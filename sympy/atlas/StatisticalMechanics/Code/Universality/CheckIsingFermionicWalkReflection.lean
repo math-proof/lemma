@@ -1,0 +1,51 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicWalkReflection.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicWalkReflection
+
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.reflect_reflect
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.firstHitSplit_steps
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.reflect_valid
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.reflect_endpoint_fst
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.reflect_endpoint_snd
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.firstHitSplit_firstHit
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.firstHitSplit_eq_some
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.firstHitSplit_reflect
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.reflectFirstHitFamilyEquiv
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.natCard_firstHitFamily_eq_reflected
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.firstHitFamilyWeight_eq_reflected
+#print axioms StatMech.Universality.isingLeapfrogKilledKernel_eq_pathCount_div
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernel_one_eq_pathCount_div
+#print axioms StatMech.Universality.isingLeapfrogKilled_mul_stopped_one_eq_pathCount_div
+#print axioms StatMech.Universality.isingLeapfrogKilledPathCount_reflectX
+#print axioms StatMech.Universality.isingLeapfrogStoppedOneStepCount_reflectX
+#print axioms StatMech.Universality.isingLeapfrogFirstHitFluxNumerator_reflectX
+#print axioms StatMech.Universality.isingLeapfrogFirstHitFluxSummand_reflectX
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernel_reflectX
+#print axioms StatMech.Universality.isingLeapfrogExitKernel_reflectX
+#print axioms StatMech.Universality.isingLeapfrogDiagonalAdjacent_eq_neighbor
+#print axioms StatMech.Universality.isingLeapfrogExitKernel_neighbor_timeOffset_eq
+#print axioms StatMech.Universality.isingLeapfrogExitKernel_neighbor_timeOffset_abs_le
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernel_neighbor_timeOffset_eq
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.reflectPrefix_valid
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.reflectPrefix_firstHit
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.reflectPrefix_endpoint
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.reflectPrefixFirstHitFamilyEquiv
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.natCard_firstHitFamily_eq_mirroredStart
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.survivalMatchedFirstHitFamilyEquiv
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.natCard_survivalMatchedFirstHitFamily_eq
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.survivingFirstHitFamilyPartitionEquiv
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.survivingMirrorFamilyPartitionEquiv
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.survivalException_before_firstHit
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.reflectPrefix_endpoint_take_fst_of_le_before
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.exists_prefix_fst_eq_of_lt_of_le
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.FirstHit.endpoint_take_fst_lt
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.exists_prefix_fst_eq_of_ge_of_gt
+#print axioms StatMech.Universality.IsingDiagonalWalkHitSplit.FirstHit.endpoint_take_fst_gt

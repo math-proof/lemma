@@ -3,6 +3,7 @@
 import Mathlib.Data.Finset.Card
 import Mathlib.SetTheory.Cardinal.Finite
 import sympy.atlas.Combinatorics.Enumerative.ParkingFunction
+import Lemma.Finset.Enumerative.ParkingFunction
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.Ring
@@ -43,11 +44,6 @@ private noncomputable def firstFree (t : ℕ) (occ : Finset (ZMod (t + 1))) (a :
 private theorem firstFree_not_mem (t : ℕ) (occ : Finset (ZMod (t + 1))) (a : ZMod (t + 1))
     (h : occ.card < t + 1) : firstFree t occ a h ∉ occ :=
   Nat.find_spec (ray_free_exists t occ a h)
-
-private theorem firstFree_is_ray (t : ℕ) (occ : Finset (ZMod (t + 1))) (a : ZMod (t + 1))
-    (h : occ.card < t + 1) :
-    ∃ j : ℕ, firstFree t occ a h = a + (((j : ℕ)) : ZMod (t + 1)) :=
-  ⟨_, rfl⟩
 
 private theorem firstFree_min (t : ℕ) (occ : Finset (ZMod (t + 1))) (a : ZMod (t + 1))
     (h : occ.card < t + 1) (j : ℕ)
@@ -353,12 +349,6 @@ private theorem linOccAux_succ_failed (s t : ℕ) (f : Fin s → Fin t) (n : ℕ
     (hm : linOccAux s t f n = none) :
     linOccAux s t f (n + 1) = none := by
   simp only [linOccAux, hm]
-
-private theorem linOccAux_succ_ge (s t : ℕ) (f : Fin s → Fin t) (n : ℕ)
-    (occ : { occ : Finset (Fin t) // occ.card ≤ n })
-    (hm : linOccAux s t f n = some occ) (h : ¬ n < s) :
-    linOccAux s t f (n + 1) = some ⟨occ.val, le_trans occ.property (Nat.le_succ n)⟩ := by
-  simp only [linOccAux, hm, h, dite_false]
 
 /-- Spot taken by car `n`, if the process got that far and found one. -/
 private noncomputable def linTake (s t : ℕ) (f : Fin s → Fin t) (n : ℕ) (h : n < s) :
@@ -1251,22 +1241,6 @@ private theorem card_circle_pairs (s t : ℕ) (hst : s ≤ t) :
       rw [Fintype.card_coe, card_parkEmpty s t g hst])
   rw [hsum, Finset.sum_const, Finset.card_univ, hdom, smul_eq_mul]
   ring
-
-/-- Double count, grouped by empty spot. -/
-private theorem card_circle_fibers (s t : ℕ) (hst : s ≤ t) :
-    Fintype.card {p : ZMod (t + 1) × (Fin s → ZMod (t + 1)) //
-      p.1 ∈ parkEmpty s t p.2 hst} =
-    (t + 1) * Fintype.card
-      {g : Fin s → ZMod (t + 1) // extra t ∈ parkEmpty s t g hst} := by
-  have : NeZero (t + 1) := ⟨by omega⟩
-  have e := Fintype.card_congr (TtoSigma s t hst)
-  rw [e, Fintype.card_sigma]
-  have hsum : (∑ x : ZMod (t + 1),
-        Fintype.card {g : Fin s → ZMod (t + 1) // x ∈ parkEmpty s t g hst}) =
-      ∑ _x : ZMod (t + 1), Fintype.card
-        {g : Fin s → ZMod (t + 1) // extra t ∈ parkEmpty s t g hst} :=
-    Finset.sum_congr rfl (fun x _ => Fintype.card_congr (fiberEquiv s t hst x))
-  rw [hsum, Finset.sum_const, Finset.card_univ, ZMod.card, smul_eq_mul]
 
 /-- Pollak's circle trick for partial parking functions: for positive `s ≤ t`,
 the number of preference lists `f : Fin s → Fin t` satisfying the standard

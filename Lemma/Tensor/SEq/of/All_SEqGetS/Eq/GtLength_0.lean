@@ -22,6 +22,5 @@ private lemma main
   exact h_all ⟨i.val, by simp [← h_length]⟩
 
 
-
 -- created on 2025-11-01
 -- updated on 2025-11-06

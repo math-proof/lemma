@@ -1,0 +1,22 @@
+import Mathlib
+import sympy.Basic
+import sympy.analysis.MeasureTheory.Section_1_1_2
+open IsElementary
+
+
+/--
+[IsElementary.isBounded](https://github.com/teorth/analysis/blob/main/Analysis/MeasureTheory/Section_1_1_2.lean)
+-/
+@[path]
+private lemma main
+  {d:ℕ}
+  {E: Set (EuclideanSpace' d)}
+-- given
+  (hE: IsElementary E) :
+-- imply
+  Bornology.IsBounded E :=
+-- proof
+  IsElementary.isBounded hE
+
+
+-- created on 2026-10-22

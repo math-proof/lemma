@@ -23,20 +23,4 @@ The paper's `s₁(n)` is `generalizedSylvester n 0`.
 def generalizedSylvester (n : ℕ) : ℕ → ℕ
   | 0 => n + 1
   | k + 1 => generalizedSylvester n k ^ 2 - generalizedSylvester n k + 1
-
-/-- The initial value of the generalized Sylvester sequence. -/
-@[simp]
-theorem generalizedSylvester_zero (n : ℕ) :
-    generalizedSylvester n 0 = n + 1 := rfl
-
-/-- The recurrence for the generalized Sylvester sequence. -/
-@[simp]
-theorem generalizedSylvester_succ (n k : ℕ) :
-    generalizedSylvester n (k + 1) =
-      generalizedSylvester n k ^ 2 - generalizedSylvester n k + 1 := rfl
-
-/-- Every term of the generalized Sylvester sequence is positive. -/
-theorem generalizedSylvester_pos (n k : ℕ) : 0 < generalizedSylvester n k := by
-  cases k <;> simp
-
 end Nat

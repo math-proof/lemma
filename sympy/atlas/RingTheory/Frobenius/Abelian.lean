@@ -32,17 +32,3 @@ This declaration lives in the root namespace, matching `arithFrobAt` and
 variable {R S G : Type*} [CommRing R] [CommRing S] [Algebra R S]
   [Group G] [MulSemiringAction G S] [SMulCommClass G R S]
   [Finite G] [Algebra.IsInvariant R S G]
-
-/-- In a commutative group, the chosen arithmetic Frobenius elements at two
-primes lying over the same prime of `R` are equal. -/
-theorem arithFrobAt_eq_of_under_eq [IsMulCommutative G]
-    (Q Q' : Ideal S) [Q.IsPrime] [Finite (S ⧸ Q)]
-    [Q'.IsPrime] [Finite (S ⧸ Q')]
-    (h : Q.under R = Q'.under R) :
-    arithFrobAt R G Q = arithFrobAt R G Q' := by
-  have hconj := isConj_arithFrobAt R G Q Q' h
-  rw [isConj_iff] at hconj
-  obtain ⟨c, hc⟩ := hconj
-  have htriv : c * arithFrobAt R G Q * c⁻¹ = arithFrobAt R G Q := by
-    rw [mul_comm' c (arithFrobAt R G Q), mul_assoc, mul_inv_cancel, mul_one]
-  exact htriv.symm.trans hc

@@ -24,11 +24,4 @@ def fallingKBinomialTransform (k : ℤ) (a : ℕ → ℤ) (n : ℕ) : ℤ :=
 `fallingKBinomialTransform`. -/
 def binomialTransform (a : ℕ → ℤ) (n : ℕ) : ℤ :=
   fallingKBinomialTransform 1 a n
-
-/-- The `k = 1` falling `k`-binomial transform has the usual binomial sum. -/
-theorem binomialTransform_eq_sum (a : ℕ → ℤ) (n : ℕ) :
-    binomialTransform a n =
-      ∑ i ∈ Finset.range (n + 1), (Nat.choose n i : ℤ) * a i := by
-  simp [binomialTransform, fallingKBinomialTransform, one_pow, mul_one]
-
 end MetaMathlibExt

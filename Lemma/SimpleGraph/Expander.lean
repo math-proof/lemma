@@ -4,66 +4,86 @@ import sympy.atlas.Combinatorics.SimpleGraph.Expander
 open SimpleGraph
 
 
+namespace SimpleGraph
+
 /--
 [mem_externalNeighborSet](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Expander.lean)
 -/
 @[path]
-private lemma mem_externalNeighborSet_eq
+lemma mem_externalNeighborSet
   {G : SimpleGraph V}
   {A : Set V}
   {v : V} :
 -- imply
-  v ∈ G.externalNeighborSet A ↔ v ∉ A ∧ ∃ a ∈ A, G.Adj a v := by
+  v ∈ G.externalNeighborSet A ↔ v ∉ A ∧ ∃ a ∈ A, G.Adj a v :=
 -- proof
-  apply SimpleGraph.mem_externalNeighborSet G A v
+  Iff.rfl
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [externalNeighborSet_disjoint](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Expander.lean)
 -/
 @[path]
-private lemma externalNeighborSet_disjoint_eq
+lemma externalNeighborSet_disjoint
   {G : SimpleGraph V}
   {A : Set V} :
 -- imply
   Disjoint (G.externalNeighborSet A) A := by
 -- proof
-  apply SimpleGraph.externalNeighborSet_disjoint G A
+  rw [Set.disjoint_left]
+  intro v hv hA
+  exact hv.1 hA
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [exists_adj_of_mem_externalNeighborSet](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Expander.lean)
 -/
 @[path]
-private lemma exists_adj_of_mem_externalNeighborSet_eq
+lemma exists_adj_of_mem_externalNeighborSet
   {G : SimpleGraph V}
   {A : Set V}
   {v : V}
 -- given
   (h : v ∈ G.externalNeighborSet A) :
 -- imply
-  ∃ a ∈ A, G.Adj a v := by
+  ∃ a ∈ A, G.Adj a v :=
 -- proof
-  apply SimpleGraph.exists_adj_of_mem_externalNeighborSet G h
+  h.2
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsCExpander.pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Expander.lean)
 -/
 @[path]
-private lemma IsCExpander_pos_eq
+lemma IsCExpander.pos
   [Finite V]
   {G : SimpleGraph V}
   {C : ℝ}
 -- given
   (h : G.IsCExpander C) :
 -- imply
-  0 < C := by
+  0 < C :=
 -- proof
-  apply SimpleGraph.IsCExpander.pos G h
+  h.1
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsCExpander.small_expansion](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Expander.lean)
 -/
 @[path]
-private lemma IsCExpander_small_expansion_eq
+lemma IsCExpander.small_expansion
   [Finite V]
   {G : SimpleGraph V}
   {C : ℝ}
@@ -72,15 +92,19 @@ private lemma IsCExpander_small_expansion_eq
   (h : G.IsCExpander C)
   (hA : (A.ncard : ℝ) < (Nat.card V : ℝ) / (2 * C)) :
 -- imply
-  C * (A.ncard : ℝ) ≤ ((G.externalNeighborSet A).ncard : ℝ) := by
+  C * (A.ncard : ℝ) ≤ ((G.externalNeighborSet A).ncard : ℝ) :=
 -- proof
-  apply SimpleGraph.IsCExpander.small_expansion G h A hA
+  h.2.1 A hA
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsCExpander.large_edge](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Expander.lean)
 -/
 @[path]
-private lemma IsCExpander_large_edge_eq
+lemma IsCExpander.large_edge
   [Finite V]
   {G : SimpleGraph V}
   {C : ℝ}
@@ -91,30 +115,38 @@ private lemma IsCExpander_large_edge_eq
   (hA : (Nat.card V : ℝ) / (2 * C) ≤ (A.ncard : ℝ))
   (hB : (Nat.card V : ℝ) / (2 * C) ≤ (B.ncard : ℝ)) :
 -- imply
-  ∃ a ∈ A, ∃ b ∈ B, G.Adj a b := by
+  ∃ a ∈ A, ∃ b ∈ B, G.Adj a b :=
 -- proof
-  apply SimpleGraph.IsCExpander.large_edge G h A B hdis hA hB
+  h.2.2 A B hdis hA hB
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsUniformVertexExpander.pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Expander.lean)
 -/
 @[path]
-private lemma IsUniformVertexExpander_pos_eq
+lemma IsUniformVertexExpander.pos
   [Finite V]
   {G : SimpleGraph V}
   {h : ℝ}
 -- given
   (hh : G.IsUniformVertexExpander h) :
 -- imply
-  0 < h := by
+  0 < h :=
 -- proof
-  apply SimpleGraph.IsUniformVertexExpander.pos G hh
+  hh.1
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsUniformVertexExpander.small_expansion](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Expander.lean)
 -/
 @[path]
-private lemma IsUniformVertexExpander_small_expansion_eq
+lemma IsUniformVertexExpander.small_expansion
   [Finite V]
   {G : SimpleGraph V}
   {h : ℝ}
@@ -123,9 +155,12 @@ private lemma IsUniformVertexExpander_small_expansion_eq
   (hh : G.IsUniformVertexExpander h)
   (hS : (S.ncard : ℝ) ≤ (Nat.card V : ℝ) / 2) :
 -- imply
-  h * (S.ncard : ℝ) ≤ ((G.externalNeighborSet S).ncard : ℝ) := by
+  h * (S.ncard : ℝ) ≤ ((G.externalNeighborSet S).ncard : ℝ) :=
 -- proof
-  apply SimpleGraph.IsUniformVertexExpander.small_expansion G hh S hS
+  hh.2 S hS
+
+end SimpleGraph
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

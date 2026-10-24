@@ -12,100 +12,6 @@ namespace NumberField
 
 variable {L : Type*} [Field L] [NumberField L]
 
-/-!
-# Unramifiedness in intermediate fields
-
-This file isolates the tower argument used in the proof of ATLAS
-`NumberTheoryI` target N390, Proposition 19.14. The primary source is
-[`v1/Atlas/NumberTheoryI/code/AnalyticClassNumber.lean` at revision
-`e8b31c5cb0bec89b487ce33fe525a2c0b0f8b9c6`, especially
-`isUnramifiedAtPrime_of_le`, lines 1433--1460](https://github.com/facebookresearch/atlas-lean/blob/e8b31c5cb0bec89b487ce33fe525a2c0b0f8b9c6/v1/Atlas/NumberTheoryI/code/AnalyticClassNumber.lean#L1433-L1460),
-which proves the same descent for intermediate fields of a
-cyclotomic field and the prime ideal `(p)`. It is used in the maximality argument
-at the end of `proposition_19_14`.
-
-The source predicate `IsUnramifiedAtPrime F p` says that every prime of `𝓞 F`
-above `(p)` has ramification index one. Here it is represented by
-`Algebra.IsUnramifiedIn (𝓞 F) 𝔭`; we generalize from the cyclotomic ambient field
-and `(p)` to an arbitrary number field `L` and ideal `𝔭` of `ℤ`. For `E ≤ F`,
-going up supplies a prime `Q` of `𝓞 F` above a given prime `P` of `𝓞 E`.
-Transitivity puts `Q` above `𝔭`, and `Algebra.IsUnramifiedAt.of_liesOver`
-descends unramifiedness from `Q` to `P`, encoding the ramification-index tower
-calculation in the source proof.
-
-The second theorem is a reusable bridge for the compositum step
-[`isUnramifiedAtPrime_sup`, lines 1588--1625](https://github.com/facebookresearch/atlas-lean/blob/e8b31c5cb0bec89b487ce33fe525a2c0b0f8b9c6/v1/Atlas/NumberTheoryI/code/AnalyticClassNumber.lean#L1588-L1625),
-in that same primary source. The source proves that two
-cyclotomic subfields unramified at `(p)` have unramified compositum, prime by
-prime, using
-[`baseChange_ramificationIdx_eq_one`, lines 1561--1586](https://github.com/facebookresearch/atlas-lean/blob/e8b31c5cb0bec89b487ce33fe525a2c0b0f8b9c6/v1/Atlas/NumberTheoryI/code/AnalyticClassNumber.lean#L1561-L1586).
-Here localization at the image
-of `p.primeCompl` retains all primes above `p` simultaneously. Its primes
-correspond to primes `q` of the integer ring whose contraction is at most `p`;
-the nonzero contractions equal `p`, so `Algebra.IsUnramifiedIn` supplies formal
-unramifiedness at every retained factor (the generic prime is automatic).
-Flatness and finite presentation then upgrade this to semilocal étaleness.
-
-This semilocal statement packages exactly the unramified local input needed for
-N390's compositum/base-change argument. It does not by itself identify a
-base-changed factor with the localization of the compositum's integer ring, nor
-does it prove `isUnramifiedAtPrime_sup` or the maximality conclusion of
-`proposition_19_14`.
-
-The normalization equivalence below develops the same compositum/base-change
-stage one level further. In the source, `baseChange_ramificationIdx_eq_one`
-shows that a prime in `E ⊔ E'` over a prime of `E` has relative ramification
-index one when `E'` is unramified, and `isUnramifiedAtPrime_sup` feeds that into
-the ramification tower formula. Our alternative algebraic route localizes at
-`(p)`, writes `R = ℤ_(p)` and the semilocal integer rings as `S_E` and `S_F`,
-and uses the étaleness of `S_F/R` to commute normalization with base change:
-`S_F ⊗[R] S_E` is the integral closure of `S_F` in
-`S_F ⊗[R] Frac(𝓞 E)`. Thus `Algebra.IsUnramifiedIn (𝓞 F) p` is the source
-assumption `IsUnramifiedAtPrime F p`, expressed for an arbitrary number field
-and prime ideal.
-
-This equivalence is not itself a theorem stated in `AnalyticClassNumber.lean`;
-it is a replacement bridge toward its two cited compositum lemmas. Identifying
-the appropriate normalized tensor factor with the localization of
-`𝓞 (E ⊔ F)` is intentionally deferred, so no claim of compositum
-unramifiedness or of Proposition 19.14's maximality is made here.
-
-The final map in this file selects a prime `Q` of the compositum and maps the
-normalized tensor algebra to `Localization.AtPrime Q`. In the source proof this
-is the primewise stage where `baseChange_ramificationIdx_eq_one` fixes `Q` over
-a prime of one intermediate field before `isUnramifiedAtPrime_sup` applies the
-tower formula. `semilocalizationToAtPrime` sends each localized integer-ring
-factor into that chosen local ring, and
-`normalizedTensorToCompositumAtPrime` transports the resulting tensor map
-through the normalization equivalence. Its prime kernel selects the generic
-component, while the prime for the local ring is the contraction of the target
-maximal ideal. The assertion that this localization is the compositum factor—and
-hence an equivalence—is still deliberately absent.
--/
-
-/-- Unramifiedness descends along intermediate fields: if `𝔭` is unramified in the
-ring of integers of `F`, it is unramified in the ring of integers of any smaller
-intermediate field `E ≤ F`.
-
-This is the generic form of `isUnramifiedAtPrime_of_le` from the primary Lean
-source for ATLAS `NumberTheoryI` target N390, Proposition 19.14. -/
-theorem isUnramifiedIn_mono (E F : IntermediateField ℚ L) (hEF : E ≤ F)
-    (𝔭 : Ideal ℤ) (hF : Algebra.IsUnramifiedIn (𝓞 F) 𝔭) :
-    Algebra.IsUnramifiedIn (𝓞 E) 𝔭 := by
-  let _alg : Algebra E F := (IntermediateField.inclusion hEF).toAlgebra
-  intro P hP hPE
-  obtain ⟨Q, _, hQprime, hQP⟩ :=
-    Ideal.exists_ideal_over_prime_of_isIntegral (S := 𝓞 F) P ⊥
-      (Ideal.comap_bot_le_of_injective _
-        (NumberField.RingOfIntegers.algebraMap.injective E F))
-  have hQP' : Q.LiesOver P := ⟨hQP.symm⟩
-  have hQp : Q.LiesOver 𝔭 := ⟨by rw [hPE.over, hQP'.over, Ideal.under_under]⟩
-  have hQ : Algebra.IsUnramifiedAt ℤ Q := hF Q hQprime hQp
-  let _ : Q.IsPrime := hQprime
-  let _ : Q.LiesOver P := hQP'
-  let _ : Algebra.IsUnramifiedAt ℤ Q := hQ
-  exact Algebra.IsUnramifiedAt.of_liesOver ℤ P Q
-
 /-- Semilocal étaleness above an unramified prime: localizing the whole finite
 algebra `𝓞 K` at the prime-complement of `p` (inverting everything outside `p`,
 keeping all local factors above `p` simultaneously) is étale over the local
@@ -210,33 +116,9 @@ noncomputable def semilocalizationToAtPrime
           simp_all [Q.over_def p]
         ⟩)
 
-/-- Characteristic equation for `semilocalizationToAtPrime` on a localization
-representative. It avoids exposing the implementation's chosen inverse unit. -/
-theorem semilocalizationToAtPrime_mk'_eq_iff
-    {R S T : Type*} [CommRing R] [CommRing S] [CommRing T]
-    [Algebra R S] [Algebra S T] [Algebra R T] [IsScalarTower R S T]
-    (p : Ideal R) [p.IsPrime] (Q : Ideal T) [Q.IsPrime] [Q.LiesOver p]
-    (x : S) (y : Algebra.algebraMapSubmonoid S p.primeCompl)
-    (z : Localization.AtPrime Q) :
-    semilocalizationToAtPrime p Q
-        (IsLocalization.mk'
-          (Localization (Algebra.algebraMapSubmonoid S p.primeCompl)) x y) = z ↔
-      algebraMap S (Localization.AtPrime Q) x =
-        algebraMap S (Localization.AtPrime Q) y * z := by
-  rw [semilocalizationToAtPrime, IsLocalization.liftAlgHom_apply,
-    IsLocalization.lift_mk'_spec]
-  change algebraMap S (Localization.AtPrime Q) x =
-      algebraMap S (Localization.AtPrime Q) y * z ↔ _
-  rfl
-
 end Localization
-
 namespace NumberField
-
-variable {L : Type*} [Field L] [NumberField L]
-
 namespace IsUnramifiedIn
-
 /-- This maps the normalized tensor algebra to the local ring at `Q` and
 selects the compositum component, but does NOT yet claim the induced
 localization is an equivalence.
@@ -281,49 +163,6 @@ noncomputable def normalizedTensorToCompositumAtPrime
   let e := tensorProductLocalizationEquivIntegralClosure
     (E := E) (F := F) p h
   exact g.comp (e.symm.restrictScalars R).toAlgHom
-
-/-- Characteristic formula on normalized simple tensors: after transporting a
-tensor generator through the normalization equivalence, the selected component
-is the product of its two semilocal images. -/
-theorem normalizedTensorToCompositumAtPrime_equiv_tmul
-    (E F : IntermediateField ℚ L)
-    (p : Ideal ℤ) [p.IsPrime] (h : Algebra.IsUnramifiedIn (𝓞 F) p)
-    (Q : Ideal (𝓞 (E ⊔ F : IntermediateField ℚ L)))
-    [Q.IsPrime] [Q.LiesOver p]
-    (x : Localization (Algebra.algebraMapSubmonoid (𝓞 F) p.primeCompl))
-    (y : Localization (Algebra.algebraMapSubmonoid (𝓞 E) p.primeCompl)) :
-    let R := Localization.AtPrime p
-    let S_F := Localization (Algebra.algebraMapSubmonoid (𝓞 F) p.primeCompl)
-    let S_E := Localization (Algebra.algebraMapSubmonoid (𝓞 E) p.primeCompl)
-    let M := (E ⊔ F : IntermediateField ℚ L)
-    letI _algE : Algebra E M := (IntermediateField.inclusion le_sup_left).toAlgebra
-    letI _algF : Algebra F M := (IntermediateField.inclusion le_sup_right).toAlgebra
-    let T := Localization.AtPrime Q
-    letI : Algebra R T := Localization.AtPrime.algebraOfLiesOver p Q
-    let fF : S_F →ₐ[𝓞 F] T := Localization.semilocalizationToAtPrime p Q
-    let fE : S_E →ₐ[𝓞 E] T := Localization.semilocalizationToAtPrime p Q
-    let e := tensorProductLocalizationEquivIntegralClosure (E := E) (F := F) p h
-    normalizedTensorToCompositumAtPrime E F p h Q (e (x ⊗ₜ[R] y)) =
-      fF x * fE y := by
-  dsimp
-  simp [normalizedTensorToCompositumAtPrime]
-  congr 1
-
-/-- The kernel of the compositum-component map is prime because the target
-localization at `Q` is a domain. The kernel selects the generic component,
-while the prime for the local ring is the contraction of the target maximal
-ideal. No localization equivalence or maximality is claimed. -/
-theorem normalizedTensorToCompositumAtPrime_ker_isPrime
-    (E F : IntermediateField ℚ L)
-    (p : Ideal ℤ) [p.IsPrime] (h : Algebra.IsUnramifiedIn (𝓞 F) p)
-    (Q : Ideal (𝓞 (E ⊔ F : IntermediateField ℚ L)))
-    [Q.IsPrime] [Q.LiesOver p] :
-    let R := Localization.AtPrime p
-    let T := Localization.AtPrime Q
-    letI : Algebra R T := Localization.AtPrime.algebraOfLiesOver p Q
-    (RingHom.ker (normalizedTensorToCompositumAtPrime E F p h Q).toRingHom).IsPrime := by
-  dsimp
-  exact RingHom.ker_isPrime _
 
 /-- Contracted maximal prime: the correct prime of the normalized tensor algebra
 at which to localize to obtain the local factor `Localization.AtPrime Q`.
@@ -371,40 +210,6 @@ theorem normalizedTensorCompositumPrime_isPrime
 
 attribute [instance] normalizedTensorCompositumPrime_isPrime
 
-/-- Defining membership characterization of the contracted maximal prime: an
-element lies in the contracted prime exactly when its image lies in the maximal
-ideal of the local target. -/
-theorem normalizedTensorCompositumPrime_mem_iff
-    (E F : IntermediateField ℚ L)
-    (p : Ideal ℤ) [p.IsPrime] (h : Algebra.IsUnramifiedIn (𝓞 F) p)
-    (Q : Ideal (𝓞 (E ⊔ F : IntermediateField ℚ L)))
-    [Q.IsPrime] [Q.LiesOver p]
-    (x : integralClosure
-      (Localization (Algebra.algebraMapSubmonoid (𝓞 F) p.primeCompl))
-      (TensorProduct (Localization.AtPrime p)
-        (Localization (Algebra.algebraMapSubmonoid (𝓞 F) p.primeCompl))
-        (FractionRing (𝓞 E)))) :
-    x ∈ normalizedTensorCompositumPrime E F p h Q ↔
-      normalizedTensorToCompositumAtPrime E F p h Q x ∈
-        IsLocalRing.maximalIdeal (Localization.AtPrime Q) := by
-  unfold normalizedTensorCompositumPrime
-  rfl
-
-/-- The kernel of the normalized-tensor-to-compositum map is contained in the
-contracted maximal prime. -/
-theorem normalizedTensorToCompositumAtPrime_ker_le
-    (E F : IntermediateField ℚ L)
-    (p : Ideal ℤ) [p.IsPrime] (h : Algebra.IsUnramifiedIn (𝓞 F) p)
-    (Q : Ideal (𝓞 (E ⊔ F : IntermediateField ℚ L)))
-    [Q.IsPrime] [Q.LiesOver p] :
-    let R := Localization.AtPrime p
-    let T := Localization.AtPrime Q
-    letI : Algebra R T := Localization.AtPrime.algebraOfLiesOver p Q
-    RingHom.ker (normalizedTensorToCompositumAtPrime E F p h Q).toRingHom ≤
-      normalizedTensorCompositumPrime E F p h Q := by
-  unfold normalizedTensorCompositumPrime
-  exact Ideal.ker_le_comap _
-
 /-- Canonical localization map: the universal property of
 `Localization.AtPrime` applied at the contracted maximal prime. An element
 outside the contracted prime maps outside the maximal ideal of the local target
@@ -440,54 +245,5 @@ noncomputable def normalizedTensorLocalizationToCompositumAtPrime
           unfold normalizedTensorCompositumPrime
           exact hmem)
       exact IsLocalRing.notMem_maximalIdeal.mp hy')
-
-/-- The canonical localization map extends the normalized-tensor map: it sends
-each algebraMap image to the value of `normalizedTensorToCompositumAtPrime`. -/
-theorem normalizedTensorLocalizationToCompositumAtPrime_algebraMap
-    (E F : IntermediateField ℚ L)
-    (p : Ideal ℤ) [p.IsPrime] (h : Algebra.IsUnramifiedIn (𝓞 F) p)
-    (Q : Ideal (𝓞 (E ⊔ F : IntermediateField ℚ L)))
-    [Q.IsPrime] [Q.LiesOver p]
-    (x : integralClosure
-      (Localization (Algebra.algebraMapSubmonoid (𝓞 F) p.primeCompl))
-      (TensorProduct (Localization.AtPrime p)
-        (Localization (Algebra.algebraMapSubmonoid (𝓞 F) p.primeCompl))
-        (FractionRing (𝓞 E)))) :
-    normalizedTensorLocalizationToCompositumAtPrime E F p h Q
-        (algebraMap _ _ x) =
-      normalizedTensorToCompositumAtPrime E F p h Q x := by
-  unfold normalizedTensorLocalizationToCompositumAtPrime
-  rw [IsLocalization.lift_eq]
-  rfl
-
-/-- Characteristic equation for the canonical localization map on a
-localization representative: the value at `IsLocalization.mk' _ x y` is
-characterized by cross multiplication against the base map. This is the stable
-`IsLocalization.lift_mk'`-style form; it avoids exposing the
-implementation-only unit proof inside
-`normalizedTensorLocalizationToCompositumAtPrime`. -/
-theorem normalizedTensorLocalizationToCompositumAtPrime_mk'_spec
-    (E F : IntermediateField ℚ L)
-    (p : Ideal ℤ) [p.IsPrime] (h : Algebra.IsUnramifiedIn (𝓞 F) p)
-    (Q : Ideal (𝓞 (E ⊔ F : IntermediateField ℚ L)))
-    [Q.IsPrime] [Q.LiesOver p]
-    (x : integralClosure
-      (Localization (Algebra.algebraMapSubmonoid (𝓞 F) p.primeCompl))
-      (TensorProduct (Localization.AtPrime p)
-        (Localization (Algebra.algebraMapSubmonoid (𝓞 F) p.primeCompl))
-        (FractionRing (𝓞 E))))
-    (y : (normalizedTensorCompositumPrime E F p h Q).primeCompl)
-    (v : Localization.AtPrime Q) :
-    normalizedTensorLocalizationToCompositumAtPrime E F p h Q
-        (IsLocalization.mk'
-          (Localization.AtPrime (normalizedTensorCompositumPrime E F p h Q)) x y) =
-      v ↔
-      normalizedTensorToCompositumAtPrime E F p h Q x =
-        normalizedTensorToCompositumAtPrime E F p h Q ↑y * v := by
-  unfold normalizedTensorLocalizationToCompositumAtPrime
-  rw [IsLocalization.lift_mk'_spec]
-  exact Iff.rfl
-
 end IsUnramifiedIn
-
 end NumberField

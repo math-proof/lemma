@@ -1,23 +1,16 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma k3prime_aux
-    {D : Type*} [CommRing D] [IsDomain D]
-    {c : D} (hc0 : c ≠ 0) (hcu : ¬IsUnit c) :
-    Irreducible (Polynomial.X ^ 2 - Polynomial.C (PowerSeries.X : PowerSeries D) * Polynomial.X +
-      Polynomial.C (PowerSeries.C c) : Polynomial (PowerSeries D)) := by
-  set f : Polynomial (PowerSeries D) := Polynomial.X ^ 2 -
-      Polynomial.C (PowerSeries.X : PowerSeries D) * Polynomial.X + Polynomial.C (PowerSeries.C c) with hf
-  have hf' : f = Polynomial.X ^ 2 + Polynomial.C (-(PowerSeries.X : PowerSeries D)) * Polynomial.X +
-      Polynomial.C (PowerSeries.C c) := by
+
+universe u
+
+private lemma k3prime_aux [CommRing D] [IsDomain D] {c : D} (hc0 : c ≠ 0) (hcu : ¬IsUnit c) : Irreducible (Polynomial.X ^ 2 - Polynomial.C (PowerSeries.X : PowerSeries D) * Polynomial.X + Polynomial.C (PowerSeries.C c) : Polynomial (PowerSeries D)) := by
+  set f : Polynomial (PowerSeries D) := Polynomial.X ^ 2 - Polynomial.C (PowerSeries.X : PowerSeries D) * Polynomial.X + Polynomial.C (PowerSeries.C c) with hf
+  have hf' : f = Polynomial.X ^ 2 + Polynomial.C (-(PowerSeries.X : PowerSeries D)) * Polynomial.X + Polynomial.C (PowerSeries.C c) := by
     rw [hf, Polynomial.C_neg]; ring
   have hdeg : f.natDegree = 2 := by
     rw [hf']; compute_degree!
@@ -39,7 +32,7 @@ private lemma k3prime_aux
   have b2 := congrArg (PowerSeries.coeff 2) h1
   simp only [PowerSeries.coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk,
     Finset.sum_range_succ, Finset.sum_range_zero, zero_add, map_add, map_neg, PowerSeries.coeff_C,
-    PowerSeries.coeff_X, if_true] at a0 a1 a2 b0 b1 b2
+    PowerSeries.coeff_X, ite_true] at a0 a1 a2 b0 b1 b2
   norm_num at a0 a1 a2 b0 b1 b2
   set x0 := PowerSeries.constantCoeff c₁ with hx0def
   set x1 := PowerSeries.coeff 1 c₁
@@ -53,26 +46,30 @@ private lemma k3prime_aux
   have h21 : 1 + 2 * x1 = 0 := by
     have : x0 * (1 + 2 * x1) = 0 := by
       linear_combination a1 - x0 * b1 + x1 * hy0
-    rcases mul_eq_zero.mp this with h | h
-    · exact absurd h hx0
-    · exact h
+    obtain h | h := mul_eq_zero.mp this
+    ·
+      apply absurd h hx0
+    ·
+      apply h
   have h8 : x0 * (8 * x2) = 1 := by
     linear_combination (4 : D) * a2 - (4 * x0) * b2 + (4 * x2) * hy0 - (4 * x1) * b1 - (2 * x1 + 1) * h21
   have hu : IsUnit x0 := IsUnit.of_mul_eq_one (8 * x2) h8
   apply hcu
   rw [a0, hy0]
-  exact hu.mul hu.neg
+  apply hu.mul hu.neg
 /--
 [PowerSeries_prime_X_sq_sub_C_X_mul_X_add_C_C](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_PowerSeries_prime_X_sq_sub_C_X_mul_X_add_C_C.lean)
 -/
 @[path]
 private lemma main
-    {D : Type*} [CommRing D] [IsDomain D] [IsPrincipalIdealRing D]
-    {c : D} (hc0 : c ≠ 0) (hcu : ¬IsUnit c) :
-    Prime (Polynomial.X ^ 2 - Polynomial.C (PowerSeries.X : PowerSeries D) * Polynomial.X +
-      Polynomial.C (PowerSeries.C c) : Polynomial (PowerSeries D)) := by
+  [CommRing D] [IsDomain D] [IsPrincipalIdealRing D]
+  {c : D} (hc0 : c ≠ 0) (hcu : ¬IsUnit c) :
+  -- imply
+  Prime (Polynomial.X ^ 2 - Polynomial.C (PowerSeries.X : PowerSeries D) * Polynomial.X + Polynomial.C (PowerSeries.C c) : Polynomial (PowerSeries D)) := by
+  -- proof
   let _ : UniqueFactorizationMonoid (PowerSeries D) := inferInstance
   let _ : UniqueFactorizationMonoid (Polynomial (PowerSeries D)) := inferInstance
-  exact UniqueFactorizationMonoid.irreducible_iff_prime.mp (k3prime_aux hc0 hcu)
+  apply UniqueFactorizationMonoid.irreducible_iff_prime.mp (k3prime_aux hc0 hcu)
+
 
 -- created on 2026-10-20

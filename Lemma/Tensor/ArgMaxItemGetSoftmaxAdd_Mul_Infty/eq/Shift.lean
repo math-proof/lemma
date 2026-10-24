@@ -29,7 +29,7 @@ private lemma main
 -- imply
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (P i j)))
   let A : Tensor ℝ* [n, n] := ([i < n] [j < n] (a i j : Tensor ℝ []) : Tensor ℝ [n, n])
-  ∃ j₀, ArgMax Set.univ (fun j : Fin n => (((A + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item) = j₀ ∧ ArgMax S zr = off j₀ := by
+  ∃ j₀, max⁻¹[j : Fin n] (((A + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item = j₀ ∧ max⁻¹[x ∈ S] zr x = off j₀ := by
 -- proof
   intro Ξ A
   obtain ⟨j₀, hP₀, hmax⟩ := huniq

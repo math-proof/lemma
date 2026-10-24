@@ -54,13 +54,6 @@ open scoped Pointwise
 noncomputable def stdLattice (d : ℕ) : Submodule ℤ (Fin d → ℝ) :=
   Submodule.span ℤ (Set.range (Pi.basisFun ℝ (Fin d)))
 
-/-- A vector is in the standard lattice exactly when all its coordinates are integers. -/
-theorem mem_stdLattice_iff {d : ℕ} {x : Fin d → ℝ} :
-    x ∈ stdLattice d ↔ ∀ i, ∃ z : ℤ, (z : ℝ) = x i := by
-  unfold stdLattice
-  rw [(Pi.basisFun ℝ (Fin d)).mem_span_iff_repr_mem ℤ x]
-  simp [Pi.basisFun_repr]
-
 /-- Lattice-point set `(t • P) ∩ ℤᵈ` for a real dilate `t`. General helper; the
 source only evaluates at `t > 0` (see `latticePointSetPos`). -/
 noncomputable def latticePointSet (d : ℕ) (P : Set (Fin d → ℝ)) (t : ℝ) :
@@ -108,50 +101,4 @@ noncomputable def translatedLatticePointSetPos (d : ℕ) (P : Set (Fin d → ℝ
 noncomputable def translatedLatticeEnumeratorPos (d : ℕ) (P : Set (Fin d → ℝ))
     (_hb : Bornology.IsBounded P) (t : {t : ℝ // 0 < t}) (x : Fin d → ℝ) : ℕ :=
   translatedLatticeEnumerator d P t.val x
-
-/-- The origin lies in the standard integer lattice. -/
-theorem zero_mem_stdLattice (d : ℕ) : (0 : Fin d → ℝ) ∈ stdLattice d :=
-  Submodule.zero_mem _
-
-/-- The empty set enumerates to zero, at any dilate. -/
-@[simp]
-theorem latticeEnumerator_empty (d : ℕ) (t : ℝ) :
-    latticeEnumerator d ∅ t = 0 := by
-  simp [latticeEnumerator, latticePointSet]
-
-/-- The translated empty set enumerates to zero. -/
-@[simp]
-theorem translatedLatticeEnumerator_empty (d : ℕ) (t : ℝ) (x : Fin d → ℝ) :
-    translatedLatticeEnumerator d ∅ t x = 0 := by
-  simp [translatedLatticeEnumerator, translatedLatticePointSet]
-
-/-- The counted dilate intersection is finite for bounded `P`
-(via `ZSpan.setFinite_inter`). This holds for every real dilate `t`, so no
-positivity is assumed here; positivity is tracked structurally in the
-source-domain declarations `latticePointSetPos` / `latticeEnumeratorPos`. -/
-theorem finite_latticePointSet (d : ℕ) (P : Set (Fin d → ℝ)) (t : ℝ)
-    (hb : Bornology.IsBounded P) :
-    Set.Finite (latticePointSet d P t) := by
-  unfold latticePointSet stdLattice
-  exact ZSpan.setFinite_inter (Pi.basisFun ℝ (Fin d)) (hb.smul₀ t)
-
-/-- Source-domain finiteness: for bounded `P` and positive `t`. -/
-theorem finite_latticePointSetPos (d : ℕ) (P : Set (Fin d → ℝ))
-    (t : {t : ℝ // 0 < t}) (hb : Bornology.IsBounded P) :
-    Set.Finite (latticePointSetPos d P t) :=
-  finite_latticePointSet d P t.val hb
-
-/-- Translated finiteness for bounded `P`: `(t • P) + {x}` stays bounded. -/
-theorem finite_translatedLatticePointSet (d : ℕ) (P : Set (Fin d → ℝ))
-    (t : ℝ) (x : Fin d → ℝ) (hb : Bornology.IsBounded P) :
-    Set.Finite (translatedLatticePointSet d P t x) := by
-  unfold translatedLatticePointSet stdLattice
-  exact ZSpan.setFinite_inter _ ((hb.smul₀ t).add (Set.finite_singleton x).isBounded)
-
-/-- Source-domain translated finiteness for bounded `P` and positive `t`. -/
-theorem finite_translatedLatticePointSetPos (d : ℕ) (P : Set (Fin d → ℝ))
-    (t : {t : ℝ // 0 < t}) (x : Fin d → ℝ) (hb : Bornology.IsBounded P) :
-    Set.Finite (translatedLatticePointSetPos d P t x) :=
-  finite_translatedLatticePointSet d P t.val x hb
-
 end LatticePointEnumerator

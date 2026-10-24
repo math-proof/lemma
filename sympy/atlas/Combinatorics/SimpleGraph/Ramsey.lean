@@ -33,24 +33,12 @@ total independently of that fact because `sInf` on `ℕ` is total. -/
 noncomputable def graphRamsey (s t : ℕ) : ℕ :=
   sInf {N : ℕ | classicalRamsey s t N}
 
-/-- The defining characterization of `graphRamsey`. -/
-theorem graphRamsey_eq_sInf (s t : ℕ) :
-    graphRamsey s t = sInf {N : ℕ | classicalRamsey s t N} :=
-  rfl
-
 /-- The two-color Ramsey number for an arbitrary pair of finite graphs. This
 uses a separate name so the established natural-parameter `graphRamsey` API
 remains compatible with existing callers. -/
 noncomputable def graphPairRamsey {α β : Type*} [Fintype α] [Fintype β]
     (G : SimpleGraph α) (H : SimpleGraph β) : ℕ :=
   sInf {n : ℕ | ∀ C : SimpleGraph (Fin n), G.IsContained C ∨ H.IsContained Cᶜ}
-
-/-- The defining characterization of `graphPairRamsey`. -/
-theorem graphPairRamsey_eq_sInf {α β : Type*} [Fintype α] [Fintype β]
-    (G : SimpleGraph α) (H : SimpleGraph β) :
-    graphPairRamsey G H =
-      sInf {n : ℕ | ∀ C : SimpleGraph (Fin n), G.IsContained C ∨ H.IsContained Cᶜ} :=
-  rfl
 
 /-- The diagonal graph Ramsey number `R(G, G)` for an arbitrary finite graph. -/
 noncomputable def diagonalGraphRamsey {α : Type*} [Fintype α] (G : SimpleGraph α) : ℕ :=

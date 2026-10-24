@@ -1,38 +1,43 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [Localization_localRingHom_surjective_and_ker_eq_map_of_surjective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Localization_localRingHom_surjective_and_ker_eq_map_of_surjective.lean)
 -/
 @[path]
 private lemma main
-    {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (hf : Function.Surjective f)
+  {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (hf : Function.Surjective f)
     (p : Ideal A) [p.IsPrime] (q : Ideal B) [q.IsPrime] (hpq : p = Ideal.comap f q) :
+    -- imply
     Function.Surjective (Localization.localRingHom p q f hpq) ∧
       RingHom.ker (Localization.localRingHom p q f hpq) =
         Ideal.map (algebraMap A (Localization.AtPrime p)) (RingHom.ker f) := by
+    -- proof
   classical
   have hmemP : ∀ s : A, f s ∉ q → s ∈ p.primeCompl := fun s hs => by
     show s ∉ p
-    rw [hpq, Ideal.mem_comap]; exact hs
+    rw [hpq, Ideal.mem_comap]; apply hs
   constructor
-  · intro z
+  ·
+    intro z
     obtain ⟨⟨b, ⟨t, ht⟩⟩, rfl⟩ := IsLocalization.mk'_surjective q.primeCompl z
     obtain ⟨a, rfl⟩ := hf b
     obtain ⟨s, rfl⟩ := hf t
     refine ⟨IsLocalization.mk' _ a ⟨s, hmemP s ht⟩, ?_⟩
     rw [Localization.localRingHom_mk']
-  · ext x
+  ·
+    ext x
     constructor
-    · intro hx
+    ·
+      intro hx
       rw [RingHom.mem_ker] at hx
       obtain ⟨⟨a, s⟩, rfl⟩ := IsLocalization.mk'_surjective p.primeCompl x
       simp only at hx
@@ -42,11 +47,16 @@ private lemma main
       have ht' : t' ∈ p.primeCompl := hmemP t' hm
       rw [IsLocalization.mem_map_algebraMap_iff p.primeCompl]
       refine ⟨⟨⟨t' * a, ?_⟩, ⟨t' * s, ?_⟩⟩, ?_⟩
-      · rw [RingHom.mem_ker, map_mul]; exact hma
-      · exact Submonoid.mul_mem _ ht' s.2
-      · show IsLocalization.mk' (Localization.AtPrime p) a s * algebraMap A _ (t' * ↑s) = algebraMap A _ (t' * a)
+      ·
+        rw [RingHom.mem_ker, map_mul]
+        apply hma
+      ·
+        apply Submonoid.mul_mem _ ht' s.2
+      ·
+        show IsLocalization.mk' (Localization.AtPrime p) a s * algebraMap A _ (t' * ↑s) = algebraMap A _ (t' * a)
         rw [mul_comm t' (s : A), map_mul, ← mul_assoc, IsLocalization.mk'_spec, map_mul, mul_comm]
-    · intro hx
+    ·
+      intro hx
       rw [IsLocalization.mem_map_algebraMap_iff p.primeCompl] at hx
       obtain ⟨⟨⟨i, hi⟩, m⟩, hxm⟩ := hx
       rw [RingHom.mem_ker]
@@ -63,7 +73,8 @@ private lemma main
         intro hq; apply hm'
         have hm2 : (m : A) ∈ Ideal.comap f q := Ideal.mem_comap.2 hq
         rw [← hpq] at hm2
-        exact hm2
-      exact (hu.mul_left_eq_zero).1 h1
+        apply hm2
+      refine (hu.mul_left_eq_zero).1 h1
+
 
 -- created on 2026-10-20

@@ -16,7 +16,7 @@ import Lemma.Vector.GetCast.as.Get.of.Eq.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Fin List Nat Tensor Vector
+open Fin List Nat Tensor Vector Set
 
 
 @[path, cast]

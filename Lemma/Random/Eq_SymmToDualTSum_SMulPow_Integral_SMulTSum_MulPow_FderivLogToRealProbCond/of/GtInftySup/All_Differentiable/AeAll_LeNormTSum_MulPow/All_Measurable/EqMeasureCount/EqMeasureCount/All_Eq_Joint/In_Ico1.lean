@@ -35,9 +35,7 @@ private lemma main
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)) (by
-      show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-      rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS])
+    SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t))
   have hs : ∀ t, PSpace (M θ) (s t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩
   have ha : ∀ t, PSpace (M θ) (a t) := fun t =>
@@ -138,7 +136,7 @@ private lemma main
       ((measurable_pi_apply t).comp measurable_fst).prodMk
         (((measurable_pi_apply t).comp (measurable_fst.comp measurable_snd)).prodMk
           ((measurable_pi_apply t).comp (measurable_snd.comp measurable_snd)))
-  -- path-binder form and G define the same Bochner integral
+  -- path-binder form and G define the same ContinuousAndEq_1AndAll_EqIm0AndGeRe0.is.Any_And_All_Eq_CharFun integral
   have hpath :
     -- TODO(sympy 𝔼 patch): 𝔽((a₀ t) = … | (s₀ t) = …) with let a₀ := a; let s₀ := s
     let a₀ := a

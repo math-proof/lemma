@@ -6,11 +6,13 @@ open MathlibExt.Analysis.Ramanujan.Part1Ch5
 open Entry3Eulerianformula
 
 
+namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry3Eulerianformula
+
 /--
 [ramanujan_part1_ch5_entry3_eulerianformula](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry3Eulerianformula.lean)
 -/
 @[path]
-private lemma ramanujan_part1_ch5_entry3_eulerianformula_eq
+lemma ramanujan_part1_ch5_entry3_eulerianformula
   {n : ℕ}
   {z : ℂ}
 -- given
@@ -25,9 +27,12 @@ private lemma ramanujan_part1_ch5_entry3_eulerianformula_eq
     HasSum (chapter5Entry8BernoulliTerm z)
     (1 / (Complex.exp z + 1)) ∧
     HasSum (chapter5Entry8PsiTerm z)
-    (1 / (Complex.exp z + 1)) := by
+    (1 / (Complex.exp z + 1)) :=
 -- proof
-  apply MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry3Eulerianformula.ramanujan_part1_ch5_entry3_eulerianformula n z hn hz
+  Entry8Eulerianformula.ramanujan_part1_ch5_entry8_eulerianformula n z hn hz
+end
+
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

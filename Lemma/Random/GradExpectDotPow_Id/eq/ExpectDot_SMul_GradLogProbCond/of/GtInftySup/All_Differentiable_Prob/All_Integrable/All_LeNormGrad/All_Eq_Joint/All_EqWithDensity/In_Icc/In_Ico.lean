@@ -1,3 +1,4 @@
+import sympy.vector.operators
 import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Ico
 import Lemma.Random.Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.All_Eq_Joint.All_EqWithDensity1
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
@@ -29,12 +30,12 @@ private lemma main
   (h₂ : ∀ t, (· t) = (r t, s t, a t))
   (hπ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
   (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
-  (h₄ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
+  (h₄ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
   (h₅ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₆ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg)
   (hφ : StronglyMeasurable
-    (fun z : S × A => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
-  (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms) :
+    (fun z : S × A => ∇[θ] Real.log (M.policy.prob θ z.1 z.2)))
+  (hMs : ∀ y u, ‖∇[θ] Real.log (M.policy.prob θ y u)‖ ≤ Ms) :
 -- imply
   have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₂ t).aemeasurable⟩)
@@ -70,16 +71,19 @@ private lemma main
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd h₂ t).aemeasurable⟩)
   have hc : γ * ℓ ∈ Set.Ico 0 1 :=
     ⟨mul_nonneg h₀.1 h₁.1, (mul_le_of_le_one_right h₀.1 h₁.2).trans_lt h₀.2⟩
-  have hφg : StronglyMeasurable
-    (fun z : S × A => gradient (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ) := by
-    simp only [gradient]
-    exact ((InnerProductSpace.toDual ℝ Θ).symm.continuous.comp_stronglyMeasurable hφ)
-  have hMsg : ∀ y u,
-    ‖gradient (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms := fun y u => by
+  -- parent / Integral_SMul still take the dual (`fderiv`) form of the score
+  have h₄' : ∀ θ' x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ'‖ ≤ g x u :=
+    fun θ' x u => by simpa [gradient, LinearIsometryEquiv.norm_map] using h₄ θ' x u
+  have hφ' : StronglyMeasurable
+    (fun z : S × A => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ) := by
+    simpa [gradient] using
+      (InnerProductSpace.toDual ℝ Θ).continuous.comp_stronglyMeasurable hφ
+  have hMs' : ∀ y u,
+    ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms := fun y u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hMs y u
   set ψ : S → A → Θ →L[ℝ] ℝ := fun y u =>
     fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ
-  have hψ : StronglyMeasurable (Function.uncurry ψ) := hφ
+  have hψ : StronglyMeasurable (Function.uncurry ψ) := hφ'
   have hmeas : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
     (fun (s : ℕ → S) (_ : ℕ → A) (r : ℕ → ℝ) (k : ℕ) =>
         r k + γ * M.Vkd θ γ (s (k + 1)) - M.Vkd θ γ (s k))
@@ -104,14 +108,14 @@ private lemma main
       fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) :=
     fun c hc' t =>
       Integral_SMul.of.In_Ico.In_Ico.All_EqWithDensity
-        (M := M) h₀ h₂ hπ θ hc' t ψ hψ ⟨Ms, hMs⟩
+        (M := M) h₀ h₂ hπ θ hc' t ψ hψ ⟨Ms, hMs'⟩
   have hbase :
     ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
       𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
         (((γ ^ (id : ℕ → ℕ)) @ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
           ∇[θ] Real.log (M.policy.prob θ (s t) (a t)))) :=
     GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Ico
-      (M := M) h₀ h₂ hπ h₃ h₄ h₅ h₆ hφ hMs
+      (M := M) h₀ h₂ hπ h₃ h₄' h₅ h₆ hφ' hMs'
   -- rewrite V_θ sugar into Vkd pointwise form for dual conversion
   have hbaseexp :
     ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
@@ -169,12 +173,12 @@ private lemma main
     Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.All_Eq_Joint.All_EqWithDensity1
       (M := M) (θ := θ) (γ := γ) (c := γ)
       (X := fun s _ r k => r k + γ * M.Vkd θ γ (s (k + 1)) - M.Vkd θ γ (s k))
-      (B := Bγ) (Ms := Ms) h₀ h₂ hmeas (hbd γ h₀) hφg hMsg
+      (B := Bγ) (Ms := Ms) h₀ h₂ hmeas (hbd γ h₀) hφ hMs
   have hA₂ :=
     Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.All_Eq_Joint.All_EqWithDensity1
       (M := M) (θ := θ) (γ := γ) (c := γ * ℓ)
       (X := fun s _ r k => r k + γ * M.Vkd θ γ (s (k + 1)) - M.Vkd θ γ (s k))
-      (B := Bc) (Ms := Ms) h₀ h₂ hmeas (hbd (γ * ℓ) hc) hφg hMsg
+      (B := Bc) (Ms := Ms) h₀ h₂ hmeas (hbd (γ * ℓ) hc) hφ hMs
   have hsplit :
     ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
       𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
@@ -201,3 +205,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -1,27 +1,215 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MotzkinCentralTrinomial
+import sympy.atlas.NumberTheory.TrinomialCoefficient
+import Lean.Elab.Tactic.Omega
 open scoped BigOperators
-open MetaMathlibExt
 
+
+namespace MetaMathlibExt
+
+/--
+[motzkinTri_trinomialCoefficient_self_eq_sum_range](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MotzkinCentralTrinomial.lean)
+-/
+@[path]
+This file gives a binomial-sum formula for central trinomial coefficients and uses it to prove
+their recurrence with the Catalan-weighted sums defining the Motzkin numbers.
+-/
+private lemma motzkinTri_trinomialCoefficient_self_eq_sum_range (n : ℕ) :
+  trinomialCoefficient n n =
+    ∑ k ∈ Finset.range (n + 1), n.choose k * (n - k).choose k := by
+  rw [trinomialCoefficient]
+  have hbase : (1 + Polynomial.X + Polynomial.X ^ 2 : Polynomial ℕ) =
+    1 + (Polynomial.X + Polynomial.X ^ 2) := by
+    exact add_assoc _ _ _
+  rw [hbase, add_pow, Polynomial.finsetSum_coeff]
+  apply Finset.sum_congr rfl
+  intro k hk
+  have hkn : k ≤ n := by
+    simpa only [Finset.mem_range, Nat.lt_add_one_iff] using hk
+  have hpoly : (Polynomial.X + Polynomial.X ^ 2 : Polynomial ℕ) =
+    Polynomial.X * (1 + Polynomial.X) := by
+    ring
+  rw [hpoly, mul_pow]
+  simp only [one_pow, one_mul]
+  rw [Polynomial.coeff_mul_natCast]
+  rw [Polynomial.coeff_X_pow_mul']
+  simp only [Nat.sub_le, ite_true, Polynomial.coeff_one_add_X_pow, Nat.cast_id]
+  rw [Nat.sub_sub_self hkn]
+  exact Nat.mul_comm _ _
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [trinomialCoefficient_self_eq_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MotzkinCentralTrinomial.lean)
 -/
 @[path]
-private lemma trinomialCoefficient_self_eq_sum_eq
+lemma trinomialCoefficient_self_eq_sum
   {n : ℕ} :
 -- imply
   trinomialCoefficient n n =
     ∑ k ∈ Finset.range (n / 2 + 1), n.choose (2 * k) * (2 * k).choose k := by
 -- proof
-  apply MetaMathlibExt.trinomialCoefficient_self_eq_sum n
+  rw [motzkinTri_trinomialCoefficient_self_eq_sum_range]
+  calc
+    (∑ k ∈ Finset.range (n + 1), n.choose k * (n - k).choose k) =
+      ∑ k ∈ Finset.range (n / 2 + 1), n.choose k * (n - k).choose k := by
+      apply (Finset.sum_subset ?_ ?_).symm
+      · intro k hk
+        simp only [Finset.mem_range] at hk ⊢
+        omega
+      · intro k hk hnot
+        simp only [Finset.mem_range] at hk hnot
+        rw [Nat.choose_eq_zero_of_lt (by omega : n - k < k), Nat.mul_zero]
+    _ = ∑ k ∈ Finset.range (n / 2 + 1),
+      n.choose (2 * k) * (2 * k).choose k := by
+      apply Finset.sum_congr rfl
+      intro k hk
+      have hchoose := Nat.choose_mul (n := n) (k := 2 * k) (s := k) (by omega)
+      have hsub : 2 * k - k = k := by omega
+      rwa [hsub] at hchoose
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[motzkinTri_trinomialCoefficient_self_eq_sum_range_of_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MotzkinCentralTrinomial.lean)
+-/
+@[path]
+private lemma motzkinTri_trinomialCoefficient_self_eq_sum_range_of_le
+  (n r : ℕ) (h : n / 2 + 1 ≤ r) :
+  trinomialCoefficient n n =
+    ∑ k ∈ Finset.range r, n.choose (2 * k) * (2 * k).choose k := by
+  rw [trinomialCoefficient_self_eq_sum]
+  apply Finset.sum_subset
+  · intro k hk
+    simp only [Finset.mem_range] at hk ⊢
+    omega
+  · intro k hk hnot
+    simp only [Finset.mem_range] at hk hnot
+    rw [Nat.choose_eq_zero_of_lt (by omega : n < 2 * k), Nat.zero_mul]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[motzkinTri_pascal_term](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MotzkinCentralTrinomial.lean)
+-/
+@[path]
+private lemma motzkinTri_pascal_term (n i : ℕ) :
+  (n + 1).choose (2 * (i + 1)) * (2 * (i + 1)).choose (i + 1) =
+    n.choose (2 * (i + 1)) * (2 * (i + 1)).choose (i + 1) +
+      n.choose (2 * i + 1) * (2 * (i + 1)).choose (i + 1) := by
+  have hidx : 2 * (i + 1) = (2 * i + 1) + 1 := by omega
+  rw [hidx, Nat.choose_succ_succ', Nat.add_mul]
+  exact Nat.add_comm _ _
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[motzkinTri_pascal](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MotzkinCentralTrinomial.lean)
+-/
+@[path]
+private lemma motzkinTri_pascal (n : ℕ) :
+  trinomialCoefficient (n + 1) (n + 1) =
+    trinomialCoefficient n n +
+      ∑ i ∈ Finset.range (n + 1),
+        n.choose (2 * i + 1) * (2 * i + 2).choose (i + 1) := by
+  have hn1 := motzkinTri_trinomialCoefficient_self_eq_sum_range_of_le
+    (n + 1) (n + 2) (by omega)
+  have hn := motzkinTri_trinomialCoefficient_self_eq_sum_range_of_le
+    n (n + 2) (by omega)
+  rw [Finset.sum_range_succ'] at hn1 hn
+  simp only [Nat.choose_zero_right, Nat.mul_zero, Nat.choose_self, Nat.one_mul] at hn1 hn
+  have hodd :
+    (∑ i ∈ Finset.range (n + 1),
+      n.choose (2 * i + 1) * (2 * (i + 1)).choose (i + 1)) =
+      ∑ i ∈ Finset.range (n + 1),
+        n.choose (2 * i + 1) * (2 * i + 2).choose (i + 1) := by
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [show 2 * (i + 1) = 2 * i + 2 by omega]
+  rw [hn1, hn]
+  simp_rw [motzkinTri_pascal_term]
+  rw [Finset.sum_add_distrib, hodd]
+  omega
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[motzkinTri_central_choose_eq_catalan](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MotzkinCentralTrinomial.lean)
+-/
+@[path]
+private lemma motzkinTri_central_choose_eq_catalan (i : ℕ) :
+  (2 * i + 2).choose (i + 1) = 2 * (2 * i + 1) * catalan i := by
+  apply Nat.eq_of_mul_eq_mul_left (by omega : 0 < i + 1)
+  have hbinom : (2 * i + 2).choose (i + 1) = Nat.centralBinom (i + 1) := by
+    rw [Nat.centralBinom_eq_two_mul_choose]
+    congr 1
+  rw [hbinom, Nat.succ_mul_centralBinom_succ,
+    ← succ_mul_catalan_eq_centralBinom]
+  ring
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[motzkinTri_term](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MotzkinCentralTrinomial.lean)
+-/
+@[path]
+private lemma motzkinTri_term (n i : ℕ) (hn : 1 ≤ n) :
+  n.choose (2 * i + 1) * (2 * i + 2).choose (i + 1) =
+    2 * n * ((n - 1).choose (2 * i) * catalan i) := by
+  have hnchoose := Nat.add_one_mul_choose_eq (n - 1) (2 * i)
+  have hnsucc : n - 1 + 1 = n := by omega
+  rw [hnsucc] at hnchoose
+  rw [motzkinTri_central_choose_eq_catalan]
+  calc
+    n.choose (2 * i + 1) * (2 * (2 * i + 1) * catalan i) =
+      2 * (n.choose (2 * i + 1) * (2 * i + 1)) * catalan i := by ring
+    _ = 2 * (n * (n - 1).choose (2 * i)) * catalan i := by rw [← hnchoose]
+    _ = 2 * n * ((n - 1).choose (2 * i) * catalan i) := by ring
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[motzkinTri_motzkin_eq_sum_range_of_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MotzkinCentralTrinomial.lean)
+-/
+@[path]
+private lemma motzkinTri_motzkin_eq_sum_range_of_le
+  (M : ℕ → ℕ)
+  (hM : ∀ n, M n =
+    ∑ k ∈ Finset.range (n / 2 + 1), n.choose (2 * k) * catalan k)
+  (n r : ℕ) (h : n / 2 + 1 ≤ r) :
+  M n = ∑ k ∈ Finset.range r, n.choose (2 * k) * catalan k := by
+  rw [hM]
+  apply Finset.sum_subset
+  · intro k hk
+    simp only [Finset.mem_range] at hk ⊢
+    omega
+  · intro k hk hnot
+    simp only [Finset.mem_range] at hk hnot
+    rw [Nat.choose_eq_zero_of_lt (by omega : n < 2 * k), Nat.zero_mul]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [motzkin_central_trinomial_recurrence](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MotzkinCentralTrinomial.lean)
 -/
 @[path]
-private lemma motzkin_central_trinomial_recurrence_eq
+lemma motzkin_central_trinomial_recurrence
   {M : ℕ → ℕ}
 -- given
   (hM : ∀ n, M n = ∑ k ∈ Finset.range (n / 2 + 1), Nat.choose n (2 * k) * catalan k) :
@@ -30,7 +218,30 @@ private lemma motzkin_central_trinomial_recurrence_eq
     trinomialCoefficient (n + 1) (n + 1) =
     trinomialCoefficient n n + 2 * n * M (n - 1) := by
 -- proof
-  apply MetaMathlibExt.motzkin_central_trinomial_recurrence M hM
+  intro n hn
+  rw [motzkinTri_pascal]
+  have hMpadded := motzkinTri_motzkin_eq_sum_range_of_le
+    M hM (n - 1) (n + 1) (by omega)
+  have hcorrection :
+    (∑ i ∈ Finset.range (n + 1),
+      n.choose (2 * i + 1) * (2 * i + 2).choose (i + 1)) =
+      2 * n * M (n - 1) := by
+    calc
+      (∑ i ∈ Finset.range (n + 1),
+        n.choose (2 * i + 1) * (2 * i + 2).choose (i + 1)) =
+        ∑ i ∈ Finset.range (n + 1),
+          2 * n * ((n - 1).choose (2 * i) * catalan i) := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        exact motzkinTri_term n i hn
+      _ = 2 * n *
+        (∑ i ∈ Finset.range (n + 1), (n - 1).choose (2 * i) * catalan i) := by
+        rw [Finset.mul_sum]
+      _ = 2 * n * M (n - 1) := by rw [hMpadded]
+  rw [hcorrection]
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

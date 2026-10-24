@@ -22,5 +22,4 @@ private lemma main
     apply LtAddS.of.Lt t h₁
 
 
-
 -- created on 2025-08-02

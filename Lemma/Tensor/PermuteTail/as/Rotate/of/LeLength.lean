@@ -10,7 +10,7 @@ import Lemma.Vector.Get
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Nat.Mod.eq.Sub
-open Vector Nat Tensor Bool List Fin
+open Vector Nat Tensor Bool List Fin Set
 
 
 @[path]

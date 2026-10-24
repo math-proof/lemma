@@ -78,18 +78,4 @@ Universe encoding: witness base and extension lie in `Type v`, giving the
 universe-local form of algebraicity for `E : Type v`. -/
 def IsAlgebraic {E : Type v} (M : Matroid E) : Prop :=
   Nonempty (AlgebraicRepresentationSomeField M)
-
-/-- A representation in `max u v` witnesses algebraicity over `K`. -/
-theorem AlgebraicRepresentation.toIsAlgebraicOver {K : Type u} [Field K]
-    {E : Type v} {M : Matroid E}
-    (self : AlgebraicRepresentation.{u, v, max u v} K M) :
-    IsAlgebraicOver K M :=
-  ⟨self⟩
-
-/-- A same-universe package witnesses algebraicity of `M`. -/
-theorem AlgebraicRepresentationSomeField.toIsAlgebraic {E : Type v}
-    {M : Matroid E} (self : AlgebraicRepresentationSomeField M) :
-    IsAlgebraic M :=
-  ⟨self⟩
-
 end Matroid

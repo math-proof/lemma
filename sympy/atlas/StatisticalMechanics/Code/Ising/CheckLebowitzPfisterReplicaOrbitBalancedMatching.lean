@@ -1,0 +1,34 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/CheckLebowitzPfisterReplicaOrbitBalancedMatching.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitBalancedMatching
+
+#print axioms StatMech.Ising.lpReplicaProfileOrbitLabelReallocates_all
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtomOfRowGate_profile
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtomOfRowGate_orbitLabel
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtomOfRowGate_row0
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtom_cast_profile
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtom_cast_orbitLabel
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtom_cast_row0
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtomOfBalancedSelector_profile
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtomOfBalancedSelector_orbitLabel
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtomOfBalancedSelector_row0
+#print axioms StatMech.Ising.lpReplicaOffdiagBalancedMatch_iff_output
+#print axioms StatMech.Ising.lpReplicaOffdiagBalancedOutputs_eq_branch_union
+#print axioms StatMech.Ising.lpReplicaOffdiagBalancedBranchOutputs_disjoint
+#print axioms StatMech.Ising.lpReplicaOffdiagBalancedOutputs_card_eq_branch_sum
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_card_eq_sum_profileFibers
+#print axioms StatMech.Ising.lpReplicaOffdiagBalancedLeftOutputs_card_eq_sum_profileFibers
+#print axioms StatMech.Ising.lpReplicaOffdiagBalancedRightOutputs_card_eq_sum_profileFibers
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedOrbitInjection_of_balancedHall
+#print axioms StatMech.Ising.lpReplicaOffdiagBalancedHall_of_outputCard
+#print axioms StatMech.Ising.lpReplicaOffdiagOrbitAtomCardInequality_of_balancedOutputCard
+#print axioms StatMech.Ising.lpReplicaOffdiagOrbitAtomCardInequality_of_balancedBranchOutputCard
+#print axioms StatMech.Ising.lpReplicaOffdiagOrbitAtomCardInequality_of_balancedProfileFiberCards

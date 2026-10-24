@@ -11,7 +11,7 @@ import Lemma.Tensor.GetRotaryMatrix.eq.MulNegSin_Delta.of.Lt.Ge
 import Lemma.Tensor.GetRotaryMatrix.eq.MulSin_Delta.of.Ge.Lt
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
 import torch.functions
-open Nat Tensor Fin
+open Nat Tensor Fin Set
 
 
 @[path]

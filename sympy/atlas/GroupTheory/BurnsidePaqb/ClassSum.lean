@@ -175,13 +175,6 @@ theorem classSum_mul (gi gj : G) :
   rw [← ConjClasses.mk_eq_mk_iff_isConj]
   exact (classRep_spec _).symm
 
-/-- Conjugate elements have equal conjugacy classes. -/
-theorem conjClass_eq_of_isConj {g1 g2 : G} (h : IsConj g1 g2) :
-    conjClass g1 = conjClass g2 := by
-  ext x
-  rw [mem_conjClass_iff, mem_conjClass_iff]
-  exact ⟨fun hx => hx.trans h, fun hx => hx.trans (isConj_comm.mp h)⟩
-
 open Classical in
 /-- Carrier class sums commute with every group-algebra element. -/
 theorem classSum_carrier_central (l : ConjClasses G) (w : MonoidAlgebra ℂ G) :

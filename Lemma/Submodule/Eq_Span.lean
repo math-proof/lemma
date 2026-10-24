@@ -1,16 +1,14 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+set_option linter.unusedSectionVars false
 
-variable {R : Type*} [CommRing R] [IsLocalRing R]
-  {V : Type*} [AddCommGroup V] [Module R V]
+
+universe u
+
+variable {R : Type u} [CommRing R] [IsLocalRing R] {V : Type u} [AddCommGroup V] [Module R V]
 private lemma eq_top_or_eq_top_of_sup_eq_top {I J : Ideal R} (h : I ⊔ J = ⊤) : I = ⊤ ∨ J = ⊤ := by
   by_contra hIJ
   push Not at hIJ
@@ -18,30 +16,23 @@ private lemma eq_top_or_eq_top_of_sup_eq_top {I J : Ideal R} (h : I ⊔ J = ⊤)
     sup_le (IsLocalRing.le_maximalIdeal hIJ.1) (IsLocalRing.le_maximalIdeal hIJ.2)
   rw [h, top_le_iff] at hle
   exact (IsLocalRing.maximalIdeal.isMaximal R).ne_top hle
-private lemma coe_mem_smul_of_mem_smul_top (I : Ideal R) (E : Submodule R V) (x : ↥E)
-    (hx : x ∈ I • (⊤ : Submodule R ↥E)) : (x : V) ∈ I • E :=
+private lemma coe_mem_smul_of_mem_smul_top (I : Ideal R) (E : Submodule R V) (x : ↥E) (hx : x ∈ I • (⊤ : Submodule R ↥E)) : (x : V) ∈ I • E :=
   (Submodule.mem_smul_top_iff I E x).mp hx
-private lemma core (X Y : Submodule R V) (hXY : IsCompl X Y) (φ : ↥X ≃ₗ[R] R)
-    (hY : ∀ W₁ W₂ : Submodule R ↥Y, IsCompl W₁ W₂ → W₁ = ⊥ ∨ W₂ = ⊥)
-    (E F : Submodule R V) (hEF : IsCompl E F)
-    (hbal : Nonempty
-      (↥(E.map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ) ≃ₗ[R]
-        ↥(F.map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ)))
-    (hE : Submodule.map (φ.toLinearMap ∘ₗ X.projectionOnto Y hXY) E = ⊤) :
-    ∃ v w : V, Submodule.span R {v, w} ⊔ IsLocalRing.maximalIdeal R • (⊤ : Submodule R V) = ⊤ := by
+private lemma core (X Y : Submodule R V) (hXY : IsCompl X Y) (φ : ↥X ≃ₗ[R] R) (hY : ∀ W₁ W₂ : Submodule R ↥Y, IsCompl W₁ W₂ → W₁ = ⊥ ∨ W₂ = ⊥) (E F : Submodule R V) (hEF : IsCompl E F) (hbal : Nonempty (↥(E.map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ) ≃ₗ[R] ↥(F.map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ))) (hE : Submodule.map (LinearMap.comp φ.toLinearMap (X.projectionOnto Y hXY)) E = ⊤) : ∃ v w : V, Submodule.span R {v, w} ⊔ IsLocalRing.maximalIdeal R • (⊤ : Submodule R V) = ⊤ := by
   set 𝔪 : Ideal R := IsLocalRing.maximalIdeal R with h𝔪
-  set π : V →ₗ[R] R := φ.toLinearMap ∘ₗ X.projectionOnto Y hXY with hπ
+  set π : V →ₗ[R] R := LinearMap.comp φ.toLinearMap (X.projectionOnto Y hXY) with hπ
   have hπY : ∀ y ∈ Y, π y = 0 := fun y hy => by
     simp only [hπ, LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply,
       Submodule.projectionOnto_apply_of_mem_right hXY hy, map_zero]
   have hkerπ : ∀ v : V, π v = 0 → v ∈ Y := fun v hv => by
     have : X.projectionOnto Y hXY v = 0 := by
       apply φ.injective
-      rw [map_zero]
-      exact hv
+      rwa [map_zero]
     exact (Submodule.projectionOnto_apply_eq_zero_iff hXY).mp this
   obtain ⟨v₀, hv₀E, hv₀⟩ : ∃ v₀ ∈ E, π v₀ = 1 := by
-    have h1 : (1 : R) ∈ Submodule.map π E := by rw [hE]; exact Submodule.mem_top
+    have h1 : (1 : R) ∈ Submodule.map π E := by
+      rw [hE]
+      refine Submodule.mem_top
     obtain ⟨v₀, hv₀E, hv₀⟩ := Submodule.mem_map.mp h1
     exact ⟨v₀, hv₀E, hv₀⟩
   have hA : ∀ v : V, v - π v • v₀ ∈ Y := fun v => by
@@ -49,17 +40,20 @@ private lemma core (X Y : Submodule R V) (hXY : IsCompl X Y) (φ : ↥X ≃ₗ[R
     rw [map_sub, map_smul, hv₀, smul_eq_mul, mul_one, sub_self]
   set R' : Submodule R V := Submodule.span R {v₀} with hR'
   have hR'E : R' ≤ E := by
-    rw [hR', Submodule.span_singleton_le_iff_mem]; exact hv₀E
+    rw [hR', Submodule.span_singleton_le_iff_mem]
+    refine hv₀E
   have hπR' : ∀ r ∈ R', r = π r • v₀ := fun r hr => by
-    obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.mp hr
-    rw [map_smul, hv₀, smul_eq_mul, mul_one]
+    obtain ⟨a, ha⟩ := Submodule.mem_span_singleton.mp hr
+    rw [← ha, map_smul, hv₀, smul_eq_mul, mul_one]
   have hR'Y : IsCompl Y R' := by
     refine IsCompl.of_eq ?_ ?_
-    · rw [Submodule.eq_bot_iff]
+    ·
+      rw [Submodule.eq_bot_iff]
       intro r hr
       obtain ⟨hrY, hrR'⟩ := Submodule.mem_inf.mp hr
       rw [hπR' r hrR', hπY r hrY, zero_smul]
-    · rw [Submodule.eq_top_iff']
+    ·
+      rw [Submodule.eq_top_iff']
       intro v
       rw [Submodule.mem_sup]
       refine ⟨v - π v • v₀, hA v, π v • v₀, ?_, sub_add_cancel _ _⟩
@@ -76,7 +70,8 @@ private lemma core (X Y : Submodule R V) (hXY : IsCompl X Y) (φ : ↥X ≃ₗ[R
     · rw [add_sub_cancel]
   have hcompl : IsCompl (Submodule.map q W) (Submodule.map q F) := by
     refine IsCompl.of_eq ?_ ?_
-    · rw [Submodule.eq_bot_iff]
+    ·
+      rw [Submodule.eq_bot_iff]
       intro y hy
       obtain ⟨hyW, hyF⟩ := Submodule.mem_inf.mp hy
       obtain ⟨w, hw, hwy⟩ := Submodule.mem_map.mp hyW
@@ -90,18 +85,21 @@ private lemma core (X Y : Submodule R V) (hXY : IsCompl X Y) (φ : ↥X ≃ₗ[R
         have : f ∈ E ⊓ F := Submodule.mem_inf.mpr ⟨hfE, hf⟩
         rwa [hEF.inf_eq_bot, Submodule.mem_bot] at this
       rw [← hfy, hf0, map_zero]
-    · rw [Submodule.eq_top_iff']
+    ·
+      rw [Submodule.eq_top_iff']
       intro y
-      have hy : (y : V) ∈ E ⊔ F := by rw [hEF.sup_eq_top]; exact Submodule.mem_top
+      have hy : (y : V) ∈ E ⊔ F := by
+        rw [hEF.sup_eq_top]
+        refine Submodule.mem_top
       obtain ⟨e, he, f, hf, hef⟩ := Submodule.mem_sup.mp hy
-      obtain ⟨a, w, hw, rfl⟩ := hEdec e he
+      obtain ⟨a, w, hw, he⟩ := hEdec e he
       rw [Submodule.mem_sup]
       refine ⟨q w, Submodule.mem_map_of_mem hw, q f, Submodule.mem_map_of_mem hf, ?_⟩
       have : q (y : V) = q w + q f := by
-        rw [← hef, map_add, map_add, hqR' _ (Submodule.smul_mem _ _ (Submodule.subset_span rfl)),
+        rw [← hef, he, map_add, map_add, hqR' _ (Submodule.smul_mem _ _ (Submodule.subset_span rfl)),
           zero_add]
       rw [← this, hqY]
-  rcases hY _ _ hcompl with hqW | hqF
+  obtain hqW | hqF := hY _ _ hcompl
   ·
     have hW0 : ∀ w ∈ W, w = 0 := fun w hw => by
       have hqw : q w = 0 := by
@@ -111,8 +109,8 @@ private lemma core (X Y : Submodule R V) (hXY : IsCompl X Y) (φ : ↥X ≃ₗ[R
       have : w ∈ Y ⊓ R' := Submodule.mem_inf.mpr ⟨(Submodule.mem_inf.mp hw).2, hwR'⟩
       rwa [hR'Y.inf_eq_bot, Submodule.mem_bot] at this
     have hEgen : ∀ e ∈ E, ∃ a : R, e = a • v₀ := fun e he => by
-      obtain ⟨a, w, hw, rfl⟩ := hEdec e he
-      exact ⟨a, by rw [hW0 w hw, add_zero]⟩
+      obtain ⟨a, w, hw, he⟩ := hEdec e he
+      exact ⟨a, by rw [he, hW0 w hw, add_zero]⟩
     obtain ⟨ψ⟩ := hbal
     set N : Submodule R V := 𝔪 • (⊤ : Submodule R V) with hN
     let e₀ : ↥(E.map N.mkQ) := ⟨N.mkQ v₀, Submodule.mem_map_of_mem hv₀E⟩
@@ -120,14 +118,16 @@ private lemma core (X Y : Submodule R V) (hXY : IsCompl X Y) (φ : ↥X ≃ₗ[R
     refine ⟨v₀, w₀, ?_⟩
     rw [Submodule.eq_top_iff']
     intro v
-    have hv : v ∈ E ⊔ F := by rw [hEF.sup_eq_top]; exact Submodule.mem_top
-    obtain ⟨e, he, f, hf, rfl⟩ := Submodule.mem_sup.mp hv
-    obtain ⟨a, rfl⟩ := hEgen e he
+    have hv : v ∈ E ⊔ F := by
+      rw [hEF.sup_eq_top]
+      refine Submodule.mem_top
+    obtain ⟨e, he, f, hf, hadd⟩ := Submodule.mem_sup.mp hv
+    obtain ⟨a, ha⟩ := hEgen e he
     have hEcyc : ∀ z : ↥(E.map N.mkQ), ∃ b : R, z = b • e₀ := fun z => by
       obtain ⟨e', he', hz⟩ := Submodule.mem_map.mp z.2
-      obtain ⟨b, rfl⟩ := hEgen e' he'
+      obtain ⟨b, hb⟩ := hEgen e' he'
       refine ⟨b, Subtype.ext ?_⟩
-      rw [Submodule.coe_smul, ← hz, map_smul]
+      rw [Submodule.coe_smul, ← hz, hb, map_smul]
     have hfclass : ∃ b : R, f - b • w₀ ∈ N := by
       let fbar : ↥(F.map N.mkQ) := ⟨N.mkQ f, Submodule.mem_map_of_mem hf⟩
       obtain ⟨b, hb⟩ := hEcyc (ψ.symm fbar)
@@ -137,13 +137,15 @@ private lemma core (X Y : Submodule R V) (hXY : IsCompl X Y) (φ : ↥X ≃ₗ[R
       have h2 : N.mkQ f = b • N.mkQ w₀ := by
         have := congrArg Subtype.val h1
         rw [Submodule.coe_smul] at this
-        rw [hw₀]
-        exact this
+        rwa [hw₀]
       rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sub, map_smul, h2, sub_self]
     obtain ⟨b, hb⟩ := hfclass
     rw [Submodule.mem_sup]
-    refine ⟨a • v₀ + b • w₀, ?_, f - b • w₀, hb, by abel⟩
-    exact Submodule.mem_span_pair.mpr ⟨a, b, rfl⟩
+    refine ⟨a • v₀ + b • w₀, ?_, f - b • w₀, hb, ?_⟩
+    · exact Submodule.mem_span_pair.mpr ⟨a, b, rfl⟩
+    ·
+      rw [← hadd, ← ha]
+      abel
   ·
     exfalso
     have hF0 : F = ⊥ := by
@@ -168,30 +170,32 @@ private lemma core (X Y : Submodule R V) (hXY : IsCompl X Y) (φ : ↥X ≃ₗ[R
       exact Subsingleton.elim _ _
     have hv₀𝔪 : v₀ ∈ N := by
       have hval : N.mkQ v₀ = 0 := congrArg Subtype.val hcl
-      rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at hval
-      exact hval
+      rwa [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at hval
     have hπ𝔪 : π v₀ ∈ 𝔪 • (⊤ : Submodule R R) := by
       have h1 : π v₀ ∈ Submodule.map π N := Submodule.mem_map_of_mem hv₀𝔪
       rw [hN, Submodule.map_smul''] at h1
       exact Submodule.smul_mono le_rfl (le_top (a := Submodule.map π ⊤)) h1
     rw [hv₀, Ideal.smul_eq_mul, Ideal.mul_top] at hπ𝔪
     exact (IsLocalRing.maximalIdeal.isMaximal R).ne_top ((Ideal.eq_top_iff_one _).mpr hπ𝔪)
-private lemma isCompl_ker_sub_ker_add (h2 : IsUnit (2 : R)) (τ : V →ₗ[R] V) (hτ : τ ∘ₗ τ = LinearMap.id) :
-    IsCompl (LinearMap.ker (τ - LinearMap.id)) (LinearMap.ker (τ + LinearMap.id)) := by
+private lemma isCompl_ker_sub_ker_add (h2 : IsUnit (2 : R)) (τ : V →ₗ[R] V) (hτ : LinearMap.comp τ τ = LinearMap.id) : IsCompl (LinearMap.ker (τ - LinearMap.id)) (LinearMap.ker (τ + LinearMap.id)) := by
   obtain ⟨u, hu⟩ := h2
   have hττ : ∀ v, τ (τ v) = v := fun v => by
     have := LinearMap.congr_fun hτ v
     simpa using this
   refine IsCompl.of_eq ?_ ?_
-  · rw [Submodule.eq_bot_iff]
+  ·
+    rw [Submodule.eq_bot_iff]
     intro v hv
     obtain ⟨h1, h2'⟩ := Submodule.mem_inf.mp hv
     rw [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply, sub_eq_zero] at h1
     rw [LinearMap.mem_ker, LinearMap.add_apply, LinearMap.id_apply, h1] at h2'
-    have h2v : (2 : R) • v = 0 := by rw [two_smul]; exact h2'
+    have h2v : (2 : R) • v = 0 := by
+      rw [two_smul]
+      refine h2'
     have : (↑u⁻¹ * (2 : R)) • v = 0 := by rw [mul_smul, h2v, smul_zero]
     rwa [← hu, Units.inv_mul, one_smul] at this
-  · rw [Submodule.eq_top_iff']
+  ·
+    rw [Submodule.eq_top_iff']
     intro v
     rw [Submodule.mem_sup]
     refine ⟨(↑u⁻¹ : R) • (v + τ v), ?_, (↑u⁻¹ : R) • (v - τ v), ?_, ?_⟩
@@ -200,15 +204,9 @@ private lemma isCompl_ker_sub_ker_add (h2 : IsUnit (2 : R)) (τ : V →ₗ[R] V)
     · rw [LinearMap.mem_ker, LinearMap.add_apply, LinearMap.id_apply, map_smul, map_sub, hττ,
         ← smul_add, sub_add_sub_cancel', sub_self, smul_zero]
     · rw [← smul_add, add_add_sub_cancel, ← two_smul R v, smul_smul, ← hu, Units.inv_mul, one_smul]
-private lemma helper_main (h2 : IsUnit (2 : R)) (τ : V →ₗ[R] V) (hτ : τ ∘ₗ τ = LinearMap.id)
-    (X Y : Submodule R V) (hXY : IsCompl X Y) (hX : Nonempty (↥X ≃ₗ[R] R))
-    (hY : ∀ W₁ W₂ : Submodule R ↥Y, IsCompl W₁ W₂ → W₁ = ⊥ ∨ W₂ = ⊥)
-    (hbal : Nonempty
-      (↥((LinearMap.ker (τ - LinearMap.id)).map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ) ≃ₗ[R]
-        ↥((LinearMap.ker (τ + LinearMap.id)).map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ))) :
-    ∃ v w : V, Submodule.span R {v, w} ⊔ IsLocalRing.maximalIdeal R • (⊤ : Submodule R V) = ⊤ := by
+private lemma helper_main (h2 : IsUnit (2 : R)) (τ : V →ₗ[R] V) (hτ : LinearMap.comp τ τ = LinearMap.id) (X Y : Submodule R V) (hXY : IsCompl X Y) (hX : Nonempty (↥X ≃ₗ[R] R)) (hY : ∀ W₁ W₂ : Submodule R ↥Y, IsCompl W₁ W₂ → W₁ = ⊥ ∨ W₂ = ⊥) (hbal : Nonempty (↥((LinearMap.ker (τ - LinearMap.id)).map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ) ≃ₗ[R] ↥((LinearMap.ker (τ + LinearMap.id)).map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ))) : ∃ v w : V, Submodule.span R {v, w} ⊔ IsLocalRing.maximalIdeal R • (⊤ : Submodule R V) = ⊤ := by
   obtain ⟨φ⟩ := hX
-  set π : V →ₗ[R] R := φ.toLinearMap ∘ₗ X.projectionOnto Y hXY with hπ
+  set π : V →ₗ[R] R := LinearMap.comp φ.toLinearMap (X.projectionOnto Y hXY) with hπ
   have hEF := isCompl_ker_sub_ker_add h2 τ hτ
   have hsurj : Submodule.map π ⊤ = ⊤ := by
     rw [Submodule.map_top, LinearMap.range_eq_top]
@@ -217,26 +215,31 @@ private lemma helper_main (h2 : IsUnit (2 : R)) (τ : V →ₗ[R] V) (hτ : τ �
     simp only [hπ, LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply,
       Submodule.projectionOnto_apply_left, LinearEquiv.apply_symm_apply]
   have hsup : Submodule.map π (LinearMap.ker (τ - LinearMap.id)) ⊔
-      Submodule.map π (LinearMap.ker (τ + LinearMap.id)) = ⊤ := by
+    Submodule.map π (LinearMap.ker (τ + LinearMap.id)) = ⊤ := by
     rw [← Submodule.map_sup, hEF.sup_eq_top, hsurj]
-  rcases eq_top_or_eq_top_of_sup_eq_top hsup with hp | hm
+  obtain hp | hm := eq_top_or_eq_top_of_sup_eq_top hsup
   · exact core X Y hXY φ hY _ _ hEF hbal hp
-  · obtain ⟨ψ⟩ := hbal
+  ·
+    obtain ⟨ψ⟩ := hbal
     exact core X Y hXY φ hY _ _ hEF.symm ⟨ψ.symm⟩ hm
 /--
 [IsLocalRing_exists_span_pair_sup_maximalIdeal_smul_top_eq_top_of_isCompl_of_involution](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_exists_span_pair_sup_maximalIdeal_smul_top_eq_top_of_isCompl_of_involution.lean)
 -/
 @[path]
 private lemma main
-    {R : Type*} [CommRing R] [IsLocalRing R] (h2 : IsUnit (2 : R))
-    {V : Type*} [AddCommGroup V] [Module R V]
-    (τ : V →ₗ[R] V) (hτ : τ ∘ₗ τ = LinearMap.id)
-    (X Y : Submodule R V) (hXY : IsCompl X Y) (hX : Nonempty (↥X ≃ₗ[R] R))
-    (hY : ∀ W₁ W₂ : Submodule R ↥Y, IsCompl W₁ W₂ → W₁ = ⊥ ∨ W₂ = ⊥)
-    (hbal : Nonempty
-      (↥((LinearMap.ker (τ - LinearMap.id)).map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ) ≃ₗ[R]
-        ↥((LinearMap.ker (τ + LinearMap.id)).map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ))) :
-    ∃ v w : V, Submodule.span R {v, w} ⊔ IsLocalRing.maximalIdeal R • (⊤ : Submodule R V) = ⊤ :=
+  {R : Type u} [CommRing R] [IsLocalRing R]
+  (h2 : IsUnit (2 : R))
+  {V : Type u} [AddCommGroup V] [Module R V]
+  (τ : V →ₗ[R] V)
+  (hτ : LinearMap.comp τ τ = LinearMap.id)
+  (X Y : Submodule R V)
+  (hXY : IsCompl X Y)
+  (hX : Nonempty (↥X ≃ₗ[R] R))
+  (hY : ∀ W₁ W₂ : Submodule R ↥Y, IsCompl W₁ W₂ → W₁ = ⊥ ∨ W₂ = ⊥)
+  (hbal : Nonempty (↥((LinearMap.ker (τ - LinearMap.id)).map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ) ≃ₗ[R] ↥((LinearMap.ker (τ + LinearMap.id)).map (IsLocalRing.maximalIdeal R • (⊤ : Submodule R V)).mkQ))) :
+  -- imply
+  ∃ v w : V, Submodule.span R {v, w} ⊔ IsLocalRing.maximalIdeal R • (⊤ : Submodule R V) = ⊤ :=
   helper_main h2 τ hτ X Y hXY hX hY hbal
+
 
 -- created on 2026-10-20

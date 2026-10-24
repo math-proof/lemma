@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverResidueField.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.Completion.FiniteLiesOverMaximalIdeal
+import Lemma.Nat.NumberField.Completion.FiniteLiesOverMaximalIdeal
 /-!
 # Naturality of adic integer maps with ring-of-integers algebra maps
 
@@ -57,22 +58,4 @@ variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
 
 variable (v : HeightOneSpectrum (𝓞 K)) (w : HeightOneSpectrum (𝓞 L))
   [w.asIdeal.LiesOver v.asIdeal]
-
-/-- Naturality of the adic integer map with respect to ring-of-integers maps. -/
-theorem adicCompletionIntegersMap_algebraMap (a : 𝓞 K) :
-    (adicCompletionIntegersMap v w)
-      (algebraMap (𝓞 K) (v.adicCompletionIntegers K) a) =
-      algebraMap (𝓞 L) (w.adicCompletionIntegers L)
-        (algebraMap (𝓞 K) (𝓞 L) a) := by
-  apply Subtype.ext
-  change adicCompletionMap v w
-      (algebraMap K (v.adicCompletion K) (algebraMap (𝓞 K) K a)) =
-    algebraMap L (w.adicCompletion L)
-      (algebraMap (𝓞 L) L (algebraMap (𝓞 K) (𝓞 L) a))
-  rw [adicCompletionMap_algebraMap,
-    IsScalarTower.algebraMap_apply K L (w.adicCompletion L)]
-  congr 1
-
 end IsDedekindDomain.HeightOneSpectrum
-
--- End of file.

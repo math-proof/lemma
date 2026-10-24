@@ -31,28 +31,4 @@ def wardGeneralizedBinomialCoefficient {R : Type*} [CommMonoid R]
     (s : ℕ → R) (n m : ℕ) : R :=
   ((Finset.range (n + m + 1)).filter fun b => 1 < b).prod
     fun b => s b ^ wardUnitsCarry b n m
-
-/-- `wardUnitsCarry b n m` is the quotient `(n % b + m % b) / b`, for every base `b`. -/
-theorem wardUnitsCarry_eq_div (b n m : ℕ) : wardUnitsCarry b n m = (n % b + m % b) / b := by
-  unfold wardUnitsCarry
-  rcases Nat.lt_or_ge 1 b with hb | hb
-  · have hn := Nat.mod_lt n (by omega : 0 < b)
-    have hm := Nat.mod_lt m (by omega : 0 < b)
-    split_ifs with h
-    · exact (Nat.div_eq_of_lt_le (by omega) (by omega)).symm
-    · exact (Nat.div_eq_of_lt (by omega)).symm
-  · rcases (by omega : b = 0 ∨ b = 1) with rfl | rfl <;> simp [Nat.mod_one]
-
-/-- Ward's generalized binomial coefficient as a product over the bases `2, …, n + m` of
-`s b` raised to the units-place carry `(n % b + m % b) / b`. -/
-theorem wardGeneralizedBinomialCoefficient_eq_prod_Icc {R : Type*} [CommMonoid R]
-    (s : ℕ → R) (n m : ℕ) :
-    wardGeneralizedBinomialCoefficient s n m =
-      ∏ b ∈ Finset.Icc 2 (n + m), s b ^ ((n % b + m % b) / b) := by
-  have hset : (Finset.range (n + m + 1)).filter (fun b => 1 < b) = Finset.Icc 2 (n + m) := by
-    ext b
-    simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_Icc]
-    omega
-  simp only [wardGeneralizedBinomialCoefficient, hset, wardUnitsCarry_eq_div]
-
 end MetaMathlibExt

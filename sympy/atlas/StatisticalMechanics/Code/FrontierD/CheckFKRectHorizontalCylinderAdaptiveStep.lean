@@ -1,0 +1,21 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectHorizontalCylinderAdaptiveStep.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderAdaptiveStep
+
+#print axioms StatMech.FrontierD.fkRectHorizontalCylinderAdaptivePairedConnectionEvent_condMass_le_boxConn
+#print axioms StatMech.FrontierD.fkRectHorizontalCylinderAdaptivePairedConnectionEvent_condMass_le_twoPoint
+#print axioms StatMech.FrontierD.fkRectHorizontalCylinderDistinctPairedWitness_insert_imp_adaptiveConnection
+#print axioms StatMech.FrontierD.fkRectHorizontalCylinderDistinctPairedWitness_step_of_planarization
+#print axioms StatMech.FrontierD.fkRectHorizontalCylinderDistinctPairedWitness_mass_le_pow_erase_of_step
+#print axioms StatMech.FrontierD.fkRectHorizontalCylinderDistinctPairedWitness_mass_le_pow_erase_of_planarization
+#print axioms StatMech.FrontierD.fkRectHorizontalCylinderCrossingTail_le_pow_pred_of_planarization
+#print axioms StatMech.FrontierD.fkRectHorizontalCylinderDistinctPairedWitness_mass_le_pow_erase_of_twoPoint
+#print axioms StatMech.FrontierD.fkRectHorizontalCylinderCrossingTail_le_pow_pred_of_twoPoint

@@ -8,6 +8,7 @@ import Mathlib.NumberTheory.NumberField.AdeleRing
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.Topology.Algebra.Valued.LocallyCompact
 import sympy.atlas.RingTheory.DedekindDomain.AdicCompletionResidueField
+import Lemma.Int.DedekindDomain.AdicCompletionResidueField
 import Mathlib.Topology.Algebra.Module.Compact
 
 /-!

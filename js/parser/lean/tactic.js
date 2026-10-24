@@ -810,9 +810,10 @@ export class LeanFrom extends LeanUnary {
         const s = this.sep();
         return `${this.operator}${s}%s`;
     }
+    // Math mode drops ordinary spaces (`from {y}` → `fromy`); use `\\ ` like `show` / `using`.
     latexFormat() {
         const s = this.sep();
-        return `${this.command}${s}%s`;
+        return s === '\n' ? `${this.command}\n%s` : `${this.command}\\ %s`;
     }
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof L.LeanCaret && caret === this.arg) {
@@ -843,7 +844,7 @@ export class LeanFrom extends LeanUnary {
         return 'from';
     }
     get command() {
-        return 'from';
+        return '{\\color{#00f}from}';
     }
 }
 

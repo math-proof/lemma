@@ -97,5 +97,11 @@ theorem erdos_379 : Filter.atTop.limsup (fun n ↦ (S n:ENat)) = ⊤ := by
   have := hp'.one_lt
   have := (p-1).lt_two_pow_self
   have : 2^(p-1) ≤ 2 ^ (p ^ (r + 2)).totient := by
-    rw [totient_prime_pow hp']; gcongr; simp; apply Nat.le_mul_of_pos_left; positivity; omega
+    rw [totient_prime_pow hp']
+    gcongr
+    · have hmul : p - 1 ≤ p ^ (r + 1) * (p - 1) :=
+        Nat.le_mul_of_pos_left (p - 1) (by positivity)
+      have h1 : 1 ≤ p := hp'.one_lt.le
+      simpa [Nat.sub_add_cancel h1] using Nat.add_le_add_right hmul 1
+    omega
   grind

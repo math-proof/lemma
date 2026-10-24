@@ -21,22 +21,4 @@ def IsCompleteGesselWord (n : ℕ) (w : List (GesselAlphabet n)) : Prop :=
   IsGesselWord n w ∧
     ∀ i : Fin n,
       gesselUnbarredCount n w (i.val + 1) = gesselBarredCount n w (i.val + 1)
-
-/-- A word is complete exactly when it is a Gessel word and every letter has zero
-signed balance. -/
-theorem isCompleteGesselWord_iff_balance_eq_zero (n : ℕ) (w : List (GesselAlphabet n)) :
-    IsCompleteGesselWord n w ↔
-      IsGesselWord n w ∧ ∀ i : Fin n, gesselBalance n w (i.val + 1) = 0 := by
-  constructor
-  · rintro ⟨hg, hcount⟩
-    refine ⟨hg, fun i => ?_⟩
-    have hi := hcount i
-    unfold gesselBalance
-    omega
-  · rintro ⟨hg, hbalance⟩
-    refine ⟨hg, fun i => ?_⟩
-    have hi := hbalance i
-    unfold gesselBalance at hi
-    omega
-
 end MetaMathlibExt

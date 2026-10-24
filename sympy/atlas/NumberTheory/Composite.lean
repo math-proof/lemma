@@ -13,13 +13,4 @@ namespace Nat
 /-- A natural number is composite if it is greater than one and not prime. -/
 def IsComposite (n : ℕ) : Prop :=
   1 < n ∧ ¬ n.Prime
-
-/-- A composite natural number is greater than one. -/
-theorem IsComposite.one_lt {n : ℕ} (h : n.IsComposite) : 1 < n :=
-  h.1
-
-/-- A composite natural number is not prime. -/
-theorem IsComposite.not_prime {n : ℕ} (h : n.IsComposite) : ¬ n.Prime :=
-  h.2
-
 end Nat

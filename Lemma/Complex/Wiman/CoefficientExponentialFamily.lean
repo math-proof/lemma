@@ -6,23 +6,29 @@ open scoped ENNReal
 open Complex
 
 
+namespace Complex
+
 /--
 [wimanCoefficientMeasure_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
 @[path]
-private lemma wimanCoefficientMeasure_singleton_eq
+lemma wimanCoefficientMeasure_singleton
   {f : ℂ → ℂ}
   {n : ℕ} :
 -- imply
-  wimanCoefficientMeasure f {n} = ENNReal.ofReal ‖wimanTaylorCoefficient f n‖ := by
+  wimanCoefficientMeasure f {n} = ENNReal.ofReal ‖wimanTaylorCoefficient f n‖ :=
 -- proof
-  apply Complex.wimanCoefficientMeasure_singleton f n
+Measure.sum_smul_dirac_singleton
+
+end Complex
+
+namespace Complex
 
 /--
 [integrable_exp_mul_wimanCoefficientMeasure](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
 @[path]
-private lemma integrable_exp_mul_wimanCoefficientMeasure_eq
+lemma integrable_exp_mul_wimanCoefficientMeasure
   {f : ℂ → ℂ}
   {x : ℝ}
 -- given
@@ -30,26 +36,41 @@ private lemma integrable_exp_mul_wimanCoefficientMeasure_eq
 -- imply
   Integrable (fun n : ℕ => Real.exp (x * (n : ℝ))) (wimanCoefficientMeasure f) := by
 -- proof
-  apply Complex.integrable_exp_mul_wimanCoefficientMeasure f hf x
+  rw [wimanCoefficientMeasure]
+  refine integrable_sum_dirac (fun n => by simp) ?_
+  refine (summable_wimanTerm f hf (Real.exp x)).congr fun n => ?_
+  rw [wimanTerm, ENNReal.toReal_ofReal (norm_nonneg _), Real.norm_eq_abs,
+    abs_of_pos (Real.exp_pos _), mul_comm x (n : ℝ), Real.exp_nat_mul,
+    abs_of_nonneg (pow_nonneg (Real.exp_pos x).le n)]
+
+end Complex
+
+namespace Complex
 
 /--
 [integrableExpSet_wimanCoefficientMeasure_eq_univ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
 @[path]
-private lemma integrableExpSet_wimanCoefficientMeasure_eq_univ_eq
+lemma integrableExpSet_wimanCoefficientMeasure_eq_univ
   {f : ℂ → ℂ}
 -- given
   (hf : Differentiable ℂ f) :
 -- imply
   integrableExpSet (fun n : ℕ => (n : ℝ)) (wimanCoefficientMeasure f) = Set.univ := by
 -- proof
-  apply Complex.integrableExpSet_wimanCoefficientMeasure_eq_univ f hf
+  ext x
+  simp only [integrableExpSet, Set.mem_ofPred_eq, Set.mem_univ, iff_true]
+  exact integrable_exp_mul_wimanCoefficientMeasure f hf x
+
+end Complex
+
+namespace Complex
 
 /--
 [mem_interior_integrableExpSet_wimanCoefficientMeasure](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
 @[path]
-private lemma mem_interior_integrableExpSet_wimanCoefficientMeasure_eq
+lemma mem_interior_integrableExpSet_wimanCoefficientMeasure
   {f : ℂ → ℂ}
   {x : ℝ}
 -- given
@@ -58,13 +79,17 @@ private lemma mem_interior_integrableExpSet_wimanCoefficientMeasure_eq
   x ∈ interior (integrableExpSet (fun n : ℕ => (n : ℝ))
     (wimanCoefficientMeasure f)) := by
 -- proof
-  apply Complex.mem_interior_integrableExpSet_wimanCoefficientMeasure f hf x
+  simp [integrableExpSet_wimanCoefficientMeasure_eq_univ f hf]
+
+end Complex
+
+namespace Complex
 
 /--
 [integral_exp_mul_wimanCoefficientMeasure](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
 @[path]
-private lemma integral_exp_mul_wimanCoefficientMeasure_eq
+lemma integral_exp_mul_wimanCoefficientMeasure
   {f : ℂ → ℂ}
   {x : ℝ}
 -- given
@@ -73,13 +98,30 @@ private lemma integral_exp_mul_wimanCoefficientMeasure_eq
   ∫ n : ℕ, Real.exp (x * (n : ℝ)) ∂(wimanCoefficientMeasure f) =
     wimanMajorant f (Real.exp x) := by
 -- proof
-  apply Complex.integral_exp_mul_wimanCoefficientMeasure f hf x
+  have hInt := integrable_exp_mul_wimanCoefficientMeasure f hf x
+  rw [wimanCoefficientMeasure] at hInt
+  have hsum : Summable (fun n : ℕ =>
+    (ENNReal.ofReal ‖wimanTaylorCoefficient f n‖).toReal *
+      ‖Real.exp (x * (n : ℝ))‖) :=
+    hInt.summable_of_dirac
+  rw [wimanCoefficientMeasure,
+    integral_sum_dirac_eq_tsum
+      (f := fun n : ℕ => Real.exp (x * (n : ℝ))) (fun n => by simp) hsum,
+    wimanMajorant]
+  apply tsum_congr
+  intro n
+  rw [ENNReal.toReal_ofReal (norm_nonneg _), smul_eq_mul, wimanTerm,
+    abs_of_pos (Real.exp_pos x), mul_comm x (n : ℝ), Real.exp_nat_mul]
+
+end Complex
+
+namespace Complex
 
 /--
 [wiman_mgf_eq_majorant](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
 @[path]
-private lemma wiman_mgf_eq_majorant_eq
+lemma wiman_mgf_eq_majorant
   {f : ℂ → ℂ}
   {x : ℝ}
 -- given
@@ -88,13 +130,17 @@ private lemma wiman_mgf_eq_majorant_eq
   mgf (fun n : ℕ => (n : ℝ)) (wimanCoefficientMeasure f) x =
     wimanMajorant f (Real.exp x) := by
 -- proof
-  apply Complex.wiman_mgf_eq_majorant f hf x
+  rw [mgf, integral_exp_mul_wimanCoefficientMeasure f hf x]
+
+end Complex
+
+namespace Complex
 
 /--
 [wiman_cgf_eq_growth](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
 @[path]
-private lemma wiman_cgf_eq_growth_eq
+lemma wiman_cgf_eq_growth
   {f : ℂ → ℂ}
   {x : ℝ}
 -- given
@@ -103,26 +149,40 @@ private lemma wiman_cgf_eq_growth_eq
   ProbabilityTheory.cgf (fun n : ℕ => (n : ℝ))
     (wimanCoefficientMeasure f) x = wimanGrowth f x := by
 -- proof
-  apply Complex.wiman_cgf_eq_growth f hf x
+  rw [cgf, wimanGrowth, wiman_mgf_eq_majorant f hf x]
+
+end Complex
+
+namespace Complex
 
 /--
 [wimanCoefficientMeasure_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
 @[path]
-private lemma wimanCoefficientMeasure_ne_zero_eq
+lemma wimanCoefficientMeasure_ne_zero
   {f : ℂ → ℂ}
 -- given
   (hne : ∃ n, wimanTaylorCoefficient f n ≠ 0) :
 -- imply
   wimanCoefficientMeasure f ≠ 0 := by
 -- proof
-  apply Complex.wimanCoefficientMeasure_ne_zero f hne
+  obtain ⟨n, hn⟩ := hne
+  have hmass : ENNReal.ofReal ‖wimanTaylorCoefficient f n‖ ≠ 0 :=
+    ne_of_gt (ENNReal.ofReal_pos.mpr (norm_pos_iff.mpr hn))
+  intro hzero
+  apply hmass
+  rw [← wimanCoefficientMeasure_singleton f n, hzero]
+  simp
+
+end Complex
+
+namespace Complex
 
 /--
 [isProbabilityMeasure_wimanTiltedMeasure](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
 @[path]
-private lemma isProbabilityMeasure_wimanTiltedMeasure_eq
+lemma isProbabilityMeasure_wimanTiltedMeasure
   {f : ℂ → ℂ}
   {x : ℝ}
 -- given
@@ -131,13 +191,19 @@ private lemma isProbabilityMeasure_wimanTiltedMeasure_eq
 -- imply
   IsProbabilityMeasure (wimanTiltedMeasure f x) := by
 -- proof
-  apply Complex.isProbabilityMeasure_wimanTiltedMeasure f hf hne x
+  let _ : NeZero (wimanCoefficientMeasure f) :=
+    ⟨wimanCoefficientMeasure_ne_zero f hne⟩
+  exact isProbabilityMeasure_tilted (integrable_exp_mul_wimanCoefficientMeasure f hf x)
+
+end Complex
+
+namespace Complex
 
 /--
 [wimanTiltedMeasure_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
 @[path]
-private lemma wimanTiltedMeasure_singleton_eq
+lemma wimanTiltedMeasure_singleton
   {f : ℂ → ℂ}
   {x : ℝ}
   {n : ℕ}
@@ -148,13 +214,29 @@ private lemma wimanTiltedMeasure_singleton_eq
     ENNReal.ofReal
     (wimanTerm f (Real.exp x) n / wimanMajorant f (Real.exp x)) := by
 -- proof
-  apply Complex.wimanTiltedMeasure_singleton f hf x n
+  rw [wimanTiltedMeasure,
+    ProbabilityTheory.tilted_mul_apply_mgf'
+      (μ := wimanCoefficientMeasure f) (X := fun n : ℕ => (n : ℝ))
+      (t := x) (measurableSet_singleton n),
+    lintegral_singleton, wiman_mgf_eq_majorant f hf x,
+    wimanCoefficientMeasure_singleton]
+  have hratio :
+    0 ≤ Real.exp (x * (n : ℝ)) / wimanMajorant f (Real.exp x) :=
+    div_nonneg (Real.exp_pos _).le (wimanMajorant_nonneg f (Real.exp x))
+  rw [← ENNReal.ofReal_mul hratio]
+  congr 1
+  rw [wimanTerm, abs_of_pos (Real.exp_pos x), mul_comm x (n : ℝ), Real.exp_nat_mul]
+  ring
+
+end Complex
+
+namespace Complex
 
 /--
 [wimanTiltedMeasure_eq_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
 @[path]
-private lemma wimanTiltedMeasure_eq_sum_eq
+lemma wimanTiltedMeasure_eq_sum
   {f : ℂ → ℂ}
   {x : ℝ}
 -- given
@@ -166,7 +248,13 @@ private lemma wimanTiltedMeasure_eq_sum_eq
     (wimanTerm f (Real.exp x) n / wimanMajorant f (Real.exp x)) •
     Measure.dirac n := by
 -- proof
-  apply Complex.wimanTiltedMeasure_eq_sum f hf x
+  apply Measure.ext_iff_singleton.mpr
+  intro n
+  rw [wimanTiltedMeasure_singleton f hf x n,
+    Measure.sum_smul_dirac_singleton]
+end
+
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

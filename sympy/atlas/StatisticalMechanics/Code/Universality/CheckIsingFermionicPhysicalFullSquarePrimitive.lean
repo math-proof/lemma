@@ -1,0 +1,28 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPhysicalFullSquarePrimitive.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquarePrimitive
+
+#print axioms StatMech.Universality.isingRectanglePrimitiveWithBase_eq_of_local_increments
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchHorizontal_endpoint_of_even
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchHorizontal_face_of_even
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchHorizontal_endpoint_of_odd
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchHorizontal_face_of_odd
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchVertical_endpoint_of_even
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchVertical_face_of_even
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchVertical_endpoint_of_odd
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchVertical_face_of_odd
+#print axioms StatMech.Universality.FKIsingSquareFullPrimitiveCompatible
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchFullValue_horizontal_increment
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchFullValue_vertical_increment
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchFullValue_eq_primitive
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimalValue_eq_full_of_compatible
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchDualValue_eq_full_of_compatible
+#print axioms StatMech.Universality.fkIsingSquareRadialPatch_unitRange_of_fullSquareGhost_compatible

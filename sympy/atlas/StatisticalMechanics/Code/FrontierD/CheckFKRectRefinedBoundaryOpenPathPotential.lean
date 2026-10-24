@@ -1,0 +1,26 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectRefinedBoundaryOpenPathPotential.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedBoundaryOpenPathPotential
+
+#print axioms StatMech.FrontierD.fkRectRefinedRawInteraction_repeated_boundary_openEdgeOnce_eq_zero
+#print axioms StatMech.FrontierD.fkRectRefinedRawInteraction_repeated_boundary_openEdgeReverseOnce_eq_zero
+#print axioms StatMech.FrontierD.fkRectRefinedRawInteraction_repeated_boundary_edgeOnce_ne_zero
+#print axioms StatMech.FrontierD.fkRectRefinedRawInteraction_repeated_west_boundary_edgeOnce_pos
+#print axioms StatMech.FrontierD.fkRectRefinedRawInteraction_repeated_west_boundary_edge_pos
+#print axioms StatMech.FrontierD.fkRectRefinedBoundaryMatchedVisitTrace_nonpos_of_avoid_west
+#print axioms StatMech.FrontierD.fkRectRefinedBoundaryMatchedVisitTrace_canonical_neg_of_avoid_west
+#print axioms StatMech.FrontierD.fkRectRefinedRawInteraction_repeated_east_boundary_edgeOnce_neg
+#print axioms StatMech.FrontierD.fkRectRefinedRawInteraction_repeated_east_boundary_edge_neg
+#print axioms StatMech.FrontierD.fkRectRefinedRawInteraction_repeated_boundary_edgeOnce_nonpos_of_avoid_west
+#print axioms StatMech.FrontierD.fkRectRefinedRawInteraction_repeated_boundary_edgeOnce_eq_zero_of_avoid_west_east
+#print axioms StatMech.FrontierD.fkRectRefinedRawInteraction_repeated_boundary_edge_nonpos_of_avoid_west
+#print axioms StatMech.FrontierD.fkRectRefinedRawInteraction_repeated_boundary_edge_nonneg_of_avoid_east
+#print axioms StatMech.FrontierD.FKRectRefinedOpenEdgeBlocks.boundary_interaction_eq_zero

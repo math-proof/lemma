@@ -1,0 +1,41 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicSquarePrimalConnectivity.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquarePrimalConnectivity
+
+namespace StatMech.Universality
+
+#check fkIsingSquareCarrierPrimalLabel
+#check fkIsingSquare_openWiredExteriorGadget_reachable_iff
+#check fkIsingSquare_caseThree_westNorth_contour_algebra
+#check fkIsingSquare_caseThree_eastSouth_contour_algebra
+#check fkIsingSquare_localMate_primalLabel_reachable
+#check fkIsingSquare_cutBondMate_primalLabel_reachable
+#check fkIsingSquareLoopGraph_adj_primalLabel_reachable
+#check fkIsingSquareLoopGraph_reachable_primalLabel_reachable
+#check fkIsingSquareCompletedLoopGraph_reachable_iff
+#check fkIsingSquareCompletedLoopGraph_reachable_primalLabel_reachable
+#check fkIsingSquare_one_visit_completedLoop_componentCount
+#check fkIsingSquare_double_visit_closed_endpoints_reachable
+#check fkIsingSquare_double_visit_clusterCount_eq
+#check fkIsingSquare_double_visit_criticalMass_open_eq_sqrtTwo_mul_closed
+#check fkIsingSquare_double_visit_pointwise_contour_balance_of_discardedLoopTurn
+
+#print axioms fkIsingSquareLoopGraph_reachable_primalLabel_reachable
+#print axioms fkIsingSquareCompletedLoopGraph_reachable_primalLabel_reachable
+#print axioms fkIsingSquare_one_visit_completedLoop_componentCount
+#print axioms fkIsingSquare_double_visit_clusterCount_eq
+#print axioms fkIsingSquare_double_visit_criticalMass_open_eq_sqrtTwo_mul_closed
+#print axioms fkIsingSquare_double_visit_pointwise_contour_balance_of_discardedLoopTurn
+
+end StatMech.Universality

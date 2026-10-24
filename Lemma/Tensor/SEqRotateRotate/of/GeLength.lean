@@ -8,7 +8,7 @@ import Lemma.List.DropRotate.eq.Take
 import Lemma.Tensor.SEqRotate_Length
 import Lemma.Tensor.SEqRotate_0
 import Lemma.Nat.Sub.eq.Zero
-open Vector Tensor List Bool Nat Fin
+open Vector Tensor List Bool Nat Fin Set
 
 
 @[path]

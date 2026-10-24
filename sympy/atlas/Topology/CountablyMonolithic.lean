@@ -26,15 +26,6 @@ def HasCountableNetwork (X : Type*) [TopologicalSpace X] : Prop :=
     ∀ ⦃U : Set X⦄, IsOpen U → ∀ x ∈ U,
       ∃ V ∈ 𝒩, x ∈ V ∧ V ⊆ U
 
-/-- Every second-countable space has a countable network. -/
-theorem hasCountableNetwork_of_secondCountable (X : Type*) [TopologicalSpace X]
-    [SecondCountableTopology X] : HasCountableNetwork X := by
-  obtain ⟨𝒩, h𝒩_countable, _h𝒩_nonempty, h𝒩_basis⟩ :=
-    TopologicalSpace.exists_countable_basis X
-  refine ⟨𝒩, h𝒩_countable, ?_⟩
-  intro U hU x hx
-  exact h𝒩_basis.exists_subset_of_mem_open hx hU
-
 /-- A topological space is countably monolithic (ω-monolithic) if the closure
 of every countable subspace has a countable network. -/
 class CountablyMonolithicSpace (X : Type*) [TopologicalSpace X] : Prop where

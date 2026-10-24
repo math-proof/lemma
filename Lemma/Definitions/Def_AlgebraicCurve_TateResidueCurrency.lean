@@ -102,11 +102,6 @@ variable (E : Type*) [Field E] [Algebra K E] [Algebra E F] [IsScalarTower K E F]
 def kaehlerPullback (ωE : Ω[E⁄K]) : Ω[F⁄K] :=
   KaehlerDifferential.map K K E F ωE
 
-variable {K F E}
-
-variable (K F E)
-variable [HasCanonicalLocalResidueKStar K E] [HasCanonicalLocalResidueKStar K F]
-variable [Algebra.IsIntegral E F]
 
 end CorrectedCarrier
 
@@ -157,7 +152,6 @@ variable (K E F : Type*) [Field K] [Field E] [Field F]
 abbrev kaehlerCotrace : Ω[E⁄K] →ₗ[E] Ω[F⁄K] :=
   KaehlerDifferential.map K K E F
 
-variable {K E F}
 
 end KaehlerCotrace
 

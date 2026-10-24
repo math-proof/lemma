@@ -1,14 +1,14 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.HamiltonianCycle
-open SimpleGraph
 
+
+namespace SimpleGraph
 
 /--
 [IsHamiltonian.of_cyclic_list](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/HamiltonianCycle.lean)
 -/
 @[path]
-private lemma IsHamiltonian_of_cyclic_list_eq
+lemma IsHamiltonian.of_cyclic_list
   [Fintype V] [DecidableEq V]
   {G : SimpleGraph V}
   {l : List V}
@@ -22,7 +22,30 @@ private lemma IsHamiltonian_of_cyclic_list_eq
 -- imply
   G.IsHamiltonian := by
 -- proof
-  apply SimpleGraph.IsHamiltonian.of_cyclic_list G l hne hclosed hchain hnodup hmem hthree
+  let q := Walk.ofSupport l hne hchain
+  let p : G.Walk (l.head hne) (l.head hne) := q.copy rfl hclosed.symm
+  have hp_length : p.length = l.length - 1 := by
+    simp only [p, q, Walk.length_copy, Walk.length_ofSupport]
+  have hp_not_nil : ¬p.Nil := by
+    rw [Walk.not_nil_iff_lt_length, hp_length]
+    omega
+  have hp_support : p.support = l := by
+    simp only [p, q, Walk.support_copy, Walk.support_ofSupport]
+  have hp_cycle : p.IsCycle := by
+    rw [Walk.isCycle_iff_isPath_tail_and_le_length]
+    constructor
+    · rw [Walk.isPath_def, p.support_tail_of_not_nil hp_not_nil, hp_support]
+      exact hnodup
+    · omega
+  intro _
+  refine ⟨l.head hne, p, Walk.IsHamiltonianCycle.mk hp_cycle ?_⟩
+  apply hp_cycle.isPath_tail.isHamiltonian_of_mem
+  intro v
+  rw [p.support_tail_of_not_nil hp_not_nil, hp_support]
+  exact hmem v
+
+end SimpleGraph
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

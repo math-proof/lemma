@@ -145,8 +145,8 @@ private lemma main
   (z : ↥(pullback f (Spec.map (CommRingCat.ofHom φ))))
   (hz : (pullback.fst f (Spec.map (CommRingCat.ofHom φ))).base z ∈ (Scheme.Hom.opensFunctor ι).obj ⊤)
   (U : (pullback f (Spec.map (CommRingCat.ofHom φ))).Opens) (hzU : z ∈ U)
-  (s : ((pullback f (Spec.map (CommRingCat.ofHom φ))).presheaf.obj (op U))) :
-  ∃ (W : (pullback f (Spec.map (CommRingCat.ofHom φ))).Opens) (_ : z ∈ W) (hWU : W ≤ U) (hWV : W ≤ ((TopologicalSpace.Opens.map (pullback.fst f (Spec.map (CommRingCat.ofHom φ))).base).obj ((Scheme.Hom.opensFunctor ι).obj ⊤))) (σ τ : ((pullback f (Spec.map (CommRingCat.ofHom φ))).presheaf.obj (op ((TopologicalSpace.Opens.map (pullback.fst f (Spec.map (CommRingCat.ofHom φ))).base).obj ((Scheme.Hom.opensFunctor ι).obj ⊤))))), σ ∈ Subring.closure
+  (s : (pullback f (Spec.map (CommRingCat.ofHom φ))).presheaf.obj (op U)) :
+  ∃ (W : (pullback f (Spec.map (CommRingCat.ofHom φ))).Opens) (_ : z ∈ W) (hWU : W ≤ U) (hWV : W ≤ ((TopologicalSpace.Opens.map (pullback.fst f (Spec.map (CommRingCat.ofHom φ))).base).obj ((Scheme.Hom.opensFunctor ι).obj ⊤))) (σ τ : (pullback f (Spec.map (CommRingCat.ofHom φ))).presheaf.obj (op ((TopologicalSpace.Opens.map (pullback.fst f (Spec.map (CommRingCat.ofHom φ))).base).obj ((Scheme.Hom.opensFunctor ι).obj ⊤)))), σ ∈ Subring.closure
     (Set.range (fun b : C => ((pullback.fst f (Spec.map (CommRingCat.ofHom φ))).app ((Scheme.Hom.opensFunctor ι).obj ⊤)).hom
         ((ι.appIso ⊤).inv ((Scheme.ΓSpecIso (CommRingCat.of C)).inv b))) ∪
      Set.range (fun a : A => ((pullback f (Spec.map (CommRingCat.ofHom φ))).presheaf.map

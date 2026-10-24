@@ -4,27 +4,36 @@ import sympy.atlas.NumberTheory.GenocchiNumber
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [genocchiPowerSeries_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GenocchiNumber.lean)
 -/
 @[path]
-private lemma genocchiPowerSeries_eq_eq
+lemma genocchiPowerSeries_eq
   :
 -- imply
-  genocchiPowerSeries = 2 * PowerSeries.X * (PowerSeries.exp ℚ + 1)⁻¹ := by
+  genocchiPowerSeries = 2 * PowerSeries.X * (PowerSeries.exp ℚ + 1)⁻¹ :=
 -- proof
-  apply MetaMathlibExt.genocchiPowerSeries_eq
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [genocchiNumber_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GenocchiNumber.lean)
 -/
 @[path]
-private lemma genocchiNumber_eq_eq
+lemma genocchiNumber_eq
   {n : ℕ} :
 -- imply
-  genocchiNumber n = (n.factorial : ℚ) * (PowerSeries.coeff n) genocchiPowerSeries := by
+  genocchiNumber n = (n.factorial : ℚ) * (PowerSeries.coeff n) genocchiPowerSeries :=
 -- proof
-  apply MetaMathlibExt.genocchiNumber_eq n
+  rfl
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

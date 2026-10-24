@@ -38,5 +38,4 @@ private lemma main
   rwa [NotOr.is.AndNotS] at h
 
 
-
 -- created on 2025-04-28

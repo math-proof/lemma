@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/PrincipalIdeal.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.RayClass.ResidueSign
+import Lemma.Nat.NumberField.RayClass.ResidueSign
 /-!
 # Principal-ideal bridge for ray elements (N406 E2)
 
@@ -52,45 +53,6 @@ noncomputable def principalRayIdealMap (m : Modulus K) :
     (principalRayIdealMap m x : (FractionalIdeal (𝓞 K)⁰ K)ˣ) =
       toPrincipalIdeal (𝓞 K) K (x : Kˣ) := by
   rfl
-
-/-- Equality of principal ideals is equality up to an integral unit. -/
-theorem toPrincipalIdeal_eq_iff_exists_integralUnit_mul (x y : Kˣ) :
-    toPrincipalIdeal (𝓞 K) K x = toPrincipalIdeal (𝓞 K) K y ↔
-      ∃ u : (𝓞 K)ˣ,
-        x = Units.map (algebraMap (𝓞 K) K).toMonoidHom u * y := by
-  constructor
-  · intro h
-    have hcoe : FractionalIdeal.spanSingleton (𝓞 K)⁰ (x : K) =
-        FractionalIdeal.spanSingleton (𝓞 K)⁰ (y : K) := by
-      have := congrArg (fun u : (FractionalIdeal (𝓞 K)⁰ K)ˣ =>
-        (u : FractionalIdeal (𝓞 K)⁰ K)) h
-      rwa [coe_toPrincipalIdeal, coe_toPrincipalIdeal] at this
-    rw [FractionalIdeal.spanSingleton_eq_spanSingleton] at hcoe
-    obtain ⟨z, hz⟩ := hcoe
-    refine ⟨z⁻¹, ?_⟩
-    rw [Units.smul_def, Algebra.smul_def] at hz
-    have hU : Units.map (algebraMap (𝓞 K) K).toMonoidHom z * x = y := by
-      apply Units.ext
-      simp only [Units.val_mul, Units.coe_map, RingHom.toMonoidHom_eq_coe,
-        MonoidHom.coe_coe]
-      exact hz
-    rw [map_inv, ← hU, inv_mul_cancel_left]
-  · rintro ⟨u, rfl⟩
-    rw [map_mul]
-    have hunit : toPrincipalIdeal (𝓞 K) K
-        (Units.map (algebraMap (𝓞 K) K).toMonoidHom u) = 1 := by
-      apply Units.ext
-      rw [Units.val_one, coe_toPrincipalIdeal]
-      have hmem : FractionalIdeal.spanSingleton (𝓞 K)⁰
-          (Units.map (algebraMap (𝓞 K) K).toMonoidHom u : Kˣ).val =
-          FractionalIdeal.spanSingleton (𝓞 K)⁰ (1 : K) := by
-        rw [FractionalIdeal.spanSingleton_eq_spanSingleton]
-        refine ⟨u⁻¹, ?_⟩
-        rw [Units.smul_def, Algebra.smul_def, Units.coe_map,
-          RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe]
-        rw [← map_mul, Units.inv_mul, map_one]
-      rwa [FractionalIdeal.spanSingleton_one] at hmem
-    rw [hunit, one_mul]
 
 /-- The ray group is exactly the image of ray-one elements. -/
 theorem rayGroup_eq_map_rayOneElements (m : Modulus K) :

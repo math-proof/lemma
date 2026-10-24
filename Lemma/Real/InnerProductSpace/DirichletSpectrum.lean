@@ -5,53 +5,78 @@ open TopologicalSpace MeasureTheory
 open EuclideanLaplacian
 
 
+namespace EuclideanLaplacian
+
 /--
 [unitBallVolume_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/InnerProductSpace/DirichletSpectrum.lean)
 -/
 @[path]
-private lemma unitBallVolume_nonneg_eq
+lemma unitBallVolume_nonneg
   {n : ℕ} :
 -- imply
-  0 ≤ unitBallVolume n := by
+  0 ≤ unitBallVolume n :=
 -- proof
-  apply EuclideanLaplacian.unitBallVolume_nonneg n
+  measureReal_nonneg
+
+end EuclideanLaplacian
+
+namespace EuclideanLaplacian
 
 /--
 [domainVolume_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/InnerProductSpace/DirichletSpectrum.lean)
 -/
 @[path]
-private lemma domainVolume_nonneg_eq
+lemma domainVolume_nonneg
   {n : ℕ}
   {Ω : Opens (EuclideanSpace ℝ (Fin n))} :
 -- imply
-  0 ≤ domainVolume Ω := by
+  0 ≤ domainVolume Ω :=
 -- proof
-  apply EuclideanLaplacian.domainVolume_nonneg Ω
+  measureReal_nonneg
+
+end EuclideanLaplacian
+
+namespace EuclideanLaplacian
 
 /--
 [semiclassicalCountingCoefficient_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/InnerProductSpace/DirichletSpectrum.lean)
 -/
 @[path]
-private lemma semiclassicalCountingCoefficient_nonneg_eq
+lemma semiclassicalCountingCoefficient_nonneg
   {n : ℕ}
   {Ω : Opens (EuclideanSpace ℝ (Fin n))} :
 -- imply
   0 ≤ semiclassicalCountingCoefficient Ω := by
 -- proof
-  apply EuclideanLaplacian.semiclassicalCountingCoefficient_nonneg Ω
+  unfold semiclassicalCountingCoefficient
+  exact div_nonneg
+    (mul_nonneg (unitBallVolume_nonneg n) (domainVolume_nonneg Ω))
+    (pow_nonneg (mul_nonneg (by norm_num) Real.pi_nonneg) n)
+
+end EuclideanLaplacian
+
+namespace EuclideanLaplacian
 
 /--
 [polyaEigenvalueBenchmark_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/InnerProductSpace/DirichletSpectrum.lean)
 -/
 @[path]
-private lemma polyaEigenvalueBenchmark_nonneg_eq
+lemma polyaEigenvalueBenchmark_nonneg
   {n : ℕ}
   {Ω : Opens (EuclideanSpace ℝ (Fin n))}
   {j : ℕ} :
 -- imply
   0 ≤ polyaEigenvalueBenchmark Ω j := by
 -- proof
-  apply EuclideanLaplacian.polyaEigenvalueBenchmark_nonneg Ω j
+  unfold polyaEigenvalueBenchmark
+  exact mul_nonneg
+    (pow_nonneg (mul_nonneg (by norm_num) Real.pi_nonneg) 2)
+    (Real.rpow_nonneg
+      (div_nonneg (Nat.cast_nonneg _)
+        (mul_nonneg (unitBallVolume_nonneg n) (domainVolume_nonneg Ω))) _)
+
+end EuclideanLaplacian
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

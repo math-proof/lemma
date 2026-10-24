@@ -27,15 +27,4 @@ noncomputable instance : CommRing (FunctionFieldAdeleRing F P O) :=
 
 instance : DFunLike (FunctionFieldAdeleRing F P O) P (fun _ ↦ F) :=
   inferInstanceAs (DFunLike (Πʳ p : P, [F, O p]) P (fun _ ↦ F))
-
-/-- Two function-field adèles are equal when all their components are equal. -/
-@[ext]
-theorem ext {a b : FunctionFieldAdeleRing F P O} (h : ∀ p, a p = b p) : a = b :=
-  Subtype.ext <| funext h
-
-/-- Every adèle lies in the selected valuation subring at all but finitely many places. -/
-theorem mem_valuationSubring_cofinitely (a : FunctionFieldAdeleRing F P O) :
-    ∀ᶠ p in Filter.cofinite, a p ∈ O p :=
-  a.2
-
 end FunctionFieldAdeleRing

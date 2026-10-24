@@ -28,4 +28,3 @@ noncomputable def initialSegmentMean (a : ℕ → ℕ) (n : ℕ) : ℝ :=
   (1 / (n : ℝ)) * ∑ j ∈ Finset.range n, (a (j + 1) : ℝ)
 
 end MetaMathlibExt
-

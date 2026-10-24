@@ -4,11 +4,13 @@ import sympy.atlas.RingTheory.GradedAlgebra.MultigradedPoincarePolynomial
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [multigradedPoincarePolynomial_coeff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedPoincarePolynomial.lean)
 -/
 @[path]
-private lemma multigradedPoincarePolynomial_coeff_eq
+lemma multigradedPoincarePolynomial_coeff
   {K : Type u} [Field K]
   {n : ℕ}
   {M : Type u} [AddCommGroup M] [Module (MvPolynomial (Fin n) K) M] [Module K M]
@@ -26,7 +28,12 @@ private lemma multigradedPoincarePolynomial_coeff_eq
   (multigradedPoincarePolynomial data bound finiteBasis emptyAbove).coeff (i, α) =
     multigradedBettiNumber data α i := by
 -- proof
-  apply MetaMathlibExt.multigradedPoincarePolynomial_coeff data bound finiteBasis emptyAbove i α
+  unfold multigradedPoincarePolynomial
+  rw [AddMonoidAlgebra.coeff_ofCoeff, Finsupp.ofSupportFinite_coe]
+  exact multigradedPoincareCoefficients_apply data i α
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

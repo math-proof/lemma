@@ -59,34 +59,4 @@ def lucasNumber : ℕ → ℕ
   | 0 => 2
   | 1 => 1
   | n + 2 => lucasNumber (n + 1) + lucasNumber n
-
-/-- The `U` sequence for `(P, Q) = (1, -1)` is the Fibonacci sequence. -/
-theorem lucasU_fibonacciLucasParams (n : ℕ) :
-    lucasU fibonacciLucasParams n = (Nat.fib n : ℤ) := by
-  induction n using Nat.twoStepInduction with
-  | zero => rfl
-  | one => rfl
-  | more n ih1 ih2 =>
-      calc
-        lucasU fibonacciLucasParams (n + 2) =
-            lucasU fibonacciLucasParams (n + 1) + lucasU fibonacciLucasParams n := by
-          simp [lucasU, fibonacciLucasParams]
-        _ = (Nat.fib (n + 1) : ℤ) + (Nat.fib n : ℤ) := by rw [ih1, ih2]
-        _ = (Nat.fib (n + 2) : ℤ) := by rw [Nat.fib_add_two, Nat.cast_add, add_comm]
-
-/-- The `V` sequence for `(P, Q) = (1, -1)` is the classical Lucas-number
-sequence. -/
-theorem lucasV_fibonacciLucasParams (n : ℕ) :
-    lucasV fibonacciLucasParams n = (lucasNumber n : ℤ) := by
-  induction n using Nat.twoStepInduction with
-  | zero => rfl
-  | one => rfl
-  | more n ih1 ih2 =>
-      calc
-        lucasV fibonacciLucasParams (n + 2) =
-            lucasV fibonacciLucasParams (n + 1) + lucasV fibonacciLucasParams n := by
-          simp [lucasV, fibonacciLucasParams]
-        _ = (lucasNumber (n + 1) : ℤ) + (lucasNumber n : ℤ) := by rw [ih1, ih2]
-        _ = (lucasNumber (n + 2) : ℤ) := by simp [lucasNumber]
-
 end MetaMathlibExt

@@ -1,23 +1,25 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [LanglandsTunnell_eq_of_forall_finsum_cpow_neg_mul_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LanglandsTunnell_eq_of_forall_finsum_cpow_neg_mul_eq.lean)
 -/
 @[path]
 private lemma main
-    (N : ℕ) (hN : 1 < N) (a b : ℤ → ℂ)
+  (N : ℕ) (hN : 1 < N) (a b : ℤ → ℂ)
     (ha : (Function.support a).Finite) (hb : (Function.support b).Finite)
-    (h : ∀ u : ℂ, ∑ᶠ i : ℤ, (N : ℂ) ^ (-(i : ℂ) * u) * a i = ∑ᶠ i : ℤ, (N : ℂ) ^ (-(i : ℂ) * u) * b i) :
+    (h : ∀ u : ℂ, finsum (fun i : ℤ => (N : ℂ) ^ (-(i : ℂ) * u) * a i) = finsum (fun i : ℤ => (N : ℂ) ^ (-(i : ℂ) * u) * b i)) :
+    -- imply
     a = b := by
+    -- proof
   have hN0 : (N : ℂ) ≠ 0 := by exact_mod_cast (show N ≠ 0 by omega)
   let χ : ℤ → (Multiplicative ℂ →* ℂ) := fun i =>
     { toFun := fun u => (N : ℂ) ^ (-(i : ℂ) * Multiplicative.toAdd u)
@@ -40,9 +42,9 @@ private lemma main
     (linearIndependent_monoidHom (Multiplicative ℂ) ℂ).comp χ hinj
   set S : Finset ℤ := (ha.union hb).toFinset with hS
   have haS : Function.support a ⊆ (S : Set ℤ) := by
-    intro i hi; simp only [hS, Set.Finite.coe_toFinset]; exact Or.inl hi
+    intro i hi; simp only [hS, Set.Finite.coe_toFinset]; apply Or.inl hi
   have hbS : Function.support b ⊆ (S : Set ℤ) := by
-    intro i hi; simp only [hS, Set.Finite.coe_toFinset]; exact Or.inr hi
+    intro i hi; simp only [hS, Set.Finite.coe_toFinset]; apply Or.inr hi
   have hsum : ∑ i ∈ S, (a i - b i) • ((χ i : Multiplicative ℂ →* ℂ) : Multiplicative ℂ → ℂ) = 0 := by
     funext u
     have hu := h (Multiplicative.toAdd u)
@@ -55,12 +57,16 @@ private lemma main
     ring
   have hc0 := linearIndependent_iff'.mp hli S (fun i => a i - b i) hsum
   funext i
-  by_cases hi : i ∈ S
-  · exact sub_eq_zero.mp (hc0 i hi)
-  · have hai : a i = 0 := by
-      by_contra hne; exact hi (haS hne)
+  if hi : i ∈ S then
+    apply sub_eq_zero.mp (hc0 i hi)
+  else
+    have hai : a i = 0 := by
+      by_contra hne
+      apply hi (haS hne)
     have hbi : b i = 0 := by
-      by_contra hne; exact hi (hbS hne)
+      by_contra hne
+      apply hi (hbS hne)
     rw [hai, hbi]
+
 
 -- created on 2026-10-20

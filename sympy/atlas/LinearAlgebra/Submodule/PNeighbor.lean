@@ -22,18 +22,4 @@ def ArePNeighbors (p : ℕ) (L₁ L₂ : Submodule R M) : Prop :=
   Nat.Prime p ∧
     Nat.card (L₁ ⧸ Submodule.comap L₁.subtype (L₁ ⊓ L₂)) = p ∧
     Nat.card (L₂ ⧸ Submodule.comap L₂.subtype (L₁ ⊓ L₂)) = p
-
-/-- The `p`-neighbor relation is symmetric. -/
-theorem arePNeighbors_comm (p : ℕ) (L₁ L₂ : Submodule R M) :
-    ArePNeighbors p L₁ L₂ ↔ ArePNeighbors p L₂ L₁ := by
-  unfold ArePNeighbors
-  rw [inf_comm]
-  aesop
-
-/-- No two submodules are `1`-neighbors, since `1` is not prime. -/
-theorem not_arePNeighbors_one (L₁ L₂ : Submodule R M) :
-    ¬ArePNeighbors 1 L₁ L₂ := by
-  intro h
-  exact Nat.not_prime_one h.1
-
 end Submodule

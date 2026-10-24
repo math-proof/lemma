@@ -111,12 +111,7 @@ namespace MotzkinRiordanPair
 noncomputable def entry (p : MotzkinRiordanPair) (n k : ℕ) : ℚ :=
   PowerSeries.coeff n (p.g * p.h ^ k)
 
-@[simp]
-theorem entry_zero_right (p : MotzkinRiordanPair) (n : ℕ) : p.entry n 0 = p.g.coeff n := by
-  simp [entry]
-
 end MotzkinRiordanPair
-
 /-- The canonical Riordan pair defining the Motzkin triangle. -/
 noncomputable def motzkinRiordanPair : MotzkinRiordanPair where
   g := motzkinG
@@ -127,91 +122,4 @@ noncomputable def motzkinRiordanPair : MotzkinRiordanPair where
 /-- The canonical `(n, k)` entry of the Motzkin triangle (OEIS A094531). -/
 noncomputable def motzkinTriangle (n k : ℕ) : ℚ :=
   motzkinRiordanPair.entry n k
-
-private theorem motzkinSquareRoot_coeff_one :
-    PowerSeries.coeff 1 motzkinSquareRoot = -1 := by
-  have hs := congrArg (PowerSeries.coeff 1) motzkinSquareRoot_isSquareRoot.1
-  norm_num [PowerSeries.coeff_one_mul, motzkinDiscriminant,
-    PowerSeries.coeff_X_pow, motzkinSquareRoot_isSquareRoot.2] at hs ⊢
-  linarith
-
-private theorem motzkinSquareRoot_coeff_two :
-    PowerSeries.coeff 2 motzkinSquareRoot = -2 := by
-  have hs := congrArg (PowerSeries.coeff 2) motzkinSquareRoot_isSquareRoot.1
-  norm_num [PowerSeries.coeff_mul, Finset.antidiagonal, motzkinDiscriminant,
-    PowerSeries.coeff_X, PowerSeries.coeff_X_pow, motzkinSquareRoot_isSquareRoot.2,
-    motzkinSquareRoot_coeff_one] at hs ⊢
-  linarith
-
-private theorem motzkinSquareRoot_coeff_three :
-    PowerSeries.coeff 3 motzkinSquareRoot = -2 := by
-  have hs := congrArg (PowerSeries.coeff 3) motzkinSquareRoot_isSquareRoot.1
-  norm_num [PowerSeries.coeff_mul, Finset.antidiagonal, motzkinDiscriminant,
-    PowerSeries.coeff_X, PowerSeries.coeff_X_pow, motzkinSquareRoot_isSquareRoot.2,
-    motzkinSquareRoot_coeff_one, motzkinSquareRoot_coeff_two] at hs ⊢
-  linarith
-
-private theorem motzkinSquareRoot_coeff_four :
-    PowerSeries.coeff 4 motzkinSquareRoot = -4 := by
-  have hs := congrArg (PowerSeries.coeff 4) motzkinSquareRoot_isSquareRoot.1
-  norm_num [PowerSeries.coeff_mul, Finset.antidiagonal, motzkinDiscriminant,
-    PowerSeries.coeff_X, PowerSeries.coeff_X_pow, motzkinSquareRoot_isSquareRoot.2,
-    motzkinSquareRoot_coeff_one, motzkinSquareRoot_coeff_two,
-    motzkinSquareRoot_coeff_three] at hs ⊢
-  linarith
-
-private theorem motzkinG_coeff_zero : PowerSeries.coeff 0 motzkinG = 1 := by
-  simp [motzkinG, PowerSeries.coeff_zero_eq_constantCoeff_apply,
-    motzkinSquareRoot_isSquareRoot.2]
-
-private theorem motzkinG_coeff_one : PowerSeries.coeff 1 motzkinG = 1 := by
-  have hg := congrArg (PowerSeries.coeff 1) motzkinG_mul_motzkinSquareRoot
-  rw [PowerSeries.coeff_one_mul] at hg
-  have hg0 : PowerSeries.constantCoeff motzkinG = 1 := by
-    simpa [PowerSeries.coeff_zero_eq_constantCoeff_apply] using motzkinG_coeff_zero
-  norm_num [motzkinG_coeff_zero,
-    hg0, motzkinSquareRoot_isSquareRoot.2, motzkinSquareRoot_coeff_one] at hg ⊢
-  linarith
-
-private theorem motzkinG_coeff_two : PowerSeries.coeff 2 motzkinG = 3 := by
-  have hg := congrArg (PowerSeries.coeff 2) motzkinG_mul_motzkinSquareRoot
-  norm_num [PowerSeries.coeff_mul, Finset.antidiagonal, motzkinG_coeff_zero,
-    motzkinG_coeff_one, motzkinSquareRoot_isSquareRoot.2,
-    motzkinSquareRoot_coeff_one, motzkinSquareRoot_coeff_two] at hg ⊢
-  linarith
-
-private theorem motzkinG_coeff_three : PowerSeries.coeff 3 motzkinG = 7 := by
-  have hg := congrArg (PowerSeries.coeff 3) motzkinG_mul_motzkinSquareRoot
-  norm_num [PowerSeries.coeff_mul, Finset.antidiagonal, motzkinG_coeff_zero,
-    motzkinG_coeff_one, motzkinG_coeff_two, motzkinSquareRoot_isSquareRoot.2,
-    motzkinSquareRoot_coeff_one, motzkinSquareRoot_coeff_two,
-    motzkinSquareRoot_coeff_three] at hg ⊢
-  linarith
-
-private theorem motzkinH_coeff_zero : PowerSeries.coeff 0 motzkinH = 0 := by
-  norm_num [motzkinH, motzkinSquareRoot_coeff_one]
-
-private theorem motzkinH_coeff_one : PowerSeries.coeff 1 motzkinH = 1 := by
-  norm_num [motzkinH, PowerSeries.coeff_X, motzkinSquareRoot_coeff_two]
-
-private theorem motzkinH_coeff_two : PowerSeries.coeff 2 motzkinH = 1 := by
-  norm_num [motzkinH, PowerSeries.coeff_X, motzkinSquareRoot_coeff_three]
-
-private theorem motzkinH_coeff_three : PowerSeries.coeff 3 motzkinH = 2 := by
-  norm_num [motzkinH, PowerSeries.coeff_X, motzkinSquareRoot_coeff_four]
-
-/-- The first four rows of the canonical Motzkin triangle, matching OEIS A094531. -/
-theorem motzkinTriangle_initial_rows :
-    [[motzkinTriangle 0 0],
-      [motzkinTriangle 1 0, motzkinTriangle 1 1],
-      [motzkinTriangle 2 0, motzkinTriangle 2 1, motzkinTriangle 2 2],
-      [motzkinTriangle 3 0, motzkinTriangle 3 1,
-        motzkinTriangle 3 2, motzkinTriangle 3 3]] =
-    [[1], [1, 1], [3, 2, 1], [7, 6, 3, 1]] := by
-  norm_num [motzkinTriangle, motzkinRiordanPair, MotzkinRiordanPair.entry,
-    pow_succ, PowerSeries.coeff_mul, Finset.antidiagonal, motzkinG_coeff_zero,
-    motzkinG_coeff_one, motzkinG_coeff_two, motzkinG_coeff_three,
-    motzkinH_coeff_zero, motzkinH_coeff_one, motzkinH_coeff_two,
-    motzkinH_coeff_three]
-
 end MetaMathlibExt

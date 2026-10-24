@@ -1,14 +1,163 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.SylvesterInertia
-open MetaMathlibExt
 
+
+namespace MetaMathlibExt
+
+/--
+[sylvesterInertia_toQuadraticForm'_congr](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/SylvesterInertia.lean)
+-/
+@[path]
+private lemma sylvesterInertia_toQuadraticForm'_congr
+  {n : Type*} [Fintype n] [DecidableEq n] (A P : Matrix n n ℝ) (x : n → ℝ) :
+  (P.transpose * A * P).toQuadraticForm' x =
+    A.toQuadraticForm' (P.mulVec x) := by
+  simp only [Matrix.toQuadraticForm', LinearMap.BilinMap.toQuadraticMap_apply,
+    Matrix.toLinearMap₂'_apply']
+  rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec,
+    Matrix.vecMul_transpose]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[sylvesterInertia_congr_equivalent](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/SylvesterInertia.lean)
+-/
+@[path]
+private lemma sylvesterInertia_congr_equivalent
+  {n : Type*} [Fintype n] [DecidableEq n] (A P : Matrix n n ℝ)
+  (hP : IsUnit P.det) :
+  QuadraticMap.Equivalent (P.transpose * A * P).toQuadraticForm'
+    A.toQuadraticForm' := by
+  refine ⟨QuadraticMap.IsometryEquiv.mk
+    (Matrix.toLinearEquiv (Pi.basisFun ℝ n) P hP) ?_⟩
+  intro x
+  simpa [Matrix.toLinearEquiv_apply, Matrix.toLin_eq_toLin',
+    Matrix.toLin'_apply] using
+    (sylvesterInertia_toQuadraticForm'_congr A P x).symm
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[sylvesterInertia_spectral_comp](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/SylvesterInertia.lean)
+-/
+@[path]
+private lemma sylvesterInertia_spectral_comp
+  {n : Type*} [Fintype n] [DecidableEq n] {A : Matrix n n ℝ}
+  (hA : A.IsHermitian) :
+  A.toQuadraticForm'.comp (Matrix.UnitaryGroup.toLin' hA.eigenvectorUnitary) =
+    QuadraticMap.weightedSumSquares ℝ hA.eigenvalues := by
+  ext y
+  simp only [QuadraticMap.comp_apply, Matrix.UnitaryGroup.toLin',
+    Matrix.toLin'_apply, Matrix.toQuadraticForm',
+    LinearMap.BilinMap.toQuadraticMap_apply, Matrix.toLinearMap₂'_apply',
+    QuadraticMap.weightedSumSquares_apply, smul_eq_mul]
+  let U : Matrix n n ℝ := hA.eigenvectorUnitary
+  let d : n → ℝ := hA.eigenvalues
+  change U.mulVec y ⬝ᵥ A.mulVec (U.mulVec y) =
+    ∑ i, d i * (y i * y i)
+  have hspec : A = U * Matrix.diagonal d * U.transpose := by
+    simpa [U, d, Unitary.conjStarAlgAut_apply, Matrix.star_eq_conjTranspose,
+      Matrix.conjTranspose_apply, Function.comp_def] using hA.spectral_theorem
+  have hU : U.transpose * U = 1 := by
+    simpa [U, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply] using
+      Matrix.UnitaryGroup.star_mul_self hA.eigenvectorUnitary
+  rw [hspec,
+    ← Matrix.mulVec_mulVec (U.mulVec y) (U * Matrix.diagonal d) U.transpose,
+    Matrix.mulVec_mulVec y U.transpose U, hU, Matrix.one_mulVec,
+    ← Matrix.mulVec_mulVec y U (Matrix.diagonal d),
+    Matrix.dotProduct_mulVec, Matrix.vecMul_mulVec U U y, hU, Matrix.vecMul_one]
+  simp only [dotProduct, Matrix.mulVec_diagonal]
+  apply Finset.sum_congr rfl
+  intro i _
+  ring
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[sylvesterInertia_spectral_equivalent](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/SylvesterInertia.lean)
+-/
+@[path]
+private lemma sylvesterInertia_spectral_equivalent
+  {n : Type*} [Fintype n] [DecidableEq n] {A : Matrix n n ℝ}
+  (hA : A.IsHermitian) :
+  QuadraticMap.Equivalent A.toQuadraticForm'
+    (QuadraticMap.weightedSumSquares ℝ hA.eigenvalues) := by
+  rw [← sylvesterInertia_spectral_comp hA]
+  exact ⟨QuadraticMap.isometryEquivOfCompLinearEquiv A.toQuadraticForm'
+    (Matrix.UnitaryGroup.toLinearEquiv hA.eigenvectorUnitary)⟩
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[sylvesterInertia_ncard_setOf](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/SylvesterInertia.lean)
+-/
+@[path]
+private lemma sylvesterInertia_ncard_setOf
+  {n : Type*} [Fintype n] (p : n → Prop) [DecidablePred p] :
+  {i | p i}.ncard = (Finset.univ.filter p).card := by
+  simpa using (Set.ncard_coe_finset (Finset.univ.filter p))
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[sylvesterInertia_card_signs](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/SylvesterInertia.lean)
+-/
+@[path]
+private lemma sylvesterInertia_card_signs
+  {n : Type*} [Fintype n] (w : n → ℝ) :
+  (Finset.univ.filter (fun i => 0 < w i)).card +
+    (Finset.univ.filter (fun i => w i < 0)).card +
+    (Finset.univ.filter (fun i => w i = 0)).card =
+    Fintype.card n := by
+  classical
+  have hp := Finset.card_filter_add_card_filter_not
+    (s := Finset.univ) (fun i => 0 < w i)
+  have hn := Finset.card_filter_add_card_filter_not
+    (s := Finset.univ.filter (fun i => ¬ 0 < w i)) (fun i => w i < 0)
+  simp only [Finset.filter_filter, not_lt] at hp hn
+  have hneg :
+    Finset.univ.filter (fun i => w i ≤ 0 ∧ w i < 0) =
+      Finset.univ.filter (fun i => w i < 0) := by
+    ext i
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+    constructor
+    · exact And.right
+    · intro hi
+      exact ⟨hi.le, hi⟩
+  have hzero :
+    Finset.univ.filter (fun i => w i ≤ 0 ∧ 0 ≤ w i) =
+      Finset.univ.filter (fun i => w i = 0) := by
+    ext i
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+    constructor
+    · rintro ⟨hi, hi'⟩
+      exact le_antisymm hi hi'
+    · intro hi
+      rw [hi]
+      exact ⟨le_rfl, le_rfl⟩
+  rw [hneg, hzero] at hn
+  simp only [Finset.card_univ] at hp
+  omega
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [sylvester_law_of_inertia](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/SylvesterInertia.lean)
 -/
 @[path]
-private lemma sylvester_law_of_inertia_eq
+lemma sylvester_law_of_inertia
   [Fintype n] [DecidableEq n]
   {A B P : Matrix n n ℝ}
 -- given
@@ -24,7 +173,46 @@ private lemma sylvester_law_of_inertia_eq
     (Finset.univ.filter (fun i => hA.eigenvalues i = 0)).card =
     (Finset.univ.filter (fun i => hB.eigenvalues i = 0)).card := by
 -- proof
-  apply MetaMathlibExt.sylvester_law_of_inertia hA hB P hP hcong
+  have hBA : QuadraticMap.Equivalent B.toQuadraticForm' A.toQuadraticForm' := by
+    rw [hcong]
+    exact sylvesterInertia_congr_equivalent A P hP
+  have hPosA := QuadraticForm.sigPos_of_equiv_weightedSumSquares
+    (sylvesterInertia_spectral_equivalent hA)
+  have hPosB := QuadraticForm.sigPos_of_equiv_weightedSumSquares
+    (sylvesterInertia_spectral_equivalent hB)
+  have hNegA := QuadraticForm.sigNeg_of_equiv_weightedSumSquares
+    (sylvesterInertia_spectral_equivalent hA)
+  have hNegB := QuadraticForm.sigNeg_of_equiv_weightedSumSquares
+    (sylvesterInertia_spectral_equivalent hB)
+  have hPosSet :
+    {i | 0 < hA.eigenvalues i}.ncard =
+      {i | 0 < hB.eigenvalues i}.ncard := by
+    calc
+      _ = sigPos A.toQuadraticForm' := hPosA.symm
+      _ = sigPos B.toQuadraticForm' := hBA.sigPos_eq.symm
+      _ = _ := hPosB
+  have hNegSet :
+    {i | hA.eigenvalues i < 0}.ncard =
+      {i | hB.eigenvalues i < 0}.ncard := by
+    calc
+      _ = sigNeg A.toQuadraticForm' := hNegA.symm
+      _ = sigNeg B.toQuadraticForm' := hBA.sigNeg_eq.symm
+      _ = _ := hNegB
+  have hPos :
+    (Finset.univ.filter (fun i => 0 < hA.eigenvalues i)).card =
+      (Finset.univ.filter (fun i => 0 < hB.eigenvalues i)).card := by
+    rwa [← sylvesterInertia_ncard_setOf, ← sylvesterInertia_ncard_setOf]
+  have hNeg :
+    (Finset.univ.filter (fun i => hA.eigenvalues i < 0)).card =
+      (Finset.univ.filter (fun i => hB.eigenvalues i < 0)).card := by
+    rwa [← sylvesterInertia_ncard_setOf, ← sylvesterInertia_ncard_setOf]
+  refine ⟨hPos, hNeg, ?_⟩
+  have hTotalA := sylvesterInertia_card_signs hA.eigenvalues
+  have hTotalB := sylvesterInertia_card_signs hB.eigenvalues
+  omega
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

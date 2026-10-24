@@ -8,6 +8,7 @@ import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 import sympy.atlas.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
+import Lemma.Int.DiscreteValuationRing.MaximalIdealGradedPiece
 /-!
 # Residue-field quotients of a DVR extension by maximal-ideal powers
 
@@ -132,12 +133,6 @@ noncomputable def factorResidueFieldMaximalIdealPowQuotient (n : ℕ) :
     commutes' := fun r => by
       obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective r
       rfl }
-
-/-- The canonical factor map is surjective, by
-`Ideal.Quotient.factor_surjective`. -/
-theorem factorResidueFieldMaximalIdealPowQuotient_surjective (n : ℕ) :
-    Function.Surjective (factorResidueFieldMaximalIdealPowQuotient A B n) :=
-  Ideal.Quotient.factor_surjective (maximalIdealPowQuotientIdeal_le A B n)
 
 /-- The canonical factor map fixes quotient representatives, by
 `Ideal.Quotient.factor_mk`. -/
@@ -378,21 +373,3 @@ noncomputable def residueFieldLinearEquivMaximalIdealGradedPieceKerFactor
     rw [← sub_eq_zero, ← map_sub, Ideal.Quotient.eq_zero_iff_mem]
     exact Submodule.mem_sup_right hmem'
   exact LinearEquiv.ofBijective φ ⟨hinj, hsurj⟩
-
-/-- The kernel equivalence sends a graded representative to the corresponding
-quotient representative, by definition. -/
-@[simp]
-theorem residueFieldLinearEquivMaximalIdealGradedPieceKerFactor_mk (n : ℕ)
-    (hSucc : Ideal.map (algebraMap A B) (maximalIdeal A) ≤
-      maximalIdeal B ^ (n + 1))
-    [IsLocalHom (algebraMap A B)]
-    [Module (ResidueField A)
-      (IsDiscreteValuationRing.MaximalIdealGradedPiece B n)]
-    [IsScalarTower (ResidueField A) (ResidueField B)
-      (IsDiscreteValuationRing.MaximalIdealGradedPiece B n)]
-    (z : (maximalIdeal B ^ n : Ideal B)) :
-    ((residueFieldLinearEquivMaximalIdealGradedPieceKerFactor A B n hSucc
-        (Submodule.Quotient.mk z) :
-        ResidueFieldMaximalIdealPowQuotient A B (n + 1)) =
-      Ideal.Quotient.mk _ (z : B)) :=
-  rfl

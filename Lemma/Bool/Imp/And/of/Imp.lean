@@ -23,4 +23,4 @@ private lemma domain_defined
   fun hcp => h hcp.2
 
 
--- created on 2023-05-03
+-- created on 2023-04-13

@@ -24,7 +24,7 @@ private lemma main
       ℙ[π](x = «x.bvar» | y = «y.bvar») ≠ 0 := by
 -- proof
   have hmul := All_Eq_MulProbCond.of.PSpace_Joint hP
-  have := PSpace.of.PSpace_Joint.snd hP
+  have := SinglePSpace.of.SinglePSpace.snd hP
   have hzero : ∀ (a : α) (b : β),
       π.prob (x, y) (a, b) = 0 → π.condProb (x, y) (a, b) = 0 :=
     fun a b hz ↦ by

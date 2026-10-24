@@ -1,61 +1,49 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-variable {A : Type u} [CommRing A]
-private lemma exists_crt_coeff (S : Finset (Ideal A)) (hS : ∀ 𝔭 ∈ S, 𝔭.IsMaximal) (𝔭 : Ideal A) (h𝔭 : 𝔭 ∈ S) :
-    ∃ a : A, a - 1 ∈ 𝔭 ∧ ∀ 𝔮 ∈ S, 𝔮 ≠ 𝔭 → a ∈ 𝔮 := by
+
+universe u v
+
+private lemma exists_crt_coeff {A : Type u} [CommRing A] (S : Finset (Ideal A)) (hS : ∀ 𝔭 ∈ S, 𝔭.IsMaximal) (𝔭 : Ideal A) (h𝔭 : 𝔭 ∈ S) : ∃ a : A, a - 1 ∈ 𝔭 ∧ ∀ 𝔮 ∈ S, 𝔮 ≠ 𝔭 → a ∈ 𝔮 := by
   classical
   have htop : 𝔭 ⊔ ⨅ 𝔮 ∈ S.erase 𝔭, 𝔮 = ⊤ := by
     refine Ideal.sup_iInf_eq_top ?_
     intro 𝔮 h𝔮
     obtain ⟨hne, h𝔮S⟩ := Finset.mem_erase.mp h𝔮
     exact (hS 𝔭 h𝔭).coprime_of_ne (hS 𝔮 h𝔮S) (Ne.symm hne)
-  have h1 : (1 : A) ∈ 𝔭 ⊔ ⨅ 𝔮 ∈ S.erase 𝔭, 𝔮 := by rw [htop]; exact Submodule.mem_top
+  have h1 : (1 : A) ∈ 𝔭 ⊔ ⨅ 𝔮 ∈ S.erase 𝔭, 𝔮 := by
+    rw [htop]
+    refine Submodule.mem_top
   obtain ⟨x, hx, y, hy, hxy⟩ := Submodule.mem_sup.mp h1
   refine ⟨y, ?_, fun 𝔮 h𝔮 hne => ?_⟩
-  · have : y - 1 = -x := by rw [← hxy]; ring
-    rw [this]; exact 𝔭.neg_mem hx
-  · have hy' := (Submodule.mem_iInf _).mp hy 𝔮
-    exact (Submodule.mem_iInf _).mp hy' (Finset.mem_erase.mpr ⟨hne, h𝔮⟩)
-variable {P : Type v} [AddCommGroup P] [Module A P]
-private lemma exists_lift_basis_fibre (𝔭 : Ideal A) [𝔭.IsMaximal] [Module.Finite A P] (d : ℕ)
-    (hrank : Module.finrank (A ⧸ 𝔭) ((A ⧸ 𝔭) ⊗[A] P) = d) :
-    ∃ (e : Fin d → P) (b : Module.Basis (Fin d) (A ⧸ 𝔭) ((A ⧸ 𝔭) ⊗[A] P)),
-      ∀ i, b i = (1 : A ⧸ 𝔭) ⊗ₜ[A] e i := by
+  ·
+    have : y - 1 = -x := by
+      rw [← hxy]
+      ring
+    rw [this]
+    exact 𝔭.neg_mem hx
+  · refine (Submodule.mem_iInf _).mp ((Submodule.mem_iInf _).mp hy 𝔮) (Finset.mem_erase.mpr ⟨hne, h𝔮⟩)
+private lemma exists_lift_basis_fibre {A : Type u} [CommRing A] {P : Type v} [AddCommGroup P] [Module A P] (𝔭 : Ideal A) [𝔭.IsMaximal] [Module.Finite A P] (d : ℕ) (hrank : Module.finrank (A ⧸ 𝔭) ((A ⧸ 𝔭) ⊗[A] P) = d) : ∃ (e : Fin d → P) (b : Module.Basis (Fin d) (A ⧸ 𝔭) ((A ⧸ 𝔭) ⊗[A] P)), ∀ i, b i = (1 : A ⧸ 𝔭) ⊗ₜ[A] e i := by
   let _ : Field (A ⧸ 𝔭) := Ideal.Quotient.field 𝔭
   let b : Module.Basis (Fin d) (A ⧸ 𝔭) ((A ⧸ 𝔭) ⊗[A] P) := Module.finBasisOfFinrankEq _ _ hrank
   have hsurj : Function.Surjective (TensorProduct.mk A (A ⧸ 𝔭) P 1) :=
     TensorProduct.mk_surjective A P (A ⧸ 𝔭) Ideal.Quotient.mk_surjective
   choose e he using fun i => hsurj (b i)
   exact ⟨e, b, fun i => (he i).symm⟩
-private lemma mem_smul_top_of_tmul_eq_zero (𝔮 : Ideal A) (p : P) (h : (1 : A ⧸ 𝔮) ⊗ₜ[A] p = 0) :
-    p ∈ 𝔮 • (⊤ : Submodule A P) := by
+private lemma mem_smul_top_of_tmul_eq_zero {A : Type u} [CommRing A] {P : Type v} [AddCommGroup P] [Module A P] (𝔮 : Ideal A) (p : P) (h : (1 : A ⧸ 𝔮) ⊗ₜ[A] p = 0) : p ∈ 𝔮 • (⊤ : Submodule A P) := by
   have h2 : TensorProduct.quotTensorEquivQuotSMul P 𝔮 (Ideal.Quotient.mk 𝔮 1 ⊗ₜ[A] p) = 0 := by
     rw [map_one, h, map_zero]
   rw [TensorProduct.quotTensorEquivQuotSMul_mk_tmul, one_smul] at h2
   exact (Submodule.Quotient.mk_eq_zero _).mp h2
-private lemma smul_one_tmul (𝔮 : Ideal A) (a : A) (p : P) :
-    a • ((1 : A ⧸ 𝔮) ⊗ₜ[A] p) = (Ideal.Quotient.mk 𝔮 a) • ((1 : A ⧸ 𝔮) ⊗ₜ[A] p) := by
+private lemma smul_one_tmul {A : Type u} [CommRing A] {P : Type v} [AddCommGroup P] [Module A P] (𝔮 : Ideal A) (a : A) (p : P) : a • ((1 : A ⧸ 𝔮) ⊗ₜ[A] p) = (Ideal.Quotient.mk 𝔮 a) • ((1 : A ⧸ 𝔮) ⊗ₜ[A] p) := by
   rw [← IsScalarTower.algebraMap_smul (A ⧸ 𝔮) a, Ideal.Quotient.algebraMap_eq]
-private lemma exists_forall_not_mem_and_linearIndependent_and_smul_mem_span
-    [IsDomain A] [Module.Finite A P] (d : ℕ)
-    (S : Finset (Ideal A)) (hS : ∀ 𝔭 ∈ S, 𝔭.IsMaximal) (hSne : S.Nonempty)
-    (hrank : ∀ (K : Type u) [Field K] [Algebra A K], Module.finrank K (K ⊗[A] P) = d) :
-    ∃ (f : A) (e : Fin d → P), (∀ 𝔭 ∈ S, f ∉ 𝔭) ∧
-      (∀ c : Fin d → A, ∑ i, c i • e i = 0 → c = 0) ∧
-      (∀ p : P, ∃ c : Fin d → A, f • p = ∑ i, c i • e i) := by
+private lemma exists_forall_not_mem_and_linearIndependent_and_smul_mem_span {A : Type u} [CommRing A] [IsDomain A] {P : Type v} [AddCommGroup P] [Module A P] [Module.Finite A P] (d : ℕ) (S : Finset (Ideal A)) (hS : ∀ 𝔭 ∈ S, 𝔭.IsMaximal) (hSne : S.Nonempty) (hrank : ∀ (K : Type u) [Field K] [Algebra A K], Module.finrank K (K ⊗[A] P) = d) : ∃ (f : A) (e : Fin d → P), (∀ 𝔭 ∈ S, f ∉ 𝔭) ∧ (∀ c : Fin d → A, ∑ i, c i • e i = 0 → c = 0) ∧ (∀ p : P, ∃ c : Fin d → A, f • p = ∑ i, c i • e i) := by
   classical
-  have hb : ∀ 𝔭 : S, ∃ (e : Fin d → P)
-      (b : Module.Basis (Fin d) (A ⧸ (𝔭 : Ideal A)) ((A ⧸ (𝔭 : Ideal A)) ⊗[A] P)),
-      ∀ i, b i = (1 : A ⧸ (𝔭 : Ideal A)) ⊗ₜ[A] e i := fun 𝔭 => by
+  have hb : ∀ 𝔭 : S, ∃ (e : Fin d → P) (b : Module.Basis (Fin d) (A ⧸ (𝔭 : Ideal A)) ((A ⧸ (𝔭 : Ideal A)) ⊗[A] P)), ∀ i, b i = (1 : A ⧸ (𝔭 : Ideal A)) ⊗ₜ[A] e i := fun 𝔭 => by
     let _ := hS 𝔭 𝔭.2
     let _ : Field (A ⧸ (𝔭 : Ideal A)) := Ideal.Quotient.field _
     exact exists_lift_basis_fibre (𝔭 : Ideal A) d (hrank (A ⧸ (𝔭 : Ideal A)))
@@ -68,12 +56,14 @@ private lemma exists_forall_not_mem_and_linearIndependent_and_smul_mem_span
     intro 𝔮 i
     simp only [e, TensorProduct.tmul_sum, TensorProduct.tmul_smul]
     rw [Finset.sum_eq_single_of_mem 𝔮 (Finset.mem_univ _)]
-    · rw [smul_one_tmul, hb 𝔮 i]
+    ·
+      rw [smul_one_tmul, hb 𝔮 i]
       have h1 : Ideal.Quotient.mk (𝔮 : Ideal A) (a 𝔮) = 1 := by
         rw [← (Ideal.Quotient.mk (𝔮 : Ideal A)).map_one, Ideal.Quotient.eq]
-        exact ha1 𝔮
+        refine ha1 𝔮
       rw [h1, one_smul]
-    · intro 𝔭 _ hne
+    ·
+      intro 𝔭 _ hne
       have hmem : a 𝔭 ∈ (𝔮 : Ideal A) := ha0 𝔭 𝔮 𝔮.2 (fun h => hne (Subtype.ext h).symm)
       rw [smul_one_tmul, Ideal.Quotient.eq_zero_iff_mem.mpr hmem, zero_smul]
   let φ : (Fin d → A) →ₗ[A] P := Fintype.linearCombination A e
@@ -101,14 +91,17 @@ private lemma exists_forall_not_mem_and_linearIndependent_and_smul_mem_span
       simp only [Submodule.mkQ_apply]
       rw [(Submodule.Quotient.mk_eq_zero (LinearMap.range φ)).mpr hy, zero_add]
       refine Submodule.smul_induction_on hz (fun t ht n _ => ?_) (fun x y hx hy => ?_)
-      · rw [Submodule.Quotient.mk_smul]; exact Submodule.smul_mem_smul ht Submodule.mem_top
-      · rw [Submodule.Quotient.mk_add]; exact Submodule.add_mem _ hx hy
+      ·
+        rw [Submodule.Quotient.mk_smul]
+        refine Submodule.smul_mem_smul ht Submodule.mem_top
+      ·
+        rw [Submodule.Quotient.mk_add]
+        refine Submodule.add_mem _ hx hy
     obtain ⟨r, hr1, hr⟩ := Submodule.exists_sub_one_mem_and_smul_eq_zero_of_fg_of_le_smul (𝔮 : Ideal A)
       (⊤ : Submodule A (P ⧸ LinearMap.range φ)) Module.Finite.fg_top hM
     refine ⟨r, hr1, fun p => ?_⟩
     have h0 := hr (Submodule.Quotient.mk p) Submodule.mem_top
-    rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero] at h0
-    exact h0
+    rwa [← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero] at h0
   choose r hr1 hr using hkill
   let J : Ideal A := Module.annihilator A (P ⧸ LinearMap.range φ)
   have hrJ : ∀ 𝔮 : S, r 𝔮 ∈ J := by
@@ -117,16 +110,15 @@ private lemma exists_forall_not_mem_and_linearIndependent_and_smul_mem_span
     intro x
     obtain ⟨p, rfl⟩ := Submodule.mkQ_surjective (LinearMap.range φ) x
     rw [Submodule.mkQ_apply, ← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero]
-    exact hr 𝔮 p
+    refine hr 𝔮 p
   have hJ : ¬ ((J : Set A) ⊆ ⋃ 𝔮 ∈ (↑S : Set (Ideal A)), (𝔮 : Set A)) := by
     obtain ⟨𝔭₀, h𝔭₀⟩ := hSne
     rw [Ideal.subset_union_prime 𝔭₀ 𝔭₀ (fun 𝔮 h𝔮 _ _ => (hS 𝔮 h𝔮).isPrime)]
     rintro ⟨𝔮, h𝔮, hle⟩
     have h1 : r ⟨𝔮, h𝔮⟩ ∈ 𝔮 := hle (hrJ ⟨𝔮, h𝔮⟩)
-    have h2 : (1 : A) ∈ 𝔮 := by
-      have := 𝔮.sub_mem h1 (hr1 ⟨𝔮, h𝔮⟩)
-      rwa [sub_sub_cancel] at this
-    exact (hS 𝔮 h𝔮).ne_top ((Ideal.eq_top_iff_one _).mpr h2)
+    refine (hS 𝔮 h𝔮).ne_top ((Ideal.eq_top_iff_one _).mpr ?_)
+    have := 𝔮.sub_mem h1 (hr1 ⟨𝔮, h𝔮⟩)
+    rwa [sub_sub_cancel] at this
   obtain ⟨f, hfJ, hfS⟩ := Set.not_subset.mp hJ
   have hfS' : ∀ 𝔭 ∈ S, f ∉ 𝔭 := by
     intro 𝔭 h𝔭 hf
@@ -134,8 +126,7 @@ private lemma exists_forall_not_mem_and_linearIndependent_and_smul_mem_span
   have hf_range : ∀ p : P, f • p ∈ LinearMap.range φ := by
     intro p
     have h0 := Module.mem_annihilator.mp hfJ (Submodule.Quotient.mk p)
-    rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero] at h0
-    exact h0
+    rwa [← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero] at h0
   have hf0 : f ≠ 0 := by
     obtain ⟨𝔭₀, h𝔭₀⟩ := hSne
     intro h; exact hfS' 𝔭₀ h𝔭₀ (h ▸ 𝔭₀.zero_mem)
@@ -149,28 +140,28 @@ private lemma exists_forall_not_mem_and_linearIndependent_and_smul_mem_span
       have hgen : ∀ p : P, (1 : K) ⊗ₜ[A] p ∈ LinearMap.range φK := by
         intro p
         obtain ⟨c', hc'⟩ := LinearMap.mem_range.mp (hf_range p)
-        have hfu : IsUnit (algebraMap A K f) := IsUnit.mk0 _ (by
-          rwa [Ne, IsFractionRing.to_map_eq_zero_iff])
+        have hfu : IsUnit (algebraMap A K f) := IsUnit.mk0 _ (by rwa [Ne, IsFractionRing.to_map_eq_zero_iff])
         refine ⟨fun i => hfu.unit⁻¹.1 * algebraMap A K (c' i), ?_⟩
         rw [hφK]
         simp_rw [mul_smul, ← Finset.smul_sum, IsScalarTower.algebraMap_smul, ← TensorProduct.tmul_smul,
           ← TensorProduct.tmul_sum, ← hφ c', hc', TensorProduct.tmul_smul]
         rw [← IsScalarTower.algebraMap_smul K f, smul_smul, IsUnit.val_inv_mul, one_smul]
       intro x
-      induction x using TensorProduct.induction_on with
-      | zero => exact ⟨0, map_zero _⟩
-      | tmul k p =>
+      refine TensorProduct.inductionOn x ?_ ?_
+      ·
+        intro k p
         obtain ⟨c', hc'⟩ := hgen p
         refine ⟨k • c', ?_⟩
         rw [map_smul, hc', TensorProduct.smul_tmul', smul_eq_mul, mul_one]
-      | add x y hx hy =>
-        obtain ⟨cx, hcx⟩ := hx; obtain ⟨cy, hcy⟩ := hy
-        exact ⟨cx + cy, by rw [map_add, hcx, hcy]⟩
+      ·
+        intro x y hx hy
+        obtain ⟨cx, hcx⟩ := hx
+        obtain ⟨cy, hcy⟩ := hy
+        refine ⟨cx + cy, ?_⟩
+        rw [map_add, hcx, hcy]
     let _ : Module.Finite K (K ⊗[A] P) := Module.Finite.base_change A K P
     have hinjK : Function.Injective φK := by
-      have hdim : Module.finrank K (Fin d → K) = Module.finrank K (K ⊗[A] P) := by
-        rw [Module.finrank_fin_fun, hrank K]
-      exact (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim).mpr hsurjK
+      refine (LinearMap.injective_iff_surjective_of_finrank_eq_finrank (by rw [Module.finrank_fin_fun, hrank K])).mpr hsurjK
     have himg : φK (fun i => algebraMap A K (c i)) = 0 := by
       rw [hφK]
       simp_rw [IsScalarTower.algebraMap_smul, ← TensorProduct.tmul_smul, ← TensorProduct.tmul_sum, ← hφ c, hc,
@@ -179,24 +170,38 @@ private lemma exists_forall_not_mem_and_linearIndependent_and_smul_mem_span
     funext i
     have := congr_fun hzero i
     exact (IsFractionRing.injective A K) (by simpa using this)
-  exact ⟨f, e, hfS', fun c hc => hinj c (by rw [hφ]; exact hc), fun p => by
+  refine ⟨f, e, hfS', ?_, ?_⟩
+  ·
+    intro c hc
+    refine hinj c ?_
+    rwa [hφ]
+  ·
+    intro p
     obtain ⟨c, hc⟩ := LinearMap.mem_range.mp (hf_range p)
-    exact ⟨c, by rw [← hc, hφ]⟩⟩
+    refine ⟨c, ?_⟩
+    rw [← hc, hφ]
 /--
 [Module_exists_forall_notMem_and_linearIndependent_and_smul_mem_span_of_finrank_baseChange_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_exists_forall_notMem_and_linearIndependent_and_smul_mem_span_of_finrank_baseChange_eq.lean)
 -/
 @[path]
 private lemma main
-    {A : Type u} [CommRing A] [IsDomain A] {P : Type v} [AddCommGroup P] [Module A P] [Module.Finite A P]
-    (d : ℕ) (S : Finset (Ideal A)) (hS : ∀ 𝔭 ∈ S, 𝔭.IsMaximal) (hSne : S.Nonempty)
-    (hrank : ∀ (K : Type u) [Field K] [Algebra A K], Module.finrank K (TensorProduct A K P) = d) :
-    ∃ (f : A) (e : Fin d → P), (∀ 𝔭 ∈ S, f ∉ 𝔭) ∧ LinearIndependent A e ∧
-      ∀ p : P, f • p ∈ Submodule.span A (Set.range e) := by
-  obtain ⟨f, e, hf, hind, hspan⟩ :=
-    exists_forall_not_mem_and_linearIndependent_and_smul_mem_span (A := A) (P := P) d S hS hSne hrank
+  {A : Type u} [CommRing A] [IsDomain A]
+  {P : Type v} [AddCommGroup P] [Module A P] [Module.Finite A P]
+  (d : ℕ)
+  (S : Finset (Ideal A))
+  -- given
+  (hS : ∀ 𝔭 ∈ S, 𝔭.IsMaximal)
+  (hSne : S.Nonempty)
+  (hrank : ∀ (K : Type u) [Field K] [Algebra A K], Module.finrank K (TensorProduct A K P) = d) :
+  -- imply
+  ∃ (f : A) (e : Fin d → P), (∀ 𝔭 ∈ S, f ∉ 𝔭) ∧ LinearIndependent A e ∧
+    ∀ p : P, f • p ∈ Submodule.span A (Set.range e) := by
+  -- proof
+  obtain ⟨f, e, hf, hind, hspan⟩ := exists_forall_not_mem_and_linearIndependent_and_smul_mem_span (A := A) (P := P) d S hS hSne hrank
   refine ⟨f, e, hf, Fintype.linearIndependent_iff.mpr (fun c hc i => congr_fun (hind c hc) i), fun p => ?_⟩
   obtain ⟨c, hc⟩ := hspan p
   rw [hc]
-  exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span (Set.mem_range_self i))
+  refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span (Set.mem_range_self i))
+
 
 -- created on 2026-10-20

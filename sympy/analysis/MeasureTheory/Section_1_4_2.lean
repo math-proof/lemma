@@ -9,15 +9,18 @@ A companion to (the introduction to) Section 1.4.2 of the book "An introduction 
 
 /-- Definition 1.4.12 (Sigma algebra) -/
 class ConcreteSigmaAlgebra (X:Type*) extends ConcreteBooleanAlgebra X where
-  countable_union_mem : ∀ E : ℕ → Set X, (∀ n, measurable (E n)) → measurable (⋃ n, E n)
+  countable_union_mem : ∀ E : ℕ → Set X,
+    (∀ n, toConcreteBooleanAlgebra.measurable (E n)) → toConcreteBooleanAlgebra.measurable (⋃ n, E n)
 
-def ConcreteBooleanAlgebra.isSigmaAlgebra {X: Type*} (B: ConcreteBooleanAlgebra X) : Prop := ∀ E : ℕ → Set X, (∀ n, measurable (E n)) → measurable (⋃ n, E n)
+def ConcreteBooleanAlgebra.isSigmaAlgebra {X: Type*} (B: ConcreteBooleanAlgebra X) : Prop :=
+  ∀ E : ℕ → Set X, (∀ n, B.measurable (E n)) → B.measurable (⋃ n, E n)
 
 theorem ConcreteSigmaAlgebra.isSigmaAlgebra {X: Type*} (B: ConcreteSigmaAlgebra X) : B.isSigmaAlgebra :=
   B.countable_union_mem
 
 def ConcreteBooleanAlgebra.isSigmaAlgebra.toSigmaAlgebra {X: Type*} {B: ConcreteBooleanAlgebra X} (h: B.isSigmaAlgebra) : ConcreteSigmaAlgebra X :=
-  { countable_union_mem := h }
+  { toConcreteBooleanAlgebra := B
+    countable_union_mem := h }
 
 /-- Exercise 1.4.10 -/
 def ConcreteBooleanAlgebra.isAtomic.isSigmaAlgebra {X: Type*} {B: ConcreteBooleanAlgebra X} (h: B.isAtomic) : B.isSigmaAlgebra :=

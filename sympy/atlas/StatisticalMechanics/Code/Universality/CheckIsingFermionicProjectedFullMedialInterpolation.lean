@@ -1,0 +1,39 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicProjectedFullMedialInterpolation.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicProjectedFullMedialInterpolation
+
+#print axioms StatMech.Universality.isingProj_norm_le
+#print axioms StatMech.Universality.isingProj_dist_le_of_nearby_holder
+#print axioms StatMech.Universality.projectionCycle_crossParity_norm_sub_le
+#print axioms
+  StatMech.Universality.IsingSquareSHolomorphicQuad.projection_cycle
+#print axioms
+  StatMech.Universality.fkIsingSquareBoundaryRadialPatchFullObservable_even_projectionCycle
+#print axioms
+  StatMech.Universality.fkIsingSquareBoundaryRadialPatchFullObservable_odd_projectionCycle
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.StableFullMedialInterpolation.locallyUniformlySequentiallyPrecompact
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.StableFullMedialInterpolation.scalingLimit_of_compactBounds_and_moreraPrimitive
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.StableFullMedialInterpolation.projectedLiteralObservable_tendsto_on_compacts
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.BoundaryRadialTensorTentGeometry.projectedMedial
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.BoundaryRadialTensorTentGeometry.interpolant_continuous
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.MeshUniformFullHolder.equicontinuous
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.BoundaryRadialTensorTentGeometry.toStableFullMedialInterpolation
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.StableFullMedialInterpolation.hasCompactLocalBounds_of_holder_anchor
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.StableFullMedialInterpolation.scalingLimit_of_tensorTentGridHolder

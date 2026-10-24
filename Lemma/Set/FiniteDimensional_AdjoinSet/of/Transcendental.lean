@@ -43,7 +43,7 @@ private lemma finiteDimensional_adjoin_of_transcendental'
   set Kx := IntermediateField.adjoin K ({x} : Set F)
   let b := Module.finBasis Kx F
   let S : Set F := insert x (Set.range b)
-  let _ : Finite S := Set.Finite.insert x (Set.finite_range b) |>.to_subtype
+  let _ : Empty.Finite S := Set.Finite.insert x (Set.finite_range b) |>.to_subtype
   let hM : FiniteDimensional E (IntermediateField.adjoin E S) :=
     IntermediateField.finiteDimensional_adjoin fun y _ => (halg.isAlgebraic y).isIntegral
   have htop : IntermediateField.adjoin E S = ⊤ := by

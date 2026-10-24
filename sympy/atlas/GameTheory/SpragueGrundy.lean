@@ -81,12 +81,6 @@ noncomputable def Equiv (G H : ImpartialGame) : Prop :=
     IsP (gameSum G K) (G.start, K.start) ↔
       IsP (gameSum H K) (H.start, K.start)
 
-/-- A position is a P-position iff every move from it leads to a position that is not. -/
-theorem isP_iff (G : ImpartialGame) (p : G.Pos) :
-    IsP G p ↔ ∀ q (_ : q ∈ G.moves p), ¬ IsP G q := by
-  unfold IsP
-  rw [WellFounded.fix_eq]
-
 private theorem exists_not_mem (s : Finset ℕ) : ∃ n, n ∉ s := by
   refine ⟨s.sup id + 1, fun h => ?_⟩
   have hle : id (s.sup id + 1) ≤ s.sup id := Finset.le_sup (f := id) h
@@ -122,12 +116,6 @@ private theorem mex_range (n : ℕ) : mex (Finset.range n) = n := by
 private noncomputable def grundy (G : ImpartialGame) : G.Pos → ℕ :=
   (wfRel G).fix fun p ih =>
     mex ((G.moves p).attach.image (fun x => ih x.val x.property))
-
-private theorem grundy_eq (G : ImpartialGame) (p : G.Pos) :
-    grundy G p =
-      mex ((G.moves p).attach.image (fun x : { q // q ∈ G.moves p } => grundy G x.val)) := by
-  unfold grundy
-  rw [WellFounded.fix_eq]
 
 private theorem exists_move_with_grundy (G : ImpartialGame) (p : G.Pos) {m : ℕ}
     (h : m < grundy G p) :
@@ -213,62 +201,6 @@ private theorem nim_grundy_aux (n : ℕ) (v : ℕ) (k : Fin (n + 1)) (hk : k.val
 private theorem nim_grundy (n : ℕ) (k : Fin (n + 1)) :
     grundy (nimHeap n) k = k.val :=
   nim_grundy_aux n k.val k (Nat.le_refl _)
-
-private theorem xor_eq_zero_iff {x y : ℕ} : x ^^^ y = 0 ↔ x = y := by
-  constructor
-  · intro h
-    have h2 : (x ^^^ y) ^^^ y = (0 : ℕ) ^^^ y := by rw [h]
-    rw [Nat.xor_assoc, Nat.xor_self, Nat.xor_zero, Nat.zero_xor] at h2
-    exact h2
-  · intro h
-    rw [h, Nat.xor_self]
-
-private theorem sum_mem_left (G H : ImpartialGame) (a : G.Pos) (b : H.Pos)
-    (a' : G.Pos) (h : a' ∈ G.moves a) :
-    ((a', b) : (gameSum G H).Pos) ∈
-      (gameSum G H).moves ((a, b) : (gameSum G H).Pos) := by
-  let := G.eqDec
-  let := H.eqDec
-  change ((a', b) : G.Pos × H.Pos) ∈
-    (G.moves a).image (fun a_1 => (a_1, b)) ∪
-      (H.moves b).image (fun b_1 => (a, b_1))
-  apply Finset.mem_union.mpr
-  left
-  exact Finset.mem_image.mpr ⟨a', h, rfl⟩
-
-private theorem sum_mem_right (G H : ImpartialGame) (a : G.Pos) (b : H.Pos)
-    (b' : H.Pos) (h : b' ∈ H.moves b) :
-    ((a, b') : (gameSum G H).Pos) ∈
-      (gameSum G H).moves ((a, b) : (gameSum G H).Pos) := by
-  let := G.eqDec
-  let := H.eqDec
-  change ((a, b') : G.Pos × H.Pos) ∈
-    (G.moves a).image (fun a_1 => (a_1, b)) ∪
-      (H.moves b).image (fun b_1 => (a, b_1))
-  apply Finset.mem_union.mpr
-  right
-  exact Finset.mem_image.mpr ⟨b', h, rfl⟩
-
-private theorem sum_cases (G H : ImpartialGame) (a : G.Pos) (b : H.Pos)
-    (q : (gameSum G H).Pos)
-    (h : q ∈ (gameSum G H).moves ((a, b) : (gameSum G H).Pos)) :
-    (∃ a', ∃ _ : a' ∈ G.moves a, q = ((a', b) : (gameSum G H).Pos)) ∨
-      (∃ b', ∃ _ : b' ∈ H.moves b, q = ((a, b') : (gameSum G H).Pos)) := by
-  let := (gameSum G H).eqDec
-  have hdisj := Finset.mem_union.mp h
-  cases hdisj with
-  | inl hl =>
-    obtain ⟨a', ha', heq⟩ := Finset.mem_image.mp hl
-    exact Or.inl ⟨a', ha', heq.symm⟩
-  | inr hr =>
-    obtain ⟨b', hb', heq⟩ := Finset.mem_image.mp hr
-    exact Or.inr ⟨b', hb', heq.symm⟩
-
-private theorem IsP_sum_unfold (G H : ImpartialGame) (a : G.Pos) (b : H.Pos) :
-    IsP (gameSum G H) ((a, b) : (gameSum G H).Pos) ↔
-      ∀ q (_ : q ∈ (gameSum G H).moves ((a, b) : (gameSum G H).Pos)),
-        ¬ IsP (gameSum G H) q :=
-  isP_iff _ _
 
 private theorem isP_sum_iff_aux (G H : ImpartialGame) (t : ℕ) (a : G.Pos) (b : H.Pos)
     (hle : G.rank a + H.rank b ≤ t) :

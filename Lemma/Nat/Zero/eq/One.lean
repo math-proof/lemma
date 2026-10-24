@@ -13,7 +13,8 @@ private lemma main
 -- imply
   0++ = 1 :=
 -- proof
-  Chapter2.Nat.zero_succ
+  rfl
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

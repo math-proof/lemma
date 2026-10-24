@@ -1,0 +1,36 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexTransitionRetieExact.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexTransitionRetieExact
+
+open StatMech.FrontierD
+
+#print axioms fkMedialTogglePairingAt_comm
+#print axioms sixVertexRetieAtTransitionVertices_self
+#print axioms fkMedialBlackBoundaryPerm_retie_of_eq
+#print axioms fkMedialBlackBoundaryPerm_retie_of_ne
+#print axioms fkColoredStrandSlotBoundaryPerm_retie_of_eq
+#print axioms fkColoredStrandSlotBoundaryPerm_retie_of_ne
+#print axioms doubledAlignedFirstReturnPerm_sameCycle_falseBoundary
+#print axioms FKMedialTwoCutSplitScore
+#print axioms FKMedialLayeredTwoCutBalanced
+#print axioms fkMedialLayeredTwoCutBalanced_of_balance
+#print axioms intCast_fkMedialLoopCount_twoToggle_sub_eq_splitScore
+#print axioms fkMedialLayeredTwoCutBalanced_iff_loopCount_eq
+#print axioms fkMedialLoopCount_retie_add_retie_eq_of_transitionTopology
+#print axioms sixVertexDegreeTwoAlignedTargetPairing_of_proper
+#print axioms sixVertexDegreeTwoAlignedTargetPairing_recover_of_proper
+#print axioms sixVertexDegreeTwoAlignedTargetPairing_loopCount_eq_of_alternating
+#print axioms sixVertexDegreeTwoAlignedTargetPairing_totalLoopCount_eq_of_topology
+#print axioms doubledAlignedBoundarySegments_step_mem_iff_of_ne_cut_heads
+#print axioms doubledAlignedBoundarySegments_rightHead_transition
+#print axioms doubledAlignedBoundarySegments_leftHead_transition
+#print axioms canonicalDoubledAlignedCut_leftHead_eq_branchSwap_rightHead_of_vertex_eq
+#print axioms canonicalDoubledAlignedCut_coincident_oppositeSplits

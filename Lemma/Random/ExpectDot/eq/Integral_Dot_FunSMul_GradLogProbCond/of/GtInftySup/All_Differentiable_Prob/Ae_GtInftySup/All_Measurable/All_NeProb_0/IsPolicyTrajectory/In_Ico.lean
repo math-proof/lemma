@@ -4,7 +4,7 @@ import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.AeRealPreimageSS.ne.Zero
 import Lemma.Random.PSpace_Path.of.All_PSpace
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
+import Lemma.Random.SinglePSpace.of.Measurable
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open scoped ENNReal.ToRealCoe
@@ -46,12 +46,9 @@ private lemma main
     ‖∇[θ] (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t)) (by
-      show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-      rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS])
+    SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t))
   have : ∀ θ t, SinglePSpace (M θ) (s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t)
-      CountableMeasure.measure_eq_count
+    SinglePSpace.of.Measurable (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t)
   have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace fun t =>
       ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).aemeasurable⟩

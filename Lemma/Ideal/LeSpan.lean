@@ -12,22 +12,22 @@ universe u
 variable {X : (Scheme : Type (u + 1))} {ι : Type u}
 
 private noncomputable abbrev res {V W : X.Opens} (h : V ≤ W) : (X.presheaf.obj (op W)) →+* (X.presheaf.obj (op V)) := (X.presheaf.map (homOfLE h).op).hom
-private lemma res_res {V W Y : X.Opens} (h : V ≤ W) (h' : W ≤ Y) (s : (X.presheaf.obj (op Y))) : res h (res h' s) = res (h.trans h') s := by
+private lemma res_res {V W Y : X.Opens} (h : V ≤ W) (h' : W ≤ Y) (s : X.presheaf.obj (op Y)) : res h (res h' s) = res (h.trans h') s := by
   change (X.presheaf.map (homOfLE h').op ≫ X.presheaf.map (homOfLE h).op) s = _
   rw [← X.presheaf.map_comp]
   rfl
-private lemma res_self {V : X.Opens} (s : (X.presheaf.obj (op V))) : res (le_refl V) s = s := by
+private lemma res_self {V : X.Opens} (s : X.presheaf.obj (op V)) : res (le_refl V) s = s := by
   change (X.presheaf.map (homOfLE (le_refl V)).op) s = s
   have : (homOfLE (le_refl V)).op = 𝟙 _ := rfl
   rw [this, X.presheaf.map_id]
   rfl
 private lemma res_mem_span
-  {V W : X.Opens} (h : V ≤ W) {Y : X.Opens} (hW : W ≤ Y) (t : (X.presheaf.obj (op Y))) (s : (X.presheaf.obj (op W)))
+  {V W : X.Opens} (h : V ≤ W) {Y : X.Opens} (hW : W ≤ Y) (t : X.presheaf.obj (op Y)) (s : X.presheaf.obj (op W))
   (hs : s ∈ Ideal.span {res hW t}) : res h s ∈ Ideal.span {res (h.trans hW) t} := by
   rw [Ideal.mem_span_singleton'] at hs ⊢
   obtain ⟨a, rfl⟩ := hs
   exact ⟨res h a, by rw [map_mul, res_res]⟩
-private noncomputable def LocMem (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (W : X.Opens) (s : (X.presheaf.obj (op W))) (x : X) : Prop :=
+private noncomputable def LocMem (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (W : X.Opens) (s : X.presheaf.obj (op W)) (x : X) : Prop :=
   ∃ (V : X.affineOpens) (i : ι) (_ : x ∈ (V : X.Opens)) (hVW : (V : X.Opens) ≤ W) (hVU : (V : X.Opens) ≤ U i), res hVW s ∈ Ideal.span {res hVU (g i)}
 private lemma exists_affine_nhd (U : ι → X.affineOpens) (hU : ⨆ i, (U i : X.Opens) = ⊤) (W : X.Opens) (x : X) (hx : x ∈ W) :
   ∃ (V : X.affineOpens) (i : ι), x ∈ (V : X.Opens) ∧ (V : X.Opens) ≤ W ∧ (V : X.Opens) ≤ U i := by
@@ -49,7 +49,7 @@ private lemma LocMem.restrict
   rw [res_res] at hmem'
   rwa [← hcomp i j V'' (h1.trans hVU) (h2.trans hV'U)]
 private lemma mul_res_g_injective
-  (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (hg : ∀ (i : ι) (W : X.affineOpens) (h : (W : X.Opens) ≤ U i), res h (g i) ∈ nonZeroDivisors (X.presheaf.obj (op (W : X.Opens)))) (i : ι) (O : X.Opens) (hO : O ≤ U i) (c₁ c₂ : (X.presheaf.obj (op O)))
+  (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (hg : ∀ (i : ι) (W : X.affineOpens) (h : (W : X.Opens) ≤ U i), res h (g i) ∈ nonZeroDivisors (X.presheaf.obj (op (W : X.Opens)))) (i : ι) (O : X.Opens) (hO : O ≤ U i) (c₁ c₂ : X.presheaf.obj (op O))
   (h : c₁ * res hO (g i) = c₂ * res hO (g i)) : c₁ = c₂ := by
   let J := Subtype (fun V : X.affineOpens => (V : X.Opens) ≤ O)
   suffices hcov : O ≤ ⨆ j : J, (j.1 : X.Opens) by
@@ -63,7 +63,7 @@ private lemma mul_res_g_injective
   obtain ⟨_, ⟨V, hV, rfl⟩, hxV, hVO⟩ := X.isBasis_affineOpens.exists_subset_of_mem_open hx O.2
   apply Iff.mpr Opens.mem_iSup ⟨⟨⟨V, hV⟩, hVO⟩, hxV⟩
 private lemma mem_span_of_locMem
-  (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (hg : ∀ (i : ι) (W : X.affineOpens) (h : (W : X.Opens) ≤ U i), res h (g i) ∈ nonZeroDivisors (X.presheaf.obj (op (W : X.Opens)))) (hcomp : ∀ (i j : ι) (W : X.affineOpens) (hi : (W : X.Opens) ≤ U i) (hj : (W : X.Opens) ≤ U j), Ideal.span {res hi (g i)} = Ideal.span {res hj (g j)}) (W₀ : X.Opens) (s : (X.presheaf.obj (op W₀))) (i : ι) (V : X.affineOpens)
+  (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (hg : ∀ (i : ι) (W : X.affineOpens) (h : (W : X.Opens) ≤ U i), res h (g i) ∈ nonZeroDivisors X.presheaf.obj (op (W : X.Opens))) (hcomp : ∀ (i j : ι) (W : X.affineOpens) (hi : (W : X.Opens) ≤ U i) (hj : (W : X.Opens) ≤ U j), Ideal.span {res hi (g i)} = Ideal.span {res hj (g j)}) (W₀ : X.Opens) (s : X.presheaf.obj (op W₀)) (i : ι) (V : X.affineOpens)
   (hVW : (V : X.Opens) ≤ W₀) (hVU : (V : X.Opens) ≤ U i)
   (hloc : ∀ x ∈ (V : X.Opens), LocMem U g W₀ s x) :
   res hVW s ∈ Ideal.span {res hVU (g i)} := by
@@ -129,7 +129,7 @@ private noncomputable def glueIdeal (U : ι → X.affineOpens) (g : ∀ i, (X.pr
     rw [smul_eq_mul, map_mul]
     apply Ideal.mul_mem_left _ _ hmem
 private lemma mem_glueIdeal (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (hU : ⨆ i, (U i : X.Opens) = ⊤) (hcomp : ∀ (i j : ι) (W : X.affineOpens) (hi : (W : X.Opens) ≤ U i) (hj : (W : X.Opens) ≤ U j), Ideal.span {res hi (g i)} = Ideal.span {res hj (g j)}) {W : X.Opens} {s : (X.presheaf.obj (op W))} : s ∈ glueIdeal U g hU hcomp W ↔ ∀ x ∈ W, LocMem U g W s x := Iff.rfl
-private lemma glueIdeal_eq_span (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (hU : ⨆ i, (U i : X.Opens) = ⊤) (hg : ∀ (i : ι) (W : X.affineOpens) (h : (W : X.Opens) ≤ U i), res h (g i) ∈ nonZeroDivisors (X.presheaf.obj (op (W : X.Opens)))) (hcomp : ∀ (i j : ι) (W : X.affineOpens) (hi : (W : X.Opens) ≤ U i) (hj : (W : X.Opens) ≤ U j), Ideal.span {res hi (g i)} = Ideal.span {res hj (g j)}) (i : ι) (W : X.affineOpens) (h : (W : X.Opens) ≤ U i) :
+private lemma glueIdeal_eq_span (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (hU : ⨆ i, (U i : X.Opens) = ⊤) (hg : ∀ (i : ι) (W : X.affineOpens) (h : (W : X.Opens) ≤ U i), res h (g i) ∈ nonZeroDivisors X.presheaf.obj (op (W : X.Opens))) (hcomp : ∀ (i j : ι) (W : X.affineOpens) (hi : (W : X.Opens) ≤ U i) (hj : (W : X.Opens) ≤ U j), Ideal.span {res hi (g i)} = Ideal.span {res hj (g j)}) (i : ι) (W : X.affineOpens) (h : (W : X.Opens) ≤ U i) :
   glueIdeal U g hU hcomp W = Ideal.span {res h (g i)} := by
   apply le_antisymm
   ·
@@ -154,7 +154,7 @@ private lemma res_mem_glueIdeal (U : ι → X.affineOpens) (g : ∀ i, (X.preshe
   have := res_mem_span (V := V') h1 hVU (g i) _ hmem
   rw [res_res] at this
   rwa [res_res]
-private lemma map_glueIdeal_basicOpen (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (hU : ⨆ i, (U i : X.Opens) = ⊤) (hg : ∀ (i : ι) (W : X.affineOpens) (h : (W : X.Opens) ≤ U i), res h (g i) ∈ nonZeroDivisors (X.presheaf.obj (op (W : X.Opens)))) (hcomp : ∀ (i j : ι) (W : X.affineOpens) (hi : (W : X.Opens) ≤ U i) (hj : (W : X.Opens) ≤ U j), Ideal.span {res hi (g i)} = Ideal.span {res hj (g j)}) (W : X.affineOpens) (f : (X.presheaf.obj (op (W : X.Opens)))) :
+private lemma map_glueIdeal_basicOpen (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (hU : ⨆ i, (U i : X.Opens) = ⊤) (hg : ∀ (i : ι) (W : X.affineOpens) (h : (W : X.Opens) ≤ U i), res h (g i) ∈ nonZeroDivisors X.presheaf.obj (op (W : X.Opens))) (hcomp : ∀ (i j : ι) (W : X.affineOpens) (hi : (W : X.Opens) ≤ U i) (hj : (W : X.Opens) ≤ U j), Ideal.span {res hi (g i)} = Ideal.span {res hj (g j)}) (W : X.affineOpens) (f : X.presheaf.obj (op (W : X.Opens))) :
   Ideal.map (res (X.basicOpen_le f)) (glueIdeal U g hU hcomp W) = glueIdeal U g hU hcomp (X.affineBasicOpen f) := by
   classical
   apply le_antisymm
@@ -219,12 +219,12 @@ private lemma map_glueIdeal_basicOpen (U : ι → X.affineOpens) (g : ∀ i, (X.
         ring
       rw [this, map_mul]
       apply Ideal.mul_mem_left _ _ (hN x.1 x.2)
-    have hs' : s * algebraMap (X.presheaf.obj (op (W : X.Opens))) (X.presheaf.obj (op (X.basicOpen f))) (f ^ (m + Nmax)) =
-        algebraMap (X.presheaf.obj (op (W : X.Opens))) (X.presheaf.obj (op (X.basicOpen f))) (f ^ Nmax * a₀) := by
+    have hs' : s * algebraMap (X.presheaf.obj (op (W : X.Opens))) X.presheaf.obj (op (X.basicOpen f)) (f ^ (m + Nmax)) =
+        algebraMap (X.presheaf.obj (op (W : X.Opens))) X.presheaf.obj (op (X.basicOpen f)) (f ^ Nmax * a₀) := by
       rw [pow_add, map_mul, ← mul_assoc, ha₀, map_mul]
       ring
-    obtain ⟨u, hu⟩ := IsLocalization.map_units (X.presheaf.obj (op (X.basicOpen f))) (⟨f ^ (m + Nmax), _, rfl⟩ : Submonoid.powers f)
-    have hu' : (↑u : (X.presheaf.obj (op (X.basicOpen f)))) = algebraMap (X.presheaf.obj (op (W : X.Opens))) (X.presheaf.obj (op (X.basicOpen f))) (f ^ (m + Nmax)) := hu
+    obtain ⟨u, hu⟩ := IsLocalization.map_units X.presheaf.obj (op (X.basicOpen f)) (⟨f ^ (m + Nmax), _, rfl⟩ : Submonoid.powers f)
+    have hu' : (↑u : X.presheaf.obj (op (X.basicOpen f))) = algebraMap (X.presheaf.obj (op (W : X.Opens))) (X.presheaf.obj (op (X.basicOpen f))) (f ^ (m + Nmax)) := hu
     have : s = algebraMap (X.presheaf.obj (op (W : X.Opens))) (X.presheaf.obj (op (X.basicOpen f))) (f ^ Nmax * a₀) * ↑u⁻¹ := by
       rw [← hs', ← hu', mul_assoc, Units.mul_inv, mul_one]
     rw [this]
@@ -232,7 +232,7 @@ private lemma map_glueIdeal_basicOpen (U : ι → X.affineOpens) (g : ∀ i, (X.
 private noncomputable def glueIdealSheafData (U : ι → X.affineOpens) (g : ∀ i, (X.presheaf.obj (op (U i)))) (hU : ⨆ i, (U i : X.Opens) = ⊤) (hg : ∀ (i : ι) (W : X.affineOpens) (h : (W : X.Opens) ≤ U i), res h (g i) ∈ nonZeroDivisors (X.presheaf.obj (op (W : X.Opens)))) (hcomp : ∀ (i j : ι) (W : X.affineOpens) (hi : (W : X.Opens) ≤ U i) (hj : (W : X.Opens) ≤ U j), Ideal.span {res hi (g i)} = Ideal.span {res hj (g j)}) : X.IdealSheafData :=
   Scheme.IdealSheafData.mk (fun W => glueIdeal U g hU hcomp W) (fun W f => map_glueIdeal_basicOpen U g hU hg hcomp W f) _ rfl
 private lemma exists_affine_res_mem_span_of_germ
-  {W : X.Opens} (a b : (X.presheaf.obj (op W))) (x : X) (hx : x ∈ W)
+  {W : X.Opens} (a b : X.presheaf.obj (op W)) (x : X) (hx : x ∈ W)
   (h : ∃ u : X.presheaf.stalk x, X.presheaf.germ W x hx a = u * X.presheaf.germ W x hx b) :
   ∃ (V : X.affineOpens) (_ : x ∈ (V : X.Opens)) (hVW : (V : X.Opens) ≤ W), res hVW a ∈ Ideal.span {res hVW b} := by
   obtain ⟨u, hu⟩ := h
@@ -257,7 +257,7 @@ private lemma exists_affine_res_mem_span_of_germ
   rw [res_res]
   apply this.symm
 private lemma span_le_span_of_forall_germ
-  (W : X.affineOpens) (a b : (X.presheaf.obj (op (W : X.Opens))))
+  (W : X.affineOpens) (a b : X.presheaf.obj (op (W : X.Opens)))
   (hb : ∀ (V : X.affineOpens) (h : (V : X.Opens) ≤ W), res h b ∈ nonZeroDivisors (X.presheaf.obj (op (V : X.Opens))))
   (h : ∀ x (hx : x ∈ (W : X.Opens)), ∃ u : X.presheaf.stalk x, X.presheaf.germ W x hx a = u * X.presheaf.germ W x hx b) :
   Ideal.span {a} ≤ Ideal.span {b} := by
@@ -272,7 +272,7 @@ private lemma span_le_span_of_forall_germ
 -/
 @[path]
 private lemma main
-  {X : (Scheme : Type (u + 1))} (W : X.affineOpens) (a b : (X.presheaf.obj (op (W : X.Opens))))
+  {X : (Scheme : Type (u + 1))} (W : X.affineOpens) (a b : X.presheaf.obj (op (W : X.Opens)))
   (hb : ∀ (V : X.affineOpens) (h : (V : X.Opens) ≤ W), (X.presheaf.map (homOfLE h).op).hom b ∈ nonZeroDivisors (X.presheaf.obj (op (V : X.Opens))))
   (h : ∀ (x : ↥X) (hx : x ∈ (W : X.Opens)), ∃ u : X.presheaf.stalk x, (X.presheaf.germ (W : X.Opens) x hx).hom a = u * (X.presheaf.germ (W : X.Opens) x hx).hom b) :
   Ideal.span {a} ≤ Ideal.span {b} :=

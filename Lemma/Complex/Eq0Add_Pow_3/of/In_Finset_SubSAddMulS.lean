@@ -19,4 +19,4 @@ private lemma sub.given
   linear_combination h
 
 
--- created on 2018-11-20
+-- created on 2018-11-10

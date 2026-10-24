@@ -34,40 +34,6 @@ def morphIterate {A : Type*} (f : A → List A) : Nat → List A → List A
   | 0, w => w
   | n + 1, w => morphExtend f (morphIterate f n w)
 
-/-- The extended letter map preserves concatenation of finite words (concept
-`jis_sem_817d955b6393d48d72476d2d`, clause `word_morphism`; statements
-`jis_59581da9ed7395999b79fb6c`, `jis_686fde4820b8be0b1543930a`,
-`jis_83acfc0f995c923dbbbed9e5`, `jis_95467c21193bf40b4aae1281`,
-`jis_e5dacb15b7f36a3e2d33683c`, `jis_f0ae0eecd29e48e7e5a45717`). -/
-theorem morphExtend_append {A : Type*} (f : A → List A) (u v : List A) :
-    morphExtend f (u ++ v) = morphExtend f u ++ morphExtend f v := by
-  induction u with
-  | nil => rfl
-  | cons b bs hb =>
-    have e1 : morphExtend f ((b :: bs) ++ v)
-        = f b ++ morphExtend f (bs ++ v) := rfl
-    have e2 : morphExtend f (b :: bs)
-        = f b ++ morphExtend f bs := rfl
-    rw [e1, e2, hb, List.append_assoc]
-
-/-- Iterating a letter map whose images all have length `k` multiplies word length by `k`
-at each step. -/
-theorem morphIterate_length_of_uniform {A : Type*} {k : Nat} {f : A → List A}
-    (hlen : ∀ x, (f x).length = k) (n : Nat) (w : List A) :
-    (morphIterate f n w).length = k ^ n * w.length := by
-  have hext : ∀ v : List A, (morphExtend f v).length = k * v.length := by
-    intro v
-    induction v with
-    | nil => rfl
-    | cons x xs ih =>
-      change (f x ++ morphExtend f xs).length = _
-      rw [List.length_append, ih, hlen, List.length_cons, Nat.mul_succ, Nat.add_comm]
-  induction n with
-  | zero => simp [morphIterate]
-  | succ n ih =>
-    rw [morphIterate, hext, ih, Nat.pow_succ]
-    ac_rfl
-
 /-- A letter map is non-erasing when every letter image is a nonempty finite
 word (concept `jis_sem_817d955b6393d48d72476d2d`, clause `non_erasing`;
 statements `jis_59581da9ed7395999b79fb6c`, `jis_686fde4820b8be0b1543930a`,

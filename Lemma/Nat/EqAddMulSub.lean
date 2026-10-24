@@ -1,24 +1,24 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma helper_main {R : Type*} [CommRing R] (e : ℕ) (a : ℕ → R)
-    (h : ∀ k : ℕ, k + 1 < e → a k - 2 * a (k + 1) + a (k + 2) = 0) :
-    ∀ n : ℕ, n + 1 ≤ e →
-      a n = a 0 + (a 1 - a 0) * n ∧ a (n + 1) = a 0 + (a 1 - a 0) * (n + 1 : ℕ) := by
+
+private lemma helper_main
+  {R : Type*} [CommRing R] (e : ℕ) (a : ℕ → R)
+  (h : ∀ k : ℕ, k + 1 < e → a k - 2 * a (k + 1) + a (k + 2) = 0) :
+  ∀ n : ℕ, n + 1 ≤ e →
+    a n = a 0 + (a 1 - a 0) * n ∧ a (n + 1) = a 0 + (a 1 - a 0) * (n + 1 : ℕ) := by
   intro n
-  induction n with
-  | zero =>
+  induction n
+  ·
     intro _
-    constructor <;> simp
-  | succ n ih =>
+    constructor
+    · simp
+    · simp
+  ·
+    rename_i n ih
     intro hn
     obtain ⟨h1, h2⟩ := ih (by omega)
     refine ⟨h2, ?_⟩
@@ -30,12 +30,17 @@ private lemma helper_main {R : Type*} [CommRing R] (e : ℕ) (a : ℕ → R)
 -/
 @[path]
 private lemma main
-    {R : Type*} [CommRing R] (e : ℕ) (a : ℕ → R)
-    (h : ∀ k : ℕ, k + 1 < e → a k - 2 * a (k + 1) + a (k + 2) = 0)
-    (k : ℕ) (hk : k ≤ e) :
-    a k = a 0 + (a 1 - a 0) * k := by
-  rcases k with _ | n
+  [CommRing R] (e : ℕ) (a : ℕ → R)
+  (h : ∀ k : ℕ, k + 1 < e → a k - 2 * a (k + 1) + a (k + 2) = 0)
+  (k : ℕ) (hk : k ≤ e) :
+  -- imply
+  a k = a 0 + (a 1 - a 0) * k := by
+  -- proof
+  cases k
   · simp
-  · exact (helper_main e a h n hk).2
+  ·
+    rename_i n
+    refine (helper_main e a h n hk).2
+
 
 -- created on 2026-10-20

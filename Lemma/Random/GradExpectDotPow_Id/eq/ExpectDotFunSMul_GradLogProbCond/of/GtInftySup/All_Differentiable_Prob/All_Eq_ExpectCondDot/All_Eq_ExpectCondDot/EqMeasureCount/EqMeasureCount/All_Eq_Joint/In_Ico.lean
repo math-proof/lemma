@@ -44,8 +44,6 @@ lemma expect_smul_grad_eq_integral
     simp only [JointRandomSymbol, AsPathRV.path_process, Dot.dot, Function.hPow_apply, id_eq]
 
 
-
-
 /-- Path-binder finset Q-score Expect = observation integral. -/
 private lemma expect_finset_smul_gradLogProb_eq_integral
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
@@ -509,9 +507,7 @@ private lemma main
   (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)) (by
-      show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-      rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS])
+    SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t))
   have : PSpace (M θ) (AsPathRV.path (s)) :=
     PSpace_Path.of.All_PSpace (fun t ↦ ⟨(Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path (a)) :=

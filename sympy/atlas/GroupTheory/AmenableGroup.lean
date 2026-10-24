@@ -34,23 +34,6 @@ def IsAmenable (G : Type*) [Group G] : Prop :=
     ∃ F : Finset G, F.Nonempty ∧
       ∀ s ∈ K, (((s • F) ∆ F).card : ℝ) / (F.card : ℝ) < ε
 
-/-- Every finite group is amenable: the whole group `Finset.univ` is invariant under
-left translation, so it is a Følner set with symmetric-difference ratio `0`. -/
-theorem isAmenable_of_finite (G : Type*) [Group G] [Finite G] : IsAmenable G := by
-  letI := Fintype.ofFinite G
-  intro K ε hε
-  refine ⟨Finset.univ, ⟨1, Finset.mem_univ 1⟩, fun s _ => ?_⟩
-  rw [Finset.smul_finset_univ, symmDiff_self]
-  simpa using hε
-
-/-- Every trivial (subsingleton) group is amenable, witnessed by `F = {1}`. -/
-theorem isAmenable_of_subsingleton (G : Type*) [Group G] [Subsingleton G] :
-    IsAmenable G := by
-  intro K ε hε
-  refine ⟨{1}, Finset.singleton_nonempty 1, fun s _ => ?_⟩
-  rw [Finset.smul_finset_singleton, Subsingleton.elim (s • (1 : G)) 1, symmDiff_self]
-  simpa using hε
-
 /-- The symmetric group `S₃` is amenable (an ordinary finite example). -/
 example : IsAmenable (Equiv.Perm (Fin 3)) := isAmenable_of_finite _
 

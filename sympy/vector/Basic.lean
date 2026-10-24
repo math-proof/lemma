@@ -7,6 +7,7 @@ import Lemma.Nat.EqAddMulDiv
 import Lemma.List.LengthRange.eq.Length
 import Lemma.List.Prod.eq.MulProdS
 import sympy.core.power
+import sympy.core.function
 open Nat Lean
 open scoped BigOperators
 
@@ -194,6 +195,11 @@ noncomputable instance (priority := low) instDotNatArrowProcess
     Dot (ℕ → α) (ℕ → Ω → α) (Ω → α) where
   dot f x := fun ω ↦ f @ (fun k ↦ x k ω)
 
+/-- Path dot when the right factor is `Fun ℕ α` (`ℕ ⇀ α`), e.g. in `𝔼[r:…]((γ ^ id) @ r)`. -/
+noncomputable instance (priority := low) instDotNatFun
+    [TopologicalSpace α] [AddCommMonoid α] [Mul α] : Dot (ℕ → α) (Fun ℕ α) α where
+  dot f g := f @ g.toFun
+
 /-- Path-smul sum: `f @ g = ∑' t, f t • g t` (scalar sequence against a vector sequence).
 Lower priority than the Mul-based `(ℕ → α) @ (ℕ → α)` so scalar `@` stays unambiguous. -/
 noncomputable instance (priority := 50) instDotNatArrowSMul
@@ -206,6 +212,12 @@ noncomputable instance (priority := 50) instDotNatArrowSMulProcess
     {E : Type*} {Ω : Type*} [TopologicalSpace E] [AddCommMonoid E] [SMul ℝ E] :
     Dot (ℕ → ℝ) (ℕ → Ω → E) (Ω → E) where
   dot f x := fun ω ↦ f @ (fun t ↦ x t ω)
+
+/-- Path-smul when the right factor is `Fun ℕ E`. -/
+noncomputable instance (priority := 50) instDotNatFunSMul
+    {E : Type*} [TopologicalSpace E] [AddCommMonoid E] [SMul ℝ E] :
+    Dot (ℕ → ℝ) (Fun ℕ E) E where
+  dot f g := f @ g.toFun
 
 /-- Finite FinsetPow dot: `(γ ^ s) @ g = ∑ i ∈ s, γ^i * g i`. -/
 instance (priority := 100) instDotFinsetPow

@@ -13,4 +13,4 @@ private lemma main
   rw [← smul_sub, Matrix.mul_smul, Matrix.smul_mul]
 
 
--- created on 2023-04-30
+-- created on 2020-02-10

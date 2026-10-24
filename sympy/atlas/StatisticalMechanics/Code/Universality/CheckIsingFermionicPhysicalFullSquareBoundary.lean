@@ -1,0 +1,22 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPhysicalFullSquareBoundary.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareBoundary
+
+#print axioms StatMech.Universality.fkIsingSquareWired_terminalBond_rawTurnCount
+#print axioms StatMech.Universality.fkIsingSquareWired_terminalDart_increment
+#print axioms StatMech.Universality.FKIsingSquareFullIntegratedPrimitive.vertex_eq_of_common_face_increment_eq
+#print axioms StatMech.Universality.FKIsingSquareFullIntegratedPrimitive.face_eq_of_common_vertex_increment_eq
+#print axioms StatMech.Universality.FKIsingSquareFullIntegratedPrimitive.left_boundary_interior_increment_eq
+#print axioms StatMech.Universality.FKIsingSquareFullIntegratedPrimitive.wiredArc_vertex_step
+#print axioms StatMech.Universality.FKIsingSquareFullIntegratedPrimitive.vertex_fixedBoundary_eq_zero
+#print axioms StatMech.Universality.FKIsingSquareFullIntegratedPrimitive.vertex_fixedBoundary_nonneg
+#print axioms StatMech.Universality.FKIsingSquareFullIntegratedPrimitive.terminalAdjacentFace_fixedBoundary
+#print axioms StatMech.Universality.FKIsingSquareFullIntegratedPrimitive.terminalAdjacentFace_le_one

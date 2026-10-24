@@ -48,5 +48,5 @@ private lemma two
     rwa [ite_eq_right h₂]
 
 
--- created on 2018-06-26
+-- created on 2018-06-25
 -- updated on 2026-10-12

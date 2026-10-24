@@ -6,11 +6,13 @@ open Localization
 open IsUnramifiedIn
 
 
+namespace NumberField
+
 /--
 [isUnramifiedIn_mono](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
 -/
 @[path]
-private lemma isUnramifiedIn_mono_eq
+lemma isUnramifiedIn_mono
   [Field L] [NumberField L]
   {E F : IntermediateField ℚ L}
   {𝔭 : Ideal ℤ}
@@ -20,28 +22,29 @@ private lemma isUnramifiedIn_mono_eq
 -- imply
   Algebra.IsUnramifiedIn (𝓞 E) 𝔭 := by
 -- proof
-  apply NumberField.isUnramifiedIn_mono E F hEF 𝔭 hF
+  let _alg : Algebra E F := (IntermediateField.inclusion hEF).toAlgebra
+  intro P hP hPE
+  obtain ⟨Q, _, hQprime, hQP⟩ :=
+    Ideal.exists_ideal_over_prime_of_isIntegral (S := 𝓞 F) P ⊥
+      (Ideal.comap_bot_le_of_injective _
+        (NumberField.RingOfIntegers.algebraMap.injective E F))
+  have hQP' : Q.LiesOver P := ⟨hQP.symm⟩
+  have hQp : Q.LiesOver 𝔭 := ⟨by rw [hPE.over, hQP'.over, Ideal.under_under]⟩
+  have hQ : Algebra.IsUnramifiedAt ℤ Q := hF Q hQprime hQp
+  let _ : Q.IsPrime := hQprime
+  let _ : Q.LiesOver P := hQP'
+  let _ : Algebra.IsUnramifiedAt ℤ Q := hQ
+  exact Algebra.IsUnramifiedAt.of_liesOver ℤ P Q
 
-/--
-[IsUnramifiedIn.etale_localization](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
--/
-@[path]
-private lemma IsUnramifiedIn_etale_localization_eq
-  [Field L] [NumberField L] [Field K] [NumberField K]
-  {p : Ideal ℤ} [p.IsPrime]
--- given
-  (h : Algebra.IsUnramifiedIn (𝓞 K) p) :
--- imply
-  Algebra.Etale (Localization.AtPrime p)
-    (Localization (Algebra.algebraMapSubmonoid (𝓞 K) p.primeCompl)) := by
--- proof
-  apply NumberField.IsUnramifiedIn.etale_localization p h
+end NumberField
+
+namespace Localization
 
 /--
 [semilocalizationToAtPrime_mk'_eq_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
 -/
 @[path]
-private lemma semilocalizationToAtPrime_mk'_eq_iff_eq
+lemma semilocalizationToAtPrime_mk'_eq_iff
   [CommRing R] [CommRing S] [CommRing T] [Algebra R S] [Algebra S T] [Algebra R T] [IsScalarTower R S T]
   {p : Ideal R} [p.IsPrime]
   {Q : Ideal T} [Q.IsPrime] [Q.LiesOver p]
@@ -55,13 +58,24 @@ private lemma semilocalizationToAtPrime_mk'_eq_iff_eq
     algebraMap S (Localization.AtPrime Q) x =
     algebraMap S (Localization.AtPrime Q) y * z := by
 -- proof
-  apply Localization.semilocalizationToAtPrime_mk'_eq_iff p Q x y z
+  rw [semilocalizationToAtPrime, IsLocalization.liftAlgHom_apply,
+    IsLocalization.lift_mk'_spec]
+  change algebraMap S (Localization.AtPrime Q) x =
+    algebraMap S (Localization.AtPrime Q) y * z ↔ _
+  rfl
+end Localization
+namespace NumberField
+variable {L : Type*} [Field L] [NumberField L]
+namespace IsUnramifiedIn
+
+
+namespace NumberField.IsUnramifiedIn
 
 /--
 [normalizedTensorToCompositumAtPrime_equiv_tmul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
 -/
 @[path]
-private lemma normalizedTensorToCompositumAtPrime_equiv_tmul_eq
+lemma normalizedTensorToCompositumAtPrime_equiv_tmul
   [Field L] [NumberField L]
   {E F : IntermediateField ℚ L}
   {p : Ideal ℤ} [p.IsPrime]
@@ -73,13 +87,19 @@ private lemma normalizedTensorToCompositumAtPrime_equiv_tmul_eq
 -- imply
   let R := by
 -- proof
-  apply NumberField.IsUnramifiedIn.normalizedTensorToCompositumAtPrime_equiv_tmul E F p h Q x y
+  dsimp
+  simp [normalizedTensorToCompositumAtPrime]
+  congr 1
+
+end NumberField.IsUnramifiedIn
+
+namespace NumberField.IsUnramifiedIn
 
 /--
 [normalizedTensorToCompositumAtPrime_ker_isPrime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
 -/
 @[path]
-private lemma normalizedTensorToCompositumAtPrime_ker_isPrime_eq
+lemma normalizedTensorToCompositumAtPrime_ker_isPrime
   [Field L] [NumberField L]
   {E F : IntermediateField ℚ L}
   {p : Ideal ℤ} [p.IsPrime]
@@ -89,29 +109,18 @@ private lemma normalizedTensorToCompositumAtPrime_ker_isPrime_eq
 -- imply
   let R := by
 -- proof
-  apply NumberField.IsUnramifiedIn.normalizedTensorToCompositumAtPrime_ker_isPrime E F p h Q
+  dsimp
+  exact RingHom.ker_isPrime _
 
-/--
-[normalizedTensorCompositumPrime_isPrime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
--/
-@[path]
-private lemma normalizedTensorCompositumPrime_isPrime_eq
-  [Field L] [NumberField L]
-  {E F : IntermediateField ℚ L}
-  {p : Ideal ℤ} [p.IsPrime]
-  {Q : Ideal (𝓞 (E ⊔ F : IntermediateField ℚ L))} [Q.IsPrime] [Q.LiesOver p]
--- given
-  (h : Algebra.IsUnramifiedIn (𝓞 F) p) :
--- imply
-  (normalizedTensorCompositumPrime E F p h Q).IsPrime := by
--- proof
-  apply NumberField.IsUnramifiedIn.normalizedTensorCompositumPrime_isPrime E F p h Q
+end NumberField.IsUnramifiedIn
+
+namespace NumberField.IsUnramifiedIn
 
 /--
 [normalizedTensorCompositumPrime_mem_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
 -/
 @[path]
-private lemma normalizedTensorCompositumPrime_mem_iff_eq
+lemma normalizedTensorCompositumPrime_mem_iff
   [Field L] [NumberField L]
   {E F : IntermediateField ℚ L}
   {p : Ideal ℤ} [p.IsPrime]
@@ -124,13 +133,18 @@ private lemma normalizedTensorCompositumPrime_mem_iff_eq
     normalizedTensorToCompositumAtPrime E F p h Q x ∈
     IsLocalRing.maximalIdeal (Localization.AtPrime Q) := by
 -- proof
-  apply NumberField.IsUnramifiedIn.normalizedTensorCompositumPrime_mem_iff E F p h Q x
+  unfold normalizedTensorCompositumPrime
+  rfl
+
+end NumberField.IsUnramifiedIn
+
+namespace NumberField.IsUnramifiedIn
 
 /--
 [normalizedTensorToCompositumAtPrime_ker_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
 -/
 @[path]
-private lemma normalizedTensorToCompositumAtPrime_ker_le_eq
+lemma normalizedTensorToCompositumAtPrime_ker_le
   [Field L] [NumberField L]
   {E F : IntermediateField ℚ L}
   {p : Ideal ℤ} [p.IsPrime]
@@ -140,13 +154,18 @@ private lemma normalizedTensorToCompositumAtPrime_ker_le_eq
 -- imply
   let R := by
 -- proof
-  apply NumberField.IsUnramifiedIn.normalizedTensorToCompositumAtPrime_ker_le E F p h Q
+  unfold normalizedTensorCompositumPrime
+  exact Ideal.ker_le_comap _
+
+end NumberField.IsUnramifiedIn
+
+namespace NumberField.IsUnramifiedIn
 
 /--
 [normalizedTensorLocalizationToCompositumAtPrime_algebraMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
 -/
 @[path]
-private lemma normalizedTensorLocalizationToCompositumAtPrime_algebraMap_eq
+lemma normalizedTensorLocalizationToCompositumAtPrime_algebraMap
   [Field L] [NumberField L]
   {E F : IntermediateField ℚ L}
   {p : Ideal ℤ} [p.IsPrime]
@@ -159,13 +178,19 @@ private lemma normalizedTensorLocalizationToCompositumAtPrime_algebraMap_eq
     (algebraMap _ _ x) =
     normalizedTensorToCompositumAtPrime E F p h Q x := by
 -- proof
-  apply NumberField.IsUnramifiedIn.normalizedTensorLocalizationToCompositumAtPrime_algebraMap E F p h Q x
+  unfold normalizedTensorLocalizationToCompositumAtPrime
+  rw [IsLocalization.lift_eq]
+  rfl
+
+end NumberField.IsUnramifiedIn
+
+namespace NumberField.IsUnramifiedIn
 
 /--
 [normalizedTensorLocalizationToCompositumAtPrime_mk'_spec](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
 -/
 @[path]
-private lemma normalizedTensorLocalizationToCompositumAtPrime_mk'_spec_eq
+lemma normalizedTensorLocalizationToCompositumAtPrime_mk'_spec
   [Field L] [NumberField L]
   {E F : IntermediateField ℚ L}
   {p : Ideal ℤ} [p.IsPrime]
@@ -183,7 +208,43 @@ private lemma normalizedTensorLocalizationToCompositumAtPrime_mk'_spec_eq
     normalizedTensorToCompositumAtPrime E F p h Q x =
     normalizedTensorToCompositumAtPrime E F p h Q ↑y * v := by
 -- proof
-  apply NumberField.IsUnramifiedIn.normalizedTensorLocalizationToCompositumAtPrime_mk'_spec E F p h Q x y v
+  unfold normalizedTensorLocalizationToCompositumAtPrime
+  rwa [IsLocalization.lift_mk'_spec]
+end IsUnramifiedIn
+end NumberField
+
+
+/--
+[IsUnramifiedIn.etale_localization](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
+-/
+@[path]
+private lemma IsUnramifiedIn_etale_localization_eq
+  [Field L] [NumberField L] [Field K] [NumberField K]
+  {p : Ideal ℤ} [p.IsPrime]
+-- given
+  (h : Algebra.IsUnramifiedIn (𝓞 K) p) :
+-- imply
+  Algebra.Etale (Localization.AtPrime p)
+    (Localization (Algebra.algebraMapSubmonoid (𝓞 K) p.primeCompl)) := by
+-- proof
+  apply NumberField.IsUnramifiedIn.etale_localization p h
+
+/--
+[normalizedTensorCompositumPrime_isPrime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean)
+-/
+@[path]
+private lemma normalizedTensorCompositumPrime_isPrime_eq
+  [Field L] [NumberField L]
+  {E F : IntermediateField ℚ L}
+  {p : Ideal ℤ} [p.IsPrime]
+  {Q : Ideal (𝓞 (E ⊔ F : IntermediateField ℚ L))} [Q.IsPrime] [Q.LiesOver p]
+-- given
+  (h : Algebra.IsUnramifiedIn (𝓞 F) p) :
+-- imply
+  (normalizedTensorCompositumPrime E F p h Q).IsPrime := by
+-- proof
+  apply NumberField.IsUnramifiedIn.normalizedTensorCompositumPrime_isPrime E F p h Q
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

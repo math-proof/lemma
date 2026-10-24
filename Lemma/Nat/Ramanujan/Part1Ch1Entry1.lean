@@ -1,15 +1,15 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch1Entry1
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch1
-open Entry1Magicsquare3
 
+
+namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch1.Entry1Magicsquare3
 
 /--
 [ramanujan_part1_ch1_entry1_magicsquare3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch1Entry1.lean)
 -/
 @[path]
-private lemma ramanujan_part1_ch1_entry1_magicsquare3_eq
+lemma ramanujan_part1_ch1_entry1_magicsquare3
   {n : ℕ}
   {a b : Fin n → ℕ}
   {L R : Fin n → Fin n → Fin n}
@@ -32,7 +32,16 @@ private lemma ramanujan_part1_ch1_entry1_magicsquare3_eq
     ∧ ((∑ i : Fin n,
     (a (L i ⟨n - 1 - i.val, by omega⟩) + b (R i ⟨n - 1 - i.val, by omega⟩))) = S) := by
 -- proof
-  apply MathlibExt.NumberTheory.Ramanujan.Part1Ch1.Entry1Magicsquare3.ramanujan_part1_ch1_entry1_magicsquare3 hn a b L R hL_row hL_col hL_diag hL_anti hR_row hR_col hR_diag hR_anti hPair
+  refine ⟨(∑ k : Fin n, a k) + (∑ k : Fin n, b k), ?_, ?_, ?_, ?_⟩
+  · intro i
+    simp only [Finset.sum_add_distrib, (hL_row i).sum_comp a, (hR_row i).sum_comp b]
+  · intro j
+    simp only [Finset.sum_add_distrib, (hL_col j).sum_comp a, (hR_col j).sum_comp b]
+  · simp only [Finset.sum_add_distrib, hL_diag.sum_comp a, hR_diag.sum_comp b]
+  · simp only [Finset.sum_add_distrib, hL_anti.sum_comp a, hR_anti.sum_comp b]
+
+end MathlibExt.NumberTheory.Ramanujan.Part1Ch1.Entry1Magicsquare3
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -11,7 +11,7 @@ import Lemma.Nat.LeSub.is.Le_Add
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Nat.Sub.ge.One.of.Gt
 import Lemma.Nat.LtSub
-open List Nat
+open List Nat Matrix
 
 
 @[path]

@@ -28,7 +28,7 @@ private lemma main
 -- proof
   intro hPyy
   have hxym : AEMeasurable (x, y) π := hP.aemeasurable
-  have hym : AEMeasurable y π := (PSpace.of.PSpace_Joint.snd hP).aemeasurable
+  have hym : AEMeasurable y π := (SinglePSpace.of.SinglePSpace.snd hP).aemeasurable
   have hyym : AEMeasurable (y, y) π :=
     (measurable_id.prodMk measurable_id).comp_aemeasurable hym
   have hxyym : AEMeasurable (x, (y, y)) π :=

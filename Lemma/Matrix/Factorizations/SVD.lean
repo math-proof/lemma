@@ -1,22 +1,185 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.Factorizations.SVD
-open Matrix
 open scoped ComplexOrder
 
+
+namespace Matrix
+
+variable [Fintype n] [DecidableEq n]
+/--
+[aux_star_mulVec_dotProduct](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Factorizations/SVD.lean)
+-/
+@[path]
+omit [DecidableEq n] in
+same as pairing one vector against the `(Aᴴ * A)`-image of the other. -/
+private lemma aux_star_mulVec_dotProduct (A : Matrix n n ℂ) (a b : n → ℂ) :
+  star (A *ᵥ a) ⬝ᵥ (A *ᵥ b) = star a ⬝ᵥ ((Aᴴ * A) *ᵥ b) := by
+  rw [star_mulVec, dotProduct_mulVec, vecMul_vecMul, ← dotProduct_mulVec]
+
+end Matrix
+
+namespace Matrix
+
+variable [Fintype n] [DecidableEq n]
+/--
+[aux_bridge_star_dotProduct](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Factorizations/SVD.lean)
+-/
+@[path]
+private lemma aux_bridge_star_dotProduct (A : Matrix n n ℂ) (hB : (Aᴴ * A).IsHermitian)
+  (i j : n) :
+  star (hB.eigenvectorBasis i).ofLp ⬝ᵥ (hB.eigenvectorBasis j).ofLp
+    = (if i = j then (1 : ℂ) else 0) := by
+  have h := orthonormal_iff_ite.mp hB.eigenvectorBasis.orthonormal i j
+  rwa [EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm] at h
+
+end Matrix
+
+namespace Matrix
+
+variable [Fintype n] [DecidableEq n]
+/--
+[aux_inner_toLp_mulVec](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Factorizations/SVD.lean)
+-/
+@[path]
+private lemma aux_inner_toLp_mulVec (A : Matrix n n ℂ) (hB : (Aᴴ * A).IsHermitian)
+  (i j : n) :
+  inner ℂ (WithLp.toLp 2 (A *ᵥ (hB.eigenvectorBasis i).ofLp))
+    (WithLp.toLp 2 (A *ᵥ (hB.eigenvectorBasis j).ofLp))
+    = ((hB.eigenvalues j : ℂ)) * (if i = j then (1 : ℂ) else 0) := by
+  have hconv : ∀ (r : ℝ) (z : ℂ), r • z = (r : ℂ) * z := fun r z => by simp
+  rw [EuclideanSpace.inner_toLp_toLp, dotProduct_comm, aux_star_mulVec_dotProduct,
+    hB.mulVec_eigenvectorBasis j, dotProduct_smul,
+    aux_bridge_star_dotProduct A hB i j, hconv _ _]
+
+end Matrix
+
+namespace Matrix
 
 /--
 [exists_unitaryGroup_diagonal_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Factorizations/SVD.lean)
 -/
 @[path]
-private lemma exists_unitaryGroup_diagonal_nonneg_eq
+lemma exists_unitaryGroup_diagonal_nonneg
   [Fintype n] [DecidableEq n]
   {A : Matrix n n ℂ} :
 -- imply
   ∃ (U V : Matrix.unitaryGroup n ℂ) (σ : n → ℝ), (∀ i, 0 ≤ σ i) ∧
     A = (U : Matrix n n ℂ) * diagonal (fun i => (σ i : ℂ)) * star (V : Matrix n n ℂ) := by
 -- proof
-  apply Matrix.exists_unitaryGroup_diagonal_nonneg A
+  have hBherm : (Aᴴ * A).IsHermitian := isHermitian_conjTranspose_mul_self A
+  -- Singular values: square roots of the (nonnegative) eigenvalues of `Aᴴ * A`.
+  set σ : n → ℝ := fun j => Real.sqrt (hBherm.eigenvalues j) with hσdef
+  have hlam_nonneg : ∀ j, 0 ≤ hBherm.eigenvalues j :=
+    fun j => Matrix.eigenvalues_conjTranspose_mul_self_nonneg A j
+  have hσ_nonneg : ∀ j, 0 ≤ σ j := by
+    intro j
+    simp only [hσdef]
+    exact Real.sqrt_nonneg _
+  have hσ_sq : ∀ j, σ j ^ 2 = hBherm.eigenvalues j := by
+    intro j
+    simp only [hσdef]
+    exact Real.sq_sqrt (hlam_nonneg j)
+  have heig_eq : ∀ j, ((hBherm.eigenvalues j : ℂ)) = ((σ j : ℂ)) ^ 2 := by
+    intro j
+    rw [← hσ_sq j, Complex.ofReal_pow]
+  -- Unnormalized left singular vectors, as elements of Euclidean space.
+  set w : n → EuclideanSpace ℂ n := fun j =>
+    ((σ j : ℂ))⁻¹ • WithLp.toLp 2 (A *ᵥ (hBherm.eigenvectorBasis j).ofLp) with hw_def
+  have hw_ofLp : ∀ j,
+    (w j).ofLp = ((σ j : ℂ))⁻¹ • (A *ᵥ (hBherm.eigenvectorBasis j).ofLp) := by
+    intro j
+    ext k
+    simp only [hw_def, PiLp.smul_apply, Pi.smul_apply]
+  have hw_inner : ∀ i j : n, inner ℂ (w i) (w j)
+    = (starRingEnd ℂ) ((σ i : ℂ))⁻¹
+      * ((((σ j : ℂ))⁻¹ * ((hBherm.eigenvalues j : ℂ) * (if i = j then (1 : ℂ) else 0)))) := by
+    intro i j
+    have e := aux_inner_toLp_mulVec A hBherm i j
+    simp only [hw_def]
+    rw [inner_smul_left, inner_smul_right, e]
+  have hci : ∀ k : n, (starRingEnd ℂ) ((σ k : ℂ))⁻¹ = ((σ k : ℂ))⁻¹ := by
+    intro k
+    simp
+  -- The `w j` with `σ j ≠ 0` form an orthonormal family.
+  have horth : Orthonormal ℂ ((({j | σ j ≠ 0} : Set n)).domRestrict w) := by
+    rw [orthonormal_iff_ite]
+    intro xi yj
+    obtain ⟨i, hi⟩ := xi
+    obtain ⟨j, hj⟩ := yj
+    have hi' : σ i ≠ 0 := hi
+    have hj' : σ j ≠ 0 := hj
+    change inner ℂ (w i) (w j) = _
+    rw [hw_inner i j, hci i, heig_eq j]
+    by_cases hij : i = j
+    · subst hij
+      have hc : ((σ i : ℂ)) ≠ 0 := by exact_mod_cast hi'
+      have hself : (⟨i, hi⟩ : ↥(({j | σ j ≠ 0} : Set n))) = ⟨i, hj'⟩ := rfl
+      rw [hself]
+      simp only [ite_true]
+      have e1 : ((σ i : ℂ))⁻¹ * (((σ i : ℂ)) * ((σ i : ℂ))) = ((σ i : ℂ)) := by
+        rw [← mul_assoc, inv_mul_cancel₀ hc, one_mul]
+      rw [mul_one, pow_two, e1, inv_mul_cancel₀ hc]
+    · have hne : (⟨i, hi⟩ : ↥(({j | σ j ≠ 0} : Set n))) ≠ ⟨j, hj⟩ :=
+      fun h => hij (Subtype.ext_iff.mp h)
+      simp [hij, hne]
+  -- Extend to a full orthonormal basis; its change-of-basis matrix is the left factor.
+  obtain ⟨bU, hbU⟩ :=
+    Orthonormal.exists_orthonormalBasis_extension_of_card_eq finrank_euclideanSpace horth
+  set U : Matrix n n ℂ :=
+    (EuclideanSpace.basisFun n ℂ).toBasis.toMatrix ⇑bU with hU_def
+  set V : Matrix n n ℂ := ↑hBherm.eigenvectorUnitary with hV_def
+  have hUcol : ∀ j, U.col j = (bU j).ofLp := by
+    intro j
+    rw [hU_def]
+    rfl
+  have hVcol : ∀ j, V.col j = (hBherm.eigenvectorBasis j).ofLp := by
+    intro j
+    rw [hV_def]
+    exact hBherm.eigenvectorUnitary_col_eq j
+  have hUunit : U ∈ Matrix.unitaryGroup n ℂ := by
+    rw [Matrix.mem_unitaryGroup_iff', Matrix.star_eq_conjTranspose, hU_def]
+    exact OrthonormalBasis.toMatrix_orthonormalBasis_conjTranspose_mul_self _ _
+  have hVunit : V ∈ Matrix.unitaryGroup n ℂ := hBherm.eigenvectorUnitary.2
+  -- Each column satisfies `A *ᵥ v j = σ j • u j`.
+  have hAVcol : ∀ j,
+    A *ᵥ (hBherm.eigenvectorBasis j).ofLp = ((σ j : ℂ)) • (bU j).ofLp := by
+    intro j
+    by_cases hj : σ j = 0
+    · have hcast0 : ((σ j : ℂ)) = 0 := by exact_mod_cast hj
+      have heig0 : hBherm.eigenvalues j = 0 := by
+        have h := hσ_sq j
+        rw [hj] at h
+        simpa using h.symm
+      have hnorm :
+        star (A *ᵥ (hBherm.eigenvectorBasis j).ofLp)
+          ⬝ᵥ (A *ᵥ (hBherm.eigenvectorBasis j).ofLp) = 0 := by
+        rw [aux_star_mulVec_dotProduct, hBherm.mulVec_eigenvectorBasis j, heig0,
+          zero_smul, dotProduct_zero]
+      have hA0 : A *ᵥ (hBherm.eigenvectorBasis j).ofLp = 0 :=
+        dotProduct_star_self_eq_zero.mp hnorm
+      rwa [hcast0, zero_smul]
+    · have hbUw : bU j = w j := hbU j hj
+      have hc : ((σ j : ℂ)) ≠ 0 := by exact_mod_cast hj
+      rw [hbUw, hw_ofLp j, ← mul_smul, mul_inv_cancel₀ hc, one_smul]
+  have hsingle : ∀ (c : ℂ) (j : n), Pi.single j c = c • Pi.single j (1 : ℂ) := by
+    intro c j
+    rw [← Pi.single_smul, smul_eq_mul, mul_one]
+  have hAV : A * V = U * diagonal (fun i => ((σ i : ℂ))) := by
+    apply Matrix.ext_of_mulVec_single
+    intro j
+    conv_lhs => rw [← mulVec_mulVec, mulVec_single_one, hVcol j]
+    conv_rhs => rw [← mulVec_mulVec, Matrix.diagonal_mulVec_single]
+    change A *ᵥ (hBherm.eigenvectorBasis j).ofLp = U *ᵥ Pi.single j (((σ j : ℂ)) * 1)
+    rw [mul_one, hsingle, mulVec_smul, mulVec_single_one, hUcol j]
+    exact hAVcol j
+  refine ⟨⟨U, hUunit⟩, ⟨V, hVunit⟩, σ, hσ_nonneg, ?_⟩
+  have hVV : V * Vᴴ = 1 := Matrix.mem_unitaryGroup_iff.1 hVunit
+  rw [Matrix.star_eq_conjTranspose]
+  calc A = (A * V) * Vᴴ := by rw [mul_assoc, hVV, mul_one]
+    _ = U * diagonal (fun i => ((σ i : ℂ))) * Vᴴ := by rw [hAV]
+
+end Matrix
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -19,31 +19,4 @@ def booleanFunctionDual (n : Nat) (f : (Fin n → Bool) → Bool) : (Fin n → B
 equal to its dual. -/
 def IsSelfDualMonotone (n : Nat) (f : (Fin n → Bool) → Bool) : Prop :=
   (∀ x y : Fin n → Bool, (∀ i, x i ≤ y i) → f x ≤ f y) ∧ f = booleanFunctionDual n f
-
-@[simp]
-theorem booleanFunctionDual_apply (n : Nat) (f : (Fin n → Bool) → Bool) (x : Fin n → Bool) :
-    booleanFunctionDual n f x = !(f (booleanVectorComplement n x)) :=
-  rfl
-
-/-- Complementing a Boolean vector twice returns the original vector. -/
-@[simp]
-theorem booleanVectorComplement_complement (n : Nat) (x : Fin n → Bool) :
-    booleanVectorComplement n (booleanVectorComplement n x) = x := by
-  funext i
-  simp [booleanVectorComplement]
-
-/-- Boolean-function duality is involutive. -/
-@[simp]
-theorem booleanFunctionDual_dual (n : Nat) (f : (Fin n → Bool) → Bool) :
-    booleanFunctionDual n (booleanFunctionDual n f) = f := by
-  funext x
-  simp [booleanFunctionDual]
-
-/-- Every coordinate projection is a self-dual monotone Boolean function. -/
-theorem selfDualMonotone_proj {n : Nat} (i : Fin n) :
-    IsSelfDualMonotone n (fun x : Fin n → Bool => x i) := by
-  refine ⟨fun x y h => h i, ?_⟩
-  funext x
-  simp [booleanFunctionDual, booleanVectorComplement]
-
 end MetaMathlibExt

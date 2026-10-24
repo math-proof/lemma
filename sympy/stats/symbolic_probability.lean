@@ -137,7 +137,7 @@ noncomputable instance (priority := low) instExpectationBochner
   rfl
 
 /--
-Canonical density `Pr(x)` of a single random variable (Radon–Nikodym derivative of its
+Canonical density `ℙ(x)` of a single random variable (Radon–Nikodym derivative of its
 law w.r.t. the canonical state measure). Equal a.e. to any witnessing density from
 `SinglePSpace.exists_distribution`. Lives in `MeasureTheory.Measure` (alongside `map` and
 `rnDeriv`) so it reads in dot form `π.prob x`, next to `π.map x`.
@@ -154,9 +154,9 @@ noncomputable def MeasureTheory.Measure.prob
 
 
 /--
-Canonical conditional density `Pr(x | y)` of a joint random symbol `(x, y)`: the joint
+Canonical conditional density `ℙ(x | y)` of a joint random symbol `(x, y)`: the joint
 density `π.prob (x, y)` divided by the marginal density of the second component — the
-Bayes formula `Pr(x | y) = Pr(x, y) / Pr(y)`. Lives in `MeasureTheory.Measure` so it
+Bayes formula `ℙ(x | y) = ℙ(x, y) / ℙ(y)`. Lives in `MeasureTheory.Measure` so it
 reads in dot form `π.condProb (x, y)`, mirroring `π.prob (x, y)`.
 -/
 noncomputable def MeasureTheory.Measure.condProb
@@ -249,5 +249,3 @@ noncomputable def MeasureTheory.Measure.condProbRA
     (x0 : α) :
     Ω → ENNReal :=
   fun ω ↦ π.condProb xy (x0, (xy ω).2)
-
-

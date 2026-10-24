@@ -38,7 +38,9 @@ instance BoundedInterval.instEmpty : EmptyCollection BoundedInterval where
 /-- The empty {name}`BoundedInterval` coerces to the empty set. -/
 @[simp]
 theorem BoundedInterval.coe_empty : ((∅ : BoundedInterval):Set ℝ) = ∅ := by
-  simp [toSet]
+  change toSet (Ioo 0 0) = ∅
+  simp only [toSet]
+  exact Set.Ioo_self 0
 
 open Classical in
 /-- This is to make {name}`Finset`s of {name}`BoundedInterval`s work properly -/
@@ -1363,10 +1365,13 @@ lemma IsElementary.sum_insert_split {d:ℕ} {a: Set (EuclideanSpace' d)} {S': Fi
     ∑ E:S', (hE E.val (Finset.mem_insert_of_mem E.property)).measure := by
   induction S' using Finset.induction_on with
   | empty =>
-    -- Base case: S' = ∅
-    -- LHS: ∑ E:(insert a ∅), ... = sum over {a}
-    -- RHS: measure of a + ∑ E:∅, ... = measure of a + 0
-    simp [Finset.sum_empty]
+    letI : Unique (↥(insert a (∅ : Finset (Set (EuclideanSpace' d))))) := {
+      default := ⟨a, by simp⟩
+      uniq := fun ⟨x, hx⟩ => by
+        apply Subtype.ext
+        simpa using hx
+    }
+    rw [Fintype.sum_unique, Fintype.sum_empty, add_zero]
   | @insert b S'' hb_notin ih =>
     -- Inductive case: S' = insert b S''
     -- Goal: ∑ E:(insert a (insert b S'')), ... = measure(a) + ∑ E:(insert b S''), ...

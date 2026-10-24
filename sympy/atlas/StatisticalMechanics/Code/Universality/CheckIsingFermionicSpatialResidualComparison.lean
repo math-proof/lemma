@@ -1,0 +1,24 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicSpatialResidualComparison.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSpatialResidualComparison
+
+open StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm
+
+#print axioms vertexSpatialTargetResidualPotential_nonneg
+#print axioms vertexSpatialTargetResidualPotential_eq_sum_point
+#print axioms vertexSpatialTargetResidualPotential_le_sum_point_bound
+#print axioms vertexDirichlet_target_error_le_spatial_residual
+#print axioms faceSpatialTargetResidualPotential_nonneg
+#print axioms faceSpatialTargetResidualPotential_eq_sum_point
+#print axioms faceSpatialTargetResidualPotential_le_sum_point_bound
+#print axioms faceDirichlet_target_error_le_spatial_residual
+#print axioms physicalIncidence_target_error_le_spatial_residual
+#print axioms physicalIncidence_uniform_convergence_of_spatial_residual

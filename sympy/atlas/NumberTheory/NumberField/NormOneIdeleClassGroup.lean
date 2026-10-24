@@ -5,6 +5,7 @@ Author: @toskua, Avocado
 -/
 
 import sympy.atlas.NumberTheory.NumberField.IdeleNorm
+import Lemma.Nat.NumberField.IdeleNorm
 /-!
 # Norm-one idele class group
 
@@ -51,14 +52,4 @@ def normOnePrincipalIdeles : Subgroup (normOneIdeles K) :=
 /-- The norm-one idele class group `C_K^1 := I_K^1 / K^×`. -/
 abbrev NormOneIdeleClassGroup :=
   (normOneIdeles K) ⧸ (normOnePrincipalIdeles K)
-
-/-- The class of a principal idele in the norm-one idele class group is trivial. -/
-@[simp]
-theorem normOne_mk_principalEmbedding (x : Kˣ) :
-    QuotientGroup.mk (s := normOnePrincipalIdeles K)
-        ⟨principalEmbedding (NumberField.RingOfIntegers K) K x,
-          principalIdeles_le_normOneIdeles K ⟨x, rfl⟩⟩ = 1 := by
-  rw [QuotientGroup.eq_one_iff]
-  exact ⟨x, rfl⟩
-
 end NumberField.TopologicalIdeleGroup

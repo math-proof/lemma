@@ -6,43 +6,56 @@ open NumberField.Modulus
 open CongruenceSubgroupPair
 
 
+namespace NumberField.Modulus.CongruenceSubgroupPair
+
 /--
 [isEquivalent_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceEquivalence.lean)
 -/
 @[path]
-private lemma isEquivalent_iff_eq
+lemma isEquivalent_iff
   [Field K] [NumberField K]
   {P Q : CongruenceSubgroupPair K} :
 -- imply
   IsEquivalent P Q ↔
     coprimeFractionalIdeals P.modulus ⊓ Q.subgroup.toAmbientSubgroup =
-    coprimeFractionalIdeals Q.modulus ⊓ P.subgroup.toAmbientSubgroup := by
+    coprimeFractionalIdeals Q.modulus ⊓ P.subgroup.toAmbientSubgroup :=
 -- proof
-  apply NumberField.Modulus.CongruenceSubgroupPair.isEquivalent_iff P Q
+  Iff.rfl
+
+end NumberField.Modulus.CongruenceSubgroupPair
+
+namespace NumberField.Modulus.CongruenceSubgroupPair
 
 /--
 [IsEquivalent.refl](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceEquivalence.lean)
 -/
 @[path]
-private lemma IsEquivalent_refl_eq
+lemma IsEquivalent.refl
   [Field K] [NumberField K]
   {P : CongruenceSubgroupPair K} :
 -- imply
-  IsEquivalent P P := by
+  IsEquivalent P P :=
 -- proof
-  apply NumberField.Modulus.CongruenceSubgroupPair.IsEquivalent.refl P
+  rfl
+
+end NumberField.Modulus.CongruenceSubgroupPair
+
+namespace NumberField.Modulus.CongruenceSubgroupPair
 
 /--
 [IsEquivalent.symm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceEquivalence.lean)
 -/
 @[path]
-private lemma IsEquivalent_symm_eq
+lemma IsEquivalent.symm
   [Field K] [NumberField K]
   {P Q : CongruenceSubgroupPair K} :
 -- imply
-  IsEquivalent P Q → IsEquivalent Q P := by
+  IsEquivalent P Q → IsEquivalent Q P :=
 -- proof
-  apply NumberField.Modulus.CongruenceSubgroupPair.IsEquivalent.symm
+  Eq.symm
+
+end NumberField.Modulus.CongruenceSubgroupPair
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

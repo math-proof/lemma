@@ -36,28 +36,4 @@ def DichromaticColorable (k : ℕ) : Prop :=
 dichromatically `k`-colourable (`⊤` if there is none). -/
 noncomputable def dichromaticNumber : ℕ∞ :=
   ⨅ n ∈ Set.ofPred (G.DichromaticColorable), (n : ℕ∞)
-
-/-- Finite dichromatic-colorability description of the dichromatic number. -/
-theorem DichromaticColorable.dichromaticNumber_eq_sInf {n : ℕ}
-    (h : G.DichromaticColorable n) :
-    G.dichromaticNumber = sInf {n' : ℕ | G.DichromaticColorable n'} := by
-  rw [ENat.natCast_sInf, dichromaticNumber]
-  exact ⟨_, h⟩
-
-/-- The empty digraph orients any edgeless graph. -/
-theorem IsOrientation.of_edgeless (hempty : ∀ u v, ¬ G.Adj u v) :
-    G.IsOrientation (fun _ _ => False) := by
-  refine ⟨fun u v h => absurd h (by simp), fun u v hadj => ?_⟩
-  exact absurd hadj (hempty u v)
-
-/-- Edgeless graphs are dichromatically `1`-colourable: no orientation has
-any directed edge, so no directed cycle exists. -/
-theorem DichromaticColorable.of_edgeless (hempty : ∀ u v, ¬ G.Adj u v) :
-    G.DichromaticColorable 1 := by
-  intro D hD
-  refine ⟨fun _ => 0, fun n f hdir => ?_⟩
-  have i0 : Fin (n + 1) := ⟨0, Nat.zero_lt_succ n⟩
-  have e : D (f i0.castSucc) (f i0.succ) := hdir.2 i0
-  exact absurd (hD.1 _ _ e) (hempty _ _)
-
 end SimpleGraph

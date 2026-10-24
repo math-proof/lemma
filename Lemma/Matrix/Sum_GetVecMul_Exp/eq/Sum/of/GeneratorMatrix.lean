@@ -4,7 +4,7 @@ import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Analysis.Calculus.Deriv.Prod
-import Lemma.NormedSpace.HasDerivAtVecMul_Exp
+import Lemma.Matrix.HasDerivAtVecMul_Exp
 import Lemma.Matrix.Sum_GetVecMul.eq.Zero.of.GeneratorMatrix
 open Matrix NormedSpace
 
@@ -22,7 +22,7 @@ private lemma main
 -- proof
   have hd : ∀ s, HasDerivAt (fun s : ℝ => ∑ j, (ξ ᵥ* exp (s • Q)) j) 0 s := by
     intro s
-    exact (HasDerivAt.fun_sum (u := Finset.univ) fun j _ => hasDerivAt_pi.mp (NormedSpace.HasDerivAtVecMul_Exp Q ξ s) j).congr_deriv (Matrix.Sum_GetVecMul.eq.Zero.of.GeneratorMatrix h₀ _)
+    exact (HasDerivAt.fun_sum (u := Finset.univ) fun j _ => hasDerivAt_pi.mp (Matrix.HasDerivAtVecMul_Exp Q ξ s) j).congr_deriv (Matrix.Sum_GetVecMul.eq.Zero.of.GeneratorMatrix h₀ _)
   simpa using is_const_of_deriv_eq_zero (fun s => (hd s).differentiableAt) (fun s => (hd s).deriv) t 0
 
 

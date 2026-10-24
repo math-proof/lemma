@@ -3,6 +3,7 @@
 import Mathlib.Geometry.Group.WordMetric
 import Mathlib.GroupTheory.Finiteness
 import sympy.atlas.Topology.MetricSpace.GromovHyperbolic
+import Lemma.Set.MetricSpace.GromovHyperbolic
 /-!
 # Hyperbolic groups
 
@@ -41,21 +42,7 @@ def IsHyperbolic (G : Type*) [Group G] : Prop :=
   ∃ (ι : Type) (_ : Finite ι) (P : Group.Generators G ι) (δ : ℝ),
     @Metric.IsDeltaHyperbolic G P.normedGroup.toMetricSpace.toPseudoMetricSpace δ
 
-/-- A word-hyperbolic group is finitely generated. -/
-theorem IsHyperbolic.fg (h : IsHyperbolic G) : Group.FG G := by
-  obtain ⟨ι, hι, P, _, _⟩ := h
-  letI := hι
-  rw [Group.fg_iff]
-  exact ⟨Set.range P.val, P.closure_eq_top, Set.finite_range P.val⟩
-
-/-- A trivial (subsingleton) group is word-hyperbolic, witnessed by the empty generating family and
-`δ = 0`. -/
-theorem IsHyperbolic.of_subsingleton (G : Type*) [Group G] [Subsingleton G] : IsHyperbolic G := by
-  refine ⟨Empty, inferInstance, ⟨Empty.elim, Subsingleton.elim _ _⟩, 0, le_refl 0, fun w x y z => ?_⟩
-  rw [Subsingleton.elim x w, Subsingleton.elim y w, Subsingleton.elim z w, min_self, sub_zero]
-
 end Group
-
 /-! ### Examples -/
 
 -- The trivial group is word-hyperbolic.

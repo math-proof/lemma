@@ -9,7 +9,7 @@ import Lemma.Int.CoeSub.eq.SubCoeS
 import Lemma.Int.CoeMul.eq.MulCoeS
 import Lemma.Set.In_IcoFloor
 import Lemma.Set.Lt.of.In_Ico
-open Set Int Nat Rat
+open Set Int Nat Rat Matrix
 
 
 @[path]

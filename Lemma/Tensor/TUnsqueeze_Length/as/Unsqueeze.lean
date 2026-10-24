@@ -10,7 +10,7 @@ import Lemma.List.ProdPermute.eq.Prod
 import Lemma.List.ProdRotate.eq.MulProdS
 import Lemma.Tensor.DataUnsqueeze.as.Data
 import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
-open Bool Fin List Nat Tensor Vector
+open Bool Fin List Nat Tensor Vector Set
 
 
 @[path]

@@ -21,13 +21,4 @@ We formalize it as the specialization `D(n,2,1,1)` of `MetaMathlibExt.dombTypeSu
 /-- The Domb numbers `Domb(n) = D(n,2,1,1)` (OEIS A002895). -/
 def dombNumber (n : ℕ) : ℕ :=
   dombTypeSum n 2 1 1
-
-/-- Unfolded sum for the Domb numbers, with the powers of one simplified. -/
-theorem dombNumber_unfold (n : ℕ) :
-    dombNumber n =
-      ∑ k ∈ Finset.range (n + 1),
-        n.choose k ^ 2 * (2 * k).choose k * (2 * (n - k)).choose (n - k) := by
-  unfold dombNumber dombTypeSum
-  simp only [pow_one]
-
 end MetaMathlibExt

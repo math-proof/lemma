@@ -24,9 +24,4 @@ def IsMeromorphicAtInfty (f : ℍ → ℂ) : Prop :=
 infinity. -/
 def IsMeromorphicAtCusps (f : ℍ → ℂ) : Prop :=
   ∀ γ : SL(2, ℤ), IsMeromorphicAtInfty (fun τ ↦ f (γ • τ))
-
-theorem IsMeromorphicAtCusps.at_infty {f : ℍ → ℂ} (hf : IsMeromorphicAtCusps f) :
-    IsMeromorphicAtInfty f := by
-  simpa using hf 1
-
 end ModularFunction

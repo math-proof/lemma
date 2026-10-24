@@ -2,6 +2,7 @@
 
 import Mathlib.Algebra.FreeAlgebra
 import sympy.atlas.NumberTheory.MultipleZeta.Index
+import Lemma.Nat.MultipleZeta.Index
 namespace MetaMathlibExt.MultipleZeta
 
 /-- The generator `x` as a word. -/
@@ -64,25 +65,6 @@ def wordSubmonoidHZero : Submonoid (FreeMonoid Bool) where
       · exact Or.inr ⟨ua * yWord * xWord * ub, by simp [mul_assoc]⟩
   one_mem' := Or.inl rfl
 
-@[simp]
-theorem mem_wordSubmonoidHOne_iff (w : FreeMonoid Bool) :
-    w ∈ wordSubmonoidHOne ↔ IsHOneWord w := by
-  rfl
-
-@[simp]
-theorem mem_wordSubmonoidHZero_iff (w : FreeMonoid Bool) :
-    w ∈ wordSubmonoidHZero ↔ IsHZeroWord w := by
-  rfl
-
-theorem wordSubmonoidHZero_le_wordSubmonoidHOne :
-    wordSubmonoidHZero ≤ wordSubmonoidHOne := by
-  intro w hw
-  change IsHZeroWord w at hw
-  change IsHOneWord w
-  rcases hw with rfl | ⟨u, rfl⟩
-  · exact Or.inl rfl
-  · exact Or.inr ⟨xWord * u, by simp [mul_assoc]⟩
-
 /-- Subalgebra `H^1` of the free algebra. -/
 noncomputable def hOne : Subalgebra ℚ (FreeAlgebra ℚ Bool) :=
   ((MonoidAlgebra.mapDomainAlgHom ℚ ℚ wordSubmonoidHOne.subtype).range).comap
@@ -94,27 +76,6 @@ noncomputable def hZero : Subalgebra ℚ (FreeAlgebra ℚ Bool) :=
   ((MonoidAlgebra.mapDomainAlgHom ℚ ℚ wordSubmonoidHZero.subtype).range).comap
     (FreeAlgebra.equivMonoidAlgebraFreeMonoid :
       FreeAlgebra ℚ Bool ≃ₐ[ℚ] MonoidAlgebra ℚ (FreeMonoid Bool)).toAlgHom
-
-theorem hZero_le_hOne : hZero ≤ hOne := by
-  intro x hx
-  simp only [hZero, hOne, Subalgebra.mem_comap, AlgHom.mem_range] at hx ⊢
-  obtain ⟨y, hy⟩ := hx
-  have hle : wordSubmonoidHZero ≤ wordSubmonoidHOne :=
-    wordSubmonoidHZero_le_wordSubmonoidHOne
-  refine ⟨MonoidAlgebra.mapDomainAlgHom ℚ ℚ (Submonoid.inclusion hle) y, ?_⟩
-  have hsubtype : wordSubmonoidHOne.subtype.comp (Submonoid.inclusion hle) =
-      wordSubmonoidHZero.subtype :=
-    Submonoid.subtype_comp_inclusion hle
-  have hcomp : MonoidAlgebra.mapDomainAlgHom ℚ ℚ wordSubmonoidHZero.subtype =
-      (MonoidAlgebra.mapDomainAlgHom ℚ ℚ wordSubmonoidHOne.subtype).comp
-        (MonoidAlgebra.mapDomainAlgHom ℚ ℚ (Submonoid.inclusion hle)) := by
-    rw [← hsubtype, MonoidAlgebra.mapDomainAlgHom_comp]
-  rw [hcomp] at hy
-  change ((MonoidAlgebra.mapDomainAlgHom ℚ ℚ wordSubmonoidHOne.subtype).comp
-    (MonoidAlgebra.mapDomainAlgHom ℚ ℚ (Submonoid.inclusion hle))) y =
-      (FreeAlgebra.equivMonoidAlgebraFreeMonoid :
-        FreeAlgebra ℚ Bool ≃ₐ[ℚ] MonoidAlgebra ℚ (FreeMonoid Bool)) x
-  exact hy
 
 theorem pnatEntries_val (idx : Index) :
     idx.pnatEntries.map PNat.val = idx.entries := by
@@ -155,10 +116,6 @@ theorem zWordPNat_mem_hOne (l : List PNat) :
       rw [FreeMonoid.ofList_append]
     exact wordSubmonoidHOne.mul_mem hk ih
 
-theorem zWord_mem_hOne (idx : Index) :
-    zWord idx ∈ wordSubmonoidHOne :=
-  zWordPNat_mem_hOne idx.pnatEntries
-
 theorem exists_hoffmanBlock_eq_xWord_mul_yWord (k : PNat) (hk : 2 ≤ k.val) :
     ∃ u, hoffmanBlock k = xWord * u * yWord := by
   refine ⟨FreeMonoid.ofList (List.replicate (k.val - 2) false), ?_⟩
@@ -169,12 +126,6 @@ theorem exists_hoffmanBlock_eq_xWord_mul_yWord (k : PNat) (hk : 2 ≤ k.val) :
     rw [h1, List.replicate_succ]
   rw [h2, FreeMonoid.ofList_cons, FreeMonoid.ofList_append]
   simp [mul_assoc]
-
-theorem hoffmanBlock_mem_hZero_of_two_le (k : PNat) (hk : 2 ≤ k.val) :
-    hoffmanBlock k ∈ wordSubmonoidHZero := by
-  obtain ⟨u, hu⟩ := exists_hoffmanBlock_eq_xWord_mul_yWord k hk
-  change IsHZeroWord (hoffmanBlock k)
-  exact Or.inr ⟨u, hu⟩
 
 private theorem hZero_word_mul_hOne_mem (ua : FreeMonoid Bool) (v : FreeMonoid Bool)
     (hv : v ∈ wordSubmonoidHOne) :
@@ -257,43 +208,8 @@ theorem mem_hZero_iff_support_subset (a : FreeAlgebra ℚ Bool) :
       (MonoidAlgebra.mapDomainAlgHom ℚ ℚ wordSubmonoidHZero.subtype).range ↔ _
   exact mem_range_mapDomainAlgHom_iff_support_subset _ _
 
-theorem zMonomial_mem_hOne (idx : Index) : zMonomial idx ∈ hOne := by
-  rw [mem_hOne_iff_support_subset]
-  simpa [zMonomial] using zWord_mem_hOne idx
-
 theorem zMonomial_mem_hZero (idx : Index) (h : IsHZeroIndex idx) :
     zMonomial idx ∈ hZero := by
   rw [mem_hZero_iff_support_subset]
   simpa [zMonomial] using zWord_mem_hZero idx h
-
-theorem xWord_not_mem_hOne : xWord ∉ wordSubmonoidHOne := by
-  change ¬IsHOneWord xWord
-  intro h
-  rcases h with h | ⟨u, hu⟩
-  · have hlist := congrArg FreeMonoid.toList h
-    simp [xWord] at hlist
-  · have hlist := congrArg FreeMonoid.toList hu
-    have hlen := congrArg List.length hlist
-    simp [xWord, yWord] at hlen
-    simp [xWord, yWord, hlen] at hlist
-
-theorem generatorX_not_mem_hOne : FreeAlgebra.ι ℚ (false : Bool) ∉ hOne := by
-  rw [mem_hOne_iff_support_subset]
-  intro h
-  have hsupp :
-      (FreeAlgebra.equivMonoidAlgebraFreeMonoid (R := ℚ)
-        (FreeAlgebra.ι ℚ (false : Bool))).coeff.support = {xWord} := by
-    have hx :
-        FreeAlgebra.equivMonoidAlgebraFreeMonoid (R := ℚ)
-            (FreeAlgebra.ι ℚ (false : Bool)) = MonoidAlgebra.single xWord 1 := by
-      simp [xWord, FreeAlgebra.equivMonoidAlgebraFreeMonoid]
-    rw [hx]
-    simp
-  have hxMem : xWord ∈
-      (FreeAlgebra.equivMonoidAlgebraFreeMonoid (R := ℚ)
-        (FreeAlgebra.ι ℚ (false : Bool))).coeff.support := by
-    rw [hsupp]
-    simp
-  exact xWord_not_mem_hOne (h xWord hxMem)
-
 end MetaMathlibExt.MultipleZeta

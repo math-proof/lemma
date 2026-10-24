@@ -4,25 +4,31 @@ import sympy.atlas.Topology.InverseLimit
 open InverseLimit
 
 
+namespace InverseLimit
+
 /--
 [mem_carrier_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/InverseLimit.lean)
 -/
 @[path]
-private lemma mem_carrier_iff_eq
+lemma mem_carrier_iff
   [Preorder ι]
   {X : ι → Type*}
   {f : ∀ ⦃i j : ι⦄, i ≤ j → X j → X i}
   {x : ∀ i, X i} :
 -- imply
-  x ∈ carrier f ↔ ∀ ⦃i j : ι⦄ (h : i ≤ j), f h (x j) = x i := by
+  x ∈ carrier f ↔ ∀ ⦃i j : ι⦄ (h : i ≤ j), f h (x j) = x i :=
 -- proof
-  apply InverseLimit.mem_carrier_iff
+  Iff.rfl
+
+end InverseLimit
+
+namespace InverseLimit
 
 /--
 [proj_compat](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/InverseLimit.lean)
 -/
 @[path]
-private lemma proj_compat_eq
+lemma proj_compat
   [Preorder ι]
   {X : ι → Type*}
   {f : ∀ ⦃i j : ι⦄, i ≤ j → X j → X i}
@@ -31,15 +37,20 @@ private lemma proj_compat_eq
   (hx : x ∈ carrier f) :
 -- imply
   ι⦄ (h : i ≤ j) :
-    f h (x j) = x i := by
+    f h (x j) = x i :=
 -- proof
-  apply InverseLimit.proj_compat hx
+  hx h
+variable [∀ i, TopologicalSpace (X i)]
+
+end InverseLimit
+
+namespace InverseLimit
 
 /--
 [isClosed_carrier](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/InverseLimit.lean)
 -/
 @[path]
-private lemma isClosed_carrier_eq
+lemma isClosed_carrier
   [Preorder ι]
   {X : ι → Type*} [∀ i, TopologicalSpace (X i)] [∀ i, T2Space (X i)]
   {f : ∀ ⦃i j : ι⦄, i ≤ j → X j → X i}
@@ -48,22 +59,35 @@ private lemma isClosed_carrier_eq
 -- imply
   IsClosed (carrier f) := by
 -- proof
-  apply InverseLimit.isClosed_carrier hf
+  have heq : carrier f =
+    ⋂ (i : ι) (j : ι) (h : i ≤ j), { x | f h (x j) = x i } := by
+    ext x
+    simp [carrier]
+  rw [heq]
+  exact isClosed_iInter fun i => isClosed_iInter fun j => isClosed_iInter fun h =>
+    isClosed_eq ((hf h).comp (continuous_apply j)) (continuous_apply i)
+
+end InverseLimit
+
+namespace InverseLimit
 
 /--
 [isCompact_carrier](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/InverseLimit.lean)
 -/
 @[path]
-private lemma isCompact_carrier_eq
+lemma isCompact_carrier
   [Preorder ι]
   {X : ι → Type*} [∀ i, TopologicalSpace (X i)] [∀ i, CompactSpace (X i)] [∀ i, T2Space (X i)]
   {f : ∀ ⦃i j : ι⦄, i ≤ j → X j → X i}
 -- given
   (hf : ∀ ⦃i j : ι⦄ (h : i ≤ j), Continuous (f h)) :
 -- imply
-  IsCompact (carrier f) := by
+  IsCompact (carrier f) :=
 -- proof
-  apply InverseLimit.isCompact_carrier hf
+  (isClosed_carrier hf).isCompact
+
+end InverseLimit
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

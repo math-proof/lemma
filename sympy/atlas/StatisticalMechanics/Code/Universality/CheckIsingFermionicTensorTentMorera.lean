@@ -1,0 +1,107 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicTensorTentMorera.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicTensorTentMorera
+
+open Filter Set Topology
+open StatMech.Universality
+open StatMech.Universality.FKIsingCaratheodoryApproximation
+
+#print axioms StatMech.Universality.complex_wedgeIntegral_tendsto_of_locallyUniform
+#print axioms StatMech.Universality.VanishingRectangleContourError.contour_tendsto_zero
+#print axioms StatMech.Universality.norm_wedgeContour_le_of_uniformNorm
+#print axioms
+  StatMech.Universality.VanishingRectangleContourError.isConservativeOn_subsequentialLimit
+#print axioms StatMech.Universality.isingCellCRAt_conj_radialGridPosition
+#print axioms StatMech.Universality.isingCellCRAt_radialGridPosition_iff
+#print axioms
+  StatMech.Universality.reflectedRadialBilinearCellContour_eq_zero_of_IsingCellCRAt
+#print axioms
+  StatMech.Universality.reflectedRadialBilinearCellPathIntegral_eq_zero_of_cellCR
+#print axioms
+  StatMech.Universality.sum_reflectedRadialBilinearCellContour_eq_rectangleBoundary
+#print axioms
+  StatMech.Universality.reflectedRadialRectangleBoundaryIntegral_eq_zero_of_cellCR
+#print axioms
+  StatMech.Universality.reflectedRadialCellRegionBoundaryIntegral_eq_zero_of_cellCR
+#print axioms
+  fkIsingSquareBoundaryRadialPatchFullObservableExtension_reflectedRegionContour_eq_zero
+#print axioms
+  StatMech.Universality.isingCenteredRadialGridPosition_eq_scaledCarrierPosition
+#print axioms
+  StatMech.Universality.fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad
+#print axioms
+  StatMech.Universality.fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_of_odd
+#print axioms
+  StatMech.Universality.fkIsingSquareBoundaryCenteredRadialPatchFullObservable_cellCR
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchFullObservableExtension_reflectedRegionContour_eq_zero
+#print axioms
+  StatMech.Universality.finiteCenteredRadialGridInterpolant_cellPoint
+#print axioms
+  StatMech.Universality.fkIsingSquareBoundaryCenteredRadialPatchInterpolant_projection
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchTwoScaleReflectedInterpolant_position
+#print axioms
+  StatMech.Universality.isingReflectedCenteredRadialGridCellPoint_eq
+#print axioms
+  StatMech.Universality.isingReflectedCenteredRadialGridPosition_eq
+#print axioms
+  StatMech.Universality.isingReflectedCenteredRadialGridPosition_succ_both
+#print axioms
+  StatMech.Universality.isingReflectedCenteredRadialGridPosition_vertical_macroStep
+#print axioms
+  StatMech.Universality.complexDisplacementIntegral_eq_average_mul
+#print axioms
+  StatMech.Universality.complexDisplacementIntegral_reverse
+#print axioms
+  StatMech.Universality.axisRectangleDisplacementContour_eq_wedgeContour
+#print axioms
+  StatMech.Universality.axisMacroDirectContour_eq_wedgeContour
+#print axioms
+  StatMech.Universality.norm_twoStepDisplacementIntegral_sub_direct_le
+#print axioms
+  StatMech.Universality.norm_sum_twoStepDisplacementIntegral_sub_direct_le
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchNormalizedExtension_reflectedRegionContour_eq_zero
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatch_reflectedCellPathIntegral_eq_zero
+#print axioms
+  StatMech.Universality.fkIsingExpandingSquareScale_tendsto_zero
+#print axioms
+  StatMech.Universality.fkIsingExpandingSquareCenteredInteriorRadius_tendsto_atTop
+#print axioms
+  StatMech.Universality.fkIsingExpandingBoundarySquareCenteredReflectedRegionContour_eq_zero
+#print axioms
+  StatMech.Universality.reflectedRadialDiscretePrimitive_succ_i_of_cellCR
+#print axioms
+  StatMech.Universality.reflectedRadialAxisStaircaseBoundaryIntegral_eq_zero_of_cellCR
+#print axioms
+  fkIsingExpandingBoundarySquareCenteredReflectedAxisStaircaseContour_eq_zero
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchTwoScaleReflectedAxisStaircasePathIntegral_eq_boundary
+#print axioms
+  fkIsingExpandingBoundarySquareCenteredReflectedAxisStaircasePathIntegral_eq_zero
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchTwoScaleReflectedInterpolant_iEdgeIntegral
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchTwoScaleReflectedInterpolant_jEdgeIntegral
+#print axioms StatMech.Universality.shiftedRealGridFloor_error
+#print axioms StatMech.Universality.shiftedRealGridFloor_add_steps
+#print axioms StatMech.Universality.shiftedRealGridFloor_tendsto
+#print axioms StatMech.Universality.reflectedRadialAxisSnap_oppositeCorner
+#print axioms StatMech.Universality.reflectedRadialAxisSnap_dist_lt
+#print axioms StatMech.Universality.reflectedRadialAxisSnap_tendsto
+#print axioms StatMech.Universality.isingReflectedCenteredRadialGridPosition_snap
+#print axioms StatMech.Universality.isingReflectedCenteredRadialGridPosition_axisSnapBase
+#print axioms
+  BoundaryRadialTensorTentGeometry.subsequentialMorera_of_contourError
+#print axioms
+  BoundaryRadialTensorTentGeometry.reflected_subsequentialMorera_of_contourError

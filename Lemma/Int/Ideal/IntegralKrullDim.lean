@@ -1,18 +1,19 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.Ideal.IntegralKrullDim
 
 
 /--
 [ringKrullDim_le_of_integral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/Ideal/IntegralKrullDim.lean)
 -/
 @[path]
-private lemma ringKrullDim_le_of_integral_eq
+lemma ringKrullDim_le_of_integral
   [CommRing A] [CommRing B] [Algebra A B] [Algebra.IsIntegral A B] :
 -- imply
-  ringKrullDim B ≤ ringKrullDim A := by
+  ringKrullDim B ≤ ringKrullDim A :=
 -- proof
-  apply ringKrullDim_le_of_integral
+  Order.krullDim_le_of_strictMono (PrimeSpectrum.comap (algebraMap A B))
+    (fun _ _ h => Ideal.IsIntegral.under_lt_under h)
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

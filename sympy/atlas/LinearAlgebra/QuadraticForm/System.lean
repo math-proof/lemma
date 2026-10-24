@@ -18,26 +18,4 @@ variable {R M N ι : Type*} [CommSemiring R]
 def systemOrthogonalSum (Q : ι → QuadraticForm R M) (Q' : ι → QuadraticForm R N) :
     ι → QuadraticForm R (M × N) :=
   fun i ↦ (Q i).prod (Q' i)
-
-/-- Evaluation of a pointwise orthogonal sum. -/
-@[simp]
-theorem systemOrthogonalSum_apply (Q : ι → QuadraticForm R M)
-    (Q' : ι → QuadraticForm R N) (i : ι) (x : M × N) :
-    systemOrthogonalSum Q Q' i x = Q i x.1 + Q' i x.2 := by
-  simp [systemOrthogonalSum]
-
-/-- The left summand restricts to the original left-hand system. -/
-@[simp]
-theorem systemOrthogonalSum_inl (Q : ι → QuadraticForm R M)
-    (Q' : ι → QuadraticForm R N) (i : ι) (x : M) :
-    systemOrthogonalSum Q Q' i (x, 0) = Q i x := by
-  simp
-
-/-- The right summand restricts to the original right-hand system. -/
-@[simp]
-theorem systemOrthogonalSum_inr (Q : ι → QuadraticForm R M)
-    (Q' : ι → QuadraticForm R N) (i : ι) (y : N) :
-    systemOrthogonalSum Q Q' i (0, y) = Q' i y := by
-  simp
-
 end QuadraticForm

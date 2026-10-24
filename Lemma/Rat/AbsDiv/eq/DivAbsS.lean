@@ -12,5 +12,4 @@ private lemma main
   abs_div a b
 
 
-
 -- created on 2025-12-09

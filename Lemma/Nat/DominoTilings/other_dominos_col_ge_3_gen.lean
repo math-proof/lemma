@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings
 import Lemma.Nat.Ge1.Ge1.of.InDominos.Domino.DominoTiling
 import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2
 open DominoTilings

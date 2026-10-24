@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings
 import Lemma.Nat.Even.of.IsFaultfree.DominoTiling
 import Lemma.Nat.DominoTilings.hasTopVerticalInCol_implies_n_ge
 open DominoTilings

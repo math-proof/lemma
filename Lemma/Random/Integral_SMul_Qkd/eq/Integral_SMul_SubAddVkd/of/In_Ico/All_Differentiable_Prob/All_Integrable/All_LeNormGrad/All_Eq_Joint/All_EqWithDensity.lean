@@ -102,7 +102,6 @@ private lemma integral_rkd_smul
     (M := M) h₁' hφrkd hCrkd θ t).symm
 
 
-
 private lemma integral_Vkd_succ_smul
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [CompleteSpace Θ]
   [MeasurableSpace S] [ReferenceMeasure A]

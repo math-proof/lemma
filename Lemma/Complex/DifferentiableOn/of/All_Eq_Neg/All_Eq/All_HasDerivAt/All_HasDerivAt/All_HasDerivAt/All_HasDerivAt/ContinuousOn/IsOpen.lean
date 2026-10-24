@@ -2,6 +2,7 @@ import Mathlib
 import sympy.Basic
 import sympy.calculus.complex.LoomanMenchoff
 
+
 /--
 [looman_menchoff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/LoomanMenchoff.lean)
 -/
@@ -24,3 +25,4 @@ private lemma looman_menchoff_eq
 
 
 -- created on 2026-10-09
+-- updated on 2026-10-24

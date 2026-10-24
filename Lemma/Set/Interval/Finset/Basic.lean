@@ -1,40 +1,43 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Order.Interval.Finset.Basic
 
 
 /--
 [Finset.Iio_eventually_nonempty](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Order/Interval/Finset/Basic.lean)
 -/
 @[path]
-private lemma Finset_Iio_eventually_nonempty_eq
+lemma Finset.Iio_eventually_nonempty
   [PartialOrder β] [LocallyFiniteOrder β] [OrderBot β] [Nontrivial β] :
 -- imply
-  ∃ (b : β), ∀ n ≥ b, (Finset.Iio n).Nonempty := by
+  ∃ (b : β), ∀ n ≥ b, (Finset.Iio n).Nonempty :=
 -- proof
-  apply Finset.Iio_eventually_nonempty β
+  let ⟨b, hb⟩ := exists_ne (⊥ : β)
+  ⟨b, fun n hn => by simp [ne_bot_of_le_ne_bot hb hn]⟩
 
 /--
 [Finset.Iio_eventually_card_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Order/Interval/Finset/Basic.lean)
 -/
 @[path]
-private lemma Finset_Iio_eventually_card_ne_zero_eq
+lemma Finset.Iio_eventually_card_ne_zero
   [PartialOrder β] [LocallyFiniteOrder β] [OrderBot β] [Nontrivial β] :
 -- imply
-  ∃ (b : β), ∀ n ≥ b, (Finset.Iio n).card ≠ 0 := by
+  ∃ (b : β), ∀ n ≥ b, (Finset.Iio n).card ≠ 0 :=
 -- proof
-  apply Finset.Iio_eventually_card_ne_zero β
+  let ⟨b, hb⟩ := Iio_eventually_nonempty β
+  ⟨b, fun n hn => by simp [nonempty_iff_ne_empty.1 <| hb n hn]⟩
 
 /--
 [Set.Iio_eventually_ncard_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Order/Interval/Finset/Basic.lean)
 -/
 @[path]
-private lemma Set_Iio_eventually_ncard_ne_zero_eq
+lemma Set.Iio_eventually_ncard_ne_zero
   [PartialOrder β] [LocallyFiniteOrder β] [OrderBot β] [Nontrivial β] :
 -- imply
-  ∃ (b : β), ∀ n ≥ b, (Set.Iio n).ncard ≠ 0 := by
+  ∃ (b : β), ∀ n ≥ b, (Set.Iio n).ncard ≠ 0 :=
 -- proof
-  apply Set.Iio_eventually_ncard_ne_zero β
+  let ⟨b, hb⟩ := Finset.Iio_eventually_card_ne_zero β
+  ⟨b, fun n hn => by rw [← Finset.coe_Iio, Set.ncard_coe_finset]; exact hb n hn⟩
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

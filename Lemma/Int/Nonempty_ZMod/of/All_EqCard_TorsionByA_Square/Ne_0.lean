@@ -350,7 +350,6 @@ theorem nonempty_zmodSqAddEquiv_torsionBy_one {A : Type*} [AddCommGroup A] :
   · intro a b _; exact Subsingleton.elim a b
   · intro y; exact ⟨0, Subsingleton.elim _ _⟩
 
-end P2MWs13.TorsionStructure
 
 end
 

@@ -26,5 +26,4 @@ private lemma main
   rwa [OfNat.eq.Cast] at h_Le
 
 
-
 -- created on 2025-05-05

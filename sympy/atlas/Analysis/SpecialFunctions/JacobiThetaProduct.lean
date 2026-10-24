@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/JacobiThetaProduct.lean -/
 
 import sympy.atlas.Analysis.SpecialFunctions.QPochhammer
+import Lemma.Complex.QPochhammer
 /-!
 # Jacobi theta product
 
@@ -35,23 +36,4 @@ namespace MetaMathlibExt.QPochhammer
 `j(x; q) = (x; q)∞ (q / x; q)∞ (q; q)∞`, for `‖q‖ < 1`. -/
 noncomputable def jacobiThetaProduct (x q : ℂ) (hq : ‖q‖ < 1) : ℂ :=
   qPochhammerInf x q hq * qPochhammerInf (q / x) q hq * qPochhammerInf q q hq
-
-/-- Involutive parameter symmetry: `j(q / x; q) = j(x; q)` when `q ≠ 0`. -/
-theorem jacobiThetaProduct_symm (x q : ℂ) (hq : ‖q‖ < 1) (h0 : q ≠ 0) :
-    jacobiThetaProduct (q / x) q hq = jacobiThetaProduct x q hq := by
-  unfold jacobiThetaProduct
-  rw [div_div_cancel₀ h0, mul_comm (qPochhammerInf (q / x) q hq) (qPochhammerInf x q hq)]
-
-/-- At `x = 0`, the first two q-Pochhammer factors are one. -/
-@[simp]
-theorem jacobiThetaProduct_zero_left (q : ℂ) (hq : ‖q‖ < 1) :
-    jacobiThetaProduct 0 q hq = qPochhammerInf q q hq := by
-  simp [jacobiThetaProduct]
-
-/-- At `q = 0`, the last two q-Pochhammer factors are one. -/
-@[simp]
-theorem jacobiThetaProduct_zero_right (x : ℂ) :
-    jacobiThetaProduct x 0 (by simp) = qPochhammerInf x 0 (by simp) := by
-  simp [jacobiThetaProduct]
-
 end MetaMathlibExt.QPochhammer

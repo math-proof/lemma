@@ -62,7 +62,7 @@ private theorem newton_exists_mean_value_point
 
 /-- A Newton step has quadratic error when the derivative is Lipschitz and bounded away
 from zero between the current point and a root. -/
-private theorem newton_step_sub_root_abs_le
+theorem newton_step_sub_root_abs_le
     {f : ℝ → ℝ} {c x m : ℝ} {K : NNReal}
     (hf : Differentiable ℝ f) (hc : f c = 0) (hm : 0 < m)
     (hK : LipschitzOnWith K (deriv f) (uIcc c x))

@@ -17,21 +17,4 @@ structure LinearPartition {V : Type*} [DecidableEq V] (G : SimpleGraph V) (k : �
   consecutive : ∀ L ∈ blocks, List.IsChain (fun a b => ¬G.Adj a b) L
 
 variable {V : Type*} [DecidableEq V] {G : SimpleGraph V} {k : ℕ}
-
-@[ext]
-theorem LinearPartition.ext {P Q : LinearPartition G k}
-    (h : P.blocks = Q.blocks) : P = Q := by
-  cases P
-  cases Q
-  cases h
-  rfl
-
-theorem LinearPartition.existsUniqueBlock (P : LinearPartition G k) (v : V) :
-    ∃! L, L ∈ P.blocks ∧ v ∈ L :=
-  P.covers v
-
-theorem LinearPartition.consecutive_mem (P : LinearPartition G k) {L : List V}
-    (hL : L ∈ P.blocks) : List.IsChain (fun a b => ¬G.Adj a b) L :=
-  P.consecutive L hL
-
 end MetaMathlibExt

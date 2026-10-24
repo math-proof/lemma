@@ -12,8 +12,8 @@ import sympy.core.power
 import sympy.vector.Basic
 import stdlib.List
 import sympy.core.function
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
+import Lemma.Random.SinglePSpace.of.Measurable
+import Lemma.Random.SinglePSpace.of.Measurable.Measurable
 
 /-!
 # Shared trajectory model for the policy-gradient lemmas (standard MDP)
@@ -192,10 +192,9 @@ variable {Θ S A : Type*}
 /-- Under `[CountableMeasure S]`, `M.stateAt t` is a `SinglePSpace` random variable on `M θ`. -/
 instance stateAt.singlePSpace (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (M.stateAt t) :=
-  Random.SinglePSpace.of.EqMeasureCount.Measurable
+  Random.SinglePSpace.of.Measurable
     (measurable_fst.comp <| measurable_snd.comp <|
       (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t))
-    CountableMeasure.measure_eq_count
 end StateAtSinglePSpace
 
 section ActionAtSinglePSpace
@@ -207,10 +206,9 @@ variable {Θ S A : Type*}
 /-- Under `[CountableMeasure A]`, `M.actionAt t` is a `SinglePSpace` random variable on `M θ`. -/
 instance actionAt.singlePSpace (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (M.actionAt t) :=
-  Random.SinglePSpace.of.EqMeasureCount.Measurable
+  Random.SinglePSpace.of.Measurable
     (measurable_snd.comp <| measurable_snd.comp <|
       (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t))
-    CountableMeasure.measure_eq_count
 end ActionAtSinglePSpace
 
 end Model
@@ -296,8 +294,7 @@ omit [MeasurableSingletonClass A] in
 /-- Under `[IsPolicyTrajectory M r s a]` and `[CountableMeasure S]`, `s t` is a `SinglePSpace` RV on `M θ`. -/
 theorem IsPolicyTrajectory.singlePSpace_s [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (s t) :=
-  Random.SinglePSpace.of.EqMeasureCount.Measurable (h.measurable_s t)
-    CountableMeasure.measure_eq_count
+  Random.SinglePSpace.of.Measurable (h.measurable_s t)
 
 end IsPolicyTrajectoryState
 
@@ -313,8 +310,7 @@ variable {Θ S A : Type*}
 /-- Under `[IsPolicyTrajectory M r s a]` and `[CountableMeasure A]`, `a t` is a `SinglePSpace` RV on `M θ`. -/
 theorem IsPolicyTrajectory.singlePSpace_a [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (a t) :=
-  Random.SinglePSpace.of.EqMeasureCount.Measurable (h.measurable_a t)
-    CountableMeasure.measure_eq_count
+  Random.SinglePSpace.of.Measurable (h.measurable_a t)
 
 end IsPolicyTrajectoryAction
 
@@ -330,16 +326,14 @@ variable {Θ S A : Type*}
 /-- Joint `(s t, a t)`. Scoped: `r` is not in the conclusion (HMM-style). -/
 theorem IsPolicyTrajectory.singlePSpace_sa [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (s t, a t) :=
-  Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
+  Random.SinglePSpace.of.Measurable.Measurable
     (h.measurable_s t) (h.measurable_a t)
-    CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count
 
 /-- Joint `(a t, s t)` (order used by some Random condProb / Grad lemmas). Scoped. -/
 theorem IsPolicyTrajectory.singlePSpace_as [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (a t, s t) :=
-  Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
+  Random.SinglePSpace.of.Measurable.Measurable
     (h.measurable_a t) (h.measurable_s t)
-    CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count
 end IsPolicyTrajectoryJoint
 
 namespace IsPolicyTrajectory

@@ -1,18 +1,26 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.LocalRing.Henselian
 
 
 /--
 [HenselianLocalRing.of_isAdicComplete_maximalIdeal](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/LocalRing/Henselian.lean)
 -/
 @[path]
-private lemma HenselianLocalRing_of_isAdicComplete_maximalIdeal_eq
+lemma HenselianLocalRing.of_isAdicComplete_maximalIdeal
   [CommRing R] [IsLocalRing R] [IsAdicComplete (IsLocalRing.maximalIdeal R) R] :
 -- imply
   HenselianLocalRing R := by
 -- proof
-  apply HenselianLocalRing.of_isAdicComplete_maximalIdeal R
+  have hH := IsAdicComplete.henselianRing R (IsLocalRing.maximalIdeal R)
+  exact {
+    is_henselian := fun f hf a0 hroot hderiv => by
+      have hderiv' : IsUnit
+        (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R)
+          (Polynomial.eval a0 (Polynomial.derivative f))) :=
+        hderiv.map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R))
+      exact hH.is_henselian f hf a0 hroot hderiv'
+  }
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

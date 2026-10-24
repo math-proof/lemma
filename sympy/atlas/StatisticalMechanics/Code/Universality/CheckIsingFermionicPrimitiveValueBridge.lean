@@ -1,0 +1,22 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPrimitiveValueBridge.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveValueBridge
+
+open StatMech.Universality
+open FKIsingSquareBoundaryLayerCoordinateOneForm
+
+#print axioms PhysicalSplitRobinConsistencyInputs.primitive_tendsto_at_of_incidenceEmbedding
+#print axioms isingFermionicEntireSquarePrimitive_tendsto_at
+#print axioms isingFermionic_dense_primitive_identification_of_finite_scale_values
+#print axioms isingFermionicEntireSquarePrimitive_im_tendsto_of_discretePrimitive
+#print axioms fkIsingExpandingBoundarySquare_scalingLimit_of_holder_and_dense_primitiveValues
+#print axioms
+  fkIsingExpandingBoundarySquare_scalingLimit_of_holder_and_dense_discretePrimitive

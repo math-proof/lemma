@@ -5,6 +5,36 @@ open IsLocalRing
 
 
 /--
+[factorResidueFieldMaximalIdealPowQuotient_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/MaximalIdealPowFactor.lean)
+-/
+@[path]
+lemma factorResidueFieldMaximalIdealPowQuotient_surjective
+  [CommRing A] [CommRing B] [IsDomain A] [IsDomain B] [IsDiscreteValuationRing A] [IsDiscreteValuationRing B] [Algebra A B]
+  {n : ℕ} :
+-- imply
+  Function.Surjective (factorResidueFieldMaximalIdealPowQuotient A B n) :=
+-- proof
+  Ideal.Quotient.factor_surjective (maximalIdealPowQuotientIdeal_le A B n)
+
+/--
+[residueFieldLinearEquivMaximalIdealGradedPieceKerFactor_mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/MaximalIdealPowFactor.lean)
+-/
+@[path]
+lemma residueFieldLinearEquivMaximalIdealGradedPieceKerFactor_mk
+  [CommRing A] [CommRing B] [IsDomain A] [IsDomain B] [IsDiscreteValuationRing A] [IsDiscreteValuationRing B] [Algebra A B] [IsLocalHom (algebraMap A B)]
+  {n : ℕ} [Module (ResidueField A) (IsDiscreteValuationRing.MaximalIdealGradedPiece B n)] [IsScalarTower (ResidueField A) (ResidueField B) (IsDiscreteValuationRing.MaximalIdealGradedPiece B n)]
+  {z : (maximalIdeal B ^ n : Ideal B)}
+-- given
+  (hSucc : Ideal.map (algebraMap A B) (maximalIdeal A) ≤ maximalIdeal B ^ (n + 1)) :
+-- imply
+  ((residueFieldLinearEquivMaximalIdealGradedPieceKerFactor A B n hSucc
+    (Submodule.Quotient.mk z) :
+    ResidueFieldMaximalIdealPowQuotient A B (n + 1)) =
+    Ideal.Quotient.mk _ (z : B)) :=
+-- proof
+  rfl
+
+/--
 [maximalIdealPowQuotientIdeal_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/MaximalIdealPowFactor.lean)
 -/
 @[path]
@@ -32,18 +62,6 @@ private lemma maximalIdealPowQuotientIdeal_le_eq
     Ideal.map (algebraMap A B) (maximalIdeal A) ⊔ maximalIdeal B ^ n := by
 -- proof
   apply maximalIdealPowQuotientIdeal_le A B n
-
-/--
-[factorResidueFieldMaximalIdealPowQuotient_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/MaximalIdealPowFactor.lean)
--/
-@[path]
-private lemma factorResidueFieldMaximalIdealPowQuotient_surjective_eq
-  [CommRing A] [CommRing B] [IsDomain A] [IsDomain B] [IsDiscreteValuationRing A] [IsDiscreteValuationRing B] [Algebra A B]
-  {n : ℕ} :
--- imply
-  Function.Surjective (factorResidueFieldMaximalIdealPowQuotient A B n) := by
--- proof
-  apply factorResidueFieldMaximalIdealPowQuotient_surjective A B n
 
 /--
 [factorResidueFieldMaximalIdealPowQuotient_mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/MaximalIdealPowFactor.lean)
@@ -77,23 +95,6 @@ private lemma residueFieldMaximalIdealPowQuotientEquivPow_mk_eq
 -- proof
   apply residueFieldMaximalIdealPowQuotientEquivPow_mk A B n h b
 
-/--
-[residueFieldLinearEquivMaximalIdealGradedPieceKerFactor_mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/MaximalIdealPowFactor.lean)
--/
-@[path]
-private lemma residueFieldLinearEquivMaximalIdealGradedPieceKerFactor_mk_eq
-  [CommRing A] [CommRing B] [IsDomain A] [IsDomain B] [IsDiscreteValuationRing A] [IsDiscreteValuationRing B] [Algebra A B] [IsLocalHom (algebraMap A B)]
-  {n : ℕ} [Module (ResidueField A) (IsDiscreteValuationRing.MaximalIdealGradedPiece B n)] [IsScalarTower (ResidueField A) (ResidueField B) (IsDiscreteValuationRing.MaximalIdealGradedPiece B n)]
-  {z : (maximalIdeal B ^ n : Ideal B)}
--- given
-  (hSucc : Ideal.map (algebraMap A B) (maximalIdeal A) ≤ maximalIdeal B ^ (n + 1)) :
--- imply
-  ((residueFieldLinearEquivMaximalIdealGradedPieceKerFactor A B n hSucc
-    (Submodule.Quotient.mk z) :
-    ResidueFieldMaximalIdealPowQuotient A B (n + 1)) =
-    Ideal.Quotient.mk _ (z : B)) := by
--- proof
-  apply residueFieldLinearEquivMaximalIdealGradedPieceKerFactor_mk A B n hSucc z
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

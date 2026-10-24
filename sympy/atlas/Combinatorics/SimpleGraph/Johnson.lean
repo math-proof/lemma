@@ -19,11 +19,4 @@ def johnsonGraph (n k : ℕ) : SimpleGraph {s : Finset (Fin n) // s.card = k} wh
   Adj s t := (s.val ∩ t.val).card + 1 = k
   symm.symm s t h := by simpa [Finset.inter_comm]
   loopless.irrefl := by simp +contextual
-
-/-- The adjacency relation of the Johnson graph. -/
-theorem johnsonGraph_adj_iff (n k : ℕ)
-    (s t : {s : Finset (Fin n) // s.card = k}) :
-    (johnsonGraph n k).Adj s t ↔ (s.val ∩ t.val).card + 1 = k :=
-  Iff.rfl
-
 end SimpleGraph

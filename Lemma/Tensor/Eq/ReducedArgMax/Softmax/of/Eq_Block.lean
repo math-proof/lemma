@@ -16,7 +16,7 @@ private lemma lower_triangle.tf
 -- imply
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide ((i.val : ℤ) - l < (j.val : ℤ) ∧ (j.val : ℤ) ≤ i.val)))
   let A₀ : Tensor ℝ* [n, n] := ([i < n] [j < n] (A i j : Tensor ℝ []) : Tensor ℝ [n, n])
-  ∀ i : Fin n, ((ArgMax Set.univ (fun j : Fin n => (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item) : Fin n) : ℤ) - i.val = ArgMax (Set.Ico (0 : ℤ) l) (z i) - ((l : ℤ) - 1) := by
+  ∀ i : Fin n, ((max⁻¹[j : Fin n] (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item : Fin n) : ℤ) - i.val = max⁻¹[x ∈ (Set.Ico (0 : ℤ) l)] (z i) x - ((l : ℤ) - 1) := by
 -- proof
   intro Ξ A₀ i
   obtain ⟨j₀, e1, e2⟩ := ArgMaxItemGetSoftmaxAdd_Mul_Infty.eq.Shift (h_ne := fun i => ⟨i, by omega⟩) (fun (i' j : Fin n) => ((i'.val : ℤ) - l < (j.val : ℤ) ∧ (j.val : ℤ) ≤ i'.val)) A i (z i)
@@ -39,7 +39,7 @@ private lemma lower_triangle
 -- imply
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide ((i.val : ℤ) - l < (j.val : ℤ) ∧ (j.val : ℤ) ≤ i.val)))
   let A₀ : Tensor ℝ* [n, n] := ([i < n] [j < n] (A i j : Tensor ℝ []) : Tensor ℝ [n, n])
-  ∀ i : Fin n, ((ArgMax Set.univ (fun j : Fin n => (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item) : Fin n) : ℤ) - i.val = ArgMax (Set.Ico (0 : ℤ) l) (z i) - ((l : ℤ) - 1) := by
+  ∀ i : Fin n, ((max⁻¹[j : Fin n] (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item : Fin n) : ℤ) - i.val = max⁻¹[x ∈ (Set.Ico (0 : ℤ) l)] (z i) x - ((l : ℤ) - 1) := by
 -- proof
   intro Ξ A₀ i
   obtain ⟨j₀, e1, e2⟩ := ArgMaxItemGetSoftmaxAdd_Mul_Infty.eq.Shift (h_ne := fun i => ⟨i, by omega⟩) (fun (i' j : Fin n) => ((i'.val : ℤ) - l < (j.val : ℤ) ∧ (j.val : ℤ) ≤ i'.val)) A i (z i)
@@ -63,7 +63,7 @@ private lemma tf
 -- imply
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide ((i.val : ℤ) - l < (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u)))
   let A₀ : Tensor ℝ* [n, n] := ([i < n] [j < n] (A i j : Tensor ℝ []) : Tensor ℝ [n, n])
-  ∀ i : Fin n, ((ArgMax Set.univ (fun j : Fin n => (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item) : Fin n) : ℤ) - i.val = ArgMax (Set.Ico 0 ((l : ℤ) + u - 1)) (z i) - ((l : ℤ) - 1) := by
+  ∀ i : Fin n, ((max⁻¹[j : Fin n] (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item : Fin n) : ℤ) - i.val = max⁻¹[x ∈ (Set.Ico 0 ((l : ℤ) + u - 1))] (z i) x - ((l : ℤ) - 1) := by
 -- proof
   intro Ξ A₀ i
   obtain ⟨j₀, e1, e2⟩ := ArgMaxItemGetSoftmaxAdd_Mul_Infty.eq.Shift (h_ne := fun i => ⟨i, by omega⟩) (fun (i' j : Fin n) => ((i'.val : ℤ) - l < (j.val : ℤ) ∧ (j.val : ℤ) < (i'.val : ℤ) + u)) A i (z i)
@@ -87,7 +87,7 @@ private lemma main
 -- imply
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide ((i.val : ℤ) - l < (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u)))
   let A₀ : Tensor ℝ* [n, n] := ([i < n] [j < n] (A i j : Tensor ℝ []) : Tensor ℝ [n, n])
-  ∀ i : Fin n, ((ArgMax Set.univ (fun j : Fin n => (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item) : Fin n) : ℤ) - i.val = ArgMax (Set.Ico 0 ((l : ℤ) + u - 1)) (z i) - ((l : ℤ) - 1) := by
+  ∀ i : Fin n, ((max⁻¹[j : Fin n] (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item : Fin n) : ℤ) - i.val = max⁻¹[x ∈ (Set.Ico 0 ((l : ℤ) + u - 1))] (z i) x - ((l : ℤ) - 1) := by
 -- proof
   intro Ξ A₀ i
   obtain ⟨j₀, e1, e2⟩ := ArgMaxItemGetSoftmaxAdd_Mul_Infty.eq.Shift (h_ne := fun i => ⟨i, by omega⟩) (fun (i' j : Fin n) => ((i'.val : ℤ) - l < (j.val : ℤ) ∧ (j.val : ℤ) < (i'.val : ℤ) + u)) A i (z i)
@@ -110,7 +110,7 @@ private lemma upper_triangle.tf
 -- imply
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u)))
   let A₀ : Tensor ℝ* [n, n] := ([i < n] [j < n] (A i j : Tensor ℝ []) : Tensor ℝ [n, n])
-  ∀ i : Fin n, ((ArgMax Set.univ (fun j : Fin n => (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item) : Fin n) : ℤ) - i.val = ArgMax (Set.Ico 0 (u : ℤ)) (z i) := by
+  ∀ i : Fin n, ((max⁻¹[j : Fin n] (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item : Fin n) : ℤ) - i.val = max⁻¹[x ∈ (Set.Ico 0 (u : ℤ))] (z i) x := by
 -- proof
   intro Ξ A₀ i
   obtain ⟨j₀, e1, e2⟩ := ArgMaxItemGetSoftmaxAdd_Mul_Infty.eq.Shift (h_ne := fun i => ⟨i, by omega⟩) (fun (i' j : Fin n) => ((i'.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i'.val : ℤ) + u)) A i (z i)
@@ -132,7 +132,7 @@ private lemma upper_triangle
 -- imply
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u)))
   let A₀ : Tensor ℝ* [n, n] := ([i < n] [j < n] (A i j : Tensor ℝ []) : Tensor ℝ [n, n])
-  ∀ i : Fin n, ((ArgMax Set.univ (fun j : Fin n => (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item) : Fin n) : ℤ) - i.val = ArgMax (Set.Ico 0 (u : ℤ)) (z i) := by
+  ∀ i : Fin n, ((max⁻¹[j : Fin n] (((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item : Fin n) : ℤ) - i.val = max⁻¹[x ∈ (Set.Ico 0 (u : ℤ))] (z i) x := by
 -- proof
   intro Ξ A₀ i
   obtain ⟨j₀, e1, e2⟩ := ArgMaxItemGetSoftmaxAdd_Mul_Infty.eq.Shift (h_ne := fun i => ⟨i, by omega⟩) (fun (i' j : Fin n) => ((i'.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i'.val : ℤ) + u)) A i (z i)
@@ -141,4 +141,4 @@ private lemma upper_triangle
   rw [e1, e2]
 
 
--- created on 2022-01-03
+-- created on 2022-01-04

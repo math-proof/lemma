@@ -79,9 +79,7 @@ def GAdj : V → V → Prop
 /-- The graph {name}`G` on 16 vertices used for the n=5 counterexample. -/
 def G : SimpleGraph V where
   Adj := GAdj
-  symm := by
-    intro u v h
-    cases u <;> cases v <;> grind [GAdj]
+  symm := { symm := fun u v h => by cases u <;> cases v <;> grind [GAdj] }
   loopless := ⟨by intro v; cases v <;> simp [GAdj]⟩
 
 /-!
@@ -219,9 +217,7 @@ lemma degree_A1 (i : Fin 2) : G.degree (A1 i) = 7 := by
           simp [VEquiv]
           grind
         _ = 1 := by
-          fin_cases i <;> simp
-          . convert Finset.card_singleton 1
-          convert Finset.card_singleton 0
+          fin_cases i <;> decide
       . calc
         _ = Finset.card (Finset.univ : Finset (Fin 5)) := by
           congr; ext; simp
@@ -315,7 +311,8 @@ lemma degree_A2 (i : Fin 3) : G.degree (A2 i) = 8 := by
             grind
           _ = _ := by
             convert Finset.card_erase_of_mem (show i ∈ Finset.univ by simp)
-            grind
+            · ext x; simp [Finset.mem_erase]
+            · simp [Fintype.card_fin]
       . calc
           _ = Finset.card (Finset.univ: Finset (Fin 5)) := by
             congr; ext; simp

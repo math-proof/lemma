@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings
 import Lemma.Nat.Eq2.of.Ge1.NotHasVerticalInCol.IsFaultfree.DominoTiling
 import Lemma.Nat.Even.AnyDominoTiling.of.IsFaultfree.DominoTiling
 import Lemma.Nat.Even.AnyTilingEquiv.of.IsFaultfree.DominoTiling

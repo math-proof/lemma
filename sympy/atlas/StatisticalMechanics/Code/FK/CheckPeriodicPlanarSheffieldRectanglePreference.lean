@@ -1,0 +1,33 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckPeriodicPlanarSheffieldRectanglePreference.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRectanglePreference
+
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.setHitsInfinite_subset_rectSideConnection_union
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rectanglePairMergeErrorUnion_mono_sources
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rectanglePairMergeErrorUnion_measureReal_tendsto_zero
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.configTranslate_preimage_rectanglePairMergeErrorUnion_subset
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.translated_rectanglePairMergeErrorUnion_measureReal_tendsto_zero
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.finiteRectangleJoinedVerticalEvent_subset_verticalCrossing
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.finiteRectangleJoinedHorizontalEvent_subset_horizontalCrossing
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.verticalCrossing_measureReal_ge_side_mul_sub_mergeError
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.horizontalCrossing_measureReal_ge_side_mul_sub_mergeError
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.setHitsInfinite_inter_rectSide_diff_mergeError_subset_rectSide
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rectSide_measureReal_ge_hits_mul_side_sub_mergeError
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.verticalCrossing_ge_preferredSide_transfer
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.horizontalCrossing_ge_preferredSide_transfer
+#print axioms StatMech.FK.PeriodicPlanar.dominant_of_four_event_sqrt_trick
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.dominant_bottomSide_measureReal_ge_fourthRoot
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.dominant_leftSide_measureReal_ge_fourthRoot
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.preference_max_bottom_left_ge_fourthRoot
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.dominant_translatedOrbitBox_bottomSide_ge_fourthRoot
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.dominant_translatedOrbitBox_bottomSide_tendsto_one
+#print axioms StatMech.FK.PeriodicPlanar.crossing_tendsto_one_of_preferredSide_transfer
+#print axioms StatMech.FK.PeriodicPlanar.crossing_max_tendsto_one_of_preferredSide_branches

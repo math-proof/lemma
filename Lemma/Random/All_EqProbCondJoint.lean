@@ -14,7 +14,7 @@ private lemma main
   (hP : SinglePSpace π (x, y, z)) :
 -- imply
   have _hPxy_z : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
-  have _hPyz : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hP
+  have _hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hP
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
     ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
       ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
@@ -27,8 +27,8 @@ private lemma main
   let ξ : Measure γ := ReferenceMeasure.measure
   let e : (α × β) × γ ≃ᵐ α × (β × γ) := MeasurableEquiv.prodAssoc
   have hP_left : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
-  have hPyz : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hP
-  have hPz : SinglePSpace π z := PSpace.of.PSpace_Joint.snd hP_left
+  have hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hP
+  have hPz : SinglePSpace π z := SinglePSpace.of.SinglePSpace.snd hP_left
   let xyz : Ω → α × (β × γ) := (x, (y, z))
   let p3 : (α × β) × γ → ENNReal := π.prob ((x, y), z)
   let p3' : α × (β × γ) → ENNReal := π.prob xyz
@@ -118,7 +118,7 @@ private lemma Cond
   (hP : SinglePSpace π (x, y, z)) :
 -- imply
   have _hPxy_z : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
-  have _hPyz : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hP
+  have _hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hP
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
     ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
       ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
@@ -133,6 +133,6 @@ private lemma Cond
   rw [hc, mul_comm]
 
 
--- created on 2023-03-27
+-- created on 2020-12-11
 -- updated on 2026-09-20
 -- updated on 2026-09-27

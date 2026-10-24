@@ -13,7 +13,7 @@ import Lemma.List.ProdRotate.eq.Prod
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.TakeRotate.eq.Drop.of.GeLength
 import Lemma.Nat.EqMod.of.Lt
-open Vector Tensor List Bool Nat Fin
+open Vector Tensor List Bool Nat Fin Set
 
 
 @[path]

@@ -1,15 +1,136 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.ChuVandermondeTerminatingSpecialization
 open scoped BigOperators
-open MetaMathlibExt
 
+
+namespace MetaMathlibExt
+
+/--
+[chu_aux_prod](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/ChuVandermondeTerminatingSpecialization.lean)
+-/
+@[path]
+private lemma chu_aux_prod (k : ℕ) : ∀ m : ℕ,
+  (∏ i ∈ Finset.Icc 2 (m + 1), (k + i)) = Nat.ascFactorial (k + 2) m := by
+  intro m
+  induction m with
+  | zero => rfl
+  | succ m ih =>
+    rw [Finset.prod_Icc_succ_top (by omega : 2 ≤ m + 1 + 1), ih, Nat.ascFactorial_succ]
+    ring
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[chu_aux_point](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/ChuVandermondeTerminatingSpecialization.lean)
+-/
+@[path]
+private lemma chu_aux_point (n k : ℕ) (hn : 1 ≤ n) :
+  ((n + k).choose k : ℚ) / ((k : ℚ) + 1)
+    = (∏ i ∈ Finset.Icc 2 n, ((k : ℚ) + (i : ℚ))) / (n.factorial : ℚ) := by
+  have hle : k ≤ n + k := Nat.le_add_left k n
+  have hA := Nat.choose_mul_factorial_mul_factorial hle
+  rw [Nat.add_sub_cancel] at hA
+  have hB := Nat.factorial_mul_ascFactorial (k + 1) (n - 1)
+  rw [show k + 1 + 1 = k + 2 from rfl] at hB
+  rw [show k + 1 + (n - 1) = n + k from by omega] at hB
+  have hn' : n = (n - 1) + 1 := by omega
+  have hkey : (∏ i ∈ Finset.Icc 2 n, (k + i)) = Nat.ascFactorial (k + 2) (n - 1) := by
+    conv_lhs => rw [hn']
+    exact chu_aux_prod k (n - 1)
+  have hA' : ((n + k).choose k : ℚ) * (k.factorial : ℚ) * (n.factorial : ℚ)
+    = ((n + k).factorial : ℚ) := by exact_mod_cast hA
+  have hB' : ((k + 1).factorial : ℚ) * ((∏ i ∈ Finset.Icc 2 n, (k + i) : ℕ) : ℚ)
+    = ((n + k).factorial : ℚ) := by
+    have hBn : ((k + 1).factorial * Nat.ascFactorial (k + 2) (n - 1) : ℕ)
+      = ((n + k).factorial : ℕ) := hB
+    rw [← hkey] at hBn
+    exact_mod_cast hBn
+  have hC' : ((k + 1).factorial : ℚ) = ((k : ℚ) + 1) * (k.factorial : ℚ) := by
+    have hC := Nat.factorial_succ k
+    exact_mod_cast hC
+  have hkF : (k.factorial : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero k)
+  have hcancel : ((n + k).choose k : ℚ) * (n.factorial : ℚ)
+    = ((∏ i ∈ Finset.Icc 2 n, (k + i) : ℕ) : ℚ) * ((k : ℚ) + 1) := by
+    have hAB : ((n + k).choose k : ℚ) * (k.factorial : ℚ) * (n.factorial : ℚ)
+      = ((∏ i ∈ Finset.Icc 2 n, (k + i) : ℕ) : ℚ) * ((k : ℚ) + 1) * (k.factorial : ℚ) := by
+      rw [hA', ← hB', hC']
+      ring
+    have hAB' : (((n + k).choose k : ℚ) * (n.factorial : ℚ)) * (k.factorial : ℚ)
+      = ((((∏ i ∈ Finset.Icc 2 n, (k + i) : ℕ) : ℚ)) * ((k : ℚ) + 1)) * (k.factorial : ℚ) := by
+      linear_combination hAB
+    exact mul_right_cancel₀ hkF hAB'
+  have hEval : (∏ i ∈ Finset.Icc 2 n, ((k : ℚ) + (i : ℚ)))
+    = ((∏ i ∈ Finset.Icc 2 n, (k + i) : ℕ) : ℚ) := by
+    rw [Nat.cast_prod]
+    exact Finset.prod_congr rfl (fun i _ => (Nat.cast_add k i).symm)
+  have hk1 : ((k : ℚ) + 1) ≠ 0 := by positivity
+  have hnF : (n.factorial : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero n)
+  rwa [hEval, div_eq_div_iff hk1 hnF]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[chu_aux_vanish](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/ChuVandermondeTerminatingSpecialization.lean)
+-/
+@[path]
+private lemma chu_aux_vanish (n : ℕ) (P : Polynomial ℚ) (hP : P.natDegree < n) :
+  ∑ k ∈ Finset.range (n + 1), (-1 : ℚ) ^ k * (n.choose k : ℚ) * P.eval (k : ℚ) = 0 := by
+  have h1 := Polynomial.fwdDiff_iter_eq_zero_of_degree_lt hP
+  have h2 := fwdDiff_iter_eq_sum_shift (1 : ℚ) (fun x => P.eval x) n (0 : ℚ)
+  rw [h1] at h2
+  simp only [Pi.zero_apply, zero_add, nsmul_eq_mul, mul_one, zsmul_eq_mul,
+    Int.cast_mul, Int.cast_pow, Int.cast_natCast, Int.cast_neg, Int.cast_one] at h2
+  have hsq2 : ∀ k : ℕ, (-1 : ℚ) ^ k * (-1 : ℚ) ^ k = 1 := by
+    intro k
+    have h2e : (-1 : ℚ) ^ (k + k) = 1 := Even.neg_one_pow ⟨k, rfl⟩
+    rwa [pow_add] at h2e
+  have hterm : ∀ k ∈ Finset.range (n + 1),
+    (-1 : ℚ) ^ (n - k) * (n.choose k : ℚ) * P.eval (k : ℚ)
+      = (-1 : ℚ) ^ n * ((-1 : ℚ) ^ k * (n.choose k : ℚ) * P.eval (k : ℚ)) := by
+    intro k hk
+    have hk' : k < n + 1 := Finset.mem_range.mp hk
+    have hkn : k ≤ n := by omega
+    have hpow : (-1 : ℚ) ^ n = (-1 : ℚ) ^ (n - k) * (-1 : ℚ) ^ k := by
+      conv_lhs => rw [← Nat.sub_add_cancel hkn, pow_add]
+    rw [hpow]
+    linear_combination
+      -(↑(n.choose k) * P.eval (↑k) * (-1 : ℚ) ^ (n - k)) * (hsq2 k)
+  rw [Finset.sum_congr rfl hterm, ← Finset.mul_sum] at h2
+  have hne : (-1 : ℚ) ^ n ≠ 0 := pow_ne_zero _ (by norm_num)
+  exact (mul_eq_zero.mp h2.symm).resolve_left hne
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[chu_aux_deg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/ChuVandermondeTerminatingSpecialization.lean)
+-/
+@[path]
+private lemma chu_aux_deg (n : ℕ) (hn : 1 ≤ n) :
+  (∏ i ∈ Finset.Icc 2 n, (Polynomial.X + Polynomial.C (i : ℚ))).natDegree < n := by
+  calc (∏ i ∈ Finset.Icc 2 n, (Polynomial.X + Polynomial.C (i : ℚ))).natDegree
+    ≤ ∑ i ∈ Finset.Icc 2 n, (Polynomial.X + Polynomial.C (i : ℚ)).natDegree :=
+      Polynomial.natDegree_prod_le _ _
+    _ = ∑ _i ∈ Finset.Icc 2 n, 1 :=
+      Finset.sum_congr rfl (fun i _ => Polynomial.natDegree_X_add_C _)
+    _ = (Finset.Icc 2 n).card := by simp
+    _ = n + 1 - 2 := Nat.card_Icc 2 n
+    _ < n := by omega
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [chu_vandermonde_terminating_specialization](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/ChuVandermondeTerminatingSpecialization.lean)
 -/
 @[path]
-private lemma chu_vandermonde_terminating_specialization_eq
+lemma chu_vandermonde_terminating_specialization
   {n : ℕ}
 -- given
   (hn : 1 ≤ n) :
@@ -17,7 +138,33 @@ private lemma chu_vandermonde_terminating_specialization_eq
   ∑ k ∈ Finset.range (n + 1),
     (n.choose k : ℚ) * ((n + k).choose k : ℚ) * (-1 : ℚ) ^ k / (k + 1) = 0 := by
 -- proof
-  apply MetaMathlibExt.chu_vandermonde_terminating_specialization n hn
+  set P : Polynomial ℚ := ∏ i ∈ Finset.Icc 2 n, (Polynomial.X + Polynomial.C (i : ℚ))
+    with hPdef
+  have hPdeg : P.natDegree < n := chu_aux_deg n hn
+  have hvan : ∑ k ∈ Finset.range (n + 1),
+    (-1 : ℚ) ^ k * (n.choose k : ℚ) * P.eval (k : ℚ) = 0 :=
+    chu_aux_vanish n P hPdeg
+  have hEval : ∀ k : ℕ, P.eval (k : ℚ)
+    = ∏ i ∈ Finset.Icc 2 n, ((k : ℚ) + (i : ℚ)) := by
+    intro k
+    rw [hPdef, Polynomial.eval_prod]
+    exact Finset.prod_congr rfl (fun i _ => by
+      rw [Polynomial.eval_add, Polynomial.eval_X, Polynomial.eval_C])
+  have hd : ∀ k : ℕ, ((k : ℚ) + 1) ≠ 0 := fun k => by positivity
+  have hN : (n.factorial : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero n)
+  have hpoint : ∀ k ∈ Finset.range (n + 1),
+    (n.choose k : ℚ) * ((n + k).choose k : ℚ) * (-1 : ℚ) ^ k / (k + 1)
+      = ((-1 : ℚ) ^ k * (n.choose k : ℚ) * P.eval (k : ℚ)) / (n.factorial : ℚ) := by
+    intro k _
+    rw [hEval k]
+    have hC2 := chu_aux_point n k hn
+    rw [div_eq_div_iff (hd k) hN] at hC2
+    rw [div_eq_div_iff (hd k) hN]
+    linear_combination ((n.choose k : ℚ) * (-1 : ℚ) ^ k) * hC2
+  rw [Finset.sum_congr rfl hpoint, ← Finset.sum_div, hvan, zero_div]
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

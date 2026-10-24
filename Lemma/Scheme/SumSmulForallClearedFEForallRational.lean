@@ -1,111 +1,107 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma eq_of_eqOn_halfplane (f g : ℂ → ℂ) (hf : Differentiable ℂ f) (hg : Differentiable ℂ g) (σ : ℝ)
-    (h : ∀ s : ℂ, σ < s.re → f s = g s) : ∀ s : ℂ, f s = g s := by
+
+private lemma eq_of_eqOn_halfplane (f g : ℂ → ℂ) (hf : Differentiable ℂ f) (hg : Differentiable ℂ g) (σ : ℝ) (h : ∀ s : ℂ, σ < s.re → f s = g s) : ∀ s : ℂ, f s = g s := by
   have hU : IsOpen {s : ℂ | σ < s.re} := isOpen_lt continuous_const Complex.continuous_re
   have hz : ((σ + 1 : ℝ) : ℂ) ∈ {s : ℂ | σ < s.re} := by
-    show σ < ((σ + 1 : ℝ) : ℂ).re; rw [Complex.ofReal_re]; linarith
+    show σ < ((σ + 1 : ℝ) : ℂ).re
+    rw [Complex.ofReal_re]
+    linarith
   have hfg : f =ᶠ[nhds ((σ + 1 : ℝ) : ℂ)] g :=
     Filter.eventually_of_mem (hU.mem_nhds hz) (fun s hs => h s hs)
   have := AnalyticOnNhd.eqOn_of_preconnected_of_eventuallyEq
     (hf.differentiableOn.analyticOnNhd isOpen_univ) (hg.differentiableOn.analyticOnNhd isOpen_univ)
     isPreconnected_univ (Set.mem_univ _) hfg
-  exact fun s => this (Set.mem_univ s)
-private lemma differentiable_cpow_mul (N : ℕ) (hN : 1 < N) (c : ℂ) : Differentiable ℂ fun s : ℂ => (N : ℂ) ^ (c * s) :=
-  (differentiable_id.const_mul c).const_cpow (Or.inl (by exact_mod_cast (by omega : N ≠ 0)))
+  refine fun s => this (Set.mem_univ s)
+private lemma differentiable_cpow_mul (N : ℕ) (hN : 1 < N) (c : ℂ) : Differentiable ℂ fun s : ℂ => (N : ℂ) ^ (c * s) := (differentiable_id.const_mul c).const_cpow (Or.inl (by exact_mod_cast (by omega : N ≠ 0)))
 private lemma differentiable_cpow_neg (N : ℕ) (hN : 1 < N) : Differentiable ℂ fun s : ℂ => (N : ℂ) ^ (-s) := by
   have : (fun s : ℂ => (N : ℂ) ^ (-s)) = fun s : ℂ => (N : ℂ) ^ ((-1 : ℂ) * s) := by
-    funext s; rw [neg_one_mul]
-  rw [this]; exact differentiable_cpow_mul N hN (-1)
+    funext s
+    rw [neg_one_mul]
+  rw [this]
+  refine differentiable_cpow_mul N hN (-1)
 private lemma differentiable_cpow_self (N : ℕ) (hN : 1 < N) : Differentiable ℂ fun s : ℂ => (N : ℂ) ^ s := by
   have : (fun s : ℂ => (N : ℂ) ^ s) = fun s : ℂ => (N : ℂ) ^ ((1 : ℂ) * s) := by
-    funext s; rw [one_mul]
-  rw [this]; exact differentiable_cpow_mul N hN 1
-private lemma differentiable_eval_comp (p : Polynomial ℂ) {g : ℂ → ℂ} (hg : Differentiable ℂ g) :
-    Differentiable ℂ fun s => p.eval (g s) :=
-  (Polynomial.differentiable p).comp hg
-private lemma exists_forall_eval_ne_zero_of_lt_norm (D : Polynomial ℂ) (hD : D ≠ 0) :
-    ∃ R : ℝ, ∀ z : ℂ, R < ‖z‖ → D.eval z ≠ 0 := by
+    funext s
+    rw [one_mul]
+  rw [this]
+  refine differentiable_cpow_mul N hN 1
+private lemma differentiable_eval_comp (p : Polynomial ℂ) {g : ℂ → ℂ} (hg : Differentiable ℂ g) : Differentiable ℂ fun s => p.eval (g s) := (Polynomial.differentiable p).comp hg
+private lemma exists_forall_eval_ne_zero_of_lt_norm (D : Polynomial ℂ) (hD : D ≠ 0) : ∃ R : ℝ, ∀ z : ℂ, R < ‖z‖ → D.eval z ≠ 0 := by
   classical
   refine ⟨∑ w ∈ D.roots.toFinset, ‖w‖, fun z hz hz0 => ?_⟩
   have hmem : z ∈ D.roots.toFinset := by
-    rw [Multiset.mem_toFinset, Polynomial.mem_roots hD]; exact hz0
+    rwa [Multiset.mem_toFinset, Polynomial.mem_roots hD]
   have : ‖z‖ ≤ ∑ w ∈ D.roots.toFinset, ‖w‖ :=
     Finset.single_le_sum (f := fun w : ℂ => ‖w‖) (fun _ _ => norm_nonneg _) hmem
   linarith
-private lemma exists_forall_eval_ne_zero_of_norm_lt (D : Polynomial ℂ) (hD : D ≠ 0) :
-    ∃ ε : ℝ, 0 < ε ∧ ∀ z : ℂ, z ≠ 0 → ‖z‖ < ε → D.eval z ≠ 0 := by
+private lemma exists_forall_eval_ne_zero_of_norm_lt (D : Polynomial ℂ) (hD : D ≠ 0) : ∃ ε : ℝ, 0 < ε ∧ ∀ z : ℂ, z ≠ 0 → ‖z‖ < ε → D.eval z ≠ 0 := by
   classical
   let S := (D.roots.toFinset).erase 0
-  by_cases hS : S.Nonempty
-  · refine ⟨S.inf' hS (fun w => ‖w‖), ?_, fun z hz0 hz hz' => ?_⟩
-    · obtain ⟨w, hw, hweq⟩ := Finset.exists_mem_eq_inf' hS (fun w => ‖w‖)
-      rw [hweq]; exact norm_pos_iff.2 (Finset.ne_of_mem_erase hw)
-    · have hmem : z ∈ S := by
-        rw [Finset.mem_erase, Multiset.mem_toFinset, Polynomial.mem_roots hD]; exact ⟨hz0, hz'⟩
-      exact absurd (Finset.inf'_le (fun w => ‖w‖) hmem) (not_le.2 hz)
-  · refine ⟨1, one_pos, fun z hz0 _ hz' => hS ⟨z, ?_⟩⟩
-    rw [Finset.mem_erase, Multiset.mem_toFinset, Polynomial.mem_roots hD]; exact ⟨hz0, hz'⟩
-private lemma norm_cpow_neg_lt (N : ℕ) (hN : 1 < N) (ε : ℝ) (hε : 0 < ε) :
-    ∃ σ : ℝ, ∀ s : ℂ, σ < s.re → ‖(N : ℂ) ^ (-s)‖ < ε := by
+  if hS : S.Nonempty then
+    refine ⟨S.inf' hS (fun w => ‖w‖), ?_, fun z hz0 hz hz' => ?_⟩
+    ·
+      obtain ⟨w, hw, hweq⟩ := Finset.exists_mem_eq_inf' hS (fun w => ‖w‖)
+      rw [hweq]
+      refine norm_pos_iff.mpr (Finset.ne_of_mem_erase hw)
+    ·
+      have hmem : z ∈ S := by
+        rw [Finset.mem_erase, Multiset.mem_toFinset, Polynomial.mem_roots hD]
+        exact ⟨hz0, hz'⟩
+      refine absurd (Finset.inf'_le (fun w => ‖w‖) hmem) (not_le.mpr hz)
+  else
+    refine ⟨1, one_pos, fun z hz0 _ hz' => hS ⟨z, ?_⟩⟩
+    rw [Finset.mem_erase, Multiset.mem_toFinset, Polynomial.mem_roots hD]
+    exact ⟨hz0, hz'⟩
+private lemma norm_cpow_neg_lt (N : ℕ) (hN : 1 < N) (ε : ℝ) (hε : 0 < ε) : ∃ σ : ℝ, ∀ s : ℂ, σ < s.re → ‖(N : ℂ) ^ (-s)‖ < ε := by
   have hN1 : (1 : ℝ) < N := by exact_mod_cast hN
   refine ⟨-Real.logb N ε, fun s hs => ?_⟩
   rw [Complex.norm_natCast_cpow_of_pos (by omega), Complex.neg_re]
-  calc (N : ℝ) ^ (-s.re) < (N : ℝ) ^ (Real.logb N ε) := Real.rpow_lt_rpow_of_exponent_lt hN1 (by linarith)
+  calc
+    _ < (N : ℝ) ^ (Real.logb N ε) := Real.rpow_lt_rpow_of_exponent_lt hN1 (by linarith)
     _ = ε := Real.rpow_logb (by linarith) hN1.ne' hε
-private lemma lt_norm_cpow (N : ℕ) (hN : 1 < N) (R : ℝ) :
-    ∃ σ : ℝ, ∀ s : ℂ, σ < s.re → R < ‖(N : ℂ) ^ s‖ := by
+private lemma lt_norm_cpow (N : ℕ) (hN : 1 < N) (R : ℝ) : ∃ σ : ℝ, ∀ s : ℂ, σ < s.re → R < ‖(N : ℂ) ^ s‖ := by
   have hN1 : (1 : ℝ) < N := by exact_mod_cast hN
-  by_cases hR : 0 < R
-  · refine ⟨Real.logb N R, fun s hs => ?_⟩
+  if hR : 0 < R then
+    refine ⟨Real.logb N R, fun s hs => ?_⟩
     rw [Complex.norm_natCast_cpow_of_pos (by omega)]
-    calc R = (N : ℝ) ^ (Real.logb N R) := (Real.rpow_logb (by linarith) hN1.ne' hR).symm
+    calc
+      _ = (N : ℝ) ^ (Real.logb N R) := (Real.rpow_logb (by linarith) hN1.ne' hR).symm
       _ < (N : ℝ) ^ s.re := Real.rpow_lt_rpow_of_exponent_lt hN1 hs
-  · refine ⟨0, fun s _ => lt_of_le_of_lt (not_lt.1 hR) ?_⟩
+  else
+    refine ⟨0, fun s _ => lt_of_le_of_lt (not_lt.mp hR) ?_⟩
     rw [Complex.norm_natCast_cpow_of_pos (by omega)]
     exact Real.rpow_pos_of_pos (by exact_mod_cast (by omega : 0 < N)) _
-private lemma differentiable_sum' {ι : Type} [Fintype ι] (F : ι → ℂ → ℂ) (h : ∀ j, Differentiable ℂ (F j)) :
-    Differentiable ℂ fun s => ∑ j, F j s := by
+private lemma differentiable_sum' {ι : Type} [Fintype ι] (F : ι → ℂ → ℂ) (h : ∀ j, Differentiable ℂ (F j)) : Differentiable ℂ fun s => ∑ j, F j s := by
   classical
   have key : ∀ (u : Finset ι), Differentiable ℂ fun s => ∑ j ∈ u, F j s := by
     intro u
-    induction u using Finset.induction_on with
-    | empty => simp only [Finset.sum_empty]; exact differentiable_const 0
-    | insert a u ha ih =>
+    refine Finset.induction_on u ?_ ?_
+    ·
+      simp only [Finset.sum_empty]
+      refine differentiable_const 0
+    ·
+      intro a u ha ih
       have : (fun s => ∑ j ∈ insert a u, F j s) = fun s => F a s + ∑ j ∈ u, F j s := by
-        funext s; rw [Finset.sum_insert ha]
-      rw [this]; exact (h a).add ih
-  exact key Finset.univ
+        funext s
+        rw [Finset.sum_insert ha]
+      rw [this]
+      refine (h a).add ih
+  refine key Finset.univ
 private lemma helper_main
-    (N : ℕ) (hN : 1 < N) (C : ℂ) (r : ℤ)
-    {ι : Type} [Fintype ι] (κ : ι → ℂ) (A B : ι → ℂ → ℂ)
-    (hj : ∀ j : ι, ∃ (P Pd Q Qd : Polynomial ℂ) (m md : ℤ) (σ σd : ℝ), Q ≠ 0 ∧ Qd ≠ 0 ∧
-      (∀ s : ℂ, σ < s.re → A j s * Q.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((m : ℂ) * s) * P.eval ((N : ℂ) ^ (-s))) ∧
-      (∀ s : ℂ, σd < s.re → B j s * Qd.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) ∧
-      (∀ s : ℂ,
-        ((1 : Polynomial ℂ)).eval ((N : ℂ) ^ s) * ((N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) *
-            Q.eval ((N : ℂ) ^ s) =
-          ((Polynomial.C C).eval ((N : ℂ) ^ s) * (N : ℂ) ^ ((r : ℂ) * s)) *
-            ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s)) * Qd.eval ((N : ℂ) ^ (-s)))) :
-    ∀ (P Pd Q Qd : Polynomial ℂ) (m md : ℤ) (σ σd : ℝ), Q ≠ 0 → Qd ≠ 0 →
-      (∀ s : ℂ, σ < s.re →
-        (∑ j, κ j * A j s) * Q.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((m : ℂ) * s) * P.eval ((N : ℂ) ^ (-s))) →
-      (∀ s : ℂ, σd < s.re →
-        (∑ j, κ j * B j s) * Qd.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) →
-      ∀ s : ℂ,
-        ((1 : Polynomial ℂ)).eval ((N : ℂ) ^ s) * ((N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) *
-            Q.eval ((N : ℂ) ^ s) =
-          ((Polynomial.C C).eval ((N : ℂ) ^ s) * (N : ℂ) ^ ((r : ℂ) * s)) *
-            ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s)) * Qd.eval ((N : ℂ) ^ (-s)) := by
+  (N : ℕ)
+  (hN : 1 < N)
+  (C : ℂ)
+  (r : ℤ)
+  {ι : Type} [Fintype ι]
+  (κ : ι → ℂ)
+  (A B : ι → ℂ → ℂ)
+  (hj : ∀ j : ι, ∃ (P Pd Q Qd : Polynomial ℂ) (m md : ℤ) (σ σd : ℝ), Q ≠ 0 ∧ Qd ≠ 0 ∧ (∀ s : ℂ, σ < s.re → A j s * Q.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((m : ℂ) * s) * P.eval ((N : ℂ) ^ (-s))) ∧ (∀ s : ℂ, σd < s.re → B j s * Qd.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) ∧ (∀ s : ℂ, ((1 : Polynomial ℂ)).eval ((N : ℂ) ^ s) * ((N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) * Q.eval ((N : ℂ) ^ s) = ((Polynomial.C C).eval ((N : ℂ) ^ s) * (N : ℂ) ^ ((r : ℂ) * s)) * ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s)) * Qd.eval ((N : ℂ) ^ (-s)))) :
+  ∀ (P Pd Q Qd : Polynomial ℂ) (m md : ℤ) (σ σd : ℝ), Q ≠ 0 → Qd ≠ 0 → (∀ s : ℂ, σ < s.re → (∑ j, κ j * A j s) * Q.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((m : ℂ) * s) * P.eval ((N : ℂ) ^ (-s))) → (∀ s : ℂ, σd < s.re → (∑ j, κ j * B j s) * Qd.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) → ∀ s : ℂ, ((1 : Polynomial ℂ)).eval ((N : ℂ) ^ s) * ((N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) * Q.eval ((N : ℂ) ^ s) = ((Polynomial.C C).eval ((N : ℂ) ^ s) * (N : ℂ) ^ ((r : ℂ) * s)) * ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s)) * Qd.eval ((N : ℂ) ^ (-s)) := by
   classical
   intro P Pd Q Qd m md σ σd hQ hQd hA hB
   choose Pj Pdj Qj Qdj mj mdj σj σdj hQj hQdj hAj hBj hFEj using hj
@@ -117,8 +113,10 @@ private lemma helper_main
   have dMneg : ∀ c : ℂ, Differentiable ℂ fun s : ℂ => (N : ℂ) ^ (c * -s) := by
     intro c
     have : (fun s : ℂ => (N : ℂ) ^ (c * -s)) = fun s : ℂ => (N : ℂ) ^ ((-c) * s) := by
-      funext s; rw [mul_neg, neg_mul]
-    rw [this]; exact dM (-c)
+      funext s
+      rw [mul_neg, neg_mul]
+    rw [this]
+    refine dM (-c)
   have dPX : ∀ p : Polynomial ℂ, Differentiable ℂ fun s : ℂ => p.eval ((N : ℂ) ^ (-s)) :=
     fun p => differentiable_eval_comp p dX
   have dPY : ∀ p : Polynomial ℂ, Differentiable ℂ fun s : ℂ => p.eval ((N : ℂ) ^ s) :=
@@ -182,8 +180,7 @@ private lemma helper_main
           (Qdj j).eval ((N : ℂ) ^ (-s)) := by
       intro j
       have h := hFEj j s
-      rw [Polynomial.eval_one, one_mul, Polynomial.eval_C] at h
-      exact h
+      rwa [Polynomial.eval_one, one_mul, Polynomial.eval_C] at h
     rw [Polynomial.eval_one, one_mul, Polynomial.eval_C]
     have step : (N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s)) * Dd.eval ((N : ℂ) ^ (-s)) * D.eval ((N : ℂ) ^ s) =
         Qd.eval ((N : ℂ) ^ (-s)) * (C * (N : ℂ) ^ ((r : ℂ) * s)) * Dd.eval ((N : ℂ) ^ (-s)) *
@@ -194,36 +191,22 @@ private lemma helper_main
         rw [hD j, Polynomial.eval_mul]
       have h2 : Dd.eval ((N : ℂ) ^ (-s)) = (Qdj j).eval ((N : ℂ) ^ (-s)) * (Ddj j).eval ((N : ℂ) ^ (-s)) := by
         rw [hDd j, Polynomial.eval_mul]
-      calc Qd.eval ((N : ℂ) ^ (-s)) * (κ j * ((N : ℂ) ^ ((mdj j : ℂ) * s) * (Pdj j).eval ((N : ℂ) ^ (-s)) *
-              (Ddj j).eval ((N : ℂ) ^ (-s)))) * D.eval ((N : ℂ) ^ s)
-          = Qd.eval ((N : ℂ) ^ (-s)) * κ j * (Ddj j).eval ((N : ℂ) ^ (-s)) *
-              ((N : ℂ) ^ ((mdj j : ℂ) * s) * (Pdj j).eval ((N : ℂ) ^ (-s)) * (Qj j).eval ((N : ℂ) ^ s)) *
-              (Dj j).eval ((N : ℂ) ^ s) := by rw [h1]; ring
-        _ = Qd.eval ((N : ℂ) ^ (-s)) * κ j * (Ddj j).eval ((N : ℂ) ^ (-s)) *
-              (C * (N : ℂ) ^ ((r : ℂ) * s) * ((N : ℂ) ^ ((mj j : ℂ) * (-s)) * (Pj j).eval ((N : ℂ) ^ s)) *
-                (Qdj j).eval ((N : ℂ) ^ (-s))) *
-              (Dj j).eval ((N : ℂ) ^ s) := by rw [FE j]
-        _ = Qd.eval ((N : ℂ) ^ (-s)) * (C * (N : ℂ) ^ ((r : ℂ) * s)) *
-              ((Qdj j).eval ((N : ℂ) ^ (-s)) * (Ddj j).eval ((N : ℂ) ^ (-s))) *
-              (κ j * ((N : ℂ) ^ ((mj j : ℂ) * (-s)) * (Pj j).eval ((N : ℂ) ^ s) * (Dj j).eval ((N : ℂ) ^ s))) := by
-            ring
-        _ = Qd.eval ((N : ℂ) ^ (-s)) * (C * (N : ℂ) ^ ((r : ℂ) * s)) * Dd.eval ((N : ℂ) ^ (-s)) *
-              (κ j * ((N : ℂ) ^ ((mj j : ℂ) * (-s)) * (Pj j).eval ((N : ℂ) ^ s) * (Dj j).eval ((N : ℂ) ^ s))) := by
-            rw [h2]
-    calc (N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s)) * Q.eval ((N : ℂ) ^ s) *
-          (D.eval ((N : ℂ) ^ s) * Dd.eval ((N : ℂ) ^ (-s)))
-        = Q.eval ((N : ℂ) ^ s) *
-          ((N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s)) * Dd.eval ((N : ℂ) ^ (-s)) * D.eval ((N : ℂ) ^ s)) := by
+      calc
+        _ = Qd.eval ((N : ℂ) ^ (-s)) * κ j * (Ddj j).eval ((N : ℂ) ^ (-s)) * ((N : ℂ) ^ ((mdj j : ℂ) * s) * (Pdj j).eval ((N : ℂ) ^ (-s)) * (Qj j).eval ((N : ℂ) ^ s)) * (Dj j).eval ((N : ℂ) ^ s) := by
+          rw [h1]
           ring
-      _ = Q.eval ((N : ℂ) ^ s) * (Qd.eval ((N : ℂ) ^ (-s)) * (C * (N : ℂ) ^ ((r : ℂ) * s)) * Dd.eval ((N : ℂ) ^ (-s)) *
-          ∑ j, κ j * ((N : ℂ) ^ ((mj j : ℂ) * (-s)) * (Pj j).eval ((N : ℂ) ^ s) * (Dj j).eval ((N : ℂ) ^ s))) := by rw [step]
-      _ = C * (N : ℂ) ^ ((r : ℂ) * s) * Qd.eval ((N : ℂ) ^ (-s)) * Dd.eval ((N : ℂ) ^ (-s)) *
-          (Q.eval ((N : ℂ) ^ s) *
-            ∑ j, κ j * ((N : ℂ) ^ ((mj j : ℂ) * (-s)) * (Pj j).eval ((N : ℂ) ^ s) * (Dj j).eval ((N : ℂ) ^ s))) := by ring
-      _ = C * (N : ℂ) ^ ((r : ℂ) * s) * Qd.eval ((N : ℂ) ^ (-s)) * Dd.eval ((N : ℂ) ^ (-s)) *
-          ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s) * D.eval ((N : ℂ) ^ s)) := by rw [← IAs]
-      _ = C * (N : ℂ) ^ ((r : ℂ) * s) * ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s)) *
-          Qd.eval ((N : ℂ) ^ (-s)) * (D.eval ((N : ℂ) ^ s) * Dd.eval ((N : ℂ) ^ (-s))) := by ring
+        _ = Qd.eval ((N : ℂ) ^ (-s)) * κ j * (Ddj j).eval ((N : ℂ) ^ (-s)) * (C * (N : ℂ) ^ ((r : ℂ) * s) * ((N : ℂ) ^ ((mj j : ℂ) * (-s)) * (Pj j).eval ((N : ℂ) ^ s)) * (Qdj j).eval ((N : ℂ) ^ (-s))) * (Dj j).eval ((N : ℂ) ^ s) := by rw [FE j]
+        _ = Qd.eval ((N : ℂ) ^ (-s)) * (C * (N : ℂ) ^ ((r : ℂ) * s)) * ((Qdj j).eval ((N : ℂ) ^ (-s)) * (Ddj j).eval ((N : ℂ) ^ (-s))) * (κ j * ((N : ℂ) ^ ((mj j : ℂ) * (-s)) * (Pj j).eval ((N : ℂ) ^ s) * (Dj j).eval ((N : ℂ) ^ s))) := by
+          ring
+        _ = Qd.eval ((N : ℂ) ^ (-s)) * (C * (N : ℂ) ^ ((r : ℂ) * s)) * Dd.eval ((N : ℂ) ^ (-s)) * (κ j * ((N : ℂ) ^ ((mj j : ℂ) * (-s)) * (Pj j).eval ((N : ℂ) ^ s) * (Dj j).eval ((N : ℂ) ^ s))) := by
+          rw [h2]
+    calc
+      _ = Q.eval ((N : ℂ) ^ s) * ((N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s)) * Dd.eval ((N : ℂ) ^ (-s)) * D.eval ((N : ℂ) ^ s)) := by
+        ring
+      _ = Q.eval ((N : ℂ) ^ s) * (Qd.eval ((N : ℂ) ^ (-s)) * (C * (N : ℂ) ^ ((r : ℂ) * s)) * Dd.eval ((N : ℂ) ^ (-s)) * ∑ j, κ j * ((N : ℂ) ^ ((mj j : ℂ) * (-s)) * (Pj j).eval ((N : ℂ) ^ s) * (Dj j).eval ((N : ℂ) ^ s))) := by rw [step]
+      _ = C * (N : ℂ) ^ ((r : ℂ) * s) * Qd.eval ((N : ℂ) ^ (-s)) * Dd.eval ((N : ℂ) ^ (-s)) * (Q.eval ((N : ℂ) ^ s) * ∑ j, κ j * ((N : ℂ) ^ ((mj j : ℂ) * (-s)) * (Pj j).eval ((N : ℂ) ^ s) * (Dj j).eval ((N : ℂ) ^ s))) := by ring
+      _ = C * (N : ℂ) ^ ((r : ℂ) * s) * Qd.eval ((N : ℂ) ^ (-s)) * Dd.eval ((N : ℂ) ^ (-s)) * ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s) * D.eval ((N : ℂ) ^ s)) := by rw [← IAs]
+      _ = C * (N : ℂ) ^ ((r : ℂ) * s) * ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s)) * Qd.eval ((N : ℂ) ^ (-s)) * (D.eval ((N : ℂ) ^ s) * Dd.eval ((N : ℂ) ^ (-s))) := by ring
   obtain ⟨R, hR⟩ := exists_forall_eval_ne_zero_of_lt_norm D hDne
   obtain ⟨ε, hε, hεD⟩ := exists_forall_eval_ne_zero_of_norm_lt Dd hDdne
   obtain ⟨σ₁, hσ₁⟩ := lt_norm_cpow N hN R
@@ -234,32 +217,24 @@ private lemma helper_main
   intro s hs
   have h1 : D.eval ((N : ℂ) ^ s) ≠ 0 := hR _ (hσ₁ s (lt_of_le_of_lt (le_max_left _ _) hs))
   have h2 : Dd.eval ((N : ℂ) ^ (-s)) ≠ 0 := hεD _ (hpow0 _) (hσ₂ s (lt_of_le_of_lt (le_max_right _ _) hs))
-  exact mul_right_cancel₀ (mul_ne_zero h1 h2) (I6 s)
+  refine mul_right_cancel₀ (mul_ne_zero h1 h2) (I6 s)
 /--
 [LanglandsTunnell_RankinSelberg_forall_clearedFE_sum_smul_of_forall_clearedFE_of_forall_rational](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LanglandsTunnell_RankinSelberg_forall_clearedFE_sum_smul_of_forall_clearedFE_of_forall_rational.lean)
 -/
 @[path]
 private lemma main
-    (N : ℕ) (hN : 1 < N) (C : ℂ) (r : ℤ)
-    {ι : Type} [Fintype ι] (κ : ι → ℂ) (A B : ι → ℂ → ℂ)
-    (hj : ∀ j : ι, ∃ (P Pd Q Qd : Polynomial ℂ) (m md : ℤ) (σ σd : ℝ), Q ≠ 0 ∧ Qd ≠ 0 ∧
-      (∀ s : ℂ, σ < s.re → A j s * Q.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((m : ℂ) * s) * P.eval ((N : ℂ) ^ (-s))) ∧
-      (∀ s : ℂ, σd < s.re → B j s * Qd.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) ∧
-      (∀ s : ℂ,
-        ((1 : Polynomial ℂ)).eval ((N : ℂ) ^ s) * ((N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) *
-            Q.eval ((N : ℂ) ^ s) =
-          ((Polynomial.C C).eval ((N : ℂ) ^ s) * (N : ℂ) ^ ((r : ℂ) * s)) *
-            ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s)) * Qd.eval ((N : ℂ) ^ (-s)))) :
-    ∀ (P Pd Q Qd : Polynomial ℂ) (m md : ℤ) (σ σd : ℝ), Q ≠ 0 → Qd ≠ 0 →
-      (∀ s : ℂ, σ < s.re →
-        (∑ j, κ j * A j s) * Q.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((m : ℂ) * s) * P.eval ((N : ℂ) ^ (-s))) →
-      (∀ s : ℂ, σd < s.re →
-        (∑ j, κ j * B j s) * Qd.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) →
-      ∀ s : ℂ,
-        ((1 : Polynomial ℂ)).eval ((N : ℂ) ^ s) * ((N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) *
-            Q.eval ((N : ℂ) ^ s) =
-          ((Polynomial.C C).eval ((N : ℂ) ^ s) * (N : ℂ) ^ ((r : ℂ) * s)) *
-            ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s)) * Qd.eval ((N : ℂ) ^ (-s)) :=
+  (N : ℕ)
+  (C : ℂ)
+  (r : ℤ)
+  {ι : Type} [Fintype ι]
+  (κ : ι → ℂ)
+  (A B : ι → ℂ → ℂ)
+  -- given
+  (hN : 1 < N)
+  (hj : ∀ j : ι, ∃ (P Pd Q Qd : Polynomial ℂ) (m md : ℤ) (σ σd : ℝ), Q ≠ 0 ∧ Qd ≠ 0 ∧ (∀ s : ℂ, σ < s.re → A j s * Q.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((m : ℂ) * s) * P.eval ((N : ℂ) ^ (-s))) ∧ (∀ s : ℂ, σd < s.re → B j s * Qd.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) ∧ (∀ s : ℂ, ((1 : Polynomial ℂ)).eval ((N : ℂ) ^ s) * ((N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) * Q.eval ((N : ℂ) ^ s) = ((Polynomial.C C).eval ((N : ℂ) ^ s) * (N : ℂ) ^ ((r : ℂ) * s)) * ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s)) * Qd.eval ((N : ℂ) ^ (-s)))) :
+  -- imply
+  ∀ (P Pd Q Qd : Polynomial ℂ) (m md : ℤ) (σ σd : ℝ), Q ≠ 0 → Qd ≠ 0 → (∀ s : ℂ, σ < s.re → (∑ j, κ j * A j s) * Q.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((m : ℂ) * s) * P.eval ((N : ℂ) ^ (-s))) → (∀ s : ℂ, σd < s.re → (∑ j, κ j * B j s) * Qd.eval ((N : ℂ) ^ (-s)) = (N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) → ∀ s : ℂ, ((1 : Polynomial ℂ)).eval ((N : ℂ) ^ s) * ((N : ℂ) ^ ((md : ℂ) * s) * Pd.eval ((N : ℂ) ^ (-s))) * Q.eval ((N : ℂ) ^ s) = ((Polynomial.C C).eval ((N : ℂ) ^ s) * (N : ℂ) ^ ((r : ℂ) * s)) * ((N : ℂ) ^ ((m : ℂ) * (-s)) * P.eval ((N : ℂ) ^ s)) * Qd.eval ((N : ℂ) ^ (-s)) :=
   helper_main N hN C r κ A B hj
+
 
 -- created on 2026-10-20

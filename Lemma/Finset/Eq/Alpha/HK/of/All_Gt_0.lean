@@ -42,4 +42,4 @@ private lemma offset0
   exact Alpha_MapRange.eq.DivHK.of.All_Imp_Gt_0.Gt_0 x h₀ (fun j _ h2 => h j h2)
 
 
--- created on 2020-09-24
+-- created on 2020-05-21

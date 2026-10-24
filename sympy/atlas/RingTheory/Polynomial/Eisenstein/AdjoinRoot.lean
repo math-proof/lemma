@@ -5,6 +5,7 @@ Author: @toskua, Avocado
 -/
 
 import sympy.atlas.RingTheory.AdjoinRoot.LocalMaximal
+import Lemma.Polynomial.AdjoinRoot.LocalMaximal
 import Mathlib.RingTheory.AdjoinRoot
 import Mathlib.RingTheory.Polynomial.Eisenstein.Basic
 import Mathlib.RingTheory.Polynomial.Eisenstein.Distinguished
@@ -272,24 +273,4 @@ theorem isDiscreteValuationRing_of_isEisensteinAt
       Ideal.span_singleton_eq_bot]
     exact root_ne_zero f heis hf hdeg
   exact ((IsDiscreteValuationRing.TFAE (AdjoinRoot f) h_not_field).out 5 1).mp hprinc
-
-/-- The root of a monic Eisenstein polynomial of positive degree over a DVR is
-irreducible. -/
-theorem irreducible_root_of_isEisensteinAt
-    {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
-    (f : A[X]) (heis : f.IsEisensteinAt (IsLocalRing.maximalIdeal A))
-    (hf : f.Monic) (hdeg : 0 < f.natDegree) :
-    Irreducible (root f) := by
-  have : IsDomain (AdjoinRoot f) := AdjoinRoot.isDomain_of_prime
-    (UniqueFactorizationMonoid.irreducible_iff_prime.mp
-      (heis.irreducible (IsLocalRing.maximalIdeal.isMaximal A).isPrime
-        hf.isPrimitive hdeg))
-  have : IsLocalRing (AdjoinRoot f) :=
-    isLocalRing_of_isEisensteinAt f heis hf hdeg
-  have : IsDiscreteValuationRing (AdjoinRoot f) :=
-    isDiscreteValuationRing_of_isEisensteinAt f heis hf hdeg
-  have : IsLocalRing.maximalIdeal (AdjoinRoot f) = Ideal.span {root f} :=
-    isLocalRing_maximalIdeal_eq_span_root f heis hf hdeg
-  exact (IsDiscreteValuationRing.irreducible_iff_uniformizer _).mpr this
-
 end AdjoinRoot

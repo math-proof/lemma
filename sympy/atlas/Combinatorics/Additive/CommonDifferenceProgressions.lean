@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Additive/CommonDifferenceProgressions.lean -/
 
 import sympy.atlas.Combinatorics.AP.Basic
+import Lemma.Set.APBasic
 namespace MetaMathlibExt
 
 /-- Common-difference progressions: holds exactly when there is one shared

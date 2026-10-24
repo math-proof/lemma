@@ -20,7 +20,7 @@ private lemma isJacobsonRing_of_field
     · apply absurd h hP.ne_top
   subst hPbot
   refine le_antisymm ?_ Ideal.le_jacobson
-  apply sInf_le ⟨le_rfl, Ideal.bot_isMaximal⟩
+  apply sInf_le (⟨le_rfl, Ideal.bot_isMaximal⟩ : ⊥ ≤ (⊥ : Ideal K) ∧ (⊥ : Ideal K).IsMaximal)
 
 private lemma mem_of_forall_isMaximal_mem
   {R : Type u} [CommRing R]
@@ -41,7 +41,7 @@ private lemma mem_of_forall_isMaximal_mem
     apply h𝔮
   let _ : (𝔮.comap (algebraMap R A)).IsMaximal := hcm ▸ inferInstance
   let _ : Field (R ⧸ 𝔮.comap (algebraMap R A)) := Ideal.Quotient.field _
-  let _ : IsJacobsonRing (R ⧸ 𝔮.comap (algebraMap R A)) := isJacobsonRing_of_field _
+  let _ : IsJacobsonRing (R ⧸ 𝔮.comap (algebraMap R A)) := isJacobsonRing_of_field
   let _ : Algebra.FiniteType R (A ⧸ 𝔮) := Algebra.FiniteType.of_surjective (Ideal.Quotient.mkₐ R 𝔮) (Ideal.Quotient.mkₐ_surjective R 𝔮)
   let _ : Algebra.FiniteType (R ⧸ 𝔮.comap (algebraMap R A)) (A ⧸ 𝔮) := Algebra.FiniteType.of_restrictScalars_finiteType R (R ⧸ 𝔮.comap (algebraMap R A)) (A ⧸ 𝔮)
   let hJ : IsJacobsonRing (A ⧸ 𝔮) := isJacobsonRing_of_finiteType (A := R ⧸ 𝔮.comap (algebraMap R A))

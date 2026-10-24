@@ -48,82 +48,16 @@ namespace Overpartition
 def IsOverlined {n : ℕ} (O : Overpartition n) (a : ℕ) : Prop :=
   a ∈ O.overlines
 
-/-- Membership characterization for `IsOverlined`. -/
-theorem isOverlined_iff {n : ℕ} {O : Overpartition n} {a : ℕ} :
-    O.IsOverlined a ↔ a ∈ O.overlines :=
-  Iff.rfl
-
-/-- An overlined size occurs in the underlying multiset of parts. -/
-theorem isOverlined_mem_parts {n : ℕ} {O : Overpartition n} {a : ℕ}
-    (h : O.IsOverlined a) : a ∈ O.toPartition.parts :=
-  Multiset.mem_toFinset.mp (O.overlines_subset h)
-
-/-- An overlined size is positive. -/
-theorem isOverlined_pos {n : ℕ} {O : Overpartition n} {a : ℕ}
-    (h : O.IsOverlined a) : 0 < a :=
-  O.toPartition.parts_pos (isOverlined_mem_parts h)
-
 /-- Equip a partition with no overlined part sizes. -/
 def ofPartition {n : ℕ} (p : Partition n) : Overpartition n where
   toPartition := p
   overlines := ∅
   overlines_subset := by simp
 
-/-- The underlying partition of `ofPartition p` is `p`. -/
-@[simp]
-theorem ofPartition_toPartition {n : ℕ} (p : Partition n) :
-    (ofPartition p).toPartition = p :=
-  rfl
-
-/-- The overlined sizes of `ofPartition p` are empty. -/
-@[simp]
-theorem ofPartition_overlines {n : ℕ} (p : Partition n) :
-    (ofPartition p).overlines = ∅ :=
-  rfl
-
-/-- No size is overlined in `ofPartition p`. -/
-@[simp]
-theorem not_isOverlined_ofPartition {n : ℕ} (p : Partition n) (a : ℕ) :
-    ¬ (ofPartition p).IsOverlined a := by
-  simp [IsOverlined]
-
 /-- Equip a partition with every distinct occurring part size overlined. -/
 def full {n : ℕ} (p : Partition n) : Overpartition n where
   toPartition := p
   overlines := p.parts.toFinset
   overlines_subset := fun _ hx => hx
-
-/-- The underlying partition of `full p` is `p`. -/
-@[simp]
-theorem full_toPartition {n : ℕ} (p : Partition n) :
-    (full p).toPartition = p :=
-  rfl
-
-/-- The overlined sizes of `full p` are the distinct parts of `p`. -/
-@[simp]
-theorem full_overlines {n : ℕ} (p : Partition n) :
-    (full p).overlines = p.parts.toFinset :=
-  rfl
-
-/-- A size is overlined in `full p` exactly when it occurs in `p`. -/
-@[simp]
-theorem isOverlined_full {n : ℕ} (p : Partition n) (a : ℕ) :
-    (full p).IsOverlined a ↔ a ∈ p.parts := by
-  simp [IsOverlined]
-
-/-- An overpartition of zero has no overlined sizes. -/
-theorem overlines_eq_empty_of_zero {O : Overpartition 0} : O.overlines = ∅ := by
-  apply Finset.eq_empty_iff_forall_notMem.mpr
-  intro a ha
-  have h := O.overlines_subset ha
-  rw [Partition.partition_zero_parts] at h
-  simp at h
-
-/-- There is only one overpartition of zero. -/
-theorem eq_of_zero (O₁ O₂ : Overpartition 0) : O₁ = O₂ := by
-  apply Overpartition.ext
-  · exact Subsingleton.elim _ _
-  · rw [overlines_eq_empty_of_zero (O := O₁), overlines_eq_empty_of_zero (O := O₂)]
-
 end Overpartition
 end Nat

@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings
 import Lemma.Nat.EqDomino.of.Ge1.Ge1.Domino
 import Lemma.Nat.Ge1.Ge1.of.InDominos.Domino.DominoTiling
 import Lemma.Nat.Ge12.Ge12.of.NeVertical11.In_Dominos.InVertical11Dominos.Domino.DominoTiling

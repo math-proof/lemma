@@ -19,11 +19,4 @@ variable {C : Type*}
 
 /-- The coefficient of a point in a curve divisor. -/
 def coeff (D : CurveDivisor C) (P : C) : ℤ := D P
-
-@[simp]
-theorem coeff_single (P : C) (n : ℤ) :
-    coeff (Finsupp.single P n) P = n := by
-  classical
-  simp [coeff]
-
 end CurveDivisor

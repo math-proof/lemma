@@ -5,7 +5,7 @@ import Lemma.Tensor.GetGetSlice.eq.Get_Add.of.GtSubMin
 import Lemma.Nat.Lt_Min.is.Lt.Lt
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.Le.of.Lt_Add_1
-open Tensor List Bool Nat Fin
+open Tensor List Bool Nat Fin Set
 
 
 @[path]

@@ -4,17 +4,35 @@ import sympy.atlas.AlgebraicGeometry.EllipticCurve.VariableChangePoint
 open WeierstrassCurve.VariableChange
 
 
+namespace WeierstrassCurve.VariableChange
+
+/--
+[natCard_point_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/EllipticCurve/VariableChangePoint.lean)
+-/
+@[path]
+lemma natCard_point_eq
+  {F : Type u} [Field F] [Finite F]
+  {C : VariableChange F}
+  {W : WeierstrassCurve F} [W.IsElliptic] :
+-- imply
+  Nat.card ((C • W).toAffine.Point) = Nat.card W.toAffine.Point :=
+-- proof
+  Nat.card_congr (pointEquiv C W)
+
+end WeierstrassCurve.VariableChange
+
 /--
 [mapAffineCoordinates_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/EllipticCurve/VariableChangePoint.lean)
 -/
 @[path]
-private lemma mapAffineCoordinates_one_eq
+lemma mapAffineCoordinates_one
   {F : Type u} [Field F]
   {xy : F × F} :
 -- imply
   mapAffineCoordinates (1 : VariableChange F) xy = xy := by
 -- proof
-  apply WeierstrassCurve.VariableChange.mapAffineCoordinates_one xy
+  ext <;> simp [mapAffineCoordinates, one_def]
+
 
 /--
 [mapAffineCoordinates_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/EllipticCurve/VariableChangePoint.lean)
@@ -72,18 +90,6 @@ private lemma equation_mapAffineCoordinates_iff_eq
 -- proof
   apply WeierstrassCurve.VariableChange.equation_mapAffineCoordinates_iff C W xy
 
-/--
-[natCard_point_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/EllipticCurve/VariableChangePoint.lean)
--/
-@[path]
-private lemma natCard_point_eq_eq
-  {F : Type u} [Field F] [Finite F]
-  {C : VariableChange F}
-  {W : WeierstrassCurve F} [W.IsElliptic] :
--- imply
-  Nat.card ((C • W).toAffine.Point) = Nat.card W.toAffine.Point := by
--- proof
-  apply WeierstrassCurve.VariableChange.natCard_point_eq C W
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

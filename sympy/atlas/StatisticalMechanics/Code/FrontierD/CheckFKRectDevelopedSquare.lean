@@ -1,0 +1,40 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectDevelopedSquare.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDevelopedSquare
+
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_undevelop_bounds
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_sharedPrimalEdge
+#print axioms StatMech.FrontierD.fkRectVertexSquarePoint_developedSquareVertex
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareVertex_fst_succ_lt
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareVertex_injective_on
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareVertex_cutGraph_adj
+#print axioms StatMech.FrontierD.fkRectLiftedDualEdge_sharedPrimalEdge
+#print axioms StatMech.FrontierD.fkRectDualEdgeToEdge_not_cut_of_developedSquare
+#print axioms StatMech.FrontierD.fkRectDevelopedSquarePullback_open_iff
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareHorizontalCrossingEvent_isIncreasing
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_compl_subset_faceDualVertical
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_faceDual_adj_imp_dual_adj
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_faceDualVertical_imp_dualVertical
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareCrossingEvent_isIncreasing
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_dualCompl_subset_crossing
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareCrossing_ge_one_div_one_add_q
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_exists_direction_crossing_ge
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareEndpointConnectionEvent_isIncreasing
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareEndpointConnection_imp_torusReachable
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_exists_endpoint_connection_ge
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareTorusEndpointConnectionEvent_isIncreasing
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareEndpointConnection_subset_torus
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_exists_torus_endpoint_connection_ge
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareHorizontalEndpointPairs_card_le
+#print axioms StatMech.FrontierD.fkRectDevelopedSquareVerticalEndpointPairs_card_le
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_exists_torus_endpoint_connection_ge_polynomial
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_exists_torus_endpoint_connection_ge_div
+#print axioms StatMech.FrontierD.fkRectDevelopedSquare_exists_fkg_attached_torus_endpoint

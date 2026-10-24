@@ -6,9 +6,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Adam Kiezun
 -/
 
-import sympy.atlas.NumberTheory.SylvesterSchur.ResidualLarge.CentralOffsetBound
-import sympy.atlas.NumberTheory.SylvesterSchur.ResidualLarge.ScaledTernaryBound
-import sympy.atlas.NumberTheory.SylvesterSchur.ResidualLarge.TinyPrimeCountingBound
+import Lemma.Nat.SylvesterSchur.ResidualLarge.CentralOffsetBound
+import Lemma.Nat.SylvesterSchur.ResidualLarge.ScaledTernaryBound
+import Lemma.Nat.SylvesterSchur.ResidualLarge.TinyPrimeCountingBound
 /-!
 # Large residual estimates for the Sylvester-Schur theorem
 

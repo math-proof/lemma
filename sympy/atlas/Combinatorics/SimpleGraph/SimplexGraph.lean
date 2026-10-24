@@ -37,16 +37,4 @@ def simplexGraph : SimpleGraph (SimplexVertex G) where
     intro x h
     rw [Finset.symmDiff_def] at h
     simp at h⟩
-
-/-- Adjacency unfolds to symmetric-difference cardinality one. -/
-theorem adj_iff (x y : SimplexVertex G) :
-    (simplexGraph G).Adj x y ↔ (x.val ∆ y.val).card = 1 := Iff.rfl
-
-/-- The empty clique is adjacent to every singleton clique. -/
-theorem empty_adj_singleton (v : V) :
-    (simplexGraph G).Adj (emptyVertex G) (singletonVertex G v) := by
-  change ((∅ : Finset V) ∆ ({v} : Finset V)).card = 1
-  rw [Finset.symmDiff_def]
-  simp
-
 end SimpleGraph

@@ -1,19 +1,25 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_4_1
-open Section_4_1
+import sympy.analysis.Section_3_1
+import Lemma.Nat.EqNat
+open Chapter3.SetTheory.Set
+open Chapter3 hiding Nat Set
+open Chapter3.SetTheory
+open Nat
 
 
 /--
-[ofNat_eq](https://github.com/teorth/analysis/blob/main/Analysis/Section_4_1.lean)
+[SetTheory.Set.nat_equiv_coe_of_coe''](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
 private lemma main
+  [SetTheory]
   {n:ℕ} :
 -- imply
-  ofNat(n) = n —— 0 :=
+  ((OfNat.ofNat n:Chapter3.Nat):ℕ) = n :=
 -- proof
-  Section_4_1.Int.ofNat_eq n
+  EqNat
 
 
--- created on 2026-10-20
+-- created on 2026-10-22
+-- updated on 2026-10-23

@@ -1,7 +1,7 @@
 import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.AeRealPreimageSS.ne.Zero
-import Lemma.Random.Prob.eq.Measure.of.Eq_Count
+import Lemma.Random.EqProb
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure
 open scoped ENNReal.ToRealCoe
@@ -42,10 +42,10 @@ private lemma main
   have hP0raw : ∀ θ' x, (M θ').real ((s 0) ⁻¹' {x}) ≠ 0 := by
     intro θ' x
     have heqR : (ℙ[M θ'](s[0] = x) : ℝ) = (M θ').real ((s 0) ⁻¹' {x}) := by
-      rw [Prob.eq.Measure.of.Eq_Count («π» := M θ') (x := s 0) CountableMeasure.measure_eq_count x]
+      rw [EqProb («π» := M θ') (x := s 0) x]
       rfl
     have heqE : ℙ[M θ'](s[0] = x) = (M θ') ((s 0) ⁻¹' {x}) :=
-      Prob.eq.Measure.of.Eq_Count («π» := M θ') (x := s 0) CountableMeasure.measure_eq_count x
+      EqProb («π» := M θ') (x := s 0) x
     rw [← heqR]
     apply ENNReal.toReal_ne_zero.mpr
     exact ⟨h₁ θ' ⟨fun _ => x⟩, heqE ▸ measure_ne_top (M θ') _⟩
@@ -85,3 +85,4 @@ private lemma main
 
 
 -- created on 2026-10-21
+-- updated on 2026-10-23

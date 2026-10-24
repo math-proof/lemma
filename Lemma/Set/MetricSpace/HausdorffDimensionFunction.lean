@@ -6,88 +6,124 @@ open Filter
 open HausdorffDimensionFunction
 
 
+namespace HausdorffDimensionFunction
+
 /--
 [ext](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
 -/
 @[path]
-private lemma ext_eq
+lemma ext
   {ψ₁ ψ₂ : HausdorffDimensionFunction}
 -- given
   (h : ∀ x, ψ₁ x = ψ₂ x) :
 -- imply
-  ψ₁ = ψ₂ := by
+  ψ₁ = ψ₂ :=
 -- proof
-  apply HausdorffDimensionFunction.ext h
+  DFunLike.ext ψ₁ ψ₂ h
+
+end HausdorffDimensionFunction
 
 /--
 [continuous](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
 -/
 @[path]
-private lemma continuous_eq
+lemma continuous
   {ψ : HausdorffDimensionFunction} :
 -- imply
-  Continuous (ψ : ℝ≥0 → ℝ≥0) := by
+  Continuous (ψ : ℝ≥0 → ℝ≥0) :=
 -- proof
-  apply HausdorffDimensionFunction.continuous ψ
+  ψ.toContinuousOrderHom.continuous_toFun
+
+
+namespace HausdorffDimensionFunction
 
 /--
 [monotone](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
 -/
 @[path]
-private lemma monotone_eq
+lemma monotone
   {ψ : HausdorffDimensionFunction} :
 -- imply
-  Monotone (ψ : ℝ≥0 → ℝ≥0) := by
+  Monotone (ψ : ℝ≥0 → ℝ≥0) :=
 -- proof
-  apply HausdorffDimensionFunction.monotone ψ
+  ψ.toContinuousOrderHom.monotone
+
+end HausdorffDimensionFunction
+
+namespace HausdorffDimensionFunction
 
 /--
 [map_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
 -/
 @[path]
-private lemma map_zero_eq
+lemma map_zero
   {ψ : HausdorffDimensionFunction} :
 -- imply
-  ψ (0 : ℝ≥0) = 0 := by
+  ψ (0 : ℝ≥0) = 0 :=
 -- proof
-  apply HausdorffDimensionFunction.map_zero ψ
+  ψ.map_zero'
+
+end HausdorffDimensionFunction
+
+namespace HausdorffDimensionFunction
 
 /--
 [map_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
 -/
 @[path]
-private lemma map_pos_eq
+lemma map_pos
   {ψ : HausdorffDimensionFunction}
   {r : ℝ≥0}
 -- given
   (hr : 0 < r) :
 -- imply
-  0 < ψ r := by
+  0 < ψ r :=
 -- proof
-  apply HausdorffDimensionFunction.map_pos ψ hr
+  ψ.map_pos' hr
+
+end HausdorffDimensionFunction
+
+namespace HausdorffDimensionFunction
 
 /--
 [map_eq_zero_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
 -/
 @[path]
-private lemma map_eq_zero_iff_eq
+lemma map_eq_zero_iff
   {ψ : HausdorffDimensionFunction}
   {r : ℝ≥0} :
 -- imply
   ψ r = 0 ↔ r = 0 := by
 -- proof
-  apply HausdorffDimensionFunction.map_eq_zero_iff ψ
+  constructor
+  · intro h
+    by_contra hr
+    have hrpos : 0 < r := pos_iff_ne_zero.mpr hr
+    have hpos : 0 < ψ r := ψ.map_pos hrpos
+    exact ne_of_gt hpos h
+  · rintro rfl
+    exact ψ.map_zero
+
+end HausdorffDimensionFunction
+
+namespace HausdorffDimensionFunction
 
 /--
 [tendsto_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
 -/
 @[path]
-private lemma tendsto_zero_eq
+lemma tendsto_zero
   {ψ : HausdorffDimensionFunction} :
 -- imply
   Tendsto (ψ : ℝ≥0 → ℝ≥0) (𝓝[>] (0 : ℝ≥0)) (𝓝 0) := by
 -- proof
-  apply HausdorffDimensionFunction.tendsto_zero ψ
+  have h : Tendsto (ψ : ℝ≥0 → ℝ≥0) (𝓝 (0 : ℝ≥0)) (𝓝 (ψ (0 : ℝ≥0))) :=
+    ψ.continuous.continuousAt
+  rw [ψ.map_zero] at h
+  exact h.mono_left inf_le_left
+
+end HausdorffDimensionFunction
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

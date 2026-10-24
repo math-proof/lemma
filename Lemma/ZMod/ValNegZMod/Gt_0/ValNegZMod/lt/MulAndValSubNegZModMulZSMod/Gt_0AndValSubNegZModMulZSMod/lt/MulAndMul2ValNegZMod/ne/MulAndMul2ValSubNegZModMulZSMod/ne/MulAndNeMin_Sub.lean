@@ -1,32 +1,24 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma skeleton (n q J₁ J₂ : ℕ) (hn : n % 2 = 1) (h3 : 3 * q ≤ n) (hq : 0 < q) (hJ₁ : J₁ = n - q)
-    (hJ₂pos : 0 < J₂) (hJ₂lt : J₂ < n) (hJ₂q : J₂ ≠ q) (hJ₂nq : J₂ ≠ n - q) :
-    0 < J₁ ∧ J₁ < n ∧ 0 < J₂ ∧ J₂ < n ∧ 2 * J₁ ≠ n ∧ 2 * J₂ ≠ n ∧ min J₁ (n - J₁) ≠ min J₂ (n - J₂) := by
+
+universe u
+
+private lemma skeleton (n q J₁ J₂ : ℕ) (hn : n % 2 = 1) (h3 : 3 * q ≤ n) (hq : 0 < q) (hJ₁ : J₁ = n - q) (hJ₂pos : 0 < J₂) (hJ₂lt : J₂ < n) (hJ₂q : J₂ ≠ q) (hJ₂nq : J₂ ≠ n - q) : 0 < J₁ ∧ J₁ < n ∧ 0 < J₂ ∧ J₂ < n ∧ 2 * J₁ ≠ n ∧ 2 * J₂ ≠ n ∧ min J₁ (n - J₁) ≠ min J₂ (n - J₂) := by
   omega
 /--
 [ModularCurve_FullLevel_val_neg_natCast_pos_and_min_ne_of_isCoprime](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_FullLevel_val_neg_natCast_pos_and_min_ne_of_isCoprime.lean)
 -/
 @[path]
 private lemma main
-    (q ℓ : ℕ) [Fact q.Prime] [Fact ℓ.Prime] (hq : 5 ≤ q) (hℓ3 : 3 ≤ ℓ) (hℓq : ℓ ≠ q) (g : ℤ) (hg : IsCoprime g q) :
-    0 < (-(q : ZMod (q * ℓ))).val ∧ (-(q : ZMod (q * ℓ))).val < q * ℓ ∧
-    0 < (-(q : ZMod (q * ℓ)) - (g : ZMod (q * ℓ)) * (ℓ : ZMod (q * ℓ))).val ∧
-    (-(q : ZMod (q * ℓ)) - (g : ZMod (q * ℓ)) * (ℓ : ZMod (q * ℓ))).val < q * ℓ ∧
-    2 * (-(q : ZMod (q * ℓ))).val ≠ q * ℓ ∧
-    2 * (-(q : ZMod (q * ℓ)) - (g : ZMod (q * ℓ)) * (ℓ : ZMod (q * ℓ))).val ≠ q * ℓ ∧
-    min (-(q : ZMod (q * ℓ))).val (q * ℓ - (-(q : ZMod (q * ℓ))).val) ≠
-      min (-(q : ZMod (q * ℓ)) - (g : ZMod (q * ℓ)) * (ℓ : ZMod (q * ℓ))).val
-        (q * ℓ - (-(q : ZMod (q * ℓ)) - (g : ZMod (q * ℓ)) * (ℓ : ZMod (q * ℓ))).val) := by
+  (q ℓ : ℕ) [Fact q.Prime] [Fact ℓ.Prime] (hq : 5 ≤ q) (hℓ3 : 3 ≤ ℓ) (hℓq : ℓ ≠ q) (g : ℤ) (hg : IsCoprime g q) :
+  -- imply
+  0 < (-(q : ZMod (q * ℓ))).val ∧ (-(q : ZMod (q * ℓ))).val < q * ℓ ∧ 0 < (-(q : ZMod (q * ℓ)) - (g : ZMod (q * ℓ)) * (ℓ : ZMod (q * ℓ))).val ∧ (-(q : ZMod (q * ℓ)) - (g : ZMod (q * ℓ)) * (ℓ : ZMod (q * ℓ))).val < q * ℓ ∧ 2 * (-(q : ZMod (q * ℓ))).val ≠ q * ℓ ∧ 2 * (-(q : ZMod (q * ℓ)) - (g : ZMod (q * ℓ)) * (ℓ : ZMod (q * ℓ))).val ≠ q * ℓ ∧ min (-(q : ZMod (q * ℓ))).val (q * ℓ - (-(q : ZMod (q * ℓ))).val) ≠ min (-(q : ZMod (q * ℓ)) - (g : ZMod (q * ℓ)) * (ℓ : ZMod (q * ℓ))).val (q * ℓ - (-(q : ZMod (q * ℓ)) - (g : ZMod (q * ℓ)) * (ℓ : ZMod (q * ℓ))).val) := by
+  -- proof
   have hqP : q.Prime := Fact.out
   have hℓP : ℓ.Prime := Fact.out
   have hq0 : 0 < q := hqP.pos
@@ -43,7 +35,7 @@ private lemma main
     rw [hqval, ZMod.val_zero] at this
     omega
   have hJ₁ : (-(q : ZMod (q * ℓ))).val = q * ℓ - q := by
-    rw [ZMod.neg_val, if_neg hq0', hqval]
+    rw [ZMod.neg_val, ite_eq_right hq0', hqval]
   set x : ZMod (q * ℓ) := -(q : ZMod (q * ℓ)) - (g : ZMod (q * ℓ)) * (ℓ : ZMod (q * ℓ)) with hx
   let φ : ZMod (q * ℓ) →+* ZMod q := ZMod.castHom (dvd_mul_right q ℓ) (ZMod q)
   have hφq : φ (q : ZMod (q * ℓ)) = 0 := by rw [map_natCast, ZMod.natCast_self]
@@ -52,14 +44,14 @@ private lemma main
     rw [ZMod.intCast_zmod_eq_zero_iff_dvd] at h
     have hu : IsUnit (q : ℤ) := hg.isUnit_of_dvd' h dvd_rfl
     rw [Int.isUnit_iff_natAbs_eq, Int.natAbs_natCast] at hu
-    exact hqP.one_lt.ne' hu
+    apply hqP.one_lt.ne' hu
   have hℓq' : (ℓ : ZMod q) ≠ 0 := by
     intro h
     rw [CharP.cast_eq_zero_iff (ZMod q) q] at h
-    exact hℓq ((Nat.prime_dvd_prime_iff_eq hqP hℓP).mp h).symm
+    apply hℓq ((Nat.prime_dvd_prime_iff_eq hqP hℓP).mp h).symm
   have hφx : φ x ≠ 0 := by
     rw [hx, map_sub, map_neg, map_mul, hφq, map_intCast, map_natCast, neg_zero, zero_sub, neg_ne_zero]
-    exact mul_ne_zero hgq hℓq'
+    apply mul_ne_zero hgq hℓq'
   have hx0 : x ≠ 0 := fun h => hφx (by rw [h, map_zero])
   have hxq : x ≠ (q : ZMod (q * ℓ)) := fun h => hφx (by rw [h, hφq])
   have hxnq : x ≠ -(q : ZMod (q * ℓ)) := fun h => hφx (by rw [h, map_neg, hφq, neg_zero])
@@ -73,6 +65,7 @@ private lemma main
     intro h
     apply hxnq
     rw [← ZMod.natCast_zmod_val x, h, Nat.cast_sub hqn.le, ZMod.natCast_self, zero_sub]
-  exact skeleton (q * ℓ) q _ _ hodd h3 hq0 hJ₁ hJ₂pos hJ₂lt hJ₂q hJ₂nq
+  refine skeleton (q * ℓ) q _ _ hodd h3 hq0 hJ₁ hJ₂pos hJ₂lt hJ₂q hJ₂nq
+
 
 -- created on 2026-10-20

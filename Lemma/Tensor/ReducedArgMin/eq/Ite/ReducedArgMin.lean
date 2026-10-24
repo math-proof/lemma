@@ -8,7 +8,7 @@ private lemma main
   {f g : ℝ → Fin m → ℝ}
   {x a b : ℝ} :
 -- imply
-  ArgMin Set.univ (if a > b then f x else g x) = if a > b then ArgMin Set.univ (f x) else ArgMin Set.univ (g x) := by
+  min⁻¹ Set.univ (if a > b then f x else g x) = if a > b then min⁻¹ Set.univ (f x) else min⁻¹ Set.univ (g x) := by
 -- proof
   split_ifs <;> rfl
 

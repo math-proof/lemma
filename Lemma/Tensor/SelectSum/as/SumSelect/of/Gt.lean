@@ -17,7 +17,7 @@ import Lemma.Tensor.SEqSum.of.LeLength
 import Lemma.Vector.GetSum.eq.Sum_Get
 import Lemma.Vector.Sum.of.All_Eq.Eq
 import torch.Tensor.sum
-open Nat List Bool Finset Tensor Vector Fin
+open Nat List Bool Finset Tensor Vector Fin Set
 set_option maxHeartbeats 500000
 
 

@@ -5,6 +5,7 @@
 -/
 
 import sympy.atlas.RingTheory.GradedAlgebra.MultigradedPoincareFiniteSupport
+import Lemma.Int.GradedAlgebra.MultigradedPoincareFiniteSupport
 /-!
 # Multigraded Poincaré polynomial
 
@@ -73,29 +74,5 @@ noncomputable def multigradedPoincarePolynomial {K : Type u} [Field K] {n : ℕ}
     have h : Function.HasFiniteSupport (multigradedPoincareCoefficients data) :=
       multigradedPoincareCoefficients_hasFiniteSupport_of_finiteResolution data
         bound finiteBasis emptyAbove
-    unfold Function.HasFiniteSupport at h
-    exact h))
-
-/-- Coefficient equation: evaluating the Poincaré polynomial at
-`(i, α)` returns exactly the edge-3 Betti number
-`multigradedBettiNumber data α i`. -/
-theorem multigradedPoincarePolynomial_coeff {K : Type u} [Field K] {n : ℕ}
-    {M : Type u} [AddCommGroup M]
-    [Module (MvPolynomial (Fin n) K) M] [Module K M]
-    {targetGraded : MultigradedPolynomialModule K n M}
-    {resolution : CategoryTheory.ProjectiveResolution
-      (ModuleCat.of (MvPolynomial (Fin n) K) M)}
-    {ι : ℕ → Type u}
-    {res : MultigradedFreeResolution K n M targetGraded resolution ι}
-    (data : MultigradedBaseChange targetGraded resolution ι res)
-    (bound : ℕ)
-    (finiteBasis : ∀ i, Finite (ι i))
-    (emptyAbove : ∀ i, bound < i → IsEmpty (ι i))
-    (i : ℕ) (α : Fin n →₀ Int) :
-    (multigradedPoincarePolynomial data bound finiteBasis emptyAbove).coeff (i, α) =
-      multigradedBettiNumber data α i := by
-  unfold multigradedPoincarePolynomial
-  rw [AddMonoidAlgebra.coeff_ofCoeff, Finsupp.ofSupportFinite_coe]
-  exact multigradedPoincareCoefficients_apply data i α
-
 end MetaMathlibExt
+    rwa [Function.HasFiniteSupport] at h))

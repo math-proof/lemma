@@ -4,11 +4,13 @@ import sympy.atlas.NumberTheory.LSeries.Artin
 open Representation
 
 
+namespace Representation
+
 /--
 [artinEulerProductOfLocalData_eq_of_hasProd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
 -/
 @[path]
-private lemma artinEulerProductOfLocalData_eq_of_hasProd_eq
+lemma artinEulerProductOfLocalData_eq_of_hasProd
   {G : Type u} [Group G] [Finite G]
   {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
   {ρ : Representation ℂ G V}
@@ -17,66 +19,19 @@ private lemma artinEulerProductOfLocalData_eq_of_hasProd_eq
 -- given
   (h : HasArtinEulerProduct ρ localData s z) :
 -- imply
-  artinEulerProductOfLocalData ρ localData s = z := by
+  artinEulerProductOfLocalData ρ localData s = z :=
 -- proof
-  apply Representation.artinEulerProductOfLocalData_eq_of_hasProd ρ localData s z h
+  h.tprod_eq
 
-/--
-[HasNonzeroArtinEulerProduct.hasArtinEulerProduct](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
--/
-@[path]
-private lemma HasNonzeroArtinEulerProduct_hasArtinEulerProduct_eq
-  {G : Type u} [Group G] [Finite G]
-  {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
-  {ρ : Representation ℂ G V}
-  {localData : Nat.Primes → ArtinLocalDatum G}
-  {s z : ℂ}
--- given
-  (h : HasNonzeroArtinEulerProduct ρ localData s z) :
--- imply
-  HasArtinEulerProduct ρ localData s z := by
--- proof
-  apply Representation.HasNonzeroArtinEulerProduct.hasArtinEulerProduct h
+end Representation
 
-/--
-[HasNonzeroArtinEulerProduct.ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
--/
-@[path]
-private lemma HasNonzeroArtinEulerProduct_ne_zero_eq
-  {G : Type u} [Group G] [Finite G]
-  {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
-  {ρ : Representation ℂ G V}
-  {localData : Nat.Primes → ArtinLocalDatum G}
-  {s z : ℂ}
--- given
-  (h : HasNonzeroArtinEulerProduct ρ localData s z) :
--- imply
-  z ≠ 0 := by
--- proof
-  apply Representation.HasNonzeroArtinEulerProduct.ne_zero h
-
-/--
-[artinEulerProductOfLocalData_eq_of_hasNonzeroProd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
--/
-@[path]
-private lemma artinEulerProductOfLocalData_eq_of_hasNonzeroProd_eq
-  {G : Type u} [Group G] [Finite G]
-  {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
-  {ρ : Representation ℂ G V}
-  {localData : Nat.Primes → ArtinLocalDatum G}
-  {s z : ℂ}
--- given
-  (h : HasNonzeroArtinEulerProduct ρ localData s z) :
--- imply
-  artinEulerProductOfLocalData ρ localData s = z := by
--- proof
-  apply Representation.artinEulerProductOfLocalData_eq_of_hasNonzeroProd ρ localData s z h
+namespace Representation
 
 /--
 [artinLocalFactorRaw_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
 -/
 @[path]
-private lemma artinLocalFactorRaw_zero_eq
+lemma artinLocalFactorRaw_zero
   {G : Type u} [Group G] [Finite G]
   {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
   {ρ : Representation ℂ G V}
@@ -89,13 +44,17 @@ private lemma artinLocalFactorRaw_zero_eq
     (ρ.comp d.decomposition.subtype : Representation ℂ d.decomposition V)
     d.inertia) d.frobenius)))⁻¹ := by
 -- proof
-  apply Representation.artinLocalFactorRaw_zero ρ p d
+  simp [artinLocalFactorRaw, artinLocalDenominator]
+
+end Representation
+
+namespace Representation
 
 /--
 [artinLocalFactorRaw_eq_zero_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
 -/
 @[path]
-private lemma artinLocalFactorRaw_eq_zero_iff_eq
+lemma artinLocalFactorRaw_eq_zero_iff
   {G : Type u} [Group G] [Finite G]
   {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
   {ρ : Representation ℂ G V}
@@ -105,13 +64,17 @@ private lemma artinLocalFactorRaw_eq_zero_iff_eq
 -- imply
   artinLocalFactorRaw ρ p d s = 0 ↔ ¬ArtinLocalFactorRegular ρ p d s := by
 -- proof
-  apply Representation.artinLocalFactorRaw_eq_zero_iff ρ p d s
+  simp [artinLocalFactorRaw, ArtinLocalFactorRegular]
+
+end Representation
+
+namespace Representation
 
 /--
 [artinLocalFactorRaw_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
 -/
 @[path]
-private lemma artinLocalFactorRaw_ne_zero_eq
+lemma artinLocalFactorRaw_ne_zero
   {G : Type u} [Group G] [Finite G]
   {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
   {ρ : Representation ℂ G V}
@@ -123,31 +86,18 @@ private lemma artinLocalFactorRaw_ne_zero_eq
 -- imply
   artinLocalFactorRaw ρ p d s ≠ 0 := by
 -- proof
-  apply Representation.artinLocalFactorRaw_ne_zero ρ p d s h
+  intro hzero
+  exact (artinLocalFactorRaw_eq_zero_iff ρ p d s).mp hzero h
 
-/--
-[HasNonzeroArtinEulerProduct.localFactorRegular](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
--/
-@[path]
-private lemma HasNonzeroArtinEulerProduct_localFactorRegular_eq
-  {G : Type u} [Group G] [Finite G]
-  {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
-  {ρ : Representation ℂ G V}
-  {localData : Nat.Primes → ArtinLocalDatum G}
-  {s z : ℂ}
-  {p : Nat.Primes}
--- given
-  (h : HasNonzeroArtinEulerProduct ρ localData s z) :
--- imply
-  ArtinLocalFactorRegular ρ p (localData p) s := by
--- proof
-  apply Representation.HasNonzeroArtinEulerProduct.localFactorRegular h p
+end Representation
+
+namespace Representation
 
 /--
 [artinLocalFactorRaw_of_action_eq_id_general](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
 -/
 @[path]
-private lemma artinLocalFactorRaw_of_action_eq_id_general_eq
+lemma artinLocalFactorRaw_of_action_eq_id_general
   {G : Type u} [Group G] [Finite G]
   {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
   {ρ : Representation ℂ G V}
@@ -162,13 +112,30 @@ private lemma artinLocalFactorRaw_of_action_eq_id_general_eq
     ((ρ.comp d.decomposition.subtype : Representation ℂ d.decomposition V).comp
     d.inertia.subtype)))⁻¹ := by
 -- proof
-  apply Representation.artinLocalFactorRaw_of_action_eq_id_general ρ p d s hact
+  rw [artinLocalFactorRaw, artinLocalDenominator, hact]
+  let W := invariants
+    ((ρ.comp d.decomposition.subtype : Representation ℂ d.decomposition V).comp
+      d.inertia.subtype)
+  have hlin : (LinearMap.id : W →ₗ[ℂ] W) -
+    (p.1 : ℂ) ^ (-s) • LinearMap.id =
+    (1 - (p.1 : ℂ) ^ (-s)) • LinearMap.id := by
+    apply LinearMap.ext
+    intro x
+    apply Subtype.ext
+    change x.1 - (p.1 : ℂ) ^ (-s) • x.1 =
+      (1 - (p.1 : ℂ) ^ (-s)) • x.1
+    rw [sub_smul, one_smul]
+  rw [hlin, LinearMap.det_smul, LinearMap.det_id, mul_one]
+
+end Representation
+
+namespace Representation
 
 /--
 [artinLocalFactorRaw_of_action_eq_id](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
 -/
 @[path]
-private lemma artinLocalFactorRaw_of_action_eq_id_eq
+lemma artinLocalFactorRaw_of_action_eq_id
   {G : Type u} [Group G] [Finite G]
   {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
   {ρ : Representation ℂ G V}
@@ -181,7 +148,97 @@ private lemma artinLocalFactorRaw_of_action_eq_id_eq
 -- imply
   artinLocalFactorRaw ρ p d s = (1 - (p.1 : ℂ) ^ (-s))⁻¹ := by
 -- proof
-  apply Representation.artinLocalFactorRaw_of_action_eq_id ρ p d s hact hdim
+  rw [artinLocalFactorRaw_of_action_eq_id_general ρ p d s hact, hdim, pow_one]
+
+end Representation
+
+/--
+[HasNonzeroArtinEulerProduct.hasArtinEulerProduct](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
+-/
+@[path]
+lemma HasNonzeroArtinEulerProduct.hasArtinEulerProduct
+  {G : Type u} [Group G] [Finite G]
+  {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
+  {ρ : Representation ℂ G V}
+  {localData : Nat.Primes → ArtinLocalDatum G}
+  {s z : ℂ}
+-- given
+  (h : HasNonzeroArtinEulerProduct ρ localData s z) :
+-- imply
+  HasArtinEulerProduct ρ localData s z :=
+-- proof
+  h.1
+
+
+namespace Representation
+
+/--
+[HasNonzeroArtinEulerProduct.ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
+-/
+@[path]
+lemma HasNonzeroArtinEulerProduct.ne_zero
+  {G : Type u} [Group G] [Finite G]
+  {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
+  {ρ : Representation ℂ G V}
+  {localData : Nat.Primes → ArtinLocalDatum G}
+  {s z : ℂ}
+-- given
+  (h : HasNonzeroArtinEulerProduct ρ localData s z) :
+-- imply
+  z ≠ 0 :=
+-- proof
+  h.2
+
+end Representation
+
+namespace Representation
+
+/--
+[artinEulerProductOfLocalData_eq_of_hasNonzeroProd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
+-/
+@[path]
+lemma artinEulerProductOfLocalData_eq_of_hasNonzeroProd
+  {G : Type u} [Group G] [Finite G]
+  {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
+  {ρ : Representation ℂ G V}
+  {localData : Nat.Primes → ArtinLocalDatum G}
+  {s z : ℂ}
+-- given
+  (h : HasNonzeroArtinEulerProduct ρ localData s z) :
+-- imply
+  artinEulerProductOfLocalData ρ localData s = z :=
+-- proof
+  h.hasArtinEulerProduct.tprod_eq
+
+end Representation
+
+namespace Representation
+
+/--
+[HasNonzeroArtinEulerProduct.localFactorRegular](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean)
+-/
+@[path]
+lemma HasNonzeroArtinEulerProduct.localFactorRegular
+  {G : Type u} [Group G] [Finite G]
+  {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
+  {ρ : Representation ℂ G V}
+  {localData : Nat.Primes → ArtinLocalDatum G}
+  {s z : ℂ}
+  {p : Nat.Primes}
+-- given
+  (h : HasNonzeroArtinEulerProduct ρ localData s z) :
+-- imply
+  ArtinLocalFactorRegular ρ p (localData p) s := by
+-- proof
+  by_contra hp
+  have hfactor : artinLocalFactorRaw ρ p (localData p) s = 0 :=
+    (artinLocalFactorRaw_eq_zero_iff ρ p (localData p) s).2 hp
+  have hzero : HasProd (fun q => artinLocalFactorRaw ρ q (localData q) s) 0 :=
+    hasProd_zero_of_exists_eq_zero ⟨p, hfactor⟩
+  exact h.ne_zero (h.hasArtinEulerProduct.unique hzero)
+
+end Representation
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

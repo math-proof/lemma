@@ -6,17 +6,21 @@ open MetaMathlibExt
 open BitstringEncoding
 
 
+namespace MetaMathlibExt.BitstringEncoding
+
 /--
 [bitDecode_bitEncode](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Computability/Complexity.lean)
 -/
 @[path]
-private lemma bitDecode_bitEncode_eq
+lemma bitDecode_bitEncode
   [BitstringEncoding α]
   {a : α} :
 -- imply
-  bitDecode (bitEncode a) = some a := by
+  bitDecode (bitEncode a) = some a :=
 -- proof
-  apply MetaMathlibExt.BitstringEncoding.bitDecode_bitEncode a
+  toEncoding.decode_encode a
+
+end MetaMathlibExt.BitstringEncoding
 
 /--
 [undelimit_delimit](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Computability/Complexity.lean)
@@ -76,3 +80,4 @@ private lemma mapM_bitDecode_map_bitEncode_eq
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

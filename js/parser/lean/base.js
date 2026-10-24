@@ -1224,6 +1224,13 @@ export class Lean extends IndentedNode {
                             return Lean.prototype.push_binary.call(app, L.LeanPreimage);
                         return target.push_binary(L.LeanPreimage);
                     }
+                    // `max⁻¹` / `min⁻¹` are atomic argmax/argmin names (not Inv of `max`/`min`).
+                    if (this instanceof L.LeanToken && (this.text === 'max' || this.text === 'min')) {
+                        const word = `${this.text}⁻¹`;
+                        const newTok = new L.LeanToken(word, this.indent, this.level);
+                        this.parent.replace(this, newTok);
+                        return newTok;
+                    }
                     return this.push_post_unary('LeanInv');
                 }
                 return this.push_post_unary('LeanNegPart');

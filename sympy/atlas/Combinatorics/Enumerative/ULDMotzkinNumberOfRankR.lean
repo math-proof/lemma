@@ -99,18 +99,5 @@ statement `jis_a4c8498023ac94f370aead45`. -/
 def uldMotzkinNumber (r : ℕ) (u : Fin r → ℕ) (l : ℕ) (d : Fin r → ℕ)
     (hr : 1 ≤ r) (n : ℕ) : ℕ :=
   Fintype.card (ULDMotzkinPath r u l d hr n)
-
-/-- Definitional cardinality equation for the Motzkin number. Concept
-`jis_sem_cc3b9e9ca9863189c52ced84`, source
-`jis_source_ed70e97a9239ad812ad2e1c8`, clause `number`,
-statement `jis_a4c8498023ac94f370aead45`. -/
-theorem uldMotzkinNumber_eq_card (r : ℕ) (u : Fin r → ℕ) (l : ℕ)
-    (d : Fin r → ℕ) (hr : 1 ≤ r) (n : ℕ) :
-    uldMotzkinNumber r u l d hr n =
-      Fintype.card { p : Fin n → ULDMotzkinStep r u l d //
-        IsMotzkinPath r u l d hr n p } :=
-  rfl
-
 end ULDMotzkin
-
 end MetaMathlibExt

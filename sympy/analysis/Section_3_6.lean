@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.analysis.Section_3_3
+import sympy.analysis.Section_3_3_api
 import sympy.analysis.Section_3_5
 
 /-!
@@ -38,18 +38,49 @@ abbrev SetTheory.Set.EqualCard (X Y:Set) : Prop := ∃ f : X → Y, Function.Bij
 
 /-- Example 3.6.2 -/
 theorem SetTheory.Set.Example_3_6_2 : EqualCard {0,1,2} {3,4,5} := by
-  use open Classical in fun x ↦
-    ⟨if x.val = 0 then 3 else if x.val = 1 then 4 else 5, by aesop⟩
-  constructor
-  · intro; aesop
-  intro y
-  have : y = (3: Object) ∨ y = (4: Object) ∨ y = (5: Object) := by
-    have := y.property
-    aesop
-  rcases this with (_ | _ | _)
-  · use ⟨0, by simp⟩; aesop
-  · use ⟨1, by simp⟩; aesop
-  · use ⟨2, by simp⟩; aesop
+  classical
+  have hne {a b : ℕ} (h : a ≠ b) : (a : Object) ≠ b := by
+    intro hab
+    exact h ((Object.natCast_inj a b).mp hab)
+  let f : ({0,1,2}:Set) → ({3,4,5}:Set) := fun x ↦
+    if x.val = 0 then ⟨3, by simp [mem_singleton]⟩
+    else if x.val = 1 then ⟨4, by simp [mem_singleton]⟩
+    else ⟨5, by simp [mem_singleton]⟩
+  refine ⟨f, ⟨?_, ?_⟩⟩
+  · intro x y hxy
+    have hx : x.val = 0 ∨ x.val = 1 ∨ x.val = 2 := by
+      simpa [mem_union, mem_singleton] using x.property
+    have hy : y.val = 0 ∨ y.val = 1 ∨ y.val = 2 := by
+      simpa [mem_union, mem_singleton] using y.property
+    have o01 : (0:Object) ≠ 1 := hne (by decide)
+    have o02 : (0:Object) ≠ 2 := hne (by decide)
+    have o12 : (1:Object) ≠ 2 := hne (by decide)
+    rcases hx with hx | hx | hx <;> rcases hy with hy | hy | hy
+    · exact Subtype.ext (hx.trans hy.symm)
+    · simp [f, hx, hy, o01.symm] at hxy
+      exact False.elim ((hne (by decide : (3:ℕ) ≠ 4)) hxy)
+    · simp [f, hx, hy, o02.symm, o12.symm] at hxy
+      exact False.elim ((hne (by decide : (3:ℕ) ≠ 5)) hxy)
+    · simp [f, hx, hy, o01.symm] at hxy
+      exact False.elim ((hne (by decide : (4:ℕ) ≠ 3)) hxy)
+    · exact Subtype.ext (hx.trans hy.symm)
+    · simp [f, hx, hy, o01.symm, o02.symm, o12.symm] at hxy
+      exact False.elim ((hne (by decide : (4:ℕ) ≠ 5)) hxy)
+    · simp [f, hx, hy, o02.symm, o12.symm] at hxy
+      exact False.elim ((hne (by decide : (5:ℕ) ≠ 3)) hxy)
+    · simp [f, hx, hy, o02.symm, o12.symm, o01.symm] at hxy
+      exact False.elim ((hne (by decide : (5:ℕ) ≠ 4)) hxy)
+    · exact Subtype.ext (hx.trans hy.symm)
+  · intro y
+    have hy : y.val = 3 ∨ y.val = 4 ∨ y.val = 5 := by
+      simpa [mem_union, mem_singleton] using y.property
+    have o01 : (1:Object) ≠ 0 := hne (by decide)
+    have o20 : (2:Object) ≠ 0 := hne (by decide)
+    have o21 : (2:Object) ≠ 1 := hne (by decide)
+    rcases hy with hy | hy | hy
+    · exact ⟨⟨0, by simp [mem_singleton]⟩, Subtype.ext (by simp [f, hy])⟩
+    · exact ⟨⟨1, by simp [mem_singleton]⟩, Subtype.ext (by simp [f, hy, o01])⟩
+    · exact ⟨⟨2, by simp [mem_singleton]⟩, Subtype.ext (by simp [f, hy, o20, o21])⟩
 
 /-- Example 3.6.3 -/
 theorem SetTheory.Set.Example_3_6_3 : EqualCard nat (nat.specify (fun x ↦ Even (x:ℕ))) := by sorry
@@ -85,29 +116,55 @@ theorem SetTheory.Set.Example_3_6_7a (a:Object) : ({a}:Set).has_card 1 := by
   rw [has_card_iff]
   use fun _ ↦ Fin_mk _ 0 (by simp)
   constructor
-  · intro x1 x2 hf; aesop
+  · intro x1 x2 _
+    apply Subtype.ext
+    exact ((mem_singleton _ _).mp x1.property).trans ((mem_singleton _ _).mp x2.property).symm
   intro y
-  use ⟨a, by simp⟩
-  have := Fin.toNat_lt y
-  simp_all
+  refine ⟨⟨a, (mem_singleton _ _).mpr rfl⟩, ?_⟩
+  apply Subtype.ext
+  have hy : (y : ℕ) = 0 := by have := Fin.toNat_lt y; omega
+  rw [← Fin.coe_toNat y, hy]
 
 theorem SetTheory.Set.Example_3_6_7b {a b c d:Object} (hab: a ≠ b) (hac: a ≠ c) (had: a ≠ d)
     (hbc: b ≠ c) (hbd: b ≠ d) (hcd: c ≠ d) : ({a,b,c,d}:Set).has_card 4 := by
+  classical
   rw [has_card_iff]
-  use open Classical in fun x ↦ Fin_mk _ (
-    if x.val = a then 0 else if x.val = b then 1 else if x.val = c then 2 else 3
-  ) (by aesop)
-  constructor
-  · intro x1 x2 hf; aesop
-  intro y
-  have : y = (0:ℕ) ∨ y = (1:ℕ) ∨ y = (2:ℕ) ∨ y = (3:ℕ) := by
-    have := Fin.toNat_lt y
-    omega
-  rcases this with (_ | _ | _ | _)
-  · use ⟨a, by aesop⟩; aesop
-  · use ⟨b, by aesop⟩; aesop
-  · use ⟨c, by aesop⟩; aesop
-  · use ⟨d, by aesop⟩; aesop
+  let f : ({a,b,c,d}:Set) → Fin 4 := fun x ↦
+    Fin_mk _ (if x.val = a then 0 else if x.val = b then 1 else if x.val = c then 2 else 3)
+      (by split_ifs <;> omega)
+  refine ⟨f, ⟨?_, ?_⟩⟩
+  · intro x y hxy
+    have mem (z : ({a,b,c,d}:Set)) :
+        z.val = a ∨ z.val = b ∨ z.val = c ∨ z.val = d := by
+      simpa [mem_union, mem_singleton] using z.property
+    have hx := mem x
+    have hy := mem y
+    rcases hx with hx | hx | hx | hx <;> rcases hy with hy | hy | hy | hy
+    all_goals try exact Subtype.ext (hx.trans hy.symm)
+    all_goals
+      have hto := congrArg Fin.toNat hxy
+      simp [f, hx, hy, hab.symm, hac.symm, had.symm, hbc.symm, hbd.symm, hcd.symm,
+        ite_false, ite_true, Fin.toNat_mk] at hto
+  · intro y
+    have hy : (y:ℕ) = 0 ∨ (y:ℕ) = 1 ∨ (y:ℕ) = 2 ∨ (y:ℕ) = 3 := by
+      have := Fin.toNat_lt y; omega
+    rcases hy with hy | hy | hy | hy
+    · refine ⟨⟨a, by simp [mem_singleton]⟩, ?_⟩
+      apply Subtype.ext
+      rw [← Fin.coe_toNat y, hy]
+      simp [f, ite_true, Fin.toNat_mk]
+    · refine ⟨⟨b, by simp [mem_singleton, hab.symm]⟩, ?_⟩
+      apply Subtype.ext
+      rw [← Fin.coe_toNat y, hy]
+      simp [f, hab.symm, ite_false, ite_true, Fin.toNat_mk]
+    · refine ⟨⟨c, by simp [mem_singleton, hac.symm, hbc.symm]⟩, ?_⟩
+      apply Subtype.ext
+      rw [← Fin.coe_toNat y, hy]
+      simp [f, hac.symm, hbc.symm, ite_false, ite_true, Fin.toNat_mk]
+    · refine ⟨⟨d, by simp [mem_singleton, had.symm, hbd.symm, hcd.symm]⟩, ?_⟩
+      apply Subtype.ext
+      rw [← Fin.coe_toNat y, hy]
+      simp [f, had.symm, hbd.symm, hcd.symm, ite_false, Fin.toNat_mk]
 
 /-- Lemma 3.6.9 -/
 theorem SetTheory.Set.pos_card_nonempty {n:ℕ} (h: n ≥ 1) {X:Set} (hX: X.has_card n) : X ≠ ∅ := by
@@ -131,14 +188,19 @@ theorem SetTheory.Set.card_erase {n:ℕ} (h: n ≥ 1) {X:Set} (hX: X.has_card n)
   -- formalize in Lean.
   rw [has_card_iff] at hX; choose f hf using hX
   set X' : Set := X \ {x.val}
-  set ι : X' → X := fun ⟨y, hy⟩ ↦ ⟨ y, by aesop ⟩
+  set ι : X' → X := fun ⟨y, hy⟩ ↦ ⟨y, ((mem_sdiff _ _ _).mp hy).1⟩
   observe hι : ∀ x:X', (ι x:Object) = x
   choose m₀ hm₀ hm₀f using (mem_Fin _ _).mp (f x).property
   set g : X' → Fin (n-1) := fun x' ↦
     let := Fin.toNat_lt (f (ι x'))
-    let : (f (ι x'):ℕ) ≠ m₀ := by
-      by_contra!; simp [←this, Subtype.val_inj, hf.1.eq_iff, ι] at hm₀f
-      have := x'.property; aesop
+    let hne : (f (ι x'):ℕ) ≠ m₀ := by
+      intro heq
+      have hobj : (f (ι x') : Object) = (f x : Object) := by
+        rw [← Fin.coe_toNat (f (ι x')), heq]
+        exact hm₀f.symm
+      have hιx : ι x' = x := hf.1 (Subtype.ext hobj)
+      have hxval : (x' : Object) = x.val := by simpa [ι] using congrArg Subtype.val hιx
+      exact ((mem_sdiff _ _ _).mp x'.property).2 ((mem_singleton _ _).mpr hxval)
     if h' : f (ι x') < m₀ then Fin_mk _ (f (ι x')) (by omega)
     else Fin_mk _ (f (ι x') - 1) (by omega)
   have hg_def (x':X') : if (f (ι x'):ℕ) < m₀ then (g x':ℕ) = f (ι x') else (g x':ℕ) = f (ι x') - 1 := by
@@ -174,14 +236,34 @@ lemma SetTheory.Set.Example_3_6_8_a: ({0,1,2}:Set).has_card 3 := by
 
 lemma SetTheory.Set.Example_3_6_8_b: ({3,4}:Set).has_card 2 := by
   rw [has_card_iff]
-  use open Classical in fun x ↦ Fin_mk _ (if x = (3:Object) then 0 else 1) (by aesop)
-  constructor
-  · intro x1 x2
-    aesop
-  intro y
-  have := Fin.toNat_lt y
-  have : y = (0:ℕ) ∨ y = (1:ℕ) := by omega
-  aesop
+  classical
+  have hne : (3:Object) ≠ 4 := fun h => (by decide : (3:ℕ) ≠ 4) ((Object.natCast_inj 3 4).mp h)
+  let f : ({3,4}:Set) → Fin 2 := fun x ↦
+    Fin_mk _ (if x.val = 3 then 0 else 1) (by split_ifs <;> omega)
+  refine ⟨f, ⟨?_, ?_⟩⟩
+  · intro x y hxy
+    have hx : x.val = 3 ∨ x.val = 4 := by simpa [mem_union, mem_singleton] using x.property
+    have hy : y.val = 3 ∨ y.val = 4 := by simpa [mem_union, mem_singleton] using y.property
+    rcases hx with hx | hx <;> rcases hy with hy | hy
+    · exact Subtype.ext (hx.trans hy.symm)
+    · have hto := congrArg Fin.toNat hxy
+      simp only [f, Fin.toNat_mk, hx, hy, hne.symm, ite_true, ite_false] at hto
+      omega
+    · have hto := congrArg Fin.toNat hxy
+      simp only [f, Fin.toNat_mk, hx, hy, hne.symm, ite_true, ite_false] at hto
+      omega
+    · exact Subtype.ext (hx.trans hy.symm)
+  · intro y
+    have hy : (y:ℕ) = 0 ∨ (y:ℕ) = 1 := by have := Fin.toNat_lt y; omega
+    rcases hy with hy | hy
+    · refine ⟨⟨3, by simp [mem_singleton]⟩, ?_⟩
+      apply Subtype.ext
+      rw [← Fin.coe_toNat y, hy]
+      simp [f, ite_true, Fin.toNat_mk]
+    · refine ⟨⟨4, by simp [mem_singleton]⟩, ?_⟩
+      apply Subtype.ext
+      rw [← Fin.coe_toNat y, hy]
+      simp [f, hne.symm, ite_false, Fin.toNat_mk]
 
 lemma SetTheory.Set.Example_3_6_8_c : ¬({0,1,2}:Set) ≈ ({3,4}:Set) := by
   by_contra h
@@ -217,8 +299,13 @@ theorem SetTheory.Set.has_card_card {X:Set} (hX: X.finite) : X.has_card (SetTheo
 theorem SetTheory.Set.has_card_to_card {X:Set} {n: ℕ}: X.has_card n → X.card = n := by
   intro h; simp [card, card_uniq (⟨ n, h ⟩:X.finite).choose_spec h]; aesop
 
-theorem SetTheory.Set.card_to_has_card {X:Set} {n: ℕ} (hn: n ≠ 0): X.card = n → X.has_card n
-  := by grind [card, has_card_card]
+theorem SetTheory.Set.card_to_has_card {X:Set} {n: ℕ} (hn: n ≠ 0): X.card = n → X.has_card n := by
+  intro h
+  by_cases hf : X.finite
+  · rw [← h]
+    exact has_card_card hf
+  · simp [card, hf] at h
+    exact absurd h.symm hn
 
 theorem SetTheory.Set.card_fin_eq (n:ℕ): (Fin n).has_card n := (has_card_iff _ _).mp ⟨ id, Function.bijective_id ⟩
 

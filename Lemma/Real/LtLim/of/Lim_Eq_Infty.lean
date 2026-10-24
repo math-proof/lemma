@@ -3,7 +3,6 @@ import sympy.Basic
 open Filter
 
 
-
 @[path]
 private lemma main
   {f : ℝ → ℝ}

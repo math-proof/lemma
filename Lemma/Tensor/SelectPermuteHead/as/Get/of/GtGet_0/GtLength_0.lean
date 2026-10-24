@@ -17,7 +17,7 @@ import Lemma.Tensor.SEqPermuteHeadS.of.Eq
 import Lemma.Tensor.SEqPermuteHead_1
 import Lemma.Tensor.SEqSelectS.of.SEq.Val.Val
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
-open Bool Fin Finset List Nat Tensor Vector
+open Bool Fin Finset List Nat Tensor Vector Set
 set_option maxHeartbeats 200000
 
 

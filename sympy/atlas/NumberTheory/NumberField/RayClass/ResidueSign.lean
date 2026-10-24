@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/ResidueSign.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.RayClass.WeakApproximation
+import Lemma.Nat.NumberField.RayClass.WeakApproximation
+import Lemma.Nat.NumberField.RayClass.InfiniteSign
 import sympy.atlas.NumberTheory.NumberField.RayClass.InfiniteSign
 /-!
 # Combined residue-sign map and ray quotient equivalence (N406)
@@ -218,17 +220,6 @@ theorem residueSignMap_surjective (m : Modulus K) :
     (residueSignMap m).ker = rayOneElements m := by
   unfold rayOneElements positiveRayElements
   rw [residueSignMap, MonoidHom.ker_prod, finiteResidueMap_ker, inf_comm]
-
-/-- The combined map is trivial exactly on ray-one elements. -/
-theorem residueSignMap_eq_one_iff (m : Modulus K) (x : rayElements m) :
-    residueSignMap m x = 1 ↔ IsRayElementOne m (x : Kˣ) := by
-  rw [← MonoidHom.mem_ker, residueSignMap_ker]
-  constructor
-  · intro h
-    obtain ⟨hfin, hpos⟩ := (mem_rayOneElements_iff m x).mp h
-    exact ⟨x.property, hfin, hpos⟩
-  · intro h
-    exact (mem_rayOneElements_iff m x).mpr ⟨h.congruent, h.positive⟩
 
 /-- Canonical quotient equivalence onto the residue-sign target. -/
 noncomputable def rayElementsQuotientEquivResidueSign (m : Modulus K) :

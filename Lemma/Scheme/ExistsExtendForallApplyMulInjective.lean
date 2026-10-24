@@ -1,26 +1,24 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
 
 /--
 [Representation_exists_extend_forall_apply_mul_of_injective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Representation_exists_extend_forall_apply_mul_of_injective.lean)
 -/
 @[path]
 private lemma main
-    {H : Type u} {G : Type v} [Group H] [Group G] {W : Type w} [AddCommGroup W] [Module ℂ W]
-    (ι : H →* G) (hι : Function.Injective ι)
-    (ρ : Representation ℂ H W) (P : Submodule ℂ W) (hP : ∀ k : H, ∀ v ∈ P, ρ k v ∈ P)
-    (T : P →ₗ[ℂ] (G → ℂ))
-    (hT : ∀ (k : H) (v : P) (x : G), T ⟨ρ k v, hP k v v.2⟩ x = T v (x * ι k)) :
-    ∃ T' : W →ₗ[ℂ] (G → ℂ),
-      (∀ (k : H) (v : W) (x : G), T' (ρ k v) x = T' v (x * ι k)) ∧ ∀ v : P, T' v = T v := by
+  {H : Type u} {G : Type v} {W : Type w} [Group H] [Group G] [AddCommGroup W] [Module ℂ W]
+  (ι : H →* G) (hι : Function.Injective ι)
+  (ρ : Representation ℂ H W) (P : Submodule ℂ W) (hP : ∀ k : H, ∀ v ∈ P, ρ k v ∈ P)
+  (T : P →ₗ[ℂ] (G → ℂ))
+  (hT : ∀ (k : H) (v : P) (x : G), T ⟨ρ k v, hP k v v.2⟩ x = T v (x * ι k)) :
+  -- imply
+  ∃ T' : W →ₗ[ℂ] (G → ℂ), (∀ (k : H) (v : W) (x : G), T' (ρ k v) x = T' v (x * ι k)) ∧ ∀ v : P, T' v = T v := by
+  -- proof
   classical
   set S : Subgroup G := ι.range with hS
   let sec : G → G := fun x => (QuotientGroup.mk x : G ⧸ S).out
@@ -48,26 +46,27 @@ private lemma main
     have h2 := hkof x
     rw [map_mul]
     apply mul_left_cancel (a := sec x)
-    rw [← mul_assoc, ← h2]; exact h1.symm
+    rw [← mul_assoc, ← h2]
+    apply h1.symm
   obtain ⟨Pc, hPc⟩ := Submodule.exists_isCompl P
-  let π : W →ₗ[ℂ] P := Submodule.linearProjOfIsCompl P Pc hPc
-  have hπ : ∀ v : P, π v = v := fun v => Submodule.linearProjOfIsCompl_apply_left hPc v
+  let π : W →ₗ[ℂ] P := Submodule.projectionOnto P Pc hPc
+  have hπ : ∀ v : P, π v = v := fun v => Submodule.projectionOnto_apply_left hPc v
   let ℓ : G → W →ₗ[ℂ] ℂ := fun r => (LinearMap.proj r).comp (T.comp π)
   have hℓ : ∀ (r : G) (v : P), ℓ r v = T v r := fun r v => by
     simp only [ℓ, LinearMap.comp_apply, LinearMap.proj_apply, hπ]
-  let T' : W →ₗ[ℂ] (G → ℂ) :=
-    { toFun := fun v x => ℓ (sec x) (ρ (kof x) v)
-      map_add' := fun v w => by funext x; simp only [map_add, Pi.add_apply]
-      map_smul' := fun c v => by funext x; simp only [map_smul, smul_eq_mul, Pi.smul_apply, RingHom.id_apply] }
+  let T' : W →ₗ[ℂ] (G → ℂ) := ⟨⟨fun v x => ℓ (sec x) (ρ (kof x) v), fun v w => by funext x; simp only [map_add, Pi.add_apply]⟩, fun c v => by funext x; simp only [map_smul, smul_eq_mul, Pi.smul_apply, RingHom.id_apply]⟩
   refine ⟨T', ?_, ?_⟩
-  · intro k v x
+  ·
+    intro k v x
     show ℓ (sec x) (ρ (kof x) (ρ k v)) = ℓ (sec (x * ι k)) (ρ (kof (x * ι k)) v)
     rw [hsec, hkof_mul, map_mul]; rfl
-  · intro v
+  ·
+    intro v
     funext x
     show ℓ (sec x) (ρ (kof x) v) = T v x
     have hmem : ρ (kof x) v ∈ P := hP _ _ v.2
     have : ℓ (sec x) (ρ (kof x) (v : W)) = ℓ (sec x) ((⟨ρ (kof x) v, hmem⟩ : P) : W) := rfl
     rw [this, hℓ, hT, ← hkof]
+
 
 -- created on 2026-10-20

@@ -16,7 +16,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Nat List Bool Tensor Vector Fin
+open Nat List Bool Tensor Vector Fin Set
 
 
 @[path]

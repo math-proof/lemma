@@ -1,6 +1,8 @@
 import Mathlib
 import sympy.Basic
 import sympy.analysis.Section_7_1
+open BigOperators
+open Classical
 open Finset
 
 

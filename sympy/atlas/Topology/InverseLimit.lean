@@ -41,46 +41,4 @@ of dependent functions `x : ∀ i, X i` compatible with the transition maps,
 that is, `f h (x j) = x i` whenever `h : i ≤ j`. -/
 def carrier (f : ∀ ⦃i j : ι⦄, i ≤ j → X j → X i) : Set (∀ i, X i) :=
   { x | ∀ ⦃i j : ι⦄ (h : i ≤ j), f h (x j) = x i }
-
-/-- Membership in the inverse limit is exactly the compatibility condition. -/
-@[simp]
-theorem mem_carrier_iff {f : ∀ ⦃i j : ι⦄, i ≤ j → X j → X i}
-    {x : ∀ i, X i} :
-    x ∈ carrier f ↔ ∀ ⦃i j : ι⦄ (h : i ≤ j), f h (x j) = x i :=
-  Iff.rfl
-
-/-- Projection compatibility for limit elements: applying a transition map to
-a higher component agrees with the lower component. -/
-theorem proj_compat {f : ∀ ⦃i j : ι⦄, i ≤ j → X j → X i}
-    {x : ∀ i, X i} (hx : x ∈ carrier f) ⦃i j : ι⦄ (h : i ≤ j) :
-    f h (x j) = x i :=
-  hx h
-
-variable [∀ i, TopologicalSpace (X i)]
-
-/-- The inverse limit set is closed in the product when every factor is
-Hausdorff and every transition map is continuous. Each compatibility equation
-`f h (x j) = x i` cuts out a closed set by `isClosed_eq`, and the limit is the
-intersection of all of them. -/
-theorem isClosed_carrier [∀ i, T2Space (X i)]
-    {f : ∀ ⦃i j : ι⦄, i ≤ j → X j → X i}
-    (hf : ∀ ⦃i j : ι⦄ (h : i ≤ j), Continuous (f h)) :
-    IsClosed (carrier f) := by
-  have heq : carrier f =
-      ⋂ (i : ι) (j : ι) (h : i ≤ j), { x | f h (x j) = x i } := by
-    ext x
-    simp [carrier]
-  rw [heq]
-  exact isClosed_iInter fun i => isClosed_iInter fun j => isClosed_iInter fun h =>
-    isClosed_eq ((hf h).comp (continuous_apply j)) (continuous_apply i)
-
-/-- The inverse limit set is compact in the product when every factor is
-compact Hausdorff and every transition map is continuous: it is a closed
-subset of a compact product. -/
-theorem isCompact_carrier [∀ i, CompactSpace (X i)] [∀ i, T2Space (X i)]
-    {f : ∀ ⦃i j : ι⦄, i ≤ j → X j → X i}
-    (hf : ∀ ⦃i j : ι⦄ (h : i ≤ j), Continuous (f h)) :
-    IsCompact (carrier f) :=
-  (isClosed_carrier hf).isCompact
-
 end InverseLimit

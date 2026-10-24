@@ -1087,7 +1087,7 @@ partial def Expr.condProbSumRV? (e : Expr) (binder : Name) : Option Expr :=
       | Binder _ _ t v => (t.condProbSumRV? binder).orElse fun _ => v.condProbSumRV? binder
       | _ => none
 
-/-- `∑ c ∈ Finset.univ, body` arising from `∑ «a.bvar» t, …` (see `sumAt` in
+/-- `∑ c ∈ Finset.univ, body` arising from `∑ «a.bvar»[t], …` / `∑ «a.bvar» t, …` (see `sumAt` in
 `sympy/concrete/summations.lean`) → `(a t, body[c ↦ a t])`, so the index prints as the RV
 (lean.js) rather than `c ∈ Finset.univ`. Triggered by finding `condProb … (c, …)` in the body
 (the sumAt residual), not by matching `Finset.univ` alone — that node's attr shape varies. -/

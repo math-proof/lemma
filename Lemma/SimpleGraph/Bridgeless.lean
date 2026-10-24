@@ -4,55 +4,73 @@ import sympy.atlas.Combinatorics.SimpleGraph.Bridgeless
 open SimpleGraph
 
 
+namespace SimpleGraph
+
 /--
 [isBridgeless_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Bridgeless.lean)
 -/
 @[path]
-private lemma isBridgeless_iff_eq
+lemma isBridgeless_iff
   {G : SimpleGraph V} :
 -- imply
-  G.IsBridgeless ↔ ∀ e ∈ G.edgeSet, ¬ G.IsBridge e := by
+  G.IsBridgeless ↔ ∀ e ∈ G.edgeSet, ¬ G.IsBridge e :=
 -- proof
-  apply SimpleGraph.isBridgeless_iff
+  Iff.rfl
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsBridgeless.mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Bridgeless.lean)
 -/
 @[path]
-private lemma IsBridgeless_mk_eq
+lemma IsBridgeless.mk
   {G : SimpleGraph V}
 -- given
   (h : ∀ e ∈ G.edgeSet, ¬ G.IsBridge e) :
 -- imply
-  G.IsBridgeless := by
+  G.IsBridgeless :=
 -- proof
-  apply SimpleGraph.IsBridgeless.mk h
+  h
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsBridgeless.not_isBridge](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Bridgeless.lean)
 -/
 @[path]
-private lemma IsBridgeless_not_isBridge_eq
+lemma IsBridgeless.not_isBridge
   {G : SimpleGraph V}
   {e : Sym2 V}
 -- given
   (h : G.IsBridgeless)
   (he : e ∈ G.edgeSet) :
 -- imply
-  ¬ G.IsBridge e := by
+  ¬ G.IsBridge e :=
 -- proof
-  apply SimpleGraph.IsBridgeless.not_isBridge h he
+  h e he
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [isBridgeless_bot](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Bridgeless.lean)
 -/
 @[path]
-private lemma isBridgeless_bot_eq
+lemma isBridgeless_bot
   :
 -- imply
   (⊥ : SimpleGraph V).IsBridgeless := by
 -- proof
-  apply SimpleGraph.isBridgeless_bot V
+  intro e he
+  simp at he
+
+end SimpleGraph
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

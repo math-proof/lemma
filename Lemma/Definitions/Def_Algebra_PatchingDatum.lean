@@ -1,0 +1,44 @@
+import Mathlib.RingTheory.MvPowerSeries.Basic
+import Mathlib.RingTheory.Ideal.Maps
+import Mathlib.RingTheory.Ideal.Operations
+
+structure Algebra.PatchingLevel (𝒪 : Type) [CommRing 𝒪] (r : ℕ) (R : Type) [CommRing R]
+    [Algebra 𝒪 R] (M : Type) [AddCommGroup M] [Module R M]
+    (J : Ideal (MvPowerSeries (Fin r) 𝒪)) : Type 1 where
+
+  N : Type
+  [instAddCommGroup : AddCommGroup N]
+  [instModule : Module (MvPowerSeries (Fin r) 𝒪) N]
+
+  φ : MvPowerSeries (Fin r) 𝒪 →ₐ[𝒪] MvPowerSeries (Fin r) 𝒪
+
+  ψ : MvPowerSeries (Fin r) 𝒪 →ₐ[𝒪] R
+  ψ_surjective : Function.Surjective ψ
+
+  ψ_φ_X : ∀ i : Fin r, ψ (φ (MvPowerSeries.X i)) = 0
+
+  π : N →+ M
+
+  π_smul : ∀ (f : MvPowerSeries (Fin r) 𝒪) (x : N), π (f • x) = ψ f • π x
+  π_surjective : Function.Surjective π
+
+  ker_π : ∀ x : N, π x = 0 ↔
+    x ∈ (Ideal.span (Set.range fun i : Fin r => φ (MvPowerSeries.X i))) •
+      (⊤ : Submodule (MvPowerSeries (Fin r) 𝒪) N)
+
+  d : ℕ
+
+  b : Fin d → N
+
+  b_span : ∀ x : N, ∃ c : Fin d → MvPowerSeries (Fin r) 𝒪, x = ∑ i, φ (c i) • b i
+
+  b_rel : ∀ c : Fin d → MvPowerSeries (Fin r) 𝒪, ∑ i, φ (c i) • b i = 0 ↔ ∀ i, c i ∈ J
+
+attribute [instance] Algebra.PatchingLevel.instAddCommGroup Algebra.PatchingLevel.instModule
+
+structure Algebra.PatchingDatum (𝒪 : Type) [CommRing 𝒪] (ℓ r : ℕ) (R : Type) [CommRing R]
+    [Algebra 𝒪 R] (M : Type) [AddCommGroup M] [Module R M] : Type 1 where
+
+  level : ∀ n : ℕ, Algebra.PatchingLevel 𝒪 r R M
+    (Ideal.span (Set.range fun j : Fin r =>
+      ((1 + MvPowerSeries.X j) ^ (ℓ ^ n) - 1 : MvPowerSeries (Fin r) 𝒪)))

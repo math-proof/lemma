@@ -1,30 +1,30 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [LanglandsTunnell_ArchBessel_integrableOn_exp_neg_mul_add_inv_mul_cpow](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LanglandsTunnell_ArchBessel_integrableOn_exp_neg_mul_add_inv_mul_cpow.lean)
 -/
 @[path]
-private lemma main (ν : ℂ) (x : ℝ) (hx : 0 < x) :
-    MeasureTheory.IntegrableOn
-      (fun t : ℝ => (Real.exp (-(x * (t + t⁻¹) / 2)) : ℂ) * ((t : ℂ) ^ (ν - 1))) (Set.Ioi 0) := by
+private lemma main
+  (ν : ℂ) (x : ℝ) (hx : 0 < x) :
+  -- imply
+  MeasureTheory.IntegrableOn (fun t : ℝ => (Real.exp (-(x * (t + t⁻¹) / 2)) : ℂ) * ((t : ℂ) ^ (ν - 1))) (Set.Ioi 0) := by
+  -- proof
   set a : ℝ := ν.re with ha
   set m : ℕ := ⌈-a⌉₊ + 1 with hm
   have hma : -1 < (m : ℝ) + a - 1 := by
     rw [hm]; have := Nat.le_ceil (-a); push_cast; linarith
   have hx2 : 0 < x / 2 := by linarith
   set C : ℝ := (m.factorial : ℝ) * (2 / x) ^ m with hC
-  have hC0 : 0 ≤ C := by positivity
-  have hg : MeasureTheory.IntegrableOn (fun t : ℝ => C * (t ^ ((m : ℝ) + a - 1) * Real.exp (-(x / 2) * t ^ (1 : ℝ)))) (Set.Ioi 0) :=
-    (integrableOn_rpow_mul_exp_neg_mul_rpow hma one_pos hx2).const_mul C
+  have hg : MeasureTheory.IntegrableOn (fun t : ℝ => C * (t ^ ((m : ℝ) + a - 1) * Real.exp (-(x / 2) * t ^ (1 : ℝ)))) (Set.Ioi 0) := (integrableOn_rpow_mul_exp_neg_mul_rpow hma one_pos hx2).const_mul C
   have hcont : ContinuousOn (fun t : ℝ => (Real.exp (-(x * (t + t⁻¹) / 2)) : ℂ) * ((t : ℂ) ^ (ν - 1))) (Set.Ioi 0) := by
     intro t ht
     have ht0 : t ≠ 0 := (ne_of_gt ht)
@@ -32,7 +32,7 @@ private lemma main (ν : ℂ) (x : ℝ) (hx : 0 < x) :
     refine ContinuousAt.mul ?_ (Complex.continuousAt_ofReal_cpow_const t (ν - 1) (Or.inr ht0))
     refine Complex.continuous_ofReal.continuousAt.comp ?_
     refine Real.continuous_exp.continuousAt.comp ?_
-    exact ((continuousAt_const.mul (continuousAt_id.add (continuousAt_inv₀ ht0))).div_const _).neg
+    apply ((continuousAt_const.mul (continuousAt_id.add (continuousAt_inv₀ ht0))).div_const _).neg
   rw [MeasureTheory.IntegrableOn]
   refine MeasureTheory.Integrable.mono' hg.integrable (hcont.aestronglyMeasurable measurableSet_Ioi) ?_
   rw [MeasureTheory.ae_restrict_iff' measurableSet_Ioi]
@@ -50,18 +50,19 @@ private lemma main (ν : ℂ) (x : ℝ) (hx : 0 < x) :
     rw [Real.exp_neg, inv_le_iff_one_le_mul₀ (Real.exp_pos _)]
     have h2 : ((x / 2) / t) ^ m * ((2 / x) ^ m * t ^ m) = 1 := by
       rw [← mul_pow, ← mul_pow]; rw [show (x / 2) / t * (2 / x * t) = 1 by field_simp]; simp
-    calc (1 : ℝ) = ((x / 2) / t) ^ m * ((2 / x) ^ m * t ^ m) := h2.symm
-      _ ≤ (Real.exp ((x / 2) / t) * m.factorial) * ((2 / x) ^ m * t ^ m) :=
-          mul_le_mul_of_nonneg_right h1 (by positivity)
+    calc
+      _ = ((x / 2) / t) ^ m * ((2 / x) ^ m * t ^ m) := h2.symm
+      _ ≤ (Real.exp ((x / 2) / t) * m.factorial) * ((2 / x) ^ m * t ^ m) := mul_le_mul_of_nonneg_right h1 (by positivity)
       _ = (m.factorial : ℝ) * (2 / x) ^ m * t ^ m * Real.exp ((x / 2) / t) := by ring
   have hpow : t ^ m * t ^ (a - 1) = t ^ ((m : ℝ) + a - 1) := by
     rw [← Real.rpow_natCast, ← Real.rpow_add ht']; congr 1; ring
   rw [hsplit]
-  calc Real.exp (-(x / 2) * t) * Real.exp (-((x / 2) / t)) * t ^ (a - 1)
-      ≤ Real.exp (-(x / 2) * t) * ((m.factorial : ℝ) * (2 / x) ^ m * t ^ m) * t ^ (a - 1) := by
-        refine mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hsing (Real.exp_pos _).le) ?_
-        exact Real.rpow_nonneg ht'.le _
+  calc
+    _ ≤ Real.exp (-(x / 2) * t) * ((m.factorial : ℝ) * (2 / x) ^ m * t ^ m) * t ^ (a - 1) := by
+      refine mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hsing (Real.exp_pos _).le) ?_
+      apply Real.rpow_nonneg ht'.le _
     _ = C * ((t ^ m * t ^ (a - 1)) * Real.exp (-(x / 2) * t)) := by rw [hC]; ring
     _ = C * (t ^ ((m : ℝ) + a - 1) * Real.exp (-(x / 2) * t)) := by rw [hpow]
+
 
 -- created on 2026-10-20

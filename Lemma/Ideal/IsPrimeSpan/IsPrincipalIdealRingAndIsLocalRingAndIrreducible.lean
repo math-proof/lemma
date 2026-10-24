@@ -1,26 +1,26 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [PowerSeries_quotient_span_X_sub_C_pow_of_irreducible](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_PowerSeries_quotient_span_X_sub_C_pow_of_irreducible.lean)
 -/
 @[path]
 private lemma main
-    {W : Type*} [CommRing W] [IsDomain W] [IsDiscreteValuationRing W]
-    (ϖ : W) (hϖ : Irreducible ϖ) (e : ℕ) (he : 1 ≤ e) :
-    (Ideal.span {(PowerSeries.X : PowerSeries W) - PowerSeries.C (ϖ ^ e)}).IsPrime ∧
-    IsPrincipalIdealRing (PowerSeries W ⧸ Ideal.span {(PowerSeries.X : PowerSeries W) - PowerSeries.C (ϖ ^ e)}) ∧
-    IsLocalRing (PowerSeries W ⧸ Ideal.span {(PowerSeries.X : PowerSeries W) - PowerSeries.C (ϖ ^ e)}) ∧
-    Irreducible (Ideal.Quotient.mk (Ideal.span {(PowerSeries.X : PowerSeries W) - PowerSeries.C (ϖ ^ e)})
-      (PowerSeries.C ϖ)) := by
+  {W : Type u} [CommRing W] [IsDomain W] [IsDiscreteValuationRing W]
+  (ϖ : W)
+  (e : ℕ)
+  -- given
+  (hϖ : Irreducible ϖ)
+  (he : 1 ≤ e) :
+  -- imply
+  (Ideal.span {(PowerSeries.X : PowerSeries W) - PowerSeries.C (ϖ ^ e)}).IsPrime ∧ IsPrincipalIdealRing (PowerSeries W ⧸ Ideal.span {(PowerSeries.X : PowerSeries W) - PowerSeries.C (ϖ ^ e)}) ∧ IsLocalRing (PowerSeries W ⧸ Ideal.span {(PowerSeries.X : PowerSeries W) - PowerSeries.C (ϖ ^ e)}) ∧ Irreducible (Ideal.Quotient.mk (Ideal.span {(PowerSeries.X : PowerSeries W) - PowerSeries.C (ϖ ^ e)}) (PowerSeries.C ϖ)) := by
+  -- proof
   have hmW : IsLocalRing.maximalIdeal W = Ideal.span {ϖ} :=
     (IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).mp hϖ
   have hϖu : ¬IsUnit ϖ := hϖ.not_isUnit
@@ -28,7 +28,9 @@ private lemma main
   have hϖm : ϖ ∈ IsLocalRing.maximalIdeal W := hϖu
   set c : W := ϖ ^ e with hc
   have hcu : ¬IsUnit c := by
-    rw [hc]; exact fun h => hϖu (isUnit_pow_iff (by omega) |>.mp h)
+    rw [hc]
+    intro h
+    apply hϖu ((isUnit_pow_iff (by omega)).mp h)
   have hc0 : c ≠ 0 := pow_ne_zero e hϖ0
   set g : PowerSeries W := PowerSeries.X - PowerSeries.C c with hg
   have hg0 : PowerSeries.constantCoeff g = -c := by
@@ -37,10 +39,12 @@ private lemma main
     simp [hg, PowerSeries.coeff_X]
   have hgirr : Irreducible g := by
     refine irreducible_iff.mpr ⟨?_, ?_⟩
-    · intro hu
+    ·
+      intro hu
       rw [PowerSeries.isUnit_iff_constantCoeff, hg0] at hu
-      exact hcu (by simpa using hu)
-    · intro a b hab
+      apply hcu (by simpa using hu)
+    ·
+      intro a b hab
       by_contra hnot
       push Not at hnot
       obtain ⟨ha, hb⟩ := hnot
@@ -54,7 +58,7 @@ private lemma main
       norm_num at h1
       apply (IsLocalRing.maximalIdeal.isMaximal W).ne_top
       rw [Ideal.eq_top_iff_one, h1]
-      exact Ideal.add_mem _ (Ideal.mul_mem_right _ _ ha') (Ideal.mul_mem_left _ _ hb')
+      apply Ideal.add_mem _ (Ideal.mul_mem_right _ _ ha') (Ideal.mul_mem_left _ _ hb')
   have hgne : g ≠ 0 := hgirr.ne_zero
   let _ : UniqueFactorizationMonoid (PowerSeries W) := inferInstance
   have hgprime : Prime g := UniqueFactorizationMonoid.irreducible_iff_prime.mp hgirr
@@ -69,8 +73,8 @@ private lemma main
   let _ : IsNoetherianRing D := inferInstance
   set π : D := Ideal.Quotient.mk I (PowerSeries.C ϖ) with hπ
   have hXc : Ideal.Quotient.mk I PowerSeries.X = Ideal.Quotient.mk I (PowerSeries.C c) := by
-    rw [Ideal.Quotient.eq, hI]
-    exact Ideal.subset_span rfl
+    rw [Ideal.Quotient.eq, hI, ← hg]
+    apply Ideal.mem_span_singleton_self
   have hXπ : Ideal.Quotient.mk I PowerSeries.X = π ^ e := by
     rw [hXc, hπ, ← map_pow, ← map_pow]
   have hπu : ¬IsUnit π := by
@@ -86,7 +90,9 @@ private lemma main
     apply isUnit_of_dvd_one
     refine ⟨PowerSeries.constantCoeff G + ϖ ^ (e - 1) * PowerSeries.constantCoeff H, ?_⟩
     have : ϖ ^ e = ϖ * ϖ ^ (e - 1) := by
-      rw [← pow_succ']; congr 1; omega
+      rw [← pow_succ']
+      congr 1
+      omega
     linear_combination (-1 : W) * h0 + (PowerSeries.constantCoeff H) * this
   have hπ0 : π ≠ 0 := by
     intro h0
@@ -101,25 +107,31 @@ private lemma main
     norm_num at e1
     rw [hg0] at e1
     have h2 : ϖ ^ (2 * e) = ϖ * ϖ ^ (2 * e - 1) := by
-      rw [← pow_succ']; congr 1; omega
-    have h3 : c * c = ϖ ^ (2 * e) := by rw [hc, ← pow_add]; congr 1; omega
+      rw [← pow_succ']
+      congr 1
+      omega
+    have h3 : c * c = ϖ ^ (2 * e) := by
+      rw [hc, ← pow_add]
+      congr 1
+      omega
     have key : ϖ * (1 + ϖ ^ (2 * e - 1) * PowerSeries.coeff 1 H) = 0 := by
       linear_combination e0 + c * e1 - (PowerSeries.coeff 1 H) * h2 - (PowerSeries.coeff 1 H) * h3
     have hxm : -(ϖ ^ (2 * e - 1) * PowerSeries.coeff 1 H) ∈ IsLocalRing.maximalIdeal W :=
       Submodule.neg_mem _ (Ideal.mul_mem_right _ _ (Ideal.pow_mem_of_mem _ hϖm _ (by omega)))
     have hunit : IsUnit (1 + ϖ ^ (2 * e - 1) * PowerSeries.coeff 1 H) := by
-      rcases IsLocalRing.isUnit_or_isUnit_of_isUnit_add
-          (a := 1 + ϖ ^ (2 * e - 1) * PowerSeries.coeff 1 H)
-          (b := -(ϖ ^ (2 * e - 1) * PowerSeries.coeff 1 H)) (by simp) with h | h
-      · exact h
-      · exact absurd h hxm
-    rcases mul_eq_zero.mp key with h | h
-    · exact hϖ0 h
-    · exact hunit.ne_zero h
+      obtain h | h := IsLocalRing.isUnit_or_isUnit_of_isUnit_add
+        (a := 1 + ϖ ^ (2 * e - 1) * PowerSeries.coeff 1 H)
+        (b := -(ϖ ^ (2 * e - 1) * PowerSeries.coeff 1 H)) (by simp)
+      · apply h
+      · apply absurd h hxm
+    obtain h | h := mul_eq_zero.mp key
+    · apply hϖ0 h
+    · apply hunit.ne_zero h
   have hπm : π ∈ IsLocalRing.maximalIdeal D := hπu
   have hmax : IsLocalRing.maximalIdeal D = Ideal.span {π} := by
     apply le_antisymm
-    · intro x hx
+    ·
+      intro x hx
       obtain ⟨F, rfl⟩ := Ideal.Quotient.mk_surjective x
       have hFu : ¬IsUnit F := fun h => hx (h.map _)
       rw [PowerSeries.isUnit_iff_constantCoeff] at hFu
@@ -133,18 +145,24 @@ private lemma main
       conv_lhs => rw [hF]
       rw [map_add, map_mul, hXπ, hw, map_mul, map_mul, ← hπ]
       have : π ^ e = π * π ^ (e - 1) := by
-        rw [← pow_succ']; congr 1; omega
-      rw [this]; ring
-    · rw [Ideal.span_le, Set.singleton_subset_iff]; exact hπm
+        rw [← pow_succ']
+        congr 1
+        omega
+      rw [this]
+      ring
+    ·
+      rw [Ideal.span_le, Set.singleton_subset_iff]
+      apply hπm
   have hnf : ¬IsField D := by
     intro hF
     have := (IsLocalRing.isField_iff_maximalIdeal_eq).mp hF
     rw [this] at hπm
-    exact hπ0 hπm
+    apply hπ0 hπm
   have hprinc : (IsLocalRing.maximalIdeal D).IsPrincipal := ⟨⟨π, hmax⟩⟩
   have hDVR : IsDiscreteValuationRing D :=
     ((IsDiscreteValuationRing.TFAE D hnf).out 1 5).mpr hprinc
   refine ⟨hIprime, inferInstance, hDloc, ?_⟩
-  exact (IsDiscreteValuationRing.irreducible_iff_uniformizer π).mpr hmax
+  apply (IsDiscreteValuationRing.irreducible_iff_uniformizer π).mpr hmax
+
 
 -- created on 2026-10-20

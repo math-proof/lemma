@@ -1,0 +1,32 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectBoundaryIncidenceRateCapstone.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceRateCapstone
+
+#print axioms
+  StatMech.FrontierD.fkQgt4_pred_exactDiagonalHalf_le_fixedChargeRate_of_normalizationVertical
+#print axioms
+  StatMech.FrontierD.fkQgt4_fixedCharge_bound_of_normalizationVertical_unconditional
+#print axioms
+  StatMech.FrontierD.fkQgt4_fixedCharge_bound_of_normalizationLimits_unconditional
+#print axioms
+  StatMech.FrontierD.fkQgt4_fixedCharge_bound_of_verticalWindingTailLimits_unconditional
+#print axioms
+  StatMech.FrontierD.fkQgt4_windingBridge_of_evenTwoByOneCrossingFloor_and_verticalLimits
+#print axioms
+  StatMech.FrontierD.fkQgt4_windingBridge_of_evenTwoByOneCrossingFloor_and_normalizationVertical
+#print axioms
+  StatMech.FrontierD.fkQgt4_windingBridge_of_evenTwoByOneCrossingFloor_and_normalizationLimits
+#print axioms
+  StatMech.FrontierD.fkQgt4_discontinuity_of_evenTwoByOneCrossingFloor_and_verticalLimits
+#print axioms
+  StatMech.FrontierD.fkQgt4_discontinuity_of_evenTwoByOneCrossingFloor_and_normalizationVertical
+#print axioms
+  StatMech.FrontierD.fkQgt4_critical_potts_phases_of_evenTwoByOneCrossingFloor_and_verticalLimits

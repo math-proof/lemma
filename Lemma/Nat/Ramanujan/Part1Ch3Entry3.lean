@@ -5,35 +5,76 @@ open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry3
 
 
+namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
+
 /--
 [fCoeff_eq_generalizedBellGenerating](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry3.lean)
 -/
 @[path]
-private lemma fCoeff_eq_generalizedBellGenerating_eq
+lemma fCoeff_eq_generalizedBellGenerating
   {x : ℂ}
   {j : ℕ} :
 -- imply
   fCoeff x j =
     Entry9IiGeneralizedbellgeneratingDefining.generalizedBellGenerating 0 1 x j := by
 -- proof
-  apply MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3.fCoeff_eq_generalizedBellGenerating x j
+  unfold fCoeff
+    Entry9IiGeneralizedbellgeneratingDefining.generalizedBellGenerating
+  congr 1
+  apply tsum_congr
+  intro k
+  simp only [zero_add, one_mul]
+
+end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
+
+namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
+
+/--
+[prod_entry9_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry3.lean)
+-/
+@[path]
+private lemma prod_entry9_eq (z : ℂ) (j : ℕ) :
+  (∏ r ∈ Finset.range (j + 1), (z + (0 : ℂ) + (1 : ℂ) * ((r : ℂ) + 1)))
+    = ∏ i ∈ Finset.range (j + 1), (z + ((i + 1 : ℕ) : ℂ)) := by
+  apply Finset.prod_congr rfl
+  intro r _
+  have hcast : (((r + 1 : ℕ)) : ℂ) = (r : ℂ) + 1 := by push_cast; ring
+  rw [hcast]
+  ring
+
+end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
+
+namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
 
 /--
 [psi_eq_entry9_P](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry3.lean)
 -/
 @[path]
-private lemma psi_eq_entry9_P_eq
+lemma psi_eq_entry9_P
   {x z : ℂ} :
 -- imply
   psi x z = Entry9Odd.entry9_P 0 1 x z := by
 -- proof
-  apply MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3.psi_eq_entry9_P x z
+  unfold psi Entry9Odd.entry9_P
+  apply tsum_congr
+  intro j
+  have hprod := prod_entry9_eq z j
+  by_cases h : ∏ i ∈ Finset.range (j + 1), (z + ((i + 1 : ℕ) : ℂ)) = 0
+  · have h2 : ∏ r ∈ Finset.range (j + 1), (z + (0 : ℂ) + (1 : ℂ) * ((r : ℂ) + 1)) = 0 :=
+    hprod.trans h
+    rw [ite_eq_left h, h2]
+    simp
+  · rw [ite_eq_right h, ← hprod]
+
+end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
+
+namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
 
 /--
 [ramanujan_part1_ch3_entry3_general](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry3.lean)
 -/
 @[path]
-private lemma ramanujan_part1_ch3_entry3_general_eq
+lemma ramanujan_part1_ch3_entry3_general
   {x : ℂ}
   {ε : ℝ}
   {N : ℕ}
@@ -45,13 +86,49 @@ private lemma ramanujan_part1_ch3_entry3_general_eq
     (fun z : ℂ => psi x z - ∑ j ∈ Finset.range (N + 1), ((-1 : ℂ) ^ j * fCoeff x j / z ^ (j + 1)))
     (fun z : ℂ => (1 : ℂ) / z ^ (N + 2)) := by
 -- proof
-  apply MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3.ramanujan_part1_ch3_entry3_general x ε hε_pos hε_lt N
+  have h9 :=
+    Entry9Odd.ramanujan_part1_ch3_entry9_odd 0 1 x one_ne_zero ε hε_pos hε_lt N
+  have hfun : (fun z : ℂ => (z + (0 : ℂ)) / (1 : ℂ)) = id := by
+    funext z
+    simp
+  have hfilter :
+    Filter.comap (fun z : ℂ => (z + (0 : ℂ)) / (1 : ℂ))
+      (Filter.cocompact ℂ ⊓ Filter.principal
+        {w : ℂ | -Real.pi + ε ≤ Complex.arg w ∧ Complex.arg w ≤ Real.pi - ε})
+      = Filter.cocompact ℂ ⊓ Filter.principal (sector ε) := by
+    rw [hfun, Filter.comap_id]
+    rfl
+  rw [hfilter] at h9
+  have hsum : ∀ z : ℂ, (Finset.sum (Finset.range (N + 1)) (fun k : ℕ =>
+    ((-1 : ℂ) ^ k *
+      Entry9IiGeneralizedbellgeneratingDefining.generalizedBellGenerating 0 1 x k)
+      / z ^ (k + 1)))
+    = ∑ j ∈ Finset.range (N + 1), ((-1 : ℂ) ^ j * fCoeff x j / z ^ (j + 1)) := by
+    intro z
+    apply Finset.sum_congr rfl
+    intro j _
+    simp only [fCoeff_eq_generalizedBellGenerating]
+  have hLHS :
+    (fun z : ℂ => psi x z -
+      ∑ j ∈ Finset.range (N + 1), ((-1 : ℂ) ^ j * fCoeff x j / z ^ (j + 1)))
+    = fun z : ℂ => -((Finset.sum (Finset.range (N + 1)) (fun k : ℕ =>
+      ((-1 : ℂ) ^ k *
+        Entry9IiGeneralizedbellgeneratingDefining.generalizedBellGenerating 0 1 x k)
+        / z ^ (k + 1)) - Entry9Odd.entry9_P 0 1 x z)) := by
+    funext z
+    rw [← psi_eq_entry9_P, hsum z]
+    ring
+  rwa [hLHS]
+
+end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
+
+namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
 
 /--
 [ramanujan_part1_ch3_entry3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry3.lean)
 -/
 @[path]
-private lemma ramanujan_part1_ch3_entry3_eq
+lemma ramanujan_part1_ch3_entry3
   {x : ℂ}
   {ε : ℝ}
   {N : ℕ}
@@ -64,7 +141,12 @@ private lemma ramanujan_part1_ch3_entry3_eq
     (fun z : ℂ => psi x z - ∑ j ∈ Finset.range (N + 1), ((-1 : ℂ) ^ j * fCoeff x j / z ^ (j + 1)))
     (fun z : ℂ => (1 : ℂ) / z ^ (N + 2)) := by
 -- proof
-  apply MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3.ramanujan_part1_ch3_entry3 x hx ε hε_pos hε_lt N
+  have _ : x ≠ 0 := hx
+  exact ramanujan_part1_ch3_entry3_general x ε hε_pos hε_lt N
+end Entry3Fsummable
+
+end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

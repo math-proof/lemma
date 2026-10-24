@@ -22,23 +22,4 @@ def IsWieferichPrime (p : ℕ) : Prop :=
 instance decidableIsWieferichPrime (p : ℕ) : Decidable p.IsWieferichPrime := by
   unfold IsWieferichPrime
   infer_instance
-
-/-- The divisibility and modular-congruence forms of the base-two Wieferich condition agree. -/
-theorem isWieferichPrime_iff_modEq (p : ℕ) :
-    p.IsWieferichPrime ↔ p.Prime ∧ 2 ^ (p - 1) ≡ 1 [MOD p ^ 2] := by
-  rw [IsWieferichPrime, Nat.ModEq.comm,
-    Nat.modEq_iff_dvd' (Nat.one_le_pow (p - 1) 2 (by decide))]
-
-/-- The base-two Wieferich condition written using natural-number remainder. -/
-theorem isWieferichPrime_iff_mod (p : ℕ) :
-    p.IsWieferichPrime ↔ p.Prime ∧ 2 ^ (p - 1) % (p ^ 2) = 1 := by
-  rw [isWieferichPrime_iff_modEq, Nat.ModEq]
-  constructor
-  · rintro ⟨hp, h⟩
-    have hp_sq : 1 < p ^ 2 := Nat.one_lt_pow (by decide) hp.one_lt
-    exact ⟨hp, by simpa [Nat.mod_eq_of_lt hp_sq] using h⟩
-  · rintro ⟨hp, h⟩
-    have hp_sq : 1 < p ^ 2 := Nat.one_lt_pow (by decide) hp.one_lt
-    exact ⟨hp, by simpa [Nat.mod_eq_of_lt hp_sq] using h⟩
-
 end Nat

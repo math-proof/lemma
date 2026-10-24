@@ -4,16 +4,23 @@ import sympy.atlas.Combinatorics.Enumerative.MarkedStepInAMarkedDyckPath
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [MarkedDyckPath.size_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MarkedStepInAMarkedDyckPath.lean)
 -/
 @[path]
-private lemma MarkedDyckPath_size_eq_eq
+lemma MarkedDyckPath.size_eq
   {P : MarkedDyckPath} :
 -- imply
   P.pathSize = markedDyckCountN P.steps + 2 * markedDyckCountNstar P.steps := by
 -- proof
-  apply MetaMathlibExt.MarkedDyckPath.size_eq P
+  unfold MarkedDyckPath.pathSize
+  have h := P.balanced
+  omega
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

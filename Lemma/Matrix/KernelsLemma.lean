@@ -1,16 +1,16 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.KernelsLemma
 open Polynomial
 open scoped BigOperators
-open MathlibExt.LinearAlgebra.KernelsLemmaWanted
 
+
+namespace MathlibExt.LinearAlgebra.KernelsLemmaWanted
 
 /--
 [iSup_ker_aeval_eq_ker_aeval_prod_of_pairwise_isCoprime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/KernelsLemma.lean)
 -/
 @[path]
-private lemma iSup_ker_aeval_eq_ker_aeval_prod_of_pairwise_isCoprime_eq
+lemma iSup_ker_aeval_eq_ker_aeval_prod_of_pairwise_isCoprime
   [CommRing R] [AddCommGroup M] [Module R M]
   {f : Module.End R M}
   {p : ι → R[X]}
@@ -21,13 +21,28 @@ private lemma iSup_ker_aeval_eq_ker_aeval_prod_of_pairwise_isCoprime_eq
   (⨆ i ∈ s, LinearMap.ker (aeval f (p i))) =
     LinearMap.ker (aeval f (∏ i ∈ s, p i)) := by
 -- proof
-  apply MathlibExt.LinearAlgebra.KernelsLemmaWanted.iSup_ker_aeval_eq_ker_aeval_prod_of_pairwise_isCoprime f p hcop s
+  classical
+  induction s using Finset.induction_on with
+  | empty =>
+    ext x
+    simp [LinearMap.mem_ker]
+  | @insert a s ha ih =>
+    have hcop_prod : IsCoprime (p a) (∏ i ∈ s, p i) := by
+      apply IsCoprime.prod_right
+      intro i hi
+      exact hcop (ne_of_mem_of_not_mem hi ha).symm
+    rw [Finset.prod_insert ha, Finset.iSup_insert,
+      ← Polynomial.sup_ker_aeval_eq_ker_aeval_mul_of_coprime f hcop_prod, ← ih]
+
+end MathlibExt.LinearAlgebra.KernelsLemmaWanted
+
+namespace MathlibExt.LinearAlgebra.KernelsLemmaWanted
 
 /--
 [supIndep_ker_aeval_of_pairwise_isCoprime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/KernelsLemma.lean)
 -/
 @[path]
-private lemma supIndep_ker_aeval_of_pairwise_isCoprime_eq
+lemma supIndep_ker_aeval_of_pairwise_isCoprime
   [CommRing R] [AddCommGroup M] [Module R M]
   {f : Module.End R M}
   {p : ι → R[X]}
@@ -37,13 +52,24 @@ private lemma supIndep_ker_aeval_of_pairwise_isCoprime_eq
 -- imply
   s.SupIndep fun i => LinearMap.ker (aeval f (p i)) := by
 -- proof
-  apply MathlibExt.LinearAlgebra.KernelsLemmaWanted.supIndep_ker_aeval_of_pairwise_isCoprime f p hcop s
+  classical
+  intro t _ i _ hit
+  rw [Finset.sup_eq_iSup,
+    iSup_ker_aeval_eq_ker_aeval_prod_of_pairwise_isCoprime f p hcop t]
+  apply Polynomial.disjoint_ker_aeval_of_isCoprime f
+  apply IsCoprime.prod_right
+  intro j hj
+  exact hcop (ne_of_mem_of_not_mem hj hit).symm
+
+end MathlibExt.LinearAlgebra.KernelsLemmaWanted
+
+namespace MathlibExt.LinearAlgebra.KernelsLemmaWanted
 
 /--
 [iSupIndep_ker_aeval_and_iSup_eq_of_pairwise_isCoprime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/KernelsLemma.lean)
 -/
 @[path]
-private lemma iSupIndep_ker_aeval_and_iSup_eq_of_pairwise_isCoprime_eq
+lemma iSupIndep_ker_aeval_and_iSup_eq_of_pairwise_isCoprime
   [CommRing R] [AddCommGroup M] [Module R M] [Fintype ι]
   {f : Module.End R M}
   {p : ι → R[X]}
@@ -53,13 +79,22 @@ private lemma iSupIndep_ker_aeval_and_iSup_eq_of_pairwise_isCoprime_eq
   iSupIndep (fun i => LinearMap.ker (aeval f (p i))) ∧
     (⨆ i, LinearMap.ker (aeval f (p i))) = LinearMap.ker (aeval f (∏ i, p i)) := by
 -- proof
-  apply MathlibExt.LinearAlgebra.KernelsLemmaWanted.iSupIndep_ker_aeval_and_iSup_eq_of_pairwise_isCoprime f p hcop
+  classical
+  constructor
+  · apply iSupIndep_iff_supIndep_univ.mpr
+    exact supIndep_ker_aeval_of_pairwise_isCoprime f p hcop Finset.univ
+  · simpa using
+    iSup_ker_aeval_eq_ker_aeval_prod_of_pairwise_isCoprime f p hcop Finset.univ
+
+end MathlibExt.LinearAlgebra.KernelsLemmaWanted
+
+namespace MathlibExt.LinearAlgebra.KernelsLemmaWanted
 
 /--
 [kernels_lemma_pairwise_isCoprime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/KernelsLemma.lean)
 -/
 @[path]
-private lemma kernels_lemma_pairwise_isCoprime_eq
+lemma kernels_lemma_pairwise_isCoprime
   [CommRing R] [AddCommGroup M] [Module R M] [Fintype ι] [DecidableEq ι]
   {f : Module.End R M}
   {p : ι → R[X]}
@@ -69,7 +104,10 @@ private lemma kernels_lemma_pairwise_isCoprime_eq
   iSupIndep (fun i => LinearMap.ker (aeval f (p i))) ∧
     (⨆ i, LinearMap.ker (aeval f (p i))) = LinearMap.ker (aeval f (∏ i, p i)) := by
 -- proof
-  apply MathlibExt.LinearAlgebra.KernelsLemmaWanted.kernels_lemma_pairwise_isCoprime f p hcop
+  exact iSupIndep_ker_aeval_and_iSup_eq_of_pairwise_isCoprime f p hcop
+
+end MathlibExt.LinearAlgebra.KernelsLemmaWanted
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -1,0 +1,23 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexDegreeTwoHighChargeHallRouting.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoHighChargeHallRouting
+
+#print axioms StatMech.FrontierD.sixVertexHorizontalDegreeTwoHighCharge_seed
+#print axioms StatMech.FrontierD.sixVertexHorizontalDegreeTwo_unitCharge_or_highCharge
+#print axioms StatMech.FrontierD.sixVertexHorizontalDegreeTwoHighChargeOccurrenceEquiv
+#print axioms StatMech.FrontierD.SixVertexHorizontalDegreeTwoRecoverableReconnection.toHallRouting
+#print axioms StatMech.FrontierD.SixVertexHorizontalDegreeTwoHighChargeHallRouting.pairedInverseCode
+#print axioms StatMech.FrontierD.SixVertexHorizontalDegreeTwoHighChargeHallRouting.paired_hall
+#print axioms StatMech.FrontierD.SixVertexHorizontalDegreeTwoHighChargeHallRouting.reconnect_supported
+#print axioms StatMech.FrontierD.SixVertexHorizontalDegreeTwoHighChargeHallRouting.reconnect_injective
+#print axioms StatMech.FrontierD.SixVertexHorizontalDegreeTwoHighChargeHallRouting.toTokenComponents
+#print axioms StatMech.FrontierD.offDiagonalTwoCycleMatching_of_degreeTwoHighChargeHallRoutings
+#print axioms StatMech.FrontierD.sixVertexMarkedTraceCoefficientwiseLogConcave_of_degreeTwoHighChargeHallRoutings

@@ -1,39 +1,29 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma exists_finset_iInf_eq {R M : Type*} [Ring R] [AddCommGroup M] [Module R M] [IsArtinian R M]
-    {ι : Type*} (S : ι → Submodule R M) : ∃ s : Finset ι, ⨅ i, S i = ⨅ i ∈ s, S i := by
+
+private lemma exists_finset_iInf_eq {R M : Type} [Ring R] [AddCommGroup M] [Module R M] [IsArtinian R M] {ι : Type} (S : ι → Submodule R M) : ∃ s : Finset ι, ⨅ i, S i = ⨅ i ∈ s, S i := by
   classical
-  obtain ⟨m, ⟨s₀, rfl⟩, hmin⟩ := IsArtinian.set_has_minimal (R := R) (M := M)
-    (Set.range fun s : Finset ι => ⨅ i ∈ s, S i) ⟨_, ∅, rfl⟩
+  obtain ⟨m, ⟨s₀, rfl⟩, hmin⟩ := IsArtinian.set_has_minimal (R := R) (M := M) (Set.range fun s : Finset ι => ⨅ i ∈ s, S i) ⟨_, ∅, rfl⟩
   refine ⟨s₀, le_antisymm (le_iInf₂ fun i _ => iInf_le S i) (le_iInf fun j => ?_)⟩
-  have hle : (⨅ i ∈ insert j s₀, S i) ≤ ⨅ i ∈ s₀, S i :=
-    biInf_mono fun i hi => Finset.mem_insert_of_mem hi
+  have hle : (⨅ i ∈ insert j s₀, S i) ≤ ⨅ i ∈ s₀, S i := biInf_mono fun i hi => Finset.mem_insert_of_mem hi
   have hnlt : ¬ (⨅ i ∈ insert j s₀, S i) < ⨅ i ∈ s₀, S i := hmin _ ⟨insert j s₀, rfl⟩
   have heq : (⨅ i ∈ insert j s₀, S i) = ⨅ i ∈ s₀, S i := (eq_or_lt_of_le hle).resolve_right hnlt
   rw [← heq]
-  exact biInf_le _ (Finset.mem_insert_self j s₀)
-private lemma baseChange_le_ker {F : Type*} [CommRing F] (K : Type*) [CommRing K] [Algebra F K]
-    {V W : Type*} [AddCommGroup V] [Module F V] [AddCommGroup W] [Module F W]
-    (f : V →ₗ[F] W) : (LinearMap.ker f).baseChange K ≤ LinearMap.ker (f.baseChange K) := by
+  refine biInf_le _ (Finset.mem_insert_self j s₀)
+
+private lemma baseChange_le_ker {F : Type} [CommRing F] (K : Type) [CommRing K] [Algebra F K] {V W : Type} [AddCommGroup V] [Module F V] [AddCommGroup W] [Module F W] (f : V →ₗ[F] W) : (LinearMap.ker f).baseChange K ≤ LinearMap.ker (f.baseChange K) := by
   rw [Submodule.baseChange_eq_span, Submodule.span_le]
-  rintro _ ⟨w, hw, rfl⟩
+  intro _ hx
+  obtain ⟨w, hw, rfl⟩ := hx
   simp only [SetLike.mem_coe, LinearMap.mem_ker] at hw ⊢
   rw [TensorProduct.mk_apply, LinearMap.baseChange_tmul, LinearMap.mem_ker.mp hw, TensorProduct.tmul_zero]
-private lemma finrank_iInf_ker_baseChange_eq
-    (F : Type) [Field F] (K : Type) [Field K] [Algebra F K]
-    (V : Type) [AddCommGroup V] [Module F V] [Module.Finite F V]
-    {ι : Type} (T : ι → (V →ₗ[F] V)) :
-    Module.finrank K ↥(⨅ i, LinearMap.ker ((T i).baseChange K)) =
-      Module.finrank F ↥(⨅ i, LinearMap.ker (T i)) := by
+
+private lemma finrank_iInf_ker_baseChange_eq (F : Type) [Field F] (K : Type) [Field K] [Algebra F K] (V : Type) [AddCommGroup V] [Module F V] [Module.Finite F V] {ι : Type} (T : ι → (V →ₗ[F] V)) : Module.finrank K ↥(⨅ i, LinearMap.ker ((T i).baseChange K)) = Module.finrank F ↥(⨅ i, LinearMap.ker (T i)) := by
   classical
   set W : Submodule F V := ⨅ i, LinearMap.ker (T i) with hW
   have key : (⨅ i, LinearMap.ker ((T i).baseChange K)) = W.baseChange K := by
@@ -53,8 +43,7 @@ private lemma finrank_iInf_ker_baseChange_eq
       have hinjK : Function.Injective (Φbar.baseChange K) := by
         intro a b hab
         have := congrArg (Ψ.baseChange K) hab
-        rwa [← LinearMap.comp_apply, ← LinearMap.comp_apply, ← LinearMap.baseChange_comp, hΨ,
-          LinearMap.baseChange_id, LinearMap.id_apply, LinearMap.id_apply] at this
+        rwa [← LinearMap.comp_apply, ← LinearMap.comp_apply, ← LinearMap.baseChange_comp, hΨ, LinearMap.baseChange_id, LinearMap.id_apply, LinearMap.id_apply] at this
       have hex : Function.Exact (W.subtype.baseChange K) (W.mkQ.baseChange K) := by
         have h := lTensor_exact K (LinearMap.exact_subtype_mkQ W) (Submodule.mkQ_surjective W)
         intro x
@@ -68,45 +57,41 @@ private lemma finrank_iInf_ker_baseChange_eq
         apply (TensorProduct.piRight F K K (fun _ : ↥s => V)).injective
         rw [map_zero]
         funext i
-        have hcomp : ∀ y : K ⊗[F] V, TensorProduct.piRight F K K (fun _ : ↥s => V) (Φ.baseChange K y) i
-            = (T (i : ι)).baseChange K y := by
+        have hcomp : ∀ y : K ⊗[F] V, TensorProduct.piRight F K K (fun _ : ↥s => V) (Φ.baseChange K y) i = (T (i : ι)).baseChange K y := by
           intro y
-          induction y using TensorProduct.induction_on with
-          | zero => simp
-          | tmul k v => simp [Φ]
-          | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+          refine TensorProduct.inductionOn y ?_ ?_
+          ·
+            intro k v
+            simp [Φ]
+          ·
+            intro a b ha hb
+            simp only [map_add, Pi.add_apply, ha, hb]
         rw [hcomp, Pi.zero_apply]
         exact (Submodule.mem_iInf _).mp hx (i : ι)
       obtain ⟨y, hy⟩ := (hex x).mp h0
       exact ⟨y, hy⟩
-    · rw [hW]
+    ·
+      rw [hW]
       refine le_iInf fun i => (Submodule.baseChange_mono _ (iInf_le _ i)).trans ?_
       exact baseChange_le_ker K (T i)
   rw [key]
   rw [← (Submodule.toBaseChange.toLinearEquiv K W).finrank_eq, Module.finrank_baseChange]
-private lemma finrank_iInf_ker_eq_of_linearEquiv {k : Type*} [Field k] {X Y : Type*}
-    [AddCommGroup X] [Module k X] [AddCommGroup Y] [Module k Y] (E : X ≃ₗ[k] Y)
-    {ι : Type*} (f : ι → (X →ₗ[k] X)) (g : ι → (Y →ₗ[k] Y))
-    (h : ∀ i x, E (f i x) = g i (E x)) :
-    Module.finrank k ↥(⨅ i, LinearMap.ker (f i)) = Module.finrank k ↥(⨅ i, LinearMap.ker (g i)) := by
+
+private lemma finrank_iInf_ker_eq_of_linearEquiv {k : Type} [Field k] {X Y : Type} [AddCommGroup X] [Module k X] [AddCommGroup Y] [Module k Y] (E : X ≃ₗ[k] Y) {ι : Type} (f : ι → (X →ₗ[k] X)) (g : ι → (Y →ₗ[k] Y)) (h : ∀ i x, E (f i x) = g i (E x)) : Module.finrank k ↥(⨅ i, LinearMap.ker (f i)) = Module.finrank k ↥(⨅ i, LinearMap.ker (g i)) := by
   have hmap : (⨅ i, LinearMap.ker (g i)).comap (E : X →ₗ[k] Y) = ⨅ i, LinearMap.ker (f i) := by
     ext x
     simp only [Submodule.mem_comap, Submodule.mem_iInf, LinearMap.mem_ker, LinearEquiv.coe_coe]
     constructor
-    · intro hx i
+    ·
+      intro hx i
       apply E.injective
       rw [h, hx i, map_zero]
-    · intro hx i
+    ·
+      intro hx i
       rw [← h, hx i, map_zero]
   rw [← hmap, Submodule.comap_equiv_eq_map_symm, LinearEquiv.finrank_map_eq]
-private lemma key (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p]
-    {M : Type} [AddCommGroup M] (V : Type) [AddCommGroup V] [instV : Module (ZMod p) V]
-    [finV : Module.Finite (ZMod p) V]
-    (π : M →ₗ[ℤ] V) (hπ : Function.Bijective (π.baseChange k))
-    {ι : Type} (f : ι → (M →ₗ[ℤ] M)) (g : ι → (V →ₗ[ZMod p] V))
-    (hfg : ∀ i m, π (f i m) = g i (π m))
-    (N : Set V) (hN : ∀ v, v ∈ N ↔ ∀ i, g i v = 0) :
-    Nat.card N = p ^ Module.finrank k ↥(⨅ i, LinearMap.ker ((f i).baseChange k)) := by
+
+private lemma key (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] {M : Type} [AddCommGroup M] (V : Type) [AddCommGroup V] [instV : Module (ZMod p) V] [finV : Module.Finite (ZMod p) V] (π : M →ₗ[ℤ] V) (hπ : Function.Bijective (π.baseChange k)) {ι : Type} (f : ι → (M →ₗ[ℤ] M)) (g : ι → (V →ₗ[ZMod p] V)) (hfg : ∀ i m, π (f i m) = g i (π m)) (N : Set V) (hN : ∀ v, v ∈ N ↔ ∀ i, g i v = 0) : Nat.card N = p ^ Module.finrank k ↥(⨅ i, LinearMap.ker ((f i).baseChange k)) := by
   have hcard : Nat.card N = Nat.card ↥(⨅ i, LinearMap.ker (g i)) := by
     refine Nat.card_congr (Equiv.subtypeEquivRight fun v => ?_)
     rw [hN v, Submodule.mem_iInf]
@@ -116,9 +101,7 @@ private lemma key (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p]
   symm
   let _ : Algebra (ZMod p) k := ZMod.algebra k p
   let E₁ : k ⊗[ℤ] M ≃ₗ[k] k ⊗[ℤ] V := LinearEquiv.ofBijective (π.baseChange k) hπ
-  let _ : TensorProduct.CompatibleSMul ℤ (ZMod p) k V :=
-    TensorProduct.CompatibleSMul.of_algebraMap_surjective (R := ℤ) (A := ZMod p) (M := k) (N := V)
-      ZMod.intCast_surjective
+  let _ : TensorProduct.CompatibleSMul ℤ (ZMod p) k V := TensorProduct.CompatibleSMul.of_algebraMap_surjective (R := ℤ) (A := ZMod p) (M := k) (N := V) ZMod.intCast_surjective
   let E₂ := (TensorProduct.equivOfCompatibleSMul ℤ (ZMod p) k k V).symm
   let E := E₁.trans E₂
   have hE₂ : ∀ (c : k) (v : V), E₂ (c ⊗ₜ[ℤ] v) = c ⊗ₜ[ZMod p] v := by
@@ -131,25 +114,30 @@ private lemma key (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p]
     rw [← hE₂]
     rfl
   rw [← finrank_iInf_ker_baseChange_eq (ZMod p) k V g]
-  refine finrank_iInf_ker_eq_of_linearEquiv E (fun i => (f i).baseChange k)
-    (fun i => (g i).baseChange k) ?_
+  refine finrank_iInf_ker_eq_of_linearEquiv E (fun i => (f i).baseChange k) (fun i => (g i).baseChange k) ?_
   intro i x
-  induction x using TensorProduct.induction_on with
-  | zero => simp
-  | tmul c m => rw [LinearMap.baseChange_tmul, hE, hE, LinearMap.baseChange_tmul, hfg]
-  | add a b ha hb =>
+  refine TensorProduct.inductionOn x ?_ ?_
+  ·
+    intro c m
+    rw [LinearMap.baseChange_tmul, hE, hE, LinearMap.baseChange_tmul, hfg]
+  ·
+    intro a b ha hb
     simp only [map_add] at ha hb ⊢
     rw [ha, hb]
+
 /--
 [Module_card_torsionBySet_quotient_natCast_smul_top_eq_pow_finrank_iInf_ker_baseChange](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_card_torsionBySet_quotient_natCast_smul_top_eq_pow_finrank_iInf_ker_baseChange.lean)
 -/
 @[path]
 private lemma main
-    (T : Type) [CommRing T] (M : Type) [AddCommGroup M] [Module T M] [Module.Finite ℤ M]
-    (𝔪 : Ideal T) (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] :
-    Nat.card ↥(Submodule.torsionBySet T (M ⧸ (Ideal.span {((p : ℕ) : T)} • (⊤ : Submodule T M))) 𝔪) =
-      p ^ Module.finrank k ↥(⨅ (t : T) (_ : t ∈ 𝔪),
-        LinearMap.ker ((DistribSMul.toLinearMap ℤ M t).baseChange k)) := by
+  (T : Type) [CommRing T]
+  (M : Type) [AddCommGroup M] [Module T M] [Module.Finite ℤ M]
+  (𝔪 : Ideal T)
+  (p : ℕ) [Fact p.Prime]
+  (k : Type) [Field k] [CharP k p] :
+  -- imply
+  Nat.card ↥(Submodule.torsionBySet T (M ⧸ (Ideal.span {((p : ℕ) : T)} • (⊤ : Submodule T M))) 𝔪) = p ^ Module.finrank k ↥(⨅ (t : T) (_ : t ∈ 𝔪), LinearMap.ker ((DistribSMul.toLinearMap ℤ M t).baseChange k)) := by
+  -- proof
   classical
   set S : Submodule T M := Ideal.span {((p : ℕ) : T)} • (⊤ : Submodule T M) with hS
   have hSmem : ∀ s ∈ S, ∃ m : M, s = (p : ℕ) • m := by
@@ -173,19 +161,25 @@ private lemma main
     intro m
     rw [hπ, Submodule.Quotient.mk_eq_zero]
     constructor
-    · intro hm; exact ⟨⟨m, hm⟩, rfl⟩
-    · rintro ⟨x, rfl⟩; exact x.2
+    ·
+      intro hm
+      exact ⟨⟨m, hm⟩, rfl⟩
+    ·
+      intro hx
+      obtain ⟨x, rfl⟩ := hx
+      exact x.2
   have hzero : ∀ y, ((S.restrictScalars ℤ).subtype.baseChange k) y = 0 := by
     intro y
-    induction y using TensorProduct.induction_on with
-    | zero => simp
-    | tmul c s =>
+    refine TensorProduct.inductionOn y ?_ ?_
+    ·
+      intro c s
       obtain ⟨m, hm⟩ := hSmem s s.2
       rw [LinearMap.baseChange_tmul]
       show c ⊗ₜ[ℤ] (s : M) = 0
-      rw [hm, ← natCast_zsmul, ← TensorProduct.smul_tmul, zsmul_eq_mul, Int.cast_natCast,
-        CharP.cast_eq_zero, zero_mul, TensorProduct.zero_tmul]
-    | add a b ha hb => rw [map_add, ha, hb, add_zero]
+      rw [hm, ← natCast_zsmul, ← TensorProduct.smul_tmul, zsmul_eq_mul, Int.cast_natCast, CharP.cast_eq_zero, zero_mul, TensorProduct.zero_tmul]
+    ·
+      intro a b ha hb
+      rw [map_add, ha, hb, add_zero]
   have hinj : Function.Injective (π.baseChange k) := by
     rw [← LinearMap.ker_eq_bot, eq_bot_iff]
     intro x hx
@@ -194,12 +188,9 @@ private lemma main
     obtain ⟨y, rfl⟩ := h.mp hx
     rw [Submodule.mem_bot]
     exact hzero y
-  let g : ↥𝔪 → ((M ⧸ S) →ₗ[ZMod p] (M ⧸ S)) := fun t =>
-    (DistribSMul.toAddMonoidHom (M ⧸ S) (t : T)).toZModLinearMap p
+  let g : ↥𝔪 → ((M ⧸ S) →ₗ[ZMod p] (M ⧸ S)) := fun t => (DistribSMul.toAddMonoidHom (M ⧸ S) (t : T)).toZModLinearMap p
   rw [iInf_subtype']
-  exact key p k (M ⧸ S) (instV := instZ) (finV := finZ) π ⟨hinj, LinearMap.baseChange_surjective k hπsurj⟩
-    (fun t : ↥𝔪 => DistribSMul.toLinearMap ℤ M (t : T)) g (fun t m => rfl)
-    (Submodule.torsionBySet T (M ⧸ S) (𝔪 : Set T) : Set (M ⧸ S))
-    (fun v => (Submodule.mem_torsionBySet_iff _ _).trans (forall_congr' fun t => Iff.rfl))
+  exact key p k (M ⧸ S) (instV := instZ) (finV := finZ) π ⟨hinj, LinearMap.baseChange_surjective k hπsurj⟩ (fun t : ↥𝔪 => DistribSMul.toLinearMap ℤ M (t : T)) g (fun t m => rfl) (Submodule.torsionBySet T (M ⧸ S) (𝔪 : Set T) : Set (M ⧸ S)) (fun v => (Submodule.mem_torsionBySet_iff _ _).trans (forall_congr' fun t => Iff.rfl))
+
 
 -- created on 2026-10-20

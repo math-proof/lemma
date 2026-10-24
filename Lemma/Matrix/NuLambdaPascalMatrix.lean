@@ -5,11 +5,13 @@ open scoped BigOperators
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [IsNuLambdaPascalMatrix.finite_support](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/NuLambdaPascalMatrix.lean)
 -/
 @[path]
-private lemma IsNuLambdaPascalMatrix_finite_support_eq
+lemma IsNuLambdaPascalMatrix.finite_support
   {N n : ℕ}
   {nu lam : ℂ}
   {beta : Fin N → ℂ}
@@ -20,15 +22,19 @@ private lemma IsNuLambdaPascalMatrix_finite_support_eq
   (h : IsNuLambdaPascalMatrix N n nu lam beta S hn)
   (hij : 2 * n ≤ i ∨ 2 * n ≤ j) :
 -- imply
-  S i j = 0 := by
+  S i j = 0 :=
 -- proof
-  apply MetaMathlibExt.IsNuLambdaPascalMatrix.finite_support N n nu lam beta S hn h i j hij
+  h.1 i j hij
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [IsNuLambdaPascalMatrix.skew](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/NuLambdaPascalMatrix.lean)
 -/
 @[path]
-private lemma IsNuLambdaPascalMatrix_skew_eq
+lemma IsNuLambdaPascalMatrix.skew
   {N n : ℕ}
   {nu lam : ℂ}
   {beta : Fin N → ℂ}
@@ -38,15 +44,19 @@ private lemma IsNuLambdaPascalMatrix_skew_eq
   (hn : 0 < n)
   (h : IsNuLambdaPascalMatrix N n nu lam beta S hn) :
 -- imply
-  S i j = -S j i := by
+  S i j = -S j i :=
 -- proof
-  apply MetaMathlibExt.IsNuLambdaPascalMatrix.skew N n nu lam beta S hn h i j
+  h.2.1 i j
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [IsNuLambdaPascalMatrix.corner](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/NuLambdaPascalMatrix.lean)
 -/
 @[path]
-private lemma IsNuLambdaPascalMatrix_corner_eq
+lemma IsNuLambdaPascalMatrix.corner
   {N n : ℕ}
   {nu lam : ℂ}
   {beta : Fin N → ℂ}
@@ -55,15 +65,19 @@ private lemma IsNuLambdaPascalMatrix_corner_eq
   (hn : 0 < n)
   (h : IsNuLambdaPascalMatrix N n nu lam beta S hn) :
 -- imply
-  S (2 * n - 2) (2 * n - 1) = 1 := by
+  S (2 * n - 2) (2 * n - 1) = 1 :=
 -- proof
-  apply MetaMathlibExt.IsNuLambdaPascalMatrix.corner N n nu lam beta S hn h
+  h.2.2.1
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [IsNuLambdaPascalMatrix.last_column](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/NuLambdaPascalMatrix.lean)
 -/
 @[path]
-private lemma IsNuLambdaPascalMatrix_last_column_eq
+lemma IsNuLambdaPascalMatrix.last_column
   {N n : ℕ}
   {nu lam : ℂ}
   {beta : Fin N → ℂ}
@@ -74,15 +88,19 @@ private lemma IsNuLambdaPascalMatrix_last_column_eq
   (h : IsNuLambdaPascalMatrix N n nu lam beta S hn)
   (hj : j < 2 * n - 2) :
 -- imply
-  S j (2 * n - 1) = ∑ t : Fin N, beta t * S (j + t.val + 1) (2 * n - 1) := by
+  S j (2 * n - 1) = ∑ t : Fin N, beta t * S (j + t.val + 1) (2 * n - 1) :=
 -- proof
-  apply MetaMathlibExt.IsNuLambdaPascalMatrix.last_column N n nu lam beta S hn h j hj
+  h.2.2.2.1 j hj
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [IsNuLambdaPascalMatrix.interior](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/NuLambdaPascalMatrix.lean)
 -/
 @[path]
-private lemma IsNuLambdaPascalMatrix_interior_eq
+lemma IsNuLambdaPascalMatrix.interior
   {N n : ℕ}
   {nu lam : ℂ}
   {beta : Fin N → ℂ}
@@ -94,9 +112,12 @@ private lemma IsNuLambdaPascalMatrix_interior_eq
   (hi : i < 2 * n - 1)
   (hj : j < 2 * n - 1) :
 -- imply
-  S i j = lam * S (i + 1) (j + 1) + nu * (S (i + 1) j + S i (j + 1)) := by
+  S i j = lam * S (i + 1) (j + 1) + nu * (S (i + 1) j + S i (j + 1)) :=
 -- proof
-  apply MetaMathlibExt.IsNuLambdaPascalMatrix.interior N n nu lam beta S hn h i j hi hj
+  h.2.2.2.2 i j hi hj
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -38,16 +38,4 @@ variable {K L : Type*} [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
   [IsAbelianGalois K L]
 
 namespace IsAbelianGalois
-
-/-- The intermediate fields of a finite-dimensional abelian Galois extension form a
-modular lattice, by transport across the Galois correspondence. -/
-theorem isModularLattice_intermediateField :
-    IsModularLattice (IntermediateField K L) := by
-  have e := IsGalois.intermediateFieldEquivSubgroup (F := K) (E := L)
-  constructor
-  intro x y z hxz
-  have h := IsModularLattice.sup_inf_le_assoc_of_le (e y) (e.le_iff_le.mpr hxz)
-  rw [← e.map_sup, ← e.map_inf, ← e.map_inf, ← e.map_sup] at h
-  exact e.le_iff_le.mp h
-
 end IsAbelianGalois

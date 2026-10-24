@@ -1,0 +1,29 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckZ2GaugeTypedFKCylinder.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierA.Z2GaugeTypedFKCylinder
+
+#print axioms StatMech.FrontierA.typedFK_finite_pair_nonconnection_product_bound
+#print axioms StatMech.FrontierA.typedFK_consistencyMass_ge_pair_nonconnection_product
+#print axioms StatMech.FrontierA.multibondIsing_twist_ratio_ge_pair_correlation_product
+#print axioms StatMech.FrontierA.cubicalXYWilsonExpectation_ge_pair_correlation_product
+#print axioms StatMech.FrontierA.typedBondEndpointDisconnections_subset_consistency
+#print axioms StatMech.FrontierA.cubicalXYWilsonExpectation_ge_sheetEndpoint_correlation_product
+#print axioms StatMech.FrontierA.cubicalXYWilson_perimeterLower_of_sheetEndpoint_sum
+#print axioms StatMech.FrontierA.typedTwoCutDisconnections_subset_consistency
+#print axioms StatMech.FrontierA.typedFK_consistencyMass_ge_twoCut_product
+#print axioms StatMech.FrontierA.typedTwoCutMarkedDisconnections_subset_consistency
+#print axioms StatMech.FrontierA.cubicalLowerSlabDisconnections_subset_consistency
+#print axioms StatMech.FrontierA.cubicalXYWilsonExpectation_ge_lowerSlab_correlation_product
+#print axioms StatMech.FrontierA.cubicalXYWilson_perimeterLower_of_lowerSlab_sum
+#print axioms StatMech.FrontierA.cubicalLowerMarkedSurfaces_disjoint
+#print axioms StatMech.FrontierA.cubicalLowerSlab_pair_ne
+#print axioms StatMech.FrontierA.cubicalXYWilson_perimeterLower_of_lowerSlab_exponential
+#print axioms StatMech.FrontierA.cubicalXYSheetUpperVertices_eq_layer

@@ -5,18 +5,23 @@ open scoped nonZeroDivisors Pointwise
 open PrimeSpectrum
 
 
+namespace PrimeSpectrum
+
 /--
 [smul_asIdeal_coe](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/FractionalIdeal/Spectrum.lean)
 -/
 @[path]
-private lemma smul_asIdeal_coe_eq
+lemma smul_asIdeal_coe
   [Group G] [CommRing R] [IsDomain R] [CommRing K] [MulSemiringAction G R] [Algebra R K] [IsFractionRing R K]
   {g : G}
   {p : PrimeSpectrum R} :
 -- imply
   FractionalIdeal.coeIdeal (S := by
 -- proof
-  apply PrimeSpectrum.smul_asIdeal_coe g p
+  rw [smul_asIdeal, FractionalIdeal.smul_coeIdeal]
+
+end PrimeSpectrum
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

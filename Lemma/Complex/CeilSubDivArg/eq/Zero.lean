@@ -13,7 +13,7 @@ import Lemma.Set.InDiv.of.In_Ioc.Gt_0
 import Lemma.Set.InSub.of.In_Ioc
 import Lemma.Set.SubsetIocS.of.Le.Ge
 import Lemma.Int.LeSub.is.Le_Add
-open Complex Int Nat Rat Real Set
+open Complex Int Nat Rat Real Set Matrix
 
 
 @[path]

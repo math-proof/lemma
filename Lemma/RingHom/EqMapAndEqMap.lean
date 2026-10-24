@@ -18,7 +18,7 @@ private lemma exists_fin_lift
   (hc : ∀ i j (h : i ≤ j), (c j).comp (t i j h) = c i)
   (hcsurj : ∀ x : L, ∃ (i : ι) (y : S i), c i y = x)
   (i : ι) {n : ℕ} (x : Fin n → L) :
-  ∃ (j : ι) (hij : i ≤ j) (y : Fin n → S j), ∀ k, c j (y k) = x k := by
+  ∃ (j : ι) (_ : i ≤ j) (y : Fin n → S j), ∀ k, c j (y k) = x k := by
   induction n with
   | zero => exact ⟨i, le_rfl, Fin.elim0, fun k => Fin.elim0 k⟩
   | succ n ih =>
@@ -56,7 +56,7 @@ private lemma exists_ringHom_comp_eq
   {ι : Type u} [Preorder ι] [Nonempty ι] [IsDirected ι (· ≤ ·)]
   (S : ι → Type u) [∀ i, CommRing (S i)]
   (t : ∀ i j, i ≤ j → (S i →+* S j))
-  (ht₁ : ∀ i (h : i ≤ i), t i i h = RingHom.id (S i))
+  (_ : ∀ i (h : i ≤ i), t i i h = RingHom.id (S i))
   (ht₂ : ∀ i j k (hij : i ≤ j) (hjk : j ≤ k), (t j k hjk).comp (t i j hij) = t i k (hij.trans hjk))
   (L : Type u) [CommRing L]
   (c : ∀ i, S i →+* L)

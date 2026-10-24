@@ -1,0 +1,31 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicStoppedWalk.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicStoppedWalk
+
+#print axioms StatMech.Universality.isingLeapfrogStoppedMean_succ
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernel_nonneg
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernel_sum_eq_one
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernel_le_one
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernel_add
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernel_l1_add_le
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernel_of_boundary
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernel_boundary_mono
+#print axioms StatMech.Universality.isingLeapfrogStoppedBoundaryMass_mono
+#print axioms StatMech.Universality.IsingLeapfrogHarmonicOnBox.stoppedMean_eq
+#print axioms StatMech.Universality.IsingLeapfrogHarmonicOnBox.normSq_sub_le_kernelGradient
+#print axioms StatMech.Universality.IsingLeapfrogHarmonicOnBox.normSq_sub_le_kernelTimeGradient
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernelTimeGradientSq_le_two
+#print axioms StatMech.Universality.isingLeapfrogStoppedKernelTimeGradientSq_le_mul_l1
+#print axioms StatMech.Universality.IsingLeapfrogDiffusiveKernelInputs.gradientBound
+#print axioms StatMech.Universality.isingLeapfrogDiffusiveGradientBound_unitMargin
+#print axioms StatMech.Universality.IsingLeapfrogHarmonicOnBox.normSq_sub_le_of_diffusiveGradient
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchFullObservableWindow_harmonic
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchFullObservableWindow_normSq_sub_le

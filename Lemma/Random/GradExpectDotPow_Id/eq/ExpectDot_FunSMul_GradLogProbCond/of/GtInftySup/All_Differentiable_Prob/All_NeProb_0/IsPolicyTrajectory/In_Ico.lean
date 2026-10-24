@@ -157,12 +157,9 @@ private lemma main
     ‖∇[θ] (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t)) (by
-      show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-      rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS])
+    SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t))
   have : ∀ θ t, SinglePSpace (M θ) (s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t)
-      CountableMeasure.measure_eq_count
+    SinglePSpace.of.Measurable (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t)
   have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
@@ -190,17 +187,14 @@ private lemma main
       (ℙ[M θ](s[0] = «s.bvar»[0])) * (ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0])) ≠ 0 := by
     intro θ «s.bvar» «a.bvar»
     have hj := h₂ θ «s.bvar» «a.bvar»
-    have hαβ : (ReferenceMeasure.measure : Measure (A × S)) = Measure.count := by
-      change (ReferenceMeasure.measure : Measure A).prod ReferenceMeasure.measure = _
-      rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS]
     have hJ : ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) =
         (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) := by
-      rw [Prob.eq.Measure.of.Eq_Count («π» := M θ) (x := (a 0, s 0)) hαβ]
+      rw [EqProb («π» := M θ) (x := (a 0, s 0))]
       congr 1
       ext ω
       simp [JointRandomSymbol, Prod.ext_iff]
     have hS₀ : ℙ[M θ](s[0] = «s.bvar»[0]) = (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
-      Prob.eq.Measure.of.Eq_Count («π» := M θ) (x := s 0) CountableMeasure.measure_eq_count «s.bvar»[0]
+      EqProb («π» := M θ) (x := s 0) «s.bvar»[0]
     have hD : ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0]) =
         (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) /
           (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
@@ -227,10 +221,10 @@ private lemma main
   have hP0raw : ∀ θ x, (M θ).real ((s 0) ⁻¹' {x}) ≠ 0 := by
     intro θ x
     have heqR : (ℙ[M θ](s[0] = x) : ℝ) = (M θ).real ((s 0) ⁻¹' {x}) := by
-      rw [Prob.eq.Measure.of.Eq_Count («π» := M θ) (x := s 0) CountableMeasure.measure_eq_count x]
+      rw [EqProb («π» := M θ) (x := s 0) x]
       rfl
     have heqE : ℙ[M θ](s[0] = x) = (M θ) ((s 0) ⁻¹' {x}) :=
-      Prob.eq.Measure.of.Eq_Count («π» := M θ) (x := s 0) CountableMeasure.measure_eq_count x
+      EqProb («π» := M θ) (x := s 0) x
     rw [← heqR]
     apply ENNReal.toReal_ne_zero.mpr
     exact ⟨hP0_bind θ ⟨fun _ => x⟩, heqE ▸ measure_ne_top (M θ) _⟩
@@ -272,7 +266,7 @@ private lemma main
       have h := mt mul_eq_zero.mpr (hπ_mul θ' ⟨fun _ => y⟩ ⟨fun _ => u⟩)
       rwa [not_or] at h
     have heqE : ℙ[M θ']((s 0) = y) = (M θ') ((s 0) ⁻¹' {y}) :=
-      Prob.eq.Measure.of.Eq_Count («π» := M θ') (x := s 0) CountableMeasure.measure_eq_count y
+      EqProb («π» := M θ') (x := s 0) y
     have hreal : (M θ').real ((s 0) ⁻¹' {y}) ≠ 0 :=
       ENNReal.toReal_ne_zero.mpr ⟨heqE ▸ hs0, measure_ne_top (M θ') _⟩
     refine mul_ne_zero hreal ?_
@@ -362,13 +356,9 @@ private lemma main
         expect_gradV_eq_integral (M := M) (θ := θ) (n := n)
           (V := fun θ' => Vloc θ' n) (s := s)
       -- GradExpect RHS is P-score Expect; unwrap then bridge ae to pol for fderiv goal
-      have hmeasEq : (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) =
-        Measure.count := by
-        rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS]
       have hSP : ∀ θ' t', SinglePSpace (M θ') (a t', s t') := fun θ' t' =>
-        SinglePSpace.of.EqMeasureCount.Measurable
+        SinglePSpace.of.Measurable
           ((Random.Measurable.of.All_Eq.snd.snd h₁ t').prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t'))
-          hmeasEq
       have : ∀ t, SinglePSpace (M θ) (a t, s t) := fun t => hSP θ t
       have hRQP :
         𝔼[s, a : M θ](∑ t ∈ Finset.range n,
@@ -811,12 +801,9 @@ private lemma advantage
     ‖∇[θ] (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t)) (by
-      show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-      rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS])
+    SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t))
   have : ∀ θ t, SinglePSpace (M θ) (s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t)
-      CountableMeasure.measure_eq_count
+    SinglePSpace.of.Measurable (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t)
   have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
@@ -849,17 +836,14 @@ private lemma advantage
       (ℙ[M θ](s[0] = «s.bvar»[0])) * (ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0])) ≠ 0 := by
     intro θ «s.bvar» «a.bvar»
     have hj := h₂ θ «s.bvar» «a.bvar»
-    have hαβ : (ReferenceMeasure.measure : Measure (A × S)) = Measure.count := by
-      change (ReferenceMeasure.measure : Measure A).prod ReferenceMeasure.measure = _
-      rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS]
     have hJ : ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) =
         (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) := by
-      rw [Prob.eq.Measure.of.Eq_Count («π» := M θ) (x := (a 0, s 0)) hαβ]
+      rw [EqProb («π» := M θ) (x := (a 0, s 0))]
       congr 1
       ext ω
       simp [JointRandomSymbol, Prod.ext_iff]
     have hS₀ : ℙ[M θ](s[0] = «s.bvar»[0]) = (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
-      Prob.eq.Measure.of.Eq_Count («π» := M θ) (x := s 0) CountableMeasure.measure_eq_count «s.bvar»[0]
+      EqProb («π» := M θ) (x := s 0) «s.bvar»[0]
     have hD : ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0]) =
         (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) /
           (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
@@ -886,10 +870,10 @@ private lemma advantage
   have hP0raw : ∀ θ x, (M θ).real ((s 0) ⁻¹' {x}) ≠ 0 := by
     intro θ x
     have heqR : (ℙ[M θ](s[0] = x) : ℝ) = (M θ).real ((s 0) ⁻¹' {x}) := by
-      rw [Prob.eq.Measure.of.Eq_Count («π» := M θ) (x := s 0) CountableMeasure.measure_eq_count x]
+      rw [EqProb («π» := M θ) (x := s 0) x]
       rfl
     have heqE : ℙ[M θ](s[0] = x) = (M θ) ((s 0) ⁻¹' {x}) :=
-      Prob.eq.Measure.of.Eq_Count («π» := M θ) (x := s 0) CountableMeasure.measure_eq_count x
+      EqProb («π» := M θ) (x := s 0) x
     rw [← heqR]
     apply ENNReal.toReal_ne_zero.mpr
     exact ⟨hP0_bind θ ⟨fun _ => x⟩, heqE ▸ measure_ne_top (M θ) _⟩
@@ -931,7 +915,7 @@ private lemma advantage
       have h := mt mul_eq_zero.mpr (hπ_mul θ' ⟨fun _ => y⟩ ⟨fun _ => u⟩)
       rwa [not_or] at h
     have heqE : ℙ[M θ']((s 0) = y) = (M θ') ((s 0) ⁻¹' {y}) :=
-      Prob.eq.Measure.of.Eq_Count («π» := M θ') (x := s 0) CountableMeasure.measure_eq_count y
+      EqProb («π» := M θ') (x := s 0) y
     have hreal : (M θ').real ((s 0) ⁻¹' {y}) ≠ 0 :=
       ENNReal.toReal_ne_zero.mpr ⟨heqE ▸ hs0, measure_ne_top (M θ') _⟩
     refine mul_ne_zero hreal ?_
@@ -957,8 +941,7 @@ private lemma advantage
         ∇[θ] (ℙ[M θ]((a t) = p.2 | (s t) = p.1) : ℝ).log)).comp_measurable
           ((Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)))).const_smul (γ ^ t)).aestronglyMeasurable.aemeasurable⟩
   have hPs : ∀ θ t, SinglePSpace (M θ) (s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable (Random.Measurable.of.All_Eq.snd.fst h₁ t)
-      CountableMeasure.measure_eq_count
+    SinglePSpace.of.Measurable (Random.Measurable.of.All_Eq.snd.fst h₁ t)
   have hscore : ∀ t, ∀ᵐ ω ∂(M θ),
       fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ := by
@@ -1350,3 +1333,4 @@ private lemma advantage
 
 
 -- created on 2026-10-21
+-- updated on 2026-10-23

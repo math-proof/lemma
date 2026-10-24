@@ -49,7 +49,7 @@ private lemma mdp
   (t : ℕ) :
 -- imply
   have : ∀ i, SinglePSpace π (s i) := fun i =>
-    SinglePSpace.of.EqMeasureCount.Measurable (hs i) CountableMeasure.measure_eq_count
+    SinglePSpace.of.Measurable (hs i)
   have : ∀ i j, SinglePSpace π (a i, s j) := fun i j =>
     SinglePSpace.of.Measurable.Measurable (ha i) (hs j)
   have : ∀ i, SinglePSpace π (s (i + 1), s i, a i) := fun i =>
@@ -74,5 +74,5 @@ private lemma mdp
     ring
 
 
--- created on 2020-12-17
+-- created on 2023-03-22
 -- updated on 2026-10-23

@@ -1,0 +1,23 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPhysicalFullSquareBoundaryLayerIntegration.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareBoundaryLayerIntegration
+
+#print axioms StatMech.Universality.fkIsingSquareFullOrientedRadialIncrementOf_incidence
+#print axioms StatMech.Universality.fkIsingSquareFullOrientedRadialIncrementOf_incidence_reverse
+#print axioms StatMech.Universality.fkIsingSquareFull_increment_closed_of
+#print axioms StatMech.Universality.fkIsingSquareFullCoordinateOneFormOf_face_sub_vertex
+#print axioms StatMech.Universality.fkIsingSquareBoundaryLayerCoordinateOneForm_face_sub_vertex
+#print axioms StatMech.Universality.fkIsingSquareBoundaryLayerCoordinateOneForm_vertex_le_face
+#print axioms StatMech.Universality.fkIsingSquareBoundaryLayerRadialIncrement_perimeterInterior
+#print axioms
+  StatMech.Universality.fkIsingSquareBoundaryLayerCoordinateOneForm_boundary_face_sub_vertex
+#print axioms
+  StatMech.Universality.fkIsingSquareBoundaryLayerCoordinateOneForm_boundary_vertex_le_face

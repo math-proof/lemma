@@ -30,16 +30,4 @@ def medianGenocchiOdd (n : ℕ) : ℚ :=
   if n = 0 then 1
   else ∑ k ∈ Finset.range ((n - 1) / 2 + 1),
     (Nat.choose n (2 * k + 1) : ℚ) * genocchiNumberViaBernoulli (2 * n - 2 * k)
-
-@[simp]
-theorem medianGenocchiOdd_zero : medianGenocchiOdd 0 = 1 := by
-  simp [medianGenocchiOdd]
-
-@[simp]
-theorem medianGenocchiOdd_one : medianGenocchiOdd 1 = -1 := by
-  have h : genocchiNumberViaBernoulli 2 = -1 := by
-    rw [genocchiNumberViaBernoulli, bernoulli_two]
-    norm_num
-  simp [medianGenocchiOdd, h]
-
 end MetaMathlibExt

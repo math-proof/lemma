@@ -54,18 +54,4 @@ structure AbGeneralizedFibonacciSequence where
   gen_eq :
     (1 - PowerSeries.C a * PowerSeries.X - PowerSeries.C b * PowerSeries.X ^ 2) *
       PowerSeries.mk F = PowerSeries.X
-
-/-- Two generalized Fibonacci sequence packages are equal when their parameters and sequence
-values agree. -/
-@[ext]
-theorem AbGeneralizedFibonacciSequence.ext
-    {x y : AbGeneralizedFibonacciSequence}
-    (ha : x.a = y.a) (hb : x.b = y.b) (hF : x.F = y.F) : x = y := by
-  cases x
-  cases y
-  cases ha
-  cases hb
-  cases hF
-  rfl
-
 end MetaMathlibExt

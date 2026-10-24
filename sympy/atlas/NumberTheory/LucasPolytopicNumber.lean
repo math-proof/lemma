@@ -37,30 +37,15 @@ structure LucasParameters where
 def lucasBracket (P : LucasParameters) : ℕ → ℝ
   | n => lucasBracketAux P.s P.t n
 
-theorem lucasBracket_ne_zero (P : LucasParameters) {n : ℕ} (hn : n ≠ 0) :
-    lucasBracket P n ≠ 0 :=
-  P.bracket_ne_zero n hn
-
 /-- The `s,t`-factorial, the product of Lucas brackets from one through `n`. -/
 def lucasFactorial (P : LucasParameters) (n : ℕ) : ℝ :=
   ∏ k ∈ Finset.range n, lucasBracket P (k + 1)
-
-theorem lucasFactorial_ne_zero (P : LucasParameters) (n : ℕ) :
-    lucasFactorial P n ≠ 0 := by
-  apply Finset.prod_ne_zero_iff.mpr
-  intro k _
-  exact lucasBracket_ne_zero P (Nat.succ_ne_zero k)
 
 /-- The Lucasnomial coefficient. As for `Nat.choose`, it is zero when
 `k > n`; within its source domain it is the displayed quotient of
 `s,t`-factorials. -/
 noncomputable def lucasnomial (P : LucasParameters) (n k : ℕ) : ℝ :=
   if k ≤ n then lucasFactorial P n / (lucasFactorial P k * lucasFactorial P (n - k)) else 0
-
-@[simp]
-theorem lucasnomial_eq_zero_of_lt (P : LucasParameters) {n k : ℕ} (h : n < k) :
-    lucasnomial P n k = 0 := by
-  simp [lucasnomial, Nat.not_le.mpr h]
 
 /-- The `n`-th simplicial `d`-Lucas-polytopic number. -/
 noncomputable def lucasPolytopicNumber (P : LucasParameters) (n d : ℕ) : ℝ :=

@@ -38,30 +38,4 @@ instance decidableIsConsecutiveCyclicPrimeLabeling (n offset : ℕ) :
     Decidable (IsConsecutiveCyclicPrimeLabeling n offset) := by
   unfold IsConsecutiveCyclicPrimeLabeling LadderAdj Nat.Coprime
   infer_instance
-
-/-- Every cyclic label is at least 1. -/
-theorem cyclicLabel_pos (n offset : ℕ) (i : Fin (2 * n)) :
-    1 ≤ cyclicLabel n offset i := by
-  unfold cyclicLabel
-  exact Nat.succ_pos _
-
-/-- Every cyclic label lies within the prime-labeling range. -/
-theorem cyclicLabel_le_size (n offset : ℕ) (hn : 0 < n) (i : Fin (2 * n)) :
-    cyclicLabel n offset i ≤ 2 * n := by
-  unfold cyclicLabel
-  have hpos : 0 < 2 * n := Nat.mul_pos (by decide) hn
-  have hmod := Nat.mod_lt (i.val + offset) hpos
-  exact Nat.succ_le_of_lt hmod
-
-/-- Interface theorem: cyclic labels lie in `1 .. 2 * n`. -/
-theorem cyclicLabel_mem_range (n offset : ℕ) (hn : 0 < n) (i : Fin (2 * n)) :
-    1 ≤ cyclicLabel n offset i ∧ cyclicLabel n offset i ≤ 2 * n :=
-  ⟨cyclicLabel_pos n offset i, cyclicLabel_le_size n offset hn i⟩
-
-/-- With zero offset, the first perimeter position carries label 1. -/
-theorem cyclicLabel_zero_offset_zero (n : ℕ) (hn : 0 < n) :
-    cyclicLabel n 0 ⟨0, Nat.mul_pos (by decide) hn⟩ = 1 := by
-  unfold cyclicLabel
-  simp
-
 end MetaMathlibExt

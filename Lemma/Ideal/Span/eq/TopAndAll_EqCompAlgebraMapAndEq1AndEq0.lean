@@ -14,7 +14,7 @@ private lemma eq_one_of_idem_unit
   -- imply
   e = 1 := by
   -- proof
-  apply Iff.mp sub_eq_zero (hu.mul_left_cancel (_).trans (mul_zero e).symm)
+  apply Iff.mp sub_eq_zero ((hu.mul_left_cancel _).trans (mul_zero e).symm)
   rw [mul_sub, mul_one, he.eq, sub_self]
 
 /--

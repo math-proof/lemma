@@ -4,35 +4,44 @@ import sympy.atlas.NumberTheory.ArithmeticFunction.CompletelyMultiplicative
 open ArithmeticFunction
 
 
+namespace ArithmeticFunction
+
 /--
 [IsCompletelyMultiplicative.map_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/CompletelyMultiplicative.lean)
 -/
 @[path]
-private lemma IsCompletelyMultiplicative_map_mul_eq
+lemma IsCompletelyMultiplicative.map_mul
   [Mul R] [Zero R]
   {f : ArithmeticFunction R}
   {m n : ℕ}
 -- given
   (hf : f.IsCompletelyMultiplicative) :
 -- imply
-  f (m * n) = f m * f n := by
+  f (m * n) = f m * f n :=
 -- proof
-  apply ArithmeticFunction.IsCompletelyMultiplicative.map_mul hf m n
+  hf m n
+
+end ArithmeticFunction
+
+namespace ArithmeticFunction
 
 /--
 [IsCompletelyMultiplicative.isMultiplicative](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/CompletelyMultiplicative.lean)
 -/
 @[path]
-private lemma IsCompletelyMultiplicative_isMultiplicative_eq
+lemma IsCompletelyMultiplicative.isMultiplicative
   [MonoidWithZero R]
   {f : ArithmeticFunction R}
 -- given
   (hf : f.IsCompletelyMultiplicative)
   (h0 : f 1 = 1) :
 -- imply
-  f.IsMultiplicative := by
+  f.IsMultiplicative :=
 -- proof
-  apply ArithmeticFunction.IsCompletelyMultiplicative.isMultiplicative hf h0
+  ⟨h1, fun _ => hf _ _⟩
+
+end ArithmeticFunction
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

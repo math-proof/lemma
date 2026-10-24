@@ -1,37 +1,39 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [HomogeneousLocalization_Away_isPushout_map_of_isBaseChange](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_HomogeneousLocalization_Away_isPushout_map_of_isBaseChange.lean)
 -/
 @[path]
 private lemma main
-    {S : Type u} [CommRing S] (S' : Type u) [CommRing S'] [Algebra S S']
-    (R : Type u) [CommRing R] [Algebra S R] (𝓡 : ℕ → Submodule S R) [GradedAlgebra 𝓡]
-    (R' : Type u) [CommRing R'] [Algebra S' R'] [Algebra S R'] [IsScalarTower S S' R']
-    (𝓡' : ℕ → Submodule S' R') [GradedAlgebra 𝓡']
-    (ϑ : R →ₐ[S] R') (hϑdeg : ∀ n, ∀ x ∈ 𝓡 n, ϑ x ∈ 𝓡' n)
-    (hbc : ∀ n, IsBaseChange S' ((ϑ.toLinearMap.restrict (p := 𝓡 n) (q := (𝓡' n).restrictScalars S) (hϑdeg n))
-      : 𝓡 n →ₗ[S] (𝓡' n).restrictScalars S))
-    {d : ℕ} (r : R) (hr : r ∈ 𝓡 d) :
+  {S : Type u} [CommRing S] (S' : Type u) [CommRing S'] [Algebra S S']
+  (R : Type u) [CommRing R] [Algebra S R] (𝓡 : ℕ → Submodule S R) [GradedAlgebra 𝓡]
+  (R' : Type u) [CommRing R'] [Algebra S' R'] [Algebra S R'] [IsScalarTower S S' R']
+  (𝓡' : ℕ → Submodule S' R') [GradedAlgebra 𝓡']
+  (ϑ : R →ₐ[S] R') (hϑdeg : ∀ n, ∀ x ∈ 𝓡 n, ϑ x ∈ 𝓡' n)
+  (hbc : ∀ n, IsBaseChange S' ((ϑ.toLinearMap.restrict (p := 𝓡 n) (q := (𝓡' n).restrictScalars S) (hϑdeg n))
+    : 𝓡 n →ₗ[S] (𝓡' n).restrictScalars S))
+  {d : ℕ} (r : R) (hr : r ∈ 𝓡 d) :
+    -- imply
     IsPushout
       (CommRingCat.ofHom ((HomogeneousLocalization.fromZeroRingHom 𝓡 (Submonoid.powers r)).comp
         ((GradedRing.projZeroRingHom' 𝓡).comp (algebraMap S R))))
       (CommRingCat.ofHom (algebraMap S S'))
-      (CommRingCat.ofHom (HomogeneousLocalization.Away.map ({ ϑ.toRingHom with map_mem := fun h => hϑdeg _ _ h } : 𝓡 →+*ᵍ 𝓡') r))
+      (CommRingCat.ofHom (HomogeneousLocalization.Away.map ({ toRingHom := ϑ.toRingHom, map_mem := fun h => hϑdeg _ _ h } : GradedRingHom 𝓡 𝓡') r))
       (CommRingCat.ofHom ((HomogeneousLocalization.fromZeroRingHom 𝓡'
-          (Submonoid.powers (({ ϑ.toRingHom with map_mem := fun h => hϑdeg _ _ h } : 𝓡 →+*ᵍ 𝓡') r))).comp
+          (Submonoid.powers (({ toRingHom := ϑ.toRingHom, map_mem := fun h => hϑdeg _ _ h } : GradedRingHom 𝓡 𝓡') r))).comp
         ((GradedRing.projZeroRingHom' 𝓡').comp (algebraMap S' R')))) := by
+  -- proof
   classical
-  set θ : 𝓡 →+*ᵍ 𝓡' := { ϑ.toRingHom with map_mem := fun h => hϑdeg _ _ h } with hθdef
+  set θ : GradedRingHom 𝓡 𝓡' := { toRingHom := ϑ.toRingHom, map_mem := fun h => hϑdeg _ _ h }
   have hθ : ∀ x, θ x = ϑ x := fun _ => rfl
   have hθr : θ r ∈ 𝓡' d := hϑdeg _ _ hr
   have hz : ∀ s : S, (GradedRing.projZeroRingHom' 𝓡 (algebraMap S R s) : R) = algebraMap S R s := fun s => by
@@ -50,11 +52,11 @@ private lemma main
   have val_toA : ∀ s : S, (toA s).val = Localization.mk (algebraMap S R s) 1 := fun s => by
     show (HomogeneousLocalization.mk _).val = _
     rw [HomogeneousLocalization.val_mk]
-    exact Localization.mk_eq_mk_iff.2 (Localization.r_of_eq (by simp [hz]))
+    apply Localization.mk_eq_mk_iff.2 (Localization.r_of_eq (by simp [hz]))
   have val_toB : ∀ s : S', (toB s).val = Localization.mk (algebraMap S' R' s) 1 := fun s => by
     show (HomogeneousLocalization.mk _).val = _
     rw [HomogeneousLocalization.val_mk]
-    exact Localization.mk_eq_mk_iff.2 (Localization.r_of_eq (by simp [hz']))
+    apply Localization.mk_eq_mk_iff.2 (Localization.r_of_eq (by simp [hz']))
   let iSA : Algebra S (HomogeneousLocalization.Away 𝓡 r) :=
     { algebraMap := toA
       commutes' := fun _ _ => mul_comm _ _
@@ -63,7 +65,7 @@ private lemma main
         apply HomogeneousLocalization.val_injective
         rw [HomogeneousLocalization.val_smul, HomogeneousLocalization.val_mul, val_toA,
           HomogeneousLocalization.val_mk, Localization.smul_mk, Localization.mk_mul]
-        exact Localization.mk_eq_mk_iff.2 (Localization.r_of_eq (by simp [Algebra.smul_def])) }
+        apply Localization.mk_eq_mk_iff.2 (Localization.r_of_eq (by simp [Algebra.smul_def])) }
   let iS'B : Algebra S' (HomogeneousLocalization.Away 𝓡' (θ r)) :=
     { algebraMap := toB
       commutes' := fun _ _ => mul_comm _ _
@@ -72,7 +74,7 @@ private lemma main
         apply HomogeneousLocalization.val_injective
         rw [HomogeneousLocalization.val_smul, HomogeneousLocalization.val_mul, val_toB,
           HomogeneousLocalization.val_mk, Localization.smul_mk, Localization.mk_mul]
-        exact Localization.mk_eq_mk_iff.2 (Localization.r_of_eq (by simp [Algebra.smul_def])) }
+        apply Localization.mk_eq_mk_iff.2 (Localization.r_of_eq (by simp [Algebra.smul_def])) }
   let iAB : Algebra (HomogeneousLocalization.Away 𝓡 r) (HomogeneousLocalization.Away 𝓡' (θ r)) := m.toAlgebra
   let iSB : Algebra S (HomogeneousLocalization.Away 𝓡' (θ r)) := (toB.comp (algebraMap S S')).toAlgebra
   let _ : IsScalarTower S S' (HomogeneousLocalization.Away 𝓡' (θ r)) :=
@@ -148,13 +150,13 @@ private lemma main
   let τ : ∀ k : ℕ, (S' ⊗[S] ↥(𝓡 (k • d)) →ₗ[S'] S' ⊗[S] HomogeneousLocalization.Away 𝓡 r) := fun k => (mkA k).baseChange S'
   have hτμ : ∀ (n n₂ : ℕ) (h : n ≤ n₂) (t : S' ⊗[S] ↥(𝓡 (n • d))), τ n₂ ((μ n n₂ h).baseChange S' t) = τ n t := by
     intro n n₂ h t
-    have hc : mkA n₂ ∘ₗ μ n n₂ h = mkA n := LinearMap.ext (mkA_μ n n₂ h)
+    have hc : LinearMap.comp (mkA n₂) (μ n n₂ h) = mkA n := LinearMap.ext (mkA_μ n n₂ h)
     show (mkA n₂).baseChange S' ((μ n n₂ h).baseChange S' t) = (mkA n).baseChange S' t
     rw [← hc, LinearMap.baseChange_comp]
     rfl
   have hφτ : ∀ (k : ℕ) (t : S' ⊗[S] ↥(𝓡 (k • d))), φ (τ k t) = mkB k (E k t) := by
     intro k
-    have : φ ∘ₗ τ k = mkB k ∘ₗ (E k).toLinearMap := by
+    have : LinearMap.comp φ (τ k) = LinearMap.comp (mkB k) ((E k).toLinearMap) := by
       refine TensorProduct.AlgebraTensorModule.ext fun s x => ?_
       show φ ((mkA k).baseChange S' (s ⊗ₜ[S] x)) = mkB k ((hbc (k • d)).equiv (s ⊗ₜ[S] x))
       rw [LinearMap.baseChange_tmul, φ_tmul, IsBaseChange.equiv_tmul, map_smul, mkA_apply]
@@ -163,18 +165,19 @@ private lemma main
       rw [HomogeneousLocalization.Away.map_mk]
       rfl
     intro t
-    exact congrArg (fun f => f t) (congrArg DFunLike.coe this)
+    apply congrArg (fun f => f t) (congrArg DFunLike.coe this)
   have hcommon : ∀ u : S' ⊗[S] HomogeneousLocalization.Away 𝓡 r, ∃ (n : ℕ) (t : S' ⊗[S] ↥(𝓡 (n • d))), τ n t = u := by
     intro u
-    induction u using TensorProduct.induction_on with
-    | zero => exact ⟨0, 0, map_zero _⟩
-    | tmul s a =>
+    refine TensorProduct.inductionOn u ?_ ?_
+    ·
+      intro s a
       obtain ⟨n, x, hx, rfl⟩ := HomogeneousLocalization.Away.mk_surjective 𝓡 hr a
       refine ⟨n, s ⊗ₜ[S] ⟨x, hx⟩, ?_⟩
       show (mkA n).baseChange S' _ = _
       rw [LinearMap.baseChange_tmul]
       rfl
-    | add u v hu hv =>
+    ·
+      intro u v hu hv
       obtain ⟨n, t, rfl⟩ := hu
       obtain ⟨n', t', rfl⟩ := hv
       refine ⟨n + n', (μ n (n + n') (Nat.le_add_right n n')).baseChange S' t +
@@ -191,16 +194,18 @@ private lemma main
   have hEμ : ∀ (n n₂ : ℕ) (h : n ≤ n₂) (t : S' ⊗[S] ↥(𝓡 (n • d))),
       ((E n₂ ((μ n n₂ h).baseChange S' t) : ↥((𝓡' (n₂ • d)).restrictScalars S)) : R') = θ r ^ (n₂ - n) * ((E n t : ↥((𝓡' (n • d)).restrictScalars S)) : R') := by
     intro n n₂ h t
-    induction t using TensorProduct.induction_on with
-    | zero => simp only [map_zero, ZeroMemClass.coe_zero, mul_zero]
-    | tmul s x =>
+    refine TensorProduct.inductionOn t ?_ ?_
+    ·
+      intro s x
       rw [LinearMap.baseChange_tmul, E_tmul, E_tmul, μ_coe n n₂ h, map_mul, map_pow, hθ r]
       ring
-    | add u v hu hv =>
+    ·
+      intro u v hu hv
       simp only [map_add, AddMemClass.coe_add, mul_add, hu, hv]
   have φ_bij : Function.Bijective φ := by
     refine ⟨(injective_iff_map_eq_zero φ).2 fun u hu => ?_, fun b => ?_⟩
-    · obtain ⟨n, t, rfl⟩ := hcommon u
+    ·
+      obtain ⟨n, t, rfl⟩ := hcommon u
       rw [hφτ] at hu
       obtain ⟨N, hN⟩ := hmkB0 n _ hu
       have h2 : E (n + N) ((μ n (n + N) (Nat.le_add_right n N)).baseChange S' t) = 0 := by
@@ -208,7 +213,8 @@ private lemma main
         rw [hEμ n (n + N) (Nat.le_add_right n N), Nat.add_sub_cancel_left, hN, ZeroMemClass.coe_zero]
       have h3 : (μ n (n + N) (Nat.le_add_right n N)).baseChange S' t = 0 := (E (n + N)).map_eq_zero_iff.mp h2
       rw [← hτμ n (n + N) (Nat.le_add_right n N) t, h3, map_zero]
-    · obtain ⟨n, y, hy, rfl⟩ := HomogeneousLocalization.Away.mk_surjective 𝓡' hθr b
+    ·
+      obtain ⟨n, y, hy, rfl⟩ := HomogeneousLocalization.Away.mk_surjective 𝓡' hθr b
       refine ⟨τ n ((E n).symm ⟨y, hy⟩), ?_⟩
       rw [hφτ, LinearEquiv.apply_symm_apply]
       rfl
@@ -217,6 +223,7 @@ private lemma main
     ⟨IsBaseChange.of_equiv e (fun a => by
       show φ ((1 : S') ⊗ₜ a) = m a
       rw [φ_tmul, one_smul])⟩
-  exact (CommRingCat.isPushout_of_isPushout S S' (HomogeneousLocalization.Away 𝓡 r) (HomogeneousLocalization.Away 𝓡' (θ r))).flip
+  apply (CommRingCat.isPushout_of_isPushout S S' (HomogeneousLocalization.Away 𝓡 r) (HomogeneousLocalization.Away 𝓡' (θ r))).flip
+
 
 -- created on 2026-10-20

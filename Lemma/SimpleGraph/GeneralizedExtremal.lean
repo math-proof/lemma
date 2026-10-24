@@ -4,11 +4,13 @@ import sympy.atlas.Combinatorics.SimpleGraph.GeneralizedExtremal
 open SimpleGraph
 
 
+namespace SimpleGraph
+
 /--
 [generalizedExtremalNumber_eq_sup](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/GeneralizedExtremal.lean)
 -/
 @[path]
-private lemma generalizedExtremalNumber_eq_sup_eq
+lemma generalizedExtremalNumber_eq_sup
   [Fintype α]
   {n : ℕ}
   {T : SimpleGraph α}
@@ -18,13 +20,19 @@ private lemma generalizedExtremalNumber_eq_sup_eq
     Finset.sup (Finset.univ.filter (fun G : SimpleGraph (Fin n) => H.Free G))
     (fun G => G.copyCount T) := by
 -- proof
-  apply SimpleGraph.generalizedExtremalNumber_eq_sup n T H
+  classical
+  unfold generalizedExtremalNumber
+  rfl
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [copyCount_le_generalizedExtremalNumber](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/GeneralizedExtremal.lean)
 -/
 @[path]
-private lemma copyCount_le_generalizedExtremalNumber_eq
+lemma copyCount_le_generalizedExtremalNumber
   [Fintype α]
   {n : ℕ}
   {T : SimpleGraph α}
@@ -35,13 +43,21 @@ private lemma copyCount_le_generalizedExtremalNumber_eq
 -- imply
   G.copyCount T ≤ generalizedExtremalNumber n T H := by
 -- proof
-  apply SimpleGraph.copyCount_le_generalizedExtremalNumber n T H G hG
+  classical
+  unfold generalizedExtremalNumber
+  apply Finset.le_sup (s := Finset.univ.filter (fun G : SimpleGraph (Fin n) => H.Free G))
+    (f := fun G => G.copyCount T) (b := G)
+  exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, hG⟩
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [generalizedExtremalNumber_le_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/GeneralizedExtremal.lean)
 -/
 @[path]
-private lemma generalizedExtremalNumber_le_iff_eq
+lemma generalizedExtremalNumber_le_iff
   [Fintype α]
   {n : ℕ}
   {T : SimpleGraph α}
@@ -51,13 +67,24 @@ private lemma generalizedExtremalNumber_le_iff_eq
   generalizedExtremalNumber n T H ≤ m ↔
     ∀ G : SimpleGraph (Fin n), H.Free G → G.copyCount T ≤ m := by
 -- proof
-  apply SimpleGraph.generalizedExtremalNumber_le_iff n T H m
+  classical
+  unfold generalizedExtremalNumber
+  rw [Finset.sup_le_iff]
+  constructor
+  · intro h G hG
+    exact h _ (Finset.mem_filter.mpr ⟨Finset.mem_univ _, hG⟩)
+  · intro h b hb
+    exact h b (Finset.mem_filter.mp hb).2
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [exists_free_copyCount_eq_generalizedExtremalNumber](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/GeneralizedExtremal.lean)
 -/
 @[path]
-private lemma exists_free_copyCount_eq_generalizedExtremalNumber_eq
+lemma exists_free_copyCount_eq_generalizedExtremalNumber
   [Fintype α]
   {n : ℕ}
   {T : SimpleGraph α}
@@ -67,7 +94,24 @@ private lemma exists_free_copyCount_eq_generalizedExtremalNumber_eq
 -- imply
   ∃ G : SimpleGraph (Fin n), H.Free G ∧ G.copyCount T = generalizedExtremalNumber n T H := by
 -- proof
-  apply SimpleGraph.exists_free_copyCount_eq_generalizedExtremalNumber n T H hne
+  classical
+  have hne' : (Finset.univ.filter (fun G : SimpleGraph (Fin n) => H.Free G)).Nonempty := by
+    obtain ⟨G0, hG0⟩ := hne
+    exact ⟨G0, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hG0⟩⟩
+  have hEx : ∃ G ∈ Finset.univ.filter (fun G : SimpleGraph (Fin n) => H.Free G),
+    Finset.sup
+      (Finset.univ.filter (fun G : SimpleGraph (Fin n) => H.Free G))
+      (fun G => G.copyCount T) = G.copyCount T :=
+    Finset.exists_mem_eq_sup
+      (Finset.univ.filter (fun G : SimpleGraph (Fin n) => H.Free G)) hne'
+      (fun G => G.copyCount T)
+  obtain ⟨G, hGmem, hEq⟩ := hEx
+  have hFree : H.Free G := (Finset.mem_filter.mp hGmem).2
+  have hdef := generalizedExtremalNumber_eq_sup n T H
+  exact ⟨G, hFree, hEq.symm.trans hdef.symm⟩
+
+end SimpleGraph
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -40,39 +40,5 @@ variable {p : ℕ} [Fact p.Prime] {A B : Type*} [CommRing A] [CommRing B] {u : A
 
 instance : CoeFun (RelativePDerivation p u) (fun _ => A → B) where
   coe d := d.toFun
-
-@[ext]
-theorem ext {d₁ d₂ : RelativePDerivation p u} (h : ∀ x, (d₁ : A → B) x = (d₂ : A → B) x) :
-    d₁ = d₂ := by
-  cases d₁ with
-  | mk f₁ h1₁ h2₁ h3₁ =>
-    cases d₂ with
-    | mk f₂ h1₂ h2₂ h3₂ =>
-      simp only [mk.injEq]
-      funext x
-      exact h x
-
-@[simp]
-theorem coe_mk (d : RelativePDerivation p u) (x : A) : (d : A → B) x = d.toFun x := rfl
-
--- Simp-facing public lemmas exposing the three laws.
-@[simp]
-theorem map_one_eq_zero (d : RelativePDerivation p u) : (d : A → B) 1 = 0 :=
-  d.map_one
-
-@[simp]
-theorem map_add_eq (d : RelativePDerivation p u) (x y : A) :
-    (d : A → B) (x + y) =
-      (d : A → B) x + (d : A → B) y + pDerivationCorrection p (u x) (u y) :=
-  d.map_add x y
-
-@[simp]
-theorem map_mul_eq (d : RelativePDerivation p u) (x y : A) :
-    (d : A → B) (x * y) =
-      (u x) ^ p * (d : A → B) y + (u y) ^ p * (d : A → B) x +
-        (p : B) * (d : A → B) x * (d : A → B) y :=
-  d.map_mul x y
-
 end RelativePDerivation
-
 end MetaMathlibExt

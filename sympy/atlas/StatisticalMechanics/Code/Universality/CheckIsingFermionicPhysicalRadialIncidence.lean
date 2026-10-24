@@ -1,0 +1,28 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPhysicalRadialIncidence.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalRadialIncidence
+
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadialBondMate_involutive
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadialDart_ne_source
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadialDart_ne_terminal
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadial_bondTurn_eq_zero_of_directedTangentCode_eq
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadial_fermionicObservable_bondMate_eq_of_code_modEq
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadial_endpoint_bondMate
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadial_faceKey_bondMate
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadial_increment_bondMate
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadialEndpoint
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadialFaceKey
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadialIncrement
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadialIncrement_nonneg
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadialFaceKey_isInterior
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadial_coordinates_adjacent
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadialCell_increment_closed
+#print axioms StatMech.Universality.fkIsingSquareInteriorRadialCell_increment_eq_normSq_full_projection

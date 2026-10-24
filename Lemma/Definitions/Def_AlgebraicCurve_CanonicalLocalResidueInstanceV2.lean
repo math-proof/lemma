@@ -498,7 +498,6 @@ end Place
 
 namespace Place
 
-variable (v : Place K F)
 
 end Place
 
@@ -965,7 +964,6 @@ section MovedCarrier
 
 variable {K K' F' : Type*} [Field K] [Field K'] [Field F']
   [Algebra K K'] [Algebra K' F'] [Algebra K F'] [IsScalarTower K K' F']
-variable [HasCanonicalLocalResidueKStar K F']
 
 end MovedCarrier
 
@@ -1285,8 +1283,6 @@ section RatProduction
 
 attribute [local instance 2000] RatFunc.instAlgebraOfPolynomial
 
-variable [HasCanonicalLocalResidueKStar ℚ (RatFunc ℚ)]
-variable [HasCanonicalLocalResidueKStar (AlgebraicClosure ℚ) (RatFunc (AlgebraicClosure ℚ))]
 
 end RatProduction
 
@@ -1522,8 +1518,6 @@ section RatProduction
 
 attribute [local instance 2000] RatFunc.instAlgebraOfPolynomial
 
-variable [HasCanonicalLocalResidueKStar ℚ (RatFunc ℚ)]
-variable [HasCanonicalLocalResidueKStar (AlgebraicClosure ℚ) (RatFunc (AlgebraicClosure ℚ))]
 
 end RatProduction
 

@@ -1,0 +1,22 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexBetheCanonicalRegularizedQuadrature.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalRegularizedQuadrature
+
+#print axioms StatMech.FrontierD.tendsto_sixVertexCanonicalEvenRegularizedDerivativeProfileQuotient
+#print axioms StatMech.FrontierD.tendsto_sixVertexCanonicalOddRegularizedDerivativeProfileQuotient
+#print axioms StatMech.FrontierD.tendsto_sixVertexCanonicalEvenRegularizedLinearizedOffset
+#print axioms StatMech.FrontierD.tendsto_sixVertexCanonicalEvenRegularizedRootDisplacement
+#print axioms StatMech.FrontierD.sum_sixVertexCanonicalEvenRegularizedRootDisplacement_eq_positive
+#print axioms StatMech.FrontierD.tendsto_sixVertexCanonicalEvenPositiveRegularizedRootDisplacement
+#print axioms StatMech.FrontierD.tendsto_sixVertexCanonicalOddRegularizedLinearizedOffset
+#print axioms StatMech.FrontierD.tendsto_sixVertexCanonicalOddRegularizedRootDisplacement
+#print axioms StatMech.FrontierD.sum_sixVertexCanonicalOddRegularizedRootDisplacement_eq_positive
+#print axioms StatMech.FrontierD.tendsto_sixVertexCanonicalOddPositiveRegularizedRootDisplacement

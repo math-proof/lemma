@@ -454,20 +454,6 @@ private theorem geneuclidThirteenRepresentatives_card :
     geneuclidThirteenRepresentatives.card = 12 := by
   decide
 
-private theorem geneuclid_squarefree_thirty : Squarefree 30 := by
-  rw [show 30 = (2 * 3) * 5 by norm_num, Nat.squarefree_mul (by decide),
-    Nat.squarefree_mul (by decide)]
-  exact ⟨⟨Nat.prime_two.squarefree, Nat.prime_three.squarefree⟩,
-    Nat.prime_five.squarefree⟩
-
-private theorem geneuclid_squarefree_two_thousand_three_hundred_ten : Squarefree 2310 := by
-  rw [show 2310 = (((2 * 3) * 5) * 7) * 11 by norm_num,
-    Nat.squarefree_mul (by decide), Nat.squarefree_mul (by decide),
-    Nat.squarefree_mul (by decide), Nat.squarefree_mul (by decide)]
-  exact ⟨⟨⟨⟨Nat.prime_two.squarefree, Nat.prime_three.squarefree⟩,
-    Nat.prime_five.squarefree⟩, Nat.prime_seven.squarefree⟩,
-    Nat.prime_eleven.squarefree⟩
-
 private theorem geneuclid_prime_lt_seven_of_dvd_thirty {p : ℕ} (hp : p.Prime)
     (h : p ∣ 30) : p < 7 := by
   rw [show 30 = (2 * 3) * 5 by norm_num, hp.dvd_mul, hp.dvd_mul] at h
@@ -2320,10 +2306,6 @@ private noncomputable def Chain (P : Finset ℕ) (hP : ∀ p ∈ P, Nat.Prime p)
 private noncomputable def chainL (P : Finset ℕ) (hP : ∀ p ∈ P, Nat.Prime p) (n : ℕ) : List ℕ :=
   (Chain P hP n).1
 
-private theorem chainL_good (P : Finset ℕ) (hP : ∀ p ∈ P, Nat.Prime p) (n : ℕ) :
-    Good P (chainL P hP n) :=
-  (Chain P hP n).2
-
 private theorem chainL_succ (P : Finset ℕ) (hP : ∀ p ∈ P, Nat.Prime p) (n : ℕ) :
     chainL P hP (n + 1) =
       Classical.choose (prop_reach P (chainL P hP n) (chainL_good P hP n)) := by
@@ -2376,12 +2358,6 @@ private theorem chainL_eval_stable (P : Finset ℕ) (hP : ∀ p ∈ P, Nat.Prime
     (hs : i < (chainL P hP s).length) (hst : s ≤ t) :
     eVal (chainL P hP s) i = eVal (chainL P hP t) i :=
   eVal_prefix _ _ (chainL_prefix_le P hP s t hst) i hs
-
-private theorem prefix_mem {l₁ l₂ : List ℕ} (h : l₁ <+: l₂) (a : ℕ) (hm : a ∈ l₁) :
-    a ∈ l₂ := by
-  have heq := List.prefix_iff_eq_append.mp h
-  rw [← heq]
-  exact List.mem_append.mpr (Or.inl hm)
 
 /-- The final sequence: stabilization of the tower. -/
 private noncomputable def seqA (P : Finset ℕ) (hP : ∀ p ∈ P, Nat.Prime p) (i : ℕ) : ℕ :=

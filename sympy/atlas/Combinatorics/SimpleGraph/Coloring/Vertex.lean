@@ -17,6 +17,7 @@ limitations under the License.
 -/
 
 import sympy.atlas.Combinatorics.SimpleGraph.Clique
+import Lemma.SimpleGraph.Clique
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
 import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
@@ -26,31 +27,6 @@ import Mathlib.Data.Set.Card
 variable {V α : Type*} {G : SimpleGraph V} {n : ℕ}
 
 namespace SimpleGraph
-
-@[inherit_doc] scoped notation "χ(" G ")" => chromaticNumber G
-
-lemma lt_chromaticNumber_iff_not_colorable : n < G.chromaticNumber ↔ ¬ G.Colorable n := by
-  rw [← chromaticNumber_le_iff_colorable, not_le]
-
-lemma le_chromaticNumber_iff_not_colorable (hn : n ≠ 0) :
-    n ≤ G.chromaticNumber ↔ ¬ G.Colorable (n - 1) := by
-  let n + 1 := n; simp [ENat.add_one_le_iff, lt_chromaticNumber_iff_not_colorable]
-
-lemma card_div_indepNum_le_chromaticNumber : ⌈(Nat.card V / α(G) : ℚ≥0)⌉₊ ≤ G.chromaticNumber := by
-  cases finite_or_infinite V
-  swap; · simp
-  cases nonempty_fintype V
-  simp only [Nat.card_eq_fintype_card, le_chromaticNumber_iff_coloring, Nat.ceil_le]
-  refine fun m c ↦ div_le_of_le_mul₀ (by simp) (by simp) ?_
-  norm_cast
-  rw [← mul_one (Fintype.card V), ← Fintype.card_fin m]
-  refine Finset.card_mul_le_card_mul (c · = ·)
-    (by simp [Finset.bipartiteAbove, Finset.filter_nonempty_iff])
-    fun b _ ↦ IsIndepSet.card_le_indepNum ?_
-  simpa [IsIndepSet, Set.Pairwise, Coloring.colorClass] using
-    fun x hx y hy _ ↦ c.not_adj_of_mem_colorClass hx hy
-
-variable (G) in
 /-- A set of edges is critical if deleting them reduces the chromatic number. -/
 def IsCriticalEdges (edges : Set (Sym2 V)) : Prop :=
   (G.deleteEdges edges).chromaticNumber < G.chromaticNumber
@@ -78,47 +54,12 @@ and deleting any single vertex reduces the chromatic number.
 -/
 def IsCritical (k : ℕ) : Prop := G.chromaticNumber = k ∧ ∀ v, (⊤ : G.Subgraph).IsCriticalVertex v
 
-theorem not_isCritical_of_fintype_lt [Fintype V] (k : ℕ) (hk : Fintype.card V < k) :
-   ¬G.IsCritical k := by
-  simp only [IsCritical, not_and, not_forall]
-  intro h
-  have := h ▸ SimpleGraph.chromaticNumber_le_iff_colorable.2 G.colorable_of_fintype
-  simp at this
-  grind
-
-open SimpleGraph
-
-set_option backward.isDefEq.respectTransparency false in
-theorem colorable_iff_induce_eq_bot (G : SimpleGraph V) (n : ℕ) :
-    G.Colorable n ↔ ∃ coloring : V → Fin n, ∀ i, G.induce {v | coloring v = i} = ⊥ := by
-  refine ⟨fun ⟨a, h⟩ ↦ ⟨a, fun i ↦ ?_⟩, fun ⟨w, h⟩ ↦ ⟨w, @fun a b h_adj ↦ ?_⟩⟩
-  · rw [SimpleGraph.eq_bot_iff_forall_not_adj]
-    rintro ⟨u, huv⟩ ⟨v, rfl⟩ huv'
-    exact (h huv').ne huv
-  specialize h (w a)
-  contrapose h
-  intro hG
-  have : ¬ ((SimpleGraph.induce {v | w v = w a} G).Adj ⟨a, by rfl⟩ ⟨b, by simp_all⟩) :=
-    hG ▸ fun a ↦ a
-  exact this h_adj
-
 /--
 `G.Cocolorable n` means that the vertices of `G` can be colored with `n` colors so that each
 color class induces either an independent set or a complete graph.
 -/
 def Cocolorable (G : SimpleGraph V) (n : ℕ) : Prop := ∃ coloring : V → Fin n,
   ∀ i, G.induce {v | coloring v = i} = ⊥ ∨ G.induce {v | coloring v = i} = ⊤
-
-/-- Every proper coloring is a cocoloring: color classes inducing `⊥` also satisfy the
-`⊥ ∨ ⊤` disjunction. -/
-theorem Colorable.cocolorable {n : ℕ} (hc : G.Colorable n) : G.Cocolorable n := by
-  obtain ⟨coloring, hcol⟩ := (colorable_iff_induce_eq_bot G n).mp hc
-  exact ⟨coloring, fun i => Or.inl (hcol i)⟩
-
-/-- Every finite graph is cocolorable, via its tautological finite coloring. -/
-theorem cocolorable_of_fintype [Fintype V] (G : SimpleGraph V) :
-    G.Cocolorable (Fintype.card V) :=
-  (colorable_of_fintype G).cocolorable
 
 /--
 The cochromatic number of a graph is the minimal number of colors needed to color its vertices
@@ -130,19 +71,6 @@ If `G` is cocolorable, then `ENat.toNat G.cochromaticNumber` is the `ℕ`-valued
 noncomputable def cochromaticNumber (G : SimpleGraph V) : ℕ∞ := ⨅ n ∈ Set.ofPred G.Cocolorable,
   (n : ℕ∞)
 
-/-- Finite cocolorability description of the cochromatic number, mirroring
-`Colorable.chromaticNumber_eq_sInf`. -/
-theorem Cocolorable.cochromaticNumber_eq_sInf {n : ℕ} (h : G.Cocolorable n) :
-    G.cochromaticNumber = sInf {n' : ℕ | G.Cocolorable n'} := by
-  rw [ENat.natCast_sInf, cochromaticNumber]
-  exact ⟨_, h⟩
-
-/-- For a finite vertex type, `toNat` of the `ℕ∞` cochromatic number is the natural-valued
-minimum of admissible color counts. -/
-theorem cochromaticNumber_toNat_eq_sInf [Fintype V] (G : SimpleGraph V) :
-    G.cochromaticNumber.toNat = sInf {n : ℕ | G.Cocolorable n} := by
-  rw [(cocolorable_of_fintype G).cochromaticNumber_eq_sInf, ENat.toNat_natCast]
-
 /-- The chromatic cardinal is the minimal number of colors need to color it. In contrast to
 `chromaticNumber`, which assigns `⊤ : ℕ∞` to all non-finitely colorable graphs, this definition
 returns a `Cardinal` and can therefore distinguish between different infinite chromatic numbers. -/
@@ -152,12 +80,6 @@ noncomputable def chromaticCardinal.{u} {V : Type u} (G : SimpleGraph V) : Cardi
 /-- The maximum size of the union of k finite independent sets. -/
 noncomputable def indepNumK (G : SimpleGraph V) [Fintype V] (k : ℕ) : ℕ :=
   sSup {n | ∃ f : Fin k → Set V, (∀ i, G.IsIndepSet (f i)) ∧ (⋃ i, f i).ncard = n}
-
-theorem indepNumK_le_card [Fintype V] (G : SimpleGraph V) (k : ℕ) :
-    indepNumK G k ≤ Fintype.card V := by
-  refine csSup_le ⟨0, fun _ => ∅, fun _ _ hx => False.elim hx, by simp⟩ ?_
-  rintro n ⟨f, _, rfl⟩
-  simpa using Set.ncard_le_card (⋃ i, f i)
 
 /-- A finite graph is CDS-colorable if it has a proper coloring
 by natural numbers such that for all `k > 0`, the number of

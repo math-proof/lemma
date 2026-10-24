@@ -20,7 +20,7 @@ private lemma main
     s (t + 1) ⟂ᵢ[π] (s[:t], a[:t]) | (s t, a t)) :
 -- imply
   have : ∀ i, SinglePSpace π (s i) := fun i =>
-    SinglePSpace.of.EqMeasureCount.Measurable (hs i) CountableMeasure.measure_eq_count
+    SinglePSpace.of.Measurable (hs i)
   have : ∀ i j, SinglePSpace π (a i, s j) := fun i j =>
     SinglePSpace.of.Measurable.Measurable (ha i) (hs j)
   have : ∀ i, SinglePSpace π (s (i + 1), s i, a i) := fun i =>
@@ -36,11 +36,6 @@ private lemma main
   intro _ _ _ _
   have : Nonempty S := ⟨«s.bvar» 0⟩
   have : Nonempty A := ⟨«a.bvar» 0⟩
-  have hS : ReferenceMeasure.measure (α := S) = Measure.count :=
-    CountableMeasure.measure_eq_count
-  have hpair : ∀ p q : ℕ, ReferenceMeasure.measure (α := (Fin p → S) × (Fin q → A)) = Measure.count := fun p q => by
-    change (Measure.count : Measure (Fin p → S)).prod Measure.count = Measure.count
-    rw [← Measure.Count.eq.ProdCountS]
   have hP : ∀ p q : ℕ, (s[:(p : ℤ)], a[:(q : ℤ)]) ⁻¹' {(«s.bvar»[:(p : ℤ)], «a.bvar»[:(q : ℤ)])} =
       {ω | (∀ i < p, s i ω = «s.bvar» i) ∧ ∀ i < q, a i ω = «a.bvar» i} := by
     intro p q
@@ -61,7 +56,7 @@ private lemma main
     ⟨_, fun _ => rfl⟩
   have hQ : ∀ n : ℕ, ℙ[π](s[:(n : ℤ) + 1] = «s.bvar»[:(n : ℤ) + 1] ∧ a[:(n : ℤ)] = «a.bvar»[:(n : ℤ)]) = π (Q n) := by
     intro n
-    rw [Prob.eq.Measure.of.Eq_Count (hpair _ _), hQdef]
+    rw [EqProb, hQdef]
     exact congrArg π (hP (n + 1) n)
   have key : ∀ (p : ℕ → Prop) (m : ℕ), (∀ i < m + 1, p i) ↔ (∀ i < m, p i) ∧ p m := fun p m =>
     ⟨fun h => ⟨fun i hi => h i (by omega), h m (by omega)⟩, fun h i hi => by
@@ -71,7 +66,7 @@ private lemma main
   refine ⟨?_, fun t => ?_⟩
   ·
     refine (hQ 0).trans ?_
-    rw [Prob.eq.Measure.of.Eq_Count hS]
+    rw [EqProb]
     congr 1
     ext ω
     simp [hQdef]

@@ -7,19 +7,19 @@ import sympy.atlas.RingTheory.Frobenius.ConjugacyClass
 [arithFrobConjClass_mem_carrier](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/Frobenius/ConjugacyClass.lean)
 -/
 @[path]
-private lemma arithFrobConjClass_mem_carrier_eq
+lemma arithFrobConjClass_mem_carrier
   [CommRing R] [CommRing S] [Algebra R S] [Group G] [MulSemiringAction G S] [SMulCommClass G R S] [Finite G] [Algebra.IsInvariant R S G]
   {Q : Ideal S} [Q.IsPrime] [Finite (S ⧸ Q)] [Algebra.IsUnramifiedAt R Q] :
 -- imply
-  arithFrobAt R G Q ∈ (arithFrobConjClass (R := by
+  arithFrobAt R G Q ∈ (arithFrobConjClass (R :=
 -- proof
-  apply arithFrobConjClass_mem_carrier Q
+  ConjClasses.mem_carrier_mk
 
 /--
 [arithFrobConjClass_eq_of_under_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/Frobenius/ConjugacyClass.lean)
 -/
 @[path]
-private lemma arithFrobConjClass_eq_of_under_eq_eq
+lemma arithFrobConjClass_eq_of_under_eq
   [CommRing R] [CommRing S] [Algebra R S] [Group G] [MulSemiringAction G S] [SMulCommClass G R S] [Finite G] [Algebra.IsInvariant R S G]
   {Q Q' : Ideal S} [Q.IsPrime] [Finite (S ⧸ Q)] [Algebra.IsUnramifiedAt R Q] [Q'.IsPrime] [Finite (S ⧸ Q')] [Algebra.IsUnramifiedAt R Q']
 -- given
@@ -27,7 +27,10 @@ private lemma arithFrobConjClass_eq_of_under_eq_eq
 -- imply
   arithFrobConjClass (R := by
 -- proof
-  apply arithFrobConjClass_eq_of_under_eq Q Q' h
+  unfold arithFrobConjClass
+  rw [ConjClasses.mk_eq_mk_iff_isConj]
+  exact isConj_arithFrobAt R G Q Q' h
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -1,0 +1,30 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckRSWStrictAxisSourcePartition.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.RSWStrictAxisSourcePartition
+
+set_option linter.style.longLine false
+
+#print axioms StatMech.Universality.RlcStrictAxisRightFullCrossing.axis_nonnegative_mem_strictTopSet
+#print axioms StatMech.Universality.RlcStrictAxisLeftFullCrossing.axis_nonpositive_mem_strictBottomSet
+#print axioms StatMech.Universality.rlc_rightLowestCandidate_explored_subset_of_open
+#print axioms StatMech.Universality.rlc_leftHighestCandidate_explored_subset_of_open
+#print axioms StatMech.Universality.rlc_rightLowestCandidate_axis_strict_of_open_strictAxis
+#print axioms StatMech.Universality.rlc_leftHighestCandidate_axis_strict_of_open_strictAxis
+#print axioms StatMech.Universality.rlc_iUnion_strictAxisExtremalPairCandidate
+#print axioms StatMech.Universality.rlc_strictAxisExtremalPairCandidate_pairwiseDisjoint
+#print axioms StatMech.Universality.rlc_strictAxisRightSourceEvent_isIncreasing
+#print axioms StatMech.Universality.rlc_strictAxisLeftSourceEvent_isIncreasing
+#print axioms StatMech.Universality.rlc_pathEdges_subset_edgesWithinFinset
+#print axioms StatMech.Universality.rlc_strictAxisRightSourceEvent_dependsOn
+#print axioms StatMech.Universality.rlc_strictAxisLeftSourceEvent_dependsOn
+#print axioms StatMech.Universality.rlc_strictAxisStoppedDiagonalEvent_mass_lower
+#print axioms StatMech.Universality.rlc_strictAxisExtremalPairCandidate_faithfulReplacement_or_intersects
+#print axioms StatMech.Universality.rlc_strictAxisExtremalPairCandidate_replacement_or_connectorEvent_eq_univ

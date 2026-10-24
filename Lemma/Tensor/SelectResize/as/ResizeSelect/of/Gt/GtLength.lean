@@ -28,7 +28,7 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool Fin List Nat Tensor Vector
+open Bool Fin List Nat Tensor Vector Set
 
 
 @[path, cast]

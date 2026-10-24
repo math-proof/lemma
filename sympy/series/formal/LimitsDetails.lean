@@ -8,6 +8,8 @@ Authors: AlgebraicCombinatorics Contributors
 -/
 import Mathlib
 import sympy.series.formal.Limits
+import Lemma.PowerSeries.Limits
+import Lemma.PowerSeries.XnEquivalence
 
 /-!
 # Detailed Proofs: Limits of Formal Power Series

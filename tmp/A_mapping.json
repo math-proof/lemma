@@ -1,0 +1,120 @@
+[
+  {
+    "file": "Lemma/Definitions/Def_Mathlib_MeasureTheory_Group_Measure.lean",
+    "lemmas": [
+      "Topology.IsOpenEmbedding.isHaarMeasure_comap"
+    ],
+    "attrs": [
+      "@[to_additive]"
+    ],
+    "status": "error",
+    "error": "push_accessibility is unexpected for LeanAttribute",
+    "raw_tail": "push_accessibility is unexpected for LeanAttribute",
+    "rewrite_probe": {
+      "stub": "tmp/A_rewrite/isHaarMeasure_comap.lean",
+      "note": "Original Mathlib-style to_additive attr; parser rejects. Probe uses private path-attr stub with Measure conclusion.",
+      "suggestedPath": "Measure/IsHaarMeasure.lean",
+      "section": "Measure",
+      "suggestions": [
+        "Measure/IsHaarMeasure.lean"
+      ],
+      "moduleName": "Measure.IsHaarMeasure"
+    }
+  },
+  {
+    "file": "Lemma/Definitions/Def_Mathlib_MeasureTheory_Measure_Typeclasses_Finite.lean",
+    "lemmas": [
+      "Topology.IsOpenEmbedding.isFiniteMeasureOnCompacts_comap"
+    ],
+    "attrs": [],
+    "status": "error",
+    "error": "Could not find lemma signature",
+    "raw_tail": "Could not find lemma signature",
+    "rewrite_probe": {
+      "stub": "tmp/A_rewrite/isFiniteMeasureOnCompacts_comap.lean",
+      "note": "Original Mathlib-style dotted lemma without LeanAssign/imply; extractSignature fails. Probe stub with Measure conclusion.",
+      "suggestedPath": "Measure/IsFiniteMeasureOnCompacts.lean",
+      "section": "Measure",
+      "suggestions": [
+        "Measure/IsFiniteMeasureOnCompacts.lean"
+      ],
+      "moduleName": "Measure.IsFiniteMeasureOnCompacts"
+    }
+  },
+  {
+    "file": "Lemma/Definitions/Def_Mathlib_Topology_Algebra_Group_Units.lean",
+    "lemmas": [
+      "Submonoid.units_isOpen"
+    ],
+    "attrs": [],
+    "status": "error",
+    "error": "Could not find lemma signature",
+    "raw_tail": "Could not find lemma signature",
+    "rewrite_probe": {
+      "stub": "tmp/A_rewrite/units_isOpen.lean",
+      "note": "Original concludes IsOpen on Set of units. Probe used Set/IsOpen; Units and Submonoid also legal data-type sections.",
+      "suggestedPath": "Set/IsOpen.lean",
+      "section": "Set",
+      "alt_legal_sections": [
+        "Units",
+        "Submonoid"
+      ],
+      "suggestions": [
+        "Set/IsOpen.lean"
+      ],
+      "moduleName": "Set.IsOpen"
+    }
+  },
+  {
+    "file": "Lemma/Definitions/Def_Mathlib_Topology_Bases.lean",
+    "lemmas": [
+      "TopologicalSpace.secondCountableTopology_of_countable_cover'"
+    ],
+    "attrs": [],
+    "status": "error",
+    "error": "Could not find lemma signature",
+    "raw_tail": "Could not find lemma signature",
+    "rewrite_probe": {
+      "stub": "tmp/A_rewrite/secondCountableTopology_of_countable_cover.lean",
+      "note": "Conclusion SecondCountableTopology / TopologicalSpace are typeclass-ish (illegal). Probe stub diluted to Set; handoff may need IsOpenEmbedding or Set after reformulating.",
+      "suggestedPath": "Set/Nonempty.lean",
+      "section": "Set",
+      "alt_legal_sections": [
+        "IsOpenEmbedding"
+      ],
+      "illegal_candidates": [
+        "TopologicalSpace",
+        "Topology"
+      ],
+      "suggestions": [
+        "Set/Nonempty.lean"
+      ],
+      "moduleName": "Set.Nonempty",
+      "probe_quality": "weak"
+    }
+  },
+  {
+    "file": "Lemma/Definitions/Def_WeierstrassCurve_DivPolyMulFormulaCore.lean",
+    "lemmas": [
+      "star_eval_core",
+      "odd_step_core",
+      "even_step_core"
+    ],
+    "attrs": [],
+    "status": "error",
+    "error": "Could not find lemma signature",
+    "raw_tail": "Could not find lemma signature",
+    "rewrite_probe": {
+      "stub": "tmp/A_rewrite/star_eval_core.lean",
+      "note": "3 private lemmas in namespace WeierstrassCurve.Affine; Mathlib-style binders so lemmaPath fails on original. Probe suggests WeierstrassCurve section (legal). Path name from stub is not final.",
+      "suggestedPath": "WeierstrassCurve/Eq/of/WeierstrassCurveRat.lean",
+      "section": "WeierstrassCurve",
+      "suggestions": [
+        "WeierstrassCurve/Eq/of/WeierstrassCurveRat.lean",
+        "WeierstrassCurve/Eq/of/WeierstrassCurve.lean"
+      ],
+      "moduleName": "WeierstrassCurve.Eq.of.WeierstrassCurveRat",
+      "probe_quality": "section-only"
+    }
+  }
+]

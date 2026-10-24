@@ -1,0 +1,34 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/CheckLebowitzPfisterReplicaOrbitRankFiveAggregateUnmarked.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankFiveAggregateUnmarked
+
+open StatMech.Ising
+
+#print axioms
+  LPReplicaOffdiagDecoratedSource.resolvable_or_unmarkedSaturated_of_highRow
+#print axioms
+  LPReplicaOffdiagDecoratedSource.low_or_resolvable_or_unmarkedSaturated_rankFive
+#print axioms
+  LPReplicaOffdiagDecoratedSource.isUnmarkedSaturatedRankFive_of_mem_complement
+#print axioms
+  lpReplicaAggregateDecoratedSourceSelectedSeam_ne_left_of_unmarkedSaturated
+#print axioms
+  lpReplicaAggregateDecoratedSourceSelectedSeam_ne_right_of_unmarkedSaturated
+#print axioms
+  lpReplicaAggregateUnmarkedSaturatedSourceRankFive_selectedSeam_unmarked
+#print axioms card_lpReplicaAggregateUnmarkedSaturatedSourceRankFive
+#print axioms
+  LPReplicaAggregateUnmarkedSaturatedSourceRankFive.toAggregate_injective
+#print axioms lpReplicaOffdiag_rankFive_handled_union_unmarkedSaturated
+#print axioms lpReplicaOffdiag_rankFive_card_handled_add_unmarkedSaturated
+#print axioms
+  card_lpReplicaAggregateDecoratedSource_rankFive_eq_handled_add_unmarked
+#print axioms lpReplicaOffdiag_rankFive_handled_disjoint_unmarkedSaturated

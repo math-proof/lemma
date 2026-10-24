@@ -68,7 +68,7 @@ theorem right_lim_of_continuous {X:Set ℝ} {f: ℝ → ℝ} {x₀:ℝ}
   apply right_lim_def
   rw [ContinuousWithinAt.eq_1] at hf
   replace hf : (nhdsWithin x₀ (.Ioo x₀ (x₀ + ε))).Tendsto f  (nhds (f x₀)) :=
-    tendsto_nhdsWithin_mono_left (Set.Ioo_subset_Ico_self.trans hX) hf
+    tendsto_nhdsWithin_mono_left (Set.Subset.trans Set.Ioo_subset_Ico_self hX) hf
   rw [Convergesto.iff]
   convert hf using 1
   have h1 : .Ioo x₀ (x₀ + ε) ∈ nhdsWithin x₀ (.Ioi x₀) := by
@@ -85,7 +85,7 @@ theorem left_lim_of_continuous {X:Set ℝ} {f: ℝ → ℝ} {x₀:ℝ}
   apply left_lim_def
   rw [ContinuousWithinAt.eq_1] at hf
   replace hf : (nhdsWithin x₀ (.Ioo (x₀ - ε) x₀)).Tendsto f (nhds (f x₀)) :=
-    tendsto_nhdsWithin_mono_left (Set.Ioo_subset_Ioc_self.trans hX) hf
+    tendsto_nhdsWithin_mono_left (Set.Subset.trans Set.Ioo_subset_Ioc_self hX) hf
   rw [Convergesto.iff]
   convert hf using 1
   have h1 : .Ioo (x₀-ε) x₀ ∈ nhdsWithin x₀ (.Iio x₀) := by

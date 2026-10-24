@@ -10,16 +10,18 @@ private lemma main
 -- given
   (h : ∀ x ∈ S, f x = g x) :
 -- imply
-  ArgMax S f = ArgMax S g := by
+  max⁻¹[x ∈ S] f x = max⁻¹[x ∈ S] g x := by
 -- proof
-  unfold ArgMax
+  unfold «max⁻¹»
   congr 1
   funext x
   apply propext
   constructor
-  · rintro ⟨hx, hy⟩
+  ·
+    rintro ⟨hx, hy⟩
     exact ⟨hx, fun y hy' => by rw [← h y hy', ← h x hx]; exact hy y hy'⟩
-  · rintro ⟨hx, hy⟩
+  ·
+    rintro ⟨hx, hy⟩
     exact ⟨hx, fun y hy' => by rw [h y hy', h x hx]; exact hy y hy'⟩
 
 

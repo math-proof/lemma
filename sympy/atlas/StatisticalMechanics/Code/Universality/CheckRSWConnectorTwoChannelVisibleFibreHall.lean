@@ -1,0 +1,19 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckRSWConnectorTwoChannelVisibleFibreHall.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelVisibleFibreHall
+
+#print axioms StatMech.Universality.rlc_twoChannelPooledVisibleEmbeddingOfCapacity_compatible
+#print axioms StatMech.Universality.RlcTwoChannelPIMSPooledScoreCompatible
+#print axioms StatMech.Universality.rlc_twoChannelPIMSPooledVisibleFibreCapacity_iff_exists_compatibleEmbedding
+#print axioms StatMech.Universality.rlc_twoChannelPIMSPooledVisibleFibreCapacity_iff_edgeCodeHall
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_merged_q_one_of_pooledVisibleCapacity
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_sqrt_pow_merged_of_pooledScoreHall
+#print axioms StatMech.Universality.rlc_finiteTwoChannelConnectorMass_selfDual_ge_of_pooledScoreHall

@@ -1,0 +1,51 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckGrahamGateDiscrepancy.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamGateDiscrepancy
+
+#print axioms StatMech.FrontierA.card_subtype_le_iff_card_leftOnly_le_card_rightOnly
+#print axioms StatMech.FrontierA.card_subtype_le_of_discrepancyEmbedding
+#print axioms StatMech.FrontierA.embeddingOf_tag_preserving_fiberwise
+#print axioms StatMech.FrontierA.embeddingOf_taggedFiberwiseMaps
+#print axioms StatMech.FrontierA.embeddingOf_taggedFiberwiseCardLE
+#print axioms StatMech.FrontierA.functionWeakComponent_eq_of_mem
+#print axioms StatMech.FrontierA.functionWeakComponent_next
+#print axioms StatMech.FrontierA.embeddingOf_functionWeakComponentwiseMaps
+#print axioms StatMech.FrontierA.embeddingSumOfCrossCollisionCharge
+#print axioms StatMech.FrontierA.embeddingSumOfCrossCollisionSecondCharge
+#print axioms StatMech.FrontierA.exists_secondCollisionCharge_of_card_le
+#print axioms StatMech.FrontierA.crossCollision_fst_injective
+#print axioms StatMech.FrontierA.crossCollision_snd_injective
+#print axioms StatMech.FrontierA.RelationPartialMatching
+#print axioms StatMech.FrontierA.RelationPartialMatching.mem_support_iff
+#print axioms StatMech.FrontierA.RelationPartialMatching.saturates_all_targets_of_card_support_eq
+#print axioms StatMech.FrontierA.RelationPartialMatching.targetPreimage
+#print axioms StatMech.FrontierA.RelationPartialMatching.targetPreimage_spec
+#print axioms StatMech.FrontierA.RelationPartialMatching.targetPreimage_injective
+#print axioms StatMech.FrontierA.exists_relationPartialMatching_saturating_unmatched
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.hole_ne_move_hole
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.occupantAt
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.occupantAt_spec
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.moveAcross
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.matching_apply_moveAcross_hole
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.moveAcross_matching_apply_hole
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.hole_ne_moveAcross_hole
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.move_matching_apply_of_ne
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.card_naturalSupport_lt_move_of_ne
+#print axioms StatMech.FrontierA.RelationPartialMatching.exists_maximalNatural_holeState_collision
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.move_move_hole_eq_of_natural_eq
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.iterate_matching_apply_eq_of_avoids
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.first_repeat_interior_matching
+#print axioms StatMech.FrontierA.RelationPartialMatching.HoleState.first_repeat_interior_natural_ne
+#print axioms StatMech.FrontierA.card_subtype_le_of_tag_preserving_fiberwise_discrepancy
+#print axioms StatMech.FrontierA.finiteCommonClosureIter_subset_succ
+#print axioms StatMech.FrontierA.finiteCommonClosureIter_common_mem_neighborhood
+#print axioms StatMech.FrontierA.exists_finiteCommonClosureIter_fixed
+#print axioms StatMech.FrontierA.card_leftOnly_le_rightOnly_of_commonClosed_expansion

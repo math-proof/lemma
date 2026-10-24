@@ -36,7 +36,11 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
      */
     static limitsOperator(base, indices) {
         if (!(base instanceof L.LeanToken) || indices.length !== 1) return null;
-        return ['max', 'min', 'sup', 'inf'].includes(base.text) ? `\\${base.text}` : null;
+        if (['max', 'min', 'sup', 'inf'].includes(base.text)) return `\\${base.text}`;
+        // Sentinels for argmax / argmin — see `latexFormat` (must not use `\limits` on `^{-1}`).
+        if (base.text === 'max⁻¹') return 'argmax';
+        if (base.text === 'min⁻¹') return 'argmin';
+        return null;
     }
 
     static expectBinderIndexLatex(ix, syntax) {
@@ -115,6 +119,10 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
         const {base, indices} = this.collectGetElemChain();
         // `μ[|s]` — conditional measure `cond μ s`
         const limitsOp = LeanGetElem.limitsOperator(base, indices);
+        // `\foo^{-1}\limits_{i}` / `\mathop{\foo^{-1}}\limits_{i}` promote `^{-1}` to an
+        // *overscript*. Keep `^{-1}` as a side superscript and put the binder under:
+        if (limitsOp === 'argmax') return '\\underset{%s}{\\operatorname{max}^{-1}}';
+        if (limitsOp === 'argmin') return '\\underset{%s}{\\operatorname{min}^{-1}}';
         if (limitsOp) return `${limitsOp}\\limits_{%s}`;
         if (indices.length === 1 && indices[0] instanceof L.LeanCondBar)
             // Lean `μ[|s]` has an empty slot before `|`; do not invent a · placeholder.

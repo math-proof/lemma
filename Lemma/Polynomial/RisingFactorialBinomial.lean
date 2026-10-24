@@ -5,11 +5,14 @@ import sympy.algebra.polynomial.rising_factorial_binomial
 open MetaMathlibExt
 open scoped BigOperators
 
+
+namespace MetaMathlibExt
+
 /--
 [ascPochhammer_eval_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Polynomial/RisingFactorialBinomial.lean)
 -/
 @[path]
-private lemma ascPochhammer_eval_add_eq
+lemma ascPochhammer_eval_add
 -- given
   (n : ℕ) (a b : ℝ) :
 -- imply
@@ -18,7 +21,123 @@ private lemma ascPochhammer_eval_add_eq
       (ascPochhammer ℝ k).eval a *
       (ascPochhammer ℝ (n - k)).eval b := by
 -- proof
-  apply ascPochhammer_eval_add
+  induction n generalizing a b with
+  | zero => simp
+  | succ n ih =>
+    have hP : ∀ (m : ℕ) (x : ℝ),
+      (ascPochhammer ℝ (m + 1)).eval x =
+        (ascPochhammer ℝ m).eval x * (x + (m : ℝ)) :=
+      fun m x => ascPochhammer_succ_eval m x
+    rw [hP n (a + b), ih, Finset.sum_mul]
+    -- Step B: each term splits into an A-part and a B-part
+    have eAB : (∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) *
+      (ascPochhammer ℝ k).eval a *
+      (ascPochhammer ℝ (n - k)).eval b * (a + b + (n : ℝ)))
+      = (∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) *
+        (ascPochhammer ℝ k).eval a *
+        (ascPochhammer ℝ (n + 1 - k)).eval b)
+      + (∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) *
+        (ascPochhammer ℝ (k + 1)).eval a *
+        (ascPochhammer ℝ (n - k)).eval b) := by
+      rw [← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro k hk
+      have hk_le : k ≤ n := by
+        have := Finset.mem_range.mp hk
+        omega
+      have hkn : ((n - k : ℕ) : ℝ) + (k : ℝ) = (n : ℝ) := by
+        exact_mod_cast Nat.sub_add_cancel hk_le
+      have hPb : (ascPochhammer ℝ (n + 1 - k)).eval b
+        = (ascPochhammer ℝ (n - k)).eval b * (b + ((n - k : ℕ) : ℝ)) := by
+        have hsub : n + 1 - k = (n - k) + 1 := by omega
+        rw [hsub]
+        exact ascPochhammer_succ_eval (n - k) b
+      have hPa : (ascPochhammer ℝ (k + 1)).eval a
+        = (ascPochhammer ℝ k).eval a * (a + (k : ℝ)) :=
+        ascPochhammer_succ_eval k a
+      have hs : a + b + (n : ℝ)
+        = (b + ((n - k : ℕ) : ℝ)) + (a + (k : ℝ)) := by
+        rw [← hkn]; ring
+      rw [hPb, hPa, hs]; ring
+    rw [eAB]
+    -- Step C: recombine via the Pascal recurrence
+    have e1 : (∑ k ∈ Finset.range (n + 1 + 1), ((n + 1).choose k : ℝ) *
+      (ascPochhammer ℝ k).eval a *
+      (ascPochhammer ℝ (n + 1 - k)).eval b)
+      = (∑ k ∈ Finset.range (n + 1), ((n + 1).choose (k + 1) : ℝ) *
+        (ascPochhammer ℝ (k + 1)).eval a *
+        (ascPochhammer ℝ (n + 1 - (k + 1))).eval b)
+      + ((n + 1).choose 0 : ℝ) *
+        (ascPochhammer ℝ 0).eval a *
+        (ascPochhammer ℝ (n + 1 - 0)).eval b :=
+      Finset.sum_range_succ' _ _
+    have eT : (∑ k ∈ Finset.range (n + 1), ((n + 1).choose (k + 1) : ℝ) *
+      (ascPochhammer ℝ (k + 1)).eval a *
+      (ascPochhammer ℝ (n + 1 - (k + 1))).eval b)
+      = (∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) *
+        (ascPochhammer ℝ (k + 1)).eval a *
+        (ascPochhammer ℝ (n - k)).eval b)
+      + (∑ k ∈ Finset.range (n + 1), (n.choose (k + 1) : ℝ) *
+        (ascPochhammer ℝ (k + 1)).eval a *
+        (ascPochhammer ℝ (n - k)).eval b) := by
+      rw [← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro k hk
+      have hC : (((n + 1).choose (k + 1) : ℕ) : ℝ)
+        = (n.choose k : ℝ) + (n.choose (k + 1) : ℝ) := by
+        rw [Nat.choose_succ_succ', Nat.cast_add]
+      have hsub : n + 1 - (k + 1) = n - k := by omega
+      rw [hsub, hC, add_mul, add_mul]
+    have e3 : (∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) *
+      (ascPochhammer ℝ k).eval a *
+      (ascPochhammer ℝ (n + 1 - k)).eval b)
+      = (∑ k ∈ Finset.range n, (n.choose (k + 1) : ℝ) *
+        (ascPochhammer ℝ (k + 1)).eval a *
+        (ascPochhammer ℝ (n + 1 - (k + 1))).eval b)
+      + (n.choose 0 : ℝ) *
+        (ascPochhammer ℝ 0).eval a *
+        (ascPochhammer ℝ (n + 1 - 0)).eval b :=
+      Finset.sum_range_succ' _ _
+    have eAsh : (∑ k ∈ Finset.range (n + 1), (n.choose (k + 1) : ℝ) *
+      (ascPochhammer ℝ (k + 1)).eval a *
+      (ascPochhammer ℝ (n - k)).eval b)
+      = (∑ k ∈ Finset.range n, (n.choose (k + 1) : ℝ) *
+        (ascPochhammer ℝ (k + 1)).eval a *
+        (ascPochhammer ℝ (n + 1 - (k + 1))).eval b) + 0 := by
+      have epeel : (∑ k ∈ Finset.range (n + 1), (n.choose (k + 1) : ℝ) *
+        (ascPochhammer ℝ (k + 1)).eval a *
+        (ascPochhammer ℝ (n - k)).eval b)
+        = (∑ k ∈ Finset.range n, (n.choose (k + 1) : ℝ) *
+          (ascPochhammer ℝ (k + 1)).eval a *
+          (ascPochhammer ℝ (n - k)).eval b)
+        + (n.choose (n + 1) : ℝ) *
+          (ascPochhammer ℝ (n + 1)).eval a *
+          (ascPochhammer ℝ (n - n)).eval b :=
+        Finset.sum_range_succ _ _
+      rw [epeel]
+      congr 1
+      · apply Finset.sum_congr rfl
+        intro k hk
+        have hsub : n + 1 - (k + 1) = n - k := by
+          have := Finset.mem_range.mp hk
+          omega
+        rw [hsub]
+      · have h0 : n.choose (n + 1) = 0 :=
+        Nat.choose_eq_zero_of_lt (Nat.lt_succ_self n)
+        rw [h0]
+        simp
+    have hT0 : ((n + 1).choose 0 : ℝ) *
+      (ascPochhammer ℝ 0).eval a *
+      (ascPochhammer ℝ (n + 1 - 0)).eval b
+      = (n.choose 0 : ℝ) *
+        (ascPochhammer ℝ 0).eval a *
+        (ascPochhammer ℝ (n + 1 - 0)).eval b := by
+      simp
+    rw [e1, eT, eAsh, hT0, e3, add_zero]
+    ring
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-09
+-- updated on 2026-10-23

@@ -13,15 +13,6 @@ open Module
 
 variable {A K : Type*} [CommRing A] [IsDomain A] [Field K] [Algebra A K] [IsFractionRing A K]
 
-omit [IsDomain A] [IsFractionRing A K] in
-/-- Dual submodule for `mul` is the colon quotient `1 / M`. -/
-theorem dualSubmodule_mul_eq_div (M : Submodule A K) :
-    LinearMap.BilinForm.dualSubmodule (LinearMap.mul K K : LinearMap.BilinForm K K) M =
-      (1 : Submodule A K) / M := by
-  ext x
-  simp only [LinearMap.BilinForm.mem_dualSubmodule, Submodule.mem_div_iff_forall_mul_mem,
-    LinearMap.mul_apply']
-
 /-- Every dual element is multiplication by a fraction. -/
 theorem Submodule.exists_mul_rep (M : Submodule A K) (hM : M ≠ ⊥)
     (f : Module.Dual A M) :
@@ -95,20 +86,6 @@ noncomputable def Submodule.dualEquivMulDualSubmodule (M : Submodule A K) (hM : 
       LinearMap.BilinForm.mul_nondegenerate M
       (Submodule.span_coe_eq_top M hM),
       Submodule.mul_dualSubmoduleToDual_surjective M hM⟩).symm
-
-/-- Evaluation of the multiplication dual equivalence. -/
-theorem Submodule.dualEquivMulDualSubmodule_spec (M : Submodule A K) (hM : M ≠ ⊥)
-    (f : Module.Dual A M) (m : M) :
-    algebraMap A K (f m) = (Submodule.dualEquivMulDualSubmodule M hM f : K) * (m : K) := by
-  have hfun : LinearMap.BilinForm.dualSubmoduleToDual
-      (LinearMap.mul K K : LinearMap.BilinForm K K) M
-      (Submodule.dualEquivMulDualSubmodule M hM f) = f :=
-    LinearEquiv.symm_apply_apply (Submodule.dualEquivMulDualSubmodule M hM) f
-  have hcon := congrArg (fun g : Module.Dual A M => g m) hfun
-  have hmap := congrArg (algebraMap A K) hcon
-  rw [LinearMap.BilinForm.dualSubmoduleToDual_apply_apply,
-    LinearMap.BilinForm.dualSubmoduleParing_spec] at hmap
-  exact hmap.symm
 
 /-- Coe of a nonzero inverse equals the multiplication dual submodule. -/
 theorem FractionalIdeal.coe_inv_eq_mul_dualSubmodule

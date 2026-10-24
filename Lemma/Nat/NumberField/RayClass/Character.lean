@@ -6,92 +6,118 @@ open NumberField
 open Modulus
 
 
+namespace NumberField.Modulus
+
 /--
 [trivialCharacter_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma trivialCharacter_apply_eq
+lemma trivialCharacter_apply
   [Field K] [NumberField K]
   {m : Modulus K}
   {x : RayClassGroup m} :
 -- imply
-  trivialCharacter m x = 1 := by
+  trivialCharacter m x = 1 :=
 -- proof
-  apply NumberField.Modulus.trivialCharacter_apply m x
+  rfl
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
 
 /--
 [RayClassCharacter_apply_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma RayClassCharacter_apply_one_eq
+lemma RayClassCharacter_apply_one
   [Field K] [NumberField K]
   {m : Modulus K}
   {chi : RayClassCharacter m} :
 -- imply
-  chi 1 = 1 := by
+  chi 1 = 1 :=
 -- proof
-  apply NumberField.Modulus.RayClassCharacter_apply_one chi
+  map_one chi
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
 
 /--
 [RayClassCharacter_apply_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma RayClassCharacter_apply_mul_eq
+lemma RayClassCharacter_apply_mul
   [Field K] [NumberField K]
   {m : Modulus K}
   {chi : RayClassCharacter m}
   {a b : RayClassGroup m} :
 -- imply
-  chi (a * b) = chi a * chi b := by
+  chi (a * b) = chi a * chi b :=
 -- proof
-  apply NumberField.Modulus.RayClassCharacter_apply_mul chi a b
+  map_mul chi a b
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
 
 /--
 [pullback_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma pullback_apply_eq
+lemma pullback_apply
   [Field K] [NumberField K]
   {m : Modulus K}
   {chi : RayClassCharacter m}
   {x : coprimeFractionalIdeals m} :
 -- imply
-  pullback chi x = chi (rayClassMap m x) := by
+  pullback chi x = chi (rayClassMap m x) :=
 -- proof
-  apply NumberField.Modulus.pullback_apply chi x
+  rfl
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
 
 /--
 [pullback_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma pullback_one_eq
+lemma pullback_one
   [Field K] [NumberField K]
   {m : Modulus K}
   {chi : RayClassCharacter m} :
 -- imply
-  pullback chi 1 = 1 := by
+  pullback chi 1 = 1 :=
 -- proof
-  apply NumberField.Modulus.pullback_one chi
+  map_one _
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
 
 /--
 [pullback_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma pullback_mul_eq
+lemma pullback_mul
   [Field K] [NumberField K]
   {m : Modulus K}
   {chi : RayClassCharacter m}
   {a b : coprimeFractionalIdeals m} :
 -- imply
-  pullback chi (a * b) = pullback chi a * pullback chi b := by
+  pullback chi (a * b) = pullback chi a * pullback chi b :=
 -- proof
-  apply NumberField.Modulus.pullback_mul chi a b
+  map_mul _ _ _
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
 
 /--
 [pullback_eq_one_of_mem_rayGroup](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma pullback_eq_one_of_mem_rayGroup_eq
+lemma pullback_eq_one_of_mem_rayGroup
   [Field K] [NumberField K]
   {m : Modulus K}
   {chi : RayClassCharacter m}
@@ -101,26 +127,34 @@ private lemma pullback_eq_one_of_mem_rayGroup_eq
 -- imply
   pullback chi x = 1 := by
 -- proof
-  apply NumberField.Modulus.pullback_eq_one_of_mem_rayGroup chi x h
+  rw [pullback_apply, (rayClassMap_eq_one_iff m x).mpr h, map_one]
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
 
 /--
 [evalComplex_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma evalComplex_one_eq
+lemma evalComplex_one
   [Field K] [NumberField K]
   {m : Modulus K}
   {chi : RayClassCharacter m} :
 -- imply
   evalComplex chi 1 = 1 := by
 -- proof
-  apply NumberField.Modulus.evalComplex_one chi
+  simp only [evalComplex, map_one]
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
 
 /--
 [evalComplex_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma evalComplex_mul_eq
+lemma evalComplex_mul
   [Field K] [NumberField K]
   {m : Modulus K}
   {chi : RayClassCharacter m}
@@ -128,13 +162,17 @@ private lemma evalComplex_mul_eq
 -- imply
   evalComplex chi (a * b) = evalComplex chi a * evalComplex chi b := by
 -- proof
-  apply NumberField.Modulus.evalComplex_mul chi a b
+  simp only [evalComplex, map_mul]
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
 
 /--
 [evalComplex_rayGroup](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma evalComplex_rayGroup_eq
+lemma evalComplex_rayGroup
   [Field K] [NumberField K]
   {m : Modulus K}
   {chi : RayClassCharacter m}
@@ -144,13 +182,17 @@ private lemma evalComplex_rayGroup_eq
 -- imply
   evalComplex chi (rayClassMap m x) = 1 := by
 -- proof
-  apply NumberField.Modulus.evalComplex_rayGroup chi x h
+  rw [(rayClassMap_eq_one_iff m x).mpr h, evalComplex_one]
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
 
 /--
 [extendByZero_of_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma extendByZero_of_mem_eq
+lemma extendByZero_of_mem
   [Field K] [NumberField K]
   {m : Modulus K}
   {chi : RayClassCharacter m}
@@ -161,13 +203,17 @@ private lemma extendByZero_of_mem_eq
   extendByZero chi I =
     Circle.coeHom (chi (rayClassMap m ⟨I, h⟩)) := by
 -- proof
-  apply NumberField.Modulus.extendByZero_of_mem chi I h
+  simp [extendByZero, h]
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
 
 /--
 [extendByZero_of_not_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean)
 -/
 @[path]
-private lemma extendByZero_of_not_mem_eq
+lemma extendByZero_of_not_mem
   [Field K] [NumberField K]
   {m : Modulus K}
   {chi : RayClassCharacter m}
@@ -177,7 +223,10 @@ private lemma extendByZero_of_not_mem_eq
 -- imply
   extendByZero chi I = 0 := by
 -- proof
-  apply NumberField.Modulus.extendByZero_of_not_mem chi I h
+  simp [extendByZero, h]
+
+end NumberField.Modulus
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

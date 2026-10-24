@@ -4,25 +4,54 @@ import sympy.atlas.NumberTheory.Sequences.PolynomiallyRecursiveMCFinite
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
-[isMCFinite_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Sequences/PolynomiallyRecursiveMCFinite.lean)
+[mc_finite_of_zmod_periodic](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Sequences/PolynomiallyRecursiveMCFinite.lean)
 -/
 @[path]
-private lemma isMCFinite_iff_eq
-  {s : ℕ → ℤ} :
--- imply
-  IsMCFinite s ↔ ∀ m : ℕ, 0 < m →
-    ∃ p q : ℕ, 0 < p ∧ 0 < q ∧
-    ∃ c : Fin p → ℤ, ∀ n : ℕ, q ≤ n →
+with `c 0 = 1` and all other coefficients `0`. -/
+private lemma mc_finite_of_zmod_periodic (s : ℕ → ℤ) (m : ℕ)
+  (hper : IsEventuallyPeriodic fun n => ((s n : ℤ) : ZMod m)) :
+  ∃ p q : ℕ, 0 < p ∧ 0 < q ∧ ∃ c : Fin p → ℤ, ∀ n : ℕ, q ≤ n →
     (s (n + p) - ∑ i : Fin p, c i * s (n + i.val)) % (↑m : ℤ) = 0 := by
--- proof
-  apply MetaMathlibExt.isMCFinite_iff s
+  obtain ⟨p, q, hp, hper⟩ := hper
+  refine ⟨p, q + 1, hp, by omega, (fun i => if i.val = 0 then 1 else 0), ?_⟩
+  intro n hn
+  have hterm : ∀ i : Fin p, (if i.val = 0 then (1 : ℤ) else 0) * s (n + i.val)
+    = (if (⟨0, hp⟩ : Fin p) = i then s (n + i.val) else 0) := by
+    intro i
+    by_cases hi : i.val = 0
+    · have hfin : (⟨0, hp⟩ : Fin p) = i := Fin.ext hi.symm
+      simp [hi, hfin]
+    · have hfin : (⟨0, hp⟩ : Fin p) ≠ i := by
+      intro hcon
+      apply hi
+      exact (congrArg Fin.val hcon).symm
+      simp [hi, hfin]
+  have hsup : (∑ i : Fin p, (if i.val = 0 then (1 : ℤ) else 0) * s (n + i.val))
+    = s n := by
+    simp_rw [hterm, Fintype.sum_ite_eq]
+    show s (n + 0) = s n
+    rw [Nat.add_zero]
+  simp only []
+  rw [hsup]
+  have hcast : (↑(s (n + p) - s n) : ZMod m) = 0 := by
+    rw [Int.cast_sub, sub_eq_zero]
+    exact hper n (by omega)
+  have hdvd : (↑m : ℤ) ∣ (s (n + p) - s n) :=
+    (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp hcast
+  exact Int.emod_eq_zero_of_dvd hdvd
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [isMCFinite_of_mvPolynomial_recursion](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Sequences/PolynomiallyRecursiveMCFinite.lean)
 -/
 @[path]
-private lemma isMCFinite_of_mvPolynomial_recursion_eq
+lemma isMCFinite_of_mvPolynomial_recursion
   {k : ℕ}
   {u : Fin (k + 1) → ℕ → ℤ}
   {P : Fin (k + 1) → MvPolynomial (Fin (k + 1) ⊕ Unit) ℤ}
@@ -31,13 +60,45 @@ private lemma isMCFinite_of_mvPolynomial_recursion_eq
 -- imply
   IsMCFinite (u 0) := by
 -- proof
-  apply MetaMathlibExt.isMCFinite_of_mvPolynomial_recursion u P hrec
+  intro m hm
+  have : NeZero m := ⟨by omega⟩
+  set φ : ℤ →+* ZMod m := Int.castRingHom (ZMod m)
+  obtain ⟨p, q0, hp, hper0⟩ :=
+    IsEventuallyPeriodic.of_finite_orbit
+      (fun a : (Fin (k + 1) → ZMod m) × ZMod m =>
+        ((fun i => MvPolynomial.eval (Sum.elim a.1 (fun _ => a.2)) ((P i).map φ)),
+          a.2 + 1))
+      (fun n : ℕ => ((fun j => φ (u j n)), φ (↑n : ℤ)))
+      (by
+        intro n
+        refine Prod.ext ?_ ?_
+        · funext i
+          simp only []
+          rw [hrec i n, MvPolynomial.map_eval]
+          have hfun : (φ ∘ Sum.elim (fun j => u j n) (fun _ : Unit => (↑n : ℤ)))
+            = Sum.elim (fun j => φ (u j n)) (fun _ : Unit => φ (↑n : ℤ)) := by
+            funext x
+            cases x with
+            | inl j => rfl
+            | inr _ => rfl
+          rw [hfun]
+        · simp only []
+          rw [map_natCast, Nat.cast_add_one, map_natCast])
+  refine mc_finite_of_zmod_periodic (u 0) m ⟨p, q0, hp, fun n hn => ?_⟩
+  have h2 := hper0 n hn
+  have h3 : φ (u (0 : Fin (k + 1)) (n + p)) = φ (u (0 : Fin (k + 1)) n) :=
+    congrFun (congrArg Prod.fst h2) 0
+  exact h3
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [IsPRecursiveSequence.isMCFinite](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Sequences/PolynomiallyRecursiveMCFinite.lean)
 -/
 @[path]
-private lemma IsPRecursiveSequence_isMCFinite_eq
+lemma IsPRecursiveSequence.isMCFinite
   {k : ℕ}
   {Q : Fin (k + 1) → Polynomial ℤ}
   {s : ℕ → ℤ}
@@ -47,13 +108,106 @@ private lemma IsPRecursiveSequence_isMCFinite_eq
 -- imply
   IsMCFinite s := by
 -- proof
-  apply MetaMathlibExt.IsPRecursiveSequence.isMCFinite hs hQ
+  intro m hm
+  have hrec : ∀ n : ℕ, k ≤ n →
+    s n = ∑ i : Fin k, (Q i.succ).eval (↑n : ℤ) * s (n - (i.val + 1)) := by
+    intro n hn
+    have h := hs n hn
+    rwa [hQ, Polynomial.eval_one, one_mul] at h
+  obtain rfl | hk := Nat.eq_zero_or_pos k
+  · have h0 : ∀ n, s n = 0 := fun n => by simpa using hrec n (Nat.zero_le n)
+    exact mc_finite_of_zmod_periodic s m (.of_periodic one_pos fun n => by rw [h0, h0])
+  have : NeZero m := ⟨by omega⟩
+  set φ : ℤ →+* ZMod m := Int.castRingHom (ZMod m)
+  obtain ⟨p, q0, hp, hper0⟩ :=
+    IsEventuallyPeriodic.of_finite_orbit
+      (fun a : (Fin k → ZMod m) × ZMod m =>
+        ((fun i : Fin k =>
+          if h : i.val + 1 < k then a.1 ⟨i.val + 1, h⟩
+          else ∑ j : Fin k, ((Q j.succ).map φ).eval (a.2 + φ (↑k : ℤ))
+            * a.1 ⟨k - 1 - j.val, by have hj := j.isLt; omega⟩),
+        a.2 + 1))
+      (fun n : ℕ => ((fun i : Fin k => φ (s (n + i.val))), φ (↑n : ℤ)))
+      (by
+        intro n
+        have hceφ : ∀ j : Fin k, φ ((Q j.succ).eval (↑(n + k) : ℤ))
+          = ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ)) := by
+          intro j
+          have h1 := Polynomial.hom_eval₂ (Q j.succ) (RingHom.id ℤ) φ
+            (↑(n + k) : ℤ)
+          rw [RingHom.comp_id, Polynomial.eval₂_eq_eval_map φ] at h1
+          have eφ : φ ((↑(n + k) : ℕ) : ℤ) = φ (↑n : ℤ) + φ (↑k : ℤ) := by
+            rw [Nat.cast_add, map_add]
+          rwa [eφ] at h1
+        have hce : ∀ j : Fin k, (↑((Q j.succ).eval (↑(n + k) : ℤ)) : ZMod m)
+          = ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ)) :=
+          fun j => hceφ j
+        have hse : ∀ j : Fin k, (↑(s (n + k - (j.val + 1))) : ZMod m)
+          = φ (s (n + (k - 1 - j.val))) := by
+          intro j
+          have hj := j.isLt
+          have e : n + k - (j.val + 1) = n + (k - 1 - j.val) := by omega
+          have hcast : ∀ a : ℤ, (↑a : ZMod m) = φ a := fun a => rfl
+          rw [e, hcast]
+        have hterm : ∀ j : Fin k,
+          (↑((Q j.succ).eval (↑(n + k) : ℤ)) : ZMod m)
+            * (↑(s (n + k - (j.val + 1))) : ZMod m)
+          = ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ))
+            * φ (s (n + (k - 1 - j.val))) := by
+          intro j
+          rw [hce j, hse j]
+        have hsum : (↑(∑ i : Fin k, (Q i.succ).eval (↑(n + k) : ℤ)
+          * s (n + k - (i.val + 1))) : ZMod m)
+          = ∑ j : Fin k, ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ))
+            * φ (s (n + (k - 1 - j.val))) := by
+          rw [Int.cast_sum]
+          refine Finset.sum_congr rfl (fun j _ => ?_)
+          rw [Int.cast_mul]
+          exact hterm j
+        refine Prod.ext ?_ ?_
+        · funext i
+          simp only []
+          by_cases hi : i.val + 1 < k
+          · rw [dite_eq_left hi]
+            show φ (s (n + 1 + i.val)) = φ (s (n + (i.val + 1)))
+            rw [show n + 1 + i.val = n + (i.val + 1) from by omega]
+          · rw [dite_eq_right hi]
+            have hi2 := i.isLt
+            have eN : n + 1 + i.val = n + k := by omega
+            have hkn : k ≤ n + k := by omega
+            rwa [eN, hrec (n + k) hkn]
+        · simp only []
+          rw [map_natCast, Nat.cast_add_one, map_natCast])
+  refine mc_finite_of_zmod_periodic s m ⟨p, q0, hp, fun n hn => ?_⟩
+  have h2 := hper0 n hn
+  have h3 : φ (s (n + p)) = φ (s n) :=
+    congrFun (congrArg Prod.fst h2) ⟨0, hk⟩
+  exact h3
+
+end MetaMathlibExt
+
+/--
+[isMCFinite_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Sequences/PolynomiallyRecursiveMCFinite.lean)
+-/
+@[path]
+lemma isMCFinite_iff
+  {s : ℕ → ℤ} :
+-- imply
+  IsMCFinite s ↔ ∀ m : ℕ, 0 < m →
+    ∃ p q : ℕ, 0 < p ∧ 0 < q ∧
+    ∃ c : Fin p → ℤ, ∀ n : ℕ, q ≤ n →
+    (s (n + p) - ∑ i : Fin p, c i * s (n + i.val)) % (↑m : ℤ) = 0 :=
+-- proof
+  Iff.rfl
+
+
+namespace MetaMathlibExt
 
 /--
 [polynomially_recursive_MC_finite](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Sequences/PolynomiallyRecursiveMCFinite.lean)
 -/
 @[path]
-private lemma polynomially_recursive_MC_finite_eq
+lemma polynomially_recursive_MC_finite
   {s : ℕ → ℤ} :
 -- imply
   ((∃ k : ℕ, ∃ u : Fin (k + 1) → ℕ → ℤ,
@@ -75,7 +229,17 @@ private lemma polynomially_recursive_MC_finite_eq
     ∃ c : Fin p → ℤ, ∀ n : ℕ, q ≤ n →
     (s (n + p) - ∑ i : Fin p, c i * s (n + i.val)) % (↑m : ℤ) = 0) := by
 -- proof
-  apply MetaMathlibExt.polynomially_recursive_MC_finite s
+  refine ⟨?_, ?_⟩
+  · rintro ⟨k, u, P, rfl, hrec⟩
+    exact isMCFinite_of_mvPolynomial_recursion u P hrec
+  · rintro ⟨k, P, -, -, -, hrec⟩
+    refine IsPRecursiveSequence.isMCFinite
+      (Q := Fin.cons 1 fun i : Fin k => P (i.val + 1)) ?_ (by simp)
+    intro n hn
+    simpa using hrec n hn
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

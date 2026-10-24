@@ -95,11 +95,15 @@ export function renderWebsiteIndex(req, res) {
   const lang = resolveWebsiteLang(req);
   const section = resolveWebsiteSection(req);
   const labels = websiteLabels(lang);
+  // Relative `style.css` / `../js/…` / `../website/md/…` need a directory base.
+  // Without this, `/lean/website` (no trailing slash) resolves assets under `/lean/` and breaks;
+  // Apache on :8080 redirects to `/lean/website/`, but Express deliberately does not (proxy loops).
+  const userSegment = req.params.userSegment || path.basename(REPO_ROOT);
   res.set('Content-Type', 'text/html; charset=utf-8');
   if (process.env.NODE_ENV !== 'production') {
     res.set('Cache-Control', 'no-store');
   }
-  res.render('website', { lang, section, ...labels });
+  res.render('website', { lang, section, userSegment, ...labels });
 }
 
 /**

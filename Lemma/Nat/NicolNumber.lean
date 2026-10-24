@@ -5,18 +5,24 @@ open scoped BigOperators
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [IsTNicolNumber.isNicolNumber](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NicolNumber.lean)
 -/
 @[path]
-private lemma IsTNicolNumber_isNicolNumber_eq
+lemma IsTNicolNumber.isNicolNumber
   {t n : ℕ}
 -- given
   (h : IsTNicolNumber t n) :
 -- imply
   IsNicolNumber n := by
 -- proof
-  apply MetaMathlibExt.IsTNicolNumber.isNicolNumber h
+  refine ⟨h.1, ⟨t, ?_⟩⟩
+  simpa [Nat.mul_comm] using h.2
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

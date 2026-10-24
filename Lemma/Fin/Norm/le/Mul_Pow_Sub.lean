@@ -1,16 +1,11 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma re_inner_le (z s a : ℂ) (r₀ : ℝ) (ha : r₀ ≤ a.re) :
-    2 * (z.re * (((r₀ : ℂ) - a) * z - s).re + z.im * (((r₀ : ℂ) - a) * z - s).im) ≤ 2 * (‖z‖ * ‖s‖) := by
+
+private lemma re_inner_le (z s a : ℂ) (r₀ : ℝ) (ha : r₀ ≤ a.re) : 2 * (z.re * (((r₀ : ℂ) - a) * z - s).re + z.im * (((r₀ : ℂ) - a) * z - s).im) ≤ 2 * (‖z‖ * ‖s‖) := by
   have h1 : z.re * (((r₀ : ℂ) - a) * z - s).re + z.im * (((r₀ : ℂ) - a) * z - s).im =
       (r₀ - a.re) * (z.re ^ 2 + z.im ^ 2) - (z * (starRingEnd ℂ) s).re := by
     simp only [Complex.mul_re, Complex.mul_im, Complex.sub_re, Complex.sub_im, Complex.ofReal_re, Complex.ofReal_im,
@@ -25,13 +20,8 @@ private lemma re_inner_le (z s a : ℂ) (r₀ : ℝ) (ha : r₀ ≤ a.re) :
     linarith
   rw [h1]
   linarith
-private lemma helper_main (m : ℕ) (a : Fin m → ℂ) (r₀ c τ : ℝ) (hτ : 0 < τ) (ha : ∀ i, r₀ ≤ (a i).re)
-    (B : ℝ → Matrix (Fin m) (Fin m) ℂ) (hB : ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i j, ‖B y i j‖ ≤ c * y ^ τ)
-    (F : Fin m → ℝ → ℂ) (hF : ∀ i, DifferentiableOn ℝ (F i) (Set.Ioi 0))
-    (hFeq : ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i,
-      (y : ℂ) * deriv (F i) y = a i * F i y + ∑ j, B y i j * F j y)
-    (ε : ℝ) (hε : 0 < ε) :
-    ∃ C : ℝ, ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i, ‖F i y‖ ≤ C * y ^ (r₀ - ε) := by
+
+private lemma helper_main (m : ℕ) (a : Fin m → ℂ) (r₀ c τ : ℝ) (hτ : 0 < τ) (ha : ∀ i, r₀ ≤ (a i).re) (B : ℝ → Matrix (Fin m) (Fin m) ℂ) (hB : ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i j, ‖B y i j‖ ≤ c * y ^ τ) (F : Fin m → ℝ → ℂ) (hF : ∀ i, DifferentiableOn ℝ (F i) (Set.Ioi 0)) (hFeq : ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i, (y : ℂ) * deriv (F i) y = a i * F i y + ∑ j, B y i j * F j y) (ε : ℝ) (hε : 0 < ε) : ∃ C : ℝ, ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i, ‖F i y‖ ≤ C * y ^ (r₀ - ε) := by
   obtain ⟨c', hc'⟩ : ∃ c' : ℝ, c' = max c 0 := ⟨_, rfl⟩
   have hc'0 : 0 ≤ c' := hc' ▸ le_max_right _ _
   have hcc' : c ≤ c' := hc' ▸ le_max_left _ _
@@ -41,21 +31,21 @@ private lemma helper_main (m : ℕ) (a : Fin m → ℂ) (r₀ c τ : ℝ) (hτ :
   set G' : Fin m → ℝ → ℂ := fun i t =>
     ((r₀ : ℂ) - a i) * G i t - ∑ j, B (Real.exp (-t)) i j * G j t with hG'
   have hGraw : ∀ (i : Fin m) (t : ℝ), HasDerivAt (G i)
-      (Complex.exp ((r₀ : ℂ) * (t : ℂ)) * (r₀ : ℂ) * F i (Real.exp (-t)) +
-        Complex.exp ((r₀ : ℂ) * (t : ℂ)) * ((-Real.exp (-t)) • deriv (F i) (Real.exp (-t)))) t := by
+    (Complex.exp ((r₀ : ℂ) * (t : ℂ)) * (r₀ : ℂ) * F i (Real.exp (-t)) +
+      Complex.exp ((r₀ : ℂ) * (t : ℂ)) * ((-Real.exp (-t)) • deriv (F i) (Real.exp (-t)))) t := by
     intro i t
     have hy : 0 < Real.exp (-t) := Real.exp_pos _
     have h1 : HasDerivAt (fun s : ℝ => Complex.exp ((r₀ : ℂ) * (s : ℂ))) (Complex.exp ((r₀ : ℂ) * (t : ℂ)) * (r₀ : ℂ)) t := by
       have h0 : HasDerivAt (fun s : ℝ => (r₀ : ℂ) * (s : ℂ)) (r₀ : ℂ) t := by
         simpa using (Complex.ofRealCLM.hasDerivAt (x := t)).const_mul (r₀ : ℂ)
-      exact h0.cexp
+      refine h0.cexp
     have h2 : HasDerivAt (fun s : ℝ => Real.exp (-s)) (-Real.exp (-t)) t := by
       simpa using (hasDerivAt_neg t).exp
     have h3 : HasDerivAt (F i) (deriv (F i) (Real.exp (-t))) (Real.exp (-t)) :=
       ((hF i).differentiableAt (Ioi_mem_nhds hy)).hasDerivAt
     have h4 : HasDerivAt (fun s : ℝ => F i (Real.exp (-s))) ((-Real.exp (-t)) • deriv (F i) (Real.exp (-t))) t :=
       h3.scomp t h2
-    exact h1.mul h4
+    refine h1.mul h4
   have hGder : ∀ (i : Fin m) (t : ℝ), 0 ≤ t → HasDerivAt (G i) (G' i t) t := by
     intro i t ht
     have hy : 0 < Real.exp (-t) := Real.exp_pos _
@@ -65,34 +55,38 @@ private lemma helper_main (m : ℕ) (a : Fin m → ℂ) (r₀ c τ : ℝ) (hτ :
     have hs : ∑ j, B (Real.exp (-t)) i j * G j t =
         Complex.exp ((r₀ : ℂ) * (t : ℂ)) * ∑ j, B (Real.exp (-t)) i j * F j (Real.exp (-t)) := by
       rw [Finset.mul_sum]
-      exact Finset.sum_congr rfl fun j _ => by simp only [hG]; ring
+      refine Finset.sum_congr rfl fun j _ => ?_
+      simp only [hG]
+      ring
     simp only [hG', hs, Complex.real_smul, Complex.ofReal_neg]
     linear_combination (-Complex.exp ((r₀ : ℂ) * (t : ℂ))) * key
   have hGcont : ∀ i : Fin m, Continuous (G i) := fun i =>
     continuous_iff_continuousAt.2 fun t => (hGraw i t).continuousAt
   set E : ℝ → ℝ := fun t => ∑ i, ((G i t).re ^ 2 + (G i t).im ^ 2) with hE
   set E' : ℝ → ℝ := fun t => ∑ i, 2 * ((G i t).re * (G' i t).re + (G i t).im * (G' i t).im) with hE'
-  have hEnorm : ∀ t, E t = ∑ i, ‖G i t‖ ^ 2 := fun t =>
-    Finset.sum_congr rfl fun i _ => by rw [Complex.sq_norm, Complex.normSq_apply]; ring
+  have hEnorm : ∀ t, E t = ∑ i, ‖G i t‖ ^ 2 := by
+    intro t
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [Complex.sq_norm, Complex.normSq_apply]
+    ring
   have hEder : ∀ t : ℝ, 0 ≤ t → HasDerivAt E (E' t) t := by
     intro t ht
     have hterm : ∀ i ∈ Finset.univ, HasDerivAt (fun s => (G i s).re ^ 2 + (G i s).im ^ 2)
         (2 * ((G i t).re * (G' i t).re + (G i t).im * (G' i t).im)) t := by
       intro i _
       have hre : HasDerivAt (fun s => (G i s).re) (G' i t).re t := by
-        have h__af := (Complex.reCLM.hasFDerivAt.comp_hasDerivAt t (hGder i t ht))
-        simp at h__af
-        exact h__af
+        have hr := Complex.reCLM.hasFDerivAt.comp_hasDerivAt t (hGder i t ht)
+        simp at hr
+        refine hr
       have him : HasDerivAt (fun s => (G i s).im) (G' i t).im t := by
-        have h__af := (Complex.imCLM.hasFDerivAt.comp_hasDerivAt t (hGder i t ht))
-        simp at h__af
-        exact h__af
+        have hi := Complex.imCLM.hasFDerivAt.comp_hasDerivAt t (hGder i t ht)
+        simp at hi
+        refine hi
       have h := (hre.pow 2).add (him.pow 2)
       refine h.congr_deriv ?_
       push_cast
       ring
-    have h := HasDerivAt.fun_sum hterm
-    exact h
+    exact HasDerivAt.fun_sum hterm
   have hEcont : Continuous E := by
     simp only [hE]
     refine continuous_finsetSum _ fun i _ => ?_
@@ -106,42 +100,46 @@ private lemma helper_main (m : ℕ) (a : Fin m → ℂ) (r₀ c τ : ℝ) (hτ :
     have hS0 : 0 ≤ S := Finset.sum_nonneg fun j _ => norm_nonneg _
     have hsi : ∀ i, ‖∑ j, B (Real.exp (-t)) i j * G j t‖ ≤ c' * Real.exp (-(τ * t)) * S := by
       intro i
-      calc ‖∑ j, B (Real.exp (-t)) i j * G j t‖ ≤ ∑ j, ‖B (Real.exp (-t)) i j * G j t‖ := norm_sum_le _ _
+      calc
+        _ ≤ ∑ j, ‖B (Real.exp (-t)) i j * G j t‖ := norm_sum_le _ _
         _ ≤ ∑ j, (c' * Real.exp (-(τ * t))) * ‖G j t‖ := by
-            refine Finset.sum_le_sum fun j _ => ?_
-            rw [norm_mul]
-            refine mul_le_mul_of_nonneg_right ?_ (norm_nonneg _)
-            have h := hB (Real.exp (-t)) hy hy1 i j
-            rw [hyτ] at h
-            exact h.trans (mul_le_mul_of_nonneg_right hcc' (Real.exp_pos _).le)
-        _ = c' * Real.exp (-(τ * t)) * S := by rw [hS, Finset.mul_sum]
+          refine Finset.sum_le_sum fun j _ => ?_
+          rw [norm_mul]
+          refine mul_le_mul_of_nonneg_right ?_ (norm_nonneg _)
+          have h := hB (Real.exp (-t)) hy hy1 i j
+          rw [hyτ] at h
+          exact h.trans (mul_le_mul_of_nonneg_right hcc' (Real.exp_pos _).le)
+        _ = c' * Real.exp (-(τ * t)) * S := by
+          rw [hS, Finset.mul_sum]
     have hcomp : ∀ i, 2 * ((G i t).re * (G' i t).re + (G i t).im * (G' i t).im) ≤
         2 * (‖G i t‖ * (c' * Real.exp (-(τ * t)) * S)) := by
       intro i
-      have h := re_inner_le (G i t) (∑ j, B (Real.exp (-t)) i j * G j t) (a i) r₀ (ha i)
-      refine h.trans ?_
-      exact mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left (hsi i) (norm_nonneg _)) (by norm_num)
-    calc E' t = ∑ i, 2 * ((G i t).re * (G' i t).re + (G i t).im * (G' i t).im) := rfl
+      exact (re_inner_le (G i t) (∑ j, B (Real.exp (-t)) i j * G j t) (a i) r₀ (ha i)).trans (mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left (hsi i) (norm_nonneg _)) (by norm_num))
+    calc
+      _ = ∑ i, 2 * ((G i t).re * (G' i t).re + (G i t).im * (G' i t).im) := rfl
       _ ≤ ∑ i, 2 * (‖G i t‖ * (c' * Real.exp (-(τ * t)) * S)) := Finset.sum_le_sum fun i _ => hcomp i
       _ = 2 * c' * Real.exp (-(τ * t)) * S ^ 2 := by
-          rw [← Finset.mul_sum, ← Finset.sum_mul, ← hS]; ring
+        rw [← Finset.mul_sum, ← Finset.sum_mul, ← hS]
+        ring
       _ ≤ 2 * c' * Real.exp (-(τ * t)) * (m * E t) := by
-          refine mul_le_mul_of_nonneg_left ?_ (by positivity)
-          rw [hEnorm t, hS]
-          simpa using (sq_sum_le_card_mul_sum_sq (s := Finset.univ) (f := fun j => ‖G j t‖))
-      _ = (2 * c' * m * Real.exp (-(τ * t))) * E t := by ring
+        refine mul_le_mul_of_nonneg_left ?_ (by positivity)
+        rw [hEnorm t, hS]
+        simpa using (sq_sum_le_card_mul_sum_sq (s := Finset.univ) (f := fun j => ‖G j t‖))
+      _ = (2 * c' * m * Real.exp (-(τ * t))) * E t := by
+        ring
   set Φ : ℝ → ℝ := fun t => L * (1 - Real.exp (-(τ * t))) with hΦ
   set W : ℝ → ℝ := fun t => Real.exp (-Φ t) * E t with hW
   set W' : ℝ → ℝ := fun t => Real.exp (-Φ t) * (E' t - (2 * c' * m * Real.exp (-(τ * t))) * E t) with hW'
   have hΦder : ∀ t, HasDerivAt Φ (2 * c' * m * Real.exp (-(τ * t))) t := by
     intro t
     have h0 : HasDerivAt (fun s : ℝ => -(τ * s)) (-τ) t := by
-      have h__af := ((hasDerivAt_id t).const_mul τ).neg
-      simp at h__af
-      exact h__af
+      have h0' := ((hasDerivAt_id t).const_mul τ).neg
+      simp at h0'
+      refine h0'
     have h1 := ((h0.exp).const_sub 1).const_mul L
     refine h1.congr_deriv ?_
-    rw [hL]; field_simp
+    rw [hL]
+    field_simp
   have hWder : ∀ t, 0 ≤ t → HasDerivAt W (W' t) t := by
     intro t ht
     have h1 : HasDerivAt (fun s => Real.exp (-Φ s)) (Real.exp (-Φ t) * -(2 * c' * m * Real.exp (-(τ * t)))) t :=
@@ -151,8 +149,7 @@ private lemma helper_main (m : ℕ) (a : Fin m → ℂ) (r₀ c τ : ℝ) (hτ :
     simp only [hW']
     ring
   have hWcont : Continuous W := by
-    have hΦc : Continuous Φ := continuous_iff_continuousAt.2 fun t => (hΦder t).continuousAt
-    exact (Real.continuous_exp.comp hΦc.neg).mul hEcont
+    exact (Real.continuous_exp.comp (continuous_iff_continuousAt.2 fun t => (hΦder t).continuousAt).neg).mul hEcont
   have hW'le : ∀ t, 0 ≤ t → W' t ≤ 0 := by
     intro t ht
     have h := hE'le t ht
@@ -176,15 +173,14 @@ private lemma helper_main (m : ℕ) (a : Fin m → ℂ) (r₀ c τ : ℝ) (hτ :
     have h2 : E T = Real.exp (Φ T) * (Real.exp (-Φ T) * E T) := by
       rw [← mul_assoc, ← Real.exp_add, add_neg_cancel, Real.exp_zero, one_mul]
     rw [h2]
-    calc Real.exp (Φ T) * (Real.exp (-Φ T) * E T) ≤ Real.exp (Φ T) * E 0 :=
-          mul_le_mul_of_nonneg_left h1 (Real.exp_pos _).le
+    calc
+      _ ≤ Real.exp (Φ T) * E 0 := mul_le_mul_of_nonneg_left h1 (Real.exp_pos _).le
       _ ≤ Real.exp L * E 0 := mul_le_mul_of_nonneg_right (Real.exp_le_exp.2 hΦT) hE0
       _ = E 0 * Real.exp L := mul_comm _ _
   have hGi : ‖G i T‖ ^ 2 ≤ E 0 * Real.exp L := by
-    have h1 : ‖G i T‖ ^ 2 ≤ E T := by
-      rw [hEnorm]
-      exact Finset.single_le_sum (f := fun j => ‖G j T‖ ^ 2) (fun j _ => by positivity) (Finset.mem_univ i)
-    exact h1.trans hET
+    suffices h1 : ‖G i T‖ ^ 2 ≤ E T from h1.trans hET
+    rw [hEnorm]
+    exact Finset.single_le_sum (f := fun j => ‖G j T‖ ^ 2) (fun j _ => by positivity) (Finset.mem_univ i)
   have hGi' : ‖G i T‖ ≤ Real.sqrt (E 0 * Real.exp L) := by
     rw [← Real.sqrt_sq (norm_nonneg (G i T))]
     exact Real.sqrt_le_sqrt hGi
@@ -199,23 +195,29 @@ private lemma helper_main (m : ℕ) (a : Fin m → ℂ) (r₀ c τ : ℝ) (hτ :
   have hsplit : ‖F i y‖ = y ^ r₀ * (y ^ (-r₀) * ‖F i y‖) := by
     rw [Real.rpow_neg hy.le, ← mul_assoc, mul_inv_cancel₀ hyρ.ne', one_mul]
   rw [hsplit]
-  calc y ^ r₀ * (y ^ (-r₀) * ‖F i y‖) ≤ y ^ r₀ * Real.sqrt (E 0 * Real.exp L) :=
-        mul_le_mul_of_nonneg_left hGi' hyρ.le
+  calc
+    _ ≤ y ^ r₀ * Real.sqrt (E 0 * Real.exp L) := mul_le_mul_of_nonneg_left hGi' hyρ.le
     _ = Real.sqrt (E 0 * Real.exp L) * y ^ r₀ := mul_comm _ _
-    _ ≤ Real.sqrt (E 0 * Real.exp L) * y ^ (r₀ - ε) :=
-        mul_le_mul_of_nonneg_left (Real.rpow_le_rpow_of_exponent_ge hy hy1 (by linarith)) (Real.sqrt_nonneg _)
+    _ ≤ Real.sqrt (E 0 * Real.exp L) * y ^ (r₀ - ε) := mul_le_mul_of_nonneg_left (Real.rpow_le_rpow_of_exponent_ge hy hy1 (by linarith)) (Real.sqrt_nonneg _)
 /--
 [LanglandsTunnell_norm_le_mul_rpow_near_zero_of_first_order_system_of_diag](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LanglandsTunnell_norm_le_mul_rpow_near_zero_of_first_order_system_of_diag.lean)
 -/
 @[path]
 private lemma main
-    (m : ℕ) (a : Fin m → ℂ) (r₀ c τ : ℝ) (hτ : 0 < τ) (ha : ∀ i, r₀ ≤ (a i).re)
-    (B : ℝ → Matrix (Fin m) (Fin m) ℂ) (hB : ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i j, ‖B y i j‖ ≤ c * y ^ τ)
-    (F : Fin m → ℝ → ℂ) (hF : ∀ i, DifferentiableOn ℝ (F i) (Set.Ioi 0))
-    (hFeq : ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i,
-      (y : ℂ) * deriv (F i) y = a i * F i y + ∑ j, B y i j * F j y) :
-    ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i, ‖F i y‖ ≤ C * y ^ (r₀ - ε) := by
-  intro ε hε
-  exact helper_main m a r₀ c τ hτ ha B hB F hF hFeq ε hε
+  (m : ℕ)
+  (a : Fin m → ℂ)
+  (r₀ c τ : ℝ)
+  (B : ℝ → Matrix (Fin m) (Fin m) ℂ)
+  (F : Fin m → ℝ → ℂ)
+  -- given
+  (hτ : 0 < τ)
+  (ha : ∀ i, r₀ ≤ (a i).re)
+  (hB : ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i j, ‖B y i j‖ ≤ c * y ^ τ)
+  (hF : ∀ i, DifferentiableOn ℝ (F i) (Set.Ioi 0))
+  (hFeq : ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i, (y : ℂ) * deriv (F i) y = a i * F i y + ∑ j, B y i j * F j y) :
+  -- imply
+  ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, ∀ y : ℝ, 0 < y → y ≤ 1 → ∀ i, ‖F i y‖ ≤ C * y ^ (r₀ - ε) :=
+  fun ε hε => helper_main m a r₀ c τ hτ ha B hB F hF hFeq ε hε
+
 
 -- created on 2026-10-20

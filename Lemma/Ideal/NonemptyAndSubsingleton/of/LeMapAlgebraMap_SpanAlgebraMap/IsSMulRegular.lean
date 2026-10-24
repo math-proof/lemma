@@ -101,7 +101,6 @@ private lemma nonempty_algHom (I : Ideal A) (a : A) (hreg : IsSMulRegular C a)
   rw [hφ]
   exact hΦalg g
 
-end AffineDilatation.UniversalProperty
 
 @[path]
 private lemma main

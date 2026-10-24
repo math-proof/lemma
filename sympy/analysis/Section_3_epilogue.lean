@@ -2,9 +2,10 @@ import Mathlib
 import Mathlib.SetTheory.ZFC.PSet
 import Mathlib.SetTheory.ZFC.Basic
 import sympy.analysis.Tools.ExistsUnique
-import sympy.analysis.Section_3_1
+import sympy.analysis.Section_3_1_api
 
 set_option doc.verso.suggestions false
+set_option backward.isDefEq.respectTransparency false
 
 /-!
 # Analysis I, Chapter 3 epilogue: Connections with ZFSet
@@ -44,9 +45,19 @@ open PSet in
 the natural numbers. -/
 noncomputable def ZFSet.nat_equiv : ℕ ≃ omega.{u} := Equiv.ofBijective (fun n => ⟨mk (ofNat.{u} n),mk_mem_iff.mpr (Mem.mk _ (ULift.up n))⟩) (by
   constructor
-  · intro _ _; simp [eq]; apply eq_of_ofNat_equiv_ofNat
-  · intro ⟨x,hx⟩; rw [←mk_out x, omega] at hx; erw [mk_mem_iff] at hx; obtain ⟨n,hn⟩ := hx
-    simp [mk_func, PSet.omega] at *; use n.down; rw [←mk_out x, eq]; exact hn.symm
+  · intro n m h
+    apply eq_of_ofNat_equiv_ofNat
+    exact (ZFSet.eq).mp (congrArg Subtype.val h)
+  · intro ⟨x, hx⟩
+    have hx' : x.out ∈ PSet.omega := by
+      have hxmk : mk x.out ∈ omega := by rw [ZFSet.mk_out]; exact hx
+      exact (ZFSet.mk_mem_iff).mp (by simpa [ZFSet.omega] using hxmk)
+    obtain ⟨n, hn⟩ := hx'
+    refine ⟨n.down, ?_⟩
+    apply Subtype.ext
+    show mk (ofNat n.down) = x
+    rw [← ZFSet.mk_out x, ZFSet.eq]
+    exact hn.symm
   )
 
 open Classical in
@@ -79,9 +90,19 @@ noncomputable instance ZFSet.inst_SetTheory : Chapter3.SetTheory.{u + 1,u + 1} w
   nat := omega
   nat_equiv := nat_equiv
   regularity_axiom A := by
-    simp; intro x hx; have ⟨y,hy,_⟩ := regularity A (by aesop)
-    use y, hy; intro z _ _; have : z ∈ A ∩ y := by simp; tauto
-    aesop
+    intro hA
+    obtain ⟨x, hx⟩ := hA
+    obtain ⟨y, hy, hinter⟩ := regularity A (by
+      rintro rfl
+      exact notMem_empty x hx)
+    refine ⟨y, hy, ?_⟩
+    intro S hS ⟨z, hzA, hzS⟩
+    have hzS' : z ∈ y := by
+      rw [hS]
+      exact hzS
+    have hz : z ∈ ZFSet.inter A y := (ZFSet.mem_sep).mpr ⟨hzA, hzS'⟩
+    rw [show ZFSet.inter A y = ∅ from hinter] at hz
+    exact notMem_empty z hz
   pow X Y := funs Y X
   function_to_object X Y := {
     toFun f := @map (fun s ↦ if h : s ∈ X then f ⟨s,h⟩ else ∅) (allZFSetDefinable _) X
@@ -89,13 +110,45 @@ noncomputable instance ZFSet.inst_SetTheory : Chapter3.SetTheory.{u + 1,u + 1} w
       ext ⟨s, hs⟩; simp_rw [ZFSet.ext_iff, mem_map] at h
       specialize h (s.pair (x ⟨_,hs⟩)); aesop}
   powerset_axiom X Y F := by
-    simp [IsFunc]; constructor
-    · intro ⟨hsub,huniq⟩
-      use (fun x ↦ ⟨(huniq _ x.property).choose,(pair_mem_prod.mp (hsub (huniq _ x.property).choose_spec)).2⟩)
-      ext; simp; constructor
-      · rintro ⟨y,hy,rfl⟩; simp_all [(huniq _ hy).choose_spec]
-      · intro hf; specialize hsub hf; rw [mem_prod] at hsub; obtain ⟨y,hy,x,_,rfl⟩ := hsub
-        use y,hy; simp_all [←(huniq _ hy).choose_eq hf]
-    · rintro ⟨f,rfl⟩; simp; constructor <;> intro _ _ <;> aesop (add safe [SetLike.coe_mem])
+    rw [mem_funs]
+    constructor
+    · intro ⟨hsub, huniq⟩
+      let g : Subtype (· ∈ Y) → Subtype (· ∈ X) := fun y ↦
+        ⟨(huniq y.val y.property).choose,
+          (pair_mem_prod.mp (hsub (huniq y.val y.property).choose_spec)).2⟩
+      let φ : ZFSet → ZFSet := fun s ↦ if h : s ∈ Y then (g ⟨s, h⟩ : ZFSet) else ∅
+      let hφ : Definable₁ φ := allZFSetDefinable _
+      refine ⟨g, ?_⟩
+      show @map φ hφ Y = F
+      apply ZFSet.ext
+      intro z
+      constructor
+      · intro hz
+        rw [@mem_map φ hφ] at hz
+        obtain ⟨y, hy, rfl⟩ := hz
+        have : φ y = (huniq y hy).choose := by simp [φ, g, hy]
+        simpa [this] using (huniq y hy).choose_spec
+      · intro hz
+        have hzy := hsub hz
+        rw [mem_prod] at hzy
+        obtain ⟨y, hy, w, _, rfl⟩ := hzy
+        rw [@mem_map φ hφ]
+        refine ⟨y, hy, ?_⟩
+        have hw' : (huniq y hy).choose = w := (huniq y hy).choose_eq hz
+        have : φ y = w := by simp [φ, g, hy, hw']
+        simpa [this]
+    · rintro ⟨f, rfl⟩
+      let φ : ZFSet → ZFSet := fun s ↦ if h : s ∈ Y then (f ⟨s, h⟩ : ZFSet) else ∅
+      let hφ : Definable₁ φ := allZFSetDefinable _
+      show IsFunc Y X (@map φ hφ Y)
+      rw [map_isFunc]
+      intro z hz
+      simp [φ, hz]
   union := sUnion
-  union_axiom _ _ := by simp [And.comm]
+  union_axiom A x := by
+    rw [mem_sUnion]
+    constructor
+    · rintro ⟨S, hSA, hxS⟩
+      exact ⟨S, hxS, hSA⟩
+    · rintro ⟨S, hxS, hSA⟩
+      exact ⟨S, hSA, hxS⟩

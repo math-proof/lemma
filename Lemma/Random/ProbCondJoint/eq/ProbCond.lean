@@ -30,7 +30,7 @@ private lemma main
 -- proof
   intro _ hP_left
   have hxym : AEMeasurable (x, y) π := hP.aemeasurable
-  have hym : AEMeasurable y π := (PSpace.of.PSpace_Joint.snd hP).aemeasurable
+  have hym : AEMeasurable y π := (SinglePSpace.of.SinglePSpace.snd hP).aemeasurable
   have hxyym : AEMeasurable ((x, y), y) π :=
     hP_left.aemeasurable
   have href_γ : ReferenceMeasure.measure (α := γ) = (count : Measure γ) := hγ

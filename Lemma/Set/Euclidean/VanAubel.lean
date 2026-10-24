@@ -1,15 +1,15 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Euclidean.VanAubel
 open scoped InnerProductSpace
-open MetaMathlibExt
 
+
+namespace MetaMathlibExt
 
 /--
 [vanAubel](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Euclidean/VanAubel.lean)
 -/
 @[path]
-private lemma vanAubel_eq
+lemma vanAubel
   :
 -- imply
   ∀ (A B C D : EuclideanSpace ℝ (Fin 2))
@@ -24,13 +24,32 @@ private lemma vanAubel_eq
     (2 : ℝ)⁻¹ • WithLp.toLp 2 (![-((A - D).ofLp 1), ((A - D).ofLp 0)]) →
     ‖Oab - Ocd‖ = ‖Obc - Oda‖ ∧ ⟪Oab - Ocd, Obc - Oda⟫_ℝ = 0 := by
 -- proof
-  apply MetaMathlibExt.vanAubel
+  intro A B C D Oab Obc Ocd Oda h1 h2 h3 h4
+  subst h1
+  subst h2
+  subst h3
+  subst h4
+  constructor
+  · rw [EuclideanSpace.norm_eq, EuclideanSpace.norm_eq]
+    congr 1
+    rw [Fin.sum_univ_two, Fin.sum_univ_two]
+    simp
+    ring
+  · rw [EuclideanSpace.inner_eq_star_dotProduct, Matrix.vec2_dotProduct]
+    simp only [Nat.succ_eq_add_one, Nat.reduceAdd, smul_add, Fin.isValue, PiLp.sub_apply, neg_sub,
+      PiLp.add_apply, PiLp.smul_apply, smul_eq_mul, Matrix.cons_val_zero, Pi.star_apply,
+      star_trivial, Matrix.cons_val_one, Matrix.cons_val_fin_one]
+    ring
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [vanAubel_right](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Euclidean/VanAubel.lean)
 -/
 @[path]
-private lemma vanAubel_right_eq
+lemma vanAubel_right
   :
 -- imply
   ∀ (A B C D : EuclideanSpace ℝ (Fin 2))
@@ -45,7 +64,25 @@ private lemma vanAubel_right_eq
     (2 : ℝ)⁻¹ • WithLp.toLp 2 (![((A - D).ofLp 1), -((A - D).ofLp 0)]) →
     ‖Oab - Ocd‖ = ‖Obc - Oda‖ ∧ ⟪Oab - Ocd, Obc - Oda⟫_ℝ = 0 := by
 -- proof
-  apply MetaMathlibExt.vanAubel_right
+  intro A B C D Oab Obc Ocd Oda h1 h2 h3 h4
+  subst h1
+  subst h2
+  subst h3
+  subst h4
+  constructor
+  · rw [EuclideanSpace.norm_eq, EuclideanSpace.norm_eq]
+    congr 1
+    rw [Fin.sum_univ_two, Fin.sum_univ_two]
+    simp
+    ring
+  · rw [EuclideanSpace.inner_eq_star_dotProduct, Matrix.vec2_dotProduct]
+    simp only [Nat.succ_eq_add_one, Nat.reduceAdd, smul_add, Fin.isValue, PiLp.sub_apply, neg_sub,
+      PiLp.add_apply, PiLp.smul_apply, smul_eq_mul, Matrix.cons_val_zero, Pi.star_apply,
+      star_trivial, Matrix.cons_val_one, Matrix.cons_val_fin_one]
+    ring
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

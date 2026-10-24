@@ -5,7 +5,7 @@ All rights reserved.
 import Mathlib
 import sympy.matrices.determinants.DominoTilings
 import sympy.series.formal.WeightedSets
-
+import Lemma.PowerSeries.WeightedSets
 /-!
 # Bridge between Domino representations
 
@@ -51,21 +51,22 @@ This bridge enables theorem transfer between files when needed.
 domino, tiling, bridge, equivalence
 -/
 
+
 open Finset BigOperators
 
 namespace DominoBridge
-
 /-! ## Coordinate conversion helpers -/
+
 
 /-- The cells covered by a DominoTilings.Domino, cast to ℤ coordinates.
     This allows comparison with DominoTilingsZ.Domino.toShape. -/
 def cellsZ (d : DominoTilings.Domino) : Set (ℤ × ℤ) :=
   {((d.cell1.1 : ℤ), (d.cell1.2 : ℤ)), ((d.cell2.1 : ℤ), (d.cell2.2 : ℤ))}
-
 /-! ## Conversion from DominoTilings.Domino to DominoTilingsZ.Domino
 
 Note: We use `DominoTilings.Domino.isHorizontal` and `DominoTilings.Domino.isVertical`
 from DominoTilings.lean via dot notation (e.g., `d.isHorizontal`). -/
+
 
 /-- Convert a DominoTilings.Domino to DominoTilingsZ.Domino.
     
@@ -81,8 +82,8 @@ def toDominoZ (d : DominoTilings.Domino) : DominoTilingsZ.Domino :=
     -- Vertical: cells differ in second coordinate
     let minRow := min d.cell1.2 d.cell2.2
     DominoTilingsZ.Domino.vertical (d.cell1.1 : ℤ) (minRow : ℤ)
-
 /-! ## Conversion from DominoTilingsZ.Domino to DominoTilings.Domino -/
+
 
 /-- A DominoTilingsZ.Domino has positive coordinates if all its cells have positive coordinates.
     This is the precondition for converting to DominoTilings.Domino (which uses ℕ coordinates). -/
@@ -126,30 +127,9 @@ def toDominoN (d : DominoTilingsZ.Domino) (hpos : hasPositiveCoords d) : DominoT
         constructor
         · rfl
         · left; omega }
-
 /-! ## Round-trip properties -/
-
-/-- Converting DominoTilings.Domino to DominoTilingsZ.Domino produces positive coordinates 
-    when all cells are positive. -/
-theorem toDominoZ_hasPositiveCoords (d : DominoTilings.Domino)
-    (h1 : d.cell1.1 ≥ 1) (h2 : d.cell1.2 ≥ 1) 
-    (h3 : d.cell2.1 ≥ 1) (h4 : d.cell2.2 ≥ 1) : hasPositiveCoords (toDominoZ d) := by
-  simp only [toDominoZ]
-  split_ifs with hH
-  · -- Horizontal case
-    simp only [hasPositiveCoords, ge_iff_le]
-    constructor
-    · have hmin : min d.cell1.1 d.cell2.1 ≥ 1 := by omega
-      exact_mod_cast hmin
-    · exact_mod_cast h2
-  · -- Vertical case
-    simp only [hasPositiveCoords, ge_iff_le]
-    constructor
-    · exact_mod_cast h1
-    · have hmin : min d.cell1.2 d.cell2.2 ≥ 1 := by omega
-      exact_mod_cast hmin
-
 /-! ## Cell preservation theorems -/
+
 
 /-- Converting DominoTilings.Domino to DominoTilingsZ.Domino preserves the set of cells (cast to ℤ).
     
@@ -225,38 +205,11 @@ theorem toDominoZ_cells (d : DominoTilings.Domino) : (toDominoZ d).toShape = cel
           · left; constructor <;> omega
     · -- Same row contradicts not horizontal
       exact absurd hrow hH
-
-/-- Converting DominoTilingsZ.Domino to DominoTilings.Domino preserves the set of cells (cast to ℤ). -/
-theorem toDominoN_cells (d : DominoTilingsZ.Domino) (hpos : hasPositiveCoords d) : 
-    cellsZ (toDominoN d hpos) = d.toShape := by
-  match d, hpos with
-  | .horizontal i j, ⟨hi, hj⟩ =>
-    simp only [toDominoN, cellsZ, DominoTilingsZ.Domino.toShape]
-    ext p
-    simp only [Set.mem_insert_iff, Set.mem_singleton_iff, Prod.ext_iff]
-    constructor
-    · rintro (⟨hp1, hp2⟩ | ⟨hp1, hp2⟩)
-      · left; constructor <;> omega
-      · right; constructor <;> omega
-    · rintro (⟨hp1, hp2⟩ | ⟨hp1, hp2⟩)
-      · left; constructor <;> omega
-      · right; constructor <;> omega
-  | .vertical i j, ⟨hi, hj⟩ =>
-    simp only [toDominoN, cellsZ, DominoTilingsZ.Domino.toShape]
-    ext p
-    simp only [Set.mem_insert_iff, Set.mem_singleton_iff, Prod.ext_iff]
-    constructor
-    · rintro (⟨hp1, hp2⟩ | ⟨hp1, hp2⟩)
-      · left; constructor <;> omega
-      · right; constructor <;> omega
-    · rintro (⟨hp1, hp2⟩ | ⟨hp1, hp2⟩)
-      · left; constructor <;> omega
-      · right; constructor <;> omega
-
 /-! ## Canonical form for DominoTilings.Domino 
 
 The DominoTilings.Domino type allows the two cells to be in either order. For a canonical
 representation, we define a form where cell1 is always the "smaller" cell. -/
+
 
 /-- A DominoTilings.Domino is in canonical form if cell1 is the "smaller" cell:
     - For horizontal dominos: cell1 has smaller column
@@ -281,13 +234,6 @@ def toCanonical (d : DominoTilings.Domino) : DominoTilings.Domino :=
     if d.cell1.1 < d.cell2.1 then d else swap d
   else
     if d.cell1.2 < d.cell2.2 then d else swap d
-
-/-- The cells of a domino in canonical form are the same as the original. -/
-theorem toCanonical_cells (d : DominoTilings.Domino) : 
-    ({(toCanonical d).cell1, (toCanonical d).cell2} : Set (ℕ × ℕ)) = {d.cell1, d.cell2} := by
-  simp only [toCanonical]
-  split_ifs <;> simp [swap, Set.pair_comm]
-
 /-! ## Rectangle correspondence
 
 The two Rectangle definitions use different types:
@@ -296,27 +242,9 @@ The two Rectangle definitions use different types:
 
 We establish that they correspond under the natural embedding ℕ → ℤ. -/
 
+
 /-- Cast a cell from ℕ × ℕ to ℤ × ℤ. -/
 def cellToZ (c : ℕ × ℕ) : ℤ × ℤ := (c.1, c.2)
-
-/-- The image of DominoTilings.Rectangle under cellToZ equals DominoTilingsZ.Rectangle 
-    as sets of ℤ × ℤ. -/
-theorem rectangle_correspondence (n m : ℕ) :
-    cellToZ '' (DominoTilings.Rectangle n m : Set (ℕ × ℕ)) = DominoTilingsZ.Rectangle n m := by
-  ext ⟨x, y⟩
-  simp only [Set.mem_image, Finset.mem_coe, DominoTilingsZ.mem_rectangle_iff]
-  constructor
-  · rintro ⟨⟨a, b⟩, hmem, heq⟩
-    simp only [cellToZ, Prod.mk.injEq] at heq
-    rw [DominoTilings.mem_Rectangle] at hmem
-    constructor <;> omega
-  · intro ⟨hx1, hx2, hy1, hy2⟩
-    refine ⟨(x.toNat, y.toNat), ?_, ?_⟩
-    · rw [DominoTilings.mem_Rectangle]
-      constructor <;> omega
-    · simp only [cellToZ, Prod.mk.injEq]
-      constructor <;> omega
-
 /-! ## Documentation: Relationship between representations
 
 ### Key differences between the two Domino types:
@@ -345,7 +273,6 @@ To bridge between `DominoTilingsZ.Tiling S` and `DominoTilings.DominoTiling n m`
 2. `toDominoZ_cells` / `toDominoN_cells` for cell preservation
 3. `rectangle_correspondence` for shape correspondence
 -/
-
 /-! ## Tiling equivalence infrastructure
 
 We develop the machinery to convert between `DominoTilings.DominoTiling n m` and
@@ -355,31 +282,19 @@ We develop the machinery to convert between `DominoTilings.DominoTiling n m` and
 3. Preserving the covering property
 -/
 
+
 section TilingEquivalence
 
 variable {n m : ℕ}
-
 /-! ### Converting a DominoTiling to a Tiling -/
+
 
 /-- Convert a Finset of DominoTilings.Domino to a Set of DominoTilingsZ.Domino. -/
 def dominoFinsetToSet (ds : Finset DominoTilings.Domino) : Set DominoTilingsZ.Domino :=
   {toDominoZ d | d ∈ ds}
 
-/-- The dominos in a DominoTiling have positive coordinates (cell coords ≥ 1). -/
-lemma DominoTiling_dominos_pos (T : DominoTilings.DominoTiling n m) (d : DominoTilings.Domino)
-    (hd : d ∈ T.dominos) : d.cell1.1 ≥ 1 ∧ d.cell1.2 ≥ 1 ∧ d.cell2.1 ≥ 1 ∧ d.cell2.2 ≥ 1 := by
-  have h := T.dominos_in_rect d hd
-  have hc1 : d.cell1 ∈ DominoTilings.Rectangle n m := by
-    apply h
-    simp [DominoTilings.Domino.cells]
-  have hc2 : d.cell2 ∈ DominoTilings.Rectangle n m := by
-    apply h
-    simp [DominoTilings.Domino.cells]
-  rw [DominoTilings.mem_Rectangle] at hc1 hc2
-  exact ⟨hc1.1, hc1.2.2.1, hc2.1, hc2.2.2.1⟩
-
 /-- Converting a DominoTiling preserves pairwise disjointness. -/
-lemma toDominoZ_pairwise_disjoint (T : DominoTilings.DominoTiling n m) :
+theorem toDominoZ_pairwise_disjoint (T : DominoTilings.DominoTiling n m) :
     Set.PairwiseDisjoint (dominoFinsetToSet T.dominos) DominoTilingsZ.Domino.toShape := by
   intro dz1 hdz1 dz2 hdz2 hne
   simp only [dominoFinsetToSet, Set.mem_ofPred_eq] at hdz1 hdz2
@@ -436,7 +351,7 @@ lemma toDominoZ_pairwise_disjoint (T : DominoTilings.DominoTiling n m) :
       simp [hdisj] at hmem
 
 /-- Converting a DominoTiling preserves the covering property. -/
-lemma toDominoZ_cover (T : DominoTilings.DominoTiling n m) :
+theorem toDominoZ_cover (T : DominoTilings.DominoTiling n m) :
     ⋃ d ∈ dominoFinsetToSet T.dominos, d.toShape = DominoTilingsZ.Rectangle n m := by
   ext ⟨x, y⟩
   simp only [Set.mem_iUnion, dominoFinsetToSet, Set.mem_ofPred_eq, 
@@ -489,44 +404,7 @@ def toTilingZ (T : DominoTilings.DominoTiling n m) :
   dominos := dominoFinsetToSet T.dominos
   pairwise_disjoint := toDominoZ_pairwise_disjoint T
   cover := toDominoZ_cover T
-
 /-! ### Dominos in a Tiling of a rectangle have positive coordinates -/
-
-/-- Dominos in a Tiling of a rectangle have positive coordinates. -/
-lemma Tiling_dominos_pos (T : DominoTilingsZ.Tiling (DominoTilingsZ.Rectangle n m))
-    (d : DominoTilingsZ.Domino) (hd : d ∈ T.dominos) : hasPositiveCoords d := by
-  have hcover := T.cover
-  have hsub : d.toShape ⊆ DominoTilingsZ.Rectangle n m := by
-    rw [← hcover]
-    exact Set.subset_biUnion_of_mem hd
-  match d with
-  | .horizontal i j =>
-    simp only [hasPositiveCoords, ge_iff_le]
-    have h1 : (i, j) ∈ DominoTilingsZ.Rectangle n m := by
-      apply hsub
-      simp [DominoTilingsZ.Domino.toShape]
-    rw [DominoTilingsZ.mem_rectangle_iff] at h1
-    exact ⟨h1.1, h1.2.2.1⟩
-  | .vertical i j =>
-    simp only [hasPositiveCoords, ge_iff_le]
-    have h1 : (i, j) ∈ DominoTilingsZ.Rectangle n m := by
-      apply hsub
-      simp [DominoTilingsZ.Domino.toShape]
-    rw [DominoTilingsZ.mem_rectangle_iff] at h1
-    exact ⟨h1.1, h1.2.2.1⟩
-
-/-- toDominoN is injective on dominos with positive coordinates. -/
-lemma toDominoN_injective {d1 d2 : DominoTilingsZ.Domino} 
-    (hpos1 : hasPositiveCoords d1) (hpos2 : hasPositiveCoords d2)
-    (heq : toDominoN d1 hpos1 = toDominoN d2 hpos2) : d1 = d2 := by
-  -- Use that toDominoN preserves cells
-  have hcells1 := toDominoN_cells d1 hpos1
-  have hcells2 := toDominoN_cells d2 hpos2
-  -- From heq, we get cellsZ (toDominoN d1 hpos1) = cellsZ (toDominoN d2 hpos2)
-  have hcellsZ : cellsZ (toDominoN d1 hpos1) = cellsZ (toDominoN d2 hpos2) := by rw [heq]
-  rw [hcells1, hcells2] at hcellsZ
-  -- Now d1.toShape = d2.toShape, so d1 = d2
-  exact DominoTilingsZ.Domino.eq_of_toShape_eq hcellsZ
 
 end TilingEquivalence
 

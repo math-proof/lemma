@@ -70,15 +70,6 @@ def IsAdmissible : List ℕ → Prop
   | [] => False
   | h :: t => 2 ≤ h ∧ ∀ x ∈ t, 0 < x
 
-@[simp]
-theorem isAdmissible_nil : ¬IsAdmissible [] := by
-  simp [IsAdmissible]
-
-@[simp]
-theorem isAdmissible_cons_iff (h : ℕ) (t : List ℕ) :
-    IsAdmissible (h :: t) ↔ 2 ≤ h ∧ ∀ x ∈ t, 0 < x := by
-  rfl
-
 /-- The bundled and list formulations of admissibility agree. -/
 theorem Index.isAdmissible_iff (index : Index) :
     index.IsAdmissible ↔ MetaMathlibExt.MultipleZeta.IsAdmissible index.entries := by

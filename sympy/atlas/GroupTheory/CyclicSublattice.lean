@@ -21,28 +21,4 @@ variable {A : Type*} [AddCommGroup A]
 the quotient of `L` by (the restriction of) `L'` is cyclic. -/
 def IsCyclicSublattice (L' L : AddSubgroup A) : Prop :=
   L' ≤ L ∧ IsAddCyclic (L ⧸ L'.addSubgroupOf L)
-
-/-- Unfolding of `IsCyclicSublattice`. -/
-theorem isCyclicSublattice_iff {L' L : AddSubgroup A} :
-    IsCyclicSublattice L' L ↔
-      L' ≤ L ∧ IsAddCyclic (L ⧸ L'.addSubgroupOf L) :=
-  Iff.rfl
-
-/-- A cyclic sublattice is contained in the ambient subgroup. -/
-theorem IsCyclicSublattice.le {L' L : AddSubgroup A}
-    (h : IsCyclicSublattice L' L) : L' ≤ L :=
-  h.1
-
-/-- The quotient witnessing cyclicity of a cyclic sublattice. -/
-theorem IsCyclicSublattice.isAddCyclic_quotient {L' L : AddSubgroup A}
-    (h : IsCyclicSublattice L' L) :
-    IsAddCyclic (L ⧸ L'.addSubgroupOf L) :=
-  h.2
-
-/-- Constructor for `IsCyclicSublattice` from containment and cyclicity. -/
-theorem IsCyclicSublattice.mk {L' L : AddSubgroup A} (hle : L' ≤ L)
-    (hcyc : IsAddCyclic (L ⧸ L'.addSubgroupOf L)) :
-    IsCyclicSublattice L' L :=
-  ⟨hle, hcyc⟩
-
 end AddSubgroup

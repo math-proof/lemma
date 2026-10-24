@@ -1,26 +1,22 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [NumberField_exists_isGalois_compositum](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_exists_isGalois_compositum.lean)
 -/
 @[path]
 private lemma main
-    (E F L : Type) [Field E] [NumberField E] [Field F] [NumberField F] [Field L] [NumberField L]
-    [Algebra E F] [Algebra E L] [IsGalois E F] [IsGalois E L] :
-    ∃ (N : Type) (_ : Field N) (_ : NumberField N) (_ : Algebra E N) (_ : Algebra F N) (_ : Algebra L N)
-      (_ : IsScalarTower E F N) (_ : IsScalarTower E L N),
-      IsGalois E N ∧
-      ∀ σ : N ≃ₐ[E] N, (∀ x : F, σ (algebraMap F N x) = algebraMap F N x) →
-        (∀ y : L, σ (algebraMap L N y) = algebraMap L N y) → σ = 1 := by
+  (E F L : Type) [Field E] [NumberField E] [Field F] [NumberField F] [Field L] [NumberField L] [Algebra E F] [Algebra E L] [IsGalois E F] [IsGalois E L] :
+  -- imply
+  ∃ (N : Type) (_ : Field N) (_ : NumberField N) (_ : Algebra E N) (_ : Algebra F N) (_ : Algebra L N) (_ : IsScalarTower E F N) (_ : IsScalarTower E L N), IsGalois E N ∧ ∀ σ : N ≃ₐ[E] N, (∀ x : F, σ (algebraMap F N x) = algebraMap F N x) → (∀ y : L, σ (algebraMap L N y) = algebraMap L N y) → σ = 1 := by
+  -- proof
   classical
   let _ : Module.Finite E F := Module.Finite.of_restrictScalars_finite ℚ E F
   let _ : Module.Finite E L := Module.Finite.of_restrictScalars_finite ℚ E L
@@ -61,21 +57,24 @@ private lemma main
     refine (IntermediateField.mem_lift ⟨z, hz⟩).mpr ((IntermediateField.mem_fixedField_iff _ _).mpr ?_)
     intro f hf
     have hσ : σ ∈ MulAction.stabilizer (↥S ≃ₐ[E] ↥S) (⟨z, hz⟩ : ↥S) := h
-    exact Subgroup.zpowers_le.mpr hσ hf
+    refine Subgroup.zpowers_le.mpr hσ hf
   have key : IntermediateField.lift (IntermediateField.fixedField (Subgroup.zpowers σ)) = S := by
     apply le_antisymm (IntermediateField.lift_le _)
     refine sup_le ?_ ?_
-    · intro z hz
+    ·
+      intro z hz
       obtain ⟨x, rfl⟩ := AlgHom.mem_fieldRange.mp hz
-      exact h1 _ (le_sup_left (b := K₂) hz) (hF x)
-    · intro z hz
+      apply h1 _ (le_sup_left (b := K₂) hz) (hF x)
+    ·
+      intro z hz
       obtain ⟨y, rfl⟩ := AlgHom.mem_fieldRange.mp hz
-      exact h1 _ (le_sup_right (a := K₁) hz) (hL y)
+      apply h1 _ (le_sup_right (a := K₁) hz) (hL y)
   have hFix : IntermediateField.fixedField (Subgroup.zpowers σ) = ⊤ :=
     IntermediateField.lift_injective S (by rw [key, IntermediateField.lift_top])
   have hbot : Subgroup.zpowers σ = ⊥ := by
     rw [← IntermediateField.fixingSubgroup_fixedField (Subgroup.zpowers σ), hFix,
       IntermediateField.fixingSubgroup_top]
-  exact Subgroup.zpowers_eq_bot.mp hbot
+  refine Subgroup.zpowers_eq_bot.mp hbot
+
 
 -- created on 2026-10-20

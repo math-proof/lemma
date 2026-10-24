@@ -48,13 +48,8 @@ private lemma main
   have hy := h.measurable_y
   have h_emit := h.emit
   have h_markov := h.markov
-  have hX : (ReferenceMeasure.measure : Measure X) = Measure.count := CountableMeasure.measure_eq_count
-  have hY : (ReferenceMeasure.measure : Measure Y) = Measure.count := CountableMeasure.measure_eq_count
   have : Nonempty X := ⟨«x.bvar» 0⟩
   have : Nonempty Y := ⟨«y.bvar» 0⟩
-  have hpair : ∀ m n : ℕ, ReferenceMeasure.measure (α := (Fin m → X) × (Fin n → Y)) = Measure.count := fun m n => by
-    change (Measure.count : Measure (Fin m → X)).prod Measure.count = Measure.count
-    rw [← Measure.Count.eq.ProdCountS]
   have hP : ∀ a b : ℕ, (x[:(a : ℤ)], y[:(b : ℤ)]) ⁻¹' {(«x.bvar»[:(a : ℤ)], «y.bvar»[:(b : ℤ)])} =
       {ω | (∀ i < a, x i ω = «x.bvar» i) ∧ ∀ i < b, y i ω = «y.bvar» i} := by
     intro a b
@@ -73,9 +68,9 @@ private lemma main
     ⟨_, fun _ => rfl⟩
   have hQ : ∀ n : ℕ, ℙ[π](x[:(n : ℤ)] = «x.bvar»[:(n : ℤ)] ∧ y[:(n : ℤ)] = «y.bvar»[:(n : ℤ)]) = π (P n) := by
     intro n
-    rw [Prob.eq.Measure.of.Eq_Count (hpair _ _), hP, hPdef]
+    rw [EqProb, hP, hPdef]
   have hprob : ∀ i, ℙ[π](y[i] = «y.bvar»[i]) = π (y i ⁻¹' {«y.bvar» i}) := fun i =>
-    Prob.eq.Measure.of.Eq_Count hY _
+    EqProb _
   have hcondx : ∀ i j, ℙ[π](x[i] = «x.bvar»[i] | y[j] = «y.bvar»[j]) =
       π (x i ⁻¹' {«x.bvar» i} ∩ y j ⁻¹' {«y.bvar» j}) / π (y j ⁻¹' {«y.bvar» j}) := fun i j =>
     ProbCond.eq.Div.of.SinglePSpace inferInstance _ _
@@ -137,3 +132,4 @@ private lemma main
 
 
 -- created on 2026-10-02
+-- updated on 2026-10-23

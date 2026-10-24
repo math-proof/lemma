@@ -90,10 +90,4 @@ theorem continuous_adicCompletionMap :
   exact ((adicCompletion.continuous_ofCompletion L w).comp
     UniformSpace.Completion.continuous_map).comp
     (adicCompletion.continuous_toCompletion K v)
-
-include hvw in
-theorem adicCompletionMap_injective :
-    Function.Injective (adicCompletionMap v w) :=
-  RingHom.injective _
-
 end IsDedekindDomain.HeightOneSpectrum

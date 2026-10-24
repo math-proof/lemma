@@ -239,7 +239,10 @@ lemma exercise_1_2_1_union :
         { toEquiv := Real.equiv_EuclideanSpace'
           continuous_toFun := hf_cont
           continuous_invFun := hg_cont }
-      simpa using e.image_closure Q
+      have h := e.image_closure Q
+      have he : (⇑e : ℝ → EuclideanSpace' 1) = Real.equiv_EuclideanSpace' := by
+        rw [← e.coe_toEquiv]
+      simpa [he] using h
 
     rw [← h_image_closure] at h_outer_eq
     rw [h_closure_Q] at h_outer_eq
@@ -360,7 +363,10 @@ lemma exercise_1_2_1_union :
         { toEquiv := Real.equiv_EuclideanSpace'
           continuous_toFun := hf_cont
           continuous_invFun := hg_cont }
-      simpa using e.image_interior Q
+      have h := e.image_interior Q
+      have he : (⇑e : ℝ → EuclideanSpace' 1) = Real.equiv_EuclideanSpace' := by
+        rw [← e.coe_toEquiv]
+      simpa [he] using h
 
     rw [← h_image_interior] at h_inner_eq
     rw [h_interior_Q, Set.image_empty] at h_inner_eq
@@ -895,9 +901,11 @@ lemma Lebesgue_outer_measure_of_dim_zero {E: Set (EuclideanSpace' 0)} :
           · -- Case 2: X is infinite
             -- The sum is Top. We prove HasSum g Top.
             have h_top : HasSum g ⊤ := by
-              -- Apply helper lemma: infinite indicator sum diverges to ⊤
-              -- g and the lemma function are definitionally equal under classical
-              convert hasSum_indicator_top_of_infinite X hX using 2
+              have hfg : g = fun n => if n ∈ X then (1 : EReal) else 0 := by
+                funext n
+                by_cases hn : n ∈ X <;> simp [g, hn]
+              rw [hfg]
+              exact hasSum_indicator_top_of_infinite X hX
             exact h_top.tsum_eq.symm ▸ h_top
         -- If HasSum g s, then for any finite set F, ∑ n ∈ F, g n ≤ s
         -- Apply this with F = {n₀}
@@ -1041,8 +1049,9 @@ lemma tsum_volume_finset_eq {d : ℕ} (hd : 0 < d) (S : Finset (Box d)) :
     simp only
     -- The first side (index 0) is empty, so product is 0
     apply Finset.prod_eq_zero (Finset.mem_univ (⟨0, hd⟩ : Fin d))
-    simp only [ite_true]
-    simp [BoundedInterval.length]
+    simp only [ite_true, EmptyCollection.emptyCollection, BoundedInterval.length,
+      BoundedInterval.a, BoundedInterval.b]
+    norm_num
 
   -- Step 2: Use tsum_eq_sum to convert infinite sum to finite sum
   have h_tsum_eq : ∑' n, (S_seq n).volume.toEReal = ∑ n ∈ Finset.range S_list.length, (S_seq n).volume.toEReal := by

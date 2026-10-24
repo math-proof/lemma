@@ -2,6 +2,7 @@
 
 import Mathlib.Data.Fintype.Card
 import sympy.atlas.Order.StrictTotalOrder
+import Lemma.Set.StrictTotalOrder
 import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
@@ -53,14 +54,6 @@ abbrev total {α : Type*} (self : StrictTotalOrder α) {a b : α} (h : a ≠ b) 
     self.lt a b ∨ self.lt b a :=
   MathlibExt.Order.StrictTotalOrder.total self h
 
-/-- Compatibility alias for the former `GaleShapley.StrictTotalOrder.ext` lemma.
-
-For new code, use `MathlibExt.Order.StrictTotalOrder.ext` directly. -/
-@[ext]
-theorem ext {α : Type*} {T T' : StrictTotalOrder α} (h : T.lt = T'.lt) :
-    T = T' :=
-  MathlibExt.Order.StrictTotalOrder.ext h
-
 /-- Compatibility instance for the former `GaleShapley` order instance.
 
 For new code, use `MathlibExt.Order.StrictTotalOrder.isStrictTotalOrder` directly. -/
@@ -87,15 +80,6 @@ def IsBlockingPair {M W : Type*}
 /-- A perfect matching is stable if it has no blocking pair. -/
 def IsStable {M W : Type*} (mp : MPrefs M W) (wp : WPrefs M W) (μ : PerfectMatching M W) : Prop :=
   ∀ m w, ¬ IsBlockingPair mp wp μ m w
-
-theorem isBlockingPair_iff {M W : Type*} (mp : MPrefs M W) (wp : WPrefs M W)
-    (μ : PerfectMatching M W) (m : M) (w : W) :
-    IsBlockingPair mp wp μ m w ↔ (mp m).lt w (μ m) ∧ (wp w).lt m (μ.symm w) :=
-  Iff.rfl
-
-theorem isStable_iff {M W : Type*} (mp : MPrefs M W) (wp : WPrefs M W)
-    (μ : PerfectMatching M W) : IsStable mp wp μ ↔ ∀ m w, ¬ IsBlockingPair mp wp μ m w :=
-  Iff.rfl
 
 /-! ## Proof of Gale–Shapley via the men-proposing deferred-acceptance algorithm.
 
@@ -202,19 +186,6 @@ private noncomputable def dostep {M W : Type*} [DecidableEq M] [DecidableEq W]
   { prop := fun m' => if m' = m0 then insert w0 (s.prop m0) else s.prop m',
     hold := fun w' =>
       if w' = w0 then some (womanChoice (wp w0) (s.hold w0) m0) else s.hold w' }
-
-private lemma dostep_prop {M W : Type*} [DecidableEq M] [DecidableEq W]
-    (mp : MPrefs M W) (wp : WPrefs M W) (s : DAState M W) (m0 : M) (w0 : W)
-    (m' : M) :
-    (dostep mp wp s m0 w0).prop m' =
-      (if m' = m0 then insert w0 (s.prop m0) else s.prop m') := rfl
-
-private lemma dostep_hold {M W : Type*} [DecidableEq M] [DecidableEq W]
-    (mp : MPrefs M W) (wp : WPrefs M W) (s : DAState M W) (m0 : M) (w0 : W)
-    (w' : W) :
-    (dostep mp wp s m0 w0).hold w' =
-      (if w' = w0 then some (womanChoice (wp w0) (s.hold w0) m0) else s.hold w') :=
-  rfl
 
 /-- Algorithm invariants: holders exist for proposed-to women; holders were proposed to;
 holders are best among proposers; holders are unique; proposals go in preference order. -/
@@ -415,44 +386,6 @@ private lemma dostep_preserves {M W : Type*} [DecidableEq M] [DecidableEq W]
 private def DAMeasure {M W : Type*} [Fintype M] (s : DAState M W) : ℕ :=
   ∑ m ∈ Finset.univ, (s.prop m).card
 
-/-- Each proposal step adds exactly one proposal. -/
-private lemma dostep_measure {M W : Type*} [Fintype M] [DecidableEq M] [DecidableEq W]
-    (mp : MPrefs M W) (wp : WPrefs M W) (s : DAState M W) (m0 : M) (w0 : W)
-    (hnew : w0 ∉ s.prop m0) :
-    DAMeasure (dostep mp wp s m0 w0) = DAMeasure s + 1 := by
-  change (∑ m ∈ Finset.univ, ((dostep mp wp s m0 w0).prop m).card) =
-    (∑ m ∈ Finset.univ, (s.prop m).card) + 1
-  have hp : ∀ m', (dostep mp wp s m0 w0).prop m' =
-      (if m' = m0 then insert w0 (s.prop m0) else s.prop m') :=
-    fun m' => dostep_prop mp wp s m0 w0 m'
-  have e1 : ((dostep mp wp s m0 w0).prop m0).card +
-      ∑ x ∈ Finset.univ.erase m0, ((dostep mp wp s m0 w0).prop x).card =
-      ∑ x ∈ Finset.univ, ((dostep mp wp s m0 w0).prop x).card :=
-    Finset.add_sum_erase Finset.univ
-      (fun x => ((dostep mp wp s m0 w0).prop x).card) (Finset.mem_univ m0)
-  have e2 : (s.prop m0).card + ∑ x ∈ Finset.univ.erase m0, (s.prop x).card =
-      ∑ x ∈ Finset.univ, (s.prop x).card :=
-    Finset.add_sum_erase Finset.univ
-      (fun x => (s.prop x).card) (Finset.mem_univ m0)
-  have e3 : (∑ x ∈ Finset.univ.erase m0, ((dostep mp wp s m0 w0).prop x).card) =
-      ∑ x ∈ Finset.univ.erase m0, (s.prop x).card := by
-    apply Finset.sum_congr rfl
-    intro x hx
-    rw [hp, ite_eq_right (Finset.ne_of_mem_erase hx)]
-  have e4 : ((dostep mp wp s m0 w0).prop m0).card = (s.prop m0).card + 1 := by
-    rw [hp, ite_eq_left rfl, Finset.card_insert_of_notMem hnew]
-  omega
-
-/-- The measure is bounded by `|M| * |W|`. -/
-private lemma DAMeasure_le {M W : Type*} [Fintype M] [Fintype W]
-    (s : DAState M W) : DAMeasure s ≤ Fintype.card M * Fintype.card W := by
-  unfold DAMeasure
-  calc ∑ m ∈ Finset.univ, (s.prop m).card
-      ≤ Finset.univ.card • Fintype.card W :=
-        Finset.sum_le_card_nsmul _ _ _ (fun m _ => Finset.card_le_univ _)
-    _ = Fintype.card M * Fintype.card W := by
-        rw [Finset.card_univ, smul_eq_mul]
-
 /-- The remaining-proposal set of the chosen man is nonempty. -/
 private lemma dastepNe {M W : Type*} [Fintype W] [DecidableEq W]
     (_mp : MPrefs M W) (s : DAState M W) (h : ∃ m, s.CanPropose m) :
@@ -509,20 +442,6 @@ private lemma dastep_measure {M W : Type*} [Fintype M] [Fintype W] [DecidableEq 
 /-- Initial state: no proposals, no holders. -/
 private def dainit {M W : Type*} : DAState M W :=
   { prop := fun _ => ∅, hold := fun _ => none }
-
-private lemma dainit_inv {M W : Type*}
-    (mp : MPrefs M W) (wp : WPrefs M W) : DAInv mp wp dainit := by
-  refine ⟨fun w m' hw => ?_, fun w m hw => ?_, fun w m hw => ?_,
-    fun m w₁ w₂ h₁ h₂ => ?_, fun m w w' hw => ?_⟩
-  · simp [dainit] at hw
-  · simp [dainit] at hw
-  · simp [dainit] at hw
-  · simp [dainit] at h₁
-  · simp [dainit] at hw
-
-private lemma dainit_measure {M W : Type*} [Fintype M] :
-    DAMeasure (dainit : DAState M W) = 0 := by
-  simp [DAMeasure, dainit]
 
 /-- Run the algorithm for `n` steps (stopping early once done). -/
 private noncomputable def darun {M W : Type*} [Fintype M] [Fintype W] [DecidableEq M]
@@ -681,21 +600,4 @@ theorem gale_shapley_exists_stable_matching_general
     · exact (wp w).irrefl (f w) ((wp w).trans hlt hb2)
 
 set_option linter.unusedDecidableInType false in
-/--
-For two finite equal-cardinality sides with strict total preferences over opposite side, a stable
-perfect matching exists.
-Source: D. Gale and L. S. Shapley, "College Admissions and the Stability of Marriage", American
-Mathematical Monthly 69 (1962), 9–15, DOI 10.2307/2312726.
-It follows from `gale_shapley_exists_stable_matching_general`; the instances `[DecidableEq M]` and
-`[DecidableEq W]` are unused and keep the source's shape.
-Proves `Wanted` entry `gale_shapley_exists_stable_matching`.
--/
-@[nolint unusedArguments]
-theorem gale_shapley_exists_stable_matching
-    {M W : Type*} [Fintype M] [Fintype W] [DecidableEq M] [DecidableEq W]
-    (hCard : Fintype.card M = Fintype.card W)
-    (mp : MPrefs M W) (wp : WPrefs M W) :
-    ∃ μ : PerfectMatching M W, IsStable mp wp μ :=
-  gale_shapley_exists_stable_matching_general hCard mp wp
-
 end MathlibExt.Combinatorics.Matching.GaleShapley

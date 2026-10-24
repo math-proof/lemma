@@ -35,29 +35,4 @@ def genBellNumber {R : Type*} [CommRing R] (s h : R) (n : ℕ) : R :=
 `𝔅_{s;h|n}(x) = ∑ k, 𝔖_{s;h}(n,k) x^k`. -/
 def genBellPolynomial {R : Type*} [CommRing R] (s h : R) (n : ℕ) (x : R) : R :=
   ∑ k ∈ Finset.range (n + 1), genStirling s h n k * x ^ k
-
-@[simp]
-theorem genStirling_zero_zero {R : Type*} [CommRing R] (s h : R) :
-    genStirling s h 0 0 = 1 := rfl
-
-@[simp]
-theorem genStirling_zero_succ {R : Type*} [CommRing R] (s h : R) (k : ℕ) :
-    genStirling s h 0 (k + 1) = 0 := rfl
-
-@[simp]
-theorem genStirling_succ_zero {R : Type*} [CommRing R] (s h : R) (n : ℕ) :
-    genStirling s h (n + 1) 0 = 0 := rfl
-
-/-- The defining recurrence for the generalized Stirling numbers. -/
-theorem genStirling_succ_succ {R : Type*} [CommRing R] (s h : R) (n k : ℕ) :
-    genStirling s h (n + 1) (k + 1) = genStirling s h n k +
-      h * ((↑(k + 1) : R) + s * (↑(n - (k + 1)) : R)) *
-        genStirling s h n (k + 1) :=
-  rfl
-
-/-- Evaluation at one gives the corresponding generalized Bell number. -/
-theorem genBellPolynomial_eval_one {R : Type*} [CommRing R] (s h : R) (n : ℕ) :
-    genBellPolynomial s h n 1 = genBellNumber s h n := by
-  simp [genBellPolynomial, genBellNumber]
-
 end MetaMathlibExt

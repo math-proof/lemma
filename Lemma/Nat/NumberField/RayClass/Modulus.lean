@@ -6,6 +6,22 @@ open NumberField
 open Modulus
 
 
+namespace NumberField.Modulus
+
+/--
+[infinite_mul_self](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Modulus.lean)
+-/
+@[path]
+lemma infinite_mul_self
+  [Field K] [NumberField K]
+  {v : RealPlace K} :
+-- imply
+  infinite v * infinite v = infinite v := by
+-- proof
+  ext <;> simp [infinite, Finset.union_idempotent]
+
+end NumberField.Modulus
+
 /--
 [mk_finitePart](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Modulus.lean)
 -/
@@ -165,17 +181,6 @@ private lemma infinite_infinitePart_eq
 -- proof
   apply NumberField.Modulus.infinite_infinitePart v
 
-/--
-[infinite_mul_self](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Modulus.lean)
--/
-@[path]
-private lemma infinite_mul_self_eq
-  [Field K] [NumberField K]
-  {v : RealPlace K} :
--- imply
-  infinite v * infinite v = infinite v := by
--- proof
-  apply NumberField.Modulus.infinite_mul_self v
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -1,6 +1,6 @@
 import Lemma.Set.UnionSDiff.eq.SDiffUnion
 import Lemma.Set.SDiffInter.eq.Empty
-open Set
+open Set BoundedInterval
 
 
 @[path]

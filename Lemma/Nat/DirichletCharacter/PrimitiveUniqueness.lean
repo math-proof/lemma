@@ -1,14 +1,14 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.DirichletCharacter.PrimitiveUniqueness
-open DirichletCharacter
 
+
+namespace DirichletCharacter
 
 /--
 [conductor_eq_of_isPrimitive_changeLevel](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/PrimitiveUniqueness.lean)
 -/
 @[path]
-private lemma conductor_eq_of_isPrimitive_changeLevel_eq
+lemma conductor_eq_of_isPrimitive_changeLevel
   [CommMonoidWithZero R]
   {n : ℕ} [NeZero n]
   {d : ℕ}
@@ -21,13 +21,20 @@ private lemma conductor_eq_of_isPrimitive_changeLevel_eq
 -- imply
   d = χ.conductor := by
 -- proof
-  apply DirichletCharacter.conductor_eq_of_isPrimitive_changeLevel χ hprim hd h
+  have hprim' : χ'.conductor = d := hprim
+  have hcond := conductor_changeLevel χ' hd
+  rw [h] at hcond
+  exact hprim'.symm.trans hcond.symm
+
+end DirichletCharacter
+
+namespace DirichletCharacter
 
 /--
 [eq_primitiveCharacter_of_changeLevel_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/PrimitiveUniqueness.lean)
 -/
 @[path]
-private lemma eq_primitiveCharacter_of_changeLevel_eq_eq
+lemma eq_primitiveCharacter_of_changeLevel_eq
   [CommMonoidWithZero R]
   {n : ℕ} [NeZero n]
   {d : ℕ}
@@ -40,13 +47,22 @@ private lemma eq_primitiveCharacter_of_changeLevel_eq_eq
 -- imply
   hlev ▸ χ' = χ.primitiveCharacter := by
 -- proof
-  apply DirichletCharacter.eq_primitiveCharacter_of_changeLevel_eq χ hlev hd h
+  subst hlev
+  have hcanon : changeLevel hd χ.primitiveCharacter = χ :=
+    changeLevel_primitiveCharacter χ
+  have heq : changeLevel hd χ' = changeLevel hd χ.primitiveCharacter := by
+    rw [h, hcanon]
+  exact changeLevel_injective hd heq
+
+end DirichletCharacter
+
+namespace DirichletCharacter
 
 /--
 [primitiveCharacter_isPrimitive_and_unique](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/PrimitiveUniqueness.lean)
 -/
 @[path]
-private lemma primitiveCharacter_isPrimitive_and_unique_eq
+lemma primitiveCharacter_isPrimitive_and_unique
   [CommMonoidWithZero R]
   {n : ℕ} [NeZero n]
   {χ : DirichletCharacter R n} :
@@ -57,7 +73,13 @@ private lemma primitiveCharacter_isPrimitive_and_unique_eq
         ∀ (hd : d ∣ n), changeLevel hd χ' = χ →
           ∃ (hlev : d = χ.conductor), hlev ▸ χ' = χ.primitiveCharacter := by
 -- proof
-  apply DirichletCharacter.primitiveCharacter_isPrimitive_and_unique χ
+  refine ⟨primitiveCharacter_isPrimitive χ, changeLevel_primitiveCharacter χ,
+    fun d χ' hprim hd h => ?_⟩
+  have hlev := conductor_eq_of_isPrimitive_changeLevel χ hprim hd h
+  exact ⟨hlev, eq_primitiveCharacter_of_changeLevel_eq χ hlev hd h⟩
+
+end DirichletCharacter
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

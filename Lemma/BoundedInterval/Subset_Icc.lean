@@ -1,0 +1,20 @@
+import Mathlib
+import sympy.Basic
+import sympy.analysis.Section_11_1
+open Chapter11.BoundedInterval
+open Chapter11
+
+
+/--
+[BoundedInterval.subset_Icc](https://github.com/teorth/analysis/blob/main/Analysis/Section_11_1.lean)
+-/
+@[path]
+private lemma main
+  {I: BoundedInterval} :
+-- imply
+  I ⊆ Icc I.a I.b :=
+-- proof
+  Chapter11.BoundedInterval.subset_Icc I
+
+
+-- created on 2026-10-22

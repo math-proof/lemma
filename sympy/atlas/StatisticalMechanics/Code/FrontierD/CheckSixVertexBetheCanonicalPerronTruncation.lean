@@ -1,0 +1,25 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexBetheCanonicalPerronTruncation.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalPerronTruncation
+
+#print axioms StatMech.FrontierD.sixVertexBetheLogNumerator_lower
+#print axioms StatMech.FrontierD.exists_lipschitzWith_sixVertexRegularizedBetheLogKernel
+#print axioms StatMech.FrontierD.periodic_sixVertexRegularizedBetheLogKernel
+#print axioms StatMech.FrontierD.sixVertexCanonicalDensityPerronEmpiricalRegularized_eq_positiveHalf
+#print axioms StatMech.FrontierD.sixVertexRegularizedBetheLogKernel_error_bounds
+#print axioms StatMech.FrontierD.sixVertexCanonicalDensityPerronRegularized_tail_error_le
+#print axioms StatMech.FrontierD.sixVertexCanonicalDensityPerronRootAverage_regularized_error_bounds
+#print axioms StatMech.FrontierD.tendsto_sixVertexCanonicalDensityPerronRegularizedLogKernel
+#print axioms StatMech.FrontierD.eventually_exists_sixVertexCanonicalRegularizedApproximation
+#print axioms StatMech.FrontierD.cauchySeq_sixVertexCanonicalDensityPerronRootAverage
+#print axioms StatMech.FrontierD.tendsto_sixVertexCanonicalDensityPerronRootAverage
+#print axioms StatMech.FrontierD.abs_sixVertexCanonicalDensityPerronRootAverageLimit_sub_regularizedIntegral_le
+#print axioms StatMech.FrontierD.tendsto_sixVertexCentralWidthRate_canonicalDensityPerronLimit

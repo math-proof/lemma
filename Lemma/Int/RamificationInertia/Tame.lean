@@ -4,93 +4,119 @@ import sympy.atlas.NumberTheory.RamificationInertia.Tame
 open Algebra
 
 
+namespace Algebra
+
 /--
 [isResidueSeparableAt_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma isResidueSeparableAt_iff_eq
+lemma isResidueSeparableAt_iff
   [CommRing R] [CommRing S] [Algebra R S]
   {q : Ideal S} [q.IsPrime] :
 -- imply
   IsResidueSeparableAt R q ↔
-    letI := by
+    letI :=
 -- proof
-  apply Algebra.isResidueSeparableAt_iff R q
+  Iff.rfl
+
+end Algebra
+
+namespace Algebra
 
 /--
 [isTamelyRamifiedAt_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma isTamelyRamifiedAt_iff_eq
+lemma isTamelyRamifiedAt_iff
   [CommRing R] [CommRing S] [Algebra R S]
   {q : Ideal S} [q.IsPrime] :
 -- imply
   IsTamelyRamifiedAt R q ↔
     IsResidueSeparableAt R q ∧
-    ¬ ringChar q.ResidueField ∣ q.ramificationIdx R := by
+    ¬ ringChar q.ResidueField ∣ q.ramificationIdx R :=
 -- proof
-  apply Algebra.isTamelyRamifiedAt_iff R q
+  Iff.rfl
+
+end Algebra
+
+namespace Algebra
 
 /--
 [isWildlyRamifiedAt_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma isWildlyRamifiedAt_iff_eq
+lemma isWildlyRamifiedAt_iff
   [CommRing R] [CommRing S] [Algebra R S]
   {q : Ideal S} [q.IsPrime] :
 -- imply
-  IsWildlyRamifiedAt R q ↔ ¬ IsTamelyRamifiedAt R q := by
+  IsWildlyRamifiedAt R q ↔ ¬ IsTamelyRamifiedAt R q :=
 -- proof
-  apply Algebra.isWildlyRamifiedAt_iff R q
+  Iff.rfl
+
+end Algebra
+
+namespace Algebra
 
 /--
 [isTamelyRamifiedAt_mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma isTamelyRamifiedAt_mk_eq
+lemma isTamelyRamifiedAt_mk
   [CommRing R] [CommRing S] [Algebra R S]
   {q : Ideal S} [q.IsPrime]
 -- given
   (hsep : IsResidueSeparableAt R q)
   (hchar : ¬ ringChar q.ResidueField ∣ q.ramificationIdx R) :
 -- imply
-  IsTamelyRamifiedAt R q := by
+  IsTamelyRamifiedAt R q :=
 -- proof
-  apply Algebra.isTamelyRamifiedAt_mk R q hsep hchar
+  ⟨hsep, hchar⟩
+
+end Algebra
+
+namespace Algebra
 
 /--
 [IsTamelyRamifiedAt.isSeparable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma IsTamelyRamifiedAt_isSeparable_eq
+lemma IsTamelyRamifiedAt.isSeparable
   [CommRing R] [CommRing S] [Algebra R S]
   {q : Ideal S} [q.IsPrime]
 -- given
   (h : IsTamelyRamifiedAt R q) :
 -- imply
-  IsResidueSeparableAt R q := by
+  IsResidueSeparableAt R q :=
 -- proof
-  apply Algebra.IsTamelyRamifiedAt.isSeparable R q h
+  h.1
+
+end Algebra
+
+namespace Algebra
 
 /--
 [IsTamelyRamifiedAt.not_dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma IsTamelyRamifiedAt_not_dvd_eq
+lemma IsTamelyRamifiedAt.not_dvd
   [CommRing R] [CommRing S] [Algebra R S]
   {q : Ideal S} [q.IsPrime]
 -- given
   (h : IsTamelyRamifiedAt R q) :
 -- imply
-  ¬ ringChar q.ResidueField ∣ q.ramificationIdx R := by
+  ¬ ringChar q.ResidueField ∣ q.ramificationIdx R :=
 -- proof
-  apply Algebra.IsTamelyRamifiedAt.not_dvd R q h
+  h.2
+
+end Algebra
+
+namespace Algebra
 
 /--
 [isWildlyRamifiedAt_iff_char_dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma isWildlyRamifiedAt_iff_char_dvd_eq
+lemma isWildlyRamifiedAt_iff_char_dvd
   [CommRing R] [CommRing S] [Algebra R S]
   {q : Ideal S} [q.IsPrime]
 -- given
@@ -98,65 +124,95 @@ private lemma isWildlyRamifiedAt_iff_char_dvd_eq
 -- imply
   IsWildlyRamifiedAt R q ↔ ringChar q.ResidueField ∣ q.ramificationIdx R := by
 -- proof
-  apply Algebra.isWildlyRamifiedAt_iff_char_dvd R q hsep
+  constructor
+  · intro hwild
+    by_contra hdvd
+    exact hwild ⟨hsep, hdvd⟩
+  · intro hdvd htame
+    exact htame.2 hdvd
+
+end Algebra
+
+namespace Algebra
 
 /--
 [isWildlyRamifiedAt_of_char_dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma isWildlyRamifiedAt_of_char_dvd_eq
+lemma isWildlyRamifiedAt_of_char_dvd
   [CommRing R] [CommRing S] [Algebra R S]
   {q : Ideal S} [q.IsPrime]
 -- given
   (hdvd : ringChar q.ResidueField ∣ q.ramificationIdx R) :
 -- imply
-  IsWildlyRamifiedAt R q := by
+  IsWildlyRamifiedAt R q :=
 -- proof
-  apply Algebra.isWildlyRamifiedAt_of_char_dvd R q hdvd
+  fun htame => htame.2 hdvd
+
+end Algebra
+
+namespace Algebra
 
 /--
 [isWildlyRamifiedAt_of_not_isResidueSeparableAt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma isWildlyRamifiedAt_of_not_isResidueSeparableAt_eq
+lemma isWildlyRamifiedAt_of_not_isResidueSeparableAt
   [CommRing R] [CommRing S] [Algebra R S]
   {q : Ideal S} [q.IsPrime]
 -- given
   (h : ¬ IsResidueSeparableAt R q) :
 -- imply
-  IsWildlyRamifiedAt R q := by
+  IsWildlyRamifiedAt R q :=
 -- proof
-  apply Algebra.isWildlyRamifiedAt_of_not_isResidueSeparableAt R q h
+  fun htame => h htame.1
+
+end Algebra
+
+namespace Algebra
 
 /--
 [isResidueSeparableAt_of_isUnramifiedAt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma isResidueSeparableAt_of_isUnramifiedAt_eq
+lemma isResidueSeparableAt_of_isUnramifiedAt
   [CommRing R] [CommRing S] [Algebra R S] [Algebra.EssFiniteType R S]
   {q : Ideal S} [q.IsPrime] [Algebra.IsUnramifiedAt R q] :
 -- imply
   IsResidueSeparableAt R q := by
 -- proof
-  apply Algebra.isResidueSeparableAt_of_isUnramifiedAt R q
+  let := Localization.AtPrime.algebraOfLiesOver (q.under R) q
+  have h : Algebra.IsSeparable (q.under R).ResidueField q.ResidueField :=
+    inferInstance
+  exact h
+
+end Algebra
+
+namespace Algebra
 
 /--
 [isTamelyRamifiedAt_of_isUnramifiedAt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma isTamelyRamifiedAt_of_isUnramifiedAt_eq
+lemma isTamelyRamifiedAt_of_isUnramifiedAt
   [CommRing R] [CommRing S] [Algebra R S] [Algebra.EssFiniteType R S]
   {q : Ideal S} [q.IsPrime] [Algebra.IsUnramifiedAt R q] :
 -- imply
   IsTamelyRamifiedAt R q := by
 -- proof
-  apply Algebra.isTamelyRamifiedAt_of_isUnramifiedAt R q
+  refine ⟨isResidueSeparableAt_of_isUnramifiedAt R q, ?_⟩
+  rw [Ideal.ramificationIdx_eq_one q R]
+  exact fun h => CharP.ringChar_ne_one (Nat.eq_one_of_dvd_one h)
+
+end Algebra
+
+namespace Algebra
 
 /--
 [isTamelyRamifiedAt_iff_isSeparable_of_charZero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean)
 -/
 @[path]
-private lemma isTamelyRamifiedAt_iff_isSeparable_of_charZero_eq
+lemma isTamelyRamifiedAt_iff_isSeparable_of_charZero
   [CommRing R] [CommRing S] [Algebra R S] [Module.Finite R S]
   {q : Ideal S} [q.IsPrime]
 -- given
@@ -164,7 +220,12 @@ private lemma isTamelyRamifiedAt_iff_isSeparable_of_charZero_eq
 -- imply
   IsTamelyRamifiedAt R q ↔ IsResidueSeparableAt R q := by
 -- proof
-  apply Algebra.isTamelyRamifiedAt_iff_isSeparable_of_charZero R q hchar
+  rw [isTamelyRamifiedAt_iff R q, hchar]
+  refine and_iff_left (fun hdvd => ?_)
+  exact (Ideal.ramificationIdx_pos q R).ne' (Nat.zero_dvd.mp hdvd)
+
+end Algebra
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

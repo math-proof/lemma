@@ -1,31 +1,36 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [Representation_forall_apply_eq_one_of_normal_isPGroup_of_isSimple](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Representation_forall_apply_eq_one_of_normal_isPGroup_of_isSimple.lean)
 -/
 @[path]
 private lemma main
-    {p : ℕ} [Fact p.Prime] {k : Type*} [Field k] [Finite k] [CharP k p]
-    {Δ : Type*} [Group Δ] [Finite Δ] {V : Type*} [AddCommGroup V] [Module k V] [FiniteDimensional k V]
-    (ρ : Representation k Δ V) (hV : Module.finrank k V ≠ 0)
-    (hsimple : ∀ W : Submodule k V, (∀ (d : Δ) (v : V), v ∈ W → ρ d v ∈ W) → W = ⊥ ∨ W = ⊤)
-    (P : Subgroup Δ) [P.Normal] (hP : IsPGroup p P) :
-    ∀ x ∈ P, ρ x = 1 := by
+  [Field k] [Finite k]
+  [Group Δ] [Finite Δ]
+  [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+  {p : ℕ} [Fact p.Prime] [CharP k p]
+  (ρ : Representation k Δ V) (hV : Module.finrank k V ≠ 0)
+  (hsimple : ∀ W : Submodule k V, (∀ (d : Δ) (v : V), v ∈ W → ρ d v ∈ W) → W = ⊥ ∨ W = ⊤)
+  (P : Subgroup Δ) [P.Normal] (hP : IsPGroup p P) :
+  -- imply
+  ∀ x ∈ P, ρ x = 1 := by
+  -- proof
   classical
-  let W : Submodule k V :=
-    { carrier := {v | ∀ x : P, ρ x v = v}
-      zero_mem' := fun x => map_zero _
-      add_mem' := fun {a b} ha hb x => by rw [map_add, ha x, hb x]
-      smul_mem' := fun c {a} ha x => by rw [map_smul, ha x] }
+  have hadd {a b : V} (ha : a ∈ {v | ∀ x : P, ρ x v = v}) (hb : b ∈ {v | ∀ x : P, ρ x v = v}) : a + b ∈ {v | ∀ x : P, ρ x v = v} := by
+    intro x
+    rw [map_add, ha x, hb x]
+  have hsmul (c : k) {a : V} (ha : a ∈ {v | ∀ x : P, ρ x v = v}) : c • a ∈ {v | ∀ x : P, ρ x v = v} := by
+    intro x
+    rw [map_smul, ha x]
+  let W : Submodule k V := { carrier := {v | ∀ x : P, ρ x v = v}, zero_mem' := fun x => map_zero _, add_mem' := hadd, smul_mem' := hsmul }
   have hWmem : ∀ v, v ∈ W ↔ ∀ x : P, ρ x v = v := fun _ => Iff.rfl
   have hWstab : ∀ (d : Δ) (v : V), v ∈ W → ρ d v ∈ W := by
     intro d v hv
@@ -35,13 +40,15 @@ private lemma main
       have := ‹P.Normal›.conj_mem (x : Δ) x.2 d⁻¹
       simpa using this
     have := hv ⟨_, hmem⟩
-    calc ρ x (ρ d v) = ρ d (ρ (d⁻¹ * x * d) v) := by
-            rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul]
-            congr 2; group
+    calc
+      _ = ρ d (ρ (d⁻¹ * x * d) v) := by
+        rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul]
+        congr 2
+        group
       _ = ρ d v := by rw [this]
   let _ : Finite V := Module.finite_of_finite k
   let _ : MulAction P V := MulAction.compHom V ((ρ : Δ →* Module.End k V).comp P.subtype)
-  have hsmul : ∀ (x : P) (v : V), x • v = ρ x v := fun _ _ => rfl
+  have hsmulAct : ∀ (x : P) (v : V), x • v = ρ x v := fun _ _ => rfl
   have hmod := hP.card_modEq_card_fixedPoints V
   have hcardV : Nat.card V ≡ 0 [MOD p] := by
     classical
@@ -49,35 +56,40 @@ private lemma main
     let _ : Fintype V := Fintype.ofFinite V
     obtain ⟨n, hp, hk⟩ := FiniteField.card k p
     rw [Nat.card_eq_fintype_card, Module.card_eq_pow_finrank (K := k), hk, ← pow_mul, Nat.modEq_zero_iff_dvd]
-    exact dvd_pow_self p (Nat.mul_ne_zero n.ne_zero hV)
+    apply dvd_pow_self p (Nat.mul_ne_zero n.ne_zero hV)
   have hfix : Nat.card (MulAction.fixedPoints P V) ≡ 0 [MOD p] := hmod.symm.trans hcardV
   have hex : ∃ v : V, v ≠ 0 ∧ ∀ x : P, ρ x v = v := by
     by_contra hne
-    push_neg at hne
-    have hsub : ∀ v : MulAction.fixedPoints P V, v = ⟨0, fun x => by rw [hsmul, map_zero]⟩ := by
+    push Not at hne
+    have hsub : ∀ v : MulAction.fixedPoints P V, v = ⟨0, fun x => by rw [hsmulAct, map_zero]⟩ := by
       rintro ⟨v, hv⟩
       by_contra h
       have hv0 : v ≠ 0 := fun h0 => h (Subtype.ext h0)
       obtain ⟨x, hx⟩ := hne v hv0
-      exact hx (hv x)
+      apply hx (hv x)
     let _ : Subsingleton (MulAction.fixedPoints P V) := ⟨fun a b => by rw [hsub a, hsub b]⟩
     have h1 : Nat.card (MulAction.fixedPoints P V) = 1 := by
       rw [Nat.card_eq_one_iff_unique]
-      exact ⟨inferInstance, ⟨⟨0, fun x => by rw [hsmul, map_zero]⟩⟩⟩
+      exact ⟨inferInstance, ⟨⟨0, fun x => by rw [hsmulAct, map_zero]⟩⟩⟩
     rw [h1, Nat.modEq_zero_iff_dvd] at hfix
-    exact (Fact.out : p.Prime).one_lt.ne' (Nat.dvd_one.mp hfix)
+    apply (Fact.out : p.Prime).one_lt.ne' (Nat.dvd_one.mp hfix)
   obtain ⟨v, hv0, hv⟩ := hex
   have hWtop : W = ⊤ := by
-    rcases hsimple W hWstab with h | h
-    · exfalso
+    obtain h | h := hsimple W hWstab
+    ·
+      exfalso
       have : v ∈ W := hv
       rw [h] at this
-      exact hv0 ((Submodule.mem_bot k).mp this)
-    · exact h
+      apply hv0 ((Submodule.mem_bot k).mp this)
+    ·
+      apply h
   intro x hx
   apply LinearMap.ext
   intro w
-  have hw : w ∈ W := by rw [hWtop]; trivial
-  exact hw ⟨x, hx⟩
+  have hw : w ∈ W := by
+    rw [hWtop]
+    trivial
+  refine hw ⟨x, hx⟩
+
 
 -- created on 2026-10-20

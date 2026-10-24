@@ -1,0 +1,26 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckPeriodicPlanarSheffieldBoundaryBandPadding.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldBoundaryBandPadding
+
+set_option linter.style.longLine false
+
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_common_leftBoundaryExhaustion_measureReal_gt
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_translatedFamily_leftBoundaryExhaustion_measureReal_gt
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_translatedFamily_rightBoundaryExhaustion_measureReal_gt
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_translatedFamily_bottomBoundaryExhaustion_measureReal_gt
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_translatedFamily_topBoundaryExhaustion_measureReal_gt
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.leftBoundaryExhaustion_to_commonSquare
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rightBoundaryExhaustion_to_commonSquare
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.bottomBoundaryExhaustion_to_commonSquare
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.topBoundaryExhaustion_to_commonSquare
+#print axioms StatMech.FK.PeriodicPlanar.le_commonPrimalDualBandHalfWidth
+#print axioms StatMech.FK.PeriodicPlanar.boundaryBandPreferenceColor_true_imp
+#print axioms StatMech.FK.PeriodicPlanar.boundaryBandPreferenceColor_false_imp

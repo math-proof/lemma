@@ -27,20 +27,4 @@ namespace Nat
 lines 83–85, which does not exclude `p = 2`. -/
 def IsSophieGermainPrime (p : ℕ) : Prop :=
   Nat.Prime p ∧ Nat.Prime (2 * p + 1)
-
-/-- Definitional characterization of Sophie Germain primes. -/
-theorem isSophieGermainPrime_iff (p : ℕ) :
-    IsSophieGermainPrime p ↔ Nat.Prime p ∧ Nat.Prime (2 * p + 1) :=
-  Iff.rfl
-
-/-- A Sophie Germain prime is prime. -/
-theorem IsSophieGermainPrime.prime {p : ℕ} (h : IsSophieGermainPrime p) :
-    Nat.Prime p :=
-  h.1
-
-/-- The associated safe prime `2 * p + 1` of a Sophie Germain prime is prime. -/
-theorem IsSophieGermainPrime.prime_two_mul_add_one {p : ℕ} (h : IsSophieGermainPrime p) :
-    Nat.Prime (2 * p + 1) :=
-  h.2
-
 end Nat

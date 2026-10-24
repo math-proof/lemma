@@ -56,22 +56,4 @@ and single-edge contractions.
 Stable source: https://en.wikipedia.org/wiki/Robertson%E2%80%93Seymour_theorem. -/
 def IsMinor (H G : FinGraph) : Prop :=
   Relation.ReflTransGen MinorStep H G
-
-/-- The minor relation is reflexive. -/
-theorem IsMinor.refl (G : FinGraph) : IsMinor G G :=
-  Relation.ReflTransGen.refl
-
-/-- The minor relation is transitive. -/
-theorem IsMinor.trans {H K G : FinGraph} :
-    IsMinor H K → IsMinor K G → IsMinor H G :=
-  Relation.ReflTransGen.trans
-
-/-- A single minor step yields a minor. -/
-theorem IsMinor.of_step {H G : FinGraph} (h : MinorStep H G) : IsMinor H G :=
-  Relation.ReflTransGen.single h
-
-/-- Isomorphic graphs are mutual minors in one step. -/
-theorem IsMinor.of_iso {H G : FinGraph} (e : H.G ≃g G.G) : IsMinor H G :=
-  IsMinor.of_step (MinorStep.iso H G e)
-
 end MetaMathlibExt

@@ -21,14 +21,4 @@ instance decidableIsEquilibriousWord (u : List (Fin 2)) :
     Decidable (IsEquilibriousWord u) := by
   unfold IsEquilibriousWord
   infer_instance
-
-/-- Reversal invariance: a finite binary word is equilibrious iff its reversal
-is. Elementary reusable consequence of the `List.count` definition.
-Provenance: concept `jis_sem_061cc96760fa3a6b576dda00`, source location
-`coons6.tex:543-575`. -/
-theorem isEquilibriousWord_reverse {u : List (Fin 2)} :
-    IsEquilibriousWord u.reverse ↔ IsEquilibriousWord u := by
-  unfold IsEquilibriousWord
-  rw [List.count_reverse, List.count_reverse]
-
 end MetaMathlibExt

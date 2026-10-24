@@ -23,5 +23,4 @@ private lemma main
     exact ⟨⟨hs, fun ht => hntu ht hu⟩, hu⟩
 
 
-
 -- created on 2025-07-20

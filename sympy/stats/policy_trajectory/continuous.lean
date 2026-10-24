@@ -19,7 +19,7 @@ regular (kernel) sense: they are the integrals against the transition kernel `M.
 * `Wk θ k x = 𝔼[r[t+k] | s[t] = x]`;
 * ;
 * ;
-* `P1k θ p x y = Pr(s[t+1] = y | s[t] = x)`, the density (w.r.t. a reference measure) of the next state
+* `P1k θ p x y = ℙ(s[t+1] = y | s[t] = x)`, the density (w.r.t. a reference measure) of the next state
   when `p x u` is the density of `M.env.trans (x, u)`.
 
 These are the continuous-state counterparts of the clamped j-step stage expectation
@@ -53,7 +53,7 @@ noncomputable def Vk (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
 noncomputable def Qk (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
   M.rk x u + γ * ∫ y, M.Vk θ γ y ∂(M.env.trans (x, u))
 
-/-- `P1k θ p x y = Pr(s[t+1] = y | s[t] = x) = ∑ u, π_θ(u | x) * p(y | x, u)`, the next-state density
+/-- `P1k θ p x y = ℙ(s[t+1] = y | s[t] = x) = ∑ u, π_θ(u | x) * p(y | x, u)`, the next-state density
 when `p x u` is a density of the transition `M.env.trans (x, u)` -/
 noncomputable def P1k (M : Model Θ S A) (θ : Θ) (p : S → A → S → ℝ) (x y : S) : ℝ :=
   ∑ u, M.policy.prob θ x u * p x u y

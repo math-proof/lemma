@@ -1,0 +1,23 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexBetheSymmetricStabilityEstimate.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheSymmetricStabilityEstimate
+
+#print axioms StatMech.FrontierD.sixVertexFiniteRootDensity_lower_of_weighted_close
+#print axioms StatMech.FrontierD.sixVertexFiniteRootDensity_lower_at_of_weighted_close
+#print axioms StatMech.FrontierD.sixVertexCyclicRootPartition_mesh_of_finiteDensityLower
+#print axioms StatMech.FrontierD.abs_finiteRootDensity_sub_continuumDensity_weighted_le_of_lower
+#print axioms StatMech.FrontierD.sixVertexWeightedFiniteDensityGauge_selfImproves
+#print axioms StatMech.FrontierD.sixVertexWeightedFiniteDensityGauge_solutionFreeAnnulus
+#print axioms StatMech.FrontierD.continuous_sixVertexContinuationWeightedFiniteDensityGauge
+#print axioms StatMech.FrontierD.sixVertexContinuationWeightedFiniteDensityGauge_solutionFreeAnnulus
+#print axioms StatMech.FrontierD.sixVertexEvenSymmetricBetheRootJacobian_injective_of_weightedDensityClose
+#print axioms StatMech.FrontierD.sixVertexContinuationWeightedFiniteDensityGauge_jacobianInjective
+#print axioms StatMech.FrontierD.exists_sixVertexContinuousEvenSymmetricBetheBranch_of_densityGauge

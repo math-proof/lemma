@@ -19,10 +19,10 @@ private lemma main
   (hPxyz : SinglePSpace π (x, y, z))
   (hCI : x ⟂ᵢ[π] y | z) :
 -- imply
-  have : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hPxyz
-  have : SinglePSpace π z := PSpace.of.PSpace_Joint.snd this
+  have : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hPxyz
+  have : SinglePSpace π z := SinglePSpace.of.SinglePSpace.snd this
   have : SinglePSpace π (x, z) := PSpace_Joint.comm
-    (PSpace.of.PSpace_Joint.fst (PSpace_JointJoint.of.PSpace_Joint_Joint (PSpace_Joint.comm (PSpace_JointJoint.of.PSpace_Joint_Joint hPxyz))))
+    (SinglePSpace.of.SinglePSpace.fst (PSpace_JointJoint.of.PSpace_Joint_Joint (PSpace_Joint.comm (PSpace_JointJoint.of.PSpace_Joint_Joint hPxyz))))
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
     ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
       ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,

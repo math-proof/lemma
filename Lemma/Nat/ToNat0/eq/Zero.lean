@@ -12,7 +12,8 @@ private lemma main
 -- imply
   (0 : Chapter2.Nat).toNat = 0 :=
 -- proof
-  Chapter2.Nat.zero_toNat
+  rfl
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -5,6 +5,7 @@
 -/
 
 import sympy.atlas.RingTheory.GradedAlgebra.MultigradedPoincareCoefficients
+import Lemma.Int.GradedAlgebra.MultigradedPoincareCoefficients
 /-!
 # Finite support of multigraded Poincaré coefficients
 

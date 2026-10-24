@@ -1,4 +1,4 @@
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.AEMeasurable
+import Lemma.Random.SinglePSpace.of.AEMeasurable
 import sympy.stats.hidden_markov_sequence
 open MeasureTheory Random Fun
 
@@ -27,8 +27,7 @@ private lemma main
   have hg : Measurable g :=
     Measurable.of_eval fun i => measurable_pi_apply (Fin.castLE ht i)
   rw [← show g ∘ x[:n] = x[:t] by funext ω i; rfl]
-  apply SinglePSpace.of.EqMeasureCount.AEMeasurable (hg.comp_aemeasurable hx)
-  apply CountableMeasure.measure_eq_count
-
+  apply SinglePSpace.of.AEMeasurable (hg.comp_aemeasurable hx)
 
 -- created on 2026-10-23
+-- updated on 2026-10-23

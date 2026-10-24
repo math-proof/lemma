@@ -1,4 +1,4 @@
-import Lemma.Random.Ne_0.of.Ne_0.Measurable
+import Lemma.Random.Prob.ne.Zero.of.NeProb_0
 import Lemma.Random.SinglePSpace.of.AEMeasurable.Le
 open MeasureTheory Random Fun
 
@@ -8,7 +8,7 @@ A nonzero atom of a length-`n` random vector stays nonzero on a prefix:
 `ℙ(x[:n] = «x.bvar»[:n]) ≠ 0` and `t ≤ n` give
 `ℙ(x[:t] = «x.bvar»[:t]) ≠ 0`.
 
-Python: Random.Ne_0.Slice.of.Ne_0, for `index = slice(0, t)` on a random
+Python: Random.NeProb_0.of.NeProb_0.Le, for `index = slice(0, t)` on a random
 vector of shape `(n,)`.
 -/
 @[path]
@@ -35,7 +35,7 @@ private lemma main
   let x₀ : Ω → Fin n → α := (‹SinglePSpace π x[:n]›.aemeasurable).mk x[:n]
   have hx₀ : Measurable x₀ := ‹SinglePSpace π x[:n]›.aemeasurable.measurable_mk
   have : SinglePSpace π x₀ :=
-    SinglePSpace.of.EqMeasureCount.Measurable hx₀ CountableMeasure.measure_eq_count
+    SinglePSpace.of.Measurable hx₀
   have hgx : g ∘ x[:n] = x[:t] := by
     funext ω i
     rfl
@@ -48,8 +48,9 @@ private lemma main
   have h0 : π.prob x₀ «x.bvar»[:n] ≠ 0 := by
     unfold Measure.prob at h ⊢
     rwa [← hmap] at h
+  have : Fact (Measurable x₀) := ⟨hx₀⟩
   have hne :=
-    Ne_0.of.Ne_0.Measurable (x := x₀) (g := g) («x.bvar» := «x.bvar»[:n]) hx₀ hg h0
+    Prob.ne.Zero.of.NeProb_0 (x := x₀) (g := g) («x.bvar» := «x.bvar»[:n]) hg (h := h0)
   have hmapt : π.map (g ∘ x₀) = π.map x[:t] := by
     rw [← hgx]
     apply Measure.map_congr

@@ -34,15 +34,4 @@ Provenance:
   https://cs.uwaterloo.ca/journals/JIS/VOL16/Kida/kida2.html -/
 noncomputable def genocchiNumber (n : ℕ) : ℚ :=
   (n.factorial : ℚ) * (PowerSeries.coeff n) genocchiPowerSeries
-
-/-- Interface restatement of `genocchiPowerSeries`. -/
-theorem genocchiPowerSeries_eq :
-    genocchiPowerSeries = 2 * PowerSeries.X * (PowerSeries.exp ℚ + 1)⁻¹ :=
-  rfl
-
-/-- Interface restatement of `genocchiNumber`. -/
-theorem genocchiNumber_eq (n : ℕ) :
-    genocchiNumber n = (n.factorial : ℚ) * (PowerSeries.coeff n) genocchiPowerSeries :=
-  rfl
-
 end MetaMathlibExt

@@ -9,270 +9,343 @@ open IsNondecreasingUnderapproximation
 open IsStrictUnderapproximation
 
 
+namespace EgyptianFraction.IsNondecreasingEgyptian
+
 /--
 [denominator_ge_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma denominator_ge_two_eq
+lemma denominator_ge_two
   {n : ℕ}
   {a : Fin n → ℕ}
   {i : Fin n}
 -- given
   (h : IsNondecreasingEgyptian a) :
 -- imply
-  2 ≤ a i := by
+  2 ≤ a i :=
 -- proof
-  apply EgyptianFraction.IsNondecreasingEgyptian.denominator_ge_two h i
+  h.1 i
+
+end EgyptianFraction.IsNondecreasingEgyptian
+
+namespace EgyptianFraction.IsNondecreasingEgyptian
 
 /--
 [monotone](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma monotone_eq
+lemma monotone
   {n : ℕ}
   {a : Fin n → ℕ}
 -- given
   (h : IsNondecreasingEgyptian a) :
 -- imply
-  Monotone a := by
+  Monotone a :=
 -- proof
-  apply EgyptianFraction.IsNondecreasingEgyptian.monotone h
+  h.2
+
+end EgyptianFraction.IsNondecreasingEgyptian
+
+namespace EgyptianFraction.IsStrictEgyptian
 
 /--
 [denominator_ge_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma EgyptianFraction_IsStrictEgyptian_denominator_ge_two_eq
+lemma denominator_ge_two
   {n : ℕ}
   {a : Fin n → ℕ}
   {i : Fin n}
 -- given
   (h : IsNondecreasingEgyptian a) :
 -- imply
-  2 ≤ a i := by
+  2 ≤ a i :=
 -- proof
-  apply EgyptianFraction.IsStrictEgyptian.denominator_ge_two h i
+  h.1 i
+
+end EgyptianFraction.IsStrictEgyptian
+
+namespace EgyptianFraction.IsStrictEgyptian
 
 /--
 [strictMono](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma strictMono_eq
+lemma strictMono
   {n : ℕ}
   {a : Fin n → ℕ}
 -- given
   (h : IsStrictEgyptian a) :
 -- imply
-  StrictMono a := by
+  StrictMono a :=
 -- proof
-  apply EgyptianFraction.IsStrictEgyptian.strictMono h
+  h.2
+
+end EgyptianFraction.IsStrictEgyptian
+
+namespace EgyptianFraction.IsStrictEgyptian
 
 /--
 [toIsNondecreasingEgyptian](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma toIsNondecreasingEgyptian_eq
+lemma toIsNondecreasingEgyptian
   {n : ℕ}
   {a : Fin n → ℕ}
 -- given
   (h : IsStrictEgyptian a) :
 -- imply
-  IsNondecreasingEgyptian a := by
+  IsNondecreasingEgyptian a :=
 -- proof
-  apply EgyptianFraction.IsStrictEgyptian.toIsNondecreasingEgyptian h
+  ⟨h.1, h.strictMono.monotone⟩
+
+end EgyptianFraction.IsStrictEgyptian
+
+namespace EgyptianFraction.IsNondecreasingUnderapproximation
 
 /--
 [nonempty](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma nonempty_eq
+lemma nonempty
   {n : ℕ}
   {target : ℝ}
   {a : Fin n → ℕ}
 -- given
   (h : IsNondecreasingUnderapproximation target a) :
 -- imply
-  0 < n := by
+  0 < n :=
 -- proof
-  apply EgyptianFraction.IsNondecreasingUnderapproximation.nonempty h
+  h.1
+
+end EgyptianFraction.IsNondecreasingUnderapproximation
+
+namespace EgyptianFraction.IsNondecreasingUnderapproximation
 
 /--
 [target_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma target_pos_eq
+lemma target_pos
   {n : ℕ}
   {target : ℝ}
   {a : Fin n → ℕ}
 -- given
   (h : IsNondecreasingUnderapproximation target a) :
 -- imply
-  0 < target := by
+  0 < target :=
 -- proof
-  apply EgyptianFraction.IsNondecreasingUnderapproximation.target_pos h
+  h.2.1
+
+end EgyptianFraction.IsNondecreasingUnderapproximation
+
+namespace EgyptianFraction.IsNondecreasingUnderapproximation
 
 /--
 [isNondecreasingEgyptian](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma isNondecreasingEgyptian_eq
+lemma isNondecreasingEgyptian
   {n : ℕ}
   {target : ℝ}
   {a : Fin n → ℕ}
 -- given
   (h : IsNondecreasingUnderapproximation target a) :
 -- imply
-  IsNondecreasingEgyptian a := by
+  IsNondecreasingEgyptian a :=
 -- proof
-  apply EgyptianFraction.IsNondecreasingUnderapproximation.isNondecreasingEgyptian h
+  h.2.2.1
+
+end EgyptianFraction.IsNondecreasingUnderapproximation
+
+namespace EgyptianFraction.IsNondecreasingUnderapproximation
 
 /--
 [denominator_ge_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma EgyptianFraction_IsNondecreasingUnderapproximation_denominator_ge_two_eq
+lemma denominator_ge_two
   {n : ℕ}
   {a : Fin n → ℕ}
   {i : Fin n}
 -- given
   (h : IsNondecreasingEgyptian a) :
 -- imply
-  2 ≤ a i := by
+  2 ≤ a i :=
 -- proof
-  apply EgyptianFraction.IsNondecreasingUnderapproximation.denominator_ge_two h i
+  h.isNondecreasingEgyptian.1 i
+
+end EgyptianFraction.IsNondecreasingUnderapproximation
+
+namespace EgyptianFraction.IsNondecreasingUnderapproximation
 
 /--
 [monotone](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma EgyptianFraction_IsNondecreasingUnderapproximation_monotone_eq
+lemma monotone
   {n : ℕ}
   {a : Fin n → ℕ}
 -- given
   (h : IsNondecreasingEgyptian a) :
 -- imply
-  Monotone a := by
+  Monotone a :=
 -- proof
-  apply EgyptianFraction.IsNondecreasingUnderapproximation.monotone h
+  h.isNondecreasingEgyptian.2
+
+end EgyptianFraction.IsNondecreasingUnderapproximation
+
+namespace EgyptianFraction.IsNondecreasingUnderapproximation
 
 /--
 [sum_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma sum_lt_eq
+lemma sum_lt
   {n : ℕ}
   {target : ℝ}
   {a : Fin n → ℕ}
 -- given
   (h : IsNondecreasingUnderapproximation target a) :
 -- imply
-  ∑ i, ((a i : ℝ)⁻¹) < target := by
+  ∑ i, ((a i : ℝ)⁻¹) < target :=
 -- proof
-  apply EgyptianFraction.IsNondecreasingUnderapproximation.sum_lt h
+  h.2.2.2
+
+end EgyptianFraction.IsNondecreasingUnderapproximation
+
+namespace EgyptianFraction.IsStrictUnderapproximation
 
 /--
 [nonempty](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma EgyptianFraction_IsStrictUnderapproximation_nonempty_eq
+lemma nonempty
   {n : ℕ}
   {target : ℝ}
   {a : Fin n → ℕ}
 -- given
   (h : IsNondecreasingUnderapproximation target a) :
 -- imply
-  0 < n := by
+  0 < n :=
 -- proof
-  apply EgyptianFraction.IsStrictUnderapproximation.nonempty h
+  h.1
+
+end EgyptianFraction.IsStrictUnderapproximation
+
+namespace EgyptianFraction.IsStrictUnderapproximation
 
 /--
 [target_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma EgyptianFraction_IsStrictUnderapproximation_target_pos_eq
+lemma target_pos
   {n : ℕ}
   {target : ℝ}
   {a : Fin n → ℕ}
 -- given
   (h : IsNondecreasingUnderapproximation target a) :
 -- imply
-  0 < target := by
+  0 < target :=
 -- proof
-  apply EgyptianFraction.IsStrictUnderapproximation.target_pos h
+  h.2.1
+
+end EgyptianFraction.IsStrictUnderapproximation
+
+namespace EgyptianFraction.IsStrictUnderapproximation
 
 /--
 [isStrictEgyptian](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma isStrictEgyptian_eq
+lemma isStrictEgyptian
   {n : ℕ}
   {target : ℝ}
   {a : Fin n → ℕ}
 -- given
   (h : IsStrictUnderapproximation target a) :
 -- imply
-  IsStrictEgyptian a := by
+  IsStrictEgyptian a :=
 -- proof
-  apply EgyptianFraction.IsStrictUnderapproximation.isStrictEgyptian h
+  h.2.2.1
+
+end EgyptianFraction.IsStrictUnderapproximation
+
+namespace EgyptianFraction.IsStrictUnderapproximation
 
 /--
 [denominator_ge_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma EgyptianFraction_IsStrictUnderapproximation_denominator_ge_two_eq
+lemma denominator_ge_two
   {n : ℕ}
   {a : Fin n → ℕ}
   {i : Fin n}
 -- given
   (h : IsNondecreasingEgyptian a) :
 -- imply
-  2 ≤ a i := by
+  2 ≤ a i :=
 -- proof
-  apply EgyptianFraction.IsStrictUnderapproximation.denominator_ge_two h i
+  h.isStrictEgyptian.1 i
+
+end EgyptianFraction.IsStrictUnderapproximation
+
+namespace EgyptianFraction.IsStrictUnderapproximation
 
 /--
 [strictMono](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma EgyptianFraction_IsStrictUnderapproximation_strictMono_eq
+lemma strictMono
   {n : ℕ}
   {a : Fin n → ℕ}
 -- given
   (h : IsStrictEgyptian a) :
 -- imply
-  StrictMono a := by
+  StrictMono a :=
 -- proof
-  apply EgyptianFraction.IsStrictUnderapproximation.strictMono h
+  h.isStrictEgyptian.2
+
+end EgyptianFraction.IsStrictUnderapproximation
+
+namespace EgyptianFraction.IsStrictUnderapproximation
 
 /--
 [sum_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma EgyptianFraction_IsStrictUnderapproximation_sum_lt_eq
+lemma sum_lt
   {n : ℕ}
   {target : ℝ}
   {a : Fin n → ℕ}
 -- given
   (h : IsNondecreasingUnderapproximation target a) :
 -- imply
-  ∑ i, ((a i : ℝ)⁻¹) < target := by
+  ∑ i, ((a i : ℝ)⁻¹) < target :=
 -- proof
-  apply EgyptianFraction.IsStrictUnderapproximation.sum_lt h
+  h.2.2.2
+
+end EgyptianFraction.IsStrictUnderapproximation
+
+namespace EgyptianFraction.IsStrictUnderapproximation
 
 /--
 [toIsNondecreasingUnderapproximation](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EgyptianFraction.lean)
 -/
 @[path]
-private lemma toIsNondecreasingUnderapproximation_eq
+lemma toIsNondecreasingUnderapproximation
   {n : ℕ}
   {target : ℝ}
   {a : Fin n → ℕ}
 -- given
   (h : IsStrictUnderapproximation target a) :
 -- imply
-  IsNondecreasingUnderapproximation target a := by
+  IsNondecreasingUnderapproximation target a :=
 -- proof
-  apply EgyptianFraction.IsStrictUnderapproximation.toIsNondecreasingUnderapproximation h
+  ⟨h.nonempty, h.target_pos, h.isStrictEgyptian.toIsNondecreasingEgyptian, h.sum_lt⟩
+
+end EgyptianFraction.IsStrictUnderapproximation
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

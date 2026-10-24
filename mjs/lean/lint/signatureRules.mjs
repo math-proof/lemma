@@ -198,10 +198,23 @@ export function signatureRules(ctx) {
             if (!inGiven) ctx.warn('default-arg-given', g.line + 1, g.col + 1, `default argument \`${g.open}${g.flat}${closeOf(g.open)}\` must be inside the \`-- given\` section`);
         }
 
-        // ---- given: propositions first, expressions next; propositions consecutive --------------------------------
+        // ---- given: never `(h : T := by tactic)`; keep needed instances as `[…]` before the hyp ----------
         const gg = given != null
             ? groups.filter((g) => g.line > given && (imply == null || g.line < imply))
             : [];
+        for (const g of gg) {
+            // tactic-valued binder defaults are forbidden (incl. `:= by infer_instance`)
+            if (g.deflt == null || !/^by\b/.test(g.deflt)) continue;
+            const inst = g.names.length ? `[${g.names[0]} : ${g.type}]` : `[${g.type}]`;
+            ctx.warn(
+                'given-inst',
+                g.line + 1,
+                g.col + 1,
+                `binder default \`${g.open}${g.flat}${closeOf(g.open)}\` uses a tactic; keep an instance binder \`${inst}\` inside \`-- given\`, before the hypothesis that needs it`,
+            );
+        }
+
+        // ---- given: propositions first, expressions next; propositions consecutive --------------------------------
         if (given != null && !ctx.astCovered.has('given-prop-first')) {
             // expressions the propositions need (closed over expression types): they must stay above the propositions
             const need = new Set();

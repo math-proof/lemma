@@ -1,11 +1,11 @@
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 import sympy.stats.policy_trajectory
 import sympy.vector.operators
-open MeasureTheory PolicyGradient Random
+open MeasureTheory PolicyGradient Random Measure
 
 
 /--
-Path-binder Expect of `∇[θ] (V θ (s n))` equals the Bochner integral of the same observable.
+Path-binder Expect of `∇[θ] (V θ (s n))` equals the ContinuousAndEq_1AndAll_EqIm0AndGeRe0.is.Any_And_All_Eq_CharFun integral of the same observable.
 -/
 @[path]
 private lemma main

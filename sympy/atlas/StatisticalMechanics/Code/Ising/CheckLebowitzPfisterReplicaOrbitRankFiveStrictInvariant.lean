@@ -1,0 +1,21 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/CheckLebowitzPfisterReplicaOrbitRankFiveStrictInvariant.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankFiveStrictInvariant
+
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtomOfRowGate_hasStrictPhysicalDoubleIncidence
+#print axioms StatMech.Ising.lpReplica_not_strictPhysicalDoubleIncidence_insert_diagonal_matching
+#print axioms StatMech.Ising.lpReplica_not_strictPhysicalDoubleIncidence_matching
+#print axioms StatMech.Ising.lpReplica_strictPhysicalDoubleIncidence_insert_parallel_pair_iff
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_rankFive_activeCore_uniqueIncidence
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_rankFive_exists_parallelComplementPair
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_rankFive_nonsaturatedHigh_singletonToggle_raw_iff
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_rankFive_low_singletonToggle_not_strictRaw
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSourceStrictRouteTargetAtom_hasDoubleIncidence

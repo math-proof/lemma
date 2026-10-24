@@ -30,27 +30,4 @@ abbrev Vertex (R : Type u) [CommRing R] :
 def zeroDivisorGraph (R : Type u) [CommRing R] :
     SimpleGraph (Vertex R) :=
   SimpleGraph.fromRel fun v w : Vertex R => (v : R) * (w : R) = 0
-
-/-- An element lifts to a vertex iff it is nonzero and a zero divisor. -/
-theorem exists_vertex_iff (R : Type u) [CommRing R] (r : R) :
-    (∃ v : Vertex R, (v : R) = r) ↔ (r ≠ 0 ∧ r ∉ nonZeroDivisors R) := by
-  constructor
-  · rintro ⟨v, rfl⟩
-    exact v.property
-  · rintro ⟨h0, hmem⟩
-    exact ⟨⟨r, h0, hmem⟩, rfl⟩
-
-/-- Adjacency is distinctness plus zero product in source orientation. -/
-theorem adj_iff (R : Type u) [CommRing R]
-    {v w : Vertex R} :
-    (zeroDivisorGraph R).Adj v w ↔ v ≠ w ∧ (v : R) * (w : R) = 0 := by
-  unfold zeroDivisorGraph
-  rw [SimpleGraph.fromRel_adj]
-  constructor
-  · rintro ⟨hne, h | h⟩
-    · exact ⟨hne, h⟩
-    · exact ⟨hne, by rw [mul_comm]; exact h⟩
-  · rintro ⟨hne, h⟩
-    exact ⟨hne, Or.inl h⟩
-
 end ZeroDivisorGraph

@@ -2,6 +2,7 @@
 
 -- Author: @toskua, Avocado
 import sympy.atlas.NumberTheory.NumberField.RayClass.FiniteCongruence
+import Lemma.Nat.NumberField.RayClass.FiniteCongruence
 import Mathlib.Analysis.AbsoluteValue.Equivalence
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
@@ -350,24 +351,5 @@ theorem exists_ne_zero_with_target_and_sign
       exact (hsupp (Or.inl ⟨v, hmem⟩)).elim
     · intro w hw
       exact (hsupp (Or.inr ⟨w, hw⟩)).elim
-
-/-- Simultaneous weak approximation at the finite and real places of a modulus.
-
-Retained API: the `a = 1` specialization of
-`exists_ne_zero_with_target_and_sign`. -/
-theorem exists_ne_zero_with_valuation_one_and_sign
-    (m : Modulus K)
-    (pos : {w : RealPlace K // w ∈ m.infinitePart} → Prop) :
-    ∃ x : K, x ≠ 0 ∧
-      (∀ v : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
-        finiteSupported m v → v.valuation K x = 1) ∧
-      ∀ (w : RealPlace K) (hw : w ∈ m.infinitePart),
-        (pos ⟨w, hw⟩ → 0 < InfinitePlace.embedding_of_isReal w.property x) ∧
-        (¬ pos ⟨w, hw⟩ → InfinitePlace.embedding_of_isReal w.property x < 0) := by
-  obtain ⟨x, hxne, hval, hsign⟩ := exists_ne_zero_with_target_and_sign m 1 pos
-    one_ne_zero (fun _ _ => map_one _)
-  exact ⟨x, hxne, fun v hv => (hval v hv).1, hsign⟩
-
 end Modulus
-
 end NumberField

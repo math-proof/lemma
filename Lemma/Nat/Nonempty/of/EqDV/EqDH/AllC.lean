@@ -1,0 +1,91 @@
+import Mathlib
+import sympy.Basic
+import Lemma.Definitions.Def_AlgebraicGeometry_DoubleComplex
+open DoubleComplex
+
+
+/-- ported from external source -/
+
+private lemma helper_main
+  {R : Type u} [CommRing R] (D D' : DoubleComplex.Bounded R)
+  (e : ∀ p q : ℕ, D.C p q ≃ₗ[R] D'.C p q)
+  (hH : ∀ (p q : ℕ) (x : D.C p q), e (p + 1) q (D.dH p q x) = D'.dH p q (e p q x))
+  (hV : ∀ (p q : ℕ) (x : D.C p q), e p (q + 1) (D.dV p q x) = D'.dV p q (e p q x))
+  (n : ℕ) :
+  Nonempty (DoubleComplex.HTot D n ≃ₗ[R] DoubleComplex.HTot D' n) := by
+  classical
+  let T : ∀ m : ℕ, Tot D m ≃ₗ[R] Tot D' m := fun m =>
+    LinearEquiv.piCongrRight (fun i : Diag m => e i.1.1 i.1.2)
+  have hTapp : ∀ (m : ℕ) (c : Tot D m) (i : Diag m), T m c i = e i.1.1 i.1.2 (c i) := fun m c i => rfl
+  have hT : ∀ (m : ℕ) (c : Tot D m), dTot D' m (T m c) = T (m + 1) (dTot D m c) := by
+    intro m c
+    funext i
+    obtain ⟨⟨pp, qq⟩, h⟩ := i
+    rw [hTapp]
+    match pp, qq, h with
+    | 0, 0, h => exact absurd h (by omega)
+    | 0, q' + 1, h =>
+      rw [dTot_apply_zero_succ, dTot_apply_zero_succ, hTapp, hV]
+    | p' + 1, 0, h =>
+      rw [dTot_apply_succ_zero, dTot_apply_succ_zero, hTapp, hH]
+    | p' + 1, q' + 1, h =>
+      rw [dTot_apply_succ_succ, dTot_apply_succ_succ, hTapp, hTapp, map_add, map_zsmul, hH, hV]
+  have hmapker : ∀ m : ℕ, (LinearMap.ker (dTot D m)).map (T m : Tot D m →ₗ[R] Tot D' m) =
+      LinearMap.ker (dTot D' m) := by
+    intro m
+    ext y
+    rw [Submodule.mem_map, LinearMap.mem_ker]
+    constructor
+    ·
+      rintro ⟨c, hc, rfl⟩
+      rw [LinearMap.mem_ker] at hc
+      rw [LinearEquiv.coe_coe, hT, hc, map_zero]
+    ·
+      intro hy
+      refine ⟨(T m).symm y, ?_, LinearEquiv.apply_symm_apply _ _⟩
+      rw [LinearMap.mem_ker]
+      apply (T (m + 1)).injective
+      rw [← hT, LinearEquiv.apply_symm_apply, hy, map_zero]
+  let K : ∀ m : ℕ, LinearMap.ker (dTot D m) ≃ₗ[R] LinearMap.ker (dTot D' m) := fun m =>
+    LinearEquiv.ofSubmodules (T m) _ _ (hmapker m)
+  have hKval : ∀ (m : ℕ) (x : LinearMap.ker (dTot D m)), ((K m x : LinearMap.ker (dTot D' m)) : Tot D' m) =
+      T m (x : Tot D m) := fun m x => rfl
+  have hmapB : (HTotB D n).map (K n : LinearMap.ker (dTot D n) →ₗ[R] LinearMap.ker (dTot D' n)) =
+      HTotB D' n := by
+    match n with
+    | 0 => exact Submodule.map_bot _
+    | n' + 1 =>
+      ext y
+      simp only [HTotB, Submodule.mem_map, Submodule.mem_comap, Submodule.subtype_apply,
+        LinearMap.mem_range]
+      constructor
+      ·
+        rintro ⟨x, ⟨c, hc⟩, rfl⟩
+        refine ⟨T n' c, ?_⟩
+        rw [LinearEquiv.coe_coe, hKval, ← hc, hT]
+      ·
+        rintro ⟨c', hc'⟩
+        have hx : T (n' + 1) (dTot D n' ((T n').symm c')) = (y : Tot D' (n' + 1)) := by
+          rw [← hT, LinearEquiv.apply_symm_apply, hc']
+        refine ⟨⟨dTot D n' ((T n').symm c'), ?_⟩, ⟨(T n').symm c', rfl⟩, ?_⟩
+        · rw [LinearMap.mem_ker, ← LinearMap.comp_apply, dTot_comp_dTot, LinearMap.zero_apply]
+        ·
+          apply Subtype.ext
+          rwa [LinearEquiv.coe_coe, hKval]
+  refine ⟨Submodule.Quotient.equiv (HTotB D n) (HTotB D' n) (K n) hmapB⟩
+@[path]
+private lemma main
+  {R : Type u} [CommRing R]
+  {D D' : DoubleComplex.Bounded R}
+  {n : ℕ}
+-- given
+  (e : ∀ p q : ℕ, D.C p q ≃ₗ[R] D'.C p q)
+  (hH : ∀ (p q : ℕ) (x : D.C p q), e (p + 1) q (D.dH p q x) = D'.dH p q (e p q x))
+  (hV : ∀ (p q : ℕ) (x : D.C p q), e p (q + 1) (D.dV p q x) = D'.dV p q (e p q x)) :
+-- imply
+  Nonempty (DoubleComplex.HTot D n ≃ₗ[R] DoubleComplex.HTot D' n) :=
+-- proof
+  helper_main D D' e hH hV n
+
+
+-- created on 2026-10-23

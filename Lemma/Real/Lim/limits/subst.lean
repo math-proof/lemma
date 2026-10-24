@@ -2,8 +2,6 @@ import sympy.series.limits
 import sympy.Basic
 
 
-
-
 @[path]
 private lemma main
   {f : ℝ → ℝ}

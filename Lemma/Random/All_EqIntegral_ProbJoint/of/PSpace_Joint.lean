@@ -2,7 +2,7 @@ import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
+import Lemma.Random.SinglePSpace.SinglePSpace.of.SinglePSpace
 open Random MeasureTheory
 
 
@@ -33,7 +33,7 @@ private lemma left
 -- given
   (hP : SinglePSpace π (x, y)) :
 -- imply
-  have := PSpace.of.PSpace_Joint.snd hP
+  have := SinglePSpace.of.SinglePSpace.snd hP
   ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
     ∫⁻ «x.bvar», ℙ[π](x = «x.bvar» ∧ y = «y.bvar») ∂ReferenceMeasure.measure =
       ℙ[π](y = «y.bvar») := by
@@ -83,7 +83,7 @@ private lemma main
 -- given
   (hP : SinglePSpace π (x, y)) :
 -- imply
-  have := PSpace.of.PSpace_Joint.fst hP
+  have := SinglePSpace.of.SinglePSpace.fst hP
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
     ∫⁻ «y.bvar», ℙ[π](x = «x.bvar» ∧ y = «y.bvar») ∂ReferenceMeasure.measure =
       ℙ[π](x = «x.bvar») := by

@@ -1,22 +1,25 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.Spectrum.Prime.GroupAction
 open scoped Pointwise
-open PrimeSpectrum
 
+
+namespace PrimeSpectrum
 
 /--
 [smul_asIdeal](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/Spectrum/Prime/GroupAction.lean)
 -/
 @[path]
-private lemma smul_asIdeal_eq
+lemma smul_asIdeal
   [Group G] [CommSemiring R] [MulSemiringAction G R]
   {g : G}
   {p : PrimeSpectrum R} :
 -- imply
-  (g • p).asIdeal = g • p.asIdeal := by
+  (g • p).asIdeal = g • p.asIdeal :=
 -- proof
-  apply PrimeSpectrum.smul_asIdeal g p
+  rfl
+
+end PrimeSpectrum
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

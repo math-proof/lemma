@@ -6,34 +6,56 @@ open scoped ENNReal
 open MetaMathlibExt.RandomMultiplicativeFunction
 
 
+namespace MetaMathlibExt.RandomMultiplicativeFunction
+
 /--
 [rademacherMeasure_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma rademacherMeasure_singleton_eq
+lemma rademacherMeasure_singleton
   {x : ℤˣ} :
 -- imply
   rademacherMeasure {x} = (2 : ENNReal)⁻¹ := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.rademacherMeasure_singleton x
+  have hs : MeasurableSet ({x} : Set ℤˣ) := by
+    have h_coe : Measurable (fun u : ℤˣ => (u : ℤ)) :=
+      measurable_iff_comap_le.2 le_rfl
+    have h_eq : ({x} : Set ℤˣ) =
+      (fun u : ℤˣ => (u : ℤ)) ⁻¹' ({(x : ℤ)} : Set ℤ) := by
+      ext u
+      simp [Units.ext_iff]
+    rw [h_eq]
+    exact h_coe (measurableSet_singleton _)
+  rw [rademacherMeasure, PMF.toMeasure_uniformOfFintype_apply _ hs]
+  simp [Fintype.card_units_int]
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [exists_rademacherFamily](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma exists_rademacherFamily_eq
+lemma exists_rademacherFamily
   :
 -- imply
   ∃ (Ω : Type) (_ : MeasurableSpace Ω) (μ : Measure Ω) (X : Nat.Primes → Ω → ℤˣ),
     IsRademacherFamily μ X ∧ IsProbabilityMeasure μ := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.exists_rademacherFamily
+  obtain ⟨Ω, hM, μ, X, hMeas, hLaw, hIndep, hProb⟩ :=
+    exists_iid Nat.Primes rademacherMeasure
+  exact ⟨Ω, hM, μ, X, ⟨hMeas, hLaw, hIndep⟩, hProb⟩
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [primeSignNat_prime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma primeSignNat_prime_eq
+lemma primeSignNat_prime
   {X : Nat.Primes → Ω → ℤˣ}
   {p : ℕ}
   {ω : Ω}
@@ -42,13 +64,17 @@ private lemma primeSignNat_prime_eq
 -- imply
   primeSignNat X p ω = (X ⟨p, hp⟩ ω : ℤ) := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.primeSignNat_prime hp
+  simp [primeSignNat, hp]
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [primeSignNat_not_prime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma primeSignNat_not_prime_eq
+lemma primeSignNat_not_prime
   {X : Nat.Primes → Ω → ℤˣ}
   {n : ℕ}
   {ω : Ω}
@@ -57,13 +83,17 @@ private lemma primeSignNat_not_prime_eq
 -- imply
   primeSignNat X n ω = 1 := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.primeSignNat_not_prime hn
+  simp [primeSignNat, hn]
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [IsRademacherFamily.measurable_primeSignNat](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma IsRademacherFamily_measurable_primeSignNat_eq
+lemma IsRademacherFamily.measurable_primeSignNat
   [MeasurableSpace Ω]
   {μ : Measure Ω}
   {X : Nat.Primes → Ω → ℤˣ}
@@ -73,13 +103,28 @@ private lemma IsRademacherFamily_measurable_primeSignNat_eq
 -- imply
   Measurable (primeSignNat X n) := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.IsRademacherFamily.measurable_primeSignNat hX n
+  by_cases hn : Nat.Prime n
+  · have h_coe : Measurable (fun u : ℤˣ => (u : ℤ)) :=
+    measurable_iff_comap_le.2 le_rfl
+    have h_eq : primeSignNat X n = fun ω => (X ⟨n, hn⟩ ω : ℤ) := by
+      funext ω
+      exact primeSignNat_prime hn
+    rw [h_eq]
+    exact h_coe.comp (hX.1 ⟨n, hn⟩)
+  · have h_eq : primeSignNat X n = fun _ => 1 := by
+    funext ω
+    exact primeSignNat_not_prime hn
+    rwa [h_eq]
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [rademacherFunction_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma rademacherFunction_apply_eq
+lemma rademacherFunction_apply
   {X : Nat.Primes → Ω → ℤˣ}
   {ω : Ω}
   {n : ℕ}
@@ -89,25 +134,34 @@ private lemma rademacherFunction_apply_eq
   rademacherFunction X ω n =
     ((moebius n : ℤ) ^ 2) * ∏ p ∈ n.primeFactors, primeSignNat X p ω := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.rademacherFunction_apply hn
+  simp [rademacherFunction, pmul_apply, prodPrimeFactors_apply hn, pow_two]
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [rademacherFunction_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma rademacherFunction_one_eq
+lemma rademacherFunction_one
   {X : Nat.Primes → Ω → ℤˣ}
   {ω : Ω} :
 -- imply
   rademacherFunction X ω 1 = 1 := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.rademacherFunction_one
+  have h1 : (1 : ℕ) ≠ 0 := by decide
+  simp [rademacherFunction_apply h1]
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [rademacherFunction_eq_prod_of_squarefree](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma rademacherFunction_eq_prod_of_squarefree_eq
+lemma rademacherFunction_eq_prod_of_squarefree
   {X : Nat.Primes → Ω → ℤˣ}
   {ω : Ω}
   {n : ℕ}
@@ -116,13 +170,17 @@ private lemma rademacherFunction_eq_prod_of_squarefree_eq
 -- imply
   rademacherFunction X ω n = ∏ p ∈ n.primeFactors, primeSignNat X p ω := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.rademacherFunction_eq_prod_of_squarefree hn
+  rw [rademacherFunction_apply hn.ne_zero, moebius_sq_eq_one_of_squarefree hn, one_mul]
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [rademacherFunction_eq_zero_of_not_squarefree](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma rademacherFunction_eq_zero_of_not_squarefree_eq
+lemma rademacherFunction_eq_zero_of_not_squarefree
   {X : Nat.Primes → Ω → ℤˣ}
   {ω : Ω}
   {n : ℕ}
@@ -131,25 +189,36 @@ private lemma rademacherFunction_eq_zero_of_not_squarefree_eq
 -- imply
   rademacherFunction X ω n = 0 := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.rademacherFunction_eq_zero_of_not_squarefree hn
+  by_cases hn0 : n = 0
+  · simp [hn0]
+  · simp [rademacherFunction_apply hn0, moebius_eq_zero_of_not_squarefree hn]
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [isMultiplicative_rademacherFunction](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma isMultiplicative_rademacherFunction_eq
+lemma isMultiplicative_rademacherFunction
   {X : Nat.Primes → Ω → ℤˣ}
   {ω : Ω} :
 -- imply
-  IsMultiplicative (rademacherFunction X ω) := by
+  IsMultiplicative (rademacherFunction X ω) :=
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.isMultiplicative_rademacherFunction
+  (isMultiplicative_moebius.pmul isMultiplicative_moebius).pmul
+    (IsMultiplicative.prodPrimeFactors _)
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [rademacherFunction_prime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma rademacherFunction_prime_eq
+lemma rademacherFunction_prime
   {X : Nat.Primes → Ω → ℤˣ}
   {ω : Ω}
   {p : ℕ}
@@ -158,13 +227,19 @@ private lemma rademacherFunction_prime_eq
 -- imply
   rademacherFunction X ω p = primeSignNat X p ω := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.rademacherFunction_prime hp
+  have hpf : p.primeFactors = {p} := by
+    simpa using Nat.primeFactors_prime_pow (p := p) (k := 1) (by decide) hp
+  rw [rademacherFunction_eq_prod_of_squarefree hp.squarefree, hpf, Finset.prod_singleton]
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [rademacherFunction_prime_sq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma rademacherFunction_prime_sq_eq
+lemma rademacherFunction_prime_sq
   {X : Nat.Primes → Ω → ℤˣ}
   {ω : Ω}
   {p : ℕ}
@@ -173,13 +248,19 @@ private lemma rademacherFunction_prime_sq_eq
 -- imply
   rademacherFunction X ω (p ^ 2) = 0 := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.rademacherFunction_prime_sq hp
+  apply rademacherFunction_eq_zero_of_not_squarefree
+  rw [Nat.squarefree_pow_iff hp.ne_one (by decide : 2 ≠ 0)]
+  simp
+
+end MetaMathlibExt.RandomMultiplicativeFunction
+
+namespace MetaMathlibExt.RandomMultiplicativeFunction
 
 /--
 [IsRademacherFamily.measurable_rademacherFunction](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean)
 -/
 @[path]
-private lemma IsRademacherFamily_measurable_rademacherFunction_eq
+lemma IsRademacherFamily.measurable_rademacherFunction
   [MeasurableSpace Ω]
   {μ : Measure Ω}
   {X : Nat.Primes → Ω → ℤˣ}
@@ -189,7 +270,23 @@ private lemma IsRademacherFamily_measurable_rademacherFunction_eq
 -- imply
   Measurable (fun ω => rademacherFunction X ω n) := by
 -- proof
-  apply MetaMathlibExt.RandomMultiplicativeFunction.IsRademacherFamily.measurable_rademacherFunction hX n
+  by_cases hn : n = 0
+  · subst n
+    have h_eq : (fun ω => rademacherFunction X ω 0) = fun _ => (0 : ℤ) := by
+      funext ω
+      simp
+    rwa [h_eq]
+  · have hprod : Measurable (fun ω => ∏ p ∈ n.primeFactors, primeSignNat X p ω) :=
+    Finset.measurable_prod n.primeFactors fun p _ => hX.measurable_primeSignNat p
+    have h_eq : (fun ω => rademacherFunction X ω n) =
+      fun ω => ((moebius n : ℤ) ^ 2) * ∏ p ∈ n.primeFactors, primeSignNat X p ω := by
+      funext ω
+      exact rademacherFunction_apply hn
+    rw [h_eq]
+    exact measurable_const.mul hprod
+
+end MetaMathlibExt.RandomMultiplicativeFunction
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

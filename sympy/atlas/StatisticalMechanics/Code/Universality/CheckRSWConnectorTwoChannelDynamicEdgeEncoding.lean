@@ -1,0 +1,37 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckRSWConnectorTwoChannelDynamicEdgeEncoding.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelDynamicEdgeEncoding
+
+#print axioms StatMech.Universality.RlcTwoChannelEdgeFailure
+#print axioms StatMech.Universality.RlcTwoChannelEdgeSuccess
+#print axioms StatMech.Universality.RlcTwoChannelDynamicRoutePlan
+#print axioms StatMech.Universality.RlcTwoChannelDynamicRoutePlan.codeSet
+#print axioms StatMech.Universality.RlcTwoChannelDynamicRoutePlan.Code
+#print axioms StatMech.Universality.RlcTwoChannelDynamicRoutePlan.Payload
+#print axioms StatMech.Universality.RlcTwoChannelDynamicRoutePlan.codeEquivPayload
+#print axioms StatMech.Universality.RlcTwoChannelDynamicRoutePlan.code_card
+#print axioms StatMech.Universality.RlcTwoChannelEdgeCodeHall
+#print axioms StatMech.Universality.rlc_twoChannelEdgeCodeHall_iff_exists_compatibleEmbedding
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_merged_q_one_of_edgeCodeHall
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_merged_of_edgeCodeHall
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_mul_merged_of_edgeCodeHall
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_sqrt_pow_merged_of_edgeCodeHall_score
+#print axioms StatMech.Universality.rlc_twoChannel_score_le_hamming_add_two
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_sqrt_pow_merged_of_edgeCodeHall_hamming
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_qpow_merged_of_edgeCodeHall_score
+#print axioms StatMech.Universality.RlcTwoChannelDynamicRoutePlan.Compatible
+#print axioms StatMech.Universality.RlcTwoChannelDynamicRoutePlan.HasCodeHall
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_merged_q_one_of_dynamicRouteHall
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_merged_of_dynamicRouteHall
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_mul_merged_of_dynamicRouteHall
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_qpow_merged_of_dynamicRouteHall_score
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_sqrt_pow_merged_of_dynamicRouteHall_score
+#print axioms StatMech.Universality.rlc_twoChannelForcedDualEventMass_compl_le_sqrt_pow_merged_of_dynamicRouteHall_hamming

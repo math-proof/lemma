@@ -1,0 +1,120 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckRSWSequentialStoppedConditionalLaw.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.RSWSequentialStoppedConditionalLaw
+
+set_option linter.style.longLine false
+
+#print axioms
+  StatMech.Universality.rlc_connectorForcedTraceActiveProb_eq_separate
+#print axioms
+  StatMech.Universality.rlc_connectorForcedTraceActiveEventMass_eq_separate
+#print axioms
+  StatMech.Universality.rlc_connectorTraceFibreConfig_agreesOff
+#print axioms
+  StatMech.Universality.rlc_connectorTraceFibreEquiv
+#print axioms
+  StatMech.Universality.rlc_connectorTraceFibre_inducedBcZ_eq
+#print axioms
+  StatMech.Universality.rlc_connectorTraceFibre_condBcProb_eq
+#print axioms
+  StatMech.Universality.rlc_connectorTraceFibreCondEventMass_eq_separate
+#print axioms
+  StatMech.Universality.rlc_connectorTraceFibreCondEventMass_selfDual_ge_one_div_one_add_q
+#print axioms
+  StatMech.Universality.RlcConnectorCompatibleExteriorFibre.trace_le_frozenExterior
+#print axioms
+  StatMech.Universality.RlcConnectorCompatibleExteriorFibre.separate_le_inducedWiring
+#print axioms
+  StatMech.Universality.rlc_numClustersBC_exteriorFibre_eq_induced
+#print axioms
+  StatMech.Universality.rlc_edgeProduct_exteriorFibre
+#print axioms
+  StatMech.Universality.rlc_bcWeight_exteriorFibre_eq_induced
+#print axioms
+  StatMech.Universality.rlc_connectorExteriorFibre_inducedBcZ_eq
+#print axioms
+  StatMech.Universality.rlc_connectorExteriorFibre_condBcProb_eq_induced
+#print axioms
+  StatMech.Universality.rlc_connectorExteriorFibreCondEventMass_eq_induced
+#print axioms
+  StatMech.Universality.rlc_connectorExteriorFibreCondEventMass_ge_separate
+#print axioms
+  StatMech.Universality.RlcSequentialExtremalExplorationState.toCompatibleExteriorFibre
+#print axioms
+  StatMech.Universality.RlcSequentialExtremalExplorationState.connectorConditionalMass_ge_separate
+#print axioms
+  StatMech.Universality.rlc_connectorExtendConfig_apply
+#print axioms
+  StatMech.Universality.rlc_extremalPairCandidateEdge_exists_connectorLift
+#print axioms
+  StatMech.Universality.rlc_finiteExtremalPairCandidate_dependsOn
+#print axioms
+  StatMech.Universality.rlc_connectorRestrictConfig_mem_finiteExtremalPairCandidate_iff
+#print axioms
+  StatMech.Universality.rlc_finiteExtremalPairCandidate_dependsOnOutside
+#print axioms
+  StatMech.Universality.rlc_finiteExtremalPairCandidateEdges_disjoint_connector_of_ambient
+#print axioms
+  StatMech.Universality.rlc_finiteExtremalPairCandidate_trace_open
+#print axioms
+  StatMech.Universality.rlc_finiteExtremalPairCandidate_compatibleExteriorFibre
+#print axioms
+  StatMech.Universality.rlc_connectorExteriorFibreCondEventMass_eq_ambientSum
+#print axioms
+  StatMech.Universality.rlc_finiteExtremalPairCandidate_connectorMass_lower
+#print axioms
+  StatMech.Universality.RlcBookFaithfulTracePair.origin_mem_strictTopSet
+#print axioms
+  StatMech.Universality.RlcBookFaithfulTracePair.origin_mem_strictBottomSet
+#print axioms
+  StatMech.Universality.rlc_connectorFoldRight_adj
+#print axioms
+  StatMech.Universality.rlc_connectorFoldLeft_adj
+#print axioms
+  StatMech.Universality.rlc_connectorFoldRight_mem_rect
+#print axioms
+  StatMech.Universality.rlc_connectorFoldLeft_mem_rect
+#print axioms
+  StatMech.Universality.rlc_connectorFoldRight_not_path
+#print axioms
+  StatMech.Universality.rlc_connectorFoldLeft_not_path
+#print axioms
+  StatMech.Universality.RlcBookFaithfulTracePair.connectorOriginRegion_mem_strictTopSet
+#print axioms
+  StatMech.Universality.RlcBookFaithfulTracePair.connectorOriginRegion_mem_strictBottomSet
+#print axioms
+  StatMech.Universality.RlcBookFaithfulTracePair.extremalPairCandidateEdges_disjoint_connectorEdges
+#print axioms
+  StatMech.Universality.RlcBookFaithfulTracePair.finiteExtremalPairCandidateEdges_disjoint_connector
+#print axioms
+  StatMech.Universality.RlcBookFaithfulTracePair.finiteExtremalPairCandidate_connectorMass_lower
+#print axioms StatMech.Universality.RlcBookFaithfulTracePair.finiteExtremalPairCandidate_connectorMass_selfDual_ge
+#print axioms
+  StatMech.Universality.RlcBookFaithfulStratumReplacement
+#print axioms
+  StatMech.Universality.rlc_rightExploredVertices_subset_of_pathVertices_subset
+#print axioms
+  StatMech.Universality.rlc_leftExploredVertices_subset_of_pathVertices_subset
+#print axioms
+  StatMech.Universality.rlc_rightLowestCandidate_explored_eq_of_open_subset
+#print axioms
+  StatMech.Universality.rlc_leftHighestCandidate_explored_eq_of_open_subset
+#print axioms
+  StatMech.Universality.RlcBookFaithfulStratumReplacement.of_subpaths
+#print axioms StatMech.Universality.RlcBookFaithfulStratumReplacement.extremalPairCandidateEdges_disjoint_connectorEdges
+#print axioms StatMech.Universality.RlcBookFaithfulStratumReplacement.finiteExtremalPairCandidateEdges_disjoint_connector
+#print axioms StatMech.Universality.RlcBookFaithfulStratumReplacement.finiteExtremalPairCandidate_trace_open
+#print axioms
+  StatMech.Universality.RlcBookFaithfulStratumReplacement.compatibleExteriorFibre
+#print axioms
+  StatMech.Universality.rlc_connectorOutsideEventMass_lower
+#print axioms StatMech.Universality.RlcBookFaithfulStratumReplacement.finiteExtremalPairCandidate_connectorMass_lower
+#print axioms StatMech.Universality.RlcBookFaithfulStratumReplacement.finiteExtremalPairCandidate_connectorMass_selfDual_ge

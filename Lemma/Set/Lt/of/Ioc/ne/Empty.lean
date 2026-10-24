@@ -1,6 +1,6 @@
 import Lemma.Set.Any_In.is.Ne_Empty
 import Lemma.Nat.Lt.of.Lt.Le
-open Set Nat
+open Set Nat BoundedInterval
 
 
 /--

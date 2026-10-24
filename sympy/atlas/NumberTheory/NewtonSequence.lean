@@ -23,12 +23,4 @@ def IsNewtonSequence {R : Type*} [CommSemiring R] (a c : ℕ → R) : Prop :=
   ∀ n : ℕ,
     a (n + 1) =
       (∑ j ∈ Finset.range n, a (n - j) * c (j + 1)) + ((n + 1 : ℕ) : R) * c (n + 1)
-
-/-- The defining Newton recurrence at a specified index. -/
-theorem IsNewtonSequence.eq_recurrence {R : Type*} [CommSemiring R]
-    {a c : ℕ → R} (h : IsNewtonSequence a c) (n : ℕ) :
-    a (n + 1) =
-      (∑ j ∈ Finset.range n, a (n - j) * c (j + 1)) + ((n + 1 : ℕ) : R) * c (n + 1) :=
-  h n
-
 end MetaMathlibExt

@@ -1,0 +1,25 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckGrahamCanonicalEdgeDegreeHall.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamCanonicalEdgeDegreeHall
+
+#print axioms StatMech.FrontierA.bipartiteNeighborhood_collisionSurplus
+#print axioms StatMech.FrontierA.bipartiteNeighborhood_collisionSurplus_iff_card_le
+#print axioms StatMech.FrontierA.card_le_bipartiteNeighbors_of_collisionSurplus
+#print axioms StatMech.FrontierA.card_le_bipartiteNeighbors_of_collisionTokenEmbedding
+#print axioms StatMech.FrontierA.bipartiteLeftSurplusToken_eq_of_source_target_eq
+#print axioms StatMech.FrontierA.cycleCollisionAndSurplusTokenEmbeddings
+
+#print axioms StatMech.FrontierA.card_le_bipartiteNeighbors_of_edgeDegree
+#print axioms StatMech.FrontierA.tightBipartiteNeighborhood_collisionSurplus
+#print axioms StatMech.GrahamGHS.FourColor.CanonicalMaskRightEdgeDegreeDominance
+#print axioms StatMech.GrahamGHS.FourColor.canonicalMaskRightEdgeDegreeDominance_of_preimageEmbedding
+#print axioms StatMech.GrahamGHS.FourColor.canonicalMaskRightEdgePreimageEmbedding_of_selectedOppositeClosure
+#print axioms StatMech.GrahamGHS.FourColor.canonicalMaskRightEdgeDegreeDominance_of_selectedOppositeClosure

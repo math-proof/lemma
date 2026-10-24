@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.analysis.Section_2_3
+import sympy.analysis.Section_2_3_api
 
 /-!
 # Analysis I, Chapter 2 epilogue: Isomorphism with the Mathlib natural numbers
@@ -34,10 +34,6 @@ Users of the companion who have completed the exercises in this section are welc
 abbrev Chapter2.Nat.toNat (n : Chapter2.Nat) : ℕ := match n with
   | zero => 0
   | succ n' => n'.toNat + 1
-
-lemma Chapter2.Nat.zero_toNat : (0 : Chapter2.Nat).toNat = 0 := rfl
-
-lemma Chapter2.Nat.succ_toNat (n : Chapter2.Nat) : (n++).toNat = n.toNat + 1 := rfl
 
 /-- The conversion is a bijection. Here we use the existing capability (from Section 2.1) to map
 the Mathlib natural numbers to the Chapter 2 natural numbers. -/
@@ -76,7 +72,7 @@ abbrev Chapter2.Nat.equivNat_ordered_ring : Chapter2.Nat ≃+*o ℕ where
   map_le_map_iff' := map_le_map_iff
 
 /-- The conversion preserves exponentiation. -/
-lemma Chapter2.Nat.pow_eq_pow (n m : Chapter2.Nat) :
+theorem Chapter2.Nat.pow_eq_pow (n m : Chapter2.Nat) :
     n.toNat ^ m.toNat = (n^m).toNat := by
   sorry
 

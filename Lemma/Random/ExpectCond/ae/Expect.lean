@@ -1,4 +1,4 @@
-import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
+import Lemma.Random.SinglePSpace.SinglePSpace.of.SinglePSpace
 import Lemma.Random.Map.eq.WithDensityProb
 open Function Random
 open scoped Classical
@@ -51,9 +51,9 @@ private lemma lintegral_partialRV_mul
   ∫⁻ ω, Expectation.partialRV π x y f ω * u (y ω) ∂π =
     ∫⁻ ω, f (x ω) (y ω) * u (y ω) ∂π := by
 -- proof
-  have hym : AEMeasurable y π := (PSpace.of.PSpace_Joint.snd hP).aemeasurable
+  have hym : AEMeasurable y π := (SinglePSpace.of.SinglePSpace.snd hP).aemeasurable
   have hxym : AEMeasurable (x, y) π := hP.aemeasurable
-  have hPy : SinglePSpace π y := PSpace.of.PSpace_Joint.snd hP
+  have hPy : SinglePSpace π y := SinglePSpace.of.SinglePSpace.snd hP
   let μ : MeasureTheory.Measure α := ReferenceMeasure.measure
   let ν : MeasureTheory.Measure γ := ReferenceMeasure.measure
   let p : α × γ → ENNReal := π.prob (x, y)
@@ -242,11 +242,11 @@ private lemma lintegral_partialRV_RA_mul
     ∫⁻ ω, f (x ω) (y ω) * u (y ω) ∂π := by
 -- proof
   have hyym : AEMeasurable (y, y) π :=
-    (PSpace.of.PSpace_Joint.snd hPyy).aemeasurable
+    (SinglePSpace.of.SinglePSpace.snd hPyy).aemeasurable
   have hxyym : AEMeasurable (x, (y, y)) π :=
     hPyy.aemeasurable
-  have hPyy2 : SinglePSpace π (y, y) := PSpace.of.PSpace_Joint.snd hPyy
-  have hym : AEMeasurable y π := (PSpace.of.PSpace_Joint.fst hPyy2).aemeasurable
+  have hPyy2 : SinglePSpace π (y, y) := SinglePSpace.of.SinglePSpace.snd hPyy
+  have hym : AEMeasurable y π := (SinglePSpace.of.SinglePSpace.fst hPyy2).aemeasurable
   let μ : MeasureTheory.Measure α := ReferenceMeasure.measure
   let ν : MeasureTheory.Measure γ := ReferenceMeasure.measure
   let νν : MeasureTheory.Measure (γ × γ) := ReferenceMeasure.measure
@@ -449,11 +449,11 @@ private lemma main
   Expectation.partialRV_RA π x y y f =ᵐ[π] 𝔼[x: π | y](f x y) := by
 -- proof
   change Expectation.partialRV_RA π x y y f =ᵐ[π] Expectation.partialRV π x y f
-  have hym : AEMeasurable y π := (PSpace.of.PSpace_Joint.snd hP).aemeasurable
-  have hPy : SinglePSpace π y := PSpace.of.PSpace_Joint.snd hP
+  have hym : AEMeasurable y π := (SinglePSpace.of.SinglePSpace.snd hP).aemeasurable
+  have hPy : SinglePSpace π y := SinglePSpace.of.SinglePSpace.snd hP
   let μ : MeasureTheory.Measure α := ReferenceMeasure.measure
   let ν : MeasureTheory.Measure γ := ReferenceMeasure.measure
-  have hPyy2 : SinglePSpace π (y, y) := PSpace.of.PSpace_Joint.snd hPyy
+  have hPyy2 : SinglePSpace π (y, y) := SinglePSpace.of.SinglePSpace.snd hPyy
   let p : α × γ → ENNReal := π.prob (x, y)
   let m : γ → ENNReal := π.prob y
   let p' : α × (γ × γ) → ENNReal :=

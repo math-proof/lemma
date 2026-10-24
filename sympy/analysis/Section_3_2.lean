@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.analysis.Section_3_1
+import sympy.analysis.Section_3_1_api
 
 /-!
 # Analysis I, Section 3.2: Russell's paradox
@@ -35,31 +35,6 @@ variable [SetTheory]
 /-- Axiom 3.8 (Universal specification) -/
 abbrev axiom_of_universal_specification : Prop :=
   ∀ P : Object → Prop, ∃ A : Set, ∀ x : Object, x ∈ A ↔ P x
-
-theorem Russells_paradox : ¬ axiom_of_universal_specification := by
-  -- This proof is written to follow the structure of the original text.
-  intro h
-  set P : Object → Prop := fun x ↦ ∃ X:Set, x = X ∧ x ∉ X
-  choose Ω hΩ using h P
-  by_cases h: (Ω:Object) ∈ Ω
-  . have : P (Ω:Object) := (hΩ _).mp h
-    obtain ⟨ Ω', ⟨ hΩ1, hΩ2⟩ ⟩ := this
-    simp at hΩ1
-    rw [←hΩ1] at hΩ2
-    contradiction
-  have : P (Ω:Object) := by use Ω
-  rw [←hΩ] at this
-  contradiction
-
-/-- Axiom 3.9 (Regularity) -/
-theorem SetTheory.Set.axiom_of_regularity {A:Set} (h: A ≠ ∅) :
-    ∃ x:A, ∀ S:Set, x.val = S → Disjoint S A := by
-  choose x h h' using regularity_axiom A (nonempty_def h)
-  use ⟨x, h⟩
-  intro S hS; specialize h' S hS
-  rw [disjoint_iff, eq_empty_iff_forall_notMem]
-  intro z hz
-  exact h' ⟨z, ((Set.mem_inter z S A).mp hz).2, ((Set.mem_inter z S A).mp hz).1⟩
 
 /--
   Exercise 3.2.1.  The spirit of the exercise is to establish these results without using either

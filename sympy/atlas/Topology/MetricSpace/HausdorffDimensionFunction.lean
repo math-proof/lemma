@@ -40,45 +40,4 @@ instance : ContinuousOrderHomClass HausdorffDimensionFunction ℝ≥0 ℝ≥0 wh
   map_continuous ψ := ψ.toContinuousOrderHom.continuous_toFun
 
 namespace HausdorffDimensionFunction
-
-@[ext]
-theorem ext {ψ₁ ψ₂ : HausdorffDimensionFunction} (h : ∀ x, ψ₁ x = ψ₂ x) : ψ₁ = ψ₂ :=
-  DFunLike.ext ψ₁ ψ₂ h
-
-/-- Continuity as a function `ℝ≥0 → ℝ≥0`. -/
-theorem continuous (ψ : HausdorffDimensionFunction) : Continuous (ψ : ℝ≥0 → ℝ≥0) :=
-  ψ.toContinuousOrderHom.continuous_toFun
-
-/-- Weak monotonicity inherited from `ContinuousOrderHom`. -/
-theorem monotone (ψ : HausdorffDimensionFunction) : Monotone (ψ : ℝ≥0 → ℝ≥0) :=
-  ψ.toContinuousOrderHom.monotone
-
-/-- Value at zero. -/
-@[simp]
-theorem map_zero (ψ : HausdorffDimensionFunction) : ψ (0 : ℝ≥0) = 0 :=
-  ψ.map_zero'
-
-/-- Strict positivity at positive radii, preserving source codomain `(0,∞)`. -/
-theorem map_pos (ψ : HausdorffDimensionFunction) {r : ℝ≥0} (hr : 0 < r) : 0 < ψ r :=
-  ψ.map_pos' hr
-
-/-- Vanishing exactly at zero: `ψ r = 0 ↔ r = 0`. -/
-theorem map_eq_zero_iff (ψ : HausdorffDimensionFunction) {r : ℝ≥0} : ψ r = 0 ↔ r = 0 := by
-  constructor
-  · intro h
-    by_contra hr
-    have hrpos : 0 < r := pos_iff_ne_zero.mpr hr
-    have hpos : 0 < ψ r := ψ.map_pos hrpos
-    exact ne_of_gt hpos h
-  · rintro rfl
-    exact ψ.map_zero
-
-/-- Source limit `lim_{r→0} ψ r = 0`, realized as `Tendsto ψ (𝓝[>] 0) (𝓝 0)`. -/
-theorem tendsto_zero (ψ : HausdorffDimensionFunction) :
-    Tendsto (ψ : ℝ≥0 → ℝ≥0) (𝓝[>] (0 : ℝ≥0)) (𝓝 0) := by
-  have h : Tendsto (ψ : ℝ≥0 → ℝ≥0) (𝓝 (0 : ℝ≥0)) (𝓝 (ψ (0 : ℝ≥0))) :=
-    ψ.continuous.continuousAt
-  rw [ψ.map_zero] at h
-  exact h.mono_left inf_le_left
-
 end HausdorffDimensionFunction

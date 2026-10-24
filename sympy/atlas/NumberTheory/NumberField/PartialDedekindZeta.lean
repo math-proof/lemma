@@ -20,17 +20,4 @@ required convergence region explicitly. -/
 noncomputable def partialDedekindZeta
     (S : Set (IsDedekindDomain.HeightOneSpectrum (RingOfIntegers K))) : ℂ → ℂ :=
   fun s ↦ ∏' (𝔭 : S), (1 - (Ideal.absNorm 𝔭.1.asIdeal : ℂ) ^ (-s))⁻¹
-
-@[simp]
-theorem partialDedekindZeta_empty (s : ℂ) :
-    partialDedekindZeta K ∅ s = 1 := by
-  simp [partialDedekindZeta]
-
-@[simp]
-theorem partialDedekindZeta_singleton
-    (𝔭 : IsDedekindDomain.HeightOneSpectrum (RingOfIntegers K)) (s : ℂ) :
-    partialDedekindZeta K {𝔭} s =
-      (1 - (Ideal.absNorm 𝔭.asIdeal : ℂ) ^ (-s))⁻¹ := by
-  simp [partialDedekindZeta]
-
 end NumberField

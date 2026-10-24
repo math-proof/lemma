@@ -1,0 +1,27 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/CheckLebowitzPfisterReplicaOrbitRankFiveStrictRouteDecoder.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankFiveStrictRouteDecoder
+
+#print axioms StatMech.Ising.lpReplicaOrbitFourColorSlotReflectRowToggle_involutive
+#print axioms StatMech.Ising.lpReplicaOrbitFourColorSlotReflectRowToggle_comm
+#print axioms StatMech.Ising.lpReplicaOrbitFourColorSlotReflectRowToggle_crossed
+#print axioms StatMech.Ising.lpReplicaOrbitFourColorSlotRowMask_reflectRowToggle
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtomCanonicalizeRawPartialReflect_slotState
+#print axioms StatMech.Ising.lpReplicaStrictRouteSingletonTag_slotState
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSourceSlotState_eq_rowGateData
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSourceCanonicalSingletonStrictRoute_slotState
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_eq_of_strictRouteState_collision
+#print axioms StatMech.Ising.card_lpReplicaStrictRouteMaskKey_rankFive
+#print axioms StatMech.Ising.LPReplicaStrictRouteStateFamily.target_fiber_card_le_twenty
+#print axioms StatMech.Ising.LPReplicaStrictRouteStateFamily.rowSlot_eq_of_target_eq
+#print axioms StatMech.Ising.LPReplicaStrictRouteStateFamily.eq_of_spatialSlot_eq_of_target_eq
+#print axioms StatMech.Ising.LPReplicaStrictRouteStateFamily.saturated_target_fiber_card_le_four
+#print axioms StatMech.Ising.LPReplicaStrictRouteStateFamily.card_le_twenty_mul_target

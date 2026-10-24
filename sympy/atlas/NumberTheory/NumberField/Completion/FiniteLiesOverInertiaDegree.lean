@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverInertiaDegree.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.Completion.FiniteLiesOverResidueNaturality
+import Lemma.Nat.NumberField.Completion.FiniteLiesOverResidueNaturality
 import Mathlib.RingTheory.RamificationInertia.Inertia
 
 /-!
@@ -64,29 +65,4 @@ variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
   [Algebra K L]
 variable (v : HeightOneSpectrum (𝓞 K)) (w : HeightOneSpectrum (𝓞 L))
   [w.asIdeal.LiesOver v.asIdeal]
-
-/-- The canonical map on finite-place completion integer rings preserves the
-inertia degree. -/
-theorem inertiaDeg_adicCompletionIntegersMap :
-    (IsLocalRing.maximalIdeal (w.adicCompletionIntegers L)).inertiaDeg
-      (v.adicCompletionIntegers K) =
-      w.asIdeal.inertiaDeg (𝓞 K) := by
-  have hcomp := comap_maximalIdeal_adicCompletionIntegersMap v w
-  let _ : (IsLocalRing.maximalIdeal (w.adicCompletionIntegers L)).LiesOver
-      (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) := ⟨hcomp.symm⟩
-  rw [Ideal.inertiaDeg_eq_of_isMaximal
-      (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K))
-      (IsLocalRing.maximalIdeal (w.adicCompletionIntegers L)),
-    Ideal.inertiaDeg_eq_of_isMaximal v.asIdeal w.asIdeal]
-  apply Algebra.finrank_eq_of_equiv_equiv
-    (completionResidueFieldEquiv (K := K) v)
-    (completionResidueFieldEquiv (K := L) w)
-  change (ringOfIntegersResidueQuotientMap v w).comp
-      (completionResidueFieldEquiv (K := K) v).toRingHom =
-    (completionResidueFieldEquiv (K := L) w).toRingHom.comp
-      (adicCompletionResidueQuotientMap v w)
-  exact completionResidueFieldEquiv_naturality v w
-
 end IsDedekindDomain.HeightOneSpectrum
-
--- End of file.

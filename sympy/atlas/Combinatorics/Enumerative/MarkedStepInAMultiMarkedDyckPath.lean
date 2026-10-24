@@ -96,50 +96,6 @@ structure MultiMarkedDyckPath where
       multiMarkedCountVert (steps.take k) ≤ multiMarkedCountE (steps.take k)
   diagonal_endpoint : multiMarkedCountE steps = multiMarkedCountVert steps
 
-/-- Diagonal count equality: the `E` count of a multi-marked Dyck path equals
-its total vertical-step count. Concept `jis_sem_ee7327c841ed4326952fd4fb`;
-source statement `jis_54a13fcd4eb84116f24d6935`. -/
-theorem multiMarkedCountEq (P : MultiMarkedDyckPath) :
-    multiMarkedCountE P.steps = multiMarkedCountVert P.steps :=
-  P.diagonal_endpoint
-
-/-- Occurrence-level size identity: for any step sequence, the vertical count
-plus the shifted index sum equals the plain count plus the index sum (each
-marked step of index `t` contributes `1 + (t - 1) = t`).
-Concept `jis_sem_ee7327c841ed4326952fd4fb`;
-source statement `jis_54a13fcd4eb84116f24d6935`. -/
-theorem multiMarkedVertShifted_eq (l : List MultiMarkedStep) :
-    multiMarkedCountVert l + multiMarkedShiftedIndexSum l =
-      multiMarkedCountPlainN l + multiMarkedIndexSum l := by
-  induction l with
-  | nil => rfl
-  | cons hd tl ih =>
-    cases hd with
-    | E =>
-      simp only [multiMarkedCountVert, multiMarkedShiftedIndexSum,
-        multiMarkedCountPlainN, multiMarkedIndexSum]
-      exact ih
-    | N =>
-      simp only [multiMarkedCountVert, multiMarkedShiftedIndexSum,
-        multiMarkedCountPlainN, multiMarkedIndexSum]
-      omega
-    | marked t h =>
-      simp only [multiMarkedCountVert, multiMarkedShiftedIndexSum,
-        multiMarkedCountPlainN, multiMarkedIndexSum]
-      omega
-
-/-- Size equality: the size `E(P) + ∑ (t - 1) N*_t(P)` equals
-`N(P) + ∑ t N*_t(P)`, derived from the diagonal endpoint via the
-occurrence-level identity. Concept `jis_sem_ee7327c841ed4326952fd4fb`;
-source statement `jis_54a13fcd4eb84116f24d6935`. -/
-theorem multiMarkedSizeEq (P : MultiMarkedDyckPath) :
-    multiMarkedSize P.steps =
-      multiMarkedCountPlainN P.steps + multiMarkedIndexSum P.steps := by
-  unfold multiMarkedSize
-  have h := multiMarkedVertShifted_eq P.steps
-  have he := multiMarkedCountEq P
-  omega
-
 /-- Vertical-step test used to delimit the final run of vertical steps.
 Concept `jis_sem_ee7327c841ed4326952fd4fb`;
 source statement `jis_54a13fcd4eb84116f24d6935`. -/

@@ -1,0 +1,18 @@
+import Mathlib
+import sympy.Basic
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexFourByTwoPositiveUnitResidualRepair
+open StatMech StatMech.FrontierD
+
+
+/--
+[sixVertexFourByTwoActiveObstructionResidualGeometricRepair_supported](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexFourByTwoPositiveUnitResidualRepair.lean)
+-/
+@[path]
+private lemma sixVertexFourByTwoActiveObstructionResidualGeometricRepair_supported_eq :
+-- imply
+  sixVertexHorizontalOffDiagonalTwoCycleSupport sixVertexFourByTwoTorus sixVertexFourByTwoSectorOne sixVertexFourByTwoActiveObstructionMiddle_pos sixVertexFourByTwoActiveObstructionMiddle_lt sixVertexFourByTwoActiveObstructionGrade sixVertexFourByTwoActiveObstructionToken sixVertexFourByTwoActiveObstructionResidualGeometricRepair.target := by
+-- proof
+  apply StatMech.FrontierD.sixVertexFourByTwoActiveObstructionResidualGeometricRepair_supported
+
+
+-- created on 2026-10-23

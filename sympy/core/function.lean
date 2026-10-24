@@ -82,16 +82,19 @@ def Subst.unexpand : Lean.PrettyPrinter.Unexpander
 # Fun (py `sympy.tensor.indexed.Indexed`)
 
 Parameter-indexed map: `f[i]` is the index; juxta after is a normal call on the residual.
-For time-indexed trajectories `r : Fun ℕ (Ω → α)`, also `r[t:]` (open slice) via
-`Fun.getSliceFrom`, matching bare `ℕ → α` sequences.
+For time-indexed trajectories `r : Fun ℕ (Ω → α)`:
+
+* open slices `r[t:]` via `Fun.getSliceFrom` (elaborated below);
+* closed slices `r[:n]`, `r[a:b]` via `Fun.getSlice` in `sympy.stats.hidden_markov_sequence`
+  (same `stdlib.List` macros as bare `ℕ → α`).
 
 Notation `r[t:]` is elaborated below (needs `stdlib.List` for the shared open-slice syntax).
 Kept in this file so there is a single import for both the structure and the sugar.
 -/
 
 /-- Parameter-indexed map: `f[i]` is the index; juxta after is a normal call on the residual.
-For time-indexed trajectories `r : Fun ℕ (Ω → α)`, also `r[t:]` via
-`Fun.getSliceFrom`, matching bare `ℕ → α` sequences. -/
+For time-indexed trajectories `r : Fun ℕ (Ω → α)`, also `r[t:]` via `Fun.getSliceFrom`
+and closed slices `r[:n]` / `r[a:b]` via `Fun.getSlice` (see `sympy.stats.hidden_markov_sequence`). -/
 structure Fun (ι : Type _) (α : Type _) where
   toFun : ι → α
 

@@ -59,13 +59,10 @@ private lemma main
     simpa using h₄ i ⟨fun k => if k = i + 1 then a else b⟩
   obtain ⟨P, hPdef⟩ : ∃ P : ℕ → (ℕ → Y) → ℝ, ∀ t (ys : ℕ → Y), P t ys = (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ) :=
     ⟨fun t ys => (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ), fun _ _ => rfl⟩
-  have hpair : ∀ k : ℕ, ReferenceMeasure.measure (α := (Fin k → X) × (Fin k → Y)) = Measure.count := fun k => by
-    change (Measure.count : Measure (Fin k → X)).prod Measure.count = Measure.count
-    rw [← Count.eq.ProdCountS]
   have hQ : ∀ (ys : ℕ → Y) (k : ℕ), (ℙ[π](x[:(k : ℤ)] = «x.bvar»[:(k : ℤ)] ∧ y[:(k : ℤ)] = ys[:(k : ℤ)]) : ENNReal) =
       π {ω | (∀ i < k, x i ω = «x.bvar» i) ∧ ∀ i < k, y i ω = ys i} := by
     intro ys k
-    rw [Prob.eq.Measure.of.Eq_Count (hpair k)]
+    rw [EqProb]
     congr 1
     ext ω
     simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_ofPred_eq, JointRandomSymbol, Prod.mk.injEq, funext_iff]
@@ -198,3 +195,4 @@ private lemma main
 
 
 -- created on 2026-10-22
+-- updated on 2026-10-23

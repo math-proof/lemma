@@ -37,17 +37,6 @@ class IsThreeManifoldWithBoundary (M : Type*) [TopologicalSpace M]
 
 variable (M : Type*) [TopologicalSpace M]
 
-/-- `M` is a topological 3-manifold iff it is Hausdorff and second-countable, given that it is
-locally homeomorphic to `ℝ³`. -/
-theorem isThreeManifold_iff [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M] :
-    IsThreeManifold M ↔ T2Space M ∧ SecondCountableTopology M :=
-  ⟨fun _ => ⟨inferInstance, inferInstance⟩, fun ⟨_, _⟩ => ⟨⟩⟩
-
-/-- A topological 3-manifold is locally compact, since `ℝ³` is. -/
-theorem IsThreeManifold.locallyCompactSpace [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]
-    [IsThreeManifold M] : LocallyCompactSpace M :=
-  ChartedSpace.locallyCompactSpace (EuclideanSpace ℝ (Fin 3)) M
-
 /-- Every topological 3-manifold with boundary is Hausdorff. -/
 example [ChartedSpace (EuclideanHalfSpace 2) M] [IsThreeManifoldWithBoundary M] : T2Space M :=
   inferInstance

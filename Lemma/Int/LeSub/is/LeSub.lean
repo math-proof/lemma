@@ -1,6 +1,6 @@
 import Lemma.Int.LeSub.is.Le_Add
 import Lemma.Nat.Add
-open Int Nat
+open Int Nat Matrix
 
 
 /--

@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings
 import Lemma.Nat.DominoTilings.reflectTiling3_dominos_minCol_maxCol
 open DominoTilings
 open Domino DominoTiling

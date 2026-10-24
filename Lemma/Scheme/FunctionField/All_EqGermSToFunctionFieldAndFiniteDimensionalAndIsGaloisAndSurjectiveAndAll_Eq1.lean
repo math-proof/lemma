@@ -23,7 +23,7 @@ private lemma germ_ffPull
   simp only [ffPull, TopCat.Presheaf.germ_stalkSpecializes_assoc, Scheme.Hom.germ_stalkMap]
 private lemma ffPull_germ_apply
   (f : C ⟶ X) (hf : f (genericPoint C) = genericPoint X)
-  (V : X.Opens) (hV : Nonempty V) (hV' : Nonempty (((TopologicalSpace.Opens.map f.base).obj V))) (s : (X.presheaf.obj (op V))) :
+  (V : X.Opens) (hV : Nonempty V) (hV' : Nonempty (((TopologicalSpace.Opens.map f.base).obj V))) (s : X.presheaf.obj (op V)) :
     ffPull f hf (X.germToFunctionField V s) =
       C.germToFunctionField (((TopologicalSpace.Opens.map f.base).obj V)) (f.app V s) := by
   change (X.germToFunctionField V ≫ ffPull f hf) s =
@@ -67,7 +67,7 @@ private lemma pullAut_one_apply (x : C.functionField) : pullAut (1 : Aut C) x = 
   rw [pullAut_one, CommRingCat.id_apply]
 private lemma pullAut_germ_apply
   (e : Aut C) (U : C.Opens) (hU : Nonempty U)
-  (hU' : Nonempty (((TopologicalSpace.Opens.map e.hom.base).obj U))) (s : (C.presheaf.obj (op U))) :
+  (hU' : Nonempty (((TopologicalSpace.Opens.map e.hom.base).obj U))) (s : C.presheaf.obj (op U)) :
     pullAut e (C.germToFunctionField U s) = C.germToFunctionField (((TopologicalSpace.Opens.map e.hom.base).obj U)) (e.hom.app U s) :=
   ffPull_germ_apply _ _ _ hU hU' _
 /--
@@ -84,9 +84,9 @@ private lemma main
     (hsec : ∀ V : X.Opens, Function.Injective (π.app V))
     (hinv : ∀ V : X.Opens, Set.range (π.app V) =
       {s | ∀ g : G, (ρ g).hom.appLE (((TopologicalSpace.Opens.map π.base).obj V)) (((TopologicalSpace.Opens.map π.base).obj V)) (by rw [← Scheme.Hom.comp_preimage, hπ g]) s = s}) :
-    ∃ (_ : Algebra X.functionField C.functionField) (θ : G →* (C.functionField ≃ₐ[X.functionField] C.functionField)), (∀ (V : X.Opens) [Nonempty (V : (Scheme : Type 1))] [Nonempty ((((TopologicalSpace.Opens.map π.base).obj V) : C.Opens) : (Scheme : Type 1))] (f : (X.presheaf.obj (op V))), algebraMap X.functionField C.functionField (X.germToFunctionField V f) =
+    ∃ (_ : Algebra X.functionField C.functionField) (θ : G →* (C.functionField ≃ₐ[X.functionField] C.functionField)), (∀ (V : X.Opens) [Nonempty (V : (Scheme : Type 1))] [Nonempty ((((TopologicalSpace.Opens.map π.base).obj V) : C.Opens) : (Scheme : Type 1))] (f : X.presheaf.obj (op V)), algebraMap X.functionField C.functionField (X.germToFunctionField V f) =
           C.germToFunctionField (((TopologicalSpace.Opens.map π.base).obj V)) (π.app V f)) ∧
-      (∀ (g : G) (U : C.Opens) [Nonempty (U : (Scheme : Type 1))] [Nonempty ((((TopologicalSpace.Opens.map (ρ g).inv.base).obj U) : C.Opens) : (Scheme : Type 1))] (f : (C.presheaf.obj (op U))), θ g (C.germToFunctionField U f) = C.germToFunctionField (((TopologicalSpace.Opens.map (ρ g).inv.base).obj U)) ((ρ g).inv.app U f)) ∧
+      (∀ (g : G) (U : C.Opens) [Nonempty (U : (Scheme : Type 1))] [Nonempty ((((TopologicalSpace.Opens.map (ρ g).inv.base).obj U) : C.Opens) : (Scheme : Type 1))] (f : C.presheaf.obj (op U)), θ g (C.germToFunctionField U f) = C.germToFunctionField (((TopologicalSpace.Opens.map (ρ g).inv.base).obj U)) ((ρ g).inv.app U f)) ∧
       FiniteDimensional X.functionField C.functionField ∧ IsGalois X.functionField C.functionField ∧
       Function.Surjective θ ∧ (∀ g : G, θ g = 1 ↔ ρ g = 1) := by
   classical
@@ -159,12 +159,12 @@ private lemma main
     let _ := functionField_isFractionRing_of_isAffineOpen X V hV
     let _ := functionField_isFractionRing_of_isAffineOpen C (((TopologicalSpace.Opens.map π.base).obj V)) hU
     set U : C.Opens := ((TopologicalSpace.Opens.map π.base).obj V) with hUdef
-    let ιU : (C.presheaf.obj (op U)) →+* C.functionField := algebraMap (C.presheaf.obj (op U)) C.functionField
+    let ιU : C.presheaf.obj (op U) →+* C.functionField := algebraMap C.presheaf.obj (op U) C.functionField
     have ιU_def : ιU = (C.germToFunctionField U).hom := rfl
     have ιU_inj : Function.Injective ιU := C.germToFunctionField_injective U
-    let α : G → ((C.presheaf.obj (op U)) →+* (C.presheaf.obj (op U))) := fun g =>
+    let α : G → (C.presheaf.obj (op U) →+* C.presheaf.obj (op U)) := fun g =>
       ((ρ g).hom.appLE U U (by rw [hUdef, ← Scheme.Hom.comp_preimage, hπ g])).hom
-    have compat : ∀ (g : G) (s : (C.presheaf.obj (op U))), ιU (α g s) = pullAut (ρ g) (ιU s) := by
+    have compat : ∀ (g : G) (s : C.presheaf.obj (op U)), ιU (α g s) = pullAut (ρ g) (ιU s) := by
       intro g s
       have hUne' : Nonempty (((TopologicalSpace.Opens.map (ρ g).hom.base).obj U)) := by
         rwa [hUdef, ← Scheme.Hom.comp_preimage, hπ g]

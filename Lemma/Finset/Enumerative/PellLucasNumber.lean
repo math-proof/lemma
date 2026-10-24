@@ -4,38 +4,51 @@ import sympy.atlas.Combinatorics.Enumerative.PellLucasNumber
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [pellLucas_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PellLucasNumber.lean)
 -/
 @[path]
-private lemma pellLucas_zero_eq
+lemma pellLucas_zero
   :
 -- imply
-  pellLucas 0 = 2 := by
+  pellLucas 0 = 2 :=
 -- proof
-  apply MetaMathlibExt.pellLucas_zero
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [pellLucas_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PellLucasNumber.lean)
 -/
 @[path]
-private lemma pellLucas_one_eq
+lemma pellLucas_one
   :
 -- imply
-  pellLucas 1 = 2 := by
+  pellLucas 1 = 2 :=
 -- proof
-  apply MetaMathlibExt.pellLucas_one
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [pellLucas_add_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PellLucasNumber.lean)
 -/
 @[path]
-private lemma pellLucas_add_two_eq
+lemma pellLucas_add_two
   {n : Nat} :
 -- imply
-  pellLucas (n + 2) = 2 * pellLucas (n + 1) + pellLucas n := by
+  pellLucas (n + 2) = 2 * pellLucas (n + 1) + pellLucas n :=
 -- proof
-  apply MetaMathlibExt.pellLucas_add_two n
+  rfl
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

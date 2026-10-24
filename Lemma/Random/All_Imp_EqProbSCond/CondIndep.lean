@@ -76,8 +76,8 @@ private lemma main
   (hμγ : ReferenceMeasure.measure (α := γ) = Measure.count)
   (hCI : x ⟂ᵢ[π] y | z) :
 -- imply
-  have _hPyz : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hPxyz
-  have _hPz : SinglePSpace π z := PSpace.of.PSpace_Joint.snd _hPyz
+  have _hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hPxyz
+  have _hPz : SinglePSpace π z := SinglePSpace.of.SinglePSpace.snd _hPyz
   have _hPxz : SinglePSpace π (x, z) := of_xz hx hz hμα hμγ
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
     ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
@@ -86,8 +86,8 @@ private lemma main
           ℙ[π](x = «x.bvar» | y = «y.bvar» ∧ z = «z.bvar») =
             ℙ[π](x = «x.bvar» | z = «z.bvar») := by
 -- proof
-  have hPyz : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hPxyz
-  have hPz : SinglePSpace π z := PSpace.of.PSpace_Joint.snd hPyz
+  have hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hPxyz
+  have hPz : SinglePSpace π z := SinglePSpace.of.SinglePSpace.snd hPyz
   have hPxz : SinglePSpace π (x, z) := of_xz hx hz hμα hμγ
   have hDens :
       ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,

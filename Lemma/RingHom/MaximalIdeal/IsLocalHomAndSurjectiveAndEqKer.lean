@@ -1,34 +1,33 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open IsLocalRing
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
 
 /--
 [IsLocalRing_map_maximalIdeal_eq_maximalIdeal_localization_atPrime_of_isReduced_of_isArtinianRing](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_map_maximalIdeal_eq_maximalIdeal_localization_atPrime_of_isReduced_of_isArtinianRing.lean)
 -/
 @[path]
 private lemma main
-    {C C' : Type} [CommRing C] [IsLocalRing C] [CommRing C'] [Algebra C C']
-    (𝔫 : Ideal C') [𝔫.IsMaximal]
-    (hle : (maximalIdeal C).map (algebraMap C C') ≤ 𝔫)
-    [IsReduced (C' ⧸ (maximalIdeal C).map (algebraMap C C'))]
-    [IsArtinianRing (C' ⧸ (maximalIdeal C).map (algebraMap C C'))] :
-    (maximalIdeal C).map (algebraMap C (Localization.AtPrime 𝔫)) = maximalIdeal (Localization.AtPrime 𝔫) ∧
+  {C C' : Type} [CommRing C] [IsLocalRing C] [CommRing C'] [Algebra C C'] [IsReduced (C' ⧸ (maximalIdeal C).map (algebraMap C C'))] [IsArtinianRing (C' ⧸ (maximalIdeal C).map (algebraMap C C'))]
+  (𝔫 : Ideal C') [𝔫.IsMaximal]
+  (hle : (maximalIdeal C).map (algebraMap C C') ≤ 𝔫) :
+  -- imply
+  (maximalIdeal C).map (algebraMap C (Localization.AtPrime 𝔫)) = maximalIdeal (Localization.AtPrime 𝔫) ∧
     IsLocalHom (algebraMap C (Localization.AtPrime 𝔫)) ∧
     Function.Surjective ((residue (Localization.AtPrime 𝔫)).comp (algebraMap C' (Localization.AtPrime 𝔫))) ∧
     RingHom.ker ((residue (Localization.AtPrime 𝔫)).comp (algebraMap C' (Localization.AtPrime 𝔫))) = 𝔫 := by
+  -- proof
   classical
   set M' : Ideal C' := (maximalIdeal C).map (algebraMap C C') with hM'
   let _ : 𝔫.IsPrime := Ideal.IsMaximal.isPrime inferInstance
   have key : ∀ n ∈ 𝔫, ∃ s : C', s ∉ 𝔫 ∧ s * n ∈ M' := by
     intro n hn
-    have hker : RingHom.ker (Ideal.Quotient.mk M') ≤ 𝔫 := by rw [Ideal.mk_ker]; exact hle
+    have hker : RingHom.ker (Ideal.Quotient.mk M') ≤ 𝔫 := by
+      rw [Ideal.mk_ker]
+      apply hle
     let hP : (𝔫.map (Ideal.Quotient.mk M')).IsPrime := Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective hker
     let L := Localization.AtPrime (𝔫.map (Ideal.Quotient.mk M'))
     have hmax : maximalIdeal L = ⊥ := by
@@ -41,24 +40,26 @@ private lemma main
       refine ⟨N, ?_⟩
       have : x ^ N ∈ maximalIdeal L ^ N := Ideal.pow_mem_pow hx N
       rw [hN] at this
-      exact (Submodule.mem_bot L).mp this
+      apply (Submodule.mem_bot L).mp this
     have h1 : algebraMap (C' ⧸ M') L (Ideal.Quotient.mk M' n) = 0 := by
       have : algebraMap (C' ⧸ M') L (Ideal.Quotient.mk M' n) ∈ maximalIdeal L := by
         rw [← Localization.AtPrime.map_eq_maximalIdeal]
-        exact Ideal.mem_map_of_mem _ (Ideal.mem_map_of_mem _ hn)
+        apply Ideal.mem_map_of_mem _ (Ideal.mem_map_of_mem _ hn)
       rwa [hmax, Submodule.mem_bot] at this
     obtain ⟨⟨m, hm⟩, hmn⟩ := (IsLocalization.map_eq_zero_iff (𝔫.map (Ideal.Quotient.mk M')).primeCompl L _).mp h1
     obtain ⟨s, rfl⟩ := Ideal.Quotient.mk_surjective m
     refine ⟨s, fun hs => hm (Ideal.mem_map_of_mem _ hs), ?_⟩
     rw [← Ideal.Quotient.eq_zero_iff_mem, map_mul]
-    exact hmn
+    apply hmn
   have hmapC : (maximalIdeal C).map (algebraMap C (Localization.AtPrime 𝔫)) = M'.map (algebraMap C' (Localization.AtPrime 𝔫)) := by
     rw [hM', Ideal.map_map, ← IsScalarTower.algebraMap_eq]
   have h1 : (maximalIdeal C).map (algebraMap C (Localization.AtPrime 𝔫)) = maximalIdeal (Localization.AtPrime 𝔫) := by
     apply le_antisymm
-    · rw [hmapC, ← Localization.AtPrime.map_eq_maximalIdeal]
-      exact Ideal.map_mono hle
-    · rw [← Localization.AtPrime.map_eq_maximalIdeal, hmapC, Ideal.map_le_iff_le_comap]
+    ·
+      rw [hmapC, ← Localization.AtPrime.map_eq_maximalIdeal]
+      apply Ideal.map_mono hle
+    ·
+      rw [← Localization.AtPrime.map_eq_maximalIdeal, hmapC, Ideal.map_le_iff_le_comap]
       intro n hn
       obtain ⟨s, hs, hsn⟩ := key n hn
       have hu : IsUnit (algebraMap C' (Localization.AtPrime 𝔫) s) := IsLocalization.map_units _ (⟨s, hs⟩ : 𝔫.primeCompl)
@@ -67,13 +68,14 @@ private lemma main
       have : algebraMap C' (Localization.AtPrime 𝔫) n = ↑u⁻¹ * algebraMap C' (Localization.AtPrime 𝔫) (s * n) := by
         rw [map_mul, ← hu', ← mul_assoc, Units.inv_mul, one_mul]
       rw [this]
-      exact Ideal.mul_mem_left _ _ (Ideal.mem_map_of_mem _ hsn)
+      apply Ideal.mul_mem_left _ _ (Ideal.mem_map_of_mem _ hsn)
   refine ⟨h1, ⟨fun a ha => ?_⟩, ?_, ?_⟩
   ·
     by_contra hna
     have : algebraMap C (Localization.AtPrime 𝔫) a ∈ maximalIdeal (Localization.AtPrime 𝔫) := by
-      rw [← h1]; exact Ideal.mem_map_of_mem _ ((IsLocalRing.mem_maximalIdeal a).mpr hna)
-    exact (IsLocalRing.mem_maximalIdeal _).mp this ha
+      rw [← h1]
+      apply Ideal.mem_map_of_mem _ ((IsLocalRing.mem_maximalIdeal a).mpr hna)
+    apply (IsLocalRing.mem_maximalIdeal _).mp this ha
   ·
     intro r
     obtain ⟨d, rfl⟩ := IsLocalRing.residue_surjective r
@@ -83,25 +85,33 @@ private lemma main
     show residue _ (algebraMap C' _ (a * t)) = residue _ (IsLocalization.mk' (Localization.AtPrime 𝔫) a ⟨s, hs⟩)
     have hm0 : residue (Localization.AtPrime 𝔫) (algebraMap C' _ m) = 0 := by
       rw [IsLocalRing.residue_eq_zero_iff, ← Localization.AtPrime.map_eq_maximalIdeal]
-      exact Ideal.mem_map_of_mem _ hm
+      apply Ideal.mem_map_of_mem _ hm
+    have hts : t * s = 1 - m := by
+      rw [← htm]
+      ring
     have hst : residue (Localization.AtPrime 𝔫) (algebraMap C' _ s) * residue (Localization.AtPrime 𝔫) (algebraMap C' _ t) = 1 := by
-      rw [← map_mul, ← map_mul, mul_comm s t, show t * s = 1 - m by rw [← htm]; ring, map_sub, map_one, map_sub, map_one, hm0, sub_zero]
-    calc residue _ (algebraMap C' _ (a * t))
-        = residue _ (algebraMap C' _ a) * residue _ (algebraMap C' _ t) := by rw [map_mul, map_mul]
+      rw [← map_mul, ← map_mul, mul_comm s t, hts, map_sub, map_one, map_sub, map_one, hm0, sub_zero]
+    calc
+      _ = residue _ (algebraMap C' _ a) * residue _ (algebraMap C' _ t) := by
+        rw [map_mul, map_mul]
       _ = residue _ (IsLocalization.mk' (Localization.AtPrime 𝔫) a ⟨s, hs⟩ * algebraMap C' _ s) * residue _ (algebraMap C' _ t) := by
-          rw [IsLocalization.mk'_spec]
-      _ = residue _ (IsLocalization.mk' (Localization.AtPrime 𝔫) a ⟨s, hs⟩) *
-            (residue _ (algebraMap C' _ s) * residue _ (algebraMap C' _ t)) := by rw [map_mul, mul_assoc]
-      _ = residue _ (IsLocalization.mk' (Localization.AtPrime 𝔫) a ⟨s, hs⟩) := by rw [hst, mul_one]
+        rw [IsLocalization.mk'_spec]
+      _ = residue _ (IsLocalization.mk' (Localization.AtPrime 𝔫) a ⟨s, hs⟩) * (residue _ (algebraMap C' _ s) * residue _ (algebraMap C' _ t)) := by
+        rw [map_mul, mul_assoc]
+      _ = residue _ (IsLocalization.mk' (Localization.AtPrime 𝔫) a ⟨s, hs⟩) := by
+        rw [hst, mul_one]
   ·
     ext x
     rw [RingHom.mem_ker, RingHom.comp_apply, IsLocalRing.residue_eq_zero_iff]
     constructor
-    · intro hx
+    ·
+      intro hx
       have : x ∈ Ideal.under C' (maximalIdeal (Localization 𝔫.primeCompl)) := hx
       rwa [Localization.AtPrime.under_maximalIdeal] at this
-    · intro hx
+    ·
+      intro hx
       rw [← Localization.AtPrime.map_eq_maximalIdeal]
-      exact Ideal.mem_map_of_mem _ hx
+      apply Ideal.mem_map_of_mem _ hx
+
 
 -- created on 2026-10-20

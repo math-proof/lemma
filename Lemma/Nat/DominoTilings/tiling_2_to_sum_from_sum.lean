@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings
 import Lemma.Nat.DominoTilings.restrictAfterHorizontalPair_prependHorizontalPair
 import Lemma.Nat.DominoTilings.restrictAfterVertical_prependVertical
 import Lemma.Nat.DominoTilings.restrictAfterVerticalGen_eq_restrictAfterVertical

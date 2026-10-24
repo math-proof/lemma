@@ -33,7 +33,7 @@ private lemma singlePSpace_s
   SinglePSpace π (s n) := by
   induction n with
   | zero => assumption
-  | succ n _ => exact PSpace.of.PSpace_Joint.fst (hT n)
+  | succ n _ => exact SinglePSpace.of.SinglePSpace.fst (hT n)
 
 
 private lemma density_zero
@@ -57,7 +57,7 @@ private lemma integral_probJoint_fst
   (hP : SinglePSpace π (x, y))
   (hα : ReferenceMeasure.measure (α := α) = Measure.count)
   (v : α) :
-  have := PSpace.of.PSpace_Joint.fst hP
+  have := SinglePSpace.of.SinglePSpace.fst hP
   ∫⁻ w : β, π.prob (x, y) (v, w) ∂ReferenceMeasure.measure =
     π.prob x v := by
   have hmain := All_EqIntegral_ProbJoint.of.PSpace_Joint hP
@@ -75,7 +75,7 @@ private lemma mulProbJoint_fst
   (hP : SinglePSpace π (x, y))
   (hα : ReferenceMeasure.measure (α := α) = Measure.count)
   (v : α) :
-  have := PSpace.of.PSpace_Joint.snd hP
+  have := SinglePSpace.of.SinglePSpace.snd hP
   (fun w : β =>
       π.prob y w *
         @MeasureTheory.Measure.condProb Ω α β _ _ _ π (x, y) hP (v, w)) =ᵐ[ReferenceMeasure.measure]
@@ -255,7 +255,7 @@ private lemma main
     let μ := ReferenceMeasure.measure (α := α)
     have hP : SinglePSpace π (s (n + 1), s n) := hT n
     have _ : SinglePSpace π (s n) := singlePSpace_s hT
-    have _ : SinglePSpace π (s (n + 1)) := PSpace.of.PSpace_Joint.fst hP
+    have _ : SinglePSpace π (s (n + 1)) := SinglePSpace.of.SinglePSpace.fst hP
     calc _ =
         ∫⁻ w₀, ∫⁻ w,
             density (s := s) (n := n) hT w₀ w *

@@ -13,9 +13,9 @@ private lemma kmeans.w_quote
 -- given
   (_ : ∑ i ∈ Finset.range k, (w i).card = M)
   (_ : (Finset.range k).biUnion w = Finset.range M)
-  (h₂ : ∀ i, w' i = (Finset.range M).filter fun j => ((ArgMin Set.univ (fun i' : Fin k => ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖) : Fin k) : ℕ) = i) :
+  (h₂ : ∀ i, w' i = (Finset.range M).filter fun j => ((min⁻¹[i' : Fin k] ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖ : Fin k) : ℕ) = i) :
 -- imply
-  (j ∈ w' i ∧ i < k) ↔ (i = ((ArgMin Set.univ (fun i' : Fin k => ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖) : Fin k) : ℕ) ∧ j < M) := by
+  (j ∈ w' i ∧ i < k) ↔ (i = ((min⁻¹[i' : Fin k] ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖ : Fin k) : ℕ) ∧ j < M) := by
 -- proof
   rw [h₂]
   simp only [Finset.mem_filter, Finset.mem_range]

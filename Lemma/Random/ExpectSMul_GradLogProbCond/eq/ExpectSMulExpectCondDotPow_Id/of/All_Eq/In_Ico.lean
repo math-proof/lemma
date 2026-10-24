@@ -1,6 +1,6 @@
 import Lemma.Random.ExpectSMul.eq.ExpectSMulExpectCond.of.All_Eq.In_Ico
 import Lemma.Random.PSpace_Path.of.All_PSpace
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
+import Lemma.Random.SinglePSpace.of.Measurable
 import Lemma.Measure.Count.eq.ProdCountS
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
@@ -33,12 +33,9 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t)) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable
+    SinglePSpace.of.Measurable
       ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).prodMk
         (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t))
-      (by
-        show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-        rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS])
   have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace
       (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)

@@ -381,7 +381,6 @@ private lemma exists_data
       have h2 := ((kerI e).toCotangent_eq).mp h1.symm
       rwa [Submodule.coe_smul_of_tower, Algebra.smul_def] at h2
 
-end P2M.TadicPS
 
 /--
 [Algebra_FormallySmooth_exists_powerSeries_expansion_along_section](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_FormallySmooth_exists_powerSeries_expansion_along_section.lean)

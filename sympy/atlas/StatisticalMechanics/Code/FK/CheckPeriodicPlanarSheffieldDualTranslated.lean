@@ -1,0 +1,23 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckPeriodicPlanarSheffieldDualTranslated.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldDualTranslated
+
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.translatedFiniteInfinitePairConnectionEvent_measureReal
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.translatedFiniteInfinitePairConnectionEvent_graphWalk
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.exists_uniformRadius_highProbability_translatedFiniteEvent
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.dualMeasure_measureReal
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.exists_uniformRadius_highProbability_complementaryDualFiniteEvent
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_verticalGap_shift_orbitBox_middleThird
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.exists_verticalGap_translatedDualPlacement
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.translatedFiniteStripPrimal_dualPairConnection_disjoint
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.exists_verticalGap_translatedFiniteStripPrimal_dualPairConnection_disjoint
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.exists_verticalGap_translatedFiniteEvents_measureReal_add_le_one
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.exists_verticalGap_not_both_translatedFiniteEvents_highProbability

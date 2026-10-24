@@ -115,34 +115,30 @@ private lemma main
   have h₂pol : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u) := fun x u =>
     (funext fun θ' => (hπeq θ' 0 ⟨fun _ => x⟩ ⟨fun _ => u⟩).symm) ▸
       h₂ 0 ⟨fun _ => x⟩ ⟨fun _ => u⟩
-  have h₃pol : ∀ θ' x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ'‖ ≤ g x u := by
+  have h₃pol : ∀ θ' x u, ‖∇[θ'] M.policy.prob θ' x u‖ ≤ g x u := by
     intro θ' x u
     have hfe : (fun θ => M.policy.prob θ x u) =
         (fun θ => (ℙ[M θ](a[0] = (⟨fun _ => u⟩ : ℕ ⇀ A)[0] |
           s[0] = (⟨fun _ => x⟩ : ℕ ⇀ S)[0]) : ℝ)) :=
       funext fun θ'' => (hπeq θ'' 0 ⟨fun _ => x⟩ ⟨fun _ => u⟩).symm
     have := h₃bound θ' 0 ⟨fun _ => x⟩ ⟨fun _ => u⟩
-    simpa [hfe, gradient, LinearIsometryEquiv.norm_map] using this
+    simpa [hfe] using this
   have hφpol : StronglyMeasurable
-    (fun z : S × A => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ) := by
-    have hφ' : StronglyMeasurable
-      (fun z : S × A => ∇[θ] Real.log (M.policy.prob θ z.1 z.2)) := by
-      convert hφ using 1
-      funext z
-      refine congrArg (gradient · θ) ?_
-      funext θ'
-      simp only [hπeq θ' 0 ⟨fun _ => z.1⟩ ⟨fun _ => z.2⟩]
-    simpa [gradient] using
-      (InnerProductSpace.toDual ℝ Θ).continuous.comp_stronglyMeasurable hφ'
+    (fun z : S × A => ∇[θ] Real.log (M.policy.prob θ z.1 z.2)) := by
+    convert hφ using 1
+    funext z
+    refine congrArg (gradient · θ) ?_
+    funext θ'
+    simp only [hπeq θ' 0 ⟨fun _ => z.1⟩ ⟨fun _ => z.2⟩]
   obtain ⟨Ms, hMsUB⟩ := hMs
-  have hMspol : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms := by
+  have hMspol : ∀ y u, ‖∇[θ] Real.log (M.policy.prob θ y u)‖ ≤ Ms := by
     intro y u
     have hfe : (fun θ' => Real.log (M.policy.prob θ' y u)) =
         (fun θ' => (ℙ[M θ'](a[0] = (⟨fun _ => u⟩ : ℕ ⇀ A)[0] |
           s[0] = (⟨fun _ => y⟩ : ℕ ⇀ S)[0]) : ℝ).log) :=
       funext fun θ' => congrArg Real.log (hπeq θ' 0 ⟨fun _ => y⟩ ⟨fun _ => u⟩).symm
     have := hMsUB (Set.mem_range_self (⟨fun _ => y⟩, ⟨fun _ => u⟩))
-    simpa [hfe, gradient, LinearIsometryEquiv.norm_map] using this
+    simpa [hfe] using this
   obtain ⟨r⟩ := r
   obtain ⟨s⟩ := s
   obtain ⟨a⟩ := a
@@ -179,9 +175,8 @@ private lemma main
         congrArg Real.log (hπeq θ' t ⟨fun _ => x⟩ ⟨fun _ => u⟩).symm
     simp only [hfe]
   have hφg : StronglyMeasurable
-    (fun z : S × A => gradient (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ) := by
-    simp only [gradient]
-    exact ((InnerProductSpace.toDual ℝ Θ).symm.continuous.comp_stronglyMeasurable hφpol)
+    (fun z : S × A => gradient (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ) :=
+    hφpol
   have hφgℙ : ∀ t, StronglyMeasurable fun z : S × A =>
       gradient (fun θ' : Θ => (ℙ[M θ']((a t) = z.2 | (s t) = z.1) : ℝ).log) θ := fun t => by
     convert hφg using 1
@@ -368,3 +363,4 @@ private lemma main
 
 
 -- created on 2026-10-21
+-- updated on 2026-10-23

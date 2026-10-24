@@ -1,23 +1,19 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open CategoryTheory CategoryTheory.Limits
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma surjective_algebraMap_of_pow_mem_range
-    (K C : Type*) [Field K] [CommRing C] [Algebra K C]
-    [Algebra.FormallyUnramified K C] [Algebra.EssFiniteType K C]
-    (p : ℕ) [ExpChar K p]
-    (h : ∀ x : C, x ^ p ∈ (algebraMap K C).range) :
-    Function.Surjective (algebraMap K C) := by
+
+universe u
+
+private lemma surjective_algebraMap_of_pow_mem_range (K C : Type u) [Field K] [CommRing C] [Algebra K C] [Algebra.FormallyUnramified K C] [Algebra.EssFiniteType K C] (p : ℕ) [ExpChar K p] (h : ∀ x : C, x ^ p ∈ (algebraMap K C).range) : Function.Surjective (algebraMap K C) := by
   classical
-  rcases subsingleton_or_nontrivial C with hC | hC
-  · intro x
+  obtain hC | hC := subsingleton_or_nontrivial C
+  ·
+    intro x
     exact ⟨0, Subsingleton.elim _ _⟩
   intro x
   have hinj : Function.Injective (algebraMap K (C ⊗[K] C)) := (algebraMap K _).injective
@@ -31,41 +27,39 @@ private lemma surjective_algebraMap_of_pow_mem_range
     let _ : Algebra.EssFiniteType K (C ⊗[K] C) := Algebra.EssFiniteType.comp K C _
     have inst : IsReduced (C ⊗[K] C) := Algebra.FormallyUnramified.isReduced_of_field K _
     exact sub_eq_zero.mp (IsNilpotent.eq_zero ⟨_, hnil⟩)
-  by_cases h' : LinearIndependent K ![1, x]
-  · have hli := h'.linearIndepOn_id
+  if h' : LinearIndependent K (Matrix.vecCons (1 : C) (Matrix.vecCons x Matrix.vecEmpty)) then
+    have hli := h'.linearIndepOn_id
     let S := hli.extend (Set.subset_univ _)
     let a : S := ⟨1, hli.subset_extend _ (by simp)⟩
     have ha : Module.Basis.extend hli a = 1 := by simp [a]
     let b : S := ⟨x, hli.subset_extend _ (by simp)⟩
     have hb : Module.Basis.extend hli b = x := by simp [b]
-    by_cases e : a = b
-    · obtain rfl : 1 = x := congr_arg Subtype.val e
+    if e : a = b then
+      have hx : (1 : C) = x := congr_arg Subtype.val e
+      rw [← hx]
       exact ⟨1, map_one _⟩
-    have := DFunLike.congr_fun
-      (DFunLike.congr_arg ((Module.Basis.extend hli).tensorProduct (Module.Basis.extend hli)).repr H)
-        (a, b)
-    simp only [Module.Basis.tensorProduct_repr_tmul_apply, ← ha, ← hb, Module.Basis.repr_self,
-      smul_eq_mul, Finsupp.single_apply, e, Ne.symm e, ↓reduceIte, mul_one, mul_zero,
-      one_ne_zero] at this
-  · rw [LinearIndependent.pair_iff] at h'
+    else
+      have := DFunLike.congr_fun
+        (DFunLike.congr_arg ((Module.Basis.extend hli).tensorProduct (Module.Basis.extend hli)).repr H)
+          (a, b)
+      simp only [Module.Basis.tensorProduct_repr_tmul_apply, ← ha, ← hb, Module.Basis.repr_self,
+        smul_eq_mul, Finsupp.single_apply, e, Ne.symm e, ↓reduceIte, mul_one, mul_zero] at this
+      exact absurd this one_ne_zero
+  else
+    rw [LinearIndependent.pair_iff] at h'
     simp only [not_forall, not_and, exists_prop] at h'
     obtain ⟨a, b, e, hab⟩ := h'
     have : IsUnit b := by
       rw [isUnit_iff_ne_zero]
-      rintro rfl
-      rw [zero_smul, ← Algebra.algebraMap_eq_smul_one, add_zero,
+      intro hb
+      rw [hb, zero_smul, ← Algebra.algebraMap_eq_smul_one, add_zero,
         (injective_iff_map_eq_zero' _).mp (algebraMap K C).injective] at e
-      cases hab e rfl
+      cases hab e hb
     use (-this.unit⁻¹ * a)
     rw [map_mul, ← Algebra.smul_def, Algebra.algebraMap_eq_smul_one, eq_neg_iff_add_eq_zero.mpr e,
       smul_neg, neg_smul, neg_neg, smul_smul, this.val_inv_mul, one_smul]
-variable {A P B : Type*} [CommRing A] [CommRing P] [CommRing B]
-  [Algebra A P] [Algebra A B] [Algebra P B] [IsScalarTower A P B]
-private lemma surjective_algebraMap_of_frobenius_factor
-    (p : ℕ) [Fact p.Prime] [CharP P p]
-    [Algebra.FormallyUnramified P B] [Algebra.FiniteType P B]
-    (G : B → P) (hGΦ : ∀ b : B, algebraMap P B (G b) = b ^ p) :
-    Function.Surjective (algebraMap P B) := by
+variable {A P B : Type u} [CommRing A] [CommRing P] [CommRing B] [Algebra A P] [Algebra A B] [Algebra P B] [IsScalarTower A P B]
+private lemma surjective_algebraMap_of_frobenius_factor (p : ℕ) [Fact p.Prime] [CharP P p] [Algebra.FormallyUnramified P B] [Algebra.FiniteType P B] (G : B → P) (hGΦ : ∀ b : B, algebraMap P B (G b) = b ^ p) : Function.Surjective (algebraMap P B) := by
   classical
   have hp : p.Prime := Fact.out
   have hint : Algebra.IsIntegral P B := by
@@ -100,26 +94,28 @@ private lemma surjective_algebraMap_of_frobenius_factor
   have hsurjL : Function.Surjective (algebraMap (P ⧸ 𝔪) (B ⧸ 𝔪B)) := by
     apply surjective_algebraMap_of_pow_mem_range (P ⧸ 𝔪) (B ⧸ 𝔪B) p
     intro c
-    obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective c
+    obtain ⟨b, hb⟩ := Ideal.Quotient.mk_surjective c
     refine ⟨Ideal.Quotient.mk 𝔪 (G b), ?_⟩
-    rw [← map_pow, ← hGΦ]
+    rw [← hb, ← map_pow, ← hGΦ]
     rfl
   have hle : (⊤ : Submodule P (B ⧸ N)) ≤ 𝔪 • ⊤ := by
     rintro m -
-    obtain ⟨b, rfl⟩ := Submodule.Quotient.mk_surjective N m
+    obtain ⟨b, hb⟩ := Submodule.Quotient.mk_surjective N m
+    rw [← hb]
     obtain ⟨l, hl⟩ := hsurjL (Ideal.Quotient.mk 𝔪B b)
-    obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective l
+    obtain ⟨x, hx⟩ := Ideal.Quotient.mk_surjective l
+    rw [← hx] at hl
     have hbx : b - algebraMap P B x ∈ 𝔪B := by
       rw [← Ideal.Quotient.eq, ← hl]
       rfl
     have hmem : b - algebraMap P B x ∈ (𝔪 • ⊤ : Submodule P B) := by
       rw [Ideal.smul_top_eq_map]
-      exact hbx
+      refine hbx
     have hq : Submodule.Quotient.mk (p := N) b = Submodule.Quotient.mk (b - algebraMap P B x) := by
       rw [Submodule.Quotient.mk_sub, eq_comm, sub_eq_self, Submodule.Quotient.mk_eq_zero]
       exact ⟨x, rfl⟩
     rw [hq]
-    have : Submodule.map (N.mkQ) (𝔪 • ⊤ : Submodule P B) ≤ 𝔪 • ⊤ := by
+    have : Submodule.map N.mkQ (𝔪 • ⊤ : Submodule P B) ≤ 𝔪 • ⊤ := by
       rw [Submodule.map_smul'', Submodule.map_top, Submodule.range_mkQ]
     exact this ⟨_, hmem, rfl⟩
   obtain ⟨r, hr1, hr⟩ := Submodule.exists_sub_one_mem_and_smul_eq_zero_of_fg_of_le_smul 𝔪
@@ -131,13 +127,8 @@ private lemma surjective_algebraMap_of_frobenius_factor
   have h1 : (1 : P) ∈ 𝔪 := by
     have := 𝔪.sub_mem (hann𝔪 hrann) hr1
     simpa using this
-  exact h𝔪max.ne_top (𝔪.eq_top_of_isUnit_mem h1 isUnit_one)
-private lemma bijective_algebraMap_of_frobenius_factor
-    (p : ℕ) [Fact p.Prime] [CharP P p]
-    [Algebra.Etale A P] [Algebra.Etale A B]
-    (G : B → P) (hGΦ : ∀ b : B, algebraMap P B (G b) = b ^ p)
-    (hΦG : ∀ x : P, G (algebraMap P B x) = x ^ p) (hG0 : G 0 = 0) :
-    Function.Bijective (algebraMap P B) := by
+  refine h𝔪max.ne_top (𝔪.eq_top_of_isUnit_mem h1 isUnit_one)
+private lemma bijective_algebraMap_of_frobenius_factor (p : ℕ) [Fact p.Prime] [CharP P p] [Algebra.Etale A P] [Algebra.Etale A B] (G : B → P) (hGΦ : ∀ b : B, algebraMap P B (G b) = b ^ p) (hΦG : ∀ x : P, G (algebraMap P B x) = x ^ p) (hG0 : G 0 = 0) : Function.Bijective (algebraMap P B) := by
   have hp : p.Prime := Fact.out
   have hPB : Algebra.Etale P B := Algebra.Etale.of_restrictScalars A P B
   have hsurj : Function.Surjective (algebraMap P B) :=
@@ -160,12 +151,8 @@ private lemma bijective_algebraMap_of_frobenius_factor
     rw [Ideal.smul_eq_mul]
     exact le_of_eq hidem.eq.symm
   rw [RingHom.injective_iff_ker_eq_bot]
-  exact hIbot
-private lemma isPushout_frobenius_of_etale
-    {A B : Type u} [CommRing A] [CommRing B] (p : ℕ) [Fact p.Prime] [CharP A p] [CharP B p]
-    {φ : A →+* B} (hφ : φ.Etale) :
-    IsPushout (CommRingCat.ofHom (frobenius A p)) (CommRingCat.ofHom φ)
-      (CommRingCat.ofHom φ) (CommRingCat.ofHom (frobenius B p)) := by
+  refine hIbot
+private lemma isPushout_frobenius_of_etale {A B : Type u} [CommRing A] [CommRing B] (p : ℕ) [Fact p.Prime] [CharP A p] [CharP B p] {φ : A →+* B} (hφ : φ.Etale) : IsPushout (CommRingCat.ofHom (frobenius A p)) (CommRingCat.ofHom φ) (CommRingCat.ofHom φ) (CommRingCat.ofHom (frobenius B p)) := by
   have hp : p.Prime := Fact.out
   set f : CommRingCat.of A ⟶ CommRingCat.of A := CommRingCat.ofHom (frobenius A p) with hf
   set g : CommRingCat.of A ⟶ CommRingCat.of B := CommRingCat.ofHom φ with hg
@@ -178,32 +165,36 @@ private lemma isPushout_frobenius_of_etale
   have hinrΦ : pushout.inr f g ≫ Φ = CommRingCat.ofHom (frobenius B p) := pushout.inr_desc _ _ _
   have hGΦ : ∀ b : B, Φ.hom ((pushout.inr f g).hom b) = b ^ p := by
     intro b
-    have := congr($(hinrΦ).hom b)
+    have := congr_arg (fun f => f.hom b) hinrΦ
     simpa [frobenius_def] using this
   have hΦG : ∀ x : ↥(pushout f g), (pushout.inr f g).hom (Φ.hom x) = x ^ p := by
-    rcases subsingleton_or_nontrivial ↥(pushout f g) with hPs | hPs
-    · intro x
+    obtain hPs | hPs := subsingleton_or_nontrivial ↥(pushout f g)
+    ·
+      intro x
       exact Subsingleton.elim _ _
     let _ : CharP ↥(pushout f g) p := by
       rw [CharP.charP_iff_prime_eq_zero hp, ← map_natCast (pushout.inl f g).hom, CharP.cast_eq_zero,
         map_zero]
     have key : Φ ≫ pushout.inr f g = CommRingCat.ofHom (frobenius ↥(pushout f g) p) := by
       apply pushout.hom_ext
-      · rw [reassoc_of% hinlΦ]
+      ·
+        rw [reassoc_of% hinlΦ]
         have h1 : CommRingCat.ofHom φ ≫ pushout.inr f g = f ≫ pushout.inl f g :=
           (pushout.condition (f := f) (g := g)).symm
         rw [h1]
         ext a
         simp [f, frobenius_def]
-      · rw [reassoc_of% hinrΦ]
+      ·
+        rw [reassoc_of% hinrΦ]
         ext b
         simp [frobenius_def]
     intro x
-    have := congr($(key).hom x)
+    have := congr_arg (fun f => f.hom x) key
     simpa [frobenius_def] using this
   have hbij : Function.Bijective Φ.hom := by
-    rcases subsingleton_or_nontrivial B with hB | hB
-    · haveI : Subsingleton ↥(pushout f g) := by
+    obtain hB | hB := subsingleton_or_nontrivial B
+    ·
+      let _ : Subsingleton ↥(pushout f g) := by
         refine subsingleton_of_zero_eq_one ?_
         rw [← map_one (pushout.inr f g).hom, Subsingleton.elim (1 : B) 0, map_zero]
       exact ⟨fun _ _ _ => Subsingleton.elim _ _, fun b => ⟨0, Subsingleton.elim _ _⟩⟩
@@ -217,7 +208,7 @@ private lemma isPushout_frobenius_of_etale
     let _ : IsScalarTower A ↥(pushout f g) B := by
       refine IsScalarTower.of_algebraMap_eq' ?_
       change φ = Φ.hom.comp (pushout.inl f g).hom
-      have := congr($(hinlΦ).hom)
+      have := congr_arg (fun f => f.hom) hinlΦ
       simpa using this.symm
     let _ : Algebra.Etale A B := hφ
     let _ : Algebra.Etale A ↥(pushout f g) := by
@@ -227,7 +218,7 @@ private lemma isPushout_frobenius_of_etale
       have hinl : (RingHom.toMorphismProperty @RingHom.Etale) (pushout.inl f g) :=
         MorphismProperty.IsStableUnderCobaseChange.of_isPushout (IsPushout.of_hasPushout f g)
           (show (RingHom.toMorphismProperty @RingHom.Etale) g from hφ)
-      exact hinl
+      refine hinl
     exact bijective_algebraMap_of_frobenius_factor (A := A) (P := ↥(pushout f g)) (B := B) p
       (G := (pushout.inr f g).hom) hGΦ hΦG (map_zero _)
   let _ : IsIso Φ := by
@@ -243,10 +234,13 @@ private lemma isPushout_frobenius_of_etale
 -/
 @[path]
 private lemma main
-    {A B : Type u} [CommRing A] [CommRing B] (p : ℕ) [Fact p.Prime] [CharP A p] [CharP B p]
-    {φ : A →+* B} (hφ : φ.Etale) :
-    IsPushout (CommRingCat.ofHom (frobenius A p)) (CommRingCat.ofHom φ)
-      (CommRingCat.ofHom φ) (CommRingCat.ofHom (frobenius B p)) :=
+  {A B : Type u} [CommRing A] [CommRing B]
+  (p : ℕ) [Fact p.Prime] [CharP A p] [CharP B p]
+  {φ : A →+* B}
+  (hφ : φ.Etale) :
+  -- imply
+  IsPushout (CommRingCat.ofHom (frobenius A p)) (CommRingCat.ofHom φ) (CommRingCat.ofHom φ) (CommRingCat.ofHom (frobenius B p)) :=
   isPushout_frobenius_of_etale p hφ
+
 
 -- created on 2026-10-20

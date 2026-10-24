@@ -22,14 +22,4 @@ def pellLucasSequence : ℕ → ℕ
   | 0 => 1
   | 1 => 1
   | n + 2 => 2 * pellLucasSequence (n + 1) + pellLucasSequence n
-
-@[simp] theorem pellLucasSequence_zero : pellLucasSequence 0 = 1 := rfl
-
-@[simp] theorem pellLucasSequence_one : pellLucasSequence 1 = 1 := rfl
-
-/-- The defining recurrence of the Pell–Lucas sequence. -/
-theorem pellLucasSequence_succ_succ (n : ℕ) :
-    pellLucasSequence (n + 2) =
-      2 * pellLucasSequence (n + 1) + pellLucasSequence n := rfl
-
 end MetaMathlibExt

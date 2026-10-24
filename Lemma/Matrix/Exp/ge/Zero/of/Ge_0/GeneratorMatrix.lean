@@ -3,8 +3,8 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Lemma.NormedSpace.Exp.ge.Zero.of.All_Ge_0
-open NormedSpace
+import Lemma.Matrix.Exp.ge.Zero.of.All_Ge_0
+open NormedSpace Matrix
 
 
 @[path]
@@ -41,7 +41,7 @@ private lemma main
     rw [Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one, ← Real.exp_eq_exp_ℝ] at h
     exact h.symm
   rw [hsplit, Matrix.exp_add_of_commute _ _ ((Commute.one_right _).smul_right _), hone, mul_smul_one]
-  exact mul_nonneg (Real.exp_pos _).le (NormedSpace.Exp.ge.Zero.of.All_Ge_0 hP i j)
+  exact mul_nonneg (Real.exp_pos _).le (Matrix.Exp.ge.Zero.of.All_Ge_0 hP i j)
 
 
 -- created on 2026-09-26

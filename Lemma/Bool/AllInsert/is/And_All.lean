@@ -23,5 +23,5 @@ private lemma doit
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff, forall_eq_or_imp, forall_eq]
 
 
--- created on 2018-03-29
+-- created on 2018-12-04
 -- updated on 2026-09-27

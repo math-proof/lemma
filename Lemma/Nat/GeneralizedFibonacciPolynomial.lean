@@ -4,41 +4,54 @@ import sympy.atlas.NumberTheory.GeneralizedFibonacciPolynomial
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [generalizedFibonacciPolynomial_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedFibonacciPolynomial.lean)
 -/
 @[path]
-private lemma generalizedFibonacciPolynomial_zero_eq
+lemma generalizedFibonacciPolynomial_zero
   {p0 p1 d g : Polynomial ℤ} :
 -- imply
-  generalizedFibonacciPolynomial p0 p1 d g 0 = p0 := by
+  generalizedFibonacciPolynomial p0 p1 d g 0 = p0 :=
 -- proof
-  apply MetaMathlibExt.generalizedFibonacciPolynomial_zero p0 p1 d g
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [generalizedFibonacciPolynomial_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedFibonacciPolynomial.lean)
 -/
 @[path]
-private lemma generalizedFibonacciPolynomial_one_eq
+lemma generalizedFibonacciPolynomial_one
   {p0 p1 d g : Polynomial ℤ} :
 -- imply
-  generalizedFibonacciPolynomial p0 p1 d g 1 = p1 := by
+  generalizedFibonacciPolynomial p0 p1 d g 1 = p1 :=
 -- proof
-  apply MetaMathlibExt.generalizedFibonacciPolynomial_one p0 p1 d g
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [generalizedFibonacciPolynomial_add_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedFibonacciPolynomial.lean)
 -/
 @[path]
-private lemma generalizedFibonacciPolynomial_add_two_eq
+lemma generalizedFibonacciPolynomial_add_two
   {p0 p1 d g : Polynomial ℤ}
   {n : ℕ} :
 -- imply
   generalizedFibonacciPolynomial p0 p1 d g (n + 2) =
       d * generalizedFibonacciPolynomial p0 p1 d g (n + 1) +
-        g * generalizedFibonacciPolynomial p0 p1 d g n := by
+        g * generalizedFibonacciPolynomial p0 p1 d g n :=
 -- proof
-  apply MetaMathlibExt.generalizedFibonacciPolynomial_add_two p0 p1 d g n
+  rfl
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

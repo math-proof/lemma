@@ -43,37 +43,4 @@ with the coloring. Linear coloring and centered chromatic number are not
 defined here. -/
 def IsCentered (φ : G.Coloring C) : Prop :=
   ∀ s : Set V, (G.induce s).Connected → ∃ v, IsPhiCenter φ s v
-
-/-- Characterization of centers via unique existence. -/
-theorem isPhiCenter_iff_existsUnique (φ : G.Coloring C) (s : Set V) (v : V) :
-    IsPhiCenter φ s v ↔ v ∈ s ∧ ∃! u, u ∈ s ∧ φ u = φ v := by
-  constructor
-  · rintro ⟨hmem, huniq⟩
-    refine ⟨hmem, v, ⟨hmem, rfl⟩, ?_⟩
-    rintro w ⟨hwmem, hweq⟩
-    exact huniq w hwmem hweq
-  · rintro ⟨hmem, u₀, ⟨_, _⟩, huniq⟩
-    refine ⟨hmem, fun w hwmem hweq => ?_⟩
-    have hw : w = u₀ := huniq w ⟨hwmem, hweq⟩
-    have hv : v = u₀ := huniq v ⟨hmem, rfl⟩
-    exact hw.trans hv.symm
-
-/-- Every singleton set has its point as a center. -/
-theorem isPhiCenter_singleton (φ : G.Coloring C) (v : V) :
-    IsPhiCenter φ {v} v :=
-  ⟨Set.mem_singleton v, fun _ hw _ => Set.mem_singleton_iff.mp hw⟩
-
-/-- An injective coloring is centered: any vertex of a connected set works. -/
-theorem isCentered_of_injective (φ : G.Coloring C)
-    (hinj : Function.Injective ⇑φ) : IsCentered φ := by
-  intro s hs
-  have hne : s.Nonempty := Set.nonempty_coe_sort.mp hs.nonempty
-  obtain ⟨v, hv⟩ := hne
-  exact ⟨v, hv, fun w _ heq => hinj heq⟩
-
-/-- The tautological vertex coloring is centered. -/
-theorem selfColoring_isCentered (G : SimpleGraph V) :
-    IsCentered (SimpleGraph.selfColoring G) :=
-  isCentered_of_injective (SimpleGraph.selfColoring G) fun _ _ h => h
-
 end SimpleGraph

@@ -1,39 +1,27 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
 
 /--
 [NumberField_compositum_isPGroup_and_normal_and_inf_eq_bot_and_exists_generators](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_compositum_isPGroup_and_normal_and_inf_eq_bot_and_exists_generators.lean)
 -/
 @[path]
 private lemma main
-    (E F L N : Type) [Field E] [NumberField E] [Field F] [NumberField F] [Field L] [NumberField L]
-    [Field N] [NumberField N]
-    [Algebra E F] [Algebra E L] [Algebra E N] [Algebra F N] [Algebra L N]
-    [IsScalarTower E F N] [IsScalarTower E L N] [IsGalois E F] [IsGalois E L] [IsGalois E N]
-    (p : ℕ) [Fact p.Prime] (hF : IsPGroup p (F ≃ₐ[E] F)) (hL : IsCyclic (L ≃ₐ[E] L))
-    (hdeg : Module.finrank E L = Module.finrank E F)
-    (hgen : ∀ σ : N ≃ₐ[E] N, (∀ x : F, σ (algebraMap F N x) = algebraMap F N x) →
-      (∀ y : L, σ (algebraMap L N y) = algebraMap L N y) → σ = 1) :
-    IsPGroup p (N ≃ₐ[E] N) ∧
-    ∃ (_ : ((IsScalarTower.toAlgHom E F N).fieldRange).fixingSubgroup.Normal)
-      (_ : ((IsScalarTower.toAlgHom E L N).fieldRange).fixingSubgroup.Normal),
-      ((IsScalarTower.toAlgHom E F N).fieldRange).fixingSubgroup ⊓
-          ((IsScalarTower.toAlgHom E L N).fieldRange).fixingSubgroup = ⊥ ∧
-      Nat.card ((N ≃ₐ[E] N) ⧸ ((IsScalarTower.toAlgHom E F N).fieldRange).fixingSubgroup)
-          = Nat.card (F ≃ₐ[E] F) ∧
-      (∃ s : (N ≃ₐ[E] N) ⧸ ((IsScalarTower.toAlgHom E L N).fieldRange).fixingSubgroup,
-        (∀ g, g ∈ Subgroup.zpowers s) ∧
-        orderOf s = Nat.card ((N ≃ₐ[E] N) ⧸ ((IsScalarTower.toAlgHom E F N).fieldRange).fixingSubgroup)) ∧
-      (∃ t : ↥((IsScalarTower.toAlgHom E F N).fieldRange).fixingSubgroup,
-        ∀ g, g ∈ Subgroup.zpowers t) := by
+  (E F L N : Type) [Field E] [NumberField E] [Field F] [NumberField F] [Field L] [NumberField L] [Field N] [NumberField N]
+  [Algebra E F] [Algebra E L] [Algebra E N] [Algebra F N] [Algebra L N]
+  [IsScalarTower E F N] [IsScalarTower E L N] [IsGalois E F] [IsGalois E L] [IsGalois E N]
+  (p : ℕ) [Fact p.Prime]
+  -- given
+  (hF : IsPGroup p (F ≃ₐ[E] F))
+  (hL : IsCyclic (L ≃ₐ[E] L))
+  (hdeg : Module.finrank E L = Module.finrank E F)
+  (hgen : ∀ σ : N ≃ₐ[E] N, (∀ x : F, σ (algebraMap F N x) = algebraMap F N x) → (∀ y : L, σ (algebraMap L N y) = algebraMap L N y) → σ = 1) :
+  -- imply
+  IsPGroup p (N ≃ₐ[E] N) ∧ ∃ (_ : ((IsScalarTower.toAlgHom E F N).fieldRange).fixingSubgroup.Normal) (_ : ((IsScalarTower.toAlgHom E L N).fieldRange).fixingSubgroup.Normal), ((IsScalarTower.toAlgHom E F N).fieldRange).fixingSubgroup ⊓ ((IsScalarTower.toAlgHom E L N).fieldRange).fixingSubgroup = ⊥ ∧ Nat.card ((N ≃ₐ[E] N) ⧸ ((IsScalarTower.toAlgHom E F N).fieldRange).fixingSubgroup) = Nat.card (F ≃ₐ[E] F) ∧ (∃ s : (N ≃ₐ[E] N) ⧸ ((IsScalarTower.toAlgHom E L N).fieldRange).fixingSubgroup, (∀ g, g ∈ Subgroup.zpowers s) ∧ orderOf s = Nat.card ((N ≃ₐ[E] N) ⧸ ((IsScalarTower.toAlgHom E F N).fieldRange).fixingSubgroup)) ∧ (∃ t : ↥((IsScalarTower.toAlgHom E F N).fieldRange).fixingSubgroup, ∀ g, g ∈ Subgroup.zpowers t) := by
+  -- proof
   classical
   let Γ := N ≃ₐ[E] N
   let KF : IntermediateField E N := (IsScalarTower.toAlgHom E F N).fieldRange
@@ -44,54 +32,66 @@ private lemma main
     intro σ
     rw [IntermediateField.mem_fixingSubgroup_iff]
     constructor
-    · intro h x
-      exact h _ (AlgHom.mem_fieldRange.mpr ⟨x, rfl⟩)
-    · rintro h _ hy
+    ·
+      intro h x
+      apply h _ (AlgHom.mem_fieldRange.mpr ⟨x, rfl⟩)
+    ·
+      rintro h _ hy
       obtain ⟨x, rfl⟩ := AlgHom.mem_fieldRange.mp hy
-      exact h x
+      apply h x
   have memL : ∀ σ : N ≃ₐ[E] N, σ ∈ KL.fixingSubgroup ↔ ∀ y : L, σ (algebraMap L N y) = algebraMap L N y := by
     intro σ
     rw [IntermediateField.mem_fixingSubgroup_iff]
     constructor
-    · intro h y
-      exact h _ (AlgHom.mem_fieldRange.mpr ⟨y, rfl⟩)
-    · rintro h _ hy
+    ·
+      intro h y
+      apply h _ (AlgHom.mem_fieldRange.mpr ⟨y, rfl⟩)
+    ·
+      rintro h _ hy
       obtain ⟨y, rfl⟩ := AlgHom.mem_fieldRange.mp hy
-      exact h y
+      apply h y
   have kerF : KF.fixingSubgroup = rF.ker := by
     ext σ
     rw [memF, MonoidHom.mem_ker]
     constructor
-    · intro h
+    ·
+      intro h
       apply AlgEquiv.ext
       intro x
       apply (algebraMap F N).injective
       show algebraMap F N (σ.restrictNormal F x) = algebraMap F N x
       rw [AlgEquiv.restrictNormal_commutes, h x]
-    · intro h x
+    ·
+      intro h x
       have hx := AlgEquiv.restrictNormal_commutes σ F x
       have h' : σ.restrictNormal F = 1 := h
       rw [h', AlgEquiv.one_apply] at hx
-      exact hx.symm
+      apply hx.symm
   have kerL : KL.fixingSubgroup = rL.ker := by
     ext σ
     rw [memL, MonoidHom.mem_ker]
     constructor
-    · intro h
+    ·
+      intro h
       apply AlgEquiv.ext
       intro y
       apply (algebraMap L N).injective
       show algebraMap L N (σ.restrictNormal L y) = algebraMap L N y
       rw [AlgEquiv.restrictNormal_commutes, h y]
-    · intro h y
+    ·
+      intro h y
       have hy := AlgEquiv.restrictNormal_commutes σ L y
       have h' : σ.restrictNormal L = 1 := h
       rw [h', AlgEquiv.one_apply] at hy
-      exact hy.symm
+      apply hy.symm
   have surjF : Function.Surjective rF := AlgEquiv.restrictNormalHom_surjective N
   have surjL : Function.Surjective rL := AlgEquiv.restrictNormalHom_surjective N
-  let nF : KF.fixingSubgroup.Normal := by rw [kerF]; infer_instance
-  let nL : KL.fixingSubgroup.Normal := by rw [kerL]; infer_instance
+  let nF : KF.fixingSubgroup.Normal := by
+    rw [kerF]
+    infer_instance
+  let nL : KL.fixingSubgroup.Normal := by
+    rw [kerL]
+    infer_instance
   have eF : (N ≃ₐ[E] N) ⧸ KF.fixingSubgroup ≃* (F ≃ₐ[E] F) :=
     (QuotientGroup.quotientMulEquivOfEq kerF).trans (QuotientGroup.quotientKerEquivOfSurjective rF surjF)
   have eL : (N ≃ₐ[E] N) ⧸ KL.fixingSubgroup ≃* (L ≃ₐ[E] L) :=
@@ -100,7 +100,7 @@ private lemma main
     rw [eq_bot_iff]
     intro σ hσ
     rw [Subgroup.mem_bot]
-    exact hgen σ ((memF σ).mp hσ.1) ((memL σ).mp hσ.2)
+    apply hgen σ ((memF σ).mp hσ.1) ((memL σ).mp hσ.2)
   have hinj : Function.Injective (rF.prod rL) := by
     intro σ τ h
     have h1 : rF σ = rF τ := congrArg Prod.fst h
@@ -110,7 +110,7 @@ private lemma main
       · rw [kerF, MonoidHom.mem_ker, map_mul, map_inv, h1, mul_inv_cancel]
       · rw [kerL, MonoidHom.mem_ker, map_mul, map_inv, h2, mul_inv_cancel]
     rw [hinf, Subgroup.mem_bot] at hk
-    exact mul_inv_eq_one.mp hk
+    apply mul_inv_eq_one.mp hk
   have cardF : Nat.card (F ≃ₐ[E] F) = Module.finrank E F := IsGalois.card_aut_eq_finrank E F
   have cardL : Nat.card (L ≃ₐ[E] L) = Module.finrank E L := IsGalois.card_aut_eq_finrank E L
   obtain ⟨k, hk⟩ := hF.exists_card_eq
@@ -119,7 +119,7 @@ private lemma main
   have hpΓ : IsPGroup p (N ≃ₐ[E] N) := hprod.of_injective (rF.prod rL) hinj
   refine ⟨hpΓ, ?_⟩
   refine ⟨nF, nL, hinf, ?_, ?_, ?_⟩
-  · exact (Nat.card_congr eF.toEquiv)
+  · apply (Nat.card_congr eF.toEquiv)
   ·
     let _ : IsCyclic ((N ≃ₐ[E] N) ⧸ KL.fixingSubgroup) := isCyclic_of_surjective eL.symm eL.symm.surjective
     obtain ⟨s, hs⟩ := IsCyclic.exists_generator (α := (N ≃ₐ[E] N) ⧸ KL.fixingSubgroup)
@@ -136,8 +136,9 @@ private lemma main
       have hmem : (a : N ≃ₐ[E] N)⁻¹ * b ∈ KF.fixingSubgroup ⊓ KL.fixingSubgroup :=
         ⟨Subgroup.mul_mem _ (Subgroup.inv_mem _ a.2) b.2, h'⟩
       rw [hinf, Subgroup.mem_bot] at hmem
-      exact inv_mul_eq_one.mp hmem
+      apply inv_mul_eq_one.mp hmem
     let _ : IsCyclic ↥KF.fixingSubgroup := isCyclic_of_injective _ hinjS
-    exact IsCyclic.exists_generator
+    apply IsCyclic.exists_generator
+
 
 -- created on 2026-10-20

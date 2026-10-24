@@ -48,29 +48,7 @@ def IsDeltaHyperbolic (X : Type*) [PseudoMetricSpace X] (δ : ℝ) : Prop :=
 /-- A pseudometric space is Gromov-hyperbolic if it is `δ`-hyperbolic for some `δ`. -/
 def IsGromovHyperbolic (X : Type*) [PseudoMetricSpace X] : Prop := ∃ δ : ℝ, IsDeltaHyperbolic X δ
 
-/-- The defining four-point inequality of a `δ`-hyperbolic space. -/
-theorem IsDeltaHyperbolic.four_point {δ : ℝ} (h : IsDeltaHyperbolic X δ) (w x y z : X) :
-    min (gromovProduct x y w) (gromovProduct y z w) - δ ≤ gromovProduct x z w :=
-  h.2 w x y z
-
-/-- Enlarging the constant preserves `δ`-hyperbolicity. -/
-theorem IsDeltaHyperbolic.mono {δ δ' : ℝ} (h : IsDeltaHyperbolic X δ) (hδ : δ ≤ δ') :
-    IsDeltaHyperbolic X δ' :=
-  ⟨h.1.trans hδ, fun w x y z => by
-    have := h.four_point w x y z
-    linarith⟩
-
-/-- The hyperbolicity constant is nonnegative. -/
-theorem IsDeltaHyperbolic.nonneg {δ : ℝ} (h : IsDeltaHyperbolic X δ) : 0 ≤ δ :=
-  h.1
-
-/-- A subsingleton space (in particular a single point) is `0`-hyperbolic: it is an `ℝ`-tree. -/
-theorem isDeltaHyperbolic_zero_of_subsingleton [Subsingleton X] : IsDeltaHyperbolic X 0 := by
-  refine ⟨le_refl 0, fun w x y z => ?_⟩
-  rw [Subsingleton.elim x w, Subsingleton.elim y w, Subsingleton.elim z w, min_self, sub_zero]
-
 end Metric
-
 /-! ### Examples -/
 
 -- A single point is `0`-hyperbolic (boundary case `δ = 0`).

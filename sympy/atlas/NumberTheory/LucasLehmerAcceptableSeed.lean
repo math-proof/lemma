@@ -162,17 +162,6 @@ private instance lucasLehmerSeed_fintype (s₁ : ℤ) (q : ℕ) [NeZero q] :
     Fintype (lucasLehmerSeed_X s₁ q) :=
   inferInstanceAs (Fintype (ZMod q × ZMod q))
 
-private theorem lucasLehmerSeed_card_X (s₁ : ℤ) (q : ℕ) [NeZero q] :
-    Fintype.card (lucasLehmerSeed_X s₁ q) = q ^ 2 := by
-  change Fintype.card (ZMod q × ZMod q) = q ^ 2
-  rw [Fintype.card_prod, ZMod.card, sq]
-
-private theorem lucasLehmerSeed_card_units_lt (s₁ : ℤ) (q : ℕ) [NeZero q]
-    (hq : 1 < q) : Fintype.card (lucasLehmerSeed_X s₁ q)ˣ < q ^ 2 := by
-  have : Fact (1 < q) := ⟨hq⟩
-  convert! card_units_lt (lucasLehmerSeed_X s₁ q)
-  rw [lucasLehmerSeed_card_X]
-
 private def lucasLehmerSeed_alpha (s₁ : ℤ) (q : ℕ) [Fact q.Prime] :
     lucasLehmerSeed_X s₁ q :=
   ((s₁ : ZMod q) / 2, 1 / 2)
@@ -275,13 +264,6 @@ private theorem lucasLehmerSeed_closedForm (s₁ : ℤ) (q : ℕ) [Fact q.Prime]
               lucasLehmerSeed_beta s₁ q ^ 2 ^ (j + 1) := by
               rw [← pow_mul, ← pow_mul, _root_.pow_succ]
 
-private theorem lucasLehmerSeed_two_lt_minFac (p' : ℕ) :
-    2 < Nat.minFac (mersenne (p' + 2)) := by
-  refine (Nat.minFac_prime (one_lt_mersenne.2 ?_).ne').two_le.lt_of_ne' ?_
-  · omega
-  · rw [Ne, Nat.minFac_eq_two_iff, mersenne, Nat.pow_succ']
-    exact Nat.two_not_dvd_two_mul_sub_one (Nat.one_le_two_pow)
-
 private theorem lucasLehmerSeed_mersenne_coe_X (s₁ : ℤ) (p : ℕ) :
     (mersenne p : lucasLehmerSeed_X s₁ (Nat.minFac (mersenne p))) = 0 := by
   apply lucasLehmerSeed_X_ext
@@ -382,27 +364,6 @@ private theorem lucasLehmerSeed_sufficiency (n : ℕ) (hn_ge : 3 ≤ n) (s₁ : 
   have hcontra := lt_of_lt_of_le horder hfactor
   exact not_lt_of_ge (Nat.sub_le _ _) hcontra
 
-private theorem lucasLehmerSeed_legendre_add_two (s₁ : ℤ) (q : ℕ) [Fact q.Prime]
-    (hjac : jacobiSym (s₁ + 2) q = -1) : legendreSym q (s₁ + 2) = -1 := by
-  calc
-    legendreSym q (s₁ + 2) = jacobiSym (s₁ + 2) q :=
-      jacobiSym.legendreSym.to_jacobiSym q (s₁ + 2)
-    _ = -1 := hjac
-
-private theorem lucasLehmerSeed_legendre_sub_two (s₁ : ℤ) (q : ℕ) [Fact q.Prime]
-    (hjac : jacobiSym (s₁ - 2) q = 1) : legendreSym q (s₁ - 2) = 1 := by
-  calc
-    legendreSym q (s₁ - 2) = jacobiSym (s₁ - 2) q :=
-      jacobiSym.legendreSym.to_jacobiSym q (s₁ - 2)
-    _ = 1 := hjac
-
-private theorem lucasLehmerSeed_legendre_D (s₁ : ℤ) (q : ℕ) [Fact q.Prime]
-    (hplus : legendreSym q (s₁ + 2) = -1)
-    (hminus : legendreSym q (s₁ - 2) = 1) :
-    legendreSym q (s₁ ^ 2 - 4) = -1 := by
-  rw [show s₁ ^ 2 - 4 = (s₁ + 2) * (s₁ - 2) by ring, legendreSym.mul, hplus, hminus]
-  norm_num
-
 private def lucasLehmerSeed_delta (s₁ : ℤ) (q : ℕ) : lucasLehmerSeed_X s₁ q := (0, 1)
 
 @[simp] private theorem lucasLehmerSeed_delta_fst (s₁ : ℤ) (q : ℕ) :
@@ -421,26 +382,6 @@ private def lucasLehmerSeed_delta (s₁ : ℤ) (q : ℕ) : lucasLehmerSeed_X s�
   · simp only [pow_two, lucasLehmerSeed_mul_snd, lucasLehmerSeed_delta_fst,
       lucasLehmerSeed_delta_snd, lucasLehmerSeed_coeZMod_snd]
     ring
-
-private theorem lucasLehmerSeed_delta_pow (s₁ : ℤ) (q i : ℕ) :
-    lucasLehmerSeed_delta s₁ q ^ (2 * i + 1) =
-      (lucasLehmerSeed_D s₁ q : lucasLehmerSeed_X s₁ q) ^ i *
-        lucasLehmerSeed_delta s₁ q := by
-  rw [pow_succ, pow_mul, lucasLehmerSeed_delta_sq]
-
-private theorem lucasLehmerSeed_delta_pow_q (s₁ : ℤ) (q : ℕ) [Fact q.Prime]
-    (hq_odd : Odd q) (hD : legendreSym q (s₁ ^ 2 - 4) = -1) :
-    lucasLehmerSeed_delta s₁ q ^ q = -lucasLehmerSeed_delta s₁ q := by
-  obtain ⟨k, rfl⟩ := hq_odd
-  have hDpow : (lucasLehmerSeed_D s₁ (2 * k + 1)) ^ k = -1 := by
-    have h := legendreSym.eq_pow (2 * k + 1) (s₁ ^ 2 - 4)
-    rw [hD] at h
-    have hhalf : (2 * k + 1) / 2 = k := by omega
-    rw [hhalf] at h
-    simpa [lucasLehmerSeed_D] using h.symm
-  rw [lucasLehmerSeed_delta_pow]
-  rw [← map_pow, hDpow, map_neg]
-  simp
 
 private theorem lucasLehmerSeed_alpha_eq (s₁ : ℤ) (q : ℕ) [Fact q.Prime] :
     lucasLehmerSeed_alpha s₁ q =
@@ -474,11 +415,6 @@ private theorem lucasLehmerSeed_beta_eq (s₁ : ℤ) (q : ℕ) [Fact q.Prime] :
       lucasLehmerSeed_coeZMod_fst, lucasLehmerSeed_delta_fst,
       lucasLehmerSeed_delta_snd]
     ring
-
-private theorem lucasLehmerSeed_coeZMod_pow_q (s₁ : ℤ) (q : ℕ) [Fact q.Prime]
-    (z : ZMod q) :
-    (z : lucasLehmerSeed_X s₁ q) ^ q = (z : lucasLehmerSeed_X s₁ q) := by
-  rw [← map_pow, ZMod.pow_card]
 
 private theorem lucasLehmerSeed_alpha_pow_q (s₁ : ℤ) (q : ℕ) [Fact q.Prime]
     (hq_odd : Odd q) (hD : legendreSym q (s₁ ^ 2 - 4) = -1) :

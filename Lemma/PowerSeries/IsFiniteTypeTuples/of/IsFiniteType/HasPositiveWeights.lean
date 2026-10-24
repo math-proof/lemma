@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.series.formal.WeightedSets
+import Lemma.PowerSeries.WeightedSets
 open scoped BigOperators
 open PowerSeries Finset
 open WeightedSet

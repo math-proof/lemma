@@ -31,21 +31,4 @@ def chapter7PowerDifferenceTerm (r x : ℂ) (j : ℕ) : ℂ :=
 /-- The power-difference series `φ_r(x) = ∑_{j ≥ 0} ((j + 1)ʳ - (j + 1 + x)ʳ)`. -/
 def chapter7PowerDifferenceSum (r x : ℂ) : ℂ :=
   ∑' j : ℕ, chapter7PowerDifferenceTerm r x j
-
-@[simp]
-theorem chapter7Admissible_zero : chapter7Admissible 0 := by
-  intro j
-  rw [add_zero]
-  exact_mod_cast Nat.succ_ne_zero j
-
-@[simp]
-theorem chapter7PowerDifferenceTerm_zero_left (x : ℂ) (j : ℕ) :
-    chapter7PowerDifferenceTerm 0 x j = 0 := by
-  simp [chapter7PowerDifferenceTerm]
-
-@[simp]
-theorem chapter7PowerDifferenceTerm_zero_right (r : ℂ) (j : ℕ) :
-    chapter7PowerDifferenceTerm r 0 j = 0 := by
-  simp [chapter7PowerDifferenceTerm]
-
 end

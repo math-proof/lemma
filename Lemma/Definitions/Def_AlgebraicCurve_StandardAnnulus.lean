@@ -832,7 +832,6 @@ section PointwiseGauss
 open RationalFunctionField
 open scoped Classical
 
-variable [IsAlgClosed K]
 
 end PointwiseGauss
 

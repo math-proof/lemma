@@ -35,79 +35,7 @@ ranges of finitely many Lipschitz maps out of the unit cube. -/
 def IsLipschitzParametrizable {X : Type*} [MetricSpace X] (d : ℕ) (B : Set X) : Prop :=
   ∃ (n : ℕ) (f : Fin n → (↥(unitCube d) → X)),
     (∀ i, ∃ K : NNReal, LipschitzWith K (f i)) ∧ B = ⋃ i, Set.range (f i)
-
-/-- The origin lies in the unit cube. -/
-theorem unitCube_zero_mem (d : ℕ) : (0 : Fin d → ℝ) ∈ unitCube d :=
-  Set.mem_Icc.mpr ⟨le_rfl, fun _ => zero_le_one⟩
-
-/-- The empty set is `d`-Lipschitz parametrizable, via the empty family. -/
-theorem isLipschitzParametrizable_empty {X : Type*} [MetricSpace X] (d : ℕ) :
-    IsLipschitzParametrizable d (∅ : Set X) := by
-  refine ⟨0, fun i => i.elim0, fun i => i.elim0, ?_⟩
-  symm
-  apply Set.eq_empty_of_forall_notMem
-  intro x hx
-  rw [Set.mem_iUnion] at hx
-  obtain ⟨i, _, _⟩ := hx
-  exact i.elim0
-
-/-- Singletons are `d`-Lipschitz parametrizable, via one constant map. -/
-theorem isLipschitzParametrizable_singleton {X : Type*} [MetricSpace X] (d : ℕ)
-    (x : X) : IsLipschitzParametrizable d ({x} : Set X) := by
-  refine ⟨1, fun _ _ => x, fun _ => ⟨0, LipschitzWith.const' _⟩, ?_⟩
-  ext y
-  simp only [Set.mem_singleton_iff, Set.mem_iUnion, Set.mem_range]
-  constructor
-  · rintro rfl
-    exact ⟨0, ⟨0, unitCube_zero_mem d⟩, rfl⟩
-  · rintro ⟨_, _, rfl⟩
-    rfl
-
 namespace Finset
-
-/-- A finite set, coerced to a set, is `d`-Lipschitz parametrizable. -/
-theorem isLipschitzParametrizable_coe {X : Type*} [MetricSpace X] (d : ℕ)
-    (s : Finset X) : IsLipschitzParametrizable d (↑s : Set X) := by
-  refine ⟨Fintype.card ↥s, fun i _ => ((Fintype.equivFin ↥s).symm i : X),
-    fun _ => ⟨0, LipschitzWith.const' _⟩, ?_⟩
-  ext x
-  simp only [Set.mem_iUnion, Set.mem_range]
-  constructor
-  · intro hx
-    refine ⟨Fintype.equivFin ↥s ⟨x, hx⟩, ⟨0, unitCube_zero_mem d⟩, ?_⟩
-    show ((Fintype.equivFin ↥s).symm (Fintype.equivFin ↥s ⟨x, hx⟩) : ↥s).val = x
-    rw [Equiv.symm_apply_apply]
-  · rintro ⟨i, _, rfl⟩
-    exact ((Fintype.equivFin ↥s).symm i).property
-
 end Finset
-
 namespace Set
-
-/-- A finite set is `d`-Lipschitz parametrizable. -/
-theorem Finite.isLipschitzParametrizable {X : Type*} [MetricSpace X] {B : Set X}
-    (hB : B.Finite) (d : ℕ) : IsLipschitzParametrizable d B := by
-  obtain ⟨s, rfl⟩ := hB.exists_finset_coe
-  exact Finset.isLipschitzParametrizable_coe d s
-
 end Set
-
-/-- The image of a `d`-Lipschitz parametrizable set under a Lipschitz map is
-`d`-Lipschitz parametrizable, by composing each chart with the map. -/
-theorem IsLipschitzParametrizable.image_lipschitzWith {X Y : Type*}
-    [MetricSpace X] [MetricSpace Y] {d : ℕ} {B : Set X}
-    (hB : IsLipschitzParametrizable d B) {f : X → Y} {K : NNReal}
-    (hf : LipschitzWith K f) : IsLipschitzParametrizable d (f '' B) := by
-  obtain ⟨n, charts, hLip, hEq⟩ := hB
-  refine ⟨n, fun i => f ∘ charts i, fun i => ?_, ?_⟩
-  · obtain ⟨L, hL⟩ := hLip i
-    exact ⟨K * L, hf.comp hL⟩
-  · rw [hEq, Set.image_iUnion]
-    refine Set.iUnion_congr fun i => ?_
-    ext y
-    simp only [Set.mem_image, Set.mem_range, Function.comp_apply]
-    constructor
-    · rintro ⟨x, ⟨a, rfl⟩, rfl⟩
-      exact ⟨a, rfl⟩
-    · rintro ⟨a, rfl⟩
-      exact ⟨charts i a, ⟨a, rfl⟩, rfl⟩

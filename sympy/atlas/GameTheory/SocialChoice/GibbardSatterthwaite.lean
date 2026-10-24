@@ -2,6 +2,8 @@
 
 import Mathlib.Data.Fintype.Basic
 import sympy.atlas.Order.StrictTotalOrder
+import Lemma.Set.StrictTotalOrder
+import Lemma.Set.SocialChoice.Arrow
 import Mathlib.Data.Finset.Max
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Fintype.EquivFin
@@ -104,18 +106,6 @@ def IsDictatorial {Alt Voter : Type*} (F : SocialChoiceFunction Alt Voter) : Pro
 private theorem sto_asymm {Alt : Type*} (o : StrictTotalOrder Alt) {a b : Alt}
     (h : o.lt a b) : ¬ o.lt b a :=
   fun h2 => o.irrefl a (o.trans h h2)
-
-/-- A strict preference implies inequality. -/
-private theorem sto_ne_of_lt {Alt : Type*} (o : StrictTotalOrder Alt) {a b : Alt}
-    (h : o.lt a b) : a ≠ b :=
-  fun heq => o.irrefl a (heq ▸ h)
-
-/-- Totality flipped: if `¬ lt a b` and `a ≠ b` then `lt b a`. -/
-private theorem sto_gt_of_not_lt {Alt : Type*} (o : StrictTotalOrder Alt) {a b : Alt}
-    (hne : a ≠ b) (h : ¬ o.lt a b) : o.lt b a := by
-  rcases o.total hne with h1 | h1
-  · exact absurd h1 h
-  · exact h1
 
 /-- Single-voter deviation the other way is also unilateral. -/
 private theorem diffAtMostAt_update_left {Alt Voter : Type*} [DecidableEq Voter]
@@ -375,30 +365,6 @@ private theorem weakPareto {Alt Voter : Type*}
   have hab : a = b := hUna.symm.trans (hmono.trans hFB)
   exact hne hab
 
-/-- With three distinct alternatives, every pair has a third alternative
-distinct from both. -/
-private theorem third_alt {Alt : Type*}
-    (hAlt : ∃ a b c : Alt, a ≠ b ∧ a ≠ c ∧ b ≠ c)
-    (u v : Alt) : ∃ w : Alt, w ≠ u ∧ w ≠ v := by
-  classical
-  obtain ⟨a, b, c, hab, hac, hbc⟩ := hAlt
-  by_contra hcon
-  push Not at hcon
-  have ha' : a = u ∨ a = v := by
-    by_cases h : a = u
-    · exact Or.inl h
-    · exact Or.inr (hcon a h)
-  have hb' : b = u ∨ b = v := by
-    by_cases h : b = u
-    · exact Or.inl h
-    · exact Or.inr (hcon b h)
-  have hc' : c = u ∨ c = v := by
-    by_cases h : c = u
-    · exact Or.inl h
-    · exact Or.inr (hcon c h)
-  rcases ha' with rfl | rfl <;> rcases hb' with rfl | rfl <;> rcases hc' with rfl | rfl <;>
-    contradiction
-
 -- Step 3: the induced social welfare function (Reny-style reduction to Arrow).
 
 /-- Agreement on a pair from two positive facts (one per order). -/
@@ -406,13 +372,6 @@ private theorem pair_agree {Alt : Type*} (o₁ o₂ : StrictTotalOrder Alt) (u v
     (h1 : o₁.lt u v) (h2 : o₂.lt u v) :
     (o₁.lt u v ↔ o₂.lt u v) ∧ (o₁.lt v u ↔ o₂.lt v u) :=
   ⟨iff_of_true h1 h2, iff_of_false (sto_asymm o₁ h1) (sto_asymm o₂ h2)⟩
-
-/-- Every pair has a third alternative distinct from both (existential form). -/
-private theorem exists_ne {Alt : Type*}
-    (hAlt : ∃ a b c : Alt, a ≠ b ∧ a ≠ c ∧ b ≠ c) (u : Alt) : ∃ w : Alt, w ≠ u := by
-  classical
-  obtain ⟨w, hw, _⟩ := third_alt hAlt u u
-  exact ⟨w, hw⟩
 
 /-- Raise the pair `{a, b}` to the top of every voter's order. -/
 private def raisePair {Alt Voter : Type*} [DecidableEq Alt]
@@ -699,21 +658,5 @@ theorem gibbard_satterthwaite_general
 
 set_option linter.unusedDecidableInType false in
 set_option linter.unusedFintypeInType false in
-/--
-Resolute SCF on ≥3 alternatives, onto and strategy-proof, is dictatorial.
-Source: A. Gibbard, Econometrica 41 (1973), 587-601, DOI 10.2307/1914083; M. A. Satterthwaite, J.
-Econom. Theory 10 (1975), 187-217, DOI 10.1016/0022-0531(75)90050-2.
-
-Proves `Wanted` entry `gibbard_satterthwaite`.
--/
-theorem gibbard_satterthwaite
-    {Alt Voter : Type*} [Fintype Alt] [DecidableEq Alt]
-    [Fintype Voter] [DecidableEq Voter] [Nonempty Voter]
-    (hAlt : ∃ a b c : Alt, a ≠ b ∧ a ≠ c ∧ b ≠ c)
-    (F : SocialChoiceFunction Alt Voter)
-    (hOnto : IsOnto F) (hSP : IsStrategyProof F) :
-    IsDictatorial F :=
-  gibbard_satterthwaite_general hAlt F hOnto hSP
-
 end MathlibExt.GameTheory.SocialChoice.GibbardSatterthwaiteWanted
 end

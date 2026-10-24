@@ -28,5 +28,3 @@ noncomputable def ℂ𝕠𝕧
     {Ω : Type*} [MeasurableSpace Ω] (π : Measure Ω) (x y : Ω → ℝ) [PSpace π x] [PSpace π y] : ℝ :=
   Expectation.ofRV π (x, y)
     (fun p : ℝ × ℝ ↦ (p.1 - Expectation.ofRV π x (fun a : ℝ ↦ a)) * (p.2 - Expectation.ofRV π y (fun a : ℝ ↦ a)))
-
-

@@ -24,7 +24,7 @@ private lemma pin_unique
   -- proof
   by_contra hij
   apply hI
-  apply I.eq_top_of_isUnit_mem _ ((hωu i j hi hj hij).map _)
+  apply I.eq_top_of_isUnit_mem _ ((hωu i j hi hj hij).map (algebraMap A₀ R))
   have := I.sub_mem hjI hiI
   rwa [sub_sub_sub_cancel_left, ← map_sub] at this
 
@@ -96,7 +96,7 @@ private lemma main
   ·
     intro 𝔭 h𝔭
     let _ : 𝔭.IsPrime := h𝔭.1.1
-    obtain ⟨j, hj, hjm⟩ := exists_pin_mem hℓ hω hωu hξ
+    obtain ⟨j, hj, hjm⟩ := exists_pin_mem (𝔭 := 𝔭) hℓ hω hωu hξ
     refine ⟨j, ⟨hj, hjm⟩, fun i ⟨hi, him⟩ => ?_⟩
     apply pin_unique hωu (Ideal.IsPrime.ne_top ‹_›) hi.2 hj.2 him hjm
   ·
@@ -111,7 +111,7 @@ private lemma main
       let _ := hq
       obtain ⟨𝔭, h𝔭, h𝔭q⟩ := Ideal.exists_minimalPrimes_le (bot_le : (⊥ : Ideal R) ≤ q)
       let _ : 𝔭.IsPrime := h𝔭.1.1
-      obtain ⟨i, hi, him⟩ := exists_pin_mem hℓ hω hωu hξ
+      obtain ⟨i, hi, him⟩ := exists_pin_mem (𝔭 := 𝔭) hℓ hω hωu hξ
       have hij : i = j := pin_unique hωu hIp.ne_top hi.2 hjℓ (hqI (h𝔭q him)) hξI
       subst hij
       rw [hIdef, Ideal.span_singleton_le_iff_mem]

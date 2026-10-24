@@ -83,7 +83,6 @@ private lemma exists_pow_of_mem (I : Ideal A) (a : A) (ha : a ∈ I) (x : Locali
       refine ⟨m + n, g * h, ?_, (frac_mul a m n g h).symm⟩
       rw [pow_add]; exact Ideal.mul_mem_mul hg hh
 
-end AffineDilatation.PowDescription
 
 @[path]
 private lemma main

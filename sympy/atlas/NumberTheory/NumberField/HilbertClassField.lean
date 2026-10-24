@@ -58,15 +58,4 @@ structure IsHilbertClassField (K L : Type u) [Field K] [Field L] [NumberField K]
 
 variable {K L : Type u} [Field K] [Field L] [NumberField K] [NumberField L]
   [Algebra K L]
-
-/-- Maximality applied: an admissible competitor `M / K` embeds into `L` over `K`. -/
-theorem IsHilbertClassField.apply_maximal {M : Type u} [Field M] [NumberField M]
-    [Algebra K M] (h : IsHilbertClassField K L)
-    (hfin : FiniteDimensional K M)
-    (hgal : IsAbelianGalois K M)
-    (hfinU : ∀ 𝔭 : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
-      Algebra.IsUnramifiedIn (𝓞 M) 𝔭.asIdeal)
-    (hinfU : IsUnramifiedAtInfinitePlaces K M) : Nonempty (M →ₐ[K] L) :=
-  h.maximal M hfin hgal hfinU hinfU
-
 end NumberField

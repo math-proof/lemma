@@ -25,11 +25,6 @@ abbrev FullShiftSpace (N : ℕ) := ℤ → Fin N
 def unitShift (N : ℕ) : FullShiftSpace N → FullShiftSpace N :=
   shift (A := Fin N) (1 : ℤ)
 
-@[simp]
-theorem unitShift_apply (N : ℕ) (x : FullShiftSpace N) (i : ℤ) :
-    unitShift N x i = x (1 + i) :=
-  rfl
-
 /-- The unit left-translation of the two-sided full shift, bundled as a homeomorphism. -/
 def shiftHomeomorph (N : ℕ) : FullShiftSpace N ≃ₜ FullShiftSpace N where
   toFun := unitShift N
@@ -45,16 +40,6 @@ def shiftHomeomorph (N : ℕ) : FullShiftSpace N ≃ₜ FullShiftSpace N where
   continuous_toFun := continuous_shift 1
   continuous_invFun := continuous_shift (-1)
 
-@[simp]
-theorem shiftHomeomorph_apply (N : ℕ) (x : FullShiftSpace N) :
-    shiftHomeomorph N x = unitShift N x :=
-  rfl
-
-@[simp]
-theorem shiftHomeomorph_symm_apply (N : ℕ) (x : FullShiftSpace N) (i : ℤ) :
-    (shiftHomeomorph N).symm x i = x (-1 + i) :=
-  rfl
-
 /-- Automorphisms of the full shift: homeomorphisms commuting with the unit shift. -/
 def automorphismGroup (N : ℕ) : Subgroup (FullShiftSpace N ≃ₜ FullShiftSpace N) :=
   Subgroup.centralizer {shiftHomeomorph N}
@@ -64,22 +49,11 @@ characterization: a continuous self-map commuting with the unit shift. -/
 def IsOneDimensionalCA (N : ℕ) (f : FullShiftSpace N → FullShiftSpace N) : Prop :=
   Continuous f ∧ Function.Commute f (unitShift N)
 
-theorem isOneDimensionalCA_iff (N : ℕ) (f : FullShiftSpace N → FullShiftSpace N) :
-    IsOneDimensionalCA N f ↔ Continuous f ∧ Function.Commute f (unitShift N) :=
-  Iff.rfl
-
 /-- The jointly periodic points of `f`: points periodic for `f` and periodic for
 the unit shift. No common temporal period is required. -/
 def jointlyPeriodicPoints (N : ℕ) (f : FullShiftSpace N → FullShiftSpace N) :
     Set (FullShiftSpace N) :=
   Function.periodicPts f ∩ Function.periodicPts (unitShift N)
-
-@[simp]
-theorem mem_jointlyPeriodicPoints (N : ℕ) (f : FullShiftSpace N → FullShiftSpace N)
-    (x : FullShiftSpace N) :
-    x ∈ jointlyPeriodicPoints N f ↔
-      x ∈ Function.periodicPts f ∧ x ∈ Function.periodicPts (unitShift N) :=
-  Iff.rfl
 
 /-- The joint periodic count `P`: the number of points of shift-period `k` that
 are also periodic for `f`. -/

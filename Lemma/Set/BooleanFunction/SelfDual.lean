@@ -4,54 +4,75 @@ import sympy.atlas.Order.BooleanFunction.SelfDual
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [booleanFunctionDual_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Order/BooleanFunction/SelfDual.lean)
 -/
 @[path]
-private lemma booleanFunctionDual_apply_eq
+lemma booleanFunctionDual_apply
   {n : Nat}
   {f : (Fin n → Bool) → Bool}
   {x : Fin n → Bool} :
 -- imply
-  booleanFunctionDual n f x = !(f (booleanVectorComplement n x)) := by
+  booleanFunctionDual n f x = !(f (booleanVectorComplement n x)) :=
 -- proof
-  apply MetaMathlibExt.booleanFunctionDual_apply n f x
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [booleanVectorComplement_complement](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Order/BooleanFunction/SelfDual.lean)
 -/
 @[path]
-private lemma booleanVectorComplement_complement_eq
+lemma booleanVectorComplement_complement
   {n : Nat}
   {x : Fin n → Bool} :
 -- imply
   booleanVectorComplement n (booleanVectorComplement n x) = x := by
 -- proof
-  apply MetaMathlibExt.booleanVectorComplement_complement n x
+  funext i
+  simp [booleanVectorComplement]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [booleanFunctionDual_dual](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Order/BooleanFunction/SelfDual.lean)
 -/
 @[path]
-private lemma booleanFunctionDual_dual_eq
+lemma booleanFunctionDual_dual
   {n : Nat}
   {f : (Fin n → Bool) → Bool} :
 -- imply
   booleanFunctionDual n (booleanFunctionDual n f) = f := by
 -- proof
-  apply MetaMathlibExt.booleanFunctionDual_dual n f
+  funext x
+  simp [booleanFunctionDual]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [selfDualMonotone_proj](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Order/BooleanFunction/SelfDual.lean)
 -/
 @[path]
-private lemma selfDualMonotone_proj_eq
+lemma selfDualMonotone_proj
   {n : Nat}
   {i : Fin n} :
 -- imply
   IsSelfDualMonotone n (fun x : Fin n → Bool => x i) := by
 -- proof
-  apply MetaMathlibExt.selfDualMonotone_proj i
+  refine ⟨fun x y h => h i, ?_⟩
+  funext x
+  simp [booleanFunctionDual, booleanVectorComplement]
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -1,0 +1,29 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicSquareWiredDoubleVisitPortGeometry.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Mathlib.Util.PrintSorries
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredDoubleVisitPortGeometry
+
+#print sorries StatMech.Universality.fkIsingSquareWired_double_visit_open_pair_exact
+#print axioms StatMech.Universality.fkIsingSquareWired_double_visit_open_pair_exact
+#print sorries StatMech.Universality.fkIsingSquareWired_double_visit_discarded_carrier_cycle_turn_mod_sixteen
+#print axioms StatMech.Universality.fkIsingSquareWired_double_visit_discarded_carrier_cycle_turn_mod_sixteen
+#print sorries StatMech.Universality.fkIsingSquareWired_double_visit_discardedLoopTurn_mod_sixteen
+#print axioms StatMech.Universality.fkIsingSquareWired_double_visit_discardedLoopTurn_mod_sixteen
+#print sorries StatMech.Universality.fkIsingSquareWired_double_visit_source_side_phase_of_discardedLoopTurn_mod_sixteen
+#print axioms StatMech.Universality.fkIsingSquareWired_double_visit_source_side_phase_of_discardedLoopTurn_mod_sixteen
+#print sorries StatMech.Universality.fkIsingSquareWired_double_visit_source_side_phase
+#print axioms StatMech.Universality.fkIsingSquareWired_double_visit_source_side_phase
+#print sorries StatMech.Universality.fkIsingSquareWired_double_visit_pointwise_contour_balance
+#print axioms StatMech.Universality.fkIsingSquareWired_double_visit_pointwise_contour_balance
+#print sorries StatMech.Universality.fkIsingSquareWired_exhaustiveSwitchingLaw
+#print axioms StatMech.Universality.fkIsingSquareWired_exhaustiveSwitchingLaw
+#print sorries StatMech.Universality.fkIsingSquareWired_fermionicObservable_contour_relation
+#print axioms StatMech.Universality.fkIsingSquareWired_fermionicObservable_contour_relation

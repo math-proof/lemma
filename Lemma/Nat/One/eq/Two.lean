@@ -13,7 +13,8 @@ private lemma main
 -- imply
   1++ = 2 :=
 -- proof
-  Chapter2.Nat.one_succ
+  rfl
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

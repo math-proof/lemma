@@ -5,25 +5,31 @@ open Finset
 open SimpleGraph
 
 
+namespace SimpleGraph
+
 /--
 [isSaturatingNonedge_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-private lemma isSaturatingNonedge_iff_eq
+lemma isSaturatingNonedge_iff
   {F : SimpleGraph V}
   {G : SimpleGraph W}
   {x y : W} :
 -- imply
   IsSaturatingNonedge F G x y ↔
-      x ≠ y ∧ ¬G.Adj x y ∧ IsContained F (G ⊔ edge x y) := by
+      x ≠ y ∧ ¬G.Adj x y ∧ IsContained F (G ⊔ edge x y) :=
 -- proof
-  apply SimpleGraph.isSaturatingNonedge_iff F G
+  Iff.rfl
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsSaturatingNonedge.symm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-private lemma IsSaturatingNonedge_symm_eq
+lemma IsSaturatingNonedge.symm
   {F : SimpleGraph V}
   {G : SimpleGraph W}
   {x y : W}
@@ -32,43 +38,57 @@ private lemma IsSaturatingNonedge_symm_eq
 -- imply
   IsSaturatingNonedge F G y x := by
 -- proof
-  apply SimpleGraph.IsSaturatingNonedge.symm F G h
+  have heq : edge x y = edge y x := edge_comm x y
+  refine ⟨Ne.symm h.1, fun hadj => h.2.1 (G.adj_symm hadj), ?_⟩
+  rwa [← heq]
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsSaturatingNonedge.ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-private lemma IsSaturatingNonedge_ne_eq
+lemma IsSaturatingNonedge.ne
   {F : SimpleGraph V}
   {G : SimpleGraph W}
   {x y : W}
 -- given
   (h : IsSaturatingNonedge F G x y) :
 -- imply
-  x ≠ y := by
+  x ≠ y :=
 -- proof
-  apply SimpleGraph.IsSaturatingNonedge.ne F G h
+  h.1
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsSaturatingNonedge.not_adj](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-private lemma IsSaturatingNonedge_not_adj_eq
+lemma IsSaturatingNonedge.not_adj
   {F : SimpleGraph V}
   {G : SimpleGraph W}
   {x y : W}
 -- given
   (h : IsSaturatingNonedge F G x y) :
 -- imply
-  ¬G.Adj x y := by
+  ¬G.Adj x y :=
 -- proof
-  apply SimpleGraph.IsSaturatingNonedge.not_adj F G h
+  h.2.1
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsSaturatingNonedge.newCopy_of_free](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-private lemma IsSaturatingNonedge_newCopy_of_free_eq
+lemma IsSaturatingNonedge.newCopy_of_free
   {F : SimpleGraph V}
   {G : SimpleGraph W}
   {x y : W}
@@ -76,34 +96,51 @@ private lemma IsSaturatingNonedge_newCopy_of_free_eq
   (h : IsSaturatingNonedge F G x y)
   (hfree : Free F G) :
 -- imply
-  IsContained F (G ⊔ edge x y) ∧ ¬IsContained F G := by
+  IsContained F (G ⊔ edge x y) ∧ ¬IsContained F G :=
 -- proof
-  apply SimpleGraph.IsSaturatingNonedge.newCopy_of_free F G h hfree
+  ⟨h.2.2, hfree⟩
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [saturatingNonedgeGraph_adj](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-private lemma saturatingNonedgeGraph_adj_eq
+lemma saturatingNonedgeGraph_adj
   {F : SimpleGraph V}
   {G : SimpleGraph W}
   {x y : W} :
 -- imply
   (saturatingNonedgeGraph F G).Adj x y ↔ IsSaturatingNonedge F G x y := by
 -- proof
-  apply SimpleGraph.saturatingNonedgeGraph_adj F G
+  simp only [saturatingNonedgeGraph, fromRel_adj]
+  constructor
+  · rintro ⟨_, h | h⟩
+    · exact h
+    · exact h.symm
+  · intro h
+    exact ⟨h.ne, Or.inl h⟩
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [numSaturatingNonedges_eq_card_edgeFinset](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-private lemma numSaturatingNonedges_eq_card_edgeFinset_eq
+lemma numSaturatingNonedges_eq_card_edgeFinset
   {F : SimpleGraph V}
   {G : SimpleGraph W} [Fintype (saturatingNonedgeGraph F G).edgeSet] :
 -- imply
-  numSaturatingNonedges F G = #(saturatingNonedgeGraph F G).edgeFinset := by
+  numSaturatingNonedges F G = #(saturatingNonedgeGraph F G).edgeFinset :=
 -- proof
-  apply SimpleGraph.numSaturatingNonedges_eq_card_edgeFinset F G
+  rfl
+
+end SimpleGraph
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

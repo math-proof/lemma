@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MultipleBinomialTransform.lean -/
 
 import sympy.atlas.Combinatorics.Enumerative.FallingKBinomialTransform
+import Lemma.Finset.Enumerative.FallingKBinomialTransform
 namespace MetaMathlibExt
 
 /-- The `n`-fold binomial transform of an integer sequence, obtained by applying

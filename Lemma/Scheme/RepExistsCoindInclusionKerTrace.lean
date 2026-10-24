@@ -1,35 +1,45 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open CategoryTheory
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [Rep_exists_coind_inclusion_ker_trace](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Rep_exists_coind_inclusion_ker_trace.lean)
 -/
 @[path]
-private lemma main {k G : Type u} [CommRing k] [Group G]
-    (U U' : Subgroup G) [U.FiniteIndex] [U'.FiniteIndex] (hUU' : U' ≤ U) (φ : G)
-    (X : Rep.{u} k G)
-    (ι : X ⟶ Rep.coind U.subtype (Rep.res U.subtype X)) (τ : Rep.coind U.subtype (Rep.res U.subtype X) ⟶ X)
-    (ι' : X ⟶ Rep.coind U'.subtype (Rep.res U'.subtype X)) (τ' : Rep.coind U'.subtype (Rep.res U'.subtype X) ⟶ X)
-    (hι : ∀ (x : X) (g : G), ((ι.hom x : Rep.coind U.subtype (Rep.res U.subtype X)) : G → X) g = X.ρ g x)
-    (hτ : ∀ y : Rep.coind U.subtype (Rep.res U.subtype X), τ.hom y = ∑ᶠ c : G ⧸ U, X.ρ c.out ((y : G → X) (c.out)⁻¹))
-    (hι' : ∀ (x : X) (g : G), ((ι'.hom x : Rep.coind U'.subtype (Rep.res U'.subtype X)) : G → X) g = X.ρ g x)
-    (hτ' : ∀ y : Rep.coind U'.subtype (Rep.res U'.subtype X), τ'.hom y = ∑ᶠ c : G ⧸ U', X.ρ c.out ((y : G → X) (c.out)⁻¹))
-    {K K' : Rep.{u} k G} (i : K ⟶ Rep.coind U.subtype (Rep.res U.subtype X)) (E : Rep.coind U.subtype (Rep.res U.subtype X) ⟶ K) (i' : K' ⟶ Rep.coind U'.subtype (Rep.res U'.subtype X)) (E' : Rep.coind U'.subtype (Rep.res U'.subtype X) ⟶ K')
-    (hτi : ∀ y : Rep.coind U.subtype (Rep.res U.subtype X), τ.hom y = 0 ↔ ∃ κ : K, i.hom κ = y)
-    (hi' : Function.Injective i'.hom) (hτi' : ∀ y : Rep.coind U'.subtype (Rep.res U'.subtype X), τ'.hom y = 0 ↔ ∃ κ : K', i'.hom κ = y)
-    (hE : ∀ (y : Rep.coind U.subtype (Rep.res U.subtype X)) (g : G), ((i.hom (E.hom y) : Rep.coind U.subtype (Rep.res U.subtype X)) : G → X) g = X.ρ φ ((y : G → X) (φ⁻¹ * g)) - (y : G → X) g)
-    (hE' : ∀ (y : Rep.coind U'.subtype (Rep.res U'.subtype X)) (g : G), ((i'.hom (E'.hom y) : Rep.coind U'.subtype (Rep.res U'.subtype X)) : G → X) g = X.ρ φ ((y : G → X) (φ⁻¹ * g)) - (y : G → X) g) :
-    ∃ (j : Rep.coind U.subtype (Rep.res U.subtype X) ⟶ Rep.coind U'.subtype (Rep.res U'.subtype X)) (jK : K ⟶ K'),
-      (∀ (y : Rep.coind U.subtype (Rep.res U.subtype X)) (g : G), ((j.hom y : Rep.coind U'.subtype (Rep.res U'.subtype X)) : G → X) g = (y : G → X) g) ∧
-      jK ≫ i' = i ≫ j ∧ ι ≫ j = ι' ∧ E ≫ jK = j ≫ E' ∧ j ≫ τ' = (U'.relIndex U : k) • τ := by
+private lemma main
+  {k G : Type u} [CommRing k] [Group G]
+  (U U' : Subgroup G) [U.FiniteIndex] [U'.FiniteIndex]
+  (φ : G)
+  (X : Rep k G)
+  (ι : X ⟶ Rep.coind U.subtype (Rep.res U.subtype X))
+  (τ : Rep.coind U.subtype (Rep.res U.subtype X) ⟶ X)
+  (ι' : X ⟶ Rep.coind U'.subtype (Rep.res U'.subtype X))
+  (τ' : Rep.coind U'.subtype (Rep.res U'.subtype X) ⟶ X)
+  {K K' : Rep k G}
+  (i : K ⟶ Rep.coind U.subtype (Rep.res U.subtype X))
+  (E : Rep.coind U.subtype (Rep.res U.subtype X) ⟶ K)
+  (i' : K' ⟶ Rep.coind U'.subtype (Rep.res U'.subtype X))
+  (E' : Rep.coind U'.subtype (Rep.res U'.subtype X) ⟶ K')
+  -- given
+  (hUU' : U' ≤ U)
+  (hι : ∀ (x : X) (g : G), ((ι.hom x : Rep.coind U.subtype (Rep.res U.subtype X)) : G → X) g = X.ρ g x)
+  (hτ : ∀ y : Rep.coind U.subtype (Rep.res U.subtype X), τ.hom y = (finsum fun c : (G ⧸ U) => X.ρ c.out ((y : G → X) (c.out)⁻¹)))
+  (hι' : ∀ (x : X) (g : G), ((ι'.hom x : Rep.coind U'.subtype (Rep.res U'.subtype X)) : G → X) g = X.ρ g x)
+  (hτ' : ∀ y : Rep.coind U'.subtype (Rep.res U'.subtype X), τ'.hom y = (finsum fun c : (G ⧸ U') => X.ρ c.out ((y : G → X) (c.out)⁻¹)))
+  (hτi : ∀ y : Rep.coind U.subtype (Rep.res U.subtype X), τ.hom y = 0 ↔ ∃ κ : K, i.hom κ = y)
+  (hi' : Function.Injective i'.hom)
+  (hτi' : ∀ y : Rep.coind U'.subtype (Rep.res U'.subtype X), τ'.hom y = 0 ↔ ∃ κ : K', i'.hom κ = y)
+  (hE : ∀ (y : Rep.coind U.subtype (Rep.res U.subtype X)) (g : G), ((i.hom (E.hom y) : Rep.coind U.subtype (Rep.res U.subtype X)) : G → X) g = X.ρ φ ((y : G → X) (φ⁻¹ * g)) - (y : G → X) g)
+  (hE' : ∀ (y : Rep.coind U'.subtype (Rep.res U'.subtype X)) (g : G), ((i'.hom (E'.hom y) : Rep.coind U'.subtype (Rep.res U'.subtype X)) : G → X) g = X.ρ φ ((y : G → X) (φ⁻¹ * g)) - (y : G → X) g) :
+  -- imply
+  ∃ (j : Rep.coind U.subtype (Rep.res U.subtype X) ⟶ Rep.coind U'.subtype (Rep.res U'.subtype X)) (jK : K ⟶ K'), (∀ (y : Rep.coind U.subtype (Rep.res U.subtype X)) (g : G), ((j.hom y : Rep.coind U'.subtype (Rep.res U'.subtype X)) : G → X) g = (y : G → X) g) ∧ jK ≫ i' = i ≫ j ∧ ι ≫ j = ι' ∧ E ≫ jK = j ≫ E' ∧ j ≫ τ' = (U'.relIndex U : k) • τ := by
+  -- proof
   classical
   have hmemj : ∀ y : Rep.coind U.subtype (Rep.res U.subtype X),
       ((y : G → X) : G → X) ∈ Representation.coindV U'.subtype (Rep.res U'.subtype X).ρ :=
@@ -53,7 +63,7 @@ private lemma main {k G : Type u} [CommRing k] [Group G]
     rw [Fintype.card_eq_nat_card, ← Subgroup.index_eq_card]
     rfl
   have hsum : ∀ (F : G → X), (∀ (g u : G), u ∈ U → F (g * u) = F g) →
-      ∑ᶠ c : G ⧸ U', F c.out = (U'.relIndex U) • ∑ᶠ c : G ⧸ U, F c.out := by
+      (finsum fun c : (G ⧸ U') => F c.out) = (U'.relIndex U) • (finsum fun c : (G ⧸ U) => F c.out) := by
     intro F hF
     let Fb : G ⧸ U → X := fun c => Quotient.liftOn' c F (fun a b h => by
       rw [QuotientGroup.leftRel_apply] at h
@@ -107,18 +117,21 @@ private lemma main {k G : Type u} [CommRing k] [Group G]
   let jK : K ⟶ K' := Rep.ofHom (jKlin.intertwiningMap_of_isIntertwiningMap K.ρ K'.ρ hjKeq)
   have hjK : ∀ κ : K, i'.hom (jK.hom κ) = j.hom (i.hom κ) := fun κ => hlift κ
   refine ⟨j, jK, hj, ?_, ?_, ?_, ?_⟩
-  · rw [Rep.hom_ext_iff, Representation.IntertwiningMap.ext_iff]
+  ·
+    rw [Rep.hom_ext_iff, Representation.IntertwiningMap.ext_iff]
     apply LinearMap.ext
     intro κ
-    exact hjK κ
-  · rw [Rep.hom_ext_iff, Representation.IntertwiningMap.ext_iff]
+    apply hjK κ
+  ·
+    rw [Rep.hom_ext_iff, Representation.IntertwiningMap.ext_iff]
     apply LinearMap.ext
     intro x
     apply Subtype.ext
     funext g
     show ((ι.hom x : Rep.coind U.subtype (Rep.res U.subtype X)) : G → X) g = ((ι'.hom x : Rep.coind U'.subtype (Rep.res U'.subtype X)) : G → X) g
     rw [hι, hι']
-  · rw [Rep.hom_ext_iff, Representation.IntertwiningMap.ext_iff]
+  ·
+    rw [Rep.hom_ext_iff, Representation.IntertwiningMap.ext_iff]
     apply LinearMap.ext
     intro y
     apply hi'
@@ -129,9 +142,11 @@ private lemma main {k G : Type u} [CommRing k] [Group G]
     show ((i.hom (E.hom y) : Rep.coind U.subtype (Rep.res U.subtype X)) : G → X) g = ((i'.hom (E'.hom (j.hom y)) : Rep.coind U'.subtype (Rep.res U'.subtype X)) : G → X) g
     rw [hE, hE']
     rfl
-  · rw [Rep.hom_ext_iff, Representation.IntertwiningMap.ext_iff]
+  ·
+    rw [Rep.hom_ext_iff, Representation.IntertwiningMap.ext_iff]
     apply LinearMap.ext
     intro y
-    exact htr y
+    apply htr y
+
 
 -- created on 2026-10-20

@@ -2,7 +2,6 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import sympy.Basic
 
 
-
 @[path]
 private lemma main
   {x y : ℝ}

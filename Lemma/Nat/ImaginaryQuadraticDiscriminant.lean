@@ -5,119 +5,244 @@ open ImaginaryQuadraticDiscriminant
 open ImaginaryQuadraticDiscriminantDecomposition
 
 
-/--
-[mem_imaginaryQuadraticDiscriminants](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
--/
-@[path]
-private lemma mem_imaginaryQuadraticDiscriminants_eq
-  {D : Int} :
--- imply
-  D ∈ imaginaryQuadraticDiscriminants ↔ IsImaginaryQuadraticDiscriminant D := by
--- proof
-  apply ImaginaryQuadraticDiscriminant.mem_imaginaryQuadraticDiscriminants
-
-/--
-[mem_fundamentalImaginaryQuadraticDiscriminants](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
--/
-@[path]
-private lemma mem_fundamentalImaginaryQuadraticDiscriminants_eq
-  {D : Int} :
--- imply
-  D ∈ fundamentalImaginaryQuadraticDiscriminants ↔
-    IsFundamentalImaginaryQuadraticDiscriminant D := by
--- proof
-  apply ImaginaryQuadraticDiscriminant.mem_fundamentalImaginaryQuadraticDiscriminants
+namespace ImaginaryQuadraticDiscriminant
 
 /--
 [isImaginaryQuadraticDiscriminant_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-private lemma isImaginaryQuadraticDiscriminant_iff_eq
+lemma isImaginaryQuadraticDiscriminant_iff
   {D : Int} :
 -- imply
-  IsImaginaryQuadraticDiscriminant D ↔ D < 0 ∧ (D % 4 = 0 ∨ D % 4 = 1) := by
+  IsImaginaryQuadraticDiscriminant D ↔ D < 0 ∧ (D % 4 = 0 ∨ D % 4 = 1) :=
 -- proof
-  apply ImaginaryQuadraticDiscriminant.isImaginaryQuadraticDiscriminant_iff D
+  Iff.rfl
+
+end ImaginaryQuadraticDiscriminant
+
+namespace ImaginaryQuadraticDiscriminant
+
+/--
+[isFundamentalImaginaryQuadraticDiscriminant_isFundamentalDiscriminant](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
+-/
+@[path]
+lemma isFundamentalImaginaryQuadraticDiscriminant_isFundamentalDiscriminant
+  {D : Int}
+-- given
+  (h : IsFundamentalImaginaryQuadraticDiscriminant D) :
+-- imply
+  MetaMathlibExt.IsFundamentalDiscriminant D :=
+-- proof
+  h.2
+
+end ImaginaryQuadraticDiscriminant
+
+namespace ImaginaryQuadraticDiscriminant
+
+/--
+[isFundamentalImaginaryQuadraticDiscriminant_isImaginary](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
+-/
+@[path]
+lemma isFundamentalImaginaryQuadraticDiscriminant_isImaginary
+  {D : Int}
+-- given
+  (h : IsFundamentalImaginaryQuadraticDiscriminant D) :
+-- imply
+  IsImaginaryQuadraticDiscriminant D := by
+-- proof
+  obtain ⟨hneg, hfund⟩ := h
+  unfold MetaMathlibExt.IsFundamentalDiscriminant at hfund
+  obtain ⟨_, hmod1⟩ | ⟨m, hDm, _, _⟩ := hfund
+  · exact ⟨hneg, Or.inr hmod1⟩
+  · have h0 : D % 4 = 0 := by simp [hDm]
+    exact ⟨hneg, Or.inl h0⟩
+namespace ImaginaryQuadraticDiscriminantDecomposition
+variable {D : Int}
+
+end ImaginaryQuadraticDiscriminant
+
+/--
+[mem_imaginaryQuadraticDiscriminants](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
+-/
+@[path]
+lemma mem_imaginaryQuadraticDiscriminants
+  {D : Int} :
+-- imply
+  D ∈ imaginaryQuadraticDiscriminants ↔ IsImaginaryQuadraticDiscriminant D :=
+-- proof
+  Iff.rfl
+
+
+namespace ImaginaryQuadraticDiscriminant
+
+/--
+[mem_fundamentalImaginaryQuadraticDiscriminants](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
+-/
+@[path]
+lemma mem_fundamentalImaginaryQuadraticDiscriminants
+  {D : Int} :
+-- imply
+  D ∈ fundamentalImaginaryQuadraticDiscriminants ↔
+    IsFundamentalImaginaryQuadraticDiscriminant D :=
+-- proof
+  Iff.rfl
+
+end ImaginaryQuadraticDiscriminant
+
+namespace ImaginaryQuadraticDiscriminant
 
 /--
 [isImaginaryQuadraticDiscriminant_mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-private lemma isImaginaryQuadraticDiscriminant_mk_eq
+lemma isImaginaryQuadraticDiscriminant_mk
   {D : Int}
 -- given
   (hneg : D < 0)
   (hmod : D % 4 = 0 ∨ D % 4 = 1) :
 -- imply
-  IsImaginaryQuadraticDiscriminant D := by
+  IsImaginaryQuadraticDiscriminant D :=
 -- proof
-  apply ImaginaryQuadraticDiscriminant.isImaginaryQuadraticDiscriminant_mk hneg hmod
+  ⟨hneg, hmod⟩
+
+end ImaginaryQuadraticDiscriminant
+
+namespace ImaginaryQuadraticDiscriminant
 
 /--
 [isImaginaryQuadraticDiscriminant_neg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-private lemma isImaginaryQuadraticDiscriminant_neg_eq
+lemma isImaginaryQuadraticDiscriminant_neg
   {D : Int}
 -- given
   (h : IsImaginaryQuadraticDiscriminant D) :
 -- imply
-  D < 0 := by
+  D < 0 :=
 -- proof
-  apply ImaginaryQuadraticDiscriminant.isImaginaryQuadraticDiscriminant_neg h
+  h.1
+
+end ImaginaryQuadraticDiscriminant
+
+namespace ImaginaryQuadraticDiscriminant
 
 /--
 [isImaginaryQuadraticDiscriminant_mod](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-private lemma isImaginaryQuadraticDiscriminant_mod_eq
+lemma isImaginaryQuadraticDiscriminant_mod
   {D : Int}
 -- given
   (h : IsImaginaryQuadraticDiscriminant D) :
 -- imply
-  D % 4 = 0 ∨ D % 4 = 1 := by
+  D % 4 = 0 ∨ D % 4 = 1 :=
 -- proof
-  apply ImaginaryQuadraticDiscriminant.isImaginaryQuadraticDiscriminant_mod h
+  h.2
+
+end ImaginaryQuadraticDiscriminant
+
+namespace ImaginaryQuadraticDiscriminant
 
 /--
 [isImaginaryQuadraticDiscriminant_of_mod_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-private lemma isImaginaryQuadraticDiscriminant_of_mod_zero_eq
+lemma isImaginaryQuadraticDiscriminant_of_mod_zero
   {D : Int}
 -- given
   (hneg : D < 0)
   (hmod : D % 4 = 0) :
 -- imply
-  IsImaginaryQuadraticDiscriminant D := by
+  IsImaginaryQuadraticDiscriminant D :=
 -- proof
-  apply ImaginaryQuadraticDiscriminant.isImaginaryQuadraticDiscriminant_of_mod_zero hneg hmod
+  ⟨hneg, Or.inl hmod⟩
+
+end ImaginaryQuadraticDiscriminant
+
+namespace ImaginaryQuadraticDiscriminant
 
 /--
 [isImaginaryQuadraticDiscriminant_of_mod_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-private lemma isImaginaryQuadraticDiscriminant_of_mod_one_eq
+lemma isImaginaryQuadraticDiscriminant_of_mod_one
   {D : Int}
 -- given
   (hneg : D < 0)
   (hmod : D % 4 = 1) :
 -- imply
-  IsImaginaryQuadraticDiscriminant D := by
+  IsImaginaryQuadraticDiscriminant D :=
 -- proof
-  apply ImaginaryQuadraticDiscriminant.isImaginaryQuadraticDiscriminant_of_mod_one hneg hmod
+  ⟨hneg, Or.inr hmod⟩
+
+end ImaginaryQuadraticDiscriminant
+
+namespace ImaginaryQuadraticDiscriminant
 
 /--
 [isFundamentalImaginaryQuadraticDiscriminant_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-private lemma isFundamentalImaginaryQuadraticDiscriminant_iff_eq
+lemma isFundamentalImaginaryQuadraticDiscriminant_iff
   {D : Int} :
 -- imply
   IsFundamentalImaginaryQuadraticDiscriminant D ↔
-    D < 0 ∧ MetaMathlibExt.IsFundamentalDiscriminant D := by
+    D < 0 ∧ MetaMathlibExt.IsFundamentalDiscriminant D :=
 -- proof
-  apply ImaginaryQuadraticDiscriminant.isFundamentalImaginaryQuadraticDiscriminant_iff D
+  Iff.rfl
+
+end ImaginaryQuadraticDiscriminant
+
+namespace ImaginaryQuadraticDiscriminant.ImaginaryQuadraticDiscriminantDecomposition
+
+/--
+[isFundamental](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
+-/
+@[path]
+lemma isFundamental
+  {D : Int}
+-- given
+  (h : ImaginaryQuadraticDiscriminantDecomposition D) :
+-- imply
+  IsFundamentalImaginaryQuadraticDiscriminant h.D_K :=
+-- proof
+  h.hD_K
+
+end ImaginaryQuadraticDiscriminant.ImaginaryQuadraticDiscriminantDecomposition
+
+namespace ImaginaryQuadraticDiscriminant.ImaginaryQuadraticDiscriminantDecomposition
+
+/--
+[u_ge_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
+-/
+@[path]
+lemma u_ge_one
+  {D : Int}
+-- given
+  (h : ImaginaryQuadraticDiscriminantDecomposition D) :
+-- imply
+  h.u ≥ 1 :=
+-- proof
+  h.hu
+
+end ImaginaryQuadraticDiscriminant.ImaginaryQuadraticDiscriminantDecomposition
+
+namespace ImaginaryQuadraticDiscriminant.ImaginaryQuadraticDiscriminantDecomposition
+
+/--
+[prop_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
+-/
+@[path]
+lemma prop_eq
+  {D : Int}
+-- given
+  (h : ImaginaryQuadraticDiscriminantDecomposition D) :
+-- imply
+  D = h.u ^ 2 * h.D_K :=
+-- proof
+  h.hD
+
+end ImaginaryQuadraticDiscriminant.ImaginaryQuadraticDiscriminantDecomposition
 
 /--
 [isFundamentalImaginaryQuadraticDiscriminant_mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
@@ -133,70 +258,6 @@ private lemma isFundamentalImaginaryQuadraticDiscriminant_mk_eq
 -- proof
   apply ImaginaryQuadraticDiscriminant.isFundamentalImaginaryQuadraticDiscriminant_mk hneg hfund
 
-/--
-[isFundamentalImaginaryQuadraticDiscriminant_isFundamentalDiscriminant](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
--/
-@[path]
-private lemma isFundamentalImaginaryQuadraticDiscriminant_isFundamentalDiscriminant_eq
-  {D : Int}
--- given
-  (h : IsFundamentalImaginaryQuadraticDiscriminant D) :
--- imply
-  MetaMathlibExt.IsFundamentalDiscriminant D := by
--- proof
-  apply ImaginaryQuadraticDiscriminant.isFundamentalImaginaryQuadraticDiscriminant_isFundamentalDiscriminant h
-
-/--
-[isFundamentalImaginaryQuadraticDiscriminant_isImaginary](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
--/
-@[path]
-private lemma isFundamentalImaginaryQuadraticDiscriminant_isImaginary_eq
-  {D : Int}
--- given
-  (h : IsFundamentalImaginaryQuadraticDiscriminant D) :
--- imply
-  IsImaginaryQuadraticDiscriminant D := by
--- proof
-  apply ImaginaryQuadraticDiscriminant.isFundamentalImaginaryQuadraticDiscriminant_isImaginary h
-
-/--
-[isFundamental](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
--/
-@[path]
-private lemma isFundamental_eq
-  {D : Int}
--- given
-  (h : ImaginaryQuadraticDiscriminantDecomposition D) :
--- imply
-  IsFundamentalImaginaryQuadraticDiscriminant h.D_K := by
--- proof
-  apply ImaginaryQuadraticDiscriminant.ImaginaryQuadraticDiscriminantDecomposition.isFundamental h
-
-/--
-[u_ge_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
--/
-@[path]
-private lemma u_ge_one_eq
-  {D : Int}
--- given
-  (h : ImaginaryQuadraticDiscriminantDecomposition D) :
--- imply
-  h.u ≥ 1 := by
--- proof
-  apply ImaginaryQuadraticDiscriminant.ImaginaryQuadraticDiscriminantDecomposition.u_ge_one h
-
-/--
-[prop_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
--/
-@[path]
-private lemma prop_eq_eq
-  {D : Int}
--- given
-  (h : ImaginaryQuadraticDiscriminantDecomposition D) :
--- imply
-  D = h.u ^ 2 * h.D_K := by
--- proof
-  apply ImaginaryQuadraticDiscriminant.ImaginaryQuadraticDiscriminantDecomposition.prop_eq h
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

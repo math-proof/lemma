@@ -32,17 +32,4 @@ structure IsDezaWith (n k b a : ℕ) : Prop where
   common_eq : ∀ u v : V, u ≠ v →
     Fintype.card (G.commonNeighbors u v) = a ∨
       Fintype.card (G.commonNeighbors u v) = b
-
-/-- The chained bound `a ≤ k`. -/
-theorem IsDezaWith.a_le_k {n k b a : ℕ} (h : G.IsDezaWith n k b a) : a ≤ k :=
-  le_trans h.a_le_b h.b_le_k
-
-/-- The chained bound `b < n`. -/
-theorem IsDezaWith.b_lt_n {n k b a : ℕ} (h : G.IsDezaWith n k b a) : b < n :=
-  lt_of_le_of_lt h.b_le_k h.k_lt_n
-
-/-- The chained bound `a < n`. -/
-theorem IsDezaWith.a_lt_n {n k b a : ℕ} (h : G.IsDezaWith n k b a) : a < n :=
-  lt_of_le_of_lt h.a_le_k h.k_lt_n
-
 end SimpleGraph

@@ -12,7 +12,8 @@ private lemma main
 -- imply
   (n++).toNat = n.toNat + 1 :=
 -- proof
-  Chapter2.Nat.succ_toNat n
+  rfl
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

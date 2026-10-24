@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings
 import Lemma.Nat.DominoTilings.tiling_2_to_sum_from_sum
 open DominoTilings
 open Domino DominoTiling

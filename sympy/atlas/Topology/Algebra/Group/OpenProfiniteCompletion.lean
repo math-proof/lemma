@@ -45,13 +45,6 @@ def etaFn (G : Type u) [Group G] [TopologicalSpace G]
     (x : G) : completion G :=
   ⟨fun _ => QuotientGroup.mk x, fun _ _ _ => rfl⟩
 
-/-- Coordinate evaluation of `etaFn`. -/
-@[simp]
-theorem etaFn_apply (G : Type u) [Group G] [TopologicalSpace G] (x : G)
-    (H : Index G) : ((etaFn G x).val H : G ⧸ H.1.toSubgroup) =
-    QuotientGroup.mk x :=
-  rfl
-
 /-- Continuity of `etaFn`; needs only separate continuity of `*`. -/
 theorem etaFn_continuous (G : Type u) [Group G] [TopologicalSpace G]
     [SeparatelyContinuousMul G] : Continuous (etaFn G) := by
@@ -79,45 +72,4 @@ def eta (G : Type u) [Group G] [TopologicalSpace G]
   map_one' := rfl
   map_mul' _ _ := rfl
   continuous_toFun := etaFn_continuous G
-
-/-- Algebraic density of `etaFn`, following Mathlib `denseRange`. -/
-theorem denseRange_etaFn (G : Type u) [Group G] [TopologicalSpace G] :
-    DenseRange (etaFn G) := by
-  unfold etaFn completion
-  apply dense_iff_inter_open.mpr
-  rintro U ⟨s, hsO, hsv⟩ ⟨⟨spc, hspc⟩, uDefaultSpec⟩
-  rw [← hsv, Set.mem_preimage] at uDefaultSpec
-  rcases (isOpen_pi_iff.mp hsO) _ uDefaultSpec with ⟨J, _fJ, hJ1, hJ2⟩
-  let M : Subgroup G := iInf fun (j : J) ↦ j.1.1.toSubgroup
-  have hMNormal : M.Normal :=
-    Subgroup.normal_iInf_normal fun _ ↦ inferInstance
-  have hMFinite : M.FiniteIndex := by
-    apply Subgroup.finiteIndex_iInf
-    infer_instance
-  have hMOpen : IsOpen (M : Set G) := by
-    rw [Subgroup.coe_iInf]
-    exact isOpen_iInter_of_finite fun j ↦ j.1.2
-  let m : Index G := ⟨{
-    toSubgroup := M
-    isNormal' := hMNormal
-    isFiniteIndex' := hMFinite }, hMOpen⟩
-  rcases QuotientGroup.mk'_surjective M (spc m) with ⟨origin, horigin⟩
-  use ⟨fun _ ↦ QuotientGroup.mk origin, fun _ _ _ ↦ rfl⟩
-  refine ⟨?_, origin, rfl⟩
-  rw [← hsv]
-  apply hJ2
-  intro a a_in_J
-  let M_to_Na : m ⟶ a :=
-    (iInf_le (fun (j : J) ↦ j.1.1.toSubgroup) ⟨a, a_in_J⟩).hom
-  rw [← (⟨fun _ ↦ QuotientGroup.mk origin, fun _ _ _ ↦ rfl⟩ :
-    ProfiniteGrp.limit (diagram G)).property M_to_Na]
-  change (finiteGrpDiagram G).map M_to_Na (QuotientGroup.mk' M origin) ∈ _
-  rw [horigin]
-  exact Set.mem_of_eq_of_mem (hspc M_to_Na) (hJ1 a a_in_J).2
-
-/-- Corrected endpoint: density of `eta` under separate continuity of `*`. -/
-theorem denseRange_eta (G : Type u) [Group G] [TopologicalSpace G]
-    [SeparatelyContinuousMul G] : DenseRange (eta G) :=
-  denseRange_etaFn G
-
 end ProfiniteGrp.OpenProfiniteCompletion

@@ -1,0 +1,25 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicFullSquareBoundaryProjectionPolynomial.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicFullSquareBoundaryProjectionPolynomial
+
+namespace StatMech.Universality
+namespace FKIsingSquareBoundaryLayerCoordinateOneForm
+
+#print axioms isingFermionicProjectionPolynomialSide_pos
+#print axioms isingFermionicProjectionPolynomialRadius_two_le
+#print axioms tendsto_isingFermionicProjectionPolynomialMesh
+#print axioms tendsto_isingFermionicProjectionPolynomialMesh_fourthOrder
+#print axioms tendsto_isingFermionicProjectionQuadraticLipschitz_mul_polynomialMesh
+#print axioms PhysicalEndpointLocalizedMarkedClampedRobinInputs.ofPolynomialTailCarrierSideTracesAndRange
+#print axioms PhysicalEndpointLocalizedMarkedClampedRobinInputs.primitive_convergence_away_projectionPolynomial
+
+end FKIsingSquareBoundaryLayerCoordinateOneForm
+end StatMech.Universality

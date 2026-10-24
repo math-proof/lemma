@@ -19,10 +19,4 @@ def firstDifference (w : ℕ → ZMod 2) : ℕ → ZMod 2 :=
 /-- The adjacent first differences of a finite binary word. -/
 def firstDifferenceList (w : List (ZMod 2)) : List (ZMod 2) :=
   List.zipWith (· - ·) w.tail w
-
-@[simp]
-theorem length_firstDifferenceList (w : List (ZMod 2)) :
-    (firstDifferenceList w).length = w.length - 1 := by
-  cases w <;> simp [firstDifferenceList]
-
 end MetaMathlibExt

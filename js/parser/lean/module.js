@@ -254,6 +254,34 @@ function looksLikeClassHypothesis(name, type) {
 }
 
 /**
+ * Explicit binder `(h : T)` / multiline `(h : Head\n  arg)`.
+ * Multiline parses as `Parenthesis(ArgsIndented(Colon(h, Head), rest))` — not a bare `Colon`.
+ * @returns {{ colon: import('./base.js').Lean, prop: import('./base.js').Lean, propLatex: (syntax: object) => string } | null}
+ */
+function explicitBinderParts(paren) {
+    const arg = paren.arg;
+    if (arg instanceof L.LeanColon) {
+        return {
+            colon: arg,
+            prop: arg.rhs,
+            propLatex: (syntax) => arg.rhs.toLatex(syntax),
+        };
+    }
+    // `(hφ : StronglyMeasurable\n  (fun z => …))`
+    if (arg instanceof L.LeanArgsIndented && arg.lhs instanceof L.LeanColon) {
+        const colon = arg.lhs;
+        const head = colon.rhs;
+        return {
+            colon,
+            // Classification uses the head (`StronglyMeasurable`); LaTeX joins the continuation.
+            prop: head,
+            propLatex: (syntax) => `${head.toLatex(syntax)}\\ ${arg.rhs.toLatex(syntax)}`,
+        };
+    }
+    return null;
+}
+
+/**
  * `(f : S → α)`: a function-valued data argument (codomain is a type), not a hypothesis.
  * `Lean_rightarrow.isProp` defaults undeclared tokens to `Prop`, which misfiles such binders
  * as givens while `(n : ℕ)` stays explicit.
@@ -463,6 +491,9 @@ function collectRandomVarNames(binderRoots) {
         }
     }
 
+    /** Pi `→` or Fun `⇀` (indexed families `ℕ ⇀ Ω → S`). */
+    const isArrow = (n) => n instanceof L.Lean_rightarrow || n instanceof L.Lean_rightharpoonup;
+
     /** @type {Set<string>} */
     const rvs = new Set();
     for (const n of nodes) {
@@ -474,10 +505,11 @@ function collectRandomVarNames(binderRoots) {
             for (const c of a.args) if (c instanceof L.LeanColon) cols.push(c);
         for (const col of cols) {
             const ty = col.rhs.peelGroup();
-            if (!(ty instanceof L.Lean_rightarrow)) continue;
-            // `X : Ω → S`, or an indexed family `s : ℕ → Ω → S` (the last domain is Ω)
+            if (!isArrow(ty)) continue;
+            // `X : Ω → S`, or an indexed family `s : ℕ → Ω → S` / `s : ℕ ⇀ Ω → S`
+            // (the last domain before the codomain is Ω). Not `V : ℕ ⇀ S → ℝ`.
             let last = ty;
-            while (last.rhs.peelGroup() instanceof L.Lean_rightarrow) last = last.rhs.peelGroup();
+            while (isArrow(last.rhs.peelGroup())) last = last.rhs.peelGroup();
             const dom = strStmt(ty.lhs.peelGroup()).trim();
             if (!probDomains.has(dom) && !probDomains.has(strStmt(last.lhs.peelGroup()).trim())) continue;
             const addNames = (x) => {
@@ -966,9 +998,9 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         for (var i = 0; i < givenSlice.length; i++) {
                             const st = givenSlice[i];
                             if (st instanceof L.LeanParenthesis) {
-                                const colon = st.arg;
-                                if (colon instanceof L.LeanColon) {
-                                    const prop = colon.rhs;
+                                const parts = explicitBinderParts(st);
+                                if (parts) {
+                                    const {colon, prop, propLatex} = parts;
                                     if (vars == null) {
                                         vars = parseVars(implicit);
                                         for (const p of decidables) vars[p] = 'Prop';
@@ -981,13 +1013,13 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                     // Mid-run data between hypotheses still ends the given run too.
                                     const isData = looksLikeDataArrow(prop, vars, typeVars);
                                     if ((prop.isProp(vars) && !isData) || looksLikeClassHypothesis(colon.lhs, prop)) {
-                                        latex.push([prop.toLatex(syntax), latexTag(strStmt(colon.lhs))]);
+                                        latex.push([propLatex(syntax), latexTag(strStmt(colon.lhs))]);
                                         if (givenStart === null) givenStart = i;
                                     } else if (givenStart !== null) {
                                         givenStop = i;
                                         break;
                                     }
-                                } else if (colon instanceof L.LeanAssign) {
+                                } else if (st.arg instanceof L.LeanAssign) {
                                     break;
                                 }
                             } else if (st.is_comment()) {

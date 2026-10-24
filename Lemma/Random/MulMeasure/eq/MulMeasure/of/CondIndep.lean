@@ -1,6 +1,6 @@
 import Mathlib.Probability.Independence.Conditional
 import Lemma.Random.All_Imp_EqProbSCond.of.CondIndep
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
+import Lemma.Random.SinglePSpace.of.Measurable
 import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
 open ProbabilityTheory MeasureTheory Measure Random
 
@@ -37,18 +37,12 @@ private lemma main
     CountableMeasure.measure_eq_count
   have hγ : ReferenceMeasure.measure (α := γ) = Measure.count :=
     CountableMeasure.measure_eq_count
-  have hβγ : ReferenceMeasure.measure (α := β × γ) = Measure.count :=
-    CountableMeasure.measure_eq_count
-  have hαβγ : ReferenceMeasure.measure (α := α × (β × γ)) = Measure.count :=
-    CountableMeasure.measure_eq_count
-  have hαγ : ReferenceMeasure.measure (α := α × γ) = Measure.count :=
-    CountableMeasure.measure_eq_count
   have hPxyz : SinglePSpace π (x, y, z) :=
-    SinglePSpace.of.EqMeasureCount.Measurable (hx.prodMk (hy.prodMk hz)) hαβγ
+    SinglePSpace.of.Measurable (hx.prodMk (hy.prodMk hz))
   have hPyz : SinglePSpace π (y, z) :=
-    SinglePSpace.of.EqMeasureCount.Measurable (hy.prodMk hz) hβγ
+    SinglePSpace.of.Measurable (hy.prodMk hz)
   have hPxz : SinglePSpace π (x, z) :=
-    SinglePSpace.of.EqMeasureCount.Measurable (hx.prodMk hz) hαγ
+    SinglePSpace.of.Measurable (hx.prodMk hz)
   have h := All_Imp_EqProbSCond.of.CondIndep hx hy hz hPxyz hCI
   simp only [hα, hβ, hγ, ae_count_iff] at h
   have h := h u v w
@@ -59,13 +53,13 @@ private lemma main
     ℙ[π](x = u | (y, z) = (v, w)) =
       π (x ⁻¹' {u} ∩ (y, z) ⁻¹' {(v, w)}) / π ((y, z) ⁻¹' {(v, w)}) := by
     have : SinglePSpace π (x, show Ω → β × γ from (y, z)) :=
-      SinglePSpace.of.EqMeasureCount.Measurable (hx.prodMk (hy.prodMk hz)) hαβγ
+      SinglePSpace.of.Measurable (hx.prodMk (hy.prodMk hz))
     exact ProbCond.eq.Div.of.SinglePSpace inferInstance u (v, w)
   have hdiv₂ :
     ℙ[π](x = u | z = w) = π (x ⁻¹' {u} ∩ z ⁻¹' {w}) / π (z ⁻¹' {w}) := by
     have := hPxz
     exact ProbCond.eq.Div.of.SinglePSpace inferInstance u w
-  rw [Prob.eq.Measure.of.Eq_Count hβγ, hdiv₁, hdiv₂, e₁, ← Set.inter_assoc] at h
+  rw [EqProb, hdiv₁, hdiv₂, e₁, ← Set.inter_assoc] at h
   if hB : π (y ⁻¹' {v} ∩ z ⁻¹' {w}) = 0 then
     have hT : π (x ⁻¹' {u} ∩ y ⁻¹' {v} ∩ z ⁻¹' {w}) = 0 := by
       apply measure_mono_null _ hB

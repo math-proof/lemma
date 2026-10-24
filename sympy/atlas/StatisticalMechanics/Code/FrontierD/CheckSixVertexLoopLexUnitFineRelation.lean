@@ -1,0 +1,19 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexLoopLexUnitFineRelation.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexLoopLexUnitFineRelation
+
+open StatMech.FrontierD
+
+#print axioms sixVertexLoopDecoratedUnitTransferFineTarget
+#print axioms sixVertexLoopLexUnitFineRelated_target
+#print axioms sixVertexLoopLexUnitFineRelated_iff_eq
+#print axioms sixVertexLoopLexUnitFineRelated_nonempty
+#print axioms card_sixVertexLoopLexUnitFineRelated_eq_one

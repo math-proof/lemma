@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.RayClass.ResidueSign
+import Lemma.Nat.NumberField.RayClass.ResidueSign
 import Mathlib.Algebra.Exact.Basic
 
 /-!
@@ -47,12 +48,6 @@ variable {K : Type*} [Field K] [NumberField K]
 def integralUnitsToFieldUnits : (𝓞 K)ˣ →* Kˣ :=
   Units.map (algebraMap (𝓞 K) K).toMonoidHom
 
-omit [NumberField K] in
-/-- The integral-unit embedding is injective. -/
-theorem integralUnitsToFieldUnits_injective :
-    Function.Injective (integralUnitsToFieldUnits (K := K)) :=
-  Units.map_injective (NumberField.RingOfIntegers.coe_injective (K := K))
-
 /-- Integral units land in ray elements (ATLAS `okUnitsToUnitsCoprime`;
 ATLAS `valuation_algebraMap_unit_eq_one` is discharged inline below). -/
 def integralUnitsToRayElements (m : Modulus K) :
@@ -67,12 +62,6 @@ def integralUnitsToRayElements (m : Modulus K) :
     ((integralUnitsToRayElements m u : rayElements m) : Kˣ) =
       integralUnitsToFieldUnits u :=
   rfl
-
-/-- The integral-unit map into ray elements is injective. -/
-theorem integralUnitsToRayElements_injective (m : Modulus K) :
-    Function.Injective (integralUnitsToRayElements m) :=
-  (MonoidHom.injective_codRestrict _ _ _).mpr
-    integralUnitsToFieldUnits_injective
 
 /-- Ray-one integral units, by comap (ATLAS `UnitsInCongruenceSubgroup`). -/
 def integralRayOneUnits (m : Modulus K) : Subgroup (𝓞 K)ˣ :=
@@ -133,27 +122,5 @@ noncomputable def integralUnitsToResidueSign (m : Modulus K) :
   unfold integralUnitsToResidueSign
   rw [MonoidHom.ker_comp_of_injective _ _ (MulEquiv.injective _),
     integralUnitsToRayQuotient_ker]
-
-/-- The ray-one inclusion is injective. -/
-theorem integralRayOneUnitsInclusion_injective (m : Modulus K) :
-    Function.Injective (integralRayOneUnitsInclusion m) := by
-  intro a b h
-  have h' : (a : (𝓞 K)ˣ) = (b : (𝓞 K)ˣ) := h
-  exact Subtype.ext h'
-
-/-- Exactness at integral units, quotient form (ATLAS `exactSeq_exact_at_units`). -/
-theorem integralUnits_mulExact_quotient (m : Modulus K) :
-    Function.MulExact (integralRayOneUnitsInclusion m)
-      (integralUnitsToRayQuotient m) := by
-  rw [MonoidHom.mulExact_iff, integralUnitsToRayQuotient_ker]
-  exact (Subgroup.range_subtype _).symm
-
-/-- Exactness at integral units, residue-sign form. -/
-theorem integralUnits_mulExact_residueSign (m : Modulus K) :
-    Function.MulExact (integralRayOneUnitsInclusion m)
-      (integralUnitsToResidueSign m) := by
-  rw [MonoidHom.mulExact_iff, integralUnitsToResidueSign_ker]
-  exact (Subgroup.range_subtype _).symm
-
 end Modulus
 end NumberField

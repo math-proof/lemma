@@ -97,7 +97,7 @@ private theorem dual_zmodDirectSumHom_injective {ι : Type*} [DecidableEq ι]
     Function.Injective (dual_zmodDirectSumHom n) :=
   AddChar.directSum_injective.comp (dual_zmodFamilyHom_injective n)
 
-private noncomputable def dual_zmodDirectSumEquiv {ι : Type*} [Fintype ι]
+noncomputable def dual_zmodDirectSumEquiv {ι : Type*} [Fintype ι]
     (n : ι → ℕ) [∀ i, NeZero (n i)] :
     (⨁ i, ZMod (n i)) ≃+ AddChar (⨁ i, ZMod (n i)) ℂ := by
   classical
@@ -107,7 +107,7 @@ private noncomputable def dual_zmodDirectSumEquiv {ι : Type*} [Fintype ι]
   rw [Fintype.bijective_iff_injective_and_card, AddChar.card_eq]
   exact ⟨dual_zmodDirectSumHom_injective n, rfl⟩
 
-private def dual_prodEquiv (α β : Type*) [AddCommGroup α] [AddCommGroup β] :
+def dual_prodEquiv (α β : Type*) [AddCommGroup α] [AddCommGroup β] :
     AddChar (α × β) ℂ ≃+ (AddChar α ℂ × AddChar β ℂ) where
   toFun ψ :=
     (ψ.compAddMonoidHom (AddMonoidHom.inl α β),
@@ -129,47 +129,4 @@ private def dual_prodEquiv (α β : Type*) [AddCommGroup α] [AddCommGroup β] :
     ext x <;> simp
   map_add' ψ χ := by
     ext x <;> rfl
-
-/--
-A finite abelian group is (non-canonically) isomorphic to its dual group.
-
-Sources: `undergrad.yaml`, section "Representation theory of finite groups",
-entry "dual groups"; K. Conrad, Characters of finite abelian groups,
-https://kconrad.math.uconn.edu/blurbs/grouptheory/charthy.pdf, Theorem 3.13.
-
-Proves `Wanted` entry `finite_abelian_dual_iso`.
-
-Proof: Use the finite abelian structure theorem, apply `AddChar.zmodAddEquiv`
-coordinatewise on the cyclic factors, and transport characters along the
-decomposition. This is the proof of Conrad's Theorem 3.13: the cyclic case,
-then products of cyclic groups.
--/
-theorem finite_abelian_dual_iso (α : Type*) [AddCommGroup α]
-    [Finite α] : Nonempty (α ≃+ AddChar α ℂ) := by
-  obtain ⟨ι, _, n, hn, ⟨e⟩⟩ := AddCommGroup.equiv_directSum_zmod_of_finite' α
-  classical
-  have hn' : ∀ i, NeZero (n i) := fun i => by
-    have := hn i
-    exact ⟨by positivity⟩
-  exact ⟨e.trans <| (@dual_zmodDirectSumEquiv ι inferInstance n hn').trans <|
-    dual_precomp e⟩
-
-/--
-The dual of a product is the product of the duals.
-
-Sources: `undergrad.yaml`, section "Representation theory of finite groups",
-entry "dual groups"; K. Conrad, Characters of finite abelian groups,
-https://kconrad.math.uconn.edu/blurbs/grouptheory/charthy.pdf, Lemma 3.12.
-
-Proves `Wanted` entry `dual_prod`.
-
-Proof: Restrict a character along the two coordinate inclusions, with inverse
-`(χ₁, χ₂) ↦ fun (x, y) ↦ χ₁ x * χ₂ y`. Conrad's Lemma 3.12 uses the same
-restriction map for finite groups and concludes by counting; the explicit
-inverse removes the finiteness assumption.
--/
-theorem dual_prod (α β : Type*) [AddCommGroup α] [AddCommGroup β] :
-    Nonempty (AddChar (α × β) ℂ ≃+ (AddChar α ℂ × AddChar β ℂ)) := by
-  exact ⟨dual_prodEquiv α β⟩
-
 end MathlibExt.GroupTheory.FiniteAbelianDualWanted

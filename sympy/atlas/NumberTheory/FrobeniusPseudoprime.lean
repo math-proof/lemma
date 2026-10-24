@@ -38,19 +38,8 @@ def IsGreatestCommonMonicDivisor {R : Type*} [CommRing R]
     Ideal.span ({g₁, g₂} : Set (_root_.Polynomial R)) =
       Ideal.span ({h} : Set (_root_.Polynomial R))
 
-/-- Unfolding of `Polynomial.IsGreatestCommonMonicDivisor`. -/
-theorem IsGreatestCommonMonicDivisor.unfold {R : Type*} [CommRing R]
-    (h g₁ g₂ : _root_.Polynomial R) :
-    IsGreatestCommonMonicDivisor h g₁ g₂ ↔
-      (h.Monic ∧ g₁.Monic ∧ g₂.Monic ∧
-        Ideal.span ({g₁, g₂} : Set (_root_.Polynomial R)) =
-          Ideal.span ({h} : Set (_root_.Polynomial R))) :=
-  Iff.rfl
-
 end Polynomial
-
 namespace Nat
-
 /-- Frobenius probable prime (pseudo1.tex lines 713-741).
 `f` is monic over the integers; degree and discriminant are `f.natDegree`
 and `f.discr`. `n` is odd, greater than one, and coprime to the natural
@@ -86,58 +75,4 @@ that is a Frobenius probable prime with respect to the monic polynomial `f`.
 Composite is `¬ n.Prime` conjoined with the probable-prime `1 < n` clause. -/
 def IsFrobeniusPseudoprime (n : ℕ) (f : _root_.Polynomial ℤ) : Prop :=
   ¬ n.Prime ∧ IsFrobeniusProbablePrime n f
-
-/-- Unfolding of `Nat.IsFrobeniusProbablePrime`. -/
-theorem IsFrobeniusProbablePrime.unfold (n : ℕ) (f : _root_.Polynomial ℤ) :
-    IsFrobeniusProbablePrime n f ↔
-      (f.Monic ∧ Odd n ∧ 1 < n ∧
-        _root_.Nat.Coprime n (Int.natAbs (f.eval 0 * f.discr)) ∧
-        ∃ F fs : ℕ → _root_.Polynomial (ZMod n),
-          ∃ q : ℕ → ℕ,
-            fs 0 = f.map (Int.castRingHom (ZMod n)) ∧
-            fs f.natDegree = 1 ∧
-            (∀ i ∈ Finset.Icc 1 f.natDegree,
-              Polynomial.IsGreatestCommonMonicDivisor (F i)
-                (Polynomial.X ^ (n ^ i) - Polynomial.X : _root_.Polynomial (ZMod n))
-                (fs (i - 1)) ∧ fs (i - 1) = F i * fs i) ∧
-            (∀ i ∈ Finset.Icc 2 f.natDegree,
-              F i ∣ (F i).comp (Polynomial.X ^ n : _root_.Polynomial (ZMod n))) ∧
-            (∀ i ∈ Finset.Icc 1 f.natDegree, Even i → (F i).natDegree = i * q i) ∧
-            (-1 : ℤ) ^
-                Finset.sum (Finset.Icc 1 f.natDegree)
-                  (fun i => if i % 2 = 0 then q i else 0) =
-              jacobiSym f.discr n) :=
-  Iff.rfl
-
-/-- A Frobenius probable prime uses a monic parameter polynomial. -/
-theorem IsFrobeniusProbablePrime.monic {n : ℕ} {f : _root_.Polynomial ℤ}
-    (h : IsFrobeniusProbablePrime n f) : f.Monic :=
-  h.1
-
-/-- A Frobenius probable prime candidate is odd. -/
-theorem IsFrobeniusProbablePrime.odd {n : ℕ} {f : _root_.Polynomial ℤ}
-    (h : IsFrobeniusProbablePrime n f) : Odd n :=
-  h.2.1
-
-/-- A Frobenius probable prime candidate exceeds one. -/
-theorem IsFrobeniusProbablePrime.one_lt {n : ℕ} {f : _root_.Polynomial ℤ}
-    (h : IsFrobeniusProbablePrime n f) : 1 < n :=
-  h.2.2.1
-
-/-- Unfolding of `Nat.IsFrobeniusPseudoprime`. -/
-theorem IsFrobeniusPseudoprime.unfold (n : ℕ) (f : _root_.Polynomial ℤ) :
-    IsFrobeniusPseudoprime n f ↔
-      (¬ n.Prime ∧ IsFrobeniusProbablePrime n f) :=
-  Iff.rfl
-
-/-- A Frobenius pseudoprime is composite, as `¬ n.Prime`. -/
-theorem IsFrobeniusPseudoprime.composite {n : ℕ} {f : _root_.Polynomial ℤ}
-    (h : IsFrobeniusPseudoprime n f) : ¬ n.Prime :=
-  h.1
-
-/-- A Frobenius pseudoprime is a Frobenius probable prime. -/
-theorem IsFrobeniusPseudoprime.probablePrime {n : ℕ} {f : _root_.Polynomial ℤ}
-    (h : IsFrobeniusPseudoprime n f) : IsFrobeniusProbablePrime n f :=
-  h.2
-
 end Nat

@@ -8,7 +8,7 @@ import Lemma.Tensor.GetPermuteTail.as.Select.of.GtGet.GtLength_0
 import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.Permute__Neg.as.PermuteTail.of.Val.eq.SubLength_1
 import Lemma.Vector.GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq
-open Fin List Nat Tensor Vector
+open Fin List Nat Tensor Vector Set
 set_option maxHeartbeats 200000
 
 

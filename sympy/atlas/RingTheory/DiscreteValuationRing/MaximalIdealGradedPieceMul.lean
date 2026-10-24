@@ -6,6 +6,7 @@ Author: Muse Code
 
 import Mathlib.RingTheory.Trace.Defs
 import sympy.atlas.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
+import Lemma.Int.DiscreteValuationRing.MaximalIdealGradedPiece
 /-!
 # Residue-field multiplication on maximal-ideal graded pieces
 
@@ -65,54 +66,4 @@ noncomputable def residueFieldMulMaximalIdealGradedPiece
     (a : IsLocalRing.ResidueField R) (i : ℕ) :
     Module.End (IsLocalRing.ResidueField R) (MaximalIdealGradedPiece R i) :=
   LinearMap.lsmul _ _ a
-
-/-- Representative formula: multiplication by `residue x` acts on a quotient
-representative as the representative `R`-scalar action `x • ·`. This is the
-bridge from residue scalar multiplication to actual multiplication on the
-quotient. -/
-@[simp]
-theorem residueFieldMulMaximalIdealGradedPiece_residue_mk
-    (x : R) (i : ℕ) (y : ((IsLocalRing.maximalIdeal R) ^ i : Ideal R)) :
-    residueFieldMulMaximalIdealGradedPiece R (IsLocalRing.residue R x) i
-        (Submodule.Quotient.mk y) =
-      Submodule.Quotient.mk (x • y) := by
-  simp only [residueFieldMulMaximalIdealGradedPiece, LinearMap.lsmul_apply]
-  exact Module.Quotient.mk_smul_mk _ _ x y
-
-/-- Base-change conjugacy: after restricting scalars to a base field `K`, the
-graded-piece equivalence conjugates residue-field left multiplication to the
-graded-piece multiplication endomorphism. New prerequisite support for the
-corrected ATLAS N261 filtered-trace route, not a source theorem. -/
-theorem residueFieldLinearEquivMaximalIdealGradedPiece_conj_lmul
-    {K : Type*} [Field K] [Algebra K (IsLocalRing.ResidueField R)]
-    (i : ℕ) [Module K (MaximalIdealGradedPiece R i)]
-    [IsScalarTower K (IsLocalRing.ResidueField R) (MaximalIdealGradedPiece R i)]
-    (a : IsLocalRing.ResidueField R) :
-    ((residueFieldLinearEquivMaximalIdealGradedPiece R i).restrictScalars K).conj
-        (Algebra.lmul K (IsLocalRing.ResidueField R) a) =
-      (residueFieldMulMaximalIdealGradedPiece R a i).restrictScalars K := by
-  refine LinearMap.ext fun y => ?_
-  simp only [LinearEquiv.conj_apply_apply, LinearEquiv.restrictScalars_apply,
-    LinearEquiv.restrictScalars_symm_apply, Algebra.coe_lmul_eq_mul,
-    LinearMap.mul_apply', LinearMap.restrictScalars_apply,
-    residueFieldMulMaximalIdealGradedPiece, LinearMap.lsmul_apply]
-  rw [← smul_eq_mul, map_smul, LinearEquiv.apply_symm_apply]
-
-/-- Graded-piece trace: after restricting scalars to a base field `K`, the
-linear trace of the graded-piece multiplication endomorphism equals the
-algebra trace of the residue scalar. New prerequisite support for the
-corrected ATLAS N261 filtered-trace route, not a source theorem. -/
-theorem trace_residueFieldMulMaximalIdealGradedPiece
-    {K : Type*} [Field K] [Algebra K (IsLocalRing.ResidueField R)]
-    (i : ℕ) [Module K (MaximalIdealGradedPiece R i)]
-    [IsScalarTower K (IsLocalRing.ResidueField R) (MaximalIdealGradedPiece R i)]
-    (a : IsLocalRing.ResidueField R) :
-    LinearMap.trace K (MaximalIdealGradedPiece R i)
-        ((residueFieldMulMaximalIdealGradedPiece R a i).restrictScalars K) =
-      Algebra.trace K (IsLocalRing.ResidueField R) a := by
-  rw [Algebra.trace_apply, ← LinearMap.trace_conj'
-    (Algebra.lmul K (IsLocalRing.ResidueField R) a)
-    ((residueFieldLinearEquivMaximalIdealGradedPiece R i).restrictScalars K),
-    residueFieldLinearEquivMaximalIdealGradedPiece_conj_lmul]
-
 end IsDiscreteValuationRing

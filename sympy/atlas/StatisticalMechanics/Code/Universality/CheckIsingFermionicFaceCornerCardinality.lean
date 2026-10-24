@@ -1,0 +1,22 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicFaceCornerCardinality.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicFaceCornerCardinality
+
+set_option linter.style.longLine false
+
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceMarkedEndpointCode_injective
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceInteriorExceptionalSources_card_le
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceInteriorExceptionalSources_mul_le
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceMarkedEndpointBarrier_le_radiusDistance
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.tendsto_faceEndpointPolynomialBound
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceMarkedEndpointBarrier_le_polynomialBound
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceMarkedEndpointBarrier_le_polynomialBound_of_halfColumn
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.tendsto_four_mul_faceEndpointPolynomialBound

@@ -1,37 +1,38 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [HopfAlgebra_exists_finiteFlat_model_prod](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_HopfAlgebra_exists_finiteFlat_model_prod.lean)
 -/
 @[path]
 private lemma main
-    {R : Type} [CommRing R] {L : Type} [CommRing L] [Algebra R L]
-    {Γ : Type} [Group Γ] [MulSemiringAction Γ L] [SMulCommClass Γ R L]
-    {M₁ M₂ : Type} [AddCommGroup M₁] [AddCommGroup M₂] [DistribMulAction Γ M₁] [DistribMulAction Γ M₂]
-    (H₁ : Type) [CommRing H₁] [HopfAlgebra R H₁] [Module.Finite R H₁] [Module.Flat R H₁]
-    [Coalgebra.IsCocomm R H₁]
-    (e₁ : WithConv (H₁ →ₐ[R] L) ≃ M₁)
-    (he₁_add : ∀ f g, e₁ (f * g) = e₁ f + e₁ g)
-    (he₁_act : ∀ (σ : Γ) (f g : WithConv (H₁ →ₐ[R] L)), (∀ x : H₁, g x = σ • (f x)) → e₁ g = σ • (e₁ f))
-    (H₂ : Type) [CommRing H₂] [HopfAlgebra R H₂] [Module.Finite R H₂] [Module.Flat R H₂]
-    [Coalgebra.IsCocomm R H₂]
-    (e₂ : WithConv (H₂ →ₐ[R] L) ≃ M₂)
-    (he₂_add : ∀ f g, e₂ (f * g) = e₂ f + e₂ g)
-    (he₂_act : ∀ (σ : Γ) (f g : WithConv (H₂ →ₐ[R] L)), (∀ x : H₂, g x = σ • (f x)) → e₂ g = σ • (e₂ f)) :
-    ∃ (H : Type) (_ : CommRing H) (_ : HopfAlgebra R H),
-      Module.Finite R H ∧ Module.Flat R H ∧ Coalgebra.IsCocomm R H ∧
-      ∃ e : WithConv (H →ₐ[R] L) ≃ M₁ × M₂,
-        (∀ f g, e (f * g) = e f + e g) ∧
-        ∀ (σ : Γ) (f g : WithConv (H →ₐ[R] L)), (∀ x : H, g x = σ • (f x)) → e g = σ • (e f) := by
+  {R : Type} [CommRing R]
+  {L : Type} [CommRing L] [Algebra R L]
+  {Γ : Type} [Group Γ] [MulSemiringAction Γ L] [SMulCommClass Γ R L]
+  {M₁ M₂ : Type} [AddCommGroup M₁] [AddCommGroup M₂] [DistribMulAction Γ M₁] [DistribMulAction Γ M₂]
+  {H₁ : Type} [CommRing H₁] [HopfAlgebra R H₁] [Module.Finite R H₁] [Module.Flat R H₁] [Coalgebra.IsCocomm R H₁]
+  {H₂ : Type} [CommRing H₂] [HopfAlgebra R H₂] [Module.Finite R H₂] [Module.Flat R H₂] [Coalgebra.IsCocomm R H₂]
+  {e₁ : WithConv (H₁ →ₐ[R] L) ≃ M₁}
+  {e₂ : WithConv (H₂ →ₐ[R] L) ≃ M₂}
+  -- given
+  (he₁_add : ∀ f g, e₁ (f * g) = e₁ f + e₁ g)
+  (he₁_act : ∀ (σ : Γ) (f g : WithConv (H₁ →ₐ[R] L)), (∀ x : H₁, g x = σ • (f x)) → e₁ g = σ • (e₁ f))
+  (he₂_add : ∀ f g, e₂ (f * g) = e₂ f + e₂ g)
+  (he₂_act : ∀ (σ : Γ) (f g : WithConv (H₂ →ₐ[R] L)), (∀ x : H₂, g x = σ • (f x)) → e₂ g = σ • (e₂ f)) :
+  -- imply
+  ∃ (H : Type) (_ : CommRing H) (_ : HopfAlgebra R H),
+    Module.Finite R H ∧ Module.Flat R H ∧ Coalgebra.IsCocomm R H ∧
+    ∃ e : WithConv (H →ₐ[R] L) ≃ M₁ × M₂,
+      (∀ f g, e (f * g) = e f + e g) ∧
+      ∀ (σ : Γ) (f g : WithConv (H →ₐ[R] L)), (∀ x : H, g x = σ • (f x)) → e g = σ • (e f) := by
+  -- proof
   classical
   refine ⟨H₁ ⊗[R] H₂, inferInstance, inferInstance, inferInstance, inferInstance, inferInstance, ?_⟩
   let fwd : WithConv ((H₁ ⊗[R] H₂) →ₐ[R] L) → M₁ × M₂ := fun F =>
@@ -51,15 +52,17 @@ private lemma main
       Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
   have hbf : ∀ m, fwd (bwd m) = m := by
     intro m
-    simp only [fwd, bwd, WithConv.ofConv_toConv]
+    simp only [fwd, bwd]
     have h1 : (Algebra.TensorProduct.lift (WithConv.ofConv (e₁.symm m.1)) (WithConv.ofConv (e₂.symm m.2))
         (fun _ _ => Commute.all _ _)).comp Algebra.TensorProduct.includeLeft = WithConv.ofConv (e₁.symm m.1) := by
-      apply AlgHom.ext; intro a
-      simp [Algebra.TensorProduct.lift_tmul]
+      apply AlgHom.ext
+      intro a
+      simp
     have h2 : (Algebra.TensorProduct.lift (WithConv.ofConv (e₁.symm m.1)) (WithConv.ofConv (e₂.symm m.2))
         (fun _ _ => Commute.all _ _)).comp Algebra.TensorProduct.includeRight = WithConv.ofConv (e₂.symm m.2) := by
-      apply AlgHom.ext; intro b
-      simp [Algebra.TensorProduct.lift_tmul]
+      apply AlgHom.ext
+      intro b
+      simp
     rw [h1, h2, WithConv.toConv_ofConv, WithConv.toConv_ofConv, Equiv.apply_symm_apply, Equiv.apply_symm_apply]
   let e : WithConv ((H₁ ⊗[R] H₂) →ₐ[R] L) ≃ M₁ × M₂ := ⟨fwd, bwd, hfb, hbf⟩
   refine ⟨e, ?_, ?_⟩
@@ -68,8 +71,9 @@ private lemma main
     show fwd (F * G) = fwd F + fwd G
     simp only [fwd, Prod.mk_add_mk, ← he₁_add, ← he₂_add]
     congr 1
-    · congr 1
-      apply congrArg WithConv.toConv ?_ |>.trans (WithConv.toConv_ofConv _)
+    ·
+      congr 1
+      apply congrArg WithConv.toConv _ |>.trans (WithConv.toConv_ofConv _)
       apply AlgHom.ext
       intro h
       let 𝓡 := Coalgebra.Repr.arbitrary R h
@@ -97,8 +101,9 @@ private lemma main
         simpa [Coalgebra.Repr.convMul_apply 𝓡] using this
       show (F * G).ofConv (h ⊗ₜ[R] (1 : H₂)) = _
       rw [hL, hR]
-    · congr 1
-      apply congrArg WithConv.toConv ?_ |>.trans (WithConv.toConv_ofConv _)
+    ·
+      congr 1
+      apply congrArg WithConv.toConv _ |>.trans (WithConv.toConv_ofConv _)
       apply AlgHom.ext
       intro h
       let 𝓡 := Coalgebra.Repr.arbitrary R h
@@ -131,11 +136,14 @@ private lemma main
     show fwd G = σ • fwd F
     simp only [fwd, Prod.smul_mk]
     congr 1
-    · apply he₁_act
+    ·
+      apply he₁_act
       intro x
-      exact hFG _
-    · apply he₂_act
+      apply hFG
+    ·
+      apply he₂_act
       intro x
-      exact hFG _
+      apply hFG
+
 
 -- created on 2026-10-20

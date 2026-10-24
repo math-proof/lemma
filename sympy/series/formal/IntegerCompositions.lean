@@ -7,7 +7,6 @@ Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
 import Mathlib
-
 /-!
 # Integer Compositions
 
@@ -53,13 +52,14 @@ are equivalent; we use `List ℕ+` here to follow the source text's presentation
 See the source LaTeX file `AlgebraicCombinatorics/tex/FPS/IntegerCompositions.tex`
 -/
 
+
 open Finset Nat BigOperators
 set_option allowUnsafeReducibility true
 attribute [local reducible] PNat
 
 namespace AlgebraicCombinatorics
-
 /-! ### Integer Compositions -/
+
 
 /--
 An integer composition is a finite tuple of positive integers.
@@ -87,67 +87,19 @@ The length of a composition is the number of parts.
 (Definition def.fps.comps, part (c))
 -/
 def len (α : Composition) : ℕ := α.length
-
 /-! #### Basic `@[simp]` lemmas for `size` and `len` -/
-
-/-- The size of the empty composition is 0. -/
-@[simp]
-theorem size_nil : size ([] : Composition) = 0 := rfl
-
-/-- The length of the empty composition is 0. -/
-@[simp]
-theorem len_nil : len ([] : Composition) = 0 := rfl
-
-/-- The size of a cons composition is the head value plus the tail size. -/
-@[simp]
-theorem size_cons (a : ℕ+) (α : Composition) : size (a :: α) = a.val + size α := rfl
-
-/-- The length of a cons composition is the tail length plus 1. -/
-@[simp]
-theorem len_cons (a : ℕ+) (α : Composition) : len (a :: α) = len α + 1 := by
-  simp only [len, List.length_cons]
-
-/-- The size of a composition is at least its length, since each part is positive. -/
-theorem size_ge_len (α : Composition) : α.len ≤ α.size := by
-  induction α with
-  | nil => simp
-  | cons a as ih =>
-    simp only [size_cons, len_cons]
-    have ha : 1 ≤ a.val := a.pos
-    omega
-
 /-! #### Singleton constructor -/
+
 
 /-- A composition with a single part. -/
 def singleton (n : ℕ+) : Composition := [n]
-
-/-- The size of a singleton composition is the value of its single part. -/
-@[simp]
-theorem size_singleton (n : ℕ+) : (singleton n).size = n.val := by
-  simp [singleton, size]
-
-/-- The length of a singleton composition is 1. -/
-@[simp]
-theorem len_singleton (n : ℕ+) : (singleton n).len = 1 := rfl
-
 /-! #### Append operation -/
+
 
 /-- Concatenation of two compositions. -/
 def append (α β : Composition) : Composition := List.append α β
 
 instance : Append Composition := ⟨append⟩
-
-/-- The size of the concatenation of two compositions equals the sum of their sizes. -/
-@[simp]
-theorem size_append (α β : Composition) : (α ++ β).size = α.size + β.size :=
-  (congrArg List.sum (List.map_append (f := fun x : ℕ+ => x.val) (l₁ := α) (l₂ := β))).trans
-    (List.sum_append (l₁ := List.map (fun x : ℕ+ => x.val) α)
-      (l₂ := List.map (fun x : ℕ+ => x.val) β))
-
-/-- The length of the concatenation of two compositions equals the sum of their lengths. -/
-@[simp]
-theorem len_append (α β : Composition) : (α ++ β).len = α.len + β.len :=
-  List.length_append (as := α) (bs := β)
 
 /--
 A composition of `n` is a composition whose size is `n`.
@@ -173,8 +125,8 @@ example : ofSizeIntoParts 17 3 :=
 
 -- The empty tuple is the only composition of 0
 example : ofSize 0 := ⟨[], by simp [size]⟩
-
 /-! #### Equivalence with Mathlib's Composition type -/
+
 
 /-- Convert a composition (List ℕ+) to a blocks list (List ℕ) -/
 def toBlocks (α : Composition) : List ℕ := α.map (·.val)
@@ -268,24 +220,12 @@ def equivMathlibFiltered (n k : ℕ) :
     exact toBlocks_ofBlocks c.blocks c.blocks_pos
 
 /--
-The empty list is the only composition of size 0.
--/
-theorem empty_of_size_zero (α : Composition) (h : α.size = 0) : α = [] := by
-  cases α with
-  | nil => rfl
-  | cons x xs =>
-    simp only [size, List.map_cons, List.sum_cons] at h
-    have : 0 < x.val := x.pos
-    omega
-
-/--
 The set of all compositions of `n` into `k` parts is finite.
 -/
 instance fintypeOfSizeIntoParts (n k : ℕ) : Fintype (ofSizeIntoParts n k) :=
   Fintype.ofEquiv _ (equivMathlibFiltered n k).symm
 
 end Composition
-
 /-! ### Counting Compositions via Mathlib
 
 We prove the main counting theorem using Mathlib's `Composition n` type, which has
@@ -295,234 +235,16 @@ The key insight is that compositions of `n` into `k` parts correspond bijectivel
 to `(k-1)`-element subsets of `{1, ..., n-1}`, giving the count `C(n-1, k-1)`.
 -/
 
+
 namespace MathlibComposition
 
 /-- Equivalence between Mathlib's `Composition n` and subsets of `Fin (n-1)`. -/
 def compositionToFinset (n : ℕ) : _root_.Composition n ≃ Finset (Fin (n - 1)) :=
   (compositionEquiv n).trans (compositionAsSetEquiv n)
 
-/--
-Key lemma: for `n > 0`, the cardinality of the finset associated to a composition
-equals the length minus 1.
-
-This follows from the structure of the `compositionAsSetEquiv`: it extracts the
-"interior" boundary points of a composition (those between 0 and n), and a
-composition of length k has exactly k-1 such interior points.
--/
-theorem compositionAsSetEquiv_card_eq_length_sub_one (n : ℕ) (hn : 0 < n)
-    (c : CompositionAsSet n) : (compositionAsSetEquiv n c).card + 1 = c.length := by
-  -- The equiv extracts interior boundary points (not 0 or Fin.last n)
-  -- c.length = c.boundaries.card - 1
-  -- Interior points = c.boundaries.card - 2 (removing 0 and Fin.last n)
-  -- So equiv.card = c.length - 1, hence equiv.card + 1 = c.length
-  unfold compositionAsSetEquiv
-  simp only [Equiv.coe_fn_mk]
-  have h1 : c.boundaries.card = c.length + 1 := c.card_boundaries_eq_succ_length
-  -- Define the interior of the boundaries
-  let interior := c.boundaries.filter (fun x => x ≠ 0 ∧ x ≠ Fin.last n)
-  have h_interior_card : interior.card = c.boundaries.card - 2 := by
-    have h0 : (0 : Fin n.succ) ∈ c.boundaries := c.zero_mem
-    have hn_mem : Fin.last n ∈ c.boundaries := c.getLast_mem
-    have h_ne : (0 : Fin n.succ) ≠ Fin.last n := by
-      simp only [ne_eq, Fin.ext_iff, Fin.val_zero, Fin.val_last]
-      omega
-    -- interior = c.boundaries \ {0, Fin.last n}
-    have heq : interior = c.boundaries \ {0, Fin.last n} := by
-      ext x
-      simp only [interior, mem_filter, mem_sdiff, mem_insert, mem_singleton]
-      tauto
-    rw [heq]
-    have hpair : {0, Fin.last n} ⊆ c.boundaries := by
-      intro x hx
-      simp only [mem_insert, mem_singleton] at hx
-      rcases hx with rfl | rfl
-      · exact h0
-      · exact hn_mem
-    rw [Finset.card_sdiff_of_subset hpair, Finset.card_pair h_ne]
-  -- The set {i : Fin (n-1) | ⟨1 + i, _⟩ ∈ c.boundaries} is in bijection with interior
-  have h_card_eq : {i : Fin (n - 1) | (⟨1 + (i : ℕ), by omega⟩ : Fin n.succ) ∈ c.boundaries}.toFinset.card = interior.card := by
-    apply Finset.card_bij (fun (i : Fin (n - 1)) _ => (⟨1 + (i : ℕ), by have := i.isLt; omega⟩ : Fin n.succ))
-    · -- i_mem: the image is in interior
-      intro i hi
-      simp at hi
-      simp only [interior, mem_filter]
-      refine ⟨hi, ?_, ?_⟩
-      · simp only [ne_eq, Fin.ext_iff, Fin.val_zero]
-        omega
-      · simp only [ne_eq, Fin.ext_iff, Fin.val_last]
-        have : (i : ℕ) < n - 1 := i.isLt
-        omega
-    · -- i_inj: the map is injective
-      intro i₁ _ i₂ _ heq
-      simp only [Fin.ext_iff] at heq ⊢
-      omega
-    · -- i_surj: the map is surjective
-      intro x hx
-      simp only [interior, mem_filter] at hx
-      obtain ⟨hx_mem, hx_ne0, hx_neL⟩ := hx
-      have hx_pos : 0 < x.val := by
-        simp only [ne_eq, Fin.ext_iff, Fin.val_zero] at hx_ne0
-        omega
-      have hx_lt : x.val < n := by
-        simp only [ne_eq, Fin.ext_iff, Fin.val_last] at hx_neL
-        have : x.val ≤ n := Nat.lt_succ_iff.mp x.isLt
-        omega
-      have hval : x.val - 1 < n - 1 := by omega
-      refine ⟨⟨x.val - 1, hval⟩, ?_, ?_⟩
-      · simp only [Set.mem_toFinset, Set.mem_ofPred_eq]
-        convert hx_mem using 2
-        omega
-      · simp only [Fin.ext_iff]
-        omega
-  rw [h_card_eq, h_interior_card, h1]
-  -- Now we have: (c.length + 1 - 2) + 1 = c.length when c.length ≥ 1
-  have hlen_pos : 1 ≤ c.length := by
-    have h2 : 2 ≤ c.boundaries.card := by
-      have h0 : (0 : Fin n.succ) ∈ c.boundaries := c.zero_mem
-      have hn_mem : Fin.last n ∈ c.boundaries := c.getLast_mem
-      have h_ne : (0 : Fin n.succ) ≠ Fin.last n := by
-        simp only [ne_eq, Fin.ext_iff, Fin.val_zero, Fin.val_last]
-        omega
-      have : {0, Fin.last n} ⊆ c.boundaries := by
-        intro x hx
-        simp only [mem_insert, mem_singleton] at hx
-        rcases hx with rfl | rfl <;> assumption
-      calc c.boundaries.card ≥ ({0, Fin.last n} : Finset (Fin n.succ)).card := Finset.card_le_card this
-        _ = 2 := Finset.card_pair h_ne
-    omega
-  omega
-
-/-- The cardinality of the associated finset plus 1 equals the composition length. -/
-theorem compositionToFinset_card_add_one (n : ℕ) (hn : 0 < n) (c : _root_.Composition n) :
-    (compositionToFinset n c).card + 1 = c.length := by
-  simp only [compositionToFinset, Equiv.trans_apply, compositionEquiv]
-  have h := compositionAsSetEquiv_card_eq_length_sub_one n hn c.toCompositionAsSet
-  convert h using 1
-  exact c.toCompositionAsSet_length.symm
-
-/--
-**Theorem thm.fps.comps.num-comps-n-k** (using Mathlib's Composition):
-For `n > 0` and `k > 0`, the number of compositions of `n` into `k` parts is `C(n-1, k-1)`.
-
-The proof establishes a bijection between compositions of length k and (k-1)-subsets
-of `Fin (n-1)`, then uses the formula for counting subsets of a given size.
--/
-theorem card_compositions_of_length (n k : ℕ) (hn : 0 < n) (hk : 0 < k) :
-    ((Finset.univ : Finset (_root_.Composition n)).filter (fun c => c.length = k)).card
-    = Nat.choose (n - 1) (k - 1) := by
-  -- Establish bijection between {c | c.length = k} and {s | s.card = k - 1}
-  let f : {c : _root_.Composition n | c.length = k} →
-      {s : Finset (Fin (n - 1)) | s.card = k - 1} :=
-    fun ⟨c, hc⟩ => ⟨compositionToFinset n c, by
-      have h := compositionToFinset_card_add_one n hn c
-      rw [hc] at h
-      have : (compositionToFinset n c).card = k - 1 := by omega
-      exact this⟩
-
-  have hf_bij : Function.Bijective f := by
-    constructor
-    · intro ⟨c1, hc1⟩ ⟨c2, hc2⟩ heq
-      simp only [f, Subtype.mk.injEq] at heq
-      exact Subtype.ext ((compositionToFinset n).injective heq)
-    · intro ⟨s, hs⟩
-      let c := (compositionToFinset n).symm s
-      have h := compositionToFinset_card_add_one n hn c
-      simp only [c] at h ⊢
-      have heq : (compositionToFinset n) ((compositionToFinset n).symm s) = s :=
-        Equiv.apply_symm_apply _ _
-      rw [heq] at h
-      simp only [Set.mem_ofPred_eq] at hs
-      rw [hs] at h
-      have hc : ((compositionToFinset n).symm s).length = k := by omega
-      exact ⟨⟨(compositionToFinset n).symm s, hc⟩, by simp [f]⟩
-
-  -- Use the bijection to count
-  have h_card : Fintype.card {c : _root_.Composition n | c.length = k} =
-      Fintype.card {s : Finset (Fin (n - 1)) | s.card = k - 1} :=
-    Fintype.card_of_bijective hf_bij
-
-  -- Convert to Finset.card
-  rw [show ((Finset.univ : Finset (_root_.Composition n)).filter
-      (fun c => c.length = k)).card =
-      Fintype.card {c : _root_.Composition n | c.length = k} from by
-        simp [Fintype.card_subtype]]
-  rw [h_card]
-
-  -- Use powersetCard formula
-  have h_powerset : Fintype.card {s : Finset (Fin (n - 1)) | s.card = k - 1} =
-      (powersetCard (k - 1) (Finset.univ : Finset (Fin (n - 1)))).card := by
-    simp only [Fintype.card_subtype]
-    congr 1
-    ext s
-    simp [powersetCard]
-
-  rw [h_powerset, card_powersetCard, Finset.card_univ, Fintype.card_fin]
-
 end MathlibComposition
 
 namespace Composition
-
-/--
-**Theorem thm.fps.comps.num-comps-n-k**:
-For `n > 0` and `k > 0`, the number of compositions of `n` into `k` parts is `Nat.choose (n-1) (k-1)`.
-
-Note: The source text states this as `C(n-1, n-k) = C(n-1, k-1)` for `n > 0`, but
-`C(n-1, n-k)` uses integer binomial coefficients where `C(-1, -k) = 0` for `k > 0`.
-In Lean's `Nat.choose` with truncating subtraction, `Nat.choose (0-1) (0-k) = Nat.choose 0 0 = 1`,
-which is incorrect for the case `n = 0, k > 0`. Additionally, when `n > 0` and `k = 0`,
-the formula `Nat.choose (n-1) (k-1) = Nat.choose (n-1) 0 = 1`, but there are no compositions
-of `n > 0` into 0 parts (the count should be 0).
-
-Therefore, we require both `n > 0` and `k > 0`, and handle edge cases separately.
--/
-theorem card_ofSizeIntoParts_pos (n k : ℕ) (hn : 0 < n) (hk : 0 < k) :
-    Fintype.card (ofSizeIntoParts n k) = Nat.choose (n - 1) (k - 1) := by
-  -- Use the equivalence with Mathlib's filtered compositions
-  rw [Fintype.card_congr (equivMathlibFiltered n k)]
-  -- Convert to Finset.card form
-  rw [show Fintype.card {c : _root_.Composition n | c.length = k} =
-      ((Finset.univ : Finset (_root_.Composition n)).filter (fun c => c.length = k)).card from by
-        simp [Fintype.card_subtype]]
-  -- Use the existing theorem from MathlibComposition namespace
-  exact MathlibComposition.card_compositions_of_length n k hn hk
-
-/--
-For `n > 0` and `k = 0`, there are no compositions (since compositions have positive parts,
-and the sum of zero positive integers is 0, not `n`).
--/
-theorem card_ofSizeIntoParts_k_zero (n : ℕ) (hn : 0 < n) :
-    Fintype.card (ofSizeIntoParts n 0) = 0 := by
-  rw [Fintype.card_eq_zero_iff]
-  constructor
-  intro ⟨α, hsize, hlen⟩
-  simp only [len] at hlen
-  simp only [size] at hsize
-  have hα : α = [] := List.eq_nil_of_length_eq_zero hlen
-  simp [hα] at hsize
-  omega
-
-/--
-For `n = 0`, the only composition is the empty one (into 0 parts).
-There are no compositions of 0 into k > 0 parts (since all parts must be positive).
--/
-theorem card_ofSizeIntoParts_zero (k : ℕ) :
-    Fintype.card (ofSizeIntoParts 0 k) = if k = 0 then 1 else 0 := by
-  split_ifs with hk
-  · -- k = 0: the only composition is the empty list
-    subst hk
-    apply Fintype.card_eq_one_iff.mpr
-    refine ⟨⟨[], ?_⟩, ?_⟩
-    · constructor <;> rfl
-    · intro ⟨α, hα⟩
-      apply Subtype.ext
-      exact empty_of_size_zero α hα.1
-  · -- k > 0: there are no compositions
-    apply Fintype.card_eq_zero_iff.mpr
-    constructor
-    intro ⟨α, hα⟩
-    have h1 := empty_of_size_zero α hα.1
-    simp only [len, h1, List.length_nil] at hα
-    exact hk hα.2.symm
 
 /--
 The set of all compositions of `n` is finite.
@@ -530,32 +252,9 @@ The set of all compositions of `n` is finite.
 instance fintypeOfSize (n : ℕ) : Fintype (ofSize n) :=
   Fintype.ofEquiv _ (equivMathlib n).symm
 
-/--
-**Theorem thm.fps.comps.num-comps-n**:
-The number of compositions of `n` is `2^(n-1)` when `n > 0`, and `1` when `n = 0`.
-
-This is proved by establishing an equivalence with Mathlib's `Composition n` and using
-`composition_card` from Mathlib.
--/
-theorem card_ofSize (n : ℕ) :
-    Fintype.card (ofSize n) = if n = 0 then 1 else 2 ^ (n - 1) := by
-  rw [Fintype.card_congr (equivMathlib n)]
-  rw [composition_card]
-  rcases n with _ | n
-  · simp
-  · simp
-
-/--
-For `n > 0`, the number of compositions of `n` is `2^(n-1)`.
--/
-theorem card_ofSize_pos (n : ℕ) (hn : 0 < n) :
-    Fintype.card (ofSize n) = 2 ^ (n - 1) := by
-  rw [card_ofSize]
-  simp [Nat.pos_iff_ne_zero.mp hn]
-
 end Composition
-
 /-! ### Weak Compositions -/
+
 
 /--
 A weak composition is a finite tuple of nonnegative integers.
@@ -582,24 +281,7 @@ The length of a weak composition is the number of parts.
 (Definition def.fps.wcomps, part (c))
 -/
 def len (α : WeakComposition) : ℕ := α.length
-
 /-! #### Basic `@[simp]` lemmas for `size` and `len` -/
-
-/-- The size of the empty weak composition is 0. -/
-@[simp]
-theorem size_nil : size ([] : WeakComposition) = 0 := rfl
-
-/-- The length of the empty weak composition is 0. -/
-@[simp]
-theorem len_nil : len ([] : WeakComposition) = 0 := rfl
-
-/-- The size of a cons weak composition is the head value plus the tail size. -/
-@[simp]
-theorem size_cons (a : ℕ) (α : WeakComposition) : size (a :: α) = a + size α := rfl
-
-/-- The length of a cons weak composition is the tail length plus 1. -/
-@[simp]
-theorem len_cons (a : ℕ) (α : WeakComposition) : len (a :: α) = len α + 1 := rfl
 
 /--
 A weak composition of `n` is a weak composition whose size is `n`.
@@ -622,8 +304,8 @@ example : ofSizeIntoParts 6 4 :=
   ⟨[3, 0, 1, 2],
    by simp only [size, List.sum_cons, List.sum_nil]; rfl,
    rfl⟩
-
 /-! #### Function representation of weak compositions -/
+
 
 /--
 Alternative representation of weak compositions as functions `Fin k → ℕ`.
@@ -659,7 +341,7 @@ def toSym (n k : ℕ) : ofSizeIntoParts' n k → Sym (Fin k) n := fun ⟨f, hf�
     exact hf⟩
 
 /-- Helper lemma: counting in a sum of replicates. -/
-private theorem count_sum_replicate (k : ℕ) (f : Fin k → ℕ) (i : Fin k) :
+theorem count_sum_replicate (k : ℕ) (f : Fin k → ℕ) (i : Fin k) :
     Multiset.count i (∑ j : Fin k, Multiset.replicate (f j) j) = f i := by
   rw [Multiset.count_sum']
   rw [Finset.sum_eq_single i]
@@ -688,31 +370,9 @@ def equivSym (n k : ℕ) : ofSizeIntoParts' n k ≃ Sym (Fin k) n where
 instance fintype (n k : ℕ) : Fintype (ofSizeIntoParts' n k) :=
   Fintype.ofEquiv _ (equivSym n k).symm
 
-/--
-**Theorem thm.fps.comps.num-wcomps-n-k**:
-The number of weak compositions of `n` into `k` parts is `Nat.choose (n+k-1) n`.
-
-The proof uses the "stars and bars" technique: weak compositions of `n` into `k` parts
-are in bijection with multisets of size `n` from an alphabet of size `k` (i.e., `Sym (Fin k) n`),
-which are counted by `Nat.choose (n+k-1) n`.
--/
-theorem card_eq (n k : ℕ) : Fintype.card (ofSizeIntoParts' n k) = Nat.choose (n + k - 1) n := by
-  rw [Fintype.card_congr (equivSym n k)]
-  cases k with
-  | zero =>
-    simp only [Nat.add_zero]
-    cases n with
-    | zero => simp
-    | succ n => simp
-  | succ k =>
-    rw [Sym.card_sym_eq_choose]
-    congr 1
-    simp only [Fintype.card_fin]
-    omega
-
 end ofSizeIntoParts'
-
 /-! #### Equivalence between list and function representations -/
+
 
 /-- Convert a list-based weak composition to a function-based one. -/
 def toFun (α : WeakComposition) (k : ℕ) (hlen : α.len = k) : Fin k → ℕ :=
@@ -793,42 +453,8 @@ The set of all weak compositions of `n` into `k` parts is finite.
 instance fintypeOfSizeIntoParts (n k : ℕ) : Fintype (ofSizeIntoParts n k) :=
   Fintype.ofEquiv _ (ofSizeIntoParts_equiv n k).symm
 
-/--
-**Theorem thm.fps.comps.num-wcomps-n-k** (first form):
-The number of weak compositions of `n` into `k` parts is `Nat.choose (n+k-1) n`.
--/
-theorem card_ofSizeIntoParts (n k : ℕ) :
-    Fintype.card (ofSizeIntoParts n k) = Nat.choose (n + k - 1) n := by
-  rw [Fintype.card_congr (ofSizeIntoParts_equiv n k)]
-  exact ofSizeIntoParts'.card_eq n k
-
-/--
-Alternative form: for `k > 0`, the number of weak compositions of `n` into `k` parts
-is `Nat.choose (n+k-1) (k-1)`.
--/
-theorem card_ofSizeIntoParts_pos (n k : ℕ) (hk : 0 < k) :
-    Fintype.card (ofSizeIntoParts n k) = Nat.choose (n + k - 1) (k - 1) := by
-  rw [card_ofSizeIntoParts]
-  cases k with
-  | zero => omega
-  | succ k =>
-    simp only [Nat.add_sub_cancel]
-    rw [Nat.choose_symm_of_eq_add]
-    omega
-
-/--
-For `k = 0`, the only weak composition is the empty one (which has size 0).
--/
-theorem card_ofSizeIntoParts_zero (n : ℕ) :
-    Fintype.card (ofSizeIntoParts n 0) = if n = 0 then 1 else 0 := by
-  rw [card_ofSizeIntoParts]
-  simp only [Nat.add_zero]
-  cases n with
-  | zero => simp
-  | succ n => simp
-
 /-- Helper lemma: sum of list after adding 1 to each element. -/
-private theorem sum_map_add_one (lst : List ℕ) : 
+theorem sum_map_add_one (lst : List ℕ) : 
     (lst.map (fun a => a + 1)).sum = lst.sum + lst.length := by
   induction lst with
   | nil => simp
@@ -838,7 +464,7 @@ private theorem sum_map_add_one (lst : List ℕ) :
     ring
 
 /-- Helper lemma: sum of PNat values is at least the length. -/
-private theorem pnat_list_sum_ge_length (lst : List ℕ+) : 
+theorem pnat_list_sum_ge_length (lst : List ℕ+) : 
     (lst.map (·.val)).sum ≥ lst.length := by
   induction lst with
   | nil => simp
@@ -848,7 +474,7 @@ private theorem pnat_list_sum_ge_length (lst : List ℕ+) :
     omega
 
 /-- Helper lemma: sum of list after subtracting 1 from each PNat element. -/
-private theorem sum_map_sub_one (lst : List ℕ+) : 
+theorem sum_map_sub_one (lst : List ℕ+) : 
     (lst.map (fun b : ℕ+ => b.val - 1)).sum = (lst.map (·.val)).sum - lst.length := by
   induction lst with
   | nil => simp
@@ -908,8 +534,8 @@ def toComposition (n k : ℕ) :
     exact List.map_id lst
 
 end WeakComposition
-
 /-! ### Bounded Weak Compositions -/
+
 
 /--
 A weak composition of `n` into `k` parts with entries bounded by `p`
@@ -927,7 +553,6 @@ The set of bounded weak compositions is finite.
 -/
 instance fintype (n k p : ℕ) : Fintype (BoundedWeakComposition n k p) := 
   Fintype.subtype (Finset.univ.filter (fun α => (∑ i, (α i).val) = n)) (by simp)
-
 /-! #### Generating Function Approach
 
 The proof of Theorem thm.fps.comps.num-wpcomps-n-k uses generating functions.
@@ -940,6 +565,7 @@ Using binomial expansions:
 
 Convolving these gives the formula.
 -/
+
 
 /-- The generating function for bounded weak compositions. -/
 noncomputable def genFun (k p : ℕ) : PowerSeries ℤ :=
@@ -1001,7 +627,7 @@ theorem coeff_invOneSubPow (k n : ℕ) (hk : 0 < k) :
   simp only [PowerSeries.coeff_mk]
 
 /-- Coefficient of the geometric series `∑_{i<p} x^i` at `x^m`. -/
-private theorem coeff_geom_series (p m : ℕ) :
+theorem coeff_geom_series (p m : ℕ) :
     (∑ i ∈ range p, (PowerSeries.X : PowerSeries ℤ) ^ i).coeff m = if m < p then 1 else 0 := by
   simp only [map_sum, PowerSeries.coeff_X_pow]
   rw [sum_ite_eq]
@@ -1015,16 +641,16 @@ private def rangeEquivFin (k : ℕ) : {x // x ∈ range k} ≃ Fin k where
   right_inv x := by simp
 
 /-- The sum over `range k` equals the sum over `Fin k`. -/
-private theorem sum_range_eq_sum_fin (k : ℕ) (l : ℕ →₀ ℕ) :
+theorem sum_range_eq_sum_fin (k : ℕ) (l : ℕ →₀ ℕ) :
     ∑ i ∈ range k, l i = ∑ i : Fin k, l i.val := by
   rw [Fin.sum_univ_eq_sum_range (fun i => l i) k]
 
 /-- The filtered finset of bounded antidiagonals. -/
-private def boundedAntidiag (n k p : ℕ) : Finset (ℕ →₀ ℕ) :=
+def boundedAntidiag (n k p : ℕ) : Finset (ℕ →₀ ℕ) :=
   (finsuppAntidiag (range k) n).filter (fun l => ∀ i ∈ range k, l i < p)
 
 /-- Forward direction of the bijection: bounded antidiagonal → BoundedWeakComposition. -/
-private noncomputable def antidiagToBwc (n k p : ℕ) : 
+noncomputable def antidiagToBwc (n k p : ℕ) : 
     boundedAntidiag n k p → BoundedWeakComposition n k p := fun l => by
   have hl := l.prop
   simp only [boundedAntidiag, mem_filter, mem_finsuppAntidiag] at hl
@@ -1033,7 +659,7 @@ private noncomputable def antidiagToBwc (n k p : ℕ) :
     simp only [← hl.1.1, h]⟩
 
 /-- Backward direction of the bijection: BoundedWeakComposition → bounded antidiagonal. -/
-private noncomputable def bwcToAntidiag (n k p : ℕ) : 
+noncomputable def bwcToAntidiag (n k p : ℕ) : 
     BoundedWeakComposition n k p → boundedAntidiag n k p := fun α => by
   let f : ℕ → ℕ := fun i => if h : i < k then (α.val ⟨i, h⟩).val else 0
   have hf : ∀ a, f a ≠ 0 → a ∈ range k := by
@@ -1060,7 +686,7 @@ private noncomputable def bwcToAntidiag (n k p : ℕ) :
     exact (α.val ⟨i, mem_range.mp hi⟩).isLt
 
 /-- Left inverse property of the bijection. -/
-private theorem bwc_left_inv (n k p : ℕ) (α : BoundedWeakComposition n k p) : 
+theorem bwc_left_inv (n k p : ℕ) (α : BoundedWeakComposition n k p) : 
     antidiagToBwc n k p (bwcToAntidiag n k p α) = α := by
   simp only [antidiagToBwc, bwcToAntidiag]
   congr 1
@@ -1068,7 +694,7 @@ private theorem bwc_left_inv (n k p : ℕ) (α : BoundedWeakComposition n k p) :
   simp only [Finsupp.onFinset_apply, i.isLt, dite_true]
 
 /-- Right inverse property of the bijection. -/
-private theorem bwc_right_inv (n k p : ℕ) (l : boundedAntidiag n k p) : 
+theorem bwc_right_inv (n k p : ℕ) (l : boundedAntidiag n k p) : 
     bwcToAntidiag n k p (antidiagToBwc n k p l) = l := by
   have hl := l.prop
   simp only [boundedAntidiag, mem_filter, mem_finsuppAntidiag] at hl
@@ -1086,7 +712,7 @@ private theorem bwc_right_inv (n k p : ℕ) (l : boundedAntidiag n k p) :
     simp [hi, this]
 
 /-- The equivalence between bounded antidiagonals and BoundedWeakComposition. -/
-private noncomputable def bwcEquiv (n k p : ℕ) : 
+noncomputable def bwcEquiv (n k p : ℕ) : 
     boundedAntidiag n k p ≃ BoundedWeakComposition n k p where
   toFun := antidiagToBwc n k p
   invFun := bwcToAntidiag n k p
@@ -1094,7 +720,7 @@ private noncomputable def bwcEquiv (n k p : ℕ) :
   right_inv := bwc_left_inv n k p
 
 /-- The cardinality of bounded antidiagonals equals the cardinality of BoundedWeakComposition. -/
-private theorem card_boundedAntidiag_eq (n k p : ℕ) :
+theorem card_boundedAntidiag_eq (n k p : ℕ) :
     (boundedAntidiag n k p).card = Fintype.card (BoundedWeakComposition n k p) := by
   rw [← Fintype.card_coe]
   exact Fintype.card_eq.mpr ⟨bwcEquiv n k p⟩
@@ -1137,7 +763,7 @@ Using `genFun k p = (1 - X^p)^k * (1-X)^{-k}` and the convolution formula:
 Convolving gives: `[x^n] = ∑_{pj ≤ n} (-1)^j C(k,j) * C(k-1+(n-pj), k-1)`
 -/
 -- The binomial expansion of (1 - X^p)^k
-private theorem one_sub_X_pow_pow_eq (p k : ℕ) : 
+theorem one_sub_X_pow_pow_eq (p k : ℕ) : 
     (1 - (PowerSeries.X : PowerSeries ℤ) ^ p) ^ k = 
     ∑ j ∈ range (k + 1), PowerSeries.C ((-1 : ℤ) ^ j * (Nat.choose k j : ℤ)) * (PowerSeries.X : PowerSeries ℤ) ^ (p * j) := by
   conv_lhs => rw [sub_eq_add_neg, add_comm, add_pow]
@@ -1155,7 +781,7 @@ private theorem one_sub_X_pow_pow_eq (p k : ℕ) :
     _ = PowerSeries.C ((-1 : ℤ) ^ j * ↑(k.choose j)) * (PowerSeries.X ^ p) ^ j := by ring
 
 -- Coefficient of X^n in (1 - X^p)^k
-private theorem coeff_one_sub_X_pow_pow (p k n : ℕ) :
+theorem coeff_one_sub_X_pow_pow (p k n : ℕ) :
     PowerSeries.coeff (R := ℤ) n ((1 - PowerSeries.X ^ p) ^ k) = 
       ∑ j ∈ (range (k + 1)).filter (fun j => p * j = n),
         (-1 : ℤ) ^ j * (Nat.choose k j : ℤ) := by
@@ -1175,7 +801,7 @@ private theorem coeff_one_sub_X_pow_pow (p k n : ℕ) :
   rw [sum_filter]
 
 -- Helper lemma for binomial coefficient symmetry
-private theorem choose_symm_helper (n k : ℕ) (hk : 0 < k) : 
+theorem choose_symm_helper (n k : ℕ) (hk : 0 < k) : 
     (k - 1 + n).choose (k - 1) = (n + k - 1).choose n := by
   have h1 : k - 1 + n = n + (k - 1) := by omega
   have h2 : n + (k - 1) = n + k - 1 := by omega
@@ -1263,11 +889,11 @@ theorem card (n k p : ℕ) :
   exact coeff_genFun_formula n k p
 
 end BoundedWeakComposition
-
 /-! ### Binary Strings Identity -/
 
+
 /-- For f : Fin k → Fin 2, the sum of values equals the cardinality of the support (positions with value 1). -/
-private theorem sum_fin2_eq_card_support (k : ℕ) (f : Fin k → Fin 2) :
+theorem sum_fin2_eq_card_support (k : ℕ) (f : Fin k → Fin 2) :
     ∑ i, (f i).val = (Finset.univ.filter (fun i => f i = 1)).card := by
   conv_lhs =>
     arg 2
@@ -1278,12 +904,12 @@ private theorem sum_fin2_eq_card_support (k : ℕ) (f : Fin k → Fin 2) :
   rw [Finset.sum_ite, Finset.sum_const_zero, add_zero, Finset.sum_const, smul_eq_mul, mul_one]
 
 /-- Elements of Fin 2 are either 0 or 1. -/
-private theorem fin2_eq_zero_or_one (x : Fin 2) : x = 0 ∨ x = 1 := by
+theorem fin2_eq_zero_or_one (x : Fin 2) : x = 0 ∨ x = 1 := by
   rcases x with ⟨v, hv⟩
   interval_cases v <;> simp
 
 /-- Bijection between binary k-strings with n ones and n-element subsets of Fin k. -/
-private def binaryStringEquiv (k n : ℕ) :
+def binaryStringEquiv (k n : ℕ) :
     BoundedWeakComposition n k 2 ≃ {s : Finset (Fin k) // s.card = n} where
   toFun := fun ⟨f, hf⟩ => ⟨Finset.univ.filter (fun i => f i = 1), by
     rw [← hf, sum_fin2_eq_card_support]⟩
@@ -1309,53 +935,5 @@ private def binaryStringEquiv (k n : ℕ) :
     ext i
     simp only [Finset.mem_filter, Finset.mem_univ, true_and]
     split_ifs with h <;> simp [h]
-
-/--
-The cardinality of `BoundedWeakComposition n k 2` (binary k-strings with n ones) is `C(k, n)`.
-This is because choosing a binary string with n ones is equivalent to choosing which n
-of the k positions will be 1.
--/
-theorem card_boundedWeakComposition_2 (k n : ℕ) :
-    Fintype.card (BoundedWeakComposition n k 2) = Nat.choose k n := by
-  rw [Fintype.card_congr (binaryStringEquiv k n)]
-  simp only [Fintype.card_subtype, Finset.card_filter]
-  have h1 : ∑ i : Finset (Fin k), (if i.card = n then 1 else 0) =
-      (Finset.powersetCard n (Finset.univ : Finset (Fin k))).card := by
-    rw [← Finset.card_filter]
-    congr 1
-    ext s
-    simp [Finset.mem_powersetCard]
-  rw [h1, Finset.card_powersetCard, Finset.card_univ, Fintype.card_fin]
-
-/--
-**Proposition prop.fps.comps.num-w2comps-n-k-id**:
-For `n, k ∈ ℕ`, we have
-`C(k, n) = ∑_{j : 2*j ≤ n} (-1)^j * C(k,j) * C(n - 2j + k - 1, n - 2j)`.
-
-This identity arises from the special case `p = 2` of Theorem thm.fps.comps.num-wpcomps-n-k,
-where we count binary strings (k-tuples of 0s and 1s) with exactly n ones.
-
-## Proof Strategy
-
-The proof uses generating functions:
-1. Binary k-strings with n ones are counted by `C(k, n)` (choosing which n positions are 1s)
-2. By Theorem thm.fps.comps.num-wpcomps-n-k with `p = 2`, the count also equals the sum formula
-3. The generating function identity `(1+X)^k = (1-X²)^k / (1-X)^k` underlies this:
-   - `(1-X²) = (1-X)(1+X)`, so `(1-X²)^k / (1-X)^k = (1+X)^k`
-   - Coefficient of X^n in `(1+X)^k` is `C(k, n)`
-   - Coefficient of X^n in `(1-X²)^k * (1-X)^{-k}` gives the sum formula via convolution
-
-Note: The sum is restricted to `j` with `2 * j ≤ n` because when `2j > n`, the term
-contributes 0 (no valid compositions exist with negative sum).
--/
-theorem binom_sum_identity (n k : ℕ) :
-    (Nat.choose k n : ℤ) =
-      ∑ j ∈ (range (k + 1)).filter (fun j => 2 * j ≤ n),
-        (-1 : ℤ) ^ j * (Nat.choose k j) * (Nat.choose (n - 2 * j + k - 1) (n - 2 * j)) := by
-  -- The proof combines two facts:
-  -- 1. card_boundedWeakComposition_2: |BoundedWeakComposition n k 2| = C(k, n)
-  -- 2. BoundedWeakComposition.card: |BoundedWeakComposition n k 2| = RHS (via inclusion-exclusion)
-  rw [← card_boundedWeakComposition_2 k n]
-  exact BoundedWeakComposition.card n k 2
 
 end AlgebraicCombinatorics

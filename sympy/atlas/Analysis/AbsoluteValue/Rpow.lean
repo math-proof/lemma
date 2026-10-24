@@ -30,11 +30,4 @@ noncomputable def rpow (v : AbsoluteValue R ℝ) (c : ℝ) (hc₀ : 0 < c) (hc�
       _ ≤ v x ^ c + v y ^ c :=
         Real.rpow_add_le_add_rpow (AbsoluteValue.nonneg v x) (AbsoluteValue.nonneg v y)
           hc₀.le hc₁
-
-/-- Evaluation of `AbsoluteValue.rpow`. -/
-@[simp]
-theorem rpow_apply (v : AbsoluteValue R ℝ) (c : ℝ) (hc₀ : 0 < c) (hc₁ : c ≤ 1) (x : R) :
-    v.rpow c hc₀ hc₁ x = v x ^ c :=
-  rfl
-
 end AbsoluteValue

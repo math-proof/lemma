@@ -6,6 +6,53 @@ open NumberField
 open Modulus
 
 
+namespace NumberField.Modulus
+
+/--
+[RayClassCharacter.isInducedBy_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/InducedCharacter.lean)
+-/
+@[path]
+lemma RayClassCharacter.isInducedBy_iff
+  [Field K] [NumberField K]
+  {m1 m2 : Modulus K}
+  {chi2 : RayClassCharacter m2}
+  {chi1 : RayClassCharacter m1}
+-- given
+  (h : m1 ∣ m2) :
+-- imply
+  chi2.IsInducedBy chi1 h ↔ ∀ x : coprimeFractionalIdeals m2,
+    pullback chi2 x = pullback chi1 (coprimeInclusion h x) := by
+-- proof
+  constructor
+  · intro hind x
+    simp [show chi2 = chi1.comp (RayClassGroup.mapOfDvd h) from hind]
+  · intro hall
+    refine MonoidHom.ext fun q => ?_
+    obtain ⟨x, rfl⟩ := rayClassMap_surjective m2 q
+    rw [MonoidHom.comp_apply, RayClassGroup.mapOfDvd_rayClassMap,
+      ← pullback_apply, ← pullback_apply]
+    exact hall x
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
+
+/--
+[RayClassCharacter.isPrimitive_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/InducedCharacter.lean)
+-/
+@[path]
+lemma RayClassCharacter.isPrimitive_iff
+  [Field K] [NumberField K]
+  {m1 m2 : Modulus K}
+  {chi : RayClassCharacter m2} :
+-- imply
+  chi.IsPrimitive ↔ ∀ (m0 : Modulus K) (chi0 : RayClassCharacter m0)
+    (h : m0 ∣ m2), chi = chi0.comp (RayClassGroup.mapOfDvd h) → m0 = m2 :=
+-- proof
+  Iff.rfl
+
+end NumberField.Modulus
+
 /--
 [finiteExponent_le_of_dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/InducedCharacter.lean)
 -/
@@ -82,36 +129,6 @@ private lemma RayClassGroup_mapOfDvd_rayClassMap_eq
 -- proof
   apply NumberField.Modulus.RayClassGroup.mapOfDvd_rayClassMap h x
 
-/--
-[RayClassCharacter.isInducedBy_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/InducedCharacter.lean)
--/
-@[path]
-private lemma RayClassCharacter_isInducedBy_iff_eq
-  [Field K] [NumberField K]
-  {m1 m2 : Modulus K}
-  {chi2 : RayClassCharacter m2}
-  {chi1 : RayClassCharacter m1}
--- given
-  (h : m1 ∣ m2) :
--- imply
-  chi2.IsInducedBy chi1 h ↔ ∀ x : coprimeFractionalIdeals m2,
-    pullback chi2 x = pullback chi1 (coprimeInclusion h x) := by
--- proof
-  apply NumberField.Modulus.RayClassCharacter.isInducedBy_iff chi2 chi1 h
-
-/--
-[RayClassCharacter.isPrimitive_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/InducedCharacter.lean)
--/
-@[path]
-private lemma RayClassCharacter_isPrimitive_iff_eq
-  [Field K] [NumberField K]
-  {m1 m2 : Modulus K}
-  {chi : RayClassCharacter m2} :
--- imply
-  chi.IsPrimitive ↔ ∀ (m0 : Modulus K) (chi0 : RayClassCharacter m0)
-    (h : m0 ∣ m2), chi = chi0.comp (RayClassGroup.mapOfDvd h) → m0 = m2 := by
--- proof
-  apply NumberField.Modulus.RayClassCharacter.isPrimitive_iff chi
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

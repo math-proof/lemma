@@ -13,7 +13,6 @@ open scoped BigOperators Topology ENNReal NNReal
 open Metric
 
 
-
 section
 /-!
 # Mittag-Leffler theorem (prescribed principal parts on `ℂ`)

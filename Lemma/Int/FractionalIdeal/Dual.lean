@@ -9,14 +9,40 @@ open Module
 [dualSubmodule_mul_eq_div](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/FractionalIdeal/Dual.lean)
 -/
 @[path]
-private lemma dualSubmodule_mul_eq_div_eq
+lemma dualSubmodule_mul_eq_div
   [CommRing A] [IsDomain A] [Field K] [Algebra A K] [IsFractionRing A K]
   {M : Submodule A K} :
 -- imply
   LinearMap.BilinForm.dualSubmodule (LinearMap.mul K K : LinearMap.BilinForm K K) M =
     (1 : Submodule A K) / M := by
 -- proof
-  apply dualSubmodule_mul_eq_div M
+  ext x
+  simp only [LinearMap.BilinForm.mem_dualSubmodule, Submodule.mem_div_iff_forall_mul_mem,
+    LinearMap.mul_apply']
+
+/--
+[Submodule.dualEquivMulDualSubmodule_spec](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/FractionalIdeal/Dual.lean)
+-/
+@[path]
+lemma Submodule.dualEquivMulDualSubmodule_spec
+  [CommRing A] [IsDomain A] [Field K] [Algebra A K] [IsFractionRing A K]
+  {M : Submodule A K}
+  {f : Module.Dual A M}
+  {m : M}
+-- given
+  (hM : M ≠ ⊥) :
+-- imply
+  algebraMap A K (f m) = (Submodule.dualEquivMulDualSubmodule M hM f : K) * (m : K) := by
+-- proof
+  have hfun : LinearMap.BilinForm.dualSubmoduleToDual
+    (LinearMap.mul K K : LinearMap.BilinForm K K) M
+    (Submodule.dualEquivMulDualSubmodule M hM f) = f :=
+    LinearEquiv.symm_apply_apply (Submodule.dualEquivMulDualSubmodule M hM) f
+  have hcon := congrArg (fun g : Module.Dual A M => g m) hfun
+  have hmap := congrArg (algebraMap A K) hcon
+  rw [LinearMap.BilinForm.dualSubmoduleToDual_apply_apply,
+    LinearMap.BilinForm.dualSubmoduleParing_spec] at hmap
+  exact hmap.symm
 
 /--
 [Submodule.exists_mul_rep](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/FractionalIdeal/Dual.lean)
@@ -74,22 +100,6 @@ private lemma Submodule_mul_dualSubmoduleToDual_surjective_eq
   apply Submodule.mul_dualSubmoduleToDual_surjective M hM
 
 /--
-[Submodule.dualEquivMulDualSubmodule_spec](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/FractionalIdeal/Dual.lean)
--/
-@[path]
-private lemma Submodule_dualEquivMulDualSubmodule_spec_eq
-  [CommRing A] [IsDomain A] [Field K] [Algebra A K] [IsFractionRing A K]
-  {M : Submodule A K}
-  {f : Module.Dual A M}
-  {m : M}
--- given
-  (hM : M ≠ ⊥) :
--- imply
-  algebraMap A K (f m) = (Submodule.dualEquivMulDualSubmodule M hM f : K) * (m : K) := by
--- proof
-  apply Submodule.dualEquivMulDualSubmodule_spec M hM f m
-
-/--
 [FractionalIdeal.coe_inv_eq_mul_dualSubmodule](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/FractionalIdeal/Dual.lean)
 -/
 @[path]
@@ -108,3 +118,4 @@ private lemma FractionalIdeal_coe_inv_eq_mul_dualSubmodule_eq
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

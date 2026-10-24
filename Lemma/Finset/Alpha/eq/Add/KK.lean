@@ -45,4 +45,4 @@ private lemma step2
     (K x (m + 1) * hH - H x (m + 1) * hK + x (m + 1 + 1) * SubMulSHK.eq.PowNeg1_Add_1 x (m + 1))
 
 
--- created on 2020-09-26
+-- created on 2020-09-25

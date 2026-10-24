@@ -4,11 +4,13 @@ import sympy.atlas.LinearAlgebra.HurwitzTransform
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [hurwitzEntry_eq_zero_of_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/HurwitzTransform.lean)
 -/
 @[path]
-private lemma hurwitzEntry_eq_zero_of_le_eq
+lemma hurwitzEntry_eq_zero_of_le
   [CommRing R]
   {a b : ℕ → R}
   {i j : ℕ}
@@ -17,13 +19,17 @@ private lemma hurwitzEntry_eq_zero_of_le_eq
 -- imply
   hurwitzEntry a b i j = 0 := by
 -- proof
-  apply MetaMathlibExt.hurwitzEntry_eq_zero_of_le a b h
+  simp [hurwitzEntry, h]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [hurwitzEntry_of_even](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/HurwitzTransform.lean)
 -/
 @[path]
-private lemma hurwitzEntry_of_even_eq
+lemma hurwitzEntry_of_even
   [CommRing R]
   {a b : ℕ → R}
   {i j : ℕ}
@@ -33,13 +39,17 @@ private lemma hurwitzEntry_of_even_eq
 -- imply
   hurwitzEntry a b i j = a (j - i / 2) := by
 -- proof
-  apply MetaMathlibExt.hurwitzEntry_of_even a b h he
+  simp [hurwitzEntry, h, he]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [hurwitzEntry_of_odd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/HurwitzTransform.lean)
 -/
 @[path]
-private lemma hurwitzEntry_of_odd_eq
+lemma hurwitzEntry_of_odd
   [CommRing R]
   {a b : ℕ → R}
   {i j : ℕ}
@@ -49,13 +59,17 @@ private lemma hurwitzEntry_of_odd_eq
 -- imply
   hurwitzEntry a b i j = b (j - (i - 1) / 2) := by
 -- proof
-  apply MetaMathlibExt.hurwitzEntry_of_odd a b h ho
+  simp [hurwitzEntry, h, ho]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [hurwitz_half_le_of_even](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/HurwitzTransform.lean)
 -/
 @[path]
-private lemma hurwitz_half_le_of_even_eq
+lemma hurwitz_half_le_of_even
   [CommRing R]
   {i j : ℕ}
 -- given
@@ -64,13 +78,17 @@ private lemma hurwitz_half_le_of_even_eq
 -- imply
   i / 2 ≤ j := by
 -- proof
-  apply MetaMathlibExt.hurwitz_half_le_of_even h he
+  omega
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [hurwitz_pred_half_le_of_odd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/HurwitzTransform.lean)
 -/
 @[path]
-private lemma hurwitz_pred_half_le_of_odd_eq
+lemma hurwitz_pred_half_le_of_odd
   [CommRing R]
   {i j : ℕ}
 -- given
@@ -79,31 +97,46 @@ private lemma hurwitz_pred_half_le_of_odd_eq
 -- imply
   (i - 1) / 2 ≤ j := by
 -- proof
-  apply MetaMathlibExt.hurwitz_pred_half_le_of_odd h ho
+  omega
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [hurwitzTransform_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/HurwitzTransform.lean)
 -/
 @[path]
-private lemma hurwitzTransform_zero_eq
+lemma hurwitzTransform_zero
   [CommRing R]
   {a b : ℕ → R} :
 -- imply
   hurwitzTransform a b 0 = a 0 := by
 -- proof
-  apply MetaMathlibExt.hurwitzTransform_zero a b
+  unfold hurwitzTransform hurwitzMatrix
+  rw [Matrix.det_fin_one]
+  simp [Matrix.of_apply, hurwitzEntry]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [hurwitzTransform_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/HurwitzTransform.lean)
 -/
 @[path]
-private lemma hurwitzTransform_one_eq
+lemma hurwitzTransform_one
   [CommRing R]
   {a b : ℕ → R} :
 -- imply
   hurwitzTransform a b 1 = a 0 * b 1 - a 1 * b 0 := by
 -- proof
-  apply MetaMathlibExt.hurwitzTransform_one a b
+  unfold hurwitzTransform hurwitzMatrix
+  rw [Matrix.det_fin_two]
+  simp [Matrix.of_apply, hurwitzEntry]
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

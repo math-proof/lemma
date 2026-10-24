@@ -1,0 +1,29 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexPairTwoCycleCompletionHall.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexPairTwoCycleCompletionHall
+
+open StatMech.FrontierD
+
+#print axioms SixVertexHorizontalFineProfilePair
+#print axioms SixVertexHorizontalFineProfileCompletionPair
+#print axioms sixVertexHorizontalFineProfileCompletionPairArrows
+#print axioms sixVertexConfigurationPairFineProfileFiberEquivHorizontalCompletions
+#print axioms sixVertexFineProfileCompletionPairArrows_equiv
+#print axioms SixVertexHorizontalFineProfileCompletionPairTwoCycleRelated
+#print axioms SixVertexHorizontalFineProfileCompletionPairUnionEqual
+#print axioms SixVertexHorizontalFineProfileCompletionPairUnionEqual.twoCycle
+#print axioms fineProfileCompletionPairTwoCycleRelated_equiv_iff
+#print axioms SixVertexHorizontalFineProfileCompletionTwoCycleMatching
+#print axioms SixVertexHorizontalFineProfileCompletionUnionMatching
+#print axioms horizontalFineProfileCompletionTwoCycleMatching_of_unionMatching
+#print axioms horizontalFineProfileCompletionTwoCycleMatching_iff_fiberHall
+#print axioms sixVertexMarkedTraceCoefficientwiseLogConcave_of_completionMatching
+#print axioms sixVertexMarkedTraceCoefficientwiseLogConcave_of_unionMatching

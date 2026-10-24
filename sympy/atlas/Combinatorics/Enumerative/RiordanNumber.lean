@@ -14,14 +14,4 @@ Context-only interpretations, not formalized here: `jis_8247c394aad205ae41f58753
 def riordanNumber (n : Nat) : Int :=
   ∑ k ∈ Finset.range (n + 1),
     (-1 : Int) ^ (n - k) * ((n.choose k : Int) * ((catalan k : Int)))
-
-/-- Definitional equation for `riordanNumber` (concept `jis_sem_b3566ec6e9de67444c66370a`;
-closed form `jis_d7e3bdcfd9ce7889bf468982`; context only `jis_8247c394aad205ae41f58753`,
-`jis_bb01b95ccd294d34ab3af40c`, `jis_c9a7f2b9564521a0b4242141`). -/
-theorem riordanNumber_eq_sum (n : Nat) :
-    riordanNumber n =
-      ∑ k ∈ Finset.range (n + 1),
-        (-1 : Int) ^ (n - k) * ((n.choose k : Int) * ((catalan k : Int))) :=
-  rfl
-
 end MetaMathlibExt

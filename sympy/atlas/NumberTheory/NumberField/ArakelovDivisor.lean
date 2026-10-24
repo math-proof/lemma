@@ -152,25 +152,6 @@ noncomputable def ArakelovDivisor.sizeHom :
     ArakelovDivisor K →* { r : ℝ // 0 < r } :=
   ArakelovDivisor.archHom K / ArakelovDivisor.idealHom K
 
-/-- The size homomorphism unfolds to the quotient of its two factors. -/
-@[simp]
-theorem ArakelovDivisor.sizeHom_apply (D : ArakelovDivisor K) :
-    ArakelovDivisor.sizeHom K D =
-      ArakelovDivisor.archHom K D / ArakelovDivisor.idealHom K D :=
-  rfl
-
-/-- Coercion of the size homomorphism to the reals. -/
-theorem ArakelovDivisor.sizeHom_coe (D : ArakelovDivisor K) :
-    (ArakelovDivisor.sizeHom K D : ℝ) =
-      (∏ w : InfinitePlace K, (D.2 w : ℝ) ^ w.mult) /
-        ((FractionalIdeal.absNorm (D.1 : FractionalIdeal (𝓞 K)⁰ K) : ℚ) : ℝ) := by
-  rw [ArakelovDivisor.sizeHom_apply,
-    show (ArakelovDivisor.archHom K) D = ArakelovDivisor.archimedeanFactor K D from rfl,
-    show (ArakelovDivisor.idealHom K) D = ArakelovDivisor.idealNorm K D from rfl,
-    div_eq_mul_inv, Positive.val_mul, Positive.coe_inv,
-    ArakelovDivisor.archimedeanFactor_coe, ArakelovDivisor.idealNorm_coe,
-    (div_eq_mul_inv _ _).symm]
-
 /-- The section set of an Arakelov divisor: the elements of the finite (ideal)
 component bounded by the ordinary archimedean radii at every infinite place.
 Complex-place bounds are ordinary (unsquared) radii; the `w.mult = 2` squaring
@@ -178,48 +159,6 @@ enters only in the size homomorphism. -/
 noncomputable def ArakelovDivisor.sectionSet (D : ArakelovDivisor K) : Set K :=
   { x | x ∈ (D.1 : FractionalIdeal (𝓞 K)⁰ K) ∧
     ∀ w : InfinitePlace K, w x ≤ (D.2 w : ℝ) }
-
-/-- Membership in a section set unfolds to the ideal membership plus the
-archimedean bounds. -/
-@[simp]
-theorem ArakelovDivisor.mem_sectionSet (D : ArakelovDivisor K) (x : K) :
-    x ∈ D.sectionSet ↔
-      x ∈ (D.1 : FractionalIdeal (𝓞 K)⁰ K) ∧
-        ∀ w : InfinitePlace K, w x ≤ (D.2 w : ℝ) :=
-  Iff.rfl
-
-/-- Every section set of an Arakelov divisor is finite. Clearing denominators by a
-nonzero element of `𝓞 K` lands in the ring of integers, and the ordinary-radius
-archimedean bounds transfer to uniform bounds on all complex embeddings, so
-`NumberField.Embeddings.finite_of_norm_le` applies. -/
-theorem ArakelovDivisor.sectionSet_finite (D : ArakelovDivisor K) :
-    D.sectionSet.Finite := by
-  obtain ⟨d, hd_mem, hden⟩ := (D.1 : FractionalIdeal (𝓞 K)⁰ K).isFractional
-  have hd_ne : d ≠ 0 := mem_nonZeroDivisors_iff_ne_zero.mp hd_mem
-  have hc_ne : algebraMap (𝓞 K) K d ≠ 0 := RingOfIntegers.coe_ne_zero_iff.mpr hd_ne
-  obtain ⟨w₀, hw₀⟩ := Set.exists_upper_bound_image Set.univ
-    (fun w : InfinitePlace K => ((D.2 w : ℝ))) Set.finite_univ
-  obtain ⟨φ₀, hφ₀⟩ := Set.exists_upper_bound_image Set.univ
-    (fun φ : K →+* ℂ => ‖φ (algebraMap (𝓞 K) K d)‖) Set.finite_univ
-  refine Set.Finite.of_finite_image (f := fun x => algebraMap (𝓞 K) K d * x)
-    ((NumberField.Embeddings.finite_of_norm_le K ℂ
-      (‖φ₀ (algebraMap (𝓞 K) K d)‖ * ((D.2 w₀ : ℝ)))).subset ?_)
-    (mul_right_injective₀ hc_ne).injOn
-  intro y hy
-  simp only [Set.mem_image] at hy
-  obtain ⟨x, hx, rfl⟩ := hy
-  rw [ArakelovDivisor.mem_sectionSet] at hx
-  obtain ⟨hxI, hxb⟩ := hx
-  refine ⟨?_, fun φ => ?_⟩
-  · obtain ⟨z, hz⟩ := hden x (FractionalIdeal.mem_coe.mpr hxI)
-    rw [Algebra.smul_def] at hz
-    exact hz ▸ RingOfIntegers.isIntegral_coe z
-  · have hφx : ‖φ x‖ ≤ ((D.2 w₀ : ℝ)) := by
-      have h1 : (InfinitePlace.mk φ) x = ‖φ x‖ := rfl
-      rw [← h1]
-      exact le_trans (hxb (InfinitePlace.mk φ)) (hw₀ _ (Set.mem_univ _))
-    rw [map_mul, norm_mul]
-    exact mul_le_mul (hφ₀ _ (Set.mem_univ _)) hφx (norm_nonneg _) (norm_nonneg _)
 
 /-- The archimedean component of the principal divisor of a unit. -/
 noncomputable def principalArch (x : Kˣ) : InfinitePlace K → { r : ℝ // 0 < r } :=
@@ -229,18 +168,6 @@ noncomputable def principalArch (x : Kˣ) : InfinitePlace K → { r : ℝ // 0 <
 with the archimedean absolute values. -/
 noncomputable def principalDivisor (x : Kˣ) : ArakelovDivisor K :=
   (toPrincipalIdeal (𝓞 K) K x, principalArch K x)
-
-/-- Coercion of the infinite component of a principal divisor. -/
-@[simp]
-theorem coe_principalDivisor_snd (x : Kˣ) (w : InfinitePlace K) :
-    (((principalDivisor K x).2 w : { r : ℝ // 0 < r }) : ℝ) = w (x : K) :=
-  rfl
-
-/-- The finite component of a principal divisor is the principal fractional ideal. -/
-theorem coe_principalDivisor_fst (x : Kˣ) :
-    ((principalDivisor K x).1 : FractionalIdeal (𝓞 K)⁰ K) =
-      FractionalIdeal.spanSingleton (𝓞 K)⁰ (x : K) :=
-  coe_toPrincipalIdeal x
 
 /-- The principal-divisor homomorphism from units of `K`. -/
 noncomputable def principalHom : Kˣ →* ArakelovDivisor K where
@@ -270,32 +197,4 @@ noncomputable def principalSubgroup : Subgroup (ArakelovDivisor K) := (principal
 
 /-- The degree-zero subgroup: the kernel of the size homomorphism. -/
 noncomputable def degreeZero : Subgroup (ArakelovDivisor K) := (ArakelovDivisor.sizeHom K).ker
-
-/-- Every principal divisor has size one. This is Mathlib's number-field product
-formula: the archimedean factor is `|Algebra.norm ℚ x|` by
-`NumberField.InfinitePlace.prod_eq_abs_norm`, and the ideal norm of the principal
-ideal is the same value by `FractionalIdeal.absNorm_span_singleton`. -/
-theorem size_principal (x : Kˣ) : ArakelovDivisor.sizeHom K (principalHom K x) = 1 := by
-  have hmap : principalHom K x = principalDivisor K x := rfl
-  rw [hmap]
-  apply Subtype.ext
-  show ((ArakelovDivisor.sizeHom K (principalDivisor K x) : { r : ℝ // 0 < r }) : ℝ) =
-    ((1 : { r : ℝ // 0 < r }) : ℝ)
-  rw [ArakelovDivisor.sizeHom_coe, Positive.val_one, coe_principalDivisor_fst,
-    FractionalIdeal.absNorm_span_singleton]
-  have hprod := InfinitePlace.prod_eq_abs_norm (K := K) (x : K)
-  simp only [coe_principalDivisor_snd] at hprod ⊢
-  rw [← hprod]
-  apply div_self
-  apply ne_of_gt
-  apply Finset.prod_pos
-  intro w _
-  apply pow_pos
-  exact InfinitePlace.pos_iff.mpr (Units.ne_zero x)
-
-/-- The principal subgroup is contained in the degree-zero subgroup. -/
-theorem principalSubgroup_le_degreeZero : principalSubgroup K ≤ degreeZero K := by
-  rw [principalSubgroup, degreeZero, MonoidHom.range_le_ker_iff]
-  exact MonoidHom.ext fun x => size_principal K x
-
 end NumberField

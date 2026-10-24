@@ -5,6 +5,7 @@ Author: @toskua, Avocado
 -/
 
 import sympy.atlas.NumberTheory.NumberField.Idele
+import Lemma.Nat.NumberField.Idele
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Push
@@ -135,69 +136,7 @@ noncomputable def adelicNorm : TopologicalIdeleGroup (𝓞 K) K →* ℝ :=
       rw [hinf, hfin]
       ring }
 
-/-- Evaluation of the adelic norm of an idele. -/
-theorem adelicNorm_apply (a : TopologicalIdeleGroup (𝓞 K) K) :
-    adelicNorm K a =
-      (∏ w : InfinitePlace K, ‖(a.1 w : w.Completion)‖ ^ w.mult) *
-        ∏ᶠ v : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
-          ‖(a.2 v : v.adicCompletion K)‖ := rfl
-
 /-- Norm-one ideles: kernel of the adelic norm. -/
 def normOneIdeles : Subgroup (TopologicalIdeleGroup (𝓞 K) K) :=
   (adelicNorm K).ker
-
-/-- Membership in the norm-one ideles. -/
-@[simp]
-theorem mem_normOneIdeles {a : TopologicalIdeleGroup (𝓞 K) K} :
-    a ∈ normOneIdeles K ↔ adelicNorm K a = 1 :=
-  MonoidHom.mem_ker
-
-/-- The adelic norm of a principal idele is one (product formula). -/
-@[simp]
-theorem adelicNorm_principalEmbedding (x : Kˣ) :
-    adelicNorm K (principalEmbedding (𝓞 K) K x) = 1 := by
-  rw [adelicNorm_apply, principalEmbedding_fst, principalEmbedding_snd]
-  have hinf : (∏ w : NumberField.InfinitePlace K,
-        ‖((infinitePrincipalEmbedding K x w : w.Completion))‖ ^ w.mult) =
-      ∏ w : NumberField.InfinitePlace K, w ((x : K)) ^ w.mult := by
-    apply Finset.prod_congr rfl
-    intro w _
-    rw [infinitePrincipalEmbedding_apply, Units.coe_map]
-    change ‖algebraMap K w.Completion (x : K)‖ ^ w.mult = w (x : K) ^ w.mult
-    have hco : algebraMap K w.Completion ((x : K)) =
-        ((WithAbs.equiv w.1).symm ((x : K)) : w.Completion) := rfl
-    rw [hco, NumberField.InfinitePlace.Completion.norm_coe]
-    simp
-  have hpt : ∀ v : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
-      ‖((finitePrincipalEmbedding (𝓞 K) K x v :
-        v.adicCompletion K))‖ =
-        (NumberField.FinitePlace.equivHeightOneSpectrum.symm v) ((x : K)) := by
-    intro v
-    rw [finitePrincipalEmbedding_apply, Units.coe_map]
-    exact (NumberField.FinitePlace.equivHeightOneSpectrum_symm_apply
-      v ((x : K))).symm
-  have hfun : (fun v : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
-        ‖((finitePrincipalEmbedding (𝓞 K) K x v :
-          v.adicCompletion K))‖) =
-      (fun v => (NumberField.FinitePlace.equivHeightOneSpectrum.symm v)
-        ((x : K))) := funext hpt
-  have hfin : (∏ᶠ v : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
-        ‖((finitePrincipalEmbedding (𝓞 K) K x v :
-          v.adicCompletion K))‖) =
-      ∏ᶠ w : NumberField.FinitePlace K, w ((x : K)) := by
-    rw [hfun]
-    exact @finprod_comp_equiv (IsDedekindDomain.HeightOneSpectrum (𝓞 K))
-      (NumberField.FinitePlace K) ℝ _
-      NumberField.FinitePlace.equivHeightOneSpectrum.symm
-      (f := fun w => w ((x : K)))
-  rw [hinf, hfin]
-  exact NumberField.prod_abs_eq_one (Units.ne_zero x)
-
-/-- Every principal idele has adelic norm one. -/
-theorem principalIdeles_le_normOneIdeles :
-    principalIdeles (𝓞 K) K ≤ normOneIdeles K := by
-  intro a ha
-  obtain ⟨x, rfl⟩ := ha
-  rw [mem_normOneIdeles, adelicNorm_principalEmbedding]
-
 end NumberField.TopologicalIdeleGroup

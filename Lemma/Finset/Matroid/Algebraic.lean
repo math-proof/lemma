@@ -4,32 +4,41 @@ import sympy.atlas.Combinatorics.Matroid.Algebraic
 open Matroid
 
 
+namespace Matroid
+
 /--
 [AlgebraicRepresentation.toIsAlgebraicOver](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Matroid/Algebraic.lean)
 -/
 @[path]
-private lemma AlgebraicRepresentation_toIsAlgebraicOver_eq
+lemma AlgebraicRepresentation.toIsAlgebraicOver
   {K : Type u} [Field K]
   {E : Type v}
   {M : Matroid E}
   {self : AlgebraicRepresentation.{u, v, max u v} K M} :
 -- imply
-  IsAlgebraicOver K M := by
+  IsAlgebraicOver K M :=
 -- proof
-  apply Matroid.AlgebraicRepresentation.toIsAlgebraicOver self
+  ⟨self⟩
+
+end Matroid
+
+namespace Matroid
 
 /--
 [AlgebraicRepresentationSomeField.toIsAlgebraic](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Matroid/Algebraic.lean)
 -/
 @[path]
-private lemma AlgebraicRepresentationSomeField_toIsAlgebraic_eq
+lemma AlgebraicRepresentationSomeField.toIsAlgebraic
   {E : Type v}
   {M : Matroid E}
   {self : AlgebraicRepresentationSomeField M} :
 -- imply
-  IsAlgebraic M := by
+  IsAlgebraic M :=
 -- proof
-  apply Matroid.AlgebraicRepresentationSomeField.toIsAlgebraic self
+  ⟨self⟩
+
+end Matroid
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

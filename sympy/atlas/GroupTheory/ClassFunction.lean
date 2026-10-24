@@ -35,27 +35,6 @@ def classFunctions (G : Type*) [Group G] (k : Type*) [Field k] :
   smul_mem' := fun c f hf a b => by simp only [Pi.smul_apply, hf a b]
 
 /--
-Characters of finite-dimensional representations are class functions.
-
-Sources: `undergrad.yaml`, section "Representation theory of finite groups",
-entry "class function over a group"; J.-P. Serre, Linear Representations of
-Finite Groups, GTM 42, §2.1 (the character is constant on conjugacy classes).
--/
-theorem character_isClassFunction {G k : Type*} [Group G] [Field k]
-    (V : FDRep k G) : IsClassFunction V.character :=
-  fun g h => FDRep.char_conj V g h
-
-private theorem classFunction_eq_of_isConj {G k : Type*} [Group G]
-    {f : G → k} (hf : IsClassFunction f) {x y : G} (hxy : IsConj x y) : f x = f y := by
-  obtain ⟨h, rfl⟩ := isConj_iff.mp hxy
-  exact (hf x h).symm
-
-/-- A class function takes equal values on conjugate elements. -/
-theorem IsClassFunction.eq_of_isConj {G k : Type*} [Group G]
-    {f : G → k} (hf : IsClassFunction f) {x y : G} (hxy : IsConj x y) : f x = f y :=
-  classFunction_eq_of_isConj hf hxy
-
-/--
 A function is a class function iff it factors through the quotient onto
 conjugacy classes.
 
@@ -109,45 +88,4 @@ def classFunctionsEquivConjClasses (G : Type*) [Group G] (k : Type*) [Field k] :
     refine Quotient.inductionOn c ?_
     intro x
     rfl
-
-/-- Descending a class function and evaluating on its conjugacy class recovers its value. -/
-@[simp]
-theorem classFunctionsEquivConjClasses_apply_mk {G k : Type*} [Group G] [Field k]
-    (f : classFunctions G k) (x : G) :
-    classFunctionsEquivConjClasses G k f (ConjClasses.mk x) = (f : G → k) x :=
-  rfl
-
-/-- Lifting a function on conjugacy classes evaluates by the quotient map. -/
-@[simp]
-theorem classFunctionsEquivConjClasses_symm_apply {G k : Type*} [Group G] [Field k]
-    (q : ConjClasses G → k) (x : G) :
-    (↑((classFunctionsEquivConjClasses G k).symm q) : G → k) x = q (ConjClasses.mk x) :=
-  rfl
-
-/--
-The space of class functions has dimension equal to the number of conjugacy
-classes.
-
-Sources: `undergrad.yaml`, section "Representation theory of finite groups",
-entry "class function over a group"; J.-P. Serre, Linear Representations of
-Finite Groups, GTM 42, §2.7, Theorem 6 (dimension count for class functions).
-
-Proves `Wanted` entry `finrank_classFunctions_eq_card_conjClasses`.
-
-Proof: Use `classFunctionsEquivConjClasses` and
-`Module.finrank_fintype_fun_eq_card`, after obtaining a finite quotient from
-`ConjClasses.mk_surjective`.
--/
-theorem finrank_classFunctions_eq_card_conjClasses (G : Type*)
-    [Group G] [Fintype G] (k : Type*) [Field k] :
-    Module.finrank k ↥(classFunctions G k) = Nat.card (ConjClasses G) := by
-  classical
-  let _ : Fintype (ConjClasses G) :=
-    Fintype.ofSurjective ConjClasses.mk ConjClasses.mk_surjective
-  calc
-    Module.finrank k ↥(classFunctions G k) = Module.finrank k (ConjClasses G → k) :=
-      (classFunctionsEquivConjClasses G k).finrank_eq
-    _ = Fintype.card (ConjClasses G) := Module.finrank_fintype_fun_eq_card k
-    _ = Nat.card (ConjClasses G) := Fintype.card_eq_nat_card
-
 end MathlibExt.GroupTheory.ClassFunctionWanted

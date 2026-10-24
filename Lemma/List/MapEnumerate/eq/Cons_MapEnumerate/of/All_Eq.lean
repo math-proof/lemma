@@ -4,7 +4,7 @@ import Lemma.List.GetElemEnumerate.eq.Some.of.GtLength
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Fin.Eq.of.Val
 import Lemma.Nat.EqCast_1'1
-open List Nat Fin
+open List Nat Fin Set
 
 
 @[path]

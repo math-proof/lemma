@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings
 import Lemma.Nat.Cells.of.Ge1Cell2Add1.Ge1Add1.Domino
 import Lemma.Nat.DominoTilings.horizontalPair_of_not_hasVerticalFirstColumn
 import Lemma.Nat.DominoTilings.horizontal_1_1_cells

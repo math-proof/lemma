@@ -1,0 +1,27 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicBoundaryRadialCellRegularity.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialCellRegularity
+
+#print axioms StatMech.Universality.isingProj_div_real
+#print axioms StatMech.Universality.projectionCycle_crossParity_norm_div_sub_div_le
+#print axioms StatMech.Universality.complexBilinearCell_norm_sub_le_of_cycle_edges
+#print axioms
+  StatMech.Universality.finiteRadialGridInterpolant_cellPoint_norm_sub_le_of_cycle_edges
+#print axioms StatMech.Universality.cellPoint_norm_sub_sq_le_of_coordinate_l1
+#print axioms StatMech.Universality.halfScale_cellHolderCoefficient_eq
+#print axioms StatMech.Universality.fkIsingSquareBoundaryRadialPatchFullObservable_even_cell_edges_le
+#print axioms StatMech.Universality.fkIsingSquareBoundaryRadialPatchFullObservable_odd_cell_edges_le
+#print axioms StatMech.Universality.fkIsingSquareBoundaryRadialPatchFullObservable_cell_edges_le
+#print axioms StatMech.Universality.fkIsingSquareBoundaryRadialPatchPhysicalNormalizedWindow_cell_edges_halfScale
+#print axioms
+  StatMech.Universality.fkIsingSquareBoundaryRadialPatchPhysicalNormalizedWindow_tensorTent_cell_norm_sub_le
+#print axioms
+  StatMech.Universality.fkIsingSquareBoundaryRadialPatchPhysicalNormalizedWindow_tensorTent_cell_holderHalf_sq

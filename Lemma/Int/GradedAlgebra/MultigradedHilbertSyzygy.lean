@@ -5,6 +5,19 @@ open CategoryTheory MvPolynomial
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
+/--
+[mgsyz_phiToN_ker](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedHilbertSyzygy.lean)
+-/
+@[path]
+private lemma mgsyz_phiToN_ker (K : Type u) [Field K] (n : ℕ)
+  (S : mgsyz_Stage K n) :
+  LinearMap.ker (mgsyz_phiToN K n S) = LinearMap.ker (mgsyz_phi (K := K) n S) :=
+LinearMap.ker_codRestrict _ _ _
+
+end MetaMathlibExt
+
 /--
 [exists_finite_multigraded_free_resolution](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedHilbertSyzygy.lean)
 -/
@@ -26,3 +39,4 @@ private lemma exists_finite_multigraded_free_resolution_eq
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

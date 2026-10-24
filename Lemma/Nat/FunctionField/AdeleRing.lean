@@ -5,33 +5,42 @@ open scoped RestrictedProduct
 open FunctionFieldAdeleRing
 
 
+namespace FunctionFieldAdeleRing
+
 /--
 [ext](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FunctionField/AdeleRing.lean)
 -/
 @[path]
-private lemma ext_eq
+lemma ext
   [Field F]
   {O : P → ValuationSubring F}
   {a b : FunctionFieldAdeleRing F P O}
 -- given
   (h : ∀ p, a p = b p) :
 -- imply
-  a = b := by
+  a = b :=
 -- proof
-  apply FunctionFieldAdeleRing.ext h
+  Subtype.ext <| funext h
+
+end FunctionFieldAdeleRing
+
+namespace FunctionFieldAdeleRing
 
 /--
 [mem_valuationSubring_cofinitely](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FunctionField/AdeleRing.lean)
 -/
 @[path]
-private lemma mem_valuationSubring_cofinitely_eq
+lemma mem_valuationSubring_cofinitely
   [Field F]
   {O : P → ValuationSubring F}
   {a : FunctionFieldAdeleRing F P O} :
 -- imply
-  ∀ᶠ p in Filter.cofinite, a p ∈ O p := by
+  ∀ᶠ p in Filter.cofinite, a p ∈ O p :=
 -- proof
-  apply FunctionFieldAdeleRing.mem_valuationSubring_cofinitely a
+  a.2
+
+end FunctionFieldAdeleRing
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

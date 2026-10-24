@@ -30,11 +30,4 @@ noncomputable def qrDowlingPolynomial (W : ℕ → ℕ → R) (n : ℕ) : Polyno
 /-- The `(q, r)`-Dowling number is the associated polynomial evaluated at `1`. -/
 noncomputable def qrDowlingNumber (W : ℕ → ℕ → R) (n : ℕ) : R :=
   Polynomial.eval 1 (qrDowlingPolynomial W n)
-
-/-- A `(q, r)`-Dowling number is the sum of its Whitney coefficients. -/
-theorem qrDowlingNumber_eq_sum (W : ℕ → ℕ → R) (n : ℕ) :
-    qrDowlingNumber W n = ∑ k ∈ Finset.range (n + 1), W n k := by
-  rw [qrDowlingNumber, qrDowlingPolynomial, Polynomial.eval_finsetSum]
-  simp
-
 end MetaMathlibExt

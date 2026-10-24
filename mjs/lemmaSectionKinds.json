@@ -1,33 +1,5 @@
 [
   {
-    "resolved": "Fin",
-    "reason": "Mathlib `Fin` is a structure",
-    "kind": "data type",
-    "folder": "Fin",
-    "decl": "structure"
-  },
-  {
-    "resolved": "Polynomial",
-    "reason": "Mathlib `Polynomial` is a structure",
-    "kind": "data type",
-    "folder": "Polynomial",
-    "decl": "structure"
-  },
-  {
-    "resolved": "MvPolynomial",
-    "reason": "Mathlib `MvPolynomial` is a def of a type former",
-    "kind": "data type",
-    "folder": "MvPolynomial",
-    "decl": "def-type"
-  },
-  {
-    "resolved": "Submodule",
-    "reason": "Mathlib `Submodule` is a structure",
-    "kind": "data type",
-    "folder": "Submodule",
-    "decl": "structure"
-  },
-  {
     "resolved": "Int",
     "reason": "Mathlib `Int` is an inductive (not a class)",
     "kind": "data type",
@@ -35,38 +7,17 @@
     "decl": "inductive"
   },
   {
-    "resolved": "Finset",
-    "reason": "Mathlib `Finset` is a structure",
+    "resolved": "Fin",
+    "reason": "Mathlib `Fin` is a structure",
     "kind": "data type",
-    "folder": "Finset",
+    "folder": "Fin",
     "decl": "structure"
   },
   {
-    "resolved": "Rat",
-    "reason": "Mathlib `Rat` is a structure",
+    "resolved": "Matrix",
+    "reason": "Mathlib `Matrix` is a def of a type former",
     "kind": "data type",
-    "folder": "Rat",
-    "decl": "structure"
-  },
-  {
-    "resolved": "Nat",
-    "reason": "Mathlib `Nat` is an inductive (not a class)",
-    "kind": "data type",
-    "folder": "Nat",
-    "decl": "inductive"
-  },
-  {
-    "resolved": "Real",
-    "reason": "Mathlib `Real` is a structure",
-    "kind": "data type",
-    "folder": "Real",
-    "decl": "structure"
-  },
-  {
-    "resolved": "Set",
-    "reason": "Mathlib `Set` is a def of a type former",
-    "kind": "data type",
-    "folder": "Set",
+    "folder": "Matrix",
     "decl": "def-type"
   },
   {
@@ -77,10 +28,17 @@
     "decl": "def-type"
   },
   {
-    "resolved": "Matrix",
-    "reason": "Mathlib `Matrix` is a def of a type former",
+    "resolved": "Subgroup",
+    "reason": "Mathlib `Subgroup` is a structure",
     "kind": "data type",
-    "folder": "Matrix",
+    "folder": "Subgroup",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Representation",
+    "reason": "Mathlib `Representation` is a def of a type former",
+    "kind": "data type",
+    "folder": "Representation",
     "decl": "def-type"
   }
 ]

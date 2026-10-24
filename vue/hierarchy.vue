@@ -13,15 +13,16 @@ import hierarchyModule from "./hierarchyModule.vue";
 
 console.log('import hierarchy.vue');
 
-const props = defineProps(['module', 'graph', 'traceback', 'keyInput']);
+const props = defineProps(['module', 'graph', 'traceback', 'keyInput', 'deep']);
 
 const self = new Vue({
 	props,
 
 	data() {
 		return {
-			// Shared across all hierarchyModule nodes (via $parent walk); first mention keeps
-			// link + subtree; later non-leaf mentions get link + »»» (no nested); leaf dups stay plain link.
+			// Shared across all hierarchyModule nodes (via $parent walk); first mention can
+			// auto-expand; later mentions start collapsed but »»» still expands in place;
+			// leaf dups stay plain link.
 			_hierarchySeen: new Set(),
 		};
 	},
@@ -32,6 +33,15 @@ const self = new Vue({
 
 	computed: {
 		deep() {
+			// Prefer createApp prop (PHP $_GET['deep'] / Node query.deep).
+			var p = this.$props && this.$props.deep;
+			if (p === true || p === 1 || p === '1' || p === 'true')
+				return true;
+			// Query string (same shape links emit: &deep=1).
+			var q = new URLSearchParams(location.search).get('deep');
+			if (q === '1' || q === 'true')
+				return true;
+			// Transitional fallback for old #deep bookmarks.
 			var hash = location.hash;
 			if (hash){
 				hash = hash.slice(1);

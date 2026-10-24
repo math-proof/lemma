@@ -4,31 +4,40 @@ import sympy.atlas.NumberTheory.Composite
 open Nat
 
 
+namespace Nat
+
 /--
 [IsComposite.one_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Composite.lean)
 -/
 @[path]
-private lemma IsComposite_one_lt_eq
+lemma IsComposite.one_lt
   {n : ℕ}
 -- given
   (h : n.IsComposite) :
 -- imply
-  1 < n := by
+  1 < n :=
 -- proof
-  apply Nat.IsComposite.one_lt h
+  h.1
+
+end Nat
+
+namespace Nat
 
 /--
 [IsComposite.not_prime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Composite.lean)
 -/
 @[path]
-private lemma IsComposite_not_prime_eq
+lemma IsComposite.not_prime
   {n : ℕ}
 -- given
   (h : n.IsComposite) :
 -- imply
-  ¬ n.Prime := by
+  ¬ n.Prime :=
 -- proof
-  apply Nat.IsComposite.not_prime h
+  h.2
+
+end Nat
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

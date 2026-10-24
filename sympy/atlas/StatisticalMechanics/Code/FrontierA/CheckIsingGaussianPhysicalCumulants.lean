@@ -1,0 +1,29 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckIsingGaussianPhysicalCumulants.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianPhysicalCumulants
+
+#print axioms StatMech.FrontierA.hasScalarMomentCumulantRecurrence_cumulantsOfMoments
+#print axioms StatMech.FrontierA.scalarCumulantsOfMoments_eq_of_recurrence
+#print axioms StatMech.FrontierA.scalarCumulantsOfMoments_four_of_symmetric
+#print axioms StatMech.FrontierA.scalarCumulantsOfMoments_odd
+#print axioms StatMech.FrontierA.scalarCumulantsOfMoments_scale
+#print axioms StatMech.FrontierA.iteratedDeriv_zero_of_even_of_odd
+#print axioms StatMech.FrontierA.PhysicalIsing.finiteIsingWeightedRawMoment_odd
+#print axioms StatMech.FrontierA.PhysicalIsing.finiteIsingWeighted_hasScalarMomentCumulantRecurrence
+#print axioms StatMech.FrontierA.PhysicalIsing.finiteIsingWeightedCumulant_odd
+#print axioms StatMech.FrontierA.PhysicalIsing.finiteIsingWeighted_scaledCumulants
+#print axioms StatMech.FrontierA.PhysicalIsing.finiteIsingWeightedCumulant_two_eq_parity
+#print axioms StatMech.FrontierA.PhysicalIsing.finiteIsingWeightedCumulant_four_eq_parity
+#print axioms StatMech.FrontierA.PhysicalIsing.criticalFiniteBoxWeightedNormalizedFourthCumulant_eq_scaled
+#print axioms StatMech.FrontierA.PhysicalIsing.exists_criticalFiniteBoxWeightedFourthScale
+#print axioms StatMech.FrontierA.PhysicalIsing.exists_criticalFiniteBoxWeightedNormalizedFourthCumulant_eq_scaled
+#print axioms StatMech.FrontierA.PhysicalIsing.criticalFiniteBoxWeightedScaledFourthCumulant_tendsto_zero
+#print axioms StatMech.FrontierA.PhysicalIsing.criticalFiniteBoxWeightedScaledCumulant_four_tendsto_zero

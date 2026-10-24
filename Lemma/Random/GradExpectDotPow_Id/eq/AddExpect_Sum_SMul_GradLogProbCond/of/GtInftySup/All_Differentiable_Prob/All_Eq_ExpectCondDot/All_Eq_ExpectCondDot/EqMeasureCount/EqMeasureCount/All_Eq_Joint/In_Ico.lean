@@ -291,7 +291,7 @@ private lemma integral_finset_smul_score_eq_of_ae
   exact congrArg ((γ ^ t * Q t (s t ω) (a t ω)) • ·) (hω t)
 
 /--
-Finite-horizon policy gradient: for every `n`,
+Empty.Finite-horizon policy gradient: for every `n`,
 `∇[θ] 𝔼[r]((γ ^ (id : ℕ → ℕ)) @ r) =
   𝔼[s, a](∑ t < n, γ ^ t * Q(s[t], a[t]) • ∇[θ] (log ℙ[M θ](a[t] | s[t]))) +
     γ ^ n • 𝔼[s](∇[θ] (V(s[n])))`.

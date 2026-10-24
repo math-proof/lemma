@@ -10,7 +10,7 @@ This file proves that the Fourier integral associated to a continuous additive c
 sigma-finite translation-invariant measure turns convolution into pointwise multiplication.
 -/
 
-namespace Fourier.ConvolutionTheorem
+namespace Measure.Eq_MulFourierSIntegral.of.Integrable.Integrable.All_MeasurePreserving_Add.Continuous
 
 open MeasureTheory
 open scoped Convolution
@@ -122,4 +122,4 @@ theorem convolution_theorem {e : AddChar ℝ Circle}
       convThm_fourier_convolution_eq_double_integral he hinv hf hg w
     _ = _ := convThm_double_integral_eq_product f g w
 
-end Fourier.ConvolutionTheorem
+end Measure.Eq_MulFourierSIntegral.of.Integrable.Integrable.All_MeasurePreserving_Add.Continuous

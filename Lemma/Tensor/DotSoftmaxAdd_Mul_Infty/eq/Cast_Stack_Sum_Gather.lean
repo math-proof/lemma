@@ -6,8 +6,6 @@ set_option maxHeartbeats 1000000
 private lemma sc_ext {x y : ℝ} (h : x = y) : (x : Tensor ℝ []) = (y : Tensor ℝ []) := by rw [h]
 
 
-
-
 /--
 Gathered form of one row of a hyperreal masked softmax times a value matrix.
 The unmasked entries \( \{ j : P_{ij} \} \) of row \( i \) are enumerated (injectively) by \( \operatorname{dm} : [0, k) \to [0, n) \)

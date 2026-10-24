@@ -808,7 +808,6 @@ private theorem entry17_aux (a b m nu x : ℝ)
   rw [hval, hT2, hT1, hDiff, hfin]
 
 
-
 section
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6

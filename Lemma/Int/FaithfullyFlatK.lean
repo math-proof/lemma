@@ -1,24 +1,30 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u v w
 
 /--
 [Subalgebra_faithfullyFlat_of_directed_of_forall_faithfullyFlat](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Subalgebra_faithfullyFlat_of_directed_of_forall_faithfullyFlat.lean)
 -/
 @[path]
 private lemma main
-    {k : Type u} [Field k] {H : Type v} [CommRing H] [Algebra k H] (K : Subalgebra k H)
-    {ι : Type w} [Nonempty ι] (F : ι → Subalgebra k H) (hdir : Directed (· ≤ ·) F)
-    (hle : ∀ i, F i ≤ K) (hcov : ∀ x ∈ K, ∃ i, x ∈ F i)
-    (hff : ∀ i, Module.FaithfullyFlat ↥(F i) H) :
-    Module.FaithfullyFlat ↥K H := by
+  {k : Type u} {H : Type v} [Field k] [CommRing H] [Algebra k H]
+  {ι : Type w} [Nonempty ι]
+  (K : Subalgebra k H)
+  (F : ι → Subalgebra k H)
+  -- given
+  (hdir : Directed (· ≤ ·) F)
+  (hle : ∀ i, F i ≤ K)
+  (hcov : ∀ x ∈ K, ∃ i, x ∈ F i)
+  (hff : ∀ i, Module.FaithfullyFlat ↥(F i) H) :
+  -- imply
+  Module.FaithfullyFlat ↥K H := by
+  -- proof
   classical
   have hfin : ∀ (n : ℕ) (g : Fin n → ↥K), ∃ i, ∀ a, ((g a : ↥K) : H) ∈ F i := by
     intro n g
@@ -41,59 +47,76 @@ private lemma main
     let _ := hff i
     have hsurj : ∀ z : ↥I ⊗[↥K] H, ∃ h : ↥S → H, z = ∑ s, (⟨g s, hgI s⟩ : ↥I) ⊗ₜ[↥K] h s := by
       intro z
-      induction z using TensorProduct.induction_on with
-      | zero => exact ⟨0, by simp⟩
-      | tmul m h =>
-          have hm : (m : ↥K) ∈ Submodule.span ↥K (Set.range g) := by
-            have hr : Set.range g = (↑S : Set ↥K) := by
-              ext x; constructor
-              · rintro ⟨s, rfl⟩; exact s.2
-              · intro hx; exact ⟨⟨x, hx⟩, rfl⟩
-            rw [hr]
-            show (m : ↥K) ∈ Ideal.span (↑S : Set ↥K)
-            rw [hS]; exact m.2
-          obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ↥K).mp hm
-          refine ⟨fun s => c s • h, ?_⟩
-          have hm' : m = ∑ s, c s • (⟨g s, hgI s⟩ : ↥I) := by
-            apply Subtype.ext
-            rw [← hc]
-            simp
-          rw [hm', TensorProduct.sum_tmul]
-          exact Finset.sum_congr rfl fun s _ => by rw [TensorProduct.smul_tmul]
-      | add z₁ z₂ h₁ h₂ =>
-          obtain ⟨f₁, rfl⟩ := h₁
-          obtain ⟨f₂, rfl⟩ := h₂
-          refine ⟨f₁ + f₂, ?_⟩
-          rw [← Finset.sum_add_distrib]
-          exact Finset.sum_congr rfl fun s _ => by rw [Pi.add_apply, TensorProduct.tmul_add]
+      refine TensorProduct.inductionOn z ?_ ?_
+      ·
+        intro m h
+        have hm : (m : ↥K) ∈ Submodule.span ↥K (Set.range g) := by
+          have hr : Set.range g = (↑S : Set ↥K) := by
+            ext x
+            constructor
+            ·
+              intro hx
+              obtain ⟨s, rfl⟩ := hx
+              apply s.2
+            ·
+              intro hx
+              exact ⟨⟨x, hx⟩, rfl⟩
+          rw [hr]
+          show (m : ↥K) ∈ Ideal.span (↑S : Set ↥K)
+          rw [hS]
+          apply m.2
+        obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ↥K).mp hm
+        refine ⟨fun s => c s • h, ?_⟩
+        have hm' : m = ∑ s, c s • (⟨g s, hgI s⟩ : ↥I) := by
+          apply Subtype.ext
+          rw [← hc]
+          simp
+        rw [hm', TensorProduct.sum_tmul]
+        apply Finset.sum_congr rfl fun s _ => by rw [TensorProduct.smul_tmul]
+      ·
+        intro z₁ z₂ h₁ h₂
+        obtain ⟨f₁, rfl⟩ := h₁
+        obtain ⟨f₂, rfl⟩ := h₂
+        refine ⟨f₁ + f₂, ?_⟩
+        rw [← Finset.sum_add_distrib]
+        apply Finset.sum_congr rfl fun s _ => by rw [Pi.add_apply, TensorProduct.tmul_add]
     rw [injective_iff_map_eq_zero]
     intro z hz
     obtain ⟨h, rfl⟩ := hsurj z
     have hrel : ∑ s, ((g s : ↥K) : H) * h s = 0 := by
       rw [map_sum] at hz
       simp [TensorProduct.lift.tmul] at hz
-      exact hz
+      apply hz
     let g' : ↥S → ↥(F i) := fun s => ⟨(g s : H), hi s⟩
     let J : Ideal ↥(F i) := Ideal.span (Set.range g')
     have hJ : J.FG := ⟨Finset.univ.image g', by simp [J]⟩
-    have hinjJ := Module.Flat.iff_lift_lsmul_comp_subtype_injective.mp
-      (inferInstance : Module.Flat ↥(F i) H) hJ
+    have hinjJ := Module.Flat.iff_lift_lsmul_comp_subtype_injective.mp (inferInstance : Module.Flat ↥(F i) H) hJ
     let z' : ↥J ⊗[↥(F i)] H := ∑ s, (⟨g' s, Ideal.subset_span ⟨s, rfl⟩⟩ : ↥J) ⊗ₜ[↥(F i)] h s
     have hz' : z' = 0 := by
       apply hinjJ
       rw [map_zero, map_sum]
-      simp [TensorProduct.lift.tmul] at hrel
-      exact hrel
+      simp at hrel
+      apply hrel
     have hJI : ∀ j : ↥(F i), j ∈ J → (Subalgebra.inclusion (hle i) j) ∈ I := by
       intro j hj
-      induction hj using Submodule.span_induction with
-      | mem x hx =>
-          obtain ⟨s, rfl⟩ := hx
-          have : Subalgebra.inclusion (hle i) (g' s) = g s := Subtype.ext rfl
-          rw [this]; exact hgI s
-      | zero => rw [map_zero]; exact I.zero_mem
-      | add x y _ _ hx hy => rw [map_add]; exact I.add_mem hx hy
-      | smul r x _ hx => rw [smul_eq_mul, map_mul]; exact I.mul_mem_left _ hx
+      refine Submodule.span_induction ?_ ?_ ?_ ?_ hj
+      ·
+        intro x hx
+        obtain ⟨s, rfl⟩ := hx
+        have : Subalgebra.inclusion (hle i) (g' s) = g s := Subtype.ext rfl
+        rw [this]
+        apply hgI s
+      ·
+        rw [map_zero]
+        apply I.zero_mem
+      ·
+        intro x y _ _ hx hy
+        rw [map_add]
+        apply I.add_mem hx hy
+      ·
+        intro r x _ hx
+        rw [smul_eq_mul, map_mul]
+        apply I.mul_mem_left _ hx
     let θ₀ : ↥J →+ H →+ ↥I ⊗[↥K] H :=
       { toFun := fun j =>
           { toFun := fun x => (⟨Subalgebra.inclusion (hle i) (j : ↥(F i)), hJI _ j.2⟩ : ↥I) ⊗ₜ[↥K] x
@@ -102,40 +125,41 @@ private lemma main
         map_zero' := by
           ext x
           simp only [AddMonoidHom.coe_mk, ZeroHom.coe_mk, AddMonoidHom.zero_apply]
-          have : (⟨Subalgebra.inclusion (hle i) ((0 : ↥J) : ↥(F i)), hJI _ (0 : ↥J).2⟩ : ↥I) = 0 :=
-            Subtype.ext (map_zero _)
+          have : (⟨Subalgebra.inclusion (hle i) ((0 : ↥J) : ↥(F i)), hJI _ (0 : ↥J).2⟩ : ↥I) = 0 := Subtype.ext (map_zero _)
           rw [this, TensorProduct.zero_tmul]
         map_add' := fun j j' => by
           ext x
           simp only [AddMonoidHom.coe_mk, ZeroHom.coe_mk, AddMonoidHom.add_apply, ← TensorProduct.add_tmul]
           congr 1 }
-    let θ : ↥J ⊗[↥(F i)] H →+ ↥I ⊗[↥K] H := TensorProduct.liftAddHom θ₀ (by
+    have hbal : ∀ (r : ↥(F i)) (j : ↥J) (x : H), θ₀ (r • j) x = θ₀ j (r • x) := by
       intro r j x
-      show (⟨Subalgebra.inclusion (hle i) ((r • j : ↥J) : ↥(F i)), _⟩ : ↥I) ⊗ₜ[↥K] x
-        = (⟨Subalgebra.inclusion (hle i) (j : ↥(F i)), _⟩ : ↥I) ⊗ₜ[↥K] (r • x)
-      have e1 : (⟨Subalgebra.inclusion (hle i) ((r • j : ↥J) : ↥(F i)), hJI _ (r • j).2⟩ : ↥I)
-          = (Subalgebra.inclusion (hle i) r) • (⟨Subalgebra.inclusion (hle i) (j : ↥(F i)), hJI _ j.2⟩ : ↥I) := by
+      show (⟨Subalgebra.inclusion (hle i) ((r • j : ↥J) : ↥(F i)), hJI _ (r • j).2⟩ : ↥I) ⊗ₜ[↥K] x = (⟨Subalgebra.inclusion (hle i) (j : ↥(F i)), hJI _ j.2⟩ : ↥I) ⊗ₜ[↥K] (r • x)
+      have e1 : (⟨Subalgebra.inclusion (hle i) ((r • j : ↥J) : ↥(F i)), hJI _ (r • j).2⟩ : ↥I) = (Subalgebra.inclusion (hle i) r) • (⟨Subalgebra.inclusion (hle i) (j : ↥(F i)), hJI _ j.2⟩ : ↥I) := by
         apply Subtype.ext
-        show Subalgebra.inclusion (hle i) (r * (j : ↥(F i))) = Subalgebra.inclusion (hle i) r * _
-        exact map_mul _ _ _
+        show Subalgebra.inclusion (hle i) (r * (j : ↥(F i))) = Subalgebra.inclusion (hle i) r * Subalgebra.inclusion (hle i) (j : ↥(F i))
+        apply map_mul _ _ _
       rw [e1, TensorProduct.smul_tmul]
-      rfl)
-    have hθ : ∀ s, θ ((⟨g' s, Ideal.subset_span ⟨s, rfl⟩⟩ : ↥J) ⊗ₜ[↥(F i)] h s)
-        = (⟨g s, hgI s⟩ : ↥I) ⊗ₜ[↥K] h s := by
+      rfl
+    let θ : ↥J ⊗[↥(F i)] H →+ ↥I ⊗[↥K] H := TensorProduct.liftAddHom θ₀ hbal
+    have hθ : ∀ s, θ ((⟨g' s, Ideal.subset_span ⟨s, rfl⟩⟩ : ↥J) ⊗ₜ[↥(F i)] h s) = (⟨g s, hgI s⟩ : ↥I) ⊗ₜ[↥K] h s := by
       intro s
       rw [TensorProduct.liftAddHom_tmul]
-      show (⟨Subalgebra.inclusion (hle i) (g' s), _⟩ : ↥I) ⊗ₜ[↥K] h s = _
+      show (⟨Subalgebra.inclusion (hle i) (g' s), hJI _ (g' s).2⟩ : ↥I) ⊗ₜ[↥K] h s = (⟨g s, hgI s⟩ : ↥I) ⊗ₜ[↥K] h s
       congr 1
-    calc (∑ s, (⟨g s, hgI s⟩ : ↥I) ⊗ₜ[↥K] h s) = θ z' := by
-          rw [map_sum]; exact Finset.sum_congr rfl fun s _ => (hθ s).symm
+    calc
+      _ = θ z' := by
+        rw [map_sum]
+        apply Finset.sum_congr rfl fun s _ => (hθ s).symm
       _ = 0 := by rw [hz', map_zero]
   ·
     intro I hI1
     have h1 : (1 : H) ∈ I.map (algebraMap ↥K H) := by
-      have : (1 : H) ∈ I • (⊤ : Submodule ↥K H) := by rw [hI1]; exact Submodule.mem_top
+      have : (1 : H) ∈ I • (⊤ : Submodule ↥K H) := by
+        rw [hI1]
+        apply Submodule.mem_top
       rw [Ideal.smul_top_eq_map] at this
-      exact this
-    obtain ⟨n, x, m₀, hsum⟩ := Submodule.mem_span_set'.mp h1
+      apply this
+    obtain ⟨n, _, m₀, hsum⟩ := Submodule.mem_span_set'.mp h1
     have hm₀ : ∀ t, ∃ m ∈ I, (m₀ t : H) = algebraMap ↥K H m := fun t => by
       obtain ⟨m, hm, hmt⟩ := (m₀ t).2
       exact ⟨m, hm, hmt.symm⟩
@@ -152,9 +176,11 @@ private lemma main
       rw [hm t]
       have : algebraMap ↥K H (m t) = algebraMap ↥(F i) H (m' t) := rfl
       rw [this]
-      exact Ideal.mem_map_of_mem _ (Ideal.subset_span ⟨t, rfl⟩)
+      refine Ideal.mem_map_of_mem _ (Ideal.subset_span ⟨t, rfl⟩)
     have hJ : J = ⊤ := ((Module.FaithfullyFlat.iff_flat_and_ideal_smul_eq_top _ _).mp (hff i)).2 J hJ1
-    have h1J : (1 : ↥(F i)) ∈ J := by rw [hJ]; trivial
+    have h1J : (1 : ↥(F i)) ∈ J := by
+      rw [hJ]
+      trivial
     obtain ⟨c, hc⟩ := Ideal.mem_span_range_iff_exists_fun.mp h1J
     rw [Ideal.eq_top_iff_one]
     have : (1 : ↥K) = ∑ t, Subalgebra.inclusion (hle i) (c t) * m t := by
@@ -164,6 +190,7 @@ private lemma main
       rw [Subalgebra.coe_one, ← this]
       simp [m']
     rw [this]
-    exact I.sum_mem fun t _ => I.mul_mem_left _ (hmI t)
+    apply I.sum_mem fun t _ => I.mul_mem_left _ (hmI t)
+
 
 -- created on 2026-10-20

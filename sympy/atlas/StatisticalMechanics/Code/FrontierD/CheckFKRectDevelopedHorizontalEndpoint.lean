@@ -1,0 +1,23 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectDevelopedHorizontalEndpoint.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDevelopedHorizontalEndpoint
+
+#print axioms StatMech.FrontierD.fkRectDevelopedThreeByOneHorizontalCrossingEvent_eq_endpointUnion
+#print axioms StatMech.FrontierD.fkRectDevelopedThreeByOneHorizontalEndpointPairs_card_le
+#print axioms StatMech.FrontierD.fkRectCritical_developedThreeByOne_exists_horizontalEndpoint_ge
+#print axioms StatMech.FrontierD.fkRectCritical_developedThreeByOne_exists_horizontalEndpoint_ge_of_crossingFloor
+#print axioms StatMech.FrontierD.fkRectDevelopedThreeByOneHorizontalEndpoint_row_span
+#print axioms StatMech.FrontierD.fkRectCritical_developedThreeByOne_exists_horizontalReflectedCarrier_ge
+#print axioms StatMech.FrontierD.fkRectCritical_developedThreeByOne_exists_horizontalReflectedCarrier_ge_of_crossingFloor
+#print axioms StatMech.FrontierD.fkRectCritical_developedThreeByOne_exists_horizontalPositiveRowBlock
+#print axioms StatMech.FrontierD.fkRectCritical_developedThreeByOne_exists_horizontalPositiveRowBlock_of_crossingFloor
+#print axioms StatMech.FrontierD.fkRectCritical_developedThreeByOne_exists_horizontalPositiveBandBlock
+#print axioms StatMech.FrontierD.fkRectCritical_developedThreeByOne_exists_horizontalPositiveBandBlock_of_crossingFloor

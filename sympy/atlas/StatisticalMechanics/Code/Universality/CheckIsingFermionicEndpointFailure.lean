@@ -1,0 +1,51 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicEndpointFailure.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicEndpointFailure
+
+namespace StatMech.Universality
+
+#print axioms sourceFailureOutputAt_vertical_diffusive_weight_le
+#print axioms sourceFailureOutputAt_left_diffusive_weight_le
+#print axioms sourceFailureOutputAt_boundary_diffusive_weight_le
+#print axioms mirrorFailureOutputAt_boundary_diffusive_weight_le
+#print axioms sourceFailureAt_boundary_diffusive_weight_le_of_rightHalf
+#print axioms natCard_mirrorFailureAt_le_aligned_add_residual
+#print axioms mirrorOnly_firstBoundary_right
+#print axioms orderedFarEndpoint_weight_eq_sum
+#print axioms lineFirstEndpoint_boundary_weight_le
+#print axioms orderedFarEndpoint_weight_le
+#print axioms orderedFarEndpoint_diffusive_weight_le
+#print axioms mirrorOnly_ordered_boundary_marks
+#print axioms natCard_mirrorOnlySourceOutputAt_le_orderedFarEndpoint
+#print axioms mirrorOnlySourceOutputAt_vertical_diffusive_weight_le
+#print axioms orderedFarHorizontalEndpoint_weight_eq_sum
+#print axioms lineFirstEndpoint_partial_weight_le_one
+#print axioms orderedFarHorizontalEndpoint_weight_le
+#print axioms natCard_mirrorOnlySourceOutputAt_le_orderedFarHorizontalEndpoint
+#print axioms mirrorOnlySourceOutputAt_horizontal_diffusive_weight_le
+#print axioms mirrorOnlySourceOutputAt_boundary_diffusive_weight_le
+#print axioms mirrorFailureAt_boundary_diffusive_weight_le_of_rightHalf
+#print axioms sourceChoiceNoHitOutputAt_horizontal_diffusive_weight_le
+#print axioms sourceChoiceNoHitOutputAt_vertical_diffusive_weight_le
+#print axioms sourceChoiceNoHitOutputAt_boundary_diffusive_weight_le
+#print axioms mirrorChoiceNoHitOutputAt_boundary_diffusive_weight_le
+#print axioms natCard_choiceNoHitAt_le_source_add_mirror
+#print axioms choiceNoHitAt_boundary_diffusive_weight_le_of_rightHalf
+#print axioms isingLeapfrogStoppedKernel_reflectedStart_boundary_diffusive_abs_le_of_rightHalf
+#print axioms sourceFailureAt_horizontal_diffusive_weight_le_of_rightHalf
+#print axioms mirrorFailureAt_horizontal_diffusive_weight_le_of_rightHalf
+#print axioms choiceNoHitAt_horizontal_diffusive_weight_le_of_rightHalf
+#print axioms isingLeapfrogStoppedKernel_reflectedStart_horizontalEndpoint_diffusive_abs_le_of_rightHalf
+
+end StatMech.Universality

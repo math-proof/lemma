@@ -25,5 +25,5 @@ private lemma main
     _ = M * |γ| ^ k := mul_comm _ _
 
 
--- created on 2023-03-27
+-- created on 2023-04-16
 -- updated on 2026-10-17

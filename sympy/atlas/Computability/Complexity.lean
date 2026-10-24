@@ -56,12 +56,6 @@ def bitEncode [BitstringEncoding α] (a : α) : List Bool := toEncoding.encode a
 /-- The decoding function of the canonical `BitstringEncoding` of `α`. -/
 def bitDecode [BitstringEncoding α] (l : List Bool) : Option α := toEncoding.decode l
 
-/-- Decoding is a left inverse of encoding. -/
-@[simp]
-theorem bitDecode_bitEncode [BitstringEncoding α] (a : α) :
-    bitDecode (bitEncode a) = some a :=
-  toEncoding.decode_encode a
-
 /-- Make a bitstring self-delimiting: each payload bit `b` becomes the two bits
 `[true, b]`, and the block is terminated by `false`. -/
 def delimit : List Bool → List Bool

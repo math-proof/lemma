@@ -4,6 +4,7 @@ import Mathlib.RepresentationTheory.Character
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
 import sympy.atlas.GroupTheory.BurnsidePaqb.ClassSum
+import Lemma.Nat.ConjClass.of.IsConj
 /-!
 Central-character stage of the complete Burnside proof.
 
@@ -105,34 +106,6 @@ theorem centralScalar_mul (l1 l2 : ConjClasses G) :
   · exact absurd h hv
 
 open Classical in
-/-- Trace equation: the central scalar times the degree is the character sum. -/
-theorem centralScalar_trace (l : ConjClasses G) :
-    centralScalar ρ l * Module.finrank ℂ V
-      = ∑ x ∈ (ConjClasses.carrier l).toFinset, ρ.character x := by
-  classical
-  have hT : ρ.asAlgebraHom (classSum (ConjClasses.carrier l).toFinset)
-      = centralScalar ρ l • 1 := by
-    ext v
-    simp [centralScalar_spec]
-  have htrace : LinearMap.trace ℂ V
-        (ρ.asAlgebraHom (classSum (ConjClasses.carrier l).toFinset))
-      = centralScalar ρ l * Module.finrank ℂ V := by
-    have hid : (1 : Module.End ℂ V) = LinearMap.id := rfl
-    rw [hT, map_smul, hid, LinearMap.trace_id, smul_eq_mul]
-  have hexpand : ρ.asAlgebraHom (classSum (ConjClasses.carrier l).toFinset)
-      = ∑ x ∈ (ConjClasses.carrier l).toFinset, ρ x := by
-    change ρ.asAlgebraHom (∑ x ∈ (ConjClasses.carrier l).toFinset,
-        MonoidAlgebra.of ℂ G x) = _
-    rw [map_sum]
-    simp only [Representation.asAlgebraHom_of]
-  have hsum : LinearMap.trace ℂ V
-        (ρ.asAlgebraHom (classSum (ConjClasses.carrier l).toFinset))
-      = ∑ x ∈ (ConjClasses.carrier l).toFinset, ρ.character x := by
-    rw [hexpand, map_sum]
-    rfl
-  rw [← htrace, hsum]
-
-open Classical in
 /-- The finite set of scalars spanning the integrality subalgebra. -/
 noncomputable def scalarGens : Finset ℂ :=
   insert 1 (Finset.univ.image (centralScalar ρ))
@@ -213,62 +186,5 @@ noncomputable def scalarSubalg : Subalgebra ℤ ℂ where
       rw [Algebra.smul_def, mul_one]
     rw [h1]
     exact Submodule.smul_mem _ _ (one_mem_scalarSpan ρ)
-
-open Classical in
-theorem scalarSubalg_fg : (scalarSubalg ρ).toSubmodule.FG := by
-  classical
-  have : (scalarSubalg ρ).toSubmodule
-      = Submodule.span ℤ (↑(scalarGens ρ) : Set ℂ) := rfl
-  rw [this]
-  exact ⟨scalarGens ρ, rfl⟩
-
-open Classical in
-/-- Central scalars are algebraic integers. -/
-theorem centralScalar_isIntegral (l : ConjClasses G) :
-    IsIntegral ℤ (centralScalar ρ l) :=
-  IsIntegral.of_mem_of_fg (scalarSubalg ρ) (scalarSubalg_fg ρ) _
-    (scalar_mem_scalarSpan ρ l)
-
-open Classical in
-/-- Bielefeld Prop 1: `|C|χ(g)/χ(1)` is an algebraic integer. -/
-theorem classSum_centralScalar_isIntegral (g : G) :
-    IsIntegral ℤ ((conjClass g).card * ρ.character g / ρ.character 1) := by
-  classical
-  have : Nontrivial V := IsSimpleModule.nontrivial (MonoidAlgebra ℂ G) ρ.asModule
-  have hpos : 0 < Module.finrank ℂ V := Module.finrank_pos
-  have hχ1ne : ρ.character 1 ≠ 0 := by
-    rw [Representation.char_one]
-    exact_mod_cast ne_of_gt hpos
-  have hdiv : centralScalar ρ (ConjClasses.mk g)
-      = (conjClass g).card * ρ.character g / ρ.character 1 := by
-    rw [eq_div_iff hχ1ne]
-    have hcarry : (ConjClasses.carrier (ConjClasses.mk g)).toFinset
-        = conjClass g := by
-      rw [carrier_toFinset]
-      apply conjClass_eq_of_isConj
-      rw [← ConjClasses.mk_eq_mk_iff_isConj]
-      exact classRep_spec _
-    have hchar : ∀ x ∈ conjClass g, ρ.character x = ρ.character g := by
-      intro x hx
-      rw [mem_conjClass_iff] at hx
-      obtain ⟨c, hc⟩ := isConj_iff.mp hx
-      have hcc := Representation.char_conj ρ x c
-      rw [hc] at hcc
-      exact hcc.symm
-    have hsum : ∑ x ∈ conjClass g, ρ.character x
-        = (conjClass g).card * ρ.character g := by
-      calc ∑ x ∈ conjClass g, ρ.character x
-            = ∑ x ∈ conjClass g, ρ.character g :=
-              Finset.sum_congr rfl (fun x hx => hchar x hx)
-        _ = (conjClass g).card * ρ.character g := by
-              rw [Finset.sum_const, nsmul_eq_mul]
-    have htrace := centralScalar_trace ρ (ConjClasses.mk g)
-    rw [hcarry, hsum] at htrace
-    rw [Representation.char_one]
-    exact htrace
-  rw [← hdiv]
-  exact centralScalar_isIntegral ρ _
-
 end CentralScalar
-
 end BurnsidePaqb

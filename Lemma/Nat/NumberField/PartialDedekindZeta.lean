@@ -4,23 +4,29 @@ import sympy.atlas.NumberTheory.NumberField.PartialDedekindZeta
 open NumberField
 
 
+namespace NumberField
+
 /--
 [partialDedekindZeta_empty](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/PartialDedekindZeta.lean)
 -/
 @[path]
-private lemma partialDedekindZeta_empty_eq
+lemma partialDedekindZeta_empty
   [Field K] [NumberField K]
   {s : ℂ} :
 -- imply
   partialDedekindZeta K ∅ s = 1 := by
 -- proof
-  apply NumberField.partialDedekindZeta_empty K s
+  simp [partialDedekindZeta]
+
+end NumberField
+
+namespace NumberField
 
 /--
 [partialDedekindZeta_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/PartialDedekindZeta.lean)
 -/
 @[path]
-private lemma partialDedekindZeta_singleton_eq
+lemma partialDedekindZeta_singleton
   [Field K] [NumberField K]
   {𝔭 : IsDedekindDomain.HeightOneSpectrum (RingOfIntegers K)}
   {s : ℂ} :
@@ -28,7 +34,10 @@ private lemma partialDedekindZeta_singleton_eq
   partialDedekindZeta K {𝔭} s =
       (1 - (Ideal.absNorm 𝔭.asIdeal : ℂ) ^ (-s))⁻¹ := by
 -- proof
-  apply NumberField.partialDedekindZeta_singleton K 𝔭 s
+  simp [partialDedekindZeta]
+
+end NumberField
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

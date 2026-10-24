@@ -4,26 +4,30 @@ import sympy.atlas.LinearAlgebra.Matrix.Toeplitz
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [isToeplitzMatrix_of_witness](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Toeplitz.lean)
 -/
 @[path]
-private lemma isToeplitzMatrix_of_witness_eq
+lemma isToeplitzMatrix_of_witness
   {n : ℕ}
   {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ}
   {c : ℤ → ℝ}
 -- given
   (h : ∀ i j, A i j = c ((i.val : ℤ) - (j.val : ℤ))) :
 -- imply
-  IsToeplitzMatrix A := by
+  IsToeplitzMatrix A :=
 -- proof
-  apply MetaMathlibExt.isToeplitzMatrix_of_witness h
+  ⟨c, h⟩
+
+end MetaMathlibExt
 
 /--
 [isSymmetricToeplitzMatrix_of_witness](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Toeplitz.lean)
 -/
 @[path]
-private lemma isSymmetricToeplitzMatrix_of_witness_eq
+lemma isSymmetricToeplitzMatrix_of_witness
   {n : ℕ}
   {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ}
   {c : ℤ → ℝ}
@@ -31,15 +35,18 @@ private lemma isSymmetricToeplitzMatrix_of_witness_eq
   (hsym : ∀ k : ℤ, c (-k) = c k)
   (h : ∀ i j, A i j = c ((i.val : ℤ) - (j.val : ℤ))) :
 -- imply
-  IsSymmetricToeplitzMatrix A := by
+  IsSymmetricToeplitzMatrix A :=
 -- proof
-  apply MetaMathlibExt.isSymmetricToeplitzMatrix_of_witness hsym h
+  ⟨c, hsym, h⟩
+
+
+namespace MetaMathlibExt
 
 /--
 [IsSymmetricToeplitzMatrix.isToeplitz](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Toeplitz.lean)
 -/
 @[path]
-private lemma IsSymmetricToeplitzMatrix_isToeplitz_eq
+lemma IsSymmetricToeplitzMatrix.isToeplitz
   {n : ℕ}
   {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ}
 -- given
@@ -47,13 +54,18 @@ private lemma IsSymmetricToeplitzMatrix_isToeplitz_eq
 -- imply
   IsToeplitzMatrix A := by
 -- proof
-  apply MetaMathlibExt.IsSymmetricToeplitzMatrix.isToeplitz h
+  obtain ⟨c, _, hr⟩ := h
+  exact ⟨c, hr⟩
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [IsSymmetricToeplitzMatrix.entry_comm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Toeplitz.lean)
 -/
 @[path]
-private lemma IsSymmetricToeplitzMatrix_entry_comm_eq
+lemma IsSymmetricToeplitzMatrix.entry_comm
   {n : ℕ}
   {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ}
   {i j : Fin (n + 1)}
@@ -62,7 +74,13 @@ private lemma IsSymmetricToeplitzMatrix_entry_comm_eq
 -- imply
   A i j = A j i := by
 -- proof
-  apply MetaMathlibExt.IsSymmetricToeplitzMatrix.entry_comm h i j
+  obtain ⟨c, hsym, hr⟩ := h
+  have hdiff : (i.val : ℤ) - (j.val : ℤ) = -((j.val : ℤ) - (i.val : ℤ)) := by
+    omega
+  rw [hr i j, hr j i, hdiff, hsym]
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

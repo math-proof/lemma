@@ -1,15 +1,15 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Completion.GlobalAdjoinRootCompletionEquiv
 open scoped NumberField NumberField.LiesOver
-open IsDedekindDomain.HeightOneSpectrum
 
+
+namespace IsDedekindDomain.HeightOneSpectrum
 
 /--
 [completion_algEquiv_of_adjoinRoot_globalEquiv](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/GlobalAdjoinRootCompletionEquiv.lean)
 -/
 @[path]
-private lemma completion_algEquiv_of_adjoinRoot_globalEquiv_eq
+lemma completion_algEquiv_of_adjoinRoot_globalEquiv
   [Field K] [Field L] [Field M] [NumberField K] [NumberField L] [Algebra K L]
   {v : HeightOneSpectrum (𝓞 K)} [Algebra (v.adicCompletion K) M]
   {w : HeightOneSpectrum (𝓞 L)} [w.asIdeal.LiesOver v.asIdeal]
@@ -21,7 +21,13 @@ private lemma completion_algEquiv_of_adjoinRoot_globalEquiv_eq
 -- imply
   Nonempty (M ≃ₐ[v.adicCompletion K] w.adicCompletion L) := by
 -- proof
-  apply IsDedekindDomain.HeightOneSpectrum.completion_algEquiv_of_adjoinRoot_globalEquiv v w g hg eL hM
+  obtain ⟨eM⟩ := hM
+  obtain ⟨eW⟩ :=
+    adicCompletion_algEquiv_adjoinRoot_of_globalEquiv v w g hg eL
+  exact ⟨eM.trans eW.symm⟩
+
+end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

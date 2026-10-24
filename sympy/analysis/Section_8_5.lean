@@ -61,7 +61,7 @@ theorem IsMin.iff {X:Type} [PartialOrder X] (x:X) :
 theorem WellFoundedLT.iff (X:Type) [LinearOrder X] :
   WellFoundedLT X ↔ ∀ A:Set X, A.Nonempty → ∃ x:A, IsMin x := by
   unfold WellFoundedLT IsMin
-  rw [isWellFounded_iff, WellFounded.wellFounded_iff_has_min]
+  rw [WellFounded.wellFounded_iff_has_min]
   peel with A hA; constructor
   . intro ⟨ x, hxA, h ⟩; use ⟨ x, hxA ⟩; intro ⟨ y, hy ⟩ this; specialize h y hy
     simp at *; order
@@ -81,11 +81,23 @@ theorem WellFoundedLT.subset {X:Type} [PartialOrder X] {A B: Set X} (hA: IsTotal
   set hAlin : LinearOrder A := LinearOrder.mk hA
   set hBlin : LinearOrder B := LinearOrder.mk (hA.subset hAB)
   rw [iff' hA] at hwell; rw [iff' (hA.subset hAB)]; intro C hC
-  have ⟨ ⟨ ⟨ x, hx ⟩, hx' ⟩, hmin ⟩ := hwell ((B.embeddingOfSubset _ hAB) '' C) (by aesop)
-  simp at hx'; choose y hy hyC this using hx'; use ⟨ _, hyC ⟩
-  simp_all [IsMin, Set.embeddingOfSubset]
-  intro a ha_B ha_C
-  apply hmin _ (hAB ha_B) <;> trivial
+  let ι := B.embeddingOfSubset A hAB
+  have ⟨⟨a, ha⟩, hmin⟩ := hwell (ι '' C) (by aesop)
+  simp only [Set.mem_image] at ha
+  obtain ⟨y, hyC, hyx⟩ := ha
+  refine ⟨⟨y, hyC⟩, ?_⟩
+  intro z hz
+  have hmem : ι z.1 ∈ ι '' C := ⟨z.1, z.2, rfl⟩
+  have hle : (⟨ι z.1, hmem⟩ : ι '' C) ≤ ⟨a, ha⟩ := by
+    change ι z.1 ≤ a
+    rw [← hyx]
+    change z.1.1 ≤ y.1
+    exact hz
+  have hge := hmin hle
+  change a ≤ ι z.1 at hge
+  rw [← hyx] at hge
+  change y.1 ≤ z.1.1 at hge
+  exact hge
 
 /-- Proposition 8.5.10 / Exercise 8.5.10 -/
 theorem WellFoundedLT.strong_induction {X:Type} [LinearOrder X] [WellFoundedLT X] {P:X → Prop}
@@ -386,7 +398,7 @@ def WellOrderedSubset.empty (X : Type) : WellOrderedSubset X where
   ord := { PartialOrder.discrete (∅ : Set X) with
     le_total := fun ⟨_, h⟩ ↦ h.elim
     toDecidableLE := fun ⟨_, h⟩ ↦ h.elim }
-  wf := ⟨⟨fun ⟨_, h⟩ ↦ h.elim⟩⟩
+  wf := ⟨fun ⟨_, h⟩ ↦ h.elim⟩
 
 theorem WellOrderedSubset.empty_isMin (X : Type) :
     @IsMin (WellOrderedSubset X) (instPartialOrder X).toPreorder.toLE

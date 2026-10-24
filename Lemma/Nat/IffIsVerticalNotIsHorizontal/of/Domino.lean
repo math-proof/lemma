@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings
 import Lemma.Nat.IsHorizontalOrIsVertical.of.Domino
 import Lemma.Nat.NotIsHorizontalAndIsVertical.of.Domino
 open DominoTilings

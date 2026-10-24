@@ -22,7 +22,7 @@ import Lemma.Tensor.Sum.eq.Sum_Select
 import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Vector.GetTranspose.eq.Get
 import torch.Tensor.sum
-open Nat Vector List Bool Int Tensor Fin
+open Nat Vector List Bool Int Tensor Fin Set
 set_option maxHeartbeats 250000
 
 

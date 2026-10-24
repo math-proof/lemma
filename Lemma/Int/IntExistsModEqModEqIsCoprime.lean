@@ -29,7 +29,7 @@ private lemma not_dvd_n_of_dvd
   -- proof
   rintro hpn
   obtain ⟨x, y, z, hxyz⟩ := h
-  apply hp.not_unit (isUnit_of_dvd_one _)
+  apply hp.not_isUnit (isUnit_of_dvd_one _)
   rw [← hxyz]
   apply dvd_add (dvd_add (dvd_mul_of_dvd_right hpc x) (dvd_mul_of_dvd_right hpd y)) (dvd_mul_of_dvd_right hpn z)
 
@@ -54,16 +54,15 @@ private lemma exists_of_ne_zero
     have hpd' : (p : ℤ) ∣ d := Iff.mpr Int.natCast_dvd hpd
     have hpc'Z : (p : ℤ) ∣ c + n * m := Iff.mpr Int.natCast_dvd hpc'
     if hpc : (p : ℤ) ∣ c then
-      apply (hpZ.dvd_or_dvd _).elim (not_dvd_n_of_dvd hpZ h hpc hpd') _
-      ·
-        have h2 := dvd_sub hpc'Z hpc
-        rwa [add_sub_cancel_left] at h2
-      ·
+      suffices hnm : (p : ℤ) ∣ n * m by
+        apply (hpZ.dvd_or_dvd hnm).elim (not_dvd_n_of_dvd hpZ h hpc hpd') _
         rw [hm, hpZ.dvd_finsetProd_iff]
         rintro ⟨q, hq, hpq⟩
         rw [hS, Finset.mem_filter] at hq
         apply hq.2 (_ ▸ hpc)
         apply Iff.mp (Nat.prime_dvd_prime_iff_eq hp (Nat.prime_of_mem_primeFactors hq.1)) (Iff.mp Int.natCast_dvd_natCast hpq)
+      have h2 := dvd_sub hpc'Z hpc
+      rwa [add_sub_cancel_left] at h2
     else
       have hpS : p ∈ S := by
         rw [hS, Finset.mem_filter, Nat.mem_primeFactors]

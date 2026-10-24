@@ -65,32 +65,4 @@ variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
 
 variable (v : HeightOneSpectrum (𝓞 K)) (w : HeightOneSpectrum (𝓞 L))
   [w.asIdeal.LiesOver v.asIdeal]
-
-/-- The local degree at a finite place lying over `v` is bounded by the
-global degree. -/
-theorem finrank_adicCompletion_le :
-    Module.finrank (v.adicCompletion K) (w.adicCompletion L) ≤
-      Module.finrank K L := by
-  let Φ : v.adicCompletion K ⊗[K] L →ₗ[v.adicCompletion K]
-      w.adicCompletion L :=
-    (Algebra.TensorProduct.lift
-      (Algebra.algHom (v.adicCompletion K) (v.adicCompletion K)
-        (w.adicCompletion L))
-      (Algebra.algHom K L (w.adicCompletion L))
-      (fun _ _ => mul_comm ..)).toLinearMap
-  have h_dense : DenseRange Φ := by
-    apply (w.denseRange_algebraMap L).mono
-    rintro _ ⟨l, rfl⟩
-    exact ⟨1 ⊗ₜ l, by simp [Φ, Algebra.algHom]⟩
-  have h_surjective : Function.Surjective Φ := by
-    rw [← Set.range_eq_univ, ← Φ.coe_range,
-      ← Φ.range.closed_of_finiteDimensional.closure_eq]
-    exact h_dense.closure_range
-  calc
-    Module.finrank (v.adicCompletion K) (w.adicCompletion L) ≤
-        Module.finrank (v.adicCompletion K)
-          (v.adicCompletion K ⊗[K] L) :=
-      LinearMap.finrank_le_finrank_of_surjective h_surjective
-    _ = Module.finrank K L := Module.finrank_baseChange
-
 end IsDedekindDomain.HeightOneSpectrum

@@ -1,38 +1,49 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+set_option linter.unusedSectionVars false
+
 
 variable {R : Type v} [Ring R]
 private noncomputable def IsCasimir (c : R ⊗[ℤ] R) : Prop :=
   ∀ x : R, (x ⊗ₜ[ℤ] (1 : R)) * c = c * ((1 : R) ⊗ₜ[ℤ] x)
-private lemma IsCasimir.one_tmul_mul {c : R ⊗[ℤ] R} (hc : IsCasimir c) (y : R) : IsCasimir (((1 : R) ⊗ₜ[ℤ] y) * c) := by
+
+private lemma IsCasimir.one_tmul_mul
+  {c : R ⊗[ℤ] R} (hc : IsCasimir c) (y : R) : IsCasimir (((1 : R) ⊗ₜ[ℤ] y) * c) := by
   intro x
   rw [← mul_assoc, Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one, mul_assoc, ← hc x, ← mul_assoc,
     Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one]
-private lemma mul'_tmul_one_mul (x : R) (c : R ⊗[ℤ] R) :
-    LinearMap.mul' ℤ R ((x ⊗ₜ[ℤ] (1 : R)) * c) = x * LinearMap.mul' ℤ R c := by
-  induction c using TensorProduct.induction_on with
-  | zero => simp
-  | tmul u v => rw [Algebra.TensorProduct.tmul_mul_tmul, LinearMap.mul'_apply, LinearMap.mul'_apply, one_mul, mul_assoc]
-  | add c c' hc hc' => rw [mul_add, map_add, map_add, hc, hc', mul_add]
-private lemma mul'_mul_one_tmul (x : R) (c : R ⊗[ℤ] R) :
-    LinearMap.mul' ℤ R (c * ((1 : R) ⊗ₜ[ℤ] x)) = LinearMap.mul' ℤ R c * x := by
-  induction c using TensorProduct.induction_on with
-  | zero => simp
-  | tmul u v => rw [Algebra.TensorProduct.tmul_mul_tmul, LinearMap.mul'_apply, LinearMap.mul'_apply, mul_one, mul_assoc]
-  | add c c' hc hc' => rw [add_mul, map_add, map_add, hc, hc', add_mul]
-private lemma IsCasimir.commute_mul' {c : R ⊗[ℤ] R} (hc : IsCasimir c) (x : R) :
-    x * LinearMap.mul' ℤ R c = LinearMap.mul' ℤ R c * x := by
+
+private lemma mul'_tmul_one_mul
+  (x : R) (c : R ⊗[ℤ] R) : LinearMap.mul' ℤ R ((x ⊗ₜ[ℤ] (1 : R)) * c) = x * LinearMap.mul' ℤ R c := by
+  refine TensorProduct.inductionOn c ?_ ?_
+  ·
+    intro u v
+    rw [Algebra.TensorProduct.tmul_mul_tmul, LinearMap.mul'_apply, LinearMap.mul'_apply, one_mul, mul_assoc]
+  ·
+    intro c c' hc hc'
+    rw [mul_add, map_add, map_add, hc, hc', mul_add]
+
+private lemma mul'_mul_one_tmul
+  (x : R) (c : R ⊗[ℤ] R) : LinearMap.mul' ℤ R (c * ((1 : R) ⊗ₜ[ℤ] x)) = LinearMap.mul' ℤ R c * x := by
+  refine TensorProduct.inductionOn c ?_ ?_
+  ·
+    intro u v
+    rw [Algebra.TensorProduct.tmul_mul_tmul, LinearMap.mul'_apply, LinearMap.mul'_apply, mul_one, mul_assoc]
+  ·
+    intro c c' hc hc'
+    rw [add_mul, map_add, map_add, hc, hc', add_mul]
+
+private lemma IsCasimir.commute_mul'
+  {c : R ⊗[ℤ] R} (hc : IsCasimir c) (x : R) : x * LinearMap.mul' ℤ R c = LinearMap.mul' ℤ R c * x := by
   rw [← mul'_tmul_one_mul, hc x, mul'_mul_one_tmul]
-private lemma IsCasimir.of_zsmul {c : R ⊗[ℤ] R} {m : ℤ}
-    (htf : ∀ v : R ⊗[ℤ] R, m • v = 0 → v = 0) (hc : IsCasimir (m • c)) : IsCasimir c := by
+
+private lemma IsCasimir.of_zsmul
+  {c : R ⊗[ℤ] R} {m : ℤ} (htf : ∀ v : R ⊗[ℤ] R, m • v = 0 → v = 0) (hc : IsCasimir (m • c)) :
+    IsCasimir c := by
   intro x
   have h := hc x
   rw [mul_smul_comm, smul_mul_assoc] at h
@@ -41,28 +52,41 @@ private lemma IsCasimir.of_zsmul {c : R ⊗[ℤ] R} {m : ℤ}
     have h' : m • ((x ⊗ₜ[ℤ] (1 : R)) * c) - m • (c * ((1 : R) ⊗ₜ[ℤ] x)) = 0 := by
       have := congrArg (fun w => w - m • (c * ((1 : R) ⊗ₜ[ℤ] x))) h
       simpa only [sub_self] using this
-    exact hs.trans h'
-  exact sub_eq_zero.mp (htf _ h2)
+    refine hs.trans h'
+  refine sub_eq_zero.mp (htf _ h2)
+
 variable {ι : Type*}
-private lemma torsionFree_of_basis (bRR : Module.Basis ι ℤ (R ⊗[ℤ] R)) (m : ℤ) (hm : m ≠ 0) (v : R ⊗[ℤ] R) (h : m • v = 0) : v = 0 := by
+
+private lemma torsionFree_of_basis
+  (bRR : Module.Basis ι ℤ (R ⊗[ℤ] R)) (m : ℤ) (hm : m ≠ 0) (v : R ⊗[ℤ] R) (h : m • v = 0) : v = 0 := by
   apply bRR.ext_elem
   intro i
   have := congrArg (fun w => bRR.repr w i) h
   simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_zero, Finsupp.zero_apply, mul_eq_zero] at this
-  rcases this with h1 | h1
-  · exact absurd h1 hm
-  · simpa using h1
+  obtain h1 | h1 := this
+  ·
+    refine absurd h1 hm
+  ·
+    simp
+    refine h1
+
 variable [Fintype ι]
-private lemma exists_eq_zsmul_of_forall_dvd (bRR : Module.Basis ι ℤ (R ⊗[ℤ] R)) (ℓ : ℤ) (c : R ⊗[ℤ] R) (h : ∀ i, ℓ ∣ bRR.repr c i) :
+
+private lemma exists_eq_zsmul_of_forall_dvd
+  (bRR : Module.Basis ι ℤ (R ⊗[ℤ] R)) (ℓ : ℤ) (c : R ⊗[ℤ] R) (h : ∀ i, ℓ ∣ bRR.repr c i) :
     ∃ c' : R ⊗[ℤ] R, c = ℓ • c' ∧ ∀ i, bRR.repr c' i = bRR.repr c i / ℓ := by
   refine ⟨∑ i, (bRR.repr c i / ℓ) • bRR i, ?_, ?_⟩
-  · apply bRR.ext_elem
+  ·
+    apply bRR.ext_elem
     intro i
     rw [map_smul, Finsupp.smul_apply, bRR.repr_sum_self, smul_eq_mul, Int.mul_ediv_cancel' (h i)]
-  · intro i
+  ·
+    intro i
     rw [bRR.repr_sum_self]
-private lemma exists_isCasimir_not_dvd (bRR : Module.Basis ι ℤ (R ⊗[ℤ] R)) (ℓ : ℤ) (hℓ : 1 < ℓ) (c₀ : R ⊗[ℤ] R) (hc₀ : IsCasimir c₀) (h₀ : c₀ ≠ 0) :
-    ∃ c : R ⊗[ℤ] R, IsCasimir c ∧ ∃ i, ¬ ℓ ∣ bRR.repr c i := by
+
+private lemma exists_isCasimir_not_dvd
+  (bRR : Module.Basis ι ℤ (R ⊗[ℤ] R)) (ℓ : ℤ) (hℓ : 1 < ℓ) (c₀ : R ⊗[ℤ] R) (hc₀ : IsCasimir c₀)
+    (h₀ : c₀ ≠ 0) : ∃ c : R ⊗[ℤ] R, IsCasimir c ∧ ∃ i, ¬ ℓ ∣ bRR.repr c i := by
   classical
   have hex : ∃ i₀, bRR.repr c₀ i₀ ≠ 0 := by
     by_contra hall
@@ -70,46 +94,55 @@ private lemma exists_isCasimir_not_dvd (bRR : Module.Basis ι ℤ (R ⊗[ℤ] R)
     apply h₀
     apply bRR.ext_elem
     intro i
-    simpa using hall i
+    simp
+    have hi := hall i
+    simp at hi
+    refine hi
   obtain ⟨i₀, hi₀⟩ := hex
   suffices H : ∀ (N : ℕ) (c : R ⊗[ℤ] R), IsCasimir c → bRR.repr c i₀ ≠ 0 → (bRR.repr c i₀).natAbs = N →
       ∃ c' : R ⊗[ℤ] R, IsCasimir c' ∧ ∃ i, ¬ ℓ ∣ bRR.repr c' i from
     H _ c₀ hc₀ hi₀ rfl
   intro N
-  induction N using Nat.strong_induction_on with
-  | _ N ih =>
-    intro c hc hci₀ hN
-    by_cases hall : ∀ i, ℓ ∣ bRR.repr c i
-    · obtain ⟨c', hc', hrepr⟩ := exists_eq_zsmul_of_forall_dvd bRR ℓ c hall
-      have hℓ0 : ℓ ≠ 0 := by omega
-      have hc'cas : IsCasimir c' := by
-        refine IsCasimir.of_zsmul (torsionFree_of_basis bRR ℓ hℓ0) ?_
-        rw [← hc']; exact hc
-      have hci₀' : bRR.repr c' i₀ ≠ 0 := by
-        rw [hrepr]
-        intro h0
-        obtain ⟨k, hk⟩ := hall i₀
-        rw [hk, Int.mul_ediv_cancel_left _ hℓ0] at h0
-        rw [h0, mul_zero] at hk
-        exact hci₀ hk
-      have hlt : (bRR.repr c' i₀).natAbs < N := by
-        rw [← hN, hrepr]
-        obtain ⟨k, hk⟩ := hall i₀
-        have hk0 : k ≠ 0 := by rintro rfl; rw [mul_zero] at hk; exact hci₀ hk
-        rw [hk, Int.mul_ediv_cancel_left _ hℓ0, Int.natAbs_mul]
-        have h1 : 1 < ℓ.natAbs := by omega
-        have h2 : 0 < k.natAbs := Int.natAbs_pos.mpr hk0
-        calc k.natAbs = 1 * k.natAbs := (one_mul _).symm
-          _ < ℓ.natAbs * k.natAbs := Nat.mul_lt_mul_of_pos_right h1 h2
-      exact ih _ hlt c' hc'cas hci₀' rfl
-    · rw [not_forall] at hall
-      exact ⟨c, hc, hall⟩
-variable {ℓ : ℕ} [Fact ℓ.Prime] {n : Type} [Fintype n] [DecidableEq n]
-  (ψ : R →+* Matrix n n (ZMod ℓ)) (hψ : Function.Surjective ψ)
-  (hker : ∀ x : R, ψ x = 0 ↔ ∃ y : R, x = (ℓ : R) * y)
-  {ι : Type*} [Fintype ι] (bR : Module.Basis ι ℤ R)
-include hker in
-private lemma linearIndependent_map_basis : LinearIndependent (ZMod ℓ) (fun i => ψ (bR i)) := by
+  refine Nat.strong_induction_on N ?_
+  intro N ih c hc hci₀ hN
+  if hall : ∀ i, ℓ ∣ bRR.repr c i then
+    obtain ⟨c', hc', hrepr⟩ := exists_eq_zsmul_of_forall_dvd bRR ℓ c hall
+    have hℓ0 : ℓ ≠ 0 := by omega
+    have hc'cas : IsCasimir c' := by
+      refine IsCasimir.of_zsmul (torsionFree_of_basis bRR ℓ hℓ0) ?_
+      rw [← hc']
+      refine hc
+    have hci₀' : bRR.repr c' i₀ ≠ 0 := by
+      rw [hrepr]
+      intro h0
+      obtain ⟨k, hk⟩ := hall i₀
+      rw [hk, Int.mul_ediv_cancel_left _ hℓ0] at h0
+      rw [h0, mul_zero] at hk
+      refine hci₀ hk
+    have hlt : (bRR.repr c' i₀).natAbs < N := by
+      rw [← hN, hrepr]
+      obtain ⟨k, hk⟩ := hall i₀
+      have hk0 : k ≠ 0 := by
+        intro hk0
+        subst hk0
+        rw [mul_zero] at hk
+        refine hci₀ hk
+      rw [hk, Int.mul_ediv_cancel_left _ hℓ0, Int.natAbs_mul]
+      have h1 : 1 < ℓ.natAbs := by omega
+      have h2 : 0 < k.natAbs := Int.natAbs_pos.mpr hk0
+      calc
+        _ = 1 * k.natAbs := (one_mul _).symm
+        _ < ℓ.natAbs * k.natAbs := Nat.mul_lt_mul_of_pos_right h1 h2
+    refine ih _ hlt c' hc'cas hci₀' rfl
+  else
+    rw [not_forall] at hall
+    refine ⟨c, hc, hall⟩
+
+variable {ℓ : ℕ} [Fact ℓ.Prime] {n : Type} [Fintype n] [DecidableEq n] {ι : Type*} [Fintype ι]
+
+private lemma linearIndependent_map_basis
+  (ψ : R →+* Matrix n n (ZMod ℓ)) (hker : ∀ x : R, ψ x = 0 ↔ ∃ y : R, x = (ℓ : R) * y)
+    (bR : Module.Basis ι ℤ R) : LinearIndependent (ZMod ℓ) (fun i => ψ (bR i)) := by
   classical
   rw [Fintype.linearIndependent_iff]
   intro g hg i
@@ -130,29 +163,45 @@ private lemma linearIndependent_map_basis : LinearIndependent (ZMod ℓ) (fun i 
   rw [hri] at hcoord
   have : (((g i).cast : ℤ) : ZMod ℓ) = 0 := by
     rw [hcoord, Int.cast_mul, Int.cast_natCast, ZMod.natCast_self, zero_mul]
-  rwa [ZMod.intCast_zmod_cast] at this
-include hψ in
-private lemma span_map_basis : ⊤ ≤ Submodule.span (ZMod ℓ) (Set.range fun i => ψ (bR i)) := by
+  rw [ZMod.intCast_zmod_cast] at this
+  refine this
+
+private lemma span_map_basis
+  (ψ : R →+* Matrix n n (ZMod ℓ)) (hψ : Function.Surjective ψ) (bR : Module.Basis ι ℤ R) :
+    ⊤ ≤ Submodule.span (ZMod ℓ) (Set.range fun i => ψ (bR i)) := by
   intro m _
-  obtain ⟨r, rfl⟩ := hψ m
+  obtain ⟨r, hr⟩ := hψ m
+  rw [← hr]
   rw [← bR.sum_repr r, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_zsmul, ← Int.cast_smul_eq_zsmul (ZMod ℓ)]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
-private noncomputable def reducedBasis : Module.Basis ι (ZMod ℓ) (Matrix n n (ZMod ℓ)) :=
+  refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
+
+private noncomputable def reducedBasis
+  (ψ : R →+* Matrix n n (ZMod ℓ)) (hψ : Function.Surjective ψ)
+    (hker : ∀ x : R, ψ x = 0 ↔ ∃ y : R, x = (ℓ : R) * y) (bR : Module.Basis ι ℤ R) :
+    Module.Basis ι (ZMod ℓ) (Matrix n n (ZMod ℓ)) :=
   Module.Basis.mk (linearIndependent_map_basis ψ hker bR) (span_map_basis ψ hψ bR)
-private lemma reducedBasis_apply (i : ι) : reducedBasis ψ hψ hker bR i = ψ (bR i) := by
+
+private lemma reducedBasis_apply
+  (ψ : R →+* Matrix n n (ZMod ℓ)) (hψ : Function.Surjective ψ)
+    (hker : ∀ x : R, ψ x = 0 ↔ ∃ y : R, x = (ℓ : R) * y) (bR : Module.Basis ι ℤ R) (i : ι) :
+    reducedBasis ψ hψ hker bR i = ψ (bR i) := by
   rw [reducedBasis, Module.Basis.mk_apply]
-variable {K : Type} [Field K] {n : Type} [Fintype n] [DecidableEq n]
-  {ι : Type*} [Fintype ι] (bM : Module.Basis ι K (Matrix n n K))
+
+variable {K : Type} [Field K] {n : Type} [Fintype n] [DecidableEq n] {ι : Type*} [Fintype ι] (bM : Module.Basis ι K (Matrix n n K))
+
 private noncomputable def sandwichElt (z : ι × ι → K) : Matrix n n K ⊗[K] (Matrix n n K)ᵐᵒᵖ :=
   ∑ p, z p • (bM p.1 ⊗ₜ[K] MulOpposite.op (bM p.2))
-private lemma mulLeftRight_sandwichElt (z : ι × ι → K) (m : Matrix n n K) :
+
+private lemma mulLeftRight_sandwichElt
+  (z : ι × ι → K) (m : Matrix n n K) :
     AlgHom.mulLeftRight K (Matrix n n K) (sandwichElt bM z) m = ∑ p, z p • (bM p.1 * m * bM p.2) := by
   simp only [sandwichElt, map_sum, map_smul, LinearMap.coe_sum, Finset.sum_apply, LinearMap.smul_apply,
     AlgHom.mulLeftRight_apply, MulOpposite.unop_op]
-omit [Fintype n] [DecidableEq n] in
-private lemma sandwichElt_eq_zero_iff (z : ι × ι → K) : sandwichElt bM z = 0 ↔ z = 0 := by
+
+private lemma sandwichElt_eq_zero_iff
+  (z : ι × ι → K) : sandwichElt bM z = 0 ↔ z = 0 := by
   classical
   let bMop : Module.Basis ι K (Matrix n n K)ᵐᵒᵖ := bM.map (MulOpposite.opLinearEquiv K)
   let bT : Module.Basis (ι × ι) K (Matrix n n K ⊗[K] (Matrix n n K)ᵐᵒᵖ) := bM.tensorProduct bMop
@@ -162,43 +211,55 @@ private lemma sandwichElt_eq_zero_iff (z : ι × ι → K) : sandwichElt bM z = 
   have hs : sandwichElt bM z = ∑ p, z p • bT p := by
     simp only [sandwichElt, hb]
   constructor
-  · intro h
+  ·
+    intro h
     rw [hs] at h
     have hrepr := bT.repr_sum_self z
     rw [h, map_zero] at hrepr
     funext p
     have := congrFun hrepr p
     rw [Finsupp.coe_zero, Pi.zero_apply] at this
-    exact this.symm
-  · rintro rfl
+    refine this.symm
+  ·
+    intro hz
+    subst hz
     simp [sandwichElt]
-private lemma forall_eq_zero_of_sandwich_eq_zero [Nonempty n] (z : ι × ι → K)
-    (h : ∀ m : Matrix n n K, ∑ p, z p • (bM p.1 * m * bM p.2) = 0) : z = 0 := by
+
+private lemma forall_eq_zero_of_sandwich_eq_zero
+  [Nonempty n] (z : ι × ι → K) (h : ∀ m : Matrix n n K, ∑ p, z p • (bM p.1 * m * bM p.2) = 0) :
+    z = 0 := by
   have hbij := (IsAzumaya.matrix K n).bij
   have h0 : AlgHom.mulLeftRight K (Matrix n n K) (sandwichElt bM z) = 0 := by
     apply LinearMap.ext
     intro m
     rw [mulLeftRight_sandwichElt, LinearMap.zero_apply, h m]
   have : sandwichElt bM z = 0 := hbij.1 (by rw [h0, map_zero])
-  exact (sandwichElt_eq_zero_iff bM z).mp this
-private lemma exists_eq_scalar_of_forall_commute (A : Matrix n n K) (h : ∀ B : Matrix n n K, B * A = A * B) :
-    ∃ k : K, A = Matrix.scalar n k := by
+  refine (sandwichElt_eq_zero_iff bM z).mp this
+
+private lemma exists_eq_scalar_of_forall_commute
+  (A : Matrix n n K) (h : ∀ B : Matrix n n K, B * A = A * B) : ∃ k : K, A = Matrix.scalar n k := by
   have hA : A ∈ Set.center (Matrix n n K) := Semigroup.mem_center_iff.mpr h
   rw [Matrix.center_eq_range] at hA
   obtain ⟨k, hk⟩ := hA
-  exact ⟨k, hk.symm⟩
+  refine ⟨k, hk.symm⟩
+
 /--
 [RingHom_exists_casimir_map_mul_eq_one_of_surjective_of_forall_map_eq_zero_iff](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_RingHom_exists_casimir_map_mul_eq_one_of_surjective_of_forall_map_eq_zero_iff.lean)
 -/
 @[path]
 private lemma main
-    {R : Type v} [Ring R] [Module.Free ℤ R] [Module.Finite ℤ R]
+  {R : Type v} [Ring R] [Module.Free ℤ R] [Module.Finite ℤ R]
     (ℓ : ℕ) [Fact ℓ.Prime] {n : Type} [Fintype n] [DecidableEq n] [Nonempty n]
-    (ψ : R →+* Matrix n n (ZMod ℓ)) (hψ : Function.Surjective ψ)
+    (ψ : R →+* Matrix n n (ZMod ℓ)) (c₀ : R ⊗[ℤ] R)
+    -- given
+    (hψ : Function.Surjective ψ)
     (hker : ∀ x : R, ψ x = 0 ↔ ∃ y : R, x = (ℓ : R) * y)
-    (c₀ : R ⊗[ℤ] R) (hc₀ : ∀ x : R, (x ⊗ₜ[ℤ] (1 : R)) * c₀ = c₀ * ((1 : R) ⊗ₜ[ℤ] x)) (h₀ : c₀ ≠ 0) :
+    (hc₀ : ∀ x : R, (x ⊗ₜ[ℤ] (1 : R)) * c₀ = c₀ * ((1 : R) ⊗ₜ[ℤ] x))
+    (h₀ : c₀ ≠ 0) :
+    -- imply
     ∃ c : R ⊗[ℤ] R, (∀ x : R, (x ⊗ₜ[ℤ] (1 : R)) * c = c * ((1 : R) ⊗ₜ[ℤ] x)) ∧
       ψ (LinearMap.mul' ℤ R c) = 1 := by
+    -- proof
   classical
   let _ : Fintype (Module.Free.ChooseBasisIndex ℤ R) := Module.Free.ChooseBasisIndex.fintype ℤ R
   let bR : Module.Basis (Module.Free.ChooseBasisIndex ℤ R) ℤ R := Module.Free.chooseBasis ℤ R
@@ -211,7 +272,8 @@ private lemma main
   set z : Module.Free.ChooseBasisIndex ℤ R × Module.Free.ChooseBasisIndex ℤ R → ℤ := fun p => bRR.repr c p with hz
   have hcz : c = ∑ p, z p • (bR p.1 ⊗ₜ[ℤ] bR p.2) := by
     conv_lhs => rw [← bRR.sum_repr c]
-    exact Finset.sum_congr rfl fun p _ => by rw [hbRR]
+    refine Finset.sum_congr rfl fun p _ => ?_
+    rw [hbRR]
   have hsand : ∀ y : R, ψ (LinearMap.mul' ℤ R (((1 : R) ⊗ₜ[ℤ] y) * c)) =
       ∑ p, ((z p : ℤ) : ZMod ℓ) • (bM p.1 * ψ y * bM p.2) := by
     intro y
@@ -225,28 +287,30 @@ private lemma main
     intro h
     have := congrFun h p₁
     simp only [hzbar, Pi.zero_apply, ZMod.intCast_zmod_eq_zero_iff_dvd] at this
-    exact hp₁ this
+    refine hp₁ this
   have hex : ∃ m : Matrix n n (ZMod ℓ), ∑ p, zbar p • (bM p.1 * m * bM p.2) ≠ 0 := by
     by_contra hall
     rw [not_exists] at hall
     apply hzbar_ne
-    exact forall_eq_zero_of_sandwich_eq_zero bM zbar fun m => by
-      have := hall m
-      rwa [not_not] at this
+    refine forall_eq_zero_of_sandwich_eq_zero bM zbar fun m => ?_
+    have := hall m
+    rw [not_not] at this
+    refine this
   obtain ⟨m₀, hm₀⟩ := hex
   have hcentral : ∀ m : Matrix n n (ZMod ℓ), ∃ k : ZMod ℓ, ∑ p, zbar p • (bM p.1 * m * bM p.2) = Matrix.scalar n k := by
     intro m
-    obtain ⟨y, rfl⟩ := hψ m
+    obtain ⟨y, hy⟩ := hψ m
     have h1 : ∑ p, zbar p • (bM p.1 * ψ y * bM p.2) = ψ (LinearMap.mul' ℤ R (((1 : R) ⊗ₜ[ℤ] y) * c)) := by
       rw [hsand]
-    rw [h1]
+    rw [← hy, h1]
     apply exists_eq_scalar_of_forall_commute
     intro B
-    obtain ⟨x, rfl⟩ := hψ B
-    rw [← map_mul, ← map_mul, (hc.one_tmul_mul y).commute_mul' x]
+    obtain ⟨x, hx⟩ := hψ B
+    rw [← hx, ← map_mul, ← map_mul, (hc.one_tmul_mul y).commute_mul' x]
   obtain ⟨κ, hκ⟩ := hcentral m₀
   have hκ0 : κ ≠ 0 := by
-    rintro rfl
+    intro hκ0
+    subst hκ0
     apply hm₀
     rw [hκ]
     simp
@@ -262,6 +326,7 @@ private lemma main
   obtain ⟨y₁, hy₁⟩ := hψ m₁
   refine ⟨((1 : R) ⊗ₜ[ℤ] y₁) * c, hc.one_tmul_mul y₁, ?_⟩
   rw [hsand y₁, hy₁]
-  exact hm₁
+  refine hm₁
+
 
 -- created on 2026-10-20

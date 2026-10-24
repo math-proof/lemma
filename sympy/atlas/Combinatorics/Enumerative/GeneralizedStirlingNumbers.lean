@@ -25,23 +25,4 @@ vanishes, giving `0`. -/
 noncomputable def generalizedStirlingSecond (n m : ℕ) (x : ℝ) : ℝ :=
   Finset.sum (Finset.range (n - m + 1)) (fun i =>
     (Nat.choose n i : ℝ) * (Nat.stirlingSecond (n - i) m : ℝ) * x ^ i)
-
-/-- Characterization of `generalizedStirlingFirst`: under `m ≤ n` it equals the
-exact source sum with coefficient `choose (i+m) m`, ordinary number
-`stirlingFirst n (i+m)`, and power `x^i`, including both endpoints `i = 0` and
-`i = n - m`. Source: Cereceda, arXiv:2401.13696v4, lines 132-142. -/
-theorem generalizedStirlingFirst_eq_sum (n m : ℕ) (x : ℝ) (_h : m ≤ n) :
-    generalizedStirlingFirst n m x =
-      Finset.sum (Finset.range (n - m + 1)) (fun i =>
-        (Nat.choose (i + m) m : ℝ) * (Nat.stirlingFirst n (i + m) : ℝ) * x ^ i) := rfl
-
-/-- Characterization of `generalizedStirlingSecond`: under `m ≤ n` it equals the
-exact source sum with coefficient `choose n i`, ordinary number
-`stirlingSecond (n-i) m`, and power `x^i`, including both endpoints `i = 0` and
-`i = n - m`. Source: Cereceda, arXiv:2401.13696v4, lines 132-142. -/
-theorem generalizedStirlingSecond_eq_sum (n m : ℕ) (x : ℝ) (_h : m ≤ n) :
-    generalizedStirlingSecond n m x =
-      Finset.sum (Finset.range (n - m + 1)) (fun i =>
-        (Nat.choose n i : ℝ) * (Nat.stirlingSecond (n - i) m : ℝ) * x ^ i) := rfl
-
 end MetaMathlibExt

@@ -10,6 +10,264 @@ import Mathlib.RingTheory.Algebraic.Defs
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 import sympy.atlas.NumberTheory.RothAuxiliary
+import Lemma.Int.RothFinsuppL1_Single.eq.NatAbs
+import Lemma.Finset.RothFinsuppL1_Sum.le.Sum_RothFinsuppL1
+import Lemma.Fin.RothKroneckerEncode.eq.Add_Mul_RothKroneckerEncode
+import Lemma.Fin.RothWeight_RothRidoutBoxComplement.eq.Sub_RothWeight.of.All_Gt_0.RothBox
+import Lemma.Fin.CoeffCoeffRothLastEquiv.eq.CoeffRothLastIndex.of.RothMvIndex
+import Lemma.Matrix.Mul_SubDiv1'2.le.RothWeightAndRothWeight.le.Sub_Mul_SubDiv1'2.of.Ne_0.RothBox.EqMulVecRothRidoutAuxMatrix_0.All_Gt_0.RothCoeff
+import Lemma.Polynomial.Map_AlgebraMapRothLastSlice.eq.MulCCoeff.of.EqRothLastEquiv_MapAlgebraMap_MulC_MapAlgebraMapMapC.RothMvIndex
+import Lemma.MvPolynomial.RothKronecker.eq.Monomial
+import Lemma.Fin.RothMvHasse_RothMvHasse.eq.SMul_RothMvHasse.of.RothMvIndex
+import Lemma.Fin.CardRothLowIndex.Gt_0.of.Lt_Div1'2.Gt_0.Gt_0
+import Lemma.Fin.Sum_SquareRothCenteredSum.le.DivMul_CardRothBox4.of.All_Gt_0
+import Lemma.Fin.RothDegreeBound_Sum.of.All_RothDegreeBound
+import Lemma.MvPolynomial.EvalAlgebraMap.eq.Eval_AlgebraMapFun
+import Lemma.Fin.RothMvHasse_Single1.eq.Pderiv
+import Lemma.Fin.Eval_0RothMvHasse.eq.Coeff.of.RothMvIndex
+import Lemma.Nat.MulChooseS
+import Lemma.Fin.MulMulMul4SquareCardRothLowIndices.le.CardRothBox.of.Gt_0.Gt_0.All_Gt_0
+import Lemma.Fin.Any_And_Det_RothMvHasse.ne.Zero.of.All_RothKroneckerBounded.LinearIndependent.Gt_1
+import Lemma.Real.Rpow.le.Prod_MulPowSRpow.of.All_Le.All_Le_PowDen.Ge_0.Ge_0.All_Gt_0.Gt_0.RothMvIndex
+import Lemma.Fin.Any_All_Eq_RothRidoutExponentAndAll_All_Le_RothRidoutExponentAndDvdProd_PowRothClearEval.of.All_DvdProd_Pow_Den.All_DvdProd_PowNum.NonemptySupport
+import Lemma.Fin.RothMvHasse0.eq.Zero.of.RothMvIndex
+import Lemma.Fin.EqRothLastTail.of.RothMvIndexAdd_1
+import Lemma.Fin.RothZeroBox.in.RothLowIndices.of.Lt_Div1'2.Gt_0
+import Lemma.Fin.RothMvVanishesBelow.of.Le_0
+import Lemma.Polynomial.LtDegreeMulC.of.LtDegree
+import Lemma.Finset.Prod_Pow_RothRidoutExponent.dvd.Prod_MulPowNumPowDenSub.of.RothMvIndex.All_DvdProd_Pow_Den.All_DvdProd_PowNum
+import Lemma.Fin.Pow_RothRidoutExponent.eq.Prod_MulPowPowPowPowSub.of.RothMvIndex
+import Lemma.Fin.RothMvL1'1.eq.One
+import Lemma.MvPolynomial.Eval.eq.RothHasseEval.of.RothBox.RothCoeff
+import Lemma.Fin.NatAbsCoeff.le.RothMvL1.of.RothMvIndex
+import Lemma.MvPolynomial.All_EqRothTranslateC
+import Lemma.Nat.RothMvOrderAdd.eq.AddRothSMvOrder.of.RothMvIndex
+import Lemma.Real.FiniteSetOfLtAbsSub_Div1RpowDenAndLeDen.of.Gt_0
+import Lemma.Fin.SquareRothCentered.le.Div1'4.of.RothBox.All_Gt_0
+import Lemma.Fin.RothMvL1.le.MulPowS
+import Lemma.Polynomial.Any_Eq_SMul.of.EqWronskian_0.Ne_0
+import Lemma.Fin.GetRothFlip.eq.Sub.of.RothBox
+import Lemma.Real.Any_LeRpowMulSum_AddSubAndDvd_RothClearEval_RothMvHasse_RothMvOfCoeff.of.LeRothMvWeight.All_Le_RothWeightAndLeRothWeight_Sub.All_LeRpowDenPow.All_LeRpowDenPow.All_DvdProd_Pow_Den.All_DvdProd_PowNum.All_Le_PowDen.All_Ge_0.All_Ge_0.Ge_0.Gt_1.All_Gt_0.RothMvIndex.RothCoeff
+import Lemma.Rat.NatDegreeRothIntPolynomial.Gt_0.of.IsAlgebraic
+import Lemma.Fin.EqRothMvOrder_Single
+import Lemma.Fin.RothLastEquiv_Map.eq.Map_MapRothLastEquiv
+import Lemma.Fin.RothMvOrderAdd_Single1.eq.AddRothMvOrder1.of.RothMvIndex
+import Lemma.Polynomial.LeDiv.of.LeNatAbsLeadingCoeffRpow_DenMul.Gt_0.GeDen_2.Ne_0
+import Lemma.Real.LiouvilleWith.of.InfiniteSetOfLtAbsSub_Div1RpowDen.Gt_0.Irrational
+import Lemma.Nat.EqEquivMapDomain_EquivMapDomainSymm
+import Lemma.Fin.RothMvVanishesBelow.of.All_RothMvVanishesBelow
+import Lemma.Fin.LeNatDegreeRothLastEquiv
+import Lemma.Polynomial.RothLastEquiv.eq.Sum_MulCMap.of.RothMvIndex.Eq_Sum_MulCMapC
+import Lemma.Fin.RothMvVanishesBelow
+import Lemma.Submodule.RothPolyWronskianRow.in.Span_XRothPolyJetRows1
+import Lemma.Real.RothCoordinateBase.Gt_0
+import Lemma.Fin.RothRidoutAuxMatrix_CastSuccLastNatDegreeRothIntegralPolynomial.eq.Eq_1.of.RothBox
+import Lemma.Fin.MapRothHasseDet.eq.RothHasseDet_Map
+import Lemma.Polynomial.RothPolyL1_RothPowerCoordAdd_1.le.MulAddRothPolyL1'1RothPolyL1_RothPowerCoord
+import Lemma.Polynomial.Eval.eq.PowMulLeadingCoeffRothIntPolynomial.of.IsAlgebraic
+import Lemma.Fin.RothDegreeBound.of.All_RothDegreeBound
+import Lemma.Fin.LeNatDegreeRothLastSlice.of.RothMvIndex
+import Lemma.Fin.MulRothDenProductEvalAlgebraMap.eq.RothClearEval
+import Lemma.Fin.Any_And_Det_RothMvHasse.ne.Zero.of.All_RothDegreeBoundOver.LinearIndependent
+import Lemma.Fin.RothMvWeight_Mul.eq.DivRothMvWeight.of.All_Gt_0.Gt_0.RothMvIndex
+import Lemma.Fin.Pderiv.eq.SMul.of.RothMvIndex
+import Lemma.Nat.Factorial.le.Pow2Mul.of.Gt_0
+import Lemma.Fin.EqCoeffRothMvOfCoeffRothBoxIndex.of.RothBox.RothCoeff
+import Lemma.Real.Prod_PowAbsSub.le.RpowMulNegRothMvWeight.of.All_LeAbsSub_RpowDivNeg.Gt_0
+import Lemma.Polynomial.RothPolyWronskianDerivativeRow0.eq.Zero
+import Lemma.Int.RothFinsuppL1_Sub.le.AddRothSFinsuppL1
+import Lemma.Fin.RothDegreeBoundNeg
+import Lemma.Rat.RothIntPolynomial.ne.Zero.of.IsAlgebraic
+import Lemma.Fin.RothDegreeBound
+import Lemma.Matrix.Eq_0.of.EqMulVecRothRidoutAuxMatrix_0.RothCoeff
+import Lemma.Real.Prod_MulPowRpowDenPowRpowDenSub.le.Pow_RothRidoutExponent.of.All_LeRpowDenPow.All_LeRpowDenPow.RothMvIndex
+import Lemma.Polynomial.LinearIndependent_J.of.LinearIndependent
+import Lemma.MvPolynomial.CoeffGetFinSuccEquivRothMvHasse_Cons.eq.RothMvHasse_CoeffHasseDerivGetFinSuccEquiv
+import Lemma.Submodule.DetUpdateRow.ne.Zero.of.In_Span.NeDet_0
+import Lemma.MvPolynomial.CoeffRothTranslate_Eval_C.eq.Sum_MulCoeffRothTranslate_CoeffPow.of.RothMvIndex
+import Lemma.Polynomial.Eval.eq.MulPowLeadingCoeffRothIntPolynomialSumRothHasseEval.of.RothCoeff.RothBox.IsAlgebraic
+import Lemma.Fin.RothTermDegree.le.Sum.of.RothBox
+import Lemma.Polynomial.NatAbsCoeff.le.RothPolyL1
+import Lemma.Fin.Nonempty_RothIntegralFactorData.of.RothDeterminantData
+import Lemma.Matrix.MulVecRothAuxMatrix.eq.Zero.of.EqMulVecRothRidoutAuxMatrix_0.RothCoeff
+import Lemma.Fin.RothMvWeight_RothRidoutComplement.eq.Sub_RothMvWeight.of.All_Le.All_Gt_0.RothMvIndex
+import Lemma.MvPolynomial.RothMvL1_Monomial.eq.NatAbs.of.RothMvIndex
+import Lemma.Polynomial.RothPolyJetRows.sub.RothPolyJetRows.of.Le
+import Lemma.MvPolynomial.Eval_LastCases.eq.Eval_Map_EvalRothLastEquiv
+import Lemma.MvPolynomial.DerivativeRothKronecker.eq.Sum_MulMulCPowPowXSubPow1RothKronecker_Pderiv
+import Lemma.Submodule.RothPolyWronskianDerivativeRow.in.Span_XRothPolyJetRowsAdd_1
+import Lemma.Rat.MonicRothIntegralPolynomial.of.IsAlgebraic
+import Lemma.Fin.RothDegreeBoundSMul
+import Lemma.Fin.RothMvHasseAdd.eq.AddRothSMvHasse.of.RothMvIndex
+import Lemma.Fin.RothMvL1_Sub.le.AddRothSMvL1
+import Lemma.Fin.LinearIndependent_RothKronecker.of.All_RothKroneckerBounded.LinearIndependent.Gt_1
+import Lemma.Fin.RothPolyL1_RothAuxTerm.le.PowMul2RothCoordinateBaseSum.of.RothBox
+import Lemma.MvPolynomial.CoeffRothTranslate
+import Lemma.Fin.RothMvVanishesBelow.of.All_LeRothMvWeight
+import Lemma.Fin.RothMvL1_RothMvHasse.le.MulPow2SumRothMvL1.of.RothMvIndex
+import Lemma.Polynomial.Eval_AlgebraMapMulLeadingCoeffRothIntPolynomialRothIntegralPolynomial.eq.Zero.of.IsAlgebraic
+import Lemma.Polynomial.Eval.eq.MulMulProd_ChoosePowLeadingCoeffRothIntPolynomialSumPow_RothTermDegree.of.RothBox.IsAlgebraic
+import Lemma.Polynomial.RothPolyL1X.eq.One
+import Lemma.Fin.RothMvOfCoeff.ne.Zero.of.Ne_0
+import Lemma.Fin.RothKronHasseJetRows.sub.RothKronHasseJetRows.of.Le
+import Lemma.Fin.RothMvVanishesBelow_Sum.of.All_RothMvVanishesBelow
+import Lemma.Fin.RothMvL1_Sum.le.Sum_RothMvL1
+import Lemma.Real.RothPolyL1_RothScaledPowerCoord.le.PowRothCoordinateBase.of.Le
+import Lemma.Real.RpowMul.le.RpowMul.of.LePow_Pow.Ge_0
+import Lemma.Polynomial.RothPolyL1Mul.le.MulRothSPolyL1
+import Lemma.Fin.Sub.le.RothMvWeightAndLe_RothMvWeight_RothRidoutComplement.of.In_SupportRothMvHasse_RothMvOfCoeff.LeRothMvWeight.RothMvIndex.All_Le_RothWeightAndLeRothWeight_Sub.RothCoeff.All_Gt_0
+import Lemma.Fin.RothMvVanishesBelow.of.Le
+import Lemma.Fin.RothKroneckerBounded_Sum.of.All_RothKroneckerBounded
+import Lemma.Fin.RothPolyL1.le.MulAdd_1RothMvL1.of.RothMvIndex
+import Lemma.Polynomial.Det_HasseDerivVal.ne.Zero.of.LinearIndependent
+import Lemma.Finset.RothFinsuppL1.eq.Sum_NatAbs.of.SubsetSupport
+import Lemma.Fin.CardRothBox.eq.Prod_Add_1
+import Lemma.Fin.RothMvL1_RothHasseDet.le.MulFactorialPowMulPow2SumRothMvL1
+import Lemma.Fin.CardRothBox.le.Pow2Sum.of.All_Gt_0
+import Lemma.Fin.MapRothMvHasse.eq.RothMvHasse_Map.of.RothMvIndex
+import Lemma.Fin.Nonempty_RothDeterminantData.of.Ne_0
+import Lemma.Finset.Prod_Pow_RothRidoutExponent.eq.Prod_MulPowProd_PowPowProd_PowSub.of.RothMvIndex
+import Lemma.Fin.RothHasseEval0.eq.RothEval.of.RothCoeff
+import Lemma.Fin.Sum_MulRothSCentered.eq.Zero.of.Ne.All_Gt_0
+import Lemma.Fin.Mul2CardRothLowIndex.le.CardRothBox.of.Le_MulMul2Square.Gt_0.Gt_0.All_Gt_0
+import Lemma.Int.RothFinsuppL1Neg.eq.RothFinsuppL1
+import Lemma.MvPolynomial.RothMvHasse.eq.Monomial.of.RothMvIndex
+import Lemma.Fin.RothCentered_RothFlip.eq.NegRothCentered.of.RothBox.All_Gt_0
+import Lemma.Fin.EqRothLastIndex_Last.of.RothMvIndex
+import Lemma.Fin.RothMvL1_CoeffRothLastEquiv.le.RothMvL1
+import Lemma.Fin.InvolutiveRothRidoutBoxComplement
+import Lemma.Fin.RothMvL1Add.le.AddRothSMvL1
+import Lemma.MvPolynomial.Eval_AlgebraMapRothMvHasse_RothMvOfCoeff.eq.RothHasseEval.of.RothMvIndex.RothCoeff
+import Lemma.Set.FiniteSetOfLeAbsQAndLeDen
+import Lemma.Real.RpowDivMul.le.PowRpow.of.Le_Pow.Ge_0.Gt_0.Gt_0.Gt_0
+import Lemma.Submodule.RothPolyRowDerivative.in.Span_XRothKronHasseJetRowsAdd_1.of.In_Span_XRothKronHasseJetRows
+import Lemma.MvPolynomial.RothMvVanishesBelow_Map_AlgebraMapRothMvOfCoeff
+import Lemma.Submodule.RothPolyRowDerivative.in.Span_XRothPolyJetRowsAdd_1.of.In_Span_XRothPolyJetRows
+import Lemma.Polynomial.RothPolyL1_RothPowerCoord.le.PowAddRothPolyL1'1
+import Lemma.MvPolynomial.RothMvVanishesBelow_MapAlgebraMap.of.All_EqEval_AlgebraMapFunRothMvHasse_0
+import Lemma.Polynomial.IsPrimitiveSubMulCDenXCNum
+import Lemma.Polynomial.Any_LtDivAndNeEvalHasseDeriv_MapAlgebraMap_0.of.Le_Rpow.Ne_0.GeDen_2.Gt_0.Gt_0
+import Lemma.Polynomial.RothPolyL1.eq.Sum_NatAbsCoeff
+import Lemma.Real.RpowMulAddSub.le.Pow_RothRidoutExponent.of.In_SupportRothMvHasse_RothMvOfCoeff.LeRothMvWeight.All_Le_RothWeightAndLeRothWeight_Sub.All_LeRpowDenPow.All_LeRpowDenPow.All_Le_PowDen.Ge_0.Ge_0.Ge_0.Gt_1.All_Gt_0.RothMvIndex.RothCoeff
+import Lemma.Fin.EqRothMvHasse0
+import Lemma.Fin.InjectiveRothBoxIndex
+import Lemma.Fin.RothMvWeight.ge.Zero.of.RothMvIndex
+import Lemma.Matrix.RothHasseEval_1.eq.Zero.of.EqMulVecRothAuxMatrix_0.RothCoeff.IsAlgebraic
+import Lemma.Fin.RothRidoutComplement.eq.Sub.of.RothMvIndex
+import Lemma.Fin.DegreeRothAuxTerm.lt.NatDegreeRothIntegralPolynomial.of.RothBox.IsAlgebraic
+import Lemma.Rat.NatDegreeRothIntegralPolynomial.Gt_0.of.IsAlgebraic
+import Lemma.Nat.Add_1.le.Pow2.of.Gt_0
+import Lemma.Fin.RothMvVanishesBelowAdd
+import Lemma.Polynomial.Eval.of.RothMvIndex
+import Lemma.Polynomial.DvdPowSubMulCDenXCNum
+import Lemma.Fin.CoeffRothLastSlice.eq.CoeffRothLastIndex.of.RothMvIndex
+import Lemma.Real.Prod_PowAbsSub.le.RpowMulNegRothMvWeight.of.All_LtAbsSub_Div1RpowDen.All_Le_PowDen.Gt_0.Ge_0.All_Gt_0
+import Lemma.Real.Finite.of.LtSum_Add_Add2.All_Ge_0.All_Ge_0.Le_1.Gt_0.IsAlgebraic
+import Lemma.Polynomial.EvalRothPowerCoord.eq.Pow.of.EqEval_0
+import Lemma.Real.NormRothRidoutAuxMatrix.le.PowMul_2RothCoordinateBaseSum
+import Lemma.Fin.RothMvL1.Gt_0.of.Ne_0
+import Lemma.Fin.Any_LtRothMvWeightAndNeEvalRothMvHasse_0.of.NotRothMvVanishesBelow
+import Lemma.Fin.GetRothRidoutBoxComplement.eq.Sub.of.RothBox
+import Lemma.Fin.RothMvHasse.eq.SMul.of.RothMvIndex
+import Lemma.Polynomial.Det_PowDerivativeGetVal.ne.Zero.of.LinearIndependent
+import Lemma.Polynomial.PowDen.le.NatAbsLeadingCoeff.of.Ne_0
+import Lemma.Fin.EqRothFlip.of.RothBox.Ne
+import Lemma.Fin.AbsEval.le.MulRothMvL1Prod_PowMax
+import Lemma.Fin.RothWeight.eq.AddRothCenteredSumDiv_2.of.RothBox
+import Lemma.Fin.NatAbsRothAuxMatrix.le.PowMul2RothCoordinateBaseSum.of.RothBox
+import Lemma.Fin.RothCentered_RothFlip.eq.RothCentered.of.RothBox.Ne
+import Lemma.Fin.EqRothLastIndexCastSucc.of.RothMvIndex
+import Lemma.Fin.RothMvL1_RothMvOfCoeff.le.Sum_NatAbs.of.RothCoeff
+import Lemma.Fin.RothRidoutAuxMatrix_CastSuccCastSucc.eq.RothAuxMatrix.of.RothBox.RothLowIndex
+import Lemma.Polynomial.Eval.eq.MulPowS.of.Le.IsAlgebraic
+import Lemma.Fin.RothPolyL1.le.MulPow2AddAddMulKMulKSMulKSumPowRothMvL1K.of.Gt_0
+import Lemma.Polynomial.RothPolyL1Add.le.AddRothSPolyL1
+import Lemma.Submodule.Any_And_All_In.of.All_In_Span.NeDet_0
+import Lemma.Polynomial.RothPolyL1_Sub.le.AddRothSPolyL1
+import Lemma.Nat.Injective_I
+import Lemma.Fin.RothMvVanishesBelow_Sub
+import Lemma.Polynomial.RothPolyL1_C.eq.NatAbs
+import Lemma.Fin.RothDegreeBound_RothMvOfCoeff.of.RothCoeff
+import Lemma.Fin.RothKronecker.ne.Zero.of.Ne_0.Gt_1
+import Lemma.Fin.RothDegreeBoundAdd
+import Lemma.Real.Mul.lt.Rpow.of.LtAdd.Le_Rpow.Le_Rpow.Ge_0.Gt_1
+import Lemma.Real.FiniteSetOfLtAbsSub_Div1RpowDen.of.NotLiouvilleWith.Gt_0.Irrational
+import Lemma.Fin.RothDegreeBoundOver_RothMvHasse.of.RothMvIndex
+import Lemma.Int.RothFinsuppL1CoeffMul.le.MulRothSFinsuppL1Coeff
+import Lemma.Fin.EqRothLastIndex.of.RothMvIndexAdd_1
+import Lemma.Fin.Ne_0AndRothVanishesBelowAndMul_SubDiv1'2.le.RothWeightAndRothWeight.le.Sub_Mul_SubDiv1'2AndRothMvL1.le.PowMul8RothCoordinateBaseSum.of.LeAddNatDegreeRothIntegralPolynomial2MulMul2Square.LtAddNatDegreeRothIntegralPolynomial2MulMul4Square.Lt_Div1'2.Gt_0.Gt_0.All_Gt_0.IsAlgebraic
+import Lemma.Fin.EqRothBoxIndex.of.RothBox
+import Lemma.Fin.RothMvVanishesBelowNeg
+import Lemma.Real.All_LeAndAntitoneAndAll_Le_MulAndAll_LePowAndSum.le.Mul2AndAll_LePowRpow.of.GeMul_2.LeMul_1.Gt_0.Le.Gt_0.All_LtPow.Monotone.All_Ge_2
+import Lemma.Fin.RothKronecker.eq.Sum_Monomial
+import Lemma.Fin.RothMvL1Mul.le.MulRothSMvL1
+import Lemma.MvPolynomial.AbsCoeffRothTranslate.le.MulMulPow4SumRothMvL1Prod_PowMax.of.RothMvIndex
+import Lemma.Fin.RothMvL1Det.le.MulFactorialPow.of.All_LeRothMvL1
+import Lemma.Polynomial.IsPrimitivePow.of.IsPrimitive
+import Lemma.Polynomial.Eval_LastCasesRothMvHasse_RothLastIndex.eq.MulEvalRothMvHasseEvalHasseDeriv.of.RothMvIndex.EqRothLastEquiv_MulCMapC
+import Lemma.Fin.CoeffRothAuxCombination.eq.Sum_MulCoeffRothAuxTerm.of.RothCoeff.RothBox
+import Lemma.Real.Any_All_Le_Rpow.of.Gt_0
+import Lemma.Fin.RothMvL1_Prod.le.Prod_RothMvL1
+import Lemma.Polynomial.RothLastEquiv.eq.MulCMap.of.EqRothLastEquiv_Sum_MulCMapC
+import Lemma.Real.AbsEval.le.MulMulMulPow8SumRothMvL1Prod_PowMaxRpow.of.All_LeProd_PowAbsSub_RpowMulNegRothMvWeight.Ge_1.Ge_0.RothMvIndex.All_Gt_0
+import Lemma.Int.RothFinsuppL1Add.le.AddRothSFinsuppL1
+import Lemma.Fin.RothMvL1Neg.eq.RothMvL1
+import Lemma.Polynomial.RothPolyRowDerivative_RothPolyDerivativeRow.eq.RothPolyDerivativeRowAdd_1
+import Lemma.Fin.RothMvWeight.le.DivRothMvOrder.of.All_Le.Gt_0.RothMvIndex
+import Lemma.Fin.RothMvWeight.eq.AddRothMvWeightDiv.of.RothMvIndex
+import Lemma.Real.RpowMulSum_AddSub.le.Prod_Pow.of.All_Any_Eq_RothRidoutExponent.LeRothMvWeight.All_Le_RothWeightAndLeRothWeight_Sub.All_LeRpowDenPow.All_LeRpowDenPow.All_Le_PowDen.All_Ge_0.All_Ge_0.Ge_0.Gt_1.All_Gt_0.RothMvIndex.RothCoeff
+import Lemma.Polynomial.DegreeRothPowerCoord.lt.NatDegree.of.GtNatDegree_0.Monic
+import Lemma.Polynomial.CoeffRothLastEquiv_RothMvHasse_RothLastIndex.eq.RothMvHasse_CoeffHasseDerivRothLastEquiv.of.RothMvIndex
+import Lemma.Fin.RothMvL1.eq.Sum_NatAbsCoeff
+import Lemma.Fin.RothMvVanishesBelow_MulDiv.of.All_Gt_0.Gt_0
+import Lemma.Fin.RothDegreeBound_ProdMulCard.of.All_RothDegreeBound
+import Lemma.Fin.RothMvVanishesBelow_Max
+import Lemma.Fin.CoeffRothMvHasse.eq.MulProd_ChooseExtAddCoeffAdd.of.RothMvIndex
+import Lemma.Polynomial.Any_And_Le_AddNatDegree1AndAll_Eq_CoeffAndAll_LeNatDegreeAndLinearIndependentAndLinearIndependentAndEq_Sum_MulCMap.of.Ne_0
+import Lemma.Real.RothDenProduct.le.RpowMul_Add1.of.All_LePowDen_RpowAdd1.Ge_0
+import Lemma.Matrix.RothAuxCombination1.eq.Zero.of.EqMulVecRothAuxMatrix_0.RothCoeff.IsAlgebraic
+import Lemma.Fin.AddMul_RothMvWeightMul_RothMvWeight_RothRidoutComplement.eq.Sum_AddDivMulDivMul_Sub.of.All_Le.RothMvIndex
+import Lemma.Fin.RothDegreeBoundOver
+import Lemma.Fin.CoeffRothTranslateM.eq.EvalRothMvHasse
+import Lemma.Real.MulPowS.le.RpowMulMulAdd_Mul.of.Le_MulMul.Le_RpowMul.Le_Rpow.Ge_0.Ge
+import Lemma.Fin.RothLastSlice0.ne.Zero.of.Ne_0
+import Lemma.Fin.RothMvVanishesBelowSMul
+import Lemma.Fin.RothMvWeightAdd.eq.AddRothSMvWeight.of.RothMvIndex
+import Lemma.Fin.Sum_SquareRothCentered.le.DivCardRothBox4.of.All_Gt_0
+import Lemma.Fin.Div_RothDenProduct.le.AbsEval.of.NeEval_AlgebraMapFun_0
+import Lemma.Fin.Eq.of.EqRothKroneckerEncode.All_Lt.All_Lt.Gt_1
+import Lemma.Real.Any_Lt_Den.of.Infinite.Subset_SetOfLtAbsSub_Div1RpowDen.Gt_0
+import Lemma.Fin.RothDegreeBoundOver_Map
+import Lemma.Fin.RothKronecker_X.eq.PowXPow
+import Lemma.Fin.RothDegreeBound_RothHasseDetMul
+import Lemma.Fin.RothRidoutAuxMatrix_LastAddNatDegreeRothIntegralPolynomial1.eq.Eq_RothRidoutBoxComplement1.of.RothBox
+import Lemma.Polynomial.RothPolyL1Neg.eq.RothPolyL1
+import Lemma.Real.Pow.le.RpowMul.of.LeSquare_Rpow.Le_Mul2.Ge_0.Ge_1
+import Lemma.MvPolynomial.FinSuccEquiv.eq.Map
+import Lemma.Fin.RothDegreeBoundOver_RothTranslate
+import Lemma.Real.Any_LtAbsSub_Div1RpowDenAndLt_Den.of.InfiniteSetOfLtAbsSub_Div1RpowDen.Gt_0
+import Lemma.Int.NatAbs.le.RothFinsuppL1
+import Lemma.Fin.RothMvVanishesBelow0
+import Lemma.Fin.EvalRothTranslateM.eq.Eval_Add
+import Lemma.Submodule.RothPolyDerivativeRow_RothKronecker.in.Span_XRothKronHasseJetRows
+import Lemma.Fin.NatAbsRothRidoutAuxMatrix.le.PowMul2RothCoordinateBaseSum.of.RothBox
+import Lemma.Fin.DivSquare64.le.DivSum_Max_Sub.of.Le_Add_1.Gt_0.GeMul_16.Gt_0.Le_Div_4.Le_1.Gt_0
+import Lemma.Polynomial.RothPolyL1.le.MulAddNatDegree1.of.All_LeNatAbsCoeff
+import Lemma.Real.Any_Ge_2AndAll_Le2Rpow.of.Gt_0
+import Lemma.Fin.RothMvVanishesBelow_Sub.of.RothMvIndex
+import Lemma.Polynomial.Eval_MapRothIntPolynomialAlgebraMap.eq.Zero
+import Lemma.Real.AbsSub.le.RpowDivNeg.of.LtAbsSub_Div1RpowDen.Le_PowDen.Gt_0.Ge_0.Gt_0
+import Lemma.Polynomial.DvdPowSubXC.of.All_EqEvalHasseDeriv_0
+import Lemma.Fin.CardRothLowIndex.lt.CardRothBox.of.Lt_MulMul4Square.Gt_0.Gt_0.All_Gt_0
+import Lemma.Real.Abs.le.AddAbs1.of.LtAbsSub_Div1RpowDen.Gt_0
+import Lemma.Real.All_Eval_AlgebraMapFunRothMvHasse.eq.Zero.of.LeRothMvWeight.Mul_MulMulPow8SumRothMvL1Prod_PowMax.lt.Rpow.All_Any_LeRpowAndDvd_RothClearEval_RothMvHasse.All_LeProd_PowAbsSub_RpowMulNegRothMvWeight.Gt_1.Ge_0.All_Gt_0.RothMvIndex
+import Lemma.Fin.RothMvHasse_Sum.eq.Sum_RothMvHasse.of.RothMvIndex
+import Lemma.Nat.RothLastIndex.eq.AddRothSLastIndex.of.RothMvIndex
+import Lemma.Fin.InvolutiveRothFlip
+import Lemma.Fin.CardSupport.le.CardRothBox
+import Lemma.Polynomial.Any_And_Det_PowDerivative.ne.Zero.of.LinearIndependent
+import Lemma.Fin.RothMvHasse.eq.Zero.of.Lt
+import Lemma.Polynomial.Wronskian.ne.Zero.of.NeNatDegree_NatDegree.Ne_0.Ne_0
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Int.NatAbs
 import Mathlib.NumberTheory.Padics.PadicVal.Basic
@@ -24,87 +282,6 @@ open scoped BigOperators
 
 namespace MetaMathlibExt
 
-private theorem ridout_padicNorm_int (l : Nat.Primes) (z : ℤ) (hz : z ≠ 0) :
-    padicNorm l.1 (z : ℚ) =
-      (((l.1 ^ padicValInt l.1 z : ℕ) : ℚ))⁻¹ := by
-  rw [padicNorm.eq_zpow_of_nonzero (by exact_mod_cast hz), padicValRat.of_int]
-  rw [zpow_neg]
-  norm_cast
-
-private theorem ridout_padicNorm_nat (l : Nat.Primes) (n : ℕ) (hn : n ≠ 0) :
-    padicNorm l.1 (n : ℚ) =
-      (((l.1 ^ padicValNat l.1 n : ℕ) : ℚ))⁻¹ := by
-  rw [padicNorm.eq_zpow_of_nonzero (by exact_mod_cast hn), padicValRat.of_nat]
-  rw [zpow_neg]
-  norm_cast
-
-private theorem ridout_padicNorm_product_eq_inv (S : Finset Nat.Primes)
-    (r : ℚ) (hr : r ≠ 0) :
-    ((∏ l ∈ S,
-        padicNorm l.1 (r.num : ℚ) * padicNorm l.1 (r.den : ℚ) : ℚ) : ℝ) =
-      (((∏ l ∈ S, l.1 ^ padicValInt l.1 r.num) *
-        (∏ l ∈ S, l.1 ^ padicValNat l.1 r.den) : ℕ) : ℝ)⁻¹ := by
-  have hnum : ∀ l : Nat.Primes,
-      padicNorm l.1 (r.num : ℚ) =
-        (((l.1 ^ padicValInt l.1 r.num : ℕ) : ℚ))⁻¹ :=
-    fun l ↦ ridout_padicNorm_int l r.num (Rat.num_ne_zero.mpr hr)
-  have hden : ∀ l : Nat.Primes,
-      padicNorm l.1 (r.den : ℚ) =
-        (((l.1 ^ padicValNat l.1 r.den : ℕ) : ℚ))⁻¹ :=
-    fun l ↦ ridout_padicNorm_nat l r.den r.den_nz
-  simp_rw [hnum, hden, ← mul_inv]
-  rw [Finset.prod_inv_distrib]
-  push_cast
-  rw [Finset.prod_mul_distrib]
-
-private theorem ridout_prime_power_product_dvd_int (S : Finset Nat.Primes)
-    (z : ℤ) :
-    ((∏ l ∈ S, l.1 ^ padicValInt l.1 z : ℕ) : ℤ) ∣ z := by
-  push_cast
-  apply Finset.prod_dvd_of_coprime
-  · rintro l hl k hk hlk
-    exact (Nat.coprime_pow_primes _ _ l.2 k.2
-      (Subtype.coe_ne_coe.mpr hlk)).isCoprime
-  · intro l hl
-    exact padicValInt_dvd z
-
-private theorem ridout_prime_power_product_dvd_nat (S : Finset Nat.Primes)
-    (n : ℕ) :
-    (∏ l ∈ S, l.1 ^ padicValNat l.1 n) ∣ n := by
-  exact_mod_cast (show
-    ((∏ l ∈ S, l.1 ^ padicValNat l.1 n : ℕ) : ℤ) ∣ (n : ℤ) by
-      push_cast
-      apply Finset.prod_dvd_of_coprime
-      · rintro l hl k hk hlk
-        exact (Nat.coprime_pow_primes _ _ l.2 k.2
-          (Subtype.coe_ne_coe.mpr hlk)).isCoprime
-      · intro l hl
-        exact_mod_cast (pow_padicValNat_dvd (p := l.1) (n := n)))
-
-private theorem ridout_finite_rat_of_abs_le_of_den_le (B : ℝ) (N : ℕ) :
-    Set.Finite {q : ℚ | |(q : ℝ)| ≤ B ∧ q.den ≤ N} := by
-  let K : ℤ := ⌈B * N⌉
-  let f : ℚ → ℤ × ℕ := fun q ↦ (q.num, q.den)
-  apply Set.Finite.of_finite_image (f := f)
-  · refine ((Set.finite_Icc (-K) K).prod (Set.finite_Icc 0 N)).subset ?_
-    rintro _ ⟨q, hq, rfl⟩
-    have hden0 : (0 : ℝ) ≤ q.den := by positivity
-    have hB : 0 ≤ B := (abs_nonneg (q : ℝ)).trans hq.1
-    have hnum : |(q.num : ℝ)| ≤ B * N := by
-      calc
-        |(q.num : ℝ)| = |(q : ℝ)| * q.den := by
-          rw [Rat.cast_def, abs_div, abs_of_pos (by positivity : (0 : ℝ) < q.den)]
-          field_simp
-        _ ≤ B * N := mul_le_mul hq.1 (by exact_mod_cast hq.2) hden0 hB
-    have hnumKReal : |(q.num : ℝ)| ≤ (K : ℝ) :=
-      hnum.trans (Int.le_ceil (B * N))
-    have hnumK : |q.num| ≤ K := by exact_mod_cast hnumKReal
-    change (-K ≤ q.num ∧ q.num ≤ K) ∧ 0 ≤ q.den ∧ q.den ≤ N
-    exact ⟨abs_le.mp hnumK, Nat.zero_le _, hq.2⟩
-  · intro a _ b _ hab
-    change (a.num, a.den) = (b.num, b.den) at hab
-    exact Rat.ext (congrArg Prod.fst hab) (congrArg Prod.snd hab)
-
 private noncomputable def ridoutNumPart (S : Finset Nat.Primes) (r : ℚ) : ℕ :=
   ∏ l ∈ S, l.1 ^ padicValInt l.1 r.num
 
@@ -114,484 +291,6 @@ private noncomputable def ridoutDenPart (S : Finset Nat.Primes) (r : ℚ) : ℕ 
 private def ridoutHeight (r : ℚ) : ℕ :=
   max r.num.natAbs r.den
 
-private theorem ridout_height_pos (r : ℚ) : 0 < ridoutHeight r := by
-  exact lt_of_lt_of_le r.pos (le_max_right _ _)
-
-private theorem ridout_basic_bounds (ξ ε : ℝ) (S : Finset Nat.Primes)
-    (r : ℚ) (hr : r ≠ 0)
-    (happrox :
-      ((∏ l ∈ S,
-        padicNorm l.1 (r.num : ℚ) * padicNorm l.1 (r.den : ℚ) : ℚ) : ℝ) *
-          |ξ - (r : ℝ)| <
-        (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹) :
-    ridoutNumPart S r ≤ r.num.natAbs ∧
-      ridoutDenPart S r ≤ r.den ∧
-      |ξ - (r : ℝ)| <
-        ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) *
-          (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ := by
-  have hnumDvd := ridout_prime_power_product_dvd_int S r.num
-  have hdenDvd := ridout_prime_power_product_dvd_nat S r.den
-  have hnum : ridoutNumPart S r ≤ r.num.natAbs := by
-    dsimp [ridoutNumPart]
-    exact_mod_cast Int.natAbs_le_of_dvd_ne_zero hnumDvd (Rat.num_ne_zero.mpr hr)
-  have hden : ridoutDenPart S r ≤ r.den := by
-    exact Nat.le_of_dvd r.pos (by simpa [ridoutDenPart] using hdenDvd)
-  have hparts : (0 : ℝ) <
-      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) := by
-    exact_mod_cast Nat.mul_pos
-      (show 0 < ridoutNumPart S r by
-        dsimp [ridoutNumPart]
-        exact Finset.prod_pos fun l _hl ↦ pow_pos l.2.pos _)
-      (show 0 < ridoutDenPart S r by
-        dsimp [ridoutDenPart]
-        exact Finset.prod_pos fun l _hl ↦ pow_pos l.2.pos _)
-  refine ⟨hnum, hden, ?_⟩
-  rw [ridout_padicNorm_product_eq_inv S r hr] at happrox
-  change (((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ))⁻¹ *
-      |ξ - (r : ℝ)| <
-        (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ at happrox
-  exact (inv_mul_lt_iff₀ hparts).mp happrox
-
-private theorem ridout_parts_le_height_sq (S : Finset Nat.Primes)
-    (r : ℚ) (hr : r ≠ 0) :
-    ridoutNumPart S r * ridoutDenPart S r ≤ ridoutHeight r ^ 2 := by
-  have hnumDvd := ridout_prime_power_product_dvd_int S r.num
-  have hdenDvd := ridout_prime_power_product_dvd_nat S r.den
-  have hnum : ridoutNumPart S r ≤ r.num.natAbs := by
-    dsimp [ridoutNumPart]
-    exact_mod_cast Int.natAbs_le_of_dvd_ne_zero hnumDvd (Rat.num_ne_zero.mpr hr)
-  have hden : ridoutDenPart S r ≤ r.den := by
-    exact Nat.le_of_dvd r.pos (by simpa [ridoutDenPart] using hdenDvd)
-  calc
-    ridoutNumPart S r * ridoutDenPart S r ≤ r.num.natAbs * r.den :=
-      Nat.mul_le_mul hnum hden
-    _ ≤ ridoutHeight r * ridoutHeight r :=
-      Nat.mul_le_mul (le_max_left _ _) (le_max_right _ _)
-    _ = ridoutHeight r ^ 2 := by ring
-
-private theorem ridout_dist_lt_one (ξ ε : ℝ) (hε : 0 < ε)
-    (S : Finset Nat.Primes) (r : ℚ) (hr : r ≠ 0)
-    (happrox :
-      ((∏ l ∈ S,
-        padicNorm l.1 (r.num : ℚ) * padicNorm l.1 (r.den : ℚ) : ℚ) : ℝ) *
-          |ξ - (r : ℝ)| <
-        (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹) :
-    |ξ - (r : ℝ)| < 1 := by
-  have hraw := (ridout_basic_bounds ξ ε S r hr happrox).2.2
-  have hH : (1 : ℝ) ≤ ridoutHeight r := by
-    exact_mod_cast ridout_height_pos r
-  have hparts : ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) ≤
-      (ridoutHeight r : ℝ) ^ 2 := by
-    exact_mod_cast ridout_parts_le_height_sq S r hr
-  have hpowNonneg : 0 ≤ (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ := by
-    positivity
-  calc
-    |ξ - (r : ℝ)| <
-        ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) *
-          (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ := hraw
-    _ ≤ (ridoutHeight r : ℝ) ^ 2 *
-          (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ :=
-      mul_le_mul_of_nonneg_right hparts hpowNonneg
-    _ = Real.rpow (ridoutHeight r : ℝ) (-ε) := by
-      rw [← Real.rpow_natCast]
-      rw [← Real.rpow_neg (zero_le_one.trans hH)]
-      rw [← Real.rpow_add (lt_of_lt_of_le zero_lt_one hH)]
-      congr 1
-      ring
-    _ ≤ 1 := Real.rpow_le_one_of_one_le_of_nonpos hH (by linarith)
-
-private theorem ridout_abs_rat_le (ξ ε : ℝ) (hε : 0 < ε)
-    (S : Finset Nat.Primes) (r : ℚ) (hr : r ≠ 0)
-    (happrox :
-      ((∏ l ∈ S,
-        padicNorm l.1 (r.num : ℚ) * padicNorm l.1 (r.den : ℚ) : ℚ) : ℝ) *
-          |ξ - (r : ℝ)| <
-        (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹) :
-    |(r : ℝ)| ≤ |ξ| + 1 := by
-  have hdist := ridout_dist_lt_one ξ ε hε S r hr happrox
-  calc
-    |(r : ℝ)| = |((r : ℝ) - ξ) + ξ| := by ring_nf
-    _ ≤ |(r : ℝ) - ξ| + |ξ| := abs_add_le _ _
-    _ ≤ 1 + |ξ| := by
-      rw [abs_sub_comm]
-      exact add_le_add hdist.le le_rfl
-    _ = |ξ| + 1 := by ring
-
-private theorem ridout_exists_rpow_threshold_of (C : ℝ) {lam : ℝ}
-    (hlam : 0 < lam) :
-    ∃ Q : ℕ, ∀ q : ℕ, Q ≤ q → C ≤ Real.rpow q lam := by
-  have hevent : ∀ᶠ x : ℝ in Filter.atTop, C ≤ x ^ lam :=
-    Filter.tendsto_atTop.1 (tendsto_rpow_atTop hlam) C
-  obtain ⟨A, hA⟩ := Filter.eventually_atTop.1 hevent
-  obtain ⟨Q, hQ⟩ := exists_nat_ge A
-  exact ⟨Q, fun q hq ↦ hA q (hQ.trans (by exact_mod_cast hq))⟩
-
-private theorem ridout_exists_rpow_bucket (d x τ : ℝ) (K : ℕ)
-    (hd : 1 < d) (hx : 1 ≤ x) (hxupper : x ≤ Real.rpow d 2)
-    (hτ : 0 < τ) (hK : 2 ≤ τ * K) :
-    ∃ k : Fin (K + 1),
-      Real.rpow d (τ * (k : ℕ)) ≤ x ∧
-      x < Real.rpow d (τ * ((k : ℕ) + 1)) := by
-  let P : ℕ → Prop := fun j ↦ Real.rpow d (τ * j) ≤ x
-  let k := Nat.findGreatest P K
-  have hPzero : P 0 := by simpa [P] using hx
-  have hkP : P k := by
-    exact Nat.findGreatest_spec (Nat.zero_le K) hPzero
-  have hkK : k ≤ K := Nat.findGreatest_le K
-  have hupper : x < Real.rpow d (τ * (k + 1)) := by
-    by_cases hk : k < K
-    · have hnP : ¬P (k + 1) :=
-        Nat.findGreatest_is_greatest (P := P) (Nat.lt_succ_self k)
-          (Nat.succ_le_iff.mpr hk)
-      apply lt_of_not_ge
-      simpa [P] using hnP
-    · have hkeq : k = K := le_antisymm hkK (Nat.le_of_not_gt hk)
-      rw [hkeq]
-      have hexp : (2 : ℝ) < τ * ((K : ℕ) + 1) := by
-        nlinarith
-      exact hxupper.trans_lt (Real.rpow_lt_rpow_of_exponent_lt hd hexp)
-  exact ⟨⟨k, Nat.lt_succ_of_le hkK⟩, hkP, hupper⟩
-
-private theorem ridout_num_le_den_sq (ξ ε : ℝ) (hε : 0 < ε)
-    (S : Finset Nat.Primes) (r : ℚ) (hr : r ≠ 0)
-    (happrox :
-      ((∏ l ∈ S,
-        padicNorm l.1 (r.num : ℚ) * padicNorm l.1 (r.den : ℚ) : ℚ) : ℝ) *
-          |ξ - (r : ℝ)| <
-        (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹)
-    (hlarge : |ξ| + 1 ≤ (r.den : ℝ)) :
-    r.num.natAbs ≤ r.den ^ 2 := by
-  have habs := ridout_abs_rat_le ξ ε hε S r hr happrox
-  have hnum : |(r.num : ℝ)| ≤ (r.den : ℝ) ^ 2 := by
-    calc
-      |(r.num : ℝ)| = |(r : ℝ)| * r.den := by
-        rw [Rat.cast_def, abs_div, abs_of_pos (by positivity : (0 : ℝ) < r.den)]
-        field_simp
-      _ ≤ (|ξ| + 1) * r.den :=
-        mul_le_mul_of_nonneg_right habs (by positivity)
-      _ ≤ (r.den : ℝ) * r.den :=
-        mul_le_mul_of_nonneg_right hlarge (by positivity)
-      _ = (r.den : ℝ) ^ 2 := by ring
-  have hnumCast : (r.num.natAbs : ℝ) ≤ ((r.den ^ 2 : ℕ) : ℝ) := by
-    simpa only [Nat.cast_natAbs, Int.cast_abs, Nat.cast_pow] using hnum
-  exact_mod_cast hnumCast
-
-private theorem ridout_approximation_with_den (ξ ε : ℝ) (hε : 0 < ε)
-    (S : Finset Nat.Primes) (r : ℚ) (hr : r ≠ 0)
-    (happrox :
-      ((∏ l ∈ S,
-        padicNorm l.1 (r.num : ℚ) * padicNorm l.1 (r.den : ℚ) : ℚ) : ℝ) *
-          |ξ - (r : ℝ)| <
-        (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹) :
-    |ξ - (r : ℝ)| <
-      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) *
-        (((r.den : ℝ) ^ (2 + ε))⁻¹) := by
-  have hraw := (ridout_basic_bounds ξ ε S r hr happrox).2.2
-  have hdenHeight : (r.den : ℝ) ≤ ridoutHeight r := by
-    exact_mod_cast (le_max_right r.num.natAbs r.den)
-  have hexp : 0 ≤ 2 + ε := by linarith
-  have hpows : Real.rpow (r.den : ℝ) (2 + ε) ≤
-      Real.rpow (ridoutHeight r : ℝ) (2 + ε) :=
-    Real.rpow_le_rpow (by positivity) hdenHeight hexp
-  have hheightPos : (0 : ℝ) < ridoutHeight r := by
-    exact_mod_cast ridout_height_pos r
-  have hinv : (Real.rpow (ridoutHeight r : ℝ) (2 + ε))⁻¹ ≤
-      (Real.rpow (r.den : ℝ) (2 + ε))⁻¹ := by
-    exact (inv_le_inv₀ (Real.rpow_pos_of_pos hheightPos _)
-      (Real.rpow_pos_of_pos (by positivity) _)).mpr hpows
-  exact hraw.trans_le (mul_le_mul_of_nonneg_left hinv (by positivity))
-
-private theorem ridout_bucket_product_bounds {ι : Type*} [Fintype ι]
-    (d τ : ℝ) (x y : ι → ℝ) (k l : ι → ℕ) (hd : 0 < d)
-    (hxlow : ∀ i, Real.rpow d (τ * k i) ≤ x i)
-    (hxhigh : ∀ i, x i ≤ Real.rpow d (τ * (k i + 1)))
-    (hylow : ∀ i, Real.rpow d (τ * l i) ≤ y i)
-    (hyhigh : ∀ i, y i ≤ Real.rpow d (τ * (l i + 1))) :
-    Real.rpow d (∑ i, (τ * k i + τ * l i)) ≤
-        (∏ i, x i) * ∏ i, y i ∧
-      (∏ i, x i) * ∏ i, y i ≤
-        Real.rpow d (∑ i, (τ * (k i + 1) + τ * (l i + 1))) := by
-  constructor
-  · calc
-      Real.rpow d (∑ i, (τ * k i + τ * l i)) =
-          ∏ i, Real.rpow d (τ * k i + τ * l i) :=
-        Real.rpow_sum_of_pos hd _ Finset.univ
-      _ = ∏ i, (Real.rpow d (τ * k i) * Real.rpow d (τ * l i)) := by
-        apply Finset.prod_congr rfl
-        intro i _hi
-        exact Real.rpow_add hd _ _
-      _ ≤ ∏ i, (x i * y i) := by
-        apply Finset.prod_le_prod₀
-        · intro i _hi
-          exact mul_nonneg (Real.rpow_nonneg hd.le _) (Real.rpow_nonneg hd.le _)
-        · intro i _hi
-          exact mul_le_mul (hxlow i) (hylow i)
-            (Real.rpow_nonneg hd.le _) ((Real.rpow_nonneg hd.le _).trans (hxlow i))
-      _ = (∏ i, x i) * ∏ i, y i := Finset.prod_mul_distrib
-  · calc
-      (∏ i, x i) * ∏ i, y i = ∏ i, (x i * y i) :=
-        Finset.prod_mul_distrib.symm
-      _ ≤ ∏ i, (Real.rpow d (τ * (k i + 1)) *
-          Real.rpow d (τ * (l i + 1))) := by
-        apply Finset.prod_le_prod₀
-        · intro i _hi
-          exact mul_nonneg ((Real.rpow_nonneg hd.le _).trans (hxlow i))
-            ((Real.rpow_nonneg hd.le _).trans (hylow i))
-        · intro i _hi
-          exact mul_le_mul (hxhigh i) (hyhigh i)
-            ((Real.rpow_nonneg hd.le _).trans (hylow i))
-            (Real.rpow_nonneg hd.le _)
-      _ = ∏ i, Real.rpow d (τ * (k i + 1) + τ * (l i + 1)) := by
-        apply Finset.prod_congr rfl
-        intro i _hi
-        exact (Real.rpow_add hd _ _).symm
-      _ = Real.rpow d (∑ i, (τ * (k i + 1) + τ * (l i + 1))) :=
-        (Real.rpow_sum_of_pos hd _ Finset.univ).symm
-
-private theorem ridout_exists_value_buckets (S : Finset Nat.Primes)
-    (r : ℚ) (hr : r ≠ 0) (τ : ℝ) (K : ℕ) (hden : 2 ≤ r.den)
-    (hnum : r.num.natAbs ≤ r.den ^ 2) (hτ : 0 < τ) (hK : 2 ≤ τ * K) :
-    ∃ k l : ↥S → Fin (K + 1),
-      (∀ i,
-        Real.rpow (r.den : ℝ) (τ * (k i : ℕ)) ≤
-            (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num ∧
-          (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num <
-            Real.rpow (r.den : ℝ) (τ * ((k i : ℕ) + 1))) ∧
-      (∀ i,
-        Real.rpow (r.den : ℝ) (τ * (l i : ℕ)) ≤
-            (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den ∧
-          (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den <
-            Real.rpow (r.den : ℝ) (τ * ((l i : ℕ) + 1))) := by
-  have hdreal : (1 : ℝ) < r.den := by exact_mod_cast hden
-  have hnumReal : (r.num.natAbs : ℝ) ≤ Real.rpow (r.den : ℝ) 2 := by
-    calc
-      (r.num.natAbs : ℝ) ≤ ((r.den ^ 2 : ℕ) : ℝ) := by exact_mod_cast hnum
-      _ = (r.den : ℝ) ^ 2 := by norm_cast
-      _ = Real.rpow (r.den : ℝ) 2 := (Real.rpow_two _).symm
-  have hdenSq : (r.den : ℝ) ≤ Real.rpow (r.den : ℝ) 2 := by
-    calc
-      (r.den : ℝ) ≤ (r.den : ℝ) ^ 2 := by
-        nlinarith [show (1 : ℝ) ≤ r.den by exact_mod_cast r.pos]
-      _ = Real.rpow (r.den : ℝ) 2 := (Real.rpow_two _).symm
-  have hnumBucket : ∀ i : ↥S, ∃ k : Fin (K + 1),
-      Real.rpow (r.den : ℝ) (τ * (k : ℕ)) ≤
-          (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num ∧
-        (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num <
-          Real.rpow (r.den : ℝ) (τ * ((k : ℕ) + 1)) := by
-    intro i
-    apply ridout_exists_rpow_bucket (r.den : ℝ)
-      ((i.1.1 : ℝ) ^ padicValInt i.1.1 r.num) τ K hdreal
-    · exact one_le_pow₀ (by exact_mod_cast i.1.2.one_le)
-    · apply le_trans _ hnumReal
-      exact_mod_cast Int.natAbs_le_of_dvd_ne_zero
-        (padicValInt_dvd r.num) (Rat.num_ne_zero.mpr hr)
-    · exact hτ
-    · exact hK
-  have hdenBucket : ∀ i : ↥S, ∃ l : Fin (K + 1),
-      Real.rpow (r.den : ℝ) (τ * (l : ℕ)) ≤
-          (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den ∧
-        (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den <
-          Real.rpow (r.den : ℝ) (τ * ((l : ℕ) + 1)) := by
-    intro i
-    apply ridout_exists_rpow_bucket (r.den : ℝ)
-      ((i.1.1 : ℝ) ^ padicValNat i.1.1 r.den) τ K hdreal
-    · exact one_le_pow₀ (by exact_mod_cast i.1.2.one_le)
-    · have hval : i.1.1 ^ padicValNat i.1.1 r.den ≤ r.den :=
-        Nat.le_of_dvd r.pos (pow_padicValNat_dvd (p := i.1.1) (n := r.den))
-      have hvalR : (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den ≤ r.den := by
-        calc
-          (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den =
-              ((i.1.1 ^ padicValNat i.1.1 r.den : ℕ) : ℝ) := by norm_cast
-          _ ≤ (r.den : ℝ) := by exact_mod_cast hval
-      exact hvalR.trans hdenSq
-    · exact hτ
-    · exact hK
-  choose k hk using hnumBucket
-  choose l hl using hdenBucket
-  exact ⟨k, l, hk, hl⟩
-
-private theorem ridout_exists_core_bucket (ξ ε : ℝ) (hε : 0 < ε)
-    (S : Finset Nat.Primes) (r : ℚ) (hr : r ≠ 0)
-    (happrox :
-      ((∏ q ∈ S,
-        padicNorm q.1 (r.num : ℚ) * padicNorm q.1 (r.den : ℚ) : ℚ) : ℝ) *
-          |ξ - (r : ℝ)| <
-        (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹)
-    (τ : ℝ) (K : ℕ) (hτ : 0 < τ) (hK : 2 ≤ τ * K)
-    (hτcard : 2 * (S.card : ℝ) * τ ≤ ε / 2)
-    (hden : 2 ≤ r.den) (hlarge : |ξ| + 1 ≤ (r.den : ℝ))
-    (hCpow : |ξ| + 2 ≤ Real.rpow (r.den : ℝ) (ε / 2)) :
-    ∃ k l : ↥S → Fin (K + 1),
-      let σ := ∑ i, (τ * (k i : ℕ) + τ * (l i : ℕ))
-      σ < 2 + ε / 2 ∧
-        |ξ - (r : ℝ)| <
-          1 / Real.rpow (r.den : ℝ) (2 + ε / 2 - σ) ∧
-        ∃ a b : ↥S → ℕ,
-          ((∏ i, i.1.1 ^ a i : ℕ) : ℤ) ∣ r.num ∧
-          (∏ i, i.1.1 ^ b i) ∣ r.den ∧
-          (∀ i, Real.rpow (r.den : ℝ) (τ * (k i : ℕ)) ≤
-            (i.1.1 : ℝ) ^ a i) ∧
-          ∀ i, Real.rpow (r.den : ℝ) (τ * (l i : ℕ)) ≤
-            (i.1.1 : ℝ) ^ b i := by
-  have hnum := ridout_num_le_den_sq ξ ε hε S r hr happrox hlarge
-  obtain ⟨k, l, hk, hl⟩ :=
-    ridout_exists_value_buckets S r hr τ K hden hnum hτ hK
-  let σ := ∑ i : ↥S, (τ * (k i : ℕ) + τ * (l i : ℕ))
-  let x : ↥S → ℝ := fun i ↦ (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num
-  let y : ↥S → ℝ := fun i ↦ (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den
-  have hprod := ridout_bucket_product_bounds (r.den : ℝ) τ x y
-    (fun i ↦ (k i : ℕ)) (fun i ↦ (l i : ℕ)) (by positivity)
-    (fun i ↦ (hk i).1) (fun i ↦ (hk i).2.le)
-    (fun i ↦ (hl i).1) (fun i ↦ (hl i).2.le)
-  have hnumEq : (ridoutNumPart S r : ℝ) = ∏ i : ↥S, x i := by
-    have hattach : (∏ i : ↥S, x i) =
-        ∏ q ∈ S, (q.1 : ℝ) ^ padicValInt q.1 r.num := by
-      calc
-        (∏ i : ↥S, x i) = ∏ i ∈ S.attach, x i :=
-          Finset.prod_coe_sort_eq_attach S x
-        _ = ∏ i ∈ S.attach,
-            (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num := by rfl
-        _ = ∏ q ∈ S, (q.1 : ℝ) ^ padicValInt q.1 r.num :=
-          Finset.prod_attach S
-            (fun q : Nat.Primes ↦ (q.1 : ℝ) ^ padicValInt q.1 r.num)
-    change ((∏ q ∈ S, q.1 ^ padicValInt q.1 r.num : ℕ) : ℝ) = ∏ i : ↥S, x i
-    push_cast
-    exact hattach.symm
-  have hdenEq : (ridoutDenPart S r : ℝ) = ∏ i : ↥S, y i := by
-    have hattach : (∏ i : ↥S, y i) =
-        ∏ q ∈ S, (q.1 : ℝ) ^ padicValNat q.1 r.den := by
-      calc
-        (∏ i : ↥S, y i) = ∏ i ∈ S.attach, y i :=
-          Finset.prod_coe_sort_eq_attach S y
-        _ = ∏ i ∈ S.attach,
-            (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den := by rfl
-        _ = ∏ q ∈ S, (q.1 : ℝ) ^ padicValNat q.1 r.den :=
-          Finset.prod_attach S
-            (fun q : Nat.Primes ↦ (q.1 : ℝ) ^ padicValNat q.1 r.den)
-    change ((∏ q ∈ S, q.1 ^ padicValNat q.1 r.den : ℕ) : ℝ) = ∏ i : ↥S, y i
-    push_cast
-    exact hattach.symm
-  have hpartsEq :
-      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) =
-        (∏ i, x i) * ∏ i, y i := by
-    push_cast
-    rw [hnumEq, hdenEq]
-  have hlower : Real.rpow (r.den : ℝ) σ ≤
-      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) := by
-    rw [hpartsEq]
-    simpa [σ] using hprod.1
-  have hupperExp :
-      (∑ i : ↥S, (τ * ((k i : ℕ) + 1) + τ * ((l i : ℕ) + 1))) =
-        σ + 2 * (S.card : ℝ) * τ := by
-    calc
-      (∑ i : ↥S, (τ * ((k i : ℕ) + 1) + τ * ((l i : ℕ) + 1))) =
-          ∑ i : ↥S, ((τ * (k i : ℕ) + τ * (l i : ℕ)) + 2 * τ) := by
-        apply Finset.sum_congr rfl
-        intro i _hi
-        ring
-      _ = (∑ i : ↥S, (τ * (k i : ℕ) + τ * (l i : ℕ))) +
-          ∑ _i : ↥S, 2 * τ := Finset.sum_add_distrib
-      _ = σ + 2 * (S.card : ℝ) * τ := by simp [σ]; ring
-  have hupper :
-      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) ≤
-        Real.rpow (r.den : ℝ) (σ + 2 * (S.card : ℝ) * τ) := by
-    rw [hpartsEq]
-    rw [← hupperExp]
-    exact hprod.2
-  have hbasic := ridout_basic_bounds ξ ε S r hr happrox
-  have habs := ridout_abs_rat_le ξ ε hε S r hr happrox
-  have hnumC : (r.num.natAbs : ℝ) ≤ (|ξ| + 1) * r.den := by
-    calc
-      (r.num.natAbs : ℝ) = |(r.num : ℝ)| := by
-        simp only [Nat.cast_natAbs, Int.cast_abs]
-      _ = |(r : ℝ)| * r.den := by
-        rw [Rat.cast_def, abs_div, abs_of_pos (by positivity : (0 : ℝ) < r.den)]
-        field_simp
-      _ ≤ (|ξ| + 1) * r.den :=
-        mul_le_mul_of_nonneg_right habs (by positivity)
-  have hpartsC :
-      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) ≤
-        (|ξ| + 1) * (r.den : ℝ) ^ 2 := by
-    calc
-      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) ≤
-          (r.num.natAbs : ℝ) * r.den := by
-        exact_mod_cast Nat.mul_le_mul hbasic.1 hbasic.2.1
-      _ ≤ ((|ξ| + 1) * r.den) * r.den :=
-        mul_le_mul_of_nonneg_right hnumC (by positivity)
-      _ = (|ξ| + 1) * (r.den : ℝ) ^ 2 := by ring
-  have hCstrict : |ξ| + 1 < Real.rpow (r.den : ℝ) (ε / 2) := by
-    linarith
-  have hpartsStrict :
-      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) <
-        Real.rpow (r.den : ℝ) (2 + ε / 2) := by
-    refine hpartsC.trans_lt ?_
-    calc
-      (|ξ| + 1) * (r.den : ℝ) ^ 2 <
-          Real.rpow (r.den : ℝ) (ε / 2) * (r.den : ℝ) ^ 2 :=
-        mul_lt_mul_of_pos_right hCstrict (sq_pos_of_pos (by positivity))
-      _ = Real.rpow (r.den : ℝ) (ε / 2) *
-          Real.rpow (r.den : ℝ) 2 := by
-        congr 1
-        exact (Real.rpow_two _).symm
-      _ = Real.rpow (r.den : ℝ) (ε / 2 + 2) :=
-        (Real.rpow_add (by positivity) _ _).symm
-      _ = Real.rpow (r.den : ℝ) (2 + ε / 2) := by ring_nf
-  have hdOne : (1 : ℝ) < r.den := by exact_mod_cast hden
-  have hσ : σ < 2 + ε / 2 :=
-    (Real.rpow_lt_rpow_left_iff hdOne).mp (hlower.trans_lt hpartsStrict)
-  have hdenApprox := ridout_approximation_with_den ξ ε hε S r hr happrox
-  have happCore : |ξ - (r : ℝ)| <
-      1 / Real.rpow (r.den : ℝ) (2 + ε / 2 - σ) := by
-    refine hdenApprox.trans_le ?_
-    calc
-      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) *
-          (Real.rpow (r.den : ℝ) (2 + ε))⁻¹ ≤
-          Real.rpow (r.den : ℝ) (σ + 2 * (S.card : ℝ) * τ) *
-            (Real.rpow (r.den : ℝ) (2 + ε))⁻¹ :=
-        mul_le_mul_of_nonneg_right hupper
-          (inv_nonneg.mpr (Real.rpow_nonneg (by positivity) _))
-      _ = Real.rpow (r.den : ℝ) (σ + 2 * (S.card : ℝ) * τ) *
-          Real.rpow (r.den : ℝ) (-(2 + ε)) := by
-        congr 1
-        exact (Real.rpow_neg (by positivity) _).symm
-      _ = Real.rpow (r.den : ℝ)
-          ((σ + 2 * (S.card : ℝ) * τ) + -(2 + ε)) :=
-        (Real.rpow_add (by positivity) _ _).symm
-      _ ≤ Real.rpow (r.den : ℝ) (-(2 + ε / 2 - σ)) := by
-        apply Real.rpow_le_rpow_of_exponent_le hdOne.le
-        nlinarith
-      _ = 1 / Real.rpow (r.den : ℝ) (2 + ε / 2 - σ) := by
-        rw [one_div]
-        exact Real.rpow_neg (by positivity) _
-  refine ⟨k, l, hσ, happCore, ?_⟩
-  let a : ↥S → ℕ := fun i ↦ padicValInt i.1.1 r.num
-  let b : ↥S → ℕ := fun i ↦ padicValNat i.1.1 r.den
-  refine ⟨a, b, ?_, ?_, ?_, ?_⟩
-  · dsimp [a]
-    push_cast
-    apply Fintype.prod_dvd_of_coprime
-    · intro i j hij
-      have hpne : i.1.1 ≠ j.1.1 := fun h ↦
-        hij (Subtype.ext (Nat.Primes.coe_nat_injective h))
-      exact (Nat.coprime_pow_primes _ _ i.1.2 j.1.2 hpne).isCoprime
-    · intro i
-      exact padicValInt_dvd r.num
-  · dsimp [b]
-    exact_mod_cast (show
-      ((∏ i : ↥S, i.1.1 ^ padicValNat i.1.1 r.den : ℕ) : ℤ) ∣ (r.den : ℤ) by
-        push_cast
-        apply Fintype.prod_dvd_of_coprime
-        · intro i j hij
-          have hpne : i.1.1 ≠ j.1.1 := fun h ↦
-            hij (Subtype.ext (Nat.Primes.coe_nat_injective h))
-          exact (Nat.coprime_pow_primes _ _ i.1.2 j.1.2 hpne).isCoprime
-        · intro i
-          exact_mod_cast (pow_padicValNat_dvd (p := i.1.1) (n := r.den)))
-  · intro i
-    exact (hk i).1
-  · intro i
-    exact (hl i).1
-
 private noncomputable def ridoutApproximants
     (ξ ε : ℝ) (S : Finset Nat.Primes) : Set ℚ :=
   {r : ℚ |
@@ -599,182 +298,4 @@ private noncomputable def ridoutApproximants
       padicNorm q.1 (r.num : ℚ) * padicNorm q.1 (r.den : ℚ) : ℚ) : ℝ) *
         |ξ - (r : ℝ)| <
       (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹}
-
-private theorem ridout_padic_roth_small (ξ : ℝ) (hξ : IsAlgebraic ℚ ξ)
-    (ε : ℝ) (hε : 0 < ε) (hεone : ε ≤ 1)
-    (S : Finset Nat.Primes) :
-    (ridoutApproximants ξ ε S).Finite := by
-  classical
-  let τ := ε / (4 * ((S.card : ℝ) + 1))
-  have hτ : 0 < τ := by dsimp [τ]; positivity
-  let K := ⌈2 / τ⌉₊
-  have hK : 2 ≤ τ * K := by
-    have hc : 2 / τ ≤ (K : ℝ) := Nat.le_ceil _
-    calc
-      (2 : ℝ) = τ * (2 / τ) := by field_simp
-      _ ≤ τ * K := mul_le_mul_of_nonneg_left hc hτ.le
-  have hτcard : 2 * (S.card : ℝ) * τ ≤ ε / 2 := by
-    have hc : (S.card : ℝ) / ((S.card : ℝ) + 1) ≤ 1 := by
-      apply (div_le_one (by positivity)).2
-      linarith
-    calc
-      2 * (S.card : ℝ) * τ =
-          (ε / 2) * ((S.card : ℝ) / ((S.card : ℝ) + 1)) := by
-        dsimp [τ]
-        field_simp
-        ring
-      _ ≤ (ε / 2) * 1 := mul_le_mul_of_nonneg_left hc (by positivity)
-      _ = ε / 2 := mul_one _
-  obtain ⟨QC, hQC⟩ :=
-    ridout_exists_rpow_threshold_of (|ξ| + 2) (by positivity : 0 < ε / 2)
-  let B₀ := max 2 (max ⌈|ξ| + 1⌉₊ QC)
-  have hBtwo : 2 ≤ B₀ := le_max_left _ _
-  have hBceil : ⌈|ξ| + 1⌉₊ ≤ B₀ :=
-    (le_max_left _ _).trans (le_max_right 2 (max ⌈|ξ| + 1⌉₊ QC))
-  have hBQC : QC ≤ B₀ :=
-    (le_max_right ⌈|ξ| + 1⌉₊ QC).trans
-      (le_max_right 2 (max ⌈|ξ| + 1⌉₊ QC))
-  let Core : (↥S → Fin (K + 1)) → (↥S → Fin (K + 1)) → Set ℚ :=
-    fun k l ↦
-      if ∑ i, (τ * (k i : ℕ) + τ * (l i : ℕ)) < 2 + ε / 2 then
-        {r : ℚ |
-          |ξ - (r : ℝ)| <
-              1 / Real.rpow (r.den : ℝ)
-                (2 + ε / 2 - ∑ i, (τ * (k i : ℕ) + τ * (l i : ℕ))) ∧
-            ∃ a b : ↥S → ℕ,
-              ((∏ i, i.1.1 ^ a i : ℕ) : ℤ) ∣ r.num ∧
-              (∏ i, i.1.1 ^ b i) ∣ r.den ∧
-              ∀ i,
-                Real.rpow (r.den : ℝ) (τ * (k i : ℕ)) ≤
-                    (i.1.1 : ℝ) ^ a i ∧
-                  Real.rpow (r.den : ℝ) (τ * (l i : ℕ)) ≤
-                    (i.1.1 : ℝ) ^ b i}
-      else ∅
-  have hCoreFinite : ∀ k l, (Core k l).Finite := by
-    intro k l
-    by_cases hσ : ∑ i, (τ * (k i : ℕ) + τ * (l i : ℕ)) < 2 + ε / 2
-    · dsimp only [Core]
-      rw [ite_eq_left hσ]
-      have hcore :=
-        MathlibExt.NumberTheory.RothAuxiliary.finite_of_divisible_approximations
-          ξ hξ (ε / 2) (by positivity) (by linarith)
-          (Finset.univ : Finset ↥S) (fun i ↦ i.1.1)
-          (fun i ↦ τ * (k i : ℕ)) (fun i ↦ τ * (l i : ℕ))
-          (by intro i hi; positivity) (by intro i hi; positivity) (by simpa using hσ)
-      simpa using hcore
-    · dsimp only [Core]
-      rw [ite_eq_right hσ]
-      exact Set.finite_empty
-  have hCoresFinite : (⋃ k, ⋃ l, Core k l).Finite :=
-    Set.finite_iUnion fun k ↦ Set.finite_iUnion fun l ↦ hCoreFinite k l
-  have hSmall :
-      {r : ℚ | r ∈ ridoutApproximants ξ ε S ∧ r.den ≤ B₀}.Finite := by
-    refine (ridout_finite_rat_of_abs_le_of_den_le (|ξ| + 1) B₀).subset ?_
-    intro r hr
-    refine ⟨?_, hr.2⟩
-    by_cases hr0 : r = 0
-    · subst r
-      simpa only [Rat.cast_zero, abs_zero] using
-        (show (0 : ℝ) ≤ |ξ| + 1 by positivity)
-    · exact ridout_abs_rat_le ξ ε hε S r hr0 hr.1
-  have hLarge :
-      {r : ℚ | r ∈ ridoutApproximants ξ ε S ∧ B₀ < r.den} ⊆
-        ⋃ k, ⋃ l, Core k l := by
-    intro r hr
-    have hr0 : r ≠ 0 := by
-      intro hz
-      subst r
-      norm_num at hr
-      omega
-    have hden : 2 ≤ r.den := hBtwo.trans hr.2.le
-    have hlarge : |ξ| + 1 ≤ (r.den : ℝ) := by
-      have hceil : |ξ| + 1 ≤ (⌈|ξ| + 1⌉₊ : ℝ) := Nat.le_ceil _
-      have hcast : (⌈|ξ| + 1⌉₊ : ℝ) ≤ B₀ := by exact_mod_cast hBceil
-      exact hceil.trans (hcast.trans (by exact_mod_cast hr.2.le))
-    have hCpow : |ξ| + 2 ≤ Real.rpow (r.den : ℝ) (ε / 2) :=
-      hQC r.den (hBQC.trans hr.2.le)
-    obtain ⟨k, l, hσ, happ, a, b, hnum, hdenDvd, ha, hb⟩ :=
-      ridout_exists_core_bucket ξ ε hε S r hr0 hr.1 τ K hτ hK hτcard
-        hden hlarge hCpow
-    apply Set.mem_iUnion.2
-    refine ⟨k, Set.mem_iUnion.2 ⟨l, ?_⟩⟩
-    dsimp only [Core]
-    rw [ite_eq_left hσ]
-    exact ⟨happ, a, b, hnum, hdenDvd, fun i ↦ ⟨ha i, hb i⟩⟩
-  refine (hSmall.union hCoresFinite).subset ?_
-  intro r hr
-  by_cases hden : r.den ≤ B₀
-  · exact Or.inl ⟨hr, hden⟩
-  · exact Or.inr (hLarge ⟨hr, Nat.lt_of_not_ge hden⟩)
-
-/-- Ridout's p-adic extension of Roth's theorem: for an irrational algebraic real `ξ`,
-`ε > 0`, and a finite set of primes `S`, only finitely many rationals
-satisfy `(∏ ℓ ∈ S, |p|_ℓ * |q|_ℓ) * |ξ - p / q| < 1 / H ^ (2 + ε)`,
-where `H = max |p| q` is the canonical rational height.
-The source prints the right side as `1 / q ^ (2 + ε)` for reduced fractions
-`p / q` with `q > 0`; since this file quantifies over all `r : ℚ` (including
-integers and large numerators with small denominators), the denominator alone
-does not control the height (e.g. `r = 2 ^ k` has `r.den = 1`), so the
-statement uses `H = max r.num.natAbs r.den` in place of the printed `q`.
-Denominator-only bounds are false over all of `ℚ`: with `2 ∈ S`,
-`r = 2 ^ k` gives LHS `= 1 - √2 / 2 ^ k < 1 =` RHS for every `k ≥ 1`,
-so the standard projective height is required for finiteness.
-p-adic normalization: `|ℓ|_ℓ = ℓ⁻¹`, formalized by `padicNorm`.
-Rational solutions `p / q` are canonical reduced rationals via `r.num`
-and `r.den`.
-
-Source: Boris Adamczewski, "The Many Faces of the Kempner Number",
-Journal of Integer Sequences 16 (2013), Article 13.2.15, `thmRi`
-environment, lines 736–746, attributed there to Ridout,
-<https://cs.uwaterloo.ca/journals/JIS/VOL16/Adamczewski/adam6.tex>.
-
-Proves `Wanted` entry `ridout_padic_roth`.
-
-Proof: The proof follows Roth's auxiliary-polynomial and index route, with the
-S-adic integrality step supplied by valuation divisibility and a finite pigeonhole.
--/
-theorem ridout_padic_roth (ξ : ℝ) (hξ : IsAlgebraic ℚ ξ) (hξi : Irrational ξ)
-    (ε : ℝ) (hε : 0 < ε)
-    (S : Finset Nat.Primes) :
-    Set.Finite {r : ℚ |
-      ((∏ ℓ ∈ S, padicNorm ℓ.1 (r.num : ℚ) * padicNorm ℓ.1 (r.den : ℚ) : ℚ) : ℝ) *
-          |ξ - (r : ℝ)| <
-        (((max r.num.natAbs r.den : ℕ) : ℝ) ^ (2 + ε))⁻¹} := by
-  change (ridoutApproximants ξ ε S).Finite
-  let ε₁ := min ε 1
-  have hε₁ : 0 < ε₁ := lt_min hε zero_lt_one
-  have hε₁one : ε₁ ≤ 1 := min_le_right _ _
-  have hsmall := ridout_padic_roth_small ξ hξ ε₁ hε₁ hε₁one S
-  have hsmallIrrational :
-      Set.Finite {r : ℚ | r ∈ ridoutApproximants ξ ε₁ S ∧ ξ ≠ (r : ℝ)} :=
-    hsmall.subset (by
-      intro r hr
-      exact hr.1)
-  refine hsmallIrrational.subset ?_
-  intro r hr
-  refine ⟨?_, hξi.ne_rat r⟩
-  change
-    ((∏ q ∈ S,
-      padicNorm q.1 (r.num : ℚ) * padicNorm q.1 (r.den : ℚ) : ℚ) : ℝ) *
-        |ξ - (r : ℝ)| <
-      (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε₁))⁻¹
-  change
-    ((∏ q ∈ S,
-      padicNorm q.1 (r.num : ℚ) * padicNorm q.1 (r.den : ℚ) : ℚ) : ℝ) *
-        |ξ - (r : ℝ)| <
-      (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ at hr
-  have hheight : (1 : ℝ) ≤ ridoutHeight r := by
-    exact_mod_cast ridout_height_pos r
-  have hpows : Real.rpow (ridoutHeight r : ℝ) (2 + ε₁) ≤
-      Real.rpow (ridoutHeight r : ℝ) (2 + ε) :=
-    Real.rpow_le_rpow_of_exponent_le hheight (by
-      dsimp [ε₁]
-      linarith [min_le_left ε 1])
-  have hinv : (Real.rpow (ridoutHeight r : ℝ) (2 + ε))⁻¹ ≤
-      (Real.rpow (ridoutHeight r : ℝ) (2 + ε₁))⁻¹ := by
-    exact (inv_le_inv₀
-      (Real.rpow_pos_of_pos (lt_of_lt_of_le zero_lt_one hheight) _)
-      (Real.rpow_pos_of_pos (lt_of_lt_of_le zero_lt_one hheight) _)).mpr hpows
-  exact hr.trans_le hinv
-
 end MetaMathlibExt

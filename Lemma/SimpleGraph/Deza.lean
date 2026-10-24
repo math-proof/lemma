@@ -4,50 +4,63 @@ import sympy.atlas.Combinatorics.SimpleGraph.Deza
 open SimpleGraph
 
 
+namespace SimpleGraph
+
 /--
 [IsDezaWith.a_le_k](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Deza.lean)
 -/
 @[path]
-private lemma IsDezaWith_a_le_k_eq
+lemma IsDezaWith.a_le_k
   [Fintype V]
   {G : SimpleGraph V} [DecidableRel G.Adj]
   {n k b a : ℕ}
 -- given
   (h : G.IsDezaWith n k b a) :
 -- imply
-  a ≤ k := by
+  a ≤ k :=
 -- proof
-  apply SimpleGraph.IsDezaWith.a_le_k G h
+  le_trans h.a_le_b h.b_le_k
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsDezaWith.b_lt_n](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Deza.lean)
 -/
 @[path]
-private lemma IsDezaWith_b_lt_n_eq
+lemma IsDezaWith.b_lt_n
   [Fintype V]
   {G : SimpleGraph V} [DecidableRel G.Adj]
   {n k b a : ℕ}
 -- given
   (h : G.IsDezaWith n k b a) :
 -- imply
-  b < n := by
+  b < n :=
 -- proof
-  apply SimpleGraph.IsDezaWith.b_lt_n G h
+  lt_of_le_of_lt h.b_le_k h.k_lt_n
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsDezaWith.a_lt_n](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Deza.lean)
 -/
 @[path]
-private lemma IsDezaWith_a_lt_n_eq
+lemma IsDezaWith.a_lt_n
   [Fintype V]
   {G : SimpleGraph V} [DecidableRel G.Adj]
   {n k b a : ℕ}
 -- given
   (h : G.IsDezaWith n k b a) :
 -- imply
-  a < n := by
+  a < n :=
 -- proof
-  apply SimpleGraph.IsDezaWith.a_lt_n G h
+  lt_of_le_of_lt h.a_le_k h.k_lt_n
+
+end SimpleGraph
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

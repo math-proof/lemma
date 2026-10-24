@@ -1,0 +1,24 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckPottsErgodicPhaseFamily.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FK.PottsErgodicPhaseFamily
+
+#print axioms StatMech.FK.freePottsClusterSumSpinProbabilityMeasure_isErgodicFor
+#print axioms StatMech.FK.freePottsClusterSumSpinProbabilityMeasure_isWeakLimit
+#print axioms StatMech.FK.wiredPottsClusterSumSpinProbabilityMeasure_isErgodicFor
+#print axioms StatMech.FK.freePottsClusterSumSpin_colorProbability_eq_inv
+#print axioms StatMech.FK.wiredPottsClusterSumSpin_boundaryColorBias_eq_fkTheta
+#print axioms StatMech.FK.wiredPottsClusterSumSpin_otherColorBias_eq_fkTheta
+#print axioms StatMech.FK.exists_ergodic_potts_cluster_phase_candidate_family_with_exact_wired_bias
+#print axioms
+  StatMech.FK.exists_ergodic_critical_potts_cluster_phase_candidate_family_with_exact_wired_bias
+#print axioms StatMech.FK.exists_pairwise_distinct_ergodic_potts_cluster_phase_family
+#print axioms StatMech.FK.exists_pairwise_distinct_ergodic_potts_cluster_phase_family_of_firstOrder
+#print axioms StatMech.FK.exists_pairwise_distinct_ergodic_critical_potts_cluster_phase_family

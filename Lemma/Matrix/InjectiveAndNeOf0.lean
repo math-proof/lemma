@@ -1,18 +1,13 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-variable {k : Type*} [Field k] {ι : Type*} {n : ℕ}
-private noncomputable def colAt (f : Fin n → ι → k) (i : ι) : Fin n → k := fun j => f j i
-private lemma span_range_colAt_eq_top (f : Fin n → ι → k) (hf : LinearIndependent k f) :
-    Submodule.span k (Set.range (colAt f)) = ⊤ := by
+
+private noncomputable def colAt {n : ℕ} (f : Fin n → ι → k) (i : ι) : Fin n → k := fun j => f j i
+
+private lemma span_range_colAt_eq_top [Field k] {n : ℕ} (f : Fin n → ι → k) (hf : LinearIndependent k f) : Submodule.span k (Set.range (colAt f)) = ⊤ := by
   by_contra hne
   obtain ⟨φ, hφ0, hle⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hne)
   set c : Fin n → k := fun j => φ (Pi.single j 1) with hc
@@ -34,44 +29,44 @@ private lemma span_range_colAt_eq_top (f : Fin n → ι → k) (hf : LinearIndep
   apply LinearMap.pi_ext'
   intro j
   ext
-  simp only [LinearMap.coe_comp, Function.comp_apply, LinearMap.coe_single, LinearMap.zero_comp,
-    LinearMap.zero_apply]
+  simp only [LinearMap.coe_comp, Function.comp_apply, LinearMap.coe_single, LinearMap.zero_comp, LinearMap.zero_apply]
   have := hc0 j
   simp only [hc] at this
   simpa using this
-private lemma exists_submatrix_det_ne_zero_of_linearIndependent (f : Fin n → ι → k) (hf : LinearIndependent k f) :
-    ∃ s : Fin n → ι, Function.Injective s ∧ (Matrix.of fun l j => f j (s l)).det ≠ 0 := by
+
+private lemma exists_submatrix_det_ne_zero_of_linearIndependent [Field k] {n : ℕ} (f : Fin n → ι → k) (hf : LinearIndependent k f) : ∃ s : Fin n → ι, Function.Injective s ∧ (Matrix.of fun l j => f j (s l)).det ≠ 0 := by
   classical
   obtain ⟨κ, a, ha, hspan, hli⟩ := exists_linearIndependent' k (colAt f)
   rw [span_range_colAt_eq_top f hf] at hspan
   let b : Module.Basis κ k (Fin n → k) := Module.Basis.mk hli (by rw [hspan])
   let e : Fin n ≃ κ := (b.indexEquiv (Pi.basisFun k (Fin n))).symm
   refine ⟨a ∘ e, ha.comp e.injective, ?_⟩
-  have hrows : LinearIndependent k (Matrix.of fun l j => f j ((a ∘ e) l)).row := by
-    have h2 : LinearIndependent k (colAt f ∘ a ∘ e) := (hli.comp e e.injective)
-    convert h2 using 1
-    rfl
-  have hU : IsUnit (Matrix.of fun l j => f j ((a ∘ e) l)) := Matrix.linearIndependent_rows_iff_isUnit.mp hrows
-  exact ((Matrix.isUnit_iff_isUnit_det _).mp hU).ne_zero
-variable {A : Type*} [CommRing A] [IsLocalRing A] {ι : Type*} {n : ℕ}
-private lemma exists_submatrix_isUnit_det_of_linearIndependent_residue (b : Fin n → ι → A)
-    (hb : LinearIndependent (IsLocalRing.ResidueField A) (fun j i => IsLocalRing.residue A (b j i))) :
-    ∃ s : Fin n → ι, Function.Injective s ∧ IsUnit (Matrix.of fun l j => b j (s l)).det := by
+  refine ((Matrix.isUnit_iff_isUnit_det _).mp (Matrix.linearIndependent_rows_iff_isUnit.mp ?_)).ne_zero
+  have h2 : LinearIndependent k (colAt f ∘ a ∘ e) := hli.comp e e.injective
+  convert h2 using 1
+  rfl
+
+private lemma exists_submatrix_isUnit_det_of_linearIndependent_residue [CommRing A] [IsLocalRing A] {n : ℕ} (b : Fin n → ι → A) (hb : LinearIndependent (IsLocalRing.ResidueField A) (fun j i => IsLocalRing.residue A (b j i))) : ∃ s : Fin n → ι, Function.Injective s ∧ IsUnit (Matrix.of fun l j => b j (s l)).det := by
   obtain ⟨s, hs, hdet⟩ := exists_submatrix_det_ne_zero_of_linearIndependent _ hb
   refine ⟨s, hs, ?_⟩
-  have hmap : IsLocalRing.residue A (Matrix.of fun l j => b j (s l)).det
-      = (Matrix.of fun l j => IsLocalRing.residue A (b j (s l))).det := by
-    rw [RingHom.map_det]; rfl
-  have hne : IsLocalRing.residue A (Matrix.of fun l j => b j (s l)).det ≠ 0 := hmap ▸ hdet
-  exact (IsLocalRing.residue_ne_zero_iff_isUnit _).mp hne
+  refine (IsLocalRing.residue_ne_zero_iff_isUnit _).mp ?_
+  have hmap : IsLocalRing.residue A (Matrix.of fun l j => b j (s l)).det = (Matrix.of fun l j => IsLocalRing.residue A (b j (s l))).det := by
+    rw [RingHom.map_det]
+    rfl
+  rw [hmap]
+  apply hdet
+
 /--
 [LinearIndependent_exists_det_submatrix_ne_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearIndependent_exists_det_submatrix_ne_zero.lean)
 -/
 @[path]
 private lemma main
-    {k : Type*} [Field k] {ι : Type*} {n : ℕ}
-    (f : Fin n → ι → k) (hf : LinearIndependent k f) :
-    ∃ s : Fin n → ι, Function.Injective s ∧ (Matrix.of fun l j => f j (s l)).det ≠ 0 :=
+  [Field k]
+  {n : ℕ}
+  (f : Fin n → ι → k) (hf : LinearIndependent k f) :
+  -- imply
+  ∃ s : Fin n → ι, Function.Injective s ∧ (Matrix.of fun l j => f j (s l)).det ≠ 0 :=
   exists_submatrix_det_ne_zero_of_linearIndependent f hf
+
 
 -- created on 2026-10-20

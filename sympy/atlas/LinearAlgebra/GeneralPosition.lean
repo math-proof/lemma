@@ -30,18 +30,7 @@ def IsGeneralPosition (k : Type u) [DivisionRing k] {V : Type v} {P : Type w} [A
 
 variable [DivisionRing k] [AddCommGroup V] [Module k V] [AffineSpace V P]
 
-/-- An affinely independent family is in general position in every dimension. -/
-theorem AffineIndependent.isGeneralPosition {p : ι → P} (hp : AffineIndependent k p) (d : ℕ) :
-    IsGeneralPosition k d p :=
-  fun s _ ↦ hp.subtype s
-
-/-- General position through a larger dimension implies general position through a smaller one. -/
-theorem IsGeneralPosition.mono {d e : ℕ} {p : ι → P} (hp : IsGeneralPosition k e p)
-    (hde : d ≤ e) : IsGeneralPosition k d p :=
-  fun s hs ↦ hp s (hs.trans (Nat.add_le_add_right hde 1))
-
 section Examples
-
 /-- The empty family is in general position in every dimension. -/
 example (p : Empty → P) (d : ℕ) : IsGeneralPosition k d p :=
   (affineIndependent_of_subsingleton k p).isGeneralPosition d
@@ -64,21 +53,7 @@ def IsGeneralPosition {k : Type u} [DivisionRing k] {V : Type v} [AddCommGroup V
 
 variable [DivisionRing k] [AddCommGroup V] [Module k V]
 
-/-- A projectively independent family is in general position in every dimension. -/
-theorem Independent.isGeneralPosition {p : ι → ℙ k V} (hp : Independent p) (d : ℕ) :
-    IsGeneralPosition d p := by
-  intro s _
-  rw [independent_iff] at hp ⊢
-  simpa [Finset.restrict_def, Function.comp_def] using
-    hp.comp (fun i : s ↦ (i : ι)) Subtype.val_injective
-
-/-- General position through a larger dimension implies general position through a smaller one. -/
-theorem IsGeneralPosition.mono {d e : ℕ} {p : ι → ℙ k V} (hp : IsGeneralPosition e p)
-    (hde : d ≤ e) : IsGeneralPosition d p :=
-  fun s hs ↦ hp s (hs.trans (Nat.add_le_add_right hde 1))
-
 section Examples
-
 /-- Two distinct projective points are in general position through dimension one. -/
 example (p q : ℙ k V) (hpq : p ≠ q) : IsGeneralPosition 1 ![p, q] :=
   ((independent_pair_iff_ne p q).2 hpq).isGeneralPosition 1

@@ -22,16 +22,8 @@ noncomputable def quotientInfAlgEquivPiQuotient :
     ext i
     rfl)
 
-@[simp]
-theorem quotientInfAlgEquivPiQuotient_mk (r : R) :
-    quotientInfAlgEquivPiQuotient K R ι I h (Ideal.Quotient.mk _ r) =
-      fun i ↦ Ideal.Quotient.mk (I i) r :=
-  rfl
-
 end Ideal
-
 namespace AdjoinRoot
-
 noncomputable def prodAlgEquiv {K : Type*} [Field K] {ι : Type*} [Fintype ι]
     (g : ι → Polynomial K)
     (hcop : Pairwise (fun i j => IsCoprime (g i) (g j))) :
@@ -43,24 +35,6 @@ noncomputable def prodAlgEquiv {K : Type*} [Field K] {ι : Type*} [Fintype ι]
   exact (Ideal.quotientEquivAlgOfEq K (Ideal.iInf_span_singleton hcop).symm).trans
     (Ideal.quotientInfAlgEquivPiQuotient K (Polynomial K) ι
       (fun i => Ideal.span {g i}) hI)
-
-@[simp]
-theorem prodAlgEquiv_mk {K : Type*} [Field K] {ι : Type*} [Fintype ι]
-    (g : ι → Polynomial K)
-    (hcop : Pairwise (fun i j => IsCoprime (g i) (g j))) (p : Polynomial K) :
-    prodAlgEquiv g hcop (AdjoinRoot.mk _ p) = fun i ↦ AdjoinRoot.mk (g i) p := by
-  classical
-  rfl
-
-@[simp]
-theorem prodAlgEquiv_root {K : Type*} [Field K] {ι : Type*} [Fintype ι]
-    (g : ι → Polynomial K)
-    (hcop : Pairwise (fun i j => IsCoprime (g i) (g j))) :
-    prodAlgEquiv g hcop (AdjoinRoot.root _) = fun i ↦ AdjoinRoot.root (g i) := by
-  classical
-  change prodAlgEquiv g hcop (AdjoinRoot.mk _ Polynomial.X) =
-    fun i ↦ AdjoinRoot.mk (g i) Polynomial.X
-  exact prodAlgEquiv_mk g hcop Polynomial.X
 
 noncomputable def tensorProductAlgEquiv {K K' : Type*} [Field K] [Field K']
     [Algebra K K'] (f : Polynomial K) :
@@ -89,25 +63,6 @@ noncomputable def tensorProductAlgEquiv {K K' : Type*} [Field K] [Field K']
       (Ideal.span {f}))).trans
     ((Ideal.quotientEquivAlg _ _ (polyEquivTensor' K K').symm rfl).trans
       (Ideal.quotientEquivAlgOfEq K' h)))
-
-@[simp]
-theorem tensorProductAlgEquiv_mk_tmul {K K' : Type*} [Field K] [Field K']
-    [Algebra K K'] (f p : Polynomial K) (c : K') :
-    letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := AdjoinRoot f) (B := K')
-    tensorProductAlgEquiv f (AdjoinRoot.mk f p ⊗ₜ[K] c) =
-      AdjoinRoot.mk (Polynomial.map (algebraMap K K') f)
-        (c • Polynomial.map (algebraMap K K') p) := by
-  rfl
-
-@[simp]
-theorem tensorProductAlgEquiv_root_tmul_one {K K' : Type*} [Field K] [Field K']
-    [Algebra K K'] (f : Polynomial K) :
-    letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := AdjoinRoot f) (B := K')
-    tensorProductAlgEquiv f (AdjoinRoot.root f ⊗ₜ[K] (1 : K')) =
-      AdjoinRoot.root (Polynomial.map (algebraMap K K') f) := by
-  change tensorProductAlgEquiv f (AdjoinRoot.mk f Polynomial.X ⊗ₜ[K] (1 : K')) =
-    AdjoinRoot.mk (Polynomial.map (algebraMap K K') f) Polynomial.X
-  rw [tensorProductAlgEquiv_mk_tmul, one_smul, Polynomial.map_X]
 
 /-- Base change of `AdjoinRoot f` along an explicit factorisation of `map f`
 into pairwise nonassociated irreducibles.
@@ -147,35 +102,4 @@ noncomputable def tensorProductAlgEquivPi {K K' : Type*} [Field K] [Field K']
     Ideal.span_singleton_eq_span_singleton.mpr hprod
   exact ((tensorProductAlgEquiv f).trans
     (Ideal.quotientEquivAlgOfEq K' hspan)).trans (prodAlgEquiv g hcop)
-
-@[simp]
-theorem tensorProductAlgEquivPi_mk_tmul_apply {K K' : Type*}
-    [Field K] [Field K'] [Algebra K K'] {ι : Type*} [Fintype ι]
-    (f p : Polynomial K) (g : ι → Polynomial K')
-    (hirr : ∀ i, Irreducible (g i))
-    (hne : Pairwise fun i j => ¬Associated (g i) (g j))
-    (hprod : Associated (Polynomial.map (algebraMap K K') f) (∏ i, g i))
-    (c : K') (i : ι) :
-    letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := AdjoinRoot f) (B := K')
-    tensorProductAlgEquivPi f g hirr hne hprod
-        (AdjoinRoot.mk f p ⊗ₜ[K] c) i =
-      AdjoinRoot.mk (g i) (c • Polynomial.map (algebraMap K K') p) := by
-  classical
-  rfl
-
-@[simp]
-theorem tensorProductAlgEquivPi_root_tmul_one_apply {K K' : Type*}
-    [Field K] [Field K'] [Algebra K K'] {ι : Type*} [Fintype ι]
-    (f : Polynomial K) (g : ι → Polynomial K')
-    (hirr : ∀ i, Irreducible (g i))
-    (hne : Pairwise fun i j => ¬Associated (g i) (g j))
-    (hprod : Associated (Polynomial.map (algebraMap K K') f) (∏ i, g i)) (i : ι) :
-    letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := AdjoinRoot f) (B := K')
-    tensorProductAlgEquivPi f g hirr hne hprod
-        (AdjoinRoot.root f ⊗ₜ[K] (1 : K')) i = AdjoinRoot.root (g i) := by
-  change tensorProductAlgEquivPi f g hirr hne hprod
-      (AdjoinRoot.mk f Polynomial.X ⊗ₜ[K] (1 : K')) i =
-    AdjoinRoot.mk (g i) Polynomial.X
-  rw [tensorProductAlgEquivPi_mk_tmul_apply, one_smul, Polynomial.map_X]
-
 end AdjoinRoot

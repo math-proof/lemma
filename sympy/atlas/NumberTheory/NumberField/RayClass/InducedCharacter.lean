@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/InducedCharacter.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.RayClass.Character
+import Lemma.Nat.NumberField.RayClass.Character
 /-!
 # Induced ray class characters (N428 Definition 22.12)
 
@@ -83,31 +84,9 @@ def RayClassCharacter.IsInducedBy (chi2 : RayClassCharacter m2)
     (chi1 : RayClassCharacter m1) (h : m1 ∣ m2) : Prop :=
   chi2 = chi1.comp (RayClassGroup.mapOfDvd h)
 
-/-- Induction holds iff pullbacks agree on all ideals coprime to `m2`. -/
-theorem RayClassCharacter.isInducedBy_iff (chi2 : RayClassCharacter m2)
-    (chi1 : RayClassCharacter m1) (h : m1 ∣ m2) :
-    chi2.IsInducedBy chi1 h ↔ ∀ x : coprimeFractionalIdeals m2,
-      pullback chi2 x = pullback chi1 (coprimeInclusion h x) := by
-  constructor
-  · intro hind x
-    simp [show chi2 = chi1.comp (RayClassGroup.mapOfDvd h) from hind]
-  · intro hall
-    refine MonoidHom.ext fun q => ?_
-    obtain ⟨x, rfl⟩ := rayClassMap_surjective m2 q
-    rw [MonoidHom.comp_apply, RayClassGroup.mapOfDvd_rayClassMap,
-      ← pullback_apply, ← pullback_apply]
-    exact hall x
-
 /-- A character is primitive if induced only from the same modulus. -/
 def RayClassCharacter.IsPrimitive (chi : RayClassCharacter m2) : Prop :=
   ∀ (m0 : Modulus K) (chi0 : RayClassCharacter m0) (h : m0 ∣ m2),
     chi.IsInducedBy chi0 h → m0 = m2
-
-/-- Unfolding of primitivity to an explicit induction equation. -/
-theorem RayClassCharacter.isPrimitive_iff (chi : RayClassCharacter m2) :
-    chi.IsPrimitive ↔ ∀ (m0 : Modulus K) (chi0 : RayClassCharacter m0)
-      (h : m0 ∣ m2), chi = chi0.comp (RayClassGroup.mapOfDvd h) → m0 = m2 :=
-  Iff.rfl
-
 end Modulus
 end NumberField

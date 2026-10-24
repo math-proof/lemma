@@ -5,8 +5,8 @@ import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import sympy.stats.frozen_invariant_law
 import Lemma.Matrix.RowStochastic_Exp.of.Ge_0.GeneratorMatrix
-import Lemma.NormedSpace.EqVecMul_Exp.of.EqVecMul_0
-import Lemma.NormedSpace.VecMul.eq.Zero.of.All_EqVecMul_Exp
+import Lemma.Matrix.EqVecMul_Exp.of.EqVecMul_0
+import Lemma.Matrix.VecMul.eq.Zero.of.All_EqVecMul_Exp
 open Matrix NormedSpace
 
 
@@ -48,10 +48,10 @@ private lemma main
         infer_instance
       fixed_iff_invariantLaw := fun θ hθ μ hμ => by
         simp only [hT]
-        exact ⟨fun h => ⟨NormedSpace.VecMul.eq.Zero.of.All_EqVecMul_Exp h⟩, fun h t _ => NormedSpace.EqVecMul_Exp.of.EqVecMul_0 h.invariant t⟩ }
+        exact ⟨fun h => ⟨Matrix.VecMul.eq.Zero.of.All_EqVecMul_Exp h⟩, fun h t _ => Matrix.EqVecMul_Exp.of.EqVecMul_0 h.invariant t⟩ }
     solves_equation := fun θ hθ ξ => by
-      refine ⟨continuous_iff_continuousAt.2 fun t => (NormedSpace.HasDerivAtVecMul_Exp (Q θ) ξ t).continuousAt, fun t _ => ?_⟩
-      simpa [hT] using (NormedSpace.HasDerivAtVecMul_Exp (Q θ) ξ t).hasDerivWithinAt
+      refine ⟨continuous_iff_continuousAt.2 fun t => (Matrix.HasDerivAtVecMul_Exp (Q θ) ξ t).continuousAt, fun t _ => ?_⟩
+      simpa [hT] using (Matrix.HasDerivAtVecMul_Exp (Q θ) ξ t).hasDerivWithinAt
     mixing := fun θ hθ ξ hξ t ht => by simpa [hT] using h₂.bound θ hθ ξ hξ t ht }, rfl, rfl, rfl, hT⟩
 
 

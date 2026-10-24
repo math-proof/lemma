@@ -7,7 +7,7 @@ import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEqPermuteTail.of.Le_1
 import Lemma.Tensor.SEqPermuteTailS.of.LeLength
-open List Tensor Nat Bool Vector Fin
+open List Tensor Nat Bool Vector Fin Matrix
 set_option maxHeartbeats 400000
 
 

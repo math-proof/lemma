@@ -1,0 +1,34 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectWiredDualBoundarySplice.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectWiredDualBoundarySplice
+
+#print axioms StatMech.FrontierD.mem_fkRectDualCutEdges_iff
+#print axioms StatMech.FrontierD.fkRectWiredDualAddedEdges_disjoint_openEdges
+#print axioms StatMech.FrontierD.fkRectDualConfiguration_forceCutClosed_apply
+#print axioms StatMech.FrontierD.fkRectOpenEdges_dual_forceCutClosed
+#print axioms StatMech.FrontierD.fkRectOpenEdges_dual_forceCutClosed_eq_inserted
+#print axioms StatMech.FrontierD.fkRectDual_forceCutClosed_eq_configurationOfInsertedEdges
+#print axioms StatMech.FrontierD.fkRectInsertEdgeList
+#print axioms StatMech.FrontierD.fkRectInsertEdgeList_eq_union_toFinset
+#print axioms StatMech.FrontierD.fkRectWiredDualAddedEdgeList
+#print axioms StatMech.FrontierD.fkRectInsert_wiredDualAddedEdgeList
+#print axioms StatMech.FrontierD.fkRectDual_forceCutClosed_eq_configurationOfInsertedEdgeList
+#print axioms StatMech.FrontierD.fkRectDualRightBoundaryEdge
+#print axioms StatMech.FrontierD.fkRectDualRightBoundaryEdge_mem_dualCutEdges
+#print axioms StatMech.FrontierD.fkRectDualRightBoundaryEdgeList
+#print axioms StatMech.FrontierD.fkRectWiredDualRightBoundaryAddedEdgeList
+#print axioms StatMech.FrontierD.mem_fkRectWiredDualRightBoundaryAddedEdgeList
+#print axioms StatMech.FrontierD.fkRectZeroTurnDualRightBoundaryContacts
+#print axioms StatMech.FrontierD.fkRectZeroTurnDualRightBoundaryContacts_nonempty
+#print axioms StatMech.FrontierD.FKRectMergeInsertionOrder
+#print axioms StatMech.FrontierD.fkRectBlackBoundaryPerm_insert_merge_partition
+#print axioms StatMech.FrontierD.fkRectBlackBoundaryPerm_sameCycle_insertEdgeList_of_mergeOrder
+#print axioms StatMech.FrontierD.fkRectMedialLoopGraph_reachable_insertEdgeList_of_mergeOrder

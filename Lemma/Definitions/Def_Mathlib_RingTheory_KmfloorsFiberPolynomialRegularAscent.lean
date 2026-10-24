@@ -1,0 +1,269 @@
+import Mathlib
+import Lemma.Definitions.Def_Mathlib_RingTheory_RegularLocalRingFlatLocalAscent
+import Lemma.Definitions.Def_Mathlib_RingTheory_SmoothFieldFiberRegularStalksStandardSmoothReduction
+
+set_option autoImplicit false
+set_option maxHeartbeats 800000
+set_option synthInstance.maxHeartbeats 400000
+
+universe u
+
+open Polynomial
+
+theorem kmf2_polyasc_isLocalization_primeCompl_congr {A : Type*} [CommSemiring A]
+    {I J : Ideal A} [I.IsPrime] [J.IsPrime] (h : I = J)
+    (S : Type*) [CommSemiring S] [Algebra A S]
+    (hloc : IsLocalization I.primeCompl S) :
+    IsLocalization J.primeCompl S := by
+  subst h
+  exact hloc
+
+theorem kmf2_polyasc_isRegularLocalRing_of_isLocalization_primeCompl
+    {A : Type*} [CommRing A] (J : Ideal A) [J.IsPrime]
+    (S : Type*) [CommRing S] [Algebra A S]
+    (h : IsLocalization J.primeCompl S)
+    (hreg : IsRegularLocalRing (Localization.AtPrime J)) :
+    IsRegularLocalRing S := by
+  haveI := h
+  haveI := hreg
+  exact IsRegularLocalRing.of_ringEquiv (R := Localization.AtPrime J)
+    (IsLocalization.algEquiv J.primeCompl (Localization.AtPrime J) S).toRingEquiv
+
+theorem kmf2_polyasc_isRegularLocalRing_atPrime_of_isLocalization_primeCompl
+    {A : Type*} [CommRing A] (J : Ideal A) [J.IsPrime]
+    (S : Type*) [CommRing S] [Algebra A S]
+    (h : IsLocalization J.primeCompl S)
+    (hreg : IsRegularLocalRing S) :
+    IsRegularLocalRing (Localization.AtPrime J) := by
+  haveI := h
+  haveI := hreg
+  exact IsRegularLocalRing.of_ringEquiv (R := S)
+    (IsLocalization.algEquiv J.primeCompl S (Localization.AtPrime J)).toRingEquiv
+
+theorem kmf2_polyasc_isRegularLocalRing_localization_atPrime_of_comap_C_eq_bot
+    (D : Type u) [CommRing D] [IsDomain D]
+    (Q : Ideal (Polynomial D)) [Q.IsPrime]
+    (hQ0 : ∀ d : D, Polynomial.C d ∈ Q → d = 0) :
+    IsRegularLocalRing (Localization.AtPrime Q) := by
+  letI : Algebra (Polynomial D) (Polynomial (FractionRing D)) :=
+    Polynomial.algebra D (FractionRing D)
+  haveI hloc : IsLocalization
+      ((nonZeroDivisors D).map (Polynomial.C : D →+* Polynomial D))
+      (Polynomial (FractionRing D)) :=
+    Polynomial.isLocalization (nonZeroDivisors D) (FractionRing D)
+
+  have hdisj : Disjoint
+      (((nonZeroDivisors D).map (Polynomial.C : D →+* Polynomial D) : Submonoid (Polynomial D)) :
+        Set (Polynomial D)) (Q : Set (Polynomial D)) := by
+    rw [Set.disjoint_left]
+    intro x hx hxQ
+    obtain ⟨d, hd, rfl⟩ := Submonoid.mem_map.mp hx
+    exact mem_nonZeroDivisors_iff_ne_zero.mp hd (hQ0 d hxQ)
+
+  haveI hq'' : (Q.map (algebraMap (Polynomial D) (Polynomial (FractionRing D)))).IsPrime :=
+    IsLocalization.isPrime_of_isPrime_disjoint
+      ((nonZeroDivisors D).map (Polynomial.C : D →+* Polynomial D))
+      (Polynomial (FractionRing D)) Q inferInstance hdisj
+  have hcom : (Q.map (algebraMap (Polynomial D) (Polynomial (FractionRing D)))).comap
+      (algebraMap (Polynomial D) (Polynomial (FractionRing D))) = Q :=
+    IsLocalization.comap_map_of_isPrime_disjoint
+      ((nonZeroDivisors D).map (Polynomial.C : D →+* Polynomial D))
+      (Polynomial (FractionRing D)) inferInstance hdisj
+  have htrans := IsLocalization.isLocalization_isLocalization_atPrime_isLocalization
+      (M := (nonZeroDivisors D).map (Polynomial.C : D →+* Polynomial D))
+      (T := Localization.AtPrime
+        (Q.map (algebraMap (Polynomial D) (Polynomial (FractionRing D)))))
+      (p := Q.map (algebraMap (Polynomial D) (Polynomial (FractionRing D))))
+  have hQloc : IsLocalization Q.primeCompl
+      (Localization.AtPrime
+        (Q.map (algebraMap (Polynomial D) (Polynomial (FractionRing D))))) :=
+    kmf2_polyasc_isLocalization_primeCompl_congr hcom
+      (Localization.AtPrime
+        (Q.map (algebraMap (Polynomial D) (Polynomial (FractionRing D))))) htrans
+
+  have hregq : IsRegularLocalRing
+      (Localization.AtPrime
+        (Q.map (algebraMap (Polynomial D) (Polynomial (FractionRing D))))) :=
+    kmf2_fiber_isRegularLocalRing_localization_atPrime_polynomial (FractionRing D) _
+  exact kmf2_polyasc_isRegularLocalRing_atPrime_of_isLocalization_primeCompl Q
+    (Localization.AtPrime
+      (Q.map (algebraMap (Polynomial D) (Polynomial (FractionRing D)))))
+    hQloc hregq
+
+theorem kmf2_polyasc_isRegularLocalRing_localization_atPrime_fiberPrime
+    (R : Type u) [CommRing R] (P : Ideal (Polynomial R)) [P.IsPrime]
+    [hPbar : (P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R)))).IsPrime] :
+    IsRegularLocalRing (Localization.AtPrime
+      (P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R))))) := by
+  have hIP : Ideal.map Polynomial.C (P.under R) ≤ P := by
+    rw [Ideal.map_le_iff_le_comap, ← Polynomial.algebraMap_eq]
+
+  haveI : IsRegularLocalRing (Localization.AtPrime
+      ((P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R)))).comap
+        (P.under R).polynomialQuotientEquivQuotientPolynomial)) := by
+    apply kmf2_polyasc_isRegularLocalRing_localization_atPrime_of_comap_C_eq_bot
+      (R ⧸ P.under R)
+    intro d hd
+    obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective d
+    rw [Ideal.mem_comap,
+      show (Polynomial.C ((Ideal.Quotient.mk (P.under R)) r)) =
+        (Polynomial.C r).map (Ideal.Quotient.mk (P.under R)) from (Polynomial.map_C _).symm,
+      Ideal.polynomialQuotientEquivQuotientPolynomial_map_mk] at hd
+    obtain ⟨a, haP, hab⟩ :=
+      (Ideal.mem_map_iff_of_surjective _ Ideal.Quotient.mk_surjective).mp hd
+    have hsub : a - Polynomial.C r ∈ Ideal.map Polynomial.C (P.under R) :=
+      (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).mp hab
+    have hCrP : Polynomial.C r ∈ P := by
+      have h2 := P.sub_mem haP (hIP hsub)
+      rwa [sub_sub_cancel] at h2
+    rw [Ideal.Quotient.eq_zero_iff_mem]
+    show r ∈ P.under R
+    rw [Ideal.mem_comap]
+    rwa [Polynomial.algebraMap_eq]
+  exact IsRegularLocalRing.of_ringEquiv
+    (R := Localization.AtPrime
+      ((P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R)))).comap
+        (P.under R).polynomialQuotientEquivQuotientPolynomial))
+    (IsLocalization.ringEquivOfRingEquiv
+      (Localization.AtPrime
+        ((P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R)))).comap
+          (P.under R).polynomialQuotientEquivQuotientPolynomial))
+      (Localization.AtPrime
+        (P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R)))))
+      (P.under R).polynomialQuotientEquivQuotientPolynomial
+      (((P.under R).polynomialQuotientEquivQuotientPolynomial).map_primeCompl_comap_eq
+        (P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R))))))
+
+theorem kmf2_polyasc_isRegularLocalRing_quotient_fiber
+    (R : Type u) [CommRing R] (P : Ideal (Polynomial R)) [P.IsPrime] :
+    IsRegularLocalRing
+      (Localization.AtPrime P ⧸
+        Ideal.map (algebraMap (Polynomial R) (Localization.AtPrime P))
+          (Ideal.map Polynomial.C (P.under R))) := by
+  have hIP : Ideal.map Polynomial.C (P.under R) ≤ P := by
+    rw [Ideal.map_le_iff_le_comap, ← Polynomial.algebraMap_eq]
+  haveI hPbar : (P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R)))).IsPrime := by
+    refine Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective ?_
+    rw [Ideal.mk_ker]
+    exact hIP
+
+  have hsub : Algebra.algebraMapSubmonoid
+      (Polynomial R ⧸ Ideal.map Polynomial.C (P.under R)) P.primeCompl
+      = (P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R)))).primeCompl := by
+    ext x
+    constructor
+    · intro hx
+      obtain ⟨b, hb, rfl⟩ := Submonoid.mem_map.mp hx
+      rw [Ideal.mem_primeCompl_iff]
+      rw [Ideal.Quotient.algebraMap_eq]
+      intro hmem
+      obtain ⟨a, haP, hab⟩ :=
+        (Ideal.mem_map_iff_of_surjective _ Ideal.Quotient.mk_surjective).mp hmem
+      have hd : a - b ∈ Ideal.map Polynomial.C (P.under R) :=
+        (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).mp hab
+      have hbP : b ∈ P := by
+        have h2 := P.sub_mem haP (hIP hd)
+        rwa [sub_sub_cancel] at h2
+      exact (Ideal.mem_primeCompl_iff.mp hb) hbP
+    · intro hx
+      obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective x
+      refine Submonoid.mem_map.mpr ⟨b, ?_, by rw [Ideal.Quotient.algebraMap_eq]⟩
+      rw [Ideal.mem_primeCompl_iff]
+      intro hbP
+      exact (Ideal.mem_primeCompl_iff.mp hx) (Ideal.mem_map_of_mem _ hbP)
+
+  haveI hloc2 : IsLocalization
+      (P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R)))).primeCompl
+      (Localization.AtPrime P ⧸
+        Ideal.map (algebraMap (Polynomial R) (Localization.AtPrime P))
+          (Ideal.map Polynomial.C (P.under R))) := by
+    have h0 : IsLocalization
+        (Algebra.algebraMapSubmonoid
+          (Polynomial R ⧸ Ideal.map Polynomial.C (P.under R)) P.primeCompl)
+        (Localization.AtPrime P ⧸
+          Ideal.map (algebraMap (Polynomial R) (Localization.AtPrime P))
+            (Ideal.map Polynomial.C (P.under R))) := inferInstance
+    rwa [hsub] at h0
+
+  have hPbarReg : IsRegularLocalRing (Localization.AtPrime
+      (P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R))))) :=
+    kmf2_polyasc_isRegularLocalRing_localization_atPrime_fiberPrime R P
+  exact kmf2_polyasc_isRegularLocalRing_of_isLocalization_primeCompl
+    (P.map (Ideal.Quotient.mk (Ideal.map Polynomial.C (P.under R))))
+    (Localization.AtPrime P ⧸
+      Ideal.map (algebraMap (Polynomial R) (Localization.AtPrime P))
+        (Ideal.map Polynomial.C (P.under R)))
+    hloc2 hPbarReg
+
+theorem kmf2_polyasc_isRegularLocalRing_localization_atPrime_polynomial_of_isRegularRing
+    (R : Type u) [CommRing R] [IsRegularRing R]
+    (P : Ideal (Polynomial R)) [P.IsPrime] :
+    IsRegularLocalRing (Localization.AtPrime P) := by
+  letI := Localization.AtPrime.algebraOfLiesOver (P.under R) P
+  haveI : IsRegularLocalRing (Localization.AtPrime (P.under R)) :=
+    IsRegularRing.isRegularLocalRing_localization (P.under R)
+  haveI : Module.Free R (Polynomial R) := Module.Free.of_basis (Polynomial.basisMonomials R)
+  haveI : Module.Flat R (Polynomial R) := inferInstance
+  haveI : Module.Flat (Localization.AtPrime (P.under R)) (Localization.AtPrime P) :=
+    inferInstance
+  haveI : IsLocalHom (algebraMap (Localization.AtPrime (P.under R))
+      (Localization.AtPrime P)) := by
+    rw [Localization.AtPrime.IsLiesOverAlgebra.algebraMap_eq (p := P.under R) (P := P)]
+    infer_instance
+  have hfiber : IsRegularLocalRing
+      (Localization.AtPrime P ⧸
+        Ideal.map (algebraMap (Localization.AtPrime (P.under R)) (Localization.AtPrime P))
+          (IsLocalRing.maximalIdeal (Localization.AtPrime (P.under R)))) := by
+    have h1 : Ideal.map
+        (algebraMap (Localization.AtPrime (P.under R)) (Localization.AtPrime P))
+        (IsLocalRing.maximalIdeal (Localization.AtPrime (P.under R)))
+        = Ideal.map (algebraMap (Polynomial R) (Localization.AtPrime P))
+            (Ideal.map Polynomial.C (P.under R)) := by
+      rw [← IsLocalization.AtPrime.map_eq_maximalIdeal (P.under R)
+          (Localization.AtPrime (P.under R)),
+        Ideal.map_map, Ideal.map_map, ← IsScalarTower.algebraMap_eq,
+        ← Polynomial.algebraMap_eq, ← IsScalarTower.algebraMap_eq]
+    rw [h1]
+    exact kmf2_polyasc_isRegularLocalRing_quotient_fiber R P
+  exact RegularFlatLocalAscent.isRegularLocalRing_of_flat_of_isRegularLocalRing_quotient
+    (Localization.AtPrime (P.under R)) (Localization.AtPrime P) hfiber
+
+theorem kmf2_polyasc_isRegularRing_polynomial_of_isRegularRing
+    (R : Type u) [CommRing R] [IsRegularRing R] :
+    IsRegularRing (Polynomial R) := by
+  haveI : IsNoetherianRing (Polynomial R) := Polynomial.isNoetherianRing
+  refine isRegularRing_iff.mpr ?_
+  intro P hP
+  exact kmf2_polyasc_isRegularLocalRing_localization_atPrime_polynomial_of_isRegularRing R P
+
+theorem kmf2_polyasc_isRegularRing_mvPolynomial_fin
+    (k : Type u) [Field k] (n : ℕ) :
+    IsRegularRing (MvPolynomial (Fin n) k) := by
+  induction n with
+  | zero =>
+    haveI : IsRegularRing k := by
+      haveI : IsDedekindDomain k := inferInstance
+      infer_instance
+    exact IsRegularRing.of_ringEquiv (MvPolynomial.isEmptyAlgEquiv k (Fin 0)).symm.toRingEquiv
+  | succ n ih =>
+    haveI := ih
+    haveI : IsRegularRing (Polynomial (MvPolynomial (Fin n) k)) :=
+      kmf2_polyasc_isRegularRing_polynomial_of_isRegularRing (MvPolynomial (Fin n) k)
+    exact IsRegularRing.of_ringEquiv (MvPolynomial.finSuccEquiv k n).symm.toRingEquiv
+
+theorem kmf2_polyasc_gate_input_clause_mvPolynomial
+    (k : Type u) [Field k] (n : ℕ) :
+    Algebra.Smooth k (MvPolynomial (Fin n) k) ∧
+      ∀ (P : Ideal (MvPolynomial (Fin n) k)) [P.IsPrime],
+        IsRegularLocalRing (Localization.AtPrime P) := by
+  refine ⟨{ formallySmooth := inferInstance, finitePresentation := inferInstance }, ?_⟩
+  intro P hP
+  haveI := kmf2_polyasc_isRegularRing_mvPolynomial_fin k n
+  exact IsRegularRing.isRegularLocalRing_localization P
+
+theorem kmf2_polyasc_gate_isRegularRing_polynomial_int :
+    IsRegularRing (Polynomial ℤ) := by
+  haveI : IsRegularRing ℤ := by
+    haveI : IsDedekindDomain ℤ := inferInstance
+    infer_instance
+  exact kmf2_polyasc_isRegularRing_polynomial_of_isRegularRing ℤ

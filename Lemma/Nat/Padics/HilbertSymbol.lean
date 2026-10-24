@@ -5,101 +5,132 @@ open hilbertSymbol
 open padicHilbertSymbol
 
 
-/--
-[eq_one_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean)
--/
-@[path]
-private lemma eq_one_iff_eq
-  [Field F]
-  {a b : Fˣ} :
--- imply
-  hilbertSymbol F a b = 1 ↔ IsSolvable F a b := by
--- proof
-  apply hilbertSymbol.eq_one_iff
-
-/--
-[eq_neg_one_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean)
--/
-@[path]
-private lemma eq_neg_one_iff_eq
-  [Field F]
-  {a b : Fˣ} :
--- imply
-  hilbertSymbol F a b = -1 ↔ ¬IsSolvable F a b := by
--- proof
-  apply hilbertSymbol.eq_neg_one_iff
-
-/--
-[eq_one_or_neg_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean)
--/
-@[path]
-private lemma eq_one_or_neg_one_eq
-  [Field F]
-  {a b : Fˣ} :
--- imply
-  hilbertSymbol F a b = 1 ∨ hilbertSymbol F a b = -1 := by
--- proof
-  apply hilbertSymbol.eq_one_or_neg_one a b
+namespace hilbertSymbol
 
 /--
 [eq_one_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean)
 -/
 @[path]
-private lemma padicHilbertSymbol_eq_one_iff_eq
+lemma eq_one_iff
   [Field F]
   {a b : Fˣ} :
 -- imply
   hilbertSymbol F a b = 1 ↔ IsSolvable F a b := by
 -- proof
-  apply padicHilbertSymbol.eq_one_iff
+  simp [hilbertSymbol]
+
+end hilbertSymbol
+
+namespace hilbertSymbol.padicHilbertSymbol
+
+/--
+[eq_one_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean)
+-/
+@[path]
+lemma eq_one_iff
+  [Field F]
+  {a b : Fˣ} :
+-- imply
+  hilbertSymbol F a b = 1 ↔ IsSolvable F a b :=
+-- proof
+  hilbertSymbol.eq_one_iff
+
+end hilbertSymbol.padicHilbertSymbol
 
 /--
 [eq_neg_one_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean)
 -/
 @[path]
-private lemma padicHilbertSymbol_eq_neg_one_iff_eq
+lemma eq_neg_one_iff
   [Field F]
   {a b : Fˣ} :
 -- imply
   hilbertSymbol F a b = -1 ↔ ¬IsSolvable F a b := by
 -- proof
-  apply padicHilbertSymbol.eq_neg_one_iff
+  simp [hilbertSymbol]
+
+
+namespace hilbertSymbol
 
 /--
 [eq_one_or_neg_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean)
 -/
 @[path]
-private lemma padicHilbertSymbol_eq_one_or_neg_one_eq
+lemma eq_one_or_neg_one
   [Field F]
   {a b : Fˣ} :
 -- imply
   hilbertSymbol F a b = 1 ∨ hilbertSymbol F a b = -1 := by
 -- proof
-  apply padicHilbertSymbol.eq_one_or_neg_one a b
+  unfold hilbertSymbol
+  split_ifs <;> simp
+
+end hilbertSymbol
+
+namespace padicHilbertSymbol
+
+/--
+[eq_neg_one_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean)
+-/
+@[path]
+lemma eq_neg_one_iff
+  [Field F]
+  {a b : Fˣ} :
+-- imply
+  hilbertSymbol F a b = -1 ↔ ¬IsSolvable F a b :=
+-- proof
+  hilbertSymbol.eq_neg_one_iff
+
+end padicHilbertSymbol
+
+namespace padicHilbertSymbol
+
+/--
+[eq_one_or_neg_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean)
+-/
+@[path]
+lemma eq_one_or_neg_one
+  [Field F]
+  {a b : Fˣ} :
+-- imply
+  hilbertSymbol F a b = 1 ∨ hilbertSymbol F a b = -1 :=
+-- proof
+  hilbertSymbol.eq_one_or_neg_one a b
+
+end padicHilbertSymbol
+
+namespace padicHilbertSymbol
 
 /--
 [sq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean)
 -/
 @[path]
-private lemma sq_eq
+lemma sq
   {p : ℕ} [Fact (Nat.Prime p)]
   {a b : ℚ_[p]ˣ} :
 -- imply
   padicHilbertSymbol p a b ^ 2 = 1 := by
 -- proof
-  apply padicHilbertSymbol.sq a b
+  obtain h | h <;> simp [h] := eq_one_or_neg_one a b
+
+end padicHilbertSymbol
+
+namespace padicHilbertSymbol
 
 /--
 [ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean)
 -/
 @[path]
-private lemma ne_zero_eq
+lemma ne_zero
   {p : ℕ} [Fact (Nat.Prime p)]
   {a b : ℚ_[p]ˣ} :
 -- imply
   padicHilbertSymbol p a b ≠ 0 := by
 -- proof
-  apply padicHilbertSymbol.ne_zero a b
+  obtain h | h <;> simp [h] := eq_one_or_neg_one a b
+
+end padicHilbertSymbol
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

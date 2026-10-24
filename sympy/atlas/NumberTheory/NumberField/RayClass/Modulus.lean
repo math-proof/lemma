@@ -120,10 +120,5 @@ noncomputable def infinite (v : RealPlace K) : Modulus K := ⟨1, {v}⟩
 /-- Infinite part of `infinite v` is the singleton. -/
 @[simp] theorem infinite_infinitePart (v : RealPlace K) :
     (infinite v).infinitePart = {v} := rfl
-
-open Classical in
-theorem infinite_mul_self (v : RealPlace K) : infinite v * infinite v = infinite v := by
-  ext <;> simp [infinite, Finset.union_idempotent]
-
 end Modulus
 end NumberField

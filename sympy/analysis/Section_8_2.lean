@@ -52,27 +52,36 @@ theorem AbsConvergent.comp {X: Type} {f:X → ℝ} {g:ℕ → X} (h: Bijective g
   choose g' hbij hconv using hf
   choose g'_inv hleft hright using bijective_iff_has_inverse.mp hbij
   have hG : Bijective (g'_inv ∘ g) := .comp ⟨hright.injective, hleft.surjective⟩ h
-  convert (absConverges_of_permute hconv hG).1 using 4 with n
-  simp [hright (g n.toNat)]
+  have hfun : (fun n ↦ (f ∘ g') ((g'_inv ∘ g) n)) = f ∘ g := by
+    ext n; simp [hright (g n)]
+  rw [← hfun]
+  exact (absConverges_of_permute hconv hG).1
 
 theorem Sum.eq {X: Type} {f:X → ℝ} {g:ℕ → X} (h: Bijective g) (hfg: (f ∘ g:Series).absConverges) : (f ∘ g:Series).convergesTo (Sum f) := by
   have : AbsConvergent f := .mk h hfg
-  simp [Sum, this]
+  unfold Sum
+  rw [dif_pos this]
   choose hbij hconv using this.choose_spec
   set g' := this.choose
   choose g'_inv hleft hright using bijective_iff_has_inverse.mp hbij
-  convert convergesTo_sum (converges_of_absConverges hfg) using 1
   have hG : Bijective (g'_inv ∘ g) := .comp ⟨hright.injective, hleft.surjective⟩ h
-  convert (absConverges_of_permute hconv hG).2 using 4 with _ n
-  by_cases hn : n ≥ 0 <;> simp [hn, hright (g n.toNat)]
+  have hfun : (fun n ↦ (f ∘ g') ((g'_inv ∘ g) n)) = f ∘ g := by
+    ext n; simp [hright (g n)]
+  have hperm := absConverges_of_permute hconv hG
+  rw [hfun] at hperm
+  convert convergesTo_sum (converges_of_absConverges hfg) using 1
+  exact hperm.2
 
 theorem Sum.of_comp {X Y:Type} {f:X → ℝ} (h: AbsConvergent f) {g: Y → X} (hbij: Bijective g) : AbsConvergent (f ∘ g) ∧ Sum f = Sum (f ∘ g) := by
   choose g' hbij' hconv' using h
   choose g_inv hleft hright using bijective_iff_has_inverse.mp hbij
   have hbij_g_inv_g' : Bijective (g_inv ∘ g') := .comp ⟨hright.injective, hleft.surjective⟩ hbij'
   have hident : (f ∘ g) ∘ g_inv ∘ g' = f ∘ g' := by ext n; simp [hright (g' n)]
-  refine ⟨ ⟨ g_inv ∘ g', ⟨ hbij_g_inv_g', by convert hconv' ⟩ ⟩, ?_ ⟩
-  have h := eq (f := f ∘ g) hbij_g_inv_g' (by convert hconv')
+  have hconv_fg : (((f ∘ g) ∘ g_inv ∘ g') : Series).absConverges := by
+    rw [hident]
+    exact hconv'
+  refine ⟨ ⟨ g_inv ∘ g', ⟨ hbij_g_inv_g', hconv_fg ⟩ ⟩, ?_ ⟩
+  have h := eq (f := f ∘ g) hbij_g_inv_g' hconv_fg
   rw [hident] at h
   solve_by_elim [convergesTo_uniq, eq]
 
@@ -166,27 +175,47 @@ theorem sum_of_sum_of_AbsConvergent {f:ℕ × ℕ → ℝ} (hf:AbsConvergent f) 
   split_ands
   . intro n
     sorry
+  rw [hdiff]
   convert convergesTo.sub hfplus_sum hfminus_sum using 1
-  . -- encountered surprising difficulty with definitional equivalence here
-    simp [hdiff]
-    change (fun n ↦ ((fun m ↦ (fplus - fminus) (n, m)):Series).sum:Series) =
-      (fun n ↦ ((fun m ↦ fplus (n, m)):Series).sum:Series)
-      - (fun n ↦ ((fun m ↦ (fminus) (n, m)):Series).sum:Series)
-    convert_to (fun n ↦ ((fun m ↦ (fplus - fminus) (n, m)):Series).sum:Series) =
-      (((fun n ↦ ((fun m ↦ fplus (n, m)):Series).sum) - (fun n ↦ ((fun m ↦ (fminus) (n, m)):Series).sum):ℕ → ℝ):Series)
-    . convert sub_coe _ _
-    rcongr _ n; simp
-    convert (sub _ _).2 with m; rfl
-    split_ifs with h <;> simp [h, HSub.hSub, Sub.sub]
-    . solve_by_elim
-    convert hfminus_conv' n.toNat
+  · ext k
+    · rfl
+    · by_cases hk : k ≥ 0
+      · have hpt : (fun m ↦ (fplus - fminus) (k.toNat, m)) =
+            fun m ↦ fplus (k.toNat, m) - fminus (k.toNat, m) := by
+          ext m; simp
+        have hser := (Series.sub_coe (fun m ↦ fplus (k.toNat, m)) (fun m ↦ fminus (k.toNat, m))).symm
+        rw [← hpt] at hser
+        have hsum := (Series.sub (hfplus_conv' k.toNat) (hfminus_conv' k.toNat)).2
+        rw [← hser] at hsum
+        have hseq : ((fun n ↦ ((fun m ↦ fplus (n, m)):Series).sum : Series) -
+            (fun n ↦ ((fun m ↦ fminus (n, m)):Series).sum : Series)).seq k =
+            ((fun m ↦ fplus (k.toNat, m)):Series).sum -
+              ((fun m ↦ fminus (k.toNat, m)):Series).sum := by
+          change (if k ≥ 0 then ((fun m ↦ fplus (k.toNat, m)):Series).sum else 0) -
+              (if k ≥ 0 then ((fun m ↦ fminus (k.toNat, m)):Series).sum else 0) = _
+          simp [hk]
+        have hlhs : ((fun n ↦ ((fun m ↦ (fplus - fminus) (n, m)):Series).sum : Series).seq k) =
+            ((fun m ↦ (fplus - fminus) (k.toNat, m)) : Series).sum := by
+          simp [hk]
+        exact hlhs.trans (hsum.trans hseq.symm)
+      · change (if k ≥ 0 then ((fun m ↦ (fplus - fminus) (k.toNat, m)):Series).sum else 0) =
+          (if k ≥ 0 then ((fun m ↦ fplus (k.toNat, m)):Series).sum else 0) -
+            (if k ≥ 0 then ((fun m ↦ fminus (k.toNat, m)):Series).sum else 0)
+        simp [hk]
   have ⟨ g, hg, _ ⟩ := hf
   have h1 := Sum.eq hg (hf.comp hg)
   have hplus := Sum.eq hg (hfplus_conv.comp hg)
   have hminus := Sum.eq hg (hfminus_conv.comp hg)
-  apply convergesTo_uniq h1 _
-  convert (convergesTo.sub hplus hminus) using 3 with n
-  split_ifs with h <;> simp [h, hdiff, HSub.hSub, Sub.sub]
+  rw [← hdiff]
+  apply convergesTo_uniq h1
+  have hsub := convergesTo.sub hplus hminus
+  have hser : (fplus ∘ g : Series) - (fminus ∘ g : Series) = (f ∘ g : Series) := by
+    rw [Series.sub_coe]
+    congr
+    ext n
+    simp [hdiff]
+  rw [hser] at hsub
+  exact hsub
 
 /-- Theorem 8.2.2, third version -/
 theorem sum_of_sum_of_AbsConvergent' {f:ℕ × ℕ → ℝ} (hf:AbsConvergent f) :
@@ -194,11 +223,13 @@ theorem sum_of_sum_of_AbsConvergent' {f:ℕ × ℕ → ℝ} (hf:AbsConvergent f)
   (fun m ↦ ((fun n ↦ f (n, m)):Series).sum:Series).convergesTo (Sum f) := by
   set π: ℕ × ℕ → ℕ × ℕ := fun p ↦ (p.2, p.1)
   have hπ: Bijective π := Involutive.bijective (congrFun rfl)
-  have ⟨ g, hg, hconv ⟩ := hf
-  convert sum_of_sum_of_AbsConvergent (f := f ∘ π) _ using 2
-  . exact (Sum.of_comp hf hπ).2
-  refine ⟨ _, hπ.comp hg, ?_ ⟩
-  convert hconv using 2
+  have hfg := Sum.of_comp hf hπ
+  have hsum := sum_of_sum_of_AbsConvergent hfg.1
+  refine ⟨?_, ?_⟩
+  · intro m
+    exact hsum.1 m
+  · rw [hfg.2]
+    exact hsum.2
 
 /-- Theorem 8.2.2, fourth version -/
 theorem sum_comm {f:ℕ × ℕ → ℝ} (hf:AbsConvergent f) :
@@ -359,7 +390,11 @@ theorem AbsConvergent'.iff_Summable {X:Type} (f:X → ℝ) : AbsConvergent' f �
   rw [bddAbove_def]
   use ∑ x ∈ S, |f x| + 1; simp; intro T
   calc
-    _ = ∑ x ∈ (T ∩ S), |f x| + ∑ x ∈ (T \ S), |f x| := (sum_inter_add_sum_diff _ _ _).symm
+    _ = ∑ x ∈ (T ∩ S), |f x| + ∑ x ∈ (T \ S), |f x| := by
+      have hT : (T ∩ S) ∪ (T \ S) = T := by
+        ext x; simp; tauto
+      simpa [hT] using
+        Finset.sum_union (s₁ := T ∩ S) (s₂ := T \ S) (Finset.disjoint_sdiff_inter T S).symm
     _ ≤ _ := by
       gcongr
       . exact inter_subset_right
@@ -392,18 +427,19 @@ theorem Sum'.eq_tsum {X:Type} (f:X → ℝ) (h: AbsConvergent' f) :
       apply AbsConvergent.comp hg
       rw [←AbsConvergent'.of_countable hE]
       exact h.subtype E
-    replace this := Sum.eq hg this
-    convert convergesTo_uniq this _ using 1
-    · replace : ∑' x, f x = ∑' n, f (g n) := calc
-        _ = ∑' x:E, f x := by
-          exact (tsum_subtype_eq_of_support_subset (fun x hx => hx)).symm
-        _ = _ := (Equiv.tsum_eq (Equiv.ofBijective _ hg) _).symm
-      rw [this]
-      unfold convergesTo; rw [Filter.Tendsto.int_natCast_atTop]
-      convert (Summable.tendsto_sum_tsum_nat ?_).comp (tendsto_add_atTop_nat 1) with n
-      . ext N; simp [Series.partial, Nat.range_succ_eq_Icc_zero]
-      rw [AbsConvergent'.iff_Summable] at h
-      exact h.comp_injective (i := Subtype.val ∘ g) (Subtype.val_injective.comp hg.1)
+    have hsum := Sum.eq hg this
+    apply convergesTo_uniq hsum
+    have htsum : ∑' x, f x = ∑' n, f (g n) := calc
+      _ = ∑' x:E, f x := (tsum_subtype_eq_of_support_subset (fun x hx => hx)).symm
+      _ = _ := (Equiv.tsum_eq (Equiv.ofBijective _ hg) _).symm
+    rw [htsum]
+    unfold convergesTo
+    rw [Filter.Tendsto.int_natCast_atTop]
+    convert (Summable.tendsto_sum_tsum_nat ?_).comp (tendsto_add_atTop_nat 1) using 1
+    · ext N
+      simp [Series.partial, Nat.range_succ_eq_Icc_zero]
+    rw [AbsConvergent'.iff_Summable] at h
+    exact h.comp_injective (i := Subtype.val ∘ g) (Subtype.val_injective.comp hg.1)
   rw [of_finsupp (A := E.toFinite.toFinset)]; symm; apply tsum_eq_sum
   all_goals simp [E]
 

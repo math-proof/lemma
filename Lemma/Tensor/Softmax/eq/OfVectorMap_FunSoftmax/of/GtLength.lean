@@ -16,7 +16,7 @@ import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSum.eq.Sum_Get
-open Finset List Nat Tensor Vector Fin
+open Finset List Nat Tensor Vector Fin Set
 set_option maxHeartbeats 250000
 
 

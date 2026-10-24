@@ -1,0 +1,19 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicBoundaryLayerConsistency.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryLayerConsistency
+
+#print axioms StatMech.Universality.isingFiniteWeighted_harmonic_approximation_of_layer_barriers
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexGhostLayerBarrier_laplacian
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceGhostLayerBarrier_laplacian
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexDirichlet_target_error_le_split
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceDirichlet_target_error_le_split
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexSampled_target_error_le_split
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceSampled_target_error_le_split

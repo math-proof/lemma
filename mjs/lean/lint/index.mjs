@@ -25,6 +25,7 @@ const Q = {
     order: 'before the `given` section, list in order: line(s) of standalone instances (instImplicit), line(s) of implicit binder(s) and their dependent instances (instImplicit) on the same line, line(s) of bare implicit binders',
     deflt: 'default arguments should be put within the `given` section',
     propFirst: 'within the `given` section: propositions come first, expressions come next, unless otherwise specified',
+    givenInst: 'an instance binder that a later given hypothesis needs stays an instance binder `[instImplicit]` inside `-- given`, before that hypothesis; never `(h : … := by infer_instance)` or any `(h : T := by tactic)`',
     combine: 'arguments of the same type should be combined, eg: {a b: Type} or (a b: Type)',
     imply: 'conclusion must be put within the `imply` section',
     proof: 'proof body must be put within the `proof` section',
@@ -60,6 +61,7 @@ export const RULES = {
     'binder-dep-inst': Q.order,
     'default-arg-given': Q.deflt,
     'given-prop-first': Q.propFirst,
+    'given-inst': Q.givenInst,
     // not an AGENTS.md rule (user request): the page typesets only the first run of `given` propositions
     'given-prop-consecutive': null,
     // not an AGENTS.md rule: numbered `h₀`/`h0`… in `-- given` must start at 0 with no gaps, and lower indices must appear earlier
@@ -85,6 +87,10 @@ export const RULES = {
     'paren-getelem': null,
     // not an AGENTS.md rule (user request): `f (x)` / `path (s)` -> drop the parens
     'paren-apparg': null,
+    // not an AGENTS.md rule (user request): `(h : (T))` -> drop redundant parens around binder type
+    'paren-redundant-type': null,
+    // not an AGENTS.md rule (user request via Matrix/Body): `a - (∑ …)` -> drop parens around ∑/∏ RHS of `-`
+    'paren-redundant-sum-sub': null,
     'have-inline-once': Q.haveOnce,
     'by-calc': Q.calc,
     'calc-start-underscore': Q.calc,
@@ -220,8 +226,17 @@ function gitOut(cwd, args) {
     return execFileSync('git', args, { cwd, ...GIT_OPTS });
 }
 
+/** Resolve symlinks so `/home/…/src/lean` and `/home/…/github/lean` share one relative path. */
+function realpath(p) {
+    try {
+        return fs.realpathSync(p);
+    } catch {
+        return path.resolve(p);
+    }
+}
+
 function repoRel(gitRoot, abs) {
-    return path.relative(gitRoot, abs).split(path.sep).join('/');
+    return path.relative(realpath(gitRoot), realpath(abs)).split(path.sep).join('/');
 }
 
 function createdOnDate(src) {
@@ -266,23 +281,72 @@ function deletedLemmaPaths(gitRoot) {
     return [...new Set(parts.split('\0').filter(isLemmaLean))];
 }
 
-/** `mv` / `rename.sh`: deleted old lemma + untracked/added dest with the same blob or the same created date + body. */
+/** `Lemma/Foo/Bar/Baz.lean` → `Foo.Bar.Baz` (rename.sh module form). */
+function lemmaPathToModule(rel) {
+    return String(rel)
+        .replace(/\\/g, '/')
+        .replace(/^Lemma\//, '')
+        .replace(/\.lean$/, '')
+        .split('/')
+        .filter(Boolean)
+        .join('.');
+}
+
+/**
+ * `sh/rename.sh` often shortens/lengthens the module path while also editing the body
+ * (e.g. CountableMeasure rewrite). Same created date + module prefix is enough then:
+ * `Measure.Measure.eq.Count.of.…` ↔ `Measure.Measure.eq.Count`.
+ */
+function relatedLemmaModules(a, b) {
+    if (!a || !b) return false;
+    return a === b || a.startsWith(b + '.') || b.startsWith(a + '.');
+}
+
+/**
+ * Radical `lemmaPath` renames (e.g. `Eq.ArgMax.Mul.…` → `GetArgMaxProbCond.eq.ArgMax.…`) share
+ * tokens even when neither module is a prefix of the other.
+ */
+function moduleTokenOverlap(a, b) {
+    const toks = (m) => new Set(String(m).split('.').filter((t) => t.length >= 3));
+    const sa = toks(a);
+    const sb = toks(b);
+    if (!sa.size || !sb.size) return 0;
+    let n = 0;
+    for (const t of sa) if (sb.has(t)) n++;
+    return n / Math.max(sa.size, sb.size);
+}
+
+/**
+ * `mv` / `rename.sh`: deleted old lemma + untracked/added dest with the same blob, same created
+ * date + body overlap, same created date + related module path, same created date + shared module
+ * tokens, or a **unique** deleted lemma with the same `-- created on` (covers radical renames when
+ * HEAD still has a tiny axiom stub so line overlap is low).
+ */
 function isMoveOfExistingLemma(gitRoot, abs) {
     const now = fs.readFileSync(abs, 'utf8');
     const nowCreated = createdOnDate(now);
+    const nowMod = lemmaPathToModule(repoRel(gitRoot, abs));
     let nowHash = null;
     try {
         nowHash = gitOut(gitRoot, ['hash-object', abs]).trim();
     } catch { /* ignore */ }
+    const sameDateOlds = [];
     for (const old of deletedLemmaPaths(gitRoot)) {
         try {
             if (nowHash && gitOut(gitRoot, ['rev-parse', `HEAD:${old}`]).trim() === nowHash) return true;
             const oldSrc = gitOut(gitRoot, ['show', `HEAD:${old}`]);
-            if (nowCreated && nowCreated === createdOnDate(oldSrc) && lineOverlap(now, oldSrc) >= 0.7) return true;
+            if (!(nowCreated && nowCreated === createdOnDate(oldSrc))) continue;
+            sameDateOlds.push(old);
+            if (lineOverlap(now, oldSrc) >= 0.7) return true;
+            const oldMod = lemmaPathToModule(old);
+            if (relatedLemmaModules(nowMod, oldMod)) return true;
+            if (moduleTokenOverlap(nowMod, oldMod) >= 0.25) return true;
         } catch {
             continue;
         }
     }
+    // Unique `-- created on` among deletions ⇒ rename kept its birth date (do not demand today).
+    if (sameDateOlds.length === 1) return true;
     return false;
 }
 
@@ -293,8 +357,9 @@ function isMoveOfExistingLemma(gitRoot, abs) {
  */
 export function isNewInGit(abs) {
     try {
-        const gitRoot = gitOut(path.dirname(abs), ['rev-parse', '--show-toplevel']).trim();
+        const gitRoot = realpath(gitOut(path.dirname(abs), ['rev-parse', '--show-toplevel']).trim());
         const rel = repoRel(gitRoot, abs);
+        if (rel.startsWith('..')) return false;
         const out = gitOut(gitRoot, ['status', '--porcelain', '--untracked-files=all', '--', rel]);
         const hit = out.split('\n').filter(Boolean).find((l) => porcelainPath(l) === rel);
         if (!hit || !isAddedOrUntracked(hit)) return false;

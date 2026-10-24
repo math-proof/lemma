@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverMaximalIdeal.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.Completion.FiniteLiesOverValuation
+import Lemma.Nat.NumberField.Completion.FiniteLiesOverValuation
 /-!
 # Finite place completion maximal ideal lies over
 

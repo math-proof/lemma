@@ -1,0 +1,23 @@
+import Mathlib
+import sympy.Basic
+import sympy.analysis.Misc.erdos_707
+open Mainstep
+
+
+/--
+[f_def](https://github.com/teorth/analysis/blob/main/Analysis/Misc/erdos_707.lean)
+-/
+@[path]
+private lemma main
+  [Hypotheses]
+  {a:ZMod N}
+  {b:B}
+-- given
+  (ha: a ∉ B) :
+-- imply
+  a - b = f ha b - g ha b :=
+-- proof
+  Mainstep.f_def ha b
+
+
+-- created on 2026-10-22

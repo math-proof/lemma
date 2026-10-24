@@ -15,7 +15,7 @@ import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Rat.CeilSub_1.eq.SubCeil_1
 import Lemma.Nat.LeSub.is.Le_Add
 import Lemma.Nat.CoeAdd.eq.AddCoeS
-open Nat Int Rat
+open Nat Int Rat Matrix
 
 
 @[path]

@@ -4,7 +4,7 @@ import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Vector.EqGetRange.of.Lt
 import Lemma.Vector.GetIndices.eq.AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Vector List Nat Fin
+open Vector List Nat Fin Set
 
 
 @[path, cast]

@@ -15,5 +15,4 @@ private lemma main
   apply SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet.GtLength _ h_i
 
 
-
 -- created on 2025-10-05

@@ -9,7 +9,7 @@ private lemma main
   {x : Fin n → ℝ}
   {M : Fin n}
 -- given
-  (h : M = ArgMax Set.univ x) :
+  (h : M = max⁻¹ Set.univ x) :
 -- imply
   ∀ k, x M ≥ x k := by
 -- proof

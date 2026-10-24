@@ -1,7 +1,7 @@
 import Lemma.Set.InterSDiff.eq.SDiffInterS
 import Lemma.Set.Subset.is.SDiff.eq.Empty
 import Lemma.Set.Subset_Inter.of.Subset.Subset
-open Set
+open Set BoundedInterval
 
 
 @[path]

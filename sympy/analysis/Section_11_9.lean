@@ -72,7 +72,7 @@ theorem deriv_of_integ {a b:ℝ} (hab: a < b) {f:ℝ → ℝ} (hf: IntegrableOn 
   HasDerivWithinAt (fun x => integ f (Icc a x)) (f x₀) (.Icc a b) x₀ := by
   -- This proof is written to follow the structure of the original text.
   rw [HasDerivWithinAt.iff_approx_linear]
-  simp [(ContinuousWithinAt.tfae _ f x₀).out 0 2] at hcts
+  simp [(ContinuousWithinAt.tfae _ f x₀).out 1 3] at hcts
   peel hcts with ε hε δ hδ hconv; intro y hy hyδ
   obtain hx₀y | rfl | hx₀y := lt_trichotomy x₀ y
   . have := ((hf.join (join_Icc_Ioc hy.1 hy.2)).1.join (join_Icc_Ioc hx₀.1 (le_of_lt hx₀y))).2
@@ -128,7 +128,8 @@ theorem integ_eq_antideriv_sub {a b:ℝ} (h:a ≤ b) {f F: ℝ → ℝ}
 
     have hF'_cts : ContinuousOn F' (Ioo (a-1) (b+1)) := by
       convert (hF_cts.comp_continuous (f := fun x ↦ max (min x b) a) (by fun_prop) ?_).continuousOn using 1
-      intros; simp [le_of_lt h]
+      · rfl
+      · simp [Set.mem_Icc]; exact le_of_lt h
 
     have hupper (P: Partition (Icc a b)) : upper_riemann_sum f P ≥ F b - F a := by
       have := P.sum_of_α_length F'
@@ -156,19 +157,21 @@ theorem integ_eq_antideriv_sub {a b:ℝ} (h:a ≤ b) {f F: ℝ → ℝ}
           set d := J.b
           apply P.contains at hJ
           have hJ' : Icc a b ⊆ Ioo (a-1/2) (b+1/2) := by apply Set.Icc_subset_Ioo <;> linarith
-          apply ((Ioo_subset J).trans hJ).trans at hJ'
+          replace hJ' := Set.Subset.trans (Set.Subset.trans (Ioo_subset J) hJ) hJ'
           simp [subset_iff] at hJ'
           rw [Set.Ioo_subset_Ioo_iff hJab] at hJ'
           have hJ'' : Icc a b ⊆ Ioo (a-1) (b+1) := by apply Set.Icc_subset_Ioo <;> linarith
-          apply hJ.trans at hJ''
+          replace hJ'' := Set.Subset.trans hJ hJ''
           rw [α_length_of_cts _ (le_of_lt hJab) _ hJ'' hF'_cts] <;> try linarith
           have := HasDerivWithinAt.mean_value hJab (hF'_cts.mono ?_) ?_
           . choose e he hmean using this
             have : HasDerivWithinAt F' (f e) (.Ioo c d) e := by
-              apply (Ioo_subset J).trans at hJ
+              replace hJ := Set.Subset.trans (Ioo_subset J) hJ
               simp [subset_iff] at hJ
               apply ((hF.2 e (hJ he)).mono hJ).congr (f := F)
-              all_goals grind
+              · intro y hy
+                exact hFF' (hJ hy)
+              · exact hFF' (hJ he)
             replace := derivative_unique ?_ this hmean
             . calc
                 _ = F' d - F' c := rfl
@@ -188,12 +191,9 @@ theorem integ_eq_antideriv_sub {a b:ℝ} (h:a ≤ b) {f F: ℝ → ℝ}
             . intro _ _; simp at *; refine ⟨ ⟨ ?_, ?_ ⟩, ?_ ⟩ <;> linarith
             simp at he; rw [closure_Ioo (by linarith)]; simp; linarith
           . simp; rw [Set.Icc_subset_Ioo_iff (le_of_lt hJab)]; grind
-          apply (Ioo_subset J).trans at hJ
-          apply (hF.1.mono _).congr
-          . intro x hx
-            have : x ∈ Set.Icc a b := by specialize hJ _ hx; simpa using hJ
-            grind
-          grind [subset_iff]
+          replace hJ := Set.Subset.trans (Ioo_subset J) hJ
+          simp [subset_iff] at hJ
+          exact (hF.1.mono hJ).congr (fun x hx => hFF' (hJ hx))
         _ = F'[Icc a b]ₗ := P.sum_of_α_length F'
         _ = F' b - F' a := by
           apply α_length_of_cts _ _ _ _ hF'_cts <;> try linarith

@@ -1,11 +1,11 @@
 import sympy.stats.policy_trajectory.continuous_action
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
-open MeasureTheory PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory PolicyGradient PolicyGradient.DensityModel Random Measure
 
 
 /--
 Discounted return under the continuous-action path binder:
-`𝔼[r: M θ]((γ ^ id) @ r)` is the Bochner integral of the same observable.
+`𝔼[r: M θ]((γ ^ id) @ r)` is the ContinuousAndEq_1AndAll_EqIm0AndGeRe0.is.Any_And_All_Eq_CharFun integral of the same observable.
 Continuous-action counterpart of `Random.ExpectDotPow_Id.eq.Integral_ExtDotPow_Id`.
 -/
 @[path]

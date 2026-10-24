@@ -5,71 +5,89 @@ open scoped BigOperators
 open LucasSequence
 
 
+namespace LucasSequence
+
 /--
 [IsPrimitiveDivisor.pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/PrimitiveDivisor.lean)
 -/
 @[path]
-private lemma IsPrimitiveDivisor_pos_eq
+lemma IsPrimitiveDivisor.pos
   {u : ℕ → ℤ}
   {discriminant : ℤ}
   {n p : ℕ}
 -- given
   (h : IsPrimitiveDivisor u discriminant n p) :
 -- imply
-  0 < n := by
+  0 < n :=
 -- proof
-  apply LucasSequence.IsPrimitiveDivisor.pos h
+  h.1
+
+end LucasSequence
+
+namespace LucasSequence
 
 /--
 [IsPrimitiveDivisor.prime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/PrimitiveDivisor.lean)
 -/
 @[path]
-private lemma IsPrimitiveDivisor_prime_eq
+lemma IsPrimitiveDivisor.prime
   {u : ℕ → ℤ}
   {discriminant : ℤ}
   {n p : ℕ}
 -- given
   (h : IsPrimitiveDivisor u discriminant n p) :
 -- imply
-  p.Prime := by
+  p.Prime :=
 -- proof
-  apply LucasSequence.IsPrimitiveDivisor.prime h
+  h.2.1
+
+end LucasSequence
+
+namespace LucasSequence
 
 /--
 [IsPrimitiveDivisor.dvd_term](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/PrimitiveDivisor.lean)
 -/
 @[path]
-private lemma IsPrimitiveDivisor_dvd_term_eq
+lemma IsPrimitiveDivisor.dvd_term
   {u : ℕ → ℤ}
   {discriminant : ℤ}
   {n p : ℕ}
 -- given
   (h : IsPrimitiveDivisor u discriminant n p) :
 -- imply
-  (p : ℤ) ∣ u n := by
+  (p : ℤ) ∣ u n :=
 -- proof
-  apply LucasSequence.IsPrimitiveDivisor.dvd_term h
+  h.2.2.1
+
+end LucasSequence
+
+namespace LucasSequence
 
 /--
 [IsPrimitiveDivisor.not_dvd_badPart](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/PrimitiveDivisor.lean)
 -/
 @[path]
-private lemma IsPrimitiveDivisor_not_dvd_badPart_eq
+lemma IsPrimitiveDivisor.not_dvd_badPart
   {u : ℕ → ℤ}
   {discriminant : ℤ}
   {n p : ℕ}
 -- given
   (h : IsPrimitiveDivisor u discriminant n p) :
 -- imply
-  ¬(p : ℤ) ∣ discriminant * ∏ k ∈ Finset.Ico 1 n, u k := by
+  ¬(p : ℤ) ∣ discriminant * ∏ k ∈ Finset.Ico 1 n, u k :=
 -- proof
-  apply LucasSequence.IsPrimitiveDivisor.not_dvd_badPart h
+  h.2.2.2
+
+end LucasSequence
+
+namespace LucasSequence
 
 /--
 [IsPrimitiveDivisor.not_dvd_discriminant](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/PrimitiveDivisor.lean)
 -/
 @[path]
-private lemma IsPrimitiveDivisor_not_dvd_discriminant_eq
+lemma IsPrimitiveDivisor.not_dvd_discriminant
   {u : ℕ → ℤ}
   {discriminant : ℤ}
   {n p : ℕ}
@@ -78,13 +96,18 @@ private lemma IsPrimitiveDivisor_not_dvd_discriminant_eq
 -- imply
   ¬(p : ℤ) ∣ discriminant := by
 -- proof
-  apply LucasSequence.IsPrimitiveDivisor.not_dvd_discriminant h
+  intro hp
+  exact h.not_dvd_badPart (dvd_mul_of_dvd_left hp _)
+
+end LucasSequence
+
+namespace LucasSequence
 
 /--
 [IsPrimitiveDivisor.not_dvd_prior](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/PrimitiveDivisor.lean)
 -/
 @[path]
-private lemma IsPrimitiveDivisor_not_dvd_prior_eq
+lemma IsPrimitiveDivisor.not_dvd_prior
   {u : ℕ → ℤ}
   {discriminant : ℤ}
   {n p k : ℕ}
@@ -94,7 +117,12 @@ private lemma IsPrimitiveDivisor_not_dvd_prior_eq
 -- imply
   ¬(p : ℤ) ∣ u k := by
 -- proof
-  apply LucasSequence.IsPrimitiveDivisor.not_dvd_prior h hk
+  intro hp
+  apply h.not_dvd_badPart
+  exact dvd_mul_of_dvd_right (dvd_trans hp (Finset.dvd_prod_of_mem u hk)) _
+
+end LucasSequence
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

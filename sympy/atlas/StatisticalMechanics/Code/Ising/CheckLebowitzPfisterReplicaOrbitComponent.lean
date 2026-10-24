@@ -1,0 +1,54 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/CheckLebowitzPfisterReplicaOrbitComponent.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitComponent
+
+#print axioms StatMech.Ising.lpReplicaProfile_le_symmetrizedProfile
+#print axioms StatMech.Ising.lpReplicaProfile_le_of_symmetrizedProfile_eq
+#print axioms StatMech.Ising.lpReplicaSymmetrizedProfile_reflect
+#print axioms StatMech.Ising.lpReplicaProfileOrbitMass_eq_sum
+#print axioms StatMech.Ising.lpReplicaReflectCopies_compl
+#print axioms StatMech.Ising.lpReplicaReflectCopies_ghost_disconn_iff
+#print axioms StatMech.Ising.lpReplicaDisconnProfileTerm_reflect
+#print axioms StatMech.Ising.lpReplicaReflectedResidual_reflect
+#print axioms StatMech.Ising.lpReplicaRowFiberMass_reflect
+#print axioms StatMech.Ising.lpReplicaProfileOrbitMass_reflectSources
+#print axioms StatMech.Ising.lpReplicaCurrentReflect_seamSource
+#print axioms StatMech.Ising.lpReplicaCurrentReflect_ghostSource
+#print axioms StatMech.Ising.lpReplicaCurrentReflect_offdiagSource
+#print axioms StatMech.Ising.lpReplicaReflectSubprofile_le_partialReflectProfile
+#print axioms StatMech.Ising.lpReplicaSymmetrizedProfile_partialReflect
+#print axioms StatMech.Ising.lpReplicaPartialReflectProfile_involutive
+#print axioms StatMech.Ising.lpReplicaSymmetrizedProfile_partialReflectCopies
+#print axioms StatMech.Ising.card_lpReplicaCopyIndicesAtEdge
+#print axioms StatMech.Ising.lpReplicaCopiesAtEdgeEquivIndices
+#print axioms StatMech.Ising.lpReplicaCopySubsetEquivProfile_edge
+#print axioms StatMech.Ising.lpReplicaCopySubsetEquivProfile_apply
+#print axioms StatMech.Ising.lpReplicaCopySubsetEquivProfile_ends
+#print axioms StatMech.Ising.lpReplicaCopySubsetEquivProfile_symm_cast
+#print axioms StatMech.Ising.lpReplicaCollisionProfile_compl_eq_partialReflectProfile
+#print axioms StatMech.Ising.lpReplicaPartialReflectCopyEquivRaw_edge
+#print axioms StatMech.Ising.lpReplicaPartialReflectCopyEquivRaw_index_of_mem
+#print axioms StatMech.Ising.lpReplicaPartialReflectCopyEquivRaw_index_of_not_mem
+#print axioms StatMech.Ising.lpReplicaPartialReflectCopyEquivRaw_ends_of_mem
+#print axioms StatMech.Ising.lpReplicaPartialReflectCopiesRaw_selected_sources
+#print axioms StatMech.Ising.lpReplicaPartialReflectCopiesRaw_compl_sources
+#print axioms StatMech.Ising.lpReplicaPartialReflectCopiesRaw_univ_sources
+#print axioms StatMech.Ising.lpReplicaPartialReflect_rootComponent_sources
+#print axioms StatMech.Ising.lpReplicaPartialReflect_rowComponent_sources
+#print axioms StatMech.Ising.lpReplicaPartialReflect_rowComponent_ghost_disconn
+#print axioms StatMech.Ising.lpReplicaOffdiagRowComponent_partialReflectAllocation
+#print axioms StatMech.Ising.lpReplicaOffdiagRowComponent_partialReflectTargetAllocation
+#print axioms StatMech.Ising.lpReplicaPartialReflectCopiesRaw_sources
+#print axioms StatMech.Ising.lpReplicaPartialReflect_rowComponent_subconfig_sources
+#print axioms StatMech.Ising.lpReplicaPartialReflectCopiesRaw_selected_profileFlux
+#print axioms StatMech.Ising.lpReplicaPartialReflectCopiesRaw_selected_profile_inverse
+#print axioms StatMech.Ising.lpReplicaReflectCopies_edgeComponent
+#print axioms StatMech.Ising.lpReplicaReflectCopies_edgeComponent_sources

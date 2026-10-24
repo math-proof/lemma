@@ -32,34 +32,4 @@ Definition block SHA-256: `17bf8967c8c4965db527869b4efe74d630e63681258d740ad2f98
 def IsSymmetricToeplitzMatrix {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ) : Prop :=
   ∃ c : ℤ → ℝ, (∀ k : ℤ, c (-k) = c k) ∧
     ∀ i j, A i j = c ((i.val : ℤ) - (j.val : ℤ))
-
-/-- Construction of a Toeplitz matrix from an explicit coefficient witness. -/
-theorem isToeplitzMatrix_of_witness {n : ℕ}
-    {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ} {c : ℤ → ℝ}
-    (h : ∀ i j, A i j = c ((i.val : ℤ) - (j.val : ℤ))) : IsToeplitzMatrix A :=
-  ⟨c, h⟩
-
-/-- Construction of a symmetric Toeplitz matrix from an even witness. -/
-theorem isSymmetricToeplitzMatrix_of_witness {n : ℕ}
-    {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ} {c : ℤ → ℝ}
-    (hsym : ∀ k : ℤ, c (-k) = c k)
-    (h : ∀ i j, A i j = c ((i.val : ℤ) - (j.val : ℤ))) : IsSymmetricToeplitzMatrix A :=
-  ⟨c, hsym, h⟩
-
-/-- Every symmetric Toeplitz matrix is Toeplitz (forget the symmetry). -/
-theorem IsSymmetricToeplitzMatrix.isToeplitz {n : ℕ}
-    {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ}
-    (h : IsSymmetricToeplitzMatrix A) : IsToeplitzMatrix A := by
-  obtain ⟨c, _, hr⟩ := h
-  exact ⟨c, hr⟩
-
-/-- Entries of a symmetric Toeplitz matrix commute: `A i j = A j i`. -/
-theorem IsSymmetricToeplitzMatrix.entry_comm {n : ℕ}
-    {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ}
-    (h : IsSymmetricToeplitzMatrix A) (i j : Fin (n + 1)) : A i j = A j i := by
-  obtain ⟨c, hsym, hr⟩ := h
-  have hdiff : (i.val : ℤ) - (j.val : ℤ) = -((j.val : ℤ) - (i.val : ℤ)) := by
-    omega
-  rw [hr i j, hr j i, hdiff, hsym]
-
 end MetaMathlibExt

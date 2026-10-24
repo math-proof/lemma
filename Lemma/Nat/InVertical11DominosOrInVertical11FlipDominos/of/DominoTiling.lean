@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings
 import Lemma.Nat.EqVertical11OrEqVertical11Flip.of.Cells.Domino
 open DominoTilings
 open Domino DominoTiling

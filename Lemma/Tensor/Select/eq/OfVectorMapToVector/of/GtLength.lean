@@ -13,7 +13,7 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool Fin List Nat Tensor Vector
+open Bool Fin List Nat Tensor Vector Set
 set_option maxHeartbeats 400000
 
 

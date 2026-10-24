@@ -82,6 +82,68 @@ function check(name, cond) {
 }
 
 {
+    // rename.sh path shortening + substantial body edit (overlap < 0.7): still same lemma
+    const root = setupRepo();
+    const oldRel = 'Lemma/Measure/Measure/eq/Count/of/EqMeasureCount/EqMeasureCount.lean';
+    const newRel = 'Lemma/Measure/Measure/eq/Count.lean';
+    const oldSrc = [
+        'import Lemma.Measure.Count.eq.ProdCountS',
+        'import sympy.stats.rv',
+        'open MeasureTheory',
+        '',
+        '',
+        '/-- old -/',
+        '@[path]',
+        'private lemma main',
+        '  [ReferenceMeasure α] [ReferenceMeasure β]',
+        '  (hα : ReferenceMeasure.measure (α := α) = Measure.count)',
+        '  (hβ : ReferenceMeasure.measure (α := β) = Measure.count) :',
+        '  ReferenceMeasure.measure (α := α × β) = Measure.count := by',
+        '  rw [hα, hβ, Measure.Count.eq.ProdCountS]',
+        '',
+        '',
+        '-- created on 2026-10-04',
+        '',
+    ].join('\n');
+    const newSrc = [
+        'import Lemma.Measure.Count.eq.ProdCountS',
+        'import sympy.stats.rv',
+        'open MeasureTheory Measure',
+        '',
+        '',
+        '/-- new: CountableMeasure -/',
+        '@[path]',
+        'private lemma main',
+        '  [CountableMeasure α] [CountableMeasure β]',
+        '  [Countable α] [MeasurableSingletonClass α] [Countable β] [MeasurableSingletonClass β] :',
+        '  ReferenceMeasure.measure (α := α × β) = Measure.count := by',
+        '  show (ReferenceMeasure.measure : Measure α).prod (ReferenceMeasure.measure : Measure β) = _',
+        '  rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS]',
+        '',
+        '',
+        '-- created on 2026-10-04',
+        '-- updated on 2026-10-22',
+        '',
+    ].join('\n');
+    fs.mkdirSync(path.dirname(path.join(root, oldRel)), { recursive: true });
+    fs.writeFileSync(path.join(root, oldRel), oldSrc);
+    git(root, ['add', oldRel]);
+    git(root, ['commit', '-m', 'add lemma']);
+    fs.mkdirSync(path.dirname(path.join(root, newRel)), { recursive: true });
+    fs.renameSync(path.join(root, oldRel), path.join(root, newRel));
+    fs.writeFileSync(path.join(root, newRel), newSrc);
+    check('rename.sh shorten + body rewrite is not new', isNewInGit(path.join(root, newRel)) === false);
+    const warns = lintLean(newSrc, {
+        file: newRel,
+        root,
+        today: '2026-10-22',
+        isNew: isNewInGit(path.join(root, newRel)),
+    }).filter((w) => w.rule === 'date-created-today');
+    check('rename.sh shorten + body rewrite: no date-created-today', warns.length === 0);
+    fs.rmSync(root, { recursive: true, force: true });
+}
+
+{
     const root = setupRepo();
     const rel = 'Lemma/Foo/Bar.lean';
     fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true });
@@ -108,6 +170,58 @@ function check(name, cond) {
     fs.writeFileSync(path.join(root, other), lemma('2026-10-07'));
     check('basename collision does not mark tracked file new', isNewInGit(path.join(root, tracked)) === false);
     check('basename collision: sibling ?? All_Eq.lean is still new', isNewInGit(path.join(root, other)) === true);
+    fs.rmSync(root, { recursive: true, force: true });
+}
+
+{
+    // Radical lemmaPath rename: HEAD still has a tiny axiom stub (low line overlap), modules do not
+    // share a prefix — keep `-- created on` via unique same-date delete match.
+    const root = setupRepo();
+    const oldRel = 'Lemma/Random/Eq/ArgMax/Mul/Prod_ProbCond/of/Ne_0/Eq.lean';
+    const newRel = 'Lemma/Random/GetArgMaxProbCond/eq/ArgMax/of/NeProbJoint__0/All_CondIndep.lean';
+    const stub = [
+        'import Lemma.Dummy',
+        '',
+        '',
+        'axiom Random.Eq.ArgMax.Mul.Prod_ProbCond.of.Ne_0.Eq : True',
+        '',
+        '',
+        '-- created on 2021-07-21',
+        '',
+    ].join('\n');
+    const full = [
+        'import Lemma.Dummy',
+        'open Fun',
+        '',
+        '',
+        '/-- naive Bayes argmax -/',
+        '@[path]',
+        'private lemma main',
+        '  [NeZero (n : ℕ)] {m : ℕ}',
+        '  {x : ℕ → α} {y : ℕ → β} :',
+        '  True := by',
+        '  trivial',
+        '',
+        '',
+        '-- created on 2021-07-21',
+        '-- updated on 2026-10-22',
+        '',
+    ].join('\n');
+    fs.mkdirSync(path.dirname(path.join(root, oldRel)), { recursive: true });
+    fs.writeFileSync(path.join(root, oldRel), stub);
+    git(root, ['add', oldRel]);
+    git(root, ['commit', '-m', 'axiom stub']);
+    fs.mkdirSync(path.dirname(path.join(root, newRel)), { recursive: true });
+    fs.renameSync(path.join(root, oldRel), path.join(root, newRel));
+    fs.writeFileSync(path.join(root, newRel), full);
+    check('radical rename + axiom stub HEAD is not new', isNewInGit(path.join(root, newRel)) === false);
+    const warns = lintLean(full, {
+        file: newRel,
+        root,
+        today: '2026-10-22',
+        isNew: isNewInGit(path.join(root, newRel)),
+    }).filter((w) => w.rule === 'date-created-today');
+    check('radical rename: no date-created-today', warns.length === 0);
     fs.rmSync(root, { recursive: true, force: true });
 }
 

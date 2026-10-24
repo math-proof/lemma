@@ -9,7 +9,7 @@ import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Nat.Eq.Eq.of.AddMul.Lt.Lt
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
-open Tensor Bool List Vector Nat Fin
+open Tensor Bool List Vector Nat Fin Set
 
 
 @[path]

@@ -24,17 +24,4 @@ def ContainsSubgraph {V : Type*} [DecidableEq V]
     (H : Finset (Finset V)) (m k : ℕ) : Prop :=
   ∃ S : Finset V, S.card = m ∧
     k ≤ (H.filter fun e => e ⊆ S).card
-
-/-- Unfolding characterization of uniformity. -/
-theorem isUniform_iff {V : Type*} (H : Finset (Finset V)) (r : ℕ) :
-    IsUniform H r ↔ ∀ e ∈ H, e.card = r :=
-  Iff.rfl
-
-/-- Unfolding characterization of finite subhypergraph containment. -/
-theorem containsSubgraph_iff {V : Type*} [DecidableEq V]
-    (H : Finset (Finset V)) (m k : ℕ) :
-    ContainsSubgraph H m k ↔
-      ∃ S : Finset V, S.card = m ∧ k ≤ (H.filter fun e => e ⊆ S).card :=
-  Iff.rfl
-
 end SetFamily

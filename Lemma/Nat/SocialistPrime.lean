@@ -4,50 +4,64 @@ import sympy.atlas.NumberTheory.SocialistPrime
 open Nat
 
 
+namespace Nat
+
 /--
 [IsSocialistPrime.prime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SocialistPrime.lean)
 -/
 @[path]
-private lemma IsSocialistPrime_prime_eq
+lemma IsSocialistPrime.prime
   {p : ℕ}
 -- given
   (h : IsSocialistPrime p) :
 -- imply
-  Nat.Prime p := by
+  Nat.Prime p :=
 -- proof
-  apply Nat.IsSocialistPrime.prime h
+  h.1
+
+end Nat
+
+namespace Nat
 
 /--
 [IsSocialistPrime.five_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SocialistPrime.lean)
 -/
 @[path]
-private lemma IsSocialistPrime_five_lt_eq
+lemma IsSocialistPrime.five_lt
   {p : ℕ}
 -- given
   (h : IsSocialistPrime p) :
 -- imply
-  5 < p := by
+  5 < p :=
 -- proof
-  apply Nat.IsSocialistPrime.five_lt h
+  h.2.1
+
+end Nat
+
+namespace Nat
 
 /--
 [IsSocialistPrime.pairwise](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SocialistPrime.lean)
 -/
 @[path]
-private lemma IsSocialistPrime_pairwise_eq
+lemma IsSocialistPrime.pairwise
   {p : ℕ}
 -- given
   (h : IsSocialistPrime p) :
 -- imply
-  Set.Pairwise (Set.Icc 2 (p - 1)) (fun k l => k.factorial % p ≠ l.factorial % p) := by
+  Set.Pairwise (Set.Icc 2 (p - 1)) (fun k l => k.factorial % p ≠ l.factorial % p) :=
 -- proof
-  apply Nat.IsSocialistPrime.pairwise h
+  h.2.2
+
+end Nat
+
+namespace Nat
 
 /--
 [IsSocialistPrime.factorial_mod_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SocialistPrime.lean)
 -/
 @[path]
-private lemma IsSocialistPrime_factorial_mod_ne_eq
+lemma IsSocialistPrime.factorial_mod_ne
   {p a b : ℕ}
 -- given
   (h : IsSocialistPrime p)
@@ -55,9 +69,12 @@ private lemma IsSocialistPrime_factorial_mod_ne_eq
   (hb : b ∈ Set.Icc 2 (p - 1))
   (hab : a ≠ b) :
 -- imply
-  a.factorial % p ≠ b.factorial % p := by
+  a.factorial % p ≠ b.factorial % p :=
 -- proof
-  apply Nat.IsSocialistPrime.factorial_mod_ne h ha hb hab
+  h.pairwise ha hb hab
+
+end Nat
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

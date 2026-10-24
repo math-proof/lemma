@@ -1,0 +1,21 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectDiagonalBlockLower.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDiagonalBlockLower
+
+#print axioms StatMech.FrontierD.fkRectWindingBlock_twoPoint_ge_cFE_pow
+#print axioms StatMech.FrontierD.fkRectWindingBlock_connectionProduct_ge_of_bulk
+#print axioms StatMech.FrontierD.exists_margin_criticalDiagonal_lt_windingBlock_twoPoint
+#print axioms StatMech.FrontierD.exists_margin_windingBlock_connectionProduct_ge_diagonal_sub
+#print axioms StatMech.FrontierD.eventually_fkRectWindingBlock_chargeOneRate_le_diagonalSub_add_barrier_of_leftRight
+#print axioms StatMech.FrontierD.eventually_fkRectWindingBlock_chargeOneRate_le_diagonalSub_add_barrier
+#print axioms StatMech.FrontierD.fkQgt4SixVertexGapRate_le_exactDiagonalHalfScale_add_barrier_of_leftRight
+#print axioms StatMech.FrontierD.fkQgt4SixVertexGapRate_le_exactDiagonalHalfScale_add_barrier
+#print axioms StatMech.FrontierD.fkQgt4SixVertexGapRate_le_exactDiagonalHalf_of_leftBarrierBounds

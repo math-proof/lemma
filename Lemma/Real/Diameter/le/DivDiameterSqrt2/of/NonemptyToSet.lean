@@ -1,0 +1,23 @@
+import Mathlib
+import sympy.Basic
+import sympy.analysis.MeasureTheory.Section_1_2_1
+open BoundedInterval
+open Box
+
+
+/--
+[subdivide_diameter_bound](https://github.com/teorth/analysis/blob/main/Analysis/MeasureTheory/Section_1_2_1.lean)
+-/
+@[path]
+private lemma main
+  {d:ℕ}
+  {B: Box d}
+-- given
+  (hB : B.toSet.Nonempty) :
+-- imply
+  ∀ B' ∈ B.subdivide, B'.diameter ≤ B.diameter / Real.sqrt 2 :=
+-- proof
+  Box.subdivide_diameter_bound B hB
+
+
+-- created on 2026-10-22

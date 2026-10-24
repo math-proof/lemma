@@ -40,63 +40,12 @@ def TripSternTree.nodeAtPath {α : Type _} (T : TripSternTree α)
   path.foldl (fun node bit =>
     if bit then T.rightTransition node else T.leftTransition node) T.seed
 
-/-- The empty path selects the root seed. Source: Amburg et al., *TRIP-Stern Sequences*, JIS 20
-(2017), Article 17.1.7, Definition TRIPSternDef, lines 471-481. -/
-theorem TripSternTree.nodeAtEmptyPath {α : Type _} (T : TripSternTree α) :
-    T.nodeAtPath [] = T.seed :=
-  rfl
-
-/-- Appending one left step applies the left transition to the node at the
-prefix path. Source: Amburg et al., *TRIP-Stern Sequences*, JIS 20 (2017), Article 17.1.7,
-Definition TRIPSternDef, lines 471-481. -/
-theorem TripSternTree.nodeAtPathAppendLeft {α : Type _}
-    (T : TripSternTree α) (path : List Bool) :
-    T.nodeAtPath (path ++ [false]) = T.leftTransition (T.nodeAtPath path) := by
-  unfold TripSternTree.nodeAtPath
-  rw [List.foldl_append]
-  simp
-
-/-- Appending one right step applies the right transition to the node at the
-prefix path. Source: Amburg et al., *TRIP-Stern Sequences*, JIS 20 (2017), Article 17.1.7,
-Definition TRIPSternDef, lines 471-481. -/
-theorem TripSternTree.nodeAtPathAppendRight {α : Type _}
-    (T : TripSternTree α) (path : List Bool) :
-    T.nodeAtPath (path ++ [true]) = T.rightTransition (T.nodeAtPath path) := by
-  unfold TripSternTree.nodeAtPath
-  rw [List.foldl_append]
-  simp
-
 /-- Depth `n` consists of all nodes selected by binary paths of length `n`.
 Source: Amburg et al., *TRIP-Stern Sequences*, JIS 20 (2017), Article 17.1.7, Definition
 TRIPSternDef, lines 471-481. -/
 def TripSternTree.nodesAtDepth {α : Type _} (T : TripSternTree α)
     (n : ℕ) : Set α :=
   { y | ∃ path : List Bool, path.length = n ∧ T.nodeAtPath path = y }
-
-/-- Membership characterization of a level. Source: Amburg et al., *TRIP-Stern Sequences*, JIS 20
-(2017), Article 17.1.7, Definition TRIPSternDef, lines 471-481. -/
-theorem TripSternTree.nodeMembershipAtDepth {α : Type _} (T : TripSternTree α)
-    (n : ℕ) (y : α) :
-    y ∈ T.nodesAtDepth n ↔
-      ∃ path : List Bool, path.length = n ∧ T.nodeAtPath path = y :=
-  Iff.rfl
-
-/-- Depth zero contains exactly the root seed. Source: Amburg et al., *TRIP-Stern Sequences*, JIS 20
-(2017), Article 17.1.7, Definition TRIPSternDef, lines 471-481. -/
-theorem TripSternTree.nodesAtDepthZero {α : Type _}
-    (T : TripSternTree α) (y : α) :
-    y ∈ T.nodesAtDepth 0 ↔ y = T.seed := by
-  constructor
-  · intro h
-    match h with
-    | ⟨path, hlen, hnode⟩ =>
-      rw [List.length_eq_zero_iff] at hlen
-      subst hlen
-      simp [TripSternTree.nodeAtPath] at hnode
-      exact hnode.symm
-  · intro h
-    subst h
-    exact ⟨[], rfl, rfl⟩
 
 /-- The left-most node at depth `n`, obtained by repeatedly applying the left
 transition `n` times starting from the seed. Source: Amburg et al., *TRIP-Stern Sequences*, JIS 20
@@ -111,33 +60,4 @@ transition `n` times starting from the seed. Source: Amburg et al., *TRIP-Stern 
 def TripSternTree.rightmostNode {α : Type _} (T : TripSternTree α) : ℕ → α
   | 0 => T.seed
   | n + 1 => T.rightTransition (T.rightmostNode n)
-
-/-- The left-most node at depth zero is the seed. Source: Amburg et al., *TRIP-Stern Sequences*, JIS
-20 (2017), Article 17.1.7, Definition TRIPSternDef, lines 471-481. -/
-theorem TripSternTree.leftmostNodeAtZero {α : Type _} (T : TripSternTree α) :
-    T.leftmostNode 0 = T.seed :=
-  rfl
-
-/-- The left-most node at depth `n + 1` is the left transition of the left-most
-node at depth `n`. Source: Amburg et al., *TRIP-Stern Sequences*, JIS 20 (2017), Article 17.1.7,
-Definition TRIPSternDef, lines 471-481. -/
-theorem TripSternTree.leftmostNodeAtSuccessor {α : Type _} (T : TripSternTree α)
-    (n : ℕ) :
-    T.leftmostNode (n + 1) = T.leftTransition (T.leftmostNode n) :=
-  rfl
-
-/-- The right-most node at depth zero is the seed. Source: Amburg et al., *TRIP-Stern Sequences*,
-JIS 20 (2017), Article 17.1.7, Definition TRIPSternDef, lines 471-481. -/
-theorem TripSternTree.rightmostNodeAtZero {α : Type _} (T : TripSternTree α) :
-    T.rightmostNode 0 = T.seed :=
-  rfl
-
-/-- The right-most node at depth `n + 1` is the right transition of the
-right-most node at depth `n`. Source: Amburg et al., *TRIP-Stern Sequences*, JIS 20 (2017), Article
-17.1.7, Definition TRIPSternDef, lines 471-481. -/
-theorem TripSternTree.rightmostNodeAtSuccessor {α : Type _} (T : TripSternTree α)
-    (n : ℕ) :
-    T.rightmostNode (n + 1) = T.rightTransition (T.rightmostNode n) :=
-  rfl
-
 end MetaMathlibExt

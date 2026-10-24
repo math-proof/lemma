@@ -3,6 +3,7 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Polynomial.Basic
 import sympy.atlas.Combinatorics.Enumerative.NarayanaNumber
+import Lemma.Finset.Enumerative.NarayanaNumber
 /-!
 # Narayana polynomials with zero constant term
 
@@ -25,13 +26,6 @@ def narayanaPolynomialCoeff : ℕ → ℕ → ℕ
   | 0, _ + 1 => 0
   | _ + 1, 0 => 0
   | n + 1, k + 1 => narayana ⟨n + 1, Nat.succ_pos n⟩ ⟨k + 1, Nat.succ_pos k⟩
-
-/-- Positive-index Narayana-polynomial coefficients agree definitionally with
-the shared Narayana-number API. -/
-theorem narayanaPolynomialCoeff_succ_succ (n k : ℕ) :
-    narayanaPolynomialCoeff (n + 1) (k + 1) =
-      narayana ⟨n + 1, Nat.succ_pos n⟩ ⟨k + 1, Nat.succ_pos k⟩ :=
-  rfl
 
 /-- The Narayana row-generating polynomial with zero constant coefficient in
 positive rows.

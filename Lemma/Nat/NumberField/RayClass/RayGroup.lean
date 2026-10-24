@@ -6,6 +6,96 @@ open NumberField
 open Modulus
 
 
+namespace NumberField.Modulus
+
+/--
+[IsRayElementOne.mem_rayElements](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
+-/
+@[path]
+lemma IsRayElementOne.mem_rayElements
+  [Field K] [NumberField K]
+  {m : Modulus K}
+  {x : Kˣ}
+-- given
+  (h : IsRayElementOne m x) :
+-- imply
+  x ∈ rayElements m :=
+-- proof
+  h.1
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
+
+/--
+[IsRayElementOne.congruent](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
+-/
+@[path]
+lemma IsRayElementOne.congruent
+  [Field K] [NumberField K]
+  {m : Modulus K}
+  {x : Kˣ}
+-- given
+  (h : IsRayElementOne m x) :
+-- imply
+  CongruentOneAtFinitePart m x :=
+-- proof
+  h.2.1
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
+
+/--
+[IsRayElementOne.positive](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
+-/
+@[path]
+lemma IsRayElementOne.positive
+  [Field K] [NumberField K]
+  {m : Modulus K}
+  {x : Kˣ}
+-- given
+  (h : IsRayElementOne m x) :
+-- imply
+  PositiveAtInfinitePart m x :=
+-- proof
+  h.2.2
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
+
+/--
+[positiveAtInfinitePart_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
+-/
+@[path]
+lemma positiveAtInfinitePart_one
+  [Field K] [NumberField K]
+  {m : Modulus K} :
+-- imply
+  PositiveAtInfinitePart m 1 := by
+-- proof
+  intro w _
+  rwa [Units.val_one, map_one]
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
+
+/--
+[isRayElementOne_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
+-/
+@[path]
+lemma isRayElementOne_one
+  [Field K] [NumberField K]
+  {m : Modulus K} :
+-- imply
+  IsRayElementOne m 1 :=
+-- proof
+  ⟨one_mem _, congruentOneAtFinitePart_one m, positiveAtInfinitePart_one m⟩
+
+end NumberField.Modulus
+
 /--
 [mem_coprimeFractionalIdeals_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
 -/
@@ -35,51 +125,6 @@ private lemma mem_rayElements_iff_eq
     coprimeFractionalIdeals m := by
 -- proof
   apply NumberField.Modulus.mem_rayElements_iff m x
-
-/--
-[IsRayElementOne.mem_rayElements](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
--/
-@[path]
-private lemma IsRayElementOne_mem_rayElements_eq
-  [Field K] [NumberField K]
-  {m : Modulus K}
-  {x : Kˣ}
--- given
-  (h : IsRayElementOne m x) :
--- imply
-  x ∈ rayElements m := by
--- proof
-  apply NumberField.Modulus.IsRayElementOne.mem_rayElements h
-
-/--
-[IsRayElementOne.congruent](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
--/
-@[path]
-private lemma IsRayElementOne_congruent_eq
-  [Field K] [NumberField K]
-  {m : Modulus K}
-  {x : Kˣ}
--- given
-  (h : IsRayElementOne m x) :
--- imply
-  CongruentOneAtFinitePart m x := by
--- proof
-  apply NumberField.Modulus.IsRayElementOne.congruent h
-
-/--
-[IsRayElementOne.positive](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
--/
-@[path]
-private lemma IsRayElementOne_positive_eq
-  [Field K] [NumberField K]
-  {m : Modulus K}
-  {x : Kˣ}
--- given
-  (h : IsRayElementOne m x) :
--- imply
-  PositiveAtInfinitePart m x := by
--- proof
-  apply NumberField.Modulus.IsRayElementOne.positive h
 
 /--
 [rayGenerators_mem_of_isRayElementOne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
@@ -142,29 +187,6 @@ private lemma congruentOneAtFinitePart_one_eq
 -- proof
   apply NumberField.Modulus.congruentOneAtFinitePart_one m
 
-/--
-[positiveAtInfinitePart_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
--/
-@[path]
-private lemma positiveAtInfinitePart_one_eq
-  [Field K] [NumberField K]
-  {m : Modulus K} :
--- imply
-  PositiveAtInfinitePart m 1 := by
--- proof
-  apply NumberField.Modulus.positiveAtInfinitePart_one m
-
-/--
-[isRayElementOne_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean)
--/
-@[path]
-private lemma isRayElementOne_one_eq
-  [Field K] [NumberField K]
-  {m : Modulus K} :
--- imply
-  IsRayElementOne m 1 := by
--- proof
-  apply NumberField.Modulus.isRayElementOne_one m
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

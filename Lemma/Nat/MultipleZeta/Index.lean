@@ -4,29 +4,37 @@ import sympy.atlas.NumberTheory.MultipleZeta.Index
 open MetaMathlibExt.MultipleZeta
 
 
+namespace MetaMathlibExt.MultipleZeta
+
 /--
 [isAdmissible_nil](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/Index.lean)
 -/
 @[path]
-private lemma isAdmissible_nil_eq
+lemma isAdmissible_nil
   :
 -- imply
   ¬IsAdmissible [] := by
 -- proof
-  apply MetaMathlibExt.MultipleZeta.isAdmissible_nil
+  simp [IsAdmissible]
+
+end MetaMathlibExt.MultipleZeta
+
+namespace MetaMathlibExt.MultipleZeta
 
 /--
 [isAdmissible_cons_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/Index.lean)
 -/
 @[path]
-private lemma isAdmissible_cons_iff_eq
+lemma isAdmissible_cons_iff
   {t : List ℕ}
 -- given
   (h : ℕ) :
 -- imply
   IsAdmissible (h :: t) ↔ 2 ≤ h ∧ ∀ x ∈ t, 0 < x := by
 -- proof
-  apply MetaMathlibExt.MultipleZeta.isAdmissible_cons_iff h t
+  rfl
+
+end MetaMathlibExt.MultipleZeta
 
 /--
 [Index.isAdmissible_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/Index.lean)
@@ -53,3 +61,4 @@ private lemma toList_hoffmanBlock_eq
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

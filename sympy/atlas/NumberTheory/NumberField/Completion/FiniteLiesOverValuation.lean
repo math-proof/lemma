@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverValuation.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.Completion.FiniteLiesOver
+import Lemma.Nat.NumberField.Completion.FiniteLiesOver
 /-!
 # Valuation formula for maps between finite-place completions
 
@@ -100,11 +101,4 @@ noncomputable def adicCompletionIntegersMap :
   map_mul' := fun _x _y => Subtype.ext (map_mul _ _ _)
   map_zero' := Subtype.ext (map_zero _)
   map_add' := fun _x _y => Subtype.ext (map_add _ _ _)
-
-@[simp]
-theorem adicCompletionIntegersMap_apply (x : v.adicCompletionIntegers K) :
-    ((adicCompletionIntegersMap v w x : w.adicCompletionIntegers L) :
-      w.adicCompletion L) = adicCompletionMap v w (x : v.adicCompletion K) :=
-  rfl
-
 end IsDedekindDomain.HeightOneSpectrum

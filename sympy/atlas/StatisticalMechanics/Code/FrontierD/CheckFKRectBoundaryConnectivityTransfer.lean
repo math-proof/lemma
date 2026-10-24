@@ -1,0 +1,37 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectBoundaryConnectivityTransfer.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryConnectivityTransfer
+
+#print axioms StatMech.FrontierD.fkRectLayerInputEmbed_injective
+#print axioms StatMech.FrontierD.finite_component_count_eq_closed_add_boundary
+#print axioms StatMech.FrontierD.finiteBoundaryEdgeRun_component_cross_sum
+#print axioms StatMech.FrontierD.fkRectBoundaryLayer_component_count
+#print axioms StatMech.FrontierD.fkRectBoundaryLayerOutput_isConnectivity
+#print axioms StatMech.FrontierD.fkRectBoundaryInitialState_isConnectivity
+#print axioms StatMech.FrontierD.fkRectBoundaryLayerOutput_vertical
+#print axioms StatMech.FrontierD.fkRectOpenEdgeCount_eq_sum_layerOpenCount
+#print axioms StatMech.FrontierD.fkRectBoundaryRunWeight_eq
+#print axioms StatMech.FrontierD.fkRectOpenEdgeCount_eq_run_add_seam
+#print axioms StatMech.FrontierD.fkRectBoundaryTransferCoefficient_eq
+#print axioms StatMech.FrontierD.fkRectBoundaryEmptyLayer_component_count
+#print axioms StatMech.FrontierD.fkRectBoundaryConnectivityTwoLayerTransfer_diag_pos
+#print axioms StatMech.FrontierD.fkRectBoundaryTransferReducedZ_eq_coefficientSum
+#print axioms StatMech.FrontierD.fkRectBoundaryLayerTransfer_nonneg
+#print axioms StatMech.FrontierD.fkRectBoundarySeamFunctional_pos
+#print axioms StatMech.FrontierD.fkRectStrip_boundary_reachable_iff
+#print axioms StatMech.FrontierD.fkRectStrip_component_count
+#print axioms StatMech.FrontierD.fkRectStripSeamGraph_component_count
+#print axioms StatMech.FrontierD.fkRectConfigurationStripSeamGraph_component_count
+#print axioms StatMech.FrontierD.fkRectConfigurationStripSeamIso
+#print axioms StatMech.FrontierD.fkRectBoundaryTransferClusterCount_eq_numClusters
+#print axioms StatMech.FrontierD.fkRectBoundaryTransferCoefficient_eq_criticalReducedWeight
+#print axioms StatMech.FrontierD.fkRectCriticalReducedZ_eq_boundaryTransferReducedZ
+#print axioms StatMech.FrontierD.exists_fkRectBoundaryTransferReducedZ_log_div_tendsto

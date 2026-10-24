@@ -5,61 +5,82 @@ open scoped BigOperators
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [fubiniNumber_eq_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/FubiniNumber.lean)
 -/
 @[path]
-private lemma fubiniNumber_eq_sum_eq
+lemma fubiniNumber_eq_sum
   {n : Nat} :
 -- imply
   fubiniNumber n =
-      ∑ k ∈ Finset.range (n + 1), Nat.stirlingSecond n k * Nat.factorial k := by
+      ∑ k ∈ Finset.range (n + 1), Nat.stirlingSecond n k * Nat.factorial k :=
 -- proof
-  apply MetaMathlibExt.fubiniNumber_eq_sum n
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [fubiniNumber_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/FubiniNumber.lean)
 -/
 @[path]
-private lemma fubiniNumber_zero_eq
+lemma fubiniNumber_zero
   :
 -- imply
   fubiniNumber 0 = 1 := by
 -- proof
-  apply MetaMathlibExt.fubiniNumber_zero
+decide
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [fubiniNumber_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/FubiniNumber.lean)
 -/
 @[path]
-private lemma fubiniNumber_one_eq
+lemma fubiniNumber_one
   :
 -- imply
   fubiniNumber 1 = 1 := by
 -- proof
-  apply MetaMathlibExt.fubiniNumber_one
+decide
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [fubiniNumber_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/FubiniNumber.lean)
 -/
 @[path]
-private lemma fubiniNumber_two_eq
+lemma fubiniNumber_two
   :
 -- imply
   fubiniNumber 2 = 3 := by
 -- proof
-  apply MetaMathlibExt.fubiniNumber_two
+decide
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [fubiniNumber_three](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/FubiniNumber.lean)
 -/
 @[path]
-private lemma fubiniNumber_three_eq
+lemma fubiniNumber_three
   :
 -- imply
   fubiniNumber 3 = 13 := by
 -- proof
-  apply MetaMathlibExt.fubiniNumber_three
+decide
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

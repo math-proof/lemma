@@ -48,13 +48,10 @@ private lemma main
   have : ∀ i : ℕ, SinglePSpace π y[i] := fun i => IsDiscreteHMM.singlePSpace_y (x := ⇑x) i
   have : ∀ i j : ℕ, SinglePSpace π (y[i], y[j]) := fun i j => IsDiscreteHMM.singlePSpace_yy (x := ⇑x) i j
   have : ∀ k : ℕ, SinglePSpace π ((⇑x)[:k], (⇑y)[:k]) := fun k => inferInstance
-  have hpair : ∀ k : ℕ, ReferenceMeasure.measure (α := (Fin k → X) × (Fin k → Y)) = Measure.count := fun k => by
-    change (Measure.count : Measure (Fin k → X)).prod Measure.count = Measure.count
-    rw [← Count.eq.ProdCountS]
   have hQ : ∀ (ys : ℕ → Y) (k : ℕ), (ℙ[π](x[:(k : ℤ)] = «x.bvar»[:(k : ℤ)] ∧ y[:(k : ℤ)] = ys[:(k : ℤ)]) : ENNReal) =
       π {ω | (∀ i < k, x[i] ω = «x.bvar»[i]) ∧ ∀ i < k, y[i] ω = ys i} := by
     intro ys k
-    rw [Prob.eq.Measure.of.Eq_Count (hpair k)]
+    rw [EqProb]
     congr 1
     ext ω
     simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_ofPred_eq, JointRandomSymbol, Prod.mk.injEq, funext_iff]
@@ -146,4 +143,4 @@ private lemma main
 
 
 -- created on 2020-12-20
--- updated on 2026-10-22
+-- updated on 2026-10-23

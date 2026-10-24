@@ -7,23 +7,24 @@ import sympy.atlas.Topology.ThreeManifold
 [isThreeManifold_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/ThreeManifold.lean)
 -/
 @[path]
-private lemma isThreeManifold_iff_eq
+lemma isThreeManifold_iff
   [TopologicalSpace M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M] :
 -- imply
-  IsThreeManifold M ↔ T2Space M ∧ SecondCountableTopology M := by
+  IsThreeManifold M ↔ T2Space M ∧ SecondCountableTopology M :=
 -- proof
-  apply isThreeManifold_iff M
+  ⟨fun _ => ⟨inferInstance, inferInstance⟩, fun ⟨_, _⟩ => ⟨⟩⟩
 
 /--
 [IsThreeManifold.locallyCompactSpace](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/ThreeManifold.lean)
 -/
 @[path]
-private lemma IsThreeManifold_locallyCompactSpace_eq
+lemma IsThreeManifold.locallyCompactSpace
   [TopologicalSpace M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M] [IsThreeManifold M] :
 -- imply
-  LocallyCompactSpace M := by
+  LocallyCompactSpace M :=
 -- proof
-  apply IsThreeManifold.locallyCompactSpace M
+  ChartedSpace.locallyCompactSpace (EuclideanSpace ℝ (Fin 3)) M
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

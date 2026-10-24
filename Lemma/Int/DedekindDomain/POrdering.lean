@@ -4,11 +4,13 @@ import sympy.atlas.RingTheory.DedekindDomain.POrdering
 open IsDedekindDomain.HeightOneSpectrum
 
 
+namespace IsDedekindDomain.HeightOneSpectrum
+
 /--
 [isPOrdering_unfold](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/POrdering.lean)
 -/
 @[path]
-private lemma isPOrdering_unfold_eq
+lemma isPOrdering_unfold
   [CommRing R] [IsDedekindDomain R]
   {p : IsDedekindDomain.HeightOneSpectrum R}
   {S : Set R}
@@ -18,15 +20,19 @@ private lemma isPOrdering_unfold_eq
     S.Infinite ∧ (∀ n, a n ∈ S) ∧
     ∀ n, ∀ x ∈ S,
     pOrderingValuation p a n (a n) ≤
-    pOrderingValuation p a n x := by
+    pOrderingValuation p a n x :=
 -- proof
-  apply IsDedekindDomain.HeightOneSpectrum.isPOrdering_unfold
+  Iff.rfl
+
+end IsDedekindDomain.HeightOneSpectrum
+
+namespace IsDedekindDomain.HeightOneSpectrum
 
 /--
 [IsPOrdering.infinite](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/POrdering.lean)
 -/
 @[path]
-private lemma IsPOrdering_infinite_eq
+lemma IsPOrdering.infinite
   [CommRing R] [IsDedekindDomain R]
   {p : IsDedekindDomain.HeightOneSpectrum R}
   {S : Set R}
@@ -34,15 +40,19 @@ private lemma IsPOrdering_infinite_eq
 -- given
   (h : IsPOrdering p S a) :
 -- imply
-  S.Infinite := by
+  S.Infinite :=
 -- proof
-  apply IsDedekindDomain.HeightOneSpectrum.IsPOrdering.infinite h
+  h.1
+
+end IsDedekindDomain.HeightOneSpectrum
+
+namespace IsDedekindDomain.HeightOneSpectrum
 
 /--
 [IsPOrdering.mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/POrdering.lean)
 -/
 @[path]
-private lemma IsPOrdering_mem_eq
+lemma IsPOrdering.mem
   [CommRing R] [IsDedekindDomain R]
   {p : IsDedekindDomain.HeightOneSpectrum R}
   {S : Set R}
@@ -51,15 +61,19 @@ private lemma IsPOrdering_mem_eq
 -- given
   (h : IsPOrdering p S a) :
 -- imply
-  a n ∈ S := by
+  a n ∈ S :=
 -- proof
-  apply IsDedekindDomain.HeightOneSpectrum.IsPOrdering.mem h n
+  h.2.1 n
+
+end IsDedekindDomain.HeightOneSpectrum
+
+namespace IsDedekindDomain.HeightOneSpectrum
 
 /--
 [IsPOrdering.min_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/POrdering.lean)
 -/
 @[path]
-private lemma IsPOrdering_min_le_eq
+lemma IsPOrdering.min_le
   [CommRing R] [IsDedekindDomain R]
   {p : IsDedekindDomain.HeightOneSpectrum R}
   {S : Set R}
@@ -70,15 +84,19 @@ private lemma IsPOrdering_min_le_eq
   (h : IsPOrdering p S a)
   (hx : x ∈ S) :
 -- imply
-  pOrderingValuation p a n (a n) ≤ pOrderingValuation p a n x := by
+  pOrderingValuation p a n (a n) ≤ pOrderingValuation p a n x :=
 -- proof
-  apply IsDedekindDomain.HeightOneSpectrum.IsPOrdering.min_le h n x hx
+  h.2.2 n x hx
+
+end IsDedekindDomain.HeightOneSpectrum
+
+namespace IsDedekindDomain.HeightOneSpectrum
 
 /--
 [IsPOrdering.isLeast](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/POrdering.lean)
 -/
 @[path]
-private lemma IsPOrdering_isLeast_eq
+lemma IsPOrdering.isLeast
   [CommRing R] [IsDedekindDomain R]
   {p : IsDedekindDomain.HeightOneSpectrum R}
   {S : Set R}
@@ -90,13 +108,21 @@ private lemma IsPOrdering_isLeast_eq
   IsLeast (pOrderingValuation p a n '' S)
     (pOrderingValuation p a n (a n)) := by
 -- proof
-  apply IsDedekindDomain.HeightOneSpectrum.IsPOrdering.isLeast h
+  constructor
+  · exact ⟨a n, h.mem n, rfl⟩
+  · intro y hy
+    obtain ⟨x, hxS, rfl⟩ := hy
+    exact h.min_le n x hxS
+
+end IsDedekindDomain.HeightOneSpectrum
+
+namespace IsDedekindDomain.HeightOneSpectrum
 
 /--
 [IsPOrdering.intro](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/POrdering.lean)
 -/
 @[path]
-private lemma IsPOrdering_intro_eq
+lemma IsPOrdering.intro
   [CommRing R] [IsDedekindDomain R]
   {p : IsDedekindDomain.HeightOneSpectrum R}
   {S : Set R}
@@ -106,15 +132,19 @@ private lemma IsPOrdering_intro_eq
   (hmem : ∀ n, a n ∈ S)
   (hmin : ∀ n, ∀ x ∈ S, pOrderingValuation p a n (a n) ≤ pOrderingValuation p a n x) :
 -- imply
-  IsPOrdering p S a := by
+  IsPOrdering p S a :=
 -- proof
-  apply IsDedekindDomain.HeightOneSpectrum.IsPOrdering.intro hinf hmem hmin
+  ⟨hinf, hmem, hmin⟩
+
+end IsDedekindDomain.HeightOneSpectrum
+
+namespace IsDedekindDomain.HeightOneSpectrum
 
 /--
 [pOrderingValuation_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/POrdering.lean)
 -/
 @[path]
-private lemma pOrderingValuation_zero_eq
+lemma pOrderingValuation_zero
   [CommRing R]
   {p : IsDedekindDomain.HeightOneSpectrum R}
   {a : ℕ → R}
@@ -122,13 +152,24 @@ private lemma pOrderingValuation_zero_eq
 -- imply
   pOrderingValuation p a 0 x = 0 := by
 -- proof
-  apply IsDedekindDomain.HeightOneSpectrum.pOrderingValuation_zero p a x
+  unfold pOrderingValuation
+  rw [Finset.range_zero, Finset.prod_empty,
+    Ideal.span_singleton_one]
+  have hunit : ¬ IsUnit p.asIdeal := by
+    rwa [Ideal.isUnit_iff]
+  have htop : (⊤ : Ideal R) = 1 := Ideal.one_eq_top.symm
+  rw [htop]
+  exact emultiplicity_of_one_right hunit
+
+end IsDedekindDomain.HeightOneSpectrum
+
+namespace IsDedekindDomain.HeightOneSpectrum
 
 /--
 [isPOrdering_iff_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/POrdering.lean)
 -/
 @[path]
-private lemma isPOrdering_iff_pos_eq
+lemma isPOrdering_iff_pos
   [CommRing R] [IsDedekindDomain R]
   {p : IsDedekindDomain.HeightOneSpectrum R}
   {S : Set R}
@@ -140,7 +181,20 @@ private lemma isPOrdering_iff_pos_eq
     pOrderingValuation p a n (a n) ≤
     pOrderingValuation p a n x := by
 -- proof
-  apply IsDedekindDomain.HeightOneSpectrum.isPOrdering_iff_pos
+  constructor
+  · intro h
+    exact ⟨h.infinite, h.mem, fun n _ x hx => h.min_le n x hx⟩
+  · intro h
+    refine ⟨h.1, h.2.1, ?_⟩
+    intro n x hx
+    by_cases hn : 1 ≤ n
+    · exact h.2.2 n hn x hx
+    · have hn0 : n = 0 := by omega
+      subst hn0
+      rw [pOrderingValuation_zero, pOrderingValuation_zero]
+
+end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

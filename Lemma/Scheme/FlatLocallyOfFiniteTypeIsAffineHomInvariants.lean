@@ -78,7 +78,7 @@ private lemma ringCore
 variable {M : (Scheme : Type 1)}
 private lemma appLE_apply_of_eq_id
   {f : M ⟶ M} (hf : f = 𝟙 M) (W : M.Opens) (e : W ≤ ((TopologicalSpace.Opens.map f.base).obj W))
-  (s : (M.presheaf.obj (op W))) : f.appLE W W e s = s := by
+  (s : M.presheaf.obj (op W)) : f.appLE W W e s = s := by
   subst hf
   have h1 : (homOfLE e).op = 𝟙 (Opposite.op W) := Subsingleton.elim _ _
   simp only [Scheme.Hom.appLE, Scheme.Hom.id_app, h1]
@@ -86,7 +86,7 @@ private lemma appLE_apply_of_eq_id
   rfl
 private lemma appLE_apply_of_eq_comp
   {f g k : M ⟶ M} (hk : k = f ≫ g) (W : M.Opens)
-  (ef : W ≤ ((TopologicalSpace.Opens.map f.base).obj W)) (eg : W ≤ ((TopologicalSpace.Opens.map g.base).obj W)) (ek : W ≤ ((TopologicalSpace.Opens.map k.base).obj W)) (s : (M.presheaf.obj (op W))) :
+  (ef : W ≤ ((TopologicalSpace.Opens.map f.base).obj W)) (eg : W ≤ ((TopologicalSpace.Opens.map g.base).obj W)) (ek : W ≤ ((TopologicalSpace.Opens.map k.base).obj W)) (s : M.presheaf.obj (op W)) :
   k.appLE W W ek s = f.appLE W W ef (g.appLE W W eg s) := by
   subst hk
   have h := Scheme.Hom.appLE_comp_appLE f g W W W eg ef

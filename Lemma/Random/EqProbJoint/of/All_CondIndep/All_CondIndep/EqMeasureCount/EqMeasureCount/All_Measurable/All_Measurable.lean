@@ -22,7 +22,7 @@ private lemma main
     s (t + 1) ⟂ᵢ[π] (s[:t], a[:t]) | (s t, a t)) :
 -- imply
   have : ∀ i, SinglePSpace π (s i) := fun i =>
-    SinglePSpace.of.EqMeasureCount.Measurable (hs i) CountableMeasure.measure_eq_count
+    SinglePSpace.of.Measurable (hs i)
   have : ∀ i j, SinglePSpace π (a i, s j) := fun i j =>
     SinglePSpace.of.Measurable.Measurable (ha i) (hs j)
   have : ∀ i, SinglePSpace π (s (i + 1), s i, a i) := fun i =>

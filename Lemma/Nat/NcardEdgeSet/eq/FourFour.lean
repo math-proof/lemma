@@ -1,0 +1,22 @@
+import Mathlib
+import sympy.Basic
+import sympy.analysis.Misc.erdos_613
+open Classical
+open scoped BigOperators
+open PikhurkoN5.V
+open PikhurkoN5
+
+
+/--
+[edge_count_44](https://github.com/teorth/analysis/blob/main/Analysis/Misc/erdos_613.lean)
+-/
+@[path]
+private lemma main
+  :
+-- imply
+  G.edgeSet.ncard = 44 :=
+-- proof
+  PikhurkoN5.edge_count_44
+
+
+-- created on 2026-10-22

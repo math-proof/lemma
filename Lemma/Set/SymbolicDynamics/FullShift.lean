@@ -4,69 +4,90 @@ import sympy.atlas.Dynamics.SymbolicDynamics.FullShift
 open SymbolicDynamics.FullShift
 
 
+namespace SymbolicDynamics.FullShift
+
 /--
 [unitShift_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Dynamics/SymbolicDynamics/FullShift.lean)
 -/
 @[path]
-private lemma unitShift_apply_eq
+lemma unitShift_apply
   {N : ℕ}
   {x : FullShiftSpace N}
   {i : ℤ} :
 -- imply
-  unitShift N x i = x (1 + i) := by
+  unitShift N x i = x (1 + i) :=
 -- proof
-  apply SymbolicDynamics.FullShift.unitShift_apply N x i
+  rfl
+
+end SymbolicDynamics.FullShift
+
+namespace SymbolicDynamics.FullShift
 
 /--
 [shiftHomeomorph_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Dynamics/SymbolicDynamics/FullShift.lean)
 -/
 @[path]
-private lemma shiftHomeomorph_apply_eq
+lemma shiftHomeomorph_apply
   {N : ℕ}
   {x : FullShiftSpace N} :
 -- imply
-  shiftHomeomorph N x = unitShift N x := by
+  shiftHomeomorph N x = unitShift N x :=
 -- proof
-  apply SymbolicDynamics.FullShift.shiftHomeomorph_apply N x
+  rfl
+
+end SymbolicDynamics.FullShift
+
+namespace SymbolicDynamics.FullShift
 
 /--
 [shiftHomeomorph_symm_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Dynamics/SymbolicDynamics/FullShift.lean)
 -/
 @[path]
-private lemma shiftHomeomorph_symm_apply_eq
+lemma shiftHomeomorph_symm_apply
   {N : ℕ}
   {x : FullShiftSpace N}
   {i : ℤ} :
 -- imply
-  (shiftHomeomorph N).symm x i = x (-1 + i) := by
+  (shiftHomeomorph N).symm x i = x (-1 + i) :=
 -- proof
-  apply SymbolicDynamics.FullShift.shiftHomeomorph_symm_apply N x i
+  rfl
+
+end SymbolicDynamics.FullShift
+
+namespace SymbolicDynamics.FullShift
 
 /--
 [isOneDimensionalCA_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Dynamics/SymbolicDynamics/FullShift.lean)
 -/
 @[path]
-private lemma isOneDimensionalCA_iff_eq
+lemma isOneDimensionalCA_iff
   {N : ℕ}
   {f : FullShiftSpace N → FullShiftSpace N} :
 -- imply
-  IsOneDimensionalCA N f ↔ Continuous f ∧ Function.Commute f (unitShift N) := by
+  IsOneDimensionalCA N f ↔ Continuous f ∧ Function.Commute f (unitShift N) :=
 -- proof
-  apply SymbolicDynamics.FullShift.isOneDimensionalCA_iff N f
+  Iff.rfl
+
+end SymbolicDynamics.FullShift
+
+namespace SymbolicDynamics.FullShift
 
 /--
 [mem_jointlyPeriodicPoints](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Dynamics/SymbolicDynamics/FullShift.lean)
 -/
 @[path]
-private lemma mem_jointlyPeriodicPoints_eq
+lemma mem_jointlyPeriodicPoints
   {N : ℕ}
   {f : FullShiftSpace N → FullShiftSpace N}
   {x : FullShiftSpace N} :
 -- imply
   x ∈ jointlyPeriodicPoints N f ↔
-      x ∈ Function.periodicPts f ∧ x ∈ Function.periodicPts (unitShift N) := by
+      x ∈ Function.periodicPts f ∧ x ∈ Function.periodicPts (unitShift N) :=
 -- proof
-  apply SymbolicDynamics.FullShift.mem_jointlyPeriodicPoints N f x
+  Iff.rfl
+
+end SymbolicDynamics.FullShift
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

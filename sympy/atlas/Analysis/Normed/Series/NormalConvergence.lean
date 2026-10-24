@@ -36,74 +36,7 @@ is finite in `ℝ≥0∞`. -/
 def ConvergesNormallyOn (f : ℕ → X → E) (S : Set X) : Prop :=
   ∑' n, supNormOn (f n) S ≠ ∞
 
-/-- The sup norm over the empty set vanishes. -/
-@[simp]
-theorem supNormOn_empty (g : X → E) : supNormOn g ∅ = 0 := by
-  unfold supNormOn
-  rw [iSup_of_empty]
-  rfl
-
-/-- The sup norm of the zero function vanishes. -/
-@[simp]
-theorem supNormOn_zero (S : Set X) : supNormOn (0 : X → E) S = 0 := by
-  simp [supNormOn]
-
-/-- The sup norm shrinks when the domain shrinks. -/
-theorem supNormOn_mono {S T : Set X} (h : T ⊆ S) (g : X → E) :
-    supNormOn g T ≤ supNormOn g S := by
-  unfold supNormOn
-  apply iSup_mono'
-  intro x
-  exact ⟨⟨x.1, h x.2⟩, le_rfl⟩
-
-/-- Every function series converges normally on the empty set. -/
-@[simp]
-theorem convergesNormallyOn_empty (f : ℕ → X → E) : ConvergesNormallyOn f ∅ := by
-  simp [ConvergesNormallyOn, supNormOn_empty]
-
-/-- The zero series converges normally on every set. -/
-@[simp]
-theorem convergesNormallyOn_zero (S : Set X) :
-    ConvergesNormallyOn (0 : ℕ → X → E) S := by
-  simp [ConvergesNormallyOn, supNormOn_zero]
-
-/-- Normal convergence persists when the domain shrinks. -/
-theorem ConvergesNormallyOn.mono {f : ℕ → X → E} {S T : Set X}
-    (h : ConvergesNormallyOn f S) (hTS : T ⊆ S) : ConvergesNormallyOn f T := by
-  unfold ConvergesNormallyOn at h ⊢
-  exact ne_top_of_le_ne_top h (ENNReal.tsum_le_tsum fun n => supNormOn_mono hTS _)
-
-variable [TopologicalSpace X]
-
 /-- Local normal convergence of the function series `f` on `S`: every `x ∈ S`
 has a neighbourhood whose intersection with `S` carries normal convergence. -/
 def ConvergesLocallyNormallyOn (f : ℕ → X → E) (S : Set X) : Prop :=
   ∀ x ∈ S, ∃ U ∈ 𝓝 x, ConvergesNormallyOn f (U ∩ S)
-
-/-- Projection from local normal convergence at a point: at any `x ∈ S`,
-some neighbourhood intersected with `S` carries normal convergence. -/
-theorem ConvergesLocallyNormallyOn.exists_nhds_inter {f : ℕ → X → E} {S : Set X}
-    {x : X} (h : ConvergesLocallyNormallyOn f S) (hx : x ∈ S) :
-    ∃ U ∈ 𝓝 x, ConvergesNormallyOn f (U ∩ S) :=
-  h x hx
-
-/-- Every function series converges locally normally on the empty set. -/
-@[simp]
-theorem convergesLocallyNormallyOn_empty (f : ℕ → X → E) :
-    ConvergesLocallyNormallyOn f ∅ :=
-  fun x hx => absurd hx (Set.notMem_empty x)
-
-/-- The zero series converges locally normally on every set. -/
-@[simp]
-theorem convergesLocallyNormallyOn_zero (S : Set X) :
-    ConvergesLocallyNormallyOn (0 : ℕ → X → E) S := by
-  intro x _
-  exact ⟨Set.univ, Filter.univ_mem, by simp⟩
-
-/-- Local normal convergence persists when the domain shrinks. -/
-theorem ConvergesLocallyNormallyOn.mono {f : ℕ → X → E} {S T : Set X}
-    (h : ConvergesLocallyNormallyOn f S) (hTS : T ⊆ S) :
-    ConvergesLocallyNormallyOn f T := by
-  intro x hx
-  obtain ⟨U, hU, hconv⟩ := h x (hTS hx)
-  exact ⟨U, hU, hconv.mono (Set.inter_subset_inter (fun x hx => hx) hTS)⟩

@@ -33,21 +33,4 @@ lines 114-122.
 -/
 def IsLucasSequenceFirstKind (P Q : ℤ) (u : ℕ → ℤ) : Prop :=
   u 0 = 0 ∧ u 1 = 1 ∧ ∀ n : ℕ, u (n + 2) = P * u (n + 1) - Q * u n
-
-/-- First clause of the defining recurrence: the value at `0`. -/
-theorem IsLucasSequenceFirstKind.initialZero {P Q : ℤ} {u : ℕ → ℤ}
-    (h : IsLucasSequenceFirstKind P Q u) : u 0 = 0 :=
-  h.1
-
-/-- Second clause of the defining recurrence: the value at `1`. -/
-theorem IsLucasSequenceFirstKind.initialOne {P Q : ℤ} {u : ℕ → ℤ}
-    (h : IsLucasSequenceFirstKind P Q u) : u 1 = 1 :=
-  h.2.1
-
-/-- Third clause of the defining recurrence: the two-step relation. -/
-theorem IsLucasSequenceFirstKind.recurrenceStep {P Q : ℤ} {u : ℕ → ℤ}
-    (h : IsLucasSequenceFirstKind P Q u) (n : ℕ) :
-    u (n + 2) = P * u (n + 1) - Q * u n :=
-  h.2.2 n
-
 end MetaMathlibExt

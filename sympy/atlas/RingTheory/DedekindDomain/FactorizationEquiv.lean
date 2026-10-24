@@ -72,18 +72,6 @@ noncomputable def finsuppToUnits (e : HeightOneSpectrum R →₀ ℤ) :
     (FractionalIdeal R⁰ K)ˣ :=
   Units.mk0 _ (finsuppProd_ne_zero K e)
 
-@[simp]
-theorem finsuppToUnits_val (e : HeightOneSpectrum R →₀ ℤ) :
-    (↑(finsuppToUnits K e) : FractionalIdeal R⁰ K) =
-      e.prod (fun v n => (v.asIdeal : FractionalIdeal R⁰ K) ^ n) :=
-  rfl
-
-/-- The valuation of a reconstructed ideal recovers the prescribed exponent. -/
-@[simp]
-theorem count_finsuppToUnits (v : HeightOneSpectrum R) (e : HeightOneSpectrum R →₀ ℤ) :
-    count K v (↑(finsuppToUnits K e) : FractionalIdeal R⁰ K) = e v :=
-  count_finsuppProd K v e
-
 /-- Reconstruction after taking exponents is the identity. -/
 theorem toUnits_left_inv (u : (FractionalIdeal R⁰ K)ˣ) :
     finsuppToUnits K (unitsToFinsupp K u) = u := by
@@ -123,11 +111,6 @@ theorem unitsToFinsupp_mul (u v : (FractionalIdeal R⁰ K)ˣ) :
   simp only [unitsToFinsupp_apply, Units.val_mul, Finsupp.add_apply]
   exact count_mul K w u.ne_zero v.ne_zero
 
-@[simp]
-theorem unitsToFinsupp_one : unitsToFinsupp K (1 : (FractionalIdeal R⁰ K)ˣ) = 0 := by
-  ext w
-  rw [unitsToFinsupp_apply, Units.val_one, count_one K w, Finsupp.zero_apply]
-
 /-- The bundled multiplicative equivalence between unit fractional ideals and
 finitely supported prime-exponent functions. -/
 noncomputable def factorizationMulEquiv :
@@ -145,37 +128,4 @@ noncomputable def factorizationMulEquiv :
     rw [toUnits_right_inv, ofAdd_toAdd]
   map_mul' u v := by
     rw [← ofAdd_add, unitsToFinsupp_mul]
-
-@[simp]
-theorem factorizationMulEquiv_apply (u : (FractionalIdeal R⁰ K)ˣ) (v : HeightOneSpectrum R) :
-    Multiplicative.toAdd (factorizationMulEquiv K u) v =
-      count K v (u : FractionalIdeal R⁰ K) :=
-  rfl
-
-@[simp]
-theorem factorizationMulEquiv_symm_val (e : Multiplicative (HeightOneSpectrum R →₀ ℤ)) :
-    ((↑((factorizationMulEquiv K).symm e) : FractionalIdeal R⁰ K)) =
-      (Multiplicative.toAdd e).prod (fun v n => (v.asIdeal : FractionalIdeal R⁰ K) ^ n) :=
-  rfl
-
-/-- The image of a prime ideal is the corresponding basis exponent function. -/
-theorem factorizationMulEquiv_prime_self (w : HeightOneSpectrum R) :
-    Multiplicative.toAdd
-        (factorizationMulEquiv K
-          (Units.mk0 _ (coeIdeal_ne_zero.mpr w.ne_bot))) =
-      Finsupp.single w 1 := by
-  ext v
-  classical
-  rw [factorizationMulEquiv_apply, Units.val_mk0, count_maximal]
-  split_ifs with h
-  · rw [h, Finsupp.single_eq_same]
-  · exact (Finsupp.single_eq_of_ne' h).symm
-
-/-- Reconstruction at a single prime power recovers the prime power. -/
-theorem symm_single_zpow (w : HeightOneSpectrum R) (n : ℤ) :
-    (↑((factorizationMulEquiv K).symm (Multiplicative.ofAdd (Finsupp.single w n))) :
-      FractionalIdeal R⁰ K) = (w.asIdeal : FractionalIdeal R⁰ K) ^ n := by
-  change (Finsupp.single w n).prod (fun v m => (v.asIdeal : FractionalIdeal R⁰ K) ^ m) = _
-  exact Finsupp.prod_single_index (zpow_zero _)
-
 end FractionalIdeal

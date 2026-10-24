@@ -2,7 +2,7 @@ import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
+import Lemma.Random.SinglePSpace.SinglePSpace.of.SinglePSpace
 open Random MeasureTheory
 
 
@@ -15,12 +15,12 @@ private lemma main
 -- given
   (hP : SinglePSpace π (x, y)) :
 -- imply
-  have := PSpace.of.PSpace_Joint.snd hP
+  have := SinglePSpace.of.SinglePSpace.snd hP
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure, ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
     ℙ[π](x = «x.bvar» | y = «y.bvar») =
       ℙ[π](x = «x.bvar» ∧ y = «y.bvar») / ℙ[π](y = «y.bvar») := by
 -- proof
-  have := PSpace.of.PSpace_Joint.snd hP
+  have := SinglePSpace.of.SinglePSpace.snd hP
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   have hmapy : π.map (fun ω ↦ ((x, y) ω).2) = π.map y := by congr

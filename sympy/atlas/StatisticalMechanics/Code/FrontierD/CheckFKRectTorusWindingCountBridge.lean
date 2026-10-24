@@ -1,0 +1,39 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectTorusWindingCountBridge.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusWindingCountBridge
+
+#print axioms StatMech.FrontierD.fkOrientedMedialLoopVerticalFlux_eq_or_eq_neg
+#print axioms StatMech.FrontierD.natAbs_fkOrientedLoopVerticalFlux_le_unorientedWindingTotal
+#print axioms StatMech.FrontierD.fkRectUnorientedVerticalWindingNumber_ge_of_fixedCharge
+#print axioms StatMech.FrontierD.fkRectFixedChargeTilt_pos_of_windingNumber_eq
+#print axioms StatMech.FrontierD.fkRectVerticalFluxSummand_ne_zero_imp_windingNumber_ge
+#print axioms StatMech.FrontierD.fkRectOrientedLoopFixedChargePartitionSum_le_windingRestricted
+#print axioms StatMech.FrontierD.sum_rcProb_mul_fixedChargeTilt_le_windingRestrictedAllTilt
+#print axioms StatMech.FrontierD.sum_fkRectOrientedLoopWeight_eq_turningProduct
+#print axioms StatMech.FrontierD.fkRectAllOrientedLoopTilt_eq_turningProduct_div_loopDefect
+#print axioms StatMech.FrontierD.fkRectZeroTurnLoopCount_add_nonzeroTurnLoopCount
+#print axioms StatMech.FrontierD.fkRectTurningProduct_eq_zero_nonzeroTurnPowers
+#print axioms StatMech.FrontierD.sum_fkRectOrientedLoopWeight_eq_zero_nonzeroTurnPowers_fkQgt4
+#print axioms StatMech.FrontierD.fkRectAllOrientedLoopTilt_eq_zeroTurnLoopCount_fkQgt4
+#print axioms StatMech.FrontierD.fkRectZeroTurnEulerResidual_le_one
+#print axioms StatMech.FrontierD.sum_rcProb_mul_windingRestrictedAllTilt_eq_residual_div_area
+#print axioms StatMech.FrontierD.sum_rcProb_mul_fixedChargeTilt_le_residual_div_area
+#print axioms StatMech.FrontierD.sixVertexFixedCharge_div_fkZ_le_windingTail_div_area
+#print axioms StatMech.FrontierD.sixVertexChargeOne_div_fkZ_le_windingTail_div_area
+#print axioms StatMech.FrontierD.fkRectCriticalWindingTailMass_le_one
+#print axioms StatMech.FrontierD.sixVertexFixedCharge_div_fkZ_le_invSqrtQ_pow_area
+#print axioms StatMech.FrontierD.sixVertexChargeOne_div_fkZ_le_invSqrtQ_pow_area
+#print axioms StatMech.FrontierD.sixVertexFixedCharge_div_fkZ_pos
+#print axioms StatMech.FrontierD.fkRectBalancedSectorNormalization_pos
+#print axioms StatMech.FrontierD.fkRectBalancedSectorNormalization_eq_chargeZeroExpectation
+#print axioms StatMech.FrontierD.sixVertexFixedCharge_div_chargeZero_eq_areaNormalizedRatio
+#print axioms StatMech.FrontierD.sixVertexFixedCharge_div_chargeZero_le_windingTail_div_balanced
+#print axioms StatMech.FrontierD.log_sqrtQ_le_fixedCharge_negLogRate_per_area

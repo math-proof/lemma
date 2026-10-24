@@ -2,13 +2,16 @@ import Mathlib
 import sympy.Basic
 import sympy.atlas.v1.Atlas.BooleanFunctions.code.OUSemigroup
 open GaussianSpace ProbabilityTheory MeasureTheory
+open MeasureTheory ProbabilityTheory Real ContinuousLinearMap
 
+
+namespace GaussianSpace
 
 /--
 [gaussian_sum_pushforward](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/OUSemigroup.lean)
 -/
 @[path]
-private lemma gaussian_sum_pushforward_eq
+lemma gaussian_sum_pushforward
   [NormedAddCommGroup E]
   [InnerProductSpace ℝ E]
   {a b c : ℝ}
@@ -17,13 +20,39 @@ private lemma gaussian_sum_pushforward_eq
 -- imply
   ((stdGaussian E).prod (stdGaussian E)).map (addSmulCLM a b) = (stdGaussian E).map (c • ContinuousLinearMap.id ℝ E) := by
 -- proof
-  apply GaussianSpace.gaussian_sum_pushforward a b c habc
+  apply Measure.ext_of_charFunDual
+  ext L'
+  rw [charFunDual_map, charFunDual_prod]
+  have h1 : (L'.comp (addSmulCLM (E := E) a b)).comp (ContinuousLinearMap.inl ℝ E E) = a • L' := by
+    ext x; simp [addSmulCLM]
+  have h2 : (L'.comp (addSmulCLM (E := E) a b)).comp (ContinuousLinearMap.inr ℝ E E) = b • L' := by
+    ext x; simp [addSmulCLM]
+  rw [h1, h2, charFunDual_stdGaussian, charFunDual_stdGaussian]
+  rw [charFunDual_map]
+  have h3 : L'.comp (c • ContinuousLinearMap.id ℝ E) = c • L' := by
+    ext x; simp
+  rw [h3, charFunDual_stdGaussian]
+  simp only [norm_smul, Real.norm_eq_abs]
+  rw [← Complex.exp_add]
+  congr 1
+  push_cast
+  have ha : (|a| : ℝ) ^ 2 = a ^ 2 := sq_abs a
+  have hb : (|b| : ℝ) ^ 2 = b ^ 2 := sq_abs b
+  have hc : (|c| : ℝ) ^ 2 = c ^ 2 := sq_abs c
+  have key : |a| ^ 2 * ‖L'‖ ^ 2 + |b| ^ 2 * ‖L'‖ ^ 2 = |c| ^ 2 * ‖L'‖ ^ 2 := by
+    nlinarith
+  norm_cast
+  linarith
+
+end GaussianSpace
+
+namespace GaussianSpace
 
 /--
 [integral_gaussian_sum](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/OUSemigroup.lean)
 -/
 @[path]
-private lemma integral_gaussian_sum_eq
+lemma integral_gaussian_sum
   [NormedAddCommGroup E]
   [InnerProductSpace ℝ E]
   {a b c : ℝ}
@@ -35,13 +64,28 @@ private lemma integral_gaussian_sum_eq
 -- imply
   ∫ w, ∫ v, g (a • w + b • v) ∂(stdGaussian E) ∂(stdGaussian E) = ∫ u, g (c • u) ∂(stdGaussian E) := by
 -- proof
-  apply GaussianSpace.integral_gaussian_sum a b c habc g hg_meas hg_int
+  have h_eq : ∀ w v, g (a • w + b • v) = (g ∘ (addSmulCLM (E := E) a b)) (w, v) := by
+    intro w v; simp [addSmulCLM, Function.comp]
+  simp_rw [h_eq]
+  rw [← integral_prod _ hg_int]
+  simp only [Function.comp]
+  rw [← integral_map (by fun_prop : AEMeasurable (addSmulCLM (E := E) a b) _)
+    hg_meas.aestronglyMeasurable]
+  rw [gaussian_sum_pushforward a b c habc]
+  rw [integral_map (by fun_prop : AEMeasurable (c • ContinuousLinearMap.id ℝ E) (stdGaussian E))
+    hg_meas.aestronglyMeasurable]
+  simp [ContinuousLinearMap.coe_smul']
+set_option maxHeartbeats 400000 in
+
+end GaussianSpace
+
+namespace GaussianSpace
 
 /--
 [ornsteinUhlenbeckOp_comp](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/OUSemigroup.lean)
 -/
 @[path]
-private lemma ornsteinUhlenbeckOp_comp_eq
+lemma ornsteinUhlenbeckOp_comp
   {n : ℕ}
   {ρ σ : ℝ}
   {f : EuclideanSpace ℝ (Fin n) → ℝ}
@@ -53,7 +97,40 @@ private lemma ornsteinUhlenbeckOp_comp_eq
 -- imply
   ornsteinUhlenbeckOp ρ (fun x => ornsteinUhlenbeckOp σ f x) = ornsteinUhlenbeckOp (ρ * σ) f := by
 -- proof
-  apply GaussianSpace.ornsteinUhlenbeckOp_comp ρ σ hρ hσ f hf hf_int
+  funext x
+  simp only [ornsteinUhlenbeckOp]
+  have h_alg : ∀ w v : EuclideanSpace ℝ (Fin n),
+    f (σ • (ρ • x + Real.sqrt (1 - ρ ^ 2) • w) + Real.sqrt (1 - σ ^ 2) • v) =
+    f ((ρ * σ) • x + ((σ * Real.sqrt (1 - ρ ^ 2)) • w + Real.sqrt (1 - σ ^ 2) • v)) := by
+    intro w v; congr 1; simp [smul_add, mul_smul, mul_comm ρ σ]; abel
+  simp_rw [h_alg]
+  set a := σ * Real.sqrt (1 - ρ ^ 2)
+  set b := Real.sqrt (1 - σ ^ 2)
+  set c := Real.sqrt (1 - (ρ * σ) ^ 2)
+  set g := fun z : EuclideanSpace ℝ (Fin n) => f ((ρ * σ) • x + z)
+  have hρ2 : ρ ^ 2 ≤ 1 := by nlinarith [hρ.1, hρ.2]
+  have hσ2 : σ ^ 2 ≤ 1 := by nlinarith [hσ.1, hσ.2]
+  have hρσ2 : (ρ * σ) ^ 2 ≤ 1 := by nlinarith [sq_nonneg ρ, sq_nonneg σ]
+  have habc : a ^ 2 + b ^ 2 = c ^ 2 := by
+    simp only [a, b, c]
+    rw [mul_pow, Real.sq_sqrt (by linarith : (0 : ℝ) ≤ 1 - ρ ^ 2)]
+    rw [Real.sq_sqrt (by linarith : (0 : ℝ) ≤ 1 - σ ^ 2)]
+    rw [show (ρ * σ) ^ 2 = ρ ^ 2 * σ ^ 2 from by ring]
+    rw [Real.sq_sqrt (by nlinarith : (0 : ℝ) ≤ 1 - ρ ^ 2 * σ ^ 2)]
+    ring
+  change ∫ w, ∫ v, g (a • w + b • v) ∂_ ∂_ = ∫ u, g (c • u) ∂_
+  have hg_meas : Measurable g := hf.comp (measurable_const.add measurable_id)
+  have hg_comp_int : Integrable (g ∘ (addSmulCLM (E := EuclideanSpace ℝ (Fin n)) a b))
+    ((stdGaussian _).prod (stdGaussian _)) := by
+    rw [← integrable_map_measure hg_meas.aestronglyMeasurable
+      (addSmulCLM (E := EuclideanSpace ℝ (Fin n)) a b).continuous.aemeasurable,
+      gaussian_sum_pushforward (E := EuclideanSpace ℝ (Fin n)) a b c habc,
+      integrable_map_measure hg_meas.aestronglyMeasurable
+        (c • ContinuousLinearMap.id ℝ (EuclideanSpace ℝ (Fin n))).continuous.aemeasurable]
+    exact hf_int ((ρ * σ) • x)
+  exact integral_gaussian_sum a b c habc g hg_meas hg_comp_int
+
+end GaussianSpace
 
 
 -- created on 2026-10-23

@@ -4,11 +4,13 @@ import sympy.atlas.InformationTheory.PrefixFree
 open MathlibExt.InformationTheory
 
 
+namespace MathlibExt.InformationTheory
+
 /--
 [IsPrefixFree.eq_of_isPrefix](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/PrefixFree.lean)
 -/
 @[path]
-private lemma IsPrefixFree_eq_of_isPrefix_eq
+lemma IsPrefixFree.eq_of_isPrefix
   {code : α → List β}
   {a₁ a₂ : α}
 -- given
@@ -17,26 +19,37 @@ private lemma IsPrefixFree_eq_of_isPrefix_eq
 -- imply
   a₁ = a₂ := by
 -- proof
-  apply MathlibExt.InformationTheory.IsPrefixFree.eq_of_isPrefix h hpre
+  by_contra hne
+  exact h hne hpre
+
+end MathlibExt.InformationTheory
+
+namespace MathlibExt.InformationTheory
 
 /--
 [IsPrefixFree.injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/PrefixFree.lean)
 -/
 @[path]
-private lemma IsPrefixFree_injective_eq
+lemma IsPrefixFree.injective
   {code : α → List β}
 -- given
   (h : IsPrefixFree code) :
 -- imply
   Function.Injective code := by
 -- proof
-  apply MathlibExt.InformationTheory.IsPrefixFree.injective h
+  intro a₁ a₂ heq
+  by_contra hne
+  exact h hne ⟨[], by simp [heq]⟩
+
+end MathlibExt.InformationTheory
+
+namespace MathlibExt.InformationTheory
 
 /--
 [IsPrefixFree.eq_of_mem_nil](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/PrefixFree.lean)
 -/
 @[path]
-private lemma IsPrefixFree_eq_of_mem_nil_eq
+lemma IsPrefixFree.eq_of_mem_nil
   {code : α → List β}
   {a₀ a : α}
 -- given
@@ -45,7 +58,13 @@ private lemma IsPrefixFree_eq_of_mem_nil_eq
 -- imply
   a = a₀ := by
 -- proof
-  apply MathlibExt.InformationTheory.IsPrefixFree.eq_of_mem_nil h ha₀ a
+  by_contra hne
+  apply h (fun heq => hne heq.symm) _
+  rw [ha₀]
+  exact ⟨_, rfl⟩
+
+end MathlibExt.InformationTheory
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

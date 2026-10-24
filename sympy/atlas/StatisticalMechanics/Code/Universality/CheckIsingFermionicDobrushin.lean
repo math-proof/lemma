@@ -1,0 +1,26 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicDobrushin.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin
+
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.criticalMass_sum_eq_one
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.norm_fermionicObservable_le_one
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.fermionicObservable_terminal
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.explorationMass_nonneg
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.explorationMass_le_one
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.fermionicObservable_eq_explorationMass_mul_phase
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.exists_nonnegative_boundary_square_of_phase
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.norm_normalizedFermionicObservable_le
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.normalizedFermionicObservable_terminal
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.LocalSwitchingTable.fermionicObservable_eq_medialVertex_edgeObs
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.LocalSwitchingTable.fermionicObservable_sHolo_relation
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.LocalSwitchingTable.fermionicObservable_contourCombination_zero
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.LocalSwitchingTable.localFaceObservable_sideValues
+#print axioms StatMech.Universality.FKIsingDobrushinDomain.LocalSwitchingTable.localFaceObservable_contour_zero

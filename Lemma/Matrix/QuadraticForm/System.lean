@@ -4,11 +4,13 @@ import sympy.atlas.LinearAlgebra.QuadraticForm.System
 open QuadraticForm
 
 
+namespace QuadraticForm
+
 /--
 [systemOrthogonalSum_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/QuadraticForm/System.lean)
 -/
 @[path]
-private lemma systemOrthogonalSum_apply_eq
+lemma systemOrthogonalSum_apply
   [CommSemiring R] [AddCommMonoid M] [AddCommMonoid N] [Module R M] [Module R N]
   {Q : ι → QuadraticForm R M}
   {Q' : ι → QuadraticForm R N}
@@ -17,13 +19,17 @@ private lemma systemOrthogonalSum_apply_eq
 -- imply
   systemOrthogonalSum Q Q' i x = Q i x.1 + Q' i x.2 := by
 -- proof
-  apply QuadraticForm.systemOrthogonalSum_apply Q Q' i x
+  simp [systemOrthogonalSum]
+
+end QuadraticForm
+
+namespace QuadraticForm
 
 /--
 [systemOrthogonalSum_inl](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/QuadraticForm/System.lean)
 -/
 @[path]
-private lemma systemOrthogonalSum_inl_eq
+lemma systemOrthogonalSum_inl
   [CommSemiring R] [AddCommMonoid M] [AddCommMonoid N] [Module R M] [Module R N]
   {Q : ι → QuadraticForm R M}
   {Q' : ι → QuadraticForm R N}
@@ -32,13 +38,17 @@ private lemma systemOrthogonalSum_inl_eq
 -- imply
   systemOrthogonalSum Q Q' i (x, 0) = Q i x := by
 -- proof
-  apply QuadraticForm.systemOrthogonalSum_inl Q Q' i x
+  simp
+
+end QuadraticForm
+
+namespace QuadraticForm
 
 /--
 [systemOrthogonalSum_inr](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/QuadraticForm/System.lean)
 -/
 @[path]
-private lemma systemOrthogonalSum_inr_eq
+lemma systemOrthogonalSum_inr
   [CommSemiring R] [AddCommMonoid M] [AddCommMonoid N] [Module R M] [Module R N]
   {Q : ι → QuadraticForm R M}
   {Q' : ι → QuadraticForm R N}
@@ -47,7 +57,10 @@ private lemma systemOrthogonalSum_inr_eq
 -- imply
   systemOrthogonalSum Q Q' i (0, y) = Q' i y := by
 -- proof
-  apply QuadraticForm.systemOrthogonalSum_inr Q Q' i y
+  simp
+
+end QuadraticForm
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -1,27 +1,20 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-variable {R K : Type*} [CommRing R] [IsDomain R] [IsPrincipalIdealRing R] [Field K] [Algebra R K]
-  [IsFractionRing R K]
-private lemma map_injective : Function.Injective (PowerSeries.map (algebraMap R K)) := by
+
+universe u
+
+private lemma map_injective [CommRing R] [IsDomain R] [IsPrincipalIdealRing R] [Field K] [Algebra R K] [IsFractionRing R K] : Function.Injective (PowerSeries.map (algebraMap R K)) := by
   intro a b h
   ext n
   apply IsFractionRing.injective R K
   have := congrArg (PowerSeries.coeff n) h
   simpa only [PowerSeries.coeff_map] using this
-private lemma helper_main (g : PowerSeries K) (Φ : Polynomial (PowerSeries R)) (hΦ : Φ.Monic)
-    (hroot : Polynomial.eval₂ (PowerSeries.map (algebraMap R K)) g Φ = 0)
-    (h : PowerSeries R) (h0 : h ≠ 0)
-    (hmul : PowerSeries.map (algebraMap R K) h * g ∈ (PowerSeries.map (algebraMap R K)).range) :
-    g ∈ (PowerSeries.map (algebraMap R K)).range := by
+private lemma helper_main [CommRing R] [IsDomain R] [IsPrincipalIdealRing R] [Field K] [Algebra R K] [IsFractionRing R K] (g : PowerSeries K) (Φ : Polynomial (PowerSeries R)) (hΦ : Φ.Monic) (hroot : Polynomial.eval₂ (PowerSeries.map (algebraMap R K)) g Φ = 0) (h : PowerSeries R) (h0 : h ≠ 0) (hmul : PowerSeries.map (algebraMap R K) h * g ∈ (PowerSeries.map (algebraMap R K)).range) : g ∈ (PowerSeries.map (algebraMap R K)).range := by
   classical
   set ι : PowerSeries R →+* PowerSeries K := PowerSeries.map (algebraMap R K) with hι
   let F := FractionRing (PowerSeries R)
@@ -54,12 +47,14 @@ private lemma helper_main (g : PowerSeries K) (Φ : Polynomial (PowerSeries R)) 
 -/
 @[path]
 private lemma main
-    {R K : Type*} [CommRing R] [IsDomain R] [IsPrincipalIdealRing R] [Field K] [Algebra R K]
-    [IsFractionRing R K] (g : PowerSeries K) (Φ : Polynomial (PowerSeries R)) (hΦ : Φ.Monic)
-    (hroot : Polynomial.eval₂ (PowerSeries.map (algebraMap R K)) g Φ = 0)
-    (h : PowerSeries R) (h0 : h ≠ 0)
-    (hmul : PowerSeries.map (algebraMap R K) h * g ∈ (PowerSeries.map (algebraMap R K)).range) :
-    g ∈ (PowerSeries.map (algebraMap R K)).range :=
+  [CommRing R] [IsDomain R] [IsPrincipalIdealRing R] [Field K] [Algebra R K] [IsFractionRing R K]
+  (g : PowerSeries K) (Φ : Polynomial (PowerSeries R)) (hΦ : Φ.Monic)
+  (hroot : Polynomial.eval₂ (PowerSeries.map (algebraMap R K)) g Φ = 0)
+  (h : PowerSeries R) (h0 : h ≠ 0)
+  (hmul : PowerSeries.map (algebraMap R K) h * g ∈ (PowerSeries.map (algebraMap R K)).range) :
+  -- imply
+  g ∈ (PowerSeries.map (algebraMap R K)).range :=
   helper_main g Φ hΦ hroot h h0 hmul
+
 
 -- created on 2026-10-20

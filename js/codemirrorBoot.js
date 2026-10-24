@@ -2,12 +2,23 @@
 // Replaces the old CM5 dynamic-import chain with proper ESM imports.
 
 import { EditorState, EditorSelection, StateEffect, Transaction, Prec } from "@codemirror/state";
-import { EditorView, keymap, lineNumbers, drawSelection, highlightSpecialChars, rectangularSelection, crosshairCursor } from "@codemirror/view";
+import { EditorView, keymap, lineNumbers, drawSelection, highlightSpecialChars, rectangularSelection, crosshairCursor, panels } from "@codemirror/view";
 import { defaultKeymap, history, historyKeymap, indentMore } from "@codemirror/commands";
 import { bracketMatching, foldGutter, indentOnInput, StreamLanguage, HighlightStyle, syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language";
 import { tags as t } from "@lezer/highlight";
 import { autocompletion, completionKeymap, startCompletion } from "@codemirror/autocomplete";
-import { searchKeymap, highlightSelectionMatches } from "@codemirror/search";
+import {
+  search,
+  highlightSelectionMatches,
+  openSearchPanel,
+  closeSearchPanel,
+  searchPanelOpen,
+  findNext,
+  findPrevious,
+  selectSelectionMatches,
+  selectNextOccurrence,
+  gotoLine,
+} from "@codemirror/search";
 import { leanMode, leanHintWords } from "./codemirror-lean.js";
 import { CMBridge, CodeMirror, deleteToLineEnd, cmMarkField } from "./codemirror.js";
 
@@ -82,6 +93,55 @@ const eclipseHighlightStyle = HighlightStyle.define([
 
 const leanLanguage = StreamLanguage.define(leanMode);
 
+
+// One page-level Find/Replace: every EditorView shares a sticky host, and
+// Mod-f closes any other open CM search panel before opening on the focused view.
+const liveEditorViews = new Set();
+
+function getGlobalSearchHost() {
+  let host = document.getElementById("cm-global-search-host");
+  if (!host) {
+    host = document.createElement("div");
+    host.id = "cm-global-search-host";
+    Object.assign(host.style, {
+      position: "sticky",
+      top: "0",
+      zIndex: "10000",
+      background: "rgb(199, 237, 204)",
+    });
+    document.body.insertBefore(host, document.body.firstChild);
+  }
+  return host;
+}
+
+function pruneDisconnectedViews() {
+  for (const v of [...liveEditorViews]) {
+    if (!v.dom.isConnected)
+      liveEditorViews.delete(v);
+  }
+}
+
+function openPageSearchPanel(view) {
+  pruneDisconnectedViews();
+  for (const other of liveEditorViews) {
+    if (other !== view && searchPanelOpen(other.state))
+      closeSearchPanel(other);
+  }
+  return openSearchPanel(view);
+}
+
+/** Same chords as @codemirror/search searchKeymap, but Mod-f is exclusive. */
+const pageSearchKeymap = [
+  { key: "Mod-f", run: openPageSearchPanel, scope: "editor search-panel" },
+  { key: "F3", run: findNext, shift: findPrevious, scope: "editor search-panel", preventDefault: true },
+  { key: "Mod-g", run: findNext, shift: findPrevious, scope: "editor search-panel", preventDefault: true },
+  { key: "Escape", run: closeSearchPanel, scope: "editor search-panel" },
+  { key: "Mod-Shift-l", run: selectSelectionMatches },
+  { key: "Mod-Alt-g", run: gotoLine },
+  { key: "Mod-d", run: selectNextOccurrence, preventDefault: true },
+];
+
+
 /**
  * Create a CodeMirror 6 editor instance wrapped in a CM5-compatible bridge.
  * @param {HTMLElement} parent - The element to mount the editor into
@@ -119,6 +179,9 @@ export function createEditor(parent, options = {}) {
     EditorView.lineWrapping,
     EditorState.allowMultipleSelections.of(true),
     cmMarkField, // CM5 markText / erroneous-text underlines (render.vue focus)
+    // Shared sticky host + search({ top }) so Find/Replace is page-level, not per-box.
+    panels({ topContainer: getGlobalSearchHost() }),
+    search({ top: true }),
   ];
 
   if (options.lineNumbers === true)
@@ -139,6 +202,12 @@ export function createEditor(parent, options = {}) {
   });
 
   const view = new EditorView({ state, parent: mount });
+  liveEditorViews.add(view);
+  const _destroyView = view.destroy.bind(view);
+  view.destroy = () => {
+    liveEditorViews.delete(view);
+    _destroyView();
+  };
   const bridge = new CMBridge(view);
   if (textarea) {
     bridge.textarea = textarea;
@@ -181,7 +250,7 @@ export function createEditor(parent, options = {}) {
     ...defaultKeymap,
     ...historyKeymap,
     ...completionKeymap,
-    ...searchKeymap,
+    ...pageSearchKeymap,
   ]));
 
   // Autocomplete — `override` must be `CompletionSource` functions

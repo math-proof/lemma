@@ -46,6 +46,7 @@ switch ($lang) {
 
         $userGuide = '用户指南';
         $participation = '项目参与';
+        $contact = '联系作者';
         $endeavour = '我的奋斗';
         // $elementaryExamples = '初级例题';
         // $intermediateExamples = '中级例题';
@@ -65,6 +66,7 @@ switch ($lang) {
 
         $userGuide = 'Guide utilisateur';
         $participation = 'Participation';
+        $contact = 'Contact';
         $endeavour = 'Parcours';
         $designManual = 'Manuel de conception';
         $languageSelect = 'Choisir la langue';
@@ -82,6 +84,7 @@ switch ($lang) {
         
         $userGuide = 'User Guide';
         $participation = 'Participation';
+        $contact = 'Contact Us';
         $endeavour = 'Lifelong Endeavour';
         // $elementaryExamples = 'Elementary Examples';
         // $intermediateExamples = 'Intermediate Examples';
@@ -96,11 +99,15 @@ switch ($lang) {
         $programmingReference = "Programming Reference";
         break;
 }
+// Same as Node `ejs/website.ejs`: relative style/js/md URLs need a directory base so
+// `/lean/website` (no trailing slash) does not resolve assets under `/lean/`.
+$websiteBase = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/lean/website')), '/') . '/';
 ?>
-
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<base href="<?php echo htmlspecialchars($websiteBase, ENT_QUOTES, 'UTF-8') ?>">
 <link href="style.css" rel="stylesheet" type="text/css" />
 <title><?php echo $title ?></title>
 </head>
@@ -108,7 +115,7 @@ switch ($lang) {
 	<div id='container'>
 
 		<div id='header' align='center'>
-			<font size=200%> <?php echo $title ?></font>
+			<h1 class="site-title"><?php echo $title ?></h1>
 
 			<div style="float:right">
 				<?php echo $languageSelect ?>
@@ -132,6 +139,9 @@ switch ($lang) {
 				</div>
 				<div class='sidebar_body'>
 					<a href='?lang=<?php echo $lang ?>&section=participation'><?php echo $participation ?></a>
+				</div>
+				<div class='sidebar_body'>
+					<a href='?lang=<?php echo $lang ?>&section=contact'><?php echo $contact ?></a>
 				</div>
 				<div class='sidebar_body'>
 					<a href='?lang=<?php echo $lang ?>&section=history'><?php echo $history ?></a>
@@ -172,6 +182,7 @@ switch ($lang) {
 <script src="../node_modules/marked/marked.min.js"></script>
 <script src="../node_modules/axios/dist/axios.min.js"></script>
 <script src="../node_modules/qs/dist/qs.js"></script>
+<script src="../js/py.js"></script>
 <script src="../js/std.js"></script>
 <script type=module>
 

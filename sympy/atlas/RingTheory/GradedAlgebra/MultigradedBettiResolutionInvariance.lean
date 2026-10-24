@@ -70,47 +70,4 @@ structure MultigradedResolutionComparison
     (data₂ : MultigradedBaseChange targetGraded resolution₂ ι₂ res₂) where
   /-- Chain-homotopy equivalence between the degree-`α` component complexes. -/
   componentHomotopyEquiv : ∀ α, HomotopyEquiv (data₁.comp α) (data₂.comp α)
-
-/-- Conditional resolution invariance of multigraded Betti numbers: a
-`MultigradedResolutionComparison` forces the two `multigradedBettiNumber`
-families to agree in every multidegree `α` and homological index `i`.
-
-Source: Benjamin Braun and Brian Davis, “Antichain Simplices,”
-Journal of Integer Sequences 23 (2020),
-`https://cs.uwaterloo.ca/journals/JIS/VOL23/Braun/braun4.tex`,
-exact lines 866--874. This is conditional only: it assumes the comparison
-and claims no existence, uniqueness, minimality, finite support, Poincaré
-polynomiality or rationality, or Hilbert syzygy. -/
-theorem multigradedBettiNumber_eq_of_resolutionComparison
-    {K : Type u} [Field K] {n : ℕ}
-    {M : Type u} [AddCommGroup M]
-    [Module (MvPolynomial (Fin n) K) M] [Module K M]
-    {targetGraded : MultigradedPolynomialModule K n M}
-    {resolution₁ resolution₂ :
-      CategoryTheory.ProjectiveResolution (ModuleCat.of (MvPolynomial (Fin n) K) M)}
-    {ι₁ ι₂ : ℕ → Type u}
-    {res₁ : MultigradedFreeResolution K n M targetGraded resolution₁ ι₁}
-    {res₂ : MultigradedFreeResolution K n M targetGraded resolution₂ ι₂}
-    {data₁ : MultigradedBaseChange targetGraded resolution₁ ι₁ res₁}
-    {data₂ : MultigradedBaseChange targetGraded resolution₂ ι₂ res₂}
-    (comparison : MultigradedResolutionComparison data₁ data₂)
-    (α : Fin n →₀ Int) (i : ℕ) :
-    multigradedBettiNumber data₁ α i = multigradedBettiNumber data₂ α i := by
-  -- Install the `HasHomology` instances so that
-  -- `HomotopyEquiv.quasiIsoAt_hom` supplies the `IsIso` used below.
-  let _ := data₁.hasHom α i
-  let _ := data₂.hasHom α i
-  let e := comparison.componentHomotopyEquiv α
-  have homIso :
-      HomologicalComplex.homology (data₁.comp α) i ≅
-        HomologicalComplex.homology (data₂.comp α) i := by
-    exact CategoryTheory.asIso (HomologicalComplex.homologyMap e.hom i)
-  have linEquiv :
-      ↥(HomologicalComplex.homology (data₁.comp α) i) ≃ₗ[K]
-        ↥(HomologicalComplex.homology (data₂.comp α) i) :=
-    CategoryTheory.Iso.toLinearEquiv homIso
-  have hFin := LinearEquiv.finrank_eq linEquiv
-  unfold multigradedBettiNumber
-  exact hFin
-
 end MetaMathlibExt

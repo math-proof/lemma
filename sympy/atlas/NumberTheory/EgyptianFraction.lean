@@ -65,110 +65,11 @@ def IsStrictUnderapproximation {n : ℕ} (target : ℝ) (a : Fin n → ℕ) : Pr
     ∑ i, ((a i : ℝ)⁻¹) < target
 
 namespace IsNondecreasingEgyptian
-
-theorem denominator_ge_two {n : ℕ} {a : Fin n → ℕ}
-    (h : IsNondecreasingEgyptian a) (i : Fin n) : 2 ≤ a i :=
-  h.1 i
-
-theorem monotone {n : ℕ} {a : Fin n → ℕ}
-    (h : IsNondecreasingEgyptian a) : Monotone a :=
-  h.2
-
 end IsNondecreasingEgyptian
-
 namespace IsStrictEgyptian
-
-theorem denominator_ge_two {n : ℕ} {a : Fin n → ℕ}
-    (h : IsStrictEgyptian a) (i : Fin n) : 2 ≤ a i :=
-  h.1 i
-
-theorem strictMono {n : ℕ} {a : Fin n → ℕ}
-    (h : IsStrictEgyptian a) : StrictMono a :=
-  h.2
-
-theorem toIsNondecreasingEgyptian {n : ℕ} {a : Fin n → ℕ}
-    (h : IsStrictEgyptian a) : IsNondecreasingEgyptian a :=
-  ⟨h.1, h.strictMono.monotone⟩
-
 end IsStrictEgyptian
-
 namespace IsNondecreasingUnderapproximation
-
-/-- A nondecreasing underapproximation has at least one term (`n ≥ 1`). -/
-theorem nonempty {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsNondecreasingUnderapproximation target a) : 0 < n :=
-  h.1
-
-/-- The target of a nondecreasing underapproximation is positive. -/
-theorem target_pos {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsNondecreasingUnderapproximation target a) : 0 < target :=
-  h.2.1
-
-/-- The denominator tuple lies in `𝓔ₙ^≤`. -/
-theorem isNondecreasingEgyptian {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsNondecreasingUnderapproximation target a) : IsNondecreasingEgyptian a :=
-  h.2.2.1
-
-/-- Every denominator in a nondecreasing underapproximation is at least two. -/
-theorem denominator_ge_two {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsNondecreasingUnderapproximation target a) (i : Fin n) : 2 ≤ a i :=
-  h.isNondecreasingEgyptian.1 i
-
-/-- The denominators of a nondecreasing underapproximation are monotone. -/
-theorem monotone {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsNondecreasingUnderapproximation target a) : Monotone a :=
-  h.isNondecreasingEgyptian.2
-
-/-- The reciprocal sum of a nondecreasing underapproximation is below its target. -/
-theorem sum_lt {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsNondecreasingUnderapproximation target a) :
-    ∑ i, ((a i : ℝ)⁻¹) < target :=
-  h.2.2.2
-
 end IsNondecreasingUnderapproximation
-
 namespace IsStrictUnderapproximation
-
-/-- A strict underapproximation has at least one term (`n ≥ 1`). -/
-theorem nonempty {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsStrictUnderapproximation target a) : 0 < n :=
-  h.1
-
-/-- The target of a strict underapproximation is positive. -/
-theorem target_pos {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsStrictUnderapproximation target a) : 0 < target :=
-  h.2.1
-
-/-- The denominator tuple lies in `𝓔ₙ^<`. -/
-theorem isStrictEgyptian {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsStrictUnderapproximation target a) : IsStrictEgyptian a :=
-  h.2.2.1
-
-/-- Every denominator in a strict underapproximation is at least two. -/
-theorem denominator_ge_two {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsStrictUnderapproximation target a) (i : Fin n) : 2 ≤ a i :=
-  h.isStrictEgyptian.1 i
-
-/-- The denominators of a strict underapproximation are strictly monotone. -/
-theorem strictMono {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsStrictUnderapproximation target a) : StrictMono a :=
-  h.isStrictEgyptian.2
-
-/-- The reciprocal sum of a strict underapproximation is below its target. -/
-theorem sum_lt {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsStrictUnderapproximation target a) :
-    ∑ i, ((a i : ℝ)⁻¹) < target :=
-  h.2.2.2
-
-/-- Every nondecreasing denominator tuple containing a strictly increasing one
-is itself nondecreasing; hence a strict underapproximation is also a
-nondecreasing underapproximation (paper's `𝓔ₙ^< ⊆ 𝓔ₙ^≤` together with the
-same sum bound). -/
-theorem toIsNondecreasingUnderapproximation {n : ℕ} {target : ℝ} {a : Fin n → ℕ}
-    (h : IsStrictUnderapproximation target a) :
-    IsNondecreasingUnderapproximation target a :=
-  ⟨h.nonempty, h.target_pos, h.isStrictEgyptian.toIsNondecreasingEgyptian, h.sum_lt⟩
-
 end IsStrictUnderapproximation
-
 end EgyptianFraction

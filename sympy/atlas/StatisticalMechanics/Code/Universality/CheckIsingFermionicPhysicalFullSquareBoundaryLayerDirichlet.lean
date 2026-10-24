@@ -1,0 +1,54 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPhysicalFullSquareBoundaryLayerDirichlet.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareBoundaryLayerDirichlet
+
+set_option linter.style.longLine false
+
+#print axioms StatMech.Universality.isingFiniteWeightedLaplacian_add
+#print axioms StatMech.Universality.isingFiniteWeightedLaplacian_const_mul
+#print axioms StatMech.Universality.isingFiniteWeightedDirichletOperator_injective
+#print axioms StatMech.Universality.isingFiniteWeighted_exists_harmonic_extension
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexGhost_reaches_boundary
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceGhost_reaches_boundary
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexGhostPrimitive_superharmonicOn
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceGhostPrimitive_subharmonicOn
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexDirichlet_harmonicOn
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexDirichlet_boundary
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceDirichlet_harmonicOn
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceDirichlet_boundary
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexDirichlet_le_ghostPrimitive
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceGhostPrimitive_le_dirichlet
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexDirichlet_nonneg
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexDirichlet_le_one
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceDirichlet_nonneg
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceDirichlet_le_one
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.physicalIncidence_dirichlet_sandwich
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.physicalIncidence_close_of_dirichlet_close
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.radialPatch_unitRange_and_dirichlet_sandwich
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.finiteSquare_integratedPrimitive_dirichletComparison

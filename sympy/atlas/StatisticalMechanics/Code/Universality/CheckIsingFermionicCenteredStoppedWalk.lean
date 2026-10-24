@@ -1,0 +1,21 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicCenteredStoppedWalk.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCenteredStoppedWalk
+
+open StatMech.Universality
+
+#print axioms IsingLeapfrogHarmonicOnBox.norm_sub_le_kernelTimeL1
+#print axioms fkIsingSquareBoundaryCenteredRadialPatchFullObservable_norm_le_two
+#print axioms fkIsingSquareBoundaryCenteredRadialPatchFullObservable_leapfrog_harmonic
+#print axioms fkIsingSquareBoundaryCenteredRadialPatchFullObservableWindow_harmonic
+#print axioms fkIsingSquareBoundaryCenteredRadialPatchFullObservableWindow_physicalNormalized_normSq_sub_le
+#print axioms fkIsingSquareBoundaryCenteredRadialPatchFullObservableWindow_norm_sub_le_diffusive
+#print axioms fkIsingSquareBoundaryCenteredRadialPatchFullObservableWindow_physicalNormalized_norm_sub_le

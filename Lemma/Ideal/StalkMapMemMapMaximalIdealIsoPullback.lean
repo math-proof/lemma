@@ -63,31 +63,31 @@ private lemma aR_eq_zero_of_mem
   {t : A} (ht : t ∈ maximalIdeal A) : aR ι₁ hres₁ b t = 0 := by
   rw [aR_apply, Iff.mpr (residue_eq_zero_iff t) ht, map_zero, map_zero]
 variable {Z : (Scheme : Type (u + 1))}
-private lemma map_op_congr {A B : Z.Opens} (i j : B ⟶ A) (s : (Z.presheaf.obj (op A))) :
+private lemma map_op_congr {A B : Z.Opens} (i j : B ⟶ A) (s : Z.presheaf.obj (op A)) :
   Z.presheaf.map i.op s = Z.presheaf.map j.op s := by
   rw [Subsingleton.elim i j]
-private lemma app_map_top {Z' : (Scheme : Type (u + 1))} (q : Z' ⟶ Z) (W : Z.Opens) (x : (Z.presheaf.obj (op ⊤))) :
+private lemma app_map_top {Z' : (Scheme : Type (u + 1))} (q : Z' ⟶ Z) (W : Z.Opens) (x : Z.presheaf.obj (op ⊤)) :
   q.app W (Z.presheaf.map (homOfLE le_top).op x) =
       Z'.presheaf.map (homOfLE le_top).op (q.appTop x) := by
   have := congrArg (fun φ => φ.hom x) (q.naturality (homOfLE (le_top : W ≤ ⊤)).op)
   simp only [CommRingCat.hom_comp, RingHom.coe_comp, Function.comp_apply] at this
   rw [this]
   exact map_op_congr _ _ _
-private lemma comp_app_apply {X Y : (Scheme : Type (u + 1))} (f : X ⟶ Y) (g : Y ⟶ Z) (U : Z.Opens) (x : (Z.presheaf.obj (op U))) :
+private lemma comp_app_apply {X Y : (Scheme : Type (u + 1))} (f : X ⟶ Y) (g : Y ⟶ Z) (U : Z.Opens) (x : Z.presheaf.obj (op U)) :
   (f ≫ g).app U x = f.app (((TopologicalSpace.Opens.map g.base).obj U)) (g.app U x) := rfl
 private lemma map_id_apply'
-  {A : Z.Opens} (i : A ⟶ A) (s : (Z.presheaf.obj (op A))) : Z.presheaf.map i.op s = s := by
+  {A : Z.Opens} (i : A ⟶ A) (s : Z.presheaf.obj (op A)) : Z.presheaf.map i.op s = s := by
   rw [Subsingleton.elim i (𝟙 _), op_id, Z.presheaf.map_id]
   rfl
-private lemma map_congr' {A B : Z.Opens} (i j : op A ⟶ op B) (s : (Z.presheaf.obj (op A))) :
+private lemma map_congr' {A B : Z.Opens} (i j : op A ⟶ op B) (s : Z.presheaf.obj (op A)) :
   Z.presheaf.map i s = Z.presheaf.map j s := by
   rw [← i.op_unop, ← j.op_unop, Subsingleton.elim i.unop j.unop]
-private lemma map_map_eq {A B C : Z.Opens} (i : op A ⟶ op B) (j : op B ⟶ op C) (s : (Z.presheaf.obj (op A))) :
+private lemma map_map_eq {A B C : Z.Opens} (i : op A ⟶ op B) (j : op B ⟶ op C) (s : Z.presheaf.obj (op A)) :
   Z.presheaf.map j (Z.presheaf.map i s) = Z.presheaf.map (i ≫ j) s := by
   rw [Z.presheaf.map_comp]
   rfl
 private lemma map_top_endo
-  (i : op (⊤ : Z.Opens) ⟶ op ⊤) (s : (Z.presheaf.obj (op ⊤))) : Z.presheaf.map i s = s := by
+  (i : op (⊤ : Z.Opens) ⟶ op ⊤) (s : Z.presheaf.obj (op ⊤)) : Z.presheaf.map i s = s := by
   rw [map_congr' i (𝟙 _), Z.presheaf.map_id]
   rfl
 variable {A A₁ : Type u} [CommRing A] [IsLocalRing A] [CommRing A₁] [IsLocalRing A₁]
@@ -256,7 +256,7 @@ private lemma core
     exact Scheme.fromSpecResidueField_apply p _
   let e := P.presheaf.stalkCongr (Inseparable.of_eq hσp)
   let τ : P.presheaf.stalk p ⟶ CommRingCat.of (X₁.presheaf.stalk (π.base p) ⧸ I) := e.inv ≫ Scheme.stalkClosedPointTo σ
-  have hτgerm : ∀ (W : P.Opens) (hW : p ∈ W) (s : (P.presheaf.obj (op W))),
+  have hτgerm : ∀ (W : P.Opens) (hW : p ∈ W) (s : P.presheaf.obj (op W)),
       ∃ hW' : σ.base (closedPoint (X₁.presheaf.stalk (π.base p) ⧸ I)) ∈ W,
         τ (P.presheaf.germ W p hW s) =
           (Scheme.ΓSpecIso (CommRingCat.of (X₁.presheaf.stalk (π.base p) ⧸ I))).hom

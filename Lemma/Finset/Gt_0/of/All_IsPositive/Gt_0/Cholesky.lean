@@ -433,7 +433,6 @@ private lemma choleskyGt_S_optξ_eq_zero
   ring
 
 
-
 private abbrev choleskyGtC_w (t : Fin n) (ξ : Fin n → ℂ) (i : Fin n) : ℂ :=
   if i = t then 1 else ξ i
 
@@ -982,4 +981,4 @@ private lemma real
   linarith
 
 
--- created on 2023-06-22
+-- created on 2023-06-29

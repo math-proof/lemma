@@ -644,7 +644,6 @@ private theorem kirszbraun_compatible_graph_total_of_maximal
   exact ⟨y, Set.mem_insert (x, y) G⟩
 
 
-
 section
 namespace InnerProductSpace.KirszbraunWanted
 

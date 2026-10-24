@@ -3,7 +3,7 @@ import Lemma.Measure.EqRnDeriv_Count
 import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Random.PSpace_Joint
 import Lemma.Random.PSpace_Joint_Joint.of.PSpace_Joint_Joint
-import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
+import Lemma.Random.SinglePSpace.SinglePSpace.of.SinglePSpace
 open MeasureTheory Measure Random
 
 
@@ -39,14 +39,14 @@ private lemma main
     PSpace_JointJoint.of.PSpace_Joint_Joint ‹SinglePSpace π (x, y, z)›
   have : SinglePSpace π (x, z) :=
     PSpace_Joint.comm
-      (PSpace.of.PSpace_Joint.fst
+      (SinglePSpace.of.SinglePSpace.fst
         (PSpace_JointJoint.of.PSpace_Joint_Joint
           (PSpace_Joint.comm (PSpace_JointJoint.of.PSpace_Joint_Joint
             ‹SinglePSpace π (x, y, z)›))))
   have : SinglePSpace π (y, (x, z)) :=
     PSpace_Joint_Joint.of.PSpace_Joint_Joint ‹SinglePSpace π (x, y, z)›
   have : SinglePSpace π z :=
-    PSpace.of.PSpace_Joint.snd ‹SinglePSpace π (x, z)›
+    SinglePSpace.of.SinglePSpace.snd ‹SinglePSpace π (x, z)›
   have : ReferenceMeasure.measure (α := α × β) = Measure.count := by
     change (ReferenceMeasure.measure (α := α)).prod
         ReferenceMeasure.measure = Measure.count

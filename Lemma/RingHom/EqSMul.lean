@@ -1,24 +1,23 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
 
 /--
 [KaehlerDifferential_exists_eq_smul_D_of_retraction_of_ker_le_span_sup_sq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_KaehlerDifferential_exists_eq_smul_D_of_retraction_of_ker_le_span_sup_sq.lean)
 -/
 @[path]
 private lemma main
-    {R S : Type*} [CommRing R] [CommRing S] [Algebra R S] [IsLocalRing S] [Module.Finite S Ω[S⁄R]]
-    (π : S →ₐ[R] R) (t : S) (ht : π t = 0)
-    (hcot : RingHom.ker π.toRingHom ≤ Ideal.span {t} ⊔ RingHom.ker π.toRingHom ^ 2)
-    (ω : Ω[S⁄R]) :
-    ∃ g : S, ω = g • KaehlerDifferential.D R S t := by
+  [CommRing R] [CommRing S] [Algebra R S] [IsLocalRing S] [Module.Finite S Ω[S⁄R]]
+  (π : S →ₐ[R] R) (t : S) (ht : π t = 0)
+  (hcot : RingHom.ker π.toRingHom ≤ Ideal.span {t} ⊔ RingHom.ker π.toRingHom ^ 2)
+  (ω : Ω[S⁄R]) :
+  -- imply
+  ∃ g : S, ω = g • KaehlerDifferential.D R S t := by
+  -- proof
   classical
   set I : Ideal S := RingHom.ker π.toRingHom with hI
   have hmemI : ∀ x : S, x ∈ I ↔ π x = 0 := fun x => by rw [hI, RingHom.mem_ker]; rfl
@@ -39,12 +38,14 @@ private lemma main
     intro y hy
     rw [pow_two] at hy
     refine Submodule.mul_induction_on hy ?_ ?_
-    · intro a ha b hb
+    ·
+      intro a ha b hb
       rw [Derivation.leibniz]
-      exact Submodule.add_mem _ (Submodule.smul_mem_smul ha Submodule.mem_top)
+      apply Submodule.add_mem _ (Submodule.smul_mem_smul ha Submodule.mem_top)
         (Submodule.smul_mem_smul hb Submodule.mem_top)
-    · intro x y hx hy
-      rw [map_add]; exact Submodule.add_mem _ hx hy
+    ·
+      intro x y hx hy
+      rw [map_add]; apply Submodule.add_mem _ hx hy
   have hD_mem : ∀ x : S, KaehlerDifferential.D R S x ∈ E := by
     intro x
     have hx1 : x - algebraMap R S (π x) ∈ I := by
@@ -57,18 +58,20 @@ private lemma main
     rw [← hsum, map_add, Derivation.leibniz]
     refine Submodule.add_mem _ (Submodule.add_mem _ ?_ ?_) ?_
     ·
-      exact Submodule.mem_sup_left (Submodule.smul_mem _ _ (Submodule.subset_span rfl))
+      apply Submodule.mem_sup_left (Submodule.smul_mem _ _ (Submodule.subset_span rfl))
     ·
       refine Submodule.mem_sup_right (Submodule.smul_mem_smul ?_ Submodule.mem_top)
-      rw [hmemI]; exact ht
-    · exact Submodule.mem_sup_right (hD_sq y hy)
+      rw [hmemI]; apply ht
+    ·
+      apply Submodule.mem_sup_right (hD_sq y hy)
   have htop : (⊤ : Submodule S Ω[S⁄R]) ≤ E := by
     rw [← KaehlerDifferential.span_range_derivation, Submodule.span_le]
     rintro _ ⟨x, rfl⟩
-    exact hD_mem x
+    apply hD_mem x
   have hN : (⊤ : Submodule S Ω[S⁄R]) ≤ N :=
     Submodule.le_of_le_smul_of_le_jacobson_bot Module.Finite.fg_top hI_jac htop
   obtain ⟨g, hg⟩ := Submodule.mem_span_singleton.mp (hN (Submodule.mem_top : ω ∈ ⊤))
   exact ⟨g, hg.symm⟩
+
 
 -- created on 2026-10-20

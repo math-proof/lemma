@@ -5,7 +5,7 @@ import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.Sum.eq.Sum_Get
-open Fin Tensor Vector
+open Fin Tensor Vector Set
 
 
 @[path, fin]

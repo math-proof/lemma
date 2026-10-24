@@ -1,0 +1,27 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexFourByTwoActiveKeyRepair.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexFourByTwoActiveKeyRepair
+
+#print axioms StatMech.FrontierD.sixVertexFourByTwoActiveCycleRepairProfile_surplus_pos
+#print axioms
+  StatMech.FrontierD.sixVertexFourByTwoActiveCycleRepairProfile_sourceWeight_eq_zero
+#print axioms
+  StatMech.FrontierD.sixVertexFourByTwoActiveCycleRepairPhysicalTarget_surplusPreimage
+#print axioms StatMech.FrontierD.sixVertexFourByTwoActiveCycleRepairConfigurationPair_eq
+#print axioms StatMech.FrontierD.sixVertexFourByTwoActiveCycleRepairSurplusToken_key
+#print axioms StatMech.FrontierD.sixVertexFourByTwoActiveCycleRepairSurplusCapacity_pos
+#print axioms StatMech.FrontierD.sixVertexFourByTwoActiveObstructionToken_cycleRepair_supported
+#print axioms StatMech.FrontierD.sixVertexFourByTwoActiveObstructionSourceKeyFiber_subsingleton
+#print axioms StatMech.FrontierD.sixVertexFourByTwoActiveObstructionCycleRepairFiberEmbedding
+#print axioms
+  StatMech.FrontierD.sixVertexFourByTwoActiveObstructionCycleRepairFiberEmbedding_supported
+#print axioms StatMech.FrontierD.sixVertexFourByTwoActiveObstructionCapacity_le_cycleRepair
+#print axioms StatMech.FrontierD.sixVertexFourByTwoActiveObstruction_singletonKeyCapacityHall

@@ -9,7 +9,7 @@ The real diagonal of a self-adjoint operator in an orthonormal basis is a doubly
 of its eigenvalues (the Schur direction of the Schur-Horn theorem).
 -/
 
-namespace InnerProductSpace.SchurHorn
+namespace Matrix.Any_In_DoublyStochasticAndEq_MulVec.of.OrthonormalBasis_Fin.EqFinrank.IsSymmetric
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
   [FiniteDimensional ℂ E]
@@ -109,4 +109,4 @@ theorem schur_diagonal_eigenvalues_doublyStochastic
     show RCLike.re (inner (𝕜 := ℂ) (b i) (T (b i))) = (D.mulVec μ) i
     exact (hdiag i).trans rfl
 
-end InnerProductSpace.SchurHorn
+end Matrix.Any_In_DoublyStochasticAndEq_MulVec.of.OrthonormalBasis_Fin.EqFinrank.IsSymmetric

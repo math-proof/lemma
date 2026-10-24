@@ -13,7 +13,7 @@ private lemma main
   (hx : x₀ ∈ S)
   (h : ∀ y ∈ S, y ≠ x₀ → f y < f x₀) :
 -- imply
-  ArgMax S f = x₀ := by
+  max⁻¹[x ∈ S] f x = x₀ := by
 -- proof
   have spec := Classical.epsilon_spec (p := fun x => x ∈ S ∧ ∀ y ∈ S, f y ≤ f x)
     ⟨x₀, hx, fun y hy => by

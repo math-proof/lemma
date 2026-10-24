@@ -19,12 +19,4 @@ def pellLucas : Nat → Nat
   | 0 => 2
   | 1 => 2
   | n + 2 => 2 * pellLucas (n + 1) + pellLucas n
-
-theorem pellLucas_zero : pellLucas 0 = 2 := rfl
-
-theorem pellLucas_one : pellLucas 1 = 2 := rfl
-
-theorem pellLucas_add_two (n : Nat) :
-    pellLucas (n + 2) = 2 * pellLucas (n + 1) + pellLucas n := rfl
-
 end MetaMathlibExt

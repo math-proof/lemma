@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.RayClass.Modulus
+import Lemma.Nat.NumberField.RayClass.Modulus
 import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.ClassGroup.Basic
 
@@ -86,18 +87,6 @@ def PositiveAtInfinitePart (m : Modulus K) (x : Kˣ) : Prop :=
 def IsRayElementOne (m : Modulus K) (x : Kˣ) : Prop :=
   x ∈ rayElements m ∧ CongruentOneAtFinitePart m x ∧ PositiveAtInfinitePart m x
 
-theorem IsRayElementOne.mem_rayElements {m : Modulus K} {x : Kˣ}
-    (h : IsRayElementOne m x) : x ∈ rayElements m :=
-  h.1
-
-theorem IsRayElementOne.congruent {m : Modulus K} {x : Kˣ}
-    (h : IsRayElementOne m x) : CongruentOneAtFinitePart m x :=
-  h.2.1
-
-theorem IsRayElementOne.positive {m : Modulus K} {x : Kˣ}
-    (h : IsRayElementOne m x) : PositiveAtInfinitePart m x :=
-  h.2.2
-
 /-- Principal generators coming from elements congruent to `1` mod `m`. -/
 def rayGenerators (m : Modulus K) : Set (coprimeFractionalIdeals m) :=
   { y |
@@ -131,15 +120,5 @@ theorem rayGroup_closure_le {m : Modulus K}
 
 theorem congruentOneAtFinitePart_one (m : Modulus K) :
     CongruentOneAtFinitePart m 1 := fun _ _ => Or.inl rfl
-
-theorem positiveAtInfinitePart_one (m : Modulus K) :
-    PositiveAtInfinitePart m 1 := by
-  intro w _
-  rw [Units.val_one, map_one]
-  exact one_pos
-
-theorem isRayElementOne_one (m : Modulus K) : IsRayElementOne m 1 :=
-  ⟨one_mem _, congruentOneAtFinitePart_one m, positiveAtInfinitePart_one m⟩
-
 end Modulus
 end NumberField

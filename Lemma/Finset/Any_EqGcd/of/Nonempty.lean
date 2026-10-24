@@ -49,5 +49,4 @@ private lemma main
     rw [Finset.sum_congr rfl hif]
 
 
-
 -- created on 2026-09-18

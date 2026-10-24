@@ -45,19 +45,25 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
 * [Nat](../?module=Nat) Algèbre élémentaire des entiers naturels
 * [Int](../?module=Int) Algèbre élémentaire des entiers relatifs
 * [Rat](../?module=Rat) Algèbre élémentaire des rationnels
-* [Real](../?module=Real) Algèbre et analyse réelle
+* [Real](../?module=Real) Algèbre et analyse réelle, p. ex. :
+  - [inégalité de Jensen](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc.main)
 * [Hyperreal](../?module=Real) Analyse non standard
 * [Complex](../?module=Complex) Analyse complexe, p. ex. :
   - [équation quadratique](../?module=Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0)
   - [équation cubique](../?module=Complex.Eq0Add_Mul_Pow_3.is.In_Finset_SubSAddMulS.of.Ne_0)
   - [équation quartique](../?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0)
 * [Set](../?module=Set) Théorie des ensembles
-* [Finset](../?module=Set) Ensembles finis
+* [Finset](../?module=Finset) Ensembles finis, p. ex. :
+  - [clustering k-means](../?module=Finset.LeAddSumS_SquareSub_Div_Sum.of.LeAbsSSub_Div_Sum.NotIn.In.GtCard_0)
 * [List](../?module=List) Théorie des listes
 * [Vector](../?module=Vector) Vecteurs (tenseurs unidimensionnels)
 * [Tensor](../?module=Tensor) Calcul tensoriel formalisé, sémantiquement aligné sur **torch.Tensor**, pour la spécification et la vérification formelle d'algorithmes d'apprentissage profond, p. ex. :
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
+* [Random](../?module=Random) Probabilités et processus stochastiques, p. ex. :
+  - [classification de documents naïve bayésienne](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)
+  - [fonction de perte CRF](../?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM), [Viterbi](../?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)
+  - [GAE (discret)](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Icc.In_Ico), [GAE (continu)](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico)
 
 <br><br>
 -------

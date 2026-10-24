@@ -2,7 +2,7 @@ import Mathlib
 import sympy.Basic
 import Lemma.Definitions.Def_AlgebraicGeometry_SmallExtensionPairTangent
 import Lemma.Definitions.Def_AlgebraicGeometry_SmallExtensionTangentCoords
-import Lemma.P2M.Util
+import Lemma.Int.P2MUtil
 
 open TensorProduct IsLocalRing AlgebraicGeometry.SmallExtension
 

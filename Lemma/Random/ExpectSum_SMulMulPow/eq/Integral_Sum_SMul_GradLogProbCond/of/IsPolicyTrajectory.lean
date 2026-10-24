@@ -11,7 +11,7 @@ open scoped ENNReal.ToRealCoe
 
 /--
 Path-binder finset Expect of discounted Q-scaled policy log-gradients equals the
-observation Bochner integral of the same sum.
+observation ContinuousAndEq_1AndAll_EqIm0AndGeRe0.is.Any_And_All_Eq_CharFun integral of the same sum.
 | attributes | lemma |
 | :---: | :---: |
 | path | Random.ExpectSum_SMulMulPow.eq.Integral_Sum_SMul_GradLogProbCond.of.IsPolicyTrajectory |

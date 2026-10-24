@@ -90,7 +90,12 @@ theorem PosintDecimal.ten_eq_ten : (mk' 1 [0] (by decide):ℕ) = 10 := by
   decide
 
 theorem PosintDecimal.digit_eq {d:Digit} (h: d ≠ 0) : (mk' d [] h:ℕ) = d := by
-  simp [toNat, mk', Finset.card_univ, Fintype.card_fin]
+  unfold toNat
+  simp only [mk']
+  have hlen : ((d :: []) : List Digit).length = 1 := by simp
+  simp [hlen, pow_zero]
+  set_option backward.isDefEq.respectTransparency false in
+    simp [Fintype.card_fin, one_mul]
 
 theorem PosintDecimal.pos (p:PosintDecimal) : 0 < (p:ℕ) := by
   simp [toNat]
@@ -137,14 +142,17 @@ theorem PosintDecimal.append_toNat (p:PosintDecimal) (d:Digit) :
   rw [List.foldl_append]; simp [List.foldl]; ring
 
 theorem PosintDecimal.eq_append {p:PosintDecimal} (h: 2 ≤ p.digits.length) : ∃ (q:PosintDecimal) (d:Digit), p = q.append d := by
-  use mk' p.head (p.digits.tail.dropLast) p.head_ne_zero
-  set a := p.digits.getLast p.nonempty; use a
+  have htail : p.digits.tail ≠ [] := by
+    simp [List.ne_nil_iff_length_pos, List.length_tail]
+    omega
+  refine ⟨mk' p.head p.digits.tail.dropLast p.head_ne_zero, p.digits.tail.getLast htail, ?_⟩
   apply congr'
-  simp [mk']
-  rw [←p.digits.cons_head_tail p.nonempty]
-  congr 1
-  convert (List.dropLast_append_getLast _).symm using 2; grind
-  simp [←List.length_pos_iff]; omega
+  simp [append, mk']
+  conv_lhs => rw [← p.digits.cons_head_tail p.nonempty]
+  conv_lhs =>
+    enter [2]
+    rw [← List.dropLast_append_getLast htail]
+  simp [head, List.head_cons]
 
 /-- Theorem B.1.4 (Uniqueness and existence of decimal representations) -/
 theorem PosintDecimal.exists_unique (n:ℕ) : n > 0 → ∃! p:PosintDecimal, (p:ℕ) = n := by
@@ -154,8 +162,13 @@ theorem PosintDecimal.exists_unique (n:ℕ) : n > 0 → ∃! p:PosintDecimal, (p
   -- note: the variable `m` in the text is referred to as `m+1` here.
   clear n; intro m hind _
   obtain hm | hm := lt_or_ge m 9
-  . apply ExistsUnique.intro (mk' (.mk (show m+1 < 10 by omega)) [] (by simp [Digit.mk]))
-    . simp [mk', Digit.mk, toNat, Digit.toNat]
+  . let d0 : Digit := .mk (show m+1 < 10 by omega)
+    have hd0 : d0 ≠ 0 := by
+      intro h0
+      have := congrArg (fun z : Digit => (z : ℕ)) h0
+      simp [d0, Digit.toNat_mk] at this
+    apply ExistsUnique.intro (mk' d0 [] hd0)
+    · simpa [d0, Digit.toNat_mk] using digit_eq hd0
     intro d hd
     obtain hdl | hdl := lt_or_ge d.digits.length 2
     . replace hdl : d.digits.length = 1 := by linarith [d.length_pos]
@@ -166,18 +179,16 @@ theorem PosintDecimal.exists_unique (n:ℕ) : n > 0 → ∃! p:PosintDecimal, (p
       . simp [hdl, mk']
       intro i hi₁ hi₂
       replace hi₁ : i = 0 := by omega
-      simp [hi₁, mk', Digit.mk, hd]
+      simp [hi₁, mk', d0, Digit.toNat_mk, hd]
     have : d.toNat ≥ 10 := calc
       _ ≥ (d.head:ℕ) * 10^(d.digits.length-1) := by
         set a : Fin d.digits.length := ⟨ d.digits.length - 1, by omega ⟩
-        convert Finset.single_le_sum _ (Finset.mem_univ a)
-        . simp [a, head, List.head_eq_getElem]
-        . infer_instance
-        intros; positivity
+        unfold toNat
+        convert Finset.single_le_sum (fun _ _ ↦ Nat.zero_le _) (Finset.mem_univ a) using 1
+        · simp [a, head, List.head_eq_getElem]
       _ ≥ 1 * 10^(2-1) := by
         gcongr
-        . have := d.head_ne_zero'; omega
-        norm_num
+        · have := d.head_ne_zero'; omega
       _ = 10 := by norm_num
     linarith
   have := (m+1).mod_add_div 10

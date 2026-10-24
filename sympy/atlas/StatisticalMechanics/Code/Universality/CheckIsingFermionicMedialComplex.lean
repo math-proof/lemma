@@ -1,0 +1,28 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicMedialComplex.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicMedialComplex
+
+#print axioms StatMech.Universality.FKIsingMedialDart.localMate_edgeFlip
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.loopGraph_degree_eq_two
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.mem_exploration_iff
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.localMate_mem_exploration_iff
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.closed_west_mem_iff_south
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.closed_east_mem_iff_north
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.open_west_mem_iff_north
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.open_east_mem_iff_south
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.loopGraph_setOpen_eq_twoEdgeSwitch
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.open_local_mem_of_closed_west_mem_not_east
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.open_local_mem_of_closed_east_mem_not_west
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.open_local_not_mem_of_closed_west_east_not_mem
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.local_switch_membership_classification
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.toDobrushinDomain
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.caseTwoExplorationSwitchingLaw
+#print axioms StatMech.Universality.FKIsingDobrushinMedialComplex.caseOneExplorationSwitchingLaw

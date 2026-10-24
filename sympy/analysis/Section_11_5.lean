@@ -83,7 +83,7 @@ theorem integ_of_uniform_cts {I: BoundedInterval} {f:ℝ → ℝ} (hf: UniformCo
 theorem integ_of_cts {a b:ℝ} {f:ℝ → ℝ} (hf: ContinuousOn f (Icc a b)) :
   IntegrableOn f (Icc a b) := integ_of_uniform_cts (UniformContinuousOn.of_continuousOn hf)
 open PiecewiseConstantOn ConstantOn in
-set_option maxHeartbeats 300000 in
+set_option maxHeartbeats 999999 in
 /-- Proposition 11.5.3 -/
 theorem integ_of_bdd_cts {I: BoundedInterval} {f:ℝ → ℝ} (hbound: BddOn f I)
   (hf: ContinuousOn f I) : IntegrableOn f I := by
@@ -185,7 +185,11 @@ theorem integ_of_bdd_cts {I: BoundedInterval} {f:ℝ → ℝ} (hbound: BddOn f I
       rw [PiecewiseConstantOn.integ_congr g'const_right, integ_const, Irightlen]
     have g'integ5 : PiecewiseConstantOn.integ g' I' = PiecewiseConstantOn.integ g I' := by
       apply PiecewiseConstantOn.integ_congr; grind [mem_iff]
-    grind
+    have h'join : PiecewiseConstantOn.integ h' I = M * ε + PiecewiseConstantOn.integ h I' + M * ε := by
+      rw [h'integ1, h'integ2, h'integ3, h'integ4, h'integ5]
+    have g'join : PiecewiseConstantOn.integ g' I = -M * ε + PiecewiseConstantOn.integ g I' + -M * ε := by
+      rw [g'integ1, g'integ2, g'integ3, g'integ4, g'integ5]
+    linarith [h'maj, g'maj, hhint, hgint, h'join, g'join]
   exact ⟨ hbound, by linarith [nonneg_of_le_const_mul_eps this] ⟩
 
 /-- Definition 11.5.4 -/

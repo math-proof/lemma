@@ -10,7 +10,7 @@ private lemma main
   {f : ℝ → ℝ}
 -- given
   (h₀ : ∃ x ∈ S, ∀ y ∈ S, f y ≤ f x)
-  (h : x₀ = ArgMax S f) :
+  (h : x₀ = max⁻¹[x ∈ S] f x) :
 -- imply
   ∀ x ∈ S, f x₀ ≥ f x := by
 -- proof

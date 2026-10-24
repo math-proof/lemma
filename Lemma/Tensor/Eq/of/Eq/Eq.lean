@@ -111,11 +111,11 @@ private lemma kmeans.nonoverlapping
   (_h₀ : ∑ i, (w i).card = M)
   (_h₁ : Finset.univ.biUnion w = Finset.range M)
   (h₂ : ∀ i, w' i = (Finset.range M).filter fun j =>
-    ArgMin Set.univ (fun i' => ‖x j - ((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j'‖) = i) :
+    min⁻¹[i' : Fin k] ‖x j - ((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j'‖ = i) :
 -- imply
   ∑ i, (w' i).card = M ∧ Finset.univ.biUnion w' = Finset.range M := by
 -- proof
-  obtain ⟨a, ha⟩ : ∃ a : ℕ → Fin k, ∀ j, ArgMin Set.univ (fun i' => ‖x j - ((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j'‖) = a j :=
+  obtain ⟨a, ha⟩ : ∃ a : ℕ → Fin k, ∀ j, min⁻¹[i' : Fin k] ‖x j - ((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j'‖ = a j :=
     ⟨_, fun _ => rfl⟩
   simp only [ha] at h₂
   constructor

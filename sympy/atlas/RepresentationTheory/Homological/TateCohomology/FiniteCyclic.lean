@@ -214,35 +214,4 @@ private noncomputable def negThreePeriodicityIso (A : Rep R G) (g : G)
   simpa using (((isoGroupHomology (R := R) (G := G) (-3) 2 (by omega)).app A) ≪≫
     Rep.FiniteCyclicGroup.groupHomologyIsoEven A g hg 2 even_two ≪≫
     (negOneIso A g hg).symm)
-
-/-- Tate cohomology of a finite cyclic group is two-periodic. -/
-theorem nonempty_periodicityIso {R G : Type u} [CommRing R] [Group G]
-    [Fintype G] [IsCyclic G] (A : Rep R G) (n : ℤ) :
-    Nonempty (tateCohomology A n ≅ tateCohomology A (n + 2)) := by
-  let _ : CommGroup G := IsCyclic.commGroup
-  let _ : DecidableEq G := Classical.decEq G
-  let g : G := (IsCyclic.exists_generator (α := G)).choose
-  have hg : ∀ x, x ∈ Subgroup.zpowers g :=
-    (IsCyclic.exists_generator (α := G)).choose_spec
-  refine ⟨?_⟩
-  cases n with
-  | ofNat i =>
-    cases i with
-    | zero => simpa using zeroPeriodicityIso A g hg
-    | succ i =>
-      letI : NeZero (i + 1) := ⟨by omega⟩
-      simpa using positivePeriodicityIso A g hg (i + 1)
-  | negSucc i =>
-    cases i with
-    | zero => simpa using negOnePeriodicityIso A g hg
-    | succ i =>
-      cases i with
-      | zero => simpa using negTwoPeriodicityIso A g hg
-      | succ i =>
-        cases i with
-        | zero => simpa using negThreePeriodicityIso A g hg
-        | succ i =>
-          convert negativePeriodicityIso A g hg i using 1 <;>
-            simp [Int.negSucc_eq] <;> ring_nf
-
 end TateCohomology

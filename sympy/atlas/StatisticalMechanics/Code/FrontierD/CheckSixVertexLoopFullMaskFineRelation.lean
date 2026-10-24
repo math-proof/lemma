@@ -1,0 +1,48 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexLoopFullMaskFineRelation.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexLoopFullMaskFineRelation
+
+open StatMech.FrontierD
+
+#print axioms sixVertexLoopDecoratedPairColored_injective
+#print axioms fkColoredFullSwapTarget_injective_fixedMask
+#print axioms fkColoredFullSwapTarget_injective_of_mask_eq
+#print axioms sixVertexTorusMaskSeamTransfer_pairSwitch
+#print axioms SixVertexFullDisagreementMask.pairSwitch
+#print axioms SixVertexFullDisagreementMask.eq_fullDisagreementMask_switchFirst
+#print axioms sixVertexTorusSwitchFirst_injective_on_fullMasks
+#print axioms sixVertexPairUnionHorizontal_pairSwitch
+#print axioms sixVertexPairUnionVertical_pairSwitch
+#print axioms SixVertexFullDisagreementMask.pairAtMostTwoCycleFineRelated
+#print axioms sixVertexLexDisagreementComponentMask_full
+#print axioms sixVertexLoopDecoratedFullMaskFineTarget
+#print axioms sixVertexLoopDecoratedFullMaskFineTarget_false_arrows
+#print axioms sixVertexLoopDecoratedFullMaskFineTarget_true_arrows
+#print axioms sixVertexLoopFullUnitMaskTarget_injective
+#print axioms sixVertexLoopFullMaskFineRelated_target
+#print axioms sixVertexLoopDecoratedFullMaskFineTarget_lex
+#print axioms sixVertexLoopLexUnitFineRelated_imp_fullMaskFineRelated
+#print axioms sixVertexLoopFullUnitMaskOfRelated_target
+#print axioms sixVertexLoopFullUnitMaskOfRelated_false_arrows
+#print axioms sixVertexLoopFullUnitMaskOfRelated_true_arrows
+#print axioms sixVertexLoopFullUnitMaskOfRelated_colored
+#print axioms sixVertexLoopFullNegativeMaskOfPreimage
+#print axioms sixVertexLoopFullNegativeMaskOfPreimage_injective
+#print axioms card_sixVertexLoopFullMaskFineRelated_preimages_le_negativeMasks
+#print axioms sixVertexLoopFullUnitMaskEquivRelated
+#print axioms card_sixVertexLoopFullMaskFineRelated
+#print axioms sixVertexLoopFullMaskFineRelated_nonempty
+#print axioms sixVertexLoopFullMaskFineRelated_bigrade
+#print axioms sixVertexLoopFullMaskFineRelated_twoCycle
+#print axioms rawFineProfile_of_fullMaskUnitDegree
+#print axioms sixVertexMarkedTraceCoefficientwiseLogConcave_of_fullMaskUnitDegree
+#print axioms rawFineProfile_of_fullMaskNegativePositiveDegree
+#print axioms sixVertexMarkedTraceCoefficientwiseLogConcave_of_fullMaskNegativePositiveDegree

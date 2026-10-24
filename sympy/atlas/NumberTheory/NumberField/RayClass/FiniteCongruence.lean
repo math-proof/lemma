@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/FiniteCongruence.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.RayClass.RayGroup
+import Lemma.Nat.NumberField.RayClass.RayGroup
 import Mathlib.RingTheory.DedekindDomain.AdicValuation
 import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.FractionalIdeal.Operations

@@ -3,7 +3,7 @@ import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetAppend.eq.Get.of.Lt
 import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.Interleave.eq.AppendStackS_Delta
-open Nat Tensor Fin
+open Nat Tensor Fin Set
 
 
 @[path]

@@ -1,0 +1,79 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckPeriodicPlanarFK.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarThermodynamicDuality
+import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarCoherentLimit
+import sympy.atlas.StatisticalMechanics.Code.FK.TriHexTorusComparison
+import sympy.atlas.StatisticalMechanics.Code.FK.TriHexTorusPressureDuality
+
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.orbitBox_mono
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.mem_orbitBox_of_eventually
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.freeInfiniteVolume_isLimit
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.wiredInfiniteVolume_isLimit
+#print axioms StatMech.FK.PeriodicPlanar.square
+#print axioms StatMech.FK.PeriodicPlanar.triangular
+#print axioms StatMech.FK.PeriodicPlanar.hexagonal
+#print axioms StatMech.FK.PeriodicPlanar.dualParam_involutive
+#print axioms StatMech.FK.PeriodicPlanar.finite_planar_free_dual_exchange
+#print axioms StatMech.FK.PeriodicPlanar.triangularEdgeChart_injective
+#print axioms StatMech.FK.PeriodicPlanar.triangularEdgeChart_surjective
+#print axioms StatMech.FK.PeriodicPlanar.hexagonalEdgeChart_injective
+#print axioms StatMech.FK.PeriodicPlanar.hexagonalEdgeChart_surjective
+#print axioms StatMech.FK.PeriodicPlanar.incidentHexFaces_adj
+#print axioms StatMech.FK.PeriodicPlanar.triangular_edge_incident_faces
+#print axioms StatMech.FK.PeriodicPlanar.triHexDualEdgeEquiv_chart
+#print axioms StatMech.FK.PeriodicPlanar.triangularTorusEdgeChartEquiv
+#print axioms StatMech.FK.PeriodicPlanar.hexagonalTorusEdgeChartEquiv
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorusDualEdgeEquiv
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_dual_openCount
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_euler
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_fkWeight_duality_signed
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_sectorSum_duality
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_sectorPartition_duality
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_sectorNormalized_duality
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorusCutDualGraph_degree_even
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorusDualCutGraph_sup_edge
+#print axioms StatMech.FK.PeriodicPlanar.triangularTorusGraph_connected
+#print axioms StatMech.FK.PeriodicPlanar.hexagonalTorusGraph_connected
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorusDefect_nonnegative
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorusDefect_le_two
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorusDefect_classified
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_topologicalCorrection_bounds
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_topologicalCorrection_log_bound
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_topologicalCorrection_logDensity_tendsto_zero
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorusDualPartitionSum_eq_sectorSum
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorusDefectWeightedDualPartitionSum_eq_sectorSum
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_partition_duality_defectWeighted
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_numerator_duality_defectWeighted
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_defectWeighted_partition_bounds
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_defectWeighted_numerator_bounds
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_defectWeighted_normalized_bounds
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_partitionCorrection_ratio_bounds
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_partitionCorrection_log_bounds
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorus_partitionCorrection_logDensity_tendsto_zero
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorusPressureDualityResidual_eq_partitionCorrection
+#print axioms StatMech.FK.PeriodicPlanar.triHexTorusPressureDualityResidual_tendsto_zero
+#print axioms StatMech.FK.PeriodicPlanar.continuous_dualConfigEquiv
+#print axioms StatMech.FK.PeriodicPlanar.dualConfigEquiv_symm
+#print axioms StatMech.FK.PeriodicPlanar.weakLimit_dual_of_finite_exchange
+#print axioms StatMech.FK.PeriodicPlanar.weakLimit_dual_event
+#print axioms StatMech.FK.PeriodicPlanar.exists_common_weak_dual_limits
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.bufferedRadius_strictMono
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.bufferedInducedWiring_le
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.freeBuffered_step
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.wiredBuffered_step
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.freeBufferedMeasure_weakConverges
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.wiredBufferedMeasure_weakConverges
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.freeBuffered_subseq_eq
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.wiredBuffered_subseq_eq
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.freeBufferedMeasure_tendsto_finiteCylinder
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.wiredBufferedMeasure_tendsto_finiteCylinder
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.free_wired_bufferedInfiniteVolume_dual
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.wired_free_bufferedInfiniteVolume_dual

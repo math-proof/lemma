@@ -47,32 +47,4 @@ def kroneckerAtPrime (D : ℤ) (p : ℕ) : ℤ :=
 def kroneckerSym (D : ℤ) (n : ℕ) : ℤ :=
   if n = 0 then if D.natAbs = 1 then 1 else 0
   else (n.primeFactorsList.map (kroneckerAtPrime D)).prod
-
-theorem kroneckerSym_zero (D : ℤ) :
-    kroneckerSym D 0 = if D.natAbs = 1 then 1 else 0 := by
-  simp [kroneckerSym]
-
-theorem kroneckerSym_one (D : ℤ) : kroneckerSym D 1 = 1 := by
-  simp [kroneckerSym]
-
-theorem kroneckerAtPrime_two (D : ℤ) :
-    kroneckerAtPrime D 2 = kroneckerAtTwo D := by
-  simp [kroneckerAtPrime]
-
-theorem kroneckerSym_two (D : ℤ) :
-    kroneckerSym D 2 = kroneckerAtTwo D := by
-  have hprime : Nat.Prime 2 := Nat.prime_two
-  have hlist : Nat.primeFactorsList 2 = [2] :=
-    Nat.primeFactorsList_prime hprime
-  rw [kroneckerSym, ite_eq_right (by decide), hlist]
-  simp [kroneckerAtPrime]
-
-/-- Kronecker symbol at a prime lower argument reduces to the prime dispatcher. -/
-theorem kroneckerSym_prime (D : ℤ) (p : ℕ) (hp : p.Prime) :
-    kroneckerSym D p = kroneckerAtPrime D p := by
-  have hne : p ≠ 0 := hp.ne_zero
-  have hlist : p.primeFactorsList = [p] := Nat.primeFactorsList_prime hp
-  rw [kroneckerSym, ite_eq_right hne, hlist]
-  simp
-
 end MetaMathlibExt

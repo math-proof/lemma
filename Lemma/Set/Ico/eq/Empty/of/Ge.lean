@@ -1,6 +1,6 @@
 import Lemma.Set.Lt.of.Ico.ne.Empty
 import Lemma.Nat.NotLt.of.Ge
-open Set Nat
+open Set Nat BoundedInterval
 
 
 @[path]

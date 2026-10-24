@@ -955,6 +955,8 @@ export class LeanBrace extends LeanPairedGroup {
             p instanceof L.LeanAssign || 
             p instanceof L.Lean_rightarrow || 
             p instanceof L.LeanArgsSpaceSeparated ||
+            // `Name.{u}`: the universe brace is the field of a property, not its own line
+            p instanceof L.LeanProperty ||
             // `⟨{ toFun := … }, e⟩` / `({ … }, n)`: an inline brace, not a line of its own (was `⟨    {`)
             p instanceof L.LeanArgsCommaSeparated ||
             p instanceof LeanPairedGroup

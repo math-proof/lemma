@@ -1,0 +1,38 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckRSWConnectorTwoChannelAmbientPermutation.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelAmbientPermutation
+
+#print axioms StatMech.Universality.rlc_twoChannelFullPhysicalAmbientFailureEmbedding
+#print axioms StatMech.Universality.rlc_twoChannelFullPhysicalAmbientFailureEmbedding_success
+#print axioms
+  StatMech.Universality.rlc_twoChannelFullPhysicalAmbientFailureEmbedding_apply_of_not_edge
+#print axioms StatMech.Universality.rlc_twoChannelFullPhysicalAmbientFailureEmbedding_agreesOff
+#print axioms StatMech.Universality.rlc_connectorTwoChannelGraph_edgeFinset_disjoint_traceWiring
+#print axioms StatMech.Universality.rlc_connectorExtendConfig_pathPairOpen_of_trace_open
+#print axioms StatMech.Universality.rlc_allOpenConnectorConfig_displays_two_pathPairs
+#print axioms StatMech.Universality.rlc_finiteExtremalPairCandidate_pairwiseDisjoint
+#print axioms StatMech.Universality.rlc_activeFiniteExtremalPairCandidate_pairwiseDisjoint
+#print axioms StatMech.Universality.rlc_exists_finiteExtremalPairCandidate
+#print axioms StatMech.Universality.rlc_twoChannelFiniteExtremalPairSelector
+#print axioms StatMech.Universality.rlc_twoChannelFiniteExtremalPairSelector_selected
+#print axioms StatMech.Universality.rlc_twoChannelFiniteExtremalPairSelector_eq_of_selected
+#print axioms StatMech.Universality.rlc_twoChannelIndexedAmbientFailureMap_success
+#print axioms StatMech.Universality.rlc_twoChannelIndexedAmbientFailureMap_agreesOff
+#print axioms StatMech.Universality.rlc_twoChannelIndexedAmbientFailureMap_collision_agreesOff_union
+#print axioms StatMech.Universality.rlc_twoChannelIndexedAmbientFailureMap_trace_open
+#print axioms StatMech.Universality.rlc_twoChannelIndexedAmbientTargetDiagonalConfig
+#print axioms StatMech.Universality.rlc_twoChannelIndexedAmbientTargetSelector
+#print axioms StatMech.Universality.rlc_twoChannelActiveAmbientTargetSelector_eq_iff_stable
+#print axioms StatMech.Universality.rlc_twoChannelIndexedAmbientFailureMap_glues_horizontal
+#print axioms StatMech.Universality.rlc_twoChannelIndexedAmbientCollisionRecovery_of_target_stable
+#print axioms StatMech.Universality.rlc_twoChannelActiveAmbientCollisionRecovery_of_target_stable
+#print axioms StatMech.Universality.rlc_twoChannelIndexedAmbientCollisionRecovery_const_bool_no_go
+#print axioms StatMech.Universality.rlc_twoChannelIndexedAmbientFailureEmbedding

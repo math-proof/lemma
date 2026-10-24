@@ -3,12 +3,16 @@ import sympy.Basic
 import sympy.calculus.complex.Wiman
 
 open Complex.Wiman
+open Complex Set
+
+
+namespace Complex
 
 /--
 [wimanTerm_abs](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
 @[path]
-private lemma wiman_term_abs_eq
+lemma wimanTerm_abs
 -- given
   (f : ℂ → ℂ)
   (r : ℝ)
@@ -16,42 +20,54 @@ private lemma wiman_term_abs_eq
 -- imply
   wimanTerm f |r| n = wimanTerm f r n := by
 -- proof
-  apply wimanTerm_abs f r n
+  simp [wimanTerm]
 
+end Complex
+
+namespace Complex
 
 /--
 [wimanMaximumTerm_abs](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
 @[path]
-private lemma wiman_maximum_term_abs_eq
+lemma wimanMaximumTerm_abs
 -- given
   (f : ℂ → ℂ)
   (r : ℝ) :
 -- imply
   wimanMaximumTerm f |r| = wimanMaximumTerm f r := by
 -- proof
-  apply wimanMaximumTerm_abs f r
+  apply congrArg sSup
+  apply congrArg Set.range
+  funext n
+  exact wimanTerm_abs f r n
 
+end Complex
+
+namespace Complex
 
 /--
 [wimanMaximumModulus_abs](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
 @[path]
-private lemma wiman_maximum_modulus_abs_eq
+lemma wimanMaximumModulus_abs
 -- given
   (f : ℂ → ℂ)
   (r : ℝ) :
 -- imply
   wimanMaximumModulus f |r| = wimanMaximumModulus f r := by
 -- proof
-  apply wimanMaximumModulus_abs f r
+  simp [wimanMaximumModulus]
 
+end Complex
+
+namespace Complex
 
 /--
 [wimanTerm_neg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
 @[path]
-private lemma wiman_term_neg_eq
+lemma wimanTerm_neg
 -- given
   (f : ℂ → ℂ)
   (r : ℝ)
@@ -59,42 +75,54 @@ private lemma wiman_term_neg_eq
 -- imply
   wimanTerm f (-r) n = wimanTerm f r n := by
 -- proof
-  apply wimanTerm_neg f r n
+  simp [wimanTerm]
 
+end Complex
+
+namespace Complex
 
 /--
 [wimanMaximumTerm_neg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
 @[path]
-private lemma wiman_maximum_term_neg_eq
+lemma wimanMaximumTerm_neg
 -- given
   (f : ℂ → ℂ)
   (r : ℝ) :
 -- imply
   wimanMaximumTerm f (-r) = wimanMaximumTerm f r := by
 -- proof
-  apply wimanMaximumTerm_neg f r
+  apply congrArg sSup
+  apply congrArg Set.range
+  funext n
+  exact wimanTerm_neg f r n
 
+end Complex
+
+namespace Complex
 
 /--
 [wimanMaximumModulus_neg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
 @[path]
-private lemma wiman_maximum_modulus_neg_eq
+lemma wimanMaximumModulus_neg
 -- given
   (f : ℂ → ℂ)
   (r : ℝ) :
 -- imply
   wimanMaximumModulus f (-r) = wimanMaximumModulus f r := by
 -- proof
-  apply wimanMaximumModulus_neg f r
+  simp [wimanMaximumModulus]
 
+end Complex
+
+namespace Complex
 
 /--
 [norm_le_wimanMaximumModulus](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
 @[path]
-private lemma norm_le_wiman_maximum_modulus_eq
+lemma norm_le_wimanMaximumModulus
 -- given
   {f : ℂ → ℂ}
   {r : ℝ}
@@ -104,14 +132,21 @@ private lemma norm_le_wiman_maximum_modulus_eq
 -- imply
   ‖f z‖ ≤ wimanMaximumModulus f r := by
 -- proof
-  apply norm_le_wimanMaximumModulus hf hz
+  have hr : 0 ≤ r := hz ▸ norm_nonneg z
+  apply le_csSup
+  · exact (isCompact_sphere (0 : ℂ) |r|).bddAbove_image
+    ((continuous_norm.comp hf).continuousOn)
+  · exact ⟨z, by simpa [Metric.mem_sphere, abs_of_nonneg hr] using hz, rfl⟩
 
+end Complex
+
+namespace Complex
 
 /--
 [cube_le_cube_mul_log_sq_of_wiman](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
 @[path]
-private lemma cube_le_cube_mul_log_sq_of_wiman_eq
+lemma cube_le_cube_mul_log_sq_of_wiman
 -- given
   {M μ : ℝ}
   (hM : 0 ≤ M)
@@ -121,7 +156,18 @@ private lemma cube_le_cube_mul_log_sq_of_wiman_eq
 -- imply
   M ^ 3 ≤ μ ^ 3 * Real.log μ ^ 2 := by
 -- proof
-  apply cube_le_cube_mul_log_sq_of_wiman hM hμ hlog hWiman
+  calc
+    M ^ 3 ≤ (μ * Real.log μ ^ (2 / 3 : ℝ)) ^ 3 :=
+      pow_le_pow_left₀ hM hWiman 3
+    _ = μ ^ 3 * (Real.log μ ^ (2 / 3 : ℝ)) ^ 3 := by
+      rw [mul_pow]
+    _ = μ ^ 3 * Real.log μ ^ 2 := by
+      congr 1
+      rw [← Real.rpow_mul_natCast hlog]
+      norm_num [Real.rpow_two]
+end
+
 
 
 -- created on 2026-10-10
+-- updated on 2026-10-23

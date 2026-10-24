@@ -61,13 +61,3 @@ open Classical in
 between a given point and all other points. -/
 noncomputable def distinctDistancesFrom (points : Finset X) (pt : X) : ℕ :=
   #((points.erase pt).image fun x => dist x pt)
-
-open Classical in
-/-- The number of unit-distance pairs of a finite set of `n` points is at most $\binom{n}{2}$,
-the total number of unordered pairs of distinct points. -/
-theorem unitDistNum_le_choose_two (s : Finset X) : unitDistNum s ≤ (#s).choose 2 := by
-  unfold unitDistNum distanceMultiplicity
-  calc #(s.offDiag.filter fun (pair : X × X) => dist pair.1 pair.2 = 1) / 2
-      ≤ #s.offDiag / 2 := Nat.div_le_div_right (Finset.card_filter_le _ _)
-    _ = (#s).choose 2 := by
-      rw [Finset.offDiag_card, Nat.choose_two_right, Nat.mul_sub_left_distrib, mul_one]

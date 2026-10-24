@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
 import Lemma.Definitions.Def_GaloisRep_Flat
-import Lemma.P2M.Util
+import Lemma.Int.P2MUtil
 
 open GaloisRepAdic
 

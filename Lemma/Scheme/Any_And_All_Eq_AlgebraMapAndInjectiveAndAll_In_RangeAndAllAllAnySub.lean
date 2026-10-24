@@ -25,14 +25,14 @@ private lemma main
     (hfree : ∀ (K : Type u) [Field K] (x : Spec (CommRingCat.of K) ⟶ X) (g : G), x ≫ (ρ g).hom = x → g = 1)
     (V : Y.Opens) (hV : IsAffineOpen V) :
     IsAffineOpen (((TopologicalSpace.Opens.map π.base).obj V)) ∧
-    let _ : Algebra (Y.presheaf.obj (op V)) (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))) := (π.app V).hom.toAlgebra
-    ∃ σ : G →* ((X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))) ≃+* (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))))),
-      (∀ (g : G) (a : (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))))),
+    let _ : Algebra Y.presheaf.obj (op V) X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))) := (π.app V).hom.toAlgebra
+    ∃ σ : G →* (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))) ≃+* X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))),
+      (∀ (g : G) (a : X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))),
         σ g a = (ρ g⁻¹).hom.appLE (((TopologicalSpace.Opens.map π.base).obj V)) (((TopologicalSpace.Opens.map π.base).obj V)) (by rw [← Scheme.Hom.comp_preimage, hπ g⁻¹]) a) ∧
-      (∀ (g : G) (r : (Y.presheaf.obj (op V))), σ g (algebraMap (Y.presheaf.obj (op V)) (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))) r) = algebraMap (Y.presheaf.obj (op V)) (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))) r) ∧
-      Function.Injective (algebraMap (Y.presheaf.obj (op V)) (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))))) ∧
-      (∀ a : (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))), (∀ g : G, σ g a = a) → a ∈ Set.range (algebraMap (Y.presheaf.obj (op V)) (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))))) ∧
-      (∀ P : Ideal (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))), P.IsPrime → ∀ g : G, g ≠ 1 → ∃ a : (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))), a - σ g a ∉ P) := by
+      (∀ (g : G) (r : Y.presheaf.obj (op V)), σ g (algebraMap (Y.presheaf.obj (op V)) X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))) r) = algebraMap (Y.presheaf.obj (op V)) X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))) r) ∧
+      Function.Injective (algebraMap (Y.presheaf.obj (op V)) X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))) ∧
+      (∀ a : X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))), (∀ g : G, σ g a = a) → a ∈ Set.range (algebraMap (Y.presheaf.obj (op V)) X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))))) ∧
+      (∀ P : Ideal X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))), P.IsPrime → ∀ g : G, g ≠ 1 → ∃ a : X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))), a - σ g a ∉ P) := by
   classical
   let _ : IsAffineHom π := haff
   have hU : IsAffineOpen (((TopologicalSpace.Opens.map π.base).obj V)) := hV.preimage π
@@ -49,16 +49,16 @@ private lemma main
     intro f f' h e e'
     subst h
     rfl
-  let E : G → ((X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))) →+* (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))))) := fun g =>
+  let E : G → (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))) →+* X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))) := fun g =>
     ((ρ g⁻¹).hom.appLE (((TopologicalSpace.Opens.map π.base).obj V)) (((TopologicalSpace.Opens.map π.base).obj V)) (hle g⁻¹)).hom
-  have hEdef : ∀ (g : G) (a : (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))))), E g a = (ρ g⁻¹).hom.appLE (((TopologicalSpace.Opens.map π.base).obj V)) (((TopologicalSpace.Opens.map π.base).obj V)) (hle g⁻¹) a :=
+  have hEdef : ∀ (g : G) (a : X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))), E g a = (ρ g⁻¹).hom.appLE (((TopologicalSpace.Opens.map π.base).obj V)) (((TopologicalSpace.Opens.map π.base).obj V)) (hle g⁻¹) a :=
     fun g a => rfl
-  have hEmul : ∀ (g h : G) (a : (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))))), E (g * h) a = E g (E h a) := by
+  have hEmul : ∀ (g h : G) (a : X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))), E (g * h) a = E g (E h a) := by
     intro g h a
     rw [hEdef, hEdef, hEdef, ← CommRingCat.comp_apply, Scheme.Hom.appLE_comp_appLE]
     apply congrFun (congrArg (fun φ => (ConcreteCategory.hom φ : _ → _))
       (keyX (by rw [mul_inv_rev, map_mul, Aut.Aut_mul_def, Iso.trans_hom]) _ _)) a
-  have hEone : ∀ a : (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))), E 1 a = a := by
+  have hEone : ∀ a : X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))), E 1 a = a := by
     intro a
     rw [hEdef]
     have hmor : (ρ (1 : G)⁻¹).hom = 𝟙 X := by
@@ -81,7 +81,7 @@ private lemma main
     ext a
     show E g⁻¹ (E g a) = a
     rw [← hEmul, inv_mul_cancel, hEone]
-  let toσ : G → ((X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))) ≃+* (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))))) :=
+  let toσ : G → (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))) ≃+* X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))) :=
     fun g => RingEquiv.ofRingHom (E g) (E g⁻¹) (hleft g) (hright g)
   have hone : toσ 1 = 1 := by
     ext a
@@ -90,11 +90,11 @@ private lemma main
     intro g h
     ext a
     apply hEmul g h a
-  let σ : G →* ((X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))) ≃+* (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))))) :=
+  let σ : G →* (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))) ≃+* X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))) :=
     { toFun := toσ
       map_one' := hone
       map_mul' := hmul }
-  have hσE : ∀ (g : G) (a : (X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V))))), σ g a = E g a := fun g a => rfl
+  have hσE : ∀ (g : G) (a : X.presheaf.obj (op (((TopologicalSpace.Opens.map π.base).obj V)))), σ g a = E g a := fun g a => rfl
   refine ⟨σ, fun g a => rfl, ?_, hinj V, ?_, ?_⟩
   ·
     intro g r

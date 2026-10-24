@@ -1,58 +1,64 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u v w in
-
+open IsLocalRing
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
+
+universe u v w
+
 variable {L : Type*} [Field L] {L' : Type*} [Field L']
-private noncomputable def overHom (f : L →+* L') (A : ValuationSubring L) (O : ValuationSubring L')
-    (h : ∀ a, f a ∈ O ↔ a ∈ A) : A →+* O where
+private noncomputable def overHom
+  (f : L →+* L') (A : ValuationSubring L) (O : ValuationSubring L')
+  (h : ∀ a, f a ∈ O ↔ a ∈ A)
+  : A →+* O where
   toFun a := ⟨f a, (h a).2 a.2⟩
   map_one' := Subtype.ext (map_one f)
   map_mul' a b := Subtype.ext (map_mul f (a : L) (b : L))
   map_zero' := Subtype.ext (map_zero f)
   map_add' a b := Subtype.ext (map_add f (a : L) (b : L))
-variable (f : L →+* L') (A : ValuationSubring L) (O : ValuationSubring L')
-  (h : ∀ a, f a ∈ O ↔ a ∈ A)
-instance isLocalHom_overHom : IsLocalHom (overHom f A O h) := by
+variable (f : L →+* L') (A : ValuationSubring L) (O : ValuationSubring L') (h : ∀ a, f a ∈ O ↔ a ∈ A)
+private lemma isLocalHom_overHom : IsLocalHom (overHom f A O h) := by
   refine ⟨fun a ha => ?_⟩
   obtain ⟨y, hy⟩ := isUnit_iff_exists_inv.1 ha
   have hy' : f a * (y : L') = 1 := by
-    have := congrArg (fun z : O => (z : L')) hy
+    have this := congrArg (fun z : O => (z : L')) hy
     simp at this
-    exact this
+    refine this
   have ha0 : (a : L) ≠ 0 := fun h0 => by
     rw [h0, map_zero, zero_mul] at hy'
-    exact zero_ne_one hy'
+    refine zero_ne_one hy'
   have hinvO : (f a)⁻¹ ∈ O := by
-    rw [← (eq_inv_of_mul_eq_one_right hy')]; exact y.2
-  have hinvA : (a : L)⁻¹ ∈ A := by rw [← h, map_inv₀]; exact hinvO
-  exact isUnit_iff_exists_inv.2 ⟨⟨_, hinvA⟩, Subtype.ext (mul_inv_cancel₀ ha0)⟩
-private lemma residue_overHom_eq_zero_of_mem_nonunits {a : L} (ha : a ∈ A.nonunits) :
-    residue O ⟨f a, (h a).2 (A.nonunits_subset ha)⟩ = 0 := by
-  have hmax : (⟨a, A.nonunits_subset ha⟩ : A) ∈ IsLocalRing.maximalIdeal A :=
+    rw [← eq_inv_of_mul_eq_one_right hy']
+    refine y.2
+  have hinvA : (a : L)⁻¹ ∈ A := by
+    rw [← h, map_inv₀]
+    refine hinvO
+  refine isUnit_iff_exists_inv.2 ⟨⟨_, hinvA⟩, Subtype.ext (mul_inv_cancel₀ ha0)⟩
+private lemma residue_overHom_eq_zero_of_mem_nonunits
+  {a : L} (ha : a ∈ A.nonunits) :
+  residue O ⟨f a, (h a).2 (A.nonunits_subset ha)⟩ = 0 := by
+  let _ : IsLocalHom (overHom f A O h) := isLocalHom_overHom f A O h
+  have hmax : (⟨a, A.nonunits_subset ha⟩ : A) ∈ maximalIdeal A :=
     ValuationSubring.coe_mem_nonunits_iff.mp ha
-  have : overHom f A O h ⟨a, A.nonunits_subset ha⟩ ∈ IsLocalRing.maximalIdeal O := by
-    rw [IsLocalRing.mem_maximalIdeal, _root_.mem_nonunits_iff] at hmax ⊢
-    exact fun hu => hmax ((isUnit_map_iff (overHom f A O h) _).1 hu)
-  exact (IsLocalRing.residue_eq_zero_iff _).2 this
-variable {K : Type*} [Field K] [IsAlgClosed K] {Ω : Type*} [Field Ω] [Algebra K Ω]
-  {Ω' : Type*} [Field Ω'] [Algebra Ω Ω'] [Algebra K Ω'] [IsScalarTower K Ω Ω']
-private lemma exists_sub_algebraMap_mem_nonunits [Algebra.IsAlgebraic Ω Ω']
-    (A : ValuationSubring Ω) (hK : ∀ c : K, algebraMap K Ω c ∈ A)
-    (hres : ∀ a : Ω, a ∈ A → ∃ c : K, a - algebraMap K Ω c ∈ A.nonunits)
-    (O : ValuationSubring Ω') (hO : ∀ a : Ω, algebraMap Ω Ω' a ∈ O ↔ a ∈ A)
-    (z : Ω') (hz : z ∈ O) : ∃ c : K, z - algebraMap K Ω' c ∈ O.nonunits := by
+  have : overHom f A O h ⟨a, A.nonunits_subset ha⟩ ∈ maximalIdeal O := by
+    rw [mem_maximalIdeal, _root_.mem_nonunits_iff] at hmax ⊢
+    refine fun hu => hmax ((isUnit_map_iff (overHom f A O h) _).1 hu)
+  refine (residue_eq_zero_iff _).2 this
+variable {K : Type*} [Field K] [IsAlgClosed K] {Ω : Type*} [Field Ω] [Algebra K Ω] {Ω' : Type*} [Field Ω'] [Algebra Ω Ω'] [Algebra K Ω'] [IsScalarTower K Ω Ω']
+private lemma exists_sub_algebraMap_mem_nonunits
+  [Algebra.IsAlgebraic Ω Ω']
+  (A : ValuationSubring Ω) (hK : ∀ c : K, algebraMap K Ω c ∈ A)
+  (hres : ∀ a : Ω, a ∈ A → ∃ c : K, a - algebraMap K Ω c ∈ A.nonunits)
+  (O : ValuationSubring Ω') (hO : ∀ a : Ω, algebraMap Ω Ω' a ∈ O ↔ a ∈ A)
+  (z : Ω') (hz : z ∈ O) :
+  ∃ c : K, z - algebraMap K Ω' c ∈ O.nonunits := by
   classical
   have hKO : ∀ c : K, algebraMap K Ω' c ∈ O := fun c => by
-    rw [IsScalarTower.algebraMap_apply K Ω Ω', hO]; exact hK c
-  let algKO : Algebra K O := ((algebraMap K Ω').codRestrict O.toSubring hKO).toAlgebra
-  have halgKO : ∀ c : K, ((algebraMap K O c : O) : Ω') = algebraMap K Ω' c := fun _ => rfl
+    rw [IsScalarTower.algebraMap_apply K Ω Ω', hO]
+    refine hK c
+  let _ : Algebra K O := ((algebraMap K Ω').codRestrict O.toSubring hKO).toAlgebra
   obtain ⟨p, hp0, hpz⟩ := (Algebra.IsAlgebraic.isAlgebraic (R := Ω) z)
   have hsupp : p.support.Nonempty := Polynomial.support_nonempty.mpr hp0
   obtain ⟨i₀, hi₀, hmax⟩ := Finset.exists_max_image p.support (fun i => A.valuation (p.coeff i)) hsupp
@@ -64,24 +70,28 @@ private lemma exists_sub_algebraMap_mem_nonunits [Algebra.IsAlgebraic Ω Ω']
   have hqmem : ∀ i, q.coeff i ∈ A := by
     intro i
     rw [hqcoeff]
-    by_cases hi : i ∈ p.support
-    · rw [← A.valuation_le_one_iff, map_mul, map_inv₀]
+    if hi : i ∈ p.support then
+      rw [← A.valuation_le_one_iff, map_mul, map_inv₀]
       have hle := hmax i hi
       have hv0 : A.valuation c₀ ≠ 0 := (Valuation.ne_zero_iff _).mpr hc₀
-      calc (A.valuation c₀)⁻¹ * A.valuation (p.coeff i)
-          ≤ (A.valuation c₀)⁻¹ * A.valuation c₀ := mul_le_mul_right hle _
+      calc
+        _ ≤ (A.valuation c₀)⁻¹ * A.valuation c₀ := mul_le_mul_right hle _
         _ = 1 := inv_mul_cancel₀ hv0
-    · rw [Polynomial.notMem_support_iff.mp hi, mul_zero]; exact A.zero_mem
-  have hqi₀ : q.coeff i₀ = 1 := by rw [hqcoeff, ← hc₀def, inv_mul_cancel₀ hc₀]
+    else
+      rw [Polynomial.notMem_support_iff.mp hi, mul_zero]
+      refine A.zero_mem
+  have hqi₀ : q.coeff i₀ = 1 := by
+    rw [hqcoeff, ← hc₀def, inv_mul_cancel₀ hc₀]
   have hqz : Polynomial.aeval z q = 0 := by
     rw [hqdef, map_mul, hpz, mul_zero]
   choose c hc using fun i => hres (q.coeff i) (hqmem i)
-  have hone : (1 : Ω) ∉ A.nonunits := by simp [ValuationSubring.mem_nonunits_iff]
+  have hone : (1 : Ω) ∉ A.nonunits := by
+    simp [ValuationSubring.mem_nonunits_iff]
   have hci₀ : c i₀ ≠ 0 := by
     intro h0
     have := hc i₀
     rw [hqi₀, h0, map_zero, sub_zero] at this
-    exact hone this
+    refine hone this
   have hcoef_res : ∀ i, residue O ⟨algebraMap Ω Ω' (q.coeff i), (hO _).2 (hqmem i)⟩ =
       algebraMap K (ResidueField O) (c i) := by
     intro i
@@ -91,7 +101,8 @@ private lemma exists_sub_algebraMap_mem_nonunits [Algebra.IsAlgebraic Ω Ω']
     have h0 := residue_overHom_eq_zero_of_mem_nonunits (algebraMap Ω Ω') A O hO hmem
     convert h0 using 2
     apply Subtype.ext
-    change algebraMap Ω Ω' (q.coeff i) - algebraMap K Ω' (c i) = algebraMap Ω Ω' (q.coeff i - _)
+    change algebraMap Ω Ω' (q.coeff i) - algebraMap K Ω' (c i) =
+      algebraMap Ω Ω' (q.coeff i - _)
     rw [map_sub, ← IsScalarTower.algebraMap_apply]
   set zO : O := ⟨z, hz⟩ with hzOdef
   set PO : Polynomial O := ∑ i ∈ q.support,
@@ -109,29 +120,35 @@ private lemma exists_sub_algebraMap_mem_nonunits [Algebra.IsAlgebraic Ω Ω']
     rw [hrdef, Polynomial.finsetSum_coeff]
     simp only [Polynomial.coeff_C_mul, Polynomial.coeff_X_pow, mul_ite, mul_one, mul_zero]
     rw [Finset.sum_ite_eq]
-  have hi₀q : i₀ ∈ q.support := Polynomial.mem_support_iff.mpr (by rw [hqi₀]; exact one_ne_zero)
+  have hqi₀0 : q.coeff i₀ ≠ 0 := by
+    rw [hqi₀]
+    refine one_ne_zero
+  have hi₀q : i₀ ∈ q.support := Polynomial.mem_support_iff.mpr hqi₀0
   have hr0 : r ≠ 0 := by
     intro h0
-    have := congrArg (fun s : Polynomial K => s.coeff i₀) h0
-    simp only [hrcoeff, hi₀q, if_true, Polynomial.coeff_zero] at this
-    exact hci₀ this
+    have this := congrArg (fun s : Polynomial K => s.coeff i₀) h0
+    simp only [hrcoeff, hi₀q, ite_true, Polynomial.coeff_zero] at this
+    refine hci₀ this
   have hPOmap : PO.map O.subtype = q.map (algebraMap Ω Ω') := by
     ext n
     rw [Polynomial.coeff_map, Polynomial.coeff_map, hPOcoeff]
-    by_cases hn : n ∈ q.support
-    · rw [if_pos hn]; rfl
-    · rw [if_neg hn, map_zero, Polynomial.notMem_support_iff.mp hn, map_zero]
+    if hn : n ∈ q.support then
+      rw [ite_eq_left hn]
+      rfl
+    else
+      rw [ite_eq_right hn, map_zero, Polynomial.notMem_support_iff.mp hn, map_zero]
   have hPOeval : PO.eval zO = 0 := by
     apply Subtype.ext
     change O.subtype (PO.eval zO) = 0
     rw [← Polynomial.eval₂_hom, ← Polynomial.eval_map, hPOmap, Polynomial.eval_map_algebraMap]
-    exact hqz
+    refine hqz
   have hPOres : PO.map (residue O) = r.map (algebraMap K (ResidueField O)) := by
     ext n
     rw [Polynomial.coeff_map, Polynomial.coeff_map, hPOcoeff, hrcoeff]
-    by_cases hn : n ∈ q.support
-    · rw [if_pos hn, if_pos hn, hcoef_res]
-    · rw [if_neg hn, if_neg hn, map_zero, map_zero]
+    if hn : n ∈ q.support then
+      rw [ite_eq_left hn, ite_eq_left hn, hcoef_res]
+    else
+      rw [ite_eq_right hn, ite_eq_right hn, map_zero, map_zero]
   have halg : IsAlgebraic K (residue O zO) := by
     refine ⟨r, hr0, ?_⟩
     rw [← Polynomial.eval_map_algebraMap, ← hPOres, Polynomial.eval_map, Polynomial.eval₂_hom,
@@ -141,12 +158,12 @@ private lemma exists_sub_algebraMap_mem_nonunits [Algebra.IsAlgebraic Ω Ω']
     have hdeg : (minpoly K (residue O zO)).degree = 1 :=
       IsAlgClosed.degree_eq_one_of_irreducible K (minpoly.irreducible hint)
     obtain ⟨c', hc'⟩ := minpoly.degree_eq_one_iff.1 hdeg
-    exact ⟨c', hc'⟩
+    refine ⟨c', hc'⟩
   refine ⟨c', ?_⟩
   have hmem : z - algebraMap K Ω' c' ∈ O := sub_mem hz (hKO c')
   rw [ValuationSubring.mem_nonunits_iff_exists_mem_maximalIdeal]
   refine ⟨hmem, ?_⟩
-  rw [← IsLocalRing.residue_eq_zero_iff]
+  rw [← residue_eq_zero_iff]
   have heq : (⟨z - algebraMap K Ω' c', hmem⟩ : O) = zO - algebraMap K O c' := Subtype.ext rfl
   rw [heq, map_sub, ← ResidueField.algebraMap_eq, ← IsScalarTower.algebraMap_apply, hc',
     ResidueField.algebraMap_eq, sub_self]
@@ -155,13 +172,19 @@ private lemma exists_sub_algebraMap_mem_nonunits [Algebra.IsAlgebraic Ω Ω']
 -/
 @[path]
 private lemma main
-    {K : Type u} [Field K] [IsAlgClosed K] {Ω : Type v} [Field Ω] [Algebra K Ω]
-    {Ω' : Type w} [Field Ω'] [Algebra Ω Ω'] [Algebra K Ω'] [IsScalarTower K Ω Ω']
-    [Algebra.IsAlgebraic Ω Ω']
-    (A : ValuationSubring Ω) (hK : ∀ c : K, algebraMap K Ω c ∈ A)
-    (hres : ∀ a : Ω, a ∈ A → ∃ c : K, a - algebraMap K Ω c ∈ A.nonunits)
-    (O : ValuationSubring Ω') (hO : ∀ a : Ω, algebraMap Ω Ω' a ∈ O ↔ a ∈ A)
-    (z : Ω') (hz : z ∈ O) : ∃ c : K, z - algebraMap K Ω' c ∈ O.nonunits :=
+  {K : Type u} [Field K] [IsAlgClosed K]
+  {Ω : Type v} [Field Ω] [Algebra K Ω]
+  {Ω' : Type w} [Field Ω'] [Algebra Ω Ω'] [Algebra K Ω'] [IsScalarTower K Ω Ω'] [Algebra.IsAlgebraic Ω Ω']
+  (A : ValuationSubring Ω)
+  (hK : ∀ c : K, algebraMap K Ω c ∈ A)
+  (hres : ∀ a : Ω, a ∈ A → ∃ c : K, a - algebraMap K Ω c ∈ A.nonunits)
+  (O : ValuationSubring Ω')
+  (hO : ∀ a : Ω, algebraMap Ω Ω' a ∈ O ↔ a ∈ A)
+  (z : Ω')
+  (hz : z ∈ O) :
+  -- imply
+  ∃ c : K, z - algebraMap K Ω' c ∈ O.nonunits :=
   exists_sub_algebraMap_mem_nonunits A hK hres O hO z hz
+
 
 -- created on 2026-10-21

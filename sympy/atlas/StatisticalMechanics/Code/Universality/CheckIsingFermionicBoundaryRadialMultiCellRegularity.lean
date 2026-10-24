@@ -1,0 +1,29 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicBoundaryRadialMultiCellRegularity.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialMultiCellRegularity
+
+#print axioms StatMech.Universality.norm_sub_sq_le_pathLength_mul_sum_dist
+#print axioms StatMech.Universality.norm_sub_sq_le_pathLength_sq_mul_mesh
+#print axioms StatMech.Universality.constantRadialTensorTent_boundaryPoint
+#print axioms StatMech.Universality.constantRadialTensorTent_cellPoint
+#print axioms StatMech.Universality.constantRadialTensorTent_exteriorPoint
+#print axioms StatMech.Universality.constantRadialTensorTent_points_tendsto_same
+#print axioms StatMech.Universality.constantRadialTensorTent_not_meshUniformFullHolder
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.MeshUniformCompactHolder.equicontinuousOn
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.StableFullMedialInterpolation.ofTensorTentCompactHolder
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.BoundaryRadialTensorTentGeometry.toStableFullMedialInterpolationCompact
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.StableFullMedialInterpolation.hasCompactLocalBounds_of_compactHolder_anchor
+#print axioms
+  StatMech.Universality.FKIsingCaratheodoryApproximation.StableFullMedialInterpolation.scalingLimit_of_tensorTentCompactHolder

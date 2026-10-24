@@ -57,35 +57,12 @@ variable {R : Type*} [CommSemiring R]
 def coset (c : CoveringSystem R) (i : c.ι) : Set R :=
   {c.residue i} + c.moduli i
 
-@[simp]
-theorem iUnion_cosets (c : CoveringSystem R) : ⋃ i, c.coset i = Set.univ :=
-  c.unionCovers
-
 end CoveringSystem
-
 namespace Int
-
 def IsCoveringSystem (classes : Finset (ℤ × ℕ)) : Prop :=
   ∀ z : ℤ, ∃ c ∈ classes, Int.ModEq (c.2 : ℤ) z c.1
 
 def indexedCoveringClasses {k : ℕ} (moduli : Fin k → ℕ)
     (residues : Fin k → ℤ) : Finset (ℤ × ℕ) :=
   Finset.univ.image fun i => (residues i, moduli i)
-
-theorem indexedCoveringClasses_isCoveringSystem_iff {k : ℕ}
-    (moduli : Fin k → ℕ) (residues : Fin k → ℤ) :
-    Int.IsCoveringSystem (Int.indexedCoveringClasses moduli residues) ↔
-      ∀ z : ℤ, ∃ i, z ≡ residues i [ZMOD (moduli i : ℤ)] := by
-  unfold IsCoveringSystem indexedCoveringClasses
-  constructor
-  · intro h z
-    obtain ⟨c, hc, hcov⟩ := h z
-    rw [Finset.mem_image] at hc
-    obtain ⟨i, _, rfl⟩ := hc
-    exact ⟨i, hcov⟩
-  · intro h z
-    obtain ⟨i, hi⟩ := h z
-    exact ⟨(residues i, moduli i),
-      Finset.mem_image_of_mem _ (Finset.mem_univ i), hi⟩
-
 end Int

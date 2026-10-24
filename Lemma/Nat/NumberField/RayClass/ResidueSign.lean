@@ -6,6 +6,29 @@ open NumberField
 open Modulus
 
 
+namespace NumberField.Modulus
+
+/--
+[residueSignMap_eq_one_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/ResidueSign.lean)
+-/
+@[path]
+lemma residueSignMap_eq_one_iff
+  [Field K] [NumberField K]
+  {m : Modulus K}
+  {x : rayElements m} :
+-- imply
+  residueSignMap m x = 1 ↔ IsRayElementOne m (x : Kˣ) := by
+-- proof
+  rw [← MonoidHom.mem_ker, residueSignMap_ker]
+  constructor
+  · intro h
+    obtain ⟨hfin, hpos⟩ := (mem_rayOneElements_iff m x).mp h
+    exact ⟨x.property, hfin, hpos⟩
+  · intro h
+    exact (mem_rayOneElements_iff m x).mpr ⟨h.congruent, h.positive⟩
+
+end NumberField.Modulus
+
 /--
 [residueSignMap_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/ResidueSign.lean)
 -/
@@ -59,19 +82,6 @@ private lemma residueSignMap_ker_eq
   apply NumberField.Modulus.residueSignMap_ker m
 
 /--
-[residueSignMap_eq_one_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/ResidueSign.lean)
--/
-@[path]
-private lemma residueSignMap_eq_one_iff_eq
-  [Field K] [NumberField K]
-  {m : Modulus K}
-  {x : rayElements m} :
--- imply
-  residueSignMap m x = 1 ↔ IsRayElementOne m (x : Kˣ) := by
--- proof
-  apply NumberField.Modulus.residueSignMap_eq_one_iff m x
-
-/--
 [rayElementsQuotientEquivResidueSign_mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/ResidueSign.lean)
 -/
 @[path]
@@ -87,3 +97,4 @@ private lemma rayElementsQuotientEquivResidueSign_mk_eq
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

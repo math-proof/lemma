@@ -4,55 +4,176 @@ import sympy.atlas.NumberTheory.PierceExpansion
 open PierceExpansion
 
 
+namespace PierceExpansion
+
 /--
 [traj_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
 -/
 @[path]
-private lemma traj_zero_eq
+lemma traj_zero
   {n a : ℕ} :
 -- imply
-  traj n a 0 = a := by
+  traj n a 0 = a :=
 -- proof
-  apply PierceExpansion.traj_zero n a
+  rfl
+
+end PierceExpansion
+
+namespace PierceExpansion
 
 /--
 [traj_succ_of_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
 -/
 @[path]
-private lemma traj_succ_of_eq_zero_eq
+lemma traj_succ_of_eq_zero
   {n a j : ℕ}
 -- given
   (h : traj n a j = 0) :
 -- imply
   traj n a (j + 1) = 0 := by
 -- proof
-  apply PierceExpansion.traj_succ_of_eq_zero h
+  simp only [traj, ite_eq_left h]
+
+end PierceExpansion
+
+namespace PierceExpansion
 
 /--
 [traj_succ_of_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
 -/
 @[path]
-private lemma traj_succ_of_ne_zero_eq
+lemma traj_succ_of_ne_zero
   {n a j : ℕ}
 -- given
   (h : traj n a j ≠ 0) :
 -- imply
   traj n a (j + 1) = n % traj n a j := by
 -- proof
-  apply PierceExpansion.traj_succ_of_ne_zero h
+  simp only [traj, ite_eq_right h]
+
+end PierceExpansion
+
+namespace PierceExpansion
 
 /--
 [traj_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
 -/
 @[path]
-private lemma traj_one_eq
+lemma traj_one
   {n t : ℕ}
 -- given
   (ht : t ≠ 0) :
 -- imply
   traj n t 1 = n % t := by
 -- proof
-  apply PierceExpansion.traj_one ht
+  have h01 : (1 : ℕ) = 0 + 1 := rfl
+  have h0 : traj n t 0 ≠ 0 := by
+    rwa [traj_zero]
+  rw [h01, traj_succ_of_ne_zero h0, traj_zero]
+
+end PierceExpansion
+
+namespace PierceExpansion
+
+/--
+[length_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
+-/
+@[path]
+lemma length_pos
+  {n a : ℕ} :
+-- imply
+  1 ≤ length n a :=
+-- proof
+  (Nat.find_spec (exists_traj_eq_zero_pos n a)).1
+
+end PierceExpansion
+
+namespace PierceExpansion
+
+/--
+[traj_length_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
+-/
+@[path]
+lemma traj_length_eq_zero
+  {n a : ℕ} :
+-- imply
+  traj n a (length n a) = 0 :=
+-- proof
+  (Nat.find_spec (exists_traj_eq_zero_pos n a)).2
+
+end PierceExpansion
+
+namespace PierceExpansion
+
+/--
+[length_le_of_traj_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
+-/
+@[path]
+lemma length_le_of_traj_eq_zero
+  {n a j : ℕ}
+-- given
+  (hj : 1 ≤ j)
+  (h : traj n a j = 0) :
+-- imply
+  length n a ≤ j :=
+-- proof
+  Nat.find_min' _ ⟨hj, h⟩
+
+end PierceExpansion
+
+namespace PierceExpansion
+
+/--
+[traj_ne_zero_of_lt_length](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
+-/
+@[path]
+lemma traj_ne_zero_of_lt_length
+  {n a j : ℕ}
+-- given
+  (hj : 1 ≤ j)
+  (hlt : j < length n a) :
+-- imply
+  traj n a j ≠ 0 := by
+-- proof
+  have hneg := Nat.find_min _ hlt
+  intro h0
+  exact hneg ⟨hj, h0⟩
+
+end PierceExpansion
+
+namespace PierceExpansion
+
+/--
+[length_le_maxLength](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
+-/
+@[path]
+lemma length_le_maxLength
+  {n a : ℕ}
+-- given
+  (ha : a ∈ Finset.Icc 1 n) :
+-- imply
+  length n a ≤ maxLength n :=
+-- proof
+  Finset.le_sup ha
+
+end PierceExpansion
+
+namespace PierceExpansion
+
+/--
+[maxLength_le_of_forall](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
+-/
+@[path]
+lemma maxLength_le_of_forall
+  {n L : ℕ}
+-- given
+  (h : ∀ a ∈ Finset.Icc 1 n, length n a ≤ L) :
+-- imply
+  maxLength n ≤ L :=
+-- proof
+  Finset.sup_le h
+
+end PierceExpansion
 
 /--
 [exists_traj_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
@@ -76,81 +197,6 @@ private lemma exists_traj_eq_zero_pos_eq
 -- proof
   apply PierceExpansion.exists_traj_eq_zero_pos n a
 
-/--
-[length_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
--/
-@[path]
-private lemma length_pos_eq
-  {n a : ℕ} :
--- imply
-  1 ≤ length n a := by
--- proof
-  apply PierceExpansion.length_pos n a
-
-/--
-[traj_length_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
--/
-@[path]
-private lemma traj_length_eq_zero_eq
-  {n a : ℕ} :
--- imply
-  traj n a (length n a) = 0 := by
--- proof
-  apply PierceExpansion.traj_length_eq_zero n a
-
-/--
-[length_le_of_traj_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
--/
-@[path]
-private lemma length_le_of_traj_eq_zero_eq
-  {n a j : ℕ}
--- given
-  (hj : 1 ≤ j)
-  (h : traj n a j = 0) :
--- imply
-  length n a ≤ j := by
--- proof
-  apply PierceExpansion.length_le_of_traj_eq_zero hj h
-
-/--
-[traj_ne_zero_of_lt_length](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
--/
-@[path]
-private lemma traj_ne_zero_of_lt_length_eq
-  {n a j : ℕ}
--- given
-  (hj : 1 ≤ j)
-  (hlt : j < length n a) :
--- imply
-  traj n a j ≠ 0 := by
--- proof
-  apply PierceExpansion.traj_ne_zero_of_lt_length hj hlt
-
-/--
-[length_le_maxLength](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
--/
-@[path]
-private lemma length_le_maxLength_eq
-  {n a : ℕ}
--- given
-  (ha : a ∈ Finset.Icc 1 n) :
--- imply
-  length n a ≤ maxLength n := by
--- proof
-  apply PierceExpansion.length_le_maxLength ha
-
-/--
-[maxLength_le_of_forall](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean)
--/
-@[path]
-private lemma maxLength_le_of_forall_eq
-  {n L : ℕ}
--- given
-  (h : ∀ a ∈ Finset.Icc 1 n, length n a ≤ L) :
--- imply
-  maxLength n ≤ L := by
--- proof
-  apply PierceExpansion.maxLength_le_of_forall h
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

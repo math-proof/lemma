@@ -1,0 +1,48 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPhysicalRobinCompatibility.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalRobinCompatibility
+
+#print axioms
+  StatMech.Universality.fkIsingExpandingBoundarySquareRadialTwoScaleInterpolant_continuous
+#print axioms
+  StatMech.Universality.fkIsingExpandingBoundarySquareRadial_embedding_dist_lt
+#print axioms
+  StatMech.Universality.fkIsingExpandingBoundarySquareRadial_normalizedObservable
+#print axioms
+  StatMech.Universality.fkIsingExpandingBoundarySquareRadial_projection_sample
+#print axioms
+  StatMech.Universality.fkIsingExpandingBoundarySquareRadial_projection_embedding_dist_le
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.fullSquareScaledVertexEmbedding_dist_le_two_abs
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.fullSquareScaledFaceEmbedding_dist_le_two_abs
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.fullFace_neighbor_card_le_four
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.isingFiniteGraphLaplacian_abs_le_four_mul
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.fullSquareScaledVertex_sampledLaplacian_le_lipschitz
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.fullSquareScaledFace_sampledLaplacian_le_lipschitz
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.fullSquareVertex_bulk_directions
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.fullSquareFace_bulk_coordinates
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.PhysicalFourthOrderBulkData.vertexLaplacian
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.PhysicalFourthOrderBulkData.faceLaplacian
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.PhysicalSplitRobinConsistencyInputs.ofFourthOrderAndLipschitz
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.PhysicalRobinConsistencyInputs.primitive_convergence
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.PhysicalSplitRobinConsistencyInputs.primitive_convergence

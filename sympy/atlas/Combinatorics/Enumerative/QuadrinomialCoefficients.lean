@@ -26,11 +26,4 @@ def zhangVSum (n r₁ r₂ s t u : ℕ) : ℕ :=
 `∑ k, choose n k * choose n (2 * k)`. -/
 def quadrinomialCoeff (n : ℕ) : ℕ :=
   ∑ k ∈ Finset.range (n + 1), n.choose k * n.choose (2 * k)
-
-/-- Quadrinomial coefficients are the `(1, 1, 0, 0, 0)` specialization of
-Zhang's `V`-sum. -/
-theorem quadrinomialCoeff_eq_zhangVSum (n : ℕ) :
-    quadrinomialCoeff n = zhangVSum n 1 1 0 0 0 := by
-  simp [quadrinomialCoeff, zhangVSum]
-
 end MetaMathlibExt

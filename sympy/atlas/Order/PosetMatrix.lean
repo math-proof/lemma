@@ -21,36 +21,4 @@ def IsPosetMatrix (n : ℕ) (M : Matrix (Fin n) (Fin n) Bool) : Prop :=
 def IsPosetMatrix.Rel {n : ℕ} (M : Matrix (Fin n) (Fin n) Bool)
     (i j : Fin n) : Prop :=
   M i j = true
-
-/-- Projection of the upper-triangularity clause (D2). -/
-theorem IsPosetMatrix.upper {n : ℕ} {M : Matrix (Fin n) (Fin n) Bool}
-    (h : IsPosetMatrix n M) :
-    ∀ i j : Fin n, (j : ℕ) < (i : ℕ) → M i j = false :=
-  h.1
-
-/-- Projection of the diagonal clause (D3). -/
-theorem IsPosetMatrix.diagonal {n : ℕ} {M : Matrix (Fin n) (Fin n) Bool}
-    (h : IsPosetMatrix n M) : ∀ i : Fin n, M i i = true :=
-  h.2.1
-
-/-- Projection of the transitivity clause (D4). -/
-theorem IsPosetMatrix.transitive {n : ℕ}
-    {M : Matrix (Fin n) (Fin n) Bool} (h : IsPosetMatrix n M) :
-    ∀ i j k : Fin n, M i j = true → M j k = true → M i k = true :=
-  h.2.2
-
-/-- The represented relation is reflexive. -/
-theorem IsPosetMatrix.rel_refl {n : ℕ} {M : Matrix (Fin n) (Fin n) Bool}
-    (h : IsPosetMatrix n M) (i : Fin n) :
-    IsPosetMatrix.Rel M i i :=
-  h.2.1 i
-
-/-- The represented relation is transitive. -/
-theorem IsPosetMatrix.rel_trans {n : ℕ} {M : Matrix (Fin n) (Fin n) Bool}
-    (h : IsPosetMatrix n M) (i j k : Fin n)
-    (hij : IsPosetMatrix.Rel M i j)
-    (hjk : IsPosetMatrix.Rel M j k) :
-    IsPosetMatrix.Rel M i k :=
-  h.2.2 i j k hij hjk
-
 end MetaMathlibExt

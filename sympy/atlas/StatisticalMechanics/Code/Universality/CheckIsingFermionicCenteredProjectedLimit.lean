@@ -1,0 +1,25 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicCenteredProjectedLimit.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCenteredProjectedLimit
+
+namespace StatMech.Universality
+
+#print axioms tendsto_apply_of_tendstoLocallyUniformlyOn_of_tendsto
+#print axioms tendsto_of_dist_tendsto_zero_of_tendsto
+#print axioms fkIsingExpandingBoundarySquareCenteredFullObservable_tendsto_of_locallyUniform
+#print axioms fkIsingExpandingBoundarySquareCenteredProjectedObservable_tendsto_of_locallyUniform
+#print axioms fkIsingExpandingBoundarySquareCenteredProjectedObservable_tendsto_of_tangent
+#print axioms
+  fkIsingExpandingBoundarySquareCenteredProjectedObservable_tendsto_of_canonicalRationalPaths
+#print axioms
+  fkIsingExpandingBoundarySquareCenteredProjectedObservable_tendsto_of_canonicalRationalPaths_of_tangent
+
+end StatMech.Universality

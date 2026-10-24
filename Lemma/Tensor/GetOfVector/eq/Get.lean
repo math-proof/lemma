@@ -39,5 +39,4 @@ private lemma main
   apply GetMap.eq.UFnGet.fin
 
 
-
 -- created on 2025-10-07

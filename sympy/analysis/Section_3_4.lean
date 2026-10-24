@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.analysis.Section_3_1
+import sympy.analysis.Section_3_1_api
 
 /-!
 # Analysis I, Section 3.4: Images and inverse images
@@ -129,17 +129,17 @@ theorem SetTheory.Set.powerset_axiom {X Y:Set} (F:Object) :
     F ∈ (X ^ Y) ↔ ∃ f: Y → X, f = F := SetTheory.powerset_axiom X Y F
 
 /-- Example 3.4.9 -/
-abbrev f_3_4_9_a : ({4,7}:Set) → ({0,1}:Set) := fun x ↦ ⟨ 0, by simp ⟩
+abbrev f_3_4_9_a : ({4,7}:Set) → ({0,1}:Set) := fun x ↦ ⟨ 0, by simp [SetTheory.Set.mem_singleton] ⟩
 
 open Classical in
 noncomputable abbrev f_3_4_9_b : ({4,7}:Set) → ({0,1}:Set) :=
-  fun x ↦ if x.val = 4 then ⟨ 0, by simp ⟩ else ⟨ 1, by simp ⟩
+  fun x ↦ if x.val = 4 then ⟨ 0, by simp [SetTheory.Set.mem_singleton] ⟩ else ⟨ 1, by simp [SetTheory.Set.mem_singleton] ⟩
 
 open Classical in
 noncomputable abbrev f_3_4_9_c : ({4,7}:Set) → ({0,1}:Set) :=
-  fun x ↦ if x.val = 4 then ⟨ 1, by simp ⟩ else ⟨ 0, by simp ⟩
+  fun x ↦ if x.val = 4 then ⟨ 1, by simp [SetTheory.Set.mem_singleton] ⟩ else ⟨ 0, by simp [SetTheory.Set.mem_singleton] ⟩
 
-abbrev f_3_4_9_d : ({4,7}:Set) → ({0,1}:Set) := fun x ↦ ⟨ 1, by simp ⟩
+abbrev f_3_4_9_d : ({4,7}:Set) → ({0,1}:Set) := fun x ↦ ⟨ 1, by simp [SetTheory.Set.mem_singleton] ⟩
 
 theorem SetTheory.Set.example_3_4_9 (F:Object) :
     F ∈ ({0,1}:Set) ^ ({4,7}:Set) ↔ F = f_3_4_9_a
@@ -147,12 +147,21 @@ theorem SetTheory.Set.example_3_4_9 (F:Object) :
   rw [powerset_axiom]
   refine ⟨?_, by aesop ⟩
   rintro ⟨f, rfl⟩
-  have h1 := (f ⟨4, by simp⟩).property
-  have h2 := (f ⟨7, by simp⟩).property
-  simp [coe_of_fun_inj] at *
+  have h1 := (f ⟨4, by simp [SetTheory.Set.mem_singleton]⟩).property
+  have h2 := (f ⟨7, by simp [SetTheory.Set.mem_singleton]⟩).property
+  simp [coe_of_fun_inj, SetTheory.Set.mem_singleton] at *
   obtain _ | _ := h1 <;> obtain _ | _ := h2
   map_tacs [left; (right;left); (right;right;left); (right;right;right)]
-  all_goals ext ⟨_, hx⟩; simp at hx; grind
+  all_goals
+    ext ⟨val, hx⟩
+    simp [SetTheory.Set.mem_pair, SetTheory.Set.mem_singleton] at hx
+    rcases hx with rfl | rfl
+    · simp [f_3_4_9_a, f_3_4_9_b, f_3_4_9_c, f_3_4_9_d, *]
+    · have hne : ¬ ((7:Object) = 4) := by
+        intro h
+        have := (Object.natCast_inj 7 4).mp h
+        contradiction
+      simp [hne, f_3_4_9_a, f_3_4_9_b, f_3_4_9_c, f_3_4_9_d, *]
 
 /-- Exercise 3.4.6 (i). One needs to provide a suitable definition of the power set here. -/
 def SetTheory.Set.powerset (X:Set) : Set :=
@@ -183,17 +192,19 @@ theorem SetTheory.Set.powerset_of_triple (a b c x:Object) :
     ∨ x = ({b,c}:Set)
     ∨ x = ({a,b,c}:Set) := by
   simp only [mem_powerset, subset_def, mem_triple]
-  refine ⟨ ?_, by aesop ⟩
-  rintro ⟨Y, rfl, hY⟩; by_cases a ∈ Y <;> by_cases b ∈ Y <;> by_cases c ∈ Y
-  on_goal 8 => left
-  on_goal 4 => right; left
-  on_goal 6 => right; right; left
-  on_goal 7 => right; right; right; left
-  on_goal 2 => right; right; right; right; left
-  on_goal 3 => right; right; right; right; right; left
-  on_goal 5 => right; right; right; right; right; right; left
-  on_goal 1 => right; right; right; right; right; right; right
-  all_goals congr; ext; simp; grind
+  refine ⟨ ?_, ?_ ⟩
+  · rintro ⟨Y, rfl, hY⟩; by_cases a ∈ Y <;> by_cases b ∈ Y <;> by_cases c ∈ Y
+    on_goal 8 => left
+    on_goal 4 => right; left
+    on_goal 6 => right; right; left
+    on_goal 7 => right; right; right; left
+    on_goal 2 => right; right; right; right; left
+    on_goal 3 => right; right; right; right; right; left
+    on_goal 5 => right; right; right; right; right; right; left
+    on_goal 1 => right; right; right; right; right; right; right
+    all_goals congr; ext; simp [SetTheory.Set.mem_singleton, SetTheory.Set.mem_pair]; grind
+  · rintro (rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl) <;>
+      simp [subset_def, mem_triple, SetTheory.Set.mem_singleton, SetTheory.Set.mem_pair]
 
 /-- Axiom 3.12 (Union) -/
 theorem SetTheory.Set.union_axiom (A: Set) (x:Object) :
@@ -225,9 +236,53 @@ noncomputable abbrev SetTheory.Set.index_example : ({1,2,3}:Set) → Set :=
   fun i ↦ if i.val = 1 then {2,3} else if i.val = 2 then {3,4} else {4,5}
 
 theorem SetTheory.Set.iUnion_example : iUnion {1,2,3} index_example = {2,3,4,5} := by
-  apply ext; intros; simp [mem_iUnion, index_example, Insert.insert]
-  refine ⟨ by aesop, ?_ ⟩; rintro (_ | _ | _); map_tacs [use 1; use 2; use 3]
-  all_goals aesop
+  apply ext
+  intro x
+  simp only [mem_iUnion, index_example, Insert.insert, mem_union, mem_singleton]
+  constructor
+  · rintro ⟨i, hi⟩
+    have hidx : i.val = 1 ∨ i.val = 2 ∨ i.val = 3 := by
+      have h := i.property
+      simpa [mem_union, mem_singleton] using h
+    rcases hidx with h1 | h2 | h3
+    · simp only [h1, ite_true, mem_union, mem_singleton] at hi
+      rcases hi with rfl | rfl
+      · left; rfl
+      · right; left; rfl
+    · have h21 : ¬ ((2:Object) = 1) := by
+        intro h
+        exact absurd ((Object.natCast_inj 2 1).mp h) (by decide)
+      simp only [h2, h21, ite_false, ite_true, mem_union, mem_singleton] at hi
+      rcases hi with rfl | rfl
+      · right; left; rfl
+      · right; right; left; rfl
+    · have h31 : ¬ ((3:Object) = 1) := by
+        intro h
+        exact absurd ((Object.natCast_inj 3 1).mp h) (by decide)
+      have h32 : ¬ ((3:Object) = 2) := by
+        intro h
+        exact absurd ((Object.natCast_inj 3 2).mp h) (by decide)
+      simp only [h3, h31, h32, ite_false, mem_union, mem_singleton] at hi
+      rcases hi with rfl | rfl
+      · right; right; left; rfl
+      · right; right; right; rfl
+  · intro hx
+    rcases hx with rfl | rfl | rfl | rfl
+    · exact ⟨⟨1, by simp [mem_union, mem_singleton]⟩, by simp [mem_union, mem_singleton]⟩
+    · exact ⟨⟨1, by simp [mem_union, mem_singleton]⟩, by simp [mem_union, mem_singleton]⟩
+    · have h21 : ¬ ((2:Object) = 1) := by
+        intro h
+        exact absurd ((Object.natCast_inj 2 1).mp h) (by decide)
+      exact ⟨⟨2, by simp [mem_union, mem_singleton]⟩,
+        by simp [h21, mem_union, mem_singleton]⟩
+    · have h31 : ¬ ((3:Object) = 1) := by
+        intro h
+        exact absurd ((Object.natCast_inj 3 1).mp h) (by decide)
+      have h32 : ¬ ((3:Object) = 2) := by
+        intro h
+        exact absurd ((Object.natCast_inj 3 2).mp h) (by decide)
+      exact ⟨⟨3, by simp [mem_union, mem_singleton]⟩,
+        by simp [h31, h32, mem_union, mem_singleton]⟩
 
 /-- Connection with Mathlib indexed union -/
 theorem SetTheory.Set.iUnion_eq (I: Set) (A: I → Set) :
@@ -333,8 +388,8 @@ theorem SetTheory.Set.iInter'_insensitive {I:Set} (β β':I) (A: I → Set) :
 
 /-- Exercise 3.4.10 (union over a union of index sets) -/
 theorem SetTheory.Set.union_iUnion {I J:Set} (A: (I ∪ J:Set) → Set) :
-    iUnion I (fun α ↦ A ⟨ α.val, by simp [α.property]⟩)
-    ∪ iUnion J (fun α ↦ A ⟨ α.val, by simp [α.property]⟩)
+    iUnion I (fun α ↦ A ⟨ α.val, (SetTheory.Set.mem_union α.val I J).mpr (Or.inl α.property)⟩)
+    ∪ iUnion J (fun α ↦ A ⟨ α.val, (SetTheory.Set.mem_union α.val I J).mpr (Or.inr α.property)⟩)
     = iUnion (I ∪ J) A := by sorry
 
 /-- Exercise 3.4.10 (a union of nonempty index sets is nonempty) -/
@@ -342,8 +397,8 @@ theorem SetTheory.Set.union_of_nonempty {I J:Set} (hI: I ≠ ∅) (hJ: J ≠ ∅
 
 /-- Exercise 3.4.10 (intersection over a union of index sets) -/
 theorem SetTheory.Set.inter_iInter {I J:Set} (hI: I ≠ ∅) (hJ: J ≠ ∅) (A: (I ∪ J:Set) → Set) :
-    iInter I hI (fun α ↦ A ⟨ α.val, by simp [α.property]⟩)
-    ∩ iInter J hJ (fun α ↦ A ⟨ α.val, by simp [α.property]⟩)
+    iInter I hI (fun α ↦ A ⟨ α.val, (SetTheory.Set.mem_union α.val I J).mpr (Or.inl α.property)⟩)
+    ∩ iInter J hJ (fun α ↦ A ⟨ α.val, (SetTheory.Set.mem_union α.val I J).mpr (Or.inr α.property)⟩)
     = iInter (I ∪ J) (union_of_nonempty hI hJ) A := by sorry
 
 /-- Exercise 3.4.11 (complement of a union) -/

@@ -1,0 +1,79 @@
+[
+  {
+    "resolved": "MeasureTheory.Measure",
+    "reason": "Mathlib `MeasureTheory.Measure` is a structure",
+    "kind": "data type",
+    "folder": "Measure",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Set",
+    "reason": "Mathlib `Set` is a def of a type former",
+    "kind": "data type",
+    "folder": "Set",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "WeierstrassCurve",
+    "reason": "Mathlib `WeierstrassCurve` is a structure",
+    "kind": "data type",
+    "folder": "WeierstrassCurve",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Units",
+    "reason": "Mathlib `Units` is a structure",
+    "kind": "data type",
+    "folder": "Units",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Submonoid",
+    "reason": "Mathlib `Submonoid` is a structure",
+    "kind": "data type",
+    "folder": "Submonoid",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Topology.IsOpenEmbedding",
+    "reason": "Mathlib `Topology.IsOpenEmbedding` is a structure",
+    "kind": "data type",
+    "folder": "IsOpenEmbedding",
+    "decl": "structure"
+  },
+  {
+    "resolved": "TopologicalSpace",
+    "reason": "Mathlib `TopologicalSpace` is a type class (`Lean.isClass`)",
+    "kind": "type class",
+    "folder": "TopologicalSpace",
+    "decl": "typeclass"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Topology",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Polynomial",
+    "reason": "Mathlib `Polynomial` is a structure",
+    "kind": "data type",
+    "folder": "Polynomial",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Rat",
+    "reason": "Mathlib `Rat` is a structure",
+    "kind": "data type",
+    "folder": "Rat",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Nat",
+    "reason": "Mathlib `Nat` is an inductive (not a class)",
+    "kind": "data type",
+    "folder": "Nat",
+    "decl": "inductive"
+  }
+]

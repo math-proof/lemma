@@ -18,5 +18,4 @@ private lemma main
     exact ⟨Or.inl ha, ha⟩
 
 
-
 -- created on 2025-07-20

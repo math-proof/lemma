@@ -71,6 +71,9 @@ theorem not_integrable : BddOn f_9_3_21 (Icc 0 1) ∧ ¬ IntegrableOn f_9_3_21 (
       _ = _ := by simp
   replace hlower : lower_integral f_9_3_21 (Icc 0 1) = 0 := by
     simp [lower_integ_eq_sup_lower_sum hbdd, hlower]
-  grind
+  intro h
+  have := h.2
+  rw [hupper, hlower] at this
+  exact zero_ne_one this
 
 end Chapter11

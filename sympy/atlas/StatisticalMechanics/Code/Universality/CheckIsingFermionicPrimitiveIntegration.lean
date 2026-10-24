@@ -1,0 +1,49 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPrimitiveIntegration.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveIntegration
+
+open Finset
+
+namespace StatMech.Universality
+
+#check IsingRectangleClosedOneForm
+#check isingRectanglePrimitive
+#check isingRectanglePrimitive_vertical_increment
+#check isingRectangle_vertical_sum_column_difference
+#check isingRectanglePrimitive_horizontal_increment
+#check isingRectanglePrimitive_eq_left_then_top
+#check isingPrimitiveIncrement_nonneg
+#check isingRectanglePrimitive_horizontal_mono_of_increment
+#check isingRectanglePrimitive_vertical_mono_of_increment
+#check isingRectanglePrimitiveWithBase_axis_boundary_values
+#check isingRectangle_horizontal_sum_eq_primitive_difference
+#check isingRectangle_vertical_sum_eq_primitive_difference
+#check isingRectangle_increment_sum_le
+#check isingRectangle_scaled_increment_sum_le
+#check isingRectangle_scaled_normSq_sum_le
+#check isingRectangle_physicalNormalized_normSq_sum_le
+
+#print axioms isingRectanglePrimitive_horizontal_increment
+#print axioms isingRectanglePrimitive_eq_left_then_top
+#print axioms isingRectanglePrimitiveWithBase_axis_boundary_values
+#print axioms isingRectangle_horizontal_sum_eq_primitive_difference
+#print axioms isingRectangle_vertical_sum_eq_primitive_difference
+#print axioms isingRectangle_horizontal_increment_sum_le
+#print axioms isingRectangle_vertical_increment_sum_le
+#print axioms isingRectangle_increment_sum_le
+#print axioms isingRectangle_scaled_increment_sum_le
+#print axioms isingRectangle_scaled_normSq_sum_le
+#print axioms isingRectangle_physicalNormalized_normSq_sum_le
+
+end StatMech.Universality

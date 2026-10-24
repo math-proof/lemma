@@ -17,4 +17,3 @@ def Binomial (n : ℕ) (k : ℤ) : ℤ :=
 
 noncomputable def FallingFactorial {R : Type*} [Field R] (x : R) (k : ℤ) : R :=
   if 0 ≤ k then (descPochhammer R k.toNat).eval x else 1 / (descPochhammer R (-k).toNat).eval (x - k)
-

@@ -2,7 +2,7 @@ import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
+import Lemma.Random.SinglePSpace.SinglePSpace.of.SinglePSpace
 open Random MeasureTheory
 
 
@@ -18,7 +18,7 @@ private lemma main
   ∀ᵐ «y.bvar» ∂π.map y,
     ∫⁻ «x.bvar», ℙ[π](x = «x.bvar» | y = «y.bvar») ∂ReferenceMeasure.measure = 1 := by
 -- proof
-  have := PSpace.of.PSpace_Joint.snd hP
+  have := SinglePSpace.of.SinglePSpace.snd hP
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution

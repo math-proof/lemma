@@ -25,39 +25,4 @@ def hurwitzTransform (a b : ℕ → R) (n : ℕ) : R :=
 /-- Single-sequence specialization from the source, with second sequence `0 ^ n`. -/
 def hurwitzSingle (a : ℕ → R) (n : ℕ) : R :=
   hurwitzTransform a (fun k => (0 : R) ^ k) n
-
-theorem hurwitzEntry_eq_zero_of_le (a b : ℕ → R) {i j : ℕ}
-    (h : 2 * j + 2 ≤ i) : hurwitzEntry a b i j = 0 := by
-  simp [hurwitzEntry, h]
-
-theorem hurwitzEntry_of_even (a b : ℕ → R) {i j : ℕ}
-    (h : ¬2 * j + 2 ≤ i) (he : i % 2 = 0) :
-    hurwitzEntry a b i j = a (j - i / 2) := by
-  simp [hurwitzEntry, h, he]
-
-theorem hurwitzEntry_of_odd (a b : ℕ → R) {i j : ℕ}
-    (h : ¬2 * j + 2 ≤ i) (ho : i % 2 ≠ 0) :
-    hurwitzEntry a b i j = b (j - (i - 1) / 2) := by
-  simp [hurwitzEntry, h, ho]
-
-theorem hurwitz_half_le_of_even {i j : ℕ}
-    (h : ¬2 * j + 2 ≤ i) (he : i % 2 = 0) : i / 2 ≤ j := by
-  omega
-
-theorem hurwitz_pred_half_le_of_odd {i j : ℕ}
-    (h : ¬2 * j + 2 ≤ i) (_ho : i % 2 ≠ 0) : (i - 1) / 2 ≤ j := by
-  omega
-
-theorem hurwitzTransform_zero (a b : ℕ → R) :
-    hurwitzTransform a b 0 = a 0 := by
-  unfold hurwitzTransform hurwitzMatrix
-  rw [Matrix.det_fin_one]
-  simp [Matrix.of_apply, hurwitzEntry]
-
-theorem hurwitzTransform_one (a b : ℕ → R) :
-    hurwitzTransform a b 1 = a 0 * b 1 - a 1 * b 0 := by
-  unfold hurwitzTransform hurwitzMatrix
-  rw [Matrix.det_fin_two]
-  simp [Matrix.of_apply, hurwitzEntry]
-
 end MetaMathlibExt

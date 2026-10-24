@@ -1,36 +1,21 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-variable {k L : Type*} [Field k] [Field L] [Algebra k L]
-private lemma mem_valuationSubring_of_isIntegral {E : Type*} [Field E] {S : Type*} [CommRing S] [Algebra S E]
-    (V : ValuationSubring E) (hS : ∀ s : S, algebraMap S E s ∈ V) {z : E}
-    (hz : IsIntegral S z) : z ∈ V := by
+
+private lemma mem_valuationSubring_of_isIntegral [Field E] [CommRing S] [Algebra S E] (V : ValuationSubring E) (hS : ∀ s : S, algebraMap S E s ∈ V) {z : E} (hz : IsIntegral S z) : z ∈ V := by
   obtain ⟨p, hpm, hpz⟩ := hz
   set φ : S →+* V := (algebraMap S E).codRestrict V hS with hφ
   have hcomp : (algebraMap V E).comp φ = algebraMap S E := RingHom.ext fun _ => rfl
   have hint : IsIntegral V z := by
     refine ⟨p.map φ, hpm.map φ, ?_⟩
-    rw [Polynomial.eval₂_map, hcomp]
-    exact hpz
+    rwa [Polynomial.eval₂_map, hcomp]
   obtain ⟨w, hw⟩ := (IsIntegrallyClosed.isIntegral_iff (R := V) (K := E)).mp hint
   rw [← hw]
-  exact w.2
-private lemma exists_finset_forall_eq_div [CharZero k] (A : ValuationSubring L)
-    (K₀ K' : IntermediateField k L) [FiniteDimensional k ↥K₀] [FiniteDimensional k ↥K'] (hK : K₀ ≤ K')
-    (C : Subring L) (hCK₀ : ∀ c : L, c ∈ C ↔ c ∈ A ∧ c ∈ K₀) [IsDomain ↥C] [IsDiscreteValuationRing ↥C]
-    (C' : Subring L) (hC'K' : ∀ c : L, c ∈ C' ↔ c ∈ A ∧ c ∈ K')
-    (t : L) (htC' : t ∈ C') (htinv : t⁻¹ ∉ C') :
-    ∃ G : Finset L, (↑G ⊆ (C' : Set L)) ∧
-      ∀ c : L, c ∈ C' → ∃ y z : L, y ∈ Submodule.span ↥C (G : Set L) ∧ z ∈ Submodule.span ↥C (G : Set L) ∧
-        z ∈ C' ∧ z⁻¹ ∈ C' ∧ z ≠ 0 ∧ c * z = y := by
+  refine w.2
+private lemma exists_finset_forall_eq_div [Field k] [Field L] [Algebra k L] [CharZero k] (A : ValuationSubring L) (K₀ K' : IntermediateField k L) [FiniteDimensional k ↥K₀] [FiniteDimensional k ↥K'] (hK : K₀ ≤ K') (C : Subring L) [IsDiscreteValuationRing ↥C] (hCK₀ : ∀ c : L, c ∈ C ↔ c ∈ A ∧ c ∈ K₀) (C' : Subring L) (hC'K' : ∀ c : L, c ∈ C' ↔ c ∈ A ∧ c ∈ K') (t : L) (htC' : t ∈ C') (htinv : t⁻¹ ∉ C') : ∃ G : Finset L, (↑G ⊆ (C' : Set L)) ∧ ∀ c : L, c ∈ C' → ∃ y z : L, y ∈ Submodule.span ↥C (G : Set L) ∧ z ∈ Submodule.span ↥C (G : Set L) ∧ z ∈ C' ∧ z⁻¹ ∈ C' ∧ z ≠ 0 ∧ c * z = y := by
   classical
   have hC : ∀ c : L, c ∈ C → c ∈ A := fun c hc => ((hCK₀ c).mp hc).1
   let algCK₀ : Algebra ↥C ↥K₀ :=
@@ -49,27 +34,37 @@ private lemma exists_finset_forall_eq_div [CharZero k] (A : ValuationSubring L)
   let _ : Algebra.IsSeparable ↥K₀ ↥K' := Algebra.IsAlgebraic.isSeparable_of_perfectField
   let _ : IsFractionRing ↥C ↥K₀ := by
     refine ⟨?_, ?_, ?_⟩
-    · rintro ⟨y, hy⟩
+    ·
+      rintro ⟨y, hy⟩
       have hy0 : (y : L) ≠ 0 := by
-        intro h; exact nonZeroDivisors.ne_zero hy (Subtype.ext h)
-      exact isUnit_iff_ne_zero.mpr (by
-        intro h; exact hy0 (congrArg (fun z : ↥K₀ => (z : L)) h))
-    · intro z
-      rcases A.mem_or_inv_mem (z : L) with hz | hz
-      · refine ⟨⟨⟨(z : L), (hCK₀ _).mpr ⟨hz, z.2⟩⟩, 1⟩, ?_⟩
+        intro h
+        exact nonZeroDivisors.ne_zero hy (Subtype.ext h)
+      refine isUnit_iff_ne_zero.mpr ?_
+      intro h
+      exact hy0 (congrArg (fun z : ↥K₀ => (z : L)) h)
+    ·
+      intro z
+      obtain hz | hz := A.mem_or_inv_mem (z : L)
+      ·
+        refine ⟨⟨⟨(z : L), (hCK₀ _).mpr ⟨hz, z.2⟩⟩, 1⟩, ?_⟩
         simp only [OneMemClass.coe_one, map_one, mul_one]
         rfl
-      · by_cases hz0 : (z : L) = 0
-        · refine ⟨⟨0, 1⟩, ?_⟩
+      ·
+        if hz0 : (z : L) = 0 then
+          refine ⟨⟨0, 1⟩, ?_⟩
           have : z = 0 := Subtype.ext hz0
           simp [this]
-        · have hzinv : (z : L)⁻¹ ∈ C := (hCK₀ _).mpr ⟨hz, inv_mem z.2⟩
-          refine ⟨⟨1, ⟨⟨(z : L)⁻¹, hzinv⟩, mem_nonZeroDivisors_of_ne_zero (by
-            intro h; exact inv_ne_zero hz0 (congrArg Subtype.val h))⟩⟩, ?_⟩
+        else
+          have hzinv : (z : L)⁻¹ ∈ C := (hCK₀ _).mpr ⟨hz, inv_mem z.2⟩
+          refine ⟨⟨1, ⟨⟨(z : L)⁻¹, hzinv⟩, mem_nonZeroDivisors_of_ne_zero ?_⟩⟩, ?_⟩
+          intro h
+          exact inv_ne_zero hz0 (congrArg Subtype.val h)
           apply Subtype.ext
           change (z : L) * (z : L)⁻¹ = ((1 : ↥C) : L)
-          rw [mul_inv_cancel₀ hz0]; rfl
-    · intro a b h
+          rw [mul_inv_cancel₀ hz0]
+          rfl
+    ·
+      intro a b h
       refine ⟨1, ?_⟩
       have : (a : L) = b := congrArg (fun z : ↥K₀ => (z : L)) h
       rw [Subtype.ext this]
@@ -85,7 +80,9 @@ private lemma exists_finset_forall_eq_div [CharZero k] (A : ValuationSubring L)
     rw [hmemV] at this
     exact htinv ((hC'K' _).mpr ⟨this, inv_mem ((hC'K' t).mp htC').2⟩)
   have hCV : ∀ s : ↥C, algebraMap ↥C ↥K' s ∈ V := by
-    intro s; rw [hmemV, halgCK']; exact hC _ s.2
+    intro s
+    rw [hmemV, halgCK']
+    exact hC _ s.2
   have hRtV : ∀ z : ↥Rt, algebraMap ↥Rt ↥K' z ∈ V := fun z =>
     mem_valuationSubring_of_isIntegral V hCV z.2
   set φ : ↥Rt →+* ↥V := (algebraMap ↥Rt ↥K').codRestrict V hRtV with hφ
@@ -93,10 +90,9 @@ private lemma exists_finset_forall_eq_div [CharZero k] (A : ValuationSubring L)
   let h𝔭prime : 𝔭.IsPrime := Ideal.IsPrime.comap φ
   have hunit : ∀ s : ↥Rt, s ∉ 𝔭 → V.valuation (algebraMap ↥Rt ↥K' s) = 1 := by
     intro s hs
-    have hsu : IsUnit (φ s) := by
-      by_contra hnu
-      exact hs (Ideal.mem_comap.mpr ((IsLocalRing.mem_maximalIdeal _).mpr hnu))
-    exact (V.valuation_eq_one_iff (φ s)).mp hsu
+    refine (V.valuation_eq_one_iff (φ s)).mp ?_
+    by_contra hnu
+    exact hs (Ideal.mem_comap.mpr ((IsLocalRing.mem_maximalIdeal _).mpr hnu))
   have h𝔭ne : 𝔭 ≠ ⊥ := by
     intro hbot
     apply hVtop
@@ -128,7 +124,8 @@ private lemma exists_finset_forall_eq_div [CharZero k] (A : ValuationSubring L)
         rfl }
   have htoL : ∀ r : ↥Rt, toL r = ((r : ↥K') : L) := fun r => rfl
   refine ⟨Gset.image toL, ?_, ?_⟩
-  · intro g hg
+  ·
+    intro g hg
     rw [Finset.coe_image] at hg
     obtain ⟨r, -, rfl⟩ := hg
     change ((r : ↥K') : L) ∈ C'
@@ -136,7 +133,9 @@ private lemma exists_finset_forall_eq_div [CharZero k] (A : ValuationSubring L)
     exact ⟨(hmemV _).mp (hRtV r), (r : ↥K').2⟩
   have hspanL : ∀ r : ↥Rt, toL r ∈ Submodule.span ↥C ((Gset.image toL : Finset L) : Set L) := by
     intro r
-    have hr : r ∈ Submodule.span ↥C (Gset : Set ↥Rt) := by rw [hGspan]; exact Submodule.mem_top
+    have hr : r ∈ Submodule.span ↥C (Gset : Set ↥Rt) := by
+      rw [hGspan]
+      refine Submodule.mem_top
     rw [Finset.coe_image]
     exact Submodule.apply_mem_span_image_of_mem_span toL hr
   intro c hc
@@ -150,11 +149,14 @@ private lemma exists_finset_forall_eq_div [CharZero k] (A : ValuationSubring L)
     have : (s : ↥Rt) = 0 := by
       apply Subtype.ext
       exact h0
-    rw [this]; exact zero_mem _
+    rw [this]
+    exact zero_mem _
   refine ⟨toL a, toL s, hspanL a, hspanL s, ?_, ?_, ?_, ?_⟩
-  · rw [htoL, hC'K']
+  ·
+    rw [htoL, hC'K']
     exact ⟨(hmemV _).mp (hRtV s), (s : ↥K').2⟩
-  · rw [htoL, hC'K']
+  ·
+    rw [htoL, hC'K']
     refine ⟨?_, inv_mem (s : ↥K').2⟩
     have hsu : IsUnit (φ s) := by
       by_contra hnu
@@ -167,9 +169,11 @@ private lemma exists_finset_forall_eq_div [CharZero k] (A : ValuationSubring L)
     have : (((s : ↥Rt) : ↥K') : L)⁻¹ = (((w : ↥V) : ↥K') : L) := (eq_inv_of_mul_eq_one_right hwL).symm
     rw [this]
     exact (hmemV _).mp w.2
-  · rw [htoL]
+  ·
+    rw [htoL]
     exact fun h0 => hs0 (Subtype.ext h0)
-  · rw [htoL, htoL]
+  ·
+    rw [htoL, htoL]
     have := congrArg (fun z : ↥K' => (z : L)) hcas
     simp only at this
     change c = (((a : ↥Rt) : ↥K') : L) * ((((s : ↥Rt) : ↥K') : L))⁻¹ at this
@@ -180,14 +184,21 @@ private lemma exists_finset_forall_eq_div [CharZero k] (A : ValuationSubring L)
 -/
 @[path]
 private lemma main
-    {k L : Type*} [Field k] [Field L] [Algebra k L] [CharZero k] (A : ValuationSubring L)
-    (K₀ K' : IntermediateField k L) [FiniteDimensional k ↥K₀] [FiniteDimensional k ↥K'] (hK : K₀ ≤ K')
-    (C : Subring L) (hCK₀ : ∀ c : L, c ∈ C ↔ c ∈ A ∧ c ∈ K₀) [IsDomain ↥C] [IsDiscreteValuationRing ↥C]
-    (C' : Subring L) (hC'K' : ∀ c : L, c ∈ C' ↔ c ∈ A ∧ c ∈ K')
-    (t : L) (htC' : t ∈ C') (htinv : t⁻¹ ∉ C') :
-    ∃ G : Finset L, (↑G ⊆ (C' : Set L)) ∧
-      ∀ c : L, c ∈ C' → ∃ y z : L, y ∈ Submodule.span ↥C (G : Set L) ∧ z ∈ Submodule.span ↥C (G : Set L) ∧
-        z ∈ C' ∧ z⁻¹ ∈ C' ∧ z ≠ 0 ∧ c * z = y :=
+  [Field k] [Field L] [Algebra k L] [CharZero k]
+  (A : ValuationSubring L)
+  (K₀ K' : IntermediateField k L) [FiniteDimensional k ↥K₀] [FiniteDimensional k ↥K']
+  (C : Subring L) [IsDiscreteValuationRing ↥C]
+  (C' : Subring L)
+  (t : L)
+  -- given
+  (hK : K₀ ≤ K')
+  (hCK₀ : ∀ c : L, c ∈ C ↔ c ∈ A ∧ c ∈ K₀)
+  (hC'K' : ∀ c : L, c ∈ C' ↔ c ∈ A ∧ c ∈ K')
+  (htC' : t ∈ C')
+  (htinv : t⁻¹ ∉ C') :
+  -- imply
+  ∃ G : Finset L, (↑G ⊆ (C' : Set L)) ∧ ∀ c : L, c ∈ C' → ∃ y z : L, y ∈ Submodule.span ↥C (G : Set L) ∧ z ∈ Submodule.span ↥C (G : Set L) ∧ z ∈ C' ∧ z⁻¹ ∈ C' ∧ z ≠ 0 ∧ c * z = y :=
   exists_finset_forall_eq_div A K₀ K' hK C hCK₀ C' hC'K' t htC' htinv
+
 
 -- created on 2026-10-20

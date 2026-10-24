@@ -185,23 +185,6 @@ private lemma volume_triangle_inter_reflect :
   exact measure_mono_null triangle_inter_reflect_subset_diagonal
     (volume.addHaar_affineSubspace diagonal diagonal_ne_top)
 
-private lemma standardTriangle_isCompact : IsCompact standardTriangle := by
-  rw [standardTriangle]
-  exact (by simp : Set.Finite
-    ({0, euclideanPlaneBasis 0, euclideanPlaneBasis 1} :
-      Set (EuclideanSpace ℝ (Fin 2)))).isCompact_convexHull ℝ
-
-private lemma standardTriangle_measurableSet : MeasurableSet standardTriangle :=
-  standardTriangle_isCompact.isClosed.measurableSet
-
-private lemma measurePreserving_reflect :
-    MeasurePreserving reflect volume volume := by
-  change MeasurePreserving
-    ((fun x : EuclideanSpace ℝ (Fin 2) ↦ euclideanPlaneBasis 0 + euclideanPlaneBasis 1 + x) ∘
-      fun x ↦ -x) volume volume
-  exact (measurePreserving_add_left volume (euclideanPlaneBasis 0 + euclideanPlaneBasis 1)).comp
-    (LinearIsometryEquiv.neg ℝ).measurePreserving
-
 private lemma reflect_image_eq_preimage :
     reflect '' standardTriangle = reflect ⁻¹' standardTriangle := by
   ext x
@@ -325,20 +308,4 @@ theorem _root_.MeasureTheory.toReal_volume_convexHull_triangle
   rw [volume_triangle, ENNReal.toReal_mul,
     ENNReal.toReal_ofReal (abs_nonneg _), toReal_volume_standardTriangle]
   ring
-
-private lemma unitSquare_eq_parallelepiped :
-    {x : EuclideanSpace ℝ (Fin 2) | ∀ i, 0 ≤ x.ofLp i ∧ x.ofLp i ≤ 1} =
-      parallelepiped euclideanPlaneBasis := by
-  rw [show parallelepiped euclideanPlaneBasis =
-      parallelepiped (euclideanPlaneBasis).toBasis from rfl,
-    parallelepiped_basis_eq]
-  ext x
-  simp
-
-/-- The Euclidean volume of the closed unit square is one. -/
-theorem _root_.MeasureTheory.volume_unitSquare :
-    volume {x : EuclideanSpace ℝ (Fin 2) | ∀ i, 0 ≤ x.ofLp i ∧ x.ofLp i ≤ 1} = 1 := by
-  rw [unitSquare_eq_parallelepiped]
-  exact (euclideanPlaneBasis).volume_parallelepiped
-
 end MetaMathlibExt

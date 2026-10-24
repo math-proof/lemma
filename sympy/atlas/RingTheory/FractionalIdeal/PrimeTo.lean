@@ -42,27 +42,6 @@ theorem isPrimeTo_one (J : Ideal A) :
   intro p _ _
   exact FractionalIdeal.extended_one _ _
 
-/-- A product of fractional ideals prime to J is prime to J. -/
-theorem IsPrimeTo.mul {I K : FractionalIdeal A⁰ (FractionRing A)}
-    {J : Ideal A} (hI : I.IsPrimeTo J) (hK : K.IsPrimeTo J) :
-    (I * K).IsPrimeTo J := by
-  intro p _ hp
-  rw [FractionalIdeal.extended_mul, hI p hp, hK p hp, one_mul]
-
-/-- The inverse of an invertible fractional ideal prime to J is prime to J. -/
-theorem IsPrimeTo.inv_unit
-    {u : (FractionalIdeal A⁰ (FractionRing A))ˣ} {J : Ideal A}
-    (hu : (u : FractionalIdeal A⁰ (FractionRing A)).IsPrimeTo J) :
-    ((u⁻¹ : (FractionalIdeal A⁰ (FractionRing A))ˣ) :
-      FractionalIdeal A⁰ (FractionRing A)).IsPrimeTo J := by
-  intro p _ hp
-  have h1 : FractionalIdeal.extended (FractionRing A)
-      (nonZeroDivisors_le_comap_algebraMap_atPrime p)
-      (↑(u * u⁻¹) : FractionalIdeal A⁰ (FractionRing A)) = 1 := by
-    simp [FractionalIdeal.extended_one]
-  rw [Units.val_mul, FractionalIdeal.extended_mul, hu p hp, one_mul] at h1
-  exact h1
-
 /-- The subgroup of invertible fractional ideals prime to J. -/
 def unitsPrimeTo (J : Ideal A) :
     Subgroup (FractionalIdeal A⁰ (FractionRing A))ˣ where
@@ -70,35 +49,4 @@ def unitsPrimeTo (J : Ideal A) :
   one_mem' := isPrimeTo_one J
   mul_mem' := fun ha hb => ha.mul hb
   inv_mem' := fun hu => hu.inv_unit
-
-/-- Membership in unitsPrimeTo is the prime-to condition on the underlying fractional ideal. -/
-@[simp]
-theorem mem_unitsPrimeTo_iff {J : Ideal A}
-    {u : (FractionalIdeal A⁰ (FractionRing A))ˣ} :
-    u ∈ unitsPrimeTo J ↔
-      (u : FractionalIdeal A⁰ (FractionRing A)).IsPrimeTo J :=
-  Iff.rfl
-
-/-- Being prime to an ideal implies being prime to every larger ideal. -/
-theorem IsPrimeTo.mono {I : FractionalIdeal A⁰ (FractionRing A)}
-    {J K : Ideal A} (hI : I.IsPrimeTo J) (hJK : J ≤ K) :
-    I.IsPrimeTo K := by
-  intro p _ hp
-  exact hI p (hJK.trans hp)
-
-/-- The prime-to subgroups are monotone in the ideal. -/
-theorem unitsPrimeTo_mono {J K : Ideal A} (hJK : J ≤ K) :
-    unitsPrimeTo J ≤ unitsPrimeTo K := by
-  intro u hu
-  exact hu.mono hJK
-
-/-- Every invertible fractional ideal is prime to the top ideal. -/
-@[simp]
-theorem unitsPrimeTo_top : unitsPrimeTo (⊤ : Ideal A) = ⊤ := by
-  rw [eq_top_iff]
-  intro u _
-  rw [mem_unitsPrimeTo_iff]
-  intro p hpPrime hp
-  exact (hpPrime.ne_top (top_unique hp)).elim
-
 end FractionalIdeal

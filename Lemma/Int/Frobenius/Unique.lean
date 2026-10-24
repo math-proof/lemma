@@ -4,11 +4,13 @@ import sympy.atlas.RingTheory.Frobenius.Unique
 open IsArithFrobAt
 
 
+namespace IsArithFrobAt
+
 /--
 [eq_of_inertia_eq_bot](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/Frobenius/Unique.lean)
 -/
 @[path]
-private lemma eq_of_inertia_eq_bot_eq
+lemma eq_of_inertia_eq_bot
   [CommRing R] [CommRing S] [Algebra R S] [Group G] [MulSemiringAction G S] [SMulCommClass G R S]
   {Q : Ideal S}
   {σ σ' : G}
@@ -19,13 +21,19 @@ private lemma eq_of_inertia_eq_bot_eq
 -- imply
   σ = σ' := by
 -- proof
-  apply IsArithFrobAt.eq_of_inertia_eq_bot hσ hσ' hbot
+  have hmem : σ * σ'⁻¹ ∈ Q.inertia G := hσ.mul_inv_mem_inertia hσ'
+  rw [hbot] at hmem
+  exact mul_inv_eq_one.mp (Subgroup.mem_bot.mp hmem)
+
+end IsArithFrobAt
+
+namespace IsArithFrobAt
 
 /--
 [existsUnique_of_inertia_eq_bot](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/Frobenius/Unique.lean)
 -/
 @[path]
-private lemma existsUnique_of_inertia_eq_bot_eq
+lemma existsUnique_of_inertia_eq_bot
   [CommRing R] [CommRing S] [Algebra R S] [Group G] [MulSemiringAction G S] [SMulCommClass G R S] [Finite G] [Algebra.IsInvariant R S G]
   {Q : Ideal S} [Q.IsPrime] [Finite (S ⧸ Q)]
   {σ σ' : G}
@@ -34,7 +42,11 @@ private lemma existsUnique_of_inertia_eq_bot_eq
 -- imply
   ∃! σ : G, IsArithFrobAt R σ Q := by
 -- proof
-  apply IsArithFrobAt.existsUnique_of_inertia_eq_bot hbot
+  obtain ⟨σ₀, h₀⟩ := exists_of_isInvariant R G Q
+  exact ⟨σ₀, h₀, fun σ' h' => eq_of_inertia_eq_bot h' h₀ hbot⟩
+
+end IsArithFrobAt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

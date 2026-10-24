@@ -1,0 +1,25 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectDevelopedTranslation.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDevelopedTranslation
+
+#print axioms StatMech.FrontierD.fkRectCriticalEventMass_evenRowTranslation
+#print axioms StatMech.FrontierD.fkRectFullGraphConfiguration_columnTranslation
+#print axioms StatMech.FrontierD.fkRectFullGraphConfiguration_evenRowTranslation
+#print axioms StatMech.FrontierD.fkRectCheckerboardTranslation_squareRepresentativeVertex
+#print axioms StatMech.FrontierD.fkRectFullGraphConfiguration_checkerboardTranslation
+#print axioms StatMech.FrontierD.fkRectCriticalEventMass_checkerboardTranslation
+#print axioms StatMech.FrontierD.fkRectCheckerboardTranslation_developedSquareVertex
+#print axioms StatMech.FrontierD.fkRectDevelopedSquarePullback_checkerboardTranslation
+#print axioms StatMech.FrontierD.fkRectDevelopedSquarePullback_translateConfig_checkerboardTranslation
+#print axioms StatMech.FrontierD.fkRectCritical_horizontalCrossingMass_le_checkerboardTranslate
+#print axioms StatMech.FrontierD.fkRectCritical_verticalCrossingMass_le_checkerboardTranslate
+#print axioms StatMech.FrontierD.fkRectCritical_developedSquareHorizontalMass_ge_evenTranslate
+#print axioms StatMech.FrontierD.fkRectCritical_developedSquareVerticalMass_ge_evenTranslate

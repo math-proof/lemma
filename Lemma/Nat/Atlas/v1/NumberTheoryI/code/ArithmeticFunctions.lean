@@ -1,0 +1,26 @@
+import Mathlib
+import sympy.Basic
+import sympy.atlas.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions
+open Finset Real Filter Asymptotics DirichletCharacter in
+open scoped Nat
+
+
+/--
+[dirichletChar_factorsThrough_iff_ker_and_unique](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/ArithmeticFunctions.lean)
+-/
+@[path]
+lemma dirichletChar_factorsThrough_iff_ker_and_unique
+  [CommMonoidWithZero R]
+  {m₂ : ℕ}
+  [NeZero m₂]
+  {χ₂ : DirichletCharacter R m₂}
+  {m₁ : ℕ}
+-- given
+  (h : m₁ ∣ m₂) :
+-- imply
+  (χ₂.FactorsThrough m₁ ↔ (ZMod.unitsMap h).ker ≤ χ₂.toUnitHom.ker) ∧ (χ₂.FactorsThrough m₁ → ∃! χ₁ : DirichletCharacter R m₁, χ₂ = changeLevel h χ₁) :=
+-- proof
+  ⟨factorsThrough_iff_ker_unitsMap h, fun hf => hf.existsUnique⟩
+
+
+-- created on 2026-10-23

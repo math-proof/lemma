@@ -4,112 +4,163 @@ import sympy.atlas.NumberTheory.TripSternTree
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [TripSternTree.nodeAtEmptyPath](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TripSternTree.lean)
 -/
 @[path]
-private lemma TripSternTree_nodeAtEmptyPath_eq
+lemma TripSternTree.nodeAtEmptyPath
   {T : TripSternTree α} :
 -- imply
-  T.nodeAtPath [] = T.seed := by
+  T.nodeAtPath [] = T.seed :=
 -- proof
-  apply MetaMathlibExt.TripSternTree.nodeAtEmptyPath T
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [TripSternTree.nodeAtPathAppendLeft](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TripSternTree.lean)
 -/
 @[path]
-private lemma TripSternTree_nodeAtPathAppendLeft_eq
+lemma TripSternTree.nodeAtPathAppendLeft
   {T : TripSternTree α}
   {path : List Bool} :
 -- imply
   T.nodeAtPath (path ++ [false]) = T.leftTransition (T.nodeAtPath path) := by
 -- proof
-  apply MetaMathlibExt.TripSternTree.nodeAtPathAppendLeft T path
+  unfold TripSternTree.nodeAtPath
+  rw [List.foldl_append]
+  simp
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [TripSternTree.nodeAtPathAppendRight](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TripSternTree.lean)
 -/
 @[path]
-private lemma TripSternTree_nodeAtPathAppendRight_eq
+lemma TripSternTree.nodeAtPathAppendRight
   {T : TripSternTree α}
   {path : List Bool} :
 -- imply
   T.nodeAtPath (path ++ [true]) = T.rightTransition (T.nodeAtPath path) := by
 -- proof
-  apply MetaMathlibExt.TripSternTree.nodeAtPathAppendRight T path
+  unfold TripSternTree.nodeAtPath
+  rw [List.foldl_append]
+  simp
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [TripSternTree.nodeMembershipAtDepth](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TripSternTree.lean)
 -/
 @[path]
-private lemma TripSternTree_nodeMembershipAtDepth_eq
+lemma TripSternTree.nodeMembershipAtDepth
   {T : TripSternTree α}
   {n : ℕ}
   {y : α} :
 -- imply
   y ∈ T.nodesAtDepth n ↔
-    ∃ path : List Bool, path.length = n ∧ T.nodeAtPath path = y := by
+    ∃ path : List Bool, path.length = n ∧ T.nodeAtPath path = y :=
 -- proof
-  apply MetaMathlibExt.TripSternTree.nodeMembershipAtDepth T n y
+  Iff.rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [TripSternTree.nodesAtDepthZero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TripSternTree.lean)
 -/
 @[path]
-private lemma TripSternTree_nodesAtDepthZero_eq
+lemma TripSternTree.nodesAtDepthZero
   {T : TripSternTree α}
   {y : α} :
 -- imply
   y ∈ T.nodesAtDepth 0 ↔ y = T.seed := by
 -- proof
-  apply MetaMathlibExt.TripSternTree.nodesAtDepthZero T y
+  constructor
+  · intro h
+    match h with
+    | ⟨path, hlen, hnode⟩ =>
+      rw [List.length_eq_zero_iff] at hlen
+      subst hlen
+      simp [TripSternTree.nodeAtPath] at hnode
+      exact hnode.symm
+  · intro h
+    subst h
+    exact ⟨[], rfl, rfl⟩
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [TripSternTree.leftmostNodeAtZero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TripSternTree.lean)
 -/
 @[path]
-private lemma TripSternTree_leftmostNodeAtZero_eq
+lemma TripSternTree.leftmostNodeAtZero
   {T : TripSternTree α} :
 -- imply
-  T.leftmostNode 0 = T.seed := by
+  T.leftmostNode 0 = T.seed :=
 -- proof
-  apply MetaMathlibExt.TripSternTree.leftmostNodeAtZero T
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [TripSternTree.leftmostNodeAtSuccessor](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TripSternTree.lean)
 -/
 @[path]
-private lemma TripSternTree_leftmostNodeAtSuccessor_eq
+lemma TripSternTree.leftmostNodeAtSuccessor
   {T : TripSternTree α}
   {n : ℕ} :
 -- imply
-  T.leftmostNode (n + 1) = T.leftTransition (T.leftmostNode n) := by
+  T.leftmostNode (n + 1) = T.leftTransition (T.leftmostNode n) :=
 -- proof
-  apply MetaMathlibExt.TripSternTree.leftmostNodeAtSuccessor T n
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [TripSternTree.rightmostNodeAtZero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TripSternTree.lean)
 -/
 @[path]
-private lemma TripSternTree_rightmostNodeAtZero_eq
+lemma TripSternTree.rightmostNodeAtZero
   {T : TripSternTree α} :
 -- imply
-  T.rightmostNode 0 = T.seed := by
+  T.rightmostNode 0 = T.seed :=
 -- proof
-  apply MetaMathlibExt.TripSternTree.rightmostNodeAtZero T
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [TripSternTree.rightmostNodeAtSuccessor](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TripSternTree.lean)
 -/
 @[path]
-private lemma TripSternTree_rightmostNodeAtSuccessor_eq
+lemma TripSternTree.rightmostNodeAtSuccessor
   {T : TripSternTree α}
   {n : ℕ} :
 -- imply
-  T.rightmostNode (n + 1) = T.rightTransition (T.rightmostNode n) := by
+  T.rightmostNode (n + 1) = T.rightTransition (T.rightmostNode n) :=
 -- proof
-  apply MetaMathlibExt.TripSternTree.rightmostNodeAtSuccessor T n
+  rfl
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

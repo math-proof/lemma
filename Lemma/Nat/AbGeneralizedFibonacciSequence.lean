@@ -4,11 +4,13 @@ import sympy.atlas.NumberTheory.AbGeneralizedFibonacciSequence
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [AbGeneralizedFibonacciSequence.ext](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/AbGeneralizedFibonacciSequence.lean)
 -/
 @[path]
-private lemma AbGeneralizedFibonacciSequence_ext_eq
+lemma AbGeneralizedFibonacciSequence.ext
   {x y : AbGeneralizedFibonacciSequence}
 -- given
   (ha : x.a = y.a)
@@ -17,7 +19,15 @@ private lemma AbGeneralizedFibonacciSequence_ext_eq
 -- imply
   x = y := by
 -- proof
-  apply MetaMathlibExt.AbGeneralizedFibonacciSequence.ext ha hb hF
+  cases x
+  cases y
+  cases ha
+  cases hb
+  cases hF
+  rfl
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

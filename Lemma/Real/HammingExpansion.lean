@@ -4,11 +4,13 @@ import sympy.atlas.InformationTheory.HammingExpansion
 open Hamming
 
 
+namespace Hamming
+
 /--
 [mem_expansion](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/HammingExpansion.lean)
 -/
 @[path]
-private lemma mem_expansion_eq
+lemma mem_expansion
   [Fintype ι] [DecidableEq ι] [Fintype F] [DecidableEq F]
   {A : Finset (ι → F)}
   {x : ι → F}
@@ -16,13 +18,17 @@ private lemma mem_expansion_eq
 -- imply
   x ∈ expansion A t ↔ ∃ a ∈ A, hammingDist x a ≤ t := by
 -- proof
-  apply Hamming.mem_expansion
+  simp only [expansion, Finset.mem_biUnion, mem_ball, hammingDist_comm]
+
+end Hamming
+
+namespace Hamming
 
 /--
 [mem_expansion_of_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/HammingExpansion.lean)
 -/
 @[path]
-private lemma mem_expansion_of_mem_eq
+lemma mem_expansion_of_mem
   [Fintype ι] [DecidableEq ι] [Fintype F] [DecidableEq F]
   {A : Finset (ι → F)}
   {x a : ι → F}
@@ -31,53 +37,71 @@ private lemma mem_expansion_of_mem_eq
   (ha : a ∈ A)
   (h : hammingDist x a ≤ t) :
 -- imply
-  x ∈ expansion A t := by
+  x ∈ expansion A t :=
 -- proof
-  apply Hamming.mem_expansion_of_mem ha h
+  mem_expansion.mpr ⟨a, ha, h⟩
+
+end Hamming
+
+namespace Hamming
 
 /--
 [expansion_empty](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/HammingExpansion.lean)
 -/
 @[path]
-private lemma expansion_empty_eq
+lemma expansion_empty
   [Fintype ι] [DecidableEq ι] [Fintype F] [DecidableEq F]
   {t : ℕ} :
 -- imply
   expansion (∅ : Finset (ι → F)) t = ∅ := by
 -- proof
-  apply Hamming.expansion_empty t
+  simp [expansion]
+
+end Hamming
+
+namespace Hamming
 
 /--
 [expansion_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/HammingExpansion.lean)
 -/
 @[path]
-private lemma expansion_singleton_eq
+lemma expansion_singleton
   [Fintype ι] [DecidableEq ι] [Fintype F] [DecidableEq F]
   {a : ι → F}
   {t : ℕ} :
 -- imply
   expansion {a} t = ball a t := by
 -- proof
-  apply Hamming.expansion_singleton a t
+  simp [expansion]
+
+end Hamming
+
+namespace Hamming
 
 /--
 [subset_expansion_self](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/HammingExpansion.lean)
 -/
 @[path]
-private lemma subset_expansion_self_eq
+lemma subset_expansion_self
   [Fintype ι] [DecidableEq ι] [Fintype F] [DecidableEq F]
   {A : Finset (ι → F)}
   {t : ℕ} :
 -- imply
   A ⊆ expansion A t := by
 -- proof
-  apply Hamming.subset_expansion_self A t
+  intro x hx
+  rw [mem_expansion]
+  exact ⟨x, hx, by simp [hammingDist_self]⟩
+
+end Hamming
+
+namespace Hamming
 
 /--
 [expansion_mono](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/HammingExpansion.lean)
 -/
 @[path]
-private lemma expansion_mono_eq
+lemma expansion_mono
   [Fintype ι] [DecidableEq ι] [Fintype F] [DecidableEq F]
   {A B : Finset (ι → F)}
   {t : ℕ}
@@ -86,20 +110,30 @@ private lemma expansion_mono_eq
 -- imply
   expansion A t ⊆ expansion B t := by
 -- proof
-  apply Hamming.expansion_mono h
+  intro x hx
+  rw [mem_expansion] at hx ⊢
+  obtain ⟨a, ha, hdist⟩ := hx
+  exact ⟨a, h ha, hdist⟩
+
+end Hamming
+
+namespace Hamming
 
 /--
 [isBall_ball](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/HammingExpansion.lean)
 -/
 @[path]
-private lemma isBall_ball_eq
+lemma isBall_ball
   [Fintype ι] [DecidableEq ι] [Fintype F] [DecidableEq F]
   {c : ι → F}
   {e : ℕ} :
 -- imply
-  IsBall (ball c e : Finset (ι → F)) := by
+  IsBall (ball c e : Finset (ι → F)) :=
 -- proof
-  apply Hamming.isBall_ball c e
+  ⟨c, e, rfl⟩
+
+end Hamming
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -62,7 +62,8 @@ private lemma item_finsetSum
     v.get ⟨0, Nat.zero_lt_one⟩) hdata).trans hget
 
 
-/-- (A @ v)[i].item expands as the ENNReal linear form in . -/
+/-- (A @ v)[i].item expands as the ENNReal linear form in 
+. -/
 private lemma matvec_get_item
   {m k : ℕ}
   (A : Tensor ENNReal [m, k])

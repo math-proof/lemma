@@ -1,6 +1,6 @@
 import Lemma.Bool.Bool.eq.Ite
 import Lemma.Set.AddIteS.eq.Ite.of.Inter.eq.Empty
-open Bool Set
+open Bool Set BoundedInterval
 
 
 @[path]

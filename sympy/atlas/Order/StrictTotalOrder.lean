@@ -25,14 +25,4 @@ instance StrictTotalOrder.isStrictTotalOrder {α : Type*} (T : StrictTotalOrder 
   trans _ _ _ := T.trans
   trichotomous := fun _ _ hab hba =>
     Classical.byContradiction fun h => (T.total h).elim hab hba
-
-/-- Two strict total orders with the same relation are equal. -/
-@[ext]
-theorem StrictTotalOrder.ext {α : Type*} {T T' : StrictTotalOrder α} (h : T.lt = T'.lt) :
-    T = T' := by
-  cases T
-  cases T'
-  cases h
-  rfl
-
 end MathlibExt.Order

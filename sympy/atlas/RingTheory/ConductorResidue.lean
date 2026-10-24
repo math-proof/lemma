@@ -55,29 +55,4 @@ def quotient_coprime_residue_equiv (hc : ¬ c ≤ q)
       _ = -(b * q₀) := by ring
   rw [hkey]
   exact q.neg_mem (q.mul_mem_left b hq₀)
-
-/-- The canonical equivalence sends residue classes to residue classes along
-`algebraMap O B`. -/
-@[simp]
-theorem quotient_coprime_residue_equiv_apply_mk (hc : ¬ c ≤ q)
-    (hclear : ∀ x ∈ c, ∀ b : B, ∃ o : O, algebraMap O B o = x * b) (o : O) :
-    quotient_coprime_residue_equiv q c hc hclear (Ideal.Quotient.mk _ o) =
-      Ideal.Quotient.mk _ (algebraMap O B o) :=
-  rfl
-
-/-- The residue rings at `q` and its contraction have the same `Nat.card`. -/
-theorem nat_card_quotient_coprime_residue_eq (hc : ¬ c ≤ q)
-    (hclear : ∀ x ∈ c, ∀ b : B, ∃ o : O, algebraMap O B o = x * b) :
-    Nat.card (O ⧸ q.comap (algebraMap O B)) = Nat.card (B ⧸ q) :=
-  Nat.card_congr (quotient_coprime_residue_equiv q c hc hclear).toEquiv
-
-/-- The quotient of `q` and the quotient of its contraction have the same
-`Submodule.cardQuot`. -/
-theorem cardQuot_coprime_residue_eq (hc : ¬ c ≤ q)
-    (hclear : ∀ x ∈ c, ∀ b : B, ∃ o : O, algebraMap O B o = x * b) :
-    Submodule.cardQuot (q.comap (algebraMap O B) : Submodule O O) =
-      Submodule.cardQuot (q : Submodule B B) := by
-  rw [Submodule.cardQuot_apply, Submodule.cardQuot_apply]
-  exact Nat.card_congr (quotient_coprime_residue_equiv q c hc hclear).toEquiv
-
 end Ideal

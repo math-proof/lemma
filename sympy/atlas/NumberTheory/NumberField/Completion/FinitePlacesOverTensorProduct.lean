@@ -96,35 +96,4 @@ noncomputable def completionTensorProductMap :
     v.adicCompletion K ⊗[K] L →ₐ[v.adicCompletion K]
       ((w : v.placesOver L) → w.val.adicCompletion L) :=
   AlgHom.pi (fun w => completionTensorProductComponent v w)
-
-@[simp]
-theorem completionTensorProductComponent_tmul (w : v.placesOver L)
-    (x : v.adicCompletion K) (y : L) :
-    completionTensorProductComponent v w (x ⊗ₜ[K] y) =
-      Algebra.algHom (v.adicCompletion K) (v.adicCompletion K)
-        (w.val.adicCompletion L) x * Algebra.algHom K L _ y :=
-  rfl
-
-@[simp]
-theorem completionTensorProductMap_apply (t : v.adicCompletion K ⊗[K] L)
-    (w : v.placesOver L) :
-    completionTensorProductMap v t w = completionTensorProductComponent v w t :=
-  rfl
-
-@[simp]
-theorem completionTensorProductMap_tmul (x : v.adicCompletion K) (y : L)
-    (w : v.placesOver L) :
-    completionTensorProductMap v (x ⊗ₜ[K] y) w =
-      Algebra.algHom (v.adicCompletion K) (v.adicCompletion K)
-        (w.val.adicCompletion L) x * Algebra.algHom K L _ y :=
-  rfl
-
-theorem completionTensorProductMap_pi_eval (w : v.placesOver L) :
-    (Pi.evalAlgHom (v.adicCompletion K)
-          (fun w : v.placesOver L => w.val.adicCompletion L) w).comp
-      (completionTensorProductMap (K := K) (L := L) v) =
-      completionTensorProductComponent v w := by
-  ext t
-  rfl
-
 end IsDedekindDomain.HeightOneSpectrum

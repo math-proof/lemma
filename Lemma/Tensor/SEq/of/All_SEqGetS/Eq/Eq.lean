@@ -8,7 +8,7 @@ import Lemma.Vector.GetFlatten_AddMul.eq.Get
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Fin.Eq.of.Val
 import Lemma.Vector.SEq.of.Val
-open Tensor Vector List Bool Nat Fin
+open Tensor Vector List Bool Nat Fin Set
 
 
 @[path]

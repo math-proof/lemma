@@ -100,17 +100,6 @@ variable [HasCanonicalLocalResidueKStar K F]
 variable [HasCanonicalDivisor (K := K) (F := F)] [∀ v : Place K F, v.DCoordGenerates]
   [Nontrivial Ω[F⁄K]]
 
-variable (K F)
-
-variable {K F}
-
-variable (K F)
-
-variable {K F}
-
-variable (K F)
-
-variable {K F}
 
 end AlgebraicCurve
 
@@ -129,7 +118,6 @@ namespace Place
 
 section DegPos
 
-variable {K F : Type*} [Field K] [Field F] [Algebra K F] (v : Place K F)
 
 end DegPos
 
@@ -193,7 +181,6 @@ private theorem mem_iff_ord_nonneg_loc {f : F} (hf : f ≠ 0) :
 
 end Place
 
-variable [HasCanonicalLocalResidueKStar K F]
 
 end AlgebraicCurve
 
@@ -211,33 +198,6 @@ variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 namespace Place
 
-variable (v : Place K F)
-
-end Place
-
-end AlgebraicCurve
-
-end
-
-set_option autoImplicit false
-
-noncomputable section
-
-open IsDedekindDomain WithZero Module IsLocalRing
-
-namespace AlgebraicCurve
-
-variable {K F : Type*} [Field K] [Field F] [Algebra K F]
-
-namespace Place
-
-variable (v : Place K F)
-
-end Place
-
-namespace Place
-
-variable (v : Place K F)
 
 end Place
 
@@ -257,13 +217,11 @@ variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 namespace Place
 
-variable (v : Place K F)
 
 end Place
 
 namespace Place
 
-variable (v : Place K F)
 
 end Place
 
@@ -283,13 +241,35 @@ variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 namespace Place
 
-variable (v : Place K F)
 
 end Place
 
 namespace Place
 
-variable (v : Place K F)
+
+end Place
+
+end AlgebraicCurve
+
+end
+
+set_option autoImplicit false
+
+noncomputable section
+
+open IsDedekindDomain WithZero Module IsLocalRing
+
+namespace AlgebraicCurve
+
+variable {K F : Type*} [Field K] [Field F] [Algebra K F]
+
+namespace Place
+
+
+end Place
+
+namespace Place
+
 
 end Place
 
@@ -313,7 +293,6 @@ variable (v : Place K F)
 
 namespace CanonicalLocalResidueDataS
 
-variable {v} {σ : v.CoefficientFieldSection} (R : v.CanonicalLocalResidueDataS σ)
 
 end CanonicalLocalResidueDataS
 
@@ -474,7 +453,6 @@ open ModularCurve.Ldgr35Cs
 
 section CompletionCarrier
 
-variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 end CompletionCarrier
 
@@ -482,7 +460,6 @@ section MovedCarrier
 
 variable {K K' F' : Type*} [Field K] [Field K'] [Field F']
   [Algebra K K'] [Algebra K' F'] [Algebra K F'] [IsScalarTower K K' F']
-variable [HasCanonicalLocalResidueKStar K F']
 
 end MovedCarrier
 
@@ -510,7 +487,6 @@ attribute [local instance 2000] RatFunc.instAlgebraOfPolynomial
 
 section Engine
 
-variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 end Engine
 
@@ -535,13 +511,11 @@ open AlgebraicCurve ModularCurve.Lg37
 
 section General
 
-variable {R : Type*} [CommRing R] (I : Ideal R)
 
 end General
 
 section Carrier
 
-variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 end Carrier
 
@@ -549,8 +523,6 @@ section RatProduction
 
 attribute [local instance 2000] RatFunc.instAlgebraOfPolynomial
 
-variable [HasCanonicalLocalResidueKStar ℚ (RatFunc ℚ)]
-variable [HasCanonicalLocalResidueKStar (AlgebraicClosure ℚ) (RatFunc (AlgebraicClosure ℚ))]
 
 end RatProduction
 
@@ -576,7 +548,6 @@ open scoped Polynomial
 
 section ResidueCalculus
 
-variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 end ResidueCalculus
 
@@ -599,13 +570,11 @@ namespace ModularCurve.KwNo6Section
 
 section GenericIso
 
-variable {K F : Type*} [Field K] [Field F] [Algebra K F] (v : Place K F)
 
 end GenericIso
 
 section GenericSection
 
-variable {K F : Type*} [Field K] [Field F] [Algebra K F] (v : Place K F)
 
 end GenericSection
 
@@ -630,7 +599,6 @@ open Mp72a102T2
 
 section Calculus
 
-variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 end Calculus
 
@@ -638,8 +606,6 @@ section RatProduction
 
 attribute [local instance 2000] RatFunc.instAlgebraOfPolynomial
 
-variable [HasCanonicalLocalResidueKStar ℚ (RatFunc ℚ)]
-variable [HasCanonicalLocalResidueKStar (AlgebraicClosure ℚ) (RatFunc (AlgebraicClosure ℚ))]
 
 end RatProduction
 
@@ -656,7 +622,6 @@ open ModularCurve.KwNo6Section
 
 namespace ModularCurve.KwNo6Pin
 
-variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 end ModularCurve.KwNo6Pin
 
@@ -689,6 +654,5 @@ open Mp72a102T1
 
 namespace AlgebraicCurve
 
-variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 end AlgebraicCurve

@@ -93,7 +93,7 @@ private lemma compl_zeroLocus_eq_biUnion
     intro hx
     obtain ⟨q, hq, hxq⟩ := exists_mem_zeroLocus_minimalPrimes x
     suffices hne : q ≠ q₀ by
-      apply Set.mem_biUnion ⟨hq, hne⟩ hxq
+      apply Set.mem_biUnion (⟨hq, hne⟩ : q ∈ minimalPrimes R \ {q₀}) hxq
     rintro rfl
     apply hx hxq
   ·
@@ -109,7 +109,7 @@ private lemma isClopen_zeroLocus_of_mem_minimalPrimes
   refine ⟨PrimeSpectrum.isClosed_zeroLocus _, ?_⟩
   rw [← isClosed_compl_iff, compl_zeroLocus_eq_biUnion huniq hq₀]
   apply Set.Finite.isClosed_biUnion
-    (Set.Finite.subset (minimalPrimes.finite_of_isNoetherianRing R) Set.diff_subset)
+    (Set.Finite.subset (minimalPrimes.finite_of_isNoetherianRing R) Set.sdiff_subset)
     (fun q _ => PrimeSpectrum.isClosed_zeroLocus _)
 private lemma exists_isClopen_isPreirreducible_mem_of_forall_isDomain_localizationAtPrime
   [IsNoetherianRing R]

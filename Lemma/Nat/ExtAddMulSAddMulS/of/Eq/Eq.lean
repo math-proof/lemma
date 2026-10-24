@@ -11,12 +11,12 @@ open Section_4_1
 private lemma main
   {a b c d a' b' c' d' : ℕ}
 -- given
-  (h1: a —— b = a' —— b')
-  (h2: c —— d = c' —— d') :
+  (h0: a —— b = a' —— b')
+  (h1: c —— d = c' —— d') :
 -- imply
   (a*c+b*d) —— (a*d+b*c) = (a'*c'+b'*d') —— (a'*d'+b'*c') :=
 -- proof
-  Section_4_1.Int.mul_congr h1 h2
+  Section_4_1.Int.mul_congr h0 h1
 
 
 -- created on 2026-10-20

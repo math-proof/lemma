@@ -5,6 +5,23 @@ open scoped NumberField
 open IsDedekindDomain.HeightOneSpectrum
 
 
+namespace IsDedekindDomain.HeightOneSpectrum
+
+/--
+[adicCompletionMap_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOver.lean)
+-/
+@[path]
+lemma adicCompletionMap_injective
+  [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
+  {v : HeightOneSpectrum (𝓞 K)}
+  {w : HeightOneSpectrum (𝓞 L)} [hvw : w.asIdeal.LiesOver v.asIdeal] :
+-- imply
+  Function.Injective (adicCompletionMap v w) :=
+-- proof
+  RingHom.injective _
+
+end IsDedekindDomain.HeightOneSpectrum
+
 /--
 [adicCompletionMap_algebraMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOver.lean)
 -/
@@ -33,18 +50,6 @@ private lemma continuous_adicCompletionMap_eq
 -- proof
   apply IsDedekindDomain.HeightOneSpectrum.continuous_adicCompletionMap v w
 
-/--
-[adicCompletionMap_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOver.lean)
--/
-@[path]
-private lemma adicCompletionMap_injective_eq
-  [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
-  {v : HeightOneSpectrum (𝓞 K)}
-  {w : HeightOneSpectrum (𝓞 L)} [hvw : w.asIdeal.LiesOver v.asIdeal] :
--- imply
-  Function.Injective (adicCompletionMap v w) := by
--- proof
-  apply IsDedekindDomain.HeightOneSpectrum.adicCompletionMap_injective v w
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

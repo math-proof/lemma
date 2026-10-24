@@ -14,7 +14,6 @@ private lemma main
   Le.of.Lt h
 
 
-
 @[path]
 private lemma relax
   {x y : ℤ}

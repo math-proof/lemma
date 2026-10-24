@@ -1,0 +1,35 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicLocalizedPoissonLinearity.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicLocalizedPoissonLinearity
+
+set_option linter.style.longLine false
+
+#print axioms StatMech.Universality.isingFiniteWeightedDirichletSolve_add
+#print axioms StatMech.Universality.isingFiniteWeightedDirichletSolve_smul
+#print axioms StatMech.Universality.isingFiniteWeightedDirichletSolve_sum
+#print axioms StatMech.Universality.isingFiniteWeightedSpatialResidualPotential_eq_sum_point
+#print axioms StatMech.Universality.isingFiniteWeightedSpatialResidualPotential_le_sum_point_bound
+#print axioms StatMech.Universality.isingFiniteWeightedLaplacian_pair_comm
+#print axioms StatMech.Universality.isingFiniteGhostConductance_comm
+#print axioms StatMech.Universality.isingFiniteWeightedPointPoissonBarrier_boundary
+#print axioms StatMech.Universality.isingFiniteWeightedPointPoissonBarrier_laplacian_source
+#print axioms StatMech.Universality.isingFiniteWeightedPointPoissonBarrier_laplacian_off_source
+#print axioms StatMech.Universality.isingFiniteWeightedPointPoissonBarrier_nonneg
+#print axioms StatMech.Universality.isingFiniteWeightedPointPoissonBarrier_comm
+#print axioms StatMech.Universality.isingFiniteWeightedPointPoissonBarrier_le_of_superharmonic
+#print axioms StatMech.Universality.isingFiniteWeightedLocalizedPoissonBarrier_eq_sum_point
+#print axioms StatMech.Universality.isingFiniteWeightedLocalizedPoissonBarrier_le_card_mul
+#print axioms StatMech.Universality.isingFiniteWeightedLocalizedPoissonBarrier_le_card_mul_reciprocal
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexMarkedEndpointBarrier_eq_sum_point
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceMarkedEndpointBarrier_eq_sum_point
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexMarkedEndpointBarrier_le_card_mul_reciprocal
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceMarkedEndpointBarrier_le_card_mul_reciprocal
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.PhysicalEndpointLocalizedRobinInputs.primitive_convergence_away_of_pointGreen

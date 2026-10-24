@@ -20,77 +20,81 @@ instance instFunLike (A:Type*) [BooleanAlgebra A] :
       cases g
       congr }
 
-variable {A:Type*} [BooleanAlgebra A] (ℙ: FinitelyAdditive A)
-         {A':Type*} [BooleanAlgebra A'] (ℙ': FinitelyAdditive A')
+variable {A:Type*} [BooleanAlgebra A] (P: FinitelyAdditive A)
+         {A':Type*} [BooleanAlgebra A'] (P': FinitelyAdditive A')
 
 @[simp]
-theorem top : ℙ ⊤ = 1 := ℙ.prob_top
+theorem top : P ⊤ = 1 := P.prob_top
 
-theorem nonneg (E:A) : 0 ≤ ℙ E := ℙ.prob_nonneg E
+theorem nonneg (E:A) : 0 ≤ P E := P.prob_nonneg E
 
-theorem disj_sup {E F:A} (hEF: Disjoint E F) : ℙ (E ⊔ F) = ℙ E + ℙ F := ℙ.prob_disj_sup hEF
+theorem disj_sup {E F:A} (hEF: Disjoint E F) : P (E ⊔ F) = P E + P F := P.prob_disj_sup hEF
 
 @[simp]
-theorem bot : ℙ ⊥ = 0 := by
+theorem bot : P ⊥ = 0 := by
   have : Disjoint (⊥:A) ⊥ := fun ⦃x⦄ a _ ↦ a
-  replace := ℙ.disj_sup this
+  replace := P.disj_sup this
   simpa using this
 
 @[simp]
-theorem compl (E:A) : ℙ Eᶜ = 1 - ℙ E := by
+theorem compl (E:A) : P Eᶜ = 1 - P E := by
   have : Disjoint Eᶜ E := disjoint_compl_left
-  replace := ℙ.disj_sup this
+  replace := P.disj_sup this
   simp at this
   linarith
 
-theorem le_one (E:A) : ℙ E ≤ 1 := by
-  linarith [ℙ.compl E, ℙ.nonneg Eᶜ]
+theorem le_one (E:A) : P E ≤ 1 := by
+  linarith [P.compl E, P.nonneg Eᶜ]
 
-theorem ge_eq_add_diff {E F:A} (hEF: E ≤ F) : ℙ F = ℙ (F \ E) + ℙ E := by
+theorem ge_eq_add_diff {E F:A} (hEF: E ≤ F) : P F = P (F \ E) + P E := by
   have : Disjoint (F \ E) E := disjoint_sdiff_self_left
-  replace := ℙ.disj_sup this
+  replace := P.disj_sup this
   rwa [sdiff_sup_cancel hEF] at this
 
-theorem mono {E F:A} (hEF: E ≤ F) : ℙ E ≤ ℙ F := by
-  linarith [ℙ.nonneg (F \ E), ℙ.ge_eq_add_diff hEF]
+theorem mono {E F:A} (hEF: E ≤ F) : P E ≤ P F := by
+  linarith [P.nonneg (F \ E), P.ge_eq_add_diff hEF]
 
-theorem sup_add_inf (E F:A) : ℙ (E ⊔ F) + ℙ (E ⊓ F) = ℙ E + ℙ F := by
-  have h₁ : E ⊓ F ≤ E := inf_le_left; replace h₁ := ℙ.ge_eq_add_diff h₁
-  have h₂ : F ≤ E ⊔ F := le_sup_right; replace h₂ := ℙ.ge_eq_add_diff h₂
+theorem sup_add_inf (E F:A) : P (E ⊔ F) + P (E ⊓ F) = P E + P F := by
+  have h₁ : E ⊓ F ≤ E := inf_le_left; replace h₁ := P.ge_eq_add_diff h₁
+  have h₂ : F ≤ E ⊔ F := le_sup_right; replace h₂ := P.ge_eq_add_diff h₂
   simp at h₁ h₂
   linarith
 
-theorem sup_le_add (E F:A) : ℙ (E ⊔ F) ≤ ℙ E + ℙ F := by
-  linarith [ℙ.sup_add_inf E F, ℙ.nonneg (E ⊓ F)]
+theorem sup_le_add (E F:A) : P (E ⊔ F) ≤ P E + P F := by
+  linarith [P.sup_add_inf E F, P.nonneg (E ⊓ F)]
 
 -- Some API for extending a finitely additive probability space
 
-def _root_.BoundedLatticeHom.preserves (f: BoundedLatticeHom A A') : Prop := ∀ E:A, ℙ' (f E) = ℙ E
+def _root_.BoundedLatticeHom.preserves (f: BoundedLatticeHom A A') : Prop := ∀ E:A, P' (f E) = P E
 
 @[simp]
-theorem _root_.BoundedLatticeHom.preserves.map {f: BoundedLatticeHom A A'} (hf: f.preserves ℙ ℙ') (E:A) : ℙ' (f E) = ℙ E := hf E
+theorem _root_.BoundedLatticeHom.preserves.map {f: BoundedLatticeHom A A'} (hf: f.preserves P P') (E:A) : P' (f E) = P E := hf E
 
 -- an example of how a probability space can be extended while preserving various properties
 
-class ExampleProb {A:Type*} [BooleanAlgebra A] (ℙ: FinitelyAdditive A) where
+class ExampleProb {A:Type*} [BooleanAlgebra A] (P: FinitelyAdditive A) where
   E : A
   F : A
   G : A
-  prob_E : ℙ E = 0.5
-  prob_EF : ℙ (E ⊔ F) = 0.75
-  prob_EF' : ℙ (E ⊓ F) = 0.25
-  prob_EG : ℙ (E \ G) = 0.4
-  prob_G : ℙ Gᶜ = 0.3
+  prob_E : P E = 0.5
+  prob_EF : P (E ⊔ F) = 0.75
+  prob_EF' : P (E ⊓ F) = 0.25
+  prob_EG : P (E \ G) = 0.4
+  prob_G : P Gᶜ = 0.3
 
-@[implicit_reducible] def ExampleProb.map {Ω: ExampleProb ℙ} {f: BoundedLatticeHom A A'} (hf: f.preserves ℙ ℙ') : ExampleProb ℙ' where
+@[implicit_reducible] def ExampleProb.map {Ω: ExampleProb P} {f: BoundedLatticeHom A A'} (hf: f.preserves P P') : ExampleProb P' where
   E := f Ω.E
   F := f Ω.F
   G := f Ω.G
   prob_E := by simp [hf, Ω.prob_E]
   prob_EF := by simp [hf, Ω.prob_EF, ←map_sup]
   prob_EF' := by simp [hf, Ω.prob_EF', ←map_inf]
-  prob_EG := by simp [hf, Ω.prob_EG, ←map_sdiff']
-  prob_G := by simp [hf, Ω.prob_G, ←map_compl']
+  prob_EG := by
+    rw [← map_sdiff', hf]
+    exact Ω.prob_EG
+  prob_G := by
+    rw [← map_compl', hf]
+    exact Ω.prob_G
 
 end FinitelyAdditive
 end ProbabilityTheory

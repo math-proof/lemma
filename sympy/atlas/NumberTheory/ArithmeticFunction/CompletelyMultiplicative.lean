@@ -28,19 +28,4 @@ variable {R : Type*}
 /-- `f` is completely multiplicative if `f (m * n) = f m * f n` for all `m, n : ℕ`. -/
 def IsCompletelyMultiplicative [Mul R] [Zero R] (f : ArithmeticFunction R) : Prop :=
   ∀ m n : ℕ, f (m * n) = f m * f n
-
-/-- Projection for `IsCompletelyMultiplicative`. -/
-@[simp]
-theorem IsCompletelyMultiplicative.map_mul [Mul R] [Zero R] {f : ArithmeticFunction R}
-    (hf : f.IsCompletelyMultiplicative) (m n : ℕ) : f (m * n) = f m * f n :=
-  hf m n
-
-/-- Over a `MonoidWithZero` codomain, a completely multiplicative `f` with
-`f 1 = 1` is `IsMultiplicative`. The normalization hypothesis is taken
-explicitly. -/
-theorem IsCompletelyMultiplicative.isMultiplicative [MonoidWithZero R]
-    {f : ArithmeticFunction R} (hf : f.IsCompletelyMultiplicative) (h1 : f 1 = 1) :
-    f.IsMultiplicative :=
-  ⟨h1, fun _ => hf _ _⟩
-
 end ArithmeticFunction

@@ -19,11 +19,4 @@ def IsNicolNumber (n : ℕ) : Prop :=
 `Nat.totient n + σ(n) = t * n`. -/
 def IsTNicolNumber (t n : ℕ) : Prop :=
   0 < n ∧ Nat.totient n + ∑ d ∈ n.divisors, d = t * n
-
-/-- Every `t`-Nicol number is a Nicol number. -/
-theorem IsTNicolNumber.isNicolNumber {t n : ℕ} (h : IsTNicolNumber t n) :
-    IsNicolNumber n := by
-  refine ⟨h.1, ⟨t, ?_⟩⟩
-  simpa [Nat.mul_comm] using h.2
-
 end MetaMathlibExt

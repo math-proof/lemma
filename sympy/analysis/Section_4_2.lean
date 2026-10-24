@@ -94,7 +94,9 @@ instance Rat.add_inst : Add Rat where
 /-- Definition 4.2.2 (Addition of rationals) -/
 theorem Rat.add_eq (a c:ℤ) {b d:ℤ} (hb: b ≠ 0) (hd: d ≠ 0) :
     (a // b) + (c // d) = (a*d + b*c) // (b*d) := by
-  convert Quotient.lift₂_mk _ _ _ _ <;> simp [hb, hd]
+  simp only [HAdd.hAdd, Add.add]
+  rw [Quotient.lift₂_mk]
+  simp [hb, hd]
 
 /-- Lemma 4.2.3 (Multiplication well-defined) -/
 instance Rat.mul_inst : Mul Rat where
@@ -103,7 +105,9 @@ instance Rat.mul_inst : Mul Rat where
 /-- Definition 4.2.2 (Multiplication of rationals) -/
 theorem Rat.mul_eq (a c:ℤ) {b d:ℤ} (hb: b ≠ 0) (hd: d ≠ 0) :
     (a // b) * (c // d) = (a*c) // (b*d) := by
-  convert Quotient.lift₂_mk _ _ _ _ <;> simp [hb, hd]
+  simp only [HMul.hMul, Mul.mul]
+  rw [Quotient.lift₂_mk]
+  simp [hb, hd]
 
 /-- Lemma 4.2.3 (Negation well-defined) -/
 instance Rat.neg_inst : Neg Rat where

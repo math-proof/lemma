@@ -18,4 +18,4 @@ private lemma main
     exact h.2 x hx hc
 
 
--- created on 2018-12-06
+-- created on 2019-06-22

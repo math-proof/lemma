@@ -1,0 +1,26 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPhysicalFullSquareIntegration.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareIntegration
+
+#print axioms StatMech.Universality.fkIsingSquareFullRadialNodeCoordinate_mem_diamond
+#print axioms StatMech.Universality.fkIsingSquareFull_exists_node_of_mem_diamond
+#print axioms StatMech.Universality.fkIsingSquareFullRadialNodeOfCoordinate_coordinate
+#print axioms StatMech.Universality.fkIsingSquareFullRadialNodeOfCoordinate_inverse
+#print axioms StatMech.Universality.fkIsingSquareFullRadialCellOfCoordinate
+#print axioms StatMech.Universality.fkIsingSquareFullRadialCellOfCoordinate_even_side_coordinates
+#print axioms StatMech.Universality.fkIsingSquareFullRadialCellOfCoordinate_odd_side_coordinates
+#print axioms StatMech.Universality.fkIsingSquareFullOrientedRadialIncrement_incidence
+#print axioms StatMech.Universality.fkIsingSquareFullOrientedRadialIncrement_incidence_reverse
+#print axioms StatMech.Universality.fkIsingSquareFullOrientedRadialIncrement_antisymm
+#print axioms StatMech.Universality.fkIsingSquareFullRadialNodeAtCoordinate_coordinate
+#print axioms StatMech.Universality.fkIsingSquareFullRadialNodeAtCoordinate_eq_vertex
+#print axioms StatMech.Universality.fkIsingSquareFullRadialNodeAtCoordinate_eq_face
+#print axioms StatMech.Universality.fkIsingSquareFull_increment_closed

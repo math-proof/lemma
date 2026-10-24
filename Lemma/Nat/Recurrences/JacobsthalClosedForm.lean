@@ -1,14 +1,14 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Recurrences.JacobsthalClosedForm
-open MetaMathlibExt
 
+
+namespace MetaMathlibExt
 
 /--
 [jacobsthal_closedForm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/JacobsthalClosedForm.lean)
 -/
 @[path]
-private lemma jacobsthal_closedForm_eq
+lemma jacobsthal_closedForm
   {J : ℕ → ℕ}
   {m : ℕ}
 -- given
@@ -18,7 +18,14 @@ private lemma jacobsthal_closedForm_eq
 -- imply
   (J m : ℚ) = ((2 : ℚ) ^ (m + 1) + (-1 : ℚ) ^ m) / 3 := by
 -- proof
-  apply MetaMathlibExt.jacobsthal_closedForm J h_zero h_one h_rec m
+  have h := binet_closed_form_second_order (fun n => (J n : ℚ)) 1 (-2) 2 (-1)
+    (by norm_num) (by norm_num) (by norm_num) (fun n => by simp [h_rec n]) m
+  simp only [h_zero, h_one] at h
+  rw [h, pow_succ]
+  ring
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

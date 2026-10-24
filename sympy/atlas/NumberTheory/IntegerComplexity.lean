@@ -27,29 +27,7 @@ def count : Expr → ℕ
   | .add a b => a.count + b.count
   | .mul a b => a.count + b.count
 
-@[simp] theorem eval_one : (one : Expr).eval = 1 := rfl
-@[simp] theorem count_one : (one : Expr).count = 1 := rfl
-@[simp] theorem eval_add (a b : Expr) : (add a b).eval = a.eval + b.eval := rfl
-@[simp] theorem eval_mul (a b : Expr) : (mul a b).eval = a.eval * b.eval := rfl
-@[simp] theorem count_add (a b : Expr) : (add a b).count = a.count + b.count := rfl
-@[simp] theorem count_mul (a b : Expr) : (mul a b).count = a.count + b.count := rfl
-
-theorem count_pos (e : Expr) : 0 < e.count := by
-  induction e with
-  | one => simp [count]
-  | add a b iha ihb => simp only [count]; exact Nat.add_pos_left iha _
-  | mul a b iha ihb => simp only [count]; exact Nat.add_pos_left iha _
-
-theorem eval_pos (e : Expr) : 0 < e.eval := by
-  induction e with
-  | one => simp [eval]
-  | add a b iha ihb => simp only [eval]; exact Nat.add_pos_left iha _
-  | mul a b iha ihb => simp only [eval]; exact Nat.mul_pos iha ihb
-
 end Expr
-
-open Expr
-
 /-- Existence of representing expression for every positive natural.
     Source C2/C4 existence side. -/
 theorem exists_expr_of_pos {n : ℕ} (h : 0 < n) : ∃ e : Expr, e.eval = n := by
@@ -78,53 +56,4 @@ theorem Pred_nonempty (n : ℕ+) : ∃ c, Pred n c := by
 noncomputable def complexity (n : ℕ+) : ℕ := by
   classical
   exact Nat.find (Pred_nonempty n)
-
-theorem complexity_spec (n : ℕ+) : Pred n (complexity n) := by
-  classical
-  exact Nat.find_spec (Pred_nonempty n)
-
-theorem complexity_min_le (n : ℕ+) {m : ℕ} (hm : Pred n m) : complexity n ≤ m := by
-  classical
-  exact Nat.find_min' (Pred_nonempty n) hm
-
-theorem exists_optimal (n : ℕ+) : ∃ e : Expr, e.eval = (n : ℕ) ∧ e.count = complexity n :=
-  complexity_spec n
-
-/-- Minimality: complexity is least leaf count. Source C4. -/
-theorem complexity_le {n : ℕ+} {e : Expr} (he : e.eval = (n : ℕ)) : complexity n ≤ e.count :=
-  complexity_min_le n ⟨e, he, rfl⟩
-
-theorem complexity_le_count (n : ℕ+) (e : Expr) (he : e.eval = (n : ℕ)) :
-    complexity n ≤ e.count := complexity_le he
-
-theorem one_le_complexity (n : ℕ+) : 1 ≤ complexity n := by
-  obtain ⟨e, _, hcount⟩ := exists_optimal n
-  have hpos := e.count_pos
-  omega
-
-theorem complexity_one : complexity (1 : ℕ+) = 1 := by
-  apply Nat.le_antisymm
-  · exact complexity_min_le _ ⟨.one, rfl, rfl⟩
-  · obtain ⟨e, _, hcount⟩ := exists_optimal (1 : ℕ+)
-    have hpos := e.count_pos
-    omega
-
-/-- Upper bound via addition of optimal witnesses. -/
-theorem complexity_add_le (a b : ℕ+) : complexity (a + b) ≤ complexity a + complexity b := by
-  obtain ⟨ea, hea, hca⟩ := exists_optimal a
-  obtain ⟨eb, heb, hcb⟩ := exists_optimal b
-  have h : (Expr.add ea eb).eval = ((a + b : ℕ+) : ℕ) := by simp [hea, heb, PNat.add_coe]
-  have hle := complexity_le h
-  simp only [count_add, hca, hcb, ge_iff_le] at hle ⊢
-  exact hle
-
-/-- Upper bound via multiplication of optimal witnesses. -/
-theorem complexity_mul_le (a b : ℕ+) : complexity (a * b) ≤ complexity a + complexity b := by
-  obtain ⟨ea, hea, hca⟩ := exists_optimal a
-  obtain ⟨eb, heb, hcb⟩ := exists_optimal b
-  have h : (Expr.mul ea eb).eval = ((a * b : ℕ+) : ℕ) := by simp [hea, heb, PNat.mul_coe]
-  have hle := complexity_le h
-  simp only [count_mul, hca, hcb, ge_iff_le] at hle ⊢
-  exact hle
-
 end IntegerComplexity

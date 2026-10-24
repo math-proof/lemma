@@ -1,0 +1,26 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexBetheZeroPhaseSingle.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheZeroPhaseSingle
+
+#print axioms StatMech.FrontierD.sixVertexBetheZeroDerivative_algebra
+#print axioms StatMech.FrontierD.sixVertexBetheZeroAdjacentPairFactor_eq_deriv
+#print axioms StatMech.FrontierD.sixVertexBethePerturbedWordTerm_adjacent_zero_pair
+#print axioms StatMech.FrontierD.sixVertexBetheZeroBoundaryPairFactor_tendsto
+#print axioms StatMech.FrontierD.sixVertexBetheZeroHatTerm_normalize_mulRight
+#print axioms StatMech.FrontierD.sum_singleML_zeroHatTerms
+#print axioms StatMech.FrontierD.SixVertexSatisfiesMultiplicativeBetheEquations.perturbedSingleMLWordTotal_tendsto
+#print axioms StatMech.FrontierD.SixVertexSatisfiesMultiplicativeBetheEquations.perturbedWordTotal_tendsto_zeroPhaseEigenvalue
+#print axioms StatMech.FrontierD.sixVertexCoordinateBetheZeroPhaseEigenrelation
+#print axioms StatMech.FrontierD.SixVertexSatisfiesMultiplicativeBetheEquations.physicalZeroPhaseEigenrelation_of_two_le
+#print axioms StatMech.FrontierD.sixVertexFixedChargeBetheRoots_physicalZeroPhaseEigenrelation_of_odd_charge
+#print axioms StatMech.FrontierD.sixVertexZeroPhaseMProduct_eq_normProduct_of_symmetric
+#print axioms StatMech.FrontierD.sixVertexFixedOddChargeBetheEigenvalueCandidate_eq_value
+#print axioms StatMech.FrontierD.sixVertexFixedChargeBetheRoots_zeroPhaseEigenrelation_value_of_odd_charge

@@ -1,7 +1,7 @@
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Rat.LeToNatCeil_1.of.Le_Add
 import Lemma.List.AddDiv.lt.LengthSlice.of.Gt_0
-open List Vector Int Nat Rat Slice
+open List Vector Int Nat Rat Slice Matrix
 
 
 private lemma inner_slice_length

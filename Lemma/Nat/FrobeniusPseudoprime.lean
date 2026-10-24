@@ -5,26 +5,32 @@ open Polynomial
 open Nat
 
 
+namespace Polynomial
+
 /--
 [IsGreatestCommonMonicDivisor.unfold](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FrobeniusPseudoprime.lean)
 -/
 @[path]
-private lemma IsGreatestCommonMonicDivisor_unfold_eq
+lemma IsGreatestCommonMonicDivisor.unfold
   [CommRing R]
   {h g₁ g₂ : _root_.Polynomial R} :
 -- imply
   IsGreatestCommonMonicDivisor h g₁ g₂ ↔
     (h.Monic ∧ g₁.Monic ∧ g₂.Monic ∧
     Ideal.span ({g₁, g₂} : Set (_root_.Polynomial R)) =
-    Ideal.span ({h} : Set (_root_.Polynomial R))) := by
+    Ideal.span ({h} : Set (_root_.Polynomial R))) :=
 -- proof
-  apply Polynomial.IsGreatestCommonMonicDivisor.unfold h g₁ g₂
+  Iff.rfl
+end Polynomial
+
+
+namespace Nat
 
 /--
 [IsFrobeniusProbablePrime.unfold](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FrobeniusPseudoprime.lean)
 -/
 @[path]
-private lemma IsFrobeniusProbablePrime_unfold_eq
+lemma IsFrobeniusProbablePrime.unfold
   {n : ℕ}
   {f : _root_.Polynomial ℤ} :
 -- imply
@@ -45,92 +51,119 @@ private lemma IsFrobeniusProbablePrime_unfold_eq
     (-1 : ℤ) ^
     Finset.sum (Finset.Icc 1 f.natDegree)
     (fun i => if i % 2 = 0 then q i else 0) =
-    jacobiSym f.discr n) := by
+    jacobiSym f.discr n) :=
 -- proof
-  apply Nat.IsFrobeniusProbablePrime.unfold n f
+  Iff.rfl
+
+end Nat
+
+namespace Nat
 
 /--
 [IsFrobeniusProbablePrime.monic](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FrobeniusPseudoprime.lean)
 -/
 @[path]
-private lemma IsFrobeniusProbablePrime_monic_eq
+lemma IsFrobeniusProbablePrime.monic
   {n : ℕ}
   {f : _root_.Polynomial ℤ}
 -- given
   (h : IsFrobeniusProbablePrime n f) :
 -- imply
-  f.Monic := by
+  f.Monic :=
 -- proof
-  apply Nat.IsFrobeniusProbablePrime.monic h
+  h.1
+
+end Nat
+
+namespace Nat
 
 /--
 [IsFrobeniusProbablePrime.odd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FrobeniusPseudoprime.lean)
 -/
 @[path]
-private lemma IsFrobeniusProbablePrime_odd_eq
+lemma IsFrobeniusProbablePrime.odd
   {n : ℕ}
   {f : _root_.Polynomial ℤ}
 -- given
   (h : IsFrobeniusProbablePrime n f) :
 -- imply
-  Odd n := by
+  Odd n :=
 -- proof
-  apply Nat.IsFrobeniusProbablePrime.odd h
+  h.2.1
+
+end Nat
+
+namespace Nat
 
 /--
 [IsFrobeniusProbablePrime.one_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FrobeniusPseudoprime.lean)
 -/
 @[path]
-private lemma IsFrobeniusProbablePrime_one_lt_eq
+lemma IsFrobeniusProbablePrime.one_lt
   {n : ℕ}
   {f : _root_.Polynomial ℤ}
 -- given
   (h : IsFrobeniusProbablePrime n f) :
 -- imply
-  1 < n := by
+  1 < n :=
 -- proof
-  apply Nat.IsFrobeniusProbablePrime.one_lt h
+  h.2.2.1
+
+end Nat
+
+namespace Nat
 
 /--
 [IsFrobeniusPseudoprime.unfold](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FrobeniusPseudoprime.lean)
 -/
 @[path]
-private lemma IsFrobeniusPseudoprime_unfold_eq
+lemma IsFrobeniusPseudoprime.unfold
   {n : ℕ}
   {f : _root_.Polynomial ℤ} :
 -- imply
   IsFrobeniusPseudoprime n f ↔
-    (¬ n.Prime ∧ IsFrobeniusProbablePrime n f) := by
+    (¬ n.Prime ∧ IsFrobeniusProbablePrime n f) :=
 -- proof
-  apply Nat.IsFrobeniusPseudoprime.unfold n f
+  Iff.rfl
+
+end Nat
+
+namespace Nat
 
 /--
 [IsFrobeniusPseudoprime.composite](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FrobeniusPseudoprime.lean)
 -/
 @[path]
-private lemma IsFrobeniusPseudoprime_composite_eq
+lemma IsFrobeniusPseudoprime.composite
   {n : ℕ}
   {f : _root_.Polynomial ℤ}
 -- given
   (h : IsFrobeniusPseudoprime n f) :
 -- imply
-  ¬ n.Prime := by
+  ¬ n.Prime :=
 -- proof
-  apply Nat.IsFrobeniusPseudoprime.composite h
+  h.1
+
+end Nat
+
+namespace Nat
 
 /--
 [IsFrobeniusPseudoprime.probablePrime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FrobeniusPseudoprime.lean)
 -/
 @[path]
-private lemma IsFrobeniusPseudoprime_probablePrime_eq
+lemma IsFrobeniusPseudoprime.probablePrime
   {n : ℕ}
   {f : _root_.Polynomial ℤ}
 -- given
   (h : IsFrobeniusPseudoprime n f) :
 -- imply
-  IsFrobeniusProbablePrime n f := by
+  IsFrobeniusProbablePrime n f :=
 -- proof
-  apply Nat.IsFrobeniusPseudoprime.probablePrime h
+  h.2
+
+end Nat
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -4,11 +4,13 @@ import sympy.atlas.Combinatorics.SimpleGraph.Degeneracy
 open SimpleGraph
 
 
+namespace SimpleGraph
+
 /--
 [IsDegenerateOn.mono](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Degeneracy.lean)
 -/
 @[path]
-private lemma IsDegenerateOn_mono_eq
+lemma IsDegenerateOn.mono
   [Finite V]
   {G : SimpleGraph V}
   {U T : Set V}
@@ -19,13 +21,19 @@ private lemma IsDegenerateOn_mono_eq
 -- imply
   G.IsDegenerateOn U l := by
 -- proof
-  apply SimpleGraph.IsDegenerateOn.mono h hkl
+  intro W hWne hWU
+  obtain ⟨v, hvW, hv⟩ := h W hWne hWU
+  exact ⟨v, hvW, hv.trans hkl⟩
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsDegenerateOn.of_subset](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Degeneracy.lean)
 -/
 @[path]
-private lemma IsDegenerateOn_of_subset_eq
+lemma IsDegenerateOn.of_subset
   [Finite V]
   {G : SimpleGraph V}
   {U T : Set V}
@@ -36,13 +44,18 @@ private lemma IsDegenerateOn_of_subset_eq
 -- imply
   G.IsDegenerateOn T k := by
 -- proof
-  apply SimpleGraph.IsDegenerateOn.of_subset h hTU
+  intro W hWne hWT
+  exact h W hWne (hWT.trans hTU)
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [IsDegenerate.isDegenerateOn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Degeneracy.lean)
 -/
 @[path]
-private lemma IsDegenerate_isDegenerateOn_eq
+lemma IsDegenerate.isDegenerateOn
   [Finite V]
   {G : SimpleGraph V}
   {U T : Set V}
@@ -51,9 +64,12 @@ private lemma IsDegenerate_isDegenerateOn_eq
 -- given
   (h : G.IsDegenerate k) :
 -- imply
-  G.IsDegenerateOn U k := by
+  G.IsDegenerateOn U k :=
 -- proof
-  apply SimpleGraph.IsDegenerate.isDegenerateOn h U
+  h.of_subset (Set.subset_univ U)
+
+end SimpleGraph
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

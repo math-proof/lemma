@@ -5,6 +5,10 @@ Author: Muse Spark 1.3
 -/
 
 import sympy.atlas.Analysis.InnerProductSpace.DiscreteSpectrum
+import Lemma.Matrix.FiniteSublevelSet
+import Lemma.Matrix.Eq.of.All_Eq
+import Lemma.Matrix.In_SublevelFinset.is.Lt
+import Lemma.Matrix.RieszMean0.eq.CountingFunction
 import Mathlib.Analysis.Distribution.TestFunction
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
@@ -84,30 +88,4 @@ noncomputable def polyaEigenvalueBenchmark {n : ℕ}
   (2 * Real.pi) ^ 2 *
     ((((j + 1 : ℕ) : ℝ) /
       (unitBallVolume n * domainVolume Ω)) ^ (2 / (n : ℝ)))
-
-theorem unitBallVolume_nonneg (n : ℕ) : 0 ≤ unitBallVolume n :=
-  measureReal_nonneg
-
-theorem domainVolume_nonneg {n : ℕ}
-    (Ω : Opens (EuclideanSpace ℝ (Fin n))) : 0 ≤ domainVolume Ω :=
-  measureReal_nonneg
-
-theorem semiclassicalCountingCoefficient_nonneg {n : ℕ}
-    (Ω : Opens (EuclideanSpace ℝ (Fin n))) :
-    0 ≤ semiclassicalCountingCoefficient Ω := by
-  unfold semiclassicalCountingCoefficient
-  exact div_nonneg
-    (mul_nonneg (unitBallVolume_nonneg n) (domainVolume_nonneg Ω))
-    (pow_nonneg (mul_nonneg (by norm_num) Real.pi_nonneg) n)
-
-theorem polyaEigenvalueBenchmark_nonneg {n : ℕ}
-    (Ω : Opens (EuclideanSpace ℝ (Fin n))) (j : ℕ) :
-    0 ≤ polyaEigenvalueBenchmark Ω j := by
-  unfold polyaEigenvalueBenchmark
-  exact mul_nonneg
-    (pow_nonneg (mul_nonneg (by norm_num) Real.pi_nonneg) 2)
-    (Real.rpow_nonneg
-      (div_nonneg (Nat.cast_nonneg _)
-        (mul_nonneg (unitBallVolume_nonneg n) (domainVolume_nonneg Ω))) _)
-
 end EuclideanLaplacian

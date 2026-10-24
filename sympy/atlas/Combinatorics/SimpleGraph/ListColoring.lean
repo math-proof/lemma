@@ -25,17 +25,4 @@ def IsListColorable (G : SimpleGraph V) (q : ℕ) : Prop :=
 list-colorable with any smaller number of colors. -/
 def IsChoiceNumber (G : SimpleGraph V) (q : ℕ) : Prop :=
   G.IsListColorable q ∧ ∀ r < q, ¬G.IsListColorable r
-
-/-- List colorability is monotone in the number of colors required in each list. -/
-theorem IsListColorable.mono (hG : G.IsListColorable q) (hqr : q ≤ r) :
-    G.IsListColorable r := by
-  intro C _ lists hlists
-  exact hG C lists fun v => hqr.trans (hlists v)
-
-/-- A list-colorable graph is colorable with the same number of colors. -/
-theorem IsListColorable.colorable (hG : G.IsListColorable q) : G.Colorable q := by
-  let lists : V → Finset (Fin q) := fun _ => Finset.univ
-  obtain ⟨color, _⟩ := hG (Fin q) lists (by simp [lists])
-  exact ⟨color⟩
-
 end SimpleGraph

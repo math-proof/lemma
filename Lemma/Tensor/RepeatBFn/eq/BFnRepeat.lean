@@ -41,5 +41,4 @@ private lemma main
   rw [FlattenMap.eq.MapFlatten]
 
 
-
 -- created on 2026-08-15

@@ -18,5 +18,5 @@ private lemma main
     linarith [h₀]
 
 
--- created on 2023-04-13
+-- created on 2023-04-04
 -- updated on 2026-10-17

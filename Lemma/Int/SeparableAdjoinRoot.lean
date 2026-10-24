@@ -1,23 +1,53 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.FieldTheory.SeparableAdjoinRoot
 open scoped Polynomial
 open IntermediateField
-open Algebra
 
+
+namespace Algebra
 
 /--
 [isSeparable_iff_exists_monic_irreducible_separable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/FieldTheory/SeparableAdjoinRoot.lean)
 -/
 @[path]
-private lemma isSeparable_iff_exists_monic_irreducible_separable_eq
+lemma isSeparable_iff_exists_monic_irreducible_separable
   [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] :
 -- imply
   Algebra.IsSeparable K L ↔
       ∃ f : K[X], f.Monic ∧ Irreducible f ∧ f.Separable ∧
         Nonempty (L ≃ₐ[K] AdjoinRoot f) := by
 -- proof
-  apply Algebra.isSeparable_iff_exists_monic_irreducible_separable K L
+  constructor
+  · intro hsep
+    have := hsep
+    obtain ⟨α, hα⟩ := Field.exists_primitive_element K L
+    have hsepα : IsSeparable K α := Algebra.IsSeparable.isSeparable K α
+    have hInt : IsIntegral K α := hsepα.isIntegral
+    refine ⟨minpoly K α, minpoly.monic hInt, minpoly.irreducible hInt, hsepα, ?_⟩
+    · have e1 := IntermediateField.adjoinRootEquivAdjoin K hInt
+      have e2 : K⟮α⟯ ≃ₐ[K] L :=
+        (IntermediateField.equivOfEq hα).trans IntermediateField.topEquiv
+      exact ⟨e2.symm.trans e1.symm⟩
+  · rintro ⟨f, hfM, hfI, hfS, ⟨e⟩⟩
+    have : Fact (Irreducible f) := ⟨hfI⟩
+    have hf0 : f ≠ 0 := hfM.ne_zero
+    have hmin : minpoly K (AdjoinRoot.root f) = f := by
+      rw [AdjoinRoot.minpoly_root hf0, hfM.leadingCoeff, inv_one, map_one, mul_one]
+    have hroot : IsSeparable K (AdjoinRoot.root f) := by
+      change Polynomial.Separable (minpoly K (AdjoinRoot.root f))
+      rwa [hmin]
+    have : Algebra.IsSeparable K K⟮AdjoinRoot.root f⟯ :=
+      IntermediateField.isSeparable_adjoin_simple_iff_isSeparable K _ |>.mpr hroot
+    have e1 : AdjoinRoot (minpoly K (AdjoinRoot.root f)) ≃ₐ[K]
+      K⟮AdjoinRoot.root f⟯ :=
+      IntermediateField.adjoinRootEquivAdjoin K hroot.isIntegral
+    rw [hmin] at e1
+    have : Algebra.IsSeparable K (AdjoinRoot f) :=
+      Algebra.IsSeparable.of_algHom K _ e1.toAlgHom
+    exact Algebra.IsSeparable.of_algHom K _ e.toAlgHom
+
+end Algebra
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

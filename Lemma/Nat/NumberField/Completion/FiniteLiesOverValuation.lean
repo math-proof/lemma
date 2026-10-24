@@ -6,6 +6,25 @@ open WithZeroTopology
 open IsDedekindDomain.HeightOneSpectrum
 
 
+namespace IsDedekindDomain.HeightOneSpectrum
+
+/--
+[adicCompletionIntegersMap_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverValuation.lean)
+-/
+@[path]
+lemma adicCompletionIntegersMap_apply
+  [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
+  {v : HeightOneSpectrum (𝓞 K)}
+  {w : HeightOneSpectrum (𝓞 L)} [w.asIdeal.LiesOver v.asIdeal]
+  {x : v.adicCompletionIntegers K} :
+-- imply
+  ((adicCompletionIntegersMap v w x : w.adicCompletionIntegers L) :
+    w.adicCompletion L) = adicCompletionMap v w (x : v.adicCompletion K) :=
+-- proof
+  rfl
+
+end IsDedekindDomain.HeightOneSpectrum
+
 /--
 [valuation_adicCompletionMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverValuation.lean)
 -/
@@ -37,20 +56,6 @@ private lemma adicCompletionMap_mem_integers_eq
 -- proof
   apply IsDedekindDomain.HeightOneSpectrum.adicCompletionMap_mem_integers v w x hx
 
-/--
-[adicCompletionIntegersMap_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverValuation.lean)
--/
-@[path]
-private lemma adicCompletionIntegersMap_apply_eq
-  [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
-  {v : HeightOneSpectrum (𝓞 K)}
-  {w : HeightOneSpectrum (𝓞 L)} [w.asIdeal.LiesOver v.asIdeal]
-  {x : v.adicCompletionIntegers K} :
--- imply
-  ((adicCompletionIntegersMap v w x : w.adicCompletionIntegers L) :
-    w.adicCompletion L) = adicCompletionMap v w (x : v.adicCompletion K) := by
--- proof
-  apply IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegersMap_apply v w x
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

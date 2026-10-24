@@ -196,7 +196,6 @@ initialize registerBuiltinAttribute {
 }
 
 
-
 def Expr.mpr' (type value : Lean.Expr) (parity : ℕ := 0) (and : Bool := false) : CoreM (ℕ × Lean.Expr × Lean.Expr) := Expr.mp' type value parity true and
 
 initialize registerBuiltinAttribute {

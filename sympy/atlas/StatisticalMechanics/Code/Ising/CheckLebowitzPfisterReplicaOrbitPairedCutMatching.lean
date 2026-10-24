@@ -1,0 +1,20 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/CheckLebowitzPfisterReplicaOrbitPairedCutMatching.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitPairedCutMatching
+
+#print axioms StatMech.Ising.lpReplicaOffdiagCoupledPairedMatch_iff_output
+#print axioms StatMech.Ising.lpReplicaOffdiagCoupledPairedHall_of_outputCard
+#print axioms StatMech.Ising.lpReplicaOffdiagOrbitAtomCardInequality_of_coupledPairedOutputCard
+#print axioms StatMech.Ising.lpReplicaOffdiagCoupledPairedOutputCard_of_profileAllocation
+#print axioms StatMech.Ising.lpReplicaOffdiagOrbitAtomCardInequality_of_coupledPairedProfileAllocation
+#print axioms StatMech.Ising.lpReplicaAggregateProfileOrbitInequality_of_coupledPairedOutputCards
+#print axioms StatMech.Ising.lpReplicaMatchingDisconn_le_of_coupledPairedOutputCards
+#print axioms StatMech.Ising.lpReplicaMatchingFiveCurrentCoefficient_sum_nonpos_of_coupledPairedProfileAllocations

@@ -8,7 +8,7 @@ private lemma main
   {n : ℕ} [NeZero n]
   {f : ℕ → ℝ} :
 -- imply
-  ArgMax (Set.univ : Set (Fin n)) (fun i => f i) = ArgMax Set.univ fun i : Fin n => f ↑i := by
+  max⁻¹[i : Fin n] f i = max⁻¹[i : Fin n] f ↑i := by
 -- proof
   rfl
 

@@ -16,7 +16,7 @@ private lemma main
   have _hPxy_z : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
   have _hPxz : SinglePSpace π (x, z) :=
     PSpace_Joint.comm
-      (PSpace.of.PSpace_Joint.fst
+      (SinglePSpace.of.SinglePSpace.fst
         (PSpace_JointJoint.of.PSpace_Joint_Joint
           (PSpace_Joint.comm (PSpace_JointJoint.of.PSpace_Joint_Joint hP))))
   have _hPyxz : SinglePSpace π (y, x, z) := PSpace_Joint_Joint.of.PSpace_Joint_Joint hP
@@ -32,7 +32,7 @@ private lemma main
   let ν : MeasureTheory.Measure β := ReferenceMeasure.measure
   let ξ : MeasureTheory.Measure γ := ReferenceMeasure.measure
   have hL_yx : SinglePSpace π ((y, x), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hPyxz
-  have hPz : SinglePSpace π z := PSpace.of.PSpace_Joint.snd hPxz
+  have hPz : SinglePSpace π z := SinglePSpace.of.SinglePSpace.snd hPxz
   have hchain :
       ∀ᵐ b ∂ReferenceMeasure.measure,
         ∀ᵐ a ∂ReferenceMeasure.measure,

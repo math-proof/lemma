@@ -1,14 +1,193 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Bernoulli.FaulhaberBernoulliPolynomialSummation
-open MetaMathlibExt
 
+
+namespace MetaMathlibExt
+
+/--
+[poly_eq_of_deriv_eval_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Bernoulli/FaulhaberBernoulliPolynomialSummation.lean)
+-/
+@[path]
+private lemma poly_eq_of_deriv_eval_zero {P Q : Polynomial ℚ} (hd : P.derivative = Q.derivative)
+  (h0 : P.eval 0 = Q.eval 0) : P = Q := by
+  have hsub : (P - Q).derivative = 0 := by rw [Polynomial.derivative_sub, hd, sub_self]
+  have hPQ := Polynomial.eq_C_of_derivative_eq_zero hsub
+  have hcoeff : (P - Q).coeff 0 = 0 := by
+    simp only [Polynomial.coeff_zero_eq_eval_zero, Polynomial.eval_sub, h0, sub_self]
+  have hPQ0 : P - Q = 0 := by rw [hPQ, hcoeff, Polynomial.C_0]
+  exact sub_eq_zero.mp hPQ0
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[bernoulli_eval_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Bernoulli/FaulhaberBernoulliPolynomialSummation.lean)
+-/
+@[path]
+private lemma bernoulli_eval_eq (k : ℕ) (a : ℚ) :
+  (Polynomial.bernoulli k).eval a =
+    ∑ i ∈ Finset.range (k + 1), _root_.bernoulli i * (k.choose i : ℚ) * a ^ (k - i) := by
+  unfold Polynomial.bernoulli
+  rw [Polynomial.eval_finsetSum]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [Polynomial.eval_monomial]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[bernoulli_comp_add_C](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Bernoulli/FaulhaberBernoulliPolynomialSummation.lean)
+-/
+@[path]
+private lemma bernoulli_comp_add_C (k : ℕ) (a : ℚ) :
+  (Polynomial.bernoulli k).comp (Polynomial.X + Polynomial.C a) =
+    ∑ s ∈ Finset.range (k + 1),
+      Polynomial.C ((k.choose s : ℚ) * a ^ (k - s)) * Polynomial.bernoulli s := by
+  induction k with
+  | zero =>
+    simp [Polynomial.bernoulli_zero]
+  | succ k ih =>
+    apply poly_eq_of_deriv_eval_zero
+    · have hNCC : ((k : ℕ) : Polynomial ℚ).comp (Polynomial.X + Polynomial.C a)
+      = ((k : ℕ) : Polynomial ℚ) :=
+      map_natCast (Polynomial.compRingHom (Polynomial.X + Polynomial.C a)) k
+      have hK : ((k : Polynomial ℚ) + 1) = (((k + 1 : ℕ)) : Polynomial ℚ) := by simp
+      have hder : ((Polynomial.bernoulli (k + 1)).comp
+        (Polynomial.X + Polynomial.C a)).derivative
+        = (((k + 1 : ℕ)) : Polynomial ℚ) *
+          ((Polynomial.bernoulli k).comp (Polynomial.X + Polynomial.C a)) := by
+        rw [Polynomial.derivative_comp, Polynomial.derivative_bernoulli_add_one,
+          Polynomial.derivative_X_add_C, one_mul, Polynomial.mul_comp,
+          Polynomial.add_comp, Polynomial.one_comp, hNCC, hK]
+      rw [hder, ih]
+      have hRHS : (∑ s ∈ Finset.range (k + 1 + 1),
+        Polynomial.C ((((k + 1).choose s : ℕ) : ℚ) * a ^ (k + 1 - s)) *
+          Polynomial.bernoulli s).derivative
+        = (((k + 1 : ℕ)) : Polynomial ℚ) * (∑ t ∈ Finset.range (k + 1),
+          Polynomial.C (((k.choose t : ℕ) : ℚ) * a ^ (k - t)) *
+            Polynomial.bernoulli t) := by
+        rw [Polynomial.derivative_sum, Finset.sum_range_succ']
+        have hz : (Polynomial.C ((((k + 1).choose 0 : ℕ) : ℚ) * a ^ (k + 1 - 0)) *
+          Polynomial.bernoulli 0).derivative = 0 := by
+          simp
+        rw [hz, add_zero, Finset.mul_sum]
+        refine Finset.sum_congr rfl fun t ht => ?_
+        rw [Finset.mem_range] at ht
+        rw [Polynomial.derivative_C_mul, Polynomial.derivative_bernoulli]
+        have hCt1 : (((t + 1 : ℕ)) : Polynomial ℚ)
+          = Polynomial.C ((((t + 1 : ℕ))) : ℚ) := by exact_mod_cast rfl
+        have hCk1 : Polynomial.C ((((k + 1 : ℕ))) : ℚ)
+          = (((k + 1 : ℕ)) : Polynomial ℚ) := by exact_mod_cast rfl
+        have hbin : ((((k + 1).choose (t + 1) : ℕ)) : ℚ) * ((((t + 1 : ℕ))) : ℚ)
+          = ((((k + 1 : ℕ))) : ℚ) * ((((k.choose t : ℕ))) : ℚ) := by
+          have h := Nat.add_one_mul_choose_eq k t
+          have hQ := congrArg (Nat.cast : ℕ → ℚ) h
+          push_cast at hQ
+          have e1 : ((((t + 1 : ℕ))) : ℚ) = ((t : ℚ) + 1) := by simp
+          have e2 : ((((k + 1 : ℕ))) : ℚ) = ((k : ℚ) + 1) := by simp
+          rwa [e1, e2]
+        have hpow : k + 1 - (t + 1) = k - t := by omega
+        rw [hpow, show t + 1 - 1 = t from Nat.add_sub_cancel t 1]
+        have hC1 : Polynomial.C ((((k + 1).choose (t + 1) : ℕ)) : ℚ) *
+          (((t + 1 : ℕ)) : Polynomial ℚ)
+          = (((k + 1 : ℕ)) : Polynomial ℚ) *
+            Polynomial.C ((((k.choose t : ℕ))) : ℚ) := by
+          rw [hCt1, ← Polynomial.C_mul, hbin, Polynomial.C_mul, hCk1]
+        calc Polynomial.C ((((k + 1).choose (t + 1) : ℕ) : ℚ) * a ^ (k - t)) *
+          ((((t + 1 : ℕ)) : Polynomial ℚ) * Polynomial.bernoulli t)
+          = (Polynomial.C ((((k + 1).choose (t + 1) : ℕ)) : ℚ) *
+            (((t + 1 : ℕ)) : Polynomial ℚ)) *
+            (Polynomial.C (a ^ (k - t)) * Polynomial.bernoulli t) := by
+            rw [Polynomial.C_mul]
+            ring
+          _ = ((((k + 1 : ℕ)) : Polynomial ℚ) *
+            Polynomial.C ((((k.choose t : ℕ))) : ℚ)) *
+            (Polynomial.C (a ^ (k - t)) * Polynomial.bernoulli t) := by
+            rw [hC1]
+          _ = (((k + 1 : ℕ)) : Polynomial ℚ) * (Polynomial.C ((((k.choose t : ℕ)) : ℚ) *
+            a ^ (k - t)) * Polynomial.bernoulli t) := by
+            rw [Polynomial.C_mul]
+            ring
+      exact hRHS.symm
+    · rw [Polynomial.eval_comp]
+      simp only [Polynomial.eval_add, Polynomial.eval_X, Polynomial.eval_C, zero_add]
+      rw [bernoulli_eval_eq, Polynomial.eval_finsetSum]
+      refine Finset.sum_congr rfl fun s _ => ?_
+      rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.bernoulli_eval_zero]
+      ring
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[C_finset_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Bernoulli/FaulhaberBernoulliPolynomialSummation.lean)
+-/
+@[path]
+private lemma C_finset_sum (s : Finset ℕ) (f : ℕ → ℚ) :
+  ∑ j ∈ s, Polynomial.C (f j) = Polynomial.C (∑ j ∈ s, f j) := by
+  induction s using Finset.induction with
+  | empty => simp
+  | insert a s ha ih =>
+    rw [Finset.sum_insert ha, Finset.sum_insert ha, ih, ← Polynomial.C_add]
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
+
+/--
+[shifted_power_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Bernoulli/FaulhaberBernoulliPolynomialSummation.lean)
+-/
+@[path]
+private lemma shifted_power_sum (m n : ℕ) :
+  ((m : ℚ) + 1) * ∑ j ∈ Finset.range n, ((j : ℚ) + 1) ^ m =
+    (Polynomial.bernoulli (m + 1)).eval ((n : ℚ) + 1) +
+      (-1) ^ m * _root_.bernoulli (m + 1) := by
+  have eN : ((((n + 1 : ℕ))) : ℚ) = ((n : ℚ) + 1) := by simp
+  cases m with
+  | zero =>
+    rw [show (0 : ℕ) + 1 = 1 from rfl]
+    have hB1 : (Polynomial.bernoulli 1).eval ((n : ℚ) + 1) = (n : ℚ) + 1 - 1 / 2 := by
+      rw [Polynomial.bernoulli_one, Polynomial.eval_sub, Polynomial.eval_X,
+        Polynomial.eval_C]
+      ring
+    rw [hB1, _root_.bernoulli_one]
+    simp only [Nat.cast_zero, zero_add, one_mul, pow_zero, Finset.sum_const,
+      Finset.card_range, nsmul_eq_mul, mul_one, one_mul]
+    ring
+  | succ m =>
+    have hFaul := Polynomial.sum_range_pow_eq_bernoulli_sub (n + 1) (m + 1)
+    simp only [Nat.succ_eq_add_one] at hFaul
+    rw [eN, Finset.sum_range_succ'] at hFaul
+    have hz : ((((0 : ℕ))) : ℚ) ^ (m + 1) = 0 := by simp
+    rw [hz, add_zero] at hFaul
+    have hS : ∑ j ∈ Finset.range n, ((((j + 1 : ℕ))) : ℚ) ^ (m + 1)
+      = ∑ j ∈ Finset.range n, ((j : ℚ) + 1) ^ (m + 1) := by
+      refine Finset.sum_congr rfl fun j _ => ?_
+      rw [Nat.cast_add, Nat.cast_one]
+    rw [hS] at hFaul
+    obtain hev | hodd := Nat.even_or_odd (m + 1)
+    · rw [hev.neg_one_pow]
+      have hodd2 : Odd (m + 1 + 1) := hev.add_one
+      have hlt : 1 < m + 1 + 1 := by omega
+      have hB0 : _root_.bernoulli (m + 1 + 1) = 0 :=
+        _root_.bernoulli_eq_zero_of_odd hodd2 hlt
+      rw [hB0] at hFaul ⊢
+      linear_combination hFaul
+    · rw [hodd.neg_one_pow]
+      linear_combination hFaul
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [faulhaber_bernoulli_polynomial_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Bernoulli/FaulhaberBernoulliPolynomialSummation.lean)
 -/
 @[path]
-private lemma faulhaber_bernoulli_polynomial_sum_eq
+lemma faulhaber_bernoulli_polynomial_sum
   {k n : ℕ} :
 -- imply
   Finset.sum (Finset.range n) (fun j =>
@@ -19,7 +198,118 @@ private lemma faulhaber_bernoulli_polynomial_sum_eq
     (-1 : ℚ) ^ r * _root_.bernoulli (r + 1))) *
     Polynomial.bernoulli (k - r)) := by
 -- proof
-  apply MetaMathlibExt.faulhaber_bernoulli_polynomial_sum k n
+  have e1 : (Finset.sum (Finset.range n) (fun j =>
+    (Polynomial.bernoulli k).comp (Polynomial.X + Polynomial.C ((j : ℚ) + 1))))
+    = ∑ j ∈ Finset.range n, ∑ s ∈ Finset.range (k + 1),
+      Polynomial.C ((k.choose s : ℚ) * ((j : ℚ) + 1) ^ (k - s)) *
+        Polynomial.bernoulli s :=
+    Finset.sum_congr rfl fun j _ => bernoulli_comp_add_C k _
+  rw [e1, Finset.sum_comm]
+  have e2 : ∀ s ∈ Finset.range (k + 1),
+    (∑ j ∈ Finset.range n, Polynomial.C ((k.choose s : ℚ) * ((j : ℚ) + 1) ^ (k - s)) *
+      Polynomial.bernoulli s)
+    = Polynomial.C ((k.choose s : ℚ) *
+      ∑ j ∈ Finset.range n, ((j : ℚ) + 1) ^ (k - s)) *
+      Polynomial.bernoulli s := by
+    intro s _
+    calc ∑ j ∈ Finset.range n, Polynomial.C ((k.choose s : ℚ) * ((j : ℚ) + 1) ^ (k - s)) *
+      Polynomial.bernoulli s
+      = ∑ j ∈ Finset.range n, Polynomial.C (k.choose s : ℚ) *
+        (Polynomial.C (((j : ℚ) + 1) ^ (k - s)) * Polynomial.bernoulli s) := by
+        refine Finset.sum_congr rfl fun j _ => ?_
+        rw [Polynomial.C_mul, mul_assoc]
+      _ = Polynomial.C (k.choose s : ℚ) *
+        ∑ j ∈ Finset.range n, (Polynomial.C (((j : ℚ) + 1) ^ (k - s)) *
+          Polynomial.bernoulli s) := by
+        rw [Finset.mul_sum]
+      _ = Polynomial.C (k.choose s : ℚ) *
+        ((∑ j ∈ Finset.range n, Polynomial.C (((j : ℚ) + 1) ^ (k - s))) *
+          Polynomial.bernoulli s) := by
+        rw [Finset.sum_mul]
+      _ = Polynomial.C (k.choose s : ℚ) *
+        (Polynomial.C (∑ j ∈ Finset.range n, ((j : ℚ) + 1) ^ (k - s)) *
+          Polynomial.bernoulli s) := by
+        rw [C_finset_sum]
+      _ = Polynomial.C ((k.choose s : ℚ) *
+        ∑ j ∈ Finset.range n, ((j : ℚ) + 1) ^ (k - s)) *
+        Polynomial.bernoulli s := by
+        rw [Polynomial.C_mul, mul_assoc]
+  have e3 : (∑ s ∈ Finset.range (k + 1), ∑ j ∈ Finset.range n,
+    Polynomial.C ((k.choose s : ℚ) * ((j : ℚ) + 1) ^ (k - s)) *
+      Polynomial.bernoulli s)
+    = ∑ s ∈ Finset.range (k + 1), Polynomial.C ((k.choose s : ℚ) *
+      ∑ j ∈ Finset.range n, ((j : ℚ) + 1) ^ (k - s)) *
+      Polynomial.bernoulli s :=
+    Finset.sum_congr rfl e2
+  rw [e3, Finset.mul_sum]
+  refine Finset.sum_bij (fun s _ => k - s) ?hi ?hinj ?hsurj ?hterm
+  · intro s hs
+    rw [Finset.mem_range] at hs ⊢
+    omega
+  · intro s₁ hs₁ s₂ hs₂ heq
+    rw [Finset.mem_range] at hs₁ hs₂
+    omega
+  · intro r hr
+    rw [Finset.mem_range] at hr
+    refine ⟨k - r, Finset.mem_range.mpr (by omega), ?_⟩
+    exact Nat.sub_sub_self (by omega)
+  · intro s hs
+    have hsk : s ≤ k := by
+      rwa [Finset.mem_range, Nat.lt_succ_iff] at hs
+    have ekk : k - (k - s) = s := Nat.sub_sub_self hsk
+    show Polynomial.C ((k.choose s : ℚ) *
+      ∑ j ∈ Finset.range n, ((j : ℚ) + 1) ^ (k - s)) * Polynomial.bernoulli s
+      = Polynomial.C (1 / ((k : ℚ) + 1)) *
+        (Polynomial.C ((Nat.choose (k + 1) ((k - s) + 1) : ℚ) *
+          ((Polynomial.bernoulli ((k - s) + 1)).eval ((n : ℚ) + 1) +
+            (-1 : ℚ) ^ (k - s) * _root_.bernoulli ((k - s) + 1))) *
+          Polynomial.bernoulli (k - (k - s)))
+    rw [ekk]
+    have hPS := shifted_power_sum (k - s) n
+    have hBn := Nat.add_one_mul_choose_eq k (k - s)
+    rw [Nat.choose_symm hsk] at hBn
+    have hBinQ := congrArg (Nat.cast : ℕ → ℚ) hBn
+    push_cast at hBinQ
+    have hd : ((((k - s : ℕ))) : ℚ) + 1 ≠ 0 := by positivity
+    have hK : ((k : ℚ) + 1) ≠ 0 := by positivity
+    have hSV : ∑ j ∈ Finset.range n, ((j : ℚ) + 1) ^ (k - s)
+      = ((Polynomial.bernoulli ((k - s) + 1)).eval ((n : ℚ) + 1) +
+        (-1 : ℚ) ^ (k - s) * _root_.bernoulli ((k - s) + 1)) /
+        (((((k - s : ℕ))) : ℚ) + 1) := by
+      rwa [eq_div_iff hd, mul_comm]
+    have hscal : (k.choose s : ℚ) * ∑ j ∈ Finset.range n, ((j : ℚ) + 1) ^ (k - s)
+      = ((Nat.choose (k + 1) ((k - s) + 1) : ℚ) / ((k : ℚ) + 1)) *
+        ((Polynomial.bernoulli ((k - s) + 1)).eval ((n : ℚ) + 1) +
+          (-1 : ℚ) ^ (k - s) * _root_.bernoulli ((k - s) + 1)) := by
+      rw [hSV]
+      field_simp
+      linear_combination
+        ((Polynomial.bernoulli ((k - s) + 1)).eval ((n : ℚ) + 1) +
+          (-1 : ℚ) ^ (k - s) * _root_.bernoulli ((k - s) + 1)) * hBinQ
+    calc Polynomial.C ((k.choose s : ℚ) *
+      ∑ j ∈ Finset.range n, ((j : ℚ) + 1) ^ (k - s)) * Polynomial.bernoulli s
+      = Polynomial.C (((Nat.choose (k + 1) ((k - s) + 1) : ℚ) / ((k : ℚ) + 1)) *
+        ((Polynomial.bernoulli ((k - s) + 1)).eval ((n : ℚ) + 1) +
+          (-1 : ℚ) ^ (k - s) * _root_.bernoulli ((k - s) + 1))) *
+        Polynomial.bernoulli s := by
+        rw [hscal]
+      _ = Polynomial.C (1 / ((k : ℚ) + 1)) *
+        (Polynomial.C ((Nat.choose (k + 1) ((k - s) + 1) : ℚ) *
+          ((Polynomial.bernoulli ((k - s) + 1)).eval ((n : ℚ) + 1) +
+            (-1 : ℚ) ^ (k - s) * _root_.bernoulli ((k - s) + 1))) *
+          Polynomial.bernoulli s) := by
+        have e : ((Nat.choose (k + 1) ((k - s) + 1) : ℚ) / ((k : ℚ) + 1)) *
+          ((Polynomial.bernoulli ((k - s) + 1)).eval ((n : ℚ) + 1) +
+            (-1 : ℚ) ^ (k - s) * _root_.bernoulli ((k - s) + 1))
+          = (1 / ((k : ℚ) + 1)) *
+            ((Nat.choose (k + 1) ((k - s) + 1) : ℚ) *
+              ((Polynomial.bernoulli ((k - s) + 1)).eval ((n : ℚ) + 1) +
+                (-1 : ℚ) ^ (k - s) * _root_.bernoulli ((k - s) + 1))) := by
+          ring
+        rw [e, Polynomial.C_mul, mul_assoc]
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

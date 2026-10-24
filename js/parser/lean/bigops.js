@@ -123,6 +123,73 @@ export class LeanBigOperator extends LeanArgs {
         return [bound.lhs, peel(set.args[1])];
     }
 
+
+    /**
+     * `∑/∏ i ∈ Finset.range (e + 1), f` / `∑/∏ i ∈ range (e + 1), f` → `[i, e]`,
+     * rendered as `\sum_{i=0}^{e}` (same closed-interval style as `icoClosedBound`).
+     */
+    rangeClosedBound() {
+        if (!(this instanceof Lean_sum || this instanceof Lean_prod)) return null;
+        const peel = (n) => (n instanceof L.LeanParenthesis ? n.arg : n);
+        const bound = this.bound;
+        if (!(bound instanceof L.Lean_in)) return null;
+        const set = peel(bound.rhs);
+        if (!(set instanceof L.LeanArgsSpaceSeparated) || set.args.length !== 2) return null;
+        const fn = peel(set.args[0]);
+        const isRange =
+            (fn instanceof L.LeanToken && fn.text === 'range') ||
+            (fn instanceof L.LeanProperty &&
+                fn.rhs instanceof L.LeanToken && fn.rhs.text === 'range' &&
+                fn.lhs instanceof L.LeanToken && fn.lhs.text === 'Finset');
+        if (!isRange) return null;
+        const top = peel(set.args[1]);
+        if (!(top instanceof L.LeanAdd) || !(top.rhs instanceof L.LeanToken) || top.rhs.text !== '1')
+            return null;
+        return [bound.lhs, top.lhs];
+    }
+
+    /**
+     * `∑/∏ i ∈ Finset.Iio k, f` / `∑/∏ i ∈ Iio k, f` → `[i, k]`, rendered as `\\sum_{i < k}`.
+     * Without this, membership falls through to interval TeX `(-\\infty, k)`.
+     */
+    iioBound() {
+        if (!(this instanceof Lean_sum || this instanceof Lean_prod)) return null;
+        const peel = (n) => (n instanceof L.LeanParenthesis ? n.arg : n);
+        const bound = this.bound;
+        if (!(bound instanceof L.Lean_in)) return null;
+        const set = peel(bound.rhs);
+        if (!(set instanceof L.LeanArgsSpaceSeparated) || set.args.length !== 2) return null;
+        const fn = peel(set.args[0]);
+        const isIio =
+            (fn instanceof L.LeanToken && fn.text === 'Iio') ||
+            (fn instanceof L.LeanProperty &&
+                fn.rhs instanceof L.LeanToken && fn.rhs.text === 'Iio' &&
+                fn.lhs instanceof L.LeanToken && fn.lhs.text === 'Finset');
+        if (!isIio) return null;
+        return [bound.lhs, peel(set.args[1])];
+    }
+
+    /**
+     * `∑/∏ i ∈ Finset.Iic k, f` / `∑/∏ i ∈ Iic k, f` → `[i, k]`, rendered as `\\sum_{i \\le k}`.
+     * Without this, membership falls through to interval TeX `(-\\infty, k]`.
+     */
+    iicBound() {
+        if (!(this instanceof Lean_sum || this instanceof Lean_prod)) return null;
+        const peel = (n) => (n instanceof L.LeanParenthesis ? n.arg : n);
+        const bound = this.bound;
+        if (!(bound instanceof L.Lean_in)) return null;
+        const set = peel(bound.rhs);
+        if (!(set instanceof L.LeanArgsSpaceSeparated) || set.args.length !== 2) return null;
+        const fn = peel(set.args[0]);
+        const isIic =
+            (fn instanceof L.LeanToken && fn.text === 'Iic') ||
+            (fn instanceof L.LeanProperty &&
+                fn.rhs instanceof L.LeanToken && fn.rhs.text === 'Iic' &&
+                fn.lhs instanceof L.LeanToken && fn.lhs.text === 'Finset');
+        if (!isIic) return null;
+        return [bound.lhs, peel(set.args[1])];
+    }
+
     /**
      * `∑/∏ i ∈ Finset.Ico a (b + 1), f` → `[i, a, b]`, rendered as `\\prod_{i=a}^{b}`.
      */
@@ -149,8 +216,14 @@ export class LeanBigOperator extends LeanArgs {
     latexFormat() {
         if (!(this instanceof L.LeanQuantifier) && this.finRangeBound())
             return `${this.command}\\limits_{%s < %s} {%s}`;
+        if (!(this instanceof L.LeanQuantifier) && !this.superscript && this.rangeClosedBound())
+            return `${this.command}\\limits_{%s=0}^{%s} {%s}`;
         if (!(this instanceof L.LeanQuantifier) && !this.superscript && this.rangeBound())
             return `${this.command}\\limits_{%s < %s} {%s}`;
+        if (!(this instanceof L.LeanQuantifier) && !this.superscript && this.iioBound())
+            return `${this.command}\\limits_{%s < %s} {%s}`;
+        if (!(this instanceof L.LeanQuantifier) && !this.superscript && this.iicBound())
+            return `${this.command}\\limits_{%s \\le %s} {%s}`;
         if (!this.superscript && this.icoClosedBound())
             return `${this.command}\\limits_{%s=%s}^{%s} {%s}`;
         const cmd = this.command;
@@ -165,11 +238,28 @@ export class LeanBigOperator extends LeanArgs {
                 const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
                 return [i.toLatex(syntax), peel(n).toLatex(syntax), this.scope.toLatex(syntax)];
             }
+            const rngClosed = !this.superscript && this.rangeClosedBound();
+            if (rngClosed) {
+                const [i, e] = rngClosed;
+                return [i.toLatex(syntax), e.toLatex(syntax), this.scope.toLatex(syntax)];
+            }
             const rng = !this.superscript && this.rangeBound();
             if (rng) {
                 const [i, n] = rng;
                 const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
                 return [i.toLatex(syntax), peel(n).toLatex(syntax), this.scope.toLatex(syntax)];
+            }
+            const iio = !this.superscript && this.iioBound();
+            if (iio) {
+                const [i, k] = iio;
+                const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
+                return [i.toLatex(syntax), peel(k).toLatex(syntax), this.scope.toLatex(syntax)];
+            }
+            const iic = !this.superscript && this.iicBound();
+            if (iic) {
+                const [i, k] = iic;
+                const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
+                return [i.toLatex(syntax), peel(k).toLatex(syntax), this.scope.toLatex(syntax)];
             }
             const ico = !this.superscript && this.icoClosedBound();
             if (ico) {
@@ -254,28 +344,47 @@ export class Lean_sum extends LeanBigOperator {
         return '∑';
     }
     /**
-     * `∑ «y.bvar» t, f`: a bound variable is never red, so the index and the body's `y t` that stands
-     * for the bound value (`(y t) = «y.bvar» t` inside `ℙ[π](…)`) are drawn in the normal colour.
+     * `∑ «y.bvar»[t], f` / `∑ «y.bvar» t, f`: a bound variable is never red, so the index and the
+     * body's `y[t]` / `y t` that stands for the bound value (`y[t] = «y.bvar»[t]` / `y t = «y.bvar» t`
+     * inside `ℙ[π](…)`) are drawn in the normal colour.
      */
     latexArgs(syntax) {
         const bnd = this.bound;
+        if (!this.scope) return super.latexArgs(syntax);
+        let quote = null;
+        let keyApp = '';
+        let keyGet = '';
         if (
-            this.scope &&
             bnd instanceof L.LeanArgsSpaceSeparated && bnd.args.length === 2 &&
             bnd.args[0] instanceof L.LeanDoubleAngleQuotation
         ) {
-            const base = bnd.args[0].boundValueLhs();
+            quote = bnd.args[0];
+            keyApp = strStmt(bnd).trim(); // `«y.bvar» t`
+            keyGet = `${strStmt(bnd.args[0]).trim()}[${strStmt(bnd.args[1]).trim()}]`; // `«y.bvar»[t]`
+        } else if (
+            bnd instanceof L.LeanGetElem &&
+            bnd.args[0] instanceof L.LeanDoubleAngleQuotation
+        ) {
+            quote = bnd.args[0];
+            keyGet = strStmt(bnd).trim(); // `«y.bvar»[t]`
+            keyApp = `${strStmt(bnd.args[0]).trim()} ${strStmt(bnd.args[1]).trim()}`; // `«y.bvar» t`
+        }
+        if (quote) {
+            const base = quote.boundValueLhs();
             if (base instanceof L.LeanToken) {
-                const key = strStmt(bnd).trim();
                 const seen = new Set();
                 const walk = (n) => {
                     if (!n || typeof n !== 'object' || seen.has(n)) return;
                     seen.add(n);
-                    if (n instanceof L.LeanEq && strStmt(n.rhs).trim() === key) {
-                        let l = n.lhs;
-                        while (l instanceof L.LeanParenthesis) l = l.arg;
-                        if (l instanceof L.LeanArgsSpaceSeparated) l = l.args[0];
-                        if (l instanceof L.LeanToken && l.text === base.text) l.kwargs.neverRed = true;
+                    if (n instanceof L.LeanEq) {
+                        const rhs = strStmt(n.rhs).trim();
+                        if (rhs === keyApp || rhs === keyGet) {
+                            let l = n.lhs;
+                            while (l instanceof L.LeanParenthesis) l = l.arg;
+                            if (l instanceof L.LeanArgsSpaceSeparated) l = l.args[0];
+                            if (l instanceof L.LeanGetElem) l = l.args[0];
+                            if (l instanceof L.LeanToken && l.text === base.text) l.kwargs.neverRed = true;
+                        }
                     }
                     if (Array.isArray(n.args)) n.args.forEach(walk);
                 };
@@ -288,8 +397,12 @@ export class Lean_sum extends LeanBigOperator {
     latexFormat() {
         if (!this.superscript) return super.latexFormat();
         const op = `\\mathop{${this.command}\\nolimits${this.superscript}}`;
-        if (this.finRangeBound() || this.rangeBound())
+        if (this.rangeClosedBound())
+            return `${op}\\limits_{%s=0}^{%s} {%s}`;
+        if (this.finRangeBound() || this.rangeBound() || this.iioBound())
             return `${op}\\limits_{%s < %s} {%s}`;
+        if (this.iicBound())
+            return `${op}\\limits_{%s \\le %s} {%s}`;
         return `${op}\\limits_{\\substack{%s}} {%s}`;
     }
 }

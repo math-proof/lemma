@@ -41,23 +41,4 @@ The assumption `[NeZero n]` expresses the usual requirement that the natural-num
 modulus be positive. -/
 noncomputable def ramanujanSum (n : ℕ) [NeZero n] (t : ℤ) : ℂ :=
   ∑ a : (ZMod n)ˣ, ZMod.stdAddChar ((a : ZMod n) * (t : ZMod n))
-
-/-- The Ramanujan sum at zero is Euler's totient function. -/
-@[simp]
-theorem ramanujanSum_zero (n : ℕ) [NeZero n] :
-    ramanujanSum n 0 = Nat.totient n := by
-  simp [ramanujanSum, ZMod.card_units_eq_totient]
-
-/-- Every Ramanujan sum of modulus one equals one. -/
-@[simp]
-theorem ramanujanSum_modulus_one (t : ℤ) : ramanujanSum 1 t = 1 := by
-  have ht : (t : ZMod 1) = 0 := Subsingleton.elim _ _
-  simp [ramanujanSum, ht]
-
-/-- A Ramanujan sum is periodic in its integer argument with period the modulus. -/
-@[simp]
-theorem ramanujanSum_add_mul_modulus (n : ℕ) [NeZero n] (t k : ℤ) :
-    ramanujanSum n (t + k * n) = ramanujanSum n t := by
-  simp [ramanujanSum]
-
 end MetaMathlibExt

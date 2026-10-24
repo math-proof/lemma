@@ -1,5 +1,5 @@
 import Lemma.Random.ProbCond.eq.DivMulProb_Prod_ProbCond.of.NeProbJoint__0.All_Indep
-import Lemma.Random.Ne_0.of.Ne_0.Measurable
+import Lemma.Random.Prob.ne.Zero.of.NeProb_0
 import sympy.concrete.expr_with_limits
 open MeasureTheory ProbabilityTheory Measure Random
 open scoped ENNReal.ToRealCoe
@@ -43,12 +43,10 @@ private lemma main
   have : ∀ j : Fin m, Measurable y[j] :=
     fun j => (measurable_pi_apply j).comp ‹Fact (Measurable y[:m])›.out
   have : SinglePSpace π y[:m] :=
-    SinglePSpace.of.EqMeasureCount.Measurable ‹Fact (Measurable y[:m])›.out
-      CountableMeasure.measure_eq_count
+    SinglePSpace.of.Measurable ‹Fact (Measurable y[:m])›.out
   have : ∀ i : Fin n, SinglePSpace π (x i) :=
-    fun i => SinglePSpace.of.EqMeasureCount.Measurable
+    fun i => SinglePSpace.of.Measurable
       ((measurable_pi_apply i).comp ‹Fact (Measurable x[:n])›.out)
-      CountableMeasure.measure_eq_count
   have : ∀ i : Fin n, SinglePSpace π (x[i], show Ω → Fin m → β from y[:m]) :=
     fun i => SinglePSpace.of.Measurable.Measurable
       ((measurable_pi_apply i).comp ‹Fact (Measurable x[:n])›.out)
@@ -79,8 +77,9 @@ private lemma main
       rfl
     have hgv : g («x.bvar»[:n], «y.bvar»[:m]) = («x.bvar»[i], «y.bvar»[:m]) := rfl
     have h1z : π.prob z («x.bvar»[:n], «y.bvar»[:m]) ≠ 0 := h₁
-    simpa [hgz, hgv] using Ne_0.of.Ne_0.Measurable (x := z) (g := g)
-      («x.bvar»[:n], «y.bvar»[:m]) hz hg h1z
+    have : Fact (Measurable z) := ⟨hz⟩
+    simpa [hgz, hgv] using Prob.ne.Zero.of.NeProb_0 (x := z) (g := g)
+      («x.bvar»[:n], «y.bvar»[:m]) hg (h := h1z)
   have hMne : ℙ[π](y[:m] = «y.bvar»[:m]) ≠ 0 := by
     have i0 : Fin n := ⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩
     have h1 := h1i i0
@@ -93,8 +92,9 @@ private lemma main
     have hsnd : Prod.snd ∘ z = y[:m] := by
       funext ω
       rfl
-    simpa [hsnd] using Ne_0.of.Ne_0.Measurable (x := z) (g := Prod.snd)
-      («x.bvar»[i0], «y.bvar»[:m]) hz measurable_snd h1z
+    have : Fact (Measurable z) := ⟨hz⟩
+    simpa [hsnd] using Prob.ne.Zero.of.NeProb_0 (x := z) (g := Prod.snd)
+      («x.bvar»[i0], «y.bvar»[:m]) measurable_snd (h := h1z)
   have hMtop : ℙ[π](y[:m] = «y.bvar»[:m]) ≠ ⊤ := by
     rw [Measure.prob,
       show (ReferenceMeasure.measure : Measure (Fin m → β)) = Measure.count from rfl,

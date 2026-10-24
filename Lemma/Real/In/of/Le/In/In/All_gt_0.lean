@@ -3,7 +3,6 @@ import sympy.Basic
 open Set
 
 
-
 @[path]
 private lemma main
   {a b x0 x1 : ℝ}

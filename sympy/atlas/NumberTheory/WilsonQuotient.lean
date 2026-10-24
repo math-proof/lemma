@@ -30,30 +30,4 @@ For a prime `p` the quotient is integral by Wilson's theorem `p ∣ (p-1)! + 1`
 needed in the lemmas, not in the type of the definition. -/
 def wilsonQuotient (p : ℕ) : ℤ :=
   ((Nat.factorial (p - 1) : ℤ) + 1) / (p : ℤ)
-
-/-- Exact recovery: `p * W(p) = (p-1)! + 1` for a prime `p`.
-
-This is the `ℤ`-form of the identity `(p-1)! = -1 + p * w_p` used in
-Avitabile–Mattarei 2308.16034, `AH.tex` ll. 315–321. By Wilson's theorem the
-division in `wilsonQuotient` is exact, so multiplying back recovers the numerator. -/
-theorem mul_wilsonQuotient (p : ℕ) (hp : Nat.Prime p) :
-    (p : ℤ) * wilsonQuotient p = (Nat.factorial (p - 1) : ℤ) + 1 := by
-  unfold wilsonQuotient
-  have h_dvd : (p : ℤ) ∣ ((Nat.factorial (p - 1) : ℤ) + 1) := by
-    let _ := Fact.mk hp
-    apply (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp
-    push_cast
-    rw [ZMod.wilsons_lemma p]
-    simp
-  exact Int.mul_ediv_cancel' h_dvd
-
-/-- Factorial form of the recovery identity: `(p-1)! = p * W(p) - 1`.
-
-Equivalent to `mul_wilsonQuotient` with the `+1` moved, matching the
-display `(p-1)! = -1 + p * w_p` from Avitabile–Mattarei `AH.tex` ll. 315–321. -/
-theorem factorial_eq_mul_wilsonQuotient_sub_one (p : ℕ) (hp : Nat.Prime p) :
-    (Nat.factorial (p - 1) : ℤ) = (p : ℤ) * wilsonQuotient p - 1 := by
-  have h := mul_wilsonQuotient p hp
-  omega
-
 end Int

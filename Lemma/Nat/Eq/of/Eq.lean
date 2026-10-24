@@ -30,5 +30,5 @@ private lemma geometric_progression
     ring
 
 
--- created on 2018-05-25
+-- created on 2019-04-05
 -- updated on 2026-09-27

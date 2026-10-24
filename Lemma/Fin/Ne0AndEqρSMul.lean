@@ -1,18 +1,14 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma FrobChareqEngine.engine3
-    {K A V : Type*} [Field K] [CommRing A] [Algebra K A] [AddCommGroup V] [Module K V]
-    [Module A V] [IsScalarTower K A V] [Module.Finite K V] [FaithfulSMul A V]
-    (𝔪 : Ideal A) (h𝔪 : 𝔪.IsMaximal) : ∃ v : V, v ≠ 0 ∧ ∀ a ∈ 𝔪, a • v = 0 := by
+
+universe u
+
+private lemma FrobChareqEngine.engine3 {K A V : Type u} [Field K] [CommRing A] [Algebra K A] [AddCommGroup V] [Module K V] [Module A V] [IsScalarTower K A V] [Module.Finite K V] [FaithfulSMul A V] (𝔪 : Ideal A) (h𝔪 : 𝔪.IsMaximal) : ∃ v : V, v ≠ 0 ∧ ∀ a ∈ 𝔪, a • v = 0 := by
   classical
   have hinj : Function.Injective (Algebra.lsmul K K V : A →ₐ[K] Module.End K V) := by
     intro a b hab
@@ -34,25 +30,24 @@ private lemma FrobChareqEngine.engine3
     refine ⟨⟨h𝔪.isPrime, bot_le⟩, ?_⟩
     rintro q ⟨hq, -⟩ hle
     have hqmax : q.IsMaximal := (IsArtinianRing.isPrime_iff_isMaximal q).mp hq
-    exact (hqmax.eq_of_le h𝔪.ne_top hle).ge
+    refine (hqmax.eq_of_le h𝔪.ne_top hle).ge
   have hass := Module.associatedPrimes.minimalPrimes_annihilator_subset_associatedPrimes A V hmin
   change (⊥ : Submodule A V).IsAssociatedPrime 𝔪 at hass
   rw [Submodule.isAssociatedPrime_iff] at hass
   obtain ⟨-, x, hx⟩ := hass
   refine ⟨x, ?_, fun a ha => ?_⟩
-  · rintro rfl
+  ·
+    rintro rfl
     apply h𝔪.ne_top
     rw [hx, eq_top_iff]
     intro a _
     rw [Submodule.mem_colon_singleton, smul_zero]
     exact Submodule.zero_mem _
-  · have : a ∈ (⊥ : Submodule A V).colon {x} := hx ▸ ha
+  ·
+    have : a ∈ (⊥ : Submodule A V).colon {x} := hx ▸ ha
     rw [Submodule.mem_colon_singleton] at this
     simpa using this
-private lemma FrobChareqEngine.engine4
-    {K A V : Type*} [Field K] [CommRing A] [Algebra K A] [AddCommGroup V] [Module K V]
-    [Module A V] [IsScalarTower K A V] [Module.Finite K V] [FaithfulSMul A V]
-    (χ : A →ₐ[K] K) : ∃ v : V, v ≠ 0 ∧ ∀ a : A, a • v = χ a • v := by
+private lemma FrobChareqEngine.engine4 {K A V : Type u} [Field K] [CommRing A] [Algebra K A] [AddCommGroup V] [Module K V] [Module A V] [IsScalarTower K A V] [Module.Finite K V] [FaithfulSMul A V] (χ : A →ₐ[K] K) : ∃ v : V, v ≠ 0 ∧ ∀ a : A, a • v = χ a • v := by
   have hsurj : Function.Surjective χ := fun c => ⟨algebraMap K A c, χ.commutes c⟩
   have hmax : (RingHom.ker χ).IsMaximal := RingHom.ker_isMaximal_of_surjective χ hsurj
   obtain ⟨v, hv, hkill⟩ :=
@@ -61,17 +56,8 @@ private lemma FrobChareqEngine.engine4
   have hmem : a - algebraMap K A (χ a) ∈ RingHom.ker χ := by
     rw [RingHom.mem_ker, map_sub, AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply, sub_self]
   have := hkill _ hmem
-  rw [sub_smul, sub_eq_zero, algebraMap_smul] at this
-  exact this
-private lemma FrobChareqEngine.engine5a
-    {K V T D : Type*} [Field K] [AddCommGroup V] [Module K V] [CommRing T] [CommRing D]
-    [Module.Finite ℤ D] [Module.Free ℤ D]
-    (ρ : T →+* Module.End K V) (χ : T →+* K) (π : T →+* D)
-    (χbar : D →+* K) (hχ : ∀ t, χbar (π t) = χ t)
-    (e : D →+ V) (heT : ∀ t d, e (π t * d) = ρ t (e d))
-    (hind : ∀ (n : ℕ) (d : Fin n → D), LinearIndependent ℤ d →
-      LinearIndependent K (fun i => e (d i))) :
-    ∃ v : V, v ≠ 0 ∧ ∀ t : T, ρ t v = χ t • v := by
+  rwa [sub_smul, sub_eq_zero, algebraMap_smul] at this
+private lemma FrobChareqEngine.engine5a {K V T D : Type u} [Field K] [AddCommGroup V] [Module K V] [CommRing T] [CommRing D] [Module.Finite ℤ D] [Module.Free ℤ D] (ρ : T →+* Module.End K V) (χ : T →+* K) (π : T →+* D) (χbar : D →+* K) (hχ : ∀ t, χbar (π t) = χ t) (e : D →+ V) (heT : ∀ t d, e (π t * d) = ρ t (e d)) (hind : ∀ (n : ℕ) (d : Fin n → D), LinearIndependent ℤ d → LinearIndependent K (fun i => e (d i))) : ∃ v : V, v ≠ 0 ∧ ∀ t : T, ρ t v = χ t • v := by
   classical
   let n := Fintype.card (Module.Free.ChooseBasisIndex ℤ D)
   let b : Module.Basis (Fin n) ℤ D := (Module.Free.chooseBasis ℤ D).reindex (Fintype.equivFin _)
@@ -88,11 +74,13 @@ private lemma FrobChareqEngine.engine5a
   have hι : ∀ (c : K) (d : D), ι (c ⊗ₜ d) = c • e d := fun c d => rfl
   have hιT : ∀ (t : T) (a : K ⊗[ℤ] D), ρ t (ι a) = ι ((1 : K) ⊗ₜ (π t) * a) := by
     intro t a
-    induction a using TensorProduct.induction_on with
-    | zero => simp
-    | tmul c d =>
-        rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, hι, hι, map_smul, heT]
-    | add a₁ a₂ h₁ h₂ => rw [mul_add, map_add, map_add, map_add, h₁, h₂]
+    refine TensorProduct.inductionOn a ?_ ?_
+    ·
+      intro c d
+      rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, hι, hι, map_smul, heT]
+    ·
+      intro a₁ a₂ h₁ h₂
+      rw [mul_add, map_add, map_add, map_add, h₁, h₂]
   let bA : Module.Basis (Fin n) K (K ⊗[ℤ] D) := Algebra.TensorProduct.basis K b
   have hyK : LinearIndependent K (fun i => e (b i)) := hind n b b.linearIndependent
   have hιb : ∀ i, ι (bA i) = e (b i) := by
@@ -113,7 +101,19 @@ private lemma FrobChareqEngine.engine5a
 [Module_End_exists_ne_zero_forall_apply_eq_smul_of_ringHom](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_End_exists_ne_zero_forall_apply_eq_smul_of_ringHom.lean)
 -/
 @[path]
-private lemma main {K V T : Type*} [Field K] [CharZero K] [AddCommGroup V] [Module K V] [CommRing T] (ρ : T →+* Module.End K V) (L : Submodule ℤ V) (hL : L.FG) (hstab : ∀ (t : T), ∀ x ∈ L, ρ t x ∈ L) (hfaith : ∀ t : T, (∀ x ∈ L, ρ t x = 0) → t = 0) (hfree : ∀ (n : ℕ) (y : Fin n → V), (∀ i, y i ∈ L) → LinearIndependent ℤ y → LinearIndependent K y) (χ : T →+* K) : ∃ v : V, v ≠ 0 ∧ ∀ t : T, ρ t v = χ t • v := by
+private lemma main
+  {K V T : Type u} [Field K] [CharZero K] [AddCommGroup V] [Module K V] [CommRing T]
+  (ρ : T →+* Module.End K V)
+  (L : Submodule ℤ V)
+  (χ : T →+* K)
+  -- given
+  (hL : L.FG)
+  (hstab : ∀ (t : T), ∀ x ∈ L, ρ t x ∈ L)
+  (hfaith : ∀ t : T, (∀ x ∈ L, ρ t x = 0) → t = 0)
+  (hfree : ∀ (n : ℕ) (y : Fin n → V), (∀ i, y i ∈ L) → LinearIndependent ℤ y → LinearIndependent K y) :
+  -- imply
+  ∃ v : V, v ≠ 0 ∧ ∀ t : T, ρ t v = χ t • v := by
+  -- proof
   classical
   let modTV : Module T V := Module.compHom V ρ
   have hsmulT : ∀ (t : T) (v : V), t • v = ρ t v := fun _ _ => rfl
@@ -126,7 +126,7 @@ private lemma main {K V T : Type*} [Field K] [CharZero K] [AddCommGroup V] [Modu
     refine ⟨fun n hn a b hab => ?_⟩
     have h : (n : K) • a = (n : K) • b := by
       simpa only [Nat.cast_smul_eq_nsmul] using hab
-    exact smul_right_injective V (Nat.cast_ne_zero.mpr hn) h
+    refine smul_right_injective V (Nat.cast_ne_zero.mpr hn) h
   let hLTtf : IsAddTorsionFree LT := by
     refine ⟨fun n hn a b hab => ?_⟩
     apply Subtype.ext
@@ -153,8 +153,7 @@ private lemma main {K V T : Type*} [Field K] [CharZero K] [AddCommGroup V] [Modu
     have h := congrArg (fun f : Module.End ℤ LT => ((f ⟨x, hx⟩ : LT) : V)) hst
     simp only [RingHom.toAddMonoidHom_eq_coe, AddMonoidHom.coe_toIntLinearMap,
       AddMonoidHom.coe_coe, ψ, Module.toModuleEnd_apply, DistribSMul.toLinearMap_apply] at h
-    rw [map_sub, LinearMap.sub_apply, sub_eq_zero]
-    exact h
+    rwa [map_sub, LinearMap.sub_apply, sub_eq_zero]
   let _ : Module.Finite ℤ T := Module.Finite.of_injective _ hψ
   let _ : IsNoetherianRing T := IsNoetherianRing.of_finite ℤ T
   have hann : Module.annihilator T LT = ⊥ := by
@@ -167,7 +166,8 @@ private lemma main {K V T : Type*} [Field K] [CharZero K] [AddCommGroup V] [Modu
   let _ : (RingHom.ker χ).IsPrime := RingHom.ker_isPrime χ
   obtain ⟨𝔓, h𝔓min, h𝔓le⟩ :=
     Ideal.exists_minimalPrimes_le (show (⊥ : Ideal T) ≤ RingHom.ker χ from bot_le)
-  have hmin : 𝔓 ∈ (Module.annihilator T LT).minimalPrimes := by rw [hann]; exact h𝔓min
+  have hmin : 𝔓 ∈ (Module.annihilator T LT).minimalPrimes := by
+    rwa [hann]
   have hass := Module.associatedPrimes.minimalPrimes_annihilator_subset_associatedPrimes T LT hmin
   change (⊥ : Submodule T LT).IsAssociatedPrime 𝔓 at hass
   rw [Submodule.isAssociatedPrime_iff] at hass
@@ -176,7 +176,7 @@ private lemma main {K V T : Type*} [Field K] [CharZero K] [AddCommGroup V] [Modu
   have hmem𝔓 : ∀ t : T, t ∈ 𝔓 ↔ ρ t (x : V) = 0 := by
     intro t
     rw [hx, Submodule.mem_colon_singleton, Submodule.mem_bot, Subtype.ext_iff]
-    exact Iff.rfl
+    refine Iff.rfl
   have hxL : (x : V) ∈ L := x.2
   let e : (T ⧸ 𝔓) →ₗ[T] V :=
     Submodule.liftQ 𝔓 (LinearMap.toSpanSingleton T V (x : V)) (fun t ht => by
@@ -214,7 +214,8 @@ private lemma main {K V T : Type*} [Field K] [CharZero K] [AddCommGroup V] [Modu
   intro n d hd
   have h1 : LinearIndependent ℤ (fun i => e (d i)) := by
     have hker : LinearMap.ker (e.restrictScalars ℤ) = ⊥ := LinearMap.ker_eq_bot.mpr he_inj
-    exact hd.map' (e.restrictScalars ℤ) hker
-  exact hfree n _ (fun i => he_memL _) h1
+    refine hd.map' (e.restrictScalars ℤ) hker
+  refine hfree n _ (fun i => he_memL _) h1
+
 
 -- created on 2026-10-20

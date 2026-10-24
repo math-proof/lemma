@@ -1,0 +1,24 @@
+import Mathlib
+import sympy.Basic
+import sympy.analysis.MeasureTheory.Section_1_1_1
+open BoundedInterval
+open Pointwise
+open IsElementary
+
+
+/--
+[IsElementary.measure_nonneg](https://github.com/teorth/analysis/blob/main/Analysis/MeasureTheory/Section_1_1_1.lean)
+-/
+@[path]
+private lemma main
+  {d:ℕ}
+  {E: Set (EuclideanSpace' d)}
+-- given
+  (hE: IsElementary E) :
+-- imply
+  0 ≤ hE.measure :=
+-- proof
+  IsElementary.measure_nonneg hE
+
+
+-- created on 2026-10-22

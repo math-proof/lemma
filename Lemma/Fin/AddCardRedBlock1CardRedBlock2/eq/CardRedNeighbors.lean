@@ -1,0 +1,22 @@
+import Mathlib
+import sympy.Basic
+import sympy.analysis.Misc.erdos_613
+open Classical
+open scoped BigOperators
+open PikhurkoN5.V
+open PikhurkoN5
+
+
+/--
+[redBlocks_partition_card](https://github.com/teorth/analysis/blob/main/Analysis/Misc/erdos_613.lean)
+-/
+@[path]
+private lemma main
+  {color : Sym2 V → Fin 2} :
+-- imply
+  (redBlock1 color).card + (redBlock2 color).card = (redNeighbors color).card :=
+-- proof
+  PikhurkoN5.redBlocks_partition_card color
+
+
+-- created on 2026-10-22

@@ -1,4 +1,4 @@
-import Lemma.Random.Prob.eq.Measure.of.Eq_Count
+import Lemma.Random.EqProb
 open MeasureTheory Measure Random
 
 
@@ -24,13 +24,11 @@ private lemma main
     π (x ⁻¹' {«x.bvar»} ∩ y ⁻¹' {«y.bvar»}) / π (y ⁻¹' {«y.bvar»}) := by
 -- proof
   have := hP
-  have hαβ : ReferenceMeasure.measure (α := α × β) = Measure.count :=
-    CountableMeasure.measure_eq_count
   have hxy : AEMeasurable (x, y) π := PSpace.aemeasurable
   have hy : AEMeasurable y π := hxy.snd
   have h₁ : ℙ[π](x = «x.bvar» ∧ y = «y.bvar») =
       π (x ⁻¹' {«x.bvar»} ∩ y ⁻¹' {«y.bvar»}) := by
-    rw [Prob.eq.Measure.of.Eq_Count hαβ]
+    rw [EqProb]
     congr 1
     ext ω
     simp [JointRandomSymbol, Prod.ext_iff]

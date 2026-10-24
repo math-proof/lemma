@@ -7,32 +7,32 @@ import sympy.atlas.NumberTheory.FactorialRatio
 [factorialProd_nil](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma factorialProd_nil_eq
+lemma factorialProd_nil
   {n : ℕ} :
 -- imply
-  factorialProd [] n = 1 := by
+  factorialProd [] n = 1 :=
 -- proof
-  apply factorialProd_nil n
+  rfl
 
 /--
 [factorialProd_cons](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma factorialProd_cons_eq
+lemma factorialProd_cons
   {a : ℕ}
   {L : List ℕ}
   {n : ℕ} :
 -- imply
   factorialProd (a :: L) n =
-    Nat.factorial (a * n) * factorialProd L n := by
+    Nat.factorial (a * n) * factorialProd L n :=
 -- proof
-  apply factorialProd_cons a L n
+  rfl
 
 /--
 [factorialProd_perm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma factorialProd_perm_eq
+lemma factorialProd_perm
   {L₁ L₂ : List ℕ}
   {n : ℕ}
 -- given
@@ -40,101 +40,106 @@ private lemma factorialProd_perm_eq
 -- imply
   factorialProd L₁ n = factorialProd L₂ n := by
 -- proof
-  apply factorialProd_perm h n
+  unfold factorialProd
+  exact (h.map _).prod_eq
 
 /--
 [factorialProd_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma factorialProd_zero_eq
+lemma factorialProd_zero
   {L : List ℕ} :
 -- imply
   factorialProd L 0 = 1 := by
 -- proof
-  apply factorialProd_zero L
+  unfold factorialProd
+  apply List.prod_eq_one
+  intro x hx
+  obtain ⟨a, _, rfl⟩ := List.mem_map.mp hx
+  rw [Nat.mul_zero, Nat.factorial_zero]
 
 /--
 [factorialProd_dvd_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma factorialProd_dvd_zero_eq
+lemma factorialProd_dvd_zero
   {A B : List ℕ} :
 -- imply
   factorialProd B 0 ∣ factorialProd A 0 := by
 -- proof
-  apply factorialProd_dvd_zero A B
+  rw [factorialProd_zero, factorialProd_zero]
 
 /--
 [isIntegralFactorialRatio_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma isIntegralFactorialRatio_iff_eq
+lemma isIntegralFactorialRatio_iff
   {A B : List ℕ} :
 -- imply
   IsIntegralFactorialRatio A B ↔
     (∀ a ∈ A, 0 < a) ∧ (∀ b ∈ B, 0 < b) ∧ A.sum = B.sum ∧
-    ∀ n : ℕ, factorialProd B n ∣ factorialProd A n := by
+    ∀ n : ℕ, factorialProd B n ∣ factorialProd A n :=
 -- proof
-  apply isIntegralFactorialRatio_iff A B
+  Iff.rfl
 
 /--
 [IsIntegralFactorialRatio.pos_left](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma IsIntegralFactorialRatio_pos_left_eq
+lemma IsIntegralFactorialRatio.pos_left
   {A B : List ℕ}
 -- given
   (h : IsIntegralFactorialRatio A B) :
 -- imply
-  ∀ a ∈ A, 0 < a := by
+  ∀ a ∈ A, 0 < a :=
 -- proof
-  apply IsIntegralFactorialRatio.pos_left h
+  h.1
 
 /--
 [IsIntegralFactorialRatio.pos_right](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma IsIntegralFactorialRatio_pos_right_eq
+lemma IsIntegralFactorialRatio.pos_right
   {A B : List ℕ}
 -- given
   (h : IsIntegralFactorialRatio A B) :
 -- imply
-  ∀ b ∈ B, 0 < b := by
+  ∀ b ∈ B, 0 < b :=
 -- proof
-  apply IsIntegralFactorialRatio.pos_right h
+  h.2.1
 
 /--
 [IsIntegralFactorialRatio.sum_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma IsIntegralFactorialRatio_sum_eq_eq
+lemma IsIntegralFactorialRatio.sum_eq
   {A B : List ℕ}
 -- given
   (h : IsIntegralFactorialRatio A B) :
 -- imply
-  A.sum = B.sum := by
+  A.sum = B.sum :=
 -- proof
-  apply IsIntegralFactorialRatio.sum_eq h
+  h.2.2.1
 
 /--
 [IsIntegralFactorialRatio.dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma IsIntegralFactorialRatio_dvd_eq
+lemma IsIntegralFactorialRatio.dvd
   {A B : List ℕ}
   {n : ℕ}
 -- given
   (h : IsIntegralFactorialRatio A B) :
 -- imply
-  factorialProd B n ∣ factorialProd A n := by
+  factorialProd B n ∣ factorialProd A n :=
 -- proof
-  apply IsIntegralFactorialRatio.dvd h n
+  h.2.2.2 n
 
 /--
 [IsIntegralFactorialRatio.mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma IsIntegralFactorialRatio_mk_eq
+lemma IsIntegralFactorialRatio.mk
   {A B : List ℕ}
 -- given
   (hA : ∀ a ∈ A, 0 < a)
@@ -142,15 +147,15 @@ private lemma IsIntegralFactorialRatio_mk_eq
   (hsum : A.sum = B.sum)
   (hdvd : ∀ n : ℕ, factorialProd B n ∣ factorialProd A n) :
 -- imply
-  IsIntegralFactorialRatio A B := by
+  IsIntegralFactorialRatio A B :=
 -- proof
-  apply IsIntegralFactorialRatio.mk hA hB hsum hdvd
+  ⟨hA, hB, hsum, hdvd⟩
 
 /--
 [isIntegralFactorialRatio_perm_left](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma isIntegralFactorialRatio_perm_left_eq
+lemma isIntegralFactorialRatio_perm_left
   {A A' B : List ℕ}
 -- given
   (hperm : List.Perm A A')
@@ -158,13 +163,21 @@ private lemma isIntegralFactorialRatio_perm_left_eq
 -- imply
   IsIntegralFactorialRatio A' B := by
 -- proof
-  apply isIntegralFactorialRatio_perm_left hperm h
+  obtain ⟨hA, hB, hsum, hdvd⟩ := h
+  refine ⟨?_, hB, ?_, ?_⟩
+  · intro a ha
+    exact hA a ((hperm.symm.mem_iff).mp ha)
+  · rw [← hperm.sum_eq]
+    exact hsum
+  · intro n
+    rw [← factorialProd_perm hperm]
+    exact hdvd n
 
 /--
 [isIntegralFactorialRatio_perm_right](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma isIntegralFactorialRatio_perm_right_eq
+lemma isIntegralFactorialRatio_perm_right
   {A B B' : List ℕ}
 -- given
   (hperm : List.Perm B B')
@@ -172,59 +185,84 @@ private lemma isIntegralFactorialRatio_perm_right_eq
 -- imply
   IsIntegralFactorialRatio A B' := by
 -- proof
-  apply isIntegralFactorialRatio_perm_right hperm h
+  obtain ⟨hA, hB, hsum, hdvd⟩ := h
+  refine ⟨hA, ?_, ?_, ?_⟩
+  · intro b hb
+    exact hB b ((hperm.symm.mem_iff).mp hb)
+  · rw [← hperm.sum_eq]
+    exact hsum
+  · intro n
+    rw [← factorialProd_perm hperm]
+    exact hdvd n
 
 /--
 [isIntegralFactorialRatio_perm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma isIntegralFactorialRatio_perm_eq
+lemma isIntegralFactorialRatio_perm
   {A A' B B' : List ℕ}
 -- given
   (hA : List.Perm A A')
   (hB : List.Perm B B')
   (h : IsIntegralFactorialRatio A B) :
 -- imply
-  IsIntegralFactorialRatio A' B' := by
+  IsIntegralFactorialRatio A' B' :=
 -- proof
-  apply isIntegralFactorialRatio_perm hA hB h
+  isIntegralFactorialRatio_perm_right hB (isIntegralFactorialRatio_perm_left hA h)
 
 /--
 [isIntegralFactorialRatio_refl](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma isIntegralFactorialRatio_refl_eq
+lemma isIntegralFactorialRatio_refl
   {L : List ℕ}
 -- given
   (hpos : ∀ a ∈ L, 0 < a) :
 -- imply
-  IsIntegralFactorialRatio L L := by
+  IsIntegralFactorialRatio L L :=
 -- proof
-  apply isIntegralFactorialRatio_refl L hpos
+  ⟨hpos, hpos, rfl, fun _ => dvd_rfl⟩
 
 /--
 [isIntegralFactorialRatio_singleton_self](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma isIntegralFactorialRatio_singleton_self_eq
+lemma isIntegralFactorialRatio_singleton_self
   {c : ℕ}
 -- given
   (hc : 0 < c) :
 -- imply
   IsIntegralFactorialRatio [c] [c] := by
 -- proof
-  apply isIntegralFactorialRatio_singleton_self c hc
+  refine ⟨?_, ?_, rfl, fun _ => dvd_rfl⟩
+  · intro a ha
+    rwa [List.mem_singleton.mp ha]
+  · intro b hb
+    rwa [List.mem_singleton.mp hb]
 
 /--
 [isIntegralFactorialRatio_centralBinom](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean)
 -/
 @[path]
-private lemma isIntegralFactorialRatio_centralBinom_eq
+lemma isIntegralFactorialRatio_centralBinom
   :
 -- imply
   IsIntegralFactorialRatio [2] [1, 1] := by
 -- proof
-  apply isIntegralFactorialRatio_centralBinom
+  refine ⟨?_, ?_, rfl, ?_⟩
+  · intro a ha
+    rw [List.mem_singleton.mp ha]
+    decide
+  · intro b hb
+    simp only [List.mem_cons, List.not_mem_nil, or_false, or_self] at hb
+    rw [hb]
+    decide
+  · intro n
+    have h := Nat.factorial_mul_factorial_dvd_factorial_add n n
+    have h2 : n + n = 2 * n := by omega
+    rw [h2] at h
+    simpa [factorialProd] using h
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

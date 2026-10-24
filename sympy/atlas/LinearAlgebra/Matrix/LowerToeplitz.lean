@@ -19,24 +19,4 @@ Exact source-span SHA-256 including terminal LF:
 Grounded concept: `jis_grounded_6e7ca1c0ec8f4d9d675959b3`. -/
 def lowerToeplitz {R : Type*} [Zero R] (a : ℕ → R) : Matrix ℕ ℕ R :=
   fun i j => if j ≤ i then a (i - j) else 0
-
-/-- Below-diagonal (and diagonal) entries of a lower-triangular Toeplitz matrix. -/
-@[simp]
-theorem lowerToeplitz_apply_of_le {R : Type*} [Zero R] (a : ℕ → R) {i j : ℕ}
-    (h : j ≤ i) : lowerToeplitz a i j = a (i - j) := by
-  simp [lowerToeplitz, h]
-
-/-- Above-diagonal entries of a lower-triangular Toeplitz matrix vanish. -/
-@[simp]
-theorem lowerToeplitz_apply_of_gt {R : Type*} [Zero R] (a : ℕ → R) {i j : ℕ}
-    (h : i < j) : lowerToeplitz a i j = 0 := by
-  simp [lowerToeplitz, Nat.not_le.mpr h]
-
-/-- Diagonal entries of a lower-triangular Toeplitz matrix equal `a 0`. -/
-@[simp]
-theorem lowerToeplitz_apply_diag {R : Type*} [Zero R] (a : ℕ → R) (i : ℕ) :
-    lowerToeplitz a i i = a 0 := by
-  have h : i ≤ i := Nat.le_refl i
-  rw [lowerToeplitz_apply_of_le a h, Nat.sub_self]
-
 end Matrix

@@ -1,0 +1,22 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPolynomialEndpointConvergence.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPolynomialEndpointConvergence
+
+set_option linter.style.longLine false
+
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.isingFermionicPolynomialSide_pos
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.tendsto_isingFermionicPolynomialMesh
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.tendsto_isingFermionicPolynomialMesh_fourthOrder
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexEndpointPolynomialBound_nonneg
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceEndpointPolynomialBound_nonneg
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.PhysicalEndpointLocalizedRobinInputs.ofPolynomialData
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.PhysicalEndpointLocalizedRobinInputs.primitive_convergence_away_polynomial
+#print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.PhysicalEndpointLocalizedRobinInputs.primitive_convergence_away_polynomial_of_lipschitz

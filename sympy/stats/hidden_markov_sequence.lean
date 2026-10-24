@@ -7,9 +7,9 @@ import stdlib.List
 import sympy.core.numbers
 
 /-- Sequential (first-order, hidden) Markov structure of the prefix joint probabilities used by the
-py CRF lemmas.  `P t ys` is `Pr(x[:t+1] = x_obs[:t+1], y[:t+1] = ys[:t+1])` for the fixed observed
-sequence, `π a = Pr(y[0] = a)`, `T a b = Pr(y[i] = b | y[i-1] = a)` (time-homogeneous) and
-`E i b = Pr(x[i] = x_obs[i] | y[i] = b)`.  The py independence assumptions
+py CRF lemmas.  `P t ys` is `ℙ(x[:t+1] = x_obs[:t+1], y[:t+1] = ys[:t+1])` for the fixed observed
+sequence, `π a = ℙ(y[0] = a)`, `T a b = ℙ(y[i] = b | y[i-1] = a)` (time-homogeneous) and
+`E i b = ℙ(x[i] = x_obs[i] | y[i] = b)`.  The py independence assumptions
 (`x[k] | x[:k] & y[:k] = x[k]`, `y[k] | y[:k] = y[k] | y[k-1]`, `y[k] | x[:k] = y[k]`) are used in py
 only through the one-step factorization recorded here. -/
 def IsHiddenMarkovSeq {Y : Type*} (P : ℕ → (ℕ → Y) → ℝ) (π : Y → ℝ) (T : Y → Y → ℝ) (E : ℕ → Y → ℝ) : Prop :=
@@ -21,14 +21,14 @@ open MeasureTheory
 open scoped ENNReal.ToRealCoe
 
 /-- Generic form of `IsHiddenMarkovPr`: the one-step factorization of an abstract prefix-probability family `P`
-(`IsHiddenMarkovPr` is this with `P t ys := Pr(x[:t+1] = xo[:t+1], y[:t+1] = ys[:t+1])`).
+(`IsHiddenMarkovPr` is this with `P t ys := ℙ(x[:t+1] = xo[:t+1], y[:t+1] = ys[:t+1])`).
 Sequential (first-order, hidden) Markov structure of the prefix joint probabilities used by the
 py CRF lemmas, stated directly in probability notation.  `y i : Ω → Y` are the hidden labels,
 `x i : Ω → X` the observations and `xo i` the fixed observed value of `x i`.
-`P t ys` is `Pr(x[:t+1] = xo[:t+1], y[:t+1] = ys[:t+1])` and satisfies the one-step factorization
+`P t ys` is `ℙ(x[:t+1] = xo[:t+1], y[:t+1] = ys[:t+1])` and satisfies the one-step factorization
 
-  `P 0 ys = Pr(x[0] = xo[0] | y[0] = ys[0]) * Pr(y[0] = ys[0])`,
-  `P (t+1) ys = P t ys * (Pr(y[t+1] = ys[t+1] | y[t] = ys[t]) * Pr(x[t+1] = xo[t+1] | y[t+1] = ys[t+1]))`
+  `P 0 ys = ℙ(x[0] = xo[0] | y[0] = ys[0]) * ℙ(y[0] = ys[0])`,
+  `P (t+1) ys = P t ys * (ℙ(y[t+1] = ys[t+1] | y[t] = ys[t]) * ℙ(x[t+1] = xo[t+1] | y[t+1] = ys[t+1]))`
 
 which is all the py independence assumptions
 (`x[k] | x[:k] & y[:k] = x[k]`, `y[k] | y[:k] = y[k] | y[k-1]`, `y[k] | x[:k] = y[k]`) are used for. -/
@@ -89,6 +89,15 @@ def Function.getSlice {β : Type*} [FunSlice β] (x : ℕ → β) (s : Slice) : 
 @[app_unexpander Function.getSlice]
 def Function.getSlice.unexpand := Slice.getSliceUnexpand
 
+/-- Closed Python slices on `Fun ℕ α` (`f[:n]`, `f[a:b]`, …): same macros as bare `ℕ → α`, resolved
+via `f.getSlice` → `Function.getSlice f.toFun`.  Reducible so `SinglePSpace` / joint coercions see the
+bare-function slice.  Open slices `f[t:]` stay `Fun.getSliceFrom` in `sympy.core.function`. -/
+abbrev Fun.getSlice {α : Type*} [FunSlice α] (f : Fun ℕ α) (s : Slice) : FunSlice.Out α s :=
+  Function.getSlice f.toFun s
+
+@[app_unexpander Fun.getSlice]
+def Fun.getSlice.unexpand := Slice.getSliceUnexpand
+
 
 /-! ### Joint history of several processes: `(x, y, …)[:n]`
 
@@ -114,9 +123,9 @@ macro_rules
 /-- The py first-order hidden Markov assumptions in probability notation (py `markov_assumptions` + `Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM`):
 for every label sequence `ys`,
 
-  `Pr(x[:1] = xo[:1], y[:1] = ys[:1]) = Pr(x[0] = xo[0] | y[0] = ys[0]) * Pr(y[0] = ys[0])`,
-  `Pr(x[:t+2] = xo[:t+2], y[:t+2] = ys[:t+2]) = Pr(x[:t+1] = xo[:t+1], y[:t+1] = ys[:t+1])
-      * (Pr(y[t+1] = ys[t+1] | y[t] = ys[t]) * Pr(x[t+1] = xo[t+1] | y[t+1] = ys[t+1]))`. -/
+  `ℙ(x[:1] = xo[:1], y[:1] = ys[:1]) = ℙ(x[0] = xo[0] | y[0] = ys[0]) * ℙ(y[0] = ys[0])`,
+  `ℙ(x[:t+2] = xo[:t+2], y[:t+2] = ys[:t+2]) = ℙ(x[:t+1] = xo[:t+1], y[:t+1] = ys[:t+1])
+      * (ℙ(y[t+1] = ys[t+1] | y[t] = ys[t]) * ℙ(x[t+1] = xo[t+1] | y[t+1] = ys[t+1]))`. -/
 def IsHiddenMarkovPr {Ω Y X : Type*} [MeasurableSpace Ω] [ReferenceMeasure Y] [ReferenceMeasure X]
     [Countable Y] [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
     (π : Measure Ω) (x : ℕ → Ω → X) (y : ℕ → Ω → Y) (xo : ℕ → X)
@@ -133,3 +142,4 @@ def IsHiddenMarkovPr {Ω Y X : Type*} [MeasurableSpace Ω] [ReferenceMeasure Y] 
 
 
 -- created on 2026-09-27
+-- updated on 2026-10-22

@@ -1,0 +1,23 @@
+import Mathlib
+import sympy.Basic
+import sympy.analysis.Section_8_1
+open Chapter8
+open Chapter8.Nat hiding min
+open Classical
+
+
+/--
+[Nat.min_eq_find](https://github.com/teorth/analysis/blob/main/Analysis/Section_8_1.lean)
+-/
+@[path]
+private lemma main
+  {X : Set ℕ}
+-- given
+  (hX : X.Nonempty) :
+-- imply
+  Chapter8.Nat.min X = Nat.find hX :=
+-- proof
+  Chapter8.Nat.min_eq_find hX
+
+
+-- created on 2026-10-22

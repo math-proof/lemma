@@ -26,7 +26,7 @@ in the regular (kernel) sense; every finite action sum `∑ u, π_θ(u | x) * �
 * `Wkd θ k x = 𝔼[r[t+k] | s[t] = x]`;
 * ;
 * ;
-* `P1kd θ p x y = Pr(s[t+1] = y | s[t] = x) = ∫ u, π_θ(u | x) * p x u y du`, the density (w.r.t. the reference measure
+* `P1kd θ p x y = ℙ(s[t+1] = y | s[t] = x) = ∫ u, π_θ(u | x) * p x u y du`, the density (w.r.t. the reference measure
   of `S`) of the next state when `p x u` is the density of `M.env.trans (x, u)`.
 
 The trajectory law `M.traj θ` / `M θ` is the Ionescu–Tulcea measure of the stage chain on `ℕ → ℝ × S × A`,
@@ -113,7 +113,7 @@ noncomputable def Vkd (M : DensityModel Θ S A) (θ : Θ) (γ : ℝ) (x : S) : �
 noncomputable def Qkd (M : DensityModel Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
   M.rkd x u + γ * ∫ y, M.Vkd θ γ y ∂(M.env.trans (x, u))
 
-/-- `P1kd θ p x y = Pr(s[t+1] = y | s[t] = x) = ∫ u, π_θ(u | x) * p(y | x, u) du`, the next-state density
+/-- `P1kd θ p x y = ℙ(s[t+1] = y | s[t] = x) = ∫ u, π_θ(u | x) * p(y | x, u) du`, the next-state density
 when `p x u` is a density of the transition `M.env.trans (x, u)` -/
 noncomputable def P1kd (M : DensityModel Θ S A) (θ : Θ) (p : S → A → S → ℝ) (x y : S) : ℝ :=
   ∫ u, M.policy.prob θ x u * p x u y ∂ReferenceMeasure.measure

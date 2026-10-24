@@ -23,8 +23,8 @@ private lemma finrank_eq_length_aux
         rw [← not_subsingleton_iff_nontrivial]
         apply hM
       let _ : IsArtinian L M := isArtinian_of_tower k (inferInstance : IsArtinian k M)
-      let _ : IsAtomic (Submodule L M) :=
-        isAtomic_of_orderBot_wellFounded_lt (wellFounded_lt : WellFounded ((· < ·) : Submodule L M → Submodule L M → Prop))
+      let _ : WellFoundedLT (Submodule L M) :=
+        ⟨(wellFounded_lt : WellFounded ((· < ·) : Submodule L M → Submodule L M → Prop))⟩
       obtain ⟨N, hNat⟩ := IsAtomic.exists_atom (Submodule L M)
       let hN : IsSimpleModule L N := by
         rw [isSimpleModule_iff_isAtom]

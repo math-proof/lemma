@@ -1,24 +1,22 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
 
 /--
 [Subalgebra_exists_fg_le_forall_comap_inclusion_mem_of_isOpen](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Subalgebra_exists_fg_le_forall_comap_inclusion_mem_of_isOpen.lean)
 -/
 @[path]
 private lemma main
-    {S : Type u} [CommRing S] (S₀ : Subalgebra ℤ S) (h₀ : S₀.FG)
-    (U : Set (PrimeSpectrum ↥S₀)) (hU : IsOpen U)
-    (hUS : ∀ p : PrimeSpectrum S, PrimeSpectrum.comap (algebraMap ↥S₀ S) p ∈ U) :
-    ∃ (S₁ : Subalgebra ℤ S) (h : S₀ ≤ S₁), S₁.FG ∧
-      ∀ q : PrimeSpectrum ↥S₁, PrimeSpectrum.comap (Subalgebra.inclusion h).toRingHom q ∈ U := by
+  {S : Type u} [CommRing S] (S₀ : Subalgebra ℤ S) (h₀ : S₀.FG)
+  (U : Set (PrimeSpectrum ↥S₀)) (hU : IsOpen U)
+  (hUS : ∀ p : PrimeSpectrum S, PrimeSpectrum.comap (algebraMap ↥S₀ S) p ∈ U) :
+  -- imply
+  ∃ (S₁ : Subalgebra ℤ S) (h : S₀ ≤ S₁), S₁.FG ∧ ∀ q : PrimeSpectrum ↥S₁, PrimeSpectrum.comap (Subalgebra.inclusion h).toRingHom q ∈ U := by
+  -- proof
   classical
   set φ : ↥S₀ →+* S := algebraMap ↥S₀ S with hφ
   have hx : ∀ p : PrimeSpectrum S, ∃ x : ↥S₀, ((PrimeSpectrum.basicOpen x : Set (PrimeSpectrum ↥S₀)) ⊆ U) ∧ φ x ∉ p.asIdeal := by
@@ -27,10 +25,7 @@ private lemma main
       PrimeSpectrum.isTopologicalBasis_basic_opens.exists_subset_of_mem_open (hUS p) hU
     exact ⟨x, hvU, hxv⟩
   choose x hxU hxp using hx
-  obtain ⟨t, ht⟩ := isCompact_univ.elim_finite_subcover
-    (fun p : PrimeSpectrum S => ((PrimeSpectrum.basicOpen (φ (x p)) : TopologicalSpace.Opens (PrimeSpectrum S)) : Set (PrimeSpectrum S)))
-    (fun p => (PrimeSpectrum.basicOpen (φ (x p))).isOpen)
-    (fun p _ => Set.mem_iUnion_of_mem p (hxp p))
+  obtain ⟨t, ht⟩ := isCompact_univ.elim_finite_subcover (fun p : PrimeSpectrum S => ((PrimeSpectrum.basicOpen (φ (x p)) : TopologicalSpace.Opens (PrimeSpectrum S)) : Set (PrimeSpectrum S))) (fun p => (PrimeSpectrum.basicOpen (φ (x p))).isOpen) (fun p _ => Set.mem_iUnion_of_mem p (hxp p))
   have hspan : Ideal.span (Set.range fun i : ↥t => φ (x i)) = ⊤ := by
     by_contra hne
     obtain ⟨M, hM, hle⟩ := Ideal.exists_le_maximal _ hne
@@ -38,13 +33,13 @@ private lemma main
     simp only [Set.mem_iUnion] at hmem
     obtain ⟨i, hi, hiM⟩ := hmem
     apply (PrimeSpectrum.mem_basicOpen _ _).mp hiM
-    exact hle (Ideal.subset_span ⟨⟨i, hi⟩, rfl⟩)
+    apply hle (Ideal.subset_span ⟨⟨i, hi⟩, rfl⟩)
   obtain ⟨a, ha⟩ := Ideal.mem_span_range_iff_exists_fun.mp (hspan.symm ▸ (Submodule.mem_top : (1 : S) ∈ ⊤))
   obtain ⟨t₀, ht₀⟩ := h₀
   let S₁ : Subalgebra ℤ S := Algebra.adjoin ℤ (↑t₀ ∪ Set.range a)
   have h01 : S₀ ≤ S₁ := by
     rw [← ht₀]
-    exact Algebra.adjoin_mono Set.subset_union_left
+    apply Algebra.adjoin_mono Set.subset_union_left
   have haS₁ : ∀ i, a i ∈ S₁ := fun i => Algebra.subset_adjoin (Set.subset_union_right (Set.mem_range_self i))
   have hfg : S₁.FG := by
     refine ⟨t₀ ∪ (Finset.univ.image a), ?_⟩
@@ -63,10 +58,11 @@ private lemma main
     push Not at hall
     apply q.isPrime.ne_top
     rw [Ideal.eq_top_iff_one, ← hsum]
-    exact Ideal.sum_mem _ fun i _ => Ideal.mul_mem_left _ _ (hall i)
+    apply Ideal.sum_mem _ fun i _ => Ideal.mul_mem_left _ _ (hall i)
   obtain ⟨i, hi⟩ := hex
   apply hxU i
   rw [SetLike.mem_coe, PrimeSpectrum.mem_basicOpen]
-  exact hi
+  apply hi
+
 
 -- created on 2026-10-20

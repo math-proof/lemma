@@ -15,5 +15,4 @@ private lemma main
   simp_all [EqGet0_0.fin]
 
 
-
 -- created on 2025-09-24

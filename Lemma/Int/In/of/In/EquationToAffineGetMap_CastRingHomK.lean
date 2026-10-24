@@ -1,0 +1,84 @@
+import Mathlib
+import sympy.Basic
+open WeierstrassCurve WeierstrassCurve.Affine
+
+
+private lemma baseChange_map_intCast_eq_map {K : Type*} [CommRing K] [Algebra ℚ K]
+  (W : WeierstrassCurve ℤ) : (W.map (Int.castRingHom ℚ))⁄K = W.map (Int.castRingHom K) := by
+  show (W.map (Int.castRingHom ℚ)).map (algebraMap ℚ K) = _
+  rw [WeierstrassCurve.map_map]
+  congr 1
+  exact RingHom.ext_int _ _
+
+private lemma equation_baseChange_map_intCast_iff {K : Type*} [CommRing K] [Algebra ℚ K]
+  (W : WeierstrassCurve ℤ) (x y : K) :
+  ((W.map (Int.castRingHom ℚ))⁄K).toAffine.Equation x y ↔
+    y ^ 2 + (W.a₁ : K) * x * y + (W.a₃ : K) * y
+      = x ^ 3 + (W.a₂ : K) * x ^ 2 + (W.a₄ : K) * x + (W.a₆ : K) := by
+  rw [baseChange_map_intCast_eq_map W, Affine.equation_iff]
+  simp only [WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃,
+    WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆, eq_intCast]
+
+private lemma mem_valuationSubring_of_equation {K : Type*} [Field K] [Algebra ℚ K]
+  (W : WeierstrassCurve ℤ) (A : ValuationSubring K) {x y : K}
+  (h : ((W.map (Int.castRingHom ℚ))⁄K).toAffine.Equation x y) (hx : x ∈ A) : y ∈ A := by
+  have heqn := (equation_baseChange_map_intCast_iff W x y).mp h
+  by_contra hy
+  have hy1 : 1 < A.valuation y :=
+    not_le.mp (fun hle => hy (A.mem_of_valuation_le_one y hle))
+  have hy0 : y ≠ 0 := by
+    rintro rfl
+    exact hy A.zero_mem
+  have hyi : A.valuation y⁻¹ < 1 := by
+    rw [map_inv₀]
+    exact inv_lt_one_of_one_lt₀ hy1
+  set c : K := (W.a₁ : K) * x + (W.a₃ : K) with hc
+  set d : K := x ^ 3 + (W.a₂ : K) * x ^ 2 + (W.a₄ : K) * x + (W.a₆ : K) with hd
+  have hcA : c ∈ A := A.add_mem _ _ (A.mul_mem _ _ (intCast_mem A _) hx) (intCast_mem A _)
+  have hdA : d ∈ A := by
+    refine A.add_mem _ _ (A.add_mem _ _ (A.add_mem _ _ ?_ ?_) ?_) (intCast_mem A _)
+    · exact A.pow_mem hx 3
+    · exact A.mul_mem _ _ (intCast_mem A _) (A.pow_mem hx 2)
+    · exact A.mul_mem _ _ (intCast_mem A _) hx
+  have key : (1 : K) = d * y⁻¹ ^ 2 - c * y⁻¹ := by
+    field_simp
+    linear_combination heqn
+  have hub : A.valuation (d * y⁻¹ ^ 2 - c * y⁻¹) < 1 := by
+    refine lt_of_le_of_lt (A.valuation.map_sub _ _) (max_lt ?_ ?_)
+    ·
+      rw [map_mul, map_pow]
+      calc
+        _ ≤ 1 * A.valuation y⁻¹ ^ 2 :=
+          mul_le_mul' ((A.valuation_le_one_iff _).mpr hdA) le_rfl
+        _ = A.valuation y⁻¹ * A.valuation y⁻¹ := by rw [one_mul, pow_two]
+        _ ≤ 1 * A.valuation y⁻¹ := mul_le_mul' hyi.le le_rfl
+        _ = A.valuation y⁻¹ := one_mul _
+        _ < 1 := hyi
+    ·
+      rw [map_mul]
+      calc
+        _ ≤ 1 * A.valuation y⁻¹ :=
+          mul_le_mul' ((A.valuation_le_one_iff _).mpr hcA) le_rfl
+        _ = A.valuation y⁻¹ := one_mul _
+        _ < 1 := hyi
+  rw [← key, _root_.map_one] at hub
+  exact absurd hub (lt_irrefl 1)
+/--
+[WeierstrassCurve_mem_valuationSubring_of_equation](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_mem_valuationSubring_of_equation.lean)
+-/
+@[path]
+private lemma main
+  [Field K] [Algebra ℚ K]
+  {W : WeierstrassCurve ℤ}
+  {A : ValuationSubring K}
+  {x y : K}
+-- given
+  (h : ((W.map (Int.castRingHom ℚ))⁄K).toAffine.Equation x y)
+  (hx : x ∈ A) :
+-- imply
+  y ∈ A :=
+-- proof
+  mem_valuationSubring_of_equation W A h hx
+
+
+-- created on 2026-10-23

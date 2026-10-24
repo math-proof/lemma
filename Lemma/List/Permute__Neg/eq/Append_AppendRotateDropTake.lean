@@ -12,7 +12,7 @@ import Lemma.Nat.LeAdd_1
 import Lemma.Nat.NotLe.is.Gt
 import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge
-open List Nat Fin
+open List Nat Fin Set
 
 
 @[path]

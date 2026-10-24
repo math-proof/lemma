@@ -325,7 +325,7 @@ private def asLimPt (x : Syntax) : PrettyPrinter.UnexpandM (TSyntax `limPt) := d
 /-- Rebuild `lim [n → x₀] e`, `lim [n → x₀⁺] e`, … (`dir`: 0 two-sided, 1 right, 2 left). -/
 private def dummyLimBinder : TSyntax `ident := ⟨mkIdent `x⟩
 
-private def unexpandLimAt (n : TSyntax `ident) (x e : TSyntax `term) (dir : Nat)
+def unexpandLimAt (n : TSyntax `ident) (x e : TSyntax `term) (dir : Nat)
     (ty? : Option (TSyntax `term) := none) (wild := false) (eq? : Option (TSyntax `term) := none) :
     PrettyPrinter.UnexpandM (TSyntax `term) := do
   match dir with

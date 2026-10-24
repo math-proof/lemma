@@ -1,6 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/QuotientToRayClass.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.RayClass.IntegralUnits
+import Lemma.Nat.NumberField.RayClass.IntegralUnits
+import Lemma.Nat.NumberField.RayClass.PrincipalIdeal
+import Lemma.Nat.NumberField.RayClass.Group
 import sympy.atlas.NumberTheory.NumberField.RayClass.PrincipalIdeal
 import sympy.atlas.NumberTheory.NumberField.RayClass.Group
 /-!
@@ -85,79 +88,6 @@ noncomputable def rayQuotientToRayClassGroup (m : Modulus K) :
       rayElementClassMap m x := by
   simp [rayQuotientToRayClassGroup]
 
-/-- An embedded integral unit generates the unit principal ideal, hence maps
-to one (forward exactness input; ATLAS lines 1160--1175). -/
-theorem principalRayIdealMap_integralUnitsToRayElements (m : Modulus K)
-    (u : (𝓞 K)ˣ) :
-    principalRayIdealMap m (integralUnitsToRayElements m u) = 1 := by
-  apply Subtype.ext
-  rw [principalRayIdealMap_apply]
-  have h : toPrincipalIdeal (𝓞 K) K
-      ((integralUnitsToRayElements m u : rayElements m) : Kˣ) =
-      toPrincipalIdeal (𝓞 K) K 1 := by
-    rw [toPrincipalIdeal_eq_iff_exists_integralUnit_mul]
-    exact ⟨u, by simp [integralUnitsToRayElements_coe,
-      integralUnitsToFieldUnits]⟩
-  simpa using h
-
-/-- Exactness at the quotient: the kernel of the quotient-to-ray-class map is
-the range of the integral-unit quotient map
-(ATLAS `exactSeq_exact_at_quotient`). -/
-theorem rayQuotientToRayClassGroup_ker (m : Modulus K) :
-    (rayQuotientToRayClassGroup m).ker =
-      MonoidHom.range (integralUnitsToRayQuotient m) := by
-  apply le_antisymm
-  · intro q hq
-    rw [MonoidHom.mem_ker] at hq
-    obtain ⟨x, rfl⟩ := QuotientGroup.mk'_surjective (rayOneElements m) q
-    rw [QuotientGroup.mk'_apply, rayQuotientToRayClassGroup_mk,
-      rayElementClassMap_apply, rayClassMap_eq_one_iff] at hq
-    obtain ⟨y, hy, hxy⟩ := Subgroup.mem_map.mp
-      ((rayGroup_eq_map_rayOneElements m).symm ▸ hq)
-    have htop : toPrincipalIdeal (𝓞 K) K (x : Kˣ) =
-        toPrincipalIdeal (𝓞 K) K (y : Kˣ) := by
-      have hcongr := congrArg Subtype.val hxy
-      have hx : ((principalRayIdealMap m x : coprimeFractionalIdeals m) :
-          (FractionalIdeal (𝓞 K)⁰ K)ˣ) =
-          toPrincipalIdeal (𝓞 K) K (x : Kˣ) :=
-        principalRayIdealMap_apply m x
-      have hy' : ((principalRayIdealMap m y : coprimeFractionalIdeals m) :
-          (FractionalIdeal (𝓞 K)⁰ K)ˣ) =
-          toPrincipalIdeal (𝓞 K) K (y : Kˣ) :=
-        principalRayIdealMap_apply m y
-      rw [hx, hy'] at hcongr
-      exact hcongr.symm
-    obtain ⟨u, hu⟩ :=
-      (toPrincipalIdeal_eq_iff_exists_integralUnit_mul (x : Kˣ) (y : Kˣ)).mp htop
-    refine MonoidHom.mem_range.mpr ⟨u, ?_⟩
-    rw [integralUnitsToRayQuotient_apply]
-    symm
-    change (x : rayElements m ⧸ rayOneElements m) =
-      ((integralUnitsToRayElements m u : rayElements m) :
-        rayElements m ⧸ rayOneElements m)
-    rw [QuotientGroup.eq_iff_div_mem]
-    have hdiv : x / integralUnitsToRayElements m u = y := by
-      apply Subtype.ext
-      simp only [Subgroup.coe_div, integralUnitsToRayElements_coe,
-        integralUnitsToFieldUnits, RingHom.toMonoidHom_eq_coe]
-      change (x : Kˣ) / Units.map (algebraMap (𝓞 K) K) u = (y : Kˣ)
-      rw [hu, mul_comm]
-      exact mul_div_cancel_right _ _
-    rwa [hdiv]
-  · intro q hq
-    obtain ⟨u, rfl⟩ := MonoidHom.mem_range.mp hq
-    rw [MonoidHom.mem_ker, integralUnitsToRayQuotient_apply,
-      rayQuotientToRayClassGroup_mk, rayElementClassMap_apply]
-    rw [principalRayIdealMap_integralUnitsToRayElements, map_one]
-
-/-- Exactness at the quotient as `MulExact`
-(ATLAS `exactSeq_exact_at_quotient`). -/
-theorem integralUnitsToRayQuotient_mulExact_rayQuotientToRayClassGroup
-    (m : Modulus K) :
-    Function.MulExact (integralUnitsToRayQuotient m)
-      (rayQuotientToRayClassGroup m) := by
-  rw [MonoidHom.mulExact_iff, rayQuotientToRayClassGroup_ker]
-
 /-- Transported residue-sign-to-ray-class map across the canonical quotient
 equivalence. -/
 noncomputable def residueSignToRayClassGroup (m : Modulus K) :
@@ -171,49 +101,5 @@ noncomputable def residueSignToRayClassGroup (m : Modulus K) :
     residueSignToRayClassGroup m (rayElementsQuotientEquivResidueSign m q) =
       rayQuotientToRayClassGroup m q := by
   simp [residueSignToRayClassGroup]
-
-/-- The transported map evaluated on a residue-sign value. -/
-theorem residueSignToRayClassGroup_residueSignMap (m : Modulus K)
-    (x : rayElements m) :
-    residueSignToRayClassGroup m (residueSignMap m x) =
-      rayElementClassMap m x := by
-  calc residueSignToRayClassGroup m (residueSignMap m x)
-      = residueSignToRayClassGroup m
-          (rayElementsQuotientEquivResidueSign m (QuotientGroup.mk x)) := by
-        rw [rayElementsQuotientEquivResidueSign_mk]
-    _ = rayQuotientToRayClassGroup m (QuotientGroup.mk x) :=
-        residueSignToRayClassGroup_equiv m _
-    _ = rayElementClassMap m x := rayQuotientToRayClassGroup_mk m x
-
-/-- The transport square: precomposing with the residue-sign map recovers the
-ray-element class map. -/
-theorem residueSignToRayClassGroup_comp_residueSignMap (m : Modulus K) :
-    (residueSignToRayClassGroup m).comp (residueSignMap m) =
-      rayElementClassMap m := by
-  ext x
-  simp only [MonoidHom.comp_apply]
-  exact residueSignToRayClassGroup_residueSignMap m x
-
-/-- Kernel of the transported map is the range of the residue-sign unit map. -/
-theorem residueSignToRayClassGroup_ker (m : Modulus K) :
-    (residueSignToRayClassGroup m).ker =
-      MonoidHom.range (integralUnitsToResidueSign m) := by
-  unfold residueSignToRayClassGroup integralUnitsToResidueSign
-  change
-    ((rayQuotientToRayClassGroup m).comp
-      (rayElementsQuotientEquivResidueSign m).symm).ker =
-    ((rayElementsQuotientEquivResidueSign m).toMonoidHom.comp
-      (integralUnitsToRayQuotient m)).range
-  rw [MonoidHom.ker_comp_mulEquiv, MonoidHom.range_comp,
-    rayQuotientToRayClassGroup_ker, MulEquiv.symm_symm,
-    MulEquiv.toMonoidHom_eq_coe]
-
-/-- Exactness at the residue-sign target as `MulExact`. -/
-theorem integralUnitsToResidueSign_mulExact_residueSignToRayClassGroup
-    (m : Modulus K) :
-    Function.MulExact (integralUnitsToResidueSign m)
-      (residueSignToRayClassGroup m) := by
-  rw [MonoidHom.mulExact_iff, residueSignToRayClassGroup_ker]
-
 end Modulus
 end NumberField

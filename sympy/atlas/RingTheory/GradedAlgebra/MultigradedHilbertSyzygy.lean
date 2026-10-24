@@ -7,8 +7,9 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 import sympy.atlas.RingTheory.GradedAlgebra.MultigradedFreeResolution
 import Mathlib.LinearAlgebra.Dimension.Finite
 
-import sympy.atlas.RingTheory.GradedAlgebra.FiniteHomogeneousGenerators
+import Lemma.Int.GradedAlgebra.FiniteHomogeneousGenerators
 import sympy.atlas.RingTheory.Polynomial.HilbertSyzygy
+import Lemma.Int.Polynomial.HilbertSyzygy
 import Mathlib.Algebra.Category.ModuleCat.Projective
 import Mathlib.Algebra.Category.ModuleCat.Abelian
 import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
@@ -723,11 +724,6 @@ private theorem mgsyz_phiToN_surjective (K : Type u) [Field K] (n : ℕ)
     exact y.2
   obtain ⟨x, hx⟩ := hy
   exact ⟨x, Subtype.ext hx⟩
-
-private theorem mgsyz_phiToN_ker (K : Type u) [Field K] (n : ℕ)
-    (S : mgsyz_Stage K n) :
-    LinearMap.ker (mgsyz_phiToN K n S) = LinearMap.ker (mgsyz_phi (K := K) n S) := by
-  exact LinearMap.ker_codRestrict _ _ _
 
 private theorem mgsyz_ker_eq_bot_of_projective (K : Type u) [Field K] (n : ℕ)
     (S : mgsyz_Stage K n)

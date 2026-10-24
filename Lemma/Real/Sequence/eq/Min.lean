@@ -1,0 +1,20 @@
+import Mathlib
+import sympy.Basic
+import sympy.analysis.Section_6_1
+open Chapter6
+open Chapter6.Sequence
+
+
+/--
+[Sequence.min_coe](https://github.com/teorth/analysis/blob/main/Analysis/Section_6_1.lean)
+-/
+@[path]
+private lemma main
+  {a b: ℕ → ℝ} :
+-- imply
+  (a:Sequence) ⊓ (b:Sequence) = (fun n ↦ min (a n) (b n)) :=
+-- proof
+  Chapter6.Sequence.min_coe a b
+
+
+-- created on 2026-10-22

@@ -15,11 +15,4 @@ Phrase concept `jis_term_dfac4b97dfaf92729d46eb23`; source statement
 def fineNumber (n : Nat) : ℚ :=
   (1 / ((n : ℚ) + 1)) * ∑ i ∈ Finset.range (n + 1),
     (-2 : ℚ) ^ i * ((i : ℚ) + 1) * ((Nat.choose (2 * (n + 1)) (n - i) : ℕ) : ℚ)
-
-/-- Restatement of the exact source explicit formula for the Fine numbers. -/
-theorem fineNumber_eq_sum (n : Nat) :
-    fineNumber n = (1 / ((n : ℚ) + 1)) * ∑ i ∈ Finset.range (n + 1),
-      (-2 : ℚ) ^ i * ((i : ℚ) + 1) * ((Nat.choose (2 * (n + 1)) (n - i) : ℕ) : ℚ) :=
-  rfl
-
 end MetaMathlibExt

@@ -29,14 +29,6 @@ namespace MetaMathlibExt
 
 open scoped BigOperators
 
-private lemma spivey_bracket_add (p q : ℝ) (hpq : p ≠ q) (k j : ℕ) :
-    (p ^ (k + j) - q ^ (k + j)) / (p - q) =
-      p ^ j * ((p ^ k - q ^ k) / (p - q)) +
-        q ^ k * ((p ^ j - q ^ j) / (p - q)) := by
-  rw [pow_add, pow_add]
-  field_simp
-  ring
-
 private lemma spivey_S_eq_zero_of_lt
     (p q : ℝ) (bracket : ℕ → ℝ) (S : ℕ → ℕ → ℝ)
     (hS0 : ∀ k, S 0 k = if k = 0 then 1 else 0)
@@ -465,12 +457,6 @@ private lemma spivey_push_Xop
               (spivey_Xop * spivey_Dop bracket) ^ j)) := by
   rw [spivey_XDop_pow_Xop_pow bracket hbracket0 p q hbracketAdd,
     spivey_binomial_expansion bracket hbracket0 p q hbracketAdd]
-
-private lemma spivey_bracket_pos (p q : ℝ) (hq0 : 0 < q) (hqp : q < p)
-    (k : ℕ) (hk : 0 < k) : 0 < (p ^ k - q ^ k) / (p - q) := by
-  have hpows : q ^ k < p ^ k :=
-    pow_lt_pow_left₀ hqp hq0.le (Nat.ne_of_gt hk)
-  exact div_pos (sub_pos.mpr hpows) (sub_pos.mpr hqp)
 
 private noncomputable def spivey_ecoeff (p : ℝ) (bracket : ℕ → ℝ) : ℕ → ℝ
   | 0 => 1
@@ -1030,44 +1016,4 @@ private def spivey_finish_public : Lean.Elab.Tactic.TacticM Unit := do
         hS0, hSsucc0, hSsucc, m, n]
     goal.assign proof
     Lean.Elab.Tactic.replaceMainGoal []
-
-/-- (p, q)-deformation of Spivey's Bell number formula: the `(p, q)`-Bell value
-`tildeB (n + m) 1` expands as the double sum over `k ≤ m` and `j ≤ n` of
-`C(n,j) * tildeS m k * bracket k ^ (n - j) * q ^ (j * k) * tildeB j (p ^ (n + m - j))`.
-
-Source: L. Oussi, *A (p,q)-Deformed Recurrence for the Bell Numbers*, Journal of
-Integer Sequences 23 (2020), Article 20.5.2, main theorem equation `lasteq`,
-lines 214-220, <https://cs.uwaterloo.ca/journals/JIS/VOL23/Oussi/oussi5.tex>.
-
-Proves `Wanted` entry `spivey_pq_bell`.
-
-Proof: We formalize the operator proof around equations `eq1`, `eq2'`, `eq4`, `meq`,
-`pqexpn`, and `lasteq` in Oussi's paper, using formal power series in place of convergent series.
--/
-theorem spivey_pq_bell :
-  ∀ (p q : ℝ) (hq0 : 0 < q) (hqp : q < p) (hp1 : p ≤ 1),
-    let bracket : ℕ → ℝ := fun k => (p ^ k - q ^ k) / (p - q);
-    let rec S : ℕ → ℕ → ℝ
-      | 0 => fun k => if k = 0 then 1 else 0
-      | (n + 1) => fun k => if k = 0 then 0
-        else p ^ (n + 1 - k) * q ^ (k - 1) * S n (k - 1) + bracket k * S n k;
-    let tildeS : ℕ → ℕ → ℝ := fun n k => p ^ Nat.choose k 2 * S n k;
-    let tildeB : ℕ → ℝ → ℝ :=
-      fun n x => ∑ k ∈ Finset.range (n + 1), tildeS n k * x ^ k;
-    ∀ (m n : ℕ),
-      tildeB (n + m) 1
-        = ∑ k ∈ Finset.range (m + 1), ∑ j ∈ Finset.range (n + 1),
-          (Nat.choose n j : ℝ) * tildeS m k * bracket k ^ (n - j)
-            * q ^ (j * k) * tildeB j (p ^ (n + m - j)) := by
-  intro p q hq0 hqp hp1 bracket tildeS tildeB m n
-  have hpq : p ≠ q := ne_of_gt hqp
-  have hbracket0 : bracket 0 = 0 := by simp [bracket]
-  have hbracketAdd : ∀ k j, bracket (k + j) = p ^ j * bracket k + q ^ k * bracket j := by
-    exact spivey_bracket_add p q hpq
-  have hbracket_ne : ∀ k, 0 < k → bracket k ≠ 0 := by
-    intro k hk
-    exact ne_of_gt (spivey_bracket_pos p q hq0 hqp k hk)
-  dsimp only [tildeB, tildeS]
-  run_tac spivey_finish_public
-
 end MetaMathlibExt

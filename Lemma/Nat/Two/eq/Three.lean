@@ -13,7 +13,8 @@ private lemma main
 -- imply
   2++ = 3 :=
 -- proof
-  Chapter2.Nat.two_succ
+  rfl
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

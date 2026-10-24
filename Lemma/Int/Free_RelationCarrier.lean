@@ -1,0 +1,31 @@
+import Mathlib
+import sympy.Basic
+import Lemma.Definitions.Def_GroupCohomology_TateCohomology
+import Lemma.Definitions.Def_GroupCohomology_TateSeam
+import Lemma.Definitions.Def_GroupCohomology_TateShiftMaps
+import Lemma.Definitions.Def_GroupCohomology_CochainCup
+import Lemma.Definitions.Def_GroupCohomology_IsGradedCupProduct
+import Lemma.Definitions.Def_GroupCohomology_IsTateCupProduct
+import Lemma.Definitions.Def_GroupCohomology_RelationModule
+import Lemma.Int.P2MUtil
+open CategoryTheory Rep CategoryTheory.MonoidalCategory
+
+
+/--
+[Rep_moduleFree_relationCarrier](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Rep_moduleFree_relationCarrier.lean)
+-/
+@[path]
+private lemma main
+  [Group G] [Fintype G]
+  {B : Rep ℤ G} [Fintype B] :
+-- imply
+  Module.Free ℤ (Rep.relationCarrier B) := by
+-- proof
+  have h : Module.Free ℤ (Rep.relationModule B) := inferInstance
+  unfold Rep.relationCarrier
+  convert h
+  rfl
+  rfl
+
+
+-- created on 2026-10-24

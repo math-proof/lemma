@@ -4,11 +4,29 @@ import sympy.atlas.NumberTheory.Fourier.PrincipalMinor
 open Fourier
 
 
+namespace Fourier
+
+/--
+[principalMinorDet_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Fourier/PrincipalMinor.lean)
+-/
+@[path]
+lemma principalMinorDet_singleton
+  [CommRing R]
+  {M : ℕ}
+  {root : RootData M R}
+  {a : ZMod M} :
+-- imply
+  principalMinorDet M root {a} = root.zeta ^ (a * a).val := by
+-- proof
+  simp [principalMinorDet]
+
+end Fourier
+
 /--
 [principalMinorMatrix_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Fourier/PrincipalMinor.lean)
 -/
 @[path]
-private lemma principalMinorMatrix_apply_eq
+lemma principalMinorMatrix_apply
   [CommRing R]
   {M : ℕ}
   {root : RootData M R}
@@ -17,34 +35,26 @@ private lemma principalMinorMatrix_apply_eq
 -- imply
   principalMinorMatrix M root S i j = root.zeta ^ (i.val * j.val).val := by
 -- proof
-  apply Fourier.principalMinorMatrix_apply M root S i j
+  simp [principalMinorMatrix]
+
+
+namespace Fourier
 
 /--
 [principalMinorDet_empty](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Fourier/PrincipalMinor.lean)
 -/
 @[path]
-private lemma principalMinorDet_empty_eq
+lemma principalMinorDet_empty
   [CommRing R]
   {M : ℕ}
   {root : RootData M R} :
 -- imply
   principalMinorDet M root ∅ = 1 := by
 -- proof
-  apply Fourier.principalMinorDet_empty M root
+  simp [principalMinorDet]
 
-/--
-[principalMinorDet_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Fourier/PrincipalMinor.lean)
--/
-@[path]
-private lemma principalMinorDet_singleton_eq
-  [CommRing R]
-  {M : ℕ}
-  {root : RootData M R}
-  {a : ZMod M} :
--- imply
-  principalMinorDet M root {a} = root.zeta ^ (a * a).val := by
--- proof
-  apply Fourier.principalMinorDet_singleton M root a
+end Fourier
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

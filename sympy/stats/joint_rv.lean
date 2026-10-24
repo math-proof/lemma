@@ -328,12 +328,27 @@ open Lean Elab Term Meta in
   | _ => throwUnsupportedSyntax
 
 open Lean Meta Elab Tactic in
-/-- `measurable_component` closes a goal `Measurable z` with a component of a local (possibly
-∀-quantified) joint measurability hypothesis, e.g. `h : ∀ t, Measurable (r t, s t, a t)` (a tuple of RVs
-elaborates through `Function.coeProdPi*` to `JointRandomSymbol …`): it tries `(h …).fst`, `(h …).snd`,
-`(h …).snd.fst`, `(h …).snd.snd`, `(h …).fst.fst`, `(h …).fst.snd`, the arguments of `h` being found by
-unification. Used by the `⟂ᵢ` sugar after `assumption` / `apply_assumption`. -/
+/-- `measurable_component` closes a goal `Measurable z` from a local (possibly ∀-quantified)
+measurability hypothesis:
+* joint / product RVs, e.g. `h : ∀ t, Measurable (r t, s t, a t)` (via `Function.coeProdPi*` /
+  `JointRandomSymbol`): tries `(h …).fst`, `(h …).snd`, and the two-step projections;
+* closed slices, e.g. `hx : Measurable x[:n]` proving `Measurable x[i]` for `i : Fin n`, via
+  `(measurable_pi_apply i).comp hx`;
+* the same shapes wrapped in `Fact`, e.g. `[hx : Fact (Measurable x[:n])]`, via `Fact.out`.
+
+Used by the `⟂ᵢ` sugar after `assumption` / `apply_assumption`. -/
 elab "measurable_component" : tactic => withMainContext do
+  let measurableProofFrom? (ldecl : LocalDecl) : MetaM (Option (Array Expr × Expr × Bool)) := do
+    let (xs, _, body) ← forallMetaTelescope (← instantiateMVars ldecl.type)
+    if body.isAppOf ``Measurable then
+      return some (xs, mkAppN ldecl.toExpr xs, false)
+    if body.isAppOf ``Fact then
+      let p := body.appArg!
+      unless p.isAppOf ``Measurable do return none
+      -- `Fact.out` is instance-implicit in the `Fact` arg; use the structure projection
+      let pf ← mkProjection (mkAppN ldecl.toExpr xs) `out
+      return some (xs, pf, true)
+    return none
   let goal ← getMainGoal
   let target ← instantiateMVars (← goal.getType)
   let paths : List (List Name) :=
@@ -342,12 +357,13 @@ elab "measurable_component" : tactic => withMainContext do
      [``Measurable.fst, ``Measurable.fst], [``Measurable.fst, ``Measurable.snd]]
   for ldecl in ← getLCtx do
     if ldecl.isImplementationDetail then continue
+    -- product / joint projections
     for path in paths do
       let s ← saveState
       try
-        let (xs, _, body) ← forallMetaTelescope (← instantiateMVars ldecl.type)
-        unless body.isAppOf ``Measurable do throwError "not a measurability hypothesis"
-        let mut pf := mkAppN ldecl.toExpr xs
+        let some (_xs, base, _isFact) ← measurableProofFrom? ldecl |
+          throwError "not a measurability hypothesis"
+        let mut pf := base
         for n in path do
           pf ← mkAppM n #[pf]
         if ← isDefEq (← inferType pf) target then
@@ -358,6 +374,21 @@ elab "measurable_component" : tactic => withMainContext do
             return
         s.restore
       catch _ => s.restore
+    -- closed slice → index: `(measurable_pi_apply i).comp h`
+    let s ← saveState
+    try
+      let some (xs, base, isFact) ← measurableProofFrom? ldecl |
+        throwError "not a measurability hypothesis"
+      -- skip ∀-quantified hyps here; only bare `Measurable (·[:n])` / `Fact (Measurable …)`
+      unless xs.isEmpty do throwError "quantified"
+      if isFact then
+        -- Delab of `Fact.out` drops the instance arg and gets stuck; use `hx.out`
+        evalTactic (← `(tactic| exact (measurable_pi_apply _).comp $(mkIdent ldecl.userName).out))
+      else
+        let hStx ← PrettyPrinter.delab base
+        evalTactic (← `(tactic| exact (measurable_pi_apply _).comp $hStx))
+      return
+    catch _ => s.restore
   throwError "measurable_component: the goal is not a component of a joint measurability hypothesis"
 
 set_option quotPrecheck false in
@@ -394,8 +425,23 @@ partial def LiftRV.idents (stx : Syntax) (acc : Array Ident := #[]) : Array Iden
     stx.getArgs.foldl (fun acc a => LiftRV.idents a acc) acc
 
 open Lean Meta in
+/-- `Fun ℕ (β → γ)` (a `Fun` process such as `Fun ℕ (Ω → S)`). The value path is re-wrapped with
+`Fun.mk`, so `s[t]` stays `Fun` indexing and does not need `GetElem` on bare functions. -/
+def LiftRV.isFunProcess (ty : Expr) : MetaM Bool := do
+  match ← whnf ty with
+  | .app (.app (.const n _) ι) α =>
+    let ι ← whnf ι
+    unless n == ``Fun && ι.isConstOf ``Nat do return false
+    match ← whnf α with
+    | .forallE _ _ b _ => return !b.hasLooseBVars
+    | _ => return false
+  | _ => return false
+
+open Lean Meta in
 /-- `some false` if `ty` is `Ω → α` (a random variable on `Ω`), `some true` if it is an indexed family
-`ℕ → Ω → α` or `Fin n → Ω → α` (a process), `none` otherwise. -/
+`ℕ → Ω → α`, `Fin n → Ω → α`, or `Fun ℕ (Ω → α)` (a process), `none` otherwise.
+A bare process is lifted by `let s := fun k ↦ s k ω` (`s t` beta-reduces to `s t ω`).
+A `Fun` process is lifted by `let s := Fun.mk (fun k ↦ s k ω)`, so `s[t]` is `Fun` indexing. -/
 def LiftRV.kind (Ω ty : Expr) : MetaM (Option Bool) := withNewMCtxDepth do
   match ← whnf ty with
   | .forallE _ d b _ =>
@@ -406,6 +452,13 @@ def LiftRV.kind (Ω ty : Expr) : MetaM (Option Bool) := withNewMCtxDepth do
     match ← whnf b with
     | .forallE _ d' b' _ =>
       if !b'.hasLooseBVars && (← isDefEq d' Ω) then return some true else return none
+    | _ => return none
+  | .app (.app (.const n _) ι) α =>
+    let ι ← whnf ι
+    unless n == ``Fun && ι.isConstOf ``Nat do return none
+    match ← whnf α with
+    | .forallE _ d b _ =>
+      if !b.hasLooseBVars && (← isDefEq d Ω) then return some true else return none
     | _ => return none
   | _ => return none
 
@@ -419,15 +472,19 @@ def LiftRV.lift (μ x : Term) (expectedType? : Option Expr) : TermElabM Expr := 
   let μty ← whnf (← instantiateMVars (← inferType μe))
   unless μty.isAppOfArity ``MeasureTheory.Measure 2 do throwError "rv%: {μe} is not a measure"
   let Ω := μty.appFn!.appArg!
-  let mut binds : Array (Ident × Bool) := #[]
+  -- `(proc, funProcess)`: `proc` is a time-indexed family; `funProcess` is `Fun ℕ (· → ·)`.
+  let mut binds : Array (Ident × Bool × Bool) := #[]
   for id in LiftRV.idents x do
     let some (fv, []) ← resolveLocalName id.getId | continue
-    if let some proc ← LiftRV.kind Ω (← instantiateMVars (← inferType fv)) then
-      binds := binds.push (id, proc)
+    let ty ← instantiateMVars (← inferType fv)
+    if let some proc ← LiftRV.kind Ω ty then
+      binds := binds.push (id, proc, ← LiftRV.isFunProcess ty)
   if binds.isEmpty then throwError "rv%: no random variable on {Ω} to lift in {x}"
   let mut body : Term := x
-  for (id, proc) in binds.reverse do
-    body ← if proc then `(let $id := fun k ↦ $id k ω; $body) else `(let $id := $id ω; $body)
+  for (id, proc, funProcess) in binds.reverse do
+    body ← if funProcess then `(let $id := Fun.mk (fun k ↦ $id k ω); $body)
+      else if proc then `(let $id := fun k ↦ $id k ω; $body)
+      else `(let $id := $id ω; $body)
   let e ← Lean.Elab.Term.elabTerm (← `(fun (ω : $(← exprToSyntax Ω)) ↦ $body)) expectedType?
   synthesizeSyntheticMVarsNoPostponing
   let e ← instantiateMVars e
@@ -447,15 +504,17 @@ def LiftRV.lift (μ x : Term) (expectedType? : Option Expr) : TermElabM Expr := 
 random variables pointwise:
 
 * `rv%[π] (V t (s t))` ↦ `fun ω ↦ V t (s t ω)` (`V t : S → ℝ`, `s : ℕ → Ω → S`);
+* `rv%[π] (V t s[t])` ↦ `fun ω ↦ V t (s[t] ω)` (`s : Fun ℕ (Ω → S)`, rebound with `Fun.mk`);
 * `rv%[π] (Q t (s t) (a t))` ↦ `fun ω ↦ Q t (s t ω) (a t ω)`;
 * `rv%[π] (u X)` ↦ `fun ω ↦ u (X ω)` (`X : Ω → α`).
 
 `x` is first elaborated as is (normal elaboration order, postponement passed through); only if that
-throws an error are the local names of type `Ω → α`, `ℕ → Ω → α` or `Fin n → Ω → α` occurring in `x`
-rebound to their values at `ω`. If that fails too, the original error is rethrown. So every `x`
-that already elaborates (e.g. `fun ω ↦ V t (s t ω)`, `𝔼[r: π](… | s t)`, `0`) is unchanged.
+throws an error are the local names of type `Ω → α`, `ℕ → Ω → α`, `Fin n → Ω → α`, or
+`Fun ℕ (Ω → α)` occurring in `x` rebound to their values at `ω`. If that fails too, the original
+error is rethrown. So every `x` that already elaborates (e.g. `fun ω ↦ V t (s t ω)`,
+`𝔼[r: π](… | s t)`, `0`) is unchanged.
 It is applied to both sides of `=ᵐ[μ]` (see the `macro_rules` below), e.g.
-`∀ t, V t (s t) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t)`.
+`∀ t, V t (s[t]) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s[t])`.
 -/
 syntax (name := liftRV) "rv%[" term "] " term:max : term
 
@@ -583,26 +642,28 @@ partial def Expectation.Macro.mkJointTerms (ys : Array Syntax) : MacroM Term := 
     `(JointRandomSymbol $y $tail)
 
 /-- Unpack a right-nested product into `let y := nest.1; …; body`.
-`rebind[i] = false` skips the `let` for that binder (the body keeps the outer local). -/
+`rebind[i] = false` skips the `let` for that binder (the body keeps the outer local).
+`asFun[i] = true` wraps the value path as `Fun.mk`, so `y[t]` stays `Fun` indexing. -/
 partial def Expectation.Macro.unpackRest
-    (ys : Array Syntax) (nest : Term) (body : Term) (rebind : Array Bool) : MacroM Term := do
-  match ys.toList, rebind.toList with
-  | [], _ => pure body
-  | [y], r :: _ =>
+    (ys : Array Syntax) (nest : Term) (body : Term) (rebind : Array Bool) (asFun : Array Bool) : MacroM Term := do
+  let bind (y : Ident) (rhs : Term) (funProcess : Bool) (body : Term) : MacroM Term :=
+    if funProcess then `(let $y := Fun.mk $rhs; $body) else `(let $y := $rhs; $body)
+  match ys.toList, rebind.toList, asFun.toList with
+  | [], _, _ => pure body
+  | [y], r :: _, f :: _ =>
     if r then
-      let y : Ident := ⟨y⟩
-      `(let $y := $nest; $body)
+      bind ⟨y⟩ nest f body
     else
       pure body
-  | y :: rest, r :: rs =>
+  | y :: rest, r :: rs, f :: fs =>
     let nest2 ← `(Prod.snd $nest)
-    let body' ← Expectation.Macro.unpackRest rest.toArray nest2 body rs.toArray
+    let body' ← Expectation.Macro.unpackRest rest.toArray nest2 body rs.toArray fs.toArray
     if r then
-      let y : Ident := ⟨y⟩
-      `(let $y := Prod.fst $nest; $body')
+      bind ⟨y⟩ (← `(Prod.fst $nest)) f body'
     else
       pure body'
-  | _, [] => Macro.throwError "𝔼 binder unpack: rebind mask shorter than the binder list"
+  | _, [], _ => Macro.throwError "𝔼 binder unpack: rebind mask shorter than the binder list"
+  | _, _, [] => Macro.throwError "𝔼 binder unpack: Fun mask shorter than the binder list"
 
 /-- The measure term of an `expectMeasure` slot: `f a b` ↦ the application `f a b`. -/
 def Expectation.Macro.measure (π : TSyntax `expectMeasure) : MacroM Term :=
@@ -893,6 +954,13 @@ private def Expectation.Macro.rebindMask (xs : Array Syntax) (body : Syntax) : T
     else
       Lean.Elab.liftMacroM <| Expectation.Macro.bodyValueUse body x.getId
 
+open Lean Meta Lean.Elab.Term in
+/-- `true` when binder `x` is a local `Fun ℕ (· → ·)`, so the value path is re-wrapped with `Fun.mk`. -/
+private def Expectation.Macro.funBinderMask (xs : Array Syntax) : TermElabM (Array Bool) :=
+  xs.mapM fun x => do
+    let some ld := (← getLCtx).findFromUserName? x.getId | return false
+    LiftRV.isFunProcess (← instantiateMVars (← inferType ld.toExpr))
+
 open Lean.Elab.Term in
 /-- Fresh `x₀`-style aliases for integrated binders that are already locals (outer processes). -/
 private def Expectation.Macro.mkOuterAliases (xs : Array Syntax) : TermElabM (List (Name × Ident)) := do
@@ -926,8 +994,9 @@ private def Expectation.Macro.elabExpect (xs : Array Syntax) (body : Syntax)
   let aliases ← Expectation.Macro.mkOuterAliases xs
   let body' ← Lean.Elab.liftMacroM <| Expectation.Macro.desugarProbRA aliases body
   let mask ← Expectation.Macro.rebindMask xs body'
+  let asFun ← Expectation.Macro.funBinderMask xs
   let nest := mkIdent `«integ»
-  let unpacked ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nest ⟨body'⟩ mask
+  let unpacked ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nest ⟨body'⟩ mask asFun
   let lam ← if mask.any id then
       `(fun $nest ↦ $unpacked)
     else
@@ -971,12 +1040,14 @@ elab_rules : term
       let body' ← Lean.Elab.liftMacroM <| Expectation.Macro.desugarProbRA aliases body
       let maskX ← Expectation.Macro.rebindMask xs body'
       let maskY ← Expectation.Macro.rebindMask ys body'
+      let funX ← Expectation.Macro.funBinderMask xs
+      let funY ← Expectation.Macro.funBinderMask ys
       let integ ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
       let free ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint ys
       let nestX := mkIdent `«integ»
       let nestY := mkIdent `«rest»
-      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY
-      let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX
+      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY funY
+      let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX funX
       let lam ← if maskX.any id then
           if maskY.any id then `(fun $nestX $nestY ↦ $bodyXY) else `(fun $nestX _ ↦ $bodyXY)
         else
@@ -992,12 +1063,14 @@ elab_rules : term
       let body' ← Lean.Elab.liftMacroM <| Expectation.Macro.desugarProbRA aliases body
       let maskX ← Expectation.Macro.rebindMask xs body'
       let maskY ← Expectation.Macro.rebindMask ys body'
+      let funX ← Expectation.Macro.funBinderMask xs
+      let funY ← Expectation.Macro.funBinderMask ys
       let integ ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
       let free ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint ys
       let nestX := mkIdent `«integ»
       let nestY := mkIdent `«rest»
-      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY
-      let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX
+      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY funY
+      let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX funX
       let lam ← if maskX.any id then
           if maskY.any id then `(fun $nestX $nestY ↦ $bodyXY) else `(fun $nestX _ ↦ $bodyXY)
         else
@@ -1005,5 +1078,3 @@ elab_rules : term
       let core ← `(Expectation.partialRV $π $integ $free $lam)
       let wrapped ← Lean.Elab.liftMacroM <| Expectation.Macro.wrapAliases aliases core
       Lean.Elab.Term.elabTerm wrapped none
-
-

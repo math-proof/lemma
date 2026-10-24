@@ -18,16 +18,4 @@ def shiftedPadovanSequence : Nat → Nat
   | 1 => 0
   | 2 => 1
   | n + 3 => shiftedPadovanSequence (n + 1) + shiftedPadovanSequence n
-
-@[simp] theorem shiftedPadovanSequence_zero : shiftedPadovanSequence 0 = 1 := rfl
-
-@[simp] theorem shiftedPadovanSequence_one : shiftedPadovanSequence 1 = 0 := rfl
-
-@[simp] theorem shiftedPadovanSequence_two : shiftedPadovanSequence 2 = 1 := rfl
-
-/-- The defining recurrence of the shifted Padovan sequence. -/
-theorem shiftedPadovanSequence_add_three (n : Nat) :
-    shiftedPadovanSequence (n + 3) =
-      shiftedPadovanSequence (n + 1) + shiftedPadovanSequence n := rfl
-
 end MetaMathlibExt

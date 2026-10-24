@@ -15,7 +15,6 @@ private lemma main
   mul_dvd_mul_right h a
 
 
-
 @[path]
 private lemma left
   [Semigroup α]

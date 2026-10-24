@@ -1,0 +1,22 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicConvergence.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicConvergence
+
+#print axioms StatMech.Universality.isingFermionicEntireSquarePrimitive_hasDerivAt
+#print axioms StatMech.Universality.isingFermionicEntireSquarePrimitive_im_eq_of_dense
+#print axioms StatMech.Universality.isingFermionic_squareRoot_unique_of_anchor
+#print axioms StatMech.Universality.isingFermionic_square_eq_of_squareDeriv_eq
+#print axioms StatMech.Universality.isingFermionic_primitive_eq_add_real_of_im_eq
+#print axioms StatMech.Universality.isingFermionic_square_eq_of_primitive_im_eq
+#print axioms StatMech.Universality.isingFermionic_fullConvergence_of_subsequential_square
+#print axioms StatMech.Universality.isingFermionic_fullConvergence_of_subsequential_squareDeriv
+#print axioms StatMech.Universality.isingFermionic_fullConvergence_of_compactBounds_and_squareDeriv
+#print axioms StatMech.Universality.isingFermionic_fullConvergence_of_compactBounds_and_primitiveIm

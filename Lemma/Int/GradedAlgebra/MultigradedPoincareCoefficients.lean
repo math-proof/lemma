@@ -4,11 +4,13 @@ import sympy.atlas.RingTheory.GradedAlgebra.MultigradedPoincareCoefficients
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [multigradedPoincareCoefficients_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedPoincareCoefficients.lean)
 -/
 @[path]
-private lemma multigradedPoincareCoefficients_apply_eq
+lemma multigradedPoincareCoefficients_apply
   {K : Type u} [Field K]
   {n : ℕ}
   {M : Type u} [AddCommGroup M] [Module (MvPolynomial (Fin n) K) M] [Module K M]
@@ -21,15 +23,19 @@ private lemma multigradedPoincareCoefficients_apply_eq
   {α : Fin n →₀ Int} :
 -- imply
   multigradedPoincareCoefficients data (i, α) =
-    multigradedBettiNumber data α i := by
+    multigradedBettiNumber data α i :=
 -- proof
-  apply MetaMathlibExt.multigradedPoincareCoefficients_apply data i α
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [multigradedPoincareCoefficients_eq_of_resolutionComparison](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedPoincareCoefficients.lean)
 -/
 @[path]
-private lemma multigradedPoincareCoefficients_eq_of_resolutionComparison_eq
+lemma multigradedPoincareCoefficients_eq_of_resolutionComparison
   {K : Type u} [Field K]
   {n : ℕ}
   {M : Type u} [AddCommGroup M] [Module (MvPolynomial (Fin n) K) M] [Module K M]
@@ -45,7 +51,14 @@ private lemma multigradedPoincareCoefficients_eq_of_resolutionComparison_eq
   multigradedPoincareCoefficients data₁ =
     multigradedPoincareCoefficients data₂ := by
 -- proof
-  apply MetaMathlibExt.multigradedPoincareCoefficients_eq_of_resolutionComparison comparison
+  funext p
+  cases p with
+  | mk i α =>
+    unfold multigradedPoincareCoefficients
+    exact multigradedBettiNumber_eq_of_resolutionComparison comparison α i
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

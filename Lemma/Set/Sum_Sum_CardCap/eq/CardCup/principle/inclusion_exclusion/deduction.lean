@@ -2,7 +2,6 @@ import Mathlib.Combinatorics.Enumerative.InclusionExclusion
 import sympy.Basic
 
 
-
 @[path]
 private lemma main
   [DecidableEq α]

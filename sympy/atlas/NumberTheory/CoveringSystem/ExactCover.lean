@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CoveringSystem/ExactCover.lean -/
 
 import sympy.atlas.NumberTheory.CoveringSystem
+import Lemma.Int.CoveringSystem
 namespace Int
 
 /-!

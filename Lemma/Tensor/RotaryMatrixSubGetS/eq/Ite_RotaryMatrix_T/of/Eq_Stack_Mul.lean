@@ -10,7 +10,7 @@ import Lemma.Tensor.MatPow.eq.Inv
 import Lemma.Tensor.RotaryMatrixNeg.eq.TRotaryMatrix
 import Lemma.Tensor.InvRotaryMatrix.eq.TRotaryMatrix
 import Lemma.Tensor.SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge
-open Fin Int Tensor
+open Fin Int Tensor Set
 
 
 @[path]

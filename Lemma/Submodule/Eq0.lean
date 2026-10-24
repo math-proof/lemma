@@ -1,44 +1,42 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [LinearMap_exists_forall_eq_zero_of_tendsto_apply_of_finiteDimensional](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearMap_exists_forall_eq_zero_of_tendsto_apply_of_finiteDimensional.lean)
 -/
 @[path]
 private lemma main
-    {X : Type*} (Y : Submodule ℂ (X → ℂ)) [FiniteDimensional ℂ ↥Y]
-    (T : ℕ → (↥Y →ₗ[ℂ] (X → ℂ)))
-    (hT : ∀ (y : ↥Y) (x : X), Filter.Tendsto (fun n => T n y x) Filter.atTop (nhds ((y : X → ℂ) x))) :
-    ∃ n, ∀ y : ↥Y, T n y = 0 → y = 0 := by
+  (Y : Submodule ℂ (X → ℂ)) [FiniteDimensional ℂ ↥Y]
+  (T : ℕ → (↥Y →ₗ[ℂ] (X → ℂ)))
+  (hT : ∀ (y : ↥Y) (x : X), Filter.Tendsto (fun n => T n y x) Filter.atTop (nhds ((y : X → ℂ) x))) :
+  -- imply
+  ∃ n, ∀ y : ↥Y, T n y = 0 → y = 0 := by
+  -- proof
   classical
-  let ev : X → (↥Y →ₗ[ℂ] ℂ) := fun x =>
-    { toFun := fun y => (y : X → ℂ) x
-      map_add' := fun _ _ => rfl
-      map_smul' := fun _ _ => rfl }
+  let ev : X → (↥Y →ₗ[ℂ] ℂ) := fun x => ⟨⟨fun y => (y : X → ℂ) x, fun _ _ => rfl⟩, fun _ _ => rfl⟩
   let W : Finset X → Submodule ℂ ↥Y := fun s => ⨅ x ∈ s, LinearMap.ker (ev x)
-  have hW_anti : ∀ s t : Finset X, s ⊆ t → W t ≤ W s := fun s t hst =>
-    biInf_mono hst
+  have hW_anti : ∀ s t : Finset X, s ⊆ t → W t ≤ W s := fun s t hst => biInf_mono hst
   have hsep : ∃ s : Finset X, W s = ⊥ := by
-    suffices h : ∀ (d : ℕ) (s : Finset X), Module.finrank ℂ ↥(W s) ≤ d → ∃ t : Finset X, W t = ⊥ from
-      h _ ∅ le_rfl
+    suffices h : ∀ (d : ℕ) (s : Finset X), Module.finrank ℂ ↥(W s) ≤ d → ∃ t : Finset X, W t = ⊥ from h _ ∅ le_rfl
     intro d
-    induction d with
-    | zero =>
+    induction d
+    ·
       intro s hs
       exact ⟨s, Submodule.finrank_eq_zero.mp (Nat.le_zero.mp hs)⟩
-    | succ d ih =>
+    ·
+      rename_i d ih
       intro s hs
-      by_cases hbot : W s = ⊥
-      · exact ⟨s, hbot⟩
-      · obtain ⟨y, hyW, hy0⟩ := (Submodule.ne_bot_iff (W s)).mp hbot
+      if hbot : W s = ⊥ then
+        exact ⟨s, hbot⟩
+      else
+        obtain ⟨y, hyW, hy0⟩ := (Submodule.ne_bot_iff (W s)).mp hbot
         have hyfun : (y : X → ℂ) ≠ 0 := fun h => hy0 (Subtype.ext h)
         obtain ⟨x, hx⟩ : ∃ x, (y : X → ℂ) x ≠ 0 := Function.ne_iff.mp hyfun
         refine ih (insert x s) (Nat.le_of_lt_succ (lt_of_lt_of_le ?_ hs))
@@ -49,31 +47,28 @@ private lemma main
         have h2 := (Submodule.mem_iInf _).mp h1 (Finset.mem_insert_self x s)
         simpa [ev] using h2
   obtain ⟨s, hs⟩ := hsep
-  let Φ : (X → ℂ) →ₗ[ℂ] (↥s → ℂ) :=
-    { toFun := fun f i => f i
-      map_add' := fun _ _ => rfl
-      map_smul' := fun _ _ => rfl }
+  let Φ : (X → ℂ) →ₗ[ℂ] (↥s → ℂ) := ⟨⟨fun f i => f i, fun _ _ => rfl⟩, fun _ _ => rfl⟩
   have hΦinj : ∀ y : ↥Y, Φ (y : X → ℂ) = 0 → y = 0 := by
     intro y hy
     have hyW : y ∈ W s := by
       refine (Submodule.mem_iInf _).mpr fun x => (Submodule.mem_iInf _).mpr fun hx => ?_
       show (y : X → ℂ) x = 0
-      exact congr_fun hy ⟨x, hx⟩
+      apply congr_fun hy ⟨x, hx⟩
     rw [hs] at hyW
-    exact (Submodule.mem_bot ℂ).mp hyW
+    apply (Submodule.mem_bot ℂ).mp hyW
   let b := Module.finBasis ℂ ↥Y
   let v : Fin (Module.finrank ℂ ↥Y) → (↥s → ℂ) := fun j => Φ (b j : X → ℂ)
   have hv : LinearIndependent ℂ v := by
-    refine LinearIndependent.map' b.linearIndependent (Φ ∘ₗ Y.subtype) ?_
+    refine LinearIndependent.map' b.linearIndependent (LinearMap.comp Φ Y.subtype) ?_
     rw [LinearMap.ker_eq_bot']
     intro y hy
-    exact hΦinj y hy
+    apply hΦinj y hy
   have htend : Filter.Tendsto (fun n => fun j => Φ (T n (b j))) Filter.atTop (nhds v) := by
     rw [tendsto_pi_nhds]
     intro j
     rw [tendsto_pi_nhds]
     intro i
-    exact hT (b j) i
+    apply hT (b j) i
   obtain ⟨n, hn⟩ := (htend.eventually hv.eventually).exists
   refine ⟨n, fun y hy => ?_⟩
   have h0 : ∑ j, (b.repr y j) • Φ (T n (b j)) = 0 := by
@@ -83,6 +78,7 @@ private lemma main
     simpa only [map_smul] using hΦ0
   have hc := Fintype.linearIndependent_iff.mp hn (fun j => b.repr y j) h0
   rw [← b.sum_repr y]
-  exact Finset.sum_eq_zero fun j _ => by rw [show b.repr y j = 0 from hc j, zero_smul]
+  apply Finset.sum_eq_zero fun j _ => by rw [show b.repr y j = 0 from hc j, zero_smul]
+
 
 -- created on 2026-10-20

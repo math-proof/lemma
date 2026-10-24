@@ -27,22 +27,4 @@ Trudgian, arXiv:1310.6403v2, line 24. -/
 def IsSocialistPrime (p : ℕ) : Prop :=
   Nat.Prime p ∧ 5 < p ∧
     Set.Pairwise (Set.Icc 2 (p - 1)) (fun k l => k.factorial % p ≠ l.factorial % p)
-
-theorem IsSocialistPrime.prime {p : ℕ} (h : IsSocialistPrime p) : Nat.Prime p :=
-  h.1
-
-theorem IsSocialistPrime.five_lt {p : ℕ} (h : IsSocialistPrime p) : 5 < p :=
-  h.2.1
-
-theorem IsSocialistPrime.pairwise {p : ℕ} (h : IsSocialistPrime p) :
-    Set.Pairwise (Set.Icc 2 (p - 1)) (fun k l => k.factorial % p ≠ l.factorial % p) :=
-  h.2.2
-
-/-- Elimination for the pairwise clause: distinct indices in `[2,p-1]`
-have distinct factorial residues mod `p`. -/
-theorem IsSocialistPrime.factorial_mod_ne {p : ℕ} (h : IsSocialistPrime p)
-    {a b : ℕ} (ha : a ∈ Set.Icc 2 (p - 1)) (hb : b ∈ Set.Icc 2 (p - 1))
-    (hab : a ≠ b) : a.factorial % p ≠ b.factorial % p :=
-  h.pairwise ha hb hab
-
 end Nat

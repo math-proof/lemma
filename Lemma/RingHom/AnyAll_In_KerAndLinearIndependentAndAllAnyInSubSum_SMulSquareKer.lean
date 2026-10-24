@@ -41,7 +41,7 @@ private lemma main
       apply Ideal.mul_mem_mul (haugProj_mem (r j)) hjI
     rw [hsmul, hdecomp, map_add, Iff.mpr Ideal.Quotient.eq_zero_iff_mem hI2, add_zero, map_mul]
     rw [show Q (algebraMap K A (Coalgebra.counit (R := K) (r j))) = algebraMap K (A ⧸ I ^ 2) (Coalgebra.counit (R := K) (r j)) from rfl, ← Algebra.smul_def]
-    apply Submodule.smul_mem _ _ (Submodule.subset_span ⟨↑j, j.2, rfl⟩)
+    apply Submodule.smul_mem _ _ (Submodule.subset_span (⟨↑j, j.2, rfl⟩ : Q (↑j) ∈ Q '' (↑s : Set A)))
   let V : Submodule K (A ⧸ I ^ 2) := Submodule.span K (Q '' (↑s : Set A))
   let _ : Module.Finite K V := Module.Finite.span_of_finite K (s.finite_toSet.image _)
   let B := Module.Free.chooseBasis K V
@@ -65,7 +65,7 @@ private lemma main
   let e := (Fintype.equivFin (Module.Free.ChooseBasisIndex K V)).symm
   let n := Fintype.card (Module.Free.ChooseBasisIndex K V)
   refine ⟨n, fun i => ξ' (e i), fun i => hξ'I (e i), ?_, ?_⟩
-  · apply ((funext hξ'Q ▸ B.linearIndependent.map' V.subtype (Submodule.ker_subtype V))).comp e e.injective
+  · apply (((funext hξ'Q : (fun j => Q (ξ' j)) = fun j => (B j : A ⧸ I ^ 2)) ▸ (B.linearIndependent.map' V.subtype (Submodule.ker_subtype V) : LinearIndependent K (fun j => (B j : A ⧸ I ^ 2)))).comp e e.injective)
   ·
     intro a haI
     have haV : Q a ∈ V := hspanA a haI

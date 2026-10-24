@@ -1,0 +1,106 @@
+import Mathlib
+import sympy.Basic
+import sympy.atlas.v1.Atlas.NumberTheoryI.code.Chapter4.SepClosedDecomp
+open Polynomial TensorProduct Module SepClosedDecomposition
+
+
+/--
+[algHom_card_eq_finrank_of_isSepClosed](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter4/SepClosedDecomp.lean)
+-/
+@[path]
+private lemma algHom_card_eq_finrank_of_isSepClosed_eq
+  {K L Ω : Type*}
+  [Field K]
+  [Field L]
+  [Field Ω] :
+-- imply
+  Fintype.card (L →ₐ[K] Ω) = finrank K L := by
+-- proof
+  apply SepClosedDecomposition.algHom_card_eq_finrank_of_isSepClosed K L Ω
+
+/--
+[algHom_linearIndependent](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter4/SepClosedDecomp.lean)
+-/
+@[path]
+private lemma algHom_linearIndependent_eq
+  {K L Ω : Type*}
+  [Field K]
+  [Field L]
+  [Field Ω] :
+-- imply
+  LinearIndependent Ω (fun (σ : L →ₐ[K] Ω) (l : L) => σ l) := by
+-- proof
+  apply SepClosedDecomposition.algHom_linearIndependent K L Ω
+
+/--
+[column_functions_linearIndependent](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter4/SepClosedDecomp.lean)
+-/
+@[path]
+private lemma column_functions_linearIndependent_eq
+  {K L Ω : Type*}
+  [Field K]
+  [Field L]
+  [Field Ω] :
+-- imply
+  LinearIndependent Ω (fun (i : Fin (finrank K L)) (φ : L →ₐ[K] Ω) => φ (finBasis K L i)) := by
+-- proof
+  apply SepClosedDecomposition.column_functions_linearIndependent K L Ω
+
+/--
+[tensorSepClosedAlgHom_injective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter4/SepClosedDecomp.lean)
+-/
+@[path]
+private lemma tensorSepClosedAlgHom_injective_eq
+  {K L Ω : Type*}
+  [Field K]
+  [Field L]
+  [Field Ω] :
+-- imply
+  Function.Injective (tensorSepClosedAlgHom K L Ω) := by
+-- proof
+  apply SepClosedDecomposition.tensorSepClosedAlgHom_injective K L Ω
+
+/--
+[finrank_tensor_eq_finrank_pi_of_isSepClosed](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter4/SepClosedDecomp.lean)
+-/
+@[path]
+private lemma finrank_tensor_eq_finrank_pi_of_isSepClosed_eq
+  {K L Ω : Type*}
+  [Field K]
+  [Field L]
+  [Field Ω] :
+-- imply
+  finrank Ω (Ω ⊗[K] L) = finrank Ω ((L →ₐ[K] Ω) → Ω) := by
+-- proof
+  apply SepClosedDecomposition.finrank_tensor_eq_finrank_pi_of_isSepClosed K L Ω
+
+/--
+[tensorSepClosedAlgHom_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter4/SepClosedDecomp.lean)
+-/
+@[path]
+private lemma tensorSepClosedAlgHom_surjective_eq
+  {K L Ω : Type*}
+  [Field K]
+  [Field L]
+  [Field Ω] :
+-- imply
+  Function.Surjective (tensorSepClosedAlgHom K L Ω) := by
+-- proof
+  apply SepClosedDecomposition.tensorSepClosedAlgHom_surjective K L Ω
+
+/--
+[tensorSepClosedAlgHom_bijective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter4/SepClosedDecomp.lean)
+-/
+@[path]
+private lemma tensorSepClosedAlgHom_bijective_eq
+  {K L Ω : Type*}
+  [Field K]
+  [Field L]
+  [Field Ω] :
+-- imply
+  Function.Bijective (tensorSepClosedAlgHom K L Ω) := by
+-- proof
+  apply SepClosedDecomposition.tensorSepClosedAlgHom_bijective K L Ω
+
+
+-- created on 2026-10-23

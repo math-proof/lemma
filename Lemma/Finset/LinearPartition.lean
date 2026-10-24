@@ -4,11 +4,13 @@ import sympy.atlas.Combinatorics.LinearPartition
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [LinearPartition.ext](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/LinearPartition.lean)
 -/
 @[path]
-private lemma LinearPartition_ext_eq
+lemma LinearPartition.ext
   [DecidableEq V]
   {G : SimpleGraph V}
   {k : ℕ}
@@ -18,28 +20,39 @@ private lemma LinearPartition_ext_eq
 -- imply
   P = Q := by
 -- proof
-  apply MetaMathlibExt.LinearPartition.ext h
+  cases P
+  cases Q
+  cases h
+  rfl
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [LinearPartition.existsUniqueBlock](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/LinearPartition.lean)
 -/
 @[path]
-private lemma LinearPartition_existsUniqueBlock_eq
+lemma LinearPartition.existsUniqueBlock
   [DecidableEq V]
   {G : SimpleGraph V}
   {k : ℕ}
   {P : LinearPartition G k}
   {v : V} :
 -- imply
-  ∃! L, L ∈ P.blocks ∧ v ∈ L := by
+  ∃! L, L ∈ P.blocks ∧ v ∈ L :=
 -- proof
-  apply MetaMathlibExt.LinearPartition.existsUniqueBlock P v
+  P.covers v
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [LinearPartition.consecutive_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/LinearPartition.lean)
 -/
 @[path]
-private lemma LinearPartition_consecutive_mem_eq
+lemma LinearPartition.consecutive_mem
   [DecidableEq V]
   {G : SimpleGraph V}
   {k : ℕ}
@@ -48,9 +61,12 @@ private lemma LinearPartition_consecutive_mem_eq
 -- given
   (hL : L ∈ P.blocks) :
 -- imply
-  List.IsChain (fun a b => ¬G.Adj a b) L := by
+  List.IsChain (fun a b => ¬G.Adj a b) L :=
 -- proof
-  apply MetaMathlibExt.LinearPartition.consecutive_mem P hL
+  P.consecutive L hL
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -240,38 +240,6 @@ private def frontPerm {N : ℕ} (π : Equiv.Perm (Fin (N + 1))) (h : IsGood (N +
   left_inv i := by apply Fin.ext; simp only [Fin.eta, Equiv.symm_apply_apply]
   right_inv i := by apply Fin.ext; simp only [Fin.eta, Equiv.apply_symm_apply]
 
-private lemma frontPerm_apply {N : ℕ} (π : Equiv.Perm (Fin (N + 1))) (h : IsGood (N + 1) π)
-    (i : Fin (π (Fin.last N)).val) (hlt : i.val < N + 1) :
-    (frontPerm π h i).val = (π ⟨i.val, hlt⟩).val := rfl
-
-private lemma frontPerm_good {N : ℕ} (π : Equiv.Perm (Fin (N + 1))) (h : IsGood (N + 1) π) :
-    IsGood (π (Fin.last N)).val (frontPerm π h) := by
-  have hcN : (π (Fin.last N)).val ≤ N := Nat.lt_succ_iff.mp (Fin.is_lt _)
-  obtain ⟨hpar, h312, h231⟩ := h
-  refine ⟨?_, ?_, ?_⟩
-  · intro i
-    have hlt : i.val < N + 1 := by have := i.isLt; omega
-    rw [frontPerm_apply π ⟨hpar, h312, h231⟩ i hlt]
-    exact hpar ⟨i.val, hlt⟩
-  · intro i j k hij hjk ⟨hjk', hki'⟩
-    have hli : i.val < N + 1 := by have := i.isLt; omega
-    have hlj : j.val < N + 1 := by have := j.isLt; omega
-    have hlk : k.val < N + 1 := by have := k.isLt; omega
-    rw [frontPerm_apply π ⟨hpar, h312, h231⟩ j hlj, frontPerm_apply π ⟨hpar, h312, h231⟩ k hlk]
-        at hjk'
-    rw [frontPerm_apply π ⟨hpar, h312, h231⟩ k hlk, frontPerm_apply π ⟨hpar, h312, h231⟩ i hli]
-        at hki'
-    exact h312 ⟨i.val, hli⟩ ⟨j.val, hlj⟩ ⟨k.val, hlk⟩ hij hjk ⟨hjk', hki'⟩
-  · intro i j k hij hjk ⟨hki', hij'⟩
-    have hli : i.val < N + 1 := by have := i.isLt; omega
-    have hlj : j.val < N + 1 := by have := j.isLt; omega
-    have hlk : k.val < N + 1 := by have := k.isLt; omega
-    rw [frontPerm_apply π ⟨hpar, h312, h231⟩ k hlk, frontPerm_apply π ⟨hpar, h312, h231⟩ i hli]
-        at hki'
-    rw [frontPerm_apply π ⟨hpar, h312, h231⟩ i hli, frontPerm_apply π ⟨hpar, h312, h231⟩ j hlj]
-        at hij'
-    exact h231 ⟨i.val, hli⟩ ⟨j.val, hlj⟩ ⟨k.val, hlk⟩ hij hjk ⟨hki', hij'⟩
-
 private def recon {m n : ℕ} (ρ : Equiv.Perm (Fin m)) (L : ℕ) (hn : m + L = n) : Equiv.Perm
     (Fin n) :=
   (finCongr hn).permCongr (buildPerm m L ρ)
@@ -297,14 +265,6 @@ private lemma recon_ge {m n : ℕ} (ρ : Equiv.Perm (Fin m)) (L : ℕ) (hn : m +
     (hx : m ≤ x.val) : (recon ρ L hn x).val = 2*m + L - 1 - x.val := by
   rw [recon_val]
   exact buildPerm_ge ρ ⟨x.val, Nat.lt_of_lt_of_eq x.2 hn.symm⟩ hx
-
-private lemma parity_c {N : ℕ} (π : Equiv.Perm (Fin (N + 1))) (h : IsGood (N + 1) π) :
-    (N - (π (Fin.last N)).val) % 2 = 0 := by
-  obtain ⟨hpar, _, _⟩ := h
-  have hp := hpar (Fin.last N)
-  have hlast : (Fin.last N).val = N := Fin.val_last N
-  have hcN : (π (Fin.last N)).val ≤ N := Nat.lt_succ_iff.mp (Fin.is_lt _)
-  omega
 
 private lemma recon_front {N : ℕ} (π : Equiv.Perm (Fin (N + 1))) (h : IsGood (N + 1) π) :
     π = recon (frontPerm π h) (N + 1 - (π (Fin.last N)).val)
@@ -412,91 +372,4 @@ private def fiberEquiv {N : ℕ} (b : Fin (N + 1)) (hb : (N - b.val) % 2 = 0) :
     have hbN : b.val ≤ N := Nat.lt_succ_iff.mp b.isLt
     rw [frontFixed_apply b _ _ _ i (by have := i.isLt; omega),
         recon_lt _ _ _ ⟨i.val, by have := i.isLt; omega⟩ (by have := i.isLt; exact i.isLt)]
-
-private lemma range_sum {N : ℕ} :
-    Fintype.card {π : Equiv.Perm (Fin (N+1)) // IsGood (N+1) π} =
-      ∑ b ∈ (Finset.range (N+1)).filter (fun b => (N - b) % 2 = 0),
-        Fintype.card {ρ : Equiv.Perm (Fin b) // IsGood b ρ} := by
-  classical
-  rw [Fintype.card_subtype,
-    Finset.card_eq_sum_card_fiberwise
-      (f := fun π => (π (Fin.last N)).val) (t := Finset.range (N+1))
-      (fun π _ => Finset.mem_range.mpr (π (Fin.last N)).isLt),
-    Finset.sum_filter]
-  apply Finset.sum_congr rfl
-  intro v hv
-  rw [Finset.mem_range] at hv
-  rw [Finset.filter_filter]
-  by_cases hpar : (N - v) % 2 = 0
-  · rw [ite_eq_left hpar, ← Fintype.card_subtype
-      (fun π => IsGood (N+1) π ∧ (π (Fin.last N)).val = v)]
-    apply Fintype.card_congr
-    refine (Equiv.subtypeEquivRight ?_).trans (fiberEquiv ⟨v, hv⟩ hpar)
-    intro π
-    constructor
-    · rintro ⟨hg, hval⟩; exact ⟨hg, Fin.ext hval⟩
-    · rintro ⟨hg, heq⟩; exact ⟨hg, by rw [heq]⟩
-  · rw [ite_eq_right hpar, ← Fintype.card_subtype
-      (fun π => IsGood (N+1) π ∧ (π (Fin.last N)).val = v),
-      Fintype.card_eq_zero_iff]
-    refine ⟨fun π => ?_⟩
-    obtain ⟨hg, hval⟩ := π.2
-    have hpc := parity_c π.1 hg
-    rw [hval] at hpc
-    exact hpar hpc
-
-private lemma recurrence (m : ℕ) :
-    Fintype.card {π : Equiv.Perm (Fin (m+3)) // IsGood (m+3) π} =
-      Fintype.card {σ : Equiv.Perm (Fin (m+2)) // IsGood (m+2) σ} +
-      Fintype.card {τ : Equiv.Perm (Fin (m+1)) // IsGood (m+1) τ} := by
-  have e1 : Fintype.card {π : Equiv.Perm (Fin (m+3)) // IsGood (m+3) π} =
-      ∑ b ∈ (Finset.range (m+3)).filter (fun b => (m + 2 - b) % 2 = 0),
-        Fintype.card {ρ : Equiv.Perm (Fin b) // IsGood b ρ} := range_sum (N := m+2)
-  have e2 : Fintype.card {τ : Equiv.Perm (Fin (m+1)) // IsGood (m+1) τ} =
-      ∑ b ∈ (Finset.range (m+1)).filter (fun b => (m - b) % 2 = 0),
-        Fintype.card {ρ : Equiv.Perm (Fin b) // IsGood b ρ} := range_sum (N := m)
-  have hset : (Finset.range (m+2)).filter (fun b => (m + 2 - b) % 2 = 0)
-      = (Finset.range (m+1)).filter (fun b => (m - b) % 2 = 0) := by
-    ext b
-    simp only [Finset.mem_filter, Finset.mem_range]
-    omega
-  rw [e1, e2, Finset.range_add_one, Finset.filter_insert,
-    ite_eq_left (show (m + 2 - (m + 2)) % 2 = 0 by omega),
-    Finset.sum_insert (by simp [Finset.mem_filter, Finset.mem_range]), hset]
-
-private theorem card_isGood_eq_fib : ∀ n, 1 ≤ n →
-    Fintype.card {π : Equiv.Perm (Fin n) // IsGood n π} = Nat.fib n := by
-  intro n
-  induction n using Nat.strong_induction_on with
-  | _ n IH =>
-    intro hn
-    match n, hn with
-    | 1, _ => decide
-    | 2, _ => decide
-    | (m+3), _ =>
-      rw [recurrence m, IH (m+2) (by omega) (by omega), IH (m+1) (by omega) (by omega)]
-      have h : Nat.fib (m+3) = Nat.fib (m+1) + Nat.fib (m+2) := Nat.fib_add_two (n := m+1)
-      omega
-
-/-- Parity-alternating permutations of `[n]` starting with an odd entry, equivalently
-index-parity-preserving permutations, that avoid both classical patterns `312` and `231`
-are counted by the Fibonacci numbers: with zero-based `Fin n`, parity preservation is
-`(π i).val % 2 = i.val % 2`, a `312` occurrence at `i < j < k` has
-`π j < π k < π i`, a `231` occurrence at `i < j < k` has `π k < π i < π j`,
-and for positive `n` the cardinality of this finite set equals `Nat.fib n`.
-Source: Per Alexandersson, Samuel Asefa Fufa, and Frether Getachew Kebede, "Pattern-Avoidance and
-Fuss–Catalan Numbers", Journal of Integer Sequences 26 (2023), Article 23.4.2, Proposition lines
-1757-1759, <https://cs.uwaterloo.ca/journals/JIS/VOL26/Getachew/get3.tex>.
-
-Proves `Wanted` entry `fibonacci_card_parity_alternating_avoiding_312_231`.
--/
-theorem fibonacci_card_parity_alternating_avoiding_312_231 (n : ℕ) (hn : 0 < n) :
-    Fintype.card { π : Equiv.Perm (Fin n) //
-        (∀ i, (π i).val % 2 = i.val % 2) ∧
-        (∀ i j k : Fin n, i.val < j.val → j.val < k.val →
-          ¬ ((π j).val < (π k).val ∧ (π k).val < (π i).val)) ∧
-        (∀ i j k : Fin n, i.val < j.val → j.val < k.val →
-          ¬ ((π k).val < (π i).val ∧ (π i).val < (π j).val)) } = Nat.fib n := by
-  exact card_isGood_eq_fib n hn
-
 end MetaMathlibExt

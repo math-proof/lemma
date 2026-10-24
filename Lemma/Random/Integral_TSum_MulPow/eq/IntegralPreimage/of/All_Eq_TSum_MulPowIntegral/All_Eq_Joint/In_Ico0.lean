@@ -101,4 +101,3 @@ private lemma main
 
 -- created on 2023-03-29
 -- updated on 2026-10-12
-

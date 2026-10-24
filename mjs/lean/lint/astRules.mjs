@@ -9,7 +9,7 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'given-prop-first', 'given-prop-consecutive', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'paren-apparg']);
+export const AST_RULES = new Set(['have-inline-once', 'given-prop-first', 'given-prop-consecutive', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub']);
 
 /** parse `source`, or null when the parser throws / does not return a module */
 export function parseAst(source) {
@@ -383,6 +383,52 @@ function parenAppArg(ctx, node) {
         1);
 }
 
+/**
+ * `(h : (T))`: the type of an explicit binder is already a complete term; an outer parenthesis
+ * pair around it is redundant against the binder's closing `)` (`(hMs : (sup[…] e < ∞))` →
+ * `(hMs : sup[…] e < ∞)`). Keep ascriptions `(e : τ)`, tuples, and `·` sections. Not an AGENTS.md
+ * rule (user request).
+ */
+function parenRedundantType(ctx, node) {
+    const { LeanParenthesis, LeanColon } = Lean.classes;
+    if (!(node instanceof LeanParenthesis)) return;
+    const colon = node.parent;
+    // binder `(names : type)` — the type node is this parenthesis
+    if (!(colon instanceof LeanColon) || colon.rhs !== node) return;
+    if (!(colon.parent instanceof LeanParenthesis)) return;
+    // `(h : (e : τ))` / `(h : (⟨…⟩ : τ))` — ascription needs the paren pair
+    if (node.arg instanceof LeanColon) return;
+    // tuples `(a, b)` / cdot sections `(· + 1)`
+    if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
+    const inner = String(node.arg).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+    const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
+    ctx.warnAst('paren-redundant-type', node,
+        `\`(${show(inner)})\` → \`${show(inner)}\`: redundant parentheses around binder type`,
+        1);
+}
+
+
+/**
+ * `((i : ℕ) - (∑ t ∈ s, d t))` / `a - (∏ …)`: parentheses wrapping a ∑/∏ that is already the
+ * entire RHS of binary `-` are redundant — the binder scopes the body, and `-`'s RHS is the
+ * whole big operator (`a - ∑ t ∈ s, d t`). Do NOT warn for `(∑ …) + d k`: dropping those parens
+ * can change meaning (`∑ …, d t + d k`). Not an AGENTS.md rule (user request via Matrix/Body).
+ */
+function parenRedundantSumSub(ctx, node) {
+    const { LeanParenthesis, LeanSub, Lean_sum, Lean_prod } = Lean.classes;
+    if (!(node instanceof LeanParenthesis)) return;
+    const inner = node.arg;
+    if (!(inner instanceof Lean_sum || inner instanceof Lean_prod)) return;
+    const parent = node.parent;
+    // only the RHS of binary `-` (never `+` / `*` / LHS)
+    if (!(parent instanceof LeanSub) || parent.rhs !== node) return;
+    if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
+    const text = String(inner).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+    const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
+    ctx.warnAst('paren-redundant-sum-sub', node,
+        `\`(${show(text)})\` → \`${show(text)}\`: parentheses around ∑/∏ on the RHS of \`-\` are redundant`,
+        1);
+}
 
 /** is the repo-relative path a `Lemma/…` file? */
 export function isLemmaPath(file) {
@@ -455,6 +501,8 @@ export function astRules(ctx, tree) {
         else {
             parenGetElem(sink, node);
             parenAppArg(sink, node);
+            parenRedundantType(sink, node);
+            parenRedundantSumSub(sink, node);
         }
     }
     found.sort((a, b) => order.get(a.node) - order.get(b.node));

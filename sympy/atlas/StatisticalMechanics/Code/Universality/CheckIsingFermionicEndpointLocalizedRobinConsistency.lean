@@ -1,0 +1,56 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicEndpointLocalizedRobinConsistency.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicEndpointLocalizedRobinConsistency
+
+#print axioms
+  StatMech.Universality.isingFiniteWeightedLocalizedPoissonBarrier_boundary
+#print axioms
+  StatMech.Universality.isingFiniteWeightedLocalizedPoissonBarrier_laplacian_of_mem
+#print axioms
+  StatMech.Universality.isingFiniteWeightedLocalizedPoissonBarrier_laplacian_of_not_mem
+#print axioms
+  StatMech.Universality.isingFiniteWeightedLocalizedPoissonBarrier_nonneg
+#print axioms
+  StatMech.Universality.isingFiniteWeighted_harmonic_approximation_of_endpoint_barriers
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.expandingSquare_scaledFourth_factor_eq_one
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.tendsto_expandingSquare_scaledFourth_of_bound_tendsto
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexMarkedEndpointBarrier_nonneg
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceMarkedEndpointBarrier_nonneg
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertex_fixed_ghost_mem_markedEndpointLayer
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.face_fixed_ghost_mem_markedEndpointLayer
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertex_adj_fixed_ghost_mem_markedEndpointLayer
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.face_adj_fixed_ghost_mem_markedEndpointLayer
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexMarkedEndpointBarrier_laplacian_nonpos
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceMarkedEndpointBarrier_laplacian_nonpos
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexMarkedEndpointBarrier_laplacian_le_neg_one
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceMarkedEndpointBarrier_laplacian_le_neg_one
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexDirichlet_target_error_le_endpointLocalized
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceDirichlet_target_error_le_endpointLocalized
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.vertexSampled_target_error_le_endpointLocalized
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.faceSampled_target_error_le_endpointLocalized
+#print axioms
+  StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.PhysicalEndpointLocalizedRobinInputs.primitive_convergence_away

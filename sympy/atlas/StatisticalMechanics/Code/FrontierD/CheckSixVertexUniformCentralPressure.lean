@@ -1,0 +1,34 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexUniformCentralPressure.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexUniformCentralPressure
+
+#print axioms StatMech.FrontierD.sixVertexSectorTrace_particleHole_uniformPressure
+#print axioms StatMech.FrontierD.sixVertexCentralTrace_le_fixedWidthPartitionSum
+#print axioms StatMech.FrontierD.sixVertexBalancedTraceShare_mem_Ioc
+#print axioms StatMech.FrontierD.sixVertexAllHeightCentralTraceMaximal_of_traceLogConcave
+#print axioms
+  StatMech.FrontierD.sixVertexUniformHeightCentralTraceBound_of_allHeightCentralTraceMaximal
+#print axioms StatMech.FrontierD.sixVertexUniformHeightCentralTraceBound_of_traceLogConcave
+#print axioms
+  StatMech.FrontierD.sixVertexPositiveEvenHeightCentralTraceMaximal_of_traceLogConcave
+#print axioms
+  StatMech.FrontierD.sixVertexPositiveEvenHeight_full_le_card_mul_central_of_traceLogConcave
+#print axioms
+  StatMech.FrontierD.sixVertexWidthTopEigenvalue_eq_halfFilled_of_uniformHeightCentralTraceBound
+#print axioms
+  StatMech.FrontierD.fkRectBalancedShareSpectralGap_eq_zero_of_uniformHeightCentralTraceBound
+#print axioms
+  StatMech.FrontierD.tendsto_fkRectBalancedShareSpectralGap_zero_of_uniformHeightCentralTraceBound
+#print axioms
+  StatMech.FrontierD.tendsto_fkRectBalancedNormalizationRate_zero_of_crossingFloor_uniformTrace
+#print axioms
+  StatMech.FrontierD.fkQgt4_windingBridge_of_crossingFloor_uniformCentralTrace

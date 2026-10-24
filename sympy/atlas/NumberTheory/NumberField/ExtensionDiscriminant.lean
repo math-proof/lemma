@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/ExtensionDiscriminant.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.LatticeDiscriminant
+import Lemma.Nat.NumberField.LatticeDiscriminant
 /-!
 # Extension discriminants
 
@@ -30,11 +31,6 @@ theorem mem_imageOfB {x : L} :
     x ∈ imageOfB A L B ↔ ∃ b : B, algebraMap B L b = x := by
   simp only [imageOfB, Subalgebra.mem_toSubmodule, AlgHom.mem_range,
     IsScalarTower.coe_toAlgHom']
-
-/-- Every element mapped from B belongs to imageOfB. -/
-theorem algebraMap_mem_imageOfB (b : B) :
-    algebraMap B L b ∈ imageOfB A L B :=
-  (mem_imageOfB A L B).mpr ⟨b, rfl⟩
 
 /-- The image of a finite A-module B is finite as an A-module. -/
 instance imageOfB_finite [Module.Finite A B] :
@@ -67,17 +63,4 @@ tuples from the image of B in L. It is not, at this level of generality, an Idea
 -/
 def extensionDiscriminant : Submodule A K :=
   latticeDiscriminant A K (imageOfB A L B)
-
-/-- The extension discriminant is the lattice discriminant of imageOfB. -/
-theorem extensionDiscriminant_eq :
-    extensionDiscriminant A K L B =
-      latticeDiscriminant A K (imageOfB A L B) :=
-  rfl
-
-/-- The discriminant of a tuple from imageOfB belongs to the extension discriminant. -/
-theorem discr_mem_extensionDiscriminant
-    {b : Fin (Module.finrank K L) → L} (hb : ∀ i, b i ∈ imageOfB A L B) :
-    Algebra.discr K b ∈ extensionDiscriminant A K L B :=
-  discr_mem_latticeDiscriminant A K hb
-
 end ExtensionDiscriminant

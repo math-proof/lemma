@@ -92,10 +92,13 @@ theorem IntegrableOn.eq {I J: BoundedInterval} (hIJ: J ⊆ I)
 /-- A handy little lemma for "epsilon of room" type arguments -/
 lemma nonneg_of_le_const_mul_eps {x C:ℝ} (h: ∀ ε>0, x ≤ C * ε) : x ≤ 0 := by
   by_cases hC: C > 0
-  . by_contra!
-    specialize h (x/(2*C)) (by positivity); convert_to x ≤ x/2 at h; grind
+  · by_contra! hx
+    specialize h (x/(2*C)) (by positivity)
+    have : C * (x / (2 * C)) = x / 2 := by field_simp
     linarith
-  specialize h 1 ?_ <;> grind
+  · have hx : x ≤ C * 1 := h 1 (by norm_num)
+    have hC' : C ≤ 0 := le_of_not_gt hC
+    nlinarith
 
 /-- Theorem 11.4.3 (Max and min preserve integrability). -/
 theorem IntegrableOn.max {I: BoundedInterval} {f g:ℝ → ℝ} (hf: IntegrableOn f I) (hg: IntegrableOn g I) :
@@ -109,11 +112,14 @@ theorem IntegrableOn.max {I: BoundedInterval} {f g:ℝ → ℝ} (hf: IntegrableO
     exact abs_max_le_max_abs_abs.trans (sup_le_sup hM hM')
   have lower_le_upper : 0 ≤ upper_integral (f ⊔ g) I - lower_integral (f ⊔ g) I := by linarith [lower_integral_le_upper hmax_bound]
   have (ε:ℝ) (hε: 0 < ε) : upper_integral (f ⊔ g) I - lower_integral (f ⊔ g) I ≤ 4*ε := by
-    choose f' hf'min hf'const hf'int using gt_of_lt_lower_integral hf.1 (show integ f I - ε < lower_integral f I
-    by grind)
-    choose g' hg'min hg'const hg'int using gt_of_lt_lower_integral hg.1 (show integ g I - ε < lower_integral g I by grind)
-    choose f'' hf''max hf''const hf''int using lt_of_gt_upper_integral hf.1 (show upper_integral f I < integ f I + ε by grind)
-    choose g'' hg''max hg''const hg''int using lt_of_gt_upper_integral hg.1 (show upper_integral g I < integ g I + ε by grind)
+    choose f' hf'min hf'const hf'int using gt_of_lt_lower_integral hf.1
+      (show integ f I - ε < lower_integral f I by simpa [integ, hf.2] using sub_lt_self (integ f I) hε)
+    choose g' hg'min hg'const hg'int using gt_of_lt_lower_integral hg.1
+      (show integ g I - ε < lower_integral g I by simpa [integ, hg.2] using sub_lt_self (integ g I) hε)
+    choose f'' hf''max hf''const hf''int using lt_of_gt_upper_integral hf.1
+      (show upper_integral f I < integ f I + ε by simpa [integ] using lt_add_of_pos_right (upper_integral f I) hε)
+    choose g'' hg''max hg''const hg''int using lt_of_gt_upper_integral hg.1
+      (show upper_integral g I < integ g I + ε by simpa [integ] using lt_add_of_pos_right (upper_integral g I) hε)
     set h := (f'' - f') + (g'' - g')
     have hf'_integ := integ_of_piecewise_const hf'const
     have hg'_integ := integ_of_piecewise_const hg'const
@@ -151,7 +157,7 @@ theorem IntegrableOn.abs {I: BoundedInterval} {f:ℝ → ℝ} (hf: IntegrableOn 
   IntegrableOn (abs f) I := by
   have := (IntegrableOn.const 0 I).1
   convert ((hf.max this).sub (hf.min this)).1 using 1
-  ext x; obtain h | h := (show f x ≤ 0 ∨ f x ≥ 0 by grind) <;> simp [h]
+  ext x; obtain h | h := le_total (f x) 0 <;> simp [h]
 
 /-- Theorem 11.4.5 (Products preserve Riemann integrability).
 It is convenient to first establish the non-negative case. -/
@@ -276,9 +282,11 @@ theorem integ_of_mul {I: BoundedInterval} {f g:ℝ → ℝ} (hf: IntegrableOn f 
   have hfplusgminus := integ_of_mul_nonneg hfplus_integ hgminus_integ hfplus_nonneg hgminus_nonneg
   have hfminusgplus := integ_of_mul_nonneg hfminus_integ hgplus_integ hfminus_nonneg hgplus_nonneg
   have hfminusgminus := integ_of_mul_nonneg hfminus_integ hgminus_integ hfminus_nonneg hgminus_nonneg
-  rw [show f = fplus - fminus by ext; simp [fplus, fminus],
-      show g = gplus - gminus by ext; simp [gplus, gminus]]
-  ring_nf
+  have hfg : f * g = fplus * gplus + (-(fplus * gminus) - fminus * gplus) + fminus * gminus := by
+    rw [show f = fplus - fminus by ext; simp [fplus, fminus],
+        show g = gplus - gminus by ext; simp [gplus, gminus]]
+    ext x; simp; ring
+  rw [hfg]
   exact ((hfplusgplus.add (hfplusgminus.neg.1.sub hfminusgplus).1).1.add hfminusgminus).1
 open BoundedInterval
 

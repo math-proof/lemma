@@ -1,13 +1,12 @@
 <template>
 	<li :style=li_style>
    		<searchLink :data=data></searchLink>
-   		<template v-if="!isRepeat && modules">
+   		<template v-if=modules>
    			<button class=transparent @click=click :title=buttonTitle>{{buttonText}}</button>
    		 	<ul v-if=show>
    	 			<hierarchyModule v-for="module, i of modules" :module=module :ref="el => children[i] = el"></hierarchyModule>
    			</ul>
 		</template>
-		<template v-else-if="isRepeat && wouldHaveChildren"> »»»</template>
     </li>
 </template>
 
@@ -118,11 +117,6 @@ const self = new Vue({
 			return depth;
 		},
 
-		wouldHaveChildren() {
-			var kids = this.$root.graph && this.$root.graph[this.module];
-			return !!(kids && kids.length);
-		},
-
 		buttonText() {
 			return this.show? '«««' : '»»»';
 		},
@@ -131,10 +125,11 @@ const self = new Vue({
 			return this.show? 'click to collapse' : 'click to expand';
 		},
 
+		// Repeats keep a »»» button (not plain text) so the user can expand in place;
+		// children still dedupe via _hierarchySeen when they mount.
 		modules() {
-			if (this.isRepeat)
-				return;
-			return this.$root.graph[this.module];
+			var kids = this.$root.graph && this.$root.graph[this.module];
+			return kids && kids.length ? kids : null;
 		},
 	},
 
@@ -145,7 +140,7 @@ const self = new Vue({
 	},
 });
 
-const { li_style, data, modules, show, children, buttonTitle, buttonText, click, isRepeat, wouldHaveChildren } = self.globals;
+const { li_style, data, modules, show, children, buttonTitle, buttonText, click } = self.globals;
 </script>
 
 <style scoped>

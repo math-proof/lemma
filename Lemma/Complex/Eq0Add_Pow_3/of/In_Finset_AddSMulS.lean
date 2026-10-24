@@ -21,4 +21,4 @@ private lemma sub.given
   linear_combination (3 * ((δ ^ (1 / 2 : ℂ) / 2 - q / 2) ^ (1 / 3 : ℂ) * (-1 / 2 + Complex.I * √3 / 2) ^ d + (-δ ^ (1 / 2 : ℂ) / 2 - q / 2) ^ (1 / 3 : ℂ))) * hK + ((δ ^ (1 / 2 : ℂ) / 2 - q / 2) ^ (1 / 3 : ℂ)) ^ 3 * hW3 + hsum
 
 
--- created on 2018-11-20
+-- created on 2018-11-10

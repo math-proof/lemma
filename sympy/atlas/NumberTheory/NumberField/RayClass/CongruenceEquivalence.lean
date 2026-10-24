@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceEquivalence.lean -/
 
 import sympy.atlas.NumberTheory.NumberField.RayClass.CongruenceSubgroup
+import Lemma.Nat.NumberField.RayClass.CongruenceSubgroup
 /-!
 # Congruence subgroup pair equivalence (N420 Definition 22.3)
 
@@ -30,23 +31,5 @@ common ambient group of all nonzero fractional ideals. -/
 def IsEquivalent (P Q : CongruenceSubgroupPair K) : Prop :=
   coprimeFractionalIdeals P.modulus ⊓ Q.subgroup.toAmbientSubgroup =
     coprimeFractionalIdeals Q.modulus ⊓ P.subgroup.toAmbientSubgroup
-
-/-- Unfolding of `IsEquivalent` to the intersection formula. -/
-theorem isEquivalent_iff (P Q : CongruenceSubgroupPair K) :
-    IsEquivalent P Q ↔
-      coprimeFractionalIdeals P.modulus ⊓ Q.subgroup.toAmbientSubgroup =
-        coprimeFractionalIdeals Q.modulus ⊓ P.subgroup.toAmbientSubgroup :=
-  Iff.rfl
-
-/-- Equivalence of pairs is reflexive. -/
-theorem IsEquivalent.refl (P : CongruenceSubgroupPair K) :
-    IsEquivalent P P :=
-  rfl
-
-/-- Equivalence of pairs is symmetric. -/
-theorem IsEquivalent.symm {P Q : CongruenceSubgroupPair K} :
-    IsEquivalent P Q → IsEquivalent Q P :=
-  Eq.symm
-
 end CongruenceSubgroupPair
 end NumberField.Modulus

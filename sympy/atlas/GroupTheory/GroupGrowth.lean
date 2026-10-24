@@ -72,43 +72,4 @@ noncomputable def growth (n : ℕ) : ℕ := Nat.card {g : G // P.wordLength g �
 def HasPolynomialGrowth : Prop :=
   (∀ n, Finite {g : G // P.wordLength g ≤ n}) ∧
     ∃ C d : ℕ, ∀ n, P.growth n ≤ C * (n + 1) ^ d
-
-/-- The ball of radius `0` is exactly `{1}`, so the growth function starts at `1`. -/
-lemma growth_zero : P.growth 0 = 1 := by
-  show Nat.card {g : G // P.wordLength g ≤ 0} = 1
-  refine Nat.card_eq_one_iff_unique.mpr ⟨⟨fun a b => Subtype.ext ?_⟩, ⟨⟨1, by simp⟩⟩⟩
-  rw [P.wordLength_eq_zero_iff.mp (Nat.le_zero.mp a.2),
-    P.wordLength_eq_zero_iff.mp (Nat.le_zero.mp b.2)]
-
-/-- Over a finite group every ball is nonempty (it contains the identity), so the growth function
-is positive. -/
-lemma growth_pos [Finite G] (n : ℕ) : 0 < P.growth n := by
-  show 0 < Nat.card {g : G // P.wordLength g ≤ n}
-  have : Nonempty {g : G // P.wordLength g ≤ n} :=
-    ⟨⟨1, by rw [P.wordLength_one]; exact Nat.zero_le n⟩⟩
-  exact Nat.card_pos
-
-/-- The growth function is bounded by the order of the group, since every ball is a subset of `G`. -/
-lemma growth_le_card [Finite G] (n : ℕ) : P.growth n ≤ Nat.card G := by
-  show Nat.card {g : G // P.wordLength g ≤ n} ≤ Nat.card G
-  exact Finite.card_subtype_le _
-
-/-- Every generating family of a finite group has polynomial growth: the growth function is bounded
-by the (constant) order of the group, i.e. by a polynomial of degree `0`. -/
-theorem hasPolynomialGrowth_of_finite [Finite G] : P.HasPolynomialGrowth := by
-  refine ⟨fun _ => inferInstance, Nat.card G, 0, fun n => ?_⟩
-  simpa using P.growth_le_card n
-
-lemma growth_pos_of_finite (hfin : ∀ n, Finite {g : G // P.wordLength g ≤ n}) (n : ℕ) :
-    0 < P.growth n := by
-  haveI := hfin n
-  show 0 < Nat.card {g : G // P.wordLength g ≤ n}
-  have : Nonempty {g : G // P.wordLength g ≤ n} :=
-    ⟨⟨1, by rw [P.wordLength_one]; exact Nat.zero_le n⟩⟩
-  exact Nat.card_pos
-
-/-- Polynomial growth implies positive growth at every radius. -/
-lemma HasPolynomialGrowth.growth_pos (h : P.HasPolynomialGrowth) (n : ℕ) : 0 < P.growth n :=
-  P.growth_pos_of_finite h.1 n
-
 end Group.Generators

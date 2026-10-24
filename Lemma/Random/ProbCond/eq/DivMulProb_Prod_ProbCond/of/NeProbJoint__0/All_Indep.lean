@@ -1,5 +1,5 @@
 import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
-import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
+import Lemma.Random.SinglePSpace.SinglePSpace.of.SinglePSpace
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.MeasureTheory.Function.FactorsThrough
 import Mathlib.Probability.Independence.Conditional
@@ -37,10 +37,10 @@ private lemma main
   (h₁ : ℙ[π](x = «x.bvar» ∧ y[:m] = «y.bvar»[:m]) ≠ 0) :
 -- imply
   have : SinglePSpace π x :=
-    PSpace.of.PSpace_Joint.fst
+    SinglePSpace.of.SinglePSpace.fst
       (inferInstance : SinglePSpace π (x, show Ω → Fin m → β from y[:m]))
   have : SinglePSpace π y[:m] :=
-    SinglePSpace.of.EqMeasureCount.Measurable ‹Fact (Measurable y[:m])›.out rfl
+    SinglePSpace.of.Measurable ‹Fact (Measurable y[:m])›.out
   have : ∀ j : Fin m, SinglePSpace π (y[j], x) :=
     fun j => SinglePSpace.of.Measurable.Measurable ((measurable_pi_apply j).comp ‹Fact (Measurable y[:m])›.out) ‹Fact (Measurable x)›.out
   ℙ[π](x = «x.bvar» | y[:m] = «y.bvar»[:m]) =
@@ -103,18 +103,13 @@ private lemma main
         exact h.2
       ·
         exact h.1 i
-  have hrefm : ReferenceMeasure.measure (α := Fin m → β) = Measure.count := rfl
-  have hrefprod : ReferenceMeasure.measure (α := α × (Fin m → β)) = Measure.count := by
-    change (ReferenceMeasure.measure (α := α)).prod
-      (ReferenceMeasure.measure (α := Fin m → β)) = Measure.count
-    rw [CountableMeasure.measure_eq_count, hrefm, ProdCountS.eq.Count]
   have hjoint : π (A ∩ ys ⁻¹' {b[:m]}) ≠ 0 := by
     let z : Ω → α × (Fin m → β) := (x, show Ω → Fin m → β from y[:m])
     have hz : z = fun ω => (x ω, y[:m] ω) := rfl
     have hprob :
       π.prob z («x.bvar», show Fin m → β from «y.bvar»[:m]) =
         π (z ⁻¹' {(«x.bvar», show Fin m → β from «y.bvar»[:m])}) :=
-      Prob.eq.Measure.of.Eq_Count hrefprod _
+      EqProb _
     have hpre : z ⁻¹' {(a, show Fin m → β from b[:m])} = A ∩ ys ⁻¹' {b[:m]} := by
       rw [hz]
       ext ω
@@ -259,9 +254,9 @@ private lemma main
       simp [Fin.val_last]
   have hC : ys ⁻¹' {b[:m]} = prefixSet m := hslice_set m
   have hmarg : ℙ[π](x = a) = π A := by
-    simpa [a, A] using Prob.eq.Measure.of.Eq_Count (x := x) CountableMeasure.measure_eq_count a
+    simpa [a, A] using EqProb (x := x) a
   have hmargY : ℙ[π](ys = b[:m]) = π (ys ⁻¹' {b[:m]}) :=
-    Prob.eq.Measure.of.Eq_Count (x := ys) hrefm b[:m]
+    EqProb (x := ys) b[:m]
   have hcond : ℙ[π](x = a | ys = b[:m]) =
     π (A ∩ ys ⁻¹' {b[:m]}) / π (ys ⁻¹' {b[:m]}) := by
     have h :
@@ -297,4 +292,4 @@ private lemma main
 
 
 -- created on 2024-06-18
--- updated on 2026-10-22
+-- updated on 2026-10-23

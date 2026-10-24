@@ -10,7 +10,7 @@ set_option backward.isDefEq.respectTransparency false
 universe u
 
 private lemma section_eq_zero_of_cover
-  {Y : (Scheme : Type 1)} {V : Y.Opens} (s : (Y.presheaf.obj (op V))) {ι : Type} (U : ι → Y.Opens)
+  {Y : (Scheme : Type 1)} {V : Y.Opens} (s : Y.presheaf.obj (op V)) {ι : Type} (U : ι → Y.Opens)
   (hU : ∀ i, U i ≤ V) (hcov : V ≤ ⨆ i, U i)
     (h : ∀ i, (Y.presheaf.map (homOfLE (hU i)).op).hom s = 0) : s = 0 := by
   refine TopCat.Sheaf.eq_of_locally_eq' Y.sheaf U V (fun i => homOfLE (hU i)) hcov s 0 fun i => ?_
@@ -88,7 +88,7 @@ private lemma ideal_unique
       ((Iff.mp (h𝔞 (A ⧸ 𝔟) (Ideal.Quotient.mkₐ R 𝔟))
         (Iff.mpr (h𝔟 (A ⧸ 𝔟) (Ideal.Quotient.mkₐ R 𝔟))
           (fun b hb => Iff.mpr Ideal.Quotient.eq_zero_iff_mem hb))) a ha)
-  exact le_antisymm (key 𝔞 𝔟 h𝔞 h𝔟) (key 𝔟 𝔞 h𝔟 h𝔞)
+  refine le_antisymm (key 𝔞 𝔟 h𝔞 h𝔟) (key 𝔟 𝔞 h𝔟 h𝔞)
 private lemma W_iff_cl_eq_bot
   (hn : PtNatural F Fmap p pt) (hc : Closed F Fmap W) (A : Type) [CommRing A]
   [Algebra R A] (s : F A) : W A s ↔ cl hc A s = ⊥ := by
@@ -216,7 +216,7 @@ private lemma preimage_le_iSup (g : Spec (CommRingCat.of A) ⟶ X) (U : X.Opens)
     rw [Iso.hom_inv_id]
     rfl
   have hDa : Da A a = (Spec (CommRingCat.of A)).basicOpen f := by rw [Da, ha]
-  apply Iff.mpr TopologicalSpace.Opens.mem_iSup ⟨⟨a, by rwa [hDa]⟩, by rwa [hDa]⟩
+  refine Iff.mpr TopologicalSpace.Opens.mem_iSup ⟨⟨a, by rwa [hDa]⟩, by rwa [hDa]⟩
 private lemma J_le_ker_iff : J hn hc ≤ (pt A s).1.ker ↔ W A s := by
   let g := (pt A s).1
   rw [Scheme.Hom.ker, Scheme.IdealSheafData.le_ofIdeals_iff, W_iff_cl_eq_bot hn hc]

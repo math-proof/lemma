@@ -1,48 +1,44 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open IsLocalRing
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+set_option linter.unusedSectionVars false
 
-variable {A : Type*} [CommRing A]
+
+variable {A : Type} [CommRing A]
 private lemma mem_span_pair_left (x y : A) : x ∈ Ideal.span ({x, y} : Set A) :=
   Ideal.subset_span (Set.mem_insert _ _)
 private lemma mem_span_pair_right (x y : A) : y ∈ Ideal.span ({x, y} : Set A) :=
   Ideal.subset_span (Set.mem_insert_of_mem _ rfl)
-private lemma span_pair_le_iff {x y : A} {I : Ideal A} :
-    Ideal.span ({x, y} : Set A) ≤ I ↔ x ∈ I ∧ y ∈ I := by
+private lemma span_pair_le_iff {x y : A} {I : Ideal A} : Ideal.span ({x, y} : Set A) ≤ I ↔ x ∈ I ∧ y ∈ I := by
   rw [Ideal.span_le, Set.insert_subset_iff, Set.singleton_subset_iff]
   rfl
-private lemma span_pair_add_mul_eq (x y k : A) :
-    Ideal.span ({x + k * y, y} : Set A) = Ideal.span {x, y} := by
+private lemma span_pair_add_mul_eq (x y k : A) : Ideal.span ({x + k * y, y} : Set A) = Ideal.span {x, y} := by
   apply le_antisymm
-  · rw [span_pair_le_iff]
+  ·
+    rw [span_pair_le_iff]
     exact ⟨Ideal.mem_span_pair.mpr ⟨1, k, by ring⟩, mem_span_pair_right _ _⟩
-  · rw [span_pair_le_iff]
+  ·
+    rw [span_pair_le_iff]
     exact ⟨Ideal.mem_span_pair.mpr ⟨1, -k, by ring⟩, mem_span_pair_right _ _⟩
-private lemma span_pair_mul_isUnit_eq {x w : A} (hw : IsUnit w) (y : A) :
-    Ideal.span ({x * w, y} : Set A) = Ideal.span {x, y} := by
-  obtain ⟨w, rfl⟩ := hw
+private lemma span_pair_mul_isUnit_eq {x w : A} (hw : IsUnit w) (y : A) : Ideal.span ({x * w, y} : Set A) = Ideal.span {x, y} := by
+  obtain ⟨u, hu⟩ := hw
+  rw [← hu]
   apply le_antisymm
-  · rw [span_pair_le_iff]
-    exact ⟨Ideal.mem_span_pair.mpr ⟨(w : A), 0, by ring⟩, mem_span_pair_right _ _⟩
-  · rw [span_pair_le_iff]
-    refine ⟨Ideal.mem_span_pair.mpr ⟨((w⁻¹ : Aˣ) : A), 0, ?_⟩, mem_span_pair_right _ _⟩
+  ·
+    rw [span_pair_le_iff]
+    exact ⟨Ideal.mem_span_pair.mpr ⟨(u : A), 0, by ring⟩, mem_span_pair_right _ _⟩
+  ·
+    rw [span_pair_le_iff]
+    refine ⟨Ideal.mem_span_pair.mpr ⟨((u⁻¹ : Units A) : A), 0, ?_⟩, mem_span_pair_right _ _⟩
     rw [zero_mul, add_zero, mul_comm x, ← mul_assoc, Units.inv_mul, one_mul]
-private lemma span_pair_pow_le {b ϖ : A} {Q : Ideal A} (hb : b ∈ Q) (hϖ : ϖ ∈ Q) {i : ℕ} (hi : 1 ≤ i) :
-    Ideal.span ({b, ϖ ^ i} : Set A) ≤ Q := by
+private lemma span_pair_pow_le {b ϖ : A} {Q : Ideal A} (hb : b ∈ Q) (hϖ : ϖ ∈ Q) {i : ℕ} (hi : 1 ≤ i) : Ideal.span ({b, ϖ ^ i} : Set A) ≤ Q := by
   rw [span_pair_le_iff]
   exact ⟨hb, Q.pow_mem_of_mem hϖ i hi⟩
 variable {ϖ a b : A} {P : Ideal A}
-private lemma step_down (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] (ha : Ideal.span {a, ϖ} = P)
-    (hbP : b ∉ P) {M : ℕ} (hM : 1 ≤ M) {c : A} (hab : a * b = ϖ ^ M * c) {z : A}
-    (hz : ϖ * z ∈ Ideal.span ({b, ϖ ^ M} : Set A)) :
-    z ∈ Ideal.span ({b, ϖ ^ (M - 1)} : Set A) := by
+private lemma step_down (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] (ha : Ideal.span {a, ϖ} = P) (hbP : b ∉ P) {M : ℕ} (hM : 1 ≤ M) {c : A} (hab : a * b = ϖ ^ M * c) {z : A} (hz : ϖ * z ∈ Ideal.span ({b, ϖ ^ M} : Set A)) : z ∈ Ideal.span ({b, ϖ ^ (M - 1)} : Set A) := by
   obtain ⟨w, y, hwy⟩ := Ideal.mem_span_pair.mp hz
   have hϖP : ϖ ∈ P := ha ▸ mem_span_pair_right a ϖ
   have hM' : ϖ ^ M = ϖ * ϖ ^ (M - 1) := by
@@ -56,26 +52,25 @@ private lemma step_down (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] (ha : Ideal
   obtain ⟨α, β, hαβ⟩ := Ideal.mem_span_pair.mp hw
   have key : ϖ * z = ϖ * (α * ϖ ^ (M - 1) * c + β * b + y * ϖ ^ (M - 1)) := by
     have h2 : ϖ * z = α * (a * b) + β * ϖ * b + y * ϖ ^ M := by
-      rw [← hwy, ← hαβ]; ring
+      rw [← hwy, ← hαβ]
+      ring
     rw [h2, hab, hM']
     ring
   have hz' : z = α * ϖ ^ (M - 1) * c + β * b + y * ϖ ^ (M - 1) :=
     (mul_cancel_left_mem_nonZeroDivisors hϖ).mp key
   rw [hz']
-  exact Ideal.mem_span_pair.mpr ⟨β, α * c + y, by ring⟩
-private lemma step_down_iter (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] (ha : Ideal.span {a, ϖ} = P)
-    (hbP : b ∉ P) {i : ℕ} :
-    ∀ {M : ℕ}, i ≤ M → ∀ {c : A}, a * b = ϖ ^ M * c → ∀ {z : A},
-      ϖ ^ i * z ∈ Ideal.span ({b, ϖ ^ M} : Set A) → z ∈ Ideal.span ({b, ϖ ^ (M - i)} : Set A) := by
-  induction i with
-  | zero =>
+  refine Ideal.mem_span_pair.mpr ⟨β, α * c + y, by ring⟩
+private lemma step_down_iter (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] (ha : Ideal.span {a, ϖ} = P) (hbP : b ∉ P) {i : ℕ} : ∀ {M : ℕ}, i ≤ M → ∀ {c : A}, a * b = ϖ ^ M * c → ∀ {z : A}, ϖ ^ i * z ∈ Ideal.span ({b, ϖ ^ M} : Set A) → z ∈ Ideal.span ({b, ϖ ^ (M - i)} : Set A) := by
+  induction i
+  ·
     intro M _ c _ z hz
     simpa using hz
-  | succ i ih =>
+  ·
+    rename_i i ih
     intro M hiM c hab z hz
     have hM : 1 ≤ M := le_trans (Nat.succ_le_succ (Nat.zero_le i)) hiM
     have h1 : ϖ * (ϖ ^ i * z) ∈ Ideal.span ({b, ϖ ^ M} : Set A) := by
-      rw [← mul_assoc, ← pow_succ']; exact hz
+      rwa [← mul_assoc, ← pow_succ']
     have h2 := step_down hϖ ha hbP hM hab h1
     have hab' : a * b = ϖ ^ (M - 1) * (ϖ * c) := by
       rw [hab, ← mul_assoc, ← pow_succ, Nat.sub_add_cancel hM]
@@ -83,10 +78,7 @@ private lemma step_down_iter (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] (ha : 
     have h4 : M - 1 - i = M - (i + 1) := by omega
     rwa [h4] at h3
 variable [IsLocalRing A] {ϖ a b : A} {P Q : Ideal A}
-private lemma no_deep_stage (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] [Q.IsPrime]
-    (ha : Ideal.span {a, ϖ} = P) (hb : Ideal.span {b, ϖ} = Q) (hbP : b ∉ P)
-    {n : ℕ} {t t' : A} (htQ : t ∉ Q) (ht : t ∈ maximalIdeal A) (htt' : t * t' = ϖ ^ n)
-    {c : A} (hab : a * b = ϖ ^ (n + 1) * c) : False := by
+private lemma no_deep_stage (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] [Q.IsPrime] (ha : Ideal.span {a, ϖ} = P) (hb : Ideal.span {b, ϖ} = Q) (hbP : b ∉ P) {n : ℕ} {t t' : A} (htQ : t ∉ Q) (ht : t ∈ maximalIdeal A) (htt' : t * t' = ϖ ^ n) {c : A} (hab : a * b = ϖ ^ (n + 1) * c) : False := by
   classical
   have hbQ : b ∈ Q := hb ▸ mem_span_pair_left b ϖ
   have hϖQ : ϖ ∈ Q := hb ▸ mem_span_pair_right b ϖ
@@ -98,7 +90,7 @@ private lemma no_deep_stage (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] [Q.IsPr
     rw [hS, Finset.mem_filter]
     refine ⟨Finset.mem_range.mpr (by omega), ?_⟩
     rw [pow_zero]
-    exact Ideal.mem_span_pair.mpr ⟨0, t', by ring⟩
+    refine Ideal.mem_span_pair.mpr ⟨0, t', by ring⟩
   have hSne : S.Nonempty := ⟨0, h0S⟩
   set β : ℕ := S.max' hSne with hβdef
   have hβS : β ∈ S := Finset.max'_mem S hSne
@@ -111,8 +103,9 @@ private lemma no_deep_stage (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] [Q.IsPr
     exact ⟨by omega, hi'⟩
   obtain ⟨x, t₀', hxt⟩ := Ideal.mem_span_pair.mp hβ
   have hprod : t * x * b + t * t₀' * ϖ ^ β = ϖ ^ n := by
-    rw [← htt', ← hxt]; ring
-  rcases le_or_gt β n with hβn | hβn
+    rw [← htt', ← hxt]
+    ring
+  obtain hβn | hβn := le_or_gt β n
   ·
     have hnβ : ϖ ^ n = ϖ ^ β * ϖ ^ (n - β) := by
       rw [← pow_add, Nat.add_sub_cancel' hβn]
@@ -122,9 +115,9 @@ private lemma no_deep_stage (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] [Q.IsPr
         rw [mul_sub, h3, ← hnβ]
         ring
       rw [h2]
-      exact Ideal.mem_span_pair.mpr ⟨_, _, rfl⟩
+      refine Ideal.mem_span_pair.mpr ⟨_, _, rfl⟩
     have h4 := step_down_iter hϖ ha hbP (i := β) (M := n + 1) (by omega) hab h1
-    rcases hβn.lt_or_eq with hlt | heq
+    obtain hlt | heq := hβn.lt_or_eq
     ·
       have h5 : t * t₀' ∈ Q := by
         have h6 : t * t₀' - ϖ ^ (n - β) ∈ Q :=
@@ -151,7 +144,7 @@ private lemma no_deep_stage (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] [Q.IsPr
       have h7 : IsUnit (t * t₀') := by
         by_contra h8
         exact h6 ((IsLocalRing.mem_maximalIdeal _).mpr h8)
-      exact ((IsLocalRing.mem_maximalIdeal _).mp ht) (isUnit_of_mul_isUnit_left h7)
+      refine ((IsLocalRing.mem_maximalIdeal _).mp ht) (isUnit_of_mul_isUnit_left h7)
   ·
     have hnβ : ϖ ^ β = ϖ ^ n * ϖ ^ (β - n) := by
       rw [← pow_add, Nat.add_sub_cancel' hβn.le]
@@ -161,7 +154,7 @@ private lemma no_deep_stage (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] [Q.IsPr
         rw [mul_sub, ← mul_assoc, ← hnβ, h3]
         ring
       rw [h2]
-      exact Ideal.mem_span_pair.mpr ⟨_, _, rfl⟩
+      refine Ideal.mem_span_pair.mpr ⟨_, _, rfl⟩
     have h4 := step_down_iter hϖ ha hbP (i := n) (M := n + 1) (by omega) hab h1
     rw [Nat.add_sub_cancel_left] at h4
     have h5 : ϖ ^ (β - n) * (t * t₀') - 1 ∈ maximalIdeal A :=
@@ -170,51 +163,50 @@ private lemma no_deep_stage (hϖ : ϖ ∈ nonZeroDivisors A) [P.IsPrime] [Q.IsPr
       (maximalIdeal A).mul_mem_right _ ((maximalIdeal A).pow_mem_of_mem hϖm _ (by omega))
     have : (1 : A) ∈ maximalIdeal A := by simpa using (maximalIdeal A).sub_mem h6 h5
     exact (maximalIdeal A).ne_top_iff_one.mp (maximalIdeal.isMaximal A).ne_top this
-variable [IsLocalRing A]
-private lemma exists_mul_eq_pow
-    {ϖ : A} (hϖ : ϖ ∈ nonZeroDivisors A)
-    {P Q : Ideal A} [P.IsPrime] [Q.IsPrime] (hQP : ¬ Q ≤ P)
-    (hPQ : P ⊔ Q = maximalIdeal A)
-    {a b : A} (ha : Ideal.span {a, ϖ} = P) (hb : Ideal.span {b, ϖ} = Q)
-    (hab : a * b ∈ Ideal.span ({ϖ} : Set A))
-    {n : ℕ} {t t' : A} (htQ : t ∉ Q) (ht : t ∈ maximalIdeal A) (htt' : t * t' = ϖ ^ n) :
-    ∃ (e : ℕ) (u v : A), 1 ≤ e ∧ e ≤ n ∧ u * v = ϖ ^ e ∧
-      Ideal.span {u, ϖ} = P ∧ Ideal.span {v, ϖ} = Q := by
+private lemma exists_mul_eq_pow {ϖ : A} (hϖ : ϖ ∈ nonZeroDivisors A) {P Q : Ideal A} [P.IsPrime] [Q.IsPrime] (hQP : ¬ Q ≤ P) (hPQ : P ⊔ Q = maximalIdeal A) {a b : A} (ha : Ideal.span {a, ϖ} = P) (hb : Ideal.span {b, ϖ} = Q) (hab : a * b ∈ Ideal.span ({ϖ} : Set A)) {n : ℕ} {t t' : A} (htQ : t ∉ Q) (ht : t ∈ maximalIdeal A) (htt' : t * t' = ϖ ^ n) : ∃ (e : ℕ) (u v : A), 1 ≤ e ∧ e ≤ n ∧ u * v = ϖ ^ e ∧ Ideal.span {u, ϖ} = P ∧ Ideal.span {v, ϖ} = Q := by
   by_contra H
   have hϖP : ϖ ∈ P := ha ▸ mem_span_pair_right a ϖ
-  have stage : ∀ j : ℕ, 1 ≤ j → j ≤ n + 1 →
-      ∃ a' b' c' : A, Ideal.span {a', ϖ} = P ∧ Ideal.span {b', ϖ} = Q ∧ a' * b' = ϖ ^ j * c' := by
+  have stage : ∀ j : ℕ, 1 ≤ j → j ≤ n + 1 → ∃ a' b' c' : A, Ideal.span {a', ϖ} = P ∧ Ideal.span {b', ϖ} = Q ∧ a' * b' = ϖ ^ j * c' := by
     intro j hj
-    induction j, hj using Nat.le_induction with
-    | base =>
+    induction j, hj using Nat.le_induction
+    ·
       intro _
       obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.mp hab
       exact ⟨a, b, c, ha, hb, by rw [pow_one, ← hc, mul_comm]⟩
-    | succ j hj ih =>
+    ·
+      rename_i j hj ih
       intro hjn
       obtain ⟨a', b', c', ha', hb', hab'⟩ := ih (by omega)
-      by_cases hc' : IsUnit c'
-      ·
+      if hc' : IsUnit c' then
         obtain ⟨w, hw⟩ := hc'
         refine (H ⟨j, a', b' * ↑w⁻¹, hj, by omega, ?_, ha', ?_⟩).elim
-        · rw [← mul_assoc, hab', ← hw, mul_assoc, Units.mul_inv, mul_one]
-        · rw [span_pair_mul_isUnit_eq (Units.isUnit _), hb']
-      ·
+        ·
+          rw [← mul_assoc, hab', ← hw, mul_assoc, Units.mul_inv, mul_one]
+        ·
+          rw [span_pair_mul_isUnit_eq (Units.isUnit _), hb']
+      else
         have hcm : c' ∈ maximalIdeal A := (IsLocalRing.mem_maximalIdeal _).mpr hc'
         rw [← hPQ, ← ha', ← hb'] at hcm
         obtain ⟨p, hp, q, hq, hpq⟩ := Submodule.mem_sup.mp hcm
         obtain ⟨α, γ₁, hαγ⟩ := Ideal.mem_span_pair.mp hp
         obtain ⟨β, γ₂, hβγ⟩ := Ideal.mem_span_pair.mp hq
-        obtain ⟨k, rfl⟩ : ∃ k, j = k + 1 := ⟨j - 1, by omega⟩
+        obtain ⟨k, hk⟩ : ∃ k, j = k + 1 := ⟨j - 1, by omega⟩
+        subst hk
         refine ⟨a' - ϖ ^ (k + 1) * β, b' - ϖ ^ (k + 1) * α, γ₁ + γ₂ + ϖ ^ k * α * β, ?_, ?_, ?_⟩
-        · have h1 : a' - ϖ ^ (k + 1) * β = a' + (-(ϖ ^ k * β)) * ϖ := by
-            rw [pow_succ]; ring
+        ·
+          have h1 : a' - ϖ ^ (k + 1) * β = a' + (-(ϖ ^ k * β)) * ϖ := by
+            rw [pow_succ]
+            ring
           rw [h1, span_pair_add_mul_eq, ha']
-        · have h1 : b' - ϖ ^ (k + 1) * α = b' + (-(ϖ ^ k * α)) * ϖ := by
-            rw [pow_succ]; ring
+        ·
+          have h1 : b' - ϖ ^ (k + 1) * α = b' + (-(ϖ ^ k * α)) * ϖ := by
+            rw [pow_succ]
+            ring
           rw [h1, span_pair_add_mul_eq, hb']
-        · have h1 : c' = α * a' + β * b' + (γ₁ + γ₂) * ϖ := by
-            rw [← hpq, ← hαγ, ← hβγ]; ring
+        ·
+          have h1 : c' = α * a' + β * b' + (γ₁ + γ₂) * ϖ := by
+            rw [← hpq, ← hαγ, ← hβγ]
+            ring
           have h4 : (a' - ϖ ^ (k + 1) * β) * (b' - ϖ ^ (k + 1) * α) =
               a' * b' - ϖ ^ (k + 1) * (α * a' + β * b') + ϖ ^ (k + 1) * ϖ ^ (k + 1) * (α * β) := by
             ring
@@ -228,22 +220,27 @@ private lemma exists_mul_eq_pow
     apply hQP
     rw [← hb', span_pair_le_iff]
     exact ⟨h, hϖP⟩
-  exact no_deep_stage hϖ ha' hb' hbP htQ ht htt' hab'
+  refine no_deep_stage hϖ ha' hb' hbP htQ ht htt' hab'
 /--
 [IsLocalRing_exists_mul_eq_pow_and_span_pair_eq_of_sup_eq_maximalIdeal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_exists_mul_eq_pow_and_span_pair_eq_of_sup_eq_maximalIdeal.lean)
 -/
 @[path]
 private lemma main
-    {A : Type*} [CommRing A] [IsLocalRing A]
-    {ϖ : A} (hϖ : ϖ ∈ nonZeroDivisors A)
-    {P Q : Ideal A} [P.IsPrime] [Q.IsPrime] (hQP : ¬ Q ≤ P)
-    (hPQ : P ⊔ Q = IsLocalRing.maximalIdeal A)
-    {a b : A} (ha : Ideal.span {a, ϖ} = P) (hb : Ideal.span {b, ϖ} = Q)
-    (hab : a * b ∈ Ideal.span {ϖ})
-    {n : ℕ} {t t' : A} (htQ : t ∉ Q) (ht : t ∈ IsLocalRing.maximalIdeal A)
-    (htt' : t * t' = ϖ ^ n) :
-    ∃ (e : ℕ) (u v : A), 1 ≤ e ∧ e ≤ n ∧ u * v = ϖ ^ e ∧
-      Ideal.span {u, ϖ} = P ∧ Ideal.span {v, ϖ} = Q :=
+  {A : Type} [CommRing A] [IsLocalRing A]
+  {ϖ : A} (hϖ : ϖ ∈ nonZeroDivisors A)
+  {P Q : Ideal A} [P.IsPrime] [Q.IsPrime]
+  (hQP : ¬ Q ≤ P)
+  (hPQ : P ⊔ Q = IsLocalRing.maximalIdeal A)
+  {a b : A} (ha : Ideal.span {a, ϖ} = P)
+  (hb : Ideal.span {b, ϖ} = Q)
+  (hab : a * b ∈ Ideal.span {ϖ})
+  {n : ℕ} {t t' : A}
+  (htQ : t ∉ Q)
+  (ht : t ∈ IsLocalRing.maximalIdeal A)
+  (htt' : t * t' = ϖ ^ n) :
+  -- imply
+  ∃ (e : ℕ) (u v : A), 1 ≤ e ∧ e ≤ n ∧ u * v = ϖ ^ e ∧ Ideal.span {u, ϖ} = P ∧ Ideal.span {v, ϖ} = Q :=
   exists_mul_eq_pow hϖ hQP hPQ ha hb hab htQ ht htt'
+
 
 -- created on 2026-10-20

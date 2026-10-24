@@ -5,6 +5,8 @@ Author: @toskua, Avocado
 -/
 
 import sympy.atlas.RingTheory.LocalRing.ResidueField.DVR
+import Lemma.AlgHom.LocalRing.ResidueField.DVR
+import Lemma.Polynomial.AdjoinRoot.LocalMaximal
 import Mathlib.RingTheory.AdjoinRoot
 import Mathlib.FieldTheory.Separable
 import sympy.atlas.RingTheory.AdjoinRoot.LocalMaximal
@@ -185,31 +187,7 @@ namespace DVRResidue
 
 variable {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
 
-/-- Monic lift of an irreducible residue polynomial with domain `AdjoinRoot`. -/
-theorem exists_monic_lift_adjoinRoot_domain
-    (gbar : (IsLocalRing.ResidueField A)[X]) (hmonic : gbar.Monic)
-    (hirr : Irreducible gbar) :
-    ∃ (g : A[X]) (_ : g.Monic) (_ : IsDomain (AdjoinRoot g))
-      (_ : Module.Finite A (AdjoinRoot g)),
-      g.map (IsLocalRing.residue A) = gbar := by
-  have hlift : gbar ∈ Polynomial.lifts (IsLocalRing.residue A) := by
-    rw [Polynomial.lifts_iff_coeff_lifts]
-    intro c
-    exact IsLocalRing.residue_surjective (gbar.coeff c)
-  obtain ⟨g, hmap, _hdeg, hg⟩ := Polynomial.lifts_and_natDegree_eq_and_monic hlift hmonic
-  have hirr_map : Irreducible (g.map (IsLocalRing.residue A)) := hmap ▸ hirr
-  have hgirr : Irreducible g :=
-    Polynomial.Monic.irreducible_of_irreducible_map (IsLocalRing.residue A) g
-      hg hirr_map
-  have hprime : Prime g := UniqueFactorizationMonoid.irreducible_iff_prime.mp hgirr
-  have hdom : IsDomain (AdjoinRoot g) := AdjoinRoot.isDomain_of_prime hprime
-  have hfin : Module.Finite A (AdjoinRoot g) := hg.finite_adjoinRoot
-  exact ⟨g, hg, hdom, hfin, hmap⟩
-
 section QuotientEquiv
-
-variable {R : Type*} [CommRing R] [IsLocalRing R]
-
 /-- Quotient of `AdjoinRoot g` by the coefficient maximal ideal recovers
 `AdjoinRoot gbar`. -/
 noncomputable def adjoinRootQuotientEquivOfMapEq
@@ -245,26 +223,6 @@ theorem adjoinRoot_map_maximalIdeal_isMaximal
       (IsLocalRing.maximalIdeal A)).IsMaximal := by
   have h := AdjoinRoot.is_maximal_of_irreducible_factor g g hirr dvd_rfl
   simpa [AdjoinRoot.mk_self] using h
-
-/-- `AdjoinRoot g` is local when `g` is monic with irreducible reduction. -/
-theorem adjoinRoot_isLocalRing_of_monic_of_irreducible_map (hg : g.Monic)
-    (hirr : Irreducible (g.map (IsLocalRing.residue A))) :
-    IsLocalRing (AdjoinRoot g) := by
-  let _ : Module.Finite A (AdjoinRoot g) := hg.finite_adjoinRoot
-  let _ : Algebra.IsIntegral A (AdjoinRoot g) :=
-    Algebra.IsIntegral.of_finite A (AdjoinRoot g)
-  refine IsLocalRing.of_unique_max_ideal ⟨_,
-    adjoinRoot_map_maximalIdeal_isMaximal (g := g) hirr, fun M hM => ?_⟩
-  let _ : M.IsMaximal := hM
-  have hc : (M.comap (algebraMap A (AdjoinRoot g))).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap A (AdjoinRoot g))
-      (algebraMap_isIntegral_iff.mpr inferInstance) M
-  have hle :
-      Ideal.map (algebraMap A (AdjoinRoot g)) (IsLocalRing.maximalIdeal A) ≤
-        M :=
-    IsLocalRing.eq_maximalIdeal hc ▸ Ideal.map_comap_le
-  exact ((adjoinRoot_map_maximalIdeal_isMaximal (g := g) hirr).eq_of_le
-    hM.ne_top hle).symm
 
 /-- The maximal ideal upstairs is the image of the base maximal ideal. -/
 theorem maximalIdeal_adjoinRoot_eq_map [IsLocalRing (AdjoinRoot g)]
@@ -311,15 +269,6 @@ theorem residueFieldEquivAdjoinRootOfMapEq_residue_mk
   rw [RingEquiv.trans_apply, Ideal.quotEquivOfEq_mk,
     adjoinRootQuotientEquivOfMapEq_mk]
 
-/-- `AdjoinRoot.of g` is local when the reduction is irreducible. -/
-theorem adjoinRoot_isLocalHom_of_irreducible_map [IsLocalRing (AdjoinRoot g)]
-    (hirr : Irreducible (g.map (IsLocalRing.residue A))) :
-    IsLocalHom (AdjoinRoot.of g) := by
-  have h := ((IsLocalRing.local_hom_TFAE (AdjoinRoot.of g)).out 4 1).mp
-  apply h
-  rw [maximalIdeal_adjoinRoot_eq_map (g := g) hirr]
-  exact Ideal.le_comap_map
-
 /-- The residue-field equivalence as an algebra equivalence. -/
 noncomputable def residueFieldAlgEquivAdjoinRootOfMapEq [IsLocalRing (AdjoinRoot g)]
     [IsLocalHom (algebraMap A (AdjoinRoot g))]
@@ -343,122 +292,9 @@ noncomputable def residueFieldAlgEquivAdjoinRootOfMapEq [IsLocalRing (AdjoinRoot
           AdjoinRoot.mk gbar (C (IsLocalRing.residue A a)) from rfl,
         residueFieldEquivAdjoinRootOfMapEq_residue_mk,
         Polynomial.map_C])
-
-/-- The algebra equivalence applied to `AdjoinRoot.mk g p`. -/
-@[simp]
-theorem residueFieldAlgEquivAdjoinRootOfMapEq_residue_mk
-    [IsLocalRing (AdjoinRoot g)] [IsLocalHom (algebraMap A (AdjoinRoot g))]
-    (gbar : (IsLocalRing.ResidueField A)[X])
-    (hirr : Irreducible (g.map (IsLocalRing.residue A)))
-    (hmap : g.map (IsLocalRing.residue A) = gbar) (p : A[X]) :
-    residueFieldAlgEquivAdjoinRootOfMapEq (g := g) gbar hirr hmap
-        (IsLocalRing.residue (AdjoinRoot g) (AdjoinRoot.mk g p)) =
-      AdjoinRoot.mk gbar (p.map (IsLocalRing.residue A)) := by
-  change (residueFieldEquivAdjoinRootOfMapEq (g := g) gbar hirr hmap)
-      (IsLocalRing.residue (AdjoinRoot g) (AdjoinRoot.mk g p)) = _
-  exact residueFieldEquivAdjoinRootOfMapEq_residue_mk (g := g) gbar hirr hmap p
-
 end Local
-
 section DVR
-
-variable {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
-variable {g : A[X]} [IsDomain (AdjoinRoot g)] [IsLocalRing (AdjoinRoot g)]
-
-/-- The monic irreducible-reduction `AdjoinRoot` over a DVR is a DVR. -/
-theorem adjoinRoot_isDiscreteValuationRing_of_monic_of_irreducible_map
-    (hg : g.Monic)
-    (hirr : Irreducible (g.map (IsLocalRing.residue A))) :
-    IsDiscreteValuationRing (AdjoinRoot g) := by
-  let _ : Module.Finite A (AdjoinRoot g) := hg.finite_adjoinRoot
-  let _ : IsNoetherianRing (AdjoinRoot g) :=
-    IsNoetherianRing.of_finite A (AdjoinRoot g)
-  have hdeg : g.degree ≠ 0 := by
-    intro hzero
-    have hpos := Polynomial.degree_pos_of_irreducible hirr
-    have hle : (g.map (IsLocalRing.residue A)).degree ≤ g.degree :=
-      Polynomial.degree_map_le
-    rw [hzero] at hle
-    exact (lt_irrefl _) (hpos.trans_le hle)
-  have hinj : Function.Injective (algebraMap A (AdjoinRoot g)) := by
-    have h := AdjoinRoot.of.injective_of_degree_ne_zero hdeg
-    rwa [← AdjoinRoot.algebraMap_eq] at h
-  have hnotfield : ¬IsField (AdjoinRoot g) := by
-    intro hfield
-    exact IsDiscreteValuationRing.not_isField A
-      (isField_of_isIntegral_of_isField hinj hfield)
-  have hprincipal : (IsLocalRing.maximalIdeal (AdjoinRoot g)).IsPrincipal := by
-    rw [maximalIdeal_adjoinRoot_eq_map (g := g) hirr]
-    have hbase : (IsLocalRing.maximalIdeal A).IsPrincipal := inferInstance
-    exact hbase.map_ringHom (AdjoinRoot.of g)
-  exact ((IsDiscreteValuationRing.TFAE (AdjoinRoot g) hnotfield).out 5 1).mp
-    hprincipal
-
 end DVR
-
 section EssentialSurjectivity
-
-universe u v
-
-variable {A : Type u} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
-
-/-- Every finite separable residue-field extension lifts to a finite DVR extension.
-
-This is the essential-surjectivity object-construction stage (prerequisite)
-for ATLAS NumberTheoryI N211, Theorem 10.13, not the full N211 target: given
-a finite-dimensional separable extension `L` of the residue field, it builds
-a finite local DVR `A`-algebra `B` with residue field `L`, without assuming
-completeness or Henselianity of `A` and without proving full faithfulness or
-the categorical equivalence. -/
-theorem exists_finite_dvr_extension_residueField_algEquiv
-    (L : Type v) [Field L] [Algebra (IsLocalRing.ResidueField A) L]
-    [FiniteDimensional (IsLocalRing.ResidueField A) L]
-    [Algebra.IsSeparable (IsLocalRing.ResidueField A) L] :
-    ∃ (B : Type u) (_ : CommRing B) (_ : IsDomain B) (_ : Algebra A B)
-      (_ : Module.Finite A B) (_ : IsDiscreteValuationRing B)
-      (_ : IsLocalHom (algebraMap A B)),
-      Nonempty (IsLocalRing.ResidueField B ≃ₐ[IsLocalRing.ResidueField A] L) := by
-  obtain ⟨α, hα⟩ := Field.exists_primitive_element (IsLocalRing.ResidueField A) L
-  have hint : IsIntegral (IsLocalRing.ResidueField A) α :=
-    (Algebra.IsAlgebraic.isAlgebraic α).isIntegral
-  obtain ⟨g, hg, hdom, hfin, hmap⟩ := exists_monic_lift_adjoinRoot_domain (A := A)
-    (minpoly (IsLocalRing.ResidueField A) α) (minpoly.monic hint)
-    (minpoly.irreducible hint)
-  have hirr_map : Irreducible (g.map (IsLocalRing.residue A)) :=
-    hmap ▸ minpoly.irreducible hint
-  let hComm : CommRing (AdjoinRoot g) := inferInstance
-  let _ : CommRing (AdjoinRoot g) := hComm
-  let hAlg : Algebra A (AdjoinRoot g) := inferInstance
-  let _ : Algebra A (AdjoinRoot g) := hAlg
-  have hDom : IsDomain (AdjoinRoot g) := hdom
-  let _ : IsDomain (AdjoinRoot g) := hDom
-  have hFin : Module.Finite A (AdjoinRoot g) := hfin
-  let _ : Module.Finite A (AdjoinRoot g) := hFin
-  let _ : IsLocalRing (AdjoinRoot g) :=
-    adjoinRoot_isLocalRing_of_monic_of_irreducible_map
-      (g := g) hg hirr_map
-  have hDVR : IsDiscreteValuationRing (AdjoinRoot g) :=
-    adjoinRoot_isDiscreteValuationRing_of_monic_of_irreducible_map
-      (g := g) hg hirr_map
-  let _ : IsDiscreteValuationRing (AdjoinRoot g) := hDVR
-  have hLocMap : IsLocalHom (algebraMap A (AdjoinRoot g)) := by
-    simpa only [AdjoinRoot.algebraMap_eq] using
-      adjoinRoot_isLocalHom_of_irreducible_map (g := g) hirr_map
-  let _ : IsLocalHom (algebraMap A (AdjoinRoot g)) := hLocMap
-  have hadj : Algebra.adjoin (IsLocalRing.ResidueField A) ({α} : Set L) = ⊤ :=
-    Algebra.adjoin_eq_top_of_intermediateField
-      (fun _ _ => Algebra.IsAlgebraic.isAlgebraic _) hα
-  have e1 : AdjoinRoot (minpoly (IsLocalRing.ResidueField A) α)
-      ≃ₐ[IsLocalRing.ResidueField A] L :=
-    (minpoly.equivAdjoin hint).trans
-      ((Subalgebra.equivOfEq _ _ hadj).trans Subalgebra.topEquiv)
-  have e0 : IsLocalRing.ResidueField (AdjoinRoot g)
-      ≃ₐ[IsLocalRing.ResidueField A]
-      AdjoinRoot (minpoly (IsLocalRing.ResidueField A) α) :=
-    residueFieldAlgEquivAdjoinRootOfMapEq (g := g) _ hirr_map hmap
-  refine ⟨AdjoinRoot g, hComm, hDom, hAlg, hFin, hDVR, hLocMap, ?_⟩
-  exact Nonempty.intro (e0.trans e1)
-
 end EssentialSurjectivity
-
 end DVRResidue

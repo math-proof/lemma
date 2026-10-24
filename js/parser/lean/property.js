@@ -62,6 +62,14 @@ export class LeanProperty extends LeanBinary {
         if (func === 'LeanDoubleAngleQuotation') {
             return caret.push_left(func, prevToken);
         }
+        // `Name.{u}` universe application: `{` is the field, not a separate argument.
+        // A space-separated reprint (`Name. {u}`) is not valid Lean.
+        if (func === 'LeanBrace' && caret instanceof L.LeanCaret && this.rhs === caret) {
+            const inner = new L.LeanCaret(caret.indent, caret.level);
+            const brace = new L.LeanBrace(inner, caret.indent, caret.level);
+            this.replace(caret, brace);
+            return inner;
+        }
         if (this.parent) {
             return this.parent.insert_left(this, func, prevToken);
         }

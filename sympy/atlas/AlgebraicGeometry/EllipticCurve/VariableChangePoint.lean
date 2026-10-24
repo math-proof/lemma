@@ -6,6 +6,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import sympy.atlas.AlgebraicGeometry.EllipticCurve.PointCount
+import Lemma.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
 import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
 import Mathlib.Tactic.Ring
 
@@ -25,11 +26,6 @@ variable {F : Type u} [Field F]
 def mapAffineCoordinates (C : VariableChange F) (xy : F × F) : F × F :=
   (C.u ^ 2 * xy.1 + C.r,
     C.u ^ 3 * xy.2 + C.u ^ 2 * C.s * xy.1 + C.t)
-
-@[simp]
-theorem mapAffineCoordinates_one (xy : F × F) :
-    mapAffineCoordinates (1 : VariableChange F) xy = xy := by
-  ext <;> simp [mapAffineCoordinates, one_def]
 
 theorem mapAffineCoordinates_mul (C C' : VariableChange F) (xy : F × F) :
     mapAffineCoordinates (C * C') xy =
@@ -102,12 +98,4 @@ noncomputable def pointEquiv (C : VariableChange F) (W : WeierstrassCurve F)
     (C • W).toAffine.Point ≃ W.toAffine.Point :=
   (C • W).toAffine.pointEquiv |>.trans
     ((affineEquationEquiv C W).optionCongr.trans W.toAffine.pointEquiv.symm)
-
-/-- An admissible variable change preserves the number of rational points of an elliptic
-Weierstrass equation over a finite field. -/
-theorem natCard_point_eq [Finite F] (C : VariableChange F) (W : WeierstrassCurve F)
-    [W.IsElliptic] :
-    Nat.card ((C • W).toAffine.Point) = Nat.card W.toAffine.Point :=
-  Nat.card_congr (pointEquiv C W)
-
 end WeierstrassCurve.VariableChange

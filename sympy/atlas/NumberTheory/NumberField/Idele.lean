@@ -155,28 +155,6 @@ def finitePrincipalEmbedding : Kˣ →* FiniteIdeleGroup R K :=
 def principalEmbedding : Kˣ →* TopologicalIdeleGroup R K :=
   (infinitePrincipalEmbedding K).prod (finitePrincipalEmbedding R K)
 
-@[simp]
-theorem infinitePrincipalEmbedding_apply (x : Kˣ) (v : InfinitePlace K) :
-    infinitePrincipalEmbedding K x v =
-      Units.map (algebraMap K v.Completion).toMonoidHom x :=
-  rfl
-
-@[simp]
-theorem finitePrincipalEmbedding_apply (x : Kˣ) (v : HeightOneSpectrum R) :
-    finitePrincipalEmbedding R K x v =
-      Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom x :=
-  rfl
-
-@[simp]
-theorem principalEmbedding_fst (x : Kˣ) :
-    (principalEmbedding R K x).1 = infinitePrincipalEmbedding K x :=
-  rfl
-
-@[simp]
-theorem principalEmbedding_snd (x : Kˣ) :
-    (principalEmbedding R K x).2 = finitePrincipalEmbedding R K x :=
-  rfl
-
 /-- The subgroup of principal ideles, namely the image of the diagonal embedding. -/
 def principalIdeles : Subgroup (TopologicalIdeleGroup R K) :=
   (principalEmbedding R K).range
@@ -191,25 +169,7 @@ def unitsEquiv :
   MulEquiv.prodUnits.trans <| MulEquiv.prodCongr MulEquiv.piUnits <|
     RestrictedProduct.unitsEquiv (fun v : HeightOneSpectrum R ↦ v.adicCompletion K)
 
-@[simp]
-theorem unitsEquiv_globalUnit (x : Kˣ) :
-    unitsEquiv R K (Units.map (algebraMap K (AdeleRing R K)).toMonoidHom x) =
-      principalEmbedding R K x :=
-  rfl
-
-/-- The diagonal map from the global multiplicative group into the ideles is injective. -/
-theorem principalEmbedding_injective [NumberField K] :
-    Function.Injective (principalEmbedding R K) := by
-  intro x y hxy
-  have hmap :
-      unitsEquiv R K (Units.map (algebraMap K (AdeleRing R K)).toMonoidHom x) =
-        unitsEquiv R K (Units.map (algebraMap K (AdeleRing R K)).toMonoidHom y) := by
-    simpa only [unitsEquiv_globalUnit] using hxy
-  exact Units.map_injective (AdeleRing.algebraMap_injective R K) <|
-    (unitsEquiv R K).injective hmap
-
 end TopologicalIdeleGroup
-
 /-- The topological idele class group, namely the quotient of the topological idele
 group by principal ideles. Upstream `NumberField.IdeleClassGroup` (the quotient of
 `𝔸[R, K]ˣ`) is a distinct type. -/

@@ -1,0 +1,30 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectPositiveBandBlockRepetition.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectPositiveBandBlockRepetition
+
+#print axioms StatMech.FrontierD.fkRectPositiveBandBulkBlocks_remainder_lt
+#print axioms StatMech.FrontierD.fkRectPositiveBandBlock_translatedCarrier_subset
+#print axioms StatMech.FrontierD.fkRectPositiveBandBlockIntersection_inducedChain
+#print axioms StatMech.FrontierD.fkRectPositiveBandBlockAuxiliaryPairs_spans
+#print axioms StatMech.FrontierD.fkRectPositiveBandBlock_auxiliary_of_bulk_connectors
+#print axioms StatMech.FrontierD.exists_fkRectPositiveBandBlock_localizedVerticalCycle
+#print axioms StatMech.FrontierD.fkRectCritical_positiveBandBulkLower
+#print axioms StatMech.FrontierD.fkRectCritical_positiveBandAuxiliaryLower
+#print axioms StatMech.FrontierD.fkRectCritical_inducedTwoPoint_le_connectedWithinMass
+#print axioms StatMech.FrontierD.fkRectColumnBand_preconnected
+#print axioms StatMech.FrontierD.fkRectCritical_cFE_pow_bandCard_le_connectedWithinMass
+#print axioms StatMech.FrontierD.fkRectCritical_cFE_pow_le_bottomConnector
+#print axioms StatMech.FrontierD.fkRectPositiveBandBlockPathVertex_last_row_lower
+#print axioms StatMech.FrontierD.fkRectCritical_cFE_pow_le_topConnector
+#print axioms StatMech.FrontierD.fkRectCritical_cFE_le_unitAttachmentOpenEvent
+#print axioms StatMech.FrontierD.fkRectCritical_concretePositiveBandAuxiliaryLower
+#print axioms StatMech.FrontierD.fkRectCritical_concretePositiveBandDualBarrierLower
+#print axioms StatMech.FrontierD.fkRectWindingBlock_sourceBarrier_eventualUpper_of_eventuallyDualPullback_mul_pow

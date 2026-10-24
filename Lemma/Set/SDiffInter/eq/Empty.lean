@@ -1,5 +1,5 @@
 import Lemma.Set.Subset.is.SDiff.eq.Empty
-open Set
+open Set BoundedInterval
 
 
 @[path]

@@ -4,30 +4,39 @@ import sympy.atlas.Combinatorics.SimpleGraph.Ramsey
 open SimpleGraph
 
 
+namespace SimpleGraph
+
 /--
 [graphRamsey_eq_sInf](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Ramsey.lean)
 -/
 @[path]
-private lemma graphRamsey_eq_sInf_eq
+lemma graphRamsey_eq_sInf
   {s t : ℕ} :
 -- imply
-  graphRamsey s t = sInf {N : ℕ | classicalRamsey s t N} := by
+  graphRamsey s t = sInf {N : ℕ | classicalRamsey s t N} :=
 -- proof
-  apply SimpleGraph.graphRamsey_eq_sInf s t
+  rfl
+
+end SimpleGraph
+
+namespace SimpleGraph
 
 /--
 [graphPairRamsey_eq_sInf](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Ramsey.lean)
 -/
 @[path]
-private lemma graphPairRamsey_eq_sInf_eq
+lemma graphPairRamsey_eq_sInf
   [Fintype α] [Fintype β]
   {G : SimpleGraph α}
   {H : SimpleGraph β} :
 -- imply
   graphPairRamsey G H =
-      sInf {n : ℕ | ∀ C : SimpleGraph (Fin n), G.IsContained C ∨ H.IsContained Cᶜ} := by
+      sInf {n : ℕ | ∀ C : SimpleGraph (Fin n), G.IsContained C ∨ H.IsContained Cᶜ} :=
 -- proof
-  apply SimpleGraph.graphPairRamsey_eq_sInf G H
+  rfl
+
+end SimpleGraph
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

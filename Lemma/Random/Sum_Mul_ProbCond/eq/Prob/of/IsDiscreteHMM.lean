@@ -46,7 +46,6 @@ private lemma main
   have h_emit := h.emit
   have h_markov := h.markov
   have hX : (ReferenceMeasure.measure : Measure X) = Measure.count := CountableMeasure.measure_eq_count
-  have hY : (ReferenceMeasure.measure : Measure Y) = Measure.count := CountableMeasure.measure_eq_count
   have : Nonempty X := ⟨«x.bvar» 0⟩
   obtain ⟨ω₀, -⟩ := nonempty_of_measure_ne_zero (μ := π) (s := Set.univ) (by simp)
   have : Nonempty Y := ⟨y 0 ω₀⟩
@@ -290,13 +289,10 @@ private lemma main
       rw [show t + (k + 1) = t + k + 1 from rfl, rA, rN, Finset.sum_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [mul_right_comm, ih b, mul_assoc]
-  have hpair' : ∀ N : ℕ, ReferenceMeasure.measure (α := (Fin N → X) × Y) = Measure.count := fun N => by
-    show (Measure.count : Measure (Fin N → X)).prod (ReferenceMeasure.measure (α := Y)) = Measure.count
-    rw [hY, ← Measure.Count.eq.ProdCountS]
   have hP1 : ∀ (n j : ℕ) (a : Y), ℙ[π](x[:n + 1] = «x.bvar»[:n + 1] ∧ y[j] = a) =
       π (Ev (fun f g => ∀ i ≤ n, f i = «x.bvar» i) ∩ y j ⁻¹' {a}) := by
     intro n j a
-    rw [Prob.eq.Measure.of.Eq_Count (hpair' _)]
+    rw [EqProb]
     congr 1
     ext ω
     simp only [hEv, Set.mem_preimage, Set.mem_singleton_iff, Set.mem_inter_iff, Set.mem_ofPred_eq, JointRandomSymbol,
@@ -310,7 +306,7 @@ private lemma main
       exact ⟨fun i => h1 i (by have := i.2; simp at this; omega), h2⟩
   have hP3 : ∀ n : ℕ, ℙ[π](x[:n + 1] = «x.bvar»[:n + 1]) = π (Ev (fun f g => ∀ i ≤ n, f i = «x.bvar» i)) := by
     intro n
-    rw [Prob.eq.Measure.of.Eq_Count rfl]
+    rw [EqProb]
     congr 1
     ext ω
     simp only [hEv, Set.mem_preimage, Set.mem_singleton_iff, Set.mem_ofPred_eq, funext_iff]
@@ -346,7 +342,7 @@ private lemma main
       π (y i ⁻¹' {c} ∩ y j ⁻¹' {b}) / π (y j ⁻¹' {b}) :=
     fun i j c b => ProbCond.eq.Div.of.SinglePSpace inferInstance c b
   have hPy : ∀ (j : ℕ) (b : Y), ℙ[π](y[j] = b) = π (y j ⁻¹' {b}) :=
-    fun j b => Prob.eq.Measure.of.Eq_Count hY b
+    fun j b => EqProb b
   have hdA : ∀ (t : ℕ) (a : Y) (k : ℕ),
       Dep (fun f g => (∀ i ≤ t + k, f i = «x.bvar» i) ∧ g t = a) (t + k + 1) (t + k + 1) := by
     intro t a k
@@ -432,4 +428,4 @@ private lemma main
 
 
 -- created on 2026-10-03
--- updated on 2026-10-05
+-- updated on 2026-10-23

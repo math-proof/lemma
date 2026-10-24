@@ -84,12 +84,4 @@ noncomputable def residueFieldLinearEquivMaximalIdealGradedPiece (i : ℕ) :
     map_smul' := fun q x => by
       obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective q
       exact e.map_smul r x }
-
-/-- Every maximal-ideal graded piece of a DVR has residue-field finrank one. -/
-theorem finrank_maximalIdealGradedPiece (i : ℕ) :
-    Module.finrank (IsLocalRing.ResidueField R)
-      (MaximalIdealGradedPiece R i) = 1 := by
-  rw [← (residueFieldLinearEquivMaximalIdealGradedPiece R i).finrank_eq]
-  exact Module.finrank_self _
-
 end IsDiscreteValuationRing

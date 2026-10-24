@@ -1,0 +1,23 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicEndpointRadialPointGreen.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicEndpointRadialPointGreen
+
+namespace StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm
+
+#print axioms endpointRadialGreenConstant_nonneg
+#print axioms vertexPointPoissonBarrier_le_endpointRadial_of_halfColumn
+#print axioms facePointPoissonBarrier_le_endpointRadial_of_halfColumn
+#print axioms vertexPointPoissonBarrier_le_endpointRadialQuadratic_of_halfColumn
+#print axioms facePointPoissonBarrier_le_endpointRadialQuadratic_of_halfColumn
+#print axioms vertexSpatialTargetResidualPotential_le_endpointRadialHarmonic_of_residualDecay
+#print axioms faceSpatialTargetResidualPotential_le_endpointRadialHarmonic_of_residualDecay
+
+end StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm

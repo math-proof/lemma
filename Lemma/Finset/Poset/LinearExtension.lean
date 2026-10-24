@@ -4,74 +4,102 @@ import sympy.atlas.Combinatorics.Poset.LinearExtension
 open FinPoset
 
 
+namespace FinPoset
+
 /--
 [mem_linearExtensions](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Poset/LinearExtension.lean)
 -/
 @[path]
-private lemma mem_linearExtensions_eq
+lemma mem_linearExtensions
   [Fintype α] [PartialOrder α]
   {σ : α → Fin (Fintype.card α)} :
 -- imply
   σ ∈ linearExtensions α ↔ Function.Bijective σ ∧ Monotone σ := by
 -- proof
-  apply FinPoset.mem_linearExtensions α σ
+  simp only [linearExtensions, Finset.mem_filter, Finset.mem_univ, true_and]
+
+end FinPoset
+
+namespace FinPoset
 
 /--
 [bijective_someLinearExtension](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Poset/LinearExtension.lean)
 -/
 @[path]
-private lemma bijective_someLinearExtension_eq
+lemma bijective_someLinearExtension
   [Fintype α] [PartialOrder α] :
 -- imply
-  Function.Bijective (someLinearExtension α) := by
+  Function.Bijective (someLinearExtension α) :=
 -- proof
-  apply FinPoset.bijective_someLinearExtension α
+  (linExtOrderIso α).toEquiv.bijective
+
+end FinPoset
+
+namespace FinPoset
 
 /--
 [monotone_someLinearExtension](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Poset/LinearExtension.lean)
 -/
 @[path]
-private lemma monotone_someLinearExtension_eq
+lemma monotone_someLinearExtension
   [Fintype α] [PartialOrder α] :
 -- imply
-  Monotone (someLinearExtension α) := by
+  Monotone (someLinearExtension α) :=
 -- proof
-  apply FinPoset.monotone_someLinearExtension α
+  fun _ _ h =>
+    (linExtOrderIso α).monotone (toLinearExtension.monotone' h)
+
+end FinPoset
+
+namespace FinPoset
 
 /--
 [nonempty_linearExtensions](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Poset/LinearExtension.lean)
 -/
 @[path]
-private lemma nonempty_linearExtensions_eq
+lemma nonempty_linearExtensions
   [Fintype α] [PartialOrder α] :
 -- imply
-  (linearExtensions α).Nonempty := by
+  (linearExtensions α).Nonempty :=
 -- proof
-  apply FinPoset.nonempty_linearExtensions α
+  ⟨someLinearExtension α, by
+    rw [mem_linearExtensions]
+    exact ⟨bijective_someLinearExtension α, monotone_someLinearExtension α⟩⟩
+
+end FinPoset
+
+namespace FinPoset
 
 /--
 [card_linearExtensions_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Poset/LinearExtension.lean)
 -/
 @[path]
-private lemma card_linearExtensions_pos_eq
+lemma card_linearExtensions_pos
   [Fintype α] [PartialOrder α] :
 -- imply
-  0 < (linearExtensions α).card := by
+  0 < (linearExtensions α).card :=
 -- proof
-  apply FinPoset.card_linearExtensions_pos α
+  Finset.card_pos.mpr (nonempty_linearExtensions α)
+
+end FinPoset
+
+namespace FinPoset
 
 /--
 [mem_maximalElements](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Poset/LinearExtension.lean)
 -/
 @[path]
-private lemma mem_maximalElements_eq
+lemma mem_maximalElements
   [PartialOrder P]
   {A : Finset P}
   {x : P} :
 -- imply
   x ∈ maximalElements A ↔ x ∈ A ∧ ∀ y ∈ A, x ≤ y → y = x := by
 -- proof
-  apply FinPoset.mem_maximalElements A x
+  simp only [maximalElements, Finset.mem_filter]
+
+end FinPoset
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

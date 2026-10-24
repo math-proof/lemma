@@ -4,6 +4,7 @@ import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
 import Mathlib.Order.ModularLattice
 import Mathlib.RingTheory.ZMod.UnitsCyclic
 import sympy.atlas.FieldTheory.Galois.Abelian
+import Lemma.Rat.Galois.Abelian
 /-!
 # Intermediate fields of prime cyclotomic fields
 
@@ -101,65 +102,4 @@ theorem existsUnique_intermediateField_finrank (p s : ℕ) (hp : p.Prime)
 noncomputable def intermediateFieldOfFinrank (p s : ℕ) (hp : p.Prime) (hs : s ∣ p - 1) :
     IntermediateField ℚ (CyclotomicField p ℚ) :=
   (existsUnique_intermediateField_finrank p s hp hs).choose
-
-@[simp]
-theorem finrank_intermediateFieldOfFinrank (p s : ℕ) (hp : p.Prime) (hs : s ∣ p - 1) :
-    Module.finrank ℚ (intermediateFieldOfFinrank p s hp hs) = s :=
-  (existsUnique_intermediateField_finrank p s hp hs).choose_spec.1
-
-/-- An intermediate field is the canonical degree-`s` field exactly when it has degree `s` over
-`ℚ`. -/
-theorem eq_intermediateFieldOfFinrank_iff (p s : ℕ) (hp : p.Prime) (hs : s ∣ p - 1)
-    (K : IntermediateField ℚ (CyclotomicField p ℚ)) :
-    K = intermediateFieldOfFinrank p s hp hs ↔ Module.finrank ℚ K = s := by
-  constructor
-  · rintro rfl
-    exact finrank_intermediateFieldOfFinrank p s hp hs
-  · intro hK
-    exact (existsUnique_intermediateField_finrank p s hp hs).unique hK
-      (finrank_intermediateFieldOfFinrank p s hp hs)
-
-/-- Two cyclotomic intermediate fields of `CyclotomicField m ℚ` whose conductors have least
-common multiple `m` generate the whole field. -/
-theorem sup_eq_top_of_lcm_eq (n₀ n₁ m : ℕ) [NeZero n₀] [NeZero n₁]
-    (E₀ E₁ : IntermediateField ℚ (CyclotomicField m ℚ))
-    [IsCyclotomicExtension {n₀} ℚ E₀] [IsCyclotomicExtension {n₁} ℚ E₁]
-    (hlcm : Nat.lcm n₀ n₁ = m) : E₀ ⊔ E₁ = ⊤ := by
-  have h_sup_cyc : IsCyclotomicExtension {Nat.lcm n₀ n₁} ℚ ↥(E₀ ⊔ E₁) :=
-    @IntermediateField.isCyclotomicExtension_lcm_sup ℚ (CyclotomicField m ℚ) _ _ _
-      n₀ n₁ E₀ E₁ ‹IsCyclotomicExtension {n₀} ℚ ↥E₀›
-      ‹IsCyclotomicExtension {n₁} ℚ ↥E₁› ‹NeZero n₀› ‹NeZero n₁›
-  rw [hlcm] at h_sup_cyc
-  have h_top_cyc : IsCyclotomicExtension {m} ℚ
-      (⊤ : IntermediateField ℚ (CyclotomicField m ℚ)) := by
-    have : IsCyclotomicExtension {m} ℚ (CyclotomicField m ℚ) :=
-      CyclotomicField.instIsCyclotomicExtensionSingletonNatSetOfCharZero m ℚ
-    exact IsCyclotomicExtension.equiv _ ℚ _ IntermediateField.topEquiv.symm
-  exact @IntermediateField.isCyclotomicExtension_eq {m} ℚ _ _ _ _ (E₀ ⊔ E₁) ⊤
-    h_sup_cyc h_top_cyc
-
-/-- If `E₀ < F`, then `F` meets `E₁` nontrivially, provided `E₀` and `E₁` are cyclotomic
-intermediate fields whose conductors have least common multiple `m`. -/
-theorem inf_ne_bot_of_lt_of_lcm_eq (n₀ n₁ m : ℕ) [NeZero n₀] [NeZero n₁]
-    (E₀ E₁ : IntermediateField ℚ (CyclotomicField m ℚ))
-    [IsCyclotomicExtension {n₀} ℚ E₀] [IsCyclotomicExtension {n₁} ℚ E₁]
-    (F : IntermediateField ℚ (CyclotomicField m ℚ))
-    (hlcm : Nat.lcm n₀ n₁ = m) (hE₀F : E₀ < F) : F ⊓ E₁ ≠ ⊥ := by
-  have hsup := sup_eq_top_of_lcm_eq n₀ n₁ m E₀ E₁ hlcm
-  have : IsCyclotomicExtension {m} ℚ (CyclotomicField m ℚ) :=
-    CyclotomicField.instIsCyclotomicExtensionSingletonNatSetOfCharZero m ℚ
-  have : NumberField (CyclotomicField m ℚ) :=
-    IsCyclotomicExtension.numberField {m} ℚ (CyclotomicField m ℚ)
-  have : IsAbelianGalois ℚ (CyclotomicField m ℚ) :=
-    IsCyclotomicExtension.isAbelianGalois {m} ℚ (CyclotomicField m ℚ)
-  let _ : IsModularLattice (IntermediateField ℚ (CyclotomicField m ℚ)) :=
-    IsAbelianGalois.isModularLattice_intermediateField
-  intro h
-  have hle : E₀ ≤ F := le_of_lt hE₀F
-  have key := sup_inf_assoc_of_le E₁ hle
-  rw [hsup, top_inf_eq] at key
-  rw [inf_comm] at h
-  rw [h, sup_bot_eq] at key
-  exact lt_irrefl F (key ▸ hE₀F)
-
 end CyclotomicField

@@ -6,6 +6,7 @@ import Mathlib.CategoryTheory.Preadditive.Projective.Resolution
 import Mathlib.LinearAlgebra.TensorProduct.Basis
 import Mathlib.RingTheory.MvPolynomial.Basic
 import sympy.atlas.RingTheory.GradedAlgebra.MultigradedZeroEvalBaseChange
+import Lemma.Int.GradedAlgebra.MultigradedZeroEvalBaseChange
 namespace MetaMathlibExt
 
 universe u

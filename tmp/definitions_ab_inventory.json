@@ -1,0 +1,1276 @@
+{
+  "counts": {
+    "total": 1450,
+    "A_lemma_only": 5,
+    "A_with_path": 0,
+    "B_sympy": 289,
+    "B_theorem": 1046,
+    "B_lemma_plus": 103,
+    "B_def_packages_total": 1438,
+    "empty_or_no_decl": 7,
+    "other": 0
+  },
+  "prefix_A_top": [
+    [
+      "Mathlib",
+      4
+    ],
+    [
+      "WeierstrassCurve",
+      1
+    ]
+  ],
+  "prefix_B_top": [
+    [
+      "ModularCurve",
+      291
+    ],
+    [
+      "AlgebraicGeometry",
+      165
+    ],
+    [
+      "AutomorphicForm",
+      106
+    ],
+    [
+      "LanglandsTunnell",
+      84
+    ],
+    [
+      "CerednikDrinfeld",
+      83
+    ],
+    [
+      "AlgebraicCurve",
+      72
+    ],
+    [
+      "WeierstrassCurve",
+      60
+    ],
+    [
+      "GroupCohomology",
+      49
+    ],
+    [
+      "NumberField",
+      46
+    ],
+    [
+      "Mathlib",
+      38
+    ],
+    [
+      "CuspForm",
+      32
+    ],
+    [
+      "GaloisRep",
+      24
+    ],
+    [
+      "MvFormalGroup",
+      19
+    ],
+    [
+      "Deformations",
+      18
+    ],
+    [
+      "FreyPackage",
+      17
+    ],
+    [
+      "TateCurve",
+      15
+    ],
+    [
+      "HopfAlgebra",
+      14
+    ],
+    [
+      "M4aHerbrand",
+      13
+    ],
+    [
+      "GoodReductionJacobian",
+      12
+    ],
+    [
+      "EllipticCurve",
+      11
+    ]
+  ],
+  "prefix_B_sympy_top": [
+    [
+      "ModularCurve",
+      81
+    ],
+    [
+      "CerednikDrinfeld",
+      29
+    ],
+    [
+      "AlgebraicGeometry",
+      25
+    ],
+    [
+      "LanglandsTunnell",
+      20
+    ],
+    [
+      "AutomorphicForm",
+      17
+    ],
+    [
+      "GaloisRep",
+      14
+    ],
+    [
+      "FreyPackage",
+      10
+    ],
+    [
+      "WeierstrassCurve",
+      10
+    ],
+    [
+      "CuspForm",
+      8
+    ],
+    [
+      "AlgebraicCurve",
+      7
+    ],
+    [
+      "GroupCohomology",
+      7
+    ],
+    [
+      "NumberField",
+      7
+    ],
+    [
+      "Mathlib",
+      3
+    ],
+    [
+      "MvFormalGroup",
+      3
+    ],
+    [
+      "EisensteinSeries",
+      2
+    ],
+    [
+      "EllipticCurve",
+      2
+    ],
+    [
+      "FLTPrelim",
+      2
+    ],
+    [
+      "FrobeniusDensity",
+      2
+    ],
+    [
+      "FullLevelTate",
+      2
+    ],
+    [
+      "GoodReductionJacobian",
+      2
+    ]
+  ],
+  "prefix_B_theorem_top": [
+    [
+      "ModularCurve",
+      206
+    ],
+    [
+      "AlgebraicGeometry",
+      127
+    ],
+    [
+      "AutomorphicForm",
+      89
+    ],
+    [
+      "AlgebraicCurve",
+      65
+    ],
+    [
+      "LanglandsTunnell",
+      64
+    ],
+    [
+      "CerednikDrinfeld",
+      54
+    ],
+    [
+      "WeierstrassCurve",
+      44
+    ],
+    [
+      "NumberField",
+      38
+    ],
+    [
+      "Mathlib",
+      30
+    ],
+    [
+      "CuspForm",
+      23
+    ],
+    [
+      "GroupCohomology",
+      18
+    ],
+    [
+      "MvFormalGroup",
+      16
+    ],
+    [
+      "TateCurve",
+      14
+    ],
+    [
+      "HopfAlgebra",
+      13
+    ],
+    [
+      "M4aHerbrand",
+      11
+    ],
+    [
+      "CohCarrier",
+      10
+    ],
+    [
+      "GoodReductionJacobian",
+      10
+    ],
+    [
+      "Dieudonne",
+      9
+    ],
+    [
+      "LocalLanglands",
+      9
+    ],
+    [
+      "PDivisibleGroup",
+      9
+    ]
+  ],
+  "A_files": [
+    {
+      "file": "Def_Mathlib_MeasureTheory_Group_Measure.lean",
+      "prefix": "Mathlib",
+      "kinds": [
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "A"
+    },
+    {
+      "file": "Def_Mathlib_MeasureTheory_Measure_Typeclasses_Finite.lean",
+      "prefix": "Mathlib",
+      "kinds": [
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "A"
+    },
+    {
+      "file": "Def_Mathlib_Topology_Algebra_Group_Units.lean",
+      "prefix": "Mathlib",
+      "kinds": [
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "A"
+    },
+    {
+      "file": "Def_Mathlib_Topology_Bases.lean",
+      "prefix": "Mathlib",
+      "kinds": [
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "A"
+    },
+    {
+      "file": "Def_WeierstrassCurve_DivPolyMulFormulaCore.lean",
+      "prefix": "WeierstrassCurve",
+      "kinds": [
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "A"
+    }
+  ],
+  "empty_files": [
+    {
+      "file": "Def_AlgebraicGeometry_IdealSheafModuleV2.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [],
+      "has_path": false,
+      "bucket": "empty"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesIhomSectionsV2.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [],
+      "has_path": false,
+      "bucket": "empty"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesPullbackMonoidalV2.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [],
+      "has_path": false,
+      "bucket": "empty"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesRigidifyV2.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [],
+      "has_path": false,
+      "bucket": "empty"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesSectionZeroSchemeV2.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [],
+      "has_path": false,
+      "bucket": "empty"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesSectionsTensorV2.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [],
+      "has_path": false,
+      "bucket": "empty"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesTensorPow.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [],
+      "has_path": false,
+      "bucket": "empty"
+    }
+  ],
+  "other_files": [],
+  "B_lemma_plus_files": [
+    {
+      "file": "Def_AbstractHeckeOperator.lean",
+      "prefix": "AbstractHeckeOperator.lean",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_FGSubalgebra.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "abbrev",
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_IdealSheafHom.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma",
+        "structure"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_IdealSheafModuleMaps.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "abbrev",
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesDet.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "abbrev",
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesPushforwardRestrict.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesRestrictOpen.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesRigidify.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesSectionsTensor.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_ModulesWedge.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "abbrev",
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_RelEffCartierDivOfPoint.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_RelEffCartierDivRestrict.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_RelEffCartierDivSupportedIn.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_AlgebraicGeometry_SubalgebraStages.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "abbrev",
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_CategoryTheory_OverTotalPresheaf.lean",
+      "prefix": "CategoryTheory",
+      "kinds": [
+        "abbrev",
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_CuspForm_Newforms.lean",
+      "prefix": "CuspForm",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_DedekindDomain_FiniteAdeleRing_TensorRestrictedProduct.lean",
+      "prefix": "DedekindDomain",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_ClosedSubalgebra.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_ConjQuotSubfunctor.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_ContinuousSMulDiscrete.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "class",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_DualNumbers.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_Frobenius.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_IsProartinian.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "abbrev",
+        "class",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_IsResidueAlgebra.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "class",
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_LiftFunctor.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_MatrixRepresentation.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_MvPowerSeriesObj.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_ProartinianCat.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "abbrev",
+        "class",
+        "def",
+        "instance",
+        "lemma",
+        "structure"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_ProartinianCompact.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_TangentSubmodule.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "def",
+        "lemma",
+        "structure"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_TaylorWilesLocal.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_Deformations_TraceAlgebra.lean",
+      "prefix": "Deformations",
+      "kinds": [
+        "abbrev",
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_DualSelmer_ExtConditions.lean",
+      "prefix": "DualSelmer",
+      "kinds": [
+        "abbrev",
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_EllipticCurve_FrobeniusEndo.lean",
+      "prefix": "EllipticCurve",
+      "kinds": [
+        "abbrev",
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_EllipticCurve_FrobeniusTrace.lean",
+      "prefix": "EllipticCurve",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_EllipticCurve_ValuationInfty.lean",
+      "prefix": "EllipticCurve",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_ExtCitation_CyclotomicUnits.lean",
+      "prefix": "ExtCitation",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_ExtCitation_KummerBridge.lean",
+      "prefix": "ExtCitation",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_ExtEndgame_ProductionDatum.lean",
+      "prefix": "ExtEndgame",
+      "kinds": [
+        "abbrev",
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_FLTPrelim_FreyPackage.lean",
+      "prefix": "FLTPrelim",
+      "kinds": [
+        "def",
+        "lemma",
+        "structure"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_FLTPrelim_GaloisRep.lean",
+      "prefix": "FLTPrelim",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_FLTPrelim_Modularity.lean",
+      "prefix": "FLTPrelim",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma",
+        "structure"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_FreyCurve_Basic.lean",
+      "prefix": "FreyCurve",
+      "kinds": [
+        "instance",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_FreyPackage_GaloisRep.lean",
+      "prefix": "FreyPackage",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_FreyPackage_ModMCarrier_LatticeRed.lean",
+      "prefix": "FreyPackage",
+      "kinds": [
+        "abbrev",
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_FreyPackage_ModMCarrier_OldSublattice.lean",
+      "prefix": "FreyPackage",
+      "kinds": [
+        "abbrev",
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_FreyPackage_ModMCarrier_Rescale.lean",
+      "prefix": "FreyPackage",
+      "kinds": [
+        "abbrev",
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_GaloisRep_ConditionLifts.lean",
+      "prefix": "GaloisRep",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_GaloisRep_GlobalUnramifiedAt.lean",
+      "prefix": "GaloisRep",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    },
+    {
+      "file": "Def_GaloisRep_ModThreeCyclotomic.lean",
+      "prefix": "GaloisRep",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "has_path": false,
+      "bucket": "B_lemma_plus"
+    }
+  ],
+  "B_lemma_plus_count": 103,
+  "B_sympy_samples": [
+    {
+      "file": "Def_Algebra_PatchingDatum.lean",
+      "prefix": "Algebra",
+      "kinds": [
+        "structure"
+      ],
+      "namespaces": [],
+      "main_decls": [
+        "structure Algebra.PatchingLevel",
+        "structure Algebra.PatchingDatum"
+      ]
+    },
+    {
+      "file": "Def_AlgebraicCurve_AffinoidCentre.lean",
+      "prefix": "AlgebraicCurve",
+      "kinds": [
+        "def"
+      ],
+      "namespaces": [
+        "AlgebraicCurve"
+      ],
+      "main_decls": [
+        "def ComponentChart.tubeBounded",
+        "def ComponentChart.HasAffinoidLifting",
+        "def ComponentChart.regOff",
+        "def ComponentChart.HasPlaceDictionary",
+        "def ComponentChart.IsCentre"
+      ]
+    },
+    {
+      "file": "Def_AlgebraicGeometry_AffineLimit.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "abbrev",
+        "def"
+      ],
+      "namespaces": [
+        "AlgebraicGeometry.AffineLimit"
+      ],
+      "main_decls": [
+        "abbrev specOver",
+        "abbrev specOverOfSubalgebra",
+        "abbrev specOverOfLE",
+        "def IsLFPSurj",
+        "def IsLFPInj"
+      ]
+    },
+    {
+      "file": "Def_AutomorphicForm_AdelicKernel.lean",
+      "prefix": "AutomorphicForm",
+      "kinds": [
+        "def"
+      ],
+      "namespaces": [
+        "AutomorphicForm"
+      ],
+      "main_decls": [
+        "def adelicKernel",
+        "def adelicKernelCentralPart",
+        "def adelicKernelUnipotentPart",
+        "def adelicKernelHyperbolicPart",
+        "def adelicKernelEllipticPart"
+      ]
+    }
+  ],
+  "B_theorem_samples": [
+    {
+      "file": "Def_AdelicDock_LocalEmbedding.lean",
+      "prefix": "AdelicDock",
+      "kinds": [
+        "def",
+        "structure",
+        "theorem"
+      ],
+      "namespaces": [
+        "AdelicDock"
+      ],
+      "main_decls": [
+        "theorem matrix_eq_of_forall_mapMatrix_finAdeleEval_eq",
+        "theorem matrix_eq_of_mapMatrix_arch_fin_eq",
+        "def splice",
+        "theorem splice_apply_of_ne",
+        "def localMat"
+      ]
+    },
+    {
+      "file": "Def_AdicCompletionGaloisAction.lean",
+      "prefix": "AdicCompletionGaloisAction.lean",
+      "kinds": [
+        "def",
+        "theorem"
+      ],
+      "namespaces": [
+        "AdicCompletion.GaloisAction",
+        "AdicCompletion"
+      ],
+      "main_decls": [
+        "theorem map_toIntAlgHom_le_of_smul_eq",
+        "def smulAlgHom",
+        "theorem smulAlgHom_of",
+        "theorem eval\u2090_smulAlgHom",
+        "def mulSemiringActionOfSMulEq"
+      ]
+    },
+    {
+      "file": "Def_AdicCompletionLocalRing.lean",
+      "prefix": "AdicCompletionLocalRing.lean",
+      "kinds": [
+        "def",
+        "instance",
+        "theorem"
+      ],
+      "namespaces": [
+        "AdicCompletion"
+      ],
+      "main_decls": [
+        "theorem eval\u2090_algebraMap",
+        "theorem mem_ker_eval\u2090_iff",
+        "theorem ker_eval\u2090_eq_map_pow",
+        "theorem exists_eq_algebraMap_add",
+        "theorem isUnit_one_add_of_mem_map"
+      ]
+    },
+    {
+      "file": "Def_AdicCompletionRestrictScalars.lean",
+      "prefix": "AdicCompletionRestrictScalars.lean",
+      "kinds": [
+        "def",
+        "theorem"
+      ],
+      "namespaces": [
+        "AdicCompletion"
+      ],
+      "main_decls": [
+        "theorem restrictScalars_map_pow_smul_top",
+        "def levelRestrictScalarsEquiv",
+        "theorem levelRestrictScalarsEquiv_mk",
+        "theorem transitionMap_levelRestrictScalarsEquiv",
+        "def restrictScalarsEquiv"
+      ]
+    }
+  ],
+  "B_samples": [
+    {
+      "file": "Def_Algebra_PatchingDatum.lean",
+      "prefix": "Algebra",
+      "kinds": [
+        "structure"
+      ],
+      "namespaces": [],
+      "main_decls": [
+        "structure Algebra.PatchingLevel",
+        "structure Algebra.PatchingDatum"
+      ]
+    },
+    {
+      "file": "Def_AlgebraicCurve_AffinoidCentre.lean",
+      "prefix": "AlgebraicCurve",
+      "kinds": [
+        "def"
+      ],
+      "namespaces": [
+        "AlgebraicCurve"
+      ],
+      "main_decls": [
+        "def ComponentChart.tubeBounded",
+        "def ComponentChart.HasAffinoidLifting",
+        "def ComponentChart.regOff",
+        "def ComponentChart.HasPlaceDictionary",
+        "def ComponentChart.IsCentre"
+      ]
+    },
+    {
+      "file": "Def_AlgebraicGeometry_AffineLimit.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "abbrev",
+        "def"
+      ],
+      "namespaces": [
+        "AlgebraicGeometry.AffineLimit"
+      ],
+      "main_decls": [
+        "abbrev specOver",
+        "abbrev specOverOfSubalgebra",
+        "abbrev specOverOfLE",
+        "def IsLFPSurj",
+        "def IsLFPInj"
+      ]
+    },
+    {
+      "file": "Def_AutomorphicForm_AdelicKernel.lean",
+      "prefix": "AutomorphicForm",
+      "kinds": [
+        "def"
+      ],
+      "namespaces": [
+        "AutomorphicForm"
+      ],
+      "main_decls": [
+        "def adelicKernel",
+        "def adelicKernelCentralPart",
+        "def adelicKernelUnipotentPart",
+        "def adelicKernelHyperbolicPart",
+        "def adelicKernelEllipticPart"
+      ]
+    },
+    {
+      "file": "Def_CategoryTheory_Subfunctor_OfIsTerminal.lean",
+      "prefix": "CategoryTheory",
+      "kinds": [
+        "def"
+      ],
+      "namespaces": [
+        "CategoryTheory",
+        "Subfunctor"
+      ],
+      "main_decls": [
+        "def ofIsTerminal"
+      ]
+    },
+    {
+      "file": "Def_CerednikDrinfeld_ClassSetGraph.lean",
+      "prefix": "CerednikDrinfeld",
+      "kinds": [
+        "def"
+      ],
+      "namespaces": [
+        "CerednikDrinfeld"
+      ],
+      "main_decls": [
+        "def meetOrder",
+        "def classSetForget",
+        "def classSetShift",
+        "def unitWeight",
+        "def classWeight"
+      ]
+    },
+    {
+      "file": "Def_CuspForm_AuxLevelHeckeModule.lean",
+      "prefix": "CuspForm",
+      "kinds": [
+        "abbrev",
+        "def",
+        "instance",
+        "structure"
+      ],
+      "namespaces": [
+        "CuspForm.AuxLevel"
+      ],
+      "main_decls": [
+        "structure Gen",
+        "def subgroup",
+        "abbrev Carrier",
+        "def op",
+        "def OpComm"
+      ]
+    },
+    {
+      "file": "Def_DedekindDomain_FiniteAdeleRing_IsDirectLimitRestricted.lean",
+      "prefix": "DedekindDomain",
+      "kinds": [
+        "instance"
+      ],
+      "namespaces": [
+        "RestrictedProduct"
+      ],
+      "main_decls": [
+        "instance instDirectedSystem",
+        "instance directed",
+        "instance instIsDirectLimit",
+        "instance instIsDirectLimit'"
+      ]
+    }
+  ],
+  "notes": {
+    "A": "lemma only",
+    "B_sympy": "no lemma no theorem -> sympy later",
+    "B_theorem": "has theorem, do not move",
+    "B_lemma_plus": "lemma plus other decls but no theorem, not A, hold",
+    "empty": "no matched top-level decls"
+  },
+  "B_lemma_plus_samples": [
+    {
+      "file": "Def_AbstractHeckeOperator.lean",
+      "prefix": "AbstractHeckeOperator.lean",
+      "kinds": [
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "namespaces": [
+        "FixedPoints",
+        "AbstractHeckeOperator"
+      ],
+      "main_decls": [
+        "lemma coe_zero",
+        "lemma coe_add",
+        "lemma coe_smul",
+        "instance module",
+        "lemma Set.bijOn_smul"
+      ]
+    },
+    {
+      "file": "Def_AlgebraicGeometry_FGSubalgebra.lean",
+      "prefix": "AlgebraicGeometry",
+      "kinds": [
+        "abbrev",
+        "def",
+        "instance",
+        "lemma"
+      ],
+      "namespaces": [
+        "AlgebraicGeometry",
+        "FGSubalgebra"
+      ],
+      "main_decls": [
+        "abbrev FGSubalgebra",
+        "lemma nonempty_subtype_le",
+        "def diagram",
+        "def cocone",
+        "lemma diagram_obj"
+      ]
+    },
+    {
+      "file": "Def_CategoryTheory_OverTotalPresheaf.lean",
+      "prefix": "CategoryTheory",
+      "kinds": [
+        "abbrev",
+        "def",
+        "lemma"
+      ],
+      "namespaces": [
+        "CategoryTheory.Functor",
+        "RepresentableBy"
+      ],
+      "main_decls": [
+        "abbrev OverTotal",
+        "lemma map_op_apply_eq_of_left_eq",
+        "lemma map_op_apply_eq_self",
+        "lemma map_op_map_op_apply",
+        "lemma map_op_map_op_apply_eq_self"
+      ]
+    },
+    {
+      "file": "Def_CuspForm_Newforms.lean",
+      "prefix": "CuspForm",
+      "kinds": [
+        "def",
+        "lemma"
+      ],
+      "namespaces": [
+        "CuspForm",
+        "FreyPackage"
+      ],
+      "main_decls": [
+        "def GoodEigensystemOccursAt",
+        "lemma GoodEigensystemOccursAt.refl",
+        "def IsNewform",
+        "lemma IsNewform.isNormalizedEigenform",
+        "lemma IsNewform.ne_zero"
+      ]
+    }
+  ]
+}

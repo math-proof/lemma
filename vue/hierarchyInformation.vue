@@ -1,9 +1,9 @@
 <template>
 	<div>
 		the lemma in question is a
-		<a :href="'?' + keyInput + '=' + self.$parent.module + (deep ? '#deep': '')" :title="'show ' + (deep?'deep':'only first-layer') + ' hierarchy'">{{keyInput}}</a>
+		<a :href="'?' + keyInput + '=' + self.$parent.module + (deep ? '&deep=1' : '')" :title="'show ' + (deep?'deep':'only first-layer') + ' hierarchy'">{{keyInput}}</a>
 		in the following hierarchy, would you switch to
-		<a :href=href>{{key}}</a> / <a :href="'?' + keyInput + '=' + self.$parent.module + '#deep'">deep</a> hierarchy?
+		<a :href=href>{{key}}</a> / <a :href="'?' + keyInput + '=' + self.$parent.module + '&deep=1'">deep</a> hierarchy?
 	</div>
 </template>
 

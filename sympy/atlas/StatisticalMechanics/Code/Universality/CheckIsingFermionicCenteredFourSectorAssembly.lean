@@ -1,0 +1,59 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicCenteredFourSectorAssembly.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCenteredFourSectorAssembly
+
+open StatMech.Universality
+
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchFullObservable_cell_edges_le
+#print axioms FKIsingExpandingCenteredDiagonalCellBound
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_of_even_available
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_right_of_even
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_top_of_even
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_of_odd_faceInterior
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_right_of_odd
+#print axioms
+  fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_top_of_odd
+#print axioms FKIsingExpandingCenteredRightEvenDiagonalCellBound
+#print axioms
+  fkIsingExpandingCenteredHorizontalRight_of_even_diagonal
+#print axioms FKIsingExpandingCenteredTopEvenDiagonalCellBound
+#print axioms
+  fkIsingExpandingCenteredVerticalTop_of_even_diagonal
+#print axioms FKIsingExpandingCenteredTopDiagonalCellBound
+#print axioms FKIsingExpandingCenteredRightDiagonalCellBound
+#print axioms
+  fkIsingExpandingCenteredHorizontalTop_of_diagonal
+#print axioms
+  fkIsingExpandingCenteredVerticalRight_of_diagonal
+#print axioms
+  fkIsingExpandingBoundarySquareCenteredNE_diagonalCellBound
+#print axioms
+  fkIsingExpandingBoundarySquareCenteredNE_window_indices_lt_outer
+#print axioms FKIsingExpandingCenteredOuterCollarBound
+#print axioms FKIsingExpandingCenteredTopRightBoundaryEdgeBounds
+#print axioms
+  FKIsingExpandingCenteredTopRightBoundaryEdgeBounds.outerCollarBound
+#print axioms
+  fkIsingExpandingCenteredTopRightBoundaryEdgeBounds_of_diagonal
+#print axioms
+  fkIsingExpandingCenteredOuterCollarBound_of_diagonal
+#print axioms
+  fkIsingExpandingCenteredNeighborTransport_of_four_sector_diagonal_and_collar
+#print axioms
+  fkIsingExpandingCenteredStrictNeighborTransport_of_four_sector_diagonal
+#print axioms
+  fkIsingExpandingCenteredNeighborTransport_of_four_sector_and_boundary_diagonal

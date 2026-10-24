@@ -295,15 +295,17 @@ private lemma helper_main
   let _ : Algebra k (X.presheaf.obj (op U)) := ψA.hom.toAlgebra
   let _ : Algebra k (Y.presheaf.obj (op V)) := ψB.hom.toAlgebra
   let εA : (X.presheaf.obj (op U)) →ₐ[k] k :=
-    χA.hom.toAlgHom (fun c => by
-      change χA.hom (ψA.hom c) = c
-      rw [← CommRingCat.comp_apply, hψχA]
-      rfl)
+    { toRingHom := χA.hom
+      commutes' := fun c => by
+        change χA.hom (ψA.hom c) = c
+        rw [← CommRingCat.comp_apply, hψχA]
+        rfl }
   let εB : (Y.presheaf.obj (op V)) →ₐ[k] k :=
-    χB.hom.toAlgHom (fun c => by
-      change χB.hom (ψB.hom c) = c
-      rw [← CommRingCat.comp_apply, hψχB]
-      rfl)
+    { toRingHom := χB.hom
+      commutes' := fun c => by
+        change χB.hom (ψB.hom c) = c
+        rw [← CommRingCat.comp_apply, hψχB]
+        rfl }
   let fX₀ := Spec.map (CommRingCat.ofHom (algebraMap k (X.presheaf.obj (op U))))
   let fY₀ := Spec.map (CommRingCat.ofHom (algebraMap k (Y.presheaf.obj (op V))))
   let x₀ := Spec.map (CommRingCat.ofHom εA.toRingHom)

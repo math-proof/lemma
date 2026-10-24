@@ -1,0 +1,33 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexHorizontalResidualCompletions.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalResidualCompletions
+
+open StatMech.FrontierD
+
+#print axioms sixVertexHorizontalProfileDeficit_eq_sub
+#print axioms sixVertexHorizontalProfileSurplus_eq_sub
+#print axioms
+  sixVertexHorizontalPairProfileChooseWeight_eq_zero_of_left_isEmpty
+#print axioms
+  sixVertexHorizontalPairProfileChooseWeight_eq_zero_of_right_isEmpty
+#print axioms sixVertexHorizontalDeficitCompletionEmbedding
+#print axioms sixVertexHorizontalSurplusCompletionEmbedding
+#print axioms sixVertexHorizontalActualDeficitConfigurationPair_injective
+#print axioms sixVertexHorizontalActualSurplusConfigurationPair_injective
+#print axioms
+  sixVertexHorizontalActualSurplusConfigurationPair_surjective_of_sourceWeight_eq_zero
+#print axioms
+  sixVertexHorizontalActualSurplusConfigurationPair_surjective_of_horizontalSourceWeight_eq_zero
+#print axioms
+  sixVertexHorizontalActualSurplusConfigurationPair_surjective_of_left_isEmpty
+#print axioms
+  sixVertexHorizontalActualSurplusConfigurationPair_surjective_of_right_isEmpty
+#print axioms configurationBigradeFibers_of_residualConfigurationHall

@@ -9,7 +9,7 @@ private lemma main
 -- given
   (h : f = g) :
 -- imply
-  ArgMax Set.univ f = ArgMax Set.univ g := by
+  max⁻¹ Set.univ f = max⁻¹ Set.univ g := by
 -- proof
   rw [h]
 

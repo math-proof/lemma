@@ -56,22 +56,6 @@ def alternatingWord {G : Type*} [Monoid G] (a b : G) : ℕ → G
   | 0 => 1
   | n + 1 => a * alternatingWord b a n
 
-@[simp]
-theorem alternatingWord_zero {G : Type*} [Monoid G] (a b : G) : alternatingWord a b 0 = 1 := rfl
-
-@[simp]
-theorem alternatingWord_succ {G : Type*} [Monoid G] (a b : G) (n : ℕ) :
-    alternatingWord a b (n + 1) = a * alternatingWord b a n := rfl
-
-/-- A monoid homomorphism carries an alternating word to the alternating word of the images. -/
-theorem map_alternatingWord {G H : Type*} [Monoid G] [Monoid H] (f : G →* H) (a b : G) (n : ℕ) :
-    f (alternatingWord a b n) = alternatingWord (f a) (f b) n := by
-  induction n generalizing a b with
-  | zero => simp
-  | succ n ih => simp [alternatingWord, ih]
-
-variable (M : CoxeterMatrix B)
-
 /-- The Artin (braid) relation for the ordered pair `(i, j)`: the two alternating words of length
 `M i j` in the generators `i` and `j` agree. It is encoded in the free group as
 `⟨s i · s j · ⋯⟩ · ⟨s j · s i · ⋯⟩⁻¹`, which lies in the relation set exactly when both words are
@@ -97,19 +81,5 @@ namespace ArtinGroup
 
 /-- The generator `s i` of the Artin group of `M`. -/
 def of (i : B) : M.ArtinGroup := PresentedGroup.of i
-
-/-- The generators generate the whole Artin group. -/
-theorem closure_range_of : Subgroup.closure (Set.range (of M)) = ⊤ :=
-  PresentedGroup.closure_range_of _
-
-/-- The defining braid relation holds among the generators: for distinct `i j` with `M i j ≠ ∞`,
-the two length-`M i j` alternating words in `of M i` and `of M j` agree. -/
-theorem braid_relation {i j : B} (hij : i ≠ j) (h : M i j ≠ 0) :
-    alternatingWord (of M i) (of M j) (M i j) = alternatingWord (of M j) (of M i) (M i j) := by
-  have hmem : M.artinRelation i j ∈ M.artinRelationsSet := ⟨i, j, hij, h, rfl⟩
-  have key := PresentedGroup.mk_eq_mk_of_mul_inv_mem hmem
-  rwa [map_alternatingWord (PresentedGroup.mk _), map_alternatingWord (PresentedGroup.mk _)] at key
-
 end ArtinGroup
-
 end CoxeterMatrix

@@ -5,16 +5,91 @@ open NumberField
 open Modulus
 
 
+namespace NumberField.Modulus
+
 /--
 [integralUnitsToFieldUnits_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
 -/
 @[path]
-private lemma integralUnitsToFieldUnits_injective_eq
+lemma integralUnitsToFieldUnits_injective
   [Field K] [NumberField K] :
 -- imply
-  Function.Injective (integralUnitsToFieldUnits (K := by
+  Function.Injective (integralUnitsToFieldUnits (K :=
 -- proof
-  apply NumberField.Modulus.integralUnitsToFieldUnits_injective
+  Units.map_injective (NumberField.RingOfIntegers.coe_injective (K := K))
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
+
+/--
+[integralUnitsToRayElements_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
+-/
+@[path]
+lemma integralUnitsToRayElements_injective
+  [Field K] [NumberField K]
+  {m : Modulus K} :
+-- imply
+  Function.Injective (integralUnitsToRayElements m) :=
+-- proof
+  (MonoidHom.injective_codRestrict _ _ _).mpr
+    integralUnitsToFieldUnits_injective
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
+
+/--
+[integralRayOneUnitsInclusion_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
+-/
+@[path]
+lemma integralRayOneUnitsInclusion_injective
+  [Field K] [NumberField K]
+  {m : Modulus K} :
+-- imply
+  Function.Injective (integralRayOneUnitsInclusion m) := by
+-- proof
+  intro a b h
+  have h' : (a : (𝓞 K)ˣ) = (b : (𝓞 K)ˣ) := h
+  exact Subtype.ext h'
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
+
+/--
+[integralUnits_mulExact_quotient](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
+-/
+@[path]
+lemma integralUnits_mulExact_quotient
+  [Field K] [NumberField K]
+  {m : Modulus K} :
+-- imply
+  Function.MulExact (integralRayOneUnitsInclusion m)
+    (integralUnitsToRayQuotient m) := by
+-- proof
+  rw [MonoidHom.mulExact_iff, integralUnitsToRayQuotient_ker]
+  exact (Subgroup.range_subtype _).symm
+
+end NumberField.Modulus
+
+namespace NumberField.Modulus
+
+/--
+[integralUnits_mulExact_residueSign](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
+-/
+@[path]
+lemma integralUnits_mulExact_residueSign
+  [Field K] [NumberField K]
+  {m : Modulus K} :
+-- imply
+  Function.MulExact (integralRayOneUnitsInclusion m)
+    (integralUnitsToResidueSign m) := by
+-- proof
+  rw [MonoidHom.mulExact_iff, integralUnitsToResidueSign_ker]
+  exact (Subgroup.range_subtype _).symm
+
+end NumberField.Modulus
 
 /--
 [integralUnitsToRayElements_coe](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
@@ -29,18 +104,6 @@ private lemma integralUnitsToRayElements_coe_eq
     integralUnitsToFieldUnits u := by
 -- proof
   apply NumberField.Modulus.integralUnitsToRayElements_coe m u
-
-/--
-[integralUnitsToRayElements_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
--/
-@[path]
-private lemma integralUnitsToRayElements_injective_eq
-  [Field K] [NumberField K]
-  {m : Modulus K} :
--- imply
-  Function.Injective (integralUnitsToRayElements m) := by
--- proof
-  apply NumberField.Modulus.integralUnitsToRayElements_injective m
 
 /--
 [mem_integralRayOneUnits_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
@@ -109,43 +172,6 @@ private lemma integralUnitsToResidueSign_ker_eq
 -- proof
   apply NumberField.Modulus.integralUnitsToResidueSign_ker m
 
-/--
-[integralRayOneUnitsInclusion_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
--/
-@[path]
-private lemma integralRayOneUnitsInclusion_injective_eq
-  [Field K] [NumberField K]
-  {m : Modulus K} :
--- imply
-  Function.Injective (integralRayOneUnitsInclusion m) := by
--- proof
-  apply NumberField.Modulus.integralRayOneUnitsInclusion_injective m
-
-/--
-[integralUnits_mulExact_quotient](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
--/
-@[path]
-private lemma integralUnits_mulExact_quotient_eq
-  [Field K] [NumberField K]
-  {m : Modulus K} :
--- imply
-  Function.MulExact (integralRayOneUnitsInclusion m)
-    (integralUnitsToRayQuotient m) := by
--- proof
-  apply NumberField.Modulus.integralUnits_mulExact_quotient m
-
-/--
-[integralUnits_mulExact_residueSign](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
--/
-@[path]
-private lemma integralUnits_mulExact_residueSign_eq
-  [Field K] [NumberField K]
-  {m : Modulus K} :
--- imply
-  Function.MulExact (integralRayOneUnitsInclusion m)
-    (integralUnitsToResidueSign m) := by
--- proof
-  apply NumberField.Modulus.integralUnits_mulExact_residueSign m
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

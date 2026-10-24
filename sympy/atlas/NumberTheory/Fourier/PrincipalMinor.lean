@@ -29,25 +29,4 @@ noncomputable def principalMinorMatrix (M : ℕ) {R : Type*} [CommRing R]
 noncomputable def principalMinorDet (M : ℕ) {R : Type*} [CommRing R]
     (root : RootData M R) (S : Finset (ZMod M)) : R :=
   (principalMinorMatrix M root S).det
-
-/-- Entry formula for a principal Fourier minor. -/
-@[simp]
-theorem principalMinorMatrix_apply (M : ℕ) {R : Type*} [CommRing R]
-    (root : RootData M R) (S : Finset (ZMod M)) (i j : S) :
-    principalMinorMatrix M root S i j = root.zeta ^ (i.val * j.val).val := by
-  simp [principalMinorMatrix]
-
-/-- The determinant of the empty principal minor is one. -/
-@[simp]
-theorem principalMinorDet_empty (M : ℕ) {R : Type*} [CommRing R]
-    (root : RootData M R) : principalMinorDet M root ∅ = 1 := by
-  simp [principalMinorDet]
-
-/-- Formula for the determinant of a singleton principal minor. -/
-@[simp]
-theorem principalMinorDet_singleton (M : ℕ) {R : Type*} [CommRing R]
-    (root : RootData M R) (a : ZMod M) :
-    principalMinorDet M root {a} = root.zeta ^ (a * a).val := by
-  simp [principalMinorDet]
-
 end Fourier

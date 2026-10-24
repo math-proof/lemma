@@ -17,15 +17,6 @@ namespace AbelianGroup
 def twoPowerImage (A : Type*) [AddCommGroup A] (k : ℕ) : Submodule ℤ A :=
   LinearMap.range (LinearMap.lsmul ℤ A (2 ^ k : ℤ))
 
-theorem twoPowerImage_succ_le (A : Type*) [AddCommGroup A] (k : ℕ) :
-    twoPowerImage A (k + 1) ≤ twoPowerImage A k := by
-  rintro x ⟨a, rfl⟩
-  refine ⟨2 • a, ?_⟩
-  simp only [LinearMap.lsmul_apply]
-  rw [← Nat.cast_smul_eq_nsmul ℤ]
-  rw [smul_smul]
-  norm_num [pow_succ, mul_comm]
-
 /-- For positive `j`, the additive quotient `2^(j-1) A / 2^j A`. -/
 abbrev higherTwoPowerLayer (A : Type*) [AddCommGroup A] (j : ℕ) : Type _ :=
   twoPowerImage A (j - 1) ⧸
@@ -58,16 +49,4 @@ noncomputable def higherTwoPowerRank (A : Type*) [AddCommGroup A] [Finite A]
 /-- The `4`-rank is the `F₂`-dimension of `2A / 4A`. -/
 noncomputable abbrev fourRank (A : Type*) [AddCommGroup A] [Finite A] : ℕ :=
   higherTwoPowerRank A 2 (by norm_num)
-
-theorem higherTwoPowerRank_eq (A : Type*) [AddCommGroup A] [Finite A]
-    (j : ℕ) (hj : 0 < j) :
-    letI : Fact (0 < j) := ⟨hj⟩
-    higherTwoPowerRank A j hj = Module.finrank (ZMod 2) (higherTwoPowerLayer A j) :=
-  rfl
-
-theorem fourRank_eq (A : Type*) [AddCommGroup A] [Finite A] :
-    letI : Fact (0 < 2) := ⟨by norm_num⟩
-    fourRank A = Module.finrank (ZMod 2) (higherTwoPowerLayer A 2) :=
-  rfl
-
 end AbelianGroup

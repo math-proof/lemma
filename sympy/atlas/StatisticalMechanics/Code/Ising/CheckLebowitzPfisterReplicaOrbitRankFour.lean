@@ -1,0 +1,27 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/CheckLebowitzPfisterReplicaOrbitRankFour.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankFour
+
+#print axioms StatMech.Ising.randomCurrent_sources_singleton_nonempty_of_edgeCopy
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_rank_four_all_falseCopies
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_rank_four_rowMask_eq_univ
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSourceCrossTraceFiber_rank_four_card_le_one
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_rank_four_swapped_all_false
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_rank_four_orientedTag
+#print axioms StatMech.Ising.sum_randomCurrent_degK_le_two_mul_card
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_rank_four_exists_seamCopy
+#print axioms StatMech.Ising.lpReplicaOrientedFourColorAtom_rank_four_all_falseCurrent
+#print axioms StatMech.Ising.lpReplicaBalancedSelector_rank_four_slotState
+#print axioms StatMech.Ising.lpReplicaOffdiagDecoratedSource_rank_four_exists_balancedSelector
+#print axioms StatMech.Ising.lpReplicaOffdiagBalancedOutputCrossTraceFiber_rank_four_nonempty
+#print axioms StatMech.Ising.lpReplicaOffdiagCrossTraceFiberCards_rank_four
+#print axioms StatMech.Ising.lpReplicaOffdiagCrossToggleMaskHall_rank_four
+#print axioms StatMech.Ising.lpReplicaOffdiagOrbitAtomCardInequality_rank_four

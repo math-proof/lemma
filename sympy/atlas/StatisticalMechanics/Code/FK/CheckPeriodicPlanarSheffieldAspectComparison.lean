@@ -1,0 +1,50 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckPeriodicPlanarSheffieldAspectComparison.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldAspectComparison
+
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.horizontalCrossing_translate_measureReal_eq
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.verticalCrossing_translate_measureReal_eq
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.verticalCrossing_measureReal_le_translate_enlarge
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.horizontalCrossing_measureReal_le_translate_enlarge
+#print axioms StatMech.FK.PeriodicPlanar.one_sub_nat_mul_one_sub_le_pow
+#print axioms
+  StatMech.FK.PeriodicPlanar.finiteEventIntersection_measureReal_ge_pow
+#print axioms StatMech.FK.PeriodicPlanar.finiteEventIntersection_append
+#print axioms
+  StatMech.FK.PeriodicPlanar.finiteEventIntersection_iterated_gluing
+#print axioms
+  StatMech.FK.PeriodicPlanar.finiteEventIntersection_iterated_gluing_measureReal_ge_pow
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.finiteEventIntersection_overlapCrossings
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.iterated_overlapCrossings_glue_horizontal
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.iterated_overlapCrossings_measureReal_ge_pow
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.overlapCrossings_measureReal_ge_cube
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.CrossNestedOutwardAspectGluing.toPowerComparison
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.CrossNestedOutwardArrayPreparation.exists_verticalEndpoint_rebuild_at_error
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.CrossNestedOutwardPowerAspectComparison.nonempty_endpointCertificate
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.freeBufferedInfiniteVolume_commonUnique_measure_ne_one_of_powerAspectComparison
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.strictDualNoCoexistence_of_powerAspectComparison_logisticCylinders
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.dualCritical_relation_of_bidirectionalDecay_powerAspectComparison_logisticCylinders
+#print axioms
+  StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.dualCritical_relation_of_bidirectionalDecay_aspectGluing_logisticCylinders

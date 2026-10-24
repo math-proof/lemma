@@ -29,7 +29,7 @@ private lemma main
   have hcounit : (Bialgebra.counitAlgHom R H').comp φ = Bialgebra.counitAlgHom R H := by
     ext h
     apply hinj
-    have := congr_fun hone h
+    have := AlgHom.congr_fun hone h
     simpa [AlgHom.convOne_def] using this
   refine ⟨BialgHom.ofAlgHom φ hcounit ?_, rfl⟩
   ext h
@@ -42,7 +42,7 @@ private lemma main
     ext a
     all_goals simp [hχ, hχ']
   rw [hθ, map_sub, sub_eq_zero]
-  have h1 := congr_fun (hmul (WithConv.toConv χ) (WithConv.toConv χ')) h
+  have h1 := AlgHom.congr_fun (hmul (WithConv.toConv χ) (WithConv.toConv χ')) h
   simp only [AlgHom.convMul_def, WithConv.ofConv_toConv, AlgHom.comp_apply] at h1
   have e1 : ∀ (f g : H →ₐ[R] K) (z : H ⊗[R] H), Algebra.TensorProduct.lift f g (fun _ _ => Commute.all _ _) z = (Algebra.TensorProduct.lmul' R (S := K)) (Algebra.TensorProduct.map f g z) := by
     intro f g z

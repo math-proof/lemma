@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ModularForms/ModularFunction.lean -/
 
 import sympy.atlas.NumberTheory.ModularForms.MeromorphicAtCusps
+import Lemma.Nat.ModularForms.MeromorphicAtCusps
 /-!
 # Modular functions
 

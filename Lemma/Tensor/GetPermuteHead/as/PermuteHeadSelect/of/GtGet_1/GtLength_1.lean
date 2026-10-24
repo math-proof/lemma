@@ -20,7 +20,7 @@ import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Tensor.LengthPermuteHead.eq.Get_1.of.GtLength_1.Gt_1
 import Lemma.Vector.GetTranspose.eq.Get
-open Bool List Nat Tensor Vector Fin
+open Bool List Nat Tensor Vector Fin Set
 set_option maxHeartbeats 250000
 
 

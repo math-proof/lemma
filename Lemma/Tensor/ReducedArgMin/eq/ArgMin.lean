@@ -8,7 +8,7 @@ private lemma main
   {n : ℕ} [NeZero n]
   {f : ℕ → ℝ} :
 -- imply
-  ArgMin (Set.univ : Set (Fin n)) (fun i => f i) = ArgMin Set.univ fun i : Fin n => f ↑i :=
+  min⁻¹[i : Fin n] f i = min⁻¹[i : Fin n] f ↑i :=
 -- proof
   rfl
 

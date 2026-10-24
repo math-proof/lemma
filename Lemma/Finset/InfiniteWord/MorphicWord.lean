@@ -4,11 +4,13 @@ import sympy.atlas.Combinatorics.InfiniteWord.MorphicWord
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [IsMorphic.intro](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/MorphicWord.lean)
 -/
 @[path]
-private lemma IsMorphic_intro_eq
+lemma IsMorphic.intro
   [Finite A]
   {u : Nat → A}
   {coding : A → B}
@@ -17,15 +19,19 @@ private lemma IsMorphic_intro_eq
   (hPure : IsPureMorphic u)
   (hCode : ∀ n, w n = coding (u n)) :
 -- imply
-  IsMorphic u coding w := by
+  IsMorphic u coding w :=
 -- proof
-  apply MetaMathlibExt.IsMorphic.intro hPure hCode
+  ⟨hPure, hCode⟩
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [IsMorphic.pure](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/MorphicWord.lean)
 -/
 @[path]
-private lemma IsMorphic_pure_eq
+lemma IsMorphic.pure
   [Finite A]
   {u : Nat → A}
   {coding : A → B}
@@ -33,15 +39,19 @@ private lemma IsMorphic_pure_eq
 -- given
   (h : IsMorphic u coding w) :
 -- imply
-  IsPureMorphic u := by
+  IsPureMorphic u :=
 -- proof
-  apply MetaMathlibExt.IsMorphic.pure h
+  h.1
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [IsMorphic.coding_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/MorphicWord.lean)
 -/
 @[path]
-private lemma IsMorphic_coding_eq_eq
+lemma IsMorphic.coding_eq
   [Finite A]
   {u : Nat → A}
   {coding : A → B}
@@ -50,23 +60,30 @@ private lemma IsMorphic_coding_eq_eq
 -- given
   (h : IsMorphic u coding w) :
 -- imply
-  w n = coding (u n) := by
+  w n = coding (u n) :=
 -- proof
-  apply MetaMathlibExt.IsMorphic.coding_eq h n
+  h.2 n
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [IsMorphic.ofPureMorphic](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/MorphicWord.lean)
 -/
 @[path]
-private lemma IsMorphic_ofPureMorphic_eq
+lemma IsMorphic.ofPureMorphic
   [Finite A]
   {u : Nat → A}
 -- given
   (hu : IsPureMorphic u) :
 -- imply
-  IsMorphic u id u := by
+  IsMorphic u id u :=
 -- proof
-  apply MetaMathlibExt.IsMorphic.ofPureMorphic hu
+  ⟨hu, fun _ => rfl⟩
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

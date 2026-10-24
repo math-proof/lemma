@@ -60,31 +60,4 @@ Source concept `jis_sem_4970e15c0be600988a8749e5`; statements
 `jis_e3cd35b86f8a67dd6c99e98e`, `jis_fd4cce9bbb14d8135f72fbdc`. -/
 def IsInfiniteTernarySquareFreeWord (u : Nat → TernaryAlphabet) : Prop :=
   IsInfiniteSquareFreeWord u
-
-/-- Every infix of a squarefree word is squarefree. -/
-theorem IsSquareFreeWord.of_isInfix {α : Type*} {u v : List α}
-    (hv : IsSquareFreeWord v) (huv : u.IsInfix v) : IsSquareFreeWord u := by
-  intro s hs
-  exact hv s (hs.trans huv)
-
-/-- A finite word is squarefree exactly when none of the prefixes of its suffixes
-is a nonempty square. This form is directly decidable when letter equality is decidable. -/
-theorem isSquareFreeWord_iff_inits_tails {α : Type*} {w : List α} :
-    IsSquareFreeWord w ↔
-      ∀ s ∈ w.tails.flatMap List.inits, ∀ x ∈ s.inits, x ≠ [] → s ≠ x ++ x := by
-  constructor
-  · intro hw s hs x _ hx heq
-    rw [List.mem_flatMap] at hs
-    obtain ⟨t, ht, hs⟩ := hs
-    have hsw : s.IsInfix w := ((List.mem_inits s t).mp hs).isInfix.trans
-      ((List.mem_tails t w).mp ht).isInfix
-    exact hw s hsw ⟨x, hx, heq⟩
-  · intro h s hs ⟨x, hx, heq⟩
-    rw [List.infix_iff_prefix_suffix] at hs
-    obtain ⟨t, hst, htw⟩ := hs
-    have hsmem : s ∈ w.tails.flatMap List.inits := by
-      rw [List.mem_flatMap]
-      exact ⟨t, (List.mem_tails t w).mpr htw, (List.mem_inits s t).mpr hst⟩
-    exact h s hsmem x ((List.mem_inits x s).mpr ⟨x, heq.symm⟩) hx heq
-
 end MetaMathlibExt

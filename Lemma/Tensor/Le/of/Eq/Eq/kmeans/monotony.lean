@@ -14,8 +14,7 @@ private lemma main
   (h₀ : ∑ i ∈ Finset.range k, (w i).card = M)
   (h₁ : (Finset.range k).biUnion w = Finset.range M)
   (h₂ : ∀ i, w' i = (Finset.range M).filter fun j =>
-    ((ArgMin Set.univ (fun i' : Fin k =>
-      ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖) : Fin k) : ℕ) = i) :
+    ((min⁻¹[i' : Fin k] ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖ : Fin k) : ℕ) = i) :
 -- imply
   ∑ i ∈ Finset.range k, ∑ j ∈ w' i,
       ‖x j - (((w' i).card : ℝ)⁻¹ • ∑ j' ∈ w' i, x j')‖ ^ 2 ≤
@@ -43,10 +42,8 @@ private lemma main
         Finset.sum_add_distrib, ← Finset.mul_sum, hz, mul_zero, add_zero]
       exact le_add_of_nonneg_right (Finset.sum_nonneg fun _ _ => sq_nonneg _)
   have hmin : ∀ j (i' : Fin k),
-      ‖x j - (((w ((ArgMin Set.univ (fun i' : Fin k =>
-        ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖) : Fin k) : ℕ)).card : ℝ)⁻¹ •
-          ∑ j' ∈ w (ArgMin Set.univ (fun i' : Fin k =>
-            ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖) : Fin k), x j')‖ ≤
+      ‖x j - (((w ((min⁻¹[i' : Fin k] ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖ : Fin k) : ℕ)).card : ℝ)⁻¹ •
+          ∑ j' ∈ w (min⁻¹[i' : Fin k] ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖ : Fin k), x j')‖ ≤
         ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖ := by
     intro j i'
     suffices hex : ∃ a : Fin k, a ∈ (Set.univ : Set (Fin k)) ∧ ∀ y : Fin k,
@@ -59,8 +56,7 @@ private lemma main
       Finset.univ_nonempty
     exact ⟨a, trivial, fun y _ => ha y (Finset.mem_univ y)⟩
   obtain ⟨A, hA⟩ : ∃ A : ℕ → Fin k, ∀ j,
-      ArgMin Set.univ (fun i' : Fin k =>
-        ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖) = A j :=
+      min⁻¹[i' : Fin k] ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖ = A j :=
     ⟨_, fun _ => rfl⟩
   simp only [hA] at h₂ hmin
   have hdisj : ((Finset.range k : Finset ℕ) : Set ℕ).PairwiseDisjoint w := by

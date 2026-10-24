@@ -5,7 +5,7 @@ import Lemma.Tensor.DataProd_0.eq.ProdSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.Prod.eq.Prod_Get
-open Fin Tensor Vector
+open Fin Tensor Vector Set
 
 
 @[path, fin, comm, fin.comm]

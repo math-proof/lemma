@@ -1,21 +1,11 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma fiveKernel_clearedMembership (A B p q : ℚ)
-    (hg3 : 2*A*p - 4*B - p^3 + 6*p*q = 0)
-    (hg4 : A^2 - 2*A*q + 4*B*p - p^2*q + 5*q^2 = 0) :
-    ((8*B - 5*p^3 + 28*p*q)^2
-        + 10*(8*B - 5*p^3 + 28*p*q)*(p^3 - 4*p*q)
-        + 5*(p^3 - 4*p*q)^2)^3 * (-16*(4*A^3 + 27*B^2))
-      = (-48*A)^3 * (8*B - 5*p^3 + 28*p*q) * (p^3 - 4*p*q)^5 := by
+
+private lemma fiveKernel_clearedMembership (A B p q : ℚ) (hg3 : 2*A*p - 4*B - p^3 + 6*p*q = 0) (hg4 : A^2 - 2*A*q + 4*B*p - p^2*q + 5*q^2 = 0) : ((8*B - 5*p^3 + 28*p*q)^2 + 10*(8*B - 5*p^3 + 28*p*q)*(p^3 - 4*p*q) + 5*(p^3 - 4*p*q)^2)^3 * (-16*(4*A^3 + 27*B^2)) = (-48*A)^3 * (8*B - 5*p^3 + 28*p*q) * (p^3 - 4*p*q)^5 := by
   linear_combination
     (20480*p^19*q - 20480*A^2*p^17 + 81920*A*p^17*q - 81920*B*p^18 - 872448*p^17*q^2 +
       933888*A^2*p^15*q - 163840*A*B*p^16 - 3039232*A*p^15*q^2 + 2310144*B*p^16*q +
@@ -56,31 +46,22 @@ private lemma fiveKernel_clearedMembership (A B p q : ℚ)
       31981568*B^5*p^5 - 955252736*B^4*p^4*q^2 - 83886080*B^3*p^3*q^4 - 274726912*B^5*p^3*q +
       1455423488*B^4*p^2*q^3 + 5242880*B^6*p^2 + 109051904*B^5*p*q^2 - 16777216*A*B^6 -
       234881024*B^6*q) * hg4
-private lemma hauptmodulFive_of_clearedMembership {N D W C u : ℚ} (hD : D ≠ 0) (hN : N = u * D)
-    (key : (N^2 + 10*N*D + 5*D^2)^3 * W = C * N * D^5) :
-    (u^2 + 10*u + 5)^3 * W = C * u := by
+private lemma hauptmodulFive_of_clearedMembership {N D W C u : ℚ} (hD : D ≠ 0) (hN : N = u * D) (key : (N^2 + 10*N*D + 5*D^2)^3 * W = C * N * D^5) : (u^2 + 10*u + 5)^3 * W = C * u := by
   apply mul_left_cancel₀ (pow_ne_zero 6 hD)
-  calc D^6 * ((u^2 + 10*u + 5)^3 * W)
-      = ((u * D)^2 + 10*(u * D)*D + 5*D^2)^3 * W := by ring
+  calc
+    _ = ((u * D)^2 + 10*(u * D)*D + 5*D^2)^3 * W := by ring
     _ = (N^2 + 10*N*D + 5*D^2)^3 * W := by rw [← hN]
     _ = C * N * D^5 := key
     _ = C * (u * D) * D^5 := by rw [hN]
     _ = D^6 * (C * u) := by ring
-private lemma eq_zero_and_eq_zero_of_sq_add_sq_eq_zero {a b : ℚ} (h : a ^ 2 + b ^ 2 = 0) :
-    a = 0 ∧ b = 0 := by
+private lemma eq_zero_and_eq_zero_of_sq_add_sq_eq_zero {a b : ℚ} (h : a ^ 2 + b ^ 2 = 0) : a = 0 ∧ b = 0 := by
   by_contra hcon
   rw [not_and_or] at hcon
-  have hpos : (0 : ℚ) < a ^ 2 + b ^ 2 := by
-    rcases hcon with ha | hb
-    · exact add_pos_of_pos_of_nonneg
-        (lt_of_le_of_ne (sq_nonneg a) (Ne.symm (pow_ne_zero 2 ha))) (sq_nonneg b)
-    · exact add_pos_of_nonneg_of_pos (sq_nonneg a)
-        (lt_of_le_of_ne (sq_nonneg b) (Ne.symm (pow_ne_zero 2 hb)))
-  exact absurd h (ne_of_gt hpos)
-private lemma p_ne_zero_of_duplicationClosed {A B p q : ℚ} (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0)
-    (hg3 : 2 * A * p - 4 * B - p ^ 3 + 6 * p * q = 0)
-    (hg4 : A ^ 2 - 2 * A * q + 4 * B * p - p ^ 2 * q + 5 * q ^ 2 = 0) :
-    p ≠ 0 := by
+  refine absurd h (ne_of_gt ?_)
+  obtain ha | hb := hcon
+  · apply add_pos_of_pos_of_nonneg (lt_of_le_of_ne (sq_nonneg a) (Ne.symm (pow_ne_zero 2 ha))) (sq_nonneg b)
+  · apply add_pos_of_nonneg_of_pos (sq_nonneg a) (lt_of_le_of_ne (sq_nonneg b) (Ne.symm (pow_ne_zero 2 hb)))
+private lemma p_ne_zero_of_duplicationClosed {A B p q : ℚ} (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0) (hg3 : 2 * A * p - 4 * B - p ^ 3 + 6 * p * q = 0) (hg4 : A ^ 2 - 2 * A * q + 4 * B * p - p ^ 2 * q + 5 * q ^ 2 = 0) : p ≠ 0 := by
   intro hp0
   apply hΔ
   subst hp0
@@ -92,38 +73,32 @@ private lemma p_ne_zero_of_duplicationClosed {A B p q : ℚ} (hΔ : 4 * A ^ 3 + 
   have hA0 : A = 0 := by linear_combination hAq + hq0
   rw [hA0]
   ring
-private lemma exists_hauptmodulFive_of_kernelQuadratic (A B p q : ℚ)
-    (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0) (hsep : p ^ 2 - 4 * q ≠ 0)
-    (hg3 : 2 * A * p - 4 * B - p ^ 3 + 6 * p * q = 0)
-    (hg4 : A ^ 2 - 2 * A * q + 4 * B * p - p ^ 2 * q + 5 * q ^ 2 = 0) :
-    ∃ v : ℚ, v ≠ 0 ∧
-      (v ^ 2 + 10 * v + 5) ^ 3 * (-16 * (4 * A ^ 3 + 27 * B ^ 2)) = (-48 * A) ^ 3 * v := by
+private lemma exists_hauptmodulFive_of_kernelQuadratic (A B p q : ℚ) (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0) (hsep : p ^ 2 - 4 * q ≠ 0) (hg3 : 2 * A * p - 4 * B - p ^ 3 + 6 * p * q = 0) (hg4 : A ^ 2 - 2 * A * q + 4 * B * p - p ^ 2 * q + 5 * q ^ 2 = 0) : ∃ v : ℚ, v ≠ 0 ∧ (v ^ 2 + 10 * v + 5) ^ 3 * (-16 * (4 * A ^ 3 + 27 * B ^ 2)) = (-48 * A) ^ 3 * v := by
   have hp : p ≠ 0 := p_ne_zero_of_duplicationClosed hΔ hg3 hg4
   have hD : p^3 - 4*p*q ≠ 0 := by
     have hfac : p^3 - 4*p*q = p * (p^2 - 4*q) := by ring
     rw [hfac]
-    exact mul_ne_zero hp hsep
-  have mem :
-      (((8*B - 5*p^3 + 28*p*q) / (p^3 - 4*p*q))^2
-          + 10*((8*B - 5*p^3 + 28*p*q) / (p^3 - 4*p*q)) + 5)^3 * (-16*(4*A^3 + 27*B^2))
-        = (-48*A)^3 * ((8*B - 5*p^3 + 28*p*q) / (p^3 - 4*p*q)) :=
-    hauptmodulFive_of_clearedMembership hD
-      (div_mul_cancel₀ (8*B - 5*p^3 + 28*p*q) hD).symm
-      (fiveKernel_clearedMembership A B p q hg3 hg4)
+    apply mul_ne_zero hp hsep
+  have mem : (((8*B - 5*p^3 + 28*p*q) / (p^3 - 4*p*q))^2 + 10*((8*B - 5*p^3 + 28*p*q) / (p^3 - 4*p*q)) + 5)^3 * (-16*(4*A^3 + 27*B^2)) = (-48*A)^3 * ((8*B - 5*p^3 + 28*p*q) / (p^3 - 4*p*q)) := hauptmodulFive_of_clearedMembership hD (div_mul_cancel₀ (8*B - 5*p^3 + 28*p*q) hD).symm (fiveKernel_clearedMembership A B p q hg3 hg4)
   refine ⟨(8*B - 5*p^3 + 28*p*q) / (p^3 - 4*p*q), ?_, mem⟩
   intro hu0
   apply hΔ
   have h0 : ((0:ℚ)^2 + 10*0 + 5)^3 * (-16*(4*A^3 + 27*B^2)) = (-48*A)^3 * 0 := by
-    rw [← hu0]; exact mem
+    rw [← hu0]
+    apply mem
   linear_combination (-1/2000 : ℚ) * h0
 /--
 [ModularCurve_exists_hauptmodulFive_of_kernelQuadratic](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_exists_hauptmodulFive_of_kernelQuadratic.lean)
 -/
 @[path]
-private lemma main (A B p q : ℚ) (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0) (hsep : p ^ 2 - 4 * q ≠ 0)
-    (hg3 : 2 * A * p - 4 * B - p ^ 3 + 6 * p * q = 0)
-    (hg4 : A ^ 2 - 2 * A * q + 4 * B * p - p ^ 2 * q + 5 * q ^ 2 = 0) :
-    ∃ v : ℚ, v ≠ 0 ∧ (v ^ 2 + 10 * v + 5) ^ 3 * (-16 * (4 * A ^ 3 + 27 * B ^ 2)) = (-48 * A) ^ 3 * v :=
-  exists_hauptmodulFive_of_kernelQuadratic A B p q hΔ hsep hg3 hg4
+private lemma main
+  (A B p q : ℚ)
+  -- given
+  (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0) (hsep : p ^ 2 - 4 * q ≠ 0)
+  (hg3 : 2 * A * p - 4 * B - p ^ 3 + 6 * p * q = 0)
+  (hg4 : A ^ 2 - 2 * A * q + 4 * B * p - p ^ 2 * q + 5 * q ^ 2 = 0) :
+  -- imply
+  ∃ v : ℚ, v ≠ 0 ∧ (v ^ 2 + 10 * v + 5) ^ 3 * (-16 * (4 * A ^ 3 + 27 * B ^ 2)) = (-48 * A) ^ 3 * v := exists_hauptmodulFive_of_kernelQuadratic A B p q hΔ hsep hg3 hg4
+
 
 -- created on 2026-10-20

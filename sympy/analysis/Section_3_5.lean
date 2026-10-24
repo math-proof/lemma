@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.analysis.Section_3_1
-import sympy.analysis.Section_3_2
+import sympy.analysis.Section_3_1_api
+import sympy.analysis.Section_3_2_api
 import sympy.analysis.Section_3_4
 
 /-!
@@ -98,21 +98,23 @@ theorem SetTheory.Set.pair_eq_fst_snd {X Y:Set} (z:X ×ˢ Y) :
 
 /-- This equips an {name}`OrderedPair` with proofs that $`x ∈ X` and $`y ∈ Y`. -/
 def SetTheory.Set.mk_cartesian {X Y:Set} (x:X) (y:Y) : X ×ˢ Y :=
-  ⟨(⟨ x, y ⟩:OrderedPair), by simp⟩
+  ⟨(⟨ x, y ⟩:OrderedPair), (mem_cartesian _ X Y).mpr ⟨x, y, rfl⟩⟩
 
 @[simp]
 theorem SetTheory.Set.fst_of_mk_cartesian {X Y:Set} (x:X) (y:Y) :
     fst (mk_cartesian x y) = x := by
   let z := mk_cartesian x y; have := (mem_cartesian _ _ _).mp z.property
   obtain ⟨ y', hy: z.val = (⟨ fst z, y' ⟩:OrderedPair) ⟩ := this.choose_spec
-  simp [z, mk_cartesian, Subtype.val_inj] at *; rw [←hy.1]
+  simp [z, mk_cartesian, Subtype.val_inj] at *
+  exact hy.1.symm
 
 @[simp]
 theorem SetTheory.Set.snd_of_mk_cartesian {X Y:Set} (x:X) (y:Y) :
     snd (mk_cartesian x y) = y := by
   let z := mk_cartesian x y; have := (mem_cartesian _ _ _).mp z.property
   obtain ⟨ x', hx: z.val = (⟨ x', snd z ⟩:OrderedPair) ⟩ := (exists_comm.mp this).choose_spec
-  simp [z, mk_cartesian, Subtype.val_inj] at *; rw [←hx.2]
+  simp [z, mk_cartesian, Subtype.val_inj] at *
+  exact hx.2.symm
 
 @[simp]
 theorem SetTheory.Set.mk_cartesian_fst_snd_eq {X Y: Set} (z: X ×ˢ Y) :
@@ -205,7 +207,8 @@ noncomputable abbrev SetTheory.Set.iProd_of_const_equiv (I:Set) (X: Set) :
 
 /-- Example 3.5.10 (d) -/
 noncomputable abbrev SetTheory.Set.iProd_equiv_prod (X: ({0,1}:Set) → Set) :
-    iProd X ≃ (X ⟨ 0, by simp ⟩) ×ˢ (X ⟨ 1, by simp ⟩) where
+    iProd X ≃ (X ⟨ 0, by simp [SetTheory.Set.mem_singleton] ⟩) ×ˢ
+      (X ⟨ 1, by simp [SetTheory.Set.mem_singleton] ⟩) where
   toFun := sorry
   invFun := sorry
   left_inv := sorry
@@ -213,7 +216,9 @@ noncomputable abbrev SetTheory.Set.iProd_equiv_prod (X: ({0,1}:Set) → Set) :
 
 /-- Example 3.5.10 (e) -/
 noncomputable abbrev SetTheory.Set.iProd_equiv_prod_triple (X: ({0,1,2}:Set) → Set) :
-    iProd X ≃ (X ⟨ 0, by simp ⟩) ×ˢ (X ⟨ 1, by simp ⟩) ×ˢ (X ⟨ 2, by simp ⟩) where
+    iProd X ≃ (X ⟨ 0, by simp [SetTheory.Set.mem_singleton] ⟩) ×ˢ
+      (X ⟨ 1, by simp [SetTheory.Set.mem_singleton] ⟩) ×ˢ
+      (X ⟨ 2, by simp [SetTheory.Set.mem_singleton] ⟩) where
   toFun := sorry
   invFun := sorry
   left_inv := sorry
@@ -293,7 +298,7 @@ theorem SetTheory.Set.Fin.coe_eq_iff' {n m:ℕ} (i: Fin n) (hi : ↑i ∈ Fin m)
   simp only [toNat, Subtype.mk.injEq, exists_prop]
   generalize_proofs h1 h2
   suffices : (h1.choose: Object) = h2.choose
-  · aesop
+  · exact (Object.natCast_inj _ _).mp this
   have := h1.choose_spec
   have := h2.choose_spec
   grind
@@ -332,7 +337,10 @@ theorem SetTheory.Set.finite_choice {n:ℕ} {X: Fin n → Set} (h: ∀ i, X i �
   choose a ha using nonempty_def (h last)
   have x : ∀ i, X i := fun i =>
     if h : i = n then
-      have : i = last := by ext; simpa [←Fin.coe_toNat, last]
+      have : i = last := by
+        ext
+        simp only [last]
+        exact (Fin.coe_toNat i).symm.trans ((Object.natCast_inj _ _).mpr h)
       ⟨a, by grind⟩
     else
       have : i < n := lt_of_le_of_ne (Nat.lt_succ_iff.mp (Fin.toNat_lt i)) h

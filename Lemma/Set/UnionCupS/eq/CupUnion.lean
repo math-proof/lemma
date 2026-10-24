@@ -6,7 +6,7 @@ import Lemma.Set.UnionDiff_Inter
 import Lemma.Set.UnionUnion
 import Lemma.Set.EqUnion.of.Subset
 import Lemma.Set.Subset_Union.of.Subset
-open Set
+open Set BoundedInterval
 
 
 @[path]

@@ -5,6 +5,7 @@
 -/
 
 import sympy.atlas.RingTheory.GradedAlgebra.MultigradedBettiResolutionInvariance
+import Lemma.Int.GradedAlgebra.MultigradedBettiResolutionInvariance
 /-!
 # Multigraded Poincaré-series coefficient family
 
@@ -61,53 +62,4 @@ noncomputable def multigradedPoincareCoefficients
     (data : MultigradedBaseChange targetGraded resolution ι res) :
     ℕ × (Fin n →₀ Int) → ℕ :=
   fun p => multigradedBettiNumber data p.2 p.1
-
-/-- Application equation: evaluating the coefficient family at `(i, α)`
-returns the corresponding Betti number. -/
-theorem multigradedPoincareCoefficients_apply
-    {K : Type u} [Field K] {n : ℕ}
-    {M : Type u} [AddCommGroup M]
-    [Module (MvPolynomial (Fin n) K) M] [Module K M]
-    {targetGraded : MultigradedPolynomialModule K n M}
-    {resolution : CategoryTheory.ProjectiveResolution
-      (ModuleCat.of (MvPolynomial (Fin n) K) M)}
-    {ι : ℕ → Type u}
-    {res : MultigradedFreeResolution K n M targetGraded resolution ι}
-    (data : MultigradedBaseChange targetGraded resolution ι res)
-    (i : ℕ) (α : Fin n →₀ Int) :
-    multigradedPoincareCoefficients data (i, α) =
-      multigradedBettiNumber data α i :=
-  rfl
-
-/-- Conditional coherence of the coefficient family: an edge-5
-`MultigradedResolutionComparison` forces the two raw coefficient
-functions to be equal.
-
-Source: Benjamin Braun and Brian Davis, “Antichain Simplices,”
-Journal of Integer Sequences 23 (2020),
-`https://cs.uwaterloo.ca/journals/JIS/VOL23/Braun/braun4.tex`,
-exact lines 870--874. This is conditional only: it assumes the
-comparison and claims no existence, unconditional independence, finite
-support, polynomiality, rationality, or convergence. -/
-theorem multigradedPoincareCoefficients_eq_of_resolutionComparison
-    {K : Type u} [Field K] {n : ℕ}
-    {M : Type u} [AddCommGroup M]
-    [Module (MvPolynomial (Fin n) K) M] [Module K M]
-    {targetGraded : MultigradedPolynomialModule K n M}
-    {resolution₁ resolution₂ : CategoryTheory.ProjectiveResolution
-      (ModuleCat.of (MvPolynomial (Fin n) K) M)}
-    {ι₁ ι₂ : ℕ → Type u}
-    {res₁ : MultigradedFreeResolution K n M targetGraded resolution₁ ι₁}
-    {res₂ : MultigradedFreeResolution K n M targetGraded resolution₂ ι₂}
-    {data₁ : MultigradedBaseChange targetGraded resolution₁ ι₁ res₁}
-    {data₂ : MultigradedBaseChange targetGraded resolution₂ ι₂ res₂}
-    (comparison : MultigradedResolutionComparison data₁ data₂) :
-    multigradedPoincareCoefficients data₁ =
-      multigradedPoincareCoefficients data₂ := by
-  funext p
-  cases p with
-  | mk i α =>
-    unfold multigradedPoincareCoefficients
-    exact multigradedBettiNumber_eq_of_resolutionComparison comparison α i
-
 end MetaMathlibExt

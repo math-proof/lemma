@@ -1,0 +1,53 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckPeriodicPlanarSheffield.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffield
+
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_edgeArc_displacement_bound
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.edgeArc_coord_le_vertex_add
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.walkArc_range_subset_expanded_planeRect
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.mem_walkArc_range_of_not_nil
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.openRectWalkArc_range_subset
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.mem_openRectWalkArc_range
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rectLeftBoundary_coord_lt
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.finiteHorizontalCrossing_extendedPath
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.finiteHorizontalCrossing_openWalk_of_wide
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.finiteVerticalCrossing_extendedPath
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.finiteVerticalCrossing_openWalk_of_tall
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.horizontalCrossingEvent_measurableSet
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.verticalCrossingEvent_isIncreasing
+#print axioms StatMech.FK.PeriodicPlanar.four_event_sqrt_trick
+#print axioms StatMech.FK.PeriodicPlanar.four_event_max_tendsto_one
+#print axioms StatMech.FK.PeriodicPlanar.min_tendsto_zero_of_matched_exclusion
+#print axioms StatMech.FK.PeriodicPlanar.balanced_aspect_crossing_contradiction
+#print axioms StatMech.FK.PeriodicPlanar.balanced_aspect_crossing_contradiction_of_error
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.translateEvent_measure_eq
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.iUnion_connectedWithinOrbit
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.clusterInfinite_isIncreasing
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.pairMergeError_real_tendsto_zero
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.pairMergeErrorUnion_real_tendsto_zero
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.reachable_configTranslate
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.cluster_configTranslate
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.hasUniqueInfiniteCluster_configTranslate
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.measurableSet_hasUniqueInfiniteCluster
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.exists_fundamental_clusterInfinite_pos
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.orbitBoxHitsInfinite_real_tendsto_one
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.dualConfigEquiv_configTranslate
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.dual_planeRect_eq
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.exists_common_edgeArc_displacement_bound
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.dualMeasure_isTranslationInvariant
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.no_open_primal_dual_edge_crossing
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.no_open_primal_dual_walkArc_crossing
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.no_openRectWalkArc_crossing
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.matchedCrossingEvents_disjoint
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.matchedCrossing_measureReal_add_le_one
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.exists_buffer_matchedCrossing_measureReal_add_le_one
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.commonUniqueInfiniteClusterEvent_measure_eq_one
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.exists_primal_dual_fundamental_clusterInfinite_pos

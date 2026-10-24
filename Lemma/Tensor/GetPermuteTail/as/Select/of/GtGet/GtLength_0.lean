@@ -21,7 +21,7 @@ import Lemma.Tensor.SEqPermuteTailS.of.Eq
 import Lemma.Tensor.SEqPermuteTail_1
 import Lemma.Tensor.SEqSelectS.of.Eq.Val
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
-open Bool Fin Finset List Nat Tensor Vector
+open Bool Fin Finset List Nat Tensor Vector Set
 
 
 @[path, cast]

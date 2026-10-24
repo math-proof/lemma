@@ -284,7 +284,6 @@ def List.buildEventuallyMp (layers : List EventuallyLayer) (hAeIff : Lean.Expr)
   go layers hAeIff 0
 
 
-
 /-- Replace the first module token containing substring `Iff` by substituting that substring with `replacement`. -/
 def List.replaceIffToken (tokens : List String) (replacement : String) : Option (List String) :=
   let rec loop (acc : List String) : List String → Option (List String)

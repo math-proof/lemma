@@ -3,7 +3,6 @@ import torch.Tensor.Basic
 import torch.Tensor.repeat
 
 
-
 @[path]
 private lemma main
   {s : List ℕ}

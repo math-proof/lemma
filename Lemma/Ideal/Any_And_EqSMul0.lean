@@ -1,17 +1,11 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma eq_bot_of_smul_eq_bot {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
-    (P : Ideal R) (htors : ∀ m : M, (∀ t ∈ P, t • m = 0) → m = 0)
-    (N : Submodule R M) (hN : P • N = ⊥) : N = ⊥ := by
+
+private lemma eq_bot_of_smul_eq_bot [CommRing R] [AddCommGroup M] [Module R M] (P : Ideal R) (htors : ∀ m : M, (∀ t ∈ P, t • m = 0) → m = 0) (N : Submodule R M) (hN : P • N = ⊥) : N = ⊥ := by
   rw [eq_bot_iff]
   intro m hm
   rw [Submodule.mem_bot]
@@ -19,30 +13,29 @@ private lemma eq_bot_of_smul_eq_bot {R M : Type*} [CommRing R] [AddCommGroup M] 
   intro t ht
   have : t • m ∈ P • N := Submodule.smul_mem_smul ht hm
   rwa [hN, Submodule.mem_bot] at this
-private lemma eq_bot_of_pow_smul_eq_bot {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
-    (P : Ideal R) (htors : ∀ m : M, (∀ t ∈ P, t • m = 0) → m = 0)
-    (k : ℕ) (N : Submodule R M) (hN : P ^ k • N = ⊥) : N = ⊥ := by
-  induction k generalizing N with
-  | zero => simpa using hN
-  | succ k ih =>
+
+private lemma eq_bot_of_pow_smul_eq_bot [CommRing R] [AddCommGroup M] [Module R M] (P : Ideal R) (htors : ∀ m : M, (∀ t ∈ P, t • m = 0) → m = 0) (k : ℕ) (N : Submodule R M) (hN : P ^ k • N = ⊥) : N = ⊥ := by
+  induction k generalizing N
+  ·
+    simpa using hN
+  ·
+    rename_i k ih
     apply ih
     apply eq_bot_of_smul_eq_bot P htors
     rwa [← Submodule.mul_smul, ← pow_succ']
-private lemma exists_not_mem_and_forall_smul_eq_zero_of_finite_of_noTorsion
-    {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M] [Finite M]
-    (P : Ideal R) (hP : P ≠ ⊤) (htors : ∀ m : M, (∀ t ∈ P, t • m = 0) → m = 0) :
-    ∃ s : R, s ∉ P ∧ ∀ m : M, s • m = 0 := by
+
+private lemma exists_not_mem_and_forall_smul_eq_zero_of_finite_of_noTorsion [CommRing R] [AddCommGroup M] [Module R M] [Finite M] (P : Ideal R) (hP : P ≠ ⊤) (htors : ∀ m : M, (∀ t ∈ P, t • m = 0) → m = 0) : ∃ s : R, s ∉ P ∧ ∀ m : M, s • m = 0 := by
   classical
   let f : ℕ → Submodule R M := fun k => P ^ k • ⊤
   have hanti : ∀ k, f (k + 1) ≤ f k := fun k => by
     show P ^ (k + 1) • ⊤ ≤ P ^ k • ⊤
     rw [pow_succ', Submodule.mul_smul]
-    exact Submodule.smul_le_right
+    apply Submodule.smul_le_right
   have hanti' : Antitone f := antitone_nat_of_succ_le hanti
   let _ : Finite (Submodule R M) := inferInstance
   obtain ⟨i, j, hij, hfij⟩ := Finite.exists_ne_map_eq_of_infinite f
   obtain ⟨n, hn⟩ : ∃ n, f (n + 1) = f n := by
-    rcases lt_or_gt_of_ne hij with h | h
+    obtain h | h := lt_or_gt_of_ne hij
     · exact ⟨i, le_antisymm (hanti i) (hfij ▸ hanti' (Nat.succ_le_of_lt h))⟩
     · exact ⟨j, le_antisymm (hanti j) (hfij.symm ▸ hanti' (Nat.succ_le_of_lt h))⟩
   let _ : IsNoetherian R M := inferInstance
@@ -50,7 +43,7 @@ private lemma exists_not_mem_and_forall_smul_eq_zero_of_finite_of_noTorsion
   have hle : f n ≤ P • f n := by
     show P ^ n • ⊤ ≤ P • (P ^ n • ⊤)
     rw [← Submodule.mul_smul, ← pow_succ']
-    exact (hn).symm.le
+    apply (hn).symm.le
   obtain ⟨r, hr1, hr⟩ := Submodule.exists_sub_one_mem_and_smul_eq_zero_of_fg_of_le_smul P (f n) hfg hle
   refine ⟨r, fun hrP => hP ?_, ?_⟩
   ·
@@ -61,25 +54,27 @@ private lemma exists_not_mem_and_forall_smul_eq_zero_of_finite_of_noTorsion
     intro m
     have hbot : P ^ n • (Submodule.map (r • LinearMap.id) ⊤ : Submodule R M) = ⊥ := by
       rw [eq_bot_iff]
-      have h1 : P ^ n • (Submodule.map (r • LinearMap.id) ⊤ : Submodule R M) =
-          Submodule.map (r • LinearMap.id) (P ^ n • ⊤) := by
+      have h1 : P ^ n • (Submodule.map (r • LinearMap.id) ⊤ : Submodule R M) = Submodule.map (r • LinearMap.id) (P ^ n • ⊤) := by
         rw [Submodule.map_smul'']
       rw [h1]
       rintro x ⟨y, hy, rfl⟩
       simp only [LinearMap.smul_apply, LinearMap.id_coe, id_eq, Submodule.mem_bot]
-      exact hr y hy
+      apply hr y hy
     have := eq_bot_of_pow_smul_eq_bot P htors n _ hbot
     have hm : r • m ∈ (Submodule.map (r • LinearMap.id) ⊤ : Submodule R M) := ⟨m, trivial, rfl⟩
     rwa [this, Submodule.mem_bot] at hm
+
 /--
 [Module_exists_notMem_forall_smul_eq_zero_of_isMaximal_of_forall_smul_eq_zero_imp](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_exists_notMem_forall_smul_eq_zero_of_isMaximal_of_forall_smul_eq_zero_imp.lean)
 -/
 @[path]
 private lemma main
-    {T : Type*} [CommRing T] {M : Type*} [AddCommGroup M] [Module T M] [Finite M]
-    (𝔓 : Ideal T) (h𝔓 : 𝔓.IsMaximal)
-    (hno : ∀ x : M, (∀ a ∈ 𝔓, a • x = 0) → x = 0) :
-    ∃ s : T, s ∉ 𝔓 ∧ ∀ x : M, s • x = 0 :=
+  [CommRing T] [AddCommGroup M] [Module T M] [Finite M]
+  (𝔓 : Ideal T) (h𝔓 : 𝔓.IsMaximal)
+  (hno : ∀ x : M, (∀ a ∈ 𝔓, a • x = 0) → x = 0) :
+  -- imply
+  ∃ s : T, s ∉ 𝔓 ∧ ∀ x : M, s • x = 0 :=
   exists_not_mem_and_forall_smul_eq_zero_of_finite_of_noTorsion 𝔓 h𝔓.ne_top hno
+
 
 -- created on 2026-10-20

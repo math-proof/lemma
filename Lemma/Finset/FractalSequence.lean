@@ -4,29 +4,43 @@ import sympy.atlas.Combinatorics.FractalSequence
 open MetaMathlibExt
 
 
+namespace MetaMathlibExt
+
 /--
 [FractalSequence.pos_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/FractalSequence.lean)
 -/
 @[path]
-private lemma FractalSequence_pos_injective_eq
+lemma FractalSequence.pos_injective
   {X : FractalSequence}
   {i : ℕ} :
 -- imply
-  Function.Injective (X.pos i) := by
+  Function.Injective (X.pos i) :=
 -- proof
-  apply MetaMathlibExt.FractalSequence.pos_injective X i
+  (X.pos_strict i).injective
+
+end MetaMathlibExt
+
+namespace MetaMathlibExt
 
 /--
 [FractalSequence.infinite_occurrences](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/FractalSequence.lean)
 -/
 @[path]
-private lemma FractalSequence_infinite_occurrences_eq
+lemma FractalSequence.infinite_occurrences
   {X : FractalSequence}
   {i : ℕ} :
 -- imply
   Set.Infinite {n | X.seq n = i + 1} := by
 -- proof
-  apply MetaMathlibExt.FractalSequence.infinite_occurrences X i
+  have hf : Function.Injective
+    (fun j => (⟨X.pos i j, X.pos_sound i j⟩ : {n // X.seq n = i + 1})) := by
+    intro a b hab
+    have hpos : X.pos i a = X.pos i b := congrArg Subtype.val hab
+    exact (X.pos_strict i).injective hpos
+  exact Set.infinite_coe_iff.mp (Infinite.of_injective _ hf)
+
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

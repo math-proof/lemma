@@ -10,16 +10,18 @@ private lemma main
 -- given
   (h : ∀ x ∈ S, f x = g x) :
 -- imply
-  ArgMin S f = ArgMin S g := by
+  min⁻¹[x ∈ S] f x = min⁻¹[x ∈ S] g x := by
 -- proof
-  unfold ArgMin
+  unfold «min⁻¹»
   congr 1
   funext x
   apply propext
   constructor
-  · rintro ⟨hx, hy⟩
+  ·
+    rintro ⟨hx, hy⟩
     exact ⟨hx, fun y hy' => by rw [← h x hx, ← h y hy']; exact hy y hy'⟩
-  · rintro ⟨hx, hy⟩
+  ·
+    rintro ⟨hx, hy⟩
     exact ⟨hx, fun y hy' => by rw [h x hx, h y hy']; exact hy y hy'⟩
 
 

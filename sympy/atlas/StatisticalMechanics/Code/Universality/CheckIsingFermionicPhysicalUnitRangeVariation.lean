@@ -1,0 +1,21 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPhysicalUnitRangeVariation.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalUnitRangeVariation
+
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimal_exists_orderedDual
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchDual_exists_orderedPrimal
+#print axioms StatMech.Universality.fkIsingSquareRadialPatch_unitRange_of_primalLower_dualUpper
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimal_deepVariation_sq_le_of_unitRange
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchDual_deepVariation_sq_le_of_unitRange
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimal_physicalDeepVariation_sq_le_of_unitRange
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchDual_physicalDeepVariation_sq_le_of_unitRange
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimal_physicalDeepVariation_fixedFraction
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchDual_physicalDeepVariation_fixedFraction

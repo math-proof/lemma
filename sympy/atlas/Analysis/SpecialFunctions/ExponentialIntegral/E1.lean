@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean -/
 
 import sympy.atlas.Analysis.SpecialFunctions.EntireExponentialIntegral
+import Lemma.Complex.EntireExponentialIntegral
 import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 
@@ -90,28 +91,4 @@ def e1AsymptoticRemainder (n : ℕ) (z : ℂ) (hz : z ≠ 0) : ℂ :=
     e1AsymptoticRemainder n z hz = e1AsymptoticRemainderRaw n z := by
   simp only [e1AsymptoticRemainder, e1AsymptoticRemainderRaw,
     principalExponentialIntegralE1_eq_raw, e1AsymptoticPartial_eq_raw]
-
-/-- The raw kernel at `0` is `-γ` by junk values (`ein 0 = 0`,
-`Complex.log 0 = 0`), not by classical analysis. -/
-theorem principalExponentialIntegralE1Raw_zero :
-    principalExponentialIntegralE1Raw 0 = -(Real.eulerMascheroniConstant : ℂ) := by
-  have hein : ein (0 : ℂ) = 0 := by simp [ein, einTerm]
-  simp [principalExponentialIntegralE1Raw, hein, Complex.log_zero]
-
-/-- Each raw asymptotic term vanishes at `0` by junk-value division. -/
-theorem e1AsymptoticTermRaw_zero (n : ℕ) :
-    e1AsymptoticTermRaw n 0 = 0 := by
-  simp [e1AsymptoticTermRaw]
-
-/-- Each raw partial sum vanishes at `0`. -/
-theorem e1AsymptoticPartialRaw_zero (n : ℕ) :
-    e1AsymptoticPartialRaw n 0 = 0 := by
-  simp [e1AsymptoticPartialRaw, e1AsymptoticTermRaw_zero]
-
-/-- The raw remainder at `0` is `-γ` by junk values, not by classical analysis. -/
-theorem e1AsymptoticRemainderRaw_zero (n : ℕ) :
-    e1AsymptoticRemainderRaw n 0 = -(Real.eulerMascheroniConstant : ℂ) := by
-  simp [e1AsymptoticRemainderRaw, principalExponentialIntegralE1Raw_zero,
-    e1AsymptoticPartialRaw_zero]
-
 end

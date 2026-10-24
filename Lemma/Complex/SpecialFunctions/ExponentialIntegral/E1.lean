@@ -5,6 +5,68 @@ open scoped BigOperators
 open Complex
 
 
+namespace Complex
+
+/--
+[principalExponentialIntegralE1Raw_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean)
+-/
+@[path]
+lemma principalExponentialIntegralE1Raw_zero
+  :
+-- imply
+  principalExponentialIntegralE1Raw 0 = -(Real.eulerMascheroniConstant : ℂ) := by
+-- proof
+  have hein : ein (0 : ℂ) = 0 := by simp [ein, einTerm]
+  simp [principalExponentialIntegralE1Raw, hein, Complex.log_zero]
+
+end Complex
+
+namespace Complex
+
+/--
+[e1AsymptoticTermRaw_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean)
+-/
+@[path]
+lemma e1AsymptoticTermRaw_zero
+  {n : ℕ} :
+-- imply
+  e1AsymptoticTermRaw n 0 = 0 := by
+-- proof
+  simp [e1AsymptoticTermRaw]
+
+end Complex
+
+namespace Complex
+
+/--
+[e1AsymptoticPartialRaw_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean)
+-/
+@[path]
+lemma e1AsymptoticPartialRaw_zero
+  {n : ℕ} :
+-- imply
+  e1AsymptoticPartialRaw n 0 = 0 := by
+-- proof
+  simp [e1AsymptoticPartialRaw, e1AsymptoticTermRaw_zero]
+
+end Complex
+
+namespace Complex
+
+/--
+[e1AsymptoticRemainderRaw_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean)
+-/
+@[path]
+lemma e1AsymptoticRemainderRaw_zero
+  {n : ℕ} :
+-- imply
+  e1AsymptoticRemainderRaw n 0 = -(Real.eulerMascheroniConstant : ℂ) := by
+-- proof
+  simp [e1AsymptoticRemainderRaw, principalExponentialIntegralE1Raw_zero,
+    e1AsymptoticPartialRaw_zero]
+end
+
+
 /--
 [principalExponentialIntegralE1_eq_raw](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean)
 -/
@@ -60,49 +122,6 @@ private lemma e1AsymptoticRemainder_eq_raw_eq
 -- proof
   apply Complex.e1AsymptoticRemainder_eq_raw n z hz
 
-/--
-[principalExponentialIntegralE1Raw_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean)
--/
-@[path]
-private lemma principalExponentialIntegralE1Raw_zero_eq
-  :
--- imply
-  principalExponentialIntegralE1Raw 0 = -(Real.eulerMascheroniConstant : ℂ) := by
--- proof
-  apply Complex.principalExponentialIntegralE1Raw_zero
-
-/--
-[e1AsymptoticTermRaw_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean)
--/
-@[path]
-private lemma e1AsymptoticTermRaw_zero_eq
-  {n : ℕ} :
--- imply
-  e1AsymptoticTermRaw n 0 = 0 := by
--- proof
-  apply Complex.e1AsymptoticTermRaw_zero n
-
-/--
-[e1AsymptoticPartialRaw_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean)
--/
-@[path]
-private lemma e1AsymptoticPartialRaw_zero_eq
-  {n : ℕ} :
--- imply
-  e1AsymptoticPartialRaw n 0 = 0 := by
--- proof
-  apply Complex.e1AsymptoticPartialRaw_zero n
-
-/--
-[e1AsymptoticRemainderRaw_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean)
--/
-@[path]
-private lemma e1AsymptoticRemainderRaw_zero_eq
-  {n : ℕ} :
--- imply
-  e1AsymptoticRemainderRaw n 0 = -(Real.eulerMascheroniConstant : ℂ) := by
--- proof
-  apply Complex.e1AsymptoticRemainderRaw_zero n
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

@@ -11,7 +11,7 @@ private lemma main
 -- given
   (hP : SinglePSpace π (x, y)) :
 -- imply
-  have := PSpace.of.PSpace_Joint.fst hP
+  have := SinglePSpace.of.SinglePSpace.fst hP
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
     ℙ[π](x = «x.bvar») = 0 →
     ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,

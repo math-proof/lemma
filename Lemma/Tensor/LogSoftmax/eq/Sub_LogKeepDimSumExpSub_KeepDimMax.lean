@@ -9,7 +9,7 @@ import Lemma.Tensor.Max.eq.Cast.of.LeLength
 import Lemma.Tensor.SoftmaxSub_Keepdim.eq.Softmax
 import Lemma.Vector.GetSum.eq.Sum_Get
 import torch.Tensor.sum
-open Fin List Nat Real Tensor Vector
+open Fin List Nat Real Tensor Vector Set
 
 
 /--

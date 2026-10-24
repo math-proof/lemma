@@ -855,7 +855,7 @@ private theorem hayman_coefficient_ratio_identity
   push_cast
   ring
 
-/-- Finite-radius specialization of the Hayman coefficient asymptotic
+/-- Empty.Finite-radius specialization of the Hayman coefficient asymptotic
 (arXiv:1906.07169v2, tex lines 495-506): under admissibility, power-series
 expansion, and saddle-point uniqueness,
 `coeff n` is equivalent to `G(r_n) / (r_n^n * sqrt(2 * pi * B(r_n)))`.

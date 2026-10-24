@@ -1,24 +1,18 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma piScalarRight_one_tmul {A K : Type*} [CommRing A] [Field K] [Algebra A K] {n : ℕ} (x : Fin n → A) (i : Fin n) :
-    TensorProduct.piScalarRight A K K (Fin n) ((1 : K) ⊗ₜ[A] x) i = algebraMap A K (x i) := by
+
+universe u
+
+private lemma piScalarRight_one_tmul [CommRing A] [Field K] [Algebra A K] {n : ℕ} (x : Fin n → A) (i : Fin n) : TensorProduct.piScalarRight A K K (Fin n) ((1 : K) ⊗ₜ[A] x) i = algebraMap A K (x i) := by
   classical
   simp [TensorProduct.piScalarRight_apply, TensorProduct.piScalarRightHom_tmul, Algebra.algebraMap_eq_smul_one]
-private lemma free_of_surjective_of_lTensor_injective
-    {A : Type*} [CommRing A] [IsDomain A]
-    {C : Type*} [AddCommGroup C] [Module A C] {n : ℕ} (f : (Fin n → A) →ₗ[A] C) (hf : Function.Surjective f)
-    (K : Type*) [Field K] [Algebra A K] [FaithfulSMul A K]
-    (hinj : Function.Injective (LinearMap.lTensor K f)) :
-    Module.Free A C ∧ Module.finrank A C = n := by
+private lemma free_of_surjective_of_lTensor_injective [CommRing A] [IsDomain A] [AddCommGroup C] [Module A C] {n : ℕ} (f : (Fin n → A) →ₗ[A] C) (hf : Function.Surjective f) (K : Type*) [Field K] [Algebra A K] [FaithfulSMul A K] (hinj : Function.Injective (LinearMap.lTensor K f)) : Module.Free A C ∧ Module.finrank A C = n := by
   classical
   have hfi : Function.Injective f := by
     intro x y hxy
@@ -28,7 +22,7 @@ private lemma free_of_surjective_of_lTensor_injective
     funext i
     have h4 := congrArg (fun z => TensorProduct.piScalarRight A K K (Fin n) z i) h2
     simp only [piScalarRight_one_tmul] at h4
-    exact FaithfulSMul.algebraMap_injective A K h4
+    apply FaithfulSMul.algebraMap_injective A K h4
   let e : (Fin n → A) ≃ₗ[A] C := LinearEquiv.ofBijective f ⟨hfi, hf⟩
   exact ⟨Module.Free.of_equiv e, by rw [← e.finrank_eq, Module.finrank_fin_fun]⟩
 /--
@@ -36,11 +30,13 @@ private lemma free_of_surjective_of_lTensor_injective
 -/
 @[path]
 private lemma main
-    {A : Type*} [CommRing A] [IsDomain A] [IsLocalRing A]
-    {C : Type*} [AddCommGroup C] [Module A C] [Module.Finite A C] (n : ℕ)
-    (hκ : Module.finrank (IsLocalRing.ResidueField A) (IsLocalRing.ResidueField A ⊗[A] C) = n)
-    (hK : Module.finrank (FractionRing A) (FractionRing A ⊗[A] C) = n) :
-    Module.Free A C ∧ Module.finrank A C = n := by
+  [CommRing A] [IsDomain A] [IsLocalRing A]
+  [AddCommGroup C] [Module A C] [Module.Finite A C] (n : ℕ)
+  (hκ : Module.finrank (IsLocalRing.ResidueField A) (IsLocalRing.ResidueField A ⊗[A] C) = n)
+  (hK : Module.finrank (FractionRing A) (FractionRing A ⊗[A] C) = n) :
+  -- imply
+  Module.Free A C ∧ Module.finrank A C = n := by
+  -- proof
   classical
   set κ := IsLocalRing.ResidueField A with hκdef
   set K := FractionRing A with hKdef
@@ -57,12 +53,18 @@ private lemma main
   have hsurjK : Function.Surjective (LinearMap.lTensor K f) := LinearMap.lTensor_surjective K hf
   let fK : (K ⊗[A] (Fin n → A)) →ₗ[K] (K ⊗[A] C) := f.baseChange K
   have hfK : (fK : (K ⊗[A] (Fin n → A)) → (K ⊗[A] C)) = LinearMap.lTensor K f := rfl
-  have hsurjK' : Function.Surjective fK := by rw [hfK]; exact hsurjK
+  have hsurjK' : Function.Surjective fK := by
+    rw [hfK]
+    apply hsurjK
   have hdim : Module.finrank K (K ⊗[A] (Fin n → A)) = Module.finrank K (K ⊗[A] C) := by
     rw [Module.finrank_baseChange, Module.finrank_fin_fun, hK]
   let _ : FiniteDimensional K (K ⊗[A] (Fin n → A)) := inferInstance
   have hinjK : Function.Injective fK :=
     (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim).2 hsurjK'
-  exact free_of_surjective_of_lTensor_injective f hf K (by rw [← hfK]; exact hinjK)
+  have hinjLt : Function.Injective (LinearMap.lTensor K f) := by
+    rw [← hfK]
+    apply hinjK
+  refine free_of_surjective_of_lTensor_injective f hf K hinjLt
+
 
 -- created on 2026-10-20

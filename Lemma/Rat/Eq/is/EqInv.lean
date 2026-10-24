@@ -27,5 +27,4 @@ private lemma main
     assumption
 
 
-
 -- created on 2026-07-26

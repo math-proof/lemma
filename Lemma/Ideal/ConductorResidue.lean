@@ -4,11 +4,13 @@ import sympy.atlas.RingTheory.ConductorResidue
 open Ideal
 
 
+namespace Ideal
+
 /--
 [quotient_coprime_residue_equiv_apply_mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/ConductorResidue.lean)
 -/
 @[path]
-private lemma quotient_coprime_residue_equiv_apply_mk_eq
+lemma quotient_coprime_residue_equiv_apply_mk
   [CommRing O] [CommRing B] [Algebra O B]
   {q : Ideal B} [q.IsMaximal]
   {c : Ideal B}
@@ -18,15 +20,19 @@ private lemma quotient_coprime_residue_equiv_apply_mk_eq
   (hclear : ∀ x ∈ c, ∀ b : B, ∃ o : O, algebraMap O B o = x * b) :
 -- imply
   quotient_coprime_residue_equiv q c hc hclear (Ideal.Quotient.mk _ o) =
-      Ideal.Quotient.mk _ (algebraMap O B o) := by
+      Ideal.Quotient.mk _ (algebraMap O B o) :=
 -- proof
-  apply Ideal.quotient_coprime_residue_equiv_apply_mk q c hc hclear o
+  rfl
+
+end Ideal
+
+namespace Ideal
 
 /--
 [nat_card_quotient_coprime_residue_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/ConductorResidue.lean)
 -/
 @[path]
-private lemma nat_card_quotient_coprime_residue_eq_eq
+lemma nat_card_quotient_coprime_residue_eq
   [CommRing O] [CommRing B] [Algebra O B]
   {q : Ideal B} [q.IsMaximal]
   {c : Ideal B}
@@ -34,15 +40,19 @@ private lemma nat_card_quotient_coprime_residue_eq_eq
   (hc : ¬ c ≤ q)
   (hclear : ∀ x ∈ c, ∀ b : B, ∃ o : O, algebraMap O B o = x * b) :
 -- imply
-  Nat.card (O ⧸ q.comap (algebraMap O B)) = Nat.card (B ⧸ q) := by
+  Nat.card (O ⧸ q.comap (algebraMap O B)) = Nat.card (B ⧸ q) :=
 -- proof
-  apply Ideal.nat_card_quotient_coprime_residue_eq q c hc hclear
+  Nat.card_congr (quotient_coprime_residue_equiv q c hc hclear).toEquiv
+
+end Ideal
+
+namespace Ideal
 
 /--
 [cardQuot_coprime_residue_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/ConductorResidue.lean)
 -/
 @[path]
-private lemma cardQuot_coprime_residue_eq_eq
+lemma cardQuot_coprime_residue_eq
   [CommRing O] [CommRing B] [Algebra O B]
   {q : Ideal B} [q.IsMaximal]
   {c : Ideal B}
@@ -53,7 +63,11 @@ private lemma cardQuot_coprime_residue_eq_eq
   Submodule.cardQuot (q.comap (algebraMap O B) : Submodule O O) =
       Submodule.cardQuot (q : Submodule B B) := by
 -- proof
-  apply Ideal.cardQuot_coprime_residue_eq q c hc hclear
+  rw [Submodule.cardQuot_apply, Submodule.cardQuot_apply]
+  exact Nat.card_congr (quotient_coprime_residue_equiv q c hc hclear).toEquiv
+
+end Ideal
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

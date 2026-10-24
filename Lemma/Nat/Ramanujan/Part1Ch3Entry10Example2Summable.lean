@@ -1,22 +1,49 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Entry10Example2Summable
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
-open Entry10Example2Summable
 
+
+namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example2Summable
 
 /--
 [ramanujan_part1_ch3_entry10_example2_summable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry10Example2Summable.lean)
 -/
 @[path]
-private lemma ramanujan_part1_ch3_entry10_example2_summable_eq
+lemma ramanujan_part1_ch3_entry10_example2_summable
   :
 -- imply
   ∀ (x : ℝ),
         Summable (fun j : ℕ => Real.exp (-x) * x ^ (j + 1) * Real.log ((j : ℝ) + 2) /
             (Nat.factorial (j + 1) : ℝ)) := by
 -- proof
-  apply MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example2Summable.ramanujan_part1_ch3_entry10_example2_summable
+  intro x
+  have hsum : Summable (fun j : ℕ =>
+    Real.exp (-x) * |x| * (|x| ^ j / (Nat.factorial j : ℝ))) :=
+    (Real.summable_pow_div_factorial |x|).mul_left _
+  refine Summable.of_norm_bounded hsum fun j => ?_
+  have hj0 : (0 : ℝ) ≤ j := by positivity
+  have hlog_nonneg : 0 ≤ Real.log ((j : ℝ) + 2) :=
+    Real.log_nonneg (by linarith)
+  have hlog_le : Real.log ((j : ℝ) + 2) ≤ (j : ℝ) + 1 := by
+    have := Real.log_le_sub_one_of_pos (by positivity : (0 : ℝ) < (j : ℝ) + 2)
+    linarith
+  simp only [norm_div, norm_mul, norm_pow, Real.norm_eq_abs,
+    abs_of_pos (Real.exp_pos _), abs_of_nonneg hlog_nonneg,
+    norm_natCast]
+  rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
+  have hj : (0 : ℝ) < (j : ℝ) + 1 := by positivity
+  calc
+    Real.exp (-x) * |x| ^ (j + 1) * Real.log ((j : ℝ) + 2) /
+      (((j : ℝ) + 1) * (Nat.factorial j : ℝ))
+      ≤ Real.exp (-x) * |x| ^ (j + 1) * ((j : ℝ) + 1) /
+        (((j : ℝ) + 1) * (Nat.factorial j : ℝ)) := by
+          gcongr
+    _ = Real.exp (-x) * |x| * (|x| ^ j / (Nat.factorial j : ℝ)) := by
+      rw [pow_succ]
+      field_simp
+
+end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example2Summable
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

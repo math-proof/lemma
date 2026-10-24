@@ -1,27 +1,25 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-variable {n : ℕ} [NeZero n]
-private lemma exists_eq_mul_of_forall_mul_eq_zero (a y : ZMod n)
-    (h : ∀ t : ZMod n, t * a = 0 → t * y = 0) : ∃ s : ZMod n, y = a * s := by
+
+universe u
+
+private lemma exists_eq_mul_of_forall_mul_eq_zero {n : ℕ} [NeZero n] (a y : ZMod n) (h : ∀ t : ZMod n, t * a = 0 → t * y = 0) : ∃ s : ZMod n, y = a * s := by
   set A : ℕ := a.val with hA
   set d : ℕ := Nat.gcd A n with hd
   have hn0 : n ≠ 0 := NeZero.ne n
   have hd0 : d ≠ 0 := Nat.gcd_ne_zero_right hn0
   obtain ⟨e, he⟩ : d ∣ n := Nat.gcd_dvd_right A n
   obtain ⟨A', hA'⟩ : d ∣ A := Nat.gcd_dvd_left A n
-  have he0 : e ≠ 0 := by rintro rfl; rw [mul_zero] at he; exact hn0 he
+  have he0 : e ≠ 0 := by
+    intro rfl
+    rw [mul_zero] at he
+    apply hn0 he
   have hea : (e : ZMod n) * a = 0 := by
-    rw [← ZMod.natCast_zmod_val a, ← hA, hA', Nat.cast_mul, ← mul_assoc, ← Nat.cast_mul, mul_comm e d, ← he,
-      ZMod.natCast_self, zero_mul]
+    rw [← ZMod.natCast_zmod_val a, ← hA, hA', Nat.cast_mul, ← mul_assoc, ← Nat.cast_mul, mul_comm e d, ← he, ZMod.natCast_self, zero_mul]
   have hey : (e : ZMod n) * y = 0 := h _ hea
   have hdy : d ∣ y.val := by
     rw [← ZMod.natCast_zmod_val y, ← Nat.cast_mul, ZMod.natCast_eq_zero_iff] at hey
@@ -35,10 +33,10 @@ private lemma exists_eq_mul_of_forall_mul_eq_zero (a y : ZMod n)
       rw [hd, Nat.gcd_eq_gcd_ab]
     push_cast at h1
     rw [ZMod.natCast_self, zero_mul, add_zero, hA, ZMod.natCast_zmod_val] at h1
-    exact h1
+    apply h1
   refine ⟨(Nat.gcdA A n : ZMod n) * (Y' : ZMod n), ?_⟩
   rw [← mul_assoc, ← hbez, ← Nat.cast_mul, ← hY', ZMod.natCast_zmod_val]
-private lemma baer : Module.Baer (ZMod n) (ZMod n) := by
+private lemma baer {n : ℕ} [NeZero n] : Module.Baer (ZMod n) (ZMod n) := by
   intro I g
   let _ : IsAddCyclic I.toAddSubgroup := AddSubgroup.isAddCyclic _
   obtain ⟨⟨a, haI⟩, hagen⟩ := IsAddCyclic.exists_generator (α := I.toAddSubgroup)
@@ -59,43 +57,35 @@ private lemma baer : Module.Baer (ZMod n) (ZMod n) := by
   have e1 : (⟨k • a, hx⟩ : I) = k • ⟨a, haI⟩ := Subtype.ext rfl
   rw [e1, map_zsmul, map_zsmul, hs]
   simp only [LinearMap.flip_apply, LinearMap.lsmul_apply, smul_eq_mul]
-instance injective_self : Module.Injective (ZMod n) (ZMod n) := baer.injective
-private lemma injective_of_free (M : Type*) [AddCommGroup M] [Module (ZMod n) M]
-    [Module.Free (ZMod n) M] [Module.Finite (ZMod n) M] : Module.Injective (ZMod n) M := by
+instance injective_self {n : ℕ} [NeZero n] : Module.Injective (ZMod n) (ZMod n) := baer.injective
+private lemma injective_of_free {n : ℕ} [NeZero n] {M : Type u} [AddCommGroup M] [Module (ZMod n) M] [Module.Free (ZMod n) M] [Module.Finite (ZMod n) M] : Module.Injective (ZMod n) M := by
   let _ := Module.Free.ChooseBasisIndex.fintype (ZMod n) M
-  let e : M ≃ₗ[ZMod n] (Module.Free.ChooseBasisIndex (ZMod n) M → ZMod n) :=
-    (Module.Free.chooseBasis (ZMod n) M).equivFun
+  let e : M ≃ₗ[ZMod n] (Module.Free.ChooseBasisIndex (ZMod n) M → ZMod n) := (Module.Free.chooseBasis (ZMod n) M).equivFun
   let _ : Module.Injective (ZMod n) (Module.Free.ChooseBasisIndex (ZMod n) M → ZMod n) := inferInstance
-  exact (Module.Baer.of_equiv e.symm (Module.Baer.of_injective inferInstance)).injective
-private lemma helper_main {M : Type*} [AddCommGroup M] [Module (ZMod n) M]
-    [Module.Free (ZMod n) M] [Module.Finite (ZMod n) M]
-    (J : Ideal (Module.End (ZMod n) M)) (b : Module.End (ZMod n) M)
-    (hb : ∀ m : M, (∀ j ∈ J, j m = 0) → b m = 0) : b ∈ J := by
+  apply (Module.Baer.of_equiv e.symm (Module.Baer.of_injective inferInstance)).injective
+private lemma helper_main {n : ℕ} [NeZero n] {M : Type u} [AddCommGroup M] [Module (ZMod n) M] [Module.Free (ZMod n) M] [Module.Finite (ZMod n) M] (J : Ideal (Module.End (ZMod n) M)) (b : Module.End (ZMod n) M) (hb : ∀ m : M, (∀ j ∈ J, j m = 0) → b m = 0) : b ∈ J := by
   classical
   let _ : _root_.Finite M := Module.finite_of_finite (ZMod n)
-  let _ : _root_.Finite (Module.End (ZMod n) M) :=
-    _root_.Finite.of_injective (β := M → M) (fun f : Module.End (ZMod n) M => (f : M → M))
-      (fun f g h => LinearMap.ext (congrFun h))
+  let _ : _root_.Finite (Module.End (ZMod n) M) := _root_.Finite.of_injective (β := M → M) (fun f : Module.End (ZMod n) M => (f : M → M)) (fun f g h => LinearMap.ext (congrFun h))
   let _ : Fintype J := Fintype.ofFinite J
-  let hinj : Module.Injective (ZMod n) M := injective_of_free M
+  let hinj : Module.Injective (ZMod n) M := injective_of_free (M := M)
   let Φ : M →ₗ[ZMod n] (J → M) := LinearMap.pi fun j : J => (j : Module.End (ZMod n) M)
   have hker : LinearMap.ker Φ ≤ LinearMap.ker b := by
     intro m hm
     rw [LinearMap.mem_ker] at hm ⊢
     refine hb m fun j hj => ?_
-    have := congrFun hm ⟨j, hj⟩
-    exact this
+    apply congrFun hm ⟨j, hj⟩
   let f : (M ⧸ LinearMap.ker Φ) →ₗ[ZMod n] (J → M) := (LinearMap.ker Φ).liftQ Φ le_rfl
   have hf : Function.Injective f := by
     rw [← LinearMap.ker_eq_bot]
-    exact Submodule.ker_liftQ_eq_bot _ _ _ le_rfl
+    apply Submodule.ker_liftQ_eq_bot _ _ _ le_rfl
   let g : (M ⧸ LinearMap.ker Φ) →ₗ[ZMod n] M := (LinearMap.ker Φ).liftQ b hker
   obtain ⟨h, hh⟩ := Module.Injective.extension_property (ZMod n) M _ _ f hf g
-  have hb' : h ∘ₗ Φ = b := by
-    have e1 : Φ = f ∘ₗ (LinearMap.ker Φ).mkQ := (Submodule.liftQ_mkQ _ _ _).symm
+  have hb' : LinearMap.comp h Φ = b := by
+    have e1 : Φ = LinearMap.comp f (LinearMap.ker Φ).mkQ := (Submodule.liftQ_mkQ _ _ _).symm
     rw [e1, ← LinearMap.comp_assoc, hh]
-    exact Submodule.liftQ_mkQ _ _ _
-  have hsum : b = ∑ j : J, (h ∘ₗ LinearMap.single (ZMod n) (fun _ : J => M) j) * (j : Module.End (ZMod n) M) := by
+    apply Submodule.liftQ_mkQ _ _ _
+  have hsum : b = ∑ j : J, (LinearMap.comp h (LinearMap.single (ZMod n) (fun _ : J => M) j)) * (j : Module.End (ZMod n) M) := by
     rw [← hb']
     ext m
     have e2 : Φ m = ∑ j : J, Pi.single j ((j : Module.End (ZMod n) M) m) := by
@@ -105,17 +95,20 @@ private lemma helper_main {M : Type*} [AddCommGroup M] [Module (ZMod n) M]
     simp only [LinearMap.coe_sum, Finset.sum_apply, Module.End.mul_apply, LinearMap.comp_apply]
     rfl
   rw [hsum]
-  exact J.sum_mem fun j _ => J.mul_mem_left _ j.2
+  apply J.sum_mem fun j _ => J.mul_mem_left _ j.2
 /--
 [Module_End_mem_ideal_of_forall_apply_eq_zero_zmod](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_End_mem_ideal_of_forall_apply_eq_zero_zmod.lean)
 -/
 @[path]
 private lemma main
-    {n : ℕ} [NeZero n] {M : Type*} [AddCommGroup M] [Module (ZMod n) M]
-    [Module.Free (ZMod n) M] [Module.Finite (ZMod n) M]
-    (J : Ideal (Module.End (ZMod n) M)) (b : Module.End (ZMod n) M)
-    (hb : ∀ m : M, (∀ j ∈ J, j m = 0) → b m = 0) :
-    b ∈ J :=
+  {n : ℕ} {M : Type u} [NeZero n] [AddCommGroup M] [Module (ZMod n) M] [Module.Free (ZMod n) M] [Module.Finite (ZMod n) M]
+  (J : Ideal (Module.End (ZMod n) M))
+  (b : Module.End (ZMod n) M)
+  -- given
+  (hb : ∀ m : M, (∀ j ∈ J, j m = 0) → b m = 0) :
+  -- imply
+  b ∈ J :=
   helper_main J b hb
+
 
 -- created on 2026-10-20

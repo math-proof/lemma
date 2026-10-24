@@ -1,0 +1,27 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckQuantumIsingSpatialSeam.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingSpatialSeam
+
+#print axioms StatMech.FrontierA.quantumIsingChainInteraction_succ_eq_open_add_seam
+#print axioms StatMech.FrontierA.abs_quantumIsingChainInteraction_sub_open
+#print axioms StatMech.FrontierA.quantumIsingSpatialTrotterWeight_le_exp_mul_open
+#print axioms StatMech.FrontierA.exp_neg_mul_open_le_quantumIsingSpatialTrotterWeight
+#print axioms StatMech.FrontierA.quantumIsingOpenTrotterTransferKernel_add
+#print axioms StatMech.FrontierA.quantumIsingOpenTrotterPathPartition_add_le
+#print axioms StatMech.FrontierA.quantumIsing_exp_mul_openPartitions_le_add
+#print axioms StatMech.FrontierA.quantumIsingOpenTrotterAction_almostAdditive
+#print axioms StatMech.FrontierA.quantumIsingOpenTrotterFreeEnergy_tendsto
+#print axioms StatMech.FrontierA.quantumIsingOpenTrotterFreeEnergy_uniform_bound
+#print axioms StatMech.FrontierA.abs_quantumIsingPeriodicTrotterAction_sub_open
+#print axioms StatMech.FrontierA.quantumIsingPeriodicTrotterFreeEnergy_tendsto
+#print axioms StatMech.FrontierA.quantumIsingPeriodicTrotterFreeEnergy_uniform_bound
+#print axioms StatMech.FrontierA.quantumIsingTrotterPathPartition_le_exp_mul_open
+#print axioms StatMech.FrontierA.exp_neg_mul_open_le_quantumIsingTrotterPathPartition

@@ -1,6 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedLucasnomialFussCatalanNumber.lean -/
 
 import sympy.atlas.NumberTheory.LucasPolytopicNumber
+import Lemma.Nat.LucasPolytopicNumber
 namespace MetaMathlibExt
 
 /-- Generalized Lucasnomial Fuss-Catalan number after Ballot, JIS Vol. 21:
@@ -23,13 +24,4 @@ noncomputable def generalizedLucasnomialFussCatalanRS
     (P : LucasParameters) (r s t : ℕ) : ℝ :=
   (lucasBracket P s / lucasBracket P ((r - 1) * t + s)) *
     lucasnomial P (r * t + s - 1) t
-
-/-- The Vol. 21 `(a, r, n)` and Vol. 24 `(r, s, t)` parameterizations agree
-under the renaming `r := a`, `s := r`, `t := n`; they are the same function.
-Concept `jis_sem_17c3c7bf3e94f23255e5a2a1`. -/
-theorem generalizedLucasnomialFussCatalan_vol24_eq
-    (P : LucasParameters) (a r n : ℕ) :
-    generalizedLucasnomialFussCatalan P a r n =
-      generalizedLucasnomialFussCatalanRS P a r n := rfl
-
 end MetaMathlibExt

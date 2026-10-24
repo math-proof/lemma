@@ -7,7 +7,7 @@ import sympy.core.intfunc
 /-!
 # Stochastic process types (DiscreteMarkovChain)
 
-Finite discrete-time homogeneous Markov-chain primitives, aligned with
+Empty.Finite discrete-time homogeneous Markov-chain primitives, aligned with
 [sympy.stats.stochastic_process_types.DiscreteMarkovChain](https://github.com/sympy/sympy/blob/master/sympy/stats/stochastic_process_types.py).
 
 In Lean these are typeclasses on a transition matrix `P : Matrix S S ℝ`

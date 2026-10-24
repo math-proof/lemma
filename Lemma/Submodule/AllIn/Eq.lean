@@ -1,30 +1,27 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
 
 /--
 [LinearMap_BilinForm_forall_mem_of_forall_apply_eq_zero_and_exists_quotient_equiv_dual_of_isotropic_of_card_sq_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearMap_BilinForm_forall_mem_of_forall_apply_eq_zero_and_exists_quotient_equiv_dual_of_isotropic_of_card_sq_eq.lean)
 -/
 @[path]
 private lemma main
-    {p : ℕ} [Fact p.Prime] {V : Type*} [AddCommGroup V] [Module (ZMod p) V] [Finite V]
-    (b : LinearMap.BilinForm (ZMod p) V)
-    (hleft : ∀ x : V, (∀ y : V, b x y = 0) → x = 0) (hright : ∀ y : V, (∀ x : V, b x y = 0) → y = 0)
-    (A : Submodule (ZMod p) V) (hiso : ∀ x ∈ A, ∀ y ∈ A, b x y = 0)
-    (hcard : Nat.card A ^ 2 = Nat.card V) :
-    (∀ y : V, (∀ a ∈ A, b a y = 0) → y ∈ A) ∧
-    ∃ φ : (V ⧸ A) ≃ₗ[ZMod p] (A →ₗ[ZMod p] ZMod p),
-      ∀ (y : V) (a : A), φ (Submodule.Quotient.mk y) a = b a y := by
+  {p : ℕ} [Fact p.Prime] [AddCommGroup V] [Module (ZMod p) V] [Finite V]
+  (b : LinearMap.BilinForm (ZMod p) V)
+  (hleft : ∀ x : V, (∀ y : V, b x y = 0) → x = 0) (hright : ∀ y : V, (∀ x : V, b x y = 0) → y = 0)
+  (A : Submodule (ZMod p) V) (hiso : ∀ x ∈ A, ∀ y ∈ A, b x y = 0)
+  (hcard : Nat.card A ^ 2 = Nat.card V) :
+  -- imply
+  (∀ y : V, (∀ a ∈ A, b a y = 0) → y ∈ A) ∧ ∃ φ : (V ⧸ A) ≃ₗ[ZMod p] (A →ₗ[ZMod p] ZMod p), ∀ (y : V) (a : A), φ (Submodule.Quotient.mk y) a = b a y := by
+  -- proof
   classical
   let _ : Module.Finite (ZMod p) V := Module.Finite.of_finite
-  let ρ : V →ₗ[ZMod p] (↥A →ₗ[ZMod p] ZMod p) := A.subtype.dualMap ∘ₗ b.flip
+  let ρ : V →ₗ[ZMod p] (↥A →ₗ[ZMod p] ZMod p) := LinearMap.comp A.subtype.dualMap b.flip
   have hρ : ∀ (y : V) (a : A), ρ y a = b a y := fun y a => rfl
   have hflip : Function.Injective b.flip := by
     intro y y' h
@@ -34,10 +31,8 @@ private lemma main
     have := LinearMap.congr_fun h x
     change b x y = b x y' at this
     rw [map_sub, this, sub_self]
-  have hflip' : Function.Surjective b.flip := by
-    have hbij := LinearMap.injective_iff_surjective_of_finrank_eq_finrank
-      (Subspace.dual_finrank_eq (K := ZMod p) (V := V)).symm |>.1 hflip
-    exact hbij
+  have hflip' : Function.Surjective b.flip :=
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank (Subspace.dual_finrank_eq (K := ZMod p) (V := V)).symm).1 hflip
   have hsurj : Function.Surjective ρ :=
     (LinearMap.dualMap_surjective_of_injective A.injective_subtype).comp hflip'
   have hdim : 2 * Module.finrank (ZMod p) A = Module.finrank (ZMod p) V := by
@@ -47,26 +42,28 @@ private lemma main
     have hV : Nat.card V = p ^ Module.finrank (ZMod p) V := by
       rw [Module.natCard_eq_pow_finrank (K := ZMod p), Nat.card_zmod]
     rw [hA, hV, ← pow_mul, mul_comm] at hcard
-    exact Nat.pow_right_injective hp hcard
+    apply Nat.pow_right_injective hp hcard
   have hAle : A ≤ LinearMap.ker ρ := by
     intro x hx
     rw [LinearMap.mem_ker]
     apply LinearMap.ext
     intro a
     rw [hρ, LinearMap.zero_apply]
-    exact hiso a a.2 x hx
+    apply hiso a a.2 x hx
   have hker : Module.finrank (ZMod p) (LinearMap.ker ρ) = Module.finrank (ZMod p) A := by
     have h1 := LinearMap.finrank_range_add_finrank_ker ρ
     rw [LinearMap.range_eq_top.2 hsurj, finrank_top, Subspace.dual_finrank_eq] at h1
     omega
   have hAeq : A = LinearMap.ker ρ := Submodule.eq_of_le_of_finrank_eq hAle hker.symm
-  refine ⟨fun y hy => ?_, ⟨(Submodule.quotEquivOfEq A (LinearMap.ker ρ) hAeq).trans
-    (ρ.quotKerEquivOfSurjective hsurj), fun y a => ?_⟩⟩
-  · rw [hAeq, LinearMap.mem_ker]
+  refine ⟨fun y hy => ?_, ⟨(Submodule.quotEquivOfEq A (LinearMap.ker ρ) hAeq).trans (ρ.quotKerEquivOfSurjective hsurj), fun y a => ?_⟩⟩
+  ·
+    rw [hAeq, LinearMap.mem_ker]
     apply LinearMap.ext
     intro a
     rw [hρ, LinearMap.zero_apply]
-    exact hy a a.2
-  · rw [LinearEquiv.trans_apply, Submodule.quotEquivOfEq_mk, LinearMap.quotKerEquivOfSurjective_apply_mk, hρ]
+    apply hy a a.2
+  ·
+    rw [LinearEquiv.trans_apply, Submodule.quotEquivOfEq_mk, LinearMap.quotKerEquivOfSurjective_apply_mk, hρ]
+
 
 -- created on 2026-10-20

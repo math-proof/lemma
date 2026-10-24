@@ -2,7 +2,7 @@ import Mathlib
 import Lemma.Fin.RothMvHasse.eq.Zero.of.Lt
 import Lemma.Fin.CoeffRothTranslateM.eq.EvalRothMvHasse
 open MathlibExt.NumberTheory.RothAuxiliary
-open Fin
+open Fin Set
 
 
 /--

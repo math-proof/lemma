@@ -5,7 +5,7 @@ import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
 import Lemma.Tensor.GetAppend.as.AppendCastS_Get.of.GtLength_0
 import Lemma.Tensor.GetAppend.eq.Get
-open Bool Fin Tensor Vector
+open Bool Fin Tensor Vector Set
 
 
 @[path]

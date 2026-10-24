@@ -2,8 +2,6 @@ import Mathlib.Topology.Order.MonotoneConvergence
 import Lemma.Real.Lim.eq.Inf.of.Le.Any_All_Ge.monotone_convergence_theorem
 
 
-
-
 @[path]
 private lemma main
   {a : ℕ → ℝ}

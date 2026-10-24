@@ -44,7 +44,7 @@ private lemma main
     apply AlgHom.ext
     intro a
     have ha : a ∈ Algebra.adjoin K {u', v'} := hgen' ▸ Algebra.mem_top
-    refine Algebra.adjoin_induction ha ?_ ?_ ?_ ?_
+    refine Algebra.adjoin_induction ?_ ?_ ?_ ?_ ha
     ·
       intro x hx
       obtain rfl | rfl := hx

@@ -1,6 +1,6 @@
 import Lemma.Set.EqSDiff.of.Inter.eq.Empty
 import Lemma.Set.Inter_Finset.eq.Empty.of.NotIn
-open Set
+open Set BoundedInterval
 
 
 @[path]

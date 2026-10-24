@@ -1,19 +1,14 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma telescope (n : ℕ) (κ r d h : ℕ → ℤ) (h0 : ℤ)
-    (hd : ∀ i, d i = κ i + r i) (hh : ∀ i, h i = κ (i + 1) - r i) (hh0 : h0 = κ 0)
-    (hrn : r n = 0) :
-    h0 + ∑ i ∈ Finset.range n, (-1 : ℤ) ^ (i + 1) * h i =
-      ∑ i ∈ Finset.range (n + 1), (-1 : ℤ) ^ i * d i := by
+
+universe u
+
+private lemma telescope (n : ℕ) (κ r d h : ℕ → ℤ) (h0 : ℤ) (hd : ∀ i, d i = κ i + r i) (hh : ∀ i, h i = κ (i + 1) - r i) (hh0 : h0 = κ 0) (hrn : r n = 0) : h0 + ∑ i ∈ Finset.range n, (-1 : ℤ) ^ (i + 1) * h i = ∑ i ∈ Finset.range (n + 1), (-1 : ℤ) ^ i * d i := by
   rw [Finset.sum_range_succ']
   have key : ∑ i ∈ Finset.range n, ((-1 : ℤ) ^ (i + 1) * r (i + 1) + (-1 : ℤ) ^ (i + 1) * r i) =
       (-1) ^ n * r n - (-1) ^ 0 * r 0 := by
@@ -34,17 +29,19 @@ private lemma telescope (n : ℕ) (κ r d h : ℕ → ℤ) (h0 : ℤ)
 -/
 @[path]
 private lemma main
-    (k : Type u) [Field k]
-    (K : ℕ → Type u) [∀ i, AddCommGroup (K i)] [∀ i, Module k (K i)] [∀ i, Module.Finite k (K i)]
-    (δ : ∀ i, K i →ₗ[k] K (i + 1)) (hδδ : ∀ i, δ (i + 1) ∘ₗ δ i = 0)
-    (n : ℕ) (hbdd : ∀ i, n < i → Subsingleton (K i))
-    (H0 : Type u) [AddCommGroup H0] [Module k H0] (e₀ : H0 ≃ₗ[k] LinearMap.ker (δ 0))
-    (H : ℕ → Type u) [∀ i, AddCommGroup (H i)] [∀ i, Module k (H i)]
-    (π : ∀ i, LinearMap.ker (δ (i + 1)) →ₗ[k] H i) (hπ : ∀ i, Function.Surjective (π i))
-    (hπker : ∀ i, LinearMap.ker (π i) =
-      (LinearMap.range (δ i)).comap (LinearMap.ker (δ (i + 1))).subtype) :
-    (Module.finrank k H0 : ℤ) + ∑ i ∈ Finset.range n, (-1 : ℤ) ^ (i + 1) * (Module.finrank k (H i) : ℤ) =
-      ∑ i ∈ Finset.range (n + 1), (-1 : ℤ) ^ i * (Module.finrank k (K i) : ℤ) := by
+  (k : Type u) [Field k]
+  (K : ℕ → Type u) [∀ i, AddCommGroup (K i)] [∀ i, Module k (K i)] [∀ i, Module.Finite k (K i)]
+  (δ : ∀ i, K i →ₗ[k] K (i + 1)) (hδδ : ∀ i, LinearMap.comp (δ (i + 1)) (δ i) = 0)
+  (n : ℕ) (hbdd : ∀ i, n < i → Subsingleton (K i))
+  (H0 : Type u) [AddCommGroup H0] [Module k H0]
+  (e₀ : H0 ≃ₗ[k] LinearMap.ker (δ 0))
+  (H : ℕ → Type u) [∀ i, AddCommGroup (H i)] [∀ i, Module k (H i)]
+  (π : ∀ i, LinearMap.ker (δ (i + 1)) →ₗ[k] H i) (hπ : ∀ i, Function.Surjective (π i))
+  (hπker : ∀ i, LinearMap.ker (π i) =
+    (LinearMap.range (δ i)).comap (LinearMap.ker (δ (i + 1))).subtype) :
+  -- imply
+  (Module.finrank k H0 : ℤ) + ∑ i ∈ Finset.range n, (-1 : ℤ) ^ (i + 1) * (Module.finrank k (H i) : ℤ) = ∑ i ∈ Finset.range (n + 1), (-1 : ℤ) ^ i * (Module.finrank k (K i) : ℤ) := by
+  -- proof
   have hle : ∀ i, LinearMap.range (δ i) ≤ LinearMap.ker (δ (i + 1)) := by
     intro i x hx
     obtain ⟨y, rfl⟩ := hx
@@ -70,9 +67,7 @@ private lemma main
     have hδn : δ n = 0 := LinearMap.ext fun x => Subsingleton.elim _ _
     rw [hδn, LinearMap.range_zero, finrank_bot]
     rfl
-  exact telescope n (fun i => (Module.finrank k (LinearMap.ker (δ i)) : ℤ))
-    (fun i => (Module.finrank k (LinearMap.range (δ i)) : ℤ))
-    (fun i => (Module.finrank k (K i) : ℤ)) (fun i => (Module.finrank k (H i) : ℤ))
-    (Module.finrank k H0 : ℤ) hd hh hh0 hrn
+  refine telescope n (fun i => (Module.finrank k (LinearMap.ker (δ i)) : ℤ)) (fun i => (Module.finrank k (LinearMap.range (δ i)) : ℤ)) (fun i => (Module.finrank k (K i) : ℤ)) (fun i => (Module.finrank k (H i) : ℤ)) (Module.finrank k H0 : ℤ) hd hh hh0 hrn
+
 
 -- created on 2026-10-20

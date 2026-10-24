@@ -1,0 +1,27 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckZ2GaugeSurfaceTensionIdentification.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierA.Z2GaugeSurfaceTensionIdentification
+
+#print axioms StatMech.FrontierA.gaugeCriticalCoupling_gaugeDualCoupling
+#print axioms StatMech.FrontierA.rectangularIsingDobrushinFreeEnergy_gaugeDualCoupling
+#print axioms StatMech.FrontierA.cubicalRectangularWilsonFreeEnergy_eq_finiteIsingDisorder
+#print axioms
+  StatMech.FrontierA.cubicalRectangularWilsonSurfaceRate_eq_rectangularIsingSurfaceTension
+#print axioms StatMech.FrontierA.cubicalSquareWilsonDensity_tendsto_rectangularIsingSurfaceTension
+#print axioms StatMech.FrontierA.cubicalSquareDisorderDensity_tendsto_rectangularIsingSurfaceTension
+#print axioms StatMech.FrontierA.cubicalRectangularWilsonSurfaceRate_pos_iff_below_critical
+#print axioms StatMech.FrontierA.cubicalSquareWilson_eventually_areaLaw_of_rectangularIsing_phase
+#print axioms
+  StatMech.FrontierA.standardCubicInterfaceDensity_tendsto_cubicalWilsonSurfaceRate
+#print axioms
+  StatMech.FrontierA.cubicalSquareWilson_eventually_areaLaw_of_weak_LebowitzPfister
+#print axioms
+  StatMech.FrontierA.cubicalSquareWilson_eventually_areaLaw_of_standard_interface_bounds

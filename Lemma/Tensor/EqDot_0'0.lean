@@ -9,7 +9,6 @@ import torch.Tensor.permute
 open Tensor Vector
 
 
-
 @[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
@@ -181,7 +180,6 @@ private lemma main
             (congrArg (fun Y => Xr.tensordot Y) hY).trans (Tensor.EqTensordot_0'0 Xr)
           exact (congrArg (fun Z => cast _ Z) htd).trans
             (Tensor.EqCast_0'0.of.Eq (by rfl))
-
 
 
 -- created on 2026-09-10

@@ -1,0 +1,29 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectBlackOrbitWindingGeometry.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBlackOrbitWindingGeometry
+
+#print axioms StatMech.FrontierD.fkRectBlackOrbitDisplacement_eq_two_deck_winding
+#print axioms StatMech.FrontierD.fkRectBlackOrbitDisplacement_eq_diagonal_medialDisplacement
+#print axioms StatMech.FrontierD.fkRectBlackOrbitMedialDisplacement_eq_winding
+#print axioms StatMech.FrontierD.fkRectMedialRibbonBlock_step_sum
+#print axioms StatMech.FrontierD.fkRectBlackOrbitMedialRibbonWord_step_sum
+#print axioms StatMech.FrontierD.fkRectBlackOrbitRibbonSubdivisionWord_preserves_winding
+#print axioms StatMech.FrontierD.fkRectBlackOrbitRibbonSubdivisionDart_valid
+#print axioms StatMech.FrontierD.fkRectBlackOrbitRibbonSubdivisionDart_exponentX_sum
+#print axioms StatMech.FrontierD.fkRectBlackOrbitRibbonSubdivisionDart_exponentY_sum
+#print axioms StatMech.FrontierD.fkRectBlackOrbitShearSubdivisionWord_nonempty
+#print axioms StatMech.FrontierD.fkRectBlackOrbitShearSubdivisionWord_cyclicNonUturn
+#print axioms StatMech.FrontierD.fkRectBlackOrbitShearSubdivisionWord_preserves_winding
+#print axioms StatMech.FrontierD.fkRectBlackOrbitSubdivisionDart_valid
+#print axioms StatMech.FrontierD.fkRectBlackOrbitSubdivisionDart_nonUturn
+#print axioms StatMech.FrontierD.fkRectBlackOrbitSubdivisionDart_exponentX_sum
+#print axioms StatMech.FrontierD.fkRectBlackOrbitSubdivisionDart_exponentY_sum
+#print axioms StatMech.FrontierD.fkRectBlackBoundaryPrimalCycleWinding_fst_odd_of_site_injective

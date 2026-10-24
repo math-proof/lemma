@@ -1,0 +1,25 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexFourByFourParameterCompleteness.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourParameterCompleteness
+
+#print axioms StatMech.FrontierD.sixVertexFourByFourAudited_firstRowZero_reverse
+#print axioms StatMech.FrontierD.sixVertexFourByFourAudited_secondRowZero_reverse
+#print axioms StatMech.FrontierD.sixVertexFourByFourAudited_firstMiddlePath_of_valid
+#print axioms StatMech.FrontierD.sixVertexFourByFourAudited_secondMiddlePath_of_valid
+#print axioms StatMech.FrontierD.sixVertexFourByFourAudited_parameterValid_uniqueCoordinate
+#print axioms StatMech.FrontierD.sixVertexFourByFourAudited_decodedSeams_coordinateRowZero
+#print axioms StatMech.FrontierD.sixVertexFourByFourAudited_coordinateParameters_valid
+#print axioms StatMech.FrontierD.sixVertexFourByFourAudited_validParameterSet_eq_coordinateImage
+#print axioms StatMech.FrontierD.sixVertexFourByFourAudited_validParameterSet_card
+#print axioms StatMech.FrontierD.sixVertexFourByFourAuditedValidParameterCoordinate_spec
+#print axioms StatMech.FrontierD.sixVertexFourByFourAuditedValidParameterCoordinate_injective
+#print axioms StatMech.FrontierD.sixVertexFourByFourAuditedValidParameter_source_eq_coordinateSource
+#print axioms StatMech.FrontierD.sixVertexFourByFourAuditedValidParameter_matching

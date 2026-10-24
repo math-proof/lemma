@@ -611,32 +611,4 @@ end MetaMathlibExt.TwoDistantPolarized
 
 section
 namespace MetaMathlibExt
-
-/-! # Partitions with 2-distant parts equal polarized partitions -/
-
-/--
-Partitions with 2-distant parts equal polarized partitions.
-
-Source: Ivica Martinjak and Dragutin Svrtan, "New Identities for the Polarized Partitions
-and Partitions with d-Distant Parts," Journal of Integer Sequences 17 (2014),
-Article 14.11.4, Theorem 1 (label `Thm1`), lines 150–155,
-<https://cs.uwaterloo.ca/journals/JIS/VOL17/Martinjak/mart3.tex>.
-
-A partition has 2-distant parts when it lies in `Dₙ²`, i.e. its parts are distinct
-and any two parts differ by at least 2 (source lines 98–105).
-A polarized partition has 1-distant (distinct) parts and every even part,
-if there are any, is greater than twice the number of odd parts
-(source lines 112–121); for all-odd partitions the even-part condition holds
-vacuously, per the intended reading at source line 121.
-
-Proves `Wanted` entry `partitions_two_distant_eq_polarized`.
--/
-theorem partitions_two_distant_eq_polarized (n : ℕ) :
-    Fintype.card {p : Nat.Partition n //
-      p.parts.Nodup ∧ ∀ a ∈ p.parts, ∀ b ∈ p.parts, a < b → a + 2 ≤ b} =
-      Fintype.card {p : Nat.Partition n //
-        p.parts.Nodup ∧ ∀ e ∈ p.parts, e % 2 = 0 →
-          2 * (p.parts.filter (fun i => i % 2 = 1)).card < e} :=
-  Fintype.card_congr ((TwoDistantPolarized.e1 n).trans (TwoDistantPolarized.e2 n))
-
 end MetaMathlibExt

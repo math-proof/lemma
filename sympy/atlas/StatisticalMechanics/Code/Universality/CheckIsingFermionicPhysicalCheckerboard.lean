@@ -1,0 +1,30 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPhysicalCheckerboard.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCheckerboard
+
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimalGraph_laplacian_eq_diagonal
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimalValue_superharmonicOn
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchDualGraph_laplacian_eq_diagonal
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchDualValue_subharmonicOn
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimalGraph_reachable_boundary
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchDualGraph_reachable_boundary
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimal_harmonic_le_value
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchDual_value_le_harmonic
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimitive_horizontal_even_le_odd
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimitive_horizontal_even_le_odd_of_odd
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimitive_vertical_even_le_odd
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimitive_vertical_even_le_odd_of_odd
+#print axioms StatMech.Universality.fkIsingSquareRadialPatch_checkerboard_dirichlet_sandwich
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimalDirichlet_harmonicOn
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchPrimalDirichlet_boundary
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchDualDirichlet_harmonicOn
+#print axioms StatMech.Universality.fkIsingSquareRadialPatchDualDirichlet_boundary
+#print axioms StatMech.Universality.fkIsingSquareRadialPatch_constructed_dirichlet_sandwich

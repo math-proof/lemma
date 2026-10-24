@@ -4,50 +4,67 @@ import sympy.atlas.NumberTheory.ArithmeticFunction.SigmaR
 open ArithmeticFunction
 
 
+namespace ArithmeticFunction
+
 /--
 [sigmaR_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/SigmaR.lean)
 -/
 @[path]
-private lemma sigmaR_apply_eq
+lemma sigmaR_apply
   {n : ℕ}
   {s : ℂ} :
 -- imply
   sigmaR s n = ∑ d ∈ n.divisors, (d : ℂ) ^ s := by
 -- proof
-  apply ArithmeticFunction.sigmaR_apply
+  rfl
+
+end ArithmeticFunction
+
+namespace ArithmeticFunction
 
 /--
 [sigmaR_apply_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/SigmaR.lean)
 -/
 @[path]
-private lemma sigmaR_apply_one_eq
+lemma sigmaR_apply_one
   {s : ℂ} :
 -- imply
   sigmaR s 1 = 1 := by
 -- proof
-  apply ArithmeticFunction.sigmaR_apply_one s
+  simp [sigmaR_apply]
+
+end ArithmeticFunction
+
+namespace ArithmeticFunction
 
 /--
 [sigmaR_zero_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/SigmaR.lean)
 -/
 @[path]
-private lemma sigmaR_zero_apply_eq
+lemma sigmaR_zero_apply
   {n : ℕ} :
 -- imply
   sigmaR 0 n = (n.divisors.card : ℂ) := by
 -- proof
-  apply ArithmeticFunction.sigmaR_zero_apply n
+  simp [sigmaR_apply]
+
+end ArithmeticFunction
+
+namespace ArithmeticFunction
 
 /--
 [sigmaR_natCast_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/SigmaR.lean)
 -/
 @[path]
-private lemma sigmaR_natCast_apply_eq
+lemma sigmaR_natCast_apply
   {k n : ℕ} :
 -- imply
   sigmaR (k : ℂ) n = (sigma k n : ℂ) := by
 -- proof
-  apply ArithmeticFunction.sigmaR_natCast_apply k n
+  simp [sigmaR_apply, sigma_apply, Complex.cpow_natCast]
+
+end ArithmeticFunction
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

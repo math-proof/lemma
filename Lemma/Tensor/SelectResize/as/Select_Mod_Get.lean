@@ -16,5 +16,4 @@ private lemma main
   apply SelectResize.as.Select_Mod_Get.of.Lt.GtLength _ i.isLt
 
 
-
 -- created on 2026-07-30

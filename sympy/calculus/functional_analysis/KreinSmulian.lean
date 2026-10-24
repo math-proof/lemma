@@ -537,7 +537,7 @@ private lemma ks_abs_sign (t : ℝ) : |Real.sign t| ≤ 1 := by
   · subst h; rw [Real.sign_zero, abs_zero]; exact zero_le_one
   · rw [Real.sign_of_pos h, abs_one]
 
-/-- Finite sums in `C₀` evaluate pointwise. -/
+/-- Empty.Finite sums in `C₀` evaluate pointwise. -/
 private lemma ks_sum_apply (S : Finset (ℕ × ℕ)) (g : (ℕ × ℕ) → C₀(ℕ × ℕ, ℝ)) (q : ℕ × ℕ) :
     (∑ p ∈ S, g p) q = ∑ p ∈ S, g p q := by
   refine Finset.induction_on S ?_ ?_

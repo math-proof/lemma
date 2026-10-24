@@ -5,39 +5,49 @@ open MetaMathlibExt
 open IsKolakoski
 
 
+namespace MetaMathlibExt.IsKolakoski
+
 /--
 [one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/KolakoskiSequence.lean)
 -/
 @[path]
-private lemma one_eq
+lemma one
   {K : ℕ → ℕ}
 -- given
   (h : IsKolakoski K) :
 -- imply
-  K 1 = 1 := by
+  K 1 = 1 :=
 -- proof
-  apply MetaMathlibExt.IsKolakoski.one h
+  h.1
+
+end MetaMathlibExt.IsKolakoski
+
+namespace MetaMathlibExt.IsKolakoski
 
 /--
 [value_eq_one_or_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/KolakoskiSequence.lean)
 -/
 @[path]
-private lemma value_eq_one_or_two_eq
+lemma value_eq_one_or_two
   {K : ℕ → ℕ}
   {n : ℕ}
 -- given
   (h : IsKolakoski K)
   (hn : 1 ≤ n) :
 -- imply
-  K n = 1 ∨ K n = 2 := by
+  K n = 1 ∨ K n = 2 :=
 -- proof
-  apply MetaMathlibExt.IsKolakoski.value_eq_one_or_two h hn
+  h.2.1 n hn
+
+end MetaMathlibExt.IsKolakoski
+
+namespace MetaMathlibExt.IsKolakoski
 
 /--
 [eq_on_block](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/KolakoskiSequence.lean)
 -/
 @[path]
-private lemma eq_on_block_eq
+lemma eq_on_block
   {K : ℕ → ℕ}
   {n i : ℕ}
 -- given
@@ -46,48 +56,73 @@ private lemma eq_on_block_eq
   (hstart : kolakoskiBlockStart K n ≤ i)
   (hend : i < kolakoskiBlockStart K n + K n) :
 -- imply
-  K i = if n % 2 = 1 then 1 else 2 := by
+  K i = if n % 2 = 1 then 1 else 2 :=
 -- proof
-  apply MetaMathlibExt.IsKolakoski.eq_on_block h hn hstart hend
+  h.2.2 n hn i hstart hend
+
+end MetaMathlibExt.IsKolakoski
+
+namespace MetaMathlibExt.IsKolakoski
 
 /--
 [two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/KolakoskiSequence.lean)
 -/
 @[path]
-private lemma two_eq
+lemma two
   {K : ℕ → ℕ}
 -- given
   (h : IsKolakoski K) :
 -- imply
   K 2 = 2 := by
 -- proof
-  apply MetaMathlibExt.IsKolakoski.two h
+  have hpositive : 0 < K 2 := by
+    obtain hK | hK <;> simp [hK] := h.value_eq_one_or_two (n := 2) (by decide)
+  have hblock := h.eq_on_block (n := 2) (i := kolakoskiBlockStart K 2)
+    (by decide) le_rfl (Nat.lt_add_of_pos_right hpositive)
+  simpa [kolakoskiBlockStart, h.one] using hblock
+
+end MetaMathlibExt.IsKolakoski
+
+namespace MetaMathlibExt.IsKolakoski
 
 /--
 [three](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/KolakoskiSequence.lean)
 -/
 @[path]
-private lemma three_eq
+lemma three
   {K : ℕ → ℕ}
 -- given
   (h : IsKolakoski K) :
 -- imply
   K 3 = 2 := by
 -- proof
-  apply MetaMathlibExt.IsKolakoski.three h
+  have hblock := h.eq_on_block (n := 2) (i := 3) (by decide)
+    (by simp [kolakoskiBlockStart, h.one])
+    (by simp [kolakoskiBlockStart, h.one, h.two])
+  simpa using hblock
+
+end MetaMathlibExt.IsKolakoski
+
+namespace MetaMathlibExt.IsKolakoski
 
 /--
 [four](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/KolakoskiSequence.lean)
 -/
 @[path]
-private lemma four_eq
+lemma four
   {K : ℕ → ℕ}
 -- given
   (h : IsKolakoski K) :
 -- imply
   K 4 = 1 := by
 -- proof
-  apply MetaMathlibExt.IsKolakoski.four h
+  have hblock := h.eq_on_block (n := 3) (i := 4) (by decide)
+    (by simp [kolakoskiBlockStart, h.one, h.two])
+    (by simp [kolakoskiBlockStart, h.one, h.two, h.three])
+  simpa using hblock
+
+end MetaMathlibExt.IsKolakoski
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

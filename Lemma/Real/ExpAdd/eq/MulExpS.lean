@@ -19,4 +19,3 @@ private lemma main
 
 -- created on 2018-08-28
 -- updated on 2026-08-22
-

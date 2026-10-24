@@ -1,16 +1,16 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
+open scoped TensorProduct
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
+
+universe u
+
 private lemma Ideal.forall_mem_map_of_sum_mul_algebraMap_mem_of_flat_LCID
-    {R : Type*} [CommRing R] {S : Type*} [CommRing S] [Algebra R S] [Module.Flat R S] {μ : ℕ}
+  {R : Type*} [CommRing R] {S : Type*} [CommRing S] [Algebra R S] [Module.Flat R S] {μ : ℕ}
     (I 𝔫 : Ideal R) (j : Fin μ → R)
     (hindep : ∀ a : Fin μ → R, (∑ i, a i * j i) ∈ I → ∀ i, a i ∈ 𝔫)
     (a' : Fin μ → S) (ha' : (∑ i, a' i * algebraMap R S (j i)) ∈ I.map (algebraMap R S)) :
@@ -22,13 +22,17 @@ private lemma Ideal.forall_mem_map_of_sum_mul_algebraMap_mem_of_flat_LCID
         simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib]
       map_smul' := fun q a => by
         simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply, Finset.mul_sum, mul_assoc] }
-  let Φ : (Fin μ → R) →ₗ[R] R ⧸ I := (Submodule.mkQ (I : Submodule R R)) ∘ₗ ψ
+  let Φ : (Fin μ → R) →ₗ[R] R ⧸ I := LinearMap.comp (Submodule.mkQ (I : Submodule R R)) ψ
   have hΦ : ∀ a, Φ a = Ideal.Quotient.mk I (∑ i, a i * j i) := fun a => rfl
   have hexact : Function.Exact (LinearMap.ker Φ).subtype Φ := by
     intro y
     constructor
-    · intro hy; exact ⟨⟨y, hy⟩, rfl⟩
-    · rintro ⟨z, rfl⟩; exact z.2
+    ·
+      intro hy
+      exact ⟨⟨y, hy⟩, rfl⟩
+    ·
+      rintro ⟨z, rfl⟩
+      apply z.2
   have hflat := Module.Flat.lTensor_exact S hexact
   let τ : S ⊗[R] (Fin μ → R) := ∑ i, a' i ⊗ₜ[R] (Pi.single i 1 : Fin μ → R)
   have hΦsingle : ∀ i, Φ (Pi.single i 1) = Ideal.Quotient.mk I (j i) := fun i => by
@@ -52,33 +56,34 @@ private lemma Ideal.forall_mem_map_of_sum_mul_algebraMap_mem_of_flat_LCID
   have hχτ : χ τ = a' := by
     funext l
     simp only [τ, map_sum, hχ, Finset.sum_apply, Pi.single_apply, ite_smul, one_smul, zero_smul,
-      Finset.sum_ite_eq, Finset.mem_univ, if_true]
+      Finset.sum_ite_eq, Finset.mem_univ, ite_true]
   have hχσ : ∀ (σ' : S ⊗[R] ↥(LinearMap.ker Φ)) (l : Fin μ),
       χ ((LinearMap.ker Φ).subtype.lTensor S σ') l ∈ 𝔫.map (algebraMap R S) := by
     intro σ' l
-    induction σ' using TensorProduct.induction_on with
-    | zero => rw [map_zero, map_zero]; exact Ideal.zero_mem _
-    | tmul x κ =>
+    refine TensorProduct.inductionOn σ' ?_ ?_
+    ·
+      intro x κ
       rw [LinearMap.lTensor_tmul, hχ]
       change (κ : Fin μ → R) l • x ∈ Ideal.map (algebraMap R S) 𝔫
       rw [Algebra.smul_def]
       refine Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ (hindep _ ?_ l))
-      exact Ideal.Quotient.eq_zero_iff_mem.1 ((hΦ _).symm.trans κ.2)
-    | add x y hx hy =>
+      apply Ideal.Quotient.eq_zero_iff_mem.1 ((hΦ _).symm.trans κ.2)
+    ·
+      intro x y hx hy
       rw [map_add, map_add, Pi.add_apply]
-      exact Ideal.add_mem _ hx hy
+      apply Ideal.add_mem _ hx hy
   intro i
   have := hχσ σ i
   rwa [hσ, hχτ] at this
 private lemma MvPolynomial.exists_generators_mod_mul_and_forall_mem_of_sum_mul_mem_LCID
-    {k : Type u} [Field k] {N : ℕ} (J 𝔫 : Ideal (MvPolynomial (Fin N) k)) [𝔫.IsMaximal] :
+  {k : Type u} [Field k] {N : ℕ} (J 𝔫 : Ideal (MvPolynomial (Fin N) k)) [𝔫.IsMaximal] :
     ∃ (μ : ℕ) (j : Fin μ → MvPolynomial (Fin N) k), (∀ i, j i ∈ J) ∧
       (∀ x ∈ J, ∃ a : Fin μ → MvPolynomial (Fin N) k, x - ∑ i, a i * j i ∈ 𝔫 * J) ∧
       (∀ a : Fin μ → MvPolynomial (Fin N) k, (∑ i, a i * j i) ∈ 𝔫 * J → ∀ i, a i ∈ 𝔫) := by
   classical
   let hF : Field (MvPolynomial (Fin N) k ⧸ 𝔫) := Ideal.Quotient.field 𝔫
   let instV : Module (MvPolynomial (Fin N) k ⧸ 𝔫) (↥J ⧸ (𝔫 • ⊤ : Submodule (MvPolynomial (Fin N) k) ↥J)) :=
-    Module.instQuotientIdealSubmoduleHSMulTop (↥J) 𝔫
+    Module.instQuotientIdealSubmoduleHSMulTop ↥J 𝔫
   let instVd : DistribMulAction (MvPolynomial (Fin N) k ⧸ 𝔫) (↥J ⧸ (𝔫 • ⊤ : Submodule (MvPolynomial (Fin N) k) ↥J)) :=
     instV.toDistribMulAction
   let instVm : MulAction (MvPolynomial (Fin N) k ⧸ 𝔫) (↥J ⧸ (𝔫 • ⊤ : Submodule (MvPolynomial (Fin N) k) ↥J)) :=
@@ -86,8 +91,8 @@ private lemma MvPolynomial.exists_generators_mod_mul_and_forall_mem_of_sum_mul_m
   let instVs : SMul (MvPolynomial (Fin N) k ⧸ 𝔫) (↥J ⧸ (𝔫 • ⊤ : Submodule (MvPolynomial (Fin N) k) ↥J)) :=
     instVm.toSMul
   let instVT : IsScalarTower (MvPolynomial (Fin N) k) (MvPolynomial (Fin N) k ⧸ 𝔫)
-      (↥J ⧸ (𝔫 • ⊤ : Submodule (MvPolynomial (Fin N) k) ↥J)) :=
-    Module.IsTorsionBySet.isScalarTower (Module.isTorsionBySet_quotient_ideal_smul (↥J) 𝔫)
+    (↥J ⧸ (𝔫 • ⊤ : Submodule (MvPolynomial (Fin N) k) ↥J)) :=
+    Module.IsTorsionBySet.isScalarTower (Module.isTorsionBySet_quotient_ideal_smul ↥J 𝔫)
   let _ : Module.Finite (MvPolynomial (Fin N) k ⧸ 𝔫) (↥J ⧸ (𝔫 • ⊤ : Submodule (MvPolynomial (Fin N) k) ↥J)) :=
     Module.Finite.of_restrictScalars_finite (MvPolynomial (Fin N) k) _ _
   let b := Module.finBasis (MvPolynomial (Fin N) k ⧸ 𝔫) (↥J ⧸ (𝔫 • ⊤ : Submodule (MvPolynomial (Fin N) k) ↥J))
@@ -114,23 +119,18 @@ private lemma MvPolynomial.exists_generators_mod_mul_and_forall_mem_of_sum_mul_m
     have h1 : (𝔫 • ⊤ : Submodule (MvPolynomial (Fin N) k) ↥J).mkQ (⟨x, hx⟩ - ∑ i, a i • jv i) = 0 := by
       rw [map_sub, hmkQ, sub_eq_zero]
       simp_rw [ha]
-      exact (b.sum_repr v).symm
+      apply (b.sum_repr v).symm
     rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero, Submodule.mem_smul_top_iff] at h1
     rw [← Ideal.smul_eq_mul]
     convert h1 using 1
     rw [Submodule.coe_sub, hcoe]
   ·
     intro a ha i
-    have h1 : (∑ i, a i • jv i : ↥J) ∈ (𝔫 • ⊤ : Submodule (MvPolynomial (Fin N) k) ↥J) := by
-      rw [Submodule.mem_smul_top_iff, hcoe, Ideal.smul_eq_mul]
-      exact ha
-    have h2 : ∑ i, Ideal.Quotient.mk 𝔫 (a i) • b i = 0 := by
-      rw [← hmkQ, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
-      exact h1
-    exact Ideal.Quotient.eq_zero_iff_mem.1
-      (Fintype.linearIndependent_iff.1 b.linearIndependent (fun i => Ideal.Quotient.mk 𝔫 (a i)) h2 i)
+    apply Ideal.Quotient.eq_zero_iff_mem.1
+      (Fintype.linearIndependent_iff.1 b.linearIndependent (fun i => Ideal.Quotient.mk 𝔫 (a i))
+        (by rw [← hmkQ, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero, Submodule.mem_smul_top_iff, hcoe, Ideal.smul_eq_mul]; apply ha) i)
 private lemma MvPolynomial.le_of_forall_sum_mul_mem_imp_of_map_eq_span_LCID
-    {K : Type u} [Field K] {N μ M : ℕ} (J' 𝔫' : Ideal (MvPolynomial (Fin N) K)) [𝔫'.IsMaximal]
+  {K : Type u} [Field K] {N μ M : ℕ} (J' 𝔫' : Ideal (MvPolynomial (Fin N) K)) [𝔫'.IsMaximal]
     (v : Fin μ → MvPolynomial (Fin N) K) (hv : ∀ i, v i ∈ J')
     (hrel : ∀ a' : Fin μ → MvPolynomial (Fin N) K, (∑ i, a' i * v i) ∈ 𝔫' * J' → ∀ i, a' i ∈ 𝔫')
     (g' : Fin M → Localization.AtPrime 𝔫')
@@ -139,22 +139,22 @@ private lemma MvPolynomial.le_of_forall_sum_mul_mem_imp_of_map_eq_span_LCID
   classical
   let hF' : Field (MvPolynomial (Fin N) K ⧸ 𝔫') := Ideal.Quotient.field 𝔫'
   let instV' : Module (MvPolynomial (Fin N) K ⧸ 𝔫')
-      (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
-    Module.instQuotientIdealSubmoduleHSMulTop (↥J') 𝔫'
+    (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
+    Module.instQuotientIdealSubmoduleHSMulTop ↥J' 𝔫'
   let instVd' : DistribMulAction (MvPolynomial (Fin N) K ⧸ 𝔫')
-      (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
+    (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
     instV'.toDistribMulAction
   let instVm' : MulAction (MvPolynomial (Fin N) K ⧸ 𝔫')
-      (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
+    (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
     instVd'.toMulAction
   let instVs' : SMul (MvPolynomial (Fin N) K ⧸ 𝔫')
-      (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
+    (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
     instVm'.toSMul
   let instVT' : IsScalarTower (MvPolynomial (Fin N) K) (MvPolynomial (Fin N) K ⧸ 𝔫')
-      (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
-    Module.IsTorsionBySet.isScalarTower (Module.isTorsionBySet_quotient_ideal_smul (↥J') 𝔫')
+    (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
+    Module.IsTorsionBySet.isScalarTower (Module.isTorsionBySet_quotient_ideal_smul ↥J' 𝔫')
   let _ : Module.Finite (MvPolynomial (Fin N) K ⧸ 𝔫')
-      (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
+    (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
     Module.Finite.of_restrictScalars_finite (MvPolynomial (Fin N) K) _ _
   let jv' : Fin μ → ↥J' := fun i => ⟨v i, hv i⟩
   let w : Fin μ → ↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J') :=
@@ -173,7 +173,7 @@ private lemma MvPolynomial.le_of_forall_sum_mul_mem_imp_of_map_eq_span_LCID
       rw [map_smul, ← ha' i, ← Ideal.Quotient.algebraMap_eq, algebraMap_smul]
     rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero, Submodule.mem_smul_top_iff, hcoe', Ideal.smul_eq_mul] at h1
     rw [← ha' i]
-    exact Ideal.Quotient.eq_zero_iff_mem.2 (hrel a' h1 i)
+    apply Ideal.Quotient.eq_zero_iff_mem.2 (hrel a' h1 i)
   have hg'mem : ∀ t, g' t ∈ J'.map (algebraMap (MvPolynomial (Fin N) K) (Localization.AtPrime 𝔫')) :=
     fun t => hg' ▸ Ideal.subset_span ⟨t, rfl⟩
   choose ys hys using fun t => (IsLocalization.mem_map_algebraMap_iff 𝔫'.primeCompl _).1 (hg'mem t)
@@ -187,12 +187,12 @@ private lemma MvPolynomial.le_of_forall_sum_mul_mem_imp_of_map_eq_span_LCID
     have hu : IsUnit (algebraMap (MvPolynomial (Fin N) K) (Localization.AtPrime 𝔫') ((ys t).2 : MvPolynomial (Fin N) K)) :=
       IsLocalization.map_units _ (ys t).2
     rw [SetLike.mem_coe, ← Ideal.mul_unit_mem_iff_mem _ hu, hys t]
-    exact Ideal.mem_map_of_mem _ (Ideal.subset_span ⟨t, rfl⟩)
+    apply Ideal.mem_map_of_mem _ (Ideal.subset_span (Set.mem_singleton t))
   have hsat' : ∀ x ∈ J', ∃ u : MvPolynomial (Fin N) K, u ∉ 𝔫' ∧ u * x ∈ Ideal.span (Set.range y) := by
     intro x hx
     have h1 : algebraMap _ (Localization.AtPrime 𝔫') x ∈
-        (Ideal.span (Set.range y)).map (algebraMap _ (Localization.AtPrime 𝔫')) := by
-      rw [← hJ'N]; exact Ideal.mem_map_of_mem _ hx
+      (Ideal.span (Set.range y)).map (algebraMap _ (Localization.AtPrime 𝔫')) := by
+      rw [← hJ'N]; apply Ideal.mem_map_of_mem _ hx
     obtain ⟨⟨z, s⟩, hzs⟩ := (IsLocalization.mem_map_algebraMap_iff 𝔫'.primeCompl _).1 h1
     rw [← map_mul] at hzs
     obtain ⟨c, hc⟩ := (IsLocalization.eq_iff_exists 𝔫'.primeCompl _).1 hzs
@@ -200,7 +200,7 @@ private lemma MvPolynomial.le_of_forall_sum_mul_mem_imp_of_map_eq_span_LCID
     rw [show (c : MvPolynomial (Fin N) K) * s * x = c * (x * s) by ring]
     change (c : MvPolynomial (Fin N) K) * (x * ((z, s) : _ × _).2) ∈ _
     rw [hc]
-    exact Ideal.mul_mem_left _ _ z.2
+    apply Ideal.mul_mem_left _ _ z.2
   let w' : Fin M → ↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J') :=
     fun t => (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J').mkQ (ys t).1
   have hspan' : (⊤ : Submodule (MvPolynomial (Fin N) K ⧸ 𝔫') _) ≤
@@ -215,11 +215,11 @@ private lemma MvPolynomial.le_of_forall_sum_mul_mem_imp_of_map_eq_span_LCID
       rfl
     have hu0 : (Ideal.Quotient.mk 𝔫' u) ≠ 0 := fun h => hu (Ideal.Quotient.eq_zero_iff_mem.1 h)
     have h2 : (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J').mkQ (u • xv) ∈
-        Submodule.span (MvPolynomial (Fin N) K ⧸ 𝔫') (Set.range w') := by
+      Submodule.span (MvPolynomial (Fin N) K ⧸ 𝔫') (Set.range w') := by
       rw [h1, map_sum]
       refine Submodule.sum_mem _ fun t _ => ?_
       rw [map_smul, ← algebraMap_smul (MvPolynomial (Fin N) K ⧸ 𝔫') (e t)]
-      exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨t, rfl⟩)
+      apply Submodule.smul_mem _ _ (Submodule.subset_span (Set.mem_singleton t))
     rw [map_smul, ← algebraMap_smul (MvPolynomial (Fin N) K ⧸ 𝔫') u, Ideal.Quotient.algebraMap_eq] at h2
     have h3 := Submodule.smul_mem _ (Ideal.Quotient.mk 𝔫' u)⁻¹ h2
     rwa [smul_smul, inv_mul_cancel₀ hu0, one_smul] at h3
@@ -229,25 +229,26 @@ private lemma MvPolynomial.le_of_forall_sum_mul_mem_imp_of_map_eq_span_LCID
   have h3 := finrank_range_le_card (R := MvPolynomial (Fin N) K ⧸ 𝔫') w'
   rw [Fintype.card_fin] at h3
   have h4 : Module.finrank (MvPolynomial (Fin N) K ⧸ 𝔫')
-      ↥(Submodule.span (MvPolynomial (Fin N) K ⧸ 𝔫') (Set.range w')) =
+    ↥(Submodule.span (MvPolynomial (Fin N) K ⧸ 𝔫') (Set.range w')) =
       Module.finrank (MvPolynomial (Fin N) K ⧸ 𝔫') (↥J' ⧸ (𝔫' • ⊤ : Submodule (MvPolynomial (Fin N) K) ↥J')) :=
     (LinearEquiv.ofTop _ htop).finrank_eq
   rw [← h4] at h1
-  exact h1.trans h3
+  apply h1.trans h3
 /--
 [Ideal_exists_map_localization_eq_span_of_baseChange_mvPolynomial](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_exists_map_localization_eq_span_of_baseChange_mvPolynomial.lean)
 -/
 @[path]
 private lemma main
-    (k : Type u) [Field k] (k' : Type u) [Field k'] [Algebra k k']
-    (N M : ℕ) (J : Ideal (MvPolynomial (Fin N) k))
-    (𝔫 : Ideal (MvPolynomial (Fin N) k)) [𝔫.IsMaximal] (h𝔫 : J ≤ 𝔫)
+  (k : Type u) [Field k] (k' : Type u) [Field k'] [Algebra k k']
+    (N M : ℕ) (J 𝔫 : Ideal (MvPolynomial (Fin N) k)) [𝔫.IsMaximal]
     (𝔫' : Ideal (MvPolynomial (Fin N) k')) [𝔫'.IsMaximal]
     (hover : Ideal.map (MvPolynomial.map (algebraMap k k')) 𝔫 ≤ 𝔫')
     (hgen : ∃ g : Fin M → Localization.AtPrime 𝔫',
       Ideal.map (algebraMap (MvPolynomial (Fin N) k') (Localization.AtPrime 𝔫'))
           (Ideal.map (MvPolynomial.map (algebraMap k k')) J) = Ideal.span (Set.range g)) :
-    ∃ g : Fin M → Localization.AtPrime 𝔫, Ideal.map (algebraMap (MvPolynomial (Fin N) k) (Localization.AtPrime 𝔫)) (J) = Ideal.span (Set.range g) := by
+    -- imply
+    ∃ g : Fin M → Localization.AtPrime 𝔫, Ideal.map (algebraMap (MvPolynomial (Fin N) k) (Localization.AtPrime 𝔫)) J = Ideal.span (Set.range g) := by
+  -- proof
   classical
   let ι : MvPolynomial (Fin N) k →+* MvPolynomial (Fin N) k' := MvPolynomial.map (algebraMap k k')
   obtain ⟨μ, j, hjJ, hspan, hindep⟩ :=
@@ -258,54 +259,59 @@ private lemma main
     let _ : Algebra (MvPolynomial (Fin N) k) (MvPolynomial (Fin N) k') := MvPolynomial.algebraMvPolynomial
     let _ : Module.Flat (MvPolynomial (Fin N) k) (MvPolynomial (Fin N) k') :=
       Module.Flat.isBaseChange k (MvPolynomial (Fin N) k) k' (MvPolynomial (Fin N) k') Algebra.IsPushout.out
-    exact Ideal.forall_mem_map_of_sum_mul_algebraMap_mem_of_flat_LCID (𝔫 * J) 𝔫 j hindep a' ha'
+    apply Ideal.forall_mem_map_of_sum_mul_algebraMap_mem_of_flat_LCID (𝔫 * J) 𝔫 j hindep a' ha'
   have hT : ∀ n ∈ J.map ι, ∃ d : Fin μ → MvPolynomial (Fin N) k', n - ∑ i, d i * ι (j i) ∈ (𝔫 * J).map ι := by
     intro n hn
     refine Submodule.span_induction ?_ ?_ ?_ ?_ (show n ∈ Ideal.span (⇑ι '' ↑J) from hn)
-    · rintro _ ⟨y, hy, rfl⟩
+    ·
+      rintro _ ⟨y, hy, rfl⟩
       obtain ⟨a, ha⟩ := hspan y hy
       refine ⟨fun i => ι (a i), ?_⟩
       have : ι y - ∑ i, ι (a i) * ι (j i) = ι (y - ∑ i, a i * j i) := by
         rw [map_sub, map_sum]; simp_rw [map_mul]
       rw [this]
-      exact Ideal.mem_map_of_mem _ ha
+      apply Ideal.mem_map_of_mem _ ha
     · exact ⟨0, by simp⟩
-    · rintro x y - - ⟨d₁, h₁⟩ ⟨d₂, h₂⟩
+    ·
+      rintro x y - - ⟨d₁, h₁⟩ ⟨d₂, h₂⟩
       refine ⟨d₁ + d₂, ?_⟩
       have : x + y - ∑ i, (d₁ + d₂) i * ι (j i) = (x - ∑ i, d₁ i * ι (j i)) + (y - ∑ i, d₂ i * ι (j i)) := by
         simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib]; ring
       rw [this]
-      exact Ideal.add_mem _ h₁ h₂
-    · rintro q x - ⟨d, hd⟩
+      apply Ideal.add_mem _ h₁ h₂
+    ·
+      rintro q x - ⟨d, hd⟩
       refine ⟨fun i => q * d i, ?_⟩
       have : q • x - ∑ i, q * d i * ι (j i) = q * (x - ∑ i, d i * ι (j i)) := by
         rw [smul_eq_mul, mul_sub, Finset.mul_sum]; simp_rw [mul_assoc]
       rw [this]
-      exact Ideal.mul_mem_left _ _ hd
+      apply Ideal.mul_mem_left _ _ hd
   have hS : ∀ x' ∈ 𝔫' * J.map ι, ∃ c : Fin μ → MvPolynomial (Fin N) k', (∀ i, c i ∈ 𝔫') ∧
       x' - ∑ i, c i * ι (j i) ∈ (𝔫 * J).map ι := by
     intro x' hx'
     refine Submodule.mul_induction_on hx' ?_ ?_
-    · intro m hm n hn
+    ·
+      intro m hm n hn
       obtain ⟨d, hd⟩ := hT n hn
       refine ⟨fun i => m * d i, fun i => Ideal.mul_mem_right _ _ hm, ?_⟩
       have : m * n - ∑ i, m * d i * ι (j i) = m * (n - ∑ i, d i * ι (j i)) := by
         rw [mul_sub, Finset.mul_sum]; simp_rw [mul_assoc]
       rw [this]
-      exact Ideal.mul_mem_left _ _ hd
-    · rintro x y ⟨c₁, hc₁, h₁⟩ ⟨c₂, hc₂, h₂⟩
+      apply Ideal.mul_mem_left _ _ hd
+    ·
+      rintro x y ⟨c₁, hc₁, h₁⟩ ⟨c₂, hc₂, h₂⟩
       refine ⟨c₁ + c₂, fun i => Ideal.add_mem _ (hc₁ i) (hc₂ i), ?_⟩
       have : x + y - ∑ i, (c₁ + c₂) i * ι (j i) = (x - ∑ i, c₁ i * ι (j i)) + (y - ∑ i, c₂ i * ι (j i)) := by
         simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib]; ring
       rw [this]
-      exact Ideal.add_mem _ h₁ h₂
+      apply Ideal.add_mem _ h₁ h₂
   have hrel : ∀ a' : Fin μ → MvPolynomial (Fin N) k', (∑ i, a' i * ι (j i)) ∈ 𝔫' * J.map ι → ∀ i, a' i ∈ 𝔫' := by
     intro a' ha' i
     obtain ⟨c, hc𝔫, hc⟩ := hS _ ha'
     have h1 : (∑ i, (a' i - c i) * ι (j i)) ∈ (𝔫 * J).map ι := by
       have : ∑ i, (a' i - c i) * ι (j i) = ∑ i, a' i * ι (j i) - ∑ i, c i * ι (j i) := by
         simp only [sub_mul, Finset.sum_sub_distrib]
-      rw [this]; exact hc
+      rw [this]; apply hc
     have h2 := hindep' _ h1 i
     have h3 : a' i - c i ∈ 𝔫' := hover h2
     simpa using Ideal.add_mem _ h3 (hc𝔫 i)
@@ -316,7 +322,8 @@ private lemma main
   let gfin : Fin M → Localization.AtPrime 𝔫 := fun t =>
     if h : (t : ℕ) < μ then algebraMap (MvPolynomial (Fin N) k) (Localization.AtPrime 𝔫) (j ⟨t, h⟩) else 0
   refine ⟨gfin, le_antisymm ?_ ?_⟩
-  · refine Submodule.le_of_le_smul_of_le_jacobson_bot (IsNoetherian.noetherian _)
+  ·
+    refine Submodule.le_of_le_smul_of_le_jacobson_bot (IsNoetherian.noetherian _)
       (IsLocalRing.maximalIdeal_le_jacobson ⊥) ?_
     rw [Ideal.map_le_iff_le_comap]
     intro x hx
@@ -324,19 +331,24 @@ private lemma main
     obtain ⟨a, ha⟩ := hspan x hx
     rw [show x = (∑ i, a i * j i) + (x - ∑ i, a i * j i) by ring, map_add]
     refine Ideal.add_mem _ (Ideal.mem_sup_left ?_) (Ideal.mem_sup_right ?_)
-    · rw [map_sum]
+    ·
+      rw [map_sum]
       refine Ideal.sum_mem _ fun i _ => ?_
       rw [map_mul]
       refine Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨⟨i, lt_of_lt_of_le i.2 hμM⟩, ?_⟩)
       simp [gfin]
-    · rw [Ideal.smul_eq_mul, ← Localization.AtPrime.map_eq_maximalIdeal, ← Ideal.map_mul]
-      exact Ideal.mem_map_of_mem _ ha
-  · rw [Ideal.span_le]
+    ·
+      rw [Ideal.smul_eq_mul, ← Localization.AtPrime.map_eq_maximalIdeal, ← Ideal.map_mul]
+      apply Ideal.mem_map_of_mem _ ha
+  ·
+    rw [Ideal.span_le]
     rintro _ ⟨t, rfl⟩
-    by_cases h : (t : ℕ) < μ
-    · simp only [gfin, dif_pos h, SetLike.mem_coe]
-      exact Ideal.mem_map_of_mem _ (hjJ _)
-    · simp only [gfin, dif_neg h, SetLike.mem_coe]
-      exact Ideal.zero_mem _
+    if h : (t : ℕ) < μ then
+      simp only [gfin, dite_eq_left h, SetLike.mem_coe]
+      apply Ideal.mem_map_of_mem _ (hjJ _)
+    else
+      simp only [gfin, dite_eq_right h, SetLike.mem_coe]
+      apply Ideal.zero_mem _
+
 
 -- created on 2026-10-20

@@ -1,7 +1,7 @@
 import Lemma.Set.Cup.eq.UnionCupS
 import Lemma.Set.EqInterUnion
 import Lemma.Set.EqSDiffUnion.of.Inter.eq.Empty
-open Set
+open Set BoundedInterval
 
 
 @[path]

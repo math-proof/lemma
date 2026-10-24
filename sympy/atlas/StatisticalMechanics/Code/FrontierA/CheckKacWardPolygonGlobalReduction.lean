@@ -1,0 +1,92 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckKacWardPolygonGlobalReduction.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardPolygonGlobalReduction
+
+#print axioms StatMech.FrontierA.kwLoopPhaseProduct_angleTurnPhase_eq_exp_sum
+#print axioms StatMech.FrontierA.kwVectorPhaseCycle_contract_ear
+#print axioms StatMech.FrontierA.kwVectorPhaseCycle_rotate
+#print axioms StatMech.FrontierA.kw_exists_common_sbtw_of_cross_opposite
+#print axioms StatMech.FrontierA.kw_fourVector_crossEar
+#print axioms StatMech.FrontierA.KWVectorEarDecomposition.phaseCycle_eq_neg_one
+#print axioms StatMech.FrontierA.KWStraightLineEmbedding.cyclePolygon
+#print axioms StatMech.FrontierA.KWStraightLineEmbedding.cyclePolygon_edgeList
+#print axioms StatMech.FrontierA.KWFiniteSimplePolygon.rotate_edgeList
+#print axioms StatMech.FrontierA.KWFiniteSimplePolygon.removeVertexOne_edgeList
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.vertexOneRemovalIsSimple_of_diagonalIsClean
+#print axioms StatMech.FrontierA.kw_angle_diagonal_ne_pi_of_no_between
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.outerTurns_ne_pi_of_diagonalIsClean
+#print axioms StatMech.FrontierA.KWFiniteSimplePolygon.vertexOnePhaseEar_of_crossEar
+#print axioms
+  StatMech.FrontierA.kwAngleTurnPhase_ear_splice_of_interiorSides
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.vertexOnePhaseEar_of_alignedSideEar
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.vertexOneGeometricEar_of_alignedSideEar
+#print axioms StatMech.FrontierA.kwAngleTurnNoWrap_or_wrap
+#print axioms StatMech.FrontierA.kwVectorTurnPhase_ear_splice_of_doubleWrap
+#print axioms StatMech.FrontierA.kwVectorTurnPhase_ear_splice_of_mixedParity
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.vertexOnePhaseEar_of_strictParityEar
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.vertexOneStrictParityEar_iff_geometricEar
+#print axioms StatMech.FrontierA.KWFiniteSimplePolygon.removable_of_geometricEar
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.exists_rotated_vertexOneGeometricEar_four
+#print axioms StatMech.FrontierA.KWFiniteSimplePolygon.collinear_local_phase
+#print axioms StatMech.FrontierA.KWFiniteSimplePolygon.vertexOnePhaseEar_of_collinear
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.exists_removable_of_geometricEar_case
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.exists_removable_of_geometricEar_five_plus
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.exists_removable_of_alignedSideEar_five_plus
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.exists_removable_of_strictParityEar_five_plus
+#print axioms StatMech.FrontierA.KWFiniteSimplePolygon.earDecomposition_three
+#print axioms
+  StatMech.FrontierA.KWFiniteSimplePolygon.earDecomposition_of_exists_removable
+#print axioms
+  StatMech.FrontierA.KWStraightLineCycleEarDecomposition.of_exists_removable
+#print axioms
+  StatMech.FrontierA.KWStraightLineCycleEarDecomposition.of_geometricEar_five_plus
+#print axioms
+  StatMech.FrontierA.KWStraightLineCycleEarDecomposition.of_alignedSideEar_five_plus
+#print axioms
+  StatMech.FrontierA.KWStraightLineCycleEarDecomposition.phaseProduct_eq_neg_one
+#print axioms StatMech.FrontierA.KWStraightLineCycleEarDecomposition.toPhaseSign
+#print axioms StatMech.FrontierA.KWStraightLineCyclePhaseSign.of_exists_removable
+#print axioms
+  StatMech.FrontierA.KWStraightLineCyclePhaseSign.of_geometricEar_five_plus
+#print axioms
+  StatMech.FrontierA.KWStraightLineCyclePhaseSign.of_alignedSideEar_five_plus
+#print axioms
+  StatMech.FrontierA.KWStraightLineCyclePhaseSign.of_strictParityEar_five_plus
+#print axioms StatMech.FrontierA.kw_totalPrincipalTurn_eq_int_mul_two_pi
+#print axioms StatMech.FrontierA.kwLoopPhaseProduct_angleTurnPhase_eq_neg_one_of_odd_winding
+#print axioms StatMech.FrontierA.kw_odd_winding_of_angleTurnPhase_eq_neg_one
+#print axioms StatMech.FrontierA.kwLoopPhaseProduct_angleTurnPhase_eq_neg_one_of_totalTurn
+#print axioms StatMech.FrontierA.KWStraightLineCycleTurning.phaseProduct_eq_neg_one
+#print axioms StatMech.FrontierA.KWStraightLineCycleOddTurning.phaseProduct_eq_neg_one
+#print axioms StatMech.FrontierA.KWStraightLineCyclePhaseSign.toOddTurning
+#print axioms StatMech.FrontierA.kw_straightLineCycleOddTurning_iff_phaseSign
+#print axioms StatMech.FrontierA.KWStraightLineCycleTurning.toOddTurning
+#print axioms StatMech.FrontierA.kwGraphFormalLogCoeff_cycle_eq_one_of_oddCycleTurning
+#print axioms
+  StatMech.FrontierA.kw_straightLineGraph_formalRoot_eq_evenPolynomial_of_oddCycleTurning
+#print axioms StatMech.FrontierA.kwGraphFormalLogCoeff_cycle_eq_one_of_cycleTurning
+#print axioms StatMech.FrontierA.kw_straightLineGraph_formalRoot_eq_evenPolynomial_of_cycleTurning
+#print axioms StatMech.FrontierA.kacWard_straightLine_trivalent_of_cycleTurning
+#print axioms StatMech.FrontierA.kwDetScalePolynomial_eval
+#print axioms StatMech.FrontierA.kwEvenScalePolynomial_eval
+#print axioms StatMech.FrontierA.kacWard_straightLine_trivalent_of_oddCycleTurning
+#print axioms StatMech.FrontierA.kacWard_straightLine_trivalent_allWeights_of_cycleTurning

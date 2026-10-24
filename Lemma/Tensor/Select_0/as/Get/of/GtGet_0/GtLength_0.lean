@@ -13,7 +13,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool Fin List Nat Tensor Vector
+open Bool Fin List Nat Tensor Vector Set
 
 
 @[path, comm, cast]

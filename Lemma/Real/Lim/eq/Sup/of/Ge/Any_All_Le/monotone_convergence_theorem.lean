@@ -4,8 +4,6 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-
-
 @[path]
 private lemma main
   {a : ℕ → ℝ}

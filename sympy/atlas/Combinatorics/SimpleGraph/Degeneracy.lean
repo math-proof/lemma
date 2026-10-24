@@ -24,23 +24,4 @@ def IsDegenerateOn {V : Type*} [Finite V] (G : SimpleGraph V) (U : Set V) (k : �
 /-- A graph is `k`-degenerate if it is `k`-degenerate on its full vertex set. -/
 def IsDegenerate {V : Type*} [Finite V] (G : SimpleGraph V) (k : ℕ) : Prop :=
   G.IsDegenerateOn Set.univ k
-
-/-- Increasing the degree bound preserves degeneracy on a vertex set. -/
-theorem IsDegenerateOn.mono [Finite V] (h : G.IsDegenerateOn U k) (hkl : k ≤ l) :
-    G.IsDegenerateOn U l := by
-  intro W hWne hWU
-  obtain ⟨v, hvW, hv⟩ := h W hWne hWU
-  exact ⟨v, hvW, hv.trans hkl⟩
-
-/-- Restricting the vertex set preserves degeneracy. -/
-theorem IsDegenerateOn.of_subset [Finite V] (h : G.IsDegenerateOn U k) (hTU : T ⊆ U) :
-    G.IsDegenerateOn T k := by
-  intro W hWne hWT
-  exact h W hWne (hWT.trans hTU)
-
-/-- A degenerate graph is degenerate on every subset of its vertices. -/
-theorem IsDegenerate.isDegenerateOn [Finite V] (h : G.IsDegenerate k) (U : Set V) :
-    G.IsDegenerateOn U k :=
-  h.of_subset (Set.subset_univ U)
-
 end SimpleGraph

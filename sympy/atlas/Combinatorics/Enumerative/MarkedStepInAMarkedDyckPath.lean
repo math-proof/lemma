@@ -75,14 +75,4 @@ Source statement `jis_f51c1ff9625da95f812ce507`;
 concept `jis_sem_1ec0710af356bb3047cb9588`. -/
 def MarkedDyckPath.pathSize (P : MarkedDyckPath) : Nat :=
   markedDyckCountNstar P.steps + markedDyckCountE P.steps
-
-/-- The size of a marked Dyck path `P` equals `N(P) + 2 * N*(P)`.
-Source statement `jis_f51c1ff9625da95f812ce507`;
-concept `jis_sem_1ec0710af356bb3047cb9588`. -/
-theorem MarkedDyckPath.size_eq (P : MarkedDyckPath) :
-    P.pathSize = markedDyckCountN P.steps + 2 * markedDyckCountNstar P.steps := by
-  unfold MarkedDyckPath.pathSize
-  have h := P.balanced
-  omega
-
 end MetaMathlibExt

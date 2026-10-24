@@ -1,0 +1,28 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/CheckLebowitzPfisterFourBridgeSecondMiddleCutCounterexample.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeSecondMiddleCutCounterexample
+
+#print axioms StatMech.Ising.fourBridgeSecondMiddleCutCounterexampleWeight_sum
+#print axioms StatMech.Ising.fourBridgeSecondMiddleCutCounterexampleWeight_logSupermodular
+#print axioms StatMech.Ising.fourBridgeSecondMiddleCutCounterexampleMass_sum
+#print axioms StatMech.Ising.fourBridgeSecondMiddleCutCounterexampleMass_logSupermodular
+#print axioms StatMech.Ising.fourBridgeSecondMiddleCutCounterexample_rankWeights
+#print axioms StatMech.Ising.fourBridgeSecondMiddleCutCounterexample_fourierRecovery
+#print axioms StatMech.Ising.fourBridgeSecondMiddleCutCounterexample_scalarBounds
+#print axioms StatMech.Ising.fourBridgeSecondMiddleCutCounterexample_rankQuadraticCuts
+#print axioms StatMech.Ising.fourBridgeSecondMiddleCutCounterexample_nestedSingletonPairCut
+#print axioms StatMech.Ising.fourBridgeSecondMiddleCutCounterexample_numerator_neg
+#print axioms
+  StatMech.Ising.fourBridgeSecondMiddleCutCounterexample_productFace_numerator_pos
+#print axioms
+  StatMech.Ising.fourBridgeSecondMiddleCutCounterexample_no_nonnegative_upperFace
+#print axioms
+  StatMech.Ising.fourBridgeSecondMiddleCutCounterexample_violates_pointwiseComplementRatio

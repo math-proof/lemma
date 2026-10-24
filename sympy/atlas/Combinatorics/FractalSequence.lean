@@ -32,20 +32,4 @@ structure FractalSequence where
   cond_F3 : ∀ h i j, h < i → ∃! k, pos i j < pos h k ∧ pos h k < pos i (j + 1)
   /-- Regularity: every column of the position array increases strictly. -/
   pos_column_strict : ∀ j, StrictMono (fun i => pos i j)
-
-/-- Each row of a fractal sequence's position array is injective. -/
-theorem FractalSequence.pos_injective (X : FractalSequence) (i : ℕ) :
-    Function.Injective (X.pos i) :=
-  (X.pos_strict i).injective
-
-/-- Every positive integer occurs infinitely often in a fractal sequence. -/
-theorem FractalSequence.infinite_occurrences (X : FractalSequence) (i : ℕ) :
-    Set.Infinite {n | X.seq n = i + 1} := by
-  have hf : Function.Injective
-      (fun j => (⟨X.pos i j, X.pos_sound i j⟩ : {n // X.seq n = i + 1})) := by
-    intro a b hab
-    have hpos : X.pos i a = X.pos i b := congrArg Subtype.val hab
-    exact (X.pos_strict i).injective hpos
-  exact Set.infinite_coe_iff.mp (Infinite.of_injective _ hf)
-
 end MetaMathlibExt

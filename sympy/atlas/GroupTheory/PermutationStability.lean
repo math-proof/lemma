@@ -84,42 +84,4 @@ def FlexiblePermutationStable (G : Type*) [Group G] : Prop :=
 /-- `G` is metabelian when its second derived subgroup is trivial. -/
 def Metabelian (G : Type*) [Group G] : Prop :=
   derivedSeries G 2 = ⊥
-
-theorem normalizedHammingDistance_self (n : ℕ) (σ : Equiv.Perm (Fin n)) :
-    normalizedHammingDistance n σ σ = 0 := by
-  simp [normalizedHammingDistance]
-
-theorem normalizedHammingDistance_nonneg (n : ℕ) (σ τ : Equiv.Perm (Fin n)) :
-    0 ≤ normalizedHammingDistance n σ τ := by
-  unfold normalizedHammingDistance
-  positivity
-
-theorem normalizedHammingDistance_le_one {n : ℕ} (hn : 0 < n)
-    (σ τ : Equiv.Perm (Fin n)) :
-    normalizedHammingDistance n σ τ ≤ 1 := by
-  unfold normalizedHammingDistance
-  rw [div_le_one (Nat.cast_pos.mpr hn)]
-  have h := hammingDist_le_card_fintype (x := fun i => σ i) (y := fun i => τ i)
-  rw [Fintype.card_fin] at h
-  exact Nat.cast_le.mpr h
-
-theorem flexibleHammingDistance_self {n m : ℕ} (h : n ≤ m)
-    (σ : Equiv.Perm (Fin n)) (τ : Equiv.Perm (Fin m))
-    (hτ : ∀ i, τ (Fin.castLE h i) = Fin.castLE h (σ i)) :
-    flexibleHammingDistance h σ τ = ((m - n : ℕ) : ℝ) / n := by
-  have hfun : (fun i => τ (Fin.castLE h i)) = (fun i => Fin.castLE h (σ i)) :=
-    funext hτ
-  unfold flexibleHammingDistance
-  rw [hfun, hammingDist_self, Nat.zero_add]
-
-theorem flexibleHammingDistance_diagonal {n : ℕ} (h : n ≤ n)
-    (σ τ : Equiv.Perm (Fin n)) :
-    flexibleHammingDistance h σ τ = normalizedHammingDistance n σ τ := by
-  have hfun : (fun i => Fin.castLE h (σ i)) = (fun i => σ i) :=
-    funext fun i => Fin.ext rfl
-  have hfun' : (fun i => τ (Fin.castLE h i)) = (fun i => τ i) :=
-    funext fun i => congrArg (τ ·) (Fin.ext rfl)
-  unfold flexibleHammingDistance normalizedHammingDistance
-  rw [hfun, hfun', Nat.sub_self, Nat.add_zero]
-
 end PermutationStability

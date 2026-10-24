@@ -32,21 +32,3 @@ at an unramified prime `Q` with finite residue field. -/
 noncomputable def arithFrobConjClass (Q : Ideal S) [Q.IsPrime] [Finite (S ⧸ Q)]
     [Algebra.IsUnramifiedAt R Q] : ConjClasses G :=
   ConjClasses.mk (arithFrobAt R G Q)
-
-/-- The chosen Frobenius element lies in its conjugacy class. -/
-theorem arithFrobConjClass_mem_carrier (Q : Ideal S) [Q.IsPrime] [Finite (S ⧸ Q)]
-    [Algebra.IsUnramifiedAt R Q] :
-    arithFrobAt R G Q ∈ (arithFrobConjClass (R := R) (G := G) Q).carrier :=
-  ConjClasses.mem_carrier_mk
-
-/-- Primes of `S` lying over the same prime of `R` give the same Frobenius
-conjugacy class. -/
-theorem arithFrobConjClass_eq_of_under_eq (Q Q' : Ideal S) [Q.IsPrime]
-    [Finite (S ⧸ Q)] [Algebra.IsUnramifiedAt R Q] [Q'.IsPrime]
-    [Finite (S ⧸ Q')] [Algebra.IsUnramifiedAt R Q']
-    (h : Q.under R = Q'.under R) :
-    arithFrobConjClass (R := R) (G := G) Q =
-      arithFrobConjClass (R := R) (G := G) Q' := by
-  unfold arithFrobConjClass
-  rw [ConjClasses.mk_eq_mk_iff_isConj]
-  exact isConj_arithFrobAt R G Q Q' h

@@ -3,23 +3,29 @@ import sympy.Basic
 import sympy.functions.special.elliptic.FundamentalParallelogram
 
 
-/--
-[FundamentalParallelogram](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/FundamentalParallelogram.lean)
--/
-@[path]
-private lemma fundamental_parallelogram_zero_eq
--- given
-  (L : PeriodPair) :
--- imply
-  L.fundamentalParallelogram 0 = ZSpan.fundamentalDomain L.basis := by
--- proof
-  apply PeriodPair.fundamentalParallelogram_zero L
+namespace PeriodPair
 
 /--
 [FundamentalParallelogram](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/FundamentalParallelogram.lean)
 -/
 @[path]
-private lemma basis_repr_omega_eq
+lemma fundamentalParallelogram_zero
+-- given
+  (L : PeriodPair) :
+-- imply
+  L.fundamentalParallelogram 0 = ZSpan.fundamentalDomain L.basis := by
+-- proof
+  simp [fundamentalParallelogram]
+
+end PeriodPair
+
+namespace PeriodPair
+
+/--
+[FundamentalParallelogram](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/FundamentalParallelogram.lean)
+-/
+@[path]
+lemma basis_repr_omega
 -- given
   (L : PeriodPair)
   (t₁ t₂ : ℝ)
@@ -27,13 +33,21 @@ private lemma basis_repr_omega_eq
 -- imply
   L.basis.repr (t₁ • L.ω₁ + t₂ • L.ω₂) i = ![t₁, t₂] i := by
 -- proof
-  apply PeriodPair.basis_repr_omega L t₁ t₂ i
+  rw [show t₁ • L.ω₁ + t₂ • L.ω₂ = t₁ • L.basis 0 + t₂ • L.basis 1 from by simp]
+  simp only [map_add, map_smul, Module.Basis.repr_self, Finsupp.smul_single,
+    smul_eq_mul, mul_one, Finsupp.add_apply, Finsupp.single_apply]
+  fin_cases i <;>
+    simp [show (1 : Fin 2) ≠ 0 from by decide, show (0 : Fin 2) ≠ 1 from by decide]
+
+end PeriodPair
+
+namespace PeriodPair
 
 /--
 [FundamentalParallelogram](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/FundamentalParallelogram.lean)
 -/
 @[path]
-private lemma mem_fundamental_parallelogram_iff_iff
+lemma mem_fundamentalParallelogram_iff
 -- given
   (L : PeriodPair)
   (α z : ℂ) :
@@ -42,7 +56,27 @@ private lemma mem_fundamental_parallelogram_iff_iff
     ∃ t₁ t₂ : ℝ, 0 ≤ t₁ ∧ t₁ < 1 ∧ 0 ≤ t₂ ∧ t₂ < 1 ∧
       z = α + t₁ • L.ω₁ + t₂ • L.ω₂ := by
 -- proof
-  apply PeriodPair.mem_fundamentalParallelogram_iff L
+  simp only [fundamentalParallelogram, Set.mem_image, ZSpan.mem_fundamentalDomain]
+  constructor
+  · rintro ⟨w, hw, rfl⟩
+    refine ⟨L.basis.repr w 0, L.basis.repr w 1, (hw 0).1, (hw 0).2,
+      (hw 1).1, (hw 1).2, ?_⟩
+    have hw_repr : w = L.basis.repr w 0 • L.ω₁ + L.basis.repr w 1 • L.ω₂ := by
+      have h := L.basis.sum_repr w
+      rwa [Fin.sum_univ_two, L.basis_zero, L.basis_one] at h
+    calc
+      α + w = α + (L.basis.repr w 0 • L.ω₁ + L.basis.repr w 1 • L.ω₂) :=
+        congrArg (α + ·) hw_repr
+      _ = α + L.basis.repr w 0 • L.ω₁ + L.basis.repr w 1 • L.ω₂ := by abel
+  · rintro ⟨t₁, t₂, h1, h2, h3, h4, rfl⟩
+    refine ⟨t₁ • L.ω₁ + t₂ • L.ω₂, fun i ↦ ?_, by abel⟩
+    rw [L.basis_repr_omega]
+    fin_cases i
+    · simpa using ⟨h1, h2⟩
+    · simpa using ⟨h3, h4⟩
+
+end PeriodPair
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-23

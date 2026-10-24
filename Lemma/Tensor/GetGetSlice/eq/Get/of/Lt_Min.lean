@@ -4,7 +4,7 @@ import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.EqGetIndices.of.Lt_Min
-open Tensor Vector List Fin
+open Tensor Vector List Fin Set
 
 
 @[path, fin]

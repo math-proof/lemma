@@ -1,0 +1,58 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckPeriodicPlanarSheffieldEndpointClosure.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldEndpointClosure
+
+open StatMech.FK.PeriodicPlanar
+
+#print axioms
+  PeriodicPlaneEmbedding.translated_rectanglePairMergeErrorUnion_tendsto_zero_of_pairMerge
+#print axioms
+  PeriodicPlaneEmbedding.uniformTemplateDeepGridAdjacentHeightCrossingRadius_of_pairMerge
+#print axioms
+  PeriodicPlaneEmbedding.uniformTemplateAdjacentBoundaryBandCrossingRadius_of_pairMerge
+#print axioms ExpandedEndpointPrimalBoundaryBandLevel.primalAdjacent_limit
+#print axioms expandedEndpoint_spans_of_inner_gaps
+#print axioms
+  PeriodicPlanarDualPair.matchedCrossing_measureReal_add_le_one_of_eventSubsets
+#print axioms
+  PeriodicPlanarDualPair.matchedVerticalHorizontalCrossing_measureReal_add_le_one_of_eventSubsets
+#print axioms
+  PeriodicPlanarDualPair.matchedCrossing_measureReal_add_le_one_of_innerVerticalStrip
+#print axioms
+  PeriodicPlanarDualPair.matchedVerticalHorizontalCrossing_measureReal_add_le_one_of_innerHorizontalStrip
+#print axioms
+  PeriodicPlanarDualPair.matchedCrossing_measureReal_add_le_one_of_innerStrips
+#print axioms
+  PeriodicPlanarDualPair.matchedVerticalHorizontalCrossing_measureReal_add_le_one_of_innerStrips
+#print axioms PeriodicPlanarDualPair.asymmetricEndpointCoordinates_false
+#print axioms PeriodicPlanarDualPair.fullyAsymmetricEndpointCoordinates_false
+#print axioms PeriodicPlanarDualPair.carriedCrossNestedArrays_false
+#print axioms PeriodicPlaneEmbedding.CarriedCrossNestedArray.tail
+#print axioms PeriodicPlanarDualPair.carriedCrossNestedArrays_succ_false
+#print axioms asymmetricComplementaryEndpointLimits_false
+#print axioms
+  ExpandedEndpointPrimalBoundaryBandLevel.false_of_alignedEndpoints
+#print axioms
+  PeriodicPlanarDualPair.ExpandedEndpointSheffieldCertificate.false
+#print axioms
+  PeriodicPlanarDualPair.BranchAlignedOutwardEndpointCertificate.false
+#print axioms
+  PeriodicPlanarDualPair.freeBufferedInfiniteVolume_commonUnique_measure_ne_one_of_branchAlignedOutwardEndpointCertificate
+#print axioms
+  PeriodicPlanarDualPair.strictDualNoCoexistence_of_branchAlignedOutwardEndpointCertificate_logisticCylinders
+#print axioms
+  PeriodicPlanarDualPair.dualCritical_relation_of_decay_branchAlignedOutwardEndpointCertificate_logisticCylinders
+#print axioms
+  PeriodicPlanarDualPair.freeBufferedInfiniteVolume_commonUnique_measure_ne_one_of_expandedEndpointCertificate
+#print axioms
+  PeriodicPlanarDualPair.strictDualNoCoexistence_of_expandedEndpointCertificate_logisticCylinders
+#print axioms
+  PeriodicPlanarDualPair.dualCritical_relation_of_decay_expandedEndpointCertificate_logisticCylinders

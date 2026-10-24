@@ -47,10 +47,12 @@ theorem integ_of_monotone {a b:ℝ} {f:ℝ → ℝ} (hf: MonotoneOn f (Icc a b))
         . apply ExistsUnique.intro (Icc b b)
           . simp [hb, mem_iff]
           rintro J ⟨ rfl | ⟨ j, hA, rfl ⟩, hJb ⟩; rfl
-          simp [e, mem_iff, hb, hbeq] at hJb
-          replace hJb := hJb.2
-          rw [mul_lt_mul_iff_of_pos_left hδpos] at hJb
-          norm_cast at hJb; linarith
+          have hJb' : b ∈ Set.Ico (a + δ * (j:ℝ)) (a + δ * ((j:ℝ) + 1)) := by
+            rw [← hb]; exact hJb
+          simp [Set.mem_Ico, hbeq] at hJb'
+          have : (N:ℝ) < (j:ℝ) + 1 := by nlinarith [hδpos]
+          norm_cast at this
+          omega
         simp [I, mem_iff] at hx
         set j := ⌊ (x-a)/δ ⌋₊
         have hxa : 0 ≤ x-a := by linarith
@@ -68,17 +70,19 @@ theorem integ_of_monotone {a b:ℝ} {f:ℝ → ℝ} (hf: MonotoneOn f (Icc a b))
         . refine ⟨ ?_, hxj ⟩; right; use j; simp [j, Nat.floor_lt hxaδ, div_lt_iff₀' hδpos]; linarith
         rintro J ⟨ rfl | ⟨ k, hk, rfl ⟩, hxJ ⟩
         . simp [mem_iff] at hxJ; grind
-        simp [mem_iff, e] at hxJ hxj
+        have hxj' : x ∈ Set.Ico (a + δ * (j:ℝ)) (a + δ * ((j:ℝ) + 1)) := hxj
+        have hxJ' : x ∈ Set.Ico (a + δ * (k:ℝ)) (a + δ * ((k:ℝ) + 1)) := hxJ
+        simp [Set.mem_Ico] at hxj' hxJ'
         obtain hjk | rfl | hjk := lt_trichotomy j k
-        . replace hjk : δ*((j:ℝ)+1) ≤ δ*(k:ℝ) := by rw [mul_le_mul_iff_of_pos_left hδpos]; norm_cast
-          linarith
-        . rfl
-        replace hjk : δ*((k:ℝ)+1) ≤ δ*(j:ℝ) := by rw [mul_le_mul_iff_of_pos_left hδpos]; norm_cast
-        linarith
+        · have : (j:ℝ) + 1 ≤ k := by norm_cast
+          nlinarith [hδpos]
+        · rfl
+        have : (k:ℝ) + 1 ≤ j := by norm_cast
+        nlinarith [hδpos]
       contains J hJ := by
         simp at hJ; obtain rfl | ⟨ j, hj, rfl ⟩ := hJ <;> simp [subset_iff, e, I]
         . linarith
-        apply Set.Ico_subset_Icc_self.trans (Set.Icc_subset_Icc _ _)
+        apply Set.Subset.trans Set.Ico_subset_Icc_self (Set.Icc_subset_Icc _ _)
         . simp; positivity
         simp [hbeq]; gcongr; norm_cast
     }

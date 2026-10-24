@@ -6,6 +6,141 @@ open IsDedekindDomain
 open FractionalIdeal
 
 
+namespace FractionalIdeal
+
+/--
+[finsuppToUnits_val](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
+-/
+@[path]
+lemma finsuppToUnits_val
+  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
+  {K}
+  {e : HeightOneSpectrum R →₀ ℤ} :
+-- imply
+  (↑(finsuppToUnits K e) : FractionalIdeal R⁰ K) =
+    e.prod (fun v n => (v.asIdeal : FractionalIdeal R⁰ K) ^ n) :=
+-- proof
+  rfl
+
+end FractionalIdeal
+
+namespace FractionalIdeal
+
+/--
+[count_finsuppToUnits](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
+-/
+@[path]
+lemma count_finsuppToUnits
+  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
+  {K}
+  {v : HeightOneSpectrum R}
+  {e : HeightOneSpectrum R →₀ ℤ} :
+-- imply
+  count K v (↑(finsuppToUnits K e) : FractionalIdeal R⁰ K) = e v :=
+-- proof
+  count_finsuppProd K v e
+
+end FractionalIdeal
+
+namespace FractionalIdeal
+
+/--
+[unitsToFinsupp_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
+-/
+@[path]
+lemma unitsToFinsupp_one
+  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
+  {K} :
+-- imply
+  unitsToFinsupp K (1 : (FractionalIdeal R⁰ K)ˣ) = 0 := by
+-- proof
+  ext w
+  rw [unitsToFinsupp_apply, Units.val_one, count_one K w, Finsupp.zero_apply]
+
+end FractionalIdeal
+
+namespace FractionalIdeal
+
+/--
+[factorizationMulEquiv_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
+-/
+@[path]
+lemma factorizationMulEquiv_apply
+  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
+  {K}
+  {u : (FractionalIdeal R⁰ K)ˣ}
+  {v : HeightOneSpectrum R} :
+-- imply
+  Multiplicative.toAdd (factorizationMulEquiv K u) v =
+    count K v (u : FractionalIdeal R⁰ K) :=
+-- proof
+  rfl
+
+end FractionalIdeal
+
+namespace FractionalIdeal
+
+/--
+[factorizationMulEquiv_symm_val](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
+-/
+@[path]
+lemma factorizationMulEquiv_symm_val
+  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
+  {K}
+  {e : Multiplicative (HeightOneSpectrum R →₀ ℤ)} :
+-- imply
+  ((↑((factorizationMulEquiv K).symm e) : FractionalIdeal R⁰ K)) =
+    (Multiplicative.toAdd e).prod (fun v n => (v.asIdeal : FractionalIdeal R⁰ K) ^ n) :=
+-- proof
+  rfl
+
+end FractionalIdeal
+
+namespace FractionalIdeal
+
+/--
+[factorizationMulEquiv_prime_self](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
+-/
+@[path]
+lemma factorizationMulEquiv_prime_self
+  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
+  {K}
+  {w : HeightOneSpectrum R} :
+-- imply
+  Multiplicative.toAdd
+    (factorizationMulEquiv K
+    (Units.mk0 _ (coeIdeal_ne_zero.mpr w.ne_bot))) =
+    Finsupp.single w 1 := by
+-- proof
+  ext v
+  classical
+  rw [factorizationMulEquiv_apply, Units.val_mk0, count_maximal]
+  split_ifs with h
+  · rw [h, Finsupp.single_eq_same]
+  · exact (Finsupp.single_eq_of_ne' h).symm
+
+end FractionalIdeal
+
+namespace FractionalIdeal
+
+/--
+[symm_single_zpow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
+-/
+@[path]
+lemma symm_single_zpow
+  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
+  {K}
+  {w : HeightOneSpectrum R}
+  {n : ℤ} :
+-- imply
+  (↑((factorizationMulEquiv K).symm (Multiplicative.ofAdd (Finsupp.single w n))) :
+    FractionalIdeal R⁰ K) = (w.asIdeal : FractionalIdeal R⁰ K) ^ n := by
+-- proof
+  change (Finsupp.single w n).prod (fun v m => (v.asIdeal : FractionalIdeal R⁰ K) ^ m) = _
+  exact Finsupp.prod_single_index (zpow_zero _)
+
+end FractionalIdeal
+
 /--
 [mem_unitsSupportFinset](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
 -/
@@ -48,34 +183,6 @@ private lemma finsuppProd_ne_zero_eq
   apply FractionalIdeal.finsuppProd_ne_zero K e
 
 /--
-[finsuppToUnits_val](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
--/
-@[path]
-private lemma finsuppToUnits_val_eq
-  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
-  {K}
-  {e : HeightOneSpectrum R →₀ ℤ} :
--- imply
-  (↑(finsuppToUnits K e) : FractionalIdeal R⁰ K) =
-    e.prod (fun v n => (v.asIdeal : FractionalIdeal R⁰ K) ^ n) := by
--- proof
-  apply FractionalIdeal.finsuppToUnits_val K e
-
-/--
-[count_finsuppToUnits](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
--/
-@[path]
-private lemma count_finsuppToUnits_eq
-  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
-  {K}
-  {v : HeightOneSpectrum R}
-  {e : HeightOneSpectrum R →₀ ℤ} :
--- imply
-  count K v (↑(finsuppToUnits K e) : FractionalIdeal R⁰ K) = e v := by
--- proof
-  apply FractionalIdeal.count_finsuppToUnits K v e
-
-/--
 [toUnits_left_inv](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
 -/
 @[path]
@@ -114,77 +221,6 @@ private lemma unitsToFinsupp_mul_eq
 -- proof
   apply FractionalIdeal.unitsToFinsupp_mul K u v
 
-/--
-[unitsToFinsupp_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
--/
-@[path]
-private lemma unitsToFinsupp_one_eq
-  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
-  {K} :
--- imply
-  unitsToFinsupp K (1 : (FractionalIdeal R⁰ K)ˣ) = 0 := by
--- proof
-  apply FractionalIdeal.unitsToFinsupp_one K
-
-/--
-[factorizationMulEquiv_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
--/
-@[path]
-private lemma factorizationMulEquiv_apply_eq
-  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
-  {K}
-  {u : (FractionalIdeal R⁰ K)ˣ}
-  {v : HeightOneSpectrum R} :
--- imply
-  Multiplicative.toAdd (factorizationMulEquiv K u) v =
-    count K v (u : FractionalIdeal R⁰ K) := by
--- proof
-  apply FractionalIdeal.factorizationMulEquiv_apply K u v
-
-/--
-[factorizationMulEquiv_symm_val](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
--/
-@[path]
-private lemma factorizationMulEquiv_symm_val_eq
-  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
-  {K}
-  {e : Multiplicative (HeightOneSpectrum R →₀ ℤ)} :
--- imply
-  ((↑((factorizationMulEquiv K).symm e) : FractionalIdeal R⁰ K)) =
-    (Multiplicative.toAdd e).prod (fun v n => (v.asIdeal : FractionalIdeal R⁰ K) ^ n) := by
--- proof
-  apply FractionalIdeal.factorizationMulEquiv_symm_val K e
-
-/--
-[factorizationMulEquiv_prime_self](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
--/
-@[path]
-private lemma factorizationMulEquiv_prime_self_eq
-  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
-  {K}
-  {w : HeightOneSpectrum R} :
--- imply
-  Multiplicative.toAdd
-    (factorizationMulEquiv K
-    (Units.mk0 _ (coeIdeal_ne_zero.mpr w.ne_bot))) =
-    Finsupp.single w 1 := by
--- proof
-  apply FractionalIdeal.factorizationMulEquiv_prime_self K w
-
-/--
-[symm_single_zpow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean)
--/
-@[path]
-private lemma symm_single_zpow_eq
-  [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
-  {K}
-  {w : HeightOneSpectrum R}
-  {n : ℤ} :
--- imply
-  (↑((factorizationMulEquiv K).symm (Multiplicative.ofAdd (Finsupp.single w n))) :
-    FractionalIdeal R⁰ K) = (w.asIdeal : FractionalIdeal R⁰ K) ^ n := by
--- proof
-  apply FractionalIdeal.symm_single_zpow K w n
-
 
 -- created on 2026-10-20
+-- updated on 2026-10-23

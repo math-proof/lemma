@@ -23,18 +23,4 @@ namespace IsDedekindDomain.HeightOneSpectrum
 
 variable {R : Type*} [CommRing R] [IsDedekindDomain R]
 variable {K : Type*} [Field K] [Algebra R K] [IsFractionRing R K]
-
-/-- The localization valuation subring at `v` is the preimage of the valuation ring in the adic
-completion along the canonical embedding of the fraction field. -/
-theorem valuationSubringAtPrime_eq_comap_adicCompletionIntegers (v : HeightOneSpectrum R) :
-    (valuationSubringAtPrime (K := K) v).toSubring =
-      Subring.comap (algebraMap K (adicCompletion K v))
-        (adicCompletionIntegers K v).toSubring := by
-  ext x
-  simp only [Subring.mem_comap, ValuationSubring.mem_toSubring]
-  simp only [valuationSubringAtPrime_eq_valuationSubring, Valuation.mem_valuationSubring_iff]
-  rw [mem_adicCompletionIntegers]
-  change (valuation K v) x ≤ 1 ↔ Valued.v (x : adicCompletion K v) ≤ 1
-  rw [valuedAdicCompletion_eq_valuation']
-
 end IsDedekindDomain.HeightOneSpectrum

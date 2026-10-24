@@ -155,10 +155,6 @@ def horizontal_1_2 : Domino where
 @[simp] theorem horizontal_1_2_cell1 : horizontal_1_2.cell1 = (1, 2) := rfl
 @[simp] theorem horizontal_1_2_cell2 : horizontal_1_2.cell2 = (2, 2) := rfl
 
-@[simp] theorem vertical_1_1_isVertical : vertical_1_1.isVertical := rfl
-@[simp] theorem horizontal_1_1_isHorizontal : horizontal_1_1.isHorizontal := rfl
-@[simp] theorem horizontal_1_2_isHorizontal : horizontal_1_2.isHorizontal := rfl
-
 theorem vertical_1_1_cells : vertical_1_1.cells = {(1, 1), (1, 2)} := rfl
 def vertical_1_1_flip : Domino where
   cell1 := (1, 2)
@@ -2985,11 +2981,11 @@ def TilingC : DominoTiling 2 3 where
 def reflectCell3 (c : Cell) : Cell := (c.1, 4 - c.2)
 
 
-private theorem nat_sub_inj_4 {a b : ℕ} (ha : a ≤ 4) (hb : b ≤ 4) (h : 4 - a = 4 - b) : a = b := by
+theorem nat_sub_inj_4 {a b : ℕ} (ha : a ≤ 4) (hb : b ≤ 4) (h : 4 - a = 4 - b) : a = b := by
   omega
 
 
-private theorem domino_cell1_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
+theorem domino_cell1_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
     d.cell1.2 ≤ 3 := by
   have h : d.cell1 ∈ d.cells := by simp [Domino.cells]
   have h' := hd h
@@ -2997,7 +2993,7 @@ private theorem domino_cell1_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Re
   exact h'.2.2.2
 
 
-private theorem domino_cell2_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
+theorem domino_cell2_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
     d.cell2.2 ≤ 3 := by
   have h : d.cell2 ∈ d.cells := by simp [Domino.cells]
   have h' := hd h
@@ -3005,7 +3001,7 @@ private theorem domino_cell2_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Re
   exact h'.2.2.2
 
 
-private def reflectDomino3 (d : Domino) (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) : Domino where
+def reflectDomino3 (d : Domino) (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) : Domino where
   cell1 := reflectCell3 d.cell1
   cell2 := reflectCell3 d.cell2
   distinct := by
@@ -3031,7 +3027,7 @@ private def reflectDomino3 (d : Domino) (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 �
       · exact hor
 
 
-private theorem reflectDomino3_injective {d1 d2 : Domino}
+theorem reflectDomino3_injective {d1 d2 : Domino}
     (h1a : d1.cell1.2 ≤ 3) (h1b : d1.cell2.2 ≤ 3)
     (h2a : d2.cell1.2 ≤ 3) (h2b : d2.cell2.2 ≤ 3)
     (heq : reflectDomino3 d1 h1a h1b = reflectDomino3 d2 h2a h2b) : d1 = d2 := by
@@ -3039,19 +3035,19 @@ private theorem reflectDomino3_injective {d1 d2 : Domino}
   ext <;> omega
 
 
-private theorem reflectCell3_mem_Rectangle' {n : ℕ} {c : Cell} (hc : c ∈ Rectangle n 3) :
+theorem reflectCell3_mem_Rectangle' {n : ℕ} {c : Cell} (hc : c ∈ Rectangle n 3) :
     reflectCell3 c ∈ Rectangle n 3 := by
   rw [mem_Rectangle] at hc ⊢
   simp only [reflectCell3]
   omega
 
 
-private theorem reflectDomino3_cells {d : Domino} (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) :
+theorem reflectDomino3_cells {d : Domino} (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) :
     (reflectDomino3 d h1 h2).cells = d.cells.image reflectCell3 := by
   simp only [Domino.cells, reflectDomino3, Finset.image_insert, Finset.image_singleton]
 
 
-private theorem reflectDomino3_cells_subset {n : ℕ} {d : Domino}
+theorem reflectDomino3_cells_subset {n : ℕ} {d : Domino}
     (hd : d.cells ⊆ Rectangle n 3) (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) :
     (reflectDomino3 d h1 h2).cells ⊆ Rectangle n 3 := by
   intro c hc
@@ -3061,7 +3057,7 @@ private theorem reflectDomino3_cells_subset {n : ℕ} {d : Domino}
   exact reflectCell3_mem_Rectangle' (hd hc')
 
 
-private theorem reflectCell3_injective_on_rect {n : ℕ} {c1 c2 : Cell}
+theorem reflectCell3_injective_on_rect {n : ℕ} {c1 c2 : Cell}
     (hc1 : c1 ∈ Rectangle n 3) (hc2 : c2 ∈ Rectangle n 3)
     (heq : reflectCell3 c1 = reflectCell3 c2) : c1 = c2 := by
   rw [mem_Rectangle] at hc1 hc2
@@ -3069,7 +3065,7 @@ private theorem reflectCell3_injective_on_rect {n : ℕ} {c1 c2 : Cell}
   ext <;> omega
 
 
-private theorem reflectCell3_surjective_on_rect {n : ℕ} {c : Cell}
+theorem reflectCell3_surjective_on_rect {n : ℕ} {c : Cell}
     (hc : c ∈ Rectangle n 3) : ∃ c' ∈ Rectangle n 3, reflectCell3 c' = c := by
   rw [mem_Rectangle] at hc
   use (c.1, 4 - c.2)
@@ -3153,5 +3149,14 @@ noncomputable def reflectTiling3 {n : ℕ} (T : DominoTiling n 3) : DominoTiling
     have heq' := reflectCell3_injective_on_rect hc1'_rect hc2'_rect heq
     exact hdisj c1' hc1' c2' hc2' heq'
 
+namespace Domino
+
+end Domino
+
+namespace DominoTiling
+
+variable {n m : ℕ}
+
+end DominoTiling
 
 end DominoTilings

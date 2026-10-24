@@ -1,0 +1,33 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckTriangularIsingCriticalPolynomial.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalPolynomial
+
+#print axioms StatMech.FrontierA.triangularIsingHighTempSymbol_zero_eq_criticalPolynomial_sq
+#print axioms StatMech.FrontierA.triangularIsingSymbol_zero_eq_criticalPolynomial_sq_mul
+#print axioms StatMech.FrontierA.triangularIsingSymbol_zero_iff_criticalPolynomial_zero
+#print axioms StatMech.FrontierA.triangularIsingCriticalPolynomial_eq_zero_iff
+#print axioms StatMech.FrontierA.triangularIsingCriticalCompanion_pos
+#print axioms StatMech.FrontierA.sinh_two_mul_eq_two_tanh_div
+#print axioms StatMech.FrontierA.triangularIsingCriticalPolynomial_zero_iff_rate_eq_one
+#print axioms StatMech.FrontierA.triangularIsingCriticalRate_sub_one_eq_polynomial_mul_factor
+#print axioms StatMech.FrontierA.triangularIsingCriticalFactor_neg
+#print axioms StatMech.FrontierA.triangularIsingSymbol_zero_iff_criticalRate_eq_one
+#print axioms StatMech.FrontierA.triangularIsingCriticalRateAlong_strictMonoOn_of_nonneg
+#print axioms StatMech.FrontierA.existsUnique_triangularIsingCriticalRate_eq_one_of_nonneg
+#print axioms StatMech.FrontierA.existsUnique_triangularIsingSymbol_zero_of_nonneg
+#print axioms StatMech.FrontierA.sinh_scale_ratio_derivNumerator_pos
+#print axioms StatMech.FrontierA.sinh_scale_ratio_strictMonoOn
+#print axioms StatMech.FrontierA.triangularIsingCriticalRate_eq_one_unique_of_neg
+#print axioms StatMech.FrontierA.exists_triangularIsingCriticalRate_gt_one_of_neg
+#print axioms StatMech.FrontierA.existsUnique_triangularIsingCriticalRate_eq_one_of_neg
+#print axioms StatMech.FrontierA.existsUnique_triangularIsingSymbol_zero_of_gt_neg_one
+#print axioms StatMech.FrontierA.hasDerivAt_triangularIsingCriticalRateAlong
+#print axioms StatMech.FrontierA.triangularIsingCriticalRateAlongDeriv_pos_at_root

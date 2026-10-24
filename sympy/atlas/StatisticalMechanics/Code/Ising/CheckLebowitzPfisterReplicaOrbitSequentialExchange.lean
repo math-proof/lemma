@@ -1,0 +1,33 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/CheckLebowitzPfisterReplicaOrbitSequentialExchange.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitSequentialExchange
+
+#print axioms StatMech.Ising.lpReplicaBalancedComponentSelector_sources_general
+#print axioms StatMech.Ising.lpReplicaBalancedComponentSelector_disconnects_general
+#print axioms StatMech.Ising.lpReplicaRowGate_balancedComponentExchange_general
+#print axioms StatMech.Ising.lpReplicaCoupledReflectToggle_currentSources
+#print axioms StatMech.Ising.lpReplicaRowGate_coupledReflectToggle
+#print axioms StatMech.Ising.lpReplicaRowGate_coupledPairedCut
+#print axioms StatMech.Ising.LPReplicaRightCoupledPairedCut.falseSource0
+#print axioms StatMech.Ising.LPReplicaRightCoupledPairedCut.falseSource1
+#print axioms StatMech.Ising.LPReplicaRightCoupledPairedCut.trueSource0
+#print axioms StatMech.Ising.LPReplicaRightCoupledPairedCut.trueSource1
+#print axioms StatMech.Ising.lpReplicaCoupledReflectToggleTagRaw_swapRows
+#print axioms StatMech.Ising.lpReplicaSwapRowsTag_coupledReflectToggleTagRaw_swapRows
+#print axioms StatMech.Ising.lpReplicaRowGate_rightCoupledPairedCut
+#print axioms StatMech.Ising.LPReplicaCoupledPairedCut.half_eq_empty_of_row1False_empty
+#print axioms StatMech.Ising.LPReplicaCoupledPairedCut.balancedComponentBoundary_eq_empty
+#print axioms StatMech.Ising.LPReplicaCoupledPairedCut.doubledHalf_eq_empty_of_balancedSelector
+#print axioms StatMech.Ising.lpReplicaOrbitFourColorSlotState_canonicalPartialReflect
+#print axioms StatMech.Ising.lpReplicaPartialReflectCanonicalCopyEquiv_edge
+#print axioms StatMech.Ising.lpReplicaPartialReflectCanonicalRelabelEquiv_ends
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtomOfCoupledPairedCut
+#print axioms StatMech.Ising.lpReplicaDecoratedOrbitAtomOfRightCoupledPairedCut

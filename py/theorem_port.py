@@ -345,8 +345,13 @@ def parse_flt_solution(source: Path) -> dict | None:
     )
     if proc.returncode != 0:
         return None
+    # lean.js prints ``import py.js`` before the JSON object.
+    out = proc.stdout
+    brace = out.find("{")
+    if brace > 0:
+        out = out[brace:]
     try:
-        data = json.loads(proc.stdout)
+        data = json.loads(out)
     except json.JSONDecodeError:
         return None
     if not isinstance(data, dict) or data.get("binders") is None:

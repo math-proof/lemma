@@ -1,0 +1,63 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/CheckLebowitzPfisterReplicaOrbitRankFiveHighRowComplementToggle.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankFiveHighRowComplementToggle
+
+#print axioms StatMech.Ising.lpReplicaToggleRows_swapRowsTag_eq_compl
+#print axioms StatMech.Ising.lpReplicaToggleRows_self
+#print axioms
+  StatMech.Ising.lpReplicaToggleRows_activeSdiff_swapRowsTag_eq_singleton_after_complement
+#print axioms
+  StatMech.Ising.lpReplicaToggleRows_activeSdiff_swapRowsComplementTag_eq_singleton
+#print axioms
+  StatMech.Ising.lpReplicaToggleRows_singleton_after_complement_ne_singleton
+#print axioms
+  StatMech.Ising.lpReplicaOffdiagDecoratedSource_rankFive_nonsaturatedHigh_iSeam_complementTarget
+#print axioms
+  StatMech.Ising.lpReplicaOffdiagDecoratedTargetToAggregate_hasStrictPhysicalDoubleIncidence
+#print axioms
+  StatMech.Ising.lpReplicaOffdiagDecoratedTargetToAggregate_ne_strictRouteCandidate
+#print axioms
+  StatMech.Ising.lpReplicaAggregateDecoratedTargetMultiplicityFiberEmbedding
+#print axioms
+  StatMech.Ising.lpReplicaAggregateDecoratedTargetMultiplicityFiberEmbedding_self
+#print axioms
+  StatMech.Ising.lpReplicaAggregateDecoratedTargetMultiplicityFiberEmbedding_flip
+#print axioms
+  StatMech.Ising.lpReplicaAggregateDecoratedTargetMultiplicityFiberEmbedding_not_strict
+#print axioms
+  StatMech.Ising.lpReplicaAggregateDecoratedTargetMultiplicityFiberEmbedding_ne_strictRouteCandidate
+#print axioms
+  StatMech.Ising.lpReplicaAggregateDecoratedTargetMultiplicityFiberEmbedding_key
+#print axioms
+  StatMech.Ising.lpReplicaAggregateDecoratedTargetMultiplicityFiberEmbedding_key_eq_of_eq
+#print axioms
+  StatMech.Ising.lpReplicaAggregateDecoratedTargetMultiplicityFiberEmbedding_ne_of_key_ne
+#print axioms
+  StatMech.Ising.lpReplicaAggregateDecoratedTargetEmbeddingOfMultiplicityPairCode
+#print axioms
+  StatMech.Ising.lpReplicaAggregateDecoratedTargetEmbeddingOfMultiplicityPairCode_not_strict
+#print axioms
+  StatMech.Ising.lpReplicaAggregateRankFiveStrictRouteNeighbors
+#print axioms
+  StatMech.Ising.LPReplicaAggregateRankFiveSupportedStrictRouteEmbedding
+#print axioms
+  StatMech.Ising.nonempty_lpReplicaAggregateRankFiveSupportedStrictRouteEmbedding
+#print axioms
+  StatMech.Ising.lpReplicaAggregateRankFiveSupportedStrictRouteEmbedding
+#print axioms
+  StatMech.Ising.lpReplicaAggregateRankFiveSupportedStrictRouteEmbedding_strict
+#print axioms StatMech.Ising.embeddingSumOfDisjointImages
+#print axioms
+  StatMech.Ising.lpReplicaAggregateRankFiveCombinedEmbeddingOfNonstrictEmbedding
+#print axioms
+  StatMech.Ising.lpReplicaOffdiagRankFiveOutputCollisionClass
+#print axioms
+  StatMech.Ising.lpReplicaOffdiagRankFiveOutputCollisionClass_card_le_four

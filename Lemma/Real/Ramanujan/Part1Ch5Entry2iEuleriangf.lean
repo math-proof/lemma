@@ -1276,4 +1276,3 @@ private lemma ramanujan_part1_ch5_entry2i_eulerian_gf_eq
 
 
 -- created on 2026-10-20
-

@@ -25,15 +25,4 @@ Pascal's triangle and `r = 1` gives the Delannoy triangle. -/
 def ordinaryRiordanPascalLikeMatrix (n k : ℕ) (r : ℤ) : ℤ :=
   Finset.sum (Finset.range (k + 1)) fun j =>
     (k.choose j : ℤ) * ((n - j).choose k : ℤ) * r ^ j
-
-/-- Definitional equation for `ordinaryRiordanPascalLikeMatrix` (concept
-`jis_sem_d14a1d74e61f27c561413829`; statements `jis_55826aed9bbc43db2e540fc8`,
-`jis_a1500757725c00536c86ba35`, `jis_ac99ac2ae8aedbaafe1c53e3`): the
-definition unfolds to the finite sum over `j`. -/
-theorem ordinaryRiordanPascalLikeMatrix_def (n k : ℕ) (r : ℤ) :
-    ordinaryRiordanPascalLikeMatrix n k r =
-      Finset.sum (Finset.range (k + 1)) fun j =>
-        (k.choose j : ℤ) * ((n - j).choose k : ℤ) * r ^ j :=
-  rfl
-
 end MetaMathlibExt

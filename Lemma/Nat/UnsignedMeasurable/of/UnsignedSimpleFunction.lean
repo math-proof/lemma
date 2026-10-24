@@ -1,0 +1,22 @@
+import Mathlib
+import sympy.Basic
+import sympy.analysis.MeasureTheory.Section_1_3_2
+open UnsignedSimpleFunction
+
+
+/--
+[UnsignedSimpleFunction.unsignedMeasurable](https://github.com/teorth/analysis/blob/main/Analysis/MeasureTheory/Section_1_3_2.lean)
+-/
+@[path]
+private lemma main
+  {d:ℕ}
+  {f: EuclideanSpace' d → EReal}
+-- given
+  (hf: UnsignedSimpleFunction f) :
+-- imply
+  UnsignedMeasurable f :=
+-- proof
+  UnsignedSimpleFunction.unsignedMeasurable hf
+
+
+-- created on 2026-10-22

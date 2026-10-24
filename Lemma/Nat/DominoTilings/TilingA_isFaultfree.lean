@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings
 import Lemma.Nat.DominoTilings.basementDominos_mem
 import Lemma.Nat.DominoTilings.middleDominos_mem
 open DominoTilings

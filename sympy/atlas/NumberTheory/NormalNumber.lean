@@ -62,12 +62,6 @@ noncomputable def IsNormalInBase (b : ℕ) (x : ℝ) : Prop :=
       atTop
       (nhds (1 / (b : ℝ) ^ k))
 
-/-- Normality in a base implies simple normality in that base. -/
-theorem IsNormalInBase.isSimplyNormalInBase {b : ℕ} {x : ℝ} (h : IsNormalInBase b x) :
-    IsSimplyNormalInBase b x := by
-  intro d hd
-  simpa [Fin.forall_fin_one] using h 1 (fun _ => d) (fun _ => hd)
-
 /-- A real number is absolutely normal if it is normal in every base at least two. -/
 noncomputable def IsAbsolutelyNormal (x : ℝ) : Prop :=
   ∀ b : ℕ, 2 ≤ b → IsNormalInBase b x

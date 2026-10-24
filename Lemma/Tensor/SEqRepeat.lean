@@ -5,7 +5,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool Fin Tensor Vector Nat
+open Bool Fin Tensor Vector Nat Set
 
 
 @[path, cast, subst 1]

@@ -11,18 +11,18 @@ universe u
 
 variable {Z : (Scheme : Type (u + 1))}
 private lemma map_op_congr
-  {A B : Z.Opens} (i j : B ⟶ A) (s : (Z.presheaf.obj (op A))) :
+  {A B : Z.Opens} (i j : B ⟶ A) (s : Z.presheaf.obj (op A)) :
   Z.presheaf.map i.op s = Z.presheaf.map j.op s := by
   rw [Subsingleton.elim i j]
 private lemma app_map_top
-  {Z' : (Scheme : Type (u + 1))} (q : Z' ⟶ Z) (W : Z.Opens) (x : (Z.presheaf.obj (op ⊤))) :
+  {Z' : (Scheme : Type (u + 1))} (q : Z' ⟶ Z) (W : Z.Opens) (x : Z.presheaf.obj (op ⊤)) :
   q.app W (Z.presheaf.map (homOfLE le_top).op x) = Z'.presheaf.map (homOfLE le_top).op (q.appTop x) := by
   have := congrArg (fun φ => φ.hom x) (q.naturality (homOfLE (le_top : W ≤ ⊤)).op)
   simp only [CommRingCat.hom_comp, RingHom.coe_comp, Function.comp_apply] at this
   rw [this]
   apply map_op_congr _ _ _
 private lemma comp_app_apply
-  {X Y : (Scheme : Type (u + 1))} (f : X ⟶ Y) (g : Y ⟶ Z) (U : Z.Opens) (x : (Z.presheaf.obj (op U))) :
+  {X Y : (Scheme : Type (u + 1))} (f : X ⟶ Y) (g : Y ⟶ Z) (U : Z.Opens) (x : Z.presheaf.obj (op U)) :
   (f ≫ g).app U x = f.app ((TopologicalSpace.Opens.map g.base).obj U) (g.app U x) := rfl
 private lemma root_pow
   [CommRing K] (k : ℕ) (g : K) :
