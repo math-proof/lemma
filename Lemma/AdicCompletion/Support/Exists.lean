@@ -234,5 +234,3 @@ theorem AdicCompletion.exists_algebra_moduleFinite_of_moduleFinite_of_isMaximal
     fun hflat => by
       have := hflat
       exact AdicCompletion.ComplFiniteAux.injective B 𝔫⟩⟩
-
-

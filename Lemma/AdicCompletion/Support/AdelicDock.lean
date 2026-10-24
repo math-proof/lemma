@@ -197,4 +197,3 @@ theorem structure_lemma
   obtain ⟨x, n, k, hk, hg, hv⟩ :=
     K1Struct.structure_lemma (F := F) (v := v) ϖ hπ hϖ m hB g hc hd
   exact ⟨⟨x, n, k, hk, hg, hv⟩⟩
-

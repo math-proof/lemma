@@ -188,8 +188,6 @@ private lemma  map_sub_apply
   simp
 
 
-
-
 open _root_.AdicCompletion in
 @[path]
 private lemma main
