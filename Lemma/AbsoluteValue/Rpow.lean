@@ -17,3 +17,4 @@ private lemma rpow_apply_eq
 
 
 -- created on 2026-10-09
+-- updated on 2026-10-24
