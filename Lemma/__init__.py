@@ -4,6 +4,7 @@ from . import Real
 from . import Nat
 from . import Int
 from . import Finset
+from . import Matrix
 from . import Rat
 from . import Complex
 from . import Vector

@@ -40,4 +40,4 @@ if __name__ == '__main__':
     run()
 # created on 2022-07-11
 # updated on 2023-03-18
-
+# remapped from Finset.DetBlock_Stack_MulPowS.eq.Mul_Prod_Factorial.vandermonde -> Matrix....of.All (base-2 specialization of n-block Lean lemma)

@@ -56,7 +56,6 @@ from . import EqKH
 from . import EqMatProd
 from . import EqReducedSum
 from . import GtAlpha
-from . import DetBlock_Stack_MulPowS
 from . import DetBlock
 from . import GeKS
 from . import LtAlpha
@@ -113,3 +112,4 @@ from . import EqSwapMatrix
 from . import All_GeRootSDivSigma
 from . import Add_Min
 from . import Mod
+from . import LeAddSumS_SquareSub_Div_Sum
