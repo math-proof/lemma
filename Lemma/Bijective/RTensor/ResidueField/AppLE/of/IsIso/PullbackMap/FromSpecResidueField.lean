@@ -25,15 +25,14 @@ private lemma main
   (hUW : U ≤ q ⁻¹ᵁ W)
   (hhU : IsAffineOpen (h ⁻¹ᵁ U)) :
 -- imply
-  let : Algebra Γ(Y, W) Γ(X, U) :=
+  let : Algebra Γ(Y, W) Γ(X, U) := (q.appLE W U hUW).hom.toAlgebra
+  let : Algebra Γ(Y, W) Γ(Z, h ⁻¹ᵁ U) := (q.appLE W U hUW ≫ h.appLE U (h ⁻¹ᵁ U) le_rfl).hom.toAlgebra
+  let : Algebra Γ(Y, W) (Y.residueField y) := (Y.evaluation W y hyW).hom.toAlgebra
+  Function.Bijective
+    ((AlgHom.mk (h.appLE U (h ⁻¹ᵁ U) le_rfl).hom (fun _ => rfl) :
+      Γ(X, U) →ₐ[Γ(Y, W)] Γ(Z, h ⁻¹ᵁ U)).toLinearMap.rTensor (Y.residueField y)) := by
 -- proof
-  (q.appLE W U hUW).hom.toAlgebra
-    let : Algebra Γ(Y, W) Γ(Z, h ⁻¹ᵁ U) := (q.appLE W U hUW ≫ h.appLE U (h ⁻¹ᵁ U) le_rfl).hom.toAlgebra
-    let : Algebra Γ(Y, W) (Y.residueField y) := (Y.evaluation W y hyW).hom.toAlgebra
-    Function.Bijective
-      ((AlgHom.mk (h.appLE U (h ⁻¹ᵁ U) le_rfl).hom (fun _ => rfl) :
-        Γ(X, U) →ₐ[Γ(Y, W)] Γ(Z, h ⁻¹ᵁ U)).toLinearMap.rTensor (Y.residueField y)) := by
-    classical
+  classical
     let iRA : Algebra Γ(Y, W) Γ(X, U) := (q.appLE W U hUW).hom.toAlgebra
     let iRB : Algebra Γ(Y, W) Γ(Z, h ⁻¹ᵁ U) := (q.appLE W U hUW ≫ h.appLE U (h ⁻¹ᵁ U) le_rfl).hom.toAlgebra
     let iRκ : Algebra Γ(Y, W) (Y.residueField y) := (Y.evaluation W y hyW).hom.toAlgebra
@@ -145,3 +144,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-24
