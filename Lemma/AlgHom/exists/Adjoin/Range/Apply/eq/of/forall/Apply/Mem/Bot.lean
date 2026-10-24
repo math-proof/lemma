@@ -202,7 +202,6 @@ private lemma mem_span_Sol
       exact hEsol b hb
 
 
-
 private lemma sum_mul_apply_eq_zero
   {κ : Type*}
   [Field κ]
@@ -282,8 +281,6 @@ private lemma sum_mul_apply_eq_zero
   rw [LinearMap.mem_ker, hΛ_apply] at h
   rw [← h]
   exact Finset.sum_congr rfl fun t ht => by rw [ha₀s t ht]
-
-
 
 
 @[path]

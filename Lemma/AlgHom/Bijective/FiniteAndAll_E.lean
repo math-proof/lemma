@@ -150,7 +150,6 @@ private lemma finite_quot_join
   exact J.neg_mem (Ideal.mul_mem_left _ _ (Ideal.subset_span rfl))
 
 
-
 private lemma finite_quot_baseChange
   (A A' : Type*)
   [CommRing A]
@@ -273,7 +272,6 @@ private lemma bijective_mapₐ_trans
     Ideal.ResidueField.algHom_ext (Subsingleton.elim _ _)
   rw [this]
   exact h₂.comp h₁
-
 
 
 private lemma bad_finite
