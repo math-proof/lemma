@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Tensor
+    from Lemma import Finset, Matrix, Tensor
 
     λ = Symbol(real=True)
     d = Symbol(integer=True, positive=True)
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Det[2]).apply(Tensor.DetDotStackS.eq.Mul_Prod.vandermonde.col_transform)
 
-    Eq << Eq[-1].this.find(Det[MatMul]).apply(Tensor.Det.Dot.Stack.eq.Mul.Prod.vandermonde)
+    Eq << Eq[-1].this.find(Det[MatMul]).apply(Matrix.DetMulStackS_MulPow.eq.Mul_Prod_Factorial.of.Le)
 
 
 

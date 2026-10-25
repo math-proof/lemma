@@ -29,7 +29,7 @@ def prove(Eq):
     i = Eq[-1].lhs.variable
     Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[1], [i, None])
 
-    Eq << Random.Eq.Mul.Prod_ProbCond.of.Ne_0.Eq.apply(Eq[0], Eq[-1])
+    Eq << Random.ProbCond.eq.DivMulProb_Prod_ProbCond.of.NeProbJoint__0.All_Indep.apply(Eq[0], Eq[-1])
 
     Eq << Real.EqArgMin.of.Eq.apply(Eq[-1], (i,))
 

@@ -30,7 +30,7 @@ def prove(Eq):
     Eq << apply(Equal(y[t] | y[:t], y[t]), Unequal(Pr(y, x), 0))
 
     j = Eq[-1].find(Product).variable
-    Eq << Random.Eq.Mul.Prod_ProbCond.of.Ne_0.Eq.apply(*Eq[:2])
+    Eq << Random.ProbCond.eq.DivMulProb_Prod_ProbCond.of.NeProbJoint__0.All_Indep.apply(*Eq[:2])
 
     Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[1], [None, j])
 

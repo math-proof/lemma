@@ -1,1 +1,1 @@
-from . import All_Eq_Max
+from . import All_Eq_LogProbCond

@@ -221,3 +221,4 @@ from . import MulCscSin
 from . import MulSecCos
 from . import MulCotTan
 from . import Ceil
+from . import LeSum_Mul

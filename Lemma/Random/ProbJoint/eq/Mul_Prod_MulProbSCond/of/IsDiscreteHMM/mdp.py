@@ -122,7 +122,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Pr[~And]).args[-1].apply(Tensor.Eq.Is.GetSlice.Get)
 
-    Eq << Random.Ne_0.Slice.of.Ne_0.apply(Eq.ne_zero_s, 0)
+    Eq << Random.NeProb_0.of.NeProb_0.Le.apply(Eq.ne_zero_s, 0)
 
     Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-1], a[0], r[0], s[1])
 

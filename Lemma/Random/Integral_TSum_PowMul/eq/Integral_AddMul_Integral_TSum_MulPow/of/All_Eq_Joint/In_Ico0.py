@@ -74,7 +74,7 @@ def prove(Eq):
     Eq.eq_expect = Eq[-1].this.rhs.apply(Real.Integral.limits.separate)
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
-    Eq << Random.Ne_0.Slice.of.Ne_0.apply(Eq[-1], slice(t, t + 2))
+    Eq << Random.NeProb_0.of.NeProb_0.Le.apply(Eq[-1], slice(t, t + 2))
     Eq << Eq[-1].this.find(Equal[Sliced]).apply(Tensor.Eq.Is.GetSlice.Get)
     Eq << Random.EqConditioned.of.Eq_Conditioned.independence_assumption.future.apply(Eq[0])
 
