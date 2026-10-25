@@ -271,7 +271,7 @@ export class LeanProperty extends LeanBinary {
                 case 'sigmoid':
                     return '{\\color{RoyalBlue}\\sigma}\\left(%s\\right)';
                 case 'factorial':
-                    return '{%s}!';
+                    return '{%s}\\ {!}';
                 case 'det':
                     return '\\left|{%s}\\right|';
                 case 'natAbs':

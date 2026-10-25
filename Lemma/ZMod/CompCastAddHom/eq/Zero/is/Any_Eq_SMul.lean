@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_PeriodMap
+import Lemma.ModularCurve.PeriodMap
 open scoped MatrixGroups
 open ModularCurve.Period
 

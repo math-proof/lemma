@@ -1,0 +1,40 @@
+import Mathlib
+import sympy.Basic
+import Notation.LocalGL2_Kirillov
+import Def.LocalGL2_Kirillov
+import Def.AutomorphicForm_ConstantTerm
+import Instance.NumberField_Completion_Finite
+import Lemma.Complex.Kirillov.eq.SubKirillovS
+open scoped Classical LocalGL2_Kirillov
+open AutomorphicForm IsDedekindDomain NumberField
+open Complex
+
+
+noncomputable section
+
+namespace LocalGL2.Kirillov
+
+variable {K : Type} [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K))
+
+variable (ψ : AddChar (HeightOneSpectrum.adicCompletion K v) ℂ)
+  (S : Submodule ℂ (GL (Fin 2) (HeightOneSpectrum.adicCompletion K v) → ℂ))
+
+variable (ϖ : (HeightOneSpectrum.adicCompletion K v)ˣ)
+
+@[path]
+private lemma main
+-- given
+  (V W : G → ℂ)
+  (n : ℤ)
+  (u : UF v) :
+-- imply
+  shell v ψ S ϖ (V - W) n u = shell v ψ S ϖ V n u - shell v ψ S ϖ W n u :=
+-- proof
+  Complex.Kirillov.eq.SubKirillovS v ψ S V W _
+
+end LocalGL2.Kirillov
+
+end
+
+
+-- created on 2026-10-25

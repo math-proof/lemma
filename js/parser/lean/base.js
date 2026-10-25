@@ -390,6 +390,7 @@ export class Lean extends IndentedNode {
         switch (token) {
             case 'import':
             case 'namespace':
+            case 'section':
             case 'end':
             case 'def':
             case 'abbrev':
@@ -455,6 +456,8 @@ export class Lean extends IndentedNode {
                 switch (tokens[self.start_idx]) {
                     case 'noncomputable':
                     case 'nonrec':
+                    case 'partial':
+                    case 'unsafe':
                         token += ` ${tokens[self.start_idx]}`;
                         self.start_idx++;
                         while (tokens[++self.start_idx] === ' ');
@@ -463,6 +466,8 @@ export class Lean extends IndentedNode {
             case 'scoped':
             case 'noncomputable':
             case 'nonrec':
+            case 'partial':
+            case 'unsafe':
                 while (tokens[++self.start_idx] === ' ');
                 return this.push_accessibility(`Lean_${tokens[self.start_idx]}`, token);
             case ' ':
@@ -561,6 +566,7 @@ export class Lean extends IndentedNode {
                         par instanceof L.Lean_open ||
                         par instanceof L.Lean_set_option ||
                         par instanceof L.Lean_namespace ||
+                        par instanceof L.Lean_section ||
                         par instanceof L.Lean_def ||
                         par instanceof L.Lean_theorem ||
                         par instanceof L.Lean_lemma ||

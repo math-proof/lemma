@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_NodeLocalized
+import Lemma.ModularCurve.NodeLocalized
 import Lemma.Int.P2MUtil
 
 open ModularCurve ModularCurve.NodeLocalized

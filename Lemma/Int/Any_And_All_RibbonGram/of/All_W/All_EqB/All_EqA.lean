@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_Ribbon
+import Def.CerednikDrinfeld_Ribbon
 import Lemma.Int.P2MUtil
 
 open CerednikDrinfeld

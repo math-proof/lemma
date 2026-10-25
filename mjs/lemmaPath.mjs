@@ -54,6 +54,9 @@ const TYPE_TO_SECTION = {
   Polynomial: "Polynomial",
   MvPolynomial: "MvPolynomial",
   LaurentPolynomial: "LaurentPolynomial",
+  PowerSeries: "PowerSeries",
+  MvPowerSeries: "MvPowerSeries",
+  Ideal: "Ideal",
   // PiLp-based sequence spaces live with Matrix in this repository.
   l1Space: "Matrix",
   L1Space: "Matrix",
@@ -603,7 +606,7 @@ function conclusionLhsHeadToken(colonNode) {
 }
 
 /**
- * Section tokens with a position weight: 0 in a function domain (`ℕ → ℝ` indices),
+ * Section tokens with a position weight: 0 in a function domain (`ℕ → ℝ` / `ℕ ⇀ ℂ` indices),
  * 2 in a codomain (value type), 1 elsewhere. Property names naming a section count
  * as `.Section` (`M.kernel` → Kernel); namespaced constants as `ns:Section`.
  */
@@ -627,7 +630,8 @@ function collectTokenWeights(node, w = 1, out = new Map()) {
     const p = nameToken(node.args[1].text || "");
     if (TYPE_TO_SECTION[p] === p) put("." + p, w);
   }
-  if (c === "Lean_rightarrow" && node.args?.length === 2) {
+  // `→` and indexed families `ℕ ⇀ ℂ`: domain is an index, codomain is the value field.
+  if ((c === "Lean_rightarrow" || c === "Lean_rightharpoonup") && node.args?.length === 2) {
     const dom = node.args[0];
     const isType = cls(dom) === "LeanToken" || (cls(dom) === "LeanArgsSpaceSeparated" && cls(dom.args?.[0]) === "LeanToken" && /^[A-Z]/.test(dom.args[0].text || ""));
     if (isType) {
@@ -653,6 +657,8 @@ const TYPECLASS_FOLDERS = new Set(["NormedSpace", "NormedAddCommGroup", "NormedF
 const TOPIC_FOLDERS = new Set([
   "AlgebraicCurve", "AlgebraicGeometry", "AutomorphicForm", "CerednikDrinfeld", "Curve",
   "Definitions", "Fourier", "groupCohomology", "HeckeEis", "ModularCurve", "P2M",
+  // Mathlib non-type-former defs / util names - never legal as Lemma sections (Ideal/Count dumps).
+  "Count", "Sum", "Prod", "Map", "Factors", "RamificationIdx", "RamificationIdx'",
 ]);
 
 /** Body 2026-10-24: these 17 are never legal sections (no transitional keep). */
@@ -670,7 +676,7 @@ function sectionKindMap() {
 }
 
 /** Topic/typeclass folders must not be chosen as sections (AGENTS.md). TYPE_TO_SECTION aliases stay allowed. */
-function refusedSectionFolder(name) {
+export function refusedSectionFolder(name) {
   if (DATA_TYPE_SECTIONS.has(name) || TYPE_TO_SECTION[name]) return false;
   if (ILLEGAL_SECTIONS.has(name) || TYPECLASS_FOLDERS.has(name) || TOPIC_FOLDERS.has(name)) return true;
   const kind = sectionKindMap().get(name);
@@ -793,6 +799,18 @@ function customSection(sections, conclNode, givenTypes, importDecls = new Map(),
 }
 
 /** `import sympy.stats.iterates` → Iterates, when such a Lemma folder exists. */
+/** open MvPolynomial PowerSeries -> data-type section boosts (like sympy imports). */
+function openDataSections(source) {
+  const out = [];
+  for (const m of String(source || "").matchAll(/^open\s+([^\n]+)/gm)) {
+    for (const name of m[1].trim().split(/\s+/)) {
+      const sec = TYPE_TO_SECTION[name] || (DATA_TYPE_SECTIONS.has(name) ? name : null);
+      if (sec) out.push(sec);
+    }
+  }
+  return out;
+}
+
 function importSections(source, sections) {
   // folder → names declared (class/structure/def/…) in the imported sympy module of the same name
   const out = new Map();
@@ -840,8 +858,11 @@ function pickSection(sigNode, sections, extra = {}) {
     else if (!TYPE_TO_SECTION[t] && sympyDecls().abbrevHeads.has(t)) { sec = abbrevSection(t); raw = 1; } // {w : ℝ → EuclideanVec m} → Matrix
     else { sec = TYPE_TO_SECTION[t]; raw = t === sec ? 3 : SECTION_WEIGHT[t] ?? 1; }
     if (!sec) continue;
-    const index = sec === "Nat" || sec === "Int";
-    // ℕ/ℤ often only index or count; prefer the value type (Real sequences)
+    // ℕ/ℤ/Fin often only index or count (e : Fin 2 picks an exponent); prefer the value field (ℂ → Complex).
+    // Fin is an index only when a scalar field is also present, so Fin-primary lemmas stay Fin.
+    const scalarField = tokens.has("ℂ") || tokens.has("ℝ") || tokens.has("ℚ")
+      || tokens.has("Complex") || tokens.has("Real") || tokens.has("Rat");
+    const index = sec === "Nat" || sec === "Int" || (sec === "Fin" && scalarField);
     if (index && tokens.size > 0) raw = Math.min(raw, 1) * 0.5;
     const x = w === 0 ? raw * 0.5 : w === 2 && !index ? raw + 0.5 : raw;
     add(sec, x);
@@ -932,13 +953,19 @@ function pickSection(sigNode, sections, extra = {}) {
       scores.set("Finset", 1);
     }
   }
-  // Matrix.det / Matrix.of as the concluded subject → Matrix over Fin / Finset.range in the
-  // entry formula (DetOf/eq/PowSub__Mul). True Finset-primary lemmas keep Finset.
+  // Matrix.det / Matrix.of / Matrix Fin-stack sugar as concluded subject → Matrix over Fin /
+  // Finset.range in the entry (DetStack_Mul_Sum_Mul_Pow_Sub/eq/PowSub__Mul). True Finset-primary keep Finset.
   {
-    const isMatrixOf = (n) => cls(n) === "LeanProperty" && cls(n.args?.[0]) === "LeanToken"
-      && n.args[0].text === "Matrix" && cls(n.args?.[1]) === "LeanToken" && n.args[1].text === "of";
+    const isMatrixOf = (n) => {
+      if (cls(n) !== "LeanProperty" || cls(n.args?.[0]) !== "LeanToken" || n.args[0].text !== "Matrix") return false;
+      const p = n.args[1];
+      if (cls(p) === "LeanToken" && p.text === "of") return true;
+      // Matrix.of fun … → Property(Matrix, ArgsSpaceSeparated(of, fun))
+      return cls(p) === "LeanArgsSpaceSeparated" && cls(p.args?.[0]) === "LeanToken" && p.args[0].text === "of";
+    };
+    const isMatrixFinStack = (n) => cls(n) === "LeanStack" && !!matrixFinBindersOf(n);
     const isDetProp = (n) => cls(n) === "LeanProperty" && cls(n.args?.[1]) === "LeanToken" && n.args[1].text === "det";
-    const conclMatrixDet = !!(concl && (hasNode(concl, isDetProp) || hasNode(concl, isMatrixOf)));
+    const conclMatrixDet = !!(concl && (hasNode(concl, isDetProp) || hasNode(concl, isMatrixOf) || hasNode(concl, isMatrixFinStack)));
     if (conclMatrixDet && scores.has("Matrix")) {
       add("Matrix", 4);
       if ((scores.get("Finset") ?? 0) > 1) scores.set("Finset", 1);
@@ -949,6 +976,29 @@ function pickSection(sigNode, sections, extra = {}) {
   if (scores.has("Polynomial") && hasNode(sigNode, (n) =>
     cls(n) === "LeanGetElem" && cls(n.args?.[1]) === "LeanToken" && n.args[1].text === "X")) {
     add("Polynomial", 4);
+  }
+  // MvPolynomial (Fin n) / Ideal (MvPolynomial) / eval / homogeneous grading:
+  // the polynomial ring beats Fin index parameters and Ideal container binders.
+  {
+    const hasMvP = hasNode(sigNode, (n) => cls(n) === "LeanToken" && n.text === "MvPolynomial");
+    if (hasMvP && scores.has("MvPolynomial")) {
+      add("MvPolynomial", 4);
+      if ((scores.get("Fin") ?? 0) > 1) scores.set("Fin", 1);
+      if ((scores.get("Ideal") ?? 0) > 1) scores.set("Ideal", 1);
+    }
+  }
+  // Module.finrank k (homogeneousSubmodule) is filed under PowerSeries (Hilbert finrank /
+  // AddMonoidAlgebra convention in this repo), not Fin / MvPolynomial.
+  {
+    const hasHomog = hasNode(sigNode, (n) => cls(n) === "LeanToken" && n.text === "homogeneousSubmodule");
+    const hasFinrank = hasNode(sigNode, (n) =>
+      (cls(n) === "LeanToken" && n.text === "finrank") ||
+      (cls(n) === "LeanProperty" && cls(n.args?.[1]) === "LeanToken" && n.args[1].text === "finrank"));
+    if (hasHomog && hasFinrank && scores.has("PowerSeries")) {
+      add("PowerSeries", 5);
+      if ((scores.get("Fin") ?? 0) > 1) scores.set("Fin", 1);
+      if ((scores.get("MvPolynomial") ?? 0) > 1) scores.set("MvPolynomial", 1);
+    }
   }
   // matrix exponential (`exp (t • Q)` with Q : Matrix …) lives in NormedSpace/
   // (`Real.exp` / `Complex.exp` are scalar exponentials, not the matrix one)
@@ -1159,6 +1209,14 @@ function collectLeafBinders(node, out = new Set(), noBinders = false) {
       if (cls(b) === "LeanColon" && cls(b.args?.[0]) === "LeanToken" && b.args[0].text && b.args[0].text !== "_") {
         out.add(b.args[0].text);
       }
+    }
+  }
+  // LeanStack Fin binders (`i < n` / Matrix `i < n, j < n`) are holes like ∑ binders
+  if (name === "LeanStack") {
+    const binders = matrixFinBindersOf(node);
+    const lts = binders || (cls(node.bound ?? node.args?.[0]) === "Lean_lt" ? [node.bound ?? node.args[0]] : []);
+    for (const lt of lts) {
+      if (cls(lt?.args?.[0]) === "LeanToken" && lt.args[0].text && lt.args[0].text !== "_") out.add(lt.args[0].text);
     }
   }
   // if h : P then ... else ... (dite): proof binder must not become a path token (All_Eq_Sum_ExpH).
@@ -2668,6 +2726,150 @@ function hasIllegalGetArgMaxProbCond(path) {
   return /(^|\/)GetArgMaxProbCond(?=\/|$)/.test(s) || /(^|\/)ArgMaxProbCond(?=\/|$)/.test(s);
 }
 
+/**
+ * Matrix Fin-entry sugar `[i < n, j < n] body` → LeanStack (comma of two Lean_lt); Tensor
+ * `[i < n] body` → LeanStack(single lt) with matrixFinBinders null.
+ * Prefer DetStack_Mul_Sum_Mul_Pow_Sub for sugar; DetOfFunMul_Sum_Mul_Pow_Sub for Matrix.of fun.
+ * Choose / Range / other Pows omitted; bare DetOf / DetLtI are wrong for this spine.
+ */
+const DET_STACK_MUL_SUM_MUL_POW_SUB = "DetStack_Mul_Sum_Mul_Pow_Sub";
+const DET_STACK_MUL_SUM_EQ_POW_SUB_MUL =
+  DET_STACK_MUL_SUM_MUL_POW_SUB + "/eq/PowSub__Mul";
+const DET_OF_FUN_MUL_SUM_MUL_POW_SUB = "DetOfFunMul_Sum_Mul_Pow_Sub";
+const DET_OF_FUN_MUL_SUM_EQ_POW_SUB_MUL =
+  DET_OF_FUN_MUL_SUM_MUL_POW_SUB + "/eq/PowSub__Mul";
+
+/** Matrix ofFun Fin binders on a LeanStack (`matrixFinBinders()` or structural comma-of-two-lt). */
+function matrixFinBindersOf(stack) {
+  if (cls(stack) !== "LeanStack") return null;
+  if (typeof stack.matrixFinBinders === "function") {
+    const b = stack.matrixFinBinders();
+    if (b && b.length === 2) return b;
+  }
+  const bound = stack.bound ?? stack.args?.[0];
+  if (cls(bound) !== "LeanArgsCommaSeparated") return null;
+  const parts = (bound.args || []).filter((x) => cls(x) !== "LeanCaret");
+  if (
+    parts.length !== 2 ||
+    !parts.every((p) => cls(p) === "Lean_lt" && cls(p.args?.[0]) === "LeanToken")
+  ) {
+    return null;
+  }
+  return parts;
+}
+
+function peelEntryStmt(node) {
+  let body = unwrapParen(node);
+  if (cls(body) === "LeanStatements" || cls(body) === "LeanArgsNewLineSeparated") {
+    body = unwrapParen((body.args || []).find((a) => cls(a) !== "LeanLineComment"));
+  }
+  return body || null;
+}
+
+/** Scope / entry body of Matrix Fin-stack sugar, optionally under `(…).det`. */
+function matrixStackEntryBody(node) {
+  let u = unwrapParen(node);
+  if (cls(u) === "LeanProperty" && cls(u.args?.[1]) === "LeanToken" && u.args[1].text === "det") {
+    u = unwrapParen(u.args[0]);
+  }
+  if (cls(u) !== "LeanStack" || !matrixFinBindersOf(u)) return null;
+  return peelEntryStmt(u.scope ?? u.args?.[1]);
+}
+
+/** Fun body of `Matrix.of fun …`, optionally under `(…).det`. */
+function matrixOfFunBody(node) {
+  let u = unwrapParen(node);
+  if (cls(u) === "LeanProperty" && cls(u.args?.[1]) === "LeanToken" && u.args[1].text === "det") {
+    u = unwrapParen(u.args[0]);
+  }
+  if (cls(u) !== "LeanProperty" || cls(u.args?.[0]) !== "LeanToken" || u.args[0].text !== "Matrix") return null;
+  const prop = u.args[1];
+  if (cls(prop) !== "LeanArgsSpaceSeparated" || cls(prop.args?.[0]) !== "LeanToken" || prop.args[0].text !== "of") {
+    return null;
+  }
+  let fun = unwrapParen(prop.args[1]);
+  if (cls(fun) !== "Lean_fun") return null;
+  let body = fun.args?.[fun.args.length - 1];
+  if (cls(body) === "LeanRightarrow" || cls(body) === "Lean_mapsto") body = body.args?.[body.args.length - 1];
+  return peelEntryStmt(body);
+}
+
+/** `(h : ℝ) ^ (i - j : ℤ)` — Pow whose exponent is Sub (colon ascriptions peeled). */
+function isPowOfSub(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanPow" || (u.args || []).length !== 2) return false;
+  let exp = unwrapParen(u.args[1]);
+  if (cls(exp) === "LeanColon") exp = unwrapParen(exp.args?.[0]);
+  return cls(exp) === "LeanSub";
+}
+
+/** Nested Mul chain contains a Pow_Sub factor (Sum body `… * (h)^ (i - j)`). */
+function mulChainHasPowSub(node) {
+  const seen = new Set();
+  function walk(n) {
+    n = unwrapParen(n);
+    if (!n || typeof n !== "object" || seen.has(n)) return false;
+    seen.add(n);
+    if (isPowOfSub(n)) return true;
+    if (cls(n) === "LeanMul") return walk(n.args?.[0]) || walk(n.args?.[1]);
+    if (cls(n) === "LeanColon") return walk(n.args?.[0]);
+    if (cls(n) === "LeanArgsNewLineSeparated" || cls(n) === "LeanStatements") {
+      return (n.args || []).some((a) => cls(a) !== "LeanLineComment" && walk(a));
+    }
+    return false;
+  }
+  return walk(node);
+}
+
+/** Entry Mul(·, Sum(… Mul … Pow_Sub …)) → abbrev `Mul_Sum_Mul_Pow_Sub`. */
+function isMulSumMulPowSubEntry(body) {
+  if (!body || cls(body) !== "LeanMul" || (body.args || []).length !== 2) return false;
+  const right = unwrapParen(body.args[1]);
+  if (cls(right) !== "Lean_sum") return false;
+  let sumBody = unwrapParen(right.args?.[right.args.length - 1]);
+  if (cls(sumBody) === "LeanArgsNewLineSeparated" || cls(sumBody) === "LeanStatements") {
+    sumBody = unwrapParen((sumBody.args || []).find((a) => cls(a) !== "LeanLineComment"));
+  }
+  return cls(sumBody) === "LeanMul" && mulChainHasPowSub(sumBody);
+}
+
+function isDetStackMulSumMulPowSubShape(node) {
+  return isMulSumMulPowSubEntry(matrixStackEntryBody(node));
+}
+
+function isDetOfFunMulSumMulPowSubShape(node) {
+  return isMulSumMulPowSubEntry(matrixOfFunBody(node));
+}
+
+/**
+ * `( [i < n, j < n] … ).det` → DetStack_Mul_Sum_Mul_Pow_Sub;
+ * `(Matrix.of fun …).det` → DetOfFunMul_Sum_Mul_Pow_Sub.
+ * Stack sugar wins over OfFun when both could apply (they should not).
+ */
+function detMatrixEntryMulSumMulPowSubName(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanProperty" || cls(u.args?.[1]) !== "LeanToken" || u.args[1].text !== "det") return "";
+  if (isDetStackMulSumMulPowSubShape(u)) return DET_STACK_MUL_SUM_MUL_POW_SUB;
+  if (isDetOfFunMulSumMulPowSubShape(u)) return DET_OF_FUN_MUL_SUM_MUL_POW_SUB;
+  return "";
+}
+
+/** RHS `(x - l) ^ (d * n)` → PowSub__Mul. */
+function isPowSubMulExpr(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanPow" || (u.args || []).length !== 2) return false;
+  return cls(unwrapParen(u.args[0])) === "LeanSub" && cls(unwrapParen(u.args[1])) === "LeanMul";
+}
+
+function detMatrixEntryEqPowSubMulBodyName(implyStmts) {
+  const eq = peelStmt(implyStmts);
+  if (cls(eq) !== "LeanEq" || (eq.args || []).length !== 2) return "";
+  if (!isPowSubMulExpr(eq.args[1])) return "";
+  if (isDetStackMulSumMulPowSubShape(eq.args[0])) return DET_STACK_MUL_SUM_EQ_POW_SUB_MUL;
+  if (isDetOfFunMulSumMulPowSubShape(eq.args[0])) return DET_OF_FUN_MUL_SUM_EQ_POW_SUB_MUL;
+  return "";
+}
+
 /** Expect of DotPow_Id @ fun of (adv bullet GradLogProbCond). */
 function expectDotFunSMulGradLogName(node) {
   const u = unwrapParen(node);
@@ -2720,6 +2922,13 @@ function preAlts(node, opts, canon) {
   const c = cls(node);
   const args = node.args || [];
   const A = (n) => (canon ? [nameExpr(n, opts)].filter(Boolean) : nameExprAlts(n, opts));
+  // Matrix Fin-stack / of-fun Mul_Sum … Pow_Sub .det → DetStack_… / DetOfFun… (not DetLtI / bare DetOf)
+  {
+    const detEntry = detMatrixEntryMulSumMulPowSubName(node);
+    if (detEntry) {
+      return canon ? [detEntry] : uniq([detEntry, ...nameExprAltsBase(node, opts)]);
+    }
+  }
   // IsPolicyTrajectory path atom (Body override: not All_Eq; All_Eq remains alt for legacy)
   if (opts.asGiven && c === "LeanArgsSpaceSeparated" && cls(args[0]) === "LeanToken" && args[0].text === "IsPolicyTrajectory") {
     return canon ? ["IsPolicyTrajectory"] : uniq(["IsPolicyTrajectory", "All_Eq"]);
@@ -4218,6 +4427,14 @@ function nameExprBase(node, opts = {}) {
     const body = nameExpr(args[args.length - 1], opts);
     return body ? tag + "_" + body : tag;
   }
+  // LeanStack: operator "Stack". Matrix ofFun = comma-of-two-lt (matrixFinBinders);
+  // Tensor = single lt / nested Stack — never name binders as LtI.
+  if (name === "LeanStack") {
+    const scope = peelEntryStmt(node.scope ?? node.args?.[1]);
+    if (matrixFinBindersOf(node) && isMulSumMulPowSubEntry(scope)) return "Stack_Mul_Sum_Mul_Pow_Sub";
+    const body = nameExpr(scope, opts);
+    return body ? "Stack_" + body : "Stack";
+  }
 
   const WRAP_OP_PREFIX = {
     LeanNorm: "Norm",
@@ -4693,6 +4910,16 @@ function nameExprAltsBase(node, opts = {}) {
     const base = !bodyAlts.length ? [tag] : bodyAlts.flatMap((b) => [tag + "_" + b, tag + b]);
     return uniq(arityRange ? [arityRange, ...base] : base);
   }
+  // LeanStack → Stack_… (Matrix Fin sugar / Tensor); never LtI from binders
+  if (name === "LeanStack") {
+    const scope = peelEntryStmt(node.scope ?? node.args?.[1]);
+    if (matrixFinBindersOf(node) && isMulSumMulPowSubEntry(scope)) {
+      return uniq(["Stack_Mul_Sum_Mul_Pow_Sub", "Stack"]);
+    }
+    const bodyAlts = nameExprAlts(scope, opts);
+    if (!bodyAlts.length) return ["Stack"];
+    return uniq(bodyAlts.flatMap((b) => ["Stack_" + b, "Stack" + b]).concat(["Stack"]));
+  }
 
   // Wrapper ops: Norm, Abs, Ceil, Floor
   const WRAP_OP_PREFIX = { LeanNorm: "Norm", LeanAbs: "Abs", LeanCeil: "Ceil", LeanFloor: "Floor" };
@@ -5138,7 +5365,7 @@ function hasMainAttr(lemma) {
   });
 }
 
-function extractLemmas(ast) { return (ast.args || []).filter((a) => cls(a) === "Lean_lemma"); }
+function extractLemmas(ast) { return (ast.args || []).filter((a) => cls(a) === "Lean_lemma" || cls(a) === "Lean_theorem"); }
 function getLemmaName(lemma) {
   const assign = (lemma.args || []).find((a) => cls(a) === "LeanAssign");
   const colon = assign?.args?.find((a) => cls(a) === "LeanColon");
@@ -5330,9 +5557,53 @@ export function namePathAtoms(source) {
   return { imply, givens };
 }
 
+/**
+ * Definitions files that declare structure / instance / capitalized def / class are not
+ * Lemma/ rename candidates (AGENTS: structure/def/instance not legal in Lemma/). Refuse
+ * rather than inventing a weak MvPolynomial/Nat path from an incidental lemma.
+ */
+function stripLeanComments(source) {
+  return String(source || "")
+    .replace(/\/-([\s\S]*?)-\//g, "\n")
+    .replace(/--[^\n]*/g, "");
+}
+
+function isDefinitionsDeclHeavy(source) {
+  const stripped = stripLeanComments(source);
+  const declRe = /(?:^|\n)(?:@[^\n]*\n)*(?:(?:noncomputable|private|protected|scoped|partial|unsafe)\s+)*(?:structure|instance|class)\s+/;
+  const capDefRe = /(?:^|\n)(?:@[^\n]*\n)*(?:(?:noncomputable|private|protected|scoped|partial|unsafe)\s+)*def\s+[A-Z]/;
+  return declRe.test(stripped) || capDefRe.test(stripped);
+}
+
+/**
+ * Multi-decl Definitions packages (2+ lemma/theorem) must not whole-dump into a path named
+ * from the first incidental lemma (Ideal/Count/eq/... from Dedekind IntegralClosure).
+ * Carve a single-primary lemma file first, then re-suggest.
+ */
+export function isDefinitionsPackage(source) {
+  const stripped = stripLeanComments(source);
+  const lemmaRe = /(?:^|\n)(?:@[^\n]*\n)*(?:(?:noncomputable|private|protected|scoped)\s+)*(?:lemma|theorem)\s+/g;
+  return [...stripped.matchAll(lemmaRe)].length > 1;
+}
+
+function definitionsRenameRefuseReason(source) {
+  if (isDefinitionsDeclHeavy(source)) {
+    return "Structure/def/instance file - leave in Definitions (not a Lemma/ rename candidate)";
+  }
+  if (isDefinitionsPackage(source)) {
+    return "Multi-decl package - leave in Definitions (carve a single primary lemma first)";
+  }
+  return null;
+}
+
 export function suggest(filePath, lemmaName, options = {}) {
   const abs = path.resolve(filePath);
   const source = fs.readFileSync(abs, "utf8").replace(/\r\n/g, "\n");
+  const curTopEarly = path.relative(LEMMA_ROOT, abs).replace(/\\/g, "/").split("/")[0];
+  if (curTopEarly === "Definitions") {
+    const refuse = definitionsRenameRefuseReason(source);
+    if (refuse) throw new Error(refuse);
+  }
   const ast = compileLemmaSource(source);
   const lemma = extractLemma(ast, lemmaName);
   if (!lemma) throw new Error("No Lean_lemma found");
@@ -5361,9 +5632,17 @@ export function suggest(filePath, lemmaName, options = {}) {
   const picked = pickSection(sig.colon, legacy ? sections : dataSections, {
     custom,
     // `import sympy.….vector` → +1.5 for Vector; custom folders (Iterates, …) are decided by customSection only
-    imports: [...importSections(source, sections).keys()].filter((s) => DATA_TYPE_SECTIONS.has(s) || TYPE_TO_SECTION[s]),
+    imports: [
+      ...[...importSections(source, sections).keys()].filter((s) => DATA_TYPE_SECTIONS.has(s) || TYPE_TO_SECTION[s]),
+      ...openDataSections(source),
+    ],
   });
   const section = picked.section;
+  if (curTop === "Definitions" && refusedSectionFolder(section) && !(sectionKindMap().get(section) === "type class" && section === curTop)) {
+    throw new Error(
+      `Topic/unknown or illegal section "${section}" - leave in Definitions (not a Lemma/ rename candidate)`
+    );
+  }
   let relCurrent = path.relative(LEMMA_ROOT, abs).replace(/\\/g, "/");
   if (relCurrent.startsWith("..")) relCurrent = path.relative(REPO, abs).replace(/\\/g, "/");
   const leaves = collectLeafBinders(sig.indented);
@@ -5527,6 +5806,15 @@ export function suggest(filePath, lemmaName, options = {}) {
         ARGMAX_EQ_ARGMAX,
         ARGMAX_EQ_MUL_PROD_PROBCOND,
       ]);
+    }
+  }
+  // Body: ([i < n, j < n] … Mul_Sum … Pow_Sub).det = (x - l)^(d * n)
+  // → DetStack_Mul_Sum_Mul_Pow_Sub/eq/PowSub__Mul (Matrix.of fun → DetOfFun…; not DetLtI / bare DetOf).
+  {
+    const bodyDetEntry = detMatrixEntryEqPowSubMulBodyName(sig.implyStmts);
+    if (bodyDetEntry) {
+      implyAltsA = uniq([bodyDetEntry, ...implyAltsA]);
+      implyAltsA.preferred = bodyDetEntry;
     }
   }
   // Canonical rendering (nameExpr) first when it is among the alternatives.

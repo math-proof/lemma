@@ -152,6 +152,60 @@ export class Lean_namespace extends LeanCommand {
     }
 }
 
+/** `section` / `noncomputable section` / named `section Foo`.
+ *  Accessibility modifiers (`noncomputable`, `partial`, `unsafe`, ...) are legal on sections
+ *  in Lean; `push_accessibility` constructs via `(accessibility, caret, indent, level)`.
+ */
+export class Lean_section extends LeanCommand {
+    static { this.register(); }
+
+    /**
+     * @param {string|import('./base.js').Lean} accessibility
+     * @param {import('./base.js').Lean|number} [arg]
+     * @param {number} [indent]
+     * @param {number} [level]
+     * @param {import('../node.js').Node | null} [parent]
+     */
+    constructor(accessibility, arg, indent, level, parent = null) {
+        // append: new Ctor(caret, indent, level)
+        // push_accessibility: new Ctor(accessibility, caret, indent, level)
+        if (level === null || level === undefined) {
+            indent = arg;
+            arg = accessibility;
+            accessibility = 'public';
+            level = arg instanceof L.Lean ? arg.level : 0;
+        }
+        super(arg, indent, level, parent);
+        this.kwargs.accessibility = accessibility;
+    }
+
+    get accessibility() {
+        return this.kwargs.accessibility;
+    }
+
+    set accessibility(v) {
+        this.kwargs.accessibility = v;
+    }
+
+    get stack_priority() {
+        return 27;
+    }
+
+    get operator() {
+        return 'section';
+    }
+
+    strFormat() {
+        const acc = this.accessibility === 'public' ? '' : `${this.accessibility} `;
+        return `${acc}${this.operator} %s`;
+    }
+
+    latexFormat() {
+        return this.strFormat();
+    }
+}
+
+
 /** `end %s`. The old parse consumed `end` and left the name as a stray command. */
 export class Lean_end extends LeanCommand {
     static { this.register(); }

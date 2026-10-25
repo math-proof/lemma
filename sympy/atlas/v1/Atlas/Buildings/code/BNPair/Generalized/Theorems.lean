@@ -9,8 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import sympy.atlas.v1.Atlas.Buildings.code.BNPair.Generalized.TypePreserving
-import Lemma.Nat.Tt.le.Bt
-import Lemma.Real.EqSigma.of.Ne
 
 set_option linter.unusedSectionVars false
 set_option maxHeartbeats 800000

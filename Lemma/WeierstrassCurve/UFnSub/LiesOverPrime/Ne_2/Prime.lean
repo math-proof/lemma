@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FLTPrelim_GaloisRep
-import Lemma.Definitions.Def_FLTPrelim_Ramification
+import Lemma.FLTPrelim.GaloisRep
+import Def.FLTPrelim_Ramification
 import Lemma.Int.P2MUtil
 open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point Int
 
@@ -26,38 +26,34 @@ private lemma main
   (hFx : (W.a₁ : AlgebraicClosure ℚ) * y₀ = 3 * x₀ ^ 2 + 2 * W.a₂ * x₀ + W.a₄)
   (hnode : A.valuation ((W.b₂ : AlgebraicClosure ℚ) + 12 * x₀) = 1)
   (hbad : A.valuation (y₀ ^ 2 + W.a₁ * x₀ * y₀ + W.a₃ * y₀ - (x₀ ^ 3 + W.a₂ * x₀ ^ 2 + W.a₄ * x₀ + W.a₆)) < 1)
-  (h : ((W.map (Int.castRingHom ℚ))⁄(AlgebraicClosure ℚ)).toAffine.Nonsingular x y)
+  (h : ((W.map (Int.castRingHom ℚ)).baseChange (AlgebraicClosure ℚ)).toAffine.Nonsingular x y)
   (htor : 2 • (Point.some x y h) = 0)
   (hX : A.valuation (x - x₀) < 1) :
 -- imply
   A.valuation (x - x₀) ^ 2 =
-        A.valuation (y₀ ^ 2 + W.a₁ * x₀ * y₀ + W.a₃ * y₀ - (x₀ ^ 3 + W.a₂ * x₀ ^ 2 + W.a₄ * x₀ + W.a₆)) ∧
-      ∀ {x' y' : AlgebraicClosure ℚ}
-        (h' : ((W.map (Int.castRingHom ℚ))⁄(AlgebraicClosure ℚ)).toAffine.Nonsingular x' y'),
-        2 • (Point.some x' y' h') = 0 → A.valuation (x' - x₀) < 1 → x' ≠ x →
-          A.valuation (x' - x) = A.valuation (x - x₀) := by
+      A.valuation (y₀ ^ 2 + W.a₁ * x₀ * y₀ + W.a₃ * y₀ - (x₀ ^ 3 + W.a₂ * x₀ ^ 2 + W.a₄ * x₀ + W.a₆)) ∧
+    ∀ {x' y' : AlgebraicClosure ℚ} (h' : ((W.map (Int.castRingHom ℚ)).baseChange (AlgebraicClosure ℚ)).toAffine.Nonsingular x' y'),
+      2 • (Point.some x' y' h') = 0 → A.valuation (x' - x₀) < 1 → x' ≠ x →
+        A.valuation (x' - x) = A.valuation (x - x₀) := by
 -- proof
   classical
 
   have _frame : x₀ ∈ A ∧ y₀ ∈ A := ⟨hx₀, hy₀⟩
   have _bad := hbad
 
-  have ha₁ : ((W.map (Int.castRingHom ℚ))⁄(AlgebraicClosure ℚ)).a₁ = (W.a₁ : (AlgebraicClosure ℚ)) := by simp
-  have ha₂ : ((W.map (Int.castRingHom ℚ))⁄(AlgebraicClosure ℚ)).a₂ = (W.a₂ : (AlgebraicClosure ℚ)) := by simp
-  have ha₃ : ((W.map (Int.castRingHom ℚ))⁄(AlgebraicClosure ℚ)).a₃ = (W.a₃ : (AlgebraicClosure ℚ)) := by simp
-  have ha₄ : ((W.map (Int.castRingHom ℚ))⁄(AlgebraicClosure ℚ)).a₄ = (W.a₄ : (AlgebraicClosure ℚ)) := by simp
-  have ha₆ : ((W.map (Int.castRingHom ℚ))⁄(AlgebraicClosure ℚ)).a₆ = (W.a₆ : (AlgebraicClosure ℚ)) := by simp
+  have ha₁ : ((W.map (Int.castRingHom ℚ)).baseChange (AlgebraicClosure ℚ)).a₁ = (W.a₁ : (AlgebraicClosure ℚ)) := by simp
+  have ha₂ : ((W.map (Int.castRingHom ℚ)).baseChange (AlgebraicClosure ℚ)).a₂ = (W.a₂ : (AlgebraicClosure ℚ)) := by simp
+  have ha₃ : ((W.map (Int.castRingHom ℚ)).baseChange (AlgebraicClosure ℚ)).a₃ = (W.a₃ : (AlgebraicClosure ℚ)) := by simp
+  have ha₄ : ((W.map (Int.castRingHom ℚ)).baseChange (AlgebraicClosure ℚ)).a₄ = (W.a₄ : (AlgebraicClosure ℚ)) := by simp
+  have ha₆ : ((W.map (Int.castRingHom ℚ)).baseChange (AlgebraicClosure ℚ)).a₆ = (W.a₆ : (AlgebraicClosure ℚ)) := by simp
   have hb₂ : (W.b₂ : (AlgebraicClosure ℚ)) = (W.a₁ : (AlgebraicClosure ℚ)) ^ 2 + 4 * (W.a₂ : (AlgebraicClosure ℚ)) := by
     push_cast [WeierstrassCurve.b₂]; ring
-  set F₀ : (AlgebraicClosure ℚ) := y₀ ^ 2 + W.a₁ * x₀ * y₀ + W.a₃ * y₀ - (x₀ ^ 3 + W.a₂ * x₀ ^ 2 + W.a₄ * x₀ + W.a₆)
-    with hF₀
+  set F₀ : AlgebraicClosure ℚ := y₀ ^ 2 + W.a₁ * x₀ * y₀ + W.a₃ * y₀ - (x₀ ^ 3 + W.a₂ * x₀ ^ 2 + W.a₄ * x₀ + W.a₆) with hF₀
   set b : (AlgebraicClosure ℚ) := (W.b₂ : (AlgebraicClosure ℚ)) + 12 * x₀ with hb
 
-  have cubic : ∀ {u v : (AlgebraicClosure ℚ)} (huv : ((W.map (Int.castRingHom ℚ))⁄(AlgebraicClosure ℚ)).toAffine.Nonsingular u v),
-      2 • (Point.some u v huv) = 0 → (u - x₀) ^ 2 * (4 * (u - x₀) + b) = 4 * F₀ := by
+  have cubic : ∀ {u v : AlgebraicClosure ℚ} (huv : ((W.map (Int.castRingHom ℚ)).baseChange (AlgebraicClosure ℚ)).toAffine.Nonsingular u v), 2 • (Point.some u v huv) = 0 → (u - x₀) ^ 2 * (4 * (u - x₀) + b) = 4 * F₀ := by
     intro u v huv htor2
-    have heq : v ^ 2 + (W.a₁ : (AlgebraicClosure ℚ)) * u * v + W.a₃ * v
-        = u ^ 3 + W.a₂ * u ^ 2 + W.a₄ * u + W.a₆ := by
+    have heq : v ^ 2 + (W.a₁ : AlgebraicClosure ℚ) * u * v + W.a₃ * v = u ^ 3 + W.a₂ * u ^ 2 + W.a₄ * u + W.a₆ := by
       have := huv.1
       rw [Affine.equation_iff] at this
       simpa using this
@@ -68,8 +64,7 @@ private lemma main
       rw [ha₁, ha₃] at hy
       linear_combination hy
     rw [hb, hb₂, hF₀]
-    linear_combination (2 * v + (W.a₁ : (AlgebraicClosure ℚ)) * u + W.a₃) * h2 - 4 * heq
-      + (4 * (u - x₀)) * hFx - (2 * (W.a₁ : (AlgebraicClosure ℚ)) * (u - x₀)) * hFy - (2 * y₀ + (W.a₁ : (AlgebraicClosure ℚ)) * x₀ + W.a₃) * hFy
+    linear_combination (2 * v + (W.a₁ : AlgebraicClosure ℚ) * u + W.a₃) * h2 - 4 * heq + (4 * (u - x₀)) * hFx - (2 * (W.a₁ : AlgebraicClosure ℚ) * (u - x₀)) * hFy - (2 * y₀ + (W.a₁ : AlgebraicClosure ℚ) * x₀ + W.a₃) * hFy
 
   have hv2 : A.valuation (2 : (AlgebraicClosure ℚ)) = 1 := by
     have hcop : IsCoprime ((2 : ℕ) : ℤ) (q : ℤ) :=
@@ -85,12 +80,12 @@ private lemma main
     have hlt1 : A.valuation ((a : (AlgebraicClosure ℚ)) * 2) < 1 := by
       rw [map_mul]
       calc A.valuation (a : (AlgebraicClosure ℚ)) * A.valuation (2 : (AlgebraicClosure ℚ)) ≤ 1 * A.valuation (2 : (AlgebraicClosure ℚ)) :=
-            mul_le_mul_of_nonneg_right ha1 zero_le'
+            mul_le_mul_of_nonneg_right ha1 zero_le
         _ < 1 := by rw [one_mul]; exact hlt
     have hlt2 : A.valuation ((c : (AlgebraicClosure ℚ)) * (q : (AlgebraicClosure ℚ))) < 1 := by
       rw [map_mul]
       calc A.valuation (c : (AlgebraicClosure ℚ)) * A.valuation (q : (AlgebraicClosure ℚ)) ≤ 1 * A.valuation (q : (AlgebraicClosure ℚ)) :=
-            mul_le_mul_of_nonneg_right hc1 zero_le'
+            mul_le_mul_of_nonneg_right hc1 zero_le
         _ < 1 := by rw [one_mul]; exact hq1
     have := Valuation.map_add_lt A.valuation hlt1 hlt2
     rw [hacK, map_one] at this
@@ -104,7 +99,7 @@ private lemma main
     · exact hnode
     · rw [map_mul, hv4, one_mul, hnode]; exact hu
 
-  have level_sq : ∀ {u v : (AlgebraicClosure ℚ)} (huv : ((W.map (Int.castRingHom ℚ))⁄(AlgebraicClosure ℚ)).toAffine.Nonsingular u v),
+  have level_sq : ∀ {u v : (AlgebraicClosure ℚ)} (huv : ((W.map (Int.castRingHom ℚ)).baseChange (AlgebraicClosure ℚ)).toAffine.Nonsingular u v),
       2 • (Point.some u v huv) = 0 → A.valuation (u - x₀) < 1 →
       A.valuation (u - x₀) ^ 2 = A.valuation F₀ := by
     intro u v huv htor2 hu
@@ -117,7 +112,7 @@ private lemma main
   have hc' := cubic h' htor'
 
   have hveq : A.valuation (x' - x₀) = A.valuation (x - x₀) :=
-    (pow_left_inj₀ zero_le' zero_le' two_ne_zero).mp ((level_sq h' htor' hX').trans (level_sq h htor hX).symm)
+    (pow_left_inj₀ zero_le zero_le two_ne_zero).mp ((level_sq h' htor' hX').trans (level_sq h htor hX).symm)
 
   have hb0 : ∀ ⦃u : (AlgebraicClosure ℚ)⦄, A.valuation (u - x₀) < 1 → 4 * (u - x₀) + b ≠ 0 := by
     intro u hu h0
@@ -126,9 +121,7 @@ private lemma main
     exact zero_ne_one this
   have hX0 : x - x₀ ≠ 0 := by
     intro h0
-    have hF : F₀ = 0 := by
-      have := hc; rw [h0] at this; simp at this
-      exact this
+    have hF : F₀ = 0 := by have := hc; rw [h0] at this; simpa using this
     have : (x' - x₀) ^ 2 * (4 * (x' - x₀) + b) = 0 := by rw [hc', hF, mul_zero]
     rcases mul_eq_zero.mp this with h1 | h1
     · apply hne

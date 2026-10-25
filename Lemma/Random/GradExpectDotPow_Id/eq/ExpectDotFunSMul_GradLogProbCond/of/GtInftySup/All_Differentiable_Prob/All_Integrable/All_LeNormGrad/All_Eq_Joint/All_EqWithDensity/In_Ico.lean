@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
-import sympy.core.function
+import Theorem.Function
 import sympy.stats.policy_trajectory.continuous_action
 import Lemma.Random.GetTSum_SMul.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
 import Lemma.Random.ExpectDotPow_Id.eq.Integral_ExtDotPow_Id.of.All_EqWithDensity

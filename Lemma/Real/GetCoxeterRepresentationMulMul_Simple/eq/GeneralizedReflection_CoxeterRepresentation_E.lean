@@ -1,15 +1,163 @@
 import Mathlib
 import sympy.Basic
 import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.PosOfAscentProof
+import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
+import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.RootSystem
+import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.Reflections
+import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism
 import Lemma.List.WordSigma.eq.AddMulS_WordSigma_E.of.All_Eq_0.Ne
 import Lemma.List.EqWordSSigma.of.WordProd
 import Lemma.Real.IsRoot_Sigma
 import Lemma.List.IsReducedDrop.of.IsReduced
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.RootSystem
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.Reflections
-open Finset BigOperators
+import Lemma.List.Eq_E.of.IsPositive_IsNegativeSigma_EqBilinForm
+open Finset BigOperators List CoxeterGroup Real
 
+
+namespace CoxeterGroup
+
+/--
+[e_not_isNegative](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/SignChangeExchangeFinal.lean)
+-/
+@[path]
+private lemma e_not_isNegative
+  [DecidableEq B]
+  [Fintype B]
+  {s : B} :
+-- imply
+  ¬ IsNegative (e s) := by
+-- proof
+  intro h
+  have hs := h s
+  simp [e] at hs
+  linarith
+
+end CoxeterGroup
+
+namespace CoxeterGroup
+
+/--
+[coxeterRepresentation_injective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/SignChangeExchangeFinal.lean)
+-/
+@[path]
+private lemma coxeterRepresentation_injective
+  [DecidableEq B]
+  [Fintype B]
+  [Group W]
+  {M : CoxeterMatrix B}
+  {cs : CoxeterSystem M W} :
+-- imply
+  Function.Injective (coxeterRepresentation M cs) := by
+-- proof
+  intro g₁ g₂ hρ
+  suffices h : g₁ * g₂⁻¹ = 1 by
+    have := congrArg (fun x => x * g₂) h
+    simpa [mul_assoc, inv_mul_cancel] using this
+  by_contra hw_ne
+  have hρw : coxeterRepresentation M cs (g₁ * g₂⁻¹) = 1 := by
+    rw [map_mul, map_inv, hρ, mul_inv_cancel]
+  have hlen_pos : 0 < cs.length (g₁ * g₂⁻¹) := by
+    rwa [Nat.pos_iff_ne_zero, ne_eq, cs.length_eq_zero_iff]
+  obtain ⟨word, hred_word, hprod_word⟩ := cs.exists_isReduced (g₁ * g₂⁻¹)
+  have hred : cs.IsReduced word := hred_word
+  have hword_ne : word ≠ [] := by
+    intro h
+    subst h
+    simp [CoxeterSystem.wordProd_nil] at hprod_word
+    exact hw_ne hprod_word
+  have hword_len : 0 < word.length := by
+    rwa [← hred, ← hprod_word]
+  set sₙ := word.getLast hword_ne
+  have hid : ∀ v, wordSigma M word v = v := by
+    intro v
+    have h1 := coxeterRepresentation_wordProd_apply M cs word v
+    have h2 : coxeterRepresentation M cs (cs.wordProd word) = 1 := by
+      rwa [← hprod_word]
+    rw [h2] at h1
+    simpa [LinearEquiv.coe_one] using h1.symm
+  have hdesc_sn : cs.length (cs.wordProd word * cs.simple sₙ) <
+      cs.length (cs.wordProd word) := by
+    have hprod' : cs.wordProd word = cs.wordProd word.dropLast * cs.simple sₙ := by
+      conv_lhs => rw [← List.dropLast_append_getLast hword_ne]
+      rw [CoxeterSystem.wordProd_append, CoxeterSystem.wordProd_singleton]
+    have : cs.wordProd word * cs.simple sₙ = cs.wordProd word.dropLast := by
+      rw [hprod', mul_assoc, cs.simple_mul_simple_self, mul_one]
+    rw [this]
+    have hlen_drop : cs.length (cs.wordProd word.dropLast) ≤ word.dropLast.length :=
+      cs.length_wordProd_le _
+    have hlen_lt : word.dropLast.length < word.length := by
+      rw [List.length_dropLast]
+      exact Nat.sub_one_lt_of_le hword_len le_rfl
+    have hlen_eq : word.length = cs.length (cs.wordProd word) := hred.symm
+    omega
+  have hneg_sn : IsNegative (wordSigma M word (e sₙ)) :=
+    neg_of_descent M cs word sₙ hred hdesc_sn
+  rw [hid (e sₙ)] at hneg_sn
+  exact e_not_isNegative (s := sₙ) hneg_sn
+
+end CoxeterGroup
+
+namespace CoxeterGroup
+
+/--
+[wordProd_cons_eq_append_of_wordSigma_eq_e](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/SignChangeExchangeFinal.lean)
+-/
+@[path]
+private lemma wordProd_cons_eq_append_of_wordSigma_eq_e
+  [DecidableEq B]
+  [Fintype B]
+  [Group W]
+  {M : CoxeterMatrix B}
+  {cs : CoxeterSystem M W}
+  {tail : List B}
+  {s t : B}
+-- given
+  (hsigma : wordSigma M tail (e s) = e t) :
+-- imply
+  cs.simple t * cs.wordProd tail = cs.wordProd tail * cs.simple s := by
+-- proof
+  apply coxeterRepresentation_injective (M := M) (cs := cs)
+  ext v
+  have lhs_eq : (coxeterRepresentation M cs (cs.simple t * cs.wordProd tail)) v =
+      sigma M t (wordSigma M tail v) := by
+    simp only [map_mul, LinearEquiv.mul_apply, coxeterRepresentation_simple,
+      sigmaLinearEquiv_apply, coxeterRepresentation_wordProd_apply]
+  have rhs_eq : (coxeterRepresentation M cs (cs.wordProd tail * cs.simple s)) v =
+      wordSigma M tail (sigma M s v) := by
+    simp only [map_mul, LinearEquiv.mul_apply, coxeterRepresentation_simple,
+      sigmaLinearEquiv_apply, coxeterRepresentation_wordProd_apply]
+  rw [lhs_eq, rhs_eq]
+  have hB : bilinForm M (wordSigma M tail v) (e t) = bilinForm M v (e s) := by
+    rw [← hsigma, wordSigma_preserves_form]
+  have hlin_add : ∀ (w : List B) (a b : B → ℝ),
+      wordSigma M w (a + b) = wordSigma M w a + wordSigma M w b := by
+    intro w a b
+    have h1 := coxeterRepresentation_wordProd_apply M cs w (a + b)
+    have h2 := coxeterRepresentation_wordProd_apply M cs w a
+    have h3 := coxeterRepresentation_wordProd_apply M cs w b
+    rw [← h1, ← h2, ← h3]
+    simp [map_add]
+  have hlin_smul : ∀ (w : List B) (c : ℝ) (a : B → ℝ),
+      wordSigma M w (c • a) = c • wordSigma M w a := by
+    intro w c a
+    have h1 := coxeterRepresentation_wordProd_apply M cs w (c • a)
+    have h2 := coxeterRepresentation_wordProd_apply M cs w a
+    rw [← h1, ← h2]
+    simp [map_smul]
+  have hsigma_eq : sigma M s v = v + (-2 * bilinForm M v (e s)) • e s := by
+    ext u
+    simp [sigma, Pi.add_apply, Pi.smul_apply]
+    ring
+  have hrhs : wordSigma M tail (sigma M s v) =
+      wordSigma M tail v + (-2 * bilinForm M v (e s)) • e t := by
+    rw [hsigma_eq, hlin_add, hlin_smul, hsigma]
+  have hlhs : sigma M t (wordSigma M tail v) =
+      wordSigma M tail v + (-2 * bilinForm M (wordSigma M tail v) (e t)) • e t := by
+    ext u
+    simp [sigma, Pi.add_apply, Pi.smul_apply]
+    ring
+  rw [hlhs, hrhs, hB]
+
+end CoxeterGroup
 
 namespace CoxeterGroup
 
@@ -26,7 +174,11 @@ private lemma wordSigma_reflection_root_neg
   {word_u : List B}
   {j : B} :
 -- imply
-  let α := wordSigma M word_u (e j) let u := cs.wordProd word_u let t := u * cs.simple j * u⁻¹ ∀ word_t : List B, cs.wordProd word_t = t → ∀ v : B → ℝ, wordSigma M word_t v = generalizedReflection M α v := by
+  let α := wordSigma M word_u (e j)
+  let u := cs.wordProd word_u
+  let t := u * cs.simple j * u⁻¹
+  ∀ word_t : List B, cs.wordProd word_t = t → ∀ v : B → ℝ,
+    wordSigma M word_t v = generalizedReflection M α v := by
 -- proof
   intro α u t word_t hprod_t v
   obtain ⟨word_u_inv, _, hprod_inv⟩ := cs.exists_isReduced (cs.wordProd word_u)⁻¹
@@ -51,15 +203,11 @@ private lemma wordSigma_reflection_root_neg
     ring
   rw [hsigma_eq, wordSigma_add, wordSigma_smul, hcancel]
   have hform : bilinForm M v' (e j) = bilinForm M v α := by
-    rw [hv'_def]
-    calc bilinForm M (wordSigma M word_u_inv v) (e j)
-      = bilinForm M (wordSigma M word_u (wordSigma M word_u_inv v))
-        (wordSigma M word_u (e j)) := by
-        rw [wordSigma_preserves_form]
-      _ = bilinForm M v α := by
-        rw [hcancel]
+    rw [hv'_def, ← wordSigma_preserves_form M word_u (wordSigma M word_u_inv v) (e j),
+      hcancel]
   rw [hform]
-  ext t
+  change v + (-2 * bilinForm M v α) • α = generalizedReflection M α v
+  ext x
   simp only [generalizedReflection, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   ring
 
@@ -80,9 +228,13 @@ private lemma conjugate_reflection_eq
   {word_u : List B}
   {j : B} :
 -- imply
-  let α := wordSigma M word_u (e j) let u := cs.wordProd word_u let t := u * cs.simple j * u⁻¹ ∀ word_t : List B, cs.wordProd word_t = t → ∀ v : B → ℝ, wordSigma M word_t v = generalizedReflection M α v :=
+  let α := wordSigma M word_u (e j)
+  let u := cs.wordProd word_u
+  let t := u * cs.simple j * u⁻¹
+  ∀ word_t : List B, cs.wordProd word_t = t → ∀ v : B → ℝ,
+    wordSigma M word_t v = generalizedReflection M α v :=
 -- proof
-  wordSigma_reflection_root_neg M cs word_u j
+  wordSigma_reflection_root_neg
 
 end CoxeterGroup
 
@@ -101,13 +253,16 @@ private lemma conj_simpleReflection_eq_generalizedReflection
   {w : W}
   {s : B} :
 -- imply
-  ∀ v : B → ℝ, (coxeterRepresentation M cs (w * cs.simple s * w⁻¹)) v = generalizedReflection M (coxeterRepresentation M cs w (e s)) v := by
+  ∀ v : B → ℝ,
+    (coxeterRepresentation M cs (w * cs.simple s * w⁻¹)) v =
+      generalizedReflection M (coxeterRepresentation M cs w (e s)) v := by
 -- proof
   obtain ⟨word_w, _, hprod_w⟩ := cs.exists_isReduced w
   obtain ⟨word_t, _, hprod_t⟩ := cs.exists_isReduced (w * cs.simple s * w⁻¹)
   have hprod_eq : cs.wordProd word_t =
     cs.wordProd word_w * cs.simple s * (cs.wordProd word_w)⁻¹ := by
-    rw [← hprod_w]; exact hprod_t.symm
+    rw [← hprod_w]
+    exact hprod_t.symm
   intro v
   have hlhs : (coxeterRepresentation M cs (w * cs.simple s * w⁻¹)) v =
     wordSigma M word_t v := by
@@ -115,199 +270,7 @@ private lemma conj_simpleReflection_eq_generalizedReflection
   have hroot : (coxeterRepresentation M cs w) (e s) = wordSigma M word_w (e s) := by
     rw [hprod_w, coxeterRepresentation_wordProd_apply]
   rw [hlhs, hroot]
-  exact wordSigma_reflection_root_neg M cs word_w s word_t hprod_eq v
-
-end CoxeterGroup
-
-namespace CoxeterGroup
-
-/--
-[pos_of_ascent_reflection](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/ReflectionLengthDecrease.lean)
--/
-@[path]
-private lemma pos_of_ascent_reflection
-  [DecidableEq B]
-  [Fintype B]
-  [Group W]
-  {M : CoxeterMatrix B}
-  {cs : CoxeterSystem M W}
-  {word_w : List B}
-  {word_u : List B}
-  {j : B}
--- given
-  (hred_w : cs.IsReduced word_w)
-  (hroot_pos : IsPositive (wordSigma M word_u (e j)))
-  (hasc : cs.length (cs.wordProd word_w * (cs.wordProd word_u * cs.simple j * (cs.wordProd word_u)⁻¹)) > cs.length (cs.wordProd word_w)) :
--- imply
-  IsPositive (wordSigma M word_w (wordSigma M word_u (e j))) := by
--- proof
-  set w := cs.wordProd word_w with hw_def
-  set u := cs.wordProd word_u
-  set t := u * cs.simple j * u⁻¹
-  set α := wordSigma M word_u (e j)
-  suffices goal : ∀ (n : ℕ) (word_w : List B),
-    word_w.length = n →
-    cs.IsReduced word_w →
-    cs.length (cs.wordProd word_w * t) > cs.length (cs.wordProd word_w) →
-    IsPositive (wordSigma M word_w α) by
-    exact goal word_w.length word_w rfl hred_w hasc
-  intro n
-  induction n using Nat.strongRecOn with
-  | _ n ih =>
-  intro word_w hlen hred hasc_w
-  match h_word : word_w with
-  | [] =>
-    exact hroot_pos
-  | s₀ :: rest =>
-    set sw₀ := cs.wordProd rest with hsw₀_def
-    have hw_eq : cs.wordProd (s₀ :: rest) = cs.simple s₀ * sw₀ := by
-      rw [cs.wordProd_cons]
-    have hred_rest : cs.IsReduced rest := by
-      show cs.length sw₀ = rest.length
-      have hle : cs.length sw₀ ≤ rest.length := cs.length_wordProd_le rest
-      have hred' : cs.length (cs.simple s₀ * sw₀) = rest.length + 1 := by
-        have : cs.IsReduced (s₀ :: rest) := hred
-        unfold CoxeterSystem.IsReduced at this
-        rw [hw_eq] at this
-        rw [this]; simp [List.length_cons]
-      obtain h1 | h1 := cs.length_simple_mul sw₀ s₀
-      · omega
-      · omega
-    have hs₀_inv : cs.simple s₀ * cs.simple s₀ = 1 := cs.simple_mul_simple_self s₀
-    have hs₀w : cs.simple s₀ * cs.wordProd (s₀ :: rest) = sw₀ := by
-      rw [hw_eq, ← mul_assoc, hs₀_inv, one_mul]
-    have hs₀wt : cs.simple s₀ * (cs.wordProd (s₀ :: rest) * t) = sw₀ * t := by
-      rw [← mul_assoc, hs₀w]
-    have hlen_sw₀ : cs.length sw₀ = rest.length := hred_rest
-    have hlen_w : cs.length (cs.wordProd (s₀ :: rest)) = rest.length + 1 := by
-      rw [hred]; simp [List.length_cons]
-    have hasc_rest : cs.length (sw₀ * t) > cs.length sw₀ := by
-      rw [← hs₀wt]
-      obtain h1 | h1 := cs.length_simple_mul (cs.wordProd (s₀ :: rest) * t) s₀
-      ·
-        rw [h1, hlen_sw₀]; omega
-      ·
-        rw [hlen_sw₀]; omega
-    have hlen_rest : rest.length < n := by
-      rw [← hlen]; simp [List.length_cons]
-    have hpos_rest : IsPositive (wordSigma M rest α) :=
-      ih rest.length hlen_rest rest rfl hred_rest hasc_rest
-    set β := wordSigma M rest α with hβ_def
-    show IsPositive (sigma M s₀ β)
-    set wu := cs.wordProd (s₀ :: rest) * u with hwu_def
-    obtain ⟨word_wu, hred_wu, hprod_wu⟩ := cs.exists_isReduced wu
-    have hsigma_wu : wordSigma M word_wu (e j) = sigma M s₀ β := by
-      have : sigma M s₀ β = wordSigma M ((s₀ :: rest) ++ word_u) (e j) := by
-        rw [wordSigma_append, wordSigma_cons]
-      rw [this]
-      apply wordSigma_eq_of_wordProd_eq M cs
-      rw [← hprod_wu, hwu_def, cs.wordProd_append]
-    obtain hasc_j | hdesc_j := cs.length_mul_simple (cs.wordProd word_wu) j
-    ·
-      have : IsPositive (wordSigma M word_wu (e j)) :=
-        pos_of_ascent M cs word_wu j hred_wu (by omega)
-      rw [hsigma_wu] at this; exact this
-    ·
-      have hneg_wu : IsNegative (wordSigma M word_wu (e j)) :=
-        neg_of_descent M cs word_wu j hred_wu (by omega)
-      rw [hsigma_wu] at hneg_wu
-      have hform_β : bilinForm M β β = 1 := by
-        rw [hβ_def]
-        have : bilinForm M (wordSigma M rest α) (wordSigma M rest α) = bilinForm M α α := by
-          rw [wordSigma_preserves_form]
-        rw [this]
-        show bilinForm M (wordSigma M word_u (e j)) (wordSigma M word_u (e j)) = 1
-        rw [wordSigma_preserves_form, bilinForm_e_e, formVal_diag]
-      have hβ_eq : β = e s₀ := CoxeterSignChangeExchangeFinal.isPositive_sigma_isNegative_eq_e M s₀ β hpos_rest hneg_wu hform_β
-      have hsigma_rest_u : wordSigma M (rest ++ word_u) (e j) = e s₀ := by
-        rw [wordSigma_append]; exact hβ_eq
-      have hconj := CoxeterSignChangeExchangeFinal.wordProd_cons_eq_append_of_wordSigma_eq_e cs
-        (rest ++ word_u) j s₀ hsigma_rest_u
-      have hprod_rest_u : cs.wordProd (rest ++ word_u) = sw₀ * u := by
-        rw [cs.wordProd_append]
-      rw [hprod_rest_u] at hconj
-      have hwt_eq : cs.wordProd (s₀ :: rest) * t = sw₀ := by
-        rw [hw_eq]
-        show cs.simple s₀ * sw₀ * (u * cs.simple j * u⁻¹) = sw₀
-        have : cs.simple s₀ * sw₀ * (u * cs.simple j * u⁻¹)
-          = cs.simple s₀ * ((sw₀ * u) * cs.simple j) * u⁻¹ := by group
-        rw [this, ← hconj]
-        have : cs.simple s₀ * (cs.simple s₀ * (sw₀ * u)) * u⁻¹ = sw₀ := by
-          rw [← mul_assoc (cs.simple s₀) (cs.simple s₀), hs₀_inv, one_mul, mul_assoc,
-            mul_inv_cancel, mul_one]
-        exact this
-      have : cs.length (cs.wordProd (s₀ :: rest) * t) = rest.length := by
-        rw [hwt_eq, hlen_sw₀]
-      omega
-
-end CoxeterGroup
-
-namespace CoxeterGroup
-
-/--
-[neg_of_descent_reflection](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/ReflectionLengthDecrease.lean)
--/
-@[path]
-private lemma neg_of_descent_reflection
-  [DecidableEq B]
-  [Fintype B]
-  [Group W]
-  {M : CoxeterMatrix B}
-  {cs : CoxeterSystem M W}
-  {word_w : List B}
-  {word_u : List B}
-  {j : B}
--- given
-  (hred_w : cs.IsReduced word_w)
-  (hroot_pos : IsPositive (wordSigma M word_u (e j)))
-  (hdesc : cs.length (cs.wordProd word_w * (cs.wordProd word_u * cs.simple j * (cs.wordProd word_u)⁻¹)) < cs.length (cs.wordProd word_w)) :
--- imply
-  IsNegative (wordSigma M word_w (wordSigma M word_u (e j))) := by
--- proof
-  set w := cs.wordProd word_w
-  set u := cs.wordProd word_u
-  set t := u * cs.simple j * u⁻¹
-  set α := wordSigma M word_u (e j)
-  have ht_sq : t * t = 1 := by
-    simp only [t]
-    have : u * cs.simple j * u⁻¹ * (u * cs.simple j * u⁻¹)
-      = u * (cs.simple j * cs.simple j) * u⁻¹ := by group
-    rw [this, cs.simple_mul_simple_self, mul_one, mul_inv_cancel]
-  set v := w * t
-  have hvt : v * t = w := by
-    simp only [v]; rw [mul_assoc, ht_sq, mul_one]
-  have hasc_v : cs.length (v * t) > cs.length v := by
-    rw [hvt]; exact hdesc
-  obtain ⟨word_v, hred_v, hprod_v⟩ := cs.exists_isReduced v
-  have hpos_v : IsPositive (wordSigma M word_v α) := by
-    apply pos_of_ascent_reflection M cs word_v word_u j hred_v hroot_pos
-    rwa [← hprod_v]
-  obtain ⟨word_t, hred_t, hprod_t⟩ := cs.exists_isReduced t
-  have hflip_full := wordSigma_reflection_root_neg M cs word_u j word_t (by rw [← hprod_t])
-  have hform_α : bilinForm M α α = 1 := by
-    show bilinForm M (wordSigma M word_u (e j)) (wordSigma M word_u (e j)) = 1
-    rw [wordSigma_preserves_form, bilinForm_e_e, formVal_diag]
-  have hflip : wordSigma M word_t α = fun b => -(α b) := by
-    have := hflip_full α
-    rw [this]
-    ext b
-    simp only [generalizedReflection]
-    rw [hform_α]
-    ring
-  have hprod_vt : cs.wordProd (word_v ++ word_t) = w := by
-    rw [cs.wordProd_append, ← hprod_v, ← hprod_t, hvt]
-  have hinv := wordSigma_eq_of_wordProd_eq M cs word_w (word_v ++ word_t)
-    (by rw [hprod_vt]) α
-  intro b
-  have : wordSigma M word_w α b = -(wordSigma M word_v α b) := by
-    rw [hinv, wordSigma_append]
-    conv_lhs => rw [show wordSigma M word_t α = fun b => -(α b) from hflip]
-    have hsmul : (fun b => -(α b)) = (-1 : ℝ) • α := by
-      ext b; simp [Pi.smul_apply, smul_eq_mul]
-    rw [hsmul, wordSigma_smul]
-    simp [Pi.smul_apply, smul_eq_mul]
-  rw [this]
-  linarith [hpos_v b]
+  exact wordSigma_reflection_root_neg (word_u := word_w) (j := s) word_t hprod_eq v
 
 end CoxeterGroup
 

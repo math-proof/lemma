@@ -1,8 +1,12 @@
 import Mathlib
 import sympy.Basic
 import sympy.atlas.v1.Atlas.LieGroups.code.KFiniteProps
-open ContinuousRep
+open ContinuousRep hiding orthogonalProjection_intertwines_subrep_val repEquiv_of_bijective_repHom repEquiv_trans repEquiv_symm mem_orthogonal_sSup sSup_orthogonal_sSup total_variation_eval_cont blt_alg_hom_extend
 open scoped ComplexOrder
+set_option linter.deprecated false
+set_option linter.style.haveILetI false
+set_option linter.unusedVariables false
+set_option linter.overlappingInstances false
 
 
 /--
@@ -27,9 +31,10 @@ private lemma unitary_inner_invariant
   rw [← ContinuousLinearMap.adjoint_inner_left]
   congr 1
   have h := (hU g).1
-  have : (ContinuousLinearMap.adjoint (π.toMonoidHom g) * π.toMonoidHom g) v = v := by
-    rw [h]; simp
-  rwa [ContinuousLinearMap.mul_apply] at this
+  have hv : (ContinuousLinearMap.adjoint (π.toMonoidHom g) * π.toMonoidHom g) v = v := by
+    rw [h]
+    rfl
+  exact hv
 
 /--
 [unitary_orthogonal_invariant](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -39,6 +44,7 @@ private lemma unitary_orthogonal_invariant
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   [NormedAddCommGroup E]
   [InnerProductSpace ℂ E]
   [CompleteSpace E]
@@ -55,7 +61,7 @@ private lemma unitary_orthogonal_invariant
 -- proof
   rw [Submodule.mem_orthogonal'] at hv ⊢
   intro w hw
-  rw [← ContinuousLinearMap.adjoint_inner_right, unitary_adjoint_eq_inv π hU]
+  rw [← ContinuousLinearMap.adjoint_inner_right, unitary_adjoint_eq_inv π hU g]
   exact hv _ (hW g⁻¹ w hw)
 
 /--
@@ -80,23 +86,16 @@ private lemma orthogonalProjection_intertwines_subrep_val
   (hW₁ : (π.restrictSubgroup K).IsInvariantSubspace W₁)
   (hW₂ : (π.restrictSubgroup K).IsInvariantSubspace W₂) :
 -- imply
-  (orthogonalProjection_intertwines_subrep π hU K W₁ W₂ hW₁ hW₂).toContinuousLinearMap v = W₂.orthogonalProjection (v : E) := by
+  (orthogonalProjection_intertwines_subrep π hU K W₁ W₂ hW₁ hW₂).toContinuousLinearMap v = W₂.orthogonalProjectionOnto (v : E) := by
 -- proof
-  simp only [orthogonalProjection_intertwines_subrep, ContinuousLinearMap.comp_apply,
-    Submodule.subtypeL_apply]
+  exact ContinuousRep.orthogonalProjection_intertwines_subrep_val π hU K W₁ W₂ hW₁ hW₂ v
+
 
 /--
 [continuous_inverse_of_bijective_clm](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
 -/
 @[path]
 private lemma continuous_inverse_of_bijective_clm
-  {G : Type uG}
-  [Group G]
-  [TopologicalSpace G]
-  [NormedAddCommGroup E]
-  [InnerProductSpace ℂ E]
-  [CompleteSpace E]
-  [IsTopologicalGroup G]
   [NormedAddCommGroup V₁]
   [NormedSpace ℂ V₁]
   [CompleteSpace V₁]
@@ -119,42 +118,24 @@ private lemma repEquiv_of_bijective_repHom
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
-  [NormedAddCommGroup E]
-  [InnerProductSpace ℂ E]
-  [CompleteSpace E]
-  [IsTopologicalGroup G]
-  [Group G']
-  [TopologicalSpace G']
   [NormedAddCommGroup V₁]
   [NormedSpace ℂ V₁]
+  [TopologicalSpace V₁]
   [CompleteSpace V₁]
   [NormedAddCommGroup V₂]
   [NormedSpace ℂ V₂]
+  [TopologicalSpace V₂]
   [CompleteSpace V₂]
-  {π₁ : ContinuousRep G' V₁}
-  {π₂ : ContinuousRep G' V₂}
+  {π₁ : ContinuousRep G V₁}
+  {π₂ : ContinuousRep G V₂}
   {T : RepHom π₁ π₂}
 -- given
   (hbij : Function.Bijective T.toContinuousLinearMap) :
 -- imply
   Nonempty (RepEquiv π₁ π₂) := by
 -- proof
-  let f := T.toContinuousLinearMap
-  let linEquiv : V₁ ≃ₗ[ℂ] V₂ := LinearEquiv.ofBijective f.toLinearMap hbij
-  let cle : V₁ ≃L[ℂ] V₂ :=
-    { linEquiv with
-      continuous_toFun := f.continuous
-      continuous_invFun := continuous_inverse_of_bijective_clm f hbij }
-  exact ⟨{
-    toContinuousLinearEquiv := cle
-    intertwines := by
-      intro g
-      ext v
-      simp only [ContinuousLinearMap.comp_apply, ContinuousLinearEquiv.coe_coe]
-      have hT := ContinuousLinearMap.ext_iff.mp (T.intertwines g) v
-      simp only [ContinuousLinearMap.comp_apply] at hT
-      exact hT
-  }⟩
+  exact ContinuousRep.repEquiv_of_bijective_repHom π₁ π₂ T hbij
+
 
 /--
 [repEquiv_trans](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -164,12 +145,6 @@ private lemma repEquiv_trans
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
-  [NormedAddCommGroup E]
-  [InnerProductSpace ℂ E]
-  [CompleteSpace E]
-  [IsTopologicalGroup G]
-  [Group G']
-  [TopologicalSpace G']
   [AddCommGroup V₁]
   [Module ℂ V₁]
   [TopologicalSpace V₁]
@@ -179,31 +154,17 @@ private lemma repEquiv_trans
   [AddCommGroup V₃]
   [Module ℂ V₃]
   [TopologicalSpace V₃]
-  {π₁ : ContinuousRep G' V₁}
-  {π₂ : ContinuousRep G' V₂}
-  {π₃ : ContinuousRep G' V₃}
+  {π₁ : ContinuousRep G V₁}
+  {π₂ : ContinuousRep G V₂}
+  {π₃ : ContinuousRep G V₃}
 -- given
   (h₁ : Nonempty (RepEquiv π₁ π₂))
   (h₂ : Nonempty (RepEquiv π₂ π₃)) :
 -- imply
   Nonempty (RepEquiv π₁ π₃) := by
 -- proof
-  obtain ⟨e₁⟩ := h₁
-  obtain ⟨e₂⟩ := h₂
-  exact ⟨{
-    toContinuousLinearEquiv := e₁.toContinuousLinearEquiv.trans e₂.toContinuousLinearEquiv
-    intertwines := by
-      intro g
-      ext v
-      simp only [ContinuousLinearMap.comp_apply, ContinuousLinearEquiv.coe_coe,
-        ContinuousLinearEquiv.trans_apply]
-      have h1 := ContinuousLinearMap.ext_iff.mp (e₁.intertwines g) v
-      simp only [ContinuousLinearMap.comp_apply, ContinuousLinearEquiv.coe_coe] at h1
-      rw [h1]
-      have h2 := ContinuousLinearMap.ext_iff.mp (e₂.intertwines g) (e₁.toContinuousLinearEquiv v)
-      simp only [ContinuousLinearMap.comp_apply, ContinuousLinearEquiv.coe_coe] at h2
-      exact h2
-  }⟩
+  exact ContinuousRep.repEquiv_trans h₁ h₂
+
 
 /--
 [repEquiv_symm](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -213,39 +174,21 @@ private lemma repEquiv_symm
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
-  [NormedAddCommGroup E]
-  [InnerProductSpace ℂ E]
-  [CompleteSpace E]
-  [IsTopologicalGroup G]
-  [Group G']
-  [TopologicalSpace G']
   [AddCommGroup V₁]
   [Module ℂ V₁]
   [TopologicalSpace V₁]
   [AddCommGroup V₂]
   [Module ℂ V₂]
   [TopologicalSpace V₂]
-  {π₁ : ContinuousRep G' V₁}
-  {π₂ : ContinuousRep G' V₂}
+  {π₁ : ContinuousRep G V₁}
+  {π₂ : ContinuousRep G V₂}
 -- given
   (h : Nonempty (RepEquiv π₁ π₂)) :
 -- imply
   Nonempty (RepEquiv π₂ π₁) := by
 -- proof
-  obtain ⟨e⟩ := h
-  exact ⟨{
-    toContinuousLinearEquiv := e.toContinuousLinearEquiv.symm
-    intertwines := by
-      intro g
-      ext w
-      simp only [ContinuousLinearMap.comp_apply, ContinuousLinearEquiv.coe_coe]
-      have hg := ContinuousLinearMap.ext_iff.mp (e.intertwines g)
-      simp only [ContinuousLinearMap.comp_apply, ContinuousLinearEquiv.coe_coe] at hg
-      apply e.toContinuousLinearEquiv.injective
-      simp only [ContinuousLinearEquiv.apply_symm_apply]
-      rw [hg (e.toContinuousLinearEquiv.symm w)]
-      simp only [ContinuousLinearEquiv.apply_symm_apply]
-  }⟩
+  exact ContinuousRep.repEquiv_symm h
+
 
 /--
 [irreducible_subspaces_orthogonal](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -292,23 +235,19 @@ private lemma irreducible_subspaces_orthogonal
     hirr₁ hirr₂ T with hzero | hbij
   ·
     intro v hv
-    have hTval := orthogonalProjection_intertwines_subrep_val π hU K W₁ W₂ hW₁ hW₂ ⟨v, hv⟩
-    have hTzero : T.toContinuousLinearMap ⟨v, hv⟩ = 0 := by
-      change (orthogonalProjection_intertwines_subrep π hU K W₁ W₂ hW₁ hW₂).toContinuousLinearMap
-        ⟨v, hv⟩ = 0
-      rw [show (orthogonalProjection_intertwines_subrep π hU K W₁ W₂ hW₁ hW₂).toContinuousLinearMap
-        = T.toContinuousLinearMap from rfl, hzero]
-      rfl
-    rw [hTval] at hTzero
-    exact (Submodule.orthogonalProjection_eq_zero_iff).mp hTzero
+    have hTval := orthogonalProjection_intertwines_subrep_val (v := ⟨v, hv⟩) hU hW₁ hW₂
+    have hTzero : T.toContinuousLinearMap ⟨v, hv⟩ = 0 := hzero ⟨v, hv⟩
+    have hproj0 : W₂.orthogonalProjectionOnto (v : E) = 0 := by
+      rw [← hTval]
+      exact hTzero
+    exact (Submodule.orthogonalProjectionOnto_eq_zero_iff).mp hproj0
   ·
     exfalso
     apply hne
-    have h12 := @repEquiv_of_bijective_repHom _ _ _
-      _ _ _ (hW₁.isClosed.completeSpace_coe)
-      _ _ _ (hW₂.isClosed.completeSpace_coe)
-      ((π.restrictSubgroup K).subrepresentation W₁ hW₁)
-      ((π.restrictSubgroup K).subrepresentation W₂ hW₂) T hbij
+    have h12 := repEquiv_of_bijective_repHom
+      (π₁ := (π.restrictSubgroup K).subrepresentation W₁ hW₁)
+      (π₂ := (π.restrictSubgroup K).subrepresentation W₂ hW₂)
+      (T := T) hbij
     exact repEquiv_trans (repEquiv_trans (repEquiv_symm hiso₁) h12) hiso₂
 
 /--
@@ -316,13 +255,6 @@ private lemma irreducible_subspaces_orthogonal
 -/
 @[path]
 private lemma mem_orthogonal_sSup
-  {G : Type uG}
-  [Group G]
-  [TopologicalSpace G]
-  [NormedAddCommGroup E]
-  [InnerProductSpace ℂ E]
-  [CompleteSpace E]
-  [IsTopologicalGroup G]
   [NormedAddCommGroup F]
   [InnerProductSpace ℂ F]
   {T : Set (Submodule ℂ F)}
@@ -332,38 +264,14 @@ private lemma mem_orthogonal_sSup
 -- imply
   v ∈ (sSup T)ᗮ := by
 -- proof
-  rw [Submodule.mem_orthogonal']
-  intro w hw
-  have key : sSup T ≤ (Submodule.span ℂ ({v} : Set F))ᗮ := by
-    apply sSup_le
-    intro W hW w' hw'
-    rw [Submodule.mem_orthogonal']
-    intro u hu
-    rw [Submodule.mem_span_singleton] at hu
-    obtain ⟨c, rfl⟩ := hu
-    rw [inner_smul_right]
-    have hv : ∀ u ∈ W, @inner ℂ _ _ v u = 0 :=
-      (Submodule.mem_orthogonal' W v).mp (h W hW)
-    rw [inner_eq_zero_symm.mp (hv w' hw')]
-    ring
-  have hw2 := key hw
-  have hw3 : ∀ u ∈ Submodule.span ℂ ({v} : Set F), @inner ℂ _ _ w u = 0 :=
-    (Submodule.mem_orthogonal' _ w).mp hw2
-  rw [inner_eq_zero_symm]
-  exact hw3 v (Submodule.mem_span_singleton_self v)
+  exact ContinuousRep.mem_orthogonal_sSup h
+
 
 /--
 [sSup_orthogonal_sSup](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
 -/
 @[path]
 private lemma sSup_orthogonal_sSup
-  {G : Type uG}
-  [Group G]
-  [TopologicalSpace G]
-  [NormedAddCommGroup E]
-  [InnerProductSpace ℂ E]
-  [CompleteSpace E]
-  [IsTopologicalGroup G]
   [NormedAddCommGroup F]
   [InnerProductSpace ℂ F]
   {S T : Set (Submodule ℂ F)}
@@ -372,10 +280,8 @@ private lemma sSup_orthogonal_sSup
 -- imply
   (sSup S).IsOrtho (sSup T) := by
 -- proof
-  rw [Submodule.IsOrtho]
-  apply sSup_le
-  intro U hU v hv
-  exact mem_orthogonal_sSup T v (fun W hW => h U hU W hW hv)
+  exact ContinuousRep.sSup_orthogonal_sSup h
+
 
 /--
 [isotypicComponent_orthogonal](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -410,8 +316,8 @@ private lemma isotypicComponent_orthogonal
   intro W₁ hW₁ W₂ hW₂
   obtain ⟨hW₁inv, hirr₁, hiso₁⟩ := hW₁
   obtain ⟨hW₂inv, hirr₂, hiso₂⟩ := hW₂
-  exact irreducible_subspaces_orthogonal π hU K σ τ W₁ W₂
-    hW₁inv hW₂inv hirr₁ hirr₂ hiso₁ hiso₂ hne
+  exact irreducible_subspaces_orthogonal (π := π) (K := K) (σ := σ) (τ := τ)
+    (W₁ := W₁) (W₂ := W₂) hU hW₁inv hW₂inv hirr₁ hirr₂ hiso₁ hiso₂ hne
 
 /--
 [discreteMeasureRep_extends](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -421,10 +327,11 @@ private lemma discreteMeasureRep_extends
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
-  {π : G →* (V →L[ℂ] V)}
+  (π : G →* (V →L[ℂ] V))
   {g : G} :
 -- imply
   discreteMeasureRep π (MonoidAlgebra.single g 1) = π g := by
@@ -439,10 +346,11 @@ private lemma discreteMeasureRep_unique
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
-  {π : G →* (V →L[ℂ] V)}
+  (π : G →* (V →L[ℂ] V))
   {φ : MonoidAlgebra ℂ G →ₐ[ℂ] (V →L[ℂ] V)}
 -- given
   (hφ : ∀ g : G, φ (MonoidAlgebra.single g 1) = π g) :
@@ -453,8 +361,9 @@ private lemma discreteMeasureRep_unique
     ext g : 1
     rw [MonoidAlgebra.lift_symm_apply]
     exact hφ g
-  have := (MonoidAlgebra.lift ℂ (V →L[ℂ] V) G).apply_symm_apply φ
-  rwa [key] at this
+  have hlift : (MonoidAlgebra.lift ℂ (V →L[ℂ] V) G) π = φ := by
+    rw [← key, (MonoidAlgebra.lift ℂ (V →L[ℂ] V) G).apply_symm_apply]
+  rw [discreteMeasureRep, ← hlift]
 
 /--
 [total_variation_eval_cont](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -464,25 +373,18 @@ private lemma total_variation_eval_cont
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
-  {V : Type uG}
-  [NormedAddCommGroup V]
-  [NormedSpace ℂ V]
-  {G : Type uG}
-  [Group G]
-  [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {M : Type uM}
   [Ring M]
   [Algebra ℂ M]
   [TopologicalSpace M]
   [inst : CompactlySupportedMeasureAlgebra G M]
-  {f : G → ℝ}
--- given
+  (f : G → ℝ)
   (hf : Continuous f)
   (hf_nn : ∀ g, 0 ≤ f g) :
--- imply
   @Continuous (MonoidAlgebra ℂ G) ℝ (TopologicalSpace.induced (MonoidAlgebra.lift ℂ M G inst.dirac) ‹TopologicalSpace M›) inferInstance (fun μ => μ.sum (fun g c => ‖c‖ * f g)) :=
--- proof
-  inst.total_variation_cont f hf hf_nn
+  ContinuousRep.total_variation_eval_cont f hf hf_nn
+
 
 /--
 [rep_lift_opNorm_le](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -492,23 +394,23 @@ private lemma rep_lift_opNorm_le
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
-  [Group G]
-  [NormedAddCommGroup V]
-  [NormedSpace ℂ V]
-  {π : G →* (V →L[ℂ] V)}
-  {μ : MonoidAlgebra ℂ G} :
+  (π : G →* (V →L[ℂ] V))
+  (μ : MonoidAlgebra ℂ G) :
 -- imply
-  ‖(MonoidAlgebra.lift ℂ (V →L[ℂ] V) G π) μ‖ ≤ μ.sum (fun g c => ‖c‖ * ‖π g‖) := by
+  ‖(MonoidAlgebra.lift ℂ (V →L[ℂ] V) G π) μ‖ ≤ MonoidAlgebra.sum μ (fun g c => ‖c‖ * ‖π g‖) := by
 -- proof
   rw [MonoidAlgebra.lift_apply]
-  calc ‖μ.sum (fun g c => c • π g)‖
-    ≤ μ.support.sum (fun g => ‖μ g • π g‖) := norm_sum_le _ _
-    _ = μ.support.sum (fun g => ‖μ g‖ * ‖π g‖) := by
-      congr 1; ext g; exact norm_smul (μ g) (π g)
-    _ = μ.sum (fun g c => ‖c‖ * ‖π g‖) := rfl
+  calc ‖μ.coeff.sum (fun g c => c • π g)‖
+    ≤ μ.coeff.support.sum (fun g => ‖μ.coeff g • π g‖) := norm_sum_le _ _
+    _ = μ.coeff.support.sum (fun g => ‖μ.coeff g‖ * ‖π g‖) := by
+      congr 1; ext g; exact norm_smul (μ.coeff g) (π g)
+    _ = MonoidAlgebra.sum μ (fun g c => ‖c‖ * ‖π g‖) := by
+      simp only [MonoidAlgebra.sum]
+      rfl
 set_option checkBinderAnnotations false in
 
 /--
@@ -519,24 +421,16 @@ private lemma total_variation_eval_continuous
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
-  {V : Type uG}
-  [NormedAddCommGroup V]
-  [NormedSpace ℂ V]
-  {G : Type uG}
-  [Group G]
-  [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {M : Type uM}
   [Ring M]
   [Algebra ℂ M]
   [TopologicalSpace M]
   [CompactlySupportedMeasureAlgebra G M]
-  {f : G → ℝ}
--- given
+  (f : G → ℝ)
   (hf : Continuous f)
   (hf_nn : ∀ g, 0 ≤ f g) :
--- imply
   @Continuous (MonoidAlgebra ℂ G) ℝ (TopologicalSpace.induced (MonoidAlgebra.lift ℂ M G CompactlySupportedMeasureAlgebra.dirac) ‹TopologicalSpace M›) inferInstance (fun μ => μ.sum (fun g c => ‖c‖ * f g)) :=
--- proof
   total_variation_eval_cont f hf hf_nn
 
 /--
@@ -547,12 +441,7 @@ private lemma rep_continuous_theorem
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
-  {V : Type uG}
-  [NormedAddCommGroup V]
-  [NormedSpace ℂ V]
-  {G : Type uG}
-  [Group G]
-  [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {M : Type uM}
   [Ring M]
   [Algebra ℂ M]
@@ -563,7 +452,7 @@ private lemma rep_continuous_theorem
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
-  {π : G →* (V →L[ℂ] V)}
+  (π : G →* (V →L[ℂ] V))
 -- given
   (hcont_norm : Continuous (fun g : G => ‖(π g : V →L[ℂ] V)‖)) :
 -- imply
@@ -580,13 +469,14 @@ private lemma rep_continuous_theorem
   haveI : IsTopologicalAddGroup M :=
     { toContinuousAdd := ‹ContinuousAdd M›, toContinuousNeg := instCNM }
   haveI : IsTopologicalAddGroup (MonoidAlgebra ℂ G) :=
-    topologicalAddGroup_induced δ_lift
+    isTopologicalAddGroup_induced δ_lift
   let π_lift := MonoidAlgebra.lift ℂ (V →L[ℂ] V) G π
   change @Continuous _ _ t_ind _ π_lift
   have h_tendsto : Filter.Tendsto π_lift (@nhds _ t_ind 0) (nhds 0) := by
     apply squeeze_zero_norm (fun μ => rep_lift_opNorm_le π μ)
-    rw [← show (0 : MonoidAlgebra ℂ G).sum (fun g c => ‖c‖ * ‖(π g : V →L[ℂ] V)‖) = 0 from
-      Finsupp.sum_zero_index]
+    have h0 : MonoidAlgebra.sum (0 : MonoidAlgebra ℂ G) (fun g c => ‖c‖ * ‖(π g : V →L[ℂ] V)‖) = 0 := by
+      simp [MonoidAlgebra.sum, Finsupp.sum_zero_index]
+    rw [← h0]
     exact (total_variation_eval_cont
       (fun g => ‖(π g : V →L[ℂ] V)‖) hcont_norm (fun g => norm_nonneg _)).continuousAt.tendsto
   have h_cont_hom : Continuous (π_lift.toAddMonoidHom : MonoidAlgebra ℂ G →+ (V →L[ℂ] V)) :=
@@ -601,12 +491,7 @@ private lemma discrete_measures_sequentially_dense
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
-  {V : Type uG}
-  [NormedAddCommGroup V]
-  [NormedSpace ℂ V]
-  {G : Type uG}
-  [Group G]
-  [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {M : Type uM}
   [Ring M]
   [Algebra ℂ M]
@@ -630,25 +515,17 @@ private lemma CompactlySupportedMeasureAlgebra.discrete_dense
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
-  {V : Type uG}
-  [NormedAddCommGroup V]
-  [NormedSpace ℂ V]
-  {G : Type uG}
-  [Group G]
-  [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {M : Type uM}
   [Ring M]
   [Algebra ℂ M]
   [TopologicalSpace M]
-  [inst : CompactlySupportedMeasureAlgebra G M]
-  [FrechetUrysohnSpace M] :
+  [inst : CompactlySupportedMeasureAlgebra G M] :
 -- imply
   Dense (Set.range (MonoidAlgebra.lift ℂ M G inst.dirac)) := by
 -- proof
-  rw [dense_iff_closure_eq]
-  ext x
-  simp only [Set.mem_univ, iff_true]
-  exact seqClosure_subset_closure (discrete_measures_sequentially_dense x)
+  exact ContinuousRep.CompactlySupportedMeasureAlgebra.discrete_dense
+
 
 /--
 [blt_alg_hom_extend](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -658,6 +535,7 @@ private lemma blt_alg_hom_extend
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
@@ -684,41 +562,8 @@ private lemma blt_alg_hom_extend
 -- imply
   ∃ (g : β →ₐ[ℂ] γ), Continuous g ∧ ∀ x : α, g (ι x) = f x := by
 -- proof
-  refine ⟨{ toFun := g_fun,
-    map_one' := ?_,
-    map_mul' := ?_,
-    map_zero' := ?_,
-    map_add' := ?_,
-    commutes' := ?_ }, hg_cont, hg_ext⟩
-  · have h1 : (1 : β) = ι 1 := (map_one ι).symm
-    rw [h1, hg_ext, map_one]
-  · intro x y
-    have key : (fun p : β × β => g_fun (p.1 * p.2)) =
-      (fun p : β × β => g_fun p.1 * g_fun p.2) := by
-      apply @Continuous.ext_on γ (β × β) _ _ _ (Set.range ι ×ˢ Set.range ι)
-      · exact h_dense.prod h_dense
-      · exact hg_cont.comp (continuous_fst.mul continuous_snd)
-      · exact (hg_cont.comp continuous_fst).mul (hg_cont.comp continuous_snd)
-      · rintro ⟨b₁, b₂⟩ ⟨⟨a₁, rfl⟩, ⟨a₂, rfl⟩⟩
-        show g_fun (ι a₁ * ι a₂) = g_fun (ι a₁) * g_fun (ι a₂)
-        rw [← map_mul ι, hg_ext, hg_ext, hg_ext, map_mul]
-    exact congr_fun key (x, y)
-  · have h0 : (0 : β) = ι 0 := (map_zero ι).symm
-    rw [h0, hg_ext, map_zero]
-  · intro x y
-    have key : (fun p : β × β => g_fun (p.1 + p.2)) =
-      (fun p : β × β => g_fun p.1 + g_fun p.2) := by
-      apply @Continuous.ext_on γ (β × β) _ _ _ (Set.range ι ×ˢ Set.range ι)
-      · exact h_dense.prod h_dense
-      · exact hg_cont.comp (continuous_fst.add continuous_snd)
-      · exact (hg_cont.comp continuous_fst).add (hg_cont.comp continuous_snd)
-      · rintro ⟨b₁, b₂⟩ ⟨⟨a₁, rfl⟩, ⟨a₂, rfl⟩⟩
-        show g_fun (ι a₁ + ι a₂) = g_fun (ι a₁) + g_fun (ι a₂)
-        rw [← map_add ι, hg_ext, hg_ext, hg_ext, map_add]
-    exact congr_fun key (x, y)
-  · intro r
-    have : algebraMap ℂ β r = ι (algebraMap ℂ α r) := (ι.commutes r).symm
-    rw [this, hg_ext, f.commutes]
+  exact ContinuousRep.blt_alg_hom_extend h_dense hg_cont hg_ext
+
 
 /--
 [CompactlySupportedMeasureAlgebra.alg_hom_extend](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -728,12 +573,7 @@ private lemma CompactlySupportedMeasureAlgebra.alg_hom_extend
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
-  {V : Type uG}
-  [NormedAddCommGroup V]
-  [NormedSpace ℂ V]
-  {G : Type uG}
-  [Group G]
-  [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {M : Type uM}
   [Ring M]
   [Algebra ℂ M]
@@ -743,7 +583,6 @@ private lemma CompactlySupportedMeasureAlgebra.alg_hom_extend
   [inst : CompactlySupportedMeasureAlgebra G M]
   [Ring A]
   [Algebra ℂ A]
-  [inst_top_A : TopologicalSpace A]
   [inst_unif_A : UniformSpace A]
   [CompleteSpace A]
   [T2Space A]
@@ -753,45 +592,12 @@ private lemma CompactlySupportedMeasureAlgebra.alg_hom_extend
   {f : MonoidAlgebra ℂ G →ₐ[ℂ] A}
 -- given
   (h_dense : Dense (Set.range (MonoidAlgebra.lift ℂ M G inst.dirac)))
-  (h_cont : @Continuous (MonoidAlgebra ℂ G) A (TopologicalSpace.induced (MonoidAlgebra.lift ℂ M G inst.dirac) ‹TopologicalSpace M›) inst_top_A f)
-  (h_top_eq : inst_top_A = inst_unif_A.toTopologicalSpace := by rfl) :
+  (h_cont : @Continuous (MonoidAlgebra ℂ G) A (TopologicalSpace.induced (MonoidAlgebra.lift ℂ M G inst.dirac) ‹TopologicalSpace M›) inst_unif_A.toTopologicalSpace f) :
 -- imply
   ∃ (g : M →ₐ[ℂ] A), Continuous g ∧ ∀ μ : MonoidAlgebra ℂ G, g ((MonoidAlgebra.lift ℂ M G inst.dirac) μ) = f μ := by
 -- proof
-  subst h_top_eq
-  letI : TopologicalSpace (MonoidAlgebra ℂ G) :=
-    TopologicalSpace.induced (MonoidAlgebra.lift ℂ M G inst.dirac) ‹TopologicalSpace M›
-  have di : IsDenseInducing (MonoidAlgebra.lift ℂ M G inst.dirac : MonoidAlgebra ℂ G → M) := {
-    eq_induced := rfl
-    dense := h_dense
-  }
-  let g_fun := di.extend (f : MonoidAlgebra ℂ G → A)
-  have hg_ext : ∀ x, g_fun ((MonoidAlgebra.lift ℂ M G inst.dirac) x) = f x :=
-    IsDenseInducing.extend_eq di h_cont
-  have h_filter : ∀ b : M, ∃ c : A,
-    Filter.Tendsto (f : MonoidAlgebra ℂ G → A) (Filter.comap
-      (MonoidAlgebra.lift ℂ M G inst.dirac : MonoidAlgebra ℂ G → M) (nhds b)) (nhds c) := by
-    intro b
-    set ι := (MonoidAlgebra.lift ℂ M G inst.dirac : MonoidAlgebra ℂ G → M)
-    haveI : ContinuousNeg M := IsSemitopologicalSemiring.continuousNeg_of_mul
-    haveI : IsTopologicalAddGroup M := ⟨⟩
-    haveI : IsTopologicalAddGroup (MonoidAlgebra ℂ G) :=
-      Topology.IsInducing.topologicalAddGroup
-        (f := (MonoidAlgebra.lift ℂ M G inst.dirac).toAddMonoidHom') di.toIsInducing
-    letI uM : UniformSpace M := IsTopologicalAddGroup.rightUniformSpace M
-    haveI : IsUniformAddGroup M := isUniformAddGroup_of_addCommGroup
-    letI uS : UniformSpace (MonoidAlgebra ℂ G) :=
-      IsTopologicalAddGroup.rightUniformSpace (MonoidAlgebra ℂ G)
-    haveI : IsUniformAddGroup (MonoidAlgebra ℂ G) := isUniformAddGroup_of_addCommGroup
-    have hι_ui : IsUniformInducing ι :=
-      AddMonoidHom.isUniformInducing_of_isInducing
-        (f := (MonoidAlgebra.lift ℂ M G inst.dirac).toAddMonoidHom') di.toIsInducing
-    have hf_uc : UniformContinuous (f : MonoidAlgebra ℂ G → A) :=
-      uniformContinuous_addMonoidHom_of_continuous (hom := MonoidAlgebra ℂ G →+ A)
-        (f := f.toAddMonoidHom') h_cont
-    exact uniformly_extend_exists hι_ui di.dense hf_uc b
-  have hg_cont : Continuous g_fun := di.continuous_extend h_filter
-  exact blt_alg_hom_extend (MonoidAlgebra.lift ℂ M G inst.dirac) f h_dense g_fun hg_cont hg_ext
+  exact ContinuousRep.CompactlySupportedMeasureAlgebra.alg_hom_extend h_dense h_cont
+
 
 /--
 [continuous_opNorm_of_jointly_continuous](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -804,15 +610,8 @@ private lemma continuous_opNorm_of_jointly_continuous
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
-  [Ring M]
-  [Algebra ℂ M]
-  [TopologicalSpace M]
-  [ContinuousAdd M]
-  [ContinuousMul M]
-  [CompactlySupportedMeasureAlgebra G M]
-  [FrechetUrysohnSpace M]
   [FiniteDimensional ℂ V]
-  {π : G →* (V →L[ℂ] V)}
+  (π : G →* (V →L[ℂ] V))
 -- given
   (hcont : Continuous (fun p : G × V => (π p.1) p.2)) :
 -- imply
@@ -832,6 +631,7 @@ private lemma discreteMeasureRep_continuous_to_opnorm
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
@@ -842,7 +642,7 @@ private lemma discreteMeasureRep_continuous_to_opnorm
   [ContinuousMul M]
   [CompactlySupportedMeasureAlgebra G M]
   [FrechetUrysohnSpace M]
-  {π : G →* (V →L[ℂ] V)}
+  (π : G →* (V →L[ℂ] V))
   [FiniteDimensional ℂ V]
 -- given
   (hcont : Continuous (fun p : G × V => (π p.1) p.2)) :
@@ -859,6 +659,7 @@ private lemma discreteMeasureRep_weakly_continuous
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
@@ -869,17 +670,15 @@ private lemma discreteMeasureRep_weakly_continuous
   [ContinuousMul M]
   [CompactlySupportedMeasureAlgebra G M]
   [FrechetUrysohnSpace M]
-  {π : G →* (V →L[ℂ] V)}
+  (π : G →* (V →L[ℂ] V))
   [FiniteDimensional ℂ V]
 -- given
   (hcont : Continuous (fun p : G × V => (π p.1) p.2)) :
 -- imply
-  letI := weakTopologyOnDiscreteMeasures (G := G) (M := M) Continuous (fun p : MonoidAlgebra ℂ G × V => (discreteMeasureRep π p.1) p.2) := by
+  @Continuous (MonoidAlgebra ℂ G) (V →L[ℂ] V)
+    (weakTopologyOnDiscreteMeasures (M := M)) inferInstance (discreteMeasureRep π) :=
 -- proof
-  letI : TopologicalSpace (MonoidAlgebra ℂ G) :=
-    weakTopologyOnDiscreteMeasures (G := G) (M := M)
-  have h_rep_cont := discreteMeasureRep_continuous_to_opnorm (M := M) π hcont
-  exact (h_rep_cont.comp continuous_fst).clm_apply continuous_snd
+  discreteMeasureRep_continuous_to_opnorm (M := M) π hcont
 
 /--
 [discreteMeasureRep_BLT_extension](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -889,6 +688,7 @@ private lemma discreteMeasureRep_BLT_extension
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
@@ -899,7 +699,7 @@ private lemma discreteMeasureRep_BLT_extension
   [ContinuousMul M]
   [CompactlySupportedMeasureAlgebra G M]
   [FrechetUrysohnSpace M]
-  {π : G →* (V →L[ℂ] V)}
+  (π : G →* (V →L[ℂ] V))
   [FiniteDimensional ℂ V]
 -- given
   (hcont : Continuous (fun p : G × V => (π p.1) p.2))
@@ -911,7 +711,7 @@ private lemma discreteMeasureRep_BLT_extension
     (weakTopologyOnDiscreteMeasures (M := M)) _ (discreteMeasureRep π) :=
     discreteMeasureRep_continuous_to_opnorm (M := M) π hcont
   exact CompactlySupportedMeasureAlgebra.alg_hom_extend
-    (discreteMeasureRep π) h_dense h_weak_cont
+    (f := discreteMeasureRep π) h_dense h_weak_cont
 
 /--
 [measureRep_exists_extension](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -921,6 +721,7 @@ private lemma measureRep_exists_extension
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
@@ -931,7 +732,7 @@ private lemma measureRep_exists_extension
   [ContinuousMul M]
   [CompactlySupportedMeasureAlgebra G M]
   [FrechetUrysohnSpace M]
-  {π : G →* (V →L[ℂ] V)}
+  (π : G →* (V →L[ℂ] V))
   [FiniteDimensional ℂ V]
 -- given
   (hcont : Continuous (fun p : G × V => (π p.1) p.2)) :
@@ -953,6 +754,7 @@ private lemma measureRep_continuous_bilinear
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
@@ -963,17 +765,19 @@ private lemma measureRep_continuous_bilinear
   [ContinuousMul M]
   [CompactlySupportedMeasureAlgebra G M]
   [FrechetUrysohnSpace M]
-  {π : G →* (V →L[ℂ] V)}
+  (π : G →* (V →L[ℂ] V))
   [FiniteDimensional ℂ V]
   {π_ext : M →ₐ[ℂ] (V →L[ℂ] V)}
 -- given
-  (hcont : Continuous (fun p : G × V => (π p.1) p.2))
-  (h_extends : ∀ g : G, π_ext (CompactlySupportedMeasureAlgebra.dirac g) = π g)
+  (_hcont : Continuous (fun p : G × V => (π p.1) p.2))
+  (_h_extends : ∀ g : G, π_ext (CompactlySupportedMeasureAlgebra.dirac g) = π g)
   (hcont_ext : Continuous π_ext) :
 -- imply
   Continuous (fun p : M × V => (π_ext p.1) p.2) :=
 -- proof
-(isBoundedBilinearMap_apply (𝕜 := ℂ)).continuous.comp (hcont_ext.prodMap continuous_id)
+by
+  exact Continuous.comp (isBoundedBilinearMap_apply (𝕜 := ℂ)).continuous
+    (Continuous.prodMap hcont_ext continuous_id)
 
 /--
 [measureRep_continuous_extension](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -983,6 +787,7 @@ private lemma measureRep_continuous_extension
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
@@ -993,7 +798,7 @@ private lemma measureRep_continuous_extension
   [ContinuousMul M]
   [CompactlySupportedMeasureAlgebra G M]
   [FrechetUrysohnSpace M]
-  {π : G →* (V →L[ℂ] V)}
+  (π : G →* (V →L[ℂ] V))
   [FiniteDimensional ℂ V]
 -- given
   (hcont : Continuous (fun p : G × V => (π p.1) p.2)) :
@@ -1002,7 +807,7 @@ private lemma measureRep_continuous_extension
 -- proof
   obtain ⟨π_ext, hcont_ext, h_dirac, _h_extends⟩ := measureRep_exists_extension (M := M) π hcont
   exact ⟨π_ext, h_dirac, hcont_ext,
-    measureRep_continuous_bilinear (M := M) π hcont π_ext h_dirac hcont_ext⟩
+    measureRep_continuous_bilinear (M := M) (π_ext := π_ext) π hcont h_dirac hcont_ext⟩
 
 /--
 [measureRep_unique_extension](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean)
@@ -1012,6 +817,7 @@ private lemma measureRep_unique_extension
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   {V : Type uG}
   [NormedAddCommGroup V]
   [NormedSpace ℂ V]
@@ -1022,11 +828,11 @@ private lemma measureRep_unique_extension
   [ContinuousMul M]
   [CompactlySupportedMeasureAlgebra G M]
   [FrechetUrysohnSpace M]
-  {π : G →* (V →L[ℂ] V)}
+  (π : G →* (V →L[ℂ] V))
   [CompleteSpace V]
   {φ₁ φ₂ : M →ₐ[ℂ] (V →L[ℂ] V)}
 -- given
-  (hcont : Continuous (fun p : G × V => (π p.1) p.2))
+  (_hcont : Continuous (fun p : G × V => (π p.1) p.2))
   (h₁ : ∀ g : G, φ₁ (CompactlySupportedMeasureAlgebra.dirac g) = π g)
   (h₂ : ∀ g : G, φ₂ (CompactlySupportedMeasureAlgebra.dirac g) = π g)
   (hcont₁ : Continuous (fun p : M × V => (φ₁ p.1) p.2))
@@ -1120,10 +926,10 @@ private lemma isotypicProjection_idempotent
   ext v
   simp only [ContinuousLinearMap.comp_apply, isotypicProjection,
     Submodule.subtypeL_apply]
-  have h : (IsotypicComponent π K σ).orthogonalProjection
-    (↑((IsotypicComponent π K σ).orthogonalProjection v)) =
-    (IsotypicComponent π K σ).orthogonalProjection v :=
-    Submodule.orthogonalProjection_mem_subspace_eq_self _
+  have h : (IsotypicComponent π K σ).orthogonalProjectionOnto
+    (↑((IsotypicComponent π K σ).orthogonalProjectionOnto v)) =
+    (IsotypicComponent π K σ).orthogonalProjectionOnto v :=
+    Submodule.orthogonalProjectionOnto_mem_subspace_eq_self _
   rw [h]
 
 /--
@@ -1158,14 +964,14 @@ private lemma isotypicProjection_range
     rw [isotypicProjection] at hw
     simp only [ContinuousLinearMap.comp_apply, Submodule.subtypeL_apply] at hw
     rw [← hw]
-    exact ((IsotypicComponent π K σ).orthogonalProjection w).2
+    exact ((IsotypicComponent π K σ).orthogonalProjectionOnto w).2
   · intro hv
     refine ⟨v, ?_⟩
     change (isotypicProjection π K σ) v = v
     rw [isotypicProjection]
     simp only [ContinuousLinearMap.comp_apply, Submodule.subtypeL_apply]
-    have : (IsotypicComponent π K σ).orthogonalProjection v = ⟨v, hv⟩ :=
-      Submodule.orthogonalProjection_mem_subspace_eq_self ⟨v, hv⟩
+    have : (IsotypicComponent π K σ).orthogonalProjectionOnto v = ⟨v, hv⟩ :=
+      Submodule.orthogonalProjectionOnto_mem_subspace_eq_self ⟨v, hv⟩
     rw [this]
 
 /--
@@ -1176,6 +982,7 @@ private lemma kFiniteSubspace_stable_eq
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   [AddCommGroup V]
   [Module ℂ V]
   [TopologicalSpace V]
@@ -1198,6 +1005,7 @@ private lemma unitary_adjoint_eq_inv_eq
   {G : Type uG}
   [Group G]
   [TopologicalSpace G]
+  [IsTopologicalGroup G]
   [NormedAddCommGroup E]
   [InnerProductSpace ℂ E]
   [CompleteSpace E]

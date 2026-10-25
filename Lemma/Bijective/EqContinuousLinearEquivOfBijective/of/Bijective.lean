@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import sympy.atlas.v1.Atlas.LieGroups.code.Admissible
+import sympy.atlas.v1.Atlas.LieGroups.code.SmoothVectorsProps
 open scoped ComplexOrder Manifold
 
 
@@ -97,14 +98,14 @@ private lemma schurProjector_commutes
   {σ : ContinuousRep K Wσ}
   {P : F →L[ℂ] F}
 -- given
-  (_ : σ.IsIrreducible)
   (_ : ∀ v, v ∈ π.IsotypicComponent K σ → P v = v)
   (_ : ∀ v, P v ∈ π.IsotypicComponent K σ)
-  (hP_comm : ∀ (g : G) (v : F), P ((π.toMonoidHom g) v) = (π.toMonoidHom g) (P v)) :
+  (hP_comm : ∀ (g : G) (v : F), P ((π.toMonoidHom g) v) = (π.toMonoidHom g) (P v))
+  (_ : σ.IsIrreducible) :
 -- imply
-  ∀ (g : G) (v : F), P ((π.toMonoidHom g) v) = (π.toMonoidHom g) (P v) := by
+  ∀ (g : G) (v : F), P ((π.toMonoidHom g) v) = (π.toMonoidHom g) (P v) :=
 -- proof
-  exact hP_comm
+  hP_comm
 
 private lemma schurProjector_preserves_smooth
   [NormedAddCommGroup E]
@@ -125,15 +126,15 @@ private lemma schurProjector_preserves_smooth
   {σ : ContinuousRep K Wσ}
   {P : F →L[ℂ] F}
 -- given
-  (hirr : σ.IsIrreducible)
   (hP_fix : ∀ v, v ∈ π.IsotypicComponent K σ → P v = v)
   (hP_range : ∀ v, P v ∈ π.IsotypicComponent K σ)
-  (hP_comm : ∀ (g : G) (v : F), P ((π.toMonoidHom g) v) = (π.toMonoidHom g) (P v)) :
+  (hP_comm : ∀ (g : G) (v : F), P ((π.toMonoidHom g) v) = (π.toMonoidHom g) (P v))
+  (hirr : σ.IsIrreducible) :
 -- imply
-  ∀ v, v ∈ π.smoothSubspace I → P v ∈ π.smoothSubspace I := by
+  ∀ v, v ∈ π.smoothSubspace I → P v ∈ π.smoothSubspace I :=
 -- proof
-  exact clm_commuting_preserves_smooth
-    (schurProjector_commutes hirr hP_fix hP_range hP_comm)
+  clm_commuting_preserves_smooth
+    (schurProjector_commutes hP_fix hP_range hP_comm hirr)
 
 private lemma smoothSubspace_dense_of_lieGroup
   [NormedAddCommGroup E]
@@ -164,18 +165,12 @@ private lemma smoothSubspace_dense_of_lieGroup
   have : MeasureTheory.Measure.IsHaarMeasure
     (MeasureTheory.MeasureSpace.volume (α := G)) :=
     MeasureTheory.Measure.isHaarMeasure_haarMeasure _
-  -- Missing from local sympy SmoothVectorsProps (present upstream atlas-lean):
-  -- ContinuousRep.gardingSubspace_dense / gardingVector_isSmooth
-  have hGardDense : Dense (π.gardingSubspace I : Set F) := by
-    sorry
-  -- Missing ContinuousRep.gardingVector_isSmooth
-  apply Dense.mono _ hGardDense
-  intro w hw
-  apply (show π.gardingSubspace I ≤ π.smoothSubspace I by
-    apply Submodule.span_le.mpr
-    intro x ⟨f, v, hf, hx⟩
-    rw [hx]
-    sorry) hw
+  apply Dense.mono _ (ContinuousRep.gardingSubspace_dense (I := I) π)
+  change π.gardingSubspace I ≤ π.smoothSubspace I
+  apply Submodule.span_le.mpr
+  intro x ⟨f, v, hf, hx⟩
+  rw [hx]
+  exact ContinuousRep.gardingVector_isSmooth (I := I) π f hf v
 
 private lemma smooth_dirac_approx
   [NormedAddCommGroup E]
@@ -208,9 +203,9 @@ private lemma invariant_subspace_map_subtype
   [IsTopologicalGroup G]
   [NormedAddCommGroup F]
   [NormedSpace ℂ F]
-  {π : ContinuousRep G F}
   {K : Subgroup G} [CompactSpace ↥K] [T2Space ↥K]
   {W : Submodule ℂ F} [FiniteDimensional ℂ W]
+  {π : ContinuousRep G F}
   {U : Submodule ℂ ↥W}
 -- given
   (hW_inv : (π.restrictSubgroup K).IsInvariantSubspace W)
@@ -257,10 +252,10 @@ private lemma isKFinite_of_orbit_le_finiteDim
   [TopologicalSpace G]
   [NormedAddCommGroup F]
   [NormedSpace ℂ F]
+  {W : Submodule ℂ F} [FiniteDimensional ℂ W]
   {π : ContinuousRep G F}
   {K : Subgroup G}
   {w : F}
-  {W : Submodule ℂ F} [FiniteDimensional ℂ W]
 -- given
   (hle : Submodule.span ℂ (Set.range (fun k : ↥K => π.toMonoidHom (↑k) w)) ≤ W) :
 -- imply

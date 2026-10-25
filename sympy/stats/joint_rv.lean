@@ -7,7 +7,7 @@ import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
 import sympy.stats.symbolic_probability
-import sympy.core.function
+import Theorem.Function
 open MeasureTheory
 open scoped ProbabilityTheory
 

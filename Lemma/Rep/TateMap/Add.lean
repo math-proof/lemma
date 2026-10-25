@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GroupCohomology_TateCohomology
-import Lemma.Definitions.Def_GroupCohomology_TateSeam
-import Lemma.Definitions.Def_GroupCohomology_TateShiftMaps
+import Lemma.GroupCohomology.TateCohomology
+import Lemma.GroupCohomology.TateSeam
+import Lemma.GroupCohomology.TateShiftMaps
 import Lemma.Int.P2MUtil
 
 open CategoryTheory Rep

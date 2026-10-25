@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ValuationSubring_ResidueValuationSubring
+import Lemma.ValuationSubring.ResidueValuationSubring
 import Lemma.Int.P2MUtil
 open IsLocalRing
 

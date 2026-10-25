@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_WalkOverlap
+import Lemma.CerednikDrinfeld.WalkOverlap
 open SimpleGraph
 open CerednikDrinfeld.Mumford CerednikDrinfeld
 

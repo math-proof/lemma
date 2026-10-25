@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_LaurentCoeff
+import Lemma.ModularCurve.LaurentCoeff
 open ModularCurve IntermediateField HahnSeries
 
 

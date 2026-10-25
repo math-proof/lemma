@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluation
-import Lemma.Definitions.Def_AlgebraicCurve_DivisorPushPull
+import Def.AlgebraicCurve_PlaceEvaluation
+import Lemma.AlgebraicCurve.DivisorPushPull
 import Lemma.Int.P2MUtil
 
 

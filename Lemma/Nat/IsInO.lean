@@ -283,26 +283,12 @@ private lemma isClopen_valuationRing
   @IsClopen C.k ht.instNormedField.toUniformSpace.toTopologicalSpace {x : C.k | C.isInO x} := by
 -- proof
   let : NormedField C.k := ht.instNormedField
+  let : Field C.k := NormedField.toField (α := C.k)
   let : IsUltrametricDist C.k := ht.instUltrametric
-  have heq : {x : C.k | C.isInO x} = {x : C.k | ‖x‖ ≤ 1} := by
+  have heq : {x : C.k | C.isInO x} = closedBall (0 : C.k) 1 := by
     ext x
-    simp only [mem_setOf_eq]
-    exact ht.isInO_iff_norm_le_one x
+    simp [ht.isInO_iff_norm_le_one, Metric.mem_closedBall, dist_eq_norm, sub_zero]
   rw [heq]
-  have hball : {x : C.k | ‖x‖ ≤ 1} = closedBall (0 : C.k) 1 := by
-    ext x
-    constructor
-    · intro h
-      change dist x 0 ≤ 1
-      have hz : dist x 0 = ‖x‖ := by convert dist_zero_right x
-      rw [hz]
-      exact h
-    · intro h
-      change dist x 0 ≤ 1 at h
-      have hz : dist x 0 = ‖x‖ := by convert dist_zero_right x
-      rw [hz] at h
-      exact h
-  rw [hball]
   exact IsUltrametricDist.isClopen_closedBall 0 one_ne_zero
 
 end DVRContext
@@ -321,26 +307,12 @@ private lemma isClopen_maximalIdeal
   @IsClopen C.k ht.instNormedField.toUniformSpace.toTopologicalSpace {x : C.k | C.isInMaxIdeal x} := by
 -- proof
   let : NormedField C.k := ht.instNormedField
+  let : Field C.k := NormedField.toField (α := C.k)
   let : IsUltrametricDist C.k := ht.instUltrametric
-  have heq : {x : C.k | C.isInMaxIdeal x} = {x : C.k | ‖x‖ < 1} := by
+  have heq : {x : C.k | C.isInMaxIdeal x} = ball (0 : C.k) 1 := by
     ext x
-    simp only [mem_setOf_eq]
-    exact ht.isInMaxIdeal_iff_norm_lt_one x
+    simp [ht.isInMaxIdeal_iff_norm_lt_one, Metric.mem_ball, dist_eq_norm, sub_zero]
   rw [heq]
-  have hball : {x : C.k | ‖x‖ < 1} = ball (0 : C.k) 1 := by
-    ext x
-    constructor
-    · intro h
-      change dist x 0 < 1
-      have hz : dist x 0 = ‖x‖ := by convert dist_zero_right x
-      rw [hz]
-      exact h
-    · intro h
-      change dist x 0 < 1 at h
-      have hz : dist x 0 = ‖x‖ := by convert dist_zero_right x
-      rw [hz] at h
-      exact h
-  rw [hball]
   exact IsUltrametricDist.isClopen_ball 0 1
 
 end DVRContext
@@ -359,47 +331,21 @@ private lemma isClopen_units
   @IsClopen C.k ht.instNormedField.toUniformSpace.toTopologicalSpace {x : C.k | C.isUnitInO x} := by
 -- proof
   let : NormedField C.k := ht.instNormedField
+  let : Field C.k := NormedField.toField (α := C.k)
   let : IsUltrametricDist C.k := ht.instUltrametric
-  have heq : {x : C.k | C.isUnitInO x} = {x : C.k | ‖x‖ = 1} := by
+  have heq : {x : C.k | C.isUnitInO x} =
+      closedBall (0 : C.k) 1 \ ball (0 : C.k) 1 := by
     ext x
-    simp only [mem_setOf_eq]
-    exact ht.isUnitInO_iff_norm_eq_one x
-  rw [heq]
-  have hset : {x : C.k | ‖x‖ = 1} = {x : C.k | ‖x‖ ≤ 1} \ {x : C.k | ‖x‖ < 1} := by
-    ext x
-    simp only [mem_setOf_eq, mem_diff]
+    simp only [Set.mem_ofPred, Set.mem_sdiff, Metric.mem_closedBall, Metric.mem_ball,
+      ht.isUnitInO_iff_norm_eq_one, dist_eq_norm, sub_zero]
     constructor
     · intro h
       exact ⟨le_of_eq h, not_lt.mpr (ge_of_eq h)⟩
     · intro ⟨h1, h2⟩
       exact le_antisymm h1 (not_lt.mp h2)
-  rw [hset]
-  have hclosed : {x : C.k | ‖x‖ ≤ 1} = closedBall (0 : C.k) 1 := by
-    ext x
-    constructor
-    · intro h
-      change dist x 0 ≤ 1
-      have hz : dist x 0 = ‖x‖ := by convert dist_zero_right x
-      rw [hz]; exact h
-    · intro h
-      change dist x 0 ≤ 1 at h
-      have hz : dist x 0 = ‖x‖ := by convert dist_zero_right x
-      rw [hz] at h; exact h
-  have hopen : {x : C.k | ‖x‖ < 1} = ball (0 : C.k) 1 := by
-    ext x
-    constructor
-    · intro h
-      change dist x 0 < 1
-      have hz : dist x 0 = ‖x‖ := by convert dist_zero_right x
-      rw [hz]; exact h
-    · intro h
-      change dist x 0 < 1 at h
-      have hz : dist x 0 = ‖x‖ := by convert dist_zero_right x
-      rw [hz] at h; exact h
-  rw [hclosed, hopen]
+  rw [heq]
   exact (IsUltrametricDist.isClopen_closedBall (0 : C.k) one_ne_zero).diff
     (IsUltrametricDist.isClopen_ball (0 : C.k) 1)
-
 
 end DVRContext
 

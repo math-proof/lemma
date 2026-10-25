@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_CurveModel
-import Lemma.Definitions.Def_AlgebraicCurve_GluedPic0
+import Lemma.AlgebraicCurve.CurveModel
+import Lemma.AlgebraicCurve.GluedPic0
 import Lemma.Int.P2MUtil
 
 open scoped TensorProduct

@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_Correspondence
-import Lemma.Definitions.Def_AlgebraicCurve_BaseChangeGalois
+import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
 import Lemma.Int.P2MUtil
 
 

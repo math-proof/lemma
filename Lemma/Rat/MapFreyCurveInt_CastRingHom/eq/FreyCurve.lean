@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FLTPrelim_FreyPackage
+import Lemma.FLTPrelim.FreyPackage
 open FreyPackage
 open WeierstrassCurve
 

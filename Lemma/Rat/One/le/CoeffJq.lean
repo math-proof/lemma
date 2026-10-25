@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_X0
+import Lemma.ModularCurve.X0
 import Lemma.Int.P2MUtil
 open scoped PowerSeries.WithPiTopology
 open PowerSeries Finset

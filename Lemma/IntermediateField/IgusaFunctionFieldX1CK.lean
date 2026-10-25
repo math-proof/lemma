@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_IgusaFunctionFieldX1
-import Lemma.Definitions.Def_ModularCurve_LaurentCoeff
+import Lemma.ModularCurve.IgusaFunctionFieldX1
+import Lemma.ModularCurve.LaurentCoeff
 import Lemma.Int.P2MUtil
 
 open ModularCurve

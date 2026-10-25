@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_LanglandsTunnell_BcWeight
+import Def.LanglandsTunnell_BcWeight
 import Lemma.Int.P2MUtil
 
 open NumberField IsDedekindDomain Matrix AutomorphicForm

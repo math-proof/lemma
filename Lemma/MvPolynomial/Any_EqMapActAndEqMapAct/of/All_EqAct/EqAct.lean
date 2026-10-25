@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_LevelModuliPackage
-import Lemma.Definitions.Def_ModularCurve_LevelModuliPackageAbs
+import Lemma.ModularCurve.LevelModuliPackage
+import Lemma.ModularCurve.LevelModuliPackageAbs
 import Lemma.Int.P2MUtil
 
 

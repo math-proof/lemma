@@ -1,4 +1,5 @@
 import Mathlib
+import Mathlib.Data.List.Chain
 import sympy.Basic
 import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicPositivity
 open Finset BigOperators CoxeterGroup
@@ -35,7 +36,7 @@ private lemma alternating_word_canonical_eq
 -- given
   (hst : s ≠ t)
   (halt : ∀ b ∈ word, b = s ∨ b = t)
-  (hchain : List.Chain' (· ≠ ·) word)
+  (hchain : List.IsChain (· ≠ ·) word)
   (hlast : word = [] ∨ (∃ h : word ≠ [], word.getLast h = t)) :
 -- imply
   (∃ k, word = altWordEven s t k) ∨ (∃ k, word = t :: altWordEven s t k) := by
@@ -75,7 +76,7 @@ private lemma parabolic_pos_eq
   (hst : s ≠ t)
   (halt : ∀ b ∈ word, b = s ∨ b = t)
   (hlen : word.length < M s t ∨ M s t = 0)
-  (hchain : List.Chain' (· ≠ ·) word)
+  (hchain : List.IsChain (· ≠ ·) word)
   (hlast : word = [] ∨ (∃ h : word ≠ [], word.getLast h = t)) :
 -- imply
   IsPositive (wordSigma M word (e s)) := by

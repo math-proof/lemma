@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_RegularProlongation
-import Lemma.Definitions.Def_AlgebraicCurve_Repartitions
+import Lemma.AlgebraicCurve.RegularProlongation
+import Lemma.AlgebraicCurve.Repartitions
 import Lemma.Int.P2MUtil
 
 open AlgebraicCurve IsLocalRing

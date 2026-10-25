@@ -1,44 +1,37 @@
 [
   {
-    "resolved": "Int",
-    "reason": "Mathlib `Int` is an inductive (not a class)",
+    "resolved": "Complex",
+    "reason": "Mathlib `Complex` is a structure",
     "kind": "data type",
-    "folder": "Int",
-    "decl": "inductive"
-  },
-  {
-    "resolved": "Fin",
-    "reason": "Mathlib `Fin` is a structure",
-    "kind": "data type",
-    "folder": "Fin",
+    "folder": "Complex",
     "decl": "structure"
   },
   {
-    "resolved": "Matrix",
-    "reason": "Mathlib `Matrix` is a def of a type former",
-    "kind": "data type",
-    "folder": "Matrix",
-    "decl": "def-type"
+    "resolved": "Field",
+    "reason": "Mathlib `Field` is a type class (`Lean.isClass`)",
+    "kind": "type class",
+    "folder": "Field",
+    "decl": "typeclass"
   },
   {
-    "resolved": "Ideal",
-    "reason": "Mathlib `Ideal` is a def of a type former",
-    "kind": "data type",
-    "folder": "Ideal",
-    "decl": "def-type"
+    "resolved": "IsAlgClosed",
+    "reason": "Mathlib `IsAlgClosed` is a type class (`Lean.isClass`)",
+    "kind": "type class",
+    "folder": "IsAlgClosed",
+    "decl": "typeclass"
   },
   {
-    "resolved": "Subgroup",
-    "reason": "Mathlib `Subgroup` is a structure",
+    "resolved": "CharZero",
+    "reason": "Mathlib `CharZero` is a type class (`Lean.isClass`)",
+    "kind": "type class",
+    "folder": "CharZero",
+    "decl": "typeclass"
+  },
+  {
+    "resolved": "Real",
+    "reason": "Mathlib `Real` is a structure",
     "kind": "data type",
-    "folder": "Subgroup",
+    "folder": "Real",
     "decl": "structure"
-  },
-  {
-    "resolved": "Representation",
-    "reason": "Mathlib `Representation` is a def of a type former",
-    "kind": "data type",
-    "folder": "Representation",
-    "decl": "def-type"
   }
 ]

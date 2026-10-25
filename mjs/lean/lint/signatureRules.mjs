@@ -6,7 +6,50 @@ import { parseSignature, hasWord } from './scan.mjs';
 
 const REL = /[=≠<>≤≥∈∉⊆⊂⊇⊃∣↔∧∨¬≈≡]|∀|∃|\bTrue\b|\bFalse\b/;
 const isLemma = (d) => d.kind === 'lemma' || d.kind === 'theorem';
-const isMain = (d) => /^@\[\s*main\b/.test(d.attrs);
+/** Legacy `@[main, …]` attribute list (docstring / older path attrs). */
+const isAttrMain = (d) => /^@\[\s*main\b/.test(d.attrs || '');
+/**
+ * Lemmas that use section markers (`-- imply` / `-- proof`, or `@[path] private lemma main`).
+ * `-- given` is required only when an explicit binder (hypothesis or given-section expression)
+ * belongs under it. An empty `-- given` is deleted, not kept as a blank marker.
+ */
+function needsSectionMarkers(d) {
+    const attrs = d.attrs || '';
+    if (d.name === 'main' && (/\bpath\b/.test(attrs) || isAttrMain(d))) return true;
+    if (isAttrMain(d)) return true;
+    const { given, imply, proof } = d.markers || {};
+    return given != null || imply != null || proof != null;
+}
+
+/** Explicit binders that belong under `-- given` (hypotheses and expression binders, not `{…}` / `[…]`). */
+function explicitGivenBinders(groups) {
+    return groups.filter((g) => g.kind === 'explicit');
+}
+
+/** First line/col that ends the `-- given` region: `-- imply`, else `:` / `:=` / `-- proof`. */
+function givenRegionEnd(d, sig) {
+    const { given, imply, proof } = d.markers;
+    const stops = [];
+    if (imply != null && imply > given) stops.push({ line: imply, col: 0 });
+    if (imply == null) {
+        if (sig.colon && sig.colon.line > given) stops.push(sig.colon);
+        if (sig.assign && sig.assign.line > given) stops.push(sig.assign);
+        if (proof != null && proof > given) stops.push({ line: proof, col: 0 });
+    }
+    if (!stops.length) return { line: d.end, col: 0 };
+    stops.sort((a, b) => a.line - b.line || a.col - b.col);
+    return stops[0];
+}
+
+/** No binder or other non-comment code between `-- given` and the next section. */
+function givenRegionBlank(P, givenLine, end) {
+    let text = '';
+    const last = Math.min(end.line, P.code.length);
+    for (let i = givenLine + 1; i < last; i++) text += (P.code[i] ?? '') + '\n';
+    if (end.col > 0 && end.line > givenLine && end.line < P.code.length)
+        text += P.code[end.line].slice(0, end.col);
+    return !text.trim();
+}
 
 /** proposition-typed binder (relation / connective in its type) vs. a clear expression binder */
 function propKind(g) {
@@ -31,6 +74,91 @@ function hypLabel(i, preferSub) {
     return preferSub ? `h${SUB_OF[i]}` : `h${i}`;
 }
 
+const BIND_KW = new Set(['∀', '∃', '∑', '∏', '⋂', '⋃', 'fun', 'λ']);
+const ID_RE = /[\p{L}_][\p{L}\p{N}_'!?₀-₉ₐ-ₜ]*/uy;
+
+/** Identifiers of `type` that are not bound by `∀` / `∃` / `∑` / `∏` / `fun` / `λ` (text fallback). */
+function freeNames(type, bound = new Set()) {
+    const found = new Set();
+    const text = String(type ?? '');
+    let i = 0;
+    const isId = (c) => c && /[\p{L}\p{N}_'!?₀-₉ₐ-ₜ]/u.test(c);
+    while (i < text.length) {
+        const ch = text[i];
+        if (/\s/.test(ch)) { i++; continue; }
+        let kw = '';
+        if ('∀∃∑∏⋂⋃λ'.includes(ch)) kw = ch;
+        else if (text.startsWith('fun', i) && !isId(text[i + 3])) kw = 'fun';
+        if (kw && BIND_KW.has(kw)) {
+            i += kw.length;
+            const local = new Set();
+            while (i < text.length) {
+                while (i < text.length && /\s/.test(text[i])) i++;
+                if (text.startsWith('=>', i) || text.startsWith('↦', i) || text[i] === ',' || text[i] === '∈' || text[i] === ':' || text[i] === '|') break;
+                if (chOpen(text[i])) {
+                    const close = CLOSE_OF[text[i]];
+                    i++;
+                    while (i < text.length && text[i] !== ':' && text[i] !== close) {
+                        while (i < text.length && /\s/.test(text[i])) i++;
+                        ID_RE.lastIndex = i;
+                        const m = ID_RE.exec(text);
+                        if (!m || m.index !== i) { if (i < text.length) i++; continue; }
+                        local.add(m[0]);
+                        i = ID_RE.lastIndex;
+                    }
+                    let depth = 1;
+                    if (text[i] === ':') i++;
+                    while (i < text.length && depth > 0) {
+                        if (chOpen(text[i])) depth++;
+                        else if (chClose(text[i])) depth--;
+                        if (depth > 0) i++;
+                    }
+                    if (i < text.length && chClose(text[i])) i++;
+                    continue;
+                }
+                ID_RE.lastIndex = i;
+                const m = ID_RE.exec(text);
+                if (m && m.index === i) { local.add(m[0]); i = ID_RE.lastIndex; continue; }
+                break;
+            }
+            while (i < text.length && /\s/.test(text[i])) i++;
+            if (text[i] === '∈' || text[i] === ':' || text[i] === '|') {
+                i++;
+                let depth = 0;
+                while (i < text.length) {
+                    if (chOpen(text[i])) depth++;
+                    else if (chClose(text[i]) && depth > 0) depth--;
+                    else if (depth === 0 && (text[i] === ',' || text.startsWith('=>', i))) break;
+                    i++;
+                }
+            }
+            if (text.startsWith('=>', i)) i += 2;
+            else if (text.startsWith('↦', i)) i += 2;
+            else if (text[i] === ',') i++;
+            const inner = new Set(bound);
+            for (const n of local) inner.add(n);
+            for (const n of freeNames(text.slice(i), inner)) found.add(n);
+            return found;
+        }
+        ID_RE.lastIndex = i;
+        const m = ID_RE.exec(text);
+        if (m && m.index === i) {
+            if (!bound.has(m[0])) found.add(m[0]);
+            i = ID_RE.lastIndex;
+            continue;
+        }
+        i++;
+    }
+    return found;
+}
+
+const CLOSE_OF = { '(': ')', '{': '}', '[': ']', '⦃': '⦄' };
+function chOpen(c) { return c === '(' || c === '{' || c === '[' || c === '⦃'; }
+function chClose(c) { return c === ')' || c === '}' || c === ']' || c === '⦄'; }
+
+function freeMentions(type, name) {
+    return freeNames(type).has(name);
+}
 
 /** `⊆` / `⊂` / `⊇` / `⊃` / `∈` / `∉` — relations whose LHS may be a set literal. */
 const SET_REL = /[⊆⊂⊇⊃∈∉]/;
@@ -84,12 +212,34 @@ export function signatureRules(ctx) {
         d.sig = sig;
         const { given, imply, proof } = d.markers;
         const groups = sig.groups;
-        const main = isMain(d);
         const where = d.name && d.name !== 'main' ? ` of \`${d.name}\`` : '';
+        const needsGiven = explicitGivenBinders(groups).length > 0;
 
-        // ---- section markers --------------------------------------------------------------------------------
-        const hasMarkers = given != null || imply != null || proof != null;
-        if (main || hasMarkers) {
+        // ---- section markers (`-- given` / `-- imply` / `-- proof`) ------------------------------------------
+        if (needsSectionMarkers(d)) {
+            if (given == null) {
+                // omit `-- given` when nothing belongs under it (type binders stay above)
+                if (needsGiven) {
+                    ctx.warn(
+                        'section-given',
+                        d.line + 1,
+                        1,
+                        `no \`-- given\` marker${where}: put hypotheses and explicit expression binders under \`-- given\``,
+                    );
+                }
+            } else if (imply != null && given > imply) {
+                ctx.warn('section-given', given + 1, 1, `\`-- given\` marker after \`-- imply\`${where}; order is given, imply, proof`);
+            } else if (proof != null && given > proof) {
+                ctx.warn('section-given', given + 1, 1, `\`-- given\` marker after \`-- proof\`${where}; order is given, imply, proof`);
+            }
+            if (given != null && givenRegionBlank(P, given, givenRegionEnd(d, sig))) {
+                ctx.warn(
+                    'section-given-empty',
+                    given + 1,
+                    1,
+                    `no content under \`-- given\`${where}; delete the \`-- given\` marker`,
+                );
+            }
             if (imply == null) {
                 ctx.warn('section-imply', d.line + 1, 1, `no \`-- imply\` marker${where}: put the conclusion after \`-- imply\``);
             } else if (sig.colon && sig.colon.line <= imply) {
@@ -103,6 +253,8 @@ export function signatureRules(ctx) {
                     text += l.slice(a, b);
                 }
                 if (text.trim()) ctx.warn('section-imply', sig.colon.line + 1, sig.colon.col + 1, `the conclusion${where} starts before \`-- imply\`; move it below the marker`);
+            } else if (proof != null && imply > proof) {
+                ctx.warn('section-imply', imply + 1, 1, `\`-- imply\` marker after \`-- proof\`${where}; order is given, imply, proof`);
             }
             if (sig.assign) {
                 const rest = P.code[sig.assign.line].slice(sig.assign.col + 2).trim();
@@ -119,6 +271,9 @@ export function signatureRules(ctx) {
                         }
                     }
                 }
+            } else if (proof == null) {
+                // term-mode / missing `:= by`: still require the three markers on path/main lemmas
+                ctx.warn('section-proof', d.line + 1, 1, `no \`-- proof\` marker${where}: put the proof body after \`-- proof\``);
             }
         }
 
@@ -198,6 +353,20 @@ export function signatureRules(ctx) {
             if (!inGiven) ctx.warn('default-arg-given', g.line + 1, g.col + 1, `default argument \`${g.open}${g.flat}${closeOf(g.open)}\` must be inside the \`-- given\` section`);
         }
 
+        // ---- explicit (non-instance) binders belong under `-- given` ------------------------------------------
+        // `{…}` / `⦃…⦄` / `[…]` stay in the pre-given region. Lean defaults `(h : T := …)` are `default-arg-given`.
+        if (given != null) {
+            for (const g of groups) {
+                if (g.kind !== 'explicit' || g.deflt != null || g.line >= given) continue;
+                ctx.warn(
+                    'explicit-above-given',
+                    g.line + 1,
+                    g.col + 1,
+                    `explicit binder \`(${g.flat})\` is above \`-- given\`; move it under \`-- given\``,
+                );
+            }
+        }
+
         // ---- given: never `(h : T := by tactic)`; keep needed instances as `[…]` before the hyp ----------
         const gg = given != null
             ? groups.filter((g) => g.line > given && (imply == null || g.line < imply))
@@ -212,6 +381,35 @@ export function signatureRules(ctx) {
                 g.col + 1,
                 `binder default \`${g.open}${g.flat}${closeOf(g.open)}\` uses a tactic; keep an instance binder \`${inst}\` inside \`-- given\`, before the hypothesis that needs it`,
             );
+        }
+
+        // ---- given: an explicit binder that a later hypothesis mentions is an implicit above `-- given` ----
+        // Text fallback of the AST rule (`mentions`). Whole-word `hasWord`; a name rebound by ∀/∃/∑/∏/fun/λ
+        // in the hypothesis type does not count.
+        if (given != null && !ctx.astCovered.has('given-implicit-dep')) {
+            const props = gg.filter((g) => propKind(g) === 'prop');
+            for (const g of gg) {
+                if (g.kind !== 'explicit' || g.deflt != null || !g.names.length || propKind(g) === 'prop') continue;
+                if (propKind(g) == null && g.names.every((n) => /^_?h/.test(n))) continue;
+                const hits = g.names.map((n) => ({
+                    n,
+                    hyps: props.filter((p) => p.line > g.line && freeMentions(p.type, n)),
+                }));
+                const referenced = hits.filter((h) => h.hyps.length);
+                if (!referenced.length) continue;
+                const shown = `(${g.flat})`;
+                if (referenced.length === g.names.length) {
+                    const hyps = [...new Set(referenced.flatMap((h) => h.hyps.flatMap((p) => p.names)))];
+                    ctx.warn('given-implicit-dep', g.line + 1, g.col + 1,
+                        `\`${shown}\` is referenced by ${hyps.map((n) => `\`${n}\``).join(', ')}; it is not a given — change it to \`{${g.flat}}\` above \`-- given\``);
+                } else {
+                    for (const h of referenced) {
+                        const hyps = [...new Set(h.hyps.flatMap((p) => p.names))];
+                        ctx.warn('given-implicit-dep', g.line + 1, g.col + 1,
+                            `\`${h.n}\` in \`${shown}\` is referenced by ${hyps.map((n) => `\`${n}\``).join(', ')}; it is not a given — change \`${h.n}\` to \`{${h.n} : …}\` above \`-- given\``);
+                    }
+                }
+            }
         }
 
         // ---- given: propositions first, expressions next; propositions consecutive --------------------------------

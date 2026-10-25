@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GaloisRep_LocalConditions
-import Lemma.Definitions.Def_GaloisRep_Residual
+import Def.GaloisRep_LocalConditions
+import Def.GaloisRep_Residual
 import Lemma.Int.P2MUtil
 
 open IsLocalRing

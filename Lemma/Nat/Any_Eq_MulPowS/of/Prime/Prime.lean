@@ -89,6 +89,68 @@ private lemma isSolvable_of_prime_card
 
 end BurnsidePaqb
 
+
+namespace BurnsidePaqb
+
+/--
+[exists_ne_one_class_prime_pow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqbReduction.lean)
+-/
+private lemma exists_ne_one_class_prime_pow_eq
+  [Group G] [Fintype G]
+  {p q a b : ℕ}
+-- given
+  (hp : p.Prime)
+  (hq : q.Prime)
+  (hcard : Fintype.card G = p ^ a * q ^ b)
+  (hb : 1 ≤ b) :
+-- imply
+  ∃ g : G, g ≠ 1 ∧ ∃ k ≤ a, (conjClass g).card = p ^ k := by
+-- proof
+  have : Fact (Nat.Prime q) := ⟨hq⟩
+  have hqdvd : q ^ b ∣ Nat.card G := by
+    rw [Nat.card_eq_fintype_card, hcard]
+    exact ⟨p ^ a, by ring⟩
+  classical
+  obtain ⟨H, hHcard⟩ := Sylow.exists_subgroup_card_pow_prime q hqdvd
+  have : Fintype H := inferInstance
+  have hHQ : IsPGroup q H := IsPGroup.of_card hHcard
+  have hcardH : 1 < Fintype.card H := by
+    rw [← Nat.card_eq_fintype_card, hHcard]
+    exact one_lt_pow₀ hq.one_lt (by omega)
+  have : Nontrivial H := Fintype.one_lt_card_iff_nontrivial.mp hcardH
+  have hnt := IsPGroup.center_nontrivial hHQ
+  obtain ⟨gH, hgH⟩ := exists_ne (1 : Subgroup.center H)
+  refine ⟨((gH : H) : G), ?_, ?_⟩
+  ·
+    intro hcon
+    exact hgH (Subtype.ext (Subtype.ext hcon))
+  ·
+    have hle : H ≤ Subgroup.centralizer {((gH : H) : G)} := by
+      intro h hh
+      rw [Subgroup.mem_centralizer_iff]
+      simp only [Set.mem_singleton_iff, forall_eq]
+      have hmem := Subgroup.mem_center_iff.mp gH.property ⟨h, hh⟩
+      have hcoe := congrArg (fun x : H => (x : G)) hmem
+      rwa [Subgroup.coe_mul, Subgroup.coe_mul, eq_comm] at hcoe
+    set g : G := ((gH : H) : G) with hg
+    have hdvd : q ^ b ∣ Fintype.card (Subgroup.centralizer {g}) := by
+      have h1 : Nat.card H ∣ Nat.card (Subgroup.centralizer {g}) :=
+        Subgroup.card_dvd_of_le hle
+      rw [hHcard] at h1
+      rwa [Nat.card_eq_fintype_card] at h1
+    have hclass := conjClass_card_mul_centralizer_card (g := g)
+    rw [hcard] at hclass
+    obtain ⟨t, ht⟩ := hdvd
+    refine (Nat.dvd_prime_pow hp).mp ⟨t, ?_⟩
+    refine (mul_right_cancel₀ (pow_ne_zero b hq.ne_zero) ?_).symm
+    calc
+      _ = (conjClass g).card * (q ^ b * t) := by ring
+      _ = (conjClass g).card * Fintype.card (Subgroup.centralizer {g}) := by rw [ht]
+      _ = p ^ a * q ^ b := hclass
+
+
+end BurnsidePaqb
+
 namespace BurnsidePaqb
 
 /--
@@ -117,12 +179,14 @@ private lemma burnside_paqb_of_simple_prime
   intro n ih H _ _ hcardH hform
   obtain ⟨a', b', hform'⟩ := hform
   by_cases htriv : Fintype.card H = 1
-  · have : Subsingleton H :=
-    Fintype.card_le_one_iff_subsingleton.mp (le_of_eq htriv)
+  ·
+    have : Subsingleton H :=
+      Fintype.card_le_one_iff_subsingleton.mp (le_of_eq htriv)
     infer_instance
-  · have hpos1 : 1 < Fintype.card H := by
-    have hpos := Fintype.card_pos (α := H)
-    omega
+  ·
+    have hpos1 : 1 < Fintype.card H := by
+      have hpos := Fintype.card_pos (α := H)
+      omega
     have : Nontrivial H :=
       Fintype.one_lt_card_iff_nontrivial.mp hpos1
     by_cases hnorm : ∃ N : Subgroup H, N.Normal ∧ N ≠ ⊥ ∧ N ≠ ⊤
@@ -158,9 +222,9 @@ private lemma burnside_paqb_of_simple_prime
         rw [hE]
         exact lt_mul_of_one_lt_right Fintype.card_pos hN1
       have hNform : ∃ a' b', Fintype.card N = p ^ a' * q ^ b' :=
-        eq_prime_pow_mul_of_dvd hp hq (hform' ▸ hdvdN)
+        eq_prime_pow_mul_of_dvd (G := H) hp hq (hform' ▸ hdvdN)
       have hQform : ∃ a' b', Fintype.card (H ⧸ N) = p ^ a' * q ^ b' := by
-        refine eq_prime_pow_mul_of_dvd (a := a') (b := b') hp hq ?_
+        refine eq_prime_pow_mul_of_dvd (G := H) (a := a') (b := b') hp hq ?_
         have hdvdQ : Fintype.card (H ⧸ N) ∣ Fintype.card H := by
           rw [hE]
           exact dvd_mul_right _ _
@@ -191,13 +255,15 @@ private lemma burnside_paqb_of_simple_prime
         ∃ (g : H) (_ : g ≠ 1) (rr : ℕ) (_ : rr.Prime) (kk : ℕ),
           (conjClass g).card = rr ^ kk := by
         obtain ha | hb := hab
-        · have hcard' : Fintype.card H = q ^ b' * p ^ a' := by
-          rw [hform']; ring
-          obtain ⟨g, hg1, k, _, hcl⟩ :=
-            exists_ne_one_class_prime_pow hq hp hcard' ha
+        ·
+          have hcard' : Fintype.card H = q ^ b' * p ^ a' := by
+            rw [hform']; ring
+          obtain ⟨g, hg1, hex⟩ := exists_ne_one_class_prime_pow_eq hq hp hcard' ha
+          obtain ⟨k, hk, hcl⟩ := hex
           exact ⟨g, hg1, q, hq, k, hcl⟩
-        · obtain ⟨g, hg1, k, _, hcl⟩ :=
-          exists_ne_one_class_prime_pow hp hq hform' hb
+        ·
+          obtain ⟨g, hg1, hex⟩ := exists_ne_one_class_prime_pow_eq hp hq hform' hb
+          obtain ⟨k, hk, hcl⟩ := hex
           exact ⟨g, hg1, p, hp, k, hcl⟩
       by_cases hk0 : kk = 0
       · subst hk0
@@ -234,16 +300,18 @@ private lemma burnside_paqb_of_simple_prime
           intro x y
           have hx : x ∈ Subgroup.center H := hcenterTop ▸ Subgroup.mem_top x
           exact (Subgroup.mem_center_iff.mp hx y).symm
-        let : CommGroup H := { ‹Group H› with mul_comm := hcomm }
+        let grp : Group H := inferInstance
+        let : CommGroup H := { toGroup := grp, mul_comm := hcomm }
         have hr : (Fintype.card H).Prime := by
           simpa only [Nat.card_eq_fintype_card] using
             (IsSimpleGroup.prime_card (α := H))
-        exact isSolvable_of_prime_card _ hr rfl
-      · have hpp : IsPrimePow (conjClass g).card := by
-        rw [hclass]
-        exact (hrr.isPrimePow.pow hk0)
+        exact isSolvable_of_prime_card hr rfl
+      ·
+        have hpp : IsPrimePow (conjClass g).card := by
+          rw [hclass]
+          exact hrr.isPrimePow.pow hk0
         obtain ⟨r, hr, hrcard⟩ := C6 inferInstance ⟨g, hg1, hpp⟩
-        exact isSolvable_of_prime_card r hr hrcard
+        exact isSolvable_of_prime_card hr hrcard
 
 end BurnsidePaqb
 

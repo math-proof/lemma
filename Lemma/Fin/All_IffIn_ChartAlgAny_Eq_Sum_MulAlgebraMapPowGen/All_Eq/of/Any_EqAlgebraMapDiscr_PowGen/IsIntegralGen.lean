@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_TwoChartIntegralModel
+import Lemma.AlgebraicCurve.TwoChartIntegralModel
 open Polynomial AlgebraicCurve AlgebraicCurve.TwoChartIntegralModel
 open Algebra Matrix
 

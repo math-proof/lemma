@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_LanglandsTunnell_ArchPlace
-import Lemma.Definitions.Def_LanglandsTunnell_ArchParam
-import Lemma.Definitions.Def_LanglandsTunnell_TateLocalZeta
-import Lemma.Definitions.Def_LanglandsTunnell_ArchEpsilon
+import Lemma.LanglandsTunnell.ArchPlace
+import Lemma.LanglandsTunnell.ArchParam
+import Lemma.LanglandsTunnell.TateLocalZeta
+import Lemma.LanglandsTunnell.ArchEpsilon
 import Lemma.Int.P2MUtil
 
 open scoped Real

@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FLTPrelim_Modularity
-import Lemma.Definitions.Def_WeierstrassCurve_VariableChangePointEquiv
+import Def.FLTPrelim_Modularity
+import Def.WeierstrassCurve_VariableChangePointEquiv
 open WeierstrassCurve
 
 

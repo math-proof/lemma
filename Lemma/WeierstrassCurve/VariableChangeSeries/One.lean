@@ -1,10 +1,10 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FormalGroup_NSeries
-import Lemma.Definitions.Def_FormalGroup_DrinfeldBasis
-import Lemma.Definitions.Def_FormalGroup_PointTransport
-import Lemma.Definitions.Def_WeierstrassCurve_FormalGroupLaw
-import Lemma.Definitions.Def_WeierstrassCurve_VariableChangeSeries
+import Lemma.FormalGroup.NSeries
+import Lemma.FormalGroup.DrinfeldBasis
+import Def.FormalGroup_PointTransport
+import Lemma.WeierstrassCurve.FormalGroupLaw
+import Lemma.WeierstrassCurve.VariableChangeSeries
 import Lemma.Int.P2MUtil
 open FormalGroup IsLocalRing Int
 

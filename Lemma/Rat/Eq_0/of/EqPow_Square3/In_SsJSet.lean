@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_SupersingularModuli
+import Lemma.ModularCurve.SupersingularModuli
 import Lemma.Int.P2MUtil
 
 open ModularCurve

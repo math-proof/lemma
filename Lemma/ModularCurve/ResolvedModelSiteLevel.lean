@@ -1,0 +1,344 @@
+import Mathlib
+import Lemma.AlgebraicGeometry.ResolvedModelGlueComponents
+import Structure.ModularCurve_DRResolvedModelPackageLevel
+import Abbrev.ModularCurve_DRModelPackageLevel
+import Lemma.Scheme.DRModelPackageLevelAPI
+import Lemma.MvPolynomial.CrossingResolutionScheme
+import Lemma.MvPolynomial.CrossingResolutionFibrePoints
+import Structure.ModularCurve_ResolvedModelSiteLevel
+
+set_option autoImplicit false
+set_option maxHeartbeats 1600000
+set_option synthInstance.maxHeartbeats 400000
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+
+noncomputable section
+
+namespace V3Glue.LevelSiteAux
+
+theorem locallyOfFinitePresentation_of_isLocallyNoetherian {X Y : Scheme.{0}} (f : X ⟶ Y)
+    [IsLocallyNoetherian Y] [LocallyOfFiniteType f] : LocallyOfFinitePresentation f := by
+  refine ⟨fun {U} hU {V} hV e => ?_⟩
+  haveI : IsNoetherianRing Γ(Y, U) := IsLocallyNoetherian.component_noetherian ⟨U, hU⟩
+  have hft : (f.appLE U V e).hom.FiniteType := f.finiteType_appLE hU hV e
+  letI := (f.appLE U V e).hom.toAlgebra
+  have : Algebra.FiniteType Γ(Y, U) Γ(X, V) := hft
+  exact (Algebra.FinitePresentation.of_finiteType (R := Γ(Y, U)) (A := Γ(X, V))).mp this
+
+end V3Glue.LevelSiteAux
+
+end
+
+noncomputable section
+
+namespace V3Glue.LevelSite
+
+open ModularCurve MvPolynomial MvPolynomial.CrossingQuotient
+
+variable {N₀ q : ℕ} [NeZero N₀] [Fact q.Prime] {hqN : ¬ q ∣ N₀} (𝔛 : DRModelPackageLevel N₀ q hqN)
+  (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ρO : DRLevel.R q →+* O)
+  (κ : Type) [Field κ] [CharP κ q] [IsAlgClosed κ] [DecidableEq κ] (τ : DRLevel.R q →+* κ)
+
+
+variable (bc : DRLevel.fibre (N₀ := N₀) τ ⟶ DRLevel.XO (N₀ := N₀) ρO)
+
+variable {O ρO κ τ} in
+
+
+variable (q) in
+omit [Fact q.Prime] in
+
+
+def chartData (hC : HasOrientedCrossingCharts 𝔛 O ρO κ τ bc) (n : Node 𝔛 κ τ) : ChartData 𝔛 O ρO κ τ bc n :=
+  let h₁ := hC n
+  let h₂ := h₁.choose_spec
+  let h₃ := h₂.choose_spec
+  let h₄ := h₃.choose_spec
+  let h₅ := h₄.choose_spec
+  let h := h₅.choose_spec
+  { e := h₁.choose
+    one_le_e := h₂.choose
+    U := h₃.choose
+    x_mem_U := h₄.choose
+    f := h₅.choose
+    f_over := h.1
+    f_fibre := h.2.1
+    f_node := h.2.2.1
+    orient_inf := h.2.2.2.1
+    orient_zero := h.2.2.2.2.1
+    orient_inf_conv := h.2.2.2.2.2.1
+    orient_zero_conv := h.2.2.2.2.2.2 }
+
+def rawChartInputOfDR (hϖ : IsLocalRing.maximalIdeal O = Ideal.span {((q : ℕ) : O)}) (M : ModelHyps q O)
+    (hC : HasOrientedCrossingCharts 𝔛 O ρO κ τ bc)
+    (hxinj : Function.Injective (fun n : Node 𝔛 κ τ => xpt 𝔛 bc n))
+    (hxcl : ∀ n : Node 𝔛 κ τ, IsClosed ({xpt 𝔛 bc n} : Set (DRLevel.XO (N₀ := N₀) ρO))) :
+    RawChartInput (DRLevel.XO (N₀ := N₀) ρO) (Node 𝔛 κ τ) := by
+
+  haveI : IsProper (DRLevel.toBase N₀ q) := 𝔛.isProper
+  haveI : LocallyOfFiniteType (pullback.snd (DRLevel.toBase N₀ q) (Spec.map (CommRingCat.ofHom ρO))) :=
+    MorphismProperty.pullback_snd _ _ inferInstance
+  have hlfp : ∀ n, LocallyOfFinitePresentation (chartData 𝔛 O ρO κ τ bc hC n).f := fun n => by
+    have : LocallyOfFiniteType ((chartData 𝔛 O ρO κ τ bc hC n).f ≫
+        Spec.map (CommRingCat.ofHom (algebraMap O (CrossingQuotient O (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e))))) := by
+      rw [(chartData 𝔛 O ρO κ τ bc hC n).f_over]; infer_instance
+    haveI := locallyOfFiniteType_of_comp (chartData 𝔛 O ρO κ τ bc hC n).f
+      (Spec.map (CommRingCat.ofHom (algebraMap O (CrossingQuotient O (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e)))))
+    exact V3Glue.LevelSiteAux.locallyOfFinitePresentation_of_isLocallyNoetherian (chartData 𝔛 O ρO κ τ bc hC n).f
+  exact
+  { x := fun n => xpt 𝔛 bc n
+    x_injective := hxinj
+    isClosed_x := hxcl
+    S := fun n => crossingScheme (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e)
+    Vc := fun n => PrimeSpectrum.basicOpen (CrossingQuotient.U (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e)) ⊔
+      PrimeSpectrum.basicOpen (CrossingQuotient.V (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e))
+    Res := fun n => Resolution ((q : ℕ) : O) (chartData 𝔛 O ρO κ τ bc hC n).e
+    ρ := fun n => Resolution.toCrossing ((q : ℕ) : O) (chartData 𝔛 O ρO κ τ bc hC n).e
+
+    isIso_ρ_restrict := fun n => M.L6 _ (chartData 𝔛 O ρO κ τ bc hC n).one_le_e
+
+    isProper_ρ := fun n => M.P6 (chartData 𝔛 O ρO κ τ bc hC n).e
+    thick := fun n => (chartData 𝔛 O ρO κ τ bc hC n).e
+    one_le_thick := fun n => (chartData 𝔛 O ρO κ τ bc hC n).one_le_e
+    U₀ := fun n => (chartData 𝔛 O ρO κ τ bc hC n).U
+    x_mem_U₀ := fun n => (chartData 𝔛 O ρO κ τ bc hC n).x_mem_U
+    f₀ := fun n => (chartData 𝔛 O ρO κ τ bc hC n).f
+    f₀_mem_Vc_iff := fun n y => by
+      have h := (chartData 𝔛 O ρO κ τ bc hC n).f_fibre y
+      have hy : ((chartData 𝔛 O ρO κ τ bc hC n).U).ι.base y = (y : DRLevel.XO (N₀ := N₀) ρO) := by simp
+      rw [hy] at h
+      have key : (chartData 𝔛 O ρO κ τ bc hC n).f.base y ∈
+          (PrimeSpectrum.basicOpen (CrossingQuotient.U (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e)) ⊔
+            PrimeSpectrum.basicOpen (CrossingQuotient.V (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e)) :
+              TopologicalSpace.Opens (PrimeSpectrum (CrossingQuotient O (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e)))) ↔
+          (chartData 𝔛 O ρO κ τ bc hC n).f.base y ∈
+              PrimeSpectrum.basicOpen (CrossingQuotient.U (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e)) ∨
+            (chartData 𝔛 O ρO κ τ bc hC n).f.base y ∈
+              PrimeSpectrum.basicOpen (CrossingQuotient.V (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e)) :=
+        TopologicalSpace.Opens.mem_sup
+      have kU : (chartData 𝔛 O ρO κ τ bc hC n).f.base y ∈
+            PrimeSpectrum.basicOpen (CrossingQuotient.U (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e)) ↔
+          CrossingQuotient.U (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e) ∉ ((chartData 𝔛 O ρO κ τ bc hC n).f.base y).asIdeal :=
+        PrimeSpectrum.mem_basicOpen _ _
+      have kV : (chartData 𝔛 O ρO κ τ bc hC n).f.base y ∈
+            PrimeSpectrum.basicOpen (CrossingQuotient.V (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e)) ↔
+          CrossingQuotient.V (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e) ∉ ((chartData 𝔛 O ρO κ τ bc hC n).f.base y).asIdeal :=
+        PrimeSpectrum.mem_basicOpen _ _
+      refine key.trans ((kU.or kV).trans ?_)
+      rw [← not_and_or]
+      exact not_congr h
+
+    f₀_node := fun n y hy => by
+      have hy' : ((chartData 𝔛 O ρO κ τ bc hC n).U).ι.base y = xpt 𝔛 bc n := by rw [← hy]; simp
+      exact (chartData 𝔛 O ρO κ τ bc hC n).f_node y hy'
+    f₀_lfp := hlfp
+    B := Spec (CommRingCat.of O)
+    πX := pullback.snd _ _
+    σ := fun n => Spec.map (CommRingCat.ofHom (algebraMap O (CrossingQuotient O (((q : ℕ) : O) ^ (chartData 𝔛 O ρO κ τ bc hC n).e))))
+    f₀_over := fun n => (chartData 𝔛 O ρO κ τ bc hC n).f_over
+
+    flat_ρ_σ := fun n => M.flat (chartData 𝔛 O ρO κ τ bc hC n).e
+    isLocallyNoetherian_Res := fun n => M.noeth (chartData 𝔛 O ρO κ τ bc hC n).e
+    interior_preimage_vertex := fun n => M.interior (chartData 𝔛 O ρO κ τ bc hC n).e }
+
+@[simp] theorem rawChartInputOfDR_U₀ (hϖ : IsLocalRing.maximalIdeal O = Ideal.span {((q : ℕ) : O)}) (M : ModelHyps q O)
+    (hC : HasOrientedCrossingCharts 𝔛 O ρO κ τ bc) (hxinj hxcl) (n : Node 𝔛 κ τ) :
+    (rawChartInputOfDR 𝔛 O ρO κ τ bc hϖ M hC hxinj hxcl).U₀ n = (chartData 𝔛 O ρO κ τ bc hC n).U := rfl
+
+@[simp] theorem rawChartInputOfDR_f₀ (hϖ : IsLocalRing.maximalIdeal O = Ideal.span {((q : ℕ) : O)}) (M : ModelHyps q O)
+    (hC : HasOrientedCrossingCharts 𝔛 O ρO κ τ bc) (hxinj hxcl) (n : Node 𝔛 κ τ) :
+    (rawChartInputOfDR 𝔛 O ρO κ τ bc hϖ M hC hxinj hxcl).f₀ n = (chartData 𝔛 O ρO κ τ bc hC n).f := rfl
+
+@[simp] theorem rawChartInputOfDR_thick (hϖ : IsLocalRing.maximalIdeal O = Ideal.span {((q : ℕ) : O)}) (M : ModelHyps q O)
+    (hC : HasOrientedCrossingCharts 𝔛 O ρO κ τ bc) (hxinj hxcl) (n : Node 𝔛 κ τ) :
+    (rawChartInputOfDR 𝔛 O ρO κ τ bc hϖ M hC hxinj hxcl).thick n = (chartData 𝔛 O ρO κ τ bc hC n).e := rfl
+
+def chartInputOfDR [Finite (Node 𝔛 κ τ)] (hϖ : IsLocalRing.maximalIdeal O = Ideal.span {((q : ℕ) : O)}) (M : ModelHyps q O)
+    (hC : HasOrientedCrossingCharts 𝔛 O ρO κ τ bc) (ET : EtNbhd)
+    (hxinj : Function.Injective (fun n : Node 𝔛 κ τ => xpt 𝔛 bc n))
+    (hxcl : ∀ n : Node 𝔛 κ τ, IsClosed ({xpt 𝔛 bc n} : Set (DRLevel.XO (N₀ := N₀) ρO))) :
+    ChartInput (DRLevel.XO (N₀ := N₀) ρO) (Node 𝔛 κ τ) :=
+  (rawChartInputOfDR 𝔛 O ρO κ τ bc hϖ M hC hxinj hxcl).toChartInput
+    ((rawChartInputOfDR 𝔛 O ρO κ τ bc hϖ M hC hxinj hxcl).hnbhd_of ET)
+
+end V3Glue.LevelSite
+
+end
+
+noncomputable section
+
+namespace V3AsmLevel
+
+open ModularCurve MvPolynomial MvPolynomial.CrossingQuotient
+
+variable {N₀ q : ℕ} [NeZero N₀] [Fact q.Prime] {hqN : ¬ q ∣ N₀} (𝔛 : DRModelPackageLevel N₀ q hqN)
+  (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ρO : DRLevel.R q →+* O)
+  (κ : Type) [Field κ] [CharP κ q] [IsAlgClosed κ] [DecidableEq κ] (toκ : O →+* κ)
+
+abbrev πX : DRLevel.XO (N₀ := N₀) ρO ⟶ Spec (CommRingCat.of O) := pullback.snd _ _
+
+abbrev bc : DRLevel.fibre (N₀ := N₀) (toκ.comp ρO) ⟶ DRLevel.XO (N₀ := N₀) ρO :=
+  DRLevel.bcMap ρO toκ
+
+theorem bc_fst : bc (N₀ := N₀) O ρO κ toκ ≫ pullback.fst _ _ = pullback.fst _ _ := by
+  rw [bc, DRLevel.bcMap, pullback.map, pullback.lift_fst, Category.comp_id]
+
+theorem bc_snd : bc (N₀ := N₀) O ρO κ toκ ≫ pullback.snd _ _ = pullback.snd _ _ ≫ Spec.map (CommRingCat.ofHom toκ) := by
+  rw [bc, DRLevel.bcMap, pullback.map, pullback.lift_snd]
+
+
+variable (hϖ : IsLocalRing.maximalIdeal O = Ideal.span {((q : ℕ) : O)}) (H : SiteHyps 𝔛 O ρO κ toκ)
+
+def R : V3Glue.RawChartInput (DRLevel.XO (N₀ := N₀) ρO) (V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) :=
+  V3Glue.LevelSite.rawChartInputOfDR 𝔛 O ρO κ (toκ.comp ρO) (bc O ρO κ toκ) hϖ H.model H.hC H.hxinj H.hxcl
+
+def C : V3Glue.ChartInput (DRLevel.XO (N₀ := N₀) ρO) (V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) :=
+  haveI := H.nodeFinite
+  V3Glue.LevelSite.chartInputOfDR 𝔛 O ρO κ (toκ.comp ρO) (bc O ρO κ toκ) hϖ H.model H.hC H.ET H.hxinj H.hxcl
+
+def D : V3Glue.GlueInput (DRLevel.XO (N₀ := N₀) ρO) (V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) := (C 𝔛 O ρO κ toκ hϖ H).toGlueInput
+def Y : Scheme.{0} := (D 𝔛 O ρO κ toκ hϖ H).glued
+def toDR : Y 𝔛 O ρO κ toκ hϖ H ⟶ DRLevel.XO (N₀ := N₀) ρO := (D 𝔛 O ρO κ toκ hϖ H).toDR
+def toBase : Y 𝔛 O ρO κ toκ hϖ H ⟶ Spec (CommRingCat.of O) := toDR 𝔛 O ρO κ toκ hϖ H ≫ πX O ρO
+
+theorem toDR_over : toDR 𝔛 O ρO κ toκ hϖ H ≫ pullback.snd _ _ = toBase 𝔛 O ρO κ toκ hϖ H := rfl
+
+theorem hq : ∀ n (y : (D 𝔛 O ρO κ toκ hϖ H).Y n), (((D 𝔛 O ρO κ toκ hϖ H).q n).base y).1 ∈ (D 𝔛 O ρO κ toκ hϖ H).X0 →
+    y ∈ Set.range ((D 𝔛 O ρO κ toκ hϖ H).j n).base :=
+  (C 𝔛 O ρO κ toκ hϖ H).hq
+
+theorem mem_X0_iff (x : DRLevel.XO (N₀ := N₀) ρO) :
+    x ∈ (D 𝔛 O ρO κ toκ hϖ H).X0 ↔ ∀ n, x ≠ V3Glue.LevelSite.xpt 𝔛 (bc O ρO κ toκ) n := by
+  haveI := H.nodeFinite
+  exact V3Glue.RawChartInput.mem_X0 _ x
+
+def width : V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO) → ℕ := (C 𝔛 O ρO κ toκ hϖ H).thick
+
+theorem one_le_width : ∀ n, 1 ≤ width 𝔛 O ρO κ toκ hϖ H n := (C 𝔛 O ρO κ toκ hϖ H).one_le_thick
+
+theorem hRF : ∀ n, IsIso (((C 𝔛 O ρO κ toκ hϖ H).f n).residueFieldMap ((C 𝔛 O ρO κ toκ hϖ H).xU n)) :=
+  fun n => (C 𝔛 O ρO κ toκ hϖ H).f_res n
+
+include hϖ in
+
+theorem p_mem_maximalIdeal : ((q : ℕ) : O) ∈ IsLocalRing.maximalIdeal O :=
+  hϖ ▸ Ideal.mem_span_singleton_self _
+
+def chartIso (n : V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) : (C 𝔛 O ρO κ toκ hϖ H).Y n ≅ ↑(toDR 𝔛 O ρO κ toκ hϖ H ⁻¹ᵁ (C 𝔛 O ρO κ toκ hϖ H).U n) :=
+  IsPullback.isoIsPullback _ _ ((D 𝔛 O ρO κ toκ hϖ H).isPullback_ιY (hq 𝔛 O ρO κ toκ hϖ H) n)
+    (isPullback_morphismRestrict (toDR 𝔛 O ρO κ toκ hϖ H) ((C 𝔛 O ρO κ toκ hϖ H).U n))
+
+theorem chartIso_hom_fst (n : V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) :
+    (chartIso 𝔛 O ρO κ toκ hϖ H n).hom ≫ (toDR 𝔛 O ρO κ toκ hϖ H ∣_ (C 𝔛 O ρO κ toκ hϖ H).U n) = (C 𝔛 O ρO κ toκ hϖ H).q n :=
+  IsPullback.isoIsPullback_hom_fst _ _ _ _
+
+def ξ : Fin 2 → DRLevel.XO (N₀ := N₀) ρO :=
+  letI := 𝔛.isIntegral_fibre0 (toκ.comp ρO)
+  Fin.cases ((𝔛.comp κ (toκ.comp ρO) 0 ≫ DRLevel.bcMap ρO toκ).base (genericPoint (DRLevel.fibre0 (N₀ := N₀) (toκ.comp ρO))))
+    (fun _ => (𝔛.comp κ (toκ.comp ρO) 1 ≫ DRLevel.bcMap ρO toκ).base (genericPoint (DRLevel.fibre0 (N₀ := N₀) (toκ.comp ρO))))
+
+@[simp] theorem ξ_zero :
+    ξ 𝔛 O ρO κ toκ 0 = (letI := 𝔛.isIntegral_fibre0 (toκ.comp ρO);
+      (𝔛.comp κ (toκ.comp ρO) 0 ≫ DRLevel.bcMap ρO toκ).base (genericPoint (DRLevel.fibre0 (N₀ := N₀) (toκ.comp ρO)))) := rfl
+@[simp] theorem ξ_one :
+    ξ 𝔛 O ρO κ toκ 1 = (letI := 𝔛.isIntegral_fibre0 (toκ.comp ρO);
+      (𝔛.comp κ (toκ.comp ρO) 1 ≫ DRLevel.bcMap ρO toκ).base (genericPoint (DRLevel.fibre0 (N₀ := N₀) (toκ.comp ρO)))) := rfl
+
+theorem vertex_eq (n : V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) :
+    (C 𝔛 O ρO κ toκ hϖ H).vertex n = MvPolynomial.CrossingQuotient.Resolution.vertexPt ((q : ℕ) : O) ((C 𝔛 O ρO κ toκ hϖ H).thick n) (IsLocalRing.maximalIdeal O)
+      (p_mem_maximalIdeal O hϖ) ((C 𝔛 O ρO κ toκ hϖ H).one_le_thick n) := by
+  have hUV : ((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n) ∉ (C 𝔛 O ρO κ toκ hϖ H).Vc n := by
+    rw [(C 𝔛 O ρO κ toκ hϖ H).f_mem_Vc_iff]; exact fun h => h rfl
+  have hUV' : ¬ (((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n) ∈
+        PrimeSpectrum.basicOpen (MvPolynomial.CrossingQuotient.U (((q : ℕ) : O) ^ ((C 𝔛 O ρO κ toκ hϖ H).thick n))) ∨
+      ((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n) ∈
+        PrimeSpectrum.basicOpen (MvPolynomial.CrossingQuotient.V (((q : ℕ) : O) ^ ((C 𝔛 O ρO κ toκ hϖ H).thick n)))) :=
+    fun hh => hUV (TopologicalSpace.Opens.mem_sup.mpr hh)
+  have kU : ((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n) ∈
+        PrimeSpectrum.basicOpen (MvPolynomial.CrossingQuotient.U (((q : ℕ) : O) ^ ((C 𝔛 O ρO κ toκ hϖ H).thick n))) ↔
+      MvPolynomial.CrossingQuotient.U (((q : ℕ) : O) ^ ((C 𝔛 O ρO κ toκ hϖ H).thick n)) ∉
+        (((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n)).asIdeal :=
+    PrimeSpectrum.mem_basicOpen _ _
+  have kV : ((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n) ∈
+        PrimeSpectrum.basicOpen (MvPolynomial.CrossingQuotient.V (((q : ℕ) : O) ^ ((C 𝔛 O ρO κ toκ hϖ H).thick n))) ↔
+      MvPolynomial.CrossingQuotient.V (((q : ℕ) : O) ^ ((C 𝔛 O ρO κ toκ hϖ H).thick n)) ∉
+        (((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n)).asIdeal :=
+    PrimeSpectrum.mem_basicOpen _ _
+  have hU1 : MvPolynomial.CrossingQuotient.U (((q : ℕ) : O) ^ ((C 𝔛 O ρO κ toκ hϖ H).thick n)) ∈
+      (((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n)).asIdeal :=
+    not_not.mp fun hn => hUV' (Or.inl (kU.mpr hn))
+  have hV1 : MvPolynomial.CrossingQuotient.V (((q : ℕ) : O) ^ ((C 𝔛 O ρO κ toκ hϖ H).thick n)) ∈
+      (((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n)).asIdeal :=
+    not_not.mp fun hn => hUV' (Or.inr (kV.mpr hn))
+  refine MvPolynomial.CrossingQuotient.Resolution.eq_vertexPt_of_mem ((q : ℕ) : O) ((C 𝔛 O ρO κ toκ hϖ H).thick n) (IsLocalRing.maximalIdeal O) (p_mem_maximalIdeal O hϖ)
+    ((C 𝔛 O ρO κ toκ hϖ H).one_le_thick n) hU1 hV1 ?_
+  intro w hw
+  have hw0 : toκ w = 0 := by
+    rw [hϖ, Ideal.mem_span_singleton] at hw
+    obtain ⟨c, rfl⟩ := hw
+    rw [map_mul, map_natCast, CharP.cast_eq_zero, zero_mul]
+  have hover : ((C 𝔛 O ρO κ toκ hϖ H).σ n).base (((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n)) = (πX O ρO).base ((C 𝔛 O ρO κ toκ hϖ H).x n) := by
+    have h := congr($((C 𝔛 O ρO κ toκ hϖ H).f_over n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n))
+    simp only [Scheme.Hom.comp_base, TopCat.comp_app] at h
+    exact h
+  have hx : (πX O ρO).base ((C 𝔛 O ρO κ toκ hϖ H).x n) =
+      (Spec.map (CommRingCat.ofHom toκ)).base
+        ((pullback.snd (DRLevel.toBase N₀ q) (Spec.map (CommRingCat.ofHom (toκ.comp ρO)))).base
+          ((pullback.fst (𝔛.comp κ (toκ.comp ρO) 0) (𝔛.comp κ (toκ.comp ρO) 1) ≫ 𝔛.comp κ (toκ.comp ρO) 0).base n)) := by
+    have h := congr($(bc_snd (N₀ := N₀) O ρO κ toκ).base ((pullback.fst (𝔛.comp κ (toκ.comp ρO) 0) (𝔛.comp κ (toκ.comp ρO) 1) ≫ 𝔛.comp κ (toκ.comp ρO) 0).base n))
+    simp only [Scheme.Hom.comp_base, TopCat.comp_app] at h
+    exact h
+  change w ∈ (PrimeSpectrum.comap (algebraMap O (MvPolynomial.CrossingQuotient O (((q : ℕ) : O) ^ ((C 𝔛 O ρO κ toκ hϖ H).thick n))))
+    (((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n))).asIdeal
+  have hσ : PrimeSpectrum.comap (algebraMap O (MvPolynomial.CrossingQuotient O (((q : ℕ) : O) ^ ((C 𝔛 O ρO κ toκ hϖ H).thick n)))) (((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n)) =
+      ((C 𝔛 O ρO κ toκ hϖ H).σ n).base (((C 𝔛 O ρO κ toκ hϖ H).f n).base ((C 𝔛 O ρO κ toκ hϖ H).xU n)) := rfl
+  rw [hσ, hover, hx]
+  change w ∈ Ideal.comap toκ _
+  rw [Ideal.mem_comap, hw0]
+  exact Ideal.zero_mem _
+
+def oRes (n : V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) (d : Fin (width 𝔛 O ρO κ toκ hϖ H n)) : (C 𝔛 O ρO κ toκ hϖ H).Res n :=
+  MvPolynomial.CrossingQuotient.Resolution.origin ((q : ℕ) : O) ((C 𝔛 O ρO κ toκ hϖ H).thick n) (IsLocalRing.maximalIdeal O) (p_mem_maximalIdeal O hϖ) d
+
+theorem hoRes : ∀ (n : V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) (d : Fin (width 𝔛 O ρO κ toκ hϖ H n)), (C 𝔛 O ρO κ toκ hϖ H).ρ n (oRes 𝔛 O ρO κ toκ hϖ H n d) = (C 𝔛 O ρO κ toκ hϖ H).vertex n := by
+  intro n d
+  show ((C 𝔛 O ρO κ toκ hϖ H).ρ n).base _ = _
+  rw [vertex_eq 𝔛 O ρO κ toκ hϖ H n]
+  exact MvPolynomial.CrossingQuotient.Resolution.toCrossing_origin ((q : ℕ) : O) ((C 𝔛 O ρO κ toκ hϖ H).thick n) (IsLocalRing.maximalIdeal O) (p_mem_maximalIdeal O hϖ) d
+
+def gRes (n : V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) (k : Fin (width 𝔛 O ρO κ toκ hϖ H n - 1)) : (C 𝔛 O ρO κ toκ hϖ H).Res n :=
+  MvPolynomial.CrossingQuotient.Resolution.lineUGen ((q : ℕ) : O) ((C 𝔛 O ρO κ toκ hϖ H).thick n) (IsLocalRing.maximalIdeal O) (p_mem_maximalIdeal O hϖ)
+    ⟨(k : ℕ), by have hk := k.2; dsimp only [width] at hk; omega⟩
+
+theorem hgRes : ∀ (n : V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) (k : Fin (width 𝔛 O ρO κ toκ hϖ H n - 1)), (C 𝔛 O ρO κ toκ hϖ H).ρ n (gRes 𝔛 O ρO κ toκ hϖ H n k) = (C 𝔛 O ρO κ toκ hϖ H).vertex n := by
+  intro n k
+  show ((C 𝔛 O ρO κ toκ hϖ H).ρ n).base _ = _
+  rw [vertex_eq 𝔛 O ρO κ toκ hϖ H n]
+  exact MvPolynomial.CrossingQuotient.Resolution.toCrossing_lineUGen_of_lt ((q : ℕ) : O) ((C 𝔛 O ρO κ toκ hϖ H).thick n) (IsLocalRing.maximalIdeal O) (p_mem_maximalIdeal O hϖ) _
+    (by have hk := k.2; dsimp only [width] at hk; simp only; omega)
+
+variable (hξ : ∀ j, ξ 𝔛 O ρO κ toκ j ∈ (C 𝔛 O ρO κ toκ hϖ H).X0)
+
+def comp : X0MqComponents (width 𝔛 O ρO κ toκ hϖ H) → (Y 𝔛 O ρO κ toκ hϖ H).IdealSheafData :=
+  (C 𝔛 O ρO κ toκ hϖ H).compG (hRF 𝔛 O ρO κ toκ hϖ H) (gRes 𝔛 O ρO κ toκ hϖ H) (hgRes 𝔛 O ρO κ toκ hϖ H) (ξ 𝔛 O ρO κ toκ) hξ
+
+def η : X0MqComponents (width 𝔛 O ρO κ toκ hϖ H) → Y 𝔛 O ρO κ toκ hϖ H :=
+  (C 𝔛 O ρO κ toκ hϖ H).ηG (hRF 𝔛 O ρO κ toκ hϖ H) (gRes 𝔛 O ρO κ toκ hϖ H) (hgRes 𝔛 O ρO κ toκ hϖ H) (ξ 𝔛 O ρO κ toκ) hξ
+
+def edgePt : (n : V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) → Fin (width 𝔛 O ρO κ toκ hϖ H n) → Y 𝔛 O ρO κ toκ hϖ H :=
+  (C 𝔛 O ρO κ toκ hϖ H).edgePt' (hRF 𝔛 O ρO κ toκ hϖ H) (oRes 𝔛 O ρO κ toκ hϖ H) (hoRes 𝔛 O ρO κ toκ hϖ H)
+
+theorem comp_def (v) : comp 𝔛 O ρO κ toκ hϖ H hξ v =
+    (C 𝔛 O ρO κ toκ hϖ H).compG (hRF 𝔛 O ρO κ toκ hϖ H) (gRes 𝔛 O ρO κ toκ hϖ H) (hgRes 𝔛 O ρO κ toκ hϖ H) (ξ 𝔛 O ρO κ toκ) hξ v := rfl
+theorem η_def (v) : η 𝔛 O ρO κ toκ hϖ H hξ v =
+    (C 𝔛 O ρO κ toκ hϖ H).ηG (hRF 𝔛 O ρO κ toκ hϖ H) (gRes 𝔛 O ρO κ toκ hϖ H) (hgRes 𝔛 O ρO κ toκ hϖ H) (ξ 𝔛 O ρO κ toκ) hξ v := rfl
+theorem edgePt_def (n) (d) : edgePt 𝔛 O ρO κ toκ hϖ H n d =
+    (C 𝔛 O ρO κ toκ hϖ H).edgePt' (hRF 𝔛 O ρO κ toκ hϖ H) (oRes 𝔛 O ρO κ toκ hϖ H) (hoRes 𝔛 O ρO κ toκ hϖ H) n d := rfl
+
+theorem chainPos'_eq (n : V3Glue.LevelSite.Node 𝔛 κ (toκ.comp ρO)) (d : ℕ) :
+    (C 𝔛 O ρO κ toκ hϖ H).chainPos' n d = DRResolvedModelPackageLevel.chainPos (width 𝔛 O ρO κ toκ hϖ H) n d := rfl
+
+end V3AsmLevel
+
+end

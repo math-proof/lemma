@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_NumberField_AdelicFourier
+import Def.NumberField_AdelicFourier
 import Lemma.Int.P2MUtil
 
 open NumberField NumberField.mixedEmbedding

@@ -79,6 +79,8 @@ export class LeanMul extends LeanArithmetic {
         }
         const lhs = this.lhs;
         const rhs = this.rhs;
+        const factorialPower = (n) =>
+            n instanceof L.LeanArgsSpaceSeparated && !!n.factorialPowerLatexFormat();
         if (
             (rhs instanceof L.LeanParenthesis && rhs.arg instanceof LeanDiv) ||
             (rhs instanceof L.LeanToken && /^\d+$/.test(rhs.text)) ||
@@ -93,7 +95,13 @@ export class LeanMul extends LeanArithmetic {
             (lhs instanceof L.LeanParenthesis && lhs.arg instanceof L.Lean_fun) ||
             (rhs.is_space_separated() && !(lhs instanceof L.LeanToken)) ||
             // `x.item * y.item` — two field accesses side by side read as one term
-            (lhs instanceof L.LeanProperty && rhs instanceof L.LeanProperty)
+            (lhs instanceof L.LeanProperty && rhs instanceof L.LeanProperty) ||
+            // `c₀ * h[k]` / `B * n.descFactorial e` — a vanished space reads as one symbol
+            // (`c₀h_k`, `Bn^{\underline{e}}`)
+            lhs instanceof L.LeanGetElem ||
+            rhs instanceof L.LeanGetElem ||
+            factorialPower(lhs) ||
+            factorialPower(rhs)
         ) {
             return '\\cdot';
         }
@@ -854,6 +862,10 @@ export class LeanFactorial extends LeanUnaryArithmeticPost {
     }
     strFormat() {
         return '%s !';
+    }
+    // Visible space before `!` (KaTeX collapses source whitespace in math mode).
+    latexFormat() {
+        return '{%s}\\ {!}';
     }
 }
 

@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_LaurentCoeff
-import Lemma.Definitions.Def_ModularCurve_X0
+import Lemma.ModularCurve.LaurentCoeff
+import Lemma.ModularCurve.X0
 import Lemma.Int.P2MUtil
 
 open ModularCurve IntermediateField HahnSeries

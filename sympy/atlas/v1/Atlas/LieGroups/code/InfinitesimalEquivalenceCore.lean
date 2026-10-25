@@ -11,7 +11,6 @@ LICENSE file in the root directory of this source tree.
 import sympy.atlas.v1.Atlas.LieGroups.code.GKModule
 import sympy.atlas.v1.Atlas.LieGroups.code.GKModuleDefs
 import sympy.atlas.v1.Atlas.LieGroups.code.HarishChandraFunctor
-import Lemma.Set.Dense_KFiniteSubspace.of.IsAdmissible
 import Lemma.Bijective.EqContinuousLinearEquivOfBijective.of.Bijective
 import sympy.atlas.v1.Atlas.LieGroups.code.Admissible
 import Mathlib.Analysis.InnerProductSpace.Completion

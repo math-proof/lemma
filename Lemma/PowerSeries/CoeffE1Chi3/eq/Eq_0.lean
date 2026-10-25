@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularForm_EisensteinChiNegThree
+import Def.ModularForm_EisensteinChiNegThree
 open EisensteinWeightOne
 
 

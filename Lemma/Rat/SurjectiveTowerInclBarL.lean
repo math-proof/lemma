@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_DegeneracyTower
+import Lemma.ModularCurve.DegeneracyTower
 import Lemma.Int.P2MUtil
 
 open ModularCurve AlgebraicCurve

@@ -4,13 +4,11 @@ import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.RootSignChangeProof
 open Finset BigOperators CoxeterGroup CoxeterExchangeGenuine CoxeterRootSignChange
 
 
-namespace CoxeterRootSignChange
-
 /--
 [isReduced_drop](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/RootSignChangeProof.lean)
 -/
 @[path]
-lemma isReduced_drop
+private lemma main
   [DecidableEq B]
   [Fintype B]
   [Group W]
@@ -35,7 +33,6 @@ lemma isReduced_drop
     rw [← List.length_append, List.take_append_drop]
   rw [hred] at hcat; omega
 
-end CoxeterRootSignChange
-
 
 -- created on 2026-10-23
+-- updated on 2026-10-24

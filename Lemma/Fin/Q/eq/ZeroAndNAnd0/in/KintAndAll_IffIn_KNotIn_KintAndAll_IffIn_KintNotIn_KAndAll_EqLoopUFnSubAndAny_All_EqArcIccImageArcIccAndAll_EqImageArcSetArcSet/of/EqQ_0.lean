@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_CellDissection
+import Def.AlgebraicCurve_CellDissection
 import Lemma.Int.P2MUtil
 
 

@@ -9,7 +9,7 @@ end Definitions
 namespace CoxeterExchange
 
 /--
-[exchange_condition_from_neg_of_descent](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/ExchangeConditionWiring.lean)
+[exchange_condition_from_neg_of_descent](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/ExchangeConditionGenuine.lean)
 -/
 @[path]
 private lemma exchange_condition_from_neg_of_descent
@@ -21,9 +21,10 @@ private lemma exchange_condition_from_neg_of_descent
 -- given
   (hsce : SignChangeExchangeHyp M cs) :
 -- imply
-  SatisfiesExchangeCondition M cs :=
+  SatisfiesExchangeCondition M cs := by
 -- proof
-  exchange_from_bridge (geometricBridgeFromNegOfDescent M cs hsce)
+  intro word s hred hlen
+  exact hsce word s hred (neg_of_descent M cs word s hred hlen)
 
 end CoxeterExchange
 

@@ -19,3 +19,4 @@ backup*
 *.bak.*
 .agent_tmp/
 .run.sh.flock
+tmp/

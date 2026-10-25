@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_AdelicIndex
-import Lemma.Definitions.Def_AlgebraicCurve_GluedPic0
+import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.AlgebraicCurve.GluedPic0
 import Lemma.Int.P2MUtil
 
 open AlgebraicCurve

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GroupCohomology_TateTwist
+import Def.GroupCohomology_TateTwist
 import Lemma.Int.P2MUtil
 open CategoryTheory Module groupCohomology Int
 

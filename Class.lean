@@ -1,0 +1,28 @@
+-- Root of the `Class` library: carved from Lemma/Definitions.
+import Class.Basic
+
+import Class.AlgebraicCurve_CanonicalDivisor
+import Class.AlgebraicCurve_ConstantFieldPullback
+import Class.AlgebraicCurve_DivisorClassGroup
+import Class.AlgebraicCurve_DivisorPushPull
+import Class.AlgebraicCurve_IsCurveOver
+import Class.AlgebraicCurve_LocalResidue
+import Class.CerednikDrinfeld_MumfordPeriod
+import Class.DedekindDomain_FiniteAdeleRing_BaseChange
+import Class.Deformations_ContinuousSMulDiscrete
+import Class.Deformations_IsProartinian
+import Class.Deformations_IsResidueAlgebra
+import Class.Deformations_ProartinianCat
+import Class.HopfAlgebra_HopfIdealQuotient
+import Class.HopfAlgebra_HopfTower
+import Class.Mathlib_Algebra_Algebra_Hom
+import Class.Mathlib_Algebra_IsDirectLimit
+import Class.Mathlib_IsModuleTopology
+import Class.ModularCurve_CanonicalDivisor
+import Class.ModularCurve_GaussPencilAdapter
+import Class.MvFormalGroup_BasicV2
+import Class.NumberField_Extension
+import Class.Patching_SystemTypes
+import Class.Representation_AbsolutelyIrreducible
+import Class.WeierstrassCurve_GenusOnePic0
+import Class.WeierstrassCurve_GenusOnePlaceGateCentred

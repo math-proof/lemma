@@ -2,7 +2,6 @@ import Mathlib
 import sympy.Basic
 import sympy.atlas.v1.Atlas.IntroductionToFunctionalAnalysis.code.LpSpaces
 open MeasureTheory
-open LpSpaces
 open scoped ENNReal NNReal
 
 
@@ -46,13 +45,18 @@ lemma eLpNormEssSup_eq_enorm_continuousMap
 @[path]
 lemma essSup_properties
   [MeasurableSpace α]
-  {μ : Measure α}
+  {_μ : Measure α}
   [NormedAddCommGroup E] :
 -- imply
-  (∀ {α : Type*} [MeasurableSpace α] {μ : MeasureTheory.Measure α} {E : Type*} [ENorm E] (f : α → E), ∀ᵐ x ∂μ, ‖f x‖ₑ ≤ MeasureTheory.eLpNormEssSup f μ) ∧ (∀ {α : Type*} [TopologicalSpace α] [CompactSpace α] [MeasurableSpace α] [BorelSpace α] {μ : MeasureTheory.Measure α} [μ.IsOpenPosMeasure] {E : Type*} [SeminormedAddCommGroup E] (f : C(α, E)), MeasureTheory.eLpNormEssSup (fun x => f x) μ = ‖f‖ₑ) :=
+  (∀ {α : Type*} [MeasurableSpace α] {μ : MeasureTheory.Measure α} {E : Type*} [ENorm E] (f : α → E),
+      ∀ᵐ x ∂μ, ‖f x‖ₑ ≤ MeasureTheory.eLpNormEssSup f μ) ∧
+    (∀ {α : Type*} [TopologicalSpace α] [CompactSpace α] [MeasurableSpace α] [BorelSpace α]
+      {μ : MeasureTheory.Measure α} [μ.IsOpenPosMeasure] {E : Type*} [SeminormedAddCommGroup E]
+      (f : C(α, E)), MeasureTheory.eLpNormEssSup (fun x => f x) μ = ‖f‖ₑ) :=
 -- proof
   ⟨fun {_} [_] {_} {_} [_] _ => ae_le_eLpNormEssSup,
-    fun {_} [_] [_] [_] [_] {_} [_] {_} [_] f => eLpNormEssSup_eq_enorm_continuousMap f⟩
+    fun {_} [_] [_] [_] [_] {_} [_] {_} [_] f =>
+      eLpNormEssSup_eq_enorm_continuousMap (f := f)⟩
 
 /--
 [holder_integrable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/LpSpaces.lean)
@@ -90,9 +94,10 @@ lemma holder_eLpNorm
 -- imply
   MeasureTheory.eLpNorm (f * g) 1 μ ≤ MeasureTheory.eLpNorm f p μ * MeasureTheory.eLpNorm g q μ := by
 -- proof
-  have h := eLpNorm_smul_le_mul_eLpNorm (𝕜 := 𝕜) (E := 𝕜) hg.1 hf.1 (hpqr := hpq)
-  simp only [smul_eq_mul] at h
-  exact h
+  have h :=
+    eLpNorm_smul_le_mul_eLpNorm (𝕜 := 𝕜) (E := 𝕜) (p := p) (q := q) (r := (1 : ℝ≥0∞))
+      (φ := f) (f := g) hf.aestronglyMeasurable hg.aestronglyMeasurable
+  simpa [smul_eq_mul] using h
 
 /--
 [holder_inequality](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/LpSpaces.lean)
@@ -109,7 +114,8 @@ lemma holder_inequality
   (hf : MemLp f p μ)
   (hg : MemLp g q μ) :
 -- imply
-  Integrable (f * g) μ ∧ MeasureTheory.eLpNorm (f * g) 1 μ ≤ MeasureTheory.eLpNorm f p μ * MeasureTheory.eLpNorm g q μ :=
+  Integrable (f * g) μ ∧
+    MeasureTheory.eLpNorm (f * g) 1 μ ≤ MeasureTheory.eLpNorm f p μ * MeasureTheory.eLpNorm g q μ :=
 -- proof
   ⟨holder_integrable hf hg, holder_eLpNorm hf hg⟩
 
@@ -125,12 +131,12 @@ lemma minkowski_inequality
   {f g : α → E}
 -- given
   (hp : 1 ≤ p)
-  (hf : AEStronglyMeasurable f μ)
-  (hg : AEStronglyMeasurable g μ) :
+  (_hf : AEStronglyMeasurable f μ)
+  (_hg : AEStronglyMeasurable g μ) :
 -- imply
   MeasureTheory.eLpNorm (f + g) p μ ≤ MeasureTheory.eLpNorm f p μ + MeasureTheory.eLpNorm g p μ :=
 -- proof
-  MeasureTheory.eLpNorm_add_le hf hg hp
+  MeasureTheory.eLpNorm_add_le hp
 
 /--
 [riesz_fischer_Lp_completeSpace](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/LpSpaces.lean)
@@ -144,7 +150,7 @@ lemma riesz_fischer_Lp_completeSpace
   {p : ℝ≥0∞}
   [Fact (1 ≤ p)] :
 -- imply
-  CompleteSpace (Lp E p μ) :=
+  CompleteSpace (MeasureTheory.Lp E p μ) :=
 -- proof
   MeasureTheory.Lp.instCompleteSpace
 
@@ -173,7 +179,7 @@ lemma lintegral_eq_iSup_lintegral_Icc_inter
     · exact Set.inter_subset_inter
         (Set.Icc_subset_Icc (neg_le_neg (Nat.cast_le.mpr hmn)) (Nat.cast_le.mpr hmn))
         (subset_rfl : S ⊆ S)
-    · intro x; exact zero_le _
+    · intro; exact bot_le
   have h_sup : (fun x => ⨆ n : ℕ, F n x) = S.indicator g := by
     ext x
     by_cases hx : x ∈ S
@@ -190,7 +196,7 @@ lemma lintegral_eq_iSup_lintegral_Icc_inter
       · apply iSup_le; intro n
         simp only [hF_def]
         rw [Set.indicator_of_notMem (fun h => hx h.2)]
-      · exact zero_le _
+      · exact bot_le
   have h_meas : ∀ n : ℕ, Measurable (F n) :=
     fun n => hg.indicator (measurableSet_Icc.inter hS)
   rw [← h_sup, lintegral_iSup h_meas h_mono]
@@ -213,16 +219,17 @@ lemma memLp_iff_iSup_lintegral_Icc_inter_lt_top
   (hS : MeasurableSet S)
   (hf : Measurable f) :
 -- imply
-  MemLp f p (volume.restrict S) ↔ ⨆ n : ℕ, ∫⁻ x in (Set.Icc (-(n : ℝ)) n) ∩ S, (‖f x‖ₑ) ^ p.toReal ∂volume < ⊤ := by
+  MemLp f p (volume.restrict S) ↔
+    ⨆ n : ℕ, ∫⁻ x in (Set.Icc (-(n : ℝ)) n) ∩ S, (‖f x‖ₑ) ^ p.toReal ∂volume < ⊤ := by
 -- proof
+  have hf_aes : AEStronglyMeasurable f (volume.restrict S) := hf.aestronglyMeasurable.restrict
   constructor
   · intro hfp
     rw [← lintegral_eq_iSup_lintegral_Icc_inter hS _ (by measurability)]
-    exact (MeasureTheory.eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top
-      hp_ne_zero hp_ne_top).mp hfp.2
+    exact (eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top
+      hp_ne_zero hp_ne_top hf_aes).mp hfp
   · intro h
-    refine ⟨hf.aestronglyMeasurable.restrict, ?_⟩
-    rw [MeasureTheory.eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top hp_ne_zero hp_ne_top]
+    rw [memLp_iff, eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top hp_ne_zero hp_ne_top hf_aes]
     rwa [lintegral_eq_iSup_lintegral_Icc_inter hS _ (by measurability)]
 
 /--
@@ -268,35 +275,31 @@ lemma memLp_of_polynomial_decay
         _ ≤ q * p.toReal := mul_le_mul_of_nonneg_left hp_ge_one (by linarith)
     have hint : Integrable (fun x : ℝ => (1 + ‖x‖) ^ (-(q * p.toReal))) volume :=
       integrable_one_add_norm hqp
-    refine ⟨hf_meas, ?_⟩
-    rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top hp_ne_zero hp_top]
-    calc ∫⁻ x, ‖f x‖ₑ ^ p.toReal ∂volume
-      ≤ ∫⁻ x, ENNReal.ofReal (C ^ p.toReal * (1 + ‖x‖) ^ (-(q * p.toReal))) ∂volume := by
-        apply lintegral_mono
-        intro x
-        simp only
-        rw [(ofReal_norm_eq_enorm (f x)).symm,
-          ENNReal.ofReal_rpow_of_nonneg (norm_nonneg _) hp_pos.le]
-        apply ENNReal.ofReal_le_ofReal
-        have hbound' : ‖f x‖ ≤ C * (1 + ‖x‖) ^ (-q) := by
-          have := hbound x
-          rwa [show |x| = ‖x‖ from (Real.norm_eq_abs x).symm] at this
-        calc ‖f x‖ ^ p.toReal
+    rw [memLp_iff, eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top hp_ne_zero hp_top hf_meas]
+    have hle : ∫⁻ (x : ℝ), ‖f x‖ₑ ^ p.toReal ∂volume ≤
+        ∫⁻ (x : ℝ), ENNReal.ofReal (C ^ p.toReal * (1 + ‖x‖) ^ (-(q * p.toReal))) ∂volume := by
+      refine lintegral_mono fun x => ?_
+      rw [(ofReal_norm_eq_enorm (f x)).symm,
+        ENNReal.ofReal_rpow_of_nonneg (norm_nonneg _) hp_pos.le]
+      apply ENNReal.ofReal_le_ofReal
+      have hboundX : ‖f x‖ ≤ C * (1 + ‖x‖) ^ (-q) := by
+        have := hbound x
+        rwa [show |x| = ‖x‖ from (Real.norm_eq_abs x).symm] at this
+      calc ‖f x‖ ^ p.toReal
           ≤ (C * (1 + ‖x‖) ^ (-q)) ^ p.toReal :=
-            Real.rpow_le_rpow (norm_nonneg _) hbound' hp_pos.le
-          _ = C ^ p.toReal * ((1 + ‖x‖) ^ (-q)) ^ p.toReal :=
+            Real.rpow_le_rpow (norm_nonneg _) hboundX hp_pos.le
+        _ = C ^ p.toReal * ((1 + ‖x‖) ^ (-q)) ^ p.toReal :=
             Real.mul_rpow hC (Real.rpow_nonneg (by positivity) _)
-          _ = C ^ p.toReal * (1 + ‖x‖) ^ (-(q * p.toReal)) := by
+        _ = C ^ p.toReal * (1 + ‖x‖) ^ (-(q * p.toReal)) := by
             congr 1
             rw [← Real.rpow_mul (by positivity : (0 : ℝ) ≤ 1 + ‖x‖)]
             ring_nf
-      _ < ⊤ := by
-        simp_rw [ENNReal.ofReal_mul (Real.rpow_nonneg hC _)]
-        rw [lintegral_const_mul _ (by measurability)]
-        apply ENNReal.mul_lt_top
-        · exact ENNReal.ofReal_lt_top
-        · rw [← lintegral_enorm_of_nonneg (fun x => Real.rpow_nonneg (by positivity) _)]
-          exact hasFiniteIntegral_iff_enorm.mp hint.hasFiniteIntegral
+    refine hle.trans_lt ?_
+    simp_rw [ENNReal.ofReal_mul (Real.rpow_nonneg hC _)]
+    rw [lintegral_const_mul _ (by measurability)]
+    refine ENNReal.mul_lt_top ENNReal.ofReal_lt_top ?_
+    rw [← lintegral_enorm_of_nonneg (fun x => Real.rpow_nonneg (by positivity) _)]
+    exact hasFiniteIntegral_iff_enorm.mp hint.hasFiniteIntegral
 
 -- created on 2026-10-23
 -- updated on 2026-10-24

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FormalHecke_Eigensystem
+import Def.FormalHecke_Eigensystem
 import Lemma.Int.P2MUtil
 open FormalHecke
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_EllipticCurve_PointReduction
+import Def.EllipticCurve_PointReduction
 import Lemma.Int.P2MUtil
 open Int
 open WeierstrassCurve IsDiscreteValuationRing IsLocalRing IsDedekindDomain.HeightOneSpectrum

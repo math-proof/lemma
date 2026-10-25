@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GroupCohomology_ContinuousH2
-import Lemma.Definitions.Def_GroupCohomology_ContinuousH2Map
+import Lemma.GroupCohomology.ContinuousH2
+import Lemma.GroupCohomology.ContinuousH2Map
 import Lemma.Int.P2MUtil
 set_option maxHeartbeats 999999
 open groupCohomology Int

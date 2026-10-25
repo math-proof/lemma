@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_LanglandsTunnell_LambdaSquared
+import Lemma.LanglandsTunnell.LambdaSquared
 open NumberField
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_DrinfeldHolomorphic
+import Lemma.CerednikDrinfeld.DrinfeldHolomorphic
 import Lemma.Int.P2MUtil
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_MumfordQuotient
+import Lemma.CerednikDrinfeld.MumfordQuotient
 import Lemma.Int.P2MUtil
 open CerednikDrinfeld.Mumford
 

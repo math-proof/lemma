@@ -7,7 +7,7 @@ import Lemma.Nat.EqAddMulDiv
 import Lemma.List.LengthRange.eq.Length
 import Lemma.List.Prod.eq.MulProdS
 import sympy.core.power
-import sympy.core.function
+import Theorem.Function
 open Nat Lean
 open scoped BigOperators
 

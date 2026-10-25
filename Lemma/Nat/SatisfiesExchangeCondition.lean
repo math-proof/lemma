@@ -74,22 +74,20 @@ private lemma exists_sign_change
   {f : ℕ → ℝ}
   {n : ℕ}
 -- given
-  (_hn : 0 < n)
+  (_ : 0 < n)
   (hf0 : f 0 > 0)
   (hfn : f n < 0) :
 -- imply
   ∃ k, k < n ∧ f k ≥ 0 ∧ f (k + 1) < 0 := by
 -- proof
   by_contra h
-  push_neg at h
+  push Not at h
   have : ∀ k, k ≤ n → f k ≥ 0 := by
     intro k hk
     induction k with
     | zero => linarith
     | succ m ih =>
-      have hm_le : m ≤ n := by omega
-      have hm_lt : m < n := by omega
-      exact h m hm_lt (ih hm_le)
+      exact h m (by omega) (ih (by omega))
   linarith [this n le_rfl]
 
 end CoxeterExchangeGenuine
@@ -106,22 +104,20 @@ private lemma exists_sign_change'
   {f : ℕ → ℝ}
   {n : ℕ}
 -- given
-  (_hn : 0 < n)
+  (_ : 0 < n)
   (hf0 : f 0 > 0)
   (hfn : f n ≤ 0) :
 -- imply
   ∃ k, k < n ∧ f k > 0 ∧ f (k + 1) ≤ 0 := by
 -- proof
   by_contra h
-  push_neg at h
+  push Not at h
   have : ∀ k, k ≤ n → f k > 0 := by
     intro k hk
     induction k with
     | zero => exact hf0
     | succ m ih =>
-      have hm_le : m ≤ n := by omega
-      have hm_lt : m < n := by omega
-      exact h m hm_lt (ih hm_le)
+      exact h m (by omega) (ih (by omega))
   linarith [this n le_rfl]
 
 end CoxeterExchangeGenuine

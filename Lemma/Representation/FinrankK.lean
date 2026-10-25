@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GroupCohomology_Selmer
+import Lemma.GroupCohomology.Selmer
 open Module
 open scoped IntermediateField Pointwise
 

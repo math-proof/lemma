@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_DualSelmer_ExtConditions
-import Lemma.Definitions.Def_ExtCitation_KummerBridge
+import Lemma.DualSelmer.ExtConditions
+import Lemma.ExtCitation.KummerBridge
 import Lemma.Int.P2MUtil
 
 open CategoryTheory Module groupCohomology ExtCitation

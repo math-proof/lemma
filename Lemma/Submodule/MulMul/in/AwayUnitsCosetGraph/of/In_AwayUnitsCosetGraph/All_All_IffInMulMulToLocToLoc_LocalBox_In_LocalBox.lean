@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_DrinfeldHolomorphic
-import Lemma.Definitions.Def_ValuationSubring_CompletionRatClosure
-import Lemma.Definitions.Def_FLTPrelim_Ramification
-import Lemma.Definitions.Def_CerednikDrinfeld_CosetGraphAtPrime
+import Lemma.CerednikDrinfeld.DrinfeldHolomorphic
+import Lemma.ValuationSubring.CompletionRatClosure
+import Def.FLTPrelim_Ramification
+import Lemma.CerednikDrinfeld.CosetGraphAtPrime
 import Lemma.Int.P2MUtil
 open scoped TensorProduct Quaternion NumberField
 open CerednikDrinfeld CerednikDrinfeld.Omega ValuationSubring QuaternionAlgebra IsDedekindDomain

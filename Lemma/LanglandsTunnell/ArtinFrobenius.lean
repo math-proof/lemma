@@ -1,0 +1,102 @@
+import Mathlib.NumberTheory.NumberField.Basic
+import Mathlib.RingTheory.Frobenius
+import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+import Mathlib.FieldTheory.Galois.IsGaloisGroup
+import Lemma.NarrowRayClassGroup.Main
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace LanglandsTunnell.P2.Artin
+
+open NumberField IsDedekindDomain
+open Deep.NTSupply
+open scoped nonZeroDivisors
+
+section Frob
+
+variable (K M : Type*) [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M]
+
+theorem algebraMap_ringOfIntegers_injective : Function.Injective (algebraMap (𝓞 K) (𝓞 M)) := by
+  intro x y h
+  have h' : algebraMap (𝓞 K) M x = algebraMap (𝓞 K) M y := by
+    rw [IsScalarTower.algebraMap_apply (𝓞 K) (𝓞 M) M, IsScalarTower.algebraMap_apply (𝓞 K) (𝓞 M) M, h]
+  rw [IsScalarTower.algebraMap_apply (𝓞 K) K M, IsScalarTower.algebraMap_apply (𝓞 K) K M] at h'
+  exact RingOfIntegers.coe_injective ((algebraMap K M).injective h')
+
+omit [NumberField M] in
+theorem exists_prime_over (v : HeightOneSpectrum (𝓞 K)) : ∃ Q : Ideal (𝓞 M), Q.IsMaximal ∧ Q.under (𝓞 K) = v.asIdeal := by
+  haveI := v.isMaximal
+  obtain ⟨Q, hQ, hQv⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral v.asIdeal
+    (by rw [(RingHom.injective_iff_ker_eq_bot _).mp (algebraMap_ringOfIntegers_injective K M)]; exact bot_le)
+  exact ⟨Q, hQ, hQv⟩
+
+def primeAbove (v : HeightOneSpectrum (𝓞 K)) : Ideal (𝓞 M) := (exists_prime_over K M v).choose
+
+variable (v : HeightOneSpectrum (𝓞 K))
+
+theorem under_primeAbove : (primeAbove K M v).under (𝓞 K) = v.asIdeal := (exists_prime_over K M v).choose_spec.2
+
+theorem ne_bot_of_under_eq {Q : Ideal (𝓞 M)} (hQ : Q.under (𝓞 K) = v.asIdeal) : Q ≠ ⊥ := fun h => by
+  rw [h, Ideal.under_def, Ideal.comap_bot_of_injective _ (algebraMap_ringOfIntegers_injective K M)] at hQ
+  exact v.ne_bot hQ.symm
+
+omit [NumberField M] in
+theorem primeAbove_ne_bot : primeAbove K M v ≠ ⊥ := ne_bot_of_under_eq K M v (under_primeAbove K M v)
+
+theorem finite_quotient_of_under_eq {Q : Ideal (𝓞 M)} (hQ : Q.under (𝓞 K) = v.asIdeal) : Finite (𝓞 M ⧸ Q) :=
+  Ideal.finiteQuotientOfFreeOfNeBot _ (ne_bot_of_under_eq K M v hQ)
+
+end Frob
+
+section Artin
+
+variable (K M : Type*) [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M] [IsGalois K M]
+  (v : HeightOneSpectrum (𝓞 K))
+
+def artinFrob : M ≃ₐ[K] M := arithFrobAt (𝓞 K) (M ≃ₐ[K] M) (primeAbove K M v)
+
+theorem isArithFrobAt_artinFrob : IsArithFrobAt (𝓞 K) (artinFrob K M v) (primeAbove K M v) :=
+  IsArithFrobAt.arithFrobAt (𝓞 K) (M ≃ₐ[K] M) (primeAbove K M v)
+
+end Artin
+
+section Symbol
+
+open Deep.NTSupply
+open scoped nonZeroDivisors
+
+variable (K M : Type*) [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M] [IsGalois K M]
+  [IsMulCommutative (M ≃ₐ[K] M)]
+
+open scoped IsMulCommutative
+
+def artinSymbol (𝔣 : Ideal (𝓞 K)) : ↥(coprimeToModulus K 𝔣) →* (M ≃ₐ[K] M) := raySymbolHom K 𝔣 (artinFrob K M)
+
+theorem artinSymbol_prime {𝔣 : Ideal (𝓞 K)} {v : HeightOneSpectrum (𝓞 K)} (hv : ¬ v.asIdeal ∣ 𝔣) :
+    artinSymbol K M 𝔣 ⟨primeUnit K v, primeUnit_mem_coprimeToModulus K hv⟩ = artinFrob K M v :=
+  raySymbolHom_prime K 𝔣 (artinFrob K M) hv
+
+end Symbol
+
+#print axioms LanglandsTunnell.P2.Artin.isGaloisGroup_ringOfIntegers
+#print axioms LanglandsTunnell.P2.Artin.algebraMap_ringOfIntegers_injective
+#print axioms LanglandsTunnell.P2.Artin.exists_prime_over
+#print axioms LanglandsTunnell.P2.Artin.primeAbove
+#print axioms LanglandsTunnell.P2.Artin.primeAbove_isMaximal
+#print axioms LanglandsTunnell.P2.Artin.under_primeAbove
+#print axioms LanglandsTunnell.P2.Artin.primeAbove_liesOver
+#print axioms LanglandsTunnell.P2.Artin.ne_bot_of_under_eq
+#print axioms LanglandsTunnell.P2.Artin.primeAbove_ne_bot
+#print axioms LanglandsTunnell.P2.Artin.primeAbove_finite
+#print axioms LanglandsTunnell.P2.Artin.finite_quotient_of_under_eq
+#print axioms LanglandsTunnell.P2.Artin.artinFrob
+#print axioms LanglandsTunnell.P2.Artin.isArithFrobAt_artinFrob
+#print axioms LanglandsTunnell.P2.Artin.artinSymbol
+#print axioms LanglandsTunnell.P2.Artin.artinSymbol_prime
+
+end LanglandsTunnell.P2.Artin
+
+end

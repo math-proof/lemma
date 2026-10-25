@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_HeckeGalois_EichlerShimura
+import Def.HeckeGalois_EichlerShimura
 import Lemma.Int.P2MUtil
 
 open ModularCurve

@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_DualSelmer_ExtConditions
-import Lemma.Definitions.Def_GroupCohomology_CupProduct
+import Lemma.DualSelmer.ExtConditions
+import Lemma.GroupCohomology.CupProduct
 import Lemma.Int.P2MUtil
 
 open CategoryTheory

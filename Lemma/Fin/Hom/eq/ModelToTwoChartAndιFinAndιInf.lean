@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_TwoChartModel
-import Lemma.Definitions.Def_AlgebraicCurve_TwoChartIntegralModel
+import Lemma.ModularCurve.TwoChartModel
+import Lemma.AlgebraicCurve.TwoChartIntegralModel
 
 
 namespace Definitions

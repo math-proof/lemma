@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_M4aHerbrand_IdeleClassVocab
-import Lemma.Definitions.Def_NumberField_IdeleBox
+import Def.M4aHerbrand_IdeleClassVocab
+import Lemma.NumberField.IdeleBox
 import Lemma.Int.P2MUtil
 
 open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum

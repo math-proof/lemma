@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_PlaceTaylorCoeff
+import Def.AlgebraicCurve_PlaceTaylorCoeff
 import Lemma.Int.P2MUtil
 
 open AlgebraicCurve AlgebraicCurve.Place

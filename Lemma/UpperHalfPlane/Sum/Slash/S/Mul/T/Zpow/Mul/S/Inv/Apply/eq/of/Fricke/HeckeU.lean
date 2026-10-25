@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularForm_HeckeOperator
+import Lemma.ModularForm.HeckeOperator
 import Lemma.Int.P2MUtil
 open UpperHalfPlane ModularForm
 open scoped MatrixGroups ModularForm

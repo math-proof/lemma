@@ -22,9 +22,28 @@ export class Lean_in extends LeanBinaryBoolean {
         return '∈';
     }
 
+    /**
+     * LaTeX-only: drop `(i : ℕ)` / `(i : Nat)` (and bare `i : ℕ`) on the ∈ element.
+     * Lean still needs the cast when `i : Fin m` and the set is `Finset ℕ` (e.g. `Finset.Ico`);
+     * pretty-print like choose's `((i : ℕ).choose j)` → `\binom{i}{j}`.
+     * @param {import('./base.js').Lean} node
+     * @returns {import('./base.js').Lean}
+     */
+    static peelLatexElem(node) {
+        let n = node;
+        if (n instanceof L.LeanParenthesis) {
+            if (n.arg instanceof L.LeanColon && n.arg.rhs instanceof L.LeanToken)
+                return n.arg.lhs;
+            if (!(n.arg instanceof L.LeanColon))
+                return n.arg;
+        }
+        if (n instanceof L.LeanColon && n.rhs instanceof L.LeanToken)
+            return n.lhs;
+        return n;
+    }
+
     latexArgs(syntax) {
-        let lhs = this.lhs;
-        if (lhs instanceof L.LeanParenthesis && !(lhs.arg instanceof L.LeanColon)) lhs = lhs.arg;
+        const lhs = Lean_in.peelLatexElem(this.lhs);
         let rhs = this.rhs;
         if (rhs instanceof L.LeanParenthesis && rhs.arg instanceof L.LeanIte) rhs = rhs.arg;
         return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
@@ -40,8 +59,7 @@ export class Lean_notin extends LeanBinaryBoolean {
     }
 
     latexArgs(syntax) {
-        let lhs = this.lhs;
-        if (lhs instanceof L.LeanParenthesis) lhs = lhs.arg;
+        const lhs = L.Lean_in.peelLatexElem(this.lhs);
         return [lhs.toLatex(syntax), this.rhs.toLatex(syntax)];
     }
 }

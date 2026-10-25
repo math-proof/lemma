@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_WeierstrassCurve_ReduceHom
+import Lemma.WeierstrassCurve.ReduceHom
 import Lemma.Int.P2MUtil
 
 open WeierstrassCurve IsLocalRing

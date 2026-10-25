@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_Mathlib_RingTheory_Valuation_LowerRamificationGroupDepth
+import Def.Mathlib_RingTheory_Valuation_LowerRamificationGroupDepth
 open IsLocalRing Polynomial IsDiscreteValuationRing
 open IntermediateField
 

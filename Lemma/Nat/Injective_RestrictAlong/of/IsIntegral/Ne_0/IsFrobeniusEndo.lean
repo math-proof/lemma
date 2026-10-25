@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_FrobeniusEndo
+import Lemma.AlgebraicCurve.FrobeniusEndo
 open AlgebraicCurve
 
 

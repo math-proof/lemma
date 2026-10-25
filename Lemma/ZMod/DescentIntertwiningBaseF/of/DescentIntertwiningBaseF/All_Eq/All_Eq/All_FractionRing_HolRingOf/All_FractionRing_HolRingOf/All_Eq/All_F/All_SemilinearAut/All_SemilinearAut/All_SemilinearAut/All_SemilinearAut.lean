@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_DescentIntertwiningBase
+import Def.CerednikDrinfeld_DescentIntertwiningBase
 import Lemma.Int.P2MUtil
 set_option maxHeartbeats 999999
 open scoped TensorProduct Quaternion NumberField MatrixGroups

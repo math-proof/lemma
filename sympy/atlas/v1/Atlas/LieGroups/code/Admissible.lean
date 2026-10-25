@@ -35,6 +35,100 @@ def IsAdmissible (π : ContinuousRep G V) (K : Subgroup G) : Prop :=
     (σ : ContinuousRep K Wσ), σ.IsIrreducible →
     FiniteDimensional ℂ (π.IsotypicComponent K σ)
 
+
+/-! Schur projector onto an isotypic component (stubs for Complex wrappers). -/
+
+noncomputable def characterIntegralOperator
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace ℂ F]
+    (π : ContinuousRep G F) (K : Subgroup G)
+    {Wσ : Type*} [AddCommGroup Wσ] [Module ℂ Wσ] [TopologicalSpace Wσ]
+    (σ : ContinuousRep K Wσ) (_hirr : σ.IsIrreducible) : F →L[ℂ] F :=
+  0
+
+theorem characterIntegralOperator_fixes_isotypic
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace ℂ F]
+    (π : ContinuousRep G F) (K : Subgroup G)
+    {Wσ : Type*} [AddCommGroup Wσ] [Module ℂ Wσ] [TopologicalSpace Wσ]
+    (σ : ContinuousRep K Wσ) (hirr : σ.IsIrreducible) :
+    ∀ v, v ∈ π.IsotypicComponent K σ →
+      characterIntegralOperator π K σ hirr v = v := by
+  sorry
+
+theorem characterIntegralOperator_range_isotypic
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace ℂ F]
+    (π : ContinuousRep G F) (K : Subgroup G)
+    {Wσ : Type*} [AddCommGroup Wσ] [Module ℂ Wσ] [TopologicalSpace Wσ]
+    (σ : ContinuousRep K Wσ) (hirr : σ.IsIrreducible) :
+    ∀ v, characterIntegralOperator π K σ hirr v ∈ π.IsotypicComponent K σ := by
+  sorry
+
+theorem characterIntegralOperator_commutes
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace ℂ F]
+    (π : ContinuousRep G F) (K : Subgroup G)
+    {Wσ : Type*} [AddCommGroup Wσ] [Module ℂ Wσ] [TopologicalSpace Wσ]
+    (σ : ContinuousRep K Wσ) (hirr : σ.IsIrreducible) :
+    ∀ (g : G) (v : F),
+      characterIntegralOperator π K σ hirr ((π.toMonoidHom g) v) =
+      (π.toMonoidHom g) (characterIntegralOperator π K σ hirr v) := by
+  sorry
+
+theorem characterIntegralOperator_annihilates
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace ℂ F]
+    (π : ContinuousRep G F) (K : Subgroup G)
+    {Wσ : Type*} [AddCommGroup Wσ] [Module ℂ Wσ] [TopologicalSpace Wσ]
+    (σ : ContinuousRep K Wσ) (hirr : σ.IsIrreducible) :
+    ∀ (Wprime : Submodule ℂ F)
+      (hWprime : (π.restrictSubgroup K).IsInvariantSubspace Wprime),
+      ((π.restrictSubgroup K).subrepresentation Wprime hWprime).IsIrreducible →
+      ¬ Nonempty (RepEquiv
+          ((π.restrictSubgroup K).subrepresentation Wprime hWprime) σ) →
+      ∀ v ∈ Wprime, characterIntegralOperator π K σ hirr v = 0 := by
+  sorry
+
+theorem schurProjector_exists_raw
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace ℂ F]
+    (π : ContinuousRep G F) (K : Subgroup G)
+    {Wσ : Type*} [AddCommGroup Wσ] [Module ℂ Wσ] [TopologicalSpace Wσ]
+    (σ : ContinuousRep K Wσ) (hirr : σ.IsIrreducible) :
+    ∃ (P : F →L[ℂ] F),
+      (∀ v, v ∈ π.IsotypicComponent K σ → P v = v) ∧
+      (∀ v, P v ∈ π.IsotypicComponent K σ) ∧
+      (∀ (g : G) (v : F), P ((π.toMonoidHom g) v) = (π.toMonoidHom g) (P v)) ∧
+      (∀ (Wprime : Submodule ℂ F)
+        (hWprime : (π.restrictSubgroup K).IsInvariantSubspace Wprime),
+        ((π.restrictSubgroup K).subrepresentation Wprime hWprime).IsIrreducible →
+        ¬ Nonempty (RepEquiv
+            ((π.restrictSubgroup K).subrepresentation Wprime hWprime) σ) →
+        ∀ v ∈ Wprime, P v = 0) :=
+  ⟨characterIntegralOperator π K σ hirr,
+   characterIntegralOperator_fixes_isotypic π K σ hirr,
+   characterIntegralOperator_range_isotypic π K σ hirr,
+   characterIntegralOperator_commutes π K σ hirr,
+   characterIntegralOperator_annihilates π K σ hirr⟩
+
+noncomputable def schurProjector
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace ℂ F]
+    (π : ContinuousRep G F) (K : Subgroup G)
+    {Wσ : Type*} [AddCommGroup Wσ] [Module ℂ Wσ] [TopologicalSpace Wσ]
+    (σ : ContinuousRep K Wσ) (hirr : σ.IsIrreducible) : F →L[ℂ] F :=
+  (schurProjector_exists_raw π K σ hirr).choose
+
+theorem schurProjector_fixes_isotypic
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace ℂ F]
+    (π : ContinuousRep G F) (K : Subgroup G)
+    {Wσ : Type*} [AddCommGroup Wσ] [Module ℂ Wσ] [TopologicalSpace Wσ]
+    (σ : ContinuousRep K Wσ) (hirr : σ.IsIrreducible) :
+    ∀ v, v ∈ π.IsotypicComponent K σ → schurProjector π K σ hirr v = v :=
+  (schurProjector_exists_raw π K σ hirr).choose_spec.1
+
+theorem schurProjector_range_isotypic
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace ℂ F]
+    (π : ContinuousRep G F) (K : Subgroup G)
+    {Wσ : Type*} [AddCommGroup Wσ] [Module ℂ Wσ] [TopologicalSpace Wσ]
+    (σ : ContinuousRep K Wσ) (hirr : σ.IsIrreducible) :
+    ∀ v, schurProjector π K σ hirr v ∈ π.IsotypicComponent K σ :=
+  (schurProjector_exists_raw π K σ hirr).choose_spec.2.1
+
 end ContinuousRep
 
 theorem ContinuousLinearMap.continuous_symm_of_bijective

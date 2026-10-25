@@ -1,0 +1,36 @@
+-- Carved from Lemma/Definitions/Def_ModularCurve_SpecialisationBridge.lean: instance decls only.
+import Lemma.ModularCurve.SpecialisationVocab
+import Instance.ModularCurve_TatePoint
+import Lemma.HahnSeries.Monodromy
+import Def.WeierstrassCurve_VariableChangePointEquiv
+import Theorems.Thm_WeierstrassCurve_Affine_Point_vcInvFun_add
+import Theorems.Thm_ModularCurve_B3_goodModel_zero_spec
+import Theorems.Thm_ModularCurve_B3_goodModel_1728_spec
+import Theorems.Thm_ModularCurve_B3_goodModel_generic_spec
+import Theorems.Thm_ModularCurve_B3_nearCurve_eq_ofJNe0Or1728
+import Theorems.Thm_ModularCurve_B3_exists_variableChange_specialFibre_goodModel
+import Theorems.Thm_ModularCurve_B3_isElliptic_specialFibre_goodModel
+import Theorems.Thm_ModularCurve_B3_isElliptic_specialFibre
+import Theorems.Thm_ModularCurve_B3_exists_torsionBy_reduction_addEquiv
+
+set_option autoImplicit false
+
+open scoped Classical
+
+noncomputable section
+
+open ModularCurve WeierstrassCurve Polynomial
+
+namespace ModularCurve.B3
+
+open ModularCurve.TatePoint
+
+universe u
+
+instance instIsElliptic_goodModel (j₀ : Qbar) : (goodModel j₀).IsElliptic := by
+  unfold goodModel; infer_instance
+
+
+end ModularCurve.B3
+
+end

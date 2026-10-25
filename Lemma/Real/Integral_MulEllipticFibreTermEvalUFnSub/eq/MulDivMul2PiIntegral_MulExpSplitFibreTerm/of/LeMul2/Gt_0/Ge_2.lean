@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AutomorphicForm_GL2TwistedMonomialFibres
+import Def.AutomorphicForm_GL2TwistedMonomialFibres
 import Lemma.Int.P2MUtil
 
 open AutomorphicForm.GL2Twisted Polynomial

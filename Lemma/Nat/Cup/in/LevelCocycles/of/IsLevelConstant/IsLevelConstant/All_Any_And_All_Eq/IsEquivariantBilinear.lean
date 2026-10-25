@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GroupCohomology_ContinuousH2
-import Lemma.Definitions.Def_GroupCohomology_CupProduct
+import Lemma.GroupCohomology.ContinuousH2
+import Lemma.GroupCohomology.CupProduct
 open CategoryTheory groupCohomology
 
 

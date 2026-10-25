@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_ComponentGroup
-import Lemma.Definitions.Def_ModularCurve_CharacterLatticePairings
+import Lemma.ModularCurve.ComponentGroup
+import Lemma.ModularCurve.CharacterLatticePairings
 import Lemma.Int.P2MUtil
 
 open ModularCurve ModularCurve.CharacterLattice Finset

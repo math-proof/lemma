@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_LanglandsTunnell_ArchPlace
+import Lemma.LanglandsTunnell.ArchPlace
 import Lemma.Int.P2MUtil
 
 open MeasureTheory LanglandsTunnell.TateLocal LanglandsTunnell.ArchPlace Metric

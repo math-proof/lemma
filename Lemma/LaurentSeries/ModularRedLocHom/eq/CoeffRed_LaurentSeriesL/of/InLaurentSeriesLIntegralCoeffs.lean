@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_CharPReduction
+import Lemma.ModularCurve.CharPReduction
 import Lemma.Int.P2MUtil
 
 open ModularCurve ModularCurve.CharPReduction

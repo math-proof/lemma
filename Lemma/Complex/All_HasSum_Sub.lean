@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_EisensteinTwoCoeff
-import Lemma.Definitions.Def_ModularForm_HeckeOperator
+import Lemma.ModularCurve.EisensteinTwoCoeff
+import Lemma.ModularForm.HeckeOperator
 import Lemma.Int.P2MUtil
 open Complex
 open scoped ArithmeticFunction.sigma

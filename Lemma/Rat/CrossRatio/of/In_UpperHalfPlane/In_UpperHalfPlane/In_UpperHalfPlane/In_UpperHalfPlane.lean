@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_DrinfeldUpperHalfPlane
+import Lemma.CerednikDrinfeld.DrinfeldUpperHalfPlane
 open scoped MatrixGroups
 open CerednikDrinfeld.Omega
 

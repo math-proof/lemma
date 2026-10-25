@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GroupCohomology_LocallyConstantClasses
+import Lemma.GroupCohomology.LocallyConstantClasses
 open CategoryTheory Module groupCohomology
 
 

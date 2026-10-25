@@ -9,11 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import sympy.atlas.v1.Atlas.LieGroups.code.HarishChandraIsomorphism
-import Lemma.Int.Any_All_Eq.of.LeKer_Ker.Surjective
-import Lemma.Int.IsInQPlus0
-import Lemma.Int.Zero.in.DominantWeights
-import sympy.atlas.v1.Atlas.LieGroups.code.CategoryO
-import sympy.atlas.v1.Atlas.LieGroups.code.KostantTheorem
 import Mathlib.RingTheory.TwoSidedIdeal.Operations
 import Mathlib.RingTheory.Congruence.Hom
 import Mathlib.LinearAlgebra.TensorProduct.Basic
@@ -21,8 +16,11 @@ import Mathlib.Algebra.Lie.Semisimple.Defs
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.Data.Complex.Basic
 import Mathlib.Algebra.Algebra.Opposite
+import Mathlib.Algebra.Lie.OfAssociative
 
 noncomputable section
+
+attribute [local instance 100] LieRing.ofAssociativeRing
 
 variable (R : Type*) [CommRing R]
 variable (𝔤 : Type*) [LieRing 𝔤] [LieAlgebra R 𝔤]
@@ -96,12 +94,10 @@ abbrev MaximalQuotient
     (χ : ↥(Subalgebra.center R (UniversalEnvelopingAlgebra R 𝔤)) →ₐ[R] R) :=
   (maximalQuotientIdeal χ).ringCon.Quotient
 
-def MaximalQuotient.proj
+noncomputable def MaximalQuotient.proj
     (χ : ↥(Subalgebra.center R (UniversalEnvelopingAlgebra R 𝔤)) →ₐ[R] R) :
-    UniversalEnvelopingAlgebra R 𝔤 →ₐ[R] MaximalQuotient χ :=
-  { (maximalQuotientIdeal χ).ringCon.mk' with
-    commutes' := fun r => by
-      simp [RingCon.mk', Algebra.algebraMap_eq_smul_one] }
+    UniversalEnvelopingAlgebra R 𝔤 →ₐ[R] MaximalQuotient χ := by
+  sorry
 
 def negOpLieHom : 𝔤 →ₗ⁅R⁆ (UniversalEnvelopingAlgebra R 𝔤)ᵐᵒᵖ where
   toFun x := MulOpposite.op (-(UniversalEnvelopingAlgebra.ι R x))

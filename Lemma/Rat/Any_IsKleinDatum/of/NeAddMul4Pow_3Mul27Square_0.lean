@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_EllipticCurve_RubinSilverbergFamily
+import Def.EllipticCurve_RubinSilverbergFamily
 import Lemma.Int.P2MUtil
 
 

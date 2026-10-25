@@ -8,8 +8,13 @@ namespace MetaMathlibExt
 [prime_not_dvd_pow_sub_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/GeneralLinearGroupExponent.lean)
 -/
 @[path]
-private lemma prime_not_dvd_pow_sub_one (p i : ℕ) (hp : p.Prime) :
-  ¬ p ∣ p ^ (i + 1) - 1 := by
+private lemma prime_not_dvd_pow_sub_one
+  (p i : ℕ)
+-- given
+  (hp : p.Prime) :
+-- imply
+  ¬(p ∣ p ^ (i + 1) - 1) := by
+-- proof
   intro h
   have h1 : p ∣ p ^ (i + 1) := dvd_pow_self p (by omega)
   have h2 : p ∣ p ^ (i + 1) - (p ^ (i + 1) - 1) := Nat.dvd_sub h1 h
@@ -27,16 +32,19 @@ namespace MetaMathlibExt
 [coprime_pow_clog_lcm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/GeneralLinearGroupExponent.lean)
 -/
 @[path]
-private lemma coprime_pow_clog_lcm (p m : ℕ) (hp : p.Prime) :
-  Nat.Coprime (p ^ Nat.clog p m)
-    ((Finset.range m).lcm (fun i => p ^ (i + 1) - 1)) := by
-  have H : ((Finset.range m).prod (fun i => p ^ (i + 1) - 1)).Coprime
-    (p ^ Nat.clog p m) := by
-    apply Nat.Coprime.prod_left
-    intro i _
-    exact ((hp.coprime_iff_not_dvd.mpr
-      (prime_not_dvd_pow_sub_one p i hp)).pow_left _).symm
-  exact Nat.Coprime.coprime_dvd_right (Finset.lcm_dvd_prod _ _) H.symm
+private lemma coprime_pow_clog_lcm
+  (p m : ℕ)
+-- given
+  (hp : p.Prime) :
+-- imply
+  (p ^ Nat.clog p m).Coprime ((Finset.range m).lcm (fun i => p ^ (i + 1) - 1)) := by
+-- proof
+  apply Nat.Coprime.coprime_dvd_right (Finset.lcm_dvd_prod _ _)
+  apply Nat.Coprime.symm
+  apply Nat.Coprime.prod_left
+  intro i _
+  exact ((hp.coprime_iff_not_dvd.mpr
+    (prime_not_dvd_pow_sub_one p i hp)).pow_left _).symm
 
 end MetaMathlibExt
 
@@ -46,34 +54,36 @@ namespace MetaMathlibExt
 [pow_sub_one_eq_divisor_prod](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/GeneralLinearGroupExponent.lean)
 -/
 @[path]
-private lemma pow_sub_one_eq_divisor_prod (p n : ℕ) (hp : p.Prime) (hn : 0 < n) :
-  p ^ n - 1 = ∏ i ∈ n.divisors, ((Polynomial.cyclotomic i ℤ).eval (p : ℤ)).natAbs := by
+private lemma pow_sub_one_eq_divisor_prod
+  (p n : ℕ)
+-- given
+  (hp : p.Prime)
+  (hn : 0 < n) :
+-- imply
+  p ^ n - 1 =
+    ∏ i ∈ n.divisors, (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic i ℤ)).natAbs := by
+-- proof
   have h1 : (1 : ℤ) < (p : ℤ) := by exact_mod_cast hp.one_lt
   have hprod := Polynomial.prod_cyclotomic_eq_X_pow_sub_one hn ℤ
   have heval : ∏ i ∈ n.divisors,
-    (Polynomial.cyclotomic i ℤ).eval (p : ℤ) = (p : ℤ) ^ n - 1 := by
-    calc ∏ i ∈ n.divisors, (Polynomial.cyclotomic i ℤ).eval (p : ℤ)
-      = Polynomial.eval (p : ℤ)
-        (∏ i ∈ n.divisors, Polynomial.cyclotomic i ℤ) :=
-        (Polynomial.eval_prod _ _ _).symm
-      _ = Polynomial.eval (p : ℤ) (Polynomial.X ^ n - 1 : Polynomial ℤ) := by
-        rw [hprod]
-      _ = (p : ℤ) ^ n - 1 := by simp
-  have hcast : (((∏ i ∈ n.divisors, ((Polynomial.cyclotomic i ℤ).eval (p : ℤ)).natAbs : ℕ)) : ℤ) =
-    ∏ i ∈ n.divisors, (Polynomial.cyclotomic i ℤ).eval (p : ℤ) := by
+      Polynomial.eval (p : ℤ) (Polynomial.cyclotomic i ℤ) = (p : ℤ) ^ n - 1 := calc
+    _ = Polynomial.eval (p : ℤ) (∏ i ∈ n.divisors, Polynomial.cyclotomic i ℤ) :=
+      (Polynomial.eval_prod _ _ _).symm
+    _ = Polynomial.eval (p : ℤ) (Polynomial.X ^ n - 1 : Polynomial ℤ) := by
+      rw [hprod]
+    _ = (p : ℤ) ^ n - 1 := by
+      simp
+  have hcast : (((∏ i ∈ n.divisors, (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic i ℤ)).natAbs : ℕ)) : ℤ) =
+    ∏ i ∈ n.divisors, Polynomial.eval (p : ℤ) (Polynomial.cyclotomic i ℤ) := by
     rw [Nat.cast_prod]
     apply Finset.prod_congr rfl
     intro i _
     exact Int.natAbs_of_nonneg (le_of_lt (Polynomial.cyclotomic_pos' i h1))
-  have hnat : (((p ^ n - 1 : ℕ)) : ℤ) = (p : ℤ) ^ n - 1 := by
-    have hle : 1 ≤ p ^ n := Nat.one_le_pow n p hp.pos
-    rw [Nat.cast_sub hle]
-    push_cast
-    ring
-  have hzz : (((p ^ n - 1 : ℕ)) : ℤ) =
-    (((∏ i ∈ n.divisors, ((Polynomial.cyclotomic i ℤ).eval (p : ℤ)).natAbs : ℕ)) : ℤ) := by
-    rw [hnat, ← heval, ← hcast]
-  exact Nat.cast_injective hzz
+  have hle : 1 ≤ p ^ n := Nat.one_le_pow n p hp.pos
+  apply @Nat.cast_injective ℤ
+  rw [hcast, heval, Nat.cast_sub hle]
+  push_cast
+  ring
 
 end MetaMathlibExt
 
@@ -83,28 +93,34 @@ namespace MetaMathlibExt
 [coprime_cycVal_of_not_dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/GeneralLinearGroupExponent.lean)
 -/
 @[path]
-private lemma coprime_cycVal_of_not_dvd (p k n : ℕ)
-  (hk : 1 ≤ k) (hkn : k < n) (hdvd : ¬ k ∣ n) :
-  Nat.Coprime (((Polynomial.cyclotomic k ℤ).eval (p : ℤ)).natAbs)
-    (((Polynomial.cyclotomic n ℤ).eval (p : ℤ)).natAbs) := by
+private lemma coprime_cycVal_of_not_dvd
+  (p k n : ℕ)
+-- given
+  (hk : 1 ≤ k)
+  (hkn : k < n)
+  (hdvd : ¬(k ∣ n)) :
+-- imply
+  ((Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ)).natAbs).Coprime
+    ((Polynomial.eval (p : ℤ) (Polynomial.cyclotomic n ℤ)).natAbs) := by
+-- proof
   by_contra hnc
-  have hgcd : Nat.gcd (((Polynomial.cyclotomic k ℤ).eval (p : ℤ)).natAbs)
-    (((Polynomial.cyclotomic n ℤ).eval (p : ℤ)).natAbs) ≠ 1 := by
+  have hgcd : Nat.gcd ((Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ)).natAbs)
+    ((Polynomial.eval (p : ℤ) (Polynomial.cyclotomic n ℤ)).natAbs) ≠ 1 := by
     intro h
     exact hnc (Nat.coprime_iff_gcd_eq_one.mpr h)
   obtain ⟨q, hq, hqgcd⟩ := Nat.exists_prime_and_dvd hgcd
-  have hqk : q ∣ ((Polynomial.cyclotomic k ℤ).eval (p : ℤ)).natAbs :=
+  have hqk : q ∣ (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ)).natAbs :=
     hqgcd.trans (Nat.gcd_dvd_left _ _)
-  have hqn : q ∣ ((Polynomial.cyclotomic n ℤ).eval (p : ℤ)).natAbs :=
+  have hqn : q ∣ (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic n ℤ)).natAbs :=
     hqgcd.trans (Nat.gcd_dvd_right _ _)
   have : Fact (Nat.Prime q) := ⟨hq⟩
-  have hqdvd_k : (q : ℤ) ∣ (Polynomial.cyclotomic k ℤ).eval (p : ℤ) :=
+  have hqdvd_k : (q : ℤ) ∣ Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ) :=
     Int.dvd_natAbs.mp (Int.ofNat_dvd.mpr hqk)
-  have hqdvd_n : (q : ℤ) ∣ (Polynomial.cyclotomic n ℤ).eval (p : ℤ) :=
+  have hqdvd_n : (q : ℤ) ∣ Polynomial.eval (p : ℤ) (Polynomial.cyclotomic n ℤ) :=
     Int.dvd_natAbs.mp (Int.ofNat_dvd.mpr hqn)
-  have hq0k : (((Polynomial.cyclotomic k ℤ).eval (p : ℤ) : ℤ) : ZMod q) = 0 :=
+  have hq0k : ((Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ) : ℤ) : ZMod q) = 0 :=
     (ZMod.intCast_zmod_eq_zero_iff_dvd _ q).mpr hqdvd_k
-  have hq0n : (((Polynomial.cyclotomic n ℤ).eval (p : ℤ) : ℤ) : ZMod q) = 0 :=
+  have hq0n : ((Polynomial.eval (p : ℤ) (Polynomial.cyclotomic n ℤ) : ℤ) : ZMod q) = 0 :=
     (ZMod.intCast_zmod_eq_zero_iff_dvd _ q).mpr hqdvd_n
   have hmap_k : ((Polynomial.cyclotomic k ℤ).map
     (Int.castRingHom (ZMod q))) = Polynomial.cyclotomic k (ZMod q) :=
@@ -133,29 +149,27 @@ private lemma coprime_cycVal_of_not_dvd (p k n : ℕ)
     hn'nd ((ZMod.natCast_eq_zero_iff n' q).mp hz)
   have : NeZero (k' : ZMod q) := ⟨hk'ne⟩
   have : NeZero (n' : ZMod q) := ⟨hn'ne⟩
-  have hprim_k : IsPrimitiveRoot (p : ZMod q) k' := by
-    have h := hk'eq ▸ hroot_k
-    exact Polynomial.isRoot_cyclotomic_prime_pow_mul_iff_of_charP.mp h
-  have hprim_n : IsPrimitiveRoot (p : ZMod q) n' := by
-    have h := hn'eq ▸ hroot_n
-    exact Polynomial.isRoot_cyclotomic_prime_pow_mul_iff_of_charP.mp h
+  have hprim_k : IsPrimitiveRoot (p : ZMod q) k' :=
+    Polynomial.isRoot_cyclotomic_prime_pow_mul_iff_of_charP.mp (hk'eq ▸ hroot_k)
+  have hprim_n : IsPrimitiveRoot (p : ZMod q) n' :=
+    Polynomial.isRoot_cyclotomic_prime_pow_mul_iff_of_charP.mp (hn'eq ▸ hroot_n)
   have hkk' : k' = n' := IsPrimitiveRoot.unique hprim_k hprim_n
-  by_cases hab : a ≤ b
-  · have hqa : q ^ a ∣ q ^ b := pow_dvd_pow q hab
+  if hab : a ≤ b then
+    have hqa : q ^ a ∣ q ^ b := pow_dvd_pow q hab
     have hkd : k' ∣ n' := hkk' ▸ dvd_rfl
-    have hkn_dvd : k ∣ n := by
-      rw [hk'eq, hn'eq]
-      exact mul_dvd_mul hqa hkd
-    exact hdvd hkn_dvd
-  · have hab : b < a := not_le.mp hab
+    apply hdvd
+    rw [hk'eq, hn'eq]
+    exact mul_dvd_mul hqa hkd
+  else
+    have hab : b < a := not_le.mp hab
     have hn'pos : 0 < n' :=
       Nat.pos_of_ne_zero (fun hz => hn'nd (hz ▸ dvd_zero q))
     have hlt : q ^ b < q ^ a := Nat.pow_lt_pow_right hq.one_lt hab
     have hlt2 : q ^ b * n' < q ^ a * n' :=
       Nat.mul_lt_mul_of_pos_right hlt hn'pos
-    have hnk : n < k := by
-      rwa [hn'eq, hk'eq, hkk']
-    exact absurd hkn (not_lt_of_gt hnk)
+    apply absurd hkn
+    apply not_lt_of_gt
+    rwa [hn'eq, hk'eq, hkk']
 
 end MetaMathlibExt
 
@@ -165,9 +179,14 @@ namespace MetaMathlibExt
 [lcm_eq_cyclotomic_prod](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/GeneralLinearGroupExponent.lean)
 -/
 @[path]
-private lemma lcm_eq_cyclotomic_prod (p m : ℕ) (hp : p.Prime) :
+private lemma lcm_eq_cyclotomic_prod
+  (p m : ℕ)
+-- given
+  (hp : p.Prime) :
+-- imply
   (Finset.range m).lcm (fun i => p ^ (i + 1) - 1) =
-    ∏ k ∈ Finset.Icc 1 m, ((Polynomial.cyclotomic k ℤ).eval (p : ℤ)).natAbs := by
+    ∏ k ∈ Finset.Icc 1 m, (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ)).natAbs := by
+-- proof
   induction m with
   | zero => simp
   | succ m IH =>
@@ -177,10 +196,10 @@ private lemma lcm_eq_cyclotomic_prod (p m : ℕ) (hp : p.Prime) :
       rw [Finset.range_add_one, Finset.lcm_insert]
       rfl
     have hP : (∏ k ∈ Finset.Icc 1 (m + 1),
-      ((Polynomial.cyclotomic k ℤ).eval (p : ℤ)).natAbs) =
+      (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ)).natAbs) =
       (∏ k ∈ Finset.Icc 1 m,
-        ((Polynomial.cyclotomic k ℤ).eval (p : ℤ)).natAbs) *
-        ((Polynomial.cyclotomic (m + 1) ℤ).eval (p : ℤ)).natAbs :=
+        (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ)).natAbs) *
+        (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic (m + 1) ℤ)).natAbs :=
       Finset.prod_Icc_succ_top (by omega) _
     have hdiv := pow_sub_one_eq_divisor_prod p (m + 1) hp (by omega)
     have hsplit : (m + 1).divisors =
@@ -189,13 +208,16 @@ private lemma lcm_eq_cyclotomic_prod (p m : ℕ) (hp : p.Prime) :
       simp only [Nat.mem_divisors, Finset.mem_insert, Finset.mem_filter,
         Finset.mem_Icc]
       constructor
-      · rintro ⟨hd, -⟩
-        by_cases hkm : k = m + 1
-        · exact Or.inl hkm
-        · have hle : k ≤ m + 1 := Nat.le_of_dvd (by omega) hd
+      ·
+        rintro ⟨hd, -⟩
+        if hkm : k = m + 1 then
+          exact Or.inl hkm
+        else
+          have hle : k ≤ m + 1 := Nat.le_of_dvd (by omega) hd
           have hpos : 0 < k := Nat.pos_of_dvd_of_pos hd (by omega)
           exact Or.inr ⟨⟨by omega, by omega⟩, hd⟩
-      · rintro (rfl | ⟨⟨-, -⟩, hd⟩)
+      ·
+        rintro (rfl | ⟨⟨-, -⟩, hd⟩)
         · exact ⟨dvd_rfl, by omega⟩
         · exact ⟨hd, by omega⟩
     have hnotmem : m + 1 ∉
@@ -205,21 +227,19 @@ private lemma lcm_eq_cyclotomic_prod (p m : ℕ) (hp : p.Prime) :
       obtain ⟨⟨-, hle⟩, -⟩ := hmem
       omega
     set D := ∏ k ∈ (Finset.Icc 1 m).filter (fun k => k ∣ m + 1),
-      ((Polynomial.cyclotomic k ℤ).eval (p : ℤ)).natAbs with hD
+      (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ)).natAbs with hD
     set A := ∏ k ∈ (Finset.Icc 1 m).filter (fun k => ¬ k ∣ m + 1),
-      ((Polynomial.cyclotomic k ℤ).eval (p : ℤ)).natAbs with hA
+      (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ)).natAbs with hA
     have hdiv2 : p ^ (m + 1) - 1 =
-      ((Polynomial.cyclotomic (m + 1) ℤ).eval (p : ℤ)).natAbs * D := by
+      (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic (m + 1) ℤ)).natAbs * D := by
       rw [hdiv, hsplit, Finset.prod_insert hnotmem]
     have hPm : (∏ k ∈ Finset.Icc 1 m,
-      ((Polynomial.cyclotomic k ℤ).eval (p : ℤ)).natAbs) = D * A := by
-      have h := Finset.prod_filter_mul_prod_filter_not (Finset.Icc 1 m)
+      (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ)).natAbs) = D * A := by
+      exact (Finset.prod_filter_mul_prod_filter_not (Finset.Icc 1 m)
         (fun k => k ∣ m + 1)
-        (fun k => ((Polynomial.cyclotomic k ℤ).eval (p : ℤ)).natAbs)
-      exact h.symm
+        (fun k => (Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ)).natAbs)).symm
     have hcop :
-      Nat.Coprime (((Polynomial.cyclotomic (m + 1) ℤ).eval (p : ℤ)).natAbs)
-        A := by
+      ((Polynomial.eval (p : ℤ) (Polynomial.cyclotomic (m + 1) ℤ)).natAbs).Coprime A := by
       apply Nat.Coprime.symm
       apply Nat.Coprime.prod_left
       intro k hk
@@ -227,7 +247,7 @@ private lemma lcm_eq_cyclotomic_prod (p m : ℕ) (hp : p.Prime) :
       obtain ⟨⟨h1, hle⟩, hnd⟩ := hk
       exact coprime_cycVal_of_not_dvd p k (m + 1) h1 (by omega) hnd
     rw [hL, hP, hdiv2, IH, hPm,
-      mul_comm (((Polynomial.cyclotomic (m + 1) ℤ).eval (p : ℤ)).natAbs) D,
+      mul_comm ((Polynomial.eval (p : ℤ) (Polynomial.cyclotomic (m + 1) ℤ)).natAbs) D,
       Nat.lcm_mul_left, Nat.Coprime.lcm_eq_mul hcop]
     ring
 
@@ -239,10 +259,15 @@ namespace MetaMathlibExt
 [charpoly_dvd_X_pow_sub_one_of_mem_GL](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/GeneralLinearGroupExponent.lean)
 -/
 @[path]
-private lemma charpoly_dvd_X_pow_sub_one_of_mem_GL (p m : ℕ) (hp : p.Prime)
-  (g : Matrix.GeneralLinearGroup (Fin m) (ZMod p)) :
-  (g.val).charpoly ∣ Polynomial.X ^
-    (p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1)) - 1 := by
+private lemma charpoly_dvd_X_pow_sub_one_of_mem_GL
+  (p m : ℕ)
+  (g : Matrix.GeneralLinearGroup (Fin m) (ZMod p))
+-- given
+  (hp : p.Prime) :
+-- imply
+  g.val.charpoly ∣
+    Polynomial.X ^ (p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1)) - 1 := by
+-- proof
   have : Fact p.Prime := ⟨hp⟩
   set K := AlgebraicClosure (ZMod p) with hK
   set A := g.val with hA
@@ -270,7 +295,7 @@ private lemma charpoly_dvd_X_pow_sub_one_of_mem_GL (p m : ℕ) (hp : p.Prime)
     have he0 : Polynomial.eval (0 : ZMod p) χ = 0 :=
       hfinj (by rwa [map_zero])
     have hc0 : χ.coeff 0 = 0 := by
-      rw [Polynomial.coeff_zero_eq_eval_zero]; exact he0
+      rwa [Polynomial.coeff_zero_eq_eval_zero]
     rw [hdet_eq, hc0, mul_zero] at hdet_unit
     exact (IsUnit.ne_zero hdet_unit) rfl
   have hlin : ∀ μ ∈ χK.roots,
@@ -325,21 +350,19 @@ private lemma charpoly_dvd_X_pow_sub_one_of_mem_GL (p m : ℕ) (hp : p.Prime)
       have h2 : p ^ (d - 1 + 1) - 1 = p ^ d - 1 := by
         rw [Nat.sub_add_cancel hd1]
       rwa [h2] at h
+    apply Polynomial.dvd_iff_isRoot.mpr
+    change Polynomial.eval μ (Polynomial.X ^ L - 1) = 0
     have hμL : μ ^ L = 1 := by
       obtain ⟨t, ht⟩ := hdivL
       rw [ht, pow_mul, hK, one_pow]
-    exact Polynomial.dvd_iff_isRoot.mpr (by
-      change Polynomial.eval μ (Polynomial.X ^ L - 1) = 0
-      simp only [Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X,
-        Polynomial.eval_one, hμL, sub_self])
+    simp [hμL]
   have hfac : χK =
     (Multiset.map (fun μ => Polynomial.X - Polynomial.C μ) χK.roots).prod :=
     Polynomial.Splits.eq_prod_roots_of_monic (IsAlgClosed.splits χK) hmonicK
   have hcardroots : χK.roots.card = m := by
     have h1 := Polynomial.Splits.natDegree_eq_card_roots (IsAlgClosed.splits χK)
-    rw [hχK, Polynomial.natDegree_map, Matrix.charpoly_natDegree_eq_dim,
-      Fintype.card_fin] at h1
-    exact h1.symm
+    rwa [hχK, Polynomial.natDegree_map, Matrix.charpoly_natDegree_eq_dim,
+      Fintype.card_fin, eq_comm] at h1
   have hdiv_roots : χK ∣ ((Polynomial.X ^ L - 1 : Polynomial K) ^ m) := by
     have h2 : (Multiset.map (fun _ => (Polynomial.X ^ L - 1 : Polynomial K))
       χK.roots).prod = ((Polynomial.X ^ L - 1 : Polynomial K) ^ m) := by
@@ -347,30 +370,21 @@ private lemma charpoly_dvd_X_pow_sub_one_of_mem_GL (p m : ℕ) (hp : p.Prime)
     rw [hfac, ← h2]
     exact Multiset.prod_dvd_prod_of_dvd _ _ (fun μ hμ => hlin μ hμ)
   have hdesc : χ ∣ ((Polynomial.X ^ L - 1 : Polynomial (ZMod p)) ^ m) := by
-    have hmap : χ.map femb ∣
-      (((Polynomial.X ^ L - 1 : Polynomial (ZMod p)) ^ m).map femb) := by
-      have h1 : (((Polynomial.X ^ L - 1 : Polynomial (ZMod p)) ^ m).map femb) =
-        ((Polynomial.X ^ L - 1 : Polynomial K) ^ m) := by
-        simp
-      rwa [h1, ← hχK]
-    exact (Polynomial.map_dvd_map _ hfinj hmonic).mp hmap
+    apply (Polynomial.map_dvd_map _ hfinj hmonic).mp
+    have h1 : (((Polynomial.X ^ L - 1 : Polynomial (ZMod p)) ^ m).map femb) =
+      ((Polynomial.X ^ L - 1 : Polynomial K) ^ m) := by
+      simp
+    rwa [h1, ← hχK]
   have hpow_le : m ≤ p ^ Nat.clog p m := Nat.le_pow_clog hp.one_lt m
   have hA3 : (((Polynomial.X ^ L - 1 : Polynomial (ZMod p)) ^ m)) ∣
     ((Polynomial.X ^ L - 1 : Polynomial (ZMod p)) ^ (p ^ Nat.clog p m)) :=
     pow_dvd_pow _ hpow_le
-  have hfrob : ((Polynomial.X ^ L - 1 : Polynomial (ZMod p)) ^ (p ^ Nat.clog p m)) =
-    Polynomial.X ^ (L * p ^ Nat.clog p m) - 1 := by
-    have h := sub_pow_char_pow (Polynomial.X ^ L : Polynomial (ZMod p)) 1
-      (Nat.clog p m)
-    rwa [one_pow, ← pow_mul] at h
-  have hN : L * p ^ Nat.clog p m = p ^ Nat.clog p m * L := mul_comm _ _
-  have h5 : ((Polynomial.X ^ L - 1 : Polynomial (ZMod p)) ^ (p ^ Nat.clog p m)) ∣
-    Polynomial.X ^ (p ^ Nat.clog p m * L) - 1 := by
-    have h5' : (Polynomial.X ^ (L * p ^ Nat.clog p m) - 1 : Polynomial (ZMod p)) =
-      (Polynomial.X ^ (p ^ Nat.clog p m * L) - 1 : Polynomial (ZMod p)) := by
-      rw [hN]
-    rw [← h5', ← hfrob]
-  exact dvd_trans hdesc (dvd_trans hA3 h5)
+  apply dvd_trans hdesc
+  apply dvd_trans hA3
+  apply dvd_of_eq
+  have h0 := sub_pow_char_pow (Polynomial.X ^ L : Polynomial (ZMod p)) 1
+    (Nat.clog p m)
+  rwa [one_pow, ← pow_mul, mul_comm] at h0
 
 end MetaMathlibExt
 
@@ -380,9 +394,14 @@ namespace MetaMathlibExt
 [pow_sub_one_dvd_exponent_of_mem_Icc](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/GeneralLinearGroupExponent.lean)
 -/
 @[path]
-private lemma pow_sub_one_dvd_exponent_of_mem_Icc (p m : ℕ) (hp : p.Prime)
-  (d : ℕ) (hd : d ∈ Finset.Icc 1 m) : p ^ d - 1 ∣
-  Monoid.exponent (Matrix.GeneralLinearGroup (Fin m) (ZMod p)) := by
+private lemma pow_sub_one_dvd_exponent_of_mem_Icc
+  (p m d : ℕ)
+-- given
+  (hp : p.Prime)
+  (hd : d ∈ Finset.Icc 1 m) :
+-- imply
+  p ^ d - 1 ∣ Monoid.exponent (Matrix.GeneralLinearGroup (Fin m) (ZMod p)) := by
+-- proof
   have : Fact p.Prime := ⟨hp⟩
   rw [Finset.mem_Icc] at hd
   obtain ⟨hd1, hdm⟩ := hd
@@ -437,15 +456,22 @@ namespace MetaMathlibExt
 [pow_clog_dvd_exponent](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/GeneralLinearGroupExponent.lean)
 -/
 @[path]
-private lemma pow_clog_dvd_exponent (p m : ℕ) (hp : p.Prime) (hm : 0 < m) :
+private lemma pow_clog_dvd_exponent
+  (p m : ℕ)
+-- given
+  (hp : p.Prime)
+  (hm : 0 < m) :
+-- imply
   p ^ Nat.clog p m ∣
     Monoid.exponent (Matrix.GeneralLinearGroup (Fin m) (ZMod p)) := by
+-- proof
   have : Fact p.Prime := ⟨hp⟩
-  by_cases hm1 : m = 1
-  · subst hm1
+  if hm1 : m = 1 then
+    subst hm1
     rw [Nat.clog_one_right]
     exact one_dvd _
-  · have hm2 : 2 ≤ m := by omega
+  else
+    have hm2 : 2 ≤ m := by omega
     have hmonic : (Polynomial.X ^ m : Polynomial (ZMod p)).Monic :=
       Polynomial.monic_X_pow m
     have hdeg : (Polynomial.X ^ m : Polynomial (ZMod p)).degree ≠ 0 := by
@@ -464,14 +490,16 @@ private lemma pow_clog_dvd_exponent (p m : ℕ) (hp : p.Prime) (hm : 0 < m) :
       Polynomial.X ^ j ↔ m ≤ j := by
       intro j
       constructor
-      · intro h
+      ·
+        intro h
         rw [Polynomial.X_pow_dvd_iff] at h
         by_contra hlt
         have hlt' : j < m := lt_of_not_ge hlt
         have h1 := h j hlt'
         rw [Polynomial.coeff_X_pow] at h1
         simp at h1
-      · intro h
+      ·
+        intro h
         obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le h
         exact ⟨Polynomial.X ^ t, pow_add _ _ _⟩
     set x := AdjoinRoot.root (Polynomial.X ^ m : Polynomial (ZMod p)) with hx
@@ -510,9 +538,8 @@ private lemma pow_clog_dvd_exponent (p m : ℕ) (hp : p.Prime) (hm : 0 < m) :
         rw [Units.val_pow_eq_pow_val, IsUnit.unit_spec] at h2
         simpa using h2
       rw [hpow] at h1
-      have h2 : x ^ (p ^ (Nat.clog p m).pred) = 0 :=
-        add_left_cancel_iff.mp (h1.trans (add_zero _).symm)
-      exact (not_le.mpr hpred) ((hxzero _).mp h2)
+      exact (not_le.mpr hpred) ((hxzero _).mp
+        (add_left_cancel_iff.mp (h1.trans (add_zero _).symm)))
     have hcp : (Nat.clog p m).pred + 1 = Nat.clog p m := by
       have h := Nat.succ_pred_eq_of_ne_zero hc0
       rwa [Nat.succ_eq_add_one] at h
@@ -545,7 +572,6 @@ private lemma pow_clog_dvd_exponent (p m : ℕ) (hp : p.Prime) (hm : 0 < m) :
       Monoid.exponent (Matrix.GeneralLinearGroup (Fin m) (ZMod p)) :=
       Monoid.order_dvd_exponent _
     rwa [← hord, ← e2]
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -564,28 +590,28 @@ private lemma generalLinearGroup_exponent_eq_lcm_eq_cyclotomicProduct
     p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1) ∧
     ((p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1) : ℕ) : ℤ) =
     (p : ℤ) ^ Nat.clog p m *
-    ∏ k ∈ Finset.Icc 1 m, (Polynomial.cyclotomic k ℤ).eval (p : ℤ) := by
+    ∏ k ∈ Finset.Icc 1 m, Polynomial.eval (p : ℤ) (Polynomial.cyclotomic k ℤ) := by
 -- proof
   have hA : Monoid.exponent (Matrix.GeneralLinearGroup (Fin m) (ZMod p)) ∣
     p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1) := by
     rw [Monoid.exponent_dvd_iff_forall_pow_eq_one]
     intro g
-    have hCH : Polynomial.aeval (g.val) (g.val.charpoly) = 0 :=
+    have hCH : Polynomial.aeval g.val g.val.charpoly = 0 :=
       Matrix.aeval_self_charpoly _
-    obtain ⟨q, hq⟩ := charpoly_dvd_X_pow_sub_one_of_mem_GL p m hp g
-    have hzero : Polynomial.aeval (g.val)
+    obtain ⟨q, hq⟩ := charpoly_dvd_X_pow_sub_one_of_mem_GL p m g hp
+    have hzero : Polynomial.aeval g.val
       ((Polynomial.X ^
         (p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1)) - 1 :
         Polynomial (ZMod p))) = 0 := by
       rw [hq, map_mul, hCH, zero_mul]
-    have hcomp : Polynomial.aeval (g.val)
+    have hcomp : Polynomial.aeval g.val
       ((Polynomial.X ^
         (p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1)) - 1 :
-        Polynomial (ZMod p))) = (g.val) ^
+        Polynomial (ZMod p))) = g.val ^
         (p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1)) - 1 := by
       simp
     rw [hcomp] at hzero
-    have hM : (g.val) ^
+    have hM : g.val ^
       (p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1)) = 1 :=
       sub_eq_zero.mp hzero
     apply Units.ext
@@ -596,7 +622,7 @@ private lemma generalLinearGroup_exponent_eq_lcm_eq_cyclotomicProduct
     rw [Finset.lcm_dvd_iff]
     intro b hb
     rw [Finset.mem_range] at hb
-    exact pow_sub_one_dvd_exponent_of_mem_Icc p m hp (b + 1)
+    exact pow_sub_one_dvd_exponent_of_mem_Icc p m (b + 1) hp
       (by rw [Finset.mem_Icc]; omega)
   have hB : p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1) ∣
     Monoid.exponent (Matrix.GeneralLinearGroup (Fin m) (ZMod p)) :=
@@ -617,25 +643,7 @@ private lemma generalLinearGroup_exponent_eq_lcm_eq_cyclotomicProduct
   intro k _
   exact Int.natAbs_of_nonneg
     (le_of_lt (Polynomial.cyclotomic_pos' k h1))
-end
-
-
-/--
-[to](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/GeneralLinearGroupExponent.lean)
--/
-@[path]
-private lemma to_eq
-  {1939}
-  {1948} :
--- imply
-  ℕ) (hp : p.Prime) (hm : 0 < m) :
-    Monoid.exponent (Matrix.GeneralLinearGroup (Fin m) (ZMod p)) =
-    p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1) ∧
-    ((p ^ Nat.clog p m * (Finset.range m).lcm (fun i => p ^ (i + 1) - 1) : ℕ) : ℤ) =
-    (p : ℤ) ^ Nat.clog p m *
-    ∏ k ∈ Finset.Icc 1 m, (Polynomial.cyclotomic k ℤ).eval (p : ℤ) := by
--- proof
-  apply MetaMathlibExt.to 1939 1948
+end MetaMathlibExt
 
 
 -- created on 2026-10-20

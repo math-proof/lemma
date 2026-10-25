@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_NumberField_ArchimedeanIdeleModule
-import Lemma.Definitions.Def_NumberField_InfinitePlaceTransport
+import Lemma.NumberField.ArchimedeanIdeleModule
+import Lemma.NumberField.InfinitePlaceTransport
 
 
 /-- ported from external source -/

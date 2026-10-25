@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GroupCohomology_TateCohomology
-import Lemma.Definitions.Def_GroupCohomology_TateDimensionShift
-import Lemma.Definitions.Def_GroupCohomology_TateDimensionShiftMaps
+import Lemma.GroupCohomology.TateCohomology
+import Lemma.Representation.EqIndBotMk
+import Def.GroupCohomology_TateDimensionShiftMaps
 import Lemma.Int.P2MUtil
 
 open CategoryTheory Rep CategoryTheory.MonoidalCategory

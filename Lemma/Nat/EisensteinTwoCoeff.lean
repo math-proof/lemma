@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_EisensteinTwoCoeff
+import Lemma.ModularCurve.EisensteinTwoCoeff
 import Lemma.Int.P2MUtil
 open ModularCurve
 

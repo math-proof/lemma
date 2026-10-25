@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicGeometry_RelEffCartierDivOfPoint
+import Lemma.AlgebraicGeometry.RelEffCartierDivOfPoint
 import Lemma.Int.P2MUtil
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry

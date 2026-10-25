@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_QuaternionAlgebra_Order
-import Lemma.Definitions.Def_QuaternionAlgebra_ReducedNorm
+import Def.QuaternionAlgebra_Order
+import Lemma.QuaternionAlgebra.ReducedNorm
 open scoped Quaternion
 open Polynomial
 

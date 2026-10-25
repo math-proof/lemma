@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AutomorphicForm_HeckeEigensystem
-import Lemma.Definitions.Def_AutomorphicForm_FormalBaseChange
+import Def.AutomorphicForm_HeckeEigensystem
+import Def.AutomorphicForm_FormalBaseChange
 open IsDedekindDomain NumberField AutomorphicForm
 
 

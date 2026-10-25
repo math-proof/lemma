@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_SpecialFormalModule
-import Lemma.Definitions.Def_CerednikDrinfeld_GradedCartierModuleData
-import Lemma.Definitions.Def_CerednikDrinfeld_GradedCartierNModule
+import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.CerednikDrinfeld.GradedCartierModuleData
+import Lemma.CerednikDrinfeld.GradedCartierNModule
 import Lemma.Int.P2MUtil
 
 

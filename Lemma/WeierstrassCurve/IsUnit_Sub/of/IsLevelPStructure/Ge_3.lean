@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_KatzLevelP
+import Lemma.ModularCurve.KatzLevelP
 import Lemma.Int.P2MUtil
 open Int
 

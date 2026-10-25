@@ -210,8 +210,8 @@ def load_deps_for(
     """Load direct and indirect dependency sets scoped to the given modules.
 
     Returns ``(direct, indirect, unknown)``.  ``unknown`` is the set of modules
-    whose ``meta.callee`` is null/absent — their indirect deps are not known, so
-    they must never be treated as "no indirect deps".
+    whose ``meta.callee`` is null/absent — their transitive deps are incomplete,
+    so they must not be used as the sole reason to drop sibling imports.
     """
     if not modules:
         return {}, {}, set()
@@ -238,14 +238,17 @@ def load_deps_for(
     indirect_rows = MySQL.instance.query(indirect_sql)
     indirect: dict[str, set[str]] = {}
     unknown: set[str] = set()
+    seen_meta: set[str] = set()
     module_set = set(modules)
     for module, callee_json in indirect_rows:
+        orig = originals[module]
+        seen_meta.add(orig)
         if callee_json is None:
-            unknown.add(originals[module])
+            unknown.add(orig)
             continue
         deps = json.loads(callee_json) if isinstance(callee_json, str) else callee_json
         if deps is None:
-            unknown.add(originals[module])
+            unknown.add(orig)
             continue
         if isinstance(deps, dict):
             # legacy {callee: [via, ...]} shape — the via arrays are ignored
@@ -254,9 +257,38 @@ def load_deps_for(
             # callee is stored unprefixed; compare against prefixed file names
             prefixed = LEMMA_PREFIX + normalize_module(callee)
             if prefixed in module_set:
-                indirect.setdefault(originals[module], set()).add(prefixed)
+                indirect.setdefault(orig, set()).add(prefixed)
+
+    # Missing lemma rows: treat like unknown meta.callee.
+    for m in modules:
+        if m not in seen_meta:
+            unknown.add(m)
 
     return direct, indirect, unknown
+
+
+def enrich_unknown_from_files(
+    modules: list[str],
+    direct: dict[str, set[str]],
+    indirect: dict[str, set[str]],
+    unknown: set[str],
+) -> None:
+    """For imports with unknown ``meta.callee``, fill sibling reachability from files.
+
+    DB null callee must not be read as "no transitive deps" (that falsely marks
+    siblings redundant when paired with incomplete data).  File closures among
+    the current import set are a safe stand-in; they never invent edges that are
+    not on disk.
+    """
+    module_set = set(modules)
+    for u in unknown:
+        # Prefer DB direct edges when present; also scan the .lean file.
+        for dep in file_direct_imports(u):
+            if dep in module_set and dep != u:
+                direct.setdefault(u, set()).add(dep)
+        for dep in file_closure(u):
+            if dep in module_set and dep != u and dep not in direct.get(u, ()):
+                indirect.setdefault(u, set()).add(dep)
 
 
 def compare(
@@ -273,6 +305,24 @@ def compare(
     if a in b_deps:
         return -1
     return 0
+
+
+def import_name_used_in_body(module: str, body: str) -> bool:
+    """True if ``module``'s lemma path appears in ``body`` (non-import text).
+
+    ``Lemma.Matrix.Foo.eq.Bar`` is referenced in proofs as ``Matrix.Foo.eq.Bar``
+    or, after ``open``/section elision, ``Foo.eq.Bar``.  Used imports must never
+    be dropped even when another import transitively reaches them in the DB.
+    """
+    bare = normalize_module(module)
+    if bare and bare in body:
+        return True
+    parts = bare.split(".")
+    if len(parts) >= 2:
+        short = ".".join(parts[1:])
+        if short and short in body:
+            return True
+    return False
 
 
 _FILE_IMPORTS: dict[str, list[str]] = {}
@@ -334,11 +384,19 @@ def find_redundant_imports(
     imports: list[tuple[str, str]],
     direct: dict[str, set[str]],
     indirect: dict[str, set[str]],
+    unknown: set[str] | None = None,
 ) -> list[str]:
-    """Pairwise compare: n*(n-1)/2 calls to compare."""
+    """Pairwise compare: n*(n-1)/2 calls to compare.
+
+    An import with unknown ``meta.callee`` must not drop a sibling solely via
+    incomplete transitive data.  Only a *known* reacher (or a direct edge) may
+    mark the other side redundant; if the reacher is still in ``unknown`` after
+    file enrichment, skip that direction.
+    """
     lemma_modules = [mod for mod, _ in imports if mod.startswith("Lemma")]
     if len(lemma_modules) <= 1:
         return []
+    unknown = unknown or set()
 
     redundant: set[str] = set()
     for i in range(len(lemma_modules)):
@@ -347,8 +405,13 @@ def find_redundant_imports(
             b = lemma_modules[j]
             c = compare(a, b, direct, indirect)
             if c == 1:
+                # a reaches b → b candidate redundant
+                if a in unknown and b not in direct.get(a, set()):
+                    continue
                 redundant.add(b)
             elif c == -1:
+                if b in unknown and a not in direct.get(b, set()):
+                    continue
                 redundant.add(a)
     return [mod for mod in lemma_modules if mod in redundant]
 
@@ -409,11 +472,21 @@ def process_file(lean_file: Path, *, dry_run: bool = False) -> None:
     direct, indirect, unknown = load_deps_for(lemma_modules)
     if unknown:
         print(f"warning: {len(unknown)} import(s) have unknown meta.callee "
-              f"(run --update first); indirect checks skipped for them")
+              f"(run --update first); using file-closure for those, and not "
+              f"dropping siblings on incomplete transitive data")
         for mod in unknown:
             print(f"  {mod}")
-    redundant = find_redundant_imports(imports, direct, indirect)
+        enrich_unknown_from_files(lemma_modules, direct, indirect, unknown)
+    redundant = find_redundant_imports(imports, direct, indirect, unknown)
     redundant += [m for m in find_redundant_file_imports(imports) if m not in redundant]
+    # Never drop an import still named in the proof/body (DB reachability ≠ use).
+    kept_used = [m for m in redundant if import_name_used_in_body(m, rest)]
+    if kept_used:
+        print(f"note: keeping {len(kept_used)} reachable import(s) still referenced "
+              f"in the file body:")
+        for mod in kept_used:
+            print(f"  import {mod}")
+        redundant = [m for m in redundant if m not in set(kept_used)]
     names = [mod for mod, _ in imports]
     duplicates = sorted({m for m in names if names.count(m) > 1} - set(redundant))
 

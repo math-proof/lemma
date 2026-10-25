@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_WeierstrassCurve_Velu
-import Lemma.Definitions.Def_WeierstrassCurve_OddOrderSummingSet
-import Lemma.Definitions.Def_WeierstrassCurve_ReduceHom
+import Lemma.WeierstrassCurve.Velu
+import Lemma.WeierstrassCurve.OddOrderSummingSet
+import Lemma.WeierstrassCurve.ReduceHom
 import Lemma.Int.P2MUtil
 
 open WeierstrassCurve IsLocalRing

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_NumberField_ArchimedeanIdeleModule
+import Lemma.NumberField.ArchimedeanIdeleModule
 import Lemma.Int.P2MUtil
 
 open NumberField

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_NumberTheory_DedekindSum
+import Lemma.NumberTheory.DedekindSum
 
 
 /-- ported from external source -/

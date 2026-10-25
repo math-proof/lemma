@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_TwoChartIntegralModel
+import Lemma.AlgebraicCurve.TwoChartIntegralModel
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped TensorProduct
 open AlgebraicCurve AlgebraicCurve.TwoChartIntegralModel

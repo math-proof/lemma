@@ -7,7 +7,8 @@
  * Defaults when a host is set match php/init.php (DB `axiom`, user/user),
  * not label’s default DB (`corpus`).
  *
- * Connection is used only if MYSQL_HOST is non-empty.
+ * Connection is used when `MYSQL_HOST` is set, or when `MYSQL_PWD` is set
+ * (host then defaults to `127.0.0.1`, same as `mjs/run.mjs`).
  */
 import fs from 'fs';
 import path from 'path';
@@ -39,8 +40,16 @@ export function shouldLoadLemmaFromMysql(leanAbsPath, echoAbsPath) {
  * Same shape as `../label/index.js` pool options.
  * @returns {{ host: string, port: number, user: string, password: string, database: string } | null}
  */
-export function getMysqlConfig() {
+/** `MYSQL_HOST`, or `127.0.0.1` when a password is already configured. */
+function mysqlHost() {
   const host = (process.env.MYSQL_HOST || '').trim();
+  if (host) return host;
+  if (process.env.MYSQL_PWD != null && process.env.MYSQL_PWD !== '') return '127.0.0.1';
+  return '';
+}
+
+export function getMysqlConfig() {
+  const host = mysqlHost();
   if (!host) return null;
   const port = Number(process.env.MYSQL_PORT || 3306);
   const database = 'axiom';
@@ -59,7 +68,7 @@ export function getMysqlConfig() {
 let probedLogin = null;
 
 async function probeMysqlLogin() {
-  const host = (process.env.MYSQL_HOST || '').trim();
+  const host = mysqlHost();
   if (!host) return;
   const port = Number(process.env.MYSQL_PORT || 3306);
   const pwd = process.env.MYSQL_PWD;

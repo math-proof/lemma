@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_PadicInt_KummerCarrier
+import Lemma.ZMod.MonicKpoly
 open scoped TensorProduct
 open PadicInt.KummerCarrier Polynomial
 

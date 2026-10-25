@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GroupCohomology_RepPi
-import Lemma.Definitions.Def_GroupCohomology_TateCohomology
+import Lemma.GroupCohomology.RepPi
+import Lemma.GroupCohomology.TateCohomology
 open CategoryTheory Rep
 
 

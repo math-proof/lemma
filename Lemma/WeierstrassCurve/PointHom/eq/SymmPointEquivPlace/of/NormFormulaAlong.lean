@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_Isogeny_ConditionalCurrency
+import Lemma.Isogeny.ConditionalCurrency
 import Lemma.Int.P2MUtil
 set_option maxHeartbeats 800000
 open AlgebraicCurve WeierstrassCurve WeierstrassCurve.Affine Int

@@ -11,7 +11,7 @@ import sympy.core.numbers
 import sympy.core.power
 import sympy.vector.Basic
 import stdlib.List
-import sympy.core.function
+import Theorem.Function
 import Lemma.Random.SinglePSpace.of.Measurable
 import Lemma.Random.SinglePSpace.of.Measurable.Measurable
 

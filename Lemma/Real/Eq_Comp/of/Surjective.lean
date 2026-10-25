@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_HopfAlgebra_HopfKer
+import Lemma.HopfAlgebra.HopfKer
 import Lemma.Int.P2MUtil
 
 

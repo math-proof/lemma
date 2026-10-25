@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_WeierstrassCurve_VeluQuotientOfSums
+import Lemma.WeierstrassCurve.VeluQuotientOfSums
 import Lemma.Int.P2MUtil
 open WeierstrassCurve Int
 

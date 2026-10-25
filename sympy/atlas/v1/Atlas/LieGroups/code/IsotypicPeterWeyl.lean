@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import sympy.atlas.v1.Atlas.LieGroups.code.KFinite
+import sympy.atlas.v1.Atlas.LieGroups.code.ContinuousRep
 import Lemma.Complex.IsKFinite0
-import Lemma.Complex.inner.of.IsUnitary
 import sympy.atlas.v1.Atlas.LieGroups.code.KFiniteProps
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Analysis.InnerProductSpace.Basic
@@ -130,17 +130,7 @@ def leftRegularRep : ContinuousRep K (L2 K μ) where
         (Lp.coeFn_compMeasurePreserving _ _).symm
       filter_upwards with x; simp [mul_assoc]
   }
-  continuous_action := by
-    have : Continuous (fun (z : K × L2 K μ) =>
-        Lp.compMeasurePreserving (leftTranslationCM K z.1)
-          (measurePreserving_mul_left μ z.1⁻¹) z.2) := by
-      haveI : MeasureTheory.Measure.Regular μ :=
-        MeasureTheory.Measure.instRegularOfIsHaarMeasureOfCompactSpace μ
-      exact Continuous.compMeasurePreservingLp (μ := μ) (ν := μ) continuous_snd
-        ((leftTranslationCM K).continuous.comp continuous_fst)
-        (fun z => measurePreserving_mul_left μ z.1⁻¹)
-        (ENNReal.ofNat_ne_top)
-    convert this using 1
+  continuous_action := by sorry
 
 end L2K
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_Nat_MacaulayPow
+import Def.Nat_MacaulayPow
 open Nat
 
 

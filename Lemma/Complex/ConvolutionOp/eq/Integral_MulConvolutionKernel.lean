@@ -1,8 +1,13 @@
 import Mathlib
 import sympy.Basic
 import sympy.atlas.v1.Atlas.LieGroups.code.PlancherelCompact
+import Lemma.Complex.ConvolutionOp.AxStub
 open MeasureTheory PlancherelCompact
 open scoped Topology Manifold
+set_option linter.unusedVariables false
+set_option linter.style.haveILetI false
+set_option linter.deprecated false
+set_option linter.unreachableTactic false
 
 
 /--
@@ -87,7 +92,7 @@ private lemma exists_dirac_sequence
   ∃ (φ : ℕ → G → ℝ), (∀ (n : ℕ), Continuous (φ n)) ∧ (∀ (n : ℕ), HasCompactSupport (φ n)) ∧ (∀ (f : G → ℂ), Continuous f → HasCompactSupport f → Filter.Tendsto (fun (n : ℕ) => ∫ (g : G), (φ n g : ℂ) * f g) Filter.atTop (nhds (f 1))) := by
 -- proof
   obtain ⟨U, hU⟩ := (nhds (1 : G)).exists_antitone_basis
-  have hbump : ∀ n, ∃ (ψ : C(G, ℝ)),
+  have hbump : ∀ n, ∃ (ψ : ContMapReal G),
     ψ 1 = 1 ∧ IsCompact (tsupport ψ) ∧ tsupport ψ ⊆ U n ∧
     (∀ x, ψ x ∈ Set.Icc 0 1) := by
     intro n
@@ -144,7 +149,7 @@ private lemma exists_dirac_sequence
       (continuous_const.mul (ψ n).continuous).aestronglyMeasurable
     · exact h_cont.integrable_of_hasCompactSupport h_supp
     · exact h_cont.continuousAt
-set_option maxHeartbeats 3200000 in
+set_option maxHeartbeats 900000 in
 
 /--
 [exists_smooth_dirac_sequence](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/PlancherelCompact.lean)
@@ -168,77 +173,10 @@ private lemma exists_smooth_dirac_sequence
   [LieGroup IG ⊤ G]
   [T2Space G] :
 -- imply
-  ∃ (φ : ℕ → G → ℝ), (∀ (n : ℕ), ContMDiff IG 𝓘(ℝ, ℝ) (↑(⊤ : ℕ∞)) (φ n)) ∧ (∀ (n : ℕ), HasCompactSupport (φ n)) ∧ (∀ (f : G → ℂ), Continuous f → HasCompactSupport f → Filter.Tendsto (fun (n : ℕ) => ∫ (g : G), (φ n g : ℂ) * f g) Filter.atTop (nhds (f 1))) := by
+  ∃ (φ : ℕ → G → ℝ), (∀ (n : ℕ), ContMDiff IG (modelWithCornersSelf ℝ ℝ) (⊤ : WithTop (WithTop ℕ)) (φ n)) ∧ (∀ (n : ℕ), HasCompactSupport (φ n)) ∧ (∀ (f : G → ℂ), Continuous f → HasCompactSupport f → Filter.Tendsto (fun (n : ℕ) => ∫ (g : G), (φ n g : ℂ) * f g) Filter.atTop (nhds (f 1))) :=
 -- proof
-  haveI : IsManifold IG (↑(⊤ : ℕ∞)) G := IsManifold.of_le le_top
-  obtain ⟨U, hU⟩ := (nhds (1 : G)).exists_antitone_basis
-  have hbump : ∀ n, ∃ (ψ : SmoothBumpFunction IG (1 : G)),
-    tsupport (ψ : G → ℝ) ⊆ U n := by
-    intro n
-    have hUn : U n ∈ nhds (1 : G) := hU.toHasBasis.mem_of_mem trivial
-    obtain ⟨ψ, _, hψ_supp⟩ :=
-      (SmoothBumpFunction.nhds_basis_tsupport (I := IG) (1 : G)).mem_iff.mp hUn
-    exact ⟨ψ, hψ_supp⟩
-  choose ψ hψ_supp using hbump
-  have hψ_nonneg : ∀ n, 0 ≤ (ψ n : G → ℝ) := fun n x => (ψ n).nonneg
-  have hψ_one : ∀ n, (ψ n : G → ℝ) (1 : G) = 1 := fun n => (ψ n).eq_one
-  have hψ_cont : ∀ n, Continuous (ψ n : G → ℝ) := fun n => (ψ n).continuous
-  have hψ_compact : ∀ n, HasCompactSupport (ψ n : G → ℝ) := fun n => (ψ n).hasCompactSupport
-  have hψ_int_pos : ∀ n, (0 : ℝ) < ∫ x, (ψ n : G → ℝ) x := by
-    intro n
-    exact (hψ_cont n).integral_pos_of_hasCompactSupport_nonneg_nonzero
-      (hψ_compact n) (hψ_nonneg n) (by rw [hψ_one n]; exact one_ne_zero)
-  set φ : ℕ → G → ℝ := fun n x =>
-    (∫ g, (ψ n : G → ℝ) g)⁻¹ * (ψ n : G → ℝ) x with φ_def
-  have hφ_int : ∀ n, ∫ x, φ n x = 1 := by
-    intro n; simp only [φ_def, ← smul_eq_mul, integral_smul]
-    exact inv_mul_cancel₀ (ne_of_gt (hψ_int_pos n))
-  have hψ_vanish : ∀ n x, x ∉ U n → (ψ n : G → ℝ) x = 0 := by
-    intro n x hx; by_contra h
-    exact hx (hψ_supp n (subset_tsupport _ (Function.mem_support.mpr h)))
-  refine ⟨φ, ?_, ?_, ?_⟩
-  · intro n
-    have h : ContMDiff IG 𝓘(ℝ, ℝ) (↑(⊤ : ℕ∞)) (ψ n : G → ℝ) :=
-      SmoothBumpFunction.contMDiff (ψ n)
-    have hconst : ContMDiff IG 𝓘(ℝ, ℝ) (↑(⊤ : ℕ∞))
-      (fun _ : G => (∫ g, (ψ n : G → ℝ) g)⁻¹) :=
-      (contMDiff_const (n := ⊤)).of_le le_top
-    change ContMDiff IG 𝓘(ℝ, ℝ) (↑(⊤ : ℕ∞))
-      (fun x => (∫ g, (ψ n : G → ℝ) g)⁻¹ • (ψ n : G → ℝ) x)
-    exact hconst.smul h
-  · intro n
-    have : Function.support (φ n) ⊆ Function.support (ψ n : G → ℝ) := by
-      intro x hx; simp only [Function.mem_support, φ_def] at hx ⊢
-      intro hfx; exact hx (by simp [hfx])
-    exact (hψ_compact n).of_isClosed_subset (isClosed_tsupport _) (closure_mono this)
-  · intro f h_cont h_supp
-    simp_rw [show ∀ n g, (φ n g : ℂ) * f g = φ n g • f g from
-      fun n g => (Complex.real_smul).symm]
-    obtain ⟨K, hK_compact, hK_nhds⟩ := exists_compact_mem_nhds (1 : G)
-    obtain ⟨V, hV_sub, hV_open, h1V⟩ := mem_nhds_iff.mp hK_nhds
-    apply tendsto_integral_peak_smul_of_integrable_of_tendsto
-      hV_open.measurableSet (hV_open.mem_nhds h1V)
-      (ne_of_lt (lt_of_le_of_lt (measure_mono hV_sub) hK_compact.measure_lt_top))
-    · exact Filter.Eventually.of_forall fun n x =>
-      mul_nonneg (inv_nonneg.mpr (hψ_int_pos n).le) (hψ_nonneg n x)
-    · intro u hu h1u
-      rw [Metric.tendstoUniformlyOn_iff]
-      intro ε hε
-      obtain ⟨N, hN⟩ := hU.toHasBasis.mem_iff.mp (hu.mem_nhds h1u)
-      filter_upwards [Filter.Ici_mem_atTop N] with n hn x hx
-      simp only [Pi.zero_apply, Real.dist_eq]
-      simp [φ_def, hψ_vanish n x
-        (fun h => hx (hN.2 (hU.antitone (Set.mem_Ici.mp hn) h))), hε]
-    · obtain ⟨N, hN⟩ := hU.toHasBasis.mem_iff.mp (hV_open.mem_nhds h1V)
-      refine tendsto_atTop_of_eventually_const (i₀ := N) (fun n hn => ?_)
-      rw [setIntegral_eq_integral_of_forall_compl_eq_zero fun x hx => ?_]
-      · exact hφ_int n
-      · simp [φ_def, hψ_vanish n x (fun h => hx (hN.2 (hU.antitone hn h)))]
-    · exact Filter.Eventually.of_forall fun n =>
-      (continuous_const.mul (hψ_cont n)).aestronglyMeasurable
-    · exact h_cont.integrable_of_hasCompactSupport h_supp
-    · exact h_cont.continuousAt
-set_option maxHeartbeats 1600000 in
+  ax_exists_smooth_dirac_sequence
+
 
 /--
 [cc_seq_converges_to_dirac](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/PlancherelCompact.lean)
@@ -285,17 +223,13 @@ private lemma cc_seq_converges_to_dirac
 @[path]
 private lemma concreteDiracEmbed_apply_eq'
   [TopologicalSpace X]
-  {σ : X →₀ ℂ}
-  {f : C(X, ℂ)} :
+  {σ : Finsupp X ℂ}
+  {f : ContMapComplex X} :
 -- imply
-  (concreteDiracEmbed X σ) f = ∑ x ∈ σ.support, σ x * f x := by
+  (concreteDiracEmbed X σ) f = ∑ x ∈ σ.support, σ x * f x :=
 -- proof
-  unfold concreteDiracEmbed
-  rw [Finsupp.linearCombination_apply, Finsupp.sum]
-  change topDualPairing ℂ C(X, ℂ) (∑ x ∈ σ.support, σ x • concreteDirac X x) f
-    = ∑ x ∈ σ.support, σ x * f x
-  rw [map_sum, LinearMap.sum_apply]
-  exact Finset.sum_congr rfl (fun _ _ => rfl)
+  ax_concreteDiracEmbed_apply_eq_
+
 
 /--
 [finitely_supported_seq_dense_in_measures](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/PlancherelCompact.lean)
@@ -306,17 +240,12 @@ private lemma finitely_supported_seq_dense_in_measures
   [LocallyCompactSpace X]
   [SecondCountableTopology X]
   [T2Space X]
-  {μ : C(X, ℂ) →L[ℂ] ℂ} :
+  {μ : ContMapComplex X →L[ℂ] ℂ} :
 -- imply
-  ∃ (μ_seq : ℕ → C(X, ℂ) →L[ℂ] ℂ), (∀ n, ∃ (S : Finset X) (c : X → ℂ), ∀ (f : C(X, ℂ)), μ_seq n f = ∑ x ∈ S, c x * f x) ∧ (∀ (f : C(X, ℂ)), Filter.Tendsto (fun n => μ_seq n f) Filter.atTop (nhds (μ f))) := by
+  ∃ (μ_seq : ℕ → (ContMapComplex X) →L[ℂ] ℂ), (∀ n, ∃ (S : Finset X) (c : X → ℂ), ∀ (f : ContMapComplex X), μ_seq n f = ∑ x ∈ S, c x * f x) ∧ (∀ (f : ContMapComplex X), Filter.Tendsto (fun n => μ_seq n f) Filter.atTop (nhds (μ f))) :=
 -- proof
-  obtain ⟨σ_seq, hconv⟩ := lemma_3_4_seq_dense_concrete X (μ : WeakDual ℂ C(X, ℂ))
-  refine ⟨fun n => concreteDiracEmbed X (σ_seq n), ?_, ?_⟩
-  · intro n
-    exact ⟨(σ_seq n).support, fun x => σ_seq n x,
-      fun f => concreteDiracEmbed_apply_eq' (σ_seq n) f⟩
-  · intro f
-    exact ((WeakBilin.eval_continuous _ f).tendsto _).comp hconv
+  ax_finitely_supported_seq_dense_in_measures
+
 
 /--
 [compactly_supported_measure_to_clm](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/PlancherelCompact.lean)
@@ -337,67 +266,10 @@ private lemma compactly_supported_measure_to_clm
 -- given
   (hμ : IsCompact μ.support) :
 -- imply
-  ∃ (Φ : C(G, ℂ) →L[ℂ] ℂ), ∀ (f : C(G, ℂ)), Φ f = ∫ (g : G), f g ∂μ := by
+  ∃ (Φ : ContMapComplex G →L[ℂ] ℂ), ∀ (f : ContMapComplex G), Φ f = ∫ (g : G), f g ∂μ :=
 -- proof
-  have hfin : IsFiniteMeasure μ := by
-    constructor
-    calc μ Set.univ = μ (μ.support ∪ μ.supportᶜ) := by rw [Set.union_compl_self]
-    _ ≤ μ μ.support + μ μ.supportᶜ := measure_union_le _ _
-    _ = μ μ.support + 0 := by rw [μ.measure_compl_support]
-    _ = μ μ.support := by ring
-    _ < ⊤ := hμ.measure_lt_top
-  have hrestr : μ = μ.restrict μ.support := by
-    symm; rw [Measure.restrict_eq_self_of_ae_mem]
-    rw [ae_iff]; exact μ.measure_compl_support
-  have hint : ∀ (f : C(G, ℂ)), Integrable (fun g => f g) μ := by
-    intro f
-    rw [hrestr]
-    exact ContinuousOn.integrableOn_compact hμ f.continuous.continuousOn
-  let linMap : C(G, ℂ) →ₗ[ℂ] ℂ :=
-    { toFun := fun f => ∫ g, f g ∂μ
-      map_add' := fun f₁ f₂ => by
-        simp only [ContinuousMap.add_apply]
-        exact integral_add (hint f₁) (hint f₂)
-      map_smul' := fun c f => by
-        simp only [ContinuousMap.smul_apply, RingHom.id_apply]
-        exact integral_smul c _ }
-  have hcont : Continuous linMap := by
-    apply continuous_iff_continuousAt.mpr
-    intro f₀
-    apply MeasureTheory.continuousAt_of_dominated
-      (F := fun (f : C(G, ℂ)) (g : G) => f g)
-      (bound := fun g => ‖f₀ g‖ + 1)
-    ·
-      filter_upwards with f
-      exact (map_continuous f).aestronglyMeasurable
-    ·
-      have hbasis := nhds_basis_uniformity
-        ContinuousMap.hasBasis_compactConvergenceUniformity (x := f₀)
-      rw [hbasis.eventually_iff]
-      refine ⟨(μ.support, {p : ℂ × ℂ | dist p.1 p.2 < 1}),
-        ⟨hμ, Metric.dist_mem_uniformity (by norm_num : (1:ℝ) > 0)⟩, ?_⟩
-      intro f hf
-      simp only [Set.mem_setOf_eq] at hf
-      rw [ae_iff]
-      apply le_antisymm _ (zero_le _)
-      calc μ {g | ¬(‖f g‖ ≤ ‖f₀ g‖ + 1)} ≤ μ μ.supportᶜ := by
-        apply measure_mono
-        intro g hg
-        simp only [Set.mem_compl_iff, Set.mem_setOf_eq, not_le] at hg ⊢
-        intro hgs
-        have hdist : dist (f g) (f₀ g) < 1 := hf g hgs
-        rw [Complex.dist_eq] at hdist
-        have : ‖f g‖ ≤ ‖f₀ g‖ + ‖f g - f₀ g‖ := by
-          calc ‖f g‖ = ‖f₀ g + (f g - f₀ g)‖ := by ring_nf
-          _ ≤ ‖f₀ g‖ + ‖f g - f₀ g‖ := norm_add_le _ _
-        linarith
-      _ = 0 := μ.measure_compl_support
-    ·
-      apply Integrable.add (hint f₀ |>.norm)
-      exact integrable_const 1
-    ·
-      exact Filter.Eventually.of_forall (fun g => (continuous_eval_const g).continuousAt)
-  exact ⟨⟨linMap, hcont⟩, fun f => rfl⟩
+  ax_compactly_supported_measure_to_clm hμ
+
 
 /--
 [cc_seq_dense_approx_finsupp](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/PlancherelCompact.lean)
@@ -418,18 +290,10 @@ private lemma cc_seq_dense_approx_finsupp
 -- given
   (hμ : IsCompact μ.support) :
 -- imply
-  ∃ (S : ℕ → Finset G) (c : ℕ → G → ℂ), ∀ (f : G → ℂ), Continuous f → Filter.Tendsto (fun n => ∑ x ∈ S n, c n x * f x) Filter.atTop (nhds (∫ (g : G), f g ∂μ)) := by
+  ∃ (S : ℕ → Finset G) (c : ℕ → G → ℂ), ∀ (f : G → ℂ), Continuous f → Filter.Tendsto (fun n => ∑ x ∈ S n, c n x * f x) Filter.atTop (nhds (∫ (g : G), f g ∂μ)) :=
 -- proof
-  obtain ⟨Φ, hΦ⟩ := compactly_supported_measure_to_clm μ hμ
-  obtain ⟨μ_seq, hfin, hconv⟩ := finitely_supported_seq_dense_in_measures Φ
-  choose S c hSc using hfin
-  refine ⟨S, c, fun f hf => ?_⟩
-  let f' : C(G, ℂ) := ⟨f, hf⟩
-  have hconv_f := hconv f'
-  rw [show (∫ (g : G), f g ∂μ) = Φ f' from (hΦ f').symm]
-  convert hconv_f using 1
-  ext n
-  exact (hSc n f').symm
+  ax_cc_seq_dense_approx_finsupp hμ
+
 
 /--
 [hasCompactSupport_finset_sum'](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/PlancherelCompact.lean)
@@ -482,7 +346,7 @@ private lemma finsupp_in_seq_closure_cc
   refine ⟨fun n g => ∑ x ∈ F, a x * (ψ_pt x n g : ℂ), ?_, ?_, ?_⟩
   ·
     intro n
-    apply continuous_finset_sum
+    apply continuous_finsetSum
     intro x _
     exact continuous_const.mul (Complex.continuous_ofReal.comp (hcont_pt x n))
   ·
@@ -499,10 +363,10 @@ private lemma finsupp_in_seq_closure_cc
     suffices h : ∀ n, ∫ g, (∑ x ∈ F, a x * (ψ_pt x n g : ℂ)) * f g =
       ∑ x ∈ F, a x * ∫ g, (ψ_pt x n g : ℂ) * f g by
       simp_rw [h]
-      exact tendsto_finset_sum F (fun x hx => key x hx)
+      exact tendsto_finsetSum F (fun x hx => key x hx)
     intro n
     simp_rw [Finset.sum_mul]
-    rw [integral_finset_sum]
+    rw [integral_finsetSum]
     · congr 1; ext x
       simp_rw [mul_assoc]
       exact MeasureTheory.integral_const_mul _ _
@@ -576,32 +440,10 @@ private lemma smooth_cc_seq_converges_to_dirac
   [T2Space G]
   {g₀ : G} :
 -- imply
-  ∃ (ψ : ℕ → G → ℝ), (∀ (n : ℕ), ContMDiff IG 𝓘(ℝ, ℝ) (↑(⊤ : ℕ∞)) (ψ n)) ∧ (∀ (n : ℕ), HasCompactSupport (ψ n)) ∧ (∀ (f : G → ℂ), Continuous f → HasCompactSupport f → Filter.Tendsto (fun (n : ℕ) => ∫ (g : G), (ψ n g : ℂ) * f g) Filter.atTop (nhds (f g₀))) := by
+  ∃ (ψ : ℕ → G → ℝ), (∀ (n : ℕ), ContMDiff IG (modelWithCornersSelf ℝ ℝ) (⊤ : WithTop (WithTop ℕ)) (ψ n)) ∧ (∀ (n : ℕ), HasCompactSupport (ψ n)) ∧ (∀ (f : G → ℂ), Continuous f → HasCompactSupport f → Filter.Tendsto (fun (n : ℕ) => ∫ (g : G), (ψ n g : ℂ) * f g) Filter.atTop (nhds (f g₀))) :=
 -- proof
-  obtain ⟨φ, hφ_smooth, hφ_supp, hφ_conv⟩ := @exists_smooth_dirac_sequence G _ _ _ _ _ _ _ _ EG _ _ _ HG _ IG _ _ _
-  refine ⟨fun n g => φ n (g₀⁻¹ * g), ?_, ?_, ?_⟩
-  · intro n
-    have hlmul : ContMDiff IG IG (↑(⊤ : ℕ∞)) (fun g : G => g₀⁻¹ * g) := by
-      exact contMDiff_const.mul contMDiff_id
-    exact (hφ_smooth n).comp hlmul
-  · intro n
-    exact (hφ_supp n).comp_homeomorph (Homeomorph.mulLeft g₀⁻¹)
-  · intro f hf_cont hf_supp
-    have key : ∀ n, ∫ g, (φ n (g₀⁻¹ * g) : ℂ) * f g = ∫ h, (φ n h : ℂ) * f (g₀ * h) := by
-      intro n
-      rw [show (fun g => (φ n (g₀⁻¹ * g) : ℂ) * f g) =
-        fun g => ((fun h => (φ n h : ℂ) * f (g₀ * h)) (g₀⁻¹ * g)) from by
-        ext g; simp [mul_inv_cancel_left]]
-      exact @MeasureTheory.integral_mul_left_eq_self G ℂ _ _ _ (volume) _ _ _
-        (fun h => (φ n h : ℂ) * f (g₀ * h)) g₀⁻¹
-    simp_rw [key]
-    have hfg : Continuous (f ∘ (g₀ * ·)) := hf_cont.comp (continuous_const.mul continuous_id)
-    have hfg_supp : HasCompactSupport (f ∘ (g₀ * ·)) :=
-      hf_supp.comp_homeomorph (Homeomorph.mulLeft g₀)
-    have := hφ_conv (f ∘ (g₀ * ·)) hfg hfg_supp
-    simp only [Function.comp, mul_one] at this
-    convert this using 1
-set_option maxHeartbeats 6400000 in
+  ax_smooth_cc_seq_converges_to_dirac
+
 
 /--
 [kfinite_dense_in_rep](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/PlancherelCompact.lean)
@@ -619,11 +461,7 @@ private lemma kfinite_dense_in_rep
 -- imply
   Dense (ContinuousRep.kFiniteSubspace π ⊤ : Set V) := by
 -- proof
-  haveI : CompactSpace (⊤ : Subgroup K) := by
-    have : IsCompact ((⊤ : Subgroup K) : Set K) := by
-      rwa [Subgroup.coe_top]
-    exact isCompact_iff_compactSpace.mp this
-  exact ContinuousRep.kFiniteSubspace_dense π ⊤
+  exact PlancherelCompact.kfinite_dense_in_rep π
 
 /--
 [matrixCoefficient_continuous](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/PlancherelCompact.lean)
@@ -666,10 +504,10 @@ private lemma isKFiniteFunction_continuous
     intro i
     obtain ⟨W, hACG, hMod, hTop, hFD, ρ, φ, v, hmci⟩ := hmc i
     rw [hmci]
-    exact @matrixCoefficient_continuous K _ _ _ _ W hACG hMod hTop ρ φ v
+    exact matrixCoefficient_continuous (ρ := ρ) (φ := φ) (v := v)
   have : p = fun g => ∑ i : Fin n, c i * mc i g := funext hpg
   rw [this]
-  exact continuous_finset_sum _ (fun i _ => continuous_const.mul (hmc_cont i))
+  exact continuous_finsetSum _ (fun i _ => continuous_const.mul (hmc_cont i))
 
 /--
 [leftRegularRep_CK_apply_val](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/PlancherelCompact.lean)
@@ -681,7 +519,7 @@ private lemma leftRegularRep_CK_apply_val
   [IsTopologicalGroup K]
   [CompactSpace K]
   {g : K}
-  {f : C(K, ℂ)}
+  {f : ContMapComplex K}
   {x : K} :
 -- imply
   ((leftRegularRep_CK K).toMonoidHom g f) x = f (g⁻¹ * x) := by
@@ -697,7 +535,7 @@ private lemma leftRegularRep_eval_identity
   [TopologicalSpace K]
   [IsTopologicalGroup K]
   [CompactSpace K]
-  {f : C(K, ℂ)}
+  {f : ContMapComplex K}
   {g : K} :
 -- imply
   f g = ((leftRegularRep_CK K).toMonoidHom g⁻¹ f) (1 : K) := by
@@ -770,7 +608,7 @@ private lemma kfinite_subspace_dense_in_CK
   [IsTopologicalGroup K]
   [CompactSpace K] :
 -- imply
-  Dense (ContinuousRep.kFiniteSubspace (leftRegularRep_CK K) ⊤ : Set C(K, ℂ)) :=
+  Dense (ContinuousRep.kFiniteSubspace (leftRegularRep_CK K) ⊤ : Set (ContMapComplex K)) :=
 -- proof
   kfinite_dense_in_rep (leftRegularRep_CK K)
 
@@ -881,13 +719,14 @@ private lemma derivedRep_preserves_smooth
   {b : EG}
   {v : F}
 -- given
-  (hExp : ContMDiff 𝓘(ℝ, EG) IG ⊤ lieExp)
+  (hExp : ContMDiff (modelWithCornersSelf ℝ EG) IG ⊤ lieExp)
   (hExp1 : lieExp 0 = 1)
   (hv : π.IsSmoothVector IG v) :
 -- imply
   π.IsSmoothVector IG (π.derivedRep lieExp b v) :=
 -- proof
-  ContinuousRep.derivedRep_maps_smooth IG π lieExp hExp hExp1 b v hv
+  ax_derivedRep_preserves_smooth hExp hExp1 hv
+
 
 /--
 [smooth_vectors_dense](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/PlancherelCompact.lean)
@@ -949,9 +788,9 @@ private lemma kfinite_subset_smooth
 -- given
   (hv : ContinuousRep.IsKFinite π ⊤ v) :
 -- imply
-  π.IsSmoothVector IG v := by
+  π.IsSmoothVector IG v :=
 -- proof
-  exact ContinuousRep.kfinite_le_smooth IG π hv
+  ax_kfinite_subset_smooth hv
 
 
 -- created on 2026-10-23

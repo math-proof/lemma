@@ -19,7 +19,9 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - code layout strictly 2-indented
   - `import` / `open` / `set_option` are contiguous (no blank lines between them), then exactly two blank lines before the rest of the file
     - drop unused `open`s by heuristic, not a `run.mjs` warning: from the lemma AST, keep `open NS` only if some identifier would not resolve from the file’s `import`s without that namespace. Do not add a compiler rule (`open-section` / `open-duplicate` / `open-prefix` stay). Keep `open scoped` and opens that only supply instances or notation even when no AST identifier is from that namespace. Mapping an identifier to its defining namespace (`measurable_snd` → `MeasureTheory`) over-requires opens that imports / `export` / Prelude already provide, and drop-one compile is costly; a noisy unused-`open` rule would fail every run until agents delete needed opens.
+    - drop redundant type ascriptions `(v : T)` by heuristic, not a `run.mjs` warning or Lean linter (both forms elaborate; the compiler cannot flag them). Drop when `v` already has type `T`, or a coercion fills the expected type anyway (`Fin`→`ℕ`, `ℕ`→`ℂ` at `*`, `n - e` with `e : Fin`). Keep ascriptions that pick a numeral’s type (`(0 : ℂ)`), that state a `show` used as a rewrite (`show ((1 : Fin 3) : ℕ) = 1`), or that the file fails to elaborate without.
   - before the `given` section, omit auto-bound implicits
+  - explicit binders `(…)` (hypotheses and given-section expressions) sit under `-- given`; type binders `{…}` / `⦃…⦄` and instance binders `[…]` stay above it
   - an instance binder that a later given hypothesis needs stays an instance binder `[instImplicit]` inside `-- given`, before that hypothesis; never `(h : … := by infer_instance)` or any `(h : T := by tactic)`
   - within the `given` section: propositions come first, expressions come next, unless otherwise specified
   - within the `proof` section, tactics convention:
@@ -37,7 +39,11 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
   - `instance` / `class` / `structure` / `macro` / `syntax` declarations are not allowed in `Lemma/` files.
   - each sub-folder is a section; a section name must be a math data type, not a type class.
   - check section kind with `node mjs/lemmaSectionKind.mjs` (optional folder names as args); classifies each `Lemma/` subfolder as data type / type class / topic via Mathlib (`Lean.isClass` / `isStructure`).
-- `sympy/` holds definitions plus only `theorem`s; these theorems are an internal API used by the definitions and are not rendered publicly. Never put a `lemma` in `sympy/`.
+- `Syntax/` holds user-defined `syntax` / related elaborator declarations. Do not put those in `sympy/` or `Lemma/`.
+- Decl libraries (siblings of `Syntax/`): `Def/` (`def`), `Abbrev/` (`abbrev`), `Class/` (`class`), `Structure/` (`structure`), `Inductive/` (`inductive`), `Instance/` (`instance`), `Notation/` (`notation` / infix-family), `Macro/` (`macro`), `Theorem/` (`theorem`).
+- `Theorem/` holds utility `theorem`s with attributes **other than** `@[main]` (helpers / internal API; not public rendered lemmas). Do not put `@[main]` results or `lemma`s here — those stay in `Lemma/`.
+- `sympy/` holds definitions (plus theorems only when tightly tied to those defs). Prefer `Theorem/` for utility theorems with non-`@[main]` attributes. Never put a `lemma` or user-defined syntax in `sympy/`.
+- Scratch/temp files (probes, bisect scripts, ad-hoc `tmp_*` / `probe_*` / `test_*` files) live in the gitignored `tmp/` folder, not at the repo root.
 
 
 ## Sub-agents
@@ -69,4 +75,4 @@ When the user says to send this issue / problem / bug / job / task to **@AgentNa
 
 ## Git
 - Stay on `main`. Do not switch to any other branch; merge changes into `main` instead.
-- Work only in `/home/cosmos/src/lean` (same tree as `/home/cosmos/github/lean`). Never edit or commit in `E:\github\lean` / `/mnt/e/github/lean`; the only git command allowed there is `git pull`.
+- Work only in `/home/cosmos/github/lean`. Never edit or commit in `E:\github\lean` / `/mnt/e/github/lean`; the only git command allowed there is `git pull`.

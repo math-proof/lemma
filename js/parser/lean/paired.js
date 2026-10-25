@@ -621,6 +621,9 @@ export class LeanParenthesis extends LeanPairedGroup {
             p instanceof L.LeanGetElemQuote ||
             p instanceof L.LeanRelational
         ) return true;
+        // Big-operator body (`∏ j ∈ s, (j ! : ℝ)`): elide only in scope position —
+        // a parenthesized binder (`∑ (i : Fin n), …`) keeps its type ascription.
+        if (p instanceof L.LeanBigOperator && p.scope === this) return true;
         // ENNReal→ℝ (`open scoped ENNReal.ToRealCoe`): `(ℙ[…](…) : ℝ)` under `•` / `+` / …
         if (arg.rhs.text === 'ℝ' && p instanceof L.LeanArithmetic) return true;
         // Standalone / `:=` imply: `(ℙ[M θ] (a t | s t) : ℝ)` → drop outer cast (same for `Real` / 𝔼).
@@ -774,23 +777,42 @@ export class LeanBracket extends LeanPairedGroup {
         return super.insert_newline(caret, newline_count, indent, next);
     }
 
+    /**
+     * On `]`: promote Fin-index sugar to `LeanStack` (bound + body scope).
+     *
+     * - Tensor: `[i < n] body` → `LeanStack(Lean_lt, body)`; nested
+     *   `[i < n] [j < n] body` → `LeanStack(lt_i, LeanStack(lt_j, body))`.
+     * - Matrix (`Syntax/LinearAlgebra/Matrix/Notation.lean` → `Matrix.ofFun`):
+     *   `[i < n, j < n] body` → `LeanStack(ArgsCommaSeparated(lt_i, lt_j), body)`.
+     *   Indented body (e.g. lemma imply) lands in `stack.scope` as
+     *   `LeanArgsNewLineSeparated`, not as a sibling under `LeanArgsIndented`
+     *   wrapping a leftover `LeanBracket`.
+     *   Pre-fix shape (do not regress): `ArgsIndented(Bracket(Comma(lt,lt)), body)`.
+     */
     push_right(funcName) {
         if (funcName === this.constructor.name) {
-            let lt = null;
+            let binder = null;
             const {arg} = this;
             if (arg instanceof L.Lean_lt && arg.lhs instanceof L.LeanToken)
-                lt = arg;
+                binder = arg;
             else if (arg instanceof L.LeanArgsSpaceSeparated) {
                 const siblings = arg.args.filter((x) => !(x instanceof L.LeanCaret));
                 if (siblings.length === 1 && siblings[0] instanceof L.Lean_lt && siblings[0].lhs instanceof L.LeanToken)
-                    lt = siblings[0];
+                    binder = siblings[0];
+            } else if (arg instanceof L.LeanArgsCommaSeparated) {
+                // Matrix `[i < m, j < n]`: exactly two `ident < term` (not a general list).
+                const parts = arg.args.filter((x) => !(x instanceof L.LeanCaret));
+                if (
+                    parts.length === 2 &&
+                    parts.every((p) => p instanceof L.Lean_lt && p.lhs instanceof L.LeanToken)
+                )
+                    binder = arg;
             }
-            if (lt) {
-                // Tensor index `[i < m]`: final tree is LeanStack(Lean_lt, scope), not bracket + wrapper.
-                this.arg = lt;
-                lt.parent = this;
+            if (binder) {
+                this.arg = binder;
+                binder.parent = this;
                 const {level} = this;
-                const stack = new L.LeanStack(lt, this.indent, level);
+                const stack = new L.LeanStack(binder, this.indent, level);
                 const scope = new L.LeanCaret(this.indent, level);
                 stack.scope = scope;
                 this.parent.replace(this, stack);

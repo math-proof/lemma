@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_HeckeOperator
+import Lemma.ModularCurve.HeckeOperator
 import Lemma.Int.P2MUtil
 
 

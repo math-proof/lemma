@@ -4,7 +4,7 @@ import Lemma.Random.SinglePSpace.of.Measurable
 import Lemma.Measure.Count.eq.ProdCountS
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
-import sympy.core.function
+import Theorem.Function
 import sympy.vector.operators
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Filter Topology Measure
 open scoped ENNReal.ToRealCoe

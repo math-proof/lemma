@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GaloisRep_LocalConditions
+import Def.GaloisRep_LocalConditions
 import Lemma.Int.P2MUtil
 
 

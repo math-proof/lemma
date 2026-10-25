@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_PeriodMap
-import Lemma.Definitions.Def_ModularCurve_PeriodTransfer
+import Lemma.ModularCurve.PeriodMap
+import Lemma.ModularCurve.PeriodTransfer
 import Lemma.Int.P2MUtil
 
 open scoped MatrixGroups

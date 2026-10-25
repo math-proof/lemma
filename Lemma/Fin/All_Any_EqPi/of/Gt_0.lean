@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_MumfordPeriod
+import Def.CerednikDrinfeld_MumfordPeriod
 import Lemma.Int.P2MUtil
 
 open ModularCurve CerednikDrinfeld CerednikDrinfeld.Mumford

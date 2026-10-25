@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AutomorphicForm_FormalBaseChange
+import Def.AutomorphicForm_FormalBaseChange
 import Lemma.Int.P2MUtil
 
 open NumberField IsDedekindDomain AutomorphicForm

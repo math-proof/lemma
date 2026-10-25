@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_WeierstrassLevelModuliDatum
+import Def.ModularCurve_WeierstrassLevelModuliDatum
 import Lemma.Int.P2MUtil
 
 open ModularCurve

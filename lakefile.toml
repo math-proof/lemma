@@ -22,3 +22,33 @@ name = "torch"
 
 [[lean_lib]]
 name = "stdlib"
+
+[[lean_lib]]
+name = "Syntax"
+
+[[lean_lib]]
+name = "Macro"
+
+[[lean_lib]]
+name = "Notation"
+
+[[lean_lib]]
+name = "Inductive"
+
+[[lean_lib]]
+name = "Abbrev"
+
+[[lean_lib]]
+name = "Instance"
+
+[[lean_lib]]
+name = "Structure"
+
+[[lean_lib]]
+name = "Class"
+
+[[lean_lib]]
+name = "Def"
+
+[[lean_lib]]
+name = "Theorem"

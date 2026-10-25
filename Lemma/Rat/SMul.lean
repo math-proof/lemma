@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_BaseChangeGalois
+import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
 import Lemma.Int.P2MUtil
 
 

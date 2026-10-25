@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_CuspSpace
-import Lemma.Definitions.Def_ModularCurve_GenusNumerics
+import Lemma.ModularCurve.CuspSpace
+import Lemma.ModularCurve.GenusNumerics
 import Lemma.Int.P2MUtil
 
 open Matrix Matrix.SpecialLinearGroup OnePoint CongruenceSubgroup

@@ -8,11 +8,11 @@ open Finset BigOperators CoxeterGroup
 [wordSigma_eq_of_wordProd_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/WordSigmaInvariance.lean)
 -/
 @[path]
-private lemma wordSigma_eq_of_wordProd_eq_eq
+private lemma main
   [DecidableEq B]
   [Fintype B]
-  {M : CoxeterMatrix B}
   [Group W]
+  {M : CoxeterMatrix B}
   {cs : CoxeterSystem M W}
   {word1 word2 : List B}
   {v : B → ℝ}
@@ -25,3 +25,4 @@ private lemma wordSigma_eq_of_wordProd_eq_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-24

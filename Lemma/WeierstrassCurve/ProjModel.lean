@@ -1,0 +1,311 @@
+import Lemma.AlgebraicGeometry.HomogeneousIdealQuotientGradingInfra
+import Lemma.AlgebraicGeometry.ProjectiveWeierstrassPolynomialPrime
+import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
+import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
+import Mathlib.AlgebraicGeometry.Morphisms.Separated
+import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
+import Mathlib.RingTheory.Ideal.Quotient.Operations
+import Mathlib.RingTheory.MvPolynomial.Homogeneous
+import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Basic
+import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
+import Mathlib.AlgebraicGeometry.Pullbacks
+import Structure.WeierstrassCurve_ProjModel
+import Abbrev.WeierstrassCurve_ProjModel
+
+set_option autoImplicit false
+
+noncomputable section
+
+universe u
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+
+namespace WeierstrassProjModel
+
+theorem ext_of_isSchemeTheoreticallyDominant_of_isSeparated {W X Y Z : Scheme.{u}}
+    {f g : X ⟶ Y} (s : Y ⟶ Z) [IsSeparated s] (h : f ≫ s = g ≫ s)
+    (ι : W ⟶ X) [IsSchemeTheoreticallyDominant ι] (hU : ι ≫ f = ι ≫ g) : f = g := by
+  let X' : Over Z := Over.mk (f ≫ s)
+  let Y' : Over Z := Over.mk s
+  let U' : Over Z := Over.mk (ι ≫ f ≫ s)
+  let f' : X' ⟶ Y' := Over.homMk f
+  let g' : X' ⟶ Y' := Over.homMk g h.symm
+  let ι' : U' ⟶ X' := Over.homMk ι
+  have : IsSeparated Y'.hom := ‹_›
+
+  have hcond : ι' ≫ f' = ι' ≫ g' := by ext1; exact hU
+
+  have hker : (equalizer.ι f' g').left.ker = ⊥ := by
+    have h1 : (equalizer.ι f' g').left.ker ≤
+        ((equalizer.lift ι' hcond ≫ equalizer.ι f' g').left).ker := by
+      rw [Over.comp_left]
+      exact Scheme.Hom.le_ker_comp _ _
+    rw [equalizer.lift_ι] at h1
+    have h2 : (ι'.left).ker = ⊥ := Scheme.Hom.ker_eq_bot ι
+    exact le_bot_iff.mp (h1.trans (le_of_eq h2))
+
+  haveI : IsClosedImmersion (equalizer.ι f' g').left := inferInstance
+  haveI : IsIso (equalizer.ι f' g').left := IsClosedImmersion.isIso_iff_ker_eq_bot.mpr hker
+  exact (cancel_epi (equalizer.ι f' g').left).mp congr($(equalizer.condition f' g').left)
+
+end WeierstrassProjModel
+
+namespace WeierstrassProjModel
+
+open NeronModelInfra
+
+theorem schemeHomOverComp_coe {B T' T A : Scheme.{u}} {t : T ⟶ B} {t' : T' ⟶ B} {f : A ⟶ B}
+    (ψ : T' ⟶ T) (hψ : ψ ≫ t = t') (x : SchemeHomOver t f) :
+    (schemeHomOverComp ψ hψ x).1 = ψ ≫ x.1 :=
+  rfl
+
+
+namespace RelativeGroupLaw
+
+variable {R : Type u} [CommRing R]
+variable {A : Scheme.{u}} {f : A ⟶ Spec (CommRingCat.of R)}
+
+def nsmul (G : RelativeGroupLaw R f) {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R))
+    (n : ℕ) (x : SchemeHomOver t f) : SchemeHomOver t f :=
+  Nat.rec (G.one t) (fun _ ih => G.mul t ih x) n
+
+@[simp]
+theorem nsmul_zero (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (x : SchemeHomOver t f) :
+    G.nsmul t 0 x = G.one t :=
+  rfl
+
+@[simp]
+theorem nsmul_succ (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) (x : SchemeHomOver t f) :
+    G.nsmul t (n + 1) x = G.mul t (G.nsmul t n x) x :=
+  rfl
+
+theorem nsmul_one_apply (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (x : SchemeHomOver t f) :
+    G.nsmul t 1 x = x := by
+  show G.mul t (G.one t) x = x
+  exact G.one_mul t x
+
+theorem nsmul_unit (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) :
+    G.nsmul t n (G.one t) = G.one t := by
+  induction n with
+  | zero => rfl
+  | succ n ih => rw [nsmul_succ, ih, G.mul_one]
+
+@[reducible]
+def pointGroup (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) : Group (SchemeHomOver t f) where
+  mul x y := G.mul t x y
+  one := G.one t
+  inv x := G.inv t x
+  mul_assoc := G.mul_assoc t
+  one_mul := G.one_mul t
+  mul_one := G.mul_one t
+  inv_mul_cancel := G.inv_mul_cancel t
+
+theorem one_natural (G : RelativeGroupLaw R f) {T T' : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (t' : T' ⟶ Spec (CommRingCat.of R))
+    (ψ : T' ⟶ T) (hψ : ψ ≫ t = t') :
+    schemeHomOverComp ψ hψ (G.one t) = G.one t' := by
+  have h : G.mul t' (schemeHomOverComp ψ hψ (G.one t)) (schemeHomOverComp ψ hψ (G.one t)) =
+      schemeHomOverComp ψ hψ (G.one t) := by
+    rw [← G.mul_natural t t' ψ hψ, G.one_mul]
+  calc schemeHomOverComp ψ hψ (G.one t)
+      = G.mul t' (G.one t') (schemeHomOverComp ψ hψ (G.one t)) := (G.one_mul t' _).symm
+    _ = G.mul t' (G.mul t' (G.inv t' (schemeHomOverComp ψ hψ (G.one t)))
+          (schemeHomOverComp ψ hψ (G.one t))) (schemeHomOverComp ψ hψ (G.one t)) := by
+        rw [G.inv_mul_cancel]
+    _ = G.mul t' (G.inv t' (schemeHomOverComp ψ hψ (G.one t)))
+          (G.mul t' (schemeHomOverComp ψ hψ (G.one t)) (schemeHomOverComp ψ hψ (G.one t))) := by
+        rw [G.mul_assoc]
+    _ = G.mul t' (G.inv t' (schemeHomOverComp ψ hψ (G.one t)))
+          (schemeHomOverComp ψ hψ (G.one t)) := by rw [h]
+    _ = G.one t' := G.inv_mul_cancel t' _
+
+theorem nsmul_natural (G : RelativeGroupLaw R f) {T T' : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (t' : T' ⟶ Spec (CommRingCat.of R))
+    (ψ : T' ⟶ T) (hψ : ψ ≫ t = t') (n : ℕ) (x : SchemeHomOver t f) :
+    schemeHomOverComp ψ hψ (G.nsmul t n x) = G.nsmul t' n (schemeHomOverComp ψ hψ x) := by
+  induction n with
+  | zero =>
+      show schemeHomOverComp ψ hψ (G.one t) = G.one t'
+      exact G.one_natural t t' ψ hψ
+  | succ n ih =>
+      calc schemeHomOverComp ψ hψ (G.nsmul t (n + 1) x)
+          = schemeHomOverComp ψ hψ (G.mul t (G.nsmul t n x) x) := rfl
+        _ = G.mul t' (schemeHomOverComp ψ hψ (G.nsmul t n x)) (schemeHomOverComp ψ hψ x) :=
+            G.mul_natural t t' ψ hψ _ _
+        _ = G.mul t' (G.nsmul t' n (schemeHomOverComp ψ hψ x)) (schemeHomOverComp ψ hψ x) := by
+            rw [ih]
+        _ = G.nsmul t' (n + 1) (schemeHomOverComp ψ hψ x) := rfl
+
+def IsTorsionPoint (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) (x : SchemeHomOver t f) : Prop :=
+  G.nsmul t n x = G.one t
+
+theorem isTorsionPoint_def (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) (x : SchemeHomOver t f) :
+    G.IsTorsionPoint t n x ↔ G.nsmul t n x = G.one t :=
+  Iff.rfl
+
+def torsionSubset (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) : Set (SchemeHomOver t f) :=
+  {x | G.IsTorsionPoint t n x}
+
+@[simp]
+theorem mem_torsionSubset (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) (x : SchemeHomOver t f) :
+    x ∈ G.torsionSubset t n ↔ G.IsTorsionPoint t n x :=
+  Iff.rfl
+
+theorem isTorsionPoint_unit (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) :
+    G.IsTorsionPoint t n (G.one t) :=
+  G.nsmul_unit t n
+
+theorem isTorsionPoint_one_iff (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (x : SchemeHomOver t f) :
+    G.IsTorsionPoint t 1 x ↔ x = G.one t := by
+  show G.nsmul t 1 x = G.one t ↔ x = G.one t
+  rw [G.nsmul_one_apply]
+
+theorem isTorsionPoint_schemeHomOverComp (G : RelativeGroupLaw R f) {T T' : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (t' : T' ⟶ Spec (CommRingCat.of R))
+    (ψ : T' ⟶ T) (hψ : ψ ≫ t = t') (n : ℕ) {x : SchemeHomOver t f}
+    (hx : G.IsTorsionPoint t n x) :
+    G.IsTorsionPoint t' n (schemeHomOverComp ψ hψ x) := by
+  show G.nsmul t' n (schemeHomOverComp ψ hψ x) = G.one t'
+  rw [← G.nsmul_natural t t' ψ hψ n x, hx]
+  exact G.one_natural t t' ψ hψ
+
+theorem mapsTo_torsionSubset_schemeHomOverComp (G : RelativeGroupLaw R f) {T T' : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (t' : T' ⟶ Spec (CommRingCat.of R))
+    (ψ : T' ⟶ T) (hψ : ψ ≫ t = t') (n : ℕ) :
+    Set.MapsTo (schemeHomOverComp ψ hψ) (G.torsionSubset t n) (G.torsionSubset t' n) :=
+  fun _ hx => G.isTorsionPoint_schemeHomOverComp t t' ψ hψ n hx
+
+end RelativeGroupLaw
+
+end WeierstrassProjModel
+end
+
+set_option autoImplicit false
+
+universe u
+
+noncomputable section
+
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits NeronModelInfra
+
+namespace WeierstrassProjModel
+
+namespace RelativeGroupLaw
+
+variable {R : Type u} [CommRing R]
+variable {A : Scheme.{u}} {f : A ⟶ Spec (CommRingCat.of R)}
+
+def schemeNsmul (G : RelativeGroupLaw R f) (n : ℕ) : A ⟶ A :=
+  (G.nsmul f n idPoint).1
+
+theorem schemeNsmul_over (G : RelativeGroupLaw R f) (n : ℕ) :
+    G.schemeNsmul n ≫ f = f :=
+  (G.nsmul f n idPoint).2
+
+abbrev schemeKer (G : RelativeGroupLaw R f) (n : ℕ) : Scheme.{u} :=
+  pullback (G.schemeNsmul n) (G.one (𝟙 (Spec (CommRingCat.of R)))).1
+
+abbrev schemeKerStr (G : RelativeGroupLaw R f) (n : ℕ) :
+    G.schemeKer n ⟶ Spec (CommRingCat.of R) :=
+  pullback.snd (G.schemeNsmul n) (G.one (𝟙 (Spec (CommRingCat.of R)))).1
+
+end RelativeGroupLaw
+
+end WeierstrassProjModel
+
+end
+
+noncomputable section
+
+open AlgebraicGeometry CategoryTheory MvPolynomial
+open HomogeneousIdealQuotientGrading ProjWeierstrassCubicPrime
+open NeronModelInfra
+
+namespace WeierstrassProjModel
+
+attribute [local instance] MvPolynomial.gradedAlgebra
+
+section Carrier
+
+variable {R : Type*} [CommRing R]
+
+theorem span_polynomial_isHomogeneousCR (V : WeierstrassCurve.Projective R) :
+    (Ideal.span {V.polynomial}).IsHomogeneous (homogeneousSubmodule (Fin 3) R) := by
+  refine Ideal.homogeneous_span _ _ ?_
+  rintro p hp
+  rcases Set.mem_singleton_iff.mp hp with rfl
+  exact ⟨3, (mem_homogeneousSubmodule _ _).mpr (isHomogeneous_polynomial V)⟩
+
+def projModelHomogeneousIdealCR (V : WeierstrassCurve.Projective R) :
+    HomogeneousIdeal (homogeneousSubmodule (Fin 3) R) :=
+  ⟨Ideal.span {V.polynomial}, span_polynomial_isHomogeneousCR V⟩
+
+@[simp]
+theorem projModelHomogeneousIdealCR_toIdeal (V : WeierstrassCurve.Projective R) :
+    (projModelHomogeneousIdealCR V).toIdeal = Ideal.span {V.polynomial} := rfl
+
+abbrev ProjModelRingCR (V : WeierstrassCurve.Projective R) : Type _ :=
+  MvPolynomial (Fin 3) R ⧸ (projModelHomogeneousIdealCR V).toIdeal
+
+abbrev projModelGradingCR (V : WeierstrassCurve.Projective R) :
+    ℕ → Submodule R (ProjModelRingCR V) :=
+  quotGradingSubmodule (homogeneousSubmodule (Fin 3) R) (projModelHomogeneousIdealCR V).toIdeal
+
+abbrev projModelCR (V : WeierstrassCurve.Projective R) : Scheme :=
+  Proj (projModelGradingCR V)
+
+def projModelStrCR (V : WeierstrassCurve.Projective R) :
+    Proj (projModelGradingCR V) ⟶ Spec (CommRingCat.of R) :=
+  Proj.toSpecZero (projModelGradingCR V) ≫
+    Spec.map (CommRingCat.ofHom (algebraMap R ((projModelGradingCR V) 0)))
+
+end Carrier
+
+section PointsEval
+
+variable {R : Type u} [CommRing R]
+
+def galTwist {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of R)} {F : Type u} [Field F]
+    [Algebra R F] (σ : F ≃ₐ[R] F)
+    (P : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R F))) f) :
+    SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R F))) f :=
+  schemeHomOverComp (Spec.map (CommRingCat.ofHom (σ : F →+* F)))
+    (by
+      rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+      exact congrArg Spec.map (congrArg CommRingCat.ofHom
+        (RingHom.ext fun x => σ.commutes x)))
+    P
+
+def IsPointsEval (V : WeierstrassCurve.Projective R)
+    (G : RelativeGroupLaw R (projModelStrCR V))
+    (ev : ∀ (F : Type u) [Field F] [DecidableEq F] [Algebra R F],
+      SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R F))) (projModelStrCR V) ≃
+        (V.baseChange F).toAffine.Point) : Prop :=
+  (∀ (F : Type u) [Field F] [DecidableEq F] [Algebra R F]
+      (P Q : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R F)))
+        (projModelStrCR V)),
+      ev F (G.mul (Spec.map (CommRingCat.ofHom (algebraMap R F))) P Q) = ev F P + ev F Q) ∧
+  (∀ (F : Type u) [Field F] [DecidableEq F] [Algebra R F] (σ : F ≃ₐ[R] F)
+      (P : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R F)))
+        (projModelStrCR V)),
+      ev F (galTwist σ P) =
+        WeierstrassCurve.Affine.Point.map (σ : F →ₐ[R] F) (ev F P))
+
+end PointsEval
+
+end WeierstrassProjModel
+
+end

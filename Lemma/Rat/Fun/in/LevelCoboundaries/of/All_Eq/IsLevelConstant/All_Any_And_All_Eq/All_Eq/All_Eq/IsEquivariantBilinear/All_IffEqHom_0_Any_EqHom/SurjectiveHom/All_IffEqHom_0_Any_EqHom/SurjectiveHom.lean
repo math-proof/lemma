@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GroupCohomology_ContinuousH2
-import Lemma.Definitions.Def_GroupCohomology_ContinuousH1
-import Lemma.Definitions.Def_GroupCohomology_CupProduct
+import Lemma.GroupCohomology.ContinuousH2
+import Lemma.GroupCohomology.ContinuousH1
+import Lemma.GroupCohomology.CupProduct
 import Lemma.Int.P2MUtil
 open CategoryTheory groupCohomology
 open Int

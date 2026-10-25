@@ -2,7 +2,6 @@ import Mathlib
 import sympy.Basic
 import sympy.atlas.v1.Atlas.Buildings.code.AffineCoxeter.TitsCone
 open Finset BigOperators CoxeterGroup TitsCone
-open CoxeterGroup
 
 
 namespace TitsCone
@@ -56,12 +55,14 @@ private lemma IsAffineCoxeterForm
   (FormIndecomposable (fun s t => formVal M s t) ∧ (∀ v : B → ℝ, bilinForm M v v ≥ 0) ∧ ¬((∀ v : B → ℝ, bilinForm M v v ≥ 0) ∧ (∀ v : B → ℝ, bilinForm M v v = 0 → v = 0))) ↔ (FormIndecomposable (fun s t => formVal M s t) ∧ (∀ v : B → ℝ, bilinForm M v v ≥ 0) ∧ (∃ v : B → ℝ, v ≠ 0 ∧ bilinForm M v v = 0)) := by
 -- proof
   constructor
-  · rintro ⟨hI, hPSD, hNotPD⟩
+  ·
+    rintro ⟨hI, hPSD, hNotPD⟩
     refine ⟨hI, hPSD, ?_⟩
-    push_neg at hNotPD
+    push Not at hNotPD
     obtain ⟨v, hv1, hv2⟩ := hNotPD hPSD
     exact ⟨v, hv2, le_antisymm (by linarith [hPSD v]) (hPSD v)⟩
-  · rintro ⟨hI, hPSD, v, hv, hfv⟩
+  ·
+    rintro ⟨hI, hPSD, v, hv, hfv⟩
     refine ⟨hI, hPSD, ?_⟩
     rintro ⟨_, hPD⟩
     exact hv (hPD v hfv)
@@ -77,8 +78,7 @@ private lemma perronFrobenius_kernel_dim_one
   [DecidableEq B]
   [Fintype B]
   [Nonempty B]
-  {f : B → B → ℝ}
-  [hPF : PerronFrobeniusProperty f]
+  {f : B → B → ℝ} [hPF : PerronFrobeniusProperty f]
 -- given
   (hIndecomp : CoxeterGroup.FormIndecomposable f)
   (hPSD : ∀ v : B → ℝ, ∑ s, ∑ t, v s * f s t * v t ≥ 0)
@@ -97,8 +97,7 @@ private lemma perronFrobenius_submatrix_pos_def
   [DecidableEq B]
   [Fintype B]
   [Nonempty B]
-  {f : B → B → ℝ}
-  [hPF : PerronFrobeniusProperty f]
+  {f : B → B → ℝ} [hPF : PerronFrobeniusProperty f]
   {b₀ : B}
 -- given
   (hIndecomp : CoxeterGroup.FormIndecomposable f)
@@ -112,10 +111,9 @@ private lemma perronFrobenius_submatrix_pos_def
   simp only [not_lt] at hle
   have hpsd_w := hPSD w
   have hw_zero : ∑ s, ∑ t, w s * f s t * w t = 0 := le_antisymm hle hpsd_w
-  by_cases hPD : ∀ v : B → ℝ, v ≠ 0 → ∑ s, ∑ t, v s * f s t * v t > 0
-  ·
+  if hPD : ∀ v : B → ℝ, v ≠ 0 → ∑ s, ∑ t, v s * f s t * v t > 0 then
     exact absurd hw_zero (ne_of_gt (hPD w hne))
-  ·
+  else
     simp only [not_forall, not_lt, exists_prop] at hPD
     obtain ⟨v₀, hv₀_ne, hv₀_le⟩ := hPD
     have hNotPD : ∃ v : B → ℝ, v ≠ 0 ∧ ∑ s, ∑ t, v s * f s t * v t = 0 :=
@@ -133,7 +131,6 @@ private lemma perronFrobenius_submatrix_pos_def
     exact hne this
 end PerronFrobenius
 section Spherical
-variable {B : Type*} [DecidableEq B] [Fintype B]
 
 /--
 [spherical_implies_finite_group](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/AffineCoxeter/TitsCone.lean)
@@ -142,17 +139,15 @@ variable {B : Type*} [DecidableEq B] [Fintype B]
 private lemma spherical_implies_finite_group
   [DecidableEq B]
   [Fintype B]
-  {M : CoxeterMatrix B}
-  [hSF : SphericalFiniteProperty M]
+  {M : CoxeterMatrix B} [hSF : SphericalFiniteProperty M]
 -- given
   (h : ∀ v : B → ℝ, v ≠ 0 → CoxeterGroup.bilinForm M v v > 0) :
 -- imply
-  Finite (M.Group) :=
+  Finite M.Group :=
 -- proof
   hSF.finite_of_pos_def h
 end Spherical
 section AffineProper
-variable {B : Type*} [DecidableEq B] [Fintype B] [Nonempty B]
 
 /--
 [extendByZero_outside](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/AffineCoxeter/TitsCone.lean)
@@ -168,9 +163,9 @@ private lemma extendByZero_outside
 -- given
   (hb : b ∉ I) :
 -- imply
-  extendByZero I v b = 0 :=
+  extendByZero I v b = 0 := by
 -- proof
-  dif_neg hb
+  simp [extendByZero, hb]
 
 /--
 [extendByZero_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/AffineCoxeter/TitsCone.lean)
@@ -191,7 +186,7 @@ private lemma extendByZero_ne_zero
   apply hv
   ext ⟨b, hb⟩
   have := congr_fun h b
-  simp only [extendByZero, dif_pos hb, Pi.zero_apply] at this
+  simp [extendByZero, hb] at this
   exact this
 
 /--
@@ -214,72 +209,9 @@ private lemma sum_restrict_of_vanish
   apply Finset.sum_subset (Finset.subset_univ I)
   intro x _ hxI; exact hf x hxI
 
-/--
-[bilinForm_restrict_eq_extend](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/AffineCoxeter/TitsCone.lean)
--/
-@[path]
-private lemma bilinForm_restrict_eq_extend
-  [DecidableEq B]
-  [Fintype B]
-  [Nonempty B]
-  {M : CoxeterMatrix B}
-  {I : Finset B}
-  {v : ↥I → ℝ} :
--- imply
-  bilinForm (M.restrict I) v v = bilinForm M (extendByZero I v) (extendByZero I v) := by
--- proof
-  simp only [bilinForm, formVal, CoxeterMatrix.restrict]
-  symm
-  rw [sum_restrict_of_vanish (f := fun s =>
-      ∑ t, (extendByZero I v s * if M.M s t = 0 then -1 else -Real.cos (Real.pi / ↑(M.M s t))) *
-        extendByZero I v t) (by
-    intro s hs
-    simp only [extendByZero, dif_neg hs, zero_mul, Finset.sum_const_zero])]
-  apply Finset.sum_congr rfl
-  intro ⟨s, hs⟩ _
-  rw [sum_restrict_of_vanish (f := fun t =>
-      (extendByZero I v s * if M.M s t = 0 then -1 else -Real.cos (Real.pi / ↑(M.M s t))) *
-        extendByZero I v t) (by
-    intro t ht
-    simp only [extendByZero, dif_neg ht, mul_zero])]
-  apply Finset.sum_congr rfl
-  intro ⟨t, ht⟩ _
-  simp only [extendByZero, dif_pos hs, dif_pos ht]
-
-/--
-[perronFrobenius_proper_subset_pos_def](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/AffineCoxeter/TitsCone.lean)
--/
-@[path]
-private lemma perronFrobenius_proper_subset_pos_def
-  [DecidableEq B]
-  [Fintype B]
-  [Nonempty B]
-  {M : CoxeterMatrix B}
-  [hPF : PerronFrobeniusProperty (fun s t => formVal M s t)]
-  {I : Finset B}
--- given
-  (hIndecomp : FormIndecomposable (fun s t => formVal M s t))
-  (hPSD : ∀ v : B → ℝ, bilinForm M v v ≥ 0)
-  (hOffDiag : ∀ s t : B, s ≠ t → formVal M s t ≤ 0)
-  (hI : I ≠ Finset.univ) :
--- imply
-  ∀ v : ↥I → ℝ, v ≠ 0 → bilinForm (M.restrict I) v v > 0 := by
--- proof
-  intro v hv
-  have hb₀ : ∃ b₀ : B, b₀ ∉ I := by
-    by_contra hall
-    simp only [not_exists, not_not] at hall
-    exact hI (Finset.eq_univ_iff_forall.mpr hall)
-  obtain ⟨b₀, hb₀⟩ := hb₀
-  rw [bilinForm_restrict_eq_extend]
-  have hvanish : extendByZero I v b₀ = 0 := extendByZero_outside hb₀
-  have hne : extendByZero I v ≠ 0 := extendByZero_ne_zero hv
-  exact perronFrobenius_submatrix_pos_def
-    (fun s t => formVal M s t) hIndecomp hPSD hOffDiag b₀
-    (extendByZero I v) hvanish hne
 end AffineProper
+
 namespace GeomRealization
-variable {V : Type*} [DecidableEq V] [Fintype V] [Nonempty V]
 
 /--
 [titsFundamentalClosure_subset_titsCone](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/AffineCoxeter/TitsCone.lean)

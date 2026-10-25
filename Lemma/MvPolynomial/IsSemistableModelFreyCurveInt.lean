@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FLTPrelim_FreyPackage
-import Lemma.Definitions.Def_FLTPrelim_Modularity
+import Lemma.FLTPrelim.FreyPackage
+import Def.FLTPrelim_Modularity
 open WeierstrassCurve
 open FreyPackage
 

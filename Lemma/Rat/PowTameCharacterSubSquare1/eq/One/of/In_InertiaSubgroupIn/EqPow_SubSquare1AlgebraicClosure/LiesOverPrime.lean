@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FLTPrelim_Ramification
-import Lemma.Definitions.Def_GaloisRep_TameCharacter
+import Def.FLTPrelim_Ramification
+import Def.GaloisRep_TameCharacter
 
 
 /-- ported from external source -/

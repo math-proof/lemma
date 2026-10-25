@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_TateSlots
-import Lemma.Definitions.Def_ModularCurve_KatzLevelPCusps
+import Lemma.ModularCurve.TateSlots
+import Lemma.ModularCurve.KatzLevelPCusps
 import Lemma.Int.P2MUtil
 
 open HahnSeries

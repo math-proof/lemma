@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_TaylorWiles_Primes
+import Lemma.TaylorWiles.Primes
 
 
 /-- ported from external source -/

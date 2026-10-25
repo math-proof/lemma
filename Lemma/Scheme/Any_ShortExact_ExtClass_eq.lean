@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicGeometry_FppfCohomologyLES
+import Lemma.AlgebraicGeometry.FppfCohomologyLES
 import Lemma.Int.P2MUtil
 open CategoryTheory CategoryTheory.Abelian CategoryTheory.Limits AlgebraicGeometry
 

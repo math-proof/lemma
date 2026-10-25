@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_DivisorClassGroup
-import Lemma.Definitions.Def_AlgebraicCurve_IsCurveOver
-import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluation
+import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Scheme.IsCurveOver
+import Def.AlgebraicCurve_PlaceEvaluation
 import Lemma.Int.P2MUtil
 
 open AlgebraicCurve Set

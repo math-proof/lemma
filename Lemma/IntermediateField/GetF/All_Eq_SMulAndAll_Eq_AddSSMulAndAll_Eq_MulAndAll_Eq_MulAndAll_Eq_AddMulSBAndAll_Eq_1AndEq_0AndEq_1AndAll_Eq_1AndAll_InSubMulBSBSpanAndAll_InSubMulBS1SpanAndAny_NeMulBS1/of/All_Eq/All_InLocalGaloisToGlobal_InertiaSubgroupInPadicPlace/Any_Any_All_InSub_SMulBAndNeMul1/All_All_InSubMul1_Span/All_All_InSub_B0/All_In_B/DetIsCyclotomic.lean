@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GaloisRep_LocalConditions
-import Lemma.Definitions.Def_GaloisRep_CompletionBridge
+import Def.GaloisRep_LocalConditions
+import Lemma.GaloisRep.CompletionBridge
 import Lemma.Int.P2MUtil
 
 

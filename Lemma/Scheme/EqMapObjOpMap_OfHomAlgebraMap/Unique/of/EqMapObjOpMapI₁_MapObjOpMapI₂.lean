@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_Algebra_DescentCofaces
+import Def.Algebra_DescentCofaces
 open CategoryTheory Opposite AlgebraicGeometry Algebra.TensorProduct Algebra.DescentCofaces
 open scoped TensorProduct
 

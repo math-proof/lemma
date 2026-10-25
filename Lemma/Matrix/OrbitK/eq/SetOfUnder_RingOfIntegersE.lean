@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_NumberField_PlaceTransport
+import Lemma.NumberField.PlaceTransport
 open scoped NumberField.PlaceTransport
 open scoped Pointwise
 open IsDedekindDomain NumberField

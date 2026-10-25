@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_PlaceTaylorCoeff
-import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluationAlgebra
-import Lemma.Definitions.Def_AlgebraicCurve_Repartitions
+import Def.AlgebraicCurve_PlaceTaylorCoeff
+import Lemma.Scheme.PlaceEvaluationAlgebra
+import Lemma.AlgebraicCurve.Repartitions
 import Lemma.Int.P2MUtil
 
 open AlgebraicCurve AlgebraicCurve.Place

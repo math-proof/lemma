@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_DivisorClassGroup
-import Lemma.Definitions.Def_AlgebraicGeometry_KwPthPowerKerDExpansionEngine
+import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.AlgebraicGeometry.KwPthPowerKerDExpansionEngine
 open KaehlerDifferential
 open AlgebraicCurve
 

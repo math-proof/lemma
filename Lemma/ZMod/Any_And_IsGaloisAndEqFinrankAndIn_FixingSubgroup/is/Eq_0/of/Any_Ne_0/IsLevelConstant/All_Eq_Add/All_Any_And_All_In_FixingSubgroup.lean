@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GroupCohomology_ContinuousH2
+import Lemma.GroupCohomology.ContinuousH2
 import Lemma.Int.P2MUtil
 open CategoryTheory
 open groupCohomology Int

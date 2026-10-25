@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicGeometry_ModulesTildePullback
+import Lemma.Scheme.MapPullback.eq.HomPullbackSpecIso
 open CategoryTheory AlgebraicGeometry Opposite TensorProduct
 
 

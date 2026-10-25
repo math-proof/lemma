@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_LaurentCoeff
-import Lemma.Definitions.Def_ModularCurve_QExpansionDiff
+import Lemma.ModularCurve.LaurentCoeff
+import Lemma.ModularCurve.QExpansionDiff
 open ModularCurve
 
 

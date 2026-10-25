@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_Gamma0HeckeOperatorHom
+import Lemma.Gamma0HeckeOperatorHom.Main
 import Lemma.Int.P2MUtil
 
 open CongruenceSubgroup Subgroup

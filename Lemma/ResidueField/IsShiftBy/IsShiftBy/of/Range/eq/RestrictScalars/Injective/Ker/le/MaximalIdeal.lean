@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_MvFormalGroup_IsShiftBy
+import Def.MvFormalGroup_IsShiftBy
 import Lemma.Int.P2MUtil
 
 open IsLocalRing MvFormalGroup

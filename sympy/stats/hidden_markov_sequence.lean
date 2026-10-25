@@ -91,7 +91,7 @@ def Function.getSlice.unexpand := Slice.getSliceUnexpand
 
 /-- Closed Python slices on `Fun ℕ α` (`f[:n]`, `f[a:b]`, …): same macros as bare `ℕ → α`, resolved
 via `f.getSlice` → `Function.getSlice f.toFun`.  Reducible so `SinglePSpace` / joint coercions see the
-bare-function slice.  Open slices `f[t:]` stay `Fun.getSliceFrom` in `sympy.core.function`. -/
+bare-function slice.  Open slices `f[t:]` stay `Fun.getSliceFrom` in `Theorem.Function`. -/
 abbrev Fun.getSlice {α : Type*} [FunSlice α] (f : Fun ℕ α) (s : Slice) : FunSlice.Out α s :=
   Function.getSlice f.toFun s
 

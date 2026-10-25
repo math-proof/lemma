@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CuspForm_QCoeffLinear
+import Def.CuspForm_QCoeffLinear
 import Lemma.Int.P2MUtil
 
 

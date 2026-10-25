@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_SpecialFormalModule
+import Lemma.CerednikDrinfeld.SpecialFormalModule
 import Lemma.Int.P2MUtil
 
 open CerednikDrinfeld CerednikDrinfeld.SpecialFormal

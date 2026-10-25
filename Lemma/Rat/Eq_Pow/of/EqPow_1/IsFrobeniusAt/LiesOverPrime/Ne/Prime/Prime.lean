@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FLTPrelim_Ramification
-import Lemma.Definitions.Def_EllipticCurve_FrobeniusTrace
-import Lemma.Definitions.Def_WeierstrassCurve_ReductionMap
+import Def.FLTPrelim_Ramification
+import Lemma.EllipticCurve.FrobeniusTrace
+import Lemma.WeierstrassCurve.ReductionMap
 import Lemma.Int.P2MUtil
 
 open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point ValuationSubring

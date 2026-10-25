@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FormalGroup_NSeries
+import Lemma.FormalGroup.NSeries
 open FormalGroup
 
 

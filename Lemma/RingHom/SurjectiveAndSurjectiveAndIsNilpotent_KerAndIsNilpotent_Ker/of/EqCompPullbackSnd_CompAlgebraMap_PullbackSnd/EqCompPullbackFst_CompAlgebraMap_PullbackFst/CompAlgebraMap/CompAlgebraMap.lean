@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_SpecialFormalModule
-import Lemma.Definitions.Def_CerednikDrinfeld_ModuliPackageDescent
-import Lemma.Definitions.Def_CerednikDrinfeld_ModuliPackageDeformation
+import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Def.CerednikDrinfeld_ModuliPackageDescent
+import Def.CerednikDrinfeld_ModuliPackageDeformation
 import Lemma.Int.P2MUtil
 
 open CerednikDrinfeld CerednikDrinfeld.SpecialFormal CerednikDrinfeld.SpecialFormal.ModuliPackage

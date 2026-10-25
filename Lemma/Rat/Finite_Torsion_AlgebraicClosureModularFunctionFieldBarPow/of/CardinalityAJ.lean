@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_EichlerShimuraData
-import Lemma.Definitions.Def_ModularCurve_ArithmeticGalois
-import Lemma.Definitions.Def_AlgebraicCurve_Repartitions
+import Lemma.ModularCurve.EichlerShimuraData
+import Lemma.ModularCurve.ArithmeticGalois
+import Lemma.AlgebraicCurve.Repartitions
 import Lemma.Int.P2MUtil
 
 open AlgebraicCurve ModularCurve

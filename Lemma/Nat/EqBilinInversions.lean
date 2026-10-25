@@ -9,6 +9,71 @@ end Definitions
 namespace CoxeterGroup
 
 /--
+[sigma_e_other_t_component'](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/InversionSet.lean)
+-/
+@[path]
+private lemma sigma_e_other_t_component'
+  [DecidableEq B]
+  [Fintype B]
+  {M : CoxeterMatrix B}
+  {s t : B}
+-- given
+  (hst : s ≠ t) :
+-- imply
+  sigma M s (e t) t = 1 := by
+-- proof
+  simp only [sigma, e, Pi.single_apply]
+  simp only [ite_true, Ne.symm hst, ite_false]
+  ring
+
+end CoxeterGroup
+
+namespace CoxeterGroup
+
+/--
+[s_in_bilinInversions_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/InversionSet.lean)
+-/
+@[path]
+private lemma s_in_bilinInversions_singleton
+  [DecidableEq B]
+  [Fintype B]
+  {M : CoxeterMatrix B}
+  {s : B} :
+-- imply
+  s ∈ bilinInversions M [s] := by
+-- proof
+  simp only [bilinInversions, Finset.mem_filter, Finset.mem_univ, true_and]
+  rw [wordSigma_singleton, sigma_e_self]
+  simp only [e, Pi.single_apply, neg_lt_zero]
+  norm_num
+
+end CoxeterGroup
+
+namespace CoxeterGroup
+
+/--
+[t_not_in_bilinInversions_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/InversionSet.lean)
+-/
+@[path]
+private lemma t_not_in_bilinInversions_singleton
+  [DecidableEq B]
+  [Fintype B]
+  {M : CoxeterMatrix B}
+  {s t : B}
+-- given
+  (hst : s ≠ t) :
+-- imply
+  t ∉ bilinInversions M [s] := by
+-- proof
+  simp only [bilinInversions, Finset.mem_filter, Finset.mem_univ, true_and, not_lt]
+  rw [wordSigma_singleton, sigma_e_other_t_component' hst]
+  norm_num
+
+end CoxeterGroup
+
+namespace CoxeterGroup
+
+/--
 [bilinInversions_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/SimpleReflectionInversions.lean)
 -/
 @[path]
@@ -26,11 +91,11 @@ private lemma bilinInversions_singleton
   ·
     intro ht
     by_contra hne
-    exact t_not_in_bilinInversions_singleton M s t (Ne.symm hne) ht
+    exact t_not_in_bilinInversions_singleton (Ne.symm hne) ht
   ·
     intro ht
-    rw [ht]
-    exact s_in_bilinInversions_singleton M s
+    subst ht
+    exact s_in_bilinInversions_singleton
 
 end CoxeterGroup
 

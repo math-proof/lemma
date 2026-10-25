@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_LanglandsTunnell_TateLocalZeta
+import Lemma.LanglandsTunnell.TateLocalZeta
 open MeasureTheory LanglandsTunnell.TateLocal Metric
 open scoped NNReal ENNReal Pointwise
 

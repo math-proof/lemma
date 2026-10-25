@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicGeometry_DoubleComplex
+import Def.AlgebraicGeometry_DoubleComplex
 open scoped DirectSum
 
 

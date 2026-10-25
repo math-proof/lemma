@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CuspForm_IntegralLattice
-import Lemma.Definitions.Def_CuspForm_IntegralStructure
+import Def.CuspForm_IntegralLattice
+import Def.CuspForm_IntegralStructure
 import Lemma.Int.P2MUtil
 
 

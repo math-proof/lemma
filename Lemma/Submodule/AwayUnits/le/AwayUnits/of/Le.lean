@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_CosetGraphAtPrime
+import Lemma.CerednikDrinfeld.CosetGraphAtPrime
 import Lemma.Int.P2MUtil
 
 open scoped TensorProduct Quaternion

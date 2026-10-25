@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_IgusaScheme
-import Lemma.Definitions.Def_AlgebraicCurve_TwoChartIntegralModel
+import Lemma.ModularCurve.IgusaScheme
+import Lemma.AlgebraicCurve.TwoChartIntegralModel
 import Lemma.Int.P2MUtil
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModularCurve ModularCurve.IgusaScheme

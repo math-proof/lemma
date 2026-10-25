@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AutomorphicForm_ConstantTerm
+import Def.AutomorphicForm_ConstantTerm
 open AutomorphicForm MeasureTheory
 
 

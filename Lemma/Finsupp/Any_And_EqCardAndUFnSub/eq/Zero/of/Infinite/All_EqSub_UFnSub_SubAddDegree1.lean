@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_DivisorClassGroup
-import Lemma.Definitions.Def_AlgebraicCurve_Repartitions
-import Lemma.Definitions.Def_AlgebraicCurve_IsCurveOver
-import Lemma.Definitions.Def_AlgebraicCurve_AdelicIndex
+import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.AlgebraicCurve.Repartitions
+import Lemma.Scheme.IsCurveOver
+import Lemma.AlgebraicCurve.AdelicIndex
 import Lemma.Int.P2MUtil
 
 open IsDedekindDomain WithZero IsLocalRing Module

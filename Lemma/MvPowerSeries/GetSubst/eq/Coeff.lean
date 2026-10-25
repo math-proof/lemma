@@ -1,11 +1,11 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FormalGroup_NSeries
-import Lemma.Definitions.Def_FormalGroup_DrinfeldBasis
-import Lemma.Definitions.Def_WeierstrassCurve_FormalGroupLaw
-import Lemma.Definitions.Def_WeierstrassCurve_FormalGroup
-import Lemma.Definitions.Def_WeierstrassCurve_HasseInvariant
-import Lemma.Definitions.Def_FormalGroup_PointTransport
+import Lemma.FormalGroup.NSeries
+import Lemma.FormalGroup.DrinfeldBasis
+import Lemma.WeierstrassCurve.FormalGroupLaw
+import Lemma.WeierstrassCurve.FormalGroup
+import Def.WeierstrassCurve_HasseInvariant
+import Def.FormalGroup_PointTransport
 import Lemma.Int.P2MUtil
 
 open FormalGroup

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_LevelFunctionField
+import Lemma.ModularCurve.LevelFunctionField
 import Lemma.Int.P2MUtil
 
 open ModularCurve

@@ -767,6 +767,14 @@ export class LeanSup extends LeanBigOperator {
     }
 }
 
+/**
+ * Fin-index sugar promoted from `LeanBracket` on `]`.
+ * `operator` / `command` === `"Stack"` (lemmaPath token for DetStack_…).
+ * - Tensor: `args[0]` = one `Lean_lt` (`[i < n] body`); `matrixFinBinders()` null
+ * - Matrix ofFun: `args[0]` = `LeanArgsCommaSeparated` of two `Lean_lt`
+ *   (`[i < n, j < n] body`); `args[1]` = entry body (may be NewLineSeparated);
+ *   `matrixFinBinders()` → `[lt_i, lt_j]`
+ */
 export class LeanStack extends LeanBigOperator {
     static { this.register(); }
 
@@ -783,6 +791,22 @@ export class LeanStack extends LeanBigOperator {
     get stack_priority() {
         if (this.scope) return L.LeanRelational.input_priority;
         return 28;
+    }
+
+    /**
+     * Matrix Fin-entry sugar: bound is `,`-separated `i < m, j < n`.
+     * @returns {[Lean, Lean] | null} the two `Lean_lt` binders
+     */
+    matrixFinBinders() {
+        const b = this.bound;
+        if (!(b instanceof L.LeanArgsCommaSeparated)) return null;
+        const parts = b.args.filter((x) => !(x instanceof L.LeanCaret));
+        if (
+            parts.length !== 2 ||
+            !parts.every((p) => p instanceof L.Lean_lt && p.lhs instanceof L.LeanToken)
+        )
+            return null;
+        return /** @type {[Lean, Lean]} */ (parts);
     }
 
     is_indented() {

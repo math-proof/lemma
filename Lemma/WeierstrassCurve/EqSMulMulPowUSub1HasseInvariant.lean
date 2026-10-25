@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_Polynomial_DeuringPolynomial
-import Lemma.Definitions.Def_WeierstrassCurve_HasseInvariant
+import Def.Polynomial_DeuringPolynomial
+import Def.WeierstrassCurve_HasseInvariant
 import Lemma.Int.P2MUtil
 open Polynomial
 open WeierstrassCurve Int

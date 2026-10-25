@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FLTPrelim_Modularity
+import Def.FLTPrelim_Modularity
 
 
 /--

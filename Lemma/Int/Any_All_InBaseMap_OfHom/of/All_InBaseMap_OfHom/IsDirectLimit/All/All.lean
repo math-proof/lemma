@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_Mathlib_Algebra_IsDirectLimit
+import Lemma.Algebra.IsDirectLimit
 open CategoryTheory AlgebraicGeometry
 
 

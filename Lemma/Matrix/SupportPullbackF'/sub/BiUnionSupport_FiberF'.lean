@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_DivisorPushPull
+import Lemma.AlgebraicCurve.DivisorPushPull
 open AlgebraicCurve AlgebraicCurve.Divisor
 
 

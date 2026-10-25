@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
 import sympy.atlas.v1.Atlas.Buildings.code.Reflection.AffineWeylSemidirectMulEquiv
-import Lemma.Matrix.Eq.of.Offset.Normal.AffineHyperplaneE
 open Set AffineWeylGroup AffineWeylGroupFullData
 open scoped InnerProductSpace
 
@@ -25,50 +24,6 @@ private lemma ext_of_decomp
   rw [d.affine_decomp g₁ g₁.prop x, d.affine_decomp g₂ g₂.prop x, hlin, htrans]
 
 
-/--
-[toSemidirect_injective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Reflection/AffineWeylSemidirectMulEquiv.lean)
--/
-@[path]
-private lemma toSemidirect_injective
-  [NormedAddCommGroup E]
-  [InnerProductSpace ℝ E]
-  {d : AffineWeylSemidirectData E} :
--- imply
-  Function.Injective d.toSemidirect := by
--- proof
-  exact AffineWeylSemidirectData.toSemidirect_injective
-
-
-/--
-[toSemidirect_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Reflection/AffineWeylSemidirectMulEquiv.lean)
--/
-@[path]
-private lemma toSemidirect_surjective
-  [NormedAddCommGroup E]
-  [InnerProductSpace ℝ E]
-  {d : AffineWeylSemidirectData E} :
--- imply
-  Function.Surjective d.toSemidirect := by
--- proof
-  exact AffineWeylSemidirectData.toSemidirect_surjective
-
-
-/--
-[toSemidirect_mul](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Reflection/AffineWeylSemidirectMulEquiv.lean)
--/
-@[path]
-private lemma toSemidirect_mul
-  [NormedAddCommGroup E]
-  [InnerProductSpace ℝ E]
-  {d : AffineWeylSemidirectData E}
-  {g₁ g₂ : ↥d.affineWeylSubgroup} :
--- imply
-  d.toSemidirect (g₁ * g₂) = d.toSemidirect g₁ * d.toSemidirect g₂ := by
--- proof
-  exact AffineWeylSemidirectData.toSemidirect_mul g₁ g₂
-
-
-
 namespace AffineWeylGroup
 
 /--
@@ -80,9 +35,10 @@ private lemma reflections_generate_affineWeylGroup
   [InnerProductSpace ℝ E]
   {Wa : AffineWeylGroup E} :
 -- imply
-  Subgroup.closure (Wa.affineReflections) = Wa.reflGroup.group :=
+  Subgroup.closure Wa.affineReflections = Wa.reflGroup.group :=
 -- proof
   Wa.reflGroup.generated_by_reflections.symm
+
 end AffineWeylGroup
 
 
@@ -100,9 +56,20 @@ private lemma coroot_translation_is_product_of_reflections
 -- given
   (hα : α ∈ d.roots) :
 -- imply
-  ∀ v : E, v + d.coroot α = d.affineReflFun α 1 (d.affineReflFun α 0 v) :=
+  ∀ v : E, v + d.coroot α = d.affineReflFun α 1 (d.affineReflFun α 0 v) := by
 -- proof
-  AffineWeylGroupFullData.corootTranslation_eq_comp_affineRefls hα
+  intro v
+  set c := d.coroot α
+  have hc : ⟪α, c⟫_ℝ = 2 := by
+    simp only [c]
+    rw [d.coroot_def α hα, inner_smul_right, div_mul_cancel₀]
+    exact inner_self_ne_zero.mpr (d.roots_ne_zero α hα)
+  simp only [affineReflFun, Int.cast_zero, Int.cast_one, sub_zero]
+  have hw : ⟪α, v - ⟪α, v⟫_ℝ • c⟫_ℝ = -⟪α, v⟫_ℝ := by
+    simp [inner_sub_right, inner_smul_right, hc]
+    ring
+  rw [hw]
+  module
 
 end AffineWeylGroupFullData
 

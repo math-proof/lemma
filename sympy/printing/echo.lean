@@ -20,6 +20,7 @@ syntax "*" tactic : echo_expr
 
 /--
 A tactic `echo` that prints the types of specified hypotheses or the main goal.
+Non-propositional locals (variables such as `α : ℂ` from `obtain`) are skipped.
 usage:
 - `echo h₁, h₂, ⊢` prints the types of hypotheses `h₁`, `h₂` and the main goal.
 - `echo _` prints the type of the first wildcard hypothesis.
@@ -52,9 +53,11 @@ elab_rules : tactic
                 logInfo decl.userName hypType
                 break
       | `(echo_ident| $h:ident) => do
-        -- Print the specific local hypothesis
+        -- Print only if the local is a hypothesis (Prop), not a variable
         try
-          logInfo h.getId (inferType (← getLocalDeclFromUserName h.getId).toExpr)
+          let hypType ← inferType (← getLocalDeclFromUserName h.getId).toExpr
+          if ← hypType.is_Prop then
+            logInfo h.getId (pure hypType)
         catch e =>
           logInfo m!"{e.toMessageData}"
       | _ =>
@@ -89,7 +92,9 @@ elab_rules : tactic
             try
               if !(← isDefEq type type') then
                 try
-                  logInfo userName (inferType (← getLocalDeclFromUserName userName).toExpr)
+                  let hypType ← inferType (← getLocalDeclFromUserName userName).toExpr
+                  if ← hypType.is_Prop then
+                    logInfo userName (pure hypType)
                 catch e =>
                   logInfo m!"{e.toMessageData}"
               else

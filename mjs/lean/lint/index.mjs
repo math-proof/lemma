@@ -24,9 +24,11 @@ const Q = {
     autoBound: 'before the `given` section, omit auto-bound implicits',
     order: 'before the `given` section, list in order: line(s) of standalone instances (instImplicit), line(s) of implicit binder(s) and their dependent instances (instImplicit) on the same line, line(s) of bare implicit binders',
     deflt: 'default arguments should be put within the `given` section',
+    explicitAbove: 'explicit binders `(…)` (hypotheses and given-section expressions) sit under `-- given`; type binders `{…}` / `⦃…⦄` and instance binders `[…]` stay above it',
     propFirst: 'within the `given` section: propositions come first, expressions come next, unless otherwise specified',
     givenInst: 'an instance binder that a later given hypothesis needs stays an instance binder `[instImplicit]` inside `-- given`, before that hypothesis; never `(h : … := by infer_instance)` or any `(h : T := by tactic)`',
     combine: 'arguments of the same type should be combined, eg: {a b: Type} or (a b: Type)',
+    given: 'partition the lemma into `-- given`, `-- imply`, and `-- proof` (hypotheses under `given`, conclusion under `imply`, tactics under `proof`)',
     imply: 'conclusion must be put within the `imply` section',
     proof: 'proof body must be put within the `proof` section',
     binop: 'within proof, binary operators `:` `+` `-` `*` `/` `=` `≠` `>` `<` `≥` `≤` should not be indented by new lines',
@@ -60,7 +62,10 @@ export const RULES = {
     'binder-order': Q.order,
     'binder-dep-inst': Q.order,
     'default-arg-given': Q.deflt,
+    'explicit-above-given': Q.explicitAbove,
     'given-prop-first': Q.propFirst,
+    // not an AGENTS.md rule: an explicit `-- given` binder that a later hypothesis mentions is an implicit above `-- given`
+    'given-implicit-dep': null,
     'given-inst': Q.givenInst,
     // not an AGENTS.md rule (user request): the page typesets only the first run of `given` propositions
     'given-prop-consecutive': null,
@@ -69,6 +74,9 @@ export const RULES = {
     // not an AGENTS.md rule: drop redundant `({…} : Set _)` on the LHS of ⊆/⊂/∈/… in `-- given`
     'redundant-set-ascription': null,
     'binder-combine': Q.combine,
+    'section-given': Q.given,
+    // not an AGENTS.md rule: a `-- given` with no binders under it should be deleted
+    'section-given-empty': null,
     'section-imply': Q.imply,
     'section-proof': Q.proof,
     // not an AGENTS.md rule: no empty lines inside the proof body (enforced by the linter)

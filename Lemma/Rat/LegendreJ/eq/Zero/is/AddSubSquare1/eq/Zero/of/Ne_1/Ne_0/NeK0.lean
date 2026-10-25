@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_LegendreJ
+import Def.ModularCurve_LegendreJ
 import Lemma.Int.P2MUtil
 open ModularCurve
 

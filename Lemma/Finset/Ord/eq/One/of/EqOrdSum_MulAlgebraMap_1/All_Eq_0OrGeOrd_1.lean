@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluation
+import Def.AlgebraicCurve_PlaceEvaluation
 import Lemma.Int.P2MUtil
 
 open AlgebraicCurve Polynomial

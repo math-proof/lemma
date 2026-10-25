@@ -6,23 +6,27 @@ import sympy.Basic
 
 @[path]
 private lemma main
+  [Field R]
   {d m : ℕ}
-  {x δ : ℝ}
+  {x δ : R}
 -- given
   (h : d ≤ m)
   (i j : Fin d) :
 -- imply
-  ((Matrix.of fun (i : Fin d) (j : Fin m) => x ^ (j : ℕ) * ((j : ℝ) + δ) ^ (i : ℕ)) *
-    (Matrix.of fun (k : Fin m) (j : Fin d) => (-x) ^ ((j : ℤ) - (k : ℕ)) * ((j : ℕ).choose k : ℝ))) i j =
-    x ^ (j : ℕ) * Nat.iterate (fwdDiff (1 : ℝ)) j (fun r : ℝ => r ^ (i : ℕ)) δ := by
+  ((Matrix.of fun (i : Fin d) (j : Fin m) => x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ)) *
+    (Matrix.of fun (k : Fin m) (j : Fin d) => (-x) ^ ((j : ℤ) - (k : ℕ)) * ((j : ℕ).choose k : R))) i j =
+    x ^ (j : ℕ) * Nat.iterate (fwdDiff (1 : R)) j (fun r : R => r ^ (i : ℕ)) δ := by
 -- proof
   have hj := j.isLt
   simp only [Matrix.mul_apply, Matrix.of_apply]
-  rw [Fin.sum_univ_eq_sum_range (fun k => x ^ k * ((k : ℝ) + δ) ^ (i : ℕ) * ((-x) ^ (((j : ℕ) : ℤ) - (k : ℤ)) * ((j : ℕ).choose k : ℝ))) m]
-  rw [← Finset.sum_subset (s₁ := Finset.range ((j : ℕ) + 1)) (s₂ := Finset.range m) (by intro k hk; simp at hk ⊢; omega) (by
-      intro k _ hk'
-      simp only [Finset.mem_range, not_lt] at hk'
-      rw [Nat.choose_eq_zero_of_lt (by omega), Nat.cast_zero, mul_zero, mul_zero])]
+  rw [Fin.sum_univ_eq_sum_range (fun k => x ^ k * ((k : R) + δ) ^ (i : ℕ) * ((-x) ^ (((j : ℕ) : ℤ) - (k : ℤ)) * ((j : ℕ).choose k : R))) m]
+  have hzero (k : ℕ) (hk : k ∈ Finset.range m) (hk' : k ∉ Finset.range ((j : ℕ) + 1)) :
+    x ^ k * ((k : R) + δ) ^ (i : ℕ) *
+      ((-x) ^ (((j : ℕ) : ℤ) - (k : ℤ)) * ((j : ℕ).choose k : R)) = 0 := by
+        simp only [Finset.mem_range, not_lt] at hk'
+        rw [Nat.choose_eq_zero_of_lt (by omega), Nat.cast_zero, mul_zero, mul_zero]
+  rw [← Finset.sum_subset (s₁ := Finset.range ((j : ℕ) + 1)) (s₂ := Finset.range m)
+      (by intro k hk; simp at hk ⊢; omega) hzero]
   rw [fwdDiff_iter_eq_sum_shift, Finset.mul_sum]
   refine Finset.sum_congr rfl fun t ht => ?_
   have ht := Finset.mem_range.mp ht

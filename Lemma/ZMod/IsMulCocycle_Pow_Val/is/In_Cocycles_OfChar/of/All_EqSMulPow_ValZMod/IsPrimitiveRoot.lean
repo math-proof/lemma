@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_DualSelmer_ExtConditions
+import Lemma.DualSelmer.ExtConditions
 import Lemma.Int.P2MUtil
 
 open CategoryTheory groupCohomology

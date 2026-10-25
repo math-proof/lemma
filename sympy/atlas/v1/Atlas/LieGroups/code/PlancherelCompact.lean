@@ -13,7 +13,6 @@ import sympy.atlas.v1.Atlas.LieGroups.code.ContinuousRep
 import Lemma.Complex.IsStronglyContinuousToMonoidHom
 import Lemma.Complex.IsKFinite0
 import Lemma.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
-import Lemma.Complex.inner.of.IsUnitary
 import Lemma.Real.IsSmoothVector0
 import Lemma.Complex.Eq_Sum_Mul
 import sympy.atlas.v1.Atlas.LieGroups.code.KFinite
@@ -174,3 +173,23 @@ abbrev smoothVectors
     {F : Type*} [NormedAddCommGroup F] [NormedSpace ℂ F]
     (π : ContinuousRep G F) : Submodule ℂ F :=
   π.smoothSubspace IG
+
+/-- Compact-group Peter-Weyl density for an arbitrary continuous representation. -/
+theorem kfinite_dense_in_rep
+    {K : Type*} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
+    [CompactSpace K]
+    {V : Type*} [AddCommGroup V] [Module ℂ V] [TopologicalSpace V]
+    (π : ContinuousRep K V) :
+    Dense (ContinuousRep.kFiniteSubspace π ⊤ : Set V) := by
+  haveI : CompactSpace (⊤ : Subgroup K) := by
+    have : IsCompact ((⊤ : Subgroup K) : Set K) := by
+      rw [Subgroup.coe_top]
+      exact isCompact_univ
+    exact isCompact_iff_compactSpace.mp this
+  exact ContinuousRep.kFiniteSubspace_dense π ⊤
+
+/-- Alias: ContinuousMap notation C(G, R) is Mathlib; exposed for atlas wrappers. -/
+abbrev ContMapReal (G : Type*) [TopologicalSpace G] := C(G, ℝ)
+
+abbrev ContMapComplex (G : Type*) [TopologicalSpace G] := C(G, ℂ)
+

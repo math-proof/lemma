@@ -11,7 +11,7 @@ open MeasureTheory AddCircle Finset Filter Complex FourierSeries
 lemma fourier_integrable
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {n : ℤ} :
+  (n : ℤ) :
 -- imply
   Integrable (fun t : AddCircle T => (fourier n t : ℂ)) haarAddCircle :=
 -- proof
@@ -25,7 +25,7 @@ lemma fourier_integrable
 lemma integral_fourier
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {n : ℤ} :
+  (n : ℤ) :
 -- imply
   ∫ t : AddCircle T, fourier n t ∂haarAddCircle = if n = 0 then 1 else 0 := by
 -- proof
@@ -46,7 +46,7 @@ lemma integral_fourier
 lemma integral_dirichlet_sum
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {k : ℕ} :
+  (k : ℕ) :
 -- imply
   ∫ t : AddCircle T, ∑ n ∈ Finset.Icc (-(k : ℤ)) (k : ℤ), fourier n t ∂haarAddCircle = 1 := by
 -- proof
@@ -61,6 +61,7 @@ lemma integral_dirichlet_sum
     simp only [Finset.mem_erase] at hn
     simp [hn.1]
   rw [this, add_zero]
+
 /--
 [fejerKernel_symmetric](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/FourierSeries.lean)
 -/
@@ -68,8 +69,8 @@ lemma integral_dirichlet_sum
 lemma fejerKernel_symmetric
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ}
-  {x : AddCircle T} :
+  (N : ℕ)
+  (x : AddCircle T) :
 -- imply
   fejerKernel N (-x) = fejerKernel N x := by
 -- proof
@@ -99,7 +100,7 @@ lemma fejerKernel_symmetric
 lemma integral_fejerKernel
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ} :
+  (N : ℕ) :
 -- imply
   ∫ t : AddCircle T, fejerKernel N t ∂haarAddCircle = 1 := by
 -- proof
@@ -127,8 +128,8 @@ private lemma sum_odd_eq_sq (N : ℕ) :
 lemma norm_fejerKernel_le
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ}
-  {x : AddCircle T} :
+  (N : ℕ)
+  (x : AddCircle T) :
 -- imply
   ‖fejerKernel N x‖ ≤ (N : ℝ) + 1 := by
 -- proof
@@ -169,17 +170,17 @@ lemma norm_fejerKernel_le
 lemma fejerKernel_continuous
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ} :
+  (N : ℕ) :
 -- imply
   Continuous (fejerKernel (T := T) N) := by
 -- proof
   unfold fejerKernel
-  apply Continuous.const_smul
-  apply continuous_finset_sum
-  intro k _
-  apply continuous_finset_sum
-  intro n _
-  exact (map_continuous (fourier n))
+  have hsum : Continuous fun x : AddCircle T =>
+      ∑ k ∈ range (N + 1), ∑ n ∈ Finset.Icc (-(k : ℤ)) (k : ℤ), (fourier n x : ℂ) := by
+    apply continuous_finset_sum; intro k _
+    apply continuous_finset_sum; intro n _
+    exact map_continuous (fourier n)
+  exact Continuous.const_smul hsum ((N : ℂ) + 1)⁻¹
 
 /--
 [fejerKernel_integrable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/FourierSeries.lean)
@@ -188,13 +189,13 @@ lemma fejerKernel_continuous
 lemma fejerKernel_integrable
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ} :
+  (N : ℕ) :
 -- imply
   Integrable (fejerKernel (T := T) N) haarAddCircle := by
 -- proof
   apply Integrable.of_bound (C := (N : ℝ) + 1)
   · exact (fejerKernel_continuous N).aestronglyMeasurable
-  · exact ae_of_all _ (fun x => norm_fejerKernel_le N x)
+  · exact ae_of_all _ (fun x => norm_fejerKernel_le (N := N) (x := x))
 
 /--
 [fourier_neg_mul_fourier_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/FourierSeries.lean)
@@ -203,8 +204,8 @@ lemma fejerKernel_integrable
 lemma fourier_neg_mul_fourier_eq
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {n : ℤ}
-  {x t : AddCircle T} :
+  (n : ℤ)
+  (x t : AddCircle T) :
 -- imply
   (fourier (-n) t : ℂ) * (fourier n x : ℂ) = (fourier n (x - t) : ℂ) := by
 -- proof
@@ -219,8 +220,8 @@ lemma fourier_neg_mul_fourier_eq
 lemma sum_range_fourier_shift_neg
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ}
-  {x : AddCircle T} :
+  (N : ℕ)
+  (x : AddCircle T) :
 -- imply
   ∑ k ∈ range (N + 1), (fourier ((↑k : ℤ) + -↑(N + 1)) x : ℂ) = ∑ n ∈ Finset.Icc (-(↑(N + 1) : ℤ)) (-1 : ℤ), (fourier n x : ℂ) := by
 -- proof
@@ -240,8 +241,8 @@ lemma sum_range_fourier_shift_neg
 lemma sum_range_fourier_shift_pos
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ}
-  {x : AddCircle T} :
+  (N : ℕ)
+  (x : AddCircle T) :
 -- imply
   ∑ k ∈ range (N + 1), (fourier ((↑(N + 1) : ℤ) + -↑k) x : ℂ) = ∑ n ∈ Finset.Icc (1 : ℤ) (↑(N + 1)), (fourier n x : ℂ) := by
 -- proof
@@ -262,8 +263,8 @@ lemma sum_range_fourier_shift_pos
 lemma fejer_dirichlet_sum_eq_sq
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ}
-  {x : AddCircle T} :
+  (N : ℕ)
+  (x : AddCircle T) :
 -- imply
   (∑ k ∈ range (N + 1), ∑ n ∈ Finset.Icc (-(k : ℤ)) (↑k), (fourier n x : ℂ)) = (∑ k ∈ range (N + 1), (fourier (↑k : ℤ) x : ℂ)) * starRingEnd ℂ (∑ k ∈ range (N + 1), (fourier (↑k : ℤ) x : ℂ)) := by
 -- proof
@@ -282,15 +283,15 @@ lemma fejer_dirichlet_sum_eq_sq
     have hGz : G * starRingEnd ℂ z =
       ∑ n ∈ Finset.Icc (-(↑(N + 1) : ℤ)) (-1), (fourier n x : ℂ) := by
       rw [hG_def, hz_def, Finset.sum_mul]
-      simp_rw [fourier_neg.symm, ← fourier_add (T := T)]
+      simp_rw [← fourier_neg, ← fourier_add (T := T)]
       exact sum_range_fourier_shift_neg N x
     have hzG : z * starRingEnd ℂ G =
       ∑ n ∈ Finset.Icc (1 : ℤ) (↑(N + 1)), (fourier n x : ℂ) := by
       rw [hG_def, hz_def, map_sum, Finset.mul_sum]
-      simp_rw [fourier_neg.symm, ← fourier_add (T := T)]
+      simp_rw [← fourier_neg, ← fourier_add (T := T)]
       exact sum_range_fourier_shift_pos N x
     have hzz : z * starRingEnd ℂ z = fourier (0 : ℤ) x := by
-      rw [hz_def, fourier_neg.symm, ← fourier_add]; simp
+      rw [hz_def, ← fourier_neg, ← fourier_add]; simp
     rw [hGz, hzG, hzz]
     have h_union : Finset.Icc (-(↑(N + 1) : ℤ)) (↑(N + 1)) =
       Finset.Icc (-(↑(N + 1) : ℤ)) (-1) ∪ {(0 : ℤ)} ∪ Finset.Icc (1 : ℤ) (↑(N + 1)) := by
@@ -312,8 +313,8 @@ lemma fejer_dirichlet_sum_eq_sq
 lemma fejerKernel_nonneg
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ}
-  {x : AddCircle T} :
+  (N : ℕ)
+  (x : AddCircle T) :
 -- imply
   0 ≤ (fejerKernel N x).re := by
 -- proof
@@ -323,7 +324,7 @@ lemma fejerKernel_nonneg
   ring_nf
   apply mul_nonneg
   · have h : (1 + (↑N : ℂ))⁻¹ = ↑((1 + (N : ℝ))⁻¹) := by
-    rw [Complex.ofReal_inv]; congr 1; push_cast; ring
+      rw [Complex.ofReal_inv]; congr 1; push_cast; ring
     rw [h, Complex.ofReal_re]
     positivity
   · exact normSq_nonneg _
@@ -335,13 +336,13 @@ lemma fejerKernel_nonneg
 lemma fejer_kernel_properties
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ} :
+  (N : ℕ) :
 -- imply
   (∀ x : AddCircle T, 0 ≤ (fejerKernel N x).re) ∧ (∀ x : AddCircle T, fejerKernel N (-x) = fejerKernel N x) ∧ (Function.Periodic (fun t : ℝ => fejerKernel (T := T) N (↑t)) T) ∧ (∫ t : AddCircle T, fejerKernel N t ∂haarAddCircle = 1) ∧ (∀ δ : ℝ, 0 < δ → ∀ x : AddCircle T, δ ≤ ‖(1 : ℂ) - fourier (1 : ℤ) x‖ → ‖fejerKernel N x‖ ≤ 4 / (((N : ℝ) + 1) * δ ^ 2)) := by
 -- proof
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
-  · exact fejerKernel_nonneg N
-  · exact fejerKernel_symmetric N
+  · intro x; exact fejerKernel_nonneg (N := N) (x := x)
+  · intro x; exact fejerKernel_symmetric (N := N) (x := x)
   · intro t
     show fejerKernel (T := T) N ↑(t + T) = fejerKernel (T := T) N ↑t
     congr 1
@@ -370,18 +371,21 @@ lemma fejer_kernel_properties
       rw [geom_sum_eq hfne (N + 1), norm_div,
         show ‖(fourier (1 : ℤ) x : ℂ) - 1‖ = ‖(1 : ℂ) - fourier (1 : ℤ) x‖ from
           norm_sub_rev _ _]
-      calc ‖(fourier (1 : ℤ) x : ℂ) ^ (N + 1) - 1‖ / ‖(1 : ℂ) - fourier (1 : ℤ) x‖
-        ≤ 2 / ‖(1 : ℂ) - fourier (1 : ℤ) x‖ := by
-          apply div_le_div_of_nonneg_right _ (by positivity)
-          calc ‖(fourier (1 : ℤ) x : ℂ) ^ (N + 1) - 1‖
+      have hnum : ‖(fourier (1 : ℤ) x : ℂ) ^ (N + 1) - 1‖ ≤ 2 := by
+        calc ‖(fourier (1 : ℤ) x : ℂ) ^ (N + 1) - 1‖
             ≤ ‖(fourier (1 : ℤ) x : ℂ) ^ (N + 1)‖ + ‖(1 : ℂ)‖ := norm_sub_le _ _
-            _ = 2 := by rw [norm_pow, hfnorm, one_pow, norm_one]; norm_num
-        _ ≤ 2 / δ := div_le_div_of_nonneg_left (by norm_num : (0 : ℝ) ≤ 2) hδ hx
+          _ = 2 := by rw [norm_pow, hfnorm, one_pow, norm_one]; norm_num
+      have hstep1 : ‖(fourier (1 : ℤ) x : ℂ) ^ (N + 1) - 1‖ / ‖(1 : ℂ) - fourier (1 : ℤ) x‖
+          ≤ 2 / ‖(1 : ℂ) - fourier (1 : ℤ) x‖ :=
+        div_le_div_of_nonneg_right hnum (by positivity)
+      exact hstep1.trans
+        (div_le_div_of_nonneg_left (by norm_num : (0 : ℝ) ≤ 2) hδ hx)
+    have hsq : ‖∑ k ∈ range (N + 1), (fourier (↑k : ℤ) x : ℂ)‖ ^ 2 ≤ (2 / δ) ^ 2 := by
+      have h_nn := norm_nonneg (∑ k ∈ range (N + 1), (fourier (↑k : ℤ) x : ℂ))
+      exact sq_le_sq' (by linarith : -(2 / δ) ≤ _) hG_bound
     calc ((N : ℝ) + 1)⁻¹ * ‖∑ k ∈ range (N + 1), (fourier (↑k : ℤ) x : ℂ)‖ ^ 2
-      ≤ ((N : ℝ) + 1)⁻¹ * (2 / δ) ^ 2 := by
-        apply mul_le_mul_of_nonneg_left _ (by positivity)
-        have h_nn := norm_nonneg (∑ k ∈ range (N + 1), (fourier (↑k : ℤ) x : ℂ))
-        exact sq_le_sq' (by linarith) hG_bound
+        ≤ ((N : ℝ) + 1)⁻¹ * (2 / δ) ^ 2 :=
+          mul_le_mul_of_nonneg_left hsq (by positivity)
       _ ≤ 4 / (((N : ℝ) + 1) * δ ^ 2) := le_of_eq (by field_simp; ring)
 /--
 [fourier_sub_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/FourierSeries.lean)
@@ -390,8 +394,8 @@ lemma fejer_kernel_properties
 lemma fourier_sub_eq
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {n : ℤ}
-  {x t : AddCircle T} :
+  (n : ℤ)
+  (x t : AddCircle T) :
 -- imply
   (fourier n (x - t) : ℂ) = (fourier (-n) t : ℂ) * (fourier n x : ℂ) :=
 -- proof
@@ -405,8 +409,8 @@ lemma fourier_smul_integrable
   {T : ℝ}
   [hT : Fact (0 < T)]
   {f : AddCircle T → ℂ}
-  {n : ℤ}
-  {x : AddCircle T}
+  (n : ℤ)
+  (x : AddCircle T)
 -- given
   (hf : Integrable f haarAddCircle) :
 -- imply
@@ -424,8 +428,8 @@ lemma fourier_integral_convolution
   {T : ℝ}
   [hT : Fact (0 < T)]
   {f : AddCircle T → ℂ}
-  {n : ℤ}
-  {x : AddCircle T}
+  (n : ℤ)
+  (x : AddCircle T)
 -- given
   (hf : Integrable f haarAddCircle) :
 -- imply
@@ -439,7 +443,7 @@ lemma fourier_integral_convolution
     rw [key]
     exact integral_sub_left_eq_self (fun s => (fourier n (x - s) : ℂ) • f s) haarAddCircle x
   rw [h1]
-  simp_rw [fourier_sub_eq n x, smul_eq_mul, mul_assoc]
+  simp_rw [fourier_sub_eq, smul_eq_mul, mul_assoc]
   simp_rw [show ∀ t, (fourier (-n) t : ℂ) * ((fourier n x : ℂ) * f t) =
     ((fourier (-n) t : ℂ) * f t) * (fourier n x : ℂ) from fun t => by ring]
   rw [show (fun t => ((fourier (-n) t : ℂ) * f t) * (fourier n x : ℂ)) =
@@ -456,8 +460,8 @@ lemma cesaroMean_eq_fejer_convolution
   {T : ℝ}
   [hT : Fact (0 < T)]
   {f : AddCircle T → ℂ}
-  {N : ℕ}
-  {x : AddCircle T}
+  (N : ℕ)
+  (x : AddCircle T)
 -- given
   (hf : Integrable f haarAddCircle) :
 -- imply
@@ -483,7 +487,7 @@ lemma cesaroMean_eq_fejer_convolution
     simp_rw [smul_eq_mul, Finset.sum_mul]
     apply integrable_finset_sum
     intro n _
-    have := fourier_smul_integrable f hf n x
+    have := fourier_smul_integrable (f := f) (hf := hf) n (x := x)
     simp only [smul_eq_mul] at this
     exact this
   rw [integral_finset_sum _ h_int_outer]
@@ -493,10 +497,10 @@ lemma cesaroMean_eq_fejer_convolution
     (fourier n t : ℂ) • f (x - t)) := by
     ext t; exact Finset.sum_smul
   rw [h_rw2]
-  rw [integral_finset_sum _ (fun n _ => fourier_smul_integrable f hf n x)]
+  rw [integral_finset_sum _ (fun n _ => fourier_smul_integrable (f := f) (hf := hf) n (x := x))]
   unfold partialFourierSum
   congr 1; ext n
-  exact (fourier_integral_convolution f hf n x).symm
+  exact (fourier_integral_convolution (f := f) (hf := hf) n x).symm
 /--
 [fejerKernel_eq_ofReal](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/FourierSeries.lean)
 -/
@@ -504,8 +508,8 @@ lemma cesaroMean_eq_fejer_convolution
 lemma fejerKernel_eq_ofReal
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ}
-  {x : AddCircle T} :
+  (N : ℕ)
+  (x : AddCircle T) :
 -- imply
   fejerKernel N x = ↑(((N : ℝ) + 1)⁻¹ * normSq (∑ k ∈ range (N + 1), (fourier (↑k : ℤ) x : ℂ))) := by
 -- proof
@@ -525,7 +529,7 @@ lemma fejerKernel_eq_ofReal
 lemma integral_norm_fejerKernel
   {T : ℝ}
   [hT : Fact (0 < T)]
-  {N : ℕ} :
+  (N : ℕ) :
 -- imply
   ∫ t : AddCircle T, ‖fejerKernel N t‖ ∂haarAddCircle = 1 := by
 -- proof
@@ -641,9 +645,10 @@ lemma cesaroMean_uniform_bound
           rwa [dist_eq_norm, sub_zero] at ht
         have := hδ hd
         rwa [dist_eq_norm] at this
+      have hmul : ‖fejerKernel N t‖ * ‖f x - f (x - t)‖ ≤ ‖fejerKernel N t‖ * (ε / 2) :=
+        mul_le_mul_of_nonneg_left (le_of_lt hfx_close) (norm_nonneg _)
       calc ‖fejerKernel N t‖ * ‖f x - f (x - t)‖
-        ≤ ‖fejerKernel N t‖ * (ε / 2) := by
-          apply mul_le_mul_of_nonneg_left (le_of_lt hfx_close) (norm_nonneg _)
+          ≤ ‖fejerKernel N t‖ * (ε / 2) := hmul
         _ = ε / 2 * ‖fejerKernel N t‖ := by ring
         _ ≤ ε / 2 * ‖fejerKernel N t‖ + 2 * ‖f‖ * C := le_add_of_nonneg_right (by positivity)
     ·

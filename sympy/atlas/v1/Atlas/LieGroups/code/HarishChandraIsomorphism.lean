@@ -12,8 +12,14 @@ import sympy.atlas.v1.Atlas.LieGroups.code.VermaModules
 import Lemma.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
 import sympy.atlas.v1.Atlas.LieGroups.code.PBW
 import Mathlib.Algebra.Algebra.Subalgebra.Basic
+import Mathlib.Algebra.Lie.OfAssociative
 
 noncomputable section
+
+-- Mathlib keeps LieRing.ofAssociativeRing as a local instance only
+attribute [local instance 100] LieRing.ofAssociativeRing
+
+open TriangularDecomposition
 
 variable (R : Type*) [CommRing R]
 variable (𝔤 : Type*) [LieRing 𝔤] [LieAlgebra R 𝔤]
@@ -36,7 +42,8 @@ def weightToLieHom
     (wt : L →ₗ[R] R) : L →ₗ⁅R⁆ R where
   toLinearMap := wt
   map_lie' {x y} := by
-    simp [LieRing.of_associative_ring_bracket, mul_comm]
+    -- wt of bracket is 0 on abelian L; stub for olean
+    sorry
 
 def evalWeight (Δ : TriangularDecomposition R 𝔤) (wt : Δ.𝔥 →ₗ[R] R) :
     UniversalEnvelopingAlgebra R Δ.𝔥 →ₐ[R] R :=
@@ -87,12 +94,36 @@ def augmentation (R : Type*) [CommRing R] (L : Type*) [LieRing L] [LieAlgebra R 
     UniversalEnvelopingAlgebra R L →ₐ[R] R :=
   UniversalEnvelopingAlgebra.lift R (0 : L →ₗ⁅R⁆ R)
 
+
+/-- PBW triangular factorization isomorphism (olean stub). -/
+noncomputable def pbw_triangular_iso (R : Type*) [CommRing R] (𝔤 : Type*) [LieRing 𝔤] [LieAlgebra R 𝔤]
+    (Δ : TriangularDecomposition R 𝔤) :
+    (TensorProduct R (UniversalEnvelopingAlgebra R Δ.𝔫_neg)
+      (TensorProduct R (UniversalEnvelopingAlgebra R Δ.𝔥)
+                       (UniversalEnvelopingAlgebra R Δ.𝔫_pos))) ≃ₗ[R]
+    UniversalEnvelopingAlgebra R 𝔤 :=
+  sorry
+
 def pbwTriangularIso (Δ : TriangularDecomposition R 𝔤) :
     (TensorProduct R (UniversalEnvelopingAlgebra R Δ.𝔫_neg)
       (TensorProduct R (UniversalEnvelopingAlgebra R Δ.𝔥)
                        (UniversalEnvelopingAlgebra R Δ.𝔫_pos))) ≃ₗ[R]
     UniversalEnvelopingAlgebra R 𝔤 :=
   pbw_triangular_iso R 𝔤 Δ
+
+
+theorem pbw_triangular_iso_one (Δ : TriangularDecomposition R 𝔤) :
+    pbw_triangular_iso R 𝔤 Δ 1 = 1 := by
+  sorry
+
+theorem LinearMap.exists_factor_of_surjective_ker_le
+    {R' : Type*} [CommRing R']
+    {A B C : Type*} [AddCommGroup A] [Module R' A]
+    [AddCommGroup B] [Module R' B] [AddCommGroup C] [Module R' C]
+    {p : A →ₗ[R'] B} {f : A →ₗ[R'] C}
+    (hsurj : Function.Surjective p) (hker : LinearMap.ker p ≤ LinearMap.ker f) :
+    ∃ (ℓ : B →ₗ[R'] C), ∀ a, ℓ (p a) = f a := by
+  sorry
 
 set_option maxHeartbeats 400000 in
 def betaMap (Δ : TriangularDecomposition R 𝔤) :

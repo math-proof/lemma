@@ -1,6 +1,6 @@
 import Mathlib.Probability.Independence.Integration
 import sympy.stats.joint_rv
-import sympy.core.function
+import Theorem.Function
 
 open MeasureTheory
 

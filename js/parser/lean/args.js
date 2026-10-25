@@ -881,8 +881,21 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         ) {
             const n = args.length === 2 ? func.lhs : args[1];
             const k = args.length === 2 ? args[1] : args[2];
-            const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
-            return [peel(n).toLatex(syntax), peel(k).toLatex(syntax)];
+            // `(i : ℕ).choose j` / `Nat.choose (i : ℕ) j` — drop Fin→ℕ (or any simple
+            // type) ascriptions so LaTeX is `\binom{i}{j}`, not `\binom{i : ℕ}{j}`.
+            const peelChooseArg = (arg) => {
+                arg = L.LeanParenthesis.peelLatex(arg);
+                if (arg instanceof L.LeanColon && arg.rhs instanceof L.LeanToken)
+                    return arg.lhs;
+                if (
+                    arg instanceof L.LeanParenthesis &&
+                    arg.arg instanceof L.LeanColon &&
+                    arg.arg.rhs instanceof L.LeanToken
+                )
+                    return arg.arg.lhs;
+                return arg;
+            };
+            return [peelChooseArg(n).toLatex(syntax), peelChooseArg(k).toLatex(syntax)];
         }
         return args.map((arg) => {
             if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
@@ -1311,11 +1324,89 @@ export class LeanArgsIndented extends LeanBinary {
             rhs.args[0] instanceof L.LeanParenthesis;
     }
 
+    /**
+     * Multiline two-sided interval. Common shapes:
+     * - `Finset.Ico a\n  b` → `ArgsIndented(SpaceSeparated(Ico, a), b)`
+     * - `x ∈ Finset.Ico a\n  b` → `ArgsIndented(Lean_in(x, SpaceSeparated(Ico, a)), b)`
+     *   (newline after the first bound; SpaceSeparated stays length 2).
+     * @returns {{ctor: string, format: string, a: import('./base.js').Lean, b: import('./base.js').Lean, membership: import('./base.js').Lean | null, inOp: string | null} | null}
+     */
+    splitIntervalOperands() {
+        const {lhs} = this;
+        /** @type {LeanArgsSpaceSeparated | null} */
+        let space = null;
+        /** @type {import('./base.js').Lean | null} */
+        let membership = null;
+        /** @type {string | null} */
+        let inOp = null;
+        if (lhs instanceof LeanArgsSpaceSeparated && lhs.args.length === 2) {
+            space = lhs;
+        } else if (
+            (lhs instanceof L.Lean_in || lhs instanceof L.Lean_notin) &&
+            lhs.rhs instanceof LeanArgsSpaceSeparated &&
+            lhs.rhs.args.length === 2
+        ) {
+            space = lhs.rhs;
+            membership = lhs.lhs;
+            inOp = lhs instanceof L.Lean_notin ? '\\notin' : '\\in';
+        } else {
+            return null;
+        }
+        const ctor = space.intervalCtor();
+        if (!ctor) return null;
+        let format = null;
+        switch (ctor) {
+            case 'Ioc':
+                format = '\\left(%s, %s\\right]';
+                break;
+            case 'Ioo':
+                format = '\\left(%s, %s\\right)';
+                break;
+            case 'Icc':
+                format = '\\left[%s, %s\\right]';
+                break;
+            case 'Ico':
+                format = '\\left[%s, %s\\right)';
+                break;
+            default:
+                return null;
+        }
+        let b = this.rhs;
+        if (b instanceof LeanArgsNewLineSeparated) {
+            const parts = b.args.filter((x) => !(x instanceof L.LeanCaret));
+            if (parts.length !== 1) return null;
+            b = parts[0];
+        }
+        return {ctor, format, a: space.args[1], b, membership, inOp};
+    }
+
     latexFormat() {
+        const split = this.splitIntervalOperands();
+        if (split) {
+            if (split.membership != null)
+                return `{%s} ${split.inOp} {${split.format}}`;
+            return split.format;
+        }
         // LaTeX ignores the newline; without a space the head and argument run together.
         if (this.isMultilineApplication()) return '%s\\ %s';
-        const sep = this.sep();
-        return `%s${sep}%s`;
+        // KaTeX display math ignores a raw newline, so
+        // `let Δ := b² - 4 * a * c` followed by `x ∈ …` renders as `4acx`.
+        return '\\begin{aligned}&%s\\\\&%s\\end{aligned}';
+    }
+
+    latexArgs(syntax) {
+        const split = this.splitIntervalOperands();
+        if (split) {
+            if (syntax) syntax[split.ctor] = true;
+            const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
+            const bounds = [peel(split.a).toLatex(syntax), peel(split.b).toLatex(syntax)];
+            if (split.membership != null) {
+                const elem = L.Lean_in.peelLatexElem(split.membership);
+                return [elem.toLatex(syntax), ...bounds];
+            }
+            return bounds;
+        }
+        return super.latexArgs(syntax);
     }
 
     relocate_last_comment() {

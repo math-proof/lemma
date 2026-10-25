@@ -14,6 +14,10 @@ import Lemma.Complex.In_WeightSpace.is.H.eq.SMul
 import sympy.atlas.v1.Atlas.LieGroups.code.GKModule
 import sympy.atlas.v1.Atlas.LieGroups.code.KTypeDecomposition
 import Mathlib.Data.ZMod.Basic
+import Mathlib.Algebra.Lie.OfAssociative
+
+-- Mathlib keeps LieRing.ofAssociativeRing as a local instance only
+attribute [local instance 100] LieRing.ofAssociativeRing
 
 noncomputable section
 
@@ -227,6 +231,7 @@ noncomputable def sl2_adjoint_gkmod
   diff_eq_lie := by intro X v; simp [LieModule.toEnd_apply_apply]
   equivariance := hAd_lie
 
+open Classical in
 noncomputable def sl2_gk_ktype_boundedness
     (𝔤 : Type*) [LieRing 𝔤] [LieAlgebra ℂ 𝔤]
     (K : Type*) [Group K]
@@ -285,6 +290,17 @@ noncomputable def principalSeries_ρF (ν : ℂ) (ε : ZMod 2) :
   toFun f m := (1/2 : ℂ) * (ν - (m : ℂ) - 1) * f (m + 2)
   map_add' u w := by ext m; simp [Pi.add_apply]; ring
   map_smul' c v := by ext m; simp [RingHom.id_apply, Pi.smul_apply, smul_eq_mul]; ring
+
+opaque sl2_gk_principalSeries_params_exists
+    (𝔤 : Type*) [LieRing 𝔤] [LieAlgebra ℂ 𝔤]
+    (K : Type*) [Group K]
+    (𝔨 : LieSubalgebra ℂ 𝔤) (Ad : K →* (𝔤 →ₗ[ℂ] 𝔤))
+    (V : Type*) [AddCommGroup V] [Module ℂ V]
+    [LieRingModule 𝔤 V] [LieModule ℂ 𝔤 V]
+    (M : GKModule 𝔤 K 𝔨 Ad V) (hirr : M.IsIrreducibleGKModule) (hadm : M.IsAdmissible)
+    (M_sl2 : SL2GKModule 𝔤 K 𝔨 Ad V)
+    (hbdd : sl2_gk_ktype_boundedness 𝔤 K 𝔨 Ad V M M_sl2 hirr hadm = .unboundedBoth) :
+    ℂ × ZMod 2 := (0, 0)
 
 noncomputable def sl2_gk_principalSeries_nu
     (𝔤 : Type*) [LieRing 𝔤] [LieAlgebra ℂ 𝔤]

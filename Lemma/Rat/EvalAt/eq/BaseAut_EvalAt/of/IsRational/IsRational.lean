@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_BaseChangeGalois
-import Lemma.Definitions.Def_AlgebraicCurve_DivisorClassGroup
-import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluation
+import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
+import Lemma.AlgebraicCurve.DivisorClassGroup
+import Def.AlgebraicCurve_PlaceEvaluation
 
 
 namespace Definitions

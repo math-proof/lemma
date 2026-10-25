@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_UVCrossingModel
-import Lemma.Definitions.Def_ModularCurve_UVCrossingGaussOrder
-import Lemma.Definitions.Def_ModularCurve_UVCrossingDominantIndices
+import Lemma.ModularCurve.UVCrossingModel
+import Lemma.ModularCurve.UVCrossingGaussOrder
+import Def.ModularCurve_UVCrossingDominantIndices
 import Lemma.Int.P2MUtil
 
 open ModularCurve ModularCurve.UVCrossingModel IsLocalRing

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_CurveModel
+import Lemma.AlgebraicCurve.CurveModel
 open CategoryTheory AlgebraicGeometry AlgebraicCurve
 
 

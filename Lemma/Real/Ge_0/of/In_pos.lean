@@ -27,8 +27,14 @@ private lemma pos_root_nonneg_coeff
   set x : B → ℝ := fun s => if s = t then 1 else 0
   have hx_face : x ∈ titsFaceDual M I := by
     constructor
-    · intro s hs; simp [hI_def] at hs; simp [x, hs]
-    · intro s hs; simp [hI_def] at hs; simp [x, hs]
+    ·
+      intro s hs
+      simp [hI_def] at hs
+      simp [x, hs]
+    ·
+      intro s hs
+      simp [hI_def] at hs
+      simp [x, hs]
   have ht_notin : t ∉ I := by simp [hI_def]
   have hα_ne : ∃ s, s ∉ I ∧ α s ≠ 0 := ⟨t, ht_notin, ne_of_lt h⟩
   have hpair := RootSystemData.pos_pairing_outside_span (M := M) I x hx_face α hα hα_ne
@@ -78,15 +84,14 @@ private lemma affine_nonposRoots_finite_of_level_bound
 -- given
   (hv₀_pos : ∀ s, v₀ s > 0)
   (hv₀_rad : ∀ t : B, ∑ u : B, v₀ u * formVal M u t = 0)
-  (hAff : IsAffineCoxeter M)
+  (_ : IsAffineCoxeter M)
   (hx : x ∈ affineHyperplane M v₀)
-  (hx_ne : x ≠ 0) :
+  (_ : x ≠ 0) :
 -- imply
-  Set.Finite (nonposRoots (RootSystemData.Φpos (M := M)) x) := by
+  Set.Finite (nonposRoots (RootSystemData.Φpos (M := M)) x) :=
 -- proof
-  have hx_sum : ∑ s, v₀ s * x s = 1 := by
-    simpa [affineHyperplane] using hx
-  exact RootSystemData.nonposRoots_finite_on_hyperplane v₀ hv₀_pos hv₀_rad x hx_sum
+  RootSystemData.nonposRoots_finite_on_hyperplane v₀ hv₀_pos hv₀_rad x
+    (by simpa [affineHyperplane] using hx)
 
 /--
 [affine_nuFiniteAt](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/AffineCoxeter/AffineCriterion.lean)
@@ -136,9 +141,8 @@ private lemma galleryChasingReflectsIntoFundClosure
   -- titsConeSet unfolds to an orbit of a fundamental-closure point
   obtain ⟨y, hy, ws, rfl⟩ := hx_cone
   refine ⟨ws.reverse, fun s => ?_⟩
-  have hrev : wordAction M ws.reverse (wordAction M ws y) = y := by
-    rw [wordAction_reverse_cancel]
-  rw [show (wordAction M ws.reverse (wordAction M ws y)) s = y s from congr_fun hrev s]
+  change (wordAction M ws.reverse (wordAction M ws y)) s ≥ 0
+  rw [wordAction_reverse_cancel]
   exact hy s
 
 /--
@@ -234,8 +238,11 @@ private lemma affineHyperplane_inter_titsCone_eq
 -- proof
   ext x
   constructor
-  · intro ⟨hx, _⟩; exact hx
-  · intro hx
+  ·
+    intro ⟨hx, _⟩
+    exact hx
+  ·
+    intro hx
     exact ⟨hx, affineHyperplane_subset_titsCone hAff hv₀_pos hv₀_rad hx⟩
 
 /--

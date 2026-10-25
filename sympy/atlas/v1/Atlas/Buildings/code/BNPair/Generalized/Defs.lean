@@ -113,10 +113,3 @@ structure GeneralizedBNPair (Gt : Type*) [Group Gt]
         g = b₁ * n * b₂ * σ)
   twist_group_finite :
     Finite (Tt ⧸ (Tt ⊓ G).subgroupOf Tt)
-
-namespace GeneralizedBNPair
-
-/-- **Decomposition of $\tilde G$.** Every $x \in \tilde G$ factors as $x = t \cdot g$ with
-$t \in \tilde T$ and $g \in G$, reflecting the coset structure $\tilde G / G \cong
-\tilde T / (\tilde T \cap G)$. -/
-end GeneralizedBNPair

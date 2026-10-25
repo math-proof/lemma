@@ -13,7 +13,6 @@ private lemma main
 -- proof
   h₀.right
 
-
 @[path]
 private lemma domain
   [Preorder α]
@@ -28,4 +27,4 @@ private lemma domain
 
 -- created on 2023-11-12
 -- updated on 2025-05-18
--- updated on 2026-09-27
+-- updated on 2026-10-24

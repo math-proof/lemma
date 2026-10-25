@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
 import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.InversionSet
-import Lemma.List.BilinInversions_ListB.eq.Empty
-open Finset BigOperators
+import Lemma.List.In_BilinInversions_ListB.is.Lt_0
+open Finset BigOperators List CoxeterGroup
 
 
 namespace CoxeterGroup
@@ -18,7 +18,8 @@ private lemma neg_e_eq_neg_one_smul_e
 -- imply
   (fun t => -(e s t)) = (-1 : ℝ) • e s := by
 -- proof
-  ext t; simp [Pi.smul_apply, smul_eq_mul]
+  ext t
+  simp [Pi.smul_apply, smul_eq_mul]
 
 end CoxeterGroup
 
@@ -60,14 +61,17 @@ private lemma bilinInversions_append_toggle
 -- imply
   s ∈ bilinInversions M (word ++ [s]) ↔ s ∉ bilinInversions M word := by
 -- proof
-  rw [mem_bilinInversions_iff, mem_bilinInversions_iff]
+  rw [In_BilinInversions_ListB.is.Lt_0, In_BilinInversions_ListB.is.Lt_0]
   rw [wordSigma_append_s_component_neg]
   constructor
-  · intro h_neg_lt h_lt
+  ·
+    intro h_neg_lt h_lt
     linarith
-  · intro h_not_lt
-    push_neg at h_not_lt
-    have hpos : wordSigma M word (e s) s > 0 := lt_of_le_of_ne h_not_lt (Ne.symm hne)
+  ·
+    intro h_not_lt
+    have h_not_lt' : ¬ wordSigma M word (e s) s < 0 := h_not_lt
+    have h_ge : wordSigma M word (e s) s ≥ 0 := le_of_not_gt h_not_lt'
+    have hpos : wordSigma M word (e s) s > 0 := lt_of_le_of_ne h_ge (Ne.symm hne)
     linarith
 
 end CoxeterGroup

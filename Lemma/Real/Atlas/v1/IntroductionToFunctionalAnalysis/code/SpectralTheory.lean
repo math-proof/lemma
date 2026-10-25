@@ -1,9 +1,61 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToFunctionalAnalysis.code.SpectralTheory
-open Function Set Filter Bornology Metric Pointwise Topology SpectralTheory
+open Function Set Filter Bornology Metric Pointwise Topology
 open Module End
 open MeasureTheory
+
+/-! Local Atlas SpectralTheory wrappers (Real-only packaging).
+Sympy SpectralTheory.lean is held broken (Lp / L2UnitInterval instances);
+do not import it until sympy lake-clean. -/
+
+namespace SpectralTheory
+
+variable {𝕜 : Type*} [RCLike 𝕜]
+variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace 𝕜 H] [CompleteSpace H]
+
+/-- A bounded linear operator $T : H \to H$ on a Hilbert space is *self-adjoint*
+if $T = T^\ast$. This is a wrapper around Mathlib's `IsSelfAdjoint`. -/
+def IsSelfAdjointOperator (T : H →L[𝕜] H) : Prop := IsSelfAdjoint T
+
+/-- The Hilbert space $L^2([0,1])$ of square-integrable real-valued functions on
+the unit interval, equipped with the restriction of Lebesgue measure to $[0,1]$. -/
+noncomputable abbrev L2UnitInterval :=
+  MeasureTheory.Lp ℝ 2 (volume.restrict (Set.Icc (0 : ℝ) 1))
+
+/-- The $k$-th orthonormal sine basis function on $[0,1]$:
+$u_k(x) = \sqrt{2} \sin(k\pi x)$.
+These form an orthonormal eigenbasis of the Green's operator with Dirichlet
+boundary conditions on the unit interval. -/
+noncomputable def sineBasisFun (k : ℕ+) : ℝ → ℝ :=
+  fun x => Real.sqrt 2 * Real.sin (↑k * Real.pi * x)
+
+/-- The $k$-th eigenvalue of the Green's operator on $[0,1]$ with Dirichlet
+boundary conditions: $\lambda_k = \dfrac{1}{k^2 \pi^2}$. -/
+noncomputable def greensEigenvalue (k : ℕ+) : ℝ := 1 / ((k : ℝ) ^ 2 * Real.pi ^ 2)
+
+/-- The square root of the $k$-th eigenvalue of the Green's operator,
+$\sqrt{\lambda_k} = \dfrac{1}{k\pi}$. This is the $k$-th eigenvalue of $A^{1/2}$. -/
+noncomputable def greensEigenvalueSqrt (k : ℕ+) : ℝ := 1 / ((k : ℝ) * Real.pi)
+
+/-- The square root $A^{1/2}$ of the Green's operator, defined via its action on the
+orthonormal eigenbasis $\{b_k\}$: if $f = \sum_k c_k\, b_k$ where
+$c_k = \langle b_k, f\rangle$, then
+$A^{1/2} f = \sum_k \frac{1}{k\pi}\, c_k\, b_k$. -/
+noncomputable def greensOperatorSqrt (b : HilbertBasis ℕ+ ℝ L2UnitInterval) :
+    L2UnitInterval → L2UnitInterval :=
+  fun f => ∑' (k : ℕ+), (greensEigenvalueSqrt k * inner (𝕜 := ℝ) (b k) f) • b k
+
+/-- The Green's kernel for the Dirichlet Laplacian on $[0,1]$:
+$G(x,t) = \min(x,t)\,(1 - \max(x,t))$.
+The Green's operator $f \mapsto \int_0^1 G(x,t) f(t)\,dt$ is the inverse of
+$-\frac{d^2}{dx^2}$ subject to $u(0)=u(1)=0$. -/
+noncomputable def greensKernel (x t : ℝ) : ℝ :=
+  min x t * (1 - max x t)
+
+end SpectralTheory
+
+open SpectralTheory
+
 
 
 /--
@@ -174,8 +226,13 @@ lemma fredholm_alternative_full
         have hb_val := congr_arg Subtype.val hb
         simp only [ContinuousLinearMap.sub_apply] at hb_val
         show μ • (b : H) - T (b : H) = y
-        have hT'_val : ↑(T' b) = T (↑b : H) := by simp [T', LinearMap.restrict_apply]
-        rw [← hT'_val]; exact hb_val
+        have hT'_val : ↑(T' b) = T (↑b : H) := by
+          change ↑(T.toLinearMap.restrict hTinv b) = T ↑b
+          rw [LinearMap.restrict_apply]; rfl
+        have : μ • (↑b : H) - ↑(T' b) = y := by
+          simpa [ContinuousLinearMap.algebraMap_apply, smul_apply,
+            ContinuousLinearMap.id_apply, sub_apply] using hb_val
+        rwa [hT'_val] at this
     · right; rw [ker_smul_id_sub_eq_eigenspace]
       exact ⟨hasEigenvalue_iff.mp heig,
         ContinuousLinearMap.finite_dimensional_eigenspace hT μ hμ⟩
@@ -184,17 +241,8 @@ lemma fredholm_alternative_full
     exact ⟨by rw [LinearMap.range_eq_top.mpr hbij.2, LinearMap.ker_eq_bot.mpr hbij.1,
       Submodule.bot_orthogonal_eq_top],
       Or.inl hbij⟩
-/-- **Maximum principle.** Let $A = A^\ast \in \mathcal{B}(H)$ be a self-adjoint
-compact operator on an infinite-dimensional Hilbert space. Then the nonzero
-eigenvalues of $A$ can be ordered as $|\lambda_1| \ge |\lambda_2| \ge \cdots$
-(counted with multiplicity), with pairwise orthonormal eigenvectors $\{u_k\}$ such
-that $T u_k = \lambda_k u_k$, $|\lambda_j| \to 0$, and for each $j$,
-$|\lambda_j| = \sup_{\|u\|=1,\, u \in \operatorname{Span}(u_1,\dots,u_{j-1})^\perp}
-|\langle Au, u\rangle|$. -/
-section SpectralDecomposition
-variable {𝕜 : Type*} [RCLike 𝕜]
-variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace 𝕜 H] [CompleteSpace H]
-open Module End
+
+/- Maximum principle (doc only; no section — Lemma/ files are lemma-only after @[path]). -/
 set_option maxHeartbeats 800000 in
 
 /--
@@ -259,7 +307,7 @@ lemma spectral_theorem_range_decomposition
           by_cases hμ : μ = 0
           · subst hμ; simp at hv; rw [hv, inner_zero_right]
           · have hv' : v ∈ eigenspace (T : End 𝕜 H) μ := by
-            simp only [ne_eq, hμ, not_false_eq_true, iSup_true] at hv; exact hv
+              simp only [ne_eq, hμ, not_false_eq_true, iSup_true] at hv; exact hv
             exact hsym.orthogonalFamily_eigenspaces (Ne.symm hμ) ⟨x, hx_eig⟩ ⟨v, hv'⟩)
         (inner_zero_right _)
         (fun a b ha hb => by
@@ -278,7 +326,8 @@ lemma spectral_theorem_range_decomposition
       rw [Submodule.orthogonal_closure, hort_range]
     haveI : CompleteSpace (LinearMap.range T.toLinearMap).topologicalClosure :=
       (Submodule.isClosed_topologicalClosure _).completeSpace_coe
-    rwa [← hort_closure]
+    simpa [hort_closure] using
+      (LinearMap.range T.toLinearMap).topologicalClosure.isCompl_orthogonal
 
 /--
 [rayleighQuotient_algebraMap_sub](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/SpectralTheory.lean)
@@ -306,7 +355,7 @@ lemma rayleighQuotient_algebraMap_sub
   rw [h_re_inner]
   have hxn : (‖x‖ : ℝ) ≠ 0 := norm_ne_zero_iff.mpr hx
   field_simp
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 999999 in
 
 /--
 [selfAdjoint_spectrum_subset_Icc](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/SpectralTheory.lean)
@@ -353,7 +402,7 @@ lemma selfAdjoint_spectrum_subset_Icc
     by_cases hx : x = 0
     · simp [hx, ContinuousLinearMap.rayleighQuotient_apply_zero]
       linarith
-    · rw [rayleighQuotient_algebraMap_sub T t x hx]
+    · rw [rayleighQuotient_algebraMap_sub (T := T) (t := t) (x := x) hx]
       rw [abs_le]
       exact ⟨by linarith [hle_M x], by linarith [hm_le x]⟩
   have h_lower : m ≤ RCLike.re mu := by
@@ -373,7 +422,7 @@ lemma selfAdjoint_spectrum_subset_Icc
       linarith [RCLike.abs_re_le_norm ((↑m : 𝕜) - mu), neg_abs_le (RCLike.re ((↑m : 𝕜) - mu))]
     linarith
   exact ⟨h_lower, h_upper⟩
-set_option maxHeartbeats 3200000 in
+set_option maxHeartbeats 999999 in
 
 /--
 [positive_iff_spectrum_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/SpectralTheory.lean)
@@ -407,7 +456,7 @@ lemma positive_iff_spectrum_nonneg
     have hrq_nonneg : ∀ x : H, 0 ≤ T.rayleighQuotient x := fun x =>
       div_nonneg (hpos x) (sq_nonneg _)
     have h_m_nonneg : (0 : ℝ) ≤ m := le_ciInf hrq_nonneg
-    exact le_trans h_m_nonneg (selfAdjoint_spectrum_subset_Icc T hT hμ).1
+    exact le_trans h_m_nonneg (selfAdjoint_spectrum_subset_Icc (T := T) hT hμ).1
   ·
     intro hspec u
     by_cases hu : u = 0
@@ -432,7 +481,7 @@ lemma positive_iff_spectrum_nonneg
         by_cases hx : x = 0
         · rw [hx, ContinuousLinearMap.rayleighQuotient_apply_zero]
         · have : S.rayleighQuotient x = M - T.rayleighQuotient x :=
-          rayleighQuotient_algebraMap_sub T M x hx
+          rayleighQuotient_algebraMap_sub (T := T) (t := M) (x := x) hx
           rw [this]; linarith [hle_M x]
       have hS_ne : S ≠ 0 := by
         intro hS_eq
@@ -449,14 +498,14 @@ lemma positive_iff_spectrum_nonneg
           by_cases hx : x = 0
           · rw [hx, ContinuousLinearMap.rayleighQuotient_apply_zero]
           · have hSrq : S.rayleighQuotient x = M - T.rayleighQuotient x :=
-            rayleighQuotient_algebraMap_sub T M x hx
+            rayleighQuotient_algebraMap_sub (T := T) (t := M) (x := x) hx
             have hSrq_zero : S.rayleighQuotient x = 0 := by
               rw [show S = 0 from hS_zero]; exact ContinuousLinearMap.rayleighQuotient_zero_apply x
             linarith
         linarith
       have hS_spec_nonneg : ∀ ν ∈ spectrum 𝕜 S, 0 ≤ RCLike.re ν := by
         intro ν hν
-        exact le_trans (le_ciInf hS_rq_nonneg) (selfAdjoint_spectrum_subset_Icc S hS_sa hν).1
+        exact le_trans (le_ciInf hS_rq_nonneg) (selfAdjoint_spectrum_subset_Icc (T := S) hS_sa hν).1
       have hS_neg_not_mem : (↑(-‖S‖) : 𝕜) ∉ spectrum 𝕜 S := by
         intro h_mem
         have := hS_spec_nonneg _ h_mem
@@ -492,7 +541,7 @@ lemma positive_iff_spectrum_nonneg
         have hx₀_ne : x₀ ≠ 0 := by
           intro h; rw [h, ContinuousLinearMap.rayleighQuotient_apply_zero] at hx₀; linarith
         have hS_rq_x₀ : S.rayleighQuotient x₀ = M - T.rayleighQuotient x₀ :=
-          rayleighQuotient_algebraMap_sub T M x₀ hx₀_ne
+          rayleighQuotient_algebraMap_sub (T := T) (t := M) (x := x₀) hx₀_ne
         have hS_rq_gt : M < |S.rayleighQuotient x₀| := by
           rw [hS_rq_x₀, abs_of_nonneg (by linarith [hle_M x₀])]; linarith
         exact lt_of_lt_of_le hS_rq_gt
@@ -514,7 +563,8 @@ lemma isOpen_invertible_operators
   have h : { T : H →L[𝕜] H | Function.Bijective T } = { T : H →L[𝕜] H | IsUnit T } := by
     ext T
     exact ContinuousLinearMap.isUnit_iff_bijective.symm
-  rwa [h]
+  rw [h]
+  exact Units.isOpen
 /--
 [greens_kernel_integral_sine_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToFunctionalAnalysis/code/SpectralTheory.lean)
 -/
@@ -544,11 +594,15 @@ lemma greens_kernel_integral_sine_eq
   have hleft_congr : Set.EqOn (fun t => min x t * (1 - max x t) * (Real.sqrt 2 * Real.sin (a * t)))
     (fun t => (1 - x) * Real.sqrt 2 * (t * Real.sin (a * t))) (Set.uIcc 0 x) := by
     intro t ht; simp only [Set.uIcc_of_le hx0] at ht
-    simp [min_eq_right ht.2, max_eq_left ht.2]; ring
+    change min x t * (1 - max x t) * (Real.sqrt 2 * Real.sin (a * t)) =
+      (1 - x) * Real.sqrt 2 * (t * Real.sin (a * t))
+    rw [min_eq_right ht.2, max_eq_left ht.2]; ring
   have hright_congr : Set.EqOn (fun t => min x t * (1 - max x t) * (Real.sqrt 2 * Real.sin (a * t)))
     (fun t => x * Real.sqrt 2 * ((1 - t) * Real.sin (a * t))) (Set.uIcc x 1) := by
     intro t ht; simp only [Set.uIcc_of_le hx1] at ht
-    simp [min_eq_left ht.1, max_eq_right ht.1]; ring
+    change min x t * (1 - max x t) * (Real.sqrt 2 * Real.sin (a * t)) =
+      x * Real.sqrt 2 * ((1 - t) * Real.sin (a * t))
+    rw [min_eq_left ht.1, max_eq_right ht.1]; ring
   rw [intervalIntegral.integral_congr hleft_congr, intervalIntegral.integral_congr hright_congr]
   rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_const_mul]
   have hI1 : ∫ t in (0:ℝ)..x, t * Real.sin (a * t) =
@@ -563,8 +617,13 @@ lemma greens_kernel_integral_sine_eq
         convert hd.sin.div_const (a ^ 2) using 1; field_simp
       have hh2 : HasDerivAt (fun t => t * Real.cos (a * t) / a)
         (Real.cos (a * t) / a - t * Real.sin (a * t)) t := by
-        convert ((hasDerivAt_id t).mul hd.cos).div_const a using 1
-        simp only [id, one_mul, neg_mul]; field_simp; ring
+        have hmul : HasDerivAt (fun u => u * Real.cos (a * u))
+            (Real.cos (a * t) + t * (-Real.sin (a * t) * a)) t := by
+          convert (hasDerivAt_id t).mul hd.cos using 1
+          · ext; rfl
+          · simp [id_eq]
+        exact (hmul.div_const a).congr_deriv (by field_simp [ha]; ring)
+
       convert hh1.sub hh2 using 1; ring
     rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hasD
       ((continuous_id.mul (Real.continuous_sin.comp
@@ -585,8 +644,13 @@ lemma greens_kernel_integral_sine_eq
         convert hd.sin.div_const (a ^ 2) using 1; field_simp
       have h3 : HasDerivAt (fun t => t * Real.cos (a * t) / a)
         (Real.cos (a * t) / a - t * Real.sin (a * t)) t := by
-        convert ((hasDerivAt_id t).mul hd.cos).div_const a using 1
-        simp only [id, one_mul, neg_mul]; field_simp; ring
+        have hmul : HasDerivAt (fun u => u * Real.cos (a * u))
+            (Real.cos (a * t) + t * (-Real.sin (a * t) * a)) t := by
+          convert (hasDerivAt_id t).mul hd.cos using 1
+          · ext; rfl
+          · simp [id_eq]
+        exact (hmul.div_const a).congr_deriv (by field_simp [ha]; ring)
+
       convert (h1.sub h2).add h3 using 1; ring
     rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hasD
       (((continuous_const.sub continuous_id).mul (Real.continuous_sin.comp
@@ -626,7 +690,7 @@ lemma greens_operator_eigendecomposition
         rw [intervalIntegral.integral_of_le (by linarith : (0:ℝ) ≤ 1)]
         exact (setIntegral_congr_set Ioc_ae_eq_Icc).symm
       rw [hconv]
-      exact greens_kernel_integral_sine_eq k x hx0 hx1
+      exact greens_kernel_integral_sine_eq (k := k) (x := x) hx0 hx1
     have hAeq := hA_greens (b k)
     have hb_ae := hb k
     have hintegral_eq : ∀ᵐ x ∂μ,

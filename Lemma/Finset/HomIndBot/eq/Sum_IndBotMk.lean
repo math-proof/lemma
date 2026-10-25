@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
 import Definitions.Def_GroupCohomology_TateCohomology
-import Definitions.Def_GroupCohomology_TateDimensionShift
+import Representation.EqIndBotMk
 open CategoryTheory Rep
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_FibrePoly
+import Lemma.ModularCurve.FibrePoly
 import Lemma.Int.P2MUtil
 
 open Polynomial ModularCurve

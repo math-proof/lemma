@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FormalGroup_DrinfeldBasis
-import Lemma.Definitions.Def_FormalGroup_NSeries
-import Lemma.Definitions.Def_FormalGroup_PointTransport
+import Lemma.FormalGroup.DrinfeldBasis
+import Lemma.FormalGroup.NSeries
+import Def.FormalGroup_PointTransport
 open FormalGroup IsLocalRing
 
 

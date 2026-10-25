@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GaloisRep_TameCharacter
-import Lemma.Definitions.Def_FLTPrelim_Ramification
-import Lemma.Definitions.Def_EllipticCurve_FrobeniusTrace
+import Def.GaloisRep_TameCharacter
+import Def.FLTPrelim_Ramification
+import Lemma.EllipticCurve.FrobeniusTrace
 import Lemma.Int.P2MUtil
 
 open ValuationSubring

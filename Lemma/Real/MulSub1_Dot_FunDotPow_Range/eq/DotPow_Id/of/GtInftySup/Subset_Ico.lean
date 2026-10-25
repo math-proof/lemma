@@ -2,7 +2,7 @@ import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
 import sympy.vector.Basic
 import sympy.concrete.sup
-import sympy.core.function
+import Theorem.Function
 open Finset
 
 

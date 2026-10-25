@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_NumberField_IdeleBox
+import Lemma.NumberField.IdeleBox
 import Lemma.Int.P2MUtil
 
 

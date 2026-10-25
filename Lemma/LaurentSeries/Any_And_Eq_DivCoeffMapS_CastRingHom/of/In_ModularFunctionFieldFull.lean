@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_JqCoeff
-import Lemma.Definitions.Def_ModularCurve_LaurentCoeff
+import Lemma.ModularCurve.JqCoeff
+import Lemma.ModularCurve.LaurentCoeff
 import Lemma.Int.P2MUtil
 
 open ModularCurve

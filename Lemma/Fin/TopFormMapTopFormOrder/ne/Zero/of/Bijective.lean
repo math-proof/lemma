@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_NeronModelInfra_TopFormOrder
+import Lemma.NeronModelInfra.TopFormOrder
 
 
 namespace Definitions

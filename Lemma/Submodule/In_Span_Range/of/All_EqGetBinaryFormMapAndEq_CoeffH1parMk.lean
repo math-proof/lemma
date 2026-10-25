@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.Definitions.Def_HeckeEis_BinaryFormRep
-import Lemma.Definitions.Def_Gamma0CoeffCohomology
+import Lemma.HeckeEis.BinaryFormRep
+import Lemma.Gamma0CoeffCohomology.Main
 import sympy.Basic
 open HeckeEis
 open MvPolynomial

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicGeometry_CoherentBaseChange
+import Def.AlgebraicGeometry_CoherentBaseChange
 open scoped TensorProduct
 open CoherentBaseChange
 open CoherentBaseChange.TwoTermComplex

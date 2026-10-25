@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_FLTPrelim_GaloisRep
+import Lemma.FLTPrelim.GaloisRep
 import Lemma.Int.P2MUtil
 open Int
 open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point

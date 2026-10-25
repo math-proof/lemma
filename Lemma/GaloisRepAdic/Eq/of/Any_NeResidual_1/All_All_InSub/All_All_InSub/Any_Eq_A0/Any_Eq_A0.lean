@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GaloisRep_Adic
-import Lemma.Definitions.Def_FLTPrelim_Ramification
+import Def.GaloisRep_Adic
+import Def.FLTPrelim_Ramification
 import Lemma.Int.P2MUtil
 
 open GaloisRepAdic

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_GradedCartierNModule
+import Lemma.CerednikDrinfeld.GradedCartierNModule
 
 
 /--

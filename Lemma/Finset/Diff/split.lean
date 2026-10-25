@@ -1,4 +1,4 @@
-import sympy.core.function
+import Theorem.Function
 import sympy.Basic
 
 

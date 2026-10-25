@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GaloisRep_Adic
+import Def.GaloisRep_Adic
 import Lemma.Int.P2MUtil
 
 open Polynomial IsLocalRing

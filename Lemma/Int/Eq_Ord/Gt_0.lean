@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_Repartitions
-import Lemma.Definitions.Def_AlgebraicCurve_IsCurveOver
+import Lemma.AlgebraicCurve.Repartitions
+import Lemma.Scheme.IsCurveOver
 open AlgebraicCurve
 
 

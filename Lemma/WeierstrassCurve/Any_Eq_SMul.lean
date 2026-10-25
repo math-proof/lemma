@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_GaloisRep_Flat
-import Lemma.Definitions.Def_GaloisRep_Residual
-import Lemma.Definitions.Def_FLTPrelim_GaloisRep
+import Def.GaloisRep_Flat
+import Def.GaloisRep_Residual
+import Lemma.FLTPrelim.GaloisRep
 import Lemma.Int.P2MUtil
 open scoped NNReal
 open scoped WeierstrassCurve.Affine

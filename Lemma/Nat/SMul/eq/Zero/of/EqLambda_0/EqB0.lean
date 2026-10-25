@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_CerednikDrinfeld_GradedCartierModuleData
-import Lemma.Definitions.Def_CerednikDrinfeld_GradedCartierNModule
+import Lemma.CerednikDrinfeld.GradedCartierModuleData
+import Lemma.CerednikDrinfeld.GradedCartierNModule
 open CerednikDrinfeld CerednikDrinfeld.GradedCartierModuleData
 
 

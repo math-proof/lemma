@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_IharaLemma_IdempotentSplitting
+import Lemma.IharaLemma.IdempotentSplitting
 open IharaLemma
 
 

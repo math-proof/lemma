@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_X1
+import Lemma.ModularCurve.X1
 
 
 /-- ported from external source -/

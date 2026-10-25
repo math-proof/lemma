@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_ArithmeticGalois
+import Lemma.ModularCurve.ArithmeticGalois
 import Lemma.Int.P2MUtil
 
 open ModularCurve AlgebraicCurve IntermediateField HahnSeries

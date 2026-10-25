@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_AlgebraicCurve_Correspondence
-import Lemma.Definitions.Def_AlgebraicCurve_DifferentialPushPull
+import Lemma.AlgebraicCurve.Correspondence
+import Def.AlgebraicCurve_DifferentialPushPull
 import Lemma.Int.P2MUtil
 
 

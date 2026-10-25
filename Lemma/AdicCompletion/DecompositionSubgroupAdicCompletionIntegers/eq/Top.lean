@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_NumberField_PlaceDecompositionAction
+import Lemma.NumberField.PlaceDecompositionAction
 open IsDedekindDomain NumberField
 open scoped NumberField.PlaceDecomp Pointwise
 

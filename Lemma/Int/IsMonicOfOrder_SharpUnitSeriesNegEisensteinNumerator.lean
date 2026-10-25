@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_EtaQuotient
+import Lemma.ModularCurve.EtaQuotient
 import Lemma.Int.P2MUtil
 
 open ModularCurve

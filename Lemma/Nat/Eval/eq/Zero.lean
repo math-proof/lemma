@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import Lemma.Definitions.Def_ModularCurve_KroneckerTransport
+import Lemma.ModularCurve.KroneckerTransport
 import Lemma.Int.P2MUtil
 
 open PowerSeries HahnSeries IntermediateField ModularCurve

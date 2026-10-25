@@ -9,7 +9,7 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'given-prop-first', 'given-prop-consecutive', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub']);
+export const AST_RULES = new Set(['have-inline-once', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub']);
 
 /** parse `source`, or null when the parser throws / does not return a module */
 export function parseAst(source) {
@@ -261,6 +261,44 @@ function givenPropFirst(ctx, decl, bs = givenBinders(decl)) {
 }
 
 /**
+ * An explicit binder under `-- given` whose names occur free in a later hypothesis is not a given:
+ * it should be `{names : type}` above `-- given`. Propositions stay. A name rebound by `∀` / `∃` /
+ * `∑` / `∏` / `fun` inside the hypothesis does not count (`mentions`).
+ * Returns true when it warned.
+ */
+function givenImplicitDep(ctx, decl, bs = givenBinders(decl)) {
+    if (!bs) return false;
+    let warned = false;
+    for (let a = 0; a < bs.length; a++) {
+        const b = bs[a];
+        if (b.kind === 'prop' || !b.names.length || !b.type) continue;
+        if (b.kind == null && b.names.every((n) => /^_?h/.test(n))) continue;
+        if (String(b.node).includes(':=')) continue;
+        const hits = b.names.map((n) => ({
+            n,
+            hyps: bs.slice(a + 1).filter((p) => p.kind === 'prop' && p.type && mentions(p.type, n)),
+        }));
+        const referenced = hits.filter((h) => h.hyps.length);
+        if (!referenced.length) continue;
+        const shown = quote(b.node, 80, 1);
+        if (referenced.length === b.names.length) {
+            const hyps = [...new Set(referenced.flatMap((h) => h.hyps.flatMap((p) => p.names)))];
+            const imp = shown.startsWith('(') && shown.endsWith(')') ? `{${shown.slice(1, -1)}}` : `{${b.names.join(' ')} : …}`;
+            ctx.warnAst('given-implicit-dep', b.node,
+                `\`${shown}\` is referenced by ${hyps.map((n) => `\`${n}\``).join(', ')}; it is not a given — change it to \`${imp}\` above \`-- given\``);
+        } else {
+            for (const h of referenced) {
+                const hyps = [...new Set(h.hyps.flatMap((p) => p.names))];
+                ctx.warnAst('given-implicit-dep', b.node,
+                    `\`${h.n}\` in \`${shown}\` is referenced by ${hyps.map((n) => `\`${n}\``).join(', ')}; it is not a given — change \`${h.n}\` to \`{${h.n} : …}\` above \`-- given\``);
+            }
+        }
+        warned = true;
+    }
+    return warned;
+}
+
+/**
  * `given-prop-consecutive`: the propositions of `-- given` must form one consecutive run. The page
  * (`render2vue` → `vue/lemma.vue`) shows `given` as: `explicit` (binders before the first
  * proposition, raw Lean) → `given` (the first run of propositions, one LaTeX block each) → `default` (everything
@@ -490,6 +528,7 @@ export function astRules(ctx, tree) {
         if (node instanceof Lean_theorem && lemmaFile) declKeywordDir(ctx, node);
         if (node instanceof Lean_lemma || node instanceof Lean_theorem) {
             const bs = givenBinders(node);
+            givenImplicitDep(sink, node, bs);
             // one finding per lemma: the consecutive check only when no independent proposition can simply move up
             if (!givenPropFirst(sink, node, bs)) givenPropConsecutive(sink, node, bs);
         }
