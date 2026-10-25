@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.SummedBKKKLClose
+import Theorem.StatisticalMechanics.Code.Probability.SummedBKKKLClose
 open Finset Real Set intervalIntegral MeasureTheory StatMech StatMech.Probability
 
 

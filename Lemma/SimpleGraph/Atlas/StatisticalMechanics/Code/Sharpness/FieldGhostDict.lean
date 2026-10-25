@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.FieldGhostDict
+import Theorem.StatisticalMechanics.Code.Sharpness.FieldGhostDict.Part4
 open Finset SimpleGraph StatMech StatMech.Ising StatMech.Sharpness StatMech.Sharpness.FieldGhostDict
 
 

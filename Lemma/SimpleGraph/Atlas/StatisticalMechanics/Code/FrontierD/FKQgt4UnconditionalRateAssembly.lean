@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4UnconditionalRateAssembly
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4UnconditionalRateAssembly
 open MeasureTheory Filter Topology StatMech StatMech.FrontierD
 
 

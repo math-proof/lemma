@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKTwoBoxDecoupling
+import Theorem.StatisticalMechanics.Code.FK.FKTwoBoxDecoupling.Part2
 open MeasureTheory Filter Topology Set StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

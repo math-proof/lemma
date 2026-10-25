@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.UniqueGames
+import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
 open UniqueGames
 open Finset
 

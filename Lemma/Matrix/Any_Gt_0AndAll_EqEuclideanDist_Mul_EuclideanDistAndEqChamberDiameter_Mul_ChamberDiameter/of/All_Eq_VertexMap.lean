@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.AffineCoxeter.CoxeterSimilitude
+import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.CoxeterSimilitude
 open Set AffineCoxeter
 open scoped InnerProductSpace
 

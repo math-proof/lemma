@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.concrete.BooleanMobiusInversion
+import Theorem.Combinatorics.Enumerative.BooleanMobiusInversion
 open scoped BigOperators
 
 

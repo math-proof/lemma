@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.JaccardLattice
+import Theorem.MathlibExtTest.Combinatorics.JaccardLattice
 open JaccardLattice
 
 

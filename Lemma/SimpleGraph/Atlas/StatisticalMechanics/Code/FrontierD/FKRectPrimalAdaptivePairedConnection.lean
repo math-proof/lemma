@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectPrimalAdaptivePairedConnection
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectPrimalAdaptivePairedConnection.Part5
 open MeasureTheory SimpleGraph StatMech.Lattice StatMech StatMech.FrontierD
 
 

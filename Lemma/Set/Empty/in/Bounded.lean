@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.BornologyGroups
+import Def.v1.Atlas.Buildings.code.Building.BornologyGroups.Part3
 open Set Filter Classical BornologicalGroupData BNPairBornology
 
 

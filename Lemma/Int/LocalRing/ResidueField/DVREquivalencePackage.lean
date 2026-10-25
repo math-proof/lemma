@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DiscreteValuationRing.Monogenic
+import Theorem.RingTheory.DiscreteValuationRing.Monogenic
 import Lemma.Int.DiscreteValuationRing.Monogenic
 import Lemma.Int.LocalRing.ResidueField.AdjoinRootLift
-import sympy.atlas.RingTheory.LocalRing.ResidueField.AdjoinRootLift
+import Def.RingTheory.LocalRing.ResidueField.AdjoinRootLift.Part3
 
 
 namespace DVRResidue

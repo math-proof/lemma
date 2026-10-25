@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamRankOneGate
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamRankOneGate
 open Finset Classical StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

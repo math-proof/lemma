@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDevelopedEndpointSpan
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedEndpointSpan
 open Set StatMech StatMech.FrontierD
 
 

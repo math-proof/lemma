@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.FiberDegreeBound
+import Def.v1.Atlas.AlgebraicGeometryI.code.FiberDegreeBound
 open Module Ideal FiberDegreeBound
 
 

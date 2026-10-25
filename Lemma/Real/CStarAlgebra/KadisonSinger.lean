@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.CStarAlgebra.KadisonSinger
+import Def.Analysis.CStarAlgebra.KadisonSinger
 open scoped BigOperators ComplexOrder Matrix.Norms.L2Operator
 open MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 open MathlibExt.Analysis.CStarAlgebra.KadisonSingerWanted

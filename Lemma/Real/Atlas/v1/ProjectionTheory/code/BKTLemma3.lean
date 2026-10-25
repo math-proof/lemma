@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.BKTLemma3
+import Def.v1.Atlas.ProjectionTheory.code.BKTLemma3
 open BKTProof
 open Finset Complex
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexSurfacePercolationTransport
+import Theorem.StatisticalMechanics.Code.FK.TriHexSurfacePercolationTransport.Part4
 open Filter Finset MeasureTheory Set Topology StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

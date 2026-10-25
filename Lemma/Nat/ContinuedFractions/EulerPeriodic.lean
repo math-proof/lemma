@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Dynamics.EventuallyPeriodicSequence
+import Abbrev.Dynamics.EventuallyPeriodicSequence
 import Lemma.Set.EventuallyPeriodicSequence
 import Lemma.Nat.ContinuedFractions.LagrangePeriodic
-import sympy.atlas.NumberTheory.ContinuedFractions.LagrangePeriodic
+import Theorem.NumberTheory.ContinuedFractions.LagrangePeriodic.Part5
 
 
 namespace MetaMathlibExt

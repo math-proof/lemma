@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.TotalDescentsParkingFunctions
+import Abbrev.Combinatorics.Enumerative.TotalDescentsParkingFunctions
 open MetaMathlibExt
 
 

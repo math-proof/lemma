@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Reflection.WallSeparationCorollary
+import Theorem.v1.Atlas.Buildings.code.Reflection.WallSeparationCorollary
 open Set HyperplaneArrangement
 open scoped InnerProductSpace
 

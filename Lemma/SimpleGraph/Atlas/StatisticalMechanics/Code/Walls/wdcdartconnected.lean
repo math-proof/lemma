@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wdcdartconnected
+import Theorem.StatisticalMechanics.Code.Walls.wdcdartconnected.Part4
 open SimpleGraph Function StatMech StatMech.Wots
 
 

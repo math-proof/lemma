@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Bernoulli.PolyBernoulliDuality
+import Def.NumberTheory.Bernoulli.PolyBernoulliDuality
 open scoped BigOperators
 open MetaMathlibExt
 

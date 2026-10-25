@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKMedialToggleCount
+import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialToggleCount
 open SimpleGraph Set StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.ghxswitchingsign
+import Theorem.StatisticalMechanics.Code.Walls.ghxswitchingsign
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Walls
 
 

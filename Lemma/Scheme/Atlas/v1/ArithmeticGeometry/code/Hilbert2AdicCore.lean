@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore
+import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore.Part2
 open PadicInt HilbertSymbol
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicConvergence
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicConvergence
 open Filter Set Topology StatMech StatMech.Universality
 
 

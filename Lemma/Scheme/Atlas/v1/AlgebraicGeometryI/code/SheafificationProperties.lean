@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SheafificationProperties
+import Def.v1.Atlas.AlgebraicGeometryI.code.SheafificationProperties
 open CategoryTheory CategoryTheory.Limits TopCat Proposition15
 
 

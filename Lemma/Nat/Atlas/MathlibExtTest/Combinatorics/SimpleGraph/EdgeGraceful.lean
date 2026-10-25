@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.EdgeGraceful
+import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.EdgeGraceful.Part4
 open EdgeGracefulTest
 
 

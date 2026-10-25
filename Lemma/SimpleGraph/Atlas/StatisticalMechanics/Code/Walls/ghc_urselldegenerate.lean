@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.ghc_urselldegenerate
+import Theorem.StatisticalMechanics.Code.Walls.ghc_urselldegenerate
 open Finset SimpleGraph Set StatMech StatMech.Walls
 
 

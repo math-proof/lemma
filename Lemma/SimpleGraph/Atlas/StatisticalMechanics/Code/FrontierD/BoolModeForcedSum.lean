@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.BoolModeForcedSum
+import Theorem.StatisticalMechanics.Code.FrontierD.BoolModeForcedSum
 open Finset StatMech StatMech.FrontierD
 
 

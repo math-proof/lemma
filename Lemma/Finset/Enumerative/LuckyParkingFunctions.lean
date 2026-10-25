@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.LuckyParkingFunctions
+import Theorem.Combinatorics.Enumerative.LuckyParkingFunctions.Part12
 open MetaMathlibExt
 
 

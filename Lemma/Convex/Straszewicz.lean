@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.Straszewicz
+import Theorem.Analysis.Convex.Straszewicz.Part4
 
 open Convex.Straszewicz
 open Set Metric Filter TopologicalSpace

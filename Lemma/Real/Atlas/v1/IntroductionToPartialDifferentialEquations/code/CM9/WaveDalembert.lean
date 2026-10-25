@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM9.WaveDalembert
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM9.WaveDalembert
 open Real Set MeasureTheory intervalIntegral CM9 CM9.Wave
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SchwartzDensity
+import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzDensity
 open SchwartzDensity
 open scoped ENNReal
 open MeasureTheory

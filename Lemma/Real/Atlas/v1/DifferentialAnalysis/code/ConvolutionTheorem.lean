@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.ConvolutionTheorem
+import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionTheorem
 open TemperedDistribution SchwartzMap DifferentialOperators Distribution
 open scoped SchwartzMap LineDeriv Pointwise
 open TemperedDistribution SchwartzMap DifferentialOperators Distribution SobolevSpace SchwartzRepresentation

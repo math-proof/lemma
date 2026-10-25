@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.Algebra.BirkhoffKakutani
+import Theorem.Topology.Algebra.BirkhoffKakutani
 open MathlibExt.Topology.Algebra.BirkhoffKakutani
 
 

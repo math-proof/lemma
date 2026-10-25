@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitPairedCutMatching
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitPairedCutMatching.Part4
 open Finset StatMech StatMech.Ising
 
 

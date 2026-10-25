@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingTorusFreeBoundaryMonomialComparison
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusFreeBoundaryMonomialComparison.Part2
 open Finset StatMech StatMech.FrontierA
 
 

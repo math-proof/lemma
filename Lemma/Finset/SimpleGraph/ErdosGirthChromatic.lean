@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.ErdosGirthChromatic
+import Def.Combinatorics.SimpleGraph.ErdosGirthChromatic
 open Finset
 open MathlibExt.Combinatorics.SimpleGraph.ErdosGirthChromaticWanted
 

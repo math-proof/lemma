@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.Factorizations.Schur
+import Def.LinearAlgebra.Matrix.Factorizations.Schur
 open Matrix
 open scoped ComplexOrder
 

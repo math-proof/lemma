@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section34
+import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section34.Part3
 open CategoryTheory AlgebraicTopology TopologicalSpace SingularCohomology CechCohomology CapProduct
 open subsets `members ⊂ Opens Y` whose union is all of `Y`. The set of
 

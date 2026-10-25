@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.WavefrontSetExtendedConvolution
+import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontSetExtendedConvolution
 open MeasureTheory Set ConeSupport
 open scoped SchwartzMap FourierTransform
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.JosephusFunction
+import Def.Combinatorics.Enumerative.JosephusFunction
 open MetaMathlibExt
 
 

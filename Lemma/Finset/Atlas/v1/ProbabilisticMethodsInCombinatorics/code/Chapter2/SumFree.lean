@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter2.SumFree
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter2.SumFree
 open Finset SumFree
 
 

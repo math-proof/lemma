@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.SL2Basics
+import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
 open Module Fintype
 
 

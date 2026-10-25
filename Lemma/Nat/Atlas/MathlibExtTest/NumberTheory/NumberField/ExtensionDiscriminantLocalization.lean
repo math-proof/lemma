@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.NumberField.ExtensionDiscriminantLocalization
+import Theorem.MathlibExtTest.NumberTheory.NumberField.ExtensionDiscriminantLocalization.Part3
 open ConcreteLocalization
 
 

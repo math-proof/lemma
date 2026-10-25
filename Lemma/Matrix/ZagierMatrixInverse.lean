@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.ZagierMatrixInverse
+import Def.LinearAlgebra.Matrix.ZagierMatrixInverse
 open scoped BigOperators
 open MetaMathlibExt
 

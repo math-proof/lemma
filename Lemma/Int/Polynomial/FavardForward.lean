@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.Polynomial.FormalOrthogonality
+import Def.Algebra.Polynomial.FormalOrthogonality
 open _root_.Polynomial
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingTorusDissemination
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusDissemination.Part8
 open Finset StatMech StatMech.FrontierA
 
 

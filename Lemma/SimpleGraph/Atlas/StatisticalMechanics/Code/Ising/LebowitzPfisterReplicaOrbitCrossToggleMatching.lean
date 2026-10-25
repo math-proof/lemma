@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitCrossToggleMatching
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitCrossToggleMatching.Part8
 open Finset StatMech StatMech.Ising
 
 

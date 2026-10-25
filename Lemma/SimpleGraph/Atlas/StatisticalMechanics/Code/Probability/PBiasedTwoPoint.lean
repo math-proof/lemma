@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.PBiasedTwoPoint
+import Theorem.StatisticalMechanics.Code.Probability.PBiasedTwoPoint.Part3
 open Real Set StatMech StatMech.Probability
 
 

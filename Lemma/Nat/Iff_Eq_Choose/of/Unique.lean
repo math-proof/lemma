@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Tools.ExistsUnique
+import Theorem.Analysis.Tools.ExistsUnique.Part2
 
 
 /--

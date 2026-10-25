@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.HoeffdingBernoulliSumAbsTail
+import Theorem.Probability.HoeffdingBernoulliSumAbsTail
 open scoped BigOperators MeasureTheory
 open ProbabilityTheory
 

@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.mv_polynomial.regular_function
-
+import Theorem.Algebra.MvPolynomial.RegularFunction.Part3
 open MvPolynomial
 
 /--
@@ -17,7 +16,6 @@ private lemma jacobian
 -- proof
   apply RegularFunction.Jacobian_apply
 
-
 /--
 [comp_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/MvPolynomial/RegularFunction.lean)
 -/
@@ -30,7 +28,6 @@ private lemma comp_apply_eq
   (G.comp F) i = MvPolynomial.bind₁ F (G i) := by
 -- proof
   apply RegularFunction.comp_apply
-
 
 /--
 [id_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/MvPolynomial/RegularFunction.lean)
@@ -45,7 +42,6 @@ private lemma id_apply_eq
 -- proof
   apply RegularFunction.id_apply
 
-
 /--
 [id_comp](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/MvPolynomial/RegularFunction.lean)
 -/
@@ -58,7 +54,6 @@ private lemma id_comp_eq
   (RegularFunction.id k τ).comp F = F := by
 -- proof
   apply RegularFunction.id_comp
-
 
 /--
 [comp_id](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/MvPolynomial/RegularFunction.lean)
@@ -73,7 +68,6 @@ private lemma comp_id_eq
 -- proof
   apply RegularFunction.comp_id
 
-
 /--
 [comp_assoc](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/MvPolynomial/RegularFunction.lean)
 -/
@@ -87,7 +81,6 @@ private lemma comp_assoc_eq
 -- proof
   apply RegularFunction.comp_assoc
 
-
 /--
 [comp_aeval](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/MvPolynomial/RegularFunction.lean)
 -/
@@ -100,6 +93,5 @@ private lemma comp_aeval_eq
   (G.comp F).aeval a = G.aeval (F.aeval a) := by
 -- proof
   apply RegularFunction.comp_aeval
-
 
 -- created on 2026-10-09

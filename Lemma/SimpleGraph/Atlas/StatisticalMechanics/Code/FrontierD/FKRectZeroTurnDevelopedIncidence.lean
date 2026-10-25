@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnDevelopedIncidence
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnDevelopedIncidence.Part3
 open Finset SimpleGraph StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedStableKeyPackageExample
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedStableKeyPackageExample.Part3
 open StatMech StatMech.Exact3D StatMech.Exact3D.InfiniteTailMaskedStableKeyPackageExample
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_10_1
+import Theorem.Analysis.Section_10_1.Part2
 
 
 /--

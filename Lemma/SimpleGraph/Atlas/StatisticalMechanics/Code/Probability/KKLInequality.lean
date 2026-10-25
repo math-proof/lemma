@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.KKLInequality
+import Theorem.StatisticalMechanics.Code.Probability.KKLInequality.Part4
 open Finset StatMech StatMech.Probability
 
 

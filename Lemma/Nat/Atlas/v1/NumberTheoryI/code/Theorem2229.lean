@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.GlobalCFT
+import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
 open NumberField RayClassField
 

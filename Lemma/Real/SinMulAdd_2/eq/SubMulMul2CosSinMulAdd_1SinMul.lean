@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivityFinite
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivityFinite
 open Finset BigOperators CoxeterGroup
 
 

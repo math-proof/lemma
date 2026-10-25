@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.DimensionDef
+import Abbrev.v1.Atlas.AlgebraicGeometryI.code.DimensionDef
 open TopologicalSpace Order Topology
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingTorusBlockQuantitative
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusBlockQuantitative
 open Finset Set StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusRandomCluster
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusRandomCluster.Part5
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Bernoulli.AbelBernoulliSums
+import Def.NumberTheory.Bernoulli.AbelBernoulliSums
 open Finset Nat Polynomial
 open MetaMathlibExt
 

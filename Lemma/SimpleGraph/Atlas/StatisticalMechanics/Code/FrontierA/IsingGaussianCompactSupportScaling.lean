@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianCompactSupportScaling
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianCompactSupportScaling
 open Filter Finset MeasureTheory Set Topology StatMech StatMech.FrontierA
 
 

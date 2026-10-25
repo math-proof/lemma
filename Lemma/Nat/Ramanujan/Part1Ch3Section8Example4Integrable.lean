@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Section8Example4Integrable
+import Def.NumberTheory.Ramanujan.Part1Ch3Section8Example4Integrable
 open Entry9IiGeneralizedbellgeneratingDefining (generalizedBellGenerating)
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Section8Example4Integrable

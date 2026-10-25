@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM4.WeakMaximumPrinciple
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM4.WeakMaximumPrinciple
 open Set WeakMaximumPrinciple
 
 

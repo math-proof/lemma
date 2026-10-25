@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWLowestCrossing
+import Theorem.StatisticalMechanics.Code.Universality.RSWLowestCrossing.Part101
 open Function MeasureTheory Set StatMech StatMech.Universality
 
 

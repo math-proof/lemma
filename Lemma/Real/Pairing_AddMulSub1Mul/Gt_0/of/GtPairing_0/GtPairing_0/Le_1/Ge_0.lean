@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeFiniteParabolic
+import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeFiniteParabolic.Part4
 open Finset BigOperators CoxeterGroup
 
 

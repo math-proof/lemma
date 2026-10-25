@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.SL2Unitary
+import Def.v1.Atlas.LieGroups.code.SL2Unitary.Part2
 open Complex
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FiniteEventMultivalued
+import Theorem.StatisticalMechanics.Code.FrontierA.FiniteEventMultivalued
 open MeasureTheory Set Finset StatMech StatMech.FrontierA
 
 

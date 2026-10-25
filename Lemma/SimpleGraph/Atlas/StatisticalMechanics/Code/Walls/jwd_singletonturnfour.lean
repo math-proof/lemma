@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jwd_singletonturnfour
+import Theorem.StatisticalMechanics.Code.Walls.jwd_singletonturnfour
 open SimpleGraph Function StatMech StatMech.Walls
 
 

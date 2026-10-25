@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.LLL
+import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.LLL.Part2
 open InnerProductSpace Finset LLL
 
 

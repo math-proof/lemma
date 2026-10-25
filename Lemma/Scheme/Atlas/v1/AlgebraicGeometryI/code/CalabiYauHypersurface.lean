@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CalabiYauHypersurface
+import Def.v1.Atlas.AlgebraicGeometryI.code.CalabiYauHypersurface.Part2
 open CYHyp SmoothProjectiveHypersurface
 
 

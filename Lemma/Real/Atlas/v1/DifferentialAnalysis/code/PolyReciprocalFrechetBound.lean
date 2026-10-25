@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.PolyReciprocalFrechetBound
+import Theorem.v1.Atlas.DifferentialAnalysis.code.PolyReciprocalFrechetBound
 open MvPolynomial DifferentialOperators
 
 

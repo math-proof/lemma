@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionFiniteDisorderDerivative
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionFiniteDisorderDerivative
 open Finset StatMech StatMech.FrontierA
 
 

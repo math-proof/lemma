@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.Riha
+import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.Riha
 open MathlibExtTest MathlibExtTest.Combinatorics MathlibExtTest.Combinatorics.SimpleGraph MathlibExtTest.Combinatorics.SimpleGraph.Riha
 
 

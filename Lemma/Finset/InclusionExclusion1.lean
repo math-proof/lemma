@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.concrete.InclusionExclusion1
+import Def.Combinatorics.Enumerative.InclusionExclusion1.Part3
 open Finset Nat
 open scoped BigOperators
 open AlgebraicCombinatorics.InclusionExclusion

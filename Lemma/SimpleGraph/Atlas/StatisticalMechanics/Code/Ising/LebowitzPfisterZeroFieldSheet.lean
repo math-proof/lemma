@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterZeroFieldSheet
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterZeroFieldSheet
 open StatMech StatMech.Ising
 
 

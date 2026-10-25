@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.NOneCertificateChunks.Chunk063
+import Theorem.StatisticalMechanics.Code.FrontierA.NOneCertificateChunks.Chunk063.Part3
 open StatMech StatMech.FrontierA StatMech.FrontierA.NOneSymmetricMeanCertificate
 
 

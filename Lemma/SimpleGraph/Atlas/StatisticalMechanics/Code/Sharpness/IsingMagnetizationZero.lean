@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.IsingMagnetizationZero
+import Theorem.StatisticalMechanics.Code.Sharpness.IsingMagnetizationZero
 open MeasureTheory Filter Topology BoundedContinuousFunction StatMech StatMech.Sharpness
 
 

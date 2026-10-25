@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Connectivity
+import Def.Combinatorics.SimpleGraph.Connectivity
 open SimpleGraph
 open Finset List
 

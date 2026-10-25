@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAngularSplitSpinor
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAngularSplitSpinor.Part3
 open StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.MergeCost
+import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
 open CPythonListsort CPythonListsort.RunProfile CPythonListsort.MergeTree CPythonListsort.MergePlan
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kwd_walkparity
+import Theorem.StatisticalMechanics.Code.Walls.kwd_walkparity
 open Finset SimpleGraph StatMech StatMech.Walls
 
 

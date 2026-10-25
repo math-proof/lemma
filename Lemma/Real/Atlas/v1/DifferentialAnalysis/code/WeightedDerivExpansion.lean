@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.WeightedDerivExpansion
+import Def.v1.Atlas.DifferentialAnalysis.code.WeightedDerivExpansion.Part2
 open BigOperators WeightedDerivExpansion
 open scoped SchwartzMap
 

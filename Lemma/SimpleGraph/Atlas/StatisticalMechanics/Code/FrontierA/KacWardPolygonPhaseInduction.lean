@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardPolygonPhaseInduction
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonPhaseInduction
 open StatMech StatMech.FrontierA
 
 

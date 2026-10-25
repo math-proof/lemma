@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.FiniteMoments
+import Theorem.StatisticalMechanics.Code.BeffaraDC.FiniteMoments.Part3
 open StatMech StatMech.BeffaraDC
 
 

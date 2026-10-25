@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexCoarseGeometry
+import Theorem.StatisticalMechanics.Code.FK.TriHexCoarseGeometry.Part3
 open Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

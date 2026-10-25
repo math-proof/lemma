@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOffdiagSwitching
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOffdiagSwitching.Part3
 open Finset StatMech StatMech.Ising
 
 

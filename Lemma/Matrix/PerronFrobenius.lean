@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.PerronFrobenius
+import Def.LinearAlgebra.Matrix.PerronFrobenius
 open Matrix
 open MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.BurnsidePaqb.ClassSum
+import Theorem.GroupTheory.BurnsidePaqb.ClassSum.Part3
 open BurnsidePaqb
 open Classical
 

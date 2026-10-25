@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.NonnegativeBoundaryCurrentConditionalPMF
+import Theorem.StatisticalMechanics.Code.FrontierB.NonnegativeBoundaryCurrentConditionalPMF
 open MeasureTheory StatMech StatMech.FrontierB
 
 

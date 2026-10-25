@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.ConsecutiveCyclicPrimeLabeling
+import Instance.Combinatorics.ConsecutiveCyclicPrimeLabeling.Part2
 open MetaMathlibExt
 
 

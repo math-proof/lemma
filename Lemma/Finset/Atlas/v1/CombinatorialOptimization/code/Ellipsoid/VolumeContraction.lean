@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.CombinatorialOptimization.code.Ellipsoid.VolumeContraction
+import Def.v1.Atlas.CombinatorialOptimization.code.Ellipsoid.VolumeContraction
 open Matrix Real EllipsoidMethod
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.complex.EnestromKakeya
+import Theorem.Analysis.Complex.EnestromKakeya
 
 open Complex.EnestromKakeya
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerCombinatorial
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerCombinatorial
 open Finset BigOperators Real ShannonEntropy ShearerCombinatorial LoomisWhitney
 
 

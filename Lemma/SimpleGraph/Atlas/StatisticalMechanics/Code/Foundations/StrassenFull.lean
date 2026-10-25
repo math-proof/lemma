@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.StrassenFull
+import Theorem.StatisticalMechanics.Code.Foundations.StrassenFull.Part7
 open MeasureTheory Finset StatMech StatMech.Transport
 
 

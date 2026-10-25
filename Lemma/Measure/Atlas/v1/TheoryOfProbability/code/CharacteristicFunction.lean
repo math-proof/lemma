@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.CharacteristicFunction
+import Def.v1.Atlas.TheoryOfProbability.code.CharacteristicFunction
 open MeasureTheory Complex ProbabilityTheory
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Additive.CommonDifferenceProgressions
+import Def.Combinatorics.Additive.CommonDifferenceProgressions
 open scoped Pointwise
 
 

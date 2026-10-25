@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.FreeEvenSpinMixing
+import Theorem.StatisticalMechanics.Code.FrontierB.FreeEvenSpinMixing.Part3
 open Filter MeasureTheory Set Topology Function StatMech StatMech.FrontierB
 
 

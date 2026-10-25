@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.Wiman.Filevych
+import Theorem.Analysis.Complex.Wiman.Filevych
 open Filter MeasureTheory Set
 open Complex
 

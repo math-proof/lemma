@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABLatticeUnconditional
+import Theorem.StatisticalMechanics.Code.Sharpness.ABLatticeUnconditional
 open Filter MeasureTheory Set SimpleGraph Topology StatMech StatMech.Sharpness
 
 

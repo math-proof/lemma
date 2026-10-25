@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.SignOrthantTiling
+import Theorem.StatisticalMechanics.Code.FK.SignOrthantTiling.Part4
 open MeasureTheory Set Filter Topology Real SimpleGraph StatMech StatMech.FK
 
 

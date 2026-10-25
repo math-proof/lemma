@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SheafDefinitions
+import Def.v1.Atlas.AlgebraicGeometryI.code.SheafDefinitions.Part2
 open SheafDefinitions
 open CategoryTheory TopologicalSpace
 

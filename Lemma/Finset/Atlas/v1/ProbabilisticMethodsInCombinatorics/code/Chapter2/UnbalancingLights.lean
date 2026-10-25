@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter2.UnbalancingLights
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter2.UnbalancingLights.Part2
 open Finset BigOperators UnbalancingLights
 
 

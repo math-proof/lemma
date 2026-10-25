@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.SumSquares.RepresentationCount
+import Def.NumberTheory.SumSquares.RepresentationCount
 open SumSquares
 
 

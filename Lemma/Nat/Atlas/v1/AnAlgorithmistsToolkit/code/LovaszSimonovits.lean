@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.LovaszSimonovits
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.LovaszSimonovits
 open LovaszSimonovits
 open Finset
 

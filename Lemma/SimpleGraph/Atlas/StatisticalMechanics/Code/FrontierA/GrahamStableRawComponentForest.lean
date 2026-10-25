@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamStableRawComponentForest
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamStableRawComponentForest.Part64
 open Finset StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.GroupCounts
+import Theorem.v1.Atlas.NumberTheoryI.code.GroupCounts.Part8
 open GroupCounts
 open scoped Classical
 

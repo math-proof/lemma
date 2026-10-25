@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamWeightedFourReplicaCore
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedFourReplicaCore
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.MatrixTree
+import Def.Combinatorics.SimpleGraph.MatrixTree.Part2
 open MathlibExt.Combinatorics.SimpleGraph.MatrixTreeWanted
 
 

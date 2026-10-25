@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SchwartzRepresentation
+import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzRepresentation
 open MeasureTheory Filter Topology SchwartzRepresentation
 open scoped ZeroAtInfty SchwartzMap
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc3_tailturneq
+import Theorem.StatisticalMechanics.Code.Walls.jc3_tailturneq
 open SimpleGraph Function StatMech StatMech.Walls
 
 

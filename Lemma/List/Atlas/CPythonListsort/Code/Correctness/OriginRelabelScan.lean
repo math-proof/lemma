@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.OriginRelabelScan
+import Def.CPythonListsort.Code.Correctness.OriginRelabelScan.Part2
 open CPythonListsort
 
 

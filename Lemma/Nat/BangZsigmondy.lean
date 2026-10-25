@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.BangZsigmondy
+import Def.NumberTheory.BangZsigmondy
 open MetaMathlibExt
 
 

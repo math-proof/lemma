@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.PivotalSpherical
+import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
 open CategoryTheory MonoidalCategory Category Limits TensorCategories
 
 

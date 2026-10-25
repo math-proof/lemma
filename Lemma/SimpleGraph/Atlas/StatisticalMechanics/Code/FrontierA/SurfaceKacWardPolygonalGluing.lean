@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.SurfaceKacWardPolygonalGluing
+import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardPolygonalGluing.Part4
 open Finset SimpleGraph StatMech StatMech.FrontierA StatMech.FrontierA.ClosedPolygonalGluingFlatSurfaceEmbedding
 
 

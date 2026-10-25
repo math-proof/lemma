@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheFixedOddChargeContinuation
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheFixedOddChargeContinuation.Part3
 open Filter Topology StatMech StatMech.FrontierD
 
 

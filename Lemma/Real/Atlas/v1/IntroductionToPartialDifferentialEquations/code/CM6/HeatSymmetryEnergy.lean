@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM6.HeatSymmetryEnergy
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM6.HeatSymmetryEnergy
 open MeasureTheory Real Filter Set CM6
 open scoped ENNReal
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.FallingKBinomialTransform
+import Def.Combinatorics.Enumerative.FallingKBinomialTransform
 open scoped BigOperators
 open MetaMathlibExt
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.MultipleHarmonic
+import Def.NumberTheory.MultipleHarmonic
 
 
 namespace MetaMathlibExt

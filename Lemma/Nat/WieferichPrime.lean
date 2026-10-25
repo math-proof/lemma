@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.WieferichPrime
+import Instance.NumberTheory.WieferichPrime
 open Nat
 
 

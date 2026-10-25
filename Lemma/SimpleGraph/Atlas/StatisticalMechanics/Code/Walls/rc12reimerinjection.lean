@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc12reimerinjection
+import Theorem.StatisticalMechanics.Code.Walls.rc12reimerinjection.Part5
 open Finset StatMech StatMech.Walls
 
 

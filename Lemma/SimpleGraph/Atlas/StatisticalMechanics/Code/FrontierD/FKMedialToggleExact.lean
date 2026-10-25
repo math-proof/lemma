@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKMedialToggleExact
+import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialToggleExact
 open SimpleGraph Equiv StatMech StatMech.FrontierD
 
 

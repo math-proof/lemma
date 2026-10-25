@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Padics.Polynomial
+import Def.NumberTheory.Padics.Polynomial
 open Polynomial
 
 

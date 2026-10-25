@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.BanachLimit
+import Theorem.Analysis.NormedSpace.BanachLimit.Part5
 
 /--
 [BanachLimit](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/BanachLimit.lean)

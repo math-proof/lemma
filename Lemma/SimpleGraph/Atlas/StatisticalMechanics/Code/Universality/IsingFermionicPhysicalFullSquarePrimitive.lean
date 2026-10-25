@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquarePrimitive
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquarePrimitive.Part3
 open SimpleGraph StatMech StatMech.Universality
 
 

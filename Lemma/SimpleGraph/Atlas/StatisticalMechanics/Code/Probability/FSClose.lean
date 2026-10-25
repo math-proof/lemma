@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.FSClose
+import Theorem.StatisticalMechanics.Code.Probability.FSClose.Part3
 open Finset Real StatMech StatMech.Probability
 
 

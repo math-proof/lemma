@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.LongRangeOrderAssembly
+import Theorem.StatisticalMechanics.Code.IsingFK.LongRangeOrderAssembly
 open StatMech StatMech.IsingFK
 
 

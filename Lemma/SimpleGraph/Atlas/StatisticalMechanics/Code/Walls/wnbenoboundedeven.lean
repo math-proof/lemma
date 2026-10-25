@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wnbenoboundedeven
+import Theorem.StatisticalMechanics.Code.Walls.wnbenoboundedeven
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

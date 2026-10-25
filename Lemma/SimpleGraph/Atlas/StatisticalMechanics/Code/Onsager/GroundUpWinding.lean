@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.GroundUpWinding
+import Theorem.StatisticalMechanics.Code.Onsager.GroundUpWinding.Part4
 open StatMech StatMech.Onsager StatMech.Onsager.GroundUp
 
 

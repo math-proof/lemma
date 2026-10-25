@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.CenteredColoring
+import Def.Combinatorics.SimpleGraph.CenteredColoring
 open SimpleGraph
 
 

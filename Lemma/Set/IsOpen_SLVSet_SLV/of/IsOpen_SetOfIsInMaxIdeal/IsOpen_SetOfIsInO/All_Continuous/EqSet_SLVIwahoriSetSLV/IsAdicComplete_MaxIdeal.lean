@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.AffineSLVStrong
+import Def.v1.Atlas.Buildings.code.Building.AffineSLVStrong.Part5
 open AffineBuildingSLVStrong
 open AffineBuildingSLV AffineBuildingSLVAxioms
 

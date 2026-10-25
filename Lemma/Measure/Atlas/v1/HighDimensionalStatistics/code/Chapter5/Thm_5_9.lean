@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_9
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_9
 open MeasureTheory Minimax
 
 

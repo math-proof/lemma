@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc2_core
+import Theorem.StatisticalMechanics.Code.Walls.bc2_core.Part3
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation StatMech.Percolation.DisjointPaths StatMech StatMech.Walls
 
 

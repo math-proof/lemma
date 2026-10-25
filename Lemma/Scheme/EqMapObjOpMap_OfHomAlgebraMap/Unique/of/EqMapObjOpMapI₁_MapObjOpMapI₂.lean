@@ -4,7 +4,6 @@ import Def.Algebra_DescentCofaces
 open CategoryTheory Opposite AlgebraicGeometry Algebra.TensorProduct Algebra.DescentCofaces
 open scoped TensorProduct
 
-
 /-- ported from external source -/
 @[path]
 private lemma main
@@ -50,7 +49,6 @@ private lemma main
     rw [h1, h2]
     simp only [op_comp, Functor.map_comp, ConcreteCategory.comp_apply]
     rw [he']
-
 
 -- created on 2026-10-23
 -- updated on 2026-10-24

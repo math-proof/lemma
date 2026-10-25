@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.Blumberg
+import Theorem.Analysis.Calculus.Blumberg.Part5
 
 /--
 [blumberg_theorem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Blumberg.lean)

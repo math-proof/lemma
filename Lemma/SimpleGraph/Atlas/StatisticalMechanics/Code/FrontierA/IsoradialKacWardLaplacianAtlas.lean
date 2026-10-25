@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsoradialKacWardLaplacianAtlas
+import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardLaplacianAtlas
 open SimpleGraph StatMech StatMech.FrontierA StatMech.FrontierA.CriticalIsoradialGenusZeroOneEmbedding
 
 

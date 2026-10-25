@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.EtaleAlgebrasProps
+import Instance.v1.Atlas.NumberTheoryI.code.EtaleAlgebrasProps
 open EtaleAlgebra
 open scoped Classical
 

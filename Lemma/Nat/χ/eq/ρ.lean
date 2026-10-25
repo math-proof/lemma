@@ -9,7 +9,6 @@ open scoped Classical LocalGL2_Kirillov
 open AutomorphicForm IsDedekindDomain NumberField
 open Complex
 
-
 noncomputable section
 
 namespace LocalGL2.Kirillov
@@ -36,6 +35,5 @@ private lemma main
 end LocalGL2.Kirillov
 
 end
-
 
 -- created on 2026-10-25

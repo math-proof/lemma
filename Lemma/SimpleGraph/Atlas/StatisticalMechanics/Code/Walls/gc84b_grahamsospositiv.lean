@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc84b_grahamsospositiv
+import Theorem.StatisticalMechanics.Code.Walls.gc84b_grahamsospositiv.Part2
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Walls
 
 

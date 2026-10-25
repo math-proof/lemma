@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRectangleMonotonicity
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRectangleMonotonicity
 open Set StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

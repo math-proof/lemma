@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamGateDiscrepancy
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamGateDiscrepancy.Part15
 open StatMech StatMech.FrontierA
 
 

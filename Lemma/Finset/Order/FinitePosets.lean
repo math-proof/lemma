@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Order.FinitePosets
+import Def.Combinatorics.Order.FinitePosets
 open MathlibExt.Combinatorics.Order.FinitePosets
 
 

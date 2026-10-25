@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.PBiasedConvexity
+import Theorem.StatisticalMechanics.Code.Probability.PBiasedConvexity.Part2
 open Real Set StatMech StatMech.Probability
 
 

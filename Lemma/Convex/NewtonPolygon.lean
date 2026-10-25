@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.NewtonPolygon
+import Theorem.Analysis.Convex.NewtonPolygon
 
 open Convex.NewtonPolygon Set
 

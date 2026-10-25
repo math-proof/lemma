@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.SharpSATCoNPHard
+import Def.v1.Atlas.TheoryOfComputation.code.SharpSATCoNPHard.Part2
 open NPCompleteness
 open TuringMachine
 

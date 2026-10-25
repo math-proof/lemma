@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingPrimitiveCapstone
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingPrimitiveCapstone
 open StatMech StatMech.FrontierD
 
 

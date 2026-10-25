@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.symmetric.LittlewoodRichardson
+import Def.Combinatorics.Young.LittlewoodRichardson.Part17
 import Lemma.Partition.NPartition
 import Lemma.MvPolynomial.MonomialSymmetric
 open AlgebraicCombinatorics hiding IsNPartition

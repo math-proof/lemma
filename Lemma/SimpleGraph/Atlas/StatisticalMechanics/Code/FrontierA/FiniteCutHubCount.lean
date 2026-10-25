@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FiniteCutHubCount
+import Theorem.StatisticalMechanics.Code.FrontierA.FiniteCutHubCount
 open Finset Set SimpleGraph StatMech StatMech.FrontierA
 
 

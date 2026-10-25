@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectPrimalBoundaryCompanionNoLoop
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectPrimalBoundaryCompanionNoLoop
 open StatMech StatMech.FrontierD
 
 

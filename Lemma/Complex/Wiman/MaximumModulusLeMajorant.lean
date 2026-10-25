@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.Wiman.MaximumModulusLeMajorant
+import Theorem.Analysis.Complex.Wiman.MaximumModulusLeMajorant
 open Complex
 
 

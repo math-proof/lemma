@@ -4,7 +4,6 @@ set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-
 /--
 [Rep_nonempty_invariants_coind_equiv](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Rep_nonempty_invariants_coind_equiv.lean)
 -/
@@ -53,6 +52,5 @@ private lemma main
     apply LinearMap.ext
     intro n
     rfl
-
 
 -- created on 2026-10-20

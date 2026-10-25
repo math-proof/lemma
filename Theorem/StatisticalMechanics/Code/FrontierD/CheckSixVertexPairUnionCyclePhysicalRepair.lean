@@ -1,0 +1,31 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexPairUnionCyclePhysicalRepair.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Def.StatisticalMechanics.Code.FrontierD.SixVertexPairUnionCyclePhysicalRepair.Part5
+open StatMech.FrontierD
+
+#print axioms sixVertexPairAtMostTwoCycleFineRelated_swap_target
+#print axioms SixVertexConfigurationPairUnionCyclePairedRepairs.signedTarget
+#print axioms SixVertexConfigurationPairUnionCyclePairedRepairs.toPhysicalPairedBranches
+#print axioms SixVertexConfigurationPairUnionCycleOffDiagonalEmbedding.toPairedRepairs
+#print axioms SixVertexConfigurationPairUnionCyclePairedRepairs.twoCycleFineHall
+#print axioms SixVertexConfigurationPairUnionCyclePairedRepairs.markedTraceCoefficientwiseLogConcave
+#print axioms SixVertexConfigurationUnitCyclePairedRepairs.toPairUnionCycle
+#print axioms pairUnionCyclePairedRepairs_of_offDiagonalEmbeddings
+#print axioms canonicalPairUnionCyclePairedRepairs_of_offDiagonalEmbeddings
+#print axioms sixVertexSectorPositiveEvenTraceLogConcave_of_pairUnionCyclePairedRepairs
+#print axioms sixVertexSectorPerronLogConcave_of_pairUnionCyclePairedRepairs
+#print axioms canonicalPhysicalPairedBranches_of_pairUnionCyclePairedRepairs
+#print axioms fkQgt4_windingBridge_of_evenTwoByOneCrossingFloor_pairUnionCyclePairedRepairs
+#print axioms fkQgt4_windingBridge_of_evenTwoByOneCrossingFloor_pairUnionCycleOffDiagonalEmbeddings
+#print axioms sixVertexFourByTwoPairUnionCycleOffDiagonalEmbedding
+#print axioms sixVertexFourByTwoPairUnionCyclePairedRepairs
+
+

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter4.EuclideanBridge
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter4.EuclideanBridge
 open MeasureTheory ProbabilityTheory Matrix Real Finset BigOperators EuclideanBridge
 
 

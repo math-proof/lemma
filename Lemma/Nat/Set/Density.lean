@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Data.Set.Density
+import Def.Data.Set.Density
 open Filter
 open scoped Topology
 open Set

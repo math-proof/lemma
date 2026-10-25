@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Analysis.Normed.Series.NormalConvergence
+import Theorem.MathlibExtTest.Analysis.Normed.Series.NormalConvergence.Part2
 open Topology
 open scoped ENNReal
 

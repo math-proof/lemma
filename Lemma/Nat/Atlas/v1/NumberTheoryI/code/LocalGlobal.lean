@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.LocalGlobal
+import Abbrev.v1.Atlas.NumberTheoryI.code.LocalGlobal
 open NumberField IsDedekindDomain Polynomial Finset in IntermediateField
 open scoped NumberField TensorProduct
 

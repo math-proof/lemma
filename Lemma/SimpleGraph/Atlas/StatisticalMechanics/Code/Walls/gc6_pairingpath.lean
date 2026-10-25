@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc6_pairingpath
+import Theorem.StatisticalMechanics.Code.Walls.gc6_pairingpath
 open Finset BigOperators StatMech StatMech.Walls
 
 

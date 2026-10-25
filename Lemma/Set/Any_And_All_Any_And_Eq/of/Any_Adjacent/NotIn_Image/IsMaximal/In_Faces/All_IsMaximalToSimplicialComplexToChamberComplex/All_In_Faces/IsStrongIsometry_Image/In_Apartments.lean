@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.StrongIsometryExt
+import Def.v1.Atlas.Buildings.code.Building.StrongIsometryExt
 import Lemma.Finset.Any_All_In_FacesAndIsMaximalAndAll_EqAndAll_EqDeltaSAndAll_EqDeltaSAndAll_EqOrAdjacent.of.IsMaximal.In_ApartmentsApartmentSystem
 
 

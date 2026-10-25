@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture
+import Class.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part4
 open DifferentialFormSpace
 
 

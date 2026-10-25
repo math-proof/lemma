@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc36rooteddiv
+import Theorem.StatisticalMechanics.Code.Walls.bc36rooteddiv.Part2
 open Set SimpleGraph Finset MeasureTheory StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Walls
 
 

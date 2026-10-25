@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexGapLambertProduct
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexGapLambertProduct
 open Finset Filter Topology StatMech StatMech.FrontierD
 
 

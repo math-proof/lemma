@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareGenericIntegration
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareGenericIntegration.Part3
 open StatMech StatMech.Universality StatMech.Universality.FKIsingSquareFullCoordinateOneForm
 
 

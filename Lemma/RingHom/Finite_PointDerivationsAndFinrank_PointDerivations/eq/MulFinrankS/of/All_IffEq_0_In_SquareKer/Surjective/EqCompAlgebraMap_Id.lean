@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.point_derivations
+import Theorem.Algebra.PointDerivations.Part2
+import Def.Algebra_PointDerivations
 open Algebra.PointDerivations
-
 
 /--
 [Algebra_PointDerivations_finite_and_finrank_eq_mul_of_surjective_of_ker](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_PointDerivations_finite_and_finrank_eq_mul_of_surjective_of_ker.lean)
@@ -107,6 +107,5 @@ private lemma main
   let e : (Ω →ₗ[k] M) ≃ₗ[k] ↥(Algebra.PointDerivations k A ev M) := LinearEquiv.ofBijective Ψ ⟨hinj, hsurj⟩
   refine ⟨Module.Finite.equiv e, ?_⟩
   rw [← e.finrank_eq, Module.finrank_linearMap]
-
 
 -- created on 2026-10-16

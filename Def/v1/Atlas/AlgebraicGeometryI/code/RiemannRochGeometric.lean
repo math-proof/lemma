@@ -1,0 +1,45 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/RiemannRochGeometric.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.AlgebraicGeometry.Morphisms.Proper
+import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+import Mathlib.AlgebraicGeometry.Properties
+import Structure.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeometric
+open AlgebraicGeometry CategoryTheory
+
+
+noncomputable section
+
+namespace RiemannRochGeometric
+
+attribute [instance] SmoothCurveWithCohomology.isIntegral
+    SmoothCurveWithCohomology.isProper SmoothCurveWithCohomology.isSmooth
+
+variable {k : Type} [Field k]
+
+/-- Euler characteristic `χ(F) = h^0(F) - h^1(F)` of a sheaf on a smooth
+complete curve. -/
+def SmoothCurveWithCohomology.eulerChar (C : SmoothCurveWithCohomology k)
+    (F : C.X.Modules) : ℤ :=
+  (C.dimH0 F : ℤ) - (C.dimH1 F : ℤ)
+
+/-- The structure sheaf of a smooth complete curve, packaged as a module
+sheaf. -/
+def SmoothCurveWithCohomology.structureSheafMod (C : SmoothCurveWithCohomology k) :
+    C.X.Modules :=
+  SheafOfModules.unit C.X.ringCatSheaf
+
+/-- The Riemann–Roch formula evaluated on `(r, d)`: `d + r(1 - g)`. -/
+def SmoothCurveWithCohomology.rrFormula (C : SmoothCurveWithCohomology k) (r d : ℤ) : ℤ :=
+  d + r * (1 - (C.arithmeticGenus : ℤ))
+
+end RiemannRochGeometric
+end

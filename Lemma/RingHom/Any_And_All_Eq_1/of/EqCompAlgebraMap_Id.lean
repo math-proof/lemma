@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.point_derivations
+import Theorem.Algebra.PointDerivations.Part2
+import Def.Algebra_PointDerivations
 open scoped TensorProduct
-
 
 universe u
 
@@ -292,6 +292,5 @@ private lemma main
   ·
     intro δ
     apply Psi_self ev hev δ
-
 
 -- created on 2026-10-20

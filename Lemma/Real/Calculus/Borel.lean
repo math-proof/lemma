@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.Borel
+import Theorem.Analysis.Calculus.Borel.Part5
 
 open scoped ContDiff
 

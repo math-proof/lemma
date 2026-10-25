@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKMixingUpperClose
+import Theorem.StatisticalMechanics.Code.FK.FKMixingUpperClose.Part5
 open MeasureTheory Filter Topology Set StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

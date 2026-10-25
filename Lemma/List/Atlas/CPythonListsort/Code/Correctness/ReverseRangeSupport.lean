@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
-import sympy.atlas.CPythonListsort.Code.Correctness.SortSliceRange
+import Structure.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
+import Def.CPythonListsort.Code.Correctness.SortSliceRange
 open CPythonListsort
 
 

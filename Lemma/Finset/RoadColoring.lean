@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.RoadColoring
+import Theorem.Combinatorics.RoadColoring.Part8
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.QRDowlingPolynomial
+import Def.NumberTheory.QRDowlingPolynomial
 open scoped BigOperators
 open MetaMathlibExt
 

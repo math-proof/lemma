@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM5.HeatFundamental
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM5.HeatFundamental
 open Set MeasureTheory Filter Topology Real HeatFundamental
 
 

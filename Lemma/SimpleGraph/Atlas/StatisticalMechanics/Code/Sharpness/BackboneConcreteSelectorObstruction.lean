@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneConcreteSelectorObstruction
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneConcreteSelectorObstruction
 open SimpleGraph Finset BigOperators StatMech StatMech.Sharpness StatMech.Sharpness.BackboneConcreteSelector
 
 

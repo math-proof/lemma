@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.TwoDim.NearHalfKKLWire
+import Theorem.StatisticalMechanics.Code.TwoDim.NearHalfKKLWire
 open MeasureTheory Set Filter Topology StatMech StatMech.TwoDim
 
 

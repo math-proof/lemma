@@ -1,0 +1,26 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/QuantumIsingThermodynamicLimit.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingBoundaryComparison.Part6
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingAlmostAdditive.Part2
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingThermodynamicLimit.Part3
+open scoped BigOperators
+open Filter
+
+
+namespace StatMech.FrontierA
+
+def quantumIsingSpaceTimeSumBlockEquiv (n A B : Nat) :
+    (Fin n -> QuantumIsingChainConfig (A + B)) ≃
+      QuantumIsingSpaceTimeTwoBlockConfig n A B :=
+  Equiv.piCongrRight (fun _ : Fin n => quantumIsingSumBlockEquiv A B)
+
+end StatMech.FrontierA

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.UniqueInfiniteComponent
+import Theorem.StatisticalMechanics.Code.Lattice.UniqueInfiniteComponent.Part3
 open Set SimpleGraph StatMech StatMech.Lattice
 
 

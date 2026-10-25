@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamExpectationAssociationClosure
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamExpectationAssociationClosure
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.additive.MinimumRestrictedAdditiveBasis
+import Theorem.Combinatorics.Additive.MinimumRestrictedAdditiveBasis.Part2
 
 
 /--

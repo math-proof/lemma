@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bgctrifgraph
+import Theorem.StatisticalMechanics.Code.Walls.bgctrifgraph.Part2
 open Set SimpleGraph Finset MeasureTheory Filter Topology StatMech StatMech.Lattice StatMech.ConfigSpace StatMech.Walls
 
 

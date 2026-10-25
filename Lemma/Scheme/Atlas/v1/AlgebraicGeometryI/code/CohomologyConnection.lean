@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CohomologyConnection
+import Structure.v1.Atlas.AlgebraicGeometryI.code.CohomologyConnection
 open CategoryTheory CategoryTheory.Limits SheafCohomology CohomologyP1 DerivedFunctorsDefs CohomologyConnection
 open SheafCohomology CohomologyP1 DerivedFunctorsDefs
 

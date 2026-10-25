@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LeeYangFieldAnalytic
+import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangFieldAnalytic.Part3
 open Finset StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBalancedShareVerticalRate
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBalancedShareVerticalRate
 open Filter Topology StatMech StatMech.FrontierD
 
 

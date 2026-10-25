@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusFacePotential
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusFacePotential.Part5
 open StatMech StatMech.FrontierA
 
 

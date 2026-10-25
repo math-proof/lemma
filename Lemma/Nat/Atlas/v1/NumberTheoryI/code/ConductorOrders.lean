@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.ConductorOrders
+import Class.v1.Atlas.NumberTheoryI.code.ConductorOrders.Part2
 open Ideal Polynomial Algebra IsDedekindDomain nonZeroDivisors
 open nonZeroDivisors
 

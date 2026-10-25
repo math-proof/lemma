@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Talagrand
+import Def.v1.Atlas.BooleanFunctions.code.Talagrand
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 open Finset BigOperators Real
 

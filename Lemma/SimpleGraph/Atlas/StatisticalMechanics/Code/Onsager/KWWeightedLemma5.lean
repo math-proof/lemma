@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.KWWeightedLemma5
+import Theorem.StatisticalMechanics.Code.Onsager.KWWeightedLemma5
 open StatMech StatMech.Onsager
 
 

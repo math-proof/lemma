@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.NumberTheory.RandomMultiplicativeFunction
+import Def.Probability.NumberTheory.RandomMultiplicativeFunction.Part2
 open MeasureTheory ProbabilityTheory ArithmeticFunction
 open scoped ENNReal
 open MetaMathlibExt.RandomMultiplicativeFunction

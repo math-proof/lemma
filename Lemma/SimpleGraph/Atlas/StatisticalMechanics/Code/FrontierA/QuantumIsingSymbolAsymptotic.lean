@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingSymbolAsymptotic
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingSymbolAsymptotic.Part2
 open Filter StatMech StatMech.FrontierA
 
 

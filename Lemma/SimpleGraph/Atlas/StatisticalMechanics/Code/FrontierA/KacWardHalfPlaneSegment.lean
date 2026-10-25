@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardHalfPlaneSegment
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardHalfPlaneSegment
 open StatMech StatMech.FrontierA
 
 

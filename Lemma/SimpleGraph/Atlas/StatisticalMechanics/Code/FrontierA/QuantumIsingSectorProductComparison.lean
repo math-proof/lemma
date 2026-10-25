@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingSectorProductComparison
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingSectorProductComparison
 open StatMech StatMech.FrontierA
 
 

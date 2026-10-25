@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kwffaceclose
+import Theorem.StatisticalMechanics.Code.Walls.kwffaceclose.Part3
 open Finset SimpleGraph StatMech StatMech.Walls
 
 

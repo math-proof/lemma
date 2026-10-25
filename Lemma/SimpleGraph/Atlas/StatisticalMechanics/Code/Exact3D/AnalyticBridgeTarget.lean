@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.AnalyticBridgeTarget
+import Theorem.StatisticalMechanics.Code.Exact3D.AnalyticBridgeTarget.Part3
 open StatMech StatMech.Exact3D StatMech.Exact3D.RGCertificate StatMech.Exact3D.RGCertificate.AnalyticBridgeInputs StatMech.Exact3D.RGCertificate.AnalyticPrefactorBridgeInputs StatMech.Exact3D.RGCertificate.AnalyticMassBridgeInputs
 
 

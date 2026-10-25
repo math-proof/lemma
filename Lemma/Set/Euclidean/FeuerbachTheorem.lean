@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Euclidean.FeuerbachTheorem
+import Theorem.Geometry.Euclidean.FeuerbachTheorem
 open Affine Affine.Simplex EuclideanGeometry
 open scoped InnerProductSpace
 open MetaMathlibExt

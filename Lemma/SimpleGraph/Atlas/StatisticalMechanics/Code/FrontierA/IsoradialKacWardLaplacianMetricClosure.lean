@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsoradialKacWardLaplacianMetricClosure
+import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardLaplacianMetricClosure
 open Finset SimpleGraph StatMech StatMech.FrontierA StatMech.FrontierA.MetricCriticalIsoradialGenusZeroOneEmbedding
 
 

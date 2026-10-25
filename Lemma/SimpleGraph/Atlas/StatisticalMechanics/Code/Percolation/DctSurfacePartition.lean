@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.DctSurfacePartition
+import Theorem.StatisticalMechanics.Code.Percolation.DctSurfacePartition.Part4
 open MeasureTheory Function Set SimpleGraph StatMech StatMech.Percolation
 
 

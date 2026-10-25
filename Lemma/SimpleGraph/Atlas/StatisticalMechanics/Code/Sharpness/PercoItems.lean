@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.PercoItems
+import Theorem.StatisticalMechanics.Code.Sharpness.PercoItems
 open MeasureTheory Set Filter Topology StatMech StatMech.Sharpness
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
+import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
 open AlgebraicGeometry in IsCompleteVariety
 
 

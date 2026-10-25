@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.MaxInfluenceHalf
+import Theorem.StatisticalMechanics.Code.BeffaraDC.MaxInfluenceHalf
 open Finset Real Set StatMech StatMech.BeffaraDC
 
 

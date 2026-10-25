@@ -5,7 +5,6 @@ open CategoryTheory CategoryTheory.Limits Opposite AlgebraicGeometry
 open Algebra CategoryTheory.Algebra IsLocalRing TensorProduct Algebra.TensorProduct
 open scoped AlgebraicGeometry
 
-
 /--
 [AlgebraicGeometry_exists_etale_nhd_of_flat_stalkMap_of_map_maximalIdeal_eq_of_isIso_residueFieldMap](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_etale_nhd_of_flat_stalkMap_of_map_maximalIdeal_eq_of_isIso_residueFieldMap.lean)
 -/
@@ -146,7 +145,6 @@ private lemma main
   exists_etale_nhd_of_flat_of_formallyUnramified_stalkMap f x hflat
     (formallyUnramified_stalkMap_of_map_maximalIdeal_eq_of_surjective f x hmax
       (ConcreteCategory.bijective_of_isIso (f.residueFieldMap x)).2)
-
 
 -- created on 2026-10-23
 -- updated on 2026-10-24

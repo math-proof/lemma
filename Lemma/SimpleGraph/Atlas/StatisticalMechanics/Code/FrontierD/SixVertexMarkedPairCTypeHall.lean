@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairCTypeHall
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairCTypeHall.Part4
 open Finset Matrix Polynomial StatMech StatMech.FrontierD
 
 

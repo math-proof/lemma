@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.ChowHelperBlowupProjective
+import Def.v1.Atlas.AlgebraicGeometryI.code.ChowHelperBlowupProjective
 open AlgebraicGeometry CategoryTheory Limits ChowHelperBlowupProjective
 open immersion `U ↪ Y` with dense image. -/
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section11
+import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
 open Set Topology MayerVietoris
 open Function
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.PermSameCycleWeightSplit
+import Theorem.StatisticalMechanics.Code.FrontierD.PermSameCycleWeightSplit
 open Equiv Finset StatMech StatMech.FrontierD
 
 

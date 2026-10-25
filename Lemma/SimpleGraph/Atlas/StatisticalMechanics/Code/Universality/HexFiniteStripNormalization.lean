@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexFiniteStripNormalization
+import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripNormalization.Part2
 open StatMech StatMech.Universality
 
 

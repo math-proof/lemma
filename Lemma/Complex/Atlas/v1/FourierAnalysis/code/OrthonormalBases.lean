@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.FourierAnalysis.code.OrthonormalBases
+import Class.v1.Atlas.FourierAnalysis.code.OrthonormalBases
 open Filter Topology Submodule OrthonormalBases HilbertSpace
 open scoped InnerProductSpace ComplexConjugate
 

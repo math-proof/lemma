@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonInsertion
+import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonInsertion.Part3
 open MeasureTheory StatMech StatMech.FrontierA
 
 

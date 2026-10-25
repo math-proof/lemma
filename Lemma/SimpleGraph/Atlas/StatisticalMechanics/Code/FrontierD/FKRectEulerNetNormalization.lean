@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectEulerNetNormalization
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEulerNetNormalization.Part3
 open Finset StatMech StatMech.FrontierD
 
 

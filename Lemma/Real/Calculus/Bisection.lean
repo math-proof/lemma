@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.Bisection
+import Theorem.Analysis.Calculus.Bisection.Part2
 
 open Real.Calculus.Bisection
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeMomentBounds
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeMomentBounds
 open Finset SimpleGraph StatMech StatMech.Ising
 
 

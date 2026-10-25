@@ -1,0 +1,172 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/DihedralPositivity.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Roots
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation.Part4
+open Finset BigOperators
+
+
+namespace CoxeterGroup
+
+set_option linter.unusedSectionVars false
+
+variable {B : Type*} [DecidableEq B] [Fintype B]
+
+/-- Support stability for $\sigma_r$ along $\{s, t\}$: if $r \in \{s, t\}$ and
+$v$ is supported in $\{s, t\}$, then $\sigma_r(v)$ is also supported in
+$\{s, t\}$. -/
+theorem sigma_support_two (M : CoxeterMatrix B) (s t : B) (hst : s ≠ t) (r : B)
+    (hr : r = s ∨ r = t) (v : B → ℝ) (hsupp : ∀ u, u ≠ s → u ≠ t → v u = 0) :
+    ∀ u, u ≠ s → u ≠ t → sigma M r v u = 0 := by
+  intro u hus hut
+  have hru : r ≠ u := by
+    rcases hr with rfl | rfl <;> [exact Ne.symm hus; exact Ne.symm hut]
+  rw [sigma_coord_ne M r v u (Ne.symm hru)]
+  exact hsupp u hus hut
+
+/-- Iterated version of $\mathtt{sigma\_support\_two}$: support in $\{s, t\}$
+is preserved under $\mathtt{wordSigma}$ for any word in the alphabet
+$\{s, t\}$. -/
+theorem wordSigma_support_two (M : CoxeterMatrix B) (s t : B) (hst : s ≠ t)
+    (word : List B) (halt : ∀ b ∈ word, b = s ∨ b = t) (v : B → ℝ)
+    (hsupp : ∀ u, u ≠ s → u ≠ t → v u = 0) :
+    ∀ u, u ≠ s → u ≠ t → wordSigma M word v u = 0 := by
+  induction word with
+  | nil => exact fun u hus hut => hsupp u hus hut
+  | cons r rest ih =>
+    intro u hus hut
+    simp only [wordSigma]
+    have hr : r = s ∨ r = t := halt r (List.mem_cons.mpr (Or.inl rfl))
+    have hrest : ∀ b ∈ rest, b = s ∨ b = t :=
+      fun b hb => halt b (List.mem_cons.mpr (Or.inr hb))
+    exact sigma_support_two M s t hst r hr (wordSigma M rest v) (ih hrest) u hus hut
+
+/-- The simple root $e_s$ is supported in $\{s, t\}$ (vacuously on
+coordinates outside this pair). -/
+theorem e_supported_two (s t : B) : ∀ u, u ≠ s → u ≠ t → (e s) u = 0 := by
+  intro u hus _
+  simp [e, hus]
+
+/-- For off-diagonal $s \ne t$ with $m(s, t) \ne 2$ (so $m(s, t) \ge 3$ or
+$\infty$), the form value satisfies $\mathtt{formVal}\,M\,s\,t \le -1/2$,
+since $\cos(\pi/3) = 1/2$. -/
+theorem formVal_le_neg_half (M : CoxeterMatrix B) (s t : B) (hst : s ≠ t)
+    (hm : M s t ≠ 2) : formVal M s t ≤ -1/2 := by
+  unfold formVal
+  split
+  · linarith
+  · rename_i hm0
+    have hm1 : M s t ≠ 1 := M.off_diagonal s t hst
+    have hm_ge_3 : (M s t : ℕ) ≥ 3 := by omega
+    have hm3 : (3 : ℝ) ≤ (M s t : ℝ) := by exact_mod_cast hm_ge_3
+    have hm_pos : (0 : ℝ) < (M s t : ℝ) := by linarith
+    have hle : Real.pi / (M s t : ℝ) ≤ Real.pi / 3 := by
+      apply div_le_div_of_nonneg_left (le_of_lt Real.pi_pos) (by positivity) hm3
+    have hge : (0 : ℝ) ≤ Real.pi / (M s t : ℝ) := by positivity
+    have hpi : Real.pi / 3 ≤ Real.pi := by linarith [Real.pi_pos]
+    have hcos : Real.cos (Real.pi / (M s t : ℝ)) ≥ 1/2 := by
+      rw [ge_iff_le, ← Real.cos_pi_div_three]
+      exact Real.cos_le_cos_of_nonneg_of_le_pi hge hpi hle
+    linarith
+
+/-- Positivity at length two: when $m(s, t) \ne 2$,
+$\mathtt{wordSigma}\,M\,[s, t]\,(e_s)$ is still a positive root. -/
+theorem dihedral_pos_len2 (M : CoxeterMatrix B) (s t : B) (hst : s ≠ t)
+    (hm : M s t ≠ 2) :
+    IsPositive (wordSigma M [s, t] (e s)) := by
+  simp only [wordSigma]
+  set v := sigma M t (e s)
+  have hv_pos : IsPositive v := sigmaLin_preserves_positive_off_diagonal M t s (Ne.symm hst)
+  have hv_supp : ∀ u, u ≠ s → u ≠ t → v u = 0 :=
+    sigma_support_two M s t hst t (Or.inr rfl) (e s) (e_supported_two s t)
+  intro u
+  by_cases hus : u = s
+  · rw [hus, sigma_coord_self]
+    have hvs : v s = 1 := by
+      show sigma M t (e s) s = 1
+      rw [sigma_coord_ne M t (e s) s hst]
+      simp [e]
+    have hbilin : bilinForm M v (e s) = 1 - 2 * formVal M s t * formVal M t s := by
+      show bilinForm M (sigma M t (e s)) (e s) = _
+      rw [bilinForm_sigma_general M s t (e s), bilinForm_e_e, bilinForm_e_e, formVal_diag]
+    rw [hvs, hbilin, formVal_symm M t s]
+    have hfv := formVal_le_neg_half M s t hst hm
+    nlinarith
+  · by_cases hut : u = t
+    · rw [hut, sigma_coord_ne M s v t (Ne.symm hst)]
+      exact hv_pos t
+    · rw [sigma_support_two M s t hst s (Or.inl rfl) v hv_supp u hus hut]
+
+/-- Closed form for $B(v, e_t)$ when $v$ is supported in $\{s, t\}$:
+$B(v, e_t) = v_s\, B_{s, t} + v_t$. -/
+theorem bilinForm_e_t_of_supported (M : CoxeterMatrix B) (s t : B) (hst : s ≠ t)
+    (v : B → ℝ) (hsupp : ∀ u, u ≠ s → u ≠ t → v u = 0) :
+    bilinForm M v (e t) = v s * formVal M s t + v t := by
+  simp only [bilinForm, e, Pi.single_apply]
+  simp_rw [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq']
+  simp only [Finset.mem_univ, ite_true]
+
+  have htail : ∀ r : B, r ≠ s → r ≠ t → v r * formVal M r t = 0 := by
+    intro r hrs hrt; rw [hsupp r hrs hrt, zero_mul]
+  have key : ∑ r : B, v r * formVal M r t =
+      v s * formVal M s t + v t * formVal M t t := by
+    have := Finset.sum_subset (Finset.subset_univ ({s, t} : Finset B))
+      (fun r _ hr => by
+        simp [Finset.mem_insert, Finset.mem_singleton] at hr
+        push_neg at hr
+        exact htail r hr.1 hr.2)
+    rw [← this]
+    simp [Finset.sum_pair hst]
+  rw [key, formVal_diag, mul_one]
+
+/-- Closed form for $B(v, e_s)$ when $v$ is supported in $\{s, t\}$:
+$B(v, e_s) = v_s + v_t\, B_{t, s}$. -/
+theorem bilinForm_e_s_of_supported (M : CoxeterMatrix B) (s t : B) (hst : s ≠ t)
+    (v : B → ℝ) (hsupp : ∀ u, u ≠ s → u ≠ t → v u = 0) :
+    bilinForm M v (e s) = v s + v t * formVal M t s := by
+  simp only [bilinForm, e, Pi.single_apply]
+  simp_rw [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq']
+  simp only [Finset.mem_univ, ite_true]
+  have htail : ∀ r : B, r ≠ s → r ≠ t → v r * formVal M r s = 0 := by
+    intro r hrs hrt; rw [hsupp r hrs hrt, zero_mul]
+  have key : ∑ r : B, v r * formVal M r s =
+      v s * formVal M s s + v t * formVal M t s := by
+    have := Finset.sum_subset (Finset.subset_univ ({s, t} : Finset B))
+      (fun r _ hr => by
+        simp [Finset.mem_insert, Finset.mem_singleton] at hr
+        push_neg at hr
+        exact htail r hr.1 hr.2)
+    rw [← this]
+    simp [Finset.sum_pair hst]
+  rw [key, formVal_diag, mul_one]
+
+/-- $t$-coordinate of $\sigma_t(v)$ when $v$ is supported in $\{s, t\}$:
+$(\sigma_t v)_t = -v_t - 2 v_s\, B_{s, t}$. -/
+theorem sigma_t_coord_t_of_supported (M : CoxeterMatrix B) (s t : B) (hst : s ≠ t)
+    (v : B → ℝ) (hsupp : ∀ u, u ≠ s → u ≠ t → v u = 0) :
+    sigma M t v t = -v t - 2 * v s * formVal M s t := by
+  rw [sigma_coord_self, bilinForm_e_t_of_supported M s t hst v hsupp]
+  ring
+
+/-- $s$-coordinate of $\sigma_s(v)$ when $v$ is supported in $\{s, t\}$:
+$(\sigma_s v)_s = -v_s - 2 v_t\, B_{t, s}$. -/
+theorem sigma_s_coord_s_of_supported (M : CoxeterMatrix B) (s t : B) (hst : s ≠ t)
+    (v : B → ℝ) (hsupp : ∀ u, u ≠ s → u ≠ t → v u = 0) :
+    sigma M s v s = -v s - 2 * v t * formVal M t s := by
+  rw [sigma_coord_self, bilinForm_e_s_of_supported M s t hst v hsupp]
+  ring
+
+/-- Infinite-order convention: if $m(s, t) = 0$ (interpreted as $\infty$),
+then $\mathtt{formVal}\,M\,s\,t = -1$. -/
+theorem formVal_eq_neg_one_of_zero (M : CoxeterMatrix B) (s t : B)
+    (hm : M s t = 0) : formVal M s t = -1 := by
+  unfold formVal; rw [hm]; simp
+
+end CoxeterGroup

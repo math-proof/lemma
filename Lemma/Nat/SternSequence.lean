@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.SternSequence
+import Def.NumberTheory.SternSequence
 open MetaMathlibExt
 
 

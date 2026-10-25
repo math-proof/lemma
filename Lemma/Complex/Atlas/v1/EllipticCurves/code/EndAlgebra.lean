@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.EndAlgebra
+import Instance.v1.Atlas.EllipticCurves.code.EndAlgebra.Part5
 open RingAntiHom RingInvolution
 open scoped TensorProduct
 

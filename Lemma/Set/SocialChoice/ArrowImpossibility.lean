@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GameTheory.SocialChoice.ArrowImpossibility
+import Def.GameTheory.SocialChoice.ArrowImpossibility
 open MetaMathlibExt
 
 

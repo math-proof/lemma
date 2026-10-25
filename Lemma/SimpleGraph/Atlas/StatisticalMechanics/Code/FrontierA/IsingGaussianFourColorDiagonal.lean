@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianFourColorDiagonal
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianFourColorDiagonal.Part3
 open Finset Classical StatMech StatMech.FrontierA
 
 

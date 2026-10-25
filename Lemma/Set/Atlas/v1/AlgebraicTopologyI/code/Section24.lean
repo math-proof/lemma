@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section24
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section24.Part5
 open CategoryTheory MonoidalCategory Limits UniversalCoefficientTheorem
 
 

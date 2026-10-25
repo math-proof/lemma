@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.KKLpBiased
+import Theorem.StatisticalMechanics.Code.Probability.KKLpBiased.Part2
 open MeasureTheory Set Filter Topology StatMech StatMech.Probability
 
 

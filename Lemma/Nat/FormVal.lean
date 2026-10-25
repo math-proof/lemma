@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.Basic
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Basic.Part3
 open Finset BigOperators CoxeterGroup
 
 

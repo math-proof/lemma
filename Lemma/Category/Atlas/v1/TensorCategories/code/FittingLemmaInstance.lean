@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.FittingLemmaInstance
+import Instance.v1.Atlas.TensorCategories.code.FittingLemmaInstance
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Idempotents
 
 

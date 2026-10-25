@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWReflectedRegion
+import Theorem.StatisticalMechanics.Code.Universality.RSWReflectedRegion
 open Function MeasureTheory Set StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Trace.InvariantSubmodule
+import Theorem.LinearAlgebra.Trace.InvariantSubmodule
 open Module.Basis
 
 

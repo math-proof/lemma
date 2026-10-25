@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.MeanfieldTargetReassembly
+import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldTargetReassembly.Part2
 open Finset Set SimpleGraph StatMech StatMech.Sharpness
 
 

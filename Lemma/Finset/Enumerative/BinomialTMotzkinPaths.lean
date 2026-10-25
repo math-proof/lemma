@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.BinomialTMotzkinPaths
+import Abbrev.Combinatorics.Enumerative.BinomialTMotzkinPaths.Part2
 open scoped BigOperators
 open MetaMathlibExt
 

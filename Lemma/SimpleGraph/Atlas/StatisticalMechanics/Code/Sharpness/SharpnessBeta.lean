@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.SharpnessBeta
+import Theorem.StatisticalMechanics.Code.Sharpness.SharpnessBeta.Part2
 open MeasureTheory Set Filter Topology Real StatMech StatMech.Sharpness
 
 

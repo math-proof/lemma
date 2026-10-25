@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexCorrectedStripInfiniteIdentity
+import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripInfiniteIdentity
 open StatMech StatMech.Universality
 
 

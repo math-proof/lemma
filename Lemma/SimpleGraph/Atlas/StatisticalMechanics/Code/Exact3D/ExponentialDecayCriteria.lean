@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.ExponentialDecayCriteria
+import Theorem.StatisticalMechanics.Code.Exact3D.ExponentialDecayCriteria
 open StatMech StatMech.Exact3D
 
 

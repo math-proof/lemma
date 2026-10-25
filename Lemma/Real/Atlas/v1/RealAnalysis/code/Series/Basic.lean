@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.RealAnalysis.code.Series.Basic
+import Def.v1.Atlas.RealAnalysis.code.Series.Basic
 open Real_Analysis Real_Analysis.Series
 open Filter Finset
 

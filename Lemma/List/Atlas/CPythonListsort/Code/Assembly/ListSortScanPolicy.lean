@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.ListSortMergePolicy
+import Theorem.CPythonListsort.Code.Assembly.ListSortMergePolicy
 
 
 namespace CPythonListsort

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.SwitchingDichotomy
+import Theorem.StatisticalMechanics.Code.Sharpness.SwitchingDichotomy.Part2
 open Finset BigOperators Classical StatMech StatMech.Sharpness StatMech.Sharpness.RandomCurrent
 
 

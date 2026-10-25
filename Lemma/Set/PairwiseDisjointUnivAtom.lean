@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.MeasureTheory.Section_1_3_1
+import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
 open scoped Classical
 open UnsignedSimpleFunction.IntegralWellDef
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.InvariantPreserve
+import Def.v1.Atlas.AlgebraicCombinatorics.code.InvariantPreserve
 open Finset Finsupp MulAction Function InvariantPreserve
 open scoped Classical Pointwise
 

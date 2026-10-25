@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.fin.SkipTwo
+import Def.Data.Fin.SkipTwo
 
 
 section

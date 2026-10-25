@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.HenselLemmas
+import Instance.v1.Atlas.NumberTheoryI.code.HenselLemmas
 open Polynomial IsLocalRing Ring
 
 

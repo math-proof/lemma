@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.EulerSeidelMatrix
+import Def.Combinatorics.Enumerative.EulerSeidelMatrix
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Recurrences.PrimitiveDivisor
+import Def.NumberTheory.Recurrences.PrimitiveDivisor
 open scoped BigOperators
 open LucasSequence
 

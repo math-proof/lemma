@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationCumulativePairedBranch
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationCumulativePairedBranch
 open StatMech StatMech.FrontierD
 
 

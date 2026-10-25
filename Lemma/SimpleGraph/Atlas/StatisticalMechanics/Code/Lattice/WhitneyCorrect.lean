@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.WhitneyCorrect
+import Theorem.StatisticalMechanics.Code.Lattice.WhitneyCorrect.Part8
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

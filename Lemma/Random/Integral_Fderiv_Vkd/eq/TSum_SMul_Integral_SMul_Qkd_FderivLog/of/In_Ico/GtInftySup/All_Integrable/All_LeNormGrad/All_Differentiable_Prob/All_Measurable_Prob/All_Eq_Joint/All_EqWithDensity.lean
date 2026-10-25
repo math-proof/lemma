@@ -1,4 +1,4 @@
-import sympy.concrete.sup
+import Macro.Order.Sup
 import Lemma.Random.Integral_Fderiv_Vkd.eq.Add_SMul_Integral_SMul_FderivLog.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.Map.eq.Init.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob

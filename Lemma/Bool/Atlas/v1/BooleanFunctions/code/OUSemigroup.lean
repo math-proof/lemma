@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.OUSemigroup
+import Def.v1.Atlas.BooleanFunctions.code.OUSemigroup
 open GaussianSpace ProbabilityTheory MeasureTheory
 open MeasureTheory ProbabilityTheory Real ContinuousLinearMap
 

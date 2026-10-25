@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.ClusterReachesRay
+import Theorem.StatisticalMechanics.Code.Percolation.ClusterReachesRay.Part3
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

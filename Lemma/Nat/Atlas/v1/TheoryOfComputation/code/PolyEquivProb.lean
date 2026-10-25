@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.PolyEquivProb
+import Def.v1.Atlas.TheoryOfComputation.code.PolyEquivProb
 open PolyEquivProb
 open Finset MvPolynomial Fintype
 

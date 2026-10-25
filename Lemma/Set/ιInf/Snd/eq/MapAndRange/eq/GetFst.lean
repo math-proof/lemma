@@ -5,7 +5,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped TensorProduct
 open AlgebraicCurve AlgebraicCurve.TwoChartIntegralModel
 
-
 /-- ported from external source -/
 @[path]
 private lemma main
@@ -62,6 +61,5 @@ private lemma main
     ·
       have hs2 : Function.Surjective (pullbackSpecIso R A O).inv.base := (pullbackSpecIso R A O).inv.homeomorph.surjective
       rw [Scheme.Hom.comp_base, TopCat.coe_comp, Set.range_comp, Set.range_eq_univ.mpr hs2, Set.image_univ, hrange]
-
 
 -- created on 2026-10-23

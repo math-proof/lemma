@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.LaplaceTransform.Basic
+import Def.Analysis.LaplaceTransform.Basic
 open MeasureTheory Set Real Filter Topology Asymptotics
 open-positive-ray (piecewise continuity on `ℝ_{>0}`) wording does not control the
 

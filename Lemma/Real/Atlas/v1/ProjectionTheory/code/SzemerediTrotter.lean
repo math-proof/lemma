@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.SzemerediTrotter
+import Def.v1.Atlas.ProjectionTheory.code.SzemerediTrotter.Part2
 open Finset Real SzemerediTrotter ProjectionTheory
 
 

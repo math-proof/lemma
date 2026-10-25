@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MeasureTheory.Geometry.BanachTarski
+import Theorem.MeasureTheory.Geometry.BanachTarski.Part16
 open MathlibExt.MeasureTheory.Geometry.BanachTarskiWanted
 open FinitelyEquidecomposableByIsometries
 

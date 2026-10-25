@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.TrinomialTransformSequence
+import Def.NumberTheory.TrinomialTransformSequence
 open scoped BigOperators
 open MetaMathlibExt
 

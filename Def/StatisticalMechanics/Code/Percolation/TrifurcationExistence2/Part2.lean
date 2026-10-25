@@ -1,0 +1,45 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/TrifurcationExistence2.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Mathlib
+import Theorem.StatisticalMechanics.Code.Percolation.BoxMergeFreeMenger.Part2
+import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationExistence2
+open MeasureTheory Set
+open scoped ENNReal BigOperators
+open StatMech.Lattice StatMech.ConfigSpace
+
+
+namespace StatMech
+
+namespace Percolation
+
+variable {d : ℕ}
+
+
+def tex_AttachData (ω : ConfigSpace (Sym2 (Site d))) (x₁ x₂ x₃ : Site d) : Prop :=
+  ∃ (a₁ a₂ a₃ : Site d) (W : Finset (Sym2 (Site d))),
+    ((hypercubicLattice d).Adj 0 a₁ ∧ (hypercubicLattice d).Adj 0 a₂ ∧
+      (hypercubicLattice d).Adj 0 a₃) ∧
+    (∀ e ∈ W, (0 : Site d) ∉ e) ∧
+    (a₁ ∈ cluster d ω x₁ ∧ a₂ ∈ cluster d ω x₂ ∧ a₃ ∈ cluster d ω x₃) ∧
+    ((∀ u v, u ∈ cluster d ω x₁ → s(u, v) ∈ W → v ∈ cluster d ω x₁) ∧
+      (∀ u v, u ∈ cluster d ω x₂ → s(u, v) ∈ W → v ∈ cluster d ω x₂) ∧
+      (∀ u v, u ∈ cluster d ω x₃ → s(u, v) ∈ W → v ∈ cluster d ω x₃)) ∧
+    (Connected d (removeSite 0 (forceOpenFinset W ω)) a₁ x₁ ∧
+      Connected d (removeSite 0 (forceOpenFinset W ω)) a₂ x₂ ∧
+      Connected d (removeSite 0 (forceOpenFinset W ω)) a₃ x₃) ∧
+    ((cluster d (removeSite 0 ω) x₁).Infinite ∧
+      (cluster d (removeSite 0 ω) x₂).Infinite ∧
+      (cluster d (removeSite 0 ω) x₃).Infinite)
+
+
+end Percolation
+end StatMech

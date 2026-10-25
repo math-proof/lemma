@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexPairReconnectionWitness
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairReconnectionWitness
 open Finset Matrix Polynomial StatMech StatMech.FrontierD
 
 

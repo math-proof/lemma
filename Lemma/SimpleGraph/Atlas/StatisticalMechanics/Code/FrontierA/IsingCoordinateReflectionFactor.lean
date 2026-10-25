@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingCoordinateReflectionFactor
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingCoordinateReflectionFactor.Part2
 open Finset StatMech StatMech.FrontierA
 
 

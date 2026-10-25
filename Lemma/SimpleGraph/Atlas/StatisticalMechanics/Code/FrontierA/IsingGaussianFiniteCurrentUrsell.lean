@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianFiniteCurrentUrsell
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianFiniteCurrentUrsell.Part2
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

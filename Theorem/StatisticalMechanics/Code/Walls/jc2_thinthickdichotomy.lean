@@ -1,0 +1,103 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/jc2_thinthickdichotomy.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Mathlib
+import Theorem.StatisticalMechanics.Code.Walls.jc_core
+import Theorem.StatisticalMechanics.Code.Walls.jc_earanchor.Part2
+import Def.StatisticalMechanics.Code.Walls.jc2_thinthickdichotomy
+open SimpleGraph Function
+
+
+namespace StatMech
+
+namespace Walls
+
+open StatMech.Lattice
+
+
+theorem jc2_rightEnd_mem (K : Set (Site 2)) (c : Site 2) (len : ℤ)
+    (hrun : jc_IsTopRowRun K c len) : jc2_rightEnd c len ∈ K :=
+  hrun.run_mem len hrun.len_nonneg (le_refl len)
+
+
+theorem jc2_thin_pendant (K : Set (Site 2)) (c : Site 2) (len : ℤ)
+    (hrun : jc_IsTopRowRun K c len) (hlen : 1 ≤ len)
+    (hthin : jc2_rightEnd c len + ![0, -1] ∉ K) :
+    jc_IsPendantCell K (jc2_rightEnd c len) :=
+  jc_rightEnd_pendant_of_down_nmem K c len hrun hlen hthin
+
+
+theorem jc2_left_down_distinct (c : Site 2) (len : ℤ) :
+    (c + ![len - 1, 0] : Site 2) ≠ jc2_rightEnd c len + ![0, -1] := by
+  intro h
+  have hy : (c + ![len - 1, 0] : Site 2) 1 = (jc2_rightEnd c len + ![0, -1] : Site 2) 1 := by
+    rw [h]
+  rw [jc2_rightEnd] at hy
+  simp only [Pi.add_apply, Matrix.cons_val_one, Matrix.cons_val_zero] at hy
+  omega
+
+
+theorem jc2_thick_not_pendant (K : Set (Site 2)) (c : Site 2) (len : ℤ)
+    (hrun : jc_IsTopRowRun K c len) (hlen : 1 ≤ len)
+    (hthick : jc2_rightEnd c len + ![0, -1] ∈ K) :
+    ¬ jc_IsPendantCell K (jc2_rightEnd c len) := by
+  rw [jc2_rightEnd] at hthick ⊢
+  set r : Site 2 := c + ![len, 0] with hr
+  rintro ⟨_, u, ⟨_, _⟩, huniq⟩
+  
+  have hleftK : (c + ![len - 1, 0] : Site 2) ∈ K :=
+    hrun.run_mem (len - 1) (by omega) (by omega)
+  have hleftAdj : (hypercubicLattice 2).Adj r (c + ![len - 1, 0]) := by
+    rw [hr, hypercubicLattice_adj, Fin.sum_univ_two]
+    have e0 : ((c + ![len, 0] : Site 2) 0 - (c + ![len - 1, 0] : Site 2) 0) = 1 := by
+      simp only [Pi.add_apply, Matrix.cons_val_zero]; ring
+    have e1 : ((c + ![len, 0] : Site 2) 1 - (c + ![len - 1, 0] : Site 2) 1) = 0 := by
+      simp only [Pi.add_apply, Matrix.cons_val_one]; ring
+    rw [e0, e1]; decide
+  
+  have hdownAdj : (hypercubicLattice 2).Adj r (r + ![0, -1]) := by
+    rw [hypercubicLattice_adj, Fin.sum_univ_two]
+    have e0 : (r 0 - (r + ![0, -1] : Site 2) 0) = 0 := by
+      simp only [Pi.add_apply, Matrix.cons_val_zero]; ring
+    have e1 : (r 1 - (r + ![0, -1] : Site 2) 1) = 1 := by
+      simp only [Pi.add_apply, Matrix.cons_val_one, Matrix.cons_val_zero]; ring
+    rw [e0, e1]; decide
+  
+  have h1 : (c + ![len - 1, 0] : Site 2) = u := huniq _ ⟨hleftK, hleftAdj⟩
+  have h2 : (r + ![0, -1] : Site 2) = u := huniq _ ⟨hthick, hdownAdj⟩
+  apply jc2_left_down_distinct c len
+  rw [jc2_rightEnd, ← hr, h1, h2]
+
+
+theorem jc2_thin_thick_dichotomy (K : Set (Site 2)) (c : Site 2) (len : ℤ)
+    (hrun : jc_IsTopRowRun K c len) (hlen : 1 ≤ len) :
+    (jc2_rightEnd c len + ![0, -1] ∉ K ∧ jc_IsPendantCell K (jc2_rightEnd c len)) ∨
+      (jc2_rightEnd c len + ![0, -1] ∈ K ∧ ¬ jc_IsPendantCell K (jc2_rightEnd c len)) := by
+  rcases em (jc2_rightEnd c len + ![0, -1] ∈ K) with hin | hout
+  · exact Or.inr ⟨hin, jc2_thick_not_pendant K c len hrun hlen hin⟩
+  · exact Or.inl ⟨hout, jc2_thin_pendant K c len hrun hlen hout⟩
+
+
+theorem jc2_rightEnd_len_zero (c : Site 2) : jc2_rightEnd c 0 = c := by
+  rw [jc2_rightEnd]
+  funext i; fin_cases i <;> simp [Pi.add_apply]
+
+
+theorem jc2_len_zero_right_or_down (K : Set (Site 2)) (c : Site 2)
+    (hrun : jc_IsTopRowRun K c 0) (v : Site 2) (hv : v ∈ K)
+    (hadj : (hypercubicLattice 2).Adj v c) :
+    v = jc2_rightEnd c 0 + ![1, 0] ∨ v = jc2_rightEnd c 0 + ![0, -1] := by
+  rw [jc2_rightEnd_len_zero]
+  exact jc_extremeCell_neighbor_right_or_down K c v hrun.isExtreme hv hadj
+
+
+end Walls
+end StatMech

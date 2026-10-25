@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.FoundNewRunSafety
-import sympy.atlas.CPythonListsort.Code.Assembly.MergeForceCollapseSafety
-import sympy.atlas.CPythonListsort.Code.Assembly.TopLevelErasureHi
+import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety.Part2
+import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety.Part2
+import Def.CPythonListsort.Code.Assembly.TopLevelErasureHi
 
 
 namespace CPythonListsort

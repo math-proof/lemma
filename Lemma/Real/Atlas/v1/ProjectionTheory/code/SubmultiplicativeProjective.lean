@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.SubmultiplicativeProjective
+import Structure.v1.Atlas.ProjectionTheory.code.SubmultiplicativeProjective
 open ProjectionTheory
 
 

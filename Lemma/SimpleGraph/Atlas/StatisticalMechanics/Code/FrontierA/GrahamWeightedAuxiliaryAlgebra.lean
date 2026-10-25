@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamWeightedAuxiliaryAlgebra
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedAuxiliaryAlgebra
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

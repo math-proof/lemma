@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.NoDiagTouchClose
+import Theorem.StatisticalMechanics.Code.Lattice.NoDiagTouchClose.Part4
 open SimpleGraph Function Set StatMech StatMech.Lattice
 
 

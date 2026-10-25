@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.atlas.v1.Atlas.LieGroups.code.PlancherelCompact
+import Abbrev.v1.Atlas.LieGroups.code.PlancherelCompact.Part3
 open MeasureTheory PlancherelCompact
 open scoped Topology Manifold
 

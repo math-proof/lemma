@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.PlusAxisMixing
+import Theorem.StatisticalMechanics.Code.FrontierB.PlusAxisMixing
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierB
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.HrouteDisjointPaths
+import Theorem.StatisticalMechanics.Code.Percolation.HrouteDisjointPaths.Part4
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation StatMech.Percolation.DisjointPaths
 
 

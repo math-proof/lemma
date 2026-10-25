@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeProductBounds
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeProductBounds
 open Finset SimpleGraph StatMech StatMech.Ising
 
 

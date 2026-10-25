@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.AdaptiveCausalWeightedMoments
+import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveCausalWeightedMoments
 open StatMech StatMech.OSSS StatMech.OSSS.AdaptiveCausalKernel
 
 

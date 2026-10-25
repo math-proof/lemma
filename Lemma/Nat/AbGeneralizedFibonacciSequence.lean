@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.AbGeneralizedFibonacciSequence
+import Structure.NumberTheory.AbGeneralizedFibonacciSequence
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.STTFull
+import Theorem.StatisticalMechanics.Code.Universality.STTFull.Part3
 open MeasureTheory ProbabilityTheory Finset StatMech StatMech.Universality
 
 

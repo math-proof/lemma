@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.FiniteWitnessGeneratedTablePackageExample
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessGeneratedTablePackageExample
 open StatMech StatMech.Exact3D StatMech.Exact3D.FiniteWitnessGeneratedTablePackageExample
 
 

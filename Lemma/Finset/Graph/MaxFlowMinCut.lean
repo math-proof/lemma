@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Graph.MaxFlowMinCut
+import Def.Combinatorics.Graph.MaxFlowMinCut
 open MathlibExt.Combinatorics.Graph.MaxFlowMinCutWanted
 
 

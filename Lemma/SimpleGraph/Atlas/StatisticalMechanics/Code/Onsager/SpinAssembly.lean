@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SpinAssembly
+import Theorem.StatisticalMechanics.Code.Onsager.SpinAssembly
 open StatMech StatMech.Onsager
 
 

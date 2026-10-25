@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.RealAnalysis.code.Derivatives.Weierstrass
+import Def.v1.Atlas.RealAnalysis.code.Derivatives.Weierstrass
 open Real BigOperators Topology in Filter
 
 

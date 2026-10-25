@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.DctItem2
+import Theorem.StatisticalMechanics.Code.Percolation.DctItem2.Part2
 open MeasureTheory Function Set SimpleGraph Filter StatMech StatMech.Percolation
 
 

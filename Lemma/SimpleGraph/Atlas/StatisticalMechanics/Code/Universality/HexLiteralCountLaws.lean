@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexLiteralCountLaws
+import Theorem.StatisticalMechanics.Code.Universality.HexLiteralCountLaws.Part3
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kc3_downfaceheadout
+import Theorem.StatisticalMechanics.Code.Walls.kc3_downfaceheadout.Part2
 open Set SimpleGraph Function StatMech StatMech.Walls
 
 

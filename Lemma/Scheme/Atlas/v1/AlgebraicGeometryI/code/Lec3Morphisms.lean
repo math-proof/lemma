@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec3Morphisms
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec3Morphisms
 open AlgebraicGeometry CategoryTheory TopologicalSpace Opposite VarietyMorphism
 
 

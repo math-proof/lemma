@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.GrothendieckRiemannRoch
+import Structure.v1.Atlas.AlgebraicGeometryI.code.GrothendieckRiemannRoch
 open GRR
 
 

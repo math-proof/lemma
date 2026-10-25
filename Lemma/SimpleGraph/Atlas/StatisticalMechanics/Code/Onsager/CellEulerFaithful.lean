@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.CellEulerFaithful
+import Theorem.StatisticalMechanics.Code.Onsager.CellEulerFaithful.Part6
 open StatMech StatMech.Onsager StatMech.Onsager.CellEulerFaithful
 
 

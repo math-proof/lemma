@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.FiniteComplementConnected
+import Theorem.StatisticalMechanics.Code.Lattice.FiniteComplementConnected
 open Set SimpleGraph StatMech StatMech.Lattice
 
 

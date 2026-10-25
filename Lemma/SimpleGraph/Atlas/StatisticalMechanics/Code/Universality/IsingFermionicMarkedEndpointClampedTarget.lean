@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicMarkedEndpointClampedTarget
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicMarkedEndpointClampedTarget.Part3
 open StatMech StatMech.Universality StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm
 
 

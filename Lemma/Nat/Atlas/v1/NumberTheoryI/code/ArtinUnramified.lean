@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.ArtinUnramified
+import Def.v1.Atlas.NumberTheoryI.code.ArtinUnramified.Part14
 open NumberField ArtinUnramified
 open scoped Pointwise
 open nonZeroDivisors

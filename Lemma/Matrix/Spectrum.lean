@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.Polynomial.RealRooted
+import Def.Algebra.Polynomial.RealRooted.Part2
 import Lemma.Polynomial.RealRooted
 open scoped ComplexOrder Matrix.Norms.L2Operator
 

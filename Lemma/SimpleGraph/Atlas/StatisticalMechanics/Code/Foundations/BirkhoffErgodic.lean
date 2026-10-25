@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.BirkhoffErgodic
+import Theorem.StatisticalMechanics.Code.Foundations.BirkhoffErgodic
 open MeasureTheory Filter Finset Function MeasurableSpace StatMech StatMech.BirkhoffAE StatMech.BirkhoffAE.Ergodic
 
 

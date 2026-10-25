@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Cyclotomic.LehmerLaurentIdentity
+import Theorem.NumberTheory.Cyclotomic.LehmerLaurentIdentity.Part3
 open MetaMathlibExt
 
 

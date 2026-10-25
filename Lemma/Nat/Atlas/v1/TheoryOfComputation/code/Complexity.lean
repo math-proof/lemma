@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.Complexity
+import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
 open TuringMachine
 
 

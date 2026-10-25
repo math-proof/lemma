@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.MagnetizationCorrespondence
+import Theorem.StatisticalMechanics.Code.IsingFK.MagnetizationCorrespondence
 open MeasureTheory Filter Topology StatMech StatMech.Ising
 
 

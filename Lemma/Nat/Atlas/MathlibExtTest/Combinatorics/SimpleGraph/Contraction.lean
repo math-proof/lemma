@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.Contraction
+import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.Contraction
 open MathlibExtTest MathlibExtTest.Combinatorics MathlibExtTest.Combinatorics.SimpleGraph MathlibExtTest.Combinatorics.SimpleGraph.Contraction
 
 

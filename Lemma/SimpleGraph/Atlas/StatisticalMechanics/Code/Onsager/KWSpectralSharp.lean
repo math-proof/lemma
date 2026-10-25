@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.KWSpectralSharp
+import Theorem.StatisticalMechanics.Code.Onsager.KWSpectralSharp.Part3
 open StatMech StatMech.Onsager
 
 

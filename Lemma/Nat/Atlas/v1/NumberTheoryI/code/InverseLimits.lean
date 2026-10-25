@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.InverseLimits
+import Def.v1.Atlas.NumberTheoryI.code.InverseLimits.Part2
 open Set
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW
+import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
 
 

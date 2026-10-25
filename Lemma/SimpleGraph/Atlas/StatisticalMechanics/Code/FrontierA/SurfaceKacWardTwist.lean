@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.SurfaceKacWardTwist
+import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardTwist.Part7
 open Finset SimpleGraph StatMech StatMech.FrontierA
 
 

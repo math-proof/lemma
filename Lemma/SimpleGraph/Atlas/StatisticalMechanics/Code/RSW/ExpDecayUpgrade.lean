@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.ExpDecayUpgrade
+import Theorem.StatisticalMechanics.Code.RSW.ExpDecayUpgrade
 open Real StatMech StatMech.RSW StatMech.RSW.ExpDecay
 
 

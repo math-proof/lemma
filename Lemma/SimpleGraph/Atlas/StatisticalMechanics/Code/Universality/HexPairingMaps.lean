@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexPairingMaps
+import Theorem.StatisticalMechanics.Code.Universality.HexPairingMaps.Part4
 open StatMech StatMech.Universality StatMech.Universality.HexFiniteRegion
 
 

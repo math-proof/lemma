@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PottsClusterSumErgodicFactor
+import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumErgodicFactor.Part2
 open MeasureTheory Set StatMech StatMech.FK
 
 

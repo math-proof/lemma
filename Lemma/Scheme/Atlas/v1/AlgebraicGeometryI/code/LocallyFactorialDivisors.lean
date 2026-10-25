@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.LocallyFactorialDivisors
+import Def.v1.Atlas.AlgebraicGeometryI.code.LocallyFactorialDivisors.Part7
 open IsDedekindDomain LocallyFactorialDivisors
 open scoped nonZeroDivisors
 

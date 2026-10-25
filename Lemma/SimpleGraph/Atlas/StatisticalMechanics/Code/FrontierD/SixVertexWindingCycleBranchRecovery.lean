@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexWindingCycleBranchRecovery
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexWindingCycleBranchRecovery.Part2
 open StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexSignedWindingCycleTarget
 
 

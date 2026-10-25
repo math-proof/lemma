@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wpdprimaldegree
+import Theorem.StatisticalMechanics.Code.Walls.wpdprimaldegree.Part2
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

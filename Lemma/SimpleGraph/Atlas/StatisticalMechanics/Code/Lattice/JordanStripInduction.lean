@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanStripInduction
+import Theorem.StatisticalMechanics.Code.Lattice.JordanStripInduction.Part9
 open Set SimpleGraph MeasureTheory StatMech StatMech.Lattice
 
 

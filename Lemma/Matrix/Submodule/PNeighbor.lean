@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Submodule.PNeighbor
+import Def.LinearAlgebra.Submodule.PNeighbor
 open Submodule
 
 

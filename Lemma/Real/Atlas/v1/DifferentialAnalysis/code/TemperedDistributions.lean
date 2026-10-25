@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
+import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
 open SchwartzMap MeasureTheory ContinuousLinearMap TemperedDistributions
 open scoped SchwartzMap ENNReal NNReal LineDeriv
 open scoped ContDiff

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.TSPHelper
+import Instance.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.TSPHelper
 open MeasureTheory Metric Set Real Filter TSPHelper
 
 

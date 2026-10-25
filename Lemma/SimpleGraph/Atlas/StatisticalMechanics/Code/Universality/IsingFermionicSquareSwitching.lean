@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareSwitching
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareSwitching
 open Finset Complex StatMech StatMech.Universality
 
 

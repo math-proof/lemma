@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.GraphNonIsoIP
+import Def.v1.Atlas.TheoryOfComputation.code.GraphNonIsoIP.Part2
 open GraphNonIsoIP InteractiveProofs Probabilistic in
 open InteractiveProofs Probabilistic TuringMachine
 

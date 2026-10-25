@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.BilinearForm.Prod
+import Instance.LinearAlgebra.BilinearForm.Prod
 open LinearMap (BilinForm)
 open Module
 open LinearMap

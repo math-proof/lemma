@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_3_1
+import Instance.Analysis.Section_3_1.Part5
 import Lemma.Set.IffVal.in.Specify
 import Lemma.Set.In.of.In_Specify
 open Chapter3.SetTheory.Set

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.RingTheory.ConductorResidue
+import Theorem.MathlibExtTest.RingTheory.ConductorResidue
 open MathlibExtTest MathlibExtTest.RingTheory MathlibExtTest.RingTheory.ConductorResidue
 
 

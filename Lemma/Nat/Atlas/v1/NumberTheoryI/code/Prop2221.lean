@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Prop2221
+import Theorem.v1.Atlas.NumberTheoryI.code.Prop2221
 open NumberField RayClassField GlobalCFT CosetDensity Prop2221
 
 

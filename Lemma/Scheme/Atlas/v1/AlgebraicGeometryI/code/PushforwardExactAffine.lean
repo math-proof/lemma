@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.PushforwardExactAffine
+import Instance.v1.Atlas.AlgebraicGeometryI.code.PushforwardExactAffine
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits PushforwardExactAffine
 
 

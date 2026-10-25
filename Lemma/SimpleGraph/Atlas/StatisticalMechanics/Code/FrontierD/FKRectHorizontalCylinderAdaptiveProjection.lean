@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderAdaptiveProjection
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderAdaptiveProjection
 open SimpleGraph StatMech StatMech.FrontierD
 
 

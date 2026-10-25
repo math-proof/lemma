@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.BonamiTwoPoint
+import Theorem.StatisticalMechanics.Code.Probability.BonamiTwoPoint
 open Real Set StatMech StatMech.Probability
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardCycleAssembly
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardCycleAssembly.Part3
 open Finset StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.CombinatorialOptimization.code.Polyhedra.BipartiteMatchingPolytope
+import Def.v1.Atlas.CombinatorialOptimization.code.Polyhedra.BipartiteMatchingPolytope
 open SimpleGraph Finset Matrix BipartiteMatchingPolytope
 
 

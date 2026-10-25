@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.InformationTheory.KraftMcMillan
+import Def.InformationTheory.KraftMcMillan
 open scoped BigOperators
 open MathlibExt.InformationTheory.KraftMcMillan
 

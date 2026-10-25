@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.CrossingDuality
+import Theorem.StatisticalMechanics.Code.RSW.CrossingDuality.Part3
 open Set SimpleGraph StatMech.Lattice StatMech.RSW.Box StatMech StatMech.RSW StatMech.RSW.CrossingDuality
 
 

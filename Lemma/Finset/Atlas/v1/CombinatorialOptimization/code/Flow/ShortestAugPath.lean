@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.CombinatorialOptimization.code.Flow.ShortestAugPath
+import Def.v1.Atlas.CombinatorialOptimization.code.Flow.ShortestAugPath
 open Finset BigOperators NetworkFlow
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CohomologyAxiomsElimination
+import Def.v1.Atlas.AlgebraicGeometryI.code.CohomologyAxiomsElimination
 open AlgebraicGeometry CategoryTheory CategoryTheory.Abelian TopologicalSpace ZariskiSheafCohomology CohomologyAxiomsElimination
 open ZariskiSheafCohomology
 

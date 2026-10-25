@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.HdomNativeWeight
+import Theorem.StatisticalMechanics.Code.Ising.HdomNativeWeight.Part3
 open Finset Classical StatMech StatMech.Ising
 
 

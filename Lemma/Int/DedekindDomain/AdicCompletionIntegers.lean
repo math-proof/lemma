@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DedekindDomain.AdicCompletionIntegers
+import Theorem.RingTheory.DedekindDomain.AdicCompletionIntegers
 open IsDedekindDomain.HeightOneSpectrum
 
 

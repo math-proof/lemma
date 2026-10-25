@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.TateCohomology
+import Instance.v1.Atlas.NumberTheoryI.code.TateCohomology.Part4
 open TateCohomology
 open Finset CategoryTheory
 

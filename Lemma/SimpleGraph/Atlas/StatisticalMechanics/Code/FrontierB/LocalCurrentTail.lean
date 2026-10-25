@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.LocalCurrentTail
+import Theorem.StatisticalMechanics.Code.FrontierB.LocalCurrentTail.Part2
 open MeasureTheory StatMech StatMech.FrontierB
 
 

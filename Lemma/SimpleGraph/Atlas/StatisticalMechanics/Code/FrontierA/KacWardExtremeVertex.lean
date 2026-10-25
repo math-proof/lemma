@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardExtremeVertex
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardExtremeVertex
 open StatMech StatMech.FrontierA
 
 

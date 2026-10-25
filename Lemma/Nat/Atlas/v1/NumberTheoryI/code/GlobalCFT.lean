@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.GlobalCFT
+import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
 open NumberField RayClassField Pointwise KroneckerWeber Ideles GlobalCFT
 open Ideles
 open NumberField RayClassField GlobalCFT

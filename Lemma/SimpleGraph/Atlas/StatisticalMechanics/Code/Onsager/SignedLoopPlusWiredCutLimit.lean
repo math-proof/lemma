@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopPlusWiredCutLimit
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopPlusWiredCutLimit
 open MeasureTheory Filter Topology StatMech StatMech.Onsager
 
 

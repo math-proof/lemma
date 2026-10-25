@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWConnectorCentralFaceFiniteGraph
+import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorCentralFaceFiniteGraph.Part5
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

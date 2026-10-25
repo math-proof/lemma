@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.GeometricAlgebra.HyperbolicCancellation
+import Def.v1.Atlas.Buildings.code.GeometricAlgebra.HyperbolicCancellation
 import Lemma.Int.OrthogonalSum.eq.Add
 import Lemma.Submodule.Any_LeAndDisjointAndEq.of.Le
-import sympy.atlas.v1.Atlas.Buildings.code.GeometricAlgebra.KernelDecomposition
+import Def.v1.Atlas.Buildings.code.GeometricAlgebra.KernelDecomposition
 open Formalization
 open Garrett
 

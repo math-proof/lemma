@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc5_eqswi
+import Theorem.StatisticalMechanics.Code.Walls.gc5_eqswi
 open Finset BigOperators Classical StatMech StatMech.Walls
 
 

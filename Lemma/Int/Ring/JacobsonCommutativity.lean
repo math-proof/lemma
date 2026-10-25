@@ -1,8 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.ring.jacobson_commutativity
-
-
+import Def.Algebra.Ring.JacobsonCommutativity
+import Theorem.Algebra.Ring.JacobsonCommutativity
 /--
 [jacobson_commutativity](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Ring/JacobsonCommutativity.lean)
 -/
@@ -44,7 +43,6 @@ private lemma IsPrimeIdeal_mem_or_mem_eq
   a ∈ P ∨ b ∈ P := by
 -- proof
   apply Int.Ring.JacobsonCommutativity.IsPrimeIdeal.mem_or_mem hP h
-
 
 -- created on 2026-10-09
 -- updated on 2026-10-23

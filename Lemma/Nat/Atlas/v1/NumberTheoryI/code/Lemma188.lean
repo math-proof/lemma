@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Lemma188
+import Def.v1.Atlas.NumberTheoryI.code.Lemma188
 open ArithmeticFunction
 open scoped Classical
 

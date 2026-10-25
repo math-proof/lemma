@@ -1,4 +1,4 @@
-import sympy.concrete.summations
+import Macro.Algebra.BigOperators.Summations
 import Mathlib.Analysis.InnerProductSpace.Dual
 import Lemma.Random.Fderiv.eq.AddSum_SMulSMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob
 open MeasureTheory PolicyGradient Random Real

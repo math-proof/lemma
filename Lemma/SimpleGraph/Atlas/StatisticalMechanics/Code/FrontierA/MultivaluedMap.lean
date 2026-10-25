@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.MultivaluedMap
+import Theorem.StatisticalMechanics.Code.FrontierA.MultivaluedMap
 open Finset StatMech StatMech.FrontierA
 
 

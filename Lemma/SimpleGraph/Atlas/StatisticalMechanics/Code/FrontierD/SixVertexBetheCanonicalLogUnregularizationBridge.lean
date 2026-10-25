@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalLogUnregularizationBridge
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalLogUnregularizationBridge
 open StatMech StatMech.FrontierD
 
 

@@ -1,11 +1,11 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.Polynomial.L1Norm
+import Def.Algebra.Polynomial.L1Norm
 import Lemma.Polynomial.L1Norm
 import Lemma.AbsoluteValue.IsClosestConjugate
 import Lemma.Polynomial.RootBound
-import sympy.atlas.Analysis.Normed.Field.IsClosestConjugate
-import sympy.atlas.Algebra.Polynomial.RootBound
+import Def.Analysis.Normed.Field.IsClosestConjugate
+import Theorem.Algebra.Polynomial.RootBound
 
 
 namespace Polynomial

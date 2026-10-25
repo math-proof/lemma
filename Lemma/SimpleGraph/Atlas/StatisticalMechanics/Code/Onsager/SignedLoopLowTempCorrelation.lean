@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopLowTempCorrelation
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopLowTempCorrelation.Part2
 open Finset SimpleGraph StatMech StatMech.Onsager
 
 

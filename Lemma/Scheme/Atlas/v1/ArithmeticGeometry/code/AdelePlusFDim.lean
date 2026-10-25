@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.AdelePlusFDim
+import Def.v1.Atlas.ArithmeticGeometry.code.AdelePlusFDim
 open FunctionFieldAdeleRing DiscreteValuationFamily
 open scoped RestrictedProduct
 

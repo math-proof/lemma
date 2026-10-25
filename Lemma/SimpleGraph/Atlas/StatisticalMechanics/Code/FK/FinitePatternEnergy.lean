@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FinitePatternEnergy
+import Theorem.StatisticalMechanics.Code.FK.FinitePatternEnergy.Part3
 open MeasureTheory Finset StatMech StatMech.FK
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.Russo
+import Theorem.StatisticalMechanics.Code.Inequalities.Russo
 open StatMech
 
 

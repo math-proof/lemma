@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SimpleApproximation
+import Theorem.v1.Atlas.DifferentialAnalysis.code.SimpleApproximation
 open MeasureTheory Filter Set Finset
 open scoped ENNReal NNReal
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.IdeleNorm
+import Def.v1.Atlas.NumberTheoryI.code.IdeleNorm.Part4
 open NumberField IsDedekindDomain Ideles Classical in
 
 

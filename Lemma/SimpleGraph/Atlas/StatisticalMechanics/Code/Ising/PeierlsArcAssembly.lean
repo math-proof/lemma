@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.PeierlsArcAssembly
+import Theorem.StatisticalMechanics.Code.Ising.PeierlsArcAssembly.Part3
 open Set SimpleGraph Function StatMech StatMech.Ising
 
 

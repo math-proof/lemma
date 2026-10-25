@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LeeYangNormalFamilyReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangNormalFamilyReduction
 open Filter Set Topology StatMech StatMech.FrontierA
 
 

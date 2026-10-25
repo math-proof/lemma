@@ -1,8 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.lie.poisson_bracket
+import Theorem.Algebra.Lie.PoissonBracket
 open Poisson
-
 
 /--
 [bracket_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/PoissonBracket.lean)
@@ -97,7 +96,6 @@ private lemma core_greatest
     (poissonCore A br J) := by
 -- proof
   apply poissonCore_isGreatest
-
 
 -- created on 2026-10-09
 -- updated on 2026-10-24

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.FiniteGroupConvolution
+import Def.GroupTheory.FiniteGroupConvolution
 open scoped BigOperators
 open MathlibExt.GroupTheory.FiniteGroupConvolutionWanted
 

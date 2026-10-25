@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationWeighted
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationWeighted
 open StatMech StatMech.Onsager
 
 

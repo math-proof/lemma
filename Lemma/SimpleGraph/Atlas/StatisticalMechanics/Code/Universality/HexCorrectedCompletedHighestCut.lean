@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexCorrectedCompletedHighestCut
+import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedCompletedHighestCut.Part3
 open StatMech StatMech.Universality
 
 

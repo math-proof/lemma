@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectQuarterTurn
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectQuarterTurn.Part9
 open Set SimpleGraph StatMech.Lattice StatMech StatMech.FrontierD
 
 

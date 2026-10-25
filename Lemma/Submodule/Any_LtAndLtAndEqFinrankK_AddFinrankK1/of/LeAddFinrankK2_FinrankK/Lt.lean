@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisProof
+import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisProof
 open GLnBuilding
 
 

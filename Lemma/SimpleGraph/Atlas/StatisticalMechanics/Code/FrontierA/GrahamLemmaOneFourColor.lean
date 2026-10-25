@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamLemmaOneFourColor
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamLemmaOneFourColor
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

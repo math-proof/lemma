@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.CompleteGesselWord
+import Def.NumberTheory.CompleteGesselWord
 open MetaMathlibExt
 
 

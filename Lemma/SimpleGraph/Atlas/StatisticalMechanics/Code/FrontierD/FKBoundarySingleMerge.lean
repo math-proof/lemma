@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKBoundarySingleMerge
+import Theorem.StatisticalMechanics.Code.FrontierD.FKBoundarySingleMerge
 open SimpleGraph StatMech StatMech.FrontierD
 
 

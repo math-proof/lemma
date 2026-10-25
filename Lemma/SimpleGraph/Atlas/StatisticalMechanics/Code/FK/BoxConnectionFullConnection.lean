@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.BoxConnectionFullConnection
+import Theorem.StatisticalMechanics.Code.FK.BoxConnectionFullConnection
 open MeasureTheory SimpleGraph StatMech StatMech.FK
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicEndpointRadialPointGreen
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointRadialPointGreen
 open StatMech StatMech.Universality StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm
 
 

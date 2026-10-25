@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.IsingPlusTIFromPlacement
+import Theorem.StatisticalMechanics.Code.Ising.IsingPlusTIFromPlacement.Part11
 open MeasureTheory ProbabilityTheory MeasurableSpace Set Filter Topology BoundedContinuousFunction StatMech StatMech.Ising
 
 

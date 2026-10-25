@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.ForestColouringClose2
+import Theorem.StatisticalMechanics.Code.Percolation.ForestColouringClose2.Part3
 open Set SimpleGraph Finset MeasureTheory StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

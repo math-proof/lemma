@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.Lagrangian
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.Lagrangian
 open Real Set MeasureTheory CM17Lagrangian
 
 

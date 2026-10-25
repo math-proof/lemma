@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectFaithfulJordanCrossing
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulJordanCrossing
 open SimpleGraph StatMech StatMech.FrontierD
 
 

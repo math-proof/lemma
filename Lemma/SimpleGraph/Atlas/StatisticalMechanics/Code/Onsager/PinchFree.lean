@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.PinchFree
+import Theorem.StatisticalMechanics.Code.Onsager.PinchFree
 open StatMech StatMech.Onsager StatMech.Onsager.PinchFree
 
 

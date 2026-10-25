@@ -1,6 +1,5 @@
 import Lemma.Vector.EqGet0_0
 
-
 @[path]
 private lemma main
   [Zero γ] [Zero δ]
@@ -16,6 +15,5 @@ private lemma main
   rw [List.Vector.get_map₂]
   simp only [Vector.EqGet0_0.fin]
   exact hf _
-
 
 -- created on 2026-09-15

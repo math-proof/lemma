@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MedianEulerNumber
+import Def.Combinatorics.Enumerative.MedianEulerNumber
 open scoped BigOperators
 open MetaMathlibExt
 

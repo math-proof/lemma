@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.Theorem151
+import Class.v1.Atlas.EllipticCurves.code.Theorem151
 open Complex ComplexLattice
 
 

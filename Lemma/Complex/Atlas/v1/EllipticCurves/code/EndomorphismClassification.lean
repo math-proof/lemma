@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.Theorem136
+import Def.v1.Atlas.EllipticCurves.code.Theorem136.Part4
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.Theorem136
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
-import sympy.atlas.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
+import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
 open OrdinarySupersingular EndomorphismRingOverFiniteField
 
 

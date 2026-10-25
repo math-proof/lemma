@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCenteredProjectedLimit
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCenteredProjectedLimit
 open Filter Metric Set Topology StatMech StatMech.Universality
 
 

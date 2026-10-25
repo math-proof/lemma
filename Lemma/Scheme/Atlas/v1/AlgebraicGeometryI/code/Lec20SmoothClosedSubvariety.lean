@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec20SmoothClosedSubvariety
+import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec20SmoothClosedSubvariety
 open KaehlerDifferential TensorProduct SmoothClosedSubvariety
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectHardCrossingOrientationNoGo
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHardCrossingOrientationNoGo.Part2
 open StatMech StatMech.FrontierD
 
 

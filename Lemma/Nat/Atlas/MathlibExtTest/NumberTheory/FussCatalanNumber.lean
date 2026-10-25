@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.FussCatalanNumber
+import Def.NumberTheory.FussCatalanNumber
 open MetaMathlibExt
 
 

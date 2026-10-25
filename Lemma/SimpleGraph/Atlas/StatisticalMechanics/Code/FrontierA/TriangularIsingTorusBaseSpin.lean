@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusBaseSpin
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusBaseSpin
 open StatMech StatMech.FrontierA
 
 

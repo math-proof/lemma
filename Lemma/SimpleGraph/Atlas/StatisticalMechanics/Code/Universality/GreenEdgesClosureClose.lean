@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.GreenEdgesClosureClose
+import Theorem.StatisticalMechanics.Code.Universality.GreenEdgesClosureClose.Part6
 open Set SimpleGraph Finset MeasureTheory StatMech.Lattice StatMech.RSW.Box StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.GrandCouplingAssembly
+import Theorem.StatisticalMechanics.Code.OSSS.GrandCouplingAssembly.Part6
 open Finset MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.GrandCouplingAssembly
 
 

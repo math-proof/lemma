@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.AdaptiveCovLowerClose
+import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveCovLowerClose
 open MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.AdaptiveCovLowerClose
 
 

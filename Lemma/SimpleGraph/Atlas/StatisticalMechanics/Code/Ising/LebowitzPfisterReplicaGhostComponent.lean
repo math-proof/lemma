@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaGhostComponent
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaGhostComponent.Part2
 open Finset StatMech StatMech.Ising
 
 

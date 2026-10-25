@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Ex_3_9
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Ex_3_9
 open MeasureTheory Set intervalIntegral Filter Chapter3
 
 

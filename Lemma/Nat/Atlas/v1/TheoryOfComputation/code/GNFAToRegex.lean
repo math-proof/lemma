@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.GNFAToRegex
+import Def.v1.Atlas.TheoryOfComputation.code.GNFAToRegex
 open Language Set Sipser
 open GNFA
 

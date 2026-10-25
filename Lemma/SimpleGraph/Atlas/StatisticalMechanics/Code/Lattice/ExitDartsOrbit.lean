@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.ExitDartsOrbit
+import Theorem.StatisticalMechanics.Code.Lattice.ExitDartsOrbit
 open Finset Set SimpleGraph Function StatMech StatMech.Lattice
 
 

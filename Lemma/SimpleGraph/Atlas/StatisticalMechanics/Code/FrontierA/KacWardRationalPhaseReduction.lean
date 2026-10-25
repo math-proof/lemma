@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardRationalPhaseReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRationalPhaseReduction.Part2
 open StatMech StatMech.FrontierA
 
 

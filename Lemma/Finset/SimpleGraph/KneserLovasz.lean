@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.KneserLovasz
+import Theorem.Combinatorics.SimpleGraph.KneserLovasz.Part8
 open Finset
 open MathlibExt.Combinatorics.SimpleGraph.KneserLovaszWanted
 

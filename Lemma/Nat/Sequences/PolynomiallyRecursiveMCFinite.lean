@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Sequences.PolynomiallyRecursiveMCFinite
+import Def.NumberTheory.Sequences.PolynomiallyRecursiveMCFinite
 open MetaMathlibExt
 
 

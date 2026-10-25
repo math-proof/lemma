@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.ClassFunction
+import Def.GroupTheory.ClassFunction.Part2
 open MathlibExt.GroupTheory.ClassFunctionWanted
 
 

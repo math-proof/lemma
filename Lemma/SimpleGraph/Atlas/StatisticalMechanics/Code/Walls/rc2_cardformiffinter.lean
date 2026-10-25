@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc2_cardformiffinter
+import Theorem.StatisticalMechanics.Code.Walls.rc2_cardformiffinter
 open Finset StatMech StatMech.Walls
 
 

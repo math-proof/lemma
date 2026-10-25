@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_3
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_3
 open Chapter5 Chapter5.Problem53
 open scoped ENNReal
 

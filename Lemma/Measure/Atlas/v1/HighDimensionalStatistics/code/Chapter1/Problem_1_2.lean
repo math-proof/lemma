@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_2
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_2
 open ProbabilityTheory hiding stdGaussian MeasureTheory Real Set
 open MeasureTheory Real Set
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.DctDifferential
+import Theorem.StatisticalMechanics.Code.Percolation.DctDifferential.Part4
 open MeasureTheory Function Set StatMech StatMech.Percolation
 
 

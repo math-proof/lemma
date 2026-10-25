@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PressureDiff
+import Theorem.StatisticalMechanics.Code.FK.PressureDiff
 open Set Filter Topology StatMech StatMech.FK
 
 

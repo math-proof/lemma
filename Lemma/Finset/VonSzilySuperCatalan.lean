@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.VonSzilySuperCatalan
+import Def.Combinatorics.VonSzilySuperCatalan
 open scoped BigOperators
 open MetaMathlibExt
 

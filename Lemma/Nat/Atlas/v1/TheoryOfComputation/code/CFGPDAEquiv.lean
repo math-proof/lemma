@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.CFGtoPDA
+import Inductive.v1.Atlas.TheoryOfComputation.code.CFGtoPDA.Part2
 import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.CFGtoPDA
 import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.CFLInterRegular
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.CFLInterRegular
+import Def.v1.Atlas.TheoryOfComputation.code.CFLInterRegular
 
 
 namespace CFGPDAEquiv

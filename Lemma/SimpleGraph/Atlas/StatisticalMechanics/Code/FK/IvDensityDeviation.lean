@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.IvDensityDeviation
+import Theorem.StatisticalMechanics.Code.FK.IvDensityDeviation.Part3
 open MeasureTheory Filter Topology SimpleGraph Set StatMech StatMech.FK
 
 

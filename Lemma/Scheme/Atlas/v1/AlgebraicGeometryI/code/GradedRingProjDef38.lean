@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.GradedRingProjDef38
+import Def.v1.Atlas.AlgebraicGeometryI.code.GradedRingProjDef38.Part2
 open Polynomial AlgebraicGeometry Definition38
 
 

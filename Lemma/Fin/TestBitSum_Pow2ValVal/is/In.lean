@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Misc.NatBitwise
+import Theorem.Analysis.Misc.NatBitwise
 open Nat
 
 

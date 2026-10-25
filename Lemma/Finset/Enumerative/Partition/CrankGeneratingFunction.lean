@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Partition.CrankGeneratingFunction
+import Theorem.Combinatorics.Enumerative.Partition.CrankGeneratingFunction.Part9
 open MetaMathlibExt
 
 

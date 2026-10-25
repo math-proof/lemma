@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialGeometry.code.GaussMapDegree
+import Def.v1.Atlas.DifferentialGeometry.code.GaussMapDegree.Part4
 open GaussMapDegree
 open scoped Matrix
 

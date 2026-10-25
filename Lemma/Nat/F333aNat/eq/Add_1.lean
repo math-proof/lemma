@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_3_3_fn
+import Abbrev.Analysis.Section_3_3_fn
 import Lemma.Nat.Eq_F333a.is.Eq_Add_1
 open Chapter3 hiding Nat Set
 open Chapter3.SetTheory

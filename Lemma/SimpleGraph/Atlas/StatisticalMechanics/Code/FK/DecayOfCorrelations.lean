@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.DecayOfCorrelations
+import Theorem.StatisticalMechanics.Code.FK.DecayOfCorrelations
 open MeasureTheory Filter Topology SimpleGraph Set StatMech StatMech.FK
 
 

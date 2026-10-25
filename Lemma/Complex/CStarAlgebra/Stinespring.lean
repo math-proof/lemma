@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.cstar_algebra.Stinespring
+import Theorem.Analysis.CStarAlgebra.Stinespring.Part8
 
 universe u
 

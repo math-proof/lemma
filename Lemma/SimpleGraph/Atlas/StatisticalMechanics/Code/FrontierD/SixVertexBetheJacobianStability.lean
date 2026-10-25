@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheJacobianStability
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheJacobianStability.Part4
 open Finset Filter Topology Matrix StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.DeltaRewrite
+import Theorem.StatisticalMechanics.Code.Sharpness.DeltaRewrite
 open Finset SimpleGraph Set StatMech StatMech.Sharpness
 
 

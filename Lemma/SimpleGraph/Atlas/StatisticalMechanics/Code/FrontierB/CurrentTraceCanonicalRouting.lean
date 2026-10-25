@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentTraceCanonicalRouting
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTraceCanonicalRouting.Part4
 open MeasureTheory Set StatMech StatMech.FrontierB
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Policy.BoundaryPowerGeometry
+import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
 open CPythonListsort
 
 

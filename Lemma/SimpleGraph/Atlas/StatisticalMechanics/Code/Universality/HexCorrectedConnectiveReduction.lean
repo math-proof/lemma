@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexCorrectedConnectiveReduction
+import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedConnectiveReduction
 open StatMech StatMech.Universality
 
 

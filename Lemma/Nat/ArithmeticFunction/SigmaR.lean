@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ArithmeticFunction.SigmaR
+import Def.NumberTheory.ArithmeticFunction.SigmaR
 open ArithmeticFunction
 
 

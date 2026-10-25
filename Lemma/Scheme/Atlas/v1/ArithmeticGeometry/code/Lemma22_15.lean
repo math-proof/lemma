@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Lemma22_15
+import Def.v1.Atlas.ArithmeticGeometry.code.Lemma22_15
 open Lemma22_15
 
 

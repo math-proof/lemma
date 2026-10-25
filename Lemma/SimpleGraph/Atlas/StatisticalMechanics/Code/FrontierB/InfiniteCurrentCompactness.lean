@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.InfiniteCurrentCompactness
+import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentCompactness
 open Filter MeasureTheory Topology TopologicalSpace Set StatMech StatMech.FrontierB
 
 

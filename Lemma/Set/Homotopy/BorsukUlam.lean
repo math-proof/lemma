@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.Homotopy.BorsukUlam
+import Theorem.Topology.Homotopy.BorsukUlam.Part11
 open Metric
 open MathlibExt.Topology.Homotopy.BorsukUlamWanted
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.ZPlusModules
+import Structure.v1.Atlas.TensorCategories.code.ZPlusModules.Part6
 open ZPlusModule
 
 

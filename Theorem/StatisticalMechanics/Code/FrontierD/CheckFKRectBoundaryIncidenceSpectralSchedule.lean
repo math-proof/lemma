@@ -1,0 +1,43 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectBoundaryIncidenceSpectralSchedule.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceSpectralSchedule.Part4
+open StatMech.FrontierD
+
+#print axioms
+  exists_nat_uniform_lower_tendsto_above
+#print axioms
+  fkRectBalancedSectorShare_fixedCharge_vertical_negLog_tendsto
+#print axioms
+  fkRectBalancedSectorNormalization_vertical_negLog_tendsto_rate
+#print axioms
+  tendsto_fkRectBalancedSectorNormalizationVerticalRate_zero_of_freePIMS_and_spectralGap
+#print axioms
+  exists_fkRectBalancedNormalization_spectralHeightLower
+#print axioms
+  fkQgt4_fixedCharge_bound_of_freePIMS_and_spectralGap_unconditional
+#print axioms
+  fkQgt4_windingBridge_of_evenTwoByOneCrossingFloor_boundaryIncidence_spectralGap_unconditional
+#print axioms
+  exists_fkRectBalancedShare_spectralHeightLower
+#print axioms
+  fkQgt4_fixedCharge_bound_of_uniformDiagonalWinding_noLoop_balancedShare
+#print axioms
+  fkQgt4_fixedCharge_bound_of_uniformDiagonalWinding_boundaryIncidenceTail_balancedShare
+#print axioms
+  fkQgt4_fixedCharge_bound_of_uniformDiagonalWinding_freePIMS_balancedShare
+#print axioms
+  fkQgt4_fixedCharge_bound_of_freePIMS_and_spectralGap
+#print axioms
+  fkQgt4_windingBridge_of_evenTwoByOneCrossingFloor_boundaryIncidence_spectralGap
+#print axioms
+  fkQgt4_discontinuity_of_evenTwoByOneCrossingFloor_boundaryIncidence_spectralGap
+
+

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM7.LaplacePoisson
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM7.LaplacePoisson.Part3
 open Real Set MeasureTheory Filter LaplacePoisson
 
 

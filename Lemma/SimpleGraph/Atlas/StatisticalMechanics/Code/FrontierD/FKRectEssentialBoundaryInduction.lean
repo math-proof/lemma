@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectEssentialBoundaryInduction
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEssentialBoundaryInduction
 open SimpleGraph StatMech StatMech.FrontierD
 
 

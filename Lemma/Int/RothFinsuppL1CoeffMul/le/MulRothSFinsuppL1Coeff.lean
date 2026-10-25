@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.RothAuxiliary
+import Theorem.NumberTheory.RothAuxiliary.Part7
 import Lemma.Finset.RothFinsuppL1_Sum.le.Sum_RothFinsuppL1
 import Lemma.Fin.RothKroneckerEncode.eq.Add_Mul_RothKroneckerEncode
 import Lemma.Fin.RothWeight_RothRidoutBoxComplement.eq.Sub_RothWeight.of.All_Gt_0.RothBox

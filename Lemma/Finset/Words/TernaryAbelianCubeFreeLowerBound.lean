@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Words.TernaryAbelianCubeFreeLowerBound
+import Def.Combinatorics.Words.TernaryAbelianCubeFreeLowerBound.Part2
 open MetaMathlibExt
 
 

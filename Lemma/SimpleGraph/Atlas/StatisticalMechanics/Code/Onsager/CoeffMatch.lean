@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.CoeffMatch
+import Theorem.StatisticalMechanics.Code.Onsager.CoeffMatch
 open Finset SimpleGraph StatMech StatMech.Onsager
 
 

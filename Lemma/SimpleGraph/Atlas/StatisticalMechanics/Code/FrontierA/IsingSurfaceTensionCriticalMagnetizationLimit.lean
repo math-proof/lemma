@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionCriticalMagnetizationLimit
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionCriticalMagnetizationLimit
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierA
 
 

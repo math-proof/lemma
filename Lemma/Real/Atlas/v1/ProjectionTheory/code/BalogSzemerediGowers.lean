@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.KeyLemmaBSG
+import Def.v1.Atlas.ProjectionTheory.code.KeyLemmaBSG
 import Lemma.Real.Atlas.v1.ProjectionTheory.code.KeyLemmaBSG
 open Finset Pointwise
 

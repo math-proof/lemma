@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.DistributionalKernels2
+import Def.v1.Atlas.DifferentialAnalysis.code.DistributionalKernels2
 open DistributionalKernels
 open scoped BigOperators SchwartzMap LineDeriv
 

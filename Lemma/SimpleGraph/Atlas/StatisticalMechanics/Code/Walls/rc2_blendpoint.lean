@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc2_blendpoint
+import Theorem.StatisticalMechanics.Code.Walls.rc2_blendpoint
 open Finset StatMech StatMech.Walls
 
 

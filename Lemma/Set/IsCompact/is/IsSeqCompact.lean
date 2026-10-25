@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.EberleinSmulian
+import Theorem.Analysis.NormedSpace.EberleinSmulian
 open Set Metric Filter Topology
 open Set Metric
 

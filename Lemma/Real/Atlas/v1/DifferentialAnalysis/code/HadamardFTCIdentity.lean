@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.HadamardFTCIdentity
+import Theorem.v1.Atlas.DifferentialAnalysis.code.HadamardFTCIdentity
 open MeasureTheory HadamardDecomposition
 open scoped SchwartzMap
 

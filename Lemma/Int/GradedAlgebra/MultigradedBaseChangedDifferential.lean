@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.GradedAlgebra.MultigradedBaseChangedDifferential
+import Theorem.RingTheory.GradedAlgebra.MultigradedBaseChangedDifferential
 open MetaMathlibExt
 
 

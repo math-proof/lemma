@@ -2,7 +2,6 @@ import Lemma.List.ZipWithLcm.comm.of.EqLengthS
 import Lemma.List.Forall₂DvdLeft_ZipWithLcm.of.EqLengthS
 open List
 
-
 @[path]
 private lemma main
 -- given
@@ -13,6 +12,5 @@ private lemma main
 -- proof
   rw [ZipWithLcm.comm.of.EqLengthS s s' h]
   exact Forall₂DvdLeft_ZipWithLcm.of.EqLengthS s' s h.symm
-
 
 -- created on 2026-10-07

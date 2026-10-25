@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldNormalRotatedSlack
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldNormalRotatedSlack.Part3
 open Filter MeasureTheory Set Topology StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

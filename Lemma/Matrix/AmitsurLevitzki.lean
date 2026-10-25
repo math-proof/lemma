@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.algebra.amitsur_levitzki
-
+import Theorem.Algebra.Algebra.AmitsurLevitzki
 open AmitsurLevitzki
 
 /--
@@ -18,7 +17,6 @@ private lemma matrix_map_smul_mul
 -- proof
   apply al_matrix_map_smul_mul A B g h
 
-
 /--
 [al_map_one_smul_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -29,7 +27,6 @@ private lemma map_one_smul_one
   ((1 : Matrix (Fin n) (Fin n) R).map (fun r => r • (1 : G))) = 1 := by
 -- proof
   apply al_map_one_smul_one
-
 
 /--
 [al_sum_map_smul_pow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
@@ -45,7 +42,6 @@ private lemma sum_map_smul_pow
       (fun r => r • (List.ofFn fun k => g (f k)).prod)) := by
 -- proof
   apply al_sum_map_smul_pow A g m
-
 
 /--
 [al_grassmann_pow_expansion](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
@@ -67,7 +63,6 @@ private lemma grassmann_pow_expansion
 -- proof
   apply al_grassmann_pow_expansion n M m
 
-
 /--
 [al_grassmann_pow_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -84,7 +79,6 @@ private lemma grassmann_pow_eq_zero
 -- proof
   apply al_grassmann_pow_eq_zero n M m hm
 
-
 /--
 [al_sign_smul_comm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -97,7 +91,6 @@ private lemma sign_smul_comm
   r • ((u : ℤ) • ω) = (((u : ℤ) • r)) • ω := by
 -- proof
   apply al_sign_smul_comm r ω u
-
 
 /--
 [al_grassmann_pow_top](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
@@ -119,7 +112,6 @@ private lemma grassmann_pow_top
 -- proof
   apply al_grassmann_pow_top n M
 
-
 /--
 [al_trace_list_prod_ofFn_comp_finRotate](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -135,7 +127,6 @@ private lemma trace_list_prod_ofFn_comp_finRotate
 -- proof
   apply al_trace_list_prod_ofFn_comp_finRotate m n A
 
-
 /--
 [al_trace_map_smul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -149,7 +140,6 @@ private lemma trace_map_smul
 -- proof
   apply al_trace_map_smul P g
 
-
 /--
 [al_sign_finRotate_even](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -161,7 +151,6 @@ private lemma sign_finRotate_even
   (finRotate (2 * k)).sign = -1 := by
 -- proof
   apply al_sign_finRotate_even k hk
-
 
 /--
 [al_grassmann_trace_pow_even_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
@@ -181,7 +170,6 @@ private lemma grassmann_trace_pow_even_eq_zero
 -- proof
   apply al_grassmann_trace_pow_even_eq_zero n M k hk h2
 
-
 /--
 [al_stdPoly_map](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -198,7 +186,6 @@ private lemma stdPoly_map
 -- proof
   apply al_stdPoly_map f m n M
 
-
 /--
 [al_io_mul_io_mem_center](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -212,7 +199,6 @@ private lemma io_mul_io_mem_center
     ∈ Subalgebra.center R (ExteriorAlgebra R V) := by
 -- proof
   apply al_io_mul_io_mem_center x y
-
 
 /--
 [al_grassmann_top_functional](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
@@ -231,7 +217,6 @@ private lemma grassmann_top_functional
 -- proof
   apply al_grassmann_top_functional m
 
-
 /--
 [al_imulti_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -245,7 +230,6 @@ private lemma imulti_two
     = (ExteriorAlgebra.ι R (w 0)) * (ExteriorAlgebra.ι R (w 1)) := by
 -- proof
   apply al_imulti_two w
-
 
 /--
 [al_Xsq_entry_mem_center](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
@@ -263,7 +247,6 @@ private lemma Xsq_entry_mem_center
     ∈ Subalgebra.center R (ExteriorAlgebra R (Fin (2 * n) → R))) := by
 -- proof
   apply al_Xsq_entry_mem_center n M a b
-
 
 /--
 [al_grassmann_sq_matrix](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
@@ -291,7 +274,6 @@ private lemma grassmann_sq_matrix
 -- proof
   apply al_grassmann_sq_matrix n M hR
 
-
 /--
 [al_derivative_det_eq_sum_det_updateRow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -305,7 +287,6 @@ private lemma derivative_det_eq_sum_det_updateRow
     = ∑ i, Matrix.det (Matrix.updateRow A i (fun j => Polynomial.derivative (A i j))) := by
 -- proof
   apply al_derivative_det_eq_sum_det_updateRow A
-
 
 /--
 [al_derivative_charpoly_eq_trace_adjugate](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
@@ -321,7 +302,6 @@ private lemma derivative_charpoly_eq_trace_adjugate
 -- proof
   apply al_derivative_charpoly_eq_trace_adjugate Y
 
-
 /--
 [al_scalar_eq_smul_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -334,7 +314,6 @@ private lemma scalar_eq_smul_one
   (Matrix.scalar nn) c = c • (1 : Matrix nn nn R) := by
 -- proof
   apply al_scalar_eq_smul_one c
-
 
 /--
 [al_X_mul_derivative_charpoly_of_nilpotent](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
@@ -353,7 +332,6 @@ private lemma X_mul_derivative_charpoly_of_nilpotent
 -- proof
   apply al_X_mul_derivative_charpoly_of_nilpotent n Y hnil htr
 
-
 /--
 [al_pow_eq_zero_of_trace_pow_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -371,7 +349,6 @@ private lemma pow_eq_zero_of_trace_pow_eq_zero
 -- proof
   apply al_pow_eq_zero_of_trace_pow_eq_zero n Y hC hnil htr
 
-
 /--
 [al_top_smul_cancel](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -386,7 +363,6 @@ private lemma top_smul_cancel
   r = 0 := by
 -- proof
   apply al_top_smul_cancel m r h
-
 
 /--
 [al_amitsur_levitzki_of_algebra_rat](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
@@ -403,7 +379,6 @@ private lemma amitsur_levitzki_of_algebra_rat
 -- proof
   apply al_amitsur_levitzki_of_algebra_rat n M
 
-
 /--
 [amitsur_levitzki](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/AmitsurLevitzki.lean)
 -/
@@ -418,6 +393,5 @@ private lemma amitsur
     (σ.sign : ℤ) • (List.ofFn fun i => M (σ i)).prod = 0 := by
 -- proof
   apply amitsur_levitzki n M
-
 
 -- created on 2026-10-09

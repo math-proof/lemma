@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc4_core
+import Theorem.StatisticalMechanics.Code.Walls.oc4_core
 open MeasureTheory Finset Real Filter Topology Set StatMech StatMech.Walls
 
 

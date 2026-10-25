@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.LocalizedCrossTree
+import Theorem.StatisticalMechanics.Code.OSSS.LocalizedCrossTree
 open StatMech StatMech.OSSS StatMech.OSSS.LocalizedCrossTree
 
 

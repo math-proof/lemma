@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReflectionGauge
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReflectionGauge
 open Finset StatMech StatMech.Ising
 
 

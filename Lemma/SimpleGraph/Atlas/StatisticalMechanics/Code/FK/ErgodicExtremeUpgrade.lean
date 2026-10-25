@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.ErgodicExtremeUpgrade
+import Theorem.StatisticalMechanics.Code.FK.ErgodicExtremeUpgrade
 open MeasureTheory Measure Set Filter StatMech StatMech.ConfigSpace StatMech.FK
 
 

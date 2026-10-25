@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingTorusSparseGreenDecay
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusSparseGreenDecay
 open Filter Finset Set StatMech StatMech.FrontierA
 
 

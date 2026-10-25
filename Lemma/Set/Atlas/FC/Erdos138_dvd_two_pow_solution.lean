@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.FC.Erdos138_dvd_two_pow_solution
+import Def.FC.Erdos138_dvd_two_pow_solution.Part3
 open Nat Filter Erdos138
 
 

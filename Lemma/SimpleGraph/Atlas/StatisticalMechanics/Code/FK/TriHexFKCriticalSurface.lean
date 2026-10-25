@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexFKCriticalSurface
+import Theorem.StatisticalMechanics.Code.FK.TriHexFKCriticalSurface
 open MeasureTheory Set StatMech.Lattice StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

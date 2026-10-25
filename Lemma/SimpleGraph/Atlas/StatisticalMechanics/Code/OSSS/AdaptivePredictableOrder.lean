@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.AdaptivePredictableOrder
+import Theorem.StatisticalMechanics.Code.OSSS.AdaptivePredictableOrder
 open StatMech StatMech.OSSS StatMech.OSSS.AdaptiveCausalKernel
 
 

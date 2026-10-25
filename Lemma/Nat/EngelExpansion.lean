@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.EngelExpansion
+import Def.NumberTheory.EngelExpansion.Part3
 open EngelExpansion
 
 

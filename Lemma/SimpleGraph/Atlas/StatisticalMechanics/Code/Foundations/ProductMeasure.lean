@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.ProductMeasure
+import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
 open MeasureTheory ProbabilityTheory StatMech StatMech.bernoulliProductMeasure
 
 

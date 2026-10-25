@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Dynamics.SymbolicDynamics.FullShift
+import Def.Dynamics.SymbolicDynamics.FullShift
 open SymbolicDynamics.FullShift
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarCanonicalErgodicity
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCanonicalErgodicity.Part3
 open MeasureTheory ProbabilityTheory Set Filter Topology StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeRemainingScalarObstruction
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeRemainingScalarObstruction.Part2
 open StatMech StatMech.Ising
 
 

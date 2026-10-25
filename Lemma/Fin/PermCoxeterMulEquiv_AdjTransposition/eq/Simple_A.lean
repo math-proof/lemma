@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.TypeAIsomorphism
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeAIsomorphism.Part3
 open Equiv Equiv.Perm Function Set SymmetricCoxeter
 
 

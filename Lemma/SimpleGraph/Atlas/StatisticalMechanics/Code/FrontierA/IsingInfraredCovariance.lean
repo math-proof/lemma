@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingInfraredCovariance
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingInfraredCovariance
 open Finset StatMech StatMech.FrontierA
 
 

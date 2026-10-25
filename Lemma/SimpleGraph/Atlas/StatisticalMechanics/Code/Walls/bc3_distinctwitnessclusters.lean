@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc3_distinctwitnessclusters
+import Theorem.StatisticalMechanics.Code.Walls.bc3_distinctwitnessclusters.Part3
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace SimpleGraph StatMech.Percolation StatMech StatMech.Walls
 
 

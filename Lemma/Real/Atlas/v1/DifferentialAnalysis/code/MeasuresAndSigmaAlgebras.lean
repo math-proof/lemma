@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
+import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
 open MeasureTheory Set MeasuresAndSigmaAlgebras
 open scoped ENNReal
 open scoped NNReal

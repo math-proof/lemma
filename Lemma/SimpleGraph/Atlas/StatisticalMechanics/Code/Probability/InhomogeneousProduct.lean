@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.InhomogeneousProduct
+import Theorem.StatisticalMechanics.Code.Probability.InhomogeneousProduct.Part2
 open MeasureTheory ProbabilityTheory Set StatMech StatMech.inhomBernoulliProductMeasure
 
 

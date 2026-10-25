@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ArithmeticFunction.BinomialPowerRealizability
+import Def.NumberTheory.ArithmeticFunction.BinomialPowerRealizability
 open MetaMathlibExt
 
 

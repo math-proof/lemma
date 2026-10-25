@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingSectorProductReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingSectorProductReduction
 open StatMech StatMech.FrontierA
 
 

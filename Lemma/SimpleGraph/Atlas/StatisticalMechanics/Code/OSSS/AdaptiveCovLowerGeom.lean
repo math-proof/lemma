@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.AdaptiveCovLowerGeom
+import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveCovLowerGeom
 open Finset Set StatMech StatMech.OSSS StatMech.OSSS.AdaptiveCovLowerGeom
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.IntegralSquareTorusIntersection
+import Theorem.StatisticalMechanics.Code.FrontierD.IntegralSquareTorusIntersection.Part9
 open Finset StatMech StatMech.FrontierD StatMech.FrontierD.IntegralSquareTorusCycle
 
 

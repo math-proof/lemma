@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Frucht
+import Def.Combinatorics.SimpleGraph.Frucht.Part6
 open MathlibExt.Combinatorics.SimpleGraph.FruchtWanted
 
 

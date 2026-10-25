@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.EdgeMarginal
+import Theorem.StatisticalMechanics.Code.FK.EdgeMarginal.Part2
 open SimpleGraph StatMech StatMech.FK
 
 

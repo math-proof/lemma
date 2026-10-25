@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.InfiniteRandomCurrentNearestNeighbor
+import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteRandomCurrentNearestNeighbor
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierB
 
 

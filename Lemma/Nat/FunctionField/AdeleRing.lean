@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.FunctionField.AdeleRing
+import Instance.NumberTheory.FunctionField.AdeleRing
 open scoped RestrictedProduct
 open FunctionFieldAdeleRing
 

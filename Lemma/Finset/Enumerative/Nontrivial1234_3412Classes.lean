@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Nontrivial1234_3412Classes
+import Theorem.Combinatorics.Enumerative.Nontrivial1234_3412Classes.Part21
 open MetaMathlibExt
 
 

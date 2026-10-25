@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.RamanujanSum
+import Def.NumberTheory.RamanujanSum
 open MetaMathlibExt
 
 

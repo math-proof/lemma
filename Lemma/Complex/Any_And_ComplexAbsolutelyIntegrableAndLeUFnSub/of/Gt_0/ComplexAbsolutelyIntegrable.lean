@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.MeasureTheory.Section_1_3_5
+import Def.Analysis.MeasureTheory.Section_1_3_5.Part3
 open ComplexAbsolutelyIntegrable
 
 

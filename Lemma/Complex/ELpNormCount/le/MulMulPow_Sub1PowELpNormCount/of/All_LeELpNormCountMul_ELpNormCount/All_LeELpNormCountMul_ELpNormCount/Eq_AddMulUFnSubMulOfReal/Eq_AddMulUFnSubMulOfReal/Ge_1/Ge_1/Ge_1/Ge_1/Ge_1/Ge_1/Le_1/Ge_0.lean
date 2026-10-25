@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.RieszThorin
+import Theorem.Analysis.NormedSpace.RieszThorin.Part3
 
 open MeasureTheory
 open scoped ENNReal

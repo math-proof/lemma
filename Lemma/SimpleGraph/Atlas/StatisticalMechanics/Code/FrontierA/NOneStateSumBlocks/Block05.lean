@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block05
+import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block05
 open StatMech StatMech.FrontierA StatMech.FrontierA.NOneSymmetricMeanCertificate
 
 

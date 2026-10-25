@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectListFlatMapReplicate
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectListFlatMapReplicate
 open StatMech StatMech.FrontierD
 
 

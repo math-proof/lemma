@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.PBWLieSubmodBridge
+import Def.v1.Atlas.LieGroups.code.PBWLieSubmodBridge
 
 
 /--

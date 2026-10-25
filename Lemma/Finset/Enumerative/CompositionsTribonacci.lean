@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.CompositionsTribonacci
+import Def.Combinatorics.Enumerative.CompositionsTribonacci
 open MetaMathlibExt
 
 

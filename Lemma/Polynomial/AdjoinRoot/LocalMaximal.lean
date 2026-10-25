@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.AdjoinRoot.LocalMaximal
+import Theorem.RingTheory.AdjoinRoot.LocalMaximal
 open Polynomial
 open AdjoinRoot
 

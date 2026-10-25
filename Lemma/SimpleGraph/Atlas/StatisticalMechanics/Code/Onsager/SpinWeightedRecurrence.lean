@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SpinWeightedRecurrence
+import Theorem.StatisticalMechanics.Code.Onsager.SpinWeightedRecurrence
 open StatMech StatMech.Onsager
 
 

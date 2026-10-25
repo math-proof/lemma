@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.CylinderDerivative
+import Theorem.StatisticalMechanics.Code.Percolation.CylinderDerivative
 open MeasureTheory ProbabilityTheory Function Filter StatMech StatMech.Percolation
 
 

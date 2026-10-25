@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.ActiveBoundaryEdges
+import Theorem.StatisticalMechanics.Code.FK.ActiveBoundaryEdges
 open Finset StatMech StatMech.FK
 
 

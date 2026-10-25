@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.GaussianQBinomial
+import Def.Combinatorics.Enumerative.GaussianQBinomial
 open Finset
 open MetaMathlibExt
 

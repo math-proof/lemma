@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAdjacentCoreSeparation
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdjacentCoreSeparation
 open StatMech StatMech.FrontierA
 
 

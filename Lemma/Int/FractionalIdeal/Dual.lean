@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.FractionalIdeal.Dual
+import Def.RingTheory.FractionalIdeal.Dual.Part2
 open scoped nonZeroDivisors
 open Module
 

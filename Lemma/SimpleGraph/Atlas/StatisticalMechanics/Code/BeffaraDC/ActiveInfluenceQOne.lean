@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.ActiveInfluenceQOne
+import Theorem.StatisticalMechanics.Code.BeffaraDC.ActiveInfluenceQOne
 open Finset Set StatMech StatMech.BeffaraDC
 
 

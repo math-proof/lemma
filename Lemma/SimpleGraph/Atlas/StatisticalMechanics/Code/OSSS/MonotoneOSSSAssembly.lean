@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.MonotoneOSSSAssembly
+import Theorem.StatisticalMechanics.Code.OSSS.MonotoneOSSSAssembly
 open MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.AdaptDisintegration
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamWeightedBridgeGap
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedBridgeGap
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

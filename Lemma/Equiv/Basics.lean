@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.permutations.Basics
+import Instance.GroupTheory.Perm.Basics.Part2
 open AlgebraicCombinatorics
 open Equiv
 

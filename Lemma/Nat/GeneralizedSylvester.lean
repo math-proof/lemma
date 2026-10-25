@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.GeneralizedSylvester
+import Def.NumberTheory.GeneralizedSylvester
 open Nat
 
 

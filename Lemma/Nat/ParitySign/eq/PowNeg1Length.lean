@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.ParitySign
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.ParitySign
 open CoxeterSystem
 open List
 

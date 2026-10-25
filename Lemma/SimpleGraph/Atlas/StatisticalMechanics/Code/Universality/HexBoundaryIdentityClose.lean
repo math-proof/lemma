@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexBoundaryIdentityClose
+import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryIdentityClose.Part3
 open StatMech StatMech.Universality StatMech.Universality.HexFObsBoundaryData
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SplitConstruction
+import Theorem.StatisticalMechanics.Code.Onsager.SplitConstruction
 open StatMech StatMech.Onsager StatMech.Onsager.SplitConstruction
 
 

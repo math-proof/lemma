@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanExteriorClosure
+import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
 open Set SimpleGraph StatMech StatMech.Lattice
 
 

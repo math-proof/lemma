@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionInteriorBlockClosure
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionInteriorBlockClosure
 open Filter Topology StatMech StatMech.FrontierA
 
 

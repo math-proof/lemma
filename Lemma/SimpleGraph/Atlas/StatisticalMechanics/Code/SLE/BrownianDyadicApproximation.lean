@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.BrownianDyadicApproximation
+import Theorem.StatisticalMechanics.Code.SLE.BrownianDyadicApproximation.Part2
 open Filter MeasureTheory ProbabilityTheory Set StatMech StatMech.SLE
 
 

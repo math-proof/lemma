@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_7_5
+import Theorem.Analysis.Section_7_5
 open Filter Real EReal
 open Chapter7
 open Chapter7.Series

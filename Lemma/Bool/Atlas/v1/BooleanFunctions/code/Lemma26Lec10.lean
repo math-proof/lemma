@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Lemma26Lec10
+import Def.v1.Atlas.BooleanFunctions.code.Lemma26Lec10
 open Finset BigOperators BooleanFourier
 
 

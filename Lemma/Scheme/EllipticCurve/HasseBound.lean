@@ -1,11 +1,11 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.AlgebraicGeometry.EllipticCurve.ManinTwist
+import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwist.Part15
 import Lemma.Scheme.EllipticCurve.ManinTwist
 import Lemma.Scheme.EllipticCurve.ManinTwistCharTwo
 import Lemma.Scheme.EllipticCurve.VariableChangePoint
-import sympy.atlas.AlgebraicGeometry.EllipticCurve.ManinTwistCharTwo
-import sympy.atlas.AlgebraicGeometry.EllipticCurve.VariableChangePoint
+import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwistCharTwo.Part22
+import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
 
 
 namespace MathlibExt.AlgebraicGeometry.EllipticCurve.HasseBoundWanted

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.PoissonConvergence
+import Def.v1.Atlas.TheoryOfProbability.code.PoissonConvergence
 open MeasureTheory ProbabilityTheory Filter Real Finset
 open scoped ENNReal NNReal Topology Nat
 

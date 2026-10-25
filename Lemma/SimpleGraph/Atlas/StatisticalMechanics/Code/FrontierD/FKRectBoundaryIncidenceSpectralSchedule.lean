@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceSpectralSchedule
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceSpectralSchedule.Part4
 open Filter Topology MeasureTheory StatMech StatMech.FrontierD
 
 

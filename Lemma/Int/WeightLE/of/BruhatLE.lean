@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.CategoryOII
+import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
 open Classical
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.FinitePlaceAbsValue
+import Theorem.v1.Atlas.NumberTheoryI.code.FinitePlaceAbsValue
 open NumberField IsDedekindDomain FinitePlace
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveConnectorClosedSeparation
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveConnectorClosedSeparation
 open StatMech StatMech.FrontierA
 
 

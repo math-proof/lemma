@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAcyclicElimination
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAcyclicElimination.Part3
 open StatMech StatMech.FrontierA
 
 

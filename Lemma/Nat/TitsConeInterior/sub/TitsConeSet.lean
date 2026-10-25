@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeInterior
+import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeInterior
 open Finset BigOperators CoxeterGroup TitsCone
 
 

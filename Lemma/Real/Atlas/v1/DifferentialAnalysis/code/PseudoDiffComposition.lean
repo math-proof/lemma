@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.PseudoDiffComposition
+import Def.v1.Atlas.DifferentialAnalysis.code.PseudoDiffComposition
 open Filter Topology MeasureTheory PoissonEquation PoissonEquation.SmoothZeroAtInfty
 open scoped SchwartzMap
 

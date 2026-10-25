@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.IntegralsCartanMatrix
+import Structure.v1.Atlas.TensorCategories.code.IntegralsCartanMatrix.Part2
 open Coalgebra
 open scoped TensorProduct
 open CategoryTheory CategoryTheory.Limits MonoidalCategory

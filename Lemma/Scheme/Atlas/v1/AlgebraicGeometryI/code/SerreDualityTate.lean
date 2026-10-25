@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate
+import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate.Part3
 open SerreDualityTate SerreDualityTate.TateDualitySetup
 open CanonicalSheafCurves RiemannRochCurves SerreDualityP1
 open SheafCohCurvesFiniteness CohomologyP1 SheafCohomology

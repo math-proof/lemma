@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Cor2322
+import Def.v1.Atlas.NumberTheoryI.code.Cor2322
 open CategoryTheory Limits in
 
 

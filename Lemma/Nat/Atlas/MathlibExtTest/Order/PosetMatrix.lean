@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Order.PosetMatrix
+import Theorem.MathlibExtTest.Order.PosetMatrix.Part4
 
 
 namespace MetaMathlibExt

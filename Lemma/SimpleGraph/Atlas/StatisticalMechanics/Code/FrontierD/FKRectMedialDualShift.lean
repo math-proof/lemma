@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectMedialDualShift
+import Def.StatisticalMechanics.Code.FrontierD.FKRectMedialDualShift.Part3
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.AvoidingRoutingResidue
+import Theorem.StatisticalMechanics.Code.Percolation.AvoidingRoutingResidue
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

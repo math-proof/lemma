@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.ListChromatic
+import Instance.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.ListChromatic
 open ListChromatic
 open Finset
 

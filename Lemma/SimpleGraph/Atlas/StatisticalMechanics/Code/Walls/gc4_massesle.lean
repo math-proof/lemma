@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc4_massesle
+import Theorem.StatisticalMechanics.Code.Walls.gc4_massesle
 open Finset BigOperators SimpleGraph Set Classical StatMech StatMech.Walls
 
 

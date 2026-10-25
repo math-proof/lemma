@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldGlobalAssembly
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldGlobalAssembly
 open Filter MeasureTheory Set SimpleGraph Topology StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

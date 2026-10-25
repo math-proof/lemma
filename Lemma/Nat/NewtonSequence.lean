@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NewtonSequence
+import Def.NumberTheory.NewtonSequence
 open MetaMathlibExt
 
 

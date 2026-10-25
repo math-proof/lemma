@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4WiredPhaseInput
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4WiredPhaseInput.Part2
 open MeasureTheory Set SimpleGraph StatMech StatMech.FrontierD
 
 

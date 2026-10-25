@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.Portmanteau
+import Theorem.v1.Atlas.TheoryOfProbability.code.Portmanteau
 open MeasureTheory Filter ProbabilityTheory Set Function
 open scoped Topology BoundedContinuousFunction ENNReal NNReal
 

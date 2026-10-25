@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopDisorderKacWard
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopDisorderKacWard
 open Finset SimpleGraph StatMech StatMech.Onsager
 
 

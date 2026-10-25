@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.MatrixExpDetTrace
+import Def.LinearAlgebra.Matrix.MatrixExpDetTrace
 open scoped BigOperators
 open MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.GaussBonnetEar
+import Theorem.StatisticalMechanics.Code.Lattice.GaussBonnetEar
 open SimpleGraph Function Set Finset StatMech StatMech.Lattice
 
 

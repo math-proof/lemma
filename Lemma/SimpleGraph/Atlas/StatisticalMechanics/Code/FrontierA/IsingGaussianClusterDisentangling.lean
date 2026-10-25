@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianClusterDisentangling
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianClusterDisentangling
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

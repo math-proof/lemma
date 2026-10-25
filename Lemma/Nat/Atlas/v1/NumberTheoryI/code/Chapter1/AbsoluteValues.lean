@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Chapter1.AbsoluteValues
+import Def.v1.Atlas.NumberTheoryI.code.Chapter1.AbsoluteValues.Part2
 open Finset in
 open scoped BigOperators
 

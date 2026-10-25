@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc21trifurc
+import Theorem.StatisticalMechanics.Code.Walls.bc21trifurc.Part2
 open Set SimpleGraph MeasureTheory StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation StatMech.Percolation.DisjointPaths StatMech StatMech.Walls
 
 

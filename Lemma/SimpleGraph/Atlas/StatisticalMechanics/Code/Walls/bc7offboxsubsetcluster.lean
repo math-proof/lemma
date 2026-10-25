@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc7offboxsubsetcluster
+import Theorem.StatisticalMechanics.Code.Walls.bc7offboxsubsetcluster
 open Set StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation StatMech.Percolation.DisjointPaths StatMech StatMech.Walls
 
 

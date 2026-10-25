@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.AizenmanDecompFull
+import Theorem.StatisticalMechanics.Code.Ising.AizenmanDecompFull.Part3
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Ising StatMech.Ising.AizenmanDecomp
 
 

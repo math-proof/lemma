@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexRectangleTorusCut
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexRectangleTorusCut.Part5
 open Finset StatMech StatMech.FrontierD
 
 

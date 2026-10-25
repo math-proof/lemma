@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.BetaCMatch
+import Theorem.StatisticalMechanics.Code.OSSS.BetaCMatch.Part2
 open Real Filter Topology Set Finset StatMech StatMech.OSSS StatMech.OSSS.BetaCMatch
 
 

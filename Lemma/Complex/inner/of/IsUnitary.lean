@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.KFiniteProps
+import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4
 open ContinuousRep hiding orthogonalProjection_intertwines_subrep_val repEquiv_of_bijective_repHom repEquiv_trans repEquiv_symm mem_orthogonal_sSup sSup_orthogonal_sSup total_variation_eval_cont blt_alg_hom_extend
 open scoped ComplexOrder
 set_option linter.deprecated false

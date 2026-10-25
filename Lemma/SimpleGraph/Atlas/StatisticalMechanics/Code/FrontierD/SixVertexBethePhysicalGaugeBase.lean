@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBethePhysicalGaugeBase
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBethePhysicalGaugeBase
 open Filter Topology StatMech StatMech.FrontierD
 
 

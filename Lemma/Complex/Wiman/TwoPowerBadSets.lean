@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.Wiman.TwoPowerBadSets
+import Def.Analysis.Complex.Wiman.TwoPowerBadSets
 open Filter MeasureTheory Set
 open scoped ENNReal
 open Complex

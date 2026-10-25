@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSplitIsotropy
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSplitIsotropy
 open StatMech StatMech.FrontierA
 
 

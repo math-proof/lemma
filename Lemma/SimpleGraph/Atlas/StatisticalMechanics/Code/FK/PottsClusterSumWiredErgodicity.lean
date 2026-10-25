@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PottsClusterSumWiredErgodicity
+import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumWiredErgodicity
 open MeasureTheory ProbabilityTheory Set Filter Topology StatMech StatMech.FK
 
 

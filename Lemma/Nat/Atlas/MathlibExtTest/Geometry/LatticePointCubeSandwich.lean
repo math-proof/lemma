@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Geometry.LatticePointCubeSandwich
+import Theorem.MathlibExtTest.Geometry.LatticePointCubeSandwich
 open LatticePointCubeSandwich MeasureTheory
 
 

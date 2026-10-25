@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Computability.Complexity
+import Def.Computability.Complexity.Part3
 open Computability
 open MetaMathlibExt
 open BitstringEncoding

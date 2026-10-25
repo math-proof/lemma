@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.MagNonneg
+import Theorem.StatisticalMechanics.Code.Ising.MagNonneg.Part2
 open MeasureTheory Filter Topology BoundedContinuousFunction StatMech StatMech.Ising
 
 

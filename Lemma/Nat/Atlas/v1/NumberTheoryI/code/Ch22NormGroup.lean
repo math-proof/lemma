@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Ch22NormGroup
+import Theorem.v1.Atlas.NumberTheoryI.code.Ch22NormGroup.Part4
 open Classical RayClassField
 open scoped NumberField
 

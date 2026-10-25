@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop
+import Theorem.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop.Part2
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

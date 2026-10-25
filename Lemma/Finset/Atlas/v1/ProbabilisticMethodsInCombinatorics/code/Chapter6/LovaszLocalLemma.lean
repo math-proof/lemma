@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.LovaszLocalLemma
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.LovaszLocalLemma
 open MeasureTheory ProbabilityTheory Set Finset ENNReal LovaszLocalLemma
 
 

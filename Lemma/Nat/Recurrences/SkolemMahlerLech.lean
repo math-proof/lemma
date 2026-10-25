@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Padics.CasselsEmbedding
+import Def.NumberTheory.Padics.CasselsEmbedding
 import Lemma.Int.Padics.CasselsEmbedding
 open scoped BigOperators Matrix
 

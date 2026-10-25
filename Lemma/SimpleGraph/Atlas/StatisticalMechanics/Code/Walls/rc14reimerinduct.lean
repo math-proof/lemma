@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc14reimerinduct
+import Theorem.StatisticalMechanics.Code.Walls.rc14reimerinduct
 open Finset StatMech StatMech.Walls
 
 

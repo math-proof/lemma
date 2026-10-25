@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.WindingAnchorClose
+import Theorem.StatisticalMechanics.Code.Ising.WindingAnchorClose
 open Finset Set SimpleGraph StatMech StatMech.Ising
 
 

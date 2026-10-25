@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Reflection.InnerProductWalls
+import Def.v1.Atlas.Buildings.code.Reflection.InnerProductWalls
 import Lemma.Finset.Inner.ne.Zero.of.Nonempty.All_Ne_0
 open Set HyperplaneArrangement
 open scoped InnerProductSpace

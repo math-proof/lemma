@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.LMWY
+import Def.v1.Atlas.ProjectionTheory.code.LMWY.Part3
 open Matrix HomogeneousDynamics
 
 

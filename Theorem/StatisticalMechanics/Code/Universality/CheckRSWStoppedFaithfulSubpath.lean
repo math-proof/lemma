@@ -1,0 +1,31 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckRSWStoppedFaithfulSubpath.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.Universality.RSWStoppedFaithfulSubpath
+set_option linter.style.longLine false
+
+#print axioms StatMech.Universality.rlc_rightWalk_first_axis_contact_from_outer
+#print axioms StatMech.Universality.rlc_leftWalk_first_axis_contact_from_outer
+#print axioms StatMech.Universality.rlc_exists_rightBookFaithfulSubpath_of_axis_strict
+#print axioms StatMech.Universality.rlc_exists_leftBookFaithfulSubpath_of_axis_strict
+#print axioms StatMech.Universality.rlc_exists_bookFaithfulSubpaths_of_axis_strict
+#print axioms StatMech.Universality.rlc_finiteConnectorEvent_eq_univ_of_common_trace_vertex
+#print axioms StatMech.Universality.rlc_extremalPairCandidate_faithfulReplacement_or_axisDefect_or_intersects
+#print axioms StatMech.Universality.RlcSourceRightFullCrossing.axis_contact_eq_endpoint
+#print axioms StatMech.Universality.RlcSourceRightFullCrossing.axis_contact_strict
+#print axioms StatMech.Universality.RlcSourceLeftFullCrossing.axis_contact_eq_endpoint
+#print axioms StatMech.Universality.RlcSourceLeftFullCrossing.axis_contact_strict
+#print axioms StatMech.Universality.rlc_sourceExtremalPairCandidate_subset_diagonalEvent
+#print axioms StatMech.Universality.rlc_sourceStoppedDiagonalEvent_subset_diagonalEvent
+#print axioms StatMech.Universality.rlc_sourceExtremalPairCandidate_pairwiseDisjoint
+#print axioms StatMech.Universality.rlc_sourceExtremalPairCandidate_faithfulReplacement_or_intersects
+#print axioms StatMech.Universality.rlc_sourceExtremalPairCandidate_replacement_or_connectorEvent_eq_univ
+
+

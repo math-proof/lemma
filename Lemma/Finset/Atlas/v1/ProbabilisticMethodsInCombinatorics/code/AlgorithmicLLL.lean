@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.AlgorithmicLLL
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.AlgorithmicLLL.Part2
 open AlgorithmicLLL
 
 

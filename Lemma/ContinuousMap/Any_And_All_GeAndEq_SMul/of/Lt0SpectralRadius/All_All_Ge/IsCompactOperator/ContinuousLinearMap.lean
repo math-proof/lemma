@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.KreinRutman
+import Theorem.Analysis.NormedSpace.KreinRutman
 
 open scoped ENNReal
 

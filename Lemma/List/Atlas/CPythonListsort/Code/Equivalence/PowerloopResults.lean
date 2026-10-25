@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Equivalence.PowerloopResults
+import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
 open CPythonListsort
 
 

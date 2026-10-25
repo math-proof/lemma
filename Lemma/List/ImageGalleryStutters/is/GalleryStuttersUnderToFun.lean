@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.ChamberComplex.UniquenessBook
+import Def.v1.Atlas.Buildings.code.ChamberComplex.UniquenessBook
 open ChamberComplex
 open scoped Classical
 

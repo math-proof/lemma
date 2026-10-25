@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelScoreAudit
+import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelScoreAudit.Part2
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationWalkHomology
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationWalkHomology
 open StatMech StatMech.Onsager
 
 

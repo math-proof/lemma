@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.WorpitzkyMultisetIdentity
+import Theorem.Combinatorics.Enumerative.WorpitzkyMultisetIdentity.Part14
 open MetaMathlibExt
 
 

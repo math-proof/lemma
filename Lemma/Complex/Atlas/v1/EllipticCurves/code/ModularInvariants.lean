@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.ModularInvariants
+import Def.v1.Atlas.EllipticCurves.code.ModularInvariants
 open Complex ModularInvariants
 open scoped UpperHalfPlane
 

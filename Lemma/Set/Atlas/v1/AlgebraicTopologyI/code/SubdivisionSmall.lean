@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.SubdivisionSmall
+import Theorem.v1.Atlas.AlgebraicTopologyI.code.SubdivisionSmall.Part3
 open Classical in AlgebraicTopologyI
 
 

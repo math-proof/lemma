@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.Pressure
+import Theorem.StatisticalMechanics.Code.Onsager.Pressure.Part2
 open Finset StatMech StatMech.Onsager
 
 

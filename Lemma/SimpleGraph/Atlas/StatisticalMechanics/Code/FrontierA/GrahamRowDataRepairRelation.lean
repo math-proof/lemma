@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamRowDataRepairRelation
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamRowDataRepairRelation.Part4
 open Finset StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

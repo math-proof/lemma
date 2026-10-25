@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.MatrixCertificate
+import Theorem.StatisticalMechanics.Code.Exact3D.MatrixCertificate.Part6
 open StatMech StatMech.Exact3D StatMech.Exact3D.RatInterval
 
 

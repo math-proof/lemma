@@ -1,0 +1,76 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/RandomCurrentPredecessorComparison.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.Exact3D.BoxPathWitness.Part4
+import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge.Part121
+import Theorem.StatisticalMechanics.Code.FK.QuadrantPartition.Part9
+import Def.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorComparison.Part89
+open scoped BigOperators symmDiff
+open MeasureTheory
+
+set_option linter.style.longLine false
+
+
+namespace StatMech
+
+namespace Exact3D
+
+set_option maxHeartbeats 800000 in
+
+set_option linter.style.longLine false in
+
+
+theorem
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchEmptySixthFiniteSumSourcePairDataInjectionChargeBoundAt_of_activeResidualBranchEmptySixthFiniteSumSourcePairDataInjectionProfileWitnessSingletonMultiChecksAt
+    {β : ℝ} {n : ℕ}
+    (hchecks :
+      FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchEmptySixthFiniteSumSourcePairDataInjectionProfileWitnessSingletonMultiChecksAt
+        β n) :
+    FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchEmptySixthFiniteSumSourcePairDataInjectionChargeBoundAt
+      β n :=
+  freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchEmptySixthFiniteSumSourcePairDataInjectionChargeBoundAt_of_forall_originIncidentSupportPattern_profileWitness_singleton_multi_checks
+    hchecks
+
+set_option maxHeartbeats 800000 in
+
+set_option linter.style.longLine false in
+
+
+theorem
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchInnerPairSixthFiniteSumSourcePairDataInjectionChargeBoundAt_of_activeResidualBranchInnerPairSixthFiniteSumSourcePairDataInjectionProfileWitnessSingletonMultiChecksAt
+    {β : ℝ} {n : ℕ}
+    (hchecks :
+      FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchInnerPairSixthFiniteSumSourcePairDataInjectionProfileWitnessSingletonMultiChecksAt
+        β n) :
+    FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchInnerPairSixthFiniteSumSourcePairDataInjectionChargeBoundAt
+      β n :=
+  freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchInnerPairSixthFiniteSumSourcePairDataInjectionChargeBoundAt_of_forall_originIncidentSupportPattern_profileWitness_singleton_multi_checks
+    hchecks
+
+set_option maxHeartbeats 800000 in
+
+set_option linter.style.longLine false in
+
+
+theorem
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchSixthFiniteSumSourcePairDataInjectionChargeBoundsAt_of_activeResidualBranchSixthFiniteSumSourcePairDataInjectionProfileWitnessSingletonMultiChecksAt
+    {β : ℝ} {n : ℕ}
+    (hchecks :
+      FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchSixthFiniteSumSourcePairDataInjectionProfileWitnessSingletonMultiChecksAt
+        β n) :
+    FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchSixthFiniteSumSourcePairDataInjectionChargeBoundsAt
+      β n :=
+  ⟨freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchEmptySixthFiniteSumSourcePairDataInjectionChargeBoundAt_of_activeResidualBranchEmptySixthFiniteSumSourcePairDataInjectionProfileWitnessSingletonMultiChecksAt
+      hchecks.1,
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYFilterSwitchedSourceSectorResidualMomentActiveResidualBranchInnerPairSixthFiniteSumSourcePairDataInjectionChargeBoundAt_of_activeResidualBranchInnerPairSixthFiniteSumSourcePairDataInjectionProfileWitnessSingletonMultiChecksAt
+      hchecks.2⟩
+
+end Exact3D
+end StatMech

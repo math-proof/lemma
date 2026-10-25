@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM12.Wave3D
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM12.Wave3D.Part2
 open Matrix Real MeasureTheory Filter intervalIntegral WaveEquation3D
 
 

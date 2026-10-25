@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
 open MeasureTheory Real ProbabilityTheory SubGaussian
 
 

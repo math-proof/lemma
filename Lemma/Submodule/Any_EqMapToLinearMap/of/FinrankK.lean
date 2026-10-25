@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.GeometricAlgebra.FlagEquivalenceInstance
+import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.FlagEquivalenceInstance
 open GeometricAlgebra
 
 

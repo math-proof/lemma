@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.MarkovChainConstruction
+import Instance.v1.Atlas.TheoryOfProbability.code.MarkovChainConstruction.Part2
 open MeasureTheory ProbabilityTheory Kernel Set
 
 

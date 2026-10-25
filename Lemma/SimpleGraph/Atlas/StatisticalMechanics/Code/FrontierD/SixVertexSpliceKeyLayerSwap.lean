@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexSpliceKeyLayerSwap
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexSpliceKeyLayerSwap.Part7
 open StatMech StatMech.FrontierD StatMech.FrontierD.FKColoredFineTwoCycleUnitTransferSpliceKey
 
 

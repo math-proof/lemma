@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.ClusterDomination
+import Theorem.StatisticalMechanics.Code.BeffaraDC.ClusterDomination.Part4
 open Set Filter Topology MeasureTheory StatMech StatMech.BeffaraDC
 
 

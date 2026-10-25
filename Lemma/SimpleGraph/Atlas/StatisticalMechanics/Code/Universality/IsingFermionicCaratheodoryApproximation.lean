@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCaratheodoryApproximation
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCaratheodoryApproximation.Part3
 open Filter Set Topology Metric StatMech StatMech.Universality StatMech.Universality.FKIsingCaratheodoryApproximation
 
 

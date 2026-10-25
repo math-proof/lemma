@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_11
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_11
 open MeasureTheory ProbabilityTheory Real Finset
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.StrongSquareCycle
+import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.StrongSquareCycle.Part2
 open MathlibExtTest MathlibExtTest.Combinatorics MathlibExtTest.Combinatorics.SimpleGraph MathlibExtTest.Combinatorics.SimpleGraph.StrongSquareCycle
 
 

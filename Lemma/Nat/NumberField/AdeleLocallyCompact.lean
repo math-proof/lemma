@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.AdeleLocallyCompact
+import Instance.NumberTheory.NumberField.AdeleLocallyCompact.Part2
 open IsDedekindDomain NumberField Valued.integer
 open scoped Valued Pointwise
 open IsDedekindDomain.HeightOneSpectrum

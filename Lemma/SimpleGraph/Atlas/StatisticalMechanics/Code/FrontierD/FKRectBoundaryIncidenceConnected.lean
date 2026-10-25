@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceConnected
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceConnected.Part2
 open Equiv Finset SimpleGraph StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.MoserCorrectness
+import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.MoserCorrectness.Part3
 open Finset MoserCorrectness
 
 

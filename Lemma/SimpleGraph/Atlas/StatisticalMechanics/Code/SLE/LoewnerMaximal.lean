@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.LoewnerMaximal
+import Theorem.StatisticalMechanics.Code.SLE.LoewnerMaximal.Part15
 open Complex Set Metric Filter Topology StatMech StatMech.SLE
 
 

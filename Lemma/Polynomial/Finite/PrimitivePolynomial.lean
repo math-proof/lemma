@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.FieldTheory.Finite.PrimitivePolynomial
+import Def.FieldTheory.Finite.PrimitivePolynomial
 open scoped Polynomial
 open Polynomial
 

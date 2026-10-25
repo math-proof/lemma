@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldCommonArray
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldCommonArray.Part4
 open Filter MeasureTheory Set Topology StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

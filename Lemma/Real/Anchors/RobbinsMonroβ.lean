@@ -5,7 +5,6 @@ import Lemma.Finset.SumIco_SumIco.eq.SumIco.of.Monotone.Le
 import Lemma.Real.Anchors.Time0.eq.Zero
 open Finset
 
-
 @[path]
 private lemma main
   {α : ℕ → ℝ}
@@ -27,6 +26,5 @@ private lemma main
   · exact Summable.of_nonneg_of_le (fun n => sq_nonneg _)
       (fun n => (pow_le_pow_left₀ (hpos n).le Real.Anchors.β.le.AddT_GetSub1TimeAdd1 2).trans add_sq_le)
       ((anc.hT.sqsum.add (anc.hα.sqsum.comp_injective hf.injective)).mul_left 2)
-
 
 -- created on 2026-09-26

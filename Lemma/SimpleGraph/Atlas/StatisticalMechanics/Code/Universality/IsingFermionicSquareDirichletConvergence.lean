@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareDirichletConvergence
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareDirichletConvergence.Part3
 open Finset SimpleGraph Filter Set Topology StatMech StatMech.Universality
 
 

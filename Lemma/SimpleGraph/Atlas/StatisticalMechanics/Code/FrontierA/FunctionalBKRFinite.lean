@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FunctionalBKRFinite
+import Theorem.StatisticalMechanics.Code.FrontierA.FunctionalBKRFinite.Part5
 open StatMech StatMech.FrontierA
 
 

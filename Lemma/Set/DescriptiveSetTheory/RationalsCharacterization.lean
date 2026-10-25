@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.DescriptiveSetTheory.RationalsCharacterization
+import Def.Topology.DescriptiveSetTheory.RationalsCharacterization
 open Set Filter
 open MathlibExt.Topology.DescriptiveSetTheory.RationalsCharacterizationWanted
 

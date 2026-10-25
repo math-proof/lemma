@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.CoastlineContinuityClose
+import Theorem.StatisticalMechanics.Code.Universality.CoastlineContinuityClose.Part2
 open Set SimpleGraph StatMech.Lattice StatMech.RSW.Box StatMech StatMech.Universality
 
 

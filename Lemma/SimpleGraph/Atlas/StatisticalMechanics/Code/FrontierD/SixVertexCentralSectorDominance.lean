@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexCentralSectorDominance
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexCentralSectorDominance.Part2
 open Finset Matrix StatMech StatMech.FrontierD
 
 

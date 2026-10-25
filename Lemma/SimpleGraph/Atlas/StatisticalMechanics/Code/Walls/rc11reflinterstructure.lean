@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc11reflinterstructure
+import Theorem.StatisticalMechanics.Code.Walls.rc11reflinterstructure
 open Finset StatMech StatMech.Walls
 
 

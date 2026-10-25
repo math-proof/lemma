@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.FibonacciPAPAvoidance
+import Def.Combinatorics.Enumerative.FibonacciPAPAvoidance.Part5
 open MetaMathlibExt
 
 

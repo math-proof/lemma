@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc22trifexist
+import Theorem.StatisticalMechanics.Code.Walls.bc22trifexist.Part2
 open StatMech.Lattice StatMech.ConfigSpace SimpleGraph StatMech.Percolation StatMech.Percolation.DisjointPaths StatMech StatMech.Walls
 
 

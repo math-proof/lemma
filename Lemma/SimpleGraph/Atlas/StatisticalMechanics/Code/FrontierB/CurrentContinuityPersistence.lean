@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentContinuityPersistence
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityPersistence
 open MeasureTheory Set StatMech StatMech.FrontierB
 
 

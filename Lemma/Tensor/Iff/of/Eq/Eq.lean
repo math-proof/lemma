@@ -1,5 +1,5 @@
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import sympy.concrete.expr_with_limits
+import Macro.Order.ExprWithLimits
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import sympy.Basic
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter8.LowerTails
+import Theorem.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter8.LowerTails
 open Real Janson JansonInequality
 open Janson
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRightBandVerticalWitness
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRightBandVerticalWitness.Part3
 open SimpleGraph StatMech StatMech.FrontierD
 
 

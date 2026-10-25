@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKMedialLoopTurningFiber
+import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialLoopTurningFiber.Part4
 open Equiv Finset SimpleGraph StatMech StatMech.FrontierD StatMech.FrontierD.FKMedialTurningFiber
 
 

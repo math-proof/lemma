@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.FiniteVolumeDomain
+import Theorem.StatisticalMechanics.Code.Ising.FiniteVolumeDomain
 open Finset StatMech StatMech.Ising StatMech.Sharpness
 
 

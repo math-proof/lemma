@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.vbgtriangle
+import Theorem.StatisticalMechanics.Code.Walls.vbgtriangle.Part3
 open Finset StatMech StatMech.Walls StatMech.Walls.VBG
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.RStirlingFirstAlternatingExpansion
+import Def.Combinatorics.Enumerative.RStirlingFirstAlternatingExpansion
 open MetaMathlibExt
 
 

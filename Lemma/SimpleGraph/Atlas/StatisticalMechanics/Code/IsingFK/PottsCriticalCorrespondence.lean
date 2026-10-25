@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.PottsCriticalCorrespondence
+import Theorem.StatisticalMechanics.Code.IsingFK.PottsCriticalCorrespondence.Part2
 open Real Set StatMech StatMech.FK StatMech.IsingFK
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.HighTemp
+import Theorem.StatisticalMechanics.Code.Onsager.HighTemp
 open Finset StatMech StatMech.Onsager
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.AlgebraicGeometry.EllipticCurve.ManinTwistCharTwo
+import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwistCharTwo.Part22
 open Polynomial
 open scoped CharTwo
 open MathlibExt.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree

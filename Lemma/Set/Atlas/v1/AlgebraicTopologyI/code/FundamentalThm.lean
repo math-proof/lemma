@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.FundamentalThm
+import Def.v1.Atlas.AlgebraicTopologyI.code.FundamentalThm.Part5
 open CategoryTheory Category Limits ChainComplex HomologicalComplex FundamentalThm FundamentalThm.Resolution
 
 

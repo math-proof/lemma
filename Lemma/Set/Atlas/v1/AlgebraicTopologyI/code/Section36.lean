@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section36
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section36.Part14
 open CategoryTheory AlgebraicTopology Limits TopologicalSpace MonoidalCategory Set FullyRelativeCapProduct
 open Set FullyRelativeCapProduct
 

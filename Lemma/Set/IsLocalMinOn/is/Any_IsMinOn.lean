@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_10_2
+import Abbrev.Analysis.Section_10_2
 open Chapter9
 open Chapter10
 open Chapter10.IsLocalMinOn

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.ChromaticSymmetric
+import Def.Combinatorics.SimpleGraph.ChromaticSymmetric
 open SimpleGraph
 
 

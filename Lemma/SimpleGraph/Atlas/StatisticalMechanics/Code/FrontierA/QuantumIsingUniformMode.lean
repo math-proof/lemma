@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingUniformMode
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingUniformMode.Part5
 open Filter Set StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch7Entry13Bernoullirecurrence
+import Def.Analysis.Ramanujan.Part1Ch7Entry13Bernoullirecurrence
 open scoped Nat Real BigOperators Interval ContDiff
 open Asymptotics Filter Finset Complex Topology MeasureTheory
 open Entry13Bernoullipolyadd (chapter7StieltjesApprox)

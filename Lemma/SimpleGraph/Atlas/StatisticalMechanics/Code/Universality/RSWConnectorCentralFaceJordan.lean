@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWConnectorCentralFaceJordan
+import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorCentralFaceJordan.Part4
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.ComplexAnalysis
+import Def.v1.Atlas.EllipticCurves.code.ComplexAnalysis.Part3
 open Complex Filter Set SmoothCurve PiecewiseSmoothCurve Residue
 open scoped Topology
 open Filter

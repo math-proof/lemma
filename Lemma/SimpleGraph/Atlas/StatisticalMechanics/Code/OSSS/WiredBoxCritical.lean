@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.WiredBoxCritical
+import Theorem.StatisticalMechanics.Code.OSSS.WiredBoxCritical.Part4
 open StatMech StatMech.OSSS StatMech.OSSS.WiredBoxCritical
 
 

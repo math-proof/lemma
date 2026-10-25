@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusEdgeFinset
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusEdgeFinset.Part3
 open Finset SimpleGraph StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusWindingGeneration
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusWindingGeneration
 open Finset SimpleGraph StatMech StatMech.FrontierD
 
 

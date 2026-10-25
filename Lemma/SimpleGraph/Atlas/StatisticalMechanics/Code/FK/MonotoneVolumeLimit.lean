@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.MonotoneVolumeLimit
+import Theorem.StatisticalMechanics.Code.FK.MonotoneVolumeLimit
 open MeasureTheory Filter Topology SimpleGraph StatMech StatMech.FK
 
 

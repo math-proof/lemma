@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.fkc_rqnumclustersle
+import Theorem.StatisticalMechanics.Code.Walls.fkc_rqnumclustersle
 open SimpleGraph StatMech StatMech.Walls StatMech.Walls.FK
 
 

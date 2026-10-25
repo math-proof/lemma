@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.YoungTableaux
+import Def.v1.Atlas.AlgebraicCombinatorics.code.YoungTableaux
 open Finset YoungDiagram in
 open scoped Classical
 

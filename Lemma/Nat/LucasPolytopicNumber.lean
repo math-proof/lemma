@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.LucasPolytopicNumber
+import Def.NumberTheory.LucasPolytopicNumber.Part2
 open scoped BigOperators
 open MetaMathlibExt
 

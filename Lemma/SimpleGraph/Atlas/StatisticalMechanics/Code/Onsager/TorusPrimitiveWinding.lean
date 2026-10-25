@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.TorusPrimitiveWinding
+import Theorem.StatisticalMechanics.Code.Onsager.TorusPrimitiveWinding.Part3
 open StatMech StatMech.Onsager
 
 

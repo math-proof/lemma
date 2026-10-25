@@ -5,7 +5,6 @@ set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-
 universe u
 
 private lemma finrank_add_of_bijective_prod
@@ -300,6 +299,5 @@ private lemma main
   apply finrank_add_affine (pullback.snd f g)
   · rw [← Scheme.Hom.preimage_sup, hUV, Scheme.Hom.preimage_top]
   · rw [← Scheme.Hom.preimage_inf, hdisj, Scheme.Hom.preimage_bot]
-
 
 -- created on 2026-10-20

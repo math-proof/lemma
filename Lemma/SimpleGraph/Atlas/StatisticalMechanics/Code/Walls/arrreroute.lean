@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.arrreroute
+import Theorem.StatisticalMechanics.Code.Walls.arrreroute.Part5
 open Finset Set SimpleGraph StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.CobhamGapTheorem
+import Def.NumberTheory.CobhamGapTheorem
 open MetaMathlibExt
 
 

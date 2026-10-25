@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.WeilPairing
+import Def.v1.Atlas.EllipticCurves.code.WeilPairing
 open WeierstrassCurve.Affine WeilPairing
 
 

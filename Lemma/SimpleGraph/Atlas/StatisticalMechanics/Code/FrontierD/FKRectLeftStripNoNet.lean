@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectLeftStripNoNet
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectLeftStripNoNet.Part2
 open SimpleGraph StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.SpecialFunctions.DickmanDeBruijnExistsUnique
+import Def.Analysis.SpecialFunctions.DickmanDeBruijnExistsUnique.Part2
 open Real
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABFieldDeriv
+import Theorem.StatisticalMechanics.Code.Sharpness.ABFieldDeriv.Part3
 open MeasureTheory Set Finset Function StatMech StatMech.Sharpness
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectFirstPrimalConnectorInsertion
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFirstPrimalConnectorInsertion
 open SimpleGraph StatMech StatMech.FrontierD
 
 

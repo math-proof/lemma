@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneFactorCheckCleared
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneFactorCheckCleared
 open StatMech StatMech.FrontierA StatMech.FrontierA.NOneSymmetricMeanCertificate
 
 

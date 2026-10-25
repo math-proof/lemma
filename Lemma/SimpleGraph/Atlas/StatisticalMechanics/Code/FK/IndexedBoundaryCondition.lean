@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.IndexedBoundaryCondition
+import Theorem.StatisticalMechanics.Code.FK.IndexedBoundaryCondition.Part7
 open SimpleGraph StatMech StatMech.FK
 
 

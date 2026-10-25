@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingThermodynamicLimit
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingThermodynamicLimit.Part7
 open Filter StatMech StatMech.FrontierA
 
 

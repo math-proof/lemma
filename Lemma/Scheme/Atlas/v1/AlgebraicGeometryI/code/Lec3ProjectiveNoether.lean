@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec3ProjectiveNoether
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec3ProjectiveNoether
 open PrimeSpectrum TopologicalSpace AlgebraicGeometry CategoryTheory
 open CategoryTheory
 

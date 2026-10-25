@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.MeasuresOnR
+import Theorem.v1.Atlas.TheoryOfProbability.code.MeasuresOnR
 open Set Filter MeasureTheory ENNReal Topology (ofReal)
 open ENNReal (ofReal)
 

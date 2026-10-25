@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.AptThinness
+import Theorem.v1.Atlas.Buildings.code.Building.AptThinness.Part2
 open ChamberComplex AptIsCoxeterProof
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianPhysicalCumulants
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianPhysicalCumulants.Part4
 open Filter Finset Topology StatMech StatMech.FrontierA StatMech.FrontierA.PhysicalIsing
 
 

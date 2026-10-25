@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.DiscreteJordanSeparationFalse
+import Theorem.StatisticalMechanics.Code.Percolation.DiscreteJordanSeparationFalse
 open Set SimpleGraph StatMech StatMech.Percolation
 
 

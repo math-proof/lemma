@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.KingmanSigned
+import Theorem.StatisticalMechanics.Code.Foundations.KingmanSigned.Part2
 open MeasureTheory Filter Topology ENNReal StatMech StatMech.KingmanSigned
 
 

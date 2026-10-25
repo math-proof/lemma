@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.PolarDensity
+import Def.NumberTheory.NumberField.PolarDensity
 open Filter Topology NumberField IsDedekindDomain
 open NumberField.Set
 

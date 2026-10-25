@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheTailConvolution
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheTailConvolution.Part2
 open StatMech StatMech.FrontierD
 
 

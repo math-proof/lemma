@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.AbsoluteValues
+import Def.v1.Atlas.ArithmeticGeometry.code.AbsoluteValues
 open AbsoluteValueOnField
 
 

@@ -1,0 +1,101 @@
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+-/
+import Mathlib
+import Def.Combinatorics.Young.LittlewoodRichardson.Part17
+import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
+import Instance.GroupTheory.Perm.Basics.Part2
+import Lemma.MvPolynomial.LittlewoodRichardson
+import Structure.Combinatorics.Young.SchurBasics.Part4
+/-!
+# Schur Polynomials
+
+This file formalizes the basics of Schur polynomials, including:
+- Alternants and the ρ vector
+- Young diagrams for N-partitions
+- Semistandard Young tableaux (SSYT)
+- Schur polynomials as sums over SSYT
+- Skew Young diagrams and skew Schur polynomials
+
+The main result is that Schur polynomials are symmetric (Theorem `thm.sf.schur-symm` and
+`thm.sf.skew-schur-symm` in the source).
+
+## Main Definitions
+
+- `NPartition N`: An N-partition is an N-tuple of natural numbers that is weakly decreasing
+- `rhoVector N`: The N-tuple (N-1, N-2, ..., 0)
+- `alternant α`: The alternant a_α = det(x_i^{α_j})
+- `NPartition.youngDiagram`: The Young diagram Y(λ) of an N-partition λ
+- `SSYT`: Semistandard Young tableaux of shape λ
+- `schurPoly`: The Schur polynomial s_λ
+- `SkewYoungDiagram`: Skew Young diagrams Y(λ/μ)
+- `skewSchurPoly`: The skew Schur polynomial s_{λ/μ}
+
+## References
+
+Based on the LaTeX source `AlgebraicCombinatorics/tex/SymmetricFunctions/SchurBasics.tex`
+
+## Tags
+
+Schur polynomial, Young diagram, semistandard tableau, alternant, symmetric polynomial
+-/
+
+
+noncomputable section
+
+open Finset Matrix Polynomial MvPolynomial BigOperators
+
+open scoped Classical
+
+variable (N : ℕ) [NeZero N]
+
+variable {R : Type*} [CommRing R]
+
+/-! ## Properties of Semistandard Skew Tableaux -/
+/-! ## Monomials from Skew Tableaux -/
+
+
+/-- The monomial x_T associated to a skew Young tableau T.
+    Definition \ref{def.sf.ytab.skew-xT} in the source.
+    x_T = ∏_{c ∈ Y(lam/mu)} x_{T(c)} -/
+def SkewYoungTableau.monomial {N : ℕ} [NeZero N] {lam mu : NPartition N}
+    (T : SkewYoungTableau lam mu) : MvPolynomial (Fin N) ℤ :=
+  ∏ c ∈ skewYoungDiagram lam mu, X (T.entry c)
+
+namespace SkewYoungTableau
+
+variable {N : ℕ} [NeZero N] {lam mu : NPartition N}
+
+/-- The number of times a value k appears in a skew tableau T.
+    This is the exponent of x_k in the monomial x_T. -/
+def countValue (T : SkewYoungTableau lam mu) (k : Fin N) : ℕ :=
+  (skewYoungDiagram lam mu).filter (fun c => T.entry c = k) |>.card
+
+/-- For a semistandard skew tableau, the monomial is the same. -/
+def SkewSSYT.monomial' {N : ℕ} [NeZero N] {lam mu : NPartition N}
+    (T : SkewSSYT lam mu) : MvPolynomial (Fin N) ℤ :=
+  T.toSkewYoungTableau.monomial
+
+end SkewYoungTableau
+
+/-! ## Skew Schur Polynomials -/
+/-! ### Finiteness of SkewSSYT
+
+To define the skew Schur polynomial as a sum over all semistandard skew tableaux,
+we need to show that the set of such tableaux is finite. The key insight is that:
+1. The skew diagram Y(λ/μ) is a finite set
+2. Entries are bounded (they live in Fin N)
+3. The SSYT conditions are decidable
+
+We represent tableaux as functions from the diagram to Fin N, and filter for those
+satisfying the SSYT conditions.
+-/
+
+
+/-- The type of all fillings of a skew diagram with entries in Fin N.
+    This is finite since the diagram is finite and Fin N is finite. -/
+def SkewFilling {N : ℕ} [NeZero N] (lam mu : NPartition N) : Type :=
+  { c // c ∈ skewYoungDiagram lam mu } → Fin N
+
+end

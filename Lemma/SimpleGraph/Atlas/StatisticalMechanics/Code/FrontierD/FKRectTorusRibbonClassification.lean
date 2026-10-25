@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusRibbonClassification
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusRibbonClassification
 open Finset StatMech StatMech.FrontierD
 
 

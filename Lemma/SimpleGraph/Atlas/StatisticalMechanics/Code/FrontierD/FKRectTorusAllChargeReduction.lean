@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusAllChargeReduction
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusAllChargeReduction
 open Matrix StatMech StatMech.FrontierD
 
 

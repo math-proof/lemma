@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamCorrections
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamCorrections.Part3
 open StatMech StatMech.FrontierA
 
 

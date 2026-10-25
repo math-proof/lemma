@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.InformationTheory.HammingBall
+import Def.InformationTheory.HammingBall
 import Lemma.Real.HammingBall
 import Lean.Elab.Tactic.Omega
 

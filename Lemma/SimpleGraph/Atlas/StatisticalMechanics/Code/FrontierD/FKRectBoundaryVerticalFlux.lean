@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryVerticalFlux
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryVerticalFlux.Part3
 open Equiv Finset SimpleGraph StatMech.Onsager StatMech.Onsager.BaseCase StatMech StatMech.FrontierD
 
 

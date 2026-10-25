@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Thm1023
+import Theorem.v1.Atlas.NumberTheoryI.code.Thm1023
 open Ideal Polynomial
 open scoped Pointwise
 

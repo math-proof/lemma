@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.LogExpInterval
+import Theorem.StatisticalMechanics.Code.Exact3D.LogExpInterval.Part4
 open StatMech StatMech.Exact3D StatMech.Exact3D.RatInterval
 
 

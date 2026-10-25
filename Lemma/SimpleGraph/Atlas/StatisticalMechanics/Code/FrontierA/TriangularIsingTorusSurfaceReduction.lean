@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSurfaceReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSurfaceReduction
 open StatMech StatMech.FrontierA
 
 

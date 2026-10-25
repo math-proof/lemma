@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionFiniteInfiniteGap
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionFiniteInfiniteGap.Part2
 open Filter Topology StatMech StatMech.FrontierA
 
 

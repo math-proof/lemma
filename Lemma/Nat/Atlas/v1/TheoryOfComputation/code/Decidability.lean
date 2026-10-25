@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.Decidability
+import Def.v1.Atlas.TheoryOfComputation.code.Decidability.Part13
 open TuringMachine in Classical Decidability LBADecidability
 
 

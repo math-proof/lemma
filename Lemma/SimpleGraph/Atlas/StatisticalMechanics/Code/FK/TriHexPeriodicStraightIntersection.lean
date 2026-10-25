@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexPeriodicStraightIntersection
+import Def.StatisticalMechanics.Code.FK.TriHexPeriodicStraightIntersection.Part2
 open Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

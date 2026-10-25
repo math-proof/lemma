@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.CompactMeasures
+import Def.v1.Atlas.LieGroups.code.CompactMeasures
 open Filter Topology Classical
 open scoped TensorProduct
 

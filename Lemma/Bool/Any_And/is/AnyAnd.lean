@@ -1,4 +1,4 @@
-import sympy.concrete.quantifier
+import Macro.Logic.Quantifier.Part4
 import sympy.Basic
 
 

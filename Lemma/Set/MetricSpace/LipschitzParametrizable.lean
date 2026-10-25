@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.MetricSpace.LipschitzParametrizable
+import Def.Topology.MetricSpace.LipschitzParametrizable
 open Finset
 open Set
 

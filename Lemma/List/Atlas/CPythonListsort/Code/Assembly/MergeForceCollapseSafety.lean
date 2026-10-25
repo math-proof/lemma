@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.MergeForceCollapseSafety
+import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety.Part2
 open CPythonListsort CPythonListsort.MergeForceCollapseStableFrame
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.FiniteWitnessInsertionIteration
+import Theorem.StatisticalMechanics.Code.Probability.FiniteWitnessInsertionIteration
 open StatMech StatMech.Probability
 
 

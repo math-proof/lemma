@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexVertexSeparation
+import Theorem.StatisticalMechanics.Code.Universality.HexVertexSeparation.Part3
 open StatMech StatMech.Universality
 
 

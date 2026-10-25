@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierForceTopology
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierForceTopology
 open SimpleGraph StatMech StatMech.FrontierD
 
 

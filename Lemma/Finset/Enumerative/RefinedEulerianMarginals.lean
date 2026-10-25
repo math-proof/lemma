@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.RefinedEulerianMarginals
+import Instance.Combinatorics.Enumerative.RefinedEulerianMarginals
 open MetaMathlibExt
 
 

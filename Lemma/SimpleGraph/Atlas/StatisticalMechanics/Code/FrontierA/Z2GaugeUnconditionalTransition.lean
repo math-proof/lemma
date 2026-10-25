@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.Z2GaugeUnconditionalTransition
+import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeUnconditionalTransition
 open Filter Topology StatMech StatMech.FrontierA
 
 

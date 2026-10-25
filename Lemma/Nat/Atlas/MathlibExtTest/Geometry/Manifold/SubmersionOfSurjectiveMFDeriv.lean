@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Geometry.Manifold.SubmersionOfSurjectiveMFDeriv
+import Theorem.MathlibExtTest.Geometry.Manifold.SubmersionOfSurjectiveMFDeriv
 open MathlibExt.Geometry.Manifold.SubmersionOfSurjectiveMFDerivWanted MathlibExtTest MathlibExtTest.Geometry MathlibExtTest.Geometry.Manifold MathlibExtTest.Geometry.Manifold.SubmersionOfSurjectiveMFDeriv
 open scoped ContDiff Manifold Topology
 

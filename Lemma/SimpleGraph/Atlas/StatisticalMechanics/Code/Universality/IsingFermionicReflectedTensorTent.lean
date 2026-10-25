@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicReflectedTensorTent
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicReflectedTensorTent.Part2
 open Filter Metric Set Topology StatMech StatMech.Universality StatMech.Universality.FKIsingCaratheodoryApproximation
 
 

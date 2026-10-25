@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.SchurOrthogonality
+import Def.v1.Atlas.LieGroups.code.SchurOrthogonality
 open MeasureTheory ContinuousRep
 open scoped ComplexConjugate
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarCoherentLimit
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCoherentLimit.Part12
 open Finset Set SimpleGraph MeasureTheory Filter Topology StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalAverageAnchor
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalAverageAnchor
 open StatMech StatMech.Universality
 
 

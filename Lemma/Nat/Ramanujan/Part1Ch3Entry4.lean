@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Entry4
+import Def.NumberTheory.Ramanujan.Part1Ch3Entry4
 open Entry9IiGeneralizedbellgeneratingDefining (generalizedBellGenerating)
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry4

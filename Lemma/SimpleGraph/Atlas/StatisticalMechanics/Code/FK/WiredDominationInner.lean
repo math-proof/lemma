@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.WiredDominationInner
+import Theorem.StatisticalMechanics.Code.FK.WiredDominationInner.Part3
 open SimpleGraph StatMech StatMech.FK
 
 

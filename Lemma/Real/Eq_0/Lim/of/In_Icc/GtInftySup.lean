@@ -2,7 +2,7 @@ import Mathlib.Analysis.SpecificLimits.Basic
 import sympy.series.limits
 import sympy.sets.sets
 import sympy.Basic
-import sympy.concrete.sup
+import Macro.Order.Sup
 open Topology
 
 

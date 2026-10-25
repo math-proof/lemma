@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexColoredLoopPairing
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexColoredLoopPairing.Part16
 open StatMech StatMech.FrontierD
 
 

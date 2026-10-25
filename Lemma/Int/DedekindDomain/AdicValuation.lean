@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DedekindDomain.AdicValuation
+import Theorem.RingTheory.DedekindDomain.AdicValuation
 open IsDedekindDomain.HeightOneSpectrum
 
 

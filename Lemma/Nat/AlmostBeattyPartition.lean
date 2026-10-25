@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.AlmostBeattyPartition
+import Def.NumberTheory.AlmostBeattyPartition
 open MetaMathlibExt
 
 

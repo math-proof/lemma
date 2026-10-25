@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.GenocchiNumber
+import Def.NumberTheory.GenocchiNumber
 import Lemma.Nat.GenocchiNumber
 import Lemma.Finset.Enumerative.GarabedianBernoulliStirling
-import sympy.atlas.Combinatorics.Enumerative.GarabedianBernoulliStirling
+import Def.Combinatorics.Enumerative.GarabedianBernoulliStirling
 open scoped BigOperators
 
 

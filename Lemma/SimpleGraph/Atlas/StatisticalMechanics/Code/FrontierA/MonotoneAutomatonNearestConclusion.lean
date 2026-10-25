@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonNearestConclusion
+import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonNearestConclusion.Part2
 open MeasureTheory Set StatMech StatMech.FrontierA
 
 

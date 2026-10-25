@@ -1,0 +1,121 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Def.StatisticalMechanics.Code.Exact3D.CorrelationLength.Part3
+import Theorem.StatisticalMechanics.Code.Exact3D.CriticalExponentCriteria
+import Theorem.StatisticalMechanics.Code.Exact3D.ExponentialDecayCriteria
+import Theorem.StatisticalMechanics.Code.Exact3D.SurfaceTensionConvexity
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteHardField.Part3
+import Theorem.StatisticalMechanics.Code.Exact3D.Ising3D.Part3
+import Theorem.StatisticalMechanics.Code.Exact3D.IsingBridgeTargets.Part17
+import Def.StatisticalMechanics.Code.Exact3D.RG.Part2
+import Theorem.StatisticalMechanics.Code.Exact3D.Certificate.Part6
+import Theorem.StatisticalMechanics.Code.Exact3D.ExponentTheorem
+import Theorem.StatisticalMechanics.Code.Exact3D.RGBridgeCriteria
+import Theorem.StatisticalMechanics.Code.Exact3D.AnalyticBridgeTarget.Part3
+import Def.StatisticalMechanics.Code.Exact3D.IsingAnalyticBridgeTarget.Part17
+import Theorem.StatisticalMechanics.Code.Exact3D.IsingRGCoordinateBridge.Part8
+import Theorem.StatisticalMechanics.Code.Exact3D.PowerLawBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.ScaleClockBridge.Part2
+import Theorem.StatisticalMechanics.Code.Exact3D.PackageComparisonBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.PackageComparisonBridgeExample.Part7
+import Theorem.StatisticalMechanics.Code.Exact3D.PackagePowerLawBridgeExample
+import Theorem.StatisticalMechanics.Code.Exact3D.PackageAnalyticBridgeExample.Part5
+import Theorem.StatisticalMechanics.Code.Exact3D.PackageReparameterizationBridgeExample.Part6
+import Theorem.StatisticalMechanics.Code.Exact3D.PackageReparameterizationComparisonExample.Part3
+import Theorem.StatisticalMechanics.Code.Exact3D.Reparameterization.Part2
+import Theorem.StatisticalMechanics.Code.Exact3D.FKReparameterization.Part5
+import Theorem.StatisticalMechanics.Code.Exact3D.FKAnalyticBridgeTarget.Part13
+import Theorem.StatisticalMechanics.Code.Exact3D.FKTwoPointQ2Bridge.Part5
+import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge.Part121
+import Theorem.StatisticalMechanics.Code.Exact3D.BoxPathWitness.Part4
+import Theorem.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorComparison.Part184
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteCombinatorics
+import Theorem.StatisticalMechanics.Code.Exact3D.ComponentThirdSplit.Part136
+import Theorem.StatisticalMechanics.Code.Exact3D.BoundaryGhostHardField.Part7
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteCurrentToExponent.Part16
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteCurrentScaleClockBridge.Part45
+import Theorem.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorToExponent
+import Theorem.StatisticalMechanics.Code.Exact3D.FKLogRatioCaseCertificate.Part8
+import Def.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2AnalyticBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2AnalyticBridgeExample
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteIsingFKBridge.Part4
+import Theorem.StatisticalMechanics.Code.Exact3D.FKFinitePlusTailBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.PackageExponentMatchingExample
+import Theorem.StatisticalMechanics.Code.Exact3D.PackageFKBridgeExample.Part2
+import Def.StatisticalMechanics.Code.Exact3D.ToyRG.Part4
+import Def.StatisticalMechanics.Code.Exact3D.Intervals.Part12
+import Theorem.StatisticalMechanics.Code.Exact3D.MatrixCertificate.Part6
+import Theorem.StatisticalMechanics.Code.Exact3D.MatrixCertificateExample.Part4
+import Theorem.StatisticalMechanics.Code.Exact3D.LogExpBounds
+import Theorem.StatisticalMechanics.Code.Exact3D.LogExpInterval.Part4
+import Theorem.StatisticalMechanics.Code.Exact3D.CaseTableExample
+import Theorem.StatisticalMechanics.Code.Exact3D.LatticeRG.Part17
+import Theorem.StatisticalMechanics.Code.Exact3D.PolymerEnumeration.Part39
+import Theorem.StatisticalMechanics.Code.Exact3D.StableKeyCertificate.Part10
+import Theorem.StatisticalMechanics.Code.Exact3D.StableKeyCertificateExample.Part2
+import Theorem.StatisticalMechanics.Code.Exact3D.TailBoundSkeleton.Part2
+import Theorem.StatisticalMechanics.Code.Exact3D.TailSummabilitySkeleton.Part5
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailSummability.Part5
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteSupportCertificateConsequences
+import Theorem.StatisticalMechanics.Code.Exact3D.StableKeyTailBridge.Part2
+import Def.StatisticalMechanics.Code.Exact3D.StableKeyTailBridgeExample.Part3
+import Def.StatisticalMechanics.Code.Exact3D.GeneratedTableTailBridge.Part2
+import Def.StatisticalMechanics.Code.Exact3D.GeneratedTableTailBridgeExample.Part4
+import Theorem.StatisticalMechanics.Code.Exact3D.TailSummabilityExample
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailSummabilityExample.Part5
+import Theorem.StatisticalMechanics.Code.Exact3D.Hierarchical.Part4
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteDimensionalRG.Part15
+import Theorem.StatisticalMechanics.Code.Exact3D.FixedPointSkeleton.Part23
+import Def.StatisticalMechanics.Code.Exact3D.FinitePlusTailContraction.Part12
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailClosedBall.Part4
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailBlockBounds.Part6
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailCone.Part4
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailRG
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailBlockRG.Part5
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailClosedBallRG.Part5
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailAnalyticBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailPowerLawBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailReparameterizationBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.IsingFinitePlusTailBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailContractionExample.Part58
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessPackage.Part9
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessPackageExample.Part6
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailWitnessPackage.Part7
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailWitnessPackageExample.Part7
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailTableWitnessPackage.Part11
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedTableWitnessPackage.Part9
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedTableWitnessPackageExample.Part2
+import Def.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedGeneratedTablePackage
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedGeneratedTablePackageExample.Part5
+import Theorem.StatisticalMechanics.Code.Exact3D.WitnessAnalyticBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.WitnessPowerLawBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.WitnessReparameterizationBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.FKWitnessBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.IsingWitnessBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailTableClosedBallRGPackage.Part6
+import Theorem.StatisticalMechanics.Code.Exact3D.TableClosedBallAnalyticBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.TableClosedBallPowerLawBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.TableClosedBallReparameterizationBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.FKTableClosedBallBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.IsingTableClosedBallBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.PackageIsingBridgeExample
+import Def.StatisticalMechanics.Code.Exact3D.InfiniteTailStableKeyPackage
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailStableKeyPackageExample.Part7
+import Def.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedStableKeyPackage
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedStableKeyPackageExample.Part3
+import Def.StatisticalMechanics.Code.Exact3D.InfiniteTailGeneratedTablePackage
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailGeneratedTablePackageExample.Part5
+import Def.StatisticalMechanics.Code.Exact3D.FiniteWitnessStableKeyPackage
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessStableKeyPackageExample
+import Def.StatisticalMechanics.Code.Exact3D.FiniteWitnessGeneratedTablePackage
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessGeneratedTablePackageExample
+
+

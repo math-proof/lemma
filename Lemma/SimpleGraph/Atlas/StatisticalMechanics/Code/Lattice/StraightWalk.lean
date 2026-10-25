@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.StraightWalk
+import Theorem.StatisticalMechanics.Code.Lattice.StraightWalk.Part4
 open Set SimpleGraph StatMech StatMech.Lattice
 
 

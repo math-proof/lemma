@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.LucasSequence
+import Def.NumberTheory.LucasSequence
 import Lemma.Nat.LucasSequence
 import Lemma.Nat.Recurrences.CohnTwiceSquareLucas
-import sympy.atlas.NumberTheory.Recurrences.CohnTwiceSquareLucas
+import Def.NumberTheory.Recurrences.CohnTwiceSquareLucas
 
 
 namespace MetaMathlibExt

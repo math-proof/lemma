@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedHighBeta
+import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedHighBeta
 open Finset Set Filter Topology MeasureTheory StatMech StatMech.FK StatMech.OSSS StatMech.OSSS.FKSharpnessWeightedHighBeta
 
 

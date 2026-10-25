@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationTransitionWalk
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationTransitionWalk.Part4
 open StatMech StatMech.Onsager
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec2OpenSubvariety
+import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec2OpenSubvariety
 open AlgebraicGeometry AlgebraicGeometry.Scheme
 open AlgebraicGeometry CategoryTheory TopologicalSpace
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDualSourceBarrierPattern
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualSourceBarrierPattern
 open StatMech StatMech.FrontierD
 
 

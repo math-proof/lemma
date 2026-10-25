@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.FiniteIsingFKBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteIsingFKBridge.Part4
 open Filter MeasureTheory StatMech StatMech.Exact3D
 
 

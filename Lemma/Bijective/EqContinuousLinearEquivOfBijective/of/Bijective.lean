@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.Admissible
-import sympy.atlas.v1.Atlas.LieGroups.code.SmoothVectorsProps
+import Def.v1.Atlas.LieGroups.code.Admissible.Part3
+import Theorem.v1.Atlas.LieGroups.code.SmoothVectorsProps
 open scoped ComplexOrder Manifold
 
 

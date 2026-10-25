@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.HormanderFundamental
+import Def.v1.Atlas.DifferentialAnalysis.code.HormanderFundamental
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.HormanderFundamental
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionTheorem
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.ConvolutionTheorem
+import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionTheorem
 open MeasureTheory Filter Topology
 open scoped SchwartzMap
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.ConvexAcyclicity
+import Theorem.v1.Atlas.AlgebraicTopologyI.code.ConvexAcyclicity.Part2
 open Finset BigOperators AlgebraicTopologyI
 
 

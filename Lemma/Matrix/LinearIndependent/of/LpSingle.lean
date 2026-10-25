@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.SL2CRepresentations
+import Def.v1.Atlas.LieGroups.code.SL2CRepresentations.Part3
 open Complex
 open scoped Classical
 

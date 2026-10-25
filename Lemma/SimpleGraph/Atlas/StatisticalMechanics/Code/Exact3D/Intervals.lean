@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.Intervals
+import Def.StatisticalMechanics.Code.Exact3D.Intervals.Part12
 open StatMech StatMech.Exact3D StatMech.Exact3D.RatInterval
 
 

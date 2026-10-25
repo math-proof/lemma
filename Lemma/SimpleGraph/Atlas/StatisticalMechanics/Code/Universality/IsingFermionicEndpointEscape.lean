@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicEndpointEscape
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointEscape.Part4
 open StatMech StatMech.Universality
 
 

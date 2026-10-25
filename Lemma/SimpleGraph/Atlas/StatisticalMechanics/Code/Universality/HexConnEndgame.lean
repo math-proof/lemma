@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexConnEndgame
+import Theorem.StatisticalMechanics.Code.Universality.HexConnEndgame
 open StatMech StatMech.Universality
 
 

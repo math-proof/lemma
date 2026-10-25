@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.Enumerative.LegendreStirlingFirstKind
+import Theorem.MathlibExtTest.Combinatorics.Enumerative.LegendreStirlingFirstKind
 
 
 namespace MetaMathlibExt

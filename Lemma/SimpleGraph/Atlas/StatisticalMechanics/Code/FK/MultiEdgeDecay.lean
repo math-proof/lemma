@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.MultiEdgeDecay
+import Theorem.StatisticalMechanics.Code.FK.MultiEdgeDecay.Part4
 open MeasureTheory Filter Topology SimpleGraph Set StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

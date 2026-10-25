@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.AnchoredCycleClose
+import Theorem.StatisticalMechanics.Code.Lattice.AnchoredCycleClose.Part3
 open Finset Set SimpleGraph Function StatMech StatMech.Lattice
 
 

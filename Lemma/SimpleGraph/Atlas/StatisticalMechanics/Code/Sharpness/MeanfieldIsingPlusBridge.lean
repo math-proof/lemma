@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.MeanfieldIsingPlusBridge
+import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingPlusBridge
 open MeasureTheory Real Set Filter Topology StatMech StatMech.Sharpness
 
 

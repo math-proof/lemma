@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.TopLevelErasureHi
+import Def.CPythonListsort.Code.Assembly.TopLevelErasureHi
 open CPythonListsort
 
 

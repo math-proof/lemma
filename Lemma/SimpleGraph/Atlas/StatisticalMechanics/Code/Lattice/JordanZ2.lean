@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanZ2
+import Theorem.StatisticalMechanics.Code.Lattice.JordanZ2.Part3
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.qbinomial.QBinomialFormulas
+import Def.Combinatorics.Enumerative.QBinomialFormulas.Part7
 import Lemma.Polynomial.QBinomialBasic
 open Polynomial
 open Finset

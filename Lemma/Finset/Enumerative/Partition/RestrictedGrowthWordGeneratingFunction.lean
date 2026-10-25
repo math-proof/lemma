@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Partition.RestrictedGrowthWordGeneratingFunction
+import Def.Combinatorics.Enumerative.Partition.RestrictedGrowthWordGeneratingFunction
 open MetaMathlibExt
 
 

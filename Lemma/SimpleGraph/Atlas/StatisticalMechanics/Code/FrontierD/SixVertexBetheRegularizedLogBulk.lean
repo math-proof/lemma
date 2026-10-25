@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheRegularizedLogBulk
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheRegularizedLogBulk.Part3
 open StatMech StatMech.FrontierD
 
 

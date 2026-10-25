@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
+import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoff
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves
+import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
 open GrothendieckBirkhoff CanonicalSheafCurves
 
 

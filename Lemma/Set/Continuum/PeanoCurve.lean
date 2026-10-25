@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.Continuum.PeanoCurve
+import Theorem.Topology.Continuum.PeanoCurve
 open Topology
 open MathlibExt.Topology.Continuum.PeanoCurveWanted
 

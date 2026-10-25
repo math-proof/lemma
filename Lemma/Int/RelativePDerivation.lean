@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.RelativePDerivation
+import Instance.RingTheory.RelativePDerivation
 open MetaMathlibExt
 open RelativePDerivation
 

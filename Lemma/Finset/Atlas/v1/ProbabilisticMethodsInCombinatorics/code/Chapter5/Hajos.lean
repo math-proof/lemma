@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter5.Hajos
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter5.Hajos
 open Filter Topology Real Asymptotics SimpleGraph Hajos
 
 

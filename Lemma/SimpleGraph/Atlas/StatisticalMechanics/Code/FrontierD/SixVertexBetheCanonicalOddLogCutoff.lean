@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalOddLogCutoff
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalOddLogCutoff
 open StatMech StatMech.FrontierD
 
 

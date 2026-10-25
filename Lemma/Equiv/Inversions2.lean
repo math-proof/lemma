@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.permutations.Inversions2
+import Def.GroupTheory.Perm.Inversions2.Part9
 import Lemma.Equiv.Inversions1
 import Lemma.Equiv.Basics
 open Equiv

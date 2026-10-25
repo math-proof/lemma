@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Bernoulli.KanekoBernoulliStirling
+import Def.NumberTheory.Bernoulli.KanekoBernoulliStirling
 open MetaMathlibExt
 
 

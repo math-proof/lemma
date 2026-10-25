@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section8
+import Instance.v1.Atlas.AlgebraicTopologyI.code.Section8.Part3
 open ExactSequence AlgebraicTopologyI
 open AlgebraicTopologyI
 

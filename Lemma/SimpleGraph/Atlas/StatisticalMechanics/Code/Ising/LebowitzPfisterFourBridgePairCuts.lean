@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgePairCuts
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgePairCuts
 open Finset StatMech StatMech.Ising
 
 

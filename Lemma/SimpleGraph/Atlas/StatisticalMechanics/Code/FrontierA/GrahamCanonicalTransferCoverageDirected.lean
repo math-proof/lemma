@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamCanonicalTransferCoverageDirected
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamCanonicalTransferCoverageDirected.Part3
 open Finset StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

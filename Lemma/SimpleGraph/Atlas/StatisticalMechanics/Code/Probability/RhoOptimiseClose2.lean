@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.RhoOptimiseClose2
+import Theorem.StatisticalMechanics.Code.Probability.RhoOptimiseClose2
 open Finset Real Filter Topology intervalIntegral MeasureTheory StatMech StatMech.Probability
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.BetacPc
+import Theorem.StatisticalMechanics.Code.IsingFK.BetacPc.Part3
 open Real StatMech StatMech.IsingFK
 
 

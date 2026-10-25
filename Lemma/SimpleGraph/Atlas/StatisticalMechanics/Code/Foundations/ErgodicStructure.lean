@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.ErgodicStructure
+import Theorem.StatisticalMechanics.Code.Foundations.ErgodicStructure.Part2
 open MeasureTheory Filter Function MeasurableSpace StatMech StatMech.ErgodicStructure
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc_perscalefrontieredge
+import Theorem.StatisticalMechanics.Code.Walls.oc_perscalefrontieredge
 open MeasureTheory StatMech StatMech.Walls
 
 

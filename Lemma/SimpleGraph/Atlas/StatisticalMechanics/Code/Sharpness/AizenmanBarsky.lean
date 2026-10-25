@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.AizenmanBarsky
+import Theorem.StatisticalMechanics.Code.Sharpness.AizenmanBarsky.Part2
 open Set Real Filter Topology StatMech StatMech.Sharpness
 
 

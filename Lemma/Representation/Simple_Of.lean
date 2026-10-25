@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.IrreducibleCharacterBasis
+import Def.GroupTheory.IrreducibleCharacterBasis.Part2
 open CategoryTheory
 open scoped MonoidAlgebra
 open MathlibExt.GroupTheory.ClassFunctionWanted

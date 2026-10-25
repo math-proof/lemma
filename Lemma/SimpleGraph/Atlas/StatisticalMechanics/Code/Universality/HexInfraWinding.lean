@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexInfraWinding
+import Theorem.StatisticalMechanics.Code.Universality.HexInfraWinding
 open StatMech StatMech.Universality
 
 

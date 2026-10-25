@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Recurrences.OesperWeavingDeterminant
+import Def.NumberTheory.Recurrences.OesperWeavingDeterminant
 open scoped BigOperators Matrix
 open MetaMathlibExt
 

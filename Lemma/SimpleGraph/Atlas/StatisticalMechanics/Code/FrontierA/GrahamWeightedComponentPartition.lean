@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamWeightedComponentPartition
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedComponentPartition
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

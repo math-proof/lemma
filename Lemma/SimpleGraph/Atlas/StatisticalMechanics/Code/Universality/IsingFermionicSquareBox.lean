@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareBox
+import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareBox.Part39
 open StatMech StatMech.Universality
 
 

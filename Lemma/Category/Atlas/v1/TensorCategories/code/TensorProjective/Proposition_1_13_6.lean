@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.TensorProjective.DirectSummand
-import sympy.atlas.v1.Atlas.TensorCategories.code.TensorProjective.TensorSummand
+import Theorem.v1.Atlas.TensorCategories.code.TensorProjective.DirectSummand
+import Def.v1.Atlas.TensorCategories.code.TensorProjective.TensorSummand
 open CategoryTheory MonoidalCategory Formalization Formalization.TensorProjective
 
 

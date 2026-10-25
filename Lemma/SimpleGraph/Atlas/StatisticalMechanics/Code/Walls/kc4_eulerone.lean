@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kc4_eulerone
+import Theorem.StatisticalMechanics.Code.Walls.kc4_eulerone.Part2
 open Set SimpleGraph Function StatMech StatMech.Walls
 
 

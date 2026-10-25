@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.GeneralizedExtremal
+import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.GeneralizedExtremal
 open SimpleGraph
 
 

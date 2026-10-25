@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DiscreteValuationRing.MaximalIdealGradedPieceMul
+import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPieceMul
 open IsDiscreteValuationRing
 
 

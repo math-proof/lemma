@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.HallTheorem
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.HallTheorem.Part2
 open Finset Function SimpleGraph HallTheorem
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.CriticalTransfer
+import Theorem.StatisticalMechanics.Code.Onsager.CriticalTransfer.Part2
 open StatMech StatMech.Onsager
 
 

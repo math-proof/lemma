@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.Corollary_1_43_6
+import Abbrev.v1.Atlas.TensorCategories.code.Corollary_1_43_6
 open FusionRing
 
 

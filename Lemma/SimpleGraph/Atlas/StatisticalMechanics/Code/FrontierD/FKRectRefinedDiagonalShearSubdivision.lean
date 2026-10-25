@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedDiagonalShearSubdivision
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDiagonalShearSubdivision.Part2
 open SimpleGraph StatMech StatMech.FrontierD
 
 

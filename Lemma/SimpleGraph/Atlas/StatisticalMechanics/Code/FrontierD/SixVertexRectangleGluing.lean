@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexRectangleGluing
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexRectangleGluing.Part6
 open Finset StatMech StatMech.FrontierD
 
 

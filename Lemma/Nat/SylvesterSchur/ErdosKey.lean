@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.SylvesterSchur.ResidualLarge
-import sympy.atlas.NumberTheory.SylvesterSchur.ResidualLargeCertificates
+import Theorem.NumberTheory.SylvesterSchur.ResidualLarge
+import Def.NumberTheory.SylvesterSchur.ResidualLargeCertificates
 import Lemma.Nat.SylvesterSchur.ResidualLargeCertificates
 open Nat Nat.SylvesterSchur
 open Finset Nat

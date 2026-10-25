@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.WiredPressureDeriv
+import Theorem.StatisticalMechanics.Code.FK.WiredPressureDeriv.Part4
 open MeasureTheory Set Filter Topology Real StatMech StatMech.FK
 
 

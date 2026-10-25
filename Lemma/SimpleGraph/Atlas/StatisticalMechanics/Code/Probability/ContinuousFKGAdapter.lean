@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.ContinuousFKGAdapter
+import Theorem.StatisticalMechanics.Code.Probability.ContinuousFKGAdapter.Part2
 open MeasureTheory StatMech StatMech.Probability
 
 

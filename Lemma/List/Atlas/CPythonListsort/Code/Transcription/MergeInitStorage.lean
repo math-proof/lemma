@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Transcription.MergeInitStorage
+import Def.CPythonListsort.Code.Transcription.MergeInitStorage
 open CPythonListsort
 
 

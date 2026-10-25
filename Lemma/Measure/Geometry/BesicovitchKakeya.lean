@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MeasureTheory.Geometry.BesicovitchKakeya
+import Def.MeasureTheory.Geometry.BesicovitchKakeya
 open MeasureTheory
 open scoped MeasureTheory ENNReal
 open scoped MeasureTheory

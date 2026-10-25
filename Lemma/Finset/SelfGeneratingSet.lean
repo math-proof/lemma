@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SelfGeneratingSet
+import Def.Combinatorics.SelfGeneratingSet.Part2
 open MetaMathlibExt
 open SelfGeneratingSet
 

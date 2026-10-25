@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.LongRectangleTorusCover
+import Theorem.StatisticalMechanics.Code.BeffaraDC.LongRectangleTorusCover.Part6
 open SimpleGraph Set StatMech StatMech.BeffaraDC
 
 

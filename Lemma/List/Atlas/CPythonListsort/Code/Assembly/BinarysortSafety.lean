@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.BinarysortSafety
+import Def.CPythonListsort.Code.Assembly.BinarysortSafety.Part2
 open CPythonListsort CPythonListsort.BinarysortTraceSafe
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.ComplexTorus
+import Instance.v1.Atlas.EllipticCurves.code.ComplexTorus
 open Complex ComplexLattice ComplexTorus
 
 

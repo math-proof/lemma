@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourWeightedConvolution
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourWeightedConvolution
 open Finset StatMech StatMech.FrontierD
 
 

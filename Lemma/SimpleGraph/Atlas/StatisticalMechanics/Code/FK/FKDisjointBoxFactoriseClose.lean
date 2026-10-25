@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKDisjointBoxFactoriseClose
+import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxFactoriseClose
 open MeasureTheory Filter Topology Set StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

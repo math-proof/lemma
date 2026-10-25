@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter2.Sampling
+import Instance.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter2.Sampling
 open Finset Nat Sampling
 
 

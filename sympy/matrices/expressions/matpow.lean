@@ -1,4 +1,4 @@
-import sympy.concrete.products
+import Def.Algebra.BigOperators.Products
 import torch.stack
 import torch.linalg.inv
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse

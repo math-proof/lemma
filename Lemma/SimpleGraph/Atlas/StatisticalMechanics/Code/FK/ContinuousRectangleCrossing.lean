@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.ContinuousRectangleCrossing
+import Theorem.StatisticalMechanics.Code.FK.ContinuousRectangleCrossing.Part9
 open Set SimpleGraph Topology StatMech StatMech.ContinuousRectangleCrossing
 
 

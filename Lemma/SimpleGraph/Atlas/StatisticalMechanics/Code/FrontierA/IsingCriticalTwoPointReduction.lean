@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingCriticalTwoPointReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalTwoPointReduction
 open Finset Set StatMech StatMech.FrontierA
 
 

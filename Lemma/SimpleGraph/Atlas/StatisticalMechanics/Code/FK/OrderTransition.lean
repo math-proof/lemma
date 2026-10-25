@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.OrderTransition
+import Theorem.StatisticalMechanics.Code.FK.OrderTransition.Part2
 open MeasureTheory StatMech StatMech.FK
 
 

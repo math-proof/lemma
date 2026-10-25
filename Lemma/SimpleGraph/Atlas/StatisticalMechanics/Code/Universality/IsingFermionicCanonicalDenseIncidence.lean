@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCanonicalDenseIncidence
+import Def.StatisticalMechanics.Code.Universality.IsingFermionicCanonicalDenseIncidence.Part8
 open Filter Set Topology StatMech StatMech.Universality
 
 

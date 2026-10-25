@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.MonoBC
+import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
 open SimpleGraph StatMech StatMech.FK
 
 

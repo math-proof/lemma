@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.Matroid.Algebraic
+import Theorem.MathlibExtTest.Combinatorics.Matroid.Algebraic.Part4
 
 
 namespace AlgebraicMatroidTest

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalMomentum
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalMomentum
 open StatMech StatMech.FrontierA
 
 

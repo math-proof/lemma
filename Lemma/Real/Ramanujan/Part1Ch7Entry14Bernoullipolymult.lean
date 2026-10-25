@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch7Entry14Bernoullipolymult
+import Def.Analysis.Ramanujan.Part1Ch7Entry14Bernoullipolymult
 open scoped Nat Real BigOperators Interval
 open Asymptotics Filter Finset Topology MeasureTheory
 open MathlibExt.Analysis.Ramanujan.Part1Ch7

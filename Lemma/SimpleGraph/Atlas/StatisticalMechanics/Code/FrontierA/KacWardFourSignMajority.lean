@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardFourSignMajority
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFourSignMajority
 open StatMech StatMech.FrontierA
 
 

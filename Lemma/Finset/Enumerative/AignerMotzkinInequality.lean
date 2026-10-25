@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.AignerMotzkinInequality
+import Def.Combinatorics.Enumerative.AignerMotzkinInequality
 open scoped BigOperators
 open MetaMathlibExt
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.SchrodingerFundamental
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.SchrodingerFundamental
 open Complex Finset MeasureTheory
 
 

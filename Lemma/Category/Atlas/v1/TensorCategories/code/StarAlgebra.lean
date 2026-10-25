@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.StarAlgebra
+import Theorem.v1.Atlas.TensorCategories.code.StarAlgebra
 open Finset Complex StarAlgWithTrace FusionRing MultifusionRingDef
 
 

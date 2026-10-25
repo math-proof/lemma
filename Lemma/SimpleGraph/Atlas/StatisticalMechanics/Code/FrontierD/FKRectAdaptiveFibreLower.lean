@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectAdaptiveFibreLower
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectAdaptiveFibreLower
 open StatMech StatMech.FrontierD
 
 

@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceCore
-
+import Structure.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceCore.Part3
 
 /--
 [Globalization.ι_denseRange](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/InfinitesimalEquivalenceCore.lean)
@@ -31,7 +30,6 @@ private lemma Globalization.ι_denseRange
   have hdense : Dense (ContinuousRep.kFiniteSubspace G_glob.π K_sub.range : Set G_glob.Ŵ) :=
     ContinuousRep.kFiniteSubspace_dense G_glob.π K_sub.range
   rwa [DenseRange, G_glob.kfin_image]
-
 
 -- created on 2026-10-23
 -- updated on 2026-10-24

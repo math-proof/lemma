@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.FC.Erdos337_ruzsa_turjanyi_solution
+import Def.FC.Erdos337_ruzsa_turjanyi_solution
 open Erdos337
 open Filter Set Asymptotics
 open scoped Pointwise

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWCanonicalOrbitSides
+import Theorem.StatisticalMechanics.Code.Universality.RSWCanonicalOrbitSides
 open Function MeasureTheory Set StatMech StatMech.Universality
 
 

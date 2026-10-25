@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.KKLLogOptimisation
+import Theorem.StatisticalMechanics.Code.Probability.KKLLogOptimisation.Part2
 open Finset Real Filter Topology StatMech StatMech.Probability
 
 

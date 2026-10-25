@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentTraceInsertion
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTraceInsertion.Part4
 open MeasureTheory StatMech StatMech.FrontierB
 
 

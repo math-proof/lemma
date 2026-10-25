@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheRootDensityKernel
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheRootDensityKernel.Part2
 open Filter Topology StatMech StatMech.FrontierD
 
 

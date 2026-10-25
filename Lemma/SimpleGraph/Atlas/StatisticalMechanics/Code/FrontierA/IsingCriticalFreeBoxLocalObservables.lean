@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingCriticalFreeBoxLocalObservables
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalFreeBoxLocalObservables.Part3
 open Filter Finset MeasureTheory Topology StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PottsInfiniteVolume
+import Theorem.StatisticalMechanics.Code.FK.PottsInfiniteVolume.Part8
 open MeasureTheory Filter Topology TopologicalSpace StatMech StatMech.FK StatMech.FK.Wired
 
 

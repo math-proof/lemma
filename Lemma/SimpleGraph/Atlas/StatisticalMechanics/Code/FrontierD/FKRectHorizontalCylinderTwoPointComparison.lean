@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderTwoPointComparison
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderTwoPointComparison.Part4
 open MeasureTheory SimpleGraph StatMech StatMech.FrontierD
 
 

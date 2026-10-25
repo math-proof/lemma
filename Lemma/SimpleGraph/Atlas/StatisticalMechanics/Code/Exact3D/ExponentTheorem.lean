@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.ExponentTheorem
+import Theorem.StatisticalMechanics.Code.Exact3D.ExponentTheorem
 open StatMech StatMech.Exact3D
 
 

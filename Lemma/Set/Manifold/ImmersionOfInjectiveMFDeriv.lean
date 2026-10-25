@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.ImmersionOfInjectiveMFDeriv
+import Theorem.Geometry.Manifold.ImmersionOfInjectiveMFDeriv
 open scoped Topology ContDiff
 open Function Set Manifold
 open MathlibExt.Geometry.Manifold.ImmersionOfInjectiveMFDerivWanted

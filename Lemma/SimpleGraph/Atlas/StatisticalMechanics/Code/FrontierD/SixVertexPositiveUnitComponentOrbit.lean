@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexPositiveUnitComponentOrbit
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveUnitComponentOrbit.Part7
 open Finset StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexPositiveUnitComponentOrbitBase StatMech.FrontierD.SixVertexPositiveUnitComponentOrbitCover
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKUniqPerEdge
+import Theorem.StatisticalMechanics.Code.FK.FKUniqPerEdge.Part3
 open Set Filter Topology StatMech.FK StatMech
 
 

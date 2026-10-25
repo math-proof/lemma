@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoHighChargeSpliceHallRouting
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoHighChargeSpliceHallRouting.Part12
 open StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexHorizontalDegreeTwoLoopSynchronizedSingleTargets StatMech.FrontierD.SixVertexHorizontalDegreeTwoLoopSpliceReconnection StatMech.FrontierD.SixVertexHorizontalDegreeTwoLoopDecodedSpliceReconnection
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.HighFreqMultConv
+import Def.v1.Atlas.ProjectionTheory.code.HighFreqMultConv
 open Finset Complex BigOperators HighFreqMultConv
 
 

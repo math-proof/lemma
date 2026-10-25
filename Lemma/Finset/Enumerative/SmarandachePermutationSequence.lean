@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.SmarandachePermutationSequence
+import Def.Combinatorics.Enumerative.SmarandachePermutationSequence
 open MetaMathlibExt
 
 

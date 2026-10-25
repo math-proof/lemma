@@ -1,0 +1,51 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/GroupCohomology.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Mathlib.RepresentationTheory.Homological.GroupCohomology.LongExactSequence
+import Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro
+import Mathlib.Algebra.Homology.ShortComplex.ExactFunctor
+import Mathlib.CategoryTheory.Limits.ExactFunctor
+import Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality
+import Mathlib.CategoryTheory.Preadditive.Injective.Resolution
+import Mathlib.Algebra.Homology.HomologySequenceLemmas
+import Def.v1.Atlas.NumberTheoryI.code.GroupCohomology.Part5
+
+
+noncomputable section
+
+open CategoryTheory
+
+universe u
+
+namespace GroupCohomology
+
+variable {k : Type u} [CommRing k] {G : Type u} [Group G]
+
+attribute [instance] FreeResolution.free
+
+attribute [instance] IsAdditiveCategory.hasFiniteBiproducts
+
+section ExactFunctor
+
+open CategoryTheory.Limits CategoryTheory.ShortComplex
+
+variable {C' : Type*} [Category C'] [Limits.HasZeroMorphisms C']
+
+structure IsLeftExact (S : ShortComplex C') : Prop where
+  mono_f : Mono S.f
+  exact : S.Exact
+
+structure IsRightExact (S : ShortComplex C') : Prop where
+  exact : S.Exact
+  epi_g : Epi S.g
+
+end ExactFunctor
+end GroupCohomology
+end

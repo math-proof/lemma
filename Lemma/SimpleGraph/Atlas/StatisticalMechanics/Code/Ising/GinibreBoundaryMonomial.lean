@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.GinibreBoundaryMonomial
+import Theorem.StatisticalMechanics.Code.Ising.GinibreBoundaryMonomial
 open Finset StatMech StatMech.Ising
 
 

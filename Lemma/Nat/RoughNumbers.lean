@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.RoughNumbers
+import Instance.NumberTheory.RoughNumbers
 open Nat
 
 

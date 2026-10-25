@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SobolevHilbert
+import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevHilbert.Part8
 open MeasureTheory SobolevHilbert
 
 

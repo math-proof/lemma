@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bkm_dccrayPt
+import Theorem.StatisticalMechanics.Code.Walls.bkm_dccrayPt
 open StatMech.Lattice StatMech.Percolation StatMech StatMech.Walls
 
 

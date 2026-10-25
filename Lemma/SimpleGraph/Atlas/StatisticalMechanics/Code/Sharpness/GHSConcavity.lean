@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.GHSConcavity
+import Theorem.StatisticalMechanics.Code.Sharpness.GHSConcavity
 open Finset SimpleGraph Set StatMech StatMech.Sharpness
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeometric
+import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeometric
 open AlgebraicGeometry CategoryTheory RiemannRochGeometric
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.QuantumInformation.Finite.KochenSpecker
+import Def.QuantumInformation.Finite.KochenSpecker
 open MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 
 

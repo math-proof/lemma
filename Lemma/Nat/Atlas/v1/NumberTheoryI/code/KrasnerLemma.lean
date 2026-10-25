@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.KrasnerLemma
+import Def.v1.Atlas.NumberTheoryI.code.KrasnerLemma
 open Polynomial Finset IntermediateField in
 
 

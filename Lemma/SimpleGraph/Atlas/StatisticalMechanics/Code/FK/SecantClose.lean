@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.SecantClose
+import Theorem.StatisticalMechanics.Code.FK.SecantClose.Part3
 open MeasureTheory Set Filter Topology Real StatMech StatMech.FK
 
 

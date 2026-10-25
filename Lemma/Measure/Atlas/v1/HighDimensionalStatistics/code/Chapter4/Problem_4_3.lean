@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Problem_4_3
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Problem_4_3
 open Matrix Real Finset MeasureTheory Chapter4 Chapter4.Problem43
 
 

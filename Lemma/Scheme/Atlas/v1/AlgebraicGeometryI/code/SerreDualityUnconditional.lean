@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SerreDualityUnconditional
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.SerreDualityUnconditional
 open SerreDualityUnconditional
 open TateCechInfra SerreDualityCurves
 open CanonicalSheafCurves RiemannRochCurves

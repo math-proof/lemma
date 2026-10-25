@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DedekindDomain.AdicCompletionResidueField
+import Def.RingTheory.DedekindDomain.AdicCompletionResidueField.Part2
 open IsDedekindDomain
 open scoped Valued
 open IsDedekindDomain.HeightOneSpectrum

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Rat.Place
+import Def.NumberTheory.Rat.Place.Part2
 open Rat
 open Place
 

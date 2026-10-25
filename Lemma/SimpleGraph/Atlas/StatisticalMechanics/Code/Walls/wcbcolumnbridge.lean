@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wcbcolumnbridge
+import Theorem.StatisticalMechanics.Code.Walls.wcbcolumnbridge.Part4
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

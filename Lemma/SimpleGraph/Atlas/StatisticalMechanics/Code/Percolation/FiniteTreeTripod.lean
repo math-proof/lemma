@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.FiniteTreeTripod
+import Theorem.StatisticalMechanics.Code.Percolation.FiniteTreeTripod
 open Set SimpleGraph Finset StatMech StatMech.Percolation
 
 

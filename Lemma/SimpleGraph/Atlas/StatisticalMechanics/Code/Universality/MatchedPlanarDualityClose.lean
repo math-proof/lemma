@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.MatchedPlanarDualityClose
+import Theorem.StatisticalMechanics.Code.Universality.MatchedPlanarDualityClose.Part5
 open Set SimpleGraph Finset StatMech.Lattice StatMech.RSW.Box StatMech StatMech.Universality
 
 

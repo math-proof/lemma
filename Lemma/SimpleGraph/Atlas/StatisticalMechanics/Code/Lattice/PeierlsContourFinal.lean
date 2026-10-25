@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.PeierlsContourFinal
+import Theorem.StatisticalMechanics.Code.Lattice.PeierlsContourFinal.Part4
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingTorusGraph
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusGraph.Part4
 open Finset StatMech StatMech.FrontierA
 
 

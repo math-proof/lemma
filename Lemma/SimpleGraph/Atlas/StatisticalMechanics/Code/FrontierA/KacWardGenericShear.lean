@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardGenericShear
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardGenericShear.Part2
 open StatMech StatMech.FrontierA
 
 

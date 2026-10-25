@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingLimitInterchange
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingLimitInterchange
 open Filter StatMech StatMech.FrontierA
 
 

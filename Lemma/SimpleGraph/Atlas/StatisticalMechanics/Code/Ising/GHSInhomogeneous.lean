@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.GHSInhomogeneous
+import Theorem.StatisticalMechanics.Code.Ising.GHSInhomogeneous.Part11
 open Finset SimpleGraph Set StatMech StatMech.Ising
 
 

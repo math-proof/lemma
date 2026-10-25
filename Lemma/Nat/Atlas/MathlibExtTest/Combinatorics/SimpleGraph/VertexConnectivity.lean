@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.VertexConnectivity
+import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.VertexConnectivity
 open MathlibExtTest MathlibExtTest.Combinatorics MathlibExtTest.Combinatorics.SimpleGraph MathlibExtTest.Combinatorics.SimpleGraph.VertexConnectivity
 
 

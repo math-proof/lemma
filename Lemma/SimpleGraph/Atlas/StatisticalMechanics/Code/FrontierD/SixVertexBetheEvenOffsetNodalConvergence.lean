@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenOffsetNodalConvergence
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenOffsetNodalConvergence
 open StatMech StatMech.FrontierD
 
 

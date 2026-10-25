@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.BAryBinomialCoefficient
+import Def.Combinatorics.Enumerative.BAryBinomialCoefficient
 import Lemma.Finset.Enumerative.BAryBinomialCoefficient
 
 

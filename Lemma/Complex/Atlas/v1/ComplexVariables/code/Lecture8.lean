@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ComplexVariables.code.Lecture8
+import Def.v1.Atlas.ComplexVariables.code.Lecture8
 open Complex MeasureTheory intervalIntegral Set Function Real in
 
 

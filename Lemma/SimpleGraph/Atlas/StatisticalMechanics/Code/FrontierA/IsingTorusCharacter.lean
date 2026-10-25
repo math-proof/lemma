@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingTorusCharacter
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusCharacter.Part3
 open Finset StatMech StatMech.FrontierA
 
 

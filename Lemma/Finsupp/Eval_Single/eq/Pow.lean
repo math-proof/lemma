@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.AlgebraicGeometry.Curve.Evaluation
+import Def.AlgebraicGeometry.Curve.Evaluation
 import Lemma.Finsupp.Eval.eq.Prod_Pow
 open CurveDivisor
 open Finsupp

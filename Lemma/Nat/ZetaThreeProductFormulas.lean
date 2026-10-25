@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ZetaThreeProductFormulas
+import Def.NumberTheory.ZetaThreeProductFormulas
 open MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry13Bernoulligen
 open MetaMathlibExt
 

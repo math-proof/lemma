@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology
+import Def.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology.Part5
 open CategoryTheory
 
 

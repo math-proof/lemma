@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.RamificationYoneda
+import Def.v1.Atlas.AlgebraicGeometryI.code.RamificationYoneda.Part2
 open CategoryTheory Opposite Lecture6
 
 

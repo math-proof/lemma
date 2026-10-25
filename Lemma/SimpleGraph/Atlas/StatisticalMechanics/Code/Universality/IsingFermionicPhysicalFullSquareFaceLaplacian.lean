@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareFaceLaplacian
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareFaceLaplacian.Part9
 open StatMech StatMech.Universality StatMech.Universality.FKIsingSquareFullIntegratedPrimitive
 
 

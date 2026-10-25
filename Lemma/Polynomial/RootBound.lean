@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.Polynomial.RootBound
+import Theorem.Algebra.Polynomial.RootBound
 open Polynomial
 
 

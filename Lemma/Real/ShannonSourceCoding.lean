@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.InformationTheory.ShannonSourceCoding
+import Abbrev.InformationTheory.ShannonSourceCoding
 open Real BigOperators Finset
 open MathlibExt.InformationTheory.ShannonSourceCodingWanted
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.Uniformization
+import Def.v1.Atlas.EllipticCurves.code.Uniformization
 open Complex PeriodPair ComplexLattice
 open scoped UpperHalfPlane
 open ComplexLattice Pointwise ModularGroup UpperHalfPlane

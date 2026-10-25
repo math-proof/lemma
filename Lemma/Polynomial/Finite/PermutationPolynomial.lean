@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.FieldTheory.Finite.PermutationPolynomial
+import Def.FieldTheory.Finite.PermutationPolynomial
 open Polynomial
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.Clique
+import Def.v1.Atlas.TheoryOfComputation.code.Clique.Part6
 open ThreeSATToClique CliqueReduction
 open SimpleGraph
 open TuringMachine NPCompleteness ThreeSATToClique ThreeSATComplete

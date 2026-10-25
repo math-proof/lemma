@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.ExactModuleCategory
+import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
 import Lemma.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
 open Category MonoidalCategory LeftModCat Limits
 

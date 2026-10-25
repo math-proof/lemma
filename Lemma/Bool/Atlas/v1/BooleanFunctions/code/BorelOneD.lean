@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.BorelOneD
+import Def.v1.Atlas.BooleanFunctions.code.BorelOneD
 open MeasureTheory ProbabilityTheory Real Set GaussianStability
 
 

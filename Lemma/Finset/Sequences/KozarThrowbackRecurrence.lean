@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Sequences.KozarThrowbackRecurrence
+import Def.Combinatorics.Sequences.KozarThrowbackRecurrence
 open MetaMathlibExt
 
 

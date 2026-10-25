@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_4_4
+import Theorem.Analysis.Section_4_4
 open Rat
 
 

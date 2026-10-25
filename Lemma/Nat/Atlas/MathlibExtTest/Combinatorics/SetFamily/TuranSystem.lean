@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SetFamily.TuranSystem
+import Def.Combinatorics.SetFamily.TuranSystem
 import Lemma.Finset.SetFamily.TuranSystem
 open TuranSystem
 

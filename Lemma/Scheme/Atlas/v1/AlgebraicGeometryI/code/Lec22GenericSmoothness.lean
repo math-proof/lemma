@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec22GenericSmoothness
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec22GenericSmoothness.Part2
 open Lec22
 open MvPolynomial
 

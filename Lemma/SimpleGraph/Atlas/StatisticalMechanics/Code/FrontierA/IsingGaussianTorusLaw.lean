@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusLaw
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusLaw.Part3
 open Finset MeasureTheory StatMech StatMech.FrontierA
 
 

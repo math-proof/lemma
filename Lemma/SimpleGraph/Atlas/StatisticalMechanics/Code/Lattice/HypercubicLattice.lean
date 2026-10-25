@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.HypercubicLattice
+import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
 open Set Finset StatMech StatMech.Lattice
 
 

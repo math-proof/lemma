@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneConcreteBondProgram
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneConcreteBondProgram.Part9
 open SimpleGraph Finset StatMech StatMech.Sharpness StatMech.Sharpness.BackboneConcreteBondProgram
 
 

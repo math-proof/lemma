@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.VectorFieldFlow
+import Structure.v1.Atlas.GeometryOfManifolds.code.VectorFieldFlow
 open Manifold Topology Metric Set
 
 

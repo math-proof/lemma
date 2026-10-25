@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.JordanNormalForm
+import Def.LinearAlgebra.Matrix.JordanNormalForm
 open Module
 open scoped BigOperators
 open MathlibExt.LinearAlgebra.Matrix.JordanNormalFormWanted

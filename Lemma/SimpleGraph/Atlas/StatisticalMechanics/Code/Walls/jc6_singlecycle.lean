@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc6_singlecycle
+import Theorem.StatisticalMechanics.Code.Walls.jc6_singlecycle.Part2
 open SimpleGraph Function Set StatMech StatMech.Walls
 
 

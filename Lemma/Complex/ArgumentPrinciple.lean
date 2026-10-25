@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.complex.ArgumentPrinciple
+import Theorem.Analysis.Complex.ArgumentPrinciple
 
 open Complex.ArgumentPrinciple
 

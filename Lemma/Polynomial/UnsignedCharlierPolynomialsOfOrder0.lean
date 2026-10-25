@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.polynomial.unsigned_charlier_polynomials_of_order0
-
+import Theorem.Algebra.Polynomial.UnsignedCharlierPolynomialsOfOrder0
 open MetaMathlibExt
 
 /--
@@ -15,6 +14,5 @@ private lemma unsignedCharlier_coeff_eq_eq
   (unsignedCharlierOrder0 ℕ n).coeff m = unsignedCharlierCoeff n m := by
 -- proof
   apply unsignedCharlier_coeff_eq
-
 
 -- created on 2026-10-09

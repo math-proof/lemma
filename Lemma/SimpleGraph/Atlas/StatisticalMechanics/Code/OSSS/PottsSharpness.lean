@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.PottsSharpness
+import Theorem.StatisticalMechanics.Code.OSSS.PottsSharpness
 open Real Set StatMech StatMech.OSSS StatMech.OSSS.PottsSharpness
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.CylinderWidthLimit
+import Theorem.StatisticalMechanics.Code.Ising.CylinderWidthLimit
 open Filter Topology StatMech StatMech.Ising
 
 

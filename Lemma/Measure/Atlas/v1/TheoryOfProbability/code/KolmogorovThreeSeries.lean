@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.KolmogorovThreeSeries
+import Def.v1.Atlas.TheoryOfProbability.code.KolmogorovThreeSeries
 open MeasureTheory ProbabilityTheory Filter KolmogorovThreeSeries
 open KolmogorovThreeSeries
 

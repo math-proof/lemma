@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.RayClass.PrincipalIdeal
+import Theorem.NumberTheory.NumberField.RayClass.PrincipalIdeal
 open scoped nonZeroDivisors
 open NumberField
 open Modulus

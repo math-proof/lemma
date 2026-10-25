@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.CylinderDecayClose
+import Theorem.StatisticalMechanics.Code.FK.CylinderDecayClose.Part6
 open MeasureTheory Filter Topology BoundedContinuousFunction SimpleGraph Set StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

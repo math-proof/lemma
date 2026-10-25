@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.IndexedEdgeLumping
+import Theorem.StatisticalMechanics.Code.FK.IndexedEdgeLumping.Part2
 open Finset StatMech StatMech.FK
 
 

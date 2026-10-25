@@ -1,10 +1,10 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.CellInvProof
+import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
+import Theorem.v1.Atlas.Buildings.code.BNPair.CellInvProof
 import Lemma.Nat.In_BruhatCell.of.In_BruhatCell
 import Lemma.Nat.In_BruhatCell1.of.In_B
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.CellCoverProof
+import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
 open BNPair
 
 

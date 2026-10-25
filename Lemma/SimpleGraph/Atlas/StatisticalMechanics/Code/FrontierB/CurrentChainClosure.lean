@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentChainClosure
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentChainClosure
 open MeasureTheory Set StatMech StatMech.FrontierB
 
 

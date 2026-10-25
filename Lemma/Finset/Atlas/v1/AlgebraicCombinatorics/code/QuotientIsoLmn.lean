@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.QuotientIsoLmn
+import Def.v1.Atlas.AlgebraicCombinatorics.code.QuotientIsoLmn.Part7
 open WreathOrbits YoungLattice YoungLattice.Lmn QuotientIsoLmn
 
 

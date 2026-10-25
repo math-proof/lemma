@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWAxisGapPIMSScaleTwoAudit
+import Theorem.StatisticalMechanics.Code.Universality.RSWAxisGapPIMSScaleTwoAudit.Part2
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

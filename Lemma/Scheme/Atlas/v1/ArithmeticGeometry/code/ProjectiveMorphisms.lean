@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.ProjectiveMorphisms
+import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveMorphisms.Part6
 open MvPolynomial ProjectiveRegularFunction ProjectiveRatMap ProjectiveThm1518
 open scoped LinearAlgebra.Projectivization
 open ProjectiveRegularFunction

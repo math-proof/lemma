@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Prop2219
+import Def.v1.Atlas.NumberTheoryI.code.Prop2219.Part2
 open Complex Finset Section19 RayClassField
 open scoped NumberField
 

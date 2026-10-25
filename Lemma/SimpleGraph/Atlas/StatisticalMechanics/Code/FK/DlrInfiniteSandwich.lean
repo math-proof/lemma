@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.DlrInfiniteSandwich
+import Theorem.StatisticalMechanics.Code.FK.DlrInfiniteSandwich
 open MeasureTheory Filter Set StatMech StatMech.FK
 
 

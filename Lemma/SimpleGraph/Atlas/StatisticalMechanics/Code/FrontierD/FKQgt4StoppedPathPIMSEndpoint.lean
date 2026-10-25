@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4StoppedPathPIMSEndpoint
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4StoppedPathPIMSEndpoint
 open Filter StatMech StatMech.FrontierD
 
 

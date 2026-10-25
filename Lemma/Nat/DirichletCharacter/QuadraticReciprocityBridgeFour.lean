@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.DirichletCharacter.QuadraticReciprocityBridgeFour
+import Theorem.NumberTheory.DirichletCharacter.QuadraticReciprocityBridgeFour
 open MetaMathlibExt
 
 

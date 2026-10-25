@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexLoopLexUnitFineRelation
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexLoopLexUnitFineRelation
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.AlgebraicGeometry.Curve.Divisor
+import Def.AlgebraicGeometry.Curve.Divisor
 open CurveDivisor
 
 

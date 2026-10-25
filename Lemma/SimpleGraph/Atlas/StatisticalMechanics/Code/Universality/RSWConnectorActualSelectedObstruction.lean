@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWConnectorActualSelectedObstruction
+import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorActualSelectedObstruction
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

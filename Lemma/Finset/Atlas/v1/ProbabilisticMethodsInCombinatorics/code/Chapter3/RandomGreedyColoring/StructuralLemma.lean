@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter3.RandomGreedyColoring.StructuralLemma
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter3.RandomGreedyColoring.StructuralLemma
 open Finset Fintype TwoColorableHypergraph
 
 

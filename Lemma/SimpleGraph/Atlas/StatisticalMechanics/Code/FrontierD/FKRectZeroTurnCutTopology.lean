@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnCutTopology
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnCutTopology.Part4
 open Finset SimpleGraph StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWSequentialStoppedExplorationBridge
+import Theorem.StatisticalMechanics.Code.Universality.RSWSequentialStoppedExplorationBridge
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

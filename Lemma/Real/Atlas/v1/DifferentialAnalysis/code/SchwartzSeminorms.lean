@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminorms
+import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminorms
 open MultiIndexBridge in TemperedDistributions
 open scoped SchwartzMap
 

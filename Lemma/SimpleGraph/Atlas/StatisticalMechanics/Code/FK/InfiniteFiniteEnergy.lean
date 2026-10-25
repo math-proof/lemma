@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy
+import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy.Part2
 open MeasureTheory Set Filter Topology SimpleGraph StatMech StatMech.FK
 
 

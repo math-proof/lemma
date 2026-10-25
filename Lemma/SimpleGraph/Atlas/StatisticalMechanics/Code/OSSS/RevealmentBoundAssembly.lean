@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.RevealmentBoundAssembly
+import Theorem.StatisticalMechanics.Code.OSSS.RevealmentBoundAssembly
 open MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.RevealmentBoundAssembly
 
 

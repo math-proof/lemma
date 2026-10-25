@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MinimalDescentPermutations
+import Def.Combinatorics.Enumerative.MinimalDescentPermutations
 open MetaMathlibExt
 
 

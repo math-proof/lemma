@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWQOneInfiniteVolume
+import Theorem.StatisticalMechanics.Code.Universality.RSWQOneInfiniteVolume
 open Set SimpleGraph MeasureTheory Filter Topology StatMech StatMech.Universality
 
 

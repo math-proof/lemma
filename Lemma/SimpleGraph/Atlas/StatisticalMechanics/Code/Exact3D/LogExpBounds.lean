@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.LogExpBounds
+import Theorem.StatisticalMechanics.Code.Exact3D.LogExpBounds
 open StatMech StatMech.Exact3D StatMech.Exact3D.ExpUpperBound StatMech.Exact3D.LogUpperBound StatMech.Exact3D.LogLowerBound
 
 

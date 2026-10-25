@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.CovLowerBound
+import Theorem.StatisticalMechanics.Code.OSSS.CovLowerBound
 open Finset StatMech StatMech.OSSS StatMech.OSSS.CovLowerBound
 
 

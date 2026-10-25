@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationMiddleAffine
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationMiddleAffine
 open StatMech StatMech.Onsager
 
 

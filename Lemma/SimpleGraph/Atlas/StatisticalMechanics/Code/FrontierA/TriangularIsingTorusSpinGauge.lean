@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSpinGauge
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSpinGauge.Part4
 open StatMech StatMech.FrontierA
 
 

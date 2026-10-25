@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.AdaptiveCausalCrossMomentClose
+import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveCausalCrossMomentClose
 open StatMech StatMech.OSSS StatMech.OSSS.AdaptiveCausalKernel
 
 

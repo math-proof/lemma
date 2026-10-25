@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.MonotonicOSSS
+import Theorem.StatisticalMechanics.Code.OSSS.MonotonicOSSS.Part3
 open Finset MeasureTheory Set StatMech StatMech.OSSS StatMech.OSSS.MonotonicFK StatMech.OSSS.MonotonicMeasure
 
 

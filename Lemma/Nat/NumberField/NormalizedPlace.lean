@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.NormalizedPlace
+import Def.NumberTheory.NumberField.NormalizedPlace
 open NumberField
 
 

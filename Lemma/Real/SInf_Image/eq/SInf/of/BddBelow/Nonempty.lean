@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.MeasureTheory.Section_1_2_0
+import Def.Analysis.MeasureTheory.Section_1_2_0.Part2
 open BoundedInterval
 open EReal
 

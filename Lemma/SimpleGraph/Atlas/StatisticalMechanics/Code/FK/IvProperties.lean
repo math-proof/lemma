@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.IvProperties
+import Theorem.StatisticalMechanics.Code.FK.IvProperties
 open SimpleGraph StatMech StatMech.FK
 
 

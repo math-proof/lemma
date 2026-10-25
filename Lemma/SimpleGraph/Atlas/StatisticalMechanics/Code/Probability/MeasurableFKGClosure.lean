@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.MeasurableFKGClosure
+import Theorem.StatisticalMechanics.Code.Probability.MeasurableFKGClosure.Part3
 open Filter MeasureTheory Set Topology StatMech
 
 

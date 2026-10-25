@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.TestFunctions
+import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
 open Filter Topology TestFunctions TestFunctions.SchwartzTestFunctionSpace
 open scoped ZeroAtInfty
 open ContinuousLinearMap

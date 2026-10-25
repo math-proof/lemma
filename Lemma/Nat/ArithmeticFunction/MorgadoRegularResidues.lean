@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ArithmeticFunction.MorgadoRegularResidues
+import Def.NumberTheory.ArithmeticFunction.MorgadoRegularResidues
 open scoped BigOperators
 open MetaMathlibExt
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopGeometricDualWeighted
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopGeometricDualWeighted
 open Finset StatMech StatMech.Onsager
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterMatchingCutCurrent
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterMatchingCutCurrent.Part3
 open Finset StatMech StatMech.Ising
 
 

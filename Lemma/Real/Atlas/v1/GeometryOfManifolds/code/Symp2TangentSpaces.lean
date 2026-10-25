@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.Symp2TangentSpaces
+import Instance.v1.Atlas.GeometryOfManifolds.code.Symp2TangentSpaces
 open DifferentialFormSpace SymplecticLinearAlgebra
 
 

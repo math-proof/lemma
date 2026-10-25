@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.DensityHalesJewett
+import Theorem.Combinatorics.DensityHalesJewett.Part13
 open scoped Finset
 open Combinatorics.Line
 open Combinatorics.Subspace

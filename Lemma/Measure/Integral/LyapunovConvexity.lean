@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MeasureTheory.Integral.LyapunovConvexity
+import Def.MeasureTheory.Integral.LyapunovConvexity
 open MeasureTheory Set Filter Topology
 open scoped RealInnerProductSpace
 open MathlibExt.MeasureTheory.Integral.LyapunovConvexityWanted

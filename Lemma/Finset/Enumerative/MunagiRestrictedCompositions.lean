@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MunagiRestrictedCompositions
+import Def.Combinatorics.Enumerative.MunagiRestrictedCompositions
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.GHarmonic
+import Def.GroupTheory.GHarmonic
 open scoped Pointwise
 
 

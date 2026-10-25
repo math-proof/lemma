@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.EdgeIndexedMultigraph
+import Def.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part4
 open SimpleGraph
 open EdgeIndexedMultigraph
 open IndexedWalk

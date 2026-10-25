@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.HcovAssembly
+import Theorem.StatisticalMechanics.Code.Sharpness.HcovAssembly.Part4
 open Finset BigOperators SimpleGraph StatMech StatMech.Sharpness StatMech.Sharpness.HcovAssembly
 
 

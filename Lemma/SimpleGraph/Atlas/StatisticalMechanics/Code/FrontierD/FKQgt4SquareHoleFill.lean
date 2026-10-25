@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4SquareHoleFill
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareHoleFill.Part2
 open Set SimpleGraph StatMech StatMech.FrontierD
 
 

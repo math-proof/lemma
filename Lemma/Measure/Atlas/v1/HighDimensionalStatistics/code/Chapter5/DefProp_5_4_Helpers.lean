@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter5.DefProp_5_4_Helpers
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.DefProp_5_4_Helpers
 open MeasureTheory InformationTheory TotalVariation
 
 

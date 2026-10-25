@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.AdjustedResolutions
+import Def.v1.Atlas.AlgebraicGeometryI.code.AdjustedResolutions.Part2
 open CategoryTheory Category Limits AdjustedResolutions
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.EnsembleGHS
+import Theorem.StatisticalMechanics.Code.Ising.EnsembleGHS
 open Finset Classical StatMech StatMech.Ising
 
 

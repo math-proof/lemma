@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc4_restrictdisjoint
+import Theorem.StatisticalMechanics.Code.Walls.rc4_restrictdisjoint
 open Finset Set StatMech StatMech.Walls
 
 

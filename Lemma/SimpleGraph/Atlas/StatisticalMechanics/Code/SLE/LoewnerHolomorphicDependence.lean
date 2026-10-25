@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.LoewnerHolomorphicDependence
+import Theorem.StatisticalMechanics.Code.SLE.LoewnerHolomorphicDependence.Part3
 open Complex Set Metric Filter Topology StatMech StatMech.SLE
 
 

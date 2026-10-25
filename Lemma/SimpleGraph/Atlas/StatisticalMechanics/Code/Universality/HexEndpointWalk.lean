@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexEndpointWalk
+import Theorem.StatisticalMechanics.Code.Universality.HexEndpointWalk.Part3
 open StatMech StatMech.Universality StatMech.Universality.HexWalk
 
 

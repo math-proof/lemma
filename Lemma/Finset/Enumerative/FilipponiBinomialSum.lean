@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.FilipponiBinomialSum
+import Def.Combinatorics.Enumerative.FilipponiBinomialSum
 open scoped BigOperators
 open MetaMathlibExt
 

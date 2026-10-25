@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.MergeTreeCost
+import Inductive.CPythonListsort.Code.Assembly.MergeTreeCost
 open CPythonListsort CPythonListsort.SpannedMergeTree
 open-subtree lengths `[148, 36, 32, 32, 8]`. Paper top-pair completion totals
 

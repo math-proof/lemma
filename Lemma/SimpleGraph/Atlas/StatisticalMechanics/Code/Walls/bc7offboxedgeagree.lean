@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc7offboxedgeagree
+import Theorem.StatisticalMechanics.Code.Walls.bc7offboxedgeagree
 open Set StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation StatMech StatMech.Walls
 
 

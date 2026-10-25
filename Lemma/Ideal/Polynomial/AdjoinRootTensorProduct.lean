@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.Polynomial.AdjoinRootTensorProduct
+import Def.RingTheory.Polynomial.AdjoinRootTensorProduct
 open scoped TensorProduct
 open Ideal
 open AdjoinRoot

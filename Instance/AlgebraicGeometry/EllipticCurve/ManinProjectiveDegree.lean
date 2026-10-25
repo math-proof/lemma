@@ -1,0 +1,33 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/EllipticCurve/ManinProjectiveDegree.lean -/
+
+/-
+Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
+-/
+
+import Mathlib.FieldTheory.RatFunc.Degree
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+/-!
+# Projective numerator degrees for Manin's proof
+
+This file isolates the characteristic-free commutative algebra used to recover the numerator
+degrees of two rational functions from primitive projective product and sum coordinates.
+-/
+
+
+namespace MathlibExt.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
+
+noncomputable section
+
+open Polynomial
+
+universe u
+
+variable {K : Type u} [Field K]
+
+instance : DecidableEq K := Classical.decEq K
+
+instance : DecidableEq K[X] := Classical.decEq K[X]
+
+end
+end MathlibExt.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree

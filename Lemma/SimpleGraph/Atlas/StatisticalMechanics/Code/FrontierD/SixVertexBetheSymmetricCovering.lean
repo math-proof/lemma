@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheSymmetricCovering
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheSymmetricCovering
 open Finset Filter Topology StatMech StatMech.FrontierD
 
 

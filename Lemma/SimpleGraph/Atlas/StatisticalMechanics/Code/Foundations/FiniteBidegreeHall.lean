@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.FiniteBidegreeHall
+import Theorem.StatisticalMechanics.Code.Foundations.FiniteBidegreeHall
 open Finset
 
 

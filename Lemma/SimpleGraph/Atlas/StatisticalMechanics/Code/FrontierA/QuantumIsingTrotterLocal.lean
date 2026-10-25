@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingTrotterLocal
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingTrotterLocal.Part2
 open StatMech StatMech.FrontierA
 
 

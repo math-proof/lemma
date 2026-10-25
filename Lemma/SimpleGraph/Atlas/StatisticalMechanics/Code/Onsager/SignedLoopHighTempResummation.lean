@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopHighTempResummation
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopHighTempResummation.Part7
 open Finset SimpleGraph MeasureTheory Filter Topology StatMech StatMech.Onsager
 
 

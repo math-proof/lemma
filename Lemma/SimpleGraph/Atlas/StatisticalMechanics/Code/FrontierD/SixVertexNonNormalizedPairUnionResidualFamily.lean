@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexNonNormalizedPairUnionResidualFamily
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexNonNormalizedPairUnionResidualFamily.Part4
 open StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexNonNormalizedPairUnionPhysicalTargetFamily
 
 

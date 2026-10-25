@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierCapstone
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierCapstone
 open Filter Topology StatMech StatMech.FrontierD
 
 

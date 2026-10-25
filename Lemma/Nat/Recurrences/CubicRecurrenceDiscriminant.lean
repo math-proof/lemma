@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Recurrences.CubicRecurrenceDiscriminant
+import Def.NumberTheory.Recurrences.CubicRecurrenceDiscriminant
 open MetaMathlibExt
 
 

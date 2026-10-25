@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.MagnetizationFK
+import Theorem.StatisticalMechanics.Code.IsingFK.MagnetizationFK
 open MeasureTheory StatMech StatMech.Ising StatMech.IsingFK
 
 

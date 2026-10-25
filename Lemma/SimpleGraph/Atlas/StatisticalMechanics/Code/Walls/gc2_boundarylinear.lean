@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc2_boundarylinear
+import Theorem.StatisticalMechanics.Code.Walls.gc2_boundarylinear
 open Finset BigOperators StatMech StatMech.Walls
 
 

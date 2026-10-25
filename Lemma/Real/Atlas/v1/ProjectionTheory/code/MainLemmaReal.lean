@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.MainLemmaReal
+import Def.v1.Atlas.ProjectionTheory.code.MainLemmaReal.Part2
 open MeasureTheory Metric Set
 
 

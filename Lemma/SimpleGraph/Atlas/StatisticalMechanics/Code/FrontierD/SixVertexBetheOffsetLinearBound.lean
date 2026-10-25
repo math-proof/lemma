@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetLinearBound
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetLinearBound
 open StatMech StatMech.FrontierD
 
 

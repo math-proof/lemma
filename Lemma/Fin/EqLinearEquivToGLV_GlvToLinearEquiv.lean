@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics
+import Class.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics.Part3
 open GeometricAlgebra GeometricAlgebra.Flag
 
 

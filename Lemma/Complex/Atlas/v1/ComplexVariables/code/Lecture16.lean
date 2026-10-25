@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ComplexVariables.code.Lecture16
+import Def.v1.Atlas.ComplexVariables.code.Lecture16
 open Complex InnerProductSpace Laplacian Metric Real Set Topology Filter MeasureTheory
 
 

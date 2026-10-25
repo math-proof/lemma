@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.RosenthalL1
+import Theorem.Analysis.NormedSpace.RosenthalL1.Part20
 
 open FunctionalAnalysis.RosenthalL1Wanted
 

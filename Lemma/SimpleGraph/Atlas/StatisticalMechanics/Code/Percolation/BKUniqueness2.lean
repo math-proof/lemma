@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.BKUniqueness2
+import Theorem.StatisticalMechanics.Code.Percolation.BKUniqueness2
 open MeasureTheory StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

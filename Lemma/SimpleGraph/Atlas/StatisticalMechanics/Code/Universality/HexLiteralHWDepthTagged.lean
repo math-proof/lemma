@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexLiteralHWDepthTagged
+import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthTagged.Part9
 open StatMech StatMech.Universality StatMech.Universality.HLHDTaggedTwoHalfData
 
 

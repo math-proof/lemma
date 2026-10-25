@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexFKTorusBoundaryReach
+import Theorem.StatisticalMechanics.Code.FK.TriHexFKTorusBoundaryReach
 open StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

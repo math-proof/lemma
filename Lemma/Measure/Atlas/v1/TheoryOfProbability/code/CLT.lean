@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.CLT
+import Def.v1.Atlas.TheoryOfProbability.code.CLT
 open MeasureTheory ProbabilityTheory Filter
 open scoped Topology ENNReal NNReal
 

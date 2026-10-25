@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingSpatialSeam
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingSpatialSeam.Part8
 open StatMech StatMech.FrontierA
 
 

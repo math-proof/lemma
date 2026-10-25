@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.CrossBoxGeneralKeystone
+import Theorem.StatisticalMechanics.Code.FK.CrossBoxGeneralKeystone.Part3
 open MeasureTheory Filter Topology Set SimpleGraph StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

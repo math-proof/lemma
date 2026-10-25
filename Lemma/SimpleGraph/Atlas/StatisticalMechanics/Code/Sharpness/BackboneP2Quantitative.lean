@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneP2Quantitative
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneP2Quantitative
 open SimpleGraph Finset StatMech StatMech.Sharpness
 
 

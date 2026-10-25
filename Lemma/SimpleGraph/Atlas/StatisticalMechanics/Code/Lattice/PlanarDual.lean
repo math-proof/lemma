@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.PlanarDual
+import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
 open SimpleGraph StatMech StatMech.Lattice
 
 

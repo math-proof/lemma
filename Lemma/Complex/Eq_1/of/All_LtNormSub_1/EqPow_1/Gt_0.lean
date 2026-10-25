@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.JordanLinearGroups
+import Def.GroupTheory.JordanLinearGroups
 open scoped commutatorElement
 open scoped Matrix.Norms.L2Operator
 open scoped MatrixOrder ComplexOrder

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.ConditionalFibreMass
+import Theorem.StatisticalMechanics.Code.FK.ConditionalFibreMass
 open StatMech StatMech.FK
 
 

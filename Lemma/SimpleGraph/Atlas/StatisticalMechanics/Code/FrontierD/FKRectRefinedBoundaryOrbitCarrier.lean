@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedBoundaryOrbitCarrier
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedBoundaryOrbitCarrier
 open StatMech StatMech.FrontierD
 
 

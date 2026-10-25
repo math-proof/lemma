@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamFourColorBalancedCore
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorBalancedCore.Part17
 open Finset StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section5
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section5.Part6
 open CategoryTheory HomotopyInvariance HomotopyTheory
 open ContinuousMap unitInterval
 open ContinuousMap

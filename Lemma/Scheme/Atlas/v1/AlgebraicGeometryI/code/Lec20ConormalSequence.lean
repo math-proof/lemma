@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec20ConormalSequence
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec20ConormalSequence
 open AlgebraicGeometry CategoryTheory KaehlerDifferential
 
 

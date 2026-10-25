@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.BookNumber
+import Def.Combinatorics.SimpleGraph.BookNumber
 open SimpleGraph
 
 

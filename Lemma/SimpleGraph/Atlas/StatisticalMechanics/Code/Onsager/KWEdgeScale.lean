@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.KWEdgeScale
+import Theorem.StatisticalMechanics.Code.Onsager.KWEdgeScale
 open StatMech StatMech.Onsager
 
 

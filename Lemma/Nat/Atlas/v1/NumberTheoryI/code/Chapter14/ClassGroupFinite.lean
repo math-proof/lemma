@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Chapter14.ClassGroupFinite
+import Def.v1.Atlas.NumberTheoryI.code.Chapter14.ClassGroupFinite
 open NumberField ClassGroupFinite
 
 

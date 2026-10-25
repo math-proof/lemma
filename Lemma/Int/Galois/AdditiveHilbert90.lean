@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.FieldTheory.Galois.AdditiveHilbert90
+import Theorem.FieldTheory.Galois.AdditiveHilbert90
 open Algebra
 
 

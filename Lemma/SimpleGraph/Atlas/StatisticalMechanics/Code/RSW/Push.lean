@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.Push
+import Theorem.StatisticalMechanics.Code.RSW.Push
 open StatMech StatMech.RSW StatMech.RSW.Push
 
 

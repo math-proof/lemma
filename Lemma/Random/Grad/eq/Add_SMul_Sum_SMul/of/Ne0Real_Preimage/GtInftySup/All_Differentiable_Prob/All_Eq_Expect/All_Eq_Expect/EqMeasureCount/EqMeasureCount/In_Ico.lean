@@ -1,5 +1,5 @@
 import Lemma.Random.GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico
-import sympy.concrete.summations
+import Macro.Algebra.BigOperators.Summations
 import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
 import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
 import Lemma.Random.SinglePSpace.of.Measurable.Measurable

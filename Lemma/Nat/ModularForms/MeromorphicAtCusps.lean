@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ModularForms.MeromorphicAtCusps
+import Def.NumberTheory.ModularForms.MeromorphicAtCusps
 open scoped UpperHalfPlane MatrixGroups
 open ModularFunction
 

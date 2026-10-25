@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.RingTheory.ConductorIdeal
+import Theorem.MathlibExtTest.RingTheory.ConductorIdeal.Part2
 
 
 /--

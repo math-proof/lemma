@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch7Entry10ZetaSide
+import Def.Analysis.Ramanujan.Part1Ch7Entry10ZetaSide
 open MathlibExt.Analysis.Ramanujan.Part1Ch7
 open Entry10Zeta4
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PlanarTrifurcation
+import Theorem.StatisticalMechanics.Code.FK.PlanarTrifurcation
 open Set SimpleGraph Finset MeasureTheory StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Walls StatMech.Percolation StatMech.FK
 
 

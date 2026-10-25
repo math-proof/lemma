@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Misc.Probability
+import Def.Analysis.Misc.Probability.Part2
 open ProbabilityTheory
 open ProbabilityTheory.FinitelyAdditive
 

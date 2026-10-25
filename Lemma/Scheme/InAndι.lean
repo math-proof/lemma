@@ -6,7 +6,6 @@ set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-
 universe u
 
 private lemma ringHom_ext_of_forall_quotient_pow
@@ -158,6 +157,5 @@ private lemma main
   (h : ∀ n : ℕ, Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk (IsLocalRing.maximalIdeal (X.presheaf.stalk x) ^ n))) ≫ X.fromSpecStalk x ≫ f = Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk (IsLocalRing.maximalIdeal (X.presheaf.stalk x) ^ n))) ≫ X.fromSpecStalk x ≫ g) :
   ∃ U : X.Opens, x ∈ U ∧ U.ι ≫ f = U.ι ≫ g :=
   exists_mem_and_ι_comp_eq f g x h
-
 
 -- created on 2026-10-20

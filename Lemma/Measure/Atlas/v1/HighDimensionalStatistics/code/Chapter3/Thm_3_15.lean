@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_15
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_15.Part2
 open Real MeasureTheory Chapter3
 
 

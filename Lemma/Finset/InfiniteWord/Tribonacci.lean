@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.InfiniteWord.Tribonacci
+import Def.Combinatorics.InfiniteWord.Tribonacci.Part2
 open InfiniteWord
 
 

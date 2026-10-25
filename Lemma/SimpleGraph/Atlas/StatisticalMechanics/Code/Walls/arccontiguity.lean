@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.arccontiguity
+import Theorem.StatisticalMechanics.Code.Walls.arccontiguity.Part2
 open Finset Set SimpleGraph StatMech StatMech.Walls
 
 

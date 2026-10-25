@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.IsingPlusErgodicClose
+import Theorem.StatisticalMechanics.Code.Ising.IsingPlusErgodicClose
 open MeasureTheory Filter Topology Set StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.Ising
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc4_avoidingsurvives
+import Theorem.StatisticalMechanics.Code.Walls.bc4_avoidingsurvives
 open Set SimpleGraph StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation StatMech StatMech.Walls
 
 

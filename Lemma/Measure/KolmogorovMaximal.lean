@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.KolmogorovMaximal
+import Def.Probability.KolmogorovMaximal
 open Finset BigOperators
 open MathlibExt.Probability.KolmogorovMaximal
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.UniversalApproximation
+import Theorem.Analysis.Calculus.UniversalApproximation.Part2
 
 /--
 [universal_approximation](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Approximation/UniversalApproximation.lean)

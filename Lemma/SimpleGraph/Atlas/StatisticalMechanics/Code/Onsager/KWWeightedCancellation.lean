@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.KWWeightedCancellation
+import Theorem.StatisticalMechanics.Code.Onsager.KWWeightedCancellation
 open StatMech StatMech.Onsager
 
 

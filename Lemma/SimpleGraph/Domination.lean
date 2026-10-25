@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Domination
+import Def.Combinatorics.SimpleGraph.Domination
 open SimpleGraph
 
 

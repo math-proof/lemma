@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec7SeparatedCriterion
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec7SeparatedCriterion
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
 
 

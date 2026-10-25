@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.SymmetricDomainSelfDuality
+import Theorem.StatisticalMechanics.Code.BeffaraDC.SymmetricDomainSelfDuality.Part12
 open Finset SimpleGraph StatMech.Lattice StatMech StatMech.BeffaraDC StatMech.BeffaraDC.SymmetricDomain
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.CMTorsor
+import Def.v1.Atlas.EllipticCurves.code.CMTorsor.Part7
 open nonZeroDivisors Module FieldNormTrace QuadraticOrder ImaginaryQuadraticDiscriminant FractionalOIdeal NormTrace PrincipalIdealNorm IdealNormMultiplicativity FractionalIdealNorm ComplexLattice ImagQuadDiscriminant ProperIdealInvertible IdealClassGroup IdealTorsion CMTorsorAction CMIdealIsogeny
 open FractionalIdeal
 open NormTrace

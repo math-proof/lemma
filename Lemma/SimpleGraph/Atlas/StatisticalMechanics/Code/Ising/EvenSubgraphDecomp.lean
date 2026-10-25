@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.EvenSubgraphDecomp
+import Theorem.StatisticalMechanics.Code.Ising.EvenSubgraphDecomp
 open Finset SimpleGraph StatMech StatMech.Ising StatMech.Ising.EvenSubgraphDecomp
 
 

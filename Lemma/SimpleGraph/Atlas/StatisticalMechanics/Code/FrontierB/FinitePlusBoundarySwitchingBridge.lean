@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.FinitePlusBoundarySwitchingBridge
+import Theorem.StatisticalMechanics.Code.FrontierB.FinitePlusBoundarySwitchingBridge
 open MeasureTheory Set StatMech StatMech.FrontierB
 
 

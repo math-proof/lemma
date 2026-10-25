@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.SophieGermainPrime
+import Def.NumberTheory.SophieGermainPrime
 open Nat
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc9assembledDnonneg
+import Theorem.StatisticalMechanics.Code.Walls.gc9assembledDnonneg.Part4
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Walls
 
 

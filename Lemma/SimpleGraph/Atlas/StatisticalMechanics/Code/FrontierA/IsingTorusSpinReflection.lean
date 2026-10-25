@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingTorusSpinReflection
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusSpinReflection.Part2
 open Finset StatMech StatMech.FrontierA
 
 

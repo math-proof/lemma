@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.PressureBCIndep
+import Theorem.StatisticalMechanics.Code.Ising.PressureBCIndep
 open Finset Filter Topology StatMech StatMech.Ising
 
 

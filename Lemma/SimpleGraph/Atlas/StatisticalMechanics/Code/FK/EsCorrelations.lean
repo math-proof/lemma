@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.EsCorrelations
+import Theorem.StatisticalMechanics.Code.FK.EsCorrelations.Part4
 open StatMech StatMech.FK
 
 

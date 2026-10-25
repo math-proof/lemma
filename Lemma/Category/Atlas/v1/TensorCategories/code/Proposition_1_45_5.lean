@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.Proposition_1_45_5
+import Abbrev.v1.Atlas.TensorCategories.code.Proposition_1_45_5
 open FusionRing Matrix BigOperators
 
 

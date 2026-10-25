@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.RiemannRochDedekind
+import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochDedekind
 open nonZeroDivisors RiemannRochCurves DedekindCurve UniqueFactorizationMonoid RiemannRochDedekind
 open scoped TensorProduct
 open RiemannRochCurves DedekindCurve

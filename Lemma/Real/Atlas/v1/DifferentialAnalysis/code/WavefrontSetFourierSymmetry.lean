@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.WavefrontSetFourierSymmetry
+import Theorem.v1.Atlas.DifferentialAnalysis.code.WavefrontSetFourierSymmetry
 open MeasureTheory WavefrontSet
 open scoped SchwartzMap FourierTransform
 

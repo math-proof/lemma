@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAdaptivePatchedTurns
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptivePatchedTurns
 open StatMech StatMech.FrontierA
 
 

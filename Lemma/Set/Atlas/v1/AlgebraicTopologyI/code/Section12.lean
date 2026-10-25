@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section12
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section12.Part2
 open CategoryTheory AlgebraicTopology Limits BarycentricSubdivision
 
 

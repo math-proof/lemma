@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.BoxTailLimit
+import Theorem.StatisticalMechanics.Code.FK.BoxTailLimit
 open MeasureTheory Filter Topology SimpleGraph StatMech StatMech.FK
 
 

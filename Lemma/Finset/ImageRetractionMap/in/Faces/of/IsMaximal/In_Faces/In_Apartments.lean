@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection
+import Def.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection
 open AptFoldingFromRetraction
 open scoped Classical
 

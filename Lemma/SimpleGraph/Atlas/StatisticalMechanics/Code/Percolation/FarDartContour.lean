@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.FarDartContour
+import Theorem.StatisticalMechanics.Code.Percolation.FarDartContour.Part5
 open Finset Set SimpleGraph Function StatMech StatMech.Percolation
 
 

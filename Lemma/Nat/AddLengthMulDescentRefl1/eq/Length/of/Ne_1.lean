@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.CoxeterTheory
+import Structure.v1.Atlas.LieGroups.code.CoxeterTheory.Part2
 open CoxeterGroupData
 open scoped BigOperators
 

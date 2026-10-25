@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_3_3_fn
+import Abbrev.Analysis.Section_3_3_fn
 import Lemma.Nat.EqF333c_CoeNonzeroAdd_1
 open Chapter3 hiding Nat Set
 open Chapter3.SetTheory

@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Policy.BoundaryPowerGeometry
-import sympy.atlas.CPythonListsort.Code.Policy.StackPowers
+import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
+import Def.CPythonListsort.Code.Policy.StackPowers.Part2
 
 
 namespace CPythonListsort

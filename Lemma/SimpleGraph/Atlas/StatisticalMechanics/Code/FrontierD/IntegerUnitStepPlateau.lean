@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.IntegerUnitStepPlateau
+import Theorem.StatisticalMechanics.Code.FrontierD.IntegerUnitStepPlateau
 open StatMech StatMech.FrontierD
 
 

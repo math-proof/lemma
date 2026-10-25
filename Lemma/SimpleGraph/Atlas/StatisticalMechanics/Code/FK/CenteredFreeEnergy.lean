@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.CenteredFreeEnergy
+import Theorem.StatisticalMechanics.Code.FK.CenteredFreeEnergy.Part3
 open SimpleGraph Filter Topology Set MeasureTheory StatMech StatMech.FK
 
 

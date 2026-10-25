@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.WCGroupH1
+import Def.v1.Atlas.ArithmeticGeometry.code.WCGroupH1
 open GaloisCohomology
 
 

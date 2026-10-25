@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRotatedBoundaryBands
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRotatedBoundaryBands.Part2
 open Filter MeasureTheory Set Topology StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

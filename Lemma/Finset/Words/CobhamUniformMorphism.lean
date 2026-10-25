@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Words.CobhamUniformMorphism
+import Def.Combinatorics.Words.CobhamUniformMorphism
 open MetaMathlibExt
 
 

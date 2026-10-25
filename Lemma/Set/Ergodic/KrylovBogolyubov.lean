@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Dynamics.Ergodic.KrylovBogolyubov
+import Def.Dynamics.Ergodic.KrylovBogolyubov
 open MeasureTheory
 open MathlibExt.Dynamics.Ergodic.KrylovBogolyubovWanted
 

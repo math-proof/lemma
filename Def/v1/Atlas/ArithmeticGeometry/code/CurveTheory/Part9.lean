@@ -1,0 +1,74 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/CurveTheory.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Mathlib
+import Def.v1.Atlas.ArithmeticGeometry.code.MorphismsCurves
+import Abbrev.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
+import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularLocalRings
+import Theorem.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part2
+
+
+noncomputable section
+
+open Module IsDiscreteValuationRing
+
+namespace ArithmeticGeometry
+
+section DVRNormalization
+
+variable {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+
+variable {K : Type*} [Field K] [Algebra R K] [IsFractionRing R K]
+
+attribute [instance] SmoothProjectiveCurveData.instCR SmoothProjectiveCurveData.instID
+  SmoothProjectiveCurveData.instDVR SmoothProjectiveCurveData.instAlg
+  SmoothProjectiveCurveData.instFR SmoothProjectiveCurveData.instAlgKR
+  SmoothProjectiveCurveData.instScalarTower
+
+namespace FunctionField_k
+
+variable {k : Type*} [Field k]
+
+variable {F₁ : Type*} {F₂ : Type*} [Field F₁] [Field F₂]
+
+section Lemma18_11_Helpers
+
+attribute [instance] DVROfFunctionField.isDVR DVROfFunctionField.isFractionRing
+
+noncomputable def SmoothProjectiveCurveData.pointToDVR
+    {k K : Type u} [Field k] [Field K] [Algebra k K]
+    {n : ℕ} (C : SmoothProjectiveCurveData k K n) (p : C.P) : DVROfFunctionField k K where
+  valRing := C.pointValSubring p
+  contains_k := C.contains_k p
+  isDVR := C.pointValSubring_isDVR p
+  isFractionRing := inferInstance
+
+def SmoothProjectiveCurveData.vanishesAt
+    {k K : Type u} [Field k] [Field K] [Algebra k K]
+    {n : ℕ} (C : SmoothProjectiveCurveData k K n) (p : C.P) (f : K) : Prop :=
+  ∃ (hf : f ∈ (C.pointValSubring p : Set K)),
+    ¬IsUnit (⟨f, hf⟩ : C.pointValSubring p)
+
+def SmoothProjectiveCurveData.zariskiTopology
+    {k K : Type u} [Field k] [Field K] [Algebra k K]
+    {n : ℕ} (C : SmoothProjectiveCurveData k K n) : TopologicalSpace C.P :=
+  TopologicalSpace.generateFrom
+    {U | ∃ (f : K), U = {p | ¬C.vanishesAt p f}}
+
+def SmoothProjectiveCurveData.regularFunctions
+    {k K : Type u} [Field k] [Field K] [Algebra k K]
+    {n : ℕ} (C : SmoothProjectiveCurveData k K n) (U : Set C.P) : Set K :=
+  {f : K | ∀ p ∈ U, f ∈ (C.pointValSubring p : Set K)}
+
+end Lemma18_11_Helpers
+end FunctionField_k
+end DVRNormalization
+end ArithmeticGeometry
+end

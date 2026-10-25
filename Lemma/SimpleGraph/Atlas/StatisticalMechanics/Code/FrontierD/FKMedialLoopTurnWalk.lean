@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKMedialLoopTurnWalk
+import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialLoopTurnWalk.Part2
 open Equiv StatMech StatMech.FrontierD
 
 

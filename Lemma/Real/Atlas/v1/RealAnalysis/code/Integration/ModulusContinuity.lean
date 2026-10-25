@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.RealAnalysis.code.Integration.ModulusContinuity
+import Structure.v1.Atlas.RealAnalysis.code.Integration.ModulusContinuity
 open Set Filter Topology Finset Integration
 
 

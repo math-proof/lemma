@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc4_footprintagree
+import Theorem.StatisticalMechanics.Code.Walls.jc4_footprintagree
 open SimpleGraph Function StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Cor1126
+import Def.v1.Atlas.NumberTheoryI.code.Cor1126
 open NumberField NumberField.InfinitePlace Module Fintype IsDedekindDomain
 
 

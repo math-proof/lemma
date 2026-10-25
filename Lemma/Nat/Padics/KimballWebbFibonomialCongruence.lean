@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Padics.KimballWebbFibonomialCongruence
+import Def.NumberTheory.Padics.KimballWebbFibonomialCongruence
 open MetaMathlibExt
 
 

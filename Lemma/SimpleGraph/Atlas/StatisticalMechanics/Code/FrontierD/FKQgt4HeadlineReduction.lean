@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4HeadlineReduction
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4HeadlineReduction
 open MeasureTheory Filter Topology StatMech StatMech.FrontierD
 
 

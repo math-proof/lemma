@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheVandermonde
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheVandermonde.Part5
 open Finset Filter Matrix Topology StatMech StatMech.FrontierD
 
 

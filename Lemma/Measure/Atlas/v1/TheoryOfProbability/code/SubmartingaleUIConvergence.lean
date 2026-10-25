@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.SubmartingaleUIConvergence
+import Theorem.v1.Atlas.TheoryOfProbability.code.SubmartingaleUIConvergence
 open MeasureTheory Filter
 open scoped MeasureTheory NNReal ENNReal Topology
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectAugmentedBarrierPatternCost
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectAugmentedBarrierPatternCost
 open StatMech StatMech.FrontierD
 
 

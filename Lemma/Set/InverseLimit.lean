@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.InverseLimit
+import Def.Topology.InverseLimit
 open InverseLimit
 
 

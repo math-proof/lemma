@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.MaxFlowMenger
+import Theorem.StatisticalMechanics.Code.Probability.MaxFlowMenger
 open Finset StatMech StatMech.Combinatorics
 
 

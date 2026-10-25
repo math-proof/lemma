@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
 open CPythonListsort CPythonListsort.MergeBulkMoveCallsite
 open SortSlice
 open Lean Elab Command

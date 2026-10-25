@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.QRWhitneyNumbers
+import Def.Combinatorics.Enumerative.QRWhitneyNumbers
 import Lemma.Finset.Enumerative.QRWhitneyNumbers
 import Lemma.Nat.QRDowlingPolynomial
-import sympy.atlas.NumberTheory.QRDowlingPolynomial
+import Def.NumberTheory.QRDowlingPolynomial
 open scoped BigOperators
 
 

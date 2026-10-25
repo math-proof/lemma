@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraNotes.code.Diagonalization
+import Def.v1.Atlas.AlgebraNotes.code.Diagonalization
 open Matrix Diagonalization
 open Module Polynomial
 

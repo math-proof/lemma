@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.HNNEmbedding
+import Def.GroupTheory.HNNEmbedding.Part2
 open SemidirectProduct
 open MathlibExt.GroupTheory.HNNEmbeddingWanted
 

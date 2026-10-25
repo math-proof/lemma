@@ -1,0 +1,1144 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/PackageComparisonBridgeExample.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.Exact3D.PackageComparisonBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessPackageExample.Part6
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailContractionExample.Part58
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailWitnessPackageExample.Part7
+import Def.StatisticalMechanics.Code.Exact3D.PackageComparisonBridgeExample
+
+
+namespace StatMech
+
+namespace Exact3D
+
+namespace PackageComparisonBridgeExample
+
+open FiniteWitnessPackageExample
+
+open FinitePlusTailContractionExample
+
+open InfiniteTailWitnessPackageExample
+
+
+theorem hierarchicalCorrelationLength_eventually_pos :
+    ∀ᶠ β in nhdsWithin HierarchicalModel.betaC (Set.Iio HierarchicalModel.betaC),
+      0 < hierarchicalCorrelationLength β :=
+  Filter.Eventually.of_forall fun _ => Real.exp_pos _
+
+
+theorem doubledHierarchicalCorrelationLength_comparable :
+    ∀ᶠ β in nhdsWithin HierarchicalModel.betaC (Set.Iio HierarchicalModel.betaC),
+      (2 : ℝ) * hierarchicalCorrelationLength β ≤
+          doubledHierarchicalCorrelationLength β ∧
+        doubledHierarchicalCorrelationLength β ≤
+          (2 : ℝ) * hierarchicalCorrelationLength β :=
+  Filter.Eventually.of_forall fun _ => by
+    simp [doubledHierarchicalCorrelationLength]
+
+
+theorem hierarchicalWitnessBridge :
+    hierarchicalContributionSplitWitnessPackage.certificate.RGToExponentBridge
+      hierarchicalCorrelationLength := by
+  change HasCriticalNu HierarchicalModel hierarchicalCorrelationLength
+    hierarchicalContributionSplitWitnessPackage.certificate.predictedExponent
+  simpa [hierarchicalContributionSplitWitnessPackage_predictedExponent_eq,
+    hierarchicalNu, hierarchicalCertificate, predictedNu] using
+    hierarchical_hasCriticalNu
+
+
+theorem hierarchicalWitnessBridge_doubled_by_package_comparison :
+    hierarchicalContributionSplitWitnessPackage.certificate.RGToExponentBridge
+      doubledHierarchicalCorrelationLength :=
+  hierarchicalContributionSplitWitnessPackage
+    |>.rgToExponentBridge_of_eventually_const_mul_le_le
+        hierarchicalWitnessBridge
+        hierarchicalCorrelationLength_eventually_pos
+        (by norm_num : (0 : ℝ) < 2)
+        (by norm_num : (0 : ℝ) < 2)
+        doubledHierarchicalCorrelationLength_comparable
+
+
+theorem hierarchicalWitness_valid_doubled_by_package_comparison :
+    hierarchicalContributionSplitWitnessPackage.certificate.Valid
+      doubledHierarchicalCorrelationLength :=
+  hierarchicalContributionSplitWitnessPackage.valid_of_eventually_const_mul_le_le
+    hierarchicalWitnessBridge
+    hierarchicalCorrelationLength_eventually_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    doubledHierarchicalCorrelationLength_comparable
+
+
+theorem hierarchicalWitness_hasCriticalNu_doubled_by_package_comparison :
+    HasCriticalNu HierarchicalModel doubledHierarchicalCorrelationLength
+      hierarchicalContributionSplitWitnessPackage.certificate.predictedExponent :=
+  hierarchicalContributionSplitWitnessPackage.hasCriticalNu_of_eventually_const_mul_le_le
+    hierarchicalWitnessBridge
+    hierarchicalCorrelationLength_eventually_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    doubledHierarchicalCorrelationLength_comparable
+
+
+theorem halfThirdScalingHyperbolicSplitting_bridge_doubled_by_package_comparison :
+    halfThirdScalingRGCertificate.RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) := by
+  let H := halfThirdScalingHyperbolicSplitting
+  simpa [halfThirdScalingRGCertificate] using
+    H.certificate_rgToExponentBridge_of_eventually_const_mul_le_le
+      halfThirdScalingBlockScale
+      halfThirdScalingModel
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem halfThirdScalingHyperbolicSplitting_valid_doubled_by_package_comparison :
+    halfThirdScalingRGCertificate.Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) := by
+  simpa [halfThirdScalingRGCertificate] using
+    halfThirdScalingHyperbolicSplitting.certificate_valid_of_eventually_const_mul_le_le
+      halfThirdScalingBlockScale
+      halfThirdScalingModel
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem halfThirdScalingHyperbolicSplitting_hasCriticalNu_doubled_by_package_comparison :
+    HasCriticalNu halfThirdScalingModel
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      halfThirdScalingRGCertificate.predictedExponent := by
+  simpa [halfThirdScalingRGCertificate] using
+    halfThirdScalingHyperbolicSplitting.certificate_hasCriticalNu_of_eventually_const_mul_le_le
+      halfThirdScalingBlockScale
+      halfThirdScalingModel
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem halfThirdScalingHyperbolicSplitting_bridge_doubled_by_package_prefactor :
+    halfThirdScalingRGCertificate.RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) := by
+  let H := halfThirdScalingHyperbolicSplitting
+  simpa [halfThirdScalingRGCertificate] using
+    H.certificate_rgToExponentBridge_mul_log_negligible_prefactor
+      halfThirdScalingBlockScale
+      halfThirdScalingModel
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      halfThirdScalingCorrelationLength_pos
+      halfThirdScalingDoublePrefactor_pos
+      halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem halfThirdScalingHyperbolicSplitting_valid_doubled_by_package_prefactor :
+    halfThirdScalingRGCertificate.Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) := by
+  simpa [halfThirdScalingRGCertificate] using
+    halfThirdScalingHyperbolicSplitting.certificate_valid_mul_log_negligible_prefactor
+      halfThirdScalingBlockScale
+      halfThirdScalingModel
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      halfThirdScalingCorrelationLength_pos
+      halfThirdScalingDoublePrefactor_pos
+      halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem halfThirdScalingHyperbolicSplitting_hasCriticalNu_doubled_by_package_prefactor :
+    HasCriticalNu halfThirdScalingModel
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      halfThirdScalingRGCertificate.predictedExponent := by
+  simpa [halfThirdScalingRGCertificate] using
+    halfThirdScalingHyperbolicSplitting.certificate_hasCriticalNu_mul_log_negligible_prefactor
+      halfThirdScalingBlockScale
+      halfThirdScalingModel
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      halfThirdScalingCorrelationLength_pos
+      halfThirdScalingDoublePrefactor_pos
+      halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem halfThirdScalingBlockRGPackage_bridge_doubled_by_package_comparison :
+    (halfThirdScalingBlockRGPackage.certificate
+      halfThirdScalingBlockScale halfThirdScalingModel).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  halfThirdScalingBlockRGPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le
+      halfThirdScalingBlockScale
+      halfThirdScalingModel
+      (by
+        simpa [halfThirdScalingBlockRGCertificate] using
+          halfThirdScalingBlockRGCertificate_bridge_from_prefactorInputs)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem halfThirdScalingBlockRGPackage_valid_doubled_by_package_comparison :
+    (halfThirdScalingBlockRGPackage.certificate
+      halfThirdScalingBlockScale halfThirdScalingModel).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  halfThirdScalingBlockRGPackage.certificate_valid_of_eventually_const_mul_le_le
+    halfThirdScalingBlockScale
+    halfThirdScalingModel
+    (by
+      simpa [halfThirdScalingBlockRGCertificate] using
+        halfThirdScalingBlockRGCertificate_bridge_from_prefactorInputs)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem
+    halfThirdScalingBlockRGPackage_hasCriticalNu_doubled_by_package_comparison :
+    HasCriticalNu halfThirdScalingModel
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (halfThirdScalingBlockRGPackage.certificate
+        halfThirdScalingBlockScale halfThirdScalingModel).predictedExponent :=
+  FinitePlusTailBlockRGPackage.certificate_hasCriticalNu_of_eventually_const_mul_le_le
+    halfThirdScalingBlockRGPackage
+    halfThirdScalingBlockScale
+    halfThirdScalingModel
+    (by
+      simpa [halfThirdScalingBlockRGCertificate] using
+        halfThirdScalingBlockRGCertificate_bridge_from_prefactorInputs)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem halfThirdScalingUnitClosedBallRGPackage_bridge_doubled_by_package_comparison :
+    (halfThirdScalingUnitClosedBallRGPackage.certificate
+      halfThirdScalingBlockScale halfThirdScalingModel).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  halfThirdScalingUnitClosedBallRGPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le
+      halfThirdScalingBlockScale
+      halfThirdScalingModel
+      (by
+        apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+        exact halfThirdScalingCorrelationLength_exact_power)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem
+    halfThirdScalingUnitClosedBallRGPackage_valid_doubled_by_package_comparison :
+    (halfThirdScalingUnitClosedBallRGPackage.certificate
+      halfThirdScalingBlockScale halfThirdScalingModel).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  FinitePlusTailClosedBallRGPackage.certificate_valid_of_eventually_const_mul_le_le
+    halfThirdScalingUnitClosedBallRGPackage
+    halfThirdScalingBlockScale
+    halfThirdScalingModel
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem
+    halfThirdScalingUnitClosedBallRGPackage_hasCriticalNu_doubled_by_package_comparison :
+    HasCriticalNu halfThirdScalingModel
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (halfThirdScalingUnitClosedBallRGPackage.certificate
+        halfThirdScalingBlockScale halfThirdScalingModel).predictedExponent :=
+  FinitePlusTailClosedBallRGPackage.certificate_hasCriticalNu_of_eventually_const_mul_le_le
+    halfThirdScalingUnitClosedBallRGPackage
+    halfThirdScalingBlockScale
+    halfThirdScalingModel
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem zeroTableClosedBallRGPackage_bridge_doubled_by_package_comparison :
+    (zeroTableClosedBallRGPackage.certificate exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  zeroTableClosedBallRGPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le
+      exampleScale
+      (by
+        apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+        exact halfThirdScalingCorrelationLength_exact_power)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem zeroTableClosedBallRGPackage_valid_doubled_by_package_comparison :
+    (zeroTableClosedBallRGPackage.certificate exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  InfiniteTailTableClosedBallRGPackage.certificate_valid_of_eventually_const_mul_le_le
+    zeroTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem
+    zeroTableClosedBallRGPackage_hasCriticalNu_doubled_by_package_comparison :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (zeroTableClosedBallRGPackage.certificate exampleScale).predictedExponent :=
+  InfiniteTailTableClosedBallRGPackage.certificate_hasCriticalNu_of_eventually_const_mul_le_le
+    zeroTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem
+    zeroTableClosedBallRGPackage_bridge_doubled_by_package_comparison_congr_predictedExponent :
+    (zeroTableClosedBallRGPackage.certificate exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  zeroTableClosedBallRGPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [zeroTableClosedBallRGPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem
+    zeroTableClosedBallRGPackage_valid_doubled_by_package_comparison_congr_predictedExponent :
+    (zeroTableClosedBallRGPackage.certificate exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  zeroTableClosedBallRGPackage
+    |>.certificate_valid_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [zeroTableClosedBallRGPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem
+    zeroTableClosedBallRGPackage_hasCriticalNu_doubled_by_package_comparison_congr_pred :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (zeroTableClosedBallRGPackage.certificate exampleScale).predictedExponent :=
+  zeroTableClosedBallRGPackage
+    |>.certificate_hasCriticalNu_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [zeroTableClosedBallRGPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem zeroTableClosedBallRGPackage_bridge_doubled_by_package_prefactor :
+    (zeroTableClosedBallRGPackage.certificate exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  zeroTableClosedBallRGPackage
+    |>.certificate_rgToExponentBridge_mul_log_negligible_prefactor
+      exampleScale
+      (by
+        apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+        exact halfThirdScalingCorrelationLength_exact_power)
+      halfThirdScalingCorrelationLength_pos
+      halfThirdScalingDoublePrefactor_pos
+      halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem zeroTableClosedBallRGPackage_valid_doubled_by_package_prefactor :
+    (zeroTableClosedBallRGPackage.certificate exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  InfiniteTailTableClosedBallRGPackage.certificate_valid_mul_log_negligible_prefactor
+    zeroTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    halfThirdScalingDoublePrefactor_pos
+    halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem zeroTableClosedBallRGPackage_hasCriticalNu_doubled_by_package_prefactor :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (zeroTableClosedBallRGPackage.certificate exampleScale).predictedExponent :=
+  InfiniteTailTableClosedBallRGPackage.certificate_hasCriticalNu_mul_log_negligible_prefactor
+    zeroTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    halfThirdScalingDoublePrefactor_pos
+    halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem generatedReplacedTCBRGPackage_bridge_doubled_by_package_comparison :
+    (generatedStableKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  generatedStableKeyReplacedTableClosedBallRGPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le
+      exampleScale
+      (by
+        apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+        exact halfThirdScalingCorrelationLength_exact_power)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem generatedReplacedTCBRGPackage_valid_doubled_by_package_comparison :
+    (generatedStableKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  InfiniteTailTableClosedBallRGPackage.certificate_valid_of_eventually_const_mul_le_le
+    generatedStableKeyReplacedTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem
+    generatedReplacedTCBRGPackage_hasCriticalNu_doubled_by_package_comparison :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (generatedStableKeyReplacedTableClosedBallRGPackage.certificate
+        exampleScale).predictedExponent :=
+  InfiniteTailTableClosedBallRGPackage.certificate_hasCriticalNu_of_eventually_const_mul_le_le
+    generatedStableKeyReplacedTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem genStableReplacedTCB_bridge_doubled_by_comparison_congr_pred :
+    (generatedStableKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  generatedStableKeyReplacedTableClosedBallRGPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [generatedStableKeyReplacedTableClosedBallRGPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genStableReplacedTCB_valid_doubled_by_comparison_congr_pred :
+    (generatedStableKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  generatedStableKeyReplacedTableClosedBallRGPackage
+    |>.certificate_valid_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [generatedStableKeyReplacedTableClosedBallRGPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genStableReplacedTCB_hasCriticalNu_doubled_by_comparison_congr_pred :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (generatedStableKeyReplacedTableClosedBallRGPackage.certificate
+        exampleScale).predictedExponent :=
+  generatedStableKeyReplacedTableClosedBallRGPackage
+    |>.certificate_hasCriticalNu_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [generatedStableKeyReplacedTableClosedBallRGPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem generatedReplacedTCBRGPackage_bridge_doubled_by_package_prefactor :
+    (generatedStableKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  generatedStableKeyReplacedTableClosedBallRGPackage
+    |>.certificate_rgToExponentBridge_mul_log_negligible_prefactor
+      exampleScale
+      (by
+        apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+        exact halfThirdScalingCorrelationLength_exact_power)
+      halfThirdScalingCorrelationLength_pos
+      halfThirdScalingDoublePrefactor_pos
+      halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem generatedReplacedTCBRGPackage_valid_doubled_by_package_prefactor :
+    (generatedStableKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  InfiniteTailTableClosedBallRGPackage.certificate_valid_mul_log_negligible_prefactor
+    generatedStableKeyReplacedTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    halfThirdScalingDoublePrefactor_pos
+    halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem generatedReplacedTCBRGPackage_hasCriticalNu_doubled_by_package_prefactor :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (generatedStableKeyReplacedTableClosedBallRGPackage.certificate
+        exampleScale).predictedExponent :=
+  InfiniteTailTableClosedBallRGPackage.certificate_hasCriticalNu_mul_log_negligible_prefactor
+    generatedStableKeyReplacedTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    halfThirdScalingDoublePrefactor_pos
+    halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem genMinCubicKeyReplacedTCBRGPackage_bridge_doubled_by_package_comparison :
+    (genMinCubicKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genMinCubicKeyReplacedTableClosedBallRGPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le
+      exampleScale
+      (by
+        apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+        exact halfThirdScalingCorrelationLength_exact_power)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genMinCubicKeyReplacedTCBRGPackage_valid_doubled_by_package_comparison :
+    (genMinCubicKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  InfiniteTailTableClosedBallRGPackage.certificate_valid_of_eventually_const_mul_le_le
+    genMinCubicKeyReplacedTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem
+    genMinCubicKeyReplacedTCBRGPackage_hasCriticalNu_doubled_by_package_comparison :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (genMinCubicKeyReplacedTableClosedBallRGPackage.certificate
+        exampleScale).predictedExponent :=
+  InfiniteTailTableClosedBallRGPackage.certificate_hasCriticalNu_of_eventually_const_mul_le_le
+    genMinCubicKeyReplacedTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem genMinCubicReplacedTCB_bridge_doubled_by_comparison_congr_pred :
+    (genMinCubicKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genMinCubicKeyReplacedTableClosedBallRGPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [genMinCubicKeyReplacedTableClosedBallRGPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genMinCubicReplacedTCB_valid_doubled_by_comparison_congr_pred :
+    (genMinCubicKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genMinCubicKeyReplacedTableClosedBallRGPackage
+    |>.certificate_valid_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [genMinCubicKeyReplacedTableClosedBallRGPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genMinCubicReplacedTCB_hasCriticalNu_doubled_by_comparison_congr_pred :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (genMinCubicKeyReplacedTableClosedBallRGPackage.certificate
+        exampleScale).predictedExponent :=
+  genMinCubicKeyReplacedTableClosedBallRGPackage
+    |>.certificate_hasCriticalNu_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [genMinCubicKeyReplacedTableClosedBallRGPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genMinCubicKeyReplacedTCBRGPackage_bridge_doubled_by_package_prefactor :
+    (genMinCubicKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genMinCubicKeyReplacedTableClosedBallRGPackage
+    |>.certificate_rgToExponentBridge_mul_log_negligible_prefactor
+      exampleScale
+      (by
+        apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+        exact halfThirdScalingCorrelationLength_exact_power)
+      halfThirdScalingCorrelationLength_pos
+      halfThirdScalingDoublePrefactor_pos
+      halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem genMinCubicKeyReplacedTCBRGPackage_valid_doubled_by_package_prefactor :
+    (genMinCubicKeyReplacedTableClosedBallRGPackage.certificate
+      exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  InfiniteTailTableClosedBallRGPackage.certificate_valid_mul_log_negligible_prefactor
+    genMinCubicKeyReplacedTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    halfThirdScalingDoublePrefactor_pos
+    halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem genMinCubicKeyReplacedTCBRGPackage_hasCriticalNu_doubled_by_package_prefactor :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (genMinCubicKeyReplacedTableClosedBallRGPackage.certificate
+        exampleScale).predictedExponent :=
+  InfiniteTailTableClosedBallRGPackage.certificate_hasCriticalNu_mul_log_negligible_prefactor
+    genMinCubicKeyReplacedTableClosedBallRGPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    halfThirdScalingDoublePrefactor_pos
+    halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem genBoundedCaseReplacedTCBRGPackage_bridge_doubled_by_package_comparison :
+    (genBoundedCaseReplacedPackage.certificate exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genBoundedCaseReplacedPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le
+      exampleScale
+      (by
+        apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+        exact halfThirdScalingCorrelationLength_exact_power)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genBoundedCaseReplacedTCBRGPackage_valid_doubled_by_package_comparison :
+    (genBoundedCaseReplacedPackage.certificate exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  InfiniteTailTableClosedBallRGPackage.certificate_valid_of_eventually_const_mul_le_le
+    genBoundedCaseReplacedPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem
+    genBoundedCaseReplacedTCBRGPackage_hasCriticalNu_doubled_by_package_comparison :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (genBoundedCaseReplacedPackage.certificate exampleScale).predictedExponent :=
+  InfiniteTailTableClosedBallRGPackage.certificate_hasCriticalNu_of_eventually_const_mul_le_le
+    genBoundedCaseReplacedPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem genBoundedCaseReplacedTCB_bridge_doubled_by_comparison_congr_pred :
+    (genBoundedCaseReplacedPackage.certificate exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genBoundedCaseReplacedPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [genBoundedCaseReplacedPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genBoundedCaseReplacedTCB_valid_doubled_by_comparison_congr_pred :
+    (genBoundedCaseReplacedPackage.certificate exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genBoundedCaseReplacedPackage
+    |>.certificate_valid_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [genBoundedCaseReplacedPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genBoundedCaseReplacedTCB_hasCriticalNu_doubled_by_comparison_congr_pred :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (genBoundedCaseReplacedPackage.certificate exampleScale).predictedExponent :=
+  genBoundedCaseReplacedPackage
+    |>.certificate_hasCriticalNu_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [genBoundedCaseReplacedPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genBoundedCaseReplacedTCBRGPackage_bridge_doubled_by_package_prefactor :
+    (genBoundedCaseReplacedPackage.certificate exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genBoundedCaseReplacedPackage
+    |>.certificate_rgToExponentBridge_mul_log_negligible_prefactor
+      exampleScale
+      (by
+        apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+        exact halfThirdScalingCorrelationLength_exact_power)
+      halfThirdScalingCorrelationLength_pos
+      halfThirdScalingDoublePrefactor_pos
+      halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem genBoundedCaseReplacedTCBRGPackage_valid_doubled_by_package_prefactor :
+    (genBoundedCaseReplacedPackage.certificate exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  InfiniteTailTableClosedBallRGPackage.certificate_valid_mul_log_negligible_prefactor
+    genBoundedCaseReplacedPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    halfThirdScalingDoublePrefactor_pos
+    halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem genBoundedCaseReplacedTCBRGPackage_hasCriticalNu_doubled_by_package_prefactor :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (genBoundedCaseReplacedPackage.certificate exampleScale).predictedExponent :=
+  InfiniteTailTableClosedBallRGPackage.certificate_hasCriticalNu_mul_log_negligible_prefactor
+    genBoundedCaseReplacedPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    halfThirdScalingDoublePrefactor_pos
+    halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem genCubicClassReplacedTCBRGPackage_bridge_doubled_by_package_comparison :
+    (genCubicClassReplacedPackage.certificate exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genCubicClassReplacedPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le
+      exampleScale
+      (by
+        apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+        exact halfThirdScalingCorrelationLength_exact_power)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genCubicClassReplacedTCBRGPackage_valid_doubled_by_package_comparison :
+    (genCubicClassReplacedPackage.certificate exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  InfiniteTailTableClosedBallRGPackage.certificate_valid_of_eventually_const_mul_le_le
+    genCubicClassReplacedPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem
+    genCubicClassReplacedTCBRGPackage_hasCriticalNu_doubled_by_package_comparison :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (genCubicClassReplacedPackage.certificate exampleScale).predictedExponent :=
+  InfiniteTailTableClosedBallRGPackage.certificate_hasCriticalNu_of_eventually_const_mul_le_le
+    genCubicClassReplacedPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    (by norm_num : (0 : ℝ) < 2)
+    (by norm_num : (0 : ℝ) < 2)
+    halfThirdScalingDoubleComparison
+
+
+theorem genCubicClassReplacedTCB_bridge_doubled_by_comparison_congr_pred :
+    (genCubicClassReplacedPackage.certificate exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genCubicClassReplacedPackage
+    |>.certificate_rgToExponentBridge_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [genCubicClassReplacedPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genCubicClassReplacedTCB_valid_doubled_by_comparison_congr_pred :
+    (genCubicClassReplacedPackage.certificate exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genCubicClassReplacedPackage
+    |>.certificate_valid_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [genCubicClassReplacedPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genCubicClassReplacedTCB_hasCriticalNu_doubled_by_comparison_congr_pred :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (genCubicClassReplacedPackage.certificate exampleScale).predictedExponent :=
+  genCubicClassReplacedPackage
+    |>.certificate_hasCriticalNu_of_eventually_const_mul_le_le_congr_predictedExponent
+      exampleScale
+      halfThirdScalingRGCertificate_bridge_from_prefactorInputs
+      (by
+        rw [genCubicClassReplacedPackage_predictedExponent_eq]
+        simpa [predictedNu, BlockScale.toReal, exampleScale,
+          halfThirdScalingBlockScale] using
+          halfThirdScalingRGCertificate_predictedExponent_eq.symm)
+      halfThirdScalingCorrelationLength_pos
+      (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (0 : ℝ) < 2)
+      halfThirdScalingDoubleComparison
+
+
+theorem genCubicClassReplacedTCBRGPackage_bridge_doubled_by_package_prefactor :
+    (genCubicClassReplacedPackage.certificate exampleScale).RGToExponentBridge
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  genCubicClassReplacedPackage
+    |>.certificate_rgToExponentBridge_mul_log_negligible_prefactor
+      exampleScale
+      (by
+        apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+        exact halfThirdScalingCorrelationLength_exact_power)
+      halfThirdScalingCorrelationLength_pos
+      halfThirdScalingDoublePrefactor_pos
+      halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem genCubicClassReplacedTCBRGPackage_valid_doubled_by_package_prefactor :
+    (genCubicClassReplacedPackage.certificate exampleScale).Valid
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β) :=
+  InfiniteTailTableClosedBallRGPackage.certificate_valid_mul_log_negligible_prefactor
+    genCubicClassReplacedPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    halfThirdScalingDoublePrefactor_pos
+    halfThirdScalingDoublePrefactor_log_negligible
+
+
+theorem genCubicClassReplacedTCBRGPackage_hasCriticalNu_doubled_by_package_prefactor :
+    HasCriticalNu (ToyCriticalModel exampleScale 3)
+      (fun β =>
+        halfThirdScalingDoublePrefactor β *
+          halfThirdScalingCorrelationLength β)
+      (genCubicClassReplacedPackage.certificate exampleScale).predictedExponent :=
+  InfiniteTailTableClosedBallRGPackage.certificate_hasCriticalNu_mul_log_negligible_prefactor
+    genCubicClassReplacedPackage
+    exampleScale
+    (by
+      apply RGCertificate.rgToExponentBridge_of_eventually_exact_power
+      exact halfThirdScalingCorrelationLength_exact_power)
+    halfThirdScalingCorrelationLength_pos
+    halfThirdScalingDoublePrefactor_pos
+    halfThirdScalingDoublePrefactor_log_negligible
+
+
+end PackageComparisonBridgeExample
+end Exact3D
+end StatMech

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedEdgeCenterClass
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedEdgeCenterClass
 open StatMech StatMech.FrontierD
 
 

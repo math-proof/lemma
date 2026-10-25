@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.LeafRemovableClose
+import Theorem.StatisticalMechanics.Code.Lattice.LeafRemovableClose.Part2
 open Set SimpleGraph StatMech StatMech.Lattice
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc4_concavitysharpness
+import Theorem.StatisticalMechanics.Code.Walls.gc4_concavitysharpness
 open Finset SimpleGraph Set StatMech StatMech.Walls
 
 

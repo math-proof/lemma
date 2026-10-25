@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.KroneckerWeber
+import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
 open KroneckerWeber
 
 

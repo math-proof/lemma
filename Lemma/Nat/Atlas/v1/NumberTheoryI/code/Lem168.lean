@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Lem168
+import Abbrev.v1.Atlas.NumberTheoryI.code.Lem168
 open MeasureTheory Set Filter Topology Asymptotics Real IntegralCriterion
 
 

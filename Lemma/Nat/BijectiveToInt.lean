@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Appendix_B_1
+import Abbrev.Analysis.Appendix_B_1.Part6
 open AppendixB
 open AppendixB.IntDecimal
 

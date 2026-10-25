@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.ListColoring
+import Def.Combinatorics.SimpleGraph.ListColoring
 open SimpleGraph
 
 

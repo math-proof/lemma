@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsoradialKacWardFormanTerm
+import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardFormanTerm.Part2
 open StatMech StatMech.FrontierA
 
 

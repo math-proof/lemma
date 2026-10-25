@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABBoundaryLimit
+import Theorem.StatisticalMechanics.Code.Sharpness.ABBoundaryLimit.Part4
 open Filter Finset MeasureTheory Set SimpleGraph Topology StatMech StatMech.Sharpness
 
 

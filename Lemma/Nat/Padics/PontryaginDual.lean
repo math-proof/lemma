@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Padics.PontryaginDual
+import Instance.NumberTheory.Padics.PontryaginDual
 open MetaMathlibExt
 
 

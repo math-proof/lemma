@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.GHSVertexPartition
+import Theorem.StatisticalMechanics.Code.Ising.GHSVertexPartition.Part8
 open Finset Classical StatMech StatMech.Ising
 
 

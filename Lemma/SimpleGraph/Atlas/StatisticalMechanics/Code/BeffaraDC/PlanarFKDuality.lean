@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.PlanarFKDuality
+import Theorem.StatisticalMechanics.Code.BeffaraDC.PlanarFKDuality.Part6
 open Finset SimpleGraph Set StatMech StatMech.BeffaraDC
 
 

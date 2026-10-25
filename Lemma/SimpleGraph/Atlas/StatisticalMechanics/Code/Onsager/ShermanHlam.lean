@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.ShermanHlam
+import Theorem.StatisticalMechanics.Code.Onsager.ShermanHlam
 open StatMech StatMech.Onsager
 
 

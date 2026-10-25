@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LeeYangLogDerivativeBound
+import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangLogDerivativeBound.Part2
 open Polynomial StatMech StatMech.FrontierA
 
 

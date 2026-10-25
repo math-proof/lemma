@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.TraceNonzero
+import Def.v1.Atlas.TensorCategories.code.TraceNonzero
 open CategoryTheory MonoidalCategory Category TensorCategories
 
 

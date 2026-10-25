@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
 open MeasureTheory Complex Finset SchwartzMap FourierAnalysis
 open scoped FourierTransform RealInnerProductSpace
 

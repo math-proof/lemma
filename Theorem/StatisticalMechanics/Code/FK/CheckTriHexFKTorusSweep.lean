@@ -1,0 +1,54 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckTriHexFKTorusSweep.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FK.TriHexFKTorusSweep.Part15
+open StatMech.FK.PeriodicPlanar
+
+#print axioms triHexTorusTriangleIndexEquiv
+#print axioms triHexTorusTriangleSweepEdgeEquiv
+#print axioms triHexTorusStarSweepEdgeEquiv
+#print axioms triHexTorusTriangleSweepEdge_val
+#print axioms triHexTorusStarSweepEdge_val
+#print axioms configReindexEquiv
+#print axioms triHexTorusCellConfigEquiv
+#print axioms triangularTorusActiveConfigEquiv
+#print axioms hexagonalTorusActiveConfigEquiv
+#print axioms triangularTorusActiveConfigEquiv_apply
+#print axioms hexagonalTorusActiveConfigEquiv_apply
+#print axioms triangularTorus_openSub_reachable_of_connects
+#print axioms triangularTorus_openSub_reachable_iff_terminalSectorGraph
+#print axioms connectedComponentEquivOfReachableIff
+#print axioms triangularTorus_numClusters_eq_terminalSector
+#print axioms hexagonalTorus_openSub_white_reachable_iff_terminalSectorGraph
+#print axioms hexagonalTorusConnectedComponentEquiv
+#print axioms hexagonalTorus_numClusters_eq_terminalSector_add_isolated
+#print axioms hexagonalTorus_isolatedCenterFactor_product
+#print axioms edgeProductW_extendActive_eq_activeProduct
+#print axioms edgeProductW_extendActive_odds_factor
+#print axioms triangleFKLocalOddsWeight_eq_directionProduct
+#print axioms starFKLocalOddsWeight_eq_isolated_mul_directionProduct
+#print axioms triangleFKGlobalLocalOdds_eq_directionProduct
+#print axioms starFKGlobalLocalOdds_eq_isolated_mul_directionProduct
+#print axioms triangularTorus_localOddsProduct_eq_activeOddsProduct
+#print axioms hexagonalTorus_localOddsProduct_eq_activeOddsProduct
+#print axioms triangularTorus_activeWeight_eq_closedProduct_mul_cellWeight
+#print axioms hexagonalTorus_activeWeight_eq_closedProduct_mul_cellWeight
+#print axioms triangularTorus_activeZ_eq_closedProduct_mul_globalConfigSum
+#print axioms hexagonalTorus_activeZ_eq_closedProduct_mul_globalConfigSum
+#print axioms triHexFK_globalConfigSum_identity
+#print axioms triHexFK_torus_activeZ_identity
+#print axioms triangularTorus_activeNumer_sector_eq
+#print axioms hexagonalTorus_activeNumer_sector_eq
+#print axioms triHexFK_torus_activeSectorRatio_eq
+#print axioms triangularTorusSectorTwoPointObservable_eq_indicator
+#print axioms hexagonalTorusSectorTwoPointObservable_eq_indicator
+#print axioms triHexFK_torus_activeTwoPointRatio_eq
+
+

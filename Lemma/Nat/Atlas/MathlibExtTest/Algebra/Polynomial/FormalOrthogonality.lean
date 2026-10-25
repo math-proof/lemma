@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Algebra.Polynomial.FormalOrthogonality
+import Theorem.MathlibExtTest.Algebra.Polynomial.FormalOrthogonality
 open MetaMathlibExt MetaMathlibExt.Polynomial
 
 

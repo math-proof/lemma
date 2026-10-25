@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.ChevalleyFiberDimension
+import Def.v1.Atlas.AlgebraicGeometryI.code.ChevalleyFiberDimension.Part2
 open PrimeSpectrum Topology ChevalleyFiberDim
 
 

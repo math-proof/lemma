@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedDistinctEdgeSupport
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDistinctEdgeSupport
 open StatMech StatMech.FrontierD
 
 

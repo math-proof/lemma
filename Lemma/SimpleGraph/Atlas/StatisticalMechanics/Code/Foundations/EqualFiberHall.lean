@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.EqualFiberHall
+import Theorem.StatisticalMechanics.Code.Foundations.EqualFiberHall
 open Finset Fintype
 
 

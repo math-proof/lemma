@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Additive.Szemeredi
+import Def.Combinatorics.Additive.Szemeredi
 open scoped Finset
 open MathlibExt.Combinatorics.Additive.SzemerediWanted
 

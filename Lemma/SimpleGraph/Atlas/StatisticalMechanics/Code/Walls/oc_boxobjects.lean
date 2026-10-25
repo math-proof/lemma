@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc_boxobjects
+import Theorem.StatisticalMechanics.Code.Walls.oc_boxobjects.Part2
 open Finset Set StatMech StatMech.Walls
 
 

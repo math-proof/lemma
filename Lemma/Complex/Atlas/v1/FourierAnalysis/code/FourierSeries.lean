@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.FourierAnalysis.code.FourierSeries
+import Instance.v1.Atlas.FourierAnalysis.code.FourierSeries
 open Real TorusConvolution ApproximateIdentity FejerL1Density
 
 

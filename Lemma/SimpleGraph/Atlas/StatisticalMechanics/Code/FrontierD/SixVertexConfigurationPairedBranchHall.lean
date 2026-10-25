@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationPairedBranchHall
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationPairedBranchHall.Part4
 open Finset StatMech StatMech.FrontierD
 
 

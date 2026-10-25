@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.ConductorIdeal
+import Def.RingTheory.ConductorIdeal
 open Subalgebra
 
 

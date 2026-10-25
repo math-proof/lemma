@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusNetMonotonicity
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusNetMonotonicity
 open SimpleGraph StatMech StatMech.FrontierD
 
 

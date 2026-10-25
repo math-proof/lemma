@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.Wiman.MaximumTermAttained
+import Theorem.Analysis.Complex.Wiman.MaximumTermAttained
 open Filter Set
 open Complex
 

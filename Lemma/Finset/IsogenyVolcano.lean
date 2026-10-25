@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.IsogenyVolcano
+import Instance.Combinatorics.IsogenyVolcano.Part2
 open BigOperators
 open Multigraph
 open IsogenyVolcano

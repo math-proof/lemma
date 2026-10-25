@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.SharpSATInIP
+import Def.v1.Atlas.TheoryOfComputation.code.SharpSATInIP.Part3
 open SharpSATInIP
 open InteractiveProofs NPCompleteness TuringMachine
 

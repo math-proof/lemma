@@ -1,5 +1,5 @@
 import sympy.Basic
-import sympy.concrete.reduced
+import Theorem.Algebra.BigOperators.Reduced.Part2
 
 
 @[path]

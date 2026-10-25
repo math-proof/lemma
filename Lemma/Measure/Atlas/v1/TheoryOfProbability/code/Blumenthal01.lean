@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.Blumenthal01
+import Structure.v1.Atlas.TheoryOfProbability.code.Blumenthal01
 open MeasureTheory MeasurableSpace Filtration ProbabilityTheory
 
 

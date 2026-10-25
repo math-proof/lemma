@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.QuadraticForms.ThreeSquaresLegendreRecursion
+import Theorem.NumberTheory.QuadraticForms.ThreeSquaresLegendreRecursion.Part23
 open MetaMathlibExt
 
 

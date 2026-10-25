@@ -41,3 +41,32 @@ def getSliceFrom.unexpand : Lean.PrettyPrinter.Unexpander
   | _ => throw ()
 
 end Fun
+
+/-- Slicing of a function `ℕ → β`, dispatched on its value type `β`. The random-variable
+instance stays in `sympy.stats.hidden_markov_sequence`. -/
+class FunSlice (β : Type*) where
+  Out : Slice → Type*
+  slice : (ℕ → β) → (s : Slice) → Out s
+
+/-- `f[a:b]` for `f : ℕ → α`: the vector `(f a, …, f (b-1)) : Fin (b - a) → α`. -/
+instance (priority := low) {α : Type*} : FunSlice α where
+  Out s := Fin (s.stop.toNat - s.start.toNat) → α
+  slice f s := fun i => f (i.val + s.start.toNat)
+
+/-- Python slicing of a function on `ℕ` (`f[:n]`, `f[a:b]`). Only unit step is supported. -/
+def Function.getSlice {β : Type*} [FunSlice β] (x : ℕ → β) (s : Slice) : FunSlice.Out β s :=
+  FunSlice.slice x s
+
+@[app_unexpander Function.getSlice]
+def Function.getSlice.unexpand := Slice.getSliceUnexpand
+
+namespace Fun
+
+/-- Closed slices on `Fun ℕ α` (`f[:n]`, `f[a:b]`). Reducible so coercions see the bare slice. -/
+abbrev getSlice {α : Type*} [FunSlice α] (f : Fun ℕ α) (s : Slice) : FunSlice.Out α s :=
+  Function.getSlice f.toFun s
+
+@[app_unexpander Fun.getSlice]
+def getSlice.unexpand := Slice.getSliceUnexpand
+
+end Fun

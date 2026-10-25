@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
+import Theorem.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
 open Module FiniteDimensional SymplecticLinearAlgebra
 
 

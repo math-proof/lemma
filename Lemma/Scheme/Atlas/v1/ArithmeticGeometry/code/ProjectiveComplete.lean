@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.ProjectiveComplete
+import Structure.v1.Atlas.ArithmeticGeometry.code.ProjectiveComplete
 open AlgebraicGeometry
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Graph.MycielskiTheorem
+import Theorem.Combinatorics.Graph.MycielskiTheorem.Part4
 open scoped SimpleGraph
 open MetaMathlibExt
 

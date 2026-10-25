@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.BK
+import Theorem.StatisticalMechanics.Code.Inequalities.BK.Part4
 open MeasureTheory Finset StatMech
 
 

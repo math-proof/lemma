@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.IsogenyKernels
+import Def.v1.Atlas.EllipticCurves.code.IsogenyKernels.Part4
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.IsogenyKernels
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.Isogenies
-import sympy.atlas.v1.Atlas.EllipticCurves.code.Isogenies
+import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
 open Polynomial
 
 

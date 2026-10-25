@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.WalkCellRegion
+import Theorem.StatisticalMechanics.Code.Onsager.WalkCellRegion.Part7
 open StatMech StatMech.Onsager StatMech.Onsager.WalkCellRegion
 
 

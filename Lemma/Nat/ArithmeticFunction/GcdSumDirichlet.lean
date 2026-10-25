@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ArithmeticFunction.GcdSumDirichlet
+import Def.NumberTheory.ArithmeticFunction.GcdSumDirichlet
 open MetaMathlibExt
 
 

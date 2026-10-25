@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.ode.PicardIteration
+import Theorem.Analysis.ODE.PicardIteration
 
 /--
 [PicardIteration](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/ODE/PicardIteration.lean)

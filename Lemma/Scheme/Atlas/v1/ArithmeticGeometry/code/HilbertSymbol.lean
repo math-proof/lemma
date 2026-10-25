@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol
+import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
 open hilbertSymbol padicHilbertSymbol realHilbertSymbol HilbertSymbol
 open scoped Classical
 

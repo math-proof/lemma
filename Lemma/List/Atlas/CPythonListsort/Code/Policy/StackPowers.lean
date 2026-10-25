@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Policy.StackPowers
+import Def.CPythonListsort.Code.Policy.StackPowers.Part2
 open CPythonListsort
 
 

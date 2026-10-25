@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.RingTheory.GradedAlgebra.MultigradedPoincareFiniteSupport
+import Theorem.MathlibExtTest.RingTheory.GradedAlgebra.MultigradedPoincareFiniteSupport.Part7
 open scoped DirectSum
 open CategoryTheory CategoryTheory.Limits
 

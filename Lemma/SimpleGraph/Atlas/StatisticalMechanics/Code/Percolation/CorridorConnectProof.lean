@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.CorridorConnectProof
+import Theorem.StatisticalMechanics.Code.Percolation.CorridorConnectProof.Part2
 open MeasureTheory Set SimpleGraph StatMech.Lattice StatMech.ConfigSpace StatMech.Combinatorics StatMech StatMech.Percolation
 
 

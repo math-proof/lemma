@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FreeDLRKernel
+import Theorem.StatisticalMechanics.Code.FK.FreeDLRKernel.Part2
 open MeasureTheory Set SimpleGraph Filter Topology StatMech StatMech.FK
 
 

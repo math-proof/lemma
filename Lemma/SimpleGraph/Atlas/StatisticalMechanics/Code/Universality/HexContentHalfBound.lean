@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexContentHalfBound
+import Theorem.StatisticalMechanics.Code.Universality.HexContentHalfBound.Part3
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.HolleyCoupling
+import Theorem.StatisticalMechanics.Code.FK.HolleyCoupling.Part2
 open MeasureTheory Finset StatMech StatMech.FK
 
 

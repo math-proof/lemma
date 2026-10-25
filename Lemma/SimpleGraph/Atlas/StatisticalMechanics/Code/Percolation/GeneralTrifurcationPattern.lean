@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.GeneralTrifurcationPattern
+import Theorem.StatisticalMechanics.Code.Percolation.GeneralTrifurcationPattern
 open Set SimpleGraph Finset StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

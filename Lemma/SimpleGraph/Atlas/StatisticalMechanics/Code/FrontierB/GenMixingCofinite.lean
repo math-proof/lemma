@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.GenMixingCofinite
+import Theorem.StatisticalMechanics.Code.FrontierB.GenMixingCofinite
 open MeasureTheory Set StatMech.ConfigSpace StatMech StatMech.FrontierB
 
 

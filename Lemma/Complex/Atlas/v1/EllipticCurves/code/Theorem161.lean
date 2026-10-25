@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.Theorem161
+import Structure.v1.Atlas.EllipticCurves.code.Theorem161
 open ComplexLattice
 open Pointwise Function ZSpan
 

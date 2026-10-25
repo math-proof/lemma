@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingTorusShellMonotonicity
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusShellMonotonicity
 open Finset StatMech StatMech.FrontierA
 
 

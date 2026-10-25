@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.BoundaryGhostHardField
+import Theorem.StatisticalMechanics.Code.Exact3D.BoundaryGhostHardField.Part7
 open Filter StatMech StatMech.Exact3D
 
 

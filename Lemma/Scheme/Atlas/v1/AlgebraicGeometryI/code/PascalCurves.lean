@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.PascalCurves
+import Def.v1.Atlas.AlgebraicGeometryI.code.PascalCurves.Part2
 open Polynomial in
 
 

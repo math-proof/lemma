@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexFiniteStripEnum
+import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripEnum.Part6
 open StatMech StatMech.Universality
 
 

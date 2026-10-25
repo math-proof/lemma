@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.ScratchSixVertexAlignedFirstReturn
+import Theorem.StatisticalMechanics.Code.FrontierD.ScratchSixVertexAlignedFirstReturn.Part26
 open StatMech.FrontierD ScratchLocalRetieC ScratchLocalRetieC.FourByTwoBondAudit
 
 

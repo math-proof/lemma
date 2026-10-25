@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.FiniteFields
+import Def.v1.Atlas.ArithmeticGeometry.code.FiniteFields
 open Finset MvPolynomial
 open MvPolynomial
 

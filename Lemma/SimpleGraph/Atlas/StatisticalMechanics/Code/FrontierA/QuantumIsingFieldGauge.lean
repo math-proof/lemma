@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingFieldGauge
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingFieldGauge.Part2
 open Matrix StatMech StatMech.FrontierA
 
 

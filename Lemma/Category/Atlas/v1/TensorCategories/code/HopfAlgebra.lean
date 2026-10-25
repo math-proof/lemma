@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.HopfAlgebra
+import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
 open Coalgebra HopfAlgebra WithConv LinearMap
 open scoped TensorProduct
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.SubmartingaleConvergence
+import Theorem.v1.Atlas.TheoryOfProbability.code.SubmartingaleConvergence
 open MeasureTheory Filter Topology
 
 

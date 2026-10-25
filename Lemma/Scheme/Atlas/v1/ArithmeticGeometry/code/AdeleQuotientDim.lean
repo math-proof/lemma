@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.AdeleQuotientDim
+import Def.v1.Atlas.ArithmeticGeometry.code.AdeleQuotientDim.Part2
 open FunctionFieldAdeleRing DiscreteValuationFamily
 open scoped RestrictedProduct
 

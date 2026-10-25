@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.OddIndependent
+import Def.Combinatorics.SimpleGraph.OddIndependent
 open SimpleGraph
 
 

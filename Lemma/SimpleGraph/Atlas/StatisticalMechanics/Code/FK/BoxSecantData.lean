@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.BoxSecantData
+import Theorem.StatisticalMechanics.Code.FK.BoxSecantData
 open Filter Topology SimpleGraph StatMech StatMech.FK
 
 

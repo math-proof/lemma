@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.EnclosedAreaWitness
+import Theorem.StatisticalMechanics.Code.Lattice.EnclosedAreaWitness.Part3
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

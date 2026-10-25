@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectMedialBoundaryWalk
+import Def.StatisticalMechanics.Code.FrontierD.FKRectMedialBoundaryWalk.Part2
 open SimpleGraph StatMech StatMech.FrontierD
 
 

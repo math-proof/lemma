@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Euclidean.JapaneseQuads
+import Def.Geometry.Euclidean.JapaneseQuads
 open MetaMathlibExt
 
 

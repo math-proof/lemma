@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentContinuityBoxInfluence
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityBoxInfluence
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierB
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.PositiveTransferCenterObservable
+import Theorem.StatisticalMechanics.Code.Ising.PositiveTransferCenterObservable
 open Finset Matrix Filter Topology StatMech StatMech.Ising
 
 

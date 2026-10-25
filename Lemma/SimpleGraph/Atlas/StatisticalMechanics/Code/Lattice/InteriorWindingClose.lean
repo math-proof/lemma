@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.InteriorWindingClose
+import Theorem.StatisticalMechanics.Code.Lattice.InteriorWindingClose
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

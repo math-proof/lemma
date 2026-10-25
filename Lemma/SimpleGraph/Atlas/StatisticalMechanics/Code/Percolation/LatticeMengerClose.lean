@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.LatticeMengerClose
+import Theorem.StatisticalMechanics.Code.Percolation.LatticeMengerClose.Part2
 open MeasureTheory Set Finset StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

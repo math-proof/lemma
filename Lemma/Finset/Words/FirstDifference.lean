@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Words.FirstDifference
+import Def.Combinatorics.Words.FirstDifference
 open MetaMathlibExt
 
 

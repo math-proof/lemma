@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc3_nocrossing
+import Theorem.StatisticalMechanics.Code.Walls.bc3_nocrossing
 open Set StatMech.Lattice StatMech StatMech.Walls
 
 

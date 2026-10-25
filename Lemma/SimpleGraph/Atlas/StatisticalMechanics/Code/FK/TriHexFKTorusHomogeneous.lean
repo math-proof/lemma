@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexFKTorusHomogeneous
+import Theorem.StatisticalMechanics.Code.FK.TriHexFKTorusHomogeneous
 open StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

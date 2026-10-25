@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SchwartzCompleteness
+import Instance.v1.Atlas.DifferentialAnalysis.code.SchwartzCompleteness
 open TemperedDistributions
 open scoped SchwartzMap
 

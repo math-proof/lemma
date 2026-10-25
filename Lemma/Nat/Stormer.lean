@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Stormer
+import Def.NumberTheory.Stormer
 open MetaMathlibExt
 
 

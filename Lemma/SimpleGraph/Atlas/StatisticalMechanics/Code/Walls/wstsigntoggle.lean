@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wstsigntoggle
+import Theorem.StatisticalMechanics.Code.Walls.wstsigntoggle.Part2
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

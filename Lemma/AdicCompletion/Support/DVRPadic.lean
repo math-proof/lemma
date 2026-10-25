@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.atlas.v1.Atlas.Buildings.code.Valuation.LatticesValuations
+import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Topology.MetricSpace.Ultra.Basic
 import Mathlib.Analysis.Normed.Group.Ultra

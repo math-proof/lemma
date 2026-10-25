@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.BXPMinimalHyp
+import Theorem.StatisticalMechanics.Code.Universality.BXPMinimalHyp
 open Set MeasureTheory SimpleGraph StatMech StatMech.Universality
 
 

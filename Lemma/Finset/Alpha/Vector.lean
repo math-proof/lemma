@@ -1,4 +1,4 @@
-import sympy.concrete.continued_fraction
+import Def.Algebra.ContinuedFractions.ContinuedFraction
 import sympy.sets.sets
 open Continuant
 

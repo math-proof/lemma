@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.RootedTreeSelectorClose
+import Theorem.StatisticalMechanics.Code.Percolation.RootedTreeSelectorClose
 open Set SimpleGraph Finset MeasureTheory StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

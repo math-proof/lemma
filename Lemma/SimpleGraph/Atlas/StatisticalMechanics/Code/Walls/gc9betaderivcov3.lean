@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc9betaderivcov3
+import Theorem.StatisticalMechanics.Code.Walls.gc9betaderivcov3
 open Finset SimpleGraph StatMech StatMech.Walls
 
 

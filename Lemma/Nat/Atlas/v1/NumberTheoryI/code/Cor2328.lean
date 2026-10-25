@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Cor2328
+import Def.v1.Atlas.NumberTheoryI.code.Cor2328
 open GroupCohomology
 open CategoryTheory
 

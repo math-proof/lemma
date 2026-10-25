@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.Basic
+import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
 import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
 
 

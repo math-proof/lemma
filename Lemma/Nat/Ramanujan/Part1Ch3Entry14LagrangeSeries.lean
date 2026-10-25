@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Entry14LagrangeSeries
+import Def.NumberTheory.Ramanujan.Part1Ch3Entry14LagrangeSeries
 open scoped Interval Topology
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry14LagrangeSeries

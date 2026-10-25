@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianClusterConfinement
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianClusterConfinement.Part3
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

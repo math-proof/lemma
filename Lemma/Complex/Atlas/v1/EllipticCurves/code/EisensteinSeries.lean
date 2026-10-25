@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.EisensteinSeries
+import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
 open Complex ComplexLattice
 open scoped UpperHalfPlane
 open ComplexLattice Pointwise

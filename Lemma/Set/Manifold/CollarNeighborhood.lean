@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.CollarNeighborhood
+import Theorem.Geometry.Manifold.CollarNeighborhood.Part45
 open Filter Function Manifold Set WithLp
 open scoped ContDiff Manifold Topology
 open MathlibExt.Geometry.Manifold.CollarNeighborhoodWanted

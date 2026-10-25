@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Cayley
+import Def.Combinatorics.SimpleGraph.Cayley
 open MathlibExt.Combinatorics.SimpleGraph.MatrixTreeWanted
 
 

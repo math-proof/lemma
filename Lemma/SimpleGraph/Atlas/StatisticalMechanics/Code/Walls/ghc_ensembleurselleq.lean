@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.ghc_ensembleurselleq
+import Theorem.StatisticalMechanics.Code.Walls.ghc_ensembleurselleq
 open Finset Classical StatMech StatMech.Walls
 
 

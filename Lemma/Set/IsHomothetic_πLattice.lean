@@ -1,8 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.AffineSLV
+import Def.v1.Atlas.Buildings.code.Building.AffineSLV.Part4
 open AffineBuildingSLV AffineBuildingSLVAxioms
-
 
 namespace AffineBuildingSLV
 
@@ -146,6 +145,5 @@ lemma closed_in_compact_is_compact
   hK_compact.of_isClosed_subset hB_closed hBK
 
 end AffineBuildingSLVAxioms
-
 
 -- created on 2026-10-23

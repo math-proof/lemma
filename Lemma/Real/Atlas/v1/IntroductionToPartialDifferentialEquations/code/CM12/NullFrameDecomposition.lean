@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM12.NullFrameDecomposition
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM12.NullFrameDecomposition.Part2
 open Matrix NullFrame
 
 

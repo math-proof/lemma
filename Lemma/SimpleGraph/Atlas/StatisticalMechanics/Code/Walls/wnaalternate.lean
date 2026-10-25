@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wnaalternate
+import Theorem.StatisticalMechanics.Code.Walls.wnaalternate.Part3
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

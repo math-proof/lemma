@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Prop30_6
+import Def.v1.Atlas.AlgebraicTopologyI.code.Prop30_6
 open Matrix SymmetricBilinearForms
 
 

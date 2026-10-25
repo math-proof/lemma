@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopLowTempPlusLimit
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopLowTempPlusLimit
 open MeasureTheory Filter Topology BoundedContinuousFunction StatMech StatMech.Onsager
 
 

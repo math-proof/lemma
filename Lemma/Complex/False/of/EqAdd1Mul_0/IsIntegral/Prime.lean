@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.BurnsidePaqb.SimplePrime
+import Def.GroupTheory.BurnsidePaqb.SimplePrime
 open BurnsidePaqb
 
 

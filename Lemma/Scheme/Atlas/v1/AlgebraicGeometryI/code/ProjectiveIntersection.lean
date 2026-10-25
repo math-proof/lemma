@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersection
+import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersection
 open Ideal MvPolynomial
 open MvPolynomial
 

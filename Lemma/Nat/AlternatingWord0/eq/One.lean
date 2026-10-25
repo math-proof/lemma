@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.ArtinGroup
+import Def.GroupTheory.ArtinGroup.Part2
 open CoxeterMatrix
 open ArtinGroup
 

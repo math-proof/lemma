@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MeasureTheory.OptimalTransport.Kantorovich
+import Theorem.MeasureTheory.OptimalTransport.Kantorovich.Part6
 open MeasureTheory
 open scoped BoundedContinuousFunction CompactlySupported ENNReal
 open MathlibExt.MeasureTheory.OptimalTransport.KantorovichWanted

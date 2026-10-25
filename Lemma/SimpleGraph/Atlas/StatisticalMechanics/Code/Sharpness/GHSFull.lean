@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.GHSFull
+import Theorem.StatisticalMechanics.Code.Sharpness.GHSFull.Part3
 open Finset SimpleGraph Set StatMech StatMech.Sharpness
 
 

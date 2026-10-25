@@ -1,0 +1,50 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexDegreeTwoAlignedSlotRoute.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoAlignedSlotRoute.Part7
+open StatMech.FrontierD
+
+#print axioms SixVertexDegreeTwoAlignedSelectedStates
+#print axioms SixVertexDegreeTwoAlignedBoundaryOccurrence
+#print axioms sixVertexDegreeTwoAlignedBoundaryKey
+#print axioms sixVertexDegreeTwoAlignedBoundaryKey_injective
+#print axioms sixVertexDegreeTwoAlignedBoundaryFinKey
+#print axioms sixVertexDegreeTwoAlignedBoundaryFinKey_injective
+#print axioms blackSideIndex_boundaryAlignedSlotQRaw
+#print axioms doubledAlignedBlackDart_true_eq_false_or_branchSwap
+#print axioms sixVertexDegreeTwoAlignedBoundarySlotOfFalseDart
+#print axioms sixVertexDegreeTwoAlignedBoundaryFinKey_eq_slotOfFalseDart
+#print axioms sixVertexDegreeTwoAlignedBoundaryFinKey_exists_iff_dart_mem
+#print axioms sixVertexDegreeTwoAlignedOccurrenceSlotEquiv_apply_dart
+#print axioms sixVertexDegreeTwoAlignedOccurrenceSlotEquiv_apply_dart_of_not_mem
+#print axioms sixVertexDegreeTwoAlignedBoundaryFinKey_exists_iff
+#print axioms sixVertexDegreeTwoAlignedSelectedStateFinIndex
+#print axioms sixVertexDegreeTwoAlignedBoundaryFinKey_selectedState
+#print axioms sixVertexDegreeTwoAlignedColoredSource_arrows
+#print axioms sixVertexDegreeTwoAlignedColoredSource_slotColor
+#print axioms sixVertexDegreeTwoAlignedColoredSource_activeSlot_bne
+#print axioms sixVertexDegreeTwoAlignedColoredSource_true_branchSwap_bne
+#print axioms sixVertexDegreeTwoAlignedColoredSource_true_branchSwap_bne_of_false_eq
+#print axioms sixVertexDegreeTwoAlignedColoredSource_doubledDart_color
+#print axioms sixVertexDegreeTwoAlignedColoredSource_falseDart_color
+#print axioms sixVertexDegreeTwoAlignedColoredSource_falseDart_true_color
+#print axioms FKColoredLoopPairing.color_blackBoundaryPerm_pow
+#print axioms sixVertexDegreeTwoAlignedColoredSource_boundaryPower_color
+#print axioms sixVertexDegreeTwoAlignedColoredSource_boundarySegment_slotColor
+#print axioms sixVertexDegreeTwoAlignedColoredSource_firstReturn_color_false
+#print axioms sixVertexDegreeTwoAlignedColoredSource_firstReturn_color_true
+#print axioms sixVertexDegreeTwoAlignedTransportedColor_active
+#print axioms SixVertexDegreeTwoAlignedOrbitCut
+#print axioms sixVertexRetieAtTransitionVertices
+#print axioms sixVertexDegreeTwoAlignedTargetPairing
+#print axioms sixVertexDegreeTwoAlignedTargetPairing_of_left_empty
+#print axioms sixVertexDegreeTwoAlignedTargetPairing_of_right_empty
+
+

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.NoetherNormalization
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.NoetherNormalization
 open MvPolynomial PrimeSpectrum
 open AlgebraicGeometry AlgebraicGeometry.Scheme
 

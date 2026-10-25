@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kc3_exterioreven
+import Theorem.StatisticalMechanics.Code.Walls.kc3_exterioreven
 open Set SimpleGraph Function StatMech.Lattice StatMech StatMech.Walls
 
 

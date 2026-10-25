@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.BrownianCompactCylinderIntersection
+import Theorem.StatisticalMechanics.Code.SLE.BrownianCompactCylinderIntersection.Part3
 open MeasureTheory Set StatMech StatMech.SLE
 
 

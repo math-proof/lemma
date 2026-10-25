@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexRootDensityKernelLipschitz
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexRootDensityKernelLipschitz
 open StatMech StatMech.FrontierD
 
 

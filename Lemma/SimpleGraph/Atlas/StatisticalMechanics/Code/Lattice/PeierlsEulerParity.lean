@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.PeierlsEulerParity
+import Theorem.StatisticalMechanics.Code.Lattice.PeierlsEulerParity
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

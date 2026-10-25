@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.ValuationRings
+import Def.v1.Atlas.ArithmeticGeometry.code.ValuationRings.Part4
 open Ideal Submodule
 open IsLocalRing Module
 

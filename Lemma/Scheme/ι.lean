@@ -5,7 +5,6 @@ set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-
 universe u
 
 /--
@@ -54,6 +53,5 @@ private lemma main
   try exact key _ _ _ _ _
   all_goals erw [← CommRingCat.comp_apply, ← X'.presheaf.map_comp]
   all_goals exact key _ _ _ _ _
-
 
 -- created on 2026-10-20

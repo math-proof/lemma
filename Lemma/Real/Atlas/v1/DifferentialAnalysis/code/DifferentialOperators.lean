@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators
+import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
 open TemperedDistribution MvPolynomial SchwartzMap MeasureTheory Distribution DifferentialOperators DifferentialOperators.SmoothZeroAtInfty
 open scoped SchwartzMap
 open Filter Topology

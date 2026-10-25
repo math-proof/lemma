@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectPrimalWitnessStep
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectPrimalWitnessStep.Part2
 open SimpleGraph StatMech StatMech.FK StatMech.FrontierD
 
 

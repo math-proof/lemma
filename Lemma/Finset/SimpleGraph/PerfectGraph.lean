@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.PerfectGraph
+import Def.Combinatorics.SimpleGraph.PerfectGraph
 open scoped Matrix BigOperators
 open scoped Classical in s.map ⟨Subtype.val, Subtype.val_injective⟩
 open MathlibExt.Combinatorics.SimpleGraph.PerfectGraphWanted

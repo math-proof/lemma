@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.LunnonDimensionDecomposition
+import Theorem.Combinatorics.Enumerative.LunnonDimensionDecomposition.Part9
 open scoped BigOperators
 open MetaMathlibExt
 

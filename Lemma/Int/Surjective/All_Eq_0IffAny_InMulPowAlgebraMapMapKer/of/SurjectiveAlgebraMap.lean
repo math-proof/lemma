@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.affine_dilatation
+import Theorem.Algebra.AffineDilatation
 set_option autoImplicit false
 
 universe u

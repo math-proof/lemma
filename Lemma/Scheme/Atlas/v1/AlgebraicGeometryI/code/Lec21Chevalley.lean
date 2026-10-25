@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec21Chevalley
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec21Chevalley
 open PrimeSpectrum Topology
 
 

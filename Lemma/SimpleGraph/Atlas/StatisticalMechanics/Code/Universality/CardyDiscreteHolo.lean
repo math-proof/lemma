@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.CardyDiscreteHolo
+import Theorem.StatisticalMechanics.Code.Universality.CardyDiscreteHolo.Part6
 open StatMech StatMech.Universality StatMech.Universality.CardyLocalConfig
 
 

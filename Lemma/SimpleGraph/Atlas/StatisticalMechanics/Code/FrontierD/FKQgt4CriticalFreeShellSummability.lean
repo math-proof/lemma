@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4CriticalFreeShellSummability
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4CriticalFreeShellSummability
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierD
 
 

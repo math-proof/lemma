@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.RandomProjection
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.RandomProjection
 open MeasureTheory Measure Real Set RandomProjection NearlyEquidistantPoints
 open scoped ENNReal NNReal
 open Real Set MeasureTheory

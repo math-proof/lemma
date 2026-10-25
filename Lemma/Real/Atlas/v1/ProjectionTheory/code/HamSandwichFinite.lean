@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.PolynomialHamSandwich
+import Def.v1.Atlas.ProjectionTheory.code.PolynomialHamSandwich
 import Lemma.Real.Atlas.v1.ProjectionTheory.code.PolynomialHamSandwich
 open Finset MvPolynomial
 

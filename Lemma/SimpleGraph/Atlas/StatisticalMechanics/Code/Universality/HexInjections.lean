@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexInjections
+import Theorem.StatisticalMechanics.Code.Universality.HexInjections.Part7
 open StatMech StatMech.Universality
 
 

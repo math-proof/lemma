@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.WardGeneralizedBinomial
+import Def.Combinatorics.Enumerative.WardGeneralizedBinomial
 import Lemma.Finset.Enumerative.WardGeneralizedBinomial
 
 

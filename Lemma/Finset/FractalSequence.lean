@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.FractalSequence
+import Structure.Combinatorics.FractalSequence
 open MetaMathlibExt
 
 

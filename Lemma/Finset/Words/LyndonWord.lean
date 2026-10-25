@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Words.LyndonWord
+import Theorem.Combinatorics.Words.LyndonWord.Part14
 open scoped BigOperators
 open MetaMathlibExt
 

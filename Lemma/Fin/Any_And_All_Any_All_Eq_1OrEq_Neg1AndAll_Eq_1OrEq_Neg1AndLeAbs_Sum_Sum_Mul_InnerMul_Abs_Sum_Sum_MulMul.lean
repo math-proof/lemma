@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.GrothendieckInequality
+import Theorem.Analysis.NormedSpace.GrothendieckInequality.Part5
 
 open scoped InnerProductSpace
 

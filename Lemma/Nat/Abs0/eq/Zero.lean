@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_4_3
+import Theorem.Analysis.Section_4_3.Part2
 open Section_4_3 hiding abs dist
 
 

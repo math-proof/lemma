@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.direct_limit
+import Instance.Algebra.DirectLimit
+import Class.Mathlib_Algebra_IsDirectLimit
 open scoped TensorProduct
-
 
 private abbrev F
   {R₀ : Type u₀} [CommRing R₀]
@@ -460,6 +460,5 @@ private lemma main
 -- proof
   classical
   apply exists_tensor_algHom f hR A B φ
-
 
 -- created on 2026-10-20

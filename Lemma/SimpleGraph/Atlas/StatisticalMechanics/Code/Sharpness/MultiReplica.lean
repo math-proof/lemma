@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.MultiReplica
+import Theorem.StatisticalMechanics.Code.Sharpness.MultiReplica.Part2
 open Finset BigOperators SimpleGraph StatMech StatMech.Sharpness StatMech.Sharpness.RandomCurrent
 
 

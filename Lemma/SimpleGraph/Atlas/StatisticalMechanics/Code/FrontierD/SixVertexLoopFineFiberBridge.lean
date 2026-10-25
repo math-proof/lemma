@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexLoopFineFiberBridge
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexLoopFineFiberBridge.Part3
 open StatMech StatMech.FrontierD
 
 

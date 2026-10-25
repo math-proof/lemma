@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWTraceSeparation
+import Theorem.StatisticalMechanics.Code.Universality.RSWTraceSeparation.Part3
 open Function MeasureTheory Set StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Theorems
+import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Theorems
 open Set FiniteReflectionGroups
 open scoped InnerProductSpace
 

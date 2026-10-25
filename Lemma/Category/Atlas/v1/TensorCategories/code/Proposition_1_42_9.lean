@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.BasedRings
+import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
 import Lemma.Category.Atlas.v1.TensorCategories.code.BasedRings
 
 

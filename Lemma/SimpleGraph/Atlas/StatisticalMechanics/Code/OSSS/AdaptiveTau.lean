@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.AdaptiveTau
+import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveTau
 open Finset MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.AdaptiveTau
 
 

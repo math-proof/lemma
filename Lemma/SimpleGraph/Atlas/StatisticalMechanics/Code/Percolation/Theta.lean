@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.Theta
+import Theorem.StatisticalMechanics.Code.Percolation.Theta
 open MeasureTheory StatMech StatMech.Percolation
 
 

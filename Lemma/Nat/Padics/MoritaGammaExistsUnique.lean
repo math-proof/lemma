@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Padics.MoritaGammaExistsUnique
+import Theorem.NumberTheory.Padics.MoritaGammaExistsUnique.Part2
 open MetaMathlibExt
 
 

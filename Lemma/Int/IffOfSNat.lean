@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_4_1
+import Theorem.Analysis.Section_4_1.Part8
 open Section_4_1 hiding Int
 open Section_4_1.Int
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.BackboneSurgeryBook
+import Theorem.StatisticalMechanics.Code.Ising.BackboneSurgeryBook
 open Finset Classical StatMech StatMech.Ising
 
 

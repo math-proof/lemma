@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.KTypeDecomposition
+import Def.v1.Atlas.LieGroups.code.KTypeDecomposition.Part3
 open Module SL2GKModule
 
 

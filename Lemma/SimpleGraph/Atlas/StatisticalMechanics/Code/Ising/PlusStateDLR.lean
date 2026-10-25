@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.PlusStateDLR
+import Theorem.StatisticalMechanics.Code.Ising.PlusStateDLR.Part6
 open MeasureTheory ProbabilityTheory MeasurableSpace Set Filter Topology StatMech StatMech.Ising
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.InfinityMaps
+import Def.v1.Atlas.Buildings.code.Building.InfinityMaps.Part7
 open AffineBuilding
 
 

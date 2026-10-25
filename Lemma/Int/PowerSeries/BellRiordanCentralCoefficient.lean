@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.BellMatrix
+import Def.NumberTheory.BellMatrix
 
 
 namespace MetaMathlibExt

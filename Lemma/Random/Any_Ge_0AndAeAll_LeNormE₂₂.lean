@@ -8,7 +8,6 @@ import Lemma.Kernel.IntegralPow.eq.Sum_SMulPowKernelMat
 import Lemma.Measure.MEqCondExpIteratesUpdate.of.Measurable.Any_All_LeNorm.Measurable.Le
 open Finset MeasureTheory Filter Real Measure Preorder
 
-
 @[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
@@ -81,6 +80,5 @@ private lemma main
       gcongr
       exact hsparse n
     _ = _ := by ring
-
 
 -- created on 2026-09-26

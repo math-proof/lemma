@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ArithmeticFunction.WintnerMeanValueMultivariable
+import Def.NumberTheory.ArithmeticFunction.WintnerMeanValueMultivariable
 open scoped BigOperators Topology
 open MetaMathlibExt
 

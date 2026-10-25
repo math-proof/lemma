@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LeeYangAsano
+import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangAsano.Part15
 open StatMech StatMech.FrontierA
 
 

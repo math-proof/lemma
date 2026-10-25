@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterThreeBridgeGraham
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterThreeBridgeGraham
 open Finset SimpleGraph StatMech StatMech.Ising
 
 

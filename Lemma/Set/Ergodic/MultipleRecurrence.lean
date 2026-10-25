@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Dynamics.Ergodic.MultipleRecurrence
+import Def.Dynamics.Ergodic.MultipleRecurrence
 open MeasureTheory
 open scoped ENNReal
 open MathlibExt.Dynamics.Ergodic.MultipleRecurrenceWanted

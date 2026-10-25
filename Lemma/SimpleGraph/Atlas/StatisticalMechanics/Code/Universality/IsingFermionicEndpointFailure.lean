@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicEndpointFailure
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointFailure.Part26
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.InfiniteWord.WordFactorComplexity
+import Def.Combinatorics.InfiniteWord.WordFactorComplexity
 open MetaMathlibExt
 
 

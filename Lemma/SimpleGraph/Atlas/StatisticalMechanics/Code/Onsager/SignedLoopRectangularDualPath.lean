@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopRectangularDualPath
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopRectangularDualPath.Part4
 open Finset SimpleGraph StatMech StatMech.Onsager
 
 

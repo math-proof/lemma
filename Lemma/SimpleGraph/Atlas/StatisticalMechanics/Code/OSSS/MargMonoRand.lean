@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.MargMonoRand
+import Theorem.StatisticalMechanics.Code.OSSS.MargMonoRand
 open Finset MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.AdaptDisintegration
 
 

@@ -1,0 +1,60 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Cor1816.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
+import Def.v1.Atlas.NumberTheoryI.code.Cor1816
+open DirichletCharacter
+
+
+namespace DirichletCharacter
+
+variable {R : Type*} [CommMonoidWithZero R]
+
+
+theorem fromPrimCharDvd_toPrimCharDvd {m : ℕ} (χ : DirichletCharacter R m) :
+    fromPrimCharDvd (toPrimCharDvd χ) = χ := by
+  unfold fromPrimCharDvd toPrimCharDvd
+  exact χ.changeLevel_primitiveCharacter
+
+
+theorem conductor_changeLevel_of_isPrimitive {m d : ℕ} (hm : m ≠ 0)
+    (hd : d ∣ m) (ψ : DirichletCharacter R d) (hprim : ψ.IsPrimitive) :
+    (changeLevel hd ψ).conductor = d := by
+  haveI : NeZero m := ⟨hm⟩
+  have hd_ne : d ≠ 0 := fun h => hm (Nat.eq_zero_of_zero_dvd (h ▸ hd))
+  have hmem : d ∈ (changeLevel hd ψ).conductorSet := ⟨hd, ψ, rfl⟩
+  have hcond_dvd : (changeLevel hd ψ).conductor ∣ d :=
+    conductor_dvd_of_mem_conductorSet _ hm hmem
+  have hft : ψ.FactorsThrough (changeLevel hd ψ).conductor := by
+    refine ⟨hcond_dvd, (changeLevel hd ψ).primitiveCharacter, ?_⟩
+    haveI : NeZero d := ⟨hd_ne⟩
+    apply changeLevel_injective hd
+    rw [← changeLevel_trans _ hcond_dvd hd, changeLevel_primitiveCharacter]
+  have hle : ψ.conductor ≤ (changeLevel hd ψ).conductor := Nat.sInf_le hft
+  rw [show ψ.conductor = d from hprim] at hle
+  exact (Nat.le_of_dvd (Nat.pos_of_ne_zero hd_ne) hcond_dvd).antisymm hle
+
+
+theorem toPrimCharDvd_fromPrimCharDvd {m : ℕ} (hm : m ≠ 0) (p : PrimCharDvd R m) :
+    toPrimCharDvd (fromPrimCharDvd p) = p := by
+  have heq_d : (toPrimCharDvd (fromPrimCharDvd p)).d = p.d :=
+    conductor_changeLevel_of_isPrimitive hm p.hdvd p.χ p.hprim
+  apply PrimCharDvd.ext' heq_d
+  haveI : NeZero m := ⟨hm⟩
+  have hd_ne : p.d ≠ 0 := fun h => hm (Nat.eq_zero_of_zero_dvd (h ▸ p.hdvd))
+  haveI : NeZero p.d := ⟨hd_ne⟩
+  apply changeLevel_injective p.hdvd
+  rw [changeLevel_cast_eq heq_d p.hdvd]
+  change changeLevel _ (fromPrimCharDvd p).primitiveCharacter = fromPrimCharDvd p
+  exact (fromPrimCharDvd p).changeLevel_primitiveCharacter
+
+
+end DirichletCharacter

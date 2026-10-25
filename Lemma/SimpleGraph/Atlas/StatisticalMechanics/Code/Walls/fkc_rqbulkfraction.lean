@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.fkc_rqbulkfraction
+import Theorem.StatisticalMechanics.Code.Walls.fkc_rqbulkfraction
 open Filter Topology StatMech.FK StatMech StatMech.Walls
 
 

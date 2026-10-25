@@ -5,7 +5,6 @@ set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-
 universe u v
 
 private lemma isEmpty_pullback_ι
@@ -55,6 +54,5 @@ private lemma main
   -- imply
   ∃! g : X ⟶ Y, ∀ i, (W i).ι ≫ g = f i :=
   helper_main W hW hdisj f
-
 
 -- created on 2026-10-20

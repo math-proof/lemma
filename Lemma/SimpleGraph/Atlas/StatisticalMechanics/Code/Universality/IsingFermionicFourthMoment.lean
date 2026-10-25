@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicFourthMoment
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicFourthMoment
 open Finset StatMech StatMech.Universality
 
 

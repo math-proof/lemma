@@ -1,7 +1,6 @@
 import Lemma.Real.Anchors.Time.lt.TimeAdd1
 open Finset
 
-
 @[path]
 private lemma main
   {α : ℕ → ℝ}
@@ -19,6 +18,5 @@ private lemma main
     conv_lhs => rw [show anc.t (n + 1) = anc.t (n + 1) - 1 + 1 by omega]
     rw [sum_Ico_succ_top (by omega)]
   linarith
-
 
 -- created on 2026-09-26

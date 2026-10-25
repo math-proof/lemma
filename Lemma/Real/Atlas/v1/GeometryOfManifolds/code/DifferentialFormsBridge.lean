@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.DifferentialFormsBridge
+import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialFormsBridge.Part2
 open MfdDiffForm
 open scoped Manifold
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.GarabedianBernoulliStirling
+import Def.Combinatorics.Enumerative.GarabedianBernoulliStirling
 open scoped BigOperators
 open MetaMathlibExt
 

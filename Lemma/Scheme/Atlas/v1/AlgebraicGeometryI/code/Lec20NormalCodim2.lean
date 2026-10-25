@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec20NormalCodim2
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec20NormalCodim2
 open PrimeSpectrum
 
 

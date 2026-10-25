@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingPrimitiveArithmetic
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingPrimitiveArithmetic
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.PluckerGr24
+import Def.v1.Atlas.AlgebraicGeometryI.code.PluckerGr24
 open ExteriorAlgebra PluckerGr24
 open scoped LinearAlgebra.Projectivization
 

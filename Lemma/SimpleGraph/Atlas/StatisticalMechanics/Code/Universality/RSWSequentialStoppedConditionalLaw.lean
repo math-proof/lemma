@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWSequentialStoppedConditionalLaw
+import Theorem.StatisticalMechanics.Code.Universality.RSWSequentialStoppedConditionalLaw.Part16
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

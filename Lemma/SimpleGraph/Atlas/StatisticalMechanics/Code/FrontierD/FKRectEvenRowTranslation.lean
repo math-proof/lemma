@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectEvenRowTranslation
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEvenRowTranslation.Part7
 open Set SimpleGraph StatMech.Lattice StatMech StatMech.FrontierD
 
 

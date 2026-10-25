@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PottsErgodicPhaseFamily
+import Theorem.StatisticalMechanics.Code.FK.PottsErgodicPhaseFamily.Part2
 open Filter MeasureTheory Set Topology StatMech StatMech.FK
 
 

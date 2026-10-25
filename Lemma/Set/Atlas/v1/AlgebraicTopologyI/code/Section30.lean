@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section30
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section30.Part4
 open Matrix SymmetricBilinearForms SurfacesAndBilinearForms BilinearForm
 open CategoryTheory AlgebraicTopology LinearMap SingularCohomology
 open CategoryTheory AlgebraicTopology SingularCohomology

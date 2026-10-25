@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.FKReparameterization
+import Theorem.StatisticalMechanics.Code.Exact3D.FKReparameterization.Part5
 open StatMech StatMech.Exact3D StatMech.Exact3D.FKReparameterization
 
 

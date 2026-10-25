@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wisindicatorsteps
+import Theorem.StatisticalMechanics.Code.Walls.wisindicatorsteps.Part5
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

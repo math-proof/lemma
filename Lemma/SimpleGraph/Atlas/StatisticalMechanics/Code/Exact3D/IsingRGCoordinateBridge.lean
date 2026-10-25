@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.IsingRGCoordinateBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.IsingRGCoordinateBridge.Part8
 open StatMech StatMech.Exact3D StatMech.Exact3D.IsingRGCoordinateScaffold StatMech.Exact3D.IsingRGCoordinateBridgeInputs StatMech.Exact3D.IsingMassRGCoordinateScaffold StatMech.Exact3D.IsingMassRGCoordinateBridgeInputs
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc8removeforcecomm
+import Theorem.StatisticalMechanics.Code.Walls.bc8removeforcecomm
 open Set StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation StatMech StatMech.Walls
 
 

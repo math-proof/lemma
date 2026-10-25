@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Dynamics.Ergodic.Birkhoff
+import Def.Dynamics.Ergodic.Birkhoff
 open MeasureTheory
 open MathlibExt.Dynamics.Ergodic.BirkhoffWanted
 

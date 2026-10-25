@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.MergeHiInvariant
+import Theorem.CPythonListsort.Code.Correctness.MergeHiInvariant
 open CPythonListsort
 
 

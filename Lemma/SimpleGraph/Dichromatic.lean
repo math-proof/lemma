@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Dichromatic
+import Def.Combinatorics.SimpleGraph.Dichromatic
 open SimpleGraph
 
 

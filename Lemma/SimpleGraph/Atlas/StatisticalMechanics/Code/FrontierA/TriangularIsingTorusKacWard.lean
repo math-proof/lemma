@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusKacWard
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusKacWard.Part2
 open StatMech StatMech.FrontierA
 
 

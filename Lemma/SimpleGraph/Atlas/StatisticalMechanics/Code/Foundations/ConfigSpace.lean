@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.ConfigSpace
+import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
 open MeasureTheory TopologicalSpace StatMech StatMech.ConfigSpace
 
 

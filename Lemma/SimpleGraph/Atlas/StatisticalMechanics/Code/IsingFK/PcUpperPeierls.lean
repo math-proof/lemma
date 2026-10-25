@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.PcUpperPeierls
+import Theorem.StatisticalMechanics.Code.IsingFK.PcUpperPeierls
 open MeasureTheory Filter Topology StatMech StatMech.IsingFK
 
 

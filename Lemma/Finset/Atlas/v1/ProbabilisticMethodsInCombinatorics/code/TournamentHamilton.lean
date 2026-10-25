@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.TournamentHamilton
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.TournamentHamilton.Part2
 open TournamentHamilton
 
 

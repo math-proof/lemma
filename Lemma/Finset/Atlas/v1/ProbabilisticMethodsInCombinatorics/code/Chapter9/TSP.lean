@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.TSP
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.TSP
 open MeasureTheory Real BigOperators Finset ENNReal Set TSPConcentration
 
 

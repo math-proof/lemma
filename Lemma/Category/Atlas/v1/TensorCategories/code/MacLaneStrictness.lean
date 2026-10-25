@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.MacLaneStrictness
+import Instance.v1.Atlas.TensorCategories.code.MacLaneStrictness.Part2
 open CategoryTheory MonoidalCategory Category EGNO EGNO.MacLaneStrictness
 open FreeMonoidalCategory
 

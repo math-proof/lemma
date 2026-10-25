@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.BoundaryConditions
+import Theorem.StatisticalMechanics.Code.Lattice.BoundaryConditions.Part10
 open StatMech StatMech.Lattice StatMech.Lattice.BoundaryCondition
 
 

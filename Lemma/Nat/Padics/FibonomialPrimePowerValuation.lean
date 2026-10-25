@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Recurrences.FibonacciPrimeDivisibility
+import Def.NumberTheory.Recurrences.FibonacciPrimeDivisibility
 import Lemma.Nat.Recurrences.FibonacciPrimeDivisibility
 
 

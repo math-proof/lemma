@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc3_eqswimultigraph
+import Theorem.StatisticalMechanics.Code.Walls.gc3_eqswimultigraph
 open Finset BigOperators Classical StatMech StatMech.Walls
 
 

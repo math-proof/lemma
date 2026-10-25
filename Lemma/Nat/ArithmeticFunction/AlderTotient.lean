@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ArithmeticFunction.AlderTotient
+import Def.NumberTheory.ArithmeticFunction.AlderTotient
 open ArithmeticFunction
 
 

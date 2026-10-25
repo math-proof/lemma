@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPreferenceInterface
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPreferenceInterface.Part14
 open Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

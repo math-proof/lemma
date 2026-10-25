@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TwoPoint
+import Theorem.StatisticalMechanics.Code.FK.TwoPoint.Part4
 open SimpleGraph StatMech StatMech.FK
 
 

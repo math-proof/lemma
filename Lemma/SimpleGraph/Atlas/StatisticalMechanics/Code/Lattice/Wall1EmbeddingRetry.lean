@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.Wall1EmbeddingRetry
+import Theorem.StatisticalMechanics.Code.Lattice.Wall1EmbeddingRetry
 open SimpleGraph Function Set Finset StatMech StatMech.Lattice
 
 

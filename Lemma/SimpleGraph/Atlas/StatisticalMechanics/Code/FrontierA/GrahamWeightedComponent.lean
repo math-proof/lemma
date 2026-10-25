@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamWeightedComponent
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedComponent.Part2
 open Finset SimpleGraph StatMech StatMech.FrontierA
 
 

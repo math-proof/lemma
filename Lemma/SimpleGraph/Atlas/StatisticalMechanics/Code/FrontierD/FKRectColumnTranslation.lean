@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectColumnTranslation
+import Def.StatisticalMechanics.Code.FrontierD.FKRectColumnTranslation.Part8
 open Set SimpleGraph StatMech StatMech.FrontierD
 
 

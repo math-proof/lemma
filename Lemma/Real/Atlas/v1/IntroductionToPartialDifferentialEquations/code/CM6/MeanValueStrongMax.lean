@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM6.MeanValueStrongMax
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM6.MeanValueStrongMax
 open Set Metric MeasureTheory CM6
 
 

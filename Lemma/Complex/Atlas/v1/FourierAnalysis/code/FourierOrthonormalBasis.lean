@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.FourierAnalysis.code.FourierOrthonormalBasis
+import Theorem.v1.Atlas.FourierAnalysis.code.FourierOrthonormalBasis
 open MeasureTheory MeasureTheory.Measure AddCircle FourierOrthonormalBasis
 
 

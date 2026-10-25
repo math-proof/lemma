@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.SpecialFunctions.ExponentialIntegral.E1.PrincipalIntegral
+import Instance.Analysis.SpecialFunctions.ExponentialIntegral.E1.PrincipalIntegral
 open Filter Set Topology MeasureTheory
 open scoped ENNReal NNReal
 open Complex

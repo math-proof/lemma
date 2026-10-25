@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.HCTensorLib
+import Theorem.StatisticalMechanics.Code.Probability.HCTensorLib
 open Finset Real Set StatMech StatMech.OSSS StatMech.Probability
 
 

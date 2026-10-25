@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TwoPointPositiveFull
+import Theorem.StatisticalMechanics.Code.FK.TwoPointPositiveFull
 open MeasureTheory Filter Topology StatMech StatMech.FK
 
 

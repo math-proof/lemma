@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.ModularPolynomial
+import Def.v1.Atlas.EllipticCurves.code.ModularPolynomial.Part5
 open CongruenceSubgroup Complex ModularFunction ExtendedUpperHalfPlane
 open scoped MatrixGroups UpperHalfPlane
 open ModularFunction

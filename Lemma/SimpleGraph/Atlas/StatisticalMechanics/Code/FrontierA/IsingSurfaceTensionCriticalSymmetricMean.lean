@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionCriticalSymmetricMean
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionCriticalSymmetricMean.Part2
 open Filter Set Topology StatMech StatMech.FrontierA
 
 

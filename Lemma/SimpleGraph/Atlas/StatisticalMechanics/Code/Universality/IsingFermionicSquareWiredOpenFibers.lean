@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredOpenFibers
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredOpenFibers
 open Finset SimpleGraph StatMech StatMech.Universality
 
 

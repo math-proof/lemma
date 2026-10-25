@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.IsingSharpness
+import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpness
 open Finset Real StatMech StatMech.Sharpness StatMech.Sharpness.IsingSharp
 
 

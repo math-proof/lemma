@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.permutations.CycleDecomposition
+import Def.GroupTheory.Perm.CycleDecomposition
 open Equiv Equiv.Perm
 open AlgebraicCombinatorics.CycleDecomposition
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.MonotoneLimit
+import Theorem.StatisticalMechanics.Code.Foundations.MonotoneLimit
 open MeasureTheory TopologicalSpace Filter Topology MeasurableSpace StatMech
 
 

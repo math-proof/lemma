@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.EntireExponentialLogAffine
+import Theorem.StatisticalMechanics.Code.FrontierA.EntireExponentialLogAffine
 open Set Bornology StatMech StatMech.FrontierA
 
 

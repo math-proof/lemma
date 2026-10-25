@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.PairingsTheorems
+import Def.v1.Atlas.NumberTheoryI.code.PairingsTheorems.Part3
 open Submodule LinearMap Module
 
 

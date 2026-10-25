@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.permutations.Inversions1
+import Def.GroupTheory.Perm.Inversions1
 open AlgebraicCombinatorics
 open AlgebraicCombinatorics.Perm
 

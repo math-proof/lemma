@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterFoldingHelpers
+import Def.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterFoldingHelpers
 open ChamberComplex
 open scoped Classical
 

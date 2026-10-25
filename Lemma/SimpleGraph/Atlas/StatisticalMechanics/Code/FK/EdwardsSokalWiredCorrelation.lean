@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.EdwardsSokalWiredCorrelation
+import Theorem.StatisticalMechanics.Code.FK.EdwardsSokalWiredCorrelation.Part3
 open StatMech StatMech.IsingFK
 
 

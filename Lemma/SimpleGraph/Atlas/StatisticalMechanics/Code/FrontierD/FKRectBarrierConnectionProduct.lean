@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBarrierConnectionProduct
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBarrierConnectionProduct
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.LocalRing.ResidueField.DVR
+import Theorem.RingTheory.LocalRing.ResidueField.DVR.Part2
 open DVRResidue
 open AlgHom
 

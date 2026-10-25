@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.osd_telescopederiv
+import Theorem.StatisticalMechanics.Code.Walls.osd_telescopederiv
 open Real Set Finset StatMech StatMech.Walls
 
 

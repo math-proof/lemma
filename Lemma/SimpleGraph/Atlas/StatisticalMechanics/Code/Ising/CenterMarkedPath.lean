@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.CenterMarkedPath
+import Theorem.StatisticalMechanics.Code.Ising.CenterMarkedPath.Part2
 open Finset Matrix StatMech StatMech.Ising
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FiniteEnergy
+import Theorem.StatisticalMechanics.Code.FK.FiniteEnergy.Part4
 open Module SimpleGraph StatMech StatMech.FK
 
 

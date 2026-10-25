@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rmr_cylinderwitness
+import Theorem.StatisticalMechanics.Code.Walls.rmr_cylinderwitness
 open Finset StatMech StatMech.Walls
 
 

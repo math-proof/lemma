@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge
+import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
 open Finset BigOperators StatMech StatMech.Sharpness StatMech.Sharpness.FluxEdgeCopy
 
 

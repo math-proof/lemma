@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.AizenmanBarsky
+import Theorem.StatisticalMechanics.Code.Ising.AizenmanBarsky.Part5
 open Finset SimpleGraph Set StatMech StatMech.Ising
 
 

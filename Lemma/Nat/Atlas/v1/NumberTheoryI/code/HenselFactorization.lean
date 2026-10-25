@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.HenselFactorization
+import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
 open Polynomial IsLocalRing
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec7CompleteVariety
+import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec7CompleteVariety
 open AlgebraicGeometry CategoryTheory Limits Formalization Formalization.Lec7CompleteVariety
 
 

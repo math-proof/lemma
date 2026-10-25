@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.FourierFF
+import Def.v1.Atlas.ProjectionTheory.code.FourierFF
 import Lemma.Real.Atlas.v1.ProjectionTheory.code.FourierFF
 open Finset hiding card Fintype (card)
 open Fintype (card)

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.Martingales
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.Martingales
 open MeasureTheory Filter Set SimpleGraph ShamirSpencer Martingales
 open MeasureTheory ProbabilityTheory Real
 open scoped NNReal

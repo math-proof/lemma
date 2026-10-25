@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicFiniteCutoff
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicFiniteCutoff
 open StatMech StatMech.Universality
 
 

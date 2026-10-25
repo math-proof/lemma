@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.OrdinaryVolcanoStructure
+import Structure.v1.Atlas.EllipticCurves.code.OrdinaryVolcanoStructure.Part2
 open VolcanoStructure OrdinaryVolcanoStructure
 
 

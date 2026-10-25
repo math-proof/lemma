@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexVertexClassification
+import Theorem.StatisticalMechanics.Code.Universality.HexVertexClassification.Part3
 open StatMech StatMech.Universality StatMech.Universality.HexSawClassification
 
 

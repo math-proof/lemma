@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanCrossingCount
+import Theorem.StatisticalMechanics.Code.Lattice.JordanCrossingCount.Part7
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

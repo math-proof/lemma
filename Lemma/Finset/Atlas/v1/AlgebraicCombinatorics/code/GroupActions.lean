@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.GroupActions
+import Abbrev.v1.Atlas.AlgebraicCombinatorics.code.GroupActions
 open SpernerProperty MulAction Finset GroupActions GraphIsoPoset
 open scoped Classical Pointwise
 open SpernerProperty GroupActions

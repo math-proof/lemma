@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruenceModEleven
+import Def.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruenceModEleven.Part2
 open MetaMathlibExt
 
 

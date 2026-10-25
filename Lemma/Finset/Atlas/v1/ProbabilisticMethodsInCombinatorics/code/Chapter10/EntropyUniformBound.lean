@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.EntropyUniformBound
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.EntropyUniformBound
 open Finset Real ShannonEntropy
 
 

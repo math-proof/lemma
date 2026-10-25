@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.woborientbridge
+import Theorem.StatisticalMechanics.Code.Walls.woborientbridge.Part4
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

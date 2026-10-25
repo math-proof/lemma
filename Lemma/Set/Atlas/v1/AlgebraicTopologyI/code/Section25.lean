@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section25
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section25.Part3
 open CategoryTheory MonoidalCategory Limits AcyclicModels in TensorChainComplex
 open AcyclicModels CategoryTheory
 open AlgebraicTopology

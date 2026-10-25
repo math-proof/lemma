@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bgfacyclicstep
+import Theorem.StatisticalMechanics.Code.Walls.bgfacyclicstep
 open Set SimpleGraph Finset StatMech StatMech.Walls
 
 

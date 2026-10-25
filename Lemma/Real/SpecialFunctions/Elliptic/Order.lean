@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.SpecialFunctions.Elliptic.Order
+import Def.Analysis.SpecialFunctions.Elliptic.Order
 open PeriodPair
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec5BezoutPascal
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec5BezoutPascal.Part5
 open MvPolynomial Classical Lec5BezoutPascal
 
 

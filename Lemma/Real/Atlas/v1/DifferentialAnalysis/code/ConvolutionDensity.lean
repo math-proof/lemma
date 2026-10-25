@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensity
+import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensity
 open MeasureTheory Filter Topology Function Set TestFunctions SchwartzMap ConvolutionDensity
 open scoped ZeroAtInfty Convolution
 open scoped ContDiff

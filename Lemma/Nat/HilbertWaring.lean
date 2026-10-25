@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.HilbertWaring
+import Theorem.NumberTheory.HilbertWaring.Part12
 open Finset
 open scoped Pointwise
 open MathlibExt.NumberTheory.HilbertWaringWanted

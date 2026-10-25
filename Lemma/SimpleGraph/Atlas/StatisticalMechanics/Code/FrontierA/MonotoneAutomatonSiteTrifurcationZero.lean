@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonSiteTrifurcationZero
+import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonSiteTrifurcationZero.Part2
 open MeasureTheory StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.CapacityNonneg
+import Theorem.StatisticalMechanics.Code.SLE.CapacityNonneg
 open Filter Topology Complex Bornology StatMech StatMech.SLE
 
 

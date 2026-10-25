@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKClusterExplorationBoxConnection
+import Theorem.StatisticalMechanics.Code.FrontierD.FKClusterExplorationBoxConnection
 open MeasureTheory SimpleGraph StatMech.Lattice StatMech StatMech.FrontierD
 
 

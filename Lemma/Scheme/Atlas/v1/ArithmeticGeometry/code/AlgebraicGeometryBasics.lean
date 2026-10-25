@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.AlgebraicGeometryBasics
+import Abbrev.v1.Atlas.ArithmeticGeometry.code.AlgebraicGeometryBasics
 open Cardinal Order
 open Order
 

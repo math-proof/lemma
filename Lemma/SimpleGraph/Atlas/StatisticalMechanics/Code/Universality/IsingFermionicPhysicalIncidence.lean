@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalIncidence
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalIncidence
 open StatMech StatMech.Universality
 
 

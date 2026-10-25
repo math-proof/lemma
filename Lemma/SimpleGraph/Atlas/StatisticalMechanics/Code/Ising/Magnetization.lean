@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.Magnetization
+import Def.StatisticalMechanics.Code.Ising.Magnetization.Part3
 open MeasureTheory StatMech StatMech.Ising
 
 

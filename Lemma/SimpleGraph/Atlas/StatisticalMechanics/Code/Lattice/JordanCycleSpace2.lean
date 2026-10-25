@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanCycleSpace2
+import Theorem.StatisticalMechanics.Code.Lattice.JordanCycleSpace2.Part3
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

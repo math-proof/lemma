@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.PcUpperAllDimensions
+import Theorem.StatisticalMechanics.Code.IsingFK.PcUpperAllDimensions
 open MeasureTheory Filter Topology Set StatMech StatMech.FK StatMech.IsingFK
 
 

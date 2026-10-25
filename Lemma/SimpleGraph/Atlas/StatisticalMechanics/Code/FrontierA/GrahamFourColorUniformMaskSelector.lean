@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamFourColorUniformMaskSelector
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorUniformMaskSelector.Part4
 open Finset Classical StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

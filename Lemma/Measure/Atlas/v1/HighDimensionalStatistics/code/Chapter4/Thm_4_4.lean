@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_4
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_4
 open MeasureTheory Matrix Real Finset Rigollet Rigollet.Chapter4 Rigollet.Chapter4.Thm_4_4
 
 

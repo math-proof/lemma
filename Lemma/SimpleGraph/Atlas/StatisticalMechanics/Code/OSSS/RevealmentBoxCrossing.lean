@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.RevealmentBoxCrossing
+import Theorem.StatisticalMechanics.Code.OSSS.RevealmentBoxCrossing.Part3
 open MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.RevealmentBoxCrossing
 
 

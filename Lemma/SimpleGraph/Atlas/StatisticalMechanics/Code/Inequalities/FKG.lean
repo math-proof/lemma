@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.FKG
+import Theorem.StatisticalMechanics.Code.Inequalities.FKG
 open Finset StatMech
 
 

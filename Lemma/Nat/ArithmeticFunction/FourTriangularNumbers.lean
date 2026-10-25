@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ArithmeticFunction.FourTriangularNumbers
+import Def.NumberTheory.ArithmeticFunction.FourTriangularNumbers
 open MetaMathlibExt
 
 

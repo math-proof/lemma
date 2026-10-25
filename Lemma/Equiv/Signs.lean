@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.permutations.Signs
+import Def.GroupTheory.Perm.Signs
 import Lemma.Equiv.Inversions1
 
 

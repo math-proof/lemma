@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanOrbitCycle
+import Theorem.StatisticalMechanics.Code.Lattice.JordanOrbitCycle.Part2
 open SimpleGraph Set Function StatMech StatMech.Lattice
 
 

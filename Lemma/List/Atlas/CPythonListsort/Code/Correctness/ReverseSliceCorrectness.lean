@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
+import Structure.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
 open CPythonListsort CPythonListsort.ReverseRangeSpec
 
 

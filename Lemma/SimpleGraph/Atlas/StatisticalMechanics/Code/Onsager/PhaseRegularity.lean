@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.PhaseRegularity
+import Theorem.StatisticalMechanics.Code.Onsager.PhaseRegularity.Part12
 open StatMech StatMech.Onsager
 
 

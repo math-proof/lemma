@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.HasseWalkFormula
+import Instance.v1.Atlas.AlgebraicCombinatorics.code.HasseWalkFormula.Part2
 open Classical in HasseWalkFormula
 open scoped Nat
 

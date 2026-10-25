@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.GenusOnePlaneCubic
+import Def.v1.Atlas.ArithmeticGeometry.code.GenusOnePlaneCubic
 open MvPolynomial AlgebraicGeometry CategoryTheory Polynomial in
 
 

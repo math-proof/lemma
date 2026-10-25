@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.Integration
+import Theorem.StatisticalMechanics.Code.OSSS.Integration.Part2
 open Real Set Finset Filter Topology StatMech StatMech.OSSS StatMech.OSSS.Integration
 
 

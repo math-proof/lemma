@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.InhomogeneousCurrentConditionalPMF
+import Theorem.StatisticalMechanics.Code.FrontierB.InhomogeneousCurrentConditionalPMF.Part5
 open MeasureTheory StatMech StatMech.FrontierB
 
 

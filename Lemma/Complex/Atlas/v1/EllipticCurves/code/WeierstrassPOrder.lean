@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.WeierstrassPOrder
+import Theorem.v1.Atlas.EllipticCurves.code.WeierstrassPOrder
 open Complex PeriodPair ComplexLattice
 
 

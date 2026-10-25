@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisSingle
+import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisSingle
 open GLnBuilding
 open Submodule Module
 

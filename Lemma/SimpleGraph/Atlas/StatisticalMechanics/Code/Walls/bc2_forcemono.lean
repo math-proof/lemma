@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc2_forcemono
+import Theorem.StatisticalMechanics.Code.Walls.bc2_forcemono
 open Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Walls
 
 

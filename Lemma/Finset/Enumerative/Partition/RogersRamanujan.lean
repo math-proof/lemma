@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Partition.RogersRamanujan
+import Def.Combinatorics.Enumerative.Partition.RogersRamanujan.Part4
 open scoped PowerSeries.WithPiTopology
 open MathlibExt.Combinatorics.Enumerative.Partition.RogersRamanujanWanted
 

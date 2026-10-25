@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.FSPerEdge
+import Theorem.StatisticalMechanics.Code.Probability.FSPerEdge
 open Finset Real Filter Topology intervalIntegral MeasureTheory StatMech StatMech.Probability
 
 

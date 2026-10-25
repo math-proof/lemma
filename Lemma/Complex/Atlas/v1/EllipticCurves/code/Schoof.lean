@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.FrobeniusEndomorphism
+import Def.v1.Atlas.EllipticCurves.code.FrobeniusEndomorphism.Part2
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.FrobeniusEndomorphism
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
-import sympy.atlas.v1.Atlas.EllipticCurves.code.TorsionEndomorphism
+import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
 
 
 namespace Schoof

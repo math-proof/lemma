@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.DisjointGraphFactorizeClose
+import Theorem.StatisticalMechanics.Code.FK.DisjointGraphFactorizeClose.Part2
 open MeasureTheory Filter Topology Set SimpleGraph StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

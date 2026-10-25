@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.JantzenFiltration
+import Def.v1.Atlas.LieGroups.code.JantzenFiltration.Part2
 open Classical
 
 

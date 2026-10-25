@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.ChevalleyImage
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.ChevalleyImage
 open PrimeSpectrum Topology
 
 

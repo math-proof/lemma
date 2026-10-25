@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.TreeNonBridgeProve
+import Theorem.StatisticalMechanics.Code.Lattice.TreeNonBridgeProve.Part4
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

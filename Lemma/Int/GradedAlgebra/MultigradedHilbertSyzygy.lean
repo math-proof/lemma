@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.GradedAlgebra.MultigradedHilbertSyzygy
+import Theorem.RingTheory.GradedAlgebra.MultigradedHilbertSyzygy.Part21
 open CategoryTheory MvPolynomial
 open MetaMathlibExt
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWSqrtTrick
+import Theorem.StatisticalMechanics.Code.Universality.RSWSqrtTrick
 open Set MeasureTheory SimpleGraph StatMech StatMech.Universality
 
 

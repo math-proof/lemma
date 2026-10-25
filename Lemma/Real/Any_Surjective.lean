@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.L1Quotient
+import Theorem.Analysis.NormedSpace.L1Quotient
 
 /--
 [L1Quotient](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/L1Quotient.lean)

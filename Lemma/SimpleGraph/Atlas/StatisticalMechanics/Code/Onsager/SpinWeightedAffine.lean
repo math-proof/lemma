@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SpinWeightedAffine
+import Theorem.StatisticalMechanics.Code.Onsager.SpinWeightedAffine.Part2
 open StatMech StatMech.Onsager
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Corollary_20_4
+import Instance.v1.Atlas.ArithmeticGeometry.code.Corollary_20_4
 open Finset
 
 

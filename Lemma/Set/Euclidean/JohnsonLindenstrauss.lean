@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Euclidean.JohnsonLindenstrauss
+import Def.Geometry.Euclidean.JohnsonLindenstrauss
 open scoped RealInnerProductSpace
 open ProbabilityTheory MeasureTheory
 open MathlibExt.Geometry.Euclidean.JohnsonLindenstraussWanted

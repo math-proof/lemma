@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.YoungLattice
+import Instance.v1.Atlas.AlgebraicCombinatorics.code.YoungLattice.Part3
 open SpernerProperty YoungLattice YoungLattice.Lmn
 
 

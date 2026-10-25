@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MedianGenocchiNumber
+import Def.Combinatorics.Enumerative.MedianGenocchiNumber
 open scoped BigOperators
 open MetaMathlibExt
 

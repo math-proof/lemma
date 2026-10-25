@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.AdaptCondBBProof2
+import Def.StatisticalMechanics.Code.OSSS.AdaptCondBBProof2.Part2
 open Finset MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.AdaptDisintegration
 
 

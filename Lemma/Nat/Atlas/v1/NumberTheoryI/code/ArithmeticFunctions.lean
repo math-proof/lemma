@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions
+import Def.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions.Part4
 open Finset Real Filter Asymptotics DirichletCharacter in
 open scoped Nat
 

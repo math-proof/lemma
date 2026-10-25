@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.VecInstances
+import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2
 open CategoryTheory MonoidalCategory Limits VecInstances
 
 

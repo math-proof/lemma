@@ -1,9 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.polynomial.l1_norm
-
+import Theorem.Algebra.Polynomial.L1Norm
 open Polynomial
-
 
 namespace Polynomial
 
@@ -83,7 +81,6 @@ lemma one_le_l1Norm_of_monic
 end Polynomial
   exact hf
 
-
 /--
 [l1Norm_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Polynomial/L1Norm.lean)
 -/
@@ -96,7 +93,6 @@ lemma l1Norm_zero
   l1Norm v (0 : Polynomial K) = 0 := by
 -- proof
   simp [l1Norm]
-
 
 namespace Polynomial
 
@@ -115,7 +111,6 @@ lemma l1Norm_nonneg
   exact Finset.sum_nonneg fun i _ ↦ v.nonneg _
 
 end Polynomial
-
 
 -- created on 2026-10-09
 -- updated on 2026-10-23

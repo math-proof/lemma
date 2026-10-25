@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.FourierDistributions
+import Def.v1.Atlas.DifferentialAnalysis.code.FourierDistributions
 open MeasureTheory FourierDistributions
 open scoped SchwartzMap FourierTransform
 open TemperedDistribution LineDeriv

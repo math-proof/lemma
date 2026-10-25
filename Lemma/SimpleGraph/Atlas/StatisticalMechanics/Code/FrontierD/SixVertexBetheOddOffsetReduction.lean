@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheOddOffsetReduction
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOddOffsetReduction.Part3
 open Finset Filter Topology StatMech StatMech.FrontierD
 
 

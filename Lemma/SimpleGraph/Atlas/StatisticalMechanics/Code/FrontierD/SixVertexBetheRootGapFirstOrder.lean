@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheRootGapFirstOrder
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheRootGapFirstOrder
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Algebra.Polynomial.Interlacing
+import Theorem.MathlibExtTest.Algebra.Polynomial.Interlacing
 open scoped BigOperators ComplexOrder
 
 

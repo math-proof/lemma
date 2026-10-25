@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.algebra.burnside_matrix
-
+import Theorem.Algebra.Algebra.BurnsideMatrix
 open BurnsideMatrix
 
 /--
@@ -20,7 +19,6 @@ private lemma simple
 -- proof
   apply burnsideSimple A h hn
 
-
 /--
 [burnside_commutant](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/BurnsideMatrix.lean)
 -/
@@ -37,7 +35,6 @@ private lemma commutant
   ∃ c : k, ∀ v, T v = c • v := by
 -- proof
   apply burnside_commutant A h T hT
-
 
 /--
 [burnside_dense](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/BurnsideMatrix.lean)
@@ -56,7 +53,6 @@ private lemma dense
 -- proof
   apply burnside_dense A h m
 
-
 /--
 [burnside_matrix](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/BurnsideMatrix.lean)
 -/
@@ -71,6 +67,5 @@ private lemma burnside
   A = ⊤ := by
 -- proof
   apply burnside_matrix A h
-
 
 -- created on 2026-10-09

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.symmetric.OmegaInvolution
+import Def.Combinatorics.Young.OmegaInvolution.Part2
 import Lemma.MvPolynomial.SymmetricDefinitions
 open MvPolynomial hiding R
 open Finset

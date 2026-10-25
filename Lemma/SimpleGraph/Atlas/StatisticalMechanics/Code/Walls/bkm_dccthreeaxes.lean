@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bkm_dccthreeaxes
+import Theorem.StatisticalMechanics.Code.Walls.bkm_dccthreeaxes
 open Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Walls
 
 

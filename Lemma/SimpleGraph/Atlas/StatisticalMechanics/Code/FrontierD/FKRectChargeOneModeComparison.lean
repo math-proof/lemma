@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectChargeOneModeComparison
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectChargeOneModeComparison
 open Finset StatMech StatMech.FrontierD
 
 

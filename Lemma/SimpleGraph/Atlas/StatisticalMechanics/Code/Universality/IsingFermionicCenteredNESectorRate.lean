@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCenteredNESectorRate
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCenteredNESectorRate
 open StatMech StatMech.Universality
 
 

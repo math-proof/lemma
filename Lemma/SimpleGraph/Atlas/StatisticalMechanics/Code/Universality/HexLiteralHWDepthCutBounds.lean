@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCutBounds
+import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCutBounds
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.WiredBoxDifferential
+import Theorem.StatisticalMechanics.Code.OSSS.WiredBoxDifferential.Part5
 open Finset Set StatMech StatMech.OSSS StatMech.OSSS.WiredBoxDifferential
 
 

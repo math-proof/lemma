@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.ClusterDualContour
+import Theorem.StatisticalMechanics.Code.Percolation.ClusterDualContour
 open Finset Set SimpleGraph Function StatMech StatMech.Percolation
 
 

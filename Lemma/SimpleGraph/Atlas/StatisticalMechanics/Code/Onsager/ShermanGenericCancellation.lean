@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.ShermanGenericCancellation
+import Theorem.StatisticalMechanics.Code.Onsager.ShermanGenericCancellation.Part3
 open StatMech StatMech.Onsager
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.DirichletCharacters
+import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
 open DirichletCharacter in Filter Topology CharacterGroup
 open Filter Topology
 

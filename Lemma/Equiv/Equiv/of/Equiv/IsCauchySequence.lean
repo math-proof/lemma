@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_5_3
+import Theorem.Analysis.Section_5_3.Part12
 open Chapter5 hiding Real
 open Chapter5.Sequence
 

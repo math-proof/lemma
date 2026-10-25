@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
+import Structure.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
 open Set Topology Filter
 
 

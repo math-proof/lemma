@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.LocalReflexivity
+import Theorem.Analysis.NormedSpace.LocalReflexivity.Part6
 
 /--
 [LocalReflexivity](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/LocalReflexivity.lean)

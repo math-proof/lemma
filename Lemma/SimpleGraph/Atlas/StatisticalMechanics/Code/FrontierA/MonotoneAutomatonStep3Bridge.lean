@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonStep3Bridge
+import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonStep3Bridge.Part4
 open MeasureTheory Set StatMech StatMech.FrontierA
 
 

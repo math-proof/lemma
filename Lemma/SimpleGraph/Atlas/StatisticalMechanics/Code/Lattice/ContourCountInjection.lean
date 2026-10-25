@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.ContourCountInjection
+import Theorem.StatisticalMechanics.Code.Lattice.ContourCountInjection.Part2
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

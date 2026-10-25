@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch8Entry8Digammaseries
+import Def.Analysis.Ramanujan.Part1Ch8Entry8Digammaseries
 open scoped Nat Real BigOperators Interval
 open Filter Finset Complex Topology MeasureTheory
 open MathlibExt.Analysis.Ramanujan.Part1Ch8

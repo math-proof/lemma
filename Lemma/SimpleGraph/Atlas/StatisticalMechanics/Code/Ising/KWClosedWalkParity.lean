@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.KWClosedWalkParity
+import Theorem.StatisticalMechanics.Code.Ising.KWClosedWalkParity.Part14
 open Finset SimpleGraph StatMech StatMech.Ising
 
 

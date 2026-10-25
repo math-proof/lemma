@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.LatticeThreeExitTree
+import Theorem.StatisticalMechanics.Code.Percolation.LatticeThreeExitTree.Part2
 open Set SimpleGraph Finset StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

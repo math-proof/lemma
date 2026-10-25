@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.MultiplicativeWeights
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.MultiplicativeWeights
 open Real Finset BigOperators MultiplicativeWeights
 
 

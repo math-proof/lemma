@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.PeriodicTurnClosure
+import Theorem.StatisticalMechanics.Code.Onsager.PeriodicTurnClosure.Part9
 open StatMech StatMech.Onsager
 
 

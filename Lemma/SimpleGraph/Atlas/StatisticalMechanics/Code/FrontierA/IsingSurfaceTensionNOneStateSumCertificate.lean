@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneStateSumCertificate
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneStateSumCertificate
 open StatMech StatMech.FrontierA StatMech.FrontierA.NOneSymmetricMeanCertificate
 
 

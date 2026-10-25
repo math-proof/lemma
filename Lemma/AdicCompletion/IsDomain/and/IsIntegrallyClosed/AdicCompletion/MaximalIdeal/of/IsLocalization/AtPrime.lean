@@ -1,5 +1,6 @@
 import sympy.Basic
-import sympy.algebra.adic_completion.localization
+import Def.Algebra.AdicCompletion.Localization
+import Instance.Algebra.AdicCompletion.Localization
 import Mathlib
 
 open IsLocalRing

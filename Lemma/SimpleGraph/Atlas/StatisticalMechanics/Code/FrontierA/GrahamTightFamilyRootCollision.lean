@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamTightFamilyRootCollision
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamTightFamilyRootCollision
 open Finset StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

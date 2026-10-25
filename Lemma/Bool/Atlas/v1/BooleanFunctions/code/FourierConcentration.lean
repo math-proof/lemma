@@ -1,15 +1,15 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Juntas
+import Def.v1.Atlas.BooleanFunctions.code.Juntas
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Juntas
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.MonotoneFourier
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Theorems
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.InfluenceFourier
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.MonotoneFourier
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Talagrand
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Theorems
+import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
+import Def.v1.Atlas.BooleanFunctions.code.MonotoneFourier
+import Def.v1.Atlas.BooleanFunctions.code.Talagrand
+import Def.v1.Atlas.BooleanFunctions.code.Theorems
 open Finset BigOperators
 
 

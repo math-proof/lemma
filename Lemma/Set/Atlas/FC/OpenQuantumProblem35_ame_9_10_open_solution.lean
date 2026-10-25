@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.FC.OpenQuantumProblem35_ame_9_10_open_solution
+import Def.FC.OpenQuantumProblem35_ame_9_10_open_solution.Part8
 open OpenQuantumProblem35
 open scoped BigOperators
 

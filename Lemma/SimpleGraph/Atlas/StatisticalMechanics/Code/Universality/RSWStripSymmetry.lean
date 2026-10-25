@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWStripSymmetry
+import Theorem.StatisticalMechanics.Code.Universality.RSWStripSymmetry.Part5
 open Set SimpleGraph MeasureTheory ProbabilityTheory StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Completion.FinitePlacesOver
+import Instance.NumberTheory.NumberField.Completion.FinitePlacesOver
 open IsDedekindDomain
 open scoped NumberField NumberField.LiesOver Valued
 

@@ -1,4 +1,4 @@
-import sympy.concrete.products
+import Def.Algebra.BigOperators.Products
 
 
 @[path, comm]

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.MeasureTheory.Notation
+import Def.Analysis.MeasureTheory.Notation.Part2
 open Filter
 open ENNReal
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.HeckeAlgebra.Generic
+import Def.v1.Atlas.Buildings.code.HeckeAlgebra.Generic.Part2
 open HeckeAlgebra
 
 

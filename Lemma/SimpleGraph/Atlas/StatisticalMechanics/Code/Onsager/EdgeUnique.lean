@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.EdgeUnique
+import Theorem.StatisticalMechanics.Code.Onsager.EdgeUnique
 open StatMech StatMech.Onsager StatMech.Onsager.EdgeUnique
 
 

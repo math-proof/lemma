@@ -1,0 +1,229 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/FKSharpnessWeightedPeriodicRepair.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPeriodic.Part3
+import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedDomain.Part5
+import Def.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPeriodicRepair
+open scoped BigOperators Classical
+open Finset Set
+
+
+namespace StatMech
+
+namespace OSSS
+
+namespace FKSharpnessWeightedPeriodicRepair
+
+open Lattice FK RevealmentConstruction RevealmentTranslation
+
+open WiredBoxDifferential WiredBoxLocalized WiredBoxOffCentre
+
+open FKSharpnessWeightedPeriodic FKSharpnessWeightedDomain
+
+theorem weighted_transShellEvent_mass_eq_phase
+    (d k : Nat) {P : Type*}
+    (J : Sym2 (Site d) -> Real) (phase : Site d -> P)
+    (phaseJ : P -> Sym2 (Site d) -> Real)
+    (hcov : PhaseCovariant J phase phaseJ)
+    (x : Site d) (q beta : Real) :
+    (∑ eta,
+      (transShellEvent d k x).indicator (fun _ => (1 : Real)) eta *
+        bcProbW (fvs_transBoxGraph d (2 * k) x)
+          (boundaryCliqueGraph (fvs_transBoxBoundary d (2 * k) x))
+          (betaParams (transBoxCoupling J (2 * k) x) beta) q eta) =
+      ∑ rho,
+        (centeredShellEvent d k).indicator (fun _ => (1 : Real)) rho *
+          bcProbW (boxGraph d (2 * k))
+            (boundaryCliqueGraph (boxBoundary d (2 * k)))
+            (betaParams (phaseBoxCoupling phaseJ (phase x) (2 * k)) beta)
+            q rho := by
+  let sigma := fvs_transEquiv d (2 * k) x
+  have hmass := cdc_eventMassProb_reCfgIso_inv sigma
+    (bcProbW (boxGraph d (2 * k))
+      (boundaryCliqueGraph (boxBoundary d (2 * k)))
+      (betaParams (phaseBoxCoupling phaseJ (phase x) (2 * k)) beta) q)
+    (bcProbW (fvs_transBoxGraph d (2 * k) x)
+      (boundaryCliqueGraph (fvs_transBoxBoundary d (2 * k) x))
+      (betaParams (transBoxCoupling J (2 * k) x) beta) q)
+    (fun eta => bcProbW_boundaryClique_reCfgIso
+      (boxGraph d (2 * k)) (fvs_transBoxGraph d (2 * k) x)
+      (boxBoundary d (2 * k)) (fvs_transBoxBoundary d (2 * k) x)
+      sigma (fvs_transEquiv_adj d (2 * k) x)
+      (fvs_transEquiv_boundary d (2 * k) x)
+      (betaParams (phaseBoxCoupling phaseJ (phase x) (2 * k)) beta)
+      (betaParams (transBoxCoupling J (2 * k) x) beta)
+      (fun e => betaParams_transBox_map_eq_phaseBox
+        J phase phaseJ hcov (2 * k) x beta e)
+      q eta)
+    (centeredShellEvent d k)
+  rwa [reCfgIso_preimage_centeredShellEvent] at hmass
+
+
+theorem weightedPhaseWiredTheta_eq_centeredShellMass
+    (d k : Nat) (hk : 1 <= k) {P : Type*}
+    (phaseJ : P -> Sym2 (Site d) -> Real) (a : P)
+    (hJ : forall e, 0 < phaseJ a e)
+    (q beta : Real) (hq : 1 <= q) (hbeta : 0 < beta) :
+    weightedPhaseWiredTheta d phaseJ a q beta k =
+      ∑ rho,
+        (centeredShellEvent d k).indicator (fun _ => (1 : Real)) rho *
+          bcProbW (boxGraph d (2 * k))
+            (boundaryCliqueGraph (boxBoundary d (2 * k)))
+            (betaParams (phaseBoxCoupling phaseJ a (2 * k)) beta) q rho := by
+  unfold weightedPhaseWiredTheta
+  change activeBCMean (boxGraph d (2 * k))
+      (boundaryCliqueGraph (boxBoundary d (2 * k)))
+      (betaParams (phaseBoxCoupling phaseJ a (2 * k)) beta) q
+      (innerCrossInd d k) = _
+  rw [activeBCMean_eq_bcProbW_lift]
+  · apply Finset.sum_congr rfl
+    intro rho hrho
+    rw [innerCrossInd_restrictActive_eq_centeredShell_indicator d k hk rho]
+  · exact betaParams_pos (fun e => hJ (Sym2.map Subtype.val e)) hbeta
+  · exact betaParams_lt_one _ beta
+  · exact zero_lt_one.trans_le hq
+
+
+theorem weightedOuterInnerConn_le_transShellMass
+    (d n k : Nat) (x : Site d)
+    (J : Sym2 (Site d) -> Real) (hJ : forall e, 0 < J e)
+    (q beta : Real) (hq : 1 <= q) (hbeta : 0 < beta)
+    (hsub : fvs_transBox d (2 * k) x ⊆ box d (2 * n)) :
+    weightedOuterInnerConn d n J q beta x k <=
+      ∑ rho,
+        (ocd_innerRestrict (flc_incl hsub) ⁻¹'
+          transShellEvent d k x).indicator (fun _ => (1 : Real)) rho *
+        bcProbW (boxGraph d (2 * n))
+          (boundaryCliqueGraph (boxBoundary d (2 * n)))
+          (betaParams (boxCoupling J (2 * n)) beta) q rho := by
+  let obs : ConfigSpace (boxGraph d (2 * n)).edgeSet -> Real := fun eta =>
+    if ConnectedToSet d
+      (liftCfg (boxActiveEdge d n)
+        (restrictConfig (boxActiveEdgeLE d (n_le_two_mul n)) eta))
+      x (centeredBoundary x k) then 1 else 0
+  unfold weightedOuterInnerConn
+  change activeBCMean (boxGraph d (2 * n))
+      (boundaryCliqueGraph (boxBoundary d (2 * n)))
+      (betaParams (boxCoupling J (2 * n)) beta) q obs <= _
+  rw [activeBCMean_eq_bcProbW_lift]
+  · apply Finset.sum_le_sum
+    intro rho hrho
+    apply mul_le_mul_of_nonneg_right
+    · unfold obs
+      by_cases hc : ConnectedToSet d
+          (liftCfg (boxActiveEdge d n)
+            (restrictConfig (boxActiveEdgeLE d (n_le_two_mul n))
+              (restrictActive (boxGraph d (2 * n)) rho)))
+          x (centeredBoundary x k)
+      · rw [if_pos hc, Set.indicator_of_mem]
+        exact outerInnerConn_subset_transShell d n k x hsub rho hc
+      · rw [if_neg hc]
+        exact Set.indicator_nonneg (fun _ => by norm_num) _
+    · exact bcProbW_nonneg _ _
+        (betaParams_pos
+          (fun e => hJ (Sym2.map Subtype.val e)) hbeta)
+        (betaParams_lt_one _ beta) (zero_lt_one.trans_le hq) rho
+  · exact betaParams_pos
+      (fun e => hJ (Sym2.map Subtype.val e)) hbeta
+  · exact betaParams_lt_one _ beta
+  · exact zero_lt_one.trans_le hq
+
+
+theorem weightedOuterInnerConn_le_phase_strict
+    (d n k : Nat) (x : Site d) (hx : x ∈ box d n)
+    (hk : 1 <= k) (hkn : 2 * k < n)
+    {P : Type*}
+    (J : Sym2 (Site d) -> Real) (hJ : forall e, 0 < J e)
+    (phase : Site d -> P) (phaseJ : P -> Sym2 (Site d) -> Real)
+    (hcov : PhaseCovariant J phase phaseJ)
+    (q beta : Real) (hq : 1 <= q) (hbeta : 0 < beta) :
+    weightedOuterInnerConn d n J q beta x k <=
+      weightedPhaseWiredTheta d phaseJ (phase x) q beta k := by
+  let hsub : fvs_transBox d (2 * k) x ⊆ box d (2 * n) := by
+    intro y hy i
+    have hyi : ((y - x) i).natAbs <= 2 * k := hy i
+    have hxi : (x i).natAbs <= n := hx i
+    have hEq : y i = (y i - x i) + x i := by ring
+    calc
+      (y i).natAbs = ((y i - x i) + x i).natAbs := by rw [← hEq]
+      _ <= (y i - x i).natAbs + (x i).natAbs := Int.natAbs_add_le _ _
+      _ = ((y - x) i).natAbs + (x i).natAbs := by simp [Pi.sub_apply]
+      _ <= 2 * k + n := Nat.add_le_add hyi hxi
+      _ <= 2 * n := by omega
+  have hxdeep : x ∈ box d (2 * n - 2 * k - 1) := by
+    apply box_mono d (show n <= 2 * n - 2 * k - 1 by omega)
+    exact hx
+  have hmargin : forall y : fvs_transBoxVerts d (2 * k) x,
+      ¬ boxBoundary d (2 * n) (flc_incl hsub y) :=
+    ocs_wired_margin d (2 * k) (2 * n) x hxdeep
+      (show 2 * k + 1 <= 2 * n by omega) hsub
+  have hlocal := weightedOuterInnerConn_le_transShellMass
+    d n k x J hJ q beta hq hbeta hsub
+  have hdomain := weighted_transShellEvent_domain_dominated
+    d (2 * n) k x J hJ hsub hmargin hk beta q hbeta hq
+  have htransport := weighted_transShellEvent_mass_eq_phase
+    d k J phase phaseJ hcov x q beta
+  have hphasePos : forall e, 0 < phaseJ (phase x) e := by
+    intro e
+    rw [← hcov x e]
+    exact hJ _
+  have hprofile := weightedPhaseWiredTheta_eq_centeredShellMass
+    d k hk phaseJ (phase x) hphasePos q beta hq hbeta
+  calc
+    weightedOuterInnerConn d n J q beta x k <=
+        ∑ rho,
+          (ocd_innerRestrict (flc_incl hsub) ⁻¹'
+            transShellEvent d k x).indicator (fun _ => (1 : Real)) rho *
+          bcProbW (boxGraph d (2 * n))
+            (boundaryCliqueGraph (boxBoundary d (2 * n)))
+            (betaParams (boxCoupling J (2 * n)) beta) q rho := hlocal
+    _ <= ∑ eta,
+          (transShellEvent d k x).indicator (fun _ => (1 : Real)) eta *
+          bcProbW (fvs_transBoxGraph d (2 * k) x)
+            (boundaryCliqueGraph (fvs_transBoxBoundary d (2 * k) x))
+            (betaParams (transBoxCoupling J (2 * k) x) beta) q eta := hdomain
+    _ = ∑ rho,
+          (centeredShellEvent d k).indicator (fun _ => (1 : Real)) rho *
+          bcProbW (boxGraph d (2 * k))
+            (boundaryCliqueGraph (boxBoundary d (2 * k)))
+            (betaParams (phaseBoxCoupling phaseJ (phase x) (2 * k)) beta)
+            q rho := htransport
+    _ = weightedPhaseWiredTheta d phaseJ (phase x) q beta k := hprofile.symm
+
+
+theorem weightedPhaseOffCentreStrict_of_covariant
+    (d n : Nat) {P : Type*}
+    (J : Sym2 (Site d) -> Real) (hJ : forall e, 0 < J e)
+    (phase : Site d -> P) (phaseJ : P -> Sym2 (Site d) -> Real)
+    (hcov : PhaseCovariant J phase phaseJ)
+    (q beta : Real) (hq : 1 <= q) (hbeta : 0 < beta) :
+    WeightedPhaseOffCentreStrict d n J phase
+      (fun a => weightedPhaseWiredTheta d phaseJ a q beta) q beta := by
+  intro x hx k hk hkn
+  apply weightedOuterInnerConn_le_phase_strict
+    d n k x _ hk hkn J hJ phase phaseJ hcov q beta hq hbeta
+  simpa [mem_osssBoxFinset] using hx
+
+
+theorem periodicWeightedNestedDominationStrict_of_covariant
+    (d n : Nat) {P : Type*}
+    (J : Sym2 (Site d) -> Real) (hJ : forall e, 0 < J e)
+    (phase : Site d -> P) (phaseJ : P -> Sym2 (Site d) -> Real)
+    (hcov : PhaseCovariant J phase phaseJ)
+    (q beta : Real) (hq : 1 <= q) (hbeta : 0 < beta) :
+    PeriodicWeightedNestedDominationStrict
+      d n J phase phaseJ q beta := by
+  exact ⟨hcov, weightedPhaseOffCentreStrict_of_covariant
+    d n J hJ phase phaseJ hcov q beta hq hbeta⟩
+
+end FKSharpnessWeightedPeriodicRepair
+end OSSS
+end StatMech

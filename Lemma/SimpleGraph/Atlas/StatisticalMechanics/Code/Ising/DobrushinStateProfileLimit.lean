@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.DobrushinStateProfileLimit
+import Theorem.StatisticalMechanics.Code.Ising.DobrushinStateProfileLimit
 open MeasureTheory Filter Topology StatMech StatMech.Ising
 
 

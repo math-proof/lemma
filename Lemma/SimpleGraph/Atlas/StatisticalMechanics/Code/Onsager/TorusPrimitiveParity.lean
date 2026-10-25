@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.TorusPrimitiveParity
+import Theorem.StatisticalMechanics.Code.Onsager.TorusPrimitiveParity
 open StatMech StatMech.Onsager
 
 

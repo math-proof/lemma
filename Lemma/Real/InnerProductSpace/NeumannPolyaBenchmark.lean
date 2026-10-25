@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.InnerProductSpace.NeumannPolyaBenchmark
+import Def.Analysis.InnerProductSpace.NeumannPolyaBenchmark
 open TopologicalSpace
 open EuclideanLaplacian
 

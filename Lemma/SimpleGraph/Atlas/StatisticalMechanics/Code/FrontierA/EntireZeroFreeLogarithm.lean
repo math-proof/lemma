@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.EntireZeroFreeLogarithm
+import Theorem.StatisticalMechanics.Code.FrontierA.EntireZeroFreeLogarithm
 open Set StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LogNonnegativeSinusoid
+import Theorem.StatisticalMechanics.Code.FrontierA.LogNonnegativeSinusoid
 open MeasureTheory Polynomial StatMech StatMech.FrontierA
 
 

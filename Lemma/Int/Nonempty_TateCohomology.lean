@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RepresentationTheory.Homological.TateCohomology.FiniteCyclic
+import Def.RepresentationTheory.Homological.TateCohomology.FiniteCyclic.Part4
 open CategoryTheory Limits ModuleCat Rep
 open TateCohomology
 

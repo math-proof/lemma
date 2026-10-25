@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWShiftedEndpoint
+import Theorem.StatisticalMechanics.Code.Universality.RSWShiftedEndpoint.Part3
 open Function MeasureTheory Set StatMech StatMech.Universality
 
 

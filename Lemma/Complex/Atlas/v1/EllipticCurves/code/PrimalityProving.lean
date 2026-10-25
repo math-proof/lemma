@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.PrimalityProving
+import Structure.v1.Atlas.EllipticCurves.code.PrimalityProving
 open Classical
 open scoped Nat
 open WeierstrassCurve

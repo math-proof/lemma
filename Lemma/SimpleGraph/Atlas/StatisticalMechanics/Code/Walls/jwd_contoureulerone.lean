@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jwd_contoureulerone
+import Theorem.StatisticalMechanics.Code.Walls.jwd_contoureulerone
 open SimpleGraph StatMech StatMech.Walls
 
 

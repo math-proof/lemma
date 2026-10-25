@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.JInvariantTwist
+import Theorem.v1.Atlas.ArithmeticGeometry.code.JInvariantTwist
 open WeierstrassCurve Polynomial
 
 

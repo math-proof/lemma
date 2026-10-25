@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardLocalAngularSplit
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardLocalAngularSplit.Part3
 open StatMech StatMech.FrontierA
 
 

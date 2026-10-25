@@ -1,6 +1,5 @@
 import sympy.Basic
 
-
 @[path]
 private lemma main
 -- given
@@ -21,6 +20,5 @@ private lemma main
   have a_eq : a = ⟨[x], by simp⟩ := Subtype.ext hx
   have b_eq : b = ⟨[y], by simp⟩ := Subtype.ext hy
   aesop
-
 
 -- created on 2025-09-21

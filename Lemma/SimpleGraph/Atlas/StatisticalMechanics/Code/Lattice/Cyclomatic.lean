@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.Cyclomatic
+import Theorem.StatisticalMechanics.Code.Lattice.Cyclomatic.Part2
 open StatMech StatMech.Lattice
 
 

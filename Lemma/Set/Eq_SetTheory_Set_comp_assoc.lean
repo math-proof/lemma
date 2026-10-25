@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_3_3
+import Abbrev.Analysis.Section_3_3.Part2
 import Lemma.Set.Eq.is.All_Eq
 open Chapter3 hiding Nat Set
 open Chapter3.SetTheory

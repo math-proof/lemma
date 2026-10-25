@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.QuantumSl2
+import Def.v1.Atlas.TensorCategories.code.QuantumSl2.Part2
 open Coalgebra HopfAlgebra QuantumSl2
 open scoped TensorProduct
 

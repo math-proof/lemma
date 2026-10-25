@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Invariance
+import Def.v1.Atlas.BooleanFunctions.code.Invariance
 open Finset BigOperators MeasureTheory BooleanFourier
 
 

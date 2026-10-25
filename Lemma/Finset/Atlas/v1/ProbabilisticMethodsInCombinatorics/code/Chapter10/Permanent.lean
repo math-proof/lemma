@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
 open Finset Matrix BigOperators KahnLovasz
 open SimpleGraph Finset BigOperators
 

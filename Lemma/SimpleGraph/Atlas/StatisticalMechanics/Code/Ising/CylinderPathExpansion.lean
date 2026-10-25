@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.CylinderPathExpansion
+import Theorem.StatisticalMechanics.Code.Ising.CylinderPathExpansion
 open Finset Matrix StatMech StatMech.Ising
 
 

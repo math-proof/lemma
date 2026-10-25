@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanConvexBox
+import Theorem.StatisticalMechanics.Code.Lattice.JordanConvexBox.Part3
 open Set SimpleGraph StatMech StatMech.Lattice
 
 

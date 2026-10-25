@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneTwoEdgeCyclePairToggle
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneTwoEdgeCyclePairToggle
 open SimpleGraph Finset BigOperators StatMech StatMech.Sharpness StatMech.Sharpness.BackboneTwoEdgeCyclePairToggle
 
 

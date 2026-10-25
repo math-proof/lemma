@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionWiring
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionWiring
 import Lemma.List.IsReduced_Drop.of.IsReduced
 open List CoxeterGroup
 

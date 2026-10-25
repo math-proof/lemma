@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger.RealStable
+import Theorem.MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger.RealStable
 open scoped ComplexOrder
 open MvPolynomial
 open MathlibExt.Analysis.CStarAlgebra.KadisonSinger

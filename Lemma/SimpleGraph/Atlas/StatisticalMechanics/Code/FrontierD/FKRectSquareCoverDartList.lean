@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectSquareCoverDartList
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSquareCoverDartList
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.Z2GaugeWilsonRatio
+import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeWilsonRatio
 open Finset StatMech StatMech.FrontierA
 
 

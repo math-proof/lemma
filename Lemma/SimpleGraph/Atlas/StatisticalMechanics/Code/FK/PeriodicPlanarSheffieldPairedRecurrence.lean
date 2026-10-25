@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPairedRecurrence
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPairedRecurrence.Part27
 open Filter MeasureTheory Set Topology StatMech StatMech.FK StatMech.FK.PeriodicPlanar StatMech.FK.PeriodicPlanar.PairedMixedBoundaryScores StatMech.FK.PeriodicPlanar.AlignedCrossNestedPairedSequence
 
 

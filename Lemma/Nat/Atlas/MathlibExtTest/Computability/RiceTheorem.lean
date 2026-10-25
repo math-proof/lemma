@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Computability.RiceTheorem
+import Theorem.MathlibExtTest.Computability.RiceTheorem
 
 
 /--

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Recurrences.LucasSequenceFirstKind
+import Def.NumberTheory.Recurrences.LucasSequenceFirstKind
 open MetaMathlibExt
 
 

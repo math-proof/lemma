@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.RectangularPrismTransfer
+import Theorem.StatisticalMechanics.Code.Ising.RectangularPrismTransfer.Part7
 open Finset Matrix Filter Topology StatMech StatMech.Ising
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.npjnopinch
+import Theorem.StatisticalMechanics.Code.Walls.npjnopinch.Part2
 open SimpleGraph Set StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.ParkingFunction
+import Instance.Combinatorics.Enumerative.ParkingFunction
 open MetaMathlibExt
 
 

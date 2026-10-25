@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterProperties
+import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterProperties.Part2
 open ChamberComplex
 open scoped Classical
 

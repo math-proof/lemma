@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.Z2GaugePerimeterReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugePerimeterReduction.Part4
 open StatMech StatMech.FrontierA
 
 

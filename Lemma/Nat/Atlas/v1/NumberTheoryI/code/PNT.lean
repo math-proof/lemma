@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.PNT
+import Def.v1.Atlas.NumberTheoryI.code.PNT
 open Chebyshev Asymptotics Filter Topology MeasureTheory Finset Nat (primeCounting) Real (log exp) Chapter16
 open Nat (primeCounting)
 open Real (log exp)

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.Words
+import Abbrev.v1.Atlas.Buildings.code.CoxeterGroup.Words
 
 
 namespace CoxeterSystem

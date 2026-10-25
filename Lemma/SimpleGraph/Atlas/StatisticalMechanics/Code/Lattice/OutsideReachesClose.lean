@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.OutsideReachesClose
+import Theorem.StatisticalMechanics.Code.Lattice.OutsideReachesClose.Part2
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

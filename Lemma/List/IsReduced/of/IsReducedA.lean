@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.BruhatSubexpression
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.BruhatSubexpression
 import Lemma.List.Any_And_Eq_WordProd.of.Eq_WordProd.IsReduced.BruhatLE.ReducedSublistProperty.StrongExchangeCondition
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.Tilt
+import Theorem.StatisticalMechanics.Code.FK.Tilt.Part3
 open StatMech StatMech.FK
 
 

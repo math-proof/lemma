@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectFaithfulWalkVerticalBound
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulWalkVerticalBound
 open SimpleGraph StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexCorrectedStripWindow
+import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripWindow.Part8
 open StatMech StatMech.Universality
 
 

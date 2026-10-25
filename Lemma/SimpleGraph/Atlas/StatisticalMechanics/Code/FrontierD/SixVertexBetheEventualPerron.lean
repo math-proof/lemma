@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheEventualPerron
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheEventualPerron
 open Filter Topology StatMech StatMech.FrontierD
 
 

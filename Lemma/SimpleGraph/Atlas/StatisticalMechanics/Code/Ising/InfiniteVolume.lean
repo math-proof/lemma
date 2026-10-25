@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.InfiniteVolume
+import Theorem.StatisticalMechanics.Code.Ising.InfiniteVolume.Part9
 open MeasureTheory Filter Topology StatMech StatMech.Ising
 
 

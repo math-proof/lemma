@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.ChordCut
+import Theorem.StatisticalMechanics.Code.Onsager.ChordCut.Part5
 open StatMech StatMech.Onsager StatMech.Onsager.ChordCut
 
 

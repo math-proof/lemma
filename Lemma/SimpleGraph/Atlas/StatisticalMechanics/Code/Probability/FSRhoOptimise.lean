@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.FSRhoOptimise
+import Theorem.StatisticalMechanics.Code.Probability.FSRhoOptimise
 open Finset Real StatMech StatMech.Probability
 
 

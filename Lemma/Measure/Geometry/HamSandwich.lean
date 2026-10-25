@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MeasureTheory.Geometry.HamSandwich
+import Def.MeasureTheory.Geometry.HamSandwich
 open MeasureTheory
 open Metric
 open scoped InnerProductSpace MeasureTheory

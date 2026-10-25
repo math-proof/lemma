@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheRootDensityFinite
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheRootDensityFinite
 open Finset StatMech StatMech.FrontierD
 
 

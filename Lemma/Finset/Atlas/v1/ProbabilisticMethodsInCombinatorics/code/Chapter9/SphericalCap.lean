@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.SphericalCap
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.SphericalCap
 open Real Set MeasureTheory SphericalCap
 
 

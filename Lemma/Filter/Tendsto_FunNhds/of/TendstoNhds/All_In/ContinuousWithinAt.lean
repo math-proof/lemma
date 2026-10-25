@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_9_4
+import Theorem.Analysis.Section_9_4.Part2
 open Chapter9
 open Filter
 open Filter.Tendsto

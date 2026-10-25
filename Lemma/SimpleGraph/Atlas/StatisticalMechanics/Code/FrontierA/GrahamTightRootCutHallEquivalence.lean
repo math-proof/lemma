@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamTightRootCutHallEquivalence
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamTightRootCutHallEquivalence
 open StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

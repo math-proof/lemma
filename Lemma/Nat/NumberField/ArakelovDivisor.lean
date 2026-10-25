@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.ArakelovDivisor
+import Def.NumberTheory.NumberField.ArakelovDivisor.Part3
 open scoped NumberField nonZeroDivisors
 open FractionalIdeal
 open NumberField

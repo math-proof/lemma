@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Entry10Example2LogPoissonAsymptotic
+import Def.NumberTheory.Ramanujan.Part1Ch3Entry10Example2LogPoissonAsymptotic
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry10Example2LogPoissonAsymptotic
 

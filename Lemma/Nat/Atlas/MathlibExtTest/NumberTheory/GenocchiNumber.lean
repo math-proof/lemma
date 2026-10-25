@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.GenocchiNumber
+import Theorem.MathlibExtTest.NumberTheory.GenocchiNumber
 
 
 namespace MetaMathlibExtTest

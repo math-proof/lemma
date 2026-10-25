@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.DifferentDiscriminant
+import Def.v1.Atlas.NumberTheoryI.code.DifferentDiscriminant.Part3
 open Algebra Submodule FractionalIdeal IsDedekindDomain
 open scoped Matrix
 open TensorProduct

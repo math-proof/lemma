@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc18mengerhard
+import Theorem.StatisticalMechanics.Code.Walls.bc18mengerhard.Part3
 open StatMech StatMech.Walls
 
 

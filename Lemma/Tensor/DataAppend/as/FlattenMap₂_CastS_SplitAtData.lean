@@ -3,7 +3,6 @@ import torch.Tensor.prod
 import torch.Tensor.Basic
 open Bool
 
-
 @[path, cast]
 private lemma main
   {b_z : List ℕ}
@@ -20,7 +19,6 @@ private lemma main
     simp [HAppend.hAppend]
   .
     grind
-
 
 -- created on 2026-04-25
 -- updated on 2026-05-02

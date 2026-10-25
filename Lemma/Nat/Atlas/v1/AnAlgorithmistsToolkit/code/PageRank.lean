@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.PageRank
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.PageRank
 open Matrix Finset PageRank
 open scoped Matrix BigOperators
 

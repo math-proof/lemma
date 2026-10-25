@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterThreeBridgeClosure
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterThreeBridgeClosure
 open Finset SimpleGraph StatMech StatMech.Ising
 
 

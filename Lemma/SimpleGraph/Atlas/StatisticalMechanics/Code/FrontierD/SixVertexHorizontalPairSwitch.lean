@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalPairSwitch
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalPairSwitch.Part4
 open Finset StatMech StatMech.FrontierD
 
 

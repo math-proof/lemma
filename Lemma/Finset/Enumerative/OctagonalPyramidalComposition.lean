@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.OctagonalPyramidalNumber
+import Def.Combinatorics.Enumerative.OctagonalPyramidalNumber
 
 
 namespace MetaMathlibExt

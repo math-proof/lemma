@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingDiagonalReflectionInfinite
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingDiagonalReflectionInfinite.Part2
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierA
 
 

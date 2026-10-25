@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.PellLucasNumber
+import Def.Combinatorics.Enumerative.PellLucasNumber
 open MetaMathlibExt
 
 

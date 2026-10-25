@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.BertiniVeronese
+import Def.v1.Atlas.AlgebraicGeometryI.code.BertiniVeronese.Part3
 open MvPolynomial Finset sets where a specified monomial coefficient is nonzero. -/ BertiniVeronese
 open sets where a specified monomial coefficient is nonzero. -/
 

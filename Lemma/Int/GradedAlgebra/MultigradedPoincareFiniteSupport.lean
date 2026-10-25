@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.GradedAlgebra.MultigradedPoincareFiniteSupport
+import Theorem.RingTheory.GradedAlgebra.MultigradedPoincareFiniteSupport
 open MetaMathlibExt
 
 

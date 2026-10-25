@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Lemma22_13
+import Theorem.v1.Atlas.ArithmeticGeometry.code.Lemma22_13
 open FunctionFieldAdeleRing DiscreteValuationFamily
 open scoped RestrictedProduct
 

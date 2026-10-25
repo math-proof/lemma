@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.TildePc
+import Def.StatisticalMechanics.Code.Percolation.TildePc.Part4
 open MeasureTheory Finset StatMech StatMech.Percolation
 
 

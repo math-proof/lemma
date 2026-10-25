@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.ComplexAnalysis
+import Def.v1.Atlas.NumberTheoryI.code.ComplexAnalysis.Part2
 open Complex Set Filter Finset MeasureTheory Topology Metric
 
 

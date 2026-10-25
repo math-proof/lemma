@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicDenseIncidenceRootBound
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDenseIncidenceRootBound
 open StatMech StatMech.Universality StatMech.Universality.FKIsingCaratheodoryApproximation
 
 

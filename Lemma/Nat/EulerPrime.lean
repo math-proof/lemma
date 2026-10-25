@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.EulerPrime
+import Def.NumberTheory.EulerPrime
 open MetaMathlibExt
 
 

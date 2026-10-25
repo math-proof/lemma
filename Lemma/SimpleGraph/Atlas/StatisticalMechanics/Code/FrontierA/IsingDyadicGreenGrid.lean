@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingDyadicGreenGrid
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingDyadicGreenGrid.Part2
 open Finset Set StatMech StatMech.FrontierA
 
 

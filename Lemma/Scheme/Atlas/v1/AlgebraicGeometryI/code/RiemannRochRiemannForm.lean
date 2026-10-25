@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.RiemannRochRiemannForm
+import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochRiemannForm
 open CanonicalSheafCurves RiemannRochEulerCurves RiemannFormRR SheafCohCurvesFiniteness RiemannRochRiemannForm
 open SheafCohCurvesFiniteness
 

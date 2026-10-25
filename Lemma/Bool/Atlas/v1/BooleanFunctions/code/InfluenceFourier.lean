@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.InfluenceFourier
+import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
 open Finset BigOperators BooleanFourier
 open scoped symmDiff
 

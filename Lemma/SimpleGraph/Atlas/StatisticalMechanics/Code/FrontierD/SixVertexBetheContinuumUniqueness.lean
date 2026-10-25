@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheContinuumUniqueness
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheContinuumUniqueness
 open StatMech StatMech.FrontierD
 
 

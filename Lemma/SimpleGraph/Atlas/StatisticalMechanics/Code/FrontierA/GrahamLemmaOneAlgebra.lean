@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamLemmaOneAlgebra
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamLemmaOneAlgebra
 open StatMech StatMech.FrontierA
 
 

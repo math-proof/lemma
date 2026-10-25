@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.BKTLemma2
+import Def.v1.Atlas.ProjectionTheory.code.BKTLemma2
 open Finset MultiplicativeConvolution
 open scoped BigOperators
 

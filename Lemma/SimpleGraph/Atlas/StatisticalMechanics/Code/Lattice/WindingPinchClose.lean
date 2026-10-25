@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.WindingPinchClose
+import Theorem.StatisticalMechanics.Code.Lattice.WindingPinchClose
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

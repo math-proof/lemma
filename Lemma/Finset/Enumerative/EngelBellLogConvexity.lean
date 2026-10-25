@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.BellTuranIdentity
+import Def.Combinatorics.Enumerative.BellTuranIdentity
 import Lemma.Finset.Enumerative.BellTuranIdentity
 
 

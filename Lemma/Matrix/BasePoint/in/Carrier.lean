@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers
+import Def.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part4
 open Set AffineHyperplane
 open scoped InnerProductSpace
 

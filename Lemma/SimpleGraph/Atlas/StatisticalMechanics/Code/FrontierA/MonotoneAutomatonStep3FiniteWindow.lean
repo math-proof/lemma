@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonStep3FiniteWindow
+import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonStep3FiniteWindow.Part12
 open MeasureTheory Set Finset SimpleGraph StatMech StatMech.FrontierA
 
 

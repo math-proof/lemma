@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.KWDualBijection
+import Theorem.StatisticalMechanics.Code.Ising.KWDualBijection.Part2
 open Finset SimpleGraph StatMech StatMech.Ising
 
 

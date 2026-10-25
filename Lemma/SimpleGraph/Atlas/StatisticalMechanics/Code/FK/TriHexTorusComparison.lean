@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexTorusComparison
+import Theorem.StatisticalMechanics.Code.FK.TriHexTorusComparison.Part2
 open Finset Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

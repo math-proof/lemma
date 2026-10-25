@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.FC.OeisA211417_supercongruence_solution
+import Def.FC.OeisA211417_supercongruence_solution.Part3
 open OeisA211417
 open Nat Int Finset
 

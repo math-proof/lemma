@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.Polynomial.L1Norm
+import Def.Algebra.Polynomial.L1Norm
 import Lemma.Polynomial.L1Norm
 
 

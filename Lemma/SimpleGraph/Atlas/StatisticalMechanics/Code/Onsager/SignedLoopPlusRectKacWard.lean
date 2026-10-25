@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopPlusRectKacWard
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopPlusRectKacWard.Part3
 open Finset SimpleGraph MeasureTheory Filter Topology StatMech StatMech.Onsager
 
 

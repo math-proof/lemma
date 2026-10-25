@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWStrictAxisSourcePartition
+import Theorem.StatisticalMechanics.Code.Universality.RSWStrictAxisSourcePartition
 open Finset SimpleGraph Set MeasureTheory StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch9Entry16Tanseries
+import Def.Analysis.Ramanujan.Part1Ch9Entry16Tanseries
 open MathlibExt.Analysis.SpecialFunctions.ArcsinTaylorSeries
 open scoped BigOperators
 open MathlibExt.Analysis.Ramanujan.Part1Ch9

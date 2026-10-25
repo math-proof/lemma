@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.InfiniteTailWitnessPackage
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailWitnessPackage.Part7
 open StatMech StatMech.Exact3D StatMech.Exact3D.InfiniteTailWitnessPackage
 
 

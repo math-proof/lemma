@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionReduction.Part2
 open Set Filter Topology StatMech StatMech.Ising
 
 

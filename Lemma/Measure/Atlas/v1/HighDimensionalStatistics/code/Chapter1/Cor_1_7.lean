@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Cor_1_7
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Cor_1_7
 open MeasureTheory Real ProbabilityTheory BigOperators Finset
 
 

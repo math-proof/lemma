@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.DiophantineApproximation.WeylCriterion
+import Theorem.NumberTheory.DiophantineApproximation.WeylCriterion.Part2
 open scoped BigOperators
 open Filter Topology
 open MetaMathlibExt

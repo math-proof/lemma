@@ -1,0 +1,67 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/ComponentThirdSplit.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteCombinatorics
+import Theorem.StatisticalMechanics.Code.Exact3D.BoxPathWitness.Part4
+import Theorem.StatisticalMechanics.Code.Walls.gc7componenteven
+import Theorem.StatisticalMechanics.Code.Exact3D.ComponentThirdSplit.Part5
+open Filter
+open scoped symmDiff
+
+
+namespace StatMech
+
+namespace Exact3D
+
+set_option linter.style.longLine false in
+
+
+def BoundaryVertexDecrementedSourceLowGhostMultiplicitySigmaEmptyWeightNonzeroBranchPositiveSubcritical :
+    Prop :=
+  ∀ β (_hβpos : 0 < β), β < Ising.betaC 3 →
+    ∀ᶠ n in atTop,
+      ∀ H : ℝ, 0 < H →
+        ∀ Ω : Finset
+          (↥(Sharpness.withGhost (FK.boxGraph 3 n)).edgeFinset → ℕ),
+          ∀ v, v ∈ Finset.univ.filter (FK.boxBoundary 3 n) →
+            let Ωnz := finiteBoundaryGhostWeightNonzeroCutoff β H n Ω
+            let e := finiteBoundaryGhostBoundaryEdge n v
+            (∑ a ∈
+                (finiteBoundaryGhostDecrementedSourceWeightVertexSigmaCurrentSupport
+                  n Ωnz v).filter (fun a => a.1 e ≤ (1 : ℕ)),
+                finiteBoundaryGhostDecrementedSourceWeightVertexSigmaSummand
+                  β H n v a) ≤
+              finiteBoundaryGhostBoundaryFiberSourcePairVertexEmptyTerm
+                β H n v
+
+set_option linter.style.longLine false in
+
+
+def BoundaryVertexDecrementedSourceResidualGhostMultiplicitySigmaMainWeightNonzeroBranchPositiveSubcritical :
+    Prop :=
+  ∀ β (_hβpos : 0 < β), β < Ising.betaC 3 →
+    ∀ᶠ n in atTop,
+      ∀ H : ℝ, 0 < H →
+        ∀ Ω : Finset
+          (↥(Sharpness.withGhost (FK.boxGraph 3 n)).edgeFinset → ℕ),
+          ∀ v, v ∈ Finset.univ.filter (FK.boxBoundary 3 n) →
+            let Ωnz := finiteBoundaryGhostWeightNonzeroCutoff β H n Ω
+            let e := finiteBoundaryGhostBoundaryEdge n v
+            (∑ a ∈
+                (finiteBoundaryGhostDecrementedSourceWeightVertexSigmaCurrentSupport
+                  n Ωnz v).filter (fun a => ¬ a.1 e ≤ (1 : ℕ)),
+                finiteBoundaryGhostDecrementedSourceWeightVertexSigmaSummand
+                  β H n v a) ≤
+              finiteBoundaryGhostCollapsedCutoffBoundaryFiberCard n Ωnz v *
+                finiteBoundaryGhostBoundaryFiberSourcePairVertexMainTerm
+                  β H n v
+
+end Exact3D
+end StatMech

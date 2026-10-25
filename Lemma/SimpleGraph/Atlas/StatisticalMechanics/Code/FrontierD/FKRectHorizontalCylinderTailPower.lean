@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderTailPower
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderTailPower
 open StatMech StatMech.FrontierD
 
 

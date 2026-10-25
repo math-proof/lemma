@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardInteriorSideSplice
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardInteriorSideSplice
 open StatMech StatMech.FrontierA
 
 

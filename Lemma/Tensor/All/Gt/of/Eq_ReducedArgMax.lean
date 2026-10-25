@@ -1,4 +1,4 @@
-import sympy.concrete.reduced
+import Theorem.Algebra.BigOperators.Reduced.Part2
 import sympy.Basic
 
 

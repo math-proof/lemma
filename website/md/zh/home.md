@@ -49,9 +49,8 @@
   - [Jensen 不等式](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc.main)
 * [Hyperreal](../?module=Real) 非标准分析
 * [Complex](../?module=Complex) 复分析，例：
-  - [一元二次方程](../?module=Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0)
-  - [一元三次方程](../?module=Complex.Eq0Add_Mul_Pow_3.is.In_Finset_SubSAddMulS.of.Ne_0)
   - [一元四次方程](../?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0)
+  - [常系数齐次线性递推通项公式](../?module=Complex.Any_All_Eq_Dot_MulDescFactorial.of.All_Eq_Dot)
 * [Set](../?module=Set) 集合论
 * [Finset](../?module=Finset) 有限集合论，例：
   - [k-means 聚类](../?module=Finset.LeAddSumS_SquareSub_Div_Sum.of.LeAbsSSub_Div_Sum.NotIn.In.GtCard_0)

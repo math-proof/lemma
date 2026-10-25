@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FunctionalBKRMonotoneReal
+import Theorem.StatisticalMechanics.Code.FrontierA.FunctionalBKRMonotoneReal.Part2
 open Finset StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.BurnsidePaqb.CharacterOrthogonality
+import Def.GroupTheory.BurnsidePaqb.CharacterOrthogonality.Part6
 open CategoryTheory
 open BurnsidePaqb
 

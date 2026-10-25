@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Twists
+import Abbrev.v1.Atlas.ArithmeticGeometry.code.Twists.Part2
 open AlgebraicGeometry CategoryTheory Limits ArithmeticGeometry
 
 

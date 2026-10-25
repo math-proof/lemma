@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectMedialReachability
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialReachability
 open SimpleGraph StatMech StatMech.FrontierD
 
 

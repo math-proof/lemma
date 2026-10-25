@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.PeierlsSingleCircuit
+import Theorem.StatisticalMechanics.Code.Lattice.PeierlsSingleCircuit.Part4
 open Finset Set SimpleGraph StatMech StatMech.Lattice StatMech.Lattice.EulerianExistence
 
 

@@ -3,7 +3,6 @@ import Lemma.Random.NormSubBellmanOp.le.MulNormSub
 import Lemma.Random.Gtμmin_0AndGeη_0AndLtη_1
 open Finset
 
-
 @[path]
 private lemma main
   {S A : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype A] [DecidableEq A] [Nonempty A] [MeasurableSpace A] [MeasurableSingletonClass A]
@@ -41,6 +40,5 @@ private lemma main
       unfold QLearningSpec.η
       gcongr
       linarith
-
 
 -- created on 2026-09-26

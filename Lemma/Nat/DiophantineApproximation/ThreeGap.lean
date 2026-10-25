@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.DiophantineApproximation.ThreeGap
+import Def.NumberTheory.DiophantineApproximation.ThreeGap
 open MetaMathlibExt
 
 

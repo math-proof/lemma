@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.Lemma_1_30_2
+import Def.v1.Atlas.TensorCategories.code.Lemma_1_30_2
 
 
 /--

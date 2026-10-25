@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc4_firstedgeone
+import Theorem.StatisticalMechanics.Code.Walls.oc4_firstedgeone
 open Finset MeasureTheory StatMech StatMech.Walls
 
 

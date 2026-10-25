@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DiscreteValuationRing.MaximalIdealPowQuotientTrace
+import Theorem.RingTheory.DiscreteValuationRing.MaximalIdealPowQuotientTrace
 open IsLocalRing
 
 

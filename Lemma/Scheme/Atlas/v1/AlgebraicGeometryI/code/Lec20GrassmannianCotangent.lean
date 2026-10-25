@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec20GrassmannianCotangent
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec20GrassmannianCotangent
 open Module
 
 

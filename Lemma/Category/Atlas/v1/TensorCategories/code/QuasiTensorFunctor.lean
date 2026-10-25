@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.QuasiTensorFunctor
+import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
 open CategoryTheory MonoidalCategory TensorCategories in
 
 

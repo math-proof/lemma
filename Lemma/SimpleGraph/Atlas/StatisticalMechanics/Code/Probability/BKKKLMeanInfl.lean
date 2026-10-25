@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.BKKKLMeanInfl
+import Theorem.StatisticalMechanics.Code.Probability.BKKKLMeanInfl.Part2
 open Finset Real Set StatMech StatMech.Probability
 
 

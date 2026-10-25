@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.DivisionPolynomials
+import Def.v1.Atlas.EllipticCurves.code.DivisionPolynomials.Part10
 open Polynomial WeierstrassCurve.Affine in ShortWeierstrassCurve ShortWeierstrassCurve.VeluDeg2Data ShortWeierstrassCurve.VeluOddData IsogenyStandardForm DivisionPolynomial
 open scoped Polynomial.Bivariate
 

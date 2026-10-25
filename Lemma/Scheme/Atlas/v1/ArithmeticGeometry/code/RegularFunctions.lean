@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.RegularFunctions
+import Def.v1.Atlas.ArithmeticGeometry.code.RegularFunctions.Part9
 open MvPolynomial
 open MvPolynomial CategoryTheory
 

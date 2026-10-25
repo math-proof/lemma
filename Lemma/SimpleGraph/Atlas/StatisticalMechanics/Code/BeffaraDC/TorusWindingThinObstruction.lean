@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.TorusWindingThinObstruction
+import Theorem.StatisticalMechanics.Code.BeffaraDC.TorusWindingThinObstruction
 open SimpleGraph Set StatMech StatMech.BeffaraDC
 
 

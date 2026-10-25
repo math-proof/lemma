@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.SpaceComplexity
+import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
 open Computability TuringMachine SpaceComplexity
 open TuringMachine
 open NPCompleteness

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.IdentityProductNecklace
+import Theorem.Combinatorics.Enumerative.IdentityProductNecklace.Part4
 open MetaMathlibExt
 
 

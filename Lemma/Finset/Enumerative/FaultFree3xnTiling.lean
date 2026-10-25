@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.FaultFree3xnTiling
+import Def.Combinatorics.Enumerative.FaultFree3xnTiling.Part21
 open MetaMathlibExt
 
 

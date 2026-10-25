@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.osd_twostagedecay
+import Theorem.StatisticalMechanics.Code.Walls.osd_twostagedecay
 open Real Filter Topology Set Finset StatMech StatMech.Walls
 
 

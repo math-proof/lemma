@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.Statistics.GlivenkoCantelli
+import Def.Probability.Statistics.GlivenkoCantelli
 open MeasureTheory ProbabilityTheory Set
 open scoped ENNReal
 open Filter Function

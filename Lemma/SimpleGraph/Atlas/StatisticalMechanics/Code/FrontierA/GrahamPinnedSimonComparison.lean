@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamPinnedSimonComparison
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamPinnedSimonComparison
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

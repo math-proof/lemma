@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationLoopClassification
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationLoopClassification.Part5
 open StatMech StatMech.Onsager
 
 

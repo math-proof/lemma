@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.BoxCrossingUncond
+import Theorem.StatisticalMechanics.Code.RSW.BoxCrossingUncond.Part3
 open Set MeasureTheory SimpleGraph StatMech StatMech.RSW StatMech.RSW.Uncond
 
 

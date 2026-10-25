@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.InsideCoveringClose
+import Theorem.StatisticalMechanics.Code.Lattice.InsideCoveringClose
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

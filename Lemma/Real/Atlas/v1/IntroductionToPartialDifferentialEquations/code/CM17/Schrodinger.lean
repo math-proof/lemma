@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.Schrodinger
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.Schrodinger
 open MeasureTheory Complex FourierTransform SchrodingerEquation
 
 

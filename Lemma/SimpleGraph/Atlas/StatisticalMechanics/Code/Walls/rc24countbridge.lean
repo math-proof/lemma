@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc24countbridge
+import Theorem.StatisticalMechanics.Code.Walls.rc24countbridge.Part3
 open Finset StatMech StatMech.Walls
 
 

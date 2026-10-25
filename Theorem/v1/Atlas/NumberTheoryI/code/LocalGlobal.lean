@@ -1,0 +1,54 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/LocalGlobal.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
+import Mathlib.FieldTheory.Galois.Basic
+import Mathlib.FieldTheory.IsAlgClosed.Basic
+import Mathlib.Analysis.Complex.Polynomial.Basic
+import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
+import Mathlib.RingTheory.Norm.Defs
+import Mathlib.RingTheory.Trace.Defs
+import Mathlib.LinearAlgebra.Charpoly.BaseChange
+import Mathlib.RingTheory.TensorProduct.Basic
+import Mathlib.LinearAlgebra.Trace
+import Mathlib.RingTheory.Trace.Basic
+import Mathlib.RingTheory.Norm.Basic
+import Mathlib.GroupTheory.SpecificGroups.Cyclic
+import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GlobalFields
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.KrasnerLemma
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
+import Def.v1.Atlas.NumberTheoryI.code.KrasnerLemma
+import Mathlib.Topology.Algebra.Valued.NormedValued
+import Mathlib.FieldTheory.PrimitiveElement
+import Mathlib.RingTheory.Ideal.GoingUp
+import Mathlib.RingTheory.AdjoinRoot
+import Mathlib.Algebra.Polynomial.Eval.Irreducible
+import Mathlib.Algebra.Polynomial.SpecificDegree
+import Theorem.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra.Part3
+import Def.v1.Atlas.NumberTheoryI.code.LocalGlobal
+open scoped NumberField TensorProduct
+open NumberField IsDedekindDomain
+
+
+noncomputable section
+
+lemma algEquiv_eq_refl_of_finrank_one {F E : Type*} [Field F] [Field E] [Algebra F E]
+    [FiniteDimensional F E] (h : Module.finrank F E = 1) (e : E ≃ₐ[F] E) :
+    e = AlgEquiv.refl := by
+  have htop := Subalgebra.bot_eq_top_of_finrank_eq_one h
+  ext x
+  have hx : x ∈ (⊤ : Subalgebra F E) := Algebra.mem_top
+  rw [← htop] at hx
+  obtain ⟨y, rfl⟩ := hx
+  simp [AlgEquiv.commutes]
+
+end

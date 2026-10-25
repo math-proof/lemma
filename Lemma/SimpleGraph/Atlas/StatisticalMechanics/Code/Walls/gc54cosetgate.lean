@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc54cosetgate
+import Theorem.StatisticalMechanics.Code.Walls.gc54cosetgate.Part2
 open Finset BigOperators SimpleGraph StatMech StatMech.Walls
 
 

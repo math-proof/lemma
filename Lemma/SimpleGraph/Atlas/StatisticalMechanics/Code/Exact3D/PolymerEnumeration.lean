@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.PolymerEnumeration
+import Theorem.StatisticalMechanics.Code.Exact3D.PolymerEnumeration.Part39
 open StatMech StatMech.Exact3D StatMech.Exact3D.PolymerSupport StatMech.Exact3D.BoundedSite StatMech.Exact3D.BoundedPolymerCase
 
 

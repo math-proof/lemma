@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.AlgebrasInCategories
+import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
 open CategoryTheory CategoryTheory.RightMod_
 
 

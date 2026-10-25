@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SerreDualityLinear
+import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityLinear.Part4
 open SerreDualityP1
 open CohomologyP1
 

@@ -1,15 +1,15 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
+import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_19
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_14_SubspaceBound
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_19
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_14_SubspaceBound
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_19
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_14_SubspaceBound
 open Matrix Finset BigOperators Rigollet MeasureTheory
 
 

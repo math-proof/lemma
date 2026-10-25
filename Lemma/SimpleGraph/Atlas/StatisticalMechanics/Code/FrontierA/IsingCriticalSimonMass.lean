@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingCriticalSimonMass
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalSimonMass
 open Finset Filter Set Topology StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc4_revealeqreach
+import Theorem.StatisticalMechanics.Code.Walls.oc4_revealeqreach
 open MeasureTheory Finset StatMech StatMech.Walls
 
 

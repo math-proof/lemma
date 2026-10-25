@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexVertexFull
+import Theorem.StatisticalMechanics.Code.Universality.HexVertexFull
 open StatMech StatMech.Universality StatMech.Universality.HexFiniteRegion
 
 

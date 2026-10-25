@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc5_nonvacuity
+import Theorem.StatisticalMechanics.Code.Walls.rc5_nonvacuity
 open Finset StatMech StatMech.Walls
 
 

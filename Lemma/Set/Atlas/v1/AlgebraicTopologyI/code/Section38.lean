@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section38
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section38.Part3
 open Metric Set Manifold CategoryTheory AlgebraicTopology Limits TopCat BorsukUlam PoincareDuality
 open Manifold CategoryTheory
 open PoincareDuality

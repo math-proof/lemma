@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheCharacteristicRoot
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCharacteristicRoot
 open Finset Matrix StatMech StatMech.FrontierD
 
 

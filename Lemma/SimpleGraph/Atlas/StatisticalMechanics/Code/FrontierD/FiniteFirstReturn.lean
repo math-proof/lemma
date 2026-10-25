@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FiniteFirstReturn
+import Theorem.StatisticalMechanics.Code.FrontierD.FiniteFirstReturn.Part8
 open StatMech StatMech.FrontierD
 
 

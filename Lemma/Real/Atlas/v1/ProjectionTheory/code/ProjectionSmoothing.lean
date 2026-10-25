@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.ProjectionSmoothing
+import Def.v1.Atlas.ProjectionTheory.code.ProjectionSmoothing
 open MeasureTheory MeasureTheory.Measure Metric Set Function Filter ProjectionSmoothing
 
 

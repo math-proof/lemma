@@ -1,6 +1,5 @@
 import sympy.vector.Basic
 
-
 @[path]
 private lemma main
   [Div α]
@@ -10,6 +9,5 @@ private lemma main
   a / b = a.map₂ HDiv.hDiv b :=
 -- proof
   rfl
-
 
 -- created on 2025-09-23

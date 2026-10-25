@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.HopfAlgebra
+import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
 import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
 
 

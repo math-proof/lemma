@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaAggregateSwitching
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaAggregateSwitching
 open Finset StatMech StatMech.Ising
 
 

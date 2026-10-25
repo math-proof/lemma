@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.RamificationInertia.Inseparable
+import Theorem.NumberTheory.RamificationInertia.Inseparable
 open scoped Pointwise
 open Ideal
 

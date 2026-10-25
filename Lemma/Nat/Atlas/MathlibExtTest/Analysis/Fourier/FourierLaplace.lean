@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Analysis.Fourier.FourierLaplace
+import Theorem.MathlibExtTest.Analysis.Fourier.FourierLaplace
 open MeasureTheory
 
 

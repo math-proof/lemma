@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.GeometricAlgebra.HyperbolicCancellation
+import Def.v1.Atlas.Buildings.code.GeometricAlgebra.HyperbolicCancellation
 open Garrett
 
 

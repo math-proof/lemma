@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.EntropySubadditivity
+import Theorem.StatisticalMechanics.Code.Probability.EntropySubadditivity.Part2
 open Finset Real StatMech StatMech.Probability
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc68countmarriage
+import Theorem.StatisticalMechanics.Code.Walls.rc68countmarriage.Part3
 open Finset StatMech StatMech.Walls
 
 

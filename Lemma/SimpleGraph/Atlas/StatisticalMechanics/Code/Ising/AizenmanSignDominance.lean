@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.AizenmanSignDominance
+import Theorem.StatisticalMechanics.Code.Ising.AizenmanSignDominance.Part2
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Ising StatMech.Sharpness StatMech.Sharpness.RandomCurrent
 
 

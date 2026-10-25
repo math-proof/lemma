@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.DecomposingCoverings
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.DecomposingCoverings
 open Set Metric DecomposingCoverings
 
 

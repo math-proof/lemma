@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.BXPAspectTransfer
+import Theorem.StatisticalMechanics.Code.Universality.BXPAspectTransfer
 open Set MeasureTheory SimpleGraph StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryToggleMergeWinding
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryToggleMergeWinding
 open Equiv Finset SimpleGraph StatMech StatMech.FrontierD
 
 

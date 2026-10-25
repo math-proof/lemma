@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.InfiniteClusterTail
+import Theorem.StatisticalMechanics.Code.Percolation.InfiniteClusterTail.Part3
 open Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

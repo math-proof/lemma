@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.LopsidedLLL
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.LopsidedLLL
 import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter6.LopsidedLLL
 open MeasureTheory ProbabilityTheory ENNReal Set Finset Real
 

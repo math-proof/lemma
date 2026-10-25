@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.GeneralInteractionFreeSelection
+import Theorem.StatisticalMechanics.Code.FrontierB.GeneralInteractionFreeSelection.Part2
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierB
 
 

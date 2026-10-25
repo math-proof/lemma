@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DiscreteValuationRing.Monogenic
+import Theorem.RingTheory.DiscreteValuationRing.Monogenic
 open IsLocalRing
 open IsDiscreteValuationRing
 

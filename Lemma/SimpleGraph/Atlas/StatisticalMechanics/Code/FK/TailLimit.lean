@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TailLimit
+import Theorem.StatisticalMechanics.Code.FK.TailLimit.Part2
 open MeasureTheory Filter Topology StatMech StatMech.FK
 
 

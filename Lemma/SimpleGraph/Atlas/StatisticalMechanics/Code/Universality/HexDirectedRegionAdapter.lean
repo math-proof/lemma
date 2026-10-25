@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexDirectedRegionAdapter
+import Def.StatisticalMechanics.Code.Universality.HexDirectedRegionAdapter.Part6
 open StatMech StatMech.Universality
 
 

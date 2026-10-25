@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Padics.HilbertSymbol.Units
+import Def.NumberTheory.Padics.HilbertSymbol.Units
 open HilbertSymbol
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetDiscreteContraction
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetDiscreteContraction
 open Finset StatMech StatMech.FrontierD
 
 

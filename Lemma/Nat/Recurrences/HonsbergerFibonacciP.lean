@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Recurrences.HonsbergerFibonacciP
+import Def.NumberTheory.Recurrences.HonsbergerFibonacciP
 open MetaMathlibExt
 
 

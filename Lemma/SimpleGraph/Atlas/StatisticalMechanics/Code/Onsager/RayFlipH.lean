@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.RayFlipH
+import Theorem.StatisticalMechanics.Code.Onsager.RayFlipH
 open StatMech StatMech.Onsager StatMech.Onsager.RayFlipH
 
 

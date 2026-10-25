@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.NuLambdaPascalMatrix
+import Def.LinearAlgebra.Matrix.NuLambdaPascalMatrix
 open scoped BigOperators
 open MetaMathlibExt
 

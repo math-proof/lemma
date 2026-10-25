@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.KestenHalf
+import Theorem.StatisticalMechanics.Code.Universality.KestenHalf
 open MeasureTheory Set Filter Topology StatMech StatMech.Universality
 
 

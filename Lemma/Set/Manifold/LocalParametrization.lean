@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.LocalParametrization
+import Def.Geometry.Manifold.LocalParametrization
 open scoped Topology Manifold ContDiff
 open Manifold
 open MathlibExt.Geometry.Manifold.LocalParametrizationWanted

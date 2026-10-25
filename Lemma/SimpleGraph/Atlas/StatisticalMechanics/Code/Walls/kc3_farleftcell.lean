@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kc3_farleftcell
+import Theorem.StatisticalMechanics.Code.Walls.kc3_farleftcell
 open Set SimpleGraph StatMech StatMech.Walls
 
 

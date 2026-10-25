@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.BdEdgeMatchStarHull
+import Theorem.StatisticalMechanics.Code.Lattice.BdEdgeMatchStarHull
 open Set SimpleGraph StatMech StatMech.Lattice
 
 

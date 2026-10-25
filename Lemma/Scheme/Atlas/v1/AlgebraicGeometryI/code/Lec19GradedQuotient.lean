@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec19GradedQuotient
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec19GradedQuotient
 open DirectSum BigOperators
 
 

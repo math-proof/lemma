@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.lkplinkingparity
+import Theorem.StatisticalMechanics.Code.Walls.lkplinkingparity
 open Finset SimpleGraph StatMech StatMech.Walls
 
 

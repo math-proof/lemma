@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MultipleBinomialTransform
+import Def.Combinatorics.Enumerative.MultipleBinomialTransform
 
 
 namespace MetaMathlibExt

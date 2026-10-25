@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.CorrelationLength
+import Def.StatisticalMechanics.Code.Exact3D.CorrelationLength.Part3
 open StatMech StatMech.Exact3D
 
 

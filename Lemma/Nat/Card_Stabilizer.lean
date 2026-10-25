@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.DicksonPGL2Tame
+import Theorem.GroupTheory.DicksonPGL2Tame.Part4
 open scoped BigOperators
 open MetaMathlibExt
 open Dickson

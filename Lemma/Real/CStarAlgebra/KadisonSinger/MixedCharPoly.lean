@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
+import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
 open scoped BigOperators
 open Polynomial
 open MvPolynomial

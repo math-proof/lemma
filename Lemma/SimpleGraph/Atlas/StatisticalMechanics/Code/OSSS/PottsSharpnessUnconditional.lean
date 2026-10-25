@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.PottsSharpnessUnconditional
+import Theorem.StatisticalMechanics.Code.OSSS.PottsSharpnessUnconditional
 open MeasureTheory Filter StatMech StatMech.OSSS StatMech.OSSS.PottsSharpnessUnconditional
 
 

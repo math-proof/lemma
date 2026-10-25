@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.TwoDim.Crossings
+import Theorem.StatisticalMechanics.Code.TwoDim.Crossings.Part4
 open Set StatMech StatMech.TwoDim
 
 

@@ -1,7 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 open Bool
 
-
 @[path]
 private lemma main
   {a : List.Vector α n}
@@ -21,6 +20,5 @@ private lemma main
   have h_b := Eq.of.SEq h_b
   subst h_a h_b
   rfl
-
 
 -- created on 2026-01-11

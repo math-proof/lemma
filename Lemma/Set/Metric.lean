@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Metric
+import Def.Geometry.Metric.Part2
 open scoped Finset
 
 

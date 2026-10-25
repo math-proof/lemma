@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardForest
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardForest
 open Finset SimpleGraph StatMech StatMech.FrontierA
 
 

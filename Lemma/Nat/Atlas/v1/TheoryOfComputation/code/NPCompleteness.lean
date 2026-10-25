@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.NPCompleteness
+import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part8
 open TuringMachine in NPCompleteness CookLevin ThreeSATComplete HamiltonianPath
 open TuringMachine NPCompleteness
 

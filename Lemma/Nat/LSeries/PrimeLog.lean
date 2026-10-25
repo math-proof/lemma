@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.LSeries.PrimeLog
+import Def.NumberTheory.LSeries.PrimeLog
 open scoped LSeries.notation
 open Nat.Primes
 

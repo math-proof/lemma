@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.ReimerPairWitnessClose
+import Theorem.StatisticalMechanics.Code.Inequalities.ReimerPairWitnessClose.Part4
 open Finset MeasureTheory StatMech
 
 

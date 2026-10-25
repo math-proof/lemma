@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedThreshold
+import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedThreshold.Part4
 open Finset Set Filter Topology MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.FKSharpnessWeightedThreshold
 
 

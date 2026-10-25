@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.GrothendieckRing
+import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
 open Finset FusionRing FusionRing.GrRingOf repZ2
 open FusionRing
 

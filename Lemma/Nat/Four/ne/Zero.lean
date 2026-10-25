@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_2_1
+import Abbrev.Analysis.Section_2_1
 import Lemma.Nat.Ne0
 open Chapter2 hiding Nat
 open Chapter2.Nat

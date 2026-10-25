@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedOrbitInteraction
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedOrbitInteraction.Part2
 open Equiv Finset StatMech StatMech.FrontierD
 
 

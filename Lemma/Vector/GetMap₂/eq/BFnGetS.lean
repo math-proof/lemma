@@ -1,6 +1,5 @@
 import sympy.vector.Basic
 
-
 @[path, fin]
 private lemma main
 -- given
@@ -12,6 +11,5 @@ private lemma main
   (a.map₂ f b)[i] = f a[i] b[i] := by
 -- proof
   simp [GetElem.getElem]
-
 
 -- created on 2026-05-03

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.RussoPrefactor
+import Theorem.StatisticalMechanics.Code.OSSS.RussoPrefactor
 open Real Finset StatMech StatMech.OSSS StatMech.OSSS.RussoPrefactor
 
 

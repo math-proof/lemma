@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.ThreePendantTree
+import Theorem.StatisticalMechanics.Code.Percolation.ThreePendantTree
 open Set SimpleGraph Finset StatMech StatMech.Percolation
 
 

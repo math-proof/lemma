@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationEdgeClassification
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationEdgeClassification
 open StatMech StatMech.Onsager
 
 

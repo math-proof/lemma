@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedDevelopedCertificate
+import Def.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedDevelopedCertificate.Part2
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetOperatorQuadrature
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetOperatorQuadrature.Part2
 open StatMech StatMech.FrontierD
 
 

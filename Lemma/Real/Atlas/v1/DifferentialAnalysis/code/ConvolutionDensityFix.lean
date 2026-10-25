@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensityFix
+import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensityFix
 open TestFunctions Filter Topology Metric ConvolutionDensity
 open scoped ZeroAtInfty
 open Filter Topology Metric

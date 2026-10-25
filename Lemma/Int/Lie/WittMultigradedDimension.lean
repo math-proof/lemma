@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.Lie.WittMultigradedDimension
+import Theorem.Algebra.Lie.WittMultigradedDimension.Part11
 open scoped BigOperators
 open MetaMathlibExt
 

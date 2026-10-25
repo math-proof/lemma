@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rmr_perorbitiffslab
+import Theorem.StatisticalMechanics.Code.Walls.rmr_perorbitiffslab
 open Finset MeasureTheory StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.symmetric.PieriJacobiTrudi
+import Def.Combinatorics.Young.PieriJacobiTrudi.Part32
 import Lemma.Matrix.LGV2
 import Lemma.MvPolynomial.OmegaInvolution
 import Lemma.Partition.NPartition

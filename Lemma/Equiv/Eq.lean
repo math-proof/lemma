@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_3_epilogue
+import Instance.Analysis.Section_3_epilogue
 open PSet
 
 

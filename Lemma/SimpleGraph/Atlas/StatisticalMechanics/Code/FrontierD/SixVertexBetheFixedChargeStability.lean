@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheFixedChargeStability
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheFixedChargeStability.Part3
 open StatMech StatMech.FrontierD
 
 

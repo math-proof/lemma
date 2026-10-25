@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch5Entry1
+import Def.Analysis.Ramanujan.Part1Ch5Entry1
 open scoped Nat Real BigOperators Interval Polynomial
 open Filter Finset Complex Topology
 open Entry1Euleriangf (chapter5DerivativeExpansion)

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.BruhatOrder
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.BruhatOrder
 open CoxeterBruhat
 
 

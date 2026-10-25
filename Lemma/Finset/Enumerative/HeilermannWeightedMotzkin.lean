@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.HeilermannWeightedMotzkin
+import Def.Combinatorics.Enumerative.HeilermannWeightedMotzkin
 open MetaMathlibExt
 
 

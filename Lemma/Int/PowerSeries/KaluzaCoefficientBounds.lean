@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.PowerSeries.KaluzaCoefficientBounds
+import Def.RingTheory.PowerSeries.KaluzaCoefficientBounds
 open MathlibExt.Algebra.PowerSeries.KaluzaCoefficientBoundsWanted
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc2_forcededgeopen
+import Theorem.StatisticalMechanics.Code.Walls.bc2_forcededgeopen.Part2
 open Set StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation StatMech StatMech.Walls
 
 

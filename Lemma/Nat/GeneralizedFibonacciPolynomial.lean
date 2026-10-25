@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.GeneralizedFibonacciPolynomial
+import Def.NumberTheory.GeneralizedFibonacciPolynomial
 open MetaMathlibExt
 
 

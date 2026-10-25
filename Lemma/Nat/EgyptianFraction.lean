@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.EgyptianFraction
+import Def.NumberTheory.EgyptianFraction
 open scoped BigOperators
 open EgyptianFraction
 open IsNondecreasingEgyptian

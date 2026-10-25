@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWInsetSourceFloor
+import Theorem.StatisticalMechanics.Code.Universality.RSWInsetSourceFloor.Part6
 open Finset SimpleGraph Set MeasureTheory StatMech StatMech.Universality
 
 

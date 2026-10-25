@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.HadamardCirculantCore
+import Def.LinearAlgebra.Matrix.HadamardCirculantCore
 open MetaMathlibExt
 
 

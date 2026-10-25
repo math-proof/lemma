@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzFourPoint
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzFourPoint
 open Finset Filter Set StatMech StatMech.Ising
 
 

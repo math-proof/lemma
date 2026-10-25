@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section23
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section23.Part2
 open CategoryTheory AlgebraicTopology TensorProduct in DirectLimitCharacterization
 open TensorProduct
 open CategoryTheory CategoryTheory.Limits

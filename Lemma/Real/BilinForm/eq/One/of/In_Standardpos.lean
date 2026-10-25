@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.AffineCoxeter.FiniteProperParabolicsInstance
+import Def.v1.Atlas.Buildings.code.AffineCoxeter.FiniteProperParabolicsInstance
 open Finset BigOperators CoxeterGroup TitsCone
 
 

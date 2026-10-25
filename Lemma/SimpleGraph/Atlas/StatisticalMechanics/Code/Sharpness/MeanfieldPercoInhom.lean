@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.MeanfieldPercoInhom
+import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldPercoInhom.Part5
 open Finset SimpleGraph Set StatMech StatMech.Sharpness
 
 

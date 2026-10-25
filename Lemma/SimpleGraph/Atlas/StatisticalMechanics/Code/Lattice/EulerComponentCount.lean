@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.EulerComponentCount
+import Theorem.StatisticalMechanics.Code.Lattice.EulerComponentCount.Part2
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

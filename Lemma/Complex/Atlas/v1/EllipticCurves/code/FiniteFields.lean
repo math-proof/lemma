@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.FiniteFields
+import Def.v1.Atlas.EllipticCurves.code.FiniteFields.Part5
 open Polynomial in
 open Polynomial IntermediateField
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.Clusters
+import Def.StatisticalMechanics.Code.Lattice.Clusters.Part7
 open Set StatMech StatMech.Lattice
 
 

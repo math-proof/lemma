@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamCriticalExponent
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamCriticalExponent
 open Filter Set StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarCrossingGluing
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCrossingGluing.Part2
 open Set SimpleGraph Topology StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

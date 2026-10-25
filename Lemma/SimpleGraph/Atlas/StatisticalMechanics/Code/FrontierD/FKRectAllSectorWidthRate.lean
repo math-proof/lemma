@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectAllSectorWidthRate
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectAllSectorWidthRate
 open Filter MeasureTheory Topology StatMech StatMech.FrontierD
 
 

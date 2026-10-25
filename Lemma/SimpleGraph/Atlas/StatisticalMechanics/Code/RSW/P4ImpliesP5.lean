@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.P4ImpliesP5
+import Theorem.StatisticalMechanics.Code.RSW.P4ImpliesP5
 open Real Filter StatMech StatMech.RSW StatMech.RSW.P4ImpliesP5
 
 

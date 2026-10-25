@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanEvenBiconditional
+import Theorem.StatisticalMechanics.Code.Lattice.JordanEvenBiconditional.Part5
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

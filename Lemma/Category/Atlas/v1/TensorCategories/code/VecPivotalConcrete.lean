@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.VecPivotalConcrete
+import Def.v1.Atlas.TensorCategories.code.VecPivotalConcrete.Part2
 open CategoryTheory MonoidalCategory Module Category TensorCategories
 
 

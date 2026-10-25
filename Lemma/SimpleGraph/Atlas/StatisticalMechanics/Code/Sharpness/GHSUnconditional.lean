@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.GHSUnconditional
+import Theorem.StatisticalMechanics.Code.Sharpness.GHSUnconditional
 open Set SimpleGraph StatMech StatMech.Sharpness
 
 

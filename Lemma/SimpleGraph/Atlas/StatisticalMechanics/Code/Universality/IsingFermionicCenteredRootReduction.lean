@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCenteredRootReduction
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCenteredRootReduction.Part2
 open Filter Set Topology StatMech StatMech.Universality
 
 

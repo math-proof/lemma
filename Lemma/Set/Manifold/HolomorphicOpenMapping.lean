@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.HolomorphicOpenMapping
+import Def.Geometry.Manifold.HolomorphicOpenMapping
 open Set Manifold
 open scoped Manifold
 open Topology Filter

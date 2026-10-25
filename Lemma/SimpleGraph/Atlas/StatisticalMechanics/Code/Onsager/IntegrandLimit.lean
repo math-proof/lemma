@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.IntegrandLimit
+import Theorem.StatisticalMechanics.Code.Onsager.IntegrandLimit.Part2
 open MeasureTheory StatMech StatMech.Onsager
 
 

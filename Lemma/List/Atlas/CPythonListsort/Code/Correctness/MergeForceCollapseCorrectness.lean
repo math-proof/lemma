@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.MergeForceCollapseCorrectness
+import Def.CPythonListsort.Code.Correctness.MergeForceCollapseCorrectness.Part2
 open CPythonListsort CPythonListsort.MergeForceCollapseCorrectnessPost
 
 

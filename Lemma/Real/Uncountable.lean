@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_8_3
+import Abbrev.Analysis.Section_8_3
 open Chapter8
 open Chapter8.Uncountable
 open Real

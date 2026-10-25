@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.VertexConnectivity
+import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
 open SimpleGraph
 
 

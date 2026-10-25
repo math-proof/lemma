@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FiniteTwoBranchWeightedTransport
+import Theorem.StatisticalMechanics.Code.FrontierD.FiniteTwoBranchWeightedTransport
 open Finset StatMech StatMech.FrontierD
 
 

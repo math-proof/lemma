@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_7_3
+import Theorem.Analysis.Section_7_3
 open Real
 open Chapter7
 open Chapter7.Series

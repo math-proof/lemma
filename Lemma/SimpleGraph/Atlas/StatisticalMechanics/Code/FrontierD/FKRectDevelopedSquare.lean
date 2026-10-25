@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDevelopedSquare
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedSquare.Part11
 open StatMech.Lattice StatMech StatMech.FrontierD
 
 

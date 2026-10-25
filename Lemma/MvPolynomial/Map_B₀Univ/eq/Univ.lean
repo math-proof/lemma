@@ -33,5 +33,4 @@ private lemma main
   refine ⟨AlgEquiv.ofAlgHom φ ψ h2 h1, ?_⟩
   exact hφ
 
-
 -- created on 2026-10-23

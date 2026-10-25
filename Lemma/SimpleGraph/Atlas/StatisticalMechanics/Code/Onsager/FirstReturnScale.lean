@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.FirstReturnScale
+import Theorem.StatisticalMechanics.Code.Onsager.FirstReturnScale
 open StatMech StatMech.Onsager
 
 

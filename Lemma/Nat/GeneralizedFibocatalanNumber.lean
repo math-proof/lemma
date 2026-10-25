@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.GeneralizedFibocatalanNumber
+import Def.NumberTheory.GeneralizedFibocatalanNumber
 open MetaMathlibExt
 
 

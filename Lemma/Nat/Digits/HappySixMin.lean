@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Digits.HappySixMin
+import Def.NumberTheory.Digits.HappySixMin
 open MetaMathlibExt
 
 

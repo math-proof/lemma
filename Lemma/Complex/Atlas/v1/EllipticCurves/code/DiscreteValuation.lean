@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.DiscreteValuation
+import Def.v1.Atlas.EllipticCurves.code.DiscreteValuation
 open DiscreteValuation
 
 

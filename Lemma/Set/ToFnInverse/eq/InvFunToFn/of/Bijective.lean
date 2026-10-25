@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_3_3_inv
+import Abbrev.Analysis.Section_3_3_inv
 import Lemma.Set.Eq_GetInverse.is.Eq.of.Bijective
 import Lemma.Set.Bijective.is.BijectiveToFn
 open Chapter3 hiding Nat Set

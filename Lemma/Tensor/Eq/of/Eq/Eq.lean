@@ -1,5 +1,5 @@
 import sympy.Basic
-import sympy.concrete.expr_with_limits
+import Macro.Order.ExprWithLimits
 import sympy.tensor.lstm
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.SpecialFunctions.Exp

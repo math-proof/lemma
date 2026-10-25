@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.CoalgebraBialgebra
+import Abbrev.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part4
 open Coalgebra CategoryTheory
 open scoped TensorProduct
 open MonoidalCategory

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamCutPairAssociation
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamCutPairAssociation
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

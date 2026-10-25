@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.TateResidueOrthogonality
+import Structure.v1.Atlas.AlgebraicGeometryI.code.TateResidueOrthogonality
 open TateResidueOrthogonality
 open SerreDualityTate SerreDualityCurves
 open CanonicalSheafCurves RiemannRochCurves SerreDualityP1

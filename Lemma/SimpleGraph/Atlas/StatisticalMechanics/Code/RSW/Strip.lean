@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.Strip
+import Theorem.StatisticalMechanics.Code.RSW.Strip.Part2
 open Set MeasureTheory SimpleGraph StatMech StatMech.RSW StatMech.RSW.Strip
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianSetClusterReplacement
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianSetClusterReplacement
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

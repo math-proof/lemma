@@ -1,7 +1,7 @@
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
 import sympy.vector.Basic
-import sympy.concrete.sup
+import Macro.Order.Sup
 import Theorem.Function
 open Finset
 

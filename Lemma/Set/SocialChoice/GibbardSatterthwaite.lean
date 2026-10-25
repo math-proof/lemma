@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GameTheory.SocialChoice.GibbardSatterthwaite
+import Theorem.GameTheory.SocialChoice.GibbardSatterthwaite.Part5
 open MathlibExt.GameTheory.SocialChoice.GibbardSatterthwaiteWanted
 
 

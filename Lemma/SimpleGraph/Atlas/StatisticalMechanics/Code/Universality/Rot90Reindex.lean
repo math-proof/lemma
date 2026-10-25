@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.Rot90Reindex
+import Theorem.StatisticalMechanics.Code.Universality.Rot90Reindex
 open Set MeasureTheory ProbabilityTheory SimpleGraph StatMech StatMech.Universality
 
 

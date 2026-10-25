@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds
+import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 open DifferentialFormSpace
 
 

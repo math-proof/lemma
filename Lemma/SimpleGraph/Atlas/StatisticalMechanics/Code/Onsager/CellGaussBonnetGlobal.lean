@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.CellGaussBonnetGlobal
+import Theorem.StatisticalMechanics.Code.Onsager.CellGaussBonnetGlobal
 open StatMech StatMech.Onsager StatMech.Onsager.CellGaussBonnetGlobal
 
 

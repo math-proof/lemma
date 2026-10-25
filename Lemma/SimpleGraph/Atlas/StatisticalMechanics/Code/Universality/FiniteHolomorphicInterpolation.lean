@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.FiniteHolomorphicInterpolation
+import Theorem.StatisticalMechanics.Code.Universality.FiniteHolomorphicInterpolation
 open Finset
 
 

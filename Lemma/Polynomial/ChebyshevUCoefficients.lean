@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.polynomial.chebyshev_u_coefficients
-
+import Theorem.Algebra.Polynomial.ChebyshevUCoefficients
 open scoped BigOperators
 open MetaMathlibExt
 
@@ -23,6 +22,5 @@ private lemma chebyshevU_coeff_eq_binomial_sum_eq
 -- proof
   apply chebyshevU_coeff_eq_binomial_sum
   exact hk
-
 
 -- created on 2026-10-09

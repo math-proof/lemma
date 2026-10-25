@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderTransverseDiagonalBound
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderTransverseDiagonalBound
 open MeasureTheory SimpleGraph StatMech.Lattice StatMech StatMech.FrontierD
 
 

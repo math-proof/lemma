@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SerreDualityDedekind
+import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityDedekind
 open nonZeroDivisors SerreDualityDedekind
 open scoped TensorProduct
 

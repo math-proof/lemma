@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalBond
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalBond.Part2
 open StatMech StatMech.Universality
 
 

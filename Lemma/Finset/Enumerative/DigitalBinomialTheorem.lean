@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.DigitalBinomialTheorem
+import Def.Combinatorics.Enumerative.DigitalBinomialTheorem
 open scoped BigOperators
 open MetaMathlibExt
 

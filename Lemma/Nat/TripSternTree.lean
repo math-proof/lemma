@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.TripSternTree
+import Def.NumberTheory.TripSternTree
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexFreeEnergy
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFreeEnergy
 open Finset Matrix Filter Topology StatMech StatMech.FrontierD
 
 

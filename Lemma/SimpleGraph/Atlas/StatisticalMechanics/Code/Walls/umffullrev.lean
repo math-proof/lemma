@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.umffullrev
+import Theorem.StatisticalMechanics.Code.Walls.umffullrev.Part2
 open SimpleGraph Function StatMech StatMech.Lattice
 
 

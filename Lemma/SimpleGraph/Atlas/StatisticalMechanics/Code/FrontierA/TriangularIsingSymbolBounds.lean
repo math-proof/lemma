@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbolBounds
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbolBounds
 open StatMech StatMech.FrontierA
 
 

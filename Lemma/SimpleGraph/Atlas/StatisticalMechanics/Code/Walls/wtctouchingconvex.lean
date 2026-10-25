@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wtctouchingconvex
+import Theorem.StatisticalMechanics.Code.Walls.wtctouchingconvex.Part3
 open SimpleGraph Function Set StatMech StatMech.Walls
 
 

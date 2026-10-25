@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.Theorem136
+import Def.v1.Atlas.EllipticCurves.code.Theorem136.Part4
 open Module Polynomial EllipticCurve EndomorphismRingOverFiniteField
 open scoped TensorProduct
 

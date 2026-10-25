@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.complex.Wiman.CorrectedEstimateAbsorption
+import Theorem.Analysis.Complex.Wiman.CorrectedEstimateAbsorption
 
 open Complex.Wiman.CorrectedEstimateAbsorption
 open Asymptotics Filter

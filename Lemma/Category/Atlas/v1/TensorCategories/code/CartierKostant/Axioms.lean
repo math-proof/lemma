@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.CartierKostant.Axioms
+import Def.v1.Atlas.TensorCategories.code.CartierKostant.Axioms.Part3
 open Coalgebra HopfAlgebra
 open scoped TensorProduct
 

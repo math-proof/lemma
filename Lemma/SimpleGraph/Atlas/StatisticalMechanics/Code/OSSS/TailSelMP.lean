@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.TailSelMP
+import Theorem.StatisticalMechanics.Code.OSSS.TailSelMP.Part3
 open Finset MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.AdaptDisintegration
 
 

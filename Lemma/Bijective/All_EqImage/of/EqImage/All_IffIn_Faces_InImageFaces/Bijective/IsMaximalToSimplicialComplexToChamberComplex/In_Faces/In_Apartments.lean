@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.MaximalApartments
+import Def.v1.Atlas.Buildings.code.Building.MaximalApartments.Part2
 
 
 /--

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.Pivotal
+import Theorem.StatisticalMechanics.Code.Inequalities.Pivotal.Part2
 open StatMech
 
 

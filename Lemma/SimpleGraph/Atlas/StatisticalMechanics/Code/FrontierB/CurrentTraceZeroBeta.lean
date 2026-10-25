@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentTraceZeroBeta
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTraceZeroBeta
 open Filter MeasureTheory StatMech StatMech.FrontierB
 
 

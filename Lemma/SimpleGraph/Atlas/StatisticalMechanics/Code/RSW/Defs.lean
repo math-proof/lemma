@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.Defs
+import Theorem.StatisticalMechanics.Code.RSW.Defs.Part7
 open Set StatMech StatMech.RSW StatMech.RSW.Box
 
 

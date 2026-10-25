@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.ExtensionDiscriminant
+import Def.NumberTheory.NumberField.ExtensionDiscriminant.Part2
 import Lemma.Nat.NumberField.ExtensionDiscriminant
 
 

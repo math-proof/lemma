@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.KWZeroEdge
+import Theorem.StatisticalMechanics.Code.Onsager.KWZeroEdge
 open StatMech StatMech.Onsager
 
 

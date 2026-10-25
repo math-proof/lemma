@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneSupportLexParityBridge
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneSupportLexParityBridge.Part7
 open Finset StatMech StatMech.Sharpness
 
 

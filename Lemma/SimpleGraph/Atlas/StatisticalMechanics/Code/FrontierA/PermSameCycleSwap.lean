@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.PermSameCycleSwap
+import Theorem.StatisticalMechanics.Code.FrontierA.PermSameCycleSwap
 open Equiv StatMech StatMech.FrontierA
 
 

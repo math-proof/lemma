@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.IwahoriGLnUniqueness
+import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLnUniqueness
 open Matrix DVRContext
 
 

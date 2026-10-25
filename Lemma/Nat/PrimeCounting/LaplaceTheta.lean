@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.LaplaceTheta
+import Def.NumberTheory.PrimeCounting.LaplaceTheta
 open MeasureTheory Finset
 open Chebyshev
 

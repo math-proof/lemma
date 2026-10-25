@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Unramified
+import Def.NumberTheory.NumberField.Unramified.Part2
 import Lemma.Nat.NumberField.Unramified
 open scoped NumberField
 

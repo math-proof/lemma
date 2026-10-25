@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexPairTwoCycleRelation
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairTwoCycleRelation
 open StatMech StatMech.FrontierD
 
 

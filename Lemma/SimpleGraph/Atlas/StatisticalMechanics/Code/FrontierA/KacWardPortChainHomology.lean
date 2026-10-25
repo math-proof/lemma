@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardPortChainHomology
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainHomology
 open StatMech StatMech.FrontierA
 
 

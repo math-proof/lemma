@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABBoundaryProfile
+import Theorem.StatisticalMechanics.Code.Sharpness.ABBoundaryProfile.Part2
 open Finset Set SimpleGraph StatMech StatMech.Sharpness
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingInfraredReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingInfraredReduction
 open Finset Filter Set Topology StatMech StatMech.FrontierA
 
 

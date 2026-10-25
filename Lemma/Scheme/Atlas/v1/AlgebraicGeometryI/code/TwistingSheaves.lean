@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.TwistingSheaves
+import Def.v1.Atlas.AlgebraicGeometryI.code.TwistingSheaves
 open CategoryTheory Limits TopologicalSpace AlgebraicGeometry
 
 

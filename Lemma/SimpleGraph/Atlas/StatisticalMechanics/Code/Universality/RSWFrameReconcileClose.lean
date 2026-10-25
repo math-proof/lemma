@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWFrameReconcileClose
+import Theorem.StatisticalMechanics.Code.Universality.RSWFrameReconcileClose.Part3
 open Set SimpleGraph MeasureTheory StatMech.Lattice StatMech.RSW.Box StatMech StatMech.Universality
 
 

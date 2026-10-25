@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Dynamics.Ergodic.Kingman
+import Def.Dynamics.Ergodic.Kingman
 open MeasureTheory Filter Topology
 open MathlibExt.Dynamics.Ergodic.KingmanWanted
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.TuringMachines
+import Def.v1.Atlas.TheoryOfComputation.code.TuringMachines.Part4
 open TuringMachine
 open Direction
 

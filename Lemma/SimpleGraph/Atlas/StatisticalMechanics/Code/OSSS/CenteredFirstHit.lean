@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.CenteredFirstHit
+import Theorem.StatisticalMechanics.Code.OSSS.CenteredFirstHit
 open StatMech StatMech.OSSS StatMech.OSSS.CenteredFirstHit
 
 

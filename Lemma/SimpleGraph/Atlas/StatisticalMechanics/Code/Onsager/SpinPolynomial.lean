@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SpinPolynomial
+import Theorem.StatisticalMechanics.Code.Onsager.SpinPolynomial.Part4
 open StatMech StatMech.Onsager
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardPolygonTurning
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonTurning.Part2
 open StatMech StatMech.FrontierA
 
 

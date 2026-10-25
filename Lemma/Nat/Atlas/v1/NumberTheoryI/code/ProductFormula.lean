@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.ProductFormula
+import Class.v1.Atlas.NumberTheoryI.code.ProductFormula
 open MeasureTheory Measure TopologicalSpace Pointwise Filter Topology MeasureTheory.Measure Metric in
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GameTheory.SocialChoice.Arrow
+import Def.GameTheory.SocialChoice.Arrow.Part3
 open MathlibExt.GameTheory.SocialChoice.ArrowWanted
 
 

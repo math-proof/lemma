@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bofopenlift
+import Theorem.StatisticalMechanics.Code.Walls.bofopenlift
 open Set SimpleGraph Finset StatMech StatMech.Lattice StatMech.ConfigSpace StatMech.Walls
 
 

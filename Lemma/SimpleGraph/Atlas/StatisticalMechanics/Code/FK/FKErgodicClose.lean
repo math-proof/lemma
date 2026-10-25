@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKErgodicClose
+import Theorem.StatisticalMechanics.Code.FK.FKErgodicClose.Part2
 open MeasureTheory ProbabilityTheory Filter Topology StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

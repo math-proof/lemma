@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.MetricSpace.HausdorffDimensionFunction
+import Instance.Topology.MetricSpace.HausdorffDimensionFunction
 open scoped NNReal Topology
 open Filter
 open HausdorffDimensionFunction

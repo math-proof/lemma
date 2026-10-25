@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBethePairedBounds
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBethePairedBounds
 open Finset StatMech StatMech.FrontierD
 
 

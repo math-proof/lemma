@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.HeckeAlgebra.GenericAlgebraUniqueness
+import Structure.v1.Atlas.Buildings.code.HeckeAlgebra.GenericAlgebraUniqueness
 open HeckeAlgebra
 open scoped Classical
 

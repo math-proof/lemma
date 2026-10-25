@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexTorusDuality
+import Theorem.StatisticalMechanics.Code.FK.TriHexTorusDuality.Part10
 open Finset Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

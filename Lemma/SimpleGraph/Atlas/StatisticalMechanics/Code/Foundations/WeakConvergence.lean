@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.WeakConvergence
+import Theorem.StatisticalMechanics.Code.Foundations.WeakConvergence
 open MeasureTheory Filter Topology BoundedContinuousFunction StatMech
 
 

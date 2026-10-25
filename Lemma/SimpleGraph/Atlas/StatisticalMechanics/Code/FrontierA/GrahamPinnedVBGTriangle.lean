@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamPinnedVBGTriangle
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamPinnedVBGTriangle
 open Finset Classical StatMech StatMech.FrontierA
 
 

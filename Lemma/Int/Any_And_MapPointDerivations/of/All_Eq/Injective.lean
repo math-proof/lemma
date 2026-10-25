@@ -1,8 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.point_derivations
-
-
+import Theorem.Algebra.PointDerivations.Part2
+import Def.Algebra_PointDerivations
 /--
 [Algebra_PointDerivations_exists_eq_and_map_eq_map_of_forall_apply_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_PointDerivations_exists_eq_and_map_eq_map_of_forall_apply_eq.lean)
 -/
@@ -37,6 +36,5 @@ private lemma main
   ext a
   show σ (cs a) = g (c.1 a)
   apply h
-
 
 -- created on 2026-10-13

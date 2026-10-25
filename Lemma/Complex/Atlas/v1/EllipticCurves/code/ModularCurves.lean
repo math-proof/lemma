@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.ModularCurves
+import Def.v1.Atlas.EllipticCurves.code.ModularCurves.Part3
 open Manifold Def1811 Complex Metric Set Function
 open scoped ContDiff
 open Def1811

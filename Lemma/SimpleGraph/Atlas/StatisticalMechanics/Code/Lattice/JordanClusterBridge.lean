@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanClusterBridge
+import Theorem.StatisticalMechanics.Code.Lattice.JordanClusterBridge.Part8
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

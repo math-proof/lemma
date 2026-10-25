@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec2ProjectiveSpace
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec2ProjectiveSpace.Part2
 open Formalization
 open scoped LinearAlgebra.Projectivization
 open MvPolynomial Set

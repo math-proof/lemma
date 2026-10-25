@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
+import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber.Part2
 import Lemma.Group.Atlas.v1.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
 open scoped Classical
 

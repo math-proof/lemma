@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.CondDistribution
+import Theorem.StatisticalMechanics.Code.Foundations.CondDistribution.Part4
 open MeasureTheory ProbabilityTheory MeasurableSpace StatMech
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDevelopedEndpointReflectionGlue
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedEndpointReflectionGlue.Part3
 open Set StatMech StatMech.FrontierD
 
 

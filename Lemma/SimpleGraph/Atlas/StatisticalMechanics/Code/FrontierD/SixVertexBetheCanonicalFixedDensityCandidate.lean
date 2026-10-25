@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalFixedDensityCandidate
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalFixedDensityCandidate.Part2
 open StatMech StatMech.FrontierD
 
 

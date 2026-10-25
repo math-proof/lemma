@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.TwoD
+import Def.Geometry.TwoD
 import Lemma.Set.TwoD
 open scoped EuclideanSpace
 

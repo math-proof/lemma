@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Partition.MexPartitionCongruenceLift
+import Theorem.Combinatorics.Enumerative.Partition.MexPartitionCongruenceLift.Part5
 open MetaMathlibExt
 
 

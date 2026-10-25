@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Partition.TwoDistantPolarized
+import Def.Combinatorics.Enumerative.Partition.TwoDistantPolarized.Part10
 open List
 open MetaMathlibExt
 

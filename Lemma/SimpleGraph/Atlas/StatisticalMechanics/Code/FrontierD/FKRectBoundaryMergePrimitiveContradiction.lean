@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryMergePrimitiveContradiction
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryMergePrimitiveContradiction
 open SimpleGraph StatMech StatMech.FrontierD
 
 

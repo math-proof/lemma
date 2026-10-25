@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.SurfaceKacWardFlatSpinor
+import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardFlatSpinor
 open Finset SimpleGraph StatMech StatMech.FrontierA
 
 

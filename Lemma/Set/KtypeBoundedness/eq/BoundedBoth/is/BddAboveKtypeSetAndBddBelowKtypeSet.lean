@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.SL2RepWired
+import Def.v1.Atlas.LieGroups.code.SL2RepWired
 open SL2GKModule
 
 

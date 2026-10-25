@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc5_reflectinvolution
+import Theorem.StatisticalMechanics.Code.Walls.rc5_reflectinvolution.Part4
 open Finset StatMech StatMech.Walls
 
 

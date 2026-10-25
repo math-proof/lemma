@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.InfiniteBK
+import Theorem.StatisticalMechanics.Code.Probability.InfiniteBK
 open MeasureTheory Set StatMech
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.GeneratedTableTailBridgeExample
+import Def.StatisticalMechanics.Code.Exact3D.GeneratedTableTailBridgeExample.Part4
 open StatMech StatMech.Exact3D StatMech.Exact3D.BoundedPolymerCase StatMech.Exact3D.BoundedPolymerCase.GeneratedTableTailBridgeExample
 
 

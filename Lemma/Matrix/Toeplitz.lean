@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.Toeplitz
+import Def.LinearAlgebra.Matrix.Toeplitz
 open MetaMathlibExt
 
 

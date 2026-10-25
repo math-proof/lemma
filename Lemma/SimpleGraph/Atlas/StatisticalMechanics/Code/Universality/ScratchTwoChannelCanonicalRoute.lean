@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.ScratchTwoChannelCanonicalRoute
+import Theorem.StatisticalMechanics.Code.Universality.ScratchTwoChannelCanonicalRoute.Part22
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

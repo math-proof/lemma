@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.EllipticCurveSmooth
+import Def.v1.Atlas.AlgebraicGeometryI.code.EllipticCurveSmooth.Part2
 open Polynomial EllipticCurveSmooth
 open scoped Polynomial.Bivariate
 

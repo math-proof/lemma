@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.ReverseScanTransport
+import Structure.CPythonListsort.Code.Correctness.ReverseScanTransport
 open CPythonListsort
 
 

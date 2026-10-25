@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.KWWeightedHomology
+import Theorem.StatisticalMechanics.Code.Onsager.KWWeightedHomology
 open StatMech StatMech.Onsager
 
 

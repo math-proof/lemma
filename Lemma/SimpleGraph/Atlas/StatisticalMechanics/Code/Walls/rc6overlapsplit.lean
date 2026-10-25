@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc6overlapsplit
+import Theorem.StatisticalMechanics.Code.Walls.rc6overlapsplit
 open Finset StatMech StatMech.Walls
 
 

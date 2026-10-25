@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Clique
+import Def.Combinatorics.SimpleGraph.Clique
 open SimpleGraph
 
 

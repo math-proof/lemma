@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.HenselBridgeLemmas
+import Theorem.v1.Atlas.NumberTheoryI.code.HenselBridgeLemmas
 open KroneckerWeber
 open scoped Padic
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc39threereplica
+import Def.StatisticalMechanics.Code.Walls.gc39threereplica.Part3
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Walls
 
 

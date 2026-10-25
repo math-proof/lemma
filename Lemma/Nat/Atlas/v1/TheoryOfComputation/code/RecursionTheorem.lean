@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.RecursionTheorem
+import Def.v1.Atlas.TheoryOfComputation.code.RecursionTheorem
 open RecursionTheorem
 
 

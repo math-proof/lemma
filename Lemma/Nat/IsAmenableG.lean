@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.AmenableGroup
+import Theorem.GroupTheory.AmenableGroup
 open scoped Pointwise Classical symmDiff
 
 

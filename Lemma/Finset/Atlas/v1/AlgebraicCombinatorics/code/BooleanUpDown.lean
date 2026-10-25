@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.BooleanUpDown
+import Def.v1.Atlas.AlgebraicCombinatorics.code.BooleanUpDown
 open Finset BigOperators BooleanUpDown
 
 

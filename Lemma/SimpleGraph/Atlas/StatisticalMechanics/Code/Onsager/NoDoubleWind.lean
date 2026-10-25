@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.NoDoubleWind
+import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind
 open StatMech StatMech.Onsager StatMech.Onsager.NoDoubleWind
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.QuadraticGaussSumFive
+import Def.NumberTheory.QuadraticGaussSumFive
 open scoped MetaMathlibExt
 open MetaMathlibExt
 

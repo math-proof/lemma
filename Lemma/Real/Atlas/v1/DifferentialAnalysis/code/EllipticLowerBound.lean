@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.EllipticLowerBound
+import Def.v1.Atlas.DifferentialAnalysis.code.EllipticLowerBound
 open TemperedDistribution MvPolynomial Metric DifferentialOperators
 open scoped SchwartzMap
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.Polynomial.RiordanOrthogonalPolynomials
+import Def.Algebra.Polynomial.RiordanOrthogonalPolynomials
 open MetaMathlibExt
 
 

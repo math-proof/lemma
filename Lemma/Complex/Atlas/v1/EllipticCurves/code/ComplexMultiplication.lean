@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.ComplexMultiplication
+import Def.v1.Atlas.EllipticCurves.code.ComplexMultiplication.Part6
 open ComplexLattice
 open Pointwise
 open Pointwise Function

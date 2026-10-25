@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.ImmersionComp
+import Def.Geometry.Manifold.ImmersionComp
 open scoped Topology ContDiff
 open Manifold
 open MathlibExt.Geometry.Manifold.ImmersionCompWanted

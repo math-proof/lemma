@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.ghysupermult
+import Theorem.StatisticalMechanics.Code.Walls.ghysupermult.Part2
 open Finset BigOperators Classical StatMech StatMech.Walls
 
 

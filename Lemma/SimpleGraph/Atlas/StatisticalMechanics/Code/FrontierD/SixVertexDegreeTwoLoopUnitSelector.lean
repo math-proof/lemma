@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoLoopUnitSelector
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoLoopUnitSelector.Part2
 open StatMech StatMech.FrontierD
 
 

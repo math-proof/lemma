@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.FreeBoxCurrentParity
+import Theorem.StatisticalMechanics.Code.FrontierB.FreeBoxCurrentParity
 open MeasureTheory Filter Topology StatMech StatMech.FrontierB
 
 

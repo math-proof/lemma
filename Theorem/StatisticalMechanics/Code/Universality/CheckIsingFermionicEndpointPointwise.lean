@@ -1,0 +1,26 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicEndpointPointwise.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointPointwise
+
+
+namespace StatMech.Universality
+
+#print axioms isingLeapfrogStoppedKernel_twoApartX_horizontalEndpoint_diffusive_abs_le
+#print axioms isingLeapfrogStoppedKernel_twoApartX_boundary_diffusive_abs_le
+#print axioms isingLeapfrogStoppedKernel_twoApartY_verticalEndpoint_diffusive_abs_le
+#print axioms isingLeapfrogExitKernel_neighbor_timeOffset_boundary_diffusive_abs_le
+#print axioms isingLeapfrogExitKernel_neighbor_timeOffset_diffusive_abs_le
+#print axioms isingLeapfrogDiffusiveExitInputs_fermionic
+#print axioms isingLeapfrogDiffusiveGradientBound_fermionic
+#print axioms fkIsingSquareRadialPatchFullObservableWindow_normSq_sub_le_diffusive
+#print axioms fkIsingSquareRadialPatchFullObservableWindow_physicalNormalized_normSq_sub_le_diffusive
+
+end StatMech.Universality

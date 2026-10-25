@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.MeasuresSupport
+import Def.v1.Atlas.LieGroups.code.MeasuresSupport.Part2
 open Filter Topology ConcreteMeasSupp
 
 

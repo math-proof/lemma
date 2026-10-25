@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.GNFA
+import Theorem.v1.Atlas.TheoryOfComputation.code.GNFA
 open List Set Sipser Sipser.GNFA
 
 

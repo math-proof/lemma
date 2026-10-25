@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ComplexVariables.code.Lecture17
+import Def.v1.Atlas.ComplexVariables.code.Lecture17
 open Finset Filter Topology BigOperators Set Polynomial Complex MittagLeffler
 
 

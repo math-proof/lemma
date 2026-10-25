@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.WeilChatelet
+import Def.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
 open ETorsorPic
 
 

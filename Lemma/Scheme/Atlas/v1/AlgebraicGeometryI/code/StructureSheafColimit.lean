@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.StructureSheafColimit
+import Instance.v1.Atlas.AlgebraicGeometryI.code.StructureSheafColimit
 open AlgebraicGeometry TopologicalSpace CategoryTheory Opposite Lec6 Lec6.RegularFunctions
 
 

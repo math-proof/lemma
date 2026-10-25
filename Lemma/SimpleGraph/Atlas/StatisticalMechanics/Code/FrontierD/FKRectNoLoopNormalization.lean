@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectNoLoopNormalization
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectNoLoopNormalization
 open Finset Filter Topology StatMech StatMech.FrontierD
 
 

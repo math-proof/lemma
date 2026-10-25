@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeInterval.Breusch.Upper
+import Def.NumberTheory.PrimeInterval.Breusch.Upper
 open Nat Finset
 open MathlibExt.NumberTheory.BreuschWanted.Internal
 

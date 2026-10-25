@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopPlusDualContour
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopPlusDualContour.Part2
 open Finset SimpleGraph Set StatMech StatMech.Onsager
 
 

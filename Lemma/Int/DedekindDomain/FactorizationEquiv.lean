@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DedekindDomain.FactorizationEquiv
+import Def.RingTheory.DedekindDomain.FactorizationEquiv.Part4
 open scoped nonZeroDivisors
 open IsDedekindDomain
 open FractionalIdeal

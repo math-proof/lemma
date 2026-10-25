@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.PartialBellPolynomial
+import Def.Combinatorics.Enumerative.PartialBellPolynomial
 open PowerSeries
 
 

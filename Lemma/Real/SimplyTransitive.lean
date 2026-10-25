@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Reflection.ReflectionGroupsCoxeter
+import Def.v1.Atlas.Buildings.code.Reflection.ReflectionGroupsCoxeter.Part2
 open Set HyperplaneArrangement
 open scoped InnerProductSpace
 

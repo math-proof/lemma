@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.BurnsidePaqb.KillingLemma
+import Def.GroupTheory.BurnsidePaqb.KillingLemma
 open BurnsidePaqb
 
 

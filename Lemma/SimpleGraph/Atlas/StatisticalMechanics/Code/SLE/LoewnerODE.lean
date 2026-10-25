@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.LoewnerODE
+import Theorem.StatisticalMechanics.Code.SLE.LoewnerODE
 open Complex Set Metric Filter Topology StatMech StatMech.SLE
 
 

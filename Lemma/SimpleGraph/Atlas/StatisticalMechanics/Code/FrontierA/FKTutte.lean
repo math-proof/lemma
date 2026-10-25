@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FKTutte
+import Theorem.StatisticalMechanics.Code.FrontierA.FKTutte
 open SimpleGraph StatMech StatMech.FK
 
 

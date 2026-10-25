@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.DualCatDefs
+import Class.v1.Atlas.TensorCategories.code.DualCatDefs
 open Category MonoidalCategory ModFun
 
 

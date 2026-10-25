@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.QuantumInformation.Finite.TsirelsonTight
+import Def.QuantumInformation.Finite.TsirelsonTight
 open Matrix
 open MathlibExt.QuantumInformation.Finite.TsirelsonTight
 

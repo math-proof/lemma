@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.MeasureTheory.Section_1_4_2
+import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
 open LebesgueMeasurable
 open LebesgueMeasurable.boolean_algebra
 

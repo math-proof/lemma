@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.HBridgeClose
+import Theorem.StatisticalMechanics.Code.OSSS.HBridgeClose.Part2
 open Finset Real Set Filter Topology StatMech StatMech.OSSS StatMech.OSSS.HBridgeClose
 
 

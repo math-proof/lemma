@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.FaceDualDichotomy
+import Theorem.StatisticalMechanics.Code.Universality.FaceDualDichotomy
 open Set SimpleGraph StatMech.Lattice StatMech.RSW.Box StatMech StatMech.Universality
 
 

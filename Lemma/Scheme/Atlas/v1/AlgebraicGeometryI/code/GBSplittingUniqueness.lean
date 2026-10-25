@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.GBSplittingUniqueness
+import Def.v1.Atlas.AlgebraicGeometryI.code.GBSplittingUniqueness
 open BigOperators GBUniqueness
 
 

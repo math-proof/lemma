@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.RussoFormula
+import Theorem.StatisticalMechanics.Code.Percolation.RussoFormula
 open StatMech StatMech.Percolation
 
 

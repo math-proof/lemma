@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.RamificationInertia.Tame
+import Def.NumberTheory.RamificationInertia.Tame
 open Algebra
 
 

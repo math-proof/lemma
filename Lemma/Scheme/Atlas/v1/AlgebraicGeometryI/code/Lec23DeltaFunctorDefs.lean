@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec23DeltaFunctorDefs
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DeltaFunctorDefs.Part2
 open CategoryTheory Category Limits Finset Lec23DeltaFunctorDefs
 
 

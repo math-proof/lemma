@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.ListSortPolicyEndpoints
+import Structure.CPythonListsort.Code.Assembly.ListSortPolicyEndpoints
 
 
 namespace CPythonListsort

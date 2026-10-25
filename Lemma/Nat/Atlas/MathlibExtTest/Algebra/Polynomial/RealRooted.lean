@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Algebra.Polynomial.RealRooted
+import Theorem.MathlibExtTest.Algebra.Polynomial.RealRooted
 open scoped ComplexOrder
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.FromBuilding
+import Def.v1.Atlas.Buildings.code.BNPair.FromBuilding.Part4
 open Building Building.GroupAction BNPairFromBuildingData
 
 

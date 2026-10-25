@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.RayClass.InfiniteSign
+import Theorem.NumberTheory.NumberField.RayClass.InfiniteSign.Part4
 open NumberField
 open Modulus
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.TorsorIffJacobian
+import Def.v1.Atlas.ArithmeticGeometry.code.TorsorIffJacobian.Part2
 
 
 /--

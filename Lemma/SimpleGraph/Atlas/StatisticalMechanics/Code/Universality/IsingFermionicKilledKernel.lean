@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicKilledKernel
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicKilledKernel.Part9
 open StatMech StatMech.Universality
 
 

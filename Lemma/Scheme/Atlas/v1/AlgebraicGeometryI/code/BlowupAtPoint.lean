@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.BlowupAtPoint
+import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupAtPoint.Part3
 open Polynomial AlgebraicGeometry BlowupAtPoint
 
 

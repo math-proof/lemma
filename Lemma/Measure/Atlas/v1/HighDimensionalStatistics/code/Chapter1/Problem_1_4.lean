@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_4
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_4
 open MeasureTheory Real ProbabilityTheory Problem_1_4
 
 

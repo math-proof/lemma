@@ -1,5 +1,5 @@
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import sympy.concrete.expr_with_limits
+import Macro.Order.ExprWithLimits
 import sympy.Basic
 
 

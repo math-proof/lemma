@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.SimpleReflectionInversions
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SimpleReflectionInversions
 open Finset BigOperators CoxeterGroup
 
 

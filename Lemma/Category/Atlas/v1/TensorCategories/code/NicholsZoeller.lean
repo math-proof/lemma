@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.NicholsZoeller
+import Theorem.v1.Atlas.TensorCategories.code.NicholsZoeller
 
 
 /--

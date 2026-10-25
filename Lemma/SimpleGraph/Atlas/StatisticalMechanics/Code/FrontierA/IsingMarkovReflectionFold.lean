@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingMarkovReflectionFold
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingMarkovReflectionFold
 open Finset StatMech StatMech.FrontierA
 
 

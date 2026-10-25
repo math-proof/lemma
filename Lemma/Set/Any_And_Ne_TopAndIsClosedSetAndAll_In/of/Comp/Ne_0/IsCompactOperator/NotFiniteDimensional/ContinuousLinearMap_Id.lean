@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.LomonosovInvariantSubspace
+import Theorem.Analysis.NormedSpace.LomonosovInvariantSubspace.Part2
 
 /--
 [LomonosovInvariantSubspace](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/LomonosovInvariantSubspace.lean)

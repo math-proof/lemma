@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PolygonalNumber
+import Theorem.NumberTheory.PolygonalNumber
 open Nat
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.CollaredWalkCrossing
+import Theorem.StatisticalMechanics.Code.Lattice.CollaredWalkCrossing
 open SimpleGraph StatMech StatMech.Lattice
 
 

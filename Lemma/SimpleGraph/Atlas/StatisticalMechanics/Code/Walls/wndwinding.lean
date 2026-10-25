@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wndwinding
+import Theorem.StatisticalMechanics.Code.Walls.wndwinding.Part3
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

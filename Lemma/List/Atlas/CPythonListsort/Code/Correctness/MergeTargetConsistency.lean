@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.MergeLoInvariant
-import sympy.atlas.CPythonListsort.Code.Correctness.MergeHiInvariant
+import Structure.CPythonListsort.Code.Correctness.MergeLoInvariant
+import Theorem.CPythonListsort.Code.Correctness.MergeHiInvariant
 
 
 namespace CPythonListsort

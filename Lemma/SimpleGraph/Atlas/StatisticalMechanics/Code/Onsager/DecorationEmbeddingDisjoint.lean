@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationEmbeddingDisjoint
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationEmbeddingDisjoint
 open StatMech StatMech.Onsager
 
 

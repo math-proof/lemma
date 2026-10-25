@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PellLucasSequence
+import Def.NumberTheory.PellLucasSequence
 open MetaMathlibExt
 
 

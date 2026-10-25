@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
 open SheafCohCurvesFiniteness
 open CohomologyP1 SheafCohomology
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexFKFiniteWiredGraphs
+import Theorem.StatisticalMechanics.Code.FK.TriHexFKFiniteWiredGraphs.Part15
 open Finset Set StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

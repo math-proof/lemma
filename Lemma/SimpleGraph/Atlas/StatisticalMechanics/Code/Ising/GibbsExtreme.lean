@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.GibbsExtreme
+import Theorem.StatisticalMechanics.Code.Ising.GibbsExtreme
 open StatMech.Ising StatMech.Lattice Finset MeasureTheory Set StatMech
 
 

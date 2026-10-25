@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.IdealEquivalence
+import Def.v1.Atlas.EllipticCurves.code.IdealEquivalence.Part2
 open IdealEquivalence
 open ComplexLattice Pointwise
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.BrunTwinPrimeReciprocals
+import Theorem.NumberTheory.PrimeCounting.BrunTwinPrimeReciprocals.Part4
 open MathlibExt.SelbergSieve
 open MathlibExt.NumberTheory.PrimeCounting.BrunTwinPrimeReciprocalsWanted
 

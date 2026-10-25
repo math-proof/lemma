@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter11.EKR
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter11.EKR
 open SimpleGraph Finset Filter Real Asymptotics ErdosKleitmanRothschild
 
 

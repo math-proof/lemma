@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.UmlaufsatzStrip
+import Def.StatisticalMechanics.Code.Onsager.UmlaufsatzStrip
 open StatMech StatMech.Onsager StatMech.Onsager.UmlaufsatzStrip
 
 

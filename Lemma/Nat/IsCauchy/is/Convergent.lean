@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_6_4
+import Abbrev.Analysis.Section_6_4.Part3
 open EReal
 open Chapter6
 open Chapter6.Sequence

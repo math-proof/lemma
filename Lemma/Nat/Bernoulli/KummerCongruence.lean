@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Bernoulli.KummerCongruence
+import Def.NumberTheory.Bernoulli.KummerCongruence
 open MetaMathlibExt
 
 

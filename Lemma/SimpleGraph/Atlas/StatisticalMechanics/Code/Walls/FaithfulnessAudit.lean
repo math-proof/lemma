@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.FaithfulnessAudit
+import Theorem.StatisticalMechanics.Code.Walls.FaithfulnessAudit.Part2
 open Finset SimpleGraph StatMech StatMech.Ising StatMech.Walls.GhcEqGap StatMech.Lattice StatMech.Percolation StatMech.Walls
 
 

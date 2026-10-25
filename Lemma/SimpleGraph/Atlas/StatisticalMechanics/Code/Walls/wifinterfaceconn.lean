@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wifinterfaceconn
+import Theorem.StatisticalMechanics.Code.Walls.wifinterfaceconn
 open SimpleGraph Function StatMech StatMech.Wif
 
 

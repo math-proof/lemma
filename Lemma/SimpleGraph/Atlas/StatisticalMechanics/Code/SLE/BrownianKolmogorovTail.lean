@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.BrownianKolmogorovTail
+import Theorem.StatisticalMechanics.Code.SLE.BrownianKolmogorovTail
 open MeasureTheory ProbabilityTheory StatMech StatMech.SLE
 
 

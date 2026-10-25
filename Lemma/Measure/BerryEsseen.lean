@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.BerryEsseen
+import Def.Probability.BerryEsseen
 open MeasureTheory ProbabilityTheory Finset Set
 open scoped ProbabilityTheory ENNReal NNReal
 open MathlibExt.Probability.BerryEsseenWanted

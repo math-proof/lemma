@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MarkedStepInAMarkedDyckPath
+import Def.Combinatorics.Enumerative.MarkedStepInAMarkedDyckPath.Part2
 open MetaMathlibExt
 
 

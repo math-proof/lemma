@@ -1,0 +1,23 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckPeriodicPlanarSheffieldHalfPlaneFiniteStripArms.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldHalfPlaneFiniteStripArms.Part2
+open StatMech.FK.PeriodicPlanar
+
+#print axioms PeriodicPlaneEmbedding.finiteJoinedBoundaryArmEvent_subset_iUnion_finiteStrip
+#print axioms PeriodicPlaneEmbedding.finiteStripJoinedBoundaryArmEvent_measureReal_tendsto
+#print axioms PeriodicPlaneEmbedding.exists_finiteStripJoinedBoundaryArmEvent_measureReal_gt
+#print axioms PeriodicPlaneEmbedding.exists_highProbability_finiteStripJoinedBoundaryArmEvent_with_separation
+#print axioms PeriodicPlaneEmbedding.exists_rowwise_finiteStripJoinedBoundaryArms_tendsto_one
+#print axioms PeriodicPlaneEmbedding.finiteStripJoinedBoundaryArmEvent_graphWalks
+#print axioms PeriodicPlaneEmbedding.walkArc_horizontal_strict_bounds_of_strip
+#print axioms PeriodicPlaneEmbedding.finiteStripJoinedBoundaryArmEvent_barrierGeometry
+
+

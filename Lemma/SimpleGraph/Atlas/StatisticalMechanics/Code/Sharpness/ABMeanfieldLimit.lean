@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABMeanfieldLimit
+import Theorem.StatisticalMechanics.Code.Sharpness.ABMeanfieldLimit
 open Filter Set Topology StatMech StatMech.Sharpness
 
 

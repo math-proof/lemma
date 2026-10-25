@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.IdealFactorization
+import Theorem.v1.Atlas.NumberTheoryI.code.IdealFactorization.Part3
 open IsDedekindDomain
 
 

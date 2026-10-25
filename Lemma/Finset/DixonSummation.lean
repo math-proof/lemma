@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.DixonSummation
+import Def.Combinatorics.DixonSummation.Part5
 open MetaMathlibExt
 
 

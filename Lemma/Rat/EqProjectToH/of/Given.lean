@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.ChevalleyRestriction
+import Def.v1.Atlas.LieGroups.code.ChevalleyRestriction.Part7
 open scoped TensorProduct
 
 

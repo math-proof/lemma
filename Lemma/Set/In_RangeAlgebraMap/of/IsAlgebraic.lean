@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.DixmierLemma
+import Def.v1.Atlas.LieGroups.code.DixmierLemma
 open Polynomial Finset Classical Finsupp Cardinal
 
 

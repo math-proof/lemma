@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.ReducedRowEchelon
+import Def.LinearAlgebra.Matrix.ReducedRowEchelon
 open Matrix.IsReducedRowEchelon
 open MathlibExt.LinearAlgebra.Matrix.ReducedRowEchelonWanted
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingUniformArcosh
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingUniformArcosh
 open Filter Set StatMech StatMech.FrontierA
 
 

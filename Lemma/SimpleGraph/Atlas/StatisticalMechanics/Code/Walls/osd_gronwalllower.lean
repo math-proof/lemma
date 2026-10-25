@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.osd_gronwalllower
+import Theorem.StatisticalMechanics.Code.Walls.osd_gronwalllower
 open Real Set StatMech StatMech.Walls
 
 

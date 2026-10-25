@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.beaenclosure
+import Theorem.StatisticalMechanics.Code.Walls.beaenclosure.Part2
 open Set SimpleGraph Finset StatMech StatMech.Lattice StatMech.ConfigSpace StatMech.Walls
 
 

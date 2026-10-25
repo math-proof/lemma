@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.complex.CasoratiWeierstrass
+import Theorem.Analysis.Complex.CasoratiWeierstrass
 
 open Complex.CasoratiWeierstrass
 

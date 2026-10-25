@@ -1,0 +1,94 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/RandomCurrentPredecessorComparison.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.Exact3D.BoxPathWitness.Part4
+import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge.Part121
+import Theorem.StatisticalMechanics.Code.FK.QuadrantPartition.Part9
+import Def.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorComparison.Part145
+open scoped BigOperators symmDiff
+open MeasureTheory
+
+set_option linter.style.longLine false
+
+
+namespace StatMech
+
+namespace Exact3D
+
+set_option linter.style.longLine false in
+
+
+theorem
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyFiniteCutoffMajorantBoundsPositiveSubcritical_of_selectedCopyEmptyFiniteCutoffMajorantBoundPositiveSubcritical_selectedCopyInnerPairFiniteCutoffMajorantBoundPositiveSubcritical
+    (hempty :
+      FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyEmptyFiniteCutoffMajorantBoundPositiveSubcritical)
+    (hinner :
+      FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyInnerPairFiniteCutoffMajorantBoundPositiveSubcritical) :
+    FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyFiniteCutoffMajorantBoundsPositiveSubcritical := by
+  intro β hβpos hβc
+  exact Filter.Eventually.mono
+    ((hempty β hβpos hβc).and (hinner β hβpos hβc)) fun _n hn =>
+      ⟨hn.1, hn.2⟩
+
+set_option linter.style.longLine false in
+
+
+theorem
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyEmptyFiniteCutoffBoundPositiveSubcritical_of_selectedCopyEmptyFiniteCutoffMajorantBoundPositiveSubcritical
+    (hmajor :
+      FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyEmptyFiniteCutoffMajorantBoundPositiveSubcritical) :
+    FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyEmptyFiniteCutoffBoundPositiveSubcritical := by
+  intro β hβpos hβc
+  exact Filter.Eventually.mono (hmajor β hβpos hβc) fun n hn =>
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyEmptyFiniteCutoffBoundAt_of_selectedCopyEmptyFiniteCutoffMajorantBoundAt
+      hn
+
+set_option linter.style.longLine false in
+
+
+theorem
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyInnerPairFiniteCutoffBoundPositiveSubcritical_of_selectedCopyInnerPairFiniteCutoffMajorantBoundPositiveSubcritical
+    (hmajor :
+      FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyInnerPairFiniteCutoffMajorantBoundPositiveSubcritical) :
+    FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyInnerPairFiniteCutoffBoundPositiveSubcritical := by
+  intro β hβpos hβc
+  exact Filter.Eventually.mono (hmajor β hβpos hβc) fun n hn =>
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyInnerPairFiniteCutoffBoundAt_of_selectedCopyInnerPairFiniteCutoffMajorantBoundAt
+      hn
+
+set_option linter.style.longLine false in
+
+
+theorem
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyFiniteCutoffBoundsPositiveSubcritical_of_selectedCopyFiniteCutoffMajorantBoundsPositiveSubcritical
+    (hmajor :
+      FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyFiniteCutoffMajorantBoundsPositiveSubcritical) :
+    FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyFiniteCutoffBoundsPositiveSubcritical := by
+  intro β hβpos hβc
+  exact Filter.Eventually.mono (hmajor β hβpos hβc) fun n hn =>
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyFiniteCutoffBoundsAt_of_selectedCopyFiniteCutoffMajorantBoundsAt
+      hn
+
+set_option linter.style.longLine false in
+
+
+theorem
+    freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyFiniteCutoffBoundsPositiveSubcritical_of_selectedCopyEmptyFiniteCutoffMajorantBoundPositiveSubcritical_selectedCopyInnerPairFiniteCutoffMajorantBoundPositiveSubcritical
+    (hempty :
+      FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyEmptyFiniteCutoffMajorantBoundPositiveSubcritical)
+    (hinner :
+      FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyInnerPairFiniteCutoffMajorantBoundPositiveSubcritical) :
+    FreeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyFiniteCutoffBoundsPositiveSubcritical :=
+  freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyFiniteCutoffBoundsPositiveSubcritical_of_selectedCopyFiniteCutoffMajorantBoundsPositiveSubcritical
+    (freeQ2BoundaryFreeVertexPositiveXFaceOrderedWedgeFullStrictSectorYSourceSectorResidualMomentBranchComponentSelectedCopyFiniteCutoffMajorantBoundsPositiveSubcritical_of_selectedCopyEmptyFiniteCutoffMajorantBoundPositiveSubcritical_selectedCopyInnerPairFiniteCutoffMajorantBoundPositiveSubcritical
+      hempty hinner)
+
+end Exact3D
+end StatMech

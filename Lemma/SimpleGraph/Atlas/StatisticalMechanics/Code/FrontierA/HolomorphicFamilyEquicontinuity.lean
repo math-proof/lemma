@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.HolomorphicFamilyEquicontinuity
+import Theorem.StatisticalMechanics.Code.FrontierA.HolomorphicFamilyEquicontinuity
 open Metric Set Topology StatMech StatMech.FrontierA
 
 

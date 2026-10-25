@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.ConvexGeometry
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.ConvexGeometry.Part2
 open Set ConvexGeometry
 open scoped Pointwise
 open MeasureTheory

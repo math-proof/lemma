@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_2_2
+import Instance.Analysis.Section_2_2.Part2
 import Lemma.Nat.All.of.All_Nat_induction
 import Lemma.Nat.Eq0Add
 import Lemma.Nat.Eq_Add0

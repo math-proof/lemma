@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.MeanfieldIsingFull
+import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingFull.Part2
 open MeasureTheory Real Set Filter Topology StatMech StatMech.Sharpness
 
 

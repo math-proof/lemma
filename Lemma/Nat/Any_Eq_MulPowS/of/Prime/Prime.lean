@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.BurnsidePaqbReduction
+import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
 import Lemma.Nat.MulCardConjClassCard_StabilizerConjActG.eq.CardG
 import Lemma.Nat.ConjClass.of.IsConj
-import sympy.atlas.GroupTheory.BurnsidePaqb.ClassSum
+import Theorem.GroupTheory.BurnsidePaqb.ClassSum.Part3
 
 
 namespace BurnsidePaqb

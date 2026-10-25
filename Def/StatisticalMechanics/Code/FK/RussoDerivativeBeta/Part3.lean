@@ -1,0 +1,31 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/RussoDerivativeBeta.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.FK.RandomCluster.Part6
+import Theorem.StatisticalMechanics.Code.FK.RussoDerivativeBeta.Part2
+open scoped BigOperators
+
+
+namespace StatMech
+
+namespace FK
+
+open Finset ConfigSpace
+
+variable {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
+
+
+noncomputable def fkNumerW (pf : Sym2 V → ℝ) (q : ℝ) (g : ConfigSpace (Sym2 V) → ℝ) : ℝ :=
+  ∑ ω : ConfigSpace (Sym2 V), g ω * fkWeightW G pf q ω
+
+
+end FK
+end StatMech

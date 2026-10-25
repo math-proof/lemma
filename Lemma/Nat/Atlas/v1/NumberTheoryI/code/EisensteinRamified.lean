@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.EisensteinRamified
+import Abbrev.v1.Atlas.NumberTheoryI.code.EisensteinRamified
 open Polynomial Ideal IsLocalRing
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TrifurcationPatternCapstone
+import Theorem.StatisticalMechanics.Code.FK.TrifurcationPatternCapstone
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.FK
 
 

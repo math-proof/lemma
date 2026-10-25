@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.SaturatingNonedge
+import Def.Combinatorics.SimpleGraph.SaturatingNonedge
 open Finset
 open SimpleGraph
 

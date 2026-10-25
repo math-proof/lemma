@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsoradialCellularRibbonDuality
+import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialCellularRibbonDuality.Part2
 open StatMech StatMech.FrontierA StatMech.FrontierA.CellularRibbonDualData
 
 

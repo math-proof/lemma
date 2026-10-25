@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.point_derivations
+import Theorem.Algebra.PointDerivations.Part2
+import Def.Algebra_PointDerivations
 open scoped TensorProduct
 set_option maxHeartbeats 1000000
-
 
 /--
 [Algebra_PointDerivations_exists_reader_tensor_linearMap_dual_of_linearEquiv_tensor](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_PointDerivations_exists_reader_tensor_linearMap_dual_of_linearEquiv_tensor.lean)
@@ -209,6 +209,5 @@ private lemma main
       rw [hT, hL, hP, hL]
     rw [hpin c ĉ hĉ, hpin c' _ hĉ', ← Algebra.PointDerivations.map_comp, hLP,
       Algebra.PointDerivations.map_comp, hΦnat]
-
 
 -- created on 2026-10-13

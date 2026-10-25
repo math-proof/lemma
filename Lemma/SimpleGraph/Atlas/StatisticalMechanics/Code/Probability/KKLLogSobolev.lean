@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.KKLLogSobolev
+import Theorem.StatisticalMechanics.Code.Probability.KKLLogSobolev.Part2
 open Finset StatMech StatMech.Probability
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.GaussBonnet
+import Theorem.StatisticalMechanics.Code.Lattice.GaussBonnet.Part4
 open SimpleGraph Function StatMech StatMech.Lattice
 
 

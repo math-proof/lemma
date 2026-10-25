@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.ring.candido_identity
-
+import Theorem.Algebra.Ring.CandidoIdentity
 open MetaMathlibExt
 
 /--
@@ -16,6 +15,5 @@ private lemma candido_identity_eq
   2 * (x ^ 4 + y ^ 4 + (x + y) ^ 4) = (x ^ 2 + y ^ 2 + (x + y) ^ 2) ^ 2 := by
 -- proof
   apply candido_identity
-
 
 -- created on 2026-10-09

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.InfiniteWord.PureMorphicWord
+import Theorem.MathlibExtTest.Combinatorics.InfiniteWord.PureMorphicWord.Part2
 
 
 namespace MetaMathlibExt

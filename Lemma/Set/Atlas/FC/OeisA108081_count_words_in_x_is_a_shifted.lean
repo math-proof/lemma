@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.FC.OeisA108081_count_words_in_x_is_a_shifted
+import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part13
 open OeisA108081
 open Nat
 open PowerSeries

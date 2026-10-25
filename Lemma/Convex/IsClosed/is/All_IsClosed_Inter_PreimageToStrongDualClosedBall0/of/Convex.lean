@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.KreinSmulian
+import Theorem.Analysis.NormedSpace.KreinSmulian.Part4
 
 /--
 [KreinSmulian](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/KreinSmulian.lean)

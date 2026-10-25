@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.InformationTheory.Pinsker
+import Def.InformationTheory.Pinsker
 open Finset BigOperators
 open MathlibExt.InformationTheory.Pinsker
 

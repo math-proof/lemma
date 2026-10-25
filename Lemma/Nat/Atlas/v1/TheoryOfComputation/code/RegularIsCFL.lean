@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.RegularIsCFL
+import Def.v1.Atlas.TheoryOfComputation.code.RegularIsCFL
 open RegularIsCFL
 open Computability
 

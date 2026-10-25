@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.HeatEquationProp1116
+import Def.v1.Atlas.DifferentialAnalysis.code.HeatEquationProp1116
 open TemperedDistribution LineDeriv Distribution HeatEquation MeasureTheory in DifferentialOperators
 open scoped SchwartzMap
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWOuterOrientation
+import Theorem.StatisticalMechanics.Code.Universality.RSWOuterOrientation.Part4
 open Function MeasureTheory Set StatMech StatMech.Universality
 
 

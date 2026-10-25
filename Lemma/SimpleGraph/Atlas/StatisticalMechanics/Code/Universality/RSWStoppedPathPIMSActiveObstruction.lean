@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWStoppedPathPIMSActiveObstruction
+import Theorem.StatisticalMechanics.Code.Universality.RSWStoppedPathPIMSActiveObstruction.Part2
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

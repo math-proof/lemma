@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.InhomogeneousFKG
+import Theorem.StatisticalMechanics.Code.FK.InhomogeneousFKG
 open StatMech StatMech.FK
 
 

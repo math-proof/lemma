@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.SpecialFunctions.QPochhammer
+import Def.Analysis.SpecialFunctions.QPochhammer
 import Lemma.Complex.QPochhammer
 import Lemma.Finset.Enumerative.Partition.RamanujanPartitionCongruence
-import sympy.atlas.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruence
+import Def.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruence
 
 
 namespace MetaMathlibExt.QPochhammer

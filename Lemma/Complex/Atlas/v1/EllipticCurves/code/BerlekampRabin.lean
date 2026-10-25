@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.BerlekampRabin
+import Structure.v1.Atlas.EllipticCurves.code.BerlekampRabin.Part2
 open Polynomial Finset BerlekampRabin
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveIntegration
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveIntegration
 open Finset StatMech StatMech.Universality
 
 

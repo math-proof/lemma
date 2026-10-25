@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.BellWeakExcedance
+import Def.Combinatorics.BellWeakExcedance.Part11
 open MetaMathlibExt
 
 

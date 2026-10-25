@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.AlgebraicGeometry.EllipticCurve.VariableChangePoint
+import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
 open WeierstrassCurve.VariableChange
 
 

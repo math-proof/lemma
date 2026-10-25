@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareScaledDomain
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareScaledDomain.Part4
 open StatMech StatMech.Universality
 
 

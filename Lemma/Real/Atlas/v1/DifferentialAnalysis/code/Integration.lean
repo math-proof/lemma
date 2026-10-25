@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.Integration
+import Abbrev.v1.Atlas.DifferentialAnalysis.code.Integration.Part2
 open MeasureTheory ENNReal Set NormedSpaces Integration MonotoneConvergence
 open scoped ENNReal
 open MeasureTheory Filter ENNReal Topology

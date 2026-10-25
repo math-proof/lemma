@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ImaginaryQuadraticDiscriminant
+import Def.NumberTheory.ImaginaryQuadraticDiscriminant.Part2
 open ImaginaryQuadraticDiscriminant
 open ImaginaryQuadraticDiscriminantDecomposition
 

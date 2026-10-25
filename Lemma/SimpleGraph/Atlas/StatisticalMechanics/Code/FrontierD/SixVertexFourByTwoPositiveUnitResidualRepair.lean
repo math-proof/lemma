@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexFourByTwoPositiveUnitResidualRepair
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByTwoPositiveUnitResidualRepair
 open StatMech StatMech.FrontierD
 
 

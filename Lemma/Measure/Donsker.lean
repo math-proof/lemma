@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.Donsker
+import Def.Probability.Donsker.Part2
 open MeasureTheory ProbabilityTheory Filter Topology
 open scoped ENNReal NNReal ProbabilityTheory Real
 open MathlibExt.Probability.DonskerWanted

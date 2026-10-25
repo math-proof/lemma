@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.DModulesII
+import Def.v1.Atlas.LieGroups.code.DModulesII.Part6
 open CategoryTheory DModulesII
 
 

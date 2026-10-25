@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_2_2
+import Instance.Analysis.Section_2_2.Part2
 import Lemma.Nat.EqAddAdd
 import Lemma.Nat.IsPosAdd.of.IsPos
 open Chapter2 hiding Nat

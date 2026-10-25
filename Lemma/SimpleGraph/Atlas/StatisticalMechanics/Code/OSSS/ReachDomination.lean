@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.ReachDomination
+import Theorem.StatisticalMechanics.Code.OSSS.ReachDomination.Part3
 open MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.ReachDomination
 
 

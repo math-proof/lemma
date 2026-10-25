@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Ideal.Counting
+import Def.NumberTheory.NumberField.Ideal.Counting
 open scoped NumberField
 open NumberField
 open Ideal

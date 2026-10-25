@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.LongRectangleGeometry
+import Theorem.StatisticalMechanics.Code.BeffaraDC.LongRectangleGeometry.Part5
 open MeasureTheory Set StatMech StatMech.BeffaraDC
 
 

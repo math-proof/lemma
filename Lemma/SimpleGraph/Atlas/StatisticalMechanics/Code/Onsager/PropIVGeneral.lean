@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.PropIVGeneral
+import Theorem.StatisticalMechanics.Code.Onsager.PropIVGeneral.Part2
 open StatMech StatMech.Onsager StatMech.Onsager.PropIVGeneral
 
 

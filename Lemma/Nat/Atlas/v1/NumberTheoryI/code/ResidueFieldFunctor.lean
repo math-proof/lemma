@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.ResidueFieldFunctor
+import Def.v1.Atlas.NumberTheoryI.code.ResidueFieldFunctor
 open Polynomial IsLocalRing IntermediateField in
 
 

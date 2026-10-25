@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.AnalyticityRegularity
+import Def.v1.Atlas.LieGroups.code.AnalyticityRegularity.Part2
 open ContinuousRep
 open scoped Manifold
 

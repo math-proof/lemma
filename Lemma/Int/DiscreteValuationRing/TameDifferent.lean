@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DiscreteValuationRing.TameDifferent
+import Theorem.RingTheory.DiscreteValuationRing.TameDifferent
 open IsLocalRing
 open scoped nonZeroDivisors
 

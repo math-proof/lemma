@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Graph.GraphMinor
+import Def.Combinatorics.Graph.GraphMinor
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.RayClass.CongruenceSubgroup
+import Def.NumberTheory.NumberField.RayClass.CongruenceSubgroup
 open scoped nonZeroDivisors
 open NumberField.Modulus
 open CongruenceSubgroup

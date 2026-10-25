@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.Polynomial.MomentGeneratingJFraction
+import Def.Algebra.Polynomial.MomentGeneratingJFraction
 open MetaMathlibExt
 
 

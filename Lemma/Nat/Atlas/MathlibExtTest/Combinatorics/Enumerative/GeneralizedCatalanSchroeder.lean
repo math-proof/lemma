@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.Enumerative.GeneralizedCatalanSchroeder
+import Theorem.MathlibExtTest.Combinatorics.Enumerative.GeneralizedCatalanSchroeder
 open MathlibExtTest MathlibExtTest.Combinatorics MathlibExtTest.Combinatorics.Enumerative MathlibExtTest.Combinatorics.Enumerative.GeneralizedCatalanSchroeder
 open scoped BigOperators
 

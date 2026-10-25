@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.DirichletL
+import Abbrev.v1.Atlas.NumberTheoryI.code.DirichletL
 open Complex Filter Topology Nat DirichletLFunction
 open scoped LSeries.notation
 

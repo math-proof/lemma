@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.UmlaufsatzSingleCycle
+import Theorem.StatisticalMechanics.Code.Lattice.UmlaufsatzSingleCycle.Part4
 open SimpleGraph Function Set Finset StatMech StatMech.Lattice
 
 

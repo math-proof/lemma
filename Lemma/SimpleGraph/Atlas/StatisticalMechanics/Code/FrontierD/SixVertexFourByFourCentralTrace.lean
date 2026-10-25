@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourCentralTrace
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourCentralTrace
 open Finset Matrix StatMech StatMech.FrontierD
 
 

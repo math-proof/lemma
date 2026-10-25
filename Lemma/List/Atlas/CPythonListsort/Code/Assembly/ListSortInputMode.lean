@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.ListSortInputMode
+import Def.CPythonListsort.Code.Assembly.ListSortInputMode
 open CPythonListsort
 
 

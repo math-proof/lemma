@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.RiemannMapping
+import Def.Analysis.Complex.RiemannMapping
 open Filter Metric Set
 open scoped Topology
 open MathlibExt.Analysis.Complex.RiemannMappingWanted

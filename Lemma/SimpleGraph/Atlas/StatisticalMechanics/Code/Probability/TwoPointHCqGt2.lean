@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.TwoPointHCqGt2
+import Theorem.StatisticalMechanics.Code.Probability.TwoPointHCqGt2.Part2
 open Finset Real Set StatMech StatMech.Probability
 
 

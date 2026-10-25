@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.CToOneLattice
+import Theorem.StatisticalMechanics.Code.Sharpness.CToOneLattice.Part4
 open Filter Topology StatMech StatMech.Sharpness
 
 

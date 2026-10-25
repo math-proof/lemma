@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.AllOpenCoarseProbabilityGeneral
+import Theorem.StatisticalMechanics.Code.FrontierA.AllOpenCoarseProbabilityGeneral.Part2
 open Finset Set SimpleGraph MeasureTheory Filter Topology StatMech StatMech.FrontierA
 
 

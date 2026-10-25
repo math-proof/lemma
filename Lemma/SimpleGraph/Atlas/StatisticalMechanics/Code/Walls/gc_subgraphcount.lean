@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc_subgraphcount
+import Theorem.StatisticalMechanics.Code.Walls.gc_subgraphcount
 open Finset BigOperators StatMech StatMech.Walls
 
 

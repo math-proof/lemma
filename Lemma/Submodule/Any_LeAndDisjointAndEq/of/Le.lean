@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.GeometricAlgebra.KernelDecomposition
+import Def.v1.Atlas.Buildings.code.GeometricAlgebra.KernelDecomposition
 open Formalization Formalization.GeometricAlgebra
 open LinearMap.BilinForm
 

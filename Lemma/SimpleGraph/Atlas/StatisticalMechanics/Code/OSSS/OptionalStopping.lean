@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.OptionalStopping
+import Theorem.StatisticalMechanics.Code.OSSS.OptionalStopping.Part3
 open Finset MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.AdaptDisintegration
 
 

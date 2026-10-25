@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FKCriticalAlgebra
+import Theorem.StatisticalMechanics.Code.FrontierA.FKCriticalAlgebra
 open StatMech StatMech.FrontierA
 
 

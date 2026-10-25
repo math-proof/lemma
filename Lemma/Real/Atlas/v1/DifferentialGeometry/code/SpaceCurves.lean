@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialGeometry.code.SpaceCurves
+import Def.v1.Atlas.DifferentialGeometry.code.SpaceCurves
 open InnerProductSpace Submodule Set SpaceCurves
 open scoped Matrix.Norms.Operator
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexSurgerySeams
+import Theorem.StatisticalMechanics.Code.Universality.HexSurgerySeams.Part5
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Entry15Example1ExponentialSeries
+import Def.NumberTheory.Ramanujan.Part1Ch3Entry15Example1ExponentialSeries
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry15Example1ExponentialSeries
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.FunctionalEquation
+import Def.v1.Atlas.NumberTheoryI.code.FunctionalEquation
 open Complex hiding exp continuous_exp Real Filter Topology Asymptotics FunctionalEquation
 open Real Filter Topology Asymptotics
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Transcription.TempStorageInvariant
+import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
 open CPythonListsort CPythonListsort.TempStorageInv
 
 

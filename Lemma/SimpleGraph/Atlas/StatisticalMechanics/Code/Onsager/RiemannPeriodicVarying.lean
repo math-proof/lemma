@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.RiemannPeriodicVarying
+import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodicVarying
 open MeasureTheory Filter StatMech StatMech.Onsager
 
 

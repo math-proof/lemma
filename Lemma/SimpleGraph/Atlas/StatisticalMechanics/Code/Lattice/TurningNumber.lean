@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.TurningNumber
+import Theorem.StatisticalMechanics.Code.Lattice.TurningNumber.Part6
 open SimpleGraph Function StatMech StatMech.Lattice
 
 

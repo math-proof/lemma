@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_3_1
+import Instance.Analysis.Section_3_1.Part5
 import Lemma.Set.In_Set.is.Eq
 import Lemma.Set.In_Union.is.InOrIn
 import Lemma.Set.Set.eq.Union

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.Z2GaugeTypedFKCylinderPerimeter
+import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeTypedFKCylinderPerimeter
 open StatMech StatMech.FrontierA
 
 

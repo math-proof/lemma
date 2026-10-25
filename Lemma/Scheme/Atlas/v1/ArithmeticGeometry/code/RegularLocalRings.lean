@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
+import Abbrev.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
 open Order ValuationSubring
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Divisors
+import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part11
 open CurveDivisor ClosedPoint CurveWithOrd CurveWithConstants CurveMorphismData ArithmeticGeometry
 open CurveWithOrd
 open CurveWithOrd CurveDivisor

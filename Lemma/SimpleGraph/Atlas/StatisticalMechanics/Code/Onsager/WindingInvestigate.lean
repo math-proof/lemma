@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.WindingInvestigate
+import Theorem.StatisticalMechanics.Code.Onsager.WindingInvestigate
 open SimpleGraph Function Set StatMech StatMech.Lattice
 
 

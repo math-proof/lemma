@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.QBinomial
+import Def.v1.Atlas.AlgebraicCombinatorics.code.QBinomial.Part2
 open Polynomial QBinomial
 open YoungLattice YoungLattice.Lmn
 

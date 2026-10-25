@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianMomentConvergence
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianMomentConvergence
 open Filter MeasureTheory Set Topology ProbabilityTheory StatMech StatMech.FrontierA
 
 

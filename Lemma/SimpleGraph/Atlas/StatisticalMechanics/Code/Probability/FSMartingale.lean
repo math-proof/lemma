@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.FSMartingale
+import Theorem.StatisticalMechanics.Code.Probability.FSMartingale.Part2
 open Finset Real StatMech StatMech.Probability
 
 

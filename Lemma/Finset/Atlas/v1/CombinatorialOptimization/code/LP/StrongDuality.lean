@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.CombinatorialOptimization.code.LP.StrongDuality
+import Def.v1.Atlas.CombinatorialOptimization.code.LP.StrongDuality
 open Matrix Finset
 
 

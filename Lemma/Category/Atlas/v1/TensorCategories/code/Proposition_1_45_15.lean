@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.FrobeniusPerron
+import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
 import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
 open Real FusionRing
 open scoped Matrix

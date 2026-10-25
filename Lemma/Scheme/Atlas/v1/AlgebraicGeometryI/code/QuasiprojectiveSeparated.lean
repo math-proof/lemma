@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.QuasiprojectiveSeparated
+import Class.v1.Atlas.AlgebraicGeometryI.code.QuasiprojectiveSeparated
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits QuasiprojectiveSeparated
 
 

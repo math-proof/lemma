@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.HilbertSpace
+import Class.v1.Atlas.DifferentialAnalysis.code.HilbertSpace
 open HilbertSpace
 open scoped ComplexInnerProductSpace
 open MeasureTheory Complex

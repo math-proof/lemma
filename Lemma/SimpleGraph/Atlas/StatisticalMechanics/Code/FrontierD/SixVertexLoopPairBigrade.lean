@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexLoopPairBigrade
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexLoopPairBigrade.Part2
 open StatMech StatMech.FrontierD
 
 

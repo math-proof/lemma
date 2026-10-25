@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wotsorbitsurj
+import Theorem.StatisticalMechanics.Code.Walls.wotsorbitsurj.Part2
 open SimpleGraph Function StatMech StatMech.Wots
 
 

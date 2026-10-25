@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LeeYangBoundaryPressure
+import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangBoundaryPressure
 open Filter Topology StatMech StatMech.FrontierA
 
 

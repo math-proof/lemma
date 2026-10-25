@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.BoxSurfaceVolume
+import Theorem.StatisticalMechanics.Code.Lattice.BoxSurfaceVolume.Part5
 open Set Finset Filter Topology StatMech StatMech.Lattice
 
 

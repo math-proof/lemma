@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.ReimerEndpointProve
+import Theorem.StatisticalMechanics.Code.Inequalities.ReimerEndpointProve.Part3
 open Finset MeasureTheory StatMech
 
 

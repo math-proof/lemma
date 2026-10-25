@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.PBiasedEntropy
+import Theorem.StatisticalMechanics.Code.Probability.PBiasedEntropy.Part2
 open Finset Real StatMech StatMech.Probability
 
 

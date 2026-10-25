@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPrimitive
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPrimitive.Part2
 open Complex StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FKTrihexDuality
+import Theorem.StatisticalMechanics.Code.FrontierA.FKTrihexDuality
 open StatMech StatMech.FrontierA
 
 

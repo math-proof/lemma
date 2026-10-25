@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc7componenteven
+import Theorem.StatisticalMechanics.Code.Walls.gc7componenteven
 open Finset BigOperators StatMech StatMech.Walls
 
 

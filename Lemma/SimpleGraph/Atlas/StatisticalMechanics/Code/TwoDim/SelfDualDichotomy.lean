@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.TwoDim.SelfDualDichotomy
+import Theorem.StatisticalMechanics.Code.TwoDim.SelfDualDichotomy
 open MeasureTheory Set Filter Topology SimpleGraph StatMech StatMech.TwoDim
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.euceuler
+import Theorem.StatisticalMechanics.Code.Walls.euceuler.Part3
 open Finset StatMech StatMech.Euc
 
 

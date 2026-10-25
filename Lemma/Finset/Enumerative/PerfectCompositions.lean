@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.PerfectCompositions
+import Def.Combinatorics.Enumerative.PerfectCompositions
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.LaplaceTransform.Basic
+import Def.Analysis.LaplaceTransform.Basic
 open MeasureTheory
 
 

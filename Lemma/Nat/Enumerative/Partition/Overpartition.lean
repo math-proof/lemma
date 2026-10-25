@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Partition.Overpartition
+import Def.Combinatorics.Enumerative.Partition.Overpartition
 open Nat
 open Overpartition
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.MagPercoIdBox
+import Theorem.StatisticalMechanics.Code.IsingFK.MagPercoIdBox.Part3
 open MeasureTheory Filter Topology StatMech StatMech.IsingFK
 
 

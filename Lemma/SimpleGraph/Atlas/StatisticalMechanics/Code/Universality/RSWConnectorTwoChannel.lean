@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannel
+import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannel.Part9
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

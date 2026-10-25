@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DetLoopExpansion
+import Theorem.StatisticalMechanics.Code.Onsager.DetLoopExpansion
 open Polynomial Set FiniteDimensional Module StatMech StatMech.Onsager
 
 

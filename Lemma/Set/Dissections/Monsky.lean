@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Dissections.Monsky
+import Theorem.Geometry.Dissections.Monsky.Part11
 open MeasureTheory Set
 open MetaMathlibExt
 

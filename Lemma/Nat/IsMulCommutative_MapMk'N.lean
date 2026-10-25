@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.SchurZassenhaus
+import Def.GroupTheory.SchurZassenhaus
 open scoped Pointwise
 open MulAction MulOpposite Subgroup QuotientGroup Function
 open MathlibExt.GroupTheory.SchurZassenhausWanted

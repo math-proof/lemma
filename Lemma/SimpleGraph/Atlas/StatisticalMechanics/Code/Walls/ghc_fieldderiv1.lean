@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.ghc_fieldderiv1
+import Theorem.StatisticalMechanics.Code.Walls.ghc_fieldderiv1
 open Finset SimpleGraph StatMech StatMech.Walls
 
 

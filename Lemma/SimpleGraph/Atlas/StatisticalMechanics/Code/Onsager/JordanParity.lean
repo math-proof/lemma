@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.JordanParity
+import Theorem.StatisticalMechanics.Code.Onsager.JordanParity
 open StatMech StatMech.Onsager StatMech.Onsager.JordanParity
 
 

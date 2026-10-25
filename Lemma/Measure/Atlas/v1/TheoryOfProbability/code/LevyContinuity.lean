@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.LevyContinuity
+import Theorem.v1.Atlas.TheoryOfProbability.code.LevyContinuity
 open MeasureTheory Complex Filter ProbabilityTheory
 open scoped Topology BoundedContinuousFunction
 

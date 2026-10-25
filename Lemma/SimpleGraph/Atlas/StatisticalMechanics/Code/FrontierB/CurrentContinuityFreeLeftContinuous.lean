@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentContinuityFreeLeftContinuous
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFreeLeftContinuous
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierB
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDevelopedEndpointRate
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedEndpointRate.Part2
 open Filter Topology StatMech StatMech.FrontierD
 
 

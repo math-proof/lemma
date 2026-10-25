@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.RidoutPadicRoth
+import Theorem.MathlibExtTest.NumberTheory.RidoutPadicRoth
 open MathlibExtTest MathlibExtTest.NumberTheory MathlibExtTest.NumberTheory.RidoutPadicRoth
 
 

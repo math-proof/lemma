@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.HadamardDecomposition
+import Def.v1.Atlas.DifferentialAnalysis.code.HadamardDecomposition
 open HadamardDecomposition
 open scoped SchwartzMap
 

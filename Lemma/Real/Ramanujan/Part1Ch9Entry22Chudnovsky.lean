@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch9Entry22Chudnovsky
+import Def.Analysis.Ramanujan.Part1Ch9Entry22Chudnovsky
 open MathlibExt.Analysis.SpecialFunctions.ArcsinTaylorSeries
 open scoped Nat Real BigOperators Interval
 open Filter Finset Complex Topology MeasureTheory

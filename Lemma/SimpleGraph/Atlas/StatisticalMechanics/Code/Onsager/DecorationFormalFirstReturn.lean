@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationFormalFirstReturn
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationFormalFirstReturn.Part20
 open StatMech StatMech.Onsager StatMech.Onsager.DecFormalExpAdd
 
 

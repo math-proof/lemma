@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SmoothingOperators
+import Def.v1.Atlas.DifferentialAnalysis.code.SmoothingOperators
 open MvPolynomial SchwartzMap SmoothingOperators
 open scoped SchwartzMap
 open scoped LineDeriv

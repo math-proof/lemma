@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.BellPermutationsSecondKind
+import Theorem.Combinatorics.BellPermutationsSecondKind.Part5
 open MetaMathlibExt
 
 

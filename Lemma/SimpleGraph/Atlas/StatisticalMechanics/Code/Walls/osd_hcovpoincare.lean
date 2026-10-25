@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.osd_hcovpoincare
+import Theorem.StatisticalMechanics.Code.Walls.osd_hcovpoincare
 open Finset StatMech StatMech.Walls
 
 

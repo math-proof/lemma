@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.KWSpinFourier
+import Theorem.StatisticalMechanics.Code.Onsager.KWSpinFourier.Part3
 open StatMech StatMech.Onsager
 
 

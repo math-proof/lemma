@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc3_orbitkeysymm
+import Theorem.StatisticalMechanics.Code.Walls.rc3_orbitkeysymm
 open Finset StatMech StatMech.Walls
 
 

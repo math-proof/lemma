@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicLocalBallot
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalBallot.Part5
 open StatMech StatMech.Universality
 
 

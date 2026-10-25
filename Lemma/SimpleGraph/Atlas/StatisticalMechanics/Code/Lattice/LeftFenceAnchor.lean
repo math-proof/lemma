@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.LeftFenceAnchor
+import Theorem.StatisticalMechanics.Code.Lattice.LeftFenceAnchor
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

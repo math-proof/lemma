@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.SchurLemma
+import Def.v1.Atlas.LieGroups.code.SchurLemma
 open scoped ComplexOrder
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.Defs
+import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
 open MeasureTheory ProbabilityTheory Complex Filter Topology StatMech StatMech.SLE
 
 

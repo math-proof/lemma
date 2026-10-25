@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Poset.LinearExtension
+import Def.Combinatorics.Poset.LinearExtension
 open FinPoset
 
 

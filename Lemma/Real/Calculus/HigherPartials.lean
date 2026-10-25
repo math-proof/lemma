@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.HigherPartials
+import Theorem.Analysis.Calculus.HigherPartials
 
 open Real.Calculus.HigherPartials
 

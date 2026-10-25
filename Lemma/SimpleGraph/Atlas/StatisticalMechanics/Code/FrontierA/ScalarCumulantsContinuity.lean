@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.ScalarCumulantsContinuity
+import Theorem.StatisticalMechanics.Code.FrontierA.ScalarCumulantsContinuity
 open Filter Finset Topology StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.RapidExpansion
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.RapidExpansion
 open Finset Real HarperIsoperimetric RapidExpansion
 
 

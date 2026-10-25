@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.AnalyticClassNumber
+import Instance.v1.Atlas.NumberTheoryI.code.AnalyticClassNumber.Part3
 open Filter Topology Asymptotics Set MeasureTheory NumberField NNReal Complex NumberField.InfinitePlace NumberField.Units Section19
 open scoped Classical
 open NumberField.InfinitePlace NumberField.Units

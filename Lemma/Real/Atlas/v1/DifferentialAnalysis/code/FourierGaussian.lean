@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.FourierGaussian
+import Def.v1.Atlas.DifferentialAnalysis.code.FourierGaussian
 open Real MeasureTheory Complex FourierAnalysis
 open scoped RealInnerProductSpace
 

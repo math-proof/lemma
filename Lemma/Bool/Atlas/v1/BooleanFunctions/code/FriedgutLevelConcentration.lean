@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Friedgut
+import Def.v1.Atlas.BooleanFunctions.code.Friedgut
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Friedgut
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.UncoveredBatch2
+import Theorem.v1.Atlas.BooleanFunctions.code.UncoveredBatch2
 open Finset Real
 
 

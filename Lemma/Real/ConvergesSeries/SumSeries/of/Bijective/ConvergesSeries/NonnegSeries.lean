@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_7_4
+import Abbrev.Analysis.Section_7_4
 open Chapter7
 open Chapter7.Series
 

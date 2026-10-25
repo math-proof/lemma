@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSplitCyclePhase
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSplitCyclePhase
 open StatMech StatMech.FrontierA
 
 

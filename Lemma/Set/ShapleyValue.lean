@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GameTheory.ShapleyValue
+import Theorem.GameTheory.ShapleyValue.Part3
 open MathlibExt.GameTheory.ShapleyValue
 
 

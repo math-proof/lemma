@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.RisingDiagonalSequence
+import Def.Combinatorics.Enumerative.RisingDiagonalSequence
 open MetaMathlibExt
 
 

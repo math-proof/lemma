@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.CouplingStructure
+import Theorem.StatisticalMechanics.Code.OSSS.CouplingStructure
 open Finset MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.CouplingStructure
 
 

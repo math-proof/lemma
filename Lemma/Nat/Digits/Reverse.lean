@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Data.Nat.Digits.Reverse
+import Theorem.Data.Nat.Digits.Reverse
 open Nat
 
 

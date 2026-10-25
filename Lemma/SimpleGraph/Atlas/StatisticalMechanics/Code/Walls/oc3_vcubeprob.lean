@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc3_vcubeprob
+import Theorem.StatisticalMechanics.Code.Walls.oc3_vcubeprob
 open Finset MeasureTheory StatMech.OSSS.GrandCoupling StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bfc2indep
+import Theorem.StatisticalMechanics.Code.Walls.bfc2indep
 open Set MeasureTheory ProbabilityTheory MeasurableSpace StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.Kolmogorov
+import Theorem.StatisticalMechanics.Code.Foundations.Kolmogorov.Part2
 open MeasureTheory StatMech StatMech.Kolmogorov
 
 

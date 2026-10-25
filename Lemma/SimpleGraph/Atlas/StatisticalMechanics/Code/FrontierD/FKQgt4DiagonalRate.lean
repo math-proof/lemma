@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4DiagonalRate
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4DiagonalRate.Part3
 open MeasureTheory Filter Topology StatMech StatMech.FrontierD
 
 

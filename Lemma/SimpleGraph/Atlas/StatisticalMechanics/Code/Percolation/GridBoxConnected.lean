@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.GridBoxConnected
+import Theorem.StatisticalMechanics.Code.Percolation.GridBoxConnected.Part2
 open Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

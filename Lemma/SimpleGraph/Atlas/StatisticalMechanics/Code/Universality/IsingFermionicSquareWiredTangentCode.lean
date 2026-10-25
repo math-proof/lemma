@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredTangentCode
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredTangentCode
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.SimplexGraph
+import Def.Combinatorics.SimpleGraph.SimplexGraph
 open scoped symmDiff
 open SimpleGraph
 

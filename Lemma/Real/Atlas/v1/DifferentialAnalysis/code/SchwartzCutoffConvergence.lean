@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SchwartzCutoffConvergence
+import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzCutoffConvergence
 open Filter Topology Metric SchwartzMap
 open scoped NNReal
 

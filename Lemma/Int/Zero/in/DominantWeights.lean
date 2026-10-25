@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.KostantTheorem
+import Def.v1.Atlas.LieGroups.code.KostantTheorem.Part5
 open MeasureTheory Filter
 
 

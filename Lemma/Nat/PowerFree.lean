@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PowerFree
+import Def.NumberTheory.PowerFree
 open Nat
 
 

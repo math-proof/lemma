@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABForwardCharacteristic
+import Theorem.StatisticalMechanics.Code.Sharpness.ABForwardCharacteristic
 open Filter Set Topology StatMech StatMech.Sharpness
 
 

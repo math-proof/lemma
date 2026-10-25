@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.SurfaceKacWardPolygonalDevelopment
+import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardPolygonalDevelopment.Part3
 open Finset SimpleGraph StatMech StatMech.FrontierA StatMech.FrontierA.ClosedPolygonalFlatSurfaceGraphAtlas
 
 

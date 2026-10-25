@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc4_revealascube
+import Theorem.StatisticalMechanics.Code.Walls.oc4_revealascube
 open Finset MeasureTheory StatMech StatMech.Walls
 
 

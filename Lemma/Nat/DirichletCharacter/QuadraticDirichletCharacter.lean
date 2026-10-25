@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.DirichletCharacter.QuadraticDirichletCharacter
+import Def.NumberTheory.DirichletCharacter.QuadraticDirichletCharacter
 open MetaMathlibExt
 
 

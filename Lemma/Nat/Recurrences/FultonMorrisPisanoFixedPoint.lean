@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Recurrences.FultonMorrisPisanoFixedPoint
+import Def.NumberTheory.Recurrences.FultonMorrisPisanoFixedPoint
 open MetaMathlibExt
 
 

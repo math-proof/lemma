@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.OutwardArmForestClose
+import Theorem.StatisticalMechanics.Code.Percolation.OutwardArmForestClose.Part3
 open Set SimpleGraph Finset StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation StatMech.Percolation.OafTree
 
 

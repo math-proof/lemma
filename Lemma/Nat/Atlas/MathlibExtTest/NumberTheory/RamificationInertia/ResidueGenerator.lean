@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.RamificationInertia.ResidueGenerator
+import Theorem.MathlibExtTest.NumberTheory.RamificationInertia.ResidueGenerator
 
 
 variable {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]

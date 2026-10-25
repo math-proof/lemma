@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.algebra.affine_dilatation
+import Theorem.Algebra.AffineDilatation
 import sympy.Basic
 
 open AffineDilatation

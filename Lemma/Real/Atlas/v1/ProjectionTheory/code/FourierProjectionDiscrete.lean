@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.FourierProjectionDiscrete
+import Def.v1.Atlas.ProjectionTheory.code.FourierProjectionDiscrete
 open ZMod Finset Complex ProjectionTheory
 open scoped ZMod
 

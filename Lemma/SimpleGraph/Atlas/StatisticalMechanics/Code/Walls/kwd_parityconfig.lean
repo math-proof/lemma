@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kwd_parityconfig
+import Theorem.StatisticalMechanics.Code.Walls.kwd_parityconfig.Part4
 open Finset SimpleGraph StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.concrete.AlternatingSums
+import Def.Combinatorics.Enumerative.AlternatingSums.Part3
 import Lemma.Polynomial.QBinomialBasic
 open Finset
 open AlgebraicCombinatorics.SignedCounting

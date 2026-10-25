@@ -1,0 +1,28 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicMarkedEndpointClampedTarget.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicMarkedEndpointClampedTarget.Part3
+open StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm
+
+#print axioms vertexMarkedEndpointClamped_boundaryConsistencyError_le
+#print axioms faceMarkedEndpointClamped_boundaryConsistencyError_le
+#print axioms vertexMarkedEndpointClamped_weightedLaplacian_eq_sampled
+#print axioms faceMarkedEndpointClamped_weightedLaplacian_eq_sampled
+#print axioms vertexMarkedEndpointClamped_weightedLaplacian_le_of_unitRange
+#print axioms faceMarkedEndpointClamped_weightedLaplacian_le_of_unitRange
+#print axioms vertexMarkedEndpointClamped_target_error_le_endpointLocalized
+#print axioms faceMarkedEndpointClamped_target_error_le_endpointLocalized
+#print axioms PhysicalEndpointLocalizedMarkedClampedRobinInputs.vertex_error_le
+#print axioms PhysicalEndpointLocalizedMarkedClampedRobinInputs.face_error_le
+#print axioms PhysicalEndpointLocalizedMarkedClampedRobinInputs.ofSampledResiduals
+#print axioms PhysicalEndpointLocalizedMarkedClampedRobinInputs.primitive_convergence_away
+#print axioms PhysicalEndpointLocalizedMarkedClampedRobinInputs.primitive_convergence_away_polynomial
+
+

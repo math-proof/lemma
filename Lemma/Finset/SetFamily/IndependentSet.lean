@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SetFamily.IndependentSet
+import Def.Combinatorics.SetFamily.IndependentSet
 open SetFamily
 
 

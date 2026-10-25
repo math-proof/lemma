@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.NilpotentCone
+import Structure.v1.Atlas.LieGroups.code.NilpotentCone.Part5
 open Set LieAlgebra
 open scoped LieAlgebra
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingTorusAxisBlockAverage
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusAxisBlockAverage.Part4
 open Finset Set StatMech StatMech.FrontierA
 
 

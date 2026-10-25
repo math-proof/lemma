@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.BilinearForm.DualLattice
+import Def.LinearAlgebra.BilinearForm.DualLattice
 open scoped nonZeroDivisors
 open Submodule
 

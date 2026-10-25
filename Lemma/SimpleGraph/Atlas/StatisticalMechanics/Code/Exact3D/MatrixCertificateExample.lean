@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.MatrixCertificateExample
+import Theorem.StatisticalMechanics.Code.Exact3D.MatrixCertificateExample.Part4
 open StatMech StatMech.Exact3D StatMech.Exact3D.MatrixCertificateExample
 
 

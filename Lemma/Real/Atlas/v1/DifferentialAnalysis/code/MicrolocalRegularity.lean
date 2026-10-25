@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.MicrolocalRegularity
+import Def.v1.Atlas.DifferentialAnalysis.code.MicrolocalRegularity.Part2
 open WavefrontSet
 open scoped SchwartzMap
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.HighDimensional
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.HighDimensional.Part2
 import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.HighDimensional
 open MeasureTheory ProbabilityTheory Real InnerProductSpace
 open MeasureTheory Real Set Finset BigOperators

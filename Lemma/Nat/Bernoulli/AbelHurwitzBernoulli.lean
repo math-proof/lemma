@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Bernoulli.AbelHurwitzBernoulli
+import Def.NumberTheory.Bernoulli.AbelHurwitzBernoulli
 open scoped BigOperators
 open MetaMathlibExt
 

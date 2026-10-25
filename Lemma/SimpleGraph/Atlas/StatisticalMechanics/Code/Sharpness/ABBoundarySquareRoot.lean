@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABBoundarySquareRoot
+import Theorem.StatisticalMechanics.Code.Sharpness.ABBoundarySquareRoot
 open Filter Finset Set SimpleGraph Topology StatMech StatMech.Sharpness
 
 

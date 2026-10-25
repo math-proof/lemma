@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.WindingBridge
+import Theorem.StatisticalMechanics.Code.Onsager.WindingBridge.Part5
 open StatMech StatMech.Onsager StatMech.Onsager.WindingBridge
 
 

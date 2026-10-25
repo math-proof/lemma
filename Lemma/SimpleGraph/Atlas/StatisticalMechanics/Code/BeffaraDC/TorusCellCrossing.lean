@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.TorusCellCrossing
+import Theorem.StatisticalMechanics.Code.BeffaraDC.TorusCellCrossing.Part4
 open SimpleGraph StatMech StatMech.BeffaraDC
 
 

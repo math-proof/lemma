@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Misc.erdos_379
+import Theorem.Analysis.Misc.erdos_379.Part2
 open Nat
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.NormalizerParabolicProof
+import Def.v1.Atlas.Buildings.code.BNPair.NormalizerParabolicProof
 open NormalizerParabolic
 open BNPair CellCover CellDisjoint SubgroupOverB
 

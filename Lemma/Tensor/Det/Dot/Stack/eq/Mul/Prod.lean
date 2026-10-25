@@ -1,7 +1,7 @@
 import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
-import Lemma.Matrix.DetMulOfOfPowNegChoose.eq.MulPowProd.of.Le
+import Lemma.Matrix.DetMulStackS_MulPow.eq.Mul_Prod_Factorial.of.Le
 open Matrix Nat
 
 
@@ -21,7 +21,7 @@ private lemma vandermonde
     ext i j
     simp [mul_comm]
   rw [hA]
-  exact DetMulOfOfPowNegChoose.eq.MulPowProd.of.Le h
+  exact DetMulStackS_MulPow.eq.Mul_Prod_Factorial.of.Le h
 
 
 -- created on 2022-01-15

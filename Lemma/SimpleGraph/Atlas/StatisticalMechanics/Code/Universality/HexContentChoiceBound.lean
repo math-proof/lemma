@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexContentChoiceBound
+import Theorem.StatisticalMechanics.Code.Universality.HexContentChoiceBound
 open StatMech StatMech.Universality
 
 

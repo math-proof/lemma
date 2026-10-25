@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.DeligneTensorProduct
+import Def.v1.Atlas.TensorCategories.code.DeligneTensorProduct.Part3
 open TensorProduct CategoryTheory ModuleCat Deligne
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexStripBandClose
+import Theorem.StatisticalMechanics.Code.Universality.HexStripBandClose.Part7
 open StatMech StatMech.Universality StatMech.Universality.HexStripSimplyConnected
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKLimitsErgodicUncond
+import Theorem.StatisticalMechanics.Code.FK.FKLimitsErgodicUncond
 open MeasureTheory Filter Topology StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

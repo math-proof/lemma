@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Corollary12Lec9
+import Theorem.v1.Atlas.BooleanFunctions.code.Corollary12Lec9
 open Finset BigOperators MeasureTheory ProbabilityTheory BooleanFourier
 
 

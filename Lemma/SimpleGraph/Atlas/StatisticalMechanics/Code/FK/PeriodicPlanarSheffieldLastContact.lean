@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldLastContact
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldLastContact
 open Set StatMech StatMech.FK StatMech.FK.PeriodicPlanar StatMech.FK.PeriodicPlanar.ContinuousHalfPlaneCrosscut
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexLiteralHWColumns
+import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWColumns.Part5
 open StatMech StatMech.Universality
 
 

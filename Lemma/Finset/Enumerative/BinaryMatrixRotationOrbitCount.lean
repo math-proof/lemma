@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.BinaryMatrixRotationOrbitCount
+import Def.Combinatorics.Enumerative.BinaryMatrixRotationOrbitCount.Part3
 open scoped BigOperators
 open MetaMathlibExt
 

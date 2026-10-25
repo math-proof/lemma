@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoSynchronizedComponents
+import Def.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoSynchronizedComponents.Part31
 open StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexDegreeTwoSynchronizedSupportedPairedSplitTargets
 
 

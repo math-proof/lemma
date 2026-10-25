@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.LindemannWeierstrass
+import Def.NumberTheory.LindemannWeierstrass
 open MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 

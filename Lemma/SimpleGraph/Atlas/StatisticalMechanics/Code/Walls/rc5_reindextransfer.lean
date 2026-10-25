@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc5_reindextransfer
+import Theorem.StatisticalMechanics.Code.Walls.rc5_reindextransfer
 open Finset StatMech StatMech.Walls
 
 

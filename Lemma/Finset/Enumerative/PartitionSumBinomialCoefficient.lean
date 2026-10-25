@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.PartitionSumBinomialCoefficient
+import Instance.Combinatorics.Enumerative.PartitionSumBinomialCoefficient
 open Finset
 open MetaMathlibExt
 

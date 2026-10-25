@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.PushforwardExactness
+import Instance.v1.Atlas.AlgebraicGeometryI.code.PushforwardExactness.Part2
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits TopCat PushforwardExactness
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.SimonPlusLimit
+import Theorem.StatisticalMechanics.Code.Sharpness.SimonPlusLimit.Part3
 open MeasureTheory Filter Topology BoundedContinuousFunction StatMech StatMech.Sharpness
 
 

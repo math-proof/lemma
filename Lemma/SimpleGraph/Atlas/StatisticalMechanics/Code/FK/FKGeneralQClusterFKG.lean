@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKGeneralQClusterFKG
+import Theorem.StatisticalMechanics.Code.FK.FKGeneralQClusterFKG
 open MeasureTheory Set StatMech StatMech.FK
 
 

@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.Link
+import Theorem.v1.Atlas.Buildings.code.Building.Link
 import Lemma.Finset.Disjoint.of.In_FacesLinkComplex.In_Faces
 import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
-import sympy.atlas.v1.Atlas.Buildings.code.Building.Basic
+import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
 open SimplicialComplex in
 open scoped Classical
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LeeYangLocalCorrelationReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangLocalCorrelationReduction.Part4
 open Complex Filter MeasureTheory Metric Set Topology StatMech StatMech.FrontierA
 
 

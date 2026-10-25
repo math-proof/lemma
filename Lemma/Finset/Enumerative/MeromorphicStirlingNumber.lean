@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MeromorphicStirlingNumber
+import Def.Combinatorics.Enumerative.MeromorphicStirlingNumber
 open MetaMathlibExt
 
 

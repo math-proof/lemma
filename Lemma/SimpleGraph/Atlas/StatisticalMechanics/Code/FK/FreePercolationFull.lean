@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FreePercolationFull
+import Theorem.StatisticalMechanics.Code.FK.FreePercolationFull
 open MeasureTheory StatMech StatMech.FK
 
 

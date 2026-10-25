@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionProof
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionProof
 open CoxeterGroup CoxeterExchangeGenuine CoxeterExchange
 
 

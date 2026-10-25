@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.QCohEquivalenceProof
+import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohEquivalenceProof
 open QCohEquivalenceProof
 open Submodule
 open CategoryTheory AlgebraicGeometry

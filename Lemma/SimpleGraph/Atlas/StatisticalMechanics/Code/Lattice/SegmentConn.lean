@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.SegmentConn
+import Theorem.StatisticalMechanics.Code.Lattice.SegmentConn
 open Set StatMech StatMech.Lattice
 
 

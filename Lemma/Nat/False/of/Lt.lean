@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_2_2
+import Instance.Analysis.Section_2_2.Part2
 import Lemma.Nat.False_Nat_not_lt_of_gt
 open Chapter2 hiding Nat
 open Chapter2.Nat

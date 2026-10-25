@@ -1,5 +1,5 @@
 import Mathlib.Data.Finset.Sort
-import sympy.concrete.expr_with_limits
+import Macro.Order.ExprWithLimits
 import sympy.sets.sets
 import sympy.Basic
 

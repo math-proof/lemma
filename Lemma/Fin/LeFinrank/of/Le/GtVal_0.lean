@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderPermutation
+import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderPermutation.Part3
 open GLnBuilding
 
 

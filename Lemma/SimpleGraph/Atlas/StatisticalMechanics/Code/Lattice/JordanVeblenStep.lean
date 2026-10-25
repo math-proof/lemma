@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanVeblenStep
+import Theorem.StatisticalMechanics.Code.Lattice.JordanVeblenStep
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

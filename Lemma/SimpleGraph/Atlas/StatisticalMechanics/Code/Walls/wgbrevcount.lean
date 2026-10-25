@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wgbrevcount
+import Theorem.StatisticalMechanics.Code.Walls.wgbrevcount.Part2
 open SimpleGraph Function StatMech StatMech.Lattice
 
 

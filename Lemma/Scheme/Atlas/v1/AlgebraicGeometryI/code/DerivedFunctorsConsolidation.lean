@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsConsolidation
+import Structure.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsConsolidation
 open CategoryTheory CategoryTheory.Limits DerivedFunctorsDefs CohomologyConnection
 open DerivedFunctorsDefs CohomologyConnection
 

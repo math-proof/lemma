@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ProdigiousNumber
+import Instance.NumberTheory.ProdigiousNumber
 
 
 namespace MetaMathlibExt

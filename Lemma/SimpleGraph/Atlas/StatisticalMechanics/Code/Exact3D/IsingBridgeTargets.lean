@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.IsingBridgeTargets
+import Theorem.StatisticalMechanics.Code.Exact3D.IsingBridgeTargets.Part17
 open StatMech StatMech.Exact3D
 
 

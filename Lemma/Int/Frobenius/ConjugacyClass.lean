@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.Frobenius.ConjugacyClass
+import Def.RingTheory.Frobenius.ConjugacyClass
 
 
 /--

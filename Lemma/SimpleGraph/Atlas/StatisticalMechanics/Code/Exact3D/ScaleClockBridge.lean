@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.ScaleClockBridge
+import Theorem.StatisticalMechanics.Code.Exact3D.ScaleClockBridge.Part2
 open StatMech StatMech.Exact3D
 
 

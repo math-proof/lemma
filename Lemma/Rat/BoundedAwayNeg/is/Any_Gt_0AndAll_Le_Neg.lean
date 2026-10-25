@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_5_4
+import Theorem.Analysis.Section_5_4.Part4
 open Chapter5 hiding Real
 
 

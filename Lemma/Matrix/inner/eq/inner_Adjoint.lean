@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraNotes.code.AdjointOperators
+import Def.v1.Atlas.AlgebraNotes.code.AdjointOperators
 open AdjointOperators
 open scoped InnerProductSpace
 open LinearMap Submodule

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Padics.PadicPolynomialDilatation
+import Def.NumberTheory.Padics.PadicPolynomialDilatation
 
 
 /--

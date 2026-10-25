@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialMultiCellRegularity
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialMultiCellRegularity.Part4
 open StatMech StatMech.Universality StatMech.Universality.FKIsingCaratheodoryApproximation
 
 

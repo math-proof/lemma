@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.DyadicInverseSquareSummability
+import Theorem.StatisticalMechanics.Code.FrontierA.DyadicInverseSquareSummability.Part4
 open Filter Finset Set Topology StatMech StatMech.FrontierA
 
 

@@ -1,0 +1,226 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/PcNontrivial.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.Percolation.Theta
+import Def.StatisticalMechanics.Code.Percolation.TildePc.Part4
+import Theorem.StatisticalMechanics.Code.Inequalities.Harris
+import Def.StatisticalMechanics.Code.Percolation.PcNontrivial.Part3
+open MeasureTheory Set SimpleGraph
+open scoped NNReal ENNReal
+open Finset
+
+set_option linter.deprecated false
+set_option linter.style.longLine false
+
+
+namespace StatMech
+
+namespace Percolation
+
+open StatMech.Lattice
+
+variable {d : ℕ}
+
+
+theorem dirOf_spec (hd : 0 < d) {ω : ConfigSpace (Sym2 (Site d))} {v : Site d}
+    (q : (openSubgraph d ω).Walk (origin d) v) (k : ℕ) (hk : k < q.length) :
+    q.getVert (k + 1)
+      = coordShift (q.getVert k) (dirOf hd q k).1 (stepSign (dirOf hd q k).2) := by
+  classical
+  unfold dirOf
+  rw [dif_pos hk]
+  exact (adj_exists_dir (openSubgraph_le ω (q.adj_getVert_succ hk))).choose_spec.choose_spec
+
+
+theorem vertOf_dirOf (hd : 0 < d) {ω : ConfigSpace (Sym2 (Site d))} {v : Site d}
+    (q : (openSubgraph d ω).Walk (origin d) v) (j : ℕ) (hj : j ≤ q.length) :
+    vertOf (dirOf hd q) j = q.getVert j := by
+  induction j with
+  | zero => simp [vertOf, q.getVert_zero]
+  | succ k ih =>
+    have hk : k < q.length := by omega
+    rw [vertOf, ih (by omega), ← dirOf_spec hd q k hk]
+
+
+theorem percolationEvent_subset_iUnion_wordEvent (hd : 0 < d) (n : ℕ) :
+    percolationEvent d
+      ⊆ ⋃ (g : ℕ → Fin d × Bool) (_ : goodWord g n), wordEvent g n := by
+  intro ω hω
+  classical
+  
+  rw [mem_percolationEvent] at hω
+  have hunb : ∃ v, Connected d ω (origin d) v ∧ v ∉ box d n := by
+    by_contra hcon
+    push Not at hcon
+    exact hω ((box_finite d n).subset (fun v hv => hcon v hv))
+  obtain ⟨v, hconn, hvbox⟩ := hunb
+  
+  obtain ⟨p, hp⟩ := hconn.exists_isPath
+  
+  have hvnorm : n + 1 ≤ ∑ i, (v i).natAbs := by
+    simp only [mem_box, not_forall, not_le] at hvbox
+    obtain ⟨i, hi⟩ := hvbox
+    calc n + 1 ≤ (v i).natAbs := by omega
+      _ ≤ ∑ j, (v j).natAbs :=
+          Finset.single_le_sum (f := fun j => (v j).natAbs) (fun _ _ => Nat.zero_le _)
+            (Finset.mem_univ i)
+  
+  have hlenv : (∑ i, (v i).natAbs) ≤ p.length := by
+    have := l1_getVert_le p p.length
+    rwa [p.getVert_length] at this
+  have hnlen : n ≤ p.length := by omega
+  
+  set q := p.take n with hq
+  have hqlen : q.length = n := by rw [hq, Walk.take_length]; omega
+  have hqpath : q.IsPath := hp.take n
+  
+  refine Set.mem_iUnion.2 ⟨dirOf hd q, Set.mem_iUnion.2 ⟨?_, ?_⟩⟩
+  · 
+    intro a ha b hb hab
+    simp only [Finset.coe_range, Set.mem_Iio] at ha hb
+    rw [vertOf_dirOf hd q a (by omega), vertOf_dirOf hd q b (by omega)] at hab
+    exact hqpath.getVert_injOn (by simp [hqlen]; omega) (by simp [hqlen]; omega) hab
+  · 
+    intro k hk
+    simp only [Finset.mem_range] at hk
+    have hkq : k < q.length := by omega
+    have hedge : edgeOf (dirOf hd q) k = s(q.getVert k, q.getVert (k + 1)) := by
+      unfold edgeOf
+      rw [vertOf_dirOf hd q k (by omega), vertOf_dirOf hd q (k + 1) (by omega)]
+    rw [hedge]
+    exact (q.adj_getVert_succ hkq).2
+
+
+theorem measure_percolationEvent_le (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+    (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) (percolationEvent d)
+      ≤ ((2 * d : ℝ≥0) * p) ^ n := by
+  classical
+  set μ := bernoulliProductMeasure (E := Sym2 (Site d)) p hp with hμ
+  
+  set ext : (Fin n → Fin d × Bool) → (ℕ → Fin d × Bool) :=
+    fun w k => if hk : k < n then w ⟨k, hk⟩ else (⟨0, hd⟩, false) with hext
+  
+  set S : Finset (Fin n → Fin d × Bool) :=
+    (Finset.univ : Finset (Fin n → Fin d × Bool)).filter (fun w => goodWord (ext w) n) with hS
+  
+  have hsubset : percolationEvent d ⊆ ⋃ w ∈ S, wordEvent (ext w) n := by
+    refine (percolationEvent_subset_iUnion_wordEvent hd n).trans ?_
+    refine Set.iUnion_subset (fun g => Set.iUnion_subset (fun hg => ?_))
+    
+    set w : Fin n → Fin d × Bool := fun i => g i.1 with hw
+    have hvert : ∀ j ≤ n, vertOf g j = vertOf (ext w) j := by
+      intro j hj
+      induction j with
+      | zero => rfl
+      | succ k ih =>
+        have hk : k < n := by omega
+        rw [vertOf_succ, vertOf_succ, ih (by omega)]
+        congr 1 <;> simp only [hext, dif_pos hk, hw]
+    have hgood' : goodWord (ext w) n := by
+      intro a ha b hb hab
+      simp only [Finset.coe_range, Set.mem_Iio] at ha hb
+      rw [← hvert a (by omega), ← hvert b (by omega)] at hab
+      exact hg (by simp only [Finset.coe_range, Set.mem_Iio]; omega)
+        (by simp only [Finset.coe_range, Set.mem_Iio]; omega) hab
+    have hwe : wordEvent g n = wordEvent (ext w) n := by
+      apply Set.ext; intro ω
+      simp only [wordEvent, Set.mem_setOf_eq, Finset.mem_range]
+      have hedge : ∀ k < n, edgeOf g k = edgeOf (ext w) k := by
+        intro k hk
+        unfold edgeOf; rw [hvert k (by omega), hvert (k + 1) (by omega)]
+      constructor
+      · intro h k hk; rw [← hedge k hk]; exact h k hk
+      · intro h k hk; rw [hedge k hk]; exact h k hk
+    rw [hwe]
+    exact Set.subset_iUnion₂_of_subset w (Finset.mem_filter.2 ⟨Finset.mem_univ _, hgood'⟩)
+      (le_refl _)
+  
+  calc μ (percolationEvent d)
+      ≤ ∑ w ∈ S, μ (wordEvent (ext w) n) :=
+        le_trans (measure_mono hsubset) (measure_biUnion_finset_le _ _)
+    _ = ∑ _w ∈ S, (p : ℝ≥0∞) ^ n :=
+        Finset.sum_congr rfl (fun w hw => wordEvent_prob_good p hp _ n (Finset.mem_filter.1 hw).2)
+    _ = (S.card : ℝ≥0∞) * (p : ℝ≥0∞) ^ n := by rw [Finset.sum_const]; ring
+    _ ≤ ((Finset.univ : Finset (Fin n → Fin d × Bool)).card : ℝ≥0∞) * (p : ℝ≥0∞) ^ n := by
+        gcongr
+        exact Finset.subset_univ S
+    _ = ((2 * d : ℝ≥0) * p) ^ n := by
+        rw [Finset.card_univ, Fintype.card_fun, Fintype.card_prod, Fintype.card_fin,
+          Fintype.card_bool, Fintype.card_fin]
+        push_cast
+        rw [mul_pow]
+        ring_nf
+
+
+theorem theta_le_pow (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+    theta d p hp ≤ ((2 * d : ℝ≥0) * p) ^ n := by
+  rw [theta, Measure.real]
+  rw [show (((2 * d : ℝ≥0) * p) ^ n : ℝ) = (((2 * d : ℝ≥0) * p) ^ n : ℝ≥0) by push_cast; ring]
+  rw [show ((((2 * d : ℝ≥0) * p) ^ n : ℝ≥0) : ℝ) = (((((2 * d : ℝ≥0) * p) ^ n : ℝ≥0) : ℝ≥0∞)).toReal
+      from by rw [ENNReal.coe_toReal]]
+  apply ENNReal.toReal_mono
+  · exact ENNReal.coe_ne_top
+  · rw [ENNReal.coe_pow, ENNReal.coe_mul]
+    exact measure_percolationEvent_le hd p hp n
+
+
+theorem theta_eq_zero_of_lt (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1)
+    (hsmall : ((2 * d : ℝ≥0) * p : ℝ) < 1) : theta d p hp = 0 := by
+  have hbase_nonneg : (0 : ℝ) ≤ ((2 * d : ℝ≥0) * p : ℝ) := by positivity
+  
+  have htend :
+      Filter.Tendsto (fun n => ((2 * d : ℝ≥0) * p : ℝ) ^ n) Filter.atTop (nhds 0) :=
+    tendsto_pow_atTop_nhds_zero_of_lt_one hbase_nonneg hsmall
+  
+  have hle : theta d p hp ≤ 0 :=
+    ge_of_tendsto htend (Filter.Eventually.of_forall (fun n => theta_le_pow hd p hp n))
+  exact le_antisymm hle (theta_nonneg d p hp)
+
+
+theorem mem_subcriticalSet_of_lt (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1)
+    (hsmall : ((2 * d : ℝ≥0) * p : ℝ) < 1) : p ∈ subcriticalSet d :=
+  ⟨hp, theta_eq_zero_of_lt hd p hp hsmall⟩
+
+
+theorem subcriticalSet_bddAbove : BddAbove (subcriticalSet d) :=
+  ⟨1, fun _ hx => hx.1⟩
+
+
+theorem le_pc_of_mem_subcriticalSet {p : ℝ≥0} (hp : p ∈ subcriticalSet d) :
+    p ≤ pc d :=
+  le_csSup subcriticalSet_bddAbove hp
+
+
+theorem pc_pos (hd : 0 < d) : 0 < pc d := by
+  have hdpos : (0 : ℝ≥0) < d := by exact_mod_cast hd
+  
+  set p : ℝ≥0 := 1 / (4 * d) with hp_def
+  have hp_pos : 0 < p := by rw [hp_def]; positivity
+  have hp1 : p ≤ 1 := by
+    rw [hp_def, div_le_one (by positivity)]
+    have hd1 : (1 : ℝ≥0) ≤ d := by exact_mod_cast hd
+    nlinarith [hd1]
+  
+  have hsmall : ((2 * d : ℝ≥0) * p : ℝ) < 1 := by
+    have h2 : (2 * (d : ℝ≥0)) * p < 1 := by
+      rw [hp_def, mul_one_div, div_lt_one (by positivity)]
+      nlinarith [hdpos]
+    exact_mod_cast h2
+  
+  exact lt_of_lt_of_le hp_pos
+    (le_pc_of_mem_subcriticalSet (mem_subcriticalSet_of_lt hd p hp1 hsmall))
+
+
+theorem pc_pos_of_two_le (hd : 2 ≤ d) : 0 < pc d :=
+  pc_pos (by omega)
+
+end Percolation
+end StatMech

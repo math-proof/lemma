@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentContinuityOddInsertion
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityOddInsertion.Part2
 open StatMech StatMech.FrontierB
 
 

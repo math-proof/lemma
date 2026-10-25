@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.RotationSystemFaces
+import Theorem.StatisticalMechanics.Code.Lattice.RotationSystemFaces.Part4
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.RightDerivedDelta
+import Def.v1.Atlas.AlgebraicGeometryI.code.RightDerivedDelta
 open CategoryTheory CategoryTheory.Limits DerivedFunctorsDefs CohomologyConnection RightDerivedDelta
 open DerivedFunctorsDefs CohomologyConnection
 

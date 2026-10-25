@@ -1,5 +1,4 @@
 import Instance.NumberField_AdelicHaar
-import Instance.NumberField_AdelicHaar
 import Structure.AutomorphicForm_AdelicLsXi
 
 open IsDedekindDomain NumberField NumberField.AdelicHaar MeasureTheory

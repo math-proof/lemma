@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.BruhatTitsFixedPoint
+import Def.v1.Atlas.Buildings.code.Building.BruhatTitsFixedPoint.Part2
 open Set Filter Topology
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.MultipleZeta.CyclicSumMultipleZetaStar
+import Def.NumberTheory.MultipleZeta.CyclicSumMultipleZetaStar
 open scoped ENNReal
 open Topology
 open scoped BigOperators

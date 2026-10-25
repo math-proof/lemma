@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamPinnedCorollaryReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamPinnedCorollaryReduction.Part2
 open Finset Classical StatMech StatMech.FrontierA
 
 

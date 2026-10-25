@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.NijenhuisGoals
+import Def.v1.Atlas.GeometryOfManifolds.code.NijenhuisGoals.Part2
 open DifferentialFormSpace MfdNijenhuis
 open scoped Manifold
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kc2_dartdircases
+import Theorem.StatisticalMechanics.Code.Walls.kc2_dartdircases
 open SimpleGraph Function StatMech StatMech.Walls
 
 

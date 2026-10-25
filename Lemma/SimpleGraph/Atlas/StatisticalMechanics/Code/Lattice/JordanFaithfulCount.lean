@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanFaithfulCount
+import Theorem.StatisticalMechanics.Code.Lattice.JordanFaithfulCount.Part6
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.RunsAlongAxisProof
+import Theorem.StatisticalMechanics.Code.Percolation.RunsAlongAxisProof
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

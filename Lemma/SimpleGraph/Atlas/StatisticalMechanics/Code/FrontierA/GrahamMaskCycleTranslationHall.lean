@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamMaskCycleTranslationHall
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamMaskCycleTranslationHall.Part5
 open Finset StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

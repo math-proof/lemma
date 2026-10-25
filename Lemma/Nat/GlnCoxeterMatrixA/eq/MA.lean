@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.TypeABridge
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeABridge
 open TypeABridge
 
 

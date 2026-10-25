@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.FiniteSupportCertificateConsequences
+import Theorem.StatisticalMechanics.Code.Exact3D.FiniteSupportCertificateConsequences
 open StatMech StatMech.Exact3D StatMech.Exact3D.TailSummability StatMech.Exact3D.TailSummability.FiniteSupportCertificate
 
 

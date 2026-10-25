@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterAgreementTiltFKG
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterAgreementTiltFKG
 open Finset StatMech StatMech.Ising
 
 

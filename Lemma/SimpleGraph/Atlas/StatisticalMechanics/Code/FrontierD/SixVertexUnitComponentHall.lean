@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexUnitComponentHall
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexUnitComponentHall
 open Finset StatMech StatMech.FrontierD
 
 

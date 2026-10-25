@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.CompleteFields
+import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
 open UniformSpace Filter Topology Finset in IsDedekindDomain
 open scoped Topology
 open IsDedekindDomain

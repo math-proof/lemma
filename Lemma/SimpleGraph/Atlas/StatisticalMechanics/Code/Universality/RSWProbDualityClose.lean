@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWProbDualityClose
+import Theorem.StatisticalMechanics.Code.Universality.RSWProbDualityClose.Part2
 open Set MeasureTheory SimpleGraph StatMech StatMech.Universality
 
 

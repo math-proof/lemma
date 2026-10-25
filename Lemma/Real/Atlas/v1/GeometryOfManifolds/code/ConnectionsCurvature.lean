@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature
+import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 open Bundle NormedSpace DifferentialFormSpace
 open scoped Manifold ContDiff Topology
 open DifferentialFormSpace

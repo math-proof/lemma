@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.SignedStirlingFirst
+import Def.Combinatorics.Enumerative.SignedStirlingFirst
 open MetaMathlibExt
 
 

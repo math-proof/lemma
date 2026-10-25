@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.IntegralDecayClose
+import Theorem.StatisticalMechanics.Code.FK.IntegralDecayClose.Part5
 open MeasureTheory Filter Topology BoundedContinuousFunction StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.HolleyFKG
+import Theorem.StatisticalMechanics.Code.Probability.HolleyFKG.Part2
 open Finset StatMech StatMech.Probability
 
 

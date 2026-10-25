@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.ArithmeticLargeSieve
+import Def.NumberTheory.PrimeCounting.ArithmeticLargeSieve.Part3
 open scoped BigOperators
 open MathlibExt.NumberTheory.PrimeCounting
 

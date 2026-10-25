@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.ThresholdDef
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.ThresholdDef
 open Filter Finset BigOperators GraphMonotonicity MonotoneProperty
 open Finset Fintype Set
 open Filter Real Set Metric

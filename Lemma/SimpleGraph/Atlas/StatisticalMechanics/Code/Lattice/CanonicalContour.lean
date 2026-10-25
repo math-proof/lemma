@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.CanonicalContour
+import Theorem.StatisticalMechanics.Code.Lattice.CanonicalContour.Part6
 open Finset Set SimpleGraph Function MeasureTheory StatMech StatMech.Lattice
 
 

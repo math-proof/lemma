@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.PowerEntropyBound
+import Def.CPythonListsort.Code.Assembly.PowerEntropyBound
 open CPythonListsort
 
 

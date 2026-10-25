@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.binsclosure
+import Theorem.StatisticalMechanics.Code.Walls.binsclosure.Part3
 open Set SimpleGraph Finset MeasureTheory Filter Topology StatMech StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation StatMech.Ising StatMech.IsingFK StatMech.Walls
 
 

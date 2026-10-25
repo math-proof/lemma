@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusScalingHandoff
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusScalingHandoff
 open Filter MeasureTheory Topology StatMech StatMech.FrontierA
 
 

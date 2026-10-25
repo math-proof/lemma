@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MeasureTheory.Measure.ImageNull
+import Theorem.MeasureTheory.Measure.ImageNull
 open MeasureTheory
 open MathlibExt.MeasureTheory
 

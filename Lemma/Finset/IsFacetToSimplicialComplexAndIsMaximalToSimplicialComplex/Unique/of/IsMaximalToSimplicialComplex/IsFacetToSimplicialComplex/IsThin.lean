@@ -1,11 +1,11 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.Basic
+import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
 import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
 import Lemma.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
 import Lemma.Nat.NotChamberAdjacent
-import sympy.atlas.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
-import sympy.atlas.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex
+import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
+import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
 open scoped Classical
 
 

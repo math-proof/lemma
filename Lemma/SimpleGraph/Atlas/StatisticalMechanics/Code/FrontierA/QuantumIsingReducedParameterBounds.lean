@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingReducedParameterBounds
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingReducedParameterBounds
 open StatMech StatMech.FrontierA
 
 

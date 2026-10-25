@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Transcription.MergeForceCollapse
+import Theorem.CPythonListsort.Code.Transcription.MergeForceCollapse
 
 
 namespace CPythonListsort

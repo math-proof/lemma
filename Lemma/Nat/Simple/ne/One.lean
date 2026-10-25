@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.CellDisjointProof
+import Theorem.v1.Atlas.Buildings.code.BNPair.CellDisjointProof
 open CellDisjoint
 open BNPair
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ComplexVariables.code.Lecture21
+import Def.v1.Atlas.ComplexVariables.code.Lecture21
 open Complex Nat Filter Topology MeasureTheory Set Asymptotics Finset Newman
 open Set Asymptotics
 open Asymptotics Finset

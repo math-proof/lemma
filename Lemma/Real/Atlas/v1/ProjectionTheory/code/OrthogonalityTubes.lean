@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.OrthogonalityTubes
+import Def.v1.Atlas.ProjectionTheory.code.OrthogonalityTubes.Part3
 open OrthogonalityTubes
 open MeasureTheory
 

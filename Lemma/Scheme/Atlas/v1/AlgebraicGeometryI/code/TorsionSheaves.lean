@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.TorsionSheaves
+import Def.v1.Atlas.AlgebraicGeometryI.code.TorsionSheaves
 open AlgebraicGeometry CategoryTheory Opposite AlgebraicGeometry.TorsionSheaf
 
 

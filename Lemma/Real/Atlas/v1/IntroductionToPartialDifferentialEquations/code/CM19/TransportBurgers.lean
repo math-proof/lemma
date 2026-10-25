@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
+import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
 open Finset MeasureTheory Set TransportBurgers TransportBurgers.Characteristics
 open TransportBurgers
 

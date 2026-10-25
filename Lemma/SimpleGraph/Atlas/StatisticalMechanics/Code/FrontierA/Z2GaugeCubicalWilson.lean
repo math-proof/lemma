@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.Z2GaugeCubicalWilson
+import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeCubicalWilson.Part3
 open Finset StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationSpinGauge
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationSpinGauge.Part5
 open StatMech StatMech.Onsager
 
 

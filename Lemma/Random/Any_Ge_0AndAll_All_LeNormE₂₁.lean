@@ -4,7 +4,6 @@ import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulNormSub
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulSumIco_Exp.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.All_Ge_0.IteratesOfResidual
 open Real Iterates Random Finset
 
-
 @[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
@@ -35,6 +34,5 @@ private lemma main
     _ = C₃ * C₂ * sk.anc.β n ^ 2 * (‖sk.x (sk.anc.t n) ω‖ + 1) * rexp (sk.anc.β n * C₂) := by ring
     _ ≤ C₃ * C₂ * sk.anc.β n ^ 2 * (‖sk.x (sk.anc.t n) ω‖ + 1) * rexp (C₁ * C₂) := by gcongr; exact hβC n
     _ = _ := by ring
-
 
 -- created on 2026-09-26

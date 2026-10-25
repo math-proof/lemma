@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorComparison
+import Theorem.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorComparison.Part184
 open MeasureTheory Classical in StatMech StatMech.Exact3D
 
 

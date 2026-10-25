@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.RiemannRochEulerCurves
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochEulerCurves
 open RiemannRochCurves CanonicalSheafCurves RiemannRochEulerCurves
 
 

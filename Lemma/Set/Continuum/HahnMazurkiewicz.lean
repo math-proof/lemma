@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.Continuum.HahnMazurkiewicz
+import Theorem.Topology.Continuum.HahnMazurkiewicz
 open Topology
 open Filter
 open MathlibExt.Topology.Continuum.HahnMazurkiewiczWanted

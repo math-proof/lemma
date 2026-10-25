@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.Renorm
+import Theorem.StatisticalMechanics.Code.RSW.Renorm
 open Real StatMech StatMech.RSW StatMech.RSW.Renorm
 
 

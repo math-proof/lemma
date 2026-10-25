@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.FourierAnalysis.code.FourierIntegrals
+import Def.v1.Atlas.FourierAnalysis.code.FourierIntegrals
 open MeasureTheory Filter Topology Real Complex FourierTransform CesaroSummation SchwartzFourierInversion TempDistFourierInversion L2FourierExtension FourierInversionL2 InverseFourierL1L2Agreement FourierInjectiveL1 L2L1FourierAgree
 open scoped Convolution ENNReal NNReal
 open ApproxIdentityR Real

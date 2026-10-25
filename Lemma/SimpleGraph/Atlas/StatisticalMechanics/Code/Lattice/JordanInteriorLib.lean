@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanInteriorLib
+import Theorem.StatisticalMechanics.Code.Lattice.JordanInteriorLib.Part4
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.BKKKLLevel2Prove
+import Theorem.StatisticalMechanics.Code.Probability.BKKKLLevel2Prove.Part2
 open Finset Real Set StatMech StatMech.Probability
 
 

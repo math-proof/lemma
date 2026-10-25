@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch5Entry5Eulerianexplicit
+import Def.Analysis.Ramanujan.Part1Ch5Entry5Eulerianexplicit
 open scoped Nat BigOperators Polynomial
 open Finset Entry4
 open MathlibExt.Analysis.Ramanujan.Part1Ch5

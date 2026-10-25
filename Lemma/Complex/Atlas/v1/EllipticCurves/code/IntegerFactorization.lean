@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.IntegerFactorization
+import Def.v1.Atlas.EllipticCurves.code.IntegerFactorization.Part4
 open Nat Real Filter Asymptotics Finset PollardPM1 ECMFactoring MontgomeryTorsion
 open Nat Finset
 

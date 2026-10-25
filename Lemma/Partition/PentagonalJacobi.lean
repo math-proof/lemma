@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.partitions.PentagonalJacobi
+import Def.Combinatorics.Enumerative.Partition.PentagonalJacobi.Part9
 import Lemma.Partition.Basics
 open AlgebraicCombinatorics
 open AlgebraicCombinatorics.State

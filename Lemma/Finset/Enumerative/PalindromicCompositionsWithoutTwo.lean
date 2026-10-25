@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.PalindromicCompositionsWithoutTwo
+import Def.Combinatorics.Enumerative.PalindromicCompositionsWithoutTwo.Part3
 open MetaMathlibExt
 
 

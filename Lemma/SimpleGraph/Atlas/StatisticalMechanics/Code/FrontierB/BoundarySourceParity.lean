@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.BoundarySourceParity
+import Theorem.StatisticalMechanics.Code.FrontierB.BoundarySourceParity.Part2
 open MeasureTheory StatMech StatMech.FrontierB
 
 

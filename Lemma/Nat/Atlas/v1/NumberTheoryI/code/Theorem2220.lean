@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Theorem2220
+import Def.v1.Atlas.NumberTheoryI.code.Theorem2220
 open NumberField RayClassField GlobalCFT DirichletDensity
 
 

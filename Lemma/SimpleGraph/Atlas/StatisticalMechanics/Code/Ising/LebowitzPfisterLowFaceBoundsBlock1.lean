@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterLowFaceBoundsBlock1
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterLowFaceBoundsBlock1
 open StatMech StatMech.Ising StatMech.Ising.LowFaceCertificate
 
 

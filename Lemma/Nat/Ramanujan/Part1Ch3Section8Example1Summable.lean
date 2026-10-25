@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Section8Example1Summable
+import Def.NumberTheory.Ramanujan.Part1Ch3Section8Example1Summable
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Section8Example1Summable
 

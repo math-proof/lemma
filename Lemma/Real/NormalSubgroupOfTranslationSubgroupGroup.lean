@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.AffineCoxeter.SemidirectProduct
+import Def.v1.Atlas.Buildings.code.AffineCoxeter.SemidirectProduct
 open Set AffineReflectionGroup
 open scoped InnerProductSpace
 

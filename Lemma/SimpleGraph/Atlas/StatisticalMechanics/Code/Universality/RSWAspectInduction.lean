@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWAspectInduction
+import Theorem.StatisticalMechanics.Code.Universality.RSWAspectInduction
 open Set MeasureTheory SimpleGraph StatMech StatMech.Universality
 
 

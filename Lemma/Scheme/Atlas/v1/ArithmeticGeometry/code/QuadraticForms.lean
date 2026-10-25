@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.QuadraticForms
+import Def.v1.Atlas.ArithmeticGeometry.code.QuadraticForms.Part2
 open LinearMap (BilinMap BilinForm) QuadraticFormEquiv QuadraticMap QuadraticFormDef93 QuadraticFormDef94
 open QuadraticMap
 open Module

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.MainLemmaFF
+import Def.v1.Atlas.ProjectionTheory.code.MainLemmaFF
 open Finset MainLemmaFF
 
 

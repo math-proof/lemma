@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.OptionalStoppingExpectation
+import Theorem.v1.Atlas.TheoryOfProbability.code.OptionalStoppingExpectation
 open MeasureTheory
 open scoped ProbabilityTheory
 

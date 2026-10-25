@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.StrassenCoupling
+import Def.Probability.StrassenCoupling
 open Finset
 open MathlibExt.Probability.StrassenCouplingWanted
 

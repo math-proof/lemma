@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingBogoliubovLimit
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingBogoliubovLimit
 open MeasureTheory StatMech StatMech.FrontierA
 
 

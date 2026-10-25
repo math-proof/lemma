@@ -1,5 +1,5 @@
 import sympy.vector.operators
-import sympy.concrete.sup
+import Macro.Order.Sup
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob
 import Lemma.Random.Summable_MulPowWkd.of.In_Ico

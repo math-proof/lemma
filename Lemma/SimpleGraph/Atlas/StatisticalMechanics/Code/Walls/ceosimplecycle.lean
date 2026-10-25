@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.ceosimplecycle
+import Theorem.StatisticalMechanics.Code.Walls.ceosimplecycle
 open Set SimpleGraph StatMech StatMech.Walls
 
 

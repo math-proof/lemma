@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
 open Finset Real Set MeasureTheory
 
 

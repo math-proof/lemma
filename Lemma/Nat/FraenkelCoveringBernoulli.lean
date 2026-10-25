@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.CoveringSystem.ExactCover
+import Def.NumberTheory.CoveringSystem.ExactCover
 open scoped BigOperators
 
 

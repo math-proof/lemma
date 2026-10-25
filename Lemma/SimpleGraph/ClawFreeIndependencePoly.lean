@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.ClawFreeIndependencePoly
+import Def.Combinatorics.SimpleGraph.ClawFreeIndependencePoly
 open MetaMathlibExt
 open SimpleGraph
 

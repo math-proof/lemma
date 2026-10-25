@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.LucasSpecialPrime
+import Def.NumberTheory.LucasSpecialPrime
 open MetaMathlibExt
 
 

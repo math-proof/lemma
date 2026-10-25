@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardVisibleDiagonal
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardVisibleDiagonal
 open StatMech StatMech.FrontierA
 
 

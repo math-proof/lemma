@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsoradialRibbonBoundaryParity
+import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialRibbonBoundaryParity.Part3
 open StatMech StatMech.FrontierA StatMech.FrontierA.RibbonPermutationSystem
 
 

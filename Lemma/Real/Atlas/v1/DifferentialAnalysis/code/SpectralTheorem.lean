@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SpectralTheorem
+import Theorem.v1.Atlas.DifferentialAnalysis.code.SpectralTheorem
 open SpectralTheorem
 open scoped ComplexInnerProductSpace
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingBoundarySum
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingBoundarySum
 open StatMech StatMech.FrontierD
 
 

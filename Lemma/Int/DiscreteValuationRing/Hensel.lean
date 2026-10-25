@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DiscreteValuationRing.Hensel
+import Theorem.RingTheory.DiscreteValuationRing.Hensel
 open Polynomial IsLocalRing Ring
 open IsDiscreteValuationRing
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexFourByTwoPositiveEvenAdapter
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByTwoPositiveEvenAdapter
 open StatMech StatMech.FrontierD
 
 

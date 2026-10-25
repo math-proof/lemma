@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wpbpivotbridge
+import Theorem.StatisticalMechanics.Code.Walls.wpbpivotbridge.Part3
 open Finset SimpleGraph Function StatMech StatMech.Wpb
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.normed.IsClosestConjugate
+import Theorem.Analysis.Normed.IsClosestConjugate
 
 /--
 [IsClosestConjugate](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Normed/Field/IsClosestConjugate.lean)

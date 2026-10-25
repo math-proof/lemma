@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DedekindDomain.POrdering
+import Def.RingTheory.DedekindDomain.POrdering
 open IsDedekindDomain.HeightOneSpectrum
 
 

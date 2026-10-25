@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_7
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_7
 open Matrix Real
 
 

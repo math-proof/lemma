@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.OrdinaryRiordanPascalLikeMatrix
+import Def.LinearAlgebra.Matrix.OrdinaryRiordanPascalLikeMatrix
 open MetaMathlibExt
 
 

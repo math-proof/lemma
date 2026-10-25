@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Words.FibonacciFactorization
+import Theorem.Combinatorics.Words.FibonacciFactorization
 open MetaMathlibExt
 
 

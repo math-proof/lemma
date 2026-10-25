@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.BrownianProjectiveExtension
+import Theorem.StatisticalMechanics.Code.SLE.BrownianProjectiveExtension.Part2
 open Filter MeasureTheory Set Topology StatMech StatMech.SLE
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.SpectraCommonGraphs
+import Instance.v1.Atlas.AnAlgorithmistsToolkit.code.SpectraCommonGraphs
 open SpectraCommonGraphs GraphProductSpectrum
 open Real SimpleGraph Matrix
 open Matrix Finset

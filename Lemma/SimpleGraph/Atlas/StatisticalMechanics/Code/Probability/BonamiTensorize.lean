@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.BonamiTensorize
+import Theorem.StatisticalMechanics.Code.Probability.BonamiTensorize.Part4
 open Finset StatMech StatMech.Probability
 
 

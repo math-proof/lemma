@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter4.ExpCauchySchwarz
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter4.ExpCauchySchwarz
 open MeasureTheory Real Filter
 
 

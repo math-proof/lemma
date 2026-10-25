@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.CompleteGesselWord
+import Theorem.MathlibExtTest.NumberTheory.CompleteGesselWord
 
 
 namespace MetaMathlibExt

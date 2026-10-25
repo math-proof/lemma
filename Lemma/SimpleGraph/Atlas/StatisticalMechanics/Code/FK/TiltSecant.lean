@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TiltSecant
+import Theorem.StatisticalMechanics.Code.FK.TiltSecant.Part2
 open MeasureTheory Set Filter Topology Real StatMech StatMech.FK
 
 

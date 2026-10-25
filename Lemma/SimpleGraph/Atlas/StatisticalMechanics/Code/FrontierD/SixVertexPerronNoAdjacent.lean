@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexPerronNoAdjacent
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPerronNoAdjacent.Part2
 open Finset Matrix StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.DolbeaultHodgeMathlib
+import Structure.v1.Atlas.GeometryOfManifolds.code.DolbeaultHodgeMathlib.Part2
 open ContinuousAlternatingMap DolbeaultHodgeMathlib
 
 

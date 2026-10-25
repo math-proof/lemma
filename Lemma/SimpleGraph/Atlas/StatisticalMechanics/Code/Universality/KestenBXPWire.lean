@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.KestenBXPWire
+import Theorem.StatisticalMechanics.Code.Universality.KestenBXPWire
 open MeasureTheory Set Filter Topology StatMech StatMech.Universality
 
 

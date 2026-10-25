@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.PentagonalNumber
+import Def.Combinatorics.Enumerative.PentagonalNumber
 open scoped BigOperators
 open scoped PowerSeries.WithPiTopology
 open MetaMathlibExt

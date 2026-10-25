@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.GeneralInteractionCurrentLimits
+import Theorem.StatisticalMechanics.Code.FrontierB.GeneralInteractionCurrentLimits.Part7
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierB
 
 

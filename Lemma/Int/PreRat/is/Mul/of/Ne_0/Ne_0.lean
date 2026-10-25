@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_4_2
+import Def.Analysis.Section_4_2.Part2
 open Section_4_2 hiding Rat
 open Section_4_2.PreRat
 

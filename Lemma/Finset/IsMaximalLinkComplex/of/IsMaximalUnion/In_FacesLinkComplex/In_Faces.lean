@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.Link
+import Theorem.v1.Atlas.Buildings.code.Building.Link
 import Lemma.Finset.Disjoint.of.In_FacesLinkComplex.In_Faces
 import Lemma.Int.Pow.eq.OneOrEqPow.of.EqMul_1
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicSubgroups
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicSubgroups
 
 
 /--

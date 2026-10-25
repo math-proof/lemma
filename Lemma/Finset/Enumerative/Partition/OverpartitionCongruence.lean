@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Partition.OverpartitionCongruence
+import Theorem.Combinatorics.Enumerative.Partition.OverpartitionCongruence.Part9
 open PowerSeries
 open scoped PowerSeries.WithPiTopology
 open MetaMathlibExt

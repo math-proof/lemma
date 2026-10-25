@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.NearestSetGeometry
+import Theorem.StatisticalMechanics.Code.FrontierA.NearestSetGeometry.Part4
 open Set StatMech StatMech.FrontierA
 
 

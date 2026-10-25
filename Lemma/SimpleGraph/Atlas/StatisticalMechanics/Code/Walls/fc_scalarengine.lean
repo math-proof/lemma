@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.fc_scalarengine
+import Theorem.StatisticalMechanics.Code.Walls.fc_scalarengine
 open Set Filter Topology StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Graph.RobbinsTheorem
+import Def.Combinatorics.Graph.RobbinsTheorem
 open MetaMathlibExt
 
 

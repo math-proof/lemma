@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.Hamming
+import Theorem.StatisticalMechanics.Code.BeffaraDC.Hamming
 open StatMech StatMech.BeffaraDC
 
 

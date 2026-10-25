@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWRayTransport
+import Theorem.StatisticalMechanics.Code.Universality.RSWRayTransport.Part5
 open Function MeasureTheory Set StatMech StatMech.Universality
 
 

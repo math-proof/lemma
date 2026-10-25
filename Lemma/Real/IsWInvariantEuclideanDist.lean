@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.AffineCoxeter.CanonicalMetric
+import Def.v1.Atlas.Buildings.code.AffineCoxeter.CanonicalMetric.Part2
 open Set AffineCoxeter
 open scoped InnerProductSpace
 

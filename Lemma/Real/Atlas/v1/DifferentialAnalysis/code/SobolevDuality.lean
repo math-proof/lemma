@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SobolevDuality
+import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDuality
 open Real MeasureTheory MeasureTheory.Measure TestFunctions SobolevDuality
 open scoped FourierTransform ComplexInnerProductSpace SchwartzMap
 open TestFunctions

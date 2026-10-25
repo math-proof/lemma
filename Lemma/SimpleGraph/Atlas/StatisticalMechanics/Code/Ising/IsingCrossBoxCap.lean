@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.IsingCrossBoxCap
+import Theorem.StatisticalMechanics.Code.Ising.IsingCrossBoxCap.Part2
 open MeasureTheory Filter Topology Set StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.Ising
 
 

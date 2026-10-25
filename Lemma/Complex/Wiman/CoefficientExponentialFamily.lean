@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.Wiman.CoefficientExponentialFamily
+import Def.Analysis.Complex.Wiman.CoefficientExponentialFamily
 open MeasureTheory ProbabilityTheory
 open scoped ENNReal
 open Complex

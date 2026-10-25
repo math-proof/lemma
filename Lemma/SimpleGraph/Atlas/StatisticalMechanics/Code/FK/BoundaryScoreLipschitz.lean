@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.BoundaryScoreLipschitz
+import Theorem.StatisticalMechanics.Code.FK.BoundaryScoreLipschitz
 open StatMech StatMech.FK
 
 

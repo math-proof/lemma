@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKGeneralQConnectionFKG
+import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConnectionFKG
 open MeasureTheory Set Filter Topology StatMech StatMech.FK
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamWeightedLemmaOneResummation
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedLemmaOneResummation
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

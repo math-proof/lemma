@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.DescendingRunInvariant
+import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
 open CPythonListsort CPythonListsort.DescendingRunSpec CPythonListsort.DescendingRunSpec.Invariant
 
 

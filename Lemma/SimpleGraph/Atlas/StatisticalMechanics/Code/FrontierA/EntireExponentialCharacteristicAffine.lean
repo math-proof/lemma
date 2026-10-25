@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.EntireExponentialCharacteristicAffine
+import Theorem.StatisticalMechanics.Code.FrontierA.EntireExponentialCharacteristicAffine
 open Filter Metric Real Set Topology ValueDistribution StatMech StatMech.FrontierA
 
 

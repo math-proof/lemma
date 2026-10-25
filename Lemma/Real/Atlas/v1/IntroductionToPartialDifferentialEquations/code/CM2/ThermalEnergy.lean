@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM2.ThermalEnergy
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM2.ThermalEnergy
 open MeasureTheory Filter HeatEquation
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWExtremalSelectionObstruction
+import Theorem.StatisticalMechanics.Code.Universality.RSWExtremalSelectionObstruction
 open Function MeasureTheory Set StatMech StatMech.Universality
 
 

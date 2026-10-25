@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.TangentConeExceptionalLocus
+import Def.v1.Atlas.AlgebraicGeometryI.code.TangentConeExceptionalLocus.Part2
 open Polynomial TangentCone
 
 

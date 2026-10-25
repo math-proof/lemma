@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.IncreasingEvent
+import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
 open StatMech
 
 

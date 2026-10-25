@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.GeneralInteractionFreeSpinLimit
+import Theorem.StatisticalMechanics.Code.FrontierB.GeneralInteractionFreeSpinLimit.Part2
 open Filter Topology Set Finset StatMech StatMech.FrontierB
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Partition.PartitionPolynomial
+import Def.Combinatorics.Enumerative.Partition.PartitionPolynomial
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_16
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_16.Part2
 open Matrix Finset BigOperators MeasureTheory ProbabilityTheory Real ENNReal
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.ShermanPhaseAssembly
+import Theorem.StatisticalMechanics.Code.Onsager.ShermanPhaseAssembly.Part5
 open StatMech StatMech.Onsager
 
 

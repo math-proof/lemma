@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarGraph
+import Def.StatisticalMechanics.Code.FK.PeriodicPlanarGraph.Part18
 open Finset Set SimpleGraph MeasureTheory StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.OddIndependent
+import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.OddIndependent
 
 
 namespace PathGraph3OddTest

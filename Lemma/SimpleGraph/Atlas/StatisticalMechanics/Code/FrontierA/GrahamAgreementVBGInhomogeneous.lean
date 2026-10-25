@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamAgreementVBGInhomogeneous
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamAgreementVBGInhomogeneous
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

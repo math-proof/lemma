@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.LadderNSPACE
+import Def.v1.Atlas.TheoryOfComputation.code.LadderNSPACE.Part3
 open Computability TuringMachine
 
 

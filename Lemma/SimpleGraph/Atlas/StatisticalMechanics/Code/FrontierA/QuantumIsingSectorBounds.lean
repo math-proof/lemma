@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingSectorBounds
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingSectorBounds
 open StatMech StatMech.FrontierA
 
 

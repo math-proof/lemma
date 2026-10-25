@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.Polynomial.UnsignedCharlierPolynomialsOfOrder0
+import Theorem.Algebra.Polynomial.UnsignedCharlierPolynomialsOfOrder0
 
 
 namespace MetaMathlibExt

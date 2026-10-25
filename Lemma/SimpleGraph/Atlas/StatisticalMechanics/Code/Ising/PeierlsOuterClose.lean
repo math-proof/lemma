@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.PeierlsOuterClose
+import Theorem.StatisticalMechanics.Code.Ising.PeierlsOuterClose.Part2
 open MeasureTheory Filter Topology Finset SimpleGraph StatMech StatMech.Ising
 
 

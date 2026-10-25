@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.InformationTheory.HammingExpansion
+import Def.InformationTheory.HammingExpansion
 open Hamming
 
 

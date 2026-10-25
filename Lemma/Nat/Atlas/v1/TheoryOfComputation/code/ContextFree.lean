@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.ContextFree
+import Def.v1.Atlas.TheoryOfComputation.code.ContextFree.Part4
 open ChomskyNormalForm CFLPumping CFLPumping.CNFParseTree
 
 

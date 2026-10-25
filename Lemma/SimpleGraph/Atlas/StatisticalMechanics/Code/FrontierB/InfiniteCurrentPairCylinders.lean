@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.InfiniteCurrentPairCylinders
+import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentPairCylinders.Part2
 open Filter MeasureTheory Topology StatMech StatMech.FrontierB
 
 

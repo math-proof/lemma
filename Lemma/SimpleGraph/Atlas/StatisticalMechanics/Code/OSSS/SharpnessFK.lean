@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.SharpnessFK
+import Theorem.StatisticalMechanics.Code.OSSS.SharpnessFK
 open Finset Real Set StatMech StatMech.OSSS StatMech.OSSS.SharpnessFK
 
 

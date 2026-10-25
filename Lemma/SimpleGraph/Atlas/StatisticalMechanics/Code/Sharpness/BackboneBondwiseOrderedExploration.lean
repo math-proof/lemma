@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneBondwiseOrderedExploration
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneBondwiseOrderedExploration.Part6
 open Finset StatMech StatMech.Sharpness StatMech.Sharpness.shb_bondwiseOrderedTests StatMech.Sharpness.shb_DynamicEdgeExploration StatMech.Sharpness.BackboneDeterminedCutSwitching
 
 

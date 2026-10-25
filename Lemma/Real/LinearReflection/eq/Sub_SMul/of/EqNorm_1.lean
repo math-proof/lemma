@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Reflection.DihedralRootHelpers
+import Theorem.v1.Atlas.Buildings.code.Reflection.DihedralRootHelpers
 open Set FiniteReflectionGroups
 open scoped InnerProductSpace
 

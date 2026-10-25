@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.GallopSafety
-import sympy.atlas.CPythonListsort.Code.Transcription.MergeHi
+import Def.CPythonListsort.Code.Assembly.GallopSafety
+import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
 
 
 namespace CPythonListsort

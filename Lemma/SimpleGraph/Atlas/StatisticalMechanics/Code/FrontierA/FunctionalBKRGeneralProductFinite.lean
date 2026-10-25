@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FunctionalBKRGeneralProductFinite
+import Theorem.StatisticalMechanics.Code.FrontierA.FunctionalBKRGeneralProductFinite
 open MeasureTheory Set Filter Topology StatMech StatMech.FrontierA
 
 

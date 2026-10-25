@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Dynamics.EventuallyPeriodicSequence
+import Abbrev.Dynamics.EventuallyPeriodicSequence
 open MetaMathlibExt
 
 

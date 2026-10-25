@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.AffineVarietyCharacterization
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.AffineVarietyCharacterization
 open AlgebraicGeometry CategoryTheory TopologicalSpace
 
 

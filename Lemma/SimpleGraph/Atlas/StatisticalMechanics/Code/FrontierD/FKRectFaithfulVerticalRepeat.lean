@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectFaithfulVerticalRepeat
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulVerticalRepeat
 open SimpleGraph StatMech StatMech.FrontierD
 
 

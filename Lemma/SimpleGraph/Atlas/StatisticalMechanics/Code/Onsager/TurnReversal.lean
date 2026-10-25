@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.TurnReversal
+import Theorem.StatisticalMechanics.Code.Onsager.TurnReversal
 open StatMech StatMech.Onsager
 
 

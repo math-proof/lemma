@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.SurfaceKacWardMetricClosure
+import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardMetricClosure.Part3
 open Finset SimpleGraph StatMech StatMech.FrontierA StatMech.FrontierA.ClosedMetricFlatSurfaceGraphAtlas
 
 

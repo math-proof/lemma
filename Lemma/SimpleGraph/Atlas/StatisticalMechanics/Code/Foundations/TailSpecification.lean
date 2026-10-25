@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.TailSpecification
+import Theorem.StatisticalMechanics.Code.Foundations.TailSpecification.Part3
 open MeasureTheory ProbabilityTheory MeasurableSpace Set StatMech
 
 

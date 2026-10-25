@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABGhostRegularity
+import Theorem.StatisticalMechanics.Code.Sharpness.ABGhostRegularity.Part7
 open Filter Finset Set SimpleGraph Topology Asymptotics StatMech StatMech.Sharpness
 
 

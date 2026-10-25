@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FiniteCumulativeGradeHall
+import Theorem.StatisticalMechanics.Code.FrontierD.FiniteCumulativeGradeHall
 open Finset StatMech StatMech.FrontierD
 
 

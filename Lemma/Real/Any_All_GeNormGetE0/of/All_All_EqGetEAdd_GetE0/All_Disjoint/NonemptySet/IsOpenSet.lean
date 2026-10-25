@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.AffineCoxeter.AffineWeylBook
+import Def.v1.Atlas.Buildings.code.AffineCoxeter.AffineWeylBook.Part2
 open Set AffineReflectionGroup AffineWeylGroup AffineWeylGroupData
 open scoped InnerProductSpace
 

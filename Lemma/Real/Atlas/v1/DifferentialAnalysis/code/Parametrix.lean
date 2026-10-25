@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.Parametrix
+import Def.v1.Atlas.DifferentialAnalysis.code.Parametrix.Part2
 open MvPolynomial MeasureTheory ContinuousLinearMap Filter Asymptotics DifferentialOperators
 open scoped SchwartzMap
 

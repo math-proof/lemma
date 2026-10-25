@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.RealAnalysis.code.Derivatives.Taylor
+import Def.v1.Atlas.RealAnalysis.code.Derivatives.Taylor
 open Finset BigOperators
 
 

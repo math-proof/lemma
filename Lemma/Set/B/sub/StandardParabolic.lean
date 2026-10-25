@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.FurtherBruhatTits
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.BruhatPropertiesInstance
+import Def.v1.Atlas.Buildings.code.BNPair.FurtherBruhatTits
+import Def.v1.Atlas.Buildings.code.BNPair.BruhatPropertiesInstance
 
 
 namespace BNPair

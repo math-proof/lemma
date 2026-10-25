@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.Sard
+import Def.Geometry.Manifold.Sard
 open scoped Manifold ContDiff Topology ENNReal MeasureTheory
 open MeasureTheory
 open MathlibExt.Geometry.Manifold.SardWanted

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.WalkCornerSum
+import Theorem.StatisticalMechanics.Code.Onsager.WalkCornerSum
 open StatMech StatMech.Onsager StatMech.Onsager.WalkCornerSum
 
 

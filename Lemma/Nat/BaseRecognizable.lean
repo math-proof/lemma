@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.BaseRecognizable
+import Def.NumberTheory.BaseRecognizable
 open MetaMathlibExt
 
 

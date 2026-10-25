@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.PerOrbitCardClose
+import Theorem.StatisticalMechanics.Code.Inequalities.PerOrbitCardClose.Part8
 open Finset MeasureTheory StatMech
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.GradedAlgebra.MultigradedBetti
+import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
 
 
 namespace MetaMathlibExt

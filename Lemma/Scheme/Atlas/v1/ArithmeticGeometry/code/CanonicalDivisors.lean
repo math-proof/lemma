@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.CanonicalDivisors
+import Def.v1.Atlas.ArithmeticGeometry.code.CanonicalDivisors.Part2
 open PicardGroup CanonicalDivisors
 
 

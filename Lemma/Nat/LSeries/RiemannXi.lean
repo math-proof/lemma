@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.LSeries.RiemannXi
+import Def.NumberTheory.LSeries.RiemannXi
 open critical strip `0 < s.re < 1` (the left half follows by reflecting
 open RiemannXi
 

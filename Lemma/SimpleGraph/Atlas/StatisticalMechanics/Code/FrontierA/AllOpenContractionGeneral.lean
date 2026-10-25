@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.AllOpenContractionGeneral
+import Theorem.StatisticalMechanics.Code.FrontierA.AllOpenContractionGeneral
 open Set SimpleGraph Finset StatMech StatMech.FrontierA
 
 

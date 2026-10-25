@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.GrothendieckRing
+import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
 import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
 
 

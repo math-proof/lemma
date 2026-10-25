@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec5DimensionTheory
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec5DimensionTheory.Part2
 open Set
 
 

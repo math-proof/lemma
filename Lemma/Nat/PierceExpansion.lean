@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PierceExpansion
+import Def.NumberTheory.PierceExpansion.Part2
 open PierceExpansion
 
 

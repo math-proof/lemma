@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.ZagierCyclicPermutationProduct
+import Theorem.Combinatorics.Enumerative.ZagierCyclicPermutationProduct.Part44
 open MetaMathlibExt
 
 

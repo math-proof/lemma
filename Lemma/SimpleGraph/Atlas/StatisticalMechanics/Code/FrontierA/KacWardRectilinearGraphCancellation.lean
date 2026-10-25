@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardRectilinearGraphCancellation
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearGraphCancellation
 open Finset SimpleGraph StatMech StatMech.FrontierA
 
 

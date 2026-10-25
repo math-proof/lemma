@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.FiniteVolumeSum
+import Theorem.StatisticalMechanics.Code.Ising.FiniteVolumeSum
 open Finset StatMech StatMech.Ising
 
 

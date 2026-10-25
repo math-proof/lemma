@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ContinuedFractions.LagrangePeriodic
+import Theorem.NumberTheory.ContinuedFractions.LagrangePeriodic.Part5
 open MetaMathlibExt
 
 

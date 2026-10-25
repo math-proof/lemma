@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.PadicNumbers
+import Def.v1.Atlas.ArithmeticGeometry.code.PadicNumbers.Part9
 open PadicInt in InverseLimit InverseLimit.NatInverseSystem DiscreteValuation PadicIntegers
 open Finset PadicInt
 open PadicInt Classical

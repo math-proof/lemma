@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToFunctionalAnalysis.code.OpenMapping
+import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.OpenMapping
 open Function
 open OpenMapping
 

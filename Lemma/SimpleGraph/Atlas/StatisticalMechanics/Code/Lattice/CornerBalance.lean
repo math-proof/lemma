@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.CornerBalance
+import Theorem.StatisticalMechanics.Code.Lattice.CornerBalance.Part4
 open SimpleGraph Function StatMech StatMech.Lattice
 
 

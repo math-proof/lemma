@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.Harris
+import Theorem.StatisticalMechanics.Code.Inequalities.Harris
 open StatMech
 
 

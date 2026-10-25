@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Padics.HilbertSymbol.Real
+import Def.NumberTheory.Padics.HilbertSymbol.Real
 open realHilbertSymbol
 
 

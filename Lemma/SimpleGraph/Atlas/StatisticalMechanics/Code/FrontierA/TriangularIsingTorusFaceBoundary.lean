@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusFaceBoundary
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusFaceBoundary
 open StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.GrassmannianProjective
+import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianProjective.Part2
 open ExteriorAlgebra GrassmannianProjective
 open scoped LinearAlgebra.Projectivization
 

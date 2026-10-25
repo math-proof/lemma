@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.HexagonalSharpness
+import Theorem.StatisticalMechanics.Code.FK.HexagonalSharpness.Part5
 open Finset Set Filter Topology MeasureTheory SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

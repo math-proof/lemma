@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.IntegralSquareTorusResiduePotential
+import Theorem.StatisticalMechanics.Code.FrontierD.IntegralSquareTorusResiduePotential
 open StatMech StatMech.FrontierD StatMech.FrontierD.IntegralSquareTorusCycle
 
 

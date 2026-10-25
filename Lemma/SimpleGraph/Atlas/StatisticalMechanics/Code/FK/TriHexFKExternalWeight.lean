@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexFKExternalWeight
+import Theorem.StatisticalMechanics.Code.FK.TriHexFKExternalWeight
 open Finset StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

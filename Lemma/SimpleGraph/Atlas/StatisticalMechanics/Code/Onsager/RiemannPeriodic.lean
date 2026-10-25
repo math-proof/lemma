@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.RiemannPeriodic
+import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodic
 open MeasureTheory StatMech StatMech.Onsager
 
 

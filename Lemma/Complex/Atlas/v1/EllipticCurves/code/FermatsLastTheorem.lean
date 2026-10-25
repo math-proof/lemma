@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.FermatsLastTheorem
+import Def.v1.Atlas.EllipticCurves.code.FermatsLastTheorem.Part3
 open Matrix CongruenceSubgroup FLT EllipticCurve
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.IsingSusceptibilityPlus
+import Theorem.StatisticalMechanics.Code.Sharpness.IsingSusceptibilityPlus.Part2
 open MeasureTheory Filter Topology BoundedContinuousFunction StatMech StatMech.Sharpness
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc_orbitinvariant
+import Theorem.StatisticalMechanics.Code.Walls.jc_orbitinvariant.Part3
 open SimpleGraph Function StatMech StatMech.Walls
 
 

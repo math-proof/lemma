@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.ConeSupportCorollary
+import Theorem.v1.Atlas.DifferentialAnalysis.code.ConeSupportCorollary
 open MeasureTheory Set ConeSupport
 
 

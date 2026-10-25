@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.SpanningTreeRealiseClose
+import Theorem.StatisticalMechanics.Code.Percolation.SpanningTreeRealiseClose.Part2
 open Set SimpleGraph Finset MeasureTheory StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

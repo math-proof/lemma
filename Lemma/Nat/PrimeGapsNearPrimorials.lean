@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ConsecutivePrime
+import Def.NumberTheory.ConsecutivePrime
 
 
 namespace MetaMathlibExt

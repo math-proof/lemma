@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Chapter3.DedekindProperties
+import Def.v1.Atlas.NumberTheoryI.code.Chapter3.DedekindProperties.Part2
 open Ideal nonZeroDivisors DedekindDomainEquiv FractionalIdealLocalization
 open nonZeroDivisors
 

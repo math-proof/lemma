@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wcddefectbridge
+import Theorem.StatisticalMechanics.Code.Walls.wcddefectbridge.Part5
 open Finset SimpleGraph Function StatMech StatMech.Wcd
 
 

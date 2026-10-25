@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Prop255
+import Def.v1.Atlas.NumberTheoryI.code.Prop255.Part4
 open Filter Set Topology RestrictedProduct
 open scoped RestrictedProduct
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GameTheory.BondarevaShapley
+import Def.GameTheory.BondarevaShapley
 open Finset
 open MathlibExt.GameTheory.ShapleyValue
 open MathlibExt.GameTheory.BondarevaShapleyWanted

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.ConvolutionWellDefined
+import Theorem.v1.Atlas.DifferentialAnalysis.code.ConvolutionWellDefined
 open MeasureTheory Set ConeSupport
 open scoped SchwartzMap
 

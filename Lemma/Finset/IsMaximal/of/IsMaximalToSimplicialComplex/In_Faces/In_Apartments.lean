@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
+import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
 import Lemma.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
 open ChamberComplex
 

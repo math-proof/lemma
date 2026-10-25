@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_6_2
+import Abbrev.Analysis.Section_6_2.Part2
 open EReal
 
 

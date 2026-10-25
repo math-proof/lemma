@@ -1,0 +1,36 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Foundations/AeTailInvariant.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Mathlib
+import Theorem.StatisticalMechanics.Code.Foundations.CondDistribution.Part4
+import Theorem.StatisticalMechanics.Code.Foundations.Ergodicity.Part2
+import Theorem.StatisticalMechanics.Code.Foundations.AeTailInvariant.Part3
+open MeasureTheory MeasurableSpace Set Filter
+open scoped ENNReal symmDiff
+
+set_option linter.unusedSectionVars false
+set_option linter.unusedDecidableInType false
+
+
+namespace StatMech
+
+open ConfigSpace
+
+variable {E H : Type*} [Countable E] [DecidableEq E]
+  [Group H] [MulAction H E]
+
+
+def AtiApproxFarOut (window : ℕ → Set E)
+    (mu : Measure (ConfigSpace E)) (s : Set (ConfigSpace E)) : Prop :=
+  ∀ (k : ℕ) (ε : ℝ≥0∞), 0 < ε →
+    ∃ A : Set (ConfigSpace E),
+      @MeasurableSet _ (outsideSigma (window k)) A ∧ mu (s ∆ A) < ε
+
+end StatMech

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.symmetric.SSYTEquiv
+import Def.Combinatorics.Young.SSYTEquiv.Part4
 import Lemma.MvPolynomial.SchurBasics
 import Lemma.MvPolynomial.PieriJacobiTrudi
 open SSYTEquiv

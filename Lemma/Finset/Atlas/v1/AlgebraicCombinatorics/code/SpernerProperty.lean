@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty
+import Def.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty.Part2
 open Finset SpernerProperty
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.StarHullWinding
+import Theorem.StatisticalMechanics.Code.Lattice.StarHullWinding.Part2
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

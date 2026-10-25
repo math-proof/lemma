@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.WeinsteinNeighborhood
+import Structure.v1.Atlas.GeometryOfManifolds.code.WeinsteinNeighborhood.Part7
 open Module FiniteDimensional SymplecticLinearAlgebra DifferentialFormSpace WeinsteinNeighborhood
 open SymplecticLinearAlgebra
 open DifferentialFormSpace

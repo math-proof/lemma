@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SchwartzComplete
+import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzComplete
 open Filter Topology SchwartzMap
 open scoped SchwartzMap
 

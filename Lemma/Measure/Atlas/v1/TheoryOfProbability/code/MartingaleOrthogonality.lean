@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.MartingaleOrthogonality
+import Theorem.v1.Atlas.TheoryOfProbability.code.MartingaleOrthogonality
 open MeasureTheory Filter
 open scoped MeasureTheory
 

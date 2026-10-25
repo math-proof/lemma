@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.Order.Dilworth
+import Theorem.MathlibExtTest.Combinatorics.Order.Dilworth.Part2
 open MathlibExt MathlibExt.Combinatorics MathlibExt.Combinatorics.Order MathlibExt.Combinatorics.Order.DilworthWanted
 
 

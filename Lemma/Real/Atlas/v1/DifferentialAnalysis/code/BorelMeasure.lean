@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.BorelMeasure
+import Theorem.v1.Atlas.DifferentialAnalysis.code.BorelMeasure
 open MeasureTheory Measure Set TopologicalSpace MeasuresAndSigmaAlgebras
 open scoped CompactlySupported ZeroAtInfty
 open RealRMK

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialGeometry.code.ExteriorAlgebra
+import Def.v1.Atlas.DifferentialGeometry.code.ExteriorAlgebra.Part2
 open Matrix Finset Module ExteriorAlgebra in ExteriorSquare
 
 

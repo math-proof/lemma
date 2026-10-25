@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Misc.erdos_987
+import Theorem.Analysis.Misc.erdos_987
 open Filter Complex Finset
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.additive.NoSmallSumDominantSet
+import Theorem.Combinatorics.Additive.NoSmallSumDominantSet
 open scoped Pointwise
 
 

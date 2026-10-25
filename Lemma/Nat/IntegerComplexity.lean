@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.IntegerComplexity
+import Def.NumberTheory.IntegerComplexity.Part3
 open Expr
 open IntegerComplexity
 

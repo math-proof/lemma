@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexBrickDualDomination
+import Theorem.StatisticalMechanics.Code.FK.TriHexBrickDualDomination
 open Finset Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

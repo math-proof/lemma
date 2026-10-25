@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.WalkCrossing
+import Theorem.StatisticalMechanics.Code.Onsager.WalkCrossing.Part4
 open StatMech StatMech.Onsager StatMech.Onsager.WalkCrossing
 
 

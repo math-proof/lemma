@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.BoxCrossingDichotomyClose
+import Theorem.StatisticalMechanics.Code.Universality.BoxCrossingDichotomyClose.Part3
 open Set SimpleGraph StatMech.Lattice StatMech.RSW.Box StatMech StatMech.Universality
 
 

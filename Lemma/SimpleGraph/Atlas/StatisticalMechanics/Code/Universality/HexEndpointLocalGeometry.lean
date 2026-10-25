@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry
+import Theorem.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry.Part8
 open StatMech StatMech.Universality
 
 

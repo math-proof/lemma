@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.BlowupDefinition
+import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupDefinition.Part3
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupDefinition
 open AlgebraicGeometry
 

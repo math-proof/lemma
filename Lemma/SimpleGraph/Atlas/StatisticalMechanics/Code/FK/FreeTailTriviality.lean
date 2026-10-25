@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FreeTailTriviality
+import Theorem.StatisticalMechanics.Code.FK.FreeTailTriviality
 open MeasureTheory ProbabilityTheory Set Filter Topology StatMech StatMech.FK
 
 

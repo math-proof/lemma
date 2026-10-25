@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusMedial
+import Def.StatisticalMechanics.Code.FrontierD.FKRectTorusMedial.Part5
 open StatMech StatMech.FrontierD
 
 

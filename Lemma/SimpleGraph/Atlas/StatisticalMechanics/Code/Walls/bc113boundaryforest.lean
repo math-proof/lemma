@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc113boundaryforest
+import Theorem.StatisticalMechanics.Code.Walls.bc113boundaryforest.Part6
 open Set SimpleGraph Finset StatMech StatMech.Walls
 
 

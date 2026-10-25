@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.AffineIsometry.Theorems
+import Def.v1.Atlas.Buildings.code.Building.AffineIsometry.Theorems
 open AffineIsometryBuilding DVRContext AnisotropicFormContext
 
 

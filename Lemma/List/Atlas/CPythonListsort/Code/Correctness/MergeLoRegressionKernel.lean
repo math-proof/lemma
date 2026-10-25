@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.MergeLoRegressionKernel
+import Def.CPythonListsort.Code.Correctness.MergeLoRegressionKernel
 open CPythonListsort
 
 

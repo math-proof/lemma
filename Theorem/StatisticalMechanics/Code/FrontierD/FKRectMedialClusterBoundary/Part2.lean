@@ -1,0 +1,93 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectMedialClusterBoundary.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialReachability
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusRibbonReduction
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEulerDefectClassification
+import Def.StatisticalMechanics.Code.FrontierD.FKRectMedialClusterBoundary.Part2
+open SimpleGraph
+
+
+namespace StatMech.FrontierD
+
+noncomputable section
+
+@[simp] theorem fkRectMedialComponentToPrimalComponent_mk
+    (R : FKRectTorus) (omega : R.Configuration)
+    (d : FKMedialDart R.medialTorus) :
+    fkRectMedialComponentToPrimalComponent R omega
+        ((fkMedialLoopGraph R.medialTorus
+          (fkRectConfigurationToMedialPairing R omega)).connectedComponentMk d) =
+      (fkRectOpenGraph R omega).connectedComponentMk
+        (fkRectMedialDartPrimalLabel R d) :=
+  rfl
+
+
+theorem fkRectMedialComponentToPrimalComponent_surjective
+    (R : FKRectTorus) (omega : R.Configuration) :
+    Function.Surjective (fkRectMedialComponentToPrimalComponent R omega) := by
+  intro C
+  induction C using ConnectedComponent.ind with
+  | _ x =>
+      refine ⟨(fkMedialLoopGraph R.medialTorus
+        (fkRectConfigurationToMedialPairing R omega)).connectedComponentMk
+          (fkRectMedialDartAtPrimalVertex R x), ?_⟩
+      simp
+
+
+theorem fkRectNumClusters_le_medialLoopCount
+    (R : FKRectTorus) (omega : R.Configuration) :
+    fkRectNumClusters R omega <= fkRectMedialLoopCount R omega := by
+  have h := Nat.card_le_card_of_surjective
+    (fkRectMedialComponentToPrimalComponent R omega)
+    (fkRectMedialComponentToPrimalComponent_surjective R omega)
+  simpa [fkRectNumClusters, fkRectMedialLoopCount, fkMedialLoopCount,
+    Nat.card_eq_fintype_card] using h
+
+
+theorem fkRectEulerHomologyDefect_le_cycleRankInt
+    (R : FKRectTorus) (F : Finset R.EdgeIndex) :
+    fkRectEulerHomologyDefect R (fkRectConfigurationOfEdges R F) <=
+      (F.card : Int) + (fkRectFinsetClusterCount R F : Int) -
+        (Fintype.card R.Vertex : Int) := by
+  have hcount := fkRectNumClusters_le_medialLoopCount R
+    (fkRectConfigurationOfEdges R F)
+  have hcountInt : (fkRectFinsetClusterCount R F : Int) <=
+      (fkRectMedialLoopCount R
+        (fkRectConfigurationOfEdges R F) : Int) := by
+    exact_mod_cast hcount
+  rw [fkRectEulerHomologyDefect_configurationOfEdges]
+  omega
+
+
+theorem fkRectEulerHomologyDefect_eq_zero_of_cycleRankInt_le_one
+    (R : FKRectTorus) (F : Finset R.EdgeIndex)
+    (hrank : (F.card : Int) + (fkRectFinsetClusterCount R F : Int) -
+        (Fintype.card R.Vertex : Int) <= 1) :
+    fkRectEulerHomologyDefect R (fkRectConfigurationOfEdges R F) = 0 := by
+  rcases fkRectEulerHomologyDefect_classified R F with hzero | htwo
+  · exact hzero
+  · have hle := fkRectEulerHomologyDefect_le_cycleRankInt R F
+    rw [htwo] at hle
+    omega
+
+
+theorem fkRectCycleRankInt_ge_two_of_eulerHomologyDefect_eq_two
+    (R : FKRectTorus) (F : Finset R.EdgeIndex)
+    (hdefect : fkRectEulerHomologyDefect R
+      (fkRectConfigurationOfEdges R F) = 2) :
+    2 <= (F.card : Int) + (fkRectFinsetClusterCount R F : Int) -
+      (Fintype.card R.Vertex : Int) := by
+  have hle := fkRectEulerHomologyDefect_le_cycleRankInt R F
+  rwa [hdefect] at hle
+
+end
+end StatMech.FrontierD

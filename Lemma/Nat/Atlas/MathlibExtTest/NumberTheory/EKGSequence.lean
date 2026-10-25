@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.EKGSequence
+import Def.NumberTheory.EKGSequence
 
 
 namespace MetaMathlibExt

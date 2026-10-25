@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneP2CoordinateToggleObstruction
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneP2CoordinateToggleObstruction
 open SimpleGraph Finset BigOperators StatMech StatMech.Sharpness StatMech.Sharpness.BackboneP2CoordinateToggleObstruction
 
 

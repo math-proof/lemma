@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.SteinerTriple
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.SteinerTriple
 open MeasureTheory Filter Topology Real Set
 
 

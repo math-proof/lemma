@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSpinQuantitativeTransport
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSpinQuantitativeTransport
 open Filter Topology StatMech StatMech.FrontierA StatMech.FrontierA.SpinConformalTransportEstimate
 
 

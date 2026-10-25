@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.LatticeShortestVector
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.LatticeShortestVector
 open InnerProductSpace Finset LatticeShortestVector
 
 

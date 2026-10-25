@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.EulerianPolynomialHankel
+import Theorem.Combinatorics.Enumerative.EulerianPolynomialHankel.Part2
 open MetaMathlibExt
 
 

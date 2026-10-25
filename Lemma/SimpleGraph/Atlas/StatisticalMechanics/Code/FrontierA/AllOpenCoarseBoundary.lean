@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.AllOpenCoarseBoundary
+import Theorem.StatisticalMechanics.Code.FrontierA.AllOpenCoarseBoundary.Part3
 open Finset Set SimpleGraph StatMech StatMech.FrontierA
 
 

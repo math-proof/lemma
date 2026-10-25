@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraNotes.code.Isometries
+import Def.v1.Atlas.AlgebraNotes.code.Isometries
 open Isometries
 open scoped EuclideanSpace
 set_option maxHeartbeats 999999

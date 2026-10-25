@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FreeTailErgodicityPrereq
+import Theorem.StatisticalMechanics.Code.FK.FreeTailErgodicityPrereq.Part3
 open MeasureTheory Set StatMech StatMech.FK
 
 

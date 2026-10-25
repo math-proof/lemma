@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.FourierAffinePlane
+import Def.v1.Atlas.ProjectionTheory.code.FourierAffinePlane
 open Finset hiding card Fintype (card) FourierFF
 open Fintype (card)
 open scoped BigOperators Classical

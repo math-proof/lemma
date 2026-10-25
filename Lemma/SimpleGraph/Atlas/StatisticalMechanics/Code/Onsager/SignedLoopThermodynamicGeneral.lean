@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopThermodynamicGeneral
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopThermodynamicGeneral
 open Finset SimpleGraph MeasureTheory Filter Topology StatMech StatMech.Onsager
 
 

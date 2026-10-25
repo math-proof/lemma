@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_11_4
+import Theorem.Analysis.Section_11_4
 open Chapter9
 open Chapter11
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.EllipticCurves
+import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
 open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point
 open Polynomial Matrix GeneralLinearGroup OnePoint
 open WeierstrassCurve.Affine

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.Lie.Ado
+import Theorem.Algebra.Lie.Ado.Part5
 open LieAlgebra
 open scoped TensorProduct
 open MathlibExt.Algebra.Lie.LandmarkWanted

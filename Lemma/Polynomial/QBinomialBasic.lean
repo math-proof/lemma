@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.qbinomial.QBinomialBasic
+import Theorem.Combinatorics.Enumerative.QBinomialBasic.Part4
 open AlgebraicCombinatorics
 open Finset
 open Nat

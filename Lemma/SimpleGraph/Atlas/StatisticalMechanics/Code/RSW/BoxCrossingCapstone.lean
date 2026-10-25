@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.BoxCrossingCapstone
+import Theorem.StatisticalMechanics.Code.RSW.BoxCrossingCapstone
 open StatMech StatMech.RSW
 
 

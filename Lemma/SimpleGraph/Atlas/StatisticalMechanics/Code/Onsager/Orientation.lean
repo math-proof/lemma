@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.Orientation
+import Theorem.StatisticalMechanics.Code.Onsager.Orientation.Part2
 open StatMech StatMech.Onsager StatMech.Onsager.Orientation
 
 

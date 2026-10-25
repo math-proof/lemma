@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.KolmogorovCycle
+import Def.v1.Atlas.TheoryOfProbability.code.KolmogorovCycle.Part3
 open MeasureTheory ProbabilityTheory Finset BigOperators StochasticMatrix
 
 

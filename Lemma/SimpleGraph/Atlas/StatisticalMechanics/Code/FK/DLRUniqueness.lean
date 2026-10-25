@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.DLRUniqueness
+import Theorem.StatisticalMechanics.Code.FK.DLRUniqueness
 open MeasureTheory Set StatMech StatMech.FK
 
 

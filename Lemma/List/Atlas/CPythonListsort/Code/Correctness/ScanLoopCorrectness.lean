@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.ScanLoopCorrectness
+import Structure.CPythonListsort.Code.Correctness.ScanLoopCorrectness
 open CPythonListsort CPythonListsort.ListSortScanCollapseCorrectnessPost
 
 

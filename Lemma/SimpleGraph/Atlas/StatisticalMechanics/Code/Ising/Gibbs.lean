@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.Gibbs
+import Theorem.StatisticalMechanics.Code.Ising.Gibbs.Part6
 open Finset StatMech StatMech.Ising
 
 

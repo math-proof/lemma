@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jwd_routescoincide
+import Theorem.StatisticalMechanics.Code.Walls.jwd_routescoincide
 open SimpleGraph Function StatMech StatMech.Walls
 
 

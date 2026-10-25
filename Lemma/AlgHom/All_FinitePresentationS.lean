@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.direct_limit
+import Instance.Algebra.DirectLimit
+import Class.Mathlib_Algebra_IsDirectLimit
 open scoped Classical
 open MvPolynomial
-
 
 /--
 [Algebra_exists_isDirectLimit_of_finitePresentation](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_exists_isDirectLimit_of_finitePresentation.lean)
@@ -196,7 +196,6 @@ private noncomputable def stageHom
   (i j : Idx R A) (h : i ≤ j) : Stage i →ₐ[R] Stage j :=
   Ideal.quotientMapₐ (rel j) (MvPolynomial.rename (incl h.1)) (rel_le_comap h)
 
-
 private noncomputable def coc
   {R : Type u}
   [CommRing R]
@@ -313,6 +312,5 @@ private lemma main
   classical
     exact ⟨Idx R A, inferInstance, inferInstance, idx_directed, fun i => Stage i, inferInstance, inferInstance,
       fun i => stage_fp i, stageHom, coc, inferInstance, isDirectLimit⟩
-
 
 -- created on 2026-10-20

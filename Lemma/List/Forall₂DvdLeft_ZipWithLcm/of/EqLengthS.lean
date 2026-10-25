@@ -1,6 +1,5 @@
 import sympy.core.mul
 
-
 @[path]
 private lemma main
 -- given
@@ -23,6 +22,5 @@ private lemma main
     | cons n' s' =>
       exact List.Forall₂.cons (Nat.dvd_lcm_left n n')
         (ih s' (Nat.succ_injective h))
-
 
 -- created on 2026-10-07

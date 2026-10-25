@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.TwoReplicaWeighted
+import Theorem.StatisticalMechanics.Code.Ising.TwoReplicaWeighted.Part2
 open Finset Classical StatMech StatMech.Ising
 
 

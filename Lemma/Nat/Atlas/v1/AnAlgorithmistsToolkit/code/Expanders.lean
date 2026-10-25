@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.Expanders
+import Abbrev.v1.Atlas.AnAlgorithmistsToolkit.code.Expanders.Part2
 open ExpanderDiameter
 open Matrix Finset BigOperators
 open Finset

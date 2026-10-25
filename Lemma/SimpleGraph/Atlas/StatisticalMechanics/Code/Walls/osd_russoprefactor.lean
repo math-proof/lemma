@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.osd_russoprefactor
+import Theorem.StatisticalMechanics.Code.Walls.osd_russoprefactor
 open Real Finset StatMech StatMech.Walls
 
 

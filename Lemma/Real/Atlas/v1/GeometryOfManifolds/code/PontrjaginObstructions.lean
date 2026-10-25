@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.PontrjaginObstructions
+import Structure.v1.Atlas.GeometryOfManifolds.code.PontrjaginObstructions.Part7
 open scoped Manifold
 
 

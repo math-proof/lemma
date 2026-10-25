@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.VandermondeTypeConvolutionForSRestrictedWeightedCompositions
+import Def.Combinatorics.Enumerative.VandermondeTypeConvolutionForSRestrictedWeightedCompositions
 open scoped BigOperators
 open MathlibExt.Combinatorics.Enumerative
 

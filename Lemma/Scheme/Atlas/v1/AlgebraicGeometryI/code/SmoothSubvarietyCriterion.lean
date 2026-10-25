@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SmoothSubvarietyCriterion
+import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothSubvarietyCriterion
 open KaehlerDifferential Algebra
 open scoped TensorProduct
 

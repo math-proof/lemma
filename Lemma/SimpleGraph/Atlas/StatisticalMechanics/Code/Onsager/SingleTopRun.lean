@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SingleTopRun
+import Theorem.StatisticalMechanics.Code.Onsager.SingleTopRun
 open StatMech StatMech.Onsager StatMech.Onsager.SingleTopRunProof
 
 

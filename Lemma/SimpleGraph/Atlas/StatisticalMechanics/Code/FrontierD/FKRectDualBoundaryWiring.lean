@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDualBoundaryWiring
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualBoundaryWiring
 open SimpleGraph StatMech StatMech.FrontierD
 
 

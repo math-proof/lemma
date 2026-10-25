@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4SquareWiredPhaseTransport
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareWiredPhaseTransport.Part2
 open Filter Finset MeasureTheory Set SimpleGraph Topology StatMech StatMech.FrontierD
 
 

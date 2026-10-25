@@ -1,0 +1,249 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/TrifurcationCount.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Mathlib
+import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+import Theorem.StatisticalMechanics.Code.Lattice.BoxSurfaceVolume.Part5
+import Def.StatisticalMechanics.Code.Lattice.Clusters.Part7
+import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeane.Part5
+import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneUniqueness.Part3
+import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneMerge.Part4
+import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneMergeGeom
+import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneClose.Part2
+import Def.StatisticalMechanics.Code.Percolation.TrifurcationCount.Part5
+open Set SimpleGraph Finset MeasureTheory Filter Topology
+open scoped BigOperators ENNReal NNReal
+
+open StatMech.Lattice StatMech.ConfigSpace
+
+
+namespace StatMech
+
+namespace Percolation
+
+variable {d : ℕ}
+
+
+theorem tfc_armEnds_nonempty (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ) (hn : 1 ≤ n)
+    (x : Site d) (hxbox : x ∈ box d n) (htri : IsTrifurcation d ω x) :
+    (tfc_armEnds ω n x).Nonempty := by
+  obtain ⟨z, hzb, hzc⟩ := tfc_trif_reaches_boundary ω n hn x hxbox htri
+  exact ⟨z, hzb, hzc⟩
+
+
+theorem tfc_distinctArmEnds_iff_injSelector (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ) :
+    tfc_DistinctArmEnds ω n ↔
+      ∃ φ : Site d → Site d,
+        (∀ x, x ∈ box d n → IsTrifurcation d ω x → φ x ∈ tfc_armEnds ω n x) ∧
+        (∀ x, x ∈ box d n → IsTrifurcation d ω x → ∀ y, y ∈ box d n →
+          IsTrifurcation d ω y → φ x = φ y → x = y) := by
+  constructor
+  · rintro ⟨φ, hmaps, hinj⟩
+    exact ⟨φ, fun x hx htri => hmaps x hx htri, hinj⟩
+  · rintro ⟨φ, hmaps, hinj⟩
+    exact ⟨φ, fun x hx htri => hmaps x hx htri, hinj⟩
+
+
+theorem tfc_distinctArmEnds_of_subsingleton (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ)
+    (hn : 1 ≤ n)
+    (hsub : ∀ x y, x ∈ box d n → IsTrifurcation d ω x → y ∈ box d n →
+      IsTrifurcation d ω y → x = y) :
+    tfc_DistinctArmEnds ω n := by
+  classical
+  
+  refine ⟨fun x => if hx : x ∈ box d n ∧ IsTrifurcation d ω x then
+      (tfc_armEnds_nonempty ω n hn x hx.1 hx.2).choose else x, ?_, ?_⟩
+  · intro x hxbox htri
+    simp only [dif_pos (⟨hxbox, htri⟩ : x ∈ box d n ∧ IsTrifurcation d ω x)]
+    have hspec := (tfc_armEnds_nonempty ω n hn x hxbox htri).choose_spec
+    exact ⟨hspec.1, hspec.2⟩
+  · 
+    intro x hxbox htri y hybox htriy _
+    exact hsub x y hxbox htri hybox htriy
+
+
+theorem tfc_residue_zero_iff_no_origin_trif (ω : ConfigSpace (Sym2 (Site d))) :
+    tfc_BoundaryArmInjection ω 0 ↔ ¬ IsTrifurcation d ω 0 := by
+  classical
+  constructor
+  · rintro ⟨φ, hmaps, _⟩ htri0
+    have h0box : (0 : Site d) ∈ box d 0 := by
+      rw [mem_box]; intro i; rw [show (0 : Site d) i = 0 from rfl]; simp
+    have hmem := hmaps 0 h0box htri0
+    rw [vertexBoundary] at hmem
+    simp only [Nat.zero_sub, Set.mem_diff] at hmem
+    exact hmem.2 hmem.1
+  · intro h0
+    have hx0 : ∀ x : Site d, x ∈ box d 0 → x = 0 := by
+      intro x hxbox
+      funext i; have := (mem_box.mp hxbox) i
+      rw [show (0 : Site d) i = 0 from rfl]; omega
+    refine ⟨fun _ => 0, ?_, ?_⟩
+    · intro x hxbox htri
+      exact absurd ((hx0 x hxbox) ▸ htri) h0
+    · intro x hxbox htri y _ _ _
+      exact absurd ((hx0 x hxbox) ▸ htri) h0
+
+
+theorem tfc_Tcount_zero_le_boundary_iff (ω : ConfigSpace (Sym2 (Site d))) :
+    Tcount d ω 0 ≤ boxSV_boundaryCard d 0 ↔ ¬ IsTrifurcation d ω 0 := by
+  classical
+  rw [tfc_boundaryCard_zero, Nat.le_zero, ← tfc_trifFinset_card, Finset.card_eq_zero,
+    tfc_trifFinset, Finset.filter_eq_empty_iff]
+  constructor
+  · intro h htri0
+    have h0box : (0 : Site d) ∈ boxFinsetBK d 0 := by
+      rw [boxFinsetBK, Set.Finite.mem_toFinset, mem_box]; intro i
+      rw [show (0 : Site d) i = 0 from rfl]; simp
+    exact h h0box htri0
+  · intro h0 x hxbox
+    rw [boxFinsetBK, Set.Finite.mem_toFinset] at hxbox
+    have hx0 : x = 0 := by
+      funext i; have := (mem_box.mp hxbox) i
+      rw [show (0 : Site d) i = 0 from rfl]; omega
+    exact hx0 ▸ h0
+
+
+theorem tfc_trifurcation_prob_eq_zero (μ : Measure (ConfigSpace (Sym2 (Site d))))
+    [IsProbabilityMeasure μ]
+    (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ)
+    (bdry : ℕ → ℕ)
+    (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → Tcount d ω n ≤ bdry n)
+    (hvol : ∀ n, 0 < (boxFinsetBK d n).card)
+    (hdens : Tendsto (fun n => (bdry n : ℝ) / ((boxFinsetBK d n).card : ℝ)) atTop (𝓝 0)) :
+    μ {ω | IsTrifurcation d ω 0} = 0 := by
+  classical
+  set p : ℝ≥0∞ := μ {ω | IsTrifurcation d ω 0} with hp
+  have hkey : ∀ n, 1 ≤ n → ((boxFinsetBK d n).card : ℝ≥0∞) * p ≤ (bdry n : ℝ≥0∞) := by
+    intro n hn
+    have hexp := expected_Tcount μ hinv n
+    rw [nsmul_eq_mul] at hexp
+    have hle : ∫⁻ ω, (Tcount d ω n : ℝ≥0∞) ∂μ ≤ (bdry n : ℝ≥0∞) := by
+      calc ∫⁻ ω, (Tcount d ω n : ℝ≥0∞) ∂μ
+          ≤ ∫⁻ _ω, (bdry n : ℝ≥0∞) ∂μ := by
+            apply lintegral_mono; intro ω; simp only
+            exact_mod_cast hbound ω n hn
+        _ = (bdry n : ℝ≥0∞) := by rw [lintegral_const]; simp
+    rwa [hexp] at hle
+  have hpfin : p ≠ ⊤ := by rw [hp]; exact (measure_ne_top μ _)
+  set pr : ℝ := p.toReal with hpr
+  have hprnn : 0 ≤ pr := ENNReal.toReal_nonneg
+  have hkeyr : ∀ n, 1 ≤ n → ((boxFinsetBK d n).card : ℝ) * pr ≤ (bdry n : ℝ) := by
+    intro n hn
+    have h := hkey n hn
+    have h' : (((boxFinsetBK d n).card : ℝ≥0∞) * p).toReal ≤ (bdry n : ℝ≥0∞).toReal :=
+      ENNReal.toReal_mono (by simp) h
+    rw [ENNReal.toReal_mul] at h'
+    simpa [ENNReal.toReal_natCast, hpr] using h'
+  have hvolr : ∀ n, (0 : ℝ) < ((boxFinsetBK d n).card : ℝ) := by
+    intro n; exact_mod_cast hvol n
+  have hle : ∀ᶠ n in atTop, pr ≤ (bdry n : ℝ) / ((boxFinsetBK d n).card : ℝ) := by
+    filter_upwards [eventually_ge_atTop 1] with n hn
+    rw [le_div_iff₀ (hvolr n)]; linarith [hkeyr n hn]
+  have hpr0 : pr ≤ 0 := le_of_tendsto_of_tendsto tendsto_const_nhds hdens hle
+  have hpreq : pr = 0 := le_antisymm hpr0 hprnn
+  have hptoreal : p.toReal = 0 := by rw [← hpr]; exact hpreq
+  have : p = 0 := (ENNReal.toReal_eq_zero_iff p).mp hptoreal |>.resolve_right hpfin
+  rw [hp] at this; exact this
+
+
+theorem tfc_numInfiniteClusters_ae_const_ne_top
+    (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ]
+    (herg : IsErgodic (G := Multiplicative (Site d)) μ)
+    (bdry : ℕ → ℕ)
+    (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → Tcount d ω n ≤ bdry n)
+    (hvol : ∀ n, 0 < (boxFinsetBK d n).card)
+    (hdens : Tendsto (fun n => (bdry n : ℝ) / ((boxFinsetBK d n).card : ℝ)) atTop (𝓝 0))
+    (htrif : 0 < μ {ω | numInfiniteClusters d ω = ⊤} →
+      0 < μ {ω | IsTrifurcation d ω 0}) :
+    ∃ k : ℕ∞, k ≠ ⊤ ∧ μ {ω | numInfiniteClusters d ω = k} = 1 := by
+  have htri0 : μ {ω | IsTrifurcation d ω 0} = 0 :=
+    tfc_trifurcation_prob_eq_zero μ herg.isTranslationInvariant bdry hbound hvol hdens
+  have htop0 : μ {ω | numInfiniteClusters d ω = ⊤} = 0 := by
+    by_contra h
+    have hpos : 0 < μ {ω | numInfiniteClusters d ω = ⊤} := pos_iff_ne_zero.mpr h
+    have := htrif hpos
+    rw [htri0] at this
+    exact (lt_irrefl 0) this
+  obtain ⟨k, hk⟩ := numInfiniteClusters_ae_const_uniqueness μ herg
+  refine ⟨k, ?_, hk⟩
+  intro hktop
+  rw [hktop] at hk
+  rw [hk] at htop0
+  exact one_ne_zero htop0
+
+
+theorem tfc_burton_keane_uniqueness_full
+    (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ]
+    (herg : IsErgodic (G := Multiplicative (Site d)) μ)
+    (hfe : HasFiniteEnergyMerge μ)
+    (bdry : ℕ → ℕ)
+    (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → Tcount d ω n ≤ bdry n)
+    (hvol : ∀ n, 0 < (boxFinsetBK d n).card)
+    (hdens : Tendsto (fun n => (bdry n : ℝ) / ((boxFinsetBK d n).card : ℝ)) atTop (𝓝 0))
+    (htrif : 0 < μ {ω | numInfiniteClusters d ω = ⊤} →
+      0 < μ {ω | IsTrifurcation d ω 0}) :
+    (μ {ω | numInfiniteClusters d ω = 0} = 1 ∨ μ {ω | numInfiniteClusters d ω = 1} = 1)
+      ∧ μ (atLeastTwoInfinite d) = 0
+      ∧ μ {ω | numInfiniteClusters d ω ≤ 1} = 1 := by
+  
+  have hkne_top : ∀ k : ℕ∞, μ {ω | numInfiniteClusters d ω = k} = 1 → k ≠ ⊤ := by
+    intro k hk
+    obtain ⟨k', hk'top, hk'⟩ :=
+      tfc_numInfiniteClusters_ae_const_ne_top μ herg bdry hbound hvol hdens htrif
+    intro hktop
+    have hsub : {ω | numInfiniteClusters d ω = k} ⊆ {ω | numInfiniteClusters d ω = k'}ᶜ := by
+      intro ω hω
+      simp only [Set.mem_setOf_eq] at hω
+      simp only [Set.mem_compl_iff, Set.mem_setOf_eq, hω]
+      intro h; exact hk'top (by rw [← h, hktop])
+    have hmk' : MeasurableSet {ω : ConfigSpace (Sym2 (Site d)) | numInfiniteClusters d ω = k'} := by
+      have heq : {ω : ConfigSpace (Sym2 (Site d)) | numInfiniteClusters d ω = k'}
+          = numInfiniteClusters d ⁻¹' {k'} := by ext ω; simp [Set.mem_preimage]
+      rw [heq]; exact measurable_numInfiniteClusters (MeasurableSet.of_discrete)
+    have hfull : μ {ω | numInfiniteClusters d ω = k'}ᶜ = 1 :=
+      le_antisymm prob_le_one (hk ▸ measure_mono hsub)
+    have hnull : μ {ω | numInfiniteClusters d ω = k'} = 0 :=
+      (prob_compl_eq_one_iff hmk').mp hfull
+    rw [hk'] at hnull
+    exact one_ne_zero hnull
+  have hmerge : μ (atLeastTwoInfinite d) = 0 :=
+    merge_event_null μ herg hfe hkne_top
+      (fun k hk2 hktop hk => hmergeGeom_discharged μ k hk2 hktop hk)
+  exact ⟨numInfiniteClusters_zero_or_one μ herg hmerge, hmerge,
+    infiniteCluster_unique_ae μ herg hmerge⟩
+
+
+theorem tfc_burton_keane_bernoulli (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+    (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
+      tfc_DistinctArmEnds ω n)
+    (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
+          {ω | numInfiniteClusters d ω = ⊤} →
+        0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
+          {ω | IsTrifurcation d ω 0}) :
+    (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
+        {ω | numInfiniteClusters d ω = 0} = 1 ∨
+      bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
+        {ω | numInfiniteClusters d ω = 1} = 1)
+      ∧ bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (atLeastTwoInfinite d) = 0
+      ∧ bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
+          {ω | numInfiniteClusters d ω ≤ 1} = 1 :=
+  tfc_burton_keane_uniqueness_full (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1)
+    (bkc_bernoulli_isErgodic hd p hp1)
+    (bkc_bernoulli_hasFiniteEnergyMerge p hp1 hp0)
+    (fun n => boxSV_boundaryCard d n)
+    (fun ω n hn => tfc_Tcount_le_boundary_of_distinctArmEnds ω n (hres ω n hn))
+    (fun n => bkc_boxFinsetBK_card_pos d n)
+    (bkc_boundary_vol_tendsto d hd)
+    htrif
+
+end Percolation
+end StatMech

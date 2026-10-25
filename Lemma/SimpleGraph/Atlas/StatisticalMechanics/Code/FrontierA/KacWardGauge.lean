@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardGauge
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardGauge
 open StatMech StatMech.FrontierA
 
 

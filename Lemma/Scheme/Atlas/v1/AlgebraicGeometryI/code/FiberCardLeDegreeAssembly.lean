@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.FiberCardLeDegreeAssembly
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.FiberCardLeDegreeAssembly
 open Module Ideal Polynomial FiberDegreeBound
 open scoped Classical
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.PrincipalIdele
+import Theorem.NumberTheory.NumberField.PrincipalIdele
 open NumberField.TopologicalIdeleGroup
 
 

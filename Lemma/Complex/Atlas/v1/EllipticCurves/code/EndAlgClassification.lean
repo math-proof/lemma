@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.EndAlgClassification
+import Inductive.v1.Atlas.EllipticCurves.code.EndAlgClassification
 open Module PositiveDefiniteInvolutionAlgebra in
 open scoped Quaternion TensorProduct
 open PositiveDefiniteInvolutionAlgebra

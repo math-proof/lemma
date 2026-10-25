@@ -1,0 +1,58 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/GlobalCFT.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Def.v1.Atlas.NumberTheoryI.code.RayClassFields.Part28
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.RayClassFields
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ideles
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.IdeleNorm
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor227
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22NormGroup
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Prop2219
+import Def.v1.Atlas.NumberTheoryI.code.Ideles.Part3
+import Def.v1.Atlas.NumberTheoryI.code.IdeleNorm.Part4
+import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
+import Theorem.v1.Atlas.NumberTheoryI.code.Cor227.Part2
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Chapter3.FiniteApproximation
+import Theorem.v1.Atlas.NumberTheoryI.code.Ch22NormGroup.Part4
+import Def.v1.Atlas.NumberTheoryI.code.Prop2219.Part2
+import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalCFT
+
+
+noncomputable section
+
+open NumberField RayClassField Pointwise KroneckerWeber
+
+section ArtinSymbol
+
+universe v
+
+variable (K : Type v) (L : Type v) [Field K] [Field L]
+  [NumberField K] [NumberField L]
+  [Algebra K L] [IsGalois K L] [FiniteDimensional K L]
+
+def RayClassGroup.mapOfDvd {K : Type u} [Field K] [NumberField K]
+    {𝔪₁ 𝔪₂ : Modulus K} (h : Modulus.dvd 𝔪₁ 𝔪₂) :
+    RayClassGroup K 𝔪₂ →* RayClassGroup K 𝔪₁ :=
+  QuotientGroup.map (RayGroup K 𝔪₂) (RayGroup K 𝔪₁)
+    (FracIdealsCoprime.inclusion K 𝔪₁ 𝔪₂ h)
+    (fun x hx => RayGroup.inclusion_le K 𝔪₁ 𝔪₂ h x hx)
+
+def IsInducedBy (K : Type u) [Field K] [NumberField K]
+    (𝔪₁ 𝔪₂ : Modulus K) (h : Modulus.dvd 𝔪₁ 𝔪₂)
+    (χ₁ : RayClassCharacter K 𝔪₁) (χ₂ : RayClassCharacter K 𝔪₂) : Prop :=
+  χ₂ = χ₁.comp (RayClassGroup.mapOfDvd h)
+
+def kernelCongruenceSubgroup (K : Type u) [Field K] [NumberField K]
+    (𝔪 : Modulus K) (χ : RayClassCharacter K 𝔪) : Subgroup (FracIdealsCoprime K 𝔪) :=
+  Subgroup.comap (QuotientGroup.mk' (RayGroup K 𝔪)) (MonoidHom.ker χ)
+
+end ArtinSymbol
+end

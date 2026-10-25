@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.BourgainPerCoord
+import Theorem.StatisticalMechanics.Code.Probability.BourgainPerCoord.Part2
 open Finset Real StatMech StatMech.Probability
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.EuclideanTSP
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.EuclideanTSP
 open EuclideanTSP
 open scoped Classical
 

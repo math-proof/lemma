@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.Ergodicity
+import Theorem.StatisticalMechanics.Code.FK.Ergodicity
 open MeasureTheory ProbabilityTheory MeasurableSpace StatMech StatMech.FK
 
 

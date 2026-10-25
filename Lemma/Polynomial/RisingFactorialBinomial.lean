@@ -1,10 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.polynomial.rising_factorial_binomial
-
+import Theorem.Algebra.Polynomial.RisingFactorialBinomial
 open MetaMathlibExt
 open scoped BigOperators
-
 
 namespace MetaMathlibExt
 
@@ -137,7 +135,6 @@ lemma ascPochhammer_eval_add
     ring
 
 end MetaMathlibExt
-
 
 -- created on 2026-10-09
 -- updated on 2026-10-23

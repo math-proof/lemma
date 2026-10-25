@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicSubgroups
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicSubgroups
 open Function Set CoxeterSystem
 open CoxeterMatrix
 

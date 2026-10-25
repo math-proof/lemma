@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.RegularConditionalDistribution
+import Structure.v1.Atlas.TheoryOfProbability.code.RegularConditionalDistribution
 open MeasureTheory ProbabilityTheory MeasureTheory.Measure
 
 

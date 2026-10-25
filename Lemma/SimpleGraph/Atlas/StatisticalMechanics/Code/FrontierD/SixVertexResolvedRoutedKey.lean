@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexResolvedRoutedKey
+import Abbrev.StatisticalMechanics.Code.FrontierD.SixVertexResolvedRoutedKey
 open StatMech StatMech.FrontierD
 
 

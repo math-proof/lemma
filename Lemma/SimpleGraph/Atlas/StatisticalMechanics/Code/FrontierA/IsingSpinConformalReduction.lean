@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSpinConformalReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSpinConformalReduction
 open BoundedContinuousFunction Filter MeasureTheory Topology StatMech StatMech.FrontierA
 
 

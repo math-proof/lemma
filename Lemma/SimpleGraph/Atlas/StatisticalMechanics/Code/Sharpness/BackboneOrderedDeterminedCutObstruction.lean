@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneOrderedDeterminedCutObstruction
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneOrderedDeterminedCutObstruction
 open Finset StatMech StatMech.Sharpness
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.AizenmanTrueBackbone
+import Theorem.StatisticalMechanics.Code.Ising.AizenmanTrueBackbone.Part2
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Ising
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RepresentationTheory.Homological.TateCohomology.HerbrandQuotient
+import Def.RepresentationTheory.Homological.TateCohomology.HerbrandQuotient.Part2
 open CategoryTheory
 open TateCohomology
 

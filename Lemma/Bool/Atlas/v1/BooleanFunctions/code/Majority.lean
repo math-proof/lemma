@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Claim21Lec10
+import Def.v1.Atlas.BooleanFunctions.code.Claim21Lec10
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Claim21Lec10
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.DisagreementStability
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.DisagreementStability
+import Def.v1.Atlas.BooleanFunctions.code.DisagreementStability
 open Finset BigOperators Real Filter
 
 

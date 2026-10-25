@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rmr_topkey
+import Theorem.StatisticalMechanics.Code.Walls.rmr_topkey.Part2
 open Finset StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.SelbergExpansion
+import Def.v1.Atlas.ProjectionTheory.code.SelbergExpansion.Part2
 open Matrix Finset BigOperators SelbergExpansion
 
 

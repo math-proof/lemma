@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.ECM
+import Def.v1.Atlas.EllipticCurves.code.ECM.Part3
 open Nat Finset
 
 

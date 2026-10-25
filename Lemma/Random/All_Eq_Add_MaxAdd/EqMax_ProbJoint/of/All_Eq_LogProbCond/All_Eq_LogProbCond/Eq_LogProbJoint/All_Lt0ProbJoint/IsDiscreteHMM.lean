@@ -1,5 +1,5 @@
 import Lemma.Random.IsHiddenMarkovPr.of.CondIndep.CondIndep
-import sympy.concrete.max
+import Macro.Order.Max
 import Lemma.Finset.Max.eq.SupUniv
 import Lemma.Fin.IteSnoc.eq.Ite.of.Le
 import Lemma.Fin.Snoc_Last.eq.Last

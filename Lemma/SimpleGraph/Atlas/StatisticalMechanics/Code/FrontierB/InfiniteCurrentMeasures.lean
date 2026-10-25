@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.InfiniteCurrentMeasures
+import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentMeasures
 open Filter MeasureTheory StatMech StatMech.FrontierB
 
 

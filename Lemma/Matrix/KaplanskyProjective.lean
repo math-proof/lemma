@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.module.kaplansky_projective
-
+import Theorem.Algebra.Module.KaplanskyProjective
 open Kaplansky
 
 /--
@@ -18,7 +17,6 @@ private lemma projective_of_retract
 -- proof
   apply kap_projective_of_retract N f hmem hid
 
-
 /--
 [kap_isUnit_det_of_sub_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
 -/
@@ -34,7 +32,6 @@ private lemma isUnit_det_of_sub_one
 -- proof
   apply kap_isUnit_det_of_sub_one A h
 
-
 /--
 [kap_isCompl_sup_map](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
 -/
@@ -49,7 +46,6 @@ private lemma isCompl_sup_map
 -- proof
   apply kap_isCompl_sup_map A D h B E hBE
 
-
 /--
 [kap_exists_countable_closed](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
 -/
@@ -62,7 +58,6 @@ private lemma exists_countable_closed
   ∃ J₁ : Set M, J₁.Countable ∧ m ∈ J₁ ∧ ∀ p ∈ J₁, ↑(s p).support ⊆ J₁ := by
 -- proof
   apply kap_exists_countable_closed s m
-
 
 /--
 [kap_content_ideal_facts](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
@@ -81,7 +76,6 @@ private lemma content_ideal_facts
 -- proof
   apply kap_content_ideal_facts s hs x
 
-
 /--
 [kap_exists_minimal_span](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
 -/
@@ -96,7 +90,6 @@ private lemma exists_minimal_span
     ∀ r : M' → R, (∑ a ∈ S, r a • a = 0) → ∀ a ∈ S, r a ∈ IsLocalRing.maximalIdeal R := by
 -- proof
   apply kap_exists_minimal_span N hN
-
 
 /--
 [kap_free_summand_of_pairing](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
@@ -114,7 +107,6 @@ private lemma free_summand_of_pairing
 -- proof
   apply kap_free_summand_of_pairing z ψ h
 
-
 /--
 [kap_exists_free_summand_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
 -/
@@ -128,7 +120,6 @@ private lemma exists_free_summand_mem
     ∧ x ∈ Submodule.span R u := by
 -- proof
   apply kap_exists_free_summand_mem x
-
 
 /--
 [kap_kapProj_facts](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
@@ -146,7 +137,6 @@ private lemma kapProj_facts
 -- proof
   apply kap_kapProj_facts s hs J
 
-
 /--
 [kap_extend_free_summand](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
 -/
@@ -163,7 +153,6 @@ private lemma extend_free_summand
 -- proof
   apply kap_extend_free_summand u hli D hD x
 
-
 /--
 [kap_free_of_projective_of_countable_span](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
 -/
@@ -177,7 +166,6 @@ private lemma free_of_projective_of_countable_span
   Module.Free R M := by
 -- proof
   apply kap_free_of_projective_of_countable_span g hgcount hgspan
-
 
 /--
 [kap_exists_basis_of_countable_span](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
@@ -193,7 +181,6 @@ private lemma exists_basis_of_countable_span
   ∃ c : Set M, LinearIndepOn R id c ∧ Submodule.span R c = N := by
 -- proof
   apply kap_exists_basis_of_countable_span N T hTcount hTspan
-
 
 /--
 [kap_closed_complement_facts](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
@@ -216,7 +203,6 @@ private lemma closed_complement_facts
 -- proof
   apply kap_closed_complement_facts s hs J J₁ hJ hJ₁
 
-
 /--
 [kap_extend_closed_pair](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
 -/
@@ -236,7 +222,6 @@ private lemma extend_closed_pair
 -- proof
   apply kap_extend_closed_pair s hs J b hJ hb hbspan m
 
-
 /--
 [kap_projective_local_free_aux](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
 -/
@@ -248,7 +233,6 @@ private lemma projective_local_free_aux
 -- proof
   apply kap_projective_local_free_aux
 
-
 /--
 [kaplansky_projective_local_free](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/KaplanskyProjective.lean)
 -/
@@ -259,6 +243,5 @@ private lemma projective_local_free
   Module.Free R M := by
 -- proof
   apply kaplansky_projective_local_free
-
 
 -- created on 2026-10-09

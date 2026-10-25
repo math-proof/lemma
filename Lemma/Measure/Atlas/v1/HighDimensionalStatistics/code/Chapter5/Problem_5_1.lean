@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_1
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_1
 open Real
 
 

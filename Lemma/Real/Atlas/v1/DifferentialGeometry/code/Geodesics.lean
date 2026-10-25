@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialGeometry.code.Geodesics
+import Class.v1.Atlas.DifferentialGeometry.code.Geodesics
 open MeasureTheory intervalIntegral Hypersurface Finset Geodesics
 open scoped InnerProductSpace BigOperators
 

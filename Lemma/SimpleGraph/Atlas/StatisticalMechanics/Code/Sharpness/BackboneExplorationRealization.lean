@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneExplorationRealization
+import Def.StatisticalMechanics.Code.Sharpness.BackboneExplorationRealization.Part12
 open SimpleGraph Finset StatMech StatMech.Sharpness StatMech.Sharpness.shb_BackboneExplorationDomain
 
 

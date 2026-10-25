@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.OffCentreDomination
+import Theorem.StatisticalMechanics.Code.FK.OffCentreDomination.Part13
 open MeasureTheory Filter Topology SimpleGraph Set StatMech StatMech.FK
 
 

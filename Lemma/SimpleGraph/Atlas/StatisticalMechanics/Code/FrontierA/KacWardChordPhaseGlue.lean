@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardChordPhaseGlue
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardChordPhaseGlue.Part2
 open StatMech StatMech.FrontierA
 
 

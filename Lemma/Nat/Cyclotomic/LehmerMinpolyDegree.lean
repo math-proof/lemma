@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Cyclotomic.RealCyclotomicPolynomial
+import Def.NumberTheory.Cyclotomic.RealCyclotomicPolynomial
 
 
 namespace MetaMathlibExt

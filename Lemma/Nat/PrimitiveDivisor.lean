@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimitiveDivisor
+import Def.NumberTheory.PrimitiveDivisor
 open IntegerSequence
 
 

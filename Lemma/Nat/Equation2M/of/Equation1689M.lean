@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Misc.equational
+import Theorem.Analysis.Misc.equational
 
 
 /--

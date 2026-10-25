@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.cstar_algebra.GNSCyclicVector
+import Theorem.Analysis.CStarAlgebra.GNSCyclicVector
 
 open scoped InnerProductSpace ComplexOrder
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Cor1015IntegralClosureDVR
+import Theorem.v1.Atlas.NumberTheoryI.code.Cor1015IntegralClosureDVR
 open IsLocalRing
 
 

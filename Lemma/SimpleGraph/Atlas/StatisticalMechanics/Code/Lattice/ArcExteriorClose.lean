@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.ArcExteriorClose
+import Theorem.StatisticalMechanics.Code.Lattice.ArcExteriorClose.Part3
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

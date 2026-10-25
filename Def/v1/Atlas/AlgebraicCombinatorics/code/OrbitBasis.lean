@@ -1,0 +1,37 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/OrbitBasis.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Mathlib.GroupTheory.GroupAction.Basic
+import Mathlib.LinearAlgebra.Basis.VectorSpace
+import Mathlib.Data.Finsupp.Basic
+import Mathlib.Data.Finsupp.SMul
+import Mathlib.Data.Real.Basic
+import Mathlib.GroupTheory.GroupAction.Quotient
+set_option autoImplicit false
+
+
+noncomputable section
+
+open scoped Classical
+
+open Finset Finsupp MulAction Function Module
+
+namespace OrbitBasis
+
+variable (G : Type*) [Group G] (α : Type*) [Fintype α] [DecidableEq α] [MulAction G α]
+
+attribute [local instance] Finsupp.comapSMul Finsupp.comapMulAction
+  Finsupp.comapDistribMulAction
+
+def rep (O : orbitRel.Quotient G α) : α :=
+  (orbitRel.Quotient.nonempty_orbit O).choose
+
+end OrbitBasis
+end

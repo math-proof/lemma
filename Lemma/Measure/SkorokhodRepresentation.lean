@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.SkorokhodRepresentation
+import Def.Probability.SkorokhodRepresentation
 open MeasureTheory
 open scoped ENNReal NNReal
 open MathlibExt.Probability.SkorokhodRepresentationWanted

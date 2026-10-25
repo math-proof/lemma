@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.Pitt
+import Theorem.Analysis.NormedSpace.Pitt.Part2
 
 /--
 [Pitt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/Pitt.lean)

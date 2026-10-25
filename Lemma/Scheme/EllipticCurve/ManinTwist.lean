@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.AlgebraicGeometry.EllipticCurve.ManinTwist
+import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwist.Part15
 open Polynomial
 open MathlibExt.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
 open MathlibExt.AlgebraicGeometry.EllipticCurve.ManinTwist

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.PicardGroup
+import Def.v1.Atlas.ArithmeticGeometry.code.PicardGroup
 open Theorem19_14
 open CurveWithOrd CurveWithConstants
 

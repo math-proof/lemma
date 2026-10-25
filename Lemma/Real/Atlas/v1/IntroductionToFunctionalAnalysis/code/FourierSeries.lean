@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToFunctionalAnalysis.code.FourierSeries
+import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.FourierSeries
 open MeasureTheory AddCircle Finset Filter Complex FourierSeries
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.GibbsChoquet
+import Theorem.StatisticalMechanics.Code.Ising.GibbsChoquet.Part2
 open MeasureTheory ProbabilityTheory MeasurableSpace Set StatMech StatMech.Ising
 
 

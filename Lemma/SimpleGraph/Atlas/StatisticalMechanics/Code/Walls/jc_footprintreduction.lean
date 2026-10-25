@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc_footprintreduction
+import Theorem.StatisticalMechanics.Code.Walls.jc_footprintreduction
 open SimpleGraph Function Set StatMech StatMech.Walls
 
 

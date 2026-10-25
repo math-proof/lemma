@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicReflectionEstimates
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicReflectionEstimates.Part13
 open StatMech StatMech.Universality StatMech.Universality.IsingDiagonalWalkHitSplit
 
 

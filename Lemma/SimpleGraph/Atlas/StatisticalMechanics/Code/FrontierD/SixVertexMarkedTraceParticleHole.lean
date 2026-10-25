@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexMarkedTraceParticleHole
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedTraceParticleHole
 open Finset Matrix StatMech StatMech.FrontierD
 
 

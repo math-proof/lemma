@@ -1,5 +1,5 @@
 import sympy.Basic
-import sympy.concrete.expr_with_limits
+import Macro.Order.ExprWithLimits
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.Basic.Finite.Prod
 import Mathlib.Data.Fintype.Lattice

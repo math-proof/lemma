@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.NontrivialAssembly
+import Theorem.StatisticalMechanics.Code.Sharpness.NontrivialAssembly
 open StatMech StatMech.Sharpness
 
 

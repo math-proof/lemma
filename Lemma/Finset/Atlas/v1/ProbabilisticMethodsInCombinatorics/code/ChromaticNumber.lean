@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.ChromaticNumber
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.ChromaticNumber
 open ChromaticNumber
 open Finset Real Filter Nat Classical
 

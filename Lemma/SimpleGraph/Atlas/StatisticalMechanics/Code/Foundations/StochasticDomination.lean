@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.StochasticDomination
+import Theorem.StatisticalMechanics.Code.Foundations.StochasticDomination
 open MeasureTheory StatMech
 
 

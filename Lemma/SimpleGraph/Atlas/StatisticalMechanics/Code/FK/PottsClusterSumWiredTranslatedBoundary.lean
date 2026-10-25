@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PottsClusterSumWiredTranslatedBoundary
+import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumWiredTranslatedBoundary.Part6
 open Filter MeasureTheory Set SimpleGraph Topology StatMech StatMech.FK
 
 

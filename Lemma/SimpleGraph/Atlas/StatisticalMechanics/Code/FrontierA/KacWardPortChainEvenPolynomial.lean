@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardPortChainEvenPolynomial
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainEvenPolynomial.Part11
 open StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PottsClusterSumFactor
+import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumFactor.Part10
 open MeasureTheory Set StatMech StatMech.FK
 
 

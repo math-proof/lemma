@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Policy.BoundaryPowerGeometry
-import sympy.atlas.CPythonListsort.Code.Equivalence.PowerloopResults
-import sympy.atlas.CPythonListsort.Code.Transcription.FoundNewRun
+import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
+import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
+import Theorem.CPythonListsort.Code.Transcription.FoundNewRun
 
 
 namespace CPythonListsort

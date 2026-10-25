@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopTwoPointAudit
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopTwoPointAudit
 open Finset StatMech StatMech.Onsager
 
 

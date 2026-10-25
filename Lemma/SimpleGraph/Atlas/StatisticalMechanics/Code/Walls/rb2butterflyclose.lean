@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rb2butterflyclose
+import Theorem.StatisticalMechanics.Code.Walls.rb2butterflyclose.Part6
 open Finset StatMech StatMech.Walls StatMech.Walls.Reimer
 
 

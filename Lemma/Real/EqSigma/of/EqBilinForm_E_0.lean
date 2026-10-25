@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelation
+import Structure.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelation
 open Finset BigOperators CoxeterGroup
 
 

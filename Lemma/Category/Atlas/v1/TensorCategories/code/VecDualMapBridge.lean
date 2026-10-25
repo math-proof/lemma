@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.VecDualMapBridge
+import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
 open CategoryTheory MonoidalCategory Module
 
 

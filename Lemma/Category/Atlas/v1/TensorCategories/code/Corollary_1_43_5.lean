@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.MfStarAlgebra
+import Def.v1.Atlas.TensorCategories.code.MfStarAlgebra.Part3
 import Lemma.Category.Atlas.v1.TensorCategories.code.MfStarAlgebra
 
 

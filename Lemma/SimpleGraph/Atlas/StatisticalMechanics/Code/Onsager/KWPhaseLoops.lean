@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.KWPhaseLoops
+import Theorem.StatisticalMechanics.Code.Onsager.KWPhaseLoops
 open StatMech StatMech.Onsager
 
 

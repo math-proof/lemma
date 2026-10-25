@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.LongRectangleTranslationClosure
+import Theorem.StatisticalMechanics.Code.BeffaraDC.LongRectangleTranslationClosure.Part9
 open MeasureTheory SimpleGraph Set StatMech StatMech.BeffaraDC
 
 

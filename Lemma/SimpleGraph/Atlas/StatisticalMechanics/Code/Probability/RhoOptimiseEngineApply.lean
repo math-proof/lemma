@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.RhoOptimiseEngineApply
+import Theorem.StatisticalMechanics.Code.Probability.RhoOptimiseEngineApply
 open Finset Real Filter Topology StatMech StatMech.Probability
 
 

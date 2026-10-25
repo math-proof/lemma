@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.module.quillen_suslin
-
+import Theorem.Algebra.Module.QuillenSuslin.Part11
 open QuillenSuslin
 
 /--
@@ -20,7 +19,6 @@ private lemma divByMonic_mul_monic
 -- proof
   apply qs_divByMonic_mul_monic a hb hd
 
-
 /--
 [qs_divByMonic_eq_of_localization_rel](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -37,7 +35,6 @@ private lemma divByMonic_eq_of_localization_rel
 -- proof
   apply qs_divByMonic_eq_of_localization_rel h
 
-
 /--
 [qsPolynomialPartFun_mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -52,7 +49,6 @@ private lemma polynomialPartFun_mk
 -- proof
   apply qsPolynomialPartFun_mk a b
 
-
 /--
 [qsPolynomialPartFun_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -65,7 +61,6 @@ private lemma polynomialPartFun_add
   qsPolynomialPartFun (x + y) = qsPolynomialPartFun x + qsPolynomialPartFun y := by
 -- proof
   apply qsPolynomialPartFun_add x y
-
 
 /--
 [qsPolynomialPartFun_smul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -81,7 +76,6 @@ private lemma polynomialPartFun_smul
 -- proof
   apply qsPolynomialPartFun_smul r x
 
-
 /--
 [qsPolynomialPart_algebraMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -94,7 +88,6 @@ private lemma polynomialPart_algebraMap
   qsPolynomialPart R (algebraMap (Polynomial R) (Localization (qsMonicSubmonoid R)) p) = p := by
 -- proof
   apply qsPolynomialPart_algebraMap p
-
 
 /--
 [qs_exists_monic_lift](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -112,7 +105,6 @@ private lemma exists_monic_lift
 -- proof
   apply qs_exists_monic_lift f hf hp
 
-
 /--
 [qs_map_monicSubmonoid_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -127,7 +119,6 @@ private lemma map_monicSubmonoid_eq
 -- proof
   apply qs_map_monicSubmonoid_eq f hf
 
-
 /--
 [qs_monicLocalization_isFractionRing](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -138,7 +129,6 @@ private lemma monicLocalization_isFractionRing
   IsFractionRing (Polynomial k) (Localization (qsMonicSubmonoid k)) := by
 -- proof
   apply qs_monicLocalization_isFractionRing k
-
 
 /--
 [qs_nonzero_polynomial_maps_to_unit](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -155,7 +145,6 @@ private lemma nonzero_polynomial_maps_to_unit
 -- proof
   apply qs_nonzero_polynomial_maps_to_unit f hp
 
-
 /--
 [qsFractionToMonicLocalization_algebraMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -169,7 +158,6 @@ private lemma fractionToMonicLocalization_algebraMap
   qsFractionToMonicLocalization k A f (algebraMap (Polynomial k) (FractionRing (Polynomial k)) p) = algebraMap (Polynomial A) (Localization (qsMonicSubmonoid A)) (p.map f) := by
 -- proof
   apply qsFractionToMonicLocalization_algebraMap k A f p
-
 
 /--
 [qs_genericSpecialization_comp_genericMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -185,7 +173,6 @@ private lemma genericSpecialization_comp_genericMap
 -- proof
   apply qs_genericSpecialization_comp_genericMap k n A f
 
-
 /--
 [qsResidueMonicMap_algebraMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -198,7 +185,6 @@ private lemma residueMonicMap_algebraMap
   qsResidueMonicMap R (algebraMap (Polynomial R) (Localization (qsMonicSubmonoid R)) p) = algebraMap (Polynomial (IsLocalRing.ResidueField R)) (Localization (qsMonicSubmonoid (IsLocalRing.ResidueField R))) (p.map (IsLocalRing.residue R)) := by
 -- proof
   apply qsResidueMonicMap_algebraMap R p
-
 
 /--
 [qsResidueMonicMap_mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -214,7 +200,6 @@ private lemma residueMonicMap_mk
 -- proof
   apply qsResidueMonicMap_mk R p s
 
-
 /--
 [qsPolynomialPart_map_residue](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -227,7 +212,6 @@ private lemma polynomialPart_map_residue
   (qsPolynomialPart R z).map (IsLocalRing.residue R) = qsPolynomialPart (IsLocalRing.ResidueField R) (qsResidueMonicMap R z) := by
 -- proof
   apply qsPolynomialPart_map_residue R z
-
 
 /--
 [qsMatrixPolynomialPart_transpose](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -242,7 +226,6 @@ private lemma matrixPolynomialPart_transpose
 -- proof
   apply qsMatrixPolynomialPart_transpose R A
 
-
 /--
 [qsMatrixPolynomialPart_algebraMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -255,7 +238,6 @@ private lemma matrixPolynomialPart_algebraMap
   qsMatrixPolynomialPart R (A.map (algebraMap (Polynomial R) (Localization (qsMonicSubmonoid R)))) = A := by
 -- proof
   apply qsMatrixPolynomialPart_algebraMap A
-
 
 /--
 [qsMatrixPolynomialPart_map_residue](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -274,7 +256,6 @@ private lemma matrixPolynomialPart_map_residue
 -- proof
   apply qsMatrixPolynomialPart_map_residue R A C hAC
 
-
 /--
 [qsPolynomialPart_mul_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -290,7 +271,6 @@ private lemma polynomialPart_mul_eq_zero
 -- proof
   apply qsPolynomialPart_mul_eq_zero hx hy
 
-
 /--
 [qs_isUnit_one_add_of_polynomialPart_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -305,7 +285,6 @@ private lemma isUnit_one_add_of_polynomialPart_eq_zero
 -- proof
   apply qs_isUnit_one_add_of_polynomialPart_eq_zero z hz
 
-
 /--
 [qsPolynomialPart_C_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -319,7 +298,6 @@ private lemma polynomialPart_C_mul
   qsPolynomialPart R (algebraMap (Polynomial R) (Localization (qsMonicSubmonoid R)) (Polynomial.C r) * z) = r • qsPolynomialPart R z := by
 -- proof
   apply qsPolynomialPart_C_mul r z
-
 
 /--
 [qsPolynomialPart_mul_of_constant_parts](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -338,7 +316,6 @@ private lemma polynomialPart_mul_of_constant_parts
 -- proof
   apply qsPolynomialPart_mul_of_constant_parts hx hy
 
-
 /--
 [qsPolynomialPart_prod_of_constant_parts](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -355,7 +332,6 @@ private lemma polynomialPart_prod_of_constant_parts
 -- proof
   apply qsPolynomialPart_prod_of_constant_parts t f g h
 
-
 /--
 [qsPolynomialPart_det_of_constant_parts](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -370,7 +346,6 @@ private lemma polynomialPart_det_of_constant_parts
   qsPolynomialPart R H.det = Polynomial.C M.det := by
 -- proof
   apply qsPolynomialPart_det_of_constant_parts H M h
-
 
 /--
 [qs_isUnit_det_of_matrixPolynomialPart_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -387,7 +362,6 @@ private lemma isUnit_det_of_matrixPolynomialPart_eq_one
 -- proof
   apply qs_isUnit_det_of_matrixPolynomialPart_eq_one H hH
 
-
 /--
 [qsHorrocksMap_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -402,7 +376,6 @@ private lemma horrocksMap_apply
 -- proof
   apply qsHorrocksMap_apply R A F
 
-
 /--
 [qs_exists_monic_matrix_multiple](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -415,7 +388,6 @@ private lemma exists_monic_matrix_multiple
   ∃ h : Polynomial R, h.Monic ∧ ∃ B₀ : Matrix ι κ (Polynomial R), B₀.map (algebraMap (Polynomial R) (Localization (qsMonicSubmonoid R))) = (algebraMap (Polynomial R) (Localization (qsMonicSubmonoid R)) h) • B := by
 -- proof
   apply qs_exists_monic_matrix_multiple R B
-
 
 /--
 [qs_horrocks_multiple_mem_range](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -439,7 +411,6 @@ private lemma horrocks_multiple_mem_range
 -- proof
   apply qs_horrocks_multiple_mem_range R A B hBA h B₀ hB₀ G
 
-
 /--
 [qs_matrix_mem_maximal_smul_of_map_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -453,7 +424,6 @@ private lemma matrix_mem_maximal_smul_of_map_eq_zero
   P ∈ IsLocalRing.maximalIdeal R • (⊤ : Submodule R (Matrix ι κ (Polynomial R))) := by
 -- proof
   apply qs_matrix_mem_maximal_smul_of_map_eq_zero R P hP
-
 
 /--
 [qs_quotient_finite_of_monic_smul_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -470,7 +440,6 @@ private lemma quotient_finite_of_monic_smul_mem
   Module.Finite R (Matrix κ κ (Polynomial R) ⧸ N) := by
 -- proof
   apply qs_quotient_finite_of_monic_smul_mem R N h hh hN
-
 
 /--
 [qs_horrocks_range_sup_maximal_eq_top](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -495,7 +464,6 @@ private lemma horrocks_range_sup_maximal_eq_top
 -- proof
   apply qs_horrocks_range_sup_maximal_eq_top R A B hBA hA hB
 
-
 /--
 [qs_horrocks_map_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -519,7 +487,6 @@ private lemma horrocks_map_surjective
 -- proof
   apply qs_horrocks_map_surjective R A B hBA hA hB
 
-
 /--
 [qs_lift_invertible_matrix](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -536,7 +503,6 @@ private lemma lift_invertible_matrix
 -- proof
   apply qs_lift_invertible_matrix f hlift M hM
 
-
 /--
 [qsResidueMonicMap_lifts_unit](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -550,7 +516,6 @@ private lemma residueMonicMap_lifts_unit
   ∃ u : (Localization (qsMonicSubmonoid R))ˣ, qsResidueMonicMap R u = z := by
 -- proof
   apply qsResidueMonicMap_lifts_unit R z hz
-
 
 /--
 [qs_lift_residue_invertible_matrix](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -567,7 +532,6 @@ private lemma lift_residue_invertible_matrix
 -- proof
   apply qs_lift_residue_invertible_matrix R M hM
 
-
 /--
 [qsMatrixEquiv.refl](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -582,7 +546,6 @@ private lemma matrixEquiv_refl
 -- proof
   apply qsMatrixEquiv.refl hE
 
-
 /--
 [qsShear_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -593,7 +556,6 @@ private lemma shear_zero
   qsShear (0 : R) = (Polynomial.C : Polynomial R →+* Polynomial (Polynomial R)) := by
 -- proof
   apply qsShear_zero
-
 
 /--
 [qsShiftX_comp_shear](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -608,7 +570,6 @@ private lemma shiftX_comp_shear
 -- proof
   apply qsShiftX_comp_shear j j'
 
-
 /--
 [qsShiftX_comp_C](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -621,7 +582,6 @@ private lemma shiftX_comp_C
   (qsShiftX j).comp (Polynomial.C : Polynomial R →+* Polynomial (Polynomial R)) = qsShear j := by
 -- proof
   apply qsShiftX_comp_C j
-
 
 /--
 [qsScaleY_comp_shear](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -636,7 +596,6 @@ private lemma scaleY_comp_shear
 -- proof
   apply qsScaleY_comp_shear r j
 
-
 /--
 [qsScaleY_comp_C](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -649,7 +608,6 @@ private lemma scaleY_comp_C
   (qsScaleY r).comp (Polynomial.C : Polynomial R →+* Polynomial (Polynomial R)) = (Polynomial.C : Polynomial R →+* Polynomial (Polynomial R)) := by
 -- proof
   apply qsScaleY_comp_C r
-
 
 /--
 [qs_scale_shear_map](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -665,7 +623,6 @@ private lemma scale_shear_map
 -- proof
   apply qs_scale_shear_map f r
 
-
 /--
 [qsEvalXY_comp_shear_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -677,7 +634,6 @@ private lemma evalXY_comp_shear_one
 -- proof
   apply qsEvalXY_comp_shear_one
 
-
 /--
 [qsEvalXY_comp_C](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -688,7 +644,6 @@ private lemma evalXY_comp_C
   (qsEvalXY : Polynomial (Polynomial R) →+* Polynomial R).comp Polynomial.C = qsConstantAtZero := by
 -- proof
   apply qsEvalXY_comp_C
-
 
 /--
 [qsMatrixEquiv.symm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -706,7 +661,6 @@ private lemma matrixEquiv_symm
 -- proof
   apply qsMatrixEquiv.symm h
 
-
 /--
 [qsMatrixEquiv.reindex_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -722,7 +676,6 @@ private lemma matrixEquiv_reindex_one
   qsMatrixEquiv E (1 : Matrix η η R) := by
 -- proof
   apply qsMatrixEquiv.reindex_one h e
-
 
 /--
 [qsMatrixEquiv.map](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -741,7 +694,6 @@ private lemma matrixEquiv_map
 -- proof
   apply qsMatrixEquiv.map h f
 
-
 /--
 [qs_transition_one_of_equal_after](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -759,7 +711,6 @@ private lemma transition_one_of_equal_after
   ∃ C D : Matrix i i S, C * D = E.map g₁ ∧ D * C = E.map g₂ ∧ C.map e = E.map (e.comp g₁) ∧ D.map e = E.map (e.comp g₁) := by
 -- proof
   apply qs_transition_one_of_equal_after h g₁ g₂ e he
-
 
 /--
 [qsMatrixEquiv.trans](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -781,7 +732,6 @@ private lemma matrixEquiv_trans
 -- proof
   apply qsMatrixEquiv.trans hEF hFG hE hG
 
-
 /--
 [qs_idempotent_map](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -797,7 +747,6 @@ private lemma idempotent_map
 -- proof
   apply qs_idempotent_map hE f
 
-
 /--
 [qs_patching_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -811,7 +760,6 @@ private lemma patching_zero
   qsMatrixEquiv (E.map (qsShear (0 : R))) (E.map (Polynomial.C : Polynomial R →+* Polynomial (Polynomial R))) := by
 -- proof
   apply qs_patching_zero hE
-
 
 /--
 [qs_patching_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -832,7 +780,6 @@ private lemma patching_add
 -- proof
   apply qs_patching_add hE hj hj'
 
-
 /--
 [qs_patching_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -850,7 +797,6 @@ private lemma patching_mul
 -- proof
   apply qs_patching_mul hj r
 
-
 /--
 [qs_exists_lifts_after_scale](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -867,7 +813,6 @@ private lemma exists_lifts_after_scale
 -- proof
   apply qs_exists_lifts_after_scale p hzero
 
-
 /--
 [qs_constantCoeff_comp_shear_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -879,7 +824,6 @@ private lemma constantCoeff_comp_shear_one
 -- proof
   apply qs_constantCoeff_comp_shear_one
 
-
 /--
 [qs_constantCoeff_comp_shear_one_eq_id](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -890,7 +834,6 @@ private lemma constantCoeff_comp_shear_one_eq_id
   (Polynomial.constantCoeff : Polynomial (Polynomial R) →+* Polynomial R).comp (qsShear (1 : R)) = RingHom.id (Polynomial R) := by
 -- proof
   apply qs_constantCoeff_comp_shear_one_eq_id
-
 
 /--
 [qs_exists_transition_with_zero_constant](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -906,7 +849,6 @@ private lemma exists_transition_with_zero_constant
   ∃ C D : Matrix i i (Polynomial (Polynomial R)), C * D = E.map (qsShear (1 : R)) ∧ D * C = E.map (Polynomial.C : Polynomial R →+* Polynomial (Polynomial R)) ∧ (∀ x y, (C x y - Polynomial.C (E x y)).coeff 0 = 0) ∧ ∀ x y, (D x y - Polynomial.C (E x y)).coeff 0 = 0 := by
 -- proof
   apply qs_exists_transition_with_zero_constant h
-
 
 /--
 [qs_patching_member_of_localization](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -928,7 +870,6 @@ private lemma patching_member_of_localization
 -- proof
   apply qs_patching_member_of_localization hM E hE hlocal
 
-
 /--
 [qs_quillen_patching](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -948,7 +889,6 @@ private lemma quillen_patching
 -- proof
   apply qs_quillen_patching E hE hlocal
 
-
 /--
 [qs_range_projective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -963,7 +903,6 @@ private lemma range_projective
 -- proof
   apply qs_range_projective E hE
 
-
 /--
 [qs_range_finite](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -976,7 +915,6 @@ private lemma range_finite
   Module.Finite R (LinearMap.range E.mulVecLin) := by
 -- proof
   apply qs_range_finite E
-
 
 /--
 [qs_mulVec_eq_self_of_mem_range](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -993,7 +931,6 @@ private lemma mulVec_eq_self_of_mem_range
   E.mulVecLin x = x := by
 -- proof
   apply qs_mulVec_eq_self_of_mem_range hE hx
-
 
 /--
 [qs_equiv_one_of_free_range](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -1012,7 +949,6 @@ private lemma equiv_one_of_free_range
 -- proof
   apply qs_equiv_one_of_free_range E hE
 
-
 /--
 [qs_equiv_one_fin_of_free_range](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -1030,7 +966,6 @@ private lemma equiv_one_fin_of_free_range
 -- proof
   apply qs_equiv_one_fin_of_free_range E hE
 
-
 /--
 [qs_residue_equiv_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -1044,7 +979,6 @@ private lemma residue_equiv_one
   ∃ n : ℕ, qsMatrixEquiv (E.map (Polynomial.mapRingHom (IsLocalRing.residue R))) (1 : Matrix (Fin n) (Fin n) (Polynomial (IsLocalRing.ResidueField R))) := by
 -- proof
   apply qs_residue_equiv_one R E hE
-
 
 /--
 [qs_fin_eq_of_one_equiv_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -1060,7 +994,6 @@ private lemma fin_eq_of_one_equiv_one
   n = m := by
 -- proof
   apply qs_fin_eq_of_one_equiv_one h
-
 
 /--
 [qs_residue_equiv_one_same_rank](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -1082,7 +1015,6 @@ private lemma residue_equiv_one_same_rank
 -- proof
   apply qs_residue_equiv_one_same_rank R E hE hQ
 
-
 /--
 [qs_horrocks_adjusted_factors](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -1102,7 +1034,6 @@ private lemma horrocks_adjusted_factors
   ∃ A : Matrix ι (Fin m) (Localization (qsMonicSubmonoid R)), ∃ B : Matrix (Fin m) ι (Localization (qsMonicSubmonoid R)), A * B = E.map (algebraMap (Polynomial R) (Localization (qsMonicSubmonoid R))) ∧ B * A = 1 ∧ qsResiduePolynomialMatrix R A ∧ qsResiduePolynomialMatrix R B := by
 -- proof
   apply qs_horrocks_adjusted_factors R E hE hQ
-
 
 /--
 [qs_horrocks_local](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -1124,7 +1055,6 @@ private lemma horrocks_local
 -- proof
   apply qs_horrocks_local R E hE hQ
 
-
 /--
 [qs_free_range_of_equiv_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -1140,7 +1070,6 @@ private lemma free_range_of_equiv_one
 -- proof
   apply qs_free_range_of_equiv_one h
 
-
 /--
 [qs_exists_idempotent_range_equiv](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -1152,7 +1081,6 @@ private lemma exists_idempotent_range_equiv
   ∃ (n : ℕ) (E : Matrix (Fin n) (Fin n) R), E * E = E ∧ Nonempty (LinearEquiv (RingHom.id R) M (LinearMap.range E.mulVecLin)) := by
 -- proof
   apply qs_exists_idempotent_range_equiv
-
 
 /--
 [qs_free_of_matrix_equiv_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -1170,7 +1098,6 @@ private lemma free_of_matrix_equiv_one
 -- proof
   apply qs_free_of_matrix_equiv_one e h
 
-
 /--
 [qs_zero_variables](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -1181,7 +1108,6 @@ private lemma zero_variables
   Module.Free (MvPolynomial (Fin 0) k) M := by
 -- proof
   apply qs_zero_variables
-
 
 /--
 [qs_idempotent_free](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
@@ -1198,7 +1124,6 @@ private lemma idempotent_free
 -- proof
   apply qs_idempotent_free n k E hE
 
-
 /--
 [quillen_suslin](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Module/QuillenSuslin.lean)
 -/
@@ -1210,6 +1135,5 @@ private lemma free_of_fg_projective
   Module.Free (MvPolynomial (Fin n) k) M := by
 -- proof
   apply quillen_suslin
-
 
 -- created on 2026-10-09

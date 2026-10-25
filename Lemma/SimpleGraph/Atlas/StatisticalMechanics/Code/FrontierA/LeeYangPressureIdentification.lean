@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LeeYangPressureIdentification
+import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangPressureIdentification
 open Complex Filter Set Topology StatMech StatMech.FrontierA
 
 

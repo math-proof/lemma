@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.PseudoDiffOps
+import Structure.v1.Atlas.DifferentialAnalysis.code.PseudoDiffOps
 open MeasureTheory Set Function TemperedDistribution DifferentialOperators
 open scoped SchwartzMap Pointwise
 

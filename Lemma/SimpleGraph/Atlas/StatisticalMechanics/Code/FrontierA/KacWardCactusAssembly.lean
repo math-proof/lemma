@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardCactusAssembly
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardCactusAssembly.Part2
 open StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPhaseTransport
+import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPhaseTransport.Part3
 open MeasureTheory Set StatMech StatMech.OSSS StatMech.OSSS.FKSharpnessWeightedPhaseTransport
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationMiddleCancellation
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationMiddleCancellation
 open StatMech StatMech.Onsager
 
 

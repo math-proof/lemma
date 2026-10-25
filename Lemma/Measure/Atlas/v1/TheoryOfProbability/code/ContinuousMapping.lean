@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.ContinuousMapping
+import Def.v1.Atlas.TheoryOfProbability.code.ContinuousMapping
 open MeasureTheory Filter ProbabilityTheory Set
 open scoped Topology BoundedContinuousFunction
 

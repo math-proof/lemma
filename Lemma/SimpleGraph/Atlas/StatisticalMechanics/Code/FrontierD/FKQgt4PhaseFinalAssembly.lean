@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4PhaseFinalAssembly
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4PhaseFinalAssembly
 open Filter MeasureTheory Set SimpleGraph StatMech StatMech.FrontierD
 
 

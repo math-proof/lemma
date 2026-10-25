@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.variational.EkelandCaristi
+import Theorem.Analysis.Calculus.EkelandCaristi
 open Set
 
 

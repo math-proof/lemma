@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicFiniteCaccioppoli
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicFiniteCaccioppoli
 open StatMech StatMech.Universality
 
 

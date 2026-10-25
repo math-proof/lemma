@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Cyclotomic.IntermediateField
+import Def.NumberTheory.Cyclotomic.IntermediateField
 open scoped IntermediateField IsMulCommutative
 open CyclotomicField
 

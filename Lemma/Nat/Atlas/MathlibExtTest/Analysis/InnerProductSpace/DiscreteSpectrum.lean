@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Analysis.InnerProductSpace.DiscreteSpectrum
+import Theorem.MathlibExtTest.Analysis.InnerProductSpace.DiscreteSpectrum.Part2
 open NonnegativeDiscreteSpectrumTest
 open scoped BigOperators
 

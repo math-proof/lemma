@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicDirichletComparison
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDirichletComparison.Part5
 open Finset SimpleGraph StatMech StatMech.Universality
 
 

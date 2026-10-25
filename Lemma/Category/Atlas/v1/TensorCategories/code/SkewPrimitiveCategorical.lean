@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.SkewPrimitiveCategorical
+import Def.v1.Atlas.TensorCategories.code.SkewPrimitiveCategorical.Part6
 open Coalgebra CategoryTheory MonoidalCategory Category Limits
 open scoped TensorProduct
 open CategoryTheory MonoidalCategory Category Limits

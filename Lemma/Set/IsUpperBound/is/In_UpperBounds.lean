@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_8_5
+import Def.Analysis.Section_8_5.Part4
 open Chapter8
 open Chapter8.IsUpperBound
 

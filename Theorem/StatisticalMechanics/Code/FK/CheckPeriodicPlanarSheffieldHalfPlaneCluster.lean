@@ -1,0 +1,44 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckPeriodicPlanarSheffieldHalfPlaneCluster.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldHalfPlaneCluster.Part8
+open StatMech.FK.PeriodicPlanar
+
+set_option linter.style.longLine false
+
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.axisSwap_isErgodic
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.axisNeg_isErgodic
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.clusterWithinSet_infinite_iff_orbitBox_escape
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.iUnion_connectedWithinSet_inter_orbitBox
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.iUnion_setConnectionWithin_inter_orbitBox
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.setConnectionWithin_inter_orbitBox_measureReal_tendsto
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.measurableSet_clusterWithinSet_infinite
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.hasInfiniteClusterWithin_configTranslate
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.measurableSet_hasInfiniteClusterWithin
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.setHitsInfiniteWithin_configTranslate
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.setHitsInfiniteWithin_translate_measureReal_eq
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.shift_image_rightHalfPlaneVertices
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rightHalfPlaneHasInfiniteCluster_translate_preimage
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rightHalfPlaneHasInfiniteCluster_measure_eq
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rightHalfPlaneHasInfiniteCluster_measure_eq_boundary
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rightHalfPlaneHasInfiniteClusterAtInfinity_translate_preimage
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rightHalfPlaneHasInfiniteClusterAtInfinity_measure_eq
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rightHalfPlaneHasInfiniteCluster_measure_eq_zero_or_one
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.clusterWithinSetEscape_measureReal_tendsto
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.iInter_finiteSetEscapeWithin
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.finiteSetEscapeWithin_measureReal_tendsto
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.iUnion_orbitBox_setHitsInfiniteWithin_rightHalfPlane
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rightHalfPlaneHasInfiniteCluster_measure_eq_zero_of_orbitBox
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rightHalfPlane_vertexEscape_measureReal_tendsto_zero
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rightHalfPlane_finiteSetEscape_measureReal_tendsto_zero
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rectSideConnectionEvent_subset_finiteSetEscapeWithin
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.rectSideConnection_measureReal_le_finiteSetEscapeWithin
+
+

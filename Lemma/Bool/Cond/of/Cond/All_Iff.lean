@@ -1,5 +1,5 @@
 import Lemma.Bool.Eq.is.All_Iff
-import sympy.concrete.quantifier
+import Macro.Logic.Quantifier.Part4
 open Bool
 
 

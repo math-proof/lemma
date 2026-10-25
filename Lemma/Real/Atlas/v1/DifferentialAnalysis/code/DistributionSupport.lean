@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.DistributionSupport
+import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionSupport
 open Distribution SchwartzMap TemperedDistribution
 open scoped SchwartzMap
 open sets on which `u` vanishes, applies a Schwartz partition of unity to

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusEulerDefect
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusEulerDefect.Part2
 open StatMech StatMech.FrontierD
 
 

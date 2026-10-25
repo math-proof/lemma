@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Boltzmann
+import Def.v1.Atlas.BooleanFunctions.code.Boltzmann
 open BooleanFourier
 open Finset Real
 

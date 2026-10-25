@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexCorrectedColumnLength
+import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedColumnLength
 open StatMech StatMech.Universality
 
 

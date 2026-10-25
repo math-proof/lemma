@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.CellMulFiniteProof
+import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulFiniteProof.Part2
 open CellMulFinite
 
 

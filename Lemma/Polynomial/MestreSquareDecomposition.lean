@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.polynomial.mestre_square_decomposition
-
+import Theorem.Algebra.Polynomial.MestreSquareDecomposition
 open MetaMathlibExt
 
 /--
@@ -22,7 +21,6 @@ private lemma mestre_monic_square_decomposition_general_eq
   · exact hPmonic
   · exact hPdeg
 
-
 /--
 [mestre_monic_square_decomposition](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Polynomial/MestreSquareDecomposition.lean)
 -/
@@ -41,6 +39,5 @@ private lemma mestre_monic_square_decomposition_eq
   · exact hd
   · exact hPmonic
   · exact hPdeg
-
 
 -- created on 2026-10-09

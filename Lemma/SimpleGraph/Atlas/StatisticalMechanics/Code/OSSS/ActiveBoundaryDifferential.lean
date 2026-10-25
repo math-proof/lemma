@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.ActiveBoundaryDifferential
+import Theorem.StatisticalMechanics.Code.OSSS.ActiveBoundaryDifferential
 open Finset Set StatMech StatMech.OSSS StatMech.OSSS.ActiveBoundaryDifferential
 
 

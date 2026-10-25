@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.ode.CauchyPeano
+import Theorem.Analysis.ODE.CauchyPeano
 
 /--
 [CauchyPeano](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/ODE/CauchyPeano.lean)

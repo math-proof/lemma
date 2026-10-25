@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.GinibreCylinderLimit
+import Theorem.StatisticalMechanics.Code.Ising.GinibreCylinderLimit
 open Filter Topology StatMech StatMech.Ising
 
 

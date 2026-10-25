@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.AdaptiveFibreLower
+import Theorem.StatisticalMechanics.Code.Probability.AdaptiveFibreLower
 open StatMech StatMech.Probability
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Isogenies
+import Def.v1.Atlas.ArithmeticGeometry.code.Isogenies.Part3
 open WeierstrassCurve Classical PadicFiltration
 open Classical
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.ShiftedEulerianHankel
+import Theorem.Combinatorics.Enumerative.ShiftedEulerianHankel
 open MetaMathlibExt
 
 

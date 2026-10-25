@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.RetractionDef
-import sympy.atlas.v1.Atlas.Buildings.code.Building.Convexity
+import Def.v1.Atlas.Buildings.code.Building.RetractionDef
+import Def.v1.Atlas.Buildings.code.Building.Convexity
 import Lemma.List.Any.of.Not.In_A.IsChainA
 open scoped Classical
 

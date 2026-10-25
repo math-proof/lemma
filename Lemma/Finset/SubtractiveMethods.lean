@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.concrete.SubtractiveMethods
+import Def.Combinatorics.Enumerative.SubtractiveMethods.Part3
 open scoped BigOperators
 open AlgebraicCombinatorics.SubtractiveMethods
 

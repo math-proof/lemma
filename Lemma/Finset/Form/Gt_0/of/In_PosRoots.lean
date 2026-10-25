@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.Lemma23_4
+import Def.v1.Atlas.LieGroups.code.Lemma23_4
 
 
 /--

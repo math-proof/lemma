@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.PressureConvex
+import Theorem.StatisticalMechanics.Code.Ising.PressureConvex
 open Finset StatMech StatMech.Ising
 
 

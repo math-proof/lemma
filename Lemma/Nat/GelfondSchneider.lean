@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.GelfondSchneider
+import Abbrev.NumberTheory.GelfondSchneider
 open scoped Topology ENNReal
 open Filter
 open scoped NumberField

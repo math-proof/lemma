@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.BrentOsbornBinomialAbsoluteMoment
+import Def.Combinatorics.Enumerative.BrentOsbornBinomialAbsoluteMoment
 open MetaMathlibExt
 
 

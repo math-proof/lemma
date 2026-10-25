@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationExternalDeletion
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationExternalDeletion
 open StatMech StatMech.Onsager
 
 

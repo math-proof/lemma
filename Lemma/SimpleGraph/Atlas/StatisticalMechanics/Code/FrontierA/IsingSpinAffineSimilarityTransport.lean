@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSpinAffineSimilarityTransport
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSpinAffineSimilarityTransport.Part2
 open Filter Topology StatMech StatMech.FrontierA
 
 

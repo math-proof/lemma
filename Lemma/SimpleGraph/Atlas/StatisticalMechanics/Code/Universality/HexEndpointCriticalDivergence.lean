@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexEndpointCriticalDivergence
+import Theorem.StatisticalMechanics.Code.Universality.HexEndpointCriticalDivergence.Part3
 open StatMech StatMech.Universality StatMech.Universality.HexEndpointSideFibers
 
 

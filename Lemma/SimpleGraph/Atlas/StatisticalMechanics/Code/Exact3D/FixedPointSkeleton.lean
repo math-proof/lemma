@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.FixedPointSkeleton
+import Theorem.StatisticalMechanics.Code.Exact3D.FixedPointSkeleton.Part23
 open StatMech StatMech.Exact3D StatMech.Exact3D.FiniteContraction StatMech.Exact3D.FiniteContraction.L1Vector StatMech.Exact3D.FiniteContraction.ClosedBallContractionCertificate StatMech.Exact3D.FiniteContraction.NonzeroAffineExample StatMech.Exact3D.FiniteContraction.ZeroLinearExample
 
 

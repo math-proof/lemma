@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialGeometry.code.GaussBonnet
+import Structure.v1.Atlas.DifferentialGeometry.code.GaussBonnet.Part7
 open Finset Real CombinatorialGaussBonnet SmoothGaussBonnet GaussBonnetBoundary
 open Real CombinatorialGaussBonnet
 open Real MeasureTheory

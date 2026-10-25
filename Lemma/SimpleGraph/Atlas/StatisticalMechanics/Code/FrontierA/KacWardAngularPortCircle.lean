@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAngularPortCircle
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAngularPortCircle
 open StatMech StatMech.FrontierA
 
 

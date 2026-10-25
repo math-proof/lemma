@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Recurrences.GolombLikeSequence
+import Theorem.NumberTheory.Recurrences.GolombLikeSequence.Part8
 open MetaMathlibExt
 
 

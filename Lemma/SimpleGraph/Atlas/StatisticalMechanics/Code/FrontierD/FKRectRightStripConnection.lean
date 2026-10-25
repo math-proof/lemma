@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRightStripConnection
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRightStripConnection.Part3
 open StatMech StatMech.FrontierD
 
 

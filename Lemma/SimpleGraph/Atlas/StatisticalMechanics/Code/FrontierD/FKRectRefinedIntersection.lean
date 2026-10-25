@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedIntersection
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedIntersection.Part7
 open Finset StatMech StatMech.FrontierD
 
 

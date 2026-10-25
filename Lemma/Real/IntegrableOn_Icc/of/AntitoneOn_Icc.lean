@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_11_6
+import Theorem.Analysis.Section_11_6
 open Chapter9 Chapter11.BoundedInterval
 open Chapter11
 

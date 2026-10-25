@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.IsingBoxEncoding
+import Theorem.StatisticalMechanics.Code.IsingFK.IsingBoxEncoding.Part4
 open MeasureTheory StatMech StatMech.IsingFK
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rmr_cardorbit
+import Theorem.StatisticalMechanics.Code.Walls.rmr_cardorbit.Part2
 open Finset StatMech StatMech.Walls
 
 

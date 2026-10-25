@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.LinearProgrammingDuality
+import Theorem.Analysis.Convex.LinearProgrammingDuality.Part3
 
 open scoped Matrix
 

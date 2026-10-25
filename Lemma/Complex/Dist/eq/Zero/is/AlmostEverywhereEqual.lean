@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.MeasureTheory.Section_1_3_4
+import Theorem.Analysis.MeasureTheory.Section_1_3_4.Part7
 open L1
 
 

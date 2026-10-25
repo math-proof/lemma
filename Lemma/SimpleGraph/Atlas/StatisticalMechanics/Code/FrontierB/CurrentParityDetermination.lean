@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentParityDetermination
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentParityDetermination.Part3
 open MeasureTheory StatMech StatMech.FrontierB
 
 

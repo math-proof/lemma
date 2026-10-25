@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PottsPhaseCoexistenceCapstone
+import Theorem.StatisticalMechanics.Code.FK.PottsPhaseCoexistenceCapstone
 open Filter MeasureTheory Topology StatMech StatMech.FK
 
 

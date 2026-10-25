@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SubGaussian
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SubGaussian
 open MeasureTheory ProbabilityTheory Real ENNReal MeasureTheory.Measure Set SubGaussian
 
 

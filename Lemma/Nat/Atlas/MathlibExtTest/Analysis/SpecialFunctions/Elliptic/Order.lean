@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Analysis.SpecialFunctions.Elliptic.Order
+import Theorem.MathlibExtTest.Analysis.SpecialFunctions.Elliptic.Order.Part2
 open scoped Topology
 
 

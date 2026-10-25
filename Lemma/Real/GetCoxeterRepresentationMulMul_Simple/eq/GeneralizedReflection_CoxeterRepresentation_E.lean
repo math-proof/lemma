@@ -1,10 +1,10 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.PosOfAscentProof
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.RootSystem
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.Reflections
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.PosOfAscentProof
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.RootSystem
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.Reflections
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism.Part2
 import Lemma.List.WordSigma.eq.AddMulS_WordSigma_E.of.All_Eq_0.Ne
 import Lemma.List.EqWordSSigma.of.WordProd
 import Lemma.Real.IsRoot_Sigma

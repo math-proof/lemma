@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.IwahoriGLn
+import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLn
 open Matrix DVRContext
 
 

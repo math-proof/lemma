@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.RandomWalks
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.RandomWalks.Part2
 open RandomWalks
 open Matrix SimpleGraph Module.End Finset
 open Finset Real BigOperators

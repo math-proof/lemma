@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.DoubleCountingFF
+import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingFF
 open ProjectionTheory
 open Finset BigOperators
 

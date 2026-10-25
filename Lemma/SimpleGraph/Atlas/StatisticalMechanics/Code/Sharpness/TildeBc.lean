@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.TildeBc
+import Def.StatisticalMechanics.Code.Sharpness.TildeBc.Part9
 open MeasureTheory Finset StatMech StatMech.Sharpness
 
 

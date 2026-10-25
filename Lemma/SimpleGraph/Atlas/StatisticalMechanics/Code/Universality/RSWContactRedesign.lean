@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWContactRedesign
+import Def.StatisticalMechanics.Code.Universality.RSWContactRedesign.Part2
 open Function MeasureTheory Set StatMech StatMech.Universality
 
 

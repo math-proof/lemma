@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FKSharpnessHomogeneous
+import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessHomogeneous
 open MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.FKSharpnessHomogeneous
 
 

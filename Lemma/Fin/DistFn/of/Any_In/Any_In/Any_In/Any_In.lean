@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.AffineMetricGR
+import Def.v1.Atlas.Buildings.code.Building.AffineMetricGR.Part2
 open Classical ChamberComplex AffineBuilding
 open ChamberComplex
 

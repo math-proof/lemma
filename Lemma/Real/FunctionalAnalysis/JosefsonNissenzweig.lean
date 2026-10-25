@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.FunctionalAnalysis.JosefsonNissenzweig
+import Theorem.Analysis.FunctionalAnalysis.JosefsonNissenzweig.Part24
 open MathlibExt.Analysis.FunctionalAnalysis.JosefsonNissenzweigWanted
 
 

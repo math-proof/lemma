@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3
 open MeasureTheory InformationTheory Real InfoTheory
 
 

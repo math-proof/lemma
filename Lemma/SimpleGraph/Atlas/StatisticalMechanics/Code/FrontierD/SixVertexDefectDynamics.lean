@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexDefectDynamics
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDefectDynamics.Part7
 open Finset StatMech StatMech.FrontierD
 
 

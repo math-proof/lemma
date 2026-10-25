@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.TwoDim.KestenUncond
+import Theorem.StatisticalMechanics.Code.TwoDim.KestenUncond
 open MeasureTheory Set Filter StatMech StatMech.TwoDim
 
 

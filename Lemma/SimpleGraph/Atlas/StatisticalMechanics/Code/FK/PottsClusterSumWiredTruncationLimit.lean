@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PottsClusterSumWiredTruncationLimit
+import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumWiredTruncationLimit.Part2
 open Filter MeasureTheory Set Topology StatMech StatMech.FK
 
 

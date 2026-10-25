@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
+import Def.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
 open Matrix Finset BigOperators in
 
 

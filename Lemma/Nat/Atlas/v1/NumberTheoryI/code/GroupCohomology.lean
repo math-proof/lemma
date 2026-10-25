@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.GroupCohomology
+import Def.v1.Atlas.NumberTheoryI.code.GroupCohomology.Part9
 open CategoryTheory GroupCohomology ChainHomotopy HomotopyHomology DerivedFunctor LongExactDerived CochainHomotopyCohomology Resolution HomFunctorHomotopy
 open CategoryTheory.Limits CategoryTheory.ShortComplex
 open CategoryTheory HomologicalComplex

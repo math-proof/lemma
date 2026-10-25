@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.complex.Wiman
+import Theorem.Analysis.Complex.Wiman.Part2
 
 open Complex.Wiman
 open Complex Set

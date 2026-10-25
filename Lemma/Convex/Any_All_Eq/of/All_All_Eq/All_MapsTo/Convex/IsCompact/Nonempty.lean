@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.MarkovKakutani
+import Theorem.Analysis.NormedSpace.MarkovKakutani
 
 open Set
 

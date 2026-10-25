@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Appendix_A_5
+import Theorem.Analysis.Appendix_A_5
 
 
 /--

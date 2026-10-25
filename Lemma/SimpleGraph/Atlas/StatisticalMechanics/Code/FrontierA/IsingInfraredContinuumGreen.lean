@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingInfraredContinuumGreen
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingInfraredContinuumGreen.Part2
 open MeasureTheory Set StatMech StatMech.FrontierA
 
 

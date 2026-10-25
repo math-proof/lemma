@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.Z2GaugeTransform
+import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeTransform.Part4
 open Finset StatMech StatMech.FrontierA
 
 

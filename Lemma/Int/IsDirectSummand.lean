@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.ProjectiveFunctors
+import Def.v1.Atlas.LieGroups.code.ProjectiveFunctors.Part7
 open ProjectiveFunctors
 open scoped TensorProduct
 

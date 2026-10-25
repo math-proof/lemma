@@ -1,7 +1,10 @@
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Order.Interval.Finset.Fin
+import Lemma.Finset.AddSumIio.eq.SumIic
+import Lemma.Finset.Any_In_Ico_SumIioSumIic.of.Eq_Sum
+import Lemma.Finset.Eq.of.In_Ico_SumIioSumIic.In_Ico_SumIioSumIic
 import Lemma.Matrix.DetStack_Mul_Sum_Mul_Pow_Sub.eq.PowSub__Mul
-import Lemma.Matrix.DetMulOfOfPowNegChoose.eq.MulPowProd.of.Le
+import Lemma.Matrix.DetMulStackS_MulPow.eq.Mul_Prod_Factorial.of.Le
 import Lemma.Matrix.MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf
 import Lemma.Matrix.MulOfPowAddOfPowNegChoose.eq.Zero
 import Syntax.LinearAlgebra.Matrix.Notation
@@ -43,33 +46,6 @@ private lemma pair_prod_succ
   simp only [h0, one_mul]
   simp_rw [hsucc]
   rw [Finset.prod_mul_distrib]
-
-private lemma offset_add_eq
-  {n : ℕ}
--- given
-  (d : Fin n ⇀ ℕ)
-  (k : Fin n) :
--- imply
-  (∑ t ∈ Finset.Iio k, d[t]) + d[k] =
-    ∑ t ∈ Finset.Iic k, d[t] := by
--- proof
-  rw [← Finset.Iio_insert, Finset.sum_insert Finset.notMem_Iio_self, add_comm]
-
-private lemma offset_mono
-  {n : ℕ}
-  {k₁ k₂ : Fin n}
--- given
-  (h : (k₁ : ℕ) < (k₂ : ℕ))
-  (d : Fin n ⇀ ℕ) :
--- imply
-  (∑ t ∈ Finset.Iio k₁, d[t]) + d[k₁] ≤
-    ∑ t ∈ Finset.Iio k₂, d[t] := by
--- proof
-  rw [offset_add_eq]
-  refine Finset.sum_le_sum_of_subset ?_
-  intro i hi
-  simp only [Finset.mem_Iic, Finset.mem_Iio, Fin.le_def, Fin.lt_def] at hi ⊢
-  apply Nat.lt_of_le_of_lt hi h
 
 /-- n-base geometric Vandermonde by induction on `n`. -/
 @[path]
@@ -282,105 +258,41 @@ private lemma main
       simpa [hA₁, hBd, hx0] using
         MulOfPowAddOfPowNegChoose.eq.Zero (δ := (0 : R)) (x := x0) (d := d0) (m := m)
     rw [hz, Matrix.det_fromBlocks_zero₁₂, hA₁, hB₁,
-      DetMulOfOfPowNegChoose.eq.MulPowProd.of.Le hd0le] at hmain
+      DetMulStackS_MulPow.eq.Mul_Prod_Factorial.of.Le hd0le] at hmain
     have hRestBd :
       (A_rest * Bd).det =
         (∏ k : Fin n, (x'[k] - x0) ^ (d'[k] * d0)) * M_rest.det := by
       have hoff'_le (k : Fin n) : off' k + d'[k] ≤ m - d0 := by
         have h1 : off' k + d'[k] = ∑ t ∈ Finset.Iic k, d'[t] := by
-          simpa [off'] using offset_add_eq d' k
+          simpa [off'] using AddSumIio.eq.SumIic d' k
         rw [h1, ← hsum']
         exact Finset.sum_le_sum_of_subset (Finset.subset_univ _)
-      have hoff'_succ (k : Fin n) (hk : (k : ℕ) + 1 < n) :
-        off' ⟨(k : ℕ) + 1, hk⟩ = off' k + d'[k] := by
-        have hL : off' ⟨(k : ℕ) + 1, hk⟩ = ∑ t ∈ Finset.Iic k, d'[t] := by
-          simp only [off']
-          have hI :
-            Finset.Iio (⟨(k : ℕ) + 1, hk⟩ : Fin n) = Finset.Iic k := by
-            ext i
-            simp only [Finset.mem_Iio, Finset.mem_Iic, Fin.lt_def, Fin.le_def]
-            exact Nat.lt_succ_iff
-          rw [hI]
-        have hR : off' k + d'[k] = ∑ t ∈ Finset.Iic k, d'[t] := by
-          simpa [off'] using offset_add_eq d' k
-        rw [hL, hR]
-      have hoff'_last (k : Fin n) (hk : (k : ℕ) = n - 1) :
-        off' k + d'[k] = m - d0 := by
-        have hn : 0 < n := by
-          have : (k : ℕ) < n := k.isLt
-          omega
-        have h1 : off' k + d'[k] = ∑ j : Fin n, d'[j] := by
-          rw [show off' k + d'[k] = ∑ t ∈ Finset.Iic k, d'[t] by
-              simpa [off'] using offset_add_eq d' k]
-          refine Finset.sum_congr ?_ fun _ _ => rfl
-          ext j
-          constructor
-          ·
-            intro
-            exact Finset.mem_univ _
-          ·
-            intro
-            have hj : (j : ℕ) < n := j.isLt
-            simp only [Finset.mem_Iic, Fin.le_def, hk]
-            omega
-        rw [h1, hsum']
       have hex (a : Fin (m - d0)) :
         ∃ k : Fin n, (a : ℕ) ∈ Finset.Ico (off' k) (off' k + d'[k]) := by
-        have hn : 0 < n := by
-          by_contra hn0
-          have hn0' : n = 0 := by omega
-          have hm0 : m - d0 = 0 := by
-            simpa [hn0'] using hsum'.symm
-          have halt : (a : ℕ) < m - d0 := a.isLt
-          omega
-        let k0 : Fin n := ⟨0, hn⟩
-        have hk0 : off' k0 ≤ (a : ℕ) := by
-          have : off' k0 = 0 := by
-            simp only [off', k0]
-            refine Finset.sum_eq_zero fun i hi =>
-              absurd (Fin.lt_def.mp (Finset.mem_Iio.mp hi)) (Nat.not_lt_zero _)
-          rw [this]
-          exact Nat.zero_le _
-        let S := (Finset.univ : Finset (Fin n)).filter fun k => off' k ≤ (a : ℕ)
-        have hSne : S.Nonempty := ⟨k0, by simp [S, hk0]⟩
-        let k := S.max' hSne
-        have hkS : off' k ≤ (a : ℕ) := (Finset.mem_filter.mp (S.max'_mem hSne)).2
-        refine ⟨k, Finset.mem_Ico.mpr ⟨hkS, ?_⟩⟩
-        by_contra hge
-        push Not at hge
-        have hge' : off' k + d'[k] ≤ (a : ℕ) := hge
-        if hlast : (k : ℕ) + 1 < n then
-          have hks : off' ⟨(k : ℕ) + 1, hlast⟩ ≤ (a : ℕ) := by
-            rwa [hoff'_succ k hlast]
-          have hmem : ⟨(k : ℕ) + 1, hlast⟩ ∈ S := by
-            simp [S, hks]
-          have : (k : ℕ) < (⟨(k : ℕ) + 1, hlast⟩ : Fin n) := by
-            simp
-          exact absurd this (not_lt_of_ge (Finset.le_max' S _ hmem))
-        else
-          have hk1 : (k : ℕ) = n - 1 := by omega
-          have hEq : off' k + d'[k] = m - d0 := hoff'_last k hk1
-          have hle : off' k + d'[k] ≤ (a : ℕ) := hge
-          rw [hEq] at hle
-          exact absurd a.isLt (not_lt_of_ge hle)
+        obtain ⟨k, hk⟩ := Any_In_Ico_SumIioSumIic.of.Eq_Sum hsum' a
+        refine ⟨k, ?_⟩
+        have h := AddSumIio.eq.SumIic d' k
+        dsimp only [GetElem.getElem] at hk h
+        rw [Finset.mem_Ico] at hk ⊢
+        simp only [off']
+        rw [h]
+        apply hk
       have huniq (a : ℕ) (k₁ k₂ : Fin n)
         (h1 : a ∈ Finset.Ico (off' k₁) (off' k₁ + d'[k₁]))
         (h2 : a ∈ Finset.Ico (off' k₂) (off' k₂ + d'[k₂])) : k₁ = k₂ := by
-        by_contra hne
-        simp only [off'] at h1 h2
-        have hlt : (k₁ : ℕ) < (k₂ : ℕ) ∨ (k₂ : ℕ) < (k₁ : ℕ) :=
-          Nat.lt_or_gt_of_ne (Fin.val_ne_of_ne hne)
-        cases hlt with
-        | inl hlt =>
-          have := offset_mono hlt d'
-          have := Finset.mem_Ico.mp h1
-          have := Finset.mem_Ico.mp h2
-          omega
-        | inr hlt =>
-          have := offset_mono hlt d'
-          have := Finset.mem_Ico.mp h1
-          have := Finset.mem_Ico.mp h2
-          omega
+        refine Eq.of.In_Ico_SumIioSumIic.In_Ico_SumIioSumIic (d := d') (t := a) ?_ ?_
+        ·
+          have h := AddSumIio.eq.SumIic d' k₁
+          simp only [off'] at h1
+          rw [Finset.mem_Ico] at h1 ⊢
+          rw [← h]
+          apply h1
+        ·
+          have h := AddSumIio.eq.SumIic d' k₂
+          simp only [off'] at h2
+          rw [Finset.mem_Ico] at h2 ⊢
+          rw [← h]
+          apply h2
       let σ : (Σ k : Fin n, Fin d'[k]) ≃ Fin (m - d0) := by
         refine Equiv.ofBijective
           (fun p => ⟨off' p.1 + (p.2 : ℕ), by
@@ -570,7 +482,7 @@ private lemma main
         ext i j
         simp only [hM_rest, off', Matrix.ofFun_apply]
         refine Fintype.sum_congr _ _ fun k => ?_
-        simp_rw [offset_add_eq]
+        simp_rw [AddSumIio.eq.SumIic]
       rwa [hshape]
     rw [hM_rest_det] at hmain
     have hLHS :
@@ -588,7 +500,7 @@ private lemma main
       ext i j
       simp only [Matrix.ofFun_apply]
       refine Fintype.sum_congr _ _ fun k => ?_
-      simp_rw [offset_add_eq]
+      simp_rw [AddSumIio.eq.SumIic]
     rw [← hLHS, ← hmain]
     rw [pair_prod_succ (x := x) (d := d)]
     simp only [Fin.prod_univ_succ, hx0, hd0, hx', hd']

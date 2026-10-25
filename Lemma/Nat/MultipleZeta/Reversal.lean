@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.MultipleZeta.Reversal
+import Def.NumberTheory.MultipleZeta.Reversal.Part2
 open MetaMathlibExt.MultipleZeta
 
 

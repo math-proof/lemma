@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicStoppedPointwise
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicStoppedPointwise.Part3
 open StatMech StatMech.Universality
 
 

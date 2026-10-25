@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.AlgebraicGeometry.EllipticCurve.PointCount
+import Theorem.MathlibExtTest.AlgebraicGeometry.EllipticCurve.PointCount.Part2
 open WeierstrassCurve
 
 

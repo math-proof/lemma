@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.ReimerDoubled2
+import Theorem.StatisticalMechanics.Code.Inequalities.ReimerDoubled2
 open Finset StatMech
 
 

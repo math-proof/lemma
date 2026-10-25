@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheSechFourier
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheSechFourier.Part3
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierD
 
 

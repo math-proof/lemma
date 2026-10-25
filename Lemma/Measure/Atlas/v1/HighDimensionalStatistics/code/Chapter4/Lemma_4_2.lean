@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
+import Notation.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
 open MeasureTheory Matrix Real Finset ENNReal
 
 

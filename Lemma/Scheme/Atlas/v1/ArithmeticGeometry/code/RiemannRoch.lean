@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.RiemannRoch
+import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
 open FunctionFieldAdeleRing RiemannRochSpace WeilDifferential
 open scoped RestrictedProduct
 open CurveWithOrd CurveDivisor

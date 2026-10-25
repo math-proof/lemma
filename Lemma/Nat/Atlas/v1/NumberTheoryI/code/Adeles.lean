@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Adeles
+import Def.v1.Atlas.NumberTheoryI.code.Adeles.Part10
 open NumberField IsDedekindDomain NumberField.Adeles
 open scoped TensorProduct
 open Filter Set Topology

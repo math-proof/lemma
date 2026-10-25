@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABInfiniteGhost
+import Theorem.StatisticalMechanics.Code.Sharpness.ABInfiniteGhost.Part13
 open Filter MeasureTheory Set SimpleGraph Topology StatMech StatMech.Sharpness
 
 

@@ -1,6 +1,7 @@
 import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
+import Syntax.LinearAlgebra.Matrix.Notation
 import sympy.Basic
 
 
@@ -13,10 +14,11 @@ private lemma main
   (h : d ≤ m)
   (i j : Fin d) :
 -- imply
-  ((Matrix.of fun (i : Fin d) (j : Fin m) => x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ)) *
-    (Matrix.of fun (k : Fin m) (j : Fin d) => (-x) ^ ((j : ℤ) - (k : ℕ)) * ((j : ℕ).choose k : R))) i j =
+  (([i < d, j < m] (x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ))) *
+    ([k < m, j < d] ((-x) ^ (j - k : ℤ) * ((j : ℕ).choose k : R)))) i j =
     x ^ (j : ℕ) * Nat.iterate (fwdDiff (1 : R)) j (fun r : R => r ^ (i : ℕ)) δ := by
 -- proof
+  unfold Matrix.ofFun
   have hj := j.isLt
   simp only [Matrix.mul_apply, Matrix.of_apply]
   rw [Fin.sum_univ_eq_sum_range (fun k => x ^ k * ((k : R) + δ) ^ (i : ℕ) * ((-x) ^ (((j : ℕ) : ℤ) - (k : ℤ)) * ((j : ℕ).choose k : R))) m]
@@ -38,3 +40,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-25

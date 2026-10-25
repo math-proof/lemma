@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.BinomialHarmonicConvolution
+import Def.NumberTheory.BinomialHarmonicConvolution
 open MetaMathlibExt
 
 

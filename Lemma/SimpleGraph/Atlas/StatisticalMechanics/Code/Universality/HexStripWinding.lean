@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexStripWinding
+import Theorem.StatisticalMechanics.Code.Universality.HexStripWinding.Part7
 open StatMech StatMech.Universality StatMech.Universality.HexStripWinding
 
 

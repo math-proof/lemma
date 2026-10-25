@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.AnimalLLNas
+import Theorem.StatisticalMechanics.Code.BeffaraDC.AnimalLLNas.Part3
 open MeasureTheory Filter Topology Finset StatMech.Kingman StatMech.KingmanAE StatMech.KingmanFilling StatMech StatMech.BeffaraDC
 
 

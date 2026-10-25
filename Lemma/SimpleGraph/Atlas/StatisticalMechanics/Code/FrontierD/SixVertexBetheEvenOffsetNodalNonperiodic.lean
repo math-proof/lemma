@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenOffsetNodalNonperiodic
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenOffsetNodalNonperiodic
 open StatMech StatMech.FrontierD
 
 

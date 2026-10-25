@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialGeometry.code.Minkowski
+import Structure.v1.Atlas.DifferentialGeometry.code.Minkowski.Part2
 open Finset Minkowski
 
 

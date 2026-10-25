@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.OSFKAssemblyClose
+import Theorem.StatisticalMechanics.Code.OSSS.OSFKAssemblyClose
 open Finset Real Set Filter Topology StatMech StatMech.OSSS StatMech.OSSS.OSFKAssemblyClose
 
 

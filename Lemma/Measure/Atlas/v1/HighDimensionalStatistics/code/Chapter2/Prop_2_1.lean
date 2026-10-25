@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_1
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_1
 open Matrix LeastSquares
 
 

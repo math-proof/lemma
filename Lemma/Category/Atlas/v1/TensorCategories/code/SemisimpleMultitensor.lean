@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.SemisimpleMultitensor
+import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
 open CategoryTheory MonoidalCategory CategoryTheory.Limits
 
 

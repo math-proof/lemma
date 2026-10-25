@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.FourierInversion
+import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
 open Real MeasureTheory MeasureTheory.Measure TestFunctions FourierInversion SobolevSpace
 open scoped FourierTransform ComplexInnerProductSpace SchwartzMap
 open FourierTransform TemperedDistribution LineDeriv

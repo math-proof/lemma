@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.PushforwardQCoh
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.PushforwardQCoh
 open AlgebraicGeometry CategoryTheory TopologicalSpace Lemma24
 
 

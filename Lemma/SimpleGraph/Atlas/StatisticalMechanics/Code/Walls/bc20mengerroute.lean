@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc20mengerroute
+import Theorem.StatisticalMechanics.Code.Walls.bc20mengerroute.Part5
 open StatMech.Lattice StatMech.ConfigSpace SimpleGraph StatMech.Percolation StatMech.Percolation.DisjointPaths StatMech StatMech.Walls
 
 

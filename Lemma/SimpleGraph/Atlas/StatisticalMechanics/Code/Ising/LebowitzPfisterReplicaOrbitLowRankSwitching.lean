@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitLowRankSwitching
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitLowRankSwitching.Part2
 open Finset StatMech StatMech.Ising
 
 

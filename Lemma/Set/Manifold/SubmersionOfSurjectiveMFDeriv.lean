@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.SubmersionOfSurjectiveMFDeriv
+import Def.Geometry.Manifold.SubmersionOfSurjectiveMFDeriv
 open scoped Topology ContDiff
 open Manifold
 open Manifold.IsSubmersionAt

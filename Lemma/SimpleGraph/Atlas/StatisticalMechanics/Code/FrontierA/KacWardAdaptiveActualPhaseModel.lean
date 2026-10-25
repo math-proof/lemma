@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveActualPhaseModel
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveActualPhaseModel
 open StatMech StatMech.FrontierA
 
 

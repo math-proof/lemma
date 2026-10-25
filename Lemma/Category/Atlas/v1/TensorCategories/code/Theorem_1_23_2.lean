@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.TannakaReconstruction
+import Structure.v1.Atlas.TensorCategories.code.TannakaReconstruction
 import Lemma.Category.Atlas.v1.TensorCategories.code.TannakaReconstruction
 open CategoryTheory
 

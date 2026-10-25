@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc38butterflymono
+import Theorem.StatisticalMechanics.Code.Walls.rc38butterflymono
 open Finset StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.WalkCellBridge
+import Theorem.StatisticalMechanics.Code.Onsager.WalkCellBridge
 open StatMech StatMech.Onsager StatMech.Onsager.WalkCellBridge
 
 

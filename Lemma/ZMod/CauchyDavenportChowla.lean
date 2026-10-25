@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.additive.CauchyDavenportChowla
+import Theorem.Combinatorics.Additive.CauchyDavenportChowla
 open scoped Pointwise
 
 

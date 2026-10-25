@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition
+import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition
 open Distribution TemperedDistribution
 open scoped SchwartzMap Manifold
 

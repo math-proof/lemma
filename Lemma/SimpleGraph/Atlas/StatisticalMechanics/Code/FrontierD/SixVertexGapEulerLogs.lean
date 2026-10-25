@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexGapEulerLogs
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexGapEulerLogs.Part3
 open Filter Topology StatMech StatMech.FrontierD
 
 

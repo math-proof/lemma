@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.MergeAtCorrectnessSupport
+import Def.CPythonListsort.Code.Correctness.MergeAtCorrectnessSupport
 open CPythonListsort CPythonListsort.StableOccurrencePermutation CPythonListsort.PendingRunsCorrect CPythonListsort.EntrySnapshotPermutation
 
 

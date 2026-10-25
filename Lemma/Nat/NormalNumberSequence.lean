@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NormalNumberSequence
+import Def.NumberTheory.NormalNumberSequence
 open MetaMathlibExt
 
 

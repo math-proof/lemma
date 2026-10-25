@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Misc.UnitsSystem
+import Theorem.Analysis.Misc.UnitsSystem.Part23
 open UnitsSystem
 open UnitsSystem.StandardUnit
 

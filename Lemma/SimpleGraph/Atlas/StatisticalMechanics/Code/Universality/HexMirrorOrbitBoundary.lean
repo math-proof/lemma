@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexMirrorOrbitBoundary
+import Theorem.StatisticalMechanics.Code.Universality.HexMirrorOrbitBoundary.Part3
 open StatMech StatMech.Universality StatMech.Universality.HexFixedBoundaryPoint StatMech.Universality.HexFiniteStripMirrorOrbitData
 
 

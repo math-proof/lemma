@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.GaussianNoiseSemigroup
+import Theorem.v1.Atlas.BooleanFunctions.code.GaussianNoiseSemigroup
 open MeasureTheory ProbabilityTheory Real GaussianStability
 
 

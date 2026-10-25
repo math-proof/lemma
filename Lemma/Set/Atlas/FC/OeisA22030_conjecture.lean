@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.FC.OeisA22030_conjecture
+import Def.FC.OeisA22030_conjecture.Part2
 open OeisA22030
 
 

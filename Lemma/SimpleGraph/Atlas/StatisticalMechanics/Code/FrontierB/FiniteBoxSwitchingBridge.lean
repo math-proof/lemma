@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.FiniteBoxSwitchingBridge
+import Theorem.StatisticalMechanics.Code.FrontierB.FiniteBoxSwitchingBridge.Part3
 open MeasureTheory Set SimpleGraph StatMech StatMech.FrontierB
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
+import Theorem.Analysis.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
 open Filter MeasureTheory Set
 open scoped ENNReal
 open Complex

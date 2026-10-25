@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.SimpleGraphCellularRibbonEmbedding
+import Theorem.StatisticalMechanics.Code.FrontierA.SimpleGraphCellularRibbonEmbedding.Part3
 open StatMech StatMech.FrontierA StatMech.FrontierA.FiniteCellularGraphEmbedding
 
 

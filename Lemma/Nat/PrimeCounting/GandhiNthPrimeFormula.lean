@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.GandhiNthPrimeFormula
+import Def.NumberTheory.PrimeCounting.GandhiNthPrimeFormula.Part2
 open scoped BigOperators
 open MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 

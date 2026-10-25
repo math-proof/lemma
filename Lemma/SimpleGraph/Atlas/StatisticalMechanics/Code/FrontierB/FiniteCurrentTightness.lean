@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.FiniteCurrentTightness
+import Theorem.StatisticalMechanics.Code.FrontierB.FiniteCurrentTightness
 open MeasureTheory StatMech StatMech.FrontierB
 
 

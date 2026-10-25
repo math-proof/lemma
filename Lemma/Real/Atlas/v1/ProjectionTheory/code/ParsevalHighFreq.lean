@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.ParsevalHighFreq
+import Def.v1.Atlas.ProjectionTheory.code.ParsevalHighFreq
 open Finset Complex ZMod ProjectionTheory
 
 

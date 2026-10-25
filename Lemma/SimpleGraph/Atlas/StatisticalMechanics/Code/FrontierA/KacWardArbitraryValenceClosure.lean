@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardArbitraryValenceClosure
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardArbitraryValenceClosure
 open StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.SymplecticManifoldMathlib
+import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticManifoldMathlib.Part2
 open SymplecticGeometry
 open scoped TensorProduct
 

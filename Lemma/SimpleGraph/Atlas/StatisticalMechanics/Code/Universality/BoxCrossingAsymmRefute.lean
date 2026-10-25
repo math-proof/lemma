@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.BoxCrossingAsymmRefute
+import Theorem.StatisticalMechanics.Code.Universality.BoxCrossingAsymmRefute
 open Set SimpleGraph StatMech.Lattice StatMech.RSW.Box StatMech StatMech.Universality
 
 

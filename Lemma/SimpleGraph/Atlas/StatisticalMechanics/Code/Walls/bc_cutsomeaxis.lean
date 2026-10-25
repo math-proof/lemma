@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc_cutsomeaxis
+import Theorem.StatisticalMechanics.Code.Walls.bc_cutsomeaxis
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Walls
 
 

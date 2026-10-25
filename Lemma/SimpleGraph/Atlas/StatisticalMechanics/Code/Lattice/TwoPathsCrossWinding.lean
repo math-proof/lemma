@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.TwoPathsCrossWinding
+import Theorem.StatisticalMechanics.Code.Lattice.TwoPathsCrossWinding.Part2
 open Set SimpleGraph MeasureTheory StatMech StatMech.Lattice
 
 

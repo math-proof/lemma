@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FKRevealmentClose
+import Theorem.StatisticalMechanics.Code.OSSS.FKRevealmentClose
 open MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.FKRevealmentClose
 
 

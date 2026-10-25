@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.ECDLP
+import Def.v1.Atlas.EllipticCurves.code.ECDLP.Part4
 open Finset Real Filter Asymptotics MeasureTheory
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.DistinctSums
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.DistinctSums.Part3
 open DubroffFoxXu DistinctSumsBound
 open Finset
 open Finset BigOperators

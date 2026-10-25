@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsoradialKacWardAtlas
+import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardAtlas
 open Finset SimpleGraph StatMech StatMech.FrontierA StatMech.FrontierA.CriticalIsoradialClosedFlatSurfaceEmbedding
 
 

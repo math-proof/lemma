@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.OrbitCoversBoundary
+import Theorem.StatisticalMechanics.Code.Lattice.OrbitCoversBoundary
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.AffineMetric
+import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
 open Classical ChamberComplex AffineCoxeter AffineCoxeterComplex AffineBuilding
 open ChamberComplex
 open AffineCoxeter

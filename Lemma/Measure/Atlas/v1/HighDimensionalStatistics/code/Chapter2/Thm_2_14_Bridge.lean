@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_14_Bridge
+import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_14_Bridge
 open Matrix MeasureTheory Metric Set Real ENNReal Finset
 
 

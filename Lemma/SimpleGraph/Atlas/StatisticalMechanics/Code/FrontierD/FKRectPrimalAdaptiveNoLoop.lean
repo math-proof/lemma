@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectPrimalAdaptiveNoLoop
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectPrimalAdaptiveNoLoop
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.WavefrontSet
+import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
 open scoped SchwartzMap FourierTransform
 

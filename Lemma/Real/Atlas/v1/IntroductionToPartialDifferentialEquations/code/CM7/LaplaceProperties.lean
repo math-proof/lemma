@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM7.LaplaceProperties
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM7.LaplaceProperties.Part2
 open Set Metric MeasureTheory Topology Filter CM7
 
 

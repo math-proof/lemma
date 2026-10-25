@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc3_keyflipmapsslab
+import Theorem.StatisticalMechanics.Code.Walls.rc3_keyflipmapsslab
 open Finset StatMech StatMech.Walls
 
 

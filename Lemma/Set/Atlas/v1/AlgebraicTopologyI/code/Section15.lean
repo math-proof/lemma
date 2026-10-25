@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section15
+import Instance.v1.Atlas.AlgebraicTopologyI.code.Section15
 open Topology CWSubcomplex SphereInfty
 
 

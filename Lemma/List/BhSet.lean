@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.additive.BhSet
+import Def.Combinatorics.Additive.BhSet.Part2
 
 
 /--

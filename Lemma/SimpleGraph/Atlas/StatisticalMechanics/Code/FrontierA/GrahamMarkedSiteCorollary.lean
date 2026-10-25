@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamMarkedSiteCorollary
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamMarkedSiteCorollary
 open Finset Filter Set StatMech StatMech.FrontierA
 
 

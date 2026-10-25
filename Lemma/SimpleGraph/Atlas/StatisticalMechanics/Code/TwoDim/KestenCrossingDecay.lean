@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.TwoDim.KestenCrossingDecay
+import Theorem.StatisticalMechanics.Code.TwoDim.KestenCrossingDecay
 open MeasureTheory Set Filter Topology StatMech StatMech.TwoDim
 
 

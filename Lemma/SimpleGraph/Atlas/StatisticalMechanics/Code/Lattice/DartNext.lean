@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.DartNext
+import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
 open SimpleGraph StatMech StatMech.Lattice
 
 

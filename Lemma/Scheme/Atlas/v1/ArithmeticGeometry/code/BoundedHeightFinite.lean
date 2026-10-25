@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.BoundedHeightFinite
+import Theorem.v1.Atlas.ArithmeticGeometry.code.BoundedHeightFinite
 open TateTheorem CanonicalHeight Filter
 
 

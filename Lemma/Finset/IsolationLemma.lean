@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.IsolationLemma
+import Def.Combinatorics.IsolationLemma
 open scoped BigOperators
 open MetaMathlibExt
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.complex.LoomanMenchoff
+import Theorem.Analysis.Complex.LoomanMenchoff.Part6
 
 
 /--

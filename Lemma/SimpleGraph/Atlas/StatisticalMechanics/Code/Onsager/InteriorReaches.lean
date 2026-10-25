@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.InteriorReaches
+import Theorem.StatisticalMechanics.Code.Onsager.InteriorReaches
 open StatMech StatMech.Onsager StatMech.Onsager.InteriorReaches
 
 

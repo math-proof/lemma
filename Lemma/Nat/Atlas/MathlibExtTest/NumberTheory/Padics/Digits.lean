@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.Padics.Digits
+import Theorem.MathlibExtTest.NumberTheory.Padics.Digits
 open PadicInt Finset PadicIntTest
 
 

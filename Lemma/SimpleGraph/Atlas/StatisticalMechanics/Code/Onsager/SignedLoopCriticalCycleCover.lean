@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopCriticalCycleCover
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopCriticalCycleCover.Part2
 open Finset SimpleGraph StatMech StatMech.Onsager
 
 

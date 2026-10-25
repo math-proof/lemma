@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.LatinSquares
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.LatinSquares
 open Function LatinSquares in ErdosSpencer
 open LatinSquares
 open Finset Real

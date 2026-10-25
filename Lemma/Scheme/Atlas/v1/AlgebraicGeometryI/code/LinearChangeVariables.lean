@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.LinearChangeVariables
+import Abbrev.v1.Atlas.AlgebraicGeometryI.code.LinearChangeVariables
 open Cardinal Polynomial MvPolynomial NoetherNormalization Ideal Nat RingHom List Finset
 
 

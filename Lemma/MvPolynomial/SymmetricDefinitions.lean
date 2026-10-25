@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.symmetric.Definitions
+import Def.Combinatorics.Young.Definitions.Part8
 import Lemma.Equiv.Basics
 open MvPolynomial hiding R
 open Finset

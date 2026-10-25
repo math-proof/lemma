@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.WindingColoring
+import Theorem.StatisticalMechanics.Code.Lattice.WindingColoring.Part6
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

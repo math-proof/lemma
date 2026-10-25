@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.RectangularAxisSubdivision
+import Theorem.StatisticalMechanics.Code.Onsager.RectangularAxisSubdivision.Part8
 open StatMech StatMech.Onsager
 
 

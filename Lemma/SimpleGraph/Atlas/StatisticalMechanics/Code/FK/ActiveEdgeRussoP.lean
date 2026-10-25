@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.ActiveEdgeRussoP
+import Theorem.StatisticalMechanics.Code.FK.ActiveEdgeRussoP
 open Finset StatMech StatMech.FK
 
 

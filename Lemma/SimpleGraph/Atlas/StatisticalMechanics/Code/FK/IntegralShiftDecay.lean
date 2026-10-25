@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.IntegralShiftDecay
+import Theorem.StatisticalMechanics.Code.FK.IntegralShiftDecay.Part2
 open MeasureTheory Filter Topology BoundedContinuousFunction StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

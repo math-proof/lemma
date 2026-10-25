@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.MeanfieldIsingIntegrated
+import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingIntegrated.Part5
 open MeasureTheory Real Set Filter Topology StatMech StatMech.Sharpness
 
 

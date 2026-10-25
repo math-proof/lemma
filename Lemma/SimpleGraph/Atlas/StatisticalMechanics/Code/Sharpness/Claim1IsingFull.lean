@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.Claim1IsingFull
+import Theorem.StatisticalMechanics.Code.Sharpness.Claim1IsingFull.Part3
 open SimpleGraph Finset Classical StatMech StatMech.Sharpness StatMech.Sharpness.RandomCurrent
 
 

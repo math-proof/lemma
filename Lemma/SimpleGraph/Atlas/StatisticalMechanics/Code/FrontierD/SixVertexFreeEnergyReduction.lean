@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexFreeEnergyReduction
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFreeEnergyReduction
 open Filter Topology StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartmentUnconditional
+import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartmentUnconditional.Part3
 open GLnBuilding
 
 

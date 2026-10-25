@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingMessagerMiracleInfinite
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingMessagerMiracleInfinite
 open Finset StatMech StatMech.FrontierA
 
 

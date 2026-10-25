@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.DedekindFactorization
+import Theorem.v1.Atlas.NumberTheoryI.code.DedekindFactorization
 open IsDedekindDomain
 open scoped nonZeroDivisors
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.CategoricalFreeness
+import Def.v1.Atlas.TensorCategories.code.CategoricalFreeness.Part2
 open CategoryTheory CategoryTheory.Limits MonoidalCategory
 
 

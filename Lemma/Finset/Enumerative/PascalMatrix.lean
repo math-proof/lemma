@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.PascalMatrix
+import Def.Combinatorics.Enumerative.PascalMatrix
 open scoped BigOperators Topology
 open MetaMathlibExt
 

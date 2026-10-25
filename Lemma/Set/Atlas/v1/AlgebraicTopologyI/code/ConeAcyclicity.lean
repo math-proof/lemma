@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.ConeAcyclicity
+import Theorem.v1.Atlas.AlgebraicTopologyI.code.ConeAcyclicity
 open Finset BigOperators AlgebraicTopologyI
 
 

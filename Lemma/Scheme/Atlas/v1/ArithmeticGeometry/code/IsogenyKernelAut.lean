@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.IsogenyKernelAut
+import Def.v1.Atlas.ArithmeticGeometry.code.IsogenyKernelAut.Part2
 open WeierstrassCurve EllipticCurveIsogeny EllipticCurveIsogeny.KernelAutData EllipticCurveIsogeny.TranslationPullbackData
 
 

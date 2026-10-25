@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.ActiveInfluence
+import Theorem.StatisticalMechanics.Code.BeffaraDC.ActiveInfluence.Part2
 open StatMech StatMech.BeffaraDC
 
 

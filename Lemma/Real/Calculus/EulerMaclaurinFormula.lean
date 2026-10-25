@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.EulerMaclaurinFormula
+import Theorem.Analysis.Calculus.EulerMaclaurinFormula.Part2
 open scoped BigOperators
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.ManifoldIntegration
+import Class.v1.Atlas.GeometryOfManifolds.code.ManifoldIntegration
 open DifferentialFormSpace
 open scoped Manifold ContDiff
 

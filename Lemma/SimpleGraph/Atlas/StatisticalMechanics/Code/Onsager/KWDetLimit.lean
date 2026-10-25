@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.KWDetLimit
+import Theorem.StatisticalMechanics.Code.Onsager.KWDetLimit.Part2
 open StatMech StatMech.Onsager
 
 

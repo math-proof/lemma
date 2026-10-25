@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MeasureTheory.Measure.Lebesgue.TriangleArea
+import Theorem.MeasureTheory.Measure.Lebesgue.TriangleArea.Part3
 open MeasureTheory Set
 open MetaMathlibExt
 

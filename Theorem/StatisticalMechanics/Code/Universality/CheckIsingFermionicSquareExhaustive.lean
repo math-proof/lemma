@@ -1,0 +1,33 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicSquareExhaustive.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareExhaustive.Part2
+
+
+namespace StatMech.Universality
+
+#check fkIsingSquare_caseTwo_westSouth_contour_algebra
+#check fkIsingSquare_caseTwo_eastNorth_contour_algebra
+#check fkIsingSquare_no_visit_pointwise_contour_balance
+#check fkIsingSquare_one_visit_west_pointwise_contour_balance
+#check fkIsingSquare_one_visit_east_pointwise_contour_balance
+#check FKIsingSquareSwitchingGeometry
+#check fkIsingSquare_exhaustiveSwitchingLaw
+#check fkIsingSquare_fermionicObservable_contour_relation
+
+#print axioms fkIsingSquare_caseTwo_westSouth_contour_algebra
+#print axioms fkIsingSquare_caseTwo_eastNorth_contour_algebra
+#print axioms fkIsingSquare_no_visit_pointwise_contour_balance
+#print axioms fkIsingSquare_one_visit_west_pointwise_contour_balance
+#print axioms fkIsingSquare_one_visit_east_pointwise_contour_balance
+#print axioms fkIsingSquare_exhaustiveSwitchingLaw
+#print axioms fkIsingSquare_fermionicObservable_contour_relation
+
+end StatMech.Universality

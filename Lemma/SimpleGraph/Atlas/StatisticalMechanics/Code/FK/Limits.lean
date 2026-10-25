@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.Limits
+import Theorem.StatisticalMechanics.Code.FK.Limits
 open MeasureTheory StatMech.Lattice SimpleGraph StatMech StatMech.FK
 
 

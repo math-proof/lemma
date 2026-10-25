@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.KingFacts
+import Theorem.StatisticalMechanics.Code.Lattice.KingFacts
 open SimpleGraph Function StatMech StatMech.Lattice
 
 

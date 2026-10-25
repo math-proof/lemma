@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective
+import Class.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective.Part3
 open CategoryTheory CategoryTheory.Limits MonoidalCategory
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc_crosstreequeryincident
+import Theorem.StatisticalMechanics.Code.Walls.oc_crosstreequeryincident
 open StatMech.Lattice StatMech StatMech.Walls
 
 

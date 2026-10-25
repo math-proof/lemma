@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.MultifusionSemisimple
+import Def.v1.Atlas.TensorCategories.code.MultifusionSemisimple.Part2
 open Finset Complex MultifusionRingDef MultifusionRingDef.MfGrRingOfC
 
 

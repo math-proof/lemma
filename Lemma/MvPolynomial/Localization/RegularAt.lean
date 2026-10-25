@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.Localization.RegularAt
+import Def.RingTheory.Localization.RegularAt.Part2
 open FractionRing
 open MvPolynomial
 open AffineCoordinateRing

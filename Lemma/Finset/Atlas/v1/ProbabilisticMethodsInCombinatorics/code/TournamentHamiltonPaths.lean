@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.TournamentHamiltonPaths
+import Theorem.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.TournamentHamiltonPaths
 open Real Finset BigOperators TournamentHamiltonPaths
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.BoxDownCompClose
+import Theorem.StatisticalMechanics.Code.Inequalities.BoxDownCompClose
 open Finset MeasureTheory StatMech
 
 

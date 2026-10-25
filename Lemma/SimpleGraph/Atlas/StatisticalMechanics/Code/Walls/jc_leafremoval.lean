@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc_leafremoval
+import Theorem.StatisticalMechanics.Code.Walls.jc_leafremoval.Part2
 open SimpleGraph StatMech StatMech.Walls
 
 

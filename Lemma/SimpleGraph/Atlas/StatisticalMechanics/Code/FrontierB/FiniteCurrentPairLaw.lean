@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.FiniteCurrentPairLaw
+import Theorem.StatisticalMechanics.Code.FrontierB.FiniteCurrentPairLaw.Part2
 open MeasureTheory StatMech StatMech.FrontierB
 
 

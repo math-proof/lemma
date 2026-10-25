@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.AbelianRepresentation
+import Def.GroupTheory.AbelianRepresentation
 open CategoryTheory
 open scoped IsMulCommutative
 open MathlibExt.GroupTheory.AbelianRepresentationWanted

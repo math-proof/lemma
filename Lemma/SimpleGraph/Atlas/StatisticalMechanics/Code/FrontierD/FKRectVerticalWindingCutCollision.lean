@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingCutCollision
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingCutCollision
 open SimpleGraph StatMech StatMech.FrontierD
 
 

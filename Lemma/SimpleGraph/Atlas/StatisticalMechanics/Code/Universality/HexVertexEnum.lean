@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexVertexEnum
+import Def.StatisticalMechanics.Code.Universality.HexVertexEnum.Part5
 open StatMech StatMech.Universality StatMech.Universality.HexVertexEnumeration
 
 

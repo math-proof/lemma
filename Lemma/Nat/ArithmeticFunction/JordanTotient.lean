@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ArithmeticFunction.JordanTotient
+import Def.NumberTheory.ArithmeticFunction.JordanTotient
 open ArithmeticFunction
 
 

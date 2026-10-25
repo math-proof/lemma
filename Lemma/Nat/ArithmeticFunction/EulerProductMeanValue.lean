@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ArithmeticFunction.EulerProductMeanValue
+import Def.NumberTheory.ArithmeticFunction.EulerProductMeanValue
 open MetaMathlibExt
 
 

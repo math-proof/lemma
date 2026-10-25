@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.IsingMinusTIFromPlacement
+import Theorem.StatisticalMechanics.Code.Ising.IsingMinusTIFromPlacement
 open MeasureTheory Filter Topology Set StatMech StatMech.Ising
 
 

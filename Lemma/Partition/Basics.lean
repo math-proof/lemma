@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.partitions.Basics
+import Def.Combinatorics.Enumerative.Partition.Basics.Part8
 open Finset
 open IversonBracket
 open Nat.Partition

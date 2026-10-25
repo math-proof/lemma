@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.GinibreBoundaryDerivative
+import Theorem.StatisticalMechanics.Code.Ising.GinibreBoundaryDerivative
 open Finset StatMech StatMech.Ising
 
 

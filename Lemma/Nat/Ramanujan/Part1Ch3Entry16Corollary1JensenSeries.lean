@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Entry16Corollary1JensenSeries
+import Def.NumberTheory.Ramanujan.Part1Ch3Entry16Corollary1JensenSeries
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry16Corollary1JensenSeries
 

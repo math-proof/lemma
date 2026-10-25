@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.DPRM
+import Def.NumberTheory.DPRM.Part2
 open scoped Dioph Vector3 Nat Function
 open MathlibExt.NumberTheory.DPRMWanted
 

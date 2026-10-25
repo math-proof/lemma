@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.QOneRSWActiveSeed
+import Theorem.StatisticalMechanics.Code.Universality.QOneRSWActiveSeed.Part2
 open Set SimpleGraph MeasureTheory StatMech StatMech.Universality
 
 

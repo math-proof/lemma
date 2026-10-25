@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.ShermanConvergence
+import Theorem.StatisticalMechanics.Code.Onsager.ShermanConvergence.Part2
 open StatMech StatMech.Onsager
 
 

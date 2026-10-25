@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.osd_logstep
+import Theorem.StatisticalMechanics.Code.Walls.osd_logstep
 open Real StatMech StatMech.Walls
 
 

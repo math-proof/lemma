@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectMedialClusterBoundary
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialClusterBoundary.Part2
 open SimpleGraph StatMech StatMech.FrontierD
 
 

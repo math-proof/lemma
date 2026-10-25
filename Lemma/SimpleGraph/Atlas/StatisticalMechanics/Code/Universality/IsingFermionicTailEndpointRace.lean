@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicTailEndpointRace
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicTailEndpointRace
 open StatMech StatMech.Universality
 
 

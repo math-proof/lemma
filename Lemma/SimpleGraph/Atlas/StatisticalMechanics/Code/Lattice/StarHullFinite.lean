@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.StarHullFinite
+import Theorem.StatisticalMechanics.Code.Lattice.StarHullFinite
 open SimpleGraph Function Set StatMech StatMech.Lattice
 
 

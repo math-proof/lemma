@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Theorem11_1
+import Def.v1.Atlas.ArithmeticGeometry.code.Theorem11_1
 open PadicInt Polynomial
 
 

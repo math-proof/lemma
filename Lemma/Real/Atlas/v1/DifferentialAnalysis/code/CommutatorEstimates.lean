@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.CommutatorEstimates
+import Def.v1.Atlas.DifferentialAnalysis.code.CommutatorEstimates
 open TemperedDistribution MvPolynomial DifferentialOperators
 open scoped SchwartzMap
 

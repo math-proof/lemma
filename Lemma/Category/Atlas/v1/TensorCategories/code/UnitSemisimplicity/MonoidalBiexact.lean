@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact
+import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact.Part4
 open CategoryTheory MonoidalCategory Category CategoryTheory.Limits TensorCategories
 
 

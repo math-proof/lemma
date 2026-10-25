@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.HyperbolicGroup
+import Theorem.GroupTheory.HyperbolicGroup
 open Group Nat
 
 

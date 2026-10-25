@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitWeight
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitWeight.Part2
 open Finset StatMech StatMech.Ising
 
 

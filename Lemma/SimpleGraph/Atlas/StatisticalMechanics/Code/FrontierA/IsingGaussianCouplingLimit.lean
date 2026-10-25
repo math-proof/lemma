@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianCouplingLimit
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianCouplingLimit
 open Filter Topology StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamHeadlineAdapter
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamHeadlineAdapter
 open SimpleGraph StatMech StatMech.FrontierA
 
 

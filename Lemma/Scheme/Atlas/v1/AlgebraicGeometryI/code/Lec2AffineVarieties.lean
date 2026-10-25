@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec2AffineVarieties
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec2AffineVarieties.Part3
 open AlgebraicGeometry CategoryTheory TopologicalSpace
 
 

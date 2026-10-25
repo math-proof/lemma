@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.MultipleZeta.Reversal
+import Theorem.MathlibExtTest.NumberTheory.MultipleZeta.Reversal
 
 
 namespace MetaMathlibExt.MultipleZeta

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Analysis.FunctionalAnalysis.BanachLimit
+import Theorem.MathlibExtTest.Analysis.FunctionalAnalysis.BanachLimit
 open Filter
 open scoped BoundedContinuousFunction ContinuousLinearMap
 

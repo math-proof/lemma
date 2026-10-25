@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.FleischnerStrong
+import Theorem.Combinatorics.SimpleGraph.FleischnerStrong.Part23
 open scoped BigOperators
 open SimpleGraph
 

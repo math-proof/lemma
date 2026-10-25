@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.DicksonPGL2Wild
+import Theorem.GroupTheory.DicksonPGL2Wild.Part6
 open scoped BigOperators Pointwise Polynomial
 open MetaMathlibExt
 open Dickson

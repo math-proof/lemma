@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheScattering
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheScattering.Part3
 open Finset StatMech StatMech.FrontierD
 
 

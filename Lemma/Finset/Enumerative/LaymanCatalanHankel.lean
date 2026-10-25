@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.LaymanCatalanHankel
+import Def.Combinatorics.Enumerative.LaymanCatalanHankel
 open MetaMathlibExt
 
 

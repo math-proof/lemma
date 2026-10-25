@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.Harmonic.Floor
+import Theorem.MathlibExtTest.NumberTheory.Harmonic.Floor
 open Asymptotics Filter Real Topology
 
 

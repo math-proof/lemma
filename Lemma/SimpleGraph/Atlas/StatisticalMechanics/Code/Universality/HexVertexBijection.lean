@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexVertexBijection
+import Theorem.StatisticalMechanics.Code.Universality.HexVertexBijection.Part5
 open StatMech StatMech.Universality StatMech.Universality.HexVertexBijection
 
 

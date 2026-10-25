@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.GeneralOptionalStopping
+import Def.v1.Atlas.TheoryOfProbability.code.GeneralOptionalStopping
 open MeasureTheory Filter
 
 

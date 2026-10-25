@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.MultipleZeta.Series
+import Def.NumberTheory.MultipleZeta.Series.Part3
 open MetaMathlibExt.MultipleZeta
 
 

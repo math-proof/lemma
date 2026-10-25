@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedOpenWalkCarrier
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedOpenWalkCarrier
 open StatMech StatMech.FrontierD
 
 

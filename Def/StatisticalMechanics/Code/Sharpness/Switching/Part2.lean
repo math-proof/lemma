@@ -1,0 +1,39 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/Switching.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Mathlib
+import Theorem.StatisticalMechanics.Code.Sharpness.Switching
+open Finset BigOperators
+open scoped symmDiff
+open Classical
+
+set_option linter.unusedSectionVars false
+
+
+namespace StatMech
+
+namespace Sharpness
+
+namespace RandomCurrent
+
+variable {ι V : Type*} [DecidableEq ι] [DecidableEq V] [Fintype V] [Fintype ι]
+
+
+def adjStep (ends : ι → Sym2 V) (K : Finset ι) (a b : V) : Prop :=
+  ∃ i ∈ K, a ∈ ends i ∧ b ∈ ends i ∧ a ≠ b
+
+
+def connK (ends : ι → Sym2 V) (K : Finset ι) : V → V → Prop :=
+  Relation.ReflTransGen (adjStep ends K)
+
+end RandomCurrent
+end Sharpness
+end StatMech

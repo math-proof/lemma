@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.CanonTrifProb
+import Theorem.StatisticalMechanics.Code.Percolation.CanonTrifProb
 open StatMech StatMech.Percolation
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FiniteActiveDuality
+import Theorem.StatisticalMechanics.Code.FK.FiniteActiveDuality.Part3
 open Finset SimpleGraph StatMech StatMech.FK
 
 

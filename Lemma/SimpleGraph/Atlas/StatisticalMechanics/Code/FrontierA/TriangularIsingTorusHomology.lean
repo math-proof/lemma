@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusHomology
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusHomology.Part2
 open StatMech StatMech.FrontierA
 
 

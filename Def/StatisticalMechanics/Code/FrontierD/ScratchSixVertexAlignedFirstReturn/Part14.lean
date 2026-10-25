@@ -1,0 +1,48 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/ScratchSixVertexAlignedFirstReturn.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoDisagreementStrand.Part16
+import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialCheckerboard
+import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryToggleParity.Part3
+import Theorem.StatisticalMechanics.Code.FrontierD.FiniteFirstReturn.Part8
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairSwitchNoUnitCounterexample.Part2
+import Theorem.StatisticalMechanics.Code.FrontierD.ScratchSixVertexAlignedFirstReturn.Part11
+open StatMech.FrontierD
+
+
+namespace ScratchLocalRetieC
+
+noncomputable def doubledAlignedSlot
+    {T : EvenTorus} {omega eta : SixVertexArrows T}
+    (homega : omega.IceRule) (heta : eta.IceRule)
+    (hdegree : SixVertexLocallyDegreeTwo omega eta)
+    (layer : Bool) (x : DoubledAlignedState omega eta) : Bool :=
+  let selected := orientedDartBoundaryAlignedSlot
+    homega heta hdegree layer x.1
+  if x.2 then !selected else selected
+
+def doubledAlignedVertex
+    {T : EvenTorus} {omega eta : SixVertexArrows T}
+    (x : DoubledAlignedState omega eta) : T.Vertex :=
+  x.1.1.1.1
+
+noncomputable def doubledAlignedBlackDart
+    {T : EvenTorus} {omega eta : SixVertexArrows T}
+    (homega : omega.IceRule) (heta : eta.IceRule)
+    (hdegree : SixVertexLocallyDegreeTwo omega eta)
+    (layer : Bool) (x : DoubledAlignedState omega eta) :
+    FKMedialBlackDart T :=
+  blackDartOfStrandSlot
+    (alignedRoutingLoopPairing homega heta hdegree layer)
+    (doubledAlignedVertex x,
+      doubledAlignedSlot homega heta hdegree layer x)
+
+
+end ScratchLocalRetieC

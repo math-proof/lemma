@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.RayClass.CongruenceEquivalence
+import Def.NumberTheory.NumberField.RayClass.CongruenceEquivalence
 open scoped nonZeroDivisors
 open NumberField.Modulus
 open CongruenceSubgroupPair

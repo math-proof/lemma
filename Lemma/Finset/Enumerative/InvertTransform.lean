@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.InvertTransform
+import Def.Combinatorics.Enumerative.InvertTransform
 open MetaMathlibExt
 
 

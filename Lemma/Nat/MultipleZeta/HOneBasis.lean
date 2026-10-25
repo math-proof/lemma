@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.MultipleZeta.HOneBasis
+import Theorem.NumberTheory.MultipleZeta.HOneBasis.Part3
 open `x`-run (which never occurs for `H^1` words). -/
 open MetaMathlibExt.MultipleZeta
 open MathlibExt.NumberTheory.MultipleZeta.WordAlgebraWanted

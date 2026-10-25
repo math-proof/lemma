@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.RearickLogarithm
+import Def.NumberTheory.RearickLogarithm
 open MetaMathlibExt
 
 

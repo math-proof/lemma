@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectEulerDefectClassification
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEulerDefectClassification
 open Finset StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.BoundaryRusso
+import Theorem.StatisticalMechanics.Code.FK.BoundaryRusso
 open Finset StatMech StatMech.FK
 
 

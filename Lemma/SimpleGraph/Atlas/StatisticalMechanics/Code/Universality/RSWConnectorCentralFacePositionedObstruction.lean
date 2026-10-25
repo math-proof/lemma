@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWConnectorCentralFacePositionedObstruction
+import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorCentralFacePositionedObstruction.Part3
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

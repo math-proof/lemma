@@ -4,7 +4,6 @@ import Mathlib.RingTheory.Ideal.Maximal
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Lemma.FLTPrelim.FreyPackage
 import Instance.FLTPrelim_GaloisRep
-import Instance.FLTPrelim_GaloisRep
 import Instance.FLTPrelim_Modularity
 
 set_option autoImplicit false

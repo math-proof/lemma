@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.HolleyConditionalCapClose
+import Theorem.StatisticalMechanics.Code.FK.HolleyConditionalCapClose.Part2
 open MeasureTheory Filter Topology Set SimpleGraph StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 
 

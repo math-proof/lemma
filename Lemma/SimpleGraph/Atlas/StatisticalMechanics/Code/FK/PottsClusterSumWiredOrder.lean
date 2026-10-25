@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PottsClusterSumWiredOrder
+import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumWiredOrder
 open MeasureTheory Set StatMech StatMech.FK
 
 

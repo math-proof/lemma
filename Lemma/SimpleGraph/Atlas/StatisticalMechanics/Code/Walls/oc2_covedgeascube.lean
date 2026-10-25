@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc2_covedgeascube
+import Theorem.StatisticalMechanics.Code.Walls.oc2_covedgeascube
 open Finset MeasureTheory StatMech StatMech.Walls
 
 

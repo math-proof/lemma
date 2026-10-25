@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Entry2Corollary1DerivativeSeries
+import Def.NumberTheory.Ramanujan.Part1Ch3Entry2Corollary1DerivativeSeries
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry2Corollary1DerivativeSeries
 

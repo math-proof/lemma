@@ -1,0 +1,755 @@
+-- Author: @toskua, Avocado
+-- Provenance: Adam Kiezun authored the original formalization
+-- (commit 8a13ba393c1d23f85b900081c600941a4bdd56dc); @toskua, Avocado
+-- authored only the Convexity.StdSimplex representation migration.
+
+import Mathlib.Analysis.Convex.Caratheodory
+import Mathlib.Analysis.Convex.Exposed
+import Mathlib.Analysis.Convex.Segment
+import Mathlib.Analysis.Convex.Slope
+import Mathlib.Analysis.Convex.Topology
+import Mathlib.Analysis.LocallyConvex.Separation
+import Mathlib.Analysis.Normed.Module.FiniteDimension
+import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
+import Mathlib.LinearAlgebra.Dimension.Constructions
+import Mathlib.LinearAlgebra.Dual.Lemmas
+import Mathlib.Topology.Algebra.Module.FiniteDimension
+import Mathlib.Topology.Baire.Lemmas
+import Mathlib.Topology.Baire.CompleteMetrizable
+import Mathlib.Tactic.Module
+import Mathlib.Topology.Bases
+import Def.Analysis.Convex.Straszewicz.Part4
+/-!
+# Straszewicz's theorem on exposed points
+
+Every extreme point of a compact convex set in a finite-dimensional real
+normed space lies in the closure of its exposed points.
+
+Primary source: S. Straszewicz, "Über exponierte Punkte abgeschlossener
+Punktmengen", Fundamenta Mathematicae 24 (1935), 139–143,
+DOI 10.4064/FM-24-1-139-143.
+-/
+
+
+namespace Convex.Straszewicz
+
+open Set Metric Filter TopologicalSpace
+
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
+
+variable {h : StrongDual ℝ E → ℝ} {x : StrongDual ℝ E}
+
+section Support
+
+variable {K : Set E}
+
+omit [FiniteDimensional ℝ E] in
+/-- Sublevel sets of the symmetrized directional derivative are open. -/
+theorem dirDeriv_sublevel_open (hK : IsCompact K) (hKne : K.Nonempty)
+    (v : StrongDual ℝ E) (c : ℝ) :
+    IsOpen {x | dirDeriv (suppFunc K) x v + dirDeriv (suppFunc K) x (-v) < c} := by
+  have hcont := suppFunc_continuous hK hKne
+  have hinner : ∀ (t : ℝ) (w : StrongDual ℝ E),
+      Continuous (fun x : StrongDual ℝ E => x + t • w) :=
+    fun t w => continuous_id.add continuous_const
+  have hQ : ∀ t₁ t₂ : ℝ, Continuous
+      (fun x => (suppFunc K (x + t₁ • v) - suppFunc K x) / t₁
+        + ((suppFunc K (x + t₂ • (-v)) - suppFunc K x) / t₂)) := by
+    intro t₁ t₂
+    apply Continuous.add
+    · apply Continuous.div_const
+      apply Continuous.sub
+      · exact hcont.comp (hinner t₁ v)
+      · exact hcont
+    · apply Continuous.div_const
+      apply Continuous.sub
+      · exact hcont.comp (hinner t₂ (-v))
+      · exact hcont
+  have hunion : {x | dirDeriv (suppFunc K) x v + dirDeriv (suppFunc K) x (-v) < c}
+      = ⋃ t₁ ∈ Ioi (0 : ℝ), ⋃ t₂ ∈ Ioi (0 : ℝ),
+        {x | (suppFunc K (x + t₁ • v) - suppFunc K x) / t₁
+          + ((suppFunc K (x + t₂ • (-v)) - suppFunc K x) / t₂) < c} := by
+    ext x
+    simp only [Set.mem_iUnion, Set.mem_Ioi]
+    constructor
+    · intro hx
+      have hx' : dirDeriv (suppFunc K) x v + dirDeriv (suppFunc K) x (-v) < c := hx
+      have hδ : (0 : ℝ) < (c - (dirDeriv (suppFunc K) x v
+          + dirDeriv (suppFunc K) x (-v))) / 2 := by linarith
+      have e1 : dirDeriv (suppFunc K) x v
+          < dirDeriv (suppFunc K) x v
+            + (c - (dirDeriv (suppFunc K) x v
+              + dirDeriv (suppFunc K) x (-v))) / 2 := by linarith
+      have e2 : dirDeriv (suppFunc K) x (-v)
+          < dirDeriv (suppFunc K) x (-v)
+            + (c - (dirDeriv (suppFunc K) x v
+              + dirDeriv (suppFunc K) x (-v))) / 2 := by linarith
+      obtain ⟨q₁, ⟨t₁, ht₁, rfl⟩, hQ₁⟩ := (csInf_lt_iff
+        (dirQuot_bddBelow (suppFunc_convex hK hKne) v)
+        (dirQuot_nonempty (h := suppFunc K) (x := x) v)).mp e1
+      obtain ⟨q₂, ⟨t₂, ht₂, rfl⟩, hQ₂⟩ := (csInf_lt_iff
+        (dirQuot_bddBelow (suppFunc_convex hK hKne) (-v))
+        (dirQuot_nonempty (h := suppFunc K) (x := x) (-v))).mp e2
+      simp only [] at hQ₁ hQ₂
+      refine ⟨t₁, ht₁, t₂, ht₂, ?_⟩
+      change (suppFunc K (x + t₁ • v) - suppFunc K x) / t₁
+        + ((suppFunc K (x + t₂ • (-v)) - suppFunc K x) / t₂) < c
+      linarith
+    · rintro ⟨t₁, ht₁, t₂, ht₂, hx⟩
+      have hx' : (suppFunc K (x + t₁ • v) - suppFunc K x) / t₁
+          + ((suppFunc K (x + t₂ • (-v)) - suppFunc K x) / t₂) < c := hx
+      have g1 : dirDeriv (suppFunc K) x v
+          ≤ (suppFunc K (x + t₁ • v) - suppFunc K x) / t₁ :=
+        dirDeriv_le_quot (suppFunc_convex hK hKne) _ ht₁
+      have g2 : dirDeriv (suppFunc K) x (-v)
+          ≤ (suppFunc K (x + t₂ • (-v)) - suppFunc K x) / t₂ :=
+        dirDeriv_le_quot (suppFunc_convex hK hKne) _ ht₂
+      change dirDeriv (suppFunc K) x v + dirDeriv (suppFunc K) x (-v) < c
+      linarith
+  rw [hunion]
+  exact isOpen_biUnion fun t₁ ht₁ => isOpen_biUnion fun t₂ ht₂ =>
+    isOpen_Iio.preimage (hQ t₁ t₂)
+
+omit [FiniteDimensional ℝ E] in
+/-- The directional derivative is continuous in the direction. -/
+theorem dirDeriv_continuous_in_v (hK : IsCompact K) (hKne : K.Nonempty)
+    (x : StrongDual ℝ E) :
+    Continuous (fun w => dirDeriv (suppFunc K) x w) := by
+  obtain ⟨C, hC, hlip⟩ := suppFunc_lipschitz hK hKne
+  have hconv := suppFunc_convex hK hKne
+  have hbound : ∀ w, dirDeriv (suppFunc K) x w ≤ C * ‖w‖ := by
+    intro w
+    have q1 : dirDeriv (suppFunc K) x w ≤ suppFunc K (x + w) - suppFunc K x := by
+      have q := dirDeriv_le_quot hconv (x := x) (v := w) (t := (1 : ℝ)) one_pos
+      have e1w : x + (1 : ℝ) • w = x + w := by rw [one_smul]
+      rw [e1w, div_one] at q
+      exact q
+    calc dirDeriv (suppFunc K) x w ≤ suppFunc K (x + w) - suppFunc K x := q1
+      _ ≤ C * ‖w‖ := by
+          have h := hlip (x + w) x
+          rwa [add_sub_cancel_left] at h
+  have hlipD : ∀ w₁ w₂, dirDeriv (suppFunc K) x w₁ - dirDeriv (suppFunc K) x w₂
+      ≤ C * ‖w₁ - w₂‖ := by
+    intro w₁ w₂
+    have hsub := dirDeriv_subadd (x := x) hconv w₂ (w₁ - w₂)
+    rw [add_sub_cancel] at hsub
+    have hb := hbound (w₁ - w₂)
+    linarith
+  have hC1 : (0 : ℝ) < C + 1 := by linarith
+  have hCδ : ∀ ε : ℝ, 0 < ε → C * (ε / (C + 1)) ≤ ε := by
+    intro ε hε
+    rw [← mul_div_assoc, div_le_iff₀ hC1, mul_add, mul_one]
+    linarith [mul_nonneg hC hε.le]
+  rw [Metric.continuous_iff]
+  intro w₀ ε hε
+  refine ⟨ε / (C + 1), div_pos hε hC1, fun w hw => ?_⟩
+  rw [dist_eq_norm] at hw
+  have h1 := hlipD w w₀
+  have h2 := hlipD w₀ w
+  have hn : ‖w₀ - w‖ = ‖w - w₀‖ := by rw [← norm_neg, neg_sub]
+  have hmain : C * ‖w - w₀‖ < ε := by
+    by_cases hC0 : C = 0
+    · rw [hC0, zero_mul]
+      exact hε
+    · have hCpos : 0 < C := lt_of_le_of_ne' hC hC0
+      calc C * ‖w - w₀‖ < C * (ε / (C + 1)) :=
+              mul_lt_mul_of_pos_left hw hCpos
+        _ ≤ ε := hCδ ε hε
+  rw [dist_eq_norm, Real.norm_eq_abs, abs_lt]
+  constructor
+  · have h2' : dirDeriv (suppFunc K) x w₀ - dirDeriv (suppFunc K) x w
+        ≤ C * ‖w - w₀‖ := by
+      calc dirDeriv (suppFunc K) x w₀ - dirDeriv (suppFunc K) x w
+          ≤ C * ‖w₀ - w‖ := h2
+        _ = C * ‖w - w₀‖ := by rw [hn]
+    linarith
+  · calc dirDeriv (suppFunc K) x w - dirDeriv (suppFunc K) x w₀
+        ≤ C * ‖w - w₀‖ := h1
+      _ < ε := hmain
+
+omit [FiniteDimensional ℝ E] in
+/-- Directional derivatives of the support function are bounded by any Lipschitz constant. -/
+theorem dirDeriv_suppFunc_bound (hK : IsCompact K) (hKne : K.Nonempty)
+    {C : ℝ} (hlip : ∀ l₁ l₂ : StrongDual ℝ E,
+      suppFunc K l₁ - suppFunc K l₂ ≤ C * ‖l₁ - l₂‖)
+    (x w : StrongDual ℝ E) : dirDeriv (suppFunc K) x w ≤ C * ‖w‖ := by
+  have hconv := suppFunc_convex hK hKne
+  have q1 : dirDeriv (suppFunc K) x w ≤ suppFunc K (x + w) - suppFunc K x := by
+    have q := dirDeriv_le_quot hconv (x := x) (v := w) (t := (1 : ℝ)) one_pos
+    have e1w : x + (1 : ℝ) • w = x + w := by rw [one_smul]
+    rw [e1w, div_one] at q
+    exact q
+  have h := hlip (x + w) x
+  rw [add_sub_cancel_left] at h
+  exact le_trans q1 h
+
+/-- Mazur's theorem: Gateaux points of the support function are dense. -/
+theorem dense_gateaux (hK : IsCompact K) (hKne : K.Nonempty) :
+    Dense {l | GateauxPt (suppFunc K) l} := by
+  rw [dense_iff_inter_open]
+  intro U hUopen hUne
+  by_contra hcon
+  have hno : ∀ x ∈ U, ¬ GateauxPt (suppFunc K) x := by
+    intro x hxU hg
+    exact hcon ⟨x, hxU, hg⟩
+  obtain ⟨dseq, hdseq⟩ : ∃ u : ℕ → StrongDual ℝ E, DenseRange u :=
+    exists_dense_seq (α := StrongDual ℝ E)
+  have hdseqD : Dense (Set.range dseq) := hdseq
+  have hDcont : ∀ x : StrongDual ℝ E,
+      Continuous (fun w => dirDeriv (suppFunc K) x w
+        + dirDeriv (suppFunc K) x (-w)) := by
+    intro x
+    exact (dirDeriv_continuous_in_v hK hKne x).add
+      ((dirDeriv_continuous_in_v hK hKne x).comp continuous_neg)
+  set G : ℕ × ℕ → Set (StrongDual ℝ E) := fun j =>
+    {x | 1 / ((j.2 : ℝ) + 1)
+      ≤ dirDeriv (suppFunc K) x (dseq j.1)
+        + dirDeriv (suppFunc K) x (-(dseq j.1))} with hG
+  have hGclosed : ∀ j, IsClosed (G j) := by
+    intro j
+    have h := dirDeriv_sublevel_open hK hKne (dseq j.1) (1 / ((j.2 : ℝ) + 1))
+    have heq : G j = {x | dirDeriv (suppFunc K) x (dseq j.1)
+        + dirDeriv (suppFunc K) x (-(dseq j.1)) < 1 / ((j.2 : ℝ) + 1)}ᶜ := by
+      ext x
+      simp only [hG, Set.mem_compl_iff, Set.mem_ofPred_eq, not_lt]
+    rw [heq]
+    exact h.isClosed_compl
+  have hcover : ∀ x ∈ U, ∃ j, x ∈ G j := by
+    intro x hxU
+    have hnx : ¬ ∀ v, dirDeriv (suppFunc K) x v + dirDeriv (suppFunc K) x (-v)
+        ≤ 0 := hno x hxU
+    push Not at hnx
+    obtain ⟨v, hv⟩ := hnx
+    have hopen : IsOpen ((fun w => dirDeriv (suppFunc K) x w
+        + dirDeriv (suppFunc K) x (-w)) ⁻¹' Ioi
+        ((dirDeriv (suppFunc K) x v + dirDeriv (suppFunc K) x (-v)) / 2)) :=
+      isOpen_Ioi.preimage (hDcont x)
+    have hne : (((fun w => dirDeriv (suppFunc K) x w
+        + dirDeriv (suppFunc K) x (-w)) ⁻¹' Ioi
+        ((dirDeriv (suppFunc K) x v + dirDeriv (suppFunc K) x (-v)) / 2)) :
+        Set _).Nonempty := by
+      refine ⟨v, ?_⟩
+      change (dirDeriv (suppFunc K) x v + dirDeriv (suppFunc K) x (-v)) / 2
+        < dirDeriv (suppFunc K) x v + dirDeriv (suppFunc K) x (-v)
+      linarith
+    obtain ⟨_, ⟨n, rfl⟩, hmem⟩ := hdseqD.exists_mem_open hopen hne
+    have hmem' : (dirDeriv (suppFunc K) x v + dirDeriv (suppFunc K) x (-v)) / 2
+        < dirDeriv (suppFunc K) x (dseq n)
+          + dirDeriv (suppFunc K) x (-(dseq n)) := hmem
+    obtain ⟨k, hk⟩ := exists_nat_one_div_lt (by linarith :
+      (0 : ℝ) < dirDeriv (suppFunc K) x (dseq n)
+        + dirDeriv (suppFunc K) x (-(dseq n)))
+    refine ⟨(n, k), ?_⟩
+    change 1 / ((k : ℝ) + 1) ≤ _
+    exact hk.le
+  obtain ⟨e', he'U⟩ := hUne
+  obtain ⟨ε, hε, hεU⟩ := Metric.mem_nhds_iff.mp (hUopen.mem_nhds he'U)
+  set ρ := ε / 2 with hρ
+  have hρpos : 0 < ρ := by linarith
+  have hBU : closedBall e' ρ ⊆ U := by
+    intro z hz
+    apply hεU
+    have hzd : dist z e' ≤ ρ := Metric.mem_closedBall.mp hz
+    rw [Metric.mem_ball]
+    linarith
+  set C : ℕ × ℕ → Set ↥(closedBall e' ρ) := fun j =>
+    Subtype.val ⁻¹' (G j) with hC
+  have hCclosed : ∀ j, IsClosed (C j) := by
+    intro j
+    exact isClosed_induced_iff.mpr ⟨G j, hGclosed j, rfl⟩
+  have hcovB : ∀ y : ↥(closedBall e' ρ), ∃ j, y ∈ C j := by
+    intro y
+    have hyU : (y : StrongDual ℝ E) ∈ U := hBU y.2
+    obtain ⟨j, hj⟩ := hcover _ hyU
+    exact ⟨j, hj⟩
+  have hex : ∃ j, (interior (C j)).Nonempty := by
+    by_contra hnone
+    push Not at hnone
+    have hUopen' : ∀ j, IsOpen ((C j)ᶜ) := fun j => (hCclosed j).isOpen_compl
+    have hUdense : ∀ j, Dense ((C j)ᶜ) := by
+      intro j
+      rw [dense_iff_closure_eq, closure_compl, hnone j, Set.compl_empty]
+    have hdense := dense_iInter_of_isOpen (f := fun j => (C j)ᶜ) hUopen' hUdense
+    have huniv : (⋃ j, C j) = univ := by
+      apply subset_antisymm (subset_univ _)
+      intro y _
+      obtain ⟨j, hj⟩ := hcovB y
+      exact Set.mem_iUnion.mpr ⟨j, hj⟩
+    have hempty : (⋂ j, (C j)ᶜ) = ∅ := by
+      rw [← Set.compl_iUnion, huniv, Set.compl_univ]
+    rw [hempty] at hdense
+    have hy₀ : (⟨e', Metric.mem_closedBall.mpr (by rw [dist_self]; exact hρpos.le)⟩ :
+        ↥(closedBall e' ρ)) ∈ closure (∅ : Set ↥(closedBall e' ρ)) := hdense _
+    rw [closure_empty] at hy₀
+    exact (Set.notMem_empty _ hy₀).elim
+  obtain ⟨⟨n, k⟩, hjint⟩ := hex
+  obtain ⟨z, hzint⟩ := hjint
+  have hzC : z ∈ C (n, k) := interior_subset hzint
+  obtain ⟨W₀, hW₀open, hW₀eq⟩ :=
+    isOpen_induced_iff (f := Subtype.val).mp (isOpen_interior (s := C (n, k)))
+  have hzW₀ : (z : StrongDual ℝ E) ∈ W₀ := by
+    rw [← Set.mem_preimage, hW₀eq]
+    exact hzint
+  have hW₀B : ∀ w ∈ W₀, w ∈ closedBall e' ρ → w ∈ G (n, k) := by
+    intro w hwW hwB
+    have h1 : (⟨w, hwB⟩ : ↥(closedBall e' ρ)) ∈ interior (C (n, k)) := by
+      rw [← hW₀eq]
+      exact hwW
+    have h2 : (⟨w, hwB⟩ : ↥(closedBall e' ρ)) ∈ C (n, k) :=
+      interior_subset h1
+    exact h2
+  -- point of W₀ strictly inside the ball, via the segment from e'
+  have hseg : ∃ z' ∈ W₀ ∩ ball e' ρ, True := by
+    have hcont_g : Continuous (fun s : ℝ => (1 - s) • e' + s • (z : StrongDual ℝ E)) :=
+      (continuous_const.sub continuous_id).smul continuous_const |>.add
+        (continuous_id.smul continuous_const)
+    have hg1 : (fun s : ℝ => (1 - s) • e' + s • (z : StrongDual ℝ E)) 1
+        = (z : StrongDual ℝ E) := by
+      simp [sub_self, zero_smul, zero_add, one_smul]
+    have hmem : (1 : ℝ) ∈ (fun s : ℝ => (1 - s) • e' + s • (z : StrongDual ℝ E)) ⁻¹' W₀ := by
+      change _ ∈ W₀
+      rw [hg1]
+      exact hzW₀
+    obtain ⟨δ, hδpos, hδsub⟩ := Metric.mem_nhds_iff.mp
+      ((hW₀open.preimage hcont_g).mem_nhds hmem)
+    -- s := 1 - min (δ/2) (1/2)
+    set m := min (δ / 2) (1 / 2 : ℝ) with hm
+    have hmpos : 0 < m := lt_min (by linarith) (by norm_num)
+    have hmle : m ≤ 1 / 2 := min_le_right _ _
+    have hmd : m < δ := lt_of_le_of_lt (min_le_left _ _) (by linarith)
+    set s := 1 - m with hs
+    have hs01 : 0 < s ∧ s < 1 := ⟨by linarith, by linarith⟩
+    have hsin : s ∈ ball (1 : ℝ) δ := by
+      rw [Metric.mem_ball, dist_eq_norm]
+      have : ‖s - 1‖ = m := by
+        rw [hs]
+        have : (1 - m) - 1 = -m := by ring
+        rw [this, norm_neg]
+        have : ‖m‖ = m := by rw [Real.norm_eq_abs, abs_of_pos hmpos]
+        exact this
+      rw [this]
+      exact hmd
+    have hgsW : (1 - s) • e' + s • (z : StrongDual ℝ E) ∈ W₀ := hδsub hsin
+    have hdist : dist ((1 - s) • e' + s • (z : StrongDual ℝ E)) e'
+        = s * dist (z : StrongDual ℝ E) e' := by
+      have e_seg : (1 - s) • e' + s • (z : StrongDual ℝ E) - e'
+          = s • ((z : StrongDual ℝ E) - e') := by
+        module
+      rw [dist_eq_norm, e_seg, norm_smul, Real.norm_eq_abs, abs_of_pos hs01.1, dist_eq_norm]
+    have hzB : dist (z : StrongDual ℝ E) e' ≤ ρ := Metric.mem_closedBall.mp z.2
+    have hlt : dist ((1 - s) • e' + s • (z : StrongDual ℝ E)) e' < ρ := by
+      rw [hdist]
+      have h3 : s * dist (z : StrongDual ℝ E) e' ≤ s * ρ :=
+        mul_le_mul_of_nonneg_left hzB hs01.1.le
+      have h4 : s * ρ < ρ := by
+        have h5 : s * ρ < 1 * ρ := mul_lt_mul_of_pos_right hs01.2 hρpos
+        rwa [one_mul] at h5
+      linarith
+    exact ⟨(1 - s) • e' + s • (z : StrongDual ℝ E),
+      ⟨hgsW, Metric.mem_ball.mpr hlt⟩, trivial⟩
+  obtain ⟨z', hz'W, -⟩ := hseg
+  -- V := W₀ ∩ ball e' ρ
+  set V : Set (StrongDual ℝ E) := W₀ ∩ ball e' ρ with hV
+  have hVopen : IsOpen V := hW₀open.inter isOpen_ball
+  have hVne : V.Nonempty := ⟨z', hz'W⟩
+  have hVG : ∀ w ∈ V, w ∈ G (n, k) := by
+    intro w hw
+    exact hW₀B w hw.1 (Metric.ball_subset_closedBall hw.2)
+  -- 1D contradiction on the line through z' in direction dseq n
+  obtain ⟨y₀, hy₀V⟩ := hVne
+  by_cases hv0 : dseq n = 0
+  · have hmem : dirDeriv (suppFunc K) y₀ (dseq n)
+        + dirDeriv (suppFunc K) y₀ (-(dseq n)) ≥ 1 / ((k : ℝ) + 1) := hVG y₀ hy₀V
+    rw [hv0] at hmem
+    simp only [neg_zero, dirDeriv_zero] at hmem
+    have hpos : (0 : ℝ) < 1 / ((k : ℝ) + 1) := one_div_pos.mpr (by positivity)
+    linarith
+  · -- slope growth contradiction
+    have hcont_l : Continuous (fun t : ℝ => y₀ + t • dseq n) :=
+      continuous_const.add (continuous_id.smul continuous_const)
+    have hpre : (0 : ℝ) ∈ (fun t : ℝ => y₀ + t • dseq n) ⁻¹' V := by
+      change y₀ + (0 : ℝ) • dseq n ∈ V
+      rw [zero_smul, add_zero]
+      exact hy₀V
+    obtain ⟨η, hηpos, hηsub⟩ := Metric.mem_nhds_iff.mp
+      ((hVopen.preimage hcont_l).mem_nhds hpre)
+    have hmemV : ∀ t : ℝ, |t| < η → y₀ + t • dseq n ∈ V := by
+      intro t ht
+      have htball : t ∈ ball (0 : ℝ) η := by
+        rw [Metric.mem_ball, dist_eq_norm]
+        have hnorm : ‖t - 0‖ = |t| := by rw [sub_zero, Real.norm_eq_abs]
+        rw [hnorm]
+        exact ht
+      exact hηsub htball
+    set a := -η / 2 with ha
+    set b := η / 2 with hb
+    have hab : a < b := by linarith
+    have haV : y₀ + a • dseq n ∈ V :=
+      hmemV a (by rw [ha, abs_div, abs_neg, abs_of_pos hηpos,
+        abs_of_pos (show (0:ℝ) < 2 from by norm_num)]; linarith)
+    have hbV : y₀ + b • dseq n ∈ V :=
+      hmemV b (by rw [hb, abs_div, abs_of_pos hηpos,
+        abs_of_pos (show (0:ℝ) < 2 from by norm_num)]; linarith)
+    have growth : ∀ s t' : ℝ, y₀ + s • dseq n ∈ V → y₀ + t' • dseq n ∈ V →
+        s < t' → dirDeriv (suppFunc K) (y₀ + t' • dseq n) (dseq n)
+          - dirDeriv (suppFunc K) (y₀ + s • dseq n) (dseq n) ≥ 1 / ((k : ℝ) + 1) := by
+      intro s t' hs ht' hst
+      have e : (y₀ + s • dseq n) + (t' - s) • dseq n = y₀ + t' • dseq n := by
+        module
+      have q1 := dirDeriv_le_quot (suppFunc_convex hK hKne) (x := y₀ + s • dseq n)
+        (dseq n) (show (0 : ℝ) < t' - s by linarith)
+      rw [e] at q1
+      have e' : (y₀ + t' • dseq n) + (t' - s) • (-(dseq n)) = y₀ + s • dseq n := by
+        module
+      have q2 := dirDeriv_le_quot (suppFunc_convex hK hKne) (x := y₀ + t' • dseq n)
+        (-(dseq n)) (show (0 : ℝ) < t' - s by linarith)
+      rw [e'] at q2
+      have hmem := hVG _ ht'
+      have hmem' : dirDeriv (suppFunc K) (y₀ + t' • dseq n) (dseq n)
+          + dirDeriv (suppFunc K) (y₀ + t' • dseq n) (-(dseq n))
+          ≥ 1 / ((k : ℝ) + 1) := hmem
+      have qneg : (suppFunc K (y₀ + s • dseq n) - suppFunc K (y₀ + t' • dseq n))
+          / (t' - s)
+          = -((suppFunc K (y₀ + t' • dseq n) - suppFunc K (y₀ + s • dseq n))
+            / (t' - s)) := by ring
+      rw [qneg] at q2
+      linarith
+    -- equally spaced points, telescoping
+    have key : ∀ N : ℕ, ((N : ℝ) + 1) / ((k : ℝ) + 1)
+        ≤ dirDeriv (suppFunc K) (y₀ + b • dseq n) (dseq n)
+          - dirDeriv (suppFunc K) (y₀ + a • dseq n) (dseq n) := by
+      intro N
+      have hstep : ∀ i ∈ Finset.range (N + 1),
+          dirDeriv (suppFunc K) (y₀ + (a + ((i : ℝ) + 1) * ((b - a) / (N + 1))) • dseq n) (dseq n)
+            - dirDeriv (suppFunc K) (y₀ + (a + (i : ℝ) * ((b - a) / (N + 1))) • dseq n) (dseq n)
+            ≥ 1 / ((k : ℝ) + 1) := by
+        intro i hi
+        apply growth
+        · apply hmemV
+          have : |a + (i : ℝ) * ((b - a) / (N + 1))| ≤ η / 2 := by
+            have hiN : (i : ℝ) ≤ N := by
+              have := Finset.mem_range.mp hi
+              exact Nat.cast_le.mpr (Nat.lt_succ_iff.mp this)
+            rw [ha, hb]
+            have hba : (0 : ℝ) ≤ (η / 2 - -η / 2) / (N + 1) := by positivity
+            have hub : -η / 2 + (i : ℝ) * ((η / 2 - -η / 2) / (N + 1)) ≤ η / 2 := by
+              have : (i : ℝ) * ((η / 2 - -η / 2) / (N + 1)) ≤ N * ((η / 2 - -η / 2) / (N + 1)) :=
+                mul_le_mul_of_nonneg_right hiN hba
+              have eNN : (N : ℝ) * ((η / 2 - -η / 2) / (N + 1)) =
+                η / 2 - -η / 2 - (η / 2 - -η / 2) / (N + 1) := by
+                field_simp
+                ring
+              linarith
+            have hlb : -η / 2 ≤ -η / 2 + (i : ℝ) * ((η / 2 - -η / 2) / (N + 1)) := by
+              have : (0 : ℝ) ≤ (i : ℝ) * ((η / 2 - -η / 2) / (N + 1)) :=
+                mul_nonneg (Nat.cast_nonneg _) hba
+              linarith
+            rw [abs_le]
+            constructor <;> linarith
+          linarith
+        · apply hmemV
+          have : |a + ((i : ℝ) + 1) * ((b - a) / (N + 1))| ≤ η / 2 := by
+            have hiN : (i : ℝ) ≤ N := by
+              have := Finset.mem_range.mp hi
+              exact Nat.cast_le.mpr (Nat.lt_succ_iff.mp this)
+            have hiN1 : ((i : ℝ) + 1) ≤ N + 1 := by linarith
+            rw [ha, hb]
+            have hba : (0 : ℝ) ≤ (η / 2 - -η / 2) / (N + 1) := by positivity
+            have hub : -η / 2 + ((i : ℝ) + 1) * ((η / 2 - -η / 2) / (N + 1)) ≤ η / 2 := by
+              have : ((i : ℝ) + 1) * ((η / 2 - -η / 2) / (N + 1))
+                  ≤ (N + 1) * ((η / 2 - -η / 2) / (N + 1)) :=
+                mul_le_mul_of_nonneg_right hiN1 hba
+              have eNN : ((N : ℝ) + 1) * ((η / 2 - -η / 2) / (N + 1))
+                  = η / 2 - -η / 2 := by
+                field_simp
+              linarith
+            have hlb : -η / 2 ≤ -η / 2 + ((i : ℝ) + 1) * ((η / 2 - -η / 2) / (N + 1)) := by
+              have : (0 : ℝ) ≤ ((i : ℝ) + 1) * ((η / 2 - -η / 2) / (N + 1)) :=
+                mul_nonneg (by positivity) hba
+              linarith
+            rw [abs_le]
+            constructor <;> linarith
+          linarith
+        · -- s < t'
+          have hpos : (0 : ℝ) < (b - a) / (N + 1) := by
+            apply div_pos _ (by positivity)
+            linarith
+          have : a + (i : ℝ) * ((b - a) / (N + 1))
+              < a + ((i : ℝ) + 1) * ((b - a) / (N + 1)) := by
+            have : (i : ℝ) * ((b - a) / (N + 1))
+                < ((i : ℝ) + 1) * ((b - a) / (N + 1)) := by
+              apply mul_lt_mul_of_pos_right _ hpos
+              linarith
+            linarith
+          exact this
+      have hsum := Finset.sum_le_sum hstep
+      -- telescope
+      have htel : ∑ i ∈ Finset.range (N + 1),
+          (dirDeriv (suppFunc K) (y₀ + (a + ((i : ℝ) + 1) * ((b - a) / (N + 1))) • dseq n) (dseq n)
+            - dirDeriv (suppFunc K) (y₀ + (a + (i : ℝ) * ((b - a) / (N + 1))) • dseq n) (dseq n))
+          = dirDeriv (suppFunc K) (y₀ + b • dseq n) (dseq n)
+            - dirDeriv (suppFunc K) (y₀ + a • dseq n) (dseq n) := by
+        have eN : a + ((N : ℝ) + 1) * ((b - a) / (N + 1)) = b := by
+          field_simp
+          ring
+        have e0 : a + ((0 : ℝ)) * ((b - a) / (N + 1)) = a := by ring
+        have hNcast : ((N + 1 : ℕ) : ℝ) = ((N : ℝ) + 1) := by push_cast; ring
+        have hfN : dirDeriv (suppFunc K)
+              (y₀ + (a + (((N + 1 : ℕ)) : ℝ) * ((b - a) / (N + 1))) • dseq n) (dseq n)
+            = dirDeriv (suppFunc K) (y₀ + b • dseq n) (dseq n) := by
+          rw [hNcast, eN]
+        have hf0 : dirDeriv (suppFunc K)
+              (y₀ + (a + (((0 : ℕ)) : ℝ) * ((b - a) / (N + 1))) • dseq n) (dseq n)
+            = dirDeriv (suppFunc K) (y₀ + a • dseq n) (dseq n) := by
+          rw [Nat.cast_zero, e0]
+        have hterm : ∀ i ∈ Finset.range (N + 1),
+            (dirDeriv (suppFunc K)
+              (y₀ + (a + ((i : ℝ) + 1) * ((b - a) / (N + 1))) • dseq n) (dseq n)
+              - dirDeriv (suppFunc K) (y₀ + (a + (i : ℝ) * ((b - a) / (N + 1))) • dseq n) (dseq n))
+            = ((fun j : ℕ =>
+              dirDeriv (suppFunc K) (y₀ + (a + (j : ℝ) * ((b - a) / (N + 1))) • dseq n)
+                (dseq n)) (i + 1)
+            - (fun j : ℕ =>
+              dirDeriv (suppFunc K) (y₀ + (a + (j : ℝ) * ((b - a) / (N + 1))) • dseq n)
+                (dseq n)) i) := by
+          intro i hi
+          have hss : a + ((i : ℝ) + 1) * ((b - a) / (N + 1))
+              = a + (((i + 1 : ℕ)) : ℝ) * ((b - a) / (N + 1)) := by
+            push_cast
+            ring
+          rw [hss]
+        have hsum_eq : (∑ i ∈ Finset.range (N + 1),
+              (dirDeriv (suppFunc K)
+                (y₀ + (a + ((i : ℝ) + 1) * ((b - a) / (N + 1))) • dseq n) (dseq n)
+                - dirDeriv (suppFunc K)
+                  (y₀ + (a + (i : ℝ) * ((b - a) / (N + 1))) • dseq n) (dseq n)))
+            = ∑ i ∈ Finset.range (N + 1),
+              ((fun j : ℕ =>
+                dirDeriv (suppFunc K) (y₀ + (a + (j : ℝ) * ((b - a) / (N + 1))) • dseq n)
+                  (dseq n)) (i + 1)
+              - (fun j : ℕ =>
+                dirDeriv (suppFunc K) (y₀ + (a + (j : ℝ) * ((b - a) / (N + 1))) • dseq n)
+                  (dseq n)) i) :=
+          Finset.sum_congr rfl (fun i hi => hterm i hi)
+        have e := Finset.sum_range_sub (fun j : ℕ =>
+          dirDeriv (suppFunc K)
+            (y₀ + (a + (j : ℝ) * ((b - a) / (N + 1))) • dseq n) (dseq n)) (N + 1)
+        rw [hsum_eq, e, hfN, hf0]
+      have hcard : ∑ i ∈ Finset.range (N + 1), (1 / ((k : ℝ) + 1))
+          = ((N : ℝ) + 1) / ((k : ℝ) + 1) := by
+        rw [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+        push_cast
+        ring
+      calc ((N : ℝ) + 1) / ((k : ℝ) + 1)
+          = ∑ i ∈ Finset.range (N + 1), (1 / ((k : ℝ) + 1)) := hcard.symm
+        _ ≤ ∑ i ∈ Finset.range (N + 1),
+            (dirDeriv (suppFunc K)
+              (y₀ + (a + ((i : ℝ) + 1) * ((b - a) / (N + 1))) • dseq n) (dseq n)
+              - dirDeriv (suppFunc K)
+                (y₀ + (a + (i : ℝ) * ((b - a) / (N + 1))) • dseq n) (dseq n)) := hsum
+        _ = dirDeriv (suppFunc K) (y₀ + b • dseq n) (dseq n)
+            - dirDeriv (suppFunc K) (y₀ + a • dseq n) (dseq n) := htel
+    -- unbounded linear growth contradicts the Lipschitz bound on directional derivatives
+    obtain ⟨C, hC, hlip⟩ := suppFunc_lipschitz hK hKne
+    have hBb : dirDeriv (suppFunc K) (y₀ + b • dseq n) (dseq n) ≤ C * ‖dseq n‖ :=
+      dirDeriv_suppFunc_bound hK hKne hlip _ _
+    have hBa_neg : dirDeriv (suppFunc K) (y₀ + a • dseq n) (-(dseq n))
+        ≤ C * ‖dseq n‖ := by
+      have h := dirDeriv_suppFunc_bound hK hKne hlip (y₀ + a • dseq n) (-(dseq n))
+      rwa [norm_neg] at h
+    have hnonneg : (0 : ℝ) ≤ dirDeriv (suppFunc K) (y₀ + a • dseq n) (dseq n)
+        + dirDeriv (suppFunc K) (y₀ + a • dseq n) (-(dseq n)) :=
+      dirDeriv_add_neg_nonneg (suppFunc_convex hK hKne) (dseq n)
+    have hle : dirDeriv (suppFunc K) (y₀ + b • dseq n) (dseq n)
+        - dirDeriv (suppFunc K) (y₀ + a • dseq n) (dseq n)
+        ≤ 2 * C * ‖dseq n‖ := by linarith
+    have hkpos : (0 : ℝ) < (k : ℝ) + 1 := by positivity
+    obtain ⟨N, hN⟩ := exists_nat_gt (2 * C * ‖dseq n‖ * ((k : ℝ) + 1))
+    have hkey := key N
+    have hfin : ((N : ℝ) + 1) ≤ 2 * C * ‖dseq n‖ * ((k : ℝ) + 1) := by
+      have hle' := le_trans hkey hle
+      have h := (div_le_iff₀ hkpos).mp hle'
+      linarith
+    have hN' : 2 * C * ‖dseq n‖ * ((k : ℝ) + 1) < (N : ℝ) := hN
+    linarith
+
+end Support
+
+section GateauxExposed
+
+set_option linter.unusedVariables false in
+omit [FiniteDimensional ℝ E] in
+/-- A maximizer of a functional lower-bounds the directional derivative. -/
+theorem maximizer_dirDeriv_ge {K : Set E} (hK : IsCompact K) (hKne : K.Nonempty)
+    {u : StrongDual ℝ E} {z : E} (hzK : z ∈ K) (hmax : u z = suppFunc K u)
+    (v : StrongDual ℝ E) : v z ≤ dirDeriv (suppFunc K) u v := by
+  unfold dirDeriv
+  apply le_csInf (dirQuot_nonempty v)
+  rintro b ⟨t, ht, rfl⟩
+  have hcont : Continuous (fun x => (u + t • v) x) :=
+    ((u + t • v) : E →L[ℝ] ℝ).continuous
+  have hbdd : BddAbove ((fun x => (u + t • v) x) '' K) := (hK.image hcont).bddAbove
+  have hsup : (u + t • v) z ≤ suppFunc K (u + t • v) :=
+    le_csSup hbdd ⟨z, hzK, rfl⟩
+  have e : (u + t • v) z = u z + t * v z := by
+    simp [add_apply, smul_apply, smul_eq_mul]
+  have ht' : (0 : ℝ) < t := ht
+  rw [e, hmax] at hsup
+  have key : v z * t ≤ suppFunc K (u + t • v) - suppFunc K u := by
+    rw [mul_comm]
+    linarith
+  exact (le_div_iff₀ ht').mpr key
+
+omit [FiniteDimensional ℝ E] in
+/-- At a Gateaux point of the support function, the maximizer is unique. -/
+theorem gateaux_unique_maximizer {K : Set E} (hK : IsCompact K) (hKne : K.Nonempty)
+    {l : StrongDual ℝ E} (hG : GateauxPt (suppFunc K) l)
+    {z₁ z₂ : E} (h₁ : z₁ ∈ K) (h₂ : z₂ ∈ K)
+    (e₁ : l z₁ = suppFunc K l) (e₂ : l z₂ = suppFunc K l) : z₁ = z₂ := by
+  have hD : ∀ v : StrongDual ℝ E, dirDeriv (suppFunc K) l v = v z₁ := by
+    intro v
+    apply le_antisymm
+    · have h1v := maximizer_dirDeriv_ge hK hKne h₁ e₁ v
+      have h2v := maximizer_dirDeriv_ge hK hKne h₁ e₁ (-v)
+      have hGv := hG v
+      have hsm : (-v) z₁ = -(v z₁) := by simp
+      rw [hsm] at h2v
+      linarith
+    · exact maximizer_dirDeriv_ge hK hKne h₁ e₁ v
+  by_contra hne
+  obtain ⟨f, hf⟩ := geometric_hahn_banach_point_point hne
+  have h1f := maximizer_dirDeriv_ge hK hKne h₂ e₂ f
+  rw [hD f] at h1f
+  linarith
+
+set_option linter.unusedVariables false in
+omit [FiniteDimensional ℝ E] in
+/-- A unique maximizer of a functional is an exposed point. -/
+theorem unique_maximizer_exposed {K : Set E} (hK : IsCompact K) (hKne : K.Nonempty)
+    {l : StrongDual ℝ E} {z : E} (hzK : z ∈ K) (hmax : l z = suppFunc K l)
+    (huniq : ∀ y ∈ K, l y = suppFunc K l → y = z) :
+    z ∈ K.exposedPoints ℝ := by
+  have hcont : Continuous (fun x => l x) := (l : E →L[ℝ] ℝ).continuous
+  have hbdd : BddAbove ((fun x => l x) '' K) := (hK.image hcont).bddAbove
+  have hle : ∀ y ∈ K, l y ≤ l z := by
+    intro y hy
+    have h : l y ≤ suppFunc K l :=
+      le_csSup hbdd (⟨y, hy, rfl⟩ : l y ∈ (fun x => l x) '' K)
+    rwa [← hmax] at h
+  rw [exposed_point_def]
+  exact ⟨hzK, l, fun y hy => ⟨hle y hy, fun h => huniq y hy (le_antisymm (hle y hy) h ▸ hmax)⟩⟩
+
+end GateauxExposed
+
+section StraszewiczMain
+
+/-- Straszewicz's theorem: every extreme point of a compact convex set in finite
+dimensions lies in the closure of the exposed points. -/
+theorem straszewicz_theorem {A : Set E} (hA_compact : IsCompact A)
+    (hA_convex : Convex ℝ A) :
+    A.extremePoints ℝ ⊆ closure (A.exposedPoints ℝ) := by
+  intro x hx
+  rw [hA_convex.mem_extremePoints_iff_mem_sdiff_convexHull_sdiff] at hx
+  obtain ⟨hxA, hxhull⟩ := hx
+  have hAne : A.Nonempty := ⟨x, hxA⟩
+  rw [Metric.mem_closure_iff]
+  intro ε hε
+  have hop : ∀ a b : StrongDual ℝ E, ∀ y : E, a y - b y ≤ ‖a - b‖ * ‖y‖ := by
+    intro a b y
+    have e : a y - b y = (a - b) y := by rw [sub_apply]
+    rw [e]
+    calc (a - b) y ≤ ‖(a - b) y‖ := le_abs_self _
+      _ ≤ ‖a - b‖ * ‖y‖ := ContinuousLinearMap.le_opNorm _ _
+  obtain ⟨xB, hxBK, hBmax⟩ :=
+    hA_compact.exists_isMaxOn hAne continuous_norm.continuousOn
+  have hBmax' : ∀ y ∈ A, ‖y‖ ≤ ‖xB‖ := fun y hy => hBmax hy
+  set B : Set E := A \ Metric.ball x ε with hBdef
+  have hBsub : B ⊆ A \ {x} := by
+    intro y hy
+    obtain ⟨hyA, hyB⟩ := hy
+    refine ⟨hyA, fun hmem => ?_⟩
+    rw [Set.mem_singleton_iff] at hmem
+    have hmem2 : y ∈ Metric.ball x ε := by
+      rw [hmem]
+      exact Metric.mem_ball_self hε
+    exact hyB hmem2
+  have hxB : x ∉ convexHull ℝ B := fun h => hxhull (convexHull_mono hBsub h)
+  have hBcompact : IsCompact B := by
+    have hbeq : B = A ∩ (Metric.ball x ε)ᶜ := Set.sdiff_eq _ _
+    rw [hbeq]
+    exact hA_compact.inter_right Metric.isOpen_ball.isClosed_compl
+  have hScompact : IsCompact (convexHull ℝ B) := IsCompact.convexHull_of_compact hBcompact
+  obtain ⟨f, u, hfu, hux⟩ := geometric_hahn_banach_closed_point
+    (convex_convexHull ℝ B) hScompact.isClosed hxB
+  have hδ : (0 : ℝ) < f x - u := sub_pos.mpr hux
+  set S : ℝ := ‖x‖ + ‖xB‖ + 1 with hSdef
+  have h2S : (0 : ℝ) < 2 * S := by
+    rw [hSdef]
+    have h1 := norm_nonneg x
+    have h2 := norm_nonneg xB
+    linarith
+  set ρ : ℝ := (f x - u) / (2 * S) with hρdef
+  have hρpos : 0 < ρ := div_pos hδ h2S
+  have hdense := dense_gateaux hA_compact hAne
+  rw [dense_iff_closure_eq] at hdense
+  have hmem : f ∈ closure {l | GateauxPt (suppFunc A) l} := by
+    rw [hdense]
+    exact Set.mem_univ f
+  obtain ⟨l', hl'G, hl'dist⟩ := Metric.mem_closure_iff.mp hmem ρ hρpos
+  have hl'G' : GateauxPt (suppFunc A) l' := hl'G
+  obtain ⟨z', hz'K, hz'max⟩ := suppFunc_attain hA_compact hAne l'
+  have huniq : ∀ y ∈ A, l' y = suppFunc A l' → y = z' :=
+    fun y hy he => gateaux_unique_maximizer hA_compact hAne hl'G' hy hz'K he hz'max
+  refine ⟨z', unique_maximizer_exposed hA_compact hAne hz'K hz'max huniq, ?_⟩
+  by_contra hz'ball
+  have hz'B : z' ∈ B := ⟨hz'K, fun h => hz'ball (Metric.mem_ball'.mp h)⟩
+  have hfz' : f z' < u := hfu _ (subset_convexHull ℝ B hz'B)
+  have hnorm : ‖f - l'‖ < ρ := by
+    have h1 : dist f l' < ρ := hl'dist
+    rwa [dist_eq_norm] at h1
+  have hnorm2 : ‖l' - f‖ < ρ := by
+    have h1 : dist f l' < ρ := hl'dist
+    rw [dist_comm] at h1
+    rwa [dist_eq_norm] at h1
+  have e1 : f x - l' x ≤ ρ * ‖x‖ := by
+    calc f x - l' x ≤ ‖f - l'‖ * ‖x‖ := hop f l' x
+      _ ≤ ρ * ‖x‖ := mul_le_mul_of_nonneg_right (le_of_lt hnorm) (norm_nonneg _)
+  have e2 : l' z' - f z' ≤ ρ * ‖xB‖ :=
+    calc l' z' - f z' ≤ ‖l' - f‖ * ‖z'‖ := hop l' f z'
+      _ ≤ ρ * ‖xB‖ :=
+          mul_le_mul (le_of_lt hnorm2) (hBmax' z' hz'K) (norm_nonneg _) hρpos.le
+  have hmax' : l' x ≤ l' z' := by
+    have hcont : Continuous (fun y => l' y) := ((l') : E →L[ℝ] ℝ).continuous
+    have hbdd : BddAbove ((fun y => l' y) '' A) := (hA_compact.image hcont).bddAbove
+    have h : l' x ≤ suppFunc A l' :=
+      le_csSup hbdd (⟨x, hxA, rfl⟩ : l' x ∈ (fun y => l' y) '' A)
+    rwa [← hz'max] at h
+  have hδS : f x - u < ρ * (‖x‖ + ‖xB‖) := by
+    have hdecomp : f x - u
+        = (f x - l' x) + (l' x - l' z') + (l' z' - f z') + (f z' - u) := by ring
+    rw [hdecomp]
+    have hneg1 : l' x - l' z' ≤ 0 := sub_nonpos.mpr hmax'
+    have hneg2 : f z' - u < 0 := sub_neg.mpr hfz'
+    calc (f x - l' x) + (l' x - l' z') + (l' z' - f z') + (f z' - u)
+        < ρ * ‖x‖ + 0 + ρ * ‖xB‖ + 0 := by
+          apply add_lt_add_of_le_of_lt
+          · exact add_le_add (add_le_add e1 hneg1) e2
+          · exact hneg2
+      _ = ρ * (‖x‖ + ‖xB‖) := by ring
+  have hSx : ‖x‖ + ‖xB‖ < 2 * S := by
+    rw [hSdef]
+    have h1 := norm_nonneg x
+    have h2 := norm_nonneg xB
+    linarith
+  have hfrac : (‖x‖ + ‖xB‖) / (2 * S) < 1 := (div_lt_one h2S).mpr hSx
+  have hlt : ρ * (‖x‖ + ‖xB‖) < f x - u := by
+    have hρe : ρ * (‖x‖ + ‖xB‖) = (f x - u) * ((‖x‖ + ‖xB‖) / (2 * S)) := by
+      rw [hρdef]
+      ring
+    rw [hρe]
+    have h := mul_lt_mul_of_pos_left hfrac hδ
+    rwa [mul_one] at h
+  linarith
+
+end StraszewiczMain
+end Convex.Straszewicz

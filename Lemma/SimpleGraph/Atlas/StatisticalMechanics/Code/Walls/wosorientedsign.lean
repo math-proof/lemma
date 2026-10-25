@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wosorientedsign
+import Theorem.StatisticalMechanics.Code.Walls.wosorientedsign.Part2
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

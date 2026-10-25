@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.PeierlsUncond
+import Theorem.StatisticalMechanics.Code.Ising.PeierlsUncond.Part11
 open MeasureTheory Filter Topology Finset SimpleGraph StatMech StatMech.Ising
 
 

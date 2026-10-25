@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.EscapeThickPointClose
+import Theorem.StatisticalMechanics.Code.Lattice.EscapeThickPointClose.Part2
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

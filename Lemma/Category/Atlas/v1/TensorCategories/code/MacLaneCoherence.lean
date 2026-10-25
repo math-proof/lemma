@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.MacLaneCoherence
+import Theorem.v1.Atlas.TensorCategories.code.MacLaneCoherence
 open CategoryTheory MonoidalCategory Category EGNO EGNO.MacLaneCoherence
 
 

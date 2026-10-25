@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexCoefficientAggregation
+import Theorem.StatisticalMechanics.Code.Universality.HexCoefficientAggregation.Part2
 open StatMech StatMech.Universality
 
 

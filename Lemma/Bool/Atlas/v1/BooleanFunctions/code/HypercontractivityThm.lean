@@ -1,11 +1,11 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Hypercontractivity
+import Def.v1.Atlas.BooleanFunctions.code.Hypercontractivity
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Stability
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Stability
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.TwoPointInequality
+import Def.v1.Atlas.BooleanFunctions.code.Stability
+import Def.v1.Atlas.BooleanFunctions.code.TwoPointInequality
 open Finset BigOperators Real
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.FractalSequenceTest
+import Theorem.MathlibExtTest.Combinatorics.FractalSequenceTest.Part5
 
 
 namespace MetaMathlibExt

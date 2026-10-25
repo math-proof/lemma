@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorThree
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorThree
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds
+import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
 open scoped Manifold
 open DifferentialFormSpace
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneActualSelectorSwitching
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneActualSelectorSwitching.Part3
 open SimpleGraph Finset StatMech StatMech.Sharpness
 
 

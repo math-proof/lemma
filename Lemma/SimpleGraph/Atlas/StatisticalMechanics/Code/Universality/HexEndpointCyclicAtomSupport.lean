@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexEndpointCyclicAtomSupport
+import Theorem.StatisticalMechanics.Code.Universality.HexEndpointCyclicAtomSupport
 open StatMech StatMech.Universality
 
 

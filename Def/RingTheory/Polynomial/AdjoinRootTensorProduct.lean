@@ -1,0 +1,112 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/Polynomial/AdjoinRootTensorProduct.lean -/
+
+import Mathlib.RingTheory.AdjoinRoot
+import Mathlib.RingTheory.Ideal.Quotient.Operations
+import Mathlib.RingTheory.PolynomialAlgebra
+import Mathlib.RingTheory.TensorProduct.Quotient
+open scoped TensorProduct
+
+
+namespace Ideal
+
+variable (K : Type*) [CommSemiring K]
+
+variable (R : Type*) [CommRing R] [Algebra K R]
+
+variable (ι : Type*) [Finite ι]
+
+variable (I : ι → Ideal R)
+
+variable (h : Pairwise fun i j => IsCoprime (I i) (I j))
+
+/-- Chinese remainder as a `K`-algebra equivalence. -/
+noncomputable def quotientInfAlgEquivPiQuotient :
+    (R ⧸ ⨅ i, I i) ≃ₐ[K] (∀ i, R ⧸ I i) :=
+  AlgEquiv.ofRingEquiv (f := Ideal.quotientInfRingEquivPiQuotient I h) (fun c => by
+    ext i
+    rfl)
+
+end Ideal
+
+namespace AdjoinRoot
+
+noncomputable def prodAlgEquiv {K : Type*} [Field K] {ι : Type*} [Fintype ι]
+    (g : ι → Polynomial K)
+    (hcop : Pairwise (fun i j => IsCoprime (g i) (g j))) :
+    AdjoinRoot (∏ i, g i) ≃ₐ[K] (∀ i, AdjoinRoot (g i)) := by
+  classical
+  have hI : Pairwise fun i j => IsCoprime (Ideal.span {g i} : Ideal (Polynomial K))
+      (Ideal.span {g j}) := fun i j hij =>
+    (Ideal.isCoprime_span_singleton_iff (g i) (g j)).mpr (hcop hij)
+  exact (Ideal.quotientEquivAlgOfEq K (Ideal.iInf_span_singleton hcop).symm).trans
+    (Ideal.quotientInfAlgEquivPiQuotient K (Polynomial K) ι
+      (fun i => Ideal.span {g i}) hI)
+
+noncomputable def tensorProductAlgEquiv {K K' : Type*} [Field K] [Field K']
+    [Algebra K K'] (f : Polynomial K) :
+    letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := AdjoinRoot f) (B := K');
+    (AdjoinRoot f ⊗[K] K') ≃ₐ[K'] AdjoinRoot (Polynomial.map (algebraMap K K') f) := by
+  letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := AdjoinRoot f) (B := K')
+  have hcomp : ((polyEquivTensor' K K').symm : K' ⊗[K] Polynomial K →+* _).comp
+      (Algebra.TensorProduct.includeRight (R := K) (A := K') (B := Polynomial K) :
+        Polynomial K →+* K' ⊗[K] Polynomial K) =
+      Polynomial.mapRingHom (algebraMap K K') := by
+    apply Polynomial.ringHom_ext
+    · intro r
+      simp [Algebra.TensorProduct.includeRight_apply, coe_polyEquivTensor'_symm,
+        polyEquivTensor_symm_apply_tmul_eq_smul, Polynomial.map_C]
+    · simp [Algebra.TensorProduct.includeRight_apply, coe_polyEquivTensor'_symm,
+        polyEquivTensor_symm_apply_tmul_eq_smul, Polynomial.map_X]
+  have h : Ideal.map ((polyEquivTensor' K K').symm : K' ⊗[K] Polynomial K →+* _)
+      (Ideal.map (↑(Algebra.TensorProduct.includeRight (R := K) (A := K')
+        (B := Polynomial K)) : Polynomial K →+* K' ⊗[K] Polynomial K)
+        (Ideal.span {f})) =
+      Ideal.span {Polynomial.map (algebraMap K K') f} := by
+    rw [Ideal.map_map, hcomp, Ideal.map_span]
+    simp
+  exact (((Algebra.TensorProduct.commRight K K' (AdjoinRoot f)).symm.trans
+    (Algebra.TensorProduct.tensorQuotientEquiv (R := K) K' (Polynomial K) K'
+      (Ideal.span {f}))).trans
+    ((Ideal.quotientEquivAlg _ _ (polyEquivTensor' K K').symm rfl).trans
+      (Ideal.quotientEquivAlgOfEq K' h)))
+
+/-- Base change of `AdjoinRoot f` along an explicit factorisation of `map f`
+into pairwise nonassociated irreducibles.
+
+This is the algebraic decomposition in ATLAS N86, Corollary 4.39 of
+[MIT 18.785 *Number Theory I*](https://ocw.mit.edu/courses/18-785-number-theory-i-fall-2021/).
+The corresponding upstream declaration is
+[`TensorSplitting.adjoinRoot_tensor_algEquiv_prod` in
+`v1/Atlas/NumberTheoryI/code/Chapter4/TensorSplitting.lean`, lines 146--160,
+at revision `e8b31c5cb0bec89b487ce33fe525a2c0b0f8b9c6`](https://github.com/facebookresearch/atlas-lean/blob/e8b31c5cb0bec89b487ce33fe525a2c0b0f8b9c6/v1/Atlas/NumberTheoryI/code/Chapter4/TensorSplitting.lean#L146-L160).
+There, `L` is presented as
+`K[X] / (f)`, the extension `K' / K` is arbitrary, and the distinct irreducible
+factors of `f` over `K'` are represented here by `g`, `hirr`, `hne`, and
+`hprod`. The source assumes that `f` is irreducible and separable in order to
+say that `L / K` is a finite separable field extension. Those assumptions are
+not needed for this CRT decomposition of the explicitly presented algebra
+`AdjoinRoot f`; accordingly, this theorem makes no stronger field or
+finite-etale claim about its factors. -/
+noncomputable def tensorProductAlgEquivPi {K K' : Type*} [Field K] [Field K']
+    [Algebra K K'] {ι : Type*} [Fintype ι] (f : Polynomial K)
+    (g : ι → Polynomial K') (hirr : ∀ i, Irreducible (g i))
+    (hne : Pairwise fun i j => ¬Associated (g i) (g j))
+    (hprod : Associated (Polynomial.map (algebraMap K K') f) (∏ i, g i)) :
+    letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := AdjoinRoot f)
+      (B := K');
+    (AdjoinRoot f ⊗[K] K') ≃ₐ[K'] (∀ i, AdjoinRoot (g i)) := by
+  letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := AdjoinRoot f)
+    (B := K')
+  have hprime : ∀ i, Prime (g i) := fun i =>
+    UniqueFactorizationMonoid.irreducible_iff_prime.mp (hirr i)
+  have hcop : Pairwise fun i j => IsCoprime (g i) (g j) := fun i j hij =>
+    (hprime i).coprime_iff_not_dvd.mpr fun hdvd =>
+      hne hij ((hprime i).associated_of_dvd (hprime j) hdvd)
+  have hspan :
+    Ideal.span ({Polynomial.map (algebraMap K K') f} : Set (Polynomial K')) =
+      Ideal.span ({∏ i, g i} : Set (Polynomial K')) :=
+    Ideal.span_singleton_eq_span_singleton.mpr hprod
+  exact ((tensorProductAlgEquiv f).trans
+    (Ideal.quotientEquivAlgOfEq K' hspan)).trans (prodAlgEquiv g hcop)
+
+end AdjoinRoot

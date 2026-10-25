@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SchwartzSingularSupport
+import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSingularSupport
 open MeasureTheory Set ConeSupport
 
 

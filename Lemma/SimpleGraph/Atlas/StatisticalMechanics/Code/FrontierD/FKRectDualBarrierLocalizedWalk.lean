@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierLocalizedWalk
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierLocalizedWalk
 open SimpleGraph StatMech StatMech.FrontierD
 
 

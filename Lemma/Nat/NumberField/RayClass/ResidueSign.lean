@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.RayClass.ResidueSign
+import Theorem.NumberTheory.NumberField.RayClass.ResidueSign.Part3
 open scoped nonZeroDivisors
 open NumberField
 open Modulus

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.FilteredColimitFiniteLimits
+import Instance.v1.Atlas.AlgebraicGeometryI.code.FilteredColimitFiniteLimits.Part2
 open CategoryTheory CategoryTheory.Limits
 
 

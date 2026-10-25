@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.TorusLoopHomology
+import Theorem.StatisticalMechanics.Code.Onsager.TorusLoopHomology.Part2
 open StatMech StatMech.Onsager
 
 

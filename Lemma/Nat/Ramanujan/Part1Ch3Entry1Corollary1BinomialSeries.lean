@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Entry1Corollary1BinomialSeries
+import Def.NumberTheory.Ramanujan.Part1Ch3Entry1Corollary1BinomialSeries
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry1Corollary1BinomialSeries
 

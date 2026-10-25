@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.FourierTransformation
+import Theorem.v1.Atlas.DifferentialAnalysis.code.FourierTransformation
 open MeasureTheory SchwartzMap FourierTransformation
 open scoped FourierTransform ComplexInnerProductSpace
 

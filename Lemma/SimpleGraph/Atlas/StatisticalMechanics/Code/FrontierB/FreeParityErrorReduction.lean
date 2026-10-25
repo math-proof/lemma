@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.FreeParityErrorReduction
+import Theorem.StatisticalMechanics.Code.FrontierB.FreeParityErrorReduction.Part3
 open Set StatMech StatMech.FK
 
 

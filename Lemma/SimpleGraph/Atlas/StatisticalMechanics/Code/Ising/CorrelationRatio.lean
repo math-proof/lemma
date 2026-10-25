@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.CorrelationRatio
+import Theorem.StatisticalMechanics.Code.Ising.CorrelationRatio
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Ising
 
 

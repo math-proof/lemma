@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.Exploration
+import Theorem.StatisticalMechanics.Code.Percolation.Exploration.Part5
 open MeasureTheory Function Set StatMech StatMech.Percolation
 
 

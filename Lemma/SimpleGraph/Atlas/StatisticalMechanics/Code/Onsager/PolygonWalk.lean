@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.PolygonWalk
+import Theorem.StatisticalMechanics.Code.Onsager.PolygonWalk.Part3
 open StatMech StatMech.Onsager StatMech.Onsager.PolygonWalk
 
 

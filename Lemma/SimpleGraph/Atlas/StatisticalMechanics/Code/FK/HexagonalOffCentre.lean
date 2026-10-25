@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.HexagonalOffCentre
+import Theorem.StatisticalMechanics.Code.FK.HexagonalOffCentre.Part5
 open Finset Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

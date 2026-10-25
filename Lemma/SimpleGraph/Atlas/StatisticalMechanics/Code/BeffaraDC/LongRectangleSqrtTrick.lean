@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.LongRectangleSqrtTrick
+import Theorem.StatisticalMechanics.Code.BeffaraDC.LongRectangleSqrtTrick
 open MeasureTheory Set StatMech StatMech.BeffaraDC
 
 

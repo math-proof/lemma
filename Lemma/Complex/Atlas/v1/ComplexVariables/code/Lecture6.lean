@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ComplexVariables.code.Lecture6
+import Def.v1.Atlas.ComplexVariables.code.Lecture6.Part3
 open Lecture6
 
 

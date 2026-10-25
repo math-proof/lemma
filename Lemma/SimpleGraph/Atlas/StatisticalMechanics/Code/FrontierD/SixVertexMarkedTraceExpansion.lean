@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexMarkedTraceExpansion
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedTraceExpansion.Part7
 open Finset Matrix StatMech StatMech.FrontierD
 
 

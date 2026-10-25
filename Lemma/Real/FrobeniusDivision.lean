@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.algebra.frobenius_division
-
+import Theorem.Algebra.Algebra.FrobeniusDivision.Part3
 open FrobeniusDivision
 
 /--
@@ -14,7 +13,6 @@ private lemma alg_map_injective
   Function.Injective (algebraMap ℝ A) := by
 -- proof
   apply algMap_injective
-
 
 /--
 [isIntegral_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
@@ -29,7 +27,6 @@ private lemma is_integral_mem
 -- proof
   apply isIntegral_mem x
 
-
 /--
 [minpoly_natDegree_le_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -42,7 +39,6 @@ private lemma minpoly_nat_degree_le_two
   (minpoly ℝ x).natDegree ≤ 2 := by
 -- proof
   apply minpoly_natDegree_le_two x
-
 
 /--
 [quad_relation](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
@@ -57,7 +53,6 @@ private lemma quadratic_relation
 -- proof
   apply quad_relation hx
 
-
 /--
 [exists_sq_eq_neg_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -71,7 +66,6 @@ private lemma exists_square_eq_neg_one
 -- proof
   apply exists_sq_eq_neg_one hx
 
-
 /--
 [complexHom_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -84,7 +78,6 @@ private lemma complex_hom_injective
   Function.Injective f := by
 -- proof
   apply complexHom_injective f
-
 
 /--
 [surjective_of_injective_of_finrank_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
@@ -102,7 +95,6 @@ private lemma surj_of_inj_of_finrank_eq
 -- proof
   apply surjective_of_injective_of_finrank_eq g hinj h
 
-
 /--
 [equiv_real_of_finrank_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -115,7 +107,6 @@ private lemma equiv_real_of_finrank_eq_one
   Nonempty (AlgEquiv ℝ A ℝ) := by
 -- proof
   apply equiv_real_of_finrank_one h
-
 
 /--
 [equiv_complex_of_finrank_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
@@ -132,7 +123,6 @@ private lemma equiv_complex_of_finrank_eq_two
 -- proof
   apply equiv_complex_of_finrank_two f hf h
 
-
 /--
 [finrank_complex_tower](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -146,7 +136,6 @@ private lemma complex_tower_finrank
 -- proof
   apply finrank_complex_tower f
 
-
 /--
 [field_finrank](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -157,7 +146,6 @@ private lemma finrank_of_field
   Module.finrank ℝ K = 1 ∨ Module.finrank ℝ K = 2 := by
 -- proof
   apply field_finrank
-
 
 /--
 [complexHom_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
@@ -171,7 +159,6 @@ private lemma complex_hom_apply
   complexHom hu z = algebraMap ℝ A z.re + z.im • u := by
 -- proof
   apply complexHom_apply hu z
-
 
 /--
 [adjoin_pair_comm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
@@ -187,7 +174,6 @@ private lemma pair_adjoin_commute
 -- proof
   apply adjoin_pair_comm h
 
-
 /--
 [centralizer_eq_range](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -201,7 +187,6 @@ private lemma centralizer_in_range
 -- proof
   apply centralizer_eq_range hi y hy
 
-
 /--
 [two_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -212,7 +197,6 @@ private lemma two_ne_zero_alg
   (2 : A) ≠ 0 := by
 -- proof
   apply FrobeniusDivision.two_ne_zero
-
 
 /--
 [eq_zero_of_add_self](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
@@ -226,7 +210,6 @@ private lemma zero_of_add_self_eq_zero
   X = 0 := by
 -- proof
   apply eq_zero_of_add_self h
-
 
 /--
 [exists_anticommute](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
@@ -242,7 +225,6 @@ private lemma exists_anticommuting
 -- proof
   apply exists_anticommute hi hw
 
-
 /--
 [quatHom_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -255,7 +237,6 @@ private lemma quat_hom_injective
   Function.Injective f := by
 -- proof
   apply quatHom_injective f
-
 
 /--
 [quatHom_mk](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
@@ -272,7 +253,6 @@ private lemma quat_hom_mk
 -- proof
   apply quatHom_mk hi hj hanti a b c d
 
-
 /--
 [comm_of_anticomm_anticomm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -286,7 +266,6 @@ private lemma anticomm_anticomm_comm
 -- proof
   apply comm_of_anticomm_anticomm ha hji
 
-
 /--
 [exists_nonreal](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -299,7 +278,6 @@ private lemma exists_non_real
   ∃ x : A, ∀ r : ℝ, algebraMap ℝ A r ≠ x := by
 -- proof
   apply exists_nonreal h1
-
 
 /--
 [quatHom_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
@@ -315,7 +293,6 @@ private lemma quat_hom_surjective
 -- proof
   apply quatHom_surjective hi hj hanti
 
-
 /--
 [frobenius_real_division_algebra](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Algebra/FrobeniusDivision.lean)
 -/
@@ -327,6 +304,5 @@ private lemma frobenius_real_div_algebra
     ∨ Nonempty (AlgEquiv ℝ A (Quaternion ℝ)) := by
 -- proof
   apply frobenius_real_division_algebra
-
 
 -- created on 2026-10-09

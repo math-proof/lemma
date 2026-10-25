@@ -1,5 +1,5 @@
 import sympy.vector.operators
-import sympy.concrete.sup
+import Macro.Order.Sup
 import Lemma.Random.Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico

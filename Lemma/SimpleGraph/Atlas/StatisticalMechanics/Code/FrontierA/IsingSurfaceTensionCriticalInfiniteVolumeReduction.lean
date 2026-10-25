@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionCriticalInfiniteVolumeReduction
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionCriticalInfiniteVolumeReduction
 open Filter Topology StatMech StatMech.FrontierA
 
 

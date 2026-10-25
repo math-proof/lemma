@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.ScanRemainder
+import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
 open CPythonListsort CPythonListsort.ScanRemainderMatches CPythonListsort.ScanRemainderEntriesMatch
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.VecCategoricalFusionData
+import Instance.v1.Atlas.TensorCategories.code.VecCategoricalFusionData
 open CategoryTheory MonoidalCategory Module TensorProduct VecCategoricalFusionData
 
 

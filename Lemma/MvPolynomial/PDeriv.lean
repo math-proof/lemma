@@ -1,9 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.mv_polynomial.p_deriv
-
+import Theorem.Algebra.MvPolynomial.PDeriv.Part2
 open MvPolynomial
-
 
 namespace MvPolynomial
 
@@ -131,7 +129,6 @@ lemma pderiv_mixedDifferential
     rw [map_sub, pderiv_comm]
 
 end MvPolynomial
-
 
 -- created on 2026-10-09
 -- updated on 2026-10-23

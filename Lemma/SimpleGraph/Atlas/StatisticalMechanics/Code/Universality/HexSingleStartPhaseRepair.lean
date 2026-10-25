@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexSingleStartPhaseRepair
+import Theorem.StatisticalMechanics.Code.Universality.HexSingleStartPhaseRepair.Part2
 open StatMech StatMech.Universality StatMech.Universality.HexSingleStartPhaseData StatMech.Universality.HexFiniteStripBoundaryData
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.Frobenius.Abelian
+import Theorem.RingTheory.Frobenius.Abelian
 
 
 /--

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.Q2
+import Theorem.StatisticalMechanics.Code.IsingFK.Q2.Part2
 open StatMech StatMech.IsingFK
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardTrivalentCoefficients
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardTrivalentCoefficients
 open StatMech StatMech.FrontierA
 
 

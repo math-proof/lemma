@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc9switching
+import Theorem.StatisticalMechanics.Code.Walls.gc9switching
 open Finset BigOperators Classical StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Ch22Conductor
+import Def.v1.Atlas.NumberTheoryI.code.Ch22Conductor
 open RayClassField Classical in LocalConductor GlobalConductor
 open scoped NumberField
 

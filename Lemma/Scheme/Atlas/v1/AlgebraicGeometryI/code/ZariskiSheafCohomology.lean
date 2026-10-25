@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.ZariskiSheafCohomology
+import Def.v1.Atlas.AlgebraicGeometryI.code.ZariskiSheafCohomology.Part4
 open AlgebraicGeometry CategoryTheory CategoryTheory.Abelian TopologicalSpace ZariskiSheafCohomology
 
 

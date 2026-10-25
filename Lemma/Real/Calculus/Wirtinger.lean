@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.Wirtinger
+import Theorem.Analysis.Calculus.Wirtinger
 
 open Real.Calculus.Wirtinger
 

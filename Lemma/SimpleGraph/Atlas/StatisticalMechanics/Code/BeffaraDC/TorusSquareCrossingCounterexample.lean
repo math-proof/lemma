@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.TorusSquareCrossingCounterexample
+import Theorem.StatisticalMechanics.Code.BeffaraDC.TorusSquareCrossingCounterexample
 open SimpleGraph Set StatMech StatMech.BeffaraDC
 
 

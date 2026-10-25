@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.ChamberComplex.Folding
+import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
 import Lemma.List.All.of.All.IsChain.Ne
 import Lemma.Nat.NotChamberAdjacent
-import sympy.atlas.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex
+import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
 open scoped Classical
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.NonnegativeCurrentFiniteMarginal
+import Theorem.StatisticalMechanics.Code.FrontierB.NonnegativeCurrentFiniteMarginal.Part2
 open MeasureTheory StatMech StatMech.FrontierB
 
 

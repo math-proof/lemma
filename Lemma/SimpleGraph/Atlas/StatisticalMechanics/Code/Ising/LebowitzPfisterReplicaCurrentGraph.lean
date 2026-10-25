@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaCurrentGraph
+import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaCurrentGraph.Part6
 open Finset StatMech StatMech.Ising
 
 

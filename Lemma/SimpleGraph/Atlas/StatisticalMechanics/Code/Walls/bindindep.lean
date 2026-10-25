@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bindindep
+import Theorem.StatisticalMechanics.Code.Walls.bindindep
 open Set SimpleGraph Finset MeasureTheory StatMech StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation StatMech.Walls
 
 

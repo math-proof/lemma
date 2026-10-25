@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_10_Bridges
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_10_Bridges
 open MeasureTheory ProbabilityTheory Matrix Real Finset BigOperators Rigollet Rigollet.Chapter4 Rigollet.Chapter4.Thm_4_10_Bridges
 
 

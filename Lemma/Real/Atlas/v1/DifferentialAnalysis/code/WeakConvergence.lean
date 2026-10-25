@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.WeakConvergence
+import Theorem.v1.Atlas.DifferentialAnalysis.code.WeakConvergence
 open TemperedDistribution MvPolynomial Filter Topology DifferentialOperators
 open scoped SchwartzMap
 

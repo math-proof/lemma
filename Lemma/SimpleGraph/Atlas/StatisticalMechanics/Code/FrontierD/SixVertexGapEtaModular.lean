@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexGapEtaModular
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexGapEtaModular
 open Filter Topology Complex UpperHalfPlane StatMech StatMech.FrontierD
 
 

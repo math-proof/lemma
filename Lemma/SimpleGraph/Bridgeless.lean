@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Bridgeless
+import Def.Combinatorics.SimpleGraph.Bridgeless
 open SimpleGraph
 
 

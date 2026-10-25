@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.VectorTwoPoint
+import Theorem.StatisticalMechanics.Code.Probability.VectorTwoPoint
 open Finset StatMech StatMech.Probability
 
 

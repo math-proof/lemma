@@ -6,7 +6,6 @@ import Lemma.Vector.SEqMap₂S.of.All_Eq.SEq.SEq
 import sympy.matrices.expressions.matmul
 open Bool List Nat Tensor Vector
 
-
 @[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
@@ -94,6 +93,5 @@ private lemma main
         simp at this
         rw [this]
         rfl
-
 
 -- created on 2026-01-11

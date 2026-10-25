@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Padics.MoritaGamma
+import Def.NumberTheory.Padics.MoritaGamma
 open MetaMathlibExt
 
 

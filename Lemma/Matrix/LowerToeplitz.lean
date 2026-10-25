@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.LowerToeplitz
+import Def.LinearAlgebra.Matrix.LowerToeplitz
 open Matrix
 
 

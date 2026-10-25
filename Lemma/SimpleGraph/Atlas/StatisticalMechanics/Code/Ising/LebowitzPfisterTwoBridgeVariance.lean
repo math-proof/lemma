@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoBridgeVariance
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoBridgeVariance.Part3
 open StatMech StatMech.Ising
 
 

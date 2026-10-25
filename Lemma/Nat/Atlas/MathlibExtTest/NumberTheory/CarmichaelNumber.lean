@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.CarmichaelNumber
+import Theorem.MathlibExtTest.NumberTheory.CarmichaelNumber
 
 
 /--

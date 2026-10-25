@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SpinCoefficientTarget
+import Theorem.StatisticalMechanics.Code.Onsager.SpinCoefficientTarget.Part2
 open StatMech StatMech.Onsager
 
 

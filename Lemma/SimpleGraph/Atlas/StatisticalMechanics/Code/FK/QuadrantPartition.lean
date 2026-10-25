@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.QuadrantPartition
+import Theorem.StatisticalMechanics.Code.FK.QuadrantPartition.Part9
 open SimpleGraph Filter Topology Set MeasureTheory StatMech StatMech.FK StatMech.FK.EdgeCount
 
 

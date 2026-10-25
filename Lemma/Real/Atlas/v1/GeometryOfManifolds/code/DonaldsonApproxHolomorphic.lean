@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.DonaldsonApproxHolomorphic
+import Def.v1.Atlas.GeometryOfManifolds.code.DonaldsonApproxHolomorphic
 open Donaldson
 open Real
 

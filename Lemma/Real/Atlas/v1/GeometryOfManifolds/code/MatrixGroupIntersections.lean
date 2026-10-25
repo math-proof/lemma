@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.MatrixGroupIntersections
+import Def.v1.Atlas.GeometryOfManifolds.code.MatrixGroupIntersections
 open Matrix CompatibleTriple
 
 

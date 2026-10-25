@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoBondUpper
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoBondUpper.Part2
 open Set StatMech StatMech.Ising
 
 

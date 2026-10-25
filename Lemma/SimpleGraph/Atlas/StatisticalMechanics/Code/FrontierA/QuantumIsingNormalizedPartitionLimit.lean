@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingNormalizedPartitionLimit
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingNormalizedPartitionLimit.Part2
 open Filter StatMech StatMech.FrontierA
 
 

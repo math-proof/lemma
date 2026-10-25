@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterLowFaceAssembly
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterLowFaceAssembly.Part8
 open Finset StatMech StatMech.Ising StatMech.Ising.LowFaceCertificate
 
 

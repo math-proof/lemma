@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedPathReversal
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedPathReversal
 open StatMech StatMech.FrontierD
 
 

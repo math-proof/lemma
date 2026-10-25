@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.RussoInfluence
+import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoInfluence.Part2
 open StatMech StatMech.BeffaraDC
 
 

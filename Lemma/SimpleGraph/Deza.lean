@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Deza
+import Structure.Combinatorics.SimpleGraph.Deza
 open SimpleGraph
 
 

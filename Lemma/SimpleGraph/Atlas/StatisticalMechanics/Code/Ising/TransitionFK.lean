@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.TransitionFK
+import Theorem.StatisticalMechanics.Code.Ising.TransitionFK
 open Real StatMech StatMech.Ising
 
 

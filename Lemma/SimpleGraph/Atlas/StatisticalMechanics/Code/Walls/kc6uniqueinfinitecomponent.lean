@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kc6uniqueinfinitecomponent
+import Theorem.StatisticalMechanics.Code.Walls.kc6uniqueinfinitecomponent
 open Set SimpleGraph StatMech StatMech.Walls
 
 

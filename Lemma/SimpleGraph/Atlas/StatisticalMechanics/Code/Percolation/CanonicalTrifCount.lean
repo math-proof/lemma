@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.CanonicalTrifCount
+import Theorem.StatisticalMechanics.Code.Percolation.CanonicalTrifCount.Part4
 open Set SimpleGraph Finset StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation StatMech.Percolation.CtcWitness
 
 

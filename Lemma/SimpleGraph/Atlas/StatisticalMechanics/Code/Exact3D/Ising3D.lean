@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.Ising3D
+import Theorem.StatisticalMechanics.Code.Exact3D.Ising3D.Part3
 open MeasureTheory StatMech StatMech.Exact3D
 
 

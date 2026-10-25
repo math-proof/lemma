@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalGhostEnergy
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalGhostEnergy
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFaceDualPercolation
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFaceDualPercolation
 open Filter MeasureTheory Set SimpleGraph StatMech StatMech.FrontierD
 
 

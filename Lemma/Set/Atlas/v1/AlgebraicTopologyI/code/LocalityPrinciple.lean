@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.LocalityPrinciple
+import Def.v1.Atlas.AlgebraicTopologyI.code.LocalityPrinciple.Part5
 open CategoryTheory AlgebraicTopologyI Finset BigOperators BarycentricSubdivision LocalityPrinciple
 
 

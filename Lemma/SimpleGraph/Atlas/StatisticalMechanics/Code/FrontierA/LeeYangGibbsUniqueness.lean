@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LeeYangGibbsUniqueness
+import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangGibbsUniqueness
 open Filter Finset MeasureTheory ProbabilityTheory Set Topology StatMech StatMech.FrontierA
 
 

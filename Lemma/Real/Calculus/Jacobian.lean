@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.Jacobian
+import Theorem.Analysis.Calculus.Jacobian
 
 open Real.Calculus.Jacobian
 open scoped Matrix

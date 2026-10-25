@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Chapter1.IntegralClosure
+import Abbrev.v1.Atlas.NumberTheoryI.code.Chapter1.IntegralClosure
 
 
 /--

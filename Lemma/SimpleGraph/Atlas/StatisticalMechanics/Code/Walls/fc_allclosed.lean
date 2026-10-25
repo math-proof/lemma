@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.fc_allclosed
+import Theorem.StatisticalMechanics.Code.Walls.fc_allclosed
 open SimpleGraph Filter Topology Set StatMech StatMech.Walls
 
 

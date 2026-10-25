@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_2_1
+import Abbrev.Analysis.Section_2_1
 import Lemma.Nat.EqRecurseNat0
 import Lemma.Nat.EqRecurse
 import Lemma.Nat.EqAndAll_Eq.is.Eq_Recurse

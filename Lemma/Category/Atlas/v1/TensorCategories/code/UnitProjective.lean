@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.UnitProjective
+import Class.v1.Atlas.TensorCategories.code.UnitProjective
 open CategoryTheory MonoidalCategory Limits TensorCategories
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectFaithfulShearCoordinates
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulShearCoordinates
 open StatMech StatMech.FrontierD
 
 

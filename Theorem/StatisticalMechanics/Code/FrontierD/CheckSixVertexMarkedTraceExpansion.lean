@@ -1,0 +1,29 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexMarkedTraceExpansion.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedTraceExpansion.Part7
+open StatMech.FrontierD
+
+#print axioms eval_sixVertexShiftedSectorTransferPolynomial_apply
+#print axioms map_sixVertexShiftedSectorTransferPolynomial
+#print axioms sixVertexShiftedSectorTransferPolynomial_coeffNonnegative
+#print axioms sixVertexShiftedSectorTransferPolynomial_pow_coeffNonnegative
+#print axioms eval_sixVertexShiftedSectorTracePolynomial
+#print axioms sixVertexMarkedSectorTraceCoefficient_nonneg
+#print axioms coeff_sixVertexMarkedFugacityPolynomial
+#print axioms eval_sixVertexMarkedTraceLogConcavityDifference
+#print axioms coeff_sixVertexMarkedTraceLogConcavityDifference
+#print axioms coeff_sixVertexMarkedTraceLogConcavityDifference_eq_sum_range
+#print axioms SixVertexMarkedAntidiagonalSuffixNonnegative.coefficientwiseLogConcave
+#print axioms Polynomial.eval_nonneg_of_coeff_nonneg
+#print axioms sixVertexSectorTrace_logConcave_of_markedCoefficientwise
+#print axioms sixVertexSectorTraceLogConcave_of_markedCoefficientwise
+
+

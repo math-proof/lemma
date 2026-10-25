@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.PlusStateSpinProfileLimit
+import Theorem.StatisticalMechanics.Code.Ising.PlusStateSpinProfileLimit
 open MeasureTheory Filter Topology StatMech StatMech.Ising
 
 

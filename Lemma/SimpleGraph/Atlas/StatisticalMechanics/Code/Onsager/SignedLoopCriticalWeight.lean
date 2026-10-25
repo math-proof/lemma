@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopCriticalWeight
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopCriticalWeight
 open StatMech StatMech.Onsager
 
 

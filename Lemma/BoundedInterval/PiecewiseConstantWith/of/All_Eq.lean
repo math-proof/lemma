@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_11_2
+import Theorem.Analysis.Section_11_2.Part6
 open Chapter11.BoundedInterval
 open Chapter11
 open Chapter11.PiecewiseConstantWith

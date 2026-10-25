@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.GradedAlgebra.MultigradedBettiResolutionInvariance
+import Structure.RingTheory.GradedAlgebra.MultigradedBettiResolutionInvariance
 open HomologicalComplex
 open MetaMathlibExt
 

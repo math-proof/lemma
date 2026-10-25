@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamFourColorCollisionStableSelector
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorCollisionStableSelector
 open Finset StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

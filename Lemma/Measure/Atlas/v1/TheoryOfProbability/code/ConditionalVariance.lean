@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.ConditionalVariance
+import Theorem.v1.Atlas.TheoryOfProbability.code.ConditionalVariance
 open MeasureTheory ProbabilityTheory Filter
 
 

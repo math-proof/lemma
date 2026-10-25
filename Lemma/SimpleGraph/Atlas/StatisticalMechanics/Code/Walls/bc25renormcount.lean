@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc25renormcount
+import Theorem.StatisticalMechanics.Code.Walls.bc25renormcount
 open Set SimpleGraph MeasureTheory StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Walls
 
 

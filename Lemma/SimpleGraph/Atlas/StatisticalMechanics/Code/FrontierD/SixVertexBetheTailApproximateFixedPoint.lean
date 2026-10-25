@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheTailApproximateFixedPoint
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheTailApproximateFixedPoint
 open StatMech StatMech.FrontierD
 
 

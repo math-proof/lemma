@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.LocalCFT
+import Def.v1.Atlas.NumberTheoryI.code.LocalCFT.Part3
 open Filter Set LocalArtinReciprocity LocalArtinMap
 open scoped RestrictedProduct
 open scoped Pointwise

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.CurveMorphisms
+import Def.v1.Atlas.ArithmeticGeometry.code.CurveMorphisms
 open AlgebraicGeometry CategoryTheory TopologicalSpace Order Set
 
 

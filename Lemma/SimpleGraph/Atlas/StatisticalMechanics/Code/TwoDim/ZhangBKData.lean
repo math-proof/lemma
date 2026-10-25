@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.TwoDim.ZhangBKData
+import Def.StatisticalMechanics.Code.TwoDim.ZhangBKData.Part6
 open MeasureTheory Set Filter Topology StatMech StatMech.TwoDim
 
 

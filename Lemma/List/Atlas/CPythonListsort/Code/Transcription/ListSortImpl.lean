@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Transcription.ListSortImpl
+import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
 open CPythonListsort
 
 

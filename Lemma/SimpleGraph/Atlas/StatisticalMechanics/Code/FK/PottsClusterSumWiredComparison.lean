@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PottsClusterSumWiredComparison
+import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumWiredComparison.Part4
 open Filter MeasureTheory Set Topology StatMech StatMech.FK
 
 

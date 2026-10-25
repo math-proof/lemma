@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.TrinomialCoefficient
+import Def.NumberTheory.TrinomialCoefficient
 
 
 namespace MetaMathlibExt

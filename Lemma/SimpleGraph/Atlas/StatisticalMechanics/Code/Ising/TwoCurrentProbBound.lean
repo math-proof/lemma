@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.TwoCurrentProbBound
+import Theorem.StatisticalMechanics.Code.Ising.TwoCurrentProbBound
 open Finset Classical StatMech StatMech.Ising
 
 

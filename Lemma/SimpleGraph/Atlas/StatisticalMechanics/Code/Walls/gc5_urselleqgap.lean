@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc5_urselleqgap
+import Theorem.StatisticalMechanics.Code.Walls.gc5_urselleqgap
 open Finset SimpleGraph Set StatMech StatMech.Walls StatMech.Walls.Gc5EqGap
 
 

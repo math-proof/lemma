@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusPhaseAssembly
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusPhaseAssembly
 open StatMech StatMech.FrontierA
 
 

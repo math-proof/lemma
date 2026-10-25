@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexBrickFaces
+import Theorem.StatisticalMechanics.Code.FK.TriHexBrickFaces.Part3
 open SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

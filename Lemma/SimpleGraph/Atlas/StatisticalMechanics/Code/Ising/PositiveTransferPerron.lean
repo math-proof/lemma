@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.PositiveTransferPerron
+import Theorem.StatisticalMechanics.Code.Ising.PositiveTransferPerron.Part2
 open Finset Matrix Filter Topology StatMech StatMech.Ising
 
 

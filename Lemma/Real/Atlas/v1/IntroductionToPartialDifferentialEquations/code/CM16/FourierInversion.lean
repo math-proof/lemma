@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierInversion
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierInversion
 open MeasureTheory Complex Finset FourierAnalysis
 open scoped FourierTransform RealInnerProductSpace
 

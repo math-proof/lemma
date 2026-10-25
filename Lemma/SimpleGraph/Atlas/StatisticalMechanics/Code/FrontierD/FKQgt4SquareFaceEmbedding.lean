@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFaceEmbedding
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFaceEmbedding.Part3
 open Set SimpleGraph StatMech StatMech.FrontierD
 
 

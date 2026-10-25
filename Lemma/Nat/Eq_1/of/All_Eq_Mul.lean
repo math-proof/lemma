@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraNotes.code.GroupHomomorphisms
+import Def.v1.Atlas.AlgebraNotes.code.GroupHomomorphisms
 open GroupHomomorphisms
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.SurfaceArea
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.SurfaceArea
 open Pointwise MeasureTheory Set Filter SurfaceArea
 
 

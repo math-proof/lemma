@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.StripCases
+import Theorem.StatisticalMechanics.Code.RSW.StripCases
 open Set MeasureTheory StatMech StatMech.RSW StatMech.RSW.StripCases
 
 

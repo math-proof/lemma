@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec23DerivedFunctors
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DerivedFunctors.Part3
 open CategoryTheory Category Limits Lec23
 
 

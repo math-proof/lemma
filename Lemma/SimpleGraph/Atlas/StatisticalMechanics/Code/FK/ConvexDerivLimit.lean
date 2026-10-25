@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.ConvexDerivLimit
+import Theorem.StatisticalMechanics.Code.FK.ConvexDerivLimit
 open Set Filter Topology StatMech StatMech.FK
 
 

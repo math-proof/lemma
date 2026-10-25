@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryWindingPersistence
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryWindingPersistence
 open Equiv SimpleGraph StatMech StatMech.FrontierD
 
 

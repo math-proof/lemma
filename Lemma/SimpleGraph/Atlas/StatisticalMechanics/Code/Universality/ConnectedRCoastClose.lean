@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.ConnectedRCoastClose
+import Theorem.StatisticalMechanics.Code.Universality.ConnectedRCoastClose.Part13
 open Set SimpleGraph MeasureTheory ProbabilityTheory StatMech.Lattice StatMech.RSW.Box StatMech StatMech.Universality
 
 

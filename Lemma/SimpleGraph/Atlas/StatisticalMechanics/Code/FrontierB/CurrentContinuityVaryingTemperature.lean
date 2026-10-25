@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentContinuityVaryingTemperature
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityVaryingTemperature.Part2
 open Filter MeasureTheory ProbabilityTheory MeasurableSpace Set Topology StatMech StatMech.FrontierB
 
 

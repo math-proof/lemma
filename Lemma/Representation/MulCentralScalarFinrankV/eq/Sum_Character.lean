@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.BurnsidePaqb.CentralCharacter
+import Def.GroupTheory.BurnsidePaqb.CentralCharacter.Part3
 open BurnsidePaqb
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils
+import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils.Part7
 open DifferentialFormSpace
 
 

@@ -1,0 +1,45 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7Entry10Zetaviabernoulli.lean -/
+
+/-
+Author: @akiezun, Avocado
+-/
+
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Analysis.Meromorphic.Basic
+import Mathlib.NumberTheory.LSeries.RiemannZeta
+import Def.Analysis.Ramanujan.Part1Ch7PowerDifference
+import Lemma.Complex.Part1Ch7PowerDifference
+import Mathlib.Analysis.Complex.HalfPlane
+import Mathlib.Analysis.Normed.Module.Connected
+import Mathlib.NumberTheory.LSeries.Dirichlet
+import Lemma.Nat.LSeries.RiemannZeta
+/-!
+# Ramanujan's Notebooks, Part I, Chapter 7, Entry 10, corollary
+
+For `φ_r(x) = ∑_{j ≥ 0} ((j + 1)ʳ - (j + 1 + x)ʳ)`, `∑_{k=1}^{n-1} φ_r(-k/n) = (n - n⁻ʳ) ζ(-r)`
+as meromorphic functions of `r`.
+-/
+
+
+namespace MathlibExt.Analysis.Ramanujan.Part1Ch7
+
+namespace Entry10Zetaviabernoulli
+
+open scoped Nat Real BigOperators Interval Polynomial ContDiff
+
+open Asymptotics Filter Finset Complex Topology MeasureTheory
+
+noncomputable section
+
+/-- The left side `∑_{k=1}^{n-1} φ_r(-k/n)` of the corollary to Entry 10, for a given `φ`. -/
+def chapter7Entry10CorollaryLeft
+    (phi : ℂ → ℂ → ℂ) (n : ℕ) (r : ℂ) : ℂ :=
+  ∑ k ∈ Icc 1 (n - 1), phi r (-((k : ℂ) / n))
+
+/-- The right side `(n - n⁻ʳ) ζ(-r)` of the corollary to Entry 10. -/
+def chapter7Entry10CorollaryRight (n : ℕ) (r : ℂ) : ℂ :=
+  ((n : ℂ) - Complex.cpow (n : ℂ) (-r)) * riemannZeta (-r)
+
+end
+end Entry10Zetaviabernoulli
+end MathlibExt.Analysis.Ramanujan.Part1Ch7

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationTransitionWeights
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationTransitionWeights.Part2
 open StatMech StatMech.Onsager
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionSheetGauge
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionSheetGauge
 open Finset StatMech StatMech.FrontierA
 
 

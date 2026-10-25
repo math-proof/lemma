@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FiniteFamilyDiagonalSelection
+import Theorem.StatisticalMechanics.Code.FrontierA.FiniteFamilyDiagonalSelection
 open Filter Topology StatMech StatMech.FrontierA
 
 

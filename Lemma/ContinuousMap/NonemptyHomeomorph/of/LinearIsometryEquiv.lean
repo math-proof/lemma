@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.BanachStone
+import Theorem.Analysis.NormedSpace.BanachStone
 
 /--
 [BanachStone](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/BanachStone.lean)

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWConstantMaintenance
+import Theorem.StatisticalMechanics.Code.Universality.RSWConstantMaintenance
 open Set MeasureTheory SimpleGraph StatMech StatMech.Universality
 
 

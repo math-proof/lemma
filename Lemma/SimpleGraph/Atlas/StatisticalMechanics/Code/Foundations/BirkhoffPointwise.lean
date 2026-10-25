@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.BirkhoffPointwise
+import Theorem.StatisticalMechanics.Code.Foundations.BirkhoffPointwise.Part4
 open MeasureTheory Filter Finset Function MeasurableSpace StatMech StatMech.BirkhoffAE
 
 

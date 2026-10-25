@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.complex.SchwarzPick
+import Theorem.Analysis.Complex.SchwarzPick
 
 open Complex.SchwarzPick
 

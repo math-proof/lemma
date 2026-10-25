@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.AizenmanInclusionExclusion
+import Theorem.StatisticalMechanics.Code.Ising.AizenmanInclusionExclusion.Part3
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Sharpness StatMech.Sharpness.RandomCurrent
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.GreatPicard
+import Def.Analysis.Complex.GreatPicard
 open Set Filter Topology Metric
 open MathlibExt.Analysis.Complex.GreatPicardWanted
 

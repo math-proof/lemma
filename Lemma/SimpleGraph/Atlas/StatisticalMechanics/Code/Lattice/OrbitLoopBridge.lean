@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.OrbitLoopBridge
+import Theorem.StatisticalMechanics.Code.Lattice.OrbitLoopBridge
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

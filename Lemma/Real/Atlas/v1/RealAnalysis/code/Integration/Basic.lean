@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.RealAnalysis.code.Integration.Basic
+import Def.v1.Atlas.RealAnalysis.code.Integration.Basic.Part2
 open Integration
 open Set Filter Topology
 

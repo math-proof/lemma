@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderEndpointLift
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderEndpointLift.Part3
 open SimpleGraph StatMech StatMech.FrontierD
 
 

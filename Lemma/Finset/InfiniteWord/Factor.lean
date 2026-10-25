@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.InfiniteWord.Factor
+import Def.Combinatorics.InfiniteWord.Factor
 open InfiniteWord
 
 

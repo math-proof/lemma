@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Idele
+import Abbrev.NumberTheory.NumberField.Idele.Part2
 open scoped RestrictedProduct NumberField.AdeleRing
 open InfinitePlace AbsoluteValue.Completion InfinitePlace.Completion IsDedekindDomain
 open NumberField

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.QuadraticForm.System
+import Def.LinearAlgebra.QuadraticForm.System
 open QuadraticForm
 
 

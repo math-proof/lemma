@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.ChowsLemma
+import Def.v1.Atlas.AlgebraicGeometryI.code.ChowsLemma.Part2
 open Polynomial ChowBlowup
 open AlgebraicGeometry CategoryTheory Limits
 

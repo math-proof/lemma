@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.RHorseNumberFubini
+import Def.Combinatorics.Enumerative.RHorseNumberFubini.Part4
 open scoped BigOperators
 open MetaMathlibExt
 

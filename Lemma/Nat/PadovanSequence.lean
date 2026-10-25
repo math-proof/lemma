@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PadovanSequence
+import Def.NumberTheory.PadovanSequence
 open MetaMathlibExt
 
 

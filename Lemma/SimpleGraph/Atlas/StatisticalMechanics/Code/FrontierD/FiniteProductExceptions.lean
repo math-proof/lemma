@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FiniteProductExceptions
+import Theorem.StatisticalMechanics.Code.FrontierD.FiniteProductExceptions
 open StatMech StatMech.FrontierD
 
 

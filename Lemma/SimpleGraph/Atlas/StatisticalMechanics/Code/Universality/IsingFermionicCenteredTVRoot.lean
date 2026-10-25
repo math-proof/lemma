@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCenteredTVRoot
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCenteredTVRoot
 open Filter Set Topology StatMech StatMech.Universality
 
 

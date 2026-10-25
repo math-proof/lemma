@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Reflection.UniqueAdjacentChamber
+import Theorem.v1.Atlas.Buildings.code.Reflection.UniqueAdjacentChamber
 open Set
 open scoped InnerProductSpace
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.KWMultiaffine
+import Theorem.StatisticalMechanics.Code.Onsager.KWMultiaffine
 open StatMech StatMech.Onsager
 
 

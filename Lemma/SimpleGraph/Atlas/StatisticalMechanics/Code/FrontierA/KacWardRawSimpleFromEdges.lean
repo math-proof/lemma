@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardRawSimpleFromEdges
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRawSimpleFromEdges
 open StatMech StatMech.FrontierA
 
 

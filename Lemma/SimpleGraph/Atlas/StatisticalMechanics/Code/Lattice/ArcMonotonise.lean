@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.ArcMonotonise
+import Theorem.StatisticalMechanics.Code.Lattice.ArcMonotonise
 open Set SimpleGraph StatMech StatMech.Lattice
 
 

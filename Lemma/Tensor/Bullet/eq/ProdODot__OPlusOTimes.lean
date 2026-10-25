@@ -1,4 +1,4 @@
-import sympy.concrete.prefix_sum.all_prefix_sums
+import Notation.Algebra.BigOperators.PrefixSum.AllPrefixSums.Part4
 
 
 @[path]

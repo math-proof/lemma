@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.MultipleZeta.Index
+import Theorem.MathlibExtTest.NumberTheory.MultipleZeta.Index.Part2
 
 
 namespace MetaMathlibExt.MultipleZeta

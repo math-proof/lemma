@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryPermutation
+import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryPermutation.Part3
 open SimpleGraph Equiv StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Data.Nat.MaxPrimeFac
+import Theorem.Data.Nat.MaxPrimeFac
 open Nat
 
 

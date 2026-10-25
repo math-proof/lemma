@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.DeltaBound
+import Theorem.StatisticalMechanics.Code.Sharpness.DeltaBound.Part2
 open SimpleGraph Finset Classical StatMech StatMech.Sharpness
 
 

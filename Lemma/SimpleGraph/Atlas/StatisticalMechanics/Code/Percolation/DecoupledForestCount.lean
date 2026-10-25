@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.DecoupledForestCount
+import Theorem.StatisticalMechanics.Code.Percolation.DecoupledForestCount.Part4
 open StatMech StatMech.Percolation
 
 

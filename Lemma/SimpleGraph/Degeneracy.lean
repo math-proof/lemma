@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Degeneracy
+import Def.Combinatorics.SimpleGraph.Degeneracy
 open SimpleGraph
 
 

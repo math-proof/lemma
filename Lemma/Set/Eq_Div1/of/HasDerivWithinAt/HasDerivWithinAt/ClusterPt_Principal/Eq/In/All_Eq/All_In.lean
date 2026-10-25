@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_10_4
+import Theorem.Analysis.Section_10_4
 open Chapter9
 open Chapter10
 open HasDerivWithinAt

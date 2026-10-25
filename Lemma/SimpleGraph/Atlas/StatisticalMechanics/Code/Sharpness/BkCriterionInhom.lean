@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BkCriterionInhom
+import Theorem.StatisticalMechanics.Code.Sharpness.BkCriterionInhom.Part2
 open Finset StatMech StatMech.Sharpness
 
 

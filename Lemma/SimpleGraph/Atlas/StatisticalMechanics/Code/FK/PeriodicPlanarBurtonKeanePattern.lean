@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeanePattern
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeanePattern.Part2
 open MeasureTheory Set SimpleGraph Finset StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

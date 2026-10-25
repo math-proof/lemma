@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Euclidean.MiquelTheorem
+import Instance.Geometry.Euclidean.MiquelTheorem
 open scoped EuclideanSpace
 open MetaMathlibExt
 

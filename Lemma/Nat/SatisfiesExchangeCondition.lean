@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionGenuine
+import Structure.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionGenuine
 open Finset BigOperators CoxeterExchangeGenuine
 
 

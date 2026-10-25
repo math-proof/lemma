@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.GenusOneRibbonEulerDefect
+import Theorem.StatisticalMechanics.Code.FrontierD.GenusOneRibbonEulerDefect
 open Finset Equiv StatMech StatMech.FrontierD
 
 

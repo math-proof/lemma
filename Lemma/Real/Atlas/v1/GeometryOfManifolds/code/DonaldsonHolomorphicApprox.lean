@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.DonaldsonHolomorphicApprox
+import Structure.v1.Atlas.GeometryOfManifolds.code.DonaldsonHolomorphicApprox
 open Real MeasureTheory
 
 

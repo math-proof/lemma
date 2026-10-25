@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarCriticalAssembly
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCriticalAssembly
 open MeasureTheory Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.TorusSpinSectors
+import Theorem.StatisticalMechanics.Code.Onsager.TorusSpinSectors.Part3
 open StatMech StatMech.Onsager
 
 

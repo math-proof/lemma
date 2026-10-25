@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
+import Instance.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
 open Real Set MeasureTheory CM8
 
 

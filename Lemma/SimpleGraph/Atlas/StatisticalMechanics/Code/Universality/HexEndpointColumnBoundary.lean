@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexEndpointColumnBoundary
+import Theorem.StatisticalMechanics.Code.Universality.HexEndpointColumnBoundary.Part2
 open StatMech StatMech.Universality
 
 

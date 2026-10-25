@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc116armproof
+import Theorem.StatisticalMechanics.Code.Walls.bc116armproof.Part3
 open Set SimpleGraph Finset StatMech StatMech.Walls
 
 

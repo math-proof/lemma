@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheWaveNormalization
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheWaveNormalization.Part4
 open Finset Matrix StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexDoubledCentralPressure
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDoubledCentralPressure.Part2
 open Filter Matrix Topology StatMech StatMech.FrontierD
 
 

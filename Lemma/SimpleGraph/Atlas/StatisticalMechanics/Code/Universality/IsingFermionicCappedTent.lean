@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCappedTent
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCappedTent
 open StatMech StatMech.Universality
 
 

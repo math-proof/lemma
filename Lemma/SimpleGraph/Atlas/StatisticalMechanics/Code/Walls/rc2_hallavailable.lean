@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc2_hallavailable
+import Theorem.StatisticalMechanics.Code.Walls.rc2_hallavailable
 open Finset Function StatMech ConfigSpace StatMech.Walls
 
 

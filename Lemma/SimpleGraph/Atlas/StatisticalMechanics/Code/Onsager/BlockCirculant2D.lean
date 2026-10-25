@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.BlockCirculant2D
+import Theorem.StatisticalMechanics.Code.Onsager.BlockCirculant2D
 open StatMech StatMech.Onsager
 
 

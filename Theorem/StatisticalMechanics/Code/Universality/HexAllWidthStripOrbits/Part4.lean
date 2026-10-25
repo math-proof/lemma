@@ -1,0 +1,273 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexAllWidthStripOrbits.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthStripGeometry.Part18
+import Theorem.StatisticalMechanics.Code.Universality.HexMirrorOrbitBoundary.Part3
+import Def.StatisticalMechanics.Code.Universality.HexAllWidthStripOrbits.Part5
+
+
+namespace StatMech.Universality
+
+open Complex HexWalk Set
+
+open scoped BigOperators
+
+noncomputable section
+
+theorem hexAWOrbitPiece_eq_raw {T L : ℕ} {hT : 0 < T} :
+    (hexAWOrbitPiece (T := T) (L := L) (hT := hT)) =
+      fun o : HexAWPairIndex T L ⊕ HexAWFixedIndex T L hT =>
+        match o with
+        | .inl i => ({i.1, hexAWReflectIncidence i.1} :
+            Finset (HexAWIncidence T L))
+        | .inr k => {k.1} := by
+  funext o
+  cases o <;> rfl
+
+theorem hexAWPairIndex_ne_reflect {T L : ℕ} (i : HexAWPairIndex T L) :
+    i.1 ≠ hexAWReflectIncidence i.1 := by
+  intro h
+  exact (Nat.ne_of_lt i.2.2) (congrArg hexAWIncidenceRank h)
+
+theorem hexAWPairIndex_reflect_mem_boundary {T L : ℕ}
+    (i : HexAWPairIndex T L) :
+    hexAWReflectIncidence i.1 ∈ hexAWBoundaryIncidences T L :=
+  (hexAWReflectIncidence_mem_boundary_iff i.1).2 i.2.1
+
+theorem hexAWPairPiece_mem_boundary {T L : ℕ} (i : HexAWPairIndex T L)
+    {e : HexAWIncidence T L} (he : e ∈ hexAWPairPiece i) :
+    e ∈ hexAWBoundaryIncidences T L := by
+  simp only [hexAWPairPiece, Finset.mem_insert, Finset.mem_singleton] at he
+  rcases he with rfl | rfl
+  · exact i.2.1
+  · exact hexAWPairIndex_reflect_mem_boundary i
+
+theorem hexAWPairPiece_not_start {T L : ℕ} (hT : 0 < T)
+    (i : HexAWPairIndex T L) {e : HexAWIncidence T L}
+    (he : e ∈ hexAWPairPiece i) :
+    e ≠ hexAWStartIncidence T L hT := by
+  intro hs
+  simp only [hexAWPairPiece, Finset.mem_insert, Finset.mem_singleton] at he
+  rcases he with he | he
+  · have hi : i.1 = hexAWStartIncidence T L hT := he.symm.trans hs
+    apply hexAWPairIndex_ne_reflect i
+    calc
+      i.1 = hexAWStartIncidence T L hT := hi
+      _ = hexAWReflectIncidence (hexAWStartIncidence T L hT) :=
+        (hexAWStartIncidence_reflect T L hT).symm
+      _ = hexAWReflectIncidence i.1 := congrArg hexAWReflectIncidence hi.symm
+  · have hr : hexAWReflectIncidence i.1 =
+        hexAWStartIncidence T L hT := he.symm.trans hs
+    have hi : i.1 = hexAWStartIncidence T L hT := by
+      calc
+        i.1 = hexAWReflectIncidence (hexAWReflectIncidence i.1) :=
+          (hexAWReflectIncidence_invol i.1).symm
+        _ = hexAWReflectIncidence (hexAWStartIncidence T L hT) :=
+          congrArg hexAWReflectIncidence hr
+        _ = hexAWStartIncidence T L hT :=
+          hexAWStartIncidence_reflect T L hT
+    apply hexAWPairIndex_ne_reflect i
+    exact hi.trans hr.symm
+
+theorem hexAWFixedPiece_mem_boundary {T L : ℕ} {hT : 0 < T}
+    (k : HexAWFixedIndex T L hT) {e : HexAWIncidence T L}
+    (he : e ∈ hexAWFixedPiece k) :
+    e ∈ hexAWBoundaryIncidences T L := by
+  have heq : e = k.1 := by simpa [hexAWFixedPiece] using he
+  subst e
+  exact k.2.1
+
+theorem hexAWFixedPiece_not_start {T L : ℕ} {hT : 0 < T}
+    (k : HexAWFixedIndex T L hT) {e : HexAWIncidence T L}
+    (he : e ∈ hexAWFixedPiece k) :
+    e ≠ hexAWStartIncidence T L hT := by
+  have heq : e = k.1 := by simpa [hexAWFixedPiece] using he
+  subst e
+  exact k.2.2.2
+
+
+theorem hexAW_mem_orbit_biUnion_iff {T L : ℕ} (hT : 0 < T)
+    (e : HexAWIncidence T L) :
+    e ∈ (Finset.univ.biUnion
+      (hexAWOrbitPiece (T := T) (L := L) (hT := hT))) ↔
+      e ∈ hexAWBoundaryIncidences T L ∧
+        e ≠ hexAWStartIncidence T L hT := by
+  constructor
+  · intro he
+    rw [Finset.mem_biUnion] at he
+    obtain ⟨o, _, heo⟩ := he
+    cases o with
+    | inl i =>
+        exact ⟨hexAWPairPiece_mem_boundary i heo,
+          hexAWPairPiece_not_start hT i heo⟩
+    | inr k =>
+        exact ⟨hexAWFixedPiece_mem_boundary k heo,
+          hexAWFixedPiece_not_start k heo⟩
+  · rintro ⟨heBoundary, heStart⟩
+    by_cases hfixed : hexAWReflectIncidence e = e
+    · rw [Finset.mem_biUnion]
+      let k : HexAWFixedIndex T L hT :=
+        ⟨e, heBoundary, hfixed, heStart⟩
+      refine ⟨Sum.inr k, Finset.mem_univ _, ?_⟩
+      simp [hexAWOrbitPiece, hexAWFixedPiece, k]
+    · have hrank :
+          hexAWIncidenceRank e <
+              hexAWIncidenceRank (hexAWReflectIncidence e) ∨
+            hexAWIncidenceRank (hexAWReflectIncidence e) <
+              hexAWIncidenceRank e := by
+        rcases lt_trichotomy (hexAWIncidenceRank e)
+            (hexAWIncidenceRank (hexAWReflectIncidence e)) with h | h | h
+        · exact Or.inl h
+        · exfalso
+          exact hfixed (hexAWIncidenceRank_injective h.symm)
+        · exact Or.inr h
+      rw [Finset.mem_biUnion]
+      cases hrank with
+      | inl hlt =>
+          let i : HexAWPairIndex T L := ⟨e, heBoundary, hlt⟩
+          refine ⟨Sum.inl i, Finset.mem_univ _, ?_⟩
+          simp [hexAWOrbitPiece, hexAWPairPiece, i]
+      | inr hlt =>
+          let er := hexAWReflectIncidence e
+          have herBoundary : er ∈ hexAWBoundaryIncidences T L :=
+            (hexAWReflectIncidence_mem_boundary_iff e).2 heBoundary
+          have herlt :
+              hexAWIncidenceRank er <
+                hexAWIncidenceRank (hexAWReflectIncidence er) := by
+            simpa [er] using hlt
+          let i : HexAWPairIndex T L := ⟨er, herBoundary, herlt⟩
+          refine ⟨Sum.inl i, Finset.mem_univ _, ?_⟩
+          simp [hexAWOrbitPiece, hexAWPairPiece, i, er]
+
+
+theorem hexAW_boundary_orbit_partition (T L : ℕ) (hT : 0 < T) :
+    hexAWBoundaryIncidences T L =
+      {hexAWStartIncidence T L hT} ∪
+        Finset.univ.biUnion
+          (hexAWOrbitPiece (T := T) (L := L) (hT := hT)) := by
+  ext e
+  rw [Finset.mem_union, Finset.mem_singleton,
+    hexAW_mem_orbit_biUnion_iff]
+  constructor
+  · intro he
+    by_cases hs : e = hexAWStartIncidence T L hT
+    · exact Or.inl hs
+    · exact Or.inr ⟨he, hs⟩
+  · rintro (rfl | ⟨he, _⟩)
+    · exact hexAWStartIncidence_mem_boundary T L hT
+    · exact he
+
+theorem hexAW_start_orbits_disjoint (T L : ℕ) (hT : 0 < T) :
+    Disjoint ({hexAWStartIncidence T L hT} :
+      Finset (HexAWIncidence T L))
+      (Finset.univ.biUnion
+        (hexAWOrbitPiece (T := T) (L := L) (hT := hT))) := by
+  rw [Finset.disjoint_left]
+  intro e heStart heOrbit
+  have hs : e = hexAWStartIncidence T L hT := by simpa using heStart
+  exact (hexAW_mem_orbit_biUnion_iff hT e).1 heOrbit |>.2 hs
+
+theorem hexAW_pairPieces_disjoint {T L : ℕ}
+    (i j : HexAWPairIndex T L) (hij : i ≠ j) :
+    Disjoint (hexAWPairPiece i) (hexAWPairPiece j) := by
+  rw [Finset.disjoint_left]
+  intro e hei hej
+  simp only [hexAWPairPiece, Finset.mem_insert, Finset.mem_singleton] at hei hej
+  rcases hei with hi | hi <;> rcases hej with hj | hj
+  · apply hij
+    apply Subtype.ext
+    exact hi.symm.trans hj
+  · have hcross : i.1 = hexAWReflectIncidence j.1 := hi.symm.trans hj
+    have hcross' : hexAWReflectIncidence i.1 = j.1 := by
+      have := congrArg hexAWReflectIncidence hcross
+      simpa using this
+    have hlt := i.2.2
+    rw [hcross'] at hlt
+    have hgt := j.2.2
+    rw [← hcross] at hgt
+    omega
+  · have hcross : hexAWReflectIncidence i.1 = j.1 := hi.symm.trans hj
+    have hcross' : i.1 = hexAWReflectIncidence j.1 := by
+      have := congrArg hexAWReflectIncidence hcross
+      simpa using this
+    have hlt := j.2.2
+    rw [← hcross'] at hlt
+    have hgt := i.2.2
+    rw [hcross] at hgt
+    omega
+  · apply hij
+    apply Subtype.ext
+    have hreflect :
+        hexAWReflectIncidence i.1 = hexAWReflectIncidence j.1 :=
+      hi.symm.trans hj
+    have := congrArg hexAWReflectIncidence hreflect
+    simpa using this
+
+theorem hexAW_pair_fixed_disjoint {T L : ℕ} {hT : 0 < T}
+    (i : HexAWPairIndex T L) (k : HexAWFixedIndex T L hT) :
+    Disjoint (hexAWPairPiece i) (hexAWFixedPiece k) := by
+  rw [Finset.disjoint_left]
+  intro e hei hek
+  have heq : e = k.1 := by simpa [hexAWFixedPiece] using hek
+  subst e
+  simp only [hexAWPairPiece, Finset.mem_insert, Finset.mem_singleton] at hei
+  rcases hei with hi | hi
+  · have hfix : hexAWReflectIncidence i.1 = i.1 := by
+      calc
+        hexAWReflectIncidence i.1 = hexAWReflectIncidence k.1 :=
+          congrArg hexAWReflectIncidence hi.symm
+        _ = k.1 := k.2.2.1
+        _ = i.1 := hi
+    exact hexAWPairIndex_ne_reflect i hfix.symm
+  · have hfix : hexAWReflectIncidence i.1 = i.1 := by
+      calc
+        hexAWReflectIncidence i.1 = k.1 := hi.symm
+        _ = hexAWReflectIncidence k.1 := k.2.2.1.symm
+        _ = hexAWReflectIncidence (hexAWReflectIncidence i.1) := by rw [hi]
+        _ = i.1 := hexAWReflectIncidence_invol i.1
+    exact hexAWPairIndex_ne_reflect i hfix.symm
+
+theorem hexAW_fixedPieces_disjoint {T L : ℕ} {hT : 0 < T}
+    (k l : HexAWFixedIndex T L hT) (hkl : k ≠ l) :
+    Disjoint (hexAWFixedPiece k) (hexAWFixedPiece l) := by
+  rw [Finset.disjoint_left]
+  intro e hek hel
+  apply hkl
+  apply Subtype.ext
+  have hk : e = k.1 := by simpa [hexAWFixedPiece] using hek
+  have hl : e = l.1 := by simpa [hexAWFixedPiece] using hel
+  exact hk.symm.trans hl
+
+
+theorem hexAW_orbitPieces_pairwiseDisjoint (T L : ℕ) (hT : 0 < T) :
+    ((Finset.univ : Finset
+      (HexAWPairIndex T L ⊕ HexAWFixedIndex T L hT)) :
+        Set (HexAWPairIndex T L ⊕ HexAWFixedIndex T L hT)).PairwiseDisjoint
+      (hexAWOrbitPiece (T := T) (L := L) (hT := hT)) := by
+  intro o _ p _ hop
+  cases o with
+  | inl i =>
+      cases p with
+      | inl j =>
+          exact hexAW_pairPieces_disjoint i j (fun hij => hop (congrArg Sum.inl hij))
+      | inr k =>
+          exact hexAW_pair_fixed_disjoint i k
+  | inr k =>
+      cases p with
+      | inl i =>
+          exact (hexAW_pair_fixed_disjoint i k).symm
+      | inr l =>
+          exact hexAW_fixedPieces_disjoint k l
+            (fun hkl => hop (congrArg Sum.inr hkl))
+
+
+end
+end StatMech.Universality

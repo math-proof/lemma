@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.MonotoneWeakLimit
+import Theorem.StatisticalMechanics.Code.FK.MonotoneWeakLimit.Part2
 open MeasureTheory Filter Topology SimpleGraph StatMech StatMech.FK
 
 

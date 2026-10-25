@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexFiniteStripNormalizedBoundary
+import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripNormalizedBoundary.Part6
 open StatMech StatMech.Universality StatMech.Universality.HexFiniteRegion StatMech.Universality.HexFObsBoundaryData StatMech.Universality.HexFiniteStripBoundaryData
 
 

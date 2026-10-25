@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.SpecialFunctions.JacobiTripleProduct
+import Def.Analysis.SpecialFunctions.JacobiTripleProduct
 import Lemma.Real.SpecialFunctions.JacobiTripleProduct
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.CenteredConvergence
+import Theorem.v1.Atlas.TheoryOfProbability.code.CenteredConvergence
 open MeasureTheory ProbabilityTheory Filter Finset ENNReal KolmogorovThreeSeries
 
 

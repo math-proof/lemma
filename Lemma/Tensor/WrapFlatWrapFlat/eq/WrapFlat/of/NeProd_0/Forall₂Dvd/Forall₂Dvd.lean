@@ -1,7 +1,6 @@
 import Lemma.Tensor.WrapFlat.eq.WrapFlatMod.of.EqLengthS
 open Tensor
 
-
 @[path]
 private lemma main
 -- given
@@ -41,6 +40,5 @@ private lemma main
       rw [hdiv, Nat.mod_mod, Nat.mod_mod_of_dvd (i / tout.prod % k) hnm]
       have hlen_sm : s.length = mid.length := List.Forall₂.length_eq ‹_›
       rw [WrapFlat.eq.WrapFlatMod.of.EqLengthS s mid hlen_sm, hmod', ih tout i hmo hmt]
-
 
 -- created on 2026-10-07

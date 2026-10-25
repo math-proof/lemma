@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.NewtonMethod
+import Theorem.Analysis.Calculus.NewtonMethod
 open Real.Calculus.NewtonMethod
 
 

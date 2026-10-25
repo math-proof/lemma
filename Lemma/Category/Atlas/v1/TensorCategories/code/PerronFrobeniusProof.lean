@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.PerronFrobeniusProof
+import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
 open Finset BigOperators Matrix PerronFrobenius
 
 

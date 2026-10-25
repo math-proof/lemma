@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusConcreteRibbon
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusConcreteRibbon.Part3
 open Equiv Finset StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc2_thinthickdichotomy
+import Theorem.StatisticalMechanics.Code.Walls.jc2_thinthickdichotomy.Part2
 open SimpleGraph Function StatMech StatMech.Walls
 
 

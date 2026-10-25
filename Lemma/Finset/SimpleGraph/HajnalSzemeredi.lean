@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.HajnalSzemeredi
+import Instance.Combinatorics.SimpleGraph.HajnalSzemeredi
 open MathlibExt.Combinatorics.SimpleGraph.HajnalSzemerediWanted
 
 

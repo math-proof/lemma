@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.DifferentialOperatorsFix
+import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperatorsFix
 open MeasureTheory Distribution Set
 open scoped SchwartzMap Topology
 

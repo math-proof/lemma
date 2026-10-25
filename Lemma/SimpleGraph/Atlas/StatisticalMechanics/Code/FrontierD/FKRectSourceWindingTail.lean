@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectSourceWindingTail
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSourceWindingTail
 open StatMech StatMech.FrontierD
 
 

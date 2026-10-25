@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.VarGapProve
+import Theorem.StatisticalMechanics.Code.Probability.VarGapProve
 open Finset Real Set StatMech StatMech.Probability
 
 

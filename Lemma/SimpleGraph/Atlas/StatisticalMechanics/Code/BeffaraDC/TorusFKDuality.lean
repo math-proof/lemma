@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.TorusFKDuality
+import Theorem.StatisticalMechanics.Code.BeffaraDC.TorusFKDuality.Part3
 open SimpleGraph Set StatMech StatMech.BeffaraDC
 
 

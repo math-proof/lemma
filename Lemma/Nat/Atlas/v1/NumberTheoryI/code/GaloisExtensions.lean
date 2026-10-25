@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.GaloisExtensions
+import Def.v1.Atlas.NumberTheoryI.code.GaloisExtensions.Part4
 open Ideal
 open scoped Pointwise
 

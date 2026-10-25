@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective
+import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
 open KaehlerDifferential Module CanonicalSheafDef CanonicalBundleProj
 open QCohProjective TwistSheaf
 

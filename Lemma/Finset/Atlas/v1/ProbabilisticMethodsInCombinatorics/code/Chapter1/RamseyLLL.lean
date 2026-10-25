@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.RamseyLocalLemma
+import Theorem.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.RamseyLocalLemma
 open Finset Fintype
 
 

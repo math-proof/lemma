@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec15PicardDivisorClass
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec15PicardDivisorClass.Part3
 open Lec15PicardDivisorClass
 open Module Polynomial LinearEquivDivisors
 

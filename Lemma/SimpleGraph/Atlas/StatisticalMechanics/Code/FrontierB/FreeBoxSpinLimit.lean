@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.FreeBoxSpinLimit
+import Theorem.StatisticalMechanics.Code.FrontierB.FreeBoxSpinLimit
 open MeasureTheory Filter Topology StatMech StatMech.FrontierB
 
 

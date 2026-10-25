@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterAgreementComplementRatio
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterAgreementComplementRatio
 open Finset StatMech StatMech.Ising
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.DombNumber
+import Def.Combinatorics.Enumerative.DombNumber
 open scoped BigOperators
 open MetaMathlibExt
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTrifurcation
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTrifurcation.Part5
 open Filter MeasureTheory Set SimpleGraph Topology Finset StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

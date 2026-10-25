@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.OrbitExteriorEven
+import Theorem.StatisticalMechanics.Code.Lattice.OrbitExteriorEven
 open Set SimpleGraph StatMech StatMech.Lattice
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
 open GraphMatrices
 open Matrix SimpleGraph
 open Finset Matrix

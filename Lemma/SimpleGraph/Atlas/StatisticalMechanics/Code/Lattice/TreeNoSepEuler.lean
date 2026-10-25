@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.TreeNoSepEuler
+import Theorem.StatisticalMechanics.Code.Lattice.TreeNoSepEuler.Part6
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

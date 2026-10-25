@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicDiamondIntegration
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDiamondIntegration.Part2
 open Finset StatMech StatMech.Universality
 
 

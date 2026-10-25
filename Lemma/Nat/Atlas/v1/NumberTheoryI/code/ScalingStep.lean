@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.ScalingStep
+import Instance.v1.Atlas.NumberTheoryI.code.ScalingStep
 open Polynomial IsLocalRing
 
 

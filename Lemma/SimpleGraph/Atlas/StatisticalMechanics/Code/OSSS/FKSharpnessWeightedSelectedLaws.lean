@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedSelectedLaws
+import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedSelectedLaws.Part3
 open MeasureTheory Set Filter Topology StatMech StatMech.OSSS StatMech.OSSS.FKSharpnessWeightedSelectedLaws
 
 

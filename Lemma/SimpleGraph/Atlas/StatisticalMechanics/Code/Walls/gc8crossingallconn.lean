@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc8crossingallconn
+import Theorem.StatisticalMechanics.Code.Walls.gc8crossingallconn
 open Finset BigOperators Classical StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorGroup
+import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorGroup.Part2
 open CartierDivisorGroup
 open scoped nonZeroDivisors
 open FractionalIdeal

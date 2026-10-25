@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.BoxCurrentLaws
+import Theorem.StatisticalMechanics.Code.FrontierB.BoxCurrentLaws.Part3
 open MeasureTheory StatMech StatMech.FrontierB
 
 

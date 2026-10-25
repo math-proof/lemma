@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneP2CutResummation
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneP2CutResummation.Part3
 open SimpleGraph Finset StatMech StatMech.Sharpness
 
 

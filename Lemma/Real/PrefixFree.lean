@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.InformationTheory.PrefixFree
+import Def.InformationTheory.PrefixFree
 open MathlibExt.InformationTheory
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.Hankel
+import Def.LinearAlgebra.Matrix.Hankel
 open Matrix
 
 

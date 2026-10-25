@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.FaceRegion
+import Theorem.StatisticalMechanics.Code.Lattice.FaceRegion.Part3
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

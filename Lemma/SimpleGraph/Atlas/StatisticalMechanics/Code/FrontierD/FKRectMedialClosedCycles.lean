@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectMedialClosedCycles
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialClosedCycles.Part2
 open Equiv StatMech StatMech.FrontierD
 
 

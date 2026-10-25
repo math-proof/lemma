@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierC.IsingTransfer
+import Theorem.StatisticalMechanics.Code.FrontierC.IsingTransfer.Part5
 open Matrix Polynomial StatMech StatMech.FrontierC
 
 

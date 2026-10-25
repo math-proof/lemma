@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicPositivity
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicPositivity
 import Lemma.List.WordSigma.eq.AddSSMul.of.All_Eq_0.Ne
 import Lemma.List.EqWordSSigma.of.WordProd
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
 open Finset BigOperators CoxeterSystem
 
 

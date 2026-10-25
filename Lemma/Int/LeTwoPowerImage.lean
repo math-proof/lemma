@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.TwoPowerRank
+import Abbrev.GroupTheory.TwoPowerRank.Part2
 open AbelianGroup
 
 

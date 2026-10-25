@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.LastExit
+import Theorem.StatisticalMechanics.Code.Percolation.LastExit.Part2
 open MeasureTheory Set SimpleGraph StatMech StatMech.Percolation
 
 

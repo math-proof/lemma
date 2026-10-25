@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamRowDataRepairCounterexampleHall
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamRowDataRepairCounterexampleHall.Part2
 open StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

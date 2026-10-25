@@ -6,7 +6,6 @@ set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-
 universe u
 
 private lemma CAux.surjective_specMap
@@ -71,6 +70,5 @@ private lemma main
       exact hWW hvW
     simpa [Scheme.Hom.comp_base] using h2
   refine ⟨IsOpenImmersion.lift (O WA).ι ((OX WX).ι ≫ hZ) hrange, IsOpenImmersion.lift_fac _ _ _⟩
-
 
 -- created on 2026-10-20

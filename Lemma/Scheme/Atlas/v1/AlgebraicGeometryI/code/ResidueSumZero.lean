@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.ResidueSumZero
+import Instance.v1.Atlas.AlgebraicGeometryI.code.ResidueSumZero
 open AlgebraicGeometry CategoryTheory Polynomial Finset BigOperators HahnSeries Classical ResidueSumZero
 open AlgebraicGeometry CategoryTheory Polynomial Finset BigOperators HahnSeries Classical IsDedekindDomain
 

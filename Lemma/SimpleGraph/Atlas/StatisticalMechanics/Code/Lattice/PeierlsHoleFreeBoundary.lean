@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.PeierlsHoleFreeBoundary
+import Theorem.StatisticalMechanics.Code.Lattice.PeierlsHoleFreeBoundary.Part4
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

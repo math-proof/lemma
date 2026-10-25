@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SnakeLemma
+import Def.v1.Atlas.AlgebraicGeometryI.code.SnakeLemma
 open CategoryTheory CategoryTheory.Limits SnakeLemma
 
 

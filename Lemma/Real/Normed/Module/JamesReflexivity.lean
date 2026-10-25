@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Normed.Module.JamesReflexivity
+import Def.Analysis.Normed.Module.JamesReflexivity
 open Set Metric
 open Filter
 open MathlibExt.Analysis.FunctionalAnalysis.BanachSpaceWanted

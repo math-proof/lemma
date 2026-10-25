@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.ReductiveGroup
+import Structure.v1.Atlas.TensorCategories.code.ReductiveGroup
 open ReductiveGroupData
 
 

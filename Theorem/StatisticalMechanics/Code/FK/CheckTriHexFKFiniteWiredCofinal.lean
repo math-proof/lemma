@@ -1,0 +1,46 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckTriHexFKFiniteWiredCofinal.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FK.TriHexFKFiniteWiredCofinal.Part15
+open StatMech.FK.PeriodicPlanar
+
+#print axioms triHexPlanarFiniteStarGraph_adj_iff_hexagonal
+#print axioms triHexPlanarFiniteStar_adjMatch_hexagonal
+#print axioms triHexPlanarFiniteStar_boundary_iff_ambient
+#print axioms triHexPlanarFiniteStar_range_subset_orbitBox_succ
+#print axioms hexagonal_orbitBox_subset_triHexPlanarFiniteStar_range_succ
+#print axioms triHexPlanarFiniteTerminal_subset_triangular_orbitBox_succ
+#print axioms triangular_orbitBox_subset_triHexPlanarFiniteTerminal_succ
+#print axioms triHexPlanarFiniteTriangle_adj_or_boundary
+#print axioms triHexPlanarFiniteTriangle_induced_le_wiredGraph
+#print axioms triHexPlanarFiniteTriangleGraph_le_induced
+#print axioms triHexPlanarFiniteRoot_not_boundary_succ
+#print axioms triHexPlanarFiniteTriangleInducedBoundaryReachIndicator_eq
+#print axioms triHexPlanarFiniteTriangleInducedWiredBoundaryProbability_eq
+#print axioms triHexPlanarFiniteInducedWiredBoundaryProbability_eq_homogeneous
+#print axioms triHexPlanarFiniteStar_inducedWiring_le
+#print axioms triHexPlanarFiniteStar_outerBuffered_dominated
+#print axioms triHexPlanarHexBuffered_inducedWiring_le
+#print axioms triHexPlanarHexBuffered_outerStar_dominated
+#print axioms triHexPlanarHexWhiteBuffered_outerEvent_subset_starRestrict
+#print axioms triHexPlanarFiniteStar_outerEvent_subset_hexBufferedRestrict
+#print axioms triHexPlanarFiniteStarWiredBoundaryProbability_eq_eventMass
+#print axioms triHexPlanarHexWhiteBuffered_mass_le_star
+#print axioms triHexPlanarFiniteStar_le_hexWhiteBuffered_mass
+#print axioms triHexPlanarHexWhiteBuffered_eventMass_tendsto
+#print axioms triHexPlanarFiniteStar_cofinal_tendsto_hexWhiteInfinite
+#print axioms triHexPlanarFiniteTriangle_outerBuffered_dominated
+#print axioms triHexPlanarTriBuffered_inducedWiring_le
+#print axioms triHexPlanarTriBuffered_outerTriangle_dominated
+#print axioms triHexPlanarFiniteTriangleInducedWiredBoundaryProbability_eq_eventMass
+#print axioms triHexPlanarTriBuffered_eventMass_tendsto
+#print axioms triHexPlanar_fixedRootInfinite_real_eq
+
+

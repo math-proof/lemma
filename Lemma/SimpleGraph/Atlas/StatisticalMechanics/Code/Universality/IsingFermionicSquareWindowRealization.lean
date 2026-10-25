@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareWindowRealization
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWindowRealization.Part3
 open StatMech StatMech.Universality
 
 

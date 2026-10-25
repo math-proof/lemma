@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoStrandCycleFlip
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoStrandCycleFlip
 open StatMech StatMech.FrontierD
 
 

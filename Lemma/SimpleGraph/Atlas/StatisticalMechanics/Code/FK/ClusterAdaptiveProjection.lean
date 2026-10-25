@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.ClusterAdaptiveProjection
+import Theorem.StatisticalMechanics.Code.FK.ClusterAdaptiveProjection.Part2
 open SimpleGraph StatMech StatMech.FK
 
 

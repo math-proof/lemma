@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.TaftConcrete
+import Theorem.v1.Atlas.TensorCategories.code.TaftConcrete.Part4
 open TaftAlgebraType
 
 

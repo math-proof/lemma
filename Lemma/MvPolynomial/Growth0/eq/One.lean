@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.GroupGrowth
+import Def.GroupTheory.GroupGrowth
 open Group.Generators
 
 

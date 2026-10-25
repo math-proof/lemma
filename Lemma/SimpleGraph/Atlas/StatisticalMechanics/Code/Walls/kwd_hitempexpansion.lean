@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kwd_hitempexpansion
+import Theorem.StatisticalMechanics.Code.Walls.kwd_hitempexpansion
 open Finset StatMech StatMech.Walls
 
 

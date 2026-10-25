@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.BrownianFiniteDimensional
+import Theorem.StatisticalMechanics.Code.SLE.BrownianFiniteDimensional.Part4
 open MeasureTheory Matrix ProbabilityTheory Set WithLp StatMech StatMech.SLE
 
 

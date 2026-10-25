@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.WiredDomChain
+import Theorem.StatisticalMechanics.Code.FK.WiredDomChain.Part4
 open MeasureTheory Filter Topology SimpleGraph StatMech StatMech.FK
 
 

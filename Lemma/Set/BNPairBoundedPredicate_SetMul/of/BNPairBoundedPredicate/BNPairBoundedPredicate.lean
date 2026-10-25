@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.CompactSubgroups
+import Structure.v1.Atlas.Buildings.code.Building.CompactSubgroups.Part2
 open CompactSubgroups
 
 

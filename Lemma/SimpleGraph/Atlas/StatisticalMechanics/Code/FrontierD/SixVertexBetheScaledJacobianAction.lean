@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheScaledJacobianAction
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheScaledJacobianAction
 open Finset Matrix StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.FourierAnalysis.code.CentralLimitTheorem
+import Def.v1.Atlas.FourierAnalysis.code.CentralLimitTheorem
 open CentralLimitTheorem
 open Complex Finset
 open MeasureTheory ProbabilityTheory Filter

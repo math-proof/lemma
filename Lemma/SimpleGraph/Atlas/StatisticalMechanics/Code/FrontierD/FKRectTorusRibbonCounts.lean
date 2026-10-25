@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusRibbonCounts
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusRibbonCounts.Part2
 open StatMech StatMech.FrontierD
 
 

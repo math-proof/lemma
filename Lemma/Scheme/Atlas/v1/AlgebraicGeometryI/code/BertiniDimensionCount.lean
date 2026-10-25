@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.BertiniDimensionCount
+import Structure.v1.Atlas.AlgebraicGeometryI.code.BertiniDimensionCount.Part2
 open BertiniArithmetic
 
 

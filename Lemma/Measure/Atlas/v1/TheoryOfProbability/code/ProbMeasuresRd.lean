@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.ProbMeasuresRd
+import Def.v1.Atlas.TheoryOfProbability.code.ProbMeasuresRd
 open MeasureTheory MeasurableSpace Set
 
 

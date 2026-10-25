@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM14.WaveEnergy
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM14.WaveEnergy.Part3
 open MeasureTheory Set Finset Classical CM14
 
 

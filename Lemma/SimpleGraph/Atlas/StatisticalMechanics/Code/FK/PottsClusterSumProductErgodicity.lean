@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PottsClusterSumProductErgodicity
+import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumProductErgodicity.Part3
 open Filter Function MeasureTheory MeasurableSpace Set Topology StatMech StatMech.FK
 
 

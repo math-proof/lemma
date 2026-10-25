@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.SweedlerConcrete
+import Theorem.v1.Atlas.TensorCategories.code.SweedlerConcrete.Part4
 open SweedlerH4
 
 

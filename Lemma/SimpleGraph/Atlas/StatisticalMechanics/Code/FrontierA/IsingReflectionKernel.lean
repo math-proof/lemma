@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingReflectionKernel
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingReflectionKernel
 open Finset Filter StatMech StatMech.FrontierA
 
 

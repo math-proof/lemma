@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.SimonLieb
+import Theorem.StatisticalMechanics.Code.Sharpness.SimonLieb.Part2
 open SimpleGraph Finset StatMech StatMech.Sharpness
 
 

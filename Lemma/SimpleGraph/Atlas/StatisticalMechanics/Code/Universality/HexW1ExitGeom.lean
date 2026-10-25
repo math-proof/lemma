@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexW1ExitGeom
+import Theorem.StatisticalMechanics.Code.Universality.HexW1ExitGeom.Part5
 open StatMech StatMech.Universality StatMech.Universality.HexStraightSide
 
 

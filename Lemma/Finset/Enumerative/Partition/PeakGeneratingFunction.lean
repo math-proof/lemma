@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Partition.PeakGeneratingFunction
+import Def.Combinatorics.Enumerative.Partition.PeakGeneratingFunction.Part9
 open MetaMathlibExt
 
 

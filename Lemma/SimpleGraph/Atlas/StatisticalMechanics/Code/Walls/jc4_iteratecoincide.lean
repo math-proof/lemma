@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc4_iteratecoincide
+import Theorem.StatisticalMechanics.Code.Walls.jc4_iteratecoincide
 open SimpleGraph Function Set StatMech StatMech.Walls
 
 

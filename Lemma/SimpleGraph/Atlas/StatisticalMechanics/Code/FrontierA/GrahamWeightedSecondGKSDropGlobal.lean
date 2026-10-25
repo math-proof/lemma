@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamWeightedSecondGKSDropGlobal
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedSecondGKSDropGlobal
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

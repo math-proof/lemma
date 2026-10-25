@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.SL2Representations
+import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
 import Lemma.Complex.In_WeightSpace.is.H.eq.SMul
 open Complex Module
 open SL2IrredGKModule

@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
+import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
 open Matrix Finset BigOperators Rigollet MeasureTheory
 
 

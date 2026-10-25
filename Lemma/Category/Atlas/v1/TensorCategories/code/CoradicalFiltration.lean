@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.CoradicalFiltration
+import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
 open Coalgebra Submodule
 open scoped TensorProduct
 open CategoryTheory CategoryTheory.Abelian CategoryTheory.Limits

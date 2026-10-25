@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.JointCurrentSubsequence
+import Theorem.StatisticalMechanics.Code.FrontierB.JointCurrentSubsequence
 open Filter MeasureTheory StatMech StatMech.FrontierB
 
 

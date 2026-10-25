@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.CircuitLowerBound
+import Theorem.StatisticalMechanics.Code.FK.CircuitLowerBound.Part6
 open StatMech StatMech.FK
 
 

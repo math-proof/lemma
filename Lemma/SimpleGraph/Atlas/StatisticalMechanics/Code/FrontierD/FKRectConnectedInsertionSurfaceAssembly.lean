@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectConnectedInsertionSurfaceAssembly
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectConnectedInsertionSurfaceAssembly
 open Finset SimpleGraph StatMech StatMech.FrontierD
 
 

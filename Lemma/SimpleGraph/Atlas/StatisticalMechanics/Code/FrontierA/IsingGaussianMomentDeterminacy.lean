@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianMomentDeterminacy
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianMomentDeterminacy
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierA
 
 

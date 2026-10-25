@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.BrowderKirk
+import Theorem.Analysis.NormedSpace.BrowderKirk.Part2
 
 open FunctionalAnalysis.BrowderKirkWanted Set
 

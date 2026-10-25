@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldDeepConnectorCage
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldDeepConnectorCage
 open Filter MeasureTheory Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair
 
 

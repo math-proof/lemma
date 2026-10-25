@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.InfiniteWord.CrochemoreSquarefreeCriterion
+import Theorem.MathlibExtTest.Combinatorics.InfiniteWord.CrochemoreSquarefreeCriterion.Part2
 open MathlibExtTest MathlibExtTest.Combinatorics MathlibExtTest.Combinatorics.InfiniteWord MathlibExtTest.Combinatorics.InfiniteWord.CrochemoreSquarefreeCriterion
 open MetaMathlibExt
 

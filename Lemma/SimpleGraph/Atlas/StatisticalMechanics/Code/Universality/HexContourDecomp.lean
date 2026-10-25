@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexContourDecomp
+import Theorem.StatisticalMechanics.Code.Universality.HexContourDecomp.Part2
 open StatMech StatMech.Universality StatMech.Universality.HexSide StatMech.Universality.HexBoundaryDecomp
 
 

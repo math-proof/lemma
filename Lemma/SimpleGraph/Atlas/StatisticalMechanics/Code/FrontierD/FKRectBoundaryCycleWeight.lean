@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryCycleWeight
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryCycleWeight.Part2
 open Equiv Finset StatMech StatMech.FrontierD
 
 

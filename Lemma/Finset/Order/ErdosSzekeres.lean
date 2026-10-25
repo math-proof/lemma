@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Order.ErdosSzekeres
+import Def.Combinatorics.Order.ErdosSzekeres.Part2
 open MathlibExt.Combinatorics.Order.ErdosSzekeres
 
 

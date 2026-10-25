@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectPositiveBandBlockRepetition
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectPositiveBandBlockRepetition.Part6
 open Set SimpleGraph Filter Topology StatMech StatMech.FrontierD
 
 

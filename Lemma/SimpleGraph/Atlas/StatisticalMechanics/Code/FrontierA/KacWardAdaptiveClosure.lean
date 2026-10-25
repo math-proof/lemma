@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveClosure
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveClosure
 open StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.EulerCircuit
+import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.EulerCircuit
 open MathlibExtTest MathlibExtTest.Combinatorics MathlibExtTest.Combinatorics.SimpleGraph MathlibExtTest.Combinatorics.SimpleGraph.EulerCircuit
 
 

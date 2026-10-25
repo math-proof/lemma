@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wcscornersum
+import Theorem.StatisticalMechanics.Code.Walls.wcscornersum.Part5
 open Finset SimpleGraph Function StatMech StatMech.Wcs
 
 

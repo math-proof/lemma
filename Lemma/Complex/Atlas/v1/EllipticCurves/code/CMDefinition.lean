@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.CMDefinition
+import Def.v1.Atlas.EllipticCurves.code.CMDefinition
 open ComplexMultiplication
 open ComplexLattice
 

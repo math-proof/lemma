@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.SortSliceRange
+import Def.CPythonListsort.Code.Correctness.SortSliceRange
 open CPythonListsort CPythonListsort.SortSlice CPythonListsort.SortSlice.EqualOutsideRange
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.BurnsidePaqbReduction
+import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
 open BurnsidePaqb
 open Classical
 

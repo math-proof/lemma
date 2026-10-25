@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.Ext1UnitVanishing
+import Class.v1.Atlas.TensorCategories.code.Ext1UnitVanishing.Part2
 open CategoryTheory MonoidalCategory Category Limits TensorCategories
 
 

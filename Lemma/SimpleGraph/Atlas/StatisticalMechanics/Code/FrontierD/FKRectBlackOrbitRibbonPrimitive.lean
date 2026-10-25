@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBlackOrbitRibbonPrimitive
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBlackOrbitRibbonPrimitive
 open StatMech StatMech.FrontierD
 
 

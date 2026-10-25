@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectPrimalDualCrossings
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectPrimalDualCrossings.Part7
 open Finset SimpleGraph StatMech StatMech.FrontierD
 
 

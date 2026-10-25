@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.RigidMonoidalDuality
+import Def.v1.Atlas.TensorCategories.code.RigidMonoidalDuality.Part2
 open CategoryTheory MonoidalCategory Limits MonoidalOpposite Opposite TensorCategories
 
 

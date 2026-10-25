@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc86brerouteinjection
+import Theorem.StatisticalMechanics.Code.Walls.gc86brerouteinjection.Part4
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Walls
 
 

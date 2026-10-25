@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.Square
+import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.Square.Part2
 
 
 namespace MathlibExtTest.Combinatorics.SimpleGraph.Square

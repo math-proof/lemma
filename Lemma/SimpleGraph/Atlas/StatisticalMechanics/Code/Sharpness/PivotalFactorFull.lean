@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.PivotalFactorFull
+import Theorem.StatisticalMechanics.Code.Sharpness.PivotalFactorFull.Part3
 open MeasureTheory Function Set StatMech StatMech.Sharpness
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.LatticeRG
+import Theorem.StatisticalMechanics.Code.Exact3D.LatticeRG.Part17
 open StatMech StatMech.Exact3D StatMech.Exact3D.PolymerSupport StatMech.Exact3D.LatticeRGData
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.KramersWannierGeneral
+import Theorem.StatisticalMechanics.Code.Ising.KramersWannierGeneral.Part5
 open Finset SimpleGraph StatMech StatMech.Ising
 
 

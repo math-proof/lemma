@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SulankeNumber
+import Def.Combinatorics.SulankeNumber
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBalancedShareSpectralGapLogConcavity
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBalancedShareSpectralGapLogConcavity.Part3
 open Filter MeasureTheory Topology StatMech StatMech.FrontierD
 
 

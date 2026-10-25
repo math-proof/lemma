@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexSmallIncidenceEnumeration
+import Theorem.StatisticalMechanics.Code.Universality.HexSmallIncidenceEnumeration.Part5
 open StatMech StatMech.Universality StatMech.Universality.HexFiniteStripCoreIncidenceEnumeration
 
 

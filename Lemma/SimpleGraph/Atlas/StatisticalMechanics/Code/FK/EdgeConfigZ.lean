@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.EdgeConfigZ
+import Theorem.StatisticalMechanics.Code.FK.EdgeConfigZ.Part15
 open SimpleGraph Filter Topology Set StatMech StatMech.FK
 
 

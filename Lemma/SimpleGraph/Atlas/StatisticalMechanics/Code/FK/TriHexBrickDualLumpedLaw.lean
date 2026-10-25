@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexBrickDualLumpedLaw
+import Theorem.StatisticalMechanics.Code.FK.TriHexBrickDualLumpedLaw.Part2
 open Finset Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

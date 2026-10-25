@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexSectorOrientationWordExpansion
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexSectorOrientationWordExpansion.Part2
 open Finset Matrix StatMech StatMech.FrontierD
 
 

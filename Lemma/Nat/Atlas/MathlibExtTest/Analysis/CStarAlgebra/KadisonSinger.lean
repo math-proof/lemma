@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger
+import Theorem.MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger
 open scoped Matrix.Norms.L2Operator
 open MathlibExt.Analysis.CStarAlgebra.KadisonSingerWanted
 

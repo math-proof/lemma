@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexBoundaryPhases
+import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryPhases.Part2
 open StatMech StatMech.Universality StatMech.Universality.HexPhaseData
 
 

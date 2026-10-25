@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.MedialPathCycleSplice
+import Theorem.StatisticalMechanics.Code.Universality.MedialPathCycleSplice
 open SimpleGraph Set StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.BoundaryConnected
+import Theorem.StatisticalMechanics.Code.Lattice.BoundaryConnected.Part2
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

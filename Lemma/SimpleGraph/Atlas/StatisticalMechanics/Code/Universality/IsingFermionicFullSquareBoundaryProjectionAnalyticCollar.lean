@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicFullSquareBoundaryProjectionAnalyticCollar
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicFullSquareBoundaryProjectionAnalyticCollar
 open StatMech StatMech.Universality StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm
 
 

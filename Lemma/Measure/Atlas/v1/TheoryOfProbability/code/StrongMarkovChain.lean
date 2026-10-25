@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.StrongMarkovChain
+import Def.v1.Atlas.TheoryOfProbability.code.StrongMarkovChain
 open MeasureTheory ProbabilityTheory
 
 

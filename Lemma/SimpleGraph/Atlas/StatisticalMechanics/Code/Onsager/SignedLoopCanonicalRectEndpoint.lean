@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopCanonicalRectEndpoint
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopCanonicalRectEndpoint
 open MeasureTheory Filter Topology StatMech StatMech.Onsager
 
 

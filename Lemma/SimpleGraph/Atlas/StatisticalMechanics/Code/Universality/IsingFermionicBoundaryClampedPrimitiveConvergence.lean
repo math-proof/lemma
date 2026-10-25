@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryClampedPrimitiveConvergence
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryClampedPrimitiveConvergence
 open StatMech StatMech.Universality StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm
 
 

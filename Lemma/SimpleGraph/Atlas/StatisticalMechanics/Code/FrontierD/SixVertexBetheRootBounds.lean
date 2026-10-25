@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheRootBounds
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheRootBounds.Part2
 open Finset Filter Topology StatMech StatMech.FrontierD
 
 

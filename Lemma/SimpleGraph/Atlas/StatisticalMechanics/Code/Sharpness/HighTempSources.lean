@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.HighTempSources
+import Theorem.StatisticalMechanics.Code.Sharpness.HighTempSources.Part3
 open Finset StatMech StatMech.Sharpness
 
 

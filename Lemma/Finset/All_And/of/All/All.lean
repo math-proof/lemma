@@ -1,5 +1,5 @@
 import sympy.Basic
-import sympy.concrete.quantifier
+import Macro.Logic.Quantifier.Part4
 
 
 @[path]

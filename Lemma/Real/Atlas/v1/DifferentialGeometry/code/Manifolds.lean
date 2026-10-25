@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialGeometry.code.Manifolds
+import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
 open LinearMap (ker range) Set Filter Hypersurface
 open scoped Topology
 open Set Filter

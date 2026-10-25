@@ -1,0 +1,47 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/TreeComplete.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.OSSS.RevealmentConstruction.Part7
+import Theorem.StatisticalMechanics.Code.OSSS.TreeComplete.Part4
+open scoped BigOperators
+open Finset
+open StatMech.Lattice
+
+set_option linter.style.longLine false
+
+
+namespace StatMech
+
+namespace OSSS
+
+namespace TreeComplete
+
+open StatMech.OSSS
+
+open StatMech.OSSS.DecisionTree
+
+open StatMech.OSSS.Revealment
+
+open StatMech.OSSS.RevealmentConstruction
+
+open scoped Classical
+
+variable {E : Type*} [Fintype E] [DecidableEq E]
+
+variable {V : Type*} [DecidableEq V]
+
+noncomputable def completeTree (endU endV : E → V) (o : V) (l : List E) (disc₀ : Finset V) :
+    DecisionTree E :=
+  exploreTree endU endV (fun disc => decide (o ∈ disc))
+    (repeatList l (disc₀ ∪ endpointsFinset endU endV l).card) disc₀
+
+end TreeComplete
+end OSSS
+end StatMech

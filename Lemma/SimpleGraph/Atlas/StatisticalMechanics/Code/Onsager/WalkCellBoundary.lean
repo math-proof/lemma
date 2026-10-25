@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.WalkCellBoundary
+import Theorem.StatisticalMechanics.Code.Onsager.WalkCellBoundary
 open StatMech StatMech.Onsager StatMech.Onsager.WalkCellBoundary
 
 

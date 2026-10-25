@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.PBiasedIntegralHC
+import Theorem.StatisticalMechanics.Code.Probability.PBiasedIntegralHC.Part2
 open Real Set StatMech StatMech.Probability
 
 

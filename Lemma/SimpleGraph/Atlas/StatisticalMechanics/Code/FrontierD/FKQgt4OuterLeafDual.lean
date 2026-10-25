@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4OuterLeafDual
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4OuterLeafDual.Part7
 open Finset Set SimpleGraph StatMech StatMech.FrontierD
 
 

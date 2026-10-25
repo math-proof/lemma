@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_2_1
+import Abbrev.Analysis.Section_2_1
 import Lemma.Nat.Eq.of.Eq_Nat_succ_cancel
 import Lemma.Nat.Four.ne.Zero
 open Chapter2 hiding Nat

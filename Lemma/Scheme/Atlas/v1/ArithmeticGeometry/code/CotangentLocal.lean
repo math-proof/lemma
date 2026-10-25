@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.CotangentLocal
+import Def.v1.Atlas.ArithmeticGeometry.code.CotangentLocal.Part3
 open IsLocalRing CotangentDual
 
 

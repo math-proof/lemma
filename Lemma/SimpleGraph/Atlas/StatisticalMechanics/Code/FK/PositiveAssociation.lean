@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PositiveAssociation
+import Theorem.StatisticalMechanics.Code.FK.PositiveAssociation
 open StatMech StatMech.FK
 
 

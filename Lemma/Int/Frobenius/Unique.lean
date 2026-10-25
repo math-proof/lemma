@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.Frobenius.Unique
+import Theorem.RingTheory.Frobenius.Unique
 open IsArithFrobAt
 
 

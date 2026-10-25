@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.Enumerative.Partition.PeakGeneratingFunction
+import Theorem.MathlibExtTest.Combinatorics.Enumerative.Partition.PeakGeneratingFunction
 open MathlibExtTest MathlibExtTest.Combinatorics MathlibExtTest.Combinatorics.Enumerative MathlibExtTest.Combinatorics.Enumerative.Partition MathlibExtTest.Combinatorics.Enumerative.Partition.PeakGeneratingFunction
 open MetaMathlibExt
 

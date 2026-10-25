@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.PredictableTreeQuery
+import Theorem.StatisticalMechanics.Code.OSSS.PredictableTreeQuery
 open StatMech StatMech.OSSS StatMech.OSSS.PredictableTreeQuery
 
 

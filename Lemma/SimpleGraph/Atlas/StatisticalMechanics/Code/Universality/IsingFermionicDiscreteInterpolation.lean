@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicDiscreteInterpolation
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDiscreteInterpolation.Part4
 open Filter Metric Set Topology StatMech StatMech.FrontierA StatMech.Universality StatMech.Universality.FKIsingCaratheodoryApproximation
 
 

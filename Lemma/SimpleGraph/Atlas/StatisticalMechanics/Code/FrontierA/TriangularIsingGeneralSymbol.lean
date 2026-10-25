@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingGeneralSymbol
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingGeneralSymbol.Part4
 open MeasureTheory StatMech StatMech.FrontierA
 
 

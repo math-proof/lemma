@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.ZariskiTopologyAffine
+import Def.v1.Atlas.AlgebraicGeometryI.code.ZariskiTopologyAffine
 open MvPolynomial Set in
 
 

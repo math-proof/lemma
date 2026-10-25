@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Dynamics.Preperiodic
+import Def.Dynamics.Preperiodic.Part2
 open Function
 
 

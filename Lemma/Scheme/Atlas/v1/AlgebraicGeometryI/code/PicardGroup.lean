@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.PicardGroup
+import Instance.v1.Atlas.AlgebraicGeometryI.code.PicardGroup
 open TensorProduct InvertibleSheaves
 
 

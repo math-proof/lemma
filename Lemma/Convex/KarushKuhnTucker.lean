@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.KarushKuhnTucker
+import Theorem.Analysis.Convex.KarushKuhnTucker
 
 open Convex.KarushKuhnTucker
 

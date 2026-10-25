@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.symmetric.SchurBasics
+import Def.Combinatorics.Young.SchurBasics.Part11
 import Lemma.MvPolynomial.LittlewoodRichardson
 import Lemma.Partition.NPartition
 import Lemma.Equiv.Basics

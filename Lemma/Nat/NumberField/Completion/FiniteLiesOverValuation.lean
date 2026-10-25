@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Completion.FiniteLiesOverValuation
+import Def.NumberTheory.NumberField.Completion.FiniteLiesOverValuation
 open scoped NumberField
 open WithZeroTopology
 open IsDedekindDomain.HeightOneSpectrum

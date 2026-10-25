@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CechSheafDataP1
+import Def.v1.Atlas.AlgebraicGeometryI.code.CechSheafDataP1.Part3
 open CechSheafDataP1
 open SerreDualityTate CanonicalSheafCurves GenusConstruction
 open TateCechInfra

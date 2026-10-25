@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.BSGProposition
+import Def.v1.Atlas.ProjectionTheory.code.BSGProposition
 open Pointwise Finset in BSG
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gh3weightedcor3
+import Theorem.StatisticalMechanics.Code.Walls.gh3weightedcor3.Part2
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Walls
 
 

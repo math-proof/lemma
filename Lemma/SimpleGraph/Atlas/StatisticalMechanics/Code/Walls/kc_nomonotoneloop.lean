@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kc_nomonotoneloop
+import Theorem.StatisticalMechanics.Code.Walls.kc_nomonotoneloop
 open Finset StatMech StatMech.Walls
 
 

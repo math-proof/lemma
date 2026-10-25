@@ -1,0 +1,24 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexDegreeTwoSynchronizedPhysicalKeyCounterexample.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoSynchronizedPhysicalKeyCounterexample.Part4
+
+
+namespace StatMech.FrontierD
+
+#print axioms sixVertexFourByTwoAlignedPairings_false
+#print axioms sixVertexFourByTwoFirstReturn_seed
+#print axioms sixVertexFourByTwoSynchronizedSeed_isIsolated
+#print axioms sixVertexFourByTwoSynchronizedSeedComponent_charge_one
+#print axioms sixVertexFourByTwoPhysicalReturn_seed
+#print axioms sixVertexFourByTwo_not_activeReturnColorInvariant
+#print axioms sixVertexFourByTwo_not_synchronizedActiveStepColorInvariant
+
+end StatMech.FrontierD

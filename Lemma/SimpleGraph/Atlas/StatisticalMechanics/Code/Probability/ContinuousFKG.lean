@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.ContinuousFKG
+import Theorem.StatisticalMechanics.Code.Probability.ContinuousFKG.Part3
 open MeasureTheory StatMech StatMech.Probability
 
 

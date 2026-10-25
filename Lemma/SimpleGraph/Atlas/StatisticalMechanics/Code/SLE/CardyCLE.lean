@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.CardyCLE
+import Theorem.StatisticalMechanics.Code.SLE.CardyCLE.Part5
 open Complex Filter Topology StatMech StatMech.SLE
 
 

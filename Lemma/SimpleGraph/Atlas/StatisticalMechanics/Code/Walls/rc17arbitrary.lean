@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc17arbitrary
+import Theorem.StatisticalMechanics.Code.Walls.rc17arbitrary.Part5
 open Finset MeasureTheory StatMech StatMech.Walls
 
 

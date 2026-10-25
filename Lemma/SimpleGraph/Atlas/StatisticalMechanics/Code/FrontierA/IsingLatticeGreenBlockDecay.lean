@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingLatticeGreenBlockDecay
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingLatticeGreenBlockDecay
 open Filter Set Topology StatMech StatMech.FrontierA
 
 

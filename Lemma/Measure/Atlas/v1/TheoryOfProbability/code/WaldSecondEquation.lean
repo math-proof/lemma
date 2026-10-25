@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.WaldSecondEquation
+import Def.v1.Atlas.TheoryOfProbability.code.WaldSecondEquation
 open MeasureTheory ProbabilityTheory Finset ENNReal Filter
 
 

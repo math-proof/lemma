@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWEulerianWinding
+import Theorem.StatisticalMechanics.Code.Universality.RSWEulerianWinding
 open Function MeasureTheory Set StatMech StatMech.Universality
 
 

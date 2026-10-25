@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.InternalHom
+import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
 import Lemma.Category.Atlas.v1.TensorCategories.code.InternalHom
-import sympy.atlas.v1.Atlas.TensorCategories.code.ConcreteModuleCategories
+import Class.v1.Atlas.TensorCategories.code.ConcreteModuleCategories.Part4
 open Category MonoidalCategory LeftModCat
 
 

@@ -2,7 +2,6 @@ import sympy.stats.q_learning
 import Lemma.Matrix.All_Gt_0.of.Stationary.StochasticIrreducible
 open Finset
 
-
 @[path]
 private lemma main
   {S A : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype A] [DecidableEq A] [Nonempty A] [MeasurableSpace A] [MeasurableSingletonClass A]
@@ -19,6 +18,5 @@ private lemma main
     rw [QLearningSpec.μmin, hy, ← hμ.rowsum]
     exact single_le_sum (fun y _ => hμ.nonneg y) (mem_univ y)
   refine ⟨h₀, ?_, ?_⟩ <;> unfold QLearningSpec.η <;> nlinarith
-
 
 -- created on 2026-09-26

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.QuadraticForms.Reduced
+import Def.NumberTheory.QuadraticForms.Reduced
 open BinaryQuadraticForm
 
 

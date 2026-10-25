@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.DescriptiveSetTheory.BaireSpaceCharacterization
+import Def.Topology.DescriptiveSetTheory.BaireSpaceCharacterization
 open Set Topology
 open Filter Metric EMetric
 open MathlibExt.Topology.DescriptiveSetTheory.BaireSpaceCharacterizationWanted

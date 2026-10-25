@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.HarishChandraFunctor
+import Structure.v1.Atlas.LieGroups.code.HarishChandraFunctor
 open scoped Manifold
 
 

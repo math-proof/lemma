@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.InterfaceConnected
+import Theorem.StatisticalMechanics.Code.Lattice.InterfaceConnected.Part8
 open SimpleGraph Function StatMech StatMech.Lattice
 
 

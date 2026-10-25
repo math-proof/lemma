@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.DlrSandwich
+import Theorem.StatisticalMechanics.Code.FK.DlrSandwich
 open SimpleGraph StatMech StatMech.FK
 
 

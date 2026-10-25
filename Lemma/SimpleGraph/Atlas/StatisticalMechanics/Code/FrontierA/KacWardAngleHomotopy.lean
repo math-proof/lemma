@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAngleHomotopy
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAngleHomotopy.Part3
 open Set SimpleGraph StatMech StatMech.FrontierA
 
 

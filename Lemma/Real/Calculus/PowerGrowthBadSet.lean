@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.PowerGrowthBadSet
+import Theorem.Analysis.Calculus.PowerGrowthBadSet
 
 open Real.Calculus.PowerGrowthBadSet
 open Set MeasureTheory

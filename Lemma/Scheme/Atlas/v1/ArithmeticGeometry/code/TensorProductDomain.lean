@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.TensorProductDomain
+import Def.v1.Atlas.ArithmeticGeometry.code.TensorProductDomain
 open TensorProduct
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexVertexBoundConcrete
+import Theorem.StatisticalMechanics.Code.Universality.HexVertexBoundConcrete.Part4
 open StatMech StatMech.Universality
 
 

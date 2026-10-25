@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section1
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
 open AlgebraicTopologyI
 open Finset AlgebraicTopology CategoryTheory
 

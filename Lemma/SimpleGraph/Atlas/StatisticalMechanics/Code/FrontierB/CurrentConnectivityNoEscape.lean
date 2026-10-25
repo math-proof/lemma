@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentConnectivityNoEscape
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentConnectivityNoEscape.Part3
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierB
 
 

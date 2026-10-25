@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeRankSimplex
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeRankSimplex
 open StatMech StatMech.Ising
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.PollakPartialParkingFunctions
+import Theorem.Combinatorics.Enumerative.PollakPartialParkingFunctions.Part12
 open MetaMathlibExt.PollakPartialParking
 
 

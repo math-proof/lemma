@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.LSeries.AbelContinuation
+import Theorem.MathlibExtTest.NumberTheory.LSeries.AbelContinuation.Part2
 open AbelContinuationTest
 open Filter Asymptotics Topology
 

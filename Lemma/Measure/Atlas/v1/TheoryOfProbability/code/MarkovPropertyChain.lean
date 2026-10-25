@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.MarkovPropertyChain
+import Def.v1.Atlas.TheoryOfProbability.code.MarkovPropertyChain.Part2
 open MeasureTheory ProbabilityTheory
 
 

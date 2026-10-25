@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.KingmanFilling
+import Theorem.StatisticalMechanics.Code.Foundations.KingmanFilling.Part2
 open MeasureTheory Filter Topology StatMech StatMech.KingmanFilling
 
 

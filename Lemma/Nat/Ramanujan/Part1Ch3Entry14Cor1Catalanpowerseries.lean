@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Entry14Cor1Catalanpowerseries
+import Def.NumberTheory.Ramanujan.Part1Ch3Entry14Cor1Catalanpowerseries
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry14Cor1Catalanpowerseries
 

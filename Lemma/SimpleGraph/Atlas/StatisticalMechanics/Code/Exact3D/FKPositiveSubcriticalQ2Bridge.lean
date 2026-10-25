@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge
+import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge.Part121
 open Filter MeasureTheory StatMech StatMech.Exact3D StatMech.Exact3D.FinsetFiberIndex
 
 

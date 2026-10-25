@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.FractionalIdeal.GroupAction
+import Abbrev.RingTheory.FractionalIdeal.GroupAction
 open scoped nonZeroDivisors
 open scoped Pointwise
 open scoped FractionalIdealUnits

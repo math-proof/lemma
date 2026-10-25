@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.BilinearForm.DualLatticeReflexive
+import Theorem.LinearAlgebra.BilinearForm.DualLatticeReflexive
 open LinearMap (BilinForm)
 open Module
 

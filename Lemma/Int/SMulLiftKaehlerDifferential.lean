@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.DModules
+import Abbrev.v1.Atlas.LieGroups.code.DModules
 open DModules
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKUniqPrimitives
+import Theorem.StatisticalMechanics.Code.FK.FKUniqPrimitives
 open MeasureTheory Set Filter Topology Real SimpleGraph Finset StatMech StatMech.FK
 
 

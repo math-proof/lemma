@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec14DivisorsPicard
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec14DivisorsPicard.Part2
 open AlgebraicGeometry CategoryTheory Lec14DivisorsPicard
 open scoped nonZeroDivisors
 open LocallyFactorialDivisors

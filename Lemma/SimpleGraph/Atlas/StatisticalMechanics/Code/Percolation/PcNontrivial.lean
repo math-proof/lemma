@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.PcNontrivial
+import Theorem.StatisticalMechanics.Code.Percolation.PcNontrivial.Part4
 open MeasureTheory Set SimpleGraph Finset StatMech StatMech.Percolation
 
 

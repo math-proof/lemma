@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MeasureTheory.Integral.PrekopaLeindler
+import Def.MeasureTheory.Integral.PrekopaLeindler
 open MeasureTheory
 open scoped ENNReal
 open MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted

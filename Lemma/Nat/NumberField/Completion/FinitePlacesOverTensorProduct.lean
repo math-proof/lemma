@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Completion.FinitePlacesOverTensorProduct
+import Def.NumberTheory.NumberField.Completion.FinitePlacesOverTensorProduct
 open scoped NumberField
 open TensorProduct
 open scoped IsDedekindDomain.HeightOneSpectrum.CompletionTensorProduct

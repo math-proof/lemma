@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_4
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_4
 open MeasureTheory Real Set
 
 

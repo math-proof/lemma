@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LeeYangZeroFree
+import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangZeroFree.Part2
 open Finset Polynomial StatMech StatMech.FrontierA
 
 

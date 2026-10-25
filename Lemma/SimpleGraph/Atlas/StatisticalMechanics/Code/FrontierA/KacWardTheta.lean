@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardTheta
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardTheta
 open StatMech StatMech.FrontierA
 
 

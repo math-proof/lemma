@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds
+import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
 open DifferentialFormSpace SymplecticLinearAlgebra
 
 

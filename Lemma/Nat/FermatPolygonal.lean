@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.FermatPolygonal
+import Def.NumberTheory.FermatPolygonal
 open scoped BigOperators
 open Nat
 open MetaMathlibExt

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc91ladder
+import Theorem.StatisticalMechanics.Code.Walls.rc91ladder
 open Finset MeasureTheory StatMech StatMech.Walls
 
 

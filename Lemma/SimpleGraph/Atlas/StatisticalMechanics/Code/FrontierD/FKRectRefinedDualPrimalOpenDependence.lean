@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualPrimalOpenDependence
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualPrimalOpenDependence
 open StatMech StatMech.FrontierD
 
 

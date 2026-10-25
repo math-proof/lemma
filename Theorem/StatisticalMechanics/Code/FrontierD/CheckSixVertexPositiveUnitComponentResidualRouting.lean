@@ -1,0 +1,80 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexPositiveUnitComponentResidualRouting.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveUnitComponentResidualRouting.Part12
+open StatMech.FrontierD
+
+#print axioms sixVertexHorizontalDegreeTwoHallSourcePhysicalEmbedding
+#print axioms SixVertexPositiveUnitComponentResidualWitness.degreeTwo
+#print axioms
+  sixVertexPositiveUnitComponentResidualGeometricSourceKind
+#print axioms
+  SixVertexHorizontalResidualGeometricCertificate.ofUnitStrand
+#print axioms positiveUnitComponentResidualTargetLift_nonempty
+#print axioms
+  SixVertexPositiveUnitComponentResidualOrbitCover.ofTargetCoverage
+#print axioms SixVertexPositiveUnitComponentResidualOrbitCover.matching
+#print axioms SixVertexPositiveUnitComponentResidualOrbitCover.matching_supported
+#print axioms sixVertexHorizontalHallSourceCanonicalLoop
+#print axioms sixVertexHorizontalHallTargetCanonicalLoop
+#print axioms sixVertexHorizontalHallHighSourceCanonicalLoop
+#print axioms
+  SixVertexHorizontalResidualGeometricCertificate.loopTarget_supported
+#print axioms
+  SixVertexHorizontalResidualGeometricSurplusRepair.ofCertificateSourceWeightZero
+#print axioms
+  SixVertexHorizontalResidualGeometricSurplusRepair.ofCertificateLeftIncompatible
+#print axioms
+  SixVertexHorizontalResidualGeometricSurplusRepair.ofCertificateRightIncompatible
+#print axioms
+  SixVertexHorizontalResidualGeometricSurplusRepair.ofUnitStrandIncompatible
+#print axioms
+  SixVertexHorizontalResidualGeometricSurplusRepair.ofFineRelated
+#print axioms SixVertexHorizontalResidualGeometricSurplusRepair.supported
+#print axioms sixVertexHorizontalResidualHighBaseKey
+#print axioms sixVertexHorizontalResidualHighBranchKey
+#print axioms
+  SixVertexHorizontalResidualHighGeometricSurplusRepair.target_supported
+#print axioms
+  SixVertexHorizontalResidualHighGeometricSurplusRepair.target_distinct
+#print axioms SixVertexPositiveUnitComponentResidualMixedRouting.paired
+#print axioms
+  SixVertexPositiveUnitComponentResidualMixedRouting.paired_distinct
+#print axioms
+  SixVertexPositiveUnitComponentResidualMixedRouting.paired_supported
+#print axioms
+  SixVertexPositiveUnitComponentResidualMixedRouting.paired_output_recovers_occurrence
+#print axioms
+  SixVertexPositiveUnitComponentResidualMixedRouting.paired_injective_with_occurrence
+#print axioms
+  SixVertexPositiveUnitComponentResidualMixedRouting.geometric_injective
+#print axioms
+  SixVertexPositiveUnitComponentResidualMixedRouting.geometric_supported
+#print axioms SixVertexPositiveUnitComponentResidualMixedRouting.nonHighToUnit
+#print axioms
+  SixVertexPositiveUnitComponentResidualMixedRouting.nonHighToGeometric
+#print axioms
+  SixVertexPositiveUnitComponentResidualMixedRouting.unit_paired_disjoint
+#print axioms SixVertexPositiveUnitComponentResidualMixedRouting.direct
+#print axioms SixVertexPositiveUnitComponentResidualMixedRouting.decode_direct
+#print axioms SixVertexPositiveUnitComponentResidualMixedRouting.direct_supported
+#print axioms SixVertexPositiveUnitComponentResidualMixedRouting.direct_injective
+#print axioms
+  SixVertexPositiveUnitComponentResidualMixedRouting.direct_paired_disjoint
+#print axioms
+  SixVertexPositiveUnitComponentResidualMixedRouting.toHighChargeHallRouting
+#print axioms
+  SixVertexPositiveUnitComponentResidualMixedRouting.toTokenComponents
+#print axioms
+  offDiagonalTwoCycleMatching_of_positiveUnitComponentMixedRoutings
+#print axioms
+  sixVertexMarkedTraceCoefficientwiseLogConcave_of_positiveUnitComponentMixedRoutings
+
+

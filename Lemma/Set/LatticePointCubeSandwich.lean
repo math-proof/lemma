@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.LatticePointCubeSandwich
+import Theorem.Geometry.LatticePointCubeSandwich.Part3
 open MeasureTheory Set ENNReal Pointwise
 open LatticePointCubeSandwich
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.InsideClimb
+import Theorem.StatisticalMechanics.Code.Onsager.InsideClimb.Part2
 open StatMech StatMech.Onsager StatMech.Onsager.InsideClimb
 
 

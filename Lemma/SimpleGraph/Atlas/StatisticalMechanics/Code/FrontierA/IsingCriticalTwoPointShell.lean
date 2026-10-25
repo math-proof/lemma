@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingCriticalTwoPointShell
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalTwoPointShell.Part3
 open Finset MeasureTheory Set StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch2
+import Def.NumberTheory.Ramanujan.Part1Ch2
 open Real Filter Topology intervalIntegral
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 open Entry3InfiniteEvaluation

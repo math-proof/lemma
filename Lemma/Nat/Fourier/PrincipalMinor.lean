@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Fourier.PrincipalMinor
+import Def.NumberTheory.Fourier.PrincipalMinor
 open Fourier
 
 

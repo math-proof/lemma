@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch7Entry9Bernoulligrowth
+import Abbrev.Analysis.Ramanujan.Part1Ch7Entry9Bernoulligrowth
 open scoped Nat Real BigOperators Interval Polynomial ContDiff
 open Asymptotics Filter Finset Complex Topology MeasureTheory
 open MathlibExt.Analysis.Ramanujan.Part1Ch7

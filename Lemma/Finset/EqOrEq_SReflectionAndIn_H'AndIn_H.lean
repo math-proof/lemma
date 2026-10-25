@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.RetractionHalfApartments
+import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.RetractionHalfApartments
 import Lemma.Finset.Eq.In_H.of.GtGalleryDist
 open scoped Classical
 

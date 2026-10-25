@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDualRankOneWinding
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualRankOneWinding
 open StatMech StatMech.FrontierD
 
 

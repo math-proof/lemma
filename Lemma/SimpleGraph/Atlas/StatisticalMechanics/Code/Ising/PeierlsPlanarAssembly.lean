@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.PeierlsPlanarAssembly
+import Theorem.StatisticalMechanics.Code.Ising.PeierlsPlanarAssembly
 open MeasureTheory Filter Topology Finset SimpleGraph StatMech StatMech.Ising
 
 

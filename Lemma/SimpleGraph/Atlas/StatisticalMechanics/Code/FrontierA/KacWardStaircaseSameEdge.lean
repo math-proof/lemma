@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardStaircaseSameEdge
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardStaircaseSameEdge
 open StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.CoxeterComplexFoldings
+import Def.v1.Atlas.Buildings.code.Building.CoxeterComplexFoldings
 open ChamberComplex Garrett.ExchangeDeletion AptIsCoxeterProof CoxeterComplexData
 open scoped Classical
 open Garrett.ExchangeDeletion

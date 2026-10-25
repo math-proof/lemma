@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.LSeries.Artin
+import Def.NumberTheory.LSeries.Artin
 open Representation
 
 

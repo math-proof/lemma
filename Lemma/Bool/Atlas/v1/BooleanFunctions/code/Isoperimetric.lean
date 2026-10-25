@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Theorems
+import Def.v1.Atlas.BooleanFunctions.code.Theorems
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Theorems
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.InfluenceFourier
+import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
 open Finset BigOperators Real
 
 

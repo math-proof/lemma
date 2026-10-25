@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Entry13CorollarySchroder
+import Def.NumberTheory.Ramanujan.Part1Ch3Entry13CorollarySchroder
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry13CorollarySchroder
 

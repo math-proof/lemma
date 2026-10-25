@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.InhomogeneousBoundaryParityAvoidance
+import Theorem.StatisticalMechanics.Code.FrontierB.InhomogeneousBoundaryParityAvoidance
 open MeasureTheory StatMech StatMech.FrontierB
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.ChainCapacity
+import Def.StatisticalMechanics.Code.SLE.ChainCapacity.Part2
 open Complex Set Filter Topology MeasureTheory StatMech StatMech.SLE
 
 

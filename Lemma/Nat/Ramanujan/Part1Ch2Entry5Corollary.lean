@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch2Entry5Corollary
+import Def.NumberTheory.Ramanujan.Part1Ch2Entry5Corollary
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 open Entry5Corollary
 

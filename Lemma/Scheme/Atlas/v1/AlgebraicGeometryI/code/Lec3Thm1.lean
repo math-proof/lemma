@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec3Thm1
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec3Thm1
 open AlgebraicGeometry CategoryTheory
 
 

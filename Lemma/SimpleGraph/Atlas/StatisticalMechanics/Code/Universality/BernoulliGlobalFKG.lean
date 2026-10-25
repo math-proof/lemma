@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.BernoulliGlobalFKG
+import Theorem.StatisticalMechanics.Code.Universality.BernoulliGlobalFKG.Part2
 open MeasureTheory Set Filter StatMech StatMech.Universality
 
 

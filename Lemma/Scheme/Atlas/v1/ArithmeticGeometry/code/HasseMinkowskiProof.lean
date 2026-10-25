@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.HasseMinkowskiProof
+import Def.v1.Atlas.ArithmeticGeometry.code.HasseMinkowskiProof.Part3
 open hilbertSymbol
 open scoped Classical
 open HilbertSymbol

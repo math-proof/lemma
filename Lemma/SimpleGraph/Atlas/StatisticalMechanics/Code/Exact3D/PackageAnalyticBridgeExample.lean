@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.PackageAnalyticBridgeExample
+import Theorem.StatisticalMechanics.Code.Exact3D.PackageAnalyticBridgeExample.Part5
 open StatMech StatMech.Exact3D StatMech.Exact3D.PackageAnalyticBridgeExample
 
 

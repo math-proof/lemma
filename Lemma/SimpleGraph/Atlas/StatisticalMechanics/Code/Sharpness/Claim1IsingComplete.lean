@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.Claim1IsingComplete
+import Theorem.StatisticalMechanics.Code.Sharpness.Claim1IsingComplete.Part4
 open SimpleGraph Finset Classical StatMech StatMech.Sharpness StatMech.Sharpness.FluxEdgeCopy
 
 

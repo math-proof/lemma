@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.Twists
+import Structure.v1.Atlas.TensorCategories.code.Twists.Part2
 open CategoryTheory TensorCategories
 open scoped TensorProduct
 open TensorCategories CategoryTheory

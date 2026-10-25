@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTail
+import Def.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTail.Part3
 open Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

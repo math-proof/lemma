@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectCutPushforward
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectCutPushforward.Part9
 open Finset SimpleGraph StatMech StatMech.FrontierD
 
 

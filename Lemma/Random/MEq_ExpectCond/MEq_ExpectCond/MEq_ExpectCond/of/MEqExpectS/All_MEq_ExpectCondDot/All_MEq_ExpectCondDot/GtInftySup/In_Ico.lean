@@ -2,7 +2,7 @@ import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Lemma.Random.MeasurableJoint.is.Measurable.Measurable
 import sympy.core.power
 import sympy.vector.Basic
-import sympy.concrete.sup
+import Macro.Order.Sup
 open MeasureTheory Random
 
 

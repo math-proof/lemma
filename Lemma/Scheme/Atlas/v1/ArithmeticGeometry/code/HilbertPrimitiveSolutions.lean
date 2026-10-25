@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.HilbertPrimitiveSolutions
+import Theorem.v1.Atlas.ArithmeticGeometry.code.HilbertPrimitiveSolutions.Part2
 open HilbertSymbol PadicInt in hilbertSymbol
 open scoped Classical
 open PadicInt HilbertSymbol

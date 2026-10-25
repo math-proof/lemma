@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.binsinsertion
+import Theorem.StatisticalMechanics.Code.Walls.binsinsertion.Part7
 open Set SimpleGraph Finset MeasureTheory Filter Topology StatMech StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation StatMech.Ising StatMech.IsingFK StatMech.Walls
 
 

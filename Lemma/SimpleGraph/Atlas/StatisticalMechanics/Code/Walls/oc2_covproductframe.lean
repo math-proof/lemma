@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc2_covproductframe
+import Theorem.StatisticalMechanics.Code.Walls.oc2_covproductframe.Part2
 open Finset StatMech StatMech.Walls
 
 

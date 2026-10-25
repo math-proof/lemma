@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.CrossingReflection
+import Theorem.StatisticalMechanics.Code.Universality.CrossingReflection.Part4
 open Set MeasureTheory SimpleGraph StatMech StatMech.Universality
 
 

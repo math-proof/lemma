@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalProfileSign
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalProfileSign
 open Finset StatMech StatMech.FrontierD
 
 

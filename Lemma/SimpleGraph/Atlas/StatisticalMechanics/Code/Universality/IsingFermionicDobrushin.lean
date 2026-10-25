@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin.Part8
 open Finset Complex StatMech StatMech.Universality StatMech.Universality.FKIsingDobrushinDomain StatMech.Universality.FKIsingDobrushinDomain.LocalSwitchingTable
 
 

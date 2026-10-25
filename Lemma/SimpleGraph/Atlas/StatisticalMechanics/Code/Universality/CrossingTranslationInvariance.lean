@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.CrossingTranslationInvariance
+import Theorem.StatisticalMechanics.Code.Universality.CrossingTranslationInvariance.Part3
 open Set MeasureTheory SimpleGraph StatMech StatMech.Universality
 
 

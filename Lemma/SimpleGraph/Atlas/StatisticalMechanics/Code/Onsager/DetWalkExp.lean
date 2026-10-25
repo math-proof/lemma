@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DetWalkExp
+import Theorem.StatisticalMechanics.Code.Onsager.DetWalkExp
 open StatMech StatMech.Onsager
 
 

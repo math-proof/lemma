@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.LucasSequence
+import Def.NumberTheory.LucasSequence
 import Lemma.Nat.LucasSequence
 open Real
 open scoped goldenRatio

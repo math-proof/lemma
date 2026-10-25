@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.CatalanHarmonicGeneratingFunction
+import Def.Combinatorics.Enumerative.CatalanHarmonicGeneratingFunction
 open scoped BigOperators
 open MetaMathlibExt
 

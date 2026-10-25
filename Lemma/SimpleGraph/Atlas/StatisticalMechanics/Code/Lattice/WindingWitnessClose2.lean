@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.WindingWitnessClose2
+import Theorem.StatisticalMechanics.Code.Lattice.WindingWitnessClose2.Part3
 open Finset Set SimpleGraph Function StatMech StatMech.Lattice
 
 

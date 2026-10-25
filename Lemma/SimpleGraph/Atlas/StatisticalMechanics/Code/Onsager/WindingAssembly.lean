@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.WindingAssembly
+import Theorem.StatisticalMechanics.Code.Onsager.WindingAssembly.Part2
 open StatMech StatMech.Onsager StatMech.Onsager.WindingAssembly
 
 

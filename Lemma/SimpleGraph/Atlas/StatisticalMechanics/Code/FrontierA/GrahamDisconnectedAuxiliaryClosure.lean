@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamDisconnectedAuxiliaryClosure
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamDisconnectedAuxiliaryClosure
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

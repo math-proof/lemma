@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MeshPatternRStirling
+import Def.Combinatorics.Enumerative.MeshPatternRStirling.Part3
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveIncrementComparison
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveIncrementComparison
 open Filter Set Topology StatMech StatMech.Universality
 
 

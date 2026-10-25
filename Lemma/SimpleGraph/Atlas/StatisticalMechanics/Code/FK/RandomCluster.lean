@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.RandomCluster
+import Theorem.StatisticalMechanics.Code.FK.RandomCluster.Part6
 open StatMech StatMech.FK
 
 

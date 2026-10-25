@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_5_1
+import Theorem.Analysis.Section_5_1.Part9
 open Chapter5
 open Chapter5.Sequence
 open Chapter5.Sequence.IsCauchy

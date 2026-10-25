@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.Roots
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation.Part4
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Roots
 open CoxeterGroup
 
 

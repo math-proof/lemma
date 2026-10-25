@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.TwoPointDerivCompute
+import Def.v1.Atlas.BooleanFunctions.code.TwoPointDerivCompute
 open Real Set BooleanFourier
 
 

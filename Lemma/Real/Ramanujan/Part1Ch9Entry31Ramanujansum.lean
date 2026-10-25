@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch9Entry31Ramanujansum
+import Def.Analysis.Ramanujan.Part1Ch9Entry31Ramanujansum
 open MathlibExt.Analysis.Ramanujan.Part1Ch9
 open Entry31Ramanujansum
 

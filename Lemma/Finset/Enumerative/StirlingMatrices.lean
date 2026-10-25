@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.StirlingMatrices
+import Def.Combinatorics.Enumerative.StirlingMatrices
 open BigOperators
 open MetaMathlibExt
 

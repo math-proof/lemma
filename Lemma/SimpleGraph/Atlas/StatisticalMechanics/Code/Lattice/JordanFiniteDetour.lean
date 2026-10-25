@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanFiniteDetour
+import Theorem.StatisticalMechanics.Code.Lattice.JordanFiniteDetour.Part3
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

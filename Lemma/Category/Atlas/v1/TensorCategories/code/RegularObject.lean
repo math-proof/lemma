@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.RegularObject
+import Abbrev.v1.Atlas.TensorCategories.code.RegularObject.Part2
 open FiniteTensorCategoryFPData
 
 

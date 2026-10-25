@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKInterfaceSubadd
+import Theorem.StatisticalMechanics.Code.FK.FKInterfaceSubadd.Part2
 open SimpleGraph Filter Topology StatMech StatMech.FK
 
 

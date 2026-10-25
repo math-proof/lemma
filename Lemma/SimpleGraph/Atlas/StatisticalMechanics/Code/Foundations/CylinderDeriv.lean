@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.CylinderDeriv
+import Theorem.StatisticalMechanics.Code.Foundations.CylinderDeriv.Part2
 open MeasureTheory ProbabilityTheory Function StatMech
 
 

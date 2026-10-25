@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.TorusLoopCharacter
+import Theorem.StatisticalMechanics.Code.Onsager.TorusLoopCharacter.Part2
 open StatMech StatMech.Onsager
 
 

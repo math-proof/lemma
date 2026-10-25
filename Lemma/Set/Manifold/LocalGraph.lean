@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.LocalGraph
+import Theorem.Geometry.Manifold.LocalGraph
 open scoped Topology
 open MathlibExt.Geometry.Manifold.LocalGraphWanted
 

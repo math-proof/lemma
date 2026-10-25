@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CanonicalDivisorDecomposition
+import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalDivisorDecomposition.Part4
 open Ideal Module CanonicalSheafCurves
 open CanonicalSheafCurves
 

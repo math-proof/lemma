@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedSupportInteraction
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedSupportInteraction.Part2
 open Finset StatMech StatMech.FrontierD
 
 

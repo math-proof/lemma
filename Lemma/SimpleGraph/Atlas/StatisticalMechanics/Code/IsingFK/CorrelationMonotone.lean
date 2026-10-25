@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.CorrelationMonotone
+import Theorem.StatisticalMechanics.Code.IsingFK.CorrelationMonotone
 open Finset StatMech StatMech.IsingFK
 
 

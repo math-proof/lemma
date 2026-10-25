@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.GibonacciNumber
+import Def.NumberTheory.GibonacciNumber
 import Lemma.Nat.GibonacciNumber
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.MvPolynomial.Stable
+import Def.Algebra.MvPolynomial.Stable
 open scoped BigOperators ComplexOrder
 open upper half-plane. -/
 open Filter MvPolynomial

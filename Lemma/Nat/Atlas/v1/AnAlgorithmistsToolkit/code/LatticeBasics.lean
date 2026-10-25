@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.LatticeBasics
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.LatticeBasics.Part2
 open Matrix BigOperators LatticeBasics
 open Submodule Set
 open MeasureTheory Measure

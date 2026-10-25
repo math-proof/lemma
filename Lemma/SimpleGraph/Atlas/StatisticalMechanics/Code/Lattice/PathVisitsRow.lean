@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.PathVisitsRow
+import Theorem.StatisticalMechanics.Code.Lattice.PathVisitsRow.Part2
 open Set Finset SimpleGraph StatMech StatMech.Lattice
 
 

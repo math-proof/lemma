@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackbonePartialEdgeCopyObstruction
+import Theorem.StatisticalMechanics.Code.Sharpness.BackbonePartialEdgeCopyObstruction
 open StatMech StatMech.Sharpness
 
 

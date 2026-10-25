@@ -1,4 +1,4 @@
-import sympy.concrete.expr_with_limits
+import Macro.Order.ExprWithLimits
 import Mathlib.Algebra.Order.Floor.Ring
 import sympy.sets.sets
 import sympy.Basic

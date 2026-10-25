@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.AlgebraicGeometry
+import Def.v1.Atlas.EllipticCurves.code.AlgebraicGeometry.Part6
 open MvPolynomial Set Cardinal
 open Cardinal
 

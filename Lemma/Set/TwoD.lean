@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.TwoD
+import Def.Geometry.TwoD
 open scoped EuclideanGeometry Finset
 open scoped EuclideanSpace EuclideanGeometry
 open scoped Real

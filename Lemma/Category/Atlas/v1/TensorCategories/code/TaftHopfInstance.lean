@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.TaftHopfInstance
+import Instance.v1.Atlas.TensorCategories.code.TaftHopfInstance.Part3
 open Coalgebra HopfAlgebra TaftAlgebraType
 
 

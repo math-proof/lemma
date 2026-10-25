@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.DescriptiveSetTheory.BernsteinSet
+import Theorem.Topology.DescriptiveSetTheory.BernsteinSet
 open Set Topology
 open Cardinal
 open MathlibExt.Topology.DescriptiveSetTheory.BernsteinSet

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCenteredDiagonalScalingLimit
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCenteredDiagonalScalingLimit
 open Filter Set Topology StatMech StatMech.Universality StatMech.Universality.FKIsingCaratheodoryApproximation
 
 

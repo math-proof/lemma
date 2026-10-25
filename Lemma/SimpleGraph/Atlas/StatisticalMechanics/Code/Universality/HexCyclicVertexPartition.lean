@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexCyclicVertexPartition
+import Theorem.StatisticalMechanics.Code.Universality.HexCyclicVertexPartition.Part9
 open StatMech StatMech.Universality
 
 

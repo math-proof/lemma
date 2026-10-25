@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.MeanfieldIsingMass
+import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingMass.Part3
 open Finset SimpleGraph StatMech StatMech.Sharpness
 
 

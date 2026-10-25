@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.InfiniteHarris
+import Theorem.StatisticalMechanics.Code.Probability.InfiniteHarris.Part3
 open MeasureTheory Set Filter StatMech
 
 

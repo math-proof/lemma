@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.LevyKhintchin
+import Theorem.Probability.LevyKhintchin.Part17
 open MeasureTheory
 open scoped ENNReal NNReal MeasureTheory Topology
 open MetaMathlibExt

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.complex.KoebeQuarter
+import Theorem.Analysis.Complex.KoebeQuarter.Part3
 
 open Complex.KoebeQuarterWanted
 

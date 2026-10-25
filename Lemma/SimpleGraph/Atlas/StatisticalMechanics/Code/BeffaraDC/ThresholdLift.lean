@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.ThresholdLift
+import Theorem.StatisticalMechanics.Code.BeffaraDC.ThresholdLift
 open Set StatMech StatMech.BeffaraDC
 
 

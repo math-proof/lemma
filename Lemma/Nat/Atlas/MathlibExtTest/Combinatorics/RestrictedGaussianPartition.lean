@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.RestrictedGaussianPartition
+import Theorem.MathlibExtTest.Combinatorics.RestrictedGaussianPartition
 open MetaMathlibExt
 
 

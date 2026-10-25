@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingTorusExponentialMoment
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusExponentialMoment
 open Finset StatMech StatMech.FrontierA
 
 

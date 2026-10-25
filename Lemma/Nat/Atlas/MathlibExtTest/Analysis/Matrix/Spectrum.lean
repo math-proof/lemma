@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Analysis.Matrix.Spectrum
+import Theorem.MathlibExtTest.Analysis.Matrix.Spectrum
 open scoped ComplexOrder Matrix.Norms.L2Operator
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFiniteDuality
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFiniteDuality
 open Finset SimpleGraph StatMech StatMech.FrontierD
 
 

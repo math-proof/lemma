@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.ghc_fieldfluct
+import Theorem.StatisticalMechanics.Code.Walls.ghc_fieldfluct
 open Finset StatMech StatMech.Walls
 
 

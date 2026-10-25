@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc5_doubledboxcount
+import Theorem.StatisticalMechanics.Code.Walls.rc5_doubledboxcount.Part2
 open Finset StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBlockRepetition
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBlockRepetition.Part12
 open Finset StatMech StatMech.FrontierD
 
 

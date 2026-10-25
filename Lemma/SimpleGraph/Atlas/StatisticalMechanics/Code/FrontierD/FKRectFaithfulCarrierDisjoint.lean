@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectFaithfulCarrierDisjoint
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulCarrierDisjoint
 open SimpleGraph StatMech StatMech.FrontierD
 
 

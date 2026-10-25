@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_6_6
+import Theorem.Analysis.Section_6_6
 open Chapter6
 open Chapter6.Sequence
 

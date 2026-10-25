@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_10
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_10
 open Finset BigOperators
 
 

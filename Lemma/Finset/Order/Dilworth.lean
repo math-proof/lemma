@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Order.Dilworth
+import Def.Combinatorics.Order.Dilworth
 open MathlibExt.Combinatorics.Order.DilworthWanted
 
 

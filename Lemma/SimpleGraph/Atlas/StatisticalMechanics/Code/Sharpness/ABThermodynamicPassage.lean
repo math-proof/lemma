@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABThermodynamicPassage
+import Theorem.StatisticalMechanics.Code.Sharpness.ABThermodynamicPassage
 open Filter Topology Set StatMech StatMech.Sharpness
 
 

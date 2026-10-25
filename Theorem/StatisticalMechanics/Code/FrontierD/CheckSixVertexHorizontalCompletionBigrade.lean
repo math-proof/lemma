@@ -1,0 +1,30 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexHorizontalCompletionBigrade.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalCompletionBigrade.Part9
+open StatMech.FrontierD
+
+#print axioms sixVertexSectorConfigurationEquivHorizontalCompletion
+#print axioms sixVertexVerticalCompletionSeamRow_injective
+#print axioms sixVertexVerticalCompletionEquivColumns
+#print axioms sixVertexVerticalColumnCompletionAtSeam_subsingleton
+#print axioms sixVertexHorizontalSectorCompletionEquivColumns
+#print axioms sixVertexColumnCompletionFamilyEquivSectorRow
+#print axioms card_sixVertexHorizontalSectorCompletion_eq_sum_columnFibers
+#print axioms sixVertexHorizontalAdmissibleSeamRow_iff_subset
+#print axioms card_sixVertexHorizontalSectorCompletion_eq_choose
+#print axioms card_sixVertexHorizontalSectorCompletion_eq_chooseCount
+#print axioms card_sixVertexConfigurationPairBigradeFiber_eq_chooseSums
+#print axioms configurationBigradeFibers_iff_horizontalChooseBigradeFibers
+#print axioms sixVertexConfigurationPairBigrade_eq_horizontalPairBigrade
+#print axioms sixVertexConfigurationPairBigradeFiberEquivHorizontalCompletions
+#print axioms card_sixVertexConfigurationPairBigradeFiber_eq_horizontalCompletions
+
+

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.RealAnalysis.code.ContinuousFunctions.Continuity
+import Def.v1.Atlas.RealAnalysis.code.ContinuousFunctions.Continuity
 open ContinuousFunctions
 
 

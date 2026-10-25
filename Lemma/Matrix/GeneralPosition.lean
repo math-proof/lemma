@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.GeneralPosition
+import Theorem.LinearAlgebra.GeneralPosition.Part2
 open Function
 open scoped Affine LinearAlgebra.Projectivization
 open Projectivization

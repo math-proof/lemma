@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.BrownianDyadicModulus
+import Theorem.StatisticalMechanics.Code.SLE.BrownianDyadicModulus
 open Filter MeasureTheory Set StatMech StatMech.SLE
 
 

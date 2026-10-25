@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Baranyai
+import Def.Combinatorics.Baranyai
 open MetaMathlibExt
 
 

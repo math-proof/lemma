@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.SelfReference
+import Def.v1.Atlas.TheoryOfComputation.code.SelfReference.Part7
 open SelfReference TuringMachine GodelIncompleteness
 open TuringMachine
 

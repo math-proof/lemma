@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.Bimodule
+import Abbrev.v1.Atlas.TensorCategories.code.Bimodule
 open CategoryTheory
 open Category MonoidalCategory MonObj
 

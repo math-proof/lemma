@@ -1,0 +1,21 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckTriangularIsingTorusHomology.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusHomology.Part2
+
+
+namespace StatMech.FrontierA
+
+#print axioms triangularTorus_surfaceSubgraphHomology_eq
+#print axioms triangularTorusSurfaceEdgeClass_diag
+#print axioms triangularTorus_surfaceParitySign_eq_spinCharacter
+#print axioms triangularTorus_surfaceQuadraticEvenPolynomial_eq
+
+end StatMech.FrontierA

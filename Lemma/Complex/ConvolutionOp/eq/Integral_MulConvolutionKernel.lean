@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.PlancherelCompact
+import Abbrev.v1.Atlas.LieGroups.code.PlancherelCompact.Part3
 import Lemma.Complex.ConvolutionOp.AxStub
 open MeasureTheory PlancherelCompact
 open scoped Topology Manifold

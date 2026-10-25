@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SmoothCurveDivisors
+import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothCurveDivisors.Part2
 open IsDedekindDomain SmoothCurveDivisors
 
 

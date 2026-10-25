@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.BollobasTwoFamilies
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.BollobasTwoFamilies
 open Finset Nat BigOperators BollobasTwoFamilies
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.MeasureTheory.Section_1_2_3
+import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
 open scoped Pointwise
 open LebesgueMeasurable
 

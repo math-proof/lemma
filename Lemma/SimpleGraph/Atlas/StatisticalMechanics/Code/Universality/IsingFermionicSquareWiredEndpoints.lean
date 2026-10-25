@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredEndpoints
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredEndpoints.Part3
 open Finset SimpleGraph StatMech StatMech.Universality
 
 

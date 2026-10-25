@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Sequences.AronsonTransform
+import Def.Combinatorics.Sequences.AronsonTransform
 open MetaMathlibExt
 
 

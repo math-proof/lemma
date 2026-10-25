@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardExtraction
+import Def.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardExtraction.Part19
 open Filter Metric StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.DirichletSeries
+import Def.v1.Atlas.NumberTheoryI.code.DirichletSeries.Part4
 open ArakelovDivisor
 open scoped Classical
 

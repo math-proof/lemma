@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.Infinity.AffineFunc
+import Def.v1.Atlas.Buildings.code.Building.Infinity.AffineFunc.Part2
 open ChamberComplex AffineBuilding
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_9_1
+import Theorem.Analysis.Section_9_1.Part3
 open Chapter9
 open Chapter9.AdherentPt
 

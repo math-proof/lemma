@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.RevealmentCrossBox
+import Theorem.StatisticalMechanics.Code.OSSS.RevealmentCrossBox.Part7
 open Finset StatMech.Lattice StatMech StatMech.OSSS
 
 

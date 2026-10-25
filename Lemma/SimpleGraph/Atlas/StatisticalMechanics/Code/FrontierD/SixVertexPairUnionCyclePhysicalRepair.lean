@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexPairUnionCyclePhysicalRepair
+import Def.StatisticalMechanics.Code.FrontierD.SixVertexPairUnionCyclePhysicalRepair.Part5
 open StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexConfigurationPairUnionCyclePairedRepairs
 
 

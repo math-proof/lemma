@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc_meanindicatormono
+import Theorem.StatisticalMechanics.Code.Walls.oc_meanindicatormono
 open MeasureTheory StatMech StatMech.Walls
 
 

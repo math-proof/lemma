@@ -3,7 +3,7 @@ import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
 import Lemma.Matrix.MulOfPowAddOfPowNegChoose.eq.Zero
 import Lemma.Matrix.DetMulOfMulPowOfPowNegChoose.eq.MulMulPowPowSubProd
-import Lemma.Matrix.DetMulOfOfPowNegChoose.eq.MulPowProd.of.Le
+import Lemma.Matrix.DetMulStackS_MulPow.eq.Mul_Prod_Factorial.of.Le
 open Matrix Nat
 
 
@@ -78,7 +78,7 @@ private lemma main
   have hz : A₁ * B₂ = 0 := by
     rw [hA₁, hB₂]
     exact MulOfPowAddOfPowNegChoose.eq.Zero
-  rw [hz, Matrix.det_fromBlocks_zero₁₂, hA₁, hB₁, DetMulOfOfPowNegChoose.eq.MulPowProd.of.Le h, hA₂, hB₂, DetMulOfMulPowOfPowNegChoose.eq.MulMulPowPowSubProd] at hmain
+  rw [hz, Matrix.det_fromBlocks_zero₁₂, hA₁, hB₁, DetMulStackS_MulPow.eq.Mul_Prod_Factorial.of.Le h, hA₂, hB₂, DetMulOfMulPowOfPowNegChoose.eq.MulMulPowPowSubProd] at hmain
   rw [← hmain]
   ring
 

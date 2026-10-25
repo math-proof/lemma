@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.IsingCylinderTransfer
+import Theorem.StatisticalMechanics.Code.Ising.IsingCylinderTransfer.Part3
 open Finset Matrix Filter Topology StatMech StatMech.Ising
 
 

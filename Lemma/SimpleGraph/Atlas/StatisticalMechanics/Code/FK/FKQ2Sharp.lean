@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKQ2Sharp
+import Theorem.StatisticalMechanics.Code.FK.FKQ2Sharp
 open Finset Real Set StatMech StatMech.FK
 
 

@@ -1,0 +1,55 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckPeriodicPlanarSheffieldBoundaryBandAssembly.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldBoundaryBandAssembly.Part8
+set_option linter.style.longLine false
+
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_translatedFamily_leftBoundaryExhaustion_centered
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_leftBoundaryExhaustion_uniform_tangentialPlacement
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_rightBoundaryExhaustion_uniform_tangentialPlacement
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_bottomBoundaryExhaustion_uniform_tangentialPlacement
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_topBoundaryExhaustion_uniform_tangentialPlacement
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_translatedFamily_rightBoundaryExhaustion_centered
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_translatedFamily_bottomBoundaryExhaustion_centered
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_translatedFamily_topBoundaryExhaustion_centered
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_orbitBox_boundaryBandSeed
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.componentGridImage_eq_normalShift
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.BoundaryBandSeed.toCommonSquare
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.CommonSquareBoundaryBandData.template_subset
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.CommonSquareBoundaryBandData.leftScore_gt
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.CommonSquareBoundaryBandData.rightScore_gt
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.CommonSquareBoundaryBandData.bottomScore_gt
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.CommonSquareBoundaryBandData.topScore_gt
+#print axioms StatMech.FK.PeriodicPlanar.exists_matched_commonSquareBoundaryBandData
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_orbitBox_normalBoundaryBandSeed
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.NormalBoundaryBandSeed.left_tangential
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.NormalBoundaryBandSeed.right_tangential
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.NormalBoundaryBandSeed.bottom_tangential
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.NormalBoundaryBandSeed.top_tangential
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.NormalBoundaryBandSeed.left_translate_to_rect
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.NormalBoundaryBandSeed.right_translate_to_rect
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.NormalBoundaryBandSeed.bottom_translate_to_rect
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.NormalBoundaryBandSeed.top_translate_to_rect
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicGraph.normalShift_image_add
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.NormalBoundaryBandSeed.toCommonSquare
+#print axioms StatMech.FK.PeriodicPlanar.exists_alternating_dominating_sequences
+#print axioms StatMech.FK.PeriodicPlanar.normalBand_left_source_aligned
+#print axioms StatMech.FK.PeriodicPlanar.normalBand_right_source_aligned
+#print axioms StatMech.FK.PeriodicPlanar.normalBand_bottom_source_aligned
+#print axioms StatMech.FK.PeriodicPlanar.normalBand_top_source_aligned
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.setHitsInfinite_subset_mixedRectSideConnection_union
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.preference_mixed_max_add_epsilon_ge_fourthRoot
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_mixed_approxPreferredSide_crossing_branch
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_uniformTemplate_mixedGridPreference_crossing_max_tendsto_one
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_uniformTemplate_mixedBoundaryScores_crossing_max_tendsto_one
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlaneEmbedding.exists_uniformRadius_boundaryBandScores_crossing_max_tendsto_one
+#print axioms StatMech.FK.PeriodicPlanar.PeriodicPlanarDualPair.TwoLevelRectangleArray.false
+
+

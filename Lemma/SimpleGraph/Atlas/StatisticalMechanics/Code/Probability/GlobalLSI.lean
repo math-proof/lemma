@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.GlobalLSI
+import Theorem.StatisticalMechanics.Code.Probability.GlobalLSI
 open Finset Real StatMech StatMech.Probability
 
 

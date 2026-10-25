@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.MfStarAlgebra
+import Def.v1.Atlas.TensorCategories.code.MfStarAlgebra.Part3
 open Finset Complex MultifusionRingDef MfGrRingOfC
 
 

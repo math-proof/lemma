@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc_boxcrossingscalesum
+import Theorem.StatisticalMechanics.Code.Walls.oc_boxcrossingscalesum
 open Finset StatMech StatMech.Walls
 
 

@@ -1,0 +1,87 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/IntroductionToPartialDifferentialEquations.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs.Part4
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM1.PDEClassification
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM12.MinkowskiVectors
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM12.NullFrameDecomposition
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM12.Wave3D
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM14.WaveEnergy
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM16.FourierInversion
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM17.Lagrangian
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM17.Schrodinger
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM18.LagrangianMechanics
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergy
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergyVerification
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM19.BurgersSingularity
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM19.SchrodingerFundamental
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM2.HeatInvariance
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM2.ThermalEnergy
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM24.Burger
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM4.WeakMaximumPrinciple
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM5.HeatFundamental
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM6.HeatSymmetryEnergy
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM6.MeanValueStrongMax
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM7.LaplacePoisson
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM7.LaplaceProperties
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM8.GreenFunctions
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM9.PoissonHarnackLiouville
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM9.WaveDalembert
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.NormsDivergence
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.PDEClassification
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM12.MinkowskiVectors
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM12.NullFrameDecomposition.Part2
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM12.Wave3D.Part2
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM14.WaveEnergy.Part3
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierInversion
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.Goal80_PlancherelND_Verification
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.FlowSymmetry.Part2
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.Lagrangian
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.Schrodinger
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.SchrodingerFundamentalND
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.FieldTransformation
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.LagrangianMechanics
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergy.Part2
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergyVerification
+import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM18.VariationalNoether
+import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.BurgersCharacteristic
+import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.BurgersSingularity
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.SchrodingerFundamental
+import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM2.Duhamel
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM2.HeatEquationSetup
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM2.HeatInvariance
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM2.ThermalEnergy
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM24.Burger
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM3.FourierSeries
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM3.HeatUniqueness
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM4.WeakMaximumPrinciple
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM5.Convolution
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM5.GaussianDerivatives
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM5.HeatFundamental
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM6.HeatSymmetryEnergy
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM6.MeanValueStrongMax
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM7.LaplacePoisson.Part3
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM7.LaplaceProperties.Part2
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM7.VerifyFundamentalSolution
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.GreenExistence
+import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.GreenFunctions.Part2
+import Instance.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM9.PoissonHarnackLiouville
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM9.WaveDalembert
+
+

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.DescriptiveSetTheory.CantorSpaceCharacterization
+import Def.Topology.DescriptiveSetTheory.CantorSpaceCharacterization
 open MathlibExt.Topology.DescriptiveSetTheory.CantorSpaceCharacterizationWanted
 
 

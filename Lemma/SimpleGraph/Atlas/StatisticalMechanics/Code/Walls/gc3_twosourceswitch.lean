@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc3_twosourceswitch
+import Theorem.StatisticalMechanics.Code.Walls.gc3_twosourceswitch
 open Finset BigOperators Classical StatMech StatMech.Walls
 
 

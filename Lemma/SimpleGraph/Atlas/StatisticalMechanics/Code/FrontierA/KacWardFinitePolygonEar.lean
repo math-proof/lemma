@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardFinitePolygonEar
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFinitePolygonEar.Part12
 open StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.ArcNoSeparation
+import Theorem.StatisticalMechanics.Code.Lattice.ArcNoSeparation.Part4
 open Set SimpleGraph StatMech StatMech.Lattice
 
 

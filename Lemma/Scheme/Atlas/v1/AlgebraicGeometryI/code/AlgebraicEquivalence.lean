@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.AlgebraicEquivalence
+import Def.v1.Atlas.AlgebraicGeometryI.code.AlgebraicEquivalence.Part4
 open AlgebraicEquivalence AlgebraicEquivalence.CartierDivisorGroup
 open AlgebraicGeometry CategoryTheory Limits
 

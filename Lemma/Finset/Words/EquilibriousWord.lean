@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Words.EquilibriousWord
+import Instance.Combinatorics.Words.EquilibriousWord
 open MetaMathlibExt
 
 

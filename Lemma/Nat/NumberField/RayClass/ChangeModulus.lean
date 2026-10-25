@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.RayClass.ChangeModulus
+import Def.NumberTheory.NumberField.RayClass.ChangeModulus
 open scoped nonZeroDivisors
 open NumberField.Modulus
 

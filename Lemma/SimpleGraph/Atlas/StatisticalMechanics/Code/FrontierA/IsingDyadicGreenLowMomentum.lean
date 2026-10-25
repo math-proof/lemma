@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingDyadicGreenLowMomentum
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingDyadicGreenLowMomentum
 open Finset Set StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec24RiemannRochSerre
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec24RiemannRochSerre.Part5
 open Lec24 Lec24.SmoothCompleteCurveWithSheaves
 
 

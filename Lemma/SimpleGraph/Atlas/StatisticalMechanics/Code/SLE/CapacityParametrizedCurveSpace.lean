@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.CapacityParametrizedCurveSpace
+import Theorem.StatisticalMechanics.Code.SLE.CapacityParametrizedCurveSpace
 open Filter MeasureTheory Topology StatMech StatMech.SLE
 
 

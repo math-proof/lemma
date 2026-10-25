@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.MultipleZeta.HZeroBasis
+import Def.NumberTheory.MultipleZeta.HZeroBasis.Part3
 open MetaMathlibExt.MultipleZeta
 open MathlibExt.NumberTheory.MultipleZeta.WordAlgebraWanted
 

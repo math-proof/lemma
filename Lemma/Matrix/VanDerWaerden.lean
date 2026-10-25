@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.VanDerWaerden
+import Def.LinearAlgebra.Matrix.VanDerWaerden
 open Matrix
 open MathlibExt.LinearAlgebra.Matrix.VanDerWaerdenWanted
 

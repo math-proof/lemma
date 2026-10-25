@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section18
+import Structure.v1.Atlas.AlgebraicTopologyI.code.Section18
 open Topology BigOperators AlgebraicTopology CategoryTheory EulerCharacteristic
 
 

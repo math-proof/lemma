@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.OffCentreEventLaw
+import Theorem.StatisticalMechanics.Code.FK.OffCentreEventLaw
 open StatMech StatMech.FK
 
 

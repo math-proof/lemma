@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Square
+import Theorem.Combinatorics.SimpleGraph.Square
 open SimpleGraph
 
 

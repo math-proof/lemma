@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.SurfaceKacWardArf
+import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardArf.Part5
 open StatMech StatMech.FrontierA
 
 

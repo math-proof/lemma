@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.EarRemoval
+import Theorem.StatisticalMechanics.Code.Lattice.EarRemoval.Part5
 open SimpleGraph Function StatMech StatMech.Lattice
 
 

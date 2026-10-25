@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Misc.UnitsSystemExamples
+import Theorem.Analysis.Misc.UnitsSystemExamples
 open UnitsSystem
 open UnitsSystem.Scalar
 

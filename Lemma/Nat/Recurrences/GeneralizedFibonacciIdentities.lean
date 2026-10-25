@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Recurrences.GeneralizedFibonacciIdentities
+import Def.NumberTheory.Recurrences.GeneralizedFibonacciIdentities
 open MetaMathlibExt
 
 

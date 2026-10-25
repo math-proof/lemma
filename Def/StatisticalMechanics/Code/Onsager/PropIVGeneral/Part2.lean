@@ -1,0 +1,53 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/PropIVGeneral.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Mathlib
+import Theorem.StatisticalMechanics.Code.Onsager.WindingBridge.Part5
+import Theorem.StatisticalMechanics.Code.Onsager.InteriorRegion.Part5
+import Theorem.StatisticalMechanics.Code.Onsager.ChordCut.Part5
+import Theorem.StatisticalMechanics.Code.Lattice.CrossingParity.Part2
+import Abbrev.StatisticalMechanics.Code.Onsager.PropIVGeneral
+
+
+namespace StatMech.Onsager.PropIVGeneral
+
+open StatMech.Lattice
+
+open StatMech.Onsager.ChordCut
+
+open StatMech.Onsager.InteriorReaches
+
+open StatMech.Onsager.WindingBridge
+
+open StatMech.Onsager.InteriorRegion
+
+
+def rayCross (Q : Polygon) (p : Pt) : ℕ :=
+  (Q.filter (fun q => q.2 = p.2 ∧ p.1 ≤ q.1)).card
+
+
+def leftCross (Q : Polygon) (p : Pt) : ℕ :=
+  (Q.filter (fun q => q.2 = p.2 ∧ q.1 < p.1)).card
+
+
+def rowCount (Q : Polygon) (y : ℤ) : ℕ :=
+  (Q.filter (fun q => q.2 = y)).card
+
+
+def IsClosedPolygon (Q : Polygon) : Prop := ∀ y : ℤ, Even (rowCount Q y)
+
+
+def interiorSet (Q : Polygon) : Set (Site 2) := {x : Site 2 | Odd (rayCross Q (fromSite x))}
+
+
+def preInterior (Q : Polygon) : Set Pt := {p : Pt | Odd (rayCross Q p)}
+
+end StatMech.Onsager.PropIVGeneral

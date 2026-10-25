@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.umlturning
+import Theorem.StatisticalMechanics.Code.Walls.umlturning
 open SimpleGraph Function StatMech StatMech.Lattice
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.FourierL1BoundedC0
+import Theorem.v1.Atlas.DifferentialAnalysis.code.FourierL1BoundedC0
 open MeasureTheory Filter Complex FourierL1BoundedC0
 open scoped FourierTransform RealInnerProductSpace Topology
 

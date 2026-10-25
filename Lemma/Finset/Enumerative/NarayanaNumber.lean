@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.NarayanaNumber
+import Def.Combinatorics.Enumerative.NarayanaNumber
 open MetaMathlibExt
 
 

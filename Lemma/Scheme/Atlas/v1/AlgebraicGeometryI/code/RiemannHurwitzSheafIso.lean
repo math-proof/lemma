@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzSheafIso
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzSheafIso
 open Ideal UniqueFactorizationMonoid RiemannHurwitzSheaf
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.ValuationBijection
+import Theorem.v1.Atlas.NumberTheoryI.code.ValuationBijection
 open IsDedekindDomain
 
 

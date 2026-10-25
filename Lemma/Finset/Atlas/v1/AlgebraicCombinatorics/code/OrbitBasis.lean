@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.OrbitBasis
+import Def.v1.Atlas.AlgebraicCombinatorics.code.OrbitBasis.Part4
 open Finset Finsupp MulAction Function Module OrbitBasis
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.QuadrinomialCoefficients
+import Def.Combinatorics.Enumerative.QuadrinomialCoefficients
 open scoped BigOperators
 open MetaMathlibExt
 

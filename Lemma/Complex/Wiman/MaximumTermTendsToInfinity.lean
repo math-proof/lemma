@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.Wiman.InfiniteTaylorSupport
+import Theorem.Analysis.Complex.Wiman.InfiniteTaylorSupport
 import Lemma.Complex.Wiman.InfiniteTaylorSupport
 import Lemma.Complex.Wiman.MaximumTermAttained
-import sympy.atlas.Analysis.Complex.Wiman.MaximumTermAttained
+import Theorem.Analysis.Complex.Wiman.MaximumTermAttained
 open Filter
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.FiniteWitnessUnionBound
+import Theorem.StatisticalMechanics.Code.Probability.FiniteWitnessUnionBound
 open Finset Set StatMech StatMech.Probability
 
 

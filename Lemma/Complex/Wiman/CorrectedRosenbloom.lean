@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.Wiman.CorrectedRosenbloom
+import Theorem.Analysis.Complex.Wiman.CorrectedRosenbloom
 open MeasureTheory ProbabilityTheory Set
 open Complex
 

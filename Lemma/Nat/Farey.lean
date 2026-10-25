@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Farey
+import Def.NumberTheory.Farey
 open scoped Rat
 open Farey
 

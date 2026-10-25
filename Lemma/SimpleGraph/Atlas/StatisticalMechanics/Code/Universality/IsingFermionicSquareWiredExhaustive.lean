@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredExhaustive
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredExhaustive.Part2
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.TrudiBrioschiDeterminant
+import Def.LinearAlgebra.Matrix.TrudiBrioschiDeterminant
 open MetaMathlibExt
 
 

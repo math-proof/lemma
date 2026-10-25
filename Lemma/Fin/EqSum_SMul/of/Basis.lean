@@ -1,9 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.lie.levi_decomposition
+import Theorem.Algebra.Lie.LeviDecomposition.Part16
 open LeviDecomposition
 open LieAlgebra
-
 
 /--
 [levi_sum_repr](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -19,8 +18,6 @@ private lemma main
   apply b.repr.injective
   ext j
   simp
-
-
 
 /--
 [levi_repr_eq_dual](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -39,8 +36,6 @@ private lemma levi_repr_eq_dual
   simp_rw [map_smul]
   simp_rw [LinearMap.BilinForm.apply_dualBasis_left hB b]
   simp
-
-
 
 /--
 [leviTraceKernel_isSolvable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -94,8 +89,6 @@ private lemma leviTraceKernel_isSolvable
   rwa [LieAlgebra.derivedSeriesOfIdeal_add, LieAlgebra.derivedSeriesOfIdeal_succ,
     LieAlgebra.derivedSeriesOfIdeal_zero]
 
-
-
 /--
 [levi_traceForm_nondegenerate](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -114,8 +107,6 @@ private lemma levi_traceForm_nondegenerate
   rw [LinearMap.BilinForm.nondegenerate_iff_ker_eq_bot]
   change (I : Submodule K L) = ⊥
   exact congr_arg LieSubmodule.toSubmodule hI
-
-
 
 /--
 [levi_trace_casimir](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -140,8 +131,6 @@ private lemma levi_trace_casimir
     (LinearMap.BilinForm.isSymm_iff.mpr (LieModule.traceForm_isSymm K L M)) b]
   simp [Module.finrank_eq_card_basis b]
 
-
-
 /--
 [levi_lie_dualBasis](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -163,8 +152,6 @@ private lemma levi_lie_dualBasis
   rw [LieModule.traceForm_apply_lie_apply']
   rw [← levi_repr_eq_dual hβ b ⁅x, b j⁆ i]
   simp [d, Finsupp.single_apply]
-
-
 
 /--
 [levi_casimir_commute](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -213,8 +200,6 @@ private lemma levi_casimir_commute
       rw [Finset.sum_comm]
       simp
 
-
-
 /--
 [levi_casimir_range_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -238,8 +223,6 @@ private lemma levi_casimir_range_le
   intro i _
   rw [Module.End.mul_apply]
   exact hW (b i) _
-
-
 
 /--
 [levi_isKilling_killingCompl](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -278,8 +261,6 @@ private lemma levi_isKilling_killingCompl
   intro y
   exact (LieIdeal.mem_killingCompl K H ⊤).mp hx y (LieSubmodule.mem_top y)
 
-
-
 /--
 [levi_isFaithful_killingCompl_ker](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -307,8 +288,6 @@ private lemma levi_isFaithful_killingCompl_ker
   change x.1 - y.1 = 0 at hz
   exact sub_eq_zero.mp hz
 
-
-
 /--
 [levi_lie_top_eq_top](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -327,8 +306,6 @@ private lemma levi_lie_top_eq_top
       rw [← lie_eq_self_of_isAtom_of_nonabelian I hI
         (LieAlgebra.IsSemisimple.non_abelian_of_isAtom I hI)]
       exact LieSubmodule.mono_lie le_top le_top
-
-
 
 /--
 [levi_codim_one_action_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -371,8 +348,6 @@ private lemma levi_codim_one_action_mem
   rw [hx]
   rfl
 
-
-
 /--
 [levi_exists_isCompl_of_trivial_action](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -392,8 +367,6 @@ private lemma levi_exists_isCompl_of_trivial_action
         rw [htriv]
         exact zero_mem U }
   exact ⟨U', LieSubmodule.isCompl_toSubmodule.mp hU⟩
-
-
 
 /--
 [levi_finrank_quotient_comap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -434,8 +407,6 @@ private lemma levi_finrank_quotient_comap
     _ = Module.finrank K (M ⧸ W) := by
       exact (LinearEquiv.ofTop (LinearMap.range f)
         (LinearMap.range_eq_top.mpr hsurj)).finrank_eq
-
-
 
 /--
 [levi_isCompl_map_of_isCompl_comap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -484,8 +455,6 @@ private lemma levi_isCompl_map_of_isCompl_comap
       dsimp [v'] at hab
       rw [← hab]
       abel
-
-
 
 /--
 [levi_codim_one_complement_aux](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -612,8 +581,6 @@ private lemma levi_codim_one_complement_aux
 termination_by n
 decreasing_by exact _hlt
 
-
-
 /--
 [levi_codim_one_complement](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -628,8 +595,6 @@ private lemma levi_codim_one_complement
 -- proof
   levi_codim_one_complement_aux (Module.finrank K W + 1) W hquot (Nat.lt_succ_self _)
 
-
-
 /--
 [leviHomScalar_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -642,8 +607,6 @@ private lemma leviHomScalar_apply
   f.1 w = leviHomScalar W hW f • w :=
 -- proof
   Classical.choose_spec f.2 w
-
-
 
 /--
 [levi_lie_mem_HomVanishing_of_mem_scalarMaps](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -664,8 +627,6 @@ private lemma levi_lie_mem_HomVanishing_of_mem_scalarMaps
   have hxw : ⁅x, w⁆ = (⟨⁅x, w.1⁆, W.lie_mem w.2⟩ : W) := rfl
   rw [hxw, sub_self]
 
-
-
 /--
 [leviFactorLieModule](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -678,8 +639,6 @@ private lemma leviFactorLieModule
   @LieModule K (L ⧸ I) M _ _ _ _ _ (leviFactorLieRingModule I hI) :=
 -- proof
   LieModule.compLieHom M (leviFactorAction I hI)
-
-
 
 /--
 [levi_factor_exists_isCompl](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -702,8 +661,6 @@ private lemma levi_factor_exists_isCompl
   refine ⟨leviUnfactorSubmodule I hI U, ?_⟩
   rwa [← LieSubmodule.isCompl_toSubmodule] at hU ⊢
 
-
-
 /--
 [leviQuotientMk_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -723,8 +680,6 @@ private lemma leviQuotientMk_surjective
   ext x
   rw [LieHom.mem_ker, leviQuotientMk_apply]
   exact LieSubmodule.Quotient.mk_eq_zero (N := I)
-
-
 
 /--
 [levi_isSolvable_of_ker_quotient](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -750,8 +705,6 @@ private lemma levi_isSolvable_of_ker_quotient
   rw [← LieIdeal.map_eq_bot_iff]
   rw [LieIdeal.derivedSeries_map_eq k hf, hk]
 
-
-
 /--
 [leviComapMap_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -771,8 +724,6 @@ private lemma leviComapMap_surjective
   apply Subtype.ext
   exact hx
 
-
-
 /--
 [leviComapMapKerToKer_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -787,8 +738,6 @@ private lemma leviComapMapKerToKer_injective
   have hxy := congrArg (fun z : f.ker ↦ z.1) h
   change x.1.1 = y.1.1 at hxy
   exact Subtype.ext (Subtype.ext hxy)
-
-
 
 /--
 [levi_isSolvable_comap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -807,8 +756,6 @@ private lemma levi_isSolvable_comap
     (leviComapMapKerToKer_injective f J).lieAlgebra_isSolvable
   exact levi_isSolvable_of_ker_quotient q (leviComapMap_surjective f hf J)
 
-
-
 /--
 [leviMapRestrict_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -824,8 +771,6 @@ private lemma leviMapRestrict_surjective
   refine ⟨x, ?_⟩
   exact Subtype.ext hx
 
-
-
 /--
 [levi_isSolvable_map](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -838,8 +783,6 @@ private lemma levi_isSolvable_map
   LieAlgebra.IsSolvable (I.map f) :=
 -- proof
   (leviMapRestrict_surjective f hf I).lieAlgebra_isSolvable
-
-
 
 /--
 [levi_radical_quotient](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -873,8 +816,6 @@ private lemma levi_radical_quotient
       exact LieAlgebra.le_solvable_ideal_solvable hI inferInstance
     exact levi_isSolvable_comap q hq (LieAlgebra.radical K (L ⧸ I))
 
-
-
 /--
 [levi_radical_quotient_radical_eq_bot](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -885,8 +826,6 @@ private lemma levi_radical_quotient_radical_eq_bot
 -- proof
   rw [← levi_radical_quotient (LieAlgebra.radical K L) le_rfl]
   rw [LieIdeal.map_eq_bot_iff, leviQuotientMk_ker]
-
-
 
 /--
 [levi_quotient_radical_isSemisimple](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -899,8 +838,6 @@ private lemma levi_quotient_radical_isSemisimple
   let _ : LieAlgebra.HasTrivialRadical K (L ⧸ LieAlgebra.radical K L) :=
     ⟨levi_radical_quotient_radical_eq_bot⟩
   exact inferInstance
-
-
 
 /--
 [levi_split_central_kernel](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -993,8 +930,6 @@ private lemma levi_split_central_kernel
   · rw [← LieSubmodule.isCompl_toSubmodule] at hU
     exact hU.inf_eq_bot
 
-
-
 /--
 [levi_abelian_radical_map](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -1062,8 +997,6 @@ private lemma levi_abelian_radical_map
   rw [← LieSubmodule.Quotient.mk_eq_zero]
   rw [LieModuleHom.map_lie, hfbar, hxcZero]
 
-
-
 /--
 [levi_lie_le_range_theta](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -1103,8 +1036,6 @@ private lemma levi_lie_le_range_theta
   have hfv := congrArg Subtype.val (hf (⟨⁅(a • r : I).1, y⁆, hary⟩ : I))
   rw [hv, hfv]
   simp only [SetLike.val_smul, smul_lie]
-
-
 
 /--
 [levi_exists_of_abelian_radical](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -1230,8 +1161,6 @@ private lemma levi_exists_of_abelian_radical
     change x = 0
     rw [← htval, htZero, map_zero]
 
-
-
 /--
 [leviSubalgebraComapMap_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -1251,8 +1180,6 @@ private lemma leviSubalgebraComapMap_surjective
   apply Subtype.ext
   exact hx
 
-
-
 /--
 [leviSubalgebraComapKerToKer_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -1267,8 +1194,6 @@ private lemma leviSubalgebraComapKerToKer_injective
   have hxy := congrArg (fun z : q.ker ↦ z.1) h
   change x.1.1 = y.1.1 at hxy
   exact Subtype.ext (Subtype.ext hxy)
-
-
 
 /--
 [levi_radical_comap_semisimple](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -1295,8 +1220,6 @@ private lemma levi_radical_comap_semisimple
       (LieIdeal.solvable_iff_le_radical (R := K) (L := T) _).mp hsolv
     simpa using hle
   · exact (LieIdeal.solvable_iff_le_radical (R := K) (L := T.comap q) _).mp inferInstance
-
-
 
 /--
 [levi_derived_radical_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -1331,8 +1254,6 @@ private lemma levi_derived_radical_lt
     exact LieIdeal.comap_incl_self R
   exact hder.ne htop
 
-
-
 /--
 [levi_quotient_derived_radical_abelian](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -1361,8 +1282,6 @@ private lemma levi_quotient_derived_radical_abelian
   rw [← hrx, ← hry, ← q.map_lie]
   have hbr : ⁅rx.1, ry.1⁆ ∈ D := LieSubmodule.lie_mem_lie rx.2 ry.2
   rwa [← LieHom.mem_ker, leviQuotientMk_ker]
-
-
 
 /--
 [levi_decomposition_aux](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -1500,8 +1419,6 @@ private lemma levi_decomposition_aux
         change x = 0
         rw [← hsx, hsZero, map_zero]
 
-
-
 /--
 [levi_decomposition](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
 -/
@@ -1523,7 +1440,6 @@ private lemma levi_decomposition
     (↑(LieAlgebra.radical K L) ⊓ (S : Submodule K L) = (⊥ : Submodule K L)) := by
   exact levi_decomposition_aux
     (Module.finrank K (LieAlgebra.radical K L) + 1) (Nat.lt_succ_self _)
-
 
 /--
 [levi_scalar_unique](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -1632,7 +1548,6 @@ private lemma LieModule_exists_isCompl_of_isSemisimple_eq
   ∃ U : LieSubmodule K L M, IsCompl W U := by
 -- proof
   apply LieModule.exists_isCompl_of_isSemisimple W
-
 
 -- created on 2026-10-09
 -- updated on 2026-10-24

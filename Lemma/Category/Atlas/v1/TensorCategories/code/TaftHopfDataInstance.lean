@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.TaftHopfInstance
+import Instance.v1.Atlas.TensorCategories.code.TaftHopfInstance.Part3
 import Lemma.Category.Atlas.v1.TensorCategories.code.TaftHopfInstance
 import Lemma.Category.Atlas.v1.TensorCategories.code.QBinomial
-import sympy.atlas.v1.Atlas.TensorCategories.code.QBinomial
+import Theorem.v1.Atlas.TensorCategories.code.QBinomial.Part2
 open Coalgebra HopfAlgebra
 open scoped TensorProduct
 

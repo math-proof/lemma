@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.Dichotomy
+import Theorem.StatisticalMechanics.Code.BeffaraDC.Dichotomy
 open StatMech StatMech.BeffaraDC
 
 

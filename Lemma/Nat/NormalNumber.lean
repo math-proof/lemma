@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NormalNumber
+import Def.NumberTheory.NormalNumber
 open Real Filter
 open MetaMathlibExt.NormalNumber
 

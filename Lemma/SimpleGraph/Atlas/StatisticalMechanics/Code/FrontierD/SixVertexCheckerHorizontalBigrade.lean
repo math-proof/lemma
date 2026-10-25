@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexCheckerHorizontalBigrade
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexCheckerHorizontalBigrade
 open StatMech StatMech.FrontierD
 
 

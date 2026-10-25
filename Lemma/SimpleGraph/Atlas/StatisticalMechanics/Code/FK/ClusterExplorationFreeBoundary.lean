@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.ClusterExplorationFreeBoundary
+import Theorem.StatisticalMechanics.Code.FK.ClusterExplorationFreeBoundary
 open SimpleGraph StatMech StatMech.FK
 
 

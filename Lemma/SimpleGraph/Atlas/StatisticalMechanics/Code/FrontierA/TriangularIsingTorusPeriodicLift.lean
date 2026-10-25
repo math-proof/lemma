@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusPeriodicLift
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusPeriodicLift.Part3
 open StatMech StatMech.FrontierA
 
 

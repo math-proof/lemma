@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.BurnsidePaqb.CyclotomicField
+import Instance.GroupTheory.BurnsidePaqb.CyclotomicField
 open Polynomial
 open BurnsidePaqb
 

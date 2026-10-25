@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamRemainderAbsorption
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamRemainderAbsorption
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

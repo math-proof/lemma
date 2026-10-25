@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Matroid.Algebraic
+import Def.Combinatorics.Matroid.Algebraic.Part2
 open Matroid
 
 

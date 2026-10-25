@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MotzkinHumpPeakHeight
+import Def.Combinatorics.Enumerative.MotzkinHumpPeakHeight.Part2
 open scoped BigOperators
 open MetaMathlibExt
 

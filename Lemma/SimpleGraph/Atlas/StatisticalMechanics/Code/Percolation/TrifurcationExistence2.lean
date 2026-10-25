@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.TrifurcationExistence2
+import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationExistence2.Part3
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

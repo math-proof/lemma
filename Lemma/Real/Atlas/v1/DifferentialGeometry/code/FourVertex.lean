@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialGeometry.code.ClosedCurves
+import Def.v1.Atlas.DifferentialGeometry.code.ClosedCurves
 import Lemma.Real.Atlas.v1.DifferentialGeometry.code.ClosedCurves
 open MeasureTheory Real Set Filter Topology
 open Real ClosedCurves

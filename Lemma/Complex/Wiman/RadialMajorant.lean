@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.Wiman.RadialMajorant
+import Def.Analysis.Complex.Wiman.RadialMajorant
 open Complex
 
 

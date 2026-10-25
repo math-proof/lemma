@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.GHSLebowitz
+import Theorem.StatisticalMechanics.Code.Ising.GHSLebowitz.Part11
 open Finset SimpleGraph Set StatMech StatMech.Ising
 
 

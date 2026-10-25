@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.FieldTheory.PuiseuxTheorem
+import Theorem.FieldTheory.PuiseuxTheorem.Part24
 open Polynomial
 open HahnSeries
 open MetaMathlibExt

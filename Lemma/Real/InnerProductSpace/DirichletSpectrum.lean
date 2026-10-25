@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.InnerProductSpace.DirichletSpectrum
+import Def.Analysis.InnerProductSpace.DirichletSpectrum
 open TopologicalSpace MeasureTheory
 open EuclideanLaplacian
 

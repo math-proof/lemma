@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.ZariskiCotangentSpace
+import Instance.v1.Atlas.AlgebraicGeometryI.code.ZariskiCotangentSpace.Part2
 open IsLocalRing
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.InfiniteWord.MorphicWord
+import Def.Combinatorics.InfiniteWord.MorphicWord
 open MetaMathlibExt
 
 

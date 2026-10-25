@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc3_slabimgeqinter
+import Theorem.StatisticalMechanics.Code.Walls.rc3_slabimgeqinter.Part2
 open Finset StatMech StatMech.Walls
 
 

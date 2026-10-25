@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.CkBanach
+import Theorem.v1.Atlas.DifferentialAnalysis.code.CkBanach.Part2
 open Filter Topology Finset TestFunctions
 open scoped ZeroAtInfty
 

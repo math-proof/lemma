@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Proposition40DegreeMap
+import Def.v1.Atlas.AlgebraicGeometryI.code.Proposition40DegreeMap.Part3
 open CategoryTheory Proposition40
 
 

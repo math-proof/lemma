@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc_firstedgerevealone
+import Theorem.StatisticalMechanics.Code.Walls.oc_firstedgerevealone
 open StatMech StatMech.Walls
 
 

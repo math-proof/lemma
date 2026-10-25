@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.GeneralizedBellPolynomial
+import Def.Combinatorics.GeneralizedBellPolynomial
 open scoped BigOperators
 open MetaMathlibExt
 

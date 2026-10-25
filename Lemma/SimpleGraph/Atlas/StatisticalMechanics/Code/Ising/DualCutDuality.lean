@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.DualCutDuality
+import Theorem.StatisticalMechanics.Code.Ising.DualCutDuality
 open Finset SimpleGraph StatMech StatMech.Ising
 
 

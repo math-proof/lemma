@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NoncentralTannyDowlingPolynomial
+import Def.NumberTheory.NoncentralTannyDowlingPolynomial
 open MetaMathlibExt
 
 

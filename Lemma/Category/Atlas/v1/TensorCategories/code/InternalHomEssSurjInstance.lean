@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.InternalHomEssSurjInstance
+import Instance.v1.Atlas.TensorCategories.code.InternalHomEssSurjInstance.Part2
 open CategoryTheory CategoryTheory.InternalHomEssSurjInst
 
 

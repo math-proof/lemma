@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Riha
+import Def.Combinatorics.SimpleGraph.Riha
 open SimpleGraph
 
 

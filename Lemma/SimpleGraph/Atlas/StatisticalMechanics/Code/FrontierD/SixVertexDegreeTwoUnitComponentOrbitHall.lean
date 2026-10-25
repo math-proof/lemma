@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoUnitComponentOrbitHall
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoUnitComponentOrbitHall.Part6
 open Finset StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexDegreeTwoUnitComponentOrbitPresentation StatMech.FrontierD.SixVertexDegreeTwoUnitComponentOrbitAtlas
 
 

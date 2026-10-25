@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.CliqueNumber
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.CliqueNumber.Part2
 open Finset BigOperators Filter Topology CliqueNumber
 open scoped Classical
 

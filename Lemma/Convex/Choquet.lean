@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.Choquet
+import Theorem.Analysis.Convex.Choquet
 
 open Convex.ChoquetWanted
 open MeasureTheory Set

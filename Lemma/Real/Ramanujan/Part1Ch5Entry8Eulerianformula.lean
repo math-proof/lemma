@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch5Entry8Eulerianformula
+import Def.Analysis.Ramanujan.Part1Ch5Entry8Eulerianformula
 open scoped Nat Real BigOperators Polynomial ContDiff
 open Filter Finset Complex Topology Entry4
 open PowerSeries

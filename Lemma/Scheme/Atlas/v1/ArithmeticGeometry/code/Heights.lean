@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Heights
+import Def.v1.Atlas.ArithmeticGeometry.code.Heights.Part4
 open Height MvPolynomial NumberField WeierstrassCurve AddSubgroup Filter Topology Polynomial Set AbsoluteHeight EllipticCurve EllipticCurve.WeakMordellWeil CanonicalHeight TateTheorem Northcott
 open Height NumberField
 open WeierstrassCurve AddSubgroup

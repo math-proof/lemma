@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs.Part4
 open LinearDifferentialOperator
 
 

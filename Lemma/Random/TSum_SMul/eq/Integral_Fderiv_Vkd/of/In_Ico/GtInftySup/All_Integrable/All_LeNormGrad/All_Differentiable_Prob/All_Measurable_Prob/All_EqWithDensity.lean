@@ -1,5 +1,5 @@
 import sympy.vector.operators
-import sympy.concrete.sup
+import Macro.Order.Sup
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Lemma.Random.GetTSum_SMul.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
 import Lemma.Random.Integral_Vkd.eq.TSum_MulPowIntegral_R.of.In_Ico.All_EqWithDensity

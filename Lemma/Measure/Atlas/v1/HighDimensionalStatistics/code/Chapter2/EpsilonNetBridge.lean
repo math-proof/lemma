@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.EpsilonNetBridge
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.EpsilonNetBridge
 open Metric Finset
 open scoped Matrix
 

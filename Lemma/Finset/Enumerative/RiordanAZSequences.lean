@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.RiordanAZSequences
+import Def.Combinatorics.Enumerative.RiordanAZSequences
 open MetaMathlibExt
 
 

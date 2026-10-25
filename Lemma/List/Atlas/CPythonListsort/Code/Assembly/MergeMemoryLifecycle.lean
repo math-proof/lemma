@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.MergeMemoryLifecycle
+import Def.CPythonListsort.Code.Assembly.MergeMemoryLifecycle.Part2
 open CPythonListsort CPythonListsort.MergeMemorySnapshot CPythonListsort.MergeMemoryCallEvent CPythonListsort.MergeMemoryEvent CPythonListsort.AccessTrace CPythonListsort.AccessTrace.MergeMemoryCallChain
 
 

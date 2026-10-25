@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.Lindeberg
+import Theorem.StatisticalMechanics.Code.OSSS.Lindeberg.Part4
 open Finset StatMech StatMech.OSSS StatMech.OSSS.Lindeberg
 
 

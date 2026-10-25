@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensional
+import Theorem.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensional
 open Filter Finset Topology StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.WiredDenominatorArithmetic
+import Theorem.StatisticalMechanics.Code.OSSS.WiredDenominatorArithmetic
 open Finset StatMech StatMech.OSSS
 
 

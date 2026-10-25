@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingAlmostAdditive
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingAlmostAdditive.Part2
 open Filter Set StatMech StatMech.FrontierA StatMech.FrontierA.QuantumIsingAlmostAdditive
 
 

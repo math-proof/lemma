@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SegreEmbedding
+import Def.v1.Atlas.AlgebraicGeometryI.code.SegreEmbedding
 open MvPolynomial
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCompletion
+import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCompletion.Part8
 open StatMech StatMech.Universality
 
 

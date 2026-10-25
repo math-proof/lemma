@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexProjPhaseClose
+import Theorem.StatisticalMechanics.Code.Universality.HexProjPhaseClose.Part3
 open StatMech StatMech.Universality StatMech.Universality.hpp_BoundaryIntegralData
 
 

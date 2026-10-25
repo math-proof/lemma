@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FunctionalBKREssInfFinite
+import Theorem.StatisticalMechanics.Code.FrontierA.FunctionalBKREssInfFinite.Part4
 open MeasureTheory StatMech StatMech.FrontierA
 
 

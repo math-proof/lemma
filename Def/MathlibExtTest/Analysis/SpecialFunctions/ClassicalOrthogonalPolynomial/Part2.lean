@@ -1,0 +1,29 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/ClassicalOrthogonalPolynomial.lean -/
+
+
+import Structure.Analysis.SpecialFunctions.ClassicalOrthogonalPolynomial
+import Mathlib.Algebra.Polynomial.FieldDivision
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.Orthogonality
+import Mathlib.Data.ENNReal.Real
+import Mathlib.Tactic
+import Theorem.MathlibExtTest.Analysis.SpecialFunctions.ClassicalOrthogonalPolynomial.Part2
+
+
+namespace MetaMathlibExt
+
+open MeasureTheory Set Real
+
+open scoped NNReal
+
+noncomputable def chebyshevWeight : ℝ → ℝ :=
+  (fun x : ℝ => Real.sqrt (1 - x ^ 2))⁻¹
+
+noncomputable def chebyshevMeasure : MeasureTheory.Measure ℝ :=
+  (MeasureTheory.volume.restrict (Set.Ioc (-1) 1)).withDensity
+    (fun x => ENNReal.ofReal (chebyshevWeight x))
+
+end MetaMathlibExt

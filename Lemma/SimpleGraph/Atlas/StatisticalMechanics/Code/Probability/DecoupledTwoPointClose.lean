@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.DecoupledTwoPointClose
+import Theorem.StatisticalMechanics.Code.Probability.DecoupledTwoPointClose
 open Real Set StatMech StatMech.Probability
 
 

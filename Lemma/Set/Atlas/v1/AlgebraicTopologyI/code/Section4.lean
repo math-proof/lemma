@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section4
+import Abbrev.v1.Atlas.AlgebraicTopologyI.code.Section4
 open AlgebraicTopologyI
 open CategoryTheory
 

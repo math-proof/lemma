@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.CoveringSystem
+import Def.NumberTheory.CoveringSystem
 open Pointwise
 open CoveringSystem
 open Int

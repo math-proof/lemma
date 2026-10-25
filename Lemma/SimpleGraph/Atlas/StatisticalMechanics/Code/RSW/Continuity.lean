@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.Continuity
+import Theorem.StatisticalMechanics.Code.RSW.Continuity
 open Filter StatMech StatMech.RSW StatMech.RSW.Continuity
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.OrderContour
+import Theorem.StatisticalMechanics.Code.FK.OrderContour.Part2
 open Finset Set SimpleGraph Filter Topology StatMech StatMech.FK
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexFKGlobalSweep
+import Theorem.StatisticalMechanics.Code.FK.TriHexFKGlobalSweep.Part5
 open Finset StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

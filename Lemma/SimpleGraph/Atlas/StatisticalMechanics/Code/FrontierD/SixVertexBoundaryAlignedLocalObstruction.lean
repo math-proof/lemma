@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBoundaryAlignedLocalObstruction
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBoundaryAlignedLocalObstruction
 open StatMech StatMech.FrontierD
 
 

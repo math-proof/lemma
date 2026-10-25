@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.ModularFunctionField
+import Abbrev.v1.Atlas.EllipticCurves.code.ModularFunctionField
 open CongruenceSubgroup ModularFunctionField
 
 

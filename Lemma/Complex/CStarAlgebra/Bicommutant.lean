@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.cstar_algebra.Bicommutant
+import Theorem.Analysis.CStarAlgebra.Bicommutant.Part6
 
 /--
 [bicommutant_finiteDimensional_matrix](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/Bicommutant.lean)

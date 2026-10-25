@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.PcUpper
+import Theorem.StatisticalMechanics.Code.Percolation.PcUpper.Part2
 open MeasureTheory Filter Topology Finset SimpleGraph StatMech StatMech.Percolation
 
 

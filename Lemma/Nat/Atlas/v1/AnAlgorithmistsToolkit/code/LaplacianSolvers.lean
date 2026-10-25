@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.LaplacianSolvers
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.LaplacianSolvers
 open Matrix Finset BigOperators SimpleGraph Real An_Algorithmists_Toolkit
 open SimpleGraph Finset
 open scoped MatrixOrder ComplexOrder

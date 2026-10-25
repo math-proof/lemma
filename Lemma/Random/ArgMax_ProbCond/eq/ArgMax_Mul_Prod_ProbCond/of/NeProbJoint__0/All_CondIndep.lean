@@ -1,6 +1,6 @@
 import Lemma.Random.ProbCond.eq.DivMulProb_Prod_ProbCond.of.NeProbJoint__0.All_Indep
 import Lemma.Random.Prob.ne.Zero.of.NeProb_0
-import sympy.concrete.expr_with_limits
+import Macro.Order.ExprWithLimits
 open MeasureTheory ProbabilityTheory Measure Random
 open scoped ENNReal.ToRealCoe
 open Fun
@@ -56,9 +56,7 @@ private lemma main
       ((measurable_pi_apply j).comp ‹Fact (Measurable y[:m])›.out)
       ((measurable_pi_apply i).comp ‹Fact (Measurable x[:n])›.out)
   max⁻¹[i : Fin n] (ℙ[π](x[i] = «x.bvar»[i] | y[:m] = «y.bvar»[:m]) : ℝ) =
-    max⁻¹[i : Fin n]
-      ((ℙ[π](x[i] = «x.bvar»[i]) : ℝ) *
-        ∏ j : Fin m, (ℙ[π](y[j] = «y.bvar»[j] | x[i] = «x.bvar»[i]) : ℝ)) := by
+    max⁻¹[i : Fin n] ((ℙ[π](x[i] = «x.bvar»[i]) : ℝ) * ∏ j : Fin m, (ℙ[π](y[j] = «y.bvar»[j] | x[i] = «x.bvar»[i]) : ℝ)) := by
 -- proof
   intro hxi hyj hys hsp hxy hyx
   have h1i : ∀ i : Fin n, ℙ[π](x[i] = «x.bvar»[i] ∧ y[:m] = «y.bvar»[:m]) ≠ 0 := by

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc6deficitform
+import Theorem.StatisticalMechanics.Code.Walls.rc6deficitform.Part4
 open Finset StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackbonePartialP2Reindex
+import Theorem.StatisticalMechanics.Code.Sharpness.BackbonePartialP2Reindex.Part3
 open SimpleGraph Finset BigOperators StatMech StatMech.Sharpness StatMech.Sharpness.BackboneLabeledSwitching StatMech.Sharpness.BackboneDeterminedCutSwitching StatMech.Sharpness.shb_PartialCurrentDynamicSelector StatMech.Sharpness.BackbonePartialP2Reindex
 
 

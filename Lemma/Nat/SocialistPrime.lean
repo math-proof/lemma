@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.SocialistPrime
+import Def.NumberTheory.SocialistPrime
 open Nat
 
 

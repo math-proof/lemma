@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.GradientDescent
+import Theorem.Analysis.Convex.GradientDescent
 
 open Convex.GradientDescent
 

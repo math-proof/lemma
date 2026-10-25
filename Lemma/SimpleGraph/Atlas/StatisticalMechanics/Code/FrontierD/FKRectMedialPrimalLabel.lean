@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectMedialPrimalLabel
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialPrimalLabel.Part3
 open StatMech StatMech.FrontierD
 
 

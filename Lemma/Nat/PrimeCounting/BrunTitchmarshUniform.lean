@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.BrunTitchmarshUniform
+import Def.NumberTheory.PrimeCounting.BrunTitchmarshUniform.Part3
 open MathlibExt.SelbergSieve
 open MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshUniformWanted
 

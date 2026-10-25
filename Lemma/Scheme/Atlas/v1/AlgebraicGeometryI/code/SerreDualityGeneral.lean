@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
+import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
 open RiemannRoch
 

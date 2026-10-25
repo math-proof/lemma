@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra
+import Theorem.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra.Part3
 open IsDedekindDomain UniformSpace AdicCompletionAlgebra
 
 

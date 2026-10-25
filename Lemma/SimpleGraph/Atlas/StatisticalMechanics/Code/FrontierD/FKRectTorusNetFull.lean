@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusNetFull
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusNetFull.Part4
 open SimpleGraph StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.ComparisonHolley
+import Theorem.StatisticalMechanics.Code.FK.ComparisonHolley.Part3
 open MeasureTheory StatMech StatMech.FK
 
 

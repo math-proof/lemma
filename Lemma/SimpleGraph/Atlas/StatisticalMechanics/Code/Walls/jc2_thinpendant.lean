@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc2_thinpendant
+import Theorem.StatisticalMechanics.Code.Walls.jc2_thinpendant
 open SimpleGraph Function StatMech StatMech.Walls
 
 

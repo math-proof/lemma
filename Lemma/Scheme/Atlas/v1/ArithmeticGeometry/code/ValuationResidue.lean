@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.CompletenessValuationCriterion
+import Structure.v1.Atlas.ArithmeticGeometry.code.CompletenessValuationCriterion.Part2
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CompletenessValuationCriterion
 open AlgebraicGeometry.CompletenessValuationCriterion
 

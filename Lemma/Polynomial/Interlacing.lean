@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Algebra.Polynomial.Interlacing
+import Def.Algebra.Polynomial.Interlacing
 open scoped ComplexOrder NNReal
 open Polynomial
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.ListSortTermination
+import Structure.CPythonListsort.Code.Assembly.ListSortTermination
 
 
 namespace CPythonListsort

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.NoPinchMatching
+import Theorem.StatisticalMechanics.Code.Lattice.NoPinchMatching.Part2
 open SimpleGraph Function Set StatMech StatMech.Lattice
 
 

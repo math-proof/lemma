@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Discrepancy
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Discrepancy
 open Finset BigOperators Discrepancy
 
 

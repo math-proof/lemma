@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.ReimerButterfly
+import Theorem.StatisticalMechanics.Code.Inequalities.ReimerButterfly
 open MeasureTheory Finset StatMech
 
 

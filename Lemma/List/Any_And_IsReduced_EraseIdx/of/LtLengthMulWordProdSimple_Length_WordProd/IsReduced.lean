@@ -3,8 +3,8 @@ import sympy.Basic
 import Lemma.List.IsReducedDrop.of.IsReduced
 import Lemma.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced.SignChangeExchangeHyp
 import Lemma.Nat.SatisfiesDeletionCondition.of.SignChangeExchangeHyp
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionProof
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionProof
 open CoxeterGroup CoxeterExchangeGenuine StrongExchangeBridge
 
 

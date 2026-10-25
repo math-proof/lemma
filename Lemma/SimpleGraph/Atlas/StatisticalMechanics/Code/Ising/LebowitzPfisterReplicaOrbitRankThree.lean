@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankThree
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankThree
 open Finset StatMech StatMech.Ising
 
 

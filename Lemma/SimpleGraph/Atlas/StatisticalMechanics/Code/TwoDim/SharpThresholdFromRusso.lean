@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.TwoDim.SharpThresholdFromRusso
+import Theorem.StatisticalMechanics.Code.TwoDim.SharpThresholdFromRusso
 open MeasureTheory Set Filter Topology StatMech StatMech.TwoDim
 
 

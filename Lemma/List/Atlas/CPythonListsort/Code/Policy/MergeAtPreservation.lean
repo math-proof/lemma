@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Policy.PendingLayout
-import sympy.atlas.CPythonListsort.Code.Transcription.MergeAt
+import Def.CPythonListsort.Code.Policy.PendingLayout
+import Theorem.CPythonListsort.Code.Transcription.MergeAt
 
 
 namespace CPythonListsort

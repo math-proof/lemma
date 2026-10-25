@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.MuntzSzasz
+import Theorem.Analysis.NormedSpace.MuntzSzasz
 
 /--
 [MuntzSzasz](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/MuntzSzasz.lean)

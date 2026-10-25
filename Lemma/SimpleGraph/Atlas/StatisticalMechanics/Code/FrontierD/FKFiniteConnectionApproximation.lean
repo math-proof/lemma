@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKFiniteConnectionApproximation
+import Theorem.StatisticalMechanics.Code.FrontierD.FKFiniteConnectionApproximation
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierD
 
 

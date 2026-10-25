@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.InfiniteWord.GeneralizedThueMorseSequence
+import Def.Combinatorics.InfiniteWord.GeneralizedThueMorseSequence.Part3
 open MetaMathlibExt
 open GeneralizedThueMorse
 

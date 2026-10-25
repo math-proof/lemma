@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToFunctionalAnalysis.code.LpSpaces
+import Instance.v1.Atlas.IntroductionToFunctionalAnalysis.code.LpSpaces
 open MeasureTheory
 open scoped ENNReal NNReal
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.MeasureTheory.Section_1_1_3
+import Theorem.Analysis.MeasureTheory.Section_1_1_3.Part7
 open BoundedInterval
 
 

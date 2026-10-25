@@ -1,0 +1,67 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/CoradicalFiltration.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Abbrev.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part4
+import Lemma.Category.Atlas.v1.TensorCategories.code.CoalgebraBialgebra
+import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
+import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
+import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+import Mathlib.Algebra.Algebra.Operations
+import Mathlib.Algebra.Homology.DerivedCategory.Ext.Basic
+import Mathlib.Algebra.Homology.DerivedCategory.Ext.ExactSequences
+import Mathlib.Algebra.Homology.DerivedCategory.Ext.EnoughInjectives
+import Mathlib.Algebra.Homology.DerivedCategory.Ext.EnoughProjectives
+import Mathlib.CategoryTheory.Simple
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.Coalgebra.GroupLike
+import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+import Mathlib.CategoryTheory.Abelian.Basic
+import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+import Mathlib.CategoryTheory.Linear.Basic
+import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+import Mathlib.CategoryTheory.Limits.Shapes.Biproducts
+import Mathlib.RingTheory.Coalgebra.Hom
+import Abbrev.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part4
+set_option maxHeartbeats 400000
+
+open scoped TensorProduct
+open Coalgebra
+
+universe u v
+
+variable {R : Type u} {C : Type v}
+variable [CommRing R] [AddCommGroup C] [Module R C] [Coalgebra R C]
+
+
+namespace Submodule
+
+section Prop_1_29_4
+
+open CategoryTheory CategoryTheory.Abelian CategoryTheory.Limits
+
+variable {𝒞 : Type*} [CategoryTheory.Category 𝒞] [CategoryTheory.Abelian 𝒞]
+    [CategoryTheory.HasExt 𝒞]
+
+section ChevalleyProperty
+
+universe v_cp u_cp
+
+variable (C : Type u_cp) [Category.{v_cp} C] [MonoidalCategory C] [HasZeroMorphisms C]
+
+/-- A tensor category has the Chevalley property if the tensor product of any two
+semisimple objects is semisimple. -/
+class HasChevalleyProperty : Prop where
+  tensor_semisimple : ∀ (X Y : C),
+    IsSemisimpleObject C X → IsSemisimpleObject C Y → IsSemisimpleObject C (X ⊗ Y)
+
+end ChevalleyProperty
+end Prop_1_29_4
+end Submodule

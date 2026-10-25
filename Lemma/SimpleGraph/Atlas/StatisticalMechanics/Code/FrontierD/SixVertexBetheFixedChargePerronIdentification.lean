@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheFixedChargePerronIdentification
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheFixedChargePerronIdentification
 open Finset Matrix StatMech StatMech.FrontierD
 
 

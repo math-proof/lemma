@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.YoungLatticeSperner
+import Def.v1.Atlas.AlgebraicCombinatorics.code.YoungLatticeSperner.Part3
 open SpernerProperty YoungLattice YoungLattice.Lmn QuotientIsoLmn GroupActions WreathOrbits Finset MulAction
 open scoped Classical Pointwise
 open QuotientIsoLmn GroupActions WreathOrbits Finset MulAction

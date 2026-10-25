@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra
+import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
 open NumberField Module ConductorOrder
 open scoped Quaternion
 open Module

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedDomainActive
+import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedDomainActive
 open Finset Set SimpleGraph StatMech StatMech.FK
 
 

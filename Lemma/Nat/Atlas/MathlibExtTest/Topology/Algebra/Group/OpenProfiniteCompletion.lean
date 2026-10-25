@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Topology.Algebra.Group.OpenProfiniteCompletion
+import Theorem.MathlibExtTest.Topology.Algebra.Group.OpenProfiniteCompletion
 open ProfiniteGrp.OpenProfiniteCompletion
 
 

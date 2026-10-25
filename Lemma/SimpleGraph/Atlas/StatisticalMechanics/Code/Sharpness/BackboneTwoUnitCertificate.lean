@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneTwoUnitCertificate
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneTwoUnitCertificate
 open SimpleGraph Finset StatMech StatMech.Sharpness StatMech.Sharpness.BackboneTwoUnitCertificate
 
 

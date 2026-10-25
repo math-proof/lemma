@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.ode.MaximalSolution
+import Theorem.Analysis.ODE.MaximalSolution.Part2
 
 open Set
 open Filter Function Metric Set

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SmoothnessOmega
+import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothnessOmega
 open KaehlerDifferential Algebra
 open AlgebraicGeometry
 

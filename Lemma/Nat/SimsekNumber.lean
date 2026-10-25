@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.SimsekNumber
+import Def.NumberTheory.SimsekNumber
 open MetaMathlibExt
 
 

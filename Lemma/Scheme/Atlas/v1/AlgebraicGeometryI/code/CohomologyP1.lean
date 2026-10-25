@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
 open CohomologyP1
 
 

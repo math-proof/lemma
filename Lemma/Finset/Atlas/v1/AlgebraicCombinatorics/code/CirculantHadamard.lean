@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.CirculantHadamard
+import Def.v1.Atlas.AlgebraicCombinatorics.code.CirculantHadamard
 open Complex NumberField Polynomial CirculantHadamard CirculantHadamardMatrix
 open Polynomial
 open Ideal NumberField RingOfIntegers IsCyclotomicExtension.Rat

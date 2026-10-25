@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Completion.FiniteLiesOverDegreeBound
+import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverDegreeBound
 open scoped NumberField NumberField.LiesOver TensorProduct Valued
 open IsDedekindDomain.HeightOneSpectrum
 

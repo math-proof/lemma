@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.DirichletUnits
+import Def.v1.Atlas.NumberTheoryI.code.DirichletUnits
 open NumberField NumberField.Units NumberField.InfinitePlace NumberField.Units.dirichletUnitTheorem Module NumberField.mixedEmbedding
 open scoped NumberField Classical Polynomial nonZeroDivisors NNReal
 open NumberField.Units.dirichletUnitTheorem Module

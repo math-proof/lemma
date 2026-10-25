@@ -1,10 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.polynomial.real_rooted
-
+import Theorem.Algebra.Polynomial.RealRooted.Part2
 open Polynomial
 open scoped ComplexOrder
-
 
 namespace Polynomial
 
@@ -190,8 +188,6 @@ end Polynomial
   · exact hmonic
   · exact hrooted
   · exact hx
-
-
 
 -- created on 2026-10-09
 -- updated on 2026-10-23

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicConcreteMorera
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicConcreteMorera
 open StatMech StatMech.Universality
 
 

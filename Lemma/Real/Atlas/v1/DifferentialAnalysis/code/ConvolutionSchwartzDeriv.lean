@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.ConvolutionSchwartzDeriv
+import Instance.v1.Atlas.DifferentialAnalysis.code.ConvolutionSchwartzDeriv
 open MeasureTheory Filter Topology Metric Set ConvolutionDensity
 open scoped ZeroAtInfty ContDiff
 

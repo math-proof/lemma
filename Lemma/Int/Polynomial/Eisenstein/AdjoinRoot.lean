@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.Polynomial.Eisenstein.AdjoinRoot
+import Theorem.RingTheory.Polynomial.Eisenstein.AdjoinRoot
 open Polynomial Ideal IsLocalRing
 open AdjoinRoot
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.LocalFields
+import Def.v1.Atlas.NumberTheoryI.code.LocalFields.Part9
 open Metric Filter Set Topology PowerSeries Finset in
 open scoped Valued
 open NumberField NumberField.InfinitePlace.Completion IsDedekindDomain

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Background_Holder_Schatten
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Background_Holder_Schatten
 open Matrix Real Finset
 
 

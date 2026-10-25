@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.BilinearFormRank
+import Def.LinearAlgebra.BilinearFormRank
 open LinearMap.BilinForm
 open MathlibExt.LinearAlgebra.BilinearFormRankWanted
 

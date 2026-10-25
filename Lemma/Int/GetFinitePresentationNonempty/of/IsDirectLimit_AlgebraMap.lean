@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.direct_limit
+import Instance.Algebra.DirectLimit
+import Class.Mathlib_Algebra_IsDirectLimit
 open scoped TensorProduct
-
 
 private lemma range_mono
   {ι : Type u} [Preorder ι]
@@ -40,7 +40,6 @@ private lemma exists_subset_range_of_finite
   refine ⟨M, fun r hr => ?_⟩
   refine range_mono f hR (hM _ (Finset.mem_image_of_mem idx (hs.mem_toFinset.mpr hr))) (hidx r)
 
-
 /--
 [Algebra_exists_finitePresentation_tensorProduct_algEquiv_of_isDirectLimit](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_exists_finitePresentation_tensorProduct_algEquiv_of_isDirectLimit.lean)
 -/
@@ -65,6 +64,5 @@ private lemma main
   have : P.HasCoeffs (G i) := ⟨hi⟩
   exact ⟨i, P.ModelOfHasCoeffs (G i), inferInstance, inferInstance, inferInstance,
     ⟨P.tensorModelOfHasCoeffsEquiv (G i)⟩⟩
-
 
 -- created on 2026-10-13

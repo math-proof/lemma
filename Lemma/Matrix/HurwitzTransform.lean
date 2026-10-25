@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.HurwitzTransform
+import Def.LinearAlgebra.HurwitzTransform
 open MetaMathlibExt
 
 

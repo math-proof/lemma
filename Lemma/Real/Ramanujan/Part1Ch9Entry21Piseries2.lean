@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch9Entry21Piseries2
+import Def.Analysis.Ramanujan.Part1Ch9Entry21Piseries2
 open scoped Nat Real BigOperators Interval Polynomial ContDiff
 open Filter Finset MeasureTheory
 open Entry8Arcsin (chapter9OddHarmonic)

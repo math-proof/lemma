@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.fkc_rqweightle
+import Theorem.StatisticalMechanics.Code.Walls.fkc_rqweightle
 open SimpleGraph StatMech StatMech.Walls StatMech.Walls.FK
 
 

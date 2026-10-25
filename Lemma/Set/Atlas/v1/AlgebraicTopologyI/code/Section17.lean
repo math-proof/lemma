@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section17
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section17.Part6
 open RealProjectiveSpace
 open AlgebraicTopologyI CategoryTheory
 open set is open. -/

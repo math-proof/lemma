@@ -1,0 +1,46 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckFKRectBalancedShareSpectralGapLogConcavity.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBalancedShareSpectralGapLogConcavity.Part3
+open StatMech.FrontierD
+
+#print axioms sixVertexSectorPerronProfile_particleHole
+#print axioms adjacentRatio_antitone_of_pos_logConcave
+#print axioms adjacent_le_of_pos_logConcave_symmetric
+#print axioms lowerHalf_le_middle_of_pos_logConcave_symmetric
+#print axioms sixVertexSectorPerronLogConcave_of_traceLogConcave
+#print axioms sixVertexSectorPerronProfile_lowerHalf_le_middle_of_logConcave
+#print axioms sixVertexWidthTopEigenvalue_eq_halfFilled_of_logConcave
+#print axioms fkRectBalancedShareSpectralGap_eq_zero_of_logConcave
+#print axioms fkRectBalancedShareSpectralGap_eq_zero_of_traceLogConcave
+#print axioms
+  fkRectBalancedShareSpectralGap_eq_zero_of_positiveEvenTraceKeyCapacityHall
+#print axioms tendsto_fkRectBalancedShareSpectralGap_zero_of_eventually_logConcave
+#print axioms
+  tendsto_fkRectBalancedShareSpectralGap_zero_of_eventually_traceLogConcave
+#print axioms tendsto_fkRectBalancedShareSpectralGap_zero_of_keyCapacityHall
+#print axioms fkRectBalancedShareSpectralGap_eq_base_shift
+#print axioms tendsto_fkRectBalancedShareSpectralGap_zero_of_base
+#print axioms
+  FKQgt4BoundaryIncidenceScheduledWindingTraceLogConcavity.toSpectralGap
+#print axioms
+  fkQgt4_windingBridge_of_evenTwoByOneCrossingFloor_boundaryIncidence_traceLogConcavity
+#print axioms
+  fkQgt4_windingBridge_of_evenTwoByOneCrossingFloor_boundaryIncidence_traceLogConcavity_unconditional
+#print axioms
+  fkQgt4_windingBridge_of_evenTwoByOneCrossingFloor_boundaryIncidence_keyCapacityHall_unconditional
+#print axioms
+  fkQgt4_discontinuity_of_evenTwoByOneCrossingFloor_spectralGap_unconditional
+#print axioms
+  fkQgt4_discontinuity_of_evenTwoByOneCrossingFloor_baseSpectralGap
+#print axioms
+  fkQgt4_discontinuity_of_evenTwoByOneCrossingFloor_keyCapacityHall
+
+

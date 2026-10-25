@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.Item3PercoLattice
+import Theorem.StatisticalMechanics.Code.Sharpness.Item3PercoLattice
 open MeasureTheory StatMech StatMech.Sharpness
 
 

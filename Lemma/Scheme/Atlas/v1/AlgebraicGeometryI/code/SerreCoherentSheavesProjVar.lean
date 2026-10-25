@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SerreCoherentSheavesProjVar
+import Instance.v1.Atlas.AlgebraicGeometryI.code.SerreCoherentSheavesProjVar
 open AlgebraicGeometry CategoryTheory TensorProduct Corollary19
 
 

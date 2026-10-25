@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamWeightedGateShift
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedGateShift
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicMedialComplex
+import Def.StatisticalMechanics.Code.Universality.IsingFermionicMedialComplex.Part7
 open Finset SimpleGraph StatMech StatMech.Universality StatMech.Universality.FKIsingMedialDart StatMech.Universality.FKIsingDobrushinMedialComplex
 
 

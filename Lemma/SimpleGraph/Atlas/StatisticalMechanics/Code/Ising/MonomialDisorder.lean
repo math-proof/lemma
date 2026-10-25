@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.MonomialDisorder
+import Theorem.StatisticalMechanics.Code.Ising.MonomialDisorder
 open Finset StatMech StatMech.Ising
 
 

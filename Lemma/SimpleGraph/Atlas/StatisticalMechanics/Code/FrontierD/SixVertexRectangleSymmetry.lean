@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexRectangleSymmetry
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexRectangleSymmetry.Part3
 open Finset StatMech StatMech.FrontierD
 
 

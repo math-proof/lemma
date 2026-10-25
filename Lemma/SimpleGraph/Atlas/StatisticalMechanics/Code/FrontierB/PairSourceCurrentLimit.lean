@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.PairSourceCurrentLimit
+import Theorem.StatisticalMechanics.Code.FrontierB.PairSourceCurrentLimit.Part4
 open Filter MeasureTheory StatMech StatMech.FrontierB
 
 

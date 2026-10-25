@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.BurtonKeane
+import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeane.Part5
 open MeasureTheory StatMech StatMech.ConfigSpace StatMech.Percolation
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc4_nonvacuity
+import Theorem.StatisticalMechanics.Code.Walls.gc4_nonvacuity
 open Finset BigOperators SimpleGraph Set Classical StatMech StatMech.Walls
 
 

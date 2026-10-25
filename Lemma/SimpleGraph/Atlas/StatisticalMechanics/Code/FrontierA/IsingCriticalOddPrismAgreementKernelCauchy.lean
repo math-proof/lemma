@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingCriticalOddPrismAgreementKernelCauchy
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalOddPrismAgreementKernelCauchy
 open StatMech StatMech.FrontierA
 
 

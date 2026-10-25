@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.TorusCellDual
+import Def.StatisticalMechanics.Code.BeffaraDC.TorusCellDual.Part6
 open SimpleGraph Set StatMech StatMech.BeffaraDC
 
 

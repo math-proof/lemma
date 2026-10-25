@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardSupportingChord
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardSupportingChord.Part4
 open StatMech StatMech.FrontierA
 
 

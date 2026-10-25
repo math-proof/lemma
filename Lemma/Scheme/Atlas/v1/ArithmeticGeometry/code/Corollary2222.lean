@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.RiemannRoch
+import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannRoch
 open RiemannRochSpace CurveDivisor CurveWithOrd
 

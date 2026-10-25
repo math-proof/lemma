@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingPeriodicProduct
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingPeriodicProduct.Part2
 open StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.EdgeIndexedMultigraph
+import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part2
 open MathlibExtTest MathlibExtTest.EdgeIndexedMultigraph
 open scoped BigOperators
 open SimpleGraph

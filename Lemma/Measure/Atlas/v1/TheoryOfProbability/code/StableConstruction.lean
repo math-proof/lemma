@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.StableConstruction
+import Theorem.v1.Atlas.TheoryOfProbability.code.StableConstruction
 open MeasureTheory Filter Set ProbabilityTheory
 open scoped Topology ENNReal NNReal
 

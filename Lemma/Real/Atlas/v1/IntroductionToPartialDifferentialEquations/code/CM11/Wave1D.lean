@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
 open Real Set MeasureTheory intervalIntegral WaveEquation1D
 
 

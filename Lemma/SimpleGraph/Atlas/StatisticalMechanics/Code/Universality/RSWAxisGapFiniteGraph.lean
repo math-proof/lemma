@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWAxisGapFiniteGraph
+import Theorem.StatisticalMechanics.Code.Universality.RSWAxisGapFiniteGraph.Part4
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

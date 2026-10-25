@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.InformationTheory.Shearer
+import Def.InformationTheory.Shearer
 open Finset BigOperators Real
 open MathlibExt.InformationTheory.Shearer
 

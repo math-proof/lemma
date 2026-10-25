@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaSeamCrossing
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaSeamCrossing
 open Finset SimpleGraph StatMech StatMech.Ising
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CechDerivedInstantiate
+import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedInstantiate.Part2
 open CategoryTheory CategoryTheory.Limits SheafCohomology CohomologyP1 DerivedFunctorsDefs CohomologyConnection
 open SheafCohomology CohomologyP1 DerivedFunctorsDefs
 

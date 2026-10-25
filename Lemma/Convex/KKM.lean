@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.KKM
+import Theorem.Analysis.Convex.KKM.Part4
 
 /--
 [KKM](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Convex/KKM.lean)

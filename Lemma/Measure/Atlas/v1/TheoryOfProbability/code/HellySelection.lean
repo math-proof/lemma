@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.HellySelection
+import Def.v1.Atlas.TheoryOfProbability.code.HellySelection
 open Filter Set Function
 open scoped Topology
 

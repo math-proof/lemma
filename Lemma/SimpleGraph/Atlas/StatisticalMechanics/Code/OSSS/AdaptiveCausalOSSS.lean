@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.AdaptiveCausalOSSS
+import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveCausalOSSS
 open StatMech StatMech.OSSS StatMech.OSSS.AdaptiveCausalKernel
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Appendix_A_7
+import Abbrev.Analysis.Appendix_A_7.Part2
 
 
 /--

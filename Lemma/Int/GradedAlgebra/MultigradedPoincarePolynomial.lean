@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.GradedAlgebra.MultigradedPoincarePolynomial
+import Def.RingTheory.GradedAlgebra.MultigradedPoincarePolynomial
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.FKIsingInterfaceConvergenceReduction
+import Theorem.StatisticalMechanics.Code.SLE.FKIsingInterfaceConvergenceReduction
 open Filter MeasureTheory Set Topology StatMech StatMech.SLE
 
 

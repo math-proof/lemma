@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.PercoSusceptibility
+import Theorem.StatisticalMechanics.Code.Sharpness.PercoSusceptibility.Part5
 open MeasureTheory Set Finset Filter StatMech StatMech.Sharpness
 
 

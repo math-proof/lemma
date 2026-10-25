@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexPeriodicPlaneEmbedding
+import Def.StatisticalMechanics.Code.FK.TriHexPeriodicPlaneEmbedding.Part2
 open Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

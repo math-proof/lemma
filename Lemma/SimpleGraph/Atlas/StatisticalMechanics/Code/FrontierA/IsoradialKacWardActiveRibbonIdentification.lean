@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsoradialKacWardActiveRibbonIdentification
+import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardActiveRibbonIdentification.Part2
 open StatMech StatMech.FrontierA StatMech.FrontierA.GenusZeroOneActiveRibbonFormanIdentification
 
 

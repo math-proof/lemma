@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wlrleftring
+import Def.StatisticalMechanics.Code.Walls.wlrleftring.Part3
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

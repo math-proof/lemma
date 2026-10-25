@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardCumulants
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardCumulants.Part3
 open Filter StatMech StatMech.FrontierA
 
 

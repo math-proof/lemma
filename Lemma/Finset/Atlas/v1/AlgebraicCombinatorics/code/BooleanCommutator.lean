@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.BooleanCommutator
+import Def.v1.Atlas.AlgebraicCombinatorics.code.BooleanCommutator
 open Finset BooleanCommutator
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexConnClosed
+import Theorem.StatisticalMechanics.Code.Universality.HexConnClosed
 open StatMech StatMech.Universality
 
 

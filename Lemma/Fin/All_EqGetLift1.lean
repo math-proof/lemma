@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.TypeAInjectivityHelper
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.TypeAInjectivityHelper
 open Equiv Fin Function
 
 

@@ -1,11 +1,11 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.FubiniNumber
+import Def.Combinatorics.Enumerative.FubiniNumber
 import Lemma.Finset.Enumerative.FubiniNumber
 import Lemma.Finset.Enumerative.SignedStirlingFirst
 import Lemma.Finset.Enumerative.StirlingMatrices
-import sympy.atlas.Combinatorics.Enumerative.SignedStirlingFirst
-import sympy.atlas.Combinatorics.Enumerative.StirlingMatrices
+import Def.Combinatorics.Enumerative.SignedStirlingFirst
+import Def.Combinatorics.Enumerative.StirlingMatrices
 
 
 namespace MetaMathlibExt

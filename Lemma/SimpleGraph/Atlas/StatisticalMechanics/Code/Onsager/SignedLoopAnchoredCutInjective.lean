@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopAnchoredCutInjective
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopAnchoredCutInjective
 open Finset SimpleGraph StatMech StatMech.Onsager
 
 

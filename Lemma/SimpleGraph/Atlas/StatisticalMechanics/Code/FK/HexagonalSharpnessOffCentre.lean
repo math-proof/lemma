@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.HexagonalSharpnessOffCentre
+import Theorem.StatisticalMechanics.Code.FK.HexagonalSharpnessOffCentre.Part4
 open Finset Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

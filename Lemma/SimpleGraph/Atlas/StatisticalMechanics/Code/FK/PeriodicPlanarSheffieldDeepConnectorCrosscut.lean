@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldDeepConnectorCrosscut
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldDeepConnectorCrosscut
 open Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

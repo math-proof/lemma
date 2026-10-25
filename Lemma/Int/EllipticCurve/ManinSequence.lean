@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.AlgebraicGeometry.EllipticCurve.ManinSequence
+import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
 open Int
 open MathlibExt.AlgebraicGeometry.EllipticCurve
 open ManinDegreeData

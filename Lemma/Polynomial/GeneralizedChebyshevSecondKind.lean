@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.polynomial.generalized_chebyshev_second_kind
-
+import Theorem.Algebra.Polynomial.GeneralizedChebyshevSecondKind
 open Polynomial
 open MetaMathlibExt.GeneralizedChebyshevSecondKind
 
@@ -18,7 +17,6 @@ private lemma P_zero_eq
 -- proof
   apply P_zero
 
-
 /--
 [P_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Polynomial/GeneralizedChebyshevSecondKind.lean)
 -/
@@ -31,7 +29,6 @@ private lemma P_one_eq
   P r s 1 = X - C r := by
 -- proof
   apply P_one
-
 
 /--
 [P_succ_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Polynomial/GeneralizedChebyshevSecondKind.lean)
@@ -46,7 +43,6 @@ private lemma P_succ_succ_eq
 -- proof
   apply P_succ_succ
 
-
 /--
 [Q_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Polynomial/GeneralizedChebyshevSecondKind.lean)
 -/
@@ -59,7 +55,6 @@ private lemma Q_zero_eq
   Q r s lam mu 0 = 1 := by
 -- proof
   apply Q_zero
-
 
 /--
 [Q_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Polynomial/GeneralizedChebyshevSecondKind.lean)
@@ -74,7 +69,6 @@ private lemma Q_one_eq
 -- proof
   apply Q_one
 
-
 /--
 [Q_add_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Polynomial/GeneralizedChebyshevSecondKind.lean)
 -/
@@ -88,7 +82,6 @@ private lemma Q_add_two_eq
 -- proof
   apply Q_add_two
 
-
 /--
 [Q_recurrence](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Polynomial/GeneralizedChebyshevSecondKind.lean)
 -/
@@ -101,6 +94,5 @@ private lemma Q_recurrence_eq
   Q r s lam mu (n + 3) = (X - C r) * Q r s lam mu (n + 2) - C s * Q r s lam mu (n + 1) := by
 -- proof
   apply Q_recurrence
-
 
 -- created on 2026-10-09

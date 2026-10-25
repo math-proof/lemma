@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexPairOrbitCharts
+import Theorem.StatisticalMechanics.Code.FK.TriHexPairOrbitCharts.Part17
 open SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

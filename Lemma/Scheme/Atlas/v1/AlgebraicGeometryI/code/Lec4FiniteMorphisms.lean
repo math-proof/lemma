@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec4FiniteMorphisms
+import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec4FiniteMorphisms
 open AlgebraicGeometry PrimeSpectrum TopologicalSpace Set Lec4
 
 

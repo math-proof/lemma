@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraNotes.code.Characters
+import Def.v1.Atlas.AlgebraNotes.code.Characters
 open Classical CharacterTheory
 open Representation
 open Matrix

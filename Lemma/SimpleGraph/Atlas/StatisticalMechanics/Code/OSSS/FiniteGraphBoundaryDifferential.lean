@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FiniteGraphBoundaryDifferential
+import Theorem.StatisticalMechanics.Code.OSSS.FiniteGraphBoundaryDifferential
 open Finset Set StatMech StatMech.OSSS StatMech.OSSS.FiniteGraphBoundaryDifferential
 
 

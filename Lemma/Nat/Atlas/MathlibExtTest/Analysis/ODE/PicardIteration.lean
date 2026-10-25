@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Analysis.ODE.PicardIteration
+import Theorem.MathlibExtTest.Analysis.ODE.PicardIteration
 open MeasureTheory MathlibExt.Analysis.ODE.PicardIterationWanted
 
 

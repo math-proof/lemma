@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.FKIsingDrivingReduction
+import Theorem.StatisticalMechanics.Code.SLE.FKIsingDrivingReduction
 open Filter MeasureTheory StatMech StatMech.SLE
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.NarayanaPolynomial
+import Def.Combinatorics.Enumerative.NarayanaPolynomial
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.SpecialFunctions.ExponentialIntegral.E1.Basic
+import Theorem.Analysis.SpecialFunctions.ExponentialIntegral.E1.Basic
 open Complex
 
 

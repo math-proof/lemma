@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SelfGeneratingSet
+import Theorem.MathlibExtTest.Combinatorics.SelfGeneratingSet
 open scoped Classical
 
 

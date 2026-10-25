@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Completion.FiniteLiesOverResidueNaturality
+import Def.NumberTheory.NumberField.Completion.FiniteLiesOverResidueNaturality
 open scoped NumberField
 open IsDedekindDomain.HeightOneSpectrum
 

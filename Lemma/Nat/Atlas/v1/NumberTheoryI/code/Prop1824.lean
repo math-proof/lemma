@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.StieltjesIntegral
+import Def.v1.Atlas.NumberTheoryI.code.StieltjesIntegral.Part2
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.StieltjesIntegral
 
 

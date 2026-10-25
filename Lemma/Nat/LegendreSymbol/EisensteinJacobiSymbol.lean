@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.LegendreSymbol.EisensteinJacobiSymbol
+import Def.NumberTheory.LegendreSymbol.EisensteinJacobiSymbol
 open MetaMathlibExt
 
 

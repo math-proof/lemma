@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Additive.SingerDifferenceSet
+import Def.Combinatorics.Additive.SingerDifferenceSet
 open scoped IntermediateField
 open MetaMathlibExt
 

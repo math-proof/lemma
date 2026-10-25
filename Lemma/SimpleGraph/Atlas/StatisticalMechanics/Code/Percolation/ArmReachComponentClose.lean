@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.ArmReachComponentClose
+import Theorem.StatisticalMechanics.Code.Percolation.ArmReachComponentClose.Part4
 open Set SimpleGraph Finset StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

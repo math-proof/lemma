@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.DiffOpSobolev
+import Def.v1.Atlas.DifferentialAnalysis.code.DiffOpSobolev.Part3
 open DifferentialOperators SobolevEmbedding SobolevSpace MvPolynomial Filter Topology MeasureTheory DiffOpSobolev
 open scoped SchwartzMap ContDiff FourierTransform
 open TestFunctions

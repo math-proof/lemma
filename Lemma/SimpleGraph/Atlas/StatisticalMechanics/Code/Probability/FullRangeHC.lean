@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.FullRangeHC
+import Theorem.StatisticalMechanics.Code.Probability.FullRangeHC.Part2
 open Finset Real StatMech StatMech.Probability
 
 

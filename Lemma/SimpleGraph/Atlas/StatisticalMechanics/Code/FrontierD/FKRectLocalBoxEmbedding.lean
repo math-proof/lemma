@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectLocalBoxEmbedding
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectLocalBoxEmbedding.Part7
 open MeasureTheory StatMech.Lattice StatMech.Percolation SimpleGraph StatMech StatMech.FrontierD
 
 

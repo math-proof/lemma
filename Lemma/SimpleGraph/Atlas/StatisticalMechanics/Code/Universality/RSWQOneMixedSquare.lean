@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWQOneMixedSquare
+import Theorem.StatisticalMechanics.Code.Universality.RSWQOneMixedSquare.Part4
 open Set SimpleGraph MeasureTheory StatMech StatMech.Universality
 
 

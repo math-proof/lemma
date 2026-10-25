@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitExactTagRecovery
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitExactTagRecovery
 open Finset StatMech StatMech.Ising
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.Frobenius.Splitting
+import Theorem.RingTheory.Frobenius.Splitting
 open scoped Pointwise
 open Ideal
 

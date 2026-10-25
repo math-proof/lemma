@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.ProjectiveSpace
+import Theorem.v1.Atlas.EllipticCurves.code.ProjectiveSpace
 open ProjectiveSpace
 open scoped LinearAlgebra.Projectivization
 

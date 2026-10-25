@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.FiberFunctorEnd
+import Def.v1.Atlas.TensorCategories.code.FiberFunctorEnd
 open TensorProduct
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingZeroField
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingZeroField.Part2
 open Filter Matrix StatMech StatMech.FrontierA
 
 

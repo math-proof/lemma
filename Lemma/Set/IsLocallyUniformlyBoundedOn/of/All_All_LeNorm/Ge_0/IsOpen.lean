@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.complex.NormalFamilies
+import Theorem.Analysis.Complex.NormalFamilies
 
 open Complex.NormalFamilies Set Filter Topology
 open Set Filter Topology

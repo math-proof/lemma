@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectFaithfulDualConfinement
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulDualConfinement
 open SimpleGraph StatMech StatMech.FrontierD
 
 

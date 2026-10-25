@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.UnivEnvelopingAction
+import Def.v1.Atlas.LieGroups.code.UnivEnvelopingAction.Part4
 open UnivEnvelopingAction
 
 

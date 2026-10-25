@@ -1,0 +1,74 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamStableRawComponentForest.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamStableRawHoleCollisionSplit.Part2
+import Def.StatisticalMechanics.Code.FrontierA.GrahamStableRawComponentForest.Part32
+open Finset
+
+
+namespace StatMech.GrahamGHS.FourColor
+
+universe u v uI uW
+
+variable {I W : Type*} [Fintype I] [DecidableEq I]
+  [Fintype W] [DecidableEq W]
+
+
+attribute [instance]
+  FiniteRelationMinimalTightProblem.stateFintype
+  FiniteRelationMinimalTightProblem.stateDecidableEq
+  FiniteRelationMinimalTightProblem.tokenFintype
+  FiniteRelationMinimalTightProblem.tokenDecidableEq
+
+structure CanonicalStableRawComponentRichStrictBlock
+    (ends : I -> Sym2 W) (m : Finset I) (j k l zero : W)
+    (hloop : ∀ i ∈ m, ¬ (ends i).IsDiag)
+    (hjk : j ≠ k) (hkl : k ≠ l) (hk0 : k ≠ zero)
+    (p : Finset I × Finset I)
+    (hno : CanonicalStableRawNoOpposingCuts
+      ends m j k l zero hloop hjk hkl hk0 p)
+    (component : Set (CanonicalStableRawExceptionalEdge
+      ends m j k l zero hloop hjk hkl hk0 p)) where
+  size : Nat
+  positive : 0 < size
+  directs : Fin size ↪ CanonicalStableRawComponentDirectState
+    ends m j k l zero hloop hjk hkl hk0 p hno component
+  tokens : Fin (size + 1) ↪ CanonicalStableRawComponentToken
+    ends m j k l zero hloop hjk hkl hk0 p hno component
+  aligned : ∀ i,
+    tokens i.castSucc = canonicalStableRawComponentDirectEmbedding
+      ends m j k l zero hloop hjk hkl hk0 p hno component (directs i)
+  extra_nonexceptional : ¬ CanonicalStableRawLeftTokenIsExceptional
+    ends m j k l zero hloop hjk hkl hk0 p (tokens (Fin.last size)).1
+
+
+structure CanonicalStableRawComponentRichIncidenceBlock
+    (ends : I -> Sym2 W) (m : Finset I) (j k l zero : W)
+    (hloop : ∀ i ∈ m, ¬ (ends i).IsDiag)
+    (hjk : j ≠ k) (hkl : k ≠ l) (hk0 : k ≠ zero)
+    (p : Finset I × Finset I)
+    (hno : CanonicalStableRawNoOpposingCuts
+      ends m j k l zero hloop hjk hkl hk0 p)
+    (component : Set (CanonicalStableRawExceptionalEdge
+      ends m j k l zero hloop hjk hkl hk0 p)) where
+  size : Nat
+  positive : 0 < size
+  sources : Fin size ↪ CanonicalStableRawComponentState
+    ends m j k l zero hloop hjk hkl hk0 p hno component
+  tokens : Fin (size + 1) ↪ CanonicalStableRawComponentToken
+    ends m j k l zero hloop hjk hkl hk0 p hno component
+  paired : ∀ i, CanonicalStableRawComponentIncident
+    ends m j k l zero hloop hjk hkl hk0 p hno component
+      (sources i) (tokens i.castSucc)
+  extra_nonexceptional : ¬ CanonicalStableRawLeftTokenIsExceptional
+    ends m j k l zero hloop hjk hkl hk0 p (tokens (Fin.last size)).1
+
+end StatMech.GrahamGHS.FourColor

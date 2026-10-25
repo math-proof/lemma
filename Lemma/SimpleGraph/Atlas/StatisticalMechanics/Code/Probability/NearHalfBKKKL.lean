@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.NearHalfBKKKL
+import Theorem.StatisticalMechanics.Code.Probability.NearHalfBKKKL
 open Finset StatMech StatMech.Probability
 
 

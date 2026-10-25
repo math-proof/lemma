@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingLieTrotter
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingLieTrotter
 open Filter Matrix StatMech StatMech.FrontierA
 
 

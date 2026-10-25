@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch5Entry3Eulerianformula
+import Theorem.Analysis.Ramanujan.Part1Ch5Entry3Eulerianformula
 open Entry4 Entry8Eulerianformula
 open MathlibExt.Analysis.Ramanujan.Part1Ch5
 open Entry3Eulerianformula

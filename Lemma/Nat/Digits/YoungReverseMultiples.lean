@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Digits.YoungReverseMultiples
+import Def.NumberTheory.Digits.YoungReverseMultiples
 open MetaMathlibExt
 
 

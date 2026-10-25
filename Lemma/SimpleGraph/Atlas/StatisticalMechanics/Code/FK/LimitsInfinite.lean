@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.LimitsInfinite
+import Theorem.StatisticalMechanics.Code.FK.LimitsInfinite
 open MeasureTheory Filter Topology StatMech StatMech.FK
 
 

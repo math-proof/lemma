@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme
+import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme.Part3
 open AlgebraicGeometry CategoryTheory TopologicalSpace Opposite CartierDivisorScheme
 
 

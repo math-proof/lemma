@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ArithmeticFunction.CompletelyMultiplicative
+import Def.NumberTheory.ArithmeticFunction.CompletelyMultiplicative
 open ArithmeticFunction
 
 

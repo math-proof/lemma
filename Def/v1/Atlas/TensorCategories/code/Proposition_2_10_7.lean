@@ -1,0 +1,46 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/Proposition_2_10_7.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Def.v1.Atlas.TensorCategories.code.HomExactImpliesExact.Part2
+set_option maxHeartbeats 800000
+
+universe v₁ v₂ v₃ u₁ u₂ u₃
+
+
+namespace CategoryTheory
+
+namespace Proposition_2_10_7
+
+open Category MonoidalCategory LeftModCat
+
+/-- Proposition 2.10.7, part (1): If the internal `Hom` bifunctor on a module category `M`
+over `C` is exact in the second variable, then `M` is an exact module category. -/
+noncomputable def part1
+    {C : Type u₁} [Category.{v₁} C] [MonoidalCategory C]
+    {M : Type u₂} [Category.{v₂} M]
+    [LeftModuleCategory C M]
+    (h : InternalHomExactInSecondVar C M) :
+    ExactModuleCategory C M :=
+  proposition_2_10_7_part1 h
+
+/-- Proposition 2.10.7, part (2): If every module functor from a nonzero module category
+`M₁` to a nonzero module category `M₂` over `C` is exact, then `M₁` is an exact module
+category. -/
+noncomputable def part2
+    {C : Type u₁} [Category.{v₁} C] [MonoidalCategory C]
+    {M₁ : Type u₂} [Category.{v₂} M₁] [LeftModuleCategory C M₁]
+    {M₂ : Type u₃} [Category.{v₃} M₂] [LeftModuleCategory C M₂]
+    [NonzeroModuleCategory M₂]
+    (h : ∀ (F : ModuleFunctor C M₁ M₂), ModuleFunctorIsExact F) :
+    ExactModuleCategory C M₁ :=
+  proposition_2_10_7_part2 h
+
+end Proposition_2_10_7
+end CategoryTheory

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ComplexVariables.code.TaylorComplex
+import Def.v1.Atlas.ComplexVariables.code.TaylorComplex
 open Complex Topology Filter Finset MeasureTheory
 
 

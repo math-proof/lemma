@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.RealSVD
+import Def.LinearAlgebra.Matrix.RealSVD
 open Matrix
 open MathlibExt.LinearAlgebra.Matrix.RealSVDWanted
 

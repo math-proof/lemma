@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanEnclosure
+import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosure.Part6
 open Finset Set SimpleGraph StatMech StatMech.Lattice StatMech.Lattice.EvenDegree
 
 

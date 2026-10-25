@@ -1,11 +1,11 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_1
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_1
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Prop_2_1
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_19
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_19
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_19
 open Matrix Rigollet
 
 

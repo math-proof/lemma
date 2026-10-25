@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredExterior
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredExterior.Part5
 open SimpleGraph StatMech StatMech.Universality
 
 

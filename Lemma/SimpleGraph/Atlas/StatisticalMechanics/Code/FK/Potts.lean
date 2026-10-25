@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.Potts
+import Theorem.StatisticalMechanics.Code.FK.Potts.Part6
 open StatMech StatMech.Potts
 
 

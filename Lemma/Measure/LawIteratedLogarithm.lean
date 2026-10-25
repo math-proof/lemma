@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.LawIteratedLogarithm
+import Def.Probability.LawIteratedLogarithm
 open MeasureTheory ProbabilityTheory
 open scoped ProbabilityTheory ENNReal NNReal
 open MathlibExt.Probability.LawIteratedLogarithmWanted

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.complex.SchwarzReflection
+import Theorem.Analysis.Complex.SchwarzReflection
 
 open Complex.SchwarzReflection
 

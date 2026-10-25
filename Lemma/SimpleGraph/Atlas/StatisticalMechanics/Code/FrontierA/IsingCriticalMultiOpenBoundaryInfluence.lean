@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingCriticalMultiOpenBoundaryInfluence
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalMultiOpenBoundaryInfluence
 open Filter MeasureTheory Topology StatMech StatMech.FrontierA
 
 

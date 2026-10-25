@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.Geometric
+import Theorem.Analysis.NormedSpace.Geometric.Part9
 
 /--
 [Geometric](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/Geometric.lean)

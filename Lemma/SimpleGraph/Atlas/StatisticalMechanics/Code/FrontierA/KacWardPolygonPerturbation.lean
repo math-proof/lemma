@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardPolygonPerturbation
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonPerturbation.Part5
 open StatMech StatMech.FrontierA
 
 

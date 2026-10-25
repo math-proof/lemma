@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.WeightedHilbert
+import Def.NumberTheory.PrimeCounting.WeightedHilbert
 open Set MeasureTheory
 open scoped ComplexConjugate Matrix.Norms.L2Operator
 open Matrix

@@ -1,0 +1,34 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexPairedBranchResidualHall.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairedBranchResidualHall.Part3
+
+
+namespace StatMech.FrontierD
+
+#print axioms SixVertexHorizontalPairedBranchResidualConstruction.inverseCode
+#print axioms SixVertexHorizontalPairedBranchResidualConstruction.toAtlas
+#print axioms SixVertexHorizontalPairedBranchResidualGeometricConstruction.toConstruction
+#print axioms SixVertexHorizontalPairedBranchResidualEmbeddings.toConstruction
+#print axioms sixVertexHorizontalPairedBranchResidualConstructionOfIsEmpty
+#print axioms SixVertexHorizontalPairedBranchResidualAtlas.source_degree
+#print axioms SixVertexHorizontalPairedBranchResidualAtlas.source_nonempty
+#print axioms SixVertexHorizontalPairedBranchResidualAtlas.inverse_degree
+#print axioms SixVertexHorizontalPairedBranchResidualAtlas.hall
+#print axioms offDiagonalTwoCycleMatching_of_pairedBranchAtlases
+#print axioms sixVertexMarkedTraceCoefficientwiseLogConcave_of_pairedBranchAtlases
+#print axioms sixVertexSectorTrace_logConcave_of_pairedBranchAtlases
+#print axioms pairedBranchResidualAtlases_of_constructions
+#print axioms offDiagonalTwoCycleMatching_of_pairedBranchConstructions_direct
+#print axioms pairedBranchResidualConstructions_of_nonempty_sources
+#print axioms sixVertexMarkedTraceCoefficientwiseLogConcave_of_pairedBranchConstructions
+#print axioms sixVertexSectorTrace_logConcave_of_pairedBranchConstructions
+
+end StatMech.FrontierD

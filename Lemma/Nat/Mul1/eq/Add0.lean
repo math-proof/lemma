@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_2_3
+import Instance.Analysis.Section_2_3.Part2
 import Lemma.Nat.Mul.eq.AddMul
 import Lemma.Nat.Mul0.eq.Zero
 open Chapter2 hiding Nat

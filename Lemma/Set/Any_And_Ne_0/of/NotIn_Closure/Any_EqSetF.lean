@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.WeaklyAnalytic
+import Def.v1.Atlas.LieGroups.code.WeaklyAnalytic.Part2
 open EllipticOperator in
 open scoped Manifold
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FreeDLRExtreme
+import Theorem.StatisticalMechanics.Code.FK.FreeDLRExtreme
 open MeasureTheory Set Topology StatMech StatMech.FK
 
 

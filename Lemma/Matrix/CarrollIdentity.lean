@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.CarrollIdentity
+import Def.LinearAlgebra.Matrix.CarrollIdentity.Part2
 open Matrix
 open MetaMathlibExt.CarrollIdentity
 

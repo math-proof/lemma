@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.IsogenyVolcano
+import Structure.v1.Atlas.EllipticCurves.code.IsogenyVolcano.Part3
 open Polynomial Finset CMConductorTrichotomy IsogenyVolcano CMIsogeny VolcanoStructure CMSetCardinality
 open Elliptic_Curves Elliptic_Curves.Deuring
 

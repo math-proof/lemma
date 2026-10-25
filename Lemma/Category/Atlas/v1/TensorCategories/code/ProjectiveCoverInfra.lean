@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.ProjectiveCoverInfra
+import Def.v1.Atlas.TensorCategories.code.ProjectiveCoverInfra.Part4
 open CategoryTheory MonoidalCategory Category Limits ProjectiveCoverInfra
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.ClusterContourBijection
+import Theorem.StatisticalMechanics.Code.Lattice.ClusterContourBijection.Part4
 open Set Finset StatMech StatMech.Lattice
 
 

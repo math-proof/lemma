@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.Counterexamples
+import Structure.v1.Atlas.GeometryOfManifolds.code.Counterexamples.Part2
 open DifferentialFormSpace KTGamma
 
 

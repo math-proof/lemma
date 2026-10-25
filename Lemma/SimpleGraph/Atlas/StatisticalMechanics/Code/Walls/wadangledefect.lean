@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wadangledefect
+import Theorem.StatisticalMechanics.Code.Walls.wadangledefect.Part4
 open Finset StatMech.Euc StatMech StatMech.Wad
 
 

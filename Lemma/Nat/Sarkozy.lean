@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.additive.Sarkozy
+import Theorem.Combinatorics.Additive.Sarkozy.Part5
 open scoped InnerProductSpace
 
 

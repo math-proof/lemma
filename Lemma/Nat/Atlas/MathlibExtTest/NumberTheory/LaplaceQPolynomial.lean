@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.LaplaceQPolynomial
+import Def.MathlibExtTest.NumberTheory.LaplaceQPolynomial
 
 
 namespace MetaMathlibExt

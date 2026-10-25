@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.CountablyMonolithic
+import Class.Topology.CountablyMonolithic
 
 
 /--

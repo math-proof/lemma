@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.IvPropertiesFull
+import Theorem.StatisticalMechanics.Code.FK.IvPropertiesFull
 open MeasureTheory Filter Topology SimpleGraph StatMech.Lattice StatMech.IsingFK StatMech StatMech.FK
 
 

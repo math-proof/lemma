@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section27
+import Abbrev.v1.Atlas.AlgebraicTopologyI.code.Section27
 open CategoryTheory AlgebraicTopology Limits UniversalCoefficientTheorem
 
 

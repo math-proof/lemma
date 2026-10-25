@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.Kingman
+import Theorem.StatisticalMechanics.Code.Foundations.Kingman.Part3
 open MeasureTheory Filter Topology StatMech StatMech.Kingman StatMech.Kingman.SubadditiveCocycle
 
 

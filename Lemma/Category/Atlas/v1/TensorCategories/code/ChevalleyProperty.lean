@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.ChevalleyProperty
+import Structure.v1.Atlas.TensorCategories.code.ChevalleyProperty.Part2
 open CategoryTheory MonoidalCategory CategoryTheory.Limits
 
 

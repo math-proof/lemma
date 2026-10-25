@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.BourgainCorollary
+import Def.v1.Atlas.ProjectionTheory.code.BourgainCorollary
 open BourgainProjection
 open MeasureTheory Real Set
 

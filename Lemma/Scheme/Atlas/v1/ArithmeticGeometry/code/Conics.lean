@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Conics
+import Def.v1.Atlas.ArithmeticGeometry.code.Conics.Part3
 open Polynomial in
 
 

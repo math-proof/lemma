@@ -1,0 +1,53 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamRowDataRepairRelation.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamComponentExchangeWeightedCounterexample.Part2
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorUniformMaskSelector.Part4
+import Def.StatisticalMechanics.Code.FrontierA.GrahamRowDataRepairRelation.Part2
+open Finset
+
+
+namespace StatMech.GrahamGHS.FourColor
+
+open StatMech.Sharpness.RandomCurrent
+
+variable {I W : Type*} [Fintype I] [DecidableEq I]
+  [Fintype W] [DecidableEq W]
+
+
+theorem canonicalRightRowData_mem_admissibleRightRowRepairs
+    (ends : I → Sym2 W) (m : Finset I) (j k l zero : W)
+    (hloop : ∀ i ∈ m, ¬ (ends i).IsDiag)
+    (hjk : j ≠ k) (hkl : k ≠ l) (hk0 : k ≠ zero)
+    (d : leftRowData ends m j k l zero) :
+    canonicalRightRowData ends m j k l zero hloop hjk hkl hk0 d ∈
+      admissibleRightRowRepairs ends m j k l zero d := by
+  rw [mem_admissibleRightRowRepairs_iff,
+    rowDataRepairRelated_iff_sameMask]
+  let c := rowDataToLeftFiber ends m j k l zero d
+  let X := canonicalMiddleTransfer ends m c.1 k zero
+  let Y := canonicalOuterTransfer ends m c.1 k zero
+  let q := balancedSwap m X Y c.1
+  have hv := canonicalTransfers_valid hloop hjk hkl c.2
+  have hdisc := canonicalBalancedSwap_disconnects
+    hloop hjk hkl hk0 c.2
+  have hq : RightPattern ends m {j, k} {k, l} k zero q :=
+    rightPattern_of_balancedTransfer c.2 hv.1 hv.2.1
+      hv.2.2.1 hv.2.2.2 hdisc
+  change fourColorMaskProfile m c.1 =
+    fourColorMaskProfile m
+      (rowDataToRightFiber ends m j k l zero
+        (rightFiberToRowData ends m j k l zero ⟨q, hq⟩)).1
+  rw [rowDataToRightFiber_leftInverse]
+  exact (fourColorMaskProfile_balancedSwap m X Y c.1).symm
+
+
+end StatMech.GrahamGHS.FourColor

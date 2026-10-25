@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.Algebra.PeterWeyl
+import Theorem.Topology.Algebra.PeterWeyl.Part6
 open MeasureTheory
 open scoped ComplexInnerProductSpace ComplexConjugate BoundedContinuousFunction
 open MathlibExt.Topology.Algebra.PeterWeylWanted

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.ReimerDoubleCoverClose
+import Theorem.StatisticalMechanics.Code.Inequalities.ReimerDoubleCoverClose.Part4
 open Finset MeasureTheory StatMech
 
 

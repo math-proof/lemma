@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Valuation.LatticesValuations
+import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
 open Polynomial Matrix DVRContext Metric Set
 
 

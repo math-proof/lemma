@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.GenusConstruction
+import Def.v1.Atlas.AlgebraicGeometryI.code.GenusConstruction.Part2
 open RiemannRochCurves CanonicalSheafCurves CohomologyP1 RiemannRoch GenusConstruction
 
 

@@ -3,7 +3,7 @@ Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
 import Mathlib
-import sympy.combinatorics.fin.SkipTwo
+import Def.Data.Fin.SkipTwo
 import sympy.matrices.determinants.PermFinset
 import Lemma.Finset.PermFinset
 /-!

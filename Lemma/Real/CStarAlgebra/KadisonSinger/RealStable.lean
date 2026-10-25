@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.CStarAlgebra.KadisonSinger.RealStable
+import Def.Analysis.CStarAlgebra.KadisonSinger.RealStable
 open scoped BigOperators ComplexOrder
 open Filter MvPolynomial
 open MathlibExt.Analysis.CStarAlgebra.KadisonSinger

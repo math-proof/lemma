@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.GrothendieckFusionRingInstance
+import Instance.v1.Atlas.TensorCategories.code.GrothendieckFusionRingInstance.Part2
 open CategoryTheory MonoidalCategory Finset
 
 

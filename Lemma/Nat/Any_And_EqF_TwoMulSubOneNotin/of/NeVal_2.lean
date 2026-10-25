@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Misc.erdos_707
+import Theorem.Analysis.Misc.erdos_707.Part5
 open Mainstep
 
 

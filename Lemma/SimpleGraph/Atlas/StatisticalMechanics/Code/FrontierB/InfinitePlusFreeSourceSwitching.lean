@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.InfinitePlusFreeSourceSwitching
+import Theorem.StatisticalMechanics.Code.FrontierB.InfinitePlusFreeSourceSwitching
 open Filter MeasureTheory Topology StatMech StatMech.FrontierB
 
 

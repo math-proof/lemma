@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.CombinatorialOptimization.code.Matching.BlossomShrinking
+import Def.v1.Atlas.CombinatorialOptimization.code.Matching.BlossomShrinking.Part2
 open SimpleGraph
 
 

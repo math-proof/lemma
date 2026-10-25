@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectHorizontalBarrierAssembly
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalBarrierAssembly
 open Filter Topology StatMech StatMech.FrontierD
 
 

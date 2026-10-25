@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BcEqIsing
+import Theorem.StatisticalMechanics.Code.Sharpness.BcEqIsing
 open Set StatMech StatMech.Sharpness
 
 

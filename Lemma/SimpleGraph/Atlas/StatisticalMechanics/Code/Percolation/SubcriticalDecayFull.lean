@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.SubcriticalDecayFull
+import Theorem.StatisticalMechanics.Code.Percolation.SubcriticalDecayFull.Part2
 open MeasureTheory Set StatMech StatMech.Percolation
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopDefectEdgeRooted
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopDefectEdgeRooted
 open Finset SimpleGraph Filter StatMech StatMech.Onsager
 
 

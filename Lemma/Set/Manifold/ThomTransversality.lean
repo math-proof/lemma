@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.ThomTransversality
+import Theorem.Geometry.Manifold.ThomTransversality
 open scoped Manifold
 open MathlibExt.Geometry.Manifold.ThomTransversalityWanted
 

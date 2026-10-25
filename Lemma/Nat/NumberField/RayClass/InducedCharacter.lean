@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.RayClass.InducedCharacter
+import Def.NumberTheory.NumberField.RayClass.InducedCharacter.Part3
 open scoped nonZeroDivisors
 open NumberField
 open Modulus

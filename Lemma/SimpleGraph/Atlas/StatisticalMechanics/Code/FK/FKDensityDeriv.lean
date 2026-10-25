@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKDensityDeriv
+import Theorem.StatisticalMechanics.Code.FK.FKDensityDeriv.Part2
 open MeasureTheory Set Filter Topology Real StatMech StatMech.FK
 
 

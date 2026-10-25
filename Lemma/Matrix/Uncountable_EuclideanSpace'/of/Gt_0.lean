@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.MeasureTheory.Section_1_2_1
+import Theorem.Analysis.MeasureTheory.Section_1_2_1.Part15
 open BoundedInterval
 open EuclideanSpace'
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheFixedChargeInfinityEigenrelation
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheFixedChargeInfinityEigenrelation
 open Finset Filter Matrix Topology StatMech StatMech.FrontierD
 
 

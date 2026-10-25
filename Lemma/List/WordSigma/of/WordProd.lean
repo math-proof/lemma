@@ -3,8 +3,8 @@ import sympy.Basic
 import Lemma.List.IsReducedDrop.of.IsReduced
 import Lemma.Nat.EqBilinInversions
 import Lemma.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced.SignChangeExchangeHyp
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.SimpleReflectionInversions
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SimpleReflectionInversions
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
 open CoxeterGroup CoxeterSignChangeExchangeFinal
 
 

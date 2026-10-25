@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.CurveTheory
+import Def.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part10
 open Module IsDiscreteValuationRing Ideal ArithmeticGeometry ArithmeticGeometry.FunctionField_k
 open Ideal
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.NormalFamilies
+import Def.Analysis.Complex.NormalFamilies
 import Lemma.Set.IsLocallyUniformlyBoundedOn.of.All_All_LeNorm.Ge_0.IsOpen
 open Filter Topology
 open scoped ENNReal NNReal

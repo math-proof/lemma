@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FreePairMixingFromTail
+import Theorem.StatisticalMechanics.Code.FK.FreePairMixingFromTail.Part3
 open MeasureTheory Set Filter Function StatMech StatMech.FK
 
 

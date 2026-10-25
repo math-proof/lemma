@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.EntireOrderMatchedQuotient
+import Theorem.StatisticalMechanics.Code.FrontierA.EntireOrderMatchedQuotient
 open Set StatMech StatMech.FrontierA
 
 

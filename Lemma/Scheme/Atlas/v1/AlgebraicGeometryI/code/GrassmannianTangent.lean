@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.GrassmannianTangent
+import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianTangent.Part2
 open Module (finrank) Grassmannian
 
 

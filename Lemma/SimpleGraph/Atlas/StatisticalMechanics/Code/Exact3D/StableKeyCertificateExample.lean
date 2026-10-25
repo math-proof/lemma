@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.StableKeyCertificateExample
+import Theorem.StatisticalMechanics.Code.Exact3D.StableKeyCertificateExample.Part2
 open StatMech StatMech.Exact3D StatMech.Exact3D.BoundedPolymerCase StatMech.Exact3D.BoundedPolymerCase.StableKeyCertificateExample
 
 

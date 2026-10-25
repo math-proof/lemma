@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareGridConsistency
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareGridConsistency.Part4
 open StatMech StatMech.Universality
 
 

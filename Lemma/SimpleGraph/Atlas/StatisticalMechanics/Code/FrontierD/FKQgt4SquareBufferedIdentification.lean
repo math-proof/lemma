@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4SquareBufferedIdentification
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareBufferedIdentification
 open Finset Set MeasureTheory Filter Topology StatMech StatMech.FrontierD
 
 

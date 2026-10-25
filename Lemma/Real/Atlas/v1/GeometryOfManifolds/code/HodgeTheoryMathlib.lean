@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.HodgeTheoryMathlib
+import Structure.v1.Atlas.GeometryOfManifolds.code.HodgeTheoryMathlib.Part6
 open HodgeMathlib
 
 

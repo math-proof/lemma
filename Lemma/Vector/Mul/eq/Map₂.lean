@@ -1,6 +1,5 @@
 import sympy.vector.Basic
 
-
 @[path]
 private lemma main
   [Mul α]
@@ -10,6 +9,5 @@ private lemma main
   a * b = a.map₂ HMul.hMul b :=
 -- proof
   rfl
-
 
 -- created on 2025-06-22

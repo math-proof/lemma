@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriHexBrickWiredCofinal
+import Theorem.StatisticalMechanics.Code.FK.TriHexBrickWiredCofinal.Part5
 open Filter Finset MeasureTheory Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

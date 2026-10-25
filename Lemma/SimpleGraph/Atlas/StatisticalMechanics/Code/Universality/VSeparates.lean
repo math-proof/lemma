@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.VSeparates
+import Theorem.StatisticalMechanics.Code.Universality.VSeparates.Part2
 open Set SimpleGraph StatMech StatMech.Universality
 
 

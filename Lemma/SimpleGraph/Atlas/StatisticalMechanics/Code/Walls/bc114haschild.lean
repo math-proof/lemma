@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc114haschild
+import Theorem.StatisticalMechanics.Code.Walls.bc114haschild.Part3
 open Set SimpleGraph Finset StatMech StatMech.Walls
 
 

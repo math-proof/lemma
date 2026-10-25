@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.ScanCorrectnessSupport
+import Theorem.CPythonListsort.Code.Correctness.ScanCorrectnessSupport
 open CPythonListsort CPythonListsort.ScanRemainderEntriesMatch CPythonListsort.PendingRunsCorrect
 
 

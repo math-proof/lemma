@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SchwartzContinuity
+import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzContinuity
 open SchwartzMap TemperedDistributions
 open scoped SchwartzMap
 

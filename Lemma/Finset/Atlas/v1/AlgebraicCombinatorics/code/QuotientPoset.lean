@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.QuotientPoset
+import Def.v1.Atlas.AlgebraicCombinatorics.code.QuotientPoset.Part2
 open Finset MulAction SpernerProperty
 open scoped Pointwise
 

@@ -1,0 +1,46 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/ClusterDomination.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.BeffaraDC.ClusterMoments.Part3
+import Theorem.StatisticalMechanics.Code.Percolation.SurfaceReassembly
+import Theorem.StatisticalMechanics.Code.Percolation.DctDifferential.Part4
+import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeane.Part5
+import Theorem.StatisticalMechanics.Code.BeffaraDC.ClusterDomination.Part3
+open scoped BigOperators NNReal ENNReal
+open Set Filter Topology MeasureTheory
+
+
+namespace StatMech
+
+namespace BeffaraDC
+
+open StatMech.Percolation StatMech.Lattice
+
+variable {d : ℕ}
+
+
+noncomputable def clusterSizeDomination (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+    (hoS : origin d ∈ (S : Set (Site d))) (hphi : phi d p hp S < 1)
+    (L : ℕ) (hL : 1 ≤ L) (hSbox : (S : Set (Site d)) ⊆ box d (L - 1)) :
+    ClusterSizeDomination :=
+  let h := clusterSizeTail_geometricTail p hp S hoS hphi L hL hSbox
+  clusterSizeDomination_of_geometricTail
+    (dist := fun n => (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
+        (clusterSizeLargeEvent d n))
+    (C := h.choose) (r := h.choose_spec.2.choose)
+    (fun _ => measureReal_nonneg)
+    h.choose_spec.2.choose_spec.1.le
+    h.choose_spec.2.choose_spec.2.1
+    h.choose_spec.2.choose_spec.2.2
+
+
+end BeffaraDC
+end StatMech

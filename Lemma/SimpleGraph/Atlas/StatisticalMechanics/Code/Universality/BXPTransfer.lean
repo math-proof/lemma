@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.BXPTransfer
+import Theorem.StatisticalMechanics.Code.Universality.BXPTransfer.Part2
 open MeasureTheory Set StatMech StatMech.Universality
 
 

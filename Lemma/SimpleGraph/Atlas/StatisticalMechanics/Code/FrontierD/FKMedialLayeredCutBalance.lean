@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKMedialLayeredCutBalance
+import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialLayeredCutBalance
 open StatMech StatMech.FrontierD
 
 

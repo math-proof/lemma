@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicStoppedWalk
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicStoppedWalk.Part6
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.TreeComplete
+import Theorem.StatisticalMechanics.Code.OSSS.TreeComplete.Part5
 open Finset StatMech.Lattice StatMech StatMech.OSSS StatMech.OSSS.TreeComplete
 
 

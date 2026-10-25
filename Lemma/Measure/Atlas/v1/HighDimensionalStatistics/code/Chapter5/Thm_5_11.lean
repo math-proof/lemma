@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_11
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_11.Part2
 open MeasureTheory InformationTheory Real Finset MinimaxLowerBound
 
 

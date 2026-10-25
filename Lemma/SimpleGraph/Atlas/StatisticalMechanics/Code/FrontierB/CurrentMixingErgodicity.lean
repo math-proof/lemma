@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentMixingErgodicity
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentMixingErgodicity.Part2
 open MeasureTheory Set StatMech StatMech.FrontierB
 
 

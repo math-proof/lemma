@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Composite
+import Def.NumberTheory.Composite
 open Nat
 
 

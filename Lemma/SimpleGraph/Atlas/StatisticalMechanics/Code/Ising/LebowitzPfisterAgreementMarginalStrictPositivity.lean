@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterAgreementMarginalStrictPositivity
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterAgreementMarginalStrictPositivity
 open Finset StatMech StatMech.Ising
 
 

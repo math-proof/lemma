@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.Daugavet
+import Theorem.Analysis.NormedSpace.Daugavet
 
 /--
 [Daugavet](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/Daugavet.lean)

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
+import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
 open SobolevSpace TemperedDistributions TestFunctions MeasureTheory
 open scoped SchwartzMap FourierTransform
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.QRWhitneyNumbers
+import Def.Combinatorics.Enumerative.QRWhitneyNumbers
 open MetaMathlibExt
 open QRWhitney
 

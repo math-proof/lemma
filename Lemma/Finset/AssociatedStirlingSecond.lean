@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.AssociatedStirlingSecond
+import Def.Combinatorics.AssociatedStirlingSecond
 open MetaMathlibExt
 
 

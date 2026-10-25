@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectSeparatedWindingNoNet
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSeparatedWindingNoNet
 open StatMech StatMech.FrontierD
 
 

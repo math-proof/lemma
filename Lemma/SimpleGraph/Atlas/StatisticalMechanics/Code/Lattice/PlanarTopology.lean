@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.PlanarTopology
+import Theorem.StatisticalMechanics.Code.Lattice.PlanarTopology.Part4
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

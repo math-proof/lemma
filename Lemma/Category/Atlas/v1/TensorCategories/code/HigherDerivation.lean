@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.HigherDerivation
+import Instance.v1.Atlas.TensorCategories.code.HigherDerivation
 open TensorCategories TensorCategories.HigherDerivationSystem
 
 

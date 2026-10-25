@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4SquarePeriodicCoverageShells
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquarePeriodicCoverageShells
 open Filter Finset Set SimpleGraph StatMech StatMech.FrontierD
 
 

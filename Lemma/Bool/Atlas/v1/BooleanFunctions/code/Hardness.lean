@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Hardness
+import Def.v1.Atlas.BooleanFunctions.code.Hardness
 open Finset BigOperators Real MeasureTheory ProbabilityTheory BooleanFourier
 open SimpleGraph
 

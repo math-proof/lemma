@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.TensorNondegen.EvalCoevalArg
+import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.EvalCoevalArg
 open CategoryTheory MonoidalCategory Category CategoryTheory.Limits TensorCategories
 
 

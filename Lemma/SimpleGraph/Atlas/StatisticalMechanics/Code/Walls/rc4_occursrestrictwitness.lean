@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc4_occursrestrictwitness
+import Theorem.StatisticalMechanics.Code.Walls.rc4_occursrestrictwitness.Part5
 open Finset StatMech StatMech.Walls
 
 

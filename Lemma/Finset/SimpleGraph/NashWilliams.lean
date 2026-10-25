@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.NashWilliams
+import Def.Combinatorics.SimpleGraph.NashWilliams
 open MathlibExt.Combinatorics.SimpleGraph.NashWilliamsWanted
 
 

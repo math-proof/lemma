@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterStrongMarkedSite
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterStrongMarkedSite
 open Finset Filter Set StatMech StatMech.Ising
 
 

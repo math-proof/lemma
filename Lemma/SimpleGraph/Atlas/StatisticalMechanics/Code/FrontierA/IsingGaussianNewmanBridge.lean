@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanBridge
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanBridge.Part2
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierA
 
 

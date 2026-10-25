@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.TotienomialCoefficient
+import Def.Combinatorics.Enumerative.TotienomialCoefficient
 import Lemma.Finset.Enumerative.TotienomialCoefficient
 
 

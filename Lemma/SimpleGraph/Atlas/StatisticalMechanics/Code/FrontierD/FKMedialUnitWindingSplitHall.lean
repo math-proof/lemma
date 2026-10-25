@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKMedialUnitWindingSplitHall
+import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialUnitWindingSplitHall
 open Equiv Finset SimpleGraph StatMech StatMech.FrontierD
 
 

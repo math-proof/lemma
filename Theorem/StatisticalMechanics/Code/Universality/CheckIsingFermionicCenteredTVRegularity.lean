@@ -1,0 +1,21 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicCenteredTVRegularity.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCenteredTVRegularity.Part2
+open StatMech.Universality
+
+#print axioms fkIsingSquareBoundaryCenteredRadialPatchFullObservable_cell_edges_le_of_margin
+#print axioms closedBall_subset_finiteCenteredRadialGridMarginInterior
+#print axioms finiteCenteredRadialGridInterpolant_lipschitzOnWith_of_fullCarrierTV
+#print axioms fkIsingExpandingSquare_fullCarrierTVCoefficient_le
+#print axioms fkIsingExpandingBoundarySquareCenteredReflectedInterpolant_lipschitzOnWith_closedBall_of_fullCarrierTV
+#print axioms fkIsingExpandingBoundarySquareCenteredReflectedInterpolant_meshUniformCompactHolder_fullCarrierTV
+
+

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectPrimalDualClusterLoopCount
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectPrimalDualClusterLoopCount
 open StatMech StatMech.FrontierD
 
 

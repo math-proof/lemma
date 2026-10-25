@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.ThetaFunction
+import Def.v1.Atlas.NumberTheoryI.code.ThetaFunction
 open Complex Filter Asymptotics Function Set
 open scoped Real Topology
 

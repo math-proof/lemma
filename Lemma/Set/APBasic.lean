@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.ap.Basic
+import Theorem.Combinatorics.Additive.AP.Basic.Part4
 
 
 namespace Set.IsAPOfLength

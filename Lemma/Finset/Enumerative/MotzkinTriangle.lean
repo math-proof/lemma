@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MotzkinTriangle
+import Def.Combinatorics.Enumerative.MotzkinTriangle.Part5
 open MetaMathlibExt
 open MotzkinRiordanPair
 

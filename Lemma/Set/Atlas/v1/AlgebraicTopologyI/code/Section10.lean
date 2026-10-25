@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section10
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section10.Part24
 open CategoryTheory CategoryTheory.Limits AlgebraicTopologyI Set in AlgebraicTopology unitInterval ContinuousMap Excision SphereHomology BrouwerFixedPoint BrouwerFixedPoint.ExcisionApplications BrouwerFixedPoint.DegreeTheory
 open AlgebraicTopology
 open AlgebraicTopology Set

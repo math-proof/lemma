@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.TrivalentCycles
+import Theorem.StatisticalMechanics.Code.Onsager.TrivalentCycles
 open StatMech StatMech.Onsager
 
 

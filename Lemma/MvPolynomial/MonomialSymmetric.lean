@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.symmetric.MonomialSymmetric
+import Def.Combinatorics.Young.MonomialSymmetric.Part6
 import Lemma.Partition.NPartition
 open MvPolynomial hiding R
 open Finset

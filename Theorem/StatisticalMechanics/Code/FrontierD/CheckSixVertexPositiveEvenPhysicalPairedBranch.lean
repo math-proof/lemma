@@ -1,0 +1,32 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexPositiveEvenPhysicalPairedBranch.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveEvenPhysicalPairedBranch.Part7
+
+
+namespace StatMech.FrontierD
+
+#print axioms sixVertexFourByTwoPhysicalPairedBranchEmbeddings
+#print axioms sixVertexFourByTwo_sectorTrace_logConcave_of_physicalBranches
+#print axioms sixVertexFourByTwo_positiveEvenBasePhysicalPairedBranches
+#print axioms sixVertexFourByTwo_positiveEvenBaseCentralPhysicalPairedBranches
+#print axioms sixVertexFourByTwo_positiveEvenBaseParticleHolePhysicalPairedBranches
+#print axioms sixVertexFourByTwo_positiveEvenBasePhysicalPairedBranches_allSectors
+#print axioms sixVertexPositiveEvenTracePhysicalPairedBranches_of_heightSteps
+#print axioms sixVertexFour_positiveEvenTracePhysicalPairedBranches_of_heightSteps
+#print axioms sixVertexFour_twoRowCommonFactor_cardinality_obstruction
+#print axioms sixVertexPositiveEvenTracePhysicalPairedBranches_of_heightFiberRoutings
+#print axioms sixVertexFour_positiveEvenTracePhysicalPairedBranches_of_heightFiberRoutings
+#print axioms sixVertexSectorPositiveEvenTraceLogConcave_of_physicalPairedBranches
+#print axioms sixVertexSectorPerronLogConcave_of_positiveEvenPhysicalPairedBranches
+#print axioms tendsto_fkRectBalancedShareSpectralGap_zero_of_physicalPairedBranches
+#print axioms fkQgt4_windingBridge_of_evenTwoByOneCrossingFloor_boundaryIncidence_physicalPairedBranches
+
+end StatMech.FrontierD

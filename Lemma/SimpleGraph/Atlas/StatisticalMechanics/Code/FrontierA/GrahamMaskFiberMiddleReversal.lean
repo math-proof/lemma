@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamMaskFiberMiddleReversal
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamMaskFiberMiddleReversal.Part24
 open Finset StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

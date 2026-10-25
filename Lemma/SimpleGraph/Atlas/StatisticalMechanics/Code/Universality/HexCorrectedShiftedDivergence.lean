@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexCorrectedShiftedDivergence
+import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedShiftedDivergence
 open StatMech StatMech.Universality StatMech.Universality.HexAsymmetricHighestCut
 
 

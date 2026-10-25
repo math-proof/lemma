@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.ClusterMeetsCorridorProof
+import Theorem.StatisticalMechanics.Code.Percolation.ClusterMeetsCorridorProof
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

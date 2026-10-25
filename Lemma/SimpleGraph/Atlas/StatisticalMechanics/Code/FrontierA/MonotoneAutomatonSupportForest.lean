@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonSupportForest
+import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonSupportForest
 open Set SimpleGraph Finset StatMech StatMech.FrontierA
 
 

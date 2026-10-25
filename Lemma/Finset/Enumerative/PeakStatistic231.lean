@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.PeakStatistic231
+import Theorem.Combinatorics.Enumerative.PeakStatistic231.Part5
 open MetaMathlibExt
 
 

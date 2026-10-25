@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.SignedLoopRectangularEmbedding
+import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopRectangularEmbedding.Part4
 open Set SimpleGraph StatMech StatMech.Onsager
 
 

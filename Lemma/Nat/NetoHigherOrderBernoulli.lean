@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NetoHigherOrderBernoulli
+import Theorem.NumberTheory.NetoHigherOrderBernoulli.Part4
 open Finset
 open MetaMathlibExt
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingFreeStateCoordinateSymmetry
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingFreeStateCoordinateSymmetry.Part3
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierA
 
 

@@ -1,0 +1,33 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationSum.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Mathlib
+import Theorem.StatisticalMechanics.Code.Onsager.SpinCharacter.Part2
+import Theorem.StatisticalMechanics.Code.Onsager.TorusDecoration.Part13
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationSum
+
+
+namespace StatMech.Onsager
+
+open BigOperators StatMech.Ising
+
+def ons_decIsExternal {L : ℕ} (edge : Sym2 (ons_Dart L)) : Prop :=
+  ∃ d : ons_Dart L, edge = s(d, ons_dartRev L d)
+
+noncomputable def ons_decoratedExternalEdges {L : ℕ}
+    (D : Finset (Sym2 (ons_Dart L))) : Finset (Sym2 (ons_Dart L)) := by
+  classical
+  exact D.filter ons_decIsExternal
+
+def ons_decEdgeProjection {L : ℕ}
+    (edge : Sym2 (ons_Dart L)) : Sym2 (ZMod L × ZMod L) :=
+  Sym2.map Prod.fst edge
+
+end StatMech.Onsager

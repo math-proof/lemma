@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.Coloring
+import Theorem.StatisticalMechanics.Code.IsingFK.Coloring.Part6
 open StatMech StatMech.IsingFK
 
 

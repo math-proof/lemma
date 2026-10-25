@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.OneDimensional
+import Theorem.Geometry.Manifold.OneDimensional.Part11
 open scoped Manifold ContDiff Topology Bundle
 open scoped Manifold ContDiff
 open MathlibExt.Geometry.Manifold.OneDimensionalClassification

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.GlobalFields
+import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
 open NumberField NumberField.InfinitePlace Module Fintype IsDedekindDomain AbsoluteValue
 open Polynomial UniqueFactorizationMonoid Classical
 

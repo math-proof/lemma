@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.Ergodicity
+import Theorem.StatisticalMechanics.Code.Foundations.Ergodicity.Part2
 open MeasureTheory StatMech StatMech.ConfigSpace
 
 

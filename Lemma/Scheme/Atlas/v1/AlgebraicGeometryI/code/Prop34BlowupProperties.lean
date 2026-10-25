@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Prop34BlowupProperties
+import Def.v1.Atlas.AlgebraicGeometryI.code.Prop34BlowupProperties.Part4
 open Polynomial AlgebraicGeometry Prop34Blowup
 
 

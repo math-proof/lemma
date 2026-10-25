@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc8core
+import Theorem.StatisticalMechanics.Code.Walls.gc8core.Part2
 open Finset BigOperators SimpleGraph Set Classical StatMech StatMech.Walls
 
 

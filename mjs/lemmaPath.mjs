@@ -1411,6 +1411,114 @@ function normHead(head, opts) {
 /** Infix / wrap arithmetic whose path atom is already a compound head (DotPow_Id, …). */
 const ARITH_OP = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanMatMul"]);
 
+/**
+ * Binder-only Get index (`h[k + n]`, slice `h[k: k + n]`) is not the relation.
+ * A numeral shift (`h[k + 3]`, `h[k + 1]`) stays: that offset is the atom (`Add_3`).
+ */
+function isGetIndexNoise(node, opts) {
+  const u = unwrapParen(node);
+  if (!u) return true;
+  const c = cls(u);
+  if (c === "LeanToken") {
+    const t = u.text || "";
+    return !t || t === "_" || !!opts?.leaves?.has(t);
+  }
+  if (c === "LeanParenthesis" || c === "LeanColon" || ARITH_OP.has(c))
+    return (u.args || []).length > 0 && (u.args || []).every((a) => isGetIndexNoise(a, opts));
+  return false;
+}
+
+/** Binder / hole index, including `e[i]` when both the head and the index are binders. */
+function isBinderHole(node, opts) {
+  const u = unwrapParen(node);
+  if (!u) return true;
+  const c = cls(u);
+  if (c === "LeanToken") {
+    const t = u.text || "";
+    return !t || t === "_" || !!opts?.leaves?.has(t);
+  }
+  if (c === "LeanGetElem") return isBinderHole(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
+  if (c === "LeanParenthesis") return isBinderHole(u.args?.[0], opts);
+  return false;
+}
+
+/**
+ * `t.descFactorial e[i]` with both arguments binder holes.
+ * Binary (`F _ Y`): the atom is `DescFactorial`, not `DescFactorial__…`.
+ */
+function isHoleBinDescFactorial(node, opts) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length !== 2) return false;
+  const head = unwrapParen(u.args[0]);
+  if (cls(head) !== "LeanProperty" || cls(head.args?.[1]) !== "LeanToken") return false;
+  if ((head.args[1].text || "") !== "descFactorial") return false;
+  return isBinderHole(head.args?.[0], opts) && isBinderHole(u.args[1], opts);
+}
+
+/** `d.choose 2` / `Nat.choose d 2` — binary; the right argument is not a following sibling. */
+function chooseAppParts(node) {
+  let u = unwrapParen(node);
+  if (cls(u) === "LeanColon") u = unwrapParen(u.args?.[0]);
+  if (cls(u) !== "LeanArgsSpaceSeparated") return null;
+  const args = u.args || [];
+  const head = unwrapParen(args[0]);
+  const prop = cls(head) === "LeanProperty" && cls(head.args?.[1]) === "LeanToken" && head.args[1].text === "choose";
+  const tok = cls(head) === "LeanToken" && /^(?:Nat\.)?choose$/.test(head.text || "");
+  if (prop && args.length === 2) return { k: args[1] };
+  if ((prop || tok) && args.length === 3) return { k: args[2] };
+  return null;
+}
+
+/** This node, or a power whose exponent is `choose`. */
+function choosePowBase(node) {
+  const u = unwrapParen(node);
+  if (chooseAppParts(u)) return u;
+  if (cls(u) === "LeanPow" && chooseAppParts(unwrapParen(u.args?.[1]))) return u;
+  return null;
+}
+
+/** `Pow_Choose2` / `Choose` → `Pow_Choose` / `Choose`. The numeral was choose's second argument. */
+function chooseHoleLeft(name) {
+  const m = /^(.*?)Choose(?:__\d+|\d+)?$/.exec(name || "");
+  return m ? m[1] + "Choose" : "";
+}
+
+/** Matrix stack whose entry is `pow * _` (`Stack_MulPow`). */
+function isStackMulLeftPow(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanStack" || !matrixFinBindersOf(u)) return false;
+  const body = unwrapParen(peelEntryStmt(u.scope ?? u.args?.[1]));
+  return cls(body) === "LeanMul" && cls(unwrapParen(body.args?.[0])) === "LeanPow";
+}
+
+/** `(stack * stack).det` where both stacks are `Stack_MulPow` → `DetMulStackS_MulPow`. */
+function isDetMulStackMulPow(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanProperty") return false;
+  const prop = u.args?.[1];
+  if (cls(prop) !== "LeanToken" || prop.text !== "det") return false;
+  const mul = unwrapParen(u.args?.[0]);
+  if (cls(mul) !== "LeanMul") return false;
+  return isStackMulLeftPow(mul.args?.[0]) && isStackMulLeftPow(mul.args?.[1]);
+}
+
+/** `_ * ∏ (i !)` — outer product, factorial factor named, other factor unnamed. */
+function isMulProdFactorial(node) {
+  const u = unwrapParen(node);
+  return cls(u) === "LeanMul" && prodOfFactorial(u.args?.[1]);
+}
+
+/** `∏ i, (i ! : R)` — the product of factorials, not choose's second argument. */
+function prodOfFactorial(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "Lean_prod" && cls(u) !== "Lean_sum") return false;
+  let body = unwrapParen(u.args?.[u.args.length - 1]);
+  if (cls(body) === "LeanColon") body = unwrapParen(body.args?.[0]);
+  if (cls(body) === "LeanParenthesis") body = unwrapParen(body.args?.[0]);
+  if (cls(body) === "LeanColon") body = unwrapParen(body.args?.[0]);
+  return cls(body) === "LeanFactorial";
+}
+
 /** Prefix for `f x`: arithmetic compounds (@ / ^ / …) ω-eval → Ext (ExtDotPow_Id); else Get. */
 function applyEvalPrefix(head) {
   if (fnLikeHead(head)) return "";
@@ -1530,6 +1638,14 @@ function binSnakeLeftName(node, left) {
 }
 
 /**
+ * Sum/prod domain kept on the atom: Icc/Ico/Ioc/Ioo and the initial intervals Iio/Iic.
+ * `Iio` / `Iic` fail `/^I[co][co]$/` (second letter is `i`) and would otherwise drop to bare Sum.
+ */
+function isSumIntervalDom(name) {
+  return /^I(?:[co][co]|ic|io)$/.test(name || "");
+}
+
+/**
  * Interval constructor head: Ico / Set.Ico / Finset.Ico (and Icc/Ioc/Ioo).
  * Used for asGiven S subset Set.Ico a b -> Subset_Ico (not Set/sub/Ico from the Set type ascription).
  */
@@ -1543,7 +1659,7 @@ function intervalCtorName(node) {
 }
 
 /**
- * Domain atom of a scoped ∑ / ∏ binder: `i ∈ Finset.range n` → Range, `i ∈ Set.Icc a b` → Icc.
+ * Domain atom of a scoped ∑ / ∏ binder: `i ∈ Finset.range n` → Range, `i ∈ Set.Icc a b` → Icc, `i ∈ Finset.Iio k` → Iio.
  * Bare `Icc` / namespaced `Set.Icc` / `Finset.range` all resolve to the constructor token.
  */
 function sumDomainName(node) {
@@ -1553,11 +1669,11 @@ function sumDomainName(node) {
   if (cls(set) === "LeanArgsSpaceSeparated") set = unwrapParen(set.args?.[0]);
   if (cls(set) === "LeanProperty" && cls(set.args?.[1]) === "LeanToken") {
     const t = set.args[1].text || "";
-    if (/^I[co][co]$/.test(t) || t === "range") return nameToken(t);
+    if (isSumIntervalDom(t) || t === "range") return nameToken(t);
   }
   if (cls(set) === "LeanToken" && set.text && !/^_/.test(set.text)) {
     const t = set.text;
-    if (/^I[co][co]$/.test(t) || t === "range") return nameToken(t);
+    if (isSumIntervalDom(t) || t === "range") return nameToken(t);
   }
   return "";
 }
@@ -1825,6 +1941,11 @@ function relationAlts(node, tag0, opts) {
     if (leftAlts.some((l) => /^NormR?$/.test(l)) && rightAlts.some((r) => /^Abs/.test(r))) {
       outR = uniq(["LeNorm_Abs", ...outR]);
     }
+  }
+  // Two Stack_MulPow factors under det: plural StackS_MulPow.
+  // RHS `_* ∏ (i !)` stays Mul_Prod_Factorial. One alt, so the long entry spelling remains canonical.
+  if (!opts.asGiven && tag0 === "Eq" && isDetMulStackMulPow(args[0]) && isMulProdFactorial(args[1])) {
+    outR = uniq(["DetMulStackS_MulPow/eq/Mul_Prod_Factorial", ...outR]);
   }
   return outR;
 }
@@ -3177,8 +3298,8 @@ function postAlts(node, opts, alts, canon) {
       const tag = (c === "Lean_prod" ? "Prod" : node.superscript === "'" ? "TSum" : "Sum") + sname;
       const b = A(args[args.length - 1]);
       const extra = b.length ? b.flatMap((y) => [tag + "_" + y, tag + y]) : [tag];
-      // Icc/Ioo preferred in canon; Finset.range asGiven uses SumRange__ (above); plain SumRange is alt-only
-      const preferDom = /^I[co][co]$/.test(sname);
+      // Icc/Ioo/Iio/Iic preferred in canon; Finset.range asGiven uses SumRange__ (above); plain SumRange is alt-only
+      const preferDom = isSumIntervalDom(sname);
       alts = preferDom
         ? uniq(extra.flatMap((e, i) => (i < alts.length ? [e, alts[i]] : [e])).concat(alts.slice(extra.length)))
         : uniq([...alts, ...(canon ? [] : extra)]);
@@ -4420,8 +4541,8 @@ function nameExprBase(node, opts = {}) {
     const arityRange = sumRangeArityName(node, opts);
     if (arityRange) return arityRange;
     const dom = sumDomainName(node);
-    // interval: keep SumIcc; imply `range` stays bare Sum (AbsSum/le/Sum_Abs)
-    const keepDom = dom && /^I[co][co]$/.test(dom);
+    // interval: keep SumIcc / SumIio; imply `range` stays bare Sum (AbsSum/le/Sum_Abs)
+    const keepDom = dom && isSumIntervalDom(dom);
     const tag = (node.superscript === "'" ? "TSum" : "Sum") + (keepDom ? dom : "");
     const args = node.args || [];
     const body = nameExpr(args[args.length - 1], opts);
@@ -4684,6 +4805,16 @@ function nameExprBase(node, opts = {}) {
     }
     if (left && right) {
       if (left === right) return tag + (pluralSnakeS(left) || pluralLetterS(left) || pluralMidS(left));
+      // t.descFactorial e[i] * r[i] ^ (t - e[i]): camel DescFactorial onto Mul.
+      // The `_` after Mul is wrong (`Mul_DescFactorial_Pow_Sub`). Alts: MulDescFactorial__Pow_Sub, Mul_Pow_Sub.
+      if (name === "LeanMul" && left === "DescFactorial" && right === "Pow_Sub" && isHoleBinDescFactorial(args[0], opts))
+        return "MulDescFactorial";
+      // x ^ (d.choose 2) * ∏ (i !) → MulPow_Choose__Prod, not MulPow_ChooseProd / MulPow_Choose2Prod.
+      // `__` is choose's missing second argument; Prod is the next factor.
+      if (name === "LeanMul" && choosePowBase(args[0]) && /^(Prod|Sum|TSum)/.test(right)) {
+        const hole = chooseHoleLeft(left);
+        if (hole) return tag + hole + "__" + right;
+      }
       return tag + joinDigits(left, right);
     }
     // C * ‖x - y‖ → MulNormSub: a wrapped (norm/abs) right operand reads camel like a unary head
@@ -4707,6 +4838,8 @@ function nameExprBase(node, opts = {}) {
   if (name === "LeanGetElem") {
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "ℙ") return "Prob";
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "∇") return "Grad";
+    // h[k + n] / h[k: k + n]: the index Add is not a path atom (All_Eq_Dot, not All_EqAdd_Dot_Add)
+    if (isGetIndexNoise(node.args?.[1], opts)) return nameExpr(node.args?.[0], opts);
   }
   if (name === "LeanBitOr") {
     return "";
@@ -4903,7 +5036,7 @@ function nameExprAltsBase(node, opts = {}) {
   if (name === "Lean_sum") {
     const arityRange = sumRangeArityName(node, opts);
     const dom = sumDomainName(node);
-    const keepDom = dom && /^I[co][co]$/.test(dom);
+    const keepDom = dom && isSumIntervalDom(dom);
     const tag = (node.superscript === "'" ? "TSum" : "Sum") + (keepDom ? dom : "");
     const args = node.args || [];
     const bodyAlts = nameExprAlts(args[args.length - 1], opts);
@@ -5237,6 +5370,22 @@ function nameExprAltsBase(node, opts = {}) {
             out.push(tag + l + "__" + r);
             continue;
           }
+          // Hole-hole descFactorial * Pow_Sub. Preferred MulDescFactorial (camel).
+          // Binary slot then the power: MulDescFactorial__Pow_Sub. Power only: Mul_Pow_Sub.
+          // Not Mul_DescFactorial_Pow_Sub (underscore after Mul).
+          if (name === "LeanMul" && l === "DescFactorial" && r === "Pow_Sub" && isHoleBinDescFactorial(args[0], opts)) {
+            out.push("MulDescFactorial", "MulDescFactorial__Pow_Sub", "Mul_Pow_Sub");
+            continue;
+          }
+          // Binary choose must not glue a sibling Prod (`ChooseProd` / `Choose_Prod` / `Choose2Prod`).
+          if (name === "LeanMul" && choosePowBase(args[0]) && /^(Prod|Sum|TSum)/.test(r || "")) {
+            const hole = chooseHoleLeft(l);
+            if (hole) {
+              out.push(tag + hole + "__" + r);
+              if (prodOfFactorial(args[1])) out.push("Mul_Prod_Factorial");
+              continue;
+            }
+          }
           if (joinDigits(l, r) !== l + r) out.push(tag + joinDigits(l, r));
           out.push(tag + l + r);
           out.push(tag + l + "_" + r); // AddMulProd_SumMulProd
@@ -5247,6 +5396,8 @@ function nameExprAltsBase(node, opts = {}) {
     for (const [, di, dj] of diag) {
       const l = leftAlts[di], r = rightAlts[dj];
       if (!l || !r) continue;
+      // Pow_Choose + Prod → Pow_ChooseProdMul; that still reads as ChooseProd.
+      if (name === "LeanMul" && chooseHoleLeft(l) && /^(Prod|Sum|TSum)/.test(r)) continue;
       out.push(l + tag + r);
       out.push(l + r + tag);
       out.push(l + "_" + tag + "_" + r);
@@ -5309,6 +5460,7 @@ function nameExprAltsBase(node, opts = {}) {
   if (name === "LeanGetElem") {
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "ℙ") return ["Prob"];
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "∇") return ["Grad"];
+    if (isGetIndexNoise(node.args?.[1], opts)) return nameExprAlts(node.args?.[0], opts);
   }
   if (name === "LeanBitOr") return [];
 
@@ -5862,6 +6014,17 @@ export function suggest(filePath, lemmaName, options = {}) {
     return !(segs.includes("MEq") && segs.length > 1);
   };
   const implyAlts = uniq([...implyAltsA, ...(passB?.implyAlts || [])]).filter(legalMeqImply);
+  // Hole-hole descFactorial * Pow_Sub. Preferred tail is MulDescFactorial.
+  // The `__` and Mul_Pow_Sub spellings are longer and otherwise fall past the shown-alt cap.
+  {
+    const descFactTails = [
+      "Any_All_Eq_Dot_MulDescFactorial",
+      "Any_All_Eq_Dot_MulDescFactorial__Pow_Sub",
+      "Any_All_Eq_Dot_Mul_Pow_Sub",
+    ];
+    if (descFactTails.every((t) => implyAlts.includes(t)))
+      implyAlts.splice(0, implyAlts.length, ...uniq([...descFactTails, ...implyAlts]));
+  }
   const implyExtraAlts = [...(implyAltsA.extra || []), ...(passB?.implyAlts?.extra || [])].filter(legalMeqImply); // accepted, not enumerated
   // lowercase ASCII components (`min/…` from a stripped `μmin`) are not names; soft relations are
   const SOFT = /^(of|is|in|sub|eq|ne|lt|gt|le|ge|dvd|ae[A-Za-z]*)$/;

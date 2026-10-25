@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Normed.Series.NormalConvergence
+import Def.Analysis.Normed.Series.NormalConvergence
 import Lemma.Real.NormalConvergence
 open Set Metric Filter Topology ENNReal
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.AppellSequence
+import Def.MathlibExtTest.NumberTheory.AppellSequence
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.SecondMoment
+import Abbrev.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.SecondMoment
 open MeasureTheory ProbabilityTheory Filter
 
 

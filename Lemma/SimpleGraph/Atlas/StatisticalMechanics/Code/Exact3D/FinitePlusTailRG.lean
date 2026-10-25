@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.FinitePlusTailRG
+import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailRG
 open StatMech StatMech.Exact3D StatMech.Exact3D.FinitePlusTailHyperbolicSplitting
 
 

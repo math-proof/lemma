@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.SurfaceTensionConvexity
+import Theorem.StatisticalMechanics.Code.Exact3D.SurfaceTensionConvexity
 open StatMech StatMech.Exact3D
 
 

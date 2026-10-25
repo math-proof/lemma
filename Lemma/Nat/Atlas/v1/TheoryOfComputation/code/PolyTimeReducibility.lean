@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.PolyTimeReducibility
+import Abbrev.v1.Atlas.TheoryOfComputation.code.PolyTimeReducibility
 open TuringMachine
 
 

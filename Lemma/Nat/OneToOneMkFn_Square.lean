@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_3_3
+import Abbrev.Analysis.Section_3_3.Part2
 import Lemma.Set.OneToOne.is.All_Eq
 import Lemma.Set.EqGetMkFn
 import Lemma.Set.EqIffP

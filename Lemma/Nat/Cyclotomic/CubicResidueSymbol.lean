@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Cyclotomic.CubicResidueSymbol
+import Def.NumberTheory.Cyclotomic.CubicResidueSymbol
 open MetaMathlibExt
 open Ideal NumberField
 

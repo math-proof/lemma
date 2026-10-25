@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.GaloisCohomology
+import Abbrev.v1.Atlas.ArithmeticGeometry.code.GaloisCohomology.Part3
 open groupCohomology GaloisCohomology GaloisCohomology.CrossedHom GaloisCohomology.ContCrossedHom
 open scoped Classical
 

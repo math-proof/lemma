@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.UnitSemisimplicity.TensorExactness
+import Instance.v1.Atlas.TensorCategories.code.UnitSemisimplicity.TensorExactness
 open CategoryTheory MonoidalCategory Category CategoryTheory.Limits TensorCategories
 
 

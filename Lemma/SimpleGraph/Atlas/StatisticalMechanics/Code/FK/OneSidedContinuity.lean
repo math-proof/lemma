@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.OneSidedContinuity
+import Theorem.StatisticalMechanics.Code.FK.OneSidedContinuity
 open MeasureTheory Set Filter Topology Real SimpleGraph Finset Function StatMech StatMech.FK
 
 

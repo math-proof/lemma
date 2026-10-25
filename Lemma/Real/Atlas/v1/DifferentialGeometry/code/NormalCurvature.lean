@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialGeometry.code.NormalCurvature
+import Def.v1.Atlas.DifferentialGeometry.code.NormalCurvature
 open Matrix Finset BigOperators
 
 

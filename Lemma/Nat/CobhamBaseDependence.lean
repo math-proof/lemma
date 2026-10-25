@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.CobhamBaseDependence
+import Def.NumberTheory.CobhamBaseDependence
 open MetaMathlibExt
 
 

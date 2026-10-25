@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DedekindDomain.DifferentLocalization
+import Instance.RingTheory.DedekindDomain.DifferentLocalization
 open FractionalIdeal
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexAlignedFirstReturn
+import Def.StatisticalMechanics.Code.FrontierD.SixVertexAlignedFirstReturn.Part31
 open StatMech.FrontierD StatMech StatMech.FrontierD.FourByTwoPrefixBondAudit
 
 

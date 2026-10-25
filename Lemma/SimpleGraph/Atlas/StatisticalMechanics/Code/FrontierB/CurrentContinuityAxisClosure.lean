@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentContinuityAxisClosure
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityAxisClosure
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierB
 
 

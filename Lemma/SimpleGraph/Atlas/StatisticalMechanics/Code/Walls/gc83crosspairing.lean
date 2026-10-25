@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc83crosspairing
+import Theorem.StatisticalMechanics.Code.Walls.gc83crosspairing.Part3
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Walls
 
 

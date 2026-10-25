@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.FreeStateDLR
+import Theorem.StatisticalMechanics.Code.Ising.FreeStateDLR
 open MeasureTheory Set StatMech StatMech.Ising
 
 

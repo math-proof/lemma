@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.BrownianModificationLaw
+import Theorem.StatisticalMechanics.Code.SLE.BrownianModificationLaw
 open Filter MeasureTheory ProbabilityTheory Set StatMech StatMech.SLE
 
 

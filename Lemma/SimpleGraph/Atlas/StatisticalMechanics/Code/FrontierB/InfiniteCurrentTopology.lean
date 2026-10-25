@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.InfiniteCurrentTopology
+import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentTopology.Part8
 open Filter MeasureTheory Topology StatMech StatMech.FrontierB
 
 

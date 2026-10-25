@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryHorizontalParity
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryHorizontalParity
 open StatMech StatMech.FrontierD
 
 

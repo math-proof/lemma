@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.JacobiStirlingFirstKind
+import Def.Combinatorics.Enumerative.JacobiStirlingFirstKind
 open scoped BigOperators
 open MetaMathlibExt
 

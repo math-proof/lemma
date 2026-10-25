@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.EnclosingLength
+import Theorem.StatisticalMechanics.Code.Lattice.EnclosingLength.Part2
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.CellConnect2
+import Theorem.StatisticalMechanics.Code.Onsager.CellConnect2
 open StatMech StatMech.Onsager StatMech.Onsager.CellConnect2
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.OSSS
+import Theorem.StatisticalMechanics.Code.Inequalities.OSSS.Part6
 open Finset StatMech StatMech.OSSS StatMech.OSSS.DecisionTree
 
 

@@ -1,0 +1,60 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamFourColorBalancedCore.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Mathlib
+import Theorem.StatisticalMechanics.Code.Ising.GKS.Part5
+import Theorem.StatisticalMechanics.Code.Ising.GKS2.Part4
+import Theorem.StatisticalMechanics.Code.Ising.AizenmanBarsky.Part5
+import Theorem.StatisticalMechanics.Code.Ising.GHSThreePoint
+import Theorem.StatisticalMechanics.Code.Ising.CorrelationRatio
+import Theorem.StatisticalMechanics.Code.Ising.CurrentWeight.Part2
+import Theorem.StatisticalMechanics.Code.Sharpness.GhostCurrentRep
+import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsingFull.Part4
+import Theorem.StatisticalMechanics.Code.Sharpness.BackbonePropsFull.Part4
+import Theorem.StatisticalMechanics.Code.Sharpness.Simon.Part3
+import Theorem.StatisticalMechanics.Code.Walls.gc10ghostfourpoint
+import Theorem.StatisticalMechanics.Code.Walls.ghc_urselleqgap
+import Theorem.StatisticalMechanics.Code.Walls.vbgtriangle.Part3
+import Theorem.StatisticalMechanics.Code.Walls.gc7ghosteven
+import Def.StatisticalMechanics.Code.FrontierA.GrahamFourColorBalancedCore.Part19
+open scoped BigOperators symmDiff
+open Finset
+
+
+namespace StatMech
+
+namespace GrahamGHS
+
+open Ising
+
+open Sharpness
+
+
+namespace FourColor
+
+variable {W ι : Type*} [Fintype W] [DecidableEq W] [Fintype ι] [DecidableEq ι]
+
+
+noncomputable instance instFintypeRightRowSupportIndex (ends : ι → Sym2 W) (m : Finset ι)
+    (j k l zero : W) : Fintype (rightRowSupportIndex ends m j k l zero) := by
+  classical
+  exact Fintype.subtype
+    (Finset.univ.filter (fun K => K ⊆ m ∧ RightRowSupport ends m j k l zero K))
+    (fun K => by simp)
+
+noncomputable instance instFintypeRightRowData (ends : ι → Sym2 W) (m : Finset ι)
+    (j k l zero : W) : Fintype (rightRowData ends m j k l zero) := by
+  classical
+  unfold rightRowData
+  infer_instance
+
+end FourColor
+end GrahamGHS
+end StatMech

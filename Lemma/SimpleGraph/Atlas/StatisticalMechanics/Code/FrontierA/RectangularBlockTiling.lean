@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.RectangularBlockTiling
+import Theorem.StatisticalMechanics.Code.FrontierA.RectangularBlockTiling
 open StatMech StatMech.FrontierA
 
 

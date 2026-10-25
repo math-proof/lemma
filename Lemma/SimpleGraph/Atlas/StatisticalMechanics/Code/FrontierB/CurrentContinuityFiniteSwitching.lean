@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentContinuityFiniteSwitching
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFiniteSwitching
 open StatMech StatMech.FrontierB
 
 

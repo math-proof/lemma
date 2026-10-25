@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Vizing
+import Def.Combinatorics.SimpleGraph.Vizing
 open MathlibExt.Combinatorics.SimpleGraph.EdgeColoringWanted
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Circumference
+import Theorem.Combinatorics.SimpleGraph.Circumference.Part2
 open SimpleGraph
 
 

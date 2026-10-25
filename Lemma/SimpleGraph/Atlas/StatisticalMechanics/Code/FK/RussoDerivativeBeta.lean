@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.RussoDerivativeBeta
+import Theorem.StatisticalMechanics.Code.FK.RussoDerivativeBeta.Part4
 open StatMech StatMech.FK
 
 

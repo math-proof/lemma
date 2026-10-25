@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.SmoothVectors
+import Def.v1.Atlas.LieGroups.code.SmoothVectors
 open ContinuousRep
 open scoped Manifold
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexTwoStrandSplit
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexTwoStrandSplit
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec19CanonicalBundle
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec19CanonicalBundle
 open KaehlerDifferential Module PicardProjective
 
 

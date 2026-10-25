@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.BurtonKeaneClose
+import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneClose.Part2
 open MeasureTheory Measure Set MeasurableSpace ProbabilityTheory Filter Finset StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 
 

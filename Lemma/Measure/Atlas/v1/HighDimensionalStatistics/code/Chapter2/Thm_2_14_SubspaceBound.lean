@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_14_SubspaceBound
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_14_SubspaceBound
 open Matrix Finset BigOperators Rigollet MeasureTheory
 
 

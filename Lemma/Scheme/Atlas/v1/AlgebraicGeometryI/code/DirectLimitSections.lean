@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.DirectLimitSections
+import Def.v1.Atlas.AlgebraicGeometryI.code.DirectLimitSections
 open CategoryTheory CategoryTheory.Limits TopCat Opposite TopologicalSpace
 
 

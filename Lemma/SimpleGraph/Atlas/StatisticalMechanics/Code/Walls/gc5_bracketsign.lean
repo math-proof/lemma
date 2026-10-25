@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc5_bracketsign
+import Theorem.StatisticalMechanics.Code.Walls.gc5_bracketsign
 open Finset Classical StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.STTTransport
+import Theorem.StatisticalMechanics.Code.Universality.STTTransport.Part3
 open SimpleGraph StatMech StatMech.Universality
 
 

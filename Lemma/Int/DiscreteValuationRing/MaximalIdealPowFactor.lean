@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DiscreteValuationRing.MaximalIdealPowFactor
+import Def.RingTheory.DiscreteValuationRing.MaximalIdealPowFactor.Part3
 open IsLocalRing
 
 

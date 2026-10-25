@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FiniteTargetTransport
+import Theorem.StatisticalMechanics.Code.FrontierA.FiniteTargetTransport
 open Set StatMech StatMech.FrontierA
 
 

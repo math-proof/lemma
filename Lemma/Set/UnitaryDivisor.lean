@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.UnitaryDivisor
+import Def.NumberTheory.UnitaryDivisor.Part2
 open Nat
 open Set
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.ListSortScanReached
+import Inductive.CPythonListsort.Code.Assembly.ListSortScanReached
 open CPythonListsort CPythonListsort.ListSortScanReachedCollapse
 
 

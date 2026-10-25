@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc10cornerexists
+import Theorem.StatisticalMechanics.Code.Walls.jc10cornerexists
 open SimpleGraph Function Set StatMech StatMech.Walls
 
 

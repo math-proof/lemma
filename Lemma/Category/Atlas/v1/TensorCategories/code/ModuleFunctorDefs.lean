@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
+import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
 open CategoryTheory CategoryTheory.ModuleFunctorHom
 open Category MonoidalCategory LeftModCat
 

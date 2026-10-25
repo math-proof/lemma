@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.DualWalkBoundsClose
+import Theorem.StatisticalMechanics.Code.Ising.DualWalkBoundsClose.Part3
 open Finset SimpleGraph StatMech StatMech.Ising
 
 

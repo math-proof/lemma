@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.GeneralUmlaufsatz
+import Theorem.StatisticalMechanics.Code.Onsager.GeneralUmlaufsatz
 open StatMech StatMech.Onsager StatMech.Onsager.GeneralUmlaufsatz
 
 

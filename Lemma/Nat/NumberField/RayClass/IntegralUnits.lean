@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.RayClass.IntegralUnits
+import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part4
 open NumberField
 open Modulus
 

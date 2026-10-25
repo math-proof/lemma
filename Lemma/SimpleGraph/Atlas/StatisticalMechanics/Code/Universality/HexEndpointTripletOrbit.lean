@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexEndpointTripletOrbit
+import Theorem.StatisticalMechanics.Code.Universality.HexEndpointTripletOrbit
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.DomainMarkov
+import Theorem.StatisticalMechanics.Code.FK.DomainMarkov.Part5
 open StatMech StatMech.FK
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeInterval.Breusch.Grid
+import Def.NumberTheory.PrimeInterval.Breusch.Grid
 open MathlibExt.NumberTheory.BreuschWanted.Internal
 
 

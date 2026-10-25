@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kc3_oddrayeqleftRegion
+import Theorem.StatisticalMechanics.Code.Walls.kc3_oddrayeqleftRegion.Part2
 open Set SimpleGraph Function StatMech StatMech.Walls
 
 

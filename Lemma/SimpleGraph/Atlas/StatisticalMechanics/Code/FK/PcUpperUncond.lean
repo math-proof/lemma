@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PcUpperUncond
+import Theorem.StatisticalMechanics.Code.FK.PcUpperUncond.Part4
 open MeasureTheory Filter Topology Finset Set SimpleGraph StatMech StatMech.FK
 
 

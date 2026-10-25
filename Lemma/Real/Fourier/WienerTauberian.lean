@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Fourier.WienerTauberian
+import Def.Analysis.Fourier.WienerTauberian
 open MeasureTheory
 open scoped Convolution FourierTransform
 open MeasureTheory Complex

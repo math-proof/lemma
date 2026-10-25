@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingTorusGaussianDomination
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusGaussianDomination.Part3
 open Finset Filter Set Topology StatMech StatMech.FrontierA
 
 

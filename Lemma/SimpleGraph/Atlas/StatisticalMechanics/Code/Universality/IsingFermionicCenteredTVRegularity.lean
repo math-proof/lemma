@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCenteredTVRegularity
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCenteredTVRegularity.Part2
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWAxisOrContactObstruction
+import Theorem.StatisticalMechanics.Code.Universality.RSWAxisOrContactObstruction.Part2
 open Function MeasureTheory Set StatMech StatMech.Universality
 
 

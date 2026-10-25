@@ -5,7 +5,6 @@ set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-
 universe u
 
 /--
@@ -85,6 +84,5 @@ private lemma main
     rw [← QuotientGroup.mk_mul, Φ_apply, Φ_apply]
     show N.ρ x⁻¹ ((f : S → N) (x * s)) = N.ρ s (N.ρ (x * s)⁻¹ ((f : S → N) (x * s)))
     rw [← Module.End.mul_apply, ← map_mul, mul_inv_rev, mul_inv_cancel_left]
-
 
 -- created on 2026-10-20

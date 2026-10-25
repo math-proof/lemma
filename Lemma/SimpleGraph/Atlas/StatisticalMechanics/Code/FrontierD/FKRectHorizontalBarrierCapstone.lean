@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectHorizontalBarrierCapstone
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalBarrierCapstone
 open Set SimpleGraph Filter Topology StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.WavefrontProducts
+import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontProducts.Part2
 open MeasureTheory Set WavefrontSet
 
 

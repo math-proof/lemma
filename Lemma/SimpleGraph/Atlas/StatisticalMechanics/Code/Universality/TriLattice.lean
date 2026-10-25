@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.TriLattice
+import Theorem.StatisticalMechanics.Code.Universality.TriLattice.Part6
 open StatMech StatMech.Universality
 
 

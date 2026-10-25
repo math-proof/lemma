@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.ChebyshevThetaBounds
+import Def.NumberTheory.PrimeCounting.ChebyshevThetaBounds
 open Nat hiding log
 open Finset Real
 open ArithmeticFunction hiding log id

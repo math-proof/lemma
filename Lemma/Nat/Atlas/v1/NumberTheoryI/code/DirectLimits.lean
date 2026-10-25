@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.DirectLimits
+import Def.v1.Atlas.NumberTheoryI.code.DirectLimits.Part2
 open TopologicalSpace TopologicalSpace.DirectLimit
 
 

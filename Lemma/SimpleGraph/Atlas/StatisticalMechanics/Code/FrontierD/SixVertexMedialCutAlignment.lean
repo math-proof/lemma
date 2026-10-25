@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexMedialCutAlignment
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMedialCutAlignment.Part2
 open SimpleGraph StatMech StatMech.FrontierD
 
 

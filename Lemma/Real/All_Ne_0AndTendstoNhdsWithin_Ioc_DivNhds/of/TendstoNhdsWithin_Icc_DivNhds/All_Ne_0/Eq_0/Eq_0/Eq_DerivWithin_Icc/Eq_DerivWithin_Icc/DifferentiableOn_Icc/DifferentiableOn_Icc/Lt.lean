@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_10_5
+import Theorem.Analysis.Section_10_5
 open Chapter9
 open Chapter10
 open Filter

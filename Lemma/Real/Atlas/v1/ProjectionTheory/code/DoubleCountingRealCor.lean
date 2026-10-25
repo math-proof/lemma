@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.DoubleCountingRealCor
+import Structure.v1.Atlas.ProjectionTheory.code.DoubleCountingRealCor
 open Finset BigOperators ProjectionTheory
 
 

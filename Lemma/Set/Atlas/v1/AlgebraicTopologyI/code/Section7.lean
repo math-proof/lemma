@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section7
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section7.Part3
 open ExactSequence HomologyCrossProduct
 open AlgebraicTopologyI
 

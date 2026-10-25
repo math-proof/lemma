@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.WalkOperatorLemmas
+import Theorem.v1.Atlas.AlgebraicCombinatorics.code.WalkOperatorLemmas
 open WalkCountFormula
 open scoped Classical
 

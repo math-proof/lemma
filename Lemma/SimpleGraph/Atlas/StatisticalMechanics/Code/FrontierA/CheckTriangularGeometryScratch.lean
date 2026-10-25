@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.CheckTriangularGeometryScratch
+import Theorem.StatisticalMechanics.Code.FrontierA.CheckTriangularGeometryScratch
 open StatMech StatMech.FrontierA
 
 

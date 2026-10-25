@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.complex.Hurwitz
+import Theorem.Analysis.Complex.Hurwitz.Part2
 open Filter Metric Set
 open scoped Topology
 

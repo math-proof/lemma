@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.RingClassField
+import Def.v1.Atlas.EllipticCurves.code.RingClassField.Part3
 open NumberField Elliptic_Curves ImagQuadPrimeSplitting CMMethod CMMethod.TwistSelection
 open Polynomial
 open Elliptic_Curves

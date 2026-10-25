@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4SquareDualDomination
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareDualDomination
 open Finset Set SimpleGraph StatMech StatMech.FrontierD
 
 

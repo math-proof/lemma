@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.ShermanSplit
+import Theorem.StatisticalMechanics.Code.Onsager.ShermanSplit.Part5
 open StatMech StatMech.Onsager
 
 

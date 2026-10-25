@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Chapter4.Theorem440
+import Theorem.v1.Atlas.NumberTheoryI.code.Chapter4.Theorem440
 open EtaleAlgebra Polynomial IntermediateField
 open scoped TensorProduct
 open Polynomial IntermediateField EtaleAlgebra

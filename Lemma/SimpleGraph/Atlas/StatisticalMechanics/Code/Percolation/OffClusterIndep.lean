@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.OffClusterIndep
+import Theorem.StatisticalMechanics.Code.Percolation.OffClusterIndep.Part4
 open MeasureTheory Set SimpleGraph StatMech StatMech.Percolation
 
 

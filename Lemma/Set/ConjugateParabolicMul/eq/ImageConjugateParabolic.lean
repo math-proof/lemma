@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.BuildingsFromBNPairs
+import Def.v1.Atlas.Buildings.code.BNPair.BuildingsFromBNPairs.Part6
 open BNPair
 
 

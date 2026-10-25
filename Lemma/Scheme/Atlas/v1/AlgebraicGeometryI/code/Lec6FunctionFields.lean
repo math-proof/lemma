@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec6FunctionFields
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec6FunctionFields
 open CategoryTheory Opposite Lec6
 open AlgebraicGeometry TopologicalSpace
 

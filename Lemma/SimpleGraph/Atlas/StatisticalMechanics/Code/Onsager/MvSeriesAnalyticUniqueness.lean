@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.MvSeriesAnalyticUniqueness
+import Theorem.StatisticalMechanics.Code.Onsager.MvSeriesAnalyticUniqueness.Part3
 open StatMech StatMech.Onsager
 
 

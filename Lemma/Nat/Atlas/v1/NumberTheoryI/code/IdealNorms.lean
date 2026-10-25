@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.IdealNorms
+import Def.v1.Atlas.NumberTheoryI.code.IdealNorms
 open nonZeroDivisors DirectSum Ideal Polynomial UniqueFactorizationMonoid DedekindKummer DedekindKummer.NF
 open NumberField
 open Ideal Polynomial UniqueFactorizationMonoid

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.WeightedSobolevSchwartz
+import Def.v1.Atlas.DifferentialAnalysis.code.WeightedSobolevSchwartz
 open SobolevEmbedding
 open scoped ZeroAtInfty SchwartzMap
 

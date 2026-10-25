@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.PerfectPairing.DualBasis
+import Def.LinearAlgebra.PerfectPairing.DualBasis
 open Module
 open LinearMap.IsPerfPair
 

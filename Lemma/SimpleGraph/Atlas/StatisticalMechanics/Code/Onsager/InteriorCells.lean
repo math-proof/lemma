@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.InteriorCells
+import Theorem.StatisticalMechanics.Code.Onsager.InteriorCells.Part2
 open StatMech StatMech.Onsager StatMech.Onsager.InteriorCells
 
 

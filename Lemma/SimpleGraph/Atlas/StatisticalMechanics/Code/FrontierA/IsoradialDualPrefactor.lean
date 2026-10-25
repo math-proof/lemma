@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsoradialDualPrefactor
+import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialDualPrefactor.Part7
 open StatMech StatMech.FrontierA StatMech.FrontierA.RibbonPermutationSystem StatMech.FrontierA.KacWardSubgraphCoefficientIdentification StatMech.FrontierA.IsoradialOddConeGaussBonnetData StatMech.FrontierA.IsoradialDualGaussBonnetParity StatMech.FrontierA.FiniteCellularGraphEmbedding
 
 

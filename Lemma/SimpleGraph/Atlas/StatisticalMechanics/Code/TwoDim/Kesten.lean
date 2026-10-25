@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.TwoDim.Kesten
+import Theorem.StatisticalMechanics.Code.TwoDim.Kesten
 open MeasureTheory Set Filter StatMech StatMech.TwoDim
 
 

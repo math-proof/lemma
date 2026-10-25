@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingInfraredMomentumShell
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingInfraredMomentumShell.Part2
 open Finset Set StatMech StatMech.FrontierA
 
 

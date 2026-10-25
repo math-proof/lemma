@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedRepeatedAppend
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedRepeatedAppend
 open Finset StatMech StatMech.FrontierD
 
 

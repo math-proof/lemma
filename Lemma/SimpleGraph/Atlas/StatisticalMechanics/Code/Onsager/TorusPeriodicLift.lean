@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.TorusPeriodicLift
+import Theorem.StatisticalMechanics.Code.Onsager.TorusPeriodicLift
 open StatMech StatMech.Onsager
 
 

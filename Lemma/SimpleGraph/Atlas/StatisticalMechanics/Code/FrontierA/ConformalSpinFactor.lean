@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.ConformalSpinFactor
+import Theorem.StatisticalMechanics.Code.FrontierA.ConformalSpinFactor
 open StatMech StatMech.FrontierA
 
 

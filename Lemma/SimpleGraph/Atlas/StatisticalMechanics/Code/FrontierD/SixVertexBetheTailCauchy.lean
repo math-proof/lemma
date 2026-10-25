@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheTailCauchy
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheTailCauchy
 open StatMech StatMech.FrontierD
 
 

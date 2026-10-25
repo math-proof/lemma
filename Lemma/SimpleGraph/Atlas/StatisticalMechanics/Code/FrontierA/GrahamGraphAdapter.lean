@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamGraphAdapter
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamGraphAdapter
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

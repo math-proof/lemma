@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.TurningTelescope
+import Theorem.StatisticalMechanics.Code.Onsager.TurningTelescope.Part3
 open StatMech StatMech.Onsager
 
 

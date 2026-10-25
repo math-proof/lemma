@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.DirectedCycles
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.DirectedCycles.Part2
 open Real Finset DirectedCycles DirectedCycles.DirectedWalk
 
 

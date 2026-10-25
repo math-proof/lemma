@@ -5,7 +5,6 @@ set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-
 universe u
 
 /--
@@ -46,6 +45,5 @@ private lemma main
     refine Scheme.Cover.hom_ext 𝒰 _ _ fun i => ?_
     rw [Scheme.Cover.ι_glueMorphisms 𝒰 _ hcompat i]
     apply hu' i
-
 
 -- created on 2026-10-20

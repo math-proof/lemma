@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Algebra.Lie.PoissonBracket
+import Theorem.MathlibExtTest.Algebra.Lie.PoissonBracket
 open MathlibExtTest MathlibExtTest.Algebra MathlibExtTest.Algebra.Lie MathlibExtTest.Algebra.Lie.PoissonBracket
 open MathlibExt.Algebra.Lie.PoissonBracket
 

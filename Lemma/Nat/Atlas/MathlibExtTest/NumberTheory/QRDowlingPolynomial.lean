@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.QRDowlingPolynomial
+import Theorem.MathlibExtTest.NumberTheory.QRDowlingPolynomial
 open MetaMathlibExt
 
 

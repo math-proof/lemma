@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.QCohAffineEquivalence
+import Def.v1.Atlas.AlgebraicGeometryI.code.QCohAffineEquivalence.Part2
 open CategoryTheory AlgebraicGeometry Proposition18
 
 

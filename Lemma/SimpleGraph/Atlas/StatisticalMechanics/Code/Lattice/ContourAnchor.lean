@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.ContourAnchor
+import Theorem.StatisticalMechanics.Code.Lattice.ContourAnchor.Part5
 open Finset Set SimpleGraph StatMech StatMech.Lattice
 
 

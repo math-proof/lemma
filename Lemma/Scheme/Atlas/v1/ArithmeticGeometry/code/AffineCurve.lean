@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.AffineCurve
+import Theorem.v1.Atlas.ArithmeticGeometry.code.AffineCurve
 open MvPolynomial Algebra
 open scoped Cardinal
 

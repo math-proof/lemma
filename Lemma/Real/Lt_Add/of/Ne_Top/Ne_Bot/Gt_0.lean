@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Misc.«Real-EReal-ENNReal»
+import Theorem.Analysis.Misc.RealERealENNReal
 open EReal
 
 

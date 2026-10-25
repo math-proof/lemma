@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.BipartiteSubgraph
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.BipartiteSubgraph.Part2
 open Finset BigOperators SimpleGraph BipartiteSubgraph
 
 

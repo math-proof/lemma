@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistenceInstance
+import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistenceInstance
 open GeometricAlgebra
 
 

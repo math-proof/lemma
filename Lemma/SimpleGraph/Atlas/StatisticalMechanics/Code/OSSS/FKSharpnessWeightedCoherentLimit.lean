@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedCoherentLimit
+import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedCoherentLimit
 open MeasureTheory Set Filter Topology StatMech StatMech.OSSS StatMech.OSSS.FKSharpnessWeightedCoherentLimit
 
 

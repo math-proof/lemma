@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicLocalFourthOrder
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalFourthOrder.Part2
 open StatMech StatMech.Universality
 
 

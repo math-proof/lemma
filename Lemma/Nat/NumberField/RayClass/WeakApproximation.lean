@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.RayClass.WeakApproximation
+import Theorem.NumberTheory.NumberField.RayClass.WeakApproximation
 open scoped nonZeroDivisors
 open NumberField
 open Modulus

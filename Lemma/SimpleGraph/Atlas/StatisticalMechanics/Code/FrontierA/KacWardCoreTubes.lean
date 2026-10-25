@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardCoreTubes
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardCoreTubes
 open StatMech StatMech.FrontierA
 
 

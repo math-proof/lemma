@@ -18,7 +18,6 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Fin List Nat Tensor Vector Set
 
-
 @[path, cast]
 private lemma main
   {b_z : List ℕ}
@@ -131,7 +130,6 @@ private lemma main
       apply congrArg
       rw [Cons_Append.eq.AppendCons]
       rw [EqCons_Tail.of.GtLength_0]
-
 
 -- created on 2026-04-25
 -- updated on 2026-05-01

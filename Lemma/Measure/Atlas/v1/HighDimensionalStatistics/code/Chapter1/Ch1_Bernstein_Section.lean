@@ -1,16 +1,16 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_8
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_16
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_19
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_8
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_16
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_11
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_19
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_8
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_16
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_11
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
+import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_19
 open MeasureTheory Real Set Measure ProbabilityTheory
 
 

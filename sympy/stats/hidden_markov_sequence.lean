@@ -5,6 +5,7 @@ import Mathlib.Data.Fintype.Pi
 import sympy.stats.joint_rv
 import stdlib.List
 import sympy.core.numbers
+import Def.Fun
 
 /-- Sequential (first-order, hidden) Markov structure of the prefix joint probabilities used by the
 py CRF lemmas.  `P t ys` is `ℙ(x[:t+1] = x_obs[:t+1], y[:t+1] = ys[:t+1])` for the fixed observed
@@ -42,18 +43,6 @@ def IsHiddenMarkovFac {Ω Y X : Type*} [MeasurableSpace Ω] [ReferenceMeasure Y]
       (ℙ[π]((x (t + 1)) = xo (t + 1) | (y (t + 1)) = ys (t + 1)) : ℝ))
 
 
-/-- Slicing of a function `ℕ → β`, dispatched on its value type `β` (instances: `β = α` for a plain
-sequence `f : ℕ → α`, and `β = Ω → α` for a family of random variables `x : ℕ → Ω → α`).  Used by
-`Function.getSlice`, i.e. by the shared `x[start:stop]` syntax of `stdlib.List`. -/
-class FunSlice (β : Type*) where
-  Out : Slice → Type*
-  slice : (ℕ → β) → (s : Slice) → Out s
-
-/-- `f[a:b]` for `f : ℕ → α`: the vector `(f a, …, f (b-1)) : Fin (b - a) → α`. -/
-instance (priority := low) {α : Type*} : FunSlice α where
-  Out s := Fin (s.stop.toNat - s.start.toNat) → α
-  slice f s := fun i => f (i.val + s.start.toNat)
-
 /-- `x[a:b]` for a family of random variables `x i : Ω → α`: the random vector
 `ω ↦ (x a ω, …, x (b-1) ω)`. -/
 instance {Ω α : Type*} : FunSlice (Ω → α) where
@@ -78,26 +67,6 @@ instance Function.coeFunProdPiSlice {Ω α β : Type*} {s t : Slice} :
     CoeFun (FunSlice.Out (Ω → α) s × FunSlice.Out (Ω → β) t)
       (fun _ => Ω → FunSlice.Vec α s × FunSlice.Vec β t) :=
   ⟨fun p ↦ JointRandomSymbol p.1 p.2⟩
-
-/-- Python slicing of a function on `ℕ` (`f[:n]`, `f[a:b]`, via the shared `x[start:stop]` syntax of
-`stdlib.List`, which expands to `x.getSlice ⟨start, stop, 1⟩`).  For a family of random
-variables `x : ℕ → Ω → α` it is the random vector `ω ↦ (x a ω, …, x (b-1) ω)`, for a plain
-sequence `f : ℕ → α` it is `(f a, …, f (b-1)) : Fin (b - a) → α`.  Only unit step is supported. -/
-def Function.getSlice {β : Type*} [FunSlice β] (x : ℕ → β) (s : Slice) : FunSlice.Out β s :=
-  FunSlice.slice x s
-
-@[app_unexpander Function.getSlice]
-def Function.getSlice.unexpand := Slice.getSliceUnexpand
-
-/-- Closed Python slices on `Fun ℕ α` (`f[:n]`, `f[a:b]`, …): same macros as bare `ℕ → α`, resolved
-via `f.getSlice` → `Function.getSlice f.toFun`.  Reducible so `SinglePSpace` / joint coercions see the
-bare-function slice.  Open slices `f[t:]` stay `Fun.getSliceFrom` in `Theorem.Function`. -/
-abbrev Fun.getSlice {α : Type*} [FunSlice α] (f : Fun ℕ α) (s : Slice) : FunSlice.Out α s :=
-  Function.getSlice f.toFun s
-
-@[app_unexpander Fun.getSlice]
-def Fun.getSlice.unexpand := Slice.getSliceUnexpand
-
 
 /-! ### Joint history of several processes: `(x, y, …)[:n]`
 

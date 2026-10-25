@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.IdeleNorm
+import Def.NumberTheory.NumberField.IdeleNorm
 open NumberField.TopologicalIdeleGroup
 
 

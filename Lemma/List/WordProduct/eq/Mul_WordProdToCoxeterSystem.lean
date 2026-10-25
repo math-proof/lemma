@@ -1,10 +1,10 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.TitsTheoremProof
+import Def.v1.Atlas.Buildings.code.Building.TitsTheoremProof
 import Lemma.Finset.Any_And_EqImageToFunMorph.of.AdjacentToSimplicialComplex.HasSufficientFoldings
 import Lemma.Nat.Any_And_EqAdd1AndEqAdd1.of.Gt.EqAdd_1OrEqAdd1.Eq0
 import Lemma.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeDeletion
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeDeletion
 open TitsTheoremProof CoxeterExchange StrongExchangeBridge
 open CoxeterExchange
 open StrongExchangeBridge

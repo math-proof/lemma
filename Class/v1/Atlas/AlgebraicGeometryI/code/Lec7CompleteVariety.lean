@@ -1,0 +1,25 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/Lec7CompleteVariety.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Mathlib.AlgebraicGeometry.Morphisms.Proper
+open AlgebraicGeometry CategoryTheory Limits
+
+universe u
+
+
+namespace Formalization.Lec7CompleteVariety
+
+/-- A morphism `f : X ⟶ S` is a complete variety if it is separated
+and universally closed (Lec 7/8, Def 19 / Lem 19 setting). -/
+class IsCompleteVariety {X S : Scheme.{u}} (f : X ⟶ S) : Prop where
+  isSeparated : IsSeparated f
+  universallyClosed : UniversallyClosed f
+
+end Formalization.Lec7CompleteVariety

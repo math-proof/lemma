@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.RamificationInertia.MaximalUnramified
+import Def.NumberTheory.RamificationInertia.MaximalUnramified
 open IntermediateField
 
 

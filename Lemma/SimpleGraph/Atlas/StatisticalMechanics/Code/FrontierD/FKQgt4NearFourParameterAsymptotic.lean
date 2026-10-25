@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4NearFourParameterAsymptotic
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4NearFourParameterAsymptotic
 open Filter Topology Asymptotics StatMech StatMech.FrontierD
 
 

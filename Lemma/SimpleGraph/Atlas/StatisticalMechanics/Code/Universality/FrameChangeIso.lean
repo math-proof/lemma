@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.FrameChangeIso
+import Theorem.StatisticalMechanics.Code.Universality.FrameChangeIso.Part8
 open Set SimpleGraph MeasureTheory ProbabilityTheory StatMech.Lattice StatMech.RSW.Box StatMech StatMech.Universality
 
 

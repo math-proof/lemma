@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareCaratheodory
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareCaratheodory.Part5
 open StatMech StatMech.Universality
 
 

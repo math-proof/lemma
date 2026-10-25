@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Prop22_4_RayClassGroup
+import Theorem.v1.Atlas.NumberTheoryI.code.Prop22_4_RayClassGroup
 open RayClassField GlobalCFT
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.HeatEquation
+import Def.v1.Atlas.DifferentialAnalysis.code.HeatEquation
 open TemperedDistribution LineDeriv DifferentialOperators in
 open scoped SchwartzMap
 open set on which `u` vanishes). -/

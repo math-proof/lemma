@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.PlusBoundarySourceSpin
+import Theorem.StatisticalMechanics.Code.FrontierB.PlusBoundarySourceSpin
 open MeasureTheory Filter StatMech StatMech.FrontierB
 
 

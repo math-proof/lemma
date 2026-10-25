@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.GaussPivot
+import Def.LinearAlgebra.Matrix.GaussPivot.Part2
 open MathlibExt.LinearAlgebra.Matrix.GaussPivotWanted
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.DisjointOccurrence
+import Theorem.StatisticalMechanics.Code.Inequalities.DisjointOccurrence.Part3
 open StatMech
 
 

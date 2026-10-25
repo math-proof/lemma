@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.RayClass.FiniteCongruence
+import Theorem.NumberTheory.NumberField.RayClass.FiniteCongruence.Part4
 open scoped nonZeroDivisors
 open NumberField
 open Modulus

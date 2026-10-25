@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.AffineCoxeter.PerronFrobeniusProof
+import Instance.v1.Atlas.Buildings.code.AffineCoxeter.PerronFrobeniusProof
 import Lemma.Real.QF.eq.BF
 open Finset BigOperators CoxeterGroup PerronFrobeniusProof
 

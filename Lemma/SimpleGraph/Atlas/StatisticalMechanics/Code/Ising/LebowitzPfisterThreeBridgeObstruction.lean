@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterThreeBridgeObstruction
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterThreeBridgeObstruction
 open StatMech StatMech.Ising
 
 

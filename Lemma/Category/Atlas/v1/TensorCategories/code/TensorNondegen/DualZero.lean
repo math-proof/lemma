@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.TensorNondegen.DualZero
+import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.DualZero
 open CategoryTheory MonoidalCategory Limits
 
 

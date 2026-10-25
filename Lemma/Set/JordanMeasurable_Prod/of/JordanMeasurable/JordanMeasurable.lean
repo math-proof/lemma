@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.MeasureTheory.Section_1_1_2
+import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
 open Pointwise
 open JordanMeasurable
 

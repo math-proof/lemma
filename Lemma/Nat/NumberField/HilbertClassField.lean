@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.HilbertClassField
+import Structure.NumberTheory.NumberField.HilbertClassField
 open scoped NumberField
 open NumberField
 

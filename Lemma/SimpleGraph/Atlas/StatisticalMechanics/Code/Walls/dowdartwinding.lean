@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.dowdartwinding
+import Theorem.StatisticalMechanics.Code.Walls.dowdartwinding
 open Set SimpleGraph StatMech StatMech.Walls
 
 

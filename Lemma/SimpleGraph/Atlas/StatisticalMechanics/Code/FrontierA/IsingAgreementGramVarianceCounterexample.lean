@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingAgreementGramVarianceCounterexample
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingAgreementGramVarianceCounterexample
 open StatMech StatMech.FrontierA
 
 

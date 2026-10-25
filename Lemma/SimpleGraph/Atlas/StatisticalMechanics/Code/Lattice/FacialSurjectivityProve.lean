@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.FacialSurjectivityProve
+import Theorem.StatisticalMechanics.Code.Lattice.FacialSurjectivityProve
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Recurrences.FibonacciPrimitiveDivisor
+import Def.NumberTheory.Recurrences.FibonacciPrimitiveDivisor
 open scoped BigOperators
 open MetaMathlibExt
 

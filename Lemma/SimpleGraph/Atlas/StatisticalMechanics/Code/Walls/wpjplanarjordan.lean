@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.wpjplanarjordan
+import Theorem.StatisticalMechanics.Code.Walls.wpjplanarjordan.Part2
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

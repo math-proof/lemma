@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Analysis.Convex.LinearProgrammingDuality
+import Theorem.MathlibExtTest.Analysis.Convex.LinearProgrammingDuality
 
 
 namespace LinearProgrammingDualityTest

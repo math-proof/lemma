@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamCutAssociationPushforward
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamCutAssociationPushforward
 open Finset SimpleGraph StatMech StatMech.FrontierA
 
 

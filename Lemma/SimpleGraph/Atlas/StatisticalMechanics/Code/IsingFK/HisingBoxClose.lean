@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.HisingBoxClose
+import Theorem.StatisticalMechanics.Code.IsingFK.HisingBoxClose.Part3
 open StatMech StatMech.IsingFK
 
 

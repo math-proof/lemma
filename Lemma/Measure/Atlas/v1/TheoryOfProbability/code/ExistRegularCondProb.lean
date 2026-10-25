@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.ExistRegularCondProb
+import Theorem.v1.Atlas.TheoryOfProbability.code.ExistRegularCondProb
 open MeasureTheory ProbabilityTheory
 
 

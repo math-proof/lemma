@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicLineGambler
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLineGambler.Part3
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheTailSelectedDensity
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheTailSelectedDensity
 open StatMech StatMech.FrontierD
 
 

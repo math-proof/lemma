@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bkm_dccclusterbasics
+import Theorem.StatisticalMechanics.Code.Walls.bkm_dccclusterbasics
 open StatMech StatMech.Walls
 
 

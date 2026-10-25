@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.Proposition_1_27_1
+import Instance.v1.Atlas.TensorCategories.code.Proposition_1_27_1.Part2
 open EGNO.Prop1271 in EGNO
 
 

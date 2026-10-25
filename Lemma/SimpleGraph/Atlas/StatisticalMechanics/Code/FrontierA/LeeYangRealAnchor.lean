@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LeeYangRealAnchor
+import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangRealAnchor.Part5
 open Filter Set Topology StatMech StatMech.FrontierA
 
 

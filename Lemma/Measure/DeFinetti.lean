@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.DeFinetti
+import Def.Probability.DeFinetti
 open MeasureTheory Set
 open MathlibExt.Probability.DeFinettiWanted
 

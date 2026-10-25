@@ -1,9 +1,8 @@
 import Mathlib
-import sympy.algebra.affine_dilatation
+import Theorem.Algebra.AffineDilatation
 import sympy.Basic
 open scoped nonZeroDivisors
 open AffineDilatation
-
 
 /--
 [AffineDilatation_nonempty_algHom_and_subsingleton_of_isSMulRegular](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AffineDilatation_nonempty_algHom_and_subsingleton_of_isSMulRegular.lean)
@@ -125,6 +124,5 @@ private lemma main
 -- proof
   ⟨nonempty_algHom I a hreg hI,
     subsingleton_algHom I a hreg⟩
-
 
 -- created on 2026-10-09

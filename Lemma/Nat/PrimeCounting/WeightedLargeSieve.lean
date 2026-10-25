@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.WeightedLargeSieve
+import Def.NumberTheory.PrimeCounting.WeightedLargeSieve
 open scoped BigOperators ComplexConjugate
 open MathlibExt.NumberTheory.PrimeCounting
 

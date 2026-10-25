@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterSummedSwitchingGKS
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterSummedSwitchingGKS
 open Finset StatMech StatMech.Ising StatMech.FrontierA
 
 

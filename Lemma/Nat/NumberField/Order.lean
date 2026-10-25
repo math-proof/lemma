@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Order
+import Def.NumberTheory.NumberField.Order
 open NumberField.IsOrder
 
 

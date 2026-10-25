@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexTaggedColumnBound
+import Theorem.StatisticalMechanics.Code.Universality.HexTaggedColumnBound
 open StatMech StatMech.Universality
 
 

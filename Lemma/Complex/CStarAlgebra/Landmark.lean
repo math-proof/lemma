@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.cstar_algebra.Landmark
+import Theorem.Analysis.CStarAlgebra.Landmark.Part2
 
 universe u
 

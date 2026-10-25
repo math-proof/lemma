@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Words.KolakoskiSequence
+import Def.Combinatorics.Words.KolakoskiSequence
 open MetaMathlibExt
 open IsKolakoski
 

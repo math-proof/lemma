@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.K0Bimodule
+import Instance.v1.Atlas.TensorCategories.code.K0Bimodule.Part5
 open Finset FusionRing FusionRing.K0Group
 
 

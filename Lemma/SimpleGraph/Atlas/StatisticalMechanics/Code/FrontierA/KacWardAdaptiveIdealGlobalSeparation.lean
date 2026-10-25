@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealGlobalSeparation
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealGlobalSeparation
 open StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Convex.Straszewicz
+import Def.Analysis.Convex.Straszewicz
 import Lemma.Convex.Straszewicz
 open Finset BigOperators InnerProductSpace
 

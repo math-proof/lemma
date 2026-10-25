@@ -1,0 +1,885 @@
+import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
+import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
+import Abbrev.Analysis.MeasureTheory.Section_1_1_2
+
+
+/-- Jordan measure equals the inner Jordan measure by definition. -/
+theorem JordanMeasurable.eq_inner {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: JordanMeasurable E) : hE.measure = Jordan_inner_measure E := rfl
+
+/-- For Jordan measurable sets, the measure also equals the outer Jordan measure. -/
+theorem JordanMeasurable.eq_outer {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: JordanMeasurable E) : hE.measure = Jordan_outer_measure E := by grind
+
+/-- Any bounded set is contained in some elementary set (a sufficiently large box). -/
+theorem IsElementary.contains_bounded {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: Bornology.IsBounded E) : ∃ A: Set (EuclideanSpace' d), IsElementary A ∧ E ⊆ A := by
+  -- Strategy:
+  -- 1. Get bound M from boundedness: E ⊆ Metric.closedBall 0 M
+  -- 2. Construct box B with Icc (-M') M' in each coordinate, where M' = max M 0 + 1
+  -- 3. Show E ⊆ B.toSet: for x ∈ E, we have ‖x‖ ≤ M < M', so |x i| ≤ ‖x‖ < M' for each coordinate i
+  -- 4. Use IsElementary.box to show B.toSet is elementary
+  -- Step 1: Get bound M from boundedness
+  rw [Metric.isBounded_iff_subset_closedBall 0] at hE
+  obtain ⟨M, hE_ball⟩ := hE
+  -- Step 2: Construct box B with Icc (-M') M' in each coordinate
+  set M' := max M 0 + 1
+  let B : Box d := {
+    side := fun _ => BoundedInterval.Icc (-M') M'
+  }
+  -- Step 3: Show E ⊆ B.toSet
+  have hE_subset : E ⊆ B.toSet := by
+    intro x hx
+    simp only [Box.mem_toSet]
+    intro i
+    have h_mem : x ∈ Metric.closedBall 0 M := hE_ball hx
+    rw [Metric.mem_closedBall, dist_zero_right] at h_mem
+    have h_M_bound : M ≤ max M 0 := le_max_left _ _
+    have h_M'_bound : max M 0 < M' := by
+      dsimp [M']
+      exact lt_add_one (max M 0)
+    have h_norm_bound : ‖x‖ < M' := lt_of_le_of_lt h_mem (lt_of_le_of_lt h_M_bound h_M'_bound)
+    have h_coord_sq : (x i)^2 ≤ ∑ j, (x j)^2 := by
+      exact Finset.single_le_sum (fun j _ => sq_nonneg (x j)) (Finset.mem_univ i)
+    have h_coord : |x i| ≤ ‖x‖ := by
+      rw [EuclideanSpace'.norm_eq]
+      calc |x i| = Real.sqrt ((x i)^2) := by rw [Real.sqrt_sq_eq_abs]
+        _ ≤ Real.sqrt (∑ j, (x j)^2) := Real.sqrt_le_sqrt h_coord_sq
+    have h_abs_bound : |x i| < M' := lt_of_le_of_lt h_coord h_norm_bound
+    constructor
+    · have : -M' < x i := by
+        rw [abs_lt] at h_abs_bound
+        exact h_abs_bound.1
+      linarith
+    · have : x i < M' := by
+        rw [abs_lt] at h_abs_bound
+        exact h_abs_bound.2
+      linarith
+  -- Step 4: Show B.toSet is elementary
+  have hB_elem : IsElementary B.toSet := IsElementary.box B
+  exact ⟨B.toSet, hB_elem, hE_subset⟩
+
+/-- Every set has the empty set as an elementary subset, so the supremum defining the Jordan
+inner measure is taken over a nonempty set of reals. -/
+theorem Jordan_inner_nonempty {d:ℕ} (E: Set (EuclideanSpace' d)) :
+    { m:ℝ | ∃ (A: Set (EuclideanSpace' d)), ∃ hA: IsElementary A,
+      A ⊆ E ∧ m = hA.measure }.Nonempty :=
+  ⟨0, ∅, IsElementary.empty d, Set.empty_subset E, (IsElementary.measure_of_empty d).symm⟩
+
+/-- For a bounded set that supremum is also bounded above, by the measure of any elementary
+superset. -/
+theorem Jordan_inner_bddAbove {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: Bornology.IsBounded E) :
+    BddAbove { m:ℝ | ∃ (A: Set (EuclideanSpace' d)), ∃ hA: IsElementary A,
+      A ⊆ E ∧ m = hA.measure } := by
+  obtain ⟨C, hC, hEC⟩ := IsElementary.contains_bounded hE
+  refine ⟨hC.measure, ?_⟩
+  rintro _ ⟨A, hA, hAE, rfl⟩
+  exact IsElementary.measure_mono hA hC (hAE.trans hEC)
+
+/-- For a nonempty set of reals that is bounded above, the supremum computed in {name}`EReal`
+agrees with the supremum computed in the reals.  Both hypotheses are needed: without them the
+real-valued supremum returns its junk value while the extended one returns an infinity. -/
+theorem EReal.sSup_image_coe {S : Set ℝ} (hne : S.Nonempty) (hbdd : BddAbove S) :
+    sSup ((fun x:ℝ ↦ (x:EReal)) '' S) = ((sSup S : ℝ) : EReal) := by
+  obtain ⟨m₀, hm₀⟩ := hne
+  obtain ⟨u, hu⟩ := id hbdd
+  apply le_antisymm
+  · apply sSup_le
+    rintro _ ⟨m, hm, rfl⟩
+    show ((m:ℝ):EReal) ≤ ((sSup S : ℝ):EReal)
+    exact_mod_cast le_csSup hbdd hm
+  · -- the supremum in `EReal` is squeezed between `m₀` and the upper bound `u`, hence finite
+    set T := sSup ((fun x:ℝ ↦ (x:EReal)) '' S)
+    have hTu : T ≤ ((u:ℝ):EReal) := by
+      apply sSup_le
+      rintro _ ⟨m, hm, rfl⟩
+      show ((m:ℝ):EReal) ≤ ((u:ℝ):EReal)
+      exact_mod_cast hu hm
+    have hm₀T : ((m₀:ℝ):EReal) ≤ T := le_sSup ⟨m₀, hm₀, rfl⟩
+    have hTtop : T ≠ ⊤ := by
+      intro h
+      rw [h] at hTu
+      exact absurd hTu (not_le.mpr (EReal.coe_lt_top u))
+    have hTbot : T ≠ ⊥ := by
+      intro h
+      rw [h] at hm₀T
+      exact absurd hm₀T (not_le.mpr (EReal.bot_lt_coe m₀))
+    rw [← EReal.coe_toReal hTtop hTbot]
+    apply EReal.coe_le_coe
+    apply csSup_le ⟨m₀, hm₀⟩
+    intro m hm
+    have hle : ((m:ℝ):EReal) ≤ T := le_sSup ⟨m, hm, rfl⟩
+    rw [← EReal.coe_toReal hTtop hTbot] at hle
+    exact_mod_cast hle
+
+/-- The extended-real and real descriptions of the elementary subset measures of a set are
+related by coercion. -/
+theorem Jordan_inner_measure'_set_eq {d:ℕ} (E: Set (EuclideanSpace' d)) :
+    { m:EReal | ∃ (A: Set (EuclideanSpace' d)), ∃ hA: IsElementary A,
+        A ⊆ E ∧ m = (hA.measure:EReal) }
+      = (fun x:ℝ ↦ (x:EReal)) ''
+          { m:ℝ | ∃ (A: Set (EuclideanSpace' d)), ∃ hA: IsElementary A,
+            A ⊆ E ∧ m = hA.measure } := by
+  ext m
+  constructor
+  · rintro ⟨A, hA, hAE, rfl⟩
+    exact ⟨hA.measure, ⟨A, hA, hAE, rfl⟩, rfl⟩
+  · rintro ⟨x, ⟨A, hA, hAE, rfl⟩, rfl⟩
+    exact ⟨A, hA, hAE, rfl⟩
+
+/-- On bounded sets the extended Jordan inner measure agrees with {name}`Jordan_inner_measure`,
+which is what makes it an extension of Definition 1.1.4 rather than a different notion. -/
+theorem Jordan_inner_measure'_eq_coe {d:ℕ} {E: Set (EuclideanSpace' d)}
+    (hE: Bornology.IsBounded E) :
+    Jordan_inner_measure' E = ((Jordan_inner_measure E : ℝ) : EReal) := by
+  rw [show Jordan_inner_measure' E
+        = sSup ((fun x:ℝ ↦ (x:EReal)) ''
+            { m:ℝ | ∃ (A: Set (EuclideanSpace' d)), ∃ hA: IsElementary A,
+              A ⊆ E ∧ m = hA.measure })
+      from congrArg sSup (Jordan_inner_measure'_set_eq E)]
+  exact EReal.sSup_image_coe (Jordan_inner_nonempty E) (Jordan_inner_bddAbove hE)
+
+/-- The extended Jordan inner measure of the whole space is infinite in positive dimension, which
+is the behaviour the text intends when it extends the definition to unbounded sets.  By contrast
+{name}`Jordan_inner_measure` returns its junk value of zero here, because it takes a supremum in
+the reals over a set with no upper bound.  This is why Exercise 1.2.5 and the formula for the
+outer measure of an open set have to be stated with the extended version. -/
+theorem Jordan_inner_measure'_univ {d:ℕ} (hd: 0 < d) :
+    Jordan_inner_measure' (Set.univ : Set (EuclideanSpace' d)) = ⊤ := by
+  apply sSup_eq_top.mpr
+  intro b hb
+  -- pick a natural number exceeding `b`, and use the cube of that side length
+  obtain ⟨n, hn⟩ : ∃ n:ℕ, b < ((n:ℝ):EReal) := by
+    rcases eq_or_ne b ⊥ with rfl | hbot
+    · exact ⟨0, by simp⟩
+    · obtain ⟨n, hn⟩ := exists_nat_gt b.toReal
+      refine ⟨n, ?_⟩
+      rw [← EReal.coe_toReal (ne_of_lt hb) hbot]
+      exact_mod_cast hn
+  set B : Box d := { side := fun _ ↦ BoundedInterval.Ioc 0 (n:ℝ) } with hB
+  refine ⟨((IsElementary.box B).measure : EReal),
+    ⟨B.toSet, IsElementary.box B, Set.subset_univ _, rfl⟩, ?_⟩
+  have hvol : (IsElementary.box B).measure = (n:ℝ)^d := by
+    rw [IsElementary.measure_of_box]
+    simp [hB, Box.volume]
+  rw [hvol]
+  refine lt_of_lt_of_le hn ?_
+  have hle : (n:ℝ) ≤ (n:ℝ)^d := by
+    rcases Nat.eq_zero_or_pos n with rfl | hn'
+    · simp
+    · calc (n:ℝ) = (n:ℝ)^1 := (pow_one _).symm
+        _ ≤ (n:ℝ)^d := by
+              apply pow_le_pow_right₀ (by exact_mod_cast hn') hd
+  exact_mod_cast hle
+
+/-- In dimension zero the whole space is a single point, so every set is bounded. -/
+theorem EuclideanSpace'.isBounded_of_dim_zero (E: Set (EuclideanSpace' 0)) :
+    Bornology.IsBounded E := by
+  rw [Metric.isBounded_iff_subset_closedBall 0]
+  refine ⟨0, fun x _ ↦ ?_⟩
+  rw [Metric.mem_closedBall, dist_zero_right, EuclideanSpace'.norm_eq]
+  simp
+
+/-- The inner Jordan measure is always non-negative. -/
+theorem Jordan_inner_measure_nonneg {d:ℕ} (E: Set (EuclideanSpace' d)) : 0 ≤ Jordan_inner_measure E := by
+  -- Strategy:
+  -- 1. Unfold the definition: Jordan_inner_measure E = sSup { m | ∃ A, IsElementary A, A ⊆ E ∧ m = hA.measure }
+  -- 2. Apply Real.sSup_nonneg: this requires showing ∀ m in the set, 0 ≤ m
+  -- 3. For any m in the set, extract the elementary set A and use IsElementary.measure_nonneg
+  -- Note: Real.sSup_nonneg handles both empty and nonempty sets, so we don't need to show nonemptiness
+  unfold Jordan_inner_measure
+  apply Real.sSup_nonneg
+  -- For any m in the set, there exists an elementary set A ⊆ E with m = hA.measure
+  intro m hm
+  -- Extract the elementary set and its measure
+  obtain ⟨A, hA, hA_subset, rfl⟩ := hm
+  -- Apply IsElementary.measure_nonneg to show 0 ≤ hA.measure
+  exact IsElementary.measure_nonneg hA
+
+/-- The outer Jordan measure is always non-negative. -/
+theorem Jordan_outer_measure_nonneg {d:ℕ} (E: Set (EuclideanSpace' d)) : 0 ≤ Jordan_outer_measure E := by
+  -- Strategy:
+  -- 1. Unfold the definition: Jordan_outer_measure E = sInf { m | ∃ A, IsElementary A, E ⊆ A ∧ m = hA.measure }
+  -- 2. Apply Real.sInf_nonneg: this requires showing ∀ m in the set, 0 ≤ m
+  -- 3. For any m in the set, extract the elementary set A and use IsElementary.measure_nonneg
+  -- Note: Real.sInf_nonneg handles both empty and nonempty sets, so we don't need to show nonemptiness
+  unfold Jordan_outer_measure
+  apply Real.sInf_nonneg
+  -- For any m in the set, there exists an elementary set A ⊇ E with m = hA.measure
+  intro m hm
+  -- Extract the elementary set and its measure
+  obtain ⟨A, hA, hE_subset, rfl⟩ := hm
+  -- Apply IsElementary.measure_nonneg to show 0 ≤ hA.measure
+  exact IsElementary.measure_nonneg hA
+
+/-- For bounded sets, inner Jordan measure is at most outer Jordan measure. -/
+theorem Jordan_inner_le_outer {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: Bornology.IsBounded E) : Jordan_inner_measure E ≤ Jordan_outer_measure E := by
+  -- Strategy:
+  -- 1. Unfold both definitions to work with sSup and sInf directly
+  -- 2. Use csSup_le to show that outer measure is an upper bound for inner measure set
+  --    csSup_le requires two goals:
+  --    a. Show inner measure set {A.measure | A ⊆ E, elementary} is nonempty (it contains at least 0)
+  --    b. Show outer measure is an upper bound: for any m in inner measure set, m ≤ outer measure
+  unfold Jordan_inner_measure Jordan_outer_measure
+  apply csSup_le
+  · -- Show the set is nonempty (it contains at least 0)
+    use 0
+    use ∅
+    use IsElementary.empty d
+    simp [IsElementary.measure_of_empty]
+  · -- Show that sInf {B.measure | B ⊇ E, elementary} is an upper bound
+    intro m hm
+    obtain ⟨A, hA, hA_subset_E, rfl⟩ := hm
+    -- For any elementary B ⊇ E, we have A ⊆ B, so A.measure ≤ B.measure
+    -- Taking infimum over all such B gives A.measure ≤ sInf {B.measure | B ⊇ E, elementary}
+    apply le_csInf
+    · -- Show the outer measure set is nonempty (use IsElementary.contains_bounded)
+      obtain ⟨B, hB, hE_subset_B⟩ := IsElementary.contains_bounded hE
+      exact ⟨hB.measure, B, hB, hE_subset_B, rfl⟩
+    · -- Show A.measure is a lower bound for the outer measure set
+      intro b hb
+      obtain ⟨B, hB, hE_subset_B, rfl⟩ := hb
+      -- Since A ⊆ E ⊆ B, we have A ⊆ B, so A.measure ≤ B.measure
+      exact IsElementary.measure_mono hA hB (Set.Subset.trans hA_subset_E hE_subset_B)
+
+/-- Elementary measure of a subset is a lower bound for inner Jordan measure. -/
+theorem le_Jordan_inner {d:ℕ} {E A: Set (EuclideanSpace' d)}
+  (hA: IsElementary A) (hAE: A ⊆ E) (hE: Bornology.IsBounded E) :
+  hA.measure ≤ Jordan_inner_measure E := by
+  -- `hA.measure` is one of the numbers the supremum ranges over, and the whole
+  -- family is bounded above by the measure of an elementary set containing `E`.
+  obtain ⟨C, hC, hEC⟩ := IsElementary.contains_bounded hE
+  refine le_csSup ⟨hC.measure, ?_⟩ ⟨A, hA, hAE, rfl⟩
+  rintro m ⟨B, hB, hBE, rfl⟩
+  exact IsElementary.measure_mono hB hC (hBE.trans hEC)
+
+/-- The elementary measure of a set is a lower bound for its own inner Jordan measure. -/
+theorem le_Jordan_inner_self {d:ℕ} {A: Set (EuclideanSpace' d)}
+  (hA: IsElementary A) : hA.measure ≤ Jordan_inner_measure A := by
+  -- Strategy:
+  -- 1. Unfold definition: Jordan_inner_measure A = sSup { m | ∃ B, IsElementary B, B ⊆ A ∧ m = hB.measure }
+  -- 2. Show hA.measure is in this set: use A itself (A ⊆ A, and hA.measure = hA.measure)
+  -- 3. Show the set is bounded above by hA.measure: for any B ⊆ A elementary, B.measure ≤ A.measure by monotonicity
+  -- 4. Apply le_csSup: any element of a set is ≤ its supremum
+  unfold Jordan_inner_measure
+  -- Step 2: Show hA.measure is in the set
+  have h_mem : hA.measure ∈ { m:ℝ | ∃ (B: Set (EuclideanSpace' d)), ∃ hB: IsElementary B, B ⊆ A ∧ m = hB.measure } := by
+    use A, hA, Set.Subset.refl A
+  -- Step 3: Show the set is bounded above by hA.measure
+  have h_bdd : BddAbove { m:ℝ | ∃ (B: Set (EuclideanSpace' d)), ∃ hB: IsElementary B, B ⊆ A ∧ m = hB.measure } := by
+    use hA.measure
+    intro m hm
+    obtain ⟨B, hB, hB_subset_A, rfl⟩ := hm
+    -- Since B ⊆ A and both are elementary, B.measure ≤ A.measure by monotonicity
+    exact IsElementary.measure_mono hB hA hB_subset_A
+  -- Step 4: Apply le_csSup
+  exact le_csSup h_bdd h_mem
+
+/-- Elementary measure of a superset is an upper bound for outer Jordan measure. -/
+theorem Jordan_outer_le {d:ℕ} {E A: Set (EuclideanSpace' d)}
+  (hA: IsElementary A) (hAE: E ⊆ A) : Jordan_outer_measure E ≤ hA.measure := by
+  -- `hA.measure` is one of the numbers the infimum ranges over, and they are all
+  -- non-negative.
+  refine csInf_le ⟨0, ?_⟩ ⟨A, hA, hAE, rfl⟩
+  rintro m ⟨B, hB, -, rfl⟩
+  exact IsElementary.measure_nonneg hB
+
+/-- The elementary measure of a set is an upper bound for its own outer Jordan measure. -/
+theorem Jordan_outer_le_self {d:ℕ} {A: Set (EuclideanSpace' d)}
+  (hA: IsElementary A) : Jordan_outer_measure A ≤ hA.measure := by
+  -- Strategy:
+  -- 1. Unfold definition: Jordan_outer_measure A = sInf { m | ∃ B, IsElementary B, A ⊆ B ∧ m = hB.measure }
+  -- 2. Show hA.measure is in this set: use A itself (A ⊆ A, and hA.measure = hA.measure)
+  -- 3. Show the set is bounded below by 0: for any B ⊇ A elementary, 0 ≤ B.measure by nonnegativity
+  -- 4. Apply csInf_le: infimum of a set is ≤ any element in the set
+  unfold Jordan_outer_measure
+  -- Step 2: Show hA.measure is in the set
+  have h_mem : hA.measure ∈ { m:ℝ | ∃ (B: Set (EuclideanSpace' d)), ∃ hB: IsElementary B, A ⊆ B ∧ m = hB.measure } := by
+    use A, hA, Set.Subset.refl A
+  -- Step 3: Show the set is bounded below by 0
+  have h_bdd : BddBelow { m:ℝ | ∃ (B: Set (EuclideanSpace' d)), ∃ hB: IsElementary B, A ⊆ B ∧ m = hB.measure } := by
+    use 0
+    intro m hm
+    obtain ⟨B, hB, _, rfl⟩ := hm
+    -- Since B is elementary, 0 ≤ B.measure by nonnegativity
+    exact IsElementary.measure_nonneg hB
+  -- Step 4: Apply csInf_le
+  exact csInf_le h_bdd h_mem
+
+/-- If m < inner measure, there exists an elementary subset with measure > m. -/
+theorem Jordan_inner_le {d:ℕ} {E: Set (EuclideanSpace' d)} {m:ℝ}
+  (hm: m < Jordan_inner_measure E) : ∃ A: Set (EuclideanSpace' d), ∃ hA: IsElementary A, A ⊆ E ∧ m < hA.measure := by
+  -- Strategy:
+  -- 1. Unfold definition: Jordan_inner_measure E = sSup { m' | ∃ A, IsElementary A, A ⊆ E ∧ m' = hA.measure }
+  -- 2. Show the set is nonempty (empty set is elementary with measure 0)
+  -- 3. Apply exists_lt_of_lt_csSup to get existence of element greater than m
+  -- 4. Extract the elementary set A from the witness
+  unfold Jordan_inner_measure at hm
+  set S := { m:ℝ | ∃ (A: Set (EuclideanSpace' d)), ∃ hA: IsElementary A, A ⊆ E ∧ m = hA.measure }
+  -- Step 2: Show the set is nonempty
+  have h_nonempty : S.Nonempty := by
+    use 0
+    use ∅
+    use IsElementary.empty d
+    constructor
+    · exact Set.empty_subset E
+    · exact Eq.symm (IsElementary.measure_of_empty d)
+  -- Step 3: Apply exists_lt_of_lt_csSup to get existence of element greater than m
+  obtain ⟨m', hm', hm_lt⟩ := exists_lt_of_lt_csSup h_nonempty hm
+  -- Step 4: Extract the elementary set A from the witness
+  obtain ⟨A, hA, hA_subset, rfl⟩ := hm'
+  exact ⟨A, hA, hA_subset, hm_lt⟩
+
+/-- If outer measure < m, there exists an elementary superset with measure < m. -/
+theorem le_Jordan_outer {d:ℕ} {E: Set (EuclideanSpace' d)} {m:ℝ}
+  (hm: Jordan_outer_measure E < m) (hbound: Bornology.IsBounded E) :
+  ∃ A: Set (EuclideanSpace' d), ∃ hA: IsElementary A, E ⊆ A ∧ hA.measure < m := by
+  -- Strategy:
+  -- 1. Unfold definition: Jordan_outer_measure E = sInf { m' | ∃ A, IsElementary A, E ⊆ A ∧ m' = hA.measure }
+  -- 2. Since sInf S < m, by properties of infimum, there exists x ∈ S with x < m
+  -- 3. Use IsElementary.contains_bounded to show the set is nonempty (since E is bounded)
+  -- 4. Apply exists_lt_of_csInf_lt to get existence of element less than m
+  -- 5. Extract the elementary set A from the witness
+  unfold Jordan_outer_measure at hm
+  set S := { m:ℝ | ∃ (A: Set (EuclideanSpace' d)), ∃ hA: IsElementary A, E ⊆ A ∧ m = hA.measure }
+  -- Step 3: Show the set is nonempty
+  have h_nonempty : S.Nonempty := by
+    obtain ⟨A, hA, hE_subset⟩ := IsElementary.contains_bounded hbound
+    exact ⟨hA.measure, A, hA, hE_subset, rfl⟩
+  -- Step 4: Apply exists_lt_of_csInf_lt to get existence of element less than m
+  obtain ⟨m', hm', hm'_lt⟩ := exists_lt_of_csInf_lt h_nonempty hm
+  -- Step 5: Extract the elementary set A from the witness
+  obtain ⟨A, hA, hE_subset, rfl⟩ := hm'
+  exact ⟨A, hA, hE_subset, hm'_lt⟩
+
+/-- An elementary set is bounded: it is a finite union of boxes, and each box sits inside
+the closed ball of radius the norm of its corner. -/
+theorem IsElementary.isBounded {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: IsElementary E) :
+    Bornology.IsBounded E := by
+  classical
+  obtain ⟨S, rfl⟩ := hE
+  rw [Bornology.isBounded_biUnion_finset]
+  intro B _
+  -- each coordinate of a point of `B` is trapped between the endpoints of that side
+  set M : ℝ := Real.sqrt (∑ i, (max |(B.side i).a| |(B.side i).b|)^2) with hM
+  rw [Metric.isBounded_iff_subset_closedBall 0]
+  refine ⟨M, fun x hx ↦ ?_⟩
+  rw [Metric.mem_closedBall, dist_zero_right]
+  have hcoord (i : Fin d) : |x i| ≤ max |(B.side i).a| |(B.side i).b| := by
+    have hxi : x i ∈ ((B.side i : BoundedInterval) : Set ℝ) := hx i
+    have hsub := (B.side i).subset_Icc
+    rw [BoundedInterval.subset_iff] at hsub
+    have hmem := hsub hxi
+    simp only [BoundedInterval.set_Icc, Set.mem_Icc] at hmem
+    rcases abs_cases (x i) with ⟨h, -⟩ | ⟨h, -⟩
+    · calc |x i| = x i := h
+        _ ≤ (B.side i).b := hmem.2
+        _ ≤ |(B.side i).b| := le_abs_self _
+        _ ≤ _ := le_max_right _ _
+    · calc |x i| = -x i := h
+        _ ≤ -(B.side i).a := by linarith [hmem.1]
+        _ ≤ |(B.side i).a| := neg_le_abs _
+        _ ≤ _ := le_max_left _ _
+  rw [EuclideanSpace'.norm_eq, hM]
+  apply Real.sqrt_le_sqrt
+  refine Finset.sum_le_sum (fun i _ ↦ ?_)
+  calc (x i)^2 = |x i|^2 := (sq_abs _).symm
+    _ ≤ (max |(B.side i).a| |(B.side i).b|)^2 := by
+        nlinarith [hcoord i, abs_nonneg (x i)]
+
+/-- Exercise 1.1.5 -/
+-- Equivalent characterizations of Jordan measurability: inner and outer measures coincide.
+theorem JordanMeasurable.equiv {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: Bornology.IsBounded E) :
+ [JordanMeasurable E,
+  ∀ ε>0, ∃ A, ∃ B, ∃ hA: IsElementary A, ∃ hB: IsElementary B,
+    A ⊆ E ∧ E ⊆ B ∧ (hB.sdiff hA).measure ≤ ε,
+  ∀ ε>0, ∃ A, ∃ hA: IsElementary A, Jordan_outer_measure (symmDiff E A) ≤ ε].TFAE := by
+  tfae_have 1 → 2 := by
+    intro hJM ε hε
+    obtain ⟨A, hA, hAE, hAμ⟩ :=
+      Jordan_inner_le (show Jordan_inner_measure E - ε / 2 < Jordan_inner_measure E by
+        linarith [half_pos hε])
+    obtain ⟨B, hB, hEB, hBμ⟩ :=
+      le_Jordan_outer (show Jordan_outer_measure E < Jordan_outer_measure E + ε / 2 by
+        linarith [half_pos hε]) hE
+    have hAB : A ⊆ B := hAE.trans hEB
+    have hadd := IsElementary.measure_of_disjUnion hA (hB.sdiff hA) disjoint_sdiff_self_right
+    have heq := IsElementary.measure_eq_of_set_eq (hA.union (hB.sdiff hA)) hB
+      (Set.union_diff_cancel hAB)
+    refine ⟨A, B, hA, hB, hAE, hEB, ?_⟩
+    linarith [hJM.2, hAμ, hBμ, hadd, heq]
+  tfae_have 2 → 3 := by
+    intro h ε hε
+    obtain ⟨A, B, hA, hB, hAE, hEB, hmeas⟩ := h ε hε
+    refine ⟨A, hA, ?_⟩
+    have hsub : symmDiff E A ⊆ B \ A := by
+      intro x hx
+      rcases (Set.mem_symmDiff.mp hx) with hx | hx
+      · exact ⟨hEB hx.1, hx.2⟩
+      · exact (hx.2 (hAE hx.1)).elim
+    exact (Jordan_outer_le (hB.sdiff hA) hsub).trans hmeas
+  tfae_have 3 → 1 := by
+    intro h
+    refine ⟨hE, le_antisymm (Jordan_inner_le_outer hE) ?_⟩
+    refine le_of_forall_pos_le_add fun ε hε => ?_
+    have hε4 : 0 < ε / 4 := by positivity
+    obtain ⟨A, hA, hΔ⟩ := h (ε / 4) hε4
+    have hΔbound : Bornology.IsBounded (symmDiff E A) :=
+      (hE.union hA.isBounded).subset (by
+        intro x hx
+        rcases Set.mem_symmDiff.mp hx with hx | hx
+        · exact Or.inl hx.1
+        · exact Or.inr hx.1)
+    have hΔlt : Jordan_outer_measure (symmDiff E A) < ε / 2 := by linarith
+    obtain ⟨C, hC, hΔC, hCμ⟩ := le_Jordan_outer hΔlt hΔbound
+    have hEAC : E ⊆ A ∪ C := by
+      intro x hx
+      by_cases hxA : x ∈ A
+      · exact Or.inl hxA
+      · exact Or.inr (hΔC (Set.mem_symmDiff.mpr (Or.inl ⟨hx, hxA⟩)))
+    have hACE : A \ C ⊆ E := by
+      intro x hx
+      by_contra hxE
+      exact hx.2 (hΔC (Set.mem_symmDiff.mpr (Or.inr ⟨hx.1, hxE⟩)))
+    have hinner : (hA.sdiff hC).measure ≤ Jordan_inner_measure E :=
+      le_Jordan_inner (hA.sdiff hC) hACE hE
+    have houter : Jordan_outer_measure E ≤ (hA.union hC).measure :=
+      Jordan_outer_le (hA.union hC) hEAC
+    have hsubadd : (hA.union hC).measure ≤ hA.measure + hC.measure :=
+      IsElementary.measure_of_union hA hC
+    have hAinter : IsElementary (A ∩ C) := hA.inter hC
+    have hdisj : Disjoint (A \ C) (A ∩ C) := by
+      rw [Set.disjoint_iff]
+      intro x ⟨hx1, hx2⟩
+      exact hx1.2 hx2.2
+    have hadd := IsElementary.measure_of_disjUnion (hA.sdiff hC) hAinter hdisj
+    have hAdecomp : (A \ C) ∪ (A ∩ C) = A := Set.diff_union_inter A C
+    have heq := IsElementary.measure_eq_of_set_eq
+      ((hA.sdiff hC).union hAinter) hA hAdecomp
+    have hinter_le : hAinter.measure ≤ hC.measure :=
+      IsElementary.measure_mono hAinter hC Set.inter_subset_right
+    linarith [hinner, houter, hsubadd, hadd, heq, hinter_le, hCμ]
+  tfae_finish
+
+/-- Every elementary set is Jordan measurable. -/
+theorem IsElementary.jordanMeasurable {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: IsElementary E) : JordanMeasurable E := by
+  refine ⟨hE.isBounded, le_antisymm (Jordan_inner_le_outer hE.isBounded) ?_⟩
+  -- outer ≤ measure ≤ inner, taking `E` itself as the enclosing and the enclosed set
+  exact (Jordan_outer_le hE (Set.Subset.refl E)).trans
+    (le_Jordan_inner hE (Set.Subset.refl E) hE.isBounded)
+
+/-- The Jordan measure of an elementary set equals its elementary measure. -/
+theorem JordanMeasurable.mes_of_elementary {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: IsElementary E) : hE.jordanMeasurable.measure = hE.measure := by
+  refine le_antisymm ?_ (le_Jordan_inner hE (Set.Subset.refl E) hE.isBounded)
+  rw [JordanMeasurable.eq_outer hE.jordanMeasurable]
+  exact Jordan_outer_le hE (Set.Subset.refl E)
+
+/-- The empty set is Jordan measurable. -/
+theorem JordanMeasurable.empty (d:ℕ) : JordanMeasurable (∅: Set (EuclideanSpace' d)) :=
+  IsElementary.jordanMeasurable (IsElementary.empty d)
+
+/-- The empty set has Jordan measure zero. -/
+@[simp]
+theorem JordanMeasurable.mes_of_empty (d:ℕ) : (JordanMeasurable.empty d).measure = 0 := by
+  have h := JordanMeasurable.mes_of_elementary (IsElementary.empty d)
+  rwa [IsElementary.measure_of_empty] at h
+
+/-- Exercise 1.1.6 (i) (Boolean closure) -/
+theorem JordanMeasurable.union {d:ℕ} {E F : Set (EuclideanSpace' d)}
+  (hE: JordanMeasurable E) (hF: JordanMeasurable F) : JordanMeasurable (E ∪ F) := by
+  -- Since $E$ and $F$ are both Jordan measurable, they are bounded.
+  have hE_bounded : Bornology.IsBounded E := by
+    exact hE.1
+  have hF_bounded : Bornology.IsBounded F := by
+    exact hF.1;
+  constructor;
+  · exact hE_bounded.union hF_bounded;
+  · -- Since $E$ and $F$ are Jordan measurable, their inner and outer measures are equal.
+    have h_inner_outer_eq : ∀ ε > 0, ∃ A B : Set (EuclideanSpace' d), ∃ hA : IsElementary A, ∃ hB : IsElementary B, A ⊆ E ∪ F ∧ E ∪ F ⊆ B ∧ (IsElementary.measure (hB.sdiff hA)) ≤ ε := by
+      intro ε hε_pos
+      obtain ⟨A₁, B₁, hA₁, hB₁, hA₁_subset_E, hE_subset_B₁, hB₁_minus_A₁⟩ : ∃ A₁ B₁ : Set (EuclideanSpace' d), ∃ hA₁ : IsElementary A₁, ∃ hB₁ : IsElementary B₁, A₁ ⊆ E ∧ E ⊆ B₁ ∧ (IsElementary.measure (hB₁.sdiff hA₁)) ≤ ε / 2 := by
+        have := JordanMeasurable.equiv hE_bounded |>.out 1 2 ; simp_all only [gt_iff_lt, exists_and_left, implies_true,
+          iff_true, div_pos_iff_of_pos_left, Nat.ofNat_pos]
+      obtain ⟨A₂, B₂, hA₂, hB₂, hA₂_subset_F, hF_subset_B₂, hB₂_minus_A₂⟩ : ∃ A₂ B₂ : Set (EuclideanSpace' d), ∃ hA₂ : IsElementary A₂, ∃ hB₂ : IsElementary B₂, A₂ ⊆ F ∧ F ⊆ B₂ ∧ (IsElementary.measure (hB₂.sdiff hA₂)) ≤ ε / 2 := by
+        have := JordanMeasurable.equiv hF_bounded |>.out 1 2;
+        exact this.mp hF ( ε / 2 ) ( half_pos hε_pos ) |> fun ⟨ A₂, B₂, hA₂, hB₂, hA₂_subset_F, hF_subset_B₂, hB₂_minus_A₂ ⟩ => ⟨ A₂, B₂, hA₂, hB₂, hA₂_subset_F, hF_subset_B₂, by linarith ⟩;
+      refine' ⟨ A₁ ∪ A₂, B₁ ∪ B₂, _, _, _, _, _ ⟩ <;> try { exact hA₁.union hA₂ } <;> try { exact hB₁.union hB₂ } <;> try { exact Set.union_subset_union hA₁_subset_E hA₂_subset_F } <;> try { exact Set.union_subset_union hE_subset_B₁ hF_subset_B₂ };
+      refine' le_trans ( le_trans ( IsElementary.measure_mono _ _ _ ) ( IsElementary.measure_of_union _ _ ) ) _;
+      rotate_left;
+      exact B₁ \ A₁
+      exact B₂ \ A₂
+      exact hB₁.sdiff hA₁
+      exact hB₂.sdiff hA₂
+      exact by linarith! [ hB₁_minus_A₁, hB₂_minus_A₂ ] ;
+      intro x hx; simp_all only [gt_iff_lt, Set.mem_diff, Set.mem_union, not_or, not_false_eq_true, and_true];
+    refine' le_antisymm _ _;
+    · apply_rules [ Jordan_inner_le_outer ];
+      exact hE_bounded.union hF_bounded;
+    · refine' le_of_forall_pos_le_add fun ε ε_pos => _;
+      obtain ⟨ A, B, hA, hB, hA_sub, hB_sub, hAB ⟩ := h_inner_outer_eq ( ε / 2 ) ( half_pos ε_pos );
+      -- Since $A \subseteq E \cup F \subseteq B$, we have $m(A) \leq m(E \cup F) \leq m(B)$.
+      have h_bounds : hA.measure ≤ Jordan_inner_measure (E ∪ F) ∧ Jordan_outer_measure (E ∪ F) ≤ hB.measure := by
+        apply And.intro;
+        · exact le_csSup ( show BddAbove { m : ℝ | ∃ A : Set ( EuclideanSpace' d ), ∃ hA : IsElementary A, A ⊆ E ∪ F ∧ m = hA.measure } from ⟨ hB.measure, by rintro m ⟨ A, hA, hA_sub, rfl ⟩ ; exact le_trans ( IsElementary.measure_mono hA hB ( by tauto ) ) ( by linarith ) ⟩ ) ⟨ A, hA, hA_sub, rfl ⟩;
+        · exact csInf_le ⟨ 0, by rintro x ⟨ A, hA, hA_sub, rfl ⟩ ; exact IsElementary.measure_nonneg _ ⟩ ⟨ B, hB, hB_sub, rfl ⟩;
+      -- Since $A \subseteq E \cup F \subseteq B$, we have $m(B) \leq m(A) + m(B \setminus A)$.
+      have h_measure_B : hB.measure ≤ hA.measure + (IsElementary.measure (hB.sdiff hA)) := by
+        have h_measure_B : hB.measure ≤ (IsElementary.measure (hA.union (hB.sdiff hA))) := by
+          apply_rules [ IsElementary.measure_mono ];
+          grind;
+        refine le_trans h_measure_B ?_;
+        exact IsElementary.measure_of_union hA (IsElementary.sdiff hB hA);
+      linarith
+
+/-- The union of a finset of Jordan measurable sets is Jordan measurable. -/
+lemma JordanMeasurable.union' {d:ℕ} {S: Finset (Set (EuclideanSpace' d))}
+(hE: ∀ E ∈ S, JordanMeasurable E) : JordanMeasurable (⋃ E ∈ S, E) := by
+  induction' S using Finset.induction with E S ih hS;
+  simp +zetaDelta at *;
+  exact empty d;
+  norm_num +zetaDelta at *;
+  · exact JordanMeasurable.union hE.1 ( hS hE.2 );
+
+/-- Exercise 1.1.6 (i) (Boolean closure) -/
+theorem JordanMeasurable.inter {d:ℕ} {E F : Set (EuclideanSpace' d)}
+  (hE: JordanMeasurable E) (hF: JordanMeasurable F) : JordanMeasurable (E ∩ F) := by
+  -- Since $E$ and $F$ are bounded, $E \cap F$ is also bounded.
+  have h_bound : Bornology.IsBounded (E ∩ F) := by
+    exact hE.1.subset ( Set.inter_subset_left );
+  -- Since $E$ and $F$ are bounded, their intersection $E \cap F$ is also bounded. We'll use the fact that the intersection of two Jordan measurable sets is Jordan measurable.
+  have h_jordan_measurable : ∀ ε > 0, ∃ A B : Set (EuclideanSpace' d), ∃ hA : IsElementary A, ∃ hB : IsElementary B, A ⊆ E ∩ F ∧ E ∩ F ⊆ B ∧ (hB.sdiff hA).measure ≤ ε := by
+    -- Since $E$ and $F$ are bounded, we can find elementary sets $A$ and $B$ such that $A \subseteq E \cap F \subseteq B$ and $|B| - |A| \leq \epsilon$.
+    have h_jordan_measurable : ∀ ε > 0, ∃ A B : Set (EuclideanSpace' d), ∃ hA : IsElementary A, ∃ hB : IsElementary B, A ⊆ E ∧ E ⊆ B ∧ (hB.sdiff hA).measure ≤ ε / 2 ∧ ∃ C D : Set (EuclideanSpace' d), ∃ hC : IsElementary C, ∃ hD : IsElementary D, C ⊆ F ∧ F ⊆ D ∧ (hD.sdiff hC).measure ≤ ε / 2 := by
+      intro ε hε_pos
+      obtain ⟨A, B, hA, hB, hA_sub, hB_sup, hA_B⟩ : ∃ A B : Set (EuclideanSpace' d), ∃ hA : IsElementary A, ∃ hB : IsElementary B, A ⊆ E ∧ E ⊆ B ∧ (hB.sdiff hA).measure ≤ ε / 2 := by
+        have := JordanMeasurable.equiv (hE.1) |>.out 1 2; simp_all only [gt_iff_lt, exists_and_left, implies_true,
+          iff_true, div_pos_iff_of_pos_left, Nat.ofNat_pos];
+      obtain ⟨C, D, hC, hD, hC_sub, hD_sup, hC_D⟩ : ∃ C D : Set (EuclideanSpace' d), ∃ hC : IsElementary C, ∃ hD : IsElementary D, C ⊆ F ∧ F ⊆ D ∧ (hD.sdiff hC).measure ≤ ε / 2 := by
+        have := JordanMeasurable.equiv ( show Bornology.IsBounded F from hF.1 ) |>.out 1 2;
+        exact this.mp hF ( ε / 2 ) ( half_pos hε_pos ) |> fun ⟨ C, D, hC, hD, hC_sub, hD_sup, hC_D ⟩ => ⟨ C, D, hC, hD, hC_sub, hD_sup, by linarith ⟩
+      use A, B, hA, hB, hA_sub, hB_sup, hA_B, C, D, hC, hD, hC_sub, hD_sup, hC_D;
+    intro ε hε_pos
+    obtain ⟨A, B, hA, hB, hAE, hEB, hAB, C, D, hC, hD, hCF, hFD, hCD⟩ := h_jordan_measurable ε hε_pos
+    use A ∩ C, B ∩ D;
+    refine' ⟨ _, _, _, _, _ ⟩;
+    exact IsElementary.inter hA hC;
+    exact IsElementary.inter hB hD;
+    · exact Set.inter_subset_inter hAE hCF;
+    · exact Set.inter_subset_inter hEB hFD;
+    · -- Since $A \cap C \subseteq B \cap D$, we have $(B \cap D) \setminus (A \cap C) \subseteq (B \setminus A) \cup (D \setminus C)$.
+      have h_subset : (B ∩ D) \ (A ∩ C) ⊆ (B \ A) ∪ (D \ C) := by
+        simp +contextual [ Set.subset_def ];
+        tauto;
+      -- Since the measure of a union is less than or equal to the sum of the measures, we have:
+      have h_measure_union : (IsElementary.union (hB.sdiff hA) (hD.sdiff hC)).measure ≤ (hB.sdiff hA).measure + (hD.sdiff hC).measure := by
+        exact IsElementary.measure_of_union (IsElementary.sdiff hB hA) (IsElementary.sdiff hD hC);
+      refine' le_trans _ ( h_measure_union.trans _ );
+      · apply_rules [ IsElementary.measure_mono ];
+      · linarith!;
+  have h_jordan_measurable : ∀ ε > 0, Jordan_outer_measure (E ∩ F) - Jordan_inner_measure (E ∩ F) ≤ ε := by
+    intro ε hε_pos
+    obtain ⟨A, B, hA, hB, hA_sub, hB_sub, h_diff⟩ := h_jordan_measurable ε hε_pos
+    have h_diff_le : Jordan_outer_measure (E ∩ F) ≤ hB.measure ∧ hA.measure ≤ Jordan_inner_measure (E ∩ F) := by
+      exact ⟨ csInf_le ⟨ 0, by rintro x ⟨ C, hC, hC_sub, rfl ⟩ ; exact IsElementary.measure_nonneg hC ⟩ ⟨ B, hB, hB_sub, rfl ⟩, le_csSup ⟨ hB.measure, by rintro x ⟨ C, hC, hC_sub, rfl ⟩ ; exact IsElementary.measure_mono hC hB ( Set.Subset.trans hC_sub hB_sub ) ⟩ ⟨ A, hA, hA_sub, rfl ⟩ ⟩;
+    have h_diff_eq : hB.measure = hA.measure + (hB.sdiff hA).measure := by
+      have h_disjoint : Disjoint A (B \ A) := by
+        exact disjoint_sdiff_self_right
+      convert IsElementary.measure_of_disjUnion hA ( IsElementary.sdiff hB hA ) h_disjoint using 1;
+      convert IsElementary.measure_irrelevant _ _;
+      · exact Set.union_diff_cancel' (fun ⦃a⦄ a ↦ a) fun ⦃a⦄ a_1 ↦ hB_sub (hA_sub a_1);
+      · exact hB;
+    linarith;
+  have h_jordan_measurable : Jordan_outer_measure (E ∩ F) - Jordan_inner_measure (E ∩ F) = 0 := by
+    exact le_antisymm ( le_of_forall_pos_le_add fun ε hε => by linarith [ h_jordan_measurable ε hε ] ) ( sub_nonneg_of_le <| Jordan_inner_le_outer h_bound );
+  exact ⟨ h_bound, by linarith ⟩
+
+/-- Exercise 1.1.6 (i) (Boolean closure) -/
+theorem JordanMeasurable.sdiff {d:ℕ} {E F : Set (EuclideanSpace' d)}
+  (hE: JordanMeasurable E) (hF: JordanMeasurable F) : JordanMeasurable (E \ F) := by
+  refine' ⟨ _, _ ⟩;
+  · exact hE.1.subset ( Set.diff_subset );
+  · have h_diff : ∀ ε > 0, ∃ A B : Set (EuclideanSpace' d), ∃ hA : IsElementary A, ∃ hB : IsElementary B, A ⊆ E \ F ∧ E \ F ⊆ B ∧ (hB.sdiff hA).measure ≤ ε := by
+      have h_diff : ∀ ε > 0, ∃ A B : Set (EuclideanSpace' d), ∃ hA : IsElementary A, ∃ hB : IsElementary B, A ⊆ E ∧ E ⊆ B ∧ (hB.sdiff hA).measure ≤ ε / 2 ∧ ∃ C D : Set (EuclideanSpace' d), ∃ hC : IsElementary C, ∃ hD : IsElementary D, C ⊆ F ∧ F ⊆ D ∧ (hD.sdiff hC).measure ≤ ε / 2 := by
+        intros ε hε_pos
+        obtain ⟨A, B, hA, hB, hAB⟩ : ∃ A B : Set (EuclideanSpace' d), ∃ hA : IsElementary A, ∃ hB : IsElementary B, A ⊆ E ∧ E ⊆ B ∧ (hB.sdiff hA).measure ≤ ε / 2 := by
+          have := JordanMeasurable.equiv hE.1 |>.out 1 2;
+          exact this.mp hE ( ε / 2 ) ( half_pos hε_pos );
+        have h_diff : ∀ ε > 0, ∃ C D : Set (EuclideanSpace' d), ∃ hC : IsElementary C, ∃ hD : IsElementary D, C ⊆ F ∧ F ⊆ D ∧ (hD.sdiff hC).measure ≤ ε / 2 := by
+          have := JordanMeasurable.equiv hF.1;
+          have := this.out 1 2;
+          intro ε_1 a
+          simp_all only [gt_iff_lt, exists_and_left, implies_true, exists_prop, List.tfae_cons_self, iff_true,
+            div_pos_iff_of_pos_left, Nat.ofNat_pos];
+        exact ⟨ A, B, hA, hB, hAB.1, hAB.2.1, hAB.2.2, h_diff ε hε_pos ⟩;
+      intro ε hε
+      obtain ⟨A, B, hA, hB, hA_sub_E, hE_sub_B, hB_diff_A, C, D, hC, hD, hC_sub_F, hF_sub_D, hD_diff_C⟩ := h_diff ε hε;
+      use A \ D, B \ C;
+      refine' ⟨ hA.sdiff hD, hB.sdiff hC, _, _, _ ⟩;
+      · exact fun x hx => ⟨ hA_sub_E hx.1, fun hx' => hx.2 <| hF_sub_D hx' ⟩;
+      · exact Set.diff_subset_diff hE_sub_B hC_sub_F;
+      · refine' le_trans ( IsElementary.measure_mono _ _ _ ) _;
+        exact ( B \ A ) ∪ ( D \ C );
+        exact IsElementary.union ( hB.sdiff hA ) ( hD.sdiff hC );
+        · grind only [= Set.setOf_true, = Set.mem_union, = Set.subset_def, = Set.setOf_false, = Set.mem_diff];
+        · exact le_trans ( IsElementary.measure_of_union _ _ ) ( by linarith );
+    refine' le_antisymm _ _;
+    · apply_rules [ Jordan_inner_le_outer ];
+      exact hE.1.subset ( Set.diff_subset );
+    · refine' le_of_forall_pos_le_add fun ε ε_pos => _;
+      obtain ⟨ A, B, hA, hB, hA', hB', h ⟩ := h_diff ε ε_pos;
+      refine' le_trans ( csInf_le _ ⟨ B, hB, hB', rfl ⟩ ) _;
+      · exact ⟨ 0, by rintro x ⟨ A, hA, hA', rfl ⟩ ; exact hA.measure_nonneg ⟩;
+      · -- Since $A \subseteq E \setminus F$, we have $hA.measure \leq \text{Jordan\_inner\_measure} (E \setminus F)$.
+        have hA_le_inner : hA.measure ≤ Jordan_inner_measure (E \ F) := by
+          exact le_csSup ⟨ _, fun m hm => by obtain ⟨ A, hA, hA', rfl ⟩ := hm; exact le_csSup ( show BddAbove { m : ℝ | ∃ A : Set ( EuclideanSpace' d ), ∃ hA : IsElementary A, A ⊆ E \ F ∧ m = hA.measure } from ⟨ _, fun m hm => by obtain ⟨ A, hA, hA', rfl ⟩ := hm; exact le_csSup ( show BddAbove { m : ℝ | ∃ A : Set ( EuclideanSpace' d ), ∃ hA : IsElementary A, A ⊆ E \ F ∧ m = hA.measure } from by
+                                                                                                                                                                                                                                                                                          refine' ⟨ _, fun m hm => _ ⟩;
+                                                                                                                                                                                                                                                                                          exact hB.measure;
+                                                                                                                                                                                                                                                                                          obtain ⟨ A, hA, hA', rfl ⟩ := hm;
+                                                                                                                                                                                                                                                                                          exact IsElementary.measure_mono hA hB fun ⦃a⦄ a_1 ↦ hB' (hA' a_1) ) ⟨ A, hA, hA', rfl ⟩ ⟩ ) ⟨ A, hA, hA', rfl ⟩ ⟩ ⟨ A, hA, hA', rfl ⟩;
+        have hB_le_inner : hB.measure ≤ hA.measure + (hB.sdiff hA).measure := by
+          have hB_le_inner : hB.measure ≤ (hA.union (hB.sdiff hA)).measure := by
+            apply_rules [ IsElementary.measure_mono ];
+            exact fun x hx => by by_cases hx' : x ∈ A <;> simp_all only [gt_iff_lt, exists_and_left,
+              Set.union_diff_self, Set.mem_union, or_true];
+          exact hB_le_inner.trans ( by simpa using IsElementary.measure_of_disjUnion hA ( hB.sdiff hA ) ( Set.disjoint_left.mpr fun x hx₁ hx₂ => by simp_all only [gt_iff_lt,
+            exists_and_left, Set.union_diff_self, Set.mem_diff, not_true_eq_false, and_false] ) |> le_of_eq );
+        linarith
+
+/-- Exercise 1.1.6 (i) (Boolean closure) -/
+theorem JordanMeasurable.symmDiff {d:ℕ} {E F : Set (EuclideanSpace' d)}
+  (hE: JordanMeasurable E) (hF: JordanMeasurable F) : JordanMeasurable (symmDiff E F) := by
+  rw [Set.symmDiff_def]
+  exact JordanMeasurable.union (hE.sdiff hF) (hF.sdiff hE)
+
+/-- Exercise 1.1.6 (ii) (non-negativity) -/
+theorem JordanMeasurable.nonneg {d:ℕ} {E : Set (EuclideanSpace' d)}
+  (hE: JordanMeasurable E) : 0 ≤ hE.measure := by
+  exact Jordan_inner_measure_nonneg E
+
+/- Exercise 1.1.6 (iii) (finite additivity) -/
+
+noncomputable section JordanFiniteAdditivityLemmas
+
+/-
+The sum of the inner Jordan measures of two disjoint bounded sets is at most the inner Jordan measure of their union.
+-/
+theorem Jordan_inner_add_le {d:ℕ} {E F: Set (EuclideanSpace' d)}
+  (hE: Bornology.IsBounded E) (hF: Bornology.IsBounded F) (hdisj: Disjoint E F) :
+  Jordan_inner_measure E + Jordan_inner_measure F ≤ Jordan_inner_measure (E ∪ F) := by
+    -- For any $a \in S_E, b \in S_F$, there exist elementary $A \subseteq E, B \subseteq F$ with $m(A)=a, m(B)=b$.
+    -- Since $E, F$ are disjoint, $A, B$ are disjoint.
+    -- $A \cup B \subseteq E \cup F$ is elementary, and $m(A \cup B) = m(A) + m(B) = a + b$ (by additivity of elementary measure).
+    have h_sum : ∀ a ∈ {m | ∃ A, ∃ hA : IsElementary A, A ⊆ E ∧ m = hA.measure}, ∀ b ∈ {m | ∃ A, ∃ hA : IsElementary A, A ⊆ F ∧ m = hA.measure}, a + b ≤ Jordan_inner_measure (E ∪ F) := by
+      intro a ha b hb
+      obtain ⟨A, hA, hAE, rfl⟩ := ha
+      obtain ⟨B, hB, hBF, rfl⟩ := hb
+      have h_union : A ∪ B ⊆ E ∪ F := by
+        exact Set.union_subset_union hAE hBF
+      have h_elem : IsElementary (A ∪ B) := by
+        exact IsElementary.union hA hB
+      have h_add : (hA.union hB).measure = hA.measure + hB.measure := by
+        apply IsElementary.measure_of_disjUnion hA hB (Disjoint.mono hAE hBF hdisj)
+      have h_le : (hA.union hB).measure ≤ Jordan_inner_measure (E ∪ F) := by
+        apply le_csSup; (
+        obtain ⟨ C, hC ⟩ := IsElementary.contains_bounded ( hE.union hF );
+        exact ⟨ _, by rintro x ⟨ A, hA, hAE, rfl ⟩ ; exact hA.measure_mono hC.1 ( hAE.trans hC.2 ) ⟩); use A ∪ B; simp_all only [Set.union_subset_iff,
+          and_self, exists_const];
+      linarith [h_add, h_le];
+    by_contra h_contra;
+    -- By definition of supremum, for any $\epsilon > 0$, there exist $a \in S_E$ and $b \in S_F$ such that $a + b > \sup S_E + \sup S_F - \epsilon$.
+    obtain ⟨a, ha⟩ : ∃ a ∈ {m | ∃ A, ∃ hA : IsElementary A, A ⊆ E ∧ m = hA.measure}, a > Jordan_inner_measure E - (Jordan_inner_measure E + Jordan_inner_measure F - Jordan_inner_measure (E ∪ F)) / 2 := by
+      exact by rcases exists_lt_of_lt_csSup ( show { m : ℝ | ∃ A : Set ( EuclideanSpace' d ), ∃ hA : IsElementary A, A ⊆ E ∧ m = hA.measure }.Nonempty from by exact ⟨ _, ⟨ ∅, IsElementary.empty _, by norm_num, rfl ⟩ ⟩ ) ( show Jordan_inner_measure E - ( Jordan_inner_measure E + Jordan_inner_measure F - Jordan_inner_measure ( E ∪ F ) ) / 2 < Jordan_inner_measure E from by linarith [ show 0 ≤ Jordan_inner_measure F from Jordan_inner_measure_nonneg F ] ) with ⟨ a, ha₁, ha₂ ⟩ ; exact ⟨ a, ha₁, ha₂ ⟩ ;
+    obtain ⟨b, hb⟩ : ∃ b ∈ {m | ∃ A, ∃ hA : IsElementary A, A ⊆ F ∧ m = hA.measure}, b > Jordan_inner_measure F - (Jordan_inner_measure E + Jordan_inner_measure F - Jordan_inner_measure (E ∪ F)) / 2 := by
+      exact exists_lt_of_lt_csSup ( show { m | ∃ A : Set ( EuclideanSpace' d ), ∃ hA : IsElementary A, A ⊆ F ∧ m = hA.measure }.Nonempty from by exact ⟨ _, ⟨ ∅, IsElementary.empty _, Set.empty_subset _, rfl ⟩ ⟩ ) ( by linarith );
+    linarith [ h_sum a ha.1 b hb.1 ]
+
+/-
+The outer Jordan measure is subadditive for bounded sets.
+-/
+theorem Jordan_outer_subadd {d:ℕ} {E F: Set (EuclideanSpace' d)}
+  (hE: Bornology.IsBounded E) (hF: Bornology.IsBounded F) :
+  Jordan_outer_measure (E ∪ F) ≤ Jordan_outer_measure E + Jordan_outer_measure F := by
+    -- Fix any $a \in S_E$ and $b \in S_F$.
+    have h_le : ∀ a ∈ {m : ℝ | ∃ A : Set (EuclideanSpace' d), ∃ hA : IsElementary A, E ⊆ A ∧ m = hA.measure}, ∀ b ∈ {m : ℝ | ∃ B : Set (EuclideanSpace' d), ∃ hB : IsElementary B, F ⊆ B ∧ m = hB.measure}, Jordan_outer_measure (E ∪ F) ≤ a + b := by
+      rintro a ⟨ A, hA, hEA, rfl ⟩ b ⟨ B, hB, hFB, rfl ⟩;
+      refine' le_trans ( csInf_le _ ⟨ A ∪ B, _, _, rfl ⟩ ) _;
+      any_goals exact hA.union hB;
+      · exact ⟨ 0, by rintro m ⟨ A, hA, hEA, rfl ⟩ ; exact IsElementary.measure_nonneg _ ⟩;
+      · exact Set.union_subset_union hEA hFB;
+      · exact IsElementary.measure_of_union hA hB;
+    refine' le_of_forall_pos_le_add fun ε εpos => _;
+    -- Choose $a \in S_E$ and $b \in S_F$ such that $a < m^*(E) + \frac{\epsilon}{2}$ and $b < m^*(F) + \frac{\epsilon}{2}$.
+    obtain ⟨a, ha₁, ha₂⟩ : ∃ a ∈ {m : ℝ | ∃ A : Set (EuclideanSpace' d), ∃ hA : IsElementary A, E ⊆ A ∧ m = hA.measure}, a < Jordan_outer_measure E + ε / 2 := by
+      have := exists_lt_of_csInf_lt ( show { m : ℝ | ∃ A : Set ( EuclideanSpace' d ), ∃ hA : IsElementary A, E ⊆ A ∧ m = hA.measure }.Nonempty from ?_ ) ( show Jordan_outer_measure E + ε / 2 > Jordan_outer_measure E from by linarith );
+      · exact this;
+      · exact Exists.elim ( IsElementary.contains_bounded hE ) fun A hA => ⟨ _, ⟨ A, hA.1, hA.2, rfl ⟩ ⟩
+    obtain ⟨b, hb₁, hb₂⟩ : ∃ b ∈ {m : ℝ | ∃ B : Set (EuclideanSpace' d), ∃ hB : IsElementary B, F ⊆ B ∧ m = hB.measure}, b < Jordan_outer_measure F + ε / 2 := by
+      exact exists_lt_of_csInf_lt ( by rcases IsElementary.contains_bounded hF with ⟨ B, hB₁, hB₂ ⟩ ; exact ⟨ _, ⟨ B, hB₁, hB₂, rfl ⟩ ⟩ ) ( lt_add_of_pos_right _ ( half_pos εpos ) );
+    linarith [ h_le a ha₁ b hb₁ ]
+
+end JordanFiniteAdditivityLemmas
+
+theorem JordanMeasurable.mes_of_disjUnion {d:ℕ} {E F : Set (EuclideanSpace' d)}
+  (hE: JordanMeasurable E) (hF: JordanMeasurable F) (hEF: Disjoint E F)
+  : (hE.union hF).measure = hE.measure + hF.measure := by
+  -- Apply the additivity property of the Jordan measure.
+  have h_add : Jordan_outer_measure (E ∪ F) = Jordan_outer_measure E + Jordan_outer_measure F := by
+    apply le_antisymm
+    generalize_proofs at *; (
+    apply_rules [ Jordan_outer_subadd, hE.1, hF.1 ]);
+    -- By Lemma 1.1.11, we have Jordan_inner_measure E + Jordan_inner_measure F ≤ Jordan_inner_measure (E ∪ F).
+    have h_inner_add : Jordan_inner_measure E + Jordan_inner_measure F ≤ Jordan_inner_measure (E ∪ F) := by
+      exact Jordan_inner_add_le hE.1 hF.1 hEF;
+    linarith [ hE.2, hF.2, Jordan_inner_le_outer hE.1, Jordan_inner_le_outer hF.1, Jordan_inner_le_outer ( hE.1.union hF.1 ) ]
+  generalize_proofs at *;
+  rw [ JordanMeasurable.eq_outer, JordanMeasurable.eq_outer, JordanMeasurable.eq_outer ] ; simp_all only
+
+/-- Exercise 1.1.6 (iii) (finite additivity) -/
+lemma JordanMeasurable.measure_of_disjUnion' {d:ℕ} {S: Finset (Set (EuclideanSpace' d))}
+(hE: ∀ E ∈ S, JordanMeasurable E) (hdisj: (S : Set (Set (EuclideanSpace' d))).PairwiseDisjoint id):
+  (JordanMeasurable.union' hE).measure = ∑ E:S, (hE E.val E.property).measure := by
+  induction' S using Finset.induction with E S hS ih;
+  · simp_all only [Finset.coe_empty, Set.pairwiseDisjoint_empty, Finset.notMem_empty, Set.iUnion_of_empty,
+    Set.iUnion_empty, mes_of_empty, Finset.univ_eq_empty, Finset.coe_mem, Finset.sum_empty];
+  · simp_all only [Set.PairwiseDisjoint, Finset.univ_eq_attach, Finset.mem_insert,
+    Finset.coe_mem, or_true, Finset.coe_insert, Set.iUnion_iUnion_eq_or_left, Finset.attach_insert,
+    Finset.mem_image, Finset.mem_attach, Subtype.mk.injEq, true_and, Subtype.exists, exists_prop,
+    exists_eq_right, not_false_eq_true, Finset.sum_insert, Finset.coe_attach, Subtype.forall,
+    implies_true, Set.injOn_of_eq_iff_eq, Finset.sum_image];
+    convert JordanMeasurable.mes_of_disjUnion ( hE E ( Finset.mem_insert_self E S ) ) ( JordanMeasurable.union' fun x hx => hE x ( Finset.mem_insert_of_mem hx ) ) _ using 1;
+    · congr! 1;
+      · rw [ eq_comm ];
+        convert JordanMeasurable.eq_outer ( hE E ( Finset.mem_insert_self E S ) ) using 1;
+      · convert ih ( fun x hx => hE x ( Finset.mem_insert_of_mem hx ) ) ( fun x hx y hy hxy => hdisj ( by simp_all only [Finset.mem_insert,
+        forall_eq_or_imp, Finset.mem_coe, ne_eq, Set.mem_insert_iff, or_true] ) ( by simp_all only [Finset.mem_insert,
+          forall_eq_or_imp, Finset.mem_coe, ne_eq, Set.mem_insert_iff, or_true] ) hxy ) |> Eq.symm;
+    · simp_all only [Finset.mem_insert, forall_eq_or_imp, Set.Pairwise, Finset.mem_coe,
+      ne_eq, Set.mem_insert_iff, not_true_eq_false, disjoint_self, id_eq, Set.bot_eq_empty,
+      IsEmpty.forall_iff, true_and, Set.disjoint_iUnion_right, not_false_eq_true, implies_true,
+      forall_const];
+      exact fun x hx => hdisj.1 x hx ( by
+      obtain ⟨left, right⟩ := hE
+      obtain ⟨left_1, right_1⟩ := hdisj
+      obtain ⟨left, right_2⟩ := left
+      apply Aesop.BuiltinRules.not_intro
+      intro a
+      subst a
+      simp_all only [not_true_eq_false] )
+
+/-- Exercise 1.1.6 (iv) (monotonicity) -/
+theorem JordanMeasurable.mono {d:ℕ} {E F : Set (EuclideanSpace' d)}
+  (hE: JordanMeasurable E) (hF: JordanMeasurable F) (hEF: E ⊆ F)
+  : hE.measure ≤ hF.measure := by
+  obtain ⟨ M, M_mem ⟩ := hF;
+  obtain ⟨ N, N_mem ⟩ := hE;
+  convert le_csInf _ _;
+  · obtain ⟨ A, hA ⟩ := IsElementary.contains_bounded M;
+    exact ⟨ _, ⟨ A, hA.1, hA.2, rfl ⟩ ⟩;
+  · rintro _ ⟨ A, hA, hAF, rfl ⟩;
+    refine' csInf_le _ _;
+    · exact ⟨ 0, by rintro x ⟨ A, hA, hAE, rfl ⟩ ; exact hA.measure_nonneg ⟩;
+    · exact ⟨ A, hA, hEF.trans hAF, rfl ⟩
+
+/-- Exercise 1.1.6 (v) (finite subadditivity) -/
+theorem JordanMeasurable.mes_of_union {d:ℕ} {E F : Set (EuclideanSpace' d)}
+  (hE: JordanMeasurable E) (hF: JordanMeasurable F)
+  : (hE.union hF).measure ≤ hE.measure + hF.measure := by
+  by_contra h_contra;
+  -- Since $E$ and $F$ are not disjoint, we can find a smaller set $G$ such that $E \cup F = E \cup G$ and $G$ is disjoint from $E$.
+  obtain ⟨G, hG⟩ : ∃ G : Set (EuclideanSpace' d), Disjoint E G ∧ E ∪ F = E ∪ G ∧ G ⊆ F := by
+    exact ⟨ F \ E, disjoint_sdiff_self_right, by simp_all only [not_le, Set.union_diff_self], fun x hx => hx.1 ⟩;
+  have hG_measurable : JordanMeasurable G := by
+    have hG_measurable : JordanMeasurable (F \ E) := by
+      exact sdiff hF hE;
+    convert hG_measurable using 1;
+    ext x;
+    exact ⟨ fun hx => ⟨ hG.2.2 hx, fun hx' => hG.1.le_bot ⟨ hx', hx ⟩ ⟩, fun hx => by rw [ Set.ext_iff ] at hG; specialize hG; have := hG.2.1 x; simp_all only [not_le,
+      Set.mem_diff, Set.mem_union, or_true, false_or, true_iff] ⟩;
+  have hG_measure : (hE.union hG_measurable).measure = hE.measure + hG_measurable.measure := by
+    convert JordanMeasurable.mes_of_disjUnion hE hG_measurable hG.1 using 1;
+  have hG_measure_le : hG_measurable.measure ≤ hF.measure := by
+    apply JordanMeasurable.mono hG_measurable hF hG.2.2;
+  exact h_contra <| by simpa only [ hG.2.1 ] using hG_measure.le.trans <| add_le_add_right hG_measure_le _;
+
+/-- Exercise 1.1.6 (v) (finite subadditivity) -/
+lemma JordanMeasurable.measure_of_union' {d:ℕ} {S: Finset (Set (EuclideanSpace' d))}
+(hE: ∀ E ∈ S, JordanMeasurable E) :
+  (JordanMeasurable.union' hE).measure ≤ ∑ E:S, (hE E.val E.property).measure := by
+  induction' S using Finset.induction_on with a S ha ih;
+  · simp_all only [Finset.notMem_empty, Set.iUnion_of_empty, Set.iUnion_empty, mes_of_empty, Finset.univ_eq_empty,
+    Finset.coe_mem, Finset.sum_empty, le_refl];
+  · convert le_trans ( JordanMeasurable.mes_of_union ( hE a ( Finset.mem_insert_self a S ) ) ( JordanMeasurable.union' fun E hE' => hE E ( Finset.mem_insert_of_mem hE' ) ) ) ( add_le_add_right ( ih fun E hE' => hE E ( Finset.mem_insert_of_mem hE' ) ) _ ) using 1;
+    · simp_all only [Finset.univ_eq_attach, Finset.mem_insert, Finset.coe_mem, or_true, Set.iUnion_iUnion_eq_or_left];
+    · simp +decide [Finset.sum_insert, ha]
+      classical
+      apply Finset.sum_image; intro x _ y _ hxy; exact Subtype.ext (Subtype.mk.inj hxy)
+
+open Pointwise
+
+/-- Exercise 1.1.6 (vi) (translation invariance) -/
+theorem JordanMeasurable.translate {d:ℕ} {E: Set (EuclideanSpace' d)}
+  (hE: JordanMeasurable E) (x: EuclideanSpace' d) : JordanMeasurable (E + {x}) := by
+  refine' ⟨ _, _ ⟩;
+  · have := hE.1;
+    rw [ isBounded_iff_forall_norm_le ] at *;
+    exact ⟨ this.choose + ‖x‖, fun y hy => by rcases Set.mem_add.mp hy with ⟨ y', hy', z', hz', rfl ⟩ ; exact le_trans ( norm_add_le _ _ ) ( add_le_add ( this.choose_spec _ hy' ) ( by simp_all only [Set.mem_singleton_iff,
+      Set.add_singleton, Set.image_add_right, Set.mem_preimage, add_neg_cancel_right, le_refl] ) ) ⟩;
+  · -- By definition of Jordan inner and outer measures, we have:
+    have h_inner : Jordan_inner_measure (E + {x}) = Jordan_inner_measure E := by
+      unfold Jordan_inner_measure;
+      congr! 3;
+      constructor <;> rintro ⟨ A, hA, hA', h ⟩;
+      · use A + { -x };
+        refine' ⟨ _, _, _ ⟩;
+        exact IsElementary.translate hA (-x);
+        intro y hy; obtain ⟨ a, ha, b, hb, rfl ⟩ := hy;
+        subst h
+        simp_all only [Set.add_singleton, Set.image_add_right, Set.mem_singleton_iff]
+        subst hb
+        obtain ⟨left, right⟩ := hE
+        obtain ⟨w, h⟩ := hA
+        subst h
+        simp_all only [Set.iUnion_subset_iff, Set.mem_iUnion, exists_prop]
+        obtain ⟨w_1, h⟩ := ha
+        obtain ⟨left_1, right_1⟩ := h
+        apply hA'
+        on_goal 2 => { exact right_1
+        }
+        · simp_all only;
+        · rw [ h, IsElementary.measure_of_translate ];
+      · use A + {x};
+        refine' ⟨ _, _, _ ⟩;
+        exact IsElementary.translate hA x;
+        · exact Set.add_subset_add hA' ( Set.Subset.refl _ );
+        · rw [ h, IsElementary.measure_of_translate ]
+    have h_outer : Jordan_outer_measure (E + {x}) = Jordan_outer_measure E := by
+      rw [ eq_comm, Jordan_outer_measure, Jordan_outer_measure ];
+      congr! 3;
+      constructor <;> rintro ⟨ A, hA, hA', rfl ⟩;
+      · refine' ⟨ A + { x }, _, _, _ ⟩;
+        exact IsElementary.translate hA x;
+        · exact Set.add_subset_add hA' ( Set.Subset.refl _ );
+        · exact Eq.symm (IsElementary.measure_of_translate hA x);
+      · refine' ⟨ A + { -x }, _, _, _ ⟩;
+        exact IsElementary.translate hA (-x);
+        · intro y hy; specialize hA' ( Set.add_mem_add hy ( Set.mem_singleton x ) ) ; simp_all only [Set.add_singleton,
+          Set.image_add_right, neg_neg, Set.mem_preimage];
+        · exact Eq.symm (IsElementary.measure_of_translate hA (-x));
+    exact h_inner.trans ( hE.2.trans h_outer.symm )
+
+/-- Exercise 1.1.6 (vi) (translation invariance) -/
+lemma JordanMeasurable.measure_of_translate {d:ℕ} {E: Set (EuclideanSpace' d)}
+(hE: JordanMeasurable E) (x: EuclideanSpace' d):
+  (hE.translate x).measure ≤ hE.measure := by
+  have := hE.1;
+  have h_factor : ∀ (E : Set (EuclideanSpace' d)), Bornology.IsBounded E → Jordan_outer_measure (E + {x}) ≤ Jordan_outer_measure E := by
+    intros E hE_bounded
+    have h_factor : ∀ (A : Set (EuclideanSpace' d)), Bornology.IsBounded E → IsElementary A → E ⊆ A → E + {x} ⊆ A + {x} := by
+      exact fun A a a a ↦ Set.add_subset_add_right a;
+    apply_rules [ csInf_le_csInf ];
+    · exact ⟨ 0, by rintro m ⟨ A, hA, hA', rfl ⟩ ; exact IsElementary.measure_nonneg hA ⟩;
+    · exact Exists.elim ( IsElementary.contains_bounded hE_bounded ) fun A hA => ⟨ _, ⟨ A, hA.1, hA.2, rfl ⟩ ⟩;
+    · rintro m ⟨ A, hA, hEA, rfl ⟩;
+      use A + {x};
+      exact ⟨ hA.translate x, h_factor A hE_bounded hA hEA, by exact Eq.symm (IsElementary.measure_of_translate hA x) ⟩;
+  convert h_factor E this using 1;
+  · convert JordanMeasurable.eq_outer _;
+  · exact eq_outer hE;
+

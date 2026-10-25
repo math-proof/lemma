@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.BurnsidePaqb.ScalarCenter
+import Instance.GroupTheory.BurnsidePaqb.ScalarCenter
 open BurnsidePaqb
 
 

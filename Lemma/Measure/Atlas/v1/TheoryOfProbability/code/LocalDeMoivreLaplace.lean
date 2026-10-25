@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.LocalDeMoivreLaplace
+import Def.v1.Atlas.TheoryOfProbability.code.LocalDeMoivreLaplace
 open Asymptotics Filter Real Topology Nat ProbabilityTheory
 
 

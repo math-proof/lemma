@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.BinomialTransformSecondOrderHarmonic
+import Def.NumberTheory.BinomialTransformSecondOrderHarmonic
 open MetaMathlibExt
 
 

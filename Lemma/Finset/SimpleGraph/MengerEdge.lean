@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.MengerEdge
+import Def.Combinatorics.SimpleGraph.MengerEdge
 open MathlibExt.Combinatorics.SimpleGraph.MengerEdgeWanted
 
 

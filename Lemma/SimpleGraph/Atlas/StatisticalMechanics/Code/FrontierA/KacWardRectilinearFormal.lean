@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardRectilinearFormal
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearFormal.Part5
 open Finset SimpleGraph StatMech StatMech.FrontierA
 
 

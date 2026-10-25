@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.TwoDim.ZhangFaithfulExclusive
+import Theorem.StatisticalMechanics.Code.TwoDim.ZhangFaithfulExclusive.Part2
 open MeasureTheory Set SimpleGraph StatMech StatMech.TwoDim
 
 

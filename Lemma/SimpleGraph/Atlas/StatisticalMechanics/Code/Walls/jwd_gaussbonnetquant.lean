@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jwd_gaussbonnetquant
+import Theorem.StatisticalMechanics.Code.Walls.jwd_gaussbonnetquant
 open SimpleGraph Function StatMech StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryOrbitReachability
+import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryOrbitReachability
 open SimpleGraph Equiv StatMech StatMech.FrontierD
 
 

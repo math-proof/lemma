@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Chapter4.TensorSplitting
+import Def.v1.Atlas.NumberTheoryI.code.Chapter4.TensorSplitting.Part2
 open Polynomial TensorProduct TensorSplitting
 
 

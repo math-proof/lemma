@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.TwoDim.ZhangRotSymmetry
+import Theorem.StatisticalMechanics.Code.TwoDim.ZhangRotSymmetry.Part3
 open MeasureTheory Set Filter Topology StatMech StatMech.TwoDim
 
 

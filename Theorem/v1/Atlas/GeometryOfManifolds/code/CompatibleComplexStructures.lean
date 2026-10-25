@@ -1,0 +1,119 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/CompatibleComplexStructures.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
+import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
+import Structure.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
+set_option autoImplicit false
+
+open Module FiniteDimensional
+
+
+namespace SymplecticLinearAlgebra
+
+variable {V : Type*} [AddCommGroup V] [Module ℝ V]
+
+/-- Every finite-dimensional symplectic vector space admits a compatible complex structure,
+constructed in a symplectic standard basis by sending $e_i \mapsto f_i$, $f_i \mapsto -e_i$. -/
+theorem exists_compatible_complex_structure [FiniteDimensional ℝ V]
+    {Ω : LinearMap.BilinForm ℝ V} (hΩ : IsSymplecticForm Ω) :
+    ∃ J : V →ₗ[ℝ] V, IsCompatibleComplexStr Ω J := by
+
+  obtain ⟨n, e, f, _, hee, hff, hef, hli, hspan⟩ := symplectic_standard_basis hΩ
+
+  let B : Basis (Fin n ⊕ Fin n) ℝ V := Basis.mk hli hspan
+
+  let J : V →ₗ[ℝ] V := B.constr ℝ (Sum.elim f (fun i => -e i))
+
+  have hBe : ∀ i, B (Sum.inl i) = e i := fun i => Basis.mk_apply hli hspan (Sum.inl i)
+  have hBf : ∀ i, B (Sum.inr i) = f i := fun i => Basis.mk_apply hli hspan (Sum.inr i)
+
+  have hJe : ∀ i, J (e i) = f i := by
+    intro i; rw [← hBe]; exact Basis.constr_basis B ℝ _ (Sum.inl i)
+  have hJf : ∀ i, J (f i) = -e i := by
+    intro i; rw [← hBf]; exact Basis.constr_basis B ℝ _ (Sum.inr i)
+
+  have hfe : ∀ i j, Ω (f i) (e j) = if i = j then -1 else 0 := by
+    intro i j; rw [sympl_skew hΩ.alt, hef j i]
+    by_cases h : j = i
+    · simp [h]
+    · simp [h, Ne.symm h]
+
+  have hG_diag : ∀ i j : Fin n ⊕ Fin n, Ω (B i) (J (B j)) = if i = j then 1 else 0 := by
+    intro i j
+    cases i with
+    | inl a =>
+      cases j with
+      | inl b => rw [hBe, hBe, hJe, hef]; simp [Sum.inl.injEq]
+      | inr b => rw [hBe, hBf, hJf, map_neg, hee]; simp
+    | inr a =>
+      cases j with
+      | inl b => rw [hBf, hBe, hJe, hff]; simp
+      | inr b =>
+        rw [hBf, hBf, hJf, map_neg, sympl_skew hΩ.alt, hef b a, neg_neg]
+        simp [Sum.inr.injEq, @eq_comm _ a b]
+  refine ⟨J, ?_, ?_, ?_⟩
+
+  · constructor
+    apply B.ext
+    intro i
+    simp only [LinearMap.comp_apply, LinearMap.neg_apply, LinearMap.id_apply]
+    cases i with
+    | inl i => rw [hBe, hJe, hJf]
+    | inr i => rw [hBf, hJf, map_neg, hJe]
+
+  ·
+    suffices h : Ω.compl₁₂ J J = Ω from by
+      intro u v
+      have := LinearMap.ext_iff.mp (LinearMap.ext_iff.mp h u) v
+      simp [LinearMap.compl₁₂_apply] at this
+      exact this
+    apply LinearMap.BilinForm.ext_basis B
+    intro i j
+    simp only [LinearMap.compl₁₂_apply]
+    cases i with
+    | inl i =>
+      cases j with
+      | inl j => rw [hBe, hBe, hJe, hJe, hff, hee]
+      | inr j =>
+        rw [hBe, hBf, hJe, hJf]
+        simp only [map_neg]
+        rw [hfe i j, hef i j]
+        split_ifs <;> simp
+    | inr i =>
+      cases j with
+      | inl j =>
+        rw [hBf, hBe, hJf, hJe]
+        simp only [map_neg, LinearMap.neg_apply]
+        rw [hef i j, hfe i j]
+        split_ifs <;> simp
+      | inr j =>
+        rw [hBf, hBf, hJf, hJf]
+        simp only [map_neg, LinearMap.neg_apply, neg_neg]
+        rw [hee i j, hff i j]
+
+  · intro u hu
+
+    have key : Ω u (J u) = ∑ i : Fin n ⊕ Fin n, (B.repr u i) ^ 2 := by
+      conv_lhs => rw [← B.sum_repr u]
+      simp only [map_sum, map_smul, LinearMap.smul_apply, smul_eq_mul,
+                 LinearMap.sum_apply, map_sum, map_smul, smul_eq_mul]
+      simp_rw [hG_diag, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
+               ite_true, sq]
+    rw [key]
+    apply (Finset.sum_pos_iff_of_nonneg (fun i _ => sq_nonneg _)).mpr
+    have hne : B.repr u ≠ 0 := by
+      intro h
+      exact hu (B.repr.injective (show B.repr u = B.repr 0 from by rw [h, map_zero]))
+    obtain ⟨i, hi⟩ := Finsupp.ne_iff.mp hne
+    rw [Finsupp.coe_zero, Pi.zero_apply] at hi
+    exact ⟨i, Finset.mem_univ _, sq_pos_of_ne_zero hi⟩
+
+end SymplecticLinearAlgebra

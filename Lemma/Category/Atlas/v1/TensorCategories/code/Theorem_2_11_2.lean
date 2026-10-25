@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.Theorem_2_11_2
+import Def.v1.Atlas.TensorCategories.code.Theorem_2_11_2.Part2
 open CategoryTheory
 open Category MonoidalCategory
 

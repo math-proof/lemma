@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexAllWidthBoundaryWinding
+import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthBoundaryWinding.Part4
 open StatMech StatMech.Universality
 
 

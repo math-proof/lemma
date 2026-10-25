@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.EdwardsSokalFull
+import Theorem.StatisticalMechanics.Code.FK.EdwardsSokalFull.Part2
 open StatMech StatMech.FK
 
 

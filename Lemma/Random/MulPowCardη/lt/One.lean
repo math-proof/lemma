@@ -1,7 +1,6 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Lemma.Random.Gtμmin_0AndGeη_0AndLtη_1
 
-
 @[path]
 private lemma main
   {S A : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype A] [DecidableEq A] [Nonempty A] [MeasurableSpace A] [MeasurableSingletonClass A]
@@ -32,6 +31,5 @@ private lemma main
     _ = Real.exp (Real.log (Fintype.card (S × A)) * (1 / spec.pmin) + Real.log spec.η) := (Real.exp_add _ _).symm
     _ < Real.exp 0 := Real.exp_lt_exp.2 (by rw [mul_one_div]; linarith)
     _ = 1 := Real.exp_zero
-
 
 -- created on 2026-09-26

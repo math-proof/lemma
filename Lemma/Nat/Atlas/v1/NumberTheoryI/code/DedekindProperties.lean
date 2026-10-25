@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.DedekindProperties
+import Def.v1.Atlas.NumberTheoryI.code.DedekindProperties
 open Ideal UniqueFactorizationMonoid IsDedekindDomain FractionalIdeal
 open IsDedekindDomain
 open scoped nonZeroDivisors

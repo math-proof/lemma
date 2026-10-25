@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.Corollary_2_14_9
+import Class.v1.Atlas.TensorCategories.code.Corollary_2_14_9
 open CategoryTheory
 open Category MonoidalCategory ModFun Limits
 

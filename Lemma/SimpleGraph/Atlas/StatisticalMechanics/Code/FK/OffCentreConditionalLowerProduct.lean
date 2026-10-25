@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.OffCentreConditionalLowerProduct
+import Theorem.StatisticalMechanics.Code.FK.OffCentreConditionalLowerProduct
 open SimpleGraph StatMech StatMech.FK
 
 

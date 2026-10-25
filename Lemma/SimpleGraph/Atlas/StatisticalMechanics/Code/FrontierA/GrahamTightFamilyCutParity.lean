@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamTightFamilyCutParity
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamTightFamilyCutParity.Part5
 open Finset StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

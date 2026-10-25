@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Ramanujan.Part1Ch3Entry15InverseSeries
+import Def.NumberTheory.Ramanujan.Part1Ch3Entry15InverseSeries
 open Filter Topology
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry15InverseSeries

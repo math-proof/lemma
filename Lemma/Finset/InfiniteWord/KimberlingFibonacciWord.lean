@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.InfiniteWord.KimberlingFibonacciWord
+import Theorem.Combinatorics.InfiniteWord.KimberlingFibonacciWord.Part4
 open MetaMathlibExt
 
 

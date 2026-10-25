@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.BrownianProductProcess
+import Theorem.StatisticalMechanics.Code.SLE.BrownianProductProcess.Part2
 open MeasureTheory ProbabilityTheory StatMech StatMech.SLE
 
 

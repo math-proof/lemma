@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4SquarePeriodicBridge
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquarePeriodicBridge.Part3
 open Finset SimpleGraph MeasureTheory StatMech StatMech.FrontierD
 
 

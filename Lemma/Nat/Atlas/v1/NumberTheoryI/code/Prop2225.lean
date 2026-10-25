@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Prop2225
+import Theorem.v1.Atlas.NumberTheoryI.code.Prop2225
 open NumberField RayClassField GlobalConductor KroneckerWeber ConductorRamification
 
 

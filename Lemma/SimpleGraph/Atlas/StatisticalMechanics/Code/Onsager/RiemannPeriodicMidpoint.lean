@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.RiemannPeriodicMidpoint
+import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodicMidpoint
 open MeasureTheory Filter StatMech StatMech.Onsager
 
 

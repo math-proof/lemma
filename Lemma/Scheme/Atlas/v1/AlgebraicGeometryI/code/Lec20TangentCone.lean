@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec20TangentCone
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec20TangentCone.Part9
 open Polynomial Lec20TangentCone
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDevelopedWideQuadratic
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedWideQuadratic
 open Set StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveConnectorScales
+import Def.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveConnectorScales
 open StatMech StatMech.FrontierA
 
 

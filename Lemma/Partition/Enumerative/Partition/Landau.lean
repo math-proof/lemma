@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.Partition.Landau
+import Def.Combinatorics.Enumerative.Partition.Landau
 open Nat
 open Partition
 

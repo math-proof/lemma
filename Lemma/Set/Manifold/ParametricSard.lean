@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.ParametricSard
+import Def.Geometry.Manifold.ParametricSard
 open MeasureTheory
 open MathlibExt.Geometry.Manifold.ParametricSardWanted
 

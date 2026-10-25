@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardFormalMultiaffine
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFormalMultiaffine
 open Finset SimpleGraph StatMech StatMech.FrontierA
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR
+import Def.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR.Part2
 open MetaMathlibExt
 open ULDMotzkin
 

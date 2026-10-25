@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ComplexVariables.code.Lecture14
+import Abbrev.v1.Atlas.ComplexVariables.code.Lecture14
 open Complex MeasureTheory Metric Set Filter Topology Classical in
 
 

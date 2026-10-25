@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.BackwardsMartingales
+import Structure.v1.Atlas.TheoryOfProbability.code.BackwardsMartingales.Part2
 open MeasureTheory Filter TheoryOfProbability3
 open scoped NNReal ENNReal MeasureTheory ProbabilityTheory Topology
 

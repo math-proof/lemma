@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexCorrectedCriticalDivergence
+import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedCriticalDivergence
 open StatMech StatMech.Universality
 
 

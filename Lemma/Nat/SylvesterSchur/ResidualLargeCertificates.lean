@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.SylvesterSchur.ResidualLargeCertificates
+import Def.NumberTheory.SylvesterSchur.ResidualLargeCertificates
 open Nat Nat.SylvesterSchur Nat.SylvesterSchur.Internal
 open Finset Nat
 

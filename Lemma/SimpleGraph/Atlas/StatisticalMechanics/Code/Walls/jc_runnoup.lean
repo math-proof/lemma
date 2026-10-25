@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc_runnoup
+import Theorem.StatisticalMechanics.Code.Walls.jc_runnoup
 open SimpleGraph Function StatMech StatMech.Walls
 
 

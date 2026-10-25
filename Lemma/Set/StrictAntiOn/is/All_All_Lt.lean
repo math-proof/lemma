@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_9_8
+import Abbrev.Analysis.Section_9_8
 open Chapter9
 open Chapter9.StrictAntitone
 

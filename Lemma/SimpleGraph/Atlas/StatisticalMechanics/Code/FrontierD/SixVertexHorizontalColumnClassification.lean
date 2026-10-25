@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalColumnClassification
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalColumnClassification
 open Finset StatMech StatMech.FrontierD
 
 

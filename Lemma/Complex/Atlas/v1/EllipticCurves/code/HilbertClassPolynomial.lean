@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial
+import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
 open Polynomial Classical
 
 

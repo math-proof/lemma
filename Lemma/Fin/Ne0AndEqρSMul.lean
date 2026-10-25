@@ -5,7 +5,6 @@ set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-
 universe u
 
 private lemma FrobChareqEngine.engine3 {K A V : Type u} [Field K] [CommRing A] [Algebra K A] [AddCommGroup V] [Module K V] [Module A V] [IsScalarTower K A V] [Module.Finite K V] [FaithfulSMul A V] (𝔪 : Ideal A) (h𝔪 : 𝔪.IsMaximal) : ∃ v : V, v ≠ 0 ∧ ∀ a ∈ 𝔪, a • v = 0 := by
@@ -216,6 +215,5 @@ private lemma main
     have hker : LinearMap.ker (e.restrictScalars ℤ) = ⊥ := LinearMap.ker_eq_bot.mpr he_inj
     refine hd.map' (e.restrictScalars ℤ) hker
   refine hfree n _ (fun i => he_memL _) h1
-
 
 -- created on 2026-10-20

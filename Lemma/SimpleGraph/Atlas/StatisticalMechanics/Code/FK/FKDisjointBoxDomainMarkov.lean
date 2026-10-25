@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKDisjointBoxDomainMarkov
+import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxDomainMarkov.Part3
 open SimpleGraph StatMech StatMech.FK
 
 

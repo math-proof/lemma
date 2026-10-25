@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FKGeneralQConsumer
+import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConsumer.Part5
 open MeasureTheory Filter Topology SimpleGraph Set StatMech StatMech.FK
 
 

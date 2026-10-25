@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.LocalExtensions
+import Theorem.v1.Atlas.NumberTheoryI.code.LocalExtensions.Part2
 open Ideal Polynomial
 open scoped Pointwise
 

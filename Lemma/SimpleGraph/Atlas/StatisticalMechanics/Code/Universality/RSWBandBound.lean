@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.RSWBandBound
+import Theorem.StatisticalMechanics.Code.Universality.RSWBandBound
 open Set MeasureTheory SimpleGraph StatMech StatMech.Universality
 
 

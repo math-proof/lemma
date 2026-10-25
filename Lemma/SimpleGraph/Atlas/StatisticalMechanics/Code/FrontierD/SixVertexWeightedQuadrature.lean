@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexWeightedQuadrature
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexWeightedQuadrature
 open MeasureTheory StatMech StatMech.FrontierD
 
 

@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MedianGenocchiNumber
+import Def.Combinatorics.Enumerative.MedianGenocchiNumber
 import Lemma.Finset.Enumerative.MedianGenocchiNumber
 import Lemma.Nat.GenocchiNumber
-import sympy.atlas.NumberTheory.GenocchiNumber
+import Def.NumberTheory.GenocchiNumber
 
 
 namespace MetaMathlibExt

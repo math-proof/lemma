@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6
 open LovaszLocalLemma Beck
 open Set Finset
 open Set Topology Finset

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.BernsteinGelfandEquivalence
+import Structure.v1.Atlas.LieGroups.code.BernsteinGelfandEquivalence.Part3
 open TensorProduct
 
 

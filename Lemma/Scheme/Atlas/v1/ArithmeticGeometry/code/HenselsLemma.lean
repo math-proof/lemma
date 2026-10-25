@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.HenselsLemma
+import Abbrev.v1.Atlas.ArithmeticGeometry.code.HenselsLemma
 open Polynomial PadicInt
 open PadicInt
 

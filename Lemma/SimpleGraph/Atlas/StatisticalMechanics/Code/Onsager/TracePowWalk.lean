@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.TracePowWalk
+import Theorem.StatisticalMechanics.Code.Onsager.TracePowWalk
 open StatMech StatMech.Onsager
 
 

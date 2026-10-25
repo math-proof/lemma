@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCompactHolderObstruction
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCompactHolderObstruction
 open StatMech StatMech.Universality
 
 

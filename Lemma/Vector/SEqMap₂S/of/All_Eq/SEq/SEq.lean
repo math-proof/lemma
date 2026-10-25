@@ -2,7 +2,6 @@ import Lemma.Bool.SEq.is.Eq
 import Lemma.Vector.Eq.is.All_EqGetS
 open Bool Vector
 
-
 @[path]
 private lemma main
   {a : List.Vector α n}
@@ -28,6 +27,5 @@ private lemma main
   intro i
   simp
   apply h
-
 
 -- created on 2026-01-11

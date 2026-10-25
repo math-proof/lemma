@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.MeanfieldIsing
+import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsing
 open MeasureTheory Real Set StatMech StatMech.Sharpness
 
 

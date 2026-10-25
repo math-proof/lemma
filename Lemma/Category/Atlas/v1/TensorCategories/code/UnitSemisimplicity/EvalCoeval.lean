@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.UnitSemisimplicity.EvalCoeval
+import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity.EvalCoeval
 open CategoryTheory MonoidalCategory Category CategoryTheory.Limits TensorCategories
 
 

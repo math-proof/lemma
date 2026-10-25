@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierBlockChain
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierBlockChain.Part2
 open StatMech StatMech.FrontierD
 
 

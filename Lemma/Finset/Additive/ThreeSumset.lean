@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Additive.ThreeSumset
+import Def.Combinatorics.Additive.ThreeSumset.Part3
 open scoped Pointwise
 open MetaMathlibExt
 

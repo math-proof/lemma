@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABGhostInfluence
+import Theorem.StatisticalMechanics.Code.Sharpness.ABGhostInfluence
 open Finset Set SimpleGraph StatMech StatMech.Sharpness
 
 

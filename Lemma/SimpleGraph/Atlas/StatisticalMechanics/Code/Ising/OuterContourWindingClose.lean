@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.OuterContourWindingClose
+import Theorem.StatisticalMechanics.Code.Ising.OuterContourWindingClose.Part3
 open MeasureTheory Filter Topology Finset SimpleGraph StatMech StatMech.Ising
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveValueBridge
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveValueBridge
 open Filter Set Topology StatMech StatMech.Universality StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.DensityDeviationFull
+import Theorem.StatisticalMechanics.Code.FK.DensityDeviationFull.Part2
 open StatMech StatMech.FK
 
 

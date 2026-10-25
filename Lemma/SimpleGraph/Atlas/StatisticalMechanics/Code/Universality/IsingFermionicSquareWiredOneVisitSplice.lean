@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredOneVisitSplice
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredOneVisitSplice
 open Finset SimpleGraph Set StatMech StatMech.Universality
 
 

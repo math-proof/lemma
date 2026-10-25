@@ -1,0 +1,45 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexEndpointMirrorOrbitBoundary.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthBoundaryWinding.Part4
+import Structure.StatisticalMechanics.Code.Universality.HexEndpointMirrorOrbitBoundary
+
+
+namespace StatMech.Universality
+
+open Complex HexWalk Set
+
+open scoped BigOperators
+
+noncomputable section
+
+namespace HexEndpointMirrorOrbitData
+
+variable {I K V : Type*} [Fintype I] [Fintype K]
+
+variable [DecidableEq I] [DecidableEq K] [DecidableEq V]
+
+variable {R : HexFiniteRegion} {h0 : ℤ} {D : HexDomain V}
+
+variable {P : D.InteriorPairing}
+
+variable {C : HexEndpointBoundaryCore R h0 D P}
+
+variable (H : HexEndpointMirrorOrbitData (I := I) (K := K) C)
+
+
+noncomputable def totalContribution : ℝ :=
+  (∑ i : I, 2 * Real.cos (H.pairs i).angle * (H.pairs i).mass) +
+    ∑ k : K, (H.fixed k).mass
+
+end HexEndpointMirrorOrbitData
+end
+end StatMech.Universality

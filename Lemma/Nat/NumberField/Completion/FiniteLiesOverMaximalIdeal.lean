@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Completion.FiniteLiesOverMaximalIdeal
+import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverMaximalIdeal
 open scoped NumberField
 open IsDedekindDomain.HeightOneSpectrum
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.DiscreteValuationRing.RamificationFiltration
+import Theorem.RingTheory.DiscreteValuationRing.RamificationFiltration
 open IsLocalRing
 open IsDiscreteValuationRing
 

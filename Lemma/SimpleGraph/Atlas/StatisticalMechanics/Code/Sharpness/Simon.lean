@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.Simon
+import Theorem.StatisticalMechanics.Code.Sharpness.Simon.Part3
 open Finset StatMech StatMech.Sharpness
 
 

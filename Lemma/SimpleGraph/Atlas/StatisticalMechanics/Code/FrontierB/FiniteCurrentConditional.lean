@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.FiniteCurrentConditional
+import Theorem.StatisticalMechanics.Code.FrontierB.FiniteCurrentConditional.Part2
 open MeasureTheory StatMech StatMech.FrontierB
 
 

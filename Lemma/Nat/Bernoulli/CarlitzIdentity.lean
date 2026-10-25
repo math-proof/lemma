@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Bernoulli.CarlitzIdentity
+import Def.NumberTheory.Bernoulli.CarlitzIdentity
 open Nat Finset
 open MetaMathlibExt
 

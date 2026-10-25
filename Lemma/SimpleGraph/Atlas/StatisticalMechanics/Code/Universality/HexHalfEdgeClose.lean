@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexHalfEdgeClose
+import Theorem.StatisticalMechanics.Code.Universality.HexHalfEdgeClose.Part3
 open StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.HdomMultiplicity
+import Theorem.StatisticalMechanics.Code.Ising.HdomMultiplicity.Part2
 open Finset Classical StatMech StatMech.Ising
 
 

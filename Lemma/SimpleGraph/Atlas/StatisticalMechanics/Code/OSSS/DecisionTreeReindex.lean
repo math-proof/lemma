@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.DecisionTreeReindex
+import Theorem.StatisticalMechanics.Code.OSSS.DecisionTreeReindex
 open StatMech StatMech.OSSS StatMech.OSSS.DecisionTree
 
 

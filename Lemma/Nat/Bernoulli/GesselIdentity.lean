@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Bernoulli.GesselIdentity
+import Def.NumberTheory.Bernoulli.GesselIdentity
 open MetaMathlibExt
 
 

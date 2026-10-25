@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc5_footprintdartsfinite
+import Theorem.StatisticalMechanics.Code.Walls.jc5_footprintdartsfinite
 open SimpleGraph Function StatMech StatMech.Walls
 
 

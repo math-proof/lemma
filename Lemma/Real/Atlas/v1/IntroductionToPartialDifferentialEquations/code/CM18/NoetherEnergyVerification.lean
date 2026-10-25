@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergyVerification
+import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergyVerification
 open CM18
 
 

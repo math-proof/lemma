@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.FoundNewRunCorrectness
+import Def.CPythonListsort.Code.Correctness.FoundNewRunCorrectness
 open CPythonListsort
 
 

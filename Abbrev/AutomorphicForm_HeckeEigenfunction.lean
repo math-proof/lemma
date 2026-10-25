@@ -2,7 +2,6 @@ import Structure.AutomorphicForm_CarrierPins
 import Structure.AutomorphicForm_HeckeEigensystem
 import Structure.NumberField_AdelicLevel
 import Instance.AbstractHeckeOperator
-import Instance.AbstractHeckeOperator
 
 set_option autoImplicit false
 

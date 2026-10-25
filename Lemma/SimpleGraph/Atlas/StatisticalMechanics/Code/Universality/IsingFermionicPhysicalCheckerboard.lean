@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCheckerboard
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCheckerboard.Part4
 open StatMech StatMech.Universality
 
 

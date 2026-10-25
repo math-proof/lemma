@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.FreeNestedDecreasing
+import Theorem.StatisticalMechanics.Code.FK.FreeNestedDecreasing
 open Finset Set SimpleGraph StatMech StatMech.FK
 
 

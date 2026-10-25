@@ -1,4 +1,4 @@
-import sympy.concrete.products
+import Def.Algebra.BigOperators.Products
 import Lemma.Tensor.GetDot_SwapMatrix.eq.Get
 import Lemma.Tensor.DotDot.eq.Dot_Dot
 import Lemma.Tensor.EqDot_Eye

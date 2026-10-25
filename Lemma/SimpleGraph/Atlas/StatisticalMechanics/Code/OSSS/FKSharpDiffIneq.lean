@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FKSharpDiffIneq
+import Theorem.StatisticalMechanics.Code.OSSS.FKSharpDiffIneq
 open Real Filter Topology Set Finset StatMech StatMech.OSSS StatMech.OSSS.FKSharpDiffIneq
 
 

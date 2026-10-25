@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.HeckeAlgebra.OperatorCommutativity
+import Def.v1.Atlas.Buildings.code.HeckeAlgebra.OperatorCommutativity.Part2
 open HeckeAlgebra
 open scoped Classical
 

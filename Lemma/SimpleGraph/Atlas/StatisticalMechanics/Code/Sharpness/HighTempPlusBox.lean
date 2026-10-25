@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.HighTempPlusBox
+import Theorem.StatisticalMechanics.Code.Sharpness.HighTempPlusBox.Part5
 open Finset SimpleGraph MeasureTheory StatMech StatMech.Sharpness
 
 

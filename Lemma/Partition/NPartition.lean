@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.combinatorics.partitions.NPartition
+import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
 open NPartition
 open scoped BigOperators
 

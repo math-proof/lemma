@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.GenocchiNumber
+import Def.NumberTheory.GenocchiNumber
 open MetaMathlibExt
 
 

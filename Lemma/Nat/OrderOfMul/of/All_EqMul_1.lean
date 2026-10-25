@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterSystemFromDeletion
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterSystemFromDeletion.Part3
 open Function Set CoxeterSystemFromDeletion
 
 

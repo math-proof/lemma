@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredBoundaryPhase
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredBoundaryPhase
 open StatMech StatMech.Universality
 
 

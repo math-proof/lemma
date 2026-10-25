@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.DoobDecomposition
+import Theorem.v1.Atlas.TheoryOfProbability.code.DoobDecomposition
 open MeasureTheory Filter DoobDecomposition
 open scoped NNReal ENNReal MeasureTheory ProbabilityTheory
 

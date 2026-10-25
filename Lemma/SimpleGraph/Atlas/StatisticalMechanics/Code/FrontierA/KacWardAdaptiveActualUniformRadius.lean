@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveActualUniformRadius
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveActualUniformRadius
 open StatMech StatMech.FrontierA
 
 

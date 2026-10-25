@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.Enumerative.MedianGenocchiDivisibility
+import Theorem.MathlibExtTest.Combinatorics.Enumerative.MedianGenocchiDivisibility
 open MathlibExtTest MathlibExtTest.Combinatorics MathlibExtTest.Combinatorics.Enumerative MathlibExtTest.Combinatorics.Enumerative.MedianGenocchiDivisibility
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.Assembly
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.Assembly.Part2
 open Finset BigOperators Real CoxeterGroup
 
 

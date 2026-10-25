@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABClusterCondition
+import Theorem.StatisticalMechanics.Code.Sharpness.ABClusterCondition
 open Finset Set SimpleGraph StatMech StatMech.Sharpness
 
 

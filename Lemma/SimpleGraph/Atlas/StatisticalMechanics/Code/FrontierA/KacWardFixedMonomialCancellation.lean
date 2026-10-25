@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardFixedMonomialCancellation
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFixedMonomialCancellation.Part2
 open StatMech StatMech.FrontierA
 
 

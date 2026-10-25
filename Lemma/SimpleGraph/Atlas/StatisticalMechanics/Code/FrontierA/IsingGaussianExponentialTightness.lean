@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianExponentialTightness
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianExponentialTightness
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierA
 
 

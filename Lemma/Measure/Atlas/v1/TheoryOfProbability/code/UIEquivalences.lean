@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.UIEquivalences
+import Abbrev.v1.Atlas.TheoryOfProbability.code.UIEquivalences
 open MeasureTheory TheoryOfProbability3
 open scoped MeasureTheory NNReal ENNReal
 

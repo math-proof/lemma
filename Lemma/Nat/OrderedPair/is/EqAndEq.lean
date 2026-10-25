@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_3_5
+import Abbrev.Analysis.Section_3_5.Part9
 open Chapter3.SetTheory.Set
 open Chapter3 hiding Nat Set
 open Chapter3.OrderedPair

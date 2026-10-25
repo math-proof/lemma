@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.InfiniteWord.SquareFreeWord
+import Def.Combinatorics.InfiniteWord.SquareFreeWord.Part2
 open MetaMathlibExt
 
 

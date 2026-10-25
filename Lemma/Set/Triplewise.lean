@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Data.Set.Triplewise
+import Def.Data.Set.Triplewise
 open Set
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKMedialLoopTopology
+import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialLoopTopology.Part4
 open SimpleGraph StatMech StatMech.FrontierD
 
 

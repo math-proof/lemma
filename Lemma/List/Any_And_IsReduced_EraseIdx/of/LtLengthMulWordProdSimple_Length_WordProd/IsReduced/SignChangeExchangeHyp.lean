@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
 open CoxeterExchange CoxeterGroup CoxeterExchangeGenuine StrongExchangeBridge
 
 

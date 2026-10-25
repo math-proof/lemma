@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.FiniteRangePerco
+import Theorem.StatisticalMechanics.Code.Sharpness.FiniteRangePerco.Part15
 open MeasureTheory StatMech StatMech.Sharpness
 
 

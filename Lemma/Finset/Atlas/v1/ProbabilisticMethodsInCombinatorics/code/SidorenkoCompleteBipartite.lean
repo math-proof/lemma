@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SidorenkoCompleteBipartite
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SidorenkoCompleteBipartite
 open SidorenkoCompleteBipartite
 open SimpleGraph Finset BigOperators
 

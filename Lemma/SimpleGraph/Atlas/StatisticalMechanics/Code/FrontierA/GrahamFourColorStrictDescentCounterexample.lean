@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamFourColorStrictDescentCounterexample
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorStrictDescentCounterexample
 open Finset StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

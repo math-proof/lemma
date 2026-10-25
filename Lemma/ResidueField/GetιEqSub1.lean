@@ -4,7 +4,6 @@ set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-
 private abbrev cyclInt (q : ℕ) := NumberField.RingOfIntegers <| CyclotomicField q ℚ
 /--
 [IsPrimitiveRoot_exists_isDiscreteValuationRing_ringHom_pow_sub_one_eq_mul_of_charP_residueField](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsPrimitiveRoot_exists_isDiscreteValuationRing_ringHom_pow_sub_one_eq_mul_of_charP_residueField.lean)
@@ -202,6 +201,5 @@ private lemma main
     refine ⟨((U⁻¹ : Units A) : A), Units.isUnit _, ?_⟩
     rw [hprod, hprod2, mul_comm (ϖ ^ (q - 1)) (U : A), ← mul_assoc, Units.inv_mul, one_mul]
   exact ⟨A, inferInstance, inferInstance, inferInstance, hfin, ϖ, hmaxA, ε, hε, hϖq, ι, hloc, hιϖ⟩
-
 
 -- created on 2026-10-20

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexDisagreementComponentFineRowProfile
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDisagreementComponentFineRowProfile
 open Finset StatMech StatMech.FrontierD
 
 

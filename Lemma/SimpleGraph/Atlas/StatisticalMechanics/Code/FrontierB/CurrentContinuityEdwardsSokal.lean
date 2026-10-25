@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentContinuityEdwardsSokal
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityEdwardsSokal
 open Filter MeasureTheory Set StatMech StatMech.FrontierB
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryCycleDuality
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryCycleDuality.Part5
 open Equiv SimpleGraph StatMech StatMech.FrontierD
 
 

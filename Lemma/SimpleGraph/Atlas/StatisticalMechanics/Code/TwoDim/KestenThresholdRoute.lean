@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.TwoDim.KestenThresholdRoute
+import Theorem.StatisticalMechanics.Code.TwoDim.KestenThresholdRoute
 open MeasureTheory Set Filter Topology StatMech StatMech.TwoDim
 
 

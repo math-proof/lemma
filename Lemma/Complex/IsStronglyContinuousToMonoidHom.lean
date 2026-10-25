@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.ContinuousRep
+import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
 open ContinuousRep
 open scoped ComplexOrder
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexLattice
+import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part11
 open StatMech StatMech.Universality StatMech.Universality.HexWalk
 
 

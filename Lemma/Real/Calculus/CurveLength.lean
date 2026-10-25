@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.CurveLength
+import Theorem.Analysis.Calculus.CurveLength
 
 /--
 [intervalIntegral.integral_norm_deriv_eq_integral_norm_derivWithin_Icc](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Calculus/CurveLength.lean)

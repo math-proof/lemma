@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.WavefrontDiffOps
+import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontDiffOps
 open MeasureTheory ConeSupport WavefrontDiffOps
 open scoped SchwartzMap FourierTransform
 

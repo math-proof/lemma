@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.RayAlternation
+import Theorem.StatisticalMechanics.Code.Lattice.RayAlternation
 open Set SimpleGraph Function StatMech StatMech.Lattice
 
 

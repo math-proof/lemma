@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.FiniteNormalizedSwitching
+import Theorem.StatisticalMechanics.Code.FrontierB.FiniteNormalizedSwitching
 open StatMech StatMech.FrontierB
 
 

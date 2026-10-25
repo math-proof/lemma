@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.G3PercDualityFull
+import Theorem.StatisticalMechanics.Code.Universality.G3PercDualityFull.Part2
 open MeasureTheory ProbabilityTheory StatMech StatMech.Universality
 
 

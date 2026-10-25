@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.HadamardGlobalInverse
+import Theorem.Geometry.Manifold.HadamardGlobalInverse
 open scoped Manifold ContDiff
 open MathlibExt.Geometry.Manifold.HadamardGlobalInverseWanted
 

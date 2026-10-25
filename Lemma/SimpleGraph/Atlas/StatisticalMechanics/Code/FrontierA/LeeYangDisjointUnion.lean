@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.LeeYangDisjointUnion
+import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangDisjointUnion
 open Finset Polynomial StatMech StatMech.FrontierA
 
 

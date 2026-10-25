@@ -1,0 +1,30 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexResolvedUnitCrossFineRelation.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexResolvedUnitCrossFineRelation.Part6
+open StatMech.FrontierD
+
+#print axioms fkColoredVertexCrossTarget_slotColor
+#print axioms fkColoredVertexCrossTarget_trueStrandSlotCount
+#print axioms fkColoredVertexCrossTarget_bigrade
+#print axioms FKColoredResolvedUnitCross.target_bigrade
+#print axioms FKColoredResolvedUnitCross.target_fine
+#print axioms FKColoredResolvedUnitCross.target_twoCycleFine
+#print axioms sixVertexLoopDecoratedResolvedUnitCrossTarget
+#print axioms sixVertexLoopDecoratedResolvedUnitCrossTarget_colored
+#print axioms sixVertexLoopDecoratedResolvedUnitCrossFineTarget
+#print axioms sixVertexLoopDecoratedResolvedUnitCrossFineTarget_bigrade
+#print axioms sixVertexLoopResolvedUnitCrossFineRelated_nonempty
+#print axioms sixVertexLoopResolvedUnitCrossFineRelated_bigrade
+#print axioms sixVertexLoopResolvedUnitCrossFineRelated_twoCycle
+#print axioms rawFineProfile_of_resolvedUnitCrossRelationEdgeDegree
+#print axioms sixVertexMarkedTraceCoefficientwiseLogConcave_of_resolvedUnitCrossRelationEdgeDegree
+
+

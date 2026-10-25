@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.CartierKostant.CommHopfFunGroup
+import Def.v1.Atlas.TensorCategories.code.CartierKostant.CommHopfFunGroup.Part2
 open Coalgebra HopfAlgebra
 open scoped TensorProduct
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.PointCounting
+import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
 open Hasse GroupExponentBound BSGSOrder QuadraticTwist Mestre
 
 

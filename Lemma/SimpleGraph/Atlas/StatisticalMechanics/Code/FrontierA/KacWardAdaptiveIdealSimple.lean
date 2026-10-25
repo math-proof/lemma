@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealSimple
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealSimple.Part2
 open StatMech StatMech.FrontierA
 
 

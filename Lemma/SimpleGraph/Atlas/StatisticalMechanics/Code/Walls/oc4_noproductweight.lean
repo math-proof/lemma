@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc4_noproductweight
+import Theorem.StatisticalMechanics.Code.Walls.oc4_noproductweight.Part2
 open Finset MeasureTheory StatMech StatMech.Walls
 
 

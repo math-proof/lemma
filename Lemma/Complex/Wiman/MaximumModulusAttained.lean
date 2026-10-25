@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.Wiman.MaximumModulusAttained
+import Theorem.Analysis.Complex.Wiman.MaximumModulusAttained
 open Set
 open Complex
 

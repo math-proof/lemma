@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.GroupoidMultitensor
+import Def.v1.Atlas.TensorCategories.code.GroupoidMultitensor.Part5
 open CategoryTheory GroupoidMultitensor
 
 

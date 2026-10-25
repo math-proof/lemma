@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.StarAlgebraCorollaries
+import Def.v1.Atlas.TensorCategories.code.StarAlgebraCorollaries.Part3
 open Finset Complex FusionRing FusionRing.GrRingOfC
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.SquarefreeTotientWeighted
+import Def.NumberTheory.PrimeCounting.SquarefreeTotientWeighted
 open scoped BigOperators
 open Finset MeasureTheory
 open MathlibExt.NumberTheory.PrimeCounting

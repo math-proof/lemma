@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc85bthreereplicaswitch
+import Theorem.StatisticalMechanics.Code.Walls.gc85bthreereplicaswitch.Part3
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Walls
 
 

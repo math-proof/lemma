@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.HeilermannWeightedMotzkinDeterminant
+import Def.Combinatorics.Enumerative.HeilermannWeightedMotzkinDeterminant
 open scoped BigOperators
 open MetaMathlibExt
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquareBoundaryGeometry
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareBoundaryGeometry
 open StatMech StatMech.Universality
 
 

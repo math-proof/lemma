@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.SubsetSum
+import Def.v1.Atlas.AlgebraicCombinatorics.code.SubsetSum.Part3
 open SpernerProperty YoungLattice YoungLattice.Lmn Finset SubsetSum
 
 

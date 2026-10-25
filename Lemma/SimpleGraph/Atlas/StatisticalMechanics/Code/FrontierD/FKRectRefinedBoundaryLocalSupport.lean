@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectRefinedBoundaryLocalSupport
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedBoundaryLocalSupport
 open StatMech StatMech.FrontierD
 
 

@@ -1,11 +1,11 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.VertexConnectivity
+import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
 import Lemma.SimpleGraph.VertexConnectivity
 import Lemma.SimpleGraph.FleischnerStrong
 import Lemma.SimpleGraph.Square
-import sympy.atlas.Combinatorics.SimpleGraph.FleischnerStrong
-import sympy.atlas.Combinatorics.SimpleGraph.Square
+import Theorem.Combinatorics.SimpleGraph.FleischnerStrong.Part23
+import Theorem.Combinatorics.SimpleGraph.Square
 
 
 namespace MetaMathlibExt

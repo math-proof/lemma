@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.FourierAnalysis.code.TruncatedFourierInversion
+import Theorem.v1.Atlas.FourierAnalysis.code.TruncatedFourierInversion
 open MeasureTheory Filter Topology Set TruncatedFourierInversion
 open scoped FourierTransform ENNReal NNReal
 

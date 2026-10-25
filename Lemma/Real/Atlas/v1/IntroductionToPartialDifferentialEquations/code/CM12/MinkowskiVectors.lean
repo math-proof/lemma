@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM12.MinkowskiVectors
+import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM12.MinkowskiVectors
 open Matrix MinkowskiVectors
 
 

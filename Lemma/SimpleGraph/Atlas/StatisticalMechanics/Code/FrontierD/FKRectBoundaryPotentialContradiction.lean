@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectBoundaryPotentialContradiction
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryPotentialContradiction
 open StatMech StatMech.FrontierD
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.W4PathDominoTilings
+import Theorem.Combinatorics.Enumerative.W4PathDominoTilings.Part11
 open SimpleGraph
 open MetaMathlibExt
 

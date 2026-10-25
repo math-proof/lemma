@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.AccessTrace
+import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
 open CPythonListsort CPythonListsort.MergeMemorySnapshot CPythonListsort.AccessTrace CPythonListsort.TraceResult
 
 

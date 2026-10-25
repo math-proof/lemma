@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Ramsey
+import Def.Combinatorics.Ramsey
 import Lemma.Finset.Ramsey
 
 

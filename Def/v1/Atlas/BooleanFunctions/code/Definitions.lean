@@ -1,0 +1,22 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Definitions.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Algebra.BigOperators.Finprod
+import Abbrev.v1.Atlas.BooleanFunctions.code.Definitions
+
+
+namespace BooleanFourier
+
+open Finset in
+noncomputable def lpNorm (p : ℝ) (f : BoolFn n) : ℝ :=
+  ((1 / (2 ^ n : ℝ)) * ∑ x : Fin n → Bool, |f x| ^ p) ^ (1 / p)
+
+end BooleanFourier

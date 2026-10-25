@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.CohomologyKunneth
+import Def.v1.Atlas.AlgebraicTopologyI.code.CohomologyKunneth.Part2
 open CategoryTheory AlgebraicTopology Limits SingularCohomology CohomologyKunneth
 open scoped TensorProduct
 

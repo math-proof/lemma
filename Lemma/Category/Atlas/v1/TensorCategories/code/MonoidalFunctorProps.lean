@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.MonoidalFunctorProps
+import Instance.v1.Atlas.TensorCategories.code.MonoidalFunctorProps.Part2
 open TensorCategories TensorCategories.MonoidalFunctorProps
 open CategoryTheory MonoidalCategory Functor
 open Category

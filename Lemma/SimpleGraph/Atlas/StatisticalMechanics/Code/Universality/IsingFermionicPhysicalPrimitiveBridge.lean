@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalPrimitiveBridge
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalPrimitiveBridge
 open StatMech StatMech.Universality
 
 

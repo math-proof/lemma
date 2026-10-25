@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.Sinkhorn
+import Def.LinearAlgebra.Matrix.Sinkhorn
 open Matrix
 open MathlibExt.LinearAlgebra.Matrix.SinkhornWanted
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.ConnectiveBounds
+import Theorem.StatisticalMechanics.Code.Universality.ConnectiveBounds.Part5
 open StatMech StatMech.Universality
 
 

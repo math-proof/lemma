@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.ProductVarieties
+import Def.v1.Atlas.ArithmeticGeometry.code.ProductVarieties.Part5
 open MvPolynomial
 
 

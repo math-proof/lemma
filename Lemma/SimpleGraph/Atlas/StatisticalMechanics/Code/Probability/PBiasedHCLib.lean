@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.PBiasedHCLib
+import Theorem.StatisticalMechanics.Code.Probability.PBiasedHCLib.Part3
 open Real Set StatMech StatMech.Probability
 
 

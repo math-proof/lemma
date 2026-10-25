@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.OrderRaisingLemma
+import Def.v1.Atlas.AlgebraicCombinatorics.code.OrderRaisingLemma
 open Matrix Finset in
 
 

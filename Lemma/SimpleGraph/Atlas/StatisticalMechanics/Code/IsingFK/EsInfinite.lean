@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.EsInfinite
+import Theorem.StatisticalMechanics.Code.IsingFK.EsInfinite.Part2
 open MeasureTheory Filter Topology BoundedContinuousFunction StatMech StatMech.IsingFK
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.Sharpness
+import Theorem.StatisticalMechanics.Code.Percolation.Sharpness.Part2
 open MeasureTheory Set Filter StatMech StatMech.Percolation
 
 

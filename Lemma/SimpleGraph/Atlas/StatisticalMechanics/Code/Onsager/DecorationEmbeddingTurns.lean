@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.DecorationEmbeddingTurns
+import Theorem.StatisticalMechanics.Code.Onsager.DecorationEmbeddingTurns.Part5
 open StatMech StatMech.Onsager
 
 

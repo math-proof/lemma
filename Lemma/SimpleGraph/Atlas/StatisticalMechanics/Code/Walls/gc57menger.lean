@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc57menger
+import Theorem.StatisticalMechanics.Code.Walls.gc57menger.Part3
 open Finset BigOperators SimpleGraph StatMech StatMech.Walls
 
 

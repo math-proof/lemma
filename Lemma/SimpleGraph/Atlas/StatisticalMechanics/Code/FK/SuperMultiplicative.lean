@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.SuperMultiplicative
+import Theorem.StatisticalMechanics.Code.FK.SuperMultiplicative.Part4
 open SimpleGraph Filter Topology StatMech StatMech.FK
 
 

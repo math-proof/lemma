@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.SL2Classification
+import Theorem.v1.Atlas.LieGroups.code.SL2Classification
 open Complex SL2SimpleModule
 set_option linter.unusedVariables false
 set_option linter.unusedSimpArgs false

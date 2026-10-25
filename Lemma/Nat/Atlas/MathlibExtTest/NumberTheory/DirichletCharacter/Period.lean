@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.NumberTheory.DirichletCharacter.Period
+import Theorem.MathlibExtTest.NumberTheory.DirichletCharacter.Period
 open MonoidHom
 
 

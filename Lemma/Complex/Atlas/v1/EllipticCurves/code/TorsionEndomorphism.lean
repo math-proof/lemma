@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.EllipticCurves.code.TorsionEndomorphism
+import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
 open WeierstrassCurve WeierstrassCurve.Affine in
 open WeierstrassCurve.Affine
 

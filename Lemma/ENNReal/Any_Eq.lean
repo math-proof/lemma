@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Appendix_B_2
+import Abbrev.Analysis.Appendix_B_2
 open NNReal AppendixB.NNRealDecimal
 open AppendixB
 

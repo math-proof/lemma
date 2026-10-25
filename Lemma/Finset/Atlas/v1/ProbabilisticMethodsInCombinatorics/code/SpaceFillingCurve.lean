@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SpaceFillingCurve
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SpaceFillingCurve
 open Finset NNReal ENNReal SpaceFillingCurve
 
 

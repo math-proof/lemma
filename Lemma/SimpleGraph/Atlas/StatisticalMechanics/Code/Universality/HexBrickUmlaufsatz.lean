@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexBrickUmlaufsatz
+import Theorem.StatisticalMechanics.Code.Universality.HexBrickUmlaufsatz.Part4
 open StatMech StatMech.Universality StatMech.Universality.HexAWBrickCycle
 
 

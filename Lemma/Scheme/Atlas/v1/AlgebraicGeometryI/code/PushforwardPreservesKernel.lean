@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.PushforwardPreservesKernel
+import Def.v1.Atlas.AlgebraicGeometryI.code.PushforwardPreservesKernel
 open CategoryTheory CategoryTheory.Limits PresheafOfModules
 
 

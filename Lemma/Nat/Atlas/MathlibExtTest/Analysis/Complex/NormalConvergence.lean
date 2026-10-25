@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Analysis.Complex.NormalConvergence
+import Theorem.MathlibExtTest.Analysis.Complex.NormalConvergence
 open Complex MeasureTheory Topology Set Filter N329Test
 
 

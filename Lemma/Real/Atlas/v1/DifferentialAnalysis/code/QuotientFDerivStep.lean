@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.QuotientFDerivStep
+import Def.v1.Atlas.DifferentialAnalysis.code.QuotientFDerivStep
 open MvPolynomial Complex DifferentialOperators
 
 

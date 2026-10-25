@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.CotangentBundleBridge
+import Instance.v1.Atlas.GeometryOfManifolds.code.CotangentBundleBridge
 open DifferentialFormSpace CotangentBundle
 
 

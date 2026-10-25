@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.Theorem_1_34_8
+import Def.v1.Atlas.TensorCategories.code.Theorem_1_34_8
 open CategoryTheory TensorCategories
 open TensorCategories
 

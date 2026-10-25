@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.Brooks
+import Def.Combinatorics.SimpleGraph.Brooks
 open Finset
 open MathlibExt.Combinatorics.SimpleGraph.BrooksWanted
 

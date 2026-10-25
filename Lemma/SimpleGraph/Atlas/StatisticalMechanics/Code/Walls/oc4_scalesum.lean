@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc4_scalesum
+import Theorem.StatisticalMechanics.Code.Walls.oc4_scalesum
 open Finset MeasureTheory StatMech StatMech.Walls
 
 

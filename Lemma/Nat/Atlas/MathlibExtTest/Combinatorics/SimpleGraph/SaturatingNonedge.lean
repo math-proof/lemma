@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.SaturatingNonedge
+import Instance.MathlibExtTest.Combinatorics.SimpleGraph.SaturatingNonedge
 open SimpleGraph
 
 

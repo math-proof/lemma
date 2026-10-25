@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
+import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
 open ArithmeticGeometry
 
 

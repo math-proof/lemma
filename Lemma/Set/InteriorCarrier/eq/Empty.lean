@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Reflection.AffineWeylGroups
+import Structure.v1.Atlas.Buildings.code.Reflection.AffineWeylGroups.Part3
 open Set AffineReflectionGroup
 open scoped InnerProductSpace
 

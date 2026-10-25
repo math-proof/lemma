@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.BoundedDifferences
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.BoundedDifferences
 open BoundedDifferences
 open MeasureTheory ProbabilityTheory Real Finset Function
 open scoped NNReal ENNReal

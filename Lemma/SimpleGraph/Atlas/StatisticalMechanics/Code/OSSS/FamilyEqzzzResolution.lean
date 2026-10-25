@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FamilyEqzzzResolution
+import Theorem.StatisticalMechanics.Code.OSSS.FamilyEqzzzResolution
 open MeasureTheory Filter Topology StatMech StatMech.OSSS StatMech.OSSS.FamilyEqzzzResolution
 
 

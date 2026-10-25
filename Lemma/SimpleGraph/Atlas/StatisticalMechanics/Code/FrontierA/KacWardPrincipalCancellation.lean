@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardPrincipalCancellation
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPrincipalCancellation
 open StatMech StatMech.FrontierA
 
 

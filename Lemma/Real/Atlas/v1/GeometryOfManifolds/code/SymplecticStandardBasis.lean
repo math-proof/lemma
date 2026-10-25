@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
+import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
 open Module FiniteDimensional SymplecticLinearAlgebra
 
 

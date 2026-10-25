@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gc3_tripleweight
+import Theorem.StatisticalMechanics.Code.Walls.gc3_tripleweight
 open Finset BigOperators SimpleGraph StatMech StatMech.Walls
 
 

@@ -11,7 +11,7 @@ import Instance.AlgebraicGeometry_FppfKummerProp17
 import Lemma.ModularCurve.JZeroToricTorsion
 import Structure.ModularCurve_JZeroNeronPrimaryTorsionSheaf
 import Def.ModularCurve_JZeroNeronPrimaryTorsionSheaf
-import sympy.atlas.DefinitionsStaging.ModularCurve_JZeroNeronPrimaryTorsionSheaf
+import Theorem.DefinitionsStaging.ModularCurve_JZeroNeronPrimaryTorsionSheaf
 import Abbrev.ModularCurve_JZeroNeronPrimaryTorsionSheaf
 
 set_option autoImplicit false

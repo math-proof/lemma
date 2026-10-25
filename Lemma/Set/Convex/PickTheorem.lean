@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Convex.PickTheorem
+import Theorem.Geometry.Convex.PickTheorem.Part18
 open Filter MeasureTheory
 open scoped Pointwise
 open MetaMathlibExt

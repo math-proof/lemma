@@ -1,7 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.commutative_algebra.eakin_nagata
-
+import Theorem.Algebra.CommutativeAlgebra.EakinNagata
 open EakinNagata
 
 /--
@@ -19,7 +18,6 @@ private lemma fg_comap
 -- proof
   apply fg_of_sup_range_comap h1 h2
 
-
 /--
 [isNoetherian_of_prime_smul_top_fg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/CommutativeAlgebra/EakinNagata.lean)
 -/
@@ -33,7 +31,6 @@ private lemma cohen
 -- proof
   apply isNoetherian_of_prime_smul_top_fg hP
 
-
 /--
 [eakin_nagata](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/CommutativeAlgebra/EakinNagata.lean)
 -/
@@ -46,6 +43,5 @@ private lemma eakin
   IsNoetherianRing A := by
 -- proof
   apply eakin_nagata hAB
-
 
 -- created on 2026-10-09

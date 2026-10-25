@@ -1,10 +1,10 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.ParabolicDefs
+import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
+import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
 import Lemma.Nat.NonemptyBruhatCell
 import Lemma.Set.ConjugateParabolicMul.eq.ImageConjugateParabolic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.BuildingsFromBNPairs
+import Def.v1.Atlas.Buildings.code.BNPair.BuildingsFromBNPairs.Part6
 
 
 namespace BNPair

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.GallopCorrectness
+import Def.CPythonListsort.Code.Assembly.GallopCorrectness
 open CPythonListsort
 
 

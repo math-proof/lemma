@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kwd_crosscountparity
+import Theorem.StatisticalMechanics.Code.Walls.kwd_crosscountparity.Part3
 open Finset Set SimpleGraph StatMech.Lattice StatMech StatMech.Walls
 
 

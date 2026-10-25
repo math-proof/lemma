@@ -1,0 +1,86 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/CanonicalBrownianSLE.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.SLE.BrownianDyadicModulus
+import Theorem.StatisticalMechanics.Code.SLE.LoewnerHolomorphicDependence.Part3
+import Def.StatisticalMechanics.Code.SLE.CanonicalBrownianSLE
+open MeasureTheory
+
+
+namespace StatMech.SLE
+
+theorem canonicalBrownian_isChordalSLE (kappa : Real) (hkappa : 0 <= kappa) :
+    IsChordalSLE kappa brownianContinuousModification brownianProductLaw
+      (canonicalBrownianLoewnerDomain kappa)
+      (canonicalBrownianLoewnerMaps kappa) := by
+  refine {
+    kappa_nonneg := hkappa
+    isBrownian := brownianContinuousModification_isStandardBrownianMotion
+    loewner := ?_ }
+  filter_upwards [
+    brownianContinuousModification_isStandardBrownianMotion.continuous_paths]
+      with omega homega
+  exact loewnerMaximalMaps_satisfiesMaximalLoewnerEquation
+    (continuous_const.mul homega)
+
+
+theorem canonicalBrownianLoewnerHull_isCompactHull (kappa : Real) :
+    ∀ᵐ omega ∂brownianProductLaw,
+      forall t, 0 <= t ->
+        IsCompactHull (canonicalBrownianLoewnerHull kappa omega t) := by
+  filter_upwards [
+    brownianContinuousModification_isStandardBrownianMotion.continuous_paths]
+      with omega homega
+  intro t ht
+  exact loewnerSwallowedSet_isCompactHull
+    (continuous_const.mul homega) ht
+
+
+theorem canonicalBrownianLoewnerHull_monotoneOn
+    (kappa : Real) (omega : Real -> Real) :
+    MonotoneOn (canonicalBrownianLoewnerHull kappa omega) (Set.Ici 0) :=
+  loewnerSwallowedSet_monotoneOn
+    (sleDriving kappa brownianContinuousModification omega)
+
+
+theorem canonicalBrownianLoewnerDomain_eq_complement
+    (kappa : Real) (omega : Real -> Real) (t : Real) :
+    canonicalBrownianLoewnerDomain kappa omega t =
+      upperHalfPlane \ canonicalBrownianLoewnerHull kappa omega t := by
+  exact (upperHalfPlane_diff_loewnerSwallowedSet
+    (sleDriving kappa brownianContinuousModification omega) t).symm
+
+
+theorem canonicalBrownianLoewnerMaps_conformalOn (kappa : Real) :
+    ∀ᵐ omega ∂brownianProductLaw,
+      forall t, 0 <= t -> forall z,
+        z ∈ canonicalBrownianLoewnerDomain kappa omega t ->
+          ConformalAt (canonicalBrownianLoewnerMaps kappa omega t) z := by
+  filter_upwards [
+    brownianContinuousModification_isStandardBrownianMotion.continuous_paths]
+      with omega homega
+  intro t ht z hz
+  exact loewnerMaximalMaps_conformalOn
+    (continuous_const.mul homega) ht z hz
+
+
+theorem canonicalBrownianLoewnerMaps_homeomorph (kappa : Real) :
+    ∀ᵐ omega ∂brownianProductLaw, ∀ t, 0 <= t ->
+      Nonempty (canonicalBrownianLoewnerDomain kappa omega t ≃ₜ
+        upperHalfPlane) := by
+  filter_upwards [
+    brownianContinuousModification_isStandardBrownianMotion.continuous_paths]
+      with omega homega
+  intro t ht
+  exact ⟨loewnerMaximalMapsHomeomorph
+    (continuous_const.mul homega) ht⟩
+
+end StatMech.SLE

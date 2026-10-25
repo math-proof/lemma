@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamWeightedLemmaOneFiberClosure
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedLemmaOneFiberClosure
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

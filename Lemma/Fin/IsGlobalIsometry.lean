@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.GeometricAlgebra.IsotropicFlagsParabolics
+import Def.v1.Atlas.Buildings.code.GeometricAlgebra.IsotropicFlagsParabolics.Part2
 open Garrett
 
 

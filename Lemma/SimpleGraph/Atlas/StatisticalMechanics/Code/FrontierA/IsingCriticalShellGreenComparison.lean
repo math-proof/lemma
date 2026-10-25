@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingCriticalShellGreenComparison
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalShellGreenComparison
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierA
 
 

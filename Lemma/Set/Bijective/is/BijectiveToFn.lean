@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_3_3
+import Abbrev.Analysis.Section_3_3.Part2
 import Lemma.Set.OneToOne.is.InjectiveToFn
 import Lemma.Set.Onto.is.SurjectiveToFn
 open Chapter3 hiding Nat Set

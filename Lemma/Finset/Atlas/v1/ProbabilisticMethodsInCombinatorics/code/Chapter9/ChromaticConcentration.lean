@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.ChromaticConcentration
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.ChromaticConcentration
 open MeasureTheory Measure SimpleGraph Real ChromaticConcentration
 
 

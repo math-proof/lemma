@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.oc2_core
+import Theorem.StatisticalMechanics.Code.Walls.oc2_core.Part2
 open Finset MeasureTheory StatMech StatMech.Walls
 
 

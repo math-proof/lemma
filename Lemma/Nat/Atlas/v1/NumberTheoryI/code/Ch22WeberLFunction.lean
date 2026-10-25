@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
+import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
 open RayClassField
 open scoped NumberField
 

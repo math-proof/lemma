@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NicolNumber
+import Def.NumberTheory.NicolNumber
 open scoped BigOperators
 open MetaMathlibExt
 

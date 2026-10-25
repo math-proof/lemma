@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexColoredStrandSplice
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexColoredStrandSplice.Part11
 open Finset StatMech StatMech.FrontierD
 
 

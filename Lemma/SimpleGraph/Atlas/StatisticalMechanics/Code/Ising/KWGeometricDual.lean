@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.KWGeometricDual
+import Theorem.StatisticalMechanics.Code.Ising.KWGeometricDual.Part22
 open Finset SimpleGraph Set StatMech StatMech.Ising
 
 

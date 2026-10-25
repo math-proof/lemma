@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_3_1_order
+import Instance.Analysis.Section_3_1_order
 open Chapter3.SetTheory.Set
 open Chapter3 hiding Nat Set
 open Chapter3.SetTheory

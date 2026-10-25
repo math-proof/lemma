@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.IVPressureConvex
+import Theorem.StatisticalMechanics.Code.FK.IVPressureConvex.Part5
 open MeasureTheory Set Filter Topology Real Finset StatMech StatMech.FK
 
 

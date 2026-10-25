@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AnAlgorithmistsToolkit.code.Sparsification
+import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Sparsification.Part2
 open Matrix Finset Sparsification
 open scoped MatrixOrder ComplexOrder Classical
 

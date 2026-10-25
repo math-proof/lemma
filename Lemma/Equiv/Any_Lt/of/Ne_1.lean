@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Valuation.DVRInstances
+import Instance.v1.Atlas.Buildings.code.Valuation.DVRInstances
 open DVRContext
 
 

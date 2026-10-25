@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.QuantumIsingAntiperiodicSectorLimit
+import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingAntiperiodicSectorLimit.Part2
 open Filter StatMech StatMech.FrontierA
 
 

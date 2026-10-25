@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Foundations.AeTailInvariant
+import Theorem.StatisticalMechanics.Code.Foundations.AeTailInvariant.Part4
 open MeasureTheory MeasurableSpace Set Filter StatMech
 
 

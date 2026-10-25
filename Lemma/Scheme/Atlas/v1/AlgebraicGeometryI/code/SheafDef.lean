@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.SheafDef
+import Def.v1.Atlas.AlgebraicGeometryI.code.SheafDef
 open TopCat TopCat.Presheaf CategoryTheory CategoryTheory.Limits
 open TopCat TopCat.Presheaf CategoryTheory CategoryTheory.Limits TopologicalSpace TopologicalSpace.Opens Opposite
 

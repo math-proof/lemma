@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.Thresholds
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.Thresholds
 open Filter Real SimpleGraph Classical Thresholds
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKQgt4SquareBoxClusterUnion
+import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareBoxClusterUnion
 open Set SimpleGraph StatMech StatMech.FrontierD
 
 

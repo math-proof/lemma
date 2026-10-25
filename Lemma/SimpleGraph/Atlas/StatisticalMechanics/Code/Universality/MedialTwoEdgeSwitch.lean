@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.MedialTwoEdgeSwitch
+import Theorem.StatisticalMechanics.Code.Universality.MedialTwoEdgeSwitch
 open SimpleGraph Set StatMech StatMech.Universality
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.InducedForestNumber
+import Def.Combinatorics.SimpleGraph.InducedForestNumber
 open SimpleGraph
 
 

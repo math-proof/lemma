@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Height.Absolute
+import Def.NumberTheory.Height.Absolute
 open IntermediateField Polynomial
 open NumberField
 

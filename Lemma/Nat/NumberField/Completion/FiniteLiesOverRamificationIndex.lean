@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.Completion.FiniteLiesOverInertiaDegree
+import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInertiaDegree
 import Lemma.Nat.NumberField.Completion.FiniteLiesOverInertiaDegree
 open scoped WithZero NumberField NumberField.LiesOver
 

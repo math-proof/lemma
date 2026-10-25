@@ -1,11 +1,11 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Talagrand
+import Def.v1.Atlas.BooleanFunctions.code.Talagrand
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Parseval
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.InfluenceFourier
-import sympy.atlas.v1.Atlas.BooleanFunctions.code.Parseval
+import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
+import Def.v1.Atlas.BooleanFunctions.code.Parseval
 open Finset BigOperators
 
 

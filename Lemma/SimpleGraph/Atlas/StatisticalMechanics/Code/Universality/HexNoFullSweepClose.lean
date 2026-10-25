@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexNoFullSweepClose
+import Theorem.StatisticalMechanics.Code.Universality.HexNoFullSweepClose.Part5
 open StatMech StatMech.Universality StatMech.Universality.HexStripSimplyConnectedMonotone
 
 

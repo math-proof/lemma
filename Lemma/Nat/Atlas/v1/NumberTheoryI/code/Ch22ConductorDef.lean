@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Ch22ConductorDef
+import Def.v1.Atlas.NumberTheoryI.code.Ch22ConductorDef
 open RayClassField
 open scoped NumberField
 

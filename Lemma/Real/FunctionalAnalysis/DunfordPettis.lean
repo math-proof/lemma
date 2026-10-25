@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.FunctionalAnalysis.DunfordPettis
+import Def.Analysis.FunctionalAnalysis.DunfordPettis
 open MeasureTheory
 open scoped ENNReal
 open scoped Pointwise

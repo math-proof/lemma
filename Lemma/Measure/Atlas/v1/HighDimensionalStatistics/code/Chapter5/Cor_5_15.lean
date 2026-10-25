@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_15
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_15
 open Real MeasureTheory Cor_5_15
 
 

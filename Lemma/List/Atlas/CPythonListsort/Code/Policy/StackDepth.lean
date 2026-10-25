@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Equivalence.PowerloopResults
-import sympy.atlas.CPythonListsort.Code.Policy.StackPowers
-import sympy.atlas.CPythonListsort.Code.Transcription.ListSortImpl
+import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
+import Def.CPythonListsort.Code.Policy.StackPowers.Part2
+import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
 
 
 namespace CPythonListsort

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.TreePercolation
+import Theorem.StatisticalMechanics.Code.Percolation.TreePercolation.Part6
 open Set Finset StatMech StatMech.Percolation
 
 

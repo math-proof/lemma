@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jwd_turnperiodbound
+import Theorem.StatisticalMechanics.Code.Walls.jwd_turnperiodbound
 open SimpleGraph Function StatMech StatMech.Walls
 
 

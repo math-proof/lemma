@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.EpsToZero
+import Theorem.StatisticalMechanics.Code.Sharpness.EpsToZero
 open Filter Topology Finset SimpleGraph StatMech StatMech.Sharpness
 
 

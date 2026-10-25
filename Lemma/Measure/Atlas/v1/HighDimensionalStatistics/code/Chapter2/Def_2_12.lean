@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
+import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
 open Finset Matrix BigOperators Rigollet
 
 

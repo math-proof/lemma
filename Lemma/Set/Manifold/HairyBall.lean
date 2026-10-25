@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.HairyBall
+import Def.Geometry.Manifold.HairyBall
 open Metric
 open scoped Pointwise
 open MathlibExt.Geometry.Manifold.HairyBallWanted

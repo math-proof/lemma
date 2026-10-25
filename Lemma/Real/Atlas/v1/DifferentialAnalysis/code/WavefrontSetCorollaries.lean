@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.WavefrontSetCorollaries
+import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontSetCorollaries
 open MeasureTheory ConeSupport
 open scoped SchwartzMap FourierTransform Pointwise
 

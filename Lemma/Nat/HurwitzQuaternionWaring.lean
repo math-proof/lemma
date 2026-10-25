@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.HurwitzQuaternionWaring
+import Def.NumberTheory.HurwitzQuaternionWaring
 open MetaMathlibExt
 
 

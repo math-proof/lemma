@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.LucasLehmerAcceptableSeed
+import Theorem.NumberTheory.LucasLehmerAcceptableSeed.Part9
 open MetaMathlibExt
 
 

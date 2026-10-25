@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc_raydisjoint
+import Theorem.StatisticalMechanics.Code.Walls.bc_raydisjoint
 open Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Walls
 
 

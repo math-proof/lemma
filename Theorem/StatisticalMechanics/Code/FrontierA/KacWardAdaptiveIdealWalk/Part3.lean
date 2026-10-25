@@ -1,0 +1,165 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAdaptiveIdealWalk.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Def.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveConnectorScales
+import Def.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealWalk.Part3
+
+
+namespace StatMech.FrontierA
+
+@[simp] theorem KWAdaptivePatchedData.idealVertex_even
+    {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
+    (patch : KWAdaptivePatchedData (M := M) polygon)
+    (i : Fin n) (k : Fin (M + 1)) :
+    patch.idealVertex (kwStairEvenIndex i k) = patch.pathBase i k := by
+  simp [KWAdaptivePatchedData.idealVertex, kwStairEvenIndex]
+
+@[simp] theorem KWAdaptivePatchedData.idealVertex_odd
+    {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
+    (patch : KWAdaptivePatchedData (M := M) polygon)
+    (i : Fin n) (k : Fin (M + 1)) :
+    patch.idealVertex (kwStairOddIndex i k) =
+      patch.idealPathCorner i k := by
+  simp [KWAdaptivePatchedData.idealVertex, kwStairOddIndex]
+
+theorem KWAdaptivePatchedData.idealMiddleCorner_sub_base
+    {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
+    (patch : KWAdaptivePatchedData (M := M) polygon)
+    (i : Fin n) (q : Fin M) :
+    patch.idealMiddleCorner i q -
+        patch.data.base i q.succ.castSucc.castSucc =
+      (1 / 2 : ℝ) *
+        (patch.data.parameter i q.succ.castSucc.succ -
+          patch.data.parameter i q.succ.castSucc.castSucc) *
+            polygon.edgeVector i := by
+  rw [KWAdaptivePatchedData.idealMiddleCorner]
+  have hbase := lineMap_sub_lineMap (polygon.vertex i)
+    (polygon.vertex (i + 1))
+    (patch.data.parameter i q.succ.castSucc.castSucc)
+    (patch.data.parameter i q.succ.castSucc.succ)
+  unfold KWStairParameterData.base KWFiniteSimplePolygon.edgeVector
+  rw [hbase]
+  ring_nf
+
+theorem KWAdaptivePatchedData.base_succ_sub_idealMiddleCorner
+    {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
+    (patch : KWAdaptivePatchedData (M := M) polygon)
+    (i : Fin n) (q : Fin M) :
+    patch.data.base i q.succ.castSucc.succ -
+        patch.idealMiddleCorner i q =
+      (1 / 2 : ℝ) *
+        (patch.data.parameter i q.succ.castSucc.succ -
+          patch.data.parameter i q.succ.castSucc.castSucc) *
+            polygon.edgeVector i := by
+  rw [show patch.data.base i q.succ.castSucc.succ -
+        patch.idealMiddleCorner i q =
+      (patch.data.base i q.succ.castSucc.succ -
+        patch.data.base i q.succ.castSucc.castSucc) -
+      (patch.idealMiddleCorner i q -
+        patch.data.base i q.succ.castSucc.castSucc) by ring,
+    patch.idealMiddleCorner_sub_base]
+  have hbase := lineMap_sub_lineMap (polygon.vertex i)
+    (polygon.vertex (i + 1))
+    (patch.data.parameter i q.succ.castSucc.castSucc)
+    (patch.data.parameter i q.succ.castSucc.succ)
+  unfold KWStairParameterData.base KWFiniteSimplePolygon.edgeVector
+  rw [hbase]
+  norm_num [div_eq_mul_inv]
+  ring
+
+theorem KWAdaptivePatchedData.idealRawEdge_even_castSucc
+    {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
+    (patch : KWAdaptivePatchedData (M := M) polygon)
+    (i : Fin n) (q : Fin M) :
+    kwRawEdge patch.idealVertex (kwStairEvenIndex i q.castSucc) =
+      (1 / 2 : ℝ) *
+        (patch.data.parameter i q.succ.castSucc.succ -
+          patch.data.parameter i q.succ.castSucc.castSucc) *
+            polygon.edgeVector i := by
+  unfold kwRawEdge
+  rw [kwStairEvenIndex_add_one, patch.idealVertex_even,
+    patch.idealVertex_odd, patch.pathBase_castSucc,
+    patch.idealPathCorner_castSucc]
+  exact patch.idealMiddleCorner_sub_base i q
+
+theorem KWAdaptivePatchedData.idealRawEdge_odd_castSucc
+    {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
+    (patch : KWAdaptivePatchedData (M := M) polygon)
+    (i : Fin n) (q : Fin M) :
+    kwRawEdge patch.idealVertex (kwStairOddIndex i q.castSucc) =
+      (1 / 2 : ℝ) *
+        (patch.data.parameter i q.succ.castSucc.succ -
+          patch.data.parameter i q.succ.castSucc.castSucc) *
+            polygon.edgeVector i := by
+  unfold kwRawEdge
+  rw [kwStairOddIndex_castSucc_add_one, patch.idealVertex_even,
+    patch.idealVertex_odd, patch.idealPathCorner_castSucc]
+  have hbase : patch.pathBase i q.succ =
+      patch.data.base i q.succ.castSucc.succ := by
+    by_cases hq : q = patch.lastMiddleIndex
+    · subst q
+      have hlast : patch.lastMiddleIndex.succ = Fin.last M := by
+        apply Fin.ext
+        simp [KWAdaptivePatchedData.lastMiddleIndex]
+        have := patch.hM
+        omega
+      rw [hlast, patch.pathBase_last]
+      unfold KWAdaptivePatchedData.incomingPort
+      congr 2
+    · have hsucc_ne : q.succ ≠ Fin.last M := by
+        intro h
+        apply hq
+        apply Fin.ext
+        have hval := congrArg Fin.val h
+        simp only [Fin.val_succ, Fin.val_last] at hval
+        simp [KWAdaptivePatchedData.lastMiddleIndex]
+        omega
+      obtain ⟨r, hr⟩ := Fin.eq_castSucc_of_ne_last hsucc_ne
+      rw [← hr, patch.pathBase_castSucc]
+      congr 2
+  rw [hbase]
+  exact patch.base_succ_sub_idealMiddleCorner i q
+
+theorem KWAdaptivePatchedData.idealRawEdge_even_last
+    {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
+    (patch : KWAdaptivePatchedData (M := M) polygon) (i : Fin n) :
+    kwRawEdge patch.idealVertex (kwStairEvenIndex i (Fin.last M)) =
+      (patch.connector (i + 1)).corner -
+        patch.alpha (i + 1) * (-polygon.edgeVector i) := by
+  unfold kwRawEdge
+  rw [kwStairEvenIndex_add_one, patch.idealVertex_even,
+    patch.idealVertex_odd, patch.pathBase_last,
+    patch.idealPathCorner_last, patch.incomingPort_eq]
+  unfold KWAdaptivePatchedData.connectorCorner
+  ring
+
+theorem KWAdaptivePatchedData.idealRawEdge_odd_last
+    {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
+    (patch : KWAdaptivePatchedData (M := M) polygon) (i : Fin n) :
+    kwRawEdge patch.idealVertex (kwStairOddIndex i (Fin.last M)) =
+      patch.beta * polygon.edgeVector (i + 1) -
+        (patch.connector (i + 1)).corner := by
+  unfold kwRawEdge
+  rw [kwStairOddIndex_last_add_one, patch.idealVertex_odd,
+    patch.idealVertex_even, patch.idealPathCorner_last]
+  have hzero : (0 : Fin (M + 1)) = (0 : Fin M).castSucc := by
+    apply Fin.ext
+    rfl
+  rw [hzero, patch.pathBase_castSucc]
+  have hport : patch.data.base (i + 1)
+      (0 : Fin M).succ.castSucc.castSucc = patch.outgoingPort (i + 1) := by
+    unfold KWAdaptivePatchedData.outgoingPort
+    congr 2
+  rw [hport, patch.outgoingPort_eq]
+  unfold KWAdaptivePatchedData.connectorCorner
+  ring
+
+end StatMech.FrontierA

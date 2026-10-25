@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PeriodicPlanarDuality
+import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarDuality
 open Set StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

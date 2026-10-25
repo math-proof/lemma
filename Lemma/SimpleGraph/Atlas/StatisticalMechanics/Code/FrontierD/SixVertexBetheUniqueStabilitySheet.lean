@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexBetheUniqueStabilitySheet
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheUniqueStabilitySheet
 open Filter Topology StatMech StatMech.FrontierD
 
 

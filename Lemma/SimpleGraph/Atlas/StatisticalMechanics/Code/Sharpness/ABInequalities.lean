@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.ABInequalities
+import Theorem.StatisticalMechanics.Code.Sharpness.ABInequalities
 open MeasureTheory Set Finset StatMech StatMech.Sharpness
 
 

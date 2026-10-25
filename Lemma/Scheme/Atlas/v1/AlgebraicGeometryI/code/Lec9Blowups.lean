@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec9Blowups
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec9Blowups.Part3
 open Polynomial Lec9Blowups
 
 

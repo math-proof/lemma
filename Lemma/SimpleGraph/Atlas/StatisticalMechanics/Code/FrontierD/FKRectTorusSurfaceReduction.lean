@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectTorusSurfaceReduction
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusSurfaceReduction
 open Finset SimpleGraph StatMech StatMech.FrontierD
 
 

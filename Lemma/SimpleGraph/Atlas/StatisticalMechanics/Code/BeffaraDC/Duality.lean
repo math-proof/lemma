@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.Duality
+import Theorem.StatisticalMechanics.Code.BeffaraDC.Duality
 open StatMech StatMech.BeffaraDC
 
 

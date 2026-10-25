@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.FiniteAbelianDual
+import Def.GroupTheory.FiniteAbelianDual.Part2
 open scoped DirectSum
 open MathlibExt.GroupTheory.FiniteAbelianDualWanted
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.HexagonalSharpnessThreshold
+import Theorem.StatisticalMechanics.Code.FK.HexagonalSharpnessThreshold
 open Finset Set Filter Topology MeasureTheory StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.FiniteTensorCategory
+import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
 open CategoryTheory
 open MonoidalCategory
 open scoped TensorProduct

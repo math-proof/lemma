@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section6
+import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
 open Finset BigOperators AlgebraicTopologyI
 
 

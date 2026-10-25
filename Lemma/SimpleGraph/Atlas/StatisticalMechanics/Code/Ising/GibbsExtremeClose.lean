@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.GibbsExtremeClose
+import Theorem.StatisticalMechanics.Code.Ising.GibbsExtremeClose
 open MeasureTheory ProbabilityTheory MeasurableSpace Set Filter Topology StatMech StatMech.Ising
 
 

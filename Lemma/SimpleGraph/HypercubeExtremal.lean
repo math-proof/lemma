@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.SimpleGraph.HypercubeExtremal
+import Def.Combinatorics.SimpleGraph.HypercubeExtremal
 open SimpleGraph
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianConePolarization
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianConePolarization.Part4
 open Filter Finset Polynomial Topology StatMech StatMech.FrontierA
 
 

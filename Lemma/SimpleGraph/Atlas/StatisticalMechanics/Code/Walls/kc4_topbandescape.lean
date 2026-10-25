@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kc4_topbandescape
+import Theorem.StatisticalMechanics.Code.Walls.kc4_topbandescape
 open Set SimpleGraph Function StatMech StatMech.Walls
 
 

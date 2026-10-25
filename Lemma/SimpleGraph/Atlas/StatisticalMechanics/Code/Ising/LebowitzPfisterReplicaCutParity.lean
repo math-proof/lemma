@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaCutParity
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaCutParity.Part2
 open Finset SimpleGraph StatMech StatMech.Ising StatMech.Ising.ReplicaCutParity
 
 

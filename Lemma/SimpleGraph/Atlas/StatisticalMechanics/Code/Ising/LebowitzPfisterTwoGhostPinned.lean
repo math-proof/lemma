@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoGhostPinned
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoGhostPinned.Part5
 open Finset StatMech StatMech.Ising
 
 

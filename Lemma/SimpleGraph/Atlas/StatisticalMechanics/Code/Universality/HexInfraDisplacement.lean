@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexInfraDisplacement
+import Theorem.StatisticalMechanics.Code.Universality.HexInfraDisplacement.Part4
 open StatMech StatMech.Universality
 
 

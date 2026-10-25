@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.OriginRelabelEquivariance
+import Def.CPythonListsort.Code.Correctness.OriginRelabelEquivariance.Part6
 open CPythonListsort
 
 

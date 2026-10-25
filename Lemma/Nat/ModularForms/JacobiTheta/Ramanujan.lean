@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.ModularForms.JacobiTheta.Ramanujan
+import Def.NumberTheory.ModularForms.JacobiTheta.Ramanujan
 open MetaMathlibExt
 
 

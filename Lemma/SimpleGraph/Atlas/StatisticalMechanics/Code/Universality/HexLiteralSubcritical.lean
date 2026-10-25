@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexLiteralSubcritical
+import Theorem.StatisticalMechanics.Code.Universality.HexLiteralSubcritical.Part4
 open StatMech StatMech.Universality
 
 

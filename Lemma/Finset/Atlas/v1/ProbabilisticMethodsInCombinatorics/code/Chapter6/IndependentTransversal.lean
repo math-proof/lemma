@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.IndependentTransversal
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.IndependentTransversal
 open SimpleGraph Finset IndependentTransversal
 
 

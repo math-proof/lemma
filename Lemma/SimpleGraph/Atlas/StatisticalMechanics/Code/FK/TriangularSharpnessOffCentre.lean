@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TriangularSharpnessOffCentre
+import Theorem.StatisticalMechanics.Code.FK.TriangularSharpnessOffCentre.Part4
 open Finset Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 
 

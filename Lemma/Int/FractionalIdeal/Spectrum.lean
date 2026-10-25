@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.FractionalIdeal.Spectrum
+import Theorem.RingTheory.FractionalIdeal.Spectrum
 open scoped nonZeroDivisors Pointwise
 open PrimeSpectrum
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.RieszRepresentation
+import Def.v1.Atlas.DifferentialAnalysis.code.RieszRepresentation
 open MeasureTheory Set TopologicalSpace CompactlySupported Measure Filter BoundedContinuousFunction RieszRepresentation
 open MeasureTheory Set TopologicalSpace CompactlySupported CompactlySupportedContinuousMap
 open scoped ZeroAtInfty ENNReal BoundedContinuousFunction

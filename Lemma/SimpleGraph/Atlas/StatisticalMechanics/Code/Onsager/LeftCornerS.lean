@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.LeftCornerS
+import Theorem.StatisticalMechanics.Code.Onsager.LeftCornerS
 open StatMech StatMech.Onsager StatMech.Onsager.LeftCornerS
 
 

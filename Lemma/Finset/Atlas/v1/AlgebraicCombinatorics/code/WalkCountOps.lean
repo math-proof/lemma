@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.WalkCountOps
+import Def.v1.Atlas.AlgebraicCombinatorics.code.WalkCountOps
 open WalkCountFormula
 open scoped Classical
 

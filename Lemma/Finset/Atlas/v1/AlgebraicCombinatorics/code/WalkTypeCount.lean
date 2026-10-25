@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicCombinatorics.code.WalkTypeCount
+import Def.v1.Atlas.AlgebraicCombinatorics.code.WalkTypeCount
 open HasseWalks WalkTypeCount in
 open scoped Nat
 

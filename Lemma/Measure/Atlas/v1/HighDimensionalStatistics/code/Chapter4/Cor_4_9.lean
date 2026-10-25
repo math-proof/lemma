@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Cor_4_9
+import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Cor_4_9
 open MeasureTheory Matrix Real Finset BigOperators ProbabilityTheory Cor49
 open scoped Matrix.Norms.L2Operator
 

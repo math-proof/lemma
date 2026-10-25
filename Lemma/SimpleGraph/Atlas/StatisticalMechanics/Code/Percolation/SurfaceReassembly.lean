@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.SurfaceReassembly
+import Theorem.StatisticalMechanics.Code.Percolation.SurfaceReassembly
 open MeasureTheory Set SimpleGraph StatMech StatMech.Percolation
 
 

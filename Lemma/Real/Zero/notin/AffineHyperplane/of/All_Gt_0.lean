@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.AffineCoxeter.Faces
-import sympy.atlas.v1.Atlas.Buildings.code.AffineCoxeter.AffineCriterion
+import Def.v1.Atlas.Buildings.code.AffineCoxeter.Faces
+import Instance.v1.Atlas.Buildings.code.AffineCoxeter.AffineCriterion.Part2
 open Finset BigOperators CoxeterGroup TitsCone AffineCoxeterFaces
 
 

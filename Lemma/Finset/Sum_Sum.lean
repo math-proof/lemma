@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_7_1
+import Theorem.Analysis.Section_7_1
 open Finset
 
 

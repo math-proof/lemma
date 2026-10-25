@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.FreeCurrentAfterMixing
+import Theorem.StatisticalMechanics.Code.FrontierB.FreeCurrentAfterMixing
 open MeasureTheory Set StatMech StatMech.FrontierB
 
 

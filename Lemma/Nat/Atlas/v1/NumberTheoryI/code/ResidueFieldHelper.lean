@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.ResidueFieldHelper
+import Theorem.v1.Atlas.NumberTheoryI.code.ResidueFieldHelper
 open IsDedekindDomain IsDedekindDomain.HeightOneSpectrum
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Combinatorics.SimpleGraph.CaroWei
+import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.CaroWei
 
 
 /--

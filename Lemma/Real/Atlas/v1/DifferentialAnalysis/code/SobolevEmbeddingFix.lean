@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SobolevEmbeddingFix
+import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbeddingFix
 open MeasureTheory Filter Topology SobolevEmbedding
 
 

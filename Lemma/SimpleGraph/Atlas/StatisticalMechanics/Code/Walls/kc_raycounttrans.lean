@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.kc_raycounttrans
+import Theorem.StatisticalMechanics.Code.Walls.kc_raycounttrans
 open Set SimpleGraph Function StatMech.Lattice StatMech StatMech.Walls
 
 

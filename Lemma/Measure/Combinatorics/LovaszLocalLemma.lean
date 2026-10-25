@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Probability.Combinatorics.LovaszLocalLemma
+import Def.Probability.Combinatorics.LovaszLocalLemma
 open Finset SimpleGraph
 open scoped BigOperators
 open MathlibExt.Probability.Combinatorics.LovaszLocalLemma

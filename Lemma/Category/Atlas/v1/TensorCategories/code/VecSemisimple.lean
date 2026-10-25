@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.VecSemisimple
+import Instance.v1.Atlas.TensorCategories.code.VecSemisimple.Part2
 open CategoryTheory MonoidalCategory Limits Module VecSemisimple
 
 

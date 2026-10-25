@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.HopfAlgebraAntiHom
+import Def.v1.Atlas.TensorCategories.code.HopfAlgebraAntiHom
 open Coalgebra HopfAlgebra LinearMap
 open scoped TensorProduct
 

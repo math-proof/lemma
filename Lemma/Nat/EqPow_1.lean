@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_2_3
+import Instance.Analysis.Section_2_3.Part2
 import Lemma.Nat.PowNat.eq.MulPow
 import Lemma.Nat.Pow_0.eq.One
 import Lemma.Nat.Eq1Mul

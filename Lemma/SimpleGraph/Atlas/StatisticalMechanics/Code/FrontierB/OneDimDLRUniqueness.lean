@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.OneDimDLRUniqueness
+import Theorem.StatisticalMechanics.Code.FrontierB.OneDimDLRUniqueness.Part8
 open Finset Matrix StatMech StatMech.FrontierB
 
 

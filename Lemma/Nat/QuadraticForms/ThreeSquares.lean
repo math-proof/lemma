@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.QuadraticForms.ThreeSquares
+import Def.NumberTheory.QuadraticForms.ThreeSquares
 open Nat
 
 

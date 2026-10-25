@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.HasseMinkowski
+import Def.v1.Atlas.ArithmeticGeometry.code.HasseMinkowski
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowski
 
 

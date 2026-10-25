@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.MacaulayMonomialShadow
+import Theorem.Combinatorics.Enumerative.MacaulayMonomialShadow.Part4
 open BigOperators
 open MetaMathlibExt
 

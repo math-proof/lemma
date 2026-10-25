@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Probability.VarGapClose
+import Theorem.StatisticalMechanics.Code.Probability.VarGapClose.Part2
 open Finset Real Set StatMech StatMech.Probability
 
 

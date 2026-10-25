@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgePointwiseCutCounterexample
+import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgePointwiseCutCounterexample.Part3
 open Finset StatMech StatMech.Ising
 
 

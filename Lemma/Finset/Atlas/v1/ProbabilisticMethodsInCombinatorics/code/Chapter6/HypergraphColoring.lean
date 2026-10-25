@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.HypergraphColoring
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.HypergraphColoring
 open Set Topology HypergraphColoring
 
 

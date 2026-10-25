@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.RamificationTypes
+import Def.v1.Atlas.NumberTheoryI.code.RamificationTypes.Part2
 open Ideal IsLocalRing
 
 

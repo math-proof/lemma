@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Manifold.TubularNeighborhood
+import Def.Geometry.Manifold.TubularNeighborhood
 open Manifold Topology Filter Metric
 open scoped Manifold ContDiff
 open Topology

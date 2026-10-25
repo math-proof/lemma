@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
 open nonZeroDivisors RiemannRochCurves
 open scoped TensorProduct
 

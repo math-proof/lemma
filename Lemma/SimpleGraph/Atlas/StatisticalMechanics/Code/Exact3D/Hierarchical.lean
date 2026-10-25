@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.Hierarchical
+import Theorem.StatisticalMechanics.Code.Exact3D.Hierarchical.Part4
 open StatMech StatMech.Exact3D
 
 

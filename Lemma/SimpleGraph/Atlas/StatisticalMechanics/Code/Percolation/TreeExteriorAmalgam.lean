@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Percolation.TreeExteriorAmalgam
+import Theorem.StatisticalMechanics.Code.Percolation.TreeExteriorAmalgam
 open Set SimpleGraph StatMech StatMech.Percolation
 
 

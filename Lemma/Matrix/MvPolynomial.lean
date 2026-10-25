@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.LinearAlgebra.Matrix.MvPolynomial
+import Def.LinearAlgebra.Matrix.MvPolynomial
 open Polynomial
 open Matrix
 

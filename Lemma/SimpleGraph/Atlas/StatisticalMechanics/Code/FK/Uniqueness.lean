@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.Uniqueness
+import Theorem.StatisticalMechanics.Code.FK.Uniqueness
 open Set Filter Topology StatMech StatMech.FK
 
 

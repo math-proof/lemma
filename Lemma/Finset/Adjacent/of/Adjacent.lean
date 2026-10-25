@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.ThinFolding
-import sympy.atlas.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.WallCrossing
+import Structure.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.ThinFolding
+import Structure.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.WallCrossing
 open scoped Classical
 
 

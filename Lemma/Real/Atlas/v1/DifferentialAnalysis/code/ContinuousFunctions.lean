@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions
+import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
 open Set Filter Topology Bornology Metric ContinuousFunctions ContinuousLinearFunctional
 open scoped ZeroAtInfty
 open Bornology Metric Set

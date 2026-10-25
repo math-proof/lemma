@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.PermCycleQuotientWeightSum
+import Theorem.StatisticalMechanics.Code.FrontierD.PermCycleQuotientWeightSum
 open Equiv Finset StatMech StatMech.FrontierD
 
 

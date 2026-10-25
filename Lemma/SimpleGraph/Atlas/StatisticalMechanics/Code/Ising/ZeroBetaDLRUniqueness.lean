@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.ZeroBetaDLRUniqueness
+import Theorem.StatisticalMechanics.Code.Ising.ZeroBetaDLRUniqueness
 open MeasureTheory Set StatMech StatMech.Ising
 
 

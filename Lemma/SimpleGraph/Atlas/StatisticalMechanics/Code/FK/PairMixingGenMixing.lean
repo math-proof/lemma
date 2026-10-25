@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.PairMixingGenMixing
+import Theorem.StatisticalMechanics.Code.FK.PairMixingGenMixing
 open MeasureTheory Set StatMech StatMech.FK
 
 

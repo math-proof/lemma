@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectEulerNetIdentification
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEulerNetIdentification
 open Finset SimpleGraph StatMech StatMech.FrontierD
 
 

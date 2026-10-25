@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.TotalTurnFour
+import Theorem.StatisticalMechanics.Code.Lattice.TotalTurnFour.Part2
 open SimpleGraph Function Set Finset StatMech StatMech.Lattice
 
 

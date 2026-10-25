@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Lattice.JordanEnclosureDuality
+import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosureDuality.Part4
 open SimpleGraph Set StatMech StatMech.Lattice
 
 

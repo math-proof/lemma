@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.SLE.LoewnerExistence
+import Theorem.StatisticalMechanics.Code.SLE.LoewnerExistence
 open Complex Set Metric Filter Topology StatMech StatMech.SLE
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SmoothPartitionOfUnity
+import Theorem.v1.Atlas.DifferentialAnalysis.code.SmoothPartitionOfUnity
 open Set Filter Topology Function Finset SmoothPartitionOfUnity
 open scoped Manifold ContDiff
 

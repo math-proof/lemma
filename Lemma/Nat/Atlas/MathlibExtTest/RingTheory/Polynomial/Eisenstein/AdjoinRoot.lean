@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.RingTheory.Polynomial.Eisenstein.AdjoinRoot
+import Theorem.MathlibExtTest.RingTheory.Polynomial.Eisenstein.AdjoinRoot.Part3
 open Polynomial ConcretePadicEisenstein
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.SurjectiveTensorFunctor
+import Class.v1.Atlas.TensorCategories.code.SurjectiveTensorFunctor
 open CategoryTheory CategoryTheory.Limits MonoidalCategory
 
 

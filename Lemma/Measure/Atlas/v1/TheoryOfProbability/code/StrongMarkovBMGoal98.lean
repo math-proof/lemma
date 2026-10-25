@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.StrongMarkovBMGoal98
+import Def.v1.Atlas.TheoryOfProbability.code.StrongMarkovBMGoal98
 open MeasureTheory ProbabilityTheory MeasurableSpace StrongMarkovBMGoal98
 open scoped NNReal ENNReal
 

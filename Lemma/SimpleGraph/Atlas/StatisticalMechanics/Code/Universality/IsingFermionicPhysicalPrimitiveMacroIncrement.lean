@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalPrimitiveMacroIncrement
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalPrimitiveMacroIncrement
 open StatMech StatMech.Universality
 
 

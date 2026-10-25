@@ -1,0 +1,47 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexDegreeTwoHighChargeSpliceHallRouting.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoHighChargeLoopHallRouting.Part11
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFullMaskSpliceKey.Part2
+import Def.StatisticalMechanics.Code.FrontierD.SixVertexResolvedCrossRoutedKey.Part2
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexSpliceKeyLayerSwap.Part7
+import Instance.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoHighChargeSpliceHallRouting
+
+
+namespace StatMech.FrontierD
+
+noncomputable section
+
+open Finset
+
+noncomputable def sixVertexLoopDecoratedSpliceUnitTarget
+    {T : EvenTorus} (middle : Fin (T.width + 1))
+    (hmiddle_pos : 0 < middle.val) (hmiddle_lt : middle.val < T.width)
+    (source : SixVertexLoopDecoratedPair T
+      (sixVertexHorizontalLowerSector middle hmiddle_pos)
+      (sixVertexHorizontalUpperSector middle hmiddle_lt))
+    (key : FKColoredFineTwoCycleUnitTransferSpliceKey
+      (sixVertexLoopDecoratedPairColored source)) :
+    SixVertexLoopDecoratedPair T middle middle := by
+  let colored := sixVertexLoopDecoratedPairColored source
+  have hsectors := key.splice.target_middleSectors middle.val hmiddle_pos
+    (by simpa [colored, sixVertexHorizontalLowerSector] using source.1.1.2.2)
+    (by simpa [colored, sixVertexHorizontalUpperSector] using source.1.2.2.2)
+    key.seamDelta_false key.seamDelta_true
+  exact ⟨(⟨key.splice.target false |>.arrows,
+      (key.splice.target false).iceRule, hsectors.1⟩,
+    ⟨key.splice.target true |>.arrows,
+      (key.splice.target true).iceRule, hsectors.2⟩),
+    (key.splice.target false).toCompatible,
+    (key.splice.target true).toCompatible⟩
+
+end
+end StatMech.FrontierD

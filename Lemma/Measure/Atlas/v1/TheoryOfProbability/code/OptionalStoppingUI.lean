@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.OptionalStoppingUI
+import Theorem.v1.Atlas.TheoryOfProbability.code.OptionalStoppingUI
 open MeasureTheory Filter
 open scoped ENNReal NNReal Topology
 

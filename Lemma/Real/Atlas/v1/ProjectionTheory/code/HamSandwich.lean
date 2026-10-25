@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProjectionTheory.code.HamSandwich
+import Def.v1.Atlas.ProjectionTheory.code.HamSandwich
 open MeasureTheory InnerProductSpace Set Filter Topology HamSandwich
 
 

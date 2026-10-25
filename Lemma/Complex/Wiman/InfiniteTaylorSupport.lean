@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Complex.Wiman.InfiniteTaylorSupport
+import Theorem.Analysis.Complex.Wiman.InfiniteTaylorSupport
 open Complex
 
 

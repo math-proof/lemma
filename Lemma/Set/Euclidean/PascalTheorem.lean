@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.Euclidean.PascalTheorem
+import Def.Geometry.Euclidean.PascalTheorem
 open MetaMathlibExt
 
 

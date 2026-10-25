@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Theorem1324
+import Theorem.v1.Atlas.ArithmeticGeometry.code.Theorem1324
 open MvPolynomial Finsupp Thm1324
 open scoped LinearAlgebra.Projectivization
 open ProjectiveVarietyDef ProjectiveVanishingIdeal AffineParts

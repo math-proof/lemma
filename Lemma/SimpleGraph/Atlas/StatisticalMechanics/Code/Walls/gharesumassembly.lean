@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.gharesumassembly
+import Theorem.StatisticalMechanics.Code.Walls.gharesumassembly
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Walls
 
 

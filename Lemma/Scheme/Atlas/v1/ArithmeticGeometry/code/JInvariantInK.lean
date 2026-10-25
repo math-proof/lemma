@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.JInvariantInK
+import Theorem.v1.Atlas.ArithmeticGeometry.code.JInvariantInK
 open WeierstrassCurve
 
 

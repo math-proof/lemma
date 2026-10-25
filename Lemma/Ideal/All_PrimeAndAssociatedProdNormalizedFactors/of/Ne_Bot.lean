@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraNotes.code.IdealFactorization
+import Def.v1.Atlas.AlgebraNotes.code.IdealFactorization.Part2
 open IdealFactorization
 open UniqueFactorizationMonoid NumberField
 

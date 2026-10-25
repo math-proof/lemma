@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.FourierAnalysis.code.BrownianMotion
+import Def.v1.Atlas.FourierAnalysis.code.BrownianMotion.Part6
 open MeasureTheory ProbabilityTheory Complex Matrix GaussianLinearTransform BetaIntegralBound BrownianCharacterization GradientIntegrability SumIndependentGaussians BrownianFDD HolderBoundary WienerConstruction
 open scoped ENNReal NNReal
 open WithLp Finset

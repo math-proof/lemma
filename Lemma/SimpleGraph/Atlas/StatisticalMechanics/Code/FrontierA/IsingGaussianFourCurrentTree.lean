@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingGaussianFourCurrentTree
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianFourCurrentTree
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 
 

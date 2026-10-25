@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.HexBoundaryUncond
+import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryUncond.Part2
 open StatMech StatMech.Universality
 
 

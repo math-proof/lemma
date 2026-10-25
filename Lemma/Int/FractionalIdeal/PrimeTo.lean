@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.FractionalIdeal.PrimeTo
+import Def.RingTheory.FractionalIdeal.PrimeTo.Part2
 open scoped nonZeroDivisors
 open FractionalIdeal
 

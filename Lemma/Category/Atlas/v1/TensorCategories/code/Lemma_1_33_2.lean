@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TensorCategories.code.CartierKostant.Axioms
+import Def.v1.Atlas.TensorCategories.code.CartierKostant.Axioms.Part3
 import Lemma.Category.Atlas.v1.TensorCategories.code.CartierKostant.Axioms
 open scoped TensorProduct
 

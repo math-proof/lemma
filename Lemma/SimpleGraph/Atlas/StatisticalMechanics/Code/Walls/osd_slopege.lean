@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.osd_slopege
+import Theorem.StatisticalMechanics.Code.Walls.osd_slopege
 open Real Set StatMech StatMech.Walls
 
 

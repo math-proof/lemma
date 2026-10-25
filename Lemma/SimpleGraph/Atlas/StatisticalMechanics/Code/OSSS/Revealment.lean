@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.Revealment
+import Theorem.StatisticalMechanics.Code.OSSS.Revealment.Part2
 open Finset StatMech StatMech.OSSS StatMech.OSSS.Revealment
 
 

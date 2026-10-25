@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicProductGreenBarrier
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicProductGreenBarrier
 open StatMech StatMech.Universality
 
 

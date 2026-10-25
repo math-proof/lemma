@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPeriodic
+import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPeriodic.Part3
 open Finset Set Filter Topology StatMech StatMech.OSSS StatMech.OSSS.FKSharpnessWeightedPeriodic
 
 

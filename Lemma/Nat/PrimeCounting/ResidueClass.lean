@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.ResidueClass
+import Def.NumberTheory.PrimeCounting.ResidueClass
 open Nat
 
 

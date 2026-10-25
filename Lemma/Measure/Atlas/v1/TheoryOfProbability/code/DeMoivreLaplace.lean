@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.DeMoivreLaplace
+import Def.v1.Atlas.TheoryOfProbability.code.DeMoivreLaplace.Part2
 open MeasureTheory ProbabilityTheory Filter
 open scoped unitInterval NNReal Topology Real
 

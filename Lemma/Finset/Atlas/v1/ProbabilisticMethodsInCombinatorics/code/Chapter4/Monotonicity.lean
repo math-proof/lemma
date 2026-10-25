@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.Monotonicity
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.Monotonicity
 open Finset Fintype Set GraphMonotonicity
 
 

@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.CellCoverProof
+import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
 import Lemma.Nat.In_BruhatCell1.of.In_B
 import Lemma.Nat.NonemptyBruhatCell
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.ParabolicDefs
+import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
 
 
 namespace BNPair

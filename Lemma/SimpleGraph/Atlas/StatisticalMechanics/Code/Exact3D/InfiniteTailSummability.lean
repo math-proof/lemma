@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.InfiniteTailSummability
+import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailSummability.Part5
 open StatMech StatMech.Exact3D StatMech.Exact3D.TailSummability StatMech.Exact3D.TailSummability.InfiniteTailCertificate StatMech.Exact3D.TailSummability.FiniteSupportCertificate StatMech.Exact3D.ContributionSplit
 
 

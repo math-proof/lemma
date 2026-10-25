@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.PowerTreeEntropy
+import Def.CPythonListsort.Code.Assembly.PowerTreeEntropy
 open CPythonListsort CPythonListsort.MergeTree
 
 

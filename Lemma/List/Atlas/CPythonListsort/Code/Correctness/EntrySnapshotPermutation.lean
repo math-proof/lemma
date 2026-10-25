@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
+import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
 open CPythonListsort CPythonListsort.EntrySnapshotPermutation
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.HarperIsoperimetric
+import Def.Combinatorics.HarperIsoperimetric
 open MathlibExt.Combinatorics.HarperIsoperimetricWanted
 
 

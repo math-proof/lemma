@@ -1,0 +1,258 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicPhysicalCenteredRadialPatch.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareBoundaryLayerLaplacian
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareBoundaryLayerFaceLaplacian.Part9
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialInterpolation.Part7
+import Def.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCenteredRadialPatch.Part7
+
+
+namespace StatMech.Universality
+
+open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
+
+noncomputable section
+
+theorem
+    fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_of_odd_faceInterior
+    (n I J : Nat) (hn : 0 < n)
+    (hI0 : 0 < I) (hI : I < 2 * n)
+    (hJ0 : 0 < J) (hJ : J < 2 * n)
+    (hodd : ¬ Even (I + J))
+    (hwest : 0 < centeredRadialHalf I J - 1)
+    (heast : centeredRadialHalf I J - 1 + 1 < 2 * n)
+    (hsouth : 0 < n + I - centeredRadialHalf I J)
+    (hnorth : n + I - centeredRadialHalf I J + 1 < 2 * n) :
+    IsingSquareSHolomorphicQuad
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨I, hI⟩ ⟨J - 1, by omega⟩)
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨I, hI⟩ ⟨J, hJ⟩)
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨I - 1, by omega⟩ ⟨J, hJ⟩)
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨I - 1, by omega⟩ ⟨J - 1, by omega⟩) := by
+  let c := centeredRadialPatchDualFullFaceOfInterior n I J
+    hwest heast hsouth hnorth
+  have hevenN : Even (I + (J - 1)) := by
+    rw [Nat.even_iff]
+    have hmod := Nat.not_even_iff.mp hodd
+    omega
+  have hN : fkIsingSquareCenteredRadialPatchEdge n
+        ⟨I, hI⟩ ⟨J - 1, by omega⟩ = faceNorthEdge n c := by
+    rw [fkIsingSquareCenteredRadialPatchEdge_eq_east n _ _ hevenN]
+    apply Subtype.ext
+    simp only [faceNorthEdge, fkIsingSquareDirectionEdge]
+    rw [Sym2.eq_iff]
+    left
+    constructor <;> apply Subtype.ext <;> funext k <;> fin_cases k <;>
+      simp [c, centeredRadialPatchDualFullFaceOfInterior, faceNWVertex,
+        fkIsingSquareCenteredRadialPatchVertex, centeredRadialHalf,
+        fkIsingSquareInteriorCellKey, fkIsingSquareNeighbor,
+        fkIsingSquareNeighborSite] <;>
+      have hmod := Nat.not_even_iff.mp hodd <;> omega
+  have hE : fkIsingSquareCenteredRadialPatchEdge n
+        ⟨I, hI⟩ ⟨J, hJ⟩ = faceEastEdge n c := by
+    rw [fkIsingSquareCenteredRadialPatchEdge_eq_north n _ _ hodd]
+    apply Subtype.ext
+    simp only [faceEastEdge, fkIsingSquareDirectionEdge]
+    rw [Sym2.eq_iff]
+    left
+    constructor <;> apply Subtype.ext <;> funext k <;> fin_cases k <;>
+      simp [c, centeredRadialPatchDualFullFaceOfInterior, faceSEVertex,
+        fkIsingSquareCenteredRadialPatchVertex, centeredRadialHalf,
+        fkIsingSquareInteriorCellKey, fkIsingSquareNeighbor,
+        fkIsingSquareNeighborSite] <;>
+      have hmod := Nat.not_even_iff.mp hodd <;> omega
+  have hevenS : Even (I - 1 + J) := by
+    rw [Nat.even_iff]
+    have hmod := Nat.not_even_iff.mp hodd
+    omega
+  have hS : fkIsingSquareCenteredRadialPatchEdge n
+        ⟨I - 1, by omega⟩ ⟨J, hJ⟩ = faceSouthEdge n c := by
+    rw [fkIsingSquareCenteredRadialPatchEdge_eq_east n _ _ hevenS]
+    apply Subtype.ext
+    simp only [faceSouthEdge, fkIsingSquareDirectionEdge]
+    rw [Sym2.eq_iff]
+    left
+    constructor <;> apply Subtype.ext <;> funext k <;> fin_cases k <;>
+      simp [c, centeredRadialPatchDualFullFaceOfInterior, faceSWVertex,
+        fkIsingSquareCenteredRadialPatchVertex, centeredRadialHalf,
+        fkIsingSquareInteriorCellKey, fkIsingSquareNeighbor,
+        fkIsingSquareNeighborSite] <;>
+      have hmod := Nat.not_even_iff.mp hodd <;> omega
+  have hoddW : ¬ Even (I - 1 + (J - 1)) := by
+    rw [Nat.not_even_iff]
+    have hmod := Nat.not_even_iff.mp hodd
+    omega
+  have hW : fkIsingSquareCenteredRadialPatchEdge n
+        ⟨I - 1, by omega⟩ ⟨J - 1, by omega⟩ = faceWestEdge n c := by
+    rw [fkIsingSquareCenteredRadialPatchEdge_eq_north n _ _ hoddW]
+    apply Subtype.ext
+    simp only [faceWestEdge, fkIsingSquareDirectionEdge]
+    rw [Sym2.eq_iff]
+    left
+    constructor <;> apply Subtype.ext <;> funext k <;> fin_cases k <;>
+      simp [c, centeredRadialPatchDualFullFaceOfInterior, faceSWVertex,
+        fkIsingSquareCenteredRadialPatchVertex, centeredRadialHalf,
+        fkIsingSquareInteriorCellKey, fkIsingSquareNeighbor,
+        fkIsingSquareNeighborSite] <;>
+      have hmod := Nat.not_even_iff.mp hodd <;> omega
+  have hSWwest : fkIsingSquareDirectionAvailable n (faceSWVertex n c) .west := by
+    change -(n : Int) < (fkIsingSquareInteriorCellKey n c).1
+    simp [c, centeredRadialPatchDualFullFaceOfInterior,
+      fkIsingSquareInteriorCellKey] at hwest ⊢
+    omega
+  have hSWsouth : fkIsingSquareDirectionAvailable n (faceSWVertex n c) .south := by
+    change -(n : Int) < (fkIsingSquareInteriorCellKey n c).2
+    simp [c, centeredRadialPatchDualFullFaceOfInterior,
+      fkIsingSquareInteriorCellKey] at hsouth ⊢
+    omega
+  have hNWwest : fkIsingSquareDirectionAvailable n (faceNWVertex n c) .west := by
+    change -(n : Int) < (fkIsingSquareInteriorCellKey n c).1
+    simp [c, centeredRadialPatchDualFullFaceOfInterior,
+      fkIsingSquareInteriorCellKey] at hwest ⊢
+    omega
+  have hNWnorth : fkIsingSquareDirectionAvailable n (faceNWVertex n c) .north := by
+    change (fkIsingSquareInteriorCellKey n c).2 + 1 < (n : Int)
+    have hc : (c.2.1 : Int) + 1 < 2 * (n : Int) := by
+      exact_mod_cast hnorth
+    dsimp [fkIsingSquareInteriorCellKey]
+    linarith
+  have hSEeast : fkIsingSquareDirectionAvailable n (faceSEVertex n c) .east := by
+    change (fkIsingSquareInteriorCellKey n c).1 + 1 < (n : Int)
+    have hc : (c.1.1 : Int) + 1 < 2 * (n : Int) := by
+      exact_mod_cast heast
+    dsimp [fkIsingSquareInteriorCellKey]
+    linarith
+  have hSEsouth : fkIsingSquareDirectionAvailable n (faceSEVertex n c) .south := by
+    change -(n : Int) < (fkIsingSquareInteriorCellKey n c).2
+    simp [c, centeredRadialPatchDualFullFaceOfInterior,
+      fkIsingSquareInteriorCellKey] at hsouth ⊢
+    omega
+  have hNWeast : fkIsingSquareDirectionAvailable n (faceNWVertex n c) .east := by
+    simp [fkIsingSquareDirectionAvailable, faceNWVertex,
+      fkIsingSquareInteriorCellKey] <;> omega
+  have hNWsouth : fkIsingSquareDirectionAvailable n (faceNWVertex n c) .south := by
+    simp [fkIsingSquareDirectionAvailable, faceNWVertex,
+      fkIsingSquareInteriorCellKey]
+  have hSEnorth : fkIsingSquareDirectionAvailable n (faceSEVertex n c) .north := by
+    simp [fkIsingSquareDirectionAvailable, faceSEVertex,
+      fkIsingSquareInteriorCellKey] <;> omega
+  have hSEwest : fkIsingSquareDirectionAvailable n (faceSEVertex n c) .west := by
+    simp [fkIsingSquareDirectionAvailable, faceSEVertex,
+      fkIsingSquareInteriorCellKey]
+  have hSWeast : fkIsingSquareDirectionAvailable n (faceSWVertex n c) .east := by
+    simp [fkIsingSquareDirectionAvailable, faceSWVertex,
+      fkIsingSquareInteriorCellKey] <;> omega
+  have hSWnorth : fkIsingSquareDirectionAvailable n (faceSWVertex n c) .north := by
+    simp [fkIsingSquareDirectionAvailable, faceSWVertex,
+      fkIsingSquareInteriorCellKey] <;> omega
+  have hnotN : (faceNorthEdge n c).1 ∉
+      fkIsingSquarePerimeterPrimalEdgeFinset n := by
+    simpa [faceNorthEdge] using
+      fkIsingSquareDirectionEdge_not_mem_perimeter_of_interior n
+        (faceNWVertex n c) .east hNWeast
+        hNWeast hNWnorth hNWwest hNWsouth
+  have hnotE : (faceEastEdge n c).1 ∉
+      fkIsingSquarePerimeterPrimalEdgeFinset n := by
+    simpa [faceEastEdge] using
+      fkIsingSquareDirectionEdge_not_mem_perimeter_of_interior n
+        (faceSEVertex n c) .north hSEnorth
+        hSEeast hSEnorth hSEwest hSEsouth
+  have hnotS : (faceSouthEdge n c).1 ∉
+      fkIsingSquarePerimeterPrimalEdgeFinset n := by
+    simpa [faceSouthEdge] using
+      fkIsingSquareDirectionEdge_not_mem_perimeter_of_interior n
+        (faceSWVertex n c) .east hSWeast
+        hSWeast hSWnorth hSWwest hSWsouth
+  have hnotW : (faceWestEdge n c).1 ∉
+      fkIsingSquarePerimeterPrimalEdgeFinset n := by
+    simpa [faceWestEdge] using
+      fkIsingSquareDirectionEdge_not_mem_perimeter_of_interior n
+        (faceSWVertex n c) .north hSWnorth
+        hSWeast hSWnorth hSWwest hSWsouth
+  have hquad := fkIsingSquareBoundaryFullFaceFullObservable_quad
+    n hn c hnotN hnotE hnotS hnotW
+  unfold fkIsingSquareBoundaryCenteredRadialPatchFullObservable
+  rw [hN, hE, hS, hW]
+  exact hquad
+
+
+theorem fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_right_of_odd
+    (n J : Nat) (hn : 0 < n) (hJ0 : 0 < J) (hJ : J < 2 * n)
+    (hodd : ¬ Even ((2 * n - 1) + J)) :
+    IsingSquareSHolomorphicQuad
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨2 * n - 1, by omega⟩ ⟨J - 1, by omega⟩)
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨2 * n - 1, by omega⟩ ⟨J, hJ⟩)
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨2 * n - 2, by omega⟩ ⟨J, hJ⟩)
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨2 * n - 2, by omega⟩ ⟨J - 1, by omega⟩) := by
+  apply
+    fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_of_odd_faceInterior
+      n (2 * n - 1) J hn (by omega) (by omega) hJ0 hJ hodd <;>
+    simp [centeredRadialHalf] <;>
+    have hmod := Nat.not_even_iff.mp hodd <;> omega
+
+
+theorem fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_top_of_odd
+    (n I : Nat) (hn : 0 < n) (hI0 : 0 < I) (hI : I < 2 * n)
+    (hodd : ¬ Even (I + (2 * n - 1))) :
+    IsingSquareSHolomorphicQuad
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨I, hI⟩ ⟨2 * n - 2, by omega⟩)
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨I, hI⟩ ⟨2 * n - 1, by omega⟩)
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨I - 1, by omega⟩ ⟨2 * n - 1, by omega⟩)
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservable n hn
+        ⟨I - 1, by omega⟩ ⟨2 * n - 2, by omega⟩) := by
+  apply
+    fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_of_odd_faceInterior
+      n I (2 * n - 1) hn hI0 hI (by omega) (by omega) hodd <;>
+    simp [centeredRadialHalf] <;>
+    have hmod := Nat.not_even_iff.mp hodd <;> omega
+
+
+theorem fkIsingSquareBoundaryCenteredRadialPatchFullObservable_cellCR
+    (n i j : Nat) (hn : 0 < n)
+    (hi : i + 2 < 2 * n) (hj : j + 2 < 2 * n) :
+    IsingCellCRAt
+      (fkIsingSquareBoundaryCenteredRadialPatchFullObservableExtension n hn)
+      i j := by
+  by_cases heven : Even (i + 1 + (j + 1))
+  · have hquad :=
+      fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad
+        n (i + 1) (j + 1) hn (by omega) (by omega)
+        (by omega) (by omega) heven
+    unfold IsingCellCRAt
+      fkIsingSquareBoundaryCenteredRadialPatchFullObservableExtension
+    simp [show i < 2 * n by omega, show i + 1 < 2 * n by omega,
+      show j < 2 * n by omega, show j + 1 < 2 * n by omega]
+    simpa using hquad.2.2
+  · have hquad :=
+      fkIsingSquareBoundaryCenteredRadialPatchFullObservable_quad_of_odd
+        n (i + 1) (j + 1) hn (by omega) (by omega)
+        (by omega) (by omega) heven
+    unfold IsingCellCRAt
+      fkIsingSquareBoundaryCenteredRadialPatchFullObservableExtension
+    simp [show i < 2 * n by omega, show i + 1 < 2 * n by omega,
+      show j < 2 * n by omega, show j + 1 < 2 * n by omega]
+    have h := hquad.2.2
+    simp only [Nat.add_sub_cancel] at h
+    linear_combination -h
+
+
+end
+end StatMech.Universality

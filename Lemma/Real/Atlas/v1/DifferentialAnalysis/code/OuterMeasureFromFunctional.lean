@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.OuterMeasureFromFunctional
+import Def.v1.Atlas.DifferentialAnalysis.code.OuterMeasureFromFunctional.Part2
 open Set TopologicalSpace MeasureTheory MeasuresAndSigmaAlgebras
 open scoped ENNReal NNReal Topology ZeroAtInfty
 

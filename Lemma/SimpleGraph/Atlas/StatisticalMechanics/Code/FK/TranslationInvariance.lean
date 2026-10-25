@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.TranslationInvariance
+import Theorem.StatisticalMechanics.Code.FK.TranslationInvariance.Part5
 open MeasureTheory Filter Topology SimpleGraph Set StatMech StatMech.FK
 
 

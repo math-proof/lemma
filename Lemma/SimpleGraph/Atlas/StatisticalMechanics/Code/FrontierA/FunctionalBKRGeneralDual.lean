@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.FunctionalBKRGeneralDual
+import Theorem.StatisticalMechanics.Code.FrontierA.FunctionalBKRGeneralDual.Part4
 open Finset StatMech StatMech.FrontierA
 
 

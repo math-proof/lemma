@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.CriticalPoint
+import Def.StatisticalMechanics.Code.FK.CriticalPoint.Part3
 open MeasureTheory StatMech StatMech.FK
 
 

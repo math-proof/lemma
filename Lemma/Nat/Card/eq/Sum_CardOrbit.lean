@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraNotes.code.GroupActions
+import Def.v1.Atlas.AlgebraNotes.code.GroupActions
 open GroupActions
 open MulAction
 

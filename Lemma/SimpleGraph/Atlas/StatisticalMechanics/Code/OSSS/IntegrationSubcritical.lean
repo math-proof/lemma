@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.IntegrationSubcritical
+import Theorem.StatisticalMechanics.Code.OSSS.IntegrationSubcritical
 open Real Filter Topology Set Finset Asymptotics StatMech StatMech.OSSS StatMech.OSSS.IntegrationSubcritical
 
 

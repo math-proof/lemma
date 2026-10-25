@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.AffineVarietySpec
+import Theorem.v1.Atlas.AlgebraicGeometryI.code.AffineVarietySpec
 open AlgebraicGeometry AlgebraicGeometry.Scheme
 open AlgebraicGeometry CategoryTheory
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Assembly.FoundNewRunSafety
+import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety.Part2
 open CPythonListsort CPythonListsort.FoundNewRunStableFrame
 
 

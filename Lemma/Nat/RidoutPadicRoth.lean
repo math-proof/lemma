@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.RidoutPadicRoth
+import Def.NumberTheory.RidoutPadicRoth
 open scoped BigOperators
 open MetaMathlibExt
 

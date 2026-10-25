@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Equivalence.MinrunResults
+import Theorem.CPythonListsort.Code.Equivalence.MinrunResults.Part3
 open CPythonListsort
 
 

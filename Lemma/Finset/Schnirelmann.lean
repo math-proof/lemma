@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Schnirelmann
+import Def.Combinatorics.Schnirelmann
 open Finset
 open scoped Pointwise
 open MathlibExt.Combinatorics.Schnirelmann

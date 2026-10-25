@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalC1
+import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalC1.Part6
 open Filter MeasureTheory Topology StatMech StatMech.FrontierA
 
 

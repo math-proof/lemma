@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.LogSpace
+import Def.v1.Atlas.TheoryOfComputation.code.LogSpace.Part4
 import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.LogSpace
 import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.SpaceComplexity
+import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
 open SpaceComplexity
 
 

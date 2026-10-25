@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.PartialDedekindZeta
+import Def.NumberTheory.NumberField.PartialDedekindZeta
 open NumberField
 
 

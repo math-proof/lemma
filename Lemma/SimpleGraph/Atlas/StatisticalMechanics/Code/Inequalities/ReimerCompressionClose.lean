@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Inequalities.ReimerCompressionClose
+import Theorem.StatisticalMechanics.Code.Inequalities.ReimerCompressionClose.Part2
 open Finset StatMech
 
 

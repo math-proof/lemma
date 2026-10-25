@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.LieGroups.code.KFinite
+import Def.v1.Atlas.LieGroups.code.KFinite.Part3
 open ContinuousRep
 
 

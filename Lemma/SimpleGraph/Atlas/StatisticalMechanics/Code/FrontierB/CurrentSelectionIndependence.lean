@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
 open MeasureTheory Filter Topology StatMech StatMech.FrontierB
 
 

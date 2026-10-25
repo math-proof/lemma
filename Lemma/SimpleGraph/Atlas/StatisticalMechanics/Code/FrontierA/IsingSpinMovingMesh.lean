@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingSpinMovingMesh
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingSpinMovingMesh.Part4
 open Filter Topology StatMech StatMech.FrontierA
 
 

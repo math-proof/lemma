@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec10SheavesP1
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec10SheavesP1.Part3
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite AlgebraicGeometry
 
 

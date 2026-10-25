@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.BaseCase
+import Theorem.StatisticalMechanics.Code.Onsager.BaseCase
 open StatMech StatMech.Onsager StatMech.Onsager.BaseCase
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamCanonicalEdgeDegreeHall
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamCanonicalEdgeDegreeHall.Part6
 open Finset StatMech StatMech.FrontierA StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Misc.SI
+import Abbrev.Analysis.Misc.SI.Part2
 open Rat
 
 

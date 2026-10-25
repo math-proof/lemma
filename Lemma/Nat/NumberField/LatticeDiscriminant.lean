@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.NumberField.LatticeDiscriminant
+import Def.NumberTheory.NumberField.LatticeDiscriminant
 open scoped Matrix
 
 

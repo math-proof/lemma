@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.CPythonListsort.Code.Correctness.MergeMovementCorrectness
+import Def.CPythonListsort.Code.Correctness.MergeMovementCorrectness.Part2
 open CPythonListsort CPythonListsort.SortSlice
 
 

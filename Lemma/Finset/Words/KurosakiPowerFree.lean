@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Words.KurosakiPowerFree
+import Def.Combinatorics.Words.KurosakiPowerFree
 open MetaMathlibExt
 
 

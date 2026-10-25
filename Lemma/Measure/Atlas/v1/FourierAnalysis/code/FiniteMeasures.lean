@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.FourierAnalysis.code.FiniteMeasures
+import Def.v1.Atlas.FourierAnalysis.code.FiniteMeasures.Part2
 open MeasureTheory BoundedContinuousFunction Complex MeasureTheory.Measure Filter Topology Metric FourierTransformMeasure WeakConvergencePortmanteau
 open Filter Topology Metric
 open scoped FourierTransform

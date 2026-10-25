@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Topology.Algebra.Group.OpenProfiniteCompletion
+import Def.Topology.Algebra.Group.OpenProfiniteCompletion.Part2
 open CategoryTheory
 open scoped Pointwise
 open ProfiniteGrp.OpenProfiniteCompletion

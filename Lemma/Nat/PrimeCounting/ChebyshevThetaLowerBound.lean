@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.ChebyshevThetaLowerBound
+import Def.NumberTheory.PrimeCounting.ChebyshevThetaLowerBound
 open Real
 open MetaMathlibExt
 

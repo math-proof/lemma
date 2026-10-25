@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.AnnulusDefs
+import Theorem.StatisticalMechanics.Code.BeffaraDC.AnnulusDefs.Part10
 open Set StatMech.Lattice SimpleGraph StatMech StatMech.BeffaraDC StatMech.BeffaraDC.SymmetricDomain
 
 

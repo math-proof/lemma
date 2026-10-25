@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.CombinatorialOptimization.code.Matching.MatchingCharacterization
+import Def.v1.Atlas.CombinatorialOptimization.code.Matching.MatchingCharacterization
 open MatchingPolytope
 open SimpleGraph Finset
 

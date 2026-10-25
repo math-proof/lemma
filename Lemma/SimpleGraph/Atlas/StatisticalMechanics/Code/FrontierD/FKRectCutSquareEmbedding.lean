@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectCutSquareEmbedding
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectCutSquareEmbedding.Part6
 open MeasureTheory StatMech.Lattice SimpleGraph StatMech StatMech.FrontierD
 
 

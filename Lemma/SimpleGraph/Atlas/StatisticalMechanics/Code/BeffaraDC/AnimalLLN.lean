@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.BeffaraDC.AnimalLLN
+import Theorem.StatisticalMechanics.Code.BeffaraDC.AnimalLLN.Part3
 open StatMech StatMech.BeffaraDC
 
 

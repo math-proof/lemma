@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.RevealmentTranslation
+import Theorem.StatisticalMechanics.Code.OSSS.RevealmentTranslation
 open Set Finset SimpleGraph StatMech StatMech.OSSS StatMech.OSSS.RevealmentTranslation
 
 

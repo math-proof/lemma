@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rc3_hallforswapinjection
+import Theorem.StatisticalMechanics.Code.Walls.rc3_hallforswapinjection
 open Finset Function StatMech ConfigSpace StatMech.Walls
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.KWRectangleWeighted
+import Theorem.StatisticalMechanics.Code.Onsager.KWRectangleWeighted.Part2
 open StatMech StatMech.Onsager
 
 

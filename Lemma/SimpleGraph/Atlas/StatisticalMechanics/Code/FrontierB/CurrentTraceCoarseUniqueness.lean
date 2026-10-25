@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentTraceCoarseUniqueness
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTraceCoarseUniqueness
 open MeasureTheory Set StatMech StatMech.FrontierB
 
 

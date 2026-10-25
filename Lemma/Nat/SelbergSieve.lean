@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.SelbergSieve
+import Def.NumberTheory.SelbergSieve
 open MathlibExt.SelbergSieve
 
 

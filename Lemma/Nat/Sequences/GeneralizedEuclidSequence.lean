@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.Sequences.GeneralizedEuclidSequence
+import Theorem.NumberTheory.Sequences.GeneralizedEuclidSequence.Part8
 open scoped Pointwise
 open MetaMathlibExt
 

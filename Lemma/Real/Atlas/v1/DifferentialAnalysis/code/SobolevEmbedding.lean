@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding
+import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
 open MeasureTheory Filter Topology SobolevEmbedding SchwartzRepresentation
 open scoped ZeroAtInfty
 open scoped SchwartzMap

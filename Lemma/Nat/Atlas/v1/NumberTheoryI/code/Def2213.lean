@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Def2213
+import Def.v1.Atlas.NumberTheoryI.code.Def2213
 open RayClassField
 open scoped NumberField
 

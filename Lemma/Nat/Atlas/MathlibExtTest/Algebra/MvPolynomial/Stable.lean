@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MathlibExtTest.Algebra.MvPolynomial.Stable
+import Theorem.MathlibExtTest.Algebra.MvPolynomial.Stable
 open MvPolynomial MathlibExtTest MathlibExtTest.Algebra MathlibExtTest.Algebra.MvPolynomial MathlibExtTest.Algebra.MvPolynomial.Stable
 open scoped ComplexOrder
 

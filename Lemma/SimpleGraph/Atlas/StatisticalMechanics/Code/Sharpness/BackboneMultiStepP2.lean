@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.BackboneMultiStepP2
+import Theorem.StatisticalMechanics.Code.Sharpness.BackboneMultiStepP2
 open SimpleGraph Finset StatMech StatMech.Sharpness StatMech.Sharpness.BackboneMultiStepBondProgram
 
 

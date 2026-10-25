@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.PairwiseIndepSLLN
+import Def.v1.Atlas.TheoryOfProbability.code.PairwiseIndepSLLN
 open MeasureTheory ProbabilityTheory Filter Set
 open scoped ENNReal NNReal MeasureTheory
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.KFull
+import Theorem.NumberTheory.KFull
 open Nat
 
 

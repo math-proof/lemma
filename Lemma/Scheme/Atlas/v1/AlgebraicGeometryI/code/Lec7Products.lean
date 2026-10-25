@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec7Products
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec7Products
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Lec7Products
 open scoped TensorProduct
 

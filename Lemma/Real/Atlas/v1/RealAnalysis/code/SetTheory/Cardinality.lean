@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.RealAnalysis.code.SetTheory.Cardinality
+import Def.v1.Atlas.RealAnalysis.code.SetTheory.Cardinality
 open SetTheory SetTheory.Cardinality
 
 

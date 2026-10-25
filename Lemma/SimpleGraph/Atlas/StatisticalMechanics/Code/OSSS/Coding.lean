@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.Coding
+import Theorem.StatisticalMechanics.Code.OSSS.Coding.Part6
 open Finset MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.Coding
 
 

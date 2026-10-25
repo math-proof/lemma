@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.BNPair.Generalized.Theorems
-import sympy.atlas.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism
+import Def.v1.Atlas.Buildings.code.BNPair.Generalized.Theorems
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism.Part2
 open GeneralizedBNPair CoxeterGroup
 
 

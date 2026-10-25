@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Section_9_9
+import Abbrev.Analysis.Section_9_9
 open Chapter6 Filter
 open Chapter9
 open Chapter9.UniformContinuousOn

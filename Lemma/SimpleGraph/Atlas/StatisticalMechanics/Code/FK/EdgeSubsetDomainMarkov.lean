@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.EdgeSubsetDomainMarkov
+import Theorem.StatisticalMechanics.Code.FK.EdgeSubsetDomainMarkov.Part5
 open Finset SimpleGraph StatMech StatMech.FK
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Onsager.CriticalIntegrability
+import Theorem.StatisticalMechanics.Code.Onsager.CriticalIntegrability.Part3
 open MeasureTheory Interval StatMech StatMech.Onsager
 
 

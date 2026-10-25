@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GameTheory.SpragueGrundy
+import Theorem.GameTheory.SpragueGrundy.Part4
 open MetaMathlibExt.SpragueGrundy
 
 

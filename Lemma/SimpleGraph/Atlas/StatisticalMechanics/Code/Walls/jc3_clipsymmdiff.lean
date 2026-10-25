@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.jc3_clipsymmdiff
+import Theorem.StatisticalMechanics.Code.Walls.jc3_clipsymmdiff
 open SimpleGraph Function Set StatMech StatMech.Walls
 
 

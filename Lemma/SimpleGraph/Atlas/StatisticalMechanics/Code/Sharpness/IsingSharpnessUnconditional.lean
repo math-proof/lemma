@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.IsingSharpnessUnconditional
+import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpnessUnconditional
 open MeasureTheory Set StatMech StatMech.Sharpness
 
 

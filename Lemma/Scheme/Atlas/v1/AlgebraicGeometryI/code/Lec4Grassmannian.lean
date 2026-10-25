@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.Lec4Grassmannian
+import Def.v1.Atlas.AlgebraicGeometryI.code.Lec4Grassmannian
 open ExteriorAlgebra Lec4Grassmannian
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicTopologyI.code.Section32
+import Def.v1.Atlas.AlgebraicTopologyI.code.Section32.Part2
 open Set Function OrientationTheorem
 
 

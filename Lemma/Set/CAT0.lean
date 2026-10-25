@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.CAT0
+import Theorem.Geometry.CAT0
 open IsCAT0FourPoint
 
 

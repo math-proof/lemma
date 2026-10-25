@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.CechDerivedStrengthened
+import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedStrengthened.Part2
 open CategoryTheory CategoryTheory.Limits DerivedFunctorsDefs CechDerivedComparison CechDerivedIsomorphismProof
 open DerivedFunctorsDefs
 open DerivedFunctorsDefs CohomologyConnection

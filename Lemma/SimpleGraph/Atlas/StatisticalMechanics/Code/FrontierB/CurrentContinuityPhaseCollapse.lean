@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.CurrentContinuityPhaseCollapse
+import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityPhaseCollapse
 open Filter MeasureTheory Set Topology StatMech StatMech.FrontierB
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Exact3D.PackageReparameterizationComparisonExample
+import Theorem.StatisticalMechanics.Code.Exact3D.PackageReparameterizationComparisonExample.Part3
 open StatMech StatMech.Exact3D StatMech.Exact3D.PackageReparameterizationComparisonExample
 
 

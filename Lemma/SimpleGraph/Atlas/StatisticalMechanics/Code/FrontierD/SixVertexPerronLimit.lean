@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexPerronLimit
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPerronLimit
 open Finset Filter Matrix Topology StatMech StatMech.FrontierD
 
 

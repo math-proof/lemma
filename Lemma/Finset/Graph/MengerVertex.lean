@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Graph.MengerVertex
+import Def.Combinatorics.Graph.MengerVertex.Part2
 open MetaMathlibExt
 open MathlibExt.Combinatorics.SimpleGraph.MengerVertexWanted
 

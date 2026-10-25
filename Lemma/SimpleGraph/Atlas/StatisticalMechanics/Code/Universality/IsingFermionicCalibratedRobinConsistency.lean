@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicCalibratedRobinConsistency
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCalibratedRobinConsistency
 open StatMech StatMech.Universality StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.HewittSavage
+import Def.v1.Atlas.TheoryOfProbability.code.HewittSavage
 open MeasureTheory MeasurableSpace ProbabilityTheory Filter Set
 open scoped ENNReal MeasureTheory
 

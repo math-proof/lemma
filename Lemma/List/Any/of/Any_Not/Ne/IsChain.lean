@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.Building.ThicknessFoldings
+import Theorem.v1.Atlas.Buildings.code.Building.ThicknessFoldings
 open ChamberComplex AptIsCoxeterProof ThicknessFoldings
 
 

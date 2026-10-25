@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Matching.GaleShapley
+import Theorem.Combinatorics.Matching.GaleShapley.Part7
 open MathlibExt.Combinatorics.Matching.GaleShapley
 open StrictTotalOrder
 

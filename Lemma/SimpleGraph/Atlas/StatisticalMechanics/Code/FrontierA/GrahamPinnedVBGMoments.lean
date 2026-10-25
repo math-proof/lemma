@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.GrahamPinnedVBGMoments
+import Theorem.StatisticalMechanics.Code.FrontierA.GrahamPinnedVBGMoments
 open Finset Classical StatMech StatMech.FrontierA
 
 

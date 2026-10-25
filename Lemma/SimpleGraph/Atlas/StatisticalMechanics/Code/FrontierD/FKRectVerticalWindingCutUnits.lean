@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingCutUnits
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingCutUnits.Part2
 open Finset SimpleGraph StatMech StatMech.FrontierD
 
 

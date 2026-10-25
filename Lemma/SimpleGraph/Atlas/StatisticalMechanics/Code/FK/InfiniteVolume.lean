@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.InfiniteVolume
+import Theorem.StatisticalMechanics.Code.FK.InfiniteVolume.Part7
 open MeasureTheory StatMech StatMech.FK
 
 

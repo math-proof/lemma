@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfProbability.code.TailSigmaAlgebra
+import Abbrev.v1.Atlas.TheoryOfProbability.code.TailSigmaAlgebra
 open MeasureTheory MeasurableSpace ProbabilityTheory Filter
 open scoped ENNReal MeasureTheory
 

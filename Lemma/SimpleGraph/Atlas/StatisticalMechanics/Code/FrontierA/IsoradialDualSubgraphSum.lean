@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsoradialDualSubgraphSum
+import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialDualSubgraphSum.Part3
 open StatMech StatMech.FrontierA
 
 

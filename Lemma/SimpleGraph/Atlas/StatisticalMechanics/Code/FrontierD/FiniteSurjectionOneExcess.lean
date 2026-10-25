@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FiniteSurjectionOneExcess
+import Theorem.StatisticalMechanics.Code.FrontierD.FiniteSurjectionOneExcess
 open Finset StatMech StatMech.FrontierD
 
 

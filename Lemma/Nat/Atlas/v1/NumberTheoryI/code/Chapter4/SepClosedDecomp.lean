@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.NumberTheoryI.code.Chapter4.SepClosedDecomp
+import Def.v1.Atlas.NumberTheoryI.code.Chapter4.SepClosedDecomp.Part2
 open Polynomial TensorProduct Module SepClosedDecomposition
 
 

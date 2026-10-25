@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.CrossClassHdom
+import Theorem.StatisticalMechanics.Code.Ising.CrossClassHdom
 open Finset Classical StatMech StatMech.Ising
 
 

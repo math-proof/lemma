@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.IsingDyadicGreenRiemann
+import Theorem.StatisticalMechanics.Code.FrontierA.IsingDyadicGreenRiemann.Part6
 open Bornology Filter Finset MeasureTheory Set StatMech StatMech.FrontierA
 
 

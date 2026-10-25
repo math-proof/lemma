@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.LogCesaroLimit
+import Theorem.StatisticalMechanics.Code.OSSS.LogCesaroLimit.Part2
 open Filter Topology Real Finset StatMech StatMech.OSSS StatMech.OSSS.LogCesaroLimit
 
 

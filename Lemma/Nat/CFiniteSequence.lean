@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.CFiniteSequence
+import Def.NumberTheory.CFiniteSequence
 open MetaMathlibExt
 
 

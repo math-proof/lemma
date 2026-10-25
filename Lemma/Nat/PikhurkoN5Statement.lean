@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.analysis.Misc.erdos_613
+import Theorem.Analysis.Misc.erdos_613.Part7
 open Classical
 open scoped BigOperators
 open PikhurkoN5

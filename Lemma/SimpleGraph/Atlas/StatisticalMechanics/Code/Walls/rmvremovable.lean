@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.rmvremovable
+import Theorem.StatisticalMechanics.Code.Walls.rmvremovable.Part3
 open Finset Set SimpleGraph Function StatMech StatMech.Walls
 
 

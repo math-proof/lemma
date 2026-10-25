@@ -1,0 +1,22 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/CheckSixVertexAgreementCapEndpoint.lean -/
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
+
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexAgreementCapEndpoint.Part2
+open StatMech.FrontierD
+
+#print axioms SixVertexDirectedTorusEdge.IsAgreement
+#print axioms SixVertexDirectedSimpleArc.Follows
+#print axioms SixVertexDirectedSimpleArc.IsAgreement
+#print axioms sixVertexFourByTwo_agreement_followed_head
+#print axioms SixVertexDirectedSimpleArc.agreement_tail_next
+#print axioms sixVertexFourByTwo_agreementCap_hits_disagreementArcInterior
+#print axioms sixVertexFourByTwo_no_internallyDisjointAgreementCap
+
+

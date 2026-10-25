@@ -1,9 +1,9 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
+import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
 import Lemma.Submodule.OfEq.eq.M.of.Eq
 import Lemma.Fin.Eq.of.Ne_0.All_Eq
-import sympy.atlas.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem
+import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem.Part2
 
 
 /--

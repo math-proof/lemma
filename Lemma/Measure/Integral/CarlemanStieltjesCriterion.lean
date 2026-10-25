@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.MeasureTheory.Integral.CarlemanStieltjesCriterion
+import Def.MeasureTheory.Integral.CarlemanStieltjesCriterion
 open Filter MeasureTheory Set
 open scoped BigOperators Topology
 open MetaMathlibExt

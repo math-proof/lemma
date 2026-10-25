@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter7.RandomGraphs
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter7.RandomGraphs
 open Finset BigOperators RandomGraphs
 
 

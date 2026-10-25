@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.NumberTheory.PrimeCounting.BrunTitchmarsh
+import Def.NumberTheory.PrimeCounting.BrunTitchmarsh
 open MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshWanted
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.IsingFK.EsLatticeBridge
+import Theorem.StatisticalMechanics.Code.IsingFK.EsLatticeBridge
 open StatMech StatMech.IsingFK
 
 

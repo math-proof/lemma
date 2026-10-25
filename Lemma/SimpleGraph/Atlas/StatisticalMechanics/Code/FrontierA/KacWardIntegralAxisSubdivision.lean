@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierA.KacWardIntegralAxisSubdivision
+import Theorem.StatisticalMechanics.Code.FrontierA.KacWardIntegralAxisSubdivision.Part7
 open StatMech StatMech.FrontierA
 
 

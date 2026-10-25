@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicSquarePathSplice
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquarePathSplice
 open Finset SimpleGraph StatMech StatMech.Universality
 
 

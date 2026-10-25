@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexFiniteTorus
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFiniteTorus.Part5
 open Finset Matrix StatMech StatMech.FrontierD
 
 

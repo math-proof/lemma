@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.SpecialFunctions.Log.IntegralDerivative
+import Def.Analysis.SpecialFunctions.Log.IntegralDerivative
 open scoped Topology
 open Real
 

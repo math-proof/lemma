@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.GeometryOfManifolds.code.EllipticRegularityConcrete
+import Structure.v1.Atlas.GeometryOfManifolds.code.EllipticRegularityConcrete.Part2
 open EllipticRegularityConcrete
 
 

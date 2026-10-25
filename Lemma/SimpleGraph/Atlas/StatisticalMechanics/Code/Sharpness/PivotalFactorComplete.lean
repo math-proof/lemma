@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Sharpness.PivotalFactorComplete
+import Theorem.StatisticalMechanics.Code.Sharpness.PivotalFactorComplete
 open MeasureTheory Function Set SimpleGraph StatMech StatMech.Percolation
 
 

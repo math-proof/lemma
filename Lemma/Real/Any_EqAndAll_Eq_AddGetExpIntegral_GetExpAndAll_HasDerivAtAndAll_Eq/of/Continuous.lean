@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.ode.Duhamel
+import Theorem.Analysis.ODE.Duhamel
 
 /--
 [Duhamel](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/ODE/Duhamel.lean)

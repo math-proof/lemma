@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.AdaptiveCausalRootFlip
+import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveCausalRootFlip
 open StatMech StatMech.OSSS StatMech.OSSS.AdaptiveCausalKernel
 
 

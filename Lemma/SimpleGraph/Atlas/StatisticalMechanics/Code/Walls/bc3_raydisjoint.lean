@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Walls.bc3_raydisjoint
+import Theorem.StatisticalMechanics.Code.Walls.bc3_raydisjoint
 open Set SimpleGraph SimpleGraph.Walk StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Walls
 
 

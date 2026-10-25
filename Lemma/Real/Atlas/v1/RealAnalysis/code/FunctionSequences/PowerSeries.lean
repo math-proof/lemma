@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.RealAnalysis.code.FunctionSequences.PowerSeries
+import Def.v1.Atlas.RealAnalysis.code.FunctionSequences.PowerSeries
 open Filter Topology FunctionSequences
 open scoped NNReal ENNReal
 

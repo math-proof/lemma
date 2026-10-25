@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalEnergy
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalEnergy
 open StatMech StatMech.Universality
 
 

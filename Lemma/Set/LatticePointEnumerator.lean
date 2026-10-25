@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Geometry.LatticePointEnumerator
+import Def.Geometry.LatticePointEnumerator
 open scoped Pointwise
 open LatticePointEnumerator
 

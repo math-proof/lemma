@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Order.BooleanFunction.SelfDual
+import Def.Order.BooleanFunction.SelfDual
 open MetaMathlibExt
 
 

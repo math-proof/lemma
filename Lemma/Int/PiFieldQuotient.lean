@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.RingTheory.PiFieldQuotient
+import Def.RingTheory.PiFieldQuotient
 open PiFieldQuotient
 
 

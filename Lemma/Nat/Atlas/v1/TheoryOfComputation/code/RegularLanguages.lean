@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.TheoryOfComputation.code.RegularLanguages
+import Def.v1.Atlas.TheoryOfComputation.code.RegularLanguages
 open Computability RegularLanguages
 open Language Set
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FK.BoundaryEdgeAbsorption
+import Theorem.StatisticalMechanics.Code.FK.BoundaryEdgeAbsorption.Part3
 open Finset SimpleGraph StatMech StatMech.FK
 
 

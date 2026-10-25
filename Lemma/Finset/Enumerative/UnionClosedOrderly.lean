@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Combinatorics.Enumerative.UnionClosedOrderly
+import Def.Combinatorics.Enumerative.UnionClosedOrderly
 open MetaMathlibExt
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.RealAnalysis.code.Integration.Fourier
+import Def.v1.Atlas.RealAnalysis.code.Integration.Fourier
 open Integration
 open MeasureTheory Real Filter Set intervalIntegral Topology
 

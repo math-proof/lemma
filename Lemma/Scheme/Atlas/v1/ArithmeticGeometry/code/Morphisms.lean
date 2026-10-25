@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ArithmeticGeometry.code.Morphisms
+import Def.v1.Atlas.ArithmeticGeometry.code.Morphisms.Part6
 open MvPolynomial AffineParts ProjectiveDimension
 open PrimeSpectrum
 open AffineParts ProjectiveDimension

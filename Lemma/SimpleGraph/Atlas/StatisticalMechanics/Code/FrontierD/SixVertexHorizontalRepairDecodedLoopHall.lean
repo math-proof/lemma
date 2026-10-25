@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalRepairDecodedLoopHall
+import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalRepairDecodedLoopHall.Part2
 open StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexHorizontalDegreeTwoLoopDecodedHorizontalRepair
 
 

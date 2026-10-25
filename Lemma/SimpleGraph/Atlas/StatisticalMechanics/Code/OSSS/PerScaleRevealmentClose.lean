@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.OSSS.PerScaleRevealmentClose
+import Theorem.StatisticalMechanics.Code.OSSS.PerScaleRevealmentClose.Part3
 open MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.PerScaleRevealmentClose
 
 

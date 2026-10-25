@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Ising.IsingPlusExtremeFinal
+import Theorem.StatisticalMechanics.Code.Ising.IsingPlusExtremeFinal
 open StatMech StatMech.Ising
 
 

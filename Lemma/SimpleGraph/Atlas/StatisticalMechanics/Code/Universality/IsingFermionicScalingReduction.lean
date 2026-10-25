@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicScalingReduction
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicScalingReduction
 open Filter Set Topology StatMech StatMech.Universality
 
 

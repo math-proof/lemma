@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.Analysis.Ramanujan.Part1Ch7Entry9Zetaeven
+import Def.Analysis.Ramanujan.Part1Ch7Entry9Zetaeven
 open scoped Nat Real BigOperators Interval Polynomial ContDiff
 open Asymptotics Filter Finset Complex Topology MeasureTheory
 open Entry10Zetaviabernoulli (chapter7Admissible chapter7PowerDifferenceTerm)

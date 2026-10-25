@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierB.MixedCurrentTraceFactor
+import Theorem.StatisticalMechanics.Code.FrontierB.MixedCurrentTraceFactor.Part2
 open MeasureTheory Set StatMech StatMech.FrontierB
 
 

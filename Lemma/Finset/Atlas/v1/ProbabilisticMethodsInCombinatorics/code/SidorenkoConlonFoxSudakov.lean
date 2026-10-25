@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SidorenkoConlonFoxSudakov
+import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SidorenkoConlonFoxSudakov
 open Sidorenko
 
 

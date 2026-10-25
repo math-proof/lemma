@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.v1.Atlas.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
+import Def.v1.Atlas.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
 open MvPolynomial Module LocalIntersection
 
 

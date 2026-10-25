@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.RSW.SelfDuality
+import Theorem.StatisticalMechanics.Code.RSW.SelfDuality.Part2
 open SimpleGraph Real StatMech StatMech.RSW
 
 

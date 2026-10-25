@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKFreeConnectionBoxEmbedding
+import Theorem.StatisticalMechanics.Code.FrontierD.FKFreeConnectionBoxEmbedding
 open MeasureTheory SimpleGraph StatMech.Lattice StatMech StatMech.FrontierD
 
 

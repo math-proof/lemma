@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.FrontierD.FKRectFaithfulWalkExtrema
+import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulWalkExtrema
 open SimpleGraph StatMech StatMech.FrontierD
 
 

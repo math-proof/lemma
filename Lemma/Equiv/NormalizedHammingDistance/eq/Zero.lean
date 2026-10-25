@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.GroupTheory.PermutationStability
+import Def.GroupTheory.PermutationStability
 open PermutationStability
 
 

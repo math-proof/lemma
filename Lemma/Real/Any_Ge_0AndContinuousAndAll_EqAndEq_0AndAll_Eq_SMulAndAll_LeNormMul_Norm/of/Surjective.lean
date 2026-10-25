@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.calculus.functional_analysis.BartleGraves
+import Theorem.Analysis.NormedSpace.BartleGraves
 
 /--
 [bartle_graves](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/BartleGraves.lean)

@@ -1,8 +1,8 @@
 import Mathlib
 import sympy.Basic
-import sympy.algebra.direct_limit
+import Instance.Algebra.DirectLimit
+import Class.Mathlib_Algebra_IsDirectLimit
 open scoped TensorProduct
-
 
 private lemma map_id_eq_rTensor
   {R₀ : Type*} [CommRing R₀] {A A' : Type*} [CommRing A] [CommRing A']
@@ -17,7 +17,6 @@ private lemma map_id_eq_rTensor
   ·
     intro x y hx hy
     rw [map_add, map_add, hx, hy]
-
 
 /--
 [Algebra_TensorProduct_isDirectLimit_map_of_isDirectLimit](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_TensorProduct_isDirectLimit_map_of_isDirectLimit.lean)
@@ -165,6 +164,5 @@ private lemma main
   ·
     intro i j hij x
     exact hcompat i j hij x
-
 
 -- created on 2026-10-16

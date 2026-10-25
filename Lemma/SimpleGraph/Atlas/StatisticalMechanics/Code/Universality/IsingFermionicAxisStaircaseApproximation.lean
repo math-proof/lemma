@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.atlas.StatisticalMechanics.Code.Universality.IsingFermionicAxisStaircaseApproximation
+import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicAxisStaircaseApproximation.Part2
 open Filter Set Topology StatMech StatMech.Universality
 
 
