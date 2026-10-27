@@ -1,4 +1,4 @@
-import sympy.matrices.dense
+import Instance.LinearAlgebra.Matrix.Dense
 import Lemma.Matrix.PosDefD
 import Lemma.Matrix.DotVecMul_MulDP.le.DotVecMul_D
 open Matrix

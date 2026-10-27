@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Macro.Order.ExprWithLimits
 import Mathlib.Analysis.SpecialFunctions.Exp
 

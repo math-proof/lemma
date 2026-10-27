@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 set_option backward.isDefEq.respectTransparency false
 set_option linter.style.haveILetI false
 open Polynomial

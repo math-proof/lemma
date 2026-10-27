@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalTorusLocalLimit.Part2
 open Filter Finset MeasureTheory Set Topology StatMech StatMech.FrontierA
 

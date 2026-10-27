@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MathlibExt MathlibExt.NumberTheory MathlibExt.NumberTheory.BreuschWanted
 open Nat
 

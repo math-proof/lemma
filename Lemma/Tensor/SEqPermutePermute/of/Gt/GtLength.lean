@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqPermutePermute__Neg.of.GtLength_Add
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 open Tensor
 
 
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2025-10-25
--- updated on 2025-10-26
+-- updated on 2026-10-26

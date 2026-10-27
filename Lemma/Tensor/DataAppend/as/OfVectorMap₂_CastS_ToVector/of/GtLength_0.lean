@@ -1,5 +1,5 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.Nat.DivDiv.eq.Div_Mul
 import Lemma.Nat.DivMod_Mul.eq.ModDiv
@@ -132,4 +132,4 @@ private lemma main
       rw [EqCons_Tail.of.GtLength_0]
 
 -- created on 2026-04-25
--- updated on 2026-05-01
+-- updated on 2026-10-26

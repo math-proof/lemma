@@ -1,5 +1,5 @@
 import Mathlib.InformationTheory.KullbackLeibler.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory InformationTheory
 
 
@@ -19,4 +19,4 @@ private lemma main
 
 
 -- created on 2021-03-25
--- updated on 2026-10-17
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicCombinatorics.code.YoungLatticeSperner.Part3
 open SpernerProperty YoungLattice YoungLattice.Lmn QuotientIsoLmn GroupActions WreathOrbits Finset MulAction
 open scoped Classical Pointwise

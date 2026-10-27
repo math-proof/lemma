@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Calculus.NewtonMethod
 open Real.Calculus.NewtonMethod
 
@@ -41,4 +41,4 @@ private lemma newton_step_sub_root_abs_le_eq
 
 
 -- created on 2026-10-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import sympy.vector.functions
+import Instance.Data.Vector.Functions.Part2
 open Bool
 
 

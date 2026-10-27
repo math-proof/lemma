@@ -3,8 +3,8 @@ import Lemma.Random.SinglePSpace.SinglePSpace.of.SinglePSpace
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.MeasureTheory.Function.FactorsThrough
 import Mathlib.Probability.Independence.Conditional
-import sympy.stats.hidden_markov_sequence
-import sympy.stats.single_pspace_measurable
+import Def.Probability.Process.HiddenMarkovSequence.Part2
+import Instance.Probability.SinglePSpaceMeasurable
 open MeasureTheory ProbabilityTheory Measure Random Fun
 open scoped ProbabilityTheory
 
@@ -292,4 +292,4 @@ private lemma main
 
 
 -- created on 2024-06-18
--- updated on 2026-10-23
+-- updated on 2026-10-26

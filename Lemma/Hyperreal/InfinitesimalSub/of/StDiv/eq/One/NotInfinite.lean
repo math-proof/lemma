@@ -7,7 +7,7 @@ import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
 import Lemma.Int.GtAbs_0.of.Ne_0
 import Lemma.Rat.Lt0Div.of.Gt_0.Gt_0
 import Lemma.Rat.SubDiv.eq.DivSub.of.Ne_0
-open Hyperreal Rat Int
+open Hyperreal Rat Int ArchimedeanClass
 
 
 /--

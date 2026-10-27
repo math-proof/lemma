@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionReduction.Part2
 open Set Filter Topology StatMech StatMech.Ising
 

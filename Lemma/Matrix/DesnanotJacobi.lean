@@ -1,6 +1,7 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.determinants.DesnanotJacobi
+import Initialize.Tactic.Attr.Basic
+import Syntax.LinearAlgebra.Matrix.Notation
+import Def.LinearAlgebra.Matrix.Determinant.DesnanotJacobi.Part7
 import Lemma.Fin.SkipTwo
 import Lemma.Finset.PermFinset
 open AlgebraicCombinatorics.Determinants
@@ -5497,10 +5498,10 @@ lemma prod_filter_eq_inv_mul_prod {K : Type*} [Field K] {m : ℕ} (x y : Fin m �
     This allows us to derive cauchy_det from cauchy_det_poly. -/
 lemma poly_matrix_eq_diag_mul_cauchyMat {K : Type*} [Field K] {m : ℕ} (x y : Fin m → K)
     (h : ∀ i j, x i + y j ≠ 0) :
-    (Matrix.of fun i j => ∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k)) =
+    ([i < m, j < m] (∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k))) =
     (Matrix.diagonal (fun i => ∏ k : Fin m, (x i + y k))) * (cauchyMat x y h) := by
   ext i j
-  simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.diagonal_apply, cauchyMat]
+  simp only [Matrix.ofFun_apply, Matrix.mul_apply, Matrix.diagonal_apply, cauchyMat]
   rw [Finset.sum_eq_single i]
   · simp only [↓reduceIte]
     rw [mul_comm]
@@ -5512,9 +5513,9 @@ lemma poly_matrix_eq_diag_mul_cauchyMat {K : Type*} [Field K] {m : ℕ} (x y : F
 
 /-- Polynomial Cauchy determinant for n = 3 (direct computation). -/
 lemma cauchy_det_poly_three {K : Type*} [Field K] (x y : Fin 3 → K) :
-    (Matrix.of fun i j => ∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k)).det =
+    ([i < 3, j < 3] (∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k))).det =
       ∏ i : Fin 3, ∏ j ∈ Ioi i, (x i - x j) * (y i - y j) := by
-  simp only [det_fin_three, Matrix.of_apply]
+  simp only [det_fin_three, Matrix.ofFun_apply]
   simp only [Fin3.filter_ne_0, Fin3.filter_ne_1, Fin3.filter_ne_2]
   simp only [Fin3.prod_pair_12, Fin3.prod_pair_02, Fin3.prod_pair_01]
   simp only [Fin.prod_univ_three, Fin3.Ioi_0, Fin3.Ioi_1, Fin3.Ioi_2]
@@ -5584,11 +5585,11 @@ lemma X_sub_X_dvd_of_subst_eq_zero {σ : Type*} [DecidableEq σ]
     because two rows become equal. This is a key lemma for the factor hunting proof. -/
 lemma cauchy_poly_det_zero_of_x_eq {m : ℕ}
     (x y : Fin m → R) (i j : Fin m) (hij : i ≠ j) (hx : x i = x j) :
-    (Matrix.of fun i' j' => ∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k)).det = 0 := by
-  have hrows : (Matrix.of fun i' j' => ∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k)) i =
-               (Matrix.of fun i' j' => ∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k)) j := by
+    ([i' < m, j' < m] (∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k))).det = 0 := by
+  have hrows : ([i' < m, j' < m] (∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k))) i =
+               ([i' < m, j' < m] (∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k))) j := by
     ext col
-    simp only [Matrix.of_apply]
+    simp only [Matrix.ofFun_apply]
     congr 1
     ext k
     rw [hx]
@@ -5598,11 +5599,11 @@ lemma cauchy_poly_det_zero_of_x_eq {m : ℕ}
     because two columns become equal. This is a key lemma for the factor hunting proof. -/
 lemma cauchy_poly_det_zero_of_y_eq {m : ℕ}
     (x y : Fin m → R) (i j : Fin m) (hij : i ≠ j) (hy : y i = y j) :
-    (Matrix.of fun i' j' => ∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k)).det = 0 := by
-  have hcols : ∀ row, (Matrix.of fun i' j' => ∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k)) row i =
-               (Matrix.of fun i' j' => ∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k)) row j := by
+    ([i' < m, j' < m] (∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k))).det = 0 := by
+  have hcols : ∀ row, ([i' < m, j' < m] (∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k))) row i =
+               ([i' < m, j' < m] (∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k))) row j := by
     intro row
-    simp only [Matrix.of_apply]
+    simp only [Matrix.ofFun_apply]
     have h1 : Finset.univ.filter (fun k => k ≠ i) = insert j (Finset.univ.filter (fun k => k ≠ i ∧ k ≠ j)) := by
       ext k
       simp only [mem_filter, mem_univ, true_and, ne_eq, mem_insert]
@@ -7783,11 +7784,11 @@ lemma cauchyMatEval_det (m : ℕ) :
 
 /-- Key factorization: the evaluated polynomial Cauchy matrix equals diag * Cauchy over ℚ -/
 lemma evalPolyCauchy_eq_diag_mul_cauchy (m : ℕ) :
-    (Matrix.of fun i j => evalPolyCauchyEntry m i j : Matrix (Fin m) (Fin m) ℤ).map (↑· : ℤ → ℚ) =
+    ([i < m, j < m] evalPolyCauchyEntry m i j : Matrix (Fin m) (Fin m) ℤ).map (↑· : ℤ → ℚ) =
     evalDiagMat m * cauchyMatEval m := by
   ext i j
   simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.diagonal_apply, evalPolyCauchyEntry, 
-             evalDiagMat, cauchyMatEval, Matrix.of_apply]
+             evalDiagMat, cauchyMatEval, Matrix.ofFun_apply]
   rw [Finset.sum_eq_single i]
   · simp only [↓reduceIte]
     have hne : (i : ℚ) + m + j ≠ 0 := eval_sum_ne_zero m i j
@@ -7855,12 +7856,12 @@ lemma map_det_int_rat {m : ℕ} (M : Matrix (Fin m) (Fin m) ℤ) :
     2. cauchyMatEval_det: Cauchy formula for specific evaluation values
     3. evalDiagMat_det: diagonal determinant equals denominator -/
 lemma polyCauchyMat'_eval_det_eq_numerator (m : ℕ) :
-    (Matrix.of fun i j => evalPolyCauchyEntry m i j : Matrix (Fin m) (Fin m) ℤ).det = 
+    ([i < m, j < m] evalPolyCauchyEntry m i j : Matrix (Fin m) (Fin m) ℤ).det = 
     evalNumerator m := by
   -- The proof embeds into ℚ, uses the factorization and Cauchy formula,
   -- then extracts the integer equality.
   -- Step 1: Convert to ℚ and compute the determinant
-  have hdet_Q : ((Matrix.of fun i j => evalPolyCauchyEntry m i j : Matrix (Fin m) (Fin m) ℤ).map (↑· : ℤ → ℚ)).det = 
+  have hdet_Q : (([i < m, j < m] evalPolyCauchyEntry m i j : Matrix (Fin m) (Fin m) ℤ).map (↑· : ℤ → ℚ)).det = 
                 (evalNumerator m : ℚ) := by
     -- Use the factorization
     rw [evalPolyCauchy_eq_diag_mul_cauchy]
@@ -8051,7 +8052,7 @@ lemma eq_of_dvd_of_eval_eq {σ : Type*} [DecidableEq σ] [Finite σ]
 
     Label: thm.det.cauchy -/
 lemma cauchy_det_poly (x y : Fin n → R) :
-    (Matrix.of fun i j => ∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k)).det =
+    ([i < n, j < n] (∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k))).det =
       ∏ i : Fin n, ∏ j ∈ Ioi i, (x i - x j) * (y i - y j) := by
   induction n using Nat.strong_induction_on with
   | _ n ih =>
@@ -11000,7 +11001,7 @@ private lemma dj_cauchy_poly_det_zero_of_x_eq
   (hij : i ≠ j)
   (hx : x i = x j) :
 -- imply
-  (Matrix.of fun i' j' => ∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k)).det = 0 := by
+  ([i' < m, j' < m] (∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k))).det = 0 := by
 -- proof
   apply AlgebraicCombinatorics.Determinants.cauchy_poly_det_zero_of_x_eq x y i j hij hx
 
@@ -11017,7 +11018,7 @@ private lemma dj_cauchy_poly_det_zero_of_y_eq
   (hij : i ≠ j)
   (hy : y i = y j) :
 -- imply
-  (Matrix.of fun i' j' => ∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k)).det = 0 := by
+  ([i' < m, j' < m] (∏ k ∈ Finset.univ.filter (· ≠ j'), (x i' + y k))).det = 0 := by
 -- proof
   apply AlgebraicCombinatorics.Determinants.cauchy_poly_det_zero_of_y_eq x y i j hij hy
 
@@ -11335,7 +11336,7 @@ private lemma dj_cauchy_det_poly
 -- given
   (x y : Fin n → R) :
 -- imply
-  (Matrix.of fun i j => ∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k)).det = ∏ i : Fin n, ∏ j ∈ Ioi i, (x i - x j) * (y i - y j) := by
+  ([i < n, j < n] (∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k))).det = ∏ i : Fin n, ∏ j ∈ Ioi i, (x i - x j) * (y i - y j) := by
 -- proof
   apply AlgebraicCombinatorics.Determinants.cauchy_det_poly x y
 
@@ -13372,7 +13373,7 @@ private lemma pv_poly_matrix_eq_diag_mul_cauchyMat
   (x y : Fin m → K)
   (h : ∀ i j, x i + y j ≠ 0) :
 -- imply
-  (Matrix.of fun i j => ∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k)) = (Matrix.diagonal (fun i => ∏ k : Fin m, (x i + y k))) * (cauchyMat x y h) := by
+  ([i < m, j < m] (∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k))) = (Matrix.diagonal (fun i => ∏ k : Fin m, (x i + y k))) * (cauchyMat x y h) := by
 -- proof
   apply AlgebraicCombinatorics.Determinants.poly_matrix_eq_diag_mul_cauchyMat x y h
 
@@ -13385,7 +13386,7 @@ private lemma pv_cauchy_det_poly_three
 -- given
   (x y : Fin 3 → K) :
 -- imply
-  (Matrix.of fun i j => ∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k)).det = ∏ i : Fin 3, ∏ j ∈ Ioi i, (x i - x j) * (y i - y j) := by
+  ([i < 3, j < 3] (∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k))).det = ∏ i : Fin 3, ∏ j ∈ Ioi i, (x i - x j) * (y i - y j) := by
 -- proof
   apply AlgebraicCombinatorics.Determinants.cauchy_det_poly_three x y
 
@@ -15187,7 +15188,7 @@ private lemma pv_evalPolyCauchy_eq_diag_mul_cauchy
 -- given
   (m : ℕ) :
 -- imply
-  (Matrix.of fun i j => evalPolyCauchyEntry m i j : Matrix (Fin m) (Fin m) ℤ).map (↑· : ℤ → ℚ) = evalDiagMat m * cauchyMatEval m := by
+  ([i < m, j < m] evalPolyCauchyEntry m i j : Matrix (Fin m) (Fin m) ℤ).map (↑· : ℤ → ℚ) = evalDiagMat m * cauchyMatEval m := by
 -- proof
   apply AlgebraicCombinatorics.Determinants.evalPolyCauchy_eq_diag_mul_cauchy m
 
@@ -15248,7 +15249,7 @@ private lemma pv_polyCauchyMat'_eval_det_eq_numerator
 -- given
   (m : ℕ) :
 -- imply
-  (Matrix.of fun i j => evalPolyCauchyEntry m i j : Matrix (Fin m) (Fin m) ℤ).det = evalNumerator m := by
+  ([i < m, j < m] evalPolyCauchyEntry m i j : Matrix (Fin m) (Fin m) ℤ).det = evalNumerator m := by
 -- proof
   apply AlgebraicCombinatorics.Determinants.polyCauchyMat'_eval_det_eq_numerator m
 

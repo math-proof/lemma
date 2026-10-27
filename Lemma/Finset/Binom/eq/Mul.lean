@@ -1,7 +1,7 @@
 import Mathlib.RingTheory.Binomial
 import Mathlib.Data.Nat.Choose.Central
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 open Nat
 
 

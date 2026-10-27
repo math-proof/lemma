@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqGetStack
-import sympy.matrices.expressions.special
-import torch.eye
+import Def.Data.Holor.BandPart
+import Def.Data.Holor.Eye
 open Tensor
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.JordanLinearGroups
 open scoped commutatorElement
 open scoped Matrix.Norms.L2Operator
@@ -1038,7 +1038,7 @@ lemma jordan_linear_groups
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26
 
 
 -- created on 2026-10-20

@@ -1,5 +1,5 @@
 import Mathlib.Order.ConditionallyCompletePartialOrder.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Set
 
 
@@ -122,4 +122,4 @@ private lemma main
 
 
 -- created on 2021-10-02
--- updated on 2026-10-17
+-- updated on 2026-10-26

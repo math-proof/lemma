@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.RSW.Push
 open StatMech StatMech.RSW StatMech.RSW.Push
 

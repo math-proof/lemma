@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Mathlib.Data.Int.GCD
 import Mathlib.Algebra.GCDMonoid.Finset
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset

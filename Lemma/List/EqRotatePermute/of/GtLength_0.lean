@@ -1,4 +1,4 @@
-import stdlib.List
+import Def.Data.List.List.Part5
 import Lemma.List.Permute.eq.Rotate.of.GtLength_0
 import Lemma.List.EqRotateRotate.of.GeLength
 open List

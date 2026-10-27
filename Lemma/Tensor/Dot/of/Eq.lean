@@ -1,4 +1,4 @@
-import sympy.matrices.expressions.matmul
+import Instance.LinearAlgebra.Matrix.Matmul
 
 
 @[path]
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2020-08-16
--- updated on 2026-08-23
+-- updated on 2026-10-26

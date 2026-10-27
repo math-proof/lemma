@@ -1,4 +1,4 @@
-import sympy.core.relational
+import Theorem.Analysis.Real.Relational
 
 
 @[path, comm, mp, mpr]

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Complex.FatouRadial.Part2
 
 open Complex.FatouRadialWanted

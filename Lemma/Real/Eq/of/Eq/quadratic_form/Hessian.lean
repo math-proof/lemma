@@ -1,7 +1,7 @@
 import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Calculus.Deriv.Pow
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -32,4 +32,4 @@ private lemma main
 
 
 -- created on 2021-12-25
--- updated on 2026-10-17
+-- updated on 2026-10-26

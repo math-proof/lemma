@@ -1,5 +1,5 @@
-import stdlib.SEq
-import torch.Tensor
+import Theorem.Logic.SEq
+import Instance.Data.Holor.Tensor.Part2
 
 
 @[path, cast]

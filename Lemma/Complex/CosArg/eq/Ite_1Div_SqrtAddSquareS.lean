@@ -1,4 +1,4 @@
-import sympy.functions.elementary.trigonometric
+import Def.Analysis.SpecialFunctions.Trigonometric.Part2
 import Lemma.Complex.Norm.eq.Sqrt
 open Complex
 

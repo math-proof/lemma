@@ -2,7 +2,7 @@ import Lemma.Tensor.DataCos.eq.CosData
 import Lemma.Tensor.DataSin.eq.SinData
 import Lemma.Tensor.DataSub.eq.SubDataS
 import Lemma.Vector.CosSub.eq.AddMulS
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Tensor Vector
 
 

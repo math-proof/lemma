@@ -1,5 +1,5 @@
 import Lemma.Tensor.Select.as.OfVectorMapToVector.of.GtVal_0
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 import Lemma.Nat.LtMod.of.Lt_Mul
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
@@ -88,4 +88,4 @@ private lemma main
 
 
 -- created on 2025-10-05
--- updated on 2025-10-07
+-- updated on 2026-10-26

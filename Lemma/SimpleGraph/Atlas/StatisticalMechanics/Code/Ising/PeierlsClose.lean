@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.PeierlsClose.Part2
 open MeasureTheory Filter Topology Finset SimpleGraph StatMech StatMech.Ising
 

@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Nat.Div.of.Eq
 import Lemma.Nat.Le.of.Gt_0.LeMulS
 import Lemma.Real.Square.le.MulMul4.of.All_Le0Add_Mul_Square.Ge_0
@@ -40,4 +40,4 @@ private lemma main
 
 
 -- created on 2025-06-06
--- updated on 2026-09-06
+-- updated on 2026-10-26

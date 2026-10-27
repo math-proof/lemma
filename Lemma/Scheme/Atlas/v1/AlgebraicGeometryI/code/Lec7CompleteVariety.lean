@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec7CompleteVariety
 open AlgebraicGeometry CategoryTheory Limits Formalization Formalization.Lec7CompleteVariety
 

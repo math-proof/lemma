@@ -1,5 +1,5 @@
 import Lemma.Tensor.DotGetSwapMatrix.eq.Get
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 import Lemma.Tensor.EqTSwapMatrix
 open Tensor
 

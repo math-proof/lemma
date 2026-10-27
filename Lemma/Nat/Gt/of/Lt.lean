@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -40,5 +40,5 @@ private lemma reverse
 
 
 -- created on 2019-07-17
--- updated on 2025-04-04
+-- updated on 2026-10-26
 -- updated on 2026-09-27

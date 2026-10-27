@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Appendix_B_2
 open NNReal AppendixB.NNRealDecimal
 open AppendixB

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Submodule.DetUpdateRow.ne.Zero.of.In_Span.NeDet_0
 open Submodule
 

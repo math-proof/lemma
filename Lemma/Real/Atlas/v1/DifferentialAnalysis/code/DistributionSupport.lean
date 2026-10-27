@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionSupport
 open Distribution SchwartzMap TemperedDistribution
 open scoped SchwartzMap

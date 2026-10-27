@@ -1,5 +1,5 @@
 import Lemma.Vector.Le.is.All_Le
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Tensor Vector
 
 

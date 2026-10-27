@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.NumberTheoryI.code.LocalExtensions.Part2
 open Ideal Polynomial
 open scoped Pointwise

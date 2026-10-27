@@ -1,4 +1,4 @@
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
 import Lemma.Tensor.GetEye.eq.Delta
@@ -128,4 +128,4 @@ private lemma main
 
 
 -- created on 2023-09-18
--- updated on 2026-09-05
+-- updated on 2026-10-26

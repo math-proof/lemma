@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Graph.RobbinsTheorem
 open MetaMathlibExt
 
@@ -596,4 +596,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Ideal.Support.IsRegularSequence
 import Lemma.Ideal.In_SpanImageSetOfLt.of.InMulX_SpanImageSetOfLt
 

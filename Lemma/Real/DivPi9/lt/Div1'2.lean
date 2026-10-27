@@ -1,6 +1,6 @@
-import sympy.core.numbers
+import Instance.Analysis.Real.Numbers
 import Mathlib.Analysis.Real.Pi.Bounds
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -12,4 +12,4 @@ private lemma main:
 
 
 -- created on 2025-03-24
--- updated on 2025-04-04
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TensorCategories.code.VecPivotalConcrete.Part2
 open CategoryTheory MonoidalCategory Module Category TensorCategories
 

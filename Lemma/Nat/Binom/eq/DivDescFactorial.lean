@@ -1,6 +1,6 @@
 import Mathlib.Data.Nat.Choose.Basic
-import sympy.functions.combinatorial.factorials
-import sympy.Basic
+import Def.Data.Nat.Factorial.Factorials
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -25,4 +25,4 @@ private lemma doit
 
 
 -- created on 2020-02-28
--- updated on 2026-09-27
+-- updated on 2026-10-26

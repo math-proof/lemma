@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FC.OpenQuantumProblem35_ame_9_10_open_solution.Part8
 open OpenQuantumProblem35
 open scoped BigOperators

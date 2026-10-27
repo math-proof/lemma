@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
 import Lemma.List.All.of.All.IsChain.Ne
 import Lemma.Nat.NotChamberAdjacent

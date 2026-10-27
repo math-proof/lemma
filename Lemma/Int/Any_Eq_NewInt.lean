@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Appendix_A_7.Part2
 
 

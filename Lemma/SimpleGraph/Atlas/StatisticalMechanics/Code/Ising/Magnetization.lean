@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Ising.Magnetization.Part3
 open MeasureTheory StatMech StatMech.Ising
 

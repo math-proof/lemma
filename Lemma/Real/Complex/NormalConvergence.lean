@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Normed.Series.NormalConvergence
 import Lemma.Real.NormalConvergence
 open Set Metric Filter Topology ENNReal
@@ -229,4 +229,4 @@ lemma ConvergesLocallyNormallyOn.hasDerivAt_tsum
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.FK.PeriodicPlanarGraph.Part18
 open Finset Set SimpleGraph MeasureTheory StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 

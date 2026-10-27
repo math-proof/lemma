@@ -1,4 +1,4 @@
-import torch.Tensor.reshape
+import Def.Data.Holor.Reshape
 import Lemma.Tensor.Dot.eq.TensorDotDataS
 import Lemma.Tensor.Einsum.as.SelectBmm.of.Eq_Get_SubLength.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.GeLength_2
@@ -10,7 +10,7 @@ import Lemma.Tensor.MapDot.eq.DotMapS.of.All_Eq_Mul
 import Lemma.Tensor.MapMul.eq.MulMap.of.All_Eq_Mul
 import Lemma.Tensor.MapTensordot.eq.TensordotMapS.of.All_Eq_Add.All_Eq_Mul
 import Lemma.Tensor.SelectMap.eq.MapSelect
-import torch.Tensor.bmm
+import Def.Data.Holor.Bmm
 open Bool List Tensor Vector
 set_option maxHeartbeats 1000000
 
@@ -382,4 +382,4 @@ private lemma main
 
 
 -- created on 2026-08-16
--- updated on 2026-08-17
+-- updated on 2026-10-26

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/Homothety.lean -/
 
 
-import sympy.atlas.Analysis.SpecialFunctions.Elliptic.Homothety
+import Theorem.Analysis.SpecialFunctions.Elliptic.Homothety
 open scoped Pointwise
 
 

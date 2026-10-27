@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.GeometryOfManifolds.code.VectorFieldFlow
 open Manifold Topology Metric Set
 

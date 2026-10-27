@@ -1,5 +1,5 @@
-import sympy.number_field.CompletedDedekindZeta.Package
-import sympy.Basic
+import Theorem.NumberTheory.NumberField.CompletedDedekindZeta.Package.Part67
+import Initialize.Tactic.Attr.Basic
 
 open P2MW.S_NumberField_exists_completedDedekindZeta_package
 
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

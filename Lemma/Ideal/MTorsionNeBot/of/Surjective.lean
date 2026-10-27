@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.HeckeGalois_EichlerShimura
 import Lemma.Int.P2MUtil
 

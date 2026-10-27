@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.DifferentialAnalysis.code.CkBanach.Part2
 open Filter Topology Finset TestFunctions
 open scoped ZeroAtInfty

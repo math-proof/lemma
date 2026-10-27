@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.ModularCurve.IgusaScheme
 import Lemma.AlgebraicCurve.TwoChartIntegralModel
 import Lemma.Int.P2MUtil

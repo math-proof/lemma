@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.KWWeighted.Part2
 open StatMech StatMech.Onsager
 

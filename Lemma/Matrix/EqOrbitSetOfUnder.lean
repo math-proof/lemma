@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.NumberField.PlaceTransport
 open scoped NumberField.PlaceTransport
 open scoped Pointwise

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.NumberTheoryI.code.LocalGlobal
 open NumberField IsDedekindDomain Polynomial Finset in IntermediateField
 open scoped NumberField TensorProduct

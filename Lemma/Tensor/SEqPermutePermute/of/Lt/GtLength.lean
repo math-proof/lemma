@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
 open Nat Tensor
 
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2025-10-12
--- updated on 2025-10-22
+-- updated on 2026-10-26

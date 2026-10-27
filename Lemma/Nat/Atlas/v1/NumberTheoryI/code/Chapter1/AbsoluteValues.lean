@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.Chapter1.AbsoluteValues.Part2
 open Finset in
 open scoped BigOperators

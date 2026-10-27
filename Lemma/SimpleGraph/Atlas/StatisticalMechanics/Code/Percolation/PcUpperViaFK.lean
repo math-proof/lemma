@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Percolation.PcUpperViaFK.Part4
 open MeasureTheory Filter Topology Set Finset StatMech StatMech.FK StatMech.Percolation
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.Sequences.GeneralizedEuclidSequence.Part8
 open scoped Pointwise
 open MetaMathlibExt
@@ -80,4 +80,4 @@ private lemma generalized_euclid_sequence_contains_every_prime_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

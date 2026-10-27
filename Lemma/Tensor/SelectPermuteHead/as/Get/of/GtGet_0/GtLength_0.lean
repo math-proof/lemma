@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.Finset.Prod.eq.MulProdS
 import Lemma.List.EraseIdxAppend.eq.AppendEraseIdx.of.GtLength
 import Lemma.List.EraseIdxRotate.eq.Append_EraseIdxTake.of.LeLength_Add.GeLength
@@ -149,4 +149,4 @@ private lemma main
 
 
 -- created on 2026-04-09
--- updated on 2026-04-16
+-- updated on 2026-10-26

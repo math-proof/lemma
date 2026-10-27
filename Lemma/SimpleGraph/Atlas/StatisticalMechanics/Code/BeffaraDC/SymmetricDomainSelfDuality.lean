@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.BeffaraDC.SymmetricDomainSelfDuality.Part12
 open Finset SimpleGraph StatMech.Lattice StatMech StatMech.BeffaraDC StatMech.BeffaraDC.SymmetricDomain
 

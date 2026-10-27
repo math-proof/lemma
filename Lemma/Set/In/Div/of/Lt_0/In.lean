@@ -1,6 +1,6 @@
 import Mathlib.Algebra.Order.Field.Basic
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

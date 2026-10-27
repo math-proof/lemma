@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.ModularCurve.PeriodMap
 import Lemma.ModularCurve.PeriodTransfer
 import Lemma.Int.P2MUtil

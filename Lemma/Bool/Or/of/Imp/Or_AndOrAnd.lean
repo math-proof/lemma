@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 
 
 @[path]

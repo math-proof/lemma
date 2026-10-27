@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardLaplacianMetricClosure
 open Finset SimpleGraph StatMech StatMech.FrontierA StatMech.FrontierA.MetricCriticalIsoradialGenusZeroOneEmbedding
 

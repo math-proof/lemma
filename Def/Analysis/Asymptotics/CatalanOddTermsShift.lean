@@ -7,7 +7,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 import Mathlib.Topology.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Data.Nat.Choose.Basic
-import Def.Analysis.Asymptotics.CatalanAsymptoticExpansion
+import Theorem.Analysis.Asymptotics.CatalanAsymptoticExpansion.Part8
 import Lemma.Real.Asymptotics.CatalanAsymptoticExpansion
 import Mathlib.Analysis.Analytic.Composition
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas

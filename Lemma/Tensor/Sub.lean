@@ -1,5 +1,5 @@
 import Lemma.Vector.GetSub.eq.SubGet
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Tensor Vector
 
 

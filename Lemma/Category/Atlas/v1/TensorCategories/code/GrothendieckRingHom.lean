@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
 import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
 

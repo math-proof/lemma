@@ -1,4 +1,4 @@
-import sympy.vector.euclidean
+import Abbrev.Analysis.InnerProductSpace.EuclideanVec
 import Lemma.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
 open Finset
 

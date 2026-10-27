@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.FiniteGraphBoundaryDifferential
 open Finset Set StatMech StatMech.OSSS StatMech.OSSS.FiniteGraphBoundaryDifferential
 

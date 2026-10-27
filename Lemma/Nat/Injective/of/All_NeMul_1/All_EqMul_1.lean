@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.CoxeterGroup.DeletionInjectivityHelpers
 import Lemma.List.AddLengthEraseIdxEraseIdx2.eq.Length.of.Lt_Length.Lt
 import Lemma.List.ProdMap.eq.PowMul.of.All_EqGet_GetAdd_2.Ge_1.EqLength_Mul2

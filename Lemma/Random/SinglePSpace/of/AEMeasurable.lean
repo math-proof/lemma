@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import sympy.stats.rv
+import Class.Probability.Rv.Part3
 open MeasureTheory
 
 
@@ -35,4 +35,4 @@ private lemma main
 
 
 -- created on 2026-10-23
--- updated on 2026-10-23
+-- updated on 2026-10-26

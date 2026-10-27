@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwistCharTwo.Part22
 open Polynomial
 open scoped CharTwo
@@ -2845,4 +2845,4 @@ private lemma manin_degree_data_of_isCharTwoNF_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

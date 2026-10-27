@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.LanglandsTunnell.TateLocalZeta
 open MeasureTheory LanglandsTunnell.TateLocal Metric
 open scoped NNReal ENNReal Pointwise

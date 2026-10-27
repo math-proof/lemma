@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
@@ -21,4 +21,4 @@ private lemma main :
 
 
 -- created on 2020-06-10
--- updated on 2026-10-17
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Def.Algebra.ContinuedFractions.ContinuedFraction
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 open Continuant
 
 

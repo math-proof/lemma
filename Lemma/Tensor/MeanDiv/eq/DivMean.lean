@@ -1,6 +1,6 @@
 import Lemma.Tensor.SumDiv.eq.DivSum
 import Lemma.Tensor.DivDiv
-import torch.Tensor.mean
+import Def.Data.Holor.Mean
 open Tensor
 
 
@@ -20,4 +20,4 @@ private lemma main
 
 
 -- created on 2025-08-29
--- updated on 2025-09-26
+-- updated on 2026-10-26

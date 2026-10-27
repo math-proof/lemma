@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.determinants.DominoTilings
+import Initialize.Tactic.Attr.Basic
+import Def.Combinatorics.Tiling.DominoTilings.Part13
 import Lemma.Nat.DominoTilings
 import Lemma.Nat.Cells.of.Ge1Cell2Add1.Ge1Add1.Domino
 import Lemma.Nat.DominoTilings.horizontalPair_of_not_hasVerticalFirstColumn

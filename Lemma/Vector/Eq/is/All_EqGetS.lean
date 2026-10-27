@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 
 
 @[path, comm, mp, mpr, fin, fin.comm, fin.mp, fin.mpr]

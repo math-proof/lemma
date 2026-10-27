@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierB.FreeEvenSpinMixing.Part3
 open Filter MeasureTheory Set Topology Function StatMech StatMech.FrontierB
 

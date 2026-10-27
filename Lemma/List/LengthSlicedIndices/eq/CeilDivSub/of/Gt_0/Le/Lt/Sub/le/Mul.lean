@@ -1,4 +1,4 @@
-import stdlib.Slice
+import Def.Data.List.Slice
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.LeCoeS.is.Le
 import Lemma.Nat.CoeAdd.eq.AddCoeS

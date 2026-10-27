@@ -1,5 +1,5 @@
 import Mathlib.Algebra.BigOperators.Ring.Finset
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Finset
 
 
@@ -35,4 +35,4 @@ private lemma main
 
 
 -- created on 2023-03-24
--- updated on 2026-10-17
+-- updated on 2026-10-26

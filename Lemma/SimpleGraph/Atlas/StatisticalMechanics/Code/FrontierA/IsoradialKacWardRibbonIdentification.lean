@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardRibbonIdentification.Part7
 open StatMech StatMech.FrontierA StatMech.FrontierA.GenusZeroOneRibbonComponentIdentification StatMech.FrontierA.GenusZeroOneRibbonFormanIdentification StatMech.FrontierA.CriticalKacWardRibbonCoefficientIdentification
 

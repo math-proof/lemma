@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusEmbedding.Part3
 open Finset Set StatMech StatMech.FrontierA
 

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch9Entry13Bernoulligen
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch9Entry13Bernoulligen.Part6
 
 open Ramanujan.Part1Ch9.Entry13Bernoulligen
 open scoped Nat Real BigOperators Interval Polynomial ContDiff
@@ -2393,4 +2393,4 @@ end
 
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.MapData.eq.DataMap
 import Lemma.Tensor.RotateMap.eq.MapRotate

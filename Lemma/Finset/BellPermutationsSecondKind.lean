@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.BellPermutationsSecondKind.Part5
 open MetaMathlibExt
 
@@ -383,4 +383,4 @@ private lemma bell_perm_second_kind_weakExcedance_eq_stirlingSecond_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

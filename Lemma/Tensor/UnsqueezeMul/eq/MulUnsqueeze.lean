@@ -1,5 +1,5 @@
 import Lemma.Tensor.UnsqueezeBFn.eq.BFnUnsqueeze
-import torch.Tensor.unsqueeze
+import Def.Data.Holor.Unsqueeze
 open Tensor
 
 
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2026-08-15
--- updated on 2026-08-16
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 open Real
 
@@ -16,4 +16,4 @@ private lemma main
 
 
 -- created on 2020-11-20
--- updated on 2023-05-14
+-- updated on 2026-10-26

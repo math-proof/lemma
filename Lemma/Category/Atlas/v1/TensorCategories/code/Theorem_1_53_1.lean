@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.TensorCategories.code.Theorem_1_53_1.Part2
 open CategoryTheory MonoidalCategory
 

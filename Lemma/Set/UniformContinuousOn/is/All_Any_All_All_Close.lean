@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Section_9_9
 open Chapter6 Filter
 open Chapter9

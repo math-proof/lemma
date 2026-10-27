@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.TheoryOfProbability.code.Portmanteau
 open MeasureTheory Filter ProbabilityTheory Set Function
 open scoped Topology BoundedContinuousFunction ENNReal NNReal

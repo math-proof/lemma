@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialGeometry.code.GaussMapDegree.Part4
 open GaussMapDegree
 open scoped Matrix

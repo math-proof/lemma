@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.NormedSpace.RosenthalL1.Part20
 
 open FunctionalAnalysis.RosenthalL1Wanted
@@ -850,4 +850,4 @@ private lemma rosenthal_l1_eq
 
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

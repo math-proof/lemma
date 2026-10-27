@@ -1,4 +1,4 @@
-import stdlib.SEq
+import Theorem.Logic.SEq
 import Lemma.Vector.ValGet.eq.ValArraySliceFlatten
 import Lemma.Vector.HEq.of.Val
 import Lemma.Nat.Le_SubMulS

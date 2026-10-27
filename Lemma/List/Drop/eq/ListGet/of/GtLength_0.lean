@@ -1,4 +1,4 @@
-import stdlib.List
+import Def.Data.List.List.Part5
 import Lemma.List.Drop.eq.Cons_Drop_Add_1.of.GtLength
 import Lemma.List.Drop.eq.Nil
 open List Nat

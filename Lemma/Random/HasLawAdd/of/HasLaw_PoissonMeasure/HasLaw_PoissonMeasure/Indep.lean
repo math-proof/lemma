@@ -1,6 +1,6 @@
 import Mathlib.Probability.Distributions.Poisson.Basic
 import Mathlib.Probability.Independence.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 open scoped NNReal
 
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2021-07-18
--- updated on 2026-10-17
+-- updated on 2026-10-26

@@ -1,6 +1,6 @@
-import sympy.functions.elementary.complexes
-import sympy.Basic
-import sympy.sets.sets
+import Notation.Analysis.Complex.Complexes
+import Initialize.Tactic.Attr.Basic
+import Theorem.Data.Set.Sets
 
 
 @[path]

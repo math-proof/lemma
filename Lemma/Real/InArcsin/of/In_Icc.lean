@@ -1,6 +1,6 @@
-import sympy.sets.sets
-import sympy.functions.elementary.trigonometric
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Def.Analysis.SpecialFunctions.Trigonometric.Part2
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

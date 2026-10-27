@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Bool.SEq.of.SEq.SEq

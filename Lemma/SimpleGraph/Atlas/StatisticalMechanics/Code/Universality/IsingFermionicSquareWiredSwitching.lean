@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredSwitching.Part2
 open Finset Complex StatMech StatMech.Universality StatMech.Universality.LegacyWiredSwitching
 

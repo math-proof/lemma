@@ -1,9 +1,9 @@
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.List.Prod.eq.Foldr
 import Lemma.Tensor.DataOfVector.eq.FlattenMapData
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
-import torch.stack
+import Def.Data.Holor.Stack.Part2
 open Fin List Tensor Vector
 
 

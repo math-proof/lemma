@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.bc7rayPtoffboxneighbor
 open Set StatMech.Lattice StatMech.Percolation StatMech StatMech.Walls
 

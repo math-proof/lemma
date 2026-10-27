@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.TheoryOfProbability.code.MeasuresOnR
 open Set Filter MeasureTheory ENNReal Topology (ofReal)
 open ENNReal (ofReal)

@@ -1,9 +1,9 @@
 import Lemma.Bool.Cast.of.SEq.Eq
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Vector.SEqRepeat_Div
-import torch.Tensor.Basic
-import torch.Tensor.reshape
-import torch.Tensor.unsqueeze
+import Def.Data.Holor.Defs.Part4
+import Def.Data.Holor.Reshape
+import Def.Data.Holor.Unsqueeze
 open Bool List Vector
 
 

@@ -1,5 +1,5 @@
-import torch.Tensor.Basic
-import torch.Tensor.repeat
+import Def.Data.Holor.Defs.Part4
+import Def.Data.Holor.Repeat
 
 
 @[path]

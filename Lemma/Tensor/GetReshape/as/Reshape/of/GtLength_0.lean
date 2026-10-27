@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetReshape.as.Reshape.of.Prod.GtLength_0
-import torch.Tensor.reshape
-import torch.Tensor.prod
+import Def.Data.Holor.Reshape
+import Def.Data.Holor.Prod
 open Tensor
 
 
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2026-01-12
--- updated on 2026-07-04
+-- updated on 2026-10-26

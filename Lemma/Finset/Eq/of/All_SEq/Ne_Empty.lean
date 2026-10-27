@@ -1,4 +1,4 @@
-import stdlib.SEq
+import Theorem.Logic.SEq
 import Lemma.Finset.Any_In.is.Ne_Empty
 open Finset
 

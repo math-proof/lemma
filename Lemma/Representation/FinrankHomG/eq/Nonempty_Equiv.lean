@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraNotes.code.Characters
 open Classical CharacterTheory
 open Representation

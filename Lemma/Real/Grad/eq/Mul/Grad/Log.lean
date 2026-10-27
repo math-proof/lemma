@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Real
 
 

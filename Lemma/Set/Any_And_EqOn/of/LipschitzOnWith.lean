@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.inner_product_space.Kirszbraun
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.InnerProductSpace.Kirszbraun.Part2
 
 /--
 [Kirszbraun](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/InnerProductSpace/Kirszbraun.lean)

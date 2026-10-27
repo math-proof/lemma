@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 
 
 @[path]
@@ -26,4 +26,4 @@ private lemma main
 
 
 -- created on 2025-04-12
--- updated on 2025-04-13
+-- updated on 2026-10-26

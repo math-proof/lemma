@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Vector.Eq.of.Val
 import Lemma.Tensor.MulShape.assoc
 import Lemma.Vector.GetVal.eq.Get.of.Lt.Lt
@@ -164,4 +164,4 @@ private lemma main
 
 
 -- created on 2026-09-06
--- updated on 2026-09-07
+-- updated on 2026-10-26

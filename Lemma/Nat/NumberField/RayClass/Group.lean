@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.NumberField.RayClass.Group
 open scoped nonZeroDivisors
 open NumberField
@@ -74,4 +74,4 @@ private lemma rayClassMap_eq_one_iff_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

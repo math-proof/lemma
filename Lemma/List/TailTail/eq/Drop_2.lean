@@ -1,4 +1,4 @@
-import stdlib.Slice
+import Def.Data.List.Slice
 import Lemma.List.Tail.eq.Drop_1
 open List
 

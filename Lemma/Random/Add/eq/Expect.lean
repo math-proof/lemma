@@ -1,6 +1,6 @@
 import Mathlib.Probability.Independence.Integration
-import sympy.stats.variance
-import sympy.Basic
+import Def.Probability.Moments.Variance
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 

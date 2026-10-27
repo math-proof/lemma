@@ -1,7 +1,7 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.bmm
-import torch.Tensor.repeat
-import torch.Tensor.permute
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Bmm
+import Def.Data.Holor.Repeat
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.Matmul.as.Bmm.of.Eq
 import Lemma.Tensor.Einsum.as.Tensordot.of.Get_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
@@ -9,7 +9,7 @@ import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool List Tensor
 
 

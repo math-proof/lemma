@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.ArithmeticGeometry.code.Lemma22_13
 open FunctionFieldAdeleRing DiscreteValuationFamily
 open scoped RestrictedProduct

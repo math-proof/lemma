@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.EqMul0_0
 import Lemma.Tensor.EqMul_0'0
 import Lemma.Tensor.EqMul_1
@@ -10,7 +10,7 @@ import Lemma.Tensor.GetRotaryMatrix.eq.MulCos_Delta.of.Lt.Lt
 import Lemma.Tensor.GetRotaryMatrix.eq.MulNegSin_Delta.of.Lt.Ge
 import Lemma.Tensor.GetRotaryMatrix.eq.MulSin_Delta.of.Ge.Lt
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Nat Tensor Fin Set
 
 
@@ -133,4 +133,4 @@ private lemma main
 
 
 -- created on 2026-09-04
--- updated on 2026-09-06
+-- updated on 2026-10-26

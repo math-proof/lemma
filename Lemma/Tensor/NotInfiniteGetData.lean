@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.Any_IsSt.is.NotInfinite
-import torch.Tensor.prod
-import sympy.core.relational
-import torch.Tensor.Basic
+import Def.Data.Holor.Prod
+import Theorem.Analysis.Real.Relational
+import Def.Data.Holor.Defs.Part4
 open Hyperreal
 
 

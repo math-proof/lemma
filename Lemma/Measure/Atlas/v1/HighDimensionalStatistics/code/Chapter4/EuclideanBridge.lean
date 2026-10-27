@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter4.EuclideanBridge
 open MeasureTheory ProbabilityTheory Matrix Real Finset BigOperators EuclideanBridge
 

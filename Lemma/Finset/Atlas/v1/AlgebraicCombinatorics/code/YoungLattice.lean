@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AlgebraicCombinatorics.code.YoungLattice.Part3
 open SpernerProperty YoungLattice YoungLattice.Lmn
 

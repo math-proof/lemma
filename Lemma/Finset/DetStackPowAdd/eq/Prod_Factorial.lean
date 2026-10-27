@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Mathlib.LinearAlgebra.Vandermonde
 open Matrix Nat
 

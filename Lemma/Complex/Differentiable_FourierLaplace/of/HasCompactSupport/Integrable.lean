@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.integrals.transforms.FourierLaplace
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Fourier.FourierLaplace
 open Fourier.FourierLaplace
 open MeasureTheory
 
@@ -21,4 +21,4 @@ private lemma differentiable_fourierLaplace_is
 
 
 -- created on 2026-10-10
--- updated on 2026-10-24
+-- updated on 2026-10-26

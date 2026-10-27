@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.Rotate_SubLength_1.eq.Cons_DropLast.of.GtLength_0
 import Lemma.Tensor.Cast_Mul.eq.MulCastS.of.Eq
@@ -113,4 +113,4 @@ private lemma main
 
 
 -- created on 2025-12-02
--- updated on 2025-12-03
+-- updated on 2026-10-26

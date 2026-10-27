@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.InfiniteWord.PureMorphicWord
 open MetaMathlibExt
 
@@ -57,4 +57,4 @@ lemma morphExtend_append
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

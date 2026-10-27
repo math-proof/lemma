@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.NumberField.Ideal.Counting
 open scoped NumberField
 open NumberField
@@ -409,4 +409,4 @@ end NumberField.Ideal
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

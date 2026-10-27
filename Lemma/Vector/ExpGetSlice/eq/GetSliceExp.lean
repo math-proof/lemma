@@ -1,5 +1,5 @@
 import Lemma.Vector.MapGetSlice.eq.GetSliceMap
-import sympy.vector.functions
+import Instance.Data.Vector.Functions.Part2
 open Vector
 
 
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2026-08-14
--- updated on 2026-08-15
+-- updated on 2026-10-26

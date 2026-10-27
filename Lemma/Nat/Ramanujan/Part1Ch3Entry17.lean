@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Filter Metric
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 
@@ -822,4 +822,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry17
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

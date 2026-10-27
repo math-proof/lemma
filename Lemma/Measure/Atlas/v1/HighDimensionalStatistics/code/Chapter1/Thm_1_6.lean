@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
 open MeasureTheory ProbabilityTheory Real BigOperators Finset
 

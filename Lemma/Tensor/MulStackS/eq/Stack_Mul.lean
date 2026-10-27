@@ -1,4 +1,4 @@
-import torch.stack
+import Def.Data.Holor.Stack.Part2
 import Lemma.Vector.FlattenMul.eq.MulFlattenS
 import Lemma.Vector.MulMapS.eq.Map_FunMul
 import Lemma.Vector.MapMap.eq.Map_Comp
@@ -34,4 +34,4 @@ private lemma main
 
 
 -- created on 2025-07-03
--- updated on 2026-08-23
+-- updated on 2026-10-26

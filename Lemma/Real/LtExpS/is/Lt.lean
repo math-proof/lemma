@@ -1,4 +1,4 @@
-import sympy.functions.elementary.exponential
+import Instance.Analysis.SpecialFunctions.Exponential.Part5
 
 
 @[path, comm, mp, mpr]

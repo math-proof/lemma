@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part4
 open Coalgebra CategoryTheory
 open scoped TensorProduct

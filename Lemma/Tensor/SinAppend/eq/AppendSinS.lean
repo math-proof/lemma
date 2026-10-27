@@ -1,4 +1,4 @@
-import torch.functions
+import Theorem.Data.Holor.Functions
 import Lemma.Tensor.MapAppend.eq.AppendMapS
 open Tensor
 
@@ -19,4 +19,4 @@ private lemma main
 
 
 -- created on 2023-06-08
--- updated on 2026-08-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Enumerative.AlternatingSums.Part3
 import Lemma.Polynomial.QBinomialBasic
 open Finset

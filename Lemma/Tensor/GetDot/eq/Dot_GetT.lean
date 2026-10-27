@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.DotT.eq.Dot
 open Bool Tensor

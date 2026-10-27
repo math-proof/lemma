@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.TensorCategories.code.K0Bimodule.Part5
 open Finset FusionRing FusionRing.K0Group
 

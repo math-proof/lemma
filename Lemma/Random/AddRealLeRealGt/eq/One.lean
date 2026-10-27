@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import Mathlib.MeasureTheory.Measure.Real
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.Buildings.code.AffineCoxeter.PerronFrobeniusProof
 open Finset BigOperators CoxeterGroup PerronFrobeniusProof
 

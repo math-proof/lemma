@@ -1,7 +1,7 @@
 import Mathlib.Data.Matrix.Mul
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.Mul
-import sympy.matrices.dense
+import Instance.LinearAlgebra.Matrix.Dense
 open Tensor
 
 

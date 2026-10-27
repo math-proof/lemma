@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Convex.LinearProgrammingDuality.Part3
 
 open scoped Matrix

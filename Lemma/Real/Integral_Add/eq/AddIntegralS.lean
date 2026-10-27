@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 open MeasureTheory
 

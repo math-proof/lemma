@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Theorems
 open Finset BigOperators BooleanFourier
 
@@ -108,12 +108,12 @@ lemma tripleCorrelation_eq_sum_cube
     simp_rw [hrw]
     ring
   rw [hconv_expand]
-  have hplanch := plancherel g (conv g g)
+  have hplanch := plancherel (f := g) (g := conv g g)
   unfold innerProduct at hplanch
   rw [← hplanch]
   congr 1
   ext S
-  rw [fourierCoeff_conv g g S]
+  rw [fourierCoeff_conv (f := g) (g := g)]
   ring
 
 end BooleanFourier
@@ -131,7 +131,7 @@ lemma agreementProb_eq
   agreementProb f = (1 + ∑ S : Finset (Fin n), fourierCoeff (fun x => boolToReal (f x)) S ^ 3) / 2 := by
 -- proof
   unfold agreementProb
-  simp_rw [boolToReal_agreement_indicator f]
+  simp_rw [boolToReal_agreement_indicator]
   simp_rw [show ∀ x : Fin n → Bool,
     ∑ y : Fin n → Bool,
       (1 + boolToReal (f x) * boolToReal (f y) * boolToReal (f (boolMul x y))) / 2 =
@@ -158,7 +158,7 @@ lemma agreementProb_eq
       Fintype.card_fin, nsmul_eq_mul, sq]
   rw [hcard_x]
   set g : (Fin n → Bool) → ℝ := fun x => boolToReal (f x)
-  have htriple := tripleCorrelation_eq_sum_cube g
+  have htriple := tripleCorrelation_eq_sum_cube (g := g)
   set T := ∑ x : Fin n → Bool, ∑ y : Fin n → Bool, g x * g y * g (boolMul x y)
   set F := ∑ S : Finset (Fin n), fourierCoeff g S ^ 3
   have h1 : (1 / (2 : ℝ) ^ n) ^ 2 * ((2 : ℝ) ^ n) ^ 2 = 1 := by field_simp
@@ -216,7 +216,7 @@ lemma totalInfluence_eq_totalInfluenceReal
   totalInfluence f = totalInfluenceReal (fun x => boolToReal (f x)) := by
 -- proof
   unfold totalInfluence totalInfluenceReal
-  exact Finset.sum_congr rfl (fun i _ => influence_eq_influenceReal f i)
+  exact Finset.sum_congr rfl (fun i _ => influence_eq_influenceReal (i := i))
 
 /--
 [totalInfluence_eq_weighted_fourier'](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Theorems.lean)
@@ -229,7 +229,7 @@ lemma totalInfluence_eq_weighted_fourier'
   totalInfluence f = ∑ S : Finset (Fin n), (S.card : ℝ) * fourierCoeff (fun x => boolToReal (f x)) S ^ 2 := by
 -- proof
   rw [totalInfluence_eq_totalInfluenceReal]
-  exact totalInfluenceReal_eq_sum_card_fourierCoeff_sq _
+  exact totalInfluenceReal_eq_sum_card_fourierCoeff_sq
 
 namespace BooleanFourier
 
@@ -251,7 +251,7 @@ lemma exists_fourierCoeff_ge_of_sum_cube_ge
   by_contra h
   push Not at h
   have hparseval : ∑ S : Finset (Fin n), fourierCoeff g S ^ 2 = 1 :=
-    parseval_signed f
+    parseval_signed
   have ⟨S₀, _, hS₀_pos⟩ : ∃ S₀ ∈ (Finset.univ : Finset (Finset (Fin n))),
     (0 : ℝ) < fourierCoeff g S₀ ^ 2 := by
     by_contra hall
@@ -297,10 +297,11 @@ lemma exists_fourierCoeff_ge_of_agreementProb
   ∃ S : Finset (Fin n), fourierCoeff (fun x => boolToReal (f x)) S ≥ 2 * δ := by
 -- proof
   apply exists_fourierCoeff_ge_of_sum_cube_ge
-  have heq := agreementProb_eq f
+  have heq := agreementProb_eq (f := f)
   linarith
 
 end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

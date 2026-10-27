@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety.Part2
 import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety.Part2
 import Def.CPythonListsort.Code.Assembly.TopLevelErasureHi

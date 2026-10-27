@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CuspForm_QCoeffLinear
 import Lemma.Int.P2MUtil
 

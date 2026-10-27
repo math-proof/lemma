@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.DirichletUnits
 open NumberField NumberField.Units NumberField.InfinitePlace NumberField.Units.dirichletUnitTheorem Module NumberField.mixedEmbedding
 open scoped NumberField Classical Polynomial nonZeroDivisors NNReal

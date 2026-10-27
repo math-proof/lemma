@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.InfiniteWord.GeneralizedThueMorseSequence.Part3
 open MetaMathlibExt
 open GeneralizedThueMorse
@@ -303,4 +303,4 @@ private lemma lt_pow_succ_self_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

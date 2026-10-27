@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Inductive.v1.Atlas.TheoryOfComputation.code.CFGtoPDA.Part2
 import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.CFGtoPDA
 import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.CFLInterRegular

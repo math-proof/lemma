@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TheoryOfProbability.code.PoissonConvergence
 open MeasureTheory ProbabilityTheory Filter Real Finset
 open scoped ENNReal NNReal Topology Nat

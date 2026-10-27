@@ -1,12 +1,12 @@
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Bool.Eq.of.SEq.SEq
 import Lemma.List.GetPermute.eq.Get.of.Ge
 import Lemma.Tensor.SEq1S.of.Eq
 import Lemma.Tensor.Softmax.as.PermuteSoftmaxPermute.of.LtAdd_1Length
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge
 import Lemma.Tensor.SumSoftmax.eq.One.of.Get_SubLength_1.gt.Zero.GtLength_0
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool List Nat Tensor Fin
 
 
@@ -49,4 +49,4 @@ private lemma main
 
 
 -- created on 2025-10-03
--- updated on 2025-10-31
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
 import Lemma.Nat.EqMax
 import Lemma.Nat.EqMax.of.Lt
 import Lemma.Tensor.Dot.eq.SelectDot_Unsqueeze_1
@@ -12,7 +12,7 @@ import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.TCast.as.T.of.Eq
 import Lemma.Tensor.TUnsqueeze.eq.Unsqueeze
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool Nat Tensor
 
 
@@ -104,4 +104,4 @@ private lemma resize
 
 
 -- created on 2026-07-11
--- updated on 2026-08-27
+-- updated on 2026-10-26

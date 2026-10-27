@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Notation.LocalGL2_Kirillov
 import Def.LocalGL2_Kirillov
 import Def.AutomorphicForm_ConstantTerm

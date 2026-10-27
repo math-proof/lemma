@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.LieGroups.code.PlancherelCompact.Part3
 import Lemma.Complex.ConvolutionOp.AxStub
 open MeasureTheory PlancherelCompact
@@ -794,4 +794,4 @@ private lemma kfinite_subset_smooth
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

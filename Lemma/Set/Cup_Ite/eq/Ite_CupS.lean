@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Bool.BFn_Ite.is.OrAndS
 import Lemma.Bool.BFnUFnFunIte.Cond.of.AndBFnUFn
 import Lemma.Bool.BFnUFnFunIte.Not.of.AndBFnUFn

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.GroupTheory.BurnsidePaqb.CyclotomicField
 open Polynomial
 open BurnsidePaqb

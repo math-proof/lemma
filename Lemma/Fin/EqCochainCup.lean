@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open CategoryTheory MonoidalCategory
 set_option autoImplicit false
 

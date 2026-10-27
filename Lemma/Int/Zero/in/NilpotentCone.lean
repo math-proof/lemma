@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.LieGroups.code.NilpotentCone.Part5
 open Set LieAlgebra
 open scoped LieAlgebra
@@ -1352,4 +1352,4 @@ end LieAlgebra
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

@@ -12,7 +12,7 @@ import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.StDiv.eq.InvStInv
 import Lemma.Hyperreal.StMul.eq.MulStS.of.NotInfinite.NotInfinite
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
-open Hyperreal Nat Rat
+open Hyperreal Nat Rat ArchimedeanClass
 
 
 @[path]

@@ -1,7 +1,7 @@
-import sympy.core.power
+import Theorem.Algebra.Power.Part2
 import Mathlib.Algebra.Ring.Defs
 import Mathlib.Algebra.Order.Ring.Unbundled.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /-- `Prod.map` of measurable maps is measurable. -/

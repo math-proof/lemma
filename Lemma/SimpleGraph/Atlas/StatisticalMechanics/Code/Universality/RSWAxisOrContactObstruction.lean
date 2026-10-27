@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.RSWAxisOrContactObstruction.Part2
 open Function MeasureTheory Set StatMech StatMech.Universality
 

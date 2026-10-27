@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopLowTempPlusLimit
 open MeasureTheory Filter Topology BoundedContinuousFunction StatMech StatMech.Onsager
 

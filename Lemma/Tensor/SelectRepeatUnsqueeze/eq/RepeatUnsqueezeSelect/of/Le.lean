@@ -1,5 +1,5 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
 import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Le
@@ -36,4 +36,4 @@ private lemma main
 
 
 -- created on 2025-11-17
--- updated on 2025-11-29
+-- updated on 2026-10-26

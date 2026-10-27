@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.PeierlsArcAssembly.Part3
 open Set SimpleGraph Function StatMech StatMech.Ising
 

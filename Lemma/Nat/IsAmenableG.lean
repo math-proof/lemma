@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.GroupTheory.AmenableGroup
 open scoped Pointwise Classical symmDiff
 
@@ -37,4 +37,4 @@ private lemma isAmenable_of_subsingleton
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

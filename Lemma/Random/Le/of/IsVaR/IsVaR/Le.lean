@@ -1,4 +1,4 @@
-import sympy.stats.value_at_risk
+import Def.Probability.Decision.Risk.ValueAtRisk
 import Lemma.Random.IsCofinalFor.of.Le
 open MeasureTheory
 

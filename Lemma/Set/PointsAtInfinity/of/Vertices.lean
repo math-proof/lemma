@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.Buildings.code.Building.InfinityConstruction.Part3
 open AffineBuilding
 

@@ -1,6 +1,6 @@
-import sympy.functions.elementary.exponential
+import Instance.Analysis.SpecialFunctions.Exponential.Part5
 import Lemma.Hyperreal.IsSt.is.Le0Mk.EqStdPart
-open Hyperreal
+open Hyperreal ArchimedeanClass
 
 
 @[path]

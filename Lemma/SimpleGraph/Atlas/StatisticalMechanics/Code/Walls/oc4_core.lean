@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.oc4_core
 open MeasureTheory Finset Real Filter Topology Set StatMech StatMech.Walls
 

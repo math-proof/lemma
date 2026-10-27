@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankFiveHandledStrictOverlapObstruction.Part4
 open StatMech StatMech.Ising StatMech.Ising.LPRankFiveHandledStrictOverlapObstruction StatMech.Ising.LPRankFiveMultiplicityMateOverlapObstruction StatMech.Ising.LPRankFiveDegreeTwoCycleOverlapObstruction StatMech.Ising.LPRankFiveDoubledRectangleOverlapObstruction
 

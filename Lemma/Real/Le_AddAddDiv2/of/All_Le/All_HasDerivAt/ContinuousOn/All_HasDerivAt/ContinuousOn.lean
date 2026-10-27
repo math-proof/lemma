@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Pow
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Set
 
 

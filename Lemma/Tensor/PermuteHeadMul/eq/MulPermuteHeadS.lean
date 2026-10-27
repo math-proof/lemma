@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.RotateMul.eq.MulRotateS
 open List Tensor Vector
 
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2025-12-02
--- updated on 2025-12-03
+-- updated on 2026-10-26

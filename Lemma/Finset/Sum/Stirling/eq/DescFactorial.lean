@@ -1,5 +1,5 @@
 import Mathlib.RingTheory.Polynomial.Pochhammer
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Finset.EvalDescPochhammer.eq.Sum_MulMulPowStirlingFirstPowNeg1Sub
 
 

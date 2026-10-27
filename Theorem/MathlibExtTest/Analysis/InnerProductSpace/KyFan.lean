@@ -4,7 +4,7 @@
 Author: @toskua, Avocado
 -/
 
-import sympy.atlas.Analysis.InnerProductSpace.KyFan
+import Theorem.Analysis.InnerProductSpace.KyFan
 open MathlibExt.Analysis.InnerProductSpace.KyFanWanted
 
 /-!

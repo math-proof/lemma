@@ -2,7 +2,7 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Prod
 import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Algebra.Order.Group.PosPart
-import sympy.dynamics.actor_critic
+import Structure.Dynamics.ActorCritic.Part6
 import Lemma.Matrix.Sum_GetVecMul.eq.Zero.of.GeneratorMatrix
 open Matrix
 

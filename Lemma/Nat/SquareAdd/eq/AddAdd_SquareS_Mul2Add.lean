@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.core.power
+import Initialize.Tactic.Attr.Basic
+import Theorem.Algebra.Power.Part2
 
 
 @[path]
@@ -14,4 +14,4 @@ private lemma main
 
 
 -- created on 2018-06-06
--- updated on 2026-08-03
+-- updated on 2026-10-26

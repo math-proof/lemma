@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheJacobianStability.Part4
 open Finset Filter Topology Matrix StatMech StatMech.FrontierD
 

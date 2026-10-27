@@ -1,7 +1,7 @@
 import Mathlib.Topology.Order.MonotoneConvergence
-import sympy.series.limits
-import sympy.sets.sets
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

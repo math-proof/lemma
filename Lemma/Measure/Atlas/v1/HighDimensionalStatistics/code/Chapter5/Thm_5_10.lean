@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_10
 open MeasureTheory InformationTheory Finset Real FanoInequality
 

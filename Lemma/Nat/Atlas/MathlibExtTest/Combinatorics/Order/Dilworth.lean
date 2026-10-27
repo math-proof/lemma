@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Combinatorics.Order.Dilworth.Part2
 open MathlibExt MathlibExt.Combinatorics MathlibExt.Combinatorics.Order MathlibExt.Combinatorics.Order.DilworthWanted
 

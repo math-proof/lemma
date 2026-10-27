@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.PolarCoord
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 open MeasureTheory
 

@@ -1,7 +1,7 @@
 import Mathlib
 import Lemma.HeckeEis.BinaryFormRep
 import Lemma.Gamma0CoeffCohomology.Main
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open HeckeEis
 open MvPolynomial
 set_option autoImplicit false
@@ -358,4 +358,4 @@ private lemma main
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

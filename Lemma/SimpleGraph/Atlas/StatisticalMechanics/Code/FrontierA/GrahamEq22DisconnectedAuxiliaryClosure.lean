@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.GrahamEq22DisconnectedAuxiliaryClosure
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 

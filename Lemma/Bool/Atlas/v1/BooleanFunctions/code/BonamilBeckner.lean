@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Hypercontractivity
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
@@ -28,7 +28,6 @@ lemma noiseOp_snoc_eq_twoPointNoiseOp
   simp_rw [Fin.snoc_castSucc, Fin.snoc_last]
   cases b <;> simp only [boolToReal_true, boolToReal_false, ite_true, ite_false, Bool.false_eq_true]
   all_goals (simp_rw [Finset.mul_sum, ← Finset.sum_add_distrib]; congr 1; funext y'; ring)
-set_option maxHeartbeats 800000 in
 
 end BooleanFourier
 
@@ -101,7 +100,6 @@ lemma lpNorm_convex_combination
   apply mul_le_mul_of_nonneg_left _ (by positivity)
   exact le_trans (rpow_le_rpow (Finset.sum_nonneg (fun x _ => rpow_nonneg (abs_nonneg _) _))
     hsum_bound h1q_nn) hMinkowski
-set_option maxHeartbeats 1600000 in
 
 end BooleanFourier
 
@@ -137,7 +135,7 @@ lemma bonami_beckner_succ
     have hB_nonneg : 0 ≤ B := by simp only [B]; unfold lpNorm; positivity
     simp only [ite_false, Bool.false_eq_true]
     rw [abs_of_nonneg hA_nonneg, abs_of_nonneg hB_nonneg]
-    have hrl := lpNorm_restrictLast f hp_pos
+    have hrl := lpNorm_restrictLast (f := f) (q := p) hp_pos
     have hlpf_nonneg : 0 ≤ lpNorm p f := by unfold lpNorm; positivity
     rw [show (A ^ p + B ^ p) / 2 = (lpNorm p f) ^ p from by linarith [hrl]]
     rw [← rpow_mul hlpf_nonneg, mul_one_div_cancel (ne_of_gt hp_pos), rpow_one]
@@ -154,7 +152,7 @@ lemma bonami_beckner_succ
     have hXT_nn : 0 ≤ lpNorm q (restrictLast (noiseOp ρ f) true) := by unfold lpNorm; positivity
     have hXF_nn : 0 ≤ lpNorm q (restrictLast (noiseOp ρ f) false) := by unfold lpNorm; positivity
     rw [abs_of_nonneg hXT_nn, abs_of_nonneg hXF_nn]
-    have hrl := lpNorm_restrictLast (noiseOp ρ f) hq_pos
+    have hrl := lpNorm_restrictLast (f := noiseOp ρ f) (q := q) hq_pos
     have hlhs_nn : 0 ≤ lpNorm q (noiseOp ρ f) := by unfold lpNorm; positivity
     symm
     rw [show (lpNorm q (restrictLast (noiseOp ρ f) true) ^ q +
@@ -183,7 +181,7 @@ lemma bonami_beckner_succ
       (fun x' => (1 + ρ) / 2 * noiseOp ρ (restrictLast f true) x' +
         (1 - ρ) / 2 * noiseOp ρ (restrictLast f false) x') := by
       ext x'
-      have := noiseOp_snoc_eq_twoPointNoiseOp ρ f x' true
+      have := noiseOp_snoc_eq_twoPointNoiseOp (ρ := ρ) (f := f) (x' := x') (b := true)
       simp only [restrictLast, twoPointNoiseOp, ite_true] at this ⊢
       exact this
     rw [show lpNorm q (restrictLast (noiseOp ρ f) true) =
@@ -194,7 +192,7 @@ lemma bonami_beckner_succ
       (1 - ρ) / 2 * noiseOp ρ (restrictLast f false) x')
       ≤ (1 + ρ) / 2 * lpNorm q (noiseOp ρ (restrictLast f true)) +
         (1 - ρ) / 2 * lpNorm q (noiseOp ρ (restrictLast f false)) :=
-        lpNorm_convex_combination _ _ _ _ hρ_half_pos hρ_half_pos' hq1
+        lpNorm_convex_combination hρ_half_pos hρ_half_pos' hq1
       _ ≤ (1 + ρ) / 2 * A + (1 - ρ) / 2 * B := by
         apply add_le_add
         · exact mul_le_mul_of_nonneg_left hih_true hρ_half_pos
@@ -206,7 +204,7 @@ lemma bonami_beckner_succ
       (fun x' => (1 - ρ) / 2 * noiseOp ρ (restrictLast f true) x' +
         (1 + ρ) / 2 * noiseOp ρ (restrictLast f false) x') := by
       ext x'
-      have := noiseOp_snoc_eq_twoPointNoiseOp ρ f x' false
+      have := noiseOp_snoc_eq_twoPointNoiseOp (ρ := ρ) (f := f) (x' := x') (b := false)
       simp only [restrictLast, twoPointNoiseOp, ite_false, Bool.false_eq_true] at this ⊢
       exact this
     rw [show lpNorm q (restrictLast (noiseOp ρ f) false) =
@@ -217,7 +215,7 @@ lemma bonami_beckner_succ
       (1 + ρ) / 2 * noiseOp ρ (restrictLast f false) x')
       ≤ (1 - ρ) / 2 * lpNorm q (noiseOp ρ (restrictLast f true)) +
         (1 + ρ) / 2 * lpNorm q (noiseOp ρ (restrictLast f false)) :=
-        lpNorm_convex_combination _ _ _ _ hρ_half_pos' hρ_half_pos hq1
+        lpNorm_convex_combination hρ_half_pos' hρ_half_pos hq1
       _ ≤ (1 - ρ) / 2 * A + (1 + ρ) / 2 * B := by
         apply add_le_add
         · exact mul_le_mul_of_nonneg_left hih_true hρ_half_pos'
@@ -276,7 +274,7 @@ lemma bonami_beckner
         rw [← rpow_mul ha, mul_inv_cancel₀ (ne_of_gt hr), rpow_one]
       rw [key _ q (abs_nonneg _) hq_pos, key _ p (abs_nonneg _) hp_pos])
   | succ m ih =>
-    exact bonami_beckner_succ f hp hpq hρ0 hρ ih
+    exact bonami_beckner_succ hp hpq hρ0 hρ (fun g => ih (f := g))
 
 end BooleanFourier
 
@@ -300,9 +298,9 @@ lemma lpNorm_degree1_hypercontractive
     0 ≤ ρ' → ρ' ≤ Real.sqrt ((2 - 1) / (q - 1)) →
     lpNorm q (noiseOp ρ' g) ≤ lpNorm 2 g := by
     intro g ρ' hρ'_nonneg hρ'_bound
-    exact bonami_beckner g (by norm_num : (1 : ℝ) ≤ 2) (by linarith) hρ'_nonneg
+    exact bonami_beckner (f := g) (by norm_num : (1 : ℝ) ≤ 2) (by linarith) hρ'_nonneg
       hρ'_bound
-  have h_from_general := hypercontractive_low_degree f 1 q hq hd h_bb
+  have h_from_general := hypercontractive_low_degree (k := 1) hq hd h_bb
   have h_rpow_eq : (q - 1) ^ ((↑(1 : ℕ) : ℝ) / 2) = Real.sqrt (q - 1) := by
     rw [Nat.cast_one]
     exact (Real.sqrt_eq_rpow (q - 1)).symm

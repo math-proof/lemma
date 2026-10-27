@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.gamma.Digamma
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Gamma.Digamma.Part3
 
 
 /--

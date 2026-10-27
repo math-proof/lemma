@@ -3,7 +3,7 @@ import Lemma.Hyperreal.EqSt_0.is.Infinite.ou.Infinitesimal
 import Lemma.Hyperreal.Infinite.is.Infinite.of.XEq
 import Lemma.Hyperreal.Infinitesimal.is.Infinitesimal.of.XEq
 import Lemma.Hyperreal.StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal
-open Hyperreal Rat
+open Hyperreal Rat ArchimedeanClass
 
 
 /--

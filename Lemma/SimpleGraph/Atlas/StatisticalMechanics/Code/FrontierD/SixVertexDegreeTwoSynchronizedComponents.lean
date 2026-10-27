@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoSynchronizedComponents.Part31
 open StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexDegreeTwoSynchronizedSupportedPairedSplitTargets
 

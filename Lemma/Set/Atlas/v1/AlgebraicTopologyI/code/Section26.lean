@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
 open CategoryTheory AlgebraicTopology Limits AlgebraicTopologyI MonoidalCategory SingularCohomology
 open scoped TensorProduct

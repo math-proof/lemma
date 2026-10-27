@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumWiredErgodicity
 open MeasureTheory ProbabilityTheory Set Filter Topology StatMech StatMech.FK
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Geometry.Manifold.ThomTransversality
 open scoped Manifold
 open MathlibExt.Geometry.Manifold.ThomTransversalityWanted
@@ -161,4 +161,4 @@ end MathlibExt.Geometry.Manifold.ThomTransversalityWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

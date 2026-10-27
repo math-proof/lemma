@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TensorCategories.code.MultifusionSemisimple.Part2
 open Finset Complex MultifusionRingDef MultifusionRingDef.MfGrRingOfC
 

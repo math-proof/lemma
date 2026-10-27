@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.InfiniteProducts2Details
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.PowerSeries.InfiniteProducts2Details
 import Lemma.PowerSeries.InfiniteProducts2
 open PowerSeries
 open scoped PowerSeries BigOperators
@@ -1138,4 +1138,4 @@ private lemma pv_coeff_mul_prod_one_add_of_coeff_zero
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

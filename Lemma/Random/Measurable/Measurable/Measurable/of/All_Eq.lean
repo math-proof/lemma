@@ -1,4 +1,4 @@
-import sympy.stats.policy_trajectory
+import Theorem.Dynamics.PolicyTrajectory
 
 
 /--

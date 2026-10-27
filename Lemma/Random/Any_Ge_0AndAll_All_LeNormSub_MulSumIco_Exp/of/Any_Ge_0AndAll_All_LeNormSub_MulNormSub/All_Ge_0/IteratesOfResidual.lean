@@ -1,4 +1,4 @@
-import sympy.stats.iterates
+import Def.Dynamics.Iterates
 import Lemma.Real.Any_Ge_0AndAll_All_LeNorm_MulAddNorm1.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub
 import Lemma.Real.Le_MulAddSum_ExpSum.of.In_Ico.All_Ge_0.All_Ge_0.All_Le_AddMulAdd1.Ge_0
 open Finset Real

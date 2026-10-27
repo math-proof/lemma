@@ -179,6 +179,8 @@ export class LeanProperty extends LeanBinary {
                 case 'fmod':
                     return [this.lhs.toLatex(syntax)];
                 case 'card':
+                    // `Finset.card s` is printed by `LeanArgsSpaceSeparated` as `|s|`.
+                    // This arm is `s.card`.
                     if (!(lhs instanceof L.LeanToken && this.parent instanceof L.LeanArgsSpaceSeparated && this.parent.args[0] === this)) {
                         let arg = this.lhs;
                         if (arg instanceof L.LeanParenthesis && !(arg.arg instanceof L.LeanColon))
@@ -254,6 +256,7 @@ export class LeanProperty extends LeanBinary {
                 case 'fmod':
                     return '{%s} {\\color{red}\\%%}';
                 case 'card':
+                    // `s.card` → bars. `Finset.card s` is the space-separated application.
                     if (!(lhs instanceof L.LeanToken && this.parent instanceof L.LeanArgsSpaceSeparated && this.parent.args[0] === this)) {
                         return '\\left|{%s}\\right|';
                     }

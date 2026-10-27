@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch6Entry13Ramanujanfactorial
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry13Ramanujanfactorial.Part4
 
 /--
 [Part1Ch6Entry13Ramanujanfactorial](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch6Entry13Ramanujanfactorial.lean)

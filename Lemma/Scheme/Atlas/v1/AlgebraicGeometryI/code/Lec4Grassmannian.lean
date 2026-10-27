@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.Lec4Grassmannian
 open ExteriorAlgebra Lec4Grassmannian
 

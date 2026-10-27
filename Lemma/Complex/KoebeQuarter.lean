@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Complex.KoebeQuarter.Part3
 
 open Complex.KoebeQuarterWanted

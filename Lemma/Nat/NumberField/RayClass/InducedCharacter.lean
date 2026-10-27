@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.NumberField.RayClass.InducedCharacter.Part3
 open scoped nonZeroDivisors
 open NumberField
@@ -131,4 +131,4 @@ private lemma RayClassGroup_mapOfDvd_rayClassMap_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

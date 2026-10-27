@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 open scoped Classical
 open CategoryTheory CategoryTheory.MonoidalCategory Module

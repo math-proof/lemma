@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.List.EqPermutePermute__Neg.of.In_Ioo_Length
 import Lemma.List.Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0
 import Lemma.Nat.ToNatSub_Neg.eq.Add1

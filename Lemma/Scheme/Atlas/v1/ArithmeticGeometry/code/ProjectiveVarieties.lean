@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveVarieties.Part7
 open MvPolynomial Finsupp HomogeneousPolynomial AffinePatch ProjectiveClosure ProjectiveVarietyDef Theorem1323 Theorem1324 Corollary1326
 open scoped LinearAlgebra.Projectivization

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4PhaseFinalAssembly
 open Filter MeasureTheory Set SimpleGraph StatMech StatMech.FrontierD
 

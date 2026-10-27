@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Percolation.CylinderDerivative
 open MeasureTheory ProbabilityTheory Function Filter StatMech StatMech.Percolation
 

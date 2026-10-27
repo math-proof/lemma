@@ -1,5 +1,5 @@
 import Lemma.Vector.SEq.of.EqLength_0.EqLength_0
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.All_SEqDataSGet.of.All_SEqGetS.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Tensor.Data.eq.FlattenMapRange
@@ -86,4 +86,4 @@ private lemma main
 
 
 -- created on 2025-05-23
--- updated on 2025-07-20
+-- updated on 2026-10-26

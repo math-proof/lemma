@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.CommutativeRings
+import Initialize.Tactic.Attr.Basic
+import Theorem.RingTheory.PowerSeries.CommutativeRings.Part3
 import Lemma.PowerSeries.DividingFPS
 open AlgebraicCombinatorics.FPS
 open scoped BigOperators
@@ -1349,4 +1349,4 @@ private lemma pv_unit_inv_zpow
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

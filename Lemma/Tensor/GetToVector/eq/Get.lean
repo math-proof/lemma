@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.Tensor.Lt_HeadD
 open Tensor
 
@@ -33,4 +33,4 @@ private lemma main
 
 
 -- created on 2025-05-23
--- updated on 2025-10-06
+-- updated on 2026-10-26

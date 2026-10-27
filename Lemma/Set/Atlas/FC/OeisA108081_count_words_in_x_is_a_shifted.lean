@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part13
 open OeisA108081
 open Nat

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.UncoveredTargets
 open Finset BigOperators BooleanFourier
 
@@ -18,7 +18,7 @@ lemma parseval_pm_one
 -- imply
   ∑ S : Finset (Fin n), (fourierCoeff f S) ^ 2 = 1 := by
 -- proof
-  have hpars := parseval f
+  have hpars := parseval (f := f)
   rw [hpars]
   have hfsq : ∀ x : Fin n → Bool, (f x) ^ 2 = 1 := by
     intro x
@@ -273,8 +273,8 @@ lemma noiseOp_self_adjoint
 -- imply
   innerProduct (noiseOperator ρ f) g = innerProduct f (noiseOperator ρ g) := by
 -- proof
-  have hlhs := plancherel (noiseOperator ρ f) g
-  have hrhs := plancherel f (noiseOperator ρ g)
+  have hlhs := plancherel (f := noiseOperator ρ f) (g := g)
+  have hrhs := plancherel (f := f) (g := noiseOperator ρ g)
   rw [← hlhs, ← hrhs]
   congr 1
   ext S
@@ -285,3 +285,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

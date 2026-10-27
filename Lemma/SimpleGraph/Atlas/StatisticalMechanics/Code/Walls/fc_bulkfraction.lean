@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.fc_bulkfraction
 open Filter Topology StatMech.FK StatMech StatMech.Walls
 

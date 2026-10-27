@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lean.Elab.Tactic.Omega
 
 
@@ -74,4 +74,4 @@ end MathlibExt.Combinatorics.Coding.SingletonBound
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

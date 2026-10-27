@@ -1,5 +1,5 @@
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor Bool
 
 
@@ -20,4 +20,4 @@ private lemma main
 
 
 -- created on 2025-07-12
--- updated on 2026-01-05
+-- updated on 2026-10-26

@@ -1,11 +1,11 @@
 import Lemma.Fin.Sum_Delta.eq.Ite
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.DetStack_Ite.eq.MulPowNeg1
 import Lemma.Tensor.GetMatPowShiftMatrix.eq.DeltaModAdd
 import Lemma.Tensor.GetSum.eq.Sum_Get.of.GtLength_0
 import Lemma.Tensor.Sub
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
-import torch.stack
+import Def.Data.Holor.Stack.Part2
 open Tensor
 
 
@@ -147,4 +147,4 @@ private lemma main
 
 
 -- created on 2020-10-03
--- updated on 2026-09-16
+-- updated on 2026-10-26

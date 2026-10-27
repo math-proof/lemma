@@ -1,6 +1,6 @@
 import Lemma.Tensor.LengthRepeat.eq.MulGet_0.of.GtLength_0
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.EqGetUnsqueeze_0
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2025-07-10
--- updated on 2025-07-11
+-- updated on 2026-10-26

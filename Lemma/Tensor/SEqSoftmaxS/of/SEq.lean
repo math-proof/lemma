@@ -1,4 +1,4 @@
-import torch.functions
+import Theorem.Data.Holor.Functions
 import Lemma.Bool.SEqUFnS.of.SEq
 open Bool
 

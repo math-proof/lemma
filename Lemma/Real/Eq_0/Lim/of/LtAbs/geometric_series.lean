@@ -1,7 +1,7 @@
 import Mathlib.Analysis.SpecificLimits.Basic
-import sympy.series.limits
-import sympy.sets.sets
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 open Topology
 
 
@@ -20,4 +20,4 @@ private lemma main
 
 
 -- created on 2023-04-15
--- updated on 2023-05-20
+-- updated on 2026-10-26

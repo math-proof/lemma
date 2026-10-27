@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 /-!
 Continuants behind SymPy's `K(x[:n])` and `H(x[:n])` (`Lemma/Finset/K/eq/Add/definition.py`,
 `Lemma/Finset/H/eq/Add/definition.py`), indexed by the slice length `n`, over any commutative ring.

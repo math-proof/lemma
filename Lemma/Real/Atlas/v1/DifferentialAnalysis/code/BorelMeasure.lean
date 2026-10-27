@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.DifferentialAnalysis.code.BorelMeasure
 open MeasureTheory Measure Set TopologicalSpace MeasuresAndSigmaAlgebras
 open scoped CompactlySupported ZeroAtInfty

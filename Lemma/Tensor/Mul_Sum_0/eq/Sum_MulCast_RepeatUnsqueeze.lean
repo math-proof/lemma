@@ -1,6 +1,6 @@
 import Lemma.Fin.All_EqUFnS.of.All_Eq
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.Stack.of.All_Eq
 import Lemma.Tensor.EqStack_Get
@@ -8,7 +8,7 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.Mul_Stack.eq.Stack_Mul
 import Lemma.Tensor.Mul_SumStack.eq.SumStack_Mul
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Fin Nat Tensor Bool
 
 

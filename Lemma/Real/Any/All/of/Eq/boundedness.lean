@@ -1,6 +1,6 @@
 import Mathlib.Topology.MetricSpace.Pseudo.Defs
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -33,4 +33,4 @@ private lemma main
 
 
 -- created on 2020-05-16
--- updated on 2026-10-17
+-- updated on 2026-10-26

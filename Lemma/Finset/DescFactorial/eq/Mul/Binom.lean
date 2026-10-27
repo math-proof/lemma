@@ -1,7 +1,7 @@
 import Mathlib.RingTheory.Binomial
 import Mathlib.RingTheory.Polynomial.Pochhammer
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

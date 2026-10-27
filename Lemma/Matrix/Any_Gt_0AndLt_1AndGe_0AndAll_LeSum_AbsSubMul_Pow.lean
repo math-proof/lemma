@@ -1,4 +1,4 @@
-import sympy.stats.markov_reward_process
+import Def.Dynamics.MarkovRewardProcess.Part4
 import Lemma.Matrix.GeometricMixing.of.StochasticIrreducible.Aperiodic
 import Lemma.Matrix.Any_And_Stationary.of.StochasticIrreducible.Aperiodic
 open Matrix

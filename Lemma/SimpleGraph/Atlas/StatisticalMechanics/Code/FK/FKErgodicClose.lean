@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.FKErgodicClose.Part2
 open MeasureTheory ProbabilityTheory Filter Topology StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 

@@ -1,4 +1,4 @@
-import torch.Tensor.Basic
+import Def.Data.Holor.Defs.Part4
 import Lemma.Tensor.EqData0'0
 import Lemma.Vector.EqSplitAt0_0
 import Lemma.Vector.EqMap0_0.of.EqUFn_0

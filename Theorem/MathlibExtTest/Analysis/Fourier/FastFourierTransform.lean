@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Fourier/FastFourierTransform.lean -/
 
 
-import sympy.atlas.Analysis.Fourier.FastFourierTransform
+import Theorem.Analysis.Fourier.FastFourierTransform.Part2
 import Mathlib.Tactic.NormNum
 
 

@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 import Lemma.List.Sum.eq.SumFinLength_Get
 open List
 

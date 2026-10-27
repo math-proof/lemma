@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.IsingRGCoordinateBridge.Part8
 open StatMech StatMech.Exact3D StatMech.Exact3D.IsingRGCoordinateScaffold StatMech.Exact3D.IsingRGCoordinateBridgeInputs StatMech.Exact3D.IsingMassRGCoordinateScaffold StatMech.Exact3D.IsingMassRGCoordinateBridgeInputs
 

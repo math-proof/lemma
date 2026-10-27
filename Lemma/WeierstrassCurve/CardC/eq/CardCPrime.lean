@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.ModularCurve.WeierstrassLevelCarrier
 import Def.ModularCurve_WeierstrassLevelComponents
 import Lemma.Int.P2MUtil

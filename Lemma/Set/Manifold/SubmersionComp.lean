@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Geometry.Manifold.SubmersionComp
 open scoped Topology ContDiff
 open Manifold
@@ -587,4 +587,4 @@ private lemma Manifold_IsSubmersion_comp_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.QuadraticForms.ThreeSquaresLegendreRecursion.Part23
 open MetaMathlibExt
 
@@ -523,4 +523,4 @@ private lemma r3_legendre_recursion_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

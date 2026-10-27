@@ -1,6 +1,6 @@
 import Lemma.Tensor.Exp.eq.MulSoftmax_KeepdimSumExp
 import Lemma.Tensor.Mul_Keepdim.eq.Mul
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor
 
 
@@ -19,4 +19,4 @@ private lemma main
 
 
 -- created on 2021-12-14
--- updated on 2026-08-19
+-- updated on 2026-10-26

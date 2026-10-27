@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.List.ProdConsAdd.eq.AddProdSCons
 import Lemma.List.AddProdSCons.eq.MulAdd
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
@@ -89,4 +89,4 @@ private lemma batch
 
 
 -- created on 2025-06-01
--- updated on 2026-08-19
+-- updated on 2026-10-26

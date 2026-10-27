@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /-- A map into a product is measurable iff both components are. -/

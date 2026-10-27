@@ -1,5 +1,5 @@
 import Lemma.Tensor.GtLength.of.GtLength_0
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
 import Lemma.Tensor.SEqArraySliceSData.of.Eq
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.GtGet_0.GtLength_0

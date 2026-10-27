@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Topology.Continuum.PeanoCurve
 open Topology
 open MathlibExt.Topology.Continuum.PeanoCurveWanted
@@ -39,4 +39,4 @@ end MathlibExt.Topology.Continuum.PeanoCurveWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

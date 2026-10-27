@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TheoryOfProbability.code.KolmogorovCycle.Part3
 open MeasureTheory ProbabilityTheory Finset BigOperators StochasticMatrix
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.AlgebraicCurve.Repartitions
 import Lemma.Scheme.IsCurveOver
 open AlgebraicCurve
@@ -48,4 +48,4 @@ private lemma main
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

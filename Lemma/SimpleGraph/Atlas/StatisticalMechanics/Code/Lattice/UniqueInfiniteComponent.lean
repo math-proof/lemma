@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.UniqueInfiniteComponent.Part3
 open Set SimpleGraph StatMech StatMech.Lattice
 

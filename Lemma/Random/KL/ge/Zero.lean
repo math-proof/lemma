@@ -1,5 +1,5 @@
 import Mathlib.InformationTheory.KullbackLeibler.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory InformationTheory
 
 

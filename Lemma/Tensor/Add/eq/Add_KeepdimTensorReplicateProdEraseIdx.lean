@@ -1,4 +1,4 @@
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataKeepdim.as.FlattenMapSplitAtCast_Data

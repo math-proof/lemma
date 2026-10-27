@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.RSW.SelfDuality.Part2
 open SimpleGraph Real StatMech StatMech.RSW
 

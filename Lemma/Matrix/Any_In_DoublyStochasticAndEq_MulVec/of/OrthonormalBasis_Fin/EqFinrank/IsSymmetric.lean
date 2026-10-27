@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.inner_product_space.SchurHorn
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.InnerProductSpace.SchurHorn
 
 /--
 [SchurHorn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/InnerProductSpace/SchurHorn.lean)

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Percolation.DctSurfacePartition.Part4
 open MeasureTheory Function Set SimpleGraph StatMech StatMech.Percolation
 

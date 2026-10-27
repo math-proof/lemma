@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch8Entry16EulerConstantSeries
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch8Entry16EulerConstantSeries.Part3
 
 open Ramanujan.Part1Ch8.Entry16Eulerconstantseries
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.RepresentationTheory.Homological.TateCohomology.FiniteCyclic.Part4
 open CategoryTheory Limits ModuleCat Rep
 open TateCohomology
@@ -49,4 +49,4 @@ end TateCohomology
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

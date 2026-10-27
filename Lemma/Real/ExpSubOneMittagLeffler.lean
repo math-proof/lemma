@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ExpSubOneMittagLeffler
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.ExpSubOneMittagLeffler.Part3
 open scoped BigOperators
 open Complex
 
@@ -802,4 +802,4 @@ end
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

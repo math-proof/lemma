@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionTheorem
 open TemperedDistribution SchwartzMap DifferentialOperators Distribution
 open scoped SchwartzMap LineDeriv Pointwise

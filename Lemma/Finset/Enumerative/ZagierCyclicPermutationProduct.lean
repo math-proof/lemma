@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.Enumerative.ZagierCyclicPermutationProduct.Part44
 open MetaMathlibExt
 
@@ -882,4 +882,4 @@ private lemma zagier_probability_product_two_cyclic_permutations_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

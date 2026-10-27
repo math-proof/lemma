@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.CerednikDrinfeld.MumfordQuotient
 import Lemma.Int.P2MUtil
 open CerednikDrinfeld.Mumford

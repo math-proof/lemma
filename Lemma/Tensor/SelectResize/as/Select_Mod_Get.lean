@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.Tensor.SelectResize.as.Select_Mod_Get.of.Lt.GtLength
 open Tensor
 

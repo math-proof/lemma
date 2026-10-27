@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
@@ -35,4 +35,4 @@ private lemma main
 
 
 -- created on 2026-07-12
--- updated on 2026-07-19
+-- updated on 2026-10-26

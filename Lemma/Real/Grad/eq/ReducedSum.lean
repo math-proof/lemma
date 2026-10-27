@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Calculus.FDeriv.Add
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

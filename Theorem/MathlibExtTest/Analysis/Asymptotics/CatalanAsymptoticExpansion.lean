@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean -/
 
 
-import Def.Analysis.Asymptotics.CatalanAsymptoticExpansion
+import Theorem.Analysis.Asymptotics.CatalanAsymptoticExpansion.Part8
 import Lemma.Real.Asymptotics.CatalanAsymptoticExpansion
 
 

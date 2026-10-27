@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
 open NumberField RayClassField Pointwise KroneckerWeber Ideles GlobalCFT
 open Ideles

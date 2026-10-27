@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusSignedChargeBridge.Part3
 open Matrix StatMech StatMech.FrontierD
 

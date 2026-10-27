@@ -1,4 +1,4 @@
-import stdlib.Slice
+import Def.Data.List.Slice
 
 
 @[path]

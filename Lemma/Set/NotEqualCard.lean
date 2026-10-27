@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Section_8_3
 open Chapter8
 open Chapter8.EqualCard

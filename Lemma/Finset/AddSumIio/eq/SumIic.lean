@@ -3,7 +3,7 @@ import Mathlib.Order.Interval.Finset.Fin
 import Instance.Fun
 import Notation.Fun
 import Syntax.Fun
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--

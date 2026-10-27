@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.CombinatorialOptimization.code.Flow.BottleneckEdge.Part2
 open Finset BigOperators Classical NetworkFlow
 

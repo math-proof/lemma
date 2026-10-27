@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.bc113boundaryforest.Part6
 open Set SimpleGraph Finset StatMech StatMech.Walls
 

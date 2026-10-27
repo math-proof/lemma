@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Finset Matrix BigOperators
 open InnerProductSpace
 open scoped InnerProductSpace
@@ -319,4 +319,4 @@ end MathlibExt.LinearAlgebra.Matrix.HadamardDeterminant
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

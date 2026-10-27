@@ -1,6 +1,6 @@
 import Lemma.Vector.Sum.eq.Zero
 import Lemma.Tensor.Einsum.eq.SumMulDataS
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor Vector
 
 

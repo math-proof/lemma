@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqItem1'1
-import torch.Tensor.item
+import Def.Data.Holor.Item
 import Lemma.Tensor.ItemAbs.eq.AbsItem
 import Lemma.Tensor.ItemSquare.eq.SquareItem
 open Tensor

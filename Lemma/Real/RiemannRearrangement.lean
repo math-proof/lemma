@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.RiemannRearrangement
+import Initialize.Tactic.Attr.Basic
+import Theorem.Topology.Algebra.InfiniteSum.RiemannRearrangement.Part3
 
 open Series.RiemannRearrangementWanted
 

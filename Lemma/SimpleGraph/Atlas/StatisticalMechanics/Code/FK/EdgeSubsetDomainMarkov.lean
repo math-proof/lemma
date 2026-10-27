@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.EdgeSubsetDomainMarkov.Part5
 open Finset SimpleGraph StatMech StatMech.FK
 

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch9Entry33Zeta3integral
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch9Entry33Zeta3integral
 
 open Ramanujan.Part1Ch9.Entry33Zeta3integral
 

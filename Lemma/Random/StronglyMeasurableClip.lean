@@ -1,5 +1,5 @@
-import sympy.stats.policy_trajectory
-import sympy.functions.elementary.miscellaneous
+import Theorem.Dynamics.PolicyTrajectory
+import Def.Order.Miscellaneous
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-12
+-- updated on 2026-10-26

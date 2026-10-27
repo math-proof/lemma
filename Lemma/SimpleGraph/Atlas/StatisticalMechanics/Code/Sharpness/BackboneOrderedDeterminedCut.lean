@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.BackboneOrderedDeterminedCut.Part4
 open Finset BigOperators StatMech StatMech.Sharpness StatMech.Sharpness.shb_OrderedLocalTests StatMech.Sharpness.shb_OrderedLocalExploration StatMech.Sharpness.BackboneDeterminedCutSwitching
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Enumerative.SubtractiveMethods.Part3
 open scoped BigOperators
 open AlgebraicCombinatorics.SubtractiveMethods

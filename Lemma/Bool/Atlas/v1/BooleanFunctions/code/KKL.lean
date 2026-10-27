@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Talagrand
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 open Finset BigOperators Real

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FLTPrelim_Ramification
 import Lemma.Int.P2MUtil
 open ValuationSubring

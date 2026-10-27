@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_14_SubspaceBound
 open Matrix Finset BigOperators Rigollet MeasureTheory
 

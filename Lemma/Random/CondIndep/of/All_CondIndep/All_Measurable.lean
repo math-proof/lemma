@@ -1,4 +1,4 @@
-import sympy.stats.hidden_markov_sequence
+import Def.Probability.Process.HiddenMarkovSequence.Part2
 import Lemma.Measure.CondIndep.of.CondIndep.CondIndep.Le_M
 import Lemma.Measure.CondIndep.of.Le.Le.CondIndep.Le_M.Le_M.Le_M.Le_M
 open MeasureTheory ProbabilityTheory Measure

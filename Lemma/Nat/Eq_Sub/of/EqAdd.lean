@@ -1,5 +1,5 @@
 import Mathlib.Algebra.Group.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetSelect_1.as.Get.of.GtGet_0.GtGet_1.GtLength_1
 import Lemma.Tensor.GetT.eq.Select

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.FreeDLRKernel.Part2
 open MeasureTheory Set SimpleGraph Filter Topology StatMech StatMech.FK
 

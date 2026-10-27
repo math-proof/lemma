@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.NumberTheory.NumberField.Completion.FinitePlacesOver
 open IsDedekindDomain
 open scoped NumberField NumberField.LiesOver Valued
@@ -83,4 +83,4 @@ end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

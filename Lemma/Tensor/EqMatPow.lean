@@ -1,4 +1,4 @@
-import sympy.matrices.expressions.matpow
+import Instance.LinearAlgebra.Matrix.Matpow
 import Lemma.Tensor.EqMatProd
 open Tensor
 

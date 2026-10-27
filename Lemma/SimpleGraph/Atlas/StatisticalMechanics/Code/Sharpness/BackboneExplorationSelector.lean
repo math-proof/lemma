@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.BackboneExplorationSelector.Part4
 open Finset StatMech StatMech.Sharpness StatMech.Sharpness.shb_DynamicEdgeExploration StatMech.Sharpness.shb_ExplorationKernel StatMech.Sharpness.shb_ExplorationRhoRealization
 

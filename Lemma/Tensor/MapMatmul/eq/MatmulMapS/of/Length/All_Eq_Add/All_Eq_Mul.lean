@@ -1,4 +1,4 @@
-import torch.Tensor.bmm
+import Def.Data.Holor.Bmm
 import Lemma.Tensor.GetMatmul.as.MatmulGetS.of.Get_0.Length.GtLength_0
 import Lemma.Tensor.MapBmm.eq.BmmMapS.of.All_Eq_Add.All_Eq_Mul
 import Lemma.Tensor.Matmul.as.Bmm

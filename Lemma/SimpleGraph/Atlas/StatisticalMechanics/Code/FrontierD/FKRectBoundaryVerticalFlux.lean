@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryVerticalFlux.Part3
 open Equiv Finset SimpleGraph StatMech.Onsager StatMech.Onsager.BaseCase StatMech StatMech.FrontierD
 

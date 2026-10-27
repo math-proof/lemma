@@ -1,5 +1,5 @@
 import Mathlib.Probability.Kernel.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open ProbabilityTheory
 
 

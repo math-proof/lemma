@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.TwoPathsCrossWinding.Part2
 open Set SimpleGraph MeasureTheory StatMech StatMech.Lattice
 

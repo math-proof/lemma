@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Ideal.GetDecompose.in.AugmentationIdealGraded.of.In_AugmentationIdealGraded
 import Lemma.Submodule.GetDecompose_SMul.in.SMulTop.of.In.In_Aug
 set_option maxHeartbeats 999999

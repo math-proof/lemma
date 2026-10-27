@@ -1,4 +1,4 @@
-import sympy.stats.quantile
+import Def.Probability.Quantile
 import Lemma.Random.AddRealLtRealGe.eq.One
 open MeasureTheory
 

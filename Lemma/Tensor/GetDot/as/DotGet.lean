@@ -1,5 +1,5 @@
-import torch.Tensor.reshape
-import torch.Tensor.prod
+import Def.Data.Holor.Reshape
+import Def.Data.Holor.Prod
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.SetAppend.eq.Append_Set.of.LeLength
 import Lemma.Tensor.Einsum.as.SelectBmm.of.GeLength_2

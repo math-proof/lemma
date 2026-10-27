@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.CerednikDrinfeld.WalkOverlap
 open SimpleGraph
 open CerednikDrinfeld.Mumford CerednikDrinfeld

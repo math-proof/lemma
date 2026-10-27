@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ComplexVariables.code.Lecture8
 open Complex MeasureTheory intervalIntegral Set Function Real in
 

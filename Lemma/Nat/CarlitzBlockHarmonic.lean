@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -321,4 +321,4 @@ lemma ZMod.carlitz_sum_inv_block_Ico_eq_zero_of_five_le
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

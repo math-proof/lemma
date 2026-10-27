@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
 open CPythonListsort CPythonListsort.MergeMemcpySite CPythonListsort.TempRangeInBounds CPythonListsort.MergeMovementFrame CPythonListsort.MovementAccessOnly CPythonListsort.TempRangeInitialized CPythonListsort.TempRangeValuesMode CPythonListsort.AccessTrace CPythonListsort.AccessTrace.HasAccess CPythonListsort.AccessTrace.HasTempAccess CPythonListsort.MovementTraceSafe CPythonListsort.MovementTempLive
 open SortSlice

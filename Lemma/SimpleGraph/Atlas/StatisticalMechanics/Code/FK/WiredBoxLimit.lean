@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.WiredBoxLimit.Part2
 open MeasureTheory Filter Topology SimpleGraph StatMech StatMech.FK
 

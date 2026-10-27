@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslateContinuity
 open Metric Filter SchwartzMap
 open scoped SchwartzMap Topology

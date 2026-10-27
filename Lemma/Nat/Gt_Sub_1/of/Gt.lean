@@ -1,6 +1,6 @@
 import Lemma.Nat.NotLe.of.Gt
 import Lemma.Nat.NotLt.is.Ge
-import sympy.functions.elementary.integers
+import Instance.Data.Int.Integers
 open Nat
 
 

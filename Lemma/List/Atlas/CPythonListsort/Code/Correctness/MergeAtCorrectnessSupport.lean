@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Correctness.MergeAtCorrectnessSupport
 open CPythonListsort CPythonListsort.StableOccurrencePermutation CPythonListsort.PendingRunsCorrect CPythonListsort.EntrySnapshotPermutation
 

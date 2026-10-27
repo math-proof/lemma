@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Vector.HeadMap.eq.UFnHead
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool Tensor Vector
 
 

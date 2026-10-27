@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.FrontierD.SixVertexAntiferroelectricSeries.Part9
 open Finset Filter Topology StatMech StatMech.FrontierD
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.TangentSpaces.Part4
 open Matrix Module Submodule LinearMap FiniteDimensional MvPolynomial IntermediateField Cardinal in IsLocalRing TangentSpaces SingularLocus
 open IntermediateField Cardinal

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Talagrand
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
@@ -38,7 +38,7 @@ lemma variance_eq_sum_fourierCoeff_sq_nonempty
 -- imply
   variance f = ∑ S ∈ (Finset.univ : Finset (Finset (Fin n))).filter (· ≠ ∅), (fourierCoeff f S) ^ 2 := by
 -- proof
-  have hparseval := parseval f
+  have hparseval := parseval (f := f)
   have hsplit : ∑ S : Finset (Fin n), (fourierCoeff f S) ^ 2 =
     (fourierCoeff f ∅) ^ 2 +
     ∑ S ∈ (Finset.univ : Finset (Finset (Fin n))).filter (· ≠ ∅),
@@ -102,3 +102,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

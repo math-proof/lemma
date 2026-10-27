@@ -3,7 +3,7 @@ import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.StDiv.ne.Zero
 import Lemma.Hyperreal.InfiniteMul.of.Infinite.Infinite
 import Lemma.Hyperreal.StInv.eq.Inv.of.EqSt
 import Lemma.Hyperreal.Lt0StInvMul.of.StDiv.gt.Zero.NotInfinite.NotInfinite.NotInfinitesimal.NotInfinitesimal
-open Hyperreal
+open Hyperreal ArchimedeanClass
 
 
 @[path]

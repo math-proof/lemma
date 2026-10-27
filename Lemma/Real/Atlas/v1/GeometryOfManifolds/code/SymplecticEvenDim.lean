@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
 open Module FiniteDimensional

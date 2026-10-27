@@ -1,4 +1,4 @@
-import stdlib.List
+import Def.Data.List.List.Part5
 import Lemma.List.Drop.eq.ListGet.of.GtLength_0
 open List
 

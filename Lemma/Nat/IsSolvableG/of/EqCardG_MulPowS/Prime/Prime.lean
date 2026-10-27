@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.BurnsidePaqb.SimplePrime
 import Lemma.Complex.False.of.EqAdd1Mul_0.IsIntegral.Prime
 
@@ -98,4 +98,4 @@ end BurnsidePaqb
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

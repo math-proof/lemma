@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.NumberTheory.LSeries.AbelContinuation.Part2
 open AbelContinuationTest
 open Filter Asymptotics Topology

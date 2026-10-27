@@ -1,5 +1,5 @@
 import Lemma.Tensor.SelectSoftmax.eq.SoftmaxSelect.of.Lt
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.SEqPermuteHeadS.of.SEq
 import Lemma.Tensor.GetPermuteHead.as.PermuteHeadSelect.of.GtGet_1.GtLength_1
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength
@@ -7,7 +7,7 @@ import Lemma.Tensor.GetSum_0.as.SumSelect.of.GtGet_0.GtLength_0
 import Lemma.Tensor.SEqPermuteHead_1
 import Lemma.Tensor.SEqSoftmaxS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Bool List Nat Tensor
 set_option maxHeartbeats 250000
 

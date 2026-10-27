@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Analysis.SpecialFunctions.Elliptic.Order.Part2
 open scoped Topology
 

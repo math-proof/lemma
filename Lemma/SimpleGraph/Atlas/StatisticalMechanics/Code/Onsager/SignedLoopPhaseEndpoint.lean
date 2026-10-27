@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopPhaseEndpoint
 open MeasureTheory StatMech StatMech.Onsager
 

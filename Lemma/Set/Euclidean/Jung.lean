@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Convex.Straszewicz
 import Lemma.Convex.Straszewicz
 open Finset BigOperators InnerProductSpace
@@ -1010,4 +1010,4 @@ end MathlibExt.Geometry.Euclidean.JungWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

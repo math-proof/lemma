@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierInversion
 open MeasureTheory Complex Finset FourierAnalysis
 open scoped FourierTransform RealInnerProductSpace

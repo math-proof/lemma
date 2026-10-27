@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Int.P2MUtil
 open NumberField Matrix Filter IsDedekindDomain Int
 open scoped RestrictedProduct

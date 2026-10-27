@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Inequalities.PerOrbitCardClose.Part8
 open Finset MeasureTheory StatMech
 

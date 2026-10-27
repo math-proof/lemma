@@ -1,5 +1,5 @@
 import Lemma.Hyperreal.LeSt_0.of.Le_0
-open Hyperreal
+open Hyperreal ArchimedeanClass
 
 
 @[path]

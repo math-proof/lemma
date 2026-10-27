@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicCombinatorics.code.YoungDiagrams.Part2
 open YoungLattice YoungLattice.Lmn
 

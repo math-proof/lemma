@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Young.MonomialSymmetric.Part6
 import Lemma.Partition.NPartition
 open MvPolynomial hiding R

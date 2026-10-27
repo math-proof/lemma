@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.GaussHypergeometricSummationFrisch
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.GaussHypergeometricSummationFrisch.Part3
 
 
 /--

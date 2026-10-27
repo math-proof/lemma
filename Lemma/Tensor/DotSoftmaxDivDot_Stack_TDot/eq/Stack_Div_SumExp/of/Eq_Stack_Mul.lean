@@ -1,10 +1,10 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub
 import Lemma.Tensor.DotDotSRotaryMatrix'.eq.Dot_DotRotaryMatrix'Sub
 import Lemma.Tensor.DotSoftmaxDivDot_T.eq.Stack_Div_SumExp
 import Lemma.Tensor.RotaryMatrixSubGetS.eq.Ite_RotaryMatrix_T.of.Eq_Stack_Mul
 import Lemma.Tensor.RotaryMatrix'SubGetS.eq.Ite_RotaryMatrix'_T.of.Eq_Stack_Mul
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Fin Tensor
 set_option maxHeartbeats 1000000
 
@@ -110,4 +110,4 @@ private lemma interleave
 
 
 -- created on 2023-06-09
--- updated on 2026-09-17
+-- updated on 2026-10-26

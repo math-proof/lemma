@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Foundations.CylinderDeriv.Part2
 open MeasureTheory ProbabilityTheory Function StatMech
 

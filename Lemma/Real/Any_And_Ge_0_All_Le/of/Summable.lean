@@ -1,5 +1,5 @@
 import Mathlib.Topology.Algebra.InfiniteSum.Real
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

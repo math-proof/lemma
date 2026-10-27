@@ -1,4 +1,4 @@
-import sympy.vector.operators
+import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Macro.Order.Sup
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1MulMulCardAbs_R.of.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob

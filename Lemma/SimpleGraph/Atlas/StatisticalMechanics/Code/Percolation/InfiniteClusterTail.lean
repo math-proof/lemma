@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Percolation.InfiniteClusterTail.Part3
 open Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 

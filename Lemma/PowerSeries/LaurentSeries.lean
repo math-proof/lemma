@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.LaurentSeries
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.HahnSeries.LaurentSeries.Part6
 import Lemma.LaurentSeries.LaurentSeries
 open AlgebraicCombinatorics.FPS.Laurent
 open LaurentPolynomial

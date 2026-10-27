@@ -1,8 +1,8 @@
 import Lemma.Tensor.Unsqueeze.eq.TensorCast_Data
-import torch.Tensor.sum
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
-import torch.Tensor.prod
+import Def.Data.Holor.Sum
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
+import Def.Data.Holor.Prod
 import Lemma.Tensor.EqDiv_0'0
 import Lemma.Tensor.EqTensor0'0
 import Lemma.Tensor.Sum.eq.Zero
@@ -11,7 +11,7 @@ import Lemma.Vector.EqCast_0'0.of.Eq
 import Lemma.Vector.Flatten0.eq.Zero
 import Lemma.Vector.MapRange.eq.Zero
 import Lemma.Vector.Repeat0.eq.Zero
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Tensor Vector
 
 

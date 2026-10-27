@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.CStarAlgebra.KaplanskyDensity.Part10
 
 open Analysis.CStarAlgebra.KaplanskyDensityWanted

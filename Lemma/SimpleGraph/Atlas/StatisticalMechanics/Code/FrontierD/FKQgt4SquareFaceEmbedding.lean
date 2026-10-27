@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFaceEmbedding.Part3
 open Set SimpleGraph StatMech StatMech.FrontierD
 

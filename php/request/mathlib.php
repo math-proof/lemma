@@ -17,7 +17,7 @@ if (!file_exists($leanFile)) {
     $file = new std\Text($leanFile);
     $codeStr = <<< EOT
 import Mathlib
-import sympy.printing.json
+import Def.Lean.PrettyPrinter.Json
 #eval do
   println! ← Name.toJson `$name
 EOT;

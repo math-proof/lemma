@@ -2,7 +2,7 @@ import Lemma.Hyperreal.EqSt
 import Lemma.Hyperreal.Infinite.is.InfinitePow
 import Lemma.Hyperreal.NotInfinite
 import Lemma.Hyperreal.StMul.eq.MulStS.of.NotInfinite.NotInfinite
-open Hyperreal
+open Hyperreal ArchimedeanClass
 
 
 @[path]
@@ -30,4 +30,4 @@ private lemma main
 
 
 -- created on 2025-12-16
--- updated on 2025-12-17
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.RSWQOneRectangleCylinder
 open Set SimpleGraph MeasureTheory StatMech StatMech.Universality
 

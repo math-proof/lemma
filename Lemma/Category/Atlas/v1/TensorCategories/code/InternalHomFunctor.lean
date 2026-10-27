@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
 import Lemma.Category.Atlas.v1.TensorCategories.code.InternalHom
 import Class.v1.Atlas.TensorCategories.code.ConcreteModuleCategories.Part4

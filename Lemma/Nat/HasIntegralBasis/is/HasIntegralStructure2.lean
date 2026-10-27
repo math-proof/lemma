@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CuspForm_IntegralLattice
 import Def.CuspForm_IntegralStructure
 import Lemma.Int.P2MUtil

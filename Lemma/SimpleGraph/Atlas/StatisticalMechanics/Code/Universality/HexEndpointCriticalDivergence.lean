@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.HexEndpointCriticalDivergence.Part3
 open StatMech StatMech.Universality StatMech.Universality.HexEndpointSideFibers
 

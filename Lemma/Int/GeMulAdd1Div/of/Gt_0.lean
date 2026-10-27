@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.MulAdd.eq.AddMulS

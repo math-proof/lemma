@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.HcovAssembly.Part4
 open Finset BigOperators SimpleGraph StatMech StatMech.Sharpness StatMech.Sharpness.HcovAssembly
 

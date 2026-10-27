@@ -2,7 +2,7 @@ import Lemma.Tensor.SumAppend.eq.AddSumS
 import Lemma.Tensor.EqSumStack
 import Lemma.Tensor.Stack.eq.AppendStackS
 import Lemma.Tensor.Sum.eq.Zero
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor
 
 

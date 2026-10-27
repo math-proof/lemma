@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
 import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
 open Function

@@ -1,5 +1,5 @@
-import sympy.functions.combinatorial.numbers
-import sympy.Basic
+import Def.Combinatorics.Enumerative.Numbers
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_3
 open MeasureTheory Matrix Real Finset SingularValueThresholding
 

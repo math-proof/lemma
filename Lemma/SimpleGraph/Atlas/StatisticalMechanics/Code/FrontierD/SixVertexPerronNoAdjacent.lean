@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPerronNoAdjacent.Part2
 open Finset Matrix StatMech StatMech.FrontierD
 

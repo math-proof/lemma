@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoHamming.Part2
 open StatMech StatMech.BeffaraDC
 

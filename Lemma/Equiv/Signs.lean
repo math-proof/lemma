@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.Perm.Signs
 import Lemma.Equiv.Inversions1
 

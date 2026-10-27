@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Probability.SkorokhodRepresentation
 open MeasureTheory
 open scoped ENNReal NNReal
@@ -821,4 +821,4 @@ end MathlibExt.Probability.SkorokhodRepresentationWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

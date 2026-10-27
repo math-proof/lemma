@@ -1,7 +1,7 @@
 import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0.GtLength
 import Lemma.Tensor.Sum.as.Stack_Sum.of.GtLength
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor
 
 
@@ -26,4 +26,4 @@ private lemma main
 
 
 -- created on 2025-06-24
--- updated on 2025-07-13
+-- updated on 2026-10-26

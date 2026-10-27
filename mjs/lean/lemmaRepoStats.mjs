@@ -3,7 +3,7 @@
  *
  * - Theorem count: `select count(*) from lemma where user = ? and json_length(imports) > 0`
  *   (`php/utility.php` `select_count`), not a raw `.lean` file count.
- * - Lines: non-empty lines in all `.lean` under `Lemma/`, `sympy/`, `stdlib/` except `*.echo.lean`
+ * - Lines: non-empty lines in all `.lean` under the decl libraries and `Lemma/` except `*.echo.lean`
  *   (`php/request/lines.php` + `read_all_lean`).
  */
 import fs from 'fs/promises';
@@ -11,7 +11,11 @@ import path from 'path';
 import { REPO_ROOT } from './modulePath.mjs';
 import { getMysqlConfig, getMysqlPool } from './fetchLemmaMysql.mjs';
 
-const LINE_ROOTS = ['Lemma', 'sympy', 'stdlib'];
+const LINE_ROOTS = [
+  'Lemma',
+  'Def', 'Theorem', 'Instance', 'Class', 'Structure', 'Abbrev',
+  'Notation', 'Inductive', 'Syntax', 'Macro', 'Initialize',
+];
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
 /** @type {Map<string, { data: { theoremCount: number, lineCount: number }, at: number }>} */

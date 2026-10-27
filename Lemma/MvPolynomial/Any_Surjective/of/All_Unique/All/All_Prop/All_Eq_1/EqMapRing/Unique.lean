@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.ModularCurve.LevelModuliPackage
 import Lemma.ModularCurve.LevelModuliPackageAbs
 import Def.ModularCurve_WeierstrassLevelModuliDatum

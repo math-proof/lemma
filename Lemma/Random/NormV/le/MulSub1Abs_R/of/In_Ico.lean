@@ -1,4 +1,4 @@
-import sympy.stats.cond_expectation
+import Theorem.Probability.CondExpectation
 import Lemma.Random.All_And_LeNormExtDotPow_Id.of.All_Eq_Joint.In_Ico
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
@@ -45,4 +45,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-10
+-- updated on 2026-10-26

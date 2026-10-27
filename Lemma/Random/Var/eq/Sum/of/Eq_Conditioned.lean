@@ -1,6 +1,6 @@
 import Mathlib.Probability.Moments.Variance
 import Mathlib.Probability.Independence.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 
 
@@ -24,4 +24,4 @@ private lemma main
 
 
 -- created on 2023-04-19
--- updated on 2026-10-17
+-- updated on 2026-10-26

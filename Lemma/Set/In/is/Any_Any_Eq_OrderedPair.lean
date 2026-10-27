@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Section_3_5.Part9
 open Chapter3.SetTheory.Set
 open Chapter3 hiding Nat Set

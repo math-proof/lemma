@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.SphericalBuilding.Oriflamme.Part5
 open Oriflamme
 
@@ -367,4 +367,4 @@ distinguished types $V_1$ and $V_2$, contradicting `distinct_SO_orbits`. -/
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

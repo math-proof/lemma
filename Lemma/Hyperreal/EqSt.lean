@@ -1,6 +1,6 @@
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.Infinitesimal0
-open Hyperreal
+open Hyperreal ArchimedeanClass
 
 
 @[path]
@@ -15,4 +15,4 @@ private lemma main
 
 
 -- created on 2025-12-11
--- updated on 2025-12-12
+-- updated on 2026-10-26

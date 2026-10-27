@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.DotT.eq.RotaryMatrix'Sub
 import Lemma.Tensor.Dot_T.eq.Dot
 open Tensor
@@ -20,4 +20,4 @@ private lemma main
 
 
 -- created on 2026-09-16
--- updated on 2026-09-16
+-- updated on 2026-10-26

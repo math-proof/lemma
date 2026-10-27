@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
 open NumberField Module ConductorOrder
 open scoped Quaternion

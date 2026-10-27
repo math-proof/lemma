@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAngleHomotopy.Part3
 open Set SimpleGraph StatMech StatMech.FrontierA
 

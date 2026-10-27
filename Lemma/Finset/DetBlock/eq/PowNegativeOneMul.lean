@@ -1,6 +1,6 @@
 import Mathlib.LinearAlgebra.Matrix.Permutation
 import Mathlib.GroupTheory.Perm.Sign
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /-- py: the determinant of a (block) permutation matrix obtained by `s` column swaps is `(-1)^s`.

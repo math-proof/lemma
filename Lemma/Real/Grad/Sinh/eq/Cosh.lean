@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

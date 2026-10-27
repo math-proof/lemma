@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.NumberTheory.Padics.PontryaginDual
 open MetaMathlibExt
 
@@ -75,4 +75,4 @@ lemma padicQuotientMap_mkQ_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

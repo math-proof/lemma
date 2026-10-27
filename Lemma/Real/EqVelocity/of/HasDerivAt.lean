@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Calculus.Deriv.Basic
-import sympy.physics.vector.kinematics
-import sympy.Basic
+import Def.Geometry.Euclidean.Kinematics
+import Initialize.Tactic.Attr.Basic
 
 
 /--

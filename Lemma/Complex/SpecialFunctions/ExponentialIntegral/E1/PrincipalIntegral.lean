@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.Analysis.SpecialFunctions.ExponentialIntegral.E1.PrincipalIntegral
 open Filter Set Topology MeasureTheory
 open scoped ENNReal NNReal
@@ -181,4 +181,4 @@ end Complex
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

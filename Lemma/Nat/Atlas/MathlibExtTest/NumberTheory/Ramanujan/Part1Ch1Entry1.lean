@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.NumberTheory.Ramanujan.Part1Ch1Entry1
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch1.Entry1Magicsquare3
 

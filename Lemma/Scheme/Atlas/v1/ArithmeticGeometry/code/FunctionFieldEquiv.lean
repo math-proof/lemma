@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.ArithmeticGeometry.code.FunctionFieldEquiv.Part4
 open AlgebraicGeometry CategoryTheory ArithmeticGeometry ArithmeticGeometry.Thm19_2
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Combinatorics.Enumerative.Partition.PeakGeneratingFunction
 open MathlibExtTest MathlibExtTest.Combinatorics MathlibExtTest.Combinatorics.Enumerative MathlibExtTest.Combinatorics.Enumerative.Partition MathlibExtTest.Combinatorics.Enumerative.Partition.PeakGeneratingFunction
 open MetaMathlibExt

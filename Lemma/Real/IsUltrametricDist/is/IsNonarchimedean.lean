@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Mathlib.Analysis.Normed.Field.Instances
 import Mathlib.Analysis.Normed.Field.Ultra
 import Mathlib.Analysis.Normed.Field.WithAbs

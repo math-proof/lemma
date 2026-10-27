@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.GroupGrowth
 open Group.Generators
 
@@ -124,4 +124,4 @@ end Group.Generators
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
-import torch.Tensor.Basic
-import torch.Tensor.permute
+import Def.Data.Holor.Defs.Part4
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.SEqPermuteTailS.of.SEq
 open Tensor
 

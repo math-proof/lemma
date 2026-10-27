@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Bool.All.of.All_Or_Not
 import Lemma.Set.NotIn_Inter.of.OrNotSIn
 import Lemma.Bool.OrOr.is.Or_Or

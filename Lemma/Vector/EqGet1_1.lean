@@ -1,4 +1,4 @@
-import sympy.vector.Basic
+import Theorem.Data.Vector.Basic.Part2
 
 
 @[path, fin, subst 1]
@@ -14,4 +14,4 @@ private lemma main
 
 
 -- created on 2025-09-23
--- updated on 2026-07-19
+-- updated on 2026-10-26

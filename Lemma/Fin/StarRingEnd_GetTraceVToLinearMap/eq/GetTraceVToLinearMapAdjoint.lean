@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.LieGroups.code.SchurOrthogonalityConsequences
 open MeasureTheory ContinuousRep
 open scoped ComplexConjugate
@@ -111,4 +111,4 @@ variable {K : Type*} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Bool
 
 

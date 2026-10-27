@@ -1,4 +1,4 @@
-import torch.Tensor.reshape
+import Def.Data.Holor.Reshape
 import Lemma.Nat.Div.eq.HDiv
 import Lemma.Tensor.DataDiv.eq.DivData
 import Lemma.Tensor.DataSum_0.as.SumSplitAtData
@@ -6,7 +6,7 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.Sum.as.OfVectorMapToVector.of.GtLength_0
 import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Reshape
 import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool Nat Tensor Vector
 
 
@@ -81,4 +81,4 @@ private lemma main
 
 
 -- created on 2025-09-25
--- updated on 2026-07-22
+-- updated on 2026-10-26

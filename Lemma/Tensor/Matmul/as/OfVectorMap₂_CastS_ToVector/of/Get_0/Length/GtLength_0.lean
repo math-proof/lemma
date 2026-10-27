@@ -3,7 +3,7 @@ import Lemma.Nat.EqMax
 import Lemma.Tensor.SEqOfVectorS.of.SEq
 import Lemma.Tensor.SEqToVectorS.of.Eq
 import Lemma.Vector.SEqMap₂S.of.All_Eq.SEq.SEq
-import sympy.matrices.expressions.matmul
+import Instance.LinearAlgebra.Matrix.Matmul
 open Bool List Nat Tensor Vector
 
 @[path]

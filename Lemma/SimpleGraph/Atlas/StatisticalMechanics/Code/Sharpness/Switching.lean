@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
 open Finset BigOperators Classical StatMech StatMech.Sharpness StatMech.Sharpness.RandomCurrent
 

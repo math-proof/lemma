@@ -1,4 +1,4 @@
-import stdlib.Slice
+import Def.Data.List.Slice
 
 
 @[path]
@@ -36,4 +36,4 @@ private lemma zero
 
 
 -- created on 2025-05-06
--- updated on 2025-05-11
+-- updated on 2026-10-26

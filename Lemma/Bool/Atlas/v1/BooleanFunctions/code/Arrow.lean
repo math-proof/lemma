@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Arrow
 open BooleanFourier
 
@@ -112,32 +112,32 @@ lemma exists_perm_for_valid_triple
   have hba := hab.symm; have hcb := hbc.symm; have hca := hac.symm
   match pab, pbc, pac, hvalid with
   | true, true, true, _ =>
-    obtain ⟨σ, hσa, hσb, hσc⟩ := exists_perm_placing_at_positions hm a b c hab hbc hac
+    obtain ⟨σ, hσa, hσb, hσc⟩ := exists_perm_placing_at_positions (a := a) (b := b) (c := c) hm hab hbc hac
     exact ⟨σ, prefersOver_of_lt (by rw [hσa, hσb]; exact Fin.mk_lt_mk.mpr (by omega)),
       prefersOver_of_lt (by rw [hσb, hσc]; exact Fin.mk_lt_mk.mpr (by omega)),
       prefersOver_of_lt (by rw [hσa, hσc]; exact Fin.mk_lt_mk.mpr (by omega))⟩
   | true, false, true, _ =>
-    obtain ⟨σ, hσa, hσc, hσb⟩ := exists_perm_placing_at_positions hm a c b hac hcb hab
+    obtain ⟨σ, hσa, hσc, hσb⟩ := exists_perm_placing_at_positions (a := a) (b := c) (c := b) hm hac hcb hab
     exact ⟨σ, prefersOver_of_lt (by rw [hσa, hσb]; exact Fin.mk_lt_mk.mpr (by omega)),
       not_prefersOver_of_lt (by rw [hσc, hσb]; exact Fin.mk_lt_mk.mpr (by omega)),
       prefersOver_of_lt (by rw [hσa, hσc]; exact Fin.mk_lt_mk.mpr (by omega))⟩
   | false, true, true, _ =>
-    obtain ⟨σ, hσb, hσa, hσc⟩ := exists_perm_placing_at_positions hm b a c hba hac hbc
+    obtain ⟨σ, hσb, hσa, hσc⟩ := exists_perm_placing_at_positions (a := b) (b := a) (c := c) hm hba hac hbc
     exact ⟨σ, not_prefersOver_of_lt (by rw [hσb, hσa]; exact Fin.mk_lt_mk.mpr (by omega)),
       prefersOver_of_lt (by rw [hσb, hσc]; exact Fin.mk_lt_mk.mpr (by omega)),
       prefersOver_of_lt (by rw [hσa, hσc]; exact Fin.mk_lt_mk.mpr (by omega))⟩
   | false, true, false, _ =>
-    obtain ⟨σ, hσb, hσc, hσa⟩ := exists_perm_placing_at_positions hm b c a hbc hca hba
+    obtain ⟨σ, hσb, hσc, hσa⟩ := exists_perm_placing_at_positions (a := b) (b := c) (c := a) hm hbc hca hba
     exact ⟨σ, not_prefersOver_of_lt (by rw [hσb, hσa]; exact Fin.mk_lt_mk.mpr (by omega)),
       prefersOver_of_lt (by rw [hσb, hσc]; exact Fin.mk_lt_mk.mpr (by omega)),
       not_prefersOver_of_lt (by rw [hσc, hσa]; exact Fin.mk_lt_mk.mpr (by omega))⟩
   | true, false, false, _ =>
-    obtain ⟨σ, hσc, hσa, hσb⟩ := exists_perm_placing_at_positions hm c a b hca hab hcb
+    obtain ⟨σ, hσc, hσa, hσb⟩ := exists_perm_placing_at_positions (a := c) (b := a) (c := b) hm hca hab hcb
     exact ⟨σ, prefersOver_of_lt (by rw [hσa, hσb]; exact Fin.mk_lt_mk.mpr (by omega)),
       not_prefersOver_of_lt (by rw [hσc, hσb]; exact Fin.mk_lt_mk.mpr (by omega)),
       not_prefersOver_of_lt (by rw [hσc, hσa]; exact Fin.mk_lt_mk.mpr (by omega))⟩
   | false, false, false, _ =>
-    obtain ⟨σ, hσc, hσb, hσa⟩ := exists_perm_placing_at_positions hm c b a hcb hba hca
+    obtain ⟨σ, hσc, hσb, hσa⟩ := exists_perm_placing_at_positions (a := c) (b := b) (c := a) hm hcb hba hca
     exact ⟨σ, not_prefersOver_of_lt (by rw [hσb, hσa]; exact Fin.mk_lt_mk.mpr (by omega)),
       not_prefersOver_of_lt (by rw [hσc, hσb]; exact Fin.mk_lt_mk.mpr (by omega)),
       not_prefersOver_of_lt (by rw [hσc, hσa]; exact Fin.mk_lt_mk.mpr (by omega))⟩
@@ -173,7 +173,7 @@ lemma arrow_viable_subcube
   have hac : a ≠ c := by simp [a, c, Fin.ext_iff]
   have hexists : ∀ k : Fin n, ∃ σ : Equiv.Perm (Fin m),
     prefersOver σ a b = u k ∧ prefersOver σ b c = v k ∧ prefersOver σ a c = w k :=
-    fun k => exists_perm_for_valid_triple hm a b c hab hbc hac (u k) (v k) (w k) (hw k)
+    fun k => exists_perm_for_valid_triple (a := a) (b := b) (c := c) (pab := u k) (pbc := v k) (pac := w k) hm hab hbc hac (hw k)
   classical
   let rankings : Fin n → Equiv.Perm (Fin m) := fun k => (hexists k).choose
   have hrankings : ∀ k, prefersOver (rankings k) a b = u k ∧
@@ -249,7 +249,7 @@ lemma arrow_viable_implies_unique_pivot
   obtain ⟨y, hfy, hfyj⟩ := exists_true_flip_witness f j hj
   by_cases hxi_yi : x i ≠ y i
   ·
-    have hcontra := arrow_viable_subcube hm f hviable x y (flipCoord x i) hfx hfy (by
+    have hcontra := arrow_viable_subcube (f := f) (u := x) (v := y) (w := flipCoord x i) hm hviable hfx hfy (by
       intro k hk
       have hki : k ≠ i := fun heq => by subst heq; exact hxi_yi hk
       simp [flipCoord, Function.update, hki])
@@ -258,7 +258,7 @@ lemma arrow_viable_implies_unique_pivot
     have hxi_yi : x i = y i := not_ne_iff.mp hxi_yi
     by_cases hxj_yj : x j ≠ y j
     ·
-      have hcontra := arrow_viable_subcube hm f hviable x y (flipCoord y j) hfx hfy (by
+      have hcontra := arrow_viable_subcube (f := f) (u := x) (v := y) (w := flipCoord y j) hm hviable hfx hfy (by
         intro k hk
         have hkj : k ≠ j := fun heq => by subst heq; exact hxj_yj hk
         simp [flipCoord, Function.update, hkj]; exact hk.symm)
@@ -274,7 +274,7 @@ lemma arrow_viable_implies_unique_pivot
         show x i ≠ !(flipCoord y j i)
         simp only [flipCoord, Function.update, dite_eq_right hne]
         rw [hxi_yi]; exact Bool.self_ne_not (y i)
-      have hcontra := arrow_viable_subcube hm f hviable x z (flipCoord x i) hfx hfz (by
+      have hcontra := arrow_viable_subcube (f := f) (u := x) (v := z) (w := flipCoord x i) hm hviable hfx hfz (by
         intro k hk
         have hki : k ≠ i := fun heq => by subst heq; exact hxi_ne_zi hk
         simp [flipCoord, Function.update, hki])
@@ -384,12 +384,12 @@ lemma arrow_impossibility
         unfold influence
         exact div_nonneg (Nat.cast_nonneg _) (pow_nonneg (by norm_num : (0 : ℝ) ≤ 2) n)
       exact lt_of_le_of_ne hnn (Ne.symm hjne)
-    exact hj (arrow_viable_implies_unique_pivot hm f hviable hodd i₀ j hi₀ hjpos).symm
+    exact hj (arrow_viable_implies_unique_pivot (f := f) (i := i₀) (j := j) hm hviable hodd hi₀ hjpos).symm
   have hinv_others : ∀ j : Fin n, j ≠ i₀ → ∀ x : Fin n → Bool, f x = f (flipCoord x j) :=
     fun j hj => influence_zero_invariant f j (hunique j hj)
   refine ⟨i₀, fun x => ?_⟩
   suffices hdep : f x = f (fun _ => x i₀) by
-    rw [hdep]; cases hxi : x i₀ <;> simp [hxi, htt, hff]
+    rw [hdep]; cases hxi : x i₀ <;> simp [htt, hff]
   suffices hsuff : ∀ (S : Finset (Fin n)),
     (∀ k ∈ S, k ≠ i₀) →
     ∀ (z : Fin n → Bool), z i₀ = x i₀ → (∀ k, k ∉ S → z k = x i₀) →
@@ -425,3 +425,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

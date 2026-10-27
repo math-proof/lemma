@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKSquareDualParameterDomination
 open Filter Finset MeasureTheory Set SimpleGraph Topology StatMech StatMech.FrontierD
 

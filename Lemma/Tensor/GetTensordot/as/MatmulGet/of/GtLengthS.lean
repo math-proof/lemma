@@ -1,4 +1,4 @@
-import torch.Tensor.reshape
+import Def.Data.Holor.Reshape
 import Lemma.Tensor.Tensordot.as.Matmul.of.GtLengthS
 import Lemma.Tensor.GetReshape.as.Reshape.of.GtLength_0
 import Lemma.Tensor.GetMatmul.as.MatmulCastS_Get.of.Eq.Length.GtLength_0
@@ -83,4 +83,4 @@ private lemma main
 
 
 -- created on 2026-01-11
--- updated on 2026-01-12
+-- updated on 2026-10-26

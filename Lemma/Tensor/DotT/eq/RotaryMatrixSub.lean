@@ -1,5 +1,5 @@
 import Lemma.Tensor.AddMulS_Stack.eq.Mul_Stack_Add
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.CosSub.eq.AddMulS
 import Lemma.Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS
 import Lemma.Tensor.DotMulSEye.eq.MulEye
@@ -63,4 +63,4 @@ private lemma main
 
 
 -- created on 2026-09-03
--- updated on 2026-09-05
+-- updated on 2026-10-26

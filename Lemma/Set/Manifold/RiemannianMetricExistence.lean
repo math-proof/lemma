@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Manifold
 open Bundle Manifold
 
@@ -378,4 +378,4 @@ end MathlibExt.Geometry.Manifold.RiemannianMetricExistenceWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

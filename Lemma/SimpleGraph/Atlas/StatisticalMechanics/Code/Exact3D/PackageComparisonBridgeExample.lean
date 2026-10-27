@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.PackageComparisonBridgeExample.Part7
 open StatMech StatMech.Exact3D StatMech.Exact3D.PackageComparisonBridgeExample
 

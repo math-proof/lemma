@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Ramanujan.Part1Ch7Entry13Bernoullirecurrence
 open scoped Nat Real BigOperators Interval ContDiff
 open Asymptotics Filter Finset Complex Topology MeasureTheory
@@ -1348,4 +1348,4 @@ end
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

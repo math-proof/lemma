@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.Isogenies.Part3
 open WeierstrassCurve Classical PadicFiltration
 open Classical

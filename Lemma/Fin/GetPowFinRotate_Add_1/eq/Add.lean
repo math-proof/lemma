@@ -1,5 +1,5 @@
-import sympy.matrices.block_swap
-import sympy.Basic
+import Def.LinearAlgebra.Matrix.BlockSwap
+import Initialize.Tactic.Attr.Basic
 open Equiv Matrix.BlockSwap
 
 

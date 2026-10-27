@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.DotT.eq.RotaryMatrixSub
 import Lemma.Tensor.RotaryMatrix0.eq.Eye
 open Nat Tensor
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2023-06-03
--- updated on 2026-09-05
+-- updated on 2026-10-26

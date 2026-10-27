@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.FrontierD.FKQgt4SquareDualOpenBoundary.Part2
 open Set SimpleGraph StatMech StatMech.FrontierD
 

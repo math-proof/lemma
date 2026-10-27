@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.IsingFK.EsWired.Part11
 open StatMech StatMech.IsingFK
 

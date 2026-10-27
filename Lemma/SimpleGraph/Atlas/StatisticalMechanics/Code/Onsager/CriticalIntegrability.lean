@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.CriticalIntegrability.Part3
 open MeasureTheory Interval StatMech StatMech.Onsager
 

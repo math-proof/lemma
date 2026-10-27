@@ -1,0 +1,63 @@
+import Theorem.Dynamics.PolicyTrajectory
+import Mathlib.Analysis.Calculus.Gradient.Basic
+import Def.Order.Miscellaneous
+open MeasureTheory ProbabilityTheory Finset
+
+/-!
+# Closed-form value functions of the policy-gradient model on a general (e.g. continuous) state space
+
+Definitions only (repo rule: `sympy/` holds definitions, theorems live in `Lemma/`).
+
+The trajectory law `M θ` of `Theorem.Dynamics.PolicyTrajectory` needs a countable state space
+(`Policy.kernel` is `Kernel.ofFunOfCountable`), and its value functions `M.V`, `M.Q` condition on the
+events `s[t] = x`, which have probability `0` when `s[t]` has a continuous law.
+On a general measurable state space `S` (e.g. `S = ℝ^b` with Lebesgue measure as `ReferenceMeasure`)
+the conditional expectations `𝔼[· | s[t] = x]` of the sympy `Q_def`, `V_def` are therefore taken in the
+regular (kernel) sense: they are the integrals against the transition kernel `M.env.trans` and the policy
+`M.policy` of the same `Model`, unrolled from the state `x`:
+
+* `rk x u = 𝔼[r[t] | s[t] = x, a[t] = u]` (the reward clamped to `[-R, R]`, almost surely equal to it);
+* `Wk θ k x = 𝔼[r[t+k] | s[t] = x]`;
+* ;
+* ;
+* `P1k θ p x y = ℙ(s[t+1] = y | s[t] = x)`, the density (w.r.t. a reference measure) of the next state
+  when `p x u` is the density of `M.env.trans (x, u)`.
+
+These are the continuous-state counterparts of the clamped j-step stage expectation
+used in `Model.Pn` / `Model.Vc`, and of `Model.Qc`, `Model.P1`
+(`Def.Dynamics.PolicyTrajectory.Gradient`), which need `Fintype S`; the model is time-homogeneous, so
+none of them depends on `t`.
+-/
+
+
+namespace PolicyGradient
+
+namespace Model
+
+variable {Θ S A : Type*} [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
+
+/-- `rk x u = 𝔼[r[t] | s[t] = x, a[t] = u]`, the expected reward clamped to `[-R, R]` -/
+noncomputable def rk (M : Model Θ S A) (x : S) (u : A) : ℝ :=
+  ∫ ρ, clip ρ (-M.env.R) M.env.R ∂(M.env.reward (x, u))
+
+/-- `Wk θ k x = 𝔼[r[t+k] | s[t] = x]` on a general state space: one policy step and one transition per `k` -/
+noncomputable def Wk (M : Model Θ S A) (θ : Θ) : ℕ → S → ℝ
+  | 0 => fun x => ∑ u, M.policy.prob θ x u * M.rk x u
+  | k + 1 => fun x => ∑ u, M.policy.prob θ x u * ∫ y, M.Wk θ k y ∂(M.env.trans (x, u))
+
+/-- state value on a general state space: -/
+noncomputable def Vk (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
+  ∑' k, γ ^ k * M.Wk θ k x
+
+/-- action value on a general state space:
+-/
+noncomputable def Qk (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
+  M.rk x u + γ * ∫ y, M.Vk θ γ y ∂(M.env.trans (x, u))
+
+/-- `P1k θ p x y = ℙ(s[t+1] = y | s[t] = x) = ∑ u, π_θ(u | x) * p(y | x, u)`, the next-state density
+when `p x u` is a density of the transition `M.env.trans (x, u)` -/
+noncomputable def P1k (M : Model Θ S A) (θ : Θ) (p : S → A → S → ℝ) (x y : S) : ℝ :=
+  ∑ u, M.policy.prob θ x u * p x u y
+
+end Model
+end PolicyGradient

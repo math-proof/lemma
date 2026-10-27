@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
 open CPythonListsort CPythonListsort.ReverseSlicePhase
 

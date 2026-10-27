@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Foundations.MonotoneLimit
 open MeasureTheory TopologicalSpace Filter Topology MeasurableSpace StatMech
 

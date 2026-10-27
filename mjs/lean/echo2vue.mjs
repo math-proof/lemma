@@ -49,7 +49,11 @@ export function get_lean_env(repoRoot) {
 }
 
 /** Local lake packages whose `.lean` sources live in this repo (not Mathlib). */
-const LOCAL_IMPORT_PREFIXES = ['Lemma.', 'sympy.', 'stdlib.', 'torch.'];
+const LOCAL_IMPORT_PREFIXES = [
+  'Lemma.',
+  'Def.', 'Theorem.', 'Instance.', 'Class.', 'Structure.', 'Abbrev.',
+  'Notation.', 'Inductive.', 'Syntax.', 'Macro.', 'Initialize.',
+];
 
 /**
  * @param {string} pkg dotted module name
@@ -120,8 +124,8 @@ function collectStaleLocalImports(tree, repoRoot) {
     out.push(pkg);
   }
   // echo2vue always injects this; ensure it is built even if parse order differs
-  if (!seen.has('sympy.printing.echo') && isOleanStale('sympy.printing.echo', repoRoot)) {
-    out.unshift('sympy.printing.echo');
+  if (!seen.has('Syntax.Tactic.Echo') && isOleanStale('Syntax.Tactic.Echo', repoRoot)) {
+    out.unshift('Syntax.Tactic.Echo');
   }
   return out;
 }
@@ -450,7 +454,7 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   const syntax = {};
   const codes = tree.render2vue(true, modify, syntax);
   // Prefer concrete lake-build diagnostics over Lean's misleading line-1
-  // "olean does not exist" attributed to `import sympy.printing.echo`.
+  // "olean does not exist" attributed to `import Syntax.Tactic.Echo`.
   const coveredMissing = new Set(
     lakeBuildErrors
       .map((e) => {

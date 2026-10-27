@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Nat.Eq.Eq.of.AddMul.Lt.Lt
 import Lemma.Vector.GetTranspose.eq.Get
@@ -74,4 +74,4 @@ private lemma main
 
 
 -- created on 2025-10-17
--- updated on 2025-10-18
+-- updated on 2026-10-26

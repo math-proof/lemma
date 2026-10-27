@@ -1,5 +1,5 @@
 import Lemma.Hyperreal.UFn.of.All_UFn
-import sympy.polys.polyroots
+import Instance.Algebra.Polynomial.Polyroots
 open Hyperreal
 
 

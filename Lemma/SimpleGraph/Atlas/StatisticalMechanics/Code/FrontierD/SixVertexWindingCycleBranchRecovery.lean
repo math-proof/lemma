@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexWindingCycleBranchRecovery.Part2
 open StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexSignedWindingCycleTarget
 

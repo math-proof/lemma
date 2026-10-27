@@ -1,6 +1,6 @@
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Finset
 
 
@@ -35,4 +35,4 @@ private lemma main
 
 
 -- created on 2023-10-12
--- updated on 2026-10-17
+-- updated on 2026-10-26

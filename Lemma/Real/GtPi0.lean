@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.functions.elementary.trigonometric
+import Initialize.Tactic.Attr.Basic
+import Def.Analysis.SpecialFunctions.Trigonometric.Part2
 
 
 @[path]

@@ -4,6 +4,7 @@ import Mathlib.LinearAlgebra.Vandermonde
 import Lemma.Matrix.DetOf_PowAdd.eq.ProdFactorial
 import Lemma.Matrix.MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf
 import Lemma.Matrix.Det.eq.Prod.of.All_All_Eq_0
+import Syntax.LinearAlgebra.Matrix.Notation
 open Matrix Nat
 
 
@@ -12,15 +13,15 @@ private lemma main
   {m d : ℕ}
   {x δ l : ℝ} :
 -- imply
-  ((Matrix.of fun (i : Fin (m - d)) (j : Fin m) => x ^ (j : ℕ) * ((j : ℝ) + δ) ^ (i : ℕ)) *
-    (Matrix.of fun (i : Fin m) (j : Fin (m - d)) =>
+  (([i < m - d, j < m] x ^ (j : ℕ) * ((j : ℝ) + δ) ^ (i : ℕ)) *
+    ([i < m, j < m - d]
       (-l) ^ ((d : ℤ) + (j : ℕ) - (i : ℕ)) * (if (j : ℕ) ≤ i then (d.choose ((i : ℕ) - j) : ℝ) else 0))).det =
     x ^ ((m - d).choose 2) * (x - l) ^ (d * (m - d)) * ∏ i ∈ Finset.range (m - d), (i ! : ℝ) := by
 -- proof
   rw [MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf, Matrix.det_mul, Det.eq.Prod.of.All_All_Eq_0]
   ·
-    have hD : (Matrix.of fun (i : Fin (m - d)) (j : Fin (m - d)) => ((j : ℝ) + δ) ^ (i : ℕ) * x ^ (j : ℕ)) =
-        (Matrix.of fun (i j : Fin (m - d)) => ((j : ℝ) + δ) ^ (i : ℕ)) * (Matrix.diagonal (fun j : Fin (m - d) => x ^ (j : ℕ)) : Matrix (Fin (m - d)) (Fin (m - d)) ℝ) := by
+    have hD : ([i < m - d, j < m - d] ((j : ℝ) + δ) ^ (i : ℕ) * x ^ (j : ℕ)) =
+        ([i < m - d, j < m - d] ((j : ℝ) + δ) ^ (i : ℕ)) * (Matrix.diagonal (fun j : Fin (m - d) => x ^ (j : ℕ)) : Matrix (Fin (m - d)) (Fin (m - d)) ℝ) := by
       ext i j
       simp [Matrix.mul_diagonal]
     rw [hD, Matrix.det_mul, DetOf_PowAdd.eq.ProdFactorial, Matrix.det_diagonal, Finset.prod_pow_eq_pow_sum,
@@ -41,3 +42,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-27

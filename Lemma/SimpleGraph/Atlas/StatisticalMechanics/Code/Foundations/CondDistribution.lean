@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Foundations.CondDistribution.Part4
 open MeasureTheory ProbabilityTheory MeasurableSpace StatMech
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec10SheafModules
 open AlgebraicGeometry
 

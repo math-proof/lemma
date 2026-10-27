@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
 open Definition1213 Lemma1214
 open MvPolynomial

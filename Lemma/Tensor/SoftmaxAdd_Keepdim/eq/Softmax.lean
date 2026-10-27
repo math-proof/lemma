@@ -1,4 +1,4 @@
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.List.ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength
 import Lemma.List.TakeInsertIdxEraseIdx.eq.Take
 import Lemma.Rat.DivMulS.eq.Div.of.Ne_0

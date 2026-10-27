@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.ProjectionTheory.code.MainLemma2R.Part3
 open MeasureTheory Metric Set Finset ProjectionTheory
 open scoped Classical InnerProductSpace

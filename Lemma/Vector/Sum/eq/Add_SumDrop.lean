@@ -1,5 +1,5 @@
 import Lemma.List.Sum.eq.Add_SumDrop
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 open List
 
 

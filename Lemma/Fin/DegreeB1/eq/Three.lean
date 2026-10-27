@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Misc.erdos_613.Part7
 open Classical
 open scoped BigOperators

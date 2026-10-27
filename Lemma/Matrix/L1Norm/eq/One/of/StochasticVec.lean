@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.stats.stochastic_process_types
+import Initialize.Tactic.Attr.Basic
+import Instance.Probability.Process.StochasticProcessTypes.Part3
 open NNReal WithLp
 
 @[path]

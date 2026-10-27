@@ -1,5 +1,5 @@
 import Mathlib.Probability.Kernel.Composition.IntegralCompProd
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 
 

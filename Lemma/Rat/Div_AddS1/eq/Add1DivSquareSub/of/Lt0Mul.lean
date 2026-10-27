@@ -1,4 +1,4 @@
-import sympy.core.power
+import Theorem.Algebra.Power.Part2
 import Lemma.Nat.Div.of.Eq
 import Lemma.Rat.DivAdd.eq.Add1Div.of.Ne_0
 open Nat Rat

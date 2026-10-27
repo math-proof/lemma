@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.oc3_vcubeprob
 open Finset MeasureTheory StatMech.OSSS.GrandCoupling StatMech StatMech.Walls
 

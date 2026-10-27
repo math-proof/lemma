@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.FLTPrelim.FreyPackage
 import Def.FLTPrelim_Modularity
 open WeierstrassCurve

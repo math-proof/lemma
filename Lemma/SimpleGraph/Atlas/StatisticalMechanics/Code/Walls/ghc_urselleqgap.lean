@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.ghc_urselleqgap
 open Finset SimpleGraph Set StatMech StatMech.Walls StatMech.Walls.GhcEqGap
 

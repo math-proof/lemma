@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRectangleTranslation
 open MeasureTheory Set StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 

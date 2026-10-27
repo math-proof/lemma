@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.SLE.LoewnerCapacity
 open Complex Set Filter Topology StatMech StatMech.SLE
 

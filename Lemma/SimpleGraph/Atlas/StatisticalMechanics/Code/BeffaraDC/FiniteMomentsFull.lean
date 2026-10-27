@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.BeffaraDC.FiniteMomentsFull.Part4
 open MeasureTheory StatMech StatMech.BeffaraDC
 

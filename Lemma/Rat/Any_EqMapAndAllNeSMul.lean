@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
@@ -162,4 +162,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-10-23
+-- updated on 2026-10-26

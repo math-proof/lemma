@@ -3,7 +3,7 @@ import Mathlib.Analysis.Calculus.FDeriv.Linear
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.Analysis.InnerProductSpace.Dual
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open InnerProductSpace
 
 
@@ -23,4 +23,4 @@ private lemma main
 
 
 -- created on 2021-12-25
--- updated on 2026-10-17
+-- updated on 2026-10-26

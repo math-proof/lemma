@@ -1,5 +1,5 @@
 import Lemma.Tensor.GetAdd.eq.AddGetS
-import torch.stack
+import Def.Data.Holor.Stack.Part2
 open Tensor
 
 

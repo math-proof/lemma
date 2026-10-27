@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqGetCons
@@ -82,4 +82,4 @@ private lemma main
 
 
 -- created on 2026-07-09
--- updated on 2026-07-13
+-- updated on 2026-10-26

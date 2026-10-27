@@ -3,7 +3,7 @@ import Mathlib.Algebra.GCDMonoid.Finset
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Lemma.Set.Sum_Mul.of.Nonempty.All_In.Gt_0.In
 import Lemma.Finset.Any_EqGcd.of.Nonempty
-import sympy.core.intfunc
+import Class.Data.Nat.GCD.Intfunc
 open Set Finset
 
 

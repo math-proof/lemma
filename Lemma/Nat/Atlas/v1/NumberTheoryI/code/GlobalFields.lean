@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
 open NumberField NumberField.InfinitePlace Module Fintype IsDedekindDomain AbsoluteValue
 open Polynomial UniqueFactorizationMonoid Classical

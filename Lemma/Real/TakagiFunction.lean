@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.TakagiFunction
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.TakagiFunction
 open MetaMathlibExt
 
 

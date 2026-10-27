@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Geometry.TwoD
 open scoped EuclideanGeometry Finset
 open scoped EuclideanSpace EuclideanGeometry
@@ -391,4 +391,4 @@ private lemma sign_oangle''_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

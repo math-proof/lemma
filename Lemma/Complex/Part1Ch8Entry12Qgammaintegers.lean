@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch8Entry12Qgammaintegers
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch8Entry12Qgammaintegers
 
 open MeasureTheory
 open Ramanujan.Part1Ch8.Entry12Qgammaintegers
@@ -706,4 +706,4 @@ end
 
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

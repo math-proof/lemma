@@ -1,5 +1,5 @@
-import stdlib.SEq
-import torch.Tensor
+import Theorem.Logic.SEq
+import Instance.Data.Holor.Tensor.Part2
 open List
 
 
@@ -21,4 +21,4 @@ private lemma main
 
 
 -- created on 2025-07-14
--- updated on 2026-07-19
+-- updated on 2026-10-26

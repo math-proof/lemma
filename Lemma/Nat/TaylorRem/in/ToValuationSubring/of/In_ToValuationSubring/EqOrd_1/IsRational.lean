@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.AlgebraicCurve_PlaceTaylorCoeff
 import Lemma.Scheme.PlaceEvaluationAlgebra
 import Lemma.AlgebraicCurve.Repartitions

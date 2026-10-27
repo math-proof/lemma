@@ -1,5 +1,5 @@
-import sympy.stats.quantile
-import sympy.Basic
+import Def.Probability.Quantile
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 

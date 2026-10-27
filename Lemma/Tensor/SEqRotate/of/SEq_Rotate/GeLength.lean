@@ -1,5 +1,5 @@
-import stdlib.SEq
-import torch.Tensor.permute
+import Theorem.Logic.SEq
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.SEqRotateRotate.of.GeLength
 import Lemma.Tensor.SEqRotateS.of.SEq
 open Tensor Nat

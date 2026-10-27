@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Set Topology
 
 
@@ -55,4 +55,4 @@ lemma IsPreconnected.inter_frontier_nonempty_of_inter_compl
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

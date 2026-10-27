@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.Combinatorics.SimpleGraph.HajnalSzemeredi
 open MathlibExt.Combinatorics.SimpleGraph.HajnalSzemerediWanted
 
@@ -3928,4 +3928,4 @@ end MathlibExt.Combinatorics.SimpleGraph.HajnalSzemerediWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

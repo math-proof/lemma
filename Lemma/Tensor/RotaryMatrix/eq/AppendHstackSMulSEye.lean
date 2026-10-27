@@ -1,6 +1,6 @@
-import sympy.matrices.expressions.special
-import torch.eye
-import torch.functions
+import Def.Data.Holor.BandPart
+import Def.Data.Holor.Eye
+import Theorem.Data.Holor.Functions
 
 
 noncomputable def Tensor.rotaryMatrix (θ : Tensor ℝ [d]) : Tensor ℝ [d + d, d + d] :=
@@ -39,4 +39,4 @@ private lemma main
 
 
 -- created on 2026-09-03
--- updated on 2026-09-05
+-- updated on 2026-10-26

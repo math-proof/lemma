@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
 open NumberField RayClassField

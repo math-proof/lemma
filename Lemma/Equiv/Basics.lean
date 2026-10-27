@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.GroupTheory.Perm.Basics.Part2
 open AlgebraicCombinatorics
 open Equiv
@@ -3198,4 +3198,4 @@ private lemma pv_swapToPair_mem_support
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

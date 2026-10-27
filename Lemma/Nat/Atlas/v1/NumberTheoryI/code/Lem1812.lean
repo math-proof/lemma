@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions.Part4
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.ArithmeticFunctions
 open DirichletCharacter MulChar

@@ -1,6 +1,6 @@
 import Mathlib.Topology.Order.Compact
 import Mathlib.Analysis.Normed.Module.FiniteDimension
-import sympy.dynamics.actor_critic
+import Structure.Dynamics.ActorCritic.Part6
 import Lemma.Matrix.IsClosed
 
 

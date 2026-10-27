@@ -154,7 +154,7 @@ class LeanModule extends LeanStatements
     public function echo()
     {
         $args = &$this->args;
-        $this->import('sympy.printing.echo');
+        $this->import('Syntax.Tactic.Echo');
         for ($index = 0; $index < count($args); ++$index)
             $args[$index]->echo();
     }

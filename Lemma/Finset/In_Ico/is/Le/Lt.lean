@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.sets.sets
+import Initialize.Tactic.Attr.Basic
+import Theorem.Data.Set.Sets
 
 
 @[path, comm, mp, mpr]

@@ -1,6 +1,6 @@
 import Mathlib.InformationTheory.KullbackLeibler.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory InformationTheory
 
 
@@ -21,4 +21,4 @@ private lemma main
 
 
 -- created on 2023-03-25
--- updated on 2026-10-17
+-- updated on 2026-10-26

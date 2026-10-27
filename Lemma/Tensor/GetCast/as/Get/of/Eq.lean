@@ -1,5 +1,5 @@
-import stdlib.SEq
-import torch.Tensor.Basic
+import Theorem.Logic.SEq
+import Def.Data.Holor.Defs.Part4
 
 
 @[path, fin, cast, cast.fin]
@@ -15,4 +15,4 @@ private lemma main
 
 
 -- created on 2025-06-29
--- updated on 2025-07-04
+-- updated on 2026-10-26

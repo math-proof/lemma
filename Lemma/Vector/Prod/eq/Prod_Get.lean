@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 import Lemma.List.Prod.eq.ProdFinLength_Get
 open List
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.PierceExpansion.Part2
 open PierceExpansion
 
@@ -199,4 +199,4 @@ private lemma exists_traj_eq_zero_pos_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

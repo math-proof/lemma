@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.stats.stochastic_process_types
+import Initialize.Tactic.Attr.Basic
+import Instance.Probability.Process.StochasticProcessTypes.Part3
 
 
 @[path]
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2026-09-19
--- updated on 2026-09-26
+-- updated on 2026-10-26

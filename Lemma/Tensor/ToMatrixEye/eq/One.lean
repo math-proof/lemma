@@ -1,7 +1,7 @@
 import Mathlib.Data.Matrix.Diagonal
 import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.GetEye.eq.Delta
-import torch.eye
+import Def.Data.Holor.Eye
 open Nat Tensor
 
 

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Polynomial/MultivariableMahlerMeasure.lean -/
 
 
-import sympy.atlas.Analysis.Polynomial.MultivariableMahlerMeasure
+import Theorem.Analysis.Polynomial.MultivariableMahlerMeasure.Part5
 open Complex MeasureTheory
 open scoped Real
 

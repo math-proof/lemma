@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.BackboneProps.Part2
 open SimpleGraph Finset StatMech StatMech.Sharpness
 

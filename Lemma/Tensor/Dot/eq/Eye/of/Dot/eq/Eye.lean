@@ -2,8 +2,8 @@ import Mathlib.LinearAlgebra.Matrix.SemiringInverse
 import Lemma.Tensor.Eq.is.ToMatrix
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 import Lemma.Tensor.ToMatrixEye.eq.One
-import torch.eye
-import torch.functions
+import Def.Data.Holor.Eye
+import Theorem.Data.Holor.Functions
 open Tensor
 
 

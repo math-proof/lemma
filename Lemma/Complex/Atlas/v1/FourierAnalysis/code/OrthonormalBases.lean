@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Class.v1.Atlas.FourierAnalysis.code.OrthonormalBases
 open Filter Topology Submodule OrthonormalBases HilbertSpace
 open scoped InnerProductSpace ComplexConjugate
@@ -186,4 +186,4 @@ private lemma inner_hasSum_of_orthonormal_series
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

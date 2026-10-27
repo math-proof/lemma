@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.wadangledefect.Part4
 open Finset StatMech.Euc StatMech StatMech.Wad
 

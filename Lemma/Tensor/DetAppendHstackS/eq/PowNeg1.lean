@@ -7,8 +7,8 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetEye.eq.Delta
 import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
-import sympy.matrices.determinant
-import torch.eye
+import Def.Data.Holor.Det
+import Def.Data.Holor.Eye
 open Bool Equiv Nat Tensor
 set_option maxHeartbeats 400000
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AlgebraicGeometryI.code.PushforwardExactAffine
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits PushforwardExactAffine
 

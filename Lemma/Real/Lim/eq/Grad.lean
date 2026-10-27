@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Calculus.Deriv.Slope
-import sympy.series.limits
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -16,4 +16,4 @@ private lemma main
 
 
 -- created on 2023-06-22
--- updated on 2026-10-17
+-- updated on 2026-10-26

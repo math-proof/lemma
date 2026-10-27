@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.TwoPointDerivCompute
 open Real Set BooleanFourier
 
@@ -56,7 +56,15 @@ lemma twoPointLogPathFn_deriv_decomp
   (hp : 1 < p)
   (ht_pos : 0 < t) :
 -- imply
-  twoPointLogPathFn_derivValue p a b t = (let r := 1 + (p - 1) / t ^ 2 let c := (1 + t) / 2 * a + (1 - t) / 2 * b let d := (1 - t) / 2 * a + (1 + t) / 2 * b let S := c ^ r + d ^ r let r' := -2 * (p - 1) / t ^ 3 let c' := (a - b) / 2 let d' := (b - a) / 2 (c ^ (r - 1) * c' + d ^ (r - 1) * d') / S + (r' / r) * twoPointLogSumGap p a b t) := by
+  twoPointLogPathFn_derivValue p a b t =
+    (let r := 1 + (p - 1) / t ^ 2;
+     let c := (1 + t) / 2 * a + (1 - t) / 2 * b;
+     let d := (1 - t) / 2 * a + (1 + t) / 2 * b;
+     let S := c ^ r + d ^ r;
+     let r' := -2 * (p - 1) / t ^ 3;
+     let c' := (a - b) / 2;
+     let d' := (b - a) / 2;
+     (c ^ (r - 1) * c' + d ^ (r - 1) * d') / S + (r' / r) * twoPointLogSumGap p a b t) := by
 -- proof
   unfold twoPointLogPathFn_derivValue twoPointLogSumGap
   simp only
@@ -141,3 +149,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

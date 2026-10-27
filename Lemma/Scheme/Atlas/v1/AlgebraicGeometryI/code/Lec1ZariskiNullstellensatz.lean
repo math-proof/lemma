@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec1ZariskiNullstellensatz.Part2
 open MvPolynomial AlgebraicGeometry CategoryTheory Lec1ZariskiNullstellensatz
 

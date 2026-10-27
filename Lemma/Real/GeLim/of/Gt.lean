@@ -1,7 +1,7 @@
 import Mathlib.Topology.Order.DenselyOrdered
 import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
-import sympy.series.limits
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -20,4 +20,4 @@ private lemma main
 
 
 -- created on 2021-08-29
--- updated on 2023-04-17
+-- updated on 2026-10-26

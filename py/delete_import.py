@@ -329,7 +329,7 @@ _FILE_IMPORTS: dict[str, list[str]] = {}
 
 
 def file_direct_imports(module: str) -> list[str]:
-    """Direct ``import`` lines of a repo-local module (``Lemma.*``, ``sympy.*``, ``stdlib.*``),
+    """Direct ``import`` lines of a repo-local module (``Lemma.*`` or a decl library),
     parsed from its ``.lean`` file.  Modules without a file here (e.g. ``Mathlib.*``) are leaves."""
     if module not in _FILE_IMPORTS:
         deps: list[str] = []
@@ -358,16 +358,22 @@ def file_closure(module: str) -> set[str]:
 
 
 def find_redundant_file_imports(imports: list[tuple[str, str]]) -> list[str]:
-    """Redundant imports among pairs that involve a non-``Lemma`` (``sympy.*``) import.
+    """Redundant imports among pairs that involve a decl-library import.
 
-    ``sympy.*`` modules have no ``lemma`` row, so reachability is read from the ``.lean`` files:
-    a ``Lemma.*`` or ``sympy.*`` import is redundant when another import of the file reaches it.
+    Decl-library modules have no ``lemma`` row, so reachability is read from the ``.lean`` files:
+    a ``Lemma.*`` or decl-library import is redundant when another import of the file reaches it.
     ``Lemma.*`` / ``Lemma.*`` pairs stay with ``find_redundant_imports`` (database)."""
     modules = list(dict.fromkeys(mod for mod, _ in imports))
     closures: dict[str, set[str]] = {}
     redundant: set[str] = set()
     for b in modules:
-        if not (b.startswith("sympy.") or b.startswith("Lemma")):
+        if not (
+            b.startswith("Lemma")
+            or b.startswith((
+                "Def.", "Theorem.", "Instance.", "Class.", "Structure.", "Abbrev.",
+                "Notation.", "Inductive.", "Syntax.", "Macro.", "Initialize.",
+            ))
+        ):
             continue
         for a in modules:
             if a == b or (a.startswith("Lemma") and b.startswith("Lemma")):

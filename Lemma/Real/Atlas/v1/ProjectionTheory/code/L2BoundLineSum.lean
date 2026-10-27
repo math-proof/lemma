@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ProjectionTheory.code.MainLemma2F
 import Lemma.Real.Atlas.v1.ProjectionTheory.code.MainLemma2F
 open Finset

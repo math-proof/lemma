@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Section_11_8.Part7
 open Chapter11.BoundedInterval Chapter9
 open Chapter11 hiding RS_integ

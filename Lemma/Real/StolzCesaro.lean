@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.StolzCesaro
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecificLimits.StolzCesaro
 
 open MetaMathlibExt
 

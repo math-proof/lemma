@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Order.ErdosSzekeres.Part2
 open MathlibExt.Combinatorics.Order.ErdosSzekeres
 
@@ -637,4 +637,4 @@ private lemma singleton_decr_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

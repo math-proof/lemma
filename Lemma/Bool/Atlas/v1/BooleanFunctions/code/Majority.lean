@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Claim21Lec10
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Claim21Lec10
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.DisagreementStability

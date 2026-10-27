@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.Revealment.Part2
 open Finset StatMech StatMech.OSSS StatMech.OSSS.Revealment
 

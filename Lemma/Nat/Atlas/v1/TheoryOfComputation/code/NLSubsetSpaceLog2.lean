@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TheoryOfComputation.code.LogSpace.Part4
 import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.LogSpace
 import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity

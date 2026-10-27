@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Section_4_2.Part2
 open Section_4_2 hiding Rat
 open Section_4_2.Rat
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,6 +1,6 @@
-import stdlib.SEq
-import torch.Tensor.Basic
-import torch.Tensor.unsqueeze
+import Theorem.Logic.SEq
+import Def.Data.Holor.Defs.Part4
+import Def.Data.Holor.Unsqueeze
 
 
 @[path, comm, cast]

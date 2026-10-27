@@ -1,5 +1,5 @@
 import Lemma.Tensor.NotInfiniteGetDataMul
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.TMap.eq.MapT
 import Lemma.Tensor.GetData.eq.HeadDataGet.of.Lt
 import Lemma.Tensor.GetDot.eq.Dot_GetT
@@ -95,4 +95,4 @@ private lemma left
 
 
 -- created on 2026-07-29
--- updated on 2026-08-19
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.Enumerative.Partition.OverpartitionCongruence.Part9
 open PowerSeries
 open scoped PowerSeries.WithPiTopology
@@ -1542,4 +1542,4 @@ private lemma overpartition_mul_five_mod_five_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

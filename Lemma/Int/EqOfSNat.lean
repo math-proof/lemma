@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Section_4_1.Part8
 open Section_4_1 hiding Int
 open Section_4_1.Int
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-10-23
+-- updated on 2026-10-26

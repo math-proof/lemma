@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Geometry.Manifold.ImmersionOfInjectiveMFDeriv
 open scoped Topology ContDiff
 open Function Set Manifold
@@ -404,4 +404,4 @@ end MathlibExt.Geometry.Manifold.ImmersionOfInjectiveMFDerivWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

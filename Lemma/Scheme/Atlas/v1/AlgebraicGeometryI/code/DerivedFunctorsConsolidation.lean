@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsConsolidation
 open CategoryTheory CategoryTheory.Limits DerivedFunctorsDefs CohomologyConnection
 open DerivedFunctorsDefs CohomologyConnection

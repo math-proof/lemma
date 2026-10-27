@@ -1,4 +1,4 @@
-import stdlib.SEq
+import Theorem.Logic.SEq
 import Lemma.Tensor.Length.of.Eq
 open Tensor
 
@@ -28,4 +28,4 @@ private lemma shape
 
 
 -- created on 2025-06-24
--- updated on 2025-10-08
+-- updated on 2026-10-26

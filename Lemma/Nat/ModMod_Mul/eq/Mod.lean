@@ -1,5 +1,5 @@
 import Lemma.Nat.Mul
-import sympy.functions.elementary.integers
+import Instance.Data.Int.Integers
 open Nat
 
 

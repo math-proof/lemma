@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Geometry.Manifold.CollarNeighborhood.Part45
 open Filter Function Manifold Set WithLp
 open scoped ContDiff Manifold Topology
@@ -591,4 +591,4 @@ private lemma topological_collar_neighborhood_of_smooth_manifold_with_boundary_e
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

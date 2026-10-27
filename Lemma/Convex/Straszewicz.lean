@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Convex.Straszewicz.Part4
 
 open Convex.Straszewicz
@@ -1355,4 +1355,4 @@ end MathlibExt.Analysis.Convex.Straszewicz
 
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierB.LeeYangPolynomial
 open Finset Polynomial StatMech StatMech.FrontierB
 

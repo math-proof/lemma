@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.Reparameterization.Part2
 open StatMech StatMech.Exact3D StatMech.Exact3D.LeftCriticalReparam StatMech.Exact3D.RGCertificate
 

@@ -3,8 +3,8 @@ import Lemma.Tensor.Add
 import Lemma.Tensor.AddMulS.eq.SubMulS
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
-import torch.functions
-import torch.stack
+import Theorem.Data.Holor.Functions
+import Def.Data.Holor.Stack.Part2
 open Tensor
 set_option maxHeartbeats 1000000
 
@@ -127,4 +127,4 @@ private lemma main
 
 
 -- created on 2023-05-22
--- updated on 2026-09-16
+-- updated on 2026-10-26

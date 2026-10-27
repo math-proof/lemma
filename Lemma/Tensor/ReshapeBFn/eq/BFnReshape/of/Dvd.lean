@@ -1,5 +1,5 @@
-import torch.Tensor.reshape
-import torch.Tensor.prod
+import Def.Data.Holor.Reshape
+import Def.Data.Holor.Prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.RepeatMap.eq.MapRepeat

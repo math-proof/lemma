@@ -1,7 +1,7 @@
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetMulEye_Stack.eq.MulDelta
 import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Tensor
 
 
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2026-09-04
--- updated on 2026-09-05
+-- updated on 2026-10-26

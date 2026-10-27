@@ -1,4 +1,4 @@
-import torch.Tensor.Basic
+import Def.Data.Holor.Defs.Part4
 import Lemma.Rat.Div.eq.DivDivS.of.Ne_0
 import Lemma.Nat.Div.eq.HDiv
 open Vector Nat Rat

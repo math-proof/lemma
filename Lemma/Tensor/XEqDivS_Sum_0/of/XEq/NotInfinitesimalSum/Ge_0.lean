@@ -1,5 +1,5 @@
 import Lemma.Tensor.HeadDataSum.eq.SumData
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 import Lemma.Tensor.XEq.is.XEqDataS
 import Lemma.Vector.XEqDivS_Sum.of.XEq.NotInfinitesimalSum.Ge_0
 open Tensor Vector

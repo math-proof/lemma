@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 import Lemma.Vector.HEq.is.HEqValS.of.Eq
 import Lemma.List.Eq.of.HEq
 open Vector List
@@ -19,4 +19,4 @@ private lemma main
 
 
 -- created on 2025-05-21
--- updated on 2025-08-02
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.NumberTheoryI.code.Ch22NormGroup.Part4
 open Classical RayClassField
 open scoped NumberField

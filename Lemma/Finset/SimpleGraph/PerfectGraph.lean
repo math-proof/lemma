@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.SimpleGraph.PerfectGraph
 open scoped Matrix BigOperators
 open scoped Classical in s.map ⟨Subtype.val, Subtype.val_injective⟩
@@ -1111,4 +1111,4 @@ end MathlibExt.Combinatorics.SimpleGraph.PerfectGraphWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

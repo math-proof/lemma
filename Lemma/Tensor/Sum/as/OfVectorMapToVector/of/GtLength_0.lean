@@ -1,5 +1,5 @@
 import Lemma.Tensor.Sum.eq.OfVectorMapToVector
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Complex.Wiman.InfiniteTaylorSupport
 import Lemma.Complex.Wiman.InfiniteTaylorSupport
 import Lemma.Complex.Wiman.MaximumTermAttained
@@ -79,4 +79,4 @@ end Complex
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

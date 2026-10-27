@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterLowFaceAssembly.Part8
 open Finset StatMech StatMech.Ising StatMech.Ising.LowFaceCertificate
 

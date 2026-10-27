@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Foundations.KingmanAE.Part4
 open MeasureTheory Filter Topology StatMech StatMech.KingmanAE
 

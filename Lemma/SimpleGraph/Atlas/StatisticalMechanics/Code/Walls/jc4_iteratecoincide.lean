@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.jc4_iteratecoincide
 open SimpleGraph Function Set StatMech StatMech.Walls
 

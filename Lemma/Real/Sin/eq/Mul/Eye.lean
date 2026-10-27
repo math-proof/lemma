@@ -3,7 +3,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Module
 import Mathlib.Topology.Instances.Matrix
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open NormedSpace
 
 
@@ -34,4 +34,4 @@ private lemma main
 
 
 -- created on 2023-06-08
--- updated on 2026-10-17
+-- updated on 2026-10-26

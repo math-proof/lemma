@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.MeasureTheory.Section_1_1_3.Part7
 open BoundedInterval
 open TaggedPartition

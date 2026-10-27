@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierB.FiniteLocalSwitching.Part2
 open StatMech StatMech.FrontierB
 

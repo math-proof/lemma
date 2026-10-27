@@ -9,7 +9,7 @@ import Lemma.Int.Mul_Neg.eq.NegSquare
 import Lemma.Nat.Mul
 import Lemma.Rat.Div.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Rat.Div.gt.Zero.of.Lt_0.Lt_0
-open Hyperreal Int Rat Nat
+open Hyperreal Int Rat Nat ArchimedeanClass
 set_option maxHeartbeats 1000000
 
 

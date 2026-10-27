@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.ErgodicExtremeUpgrade
 open MeasureTheory Measure Set Filter StatMech StatMech.ConfigSpace StatMech.FK
 

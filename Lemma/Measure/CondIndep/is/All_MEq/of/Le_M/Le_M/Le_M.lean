@@ -1,5 +1,5 @@
 import Mathlib.Probability.Independence.Conditional
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory MeasurableSpace
 open scoped ProbabilityTheory
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open CategoryTheory AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 

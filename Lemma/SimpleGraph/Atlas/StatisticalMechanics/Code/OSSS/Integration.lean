@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.Integration.Part2
 open Real Set Finset Filter Topology StatMech StatMech.OSSS StatMech.OSSS.Integration
 

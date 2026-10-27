@@ -83,7 +83,7 @@ async function listUnbuilt(conn, limit) {
 function generateBatchLean(names) {
   const namesArr = names.map((n) => JSON.stringify(n)).join(', ');
   return `import Mathlib
-import sympy.printing.json
+import Def.Lean.PrettyPrinter.Json
 open Lean Meta
 #eval Meta.MetaM.run' do
   let names := [${namesArr}]

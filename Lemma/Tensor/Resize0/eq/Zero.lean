@@ -1,4 +1,4 @@
-import torch.Tensor.resize
+import Def.Data.Holor.Resize
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.EqSplitAt0_0

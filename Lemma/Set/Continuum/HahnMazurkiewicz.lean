@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Topology.Continuum.HahnMazurkiewicz
 open Topology
 open Filter
@@ -1300,4 +1300,4 @@ end MathlibExt.Topology.Continuum.HahnMazurkiewiczWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

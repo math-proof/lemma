@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.RingTheory.Polynomial.HilbertSyzygy
 open CategoryTheory Polynomial TensorProduct
 open MathlibExt.RingTheory.Polynomial.HilbertSyzygyWanted
@@ -673,4 +673,4 @@ private lemma hs_coeff_X_smul_zero {R : Type u} [CommRing R] {N : Type v}
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

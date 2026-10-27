@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqUFnS.of.SEq
-import torch.Tensor.Basic
-import torch.Tensor.permute
+import Def.Data.Holor.Defs.Part4
+import Notation.Data.Holor.Permute
 open Bool
 
 

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.inner_product_space.CompactSpectral
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.InnerProductSpace.CompactSpectral
 
 
 /--
@@ -21,4 +21,4 @@ private lemma compactNormal_hilbertBasis_eq
 
 
 -- created on 2026-10-10
--- updated on 2026-10-24
+-- updated on 2026-10-26

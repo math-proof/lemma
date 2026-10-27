@@ -1,5 +1,5 @@
 import Lemma.Fin.Sum.of.All_Eq
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 import Lemma.Tensor.Dot.eq.SumMul__0
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.Mul

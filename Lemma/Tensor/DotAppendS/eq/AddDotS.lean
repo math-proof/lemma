@@ -1,4 +1,4 @@
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 import Lemma.Tensor.Dot.eq.TensorDotDataS
 import Lemma.Tensor.DotHstack.eq.AddDotS
 import Lemma.Vector.DotAppendS.eq.AddDotS
@@ -77,4 +77,4 @@ private lemma vm
 
 
 -- created on 2026-08-23
--- updated on 2026-09-10
+-- updated on 2026-10-26

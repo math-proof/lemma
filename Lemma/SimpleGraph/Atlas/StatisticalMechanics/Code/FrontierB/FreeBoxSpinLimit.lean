@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierB.FreeBoxSpinLimit
 open MeasureTheory Filter Topology StatMech StatMech.FrontierB
 

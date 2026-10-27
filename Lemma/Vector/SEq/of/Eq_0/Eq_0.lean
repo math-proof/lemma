@@ -1,5 +1,5 @@
 import Lemma.Vector.SEq.of.Val
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 open Vector
 
 

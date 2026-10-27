@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt

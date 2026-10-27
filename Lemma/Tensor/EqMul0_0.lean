@@ -1,7 +1,7 @@
 import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Tensor.Mul
 import Lemma.Vector.EqMul0_0
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Vector Tensor
 
 
@@ -34,4 +34,4 @@ private lemma nat
 
 
 -- created on 2025-12-23
--- updated on 2026-09-04
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AlgebraicGeometryI.code.StructureSheafColimit
 open AlgebraicGeometry TopologicalSpace CategoryTheory Opposite Lec6 Lec6.RegularFunctions
 

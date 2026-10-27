@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.Measure.Count
 import Lemma.Measure.EqRnDeriv_Count
-import sympy.stats.single_pspace_measurable
+import Instance.Probability.SinglePSpaceMeasurable
 open MeasureTheory Measure Random
 
 

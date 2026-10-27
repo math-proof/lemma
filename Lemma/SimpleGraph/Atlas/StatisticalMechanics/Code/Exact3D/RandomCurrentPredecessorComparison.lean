@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorComparison.Part184
 open MeasureTheory Classical in StatMech StatMech.Exact3D
 

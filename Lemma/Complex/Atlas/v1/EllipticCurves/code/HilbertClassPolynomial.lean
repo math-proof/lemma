@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
 open Polynomial Classical
 

@@ -1,5 +1,5 @@
 import Lemma.Tensor.Tensordot.as.Matmul.of.GeLengthS
-import torch.Tensor.reshape
+import Def.Data.Holor.Reshape
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 open Tensor
 

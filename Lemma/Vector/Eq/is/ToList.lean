@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 import Lemma.Vector.Eq.of.Val
 open Vector
 
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2025-05-11
--- updated on 2026-09-09
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveUnitComponentResidualRouting.Part12
 open StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexPositiveUnitComponentResidualOrbitCover StatMech.FrontierD.SixVertexHorizontalResidualGeometricCertificate StatMech.FrontierD.SixVertexHorizontalResidualHighGeometricSurplusRepair StatMech.FrontierD.SixVertexPositiveUnitComponentResidualMixedRouting
 

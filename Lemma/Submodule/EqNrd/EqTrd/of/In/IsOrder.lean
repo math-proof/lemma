@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.QuaternionAlgebra_Order
 import Lemma.QuaternionAlgebra.ReducedNorm
 open scoped Quaternion

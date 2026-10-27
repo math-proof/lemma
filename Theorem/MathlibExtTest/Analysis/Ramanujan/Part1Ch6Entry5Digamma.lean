@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch6Entry5Digamma.lean -/
 
 
-import sympy.atlas.Analysis.Ramanujan.Part1Ch6Entry5Digamma
+import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry5Digamma
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 5 API checks
 

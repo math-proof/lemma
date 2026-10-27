@@ -1,7 +1,7 @@
 import Lemma.Fin.Sum.of.All_Eq
-import torch.Tensor.sum
-import torch.Tensor.unsqueeze
-import torch.Tensor.permute
+import Def.Data.Holor.Sum
+import Def.Data.Holor.Unsqueeze
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetDot.eq.DotGetS
@@ -110,4 +110,4 @@ private lemma mv
 
 
 -- created on 2026-07-31
--- updated on 2026-08-27
+-- updated on 2026-10-26

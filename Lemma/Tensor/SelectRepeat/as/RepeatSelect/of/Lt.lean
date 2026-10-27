@@ -1,6 +1,6 @@
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
-import torch.Tensor.repeat
-import torch.Tensor.prod
+import Def.Data.Holor.Repeat
+import Def.Data.Holor.Prod
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
@@ -180,4 +180,4 @@ private lemma main
 
 
 -- created on 2025-11-18
--- updated on 2025-11-22
+-- updated on 2026-10-26

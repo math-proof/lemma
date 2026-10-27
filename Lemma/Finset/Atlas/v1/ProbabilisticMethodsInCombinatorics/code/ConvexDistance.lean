@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.ConvexDistance
 open Finset ConvexDistance
 open scoped BigOperators

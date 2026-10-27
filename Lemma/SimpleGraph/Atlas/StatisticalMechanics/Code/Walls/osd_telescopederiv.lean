@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.osd_telescopederiv
 open Real Set Finset StatMech StatMech.Walls
 

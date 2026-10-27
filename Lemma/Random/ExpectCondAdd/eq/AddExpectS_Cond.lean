@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
-import sympy.stats.cond_expectation
-import sympy.Basic
+import Theorem.Probability.CondExpectation
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
@@ -24,4 +24,4 @@ private lemma main
 
 
 -- created on 2023-03-24
--- updated on 2026-09-20
+-- updated on 2026-10-26

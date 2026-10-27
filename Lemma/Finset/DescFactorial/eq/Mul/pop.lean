@@ -1,5 +1,5 @@
 import Mathlib.RingTheory.Polynomial.Pochhammer
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -16,4 +16,4 @@ private lemma main
 
 
 -- created on 2023-08-17
--- updated on 2023-08-26
+-- updated on 2026-10-26

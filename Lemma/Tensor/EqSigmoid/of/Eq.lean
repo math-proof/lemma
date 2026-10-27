@@ -1,6 +1,6 @@
-import sympy.tensor.lstm
-import sympy.sets.sets
-import sympy.Basic
+import Def.Data.Matrix.Lstm
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

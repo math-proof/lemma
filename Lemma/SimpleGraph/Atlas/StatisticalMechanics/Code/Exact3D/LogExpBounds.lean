@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.LogExpBounds
 open StatMech StatMech.Exact3D StatMech.Exact3D.ExpUpperBound StatMech.Exact3D.LogUpperBound StatMech.Exact3D.LogLowerBound
 

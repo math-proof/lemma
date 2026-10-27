@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TheoryOfComputation.code.GraphNonIsoIP.Part2
 open GraphNonIsoIP InteractiveProofs Probabilistic in
 open InteractiveProofs Probabilistic TuringMachine

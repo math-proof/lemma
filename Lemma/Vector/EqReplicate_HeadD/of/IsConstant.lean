@@ -1,6 +1,6 @@
 import Lemma.Vector.Eq.of.Val
 import Lemma.List.EqReplicate_HeadD.of.IsConstant
-import sympy.vector.Basic
+import Theorem.Data.Vector.Basic.Part2
 open Vector List
 
 

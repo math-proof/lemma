@@ -1,6 +1,6 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
 import Lemma.List.PermuteCons.eq.Cons_Permute.of.Ge
 import Lemma.List.PermuteInsertIdx.eq.InsertIdx.of.GtLength_0
@@ -128,4 +128,4 @@ private lemma main
 
 
 -- created on 2026-07-11
--- updated on 2026-08-27
+-- updated on 2026-10-26

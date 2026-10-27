@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.Lec5BezoutPascal.Part5
 open MvPolynomial Classical Lec5BezoutPascal
 

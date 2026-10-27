@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Series/HardyInequality.lean -/
 
 
-import sympy.atlas.Analysis.Series.HardyInequality
+import Theorem.Topology.Algebra.InfiniteSum.HardyInequality
 
 
 namespace MetaMathlibExt

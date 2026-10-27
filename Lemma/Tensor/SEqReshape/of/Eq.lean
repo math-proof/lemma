@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import torch.Tensor.reshape
-import torch.Tensor.repeat
-import torch.Tensor.prod
+import Def.Data.Holor.Reshape
+import Def.Data.Holor.Repeat
+import Def.Data.Holor.Prod
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.Div.eq.One.of.Ne_0
 import Lemma.Nat.EqMulDiv

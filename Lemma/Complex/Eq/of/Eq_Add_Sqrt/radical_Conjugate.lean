@@ -1,5 +1,5 @@
 import Mathlib.Analysis.RCLike.Sqrt
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardMetricAtlas.Part4
 open Finset SimpleGraph StatMech StatMech.FrontierA StatMech.FrontierA.ClosedMetricFlatSurfaceGraphAtlas
 

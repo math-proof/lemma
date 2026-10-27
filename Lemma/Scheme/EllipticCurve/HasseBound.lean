@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwist.Part15
 import Lemma.Scheme.EllipticCurve.ManinTwist
 import Lemma.Scheme.EllipticCurve.ManinTwistCharTwo
@@ -38,4 +38,4 @@ end MathlibExt.AlgebraicGeometry.EllipticCurve.HasseBoundWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

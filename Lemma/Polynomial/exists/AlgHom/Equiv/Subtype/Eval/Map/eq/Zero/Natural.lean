@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 universe u v w
 set_option maxHeartbeats 800000

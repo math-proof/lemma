@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch6Entry16InfiniteSum
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry16InfiniteSum
 
 open Ramanujan.Part1Ch6.Entry16InfiniteSum
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.TrinomialCoefficient
 import Lean.Elab.Tactic.Omega
 open scoped BigOperators
@@ -244,4 +244,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

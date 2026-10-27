@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierC.IsingTransfer.Part5
 open Matrix Polynomial StatMech StatMech.FrontierC
 

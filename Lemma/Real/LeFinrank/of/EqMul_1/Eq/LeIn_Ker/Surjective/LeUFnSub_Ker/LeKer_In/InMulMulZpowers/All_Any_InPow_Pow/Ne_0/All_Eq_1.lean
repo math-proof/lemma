@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.GroupCohomology_TateTwist
 import Lemma.Int.P2MUtil
 open CategoryTheory Module groupCohomology Int

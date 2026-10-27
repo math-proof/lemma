@@ -1,5 +1,5 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.prod
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Prod
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.DataExp.eq.ExpData
@@ -8,7 +8,7 @@ import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Vector.Div.eq.Div_Replicate
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool List Nat Tensor Vector
 
 
@@ -60,4 +60,4 @@ private lemma main
 
 
 -- created on 2025-10-11
--- updated on 2026-07-22
+-- updated on 2026-10-26

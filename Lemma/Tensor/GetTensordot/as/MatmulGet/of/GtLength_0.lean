@@ -1,5 +1,5 @@
 import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLengthS
-import torch.Tensor.reshape
+import Def.Data.Holor.Reshape
 open Tensor
 
 

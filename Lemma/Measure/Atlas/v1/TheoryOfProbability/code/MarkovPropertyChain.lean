@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TheoryOfProbability.code.MarkovPropertyChain.Part2
 open MeasureTheory ProbabilityTheory
 

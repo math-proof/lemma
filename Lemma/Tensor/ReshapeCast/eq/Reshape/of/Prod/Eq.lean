@@ -1,6 +1,6 @@
-import torch.Tensor.Basic
-import torch.Tensor.prod
-import torch.Tensor.reshape
+import Def.Data.Holor.Defs.Part4
+import Def.Data.Holor.Prod
+import Def.Data.Holor.Reshape
 
 
 @[path, comm]

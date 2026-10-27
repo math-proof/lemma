@@ -1,6 +1,6 @@
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
-import sympy.stats.policy_trajectory
-import sympy.vector.operators
+import Theorem.Dynamics.PolicyTrajectory
+import Def.Analysis.Calculus.Gradient.Operators.Part2
 open MeasureTheory PolicyGradient Random Measure
 
 

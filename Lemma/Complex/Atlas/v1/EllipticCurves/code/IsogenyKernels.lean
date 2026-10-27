@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.EllipticCurves.code.IsogenyKernels.Part4
 open Polynomial Velu Velu.VeluDeg2Data Velu.VeluOddData
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.TheoryOfProbability.code.CenteredConvergence
 open MeasureTheory ProbabilityTheory Filter Finset ENNReal KolmogorovThreeSeries
 

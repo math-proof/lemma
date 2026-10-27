@@ -1,5 +1,5 @@
-import sympy.sets.stirling_partition
-import sympy.Basic
+import Abbrev.Combinatorics.Enumerative.StirlingPartition
+import Initialize.Tactic.Attr.Basic
 open Stirling.conditionset
 
 

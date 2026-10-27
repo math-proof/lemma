@@ -1,7 +1,7 @@
-import sympy.series.limits
-import sympy.core.singleton
+import Def.Analysis.Real.Limits.Part4
+import Notation.Lean.Expr.Singleton
 import Lemma.Bool.Iff.is.IffNotS
-open Bool
+open Bool ArchimedeanClass
 
 
 /--

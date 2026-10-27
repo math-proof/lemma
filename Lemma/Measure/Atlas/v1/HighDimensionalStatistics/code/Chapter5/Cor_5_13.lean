@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_13.Part3
 open MeasureTheory InformationTheory GaussianSequenceModel
 

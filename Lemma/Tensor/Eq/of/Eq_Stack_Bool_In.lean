@@ -1,5 +1,5 @@
-import sympy.functions.elementary.conv
-import sympy.Basic
+import Def.Analysis.Conv
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

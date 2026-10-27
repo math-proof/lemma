@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 400000
 open scoped TensorProduct nonZeroDivisors

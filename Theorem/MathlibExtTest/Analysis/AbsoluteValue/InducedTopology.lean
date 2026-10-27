@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/AbsoluteValue/InducedTopology.lean -/
 
 
-import sympy.atlas.Analysis.AbsoluteValue.InducedTopology
+import Theorem.Analysis.AbsoluteValue.InducedTopology
 
 
 namespace AbsoluteValue

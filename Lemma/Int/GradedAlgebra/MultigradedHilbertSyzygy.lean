@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.RingTheory.GradedAlgebra.MultigradedHilbertSyzygy.Part21
 open CategoryTheory MvPolynomial
 open MetaMathlibExt
@@ -39,4 +39,4 @@ private lemma exists_finite_multigraded_free_resolution_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/CatalanSqrtTwo.lean -/
 
 
-import sympy.atlas.Analysis.SpecialFunctions.CatalanSqrtTwo
+import Theorem.Analysis.SpecialFunctions.CatalanSqrtTwo
 open scoped Topology
 open Filter
 

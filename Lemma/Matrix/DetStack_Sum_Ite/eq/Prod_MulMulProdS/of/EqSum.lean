@@ -1,8 +1,8 @@
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Order.Interval.Finset.Fin
 import Lemma.Finset.AddSumIio.eq.SumIic
-import Lemma.Finset.Any_In_Ico_SumIioSumIic.of.Eq_Sum
-import Lemma.Finset.Eq.of.In_Ico_SumIioSumIic.In_Ico_SumIioSumIic
+import Lemma.Finset.Any_In_IcoSumIio_SumIic.of.Eq_Sum
+import Lemma.Finset.Eq.of.In_IcoSumIio_SumIic.In_IcoSumIio_SumIic
 import Lemma.Matrix.DetStack_Mul_Sum_Mul_Pow_Sub.eq.PowSub__Mul
 import Lemma.Matrix.DetMulStackS_MulPow.eq.Mul_Prod_Factorial.of.Le
 import Lemma.Matrix.MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf
@@ -163,7 +163,7 @@ private lemma main
       ext (a | a) j
       ·
         simp only [Matrix.submatrix_apply, id, Matrix.fromRows_apply_inl, hA₁, hM,
-          Matrix.of_apply, Matrix.ofFun_apply]
+          Matrix.of_apply]
         rw [hε₁_inl a]
         have hterm :
           (∑ k : Fin (n + 1),
@@ -195,7 +195,7 @@ private lemma main
       ·
         have ha := hε₁_inr a
         simp only [Matrix.submatrix_apply, id, Matrix.fromRows_apply_inr, hA_rest, hM,
-          Matrix.of_apply, Matrix.ofFun_apply]
+          Matrix.of_apply]
         rw [ha, Fin.sum_univ_succ]
         have h0 : ¬(d0 + (a : ℕ) ∈ Finset.Ico (off 0) (off 0 + d[0])) := by
           simp [hoff0, d0]
@@ -269,7 +269,7 @@ private lemma main
         exact Finset.sum_le_sum_of_subset (Finset.subset_univ _)
       have hex (a : Fin (m - d0)) :
         ∃ k : Fin n, (a : ℕ) ∈ Finset.Ico (off' k) (off' k + d'[k]) := by
-        obtain ⟨k, hk⟩ := Any_In_Ico_SumIioSumIic.of.Eq_Sum hsum' a
+        obtain ⟨k, hk⟩ := Any_In_IcoSumIio_SumIic.of.Eq_Sum hsum' a
         refine ⟨k, ?_⟩
         have h := AddSumIio.eq.SumIic d' k
         dsimp only [GetElem.getElem] at hk h
@@ -280,7 +280,7 @@ private lemma main
       have huniq (a : ℕ) (k₁ k₂ : Fin n)
         (h1 : a ∈ Finset.Ico (off' k₁) (off' k₁ + d'[k₁]))
         (h2 : a ∈ Finset.Ico (off' k₂) (off' k₂ + d'[k₂])) : k₁ = k₂ := by
-        refine Eq.of.In_Ico_SumIioSumIic.In_Ico_SumIioSumIic (d := d') (t := a) ?_ ?_
+        refine Eq.of.In_IcoSumIio_SumIic.In_IcoSumIio_SumIic (d := d') (t := a) ?_ ?_
         ·
           have h := AddSumIio.eq.SumIic d' k₁
           simp only [off'] at h1
@@ -508,4 +508,4 @@ private lemma main
 
 
 -- created on 2026-10-23
--- updated on 2026-10-25
+-- updated on 2026-10-27

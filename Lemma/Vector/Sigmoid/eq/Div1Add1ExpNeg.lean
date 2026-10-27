@@ -1,4 +1,4 @@
-import sympy.vector.functions
+import Instance.Data.Vector.Functions.Part2
 
 
 @[path]

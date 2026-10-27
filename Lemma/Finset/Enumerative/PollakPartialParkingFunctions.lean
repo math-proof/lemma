@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.Enumerative.PollakPartialParkingFunctions.Part12
 open MetaMathlibExt.PollakPartialParking
 
@@ -71,4 +71,4 @@ private lemma pollak_partial_parking_functions_card_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

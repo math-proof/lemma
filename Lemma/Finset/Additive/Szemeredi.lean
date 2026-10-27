@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Additive.Szemeredi
 open scoped Finset
 open MathlibExt.Combinatorics.Additive.SzemerediWanted
@@ -251,4 +251,4 @@ end MathlibExt.Combinatorics.Additive.SzemerediWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

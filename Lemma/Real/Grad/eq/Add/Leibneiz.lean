@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Analysis.Calculus.Deriv.Prod
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 open scoped Topology
 

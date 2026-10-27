@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Probability.PBiasedRhoOptimise
 open Finset Real Filter Topology StatMech StatMech.OSSS StatMech.Probability
 

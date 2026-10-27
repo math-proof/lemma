@@ -26,11 +26,6 @@
 5. **溯因式推理**  
    由待证目标反向寻找充分条件或适用引理（证明搜索意义上的“由果索因”），如：`refine` / `apply`
 
-## 启发式辅助推理
-
-- **类比**  
-  在保持结构的前提下，将已知结论从某一数学结构迁移至另一结构（例如由实数域推广至超实数域），以检验命题是否仍成立。
-
 <br><br>
 ------
 
@@ -56,6 +51,8 @@
   - [k-means 聚类](../?module=Finset.LeAddSumS_SquareSub_Div_Sum.of.LeAbsSSub_Div_Sum.NotIn.In.GtCard_0)
 * [List](../?module=List) 列表理论
 * [Vector](../?module=Vector) 向量（一维张量）理论
+* [Matrix](../?module=Matrix) 矩阵理论，例：
+  - [置盐定理](../?module=Matrix.Any_And_EqSMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
 * [Tensor](../?module=Tensor) 形式化张量演算，语义上与 **torch.Tensor** 对齐，用于深度学习算法的形式化表述与验证，例：
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)

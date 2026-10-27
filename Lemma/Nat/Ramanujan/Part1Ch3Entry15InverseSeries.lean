@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry15InverseSeries
 open Filter Topology
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
@@ -409,4 +409,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry15InverseSeries
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

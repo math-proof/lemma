@@ -34,7 +34,7 @@ export function fetchLemmaJson(leanFileAbs, { timeoutMs = 120000 } = {}) {
   const probe = path.join(REPO, '_suggest_probe.lean');
   const src =
     'import ' + moduleName + '\n' +
-    'import sympy.printing.json\n' +
+    'import Def.Lean.PrettyPrinter.Json\n' +
     'open Lean Meta\n\n' +
     '#eval show MetaM Unit from do\n' +
     '  let n := ' + privateNameLean + '\n' +
@@ -97,7 +97,7 @@ function probeChunk(chunkRel, timeoutMs) {
   const probe = path.join(REPO, '_scan_probe.lean');
   const src =
     mods.map((m) => 'import ' + m).join('\n') +
-    '\nimport sympy.printing.json\n' +
+    '\nimport Def.Lean.PrettyPrinter.Json\n' +
     'open Lean Meta\n\n' +
     '#eval show MetaM Unit from do\n' +
     '  let ns : List Name := [\n' +

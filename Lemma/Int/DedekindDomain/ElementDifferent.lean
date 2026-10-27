@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.RingTheory.DedekindDomain.ElementDifferent
 
 
@@ -120,4 +120,4 @@ lemma differentIdeal_eq_span_derivative_of_adjoin_eq_top
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

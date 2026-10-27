@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
 open TemperedDistribution MvPolynomial SchwartzMap MeasureTheory Distribution DifferentialOperators DifferentialOperators.SmoothZeroAtInfty
 open scoped SchwartzMap

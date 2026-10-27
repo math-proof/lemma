@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPeriodic.Part3
 open Finset Set Filter Topology StatMech StatMech.OSSS StatMech.OSSS.FKSharpnessWeightedPeriodic
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Algebra.TensorProduct MvPolynomial
 open scoped TensorProduct
 open Algebra.TensorProduct MvPolynomial

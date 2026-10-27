@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.LinearAlgebra.Matrix.Hankel
 open Matrix
 
@@ -39,4 +39,4 @@ end Matrix
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

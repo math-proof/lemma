@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.kc3_farleftcell
 open Set SimpleGraph StatMech StatMech.Walls
 

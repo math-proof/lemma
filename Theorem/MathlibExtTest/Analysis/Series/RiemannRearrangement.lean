@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Series/RiemannRearrangement.lean -/
 
 
-import sympy.atlas.Analysis.Series.RiemannRearrangement
+import Theorem.Topology.Algebra.InfiniteSum.RiemannRearrangement.Part3
 
 
 namespace MathlibExtTest.Analysis.Series.RiemannRearrangement

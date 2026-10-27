@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
 open Finset Matrix BigOperators
 

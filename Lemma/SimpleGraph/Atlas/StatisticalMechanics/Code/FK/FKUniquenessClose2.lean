@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.FKUniquenessClose2
 open MeasureTheory Set Filter Topology StatMech StatMech.FK
 

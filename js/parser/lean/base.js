@@ -1286,9 +1286,24 @@ export class Lean extends IndentedNode {
                         while (isIdentContinueToken(tokens[self.start_idx + 1] ?? '')) word += tokens[++self.start_idx];
                         return this.parent.insert_word(this, word);
                     }
-                    return this.parent.insert_word(this, '@');
+                    if (tokens[self.start_idx + 1] !== 'ᵒ')
+                        return this.parent.insert_word(this, '@');
                 }
-                return this.push_binary(L.LeanMatMul);
+                {
+                    // `@ᵒ` is one infix (outer product). A space before `ᵒ` is not that operator.
+                    let superscript = '';
+                    if (tokens[self.start_idx + 1] === 'ᵒ') {
+                        superscript = 'ᵒ';
+                        self.start_idx++;
+                    }
+                    const caret = this.push_binary(L.LeanMatMul);
+                    if (superscript) {
+                        let p = caret;
+                        while (p && !(p instanceof L.LeanMatMul)) p = p.parent;
+                        if (p) p.superscript = superscript;
+                    }
+                    return caret;
+                }
             case 'end':
                 return this.parent.insert_end(this);
             case 'only':

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Section_5_3.Part12
 open Chapter5 hiding Real
 open Chapter5.BoundedAwayZero

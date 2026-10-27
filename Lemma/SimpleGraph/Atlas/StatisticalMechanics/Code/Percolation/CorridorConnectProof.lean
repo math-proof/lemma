@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Percolation.CorridorConnectProof.Part2
 open MeasureTheory Set SimpleGraph StatMech.Lattice StatMech.ConfigSpace StatMech.Combinatorics StatMech StatMech.Percolation
 

@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.MeasurableSpace.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

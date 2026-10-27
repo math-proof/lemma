@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /-- A map into a pi-type is measurable iff every coordinate is. -/

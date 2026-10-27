@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.polys.agca.elliptic_curve.galois_representation
+import Initialize.Tactic.Attr.Basic
+import Def.AlgebraicGeometry.EllipticCurve.GaloisRepresentation.Part4
 
 open MetaMathlibExt WeierstrassCurve
 

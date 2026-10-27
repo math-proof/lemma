@@ -1,4 +1,4 @@
-import stdlib.SEq
+import Theorem.Logic.SEq
 import Lemma.Vector.Get.of.SEq.Lt
 import Lemma.Vector.Head.eq.Get_0
 open Vector

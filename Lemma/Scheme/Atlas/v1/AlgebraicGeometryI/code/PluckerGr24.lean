@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.PluckerGr24
 open ExteriorAlgebra PluckerGr24
 open scoped LinearAlgebra.Projectivization

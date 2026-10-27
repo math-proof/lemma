@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -29,5 +29,5 @@ private lemma relax.given
 
 
 -- created on 2018-12-29
--- updated on 2025-04-18
+-- updated on 2026-10-26
 -- updated on 2026-09-27

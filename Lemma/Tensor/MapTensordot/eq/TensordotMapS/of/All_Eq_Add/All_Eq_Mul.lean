@@ -1,4 +1,4 @@
-import torch.Tensor.reshape
+import Def.Data.Holor.Reshape
 import Lemma.Tensor.MapMatmul.eq.MatmulMapS.of.Length.All_Eq_Add.All_Eq_Mul
 import Lemma.Tensor.Tensordot.as.Matmul.of.GeLengthS
 import Lemma.Tensor.Tensordot.as.Matmul.of.LtLengthS

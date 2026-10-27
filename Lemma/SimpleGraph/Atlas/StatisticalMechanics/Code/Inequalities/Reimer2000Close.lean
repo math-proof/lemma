@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Inequalities.Reimer2000Close.Part5
 open Finset MeasureTheory StatMech
 

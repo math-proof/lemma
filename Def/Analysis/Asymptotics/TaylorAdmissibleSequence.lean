@@ -1,5 +1,3 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/TaylorAdmissibleSequence.lean -/
-
 import Mathlib.Data.Nat.Basic
 
 
@@ -16,5 +14,6 @@ eventually strictly increasing sequences of natural numbers, lines 113–125,
 <https://cs.uwaterloo.ca/journals/JIS/VOL25/Cohen/cohen13.tex>. -/
 def IsTaylorAdmissibleSequence (a : ℕ → ℕ) : Prop :=
   (∀ n, 0 < n → 0 < a n) ∧ ∃ n₀, 1 ≤ n₀ ∧ ∀ n, n₀ ≤ n → a n < a (n + 1)
+
 
 end MetaMathlibExt

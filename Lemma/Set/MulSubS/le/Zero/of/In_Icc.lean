@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Int.Le0Sub.is.Ge
 import Lemma.Int.Ge0Sub.is.Le
 import Lemma.Int.Le_0.of.Ge_0.Le_0

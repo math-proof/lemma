@@ -1,9 +1,9 @@
 import Lemma.Tensor.DotDot.eq.Dot_Dot
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix
 import Lemma.Tensor.RotaryMatrixNeg.eq.TRotaryMatrix
 import Lemma.Tensor.TDot.eq.DotTS
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Tensor
 set_option maxHeartbeats 1000000
 
@@ -37,4 +37,4 @@ private lemma main
 
 
 -- created on 2026-09-16
--- updated on 2026-09-16
+-- updated on 2026-10-26

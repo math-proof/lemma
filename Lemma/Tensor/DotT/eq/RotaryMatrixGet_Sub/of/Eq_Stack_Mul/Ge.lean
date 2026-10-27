@@ -1,5 +1,5 @@
 import Lemma.Tensor.DotT.eq.RotaryMatrixSub
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge
 open Tensor
 
@@ -21,4 +21,4 @@ private lemma main
 
 
 -- created on 2023-05-30
--- updated on 2026-09-05
+-- updated on 2026-10-26

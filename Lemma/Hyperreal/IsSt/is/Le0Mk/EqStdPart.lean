@@ -1,5 +1,5 @@
 import Lemma.Hyperreal.IsSt.is.All_LtAbs
-open Hyperreal Int
+open Hyperreal Int ArchimedeanClass
 
 
 @[path, comm, mp, mpr]

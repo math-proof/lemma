@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.TriHexFKFiniteWiredWeights.Part4
 open Finset Set StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 

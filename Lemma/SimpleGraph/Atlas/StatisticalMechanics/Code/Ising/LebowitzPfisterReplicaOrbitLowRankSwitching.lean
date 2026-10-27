@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitLowRankSwitching.Part2
 open Finset StatMech StatMech.Ising
 

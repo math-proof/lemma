@@ -1,5 +1,5 @@
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /-- If finsets `w i` (`i < k`) have total size `|⋃ w i|`, they are pairwise disjoint. -/

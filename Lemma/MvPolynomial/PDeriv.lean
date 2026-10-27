@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.MvPolynomial.PDeriv.Part2
 open MvPolynomial
 
@@ -131,4 +131,4 @@ lemma pderiv_mixedDifferential
 end MvPolynomial
 
 -- created on 2026-10-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

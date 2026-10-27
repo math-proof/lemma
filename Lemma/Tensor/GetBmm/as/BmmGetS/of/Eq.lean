@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetBmm.eq.BmmGetS
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
-import torch.Tensor.bmm
+import Def.Data.Holor.Bmm
 open Tensor
 
 
@@ -33,4 +33,4 @@ private lemma main
 
 
 -- created on 2026-07-03
--- updated on 2026-07-04
+-- updated on 2026-10-26

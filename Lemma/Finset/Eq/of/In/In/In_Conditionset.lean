@@ -1,4 +1,4 @@
-import sympy.sets.stirling_partition
+import Abbrev.Combinatorics.Enumerative.StirlingPartition
 import Lemma.Finset.Eq.of.In.In.Lt.Lt.EqBiUnion.EqSum_Card
 open Finset Stirling.conditionset
 

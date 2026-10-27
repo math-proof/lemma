@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexSpliceKeyLayerSwap.Part7
 open StatMech StatMech.FrontierD StatMech.FrontierD.FKColoredFineTwoCycleUnitTransferSpliceKey
 

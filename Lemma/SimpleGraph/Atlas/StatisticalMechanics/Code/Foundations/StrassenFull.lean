@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Foundations.StrassenFull.Part7
 open MeasureTheory Finset StatMech StatMech.Transport
 

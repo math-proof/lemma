@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.Polynomial.RisingFactorialBinomial
 open MetaMathlibExt
 open scoped BigOperators
@@ -137,4 +137,4 @@ lemma ascPochhammer_eval_add
 end MetaMathlibExt
 
 -- created on 2026-10-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

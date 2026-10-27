@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedEndpointReflectionGlue.Part3
 open Set StatMech StatMech.FrontierD
 

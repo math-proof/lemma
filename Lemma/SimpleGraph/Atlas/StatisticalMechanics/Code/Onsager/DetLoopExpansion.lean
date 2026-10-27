@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.DetLoopExpansion
 open Polynomial Set FiniteDimensional Module StatMech StatMech.Onsager
 

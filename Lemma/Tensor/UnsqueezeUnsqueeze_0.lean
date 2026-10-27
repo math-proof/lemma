@@ -1,5 +1,5 @@
 import Lemma.Tensor.DataUnsqueeze.as.Data
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Bool Tensor
 
 

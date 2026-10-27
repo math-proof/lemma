@@ -1,5 +1,5 @@
-import sympy.functions.elementary.complexes
-import sympy.Basic
+import Notation.Analysis.Complex.Complexes
+import Initialize.Tactic.Attr.Basic
 open scoped ComplexOrder
 
 

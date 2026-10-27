@@ -1,5 +1,5 @@
-import sympy.stats.policy_trajectory
-import sympy.stats.cond_expectation
+import Theorem.Dynamics.PolicyTrajectory
+import Theorem.Probability.CondExpectation
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Topology.Algebra.Group.OpenProfiniteCompletion.Part2
 open CategoryTheory
 open scoped Pointwise
@@ -97,4 +97,4 @@ private lemma etaFn_continuous_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

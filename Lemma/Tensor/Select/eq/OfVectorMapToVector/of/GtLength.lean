@@ -1,5 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.Nat.Div.eq.AddMulDiv_Mul
@@ -73,4 +73,4 @@ private lemma main
 
 
 -- created on 2026-07-23
--- updated on 2026-07-24
+-- updated on 2026-10-26

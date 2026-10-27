@@ -1,5 +1,5 @@
-import torch.Tensor.reshape
-import torch.Tensor.prod
+import Def.Data.Holor.Reshape
+import Def.Data.Holor.Prod
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.TakeTake.eq.Take.of.Gt
 import Lemma.List.ZipWith_Append.eq.AppendZipWithS
@@ -241,4 +241,4 @@ private lemma main
 
 
 -- created on 2026-07-16
--- updated on 2026-08-14
+-- updated on 2026-10-26

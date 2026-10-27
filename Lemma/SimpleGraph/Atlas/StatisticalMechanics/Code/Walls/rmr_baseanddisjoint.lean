@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.rmr_baseanddisjoint
 open Finset MeasureTheory StatMech StatMech.Walls
 

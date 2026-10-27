@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.XnEquivalence
+import Initialize.Tactic.Attr.Basic
+import Notation.RingTheory.PowerSeries.XnEquivalence
 open PowerSeries
 open scoped PowerSeries BigOperators Polynomial
 
@@ -689,4 +689,4 @@ private lemma x_coeff_pow_eq_zero_of_lt_of_constantCoeff_eq_zero
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

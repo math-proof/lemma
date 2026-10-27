@@ -15,7 +15,7 @@ import Lemma.Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.of.Lt_Mul_ProdTail.Gt_0.GtGet_0.GtLength_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SEqFlattenSSplitAt.of.SEq
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Bool List Nat Tensor Vector
 
 
@@ -119,4 +119,4 @@ private lemma main
 
 
 -- created on 2025-07-05
--- updated on 2026-07-27
+-- updated on 2026-10-26

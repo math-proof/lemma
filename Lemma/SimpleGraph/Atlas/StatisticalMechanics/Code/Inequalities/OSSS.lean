@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Inequalities.OSSS.Part6
 open Finset StatMech StatMech.OSSS StatMech.OSSS.DecisionTree
 

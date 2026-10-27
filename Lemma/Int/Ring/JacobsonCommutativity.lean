@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Algebra.Ring.JacobsonCommutativity
 import Theorem.Algebra.Ring.JacobsonCommutativity
 /--
@@ -45,4 +45,4 @@ private lemma IsPrimeIdeal_mem_or_mem_eq
   apply Int.Ring.JacobsonCommutativity.IsPrimeIdeal.mem_or_mem hP h
 
 -- created on 2026-10-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

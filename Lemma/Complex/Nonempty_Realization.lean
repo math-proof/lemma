@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.LieGroups.code.SL2Classification
 open Complex SL2SimpleModule
 set_option linter.unusedVariables false
@@ -182,4 +182,4 @@ private lemma sl2_classification_uniqueness
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentCompactness
 open Filter MeasureTheory Topology TopologicalSpace Set StatMech StatMech.FrontierB
 

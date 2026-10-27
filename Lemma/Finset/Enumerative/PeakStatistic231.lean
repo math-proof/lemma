@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.Enumerative.PeakStatistic231.Part5
 open MetaMathlibExt
 
@@ -1185,4 +1185,4 @@ private lemma card_permutations_avoiding_231_with_peak_count_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

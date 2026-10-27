@@ -1,5 +1,5 @@
-import sympy.matrices.plu
-import sympy.Basic
+import Def.LinearAlgebra.Matrix.Echelon.Plu
+import Initialize.Tactic.Attr.Basic
 open Matrix
 
 

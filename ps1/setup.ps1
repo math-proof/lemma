@@ -290,8 +290,8 @@ if ($pwExit -ne 0) {
 # now build the entire project
 Write-Host "⏳ building the entire project..."
 lake build
-# build specifically sympy.printing.echo for latex printing support
-lake build sympy.printing.echo
+# build specifically Syntax.Tactic.Echo for latex printing support
+lake build Syntax.Tactic.Echo
 $end = Get-Date
 $totalTime = ($end - $start).TotalSeconds
 Write-Host "🏁 Build completed in $totalTime seconds." -ForegroundColor Cyan

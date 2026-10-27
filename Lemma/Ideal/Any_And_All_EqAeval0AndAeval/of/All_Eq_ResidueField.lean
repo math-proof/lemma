@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open KaehlerDifferential
 open MvPolynomial (pderiv X pderiv_X)
 open scoped TensorProduct

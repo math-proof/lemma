@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Algebra.Polynomial.FormalOrthogonality
 open MetaMathlibExt MetaMathlibExt.Polynomial
 

@@ -5,7 +5,7 @@ import Lemma.Tensor.EqData0'0
 import Lemma.Vector.EqSplitAt0_0
 import Lemma.Vector.EqSum_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool List Tensor Vector
 
 

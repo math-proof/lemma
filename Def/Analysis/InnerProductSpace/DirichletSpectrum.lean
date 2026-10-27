@@ -4,7 +4,7 @@
 Author: Muse Spark 1.3
 -/
 
-import Theorem.Analysis.InnerProductSpace.DiscreteSpectrum.Part3
+import Theorem.Analysis.InnerProductSpace.DiscreteSpectrum.Part4
 import Lemma.Matrix.FiniteSublevelSet
 import Lemma.Matrix.Eq.of.All_Eq
 import Lemma.Matrix.In_SublevelFinset.is.Lt

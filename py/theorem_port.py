@@ -1385,7 +1385,7 @@ def make_skeleton(
         signature = (f"{pre} :\n" if pre else "  :\n") + "-- imply\n"
     open_block = f"\n{opens}\n" if opens else "\n"
     return f"""import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 {open_block}
 {preamble}
 @[path]

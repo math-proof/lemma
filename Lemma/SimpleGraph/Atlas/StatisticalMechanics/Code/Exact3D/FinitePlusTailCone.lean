@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailCone.Part4
 open StatMech StatMech.Exact3D StatMech.Exact3D.FinitePlusTailState StatMech.Exact3D.FinitePlusTailLipschitzCertificate StatMech.Exact3D.FinitePlusTailHyperbolicSplitting StatMech.Exact3D.FinitePlusTailConeCertificate
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Algebra_DescentCofaces
 open CategoryTheory Opposite AlgebraicGeometry Algebra.TensorProduct Algebra.DescentCofaces
 open scoped TensorProduct
@@ -51,4 +51,4 @@ private lemma main
     rw [he']
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

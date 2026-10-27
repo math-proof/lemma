@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Finset.Sum.eq.SMulCard.of.All_Eq
 open Finset
 

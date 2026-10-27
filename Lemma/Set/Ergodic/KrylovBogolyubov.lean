@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Dynamics.Ergodic.KrylovBogolyubov
 open MeasureTheory
 open MathlibExt.Dynamics.Ergodic.KrylovBogolyubovWanted
@@ -158,4 +158,4 @@ end MathlibExt.Dynamics.Ergodic.KrylovBogolyubovWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.LinearAlgebra.Matrix.ReducedRowEchelon
 open Matrix.IsReducedRowEchelon
 open MathlibExt.LinearAlgebra.Matrix.ReducedRowEchelonWanted
@@ -847,4 +847,4 @@ end MathlibExt.LinearAlgebra.Matrix.ReducedRowEchelonWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

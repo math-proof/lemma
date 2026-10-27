@@ -1,7 +1,7 @@
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import torch.Tensor.permute
-import torch.linalg.inv
-import torch.functions
+import Notation.Data.Holor.Permute
+import Def.Data.Holor.Inv
+import Theorem.Data.Holor.Functions
 import Lemma.Tensor.DotT_RotaryMatrix'.eq.Eye
 import Lemma.Tensor.EqToMatrixStack
 import Lemma.Tensor.ToMatrixT.eq.TToMatrix

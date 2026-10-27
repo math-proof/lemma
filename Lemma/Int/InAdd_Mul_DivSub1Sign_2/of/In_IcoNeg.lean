@@ -1,5 +1,5 @@
-import stdlib.Slice
-import sympy.sets.sets
+import Def.Data.List.Slice
+import Theorem.Data.Set.Sets
 import Lemma.Int.DivSub1Sign_2.eq.Zero.of.Ge_0
 import Lemma.Int.DivSub1Sign_2.eq.One.of.Lt_0
 import Lemma.Int.Le0Sub.is.Ge

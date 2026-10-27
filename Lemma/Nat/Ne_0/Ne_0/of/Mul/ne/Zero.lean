@@ -1,5 +1,5 @@
 import Lemma.Nat.Ne_0.of.Mul.ne.Zero
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Nat
 
 
@@ -32,4 +32,4 @@ private lemma tensor
 
 
 -- created on 2018-01-22
--- updated on 2026-09-27
+-- updated on 2026-10-26

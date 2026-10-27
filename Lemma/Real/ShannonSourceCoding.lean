@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.InformationTheory.ShannonSourceCoding
 open Real BigOperators Finset
 open MathlibExt.InformationTheory.ShannonSourceCodingWanted
@@ -286,4 +286,4 @@ end MathlibExt.InformationTheory.ShannonSourceCodingWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

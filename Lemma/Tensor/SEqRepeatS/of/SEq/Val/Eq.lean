@@ -1,6 +1,6 @@
-import torch.Tensor.Basic
-import torch.Tensor.repeat
-import stdlib.SEq
+import Def.Data.Holor.Defs.Part4
+import Def.Data.Holor.Repeat
+import Theorem.Logic.SEq
 
 
 @[path]

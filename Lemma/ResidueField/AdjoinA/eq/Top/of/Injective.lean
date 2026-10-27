@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Mathlib_RingTheory_Valuation_LowerRamificationGroupDepth
 open IsLocalRing Polynomial IsDiscreteValuationRing
 open IntermediateField

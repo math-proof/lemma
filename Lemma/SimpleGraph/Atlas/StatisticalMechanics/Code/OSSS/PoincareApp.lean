@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.PoincareApp
 open Finset StatMech StatMech.OSSS StatMech.OSSS.PoincareApp StatMech.OSSS.MonotonicFK
 

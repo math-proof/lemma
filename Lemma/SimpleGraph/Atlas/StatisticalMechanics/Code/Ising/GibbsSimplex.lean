@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.GibbsSimplex.Part3
 open MeasureTheory ProbabilityTheory MeasurableSpace Set StatMech StatMech.Ising
 

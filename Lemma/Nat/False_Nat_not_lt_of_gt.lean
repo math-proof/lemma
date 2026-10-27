@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.Analysis.Section_2_2.Part2
 import Lemma.Nat.Le.of.Lt_Nat_le_of_lt
 import Lemma.Nat.Ne_Nat_ne_of_lt
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-10-23
+-- updated on 2026-10-26

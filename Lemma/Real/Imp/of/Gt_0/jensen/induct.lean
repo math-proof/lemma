@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Convex.Deriv
 import Mathlib.Analysis.Convex.Jensen
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--

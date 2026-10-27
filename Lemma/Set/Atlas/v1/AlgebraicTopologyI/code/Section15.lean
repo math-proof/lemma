@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AlgebraicTopologyI.code.Section15
 open Topology CWSubcomplex SphereInfty
 

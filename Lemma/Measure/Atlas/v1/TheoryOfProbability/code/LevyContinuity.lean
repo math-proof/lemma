@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.TheoryOfProbability.code.LevyContinuity
 open MeasureTheory Complex Filter ProbabilityTheory
 open scoped Topology BoundedContinuousFunction

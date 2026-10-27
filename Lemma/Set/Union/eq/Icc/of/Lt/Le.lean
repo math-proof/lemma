@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Nat.Le.of.Lt
 open Nat
 

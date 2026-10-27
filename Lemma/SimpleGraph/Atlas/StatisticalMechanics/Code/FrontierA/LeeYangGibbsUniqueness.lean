@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangGibbsUniqueness
 open Filter Finset MeasureTheory ProbabilityTheory Set Topology StatMech StatMech.FrontierA
 

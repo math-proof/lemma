@@ -1,7 +1,7 @@
 import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Calculus.Deriv.Prod
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open BigOperators
 
 

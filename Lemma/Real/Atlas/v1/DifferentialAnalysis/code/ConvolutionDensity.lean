@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensity
 open MeasureTheory Filter Topology Function Set TestFunctions SchwartzMap ConvolutionDensity
 open scoped ZeroAtInfty Convolution

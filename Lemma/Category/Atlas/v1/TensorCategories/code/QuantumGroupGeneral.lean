@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Class.v1.Atlas.TensorCategories.code.QuantumGroupGeneral
 open Coalgebra HopfAlgebra
 open scoped TensorProduct

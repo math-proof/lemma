@@ -1,5 +1,5 @@
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2021-02-27
--- updated on 2023-05-04
+-- updated on 2026-10-26

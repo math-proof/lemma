@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.PrimeInterval.Breusch.Lower
 open MathlibExt MathlibExt.NumberTheory MathlibExt.NumberTheory.BreuschWanted MathlibExt.NumberTheory.BreuschWanted.Internal
 open Nat Finset

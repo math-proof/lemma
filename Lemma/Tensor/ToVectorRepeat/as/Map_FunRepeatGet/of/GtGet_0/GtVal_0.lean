@@ -1,5 +1,5 @@
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 import Lemma.Nat.LtVal
 import Lemma.List.GetSet.eq.Get.of.Gt.GtLength
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
@@ -72,4 +72,4 @@ private lemma main
 
 
 -- created on 2025-10-05
--- updated on 2025-10-06
+-- updated on 2026-10-26

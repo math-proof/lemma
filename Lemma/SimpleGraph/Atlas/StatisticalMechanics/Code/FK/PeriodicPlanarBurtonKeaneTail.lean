@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTail.Part3
 open Set SimpleGraph StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 

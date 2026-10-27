@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
 open OrdinarySupersingular Hasse

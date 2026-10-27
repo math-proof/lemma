@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqGetT
-import torch.Tensor.permute
-import sympy.matrices.dense
+import Notation.Data.Holor.Permute
+import Instance.LinearAlgebra.Matrix.Dense
 open scoped Matrix
 
 

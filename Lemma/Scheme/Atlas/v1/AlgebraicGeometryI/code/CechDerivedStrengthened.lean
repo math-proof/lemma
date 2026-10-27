@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedStrengthened.Part2
 open CategoryTheory CategoryTheory.Limits DerivedFunctorsDefs CechDerivedComparison CechDerivedIsomorphismProof
 open DerivedFunctorsDefs

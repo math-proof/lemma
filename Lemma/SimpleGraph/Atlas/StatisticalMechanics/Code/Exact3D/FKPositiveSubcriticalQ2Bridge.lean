@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge.Part121
 open Filter MeasureTheory StatMech StatMech.Exact3D StatMech.Exact3D.FinsetFiberIndex
 

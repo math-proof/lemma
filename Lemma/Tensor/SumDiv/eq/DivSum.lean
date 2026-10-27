@@ -2,7 +2,7 @@ import Lemma.Tensor.Div.eq.Div_GetData_0
 import Lemma.Tensor.Div.eq.Div_KeepdimTensorReplicateProdEraseIdx
 import Lemma.Tensor.Div.eq.Div_TensorReplicate
 import Lemma.Tensor.SumDiv_Keepdim.eq.DivSum
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor
 
 
@@ -36,4 +36,4 @@ private lemma main
 
 
 -- created on 2025-09-21
--- updated on 2026-08-15
+-- updated on 2026-10-26

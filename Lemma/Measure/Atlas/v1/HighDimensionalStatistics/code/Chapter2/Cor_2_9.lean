@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Real Finset BigOperators MeasureTheory Matrix in
 
 

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.LaurentSeries
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.LaurentSeries.Part11
 open AlgebraicCombinatorics
 open AlgebraicCombinatorics.BinaryRepresentation
 
@@ -1686,4 +1686,4 @@ private lemma pv_sum_powers_of_three_eq_zero_aux
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

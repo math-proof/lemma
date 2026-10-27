@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.RSW.BoxCrossing.Part3
 open Set MeasureTheory StatMech StatMech.RSW StatMech.RSW.BoxCrossing
 

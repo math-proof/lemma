@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.NumberTheory.NumberField.Idele.Part2
 open scoped RestrictedProduct NumberField.AdeleRing
 open InfinitePlace AbsoluteValue.Completion InfinitePlace.Completion IsDedekindDomain
@@ -144,4 +144,4 @@ private lemma isOpen_localIntegralUnitSubgroup_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

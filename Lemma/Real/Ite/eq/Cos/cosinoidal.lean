@@ -1,7 +1,7 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Data.Int.DivMod
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -44,4 +44,4 @@ private lemma main
 
 
 -- created on 2022-01-23
--- updated on 2026-10-17
+-- updated on 2026-10-26

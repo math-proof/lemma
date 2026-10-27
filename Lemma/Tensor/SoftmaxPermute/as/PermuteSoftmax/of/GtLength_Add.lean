@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.EqAdd0
 import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length
@@ -85,4 +85,4 @@ private lemma main
 
 
 -- created on 2025-10-31
--- updated on 2025-11-30
+-- updated on 2026-10-26

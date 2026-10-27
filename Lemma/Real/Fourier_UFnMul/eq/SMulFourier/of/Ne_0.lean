@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.integrals.transforms.Scaling
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Fourier.Scaling.Part2
 open scoped FourierTransform
 open MeasureTheory
 
@@ -36,4 +36,4 @@ lemma fourier_comp_mul_left
 end Real
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Friedgut
 open BooleanFourier
 
@@ -254,7 +254,7 @@ lemma friedgut_l2_bridge
       ∑ S ∈ univ.filter (fun S => ¬(S ⊆ J)),
         fourierCoeff (liftPM f) S * chi S x := by
     intro x
-    have hfe := fourier_expansion (liftPM f) x
+    have hfe := fourier_expansion (f := liftPM f) (x := x)
     have hsplit : ∑ S : Finset (Fin n), fourierCoeff (liftPM f) S * chi S x =
       (∑ S ∈ univ.filter (· ⊆ J), fourierCoeff (liftPM f) S * chi S x) +
       (∑ S ∈ univ.filter (fun S => ¬(S ⊆ J)), fourierCoeff (liftPM f) S * chi S x) := by
@@ -269,7 +269,7 @@ lemma friedgut_l2_bridge
       (liftPM f x - fourierTrunc (liftPM f) J x)^2 = (tail x)^2 := by
       intro x; congr 1; exact h_diff_expansion x
     simp_rw [h_eq_tail]
-    rw [← parseval tail]
+    rw [← parseval (f := tail)]
     have h_coeff : ∀ S : Finset (Fin n),
       fourierCoeff tail S = if S ∈ F then fourierCoeff (liftPM f) S else 0 :=
       fun S => fourierCoeff_of_chi_sum F _ S
@@ -307,3 +307,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

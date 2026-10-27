@@ -1,4 +1,4 @@
-import sympy.stats.stochastic_process
+import Instance.Probability.Process.StochasticProcess.Part3
 open WithLp
 open scoped Matrix
 

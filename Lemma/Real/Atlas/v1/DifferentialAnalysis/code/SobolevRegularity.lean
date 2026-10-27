@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevRegularity
 open MeasureTheory SobolevSpace TemperedDistributions SobolevRegularity
 open scoped FourierTransform SchwartzMap

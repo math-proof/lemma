@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.gc58cyclespace
 open Finset BigOperators SimpleGraph StatMech StatMech.Walls
 

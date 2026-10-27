@@ -1,5 +1,5 @@
-import stdlib.SEq
-import sympy.Basic
+import Theorem.Logic.SEq
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -38,4 +38,4 @@ private lemma main
 
 
 -- created on 2025-05-30
--- updated on 2025-06-01
+-- updated on 2026-10-26

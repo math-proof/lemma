@@ -1,7 +1,7 @@
 import Lemma.DrinfeldCurve.FunctionField
 import Lemma.AlgebraicCurve.DivisorClassGroup
 import Lemma.ModularCurve.JZeroTateModule
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 set_option autoImplicit false
 open scoped TensorProduct
 

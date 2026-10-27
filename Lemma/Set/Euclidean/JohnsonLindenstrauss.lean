@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Geometry.Euclidean.JohnsonLindenstrauss
 open scoped RealInnerProductSpace
 open ProbabilityTheory MeasureTheory
@@ -747,4 +747,4 @@ end MathlibExt.Geometry.Euclidean.JohnsonLindenstraussWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,7 +1,7 @@
 import Lemma.Int.EqToNat
 import Lemma.List.GetSlicedIndices.eq.AddMul.of.GtLength.Gt_0.Le.Lt
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 open Int Nat Slice List
 
 

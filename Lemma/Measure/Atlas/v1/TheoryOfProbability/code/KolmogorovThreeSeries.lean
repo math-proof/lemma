@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TheoryOfProbability.code.KolmogorovThreeSeries
 open MeasureTheory ProbabilityTheory Filter KolmogorovThreeSeries
 open KolmogorovThreeSeries

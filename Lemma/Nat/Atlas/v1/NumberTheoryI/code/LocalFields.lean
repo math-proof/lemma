@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.LocalFields.Part9
 open Metric Filter Set Topology PowerSeries Finset in
 open scoped Valued

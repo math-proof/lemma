@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.FunctionalAnalysis.JosefsonNissenzweig.Part24
 open MathlibExt.Analysis.FunctionalAnalysis.JosefsonNissenzweigWanted
 
@@ -856,4 +856,4 @@ private lemma josefson_nissenzweig_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

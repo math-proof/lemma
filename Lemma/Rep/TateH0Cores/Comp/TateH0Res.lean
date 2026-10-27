@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.GroupCohomology.TateCohomology
 import Def.GroupCohomology_TateResCor
 import Lemma.Int.P2MUtil

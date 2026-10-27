@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.AlgebraicCurve.GluedPic0
 import Lemma.AlgebraicCurve.AdelicIndex
 import Lemma.Int.P2MUtil

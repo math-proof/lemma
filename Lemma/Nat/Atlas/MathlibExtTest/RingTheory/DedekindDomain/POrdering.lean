@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.RingTheory.DedekindDomain.POrdering
 import Lemma.Int.DedekindDomain.POrdering
 open IsDedekindDomain.HeightOneSpectrum

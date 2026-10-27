@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
 open UniformSpace Filter Topology Finset in IsDedekindDomain
 open scoped Topology

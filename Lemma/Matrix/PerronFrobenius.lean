@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.LinearAlgebra.Matrix.PerronFrobenius
 open Matrix
 open MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
@@ -492,4 +492,4 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

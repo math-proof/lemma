@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.NumberField.RayClass.CongruenceSubgroup
 open scoped nonZeroDivisors
 open NumberField.Modulus
@@ -105,4 +105,4 @@ private lemma image_comap_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

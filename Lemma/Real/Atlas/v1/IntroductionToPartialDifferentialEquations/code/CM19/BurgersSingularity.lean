@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.BurgersSingularity
 open Finset MeasureTheory Set TransportBurgers
 

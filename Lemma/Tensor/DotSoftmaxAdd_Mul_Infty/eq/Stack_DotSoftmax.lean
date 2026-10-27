@@ -31,7 +31,7 @@ import Lemma.Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool
 import Lemma.Tensor.GetDiv.eq.DivGetS
 import Lemma.Tensor.GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor Hyperreal
 set_option maxHeartbeats 2000000
 
@@ -188,4 +188,4 @@ private lemma main
 
 
 -- created on 2020-12-28
--- updated on 2026-08-28
+-- updated on 2026-10-26

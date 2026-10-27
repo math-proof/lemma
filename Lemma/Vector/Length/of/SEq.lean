@@ -1,5 +1,5 @@
-import stdlib.SEq
-import sympy.vector.vector
+import Theorem.Logic.SEq
+import Instance.Data.Vector.Vector
 
 
 @[path]

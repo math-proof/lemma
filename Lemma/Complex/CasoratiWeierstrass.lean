@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Complex.CasoratiWeierstrass
 
 open Complex.CasoratiWeierstrass

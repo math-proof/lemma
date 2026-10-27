@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open CategoryTheory CategoryTheory.Limits
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000

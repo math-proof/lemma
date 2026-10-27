@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
 import Lemma.Category.Atlas.v1.TensorCategories.code.ModuleFunctorDefs
 open Category MonoidalCategory LeftModCat

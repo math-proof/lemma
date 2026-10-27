@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.NormedSpace.RieszThorin.Part3
 
 open MeasureTheory

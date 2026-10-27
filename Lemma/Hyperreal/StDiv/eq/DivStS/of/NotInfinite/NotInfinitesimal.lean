@@ -4,7 +4,7 @@ import Lemma.Hyperreal.StInv.eq.InvSt
 import Lemma.Hyperreal.StMul.eq.MulStS.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.Infinite.is.InfiniteNeg
 import Lemma.Rat.Div.eq.Mul_Inv
-open Hyperreal Rat
+open Hyperreal Rat ArchimedeanClass
 
 
 @[path]

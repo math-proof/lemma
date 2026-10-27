@@ -1,5 +1,5 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 import Lemma.Tensor.SEqSumS.of.All_SEq.Gt_0
 import Lemma.Tensor.Sum_0.as.Sum_Get.of.GtLength_0
 open Bool Tensor

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section38.Part3
 open Metric Set Manifold CategoryTheory AlgebraicTopology Limits TopCat BorsukUlam PoincareDuality
 open Manifold CategoryTheory

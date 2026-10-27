@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.SLE.CapacityParametrizedCurveSpace
 open Filter MeasureTheory Topology StatMech StatMech.SLE
 

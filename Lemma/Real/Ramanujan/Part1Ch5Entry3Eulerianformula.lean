@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Ramanujan.Part1Ch5Entry3Eulerianformula
 open Entry4 Entry8Eulerianformula
 open MathlibExt.Analysis.Ramanujan.Part1Ch5
@@ -35,4 +35,4 @@ end
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

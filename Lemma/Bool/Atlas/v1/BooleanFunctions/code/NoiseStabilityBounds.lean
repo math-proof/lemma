@@ -1,6 +1,8 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Theorems
+import Def.v1.Atlas.BooleanFunctions.code.Stability
+import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Stability
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Theorems
 open Finset BigOperators
 
@@ -70,8 +72,8 @@ lemma noiseStability_bounds
 -- imply
   fourierCoeff f ∅ ^ 2 ≤ noiseStability ρ f ∧ noiseStability ρ f ≤ ∑ S : Finset (Fin n), fourierCoeff f S ^ 2 :=
 -- proof
-  ⟨noiseStability_ge_fourierCoeff_empty_sq ρ hρ₀ f,
-    noiseStability_le_sum_sq ρ hρ₀ hρ₁ f⟩
+  ⟨noiseStability_ge_fourierCoeff_empty_sq hρ₀,
+    noiseStability_le_sum_sq hρ₀ hρ₁⟩
 
 end BooleanFourier
 
@@ -91,8 +93,8 @@ lemma noiseStability_le_one_of_boolean
 -- imply
   noiseStability ρ (fun x => boolToReal (f x)) ≤ 1 := by
 -- proof
-  have h := noiseStability_le_sum_sq ρ hρ₀ hρ₁ (fun x => boolToReal (f x))
-  linarith [parseval_signed f]
+  have h := noiseStability_le_sum_sq (f := fun x => boolToReal (f x)) hρ₀ hρ₁
+  linarith [parseval_signed]
 
 end BooleanFourier
 
@@ -112,8 +114,8 @@ lemma noiseStability_bounds_boolean
 -- imply
   fourierCoeff (fun x => boolToReal (f x)) ∅ ^ 2 ≤ noiseStability ρ (fun x => boolToReal (f x)) ∧ noiseStability ρ (fun x => boolToReal (f x)) ≤ 1 :=
 -- proof
-  ⟨noiseStability_ge_fourierCoeff_empty_sq ρ hρ₀ _,
-    noiseStability_le_one_of_boolean ρ hρ₀ hρ₁ f⟩
+  ⟨noiseStability_ge_fourierCoeff_empty_sq (f := fun x => boolToReal (f x)) hρ₀,
+    noiseStability_le_one_of_boolean hρ₀ hρ₁⟩
 
 end BooleanFourier
 

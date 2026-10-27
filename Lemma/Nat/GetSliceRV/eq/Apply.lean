@@ -1,4 +1,4 @@
-import sympy.stats.hidden_markov_sequence
+import Def.Probability.Process.HiddenMarkovSequence.Part2
 open MeasureTheory
 open scoped ENNReal.ToRealCoe
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry13CorollarySchroder
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry13CorollarySchroder
@@ -1041,4 +1041,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry13CorollarySchroder
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

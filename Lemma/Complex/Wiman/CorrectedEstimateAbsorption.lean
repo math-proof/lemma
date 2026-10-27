@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Complex.Wiman.CorrectedEstimateAbsorption
 
 open Complex.Wiman.CorrectedEstimateAbsorption
@@ -127,4 +127,4 @@ end Complex
 
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

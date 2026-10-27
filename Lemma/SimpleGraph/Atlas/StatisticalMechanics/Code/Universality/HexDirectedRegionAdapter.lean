@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Universality.HexDirectedRegionAdapter.Part6
 open StatMech StatMech.Universality
 

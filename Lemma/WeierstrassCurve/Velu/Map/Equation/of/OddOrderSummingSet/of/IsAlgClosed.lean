@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.WeierstrassCurve.VeluPointMap
 import Lemma.WeierstrassCurve.OddOrderSummingSet
 import Lemma.Int.P2MUtil

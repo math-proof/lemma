@@ -256,7 +256,7 @@ import Lemma.Fin.CardSupport.le.CardRothBox
 import Lemma.Polynomial.Any_And_Det_PowDerivative.ne.Zero.of.LinearIndependent
 import Lemma.Fin.RothMvHasse.eq.Zero.of.Lt
 import Lemma.Polynomial.Wronskian.ne.Zero.of.NeNatDegree_NatDegree.Ne_0.Ne_0
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MathlibExt.NumberTheory.RothAuxiliary
 open scoped Matrix BigOperators Polynomial nonZeroDivisors
 

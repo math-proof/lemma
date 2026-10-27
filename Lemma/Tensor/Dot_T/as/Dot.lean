@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.DotT.eq.Dot
 import Lemma.Tensor.EqTT
 import Lemma.Tensor.SEqDotS.of.SEq
@@ -27,4 +27,4 @@ private lemma main
 
 
 -- created on 2026-08-17
--- updated on 2026-08-18
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.Chapter3.DedekindProperties.Part2
 open Ideal nonZeroDivisors DedekindDomainEquiv FractionalIdealLocalization
 open nonZeroDivisors

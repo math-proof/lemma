@@ -1,7 +1,7 @@
 import Macro.Logic.Quantifier.Part4
-import sympy.series.limits
-import sympy.sets.sets
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 open Set Filter
 
 
@@ -23,4 +23,4 @@ private lemma main
 
 
 -- created on 2023-10-15
--- updated on 2026-10-12
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open scoped Convolution InnerProductSpace ENNReal
 open MeasureTheory
 

@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 

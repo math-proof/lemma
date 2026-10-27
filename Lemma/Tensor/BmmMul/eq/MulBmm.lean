@@ -1,7 +1,7 @@
 import Lemma.Tensor.BmmBFn.eq.BFnBmm
 import Lemma.Tensor.MulMul
 import Lemma.Tensor.SumMul.eq.MulSum
-import torch.Tensor.bmm
+import Def.Data.Holor.Bmm
 open Tensor
 
 

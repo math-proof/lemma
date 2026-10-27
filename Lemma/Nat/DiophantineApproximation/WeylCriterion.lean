@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.DiophantineApproximation.WeylCriterion.Part2
 open scoped BigOperators
 open Filter Topology
@@ -965,4 +965,4 @@ private lemma weyl_criterion_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

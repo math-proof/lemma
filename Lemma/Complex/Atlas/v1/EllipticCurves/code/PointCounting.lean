@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
 open Hasse GroupExponentBound BSGSOrder QuadraticTwist Mestre
 

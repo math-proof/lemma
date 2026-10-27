@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.AlgebraicCombinatorics.code.WalkCountBridge.Part2
 open WalkCountFormula NormalOrderCoeff Finset WalkCountBridge
 open scoped Classical

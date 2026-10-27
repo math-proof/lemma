@@ -1,8 +1,8 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.determinants.DominoBridge
-import sympy.matrices.determinants.DominoTilings
-import sympy.series.formal.WeightedSets
+import Initialize.Tactic.Attr.Basic
+import Def.Combinatorics.Tiling.DominoBridge.Part4
+import Def.Combinatorics.Tiling.DominoTilings.Part13
+import Def.Combinatorics.Enumerative.WeightedSets.Part26
 import Lemma.Nat.DominoTilings
 import Lemma.PowerSeries.WeightedSets
 open DominoBridge

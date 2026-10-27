@@ -1,5 +1,5 @@
-import sympy.stats.joint_rv
-import sympy.Basic
+import Syntax.Probability.JointRv.Part6
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2023-04-24
--- updated on 2026-10-17
+-- updated on 2026-10-26

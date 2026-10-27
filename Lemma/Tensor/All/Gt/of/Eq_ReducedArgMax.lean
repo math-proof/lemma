@@ -1,5 +1,5 @@
 import Theorem.Algebra.BigOperators.Reduced.Part2
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

@@ -1,6 +1,6 @@
 import Lemma.Bool.EqCast.of.HEq
-import torch.Tensor.unsqueeze
-import torch.Tensor.prod
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Prod
 import Lemma.Fin.HEqFinS.of.Eq.Eq.Lt
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqValCast.of.Lt.Eq
@@ -72,4 +72,4 @@ private lemma main
 
 
 -- created on 2025-07-13
--- updated on 2025-11-30
+-- updated on 2026-10-26

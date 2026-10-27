@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.TensorCategories.code.FittingLemmaInstance
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Idempotents
 

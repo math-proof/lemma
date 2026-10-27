@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.NumberField.RayClass.ResidueSign.Part3
 open scoped nonZeroDivisors
 open NumberField
@@ -97,4 +97,4 @@ private lemma rayElementsQuotientEquivResidueSign_mk_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

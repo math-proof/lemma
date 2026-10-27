@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Ideal.Support.IsRegularSequence
 import Lemma.Fin.Image_CastSuccFinSetOfLtI.eq.ImageSetOfLtICastSucc
 

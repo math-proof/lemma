@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalTwoPointShell.Part3
 open Finset MeasureTheory Set StatMech StatMech.FrontierA
 

@@ -11,9 +11,9 @@ open Complex
 | mpr | Complex.Eq0Add_Mul_Pow_4.of.In_Ite_FinsetSSubS__SubS.Ne_0 |
 
 The monic reduction's proof applies the
-[quadratic](../?module=Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0)
+[quadratic](?module=Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0)
 and
-[cubic](../?module=Complex.Eq0Add_Mul_Pow_3.is.In_Finset_SubSAddMulS.of.Ne_0)
+[cubic](?module=Complex.Eq0Add_Pow_3.is.In_Finset_SubSAddMulS)
 formulae.
 -/
 @[path, comm, mp, mpr]
@@ -50,4 +50,4 @@ private lemma main
 
 
 -- created on 2018-11-29
--- updated on 2026-10-25
+-- updated on 2026-10-26

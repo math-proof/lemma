@@ -1,5 +1,5 @@
-import sympy.core.logic
-import sympy.sets.sets
+import Def.Tactic.Logic.Part4
+import Theorem.Data.Set.Sets
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Add.is.Eq
 import Lemma.Nat.EqSubAdd
@@ -29,4 +29,4 @@ private lemma main
 
 
 -- created on 2025-04-06
--- updated on 2025-04-26
+-- updated on 2026-10-26

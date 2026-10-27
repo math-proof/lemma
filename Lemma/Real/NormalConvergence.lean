@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.NormalConvergence
+import Initialize.Tactic.Attr.Basic
+import Theorem.Topology.Algebra.InfiniteSum.NormalConvergence.Part2
 open Topology
 open scoped ENNReal
 
@@ -173,4 +173,4 @@ lemma ConvergesLocallyNormallyOn.of_subset
 
 
 -- created on 2026-10-10
--- updated on 2026-10-24
+-- updated on 2026-10-26

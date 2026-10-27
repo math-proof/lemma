@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.DirectedCycles.Part2
 open Real Finset DirectedCycles DirectedCycles.DirectedWalk
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOddUniqueStabilitySheet
 open Filter Topology StatMech StatMech.FrontierD
 

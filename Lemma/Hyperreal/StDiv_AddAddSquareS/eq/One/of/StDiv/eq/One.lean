@@ -11,7 +11,7 @@ import Lemma.Hyperreal.StPow.eq.PowSt.of.NotInfinite
 import Lemma.Nat.Ne_0.of.Eq
 import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Rat.Div_AddAddSquareS.eq.Div_Add_AddDivS.of.Ne_0.Ne_0
-open Hyperreal Nat Rat
+open Hyperreal Nat Rat ArchimedeanClass
 
 
 @[path]
@@ -79,4 +79,4 @@ private lemma main
 
 
 -- created on 2025-12-19
--- updated on 2025-12-20
+-- updated on 2026-10-26

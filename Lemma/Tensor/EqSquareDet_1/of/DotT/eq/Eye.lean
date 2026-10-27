@@ -1,5 +1,5 @@
-import sympy.polys.polyroots
-import torch.Tensor.permute
+import Instance.Algebra.Polynomial.Polyroots
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 import Lemma.Tensor.ToMatrixEye.eq.One

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.GroupCohomology.ContinuousH2
 import Lemma.GroupCohomology.ContinuousH2Map
 import Lemma.GroupCohomology.ContinuousH1

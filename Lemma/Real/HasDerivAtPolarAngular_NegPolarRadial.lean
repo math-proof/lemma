@@ -3,8 +3,8 @@ import Mathlib.Analysis.Calculus.Deriv.Comp
 import Mathlib.Analysis.Calculus.Deriv.Prod
 import Mathlib.Analysis.Calculus.FDeriv.Linear
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import sympy.physics.vector.kinematics
-import sympy.Basic
+import Def.Geometry.Euclidean.Kinematics
+import Initialize.Tactic.Attr.Basic
 open scoped ENNReal
 
 

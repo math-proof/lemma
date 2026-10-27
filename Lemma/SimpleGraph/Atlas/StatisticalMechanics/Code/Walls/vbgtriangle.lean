@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.vbgtriangle.Part3
 open Finset StatMech StatMech.Walls StatMech.Walls.VBG
 

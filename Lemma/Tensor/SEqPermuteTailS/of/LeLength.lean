@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
@@ -91,4 +91,4 @@ private lemma main
 
 
 -- created on 2025-10-29
--- updated on 2025-10-30
+-- updated on 2026-10-26

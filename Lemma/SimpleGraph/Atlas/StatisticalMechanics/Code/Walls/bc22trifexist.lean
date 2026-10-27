@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.bc22trifexist.Part2
 open StatMech.Lattice StatMech.ConfigSpace SimpleGraph StatMech.Percolation StatMech.Percolation.DisjointPaths StatMech StatMech.Walls
 

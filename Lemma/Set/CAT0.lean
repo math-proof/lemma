@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Geometry.CAT0
 open IsCAT0FourPoint
 
@@ -77,4 +77,4 @@ end IsCAT0FourPoint
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

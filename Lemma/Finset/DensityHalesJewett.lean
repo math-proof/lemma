@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.DensityHalesJewett.Part13
 open scoped Finset
 open Combinatorics.Line
@@ -4925,4 +4925,4 @@ private lemma density_hales_jewett_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
 open AlgebraicTopologyI
 open Finset AlgebraicTopology CategoryTheory

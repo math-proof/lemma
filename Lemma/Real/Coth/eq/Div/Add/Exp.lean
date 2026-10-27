@@ -1,5 +1,5 @@
 import Lemma.Real.Tanh.eq.Div.Add.Exp
-import sympy.functions.elementary.hyperbolic
+import Def.Analysis.SpecialFunctions.Hyperbolic
 open Real
 
 

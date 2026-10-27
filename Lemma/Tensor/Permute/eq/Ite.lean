@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0
 import Lemma.List.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0
@@ -77,4 +77,4 @@ private lemma main
 
 
 -- created on 2025-07-14
--- updated on 2025-07-18
+-- updated on 2026-10-26

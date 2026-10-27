@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.npjnopinch.Part2
 open SimpleGraph Set StatMech StatMech.Walls
 

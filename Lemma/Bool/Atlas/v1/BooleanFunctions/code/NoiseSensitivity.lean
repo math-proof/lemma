@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.NoiseSensitivity
 open Finset BigOperators BooleanFourier
 
@@ -16,10 +16,10 @@ lemma parseval_boolToReal
 -- imply
   ∑ S : Finset (Fin n), fourierCoeff (fun x => boolToReal (f x)) S ^ 2 = 1 := by
 -- proof
-  have hpars := parseval (fun x => boolToReal (f x))
+  have hpars := parseval (f := fun x => boolToReal (f x))
   rw [hpars]
   have hval : ∀ x : Fin n → Bool, (boolToReal (f x)) ^ 2 = 1 :=
-    fun x => boolToReal_sq (f x)
+    fun x => boolToReal_sq (b := f x)
   simp_rw [hval]
   simp [Fintype.card_bool, Fintype.card_fin]
 
@@ -72,3 +72,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

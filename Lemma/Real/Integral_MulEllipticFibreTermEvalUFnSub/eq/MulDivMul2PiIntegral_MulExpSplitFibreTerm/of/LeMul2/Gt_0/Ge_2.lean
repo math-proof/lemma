@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.AutomorphicForm_GL2TwistedMonomialFibres
 import Lemma.Int.P2MUtil
 

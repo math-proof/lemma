@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FC.WrittenOnTheWallII_GraphConjecture314_conjecture314
 open WrittenOnTheWallII WrittenOnTheWallII.GraphConjecture314
 open SimpleGraph

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInertiaDegree
 import Lemma.Nat.NumberField.Completion.FiniteLiesOverInertiaDegree
 open scoped WithZero NumberField NumberField.LiesOver
@@ -149,4 +149,4 @@ end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

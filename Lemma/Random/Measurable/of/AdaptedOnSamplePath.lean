@@ -1,4 +1,4 @@
-import sympy.stats.iterates
+import Def.Dynamics.Iterates
 import Lemma.Measure.Measurable_FrestrictLe_PiLE
 open MeasureTheory Measure
 

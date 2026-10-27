@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/ComplexMultiplication.lean -/
 
 
-import sympy.atlas.Analysis.SpecialFunctions.Elliptic.ComplexMultiplication
+import Theorem.Analysis.SpecialFunctions.Elliptic.ComplexMultiplication.Part2
 
 
 namespace PeriodPair

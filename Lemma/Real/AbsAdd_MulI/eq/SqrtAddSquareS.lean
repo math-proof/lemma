@@ -1,4 +1,4 @@
-import sympy.core.numbers
+import Instance.Analysis.Real.Numbers
 import Lemma.Nat.Square.eq.Mul
 open Nat
 

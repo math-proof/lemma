@@ -1,6 +1,6 @@
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
-import sympy.vector.Basic
+import Theorem.Data.Vector.Basic.Part2
 import Macro.Order.Sup
 import Theorem.Function
 open Finset

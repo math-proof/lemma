@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEqSoftmaxS.of.SEq.Eq
-import torch.Tensor.bmm
-import torch.Tensor.permute
+import Def.Data.Holor.Bmm
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
 import Lemma.Tensor.GetDot_TGetSlice.as.Dot_Get
 import Lemma.Tensor.GetSliceGetDiv.eq.DivGetSliceGet
@@ -80,4 +80,4 @@ private lemma gpt
 
 
 -- created on 2023-06-18
--- updated on 2026-08-20
+-- updated on 2026-10-26

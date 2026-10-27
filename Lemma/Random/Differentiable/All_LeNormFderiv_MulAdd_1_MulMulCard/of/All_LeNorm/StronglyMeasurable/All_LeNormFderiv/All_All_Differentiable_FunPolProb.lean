@@ -1,4 +1,4 @@
-import sympy.stats.policy_trajectory.gradient
+import Def.Dynamics.PolicyTrajectory.Gradient
 import Lemma.Random.T.ge.Zero
 import Lemma.Random.W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable

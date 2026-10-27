@@ -1,4 +1,4 @@
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Fin.Sum.ne.Zero.of.All_Gt_0.Ne_0
 import Lemma.Real.EqLog1'0
 import Lemma.Real.GtExp_0
@@ -8,7 +8,7 @@ import Lemma.Tensor.LogDiv.eq.SubLogS.of.All_Ne_0.All_Ne_0
 import Lemma.Tensor.Max.eq.Cast.of.LeLength
 import Lemma.Tensor.SoftmaxSub_Keepdim.eq.Softmax
 import Lemma.Vector.GetSum.eq.Sum_Get
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Fin List Nat Real Tensor Vector Set
 
 
@@ -108,4 +108,4 @@ private lemma main
 
 
 -- created on 2025-12-03
--- updated on 2025-12-04
+-- updated on 2026-10-26

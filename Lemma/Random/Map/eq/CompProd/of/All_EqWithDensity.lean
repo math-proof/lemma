@@ -1,5 +1,5 @@
 import Lemma.Measure.MapComap_MapId.eq.Map.of.Measurable
-import sympy.stats.policy_trajectory.continuous_action
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Measure Finset
 
 

@@ -1,4 +1,4 @@
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0
 import Lemma.Tensor.GtLength
 open Tensor List

@@ -1,4 +1,4 @@
-import sympy.matrices.determinant
+import Def.Data.Holor.Det
 
 
 @[path]

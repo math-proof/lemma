@@ -1,4 +1,4 @@
-import sympy.vector.operators
+import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Macro.Order.Sup
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Lemma.Random.GetTSum_SMul.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity

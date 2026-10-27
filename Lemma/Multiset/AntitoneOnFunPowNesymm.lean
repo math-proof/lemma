@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Mathlib.RingTheory.MvPolynomial.Symmetric.Defs
 import Mathlib.RingTheory.Polynomial.Vieta
 import Mathlib.Analysis.SpecialFunctions.Pow.Real

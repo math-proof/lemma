@@ -178,11 +178,15 @@ export class LeanMatMul extends LeanArithmetic {
 
     static input_priority = 70;
 
+    /** `ᵒ` on `@ᵒ` (outer product). Glued to `@`; a space would not be the infix. */
+    superscript = '';
+
     get operator() {
-        return '@';
+        return this.superscript ? `@${this.superscript}` : '@';
     }
 
     get command() {
+        if (this.superscript === 'ᵒ') return '{\\color{red}\\times}^{\\circ}';
         return '{\\color{red}\\times}';
     }
 

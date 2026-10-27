@@ -1,7 +1,7 @@
 import Lemma.Tensor.Stack.eq.AppendStackS
 import Lemma.Tensor.Sum.eq.Zero
 import Lemma.Tensor.SumAppend.eq.AddSumS
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor
 
 
@@ -48,4 +48,4 @@ private lemma fin
 
 
 -- created on 2026-07-22
--- updated on 2026-07-23
+-- updated on 2026-10-26

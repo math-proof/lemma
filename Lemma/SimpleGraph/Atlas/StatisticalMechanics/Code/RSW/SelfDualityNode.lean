@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.RSW.SelfDualityNode.Part5
 open MeasureTheory StatMech StatMech.RSW
 

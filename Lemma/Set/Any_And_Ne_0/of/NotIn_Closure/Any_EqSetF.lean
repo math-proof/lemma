@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.LieGroups.code.WeaklyAnalytic.Part2
 open EllipticOperator in
 open scoped Manifold

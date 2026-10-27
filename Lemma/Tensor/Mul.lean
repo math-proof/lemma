@@ -1,7 +1,7 @@
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Map₂.eq.Map.of.Eq_1
-import torch.Tensor.Basic
+import Def.Data.Holor.Defs.Part4
 open Tensor Vector
 
 
@@ -69,4 +69,4 @@ private lemma nat
 
 
 -- created on 2026-09-02
--- updated on 2026-09-17
+-- updated on 2026-10-26

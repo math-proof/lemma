@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Probability.InhomogeneousProduct.Part2
 open MeasureTheory ProbabilityTheory Set StatMech StatMech.inhomBernoulliProductMeasure
 

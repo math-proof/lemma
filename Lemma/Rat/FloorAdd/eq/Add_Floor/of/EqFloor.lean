@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Int.FloorAdd.eq.Add_Floor
 open Int
 

@@ -1,6 +1,6 @@
 import Mathlib.RingTheory.Polynomial.Pochhammer
 import Mathlib.Algebra.BigOperators.Intervals
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

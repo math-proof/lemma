@@ -79,6 +79,18 @@ function implyLetAlignLatex(imply, syntax) {
 }
 
 /**
+ * `:= by` / `:= calc` is a right-margin `\tag*`, same as a given name (`\tag*{$hrec$}`).
+ * PHP `module.php` appends `\tag*{ := by}` to `imply.latex`.
+ * @param {string} latex
+ * @param {string} by
+ */
+function withImplyAssignLatex(latex, by) {
+    if (!by || latex == null || latex === '') return latex;
+    const word = by === 'by' ? '{\\color{#00f}by}' : by;
+    return latex + `\\tag*{ := ${word}}`;
+}
+
+/**
  * Echo-style `:= by` proofs: `LeanTactic` may indent continuation lines (nested tactics under
  * `intro`); `LeanModule` then applies `indentText(proofInd)` to the whole string, doubling those
  * spaces and changing how the next parse groups tactics. Remove the common leading whitespace
@@ -870,7 +882,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         implyLatex = implyShown.map(st => implyConclusionLatex(st, syntax)).join('\n');
                     const assignSuffix = ' :=' + (by ? ` ${by}` : '');
 
-                    const implyOut = { lean: implyLean + assignSuffix, latex: implyLatex };
+                    const implyOut = { lean: implyLean + assignSuffix, latex: withImplyAssignLatex(implyLatex, by) };
                     declspec = declspec.lhs;
                     let collectedExplicit = null;
                     let name;
@@ -1216,12 +1228,12 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                 .join('\n');
                         }
 
-                        implyOut = { lean: implyLean + ' :=' + (by ? ` ${by}` : ''), latex: implyLatex };
+                        implyOut = { lean: implyLean + ' :=' + (by ? ` ${by}` : ''), latex: withImplyAssignLatex(implyLatex, by) };
                     } else {
                         markRandomVarSequence([implyNode], flatRvNames);
                         const implyLean = unindentTwo(strStmt(implyNode)) + ' :=' + (by ? ` ${by}` : '');
                         const implyLatex = implyConclusionLatex(implyNode, syntax);
-                        implyOut = { lean: implyLean, latex: implyLatex };
+                        implyOut = { lean: implyLean, latex: withImplyAssignLatex(implyLatex, by) };
                     }
                     syntax.letBindings = buildLetBindings(flatImplyStmts ?? []);
                     const proof = innerAssign.rhs;
@@ -1339,7 +1351,7 @@ export class LeanModule extends LeanStatements {
     }
 
     echo() {
-        this.import('sympy.printing.echo');
+        this.import('Syntax.Tactic.Echo');
         const {args} = this;
         for (let i = 0; i < args.length; i++) args[i].echo();
     }

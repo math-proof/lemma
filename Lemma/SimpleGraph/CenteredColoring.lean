@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.SimpleGraph.CenteredColoring
 open SimpleGraph
 
@@ -83,4 +83,4 @@ lemma isPhiCenter_iff_existsUnique
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

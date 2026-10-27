@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredCompletion.Part19
 open StatMech StatMech.Universality
 

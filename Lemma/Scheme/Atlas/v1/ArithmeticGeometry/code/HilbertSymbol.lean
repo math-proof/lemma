@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
 open hilbertSymbol padicHilbertSymbol realHilbertSymbol HilbertSymbol
 open scoped Classical

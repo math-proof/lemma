@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.LinearAlgebra.BilinearFormRank
 open LinearMap.BilinForm
 open MathlibExt.LinearAlgebra.BilinearFormRankWanted
@@ -78,4 +78,4 @@ end MathlibExt.LinearAlgebra.BilinearFormRankWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

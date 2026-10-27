@@ -1,7 +1,5 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/TaylorInitialMean.lean -/
-
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 /-!
 # Initial segment mean for Taylor's variance-to-mean power law
 

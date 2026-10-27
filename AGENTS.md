@@ -13,7 +13,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
   - mjs/lemmaPath.mjs
     suggest a better lemma path if it isn't consistent; use `sh/rename.sh` to rename the Lean lemma module
 - Attribute-generated lemmas
-  - Read `sympy/Basic.lean` to understand attribute-generated lemmas (`@[comm]`, `@[cast]`, `@[mp]`, `@[mpr]`, `@[fin]`, `@[mt]`, …) and apply them wisely.
+  - Read `Initialize/Tactic/Attr/Basic.lean` to understand attribute-generated lemmas (`@[comm]`, `@[cast]`, `@[mp]`, `@[mpr]`, `@[fin]`, `@[mt]`, …) and apply them wisely.
   - For `LHS.is.RHS` tagged with `@[mp]` / `@[mpr]`, prefer the generated one-direction lemmas `RHS.of.LHS` / `LHS.of.RHS` over calling `.mp` / `.mpr` on the iff.
   - For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp [← LHS.eq.RHS]` or `rw [LHS.eq.RHS.symm]`.
 - code layout strictly 2-indented
@@ -39,10 +39,10 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
   - `instance` / `class` / `structure` / `macro` / `syntax` declarations are not allowed in `Lemma/` files.
   - each sub-folder is a section; a section name must be a math data type, not a type class.
   - check section kind with `node mjs/lemmaSectionKind.mjs` (optional folder names as args); classifies each `Lemma/` subfolder as data type / type class / topic via Mathlib (`Lean.isClass` / `isStructure`).
-- `Syntax/` holds user-defined `syntax` / related elaborator declarations. Do not put those in `sympy/` or `Lemma/`.
-- Decl libraries (siblings of `Syntax/`): `Def/` (`def`), `Abbrev/` (`abbrev`), `Class/` (`class`), `Structure/` (`structure`), `Inductive/` (`inductive`), `Instance/` (`instance`), `Notation/` (`notation` / infix-family), `Macro/` (`macro`), `Theorem/` (`theorem`).
+- `Syntax/` holds user-defined `syntax` / related elaborator declarations. Do not put those in `Lemma/`.
+- Decl libraries (siblings of `Syntax/`): `Def/` (`def`), `Initialize/` (`initialize`), `Abbrev/` (`abbrev`), `Class/` (`class`), `Structure/` (`structure`), `Inductive/` (`inductive`), `Instance/` (`instance`), `Notation/` (`notation` / infix-family), `Macro/` (`macro`), `Theorem/` (`theorem`).
 - `Theorem/` holds utility `theorem`s with attributes **other than** `@[main]` (helpers / internal API; not public rendered lemmas). Do not put `@[main]` results or `lemma`s here — those stay in `Lemma/`.
-- `sympy/` holds definitions (plus theorems only when tightly tied to those defs). Prefer `Theorem/` for utility theorems with non-`@[main]` attributes. Never put a `lemma` or user-defined syntax in `sympy/`.
+- Prefer `Theorem/` for utility theorems with non-`@[main]` attributes. Never put a `lemma` or user-defined syntax in a decl library.
 - Scratch/temp files (probes, bisect scripts, ad-hoc `tmp_*` / `probe_*` / `test_*` files) live in the gitignored `tmp/` folder, not at the repo root.
 
 
@@ -70,7 +70,7 @@ When the user says to send this issue / problem / bug / job / task to **@AgentNa
   Example: `[lemmaPath / mjs](dfdec45a-5321-428c-9160-f3c47ec2af53)` — short scope or file path, then `/`, then the agent name; the link target is the agent **chat id** (UUID). Prefer this over bare `@AgentName` when a chat id is available.
 
 ## Debugging
-- print logging info via `sympy.printing.echo` by creating *.echo.lean tracing files for debugging.
+- print logging info via `Syntax.Tactic.Echo` by creating *.echo.lean tracing files for debugging.
 - Confirm the file compiles with `lake build <Module.Name>` or `lake env lean <path/to/file.lean>`.
 
 ## Git

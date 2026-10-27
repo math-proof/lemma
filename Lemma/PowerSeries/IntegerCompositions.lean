@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.IntegerCompositions
+import Initialize.Tactic.Attr.Basic
+import Def.Combinatorics.Enumerative.IntegerCompositions.Part17
 open AlgebraicCombinatorics
 open AlgebraicCombinatorics.BoundedWeakComposition
 open Finset
@@ -1217,4 +1217,4 @@ private lemma pv_fin2_eq_zero_or_one
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

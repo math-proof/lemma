@@ -1,8 +1,8 @@
 import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import sympy.physics.vector.kinematics
-import sympy.Basic
+import Def.Geometry.Euclidean.Kinematics
+import Initialize.Tactic.Attr.Basic
 
 
 /--

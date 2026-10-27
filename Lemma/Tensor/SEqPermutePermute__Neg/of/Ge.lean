@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.SEqPermutePermute__Neg.of.GtLength_Add
 open Tensor Nat
 

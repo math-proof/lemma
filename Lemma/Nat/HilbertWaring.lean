@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.HilbertWaring.Part12
 open Finset
 open scoped Pointwise
@@ -3093,4 +3093,4 @@ private lemma hilbert_waring_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

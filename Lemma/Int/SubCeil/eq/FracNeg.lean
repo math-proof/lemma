@@ -1,5 +1,5 @@
 import Lemma.Int.Ceil.eq.NegFloorNeg
-import sympy.functions.elementary.integers
+import Instance.Data.Int.Integers
 open Int
 
 

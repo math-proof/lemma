@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.log.Integral
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Log.Integral
 
 
 namespace Real
@@ -58,4 +58,4 @@ end Real
 
 
 -- created on 2020-06-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

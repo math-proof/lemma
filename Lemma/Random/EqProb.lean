@@ -1,5 +1,5 @@
 import Lemma.Measure.EqRnDeriv_Count
-import sympy.stats.joint_rv
+import Syntax.Probability.JointRv.Part6
 open MeasureTheory Measure
 
 
@@ -24,4 +24,4 @@ private lemma main
 
 
 -- created on 2026-10-02
--- updated on 2026-10-23
+-- updated on 2026-10-26

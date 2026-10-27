@@ -2,8 +2,8 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetGetSlice.eq.Get_Add.of.GtSubMin
 import Lemma.Bool.SEq.is.Eq
-import torch.stack
-import torch.Tensor
+import Def.Data.Holor.Stack.Part2
+import Instance.Data.Holor.Tensor.Part2
 open Tensor List Bool Nat
 
 
@@ -34,4 +34,4 @@ private lemma main
 
 
 -- created on 2020-03-12
--- updated on 2026-09-09
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.TriHexFKCriticalSurface
 open MeasureTheory Set StatMech.Lattice StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 

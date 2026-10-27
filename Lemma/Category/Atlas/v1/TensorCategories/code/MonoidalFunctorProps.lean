@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.TensorCategories.code.MonoidalFunctorProps.Part2
 open TensorCategories TensorCategories.MonoidalFunctorProps
 open CategoryTheory MonoidalCategory Functor

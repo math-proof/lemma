@@ -1,5 +1,5 @@
-import stdlib.SEq
-import torch.Tensor
+import Theorem.Logic.SEq
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
@@ -47,4 +47,4 @@ private lemma right
 
 
 -- created on 2025-07-04
--- updated on 2025-07-17
+-- updated on 2026-10-26

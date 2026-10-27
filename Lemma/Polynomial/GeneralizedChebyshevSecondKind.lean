@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.Polynomial.GeneralizedChebyshevSecondKind
 open Polynomial
 open MetaMathlibExt.GeneralizedChebyshevSecondKind

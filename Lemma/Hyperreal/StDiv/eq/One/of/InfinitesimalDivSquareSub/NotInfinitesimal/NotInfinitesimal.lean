@@ -2,7 +2,7 @@ import Lemma.Hyperreal.StDiv.eq.One.of.StDiv_AddAddSquareS.eq.One.Infinite.NotIn
 import Lemma.Hyperreal.StDiv.eq.One.of.StDiv_AddAddSquareS.eq.One.NotInfinite.NotInfinite.NotInfinitesimal.NotInfinitesimal
 import Lemma.Nat.AddAdd
 import Lemma.Nat.MulMul
-open Hyperreal Nat
+open Hyperreal Nat ArchimedeanClass
 
 
 @[path]

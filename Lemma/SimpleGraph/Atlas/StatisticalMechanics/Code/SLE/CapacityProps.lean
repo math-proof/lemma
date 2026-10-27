@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.SLE.CapacityProps
 open Filter Topology Complex Bornology StatMech StatMech.SLE
 

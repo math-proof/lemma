@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEssentialBoundaryInduction
 open SimpleGraph StatMech StatMech.FrontierD
 

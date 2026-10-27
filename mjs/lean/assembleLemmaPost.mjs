@@ -317,9 +317,9 @@ export async function assembleLeanSourceFromPostBody(body) {
   const uniqImports = [...new Set(imports)].sort();
   if (
     !uniqImports.some((i) => String(i).startsWith('Lemma.')) &&
-    !uniqImports.includes('sympy.Basic')
+    !uniqImports.includes('Initialize.Tactic.Attr.Basic')
   ) {
-    uniqImports.push('sympy.Basic');
+    uniqImports.push('Initialize.Tactic.Attr.Basic');
   }
   const importLines = uniqImports.map((i) => `import ${i}`);
 
@@ -392,14 +392,14 @@ export async function assembleLeanSourceFromPostBody(body) {
     .map((line) => line.replace(/\r/g, ''))
     .join('\n');
 
-  /** `php/lemma.php` compile → `$syntax` → `import_syntax` (e.g. `≃` → `stdlib.SEq`). */
+  /** `php/lemma.php` compile → `$syntax` → `import_syntax` (e.g. `≃` → `Theorem.Logic.SEq`). */
   const mergedImports = await mergeSyntaxDrivenImports([...uniqImports], out);
   let finalImports = [...new Set(mergedImports)].sort();
   if (
     !finalImports.some((i) => String(i).startsWith('Lemma.')) &&
-    !finalImports.includes('sympy.Basic')
+    !finalImports.includes('Initialize.Tactic.Attr.Basic')
   ) {
-    finalImports.push('sympy.Basic');
+    finalImports.push('Initialize.Tactic.Attr.Basic');
     finalImports.sort();
   }
   finalImports = await pruneRedundantSyntaxImports(finalImports);

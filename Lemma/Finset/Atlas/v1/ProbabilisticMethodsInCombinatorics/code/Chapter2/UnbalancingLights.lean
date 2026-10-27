@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter2.UnbalancingLights.Part2
 open Finset BigOperators UnbalancingLights
 

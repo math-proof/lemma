@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.CentralBinomPowerSum
+import Initialize.Tactic.Attr.Basic
+import Theorem.Data.Nat.Choose.CentralBinomPowerSum
 
 open MetaMathlibExt
 

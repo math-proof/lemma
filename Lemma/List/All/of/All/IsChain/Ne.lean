@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
 open ChamberComplex ChamberComplex.Folding ChamberComplex.ReversibleFolding ChamberComplex.WallReflection
 open scoped Classical

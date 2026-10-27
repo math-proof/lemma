@@ -1,5 +1,5 @@
 import Lemma.Bool.HEq.of.SEq
-import sympy.matrices.expressions.matmul
+import Instance.LinearAlgebra.Matrix.Matmul
 open Bool
 
 

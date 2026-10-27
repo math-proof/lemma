@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch6Entry6Harmonic
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry6Harmonic
 
 open scoped ContDiff
 open Ramanujan.Part1Ch6.Entry6Harmonic

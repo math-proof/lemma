@@ -1,5 +1,5 @@
-import torch.functions
-import torch.Tensor.sum
+import Theorem.Data.Holor.Functions
+import Def.Data.Holor.Sum
 
 
 @[path]

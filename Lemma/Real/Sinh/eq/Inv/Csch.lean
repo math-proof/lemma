@@ -1,5 +1,5 @@
-import sympy.functions.elementary.hyperbolic
-import sympy.Basic
+import Def.Analysis.SpecialFunctions.Hyperbolic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

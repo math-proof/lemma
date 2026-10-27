@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/CompleteExponentialAutonomousFunction.lean -/
 
 
-import sympy.atlas.Analysis.SpecialFunctions.CompleteExponentialAutonomousFunction
+import Def.Analysis.SpecialFunctions.CompleteExponentialAutonomousFunction.Part2
 
 
 namespace MetaMathlibExt

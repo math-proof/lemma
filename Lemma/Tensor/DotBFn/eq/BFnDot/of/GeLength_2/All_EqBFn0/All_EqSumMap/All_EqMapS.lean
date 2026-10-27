@@ -1,4 +1,4 @@
-import torch.Tensor.reshape
+import Def.Data.Holor.Reshape
 import Lemma.Tensor.BmmBFn.eq.BFnBmm
 import Lemma.Tensor.Einsum.as.SelectBmm.of.Eq_Get_SubLength.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.GeLength_2
@@ -6,8 +6,8 @@ import Lemma.Tensor.Einsum.as.SelectBmm.of.GtGet_SubLength.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.Gt_Get_SubLength.GeLength_2
 import Lemma.Tensor.ResizeBFn.eq.BFnResize
 import Lemma.Tensor.SelectBFn.eq.BFnSelect
-import torch.Tensor.bmm
-import torch.Tensor.sum
+import Def.Data.Holor.Bmm
+import Def.Data.Holor.Sum
 open Bool List Tensor
 set_option maxHeartbeats 500000
 

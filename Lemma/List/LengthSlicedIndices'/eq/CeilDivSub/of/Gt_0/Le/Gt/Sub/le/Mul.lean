@@ -1,4 +1,4 @@
-import stdlib.List
+import Def.Data.List.List.Part5
 import Lemma.Rat.CeilDivSub.eq.One.of.GeAdd.Gt_0
 import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Nat.Le.of.Sub.eq.Zero
@@ -63,4 +63,4 @@ private lemma main
 
 
 -- created on 2025-05-04
--- updated on 2025-05-05
+-- updated on 2026-10-26

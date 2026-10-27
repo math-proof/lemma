@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Percolation.SharpnessUnconditional.Part2
 open MeasureTheory Set Filter Finset SimpleGraph StatMech StatMech.Percolation
 

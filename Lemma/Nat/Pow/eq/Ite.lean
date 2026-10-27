@@ -1,6 +1,6 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -27,4 +27,4 @@ private lemma base
 
 
 -- created on 2020-02-29
--- updated on 2026-09-27
+-- updated on 2026-10-26

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/GeneralizedHypergeometric.lean -/
 
 
-import sympy.atlas.Analysis.SpecialFunctions.GeneralizedHypergeometric
+import Theorem.Analysis.SpecialFunctions.GeneralizedHypergeometric.Part3
 import Mathlib.Tactic.NormNum
 
 

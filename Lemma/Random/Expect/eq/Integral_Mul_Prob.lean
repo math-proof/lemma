@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.Measure.WithDensity
-import sympy.stats.joint_rv
+import Syntax.Probability.JointRv.Part6
 import Lemma.Random.Map.eq.WithDensityProb
 open MeasureTheory
 
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2023-03-24
--- updated on 2026-09-20
+-- updated on 2026-10-26

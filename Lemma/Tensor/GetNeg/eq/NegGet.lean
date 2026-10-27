@@ -1,4 +1,4 @@
-import torch.functions
+import Theorem.Data.Holor.Functions
 import Lemma.Tensor.LengthNeg.eq.Length
 import Lemma.Tensor.GetTensorMapData.eq.TensorMapDataGet
 open Tensor

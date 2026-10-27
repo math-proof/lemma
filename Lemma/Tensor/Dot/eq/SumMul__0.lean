@@ -1,8 +1,8 @@
 import Lemma.Tensor.HeadDataSum.eq.SumData
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Vector.SEqMulS.of.SEq.SEq
-import sympy.matrices.expressions.matmul
-import torch.Tensor.sum
+import Instance.LinearAlgebra.Matrix.Matmul
+import Def.Data.Holor.Sum
 open Bool Tensor Vector
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 open Matrix.SpecialLinearGroup UpperHalfPlane Polynomial
 open scoped MatrixGroups ModularForm OnePoint

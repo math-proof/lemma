@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.inner_product_space.BoundedSelfAdjointSpectral
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.InnerProductSpace.BoundedSelfAdjointSpectral.Part17
 
 open MeasureTheory
 

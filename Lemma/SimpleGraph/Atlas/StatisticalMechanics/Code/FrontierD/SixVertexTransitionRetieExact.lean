@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexTransitionRetieExact.Part3
 open Equiv StatMech StatMech.FrontierD
 

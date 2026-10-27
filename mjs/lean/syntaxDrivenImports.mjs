@@ -1,6 +1,6 @@
 /**
  * Ports `php/lemma.php` lines 608–659: after `compile` + `render2vue`, `$syntax` keys drive extra
- * `stdlib.*` / `sympy.*` imports (`import_syntax`). Uses the same JS parser as `render2vue.mjs`.
+ * decl-library imports (`import_syntax`). Uses the same JS parser as `render2vue.mjs`.
  *
  * Skips adding an import when PHP would: already present, or implied by `Lemma.*` via MySQL
  * recursive deps (`importSyntaxDeps.mjs`) or filesystem `contains_module`.
@@ -9,7 +9,7 @@ import { compile, LeanModule } from '../../js/parser/lean.js';
 import { transitiveProvidesImport } from './importSyntaxDeps.mjs';
 
 /**
- * @param {string[]} imports dotted import paths (no `import ` prefix), e.g. `stdlib.SEq`
+ * @param {string[]} imports dotted import paths (no `import ` prefix), e.g. `Theorem.Logic.SEq`
  * @param {string} leanSource full `.lean` file text (imports + body)
  * @returns {Promise<string[]>} `imports` plus any syntax-driven additions (PHP `array_unshift` order)
  */
@@ -48,16 +48,16 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
   for (const tac of Object.keys(syntax)) {
     switch (tac) {
       case 'denote':
-        await maybeUnshift('sympy.core.logic');
+        await maybeUnshift('Def.Tactic.Logic.Part4');
         break;
       case 'mp':
       case 'mpr':
-        await maybeUnshift('sympy.core.logic');
+        await maybeUnshift('Def.Tactic.Logic.Part4');
         break;
       case '²':
       case '³':
       case '⁴':
-        await maybeUnshift('sympy.core.power');
+        await maybeUnshift('Theorem.Algebra.Power.Part2');
         break;
       case 'Ici':
       case 'Iic':
@@ -68,39 +68,39 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
       case 'Icc':
       case 'Ico':
       case 'range':
-        await maybeUnshift('sympy.sets.sets');
+        await maybeUnshift('Theorem.Data.Set.Sets');
         break;
       case 'setOf':
-        await maybeUnshift('sympy.concrete.quantifier');
+        await maybeUnshift('Macro.Logic.Quantifier.Part4');
         break;
       case 'LeanStack':
-        await maybeUnshift('torch.stack');
+        await maybeUnshift('Def.Data.Holor.Stack.Part2');
         break;
       case 'Tensor':
-        if (!has('sympy.tensor.tensor') && !has('torch.stack')) {
-          await maybeUnshift('sympy.tensor.Basic');
+        if (!has('Instance.Data.Holor.Tensor.Part2') && !has('Def.Data.Holor.Stack.Part2')) {
+          await maybeUnshift('Def.Data.Holor.Defs.Part4');
         }
         break;
       case 'IntegerRing':
-        await maybeUnshift('sympy.polys.domains');
+        await maybeUnshift('Instance.Data.Int.Integers');
         break;
       case 'KroneckerDelta':
-        await maybeUnshift('sympy.functions.special.tensor_functions');
+        await maybeUnshift('Def.Analysis.SpecialFunctions.TensorFunctions');
         break;
       case 'eye':
-        await maybeUnshift('sympy.matrices.expressions.special');
+        await maybeUnshift('Def.Data.Holor.BandPart');
         break;
       case '≃':
-        await maybeUnshift('stdlib.SEq');
+        await maybeUnshift('Theorem.Logic.SEq');
         break;
       case '≈':
-        await maybeUnshift('sympy.core.relational');
+        await maybeUnshift('Theorem.Analysis.Real.Relational');
         break;
       case 'softmax':
-        await maybeUnshift('torch.nn.functional.softmax');
+        await maybeUnshift('Def.Data.Holor.Softmax');
         break;
       case 'sigmoid':
-        await maybeUnshift('sympy.vector.functions');
+        await maybeUnshift('Instance.Data.Vector.Functions.Part2');
         break;
       default:
         break;

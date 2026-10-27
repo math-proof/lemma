@@ -1,4 +1,4 @@
-import stdlib.SEq
+import Theorem.Logic.SEq
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthCons.gt.Zero
 open Tensor List

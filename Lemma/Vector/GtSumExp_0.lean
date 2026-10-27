@@ -1,4 +1,4 @@
-import sympy.vector.functions
+import Instance.Data.Vector.Functions.Part2
 import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Finset.Lt0Sum.of.All_Gt_0.Ne_Empty
 open Vector Finset
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2025-10-07
--- updated on 2025-10-08
+-- updated on 2026-10-26

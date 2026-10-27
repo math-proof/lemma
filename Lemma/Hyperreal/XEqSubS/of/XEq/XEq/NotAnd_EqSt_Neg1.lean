@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.XEqAddS.of.XEq.XEq.NotAnd_EqSt_Neg1
 import Lemma.Hyperreal.XEqNegS.of.XEq
 import Lemma.Hyperreal.StNeg.eq.NegSt
-open Hyperreal Rat
+open Hyperreal Rat ArchimedeanClass
 
 
 @[path]

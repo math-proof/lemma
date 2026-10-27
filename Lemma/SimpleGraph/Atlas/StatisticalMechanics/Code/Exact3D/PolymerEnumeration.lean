@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.PolymerEnumeration.Part39
 open StatMech StatMech.Exact3D StatMech.Exact3D.PolymerSupport StatMech.Exact3D.BoundedSite StatMech.Exact3D.BoundedPolymerCase
 

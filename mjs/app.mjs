@@ -980,8 +980,9 @@ app.post('/:userSegment', ensureProjectUser, handleLeanPostSearchRoute);
 app.post('/:userSegment/', ensureProjectUser, handleLeanPostSearchRoute);
 app.post('/:userSegment/index.php', ensureProjectUser, handleLeanPostSearchRoute);
 
-app.get('/', (_req, res) => {
-  res.redirect(302, `/${PROJECT_USER}/`);
+app.get('/', (req, res) => {
+  const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+  res.redirect(302, `/${PROJECT_USER}/${q}`);
 });
 
 app.listen(PORT, '0.0.0.0', () => {

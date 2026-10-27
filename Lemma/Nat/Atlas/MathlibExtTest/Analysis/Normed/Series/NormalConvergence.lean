@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Analysis.Normed.Series.NormalConvergence.Part2
 open Topology
 open scoped ENNReal

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.EllipticCurves.code.ModularForms.Part5
 open ModularEllipticCurve in EllipticCurveLFunction EllipticCurveReduction HeckeOperatorProperties NewformDefinition SpectralTheorem
 open scoped CongruenceSubgroup MatrixGroups ModularForm Topology Manifold

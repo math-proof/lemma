@@ -1,6 +1,6 @@
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import sympy.functions.elementary.trigonometric
-import sympy.Basic
+import Def.Analysis.SpecialFunctions.Trigonometric.Part2
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2023-10-03
--- updated on 2026-10-17
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open PowerSeries Finset
 
 
@@ -754,4 +754,4 @@ lemma fps_lagrange_burmann_coeff
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

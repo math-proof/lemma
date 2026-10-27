@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.BeffaraDC.ClusterMoments.Part3
 open Set Filter Topology StatMech StatMech.BeffaraDC StatMech.BeffaraDC.ClusterSizeDomination
 

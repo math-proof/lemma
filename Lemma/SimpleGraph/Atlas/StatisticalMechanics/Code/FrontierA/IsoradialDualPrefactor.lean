@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialDualPrefactor.Part7
 open StatMech StatMech.FrontierA StatMech.FrontierA.RibbonPermutationSystem StatMech.FrontierA.KacWardSubgraphCoefficientIdentification StatMech.FrontierA.IsoradialOddConeGaussBonnetData StatMech.FrontierA.IsoradialDualGaussBonnetParity StatMech.FrontierA.FiniteCellularGraphEmbedding
 

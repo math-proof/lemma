@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.DifferentialAnalysis.code.Integration.Part2
 open MeasureTheory ENNReal Set NormedSpaces Integration MonotoneConvergence
 open scoped ENNReal

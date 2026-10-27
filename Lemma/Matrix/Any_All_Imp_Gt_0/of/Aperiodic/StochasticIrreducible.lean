@@ -1,4 +1,4 @@
-import sympy.stats.stochastic_process_types
+import Instance.Probability.Process.StochasticProcessTypes.Part3
 import Lemma.Set.Any_All_In.of.ClosedUnderAdd.FiniteGCDOne
 
 
@@ -61,4 +61,4 @@ private lemma main
         rwa [this] at hineq
 
 -- created on 2026-09-22
--- updated on 2026-09-24
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Exact3D.GeneratedTableTailBridge.Part2
 open StatMech StatMech.Exact3D StatMech.Exact3D.BoundedPolymerCase
 

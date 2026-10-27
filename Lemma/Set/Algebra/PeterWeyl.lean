@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Topology.Algebra.PeterWeyl.Part6
 open MeasureTheory
 open scoped ComplexInnerProductSpace ComplexConjugate BoundedContinuousFunction
@@ -486,4 +486,4 @@ private lemma peter_weyl_point_separation_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

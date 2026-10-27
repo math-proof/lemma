@@ -1,11 +1,11 @@
-import torch.Tensor.reshape
+import Def.Data.Holor.Reshape
 import Lemma.Nat.EqMax.of.Gt
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSelectS.of.SEq
-import sympy.matrices.expressions.matmul
-import torch.Tensor.bmm
+import Instance.LinearAlgebra.Matrix.Matmul
+import Def.Data.Holor.Bmm
 open Bool List Nat Tensor
 set_option maxHeartbeats 200000
 
@@ -71,4 +71,4 @@ private lemma main
 
 
 -- created on 2026-01-06
--- updated on 2026-07-10
+-- updated on 2026-10-26

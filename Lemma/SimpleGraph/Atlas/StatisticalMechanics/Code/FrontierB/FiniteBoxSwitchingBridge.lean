@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierB.FiniteBoxSwitchingBridge.Part3
 open MeasureTheory Set SimpleGraph StatMech StatMech.FrontierB
 

@@ -1,5 +1,5 @@
-import sympy.integrals.integrals
-import torch.stack
+import Instance.MeasureTheory.Integral.IntervalIntegral.Integrals.Part4
+import Def.Data.Holor.Stack.Part2
 import Lemma.Tensor.GetAdd.eq.AddGetS
 import Lemma.Vector.FlattenMap.eq.MapFlatten
 import Mathlib.MeasureTheory.SpecificCodomains.Pi

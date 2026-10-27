@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
 open CPythonListsort CPythonListsort.RunProfile CPythonListsort.MergeTree CPythonListsort.MergePlan
 

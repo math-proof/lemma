@@ -1,6 +1,6 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.reshape
-import torch.Tensor.bmm
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Reshape
+import Def.Data.Holor.Bmm
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.ResizeUnsqueeze.as.UnsqueezeResize
@@ -36,4 +36,4 @@ private lemma main
 
 
 -- created on 2026-07-10
--- updated on 2026-07-11
+-- updated on 2026-10-26

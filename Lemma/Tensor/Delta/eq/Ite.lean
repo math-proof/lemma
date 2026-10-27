@@ -1,5 +1,5 @@
 import Lemma.Nat.Delta.eq.Ite
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Nat
 
 

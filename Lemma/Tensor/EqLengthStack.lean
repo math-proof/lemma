@@ -1,4 +1,4 @@
-import torch.stack
+import Def.Data.Holor.Stack.Part2
 import Lemma.Vector.MapMap.eq.Map_Comp
 open Vector
 
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2025-05-23
--- updated on 2025-09-24
+-- updated on 2026-10-26

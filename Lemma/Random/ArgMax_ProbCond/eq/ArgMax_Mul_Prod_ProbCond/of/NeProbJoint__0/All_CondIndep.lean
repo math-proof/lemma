@@ -20,7 +20,7 @@ conditional independence of each `y[t]` from its prefix `y[:t]` given the label
 (the common factor `1 / ℙ(y[:m])` drops out of the argmax).
 
 `[Fact (Measurable …)]` feeds `SinglePSpace π (x[:n], y[:m])` via the instance in
-`sympy.stats.single_pspace_measurable`, so no explicit `hslice` binder is needed.
+`Instance.Probability.SinglePSpaceMeasurable`, so no explicit `hslice` binder is needed.
 -/
 @[path]
 private lemma main

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.TwoDim.ZhangLowerBound
 open MeasureTheory Set Filter Topology StatMech StatMech.TwoDim
 

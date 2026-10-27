@@ -1,6 +1,6 @@
-import sympy.functions.elementary.trigonometric
+import Def.Analysis.SpecialFunctions.Trigonometric.Part2
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -16,4 +16,4 @@ private lemma main
 
 
 -- created on 2020-12-06
--- updated on 2023-06-01
+-- updated on 2026-10-26

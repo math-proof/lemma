@@ -1,5 +1,5 @@
 import Macro.Logic.Quantifier.Part4
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

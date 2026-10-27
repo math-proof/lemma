@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Definitions.Def_GroupCohomology_TateCohomology
 import Representation.EqIndBotMk
 open CategoryTheory Rep

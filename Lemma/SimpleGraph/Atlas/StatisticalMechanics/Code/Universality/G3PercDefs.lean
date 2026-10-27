@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.G3PercDefs.Part9
 open MeasureTheory Set StatMech StatMech.Universality
 

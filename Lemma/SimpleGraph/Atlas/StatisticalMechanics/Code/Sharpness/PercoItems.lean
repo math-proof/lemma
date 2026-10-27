@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.PercoItems
 open MeasureTheory Set Filter Topology StatMech StatMech.Sharpness
 

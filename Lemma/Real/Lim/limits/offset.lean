@@ -1,6 +1,6 @@
 import Mathlib.Topology.Algebra.Constructions
-import sympy.series.limits
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Initialize.Tactic.Attr.Basic
 
 
 open Filter

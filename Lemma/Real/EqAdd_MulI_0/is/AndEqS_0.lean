@@ -1,5 +1,5 @@
-import sympy.core.numbers
-import sympy.Basic
+import Instance.Analysis.Real.Numbers
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

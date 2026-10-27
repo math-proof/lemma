@@ -3,7 +3,7 @@ import Lemma.Tensor.LengthMul.eq.Length.of.GtLength_0
 import Lemma.Tensor.LengthRepeat.eq.Length.of.GtVal_0
 import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0.GtLength
 import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
-import torch.Tensor.bmm
+import Def.Data.Holor.Bmm
 open List Tensor
 
 

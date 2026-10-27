@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.AlgebraicCurve.TwoChartIntegralModel
 open AlgebraicCurve AlgebraicCurve.TwoChartIntegralModel Polynomial Rat
 

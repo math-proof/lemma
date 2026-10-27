@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /-- Restricting a measurable map to a subtype range is measurable. -/

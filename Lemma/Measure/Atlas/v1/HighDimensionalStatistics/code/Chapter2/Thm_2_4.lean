@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_4
 open Matrix MeasureTheory Real ProbabilityTheory ENNReal Finset Set Pointwise Rigollet Rigollet.Chapter2
 

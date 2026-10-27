@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.OrderTransition.Part2
 open MeasureTheory StatMech StatMech.FK
 

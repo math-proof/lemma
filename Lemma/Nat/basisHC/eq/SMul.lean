@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
 open Module Fintype
 

@@ -1,6 +1,6 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
-import torch.Tensor.permute
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
+import Notation.Data.Holor.Permute
 import Lemma.Nat.EqMax
 import Lemma.Nat.EqMax.of.Lt
 import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
@@ -10,7 +10,7 @@ import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool Nat Tensor
 
 

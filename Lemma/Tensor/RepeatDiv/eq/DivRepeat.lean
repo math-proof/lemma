@@ -1,5 +1,5 @@
 import Lemma.Tensor.RepeatBFn.eq.BFnRepeat
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 open Tensor
 
 
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2026-08-12
--- updated on 2026-08-15
+-- updated on 2026-10-26

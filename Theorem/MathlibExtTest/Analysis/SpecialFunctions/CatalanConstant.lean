@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/CatalanConstant.lean -/
 
 
-import sympy.atlas.Analysis.SpecialFunctions.CatalanConstant
+import Theorem.Analysis.SpecialFunctions.CatalanConstant
 
 
 example : Real.catalanConstant =

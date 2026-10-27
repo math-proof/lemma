@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.EllipticCurves.code.EndAlgebra.Part5
 open RingAntiHom RingInvolution
 open scoped TensorProduct

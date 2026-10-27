@@ -1,14 +1,14 @@
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
-import torch.Tensor.permute
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.MapMul.eq.MulMapS.of.All_Eq_Mul
 import Lemma.Tensor.RepeatMap.eq.MapRepeat
 import Lemma.Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd
 import Lemma.Tensor.TMap.eq.MapT
 import Lemma.Tensor.UnsqueezeMap.eq.MapUnsqueeze
-import torch.Tensor.bmm
-import torch.Tensor.sum
+import Def.Data.Holor.Bmm
+import Def.Data.Holor.Sum
 open List Tensor
 
 
@@ -107,4 +107,4 @@ private lemma main
 
 
 -- created on 2026-08-16
--- updated on 2026-08-17
+-- updated on 2026-10-26

@@ -1,4 +1,4 @@
-import sympy.stats.iterates
+import Def.Dynamics.Iterates
 import Lemma.Real.Any_Ge_0AndAll_All_LeNorm_MulAddNorm1.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub
 
 

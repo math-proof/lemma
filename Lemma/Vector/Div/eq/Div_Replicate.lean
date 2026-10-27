@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Vector.EqGetReplicate
 open Vector

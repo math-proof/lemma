@@ -1,5 +1,5 @@
 import Lemma.Bool.SEqBFnS.of.SEq.SEq
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Bool
 
 
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2025-12-01
--- updated on 2026-07-11
+-- updated on 2026-10-26

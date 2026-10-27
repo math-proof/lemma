@@ -320,6 +320,6 @@ popd >/dev/null
 
 echo "⏳ building the entire project..."
 lake build
-lake build sympy.printing.echo
+lake build Syntax.Tactic.Echo
 end_ts="$(date +%s)"
 echo "🏁 Build completed in $((end_ts - start_ts)) seconds."

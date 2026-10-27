@@ -1,9 +1,6 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/InnerProductSpace/DiscreteSpectrum.lean -/
-
 /-
 Author: Muse Spark 1.3
 -/
-
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Data.Set.Card

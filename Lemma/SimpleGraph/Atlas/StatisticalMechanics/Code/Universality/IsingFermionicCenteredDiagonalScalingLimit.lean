@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCenteredDiagonalScalingLimit
 open Filter Set Topology StatMech StatMech.Universality StatMech.Universality.FKIsingCaratheodoryApproximation
 

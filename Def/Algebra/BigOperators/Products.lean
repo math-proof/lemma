@@ -1,6 +1,6 @@
-import sympy.matrices.expressions.special
-import torch.eye
-import sympy.matrices.expressions.matmul
+import Def.Data.Holor.BandPart
+import Def.Data.Holor.Eye
+import Instance.LinearAlgebra.Matrix.Matmul
 
 
 /--

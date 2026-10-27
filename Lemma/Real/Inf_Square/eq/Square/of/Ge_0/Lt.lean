@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Mathlib.Analysis.Real.Sqrt
 import Lemma.Real.EqInf.of.Lt
 
@@ -31,4 +31,4 @@ private lemma main
 
 
 -- created on 2019-07-02
--- updated on 2023-05-20
+-- updated on 2026-10-26

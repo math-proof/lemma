@@ -1,5 +1,5 @@
-import sympy.series.limits
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -16,4 +16,4 @@ private lemma main
 
 
 -- created on 2020-04-10
--- updated on 2026-10-12
+-- updated on 2026-10-26

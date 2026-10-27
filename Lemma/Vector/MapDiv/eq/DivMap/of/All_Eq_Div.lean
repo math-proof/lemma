@@ -1,5 +1,5 @@
 import Lemma.Vector.GetDiv.eq.DivGet
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 open Vector
 
 

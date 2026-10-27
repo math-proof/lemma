@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.NumberTheoryI.code.AnalyticClassNumber.Part3
 open Filter Topology Asymptotics Set MeasureTheory NumberField NNReal Complex NumberField.InfinitePlace NumberField.Units Section19
 open scoped Classical

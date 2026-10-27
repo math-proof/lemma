@@ -1,5 +1,5 @@
 import Lemma.Hyperreal.StDiv.eq.InvStInv
-open Hyperreal
+open Hyperreal ArchimedeanClass
 
 
 @[path]

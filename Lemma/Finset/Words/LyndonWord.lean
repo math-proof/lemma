@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.Words.LyndonWord.Part14
 open scoped BigOperators
 open MetaMathlibExt
@@ -369,4 +369,4 @@ private lemma card_lyndonWordsOfContent_eq_wittMultigradedValue_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

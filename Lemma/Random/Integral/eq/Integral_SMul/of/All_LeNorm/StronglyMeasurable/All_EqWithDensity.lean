@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.Integral.Prod
-import sympy.stats.policy_trajectory.continuous_action
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel
 
 

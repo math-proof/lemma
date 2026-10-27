@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.FlattenCast.as.Flatten.of.Eq.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
@@ -76,4 +76,4 @@ private lemma main
 
 
 -- created on 2025-10-17
--- updated on 2025-10-18
+-- updated on 2026-10-26

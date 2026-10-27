@@ -1,6 +1,6 @@
 import Mathlib.Basic.Complex.Basic
 import Mathlib.Data.Nat.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -32,4 +32,4 @@ private lemma main
 
 
 -- created on 2018-11-03
--- updated on 2023-05-21
+-- updated on 2026-10-26

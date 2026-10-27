@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.Prop2219.Part2
 open Complex Finset Section19 RayClassField
 open scoped NumberField

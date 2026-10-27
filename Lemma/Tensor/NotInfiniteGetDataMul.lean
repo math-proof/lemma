@@ -1,5 +1,5 @@
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.NotInfiniteGetData
 open Hyperreal Tensor

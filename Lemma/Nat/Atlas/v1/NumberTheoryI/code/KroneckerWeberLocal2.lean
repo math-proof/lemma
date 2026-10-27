@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.NumberTheoryI.code.KroneckerWeberLocal2.Part2
 open KroneckerWeberLocal2
 

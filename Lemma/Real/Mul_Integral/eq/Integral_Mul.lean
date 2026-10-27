@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

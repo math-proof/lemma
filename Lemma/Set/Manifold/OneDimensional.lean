@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Geometry.Manifold.OneDimensional.Part11
 open scoped Manifold ContDiff Topology Bundle
 open scoped Manifold ContDiff
@@ -3720,4 +3720,4 @@ private lemma compact_connected_one_manifold_with_boundary_classification_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

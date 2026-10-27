@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.determinants.PermFinset
+import Initialize.Tactic.Attr.Basic
+import Def.LinearAlgebra.Matrix.Determinant.PermFinset
 
 
 section
@@ -219,4 +219,4 @@ private lemma x_imageFinset_inv
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Bool.Ite__Ite.eq.Ite__IteAnd_Not
 import Lemma.Bool.AndOr.is.OrAndS
 open Bool

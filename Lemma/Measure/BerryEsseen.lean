@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Probability.BerryEsseen
 open MeasureTheory ProbabilityTheory Finset Set
 open scoped ProbabilityTheory ENNReal NNReal
@@ -4376,4 +4376,4 @@ end MathlibExt.Probability.BerryEsseenWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

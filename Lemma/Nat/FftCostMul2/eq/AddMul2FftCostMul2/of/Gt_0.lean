@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.integrals.transforms.FastFourierTransform
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Fourier.FastFourierTransform.Part2
 open Fourier.FastFourierTransformWanted
 
 

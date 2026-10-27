@@ -1,4 +1,4 @@
-import stdlib.Slice
+import Def.Data.List.Slice
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Nat.CoeMin.eq.MinCoeS
 import Lemma.Int.EqToNat

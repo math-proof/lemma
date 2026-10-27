@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.Analysis.Section_2_3.Part2
 import Lemma.Nat.MulAddEqAddMulS
 open Chapter2 hiding Nat
@@ -21,4 +21,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-10-23
+-- updated on 2026-10-26

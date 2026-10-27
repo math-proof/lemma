@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.ContourEncodingClose.Part3
 open Set Finset SimpleGraph StatMech.Ising StatMech StatMech.Lattice
 

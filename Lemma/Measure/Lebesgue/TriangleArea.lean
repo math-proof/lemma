@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MeasureTheory.Measure.Lebesgue.TriangleArea.Part3
 open MeasureTheory Set
 open MetaMathlibExt
@@ -102,4 +102,4 @@ private lemma MeasureTheory_volume_unitSquare_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

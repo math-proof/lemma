@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.NotationsExamples
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.PowerSeries.NotationsExamples
 
 
 section
@@ -1441,4 +1441,4 @@ private lemma pv_one_sub_smul_X_mul_geom
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

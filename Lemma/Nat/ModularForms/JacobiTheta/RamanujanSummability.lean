@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.ModularForms.JacobiTheta.Ramanujan
 import Lemma.Nat.ModularForms.JacobiTheta.Ramanujan
 open scoped Topology
@@ -188,4 +188,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

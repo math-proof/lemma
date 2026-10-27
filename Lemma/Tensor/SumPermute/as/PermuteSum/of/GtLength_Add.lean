@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length
-import torch.Tensor.sum
-import torch.Tensor.permute
+import Def.Data.Holor.Sum
+import Notation.Data.Holor.Permute
 import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 import Lemma.Nat.Lt.of.LtAdd
 import Lemma.List.PermuteCons.eq.Cons_Permute
@@ -9,7 +9,7 @@ import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.EqAdd0
 import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Tensor.SumPermuteHead.as.Sum_0.of.GtLength
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Bool List Nat Tensor
 
 

@@ -1,6 +1,6 @@
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
-import torch.Tensor.sum
-import torch.Tensor.unsqueeze
+import Def.Data.Holor.Sum
+import Def.Data.Holor.Unsqueeze
 import Lemma.Tensor.DataUnsqueeze.as.Data
 import Lemma.Vector.Get.of.SEq.Lt
 import Lemma.Vector.Sum.eq.Head

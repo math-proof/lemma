@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.WeightedSets
+import Initialize.Tactic.Attr.Basic
+import Def.Combinatorics.Enumerative.WeightedSets.Part26
 import Lemma.PowerSeries.WeightedSets
 open scoped BigOperators
 open PowerSeries Finset

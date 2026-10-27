@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.TensorCategories.code.Corollary_1_15_9
 open CategoryTheory MonoidalCategory Limits
 

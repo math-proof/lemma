@@ -2,7 +2,7 @@ import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
 import Syntax.LinearAlgebra.Matrix.Notation
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -40,4 +40,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-25
+-- updated on 2026-10-26

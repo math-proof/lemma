@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.bc3_nocrossing
 open Set StatMech.Lattice StatMech StatMech.Walls
 

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.asymptotics.CatalanAsymptoticExpansion
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Asymptotics.CatalanAsymptoticExpansion.Part8
 open scoped BigOperators
 
 
@@ -1977,4 +1977,4 @@ private lemma Real_tendsto_pow_mul_sub_bernoulli_sum_of_log_diff_eq
 
 
 -- created on 2026-10-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch7Entry8
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch7Entry8
 
 open Ramanujan.Part1Ch7.Entry8
 open scoped Nat Real BigOperators Interval Polynomial
@@ -156,4 +156,4 @@ end
 
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

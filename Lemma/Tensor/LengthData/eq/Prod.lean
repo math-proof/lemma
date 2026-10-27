@@ -1,5 +1,5 @@
-import torch.stack
-import torch.Tensor.prod
+import Def.Data.Holor.Stack.Part2
+import Def.Data.Holor.Prod
 
 
 @[path]

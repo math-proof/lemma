@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.RealAnalysis.code.Derivatives.Weierstrass
 open Real BigOperators Topology in Filter
 

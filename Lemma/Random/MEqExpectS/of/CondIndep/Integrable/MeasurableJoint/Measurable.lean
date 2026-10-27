@@ -1,8 +1,8 @@
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Real
 import Mathlib.Probability.Independence.Conditional
-import sympy.Basic
-import sympy.stats.joint_rv
+import Initialize.Tactic.Attr.Basic
+import Syntax.Probability.JointRv.Part6
 open MeasureTheory ProbabilityTheory
 
 

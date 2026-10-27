@@ -4,7 +4,7 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Real.Pi.Bounds
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Mathlib.Topology.Order.Compact
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -105,4 +105,4 @@ private lemma main
 
 
 -- created on 2023-10-03
--- updated on 2026-10-17
+-- updated on 2026-10-26

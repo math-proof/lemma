@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Measure Topology
 open scoped ENNReal
 
@@ -137,4 +137,4 @@ end MathlibExt.MeasureTheory.Function.Lusin
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Ramsey
 open scoped BigOperators
 open MathlibExt.Combinatorics.Ramsey
@@ -329,4 +329,4 @@ end MathlibExt.Combinatorics.Ramsey
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

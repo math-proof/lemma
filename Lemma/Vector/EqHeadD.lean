@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 
 
 @[path]
@@ -14,4 +14,4 @@ private lemma main
 
 
 -- created on 2024-07-01
--- updated on 2025-06-29
+-- updated on 2026-10-26

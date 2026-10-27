@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.List.RotateRotate.eq.Rotate_Add

@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Rat.LeDivS.of.Le.Gt_0
 open Rat

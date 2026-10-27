@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Inductive.CPythonListsort.Code.Assembly.ListSortScanReached
 open CPythonListsort CPythonListsort.ListSortScanReachedCollapse
 

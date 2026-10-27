@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Young.SSYTEquiv.Part4
 import Lemma.MvPolynomial.SchurBasics
 import Lemma.MvPolynomial.PieriJacobiTrudi

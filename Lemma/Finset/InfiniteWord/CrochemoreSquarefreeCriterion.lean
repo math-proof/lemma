@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.InfiniteWord.SquareFreeWord.Part2
 import Lemma.Finset.InfiniteWord.SquareFreeWord
 
@@ -1509,4 +1509,4 @@ private lemma croch_prefix_cover_or_tail {A T : Type*} (f : A → List T)
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

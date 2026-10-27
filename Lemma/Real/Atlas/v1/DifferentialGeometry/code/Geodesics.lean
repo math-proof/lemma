@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Class.v1.Atlas.DifferentialGeometry.code.Geodesics
 open MeasureTheory intervalIntegral Hypersurface Finset Geodesics
 open scoped InnerProductSpace BigOperators

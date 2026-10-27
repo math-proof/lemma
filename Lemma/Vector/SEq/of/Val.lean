@@ -1,4 +1,4 @@
-import stdlib.SEq
+import Theorem.Logic.SEq
 import Lemma.Vector.Eq.of.Val
 open Vector Bool
 

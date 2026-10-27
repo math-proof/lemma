@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.IndexedEdgeLumping.Part2
 open Finset StatMech StatMech.FK
 

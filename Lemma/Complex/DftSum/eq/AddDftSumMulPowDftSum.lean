@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.integrals.transforms.FastFourierTransform
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Fourier.FastFourierTransform.Part2
 open Fourier.FastFourierTransformWanted
 
 
@@ -23,4 +23,4 @@ private lemma dft_sum_two_mul_eq
 
 
 -- created on 2026-10-10
--- updated on 2026-10-24
+-- updated on 2026-10-26

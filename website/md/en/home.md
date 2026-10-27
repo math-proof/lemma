@@ -27,9 +27,6 @@ Divide and conquer is case analysis: splitting a hard problem into several simpl
 5. Abduction
 Abduction infers possible causes from a known result. Starting from the goal, one derives sufficient conditions under which the goal holds: `refine`/`apply`
 
-## Heuristic-Assisted Reasoning
-- Analogy
-  Analogy reasons from a known particular to an unknown particular. For example, try transferring a proposition from the reals to the hyperreals and see whether it still holds.
 <br><br>
 ------
 
@@ -55,6 +52,8 @@ The library currently contains <label id=count>5000</label> proved theorems (<la
   - [k-means clustering](../?module=Finset.LeAddSumS_SquareSub_Div_Sum.of.LeAbsSSub_Div_Sum.NotIn.In.GtCard_0)
 * [List](../?module=List) Finite list theorems
 * [Vector](../?module=Vector) One-dimensional vector theorems
+* [Matrix](../?module=Matrix) Matrix theory, e.g.:
+  - [Okishio's theorem](../?module=Matrix.Any_And_EqSMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
 * [Tensor](../?module=Tensor) Formal tensor calculus, semantically equivalent to **torch.Tensor**, for formal verification of deep-learning algorithms, e.g.:
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)

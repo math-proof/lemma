@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosureDuality.Part4
 open SimpleGraph Set StatMech StatMech.Lattice
 

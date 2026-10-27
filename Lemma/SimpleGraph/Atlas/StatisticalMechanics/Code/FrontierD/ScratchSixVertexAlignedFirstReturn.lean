@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.ScratchSixVertexAlignedFirstReturn.Part26
 open StatMech.FrontierD ScratchLocalRetieC ScratchLocalRetieC.FourByTwoBondAudit
 

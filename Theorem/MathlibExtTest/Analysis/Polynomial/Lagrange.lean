@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Polynomial/Lagrange.lean -/
 
 
-import sympy.atlas.Analysis.Polynomial.Lagrange
+import Theorem.LinearAlgebra.Lagrange
 open Lagrange
 
 

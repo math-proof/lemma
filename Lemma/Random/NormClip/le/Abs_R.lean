@@ -1,5 +1,5 @@
-import sympy.stats.policy_trajectory
-import sympy.functions.elementary.miscellaneous
+import Theorem.Dynamics.PolicyTrajectory
+import Def.Order.Miscellaneous
 
 
 /--

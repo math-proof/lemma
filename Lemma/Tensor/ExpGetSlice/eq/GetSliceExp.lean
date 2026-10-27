@@ -1,5 +1,5 @@
 import Lemma.Tensor.MapGetSlice.eq.GetSliceMap
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Tensor
 
 
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2026-08-14
--- updated on 2026-08-15
+-- updated on 2026-10-26

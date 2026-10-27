@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Set.In_Ico.is.Le.Lt
 import Lemma.Set.In_IooDivS.of.In_Ico0.Sub.eq.DivSqrt3'2
 import Lemma.Real.SinMul3.eq.SubMul3_Mul4SinMul3

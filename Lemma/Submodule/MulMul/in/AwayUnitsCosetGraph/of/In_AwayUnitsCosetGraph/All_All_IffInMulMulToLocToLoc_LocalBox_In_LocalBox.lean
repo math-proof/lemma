@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.CerednikDrinfeld.DrinfeldHolomorphic
 import Lemma.ValuationSubring.CompletionRatClosure
 import Def.FLTPrelim_Ramification

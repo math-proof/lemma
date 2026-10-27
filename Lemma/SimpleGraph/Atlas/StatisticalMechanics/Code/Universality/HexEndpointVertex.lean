@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.HexEndpointVertex.Part14
 open StatMech StatMech.Universality StatMech.Universality.HexFiniteRegion
 

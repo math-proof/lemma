@@ -14,7 +14,7 @@ import Lemma.Rat.DivMul.eq.Mul_Div
 import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Rat.Div_Neg.eq.NegDiv
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
-open Hyperreal Nat Rat Int
+open Hyperreal Nat Rat Int ArchimedeanClass
 set_option maxHeartbeats 1000000
 
 
@@ -425,4 +425,4 @@ private lemma main
 
 
 -- created on 2026-07-25
--- updated on 2026-07-26
+-- updated on 2026-10-26

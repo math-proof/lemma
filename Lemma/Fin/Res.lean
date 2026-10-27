@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.AlgebraicGeometry.OrderedAffineCoverCech
 open CategoryTheory Opposite
 set_option autoImplicit false

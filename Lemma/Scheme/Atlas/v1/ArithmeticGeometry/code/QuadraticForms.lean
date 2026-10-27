@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.QuadraticForms.Part2
 open LinearMap (BilinMap BilinForm) QuadraticFormEquiv QuadraticMap QuadraticFormDef93 QuadraticFormDef94
 open QuadraticMap

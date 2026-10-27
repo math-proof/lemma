@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.Multivariate
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.MvPowerSeries.Multivariate
 
 
 section
@@ -474,4 +474,4 @@ private lemma x_sum_filter_zero_snd
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

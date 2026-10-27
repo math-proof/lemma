@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TensorCategories.code.RigidMonoidalDuality.Part2
 open CategoryTheory MonoidalCategory Limits MonoidalOpposite Opposite TensorCategories
 

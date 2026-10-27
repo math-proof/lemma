@@ -1,4 +1,4 @@
-import sympy.matrices.expressions.permutation
+import Def.LinearAlgebra.Matrix.Permutation
 import Lemma.Nat.Delta.eq.Ite
 open Nat
 

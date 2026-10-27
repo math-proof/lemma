@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
 open Real Set MeasureTheory CM8
 

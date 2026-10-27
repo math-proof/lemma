@@ -1,6 +1,6 @@
 import Lemma.Tensor.LengthKeepdim.eq.Length.of.Gt_0
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.GetTail.eq.Get_Add_1.of.GtLengthTail
 import Lemma.Tensor.Keepdim.as.RepeatUnsqueeze
@@ -95,4 +95,4 @@ private lemma main
 
 
 -- created on 2025-10-09
--- updated on 2025-10-11
+-- updated on 2026-10-26

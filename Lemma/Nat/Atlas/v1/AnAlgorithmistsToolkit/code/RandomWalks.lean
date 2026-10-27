@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.RandomWalks.Part2
 open RandomWalks
 open Matrix SimpleGraph Module.End Finset

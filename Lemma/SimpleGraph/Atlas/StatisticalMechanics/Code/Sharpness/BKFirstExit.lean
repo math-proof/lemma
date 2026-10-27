@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.BKFirstExit
 open MeasureTheory Finset Set StatMech StatMech.Sharpness
 

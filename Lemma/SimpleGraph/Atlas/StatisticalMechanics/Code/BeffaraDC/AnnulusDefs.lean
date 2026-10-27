@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.BeffaraDC.AnnulusDefs.Part10
 open Set StatMech.Lattice SimpleGraph StatMech StatMech.BeffaraDC StatMech.BeffaraDC.SymmetricDomain
 

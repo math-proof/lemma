@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Percolation.FarDartContour.Part5
 open Finset Set SimpleGraph Function StatMech StatMech.Percolation
 

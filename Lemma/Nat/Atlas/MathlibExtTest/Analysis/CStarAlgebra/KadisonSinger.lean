@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger
 open scoped Matrix.Norms.L2Operator
 open MathlibExt.Analysis.CStarAlgebra.KadisonSingerWanted

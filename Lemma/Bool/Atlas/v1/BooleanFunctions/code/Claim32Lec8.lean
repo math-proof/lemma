@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Claim32Lec8
 open BooleanAnalysis
 open Finset
@@ -23,7 +23,9 @@ lemma indicator_ne_iff
   · intro h
     by_cases hx : x ∈ A <;> by_cases hy : y ∈ A <;> simp_all
   · intro h
-    obtain ⟨hx, hny⟩ | ⟨hnx, hy⟩ <;> simp_all := h
+    obtain ⟨hx, hny⟩ | ⟨hnx, hy⟩ := h
+    · simp [hx, hny]
+    · simp [hnx, hy]
 
 end BooleanAnalysis
 
@@ -91,8 +93,7 @@ lemma card_boundary_eq_sum
       (x ∈ A ∧ flip x i ∉ A) ∨ (x ∉ A ∧ flip x i ∈ A))).map
       ⟨fun x => (x, i), fun a b h => by simpa using congr_arg Prod.fst h⟩ := by
     ext ⟨x, j⟩
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_map,
-      Function.Embedding.coeFn_mk]
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_map]
     constructor
     · intro ⟨hP, hj⟩
       subst hj
@@ -120,7 +121,7 @@ lemma edgeBoundaryMeasure_eq_totalInfluence_indicator_div_n
 -- proof
   rw [edgeBoundaryMeasure_def hn, totalInfluence_indicator, div_div]
   congr 1
-  · have hcard := card_boundary_eq_sum A
+  · have hcard := card_boundary_eq_sum (A := A)
     exact_mod_cast hcard
   · ring
 

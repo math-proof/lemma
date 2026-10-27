@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TensorCategories.code.Lemma_2_9_12
 open CategoryTheory
 open Category MonoidalCategory MonObj

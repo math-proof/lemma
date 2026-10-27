@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.polys.MultivariableMahlerMeasure
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Polynomial.MultivariableMahlerMeasure.Part5
 
 open MultivariableMahlerMeasure.MetaMathlibExt
 

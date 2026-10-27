@@ -11,7 +11,7 @@ import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
 import Lemma.Tensor.Get.of.Eq
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.Sum_IteIn_Ico.eq.SumGetSlice
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Int Nat Tensor
 
 
@@ -81,4 +81,4 @@ private lemma main
 
 
 -- created on 2026-08-11
--- updated on 2026-08-14
+-- updated on 2026-10-26

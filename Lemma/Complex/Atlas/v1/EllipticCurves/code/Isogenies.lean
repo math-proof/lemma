@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
 open Polynomial ProjectiveCurve WeierstrassCurve WeierstrassCurve.Affine Isogeny IsogenyStandardForm IsogenyStandardForm.WithCurveData
 open scoped Polynomial.Bivariate

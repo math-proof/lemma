@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Parseval
 open Finset BigOperators BooleanFourier
 
@@ -24,7 +24,7 @@ lemma plancherel
     g x = ∑ S : Finset (Fin n),
       (c * ∑ y : Fin n → Bool, g y * chi S y) * chi S x := by
     intro x
-    exact fourier_expansion g x
+    exact fourier_expansion (f := g) (x := x)
   have rhs_calc : c * ∑ x : Fin n → Bool, f x * g x =
     c * ∑ x : Fin n → Bool,
       ∑ S : Finset (Fin n), f x * ((c * ∑ y : Fin n → Bool, g y * chi S y) * chi S x) := by
@@ -64,7 +64,7 @@ lemma parseval
 -- imply
   ∑ S : Finset (Fin n), (fourierCoeff f S) ^ 2 = (1 / (2 : ℝ) ^ n) * ∑ x : Fin n → Bool, (f x) ^ 2 := by
 -- proof
-  have h := plancherel f f
+  have h := plancherel (f := f) (g := f)
   simp only [innerProduct] at h
   rw [show ∑ S : Finset (Fin n), fourierCoeff f S * fourierCoeff f S =
     ∑ S : Finset (Fin n), fourierCoeff f S ^ 2 from
@@ -87,9 +87,10 @@ lemma claim_2_2
 -- imply
   (∑ S : Finset (Fin n), fourierCoeff f S * fourierCoeff g S = (1 / (2 : ℝ) ^ n) * ∑ x : Fin n → Bool, f x * g x) ∧ (∑ S : Finset (Fin n), (fourierCoeff f S) ^ 2 = (1 / (2 : ℝ) ^ n) * ∑ x : Fin n → Bool, (f x) ^ 2) :=
 -- proof
-  ⟨plancherel f g, parseval f⟩
+  ⟨plancherel (f := f) (g := g), parseval (f := f)⟩
 
 end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

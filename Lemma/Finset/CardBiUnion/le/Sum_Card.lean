@@ -1,5 +1,5 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -14,4 +14,4 @@ private lemma main
 
 
 -- created on 2020-07-07
--- updated on 2026-09-08
+-- updated on 2026-10-26

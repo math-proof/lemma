@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.bc2_threewitnesses
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Walls
 

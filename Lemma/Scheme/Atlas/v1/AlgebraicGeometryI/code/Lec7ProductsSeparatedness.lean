@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec7ProductsSeparatedness
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Lec7
 open scoped TensorProduct

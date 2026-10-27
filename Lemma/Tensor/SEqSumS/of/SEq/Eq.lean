@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqSumS.of.SEq
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor
 
 

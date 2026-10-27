@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
 import Lemma.Nat.MulCardConjClassCard_StabilizerConjActG.eq.CardG
 import Lemma.Nat.ConjClass.of.IsConj
@@ -317,4 +317,4 @@ end BurnsidePaqb
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

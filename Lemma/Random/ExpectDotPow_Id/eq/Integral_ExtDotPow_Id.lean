@@ -1,4 +1,4 @@
-import sympy.stats.policy_trajectory
+import Theorem.Dynamics.PolicyTrajectory
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 open MeasureTheory PolicyGradient PolicyGradient.Model
 

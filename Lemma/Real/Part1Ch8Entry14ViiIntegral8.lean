@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch8Entry14ViiIntegral8
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch8Entry14ViiIntegral8
 
 open MeasureTheory
 open Ramanujan.Part1Ch8.Entry14ViiIntegral8

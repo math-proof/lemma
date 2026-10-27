@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.Lie.WittMultigradedDimension.Part11
 open scoped BigOperators
 open MetaMathlibExt
@@ -338,4 +338,4 @@ private lemma finrank_freeLieMultihomogeneousComponent_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

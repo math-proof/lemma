@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.RingTheory.LocalRing.ResidueField.AdjoinRootLift.Part3
 open Polynomial
 open DVRResidue
@@ -283,4 +283,4 @@ private lemma residueFieldEquivAdjoinRootOfMapEq_residue_mk_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

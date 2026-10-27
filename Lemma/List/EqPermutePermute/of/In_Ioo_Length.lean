@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.List.GetPermute__Neg.eq.Ite.of.GtLength
 import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
@@ -34,4 +34,4 @@ private lemma main
 
 
 -- created on 2025-10-12
--- updated on 2025-10-25
+-- updated on 2026-10-26

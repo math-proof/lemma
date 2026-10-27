@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch5Entry30Secondordereulerian.lean -/
 
 
-import sympy.atlas.Analysis.Ramanujan.Part1Ch5Entry30Secondordereulerian
+import Theorem.Analysis.SpecialFunctions.Part1Ch5Entry30Secondordereulerian.Part3
 import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 30 API checks

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.Polynomial.RealRooted.Part2
 open Polynomial
 open scoped ComplexOrder
@@ -190,4 +190,4 @@ end Polynomial
   · exact hx
 
 -- created on 2026-10-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

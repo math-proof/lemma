@@ -1,6 +1,6 @@
 import Lemma.List.EraseIdx_0.eq.Tail
 import Lemma.List.TailTail.eq.Drop_2
-import stdlib.Slice
+import Def.Data.List.Slice
 open List
 
 

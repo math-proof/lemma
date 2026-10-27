@@ -1,5 +1,5 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.prod
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Prod
 import Lemma.Finset.Prod.eq.MulProdS
 import Lemma.List.EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Lt.GeLength
 import Lemma.List.GetInsertIdx.eq.Get.of.Lt.GeLength
@@ -115,4 +115,4 @@ private lemma main
 
 
 -- created on 2025-11-26
--- updated on 2025-11-27
+-- updated on 2026-10-26

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.NonIntegerPowers
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.PowerSeries.NonIntegerPowers.Part2
 import Lemma.PowerSeries.ExpLog
 open PowerSeries
 open Finset

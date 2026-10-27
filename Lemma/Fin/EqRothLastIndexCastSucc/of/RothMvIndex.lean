@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.RothAuxiliary.Part7
 import Lemma.Int.RothFinsuppL1_Single.eq.NatAbs
 import Lemma.Finset.RothFinsuppL1_Sum.le.Sum_RothFinsuppL1

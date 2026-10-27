@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/InnerProductSpace/BoundedSelfAdjointSpectral.lean -/
 
 
-import sympy.atlas.Analysis.InnerProductSpace.BoundedSelfAdjointSpectral
+import Theorem.Analysis.InnerProductSpace.BoundedSelfAdjointSpectral.Part17
 
 
 namespace MathlibExtTest.Analysis.InnerProductSpace.BoundedSelfAdjointSpectral

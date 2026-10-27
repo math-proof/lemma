@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.RingTheory.Polynomial.Eisenstein.AdjoinRoot
 open Polynomial Ideal IsLocalRing
 open AdjoinRoot
@@ -186,4 +186,4 @@ private lemma root_ne_zero_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

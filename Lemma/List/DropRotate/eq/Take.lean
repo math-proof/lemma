@@ -1,4 +1,4 @@
-import stdlib.List
+import Def.Data.List.List.Part5
 import Lemma.List.Rotate.eq.AppendDrop__Take
 open List
 

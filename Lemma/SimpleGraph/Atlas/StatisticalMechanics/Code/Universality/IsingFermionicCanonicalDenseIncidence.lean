@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Universality.IsingFermionicCanonicalDenseIncidence.Part8
 open Filter Set Topology StatMech StatMech.Universality
 

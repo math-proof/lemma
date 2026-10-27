@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.EllipticCurves.code.ModularPolynomial.Part5
 open CongruenceSubgroup Complex ModularFunction ExtendedUpperHalfPlane
 open scoped MatrixGroups UpperHalfPlane

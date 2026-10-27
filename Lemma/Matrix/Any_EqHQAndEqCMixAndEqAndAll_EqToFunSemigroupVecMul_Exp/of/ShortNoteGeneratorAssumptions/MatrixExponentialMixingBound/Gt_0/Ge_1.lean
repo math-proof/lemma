@@ -3,7 +3,7 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Topology.Algebra.Module.FiniteDimension
-import sympy.stats.frozen_invariant_law
+import Class.Probability.Process.FrozenInvariantLaw.Part2
 import Lemma.Matrix.RowStochastic_Exp.of.Ge_0.GeneratorMatrix
 import Lemma.Matrix.EqVecMul_Exp.of.EqVecMul_0
 import Lemma.Matrix.VecMul.eq.Zero.of.All_EqVecMul_Exp

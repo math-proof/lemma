@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec3Thm1
 open AlgebraicGeometry CategoryTheory
 

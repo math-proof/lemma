@@ -1,5 +1,5 @@
 import Lemma.Tensor.MapCast.as.MapBFn.of.Eq
-import sympy.matrices.expressions.matmul
+import Instance.LinearAlgebra.Matrix.Matmul
 open Tensor
 
 
@@ -27,4 +27,4 @@ private lemma main
 
 
 -- created on 2026-08-15
--- updated on 2026-08-17
+-- updated on 2026-10-26

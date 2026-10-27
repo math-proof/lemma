@@ -1,7 +1,7 @@
 import Mathlib.Topology.Order.DenselyOrdered
 import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
-import sympy.series.limits
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

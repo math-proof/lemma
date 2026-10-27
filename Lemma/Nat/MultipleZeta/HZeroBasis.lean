@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.MultipleZeta.HZeroBasis.Part3
 open MetaMathlibExt.MultipleZeta
 open MathlibExt.NumberTheory.MultipleZeta.WordAlgebraWanted
@@ -193,4 +193,4 @@ end MathlibExt.NumberTheory.MultipleZeta.WordAlgebraWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

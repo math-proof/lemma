@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.LieGroups.code.GrothendieckGroupO.Part4
 open ProjectiveFunctors Classical
 open scoped TensorProduct

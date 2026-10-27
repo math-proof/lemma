@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPhaseTransport.Part3
 open MeasureTheory Set StatMech StatMech.OSSS StatMech.OSSS.FKSharpnessWeightedPhaseTransport
 

@@ -1,6 +1,6 @@
-import sympy.functions.combinatorial.integer_factorials
+import Def.Data.Nat.Factorial.IntegerFactorials
 import Mathlib.RingTheory.Polynomial.Pochhammer
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 
 
 @[path]

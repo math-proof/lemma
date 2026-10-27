@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open IsLocalRing
 open scoped TensorProduct
 set_option maxHeartbeats 999999

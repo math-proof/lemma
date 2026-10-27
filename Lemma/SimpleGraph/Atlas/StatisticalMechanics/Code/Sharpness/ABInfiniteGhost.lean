@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.ABInfiniteGhost.Part13
 open Filter MeasureTheory Set SimpleGraph Topology StatMech StatMech.Sharpness
 

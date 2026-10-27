@@ -1,10 +1,10 @@
-import torch.Tensor.reshape
+import Def.Data.Holor.Reshape
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeLength_2.GeLength_2
 import Lemma.Tensor.MatmulBFn.eq.BFnMatmul.of.Length.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.SEqTensordotS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.Tensordot.as.Matmul.of.GeLengthS
 import Lemma.Tensor.Tensordot.as.Matmul.of.LtLengthS
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool List Tensor
 set_option maxHeartbeats 500000
 

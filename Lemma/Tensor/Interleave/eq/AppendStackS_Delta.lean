@@ -1,5 +1,5 @@
-import sympy.functions.special.tensor_functions
-import torch.stack
+import Def.Analysis.SpecialFunctions.TensorFunctions
+import Def.Data.Holor.Stack.Part2
 
 
 def Tensor.interleave (d : ℕ) : Tensor ℝ [d + d, d + d] :=
@@ -38,4 +38,4 @@ private lemma main
 
 
 -- created on 2026-09-04
--- updated on 2026-09-05
+-- updated on 2026-10-26

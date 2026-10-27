@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.NumberTheoryI.code.Prop2225
 open NumberField RayClassField GlobalConductor KroneckerWeber ConductorRamification
 

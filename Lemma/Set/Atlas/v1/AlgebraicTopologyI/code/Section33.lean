@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section33.Part2
 open CategoryTheory AlgebraicTopology Limits SingularCohomology in
 open SingularCohomology

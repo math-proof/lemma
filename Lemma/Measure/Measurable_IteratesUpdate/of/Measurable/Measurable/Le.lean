@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.MeasurableSpace.PreorderRestrict
-import sympy.stats.iterates
-import sympy.Basic
+import Def.Dynamics.Iterates
+import Initialize.Tactic.Attr.Basic
 open Finset Preorder
 
 

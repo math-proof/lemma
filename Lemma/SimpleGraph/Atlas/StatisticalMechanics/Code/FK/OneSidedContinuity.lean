@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.OneSidedContinuity
 open MeasureTheory Set Filter Topology Real SimpleGraph Finset Function StatMech StatMech.FK
 

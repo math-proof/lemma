@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.Topology.MetricSpace.HausdorffDimensionFunction
 open scoped NNReal Topology
 open Filter
@@ -126,4 +126,4 @@ end HausdorffDimensionFunction
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

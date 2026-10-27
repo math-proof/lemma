@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquarePeriodicBridge.Part3
 open Finset SimpleGraph MeasureTheory StatMech StatMech.FrontierD
 

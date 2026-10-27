@@ -1,4 +1,4 @@
-import stdlib.List
+import Def.Data.List.List.Part5
 
 
 @[path]
@@ -14,4 +14,4 @@ private lemma main
 
 
 -- created on 2025-06-11
--- updated on 2025-06-12
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.ArithmeticGeometry.code.CompletenessValuationCriterion.Part2
 open AlgebraicGeometry AlgebraicGeometry.CompletenessValuationCriterion
 

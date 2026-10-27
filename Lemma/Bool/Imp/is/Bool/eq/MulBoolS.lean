@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Bool.Cond.is.Bool.eq.One
 import Lemma.Bool.Imp.is.Or_Not
 import Lemma.Bool.Bool.eq.Zero.of.Bool.ne.One

@@ -1,9 +1,9 @@
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
-import sympy.functions.combinatorial.factorials
-import sympy.functions.elementary.trigonometric
-import sympy.series.limits
-import sympy.sets.sets
-import sympy.Basic
+import Def.Data.Nat.Factorial.Factorials
+import Def.Analysis.SpecialFunctions.Trigonometric.Part2
+import Def.Analysis.Real.Limits.Part4
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2018-06-02
--- updated on 2026-08-20
+-- updated on 2026-10-26

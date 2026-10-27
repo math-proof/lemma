@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Set Real
 
 private lemma pi2_lt_10 : π^2 < 10 := by

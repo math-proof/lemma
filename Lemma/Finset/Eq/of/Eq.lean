@@ -1,7 +1,7 @@
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.BigOperators.Intervals
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Matrix
 
 

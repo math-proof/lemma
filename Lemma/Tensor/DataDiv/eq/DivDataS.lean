@@ -1,4 +1,4 @@
-import torch.Tensor.Basic
+import Def.Data.Holor.Defs.Part4
 
 
 @[path]
@@ -13,4 +13,4 @@ private lemma main
 
 
 -- created on 2025-09-21
--- updated on 2025-09-24
+-- updated on 2026-10-26

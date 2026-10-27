@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.SLE.FKIsingDrivingReduction
 open Filter MeasureTheory StatMech StatMech.SLE
 

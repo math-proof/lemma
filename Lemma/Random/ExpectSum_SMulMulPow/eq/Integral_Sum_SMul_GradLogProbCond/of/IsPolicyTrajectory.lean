@@ -1,7 +1,7 @@
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 import Lemma.Random.PSpace_Path.of.All_PSpace
-import sympy.stats.policy_trajectory
-import sympy.vector.operators
+import Theorem.Dynamics.PolicyTrajectory
+import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real Measure

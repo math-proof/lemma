@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.RamseyAlteration
 open RamseyAlteration
 open Finset Fintype RamseyLowerBound

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.ArtinUnramified.Part14
 open NumberField ArtinUnramified
 open scoped Pointwise

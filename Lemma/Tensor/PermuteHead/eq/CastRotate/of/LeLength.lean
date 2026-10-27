@@ -1,5 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.PermuteHead.as.Rotate.of.LeLength
 open Bool Tensor List
 

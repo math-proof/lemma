@@ -1,11 +1,11 @@
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.Softmax.eq.TensorSoftmaxData
 import Lemma.Tensor.Sum.eq.MkListSumData
 import Lemma.Vector.SumSoftmax.eq.One
 import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor Vector Bool
 
 
@@ -57,4 +57,4 @@ private lemma main
 
 
 -- created on 2025-10-07
--- updated on 2025-10-12
+-- updated on 2026-10-26

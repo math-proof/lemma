@@ -7,7 +7,7 @@ import Lemma.Tensor.DataMul.eq.Mul_Data
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetMul.eq.Mul_Get
-import sympy.matrices.expressions.matmul
+import Instance.LinearAlgebra.Matrix.Matmul
 open List Tensor Vector Bool
 
 

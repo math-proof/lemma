@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 namespace MathlibExt.Geometry.Euclidean.SylvesterGallaiWanted
@@ -280,4 +280,4 @@ end MathlibExt.Geometry.Euclidean.SylvesterGallaiWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

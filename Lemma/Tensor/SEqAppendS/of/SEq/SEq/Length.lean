@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.Eq.of.Append.Length
-import torch.Tensor.Basic
+import Def.Data.Holor.Defs.Part4
 open Bool List
 
 

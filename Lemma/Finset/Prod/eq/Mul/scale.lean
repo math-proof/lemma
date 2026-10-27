@@ -1,5 +1,5 @@
 import Mathlib.Data.Finset.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Finset
 
 

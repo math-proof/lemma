@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.NumberTheory.NumberField.AdeleLocallyCompact.Part2
 open IsDedekindDomain NumberField Valued.integer
 open scoped Valued Pointwise

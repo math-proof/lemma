@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.AlgebraicCurve.RegularProlongation
 import Def.AlgebraicCurve_PlaceEvaluation
 import Lemma.Int.P2MUtil

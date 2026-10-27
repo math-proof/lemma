@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianConePolarization.Part4
 open Filter Finset Polynomial Topology StatMech StatMech.FrontierA
 

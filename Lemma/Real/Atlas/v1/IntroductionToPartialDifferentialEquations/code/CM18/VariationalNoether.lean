@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergy.Part2
 import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergy
 open CM18

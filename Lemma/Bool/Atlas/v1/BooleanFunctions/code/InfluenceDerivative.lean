@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.InfluenceDerivative
 open BooleanFourier
 
@@ -83,7 +83,7 @@ lemma influence_filter_card_eq
       if f (Fin.insertNth i p.1 p.2) ≠ f (flipCoord (Fin.insertNth i p.1 p.2) i) then 1 else 0)
     (by intro p; simp)
   rw [h]
-  simp_rw [ne_flipCoord_iff_insertNth f i]
+  simp_rw [ne_flipCoord_iff_insertNth]
   rw [Fintype.sum_prod_type]
   simp only [Fintype.sum_bool, ← two_mul]
 
@@ -111,7 +111,7 @@ lemma influence_eq_l2_norm_sq_discreteDerivative
   simp_rw [deriv_sq]
   rw [Finset.sum_ite, Finset.sum_const_zero, Finset.sum_const, zero_add, nsmul_eq_mul, mul_one]
   simp only [influence]
-  rw [influence_filter_card_eq f i]
+  rw [influence_filter_card_eq]
   push_cast
   rw [pow_succ]
   ring
@@ -120,3 +120,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

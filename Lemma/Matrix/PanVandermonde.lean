@@ -1,5 +1,6 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
+import Syntax.LinearAlgebra.Matrix.Notation
 
 
 namespace MetaMathlibExt
@@ -149,12 +150,11 @@ private lemma mat_decomp_aux
         S a b c n k * ∏ j ∈ Finset.range k,
           ((y - RCLike.ofReal c) - (j : K) * RCLike.ofReal b))
   (hSvan : ∀ (a b c : ℝ) (n k : ℕ), n < k → S a b c n k = 0) :
-  Matrix.of (fun (r s : Fin p) => ∏ j ∈ Finset.range r.val, (y s - (j : K) * RCLike.ofReal A)) =
-  Matrix.of (fun (r s : Fin p) => S A B C r.val s.val) *
-    Matrix.of (fun (r s : Fin p) =>
-      ∏ j ∈ Finset.range r.val, ((y s - RCLike.ofReal C) - (j : K) * RCLike.ofReal B)) := by
+  [r < p, s < p] (∏ j ∈ Finset.range r.val, (y s - (j : K) * RCLike.ofReal A)) =
+  ([r < p, s < p] S A B C r.val s.val) *
+    ([r < p, s < p] (∏ j ∈ Finset.range r.val, ((y s - RCLike.ofReal C) - (j : K) * RCLike.ofReal B))) := by
   ext r s
-  simp only [Matrix.of_apply, Matrix.mul_apply]
+  simp only [Matrix.ofFun_apply, Matrix.mul_apply]
   have h1 := hS A B C (y s) r.val
   have hLHS : (∑ t : Fin p, S A B C r.val t.val *
     ∏ j ∈ Finset.range t.val, ((y s - RCLike.ofReal C) - (j : K) * RCLike.ofReal B))
@@ -193,15 +193,15 @@ private lemma S_det_one
         S a b c n k * ∏ j ∈ Finset.range k,
           ((y - RCLike.ofReal c) - (j : K) * RCLike.ofReal b))
   (hSvan : ∀ (a b c : ℝ) (n k : ℕ), n < k → S a b c n k = 0) :
-  Matrix.det (Matrix.of (fun (r s : Fin p) => S A B C r.val s.val)) = 1 := by
-  have hTri : (Matrix.of (fun (r s : Fin p) => S A B C r.val s.val)).IsLowerTriangular := by
+  Matrix.det ([r < p, s < p] S A B C r.val s.val) = 1 := by
+  have hTri : ([r < p, s < p] S A B C r.val s.val).IsLowerTriangular := by
     intro i j hij
-    simp only [Matrix.of_apply]
+    simp only [Matrix.ofFun_apply]
     have hij' : i < j := hij
     have hval : i.val < j.val := Fin.lt_def.mp hij'
     exact hSvan A B C i.val j.val hval
   rw [Matrix.det_of_isLowerTriangular _ hTri]
-  simp only [Matrix.of_apply]
+  simp only [Matrix.ofFun_apply]
   apply Finset.prod_eq_one
   intro i _
   exact S_diag_aux K S hS A B C i.val
@@ -225,48 +225,37 @@ lemma pan_vandermonde_general
   (hSvan : ∀ (a b c : ℝ) (n k : ℕ), n < k → S a b c n k = 0)
   (hdist : Function.Injective x) :
 -- imply
-  (Matrix.of (fun (r c : Fin p) => ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)) =
-    Matrix.of (fun (r c : Fin p) => S α β γ r.val c.val) *
-    Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, ((x c - RCLike.ofReal γ) - (j : K) * RCLike.ofReal β)))
-    ∧ Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α))) =
-    Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0)))
-    ∧ Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0))) =
+  ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)) =
+    ([r < p, c < p] S α β γ r.val c.val) *
+    ([r < p, c < p] (∏ j ∈ Finset.range r.val, ((x c - RCLike.ofReal γ) - (j : K) * RCLike.ofReal β))))
+    ∧ Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α))) =
+    Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0)))
+    ∧ Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0))) =
     ∏ ij ∈ Finset.univ.filter (fun ij : Fin p × Fin p => ij.1 < ij.2), (x ij.2 - x ij.1)
-    ∧ IsUnit (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))
-    ∧ (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))⁻¹ =
-    (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0)))⁻¹ *
-    Matrix.of (fun (r c : Fin p) => S 0 α 0 r.val c.val) := by
+    ∧ IsUnit ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))
+    ∧ ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))⁻¹ =
+    ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0)))⁻¹ *
+    ([r < p, c < p] S 0 α 0 r.val c.val) := by
 -- proof
   classical
   -- First decomposition and determinant-one facts
   have hDecomp1 := mat_decomp_aux p K x α β γ S hS hSvan
-  have hDetB : Matrix.det (Matrix.of (fun (r s : Fin p) => S α β γ r.val s.val)) = 1 :=
+  have hDetB : Matrix.det ([r < p, s < p] S α β γ r.val s.val) = 1 :=
     S_det_one p K α β γ S hS hSvan
-  have hDetD2 : Matrix.det (Matrix.of (fun (r s : Fin p) => S 0 β γ r.val s.val)) = 1 :=
+  have hDetD2 : Matrix.det ([r < p, s < p] S 0 β γ r.val s.val) = 1 :=
     S_det_one p K 0 β γ S hS hSvan
   have hV2 := mat_decomp_aux p K x 0 β γ S hS hSvan
   -- det A = det V
-  have hDetA_eq : Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))
-    = Matrix.det (Matrix.of (fun (r c : Fin p) =>
-      ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0))) := by
+  have hDetA_eq : Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))
+    = Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0))) := by
     rw [hDecomp1, hV2, Matrix.det_mul, Matrix.det_mul, hDetB, hDetD2]
   -- V equals transpose of vandermonde
-  have hVtrans : Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ)))
+  have hVtrans : [r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ)))
     = (Matrix.vandermonde x).transpose := by
     ext r c
-    simp only [Matrix.of_apply, Matrix.transpose_apply, Matrix.vandermonde_apply]
+    simp only [Matrix.ofFun_apply, Matrix.transpose_apply, Matrix.vandermonde_apply]
     simp
-  have hDetV : Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ))))
+  have hDetV : Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ))))
     = (Matrix.vandermonde x).det := by
     rw [hVtrans, Matrix.det_transpose]
   have hDetVan := Matrix.det_vandermonde x
@@ -283,8 +272,7 @@ lemma pan_vandermonde_general
     intro i _
     rw [← Finset.prod_filter]
     rw [hIoi i]
-  have hVander : Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ))))
+  have hVander : Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ))))
     = ∏ ij ∈ Finset.univ.filter (fun ij : Fin p × Fin p => ij.1 < ij.2), (x ij.2 - x ij.1) := by
     rw [hDetV, hDetVan, hConv]
   -- nonzero product from injectivity
@@ -301,53 +289,40 @@ lemma pan_vandermonde_general
       apply hdist
       exact hEq
     exact sub_ne_zero.mpr hxne
-  have hIsUnitA : IsUnit (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α))) := by
+  have hIsUnitA : IsUnit ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α))) := by
     rw [Matrix.isUnit_iff_isUnit_det]
     rw [hDetA_eq, hVander]
     exact isUnit_iff_ne_zero.mpr hProdNe
   -- V = D * A for the inverse formula
   have hRaw := mat_decomp_aux p K x 0 α 0 S hS hSvan
-  have hSecond : Matrix.of (fun (r s : Fin p) =>
-    ∏ j ∈ Finset.range r.val, ((x s - RCLike.ofReal (0 : ℝ)) - (j : K) * RCLike.ofReal α))
-    = Matrix.of (fun (r s : Fin p) =>
-      ∏ j ∈ Finset.range r.val, (x s - (j : K) * RCLike.ofReal α)) := by
+  have hSecond : [r < p, s < p] (∏ j ∈ Finset.range r.val, ((x s - RCLike.ofReal (0 : ℝ)) - (j : K) * RCLike.ofReal α))
+    = [r < p, s < p] (∏ j ∈ Finset.range r.val, (x s - (j : K) * RCLike.ofReal α)) := by
     ext r s
-    simp only [Matrix.of_apply]
+    simp only [Matrix.ofFun_apply]
     apply Finset.prod_congr rfl
     intro j _
     simp
-  have hVA : Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ)))
-    = Matrix.of (fun (r c : Fin p) => S 0 α 0 r.val c.val) *
-      Matrix.of (fun (r c : Fin p) =>
-        ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)) := by
+  have hVA : [r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ)))
+    = ([r < p, c < p] S 0 α 0 r.val c.val) *
+      ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α))) := by
     rwa [hSecond] at hRaw
-  have hDetADet : Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α))) ≠ 0 := by
+  have hDetADet : Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α))) ≠ 0 := by
     rwa [hDetA_eq, hVander]
-  have hIsUnitDetA : IsUnit (Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))) :=
+  have hIsUnitDetA : IsUnit (Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))) :=
     isUnit_iff_ne_zero.mpr hDetADet
-  have hIsUnitDetV : IsUnit (Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ))))) := by
+  have hIsUnitDetV : IsUnit (Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ))))) := by
     rwa [← hDetA_eq]
-  have hInv : (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))⁻¹
-    = (Matrix.of (fun (r c : Fin p) =>
-      ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ))))⁻¹ *
-      Matrix.of (fun (r c : Fin p) => S 0 α 0 r.val c.val) := by
+  have hInv : ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))⁻¹
+    = ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ))))⁻¹ *
+      ([r < p, c < p] S 0 α 0 r.val c.val) := by
     apply Matrix.inv_eq_left_inv
-    have h1 : ((Matrix.of (fun (r c : Fin p) =>
-      ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ))))⁻¹ *
-      Matrix.of (fun (r c : Fin p) => S 0 α 0 r.val c.val)) *
-      Matrix.of (fun (r c : Fin p) =>
-        ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)) = 1 := by
+    have h1 : (([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal (0 : ℝ))))⁻¹ *
+      ([r < p, c < p] S 0 α 0 r.val c.val)) *
+      ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α))) = 1 := by
       rw [Matrix.mul_assoc, ← hVA]
       exact Matrix.nonsing_inv_mul _ hIsUnitDetV
     exact h1
   exact ⟨hDecomp1, hDetA_eq, hVander, hIsUnitA, hInv⟩
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -361,7 +336,7 @@ lemma pan_vandermonde
   :
 -- imply
   ∀ (p : ℕ)
-    (hp : 0 < p)
+    (_hp : 0 < p)
     (K : Type*) [RCLike K]
     (x : Fin p → K)
     (α β γ : ℝ)
@@ -373,30 +348,23 @@ lemma pan_vandermonde
     ((y - RCLike.ofReal c) - (j : K) * RCLike.ofReal b))
     (hSvan : ∀ (a b c : ℝ) (n k : ℕ), n < k → S a b c n k = 0)
     (hdist : Function.Injective x),
-    (Matrix.of (fun (r c : Fin p) => ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)) =
-    Matrix.of (fun (r c : Fin p) => S α β γ r.val c.val) *
-    Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, ((x c - RCLike.ofReal γ) - (j : K) * RCLike.ofReal β)))
-    ∧ Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α))) =
-    Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0)))
-    ∧ Matrix.det (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0))) =
+    ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)) =
+    ([r < p, c < p] S α β γ r.val c.val) *
+    ([r < p, c < p] (∏ j ∈ Finset.range r.val, ((x c - RCLike.ofReal γ) - (j : K) * RCLike.ofReal β))))
+    ∧ Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α))) =
+    Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0)))
+    ∧ Matrix.det ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0))) =
     ∏ ij ∈ Finset.univ.filter (fun ij : Fin p × Fin p => ij.1 < ij.2), (x ij.2 - x ij.1)
-    ∧ IsUnit (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))
-    ∧ (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))⁻¹ =
-    (Matrix.of (fun (r c : Fin p) =>
-    ∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0)))⁻¹ *
-    Matrix.of (fun (r c : Fin p) => S 0 α 0 r.val c.val) := by
+    ∧ IsUnit ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))
+    ∧ ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal α)))⁻¹ =
+    ([r < p, c < p] (∏ j ∈ Finset.range r.val, (x c - (j : K) * RCLike.ofReal 0)))⁻¹ *
+    ([r < p, c < p] S 0 α 0 r.val c.val) := by
 -- proof
   intro p _ K _ x α β γ S hS hSvan hdist
-  exact pan_vandermonde_general p K x α β γ S hS hSvan hdist
+  exact pan_vandermonde_general (K := K) hS hSvan hdist
 
 end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-27

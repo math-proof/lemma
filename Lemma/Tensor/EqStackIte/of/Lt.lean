@@ -1,5 +1,5 @@
-import sympy.tensor.stack_ite
-import sympy.Basic
+import Def.Data.Fin.StackIte
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

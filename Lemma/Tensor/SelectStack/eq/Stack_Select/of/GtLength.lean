@@ -1,6 +1,6 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
-import torch.stack
+import Def.Data.Holor.Stack.Part2
 open Tensor Bool
 
 

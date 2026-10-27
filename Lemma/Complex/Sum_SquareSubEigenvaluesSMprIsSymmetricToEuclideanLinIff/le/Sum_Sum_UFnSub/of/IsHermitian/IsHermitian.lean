@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.inner_product_space.HoffmanWielandt
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.InnerProductSpace.HoffmanWielandt
 
 
 /--
@@ -22,4 +22,4 @@ private lemma hoffman_wielandt_hermitian_le
 
 
 -- created on 2026-10-10
--- updated on 2026-10-24
+-- updated on 2026-10-26

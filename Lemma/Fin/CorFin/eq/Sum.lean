@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.GroupCohomology.Corestriction2
 open CategoryTheory groupCohomology
 set_option autoImplicit false

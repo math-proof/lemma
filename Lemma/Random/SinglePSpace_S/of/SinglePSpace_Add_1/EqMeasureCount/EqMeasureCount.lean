@@ -1,6 +1,6 @@
 import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Random.SinglePSpace.of.AEMeasurable.Distributed
-import sympy.stats.hidden_markov_sequence
+import Def.Probability.Process.HiddenMarkovSequence.Part2
 open MeasureTheory Measure Random
 
 

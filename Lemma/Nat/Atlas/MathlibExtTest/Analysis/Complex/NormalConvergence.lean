@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Analysis.Complex.NormalConvergence
 open Complex MeasureTheory Topology Set Filter N329Test
 

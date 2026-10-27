@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.TensorCategories.code.DualCategory.Part6
 import Lemma.Category.Atlas.v1.TensorCategories.code.DualCategory
 open CategoryTheory in

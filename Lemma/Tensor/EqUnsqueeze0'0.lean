@@ -1,5 +1,5 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.prod
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Unsqueeze.eq.TensorCast_Data

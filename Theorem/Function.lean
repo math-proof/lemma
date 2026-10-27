@@ -8,7 +8,7 @@ import Notation.Fun
 import Structure.Fun
 import Syntax.Fun
 import Syntax.Subst
-import stdlib.List
+import Def.Data.List.List.Part5
 
 
 @[simp]

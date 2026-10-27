@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -27,4 +27,4 @@ private lemma main
 
 
 -- created on 2018-01-11
--- updated on 2025-04-06
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqSoftmaxS.of.SEq
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Tensor
 
 

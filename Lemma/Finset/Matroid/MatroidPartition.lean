@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 namespace MathlibExt.Combinatorics.Matroid.MatroidPartitionWanted
@@ -390,4 +390,4 @@ end MathlibExt.Combinatorics.Matroid.MatroidPartitionWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

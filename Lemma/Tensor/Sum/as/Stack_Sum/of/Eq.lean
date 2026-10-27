@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEqStackS_UFnGet.of.Eq
 import Lemma.Tensor.Sum.eq.Stack_Sum
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor
 
 
@@ -20,4 +20,4 @@ private lemma main
 
 
 -- created on 2025-06-27
--- updated on 2026-07-22
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
 open BurnsidePaqb
 open Classical

@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqGetStack
-import sympy.matrices.expressions.permutation
+import Def.LinearAlgebra.Matrix.Permutation
 open Tensor
 
 
@@ -51,4 +51,4 @@ private lemma main
 
 
 -- created on 2020-07-25
--- updated on 2026-09-08
+-- updated on 2026-10-26

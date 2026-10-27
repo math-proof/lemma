@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Ex_3_8
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Ex_3_8
 open MeasureTheory Real Set intervalIntegral Chapter3

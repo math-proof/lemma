@@ -1,7 +1,7 @@
 import Lemma.Random.MulMeasure.eq.MulMeasure.of.CondIndep
 import Lemma.Random.Measure.eq.Mul_MulDivS.of.Subset
 import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
-import sympy.stats.discrete_hmm
+import Instance.Probability.Process.DiscreteHMM.Part2
 import Macro.Algebra.BigOperators.Summations
 open MeasureTheory Random
 open IsDiscreteHMM
@@ -428,4 +428,4 @@ private lemma main
 
 
 -- created on 2026-10-03
--- updated on 2026-10-23
+-- updated on 2026-10-26

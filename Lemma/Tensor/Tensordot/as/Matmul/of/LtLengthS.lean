@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import torch.Tensor.reshape
-import sympy.matrices.expressions.matmul
+import Def.Data.Holor.Reshape
+import Instance.LinearAlgebra.Matrix.Matmul
 open List Bool
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TensorCategories.code.QuantumSl2.Part2
 import Lemma.Category.Atlas.v1.TensorCategories.code.QuantumSl2
 open Coalgebra HopfAlgebra

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TheoryOfProbability.code.PairwiseIndepSLLN
 open MeasureTheory ProbabilityTheory Filter Set
 open scoped ENNReal NNReal MeasureTheory

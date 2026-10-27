@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Lemma.Random.MeasurableJoint.is.Measurable.Measurable
-import sympy.core.power
-import sympy.vector.Basic
+import Theorem.Algebra.Power.Part2
+import Theorem.Data.Vector.Basic.Part2
 import Macro.Order.Sup
 open MeasureTheory Random
 
@@ -107,4 +107,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-10
+-- updated on 2026-10-26

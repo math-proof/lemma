@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.NumberTheory.GelfondSchneider
 open scoped Topology ENNReal
 open Filter
@@ -2620,4 +2620,4 @@ end MathlibExt.NumberTheory.TranscendenceWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Lemma.Tensor.DataMul.eq.MulDataS
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.Eq.is.EqDataS
 open Tensor
 

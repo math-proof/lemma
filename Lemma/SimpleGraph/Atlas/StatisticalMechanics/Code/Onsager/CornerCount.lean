@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.CornerCount.Part3
 open StatMech StatMech.Onsager StatMech.Onsager.CornerCount
 

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch8Entry17Loggammaintegral
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch8Entry17Loggammaintegral
 
 open Ramanujan.Part1Ch8.Entry17Loggammaintegral
 

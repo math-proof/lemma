@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKRectLocalBoxEmbedding.Part7
 open MeasureTheory StatMech.Lattice StatMech.Percolation SimpleGraph StatMech StatMech.FrontierD
 

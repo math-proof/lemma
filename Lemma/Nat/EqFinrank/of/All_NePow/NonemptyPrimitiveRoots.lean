@@ -1,5 +1,5 @@
 import Mathlib.FieldTheory.KummerExtension
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Polynomial
 
 

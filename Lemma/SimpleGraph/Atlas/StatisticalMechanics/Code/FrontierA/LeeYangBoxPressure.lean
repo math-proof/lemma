@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangBoxPressure.Part3
 open Finset Filter Topology Set SimpleGraph StatMech StatMech.FrontierA
 

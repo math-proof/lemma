@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.fkc_rqinterface
 open SimpleGraph Filter Topology Set StatMech StatMech.Walls
 

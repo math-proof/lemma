@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.WindingAssembly.Part2
 open StatMech StatMech.Onsager StatMech.Onsager.WindingAssembly
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.AlgebraicTopologyI.code.SubdivisionSmall.Part3
 open Classical in AlgebraicTopologyI
 

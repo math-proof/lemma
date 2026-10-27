@@ -1,5 +1,5 @@
-import sympy.stats.step_size
-import sympy.Basic
+import Def.Dynamics.StepSize.Part2
+import Initialize.Tactic.Attr.Basic
 import Mathlib.Analysis.SumIntegralComparisons
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 open Finset Real

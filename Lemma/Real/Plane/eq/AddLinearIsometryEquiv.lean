@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraNotes.code.Isometries
 open Isometries
 open scoped EuclideanSpace
@@ -273,4 +273,4 @@ end Isometries
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

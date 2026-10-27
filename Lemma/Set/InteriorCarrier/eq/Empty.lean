@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.Buildings.code.Reflection.AffineWeylGroups.Part3
 open Set AffineReflectionGroup
 open scoped InnerProductSpace

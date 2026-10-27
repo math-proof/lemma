@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Order.Dilworth
 open MathlibExt.Combinatorics.Order.DilworthWanted
 
@@ -1106,4 +1106,4 @@ end MathlibExt.Combinatorics.Order.DilworthWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

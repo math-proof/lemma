@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Exact3D.IsingAnalyticBridgeTarget.Part17
 open StatMech StatMech.Exact3D StatMech.Exact3D.IsingAnalyticRGToExponentTarget StatMech.Exact3D.IsingMassAnalyticRGToExponentTarget StatMech.Exact3D.IsingMassPowerLawAnalyticRGToExponentTarget StatMech.Exact3D.FreeAnalyticRGToPlusExponentTarget StatMech.Exact3D.FreeMassAnalyticRGToPlusExponentTarget StatMech.Exact3D.FreeMassPowerLawToPlusAnalyticRGToExponentTarget
 

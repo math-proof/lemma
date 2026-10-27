@@ -1,5 +1,5 @@
-import sympy.functions.combinatorial.factorials
-import sympy.Basic
+import Def.Data.Nat.Factorial.Factorials
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

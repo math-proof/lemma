@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.NumberTheoryI.code.FourierAnalysis
 open MeasureTheory Complex Real FourierAnalysis
 open scoped FourierTransform SchwartzMap

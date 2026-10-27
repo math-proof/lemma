@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Universality.HexBridgeDecomp.Part9
 open StatMech StatMech.Universality StatMech.Universality.HexBridge
 

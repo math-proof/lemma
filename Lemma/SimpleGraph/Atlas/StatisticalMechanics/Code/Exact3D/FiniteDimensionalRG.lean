@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.FiniteDimensionalRG.Part15
 open StatMech StatMech.Exact3D StatMech.Exact3D.IntervalLipschitzConstant StatMech.Exact3D.StableBlockWithRemainder StatMech.Exact3D.FiniteHyperbolicSplitting StatMech.Exact3D.FiniteHyperbolicSplittingExample StatMech.Exact3D.TwoCoordinateRGData
 

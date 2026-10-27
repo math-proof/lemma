@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Fourier/ConvolutionTheorem.lean -/
 
 
-import sympy.atlas.Analysis.Measure.Eq_MulFourierSIntegral.of.Integrable.Integrable.All_MeasurePreserving_Add.Continuous
+import Lemma.Measure.Eq_MulFourierSIntegral.of.Integrable.Integrable.All_MeasurePreserving_Add.Continuous
 open MeasureTheory
 open scoped Convolution
 

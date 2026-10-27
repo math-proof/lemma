@@ -1,5 +1,5 @@
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.List.EqRotateRotate.of.GeLength
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.Nat.Sub_Mod.eq.ModSub
@@ -96,4 +96,4 @@ private lemma main
 
 
 -- created on 2025-10-18
--- updated on 2025-10-19
+-- updated on 2026-10-26

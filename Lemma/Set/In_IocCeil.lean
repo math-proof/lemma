@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Int.EqCeil.is.Lt.Le
 import Lemma.Set.In_Ioc.is.Lt.Le
 open Set Int

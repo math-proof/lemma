@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4NearFourParameterAsymptotic
 open Filter Topology Asymptotics StatMech StatMech.FrontierD
 

@@ -1,5 +1,5 @@
 import Mathlib.Probability.ConditionalProbability
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Set
 
 
@@ -67,4 +67,4 @@ private lemma main
 
 
 -- created on 2024-06-20
--- updated on 2026-10-17
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.GaloisRep_Adic
 import Lemma.Int.P2MUtil
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.RothAuxiliary.Part7
 import Lemma.Finset.RothFinsuppL1_Sum.le.Sum_RothFinsuppL1
 import Lemma.Fin.RothKroneckerEncode.eq.Add_Mul_RothKroneckerEncode

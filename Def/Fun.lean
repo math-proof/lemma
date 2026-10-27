@@ -1,5 +1,5 @@
 import Structure.Fun
-import stdlib.List
+import Def.Data.List.List.Part5
 
 namespace Fun
 
@@ -43,7 +43,7 @@ def getSliceFrom.unexpand : Lean.PrettyPrinter.Unexpander
 end Fun
 
 /-- Slicing of a function `ℕ → β`, dispatched on its value type `β`. The random-variable
-instance stays in `sympy.stats.hidden_markov_sequence`. -/
+instance stays in `Def.Probability.Process.HiddenMarkovSequence.Part2`. -/
 class FunSlice (β : Type*) where
   Out : Slice → Type*
   slice : (ℕ → β) → (s : Slice) → Out s

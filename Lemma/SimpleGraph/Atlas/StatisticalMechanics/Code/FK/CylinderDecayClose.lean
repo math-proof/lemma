@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.CylinderDecayClose.Part6
 open MeasureTheory Filter Topology BoundedContinuousFunction SimpleGraph Set StatMech.ConfigSpace StatMech.Lattice StatMech StatMech.FK
 

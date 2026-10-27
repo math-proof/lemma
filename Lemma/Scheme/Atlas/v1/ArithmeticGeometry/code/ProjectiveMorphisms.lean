@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveMorphisms.Part6
 open MvPolynomial ProjectiveRegularFunction ProjectiveRatMap ProjectiveThm1518
 open scoped LinearAlgebra.Projectivization

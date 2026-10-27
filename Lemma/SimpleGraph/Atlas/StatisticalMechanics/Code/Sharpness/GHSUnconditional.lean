@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.GHSUnconditional
 open Set SimpleGraph StatMech StatMech.Sharpness
 

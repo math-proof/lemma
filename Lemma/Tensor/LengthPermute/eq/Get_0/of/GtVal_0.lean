@@ -1,7 +1,7 @@
 import Lemma.List.GetPermute.eq.Get.of.Gt
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import torch.Tensor.Basic
-import torch.Tensor.permute
+import Def.Data.Holor.Defs.Part4
+import Notation.Data.Holor.Permute
 open Tensor List
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicCombinatorics.code.OrbitBasis.Part4
 open Finset Finsupp MulAction Function Module OrbitBasis
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Universality.RSWOuterStraddle.Part2
 open Function MeasureTheory Set StatMech StatMech.Universality
 

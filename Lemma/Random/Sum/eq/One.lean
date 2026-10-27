@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
-import sympy.stats.joint_rv
-import sympy.Basic
+import Syntax.Probability.JointRv.Part6
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 

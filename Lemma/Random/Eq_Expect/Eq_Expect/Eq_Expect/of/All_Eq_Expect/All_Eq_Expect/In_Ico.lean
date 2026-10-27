@@ -1,7 +1,7 @@
 import Lemma.Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico
 import Lemma.Random.MEqExpectS.of.All_Eq.In_Ico
 import Lemma.Random.Eq.of.Ne_0.MEq
-import sympy.stats.cond_expectation
+import Theorem.Probability.CondExpectation
 import Lemma.Random.Integrable.of.Measurable
 import Lemma.Random.StronglyMeasurableClip
 open MeasureTheory ProbabilityTheory PolicyGradient Random
@@ -153,4 +153,4 @@ private lemma main
 
 
 -- created on 2023-03-28
--- updated on 2026-10-12
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Lemma.Tensor.Data.eq.FlattenMapRange_GetToVector
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.EqFlattenMapRange.of.All_SEqArraySlice
@@ -29,4 +29,4 @@ private lemma main
 
 
 -- created on 2025-05-18
--- updated on 2025-11-11
+-- updated on 2026-10-26

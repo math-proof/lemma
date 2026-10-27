@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTrifurcation.Part5
 open Filter MeasureTheory Set SimpleGraph Topology Finset StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 

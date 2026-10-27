@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 

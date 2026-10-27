@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.SpecialFunctions.ExponentialIntegral.E1.TwoTermRemainder
 open Filter Set Topology MeasureTheory
 open Complex
@@ -203,4 +203,4 @@ end Complex
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

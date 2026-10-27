@@ -1,6 +1,6 @@
-import torch.functions
-import stdlib.SEq
-import torch.Tensor.Basic
+import Theorem.Data.Holor.Functions
+import Theorem.Logic.SEq
+import Def.Data.Holor.Defs.Part4
 
 
 @[path, comm, cast]

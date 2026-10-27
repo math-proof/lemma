@@ -1,5 +1,5 @@
-import sympy.vector.lp_space
-import sympy.Basic
+import Def.Analysis.Normed.Lp.LpSpace.Part2
+import Initialize.Tactic.Attr.Basic
 open Finset LpSpace
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Young.LittlewoodRichardson.Part17
 import Lemma.Partition.NPartition
 import Lemma.MvPolynomial.MonomialSymmetric

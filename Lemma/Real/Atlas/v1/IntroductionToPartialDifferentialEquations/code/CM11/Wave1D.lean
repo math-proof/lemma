@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
 open Real Set MeasureTheory intervalIntegral WaveEquation1D
 

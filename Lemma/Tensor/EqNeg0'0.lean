@@ -1,5 +1,5 @@
 import Lemma.Vector.EqNeg0'0
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Vector Tensor
 
 

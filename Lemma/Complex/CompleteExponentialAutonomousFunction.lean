@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.CompleteExponentialAutonomousFunction
+import Initialize.Tactic.Attr.Basic
+import Def.Analysis.SpecialFunctions.CompleteExponentialAutonomousFunction.Part2
 open MetaMathlibExt
 
 

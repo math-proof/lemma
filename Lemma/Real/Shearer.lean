@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.InformationTheory.Shearer
 open Finset BigOperators Real
 open MathlibExt.InformationTheory.Shearer
@@ -1127,4 +1127,4 @@ end MathlibExt.InformationTheory.Shearer
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

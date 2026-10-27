@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AlgebraicCombinatorics.code.HasseWalkFormula.Part2
 open Classical in HasseWalkFormula
 open scoped Nat

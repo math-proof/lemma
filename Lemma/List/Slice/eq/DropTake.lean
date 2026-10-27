@@ -1,5 +1,5 @@
 import Lemma.List.DropTake.eq.TakeDrop
-import stdlib.List
+import Def.Data.List.List.Part5
 open List
 
 

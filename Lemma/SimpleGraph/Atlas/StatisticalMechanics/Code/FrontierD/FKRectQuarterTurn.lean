@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKRectQuarterTurn.Part9
 open Set SimpleGraph StatMech.Lattice StatMech StatMech.FrontierD
 

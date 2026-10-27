@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -61,4 +61,4 @@ private lemma set₂
 
 
 -- created on 2025-07-29
--- updated on 2026-08-21
+-- updated on 2026-10-26

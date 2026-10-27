@@ -1,4 +1,4 @@
-import stdlib.Slice
+import Def.Data.List.Slice
 import Lemma.Int.InAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
 import Lemma.Int.EqToNat.of.Ge_0
 open Int

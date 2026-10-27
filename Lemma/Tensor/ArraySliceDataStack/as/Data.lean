@@ -1,4 +1,4 @@
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.List.Prod.eq.Foldr
 import Lemma.Tensor.GetUnflattenDataStack.eq.Data
 import Lemma.Bool.SEq.is.Eq
@@ -32,4 +32,4 @@ private lemma main
 
 
 -- created on 2025-05-23
--- updated on 2025-07-17
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Algebra_DescentCofaces
 open CategoryTheory Opposite AlgebraicGeometry Algebra.TensorProduct Algebra.DescentCofaces
 open scoped TensorProduct

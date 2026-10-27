@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierB.BoxCurrentPatternFactor.Part2
 open MeasureTheory Filter Topology StatMech StatMech.FrontierB
 

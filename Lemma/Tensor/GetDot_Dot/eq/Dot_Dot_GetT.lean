@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.Dot
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetDot.eq.DotGetS
@@ -32,4 +32,4 @@ private lemma main
 
 
 -- created on 2026-07-09
--- updated on 2026-07-21
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.GroupTheory.QuotientGroup.Basic
 open QuotientGroup
 
@@ -25,4 +25,4 @@ private lemma quotientEquivRangeQuotient_mk_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

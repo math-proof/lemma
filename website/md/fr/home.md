@@ -26,11 +26,6 @@ Pour maîtriser ce système de dérivation, il est utile de connaître les modes
 5. **Raisonnement abductif**  
    Recherche à rebours : partir du but et identifier des conditions suffisantes ou des lemmes applicables. Tactiques : `refine` / `apply`
 
-## Raisonnement heuristique
-
-- **Analogie**  
-  Transporter un résultat connu d'une structure mathématique à une autre (par exemple des réels aux hyperréels) pour tester si la proposition subsiste.
-
 <br><br>
 ------
 
@@ -56,6 +51,8 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
   - [clustering k-means](../?module=Finset.LeAddSumS_SquareSub_Div_Sum.of.LeAbsSSub_Div_Sum.NotIn.In.GtCard_0)
 * [List](../?module=List) Théorie des listes
 * [Vector](../?module=Vector) Vecteurs (tenseurs unidimensionnels)
+* [Matrix](../?module=Matrix) Théorie des matrices, p. ex. :
+  - [théorème d'Okishio](../?module=Matrix.Any_And_EqSMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
 * [Tensor](../?module=Tensor) Calcul tensoriel formalisé, sémantiquement aligné sur **torch.Tensor**, pour la spécification et la vérification formelle d'algorithmes d'apprentissage profond, p. ex. :
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)

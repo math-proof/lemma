@@ -13,9 +13,9 @@ if ($refresh -or -not (Test-Path "json/mathlib.jsonl")) {
     lake build Mathlib
     Write-Host "Generating mathlib.jsonl..."
     New-Item -Path "json/mathlib.jsonl" -ItemType File -Force
-    # lake env lean sympy/printing/mathlib.lean | Out-File "json/mathlib.jsonl" -Encoding utf8
-    cmd /c "lake env lean sympy/printing/mathlib.lean" | Tee-Object -FilePath "json/mathlib.jsonl" -Append
-    # cmd /c "lake setup-file sympy/printing/mathlib.lean" | Tee-Object -FilePath "json/mathlib.jsonl" -Append
+    # lake env lean Def/Lean/Meta/Mathlib.lean | Out-File "json/mathlib.jsonl" -Encoding utf8
+    cmd /c "lake env lean Def/Lean/Meta/Mathlib.lean" | Tee-Object -FilePath "json/mathlib.jsonl" -Append
+    # cmd /c "lake setup-file Def/Lean/Meta/Mathlib.lean" | Tee-Object -FilePath "json/mathlib.jsonl" -Append
 }
 
 # Generate json/mathlib.tsv if missing

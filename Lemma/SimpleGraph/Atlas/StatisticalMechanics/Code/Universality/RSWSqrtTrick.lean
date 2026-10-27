@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.RSWSqrtTrick
 open Set MeasureTheory SimpleGraph StatMech StatMech.Universality
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessPackage.Part9
 open StatMech StatMech.Exact3D StatMech.Exact3D.RGCertificate StatMech.Exact3D.FiniteStableWitness StatMech.Exact3D.FiniteWitnessPackage
 

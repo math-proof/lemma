@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Real Set
 
 
@@ -30,4 +30,4 @@ private lemma main :
 
 
 -- created on 2023-03-20
--- updated on 2026-10-17
+-- updated on 2026-10-26

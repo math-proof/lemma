@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SubGaussian
 open MeasureTheory ProbabilityTheory Real ENNReal MeasureTheory.Measure Set SubGaussian
 

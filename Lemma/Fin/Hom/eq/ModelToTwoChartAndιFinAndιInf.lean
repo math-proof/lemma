@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.ModularCurve.TwoChartModel
 import Lemma.AlgebraicCurve.TwoChartIntegralModel
 
@@ -25,4 +25,4 @@ private lemma main
   ⟨Iso.refl _, Category.id_comp _, Category.comp_id _, Category.comp_id _⟩
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

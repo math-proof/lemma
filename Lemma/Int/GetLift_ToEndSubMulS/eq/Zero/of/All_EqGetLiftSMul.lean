@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.LieGroups.code.PrincipalSeries.Part6
 
 
@@ -192,4 +192,4 @@ private lemma functor_H_lambda_middle_exact
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

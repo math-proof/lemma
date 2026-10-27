@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.GeometryOfManifolds.code.EllipticRegularityConcrete.Part2
 open EllipticRegularityConcrete
 

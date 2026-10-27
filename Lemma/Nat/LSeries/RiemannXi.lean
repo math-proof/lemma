@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.LSeries.RiemannXi
 open critical strip `0 < s.re < 1` (the left half follows by reflecting
 open RiemannXi
@@ -176,4 +176,4 @@ end RiemannXi
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

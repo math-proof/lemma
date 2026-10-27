@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 open Polynomial WeierstrassCurve WeierstrassCurve.Affine
 open scoped Polynomial.Bivariate

@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -36,4 +36,4 @@ private lemma main
 
 
 -- created on 2025-05-26
--- updated on 2025-07-17
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib.Topology.Order.Compact
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -19,4 +19,4 @@ private lemma main
   refine ⟨xi, hxi, fun z hz => hmin hz⟩
 
 -- created on 2023-10-15
--- updated on 2023-11-10
+-- updated on 2026-10-26

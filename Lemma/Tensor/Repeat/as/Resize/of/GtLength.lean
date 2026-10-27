@@ -1,4 +1,4 @@
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 import Lemma.Tensor.Resize_0.as.AppendCast_Repeat_0.of.GtLength_0
 import Lemma.Tensor.SEqAppend.of.Eq_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0

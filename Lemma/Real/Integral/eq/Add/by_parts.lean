@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 open MeasureTheory
@@ -23,4 +23,4 @@ private lemma main
 
 
 -- created on 2020-06-07
--- updated on 2023-07-03
+-- updated on 2026-10-26

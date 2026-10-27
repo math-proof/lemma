@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.FKUniqPerEdge.Part3
 open Set Filter Topology StatMech.FK StatMech
 

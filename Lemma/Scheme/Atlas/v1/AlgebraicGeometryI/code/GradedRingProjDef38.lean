@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.GradedRingProjDef38.Part2
 open Polynomial AlgebraicGeometry Definition38
 

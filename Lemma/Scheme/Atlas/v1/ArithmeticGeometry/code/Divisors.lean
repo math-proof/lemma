@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part11
 open CurveDivisor ClosedPoint CurveWithOrd CurveWithConstants CurveMorphismData ArithmeticGeometry
 open CurveWithOrd

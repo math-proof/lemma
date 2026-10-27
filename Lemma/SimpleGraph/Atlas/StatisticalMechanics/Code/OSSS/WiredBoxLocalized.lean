@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.WiredBoxLocalized.Part3
 open StatMech StatMech.OSSS StatMech.OSSS.WiredBoxLocalized
 

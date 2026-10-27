@@ -12,7 +12,7 @@ the gradient of the Bellman equations of extract_QVA; the next-state sum of the 
 becomes an integral against the reference measure of `S` (e.g. Lebesgue measure on `ℝ^b`).
 Since `ℙ(s[t] = x) = 0` for a continuous state, the values `V = Vk`, `Q = Qk` are the regular (kernel) conditional
 expectations of the discounted return given `s[t] = x` (resp. `s[t] = x, a[t] = u`),
-see `sympy.stats.policy_trajectory.continuous`; `ℙ(s[t+1] = y | s[t] = x) = P1k θ p x y = ∑ u, π_θ(u | x) * p x u y`.
+see `Def.Dynamics.PolicyTrajectory.Continuous`; `ℙ(s[t+1] = y | s[t] = x) = P1k θ p x y = ∑ u, π_θ(u | x) * p x u y`.
 h₁, h₂: θ ↦ π_θ(u | x) is differentiable with a bounded gradient (as in the discrete version);
 h₃: x ↦ π_θ(u | x) is measurable; h₄, h₅, h₆: `p x u` is a (measurable, nonnegative) density of the transition
 `T(· | x, u)` w.r.t. the reference measure. `Θ` is finite-dimensional (the weights `π` have shape `(D,)`).

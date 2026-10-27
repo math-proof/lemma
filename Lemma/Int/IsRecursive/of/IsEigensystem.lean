@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FormalHecke_Eigensystem
 import Lemma.Int.P2MUtil
 open FormalHecke

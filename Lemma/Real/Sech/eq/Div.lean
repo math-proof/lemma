@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Complex.Trigonometric
-import sympy.functions.elementary.hyperbolic
-import sympy.Basic
+import Def.Analysis.SpecialFunctions.Hyperbolic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -14,4 +14,4 @@ private lemma main
 
 
 -- created on 2023-11-26
--- updated on 2026-10-17
+-- updated on 2026-10-26

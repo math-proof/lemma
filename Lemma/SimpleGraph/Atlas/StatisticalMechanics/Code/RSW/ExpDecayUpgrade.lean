@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.RSW.ExpDecayUpgrade
 open Real StatMech StatMech.RSW StatMech.RSW.ExpDecay
 

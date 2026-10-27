@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
 open FunctionFieldAdeleRing RiemannRochSpace WeilDifferential
 open scoped RestrictedProduct

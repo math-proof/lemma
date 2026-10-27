@@ -1,5 +1,5 @@
 import Lemma.List.Permute.of.Eq.Val.Eq
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.List.EqSwap.of.OrLeSLength
 import Lemma.Tensor.LengthCast.eq.Length.of.Eq
 import Lemma.Tensor.LengthPermute.eq.Length.of.Ge_0.GtVal_0
@@ -100,4 +100,4 @@ private lemma main
 
 
 -- created on 2026-07-03
--- updated on 2026-07-04
+-- updated on 2026-10-26

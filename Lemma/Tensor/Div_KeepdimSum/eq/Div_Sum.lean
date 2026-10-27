@@ -1,13 +1,13 @@
-import torch.Tensor.sum
-import torch.Tensor.unsqueeze
-import torch.Tensor.prod
+import Def.Data.Holor.Sum
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Prod
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.Div.eq.Div_GetData_0
 import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Vector.Div.eq.Div_Replicate
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Bool Nat Tensor Vector
 
 

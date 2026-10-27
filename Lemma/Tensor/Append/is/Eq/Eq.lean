@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.EqDataS
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
 import Lemma.Bool.SEq.is.Eq
@@ -132,4 +132,4 @@ private lemma batch
 
 
 -- created on 2020-08-28
--- updated on 2026-09-09
+-- updated on 2026-10-26

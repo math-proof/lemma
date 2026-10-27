@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.MonotonicOSSS.Part3
 open Finset MeasureTheory Set StatMech StatMech.OSSS StatMech.OSSS.MonotonicFK StatMech.OSSS.MonotonicMeasure
 

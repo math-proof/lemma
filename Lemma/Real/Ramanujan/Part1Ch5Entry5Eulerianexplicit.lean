@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Ramanujan.Part1Ch5Entry5Eulerianexplicit
 open scoped Nat BigOperators Polynomial
 open Finset Entry4
@@ -491,4 +491,4 @@ end
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

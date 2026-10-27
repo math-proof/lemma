@@ -1,5 +1,5 @@
 import Lemma.Tensor.SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block
-import torch.Tensor.item
+import Def.Data.Holor.Item
 open Tensor
 set_option maxHeartbeats 500000
 

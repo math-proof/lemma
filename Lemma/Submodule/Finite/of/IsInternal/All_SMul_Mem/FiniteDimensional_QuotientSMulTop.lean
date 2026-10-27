@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Submodule.Any_And_All_Any_In.of.FiniteDimensional_QuotientSMulTop
 import Lemma.Submodule.Any_And_In_Span_InterAndInAndIn_SMulTop.of.All_Any_In.Eq_Top_Span_ImageMkQ.In
 import Lemma.Submodule.In_Span_IUnion_Image2SMul.of.In.In_SMulTop

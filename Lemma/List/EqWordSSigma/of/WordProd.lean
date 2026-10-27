@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
 open Finset BigOperators CoxeterGroup
 
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

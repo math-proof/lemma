@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Class.v1.Atlas.TensorCategories.code.Corollary_2_14_9
 open CategoryTheory
 open Category MonoidalCategory ModFun Limits

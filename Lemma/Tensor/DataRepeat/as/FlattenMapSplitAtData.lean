@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import torch.Tensor.Basic
-import torch.Tensor.repeat
+import Def.Data.Holor.Defs.Part4
+import Def.Data.Holor.Repeat
 open Bool List
 
 

@@ -1,5 +1,5 @@
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.List.ProdDropTake.eq.MulProdDropTake.of.Gt.GtLength
 import Lemma.List.ProdTail.eq.MulProdTakeTailTake.of.Ge
 import Lemma.List.TailPermute__Neg.eq.PermuteTail.of.Gt
@@ -243,4 +243,4 @@ private lemma main
 
 
 -- created on 2025-12-02
--- updated on 2025-12-03
+-- updated on 2026-10-26

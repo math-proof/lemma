@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.determinants.CauchyBinet
+import Initialize.Tactic.Attr.Basic
+import Def.LinearAlgebra.Matrix.Determinant.CauchyBinet.Part5
 import Lemma.Finset.PermFinset
 open AlgebraicCombinatorics.CauchyBinet
 open Finset

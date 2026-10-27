@@ -1,7 +1,7 @@
 import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Tensor.Mul
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Tensor Vector
 
 

@@ -1,6 +1,6 @@
 import Mathlib.Probability.Moments.Variance
 import Mathlib.Analysis.SpecificLimits.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Finset Filter
 
 
@@ -77,4 +77,4 @@ private lemma main
 
 
 -- created on 2023-04-18
--- updated on 2026-10-17
+-- updated on 2026-10-26

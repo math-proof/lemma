@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MeasureTheory.OptimalTransport.Kantorovich.Part6
 open MeasureTheory
 open scoped BoundedContinuousFunction CompactlySupported ENNReal
@@ -531,4 +531,4 @@ private lemma kantorovich_duality_compact_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import sympy.integrals.integrals
+import Instance.MeasureTheory.Integral.IntervalIntegral.Integrals.Part4
 
 
 open MeasureTheory

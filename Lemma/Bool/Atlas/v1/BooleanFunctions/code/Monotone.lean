@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Monotone
 open BooleanFourier
 
@@ -151,10 +151,10 @@ lemma monotone_fourierCoeff_singleton_eq_influence
       simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hx
       cases hxi : x i
       case false =>
-        obtain ⟨hfx, _⟩ := Bool.false_true_of_le_ne (hf (le_flipCoord_of_false x i hxi)) hx
+        obtain ⟨hfx, _⟩ := Bool.false_true_of_le_ne (hf (le_flipCoord_of_false hxi)) hx
         rw [hfx]; simp [boolToReal]
       case true =>
-        obtain ⟨_, hfx⟩ := Bool.false_true_of_le_ne (hf (flipCoord_le_of_true x i hxi)) hx.symm
+        obtain ⟨_, hfx⟩ := Bool.false_true_of_le_ne (hf (flipCoord_le_of_true hxi)) hx.symm
         rw [hfx]; simp [boolToReal]
     rw [Finset.sum_congr rfl hterm]
     simp [Finset.sum_const, nsmul_eq_mul]
@@ -179,14 +179,15 @@ lemma monotone_fourierCoeff_singleton_eq_influence
       linarith [hcancel]
     ·
       intro x _ _
-      exact flipCoord_ne_self' x i
+      exact flipCoord_ne_self'
     ·
       intro x hx
       simp only [Finset.mem_filter, Finset.mem_univ, true_and, not_not] at hx ⊢
-      rwa [flipCoord_flipCoord]
+      rw [flipCoord_flipCoord]
+      exact hx.symm
     ·
       intro x _
-      exact flipCoord_flipCoord x i
+      exact flipCoord_flipCoord
   linarith [hsplit]
 
 end BooleanFourier

@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Normed.Lp.PiLp
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

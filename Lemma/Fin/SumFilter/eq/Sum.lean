@@ -1,5 +1,5 @@
 import Macro.Order.ExprWithLimits
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /-- The band `i − l < j < i + u` of row `i` is the contiguous window `[β, ζ)`, `β = relu(i − l + 1)`, `ζ = min(n, i + u)`. -/

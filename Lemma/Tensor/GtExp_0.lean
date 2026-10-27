@@ -1,5 +1,5 @@
 import Lemma.Vector.GtExp_0
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Vector
 
 

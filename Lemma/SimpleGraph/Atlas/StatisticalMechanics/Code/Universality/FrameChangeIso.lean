@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.FrameChangeIso.Part8
 open Set SimpleGraph MeasureTheory ProbabilityTheory StatMech.Lattice StatMech.RSW.Box StatMech StatMech.Universality
 

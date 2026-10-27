@@ -1,5 +1,5 @@
 import Lemma.List.ProdTail.eq.MulProdTakeTail
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Nat.DivAdd.eq.AddDivS.of.Dvd
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.ModAddMul.eq.Mod
@@ -150,4 +150,4 @@ private lemma main
 
 
 -- created on 2026-07-10
--- updated on 2026-07-13
+-- updated on 2026-10-26

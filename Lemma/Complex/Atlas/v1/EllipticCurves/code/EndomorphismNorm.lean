@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.EllipticCurves.code.EndomorphismNorm.Part2
 open PositiveDefiniteInvolutionAlgebra WeierstrassCurve WeierstrassCurve.Affine
 open scoped TensorProduct

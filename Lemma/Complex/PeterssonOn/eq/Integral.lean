@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.CuspForm.PeterssonOn
 open MeasureTheory Matrix
 open scoped MatrixGroups ModularForm

@@ -1,4 +1,4 @@
-import torch.Tensor.Basic
+import Def.Data.Holor.Defs.Part4
 import Lemma.Vector.HEq.of.Val
 import Lemma.Tensor.Length.of.SEq
 import Lemma.Bool.HEq.of.Cond.Cond

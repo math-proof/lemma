@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalPowerBounds
 open Filter Finset MeasureTheory Set Topology StatMech StatMech.FrontierA
 

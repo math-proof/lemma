@@ -1,4 +1,4 @@
-import sympy.functions.elementary.complexes
+import Notation.Analysis.Complex.Complexes
 import Lemma.Nat.Square.eq.Mul
 open Nat
 

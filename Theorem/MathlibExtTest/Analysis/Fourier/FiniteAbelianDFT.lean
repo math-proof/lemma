@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Fourier/FiniteAbelianDFT.lean -/
 
 
-import sympy.atlas.Analysis.Fourier.FiniteAbelianDFT
+import Theorem.Analysis.Fourier.FiniteAbelian.FiniteAbelianDFT
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.Basic.Complex.BigOperators
 open scoped BigOperators

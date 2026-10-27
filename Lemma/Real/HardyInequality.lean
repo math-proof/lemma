@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.HardyInequality
+import Initialize.Tactic.Attr.Basic
+import Theorem.Topology.Algebra.InfiniteSum.HardyInequality
 
 /--
 [HardyInequality](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Series/HardyInequality.lean)

@@ -1,6 +1,6 @@
-import torch.Tensor.sum
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
+import Def.Data.Holor.Sum
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
 import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Tensor.Dot.eq.GetSumMul
 import Lemma.Tensor.Dot.eq.SelectSumMul
@@ -194,4 +194,4 @@ private lemma une
 
 
 -- created on 2026-01-05
--- updated on 2026-08-27
+-- updated on 2026-10-26

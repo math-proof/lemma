@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.CPythonListsort.Code.Assembly.ListSortMergePolicy
 open CPythonListsort
 open forest at the exact reached final-collapse boundary. -/

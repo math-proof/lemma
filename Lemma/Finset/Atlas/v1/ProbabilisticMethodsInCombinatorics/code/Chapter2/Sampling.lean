@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter2.Sampling
 open Finset Nat Sampling
 

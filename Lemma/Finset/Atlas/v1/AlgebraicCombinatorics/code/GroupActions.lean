@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.AlgebraicCombinatorics.code.GroupActions
 open SpernerProperty MulAction Finset GroupActions GraphIsoPoset
 open scoped Classical Pointwise

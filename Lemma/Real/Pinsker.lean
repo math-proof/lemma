@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.InformationTheory.Pinsker
 open Finset BigOperators
 open MathlibExt.InformationTheory.Pinsker
@@ -367,4 +367,4 @@ end MathlibExt.InformationTheory.Pinsker
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

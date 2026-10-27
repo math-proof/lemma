@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AnAlgorithmistsToolkit.code.SpectraCommonGraphs
 open SpectraCommonGraphs GraphProductSpectrum
 open Real SimpleGraph Matrix

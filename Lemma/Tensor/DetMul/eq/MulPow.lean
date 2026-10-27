@@ -5,8 +5,8 @@ import Lemma.Tensor.GetMul.eq.MulGet
 import Lemma.Tensor.Pow.eq.TensorListPow
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetMul.eq.Mul_Get
-import torch.stack
-import torch.Tensor
+import Def.Data.Holor.Stack.Part2
+import Instance.Data.Holor.Tensor.Part2
 open Tensor
 
 
@@ -112,4 +112,4 @@ private lemma main
 
 
 -- created on 2020-08-19
--- updated on 2026-09-07
+-- updated on 2026-10-26

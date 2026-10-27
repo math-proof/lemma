@@ -1,4 +1,4 @@
-import sympy.stats.markov_chain
+import Instance.Probability.Process.MarkovChain.Part3
 open MeasureTheory ProbabilityTheory
 
 

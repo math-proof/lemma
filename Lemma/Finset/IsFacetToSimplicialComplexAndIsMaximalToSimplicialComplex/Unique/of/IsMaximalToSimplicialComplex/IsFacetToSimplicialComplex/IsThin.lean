@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
 import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
 import Lemma.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick

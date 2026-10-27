@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Correctness.MergeForceCollapseCorrectness.Part2
 open CPythonListsort CPythonListsort.MergeForceCollapseCorrectnessPost
 

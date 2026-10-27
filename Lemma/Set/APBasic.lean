@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.Additive.AP.Basic.Part4
 
 
@@ -167,4 +167,4 @@ private lemma is_ap_of_length_free_coe_iff
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

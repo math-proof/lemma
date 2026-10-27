@@ -1,6 +1,6 @@
 import Mathlib.Order.Interval.Set.Basic
 import Mathlib.Data.Int.Interval
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2021-06-23
--- updated on 2026-10-17
+-- updated on 2026-10-26

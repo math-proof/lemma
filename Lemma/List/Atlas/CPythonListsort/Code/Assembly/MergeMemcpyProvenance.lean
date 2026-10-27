@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
 open CPythonListsort CPythonListsort.MergeBulkMoveCallsite
 open SortSlice

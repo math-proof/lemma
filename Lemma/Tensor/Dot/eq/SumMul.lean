@@ -1,14 +1,14 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
-import torch.Tensor.permute
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.Dot.eq.Bmm
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
-import torch.Tensor.bmm
-import torch.Tensor.sum
+import Def.Data.Holor.Bmm
+import Def.Data.Holor.Sum
 open Bool Tensor
 
 
@@ -80,4 +80,4 @@ private lemma resize
 
 
 -- created on 2026-07-10
--- updated on 2026-08-13
+-- updated on 2026-10-26

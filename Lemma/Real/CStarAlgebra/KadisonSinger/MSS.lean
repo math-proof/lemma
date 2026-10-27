@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Analysis.CStarAlgebra.KadisonSinger.MSS
 open scoped BigOperators ComplexOrder Matrix.Norms.L2Operator
 open MathlibExt.Analysis.CStarAlgebra.KadisonSinger
@@ -427,4 +427,4 @@ end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

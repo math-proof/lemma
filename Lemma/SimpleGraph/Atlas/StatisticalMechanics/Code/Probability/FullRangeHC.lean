@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Probability.FullRangeHC.Part2
 open Finset Real StatMech StatMech.Probability
 

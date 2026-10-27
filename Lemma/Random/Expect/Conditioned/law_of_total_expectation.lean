@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
@@ -19,4 +19,4 @@ private lemma main
 
 
 -- created on 2023-04-22
--- updated on 2026-10-17
+-- updated on 2026-10-26

@@ -1,7 +1,7 @@
 import Lemma.Tensor.BmmBFn.eq.BFnBmm
 import Lemma.Tensor.MulDiv.eq.DivMul
 import Lemma.Tensor.SumDiv.eq.DivSum
-import torch.Tensor.bmm
+import Def.Data.Holor.Bmm
 open Tensor
 
 
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2026-08-13
--- updated on 2026-08-15
+-- updated on 2026-10-26

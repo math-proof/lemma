@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.DifferentialAnalysis.code.ConvolutionSmooth
 open MeasureTheory Filter Topology Function Set TestFunctions ContinuousLinearMap ConvolutionSmooth
 open scoped ZeroAtInfty Convolution SchwartzMap ContDiff

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.GroupTheory.TwoPowerRank.Part2
 open AbelianGroup
 
@@ -27,4 +27,4 @@ end AbelianGroup
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

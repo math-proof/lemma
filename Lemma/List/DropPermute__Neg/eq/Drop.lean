@@ -1,7 +1,7 @@
 import Lemma.List.EqDropAppend.of.Eq_Length
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.Nat.EqMin.of.Lt
-import stdlib.List
+import Def.Data.List.List.Part5
 open List Nat
 
 

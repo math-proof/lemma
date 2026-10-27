@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.EqSt
 import Lemma.Hyperreal.NotInfinite
 import Lemma.Hyperreal.StMul.eq.MulStS.of.NotInfinite.NotInfinite
-open Hyperreal
+open Hyperreal ArchimedeanClass
 
 
 @[path]

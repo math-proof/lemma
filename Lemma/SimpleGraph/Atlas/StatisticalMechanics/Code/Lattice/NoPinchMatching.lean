@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.NoPinchMatching.Part2
 open SimpleGraph Function Set StatMech StatMech.Lattice
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section16.Part4
 open AlgebraicTopology CategoryTheory Limits AlgebraicTopologyI CWComplex CWComplex.SkeletonHomology CWHomology CellularHomology
 open Topology

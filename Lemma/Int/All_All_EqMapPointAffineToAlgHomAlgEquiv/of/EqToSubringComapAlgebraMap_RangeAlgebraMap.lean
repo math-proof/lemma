@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.polys.agca.elliptic_curve.neron_ogg_shafarevich
+import Initialize.Tactic.Attr.Basic
+import Theorem.AlgebraicGeometry.EllipticCurve.NeronOggShafarevich.Part5
 
 open scoped WeierstrassCurve.Affine
 

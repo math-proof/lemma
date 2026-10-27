@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FC.Erdos337_ruzsa_turjanyi_solution
 open Erdos337
 open Filter Set Asymptotics

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalPolynomial.Part5
 open StatMech StatMech.FrontierA
 

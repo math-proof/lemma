@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Correctness.OriginRelabelEquivariance.Part6
 open CPythonListsort
 

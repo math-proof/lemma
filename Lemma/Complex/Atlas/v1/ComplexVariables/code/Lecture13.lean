@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
 open Complex MeasureTheory Set intervalIntegral Real Filter Function Topology Metric OnePoint ClosedCurve
 open Topology OnePoint

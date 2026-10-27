@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
 open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point
 open Polynomial Matrix GeneralLinearGroup OnePoint

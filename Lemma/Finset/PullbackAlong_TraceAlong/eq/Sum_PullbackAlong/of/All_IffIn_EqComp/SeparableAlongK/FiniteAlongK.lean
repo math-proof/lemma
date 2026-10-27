@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.AlgebraicCurve.Correspondence
 import Def.AlgebraicCurve_DifferentialPushPull
 import Lemma.Int.P2MUtil

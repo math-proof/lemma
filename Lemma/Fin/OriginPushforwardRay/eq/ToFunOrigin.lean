@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.Building.InfinityMaps.Part7
 open AffineBuilding
 
@@ -523,4 +523,4 @@ private lemma inducedSimplexMap_exists_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

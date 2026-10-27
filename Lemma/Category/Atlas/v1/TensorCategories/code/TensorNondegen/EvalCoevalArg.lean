@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.EvalCoevalArg
 open CategoryTheory MonoidalCategory Category CategoryTheory.Limits TensorCategories
 

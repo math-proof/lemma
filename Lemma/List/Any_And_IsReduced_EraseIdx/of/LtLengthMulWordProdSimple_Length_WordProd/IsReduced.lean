@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.List.IsReducedDrop.of.IsReduced
 import Lemma.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced.SignChangeExchangeHyp
 import Lemma.Nat.SatisfiesDeletionCondition.of.SignChangeExchangeHyp

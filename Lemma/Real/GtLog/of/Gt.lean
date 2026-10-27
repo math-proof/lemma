@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -15,4 +15,4 @@ private lemma main
 
 
 -- created on 2022-03-31
--- updated on 2022-04-01
+-- updated on 2026-10-26

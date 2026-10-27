@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Dynamics.Ergodic.Kingman
 open MeasureTheory Filter Topology
 open MathlibExt.Dynamics.Ergodic.KingmanWanted
@@ -1233,4 +1233,4 @@ end MathlibExt.Dynamics.Ergodic.KingmanWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

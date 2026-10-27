@@ -1,5 +1,5 @@
-import torch.functions
-import torch.stack
+import Theorem.Data.Holor.Functions
+import Def.Data.Holor.Stack.Part2
 
 
 noncomputable def Tensor.rotaryMatrix' (θ : Tensor ℝ [d]) : Tensor ℝ [d + d, d + d] :=
@@ -65,4 +65,4 @@ private lemma main
 
 
 -- created on 2026-09-04
--- updated on 2026-09-05
+-- updated on 2026-10-26

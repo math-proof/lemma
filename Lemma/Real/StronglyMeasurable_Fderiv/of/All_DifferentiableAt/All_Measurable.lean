@@ -2,7 +2,7 @@ import Mathlib.Analysis.Calculus.FDeriv.Measurable
 import Mathlib.Analysis.Calculus.FDeriv.Equiv
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Metrizable
 import Mathlib.Topology.Algebra.Module.FiniteDimension
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 

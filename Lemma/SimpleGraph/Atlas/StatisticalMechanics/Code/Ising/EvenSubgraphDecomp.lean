@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.EvenSubgraphDecomp
 open Finset SimpleGraph StatMech StatMech.Ising StatMech.Ising.EvenSubgraphDecomp
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.LocalityPrinciple.Part5
 open CategoryTheory AlgebraicTopologyI Finset BigOperators BarycentricSubdivision LocalityPrinciple
 

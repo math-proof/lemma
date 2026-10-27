@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ExpOfContinuousAddMul
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.ExpOfContinuousAddMul
 open scoped Interval Topology
 
 
@@ -127,4 +127,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

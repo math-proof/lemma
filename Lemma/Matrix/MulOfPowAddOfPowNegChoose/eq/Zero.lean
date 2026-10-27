@@ -1,7 +1,8 @@
 import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
+import Syntax.LinearAlgebra.Matrix.Notation
 
 
 @[path]
@@ -10,8 +11,8 @@ private lemma main
   {d m : ℕ}
   {x δ : R} :
 -- imply
-  (Matrix.of fun (i : Fin d) (j : Fin m) => x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ)) *
-    (Matrix.of fun (i : Fin m) (j : Fin (m - d)) =>
+  ([i < d, j < m] x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ)) *
+    ([i < m, j < m - d]
       (-x) ^ ((d : ℤ) + (j : ℕ) - (i : ℕ)) * (if (j : ℕ) ≤ i then (d.choose ((i : ℕ) - j) : R) else 0)) = 0 := by
 -- proof
   ext i j
@@ -46,3 +47,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-27

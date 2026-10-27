@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPhasewiseMeanField.Part2
 open Finset Set Filter Topology MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.FKSharpnessWeightedPhasewiseMeanField
 

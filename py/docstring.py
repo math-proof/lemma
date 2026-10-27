@@ -2,7 +2,7 @@
 """Format a Lemma .lean file: add attribute docstrings.
 
 For files with `@[path, ...]` private lemma main, generates attribute docstrings via
-`sympy/parsing/AttrDocstringGen.lean` and verifies each name with `#check`.
+`Def/Tactic/Attr/AttrDocstringGen.lean` and verifies each name with `#check`.
 
 Only the lemma main will be added with attribute docstring; other lemmas won't.
 
@@ -27,7 +27,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-GEN = ROOT / "sympy" / "parsing" / "AttrDocstringGen.lean"
+GEN = ROOT / "Def" / "Tactic" / "Attr" / "AttrDocstringGen.lean"
 SH_DIR = ROOT / "sh"
 
 CUSTOM_ATTR_HEADS = frozenset({

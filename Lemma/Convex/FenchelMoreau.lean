@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Convex.FenchelMoreau.Part2
 
 open Convex.FenchelMoreau

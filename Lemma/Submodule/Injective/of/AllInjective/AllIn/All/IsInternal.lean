@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.AlgebraicGeometry_DoubleComplex
 open scoped DirectSum
 

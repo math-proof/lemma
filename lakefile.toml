@@ -15,15 +15,6 @@ name = "Lemma"
 leanOptions = {linter.dupNamespace = false, linter.unusedTactic = false, linter.style.nameCheck = false, diagnostics.threshold = 1000}
 
 [[lean_lib]]
-name = "sympy"
-
-[[lean_lib]]
-name = "torch"
-
-[[lean_lib]]
-name = "stdlib"
-
-[[lean_lib]]
 name = "Syntax"
 
 [[lean_lib]]
@@ -49,6 +40,9 @@ name = "Class"
 
 [[lean_lib]]
 name = "Def"
+
+[[lean_lib]]
+name = "Initialize"
 
 [[lean_lib]]
 name = "Theorem"

@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.LeGetS.of.Le
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Tensor
 
 

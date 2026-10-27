@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Finset.AlphaAppend.eq.AlphaAppend_AddDiv
 open Finset Continuant
 

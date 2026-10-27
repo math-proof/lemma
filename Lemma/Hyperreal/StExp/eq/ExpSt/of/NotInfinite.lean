@@ -1,5 +1,6 @@
-import sympy.functions.elementary.exponential
-import sympy.series.limits
+import Instance.Analysis.SpecialFunctions.Exponential.Part5
+import Def.Analysis.Real.Limits.Part4
+open ArchimedeanClass
 
 
 @[path]

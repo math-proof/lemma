@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.HexMirrorPairedBoundary.Part3
 open StatMech StatMech.Universality StatMech.Universality.HexMirrorBoundaryPair StatMech.Universality.HexFiniteStripMirrorPairedData
 

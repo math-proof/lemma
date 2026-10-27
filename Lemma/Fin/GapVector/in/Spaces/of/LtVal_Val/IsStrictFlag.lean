@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementCompatibility
 open GLnBuilding
 
@@ -106,4 +106,4 @@ private lemma biSup_span_singleton_eq_of_le_of_finrank_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

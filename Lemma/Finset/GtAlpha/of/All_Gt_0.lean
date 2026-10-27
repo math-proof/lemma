@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Finset.K.gt.Zero.of.All_Imp_Gt_0.Gt_0
 import Lemma.Finset.SubMulSHK.eq.PowNeg1_Add_1
 import Lemma.Finset.Alpha_MapRange.eq.DivHK.of.All_Imp_Gt_0.Gt_0

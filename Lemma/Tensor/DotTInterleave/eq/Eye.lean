@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqDot_Eye
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.RotaryMatrix'0.eq.Eye
 open Tensor
 
@@ -18,4 +18,4 @@ private lemma main :
 
 
 -- created on 2026-09-05
--- updated on 2026-09-06
+-- updated on 2026-10-26

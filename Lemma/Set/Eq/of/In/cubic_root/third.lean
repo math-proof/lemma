@@ -1,6 +1,6 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import sympy.functions.elementary.complexes
-import sympy.Basic
+import Notation.Analysis.Complex.Complexes
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -30,4 +30,4 @@ private lemma main
 
 
 -- created on 2021-03-08
--- updated on 2026-10-17
+-- updated on 2026-10-26

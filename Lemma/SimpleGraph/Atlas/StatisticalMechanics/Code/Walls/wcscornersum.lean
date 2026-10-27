@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.wcscornersum.Part5
 open Finset SimpleGraph Function StatMech StatMech.Wcs
 

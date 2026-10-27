@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open scoped Pointwise
 open RingTheory.Sequence
 open Module

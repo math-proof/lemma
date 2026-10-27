@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Misc.Probability.Part2
 open ProbabilityTheory
 open ProbabilityTheory.FinitelyAdditive

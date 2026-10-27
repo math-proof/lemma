@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Measure.IsFiniteMeasureOnCompacts_Comap.of.IsOpenEmbedding
 open Topology MeasureTheory Measure
 

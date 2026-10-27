@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.SheafDefinitions.Part2
 open SheafDefinitions
 open CategoryTheory TopologicalSpace

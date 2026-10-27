@@ -1,4 +1,4 @@
-import sympy.tensor.index_of
+import Def.Data.List.IndexOf
 open IndexOf
 
 

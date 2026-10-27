@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
 import Lemma.AlgebraicCurve.DivisorClassGroup
 import Def.AlgebraicCurve_PlaceEvaluation

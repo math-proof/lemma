@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 abbrev V (M : ℕ) : Type := ZMod M × ZMod M

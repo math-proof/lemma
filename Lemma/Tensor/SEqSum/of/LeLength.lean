@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.FlattenCast.as.Flatten.of.Eq.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -7,7 +7,7 @@ import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.SplitAt.as.VectorList.of.LeLength
 import Lemma.Vector.Sum.eq.Head.of.Eq_1
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool List Tensor Vector
 
 
@@ -53,4 +53,4 @@ private lemma main
 
 
 -- created on 2025-06-23
--- updated on 2026-07-22
+-- updated on 2026-10-26

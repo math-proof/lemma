@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Nat.Sub.of.Eq
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.Mul_Add.eq.AddMulS
@@ -80,4 +80,4 @@ private lemma main
 
 
 -- created on 2024-11-29
--- updated on 2025-06-13
+-- updated on 2026-10-26

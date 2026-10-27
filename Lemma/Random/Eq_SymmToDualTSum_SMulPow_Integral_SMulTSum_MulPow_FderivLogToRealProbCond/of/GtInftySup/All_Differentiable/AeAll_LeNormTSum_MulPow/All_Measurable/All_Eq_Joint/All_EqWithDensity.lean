@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
-import sympy.vector.operators
-import sympy.stats.policy_trajectory.continuous_action
+import Def.Analysis.Calculus.Gradient.Operators.Part2
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Filter Topology Random Measure

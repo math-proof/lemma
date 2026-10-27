@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger.Barrier
 open scoped BigOperators ComplexOrder
 open MvPolynomial

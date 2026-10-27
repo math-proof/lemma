@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.BeffaraDC.TorusDefectComplement.Part2
 open SimpleGraph Set StatMech StatMech.BeffaraDC
 

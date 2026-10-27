@@ -1,5 +1,5 @@
 import Lemma.Bool.SEqUFnS.of.SEq
-import sympy.vector.functions
+import Instance.Data.Vector.Functions.Part2
 open Bool
 
 

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ArcsinTaylorSeries
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.ArcsinTaylorSeries.Part3
 
 open SpecialFunctions.ArcsinTaylorSeries
 
@@ -832,4 +832,4 @@ private lemma arcsin_integral_series_zero_eq :
 
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

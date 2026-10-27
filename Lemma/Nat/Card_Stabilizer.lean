@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.GroupTheory.DicksonPGL2Tame.Part4
 open scoped BigOperators
 open MetaMathlibExt
@@ -1598,4 +1598,4 @@ private lemma classification_tame_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

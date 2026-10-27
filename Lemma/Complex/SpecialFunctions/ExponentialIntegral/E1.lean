@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.SpecialFunctions.ExponentialIntegral.E1
 open scoped BigOperators
 open Complex
@@ -124,4 +124,4 @@ private lemma e1AsymptoticRemainder_eq_raw_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

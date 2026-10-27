@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.Buildings.code.Building.PropositionRetractionProperties
 open Set PropositionRetractionProperties
 

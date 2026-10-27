@@ -1,4 +1,4 @@
-import sympy.vector.operators
+import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Macro.Order.Sup
 import Lemma.Random.Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
@@ -51,4 +51,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-20
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.BernoulliGlobalFKG.Part2
 open MeasureTheory Set Filter StatMech StatMech.Universality
 

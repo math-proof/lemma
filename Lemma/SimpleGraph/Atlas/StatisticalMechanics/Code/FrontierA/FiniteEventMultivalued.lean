@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.FiniteEventMultivalued
 open MeasureTheory Set Finset StatMech StatMech.FrontierA
 

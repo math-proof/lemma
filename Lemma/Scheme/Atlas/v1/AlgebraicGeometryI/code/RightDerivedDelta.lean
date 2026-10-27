@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.RightDerivedDelta
 open CategoryTheory CategoryTheory.Limits DerivedFunctorsDefs CohomologyConnection RightDerivedDelta
 open DerivedFunctorsDefs CohomologyConnection

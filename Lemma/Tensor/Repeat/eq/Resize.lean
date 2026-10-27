@@ -1,4 +1,4 @@
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 import Lemma.Tensor.Repeat.as.Resize.of.GtLength
 open Bool Tensor
 

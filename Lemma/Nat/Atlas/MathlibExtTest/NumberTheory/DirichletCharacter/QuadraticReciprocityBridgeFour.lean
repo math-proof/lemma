@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.DirichletCharacter.QuadraticReciprocityBridgeFour
 import Lemma.Nat.DirichletCharacter.QuadraticReciprocityBridgeFour
 open MetaMathlibExt

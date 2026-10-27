@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.BackboneOrderedDeterminedCutObstruction
 open Finset StatMech StatMech.Sharpness
 

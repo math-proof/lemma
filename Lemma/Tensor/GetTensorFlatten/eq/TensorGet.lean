@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.EqDataS
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.DataGet.eq.Get.of.EqData_Flatten
 open Tensor Bool
 
@@ -24,4 +24,4 @@ private lemma main
 
 
 -- created on 2025-05-24
--- updated on 2025-05-27
+-- updated on 2026-10-26

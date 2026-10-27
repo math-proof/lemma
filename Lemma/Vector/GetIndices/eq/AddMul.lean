@@ -4,7 +4,7 @@ import Lemma.Nat.CoeAdd_1.eq.AddCoe_1
 import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.Vector.Get
 import Lemma.List.EqLengthSlice_Mul.of.Lt
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 open Bool Int List Nat Rat Vector
 
 
@@ -119,4 +119,4 @@ private lemma Comm
 
 
 -- created on 2025-11-07
--- updated on 2026-08-24
+-- updated on 2026-10-26

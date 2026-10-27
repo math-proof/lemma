@@ -1,5 +1,5 @@
-import sympy.stats.cond_expectation
-import sympy.stats.hidden_markov_sequence
+import Theorem.Probability.CondExpectation
+import Def.Probability.Process.HiddenMarkovSequence.Part2
 import Lemma.Random.MEq_Clip.of.All_Eq
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.NormClip.le.AbsR
@@ -71,4 +71,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-10
+-- updated on 2026-10-26

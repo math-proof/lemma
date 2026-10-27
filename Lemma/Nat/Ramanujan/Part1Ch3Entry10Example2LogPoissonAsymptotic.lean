@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry10Example2LogPoissonAsymptotic
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Entry10Example2LogPoissonAsymptotic
@@ -1405,4 +1405,4 @@ end
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

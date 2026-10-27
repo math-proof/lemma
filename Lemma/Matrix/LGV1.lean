@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.determinants.LGV1
+import Initialize.Tactic.Attr.Basic
+import Def.LinearAlgebra.Matrix.Determinant.LGV1.Part18
 import Lemma.Matrix.LGV2
 open Finset
 open Matrix

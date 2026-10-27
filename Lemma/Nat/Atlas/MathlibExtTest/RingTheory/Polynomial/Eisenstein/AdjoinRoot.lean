@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.RingTheory.Polynomial.Eisenstein.AdjoinRoot.Part3
 open Polynomial ConcretePadicEisenstein
 

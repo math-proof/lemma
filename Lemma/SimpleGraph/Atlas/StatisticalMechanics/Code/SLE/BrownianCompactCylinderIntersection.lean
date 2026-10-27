@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.SLE.BrownianCompactCylinderIntersection.Part3
 open MeasureTheory Set StatMech StatMech.SLE
 

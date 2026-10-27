@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.LanglandsTunnell.ArchPlace
 import Lemma.LanglandsTunnell.TateLocalZeta
 import Lemma.LanglandsTunnell.ArchEpsilon

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.GeometryOfNumbers.Part2
 open MeasureTheory Measure Set Submodule ZLattice Module GeometryOfNumbers
 open scoped NumberField

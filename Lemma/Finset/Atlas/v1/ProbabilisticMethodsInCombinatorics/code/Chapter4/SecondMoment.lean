@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.SecondMoment
 open MeasureTheory ProbabilityTheory Filter
 

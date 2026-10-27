@@ -1,4 +1,4 @@
-import torch.nn.functional.relu
+import Def.Data.Holor.Relu
 
 
 @[path]

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.NumberTheory.RidoutPadicRoth
 open MathlibExtTest MathlibExtTest.NumberTheory MathlibExtTest.NumberTheory.RidoutPadicRoth
 

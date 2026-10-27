@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.CombinatorialOptimization.code.Flow.MaxFlowAugPath
 open Finset BigOperators Classical NetworkFlow
 

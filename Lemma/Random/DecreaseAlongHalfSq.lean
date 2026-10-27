@@ -1,4 +1,4 @@
-import sympy.stats.lyapunov
+import Structure.Dynamics.Lyapunov
 import Lemma.Random.MulPowCardη.lt.One
 import Lemma.Random.NormSubOfLpExpectedUpdateTarget.le.MulηNormSub
 import Lemma.LpSpace.Norm.le.MulPow_NormOfLp.of.Ge_1

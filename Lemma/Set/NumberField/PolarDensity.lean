@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.NumberField.PolarDensity
 open Filter Topology NumberField IsDedekindDomain
 open NumberField.Set
@@ -92,4 +92,4 @@ private lemma hasPolarDensity_empty_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

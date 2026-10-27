@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.CanonicalContour.Part6
 open Finset Set SimpleGraph Function MeasureTheory StatMech StatMech.Lattice
 

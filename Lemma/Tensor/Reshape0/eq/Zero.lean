@@ -1,4 +1,4 @@
-import torch.Tensor.reshape
+import Def.Data.Holor.Reshape
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Repeat0.eq.Zero

@@ -1,4 +1,4 @@
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.DataRepeat.as.FlattenMapSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS

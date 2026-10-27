@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.Building.Infinity.Sectors.Part3
 open ChamberComplex AffineBuilding
 
@@ -276,4 +276,4 @@ private lemma apt_face_extends_to_chamber_of_building_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

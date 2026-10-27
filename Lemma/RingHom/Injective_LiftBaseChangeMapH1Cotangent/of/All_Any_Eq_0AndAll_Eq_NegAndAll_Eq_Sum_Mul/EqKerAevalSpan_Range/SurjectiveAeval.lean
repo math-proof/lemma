@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Algebra Algebra.Generators Algebra.Extension
 open MvPolynomial (rename C sumRingEquiv sumRingEquiv_symm_C_C sumRingEquiv_symm_C_X algebraMap_eq
   ringHom_ext aeval)

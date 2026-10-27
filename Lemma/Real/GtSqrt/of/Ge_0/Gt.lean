@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Real.Sqrt
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -15,4 +15,4 @@ private lemma main
 
 
 -- created on 2019-06-13
--- updated on 2023-05-02
+-- updated on 2026-10-26

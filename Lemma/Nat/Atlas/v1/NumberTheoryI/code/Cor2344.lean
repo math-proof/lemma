@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.NumberTheoryI.code.Cor2344
 open TateCohomology
 open Finset CategoryTheory

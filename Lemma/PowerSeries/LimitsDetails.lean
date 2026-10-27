@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.LimitsDetails
+import Initialize.Tactic.Attr.Basic
+import Theorem.RingTheory.PowerSeries.LimitsDetails
 open PowerSeries
 open Seq
 open scoped PowerSeries BigOperators Polynomial

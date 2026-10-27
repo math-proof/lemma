@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.Substitution
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.PowerSeries.Substitution
 import Lemma.PowerSeries.FPSDefinition
 open PowerSeries
 open scoped BigOperators
@@ -1069,4 +1069,4 @@ private lemma x_subst_one
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

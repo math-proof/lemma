@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangLogDerivativeBound.Part2
 open Polynomial StatMech StatMech.FrontierA
 

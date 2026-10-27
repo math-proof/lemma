@@ -1,4 +1,4 @@
-import sympy.vector.Basic
+import Theorem.Data.Vector.Basic.Part2
 
 
 @[path, comm, fin, fin.comm]

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MvPolynomial CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000

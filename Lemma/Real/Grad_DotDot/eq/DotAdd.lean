@@ -1,7 +1,7 @@
 import Mathlib.Analysis.Calculus.FDeriv.Add
 import Mathlib.Analysis.Calculus.FDeriv.Mul
 import Mathlib.Analysis.Calculus.FDeriv.Prod
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 set_option linter.deprecated false
 
 
@@ -55,4 +55,4 @@ private lemma main
 
 
 -- created on 2021-12-25
--- updated on 2026-10-17
+-- updated on 2026-10-26

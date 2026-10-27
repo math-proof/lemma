@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.Tensor.EqData1'1
 import Lemma.Finset.UFnProd.eq.Prod_UFn.All_EqUFnMul.EqUFn_1
 open Tensor Finset

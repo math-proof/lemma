@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
 
@@ -34,8 +34,8 @@ lemma abs_chi_eq_one
 -- imply
   |chi S x| = 1 := by
 -- proof
-  have h := chi_sq S x
-  have hne := chi_ne_zero S x
+  have h := chi_sq (S := S) (x := x)
+  have hne := chi_ne_zero (S := S) (x := x)
   have habs_sq : |chi S x| ^ 2 = 1 := by
     rw [sq_abs]; exact h
   have habs_nn : (0 : ℝ) ≤ |chi S x| := abs_nonneg _
@@ -59,10 +59,11 @@ lemma sample_bounded
 -- imply
   |f x * chi S x| ≤ 1 := by
 -- proof
-  rw [abs_mul, abs_chi_eq_one S x, mul_one]
+  rw [abs_mul, abs_chi_eq_one (S := S) (x := x), mul_one]
   exact hf x
 
 end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

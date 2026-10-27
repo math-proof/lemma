@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.inner_product_space.WeylPerturbation
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.InnerProductSpace.WeylPerturbation
 
 /--
 [WeylPerturbation](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/InnerProductSpace/WeylPerturbation.lean)

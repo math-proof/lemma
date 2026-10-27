@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open scoped Manifold ContDiff Topology
 open Filter Set
 

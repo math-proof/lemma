@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Analysis.SpecialFunctions.Log.IntegralDerivative
 open scoped Topology
 open Real
@@ -259,4 +259,4 @@ end Real
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.MultipleZeta.HOneBasis.Part3
 open `x`-run (which never occurs for `H^1` words). -/
 open MetaMathlibExt.MultipleZeta
@@ -354,4 +354,4 @@ private lemma hOne_basis_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

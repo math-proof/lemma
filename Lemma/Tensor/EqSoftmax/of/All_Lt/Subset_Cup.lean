@@ -14,7 +14,7 @@ import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
 import Lemma.Hyperreal.OfRealExp.eq.ExpOfReal
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor Hyperreal
 set_option maxHeartbeats 1000000
 
@@ -181,4 +181,4 @@ private lemma main
 
 
 -- created on 2022-04-26
--- updated on 2023-03-19
+-- updated on 2026-10-26

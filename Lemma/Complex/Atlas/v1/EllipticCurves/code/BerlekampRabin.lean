@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.EllipticCurves.code.BerlekampRabin.Part2
 open Polynomial Finset BerlekampRabin
 

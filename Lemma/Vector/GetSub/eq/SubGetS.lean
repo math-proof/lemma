@@ -1,5 +1,5 @@
 import Lemma.Int.Sub.eq.Add_Neg
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 open Int Vector
 
 

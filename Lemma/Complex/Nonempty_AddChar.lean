@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.FiniteAbelianDual.Part2
 open scoped DirectSum
 open MathlibExt.GroupTheory.FiniteAbelianDualWanted
@@ -48,4 +48,4 @@ private lemma dual_prod
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.integrals.transforms.ConvolutionTheorem
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Fourier.ConvolutionTheorem
 
 open scoped Convolution
 

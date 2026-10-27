@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Set.In_Ico.is.Le.Lt
 open Set Int
@@ -21,4 +21,4 @@ private lemma main
 
 
 -- created on 2025-03-30
--- updated on 2025-05-04
+-- updated on 2026-10-26

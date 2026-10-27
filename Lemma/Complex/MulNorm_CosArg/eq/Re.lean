@@ -1,6 +1,6 @@
-import sympy.functions.elementary.complexes
-import sympy.functions.elementary.trigonometric
-import sympy.Basic
+import Notation.Analysis.Complex.Complexes
+import Def.Analysis.SpecialFunctions.Trigonometric.Part2
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -19,4 +19,4 @@ private lemma main
 
 
 -- created on 2018-06-13
--- updated on 2026-08-30
+-- updated on 2026-10-26

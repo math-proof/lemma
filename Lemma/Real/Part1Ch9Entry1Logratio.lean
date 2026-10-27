@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch9Entry1Logratio
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch9Entry1Logratio.Part3
 
 open Ramanujan.Part1Ch9.Entry1Logratio
 

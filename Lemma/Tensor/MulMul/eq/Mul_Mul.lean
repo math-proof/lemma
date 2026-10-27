@@ -1,5 +1,5 @@
 import Lemma.Tensor.Mul
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Tensor
 
 

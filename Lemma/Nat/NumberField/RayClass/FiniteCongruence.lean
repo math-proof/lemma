@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.NumberField.RayClass.FiniteCongruence.Part4
 open scoped nonZeroDivisors
 open NumberField

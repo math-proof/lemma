@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.TensorCategories.code.DualCategory.Part6
 open CategoryTheory CategoryTheory.DualCatObj
 open Category MonoidalCategory LeftModCat Limits

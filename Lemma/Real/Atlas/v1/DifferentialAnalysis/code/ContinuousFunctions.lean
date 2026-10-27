@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
 open Set Filter Topology Bornology Metric ContinuousFunctions ContinuousLinearFunctional
 open scoped ZeroAtInfty

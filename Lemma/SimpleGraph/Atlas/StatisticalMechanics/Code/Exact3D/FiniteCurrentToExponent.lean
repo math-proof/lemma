@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.FiniteCurrentToExponent.Part16
 open StatMech StatMech.Exact3D StatMech.Exact3D.FiniteCurrentActualScheduleProjectionInputs StatMech.Exact3D.FiniteCurrentThresholdCandidateEmbeddingProjectionInputs StatMech.Exact3D.FiniteCurrentExpandedDemandProjectionInputs StatMech.Exact3D.Ising3DTransitionAssemblyInputs StatMech.Exact3D.FiniteCurrentMassBridgeInputs
 

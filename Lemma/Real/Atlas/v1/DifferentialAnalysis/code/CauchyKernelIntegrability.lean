@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.CauchyKernelIntegrability
 open Real Set MeasureTheory Metric CauchyKernel
 open scoped ENNReal Real Topology

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.Lie.LeviDecomposition.Part16
 open LeviDecomposition
 open LieAlgebra
@@ -1550,4 +1550,4 @@ private lemma LieModule_exists_isCompl_of_isSemisimple_eq
   apply LieModule.exists_isCompl_of_isSemisimple W
 
 -- created on 2026-10-09
--- updated on 2026-10-24
+-- updated on 2026-10-26

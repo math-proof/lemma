@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Finset.Alpha_Cons.eq.Add_DivAlpha
 import Lemma.Finset.H.gt.Zero.of.All_Gt_0
 open Finset Continuant

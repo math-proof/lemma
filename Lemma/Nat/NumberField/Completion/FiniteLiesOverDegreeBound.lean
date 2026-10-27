@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverDegreeBound
 open scoped NumberField NumberField.LiesOver TensorProduct Valued
 open IsDedekindDomain.HeightOneSpectrum
@@ -45,4 +45,4 @@ end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

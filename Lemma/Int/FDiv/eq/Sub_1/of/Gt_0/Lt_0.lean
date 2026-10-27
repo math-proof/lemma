@@ -1,4 +1,4 @@
-import sympy.functions.elementary.integers
+import Instance.Data.Int.Integers
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Int.NegAdd.eq.SubNeg
 import Lemma.Int.Div_Neg.eq.NegDiv

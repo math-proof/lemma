@@ -2,7 +2,7 @@ import Mathlib.Order.Lattice
 import Mathlib.Basic.Real.Basic
 import Mathlib.Algebra.Order.AbsoluteValue.Basic
 import Mathlib.Order.CompleteLattice.Finset
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Finset
 
 

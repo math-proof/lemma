@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Lattice.Clusters.Part7
 open Set StatMech StatMech.Lattice
 

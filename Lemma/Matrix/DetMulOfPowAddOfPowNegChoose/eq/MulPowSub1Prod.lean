@@ -4,6 +4,7 @@ import Mathlib.LinearAlgebra.Vandermonde
 import Lemma.Matrix.DetOf_PowAdd.eq.ProdFactorial
 import Lemma.Matrix.MulOfPowAddOfPowNegChoose.eq.MulOfChooseSumOf
 import Lemma.Matrix.Det.eq.Prod.of.All_All_Eq_0
+import Syntax.LinearAlgebra.Matrix.Notation
 open Matrix Nat
 
 
@@ -12,8 +13,8 @@ private lemma main
   {m d : ℕ}
   {δ l : ℝ} :
 -- imply
-  ((Matrix.of fun (i : Fin (m - d)) (j : Fin m) => ((j : ℝ) + δ) ^ (i : ℕ)) *
-    (Matrix.of fun (i : Fin m) (j : Fin (m - d)) =>
+  (([i < m - d, j < m] ((j : ℝ) + δ) ^ (i : ℕ)) *
+    ([i < m, j < m - d]
       (-l) ^ ((d : ℤ) + (j : ℕ) - (i : ℕ)) * (if (j : ℕ) ≤ i then (d.choose ((i : ℕ) - j) : ℝ) else 0))).det =
     (1 - l) ^ (d * (m - d)) * ∏ i ∈ Finset.range (m - d), (i ! : ℝ) := by
 -- proof
@@ -33,3 +34,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-27

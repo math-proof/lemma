@@ -312,7 +312,7 @@ function Not($token) {
     return Not-Token $token
 }
 
-# Mirror List.andLeftTokens / List.andRightTokens / Name.andProjName from sympy/Basic.lean:
+# Mirror List.andLeftTokens / List.andRightTokens / Name.andProjName from Def/Tactic/Attr/Basic.lean:
 # Section.Type1.Type2.of.Givens -> Section.Type1.of.Givens (left) or Section.Type2.of.Givens (right);
 # when Type1 = Type2, append .fst / .snd.
 function Get-AndProjModule {
@@ -519,7 +519,7 @@ ForEach-Object {
     }
     if ($attributes -cmatch '\bmp\.left\b') {
         # Apply `mp` (commutateIs "of") then And.left projection.
-        # Mirrors `List.mpProjTokens` / `Name.mpProjName` in sympy/Basic.lean.
+        # Mirrors `List.mpProjTokens` / `Name.mpProjName` in Def/Tactic/Attr/Basic.lean.
         $tokens = $module -split '\.'
         $rest = @($tokens[1..($tokens.Length - 1)])
         $isIdx = [array]::IndexOf([object[]]$rest, 'is')
@@ -545,7 +545,7 @@ ForEach-Object {
     }
     if ($attributes -cmatch '\bmp\.right\b') {
         # Apply `mp` (commutateIs "of") then And.right projection.
-        # Mirrors `List.mpProjTokens` / `Name.mpProjName` in sympy/Basic.lean.
+        # Mirrors `List.mpProjTokens` / `Name.mpProjName` in Def/Tactic/Attr/Basic.lean.
         $tokens = $module -split '\.'
         $rest = @($tokens[1..($tokens.Length - 1)])
         $isIdx = [array]::IndexOf([object[]]$rest, 'is')

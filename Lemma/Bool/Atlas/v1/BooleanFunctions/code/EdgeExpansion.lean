@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.EdgeExpansion
 open BooleanAnalysis
 
@@ -98,7 +98,7 @@ lemma flip_injective
   intro i j hij
   by_contra h_ne
   have hi : flip x i i = flip x j i := congr_fun hij i
-  rw [flip_apply_same, flip_apply_ne x j i h_ne] at hi
+  rw [flip_apply_same, flip_apply_ne (i := j) (j := i) h_ne] at hi
   simp at hi
 
 end BooleanAnalysis
@@ -161,3 +161,4 @@ end BooleanAnalysis
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

@@ -1,6 +1,6 @@
-import stdlib.SEq
-import torch.Tensor.Basic
-import torch.Tensor.permute
+import Theorem.Logic.SEq
+import Def.Data.Holor.Defs.Part4
+import Notation.Data.Holor.Permute
 
 
 @[path, cast]
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2026-07-11
--- updated on 2026-08-18
+-- updated on 2026-10-26

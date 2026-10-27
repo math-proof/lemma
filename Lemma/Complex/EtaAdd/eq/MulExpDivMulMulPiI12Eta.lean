@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 open Complex ModularGroup
 open UpperHalfPlane hiding I

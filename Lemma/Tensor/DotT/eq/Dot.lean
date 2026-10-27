@@ -1,6 +1,6 @@
 import Lemma.Bool.EqCastS.of.SEq.Eq
-import torch.Tensor.unsqueeze
-import torch.Tensor.permute
+import Def.Data.Holor.Unsqueeze
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.Dot
 import Lemma.Tensor.Dot.eq.GetSumMul
 import Lemma.Tensor.Dot.eq.SelectSumMul
@@ -125,4 +125,4 @@ private lemma resize
 
 
 -- created on 2026-07-30
--- updated on 2026-08-27
+-- updated on 2026-10-26

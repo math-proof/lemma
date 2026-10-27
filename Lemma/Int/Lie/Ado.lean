@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.Lie.Ado.Part5
 open LieAlgebra
 open scoped TensorProduct
@@ -1665,4 +1665,4 @@ private lemma ado_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

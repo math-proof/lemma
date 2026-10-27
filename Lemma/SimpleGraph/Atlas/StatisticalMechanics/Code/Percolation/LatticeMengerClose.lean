@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Percolation.LatticeMengerClose.Part2
 open MeasureTheory Set Finset StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 

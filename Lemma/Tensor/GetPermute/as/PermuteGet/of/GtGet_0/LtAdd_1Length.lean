@@ -1,5 +1,5 @@
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.List.DropTail.eq.Drop
 import Lemma.List.ProdTail.eq.MulProdTakeTail
 import Lemma.Nat.DivAddMul.eq.AddDiv.of.Gt_0

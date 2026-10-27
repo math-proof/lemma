@@ -1,5 +1,5 @@
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
-open Hyperreal Int
+open Hyperreal Int ArchimedeanClass
 
 
 /--

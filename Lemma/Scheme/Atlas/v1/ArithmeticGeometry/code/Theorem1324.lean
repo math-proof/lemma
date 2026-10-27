@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.ArithmeticGeometry.code.Theorem1324
 open MvPolynomial Finsupp Thm1324
 open scoped LinearAlgebra.Projectivization

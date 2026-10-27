@@ -6,7 +6,7 @@ import Lemma.Vector.ExpCast.as.Exp.of.Eq
 import Lemma.Vector.ExpFlatten.eq.FlattenExp
 import Lemma.Vector.ExpGetSlice.eq.GetSliceExp
 import Lemma.Vector.ExpSplitAt.eq.SplitAtExp
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Bool List Tensor Vector
 
 
@@ -43,4 +43,4 @@ private lemma main
 
 
 -- created on 2025-11-17
--- updated on 2026-08-14
+-- updated on 2026-10-26

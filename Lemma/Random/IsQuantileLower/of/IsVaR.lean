@@ -1,5 +1,5 @@
-import sympy.stats.value_at_risk
-import sympy.Basic
+import Def.Probability.Decision.Risk.ValueAtRisk
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 

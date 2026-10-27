@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.Measure.AEMeasurable
 import Mathlib.Probability.Distributions.Gaussian.Real
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 open scoped NNReal
 
@@ -31,4 +31,4 @@ private lemma main
 
 
 -- created on 2023-04-10
--- updated on 2026-10-17
+-- updated on 2026-10-26

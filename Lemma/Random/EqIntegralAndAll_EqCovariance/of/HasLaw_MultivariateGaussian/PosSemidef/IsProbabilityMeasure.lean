@@ -1,6 +1,6 @@
 import Mathlib.Probability.Distributions.Gaussian.Multivariate
 import Mathlib.Probability.HasLaw
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 
 

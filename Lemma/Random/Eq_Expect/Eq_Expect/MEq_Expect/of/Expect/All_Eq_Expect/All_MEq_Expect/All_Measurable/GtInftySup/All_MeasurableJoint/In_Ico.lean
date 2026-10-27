@@ -1,7 +1,7 @@
 import Lemma.Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico
 import Lemma.Random.MEqCondExp_Integral.of.Integrable.Measurable
 import Lemma.Random.Eq.of.Ne_0.MEq
-import sympy.stats.cond_expectation
+import Theorem.Probability.CondExpectation
 open MeasureTheory ProbabilityTheory
 
 

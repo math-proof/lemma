@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.functions.elementary.integers
+import Initialize.Tactic.Attr.Basic
+import Instance.Data.Int.Integers
 
 
 @[path]
@@ -15,4 +15,4 @@ private lemma main
 
 
 -- created on 2025-06-19
--- updated on 2025-10-16
+-- updated on 2026-10-26

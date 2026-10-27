@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.BoxConnectionFullConnection
 open MeasureTheory SimpleGraph StatMech StatMech.FK
 

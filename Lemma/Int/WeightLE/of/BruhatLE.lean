@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
 open Classical
 
@@ -1707,4 +1707,4 @@ private lemma prodLieModuleHom_apply_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

@@ -1,4 +1,4 @@
-import sympy.stats.markov_samples
+import Def.Dynamics.MarkovSamples
 open Finset
 
 

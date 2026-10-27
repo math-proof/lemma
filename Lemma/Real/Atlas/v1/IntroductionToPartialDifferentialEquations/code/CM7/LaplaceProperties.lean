@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM7.LaplaceProperties.Part2
 open Set Metric MeasureTheory Topology Filter CM7
 

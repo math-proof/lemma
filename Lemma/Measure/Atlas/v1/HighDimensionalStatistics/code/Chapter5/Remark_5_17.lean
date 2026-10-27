@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Remark_5_17
 open Finset BigOperators Real Rigollet Rigollet.Chapter5
 

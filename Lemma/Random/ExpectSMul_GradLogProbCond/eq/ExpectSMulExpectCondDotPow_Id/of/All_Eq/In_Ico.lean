@@ -5,7 +5,7 @@ import Lemma.Measure.Count.eq.ProdCountS
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Theorem.Function
-import sympy.vector.operators
+import Def.Analysis.Calculus.Gradient.Operators.Part2
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Filter Topology Measure
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 4000000
@@ -61,4 +61,4 @@ private lemma main
 
 
 -- created on 2023-04-01
--- updated on 2026-10-20
+-- updated on 2026-10-26

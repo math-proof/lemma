@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqGetStack
-import sympy.matrices.dense
-import torch.stack
+import Instance.LinearAlgebra.Matrix.Dense
+import Def.Data.Holor.Stack.Part2
 open Tensor
 
 
@@ -20,4 +20,4 @@ private lemma main
 
 
 -- created on 2019-10-16
--- updated on 2026-09-08
+-- updated on 2026-10-26

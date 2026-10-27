@@ -1,5 +1,5 @@
 import Mathlib.NumberTheory.FLT.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--

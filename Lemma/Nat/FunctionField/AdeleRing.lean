@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.NumberTheory.FunctionField.AdeleRing
 open scoped RestrictedProduct
 open FunctionFieldAdeleRing
@@ -43,4 +43,4 @@ end FunctionFieldAdeleRing
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

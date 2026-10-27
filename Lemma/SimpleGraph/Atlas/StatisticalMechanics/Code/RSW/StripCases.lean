@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.RSW.StripCases
 open Set MeasureTheory StatMech StatMech.RSW StatMech.RSW.StripCases
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.DefProp_5_4_Helpers
 open MeasureTheory InformationTheory TotalVariation
 

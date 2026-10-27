@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.DifferentialGeometry.code.GaussBonnet.Part7
 open Finset Real CombinatorialGaussBonnet SmoothGaussBonnet GaussBonnetBoundary
 open Real CombinatorialGaussBonnet

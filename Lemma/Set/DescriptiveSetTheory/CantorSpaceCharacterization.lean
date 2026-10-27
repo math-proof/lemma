@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Topology.DescriptiveSetTheory.CantorSpaceCharacterization
 open MathlibExt.Topology.DescriptiveSetTheory.CantorSpaceCharacterizationWanted
 
@@ -1146,4 +1146,4 @@ end MathlibExt.Topology.DescriptiveSetTheory.CantorSpaceCharacterizationWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

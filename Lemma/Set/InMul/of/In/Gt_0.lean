@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.sets.handlers.add
+import Initialize.Tactic.Attr.Basic
+import Class.Data.Set.Add
 
 
 @[path]

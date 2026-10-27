@@ -5,7 +5,7 @@ import Mathlib.LinearAlgebra.UnitaryGroup
 import Mathlib.Algebra.Order.Star.Real
 import Lemma.Matrix.PosDefAsymm.is.PosDefAdd_T
 import Lemma.Matrix.DotVecMul_Diagonal.eq.Sum_MulMul
-import sympy.core.singleton
+import Notation.Lean.Expr.Singleton
 open Matrix
 
 

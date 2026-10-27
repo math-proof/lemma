@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialGeometry.code.Intrinsic.Part4
 open Matrix Finset BigOperators ChristoffelSymbols ChristoffelFromMetric TensorDecomposition MovingFrame NormalCoordinates RiemannIntrinsic GaussEquation IntrinsicCurvatures RigidityRank3 GaussBonnetTorus AbstractGaussBonnet
 open ChristoffelSymbols

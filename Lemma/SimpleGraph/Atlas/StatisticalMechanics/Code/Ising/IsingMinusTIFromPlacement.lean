@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.IsingMinusTIFromPlacement
 open MeasureTheory Filter Topology Set StatMech StatMech.Ising
 

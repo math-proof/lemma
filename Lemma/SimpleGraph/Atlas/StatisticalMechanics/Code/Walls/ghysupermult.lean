@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.ghysupermult.Part2
 open Finset BigOperators Classical StatMech StatMech.Walls
 

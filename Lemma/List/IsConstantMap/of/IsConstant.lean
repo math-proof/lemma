@@ -1,4 +1,4 @@
-import stdlib.List
+import Def.Data.List.List.Part5
 import Lemma.List.All_EqUFnS.of.All_Eq
 open List
 
@@ -21,4 +21,4 @@ private lemma main
 
 
 -- created on 2024-07-01
--- updated on 2025-10-03
+-- updated on 2026-10-26

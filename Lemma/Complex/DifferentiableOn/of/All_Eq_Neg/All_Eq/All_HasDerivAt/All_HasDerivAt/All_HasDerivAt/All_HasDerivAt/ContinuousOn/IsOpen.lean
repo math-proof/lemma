@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Complex.LoomanMenchoff.Part6
 
 
@@ -25,4 +25,4 @@ private lemma looman_menchoff_eq
 
 
 -- created on 2026-10-09
--- updated on 2026-10-24
+-- updated on 2026-10-26

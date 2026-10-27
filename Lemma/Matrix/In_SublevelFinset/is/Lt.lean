@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.inner_product_space.DiscreteSpectrum
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.InnerProductSpace.DiscreteSpectrum.Part4
 open scoped BigOperators
 
 
@@ -19,4 +19,4 @@ private lemma mem_sublevel_finset_iff
   apply NonnegativeDiscreteSpectrum.mem_sublevelFinset S Λ j
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

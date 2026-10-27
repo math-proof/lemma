@@ -1,11 +1,11 @@
 import Lemma.Tensor.EqTensordot_0'0
 import Lemma.Tensor.EqEinsum_0'0
-import torch.Tensor.sum
-import torch.Tensor.reshape
-import torch.Tensor.bmm
-import torch.Tensor.repeat
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Sum
+import Def.Data.Holor.Reshape
+import Def.Data.Holor.Bmm
+import Def.Data.Holor.Repeat
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 open Tensor Vector
 
 

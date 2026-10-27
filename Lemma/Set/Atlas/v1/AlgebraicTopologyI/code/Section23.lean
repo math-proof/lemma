@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section23.Part2
 open CategoryTheory AlgebraicTopology TensorProduct in DirectLimitCharacterization
 open TensorProduct

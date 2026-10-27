@@ -1,4 +1,4 @@
-import stdlib.SEq
+import Theorem.Logic.SEq
 import Lemma.Vector.Val.eq.Nil.of.EqLength_0
 import Lemma.Vector.HEq.of.Val
 open Vector

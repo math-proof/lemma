@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.DotT.eq.RotaryMatrix'Sub
 open Nat Tensor
 

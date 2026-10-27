@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Theorems
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Theorems
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
@@ -80,9 +80,9 @@ lemma varianceReal_boolToReal_eq
       (fun S => fourierCoeff g S ^ 2) (Finset.mem_univ ∅)
     linarith
   have hparseval : ∑ S : Finset (Fin n), fourierCoeff g S ^ 2 = 1 :=
-    parseval_signed f
+    parseval_signed
   have hempty : fourierCoeff g ∅ = 2 * vol f - 1 :=
-    fourierCoeff_empty_eq f
+    fourierCoeff_empty_eq
   rw [hvar_split, hparseval, hempty]
   ring
 
@@ -102,11 +102,11 @@ lemma edge_isoperimetric_inequality
 -- proof
   set g : (Fin n → Bool) → ℝ := fun x => boolToReal (f x) with hg_def
   have h_eq : totalInfluence f = totalInfluenceReal g :=
-    totalInfluence_eq_totalInfluenceReal f
+    totalInfluence_eq_totalInfluenceReal
   have h_ge_var : totalInfluenceReal g ≥ varianceReal g :=
-    totalInfluenceReal_ge_varianceReal g
+    totalInfluenceReal_ge_varianceReal (f := g)
   have h_var : varianceReal g = 4 * vol f * (1 - vol f) :=
-    varianceReal_boolToReal_eq f
+    varianceReal_boolToReal_eq
   linarith
 
 end BooleanFourier
@@ -123,7 +123,7 @@ lemma corollary_3_2
 -- imply
   4 * vol f * (1 - vol f) ≤ totalInfluence f :=
 -- proof
-  edge_isoperimetric_inequality f
+  edge_isoperimetric_inequality
 
 end BooleanFourier
 

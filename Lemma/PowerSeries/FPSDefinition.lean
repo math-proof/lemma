@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.FPSDefinition
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.PowerSeries.FPSDefinition.Part3
 import Lemma.PowerSeries.InfiniteProducts2
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.DifferentialAnalysis.code.ConvolutionWellDefined
 open MeasureTheory Set ConeSupport
 open scoped SchwartzMap

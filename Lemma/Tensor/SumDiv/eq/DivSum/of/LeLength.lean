@@ -1,7 +1,7 @@
 import Lemma.Nat.NotLt.of.Ge
 import Lemma.Tensor.CastDiv.eq.DivCast.of.Eq
 import Lemma.Tensor.SEqSum.of.LeLength
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open List Nat Tensor
 
 
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2025-09-25
--- updated on 2026-07-22
+-- updated on 2026-10-26

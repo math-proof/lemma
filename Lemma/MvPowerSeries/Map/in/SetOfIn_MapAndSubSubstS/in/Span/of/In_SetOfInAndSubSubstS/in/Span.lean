@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.MvFormalGroup.NegV2
 import Lemma.CerednikDrinfeld.SpecialFormalModule
 import Lemma.Int.P2MUtil

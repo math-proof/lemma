@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.StatisticalMechanics.Code.Universality.HexLiteralHWRecursive.Part4
 open StatMech StatMech.Universality StatMech.Universality.HLHRTruncatedTwoHalfData StatMech.Universality.HLHRAugmentedTwoHalfData
 

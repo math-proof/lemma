@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.Recurrences.GolombLikeSequence.Part8
 open MetaMathlibExt
 
@@ -300,4 +300,4 @@ private lemma golomb_like_closed_form_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

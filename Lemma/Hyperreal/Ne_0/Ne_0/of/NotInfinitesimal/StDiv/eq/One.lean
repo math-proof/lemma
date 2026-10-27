@@ -2,7 +2,7 @@ import Lemma.Hyperreal.Infinite.of.Infinite.StDiv.ne.Zero
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.StDiv.ne.Zero
 import Lemma.Hyperreal.Ne_0.of.Infinite
 import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
-open Hyperreal
+open Hyperreal ArchimedeanClass
 
 
 @[path]

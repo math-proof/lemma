@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.Limits
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.PowerSeries.Limits.Part2
 import Lemma.PowerSeries.XnEquivalence
 open PowerSeries
 open Seq
@@ -2017,4 +2017,4 @@ private lemma pv_coeff_prod_eq_of_eventually_one
 
 
 -- created on 2026-10-12
--- updated on 2026-10-23
+-- updated on 2026-10-26

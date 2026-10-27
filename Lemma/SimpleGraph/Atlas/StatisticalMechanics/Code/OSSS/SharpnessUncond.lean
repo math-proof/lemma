@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.SharpnessUncond.Part2
 open Finset Real Set StatMech.Lattice StatMech StatMech.OSSS
 

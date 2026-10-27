@@ -1,5 +1,5 @@
 import Lemma.Tensor.Dot_T.as.Dot
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetGetSlice.eq.Get_Add.of.GtSubMin
 open Tensor
@@ -62,4 +62,4 @@ private lemma zero
 
 
 -- created on 2026-08-17
--- updated on 2026-08-20
+-- updated on 2026-10-26

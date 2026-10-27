@@ -2,7 +2,7 @@
 
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import sympy.atlas.Analysis.InnerProductSpace.PolarSet
+import Theorem.Analysis.InnerProductSpace.PolarSet
 open MetaMathlibExt
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.bc12core.Part2
 open Set SimpleGraph StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation MeasureTheory StatMech StatMech.Walls
 

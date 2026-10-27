@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch6Entry6Harmonic.lean -/
 
 
-import sympy.atlas.Analysis.Ramanujan.Part1Ch6Entry6Harmonic
+import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry6Harmonic
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 6 API checks
 

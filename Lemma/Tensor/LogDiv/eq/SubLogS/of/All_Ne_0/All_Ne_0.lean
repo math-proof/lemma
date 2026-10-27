@@ -1,7 +1,7 @@
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.DataSub.eq.SubDataS
 import Lemma.Vector.LogDiv.eq.SubLogS.of.All_Ne_0.All_Ne_0
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Tensor Vector
 
 

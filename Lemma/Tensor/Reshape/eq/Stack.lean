@@ -1,9 +1,9 @@
-import torch.Tensor.reshape
+import Def.Data.Holor.Reshape
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetReshape.as.Reshape.of.GtLength_0
 import Lemma.Tensor.SEqReshape.of.Eq
-import torch.stack
+import Def.Data.Holor.Stack.Part2
 open Bool Tensor
 
 

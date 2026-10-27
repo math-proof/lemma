@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.RingTheory.FractionalIdeal.Dual.Part2
 open scoped nonZeroDivisors
 open Module
@@ -118,4 +118,4 @@ private lemma FractionalIdeal_coe_inv_eq_mul_dualSubmodule_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

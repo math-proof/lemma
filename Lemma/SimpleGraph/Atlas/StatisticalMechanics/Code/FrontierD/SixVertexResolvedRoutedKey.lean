@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.StatisticalMechanics.Code.FrontierD.SixVertexResolvedRoutedKey
 open StatMech StatMech.FrontierD
 

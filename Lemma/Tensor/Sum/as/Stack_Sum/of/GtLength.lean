@@ -1,5 +1,5 @@
 import Lemma.Tensor.Sum.as.Stack_Sum.of.Eq
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor Nat
 
 
@@ -23,4 +23,4 @@ private lemma main
 
 
 -- created on 2025-06-27
--- updated on 2025-07-13
+-- updated on 2026-10-26

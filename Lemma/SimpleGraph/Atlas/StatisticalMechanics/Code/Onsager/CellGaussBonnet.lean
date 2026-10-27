@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.CellGaussBonnet.Part3
 open StatMech StatMech.Onsager StatMech.Onsager.CellGaussBonnet
 

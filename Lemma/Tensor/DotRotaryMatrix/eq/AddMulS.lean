@@ -2,7 +2,7 @@ import Lemma.List.ConsLengthSlice.eq.List
 import Lemma.Tensor.DotRotaryMatrix.eq.AddMulSAppend
 import Lemma.Tensor.SEq_Append
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Bool List Tensor
 set_option maxHeartbeats 300000
 
@@ -42,4 +42,4 @@ private lemma main
 
 
 -- created on 2023-06-06
--- updated on 2026-09-05
+-- updated on 2026-10-26

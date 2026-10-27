@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Scheme.CanonicalDivisor
 open KaehlerDifferential AlgebraicCurve
 

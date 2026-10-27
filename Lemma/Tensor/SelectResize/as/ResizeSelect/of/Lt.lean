@@ -1,6 +1,6 @@
 import Lemma.List.AddMul_ProdDrop.lt.ProdDrop.of.GtProdDrop_Succ.GtGet.Gtlength
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.ProdTakeSet.eq.MulProdSetTake.of.Ne.GtLength
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt

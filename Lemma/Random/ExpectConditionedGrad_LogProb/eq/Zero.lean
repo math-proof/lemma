@@ -1,6 +1,6 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.Calculus.FDeriv.Add
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Random.ProbCond.eq.Pr.of.Ne_0
 import Lemma.Random.Eq_0.of.EqReal_0
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq

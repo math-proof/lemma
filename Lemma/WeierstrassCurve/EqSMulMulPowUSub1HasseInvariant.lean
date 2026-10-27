@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Polynomial_DeuringPolynomial
 import Def.WeierstrassCurve_HasseInvariant
 import Lemma.Int.P2MUtil

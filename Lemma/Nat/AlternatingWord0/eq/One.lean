@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.ArtinGroup.Part2
 open CoxeterMatrix
 open ArtinGroup
@@ -98,4 +98,4 @@ end CoxeterMatrix.ArtinGroup
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

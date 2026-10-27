@@ -1,4 +1,4 @@
-import sympy.stats.policy_trajectory.continuous_action
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
 open scoped ENNReal.ToRealCoe
 open IsPolicyTrajectory

@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData1'1
 import Lemma.Vector.EqGet1_1
-import sympy.core.relational
+import Theorem.Analysis.Real.Relational
 open Tensor Vector
 
 

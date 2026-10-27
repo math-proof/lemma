@@ -1,4 +1,4 @@
-import sympy.functions.combinatorial.integer_factorials
+import Def.Data.Nat.Factorial.IntegerFactorials
 
 
 /-- `RisingFactorial(x, n) = Σ_{k ≤ n} x^k · Stirling1(n, k)` (unsigned Stirling numbers of the first kind). -/

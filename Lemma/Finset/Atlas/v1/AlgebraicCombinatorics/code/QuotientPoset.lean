@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicCombinatorics.code.QuotientPoset.Part2
 open Finset MulAction SpernerProperty
 open scoped Pointwise

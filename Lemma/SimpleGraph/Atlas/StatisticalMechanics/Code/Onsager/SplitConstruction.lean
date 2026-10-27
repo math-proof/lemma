@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.SplitConstruction
 open StatMech StatMech.Onsager StatMech.Onsager.SplitConstruction
 

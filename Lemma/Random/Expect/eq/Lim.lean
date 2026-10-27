@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Filter Topology
 
 
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2023-04-04
--- updated on 2026-10-17
+-- updated on 2026-10-26

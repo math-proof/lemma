@@ -42,10 +42,17 @@ export function filterImportsByLemmaCode(imports, lemmaCode, openSectionList) {
         if (openSet.has(section)) tokens.shift();
         break;
       }
-      case 'sympy':
-        if (tokens[1] === 'Basic') return false;
-        return true;
-      case 'stdlib':
+      case 'Def':
+      case 'Theorem':
+      case 'Instance':
+      case 'Class':
+      case 'Structure':
+      case 'Abbrev':
+      case 'Notation':
+      case 'Inductive':
+      case 'Syntax':
+      case 'Macro':
+      case 'Initialize':
       case 'Mathlib':
         return true;
       default:

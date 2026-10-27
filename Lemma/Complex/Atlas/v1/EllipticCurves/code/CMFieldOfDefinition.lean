@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.EllipticCurves.code.CMFieldOfDefinition
 open Matrix.SpecialLinearGroup Matrix CongruenceSubgroup CMFieldOfDefinition
 open scoped MatrixGroups

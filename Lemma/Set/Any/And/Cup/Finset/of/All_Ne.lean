@@ -1,7 +1,7 @@
 import Mathlib.Data.Finset.Sort
 import Macro.Order.ExprWithLimits
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

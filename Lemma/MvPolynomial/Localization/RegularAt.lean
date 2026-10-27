@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.RingTheory.Localization.RegularAt.Part2
 open FractionRing
 open MvPolynomial
@@ -94,4 +94,4 @@ end MvPolynomial
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.Lie.PoissonBracket
 open Poisson
 
@@ -98,4 +98,4 @@ private lemma core_greatest
   apply poissonCore_isGreatest
 
 -- created on 2026-10-09
--- updated on 2026-10-24
+-- updated on 2026-10-26

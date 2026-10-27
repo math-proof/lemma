@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -28,4 +28,4 @@ private lemma set
   aesop
 
 -- created on 2019-02-28
--- updated on 2025-07-30
+-- updated on 2026-10-26

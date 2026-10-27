@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.bfc2indep
 open Set MeasureTheory ProbabilityTheory MeasurableSpace StatMech StatMech.Walls
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.ArithmeticGeometry.code.GaloisCohomology.Part3
 open groupCohomology GaloisCohomology GaloisCohomology.CrossedHom GaloisCohomology.ContCrossedHom
 open scoped Classical

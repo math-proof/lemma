@@ -1,5 +1,5 @@
 import Lemma.List.EqInsertIdx.of.LtLength
-import torch.Tensor.unsqueeze
+import Def.Data.Holor.Unsqueeze
 import Lemma.List.InsertIdx.ne.Nil.of.Ne_Nil
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Ne_Nil
@@ -58,4 +58,4 @@ private lemma main
 
 
 -- created on 2025-10-10
--- updated on 2025-11-30
+-- updated on 2026-10-26

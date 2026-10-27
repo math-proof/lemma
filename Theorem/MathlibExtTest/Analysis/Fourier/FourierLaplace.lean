@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Fourier/FourierLaplace.lean -/
 
 
-import sympy.atlas.Analysis.Fourier.FourierLaplace
+import Theorem.Analysis.Fourier.FourierLaplace
 import Def.MathlibExtTest.Analysis.Fourier.FourierLaplace
 open MeasureTheory
 

@@ -1,6 +1,6 @@
 import Lemma.Complex.ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0
 import Lemma.Complex.ExpMulIDivMul2Pi3.eq.Add_MulI
-import sympy.polys.polyroots
+import Instance.Algebra.Polynomial.Polyroots
 open Complex
 
 

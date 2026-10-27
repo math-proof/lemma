@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.LinearAlgebra.Matrix.Toeplitz.Part3
 open MetaMathlibExt
 

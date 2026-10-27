@@ -1,6 +1,6 @@
-import sympy.Basic
-import sympy.core.numbers
-import sympy.sets.sets
+import Initialize.Tactic.Attr.Basic
+import Instance.Analysis.Real.Numbers
+import Theorem.Data.Set.Sets
 
 
 @[path]

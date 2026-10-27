@@ -1,4 +1,4 @@
-import torch.Tensor.unsqueeze
+import Def.Data.Holor.Unsqueeze
 import Lemma.Tensor.SEqBFnSGet.of.SEq.GtLength_0
 open Tensor
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.EdgeGraceful.Part4
 open EdgeGracefulTest
 

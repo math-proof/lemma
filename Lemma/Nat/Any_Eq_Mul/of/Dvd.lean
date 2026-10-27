@@ -1,4 +1,4 @@
-import sympy.functions.elementary.integers
+import Instance.Data.Int.Integers
 import Lemma.Nat.Mul
 open Nat
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.LocallyFactorialDivisors.Part7
 open IsDedekindDomain LocallyFactorialDivisors
 open scoped nonZeroDivisors

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Enumerative.InclusionExclusion1.Part3
 open Finset Nat
 open scoped BigOperators
@@ -824,4 +824,4 @@ private lemma x_card_inf_S_avoid
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

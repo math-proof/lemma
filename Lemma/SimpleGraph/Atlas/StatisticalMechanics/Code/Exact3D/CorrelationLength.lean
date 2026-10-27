@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Exact3D.CorrelationLength.Part3
 open StatMech StatMech.Exact3D
 

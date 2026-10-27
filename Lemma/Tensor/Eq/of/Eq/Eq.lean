@@ -1,6 +1,6 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Macro.Order.ExprWithLimits
-import sympy.tensor.lstm
+import Def.Data.Matrix.Lstm
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.SpecialFunctions.Pow.Real

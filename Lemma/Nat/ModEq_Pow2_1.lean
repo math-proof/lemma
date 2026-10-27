@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Nat.GePow2_1
 import Lemma.Nat.ModEq_Add
 import Lemma.Nat.EqAddSub.of.Ge

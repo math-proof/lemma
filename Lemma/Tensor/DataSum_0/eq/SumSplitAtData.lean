@@ -4,7 +4,7 @@ import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Bool Vector
 
 

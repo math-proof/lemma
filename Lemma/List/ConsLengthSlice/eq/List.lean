@@ -1,6 +1,6 @@
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.List.LengthSlice.eq.SubMin
-import stdlib.Slice
+import Def.Data.List.Slice
 open List
 
 

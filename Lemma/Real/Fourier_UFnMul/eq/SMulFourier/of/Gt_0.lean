@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.integrals.transforms.Scaling
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Fourier.Scaling.Part2
 import Lemma.Real.Fourier_UFnMul.eq.SMulFourier.of.Ne_0
 open scoped FourierTransform
 open MeasureTheory
@@ -29,4 +29,4 @@ end Real
 
 
 -- created on 2026-10-10
--- updated on 2026-10-24
+-- updated on 2026-10-26

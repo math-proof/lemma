@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqSoftmaxS.of.SEq.Eq
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
 import Lemma.Tensor.SoftmaxPermute.as.PermuteSoftmax.of.GtLength_Add
 open Tensor
@@ -39,4 +39,4 @@ private lemma main
 
 
 -- created on 2025-10-12
--- updated on 2025-10-31
+-- updated on 2026-10-26

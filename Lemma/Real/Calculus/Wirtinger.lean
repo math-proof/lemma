@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Calculus.Wirtinger
 
 open Real.Calculus.Wirtinger

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.MeasureTheory.Geometry.BesicovitchKakeya
 open MeasureTheory
 open scoped MeasureTheory ENNReal
@@ -1165,4 +1165,4 @@ end MathlibExt.MeasureTheory.Geometry.BesicovitchKakeyaWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.GrahamCanonicalEdgeDegreeHall.Part6
 open Finset StatMech StatMech.FrontierA StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 

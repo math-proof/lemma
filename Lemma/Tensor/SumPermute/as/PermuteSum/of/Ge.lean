@@ -1,7 +1,7 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge.EqAdd_1Length
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge.LtAdd_1Length
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open List Nat Tensor
 
 
@@ -32,4 +32,4 @@ private lemma main
 
 
 -- created on 2025-10-31
--- updated on 2025-11-16
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib.Algebra.Group.ForwardDiff
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

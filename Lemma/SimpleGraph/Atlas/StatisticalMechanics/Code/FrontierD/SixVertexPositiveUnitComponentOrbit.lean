@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveUnitComponentOrbit.Part7
 open Finset StatMech StatMech.FrontierD StatMech.FrontierD.SixVertexPositiveUnitComponentOrbitBase StatMech.FrontierD.SixVertexPositiveUnitComponentOrbitCover
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TheoryOfComputation.code.SelfReference.Part7
 open SelfReference TuringMachine GodelIncompleteness
 open TuringMachine

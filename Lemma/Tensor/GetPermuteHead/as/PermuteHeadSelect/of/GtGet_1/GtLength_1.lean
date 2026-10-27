@@ -1,6 +1,6 @@
 import Lemma.Tensor.Select.as.OfVectorMapToVector.of.GtVal_0
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.EraseIdxTail.eq.Drop_2
 import Lemma.List.Get_0.dvd.ProdTakeEraseIdx.of.Gt_0.Gt_0.GtLength_1
@@ -334,4 +334,4 @@ private lemma main
 
 
 -- created on 2025-11-02
--- updated on 2025-11-04
+-- updated on 2026-10-26

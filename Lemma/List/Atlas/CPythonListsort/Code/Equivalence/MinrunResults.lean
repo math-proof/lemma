@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.CPythonListsort.Code.Equivalence.MinrunResults.Part3
 open CPythonListsort
 

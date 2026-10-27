@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedDomain.Part5
 open Finset Set StatMech StatMech.FK StatMech.OSSS StatMech.OSSS.FKSharpnessWeightedDomain
 

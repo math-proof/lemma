@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FLTPrelim_Ramification
 import Def.GaloisRep_TameCharacter
 

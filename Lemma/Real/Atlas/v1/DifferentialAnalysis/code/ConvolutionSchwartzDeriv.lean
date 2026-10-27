@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.DifferentialAnalysis.code.ConvolutionSchwartzDeriv
 open MeasureTheory Filter Topology Metric Set ConvolutionDensity
 open scoped ZeroAtInfty ContDiff

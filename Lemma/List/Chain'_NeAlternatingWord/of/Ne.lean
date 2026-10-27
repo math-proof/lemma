@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicPositivity
 import Lemma.List.WordSigma.eq.AddSSMul.of.All_Eq_0.Ne
 import Lemma.List.EqWordSSigma.of.WordProd

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.asymptotics.WatsonLaplaceLemma
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Asymptotics.WatsonLaplaceLemma
 
 open MetaMathlibExt
 
@@ -77,4 +77,4 @@ lemma watson_laplace_integral_asymptotic
 
 
 -- created on 2026-10-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

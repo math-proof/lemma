@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianTrivialityReduction.Part2
 open Filter Finset Topology StatMech StatMech.FrontierA
 

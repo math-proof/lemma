@@ -1,7 +1,7 @@
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Basic.Real.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Finset
 
 

@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 import Lemma.Bool.UFn.of.Eq
 import Lemma.List.LengthFlatten.eq.SumMapLength
 import Lemma.List.MapMap.eq.Map_Comp

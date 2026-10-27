@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
-import sympy.matrices.expressions.matmul
-import torch.Tensor.sum
+import Instance.LinearAlgebra.Matrix.Matmul
+import Def.Data.Holor.Sum
 open Bool Tensor
 
 
@@ -61,4 +61,4 @@ private lemma resize
 
 
 -- created on 2026-01-05
--- updated on 2026-08-17
+-- updated on 2026-10-26

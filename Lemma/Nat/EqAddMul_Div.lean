@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.functions.elementary.integers
+import Initialize.Tactic.Attr.Basic
+import Instance.Data.Int.Integers
 
 
 /--

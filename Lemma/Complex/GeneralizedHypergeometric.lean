@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.GeneralizedHypergeometric
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.GeneralizedHypergeometric.Part3
 open MetaMathlibExt.GeneralizedHypergeometric
 
 

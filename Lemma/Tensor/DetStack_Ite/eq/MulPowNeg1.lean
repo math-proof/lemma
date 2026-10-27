@@ -4,7 +4,7 @@ import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.Pow.eq.TensorListPow
-import torch.stack
+import Def.Data.Holor.Stack.Part2
 open Tensor
 
 

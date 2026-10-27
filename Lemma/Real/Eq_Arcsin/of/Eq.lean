@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

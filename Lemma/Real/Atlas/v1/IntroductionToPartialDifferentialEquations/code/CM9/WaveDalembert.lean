@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM9.WaveDalembert
 open Real Set MeasureTheory intervalIntegral CM9 CM9.Wave
 

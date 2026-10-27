@@ -1,6 +1,6 @@
-import torch.Tensor.Basic
-import torch.Tensor.prod
-import torch.functions
+import Def.Data.Holor.Defs.Part4
+import Def.Data.Holor.Prod
+import Theorem.Data.Holor.Functions
 open List
 
 

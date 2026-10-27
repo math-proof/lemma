@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredOpenFibers
 open Finset SimpleGraph StatMech StatMech.Universality
 

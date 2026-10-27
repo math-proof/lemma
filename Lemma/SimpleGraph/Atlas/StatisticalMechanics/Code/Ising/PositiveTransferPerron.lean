@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.PositiveTransferPerron.Part2
 open Finset Matrix Filter Topology StatMech StatMech.Ising
 

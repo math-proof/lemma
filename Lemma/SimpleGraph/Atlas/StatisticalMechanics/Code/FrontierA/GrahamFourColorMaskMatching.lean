@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorMaskMatching.Part2
 open Finset StatMech StatMech.GrahamGHS StatMech.GrahamGHS.FourColor
 

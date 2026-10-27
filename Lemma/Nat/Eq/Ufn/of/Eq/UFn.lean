@@ -1,5 +1,5 @@
-import sympy.functions.special.tensor_functions
-import sympy.Basic
+import Def.Analysis.SpecialFunctions.TensorFunctions
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.GHSDistinctSite.Part2
 open Finset SimpleGraph Set StatMech StatMech.Ising
 

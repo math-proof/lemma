@@ -1,5 +1,10 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
+import Def.v1.Atlas.BooleanFunctions.code.Stability
+import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Stability
+import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseStability
+import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseStabilityBounds
+import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Theorems
 open Finset BigOperators
 
 
@@ -40,7 +45,7 @@ lemma noiseStability_at_zero
 -- imply
   noiseStability 0 f = fourierCoeff f ∅ ^ 2 :=
 -- proof
-  noiseStability_zero f
+  noiseStability_zero
 
 end BooleanFourier
 
@@ -57,7 +62,7 @@ lemma noiseStability_at_one_of_boolean
   noiseStability 1 (fun x => boolToReal (f x)) = 1 := by
 -- proof
   rw [noiseStability_one]
-  exact parseval_signed f
+  exact parseval_signed
 
 end BooleanFourier
 
@@ -77,9 +82,10 @@ lemma noiseStability_bounds_of_boolean
 -- imply
   fourierCoeff (fun x => boolToReal (f x)) ∅ ^ 2 ≤ noiseStability ρ (fun x => boolToReal (f x)) ∧ noiseStability ρ (fun x => boolToReal (f x)) ≤ 1 :=
 -- proof
-  noiseStability_bounds_boolean ρ hρ₀ hρ₁ f
+  noiseStability_bounds_boolean hρ₀ hρ₁
 
 end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

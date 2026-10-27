@@ -1,7 +1,7 @@
 import Lemma.Tensor.GtLength.of.GtLength_0
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 import Lemma.Tensor.Sum_0.eq.Sum_Get
-import stdlib.SEq
+import Theorem.Logic.SEq
 open Tensor
 
 /--

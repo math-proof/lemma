@@ -1,5 +1,5 @@
 import Lemma.Multiset.AntitoneOnFunPowNesymm
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 
 
 @[path]

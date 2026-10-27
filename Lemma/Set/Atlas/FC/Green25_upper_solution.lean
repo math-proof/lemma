@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FC.Green25_upper_solution.Part8
 open Asymptotics Filter Finset Green25
 

@@ -1,7 +1,7 @@
-import sympy.matrices.expressions.matmul
-import torch.Tensor.reshape
-import torch.Tensor.bmm
-import torch.Tensor.select
+import Instance.LinearAlgebra.Matrix.Matmul
+import Def.Data.Holor.Reshape
+import Def.Data.Holor.Bmm
+import Def.Data.Holor.Select
 import Lemma.Tensor.Cast_ResizeCast_0.eq.Zero
 import Lemma.Tensor.EqBmm_0'0
 import Lemma.Tensor.Select0.eq.Zero

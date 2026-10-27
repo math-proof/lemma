@@ -1,6 +1,6 @@
 import Mathlib.Combinatorics.Enumerative.Stirling
 import Mathlib.Algebra.BigOperators.Ring.Finset
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Finset Nat
 
 
@@ -145,4 +145,4 @@ private lemma main
 
 
 -- created on 2023-08-20
--- updated on 2026-10-17
+-- updated on 2026-10-26

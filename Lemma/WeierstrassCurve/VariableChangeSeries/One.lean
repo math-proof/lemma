@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.FormalGroup.NSeries
 import Lemma.FormalGroup.DrinfeldBasis
 import Def.FormalGroup_PointTransport

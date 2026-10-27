@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq
-import torch.Tensor.unsqueeze
+import Def.Data.Holor.Unsqueeze
 open Tensor
 
 

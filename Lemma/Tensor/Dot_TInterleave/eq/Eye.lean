@@ -1,8 +1,8 @@
 import Lemma.Tensor.Dot.eq.Eye.of.Dot.eq.Eye
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.DotTInterleave.eq.Eye
-import torch.eye
-import torch.functions
+import Def.Data.Holor.Eye
+import Theorem.Data.Holor.Functions
 open Tensor
 
 
@@ -16,4 +16,4 @@ private lemma main :
 
 
 -- created on 2026-09-05
--- updated on 2026-09-06
+-- updated on 2026-10-26

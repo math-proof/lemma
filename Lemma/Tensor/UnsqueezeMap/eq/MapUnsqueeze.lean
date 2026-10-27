@@ -1,5 +1,5 @@
 import Lemma.Tensor.ReshapeMap.eq.MapReshape.of.Dvd
-import torch.Tensor.unsqueeze
+import Def.Data.Holor.Unsqueeze
 open Tensor
 
 

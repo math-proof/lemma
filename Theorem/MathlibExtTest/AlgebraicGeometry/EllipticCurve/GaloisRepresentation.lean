@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/GaloisRepresentation.lean -/
 
 
-import sympy.atlas.AlgebraicGeometry.EllipticCurve.GaloisRepresentation
+import Def.AlgebraicGeometry.EllipticCurve.GaloisRepresentation.Part4
 /-!
 # Tests for the Galois action on `p`-torsion
 

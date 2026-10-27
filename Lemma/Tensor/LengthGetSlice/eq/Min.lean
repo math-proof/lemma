@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.List.LengthSlice.eq.Min
 open Tensor List
 

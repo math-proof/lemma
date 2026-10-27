@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.PermuteHead0.eq.Zero
 import Lemma.Tensor.PermuteTail0.eq.Zero
 import Lemma.Tensor.EqCast_0'0.of.Eq

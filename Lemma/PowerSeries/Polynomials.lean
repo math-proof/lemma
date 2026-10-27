@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.Polynomials
+import Initialize.Tactic.Attr.Basic
+import Notation.RingTheory.PowerSeries.Polynomials
 
 
 section

@@ -1,5 +1,5 @@
-import stdlib.SEq
-import torch.Tensor.Basic
+import Theorem.Logic.SEq
+import Def.Data.Holor.Defs.Part4
 import Lemma.Vector.HEq.of.Val
 open Vector Bool
 

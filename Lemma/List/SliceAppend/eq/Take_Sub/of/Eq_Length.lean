@@ -1,4 +1,4 @@
-import stdlib.List
+import Def.Data.List.List.Part5
 import Lemma.List.SliceAppend.eq.Take_Sub_Length
 open List
 

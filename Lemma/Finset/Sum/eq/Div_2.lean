@@ -1,5 +1,5 @@
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -13,4 +13,4 @@ private lemma gauss_summation
 
 
 -- created on 2024-12-21
--- updated on 2025-07-14
+-- updated on 2026-10-26

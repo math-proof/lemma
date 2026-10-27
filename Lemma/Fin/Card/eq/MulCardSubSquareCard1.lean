@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.GroupTheory.DicksonPGL2Wild.Part6
 open scoped BigOperators Pointwise Polynomial
 open MetaMathlibExt
@@ -5093,4 +5093,4 @@ private lemma classification_wild_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

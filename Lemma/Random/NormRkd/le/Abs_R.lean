@@ -1,4 +1,4 @@
-import sympy.stats.policy_trajectory.continuous_action
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
 open MeasureTheory PolicyGradient
 
 
@@ -35,4 +35,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-12
+-- updated on 2026-10-26

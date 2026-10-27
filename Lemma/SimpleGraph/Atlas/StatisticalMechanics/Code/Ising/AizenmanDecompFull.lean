@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.AizenmanDecompFull.Part3
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Ising StatMech.Ising.AizenmanDecomp
 

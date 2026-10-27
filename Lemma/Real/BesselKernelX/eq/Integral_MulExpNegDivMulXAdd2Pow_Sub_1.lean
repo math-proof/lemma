@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.LanglandsTunnell.ArchBessel
 open MeasureTheory Set LanglandsTunnell.ArchBessel
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open NumberField NumberField.InfinitePlace NumberField.Units NumberField.Units.dirichletUnitTheorem Subgroup Matrix Finset
 open scoped NumberField Classical
 open NumberField.Units.dirichletUnitTheorem

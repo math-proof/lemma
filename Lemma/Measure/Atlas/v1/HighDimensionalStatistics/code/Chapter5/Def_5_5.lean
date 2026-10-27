@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Def_5_5
 open InformationTheory MeasureTheory MeasureTheory.Measure Rigollet Rigollet.Chapter5
 

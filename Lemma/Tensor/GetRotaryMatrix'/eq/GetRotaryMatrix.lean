@@ -1,7 +1,7 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix
 import Lemma.Tensor.SEqDotS.of.SEq
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Bool Nat Tensor Fin
 
 

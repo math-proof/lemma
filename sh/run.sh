@@ -345,7 +345,7 @@ emit_synthetic() {
   echo "  ('$user', \"$1\", '[]', '[]', '[]', '[]', '[]', '{\"error\":[]}', '[]')," >> sql/test.sql
 }
 
-# Mirror List.andLeftTokens / List.andRightTokens / Name.andProjName from sympy/Basic.lean:
+# Mirror List.andLeftTokens / List.andRightTokens / Name.andProjName from Def/Tactic/Attr/Basic.lean:
 # Section.Type1.Type2.of.Givens -> Section.Type1.of.Givens (left) or Section.Type2.of.Givens (right);
 # when Type1 = Type2, append .fst / .snd.
 and_proj_module() {

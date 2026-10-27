@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.GaloisRep.AdZero
 import Def.Deformations_TaylorWilesLocal
 set_option autoImplicit false

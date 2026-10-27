@@ -1,4 +1,4 @@
-import sympy.core.power
+import Theorem.Algebra.Power.Part2
 import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalPow
 open Hyperreal
 

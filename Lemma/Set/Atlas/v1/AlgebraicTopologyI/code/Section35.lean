@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section35.Part14
 open Set CategoryTheory AlgebraicTopology Limits TopologicalSpace Function neighborhoods of `K`. -/ CategoryTheory.Limits SingularCohomology in Classical inclusion $U_j \hookrightarrow U_i$. $V_j V_i$. CechCohomology
 open CategoryTheory AlgebraicTopology Limits TopologicalSpace Function

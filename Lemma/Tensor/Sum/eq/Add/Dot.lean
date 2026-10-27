@@ -1,5 +1,5 @@
 import Mathlib.LinearAlgebra.Matrix.Notation
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -13,4 +13,4 @@ private lemma main
 
 
 -- created on 2023-09-18
--- updated on 2026-10-17
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.Perm.Inversions1
 open AlgebraicCombinatorics
 open AlgebraicCombinatorics.Perm
@@ -4220,4 +4220,4 @@ private lemma pv_lehmerCodeImage_eq
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

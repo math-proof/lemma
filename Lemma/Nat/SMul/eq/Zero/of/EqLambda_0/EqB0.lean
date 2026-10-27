@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.CerednikDrinfeld.GradedCartierModuleData
 import Lemma.CerednikDrinfeld.GradedCartierNModule
 open CerednikDrinfeld CerednikDrinfeld.GradedCartierModuleData

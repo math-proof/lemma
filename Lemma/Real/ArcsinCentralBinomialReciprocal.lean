@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ArcsinCentralBinomialReciprocal
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.ArcsinCentralBinomialReciprocal.Part7
 
 
 namespace MetaMathlibExt
@@ -1256,4 +1256,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

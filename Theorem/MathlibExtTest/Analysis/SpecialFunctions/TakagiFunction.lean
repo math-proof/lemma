@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/TakagiFunction.lean -/
 
 
-import sympy.atlas.Analysis.SpecialFunctions.TakagiFunction
+import Theorem.Analysis.SpecialFunctions.TakagiFunction
 
 
 namespace MetaMathlibExt

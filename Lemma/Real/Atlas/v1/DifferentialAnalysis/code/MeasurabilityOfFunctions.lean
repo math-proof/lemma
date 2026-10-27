@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasurableSpace Set MeasureTheory MeasureTheory.SimpleFunc
 open scoped ENNReal NNReal
 

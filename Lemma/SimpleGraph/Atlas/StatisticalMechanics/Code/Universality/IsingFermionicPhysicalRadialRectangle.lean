@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalRadialRectangle.Part6
 open StatMech StatMech.Universality StatMech.Universality.FKIsingSquareInteriorRadialRectanglePlacement StatMech.Universality.FKIsingSquareInteriorRadialFiniteRectanglePlacement
 

@@ -1,5 +1,5 @@
 import Lemma.Real.Norm.eq.Sqrt
-import sympy.physics.vector.kinematics
+import Def.Geometry.Euclidean.Kinematics
 
 
 /--

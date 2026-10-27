@@ -1,5 +1,5 @@
-import stdlib.SEq
-import sympy.Basic
+import Theorem.Logic.SEq
+import Initialize.Tactic.Attr.Basic
 
 
 /--

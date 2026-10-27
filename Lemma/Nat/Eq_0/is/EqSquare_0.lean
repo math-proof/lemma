@@ -1,4 +1,4 @@
-import sympy.core.power
+import Theorem.Algebra.Power.Part2
 import Lemma.Nat.Pow.eq.Zero.is.Eq_0.of.Gt_0
 open Nat
 
@@ -26,4 +26,4 @@ private lemma main
 
 
 -- created on 2025-12-20
--- updated on 2026-08-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.GeometricAlgebra.HyperbolicCancellation
 import Lemma.Int.OrthogonalSum.eq.Add
 open FiniteDimensional Module

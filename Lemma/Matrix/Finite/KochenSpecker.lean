@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.QuantumInformation.Finite.KochenSpecker
 open MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 
@@ -628,4 +628,4 @@ end MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.series.limits
+import Initialize.Tactic.Attr.Basic
+import Def.Analysis.Real.Limits.Part4
 
 
 @[path]

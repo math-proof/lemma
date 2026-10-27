@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.CoxeterGroup.ReflectionIdentificationGenuine
 import Lemma.Nat.StrongExchangeForBruhat
 import Lemma.List.IsReducedDrop.of.IsReduced

@@ -1,7 +1,5 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/TaylorInitialSampleVariance.lean -/
-
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Order.Interval.Finset.Nat
 open scoped BigOperators
 
@@ -31,5 +29,6 @@ inverse-zero); the source invokes it for `n ≥ 2` with `ℕ = {1, 2, ...}`. -/
 noncomputable def initialSegmentSampleVariance (a : ℕ → ℕ) (n : ℕ) : ℝ :=
   ((n : ℝ) - 1)⁻¹ * ∑ j ∈ Finset.Icc 1 n,
     (((a j : ℝ) - (1 / (n : ℝ)) * ∑ k ∈ Finset.Icc 1 n, (a k : ℝ)) ^ 2)
+
 
 end MetaMathlibExt

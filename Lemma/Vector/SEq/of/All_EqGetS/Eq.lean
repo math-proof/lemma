@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 import Lemma.Vector.Eq.of.Eq_Cast.Eq
 open Vector
 

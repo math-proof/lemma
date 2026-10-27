@@ -1,4 +1,4 @@
-import sympy.stats.linear_td
+import Class.Dynamics.LinearTD
 open Matrix
 
 

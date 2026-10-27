@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
-import sympy.stats.policy_trajectory.continuous_action
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
 open MeasureTheory ProbabilityTheory Topology PolicyGradient
 
 

@@ -1,5 +1,5 @@
 import Lemma.Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0
-import sympy.vector.functions
+import Instance.Data.Vector.Functions.Part2
 open Real Vector
 
 

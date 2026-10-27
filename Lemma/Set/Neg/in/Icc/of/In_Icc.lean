@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Int.LeNegS.of.Ge
 open Int
 
@@ -16,4 +16,4 @@ private lemma main
 
 
 -- created on 2018-05-14
--- updated on 2025-10-01
+-- updated on 2026-10-26

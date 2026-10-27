@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Assembly.MergeMemoryLifecycle.Part2
 open CPythonListsort CPythonListsort.MergeMemorySnapshot CPythonListsort.MergeMemoryCallEvent CPythonListsort.MergeMemoryEvent CPythonListsort.AccessTrace CPythonListsort.AccessTrace.MergeMemoryCallChain
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.GibbsExtreme
 open StatMech.Ising StatMech.Lattice Finset MeasureTheory Set StatMech
 

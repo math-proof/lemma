@@ -1,8 +1,8 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.List.Swap.eq.Permute__Neg1.of.GtLength
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge
 import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool List Tensor
 
 

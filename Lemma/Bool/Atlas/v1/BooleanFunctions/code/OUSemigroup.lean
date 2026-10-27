@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.OUSemigroup
 open GaussianSpace ProbabilityTheory MeasureTheory
 open MeasureTheory ProbabilityTheory Real ContinuousLinearMap
@@ -12,8 +12,12 @@ namespace GaussianSpace
 -/
 @[path]
 lemma gaussian_sum_pushforward
+  {E : Type*}
   [NormedAddCommGroup E]
   [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E]
+  [MeasurableSpace E]
+  [BorelSpace E]
   {a b c : ℝ}
 -- given
   (habc : a ^ 2 + b ^ 2 = c ^ 2) :
@@ -53,8 +57,12 @@ namespace GaussianSpace
 -/
 @[path]
 lemma integral_gaussian_sum
+  {E : Type*}
   [NormedAddCommGroup E]
   [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E]
+  [MeasurableSpace E]
+  [BorelSpace E]
   {a b c : ℝ}
   {g : E → ℝ}
 -- given
@@ -71,11 +79,10 @@ lemma integral_gaussian_sum
   simp only [Function.comp]
   rw [← integral_map (by fun_prop : AEMeasurable (addSmulCLM (E := E) a b) _)
     hg_meas.aestronglyMeasurable]
-  rw [gaussian_sum_pushforward a b c habc]
+  rw [gaussian_sum_pushforward habc]
   rw [integral_map (by fun_prop : AEMeasurable (c • ContinuousLinearMap.id ℝ E) (stdGaussian E))
     hg_meas.aestronglyMeasurable]
-  simp [ContinuousLinearMap.coe_smul']
-set_option maxHeartbeats 400000 in
+  simp
 
 end GaussianSpace
 
@@ -124,11 +131,11 @@ lemma ornsteinUhlenbeckOp_comp
     ((stdGaussian _).prod (stdGaussian _)) := by
     rw [← integrable_map_measure hg_meas.aestronglyMeasurable
       (addSmulCLM (E := EuclideanSpace ℝ (Fin n)) a b).continuous.aemeasurable,
-      gaussian_sum_pushforward (E := EuclideanSpace ℝ (Fin n)) a b c habc,
+      gaussian_sum_pushforward (E := EuclideanSpace ℝ (Fin n)) (a := a) (b := b) (c := c) habc,
       integrable_map_measure hg_meas.aestronglyMeasurable
         (c • ContinuousLinearMap.id ℝ (EuclideanSpace ℝ (Fin n))).continuous.aemeasurable]
     exact hf_int ((ρ * σ) • x)
-  exact integral_gaussian_sum a b c habc g hg_meas hg_comp_int
+  exact integral_gaussian_sum (a := a) (b := b) (c := c) (g := g) habc hg_meas hg_comp_int
 
 end GaussianSpace
 

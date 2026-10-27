@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Correctness.ReverseModeAlgebra.Part4
 open CPythonListsort CPythonListsort.ReverseStableOccurrencePermutation CPythonListsort.SortSlice CPythonListsort.ListSortInput
 

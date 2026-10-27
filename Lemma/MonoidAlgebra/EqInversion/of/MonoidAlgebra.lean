@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Algebra.MonoidAlgebra.InversionTwist.Part3
 open GroupRing
 

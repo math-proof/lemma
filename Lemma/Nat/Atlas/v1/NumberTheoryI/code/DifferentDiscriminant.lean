@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.DifferentDiscriminant.Part3
 open Algebra Submodule FractionalIdeal IsDedekindDomain
 open scoped Matrix

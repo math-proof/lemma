@@ -1,5 +1,5 @@
-import sympy.matrices.cholesky
-import sympy.Basic
+import Def.Analysis.Matrix.Cholesky
+import Initialize.Tactic.Attr.Basic
 open Matrix
 open scoped ComplexOrder
 

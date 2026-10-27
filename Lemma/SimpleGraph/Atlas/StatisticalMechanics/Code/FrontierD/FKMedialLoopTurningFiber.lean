@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialLoopTurningFiber.Part4
 open Equiv Finset SimpleGraph StatMech StatMech.FrontierD StatMech.FrontierD.FKMedialTurningFiber
 

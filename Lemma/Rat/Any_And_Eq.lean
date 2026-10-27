@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
 open scoped Pointwise
 

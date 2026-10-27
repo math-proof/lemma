@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Correctness.SortSliceRange
 open CPythonListsort CPythonListsort.SortSlice CPythonListsort.SortSlice.EqualOutsideRange
 

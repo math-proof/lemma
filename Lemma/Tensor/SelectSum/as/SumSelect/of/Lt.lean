@@ -1,4 +1,4 @@
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Finset.Sum.of.All_Eq.Eq
 import Lemma.List.DropEraseIdx.eq.AppendDropTake.of.Ge
 import Lemma.List.DropEraseIdx.eq.Drop.of.Lt
@@ -15,7 +15,7 @@ import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 import Lemma.Vector.GetSum.eq.Sum_Get
 import Lemma.Vector.Sum.of.All_Eq.Eq
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool Finset List Nat Tensor Vector Fin Set
 set_option maxHeartbeats 250000
 
@@ -213,4 +213,4 @@ private lemma main
 
 
 -- created on 2025-11-28
--- updated on 2025-11-29
+-- updated on 2026-10-26

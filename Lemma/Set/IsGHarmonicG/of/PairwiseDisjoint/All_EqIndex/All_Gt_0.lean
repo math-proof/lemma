@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.GHarmonic
 open scoped Pointwise
 
@@ -121,4 +121,4 @@ lemma not_isGHarmonic_of_zero
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

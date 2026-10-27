@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.FrontierD.SixVertexAlignedFirstReturn.Part31
 open StatMech.FrontierD StatMech StatMech.FrontierD.FourByTwoPrefixBondAudit
 

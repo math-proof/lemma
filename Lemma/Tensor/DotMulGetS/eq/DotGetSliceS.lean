@@ -1,5 +1,5 @@
 import Lemma.Bool.Bool.eq.Ite
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 import Lemma.Int.Icc_Sub_1.eq.Ico
 import Lemma.Int.InSub.is.In_Ico_AddS
 import Lemma.Int.In_Ico.is.In_IcoToNatS
@@ -148,4 +148,4 @@ private lemma main
 
 
 -- created on 2026-08-14
--- updated on 2026-08-27
+-- updated on 2026-10-26

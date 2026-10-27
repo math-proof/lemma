@@ -11,7 +11,7 @@ import Lemma.Hyperreal.NotInfinitesimalDivAbsSub.of.Infinite.NotInfinite
 import Lemma.Hyperreal.NotInfinitesimalDivSquareSub.of.Infinite.NotInfinite
 import Lemma.Hyperreal.XEq.is.InfinitesimalDivSquareSub
 import Lemma.Real.Eq_1.of.AddInv.eq.Two
-open Hyperreal Int Nat Rat Real
+open Hyperreal Int Nat Rat Real ArchimedeanClass
 
 
 /--
@@ -314,4 +314,4 @@ private lemma main
 
 
 -- created on 2025-12-09
--- updated on 2025-12-21
+-- updated on 2026-10-26

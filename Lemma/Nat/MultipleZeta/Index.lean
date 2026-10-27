@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.MultipleZeta.Index.Part2
 open MetaMathlibExt.MultipleZeta
 
@@ -61,4 +61,4 @@ private lemma toList_hoffmanBlock_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.Enumerative.LunnonDimensionDecomposition.Part9
 open scoped BigOperators
 open MetaMathlibExt
@@ -287,4 +287,4 @@ private lemma lunnon_fixed_polycube_dimension_decomposition_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

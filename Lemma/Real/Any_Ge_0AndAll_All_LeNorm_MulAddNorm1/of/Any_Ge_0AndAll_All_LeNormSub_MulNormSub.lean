@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Mathlib.Analysis.Normed.Group.Basic
 import Mathlib.Data.Fintype.Lattice
 open Finset

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.WeightedSets
+import Initialize.Tactic.Attr.Basic
+import Def.Combinatorics.Enumerative.WeightedSets.Part26
 open scoped BigOperators
 open PowerSeries Finset
 open WeightedSet WeightedSetExamples DominoTilingsZ
@@ -4044,4 +4044,4 @@ private lemma pv_sigma_fin_fun_ext
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqGetStack
-import sympy.matrices.expressions.permutation
+import Def.LinearAlgebra.Matrix.Permutation
 open Tensor
 
 

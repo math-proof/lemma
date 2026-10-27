@@ -1,5 +1,5 @@
-import torch.Tensor.Basic
-import torch.functions
+import Def.Data.Holor.Defs.Part4
+import Theorem.Data.Holor.Functions
 
 
 @[path]

@@ -897,6 +897,17 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             };
             return [peelChooseArg(n).toLatex(syntax), peelChooseArg(k).toLatex(syntax)];
         }
+        if (
+            func instanceof L.LeanProperty &&
+            func.rhs instanceof L.LeanToken &&
+            func.rhs.text === 'card' &&
+            args.length === 2
+        ) {
+            let arg = args[1];
+            if (arg instanceof L.LeanParenthesis && !(arg.arg instanceof L.LeanColon))
+                arg = arg.arg;
+            return [arg.toLatex(syntax)];
+        }
         return args.map((arg) => {
             if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
                 arg = arg.arg;
@@ -991,6 +1002,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             if (func.rhs.text === 'fmod' && args.length === 2) return '{%s}{%s}';
             if (func.rhs.text === 'choose' && (args.length === 2 || args.length === 3))
                 return '\\binom{%s}{%s}';
+            // `Finset.card {…}` — bars around the set, not the words `Finset.card`.
+            if (func.rhs.text === 'card' && args.length === 2)
+                return '\\left|{%s}\\right|';
         }
         const n = args.length;
         return Array(n)

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.BeffaraDC.MaxInfluencePBiased.Part2
 open Finset Real Set StatMech StatMech.BeffaraDC
 

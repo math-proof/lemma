@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalC1.Part6
 open Filter MeasureTheory Topology StatMech StatMech.FrontierA
 

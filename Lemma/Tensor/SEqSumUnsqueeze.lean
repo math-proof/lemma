@@ -1,7 +1,7 @@
 import Lemma.List.ProdTakeDropInsertIdx.eq.One
-import torch.Tensor.sum
-import torch.Tensor.unsqueeze
-import torch.Tensor.prod
+import Def.Data.Holor.Sum
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Prod
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.DataSum.as.FlattenMapSplitAtData
 import Lemma.Tensor.DataUnsqueeze.as.Data

@@ -2,8 +2,8 @@ import Lemma.Int.Sub0.eq.Neg
 import Lemma.Nat.Sub.eq.Zero
 import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.GetSub.eq.SubGetS
-import torch.functions
-import torch.stack
+import Theorem.Data.Holor.Functions
+import Def.Data.Holor.Stack.Part2
 open Tensor Int Nat
 set_option maxHeartbeats 1000000
 
@@ -44,4 +44,4 @@ private lemma main
 
 
 -- created on 2025-12-23
--- updated on 2026-08-19
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingLieTrotter
 open Filter Matrix StatMech StatMech.FrontierA
 

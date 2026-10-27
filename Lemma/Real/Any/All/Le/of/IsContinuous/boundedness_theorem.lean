@@ -1,5 +1,5 @@
 import Mathlib.Topology.Order.Compact
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

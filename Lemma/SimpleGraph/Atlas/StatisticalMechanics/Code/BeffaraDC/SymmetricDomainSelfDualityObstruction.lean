@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.BeffaraDC.SymmetricDomainSelfDualityObstruction.Part6
 open Set SimpleGraph StatMech.Lattice StatMech StatMech.BeffaraDC StatMech.BeffaraDC.SymmetricDomain
 

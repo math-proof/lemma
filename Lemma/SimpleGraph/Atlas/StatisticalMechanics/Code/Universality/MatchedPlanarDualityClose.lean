@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.MatchedPlanarDualityClose.Part5
 open Set SimpleGraph Finset StatMech.Lattice StatMech.RSW.Box StatMech StatMech.Universality
 

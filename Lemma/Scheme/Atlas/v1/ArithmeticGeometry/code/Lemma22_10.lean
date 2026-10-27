@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.AdelePlusFDim
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.AdelePlusFDim
 open FunctionFieldAdeleRing DiscreteValuationFamily

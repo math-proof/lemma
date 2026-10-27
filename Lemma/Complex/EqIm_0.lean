@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.functions.elementary.complexes
+import Initialize.Tactic.Attr.Basic
+import Notation.Analysis.Complex.Complexes
 
 
 @[path, subst 0]

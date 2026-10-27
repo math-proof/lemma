@@ -1,7 +1,7 @@
 import Macro.Logic.Quantifier.Part4
-import sympy.series.limits
-import sympy.sets.sets
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path, comm, mp, mpr]
@@ -139,4 +139,4 @@ private lemma εN.neg
 
 
 -- created on 2020-04-03
--- updated on 2026-08-20
+-- updated on 2026-10-26

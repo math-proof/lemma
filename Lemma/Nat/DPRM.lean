@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.DPRM.Part2
 open scoped Dioph Vector3 Nat Function
 open MathlibExt.NumberTheory.DPRMWanted
@@ -2563,4 +2563,4 @@ end MathlibExt.NumberTheory.DPRMWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

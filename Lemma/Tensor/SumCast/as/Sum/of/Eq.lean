@@ -1,6 +1,6 @@
-import stdlib.SEq
-import torch.Tensor.Basic
-import torch.Tensor.sum
+import Theorem.Logic.SEq
+import Def.Data.Holor.Defs.Part4
+import Def.Data.Holor.Sum
 @[path, cast]
 private lemma main
   [Add α] [Zero α]

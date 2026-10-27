@@ -1,13 +1,13 @@
 import Lemma.Tensor.Dot.eq.SumMul
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
-import torch.Tensor.permute
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.Einsum.eq.SumMulDataS
 import Lemma.Tensor.MapCast.as.MapBFn.of.Eq
 import Lemma.Tensor.RepeatBFn.eq.BFnRepeat
 import Lemma.Tensor.ResizeBFn.eq.BFnResize
 import Lemma.Tensor.UnsqueezeBFn.eq.BFnUnsqueeze
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor
 
 
@@ -95,4 +95,4 @@ private lemma matrix
 
 
 -- created on 2026-08-15
--- updated on 2026-08-17
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_4
 open MeasureTheory Real ProbabilityTheory Problem_1_4
 

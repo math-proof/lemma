@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.GrahamComponentAssociationReduction.Part3
 open Finset SimpleGraph Classical StatMech StatMech.FrontierA
 

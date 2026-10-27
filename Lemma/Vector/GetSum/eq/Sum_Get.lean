@@ -1,5 +1,5 @@
 import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 open Vector Finset
 
 

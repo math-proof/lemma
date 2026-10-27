@@ -1,5 +1,5 @@
 import Mathlib.Data.Int.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -15,4 +15,4 @@ private lemma main
   · rw [h, abs_neg]
 
 -- created on 2018-08-14
--- updated on 2023-05-20
+-- updated on 2026-10-26

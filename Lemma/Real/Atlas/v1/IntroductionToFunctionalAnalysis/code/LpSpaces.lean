@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.IntroductionToFunctionalAnalysis.code.LpSpaces
 open MeasureTheory
 open scoped ENNReal NNReal
@@ -302,4 +302,4 @@ lemma memLp_of_polynomial_decay
     exact hasFiniteIntegral_iff_enorm.mp hint.hasFiniteIntegral
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

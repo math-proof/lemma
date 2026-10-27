@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
 open MeasureTheory Real ProbabilityTheory SubGaussian
 

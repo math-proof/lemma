@@ -2,7 +2,7 @@ import Mathlib.Analysis.Calculus.FDeriv.Comp
 import Mathlib.Analysis.Calculus.FDeriv.Linear
 import Mathlib.Analysis.InnerProductSpace.Dual
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open InnerProductSpace
 
 
@@ -24,4 +24,4 @@ private lemma main
 
 
 -- created on 2023-04-08
--- updated on 2026-10-17
+-- updated on 2026-10-26

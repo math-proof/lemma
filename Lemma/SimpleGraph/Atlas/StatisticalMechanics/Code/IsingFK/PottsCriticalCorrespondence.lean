@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.IsingFK.PottsCriticalCorrespondence.Part2
 open Real Set StatMech StatMech.FK StatMech.IsingFK
 

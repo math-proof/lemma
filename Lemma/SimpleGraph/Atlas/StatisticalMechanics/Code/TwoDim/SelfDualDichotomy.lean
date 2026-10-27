@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.TwoDim.SelfDualDichotomy
 open MeasureTheory Set Filter Topology SimpleGraph StatMech StatMech.TwoDim
 

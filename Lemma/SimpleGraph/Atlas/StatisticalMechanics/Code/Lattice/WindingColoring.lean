@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.WindingColoring.Part6
 open SimpleGraph Set StatMech StatMech.Lattice
 

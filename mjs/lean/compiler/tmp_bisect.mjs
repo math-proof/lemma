@@ -11,7 +11,7 @@ function tryCompile(label, src) {
 }
 
 const base = `import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Rings
 
 

@@ -1,5 +1,5 @@
 import Mathlib.Probability.Independence.Integration
-import sympy.stats.variance
+import Def.Probability.Moments.Variance
 import Lemma.Random.Expect.eq.Integral.Id
 open MeasureTheory
 

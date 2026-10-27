@@ -3,10 +3,10 @@ import Lemma.Tensor.Add
 import Lemma.Tensor.AddMulS.eq.SubMulS
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
-import torch.Tensor.permute
-import torch.Tensor
-import torch.functions
-import torch.stack
+import Notation.Data.Holor.Permute
+import Instance.Data.Holor.Tensor.Part2
+import Theorem.Data.Holor.Functions
+import Def.Data.Holor.Stack.Part2
 open Bool Tensor List
 set_option maxHeartbeats 1000000
 

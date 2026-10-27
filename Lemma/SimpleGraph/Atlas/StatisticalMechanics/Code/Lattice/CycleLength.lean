@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.CycleLength
 open SimpleGraph SimpleGraph.Walk StatMech StatMech.Lattice
 

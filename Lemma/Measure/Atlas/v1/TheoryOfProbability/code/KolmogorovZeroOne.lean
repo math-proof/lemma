@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.TheoryOfProbability.code.TailSigmaAlgebra
 open MeasureTheory MeasurableSpace ProbabilityTheory Filter
 open scoped ENNReal MeasureTheory

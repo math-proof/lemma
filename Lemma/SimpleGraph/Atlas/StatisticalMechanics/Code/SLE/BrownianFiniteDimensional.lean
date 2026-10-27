@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.SLE.BrownianFiniteDimensional.Part4
 open MeasureTheory Matrix ProbabilityTheory Set WithLp StatMech StatMech.SLE
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Enumerative.Partition.PentagonalJacobi.Part9
 import Lemma.Partition.Basics
 open AlgebraicCombinatorics

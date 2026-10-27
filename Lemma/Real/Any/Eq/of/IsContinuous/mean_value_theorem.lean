@@ -1,5 +1,5 @@
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.MeanValue
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -19,4 +19,4 @@ private lemma main
 
 
 -- created on 2020-06-15
--- updated on 2026-10-17
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section31.Part7
 open Topology MulAction CategoryTheory TopologicalSpace AlgebraicTopology SingularCohomology Limits CoveringSpaces OrientationHomology
 open CategoryTheory AlgebraicTopology SingularCohomology Limits

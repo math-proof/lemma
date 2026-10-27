@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
 open WeierstrassCurve.VariableChange
 
@@ -92,4 +92,4 @@ private lemma equation_mapAffineCoordinates_iff_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.List.EqLengthSlice
 import Lemma.List.GetSlicedIndices.eq.Add.of.Lt.LeAddS.Lt_Add
@@ -51,4 +51,4 @@ private lemma coe
 
 
 -- created on 2025-05-23
--- updated on 2025-05-24
+-- updated on 2026-10-26

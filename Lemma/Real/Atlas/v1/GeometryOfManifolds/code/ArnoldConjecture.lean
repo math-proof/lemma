@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Class.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part4
 open DifferentialFormSpace
 

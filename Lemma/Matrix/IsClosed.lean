@@ -1,7 +1,7 @@
 import Mathlib.Topology.Algebra.Monoid
 import Mathlib.Topology.Order.OrderClosed
-import sympy.stats.generator_matrix
-import sympy.Basic
+import Class.Probability.Process.GeneratorMatrix
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/CatalanConstantProducts.lean -/
 
 
-import sympy.atlas.Analysis.SpecialFunctions.CatalanConstantProducts
+import Theorem.Analysis.SpecialFunctions.CatalanConstantProducts.Part7
 open scoped BigOperators
 
 

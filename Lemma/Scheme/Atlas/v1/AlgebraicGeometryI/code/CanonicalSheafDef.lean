@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafDef.Part2
 open KaehlerDifferential CanonicalSheafDef
 

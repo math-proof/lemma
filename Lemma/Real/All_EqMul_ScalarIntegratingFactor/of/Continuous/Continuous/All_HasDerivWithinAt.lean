@@ -1,8 +1,8 @@
 import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import sympy.dynamics.actor_critic
-import sympy.Basic
+import Structure.Dynamics.ActorCritic.Part6
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

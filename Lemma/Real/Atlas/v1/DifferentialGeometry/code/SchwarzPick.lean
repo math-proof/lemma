@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialGeometry.code.SchwarzPick
 open Complex Metric Set Function Filter SchwarzPick
 open scoped Topology ComplexConjugate

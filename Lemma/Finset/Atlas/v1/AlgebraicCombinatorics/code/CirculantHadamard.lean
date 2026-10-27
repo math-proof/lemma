@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicCombinatorics.code.CirculantHadamard
 open Complex NumberField Polynomial CirculantHadamard CirculantHadamardMatrix
 open Polynomial

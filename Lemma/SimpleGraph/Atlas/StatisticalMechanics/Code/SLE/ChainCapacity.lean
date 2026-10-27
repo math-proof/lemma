@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.SLE.ChainCapacity.Part2
 open Complex Set Filter Topology MeasureTheory StatMech StatMech.SLE
 

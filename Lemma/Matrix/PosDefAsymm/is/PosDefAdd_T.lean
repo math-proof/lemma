@@ -1,7 +1,7 @@
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Algebra.Order.Star.Real
 import Lemma.Matrix.Dot_MulVecT.eq.Dot_MulVec
-import sympy.matrices.dense
+import Instance.LinearAlgebra.Matrix.Dense
 open scoped Matrix
 
 

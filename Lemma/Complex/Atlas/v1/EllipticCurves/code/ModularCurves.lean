@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.EllipticCurves.code.ModularCurves.Part3
 open Manifold Def1811 Complex Metric Set Function
 open scoped ContDiff

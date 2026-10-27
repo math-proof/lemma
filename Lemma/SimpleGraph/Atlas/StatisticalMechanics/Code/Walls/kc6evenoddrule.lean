@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.kc6evenoddrule
 open Set SimpleGraph Function StatMech.Lattice StatMech StatMech.Walls
 

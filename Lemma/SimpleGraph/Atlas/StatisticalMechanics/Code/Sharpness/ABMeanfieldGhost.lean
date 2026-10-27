@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.ABMeanfieldGhost
 open Finset Set SimpleGraph StatMech StatMech.Sharpness
 

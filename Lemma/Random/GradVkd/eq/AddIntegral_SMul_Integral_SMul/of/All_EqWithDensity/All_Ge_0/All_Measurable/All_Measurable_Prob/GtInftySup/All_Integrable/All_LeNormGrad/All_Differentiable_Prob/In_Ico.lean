@@ -14,7 +14,7 @@ Continuous-action counterpart of
 `Random.GradVk.eq.Add_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Differentiable_Prob.In_Ico`.
 The policy `π_θ(u | x)` is a probability density w.r.t. the reference measure of `A` (`DensityPolicy`); `V = Vkd`, `Q = Qkd`
 are the regular (kernel) conditional expectations of the discounted return given `s[t] = x`
-(resp. `s[t] = x, a[t] = u`), see `sympy.stats.policy_trajectory.continuous_action`;
+(resp. `s[t] = x, a[t] = u`), see `Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3`;
 `ℙ(s[t+1] = y | s[t] = x) = P1kd θ p x y = ∫ u, π_θ(u | x) * p x u y du`.
 h₁: θ ↦ π_θ(u | x) is differentiable; h₂, h₃, h₄: its gradient is dominated by `g x u`, where `g x` is integrable over
 the actions uniformly in the state (this replaces `sup ‖∇π‖ < ∞` of the finite-action version, where `∑ u` is

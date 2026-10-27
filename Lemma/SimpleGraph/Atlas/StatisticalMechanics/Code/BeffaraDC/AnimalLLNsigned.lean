@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.BeffaraDC.AnimalLLNsigned
 open MeasureTheory Filter Topology Finset StatMech.Kingman StatMech.KingmanAE StatMech.KingmanFilling StatMech.KingmanSigned StatMech StatMech.BeffaraDC
 

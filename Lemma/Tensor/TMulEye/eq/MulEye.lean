@@ -1,9 +1,9 @@
 import Lemma.Nat.Delta.eq.Ite
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.GetMulEye_Stack.eq.MulDelta
 import Lemma.Tensor.EqGetT
-import torch.eye
+import Def.Data.Holor.Eye
 open Nat Tensor
 set_option maxHeartbeats 1000000
 

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.integrals.transforms.Bochner
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Fourier.Bochner.Part3
 
 open Fourier.BochnerWanted
 open MeasureTheory

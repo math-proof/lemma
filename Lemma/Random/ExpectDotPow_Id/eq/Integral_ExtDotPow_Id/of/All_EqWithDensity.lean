@@ -1,4 +1,4 @@
-import sympy.stats.policy_trajectory.continuous_action
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 open MeasureTheory PolicyGradient PolicyGradient.DensityModel Random Measure
 

@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.Bool.BFn_Ite__Ite.is.And.ou.OrAndS
 import Lemma.Bool.And_NotAnd.of.And_Not
@@ -48,4 +48,4 @@ private lemma main
 
 
 -- created on 2018-01-20
--- updated on 2025-04-14
+-- updated on 2026-10-26

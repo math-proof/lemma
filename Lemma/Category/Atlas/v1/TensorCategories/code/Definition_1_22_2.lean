@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TensorCategories.code.Definition_1_22_2
 open Coalgebra HopfAlgebra LinearMap
 open scoped TensorProduct

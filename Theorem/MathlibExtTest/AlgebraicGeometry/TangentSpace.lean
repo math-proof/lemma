@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/TangentSpace.lean -/
 
 
-import sympy.atlas.AlgebraicGeometry.TangentSpace
+import Theorem.AlgebraicGeometry.TangentSpace
 set_option autoImplicit false
 
 variable {k : Type*} [Field k] {n : Nat}

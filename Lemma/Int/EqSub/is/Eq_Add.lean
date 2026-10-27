@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is, is.comm, mp.mt, mpr.mt]

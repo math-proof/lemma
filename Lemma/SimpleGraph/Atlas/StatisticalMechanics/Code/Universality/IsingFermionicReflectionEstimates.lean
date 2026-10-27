@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicReflectionEstimates.Part13
 open StatMech StatMech.Universality StatMech.Universality.IsingDiagonalWalkHitSplit
 

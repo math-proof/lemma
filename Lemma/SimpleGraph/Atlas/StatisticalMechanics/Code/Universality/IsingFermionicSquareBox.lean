@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareBox.Part39
 open StatMech StatMech.Universality
 

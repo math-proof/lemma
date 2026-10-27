@@ -1,6 +1,6 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
-import torch.linalg
+import Def.Data.Holor.BandPart
 open Tensor
 
 
@@ -70,4 +70,4 @@ private lemma main
 
 
 -- created on 2022-01-01
--- updated on 2022-01-23
+-- updated on 2026-10-26

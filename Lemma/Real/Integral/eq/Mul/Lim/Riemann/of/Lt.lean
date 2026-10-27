@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import Mathlib.Topology.MetricSpace.Pseudo.Defs
 import Mathlib.Topology.UniformSpace.Compact
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open intervalIntegral Filter Finset Metric MeasureTheory Set
 
 
@@ -161,4 +161,4 @@ private lemma main
 
 
 -- created on 2020-05-27
--- updated on 2026-10-17
+-- updated on 2026-10-26

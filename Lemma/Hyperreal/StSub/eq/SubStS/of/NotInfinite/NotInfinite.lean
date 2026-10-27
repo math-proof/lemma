@@ -2,7 +2,7 @@ import Lemma.Hyperreal.Infinite.is.InfiniteNeg
 import Lemma.Hyperreal.StAdd.eq.AddStS.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.StNeg.eq.NegSt
 import Lemma.Int.Sub.eq.Add_Neg
-open Hyperreal Int
+open Hyperreal Int ArchimedeanClass
 
 
 @[path]
@@ -24,4 +24,4 @@ private lemma main
 
 
 -- created on 2025-12-10
--- updated on 2025-12-16
+-- updated on 2026-10-26

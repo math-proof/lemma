@@ -1,4 +1,4 @@
-import sympy.integrals.integrals
+import Instance.MeasureTheory.Integral.IntervalIntegral.Integrals.Part4
 
 
 @[path]
@@ -16,4 +16,4 @@ private lemma main
 
 
 -- created on 2023-03-27
--- updated on 2023-04-04
+-- updated on 2026-10-26

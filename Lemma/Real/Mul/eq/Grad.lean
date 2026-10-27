@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Calculus.Deriv.Mul
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--

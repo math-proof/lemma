@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Analysis.Matrix.Spectrum
 open scoped ComplexOrder Matrix.Norms.L2Operator
 

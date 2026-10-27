@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.ExpLog
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.PowerSeries.ExpLog.Part6
 import Lemma.PowerSeries.InfiniteProducts
 open PowerSeries
 open Finset

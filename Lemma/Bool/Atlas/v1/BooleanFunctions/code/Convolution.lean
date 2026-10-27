@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Convolution
 open Finset BigOperators BooleanFourier
 
@@ -36,7 +36,7 @@ lemma chi_boolMul
   rw [← Finset.prod_mul_distrib]
   apply Finset.prod_congr rfl
   intro i _
-  exact boolToReal_xnor (x i) (y i)
+  exact boolToReal_xnor (a := x i) (b := y i)
 
 end BooleanFourier
 
@@ -116,7 +116,7 @@ lemma fourierCoeff_conv
         exact ⟨boolMul z y, Finset.mem_univ _, boolMul_right_cancel z⟩
       · intro x _
         have hx : boolMul y (boolMul x y) = x := by
-          rw [boolMul_comm y (boolMul x y), boolMul_right_cancel x]
+          rw [boolMul_comm (x := y) (y := boolMul x y), boolMul_right_cancel x]
         simp only [hx]
     rw [reindex]
     simp_rw [chi_boolMul]
@@ -129,3 +129,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

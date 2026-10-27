@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.ModularCurve.UVCrossingModel
 import Lemma.ModularCurve.UVCrossingGaussOrder
 import Def.ModularCurve_UVCrossingDominantIndices

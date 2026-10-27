@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqSumS.of.All_SEq.Eq.Gt_0
-import stdlib.SEq
+import Theorem.Logic.SEq
 open Tensor
 
 

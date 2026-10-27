@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.integrals.transforms.FiniteAbelianDFT
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Fourier.FiniteAbelian.FiniteAbelianDFT
 open Fourier.FiniteAbelianDFTWanted
 
 
@@ -21,4 +21,4 @@ private lemma dft_fun_translate_eq
 
 
 -- created on 2026-10-10
--- updated on 2026-10-24
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Calculus.Gradient.Basic
-import sympy.vector.operators
+import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico

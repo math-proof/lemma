@@ -1,5 +1,5 @@
 import Lemma.Nat.Delta.eq.Ite
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.EqGetT
 import Lemma.Tensor.GetSwapMatrix.eq.Ite
 open Tensor

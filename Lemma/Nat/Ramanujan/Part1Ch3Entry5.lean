@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
 import Lemma.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
 open Entry9IiGeneralizedbellgeneratingDefining (generalizedBellGenerating)
@@ -233,4 +233,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry5
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,4 +1,4 @@
-import torch.stack
+import Def.Data.Holor.Stack.Part2
 import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.EqUnflattenFlatten

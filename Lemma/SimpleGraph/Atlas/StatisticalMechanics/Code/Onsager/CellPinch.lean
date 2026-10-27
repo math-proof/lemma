@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.CellPinch
 open StatMech StatMech.Onsager StatMech.Onsager.CellPinch
 

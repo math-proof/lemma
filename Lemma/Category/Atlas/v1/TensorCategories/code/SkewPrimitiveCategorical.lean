@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TensorCategories.code.SkewPrimitiveCategorical.Part6
 open Coalgebra CategoryTheory MonoidalCategory Category Limits
 open scoped TensorProduct

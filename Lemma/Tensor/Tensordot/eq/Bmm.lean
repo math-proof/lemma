@@ -1,7 +1,7 @@
-import torch.Tensor.bmm
+import Def.Data.Holor.Bmm
 import Lemma.Nat.EqMax
 import Lemma.Tensor.SEqResize.of.Eq_Get
-import sympy.matrices.expressions.matmul
+import Instance.LinearAlgebra.Matrix.Matmul
 open Bool Nat Tensor
 
 

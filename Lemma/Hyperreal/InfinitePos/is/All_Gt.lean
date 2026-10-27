@@ -1,5 +1,5 @@
-import sympy.series.limits
-import sympy.core.singleton
+import Def.Analysis.Real.Limits.Part4
+import Notation.Lean.Expr.Singleton
 import Lemma.Int.GeAbs
 import Lemma.Int.GeAbs_0
 import Lemma.Nat.Lt.of.Lt.Le

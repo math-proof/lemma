@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDenseIncidenceRootBound
 open StatMech StatMech.Universality StatMech.Universality.FKIsingCaratheodoryApproximation
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.ModularCurve.X0
 import Lemma.ModularCurve.LaurentCoeff
 import Lemma.Int.P2MUtil

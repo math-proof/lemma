@@ -1,7 +1,7 @@
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.Real.Sqrt
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 open Real
 

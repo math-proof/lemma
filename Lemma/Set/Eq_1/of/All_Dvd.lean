@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.core.intfunc
+import Initialize.Tactic.Attr.Basic
+import Class.Data.Nat.GCD.Intfunc
 import Mathlib.Algebra.GCDMonoid.Finset
 
 

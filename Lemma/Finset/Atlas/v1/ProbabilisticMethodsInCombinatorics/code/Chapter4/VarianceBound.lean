@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.SecondMoment
 import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter4.SecondMoment
 open Filter Asymptotics MeasureTheory ProbabilityTheory

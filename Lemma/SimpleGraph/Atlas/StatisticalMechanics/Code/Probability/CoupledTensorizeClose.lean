@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Probability.CoupledTensorizeClose
 open Finset Real Set StatMech StatMech.Probability
 

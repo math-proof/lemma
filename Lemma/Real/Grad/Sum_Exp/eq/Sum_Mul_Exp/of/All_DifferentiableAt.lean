@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section9.Part3
 open CategoryTheory HomologyLongExactSequence FiveLemma FiveLemma.LongExactLadder
 open FiveLemma

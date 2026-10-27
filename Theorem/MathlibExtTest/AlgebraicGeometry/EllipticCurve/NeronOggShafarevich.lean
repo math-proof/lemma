@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/NeronOggShafarevich.lean -/
 
 
-import sympy.atlas.AlgebraicGeometry.EllipticCurve.NeronOggShafarevich
+import Theorem.AlgebraicGeometry.EllipticCurve.NeronOggShafarevich.Part5
 
 
 namespace MetaMathlibExt

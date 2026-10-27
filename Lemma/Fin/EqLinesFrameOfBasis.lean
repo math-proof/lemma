@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisSingle
 open GLnBuilding
 open Submodule Module
@@ -65,4 +65,4 @@ private lemma adapted_frame_of_single_subspace
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

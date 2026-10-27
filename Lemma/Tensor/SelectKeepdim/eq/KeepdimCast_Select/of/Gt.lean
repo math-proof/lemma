@@ -1,5 +1,5 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
 import Lemma.List.EqGetInsertIdx.of.GeLength
 import Lemma.List.EraseIdxEraseIdx.of.Le.GtLength
 import Lemma.List.GetEraseIdx.eq.Get.of.Lt.GtLength
@@ -10,7 +10,7 @@ import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Gt.GtLength
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Gt.GeLength
 import Lemma.Tensor.UnsqueezeCast.as.Unsqueeze.of.Eq
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Tensor Bool List Nat
 
 
@@ -84,4 +84,4 @@ private lemma main
 
 
 -- created on 2025-11-26
--- updated on 2025-11-28
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.AlgebraicGeometry.RelEffCartierDivOfPoint
 import Lemma.Int.P2MUtil
 

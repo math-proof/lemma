@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.WeightedDerivExpansion.Part2
 open BigOperators WeightedDerivExpansion
 open scoped SchwartzMap

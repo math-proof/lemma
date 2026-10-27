@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Mathlib.Data.EReal.Inv
 
 
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2023-04-16
--- updated on 2026-10-17
+-- updated on 2026-10-26

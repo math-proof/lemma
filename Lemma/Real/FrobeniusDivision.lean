@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.Algebra.FrobeniusDivision.Part3
 open FrobeniusDivision
 

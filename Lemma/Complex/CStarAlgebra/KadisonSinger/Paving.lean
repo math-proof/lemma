@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.CStarAlgebra.KadisonSinger.Paving.Part4
 
 open scoped BigOperators Matrix.Norms.L2Operator
@@ -958,4 +958,4 @@ lemma andersonPaving_of_finiteMSS
 
 
 -- created on 2026-10-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

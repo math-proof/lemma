@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.ListChromatic
 open ListChromatic
 open Finset

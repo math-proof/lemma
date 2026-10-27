@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Scheme.MapPullback.eq.HomPullbackSpecIso
 open CategoryTheory AlgebraicGeometry Opposite TensorProduct
 

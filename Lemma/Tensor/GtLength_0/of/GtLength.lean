@@ -1,4 +1,4 @@
-import torch.Tensor.Basic
+import Def.Data.Holor.Defs.Part4
 import Lemma.Tensor.GtLength_0.of.GtLength_0
 open Tensor Nat
 

@@ -1,6 +1,6 @@
 import Mathlib.Probability.Distributions.Binomial
 import Mathlib.Probability.Distributions.Bernoulli
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open ProbabilityTheory
 
 
@@ -30,4 +30,4 @@ private lemma main
 
 
 -- created on 2021-07-17
--- updated on 2026-10-17
+-- updated on 2026-10-26

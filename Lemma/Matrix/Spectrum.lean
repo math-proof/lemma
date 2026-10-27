@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Algebra.Polynomial.RealRooted.Part2
 import Lemma.Polynomial.RealRooted
 open scoped ComplexOrder Matrix.Norms.L2Operator
@@ -97,4 +97,4 @@ end Matrix
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

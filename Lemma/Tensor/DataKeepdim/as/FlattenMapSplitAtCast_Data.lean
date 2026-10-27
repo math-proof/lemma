@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import torch.Tensor.repeat
-import torch.Tensor.prod
+import Def.Data.Holor.Repeat
+import Def.Data.Holor.Prod
 import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
 import Lemma.Tensor.DataRepeat.as.FlattenMapSplitAtData
@@ -33,4 +33,4 @@ private lemma main
 
 
 -- created on 2025-11-29
--- updated on 2025-11-30
+-- updated on 2026-10-26

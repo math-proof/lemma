@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Section_11_7
 open Chapter11.BoundedInterval Chapter9
 open Chapter11

@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqGetUnsqueeze_0
-import torch.Tensor.unsqueeze
+import Def.Data.Holor.Unsqueeze
 import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
@@ -64,4 +64,4 @@ private lemma main
 
 
 -- created on 2025-10-07
--- updated on 2026-07-24
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.bc24coarsetrif.Part2
 open Set SimpleGraph MeasureTheory StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Walls
 

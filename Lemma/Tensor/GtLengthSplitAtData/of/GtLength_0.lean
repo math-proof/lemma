@@ -1,5 +1,5 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import torch.Tensor.Basic
+import Def.Data.Holor.Defs.Part4
 open List
 
 

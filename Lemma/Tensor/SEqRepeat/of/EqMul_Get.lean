@@ -1,5 +1,5 @@
 import Lemma.Nat.GtMul.of.Gt_0.Gt_1
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 import Lemma.Tensor.SEqRepeat.of.Eq0Get
 import Lemma.Tensor.SEqRepeat
 open Tensor Nat

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohLocalization
 open AlgebraicGeometry CategoryTheory QCohLocalization
 open LocalizedModule

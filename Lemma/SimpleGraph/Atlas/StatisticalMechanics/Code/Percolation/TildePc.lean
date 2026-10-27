@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Percolation.TildePc.Part4
 open MeasureTheory Finset StatMech StatMech.Percolation
 

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.Pfaffian
+import Initialize.Tactic.Attr.Basic
+import Def.LinearAlgebra.Matrix.Pfaffian
 
 
 section

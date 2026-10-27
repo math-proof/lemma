@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.BackboneResummation.Part2
 open Finset Classical StatMech StatMech.Ising
 

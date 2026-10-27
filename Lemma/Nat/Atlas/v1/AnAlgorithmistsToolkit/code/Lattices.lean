@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.Lattices
 open MeasureTheory MeasureTheory.Measure Submodule Module ZSpan Set Metric InnerProductSpace Finset Lattices Lattice2D
 open InnerProductSpace Finset

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.HormanderFundamental
 open Distribution DifferentialOperators
 open scoped SchwartzMap LineDeriv Pointwise Manifold

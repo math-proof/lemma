@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetRepeat.eq.Get_Mod
@@ -43,4 +43,4 @@ private lemma main
 
 
 -- created on 2026-01-13
--- updated on 2026-07-19
+-- updated on 2026-10-26

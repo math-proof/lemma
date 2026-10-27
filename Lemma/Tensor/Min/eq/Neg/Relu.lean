@@ -1,4 +1,4 @@
-import torch.nn.functional.relu
+import Def.Data.Holor.Relu
 
 
 @[path]
@@ -13,4 +13,4 @@ private lemma main
 
 
 -- created on 2021-12-25
--- updated on 2026-10-17
+-- updated on 2026-10-26

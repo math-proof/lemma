@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
 open Finset BigOperators BooleanFourier
 
@@ -10,7 +10,7 @@ namespace BooleanFourier
 [boolToReal_true](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/FourierExpansion.lean)
 -/
 @[path]
-lemma boolToReal_true
+lemma boolToReal_true :
 -- imply
   boolToReal true = 1 := by
 -- proof
@@ -24,7 +24,7 @@ namespace BooleanFourier
 [boolToReal_false](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/FourierExpansion.lean)
 -/
 @[path]
-lemma boolToReal_false
+lemma boolToReal_false :
 -- imply
   boolToReal false = -1 := by
 -- proof
@@ -154,7 +154,7 @@ lemma chi_mul_self
 -- imply
   chi S x * chi S x = 1 := by
 -- proof
-  have h := chi_sq S x
+  have h := chi_sq (S := S) (x := x)
   linarith [sq_abs (chi S x), h, sq_nonneg (chi S x)]
 
 end BooleanFourier
@@ -173,7 +173,7 @@ lemma chi_ne_zero
   chi S x ≠ 0 := by
 -- proof
   simp only [chi]
-  exact Finset.prod_ne_zero_iff.mpr (fun i _ => boolToReal_ne_zero (x i))
+  exact Finset.prod_ne_zero_iff.mpr (fun i _ => boolToReal_ne_zero (b := x i))
 
 end BooleanFourier
 
@@ -273,14 +273,14 @@ lemma sum_chi
   · obtain ⟨j, hj⟩ := Finset.nonempty_iff_ne_empty.mpr h
     apply Finset.sum_ninvolution (g := fun x => flipAt j x)
     · intro x
-      have := chi_flipAt S j hj x
+      have := chi_flipAt (S := S) (j := j) (x := x) hj
       linarith
     · intro x _
-      exact flipAt_ne_self j x
+      exact flipAt_ne_self (j := j) (x := x)
     · intro x
       exact Finset.mem_univ _
     · intro x
-      exact flipAt_flipAt j x
+      exact flipAt_flipAt (j := j) (x := x)
 
 end BooleanFourier
 
@@ -318,7 +318,7 @@ lemma sum_chi_mul_chi
   · subst h
     simp [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
   · obtain ⟨i, hi⟩ := Function.ne_iff.mp h
-    exact Finset.prod_eq_zero (Finset.mem_univ i) (if_neg hi)
+    exact Finset.prod_eq_zero (Finset.mem_univ i) (ite_eq_right hi)
 
 end BooleanFourier
 
@@ -377,3 +377,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

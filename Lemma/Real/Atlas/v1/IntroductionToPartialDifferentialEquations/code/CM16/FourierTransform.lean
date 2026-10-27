@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
 open MeasureTheory Complex Finset SchwartzMap FourierAnalysis
 open scoped FourierTransform RealInnerProductSpace

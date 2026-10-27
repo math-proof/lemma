@@ -1,5 +1,5 @@
-import sympy.stats.lyapunov
-import sympy.vector.lp_space
+import Structure.Dynamics.Lyapunov
+import Def.Analysis.Normed.Lp.LpSpace.Part2
 import Lemma.Matrix.PosDefAsymm.is.Any_All_Le_Dot_MulVec
 import Lemma.Random.LinearTD.NegDefAsymmA
 import Lemma.Random.LinearTD.ExpectedUpdate.eq.ToLpAddMulVecA

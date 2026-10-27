@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneClose.Part2
 open MeasureTheory Measure Set MeasurableSpace ProbabilityTheory Filter Finset StatMech.Lattice StatMech.ConfigSpace StatMech StatMech.Percolation
 

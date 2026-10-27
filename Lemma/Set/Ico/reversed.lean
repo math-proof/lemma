@@ -1,5 +1,5 @@
-import sympy.sets.fancysets
-import sympy.Basic
+import Def.Data.List.Range
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

@@ -1,4 +1,4 @@
-import sympy.matrices.expressions.matmul
+import Instance.LinearAlgebra.Matrix.Matmul
 import Lemma.Tensor.EqBmm_0'0
 import Lemma.Tensor.Resize0.eq.Zero
 import Lemma.Tensor.ToVector0.eq.Zero

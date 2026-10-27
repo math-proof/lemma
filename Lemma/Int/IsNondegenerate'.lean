@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.GeometricAlgebra.HyperbolicCancellation
 import Lemma.Int.OrthogonalSum.eq.Add
 open FiniteDimensional Module Garrett
@@ -40,4 +40,4 @@ private lemma nondeg_fst_of_orthogonalSum_nondeg
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

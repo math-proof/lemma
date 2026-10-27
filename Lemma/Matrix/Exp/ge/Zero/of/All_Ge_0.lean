@@ -4,8 +4,8 @@ import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Topology.Algebra.InfiniteSum.Order
-import sympy.stats.generator_matrix
-import sympy.Basic
+import Class.Probability.Process.GeneratorMatrix
+import Initialize.Tactic.Attr.Basic
 open Matrix NormedSpace
 
 

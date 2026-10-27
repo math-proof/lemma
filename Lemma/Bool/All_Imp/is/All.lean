@@ -1,5 +1,5 @@
 import Macro.Logic.Quantifier.Part4
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -21,4 +21,4 @@ private lemma main
 
 
 -- created on 2018-09-18
--- updated on 2026-08-28
+-- updated on 2026-10-26

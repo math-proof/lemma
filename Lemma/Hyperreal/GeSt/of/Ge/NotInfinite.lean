@@ -1,6 +1,6 @@
 import Lemma.Hyperreal.GeSt_0.of.Ge_0
 import Lemma.Hyperreal.StSub.eq.SubSt.of.NotInfinite
-open Hyperreal
+open Hyperreal ArchimedeanClass
 
 
 @[path]

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.RingTheory.AdjoinRoot.LocalMaximal
 open Polynomial
 open AdjoinRoot
@@ -204,4 +204,4 @@ private lemma is_maximal_of_irreducible_factor_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

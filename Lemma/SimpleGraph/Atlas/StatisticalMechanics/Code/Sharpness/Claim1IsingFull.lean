@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.Claim1IsingFull.Part3
 open SimpleGraph Finset Classical StatMech StatMech.Sharpness StatMech.Sharpness.RandomCurrent
 

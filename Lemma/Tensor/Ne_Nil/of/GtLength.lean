@@ -1,6 +1,6 @@
 import Lemma.List.Ne_Nil.is.GtLength_0
 import Lemma.Tensor.GtLength_0.of.GtLength
-import torch.Tensor.Basic
+import Def.Data.Holor.Defs.Part4
 open Tensor List
 
 

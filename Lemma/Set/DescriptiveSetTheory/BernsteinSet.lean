@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Topology.DescriptiveSetTheory.BernsteinSet
 open Set Topology
 open Cardinal
@@ -244,4 +244,4 @@ end MathlibExt.Topology.DescriptiveSetTheory.BernsteinSet
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

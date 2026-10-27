@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Section_2_1
 import Lemma.Nat.Eq.of.Eq_Nat_succ_cancel
 open Chapter2 hiding Nat
@@ -23,4 +23,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-10-23
+-- updated on 2026-10-26

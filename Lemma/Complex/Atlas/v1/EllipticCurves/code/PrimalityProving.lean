@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.EllipticCurves.code.PrimalityProving
 open Classical
 open scoped Nat

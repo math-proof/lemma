@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Enumerative.QBinomialFormulas.Part7
 import Lemma.Polynomial.QBinomialBasic
 open Polynomial

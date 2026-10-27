@@ -1,5 +1,5 @@
 import Lemma.Vector.EqHeadSplitAt_0
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Vector.Get.of.Eq.Lt
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
@@ -92,4 +92,4 @@ private lemma main
 
 
 -- created on 2026-01-13
--- updated on 2026-05-03
+-- updated on 2026-10-26

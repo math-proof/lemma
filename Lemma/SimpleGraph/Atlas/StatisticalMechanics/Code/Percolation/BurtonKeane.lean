@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeane.Part5
 open MeasureTheory StatMech StatMech.ConfigSpace StatMech.Percolation
 

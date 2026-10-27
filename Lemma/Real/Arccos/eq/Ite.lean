@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.functions.elementary.trigonometric
+import Initialize.Tactic.Attr.Basic
+import Def.Analysis.SpecialFunctions.Trigonometric.Part2
 
 
 @[path]
@@ -15,4 +15,4 @@ private lemma main
 
 
 -- created on 2022-01-20
--- updated on 2023-04-30
+-- updated on 2026-10-26

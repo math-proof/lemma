@@ -1,4 +1,4 @@
-import sympy.stats.lyapunov
+import Structure.Dynamics.Lyapunov
 import Lemma.LpSpace.HalfSq.le.AddAddHalfSqInner_MulSub1HalfSqSub.of.Ge_2
 import Lemma.LpSpace.Norm.le.NormToL2.of.Ge_2
 import Lemma.LpSpace.Any_And_Ge_0_All_LeNormToL2_MulNorm.of.Ge_2

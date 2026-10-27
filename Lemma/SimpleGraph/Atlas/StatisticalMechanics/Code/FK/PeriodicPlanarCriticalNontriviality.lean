@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCriticalNontriviality.Part8
 open MeasureTheory Set SimpleGraph Filter Topology StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TensorCategories.code.CartierKostant.Axioms.Part3
 import Lemma.Category.Atlas.v1.TensorCategories.code.CartierKostant.Axioms
 open Coalgebra HopfAlgebra

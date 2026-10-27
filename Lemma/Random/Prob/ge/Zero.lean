@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.stats.symbolic_probability
+import Initialize.Tactic.Attr.Basic
+import Def.Probability.SymbolicProbability.Part2
 open MeasureTheory
 
 

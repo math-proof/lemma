@@ -3,7 +3,7 @@ Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
 import Mathlib
-import sympy.matrices.determinants.LGV2
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
 import Def.Combinatorics.Young.OmegaInvolution.Part2
 import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
 import Def.Combinatorics.Young.LittlewoodRichardson.Part17

@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
-import sympy.matrices.dense
+import Instance.LinearAlgebra.Matrix.Dense
 open Tensor
 
 

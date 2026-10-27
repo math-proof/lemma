@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.Building.Infinity.SectorParallelism
 open ChamberComplex AffineBuilding
 
@@ -203,4 +203,4 @@ private lemma parallel_sectors_same_positive_half_apartment
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

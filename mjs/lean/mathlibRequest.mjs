@@ -63,7 +63,7 @@ export async function handleMathlibPhpRequest(req, res) {
   const relFile = `test.${name.replace(/\?/g, '%3F')}.lean`;
   const absFile = path.join(REPO_ROOT, relFile);
   const codeStr = `import Mathlib
-import sympy.printing.json
+import Def.Lean.PrettyPrinter.Json
 #eval do
   println! ← Name.toJson \`${name}
 `;

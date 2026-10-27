@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.LatticeBasics.Part2
 open Matrix BigOperators LatticeBasics
 open Submodule Set

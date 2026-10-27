@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.fkc_rqnumclustersle
 open SimpleGraph StatMech StatMech.Walls StatMech.Walls.FK
 

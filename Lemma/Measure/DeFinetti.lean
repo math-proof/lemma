@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Probability.DeFinetti
 open MeasureTheory Set
 open MathlibExt.Probability.DeFinettiWanted
@@ -700,4 +700,4 @@ end MathlibExt.Probability.DeFinettiWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

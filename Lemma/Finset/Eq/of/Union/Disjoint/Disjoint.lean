@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.Building.LinkBuilding
 import Lemma.Bijective.All_All_All_Any_And_Eq_ImageAndAll_All_Eq_Image.of.All_ChamberAdjacent.All_Any_And_Eq.All_All_Eq.EqToSimplicialComplex
 open scoped Classical

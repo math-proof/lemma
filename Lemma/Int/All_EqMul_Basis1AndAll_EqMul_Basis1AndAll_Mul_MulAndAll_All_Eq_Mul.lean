@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.Buildings.code.HeckeAlgebra.GenericAlgebraUniqueness
 import Lemma.Int.Basis.of.Basis
 open scoped Classical
@@ -36,4 +36,4 @@ end HeckeAlgebra
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

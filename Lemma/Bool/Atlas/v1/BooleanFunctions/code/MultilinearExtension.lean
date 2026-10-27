@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
 open Finset BigOperators BooleanFourier
 
@@ -18,7 +18,7 @@ lemma multilinearExtension_eq_on_boolToReal
   multilinearExtension f (fun i => boolToReal (b i)) = f b := by
 -- proof
   change ∑ S : Finset (Fin n), fourierCoeff f S * chi S b = f b
-  exact (fourier_expansion f b).symm
+  exact (fourier_expansion (f := f) (x := b)).symm
 
 end BooleanFourier
 
@@ -95,3 +95,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

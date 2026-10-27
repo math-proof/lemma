@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.AlgebraicGeometryI.code.LinearChangeVariables
 open Cardinal Polynomial MvPolynomial NoetherNormalization Ideal Nat RingHom List Finset
 

@@ -1,4 +1,4 @@
-import sympy.series.limits
+import Def.Analysis.Real.Limits.Part4
 import Lemma.Nat.NotLt.of.Ge
 open Nat
 

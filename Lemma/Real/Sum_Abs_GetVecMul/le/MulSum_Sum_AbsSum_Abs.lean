@@ -1,6 +1,6 @@
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Matrix.Mul
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Matrix
 
 

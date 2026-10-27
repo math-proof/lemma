@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.RevealmentBoundAssembly
 open MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.RevealmentBoundAssembly
 

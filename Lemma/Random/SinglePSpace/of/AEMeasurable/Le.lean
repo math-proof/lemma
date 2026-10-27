@@ -1,5 +1,5 @@
 import Lemma.Random.SinglePSpace.of.AEMeasurable
-import sympy.stats.hidden_markov_sequence
+import Def.Probability.Process.HiddenMarkovSequence.Part2
 open MeasureTheory Random Fun
 
 
@@ -30,4 +30,4 @@ private lemma main
   apply SinglePSpace.of.AEMeasurable (hg.comp_aemeasurable hx)
 
 -- created on 2026-10-23
--- updated on 2026-10-23
+-- updated on 2026-10-26

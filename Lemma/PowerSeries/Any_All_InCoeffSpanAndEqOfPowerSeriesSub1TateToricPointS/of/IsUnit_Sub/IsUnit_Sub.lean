@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.ModularCurve.TateSlots
 import Lemma.ModularCurve.KatzLevelPCusps
 import Lemma.Int.P2MUtil

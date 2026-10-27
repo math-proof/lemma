@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.DualSelmer.ExtConditions
 import Lemma.GroupCohomology.CupProduct
 import Lemma.Int.P2MUtil

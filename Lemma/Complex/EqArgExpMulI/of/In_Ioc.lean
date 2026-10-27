@@ -1,6 +1,6 @@
-import sympy.sets.sets
-import sympy.Basic
-import sympy.functions.elementary.complexes
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
+import Notation.Analysis.Complex.Complexes
 
 
 @[path]
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2018-11-07
--- updated on 2026-08-20
+-- updated on 2026-10-26

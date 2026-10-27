@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.JordanSingleCycle.Part4
 open Finset Set SimpleGraph Function List StatMech StatMech.Lattice
 

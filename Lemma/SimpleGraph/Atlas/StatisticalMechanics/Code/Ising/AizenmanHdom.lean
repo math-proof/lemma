@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Ising.AizenmanHdom.Part2
 open Finset BigOperators SimpleGraph Classical StatMech StatMech.Sharpness StatMech.Sharpness.RandomCurrent
 

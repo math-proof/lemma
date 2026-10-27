@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianMomentConvergence
 open Filter MeasureTheory Set Topology ProbabilityTheory StatMech StatMech.FrontierA
 

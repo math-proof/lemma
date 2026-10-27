@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Polynomial
 set_option synthInstance.maxHeartbeats 800000
 

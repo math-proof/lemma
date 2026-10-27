@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 def Fin.toSplit {d : ℕ} (i : Fin (d + d)) : Fin (d + d) :=

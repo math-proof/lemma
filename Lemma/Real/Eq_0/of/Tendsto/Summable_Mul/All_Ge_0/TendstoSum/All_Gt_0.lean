@@ -1,6 +1,6 @@
 import Mathlib.Topology.Algebra.InfiniteSum.Real
 import Mathlib.Order.Filter.AtTopBot.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Filter Finset Topology
 
 

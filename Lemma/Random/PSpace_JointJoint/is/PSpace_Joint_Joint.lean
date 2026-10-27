@@ -1,8 +1,8 @@
 import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Integral.Lebesgue.Map
-import sympy.stats.joint_rv
-import sympy.Basic
+import Syntax.Probability.JointRv.Part6
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
@@ -86,4 +86,4 @@ private lemma main
 
 
 -- created on 2026-09-19
--- updated on 2026-09-19
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Geometry.Manifold.HadamardGlobalInverse
 open scoped Manifold ContDiff
 open MathlibExt.Geometry.Manifold.HadamardGlobalInverseWanted
@@ -91,4 +91,4 @@ end MathlibExt.Geometry.Manifold.HadamardGlobalInverseWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

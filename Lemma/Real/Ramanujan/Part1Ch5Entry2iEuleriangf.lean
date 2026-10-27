@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch5Entry2iEuleriangf
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch5Entry2iEuleriangf.Part7
 open scoped Nat Real BigOperators Interval Polynomial
 open Finset
 open Ramanujan.Part1Ch5.Entry2iEuleriangf

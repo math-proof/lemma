@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.RingTheory.LocalRing.ResidueField.DVR.Part2
 import Lemma.AlgHom.LocalRing.ResidueField.DVR
 
@@ -135,4 +135,4 @@ end DVRResidue
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

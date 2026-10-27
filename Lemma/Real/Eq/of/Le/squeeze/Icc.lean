@@ -1,6 +1,6 @@
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.Linarith
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

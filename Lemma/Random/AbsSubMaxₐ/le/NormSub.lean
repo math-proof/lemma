@@ -1,4 +1,4 @@
-import sympy.stats.q_learning
+import Class.Dynamics.QLearning
 import Lemma.Finset.AbsSubSup'.le.Sup'AbsSub.of.Nonempty
 open Finset
 

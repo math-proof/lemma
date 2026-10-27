@@ -1,6 +1,6 @@
 import Mathlib.RingTheory.Polynomial.Vieta
-import sympy.Basic
-import sympy.sets.sets
+import Initialize.Tactic.Attr.Basic
+import Theorem.Data.Set.Sets
 open Polynomial
 
 
@@ -31,4 +31,4 @@ private lemma main
 
 
 -- created on 2018-11-15
--- updated on 2026-08-22
+-- updated on 2026-10-26

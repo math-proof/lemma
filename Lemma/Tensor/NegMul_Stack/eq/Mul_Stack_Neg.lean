@@ -1,6 +1,6 @@
 import Lemma.Tensor.Mul_Neg.eq.NegMul
 import Lemma.Tensor.NegStack.eq.Stack_Neg
-import torch.stack
+import Def.Data.Holor.Stack.Part2
 open Tensor
 
 

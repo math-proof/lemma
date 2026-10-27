@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.EllipticCurves.code.Theorem161
 open ComplexLattice
 open Pointwise Function ZSpan

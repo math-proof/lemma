@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Calculus.TangentSpaceLevelSet
 
 open Real.Calculus.TangentSpaceLevelSet

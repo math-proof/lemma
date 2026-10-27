@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.WiredBoxDifferential.Part5
 open Finset Set StatMech StatMech.OSSS StatMech.OSSS.WiredBoxDifferential
 

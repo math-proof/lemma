@@ -3,7 +3,7 @@ import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.MapMap.eq.Map_Comp
 import Lemma.Vector.ResizeMap.eq.MapResize
 import Lemma.Vector.SplitAtMap.eq.MapSplitAt
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open List Tensor Vector
 
 

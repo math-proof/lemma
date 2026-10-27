@@ -1,5 +1,5 @@
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor Bool
 
 

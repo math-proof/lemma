@@ -1,6 +1,6 @@
 import Lemma.Finset.Sum.of.All_Eq.Eq
-import torch.Tensor.sum
-import torch.Tensor.prod
+import Def.Data.Holor.Sum
+import Def.Data.Holor.Prod
 import Lemma.List.Get.dvd.Mul_ProdTake.of.GtLength
 import Lemma.List.ProdDrop.dvd.Prod
 import Lemma.List.ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength
@@ -224,4 +224,4 @@ private lemma main
 
 
 -- created on 2025-11-29
--- updated on 2026-08-27
+-- updated on 2026-10-26

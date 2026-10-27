@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch8Entry14Qreflection
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch8Entry14Qreflection
 
 open Ramanujan.Part1Ch8.Entry14Qreflection
 

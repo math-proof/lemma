@@ -1,5 +1,5 @@
 import Lemma.Hyperreal.IsSt.is.Le0Mk.EqStdPart
-open Hyperreal
+open Hyperreal ArchimedeanClass
 
 
 @[path]

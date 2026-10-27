@@ -1,5 +1,5 @@
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

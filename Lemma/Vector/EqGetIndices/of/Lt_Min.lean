@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.List.EqGetSlicedIndices.of.Lt.Le.Gt_0
 open List Nat

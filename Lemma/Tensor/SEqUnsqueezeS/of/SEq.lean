@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqUFnS.of.SEq
-import torch.Tensor.Basic
-import torch.Tensor.unsqueeze
+import Def.Data.Holor.Defs.Part4
+import Def.Data.Holor.Unsqueeze
 open Bool
 
 

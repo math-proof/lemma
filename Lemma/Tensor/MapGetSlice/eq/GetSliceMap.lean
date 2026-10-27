@@ -1,7 +1,7 @@
 import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.MapData.eq.DataMap
 import Lemma.Vector.FlattenMap.eq.MapFlatten
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Tensor Vector
 
 

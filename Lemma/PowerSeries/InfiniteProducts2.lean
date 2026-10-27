@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.InfiniteProducts2
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.PowerSeries.InfiniteProducts2.Part6
 open PowerSeries
 open scoped PowerSeries PowerSeries.WithPiTopology
 
@@ -3659,4 +3659,4 @@ private lemma pv_pnatEquivEvenNat_value
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

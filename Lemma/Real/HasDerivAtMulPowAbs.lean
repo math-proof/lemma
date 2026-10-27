@@ -2,7 +2,7 @@ import Mathlib.Analysis.Calculus.Deriv.Abs
 import Mathlib.Analysis.Calculus.Deriv.Pow
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Asymptotics.Lemmas
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Asymptotics Topology
 
 

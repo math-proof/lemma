@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
 open Set Finset StatMech StatMech.Lattice
 

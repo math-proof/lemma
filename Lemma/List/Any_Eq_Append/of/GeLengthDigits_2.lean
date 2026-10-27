@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Appendix_B_1.Part6
 open AppendixB
 open AppendixB.PosintDecimal

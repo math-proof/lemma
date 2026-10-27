@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.TreeComplete.Part5
 open Finset StatMech.Lattice StatMech StatMech.OSSS StatMech.OSSS.TreeComplete
 

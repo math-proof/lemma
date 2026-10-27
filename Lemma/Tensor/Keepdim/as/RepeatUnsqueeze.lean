@@ -1,7 +1,7 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
 import Lemma.Bool.SEqCast.of.Eq
-import torch.functions
+import Theorem.Data.Holor.Functions
 open List Bool
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Nat.Add_1.le.Pow2.of.Gt_0
 open Nat
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangPressurePrimitive.Part2
 open Complex Filter Metric Set Topology StatMech StatMech.FrontierA
 

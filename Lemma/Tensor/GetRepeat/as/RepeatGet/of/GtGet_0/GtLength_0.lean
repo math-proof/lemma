@@ -1,4 +1,4 @@
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
 open Nat Tensor

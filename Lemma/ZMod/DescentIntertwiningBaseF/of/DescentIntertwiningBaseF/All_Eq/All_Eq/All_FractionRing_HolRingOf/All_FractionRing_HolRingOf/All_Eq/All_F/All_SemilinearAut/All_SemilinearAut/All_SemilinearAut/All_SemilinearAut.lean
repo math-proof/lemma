@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CerednikDrinfeld_DescentIntertwiningBase
 import Lemma.Int.P2MUtil
 set_option maxHeartbeats 999999

@@ -22,7 +22,7 @@ continuous-state version simplify: joint measurability of the policy becomes mea
 nonnegativity, measurability and density hypotheses on `p` all follow from h₆.
 h₁: θ ↦ π_θ(u | x) is differentiable; h₂, h₃, h₄: its gradient is dominated by `g x u`, where `g x` is integrable over
 the actions uniformly in the state. `V = Vkd`, `Q = Qkd` are the closed-form values of
-`sympy.stats.policy_trajectory.continuous_action`.
+`Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3`.
 -/
 @[path]
 private lemma main

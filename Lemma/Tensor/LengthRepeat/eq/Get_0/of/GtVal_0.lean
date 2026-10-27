@@ -1,4 +1,4 @@
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 import Lemma.Tensor.LengthRepeat.eq.Length.of.GtVal_0
 open Tensor
 
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2025-07-05
--- updated on 2026-07-04
+-- updated on 2026-10-26

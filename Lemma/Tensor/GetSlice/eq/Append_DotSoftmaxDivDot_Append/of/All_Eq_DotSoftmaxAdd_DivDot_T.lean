@@ -1,5 +1,5 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq
 import Lemma.Tensor.SEqGetSliceSStack.of.LengthSlice
 import Lemma.Tensor.Stack.eq.AppendStackS
@@ -178,4 +178,4 @@ private lemma kv_cache
 
 
 -- created on 2024-02-28
--- updated on 2026-08-20
+-- updated on 2026-10-26

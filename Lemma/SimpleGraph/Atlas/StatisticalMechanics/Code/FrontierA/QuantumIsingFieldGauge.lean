@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingFieldGauge.Part2
 open Matrix StatMech StatMech.FrontierA
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.NumberTheory.Padics.Digits
 open PadicInt Finset PadicIntTest
 

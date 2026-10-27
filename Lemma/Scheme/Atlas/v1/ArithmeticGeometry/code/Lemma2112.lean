@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.ArithmeticGeometry.code.Lemma2112
 open RiemannRochSpace Lemma2112
 open CurveWithOrd CurveDivisor

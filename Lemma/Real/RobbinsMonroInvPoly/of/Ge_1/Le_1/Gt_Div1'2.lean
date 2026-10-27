@@ -1,4 +1,4 @@
-import sympy.stats.step_size
+import Def.Dynamics.StepSize.Part2
 import Lemma.Real.TendstoSumPow.of.Ge_1.Le_1
 import Lemma.Real.SummableSquarePow.of.Gt_Div1'2
 open Real

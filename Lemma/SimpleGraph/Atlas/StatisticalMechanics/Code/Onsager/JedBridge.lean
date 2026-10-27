@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Onsager.JedBridge.Part3
 open StatMech StatMech.Onsager StatMech.Onsager.JedBridge
 

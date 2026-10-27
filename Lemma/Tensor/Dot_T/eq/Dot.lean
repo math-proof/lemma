@@ -1,5 +1,5 @@
 import Lemma.Tensor.DotT.eq.Dot
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.EqTT
 open Tensor
 

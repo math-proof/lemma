@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneMomentNormalization.Part2
 open Finset StatMech StatMech.FrontierA StatMech.FrontierA.NOneSymmetricMeanCertificate
 

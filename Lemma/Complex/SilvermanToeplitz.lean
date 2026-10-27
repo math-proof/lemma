@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.SilvermanToeplitz
+import Initialize.Tactic.Attr.Basic
+import Theorem.Topology.Algebra.InfiniteSum.SilvermanToeplitz
 
 /--
 [SilvermanToeplitz](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Series/SilvermanToeplitz.lean)

@@ -1,5 +1,6 @@
-import sympy.series.limits
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Initialize.Tactic.Attr.Basic
+open ArchimedeanClass
 
 
 @[path]
@@ -14,4 +15,4 @@ private lemma main
 
 
 -- created on 2025-12-09
--- updated on 2025-12-10
+-- updated on 2026-10-26

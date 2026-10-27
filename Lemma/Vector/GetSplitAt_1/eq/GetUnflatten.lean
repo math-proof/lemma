@@ -1,4 +1,4 @@
-import sympy.vector.vector
+import Instance.Data.Vector.Vector
 import Lemma.Bool.HEq.of.All_Eq.Eq.Eq
 import Lemma.List.Prod.eq.Foldr
 import Lemma.Bool.HEq.of.All_HEq.Eq
@@ -27,4 +27,4 @@ private lemma main
 
 
 -- created on 2025-07-16
--- updated on 2026-08-24
+-- updated on 2026-10-26

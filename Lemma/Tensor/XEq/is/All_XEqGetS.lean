@@ -1,5 +1,5 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.XEq.is.XEqDataS
 import Lemma.Vector.XEq.is.All_XEqGetS
@@ -47,4 +47,4 @@ private lemma main
 
 
 -- created on 2025-12-24
--- updated on 2026-08-27
+-- updated on 2026-10-26

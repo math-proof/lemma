@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.TensorCategories.code.UnitSemisimplicity.TensorExactness
 open CategoryTheory MonoidalCategory Category CategoryTheory.Limits TensorCategories
 

@@ -1,7 +1,7 @@
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Algebra.BigOperators.Fin
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

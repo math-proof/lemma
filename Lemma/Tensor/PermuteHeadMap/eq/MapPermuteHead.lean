@@ -1,7 +1,7 @@
 import Lemma.Tensor.MapData.eq.DataMap
 import Lemma.Tensor.RotateMap.eq.MapRotate
 import Lemma.Tensor.TensorMap.eq.MapTensor
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open List Tensor Vector
 
 

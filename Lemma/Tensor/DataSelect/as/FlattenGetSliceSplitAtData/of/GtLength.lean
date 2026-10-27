@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open Bool List
 
 
@@ -33,4 +33,4 @@ private lemma main
 
 
 -- created on 2025-11-10
--- updated on 2026-07-23
+-- updated on 2026-10-26

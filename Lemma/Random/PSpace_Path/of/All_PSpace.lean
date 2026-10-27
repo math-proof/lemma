@@ -1,5 +1,5 @@
-import sympy.stats.joint_rv
-import sympy.Basic
+import Syntax.Probability.JointRv.Part6
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
@@ -9,7 +9,7 @@ Path of a process with a.e. measurable coordinates is a.e. measurable (product Ï
 Not an `instance`: synthesizing `IsProbabilityMeasure Ï€` via `PSpace` would otherwise loop
 through a metavariable process `X`.
 
-Formerly `PSpace.of_process_path` in `sympy/stats/joint_rv.lean`.
+Formerly `PSpace.of_process_path` in `Syntax/Probability/JointRv/Part6.lean`.
 -/
 @[path]
 private lemma main

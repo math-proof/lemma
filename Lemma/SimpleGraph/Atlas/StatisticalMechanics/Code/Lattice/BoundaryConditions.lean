@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.BoundaryConditions.Part10
 open StatMech StatMech.Lattice StatMech.Lattice.BoundaryCondition
 

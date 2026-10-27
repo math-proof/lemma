@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Int.LeNegS.of.Ge
 import Lemma.Int.LtNegS.of.Gt
 open Int

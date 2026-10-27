@@ -1,5 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.Nat.Div.eq.AddMulDiv_Mul
@@ -13,7 +13,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.MapMap.eq.Map_Comp
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool Fin List Nat Tensor Vector
 
 
@@ -97,4 +97,4 @@ private lemma main
 
 
 -- created on 2025-06-27
--- updated on 2026-07-22
+-- updated on 2026-10-26

@@ -5,7 +5,7 @@ if [ ! -f "json/mathlib.jsonl" ]; then
   # each lean process needs ~7GB RAM; keep parallel chunks low
   chunks=${MATHLIB_CHUNKS:-2}
   for ((i = 0; i < chunks; i++)); do
-    CHUNK_IDX=$i NUM_CHUNKS=$chunks lake env lean sympy/printing/mathlib.lean > "json/mathlib.$i.jsonl" &
+    CHUNK_IDX=$i NUM_CHUNKS=$chunks lake env lean Def/Lean/Meta/Mathlib.lean > "json/mathlib.$i.jsonl" &
   done
   wait
   cat $(seq -f "json/mathlib.%g.jsonl" 0 $((chunks - 1))) > json/mathlib.jsonl

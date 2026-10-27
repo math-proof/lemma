@@ -1,5 +1,5 @@
-import sympy.functions.combinatorial.integer_factorials
-import sympy.sets.sets
+import Def.Data.Nat.Factorial.IntegerFactorials
+import Theorem.Data.Set.Sets
 
 
 @[path]

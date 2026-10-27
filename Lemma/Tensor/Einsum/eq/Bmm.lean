@@ -1,4 +1,4 @@
-import torch.Tensor.bmm
+import Def.Data.Holor.Bmm
 import Lemma.Tensor.Tensordot.eq.Bmm
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 open Bool Nat Tensor
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2026-07-15
--- updated on 2026-08-27
+-- updated on 2026-10-26

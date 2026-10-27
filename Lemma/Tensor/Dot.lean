@@ -2,7 +2,7 @@ import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
 import Lemma.Tensor.Dot.eq.SumMul__0
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 import Lemma.Tensor.Sum.of.Eq
 import Lemma.Matrix.MulOfPowNegChooseOfMulPow.eq.MulOfOfChooseSum
 open Matrix Tensor
@@ -51,4 +51,4 @@ private lemma vandermonde.row_transform
 
 
 -- created on 2020-08-16
--- updated on 2026-09-27
+-- updated on 2026-10-26

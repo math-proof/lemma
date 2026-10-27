@@ -1,6 +1,6 @@
 import Mathlib
 import Mathlib.Data.List.Chain
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicPositivity
 open Finset BigOperators CoxeterGroup
 

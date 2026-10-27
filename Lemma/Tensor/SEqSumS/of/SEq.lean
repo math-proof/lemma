@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqUFnS.of.SEq
-import torch.Tensor.Basic
-import torch.Tensor.sum
+import Def.Data.Holor.Defs.Part4
+import Def.Data.Holor.Sum
 open Bool
 
 
@@ -19,4 +19,4 @@ private lemma main
 
 
 -- created on 2025-06-29
--- updated on 2025-07-13
+-- updated on 2026-10-26

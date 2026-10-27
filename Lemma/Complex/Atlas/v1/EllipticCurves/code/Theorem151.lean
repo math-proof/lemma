@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Class.v1.Atlas.EllipticCurves.code.Theorem151
 open Complex ComplexLattice
 

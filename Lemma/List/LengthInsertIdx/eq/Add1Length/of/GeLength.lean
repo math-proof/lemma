@@ -1,5 +1,5 @@
 import Lemma.List.LengthInsertIdx.eq.Add_Length_1.of.GeLength
-import stdlib.List
+import Def.Data.List.List.Part5
 open List Nat
 
 
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2025-06-08
--- updated on 2026-07-12
+-- updated on 2026-10-26

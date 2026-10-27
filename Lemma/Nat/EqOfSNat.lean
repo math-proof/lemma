@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.Analysis.Section_3_1.Part5
 import Lemma.Nat.Nat.is.Eq
 open Chapter3.SetTheory.Set
@@ -23,4 +23,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-10-23
+-- updated on 2026-10-26

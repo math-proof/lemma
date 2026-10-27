@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.MathlibExtTest.Combinatorics.SimpleGraph.SaturatingNonedge
 open SimpleGraph
 

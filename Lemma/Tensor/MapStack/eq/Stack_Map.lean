@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetMap.eq.MapGet
-import sympy.matrices.expressions.special
+import Def.Data.Holor.BandPart
 open Tensor
 
 
@@ -23,4 +23,4 @@ private lemma main
 
 
 -- created on 2026-07-29
--- updated on 2026-08-19
+-- updated on 2026-10-26

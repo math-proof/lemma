@@ -1,8 +1,8 @@
 import Lemma.Tensor.MeanDiv.eq.DivMean
 import Lemma.Tensor.Sum.eq.Zero
 import Lemma.Tensor.Div.eq.DivDivS.of.Ne_0
-import torch.Tensor.mean
-import torch.Tensor.sum
+import Def.Data.Holor.Mean
+import Def.Data.Holor.Sum
 open Tensor Vector Bool Nat
 set_option maxHeartbeats 250000
 
@@ -56,4 +56,4 @@ private lemma main
 
 
 -- created on 2025-08-29
--- updated on 2025-09-04
+-- updated on 2026-10-26

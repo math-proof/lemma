@@ -1,4 +1,4 @@
-import stdlib.Slice
+import Def.Data.List.Slice
 import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Int.EqSign_1.of.Gt_0
 open Nat Int

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupDefinition.Part3
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupDefinition
 open AlgebraicGeometry

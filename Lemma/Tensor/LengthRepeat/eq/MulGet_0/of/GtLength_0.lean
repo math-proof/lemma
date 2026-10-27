@@ -1,5 +1,5 @@
 import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 open Tensor Nat
 
 
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2025-07-10
--- updated on 2025-07-12
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib.Data.Int.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -13,4 +13,4 @@ private lemma main
   exact le_of_eq h.symm
 
 -- created on 2019-03-31
--- updated on 2023-11-11
+-- updated on 2026-10-26

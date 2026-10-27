@@ -1,6 +1,7 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Boltzmann
+import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Theorems
 open BooleanFourier
 open Finset Real
 
@@ -33,7 +34,9 @@ lemma card_filter_cons
         rw [← hx.1]; exact Fin.cons_self_tail x
       rw [this]; exact hx.2
     · have : Fin.cons b (Fin.tail x) = x := by
-      rwa [← hx.1]; exact Fin.cons_self_tail x
+        rw [← hx.1]
+        exact Fin.cons_self_tail x
+      exact this
 
 end BooleanFourier
 
@@ -65,8 +68,8 @@ lemma filter_card_decomp
     simp [h1] at h2
   rw [hpart, Finset.card_union_of_disjoint hdisj]
   congr 1
-  · exact card_filter_cons f false
-  · exact card_filter_cons f true
+  · exact card_filter_cons (b := false)
+  · exact card_filter_cons (b := true)
 
 end BooleanFourier
 
@@ -84,7 +87,7 @@ lemma vol_restrict_decomp
 -- proof
   unfold vol restrict
   have h2n : (2 : ℝ) ^ n ≠ 0 := pow_ne_zero n (by norm_num)
-  have hcard := filter_card_decomp f
+  have hcard := filter_card_decomp (f := f)
   rw [show (2 : ℝ) ^ (n + 1) = 2 * 2 ^ n from by ring]
   field_simp
   push_cast [hcard]
@@ -100,9 +103,8 @@ namespace BooleanFourier
 @[path]
 lemma filter_card_split_by_first_coord
   {n : ℕ}
-  [DecidablePred P]
--- given
-  (P : (Fin (n+1) → Bool) → Prop) :
+  {P : (Fin (n+1) → Bool) → Prop}
+  [DecidablePred P] :
 -- imply
   (Finset.univ.filter P).card = (Finset.univ.filter fun y : Fin n → Bool => P (Fin.cons false y)).card + (Finset.univ.filter fun y : Fin n → Bool => P (Fin.cons true y)).card := by
 -- proof
@@ -129,8 +131,7 @@ lemma filter_card_split_by_first_coord
       ⟨fun y => (true, y), fun _ _ h => by simpa using h⟩) := by
     rw [Finset.disjoint_left]
     intro ⟨b, y⟩ h1 h2
-    simp only [Finset.mem_map, Finset.mem_filter, Finset.mem_univ, true_and,
-      Function.Embedding.coeFn_mk] at h1 h2
+    simp only [Finset.mem_map, Finset.mem_filter, Finset.mem_univ, true_and] at h1 h2
     obtain ⟨_, _, heq₁⟩ := h1
     obtain ⟨_, _, heq₂⟩ := h2
     have hfalse := (Prod.mk.inj heq₁).1
@@ -145,7 +146,7 @@ lemma filter_card_split_by_first_coord
       ⟨fun y => (true, y), fun _ _ h => by simpa using h⟩ := by
     ext ⟨b, y⟩
     simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_union,
-      Finset.mem_map, Function.Embedding.coeFn_mk]
+      Finset.mem_map]
     constructor
     · intro hP; cases b
       · left; exact ⟨y, hP, rfl⟩
@@ -224,7 +225,7 @@ lemma influence_succ_eq
 -- proof
   unfold influence restrict
   have h_split := filter_card_split_by_first_coord
-    (fun x => f x ≠ f (flipCoord x (Fin.succ i)))
+    (P := fun x => f x ≠ f (flipCoord x (Fin.succ i)))
   have h_false : (Finset.univ.filter fun y : Fin n → Bool =>
     f (Fin.cons false y) ≠ f (flipCoord (Fin.cons false y : Fin (n+1) → Bool) (Fin.succ i))) =
     (Finset.univ.filter fun y : Fin n → Bool =>
@@ -261,7 +262,9 @@ lemma card_disagree_ge_abs_diff
   [DecidableEq α]
   {f₀ f₁ : α → Bool} :
 -- imply
-  ((Finset.univ.filter fun y => f₀ y ≠ f₁ y).card : ℝ) ≥ := by
+  ((Finset.univ.filter fun y => f₀ y ≠ f₁ y).card : ℝ) ≥
+    |((Finset.univ.filter fun y => f₁ y = true).card : ℝ) -
+      ((Finset.univ.filter fun y => f₀ y = true).card : ℝ)| := by
 -- proof
   set T₀ := Finset.univ.filter fun y => f₀ y = true
   set T₁ := Finset.univ.filter fun y => f₁ y = true
@@ -303,11 +306,11 @@ lemma influence_zero_ge_abs_vol_diff
   {n : ℕ}
   {f : (Fin (n + 1) → Bool) → Bool} :
 -- imply
-  influence f 0 ≥ := by
+  influence f 0 ≥ |vol (restrict f true) - vol (restrict f false)| := by
 -- proof
   unfold influence vol restrict
   have h_split := filter_card_split_by_first_coord
-    (fun x => f x ≠ f (flipCoord x 0))
+    (P := fun x => f x ≠ f (flipCoord x 0))
   have h_false_filter : (Finset.univ.filter fun y : Fin n → Bool =>
     f (Fin.cons false y) ≠ f (flipCoord (Fin.cons false y : Fin (n+1) → Bool) 0)) =
     (Finset.univ.filter fun y : Fin n → Bool =>
@@ -330,7 +333,7 @@ lemma influence_zero_ge_abs_vol_diff
     rw [h_split, h_false_filter, h_true_filter, h_ne_comm]
     ring
   have h_disagree := card_disagree_ge_abs_diff
-    (fun y => f (Fin.cons false y)) (fun y => f (Fin.cons true y))
+    (f₀ := fun y => f (Fin.cons false y)) (f₁ := fun y => f (Fin.cons true y))
   have h_dis_eq : ((Finset.univ.filter fun y : Fin n → Bool =>
     (fun y => f (Fin.cons false y)) y ≠ (fun y => f (Fin.cons true y)) y).card : ℝ) =
     (Dis : ℝ) := by rfl
@@ -359,7 +362,9 @@ lemma totalInfluence_restrict_bound
   {n : ℕ}
   {f : (Fin (n + 1) → Bool) → Bool} :
 -- imply
-  totalInfluence f ≥ (totalInfluence (restrict f false) + totalInfluence (restrict f true)) / 2 + := by
+  totalInfluence f ≥
+    (totalInfluence (restrict f false) + totalInfluence (restrict f true)) / 2 +
+      |vol (restrict f true) - vol (restrict f false)| := by
 -- proof
   unfold totalInfluence
   rw [show (∑ i : Fin (n+1), influence f i) =
@@ -371,8 +376,8 @@ lemma totalInfluence_restrict_bound
       ∑ i : Fin n, influence (restrict f true) i) / 2 =
       ∑ i : Fin n, (influence (restrict f false) i + influence (restrict f true) i) / 2 from by
       rw [← Finset.sum_div, ← Finset.sum_add_distrib]]
-    exact Finset.sum_congr rfl (fun i _ => influence_succ_eq f i)
-  linarith [influence_zero_ge_abs_vol_diff f]
+    exact Finset.sum_congr rfl (fun i _ => influence_succ_eq)
+  linarith [influence_zero_ge_abs_vol_diff (f := f)]
 
 end BooleanFourier
 
@@ -390,7 +395,8 @@ lemma tensorization_half
   (hα₀_le : α₀ ≤ 1)
   (hα₁_le : α₁ ≤ 1) :
 -- imply
-  (α₀ * (Real.log (1 / α₀) / Real.log 2) + α₁ * (Real.log (1 / α₁) / Real.log 2)) / 2 + := by
+  (α₀ * (Real.log (1 / α₀) / Real.log 2) + α₁ * (Real.log (1 / α₁) / Real.log 2)) / 2 + |α₁ - α₀| ≥
+    ((α₀ + α₁) / 2) * (Real.log (1 / ((α₀ + α₁) / 2)) / Real.log 2) := by
 -- proof
   have hlog2_pos : (0:ℝ) < Real.log 2 := Real.log_pos (by norm_num)
   have heq₀ : α₀ * (Real.log (1 / α₀) / Real.log 2) = negMulLog α₀ / Real.log 2 := by
@@ -483,9 +489,10 @@ lemma tensorization_half_boundary_left
   {α₁ : ℝ}
 -- given
   (hα₁_pos : 0 < α₁)
-  (hα₁_le : α₁ ≤ 1) :
+  (_hα₁_le : α₁ ≤ 1) :
 -- imply
-  (0 * (Real.log (1 / (0:ℝ)) / Real.log 2) + α₁ * (Real.log (1 / α₁) / Real.log 2)) / 2 + := by
+  (0 * (Real.log (1 / (0:ℝ)) / Real.log 2) + α₁ * (Real.log (1 / α₁) / Real.log 2)) / 2 + |α₁ - 0| ≥
+    ((0 + α₁) / 2) * (Real.log (1 / ((0 + α₁) / 2)) / Real.log 2) := by
 -- proof
   simp only [zero_mul, zero_add, sub_zero, abs_of_pos hα₁_pos]
   have hlog2 : (0:ℝ) < Real.log 2 := Real.log_pos (by norm_num)
@@ -508,9 +515,10 @@ lemma tensorization_half_boundary_right
   {α₀ : ℝ}
 -- given
   (hα₀_pos : 0 < α₀)
-  (hα₀_le : α₀ ≤ 1) :
+  (_hα₀_le : α₀ ≤ 1) :
 -- imply
-  (α₀ * (Real.log (1 / α₀) / Real.log 2) + 0 * (Real.log (1 / (0:ℝ)) / Real.log 2)) / 2 + := by
+  (α₀ * (Real.log (1 / α₀) / Real.log 2) + 0 * (Real.log (1 / (0:ℝ)) / Real.log 2)) / 2 + |0 - α₀| ≥
+    ((α₀ + 0) / 2) * (Real.log (1 / ((α₀ + 0) / 2)) / Real.log 2) := by
 -- proof
   simp only [zero_mul, add_zero, show (0:ℝ) - α₀ = -α₀ from by ring, abs_neg, abs_of_pos hα₀_pos]
   have hlog2 : (0:ℝ) < Real.log 2 := Real.log_pos (by norm_num)
@@ -559,17 +567,25 @@ lemma totalInfluence_ge_two_vol_log
     set α₀ := 1 - vol (restrict f false)
     set α₁ := 1 - vol (restrict f true)
     set α := 1 - vol f
-    have hα₀_nn : 0 ≤ α₀ := by show 0 ≤ 1 - vol (restrict f false); linarith [vol_le_one (restrict f false)]
-    have hα₁_nn : 0 ≤ α₁ := by show 0 ≤ 1 - vol (restrict f true); linarith [vol_le_one (restrict f true)]
-    have hα₀_le : α₀ ≤ 1 := by show 1 - vol (restrict f false) ≤ 1; linarith [vol_nonneg (restrict f false)]
-    have hα₁_le : α₁ ≤ 1 := by show 1 - vol (restrict f true) ≤ 1; linarith [vol_nonneg (restrict f true)]
+    have hα₀_nn : 0 ≤ α₀ := by
+      show 0 ≤ 1 - vol (restrict f false)
+      linarith [vol_le_one (f := restrict f false)]
+    have hα₁_nn : 0 ≤ α₁ := by
+      show 0 ≤ 1 - vol (restrict f true)
+      linarith [vol_le_one (f := restrict f true)]
+    have hα₀_le : α₀ ≤ 1 := by
+      show 1 - vol (restrict f false) ≤ 1
+      linarith [vol_nonneg (f := restrict f false)]
+    have hα₁_le : α₁ ≤ 1 := by
+      show 1 - vol (restrict f true) ≤ 1
+      linarith [vol_nonneg (f := restrict f true)]
     have hα_eq : α = (α₀ + α₁) / 2 := by
       show 1 - vol f = (1 - vol (restrict f false) + (1 - vol (restrict f true))) / 2
-      have := vol_restrict_decomp f
+      have := vol_restrict_decomp (f := f)
       linarith
-    have ih₀ := ih (restrict f false)
-    have ih₁ := ih (restrict f true)
-    have h_bound := totalInfluence_restrict_bound f
+    have ih₀ := ih (f := restrict f false)
+    have ih₁ := ih (f := restrict f true)
+    have h_bound := totalInfluence_restrict_bound
     have h_abs_eq : |vol (restrict f true) - vol (restrict f false)| = |α₁ - α₀| := by
       show |vol (restrict f true) - vol (restrict f false)| =
         |(1 - vol (restrict f true)) - (1 - vol (restrict f false))|
@@ -596,16 +612,17 @@ lemma totalInfluence_ge_two_vol_log
           rw [← hα₀_zero, ← hα₁_zero]; simp
         ·
           rw [← hα₀_zero]
-          exact tensorization_half_boundary_left α₁ hα₁_pos hα₁_le
+          exact tensorization_half_boundary_left (α₁ := α₁) hα₁_pos hα₁_le
       · rcases eq_or_lt_of_le hα₁_nn with (hα₁_zero | hα₁_pos)
         ·
           rw [← hα₁_zero]
-          exact tensorization_half_boundary_right α₀ hα₀_pos hα₀_le
+          exact tensorization_half_boundary_right (α₀ := α₀) hα₀_pos hα₀_le
         ·
-          exact tensorization_half α₀ α₁ hα₀_pos hα₁_pos hα₀_le hα₁_le
+          exact tensorization_half (α₀ := α₀) (α₁ := α₁) hα₀_pos hα₁_pos hα₀_le hα₁_le
     linarith
 
 end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

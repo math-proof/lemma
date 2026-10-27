@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.polys.agca.variety
+import Initialize.Tactic.Attr.Basic
+import Theorem.AlgebraicGeometry.Variety
 
 open AlgebraicGeometry
 

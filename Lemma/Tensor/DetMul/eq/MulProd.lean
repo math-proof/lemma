@@ -1,5 +1,5 @@
 import Mathlib.Data.Matrix.Mul
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.Mul
 import Lemma.Tensor.MulStack.eq.Stack_Mul
@@ -43,4 +43,4 @@ private lemma main
 
 
 -- created on 2022-01-15
--- updated on 2026-09-06
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankFiveAggregateCounterexample.Part4
 open Finset StatMech StatMech.Ising StatMech.Ising.LPRankFiveAggregateCounterexample
 

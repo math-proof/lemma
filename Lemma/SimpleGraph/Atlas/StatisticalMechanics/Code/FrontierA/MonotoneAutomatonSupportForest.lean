@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonSupportForest
 open Set SimpleGraph Finset StatMech StatMech.FrontierA
 

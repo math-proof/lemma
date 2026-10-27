@@ -1,4 +1,4 @@
-import sympy.stats.markov_reward_process
+import Def.Dynamics.MarkovRewardProcess.Part4
 import Mathlib.Analysis.Convex.Mul
 open Matrix Finset
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierB.PlusCurrentLimit
 open Filter MeasureTheory StatMech StatMech.FrontierB
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.LieGroups.code.CompactMeasures
 open Filter Topology Classical
 open scoped TensorProduct
@@ -425,4 +425,4 @@ private lemma boxtimes_extension_unique
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

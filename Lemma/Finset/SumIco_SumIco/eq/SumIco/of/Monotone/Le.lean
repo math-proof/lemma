@@ -1,5 +1,5 @@
 import Mathlib.Algebra.BigOperators.Intervals
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Finset
 
 

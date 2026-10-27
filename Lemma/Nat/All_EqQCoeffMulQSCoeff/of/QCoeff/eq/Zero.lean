@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FLTPrelim_Modularity
 import Lemma.Int.P2MUtil
 open scoped MatrixGroups

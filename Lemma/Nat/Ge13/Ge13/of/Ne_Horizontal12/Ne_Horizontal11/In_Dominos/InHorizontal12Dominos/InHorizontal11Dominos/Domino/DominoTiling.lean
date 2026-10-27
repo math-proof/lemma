@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.determinants.DominoTilings
+import Initialize.Tactic.Attr.Basic
+import Def.Combinatorics.Tiling.DominoTilings.Part13
 import Lemma.Nat.DominoTilings
 import Lemma.Nat.Ge1.Ge1.of.InDominos.Domino.DominoTiling
 import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2

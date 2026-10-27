@@ -1,6 +1,6 @@
-import sympy.matrices.plu
-import sympy.sets.sets
-import sympy.Basic
+import Def.LinearAlgebra.Matrix.Echelon.Plu
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -31,4 +31,4 @@ private lemma main
 
 
 -- created on 2020-08-23
--- updated on 2026-10-17
+-- updated on 2026-10-26

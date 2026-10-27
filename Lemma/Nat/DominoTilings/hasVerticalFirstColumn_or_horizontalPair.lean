@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.determinants.DominoTilings
+import Initialize.Tactic.Attr.Basic
+import Def.Combinatorics.Tiling.DominoTilings.Part13
 import Lemma.Nat.DominoTilings
 import Lemma.Nat.CellsEq1.of.In1Cells.CellsEq1.Ne.InDominos.InDominos.Domino.DominoTiling
 import Lemma.Nat.CellsEq1OrCellsEq1.of.In1Cells.InDominos.Domino.DominoTiling

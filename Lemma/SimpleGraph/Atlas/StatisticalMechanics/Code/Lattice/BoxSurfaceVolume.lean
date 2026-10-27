@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Lattice.BoxSurfaceVolume.Part5
 open Set Finset Filter Topology StatMech StatMech.Lattice
 

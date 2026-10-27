@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.polys.agca.affine.defined_over
+import Initialize.Tactic.Attr.Basic
+import Theorem.AlgebraicGeometry.DefinedOver.Part2
 
 open MvPolynomial
 

@@ -1,7 +1,7 @@
-import torch.functions
-import torch.Tensor.sum
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
+import Theorem.Data.Holor.Functions
+import Def.Data.Holor.Sum
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
@@ -42,4 +42,4 @@ private lemma main
 
 
 -- created on 2025-10-05
--- updated on 2025-10-07
+-- updated on 2026-10-26

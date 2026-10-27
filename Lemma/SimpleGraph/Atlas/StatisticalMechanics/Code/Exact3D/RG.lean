@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Exact3D.RG.Part2
 open StatMech StatMech.Exact3D StatMech.Exact3D.BlockScale
 

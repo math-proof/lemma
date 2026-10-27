@@ -1,5 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
-import torch.Tensor.repeat
+import Def.Data.Holor.Repeat
 import Lemma.Tensor.SEqRepeat.of.EqMul_Get
 open Tensor Bool
 

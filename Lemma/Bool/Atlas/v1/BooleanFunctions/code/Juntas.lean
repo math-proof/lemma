@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Juntas
 open BooleanFourier
 
@@ -47,7 +47,7 @@ lemma high_influence_count_le
       Finset.card_nsmul_le_sum J (fun i => influence f i) τ (fun i hi => hJ i hi)
     rwa [nsmul_eq_mul] at hsm
   have h2 : ∑ i ∈ J, influence f i ≤ totalInfluence f := by
-    exact Finset.sum_le_univ_sum_of_nonneg (fun i => influence_nonneg f i)
+    exact Finset.sum_le_univ_sum_of_nonneg (fun i => influence_nonneg (f := f) (i := i))
   rw [le_div_iff₀ hτ]
   linarith
 
@@ -55,3 +55,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

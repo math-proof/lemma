@@ -1,5 +1,5 @@
-import sympy.stats.iterates
-import sympy.Basic
+import Def.Dynamics.Iterates
+import Initialize.Tactic.Attr.Basic
 import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.Topology.EMetricSpace.Lipschitz
 open Filter MeasureTheory

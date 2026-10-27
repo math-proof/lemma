@@ -1,4 +1,4 @@
-import sympy.matrices.expressions.permutation
+import Def.LinearAlgebra.Matrix.Permutation
 
 
 @[path]

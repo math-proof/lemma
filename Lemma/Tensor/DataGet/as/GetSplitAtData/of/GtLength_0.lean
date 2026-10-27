@@ -1,4 +1,4 @@
-import stdlib.SEq
+import Theorem.Logic.SEq
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.GtLengthSplitAtData.of.GtLength_0

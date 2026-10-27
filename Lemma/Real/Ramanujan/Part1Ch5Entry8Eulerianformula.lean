@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Ramanujan.Part1Ch5Entry8Eulerianformula
 open scoped Nat Real BigOperators Polynomial ContDiff
 open Filter Finset Complex Topology Entry4
@@ -1140,4 +1140,4 @@ end
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

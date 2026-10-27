@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FLTPrelim_Modularity
 import Def.WeierstrassCurve_VariableChangePointEquiv
 open WeierstrassCurve

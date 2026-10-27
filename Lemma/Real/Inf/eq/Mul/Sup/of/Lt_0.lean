@@ -1,5 +1,5 @@
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 import Mathlib.Basic.Real.Pointwise
 
 
@@ -20,4 +20,4 @@ private lemma main
 
 
 -- created on 2019-12-22
--- updated on 2021-10-02
+-- updated on 2026-10-26

@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import torch.Tensor.prod
-import torch.Tensor.Basic
+import Def.Data.Holor.Prod
+import Def.Data.Holor.Defs.Part4
 open Bool
 
 @[path, cast]
@@ -21,4 +21,4 @@ private lemma main
     grind
 
 -- created on 2026-04-25
--- updated on 2026-05-02
+-- updated on 2026-10-26

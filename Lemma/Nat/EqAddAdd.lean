@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.Analysis.Section_2_2.Part2
 import Lemma.Nat.All.of.All_Nat_induction
 import Lemma.Nat.Eq0Add
@@ -30,4 +30,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-10-23
+-- updated on 2026-10-26

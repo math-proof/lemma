@@ -3,7 +3,7 @@ import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.GetEye.eq.Delta
 import Lemma.Tensor.GetShiftMatrix.eq.DeltaModAdd_1
 import Lemma.Tensor.MatProd.eq.DotMatProd
-import sympy.matrices.expressions.matpow
+import Instance.LinearAlgebra.Matrix.Matpow
 open Nat Tensor
 
 
@@ -71,4 +71,4 @@ private lemma main
 
 
 -- created on 2026-09-11
--- updated on 2026-09-16
+-- updated on 2026-10-26

@@ -19,7 +19,7 @@ import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Rat.SquareDiv.eq.DivSquareS
-open Hyperreal Int Nat Rat
+open Hyperreal Int Nat Rat ArchimedeanClass
 
 
 @[path]
@@ -81,4 +81,4 @@ private lemma main
 
 
 -- created on 2025-12-19
--- updated on 2025-12-20
+-- updated on 2026-10-26

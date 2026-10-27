@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Stability
 open Finset BigOperators Real BooleanFourier
 
@@ -18,7 +18,7 @@ lemma noiseOperator_eq_fourier_sum
 -- imply
   noiseOperator ρ f x = ∑ S : Finset (Fin n), ρ ^ S.card * fourierCoeff f S * chi S x :=
 -- proof
-noiseOp_eq_fourier_expansion ρ f x
+noiseOp_eq_fourier_expansion (ρ := ρ) (f := f) (x := x)
 
 end BooleanFourier
 
@@ -58,7 +58,7 @@ lemma sum_chi_mul_chi_eq
       | inl hjST =>
         have hflip : chi S (flipAt j x) * chi T (flipAt j x) =
           -(chi S x * chi T x) := by
-          rw [chi_flipAt S j hjST.1 x]
+          rw [chi_flipAt (S := S) (j := j) (x := x) hjST.1]
           have hT : chi T (flipAt j x) = chi T x := by
             simp only [chi, flipAt]
             apply Finset.prod_congr rfl
@@ -70,7 +70,7 @@ lemma sum_chi_mul_chi_eq
       | inr hjTS =>
         have hflip : chi S (flipAt j x) * chi T (flipAt j x) =
           -(chi S x * chi T x) := by
-          rw [chi_flipAt T j hjTS.1 x]
+          rw [chi_flipAt (S := T) (j := j) (x := x) hjTS.1]
           have hS : chi S (flipAt j x) = chi S x := by
             simp only [chi, flipAt]
             apply Finset.prod_congr rfl
@@ -80,11 +80,11 @@ lemma sum_chi_mul_chi_eq
           rw [hS]; ring
         linarith
     · intro x _
-      exact flipAt_ne_self j x
+      exact flipAt_ne_self (j := j) (x := x)
     · intro x
       exact Finset.mem_univ _
     · intro x
-      exact flipAt_flipAt j x
+      exact flipAt_flipAt (j := j) (x := x)
 
 end BooleanFourier
 
@@ -108,7 +108,7 @@ lemma noiseStability_eq_sum
   simp_rw [noiseOperator_eq_fourier_sum]
   conv_lhs =>
     arg 2; arg 2; ext x
-    rw [fourier_expansion f x]
+    rw [fourier_expansion (f := f) (x := x)]
   simp_rw [Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm (s := univ (α := Fin n → Bool))]
   simp_rw [Finset.sum_comm (s := univ (α := Fin n → Bool))]
@@ -507,3 +507,4 @@ end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

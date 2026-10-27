@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.LieGroups.code.HCBimoduleProjectives.Part2
 
 
@@ -86,4 +86,4 @@ private lemma tensor_product_bimodule_surjects_from_generators
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

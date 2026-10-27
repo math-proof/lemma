@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Probability.Statistics.GlivenkoCantelli
 open MeasureTheory ProbabilityTheory Set
 open scoped ENNReal
@@ -472,4 +472,4 @@ end MathlibExt.Probability.Statistics.GlivenkoCantelliWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

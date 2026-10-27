@@ -1,7 +1,7 @@
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Ring
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -306,4 +306,4 @@ private lemma main
 
 
 -- created on 2018-11-24
--- updated on 2026-10-17
+-- updated on 2026-10-26

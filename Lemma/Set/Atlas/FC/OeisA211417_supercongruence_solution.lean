@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FC.OeisA211417_supercongruence_solution.Part3
 open OeisA211417
 open Nat Int Finset

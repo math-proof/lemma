@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AnAlgorithmistsToolkit.code.DisjointUnion
 open DisjointUnion
 open Matrix SimpleGraph Finset

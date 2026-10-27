@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.M4aHerbrand_IdeleClassVocab
 import Lemma.NumberField.IdeleBox
 import Lemma.Int.P2MUtil

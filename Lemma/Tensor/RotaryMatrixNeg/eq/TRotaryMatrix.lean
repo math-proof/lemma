@@ -1,5 +1,5 @@
 import Lemma.Tensor.CosNeg.eq.Cos
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.NegMul_Stack.eq.Mul_Stack_Neg
 import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
 import Lemma.Tensor.SinNeg.eq.NegSin
@@ -27,4 +27,4 @@ private lemma main
 
 
 -- created on 2026-09-03
--- updated on 2026-09-05
+-- updated on 2026-10-26

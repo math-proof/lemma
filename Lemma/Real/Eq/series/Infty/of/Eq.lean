@@ -1,7 +1,7 @@
 import Mathlib.Analysis.Analytic.OfScalars
 import Mathlib.Analysis.Analytic.Uniqueness
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

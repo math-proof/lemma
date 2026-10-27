@@ -1,5 +1,5 @@
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Finset
 
 
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2023-04-24
--- updated on 2026-10-20
+-- updated on 2026-10-26

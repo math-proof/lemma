@@ -1,5 +1,5 @@
 import Lemma.Int.EqNegToNatNeg.of.Lt_0
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.SEq.of.SEqPermuteS.Eq.GtLength.GtLength.Ge
 import Lemma.Tensor.SEq.of.SEqPermuteS.Eq.GtLength.GtLength.GtLength_Add
 import Lemma.Tensor.SEqPermuteS__Neg.of.Le
@@ -70,4 +70,4 @@ private lemma main
 
 
 -- created on 2025-10-25
--- updated on 2025-10-31
+-- updated on 2026-10-26

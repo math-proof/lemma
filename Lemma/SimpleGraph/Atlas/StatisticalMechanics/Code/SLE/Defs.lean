@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
 open MeasureTheory ProbabilityTheory Complex Filter Topology StatMech StatMech.SLE
 

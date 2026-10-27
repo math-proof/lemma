@@ -1,5 +1,5 @@
 import Mathlib.Dynamics.OmegaLimit
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Filter
 
 

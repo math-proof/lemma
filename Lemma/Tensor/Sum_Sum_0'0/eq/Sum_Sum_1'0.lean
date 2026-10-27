@@ -1,5 +1,5 @@
 import Lemma.Tensor.Sum_Sum_0'0.as.Sum_Sum_1'0
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool Tensor
 
 

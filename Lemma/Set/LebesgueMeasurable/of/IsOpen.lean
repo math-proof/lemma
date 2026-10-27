@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.MeasureTheory.Section_1_2_2.Part3
 open IsOpen
 

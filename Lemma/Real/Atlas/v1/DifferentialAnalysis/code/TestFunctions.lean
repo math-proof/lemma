@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
 open Filter Topology TestFunctions TestFunctions.SchwartzTestFunctionSpace
 open scoped ZeroAtInfty

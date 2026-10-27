@@ -1,5 +1,5 @@
 import Lemma.Fin.HEq.of.All_Eq.Eq
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 import Lemma.Tensor.DataSum.eq.Sum_Data
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
@@ -31,4 +31,4 @@ private lemma main
 
 
 -- created on 2025-07-13
--- updated on 2026-07-22
+-- updated on 2026-10-26

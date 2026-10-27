@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraNotes.code.Diagonalization
 open Matrix Diagonalization
 open Module Polynomial
@@ -49,4 +49,4 @@ open Matrix
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

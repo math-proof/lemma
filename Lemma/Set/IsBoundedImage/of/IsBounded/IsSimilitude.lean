@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
 open Classical ChamberComplex AffineCoxeter AffineCoxeterComplex AffineBuilding
 open ChamberComplex

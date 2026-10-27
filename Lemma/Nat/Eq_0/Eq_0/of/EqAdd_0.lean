@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.Analysis.Section_2_2.Part2
 import Lemma.Nat.IsPos.is.Ne_0
 import Lemma.Nat.IsPosAdd.of.IsPos
@@ -34,4 +34,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-10-23
+-- updated on 2026-10-26

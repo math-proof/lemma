@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.ValuationSubring.ResidueValuationSubring
 import Lemma.Int.P2MUtil
 open IsLocalRing

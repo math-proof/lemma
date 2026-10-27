@@ -1,7 +1,7 @@
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
 import Mathlib.MeasureTheory.Function.SpecialFunctions.Basic
-import sympy.vector.lp_space
-import sympy.Basic
+import Def.Analysis.Normed.Lp.LpSpace.Part2
+import Initialize.Tactic.Attr.Basic
 open LpSpace
 
 

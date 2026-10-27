@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.rb2butterflyclose.Part6
 open Finset StatMech StatMech.Walls StatMech.Walls.Reimer
 

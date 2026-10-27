@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Cyclotomic.CubicResidueSymbol
 open MetaMathlibExt
 open Ideal NumberField

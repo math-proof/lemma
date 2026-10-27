@@ -1,5 +1,5 @@
-import sympy.dynamics.actor_critic
-import sympy.Basic
+import Structure.Dynamics.ActorCritic.Part6
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open IntermediateField
 open scoped IntermediateField.algebraAdjoinAdjoin Pointwise
 

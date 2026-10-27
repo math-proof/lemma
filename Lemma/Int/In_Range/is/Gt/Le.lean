@@ -1,4 +1,4 @@
-import sympy.sets.fancysets
+import Def.Data.List.Range
 import Lemma.Int.EqToNat_0.of.Lt_0
 import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 open Int

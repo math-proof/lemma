@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 namespace MathlibExt.LinearAlgebra.Matrix.SimultaneousDiagonalizationWanted
@@ -147,4 +147,4 @@ private lemma Matrix_PosDef_exists_isUnit_transpose_mul_mul_eq_one_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

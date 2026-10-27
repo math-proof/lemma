@@ -573,8 +573,38 @@ ${latex}
             event.currentTarget.focus();
         },
 
+        /** Native textarea. `this.commentTextarea` stays `{}` because `$mounted` only tracks child components. */
+        commentTextareaEl() {
+            var slot = this.$refs && this.$refs.commentTextarea;
+            if (slot && slot.value instanceof HTMLTextAreaElement)
+                return slot.value;
+            var root = this.$el;
+            if (root && root.querySelector)
+                return root.querySelector('textarea.green');
+        },
+
+        exitCommentEdit(event) {
+            if (!this.commentEditMode || !this.markdownComment)
+                return;
+            event.preventDefault();
+            event.stopPropagation();
+            this.commentEditMode = false;
+            this.rebuildMarkdownComment();
+            var host = event.currentTarget;
+            if (!host || !host.classList || !host.classList.contains('lemma-comment'))
+                host = host && host.closest ? host.closest('.lemma-comment') : null;
+            this.$nextTick(() => {
+                if (host && host.focus)
+                    host.focus();
+            });
+        },
+
         keydown_comment(event) {
             var {key, target} = event;
+            if (key === 'Escape') {
+                this.exitCommentEdit(event);
+                return;
+            }
             if (key !== 'Insert')
                 return;
             if (this.commentEditMode && (target.tagName === 'TEXTAREA' || target.closest && target.closest('textarea')))
@@ -586,12 +616,12 @@ ${latex}
             event.preventDefault();
             this.commentEditMode = true;
             this.$nextTick(() => {
-                var ta = this.commentTextarea;
-                if (ta) {
-                    ta.focus();
-                    var n = ta.value.length;
-                    ta.setSelectionRange(n, n);
-                }
+                var ta = this.commentTextareaEl();
+                if (!ta)
+                    return;
+                ta.focus();
+                var n = ta.value.length;
+                ta.setSelectionRange(n, n);
             });
         },
 
@@ -611,11 +641,7 @@ ${latex}
             var {key, target} = event;
             switch (key) {
             case 'Escape':
-                if (this.markdownComment) {
-                    event.preventDefault();
-                    this.commentEditMode = false;
-                    this.rebuildMarkdownComment();
-                }
+                this.exitCommentEdit(event);
                 break;
             case 's':
                 if (event.ctrlKey) {

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicSubgroups
 open Function Set CoxeterSystem
 open CoxeterMatrix
@@ -96,4 +96,4 @@ end CoxeterSystem
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

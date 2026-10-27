@@ -1,5 +1,5 @@
 import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 open List Tensor
 
 

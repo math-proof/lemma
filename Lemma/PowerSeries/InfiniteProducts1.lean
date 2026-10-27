@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.InfiniteProducts1
+import Initialize.Tactic.Attr.Basic
+import Notation.RingTheory.PowerSeries.InfiniteProducts1
 import Lemma.PowerSeries.InfiniteProducts
 import Lemma.PowerSeries.XnEquivalence
 open PowerSeries

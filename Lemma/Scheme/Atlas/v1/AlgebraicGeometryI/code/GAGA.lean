@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
 

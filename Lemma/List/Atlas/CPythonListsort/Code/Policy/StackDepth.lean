@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
 import Def.CPythonListsort.Code.Policy.StackPowers.Part2
 import Theorem.CPythonListsort.Code.Transcription.ListSortImpl

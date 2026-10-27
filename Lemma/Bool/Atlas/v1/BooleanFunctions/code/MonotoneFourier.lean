@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.MonotoneFourier
 open Finset BigOperators BooleanFourier
 
@@ -81,7 +81,7 @@ lemma monotone_pair_sum
       · simp [Function.update_of_ne hj]
     have hmono : f x ≤ f (Function.update x i true) := by
       conv_lhs => rw [← hupd_false]
-      exact monotone_update_le f hf i x
+      exact monotone_update_le hf
     cases hfx : f x <;> cases hfflip : f (Function.update x i true)
     · simp [boolToReal]
     · simp [boolToReal]; norm_num
@@ -101,7 +101,7 @@ lemma monotone_pair_sum
       · simp [Function.update_of_ne hj]
     have hmono : f (Function.update x i false) ≤ f x := by
       conv_rhs => rw [← hupd_true]
-      exact monotone_update_le f hf i x
+      exact monotone_update_le hf
     cases hfx : f x <;> cases hfflip : f (Function.update x i false)
     · simp [boolToReal]
     ·
@@ -134,7 +134,7 @@ lemma sum_boolToReal_eq_card_of_monotone
       simp only [flipCoord_flipCoord'] at this
       exact this
     · intro y
-      exact ⟨flipCoord y i, flipCoord_flipCoord' y i⟩
+      exact ⟨flipCoord y i, flipCoord_flipCoord'⟩
   have sum_flip : ∀ g : (Fin n → Bool) → ℝ,
     ∑ x : Fin n → Bool, g (flipCoord x i) = ∑ x : Fin n → Bool, g x :=
     fun g => Fintype.sum_bijective _ hflip_bij _ _ (fun _ => rfl)
@@ -150,7 +150,7 @@ lemma sum_boolToReal_eq_card_of_monotone
       ∑ x : Fin n → Bool, boolToReal (f (flipCoord x i)) * boolToReal ((flipCoord x i) i) :=
       Finset.sum_add_distrib
     linarith
-  simp_rw [monotone_pair_sum f hf i] at double
+  simp_rw [monotone_pair_sum hf] at double
   have boole_eq : ∑ x : Fin n → Bool,
     (if f x ≠ f (flipCoord x i) then (2 : ℝ) else 0) =
     2 * ↑(Finset.univ.filter (fun x : Fin n → Bool => f x ≠ f (flipCoord x i))).card := by
@@ -184,7 +184,7 @@ lemma fourierCoeff_singleton_eq_influence_of_monotone
     boolToReal (x i) := by
     intro x; simp
   simp_rw [hchi]
-  rw [one_div, sum_boolToReal_eq_card_of_monotone f hf i]
+  rw [one_div, sum_boolToReal_eq_card_of_monotone hf]
   ring
 
 end BooleanFourier

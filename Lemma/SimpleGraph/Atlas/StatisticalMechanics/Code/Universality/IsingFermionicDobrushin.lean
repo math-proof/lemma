@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin.Part8
 open Finset Complex StatMech StatMech.Universality StatMech.Universality.FKIsingDobrushinDomain StatMech.Universality.FKIsingDobrushinDomain.LocalSwitchingTable
 

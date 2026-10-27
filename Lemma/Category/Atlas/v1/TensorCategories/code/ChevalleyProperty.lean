@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.TensorCategories.code.ChevalleyProperty.Part2
 open CategoryTheory MonoidalCategory CategoryTheory.Limits
 

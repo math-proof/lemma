@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.SharpThreshold
 open BooleanFourier
 open Finset
@@ -42,10 +42,11 @@ lemma totalInfluence_le_n
 -- proof
   show ∑ i : Fin n, influence f i ≤ (n : ℝ)
   calc ∑ i : Fin n, influence f i
-    ≤ ∑ _i : Fin n, (1 : ℝ) := Finset.sum_le_sum (fun i _ => influence_le_one f i)
+    ≤ ∑ _i : Fin n, (1 : ℝ) := Finset.sum_le_sum (fun i _ => influence_le_one (f := f) (i := i))
     _ = (n : ℝ) := by simp [Finset.card_univ, Fintype.card_fin]
 
 end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

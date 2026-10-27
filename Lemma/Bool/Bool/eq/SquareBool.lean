@@ -1,5 +1,5 @@
-import sympy.core.power
-import sympy.Basic
+import Theorem.Algebra.Power.Part2
+import Initialize.Tactic.Attr.Basic
 
 
 /--

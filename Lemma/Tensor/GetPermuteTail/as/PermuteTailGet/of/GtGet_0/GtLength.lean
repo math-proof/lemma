@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.DropTail.eq.Drop
 import Lemma.List.ProdDrop.dvd.ProdTail.of.Gt_0

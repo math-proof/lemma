@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import torch.Tensor.reshape
-import sympy.matrices.expressions.matmul
-import torch.Tensor.bmm
+import Def.Data.Holor.Reshape
+import Instance.LinearAlgebra.Matrix.Matmul
+import Def.Data.Holor.Bmm
 open Bool List
 set_option maxHeartbeats 200000
 

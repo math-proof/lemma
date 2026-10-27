@@ -1,7 +1,7 @@
 import Mathlib.Analysis.SpecificLimits.Basic
-import sympy.series.limits
-import sympy.sets.sets
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 import Macro.Order.Sup
 open Topology
 

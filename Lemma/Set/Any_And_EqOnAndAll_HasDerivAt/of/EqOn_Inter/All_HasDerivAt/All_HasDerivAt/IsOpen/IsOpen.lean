@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.ODE.MaximalSolution.Part2
 
 open Set
@@ -816,4 +816,4 @@ end MathlibExt.Analysis.ODE.MaximalSolutionWanted
 
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

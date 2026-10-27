@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.TriHexSurfacePercolationTransport.Part4
 open Filter Finset MeasureTheory Set Topology StatMech StatMech.FK StatMech.FK.PeriodicPlanar
 

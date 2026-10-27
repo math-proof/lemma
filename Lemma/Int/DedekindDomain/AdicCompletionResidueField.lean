@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.RingTheory.DedekindDomain.AdicCompletionResidueField.Part2
 open IsDedekindDomain
 open scoped Valued

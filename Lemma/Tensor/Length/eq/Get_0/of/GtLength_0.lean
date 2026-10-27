@@ -1,4 +1,4 @@
-import torch.Tensor.Basic
+import Def.Data.Holor.Defs.Part4
 import Lemma.Tensor.Length.eq.Get_0.of.Ne_Nil
 open Tensor List
 
@@ -15,4 +15,4 @@ private lemma main
 
 
 -- created on 2025-06-14
--- updated on 2025-10-10
+-- updated on 2026-10-26

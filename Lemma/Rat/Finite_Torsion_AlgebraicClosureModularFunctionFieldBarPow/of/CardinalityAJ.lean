@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.ModularCurve.EichlerShimuraData
 import Lemma.ModularCurve.ArithmeticGalois
 import Lemma.AlgebraicCurve.Repartitions

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.ModularCurve.PeriodMap
 open scoped MatrixGroups
 open ModularCurve.Period

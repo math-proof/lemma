@@ -1,14 +1,14 @@
 import Lemma.Tensor.Dot.eq.GetSumMul
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
-import torch.Tensor.permute
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.Dot.eq.SelectDot_Unsqueeze_1
 import Lemma.Tensor.DotBFn.eq.BFnDot.of.GeLength_2.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.DotBFn.eq.BFnDot.of.GeLength_2.GeLength_2.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.MapDot.eq.DotMap.of.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.MapDot.eq.DotMap.of.All_EqMulMap
 import Lemma.Tensor.Einsum.eq.MulGetData_0
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor Vector
 
 
@@ -117,4 +117,4 @@ private lemma main
 
 
 -- created on 2026-08-15
--- updated on 2026-08-17
+-- updated on 2026-10-26

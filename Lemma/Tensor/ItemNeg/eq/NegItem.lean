@@ -1,5 +1,5 @@
-import torch.Tensor.Basic
-import torch.Tensor.item
+import Def.Data.Holor.Defs.Part4
+import Def.Data.Holor.Item
 import Lemma.Tensor.DataNeg.eq.NegData
 open Tensor Vector
 

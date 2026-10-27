@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Definitions.Def_EllipticCurve_FrobeniusTrace
 import Definitions.Def_FLTPrelim_Ramification
 import Definitions.Def_GaloisRep_TameCharacter

@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.List.LengthFlatten.eq.SumMap_FunLength
 open List Nat
 
@@ -36,4 +36,4 @@ private lemma main
 
 
 -- created on 2024-07-01
--- updated on 2025-05-31
+-- updated on 2026-10-26

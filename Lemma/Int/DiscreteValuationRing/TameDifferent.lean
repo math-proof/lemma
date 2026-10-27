@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.RingTheory.DiscreteValuationRing.TameDifferent
 open IsLocalRing
 open scoped nonZeroDivisors
@@ -52,4 +52,4 @@ lemma differentIdeal_eq_maximalIdeal_pow_sub_one_of_isUnit_natCast
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

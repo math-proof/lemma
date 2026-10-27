@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Dynamics.Preperiodic.Part2
 open Function
 
@@ -265,4 +265,4 @@ private lemma grandOrbitRel_equivalence_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

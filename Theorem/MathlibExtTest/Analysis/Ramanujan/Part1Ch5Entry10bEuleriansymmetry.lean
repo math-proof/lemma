@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch5Entry10bEuleriansymmetry.lean -/
 
 
-import sympy.atlas.Analysis.Ramanujan.Part1Ch5Entry10bEuleriansymmetry
+import Theorem.Analysis.SpecialFunctions.Part1Ch5Entry10bEuleriansymmetry.Part3
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 10b API checks
 

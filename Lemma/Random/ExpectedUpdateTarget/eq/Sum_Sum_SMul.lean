@@ -1,4 +1,4 @@
-import sympy.stats.q_learning
+import Class.Dynamics.QLearning
 open Finset
 
 

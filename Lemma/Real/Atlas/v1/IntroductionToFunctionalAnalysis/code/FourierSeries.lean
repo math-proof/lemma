@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.FourierSeries
 open MeasureTheory AddCircle Finset Filter Complex FourierSeries
 
@@ -707,4 +707,4 @@ lemma fejer_uniform_convergence
   exact cesaroMean_uniform_bound (f := f) (ε := ε) (δ := δ) hε hδ_pos hδ
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

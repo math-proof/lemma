@@ -1,4 +1,4 @@
-import sympy.core.mul
+import Theorem.Data.List.Mul.Part4
 open Tensor
 
 

@@ -1,4 +1,4 @@
-import torch.Tensor.unsqueeze
+import Def.Data.Holor.Unsqueeze
 import Lemma.List.SetInsertIdx.eq.InsertIdxSet.of.GtLength
 import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
@@ -44,4 +44,4 @@ private lemma main
 
 
 -- created on 2026-07-12
--- updated on 2026-07-13
+-- updated on 2026-10-26

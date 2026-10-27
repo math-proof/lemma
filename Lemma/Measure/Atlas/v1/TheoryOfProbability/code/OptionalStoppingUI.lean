@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.TheoryOfProbability.code.OptionalStoppingUI
 open MeasureTheory Filter
 open scoped ENNReal NNReal Topology

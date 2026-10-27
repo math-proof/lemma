@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec7ClosedProductSubvariety
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Lec7ClosedProductSubvariety
 

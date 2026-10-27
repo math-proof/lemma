@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.EqGetStack
-import sympy.matrices.expressions.special
+import Def.Data.Holor.BandPart
 open Tensor
 
 

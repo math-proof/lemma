@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.Enumerative.LuckyParkingFunctions.Part12
 open MetaMathlibExt
 
@@ -359,4 +359,4 @@ private lemma expected_lucky_spots_weakly_increasing_parking_functions_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,6 +1,6 @@
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
 import Mathlib.Basic.Real.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

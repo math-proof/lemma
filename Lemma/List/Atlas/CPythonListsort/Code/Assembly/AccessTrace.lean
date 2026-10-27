@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
 open CPythonListsort CPythonListsort.MergeMemorySnapshot CPythonListsort.AccessTrace CPythonListsort.TraceResult
 

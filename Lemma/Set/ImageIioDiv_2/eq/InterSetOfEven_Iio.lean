@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -64,4 +64,4 @@ private lemma image_mul_two_Iio_even
 
 
 -- created on 2026-10-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

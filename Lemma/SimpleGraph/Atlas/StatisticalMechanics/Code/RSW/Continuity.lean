@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.RSW.Continuity
 open Filter StatMech StatMech.RSW StatMech.RSW.Continuity
 

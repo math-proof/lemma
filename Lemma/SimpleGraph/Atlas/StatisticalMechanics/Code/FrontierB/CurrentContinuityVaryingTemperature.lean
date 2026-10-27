@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityVaryingTemperature.Part2
 open Filter MeasureTheory ProbabilityTheory MeasurableSpace Set Topology StatMech StatMech.FrontierB
 

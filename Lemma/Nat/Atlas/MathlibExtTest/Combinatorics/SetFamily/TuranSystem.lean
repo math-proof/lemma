@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.SetFamily.TuranSystem
 import Lemma.Finset.SetFamily.TuranSystem
 open TuranSystem

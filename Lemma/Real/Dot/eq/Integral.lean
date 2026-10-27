@@ -1,4 +1,4 @@
-import sympy.integrals.integrals
+import Instance.MeasureTheory.Integral.IntervalIntegral.Integrals.Part4
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.Topology.Algebra.Module.FiniteDimension

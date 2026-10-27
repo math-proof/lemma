@@ -1,9 +1,9 @@
 import Lemma.Finset.MulSum.eq.Sum_Mul
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Fin.Sum_MulDeltaS.eq.Delta
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.GetMulEye_Stack.eq.MulDelta
-import torch.eye
+import Def.Data.Holor.Eye
 open Finset Nat Tensor Fin
 set_option maxHeartbeats 400000
 

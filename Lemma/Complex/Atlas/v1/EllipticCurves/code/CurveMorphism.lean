@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.EllipticCurves.code.CurveMorphism.Part3
 open Polynomial CurveMorphism
 open scoped Polynomial.Bivariate

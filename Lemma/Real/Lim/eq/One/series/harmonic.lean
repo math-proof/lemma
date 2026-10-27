@@ -1,6 +1,6 @@
 import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import sympy.series.limits
-import sympy.Basic
+import Def.Analysis.Real.Limits.Part4
+import Initialize.Tactic.Attr.Basic
 
 open scoped Topology
 open Filter

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.HexW1ExitGeom.Part5
 open StatMech StatMech.Universality StatMech.Universality.HexStraightSide
 

@@ -1,5 +1,5 @@
-import sympy.polys.polyroots
-import sympy.Basic
+import Instance.Algebra.Polynomial.Polyroots
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

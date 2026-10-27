@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Complex.Exponential
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

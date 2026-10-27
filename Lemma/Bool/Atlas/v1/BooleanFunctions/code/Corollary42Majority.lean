@@ -1,5 +1,6 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
+import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Majority
 open Finset BigOperators Real Filter
 
 
@@ -37,8 +38,8 @@ lemma majority_noiseSensitive
 -- imply
   Filter.Tendsto (fun k => noiseSensitivityReal δ (majorityFn (2 * k + 1))) Filter.atTop (nhds ((1 / Real.pi) * Real.arccos (1 - 2 * δ))) ∧ 0 < (1 / Real.pi) * Real.arccos (1 - 2 * δ) :=
 -- proof
-  ⟨noiseSensitivity_majority_tendsto δ hδ_pos hδ_le,
-    noiseSensitivity_majority_limit_pos δ hδ_pos⟩
+  ⟨noiseSensitivity_majority_tendsto hδ_pos hδ_le,
+    noiseSensitivity_majority_limit_pos hδ_pos⟩
 
 end BooleanFourier
 
@@ -56,11 +57,12 @@ lemma majority_noiseSensitivity_eventually_pos
 -- imply
   ∀ᶠ k in Filter.atTop, 0 < noiseSensitivityReal δ (majorityFn (2 * k + 1)) := by
 -- proof
-  have hlim := noiseSensitivity_majority_tendsto δ hδ_pos hδ_le
-  have hpos := noiseSensitivity_majority_limit_pos δ hδ_pos
+  have hlim := noiseSensitivity_majority_tendsto hδ_pos hδ_le
+  have hpos := noiseSensitivity_majority_limit_pos hδ_pos
   exact hlim.eventually (eventually_gt_nhds hpos)
 
 end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

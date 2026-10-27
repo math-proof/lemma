@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
-import sympy.atlas.Analysis.SpecialFunctions.LambertWFunction
+import Theorem.Analysis.SpecialFunctions.LambertWFunction
 
 
 namespace MetaMathlibExt

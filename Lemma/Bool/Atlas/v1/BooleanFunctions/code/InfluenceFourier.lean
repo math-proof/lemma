@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
 open Finset BigOperators BooleanFourier
 open scoped symmDiff
@@ -113,8 +113,8 @@ lemma influenceReal_eq_sum_fourierCoeff_sq
     f x - f (flipAt i x) =
       2 * ∑ S ∈ T, fourierCoeff f S * chi S x := by
     intro x
-    have hfx := fourier_expansion f x
-    have hfx' := fourier_expansion f (flipAt i x)
+    have hfx := fourier_expansion (f := f) (x := x)
+    have hfx' := fourier_expansion (f := f) (x := flipAt i x)
     have calc1 : f x - f (flipAt i x) =
       ∑ S : Finset (Fin n), fourierCoeff f S * (chi S x - chi S (flipAt i x)) := by
       rw [hfx, hfx', ← Finset.sum_sub_distrib]
@@ -125,8 +125,8 @@ lemma influenceReal_eq_sum_fourierCoeff_sq
       if i ∈ S then 2 * (fourierCoeff f S * chi S x) else 0 := by
       intro S
       by_cases hi : i ∈ S
-      · rw [chi_flipAt S i hi x]; simp only [hi, if_true]; ring
-      · rw [chi_flipAt_of_not_mem S i hi x]; simp only [hi, if_false, sub_self, mul_zero]
+      · rw [chi_flipAt (S := S) (j := i) (x := x) hi]; simp only [hi, ite_true]; ring
+      · rw [chi_flipAt_of_not_mem hi]; simp only [hi, ite_false, sub_self, mul_zero]
     simp_rw [calc2, Finset.sum_ite, Finset.sum_const_zero, add_zero, Finset.mul_sum]
     rfl
   have simp_eq : ∀ x : Fin n → Bool,
@@ -229,7 +229,7 @@ lemma totalInfluenceReal_ge_varianceReal
   apply Finset.sum_le_sum
   intro S _
   by_cases hS : S ≠ ∅
-  · simp only [if_pos hS]
+  · simp only [ite_eq_left hS]
     have hcard : (1 : ℝ) ≤ (S.card : ℝ) :=
       Nat.one_le_cast.mpr (Finset.card_pos.mpr (Finset.nonempty_iff_ne_empty.mpr hS))
     nlinarith [sq_nonneg (fourierCoeff f S)]
@@ -253,7 +253,9 @@ lemma sq_eq_self_of_zero_one
 -- imply
   f x ^ 2 = f x := by
 -- proof
-  obtain h | h <;> simp [h] := hf x
+  obtain h | h := hf x
+  · rw [h]; ring
+  · rw [h]; ring
 
 end BooleanFourier
 
@@ -272,8 +274,8 @@ lemma varianceReal_eq_quarter_of_balanced
 -- imply
   varianceReal f = 1 / 4 := by
 -- proof
-  have hparseval := parseval f
-  have hfsq : ∀ x : Fin n → Bool, f x ^ 2 = f x := sq_eq_self_of_zero_one f hf
+  have hparseval := parseval (f := f)
+  have hfsq : ∀ x : Fin n → Bool, f x ^ 2 = f x := fun x => sq_eq_self_of_zero_one (x := x) hf
   have hparseval' : ∑ S : Finset (Fin n), fourierCoeff f S ^ 2 =
     (1 / (2 : ℝ) ^ n) * ∑ x : Fin n → Bool, f x := by
     rw [hparseval]
@@ -315,11 +317,12 @@ lemma totalInfluenceReal_ge_quarter_of_balanced
 -- imply
   totalInfluenceReal f ≥ 1 / 4 := by
 -- proof
-  have hvar := varianceReal_eq_quarter_of_balanced f hf hbal
-  have hinfl := totalInfluenceReal_ge_varianceReal f
+  have hvar := varianceReal_eq_quarter_of_balanced hf hbal
+  have hinfl := totalInfluenceReal_ge_varianceReal (f := f)
   linarith
 
 end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

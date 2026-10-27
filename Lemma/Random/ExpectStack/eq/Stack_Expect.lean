@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Measure.WithDensity
-import sympy.stats.cond_expectation
-import sympy.stats.symbolic_multivariate_probability
-import torch.stack
+import Theorem.Probability.CondExpectation
+import Instance.Probability.SymbolicMultivariateProbability
+import Def.Data.Holor.Stack.Part2
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
@@ -104,4 +104,4 @@ private lemma main
 
 
 -- created on 2023-04-02
--- updated on 2026-09-21
+-- updated on 2026-10-26

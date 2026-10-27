@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityMagnetizationFK
 open Filter MeasureTheory Set Topology BoundedContinuousFunction StatMech StatMech.FrontierB
 

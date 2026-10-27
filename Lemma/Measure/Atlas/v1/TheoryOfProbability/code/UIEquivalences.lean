@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.TheoryOfProbability.code.UIEquivalences
 open MeasureTheory TheoryOfProbability3
 open scoped MeasureTheory NNReal ENNReal

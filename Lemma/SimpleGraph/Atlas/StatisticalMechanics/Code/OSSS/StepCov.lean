@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.StepCov.Part4
 open Finset StatMech StatMech.OSSS StatMech.OSSS.StepCov StatMech.OSSS.StepCov.Counterexample
 

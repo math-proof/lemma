@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.KnuthCatalanLogSq
+import Initialize.Tactic.Attr.Basic
+import Theorem.Combinatorics.Enumerative.Catalan.KnuthCatalanLogSq.Part2
 
 /--
 [KnuthCatalanLogSq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Series/KnuthCatalanLogSq.lean)

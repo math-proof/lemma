@@ -1,5 +1,5 @@
 import Mathlib.Combinatorics.Enumerative.InclusionExclusion
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

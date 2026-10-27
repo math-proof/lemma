@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.RSW.P5Equivalences.Part2
 open Set StatMech StatMech.RSW StatMech.RSW.Box
 

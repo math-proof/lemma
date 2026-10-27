@@ -1,7 +1,7 @@
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open Matrix
 
 

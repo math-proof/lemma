@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.asymptotics.BenderProductCoefficient
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Asymptotics.BenderProductCoefficient
 
 open Filter
 

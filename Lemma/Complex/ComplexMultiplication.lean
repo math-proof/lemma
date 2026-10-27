@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.elliptic.ComplexMultiplication
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Elliptic.ComplexMultiplication.Part2
 
 
 /--

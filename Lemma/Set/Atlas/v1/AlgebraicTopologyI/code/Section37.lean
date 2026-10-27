@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AlgebraicTopologyI.code.Section37.Part3
 open CategoryTheory TopologicalSpace Limits PoincareDuality PoincareDuality.CombinedOpenNhds
 open Limits TopologicalSpace

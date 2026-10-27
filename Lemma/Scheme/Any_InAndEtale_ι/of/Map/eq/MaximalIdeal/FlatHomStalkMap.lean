@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Int.P2MUtil
 open CategoryTheory CategoryTheory.Limits Opposite AlgebraicGeometry
 open Algebra CategoryTheory.Algebra IsLocalRing TensorProduct Algebra.TensorProduct
@@ -147,4 +147,4 @@ private lemma main
       (ConcreteCategory.bijective_of_isIso (f.residueFieldMap x)).2)
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

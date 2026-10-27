@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch7DirichletBeta
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch7DirichletBeta
 
 open Ramanujan.Part1Ch7.DirichletBeta
 
@@ -114,4 +114,4 @@ private lemma beta_char3_eq :
 
 
 -- created on 2026-10-10
--- updated on 2026-10-23
+-- updated on 2026-10-26

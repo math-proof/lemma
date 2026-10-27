@@ -1,6 +1,6 @@
-import sympy.functions.combinatorial.numbers
-import sympy.sets.sets
-import sympy.Basic
+import Def.Combinatorics.Enumerative.Numbers
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

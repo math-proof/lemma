@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqCast.of.Eq
-import torch.Tensor.unsqueeze
-import torch.Tensor.prod
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Prod
 import Lemma.Tensor.Unsqueeze.eq.TensorCast_Data
 open Bool List Tensor
 
@@ -20,4 +20,4 @@ private lemma main
 
 
 -- created on 2025-11-30
--- updated on 2026-07-10
+-- updated on 2026-10-26

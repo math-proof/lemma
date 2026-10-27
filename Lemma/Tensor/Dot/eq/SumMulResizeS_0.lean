@@ -1,5 +1,5 @@
-import sympy.matrices.expressions.matmul
-import torch.Tensor.sum
+import Instance.LinearAlgebra.Matrix.Matmul
+import Def.Data.Holor.Sum
 @[path]
 private lemma main
   [Mul α] [Add α] [Zero α]

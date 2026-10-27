@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.Lemma11_5
 open MvPolynomial MeasureTheory Complex Real Set Metric DifferentialOperators
 open scoped SchwartzMap

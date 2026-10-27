@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
 import Def.CPythonListsort.Code.Policy.StackPowers.Part2
 

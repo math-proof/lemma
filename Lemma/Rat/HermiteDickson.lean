@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FieldTheory.Finite.PermutationPolynomial
 import Lemma.Polynomial.Finite.PermutationPolynomial
 
@@ -499,4 +499,4 @@ end MathlibExt.FieldTheory.HermiteDickson
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

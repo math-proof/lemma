@@ -1,4 +1,4 @@
-import sympy.stats.frozen_invariant_law
+import Class.Probability.Process.FrozenInvariantLaw.Part2
 import Lemma.Real.ActorBoxProjection.in.ActorBox.of.Ge_0
 import Lemma.Real.Dist.le.Dist.of.EuclideanVec
 

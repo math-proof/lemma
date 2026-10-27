@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Section_8_2.Part4
 open Chapter7 Chapter7.Series Finset Function Filter
 open Chapter8

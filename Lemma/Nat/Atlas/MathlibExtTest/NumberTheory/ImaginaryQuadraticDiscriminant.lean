@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.NumberTheory.ImaginaryQuadraticDiscriminant.Part2
 open ImaginaryQuadraticDiscriminant
 

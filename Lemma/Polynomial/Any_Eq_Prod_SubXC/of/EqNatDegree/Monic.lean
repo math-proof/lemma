@@ -2,7 +2,10 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Polynomial.RingDivision
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.FieldTheory.IsAlgClosed.Basic
-import sympy.Basic
+import Instance.Fun
+import Notation.Fun
+import Syntax.Fun
+import Initialize.Tactic.Attr.Basic
 open Polynomial
 
 
@@ -17,12 +20,12 @@ private lemma main
   (hm : q.Monic)
   (hd : q.natDegree = n) :
 -- imply
-  ∃ r : Fin n → ℂ, q = ∏ i : Fin n, (X - C (r i)) := by
+  ∃ r : Fin n ⇀ ℂ, q = ∏ i : Fin n, (X - C r[i]) := by
 -- proof
   induction n generalizing q with
   | zero =>
     have hq1 : q = 1 := (Monic.natDegree_eq_zero hm).mp hd
-    refine ⟨fun i => Fin.elim0 i, ?_⟩
+    refine ⟨⟨fun i => Fin.elim0 i⟩, ?_⟩
     simp [hq1]
   | succ n ih =>
     have hdeg : q.degree ≠ 0 := by
@@ -38,9 +41,10 @@ private lemma main
       rw [← hq, hd, natDegree_X_sub_C] at hmul
       omega
     obtain ⟨r', hr'⟩ := ih hqmonic hqdeg
-    refine ⟨Fin.cons α r', ?_⟩
-    rw [Fin.prod_univ_succ, Fin.cons_zero, hq, hr']
-    congr 1
+    refine ⟨⟨Fin.cons α fun i => r'[i]⟩, ?_⟩
+    rw [Fin.prod_univ_succ, hq, hr']
+    simp [Fin.cons_zero, Fin.cons_succ]
 
 
 -- created on 2026-10-25
+-- updated on 2026-10-27

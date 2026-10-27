@@ -1,6 +1,6 @@
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.BigOperators.Intervals
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -19,4 +19,4 @@ private lemma main
 
 
 -- created on 2020-08-30
--- updated on 2026-10-17
+-- updated on 2026-10-26

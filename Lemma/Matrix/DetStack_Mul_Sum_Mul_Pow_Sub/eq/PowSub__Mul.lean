@@ -1,5 +1,5 @@
 import Mathlib.LinearAlgebra.Matrix.Block
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Syntax.LinearAlgebra.Matrix.Notation
 open Matrix
 

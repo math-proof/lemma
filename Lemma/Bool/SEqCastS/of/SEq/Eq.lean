@@ -1,4 +1,4 @@
-import stdlib.SEq
+import Theorem.Logic.SEq
 import Lemma.Bool.Cast.of.SEq.Eq
 open Bool
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.TournamentHamiltonPaths
 open Real Finset BigOperators TournamentHamiltonPaths
 

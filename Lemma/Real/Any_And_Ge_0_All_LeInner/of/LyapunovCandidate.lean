@@ -1,5 +1,5 @@
-import sympy.stats.lyapunov
-import sympy.Basic
+import Structure.Dynamics.Lyapunov
+import Initialize.Tactic.Attr.Basic
 open Finset
 
 

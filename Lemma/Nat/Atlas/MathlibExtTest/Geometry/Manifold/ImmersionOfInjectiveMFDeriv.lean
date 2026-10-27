@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Geometry.Manifold.ImmersionOfInjectiveMFDeriv
 open Manifold MathlibExt.Geometry.Manifold.ImmersionOfInjectiveMFDerivWanted MathlibExtTest MathlibExtTest.Geometry MathlibExtTest.Geometry.Manifold MathlibExtTest.Geometry.Manifold.ImmersionOfInjectiveMFDeriv
 open scoped Topology ContDiff

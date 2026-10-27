@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.AlgebraicGeometry.Curve.Evaluation
 open CurveDivisor
 
@@ -21,4 +21,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

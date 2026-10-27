@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
 open Coalgebra Submodule
 open scoped TensorProduct

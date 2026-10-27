@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Probability.MeasurableFKGClosure.Part3
 open Filter MeasureTheory Set Topology StatMech
 

@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqStack_0'0
 import Lemma.Tensor.LeStackS.of.All_Le
-import torch.stack
+import Def.Data.Holor.Stack.Part2
 open Tensor
 
 
@@ -20,4 +20,4 @@ private lemma main
 
 
 -- created on 2026-07-26
--- updated on 2026-07-27
+-- updated on 2026-10-26

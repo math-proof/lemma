@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.DividingFPS
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.PowerSeries.DividingFPS.Part2
 
 
 section
@@ -1206,4 +1206,4 @@ private lemma pv_coeff_natCast_fps
 
 
 -- created on 2026-10-11
--- updated on 2026-10-23
+-- updated on 2026-10-26

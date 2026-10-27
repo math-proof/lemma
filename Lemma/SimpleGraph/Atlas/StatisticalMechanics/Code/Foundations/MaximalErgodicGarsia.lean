@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Foundations.MaximalErgodicGarsia
 open MeasureTheory Filter Finset Function StatMech StatMech.GarsiaMax
 

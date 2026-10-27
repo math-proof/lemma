@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.Ideal.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 namespace AffineDilatation
 namespace PowDescription
 

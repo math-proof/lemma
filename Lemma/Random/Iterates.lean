@@ -1,4 +1,4 @@
-import sympy.stats.markov_samples
+import Def.Dynamics.MarkovSamples
 import Lemma.Real.Anchors.Time.lt.TimeAdd1
 open Finset
 

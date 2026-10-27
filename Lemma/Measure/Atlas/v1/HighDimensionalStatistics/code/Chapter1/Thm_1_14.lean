@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_14
 open MeasureTheory Real ProbabilityTheory ENNReal Finset Set
 

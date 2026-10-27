@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.EpsilonNetBridge
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.EpsilonNetBridge
 open Matrix Finset BigOperators MeasureTheory in

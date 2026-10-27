@@ -1,5 +1,6 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
+import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Majority
 open Finset BigOperators Real Filter
 
 
@@ -23,9 +24,8 @@ lemma noiseSensitivity_majority_limit_lt_half
     exact Real.arccos_lt_arccos (by linarith : (-1 : ℝ) ≤ 0) h1
       (by linarith : (1 : ℝ) - 2 * δ ≤ 1)
   calc (1 / Real.pi) * Real.arccos (1 - 2 * δ)
-    < (1 / Real.pi) * (Real.pi / 2) := by
-      apply mul_lt_mul_of_pos_left h3
-      exact div_pos one_pos Real.pi_pos
+    < (1 / Real.pi) * (Real.pi / 2) :=
+      mul_lt_mul_of_pos_left h3 (div_pos one_pos Real.pi_pos)
     _ = 1 / 2 := by field_simp
 
 end BooleanFourier
@@ -44,10 +44,11 @@ lemma majority_not_maximally_noiseSensitive
 -- imply
   Filter.Tendsto (fun k => noiseSensitivityReal δ (majorityFn (2 * k + 1))) Filter.atTop (nhds ((1 / Real.pi) * Real.arccos (1 - 2 * δ))) ∧ (1 / Real.pi) * Real.arccos (1 - 2 * δ) < 1 / 2 := by
 -- proof
-  exact ⟨noiseSensitivity_majority_tendsto δ hδ_pos (le_of_lt hδ_lt),
-    noiseSensitivity_majority_limit_lt_half δ hδ_pos hδ_lt⟩
+  exact ⟨noiseSensitivity_majority_tendsto hδ_pos (le_of_lt hδ_lt),
+    noiseSensitivity_majority_limit_lt_half hδ_pos hδ_lt⟩
 
 end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

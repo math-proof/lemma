@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryPermutation.Part3
 open SimpleGraph Equiv StatMech StatMech.FrontierD
 

@@ -1,5 +1,5 @@
-import sympy.stats.frozen_invariant_law
-import sympy.Basic
+import Class.Probability.Process.FrozenInvariantLaw.Part2
+import Initialize.Tactic.Attr.Basic
 open Matrix
 
 

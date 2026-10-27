@@ -3,7 +3,7 @@ import Lemma.Tensor.LengthSum.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Sum.eq.SumStack_Select
 import Lemma.Tensor.Sum_0.eq.SumStack_Get
 import Lemma.Tensor.Sum_Sum
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool Tensor
 
 
@@ -53,4 +53,4 @@ private lemma main
 
 
 -- created on 2026-07-22
--- updated on 2026-07-23
+-- updated on 2026-10-26

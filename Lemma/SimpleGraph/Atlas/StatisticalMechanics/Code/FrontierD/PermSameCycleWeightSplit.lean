@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FrontierD.PermSameCycleWeightSplit
 open Equiv Finset StatMech StatMech.FrontierD
 

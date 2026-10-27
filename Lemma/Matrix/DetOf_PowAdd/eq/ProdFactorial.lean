@@ -1,7 +1,8 @@
 import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
+import Syntax.LinearAlgebra.Matrix.Notation
 open Nat
 
 
@@ -10,12 +11,12 @@ private lemma main
   {n : ℕ}
   {δ : ℝ} :
 -- imply
-  (Matrix.of fun (i j : Fin n) => ((j : ℝ) + δ) ^ (i : ℕ)).det = ∏ i : Fin n, ((i : ℕ)! : ℝ) := by
+  ([i < n, j < n] (((j : ℝ) + δ) ^ (i : ℕ))).det = ∏ i : Fin n, ((i : ℕ)! : ℝ) := by
 -- proof
   rw [← Matrix.det_transpose]
-  have h : (Matrix.of fun (i j : Fin n) => ((j : ℝ) + δ) ^ (i : ℕ)).transpose = Matrix.vandermonde fun j : Fin n => (j : ℝ) + δ := by
+  have h : ([i < n, j < n] (((j : ℝ) + δ) ^ (i : ℕ))).transpose = Matrix.vandermonde fun j : Fin n => (j : ℝ) + δ := by
     ext i j
-    simp [Matrix.vandermonde]
+    simp [Matrix.vandermonde, Matrix.ofFun_apply]
   have hc : ∏ x : Fin n, ∏ y ∈ Finset.Ioi x, (((y : ℕ) : ℝ) + δ - (((x : ℕ) : ℝ) + δ)) = ∏ y : Fin n, ∏ x ∈ Finset.Iio y, (((y : ℕ) : ℝ) + δ - (((x : ℕ) : ℝ) + δ)) :=
     Finset.prod_comm' (by intro x y; simp)
   rw [h, Matrix.det_vandermonde, hc]
@@ -34,3 +35,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-27

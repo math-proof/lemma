@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.Nat.Eq_0.of.Lt_1
 import Lemma.Tensor.EqLengthUnsqueeze_0'1
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -67,4 +67,4 @@ private lemma nat
   aesop
 
 -- created on 2025-07-11
--- updated on 2025-11-30
+-- updated on 2026-10-26

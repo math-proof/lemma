@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.SimpleGraph.Connectivity
 open SimpleGraph
 open Finset List

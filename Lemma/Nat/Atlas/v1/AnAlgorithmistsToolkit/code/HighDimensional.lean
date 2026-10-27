@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.HighDimensional.Part2
 open MeasureTheory ProbabilityTheory Finset HighDimensional
 open scoped NNReal

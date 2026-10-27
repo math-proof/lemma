@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochApplications
 open CanonicalSheafCurves RiemannRochEulerCurves RiemannRochRiemannForm SheafCohCurvesFiniteness RiemannRochApplications
 open SheafCohCurvesFiniteness

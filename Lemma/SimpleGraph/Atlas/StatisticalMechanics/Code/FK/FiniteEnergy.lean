@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.FiniteEnergy.Part4
 open Module SimpleGraph StatMech StatMech.FK
 

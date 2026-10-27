@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Section_5_4.Part4
 open Chapter5 hiding Real
 open Chapter5.Real

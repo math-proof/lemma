@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.BeffaraDC.TorusWindingThinObstruction
 open SimpleGraph Set StatMech StatMech.BeffaraDC
 

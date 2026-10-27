@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.EqDataS
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Vector.Map₂.eq.Map.of.Eq_1
-import torch.Tensor.Basic
+import Def.Data.Holor.Defs.Part4
 open Tensor Vector
 
 

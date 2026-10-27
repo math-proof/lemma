@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import torch.Tensor.unsqueeze
-import torch.Tensor.prod
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Prod
 import Lemma.Nat.Cast.eq.Fin.of.Lt.Eq
 import Lemma.Tensor.DataUnsqueeze.as.Data
 import Lemma.Vector.EqGetRange
@@ -29,4 +29,4 @@ private lemma main
 
 
 -- created on 2025-11-27
--- updated on 2025-11-30
+-- updated on 2026-10-26

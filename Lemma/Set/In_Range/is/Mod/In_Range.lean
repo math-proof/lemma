@@ -1,4 +1,4 @@
-import stdlib.Slice
+import Def.Data.List.Slice
 import Lemma.Int.EqSign_1.of.Gt_0
 import Lemma.Int.Mod.eq.Zero.of.ModAdd.eq.Mod.Ne_0
 import Lemma.Int.Sign.eq.Neg1.of.Lt_0
@@ -460,4 +460,4 @@ private lemma main
 
 
 -- created on 2023-05-30
--- updated on 2026-09-02
+-- updated on 2026-10-26

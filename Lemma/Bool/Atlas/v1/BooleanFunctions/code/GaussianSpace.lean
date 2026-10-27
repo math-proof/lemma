@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
 open GaussianSpace ProbabilityTheory MeasureTheory
 open MeasureTheory ProbabilityTheory Real
@@ -12,7 +12,6 @@ namespace GaussianSpace
 -/
 @[path]
 lemma stdGaussianDensity_eq_gaussianPDFReal
-  {_n : ℕ}
   {t : ℝ} :
 -- imply
   stdGaussianDensity t = gaussianPDFReal 0 1 t := by
@@ -27,14 +26,13 @@ namespace GaussianSpace
 [integral_stdGaussianDensity_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GaussianSpace.lean)
 -/
 @[path]
-lemma integral_stdGaussianDensity_eq_one
-  {_n : ℕ} :
+lemma integral_stdGaussianDensity_eq_one :
 -- imply
   ∫ t : ℝ, stdGaussianDensity t = 1 := by
 -- proof
   have h : (fun t => stdGaussianDensity t) = gaussianPDFReal 0 1 := by
     ext t
-    exact stdGaussianDensity_eq_gaussianPDFReal t
+    exact stdGaussianDensity_eq_gaussianPDFReal (t := t)
   rw [h]
   exact integral_gaussianPDFReal_eq_one 0 one_ne_zero
 
@@ -42,3 +40,4 @@ end GaussianSpace
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

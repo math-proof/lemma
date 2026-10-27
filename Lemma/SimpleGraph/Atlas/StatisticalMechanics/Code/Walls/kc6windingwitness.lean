@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.kc6windingwitness
 open Set SimpleGraph Function StatMech StatMech.Walls
 

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.integrals.transforms.FourierLaplace
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Fourier.FourierLaplace
 
 open Fourier.FourierLaplace
 open MeasureTheory

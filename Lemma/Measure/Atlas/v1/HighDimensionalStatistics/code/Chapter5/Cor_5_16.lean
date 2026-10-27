@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_16.Part5
 open Real MeasureTheory InformationTheory MinimaxL1Ball
 

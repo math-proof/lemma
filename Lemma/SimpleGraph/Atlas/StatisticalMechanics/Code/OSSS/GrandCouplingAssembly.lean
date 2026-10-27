@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.OSSS.GrandCouplingAssembly.Part6
 open Finset MeasureTheory StatMech StatMech.OSSS StatMech.OSSS.GrandCouplingAssembly
 

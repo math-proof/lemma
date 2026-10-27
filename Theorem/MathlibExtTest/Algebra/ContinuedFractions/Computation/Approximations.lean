@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/ContinuedFractions/Computation/Approximations.lean -/
 
 
-import sympy.atlas.Algebra.ContinuedFractions.Computation.Approximations
+import Lemma.Real.ContinuedFractions.Computation.Approximations
 
 
 namespace GenContFract

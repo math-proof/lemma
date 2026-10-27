@@ -16,7 +16,7 @@ import Lemma.Rat.EqDiv_1
 import Lemma.Rat.GeInvSquare_0
 import Lemma.Rat.MulDivS.eq.One.of.Ne_0.Ne_0
 import Lemma.Real.Eq_1.of.Add_Inv.eq.Two
-open Hyperreal Nat Rat Real
+open Hyperreal Nat Rat Real ArchimedeanClass
 
 
 @[path]

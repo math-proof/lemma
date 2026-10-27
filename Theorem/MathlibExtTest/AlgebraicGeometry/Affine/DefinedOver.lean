@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/Affine/DefinedOver.lean -/
 
 
-import sympy.atlas.AlgebraicGeometry.Affine.DefinedOver
+import Theorem.AlgebraicGeometry.DefinedOver.Part2
 set_option autoImplicit false
 
 /-!

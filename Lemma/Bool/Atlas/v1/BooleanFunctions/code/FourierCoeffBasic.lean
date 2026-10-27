@@ -1,11 +1,13 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Parseval
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 import Def.v1.Atlas.BooleanFunctions.code.Parseval
 import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
+import Def.v1.Atlas.BooleanFunctions.code.Stability
+import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseStability
 open Finset BigOperators
 
 

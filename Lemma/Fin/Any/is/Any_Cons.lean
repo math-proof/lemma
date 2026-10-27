@@ -1,5 +1,5 @@
 import Mathlib.Data.Fin.Tuple.Basic
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path, comm, mp, mpr]
@@ -14,4 +14,4 @@ private lemma main
 
 
 -- created on 2023-07-02
--- updated on 2026-09-08
+-- updated on 2026-10-26

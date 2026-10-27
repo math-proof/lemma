@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverMaximalIdeal
 open scoped NumberField
 open IsDedekindDomain.HeightOneSpectrum

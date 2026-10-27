@@ -1,7 +1,7 @@
 import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
-import sympy.stats.joint_rv
-import sympy.Basic
+import Syntax.Probability.JointRv.Part6
+import Initialize.Tactic.Attr.Basic
 
 open ProbabilityTheory MeasureTheory
 
@@ -21,4 +21,4 @@ private lemma main
 
 
 -- created on 2021-07-14
--- updated on 2026-10-10
+-- updated on 2026-10-26

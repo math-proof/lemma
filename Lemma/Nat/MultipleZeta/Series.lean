@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.MultipleZeta.Series.Part3
 open MetaMathlibExt.MultipleZeta
 
@@ -206,4 +206,4 @@ end MetaMathlibExt.MultipleZeta
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

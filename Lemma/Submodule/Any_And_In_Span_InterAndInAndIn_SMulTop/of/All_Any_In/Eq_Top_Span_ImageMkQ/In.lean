@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.Submodule.GetDecompose.in.SMulTop.of.In_SMulTop
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000

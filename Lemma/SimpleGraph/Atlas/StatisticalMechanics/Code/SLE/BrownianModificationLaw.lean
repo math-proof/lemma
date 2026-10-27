@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.SLE.BrownianModificationLaw
 open Filter MeasureTheory ProbabilityTheory Set StatMech StatMech.SLE
 

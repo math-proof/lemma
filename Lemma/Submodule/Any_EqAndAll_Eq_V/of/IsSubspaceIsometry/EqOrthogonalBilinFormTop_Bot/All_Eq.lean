@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
 import Lemma.Submodule.OfEq.eq.M.of.Eq
 import Lemma.Fin.Eq.of.Ne_0.All_Eq

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.inner_product_space.ToeplitzHausdorff
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.InnerProductSpace.ToeplitzHausdorff
 open InnerProductSpace.ToeplitzHausdorffWanted
 
 
@@ -21,4 +21,4 @@ private lemma inner_mem_numerical_range_is
 
 
 -- created on 2026-10-10
--- updated on 2026-10-24
+-- updated on 2026-10-26

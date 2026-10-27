@@ -1,4 +1,4 @@
-import sympy.matrices.ofFun
+import Theorem.LinearAlgebra.Matrix.OfFun
 open Lean
 
 

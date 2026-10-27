@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.GetDot.eq.DotGetS
 open Tensor
 
@@ -23,4 +23,4 @@ private lemma main
 
 
 -- created on 2025-07-19
--- updated on 2026-07-21
+-- updated on 2026-10-26

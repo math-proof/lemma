@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch6Entry17Stirlingcoeffs
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry17Stirlingcoeffs.Part2
 
 /--
 [Part1Ch6Entry17Stirlingcoeffs](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch6Entry17Stirlingcoeffs.lean)

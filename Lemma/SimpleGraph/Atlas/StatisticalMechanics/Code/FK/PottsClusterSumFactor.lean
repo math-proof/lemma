@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumFactor.Part10
 open MeasureTheory Set StatMech StatMech.FK
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Class.v1.Atlas.NumberTheoryI.code.ProductFormula
 open MeasureTheory Measure TopologicalSpace Pointwise Filter Topology MeasureTheory.Measure Metric in
 

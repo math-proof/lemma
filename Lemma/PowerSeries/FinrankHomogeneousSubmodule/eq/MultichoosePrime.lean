@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.PowerSeries.MemFinsuppAntidiagUnivIffDegree
 open MvPolynomial PowerSeries
 

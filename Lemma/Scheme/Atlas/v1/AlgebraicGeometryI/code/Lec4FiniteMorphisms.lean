@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec4FiniteMorphisms
 open AlgebraicGeometry PrimeSpectrum TopologicalSpace Set Lec4
 

@@ -1,4 +1,4 @@
-import sympy.matrices.expressions.matmul
+import Instance.LinearAlgebra.Matrix.Matmul
 open Tensor Nat
 
 

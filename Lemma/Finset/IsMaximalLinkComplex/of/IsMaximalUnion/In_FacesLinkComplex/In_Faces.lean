@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.Buildings.code.Building.Link
 import Lemma.Finset.Disjoint.of.In_FacesLinkComplex.In_Faces
 import Lemma.Int.Pow.eq.OneOrEqPow.of.EqMul_1

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.InteriorRegion.Part5
 open StatMech StatMech.Onsager StatMech.Onsager.InteriorRegion
 

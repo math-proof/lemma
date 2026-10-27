@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.SphericalBuilding.RefinementFrame
 open GLnBuilding
 
@@ -156,4 +156,4 @@ private lemma CompleteFlag.IsStrictFlag.span_gapVectors_eq_top
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

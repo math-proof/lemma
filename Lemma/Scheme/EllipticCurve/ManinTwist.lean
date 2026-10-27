@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwist.Part15
 open Polynomial
 open MathlibExt.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
@@ -1236,4 +1236,4 @@ private lemma manin_degree_data_of_isCharNeTwoNF_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

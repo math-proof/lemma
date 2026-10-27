@@ -1,7 +1,7 @@
 import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

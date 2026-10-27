@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.Enumerative.W4PathDominoTilings.Part11
 open SimpleGraph
 open MetaMathlibExt
@@ -836,4 +836,4 @@ private lemma boxProd_tiling_card_eq_fib_mul_pellNumber_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

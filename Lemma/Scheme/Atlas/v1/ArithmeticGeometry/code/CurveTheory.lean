@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part10
 open Module IsDiscreteValuationRing Ideal ArithmeticGeometry ArithmeticGeometry.FunctionField_k
 open Ideal

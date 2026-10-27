@@ -1,4 +1,4 @@
-import sympy.stats.frozen_invariant_law
+import Class.Probability.Process.FrozenInvariantLaw.Part2
 import Lemma.Matrix.Sum_AbsSub.le.Two.of.StochasticVec.StochasticVec
 
 

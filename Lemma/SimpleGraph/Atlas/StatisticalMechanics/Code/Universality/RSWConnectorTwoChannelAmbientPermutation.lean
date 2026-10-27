@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelAmbientPermutation.Part5
 open Finset SimpleGraph Set StatMech StatMech.Universality
 

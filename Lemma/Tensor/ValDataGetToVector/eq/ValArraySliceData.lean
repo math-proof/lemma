@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Bool.HEq.of.SEq
 import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0
@@ -34,4 +34,4 @@ private lemma main
 
 
 -- created on 2025-05-18
--- updated on 2025-07-17
+-- updated on 2026-10-26

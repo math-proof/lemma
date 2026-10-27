@@ -1,5 +1,5 @@
 import Theorem.Algebra.BigOperators.Reduced.Part2
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -81,4 +81,4 @@ private lemma main
 
 
 -- created on 2022-04-30
--- updated on 2026-10-12
+-- updated on 2026-10-26

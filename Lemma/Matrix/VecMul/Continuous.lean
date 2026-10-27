@@ -1,5 +1,5 @@
-import sympy.Basic
-import sympy.stats.stochastic_process_types
+import Initialize.Tactic.Attr.Basic
+import Instance.Probability.Process.StochasticProcessTypes.Part3
 import Mathlib.Topology.Instances.Matrix
 open WithLp PiLp
 open scoped Matrix
@@ -19,4 +19,4 @@ private lemma main
 
 
 -- created on 2026-09-22
--- updated on 2026-09-26
+-- updated on 2026-10-26

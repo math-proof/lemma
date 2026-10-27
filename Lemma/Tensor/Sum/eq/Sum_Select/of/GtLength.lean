@@ -12,7 +12,7 @@ import Lemma.Tensor.SEqSumS.of.All_SEq.Eq.Eq
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Tensor.Sum.as.Stack_Sum.of.GtLength
 import Lemma.Tensor.Sum_0.as.Sum_Get.of.GtLength_0
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Bool List Nat Tensor
 
 
@@ -78,4 +78,4 @@ private lemma main
 
 
 -- created on 2025-11-07
--- updated on 2026-07-22
+-- updated on 2026-10-26

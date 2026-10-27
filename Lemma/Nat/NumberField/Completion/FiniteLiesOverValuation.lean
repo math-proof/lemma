@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.NumberField.Completion.FiniteLiesOverValuation
 open scoped NumberField
 open WithZeroTopology
@@ -58,4 +58,4 @@ private lemma adicCompletionMap_mem_integers_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

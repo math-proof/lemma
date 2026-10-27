@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Probability.PBiasedIntegralHC.Part2
 open Real Set StatMech StatMech.Probability
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Walls.bc3_distinctwitnessclusters.Part3
 open MeasureTheory Set StatMech.Lattice StatMech.ConfigSpace SimpleGraph StatMech.Percolation StatMech StatMech.Walls
 

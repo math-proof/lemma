@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.StatisticalMechanics.Code.Onsager.UmlaufsatzStrip
 open StatMech StatMech.Onsager StatMech.Onsager.UmlaufsatzStrip
 

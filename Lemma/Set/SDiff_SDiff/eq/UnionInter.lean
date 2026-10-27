@@ -1,4 +1,4 @@
-import sympy.core.logic
+import Def.Tactic.Logic.Part4
 import Lemma.Set.UnionDiff__Inter
 import Lemma.Set.SDiffUnion.eq.UnionSDiffS
 import Lemma.Set.SubsetInter
@@ -36,4 +36,4 @@ private lemma main
 
 
 -- created on 2018-01-09
--- updated on 2025-04-30
+-- updated on 2026-10-26

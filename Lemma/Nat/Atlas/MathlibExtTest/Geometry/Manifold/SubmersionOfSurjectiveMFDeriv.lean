@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Geometry.Manifold.SubmersionOfSurjectiveMFDeriv
 open MathlibExt.Geometry.Manifold.SubmersionOfSurjectiveMFDerivWanted MathlibExtTest MathlibExtTest.Geometry MathlibExtTest.Geometry.Manifold MathlibExtTest.Geometry.Manifold.SubmersionOfSurjectiveMFDeriv
 open scoped ContDiff Manifold Topology

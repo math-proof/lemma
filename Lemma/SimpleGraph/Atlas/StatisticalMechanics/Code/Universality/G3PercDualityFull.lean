@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.G3PercDualityFull.Part2
 open MeasureTheory ProbabilityTheory StatMech StatMech.Universality
 

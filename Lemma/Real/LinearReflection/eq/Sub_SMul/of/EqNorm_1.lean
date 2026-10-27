@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.Buildings.code.Reflection.DihedralRootHelpers
 open Set FiniteReflectionGroups
 open scoped InnerProductSpace
@@ -66,4 +66,4 @@ end FiniteReflectionGroups
 
 
 -- created on 2026-10-23
--- updated on 2026-10-24
+-- updated on 2026-10-26

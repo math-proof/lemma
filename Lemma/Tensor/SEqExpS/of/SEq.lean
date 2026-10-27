@@ -1,5 +1,5 @@
 import Lemma.Bool.SEqUFnS.of.SEq
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Bool
 
 

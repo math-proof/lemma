@@ -1,7 +1,7 @@
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Hyperreal.LeSt_0.of.Le_0
 import Lemma.Hyperreal.EqSt_0.is.Infinite.ou.Infinitesimal
-open Hyperreal Nat
+open Hyperreal Nat ArchimedeanClass
 
 
 @[path]

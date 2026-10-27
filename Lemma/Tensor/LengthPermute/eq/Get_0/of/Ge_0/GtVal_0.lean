@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.LengthPermute.eq.Length.of.Ge_0.GtVal_0
 open Tensor
 

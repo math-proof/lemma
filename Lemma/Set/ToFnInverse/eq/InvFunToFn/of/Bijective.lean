@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Section_3_3_inv
 import Lemma.Set.Eq_GetInverse.is.Eq.of.Bijective
 import Lemma.Set.Bijective.is.BijectiveToFn
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,4 +1,4 @@
-import torch.Tensor
+import Instance.Data.Holor.Tensor.Part2
 import Lemma.Nat.Lt_Add
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetUnflatten.of.Eq.Lt.Eq.Eq
@@ -59,4 +59,4 @@ private lemma main
 
 
 -- created on 2025-05-31
--- updated on 2025-07-15
+-- updated on 2026-10-26

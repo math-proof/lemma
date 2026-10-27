@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Foundations.BirkhoffPointwise.Part4
 open MeasureTheory Filter Finset Function MeasurableSpace StatMech StatMech.BirkhoffAE
 

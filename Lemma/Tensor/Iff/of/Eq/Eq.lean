@@ -1,7 +1,7 @@
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Macro.Order.ExprWithLimits
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

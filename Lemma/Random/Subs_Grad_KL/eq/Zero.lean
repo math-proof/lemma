@@ -1,7 +1,7 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.Calculus.FDeriv.Add
 import Mathlib.Analysis.Calculus.FDeriv.Mul
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -43,4 +43,4 @@ private lemma main
 
 
 -- created on 2023-04-20
--- updated on 2026-10-17
+-- updated on 2026-10-26

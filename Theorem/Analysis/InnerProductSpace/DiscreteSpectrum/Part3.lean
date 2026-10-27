@@ -1,9 +1,6 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/InnerProductSpace/DiscreteSpectrum.lean -/
-
 /-
 Author: Muse Spark 1.3
 -/
-
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Data.Set.Card
@@ -14,11 +11,11 @@ open scoped BigOperators
 
 namespace NonnegativeDiscreteSpectrum
 
-/-- The `σ = 0` endpoint recovers the counting function, since every
-summand has strictly positive base. -/
-@[simp] theorem rieszMean_zero
-    (S : NonnegativeDiscreteSpectrum) (Λ : ℝ) :
-    S.rieszMean 0 Λ = S.countingFunction Λ := by
-  simp [rieszMean, countingFunction]
+/-- Exact membership for the sublevel finset. -/
+@[simp] theorem mem_sublevelFinset
+    (S : NonnegativeDiscreteSpectrum) (Λ : ℝ) (j : ℕ) :
+    j ∈ S.sublevelFinset Λ ↔ S j < Λ := by
+  rw [sublevelFinset, Set.Finite.mem_toFinset]
+  rfl
 
 end NonnegativeDiscreteSpectrum

@@ -1,8 +1,8 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
-import sympy.stats.cond_expectation
-import sympy.stats.symbolic_multivariate_probability
-import torch.Tensor.item
+import Theorem.Probability.CondExpectation
+import Instance.Probability.SymbolicMultivariateProbability
+import Def.Data.Holor.Item
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.ItemMul.eq.MulItemS
@@ -166,4 +166,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-09-26
+-- updated on 2026-10-26

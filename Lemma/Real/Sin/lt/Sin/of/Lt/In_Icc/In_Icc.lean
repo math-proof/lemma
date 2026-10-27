@@ -1,6 +1,6 @@
-import sympy.sets.sets
-import sympy.functions.elementary.trigonometric
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Def.Analysis.SpecialFunctions.Trigonometric.Part2
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2025-03-24
--- updated on 2025-03-25
+-- updated on 2026-10-26

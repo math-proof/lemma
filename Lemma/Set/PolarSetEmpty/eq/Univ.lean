@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.inner_product_space.PolarSet
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.InnerProductSpace.PolarSet
 
 open InnerProductSpace.PolarSet.MetaMathlibExt
 

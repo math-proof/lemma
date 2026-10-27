@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Calculus.ParametricIntegral
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Topology
 
 

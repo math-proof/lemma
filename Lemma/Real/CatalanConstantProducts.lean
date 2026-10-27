@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.CatalanConstantProducts
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.CatalanConstantProducts.Part7
 
 
 /--

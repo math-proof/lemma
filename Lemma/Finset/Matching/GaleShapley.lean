@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.Matching.GaleShapley.Part7
 open MathlibExt.Combinatorics.Matching.GaleShapley
 open StrictTotalOrder
@@ -206,4 +206,4 @@ private lemma gale_shapley_exists_stable_matching_general_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

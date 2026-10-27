@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.polys.agca.elliptic_curve.point_count
+import Initialize.Tactic.Attr.Basic
+import Theorem.AlgebraicGeometry.EllipticCurve.PointCount.Part3
 
 open WeierstrassCurve.Affine Polynomial
 open Polynomial
@@ -193,4 +193,4 @@ end WeierstrassCurve.Affine
 
 
 -- created on 2026-10-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

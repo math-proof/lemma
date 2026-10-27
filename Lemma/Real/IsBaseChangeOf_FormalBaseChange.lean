@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.AutomorphicForm_HeckeEigensystem
 import Def.AutomorphicForm_FormalBaseChange
 open IsDedekindDomain NumberField AutomorphicForm

@@ -1,7 +1,7 @@
 import Mathlib.RingTheory.Polynomial.Pochhammer
 import Mathlib.Combinatorics.Enumerative.Stirling
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

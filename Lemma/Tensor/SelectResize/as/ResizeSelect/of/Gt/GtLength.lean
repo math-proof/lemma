@@ -1,6 +1,6 @@
 import Lemma.Nat.ModEq.of.EqMod
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.Nat.ModEq.of.AddMul
 import Lemma.Nat.ModEq.of.EqAddMul
 import Lemma.Nat.Dvd_Mul
@@ -186,4 +186,4 @@ private lemma main
 
 
 -- created on 2026-07-30
--- updated on 2026-08-01
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Inductive.v1.Atlas.EllipticCurves.code.EndAlgClassification
 open Module PositiveDefiniteInvolutionAlgebra in
 open scoped Quaternion TensorProduct

@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.Derivatives
+import Initialize.Tactic.Attr.Basic
+import Theorem.RingTheory.PowerSeries.Derivatives
 import Lemma.PowerSeries.FPSDefinition
 open PowerSeries Polynomial
 open scoped PowerSeries

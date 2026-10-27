@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Real Finset
 open scoped ENNReal NNReal MeasureTheory ProbabilityTheory
 

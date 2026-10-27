@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.NumberTheoryI.code.DirichletL
 open Complex Filter Topology Nat DirichletLFunction
 open scoped LSeries.notation

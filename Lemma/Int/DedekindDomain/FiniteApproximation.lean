@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open UniqueFactorizationMonoid IsDedekindDomain Ideal Finset
 open scoped nonZeroDivisors
 
@@ -142,4 +142,4 @@ lemma FractionalIdeal.exists_elem_eq_valuation_at_primes
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

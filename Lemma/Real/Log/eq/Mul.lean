@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Ex_3_9
 open MeasureTheory Set intervalIntegral Filter Chapter3
 

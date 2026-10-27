@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.polys.Lagrange
+import Initialize.Tactic.Attr.Basic
+import Theorem.LinearAlgebra.Lagrange
 
 /--
 [Lagrange](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Polynomial/Lagrange.lean)

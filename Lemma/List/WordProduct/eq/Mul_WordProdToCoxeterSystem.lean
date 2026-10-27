@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.Building.TitsTheoremProof
 import Lemma.Finset.Any_And_EqImageToFunMorph.of.AdjacentToSimplicialComplex.HasSufficientFoldings
 import Lemma.Nat.Any_And_EqAdd1AndEqAdd1.of.Gt.EqAdd_1OrEqAdd1.Eq0

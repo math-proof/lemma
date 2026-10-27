@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.BooleanFunctions.code.Hypercontractivity
 open Finset BigOperators Real BooleanFourier
 
@@ -31,7 +31,7 @@ lemma sum_chi_mul_chi_point
     apply Finset.sum_ninvolution (g := fun x => flipAt j x)
     · intro x
       obtain ⟨hjS, hjT⟩ | ⟨hjT, hjS⟩ := hjmem
-      · have h1 : chi S (flipAt j x) = -chi S x := chi_flipAt S j hjS x
+      · have h1 : chi S (flipAt j x) = -chi S x := chi_flipAt (S := S) (j := j) (x := x) hjS
         have h2 : chi T (flipAt j x) = chi T x := by
           simp only [chi, flipAt]
           apply Finset.prod_congr rfl
@@ -41,20 +41,20 @@ lemma sum_chi_mul_chi_point
         linarith [show chi S (flipAt j x) * chi T (flipAt j x) =
           -(chi S x * chi T x) from by rw [h1, h2]; ring]
       · have h1 : chi S (flipAt j x) = chi S x := by
-        simp only [chi, flipAt]
-        apply Finset.prod_congr rfl
-        intro i hi
-        congr 1
-        exact Function.update_of_ne (ne_of_mem_of_not_mem hi hjS) _ _
-        have h2 : chi T (flipAt j x) = -chi T x := chi_flipAt T j hjT x
+          simp only [chi, flipAt]
+          apply Finset.prod_congr rfl
+          intro i hi
+          congr 1
+          exact Function.update_of_ne (ne_of_mem_of_not_mem hi hjS) _ _
+        have h2 : chi T (flipAt j x) = -chi T x := chi_flipAt (S := T) (j := j) (x := x) hjT
         linarith [show chi S (flipAt j x) * chi T (flipAt j x) =
           -(chi S x * chi T x) from by rw [h1, h2]; ring]
     · intro x _
-      exact flipAt_ne_self j x
+      exact flipAt_ne_self (j := j) (x := x)
     · intro x
       exact Finset.mem_univ _
     · intro x
-      exact flipAt_flipAt j x
+      exact flipAt_flipAt (j := j) (x := x)
 
 end BooleanFourier
 
@@ -151,7 +151,7 @@ lemma noiseOp_fourierCoeff
   simp only [fourierCoeff, one_div]
   have hrewrite : ∀ y : Fin n → Bool,
     noiseOp ρ f y = ∑ T : Finset (Fin n), ρ ^ T.card * fourierCoeff f T * chi T y :=
-    fun y => noiseOp_eq_fourier_expansion ρ f y
+    fun y => noiseOp_eq_fourier_expansion (ρ := ρ) (f := f) (x := y)
   simp_rw [hrewrite]
   have step1 : ∀ y : Fin n → Bool,
     (∑ T : Finset (Fin n),
@@ -175,7 +175,7 @@ lemma noiseOp_fourierCoeff
   simp_rw [sum_chi_mul_chi_point]
   simp only [mul_ite, mul_zero]
   rw [Finset.sum_ite_eq']
-  simp only [Finset.mem_univ, if_true]
+  simp only [Finset.mem_univ, ite_true]
   simp only [fourierCoeff, one_div]
   field_simp
 
@@ -253,7 +253,7 @@ lemma lpNorm_restrictLast
   rw [← rpow_mul hbase_f, ← rpow_mul hbase_t, ← rpow_mul hbase_ff]
   have hexp : 1 / q * q = 1 := by field_simp
   rw [hexp, rpow_one, rpow_one, rpow_one]
-  rw [sum_finBool_succ_split (fun x => |f x| ^ q)]
+  rw [sum_finBool_succ_split (g := fun x => |f x| ^ q)]
   simp only [restrictLast]
   ring_nf
 
@@ -320,9 +320,9 @@ lemma noiseOp_one
   noiseOp 1 f = f := by
 -- proof
   funext x
-  have h := noiseOp_eq_fourier_expansion 1 f x
+  have h := noiseOp_eq_fourier_expansion (ρ := 1) (f := f) (x := x)
   simp only [one_pow, one_mul] at h
-  rw [h, ← fourier_expansion f x]
+  rw [h, ← fourier_expansion (f := f) (x := x)]
 
 end BooleanFourier
 
@@ -340,8 +340,8 @@ lemma noiseOp_comp
   noiseOp ρ (noiseOp σ f) = noiseOp (ρ * σ) f := by
 -- proof
   funext x
-  rw [noiseOp_eq_fourier_expansion ρ (noiseOp σ f) x]
-  rw [noiseOp_eq_fourier_expansion (ρ * σ) f x]
+  rw [noiseOp_eq_fourier_expansion (ρ := ρ) (f := noiseOp σ f) (x := x)]
+  rw [noiseOp_eq_fourier_expansion (ρ := ρ * σ) (f := f) (x := x)]
   congr 1; ext S
   rw [noiseOp_fourierCoeff, mul_pow]
   ring
@@ -371,10 +371,10 @@ lemma sum_pow_card_mul_fourierCoeff_sq_le
   by_cases hfS : fourierCoeff f S = 0
   · simp [hfS]
   · have hSk : S.card ≤ k := by
-    have hS_mem : S ∈ Finset.univ.filter
-      (fun T : Finset (Fin n) => fourierCoeff f T ≠ 0) :=
-      Finset.mem_filter.mpr ⟨Finset.mem_univ _, hfS⟩
-    exact le_trans (Finset.le_sup hS_mem) hdeg
+      have hS_mem : S ∈ Finset.univ.filter
+        (fun T : Finset (Fin n) => fourierCoeff f T ≠ 0) :=
+        Finset.mem_filter.mpr ⟨Finset.mem_univ _, hfS⟩
+      exact le_trans (Finset.le_sup (f := Finset.card) hS_mem) hdeg
     have hc_nonneg : 0 ≤ c := le_trans zero_le_one hc
     have hc_pow : c ^ S.card ≤ c ^ k := by
       exact pow_le_pow_right₀ hc hSk
@@ -432,7 +432,7 @@ lemma hypercontractive_low_degree
   have h_sq_bound : ∑ S : Finset (Fin n), (fourierCoeff g S) ^ 2 ≤
     (q - 1) ^ k * ∑ S : Finset (Fin n), (fourierCoeff f S) ^ 2 := by
     rw [hg_l2_sq]
-    exact sum_pow_card_mul_fourierCoeff_sq_le f k (q - 1) (by linarith) hdeg
+    exact sum_pow_card_mul_fourierCoeff_sq_le (f := f) (k := k) (c := q - 1) (by linarith) hdeg
   have h_lpNorm2_eq : ∀ h : BoolFn n,
     lpNorm 2 h = (∑ S : Finset (Fin n), (fourierCoeff h S) ^ 2) ^ ((1 : ℝ) / 2) := by
     intro h
@@ -443,7 +443,7 @@ lemma hypercontractive_low_degree
       rw [show (2 : ℝ) = (↑(2 : ℕ) : ℝ) from by norm_num, rpow_natCast]
       exact sq_abs (h y)
     simp_rw [h_abs_sq]
-    exact (parseval h).symm
+    exact (parseval (f := h)).symm
   rw [h_lpNorm2_eq g, h_lpNorm2_eq f]
   have hf_sum_nonneg : (0 : ℝ) ≤ ∑ S : Finset (Fin n), (fourierCoeff f S) ^ 2 :=
     Finset.sum_nonneg (fun S _ => sq_nonneg _)
@@ -475,7 +475,7 @@ lemma fourierCoeff_noiseOp
 -- imply
   fourierCoeff (noiseOp ρ f) S = ρ ^ S.card * fourierCoeff f S :=
 -- proof
-  noiseOp_fourierCoeff ρ f S
+  noiseOp_fourierCoeff
 
 end BooleanFourier
 
@@ -574,7 +574,7 @@ lemma chi_combineAssignment_eq
   · rw [← Finset.subtype_map (· ∈ J) (s := U), Finset.prod_map]
     congr 1; ext ⟨i, hi⟩; simp [hi]
   · have hfilt : Finset.filter (fun x => ¬ x ∈ J) U = Finset.filter (· ∈ Jᶜ) U := by
-    ext i; simp [Finset.mem_compl]
+      ext i; simp [Finset.mem_compl]
     rw [hfilt, ← Finset.subtype_map (· ∈ Jᶜ) (s := U), Finset.prod_map]
     congr 1; ext ⟨i, hi⟩
     have hi' : ¬ (i ∈ J) := Finset.mem_compl.mp hi
@@ -604,7 +604,7 @@ lemma sum_chiOn_mul_chiOn
         ∏ i ∈ S, (boolToReal (x i) * boolToReal (x i)) from
         (Finset.prod_mul_distrib).symm]
     simp only [boolToReal_mul_self, Finset.prod_const_one]
-    simp [Fintype.card_fun, Fintype.card_bool, Fintype.card_coe]
+    simp [Fintype.card_bool]
   · obtain ⟨j, hj⟩ := Finset.symmDiff_nonempty.mpr h
     have hjmem := Finset.mem_symmDiff.mp hj
     apply Finset.sum_ninvolution (g := fun x => Function.update x j (!x j))
@@ -635,8 +635,7 @@ lemma sum_chiOn_mul_chiOn
       obtain ⟨hjS, hjT⟩ | ⟨hjT, hjS⟩ := hjmem
       · rw [hflip_mem S hjS, hflip_not_mem T hjT]; ring
       · rw [hflip_not_mem S hjS, hflip_mem T hjT]; ring
-    · intro x _
-      intro heq
+    · intro x _ heq
       have : Function.update x j (!x j) j = x j := congr_fun heq j
       simp [Function.update] at this
     · intro x; exact Finset.mem_univ _
@@ -670,8 +669,8 @@ lemma fourierCoeff_restrictToSubset
     arg 2; arg 2; ext xJ
     rw [show f (combineAssignment J xJ z) =
       ∑ U : Finset (Fin n), fourierCoeff f U * chi U (combineAssignment J xJ z)
-      from fourier_expansion f (combineAssignment J xJ z)]
-  simp_rw [chi_combineAssignment_eq J]
+      from fourier_expansion (f := f) (x := combineAssignment J xJ z)]
+  simp_rw [chi_combineAssignment_eq]
   conv_lhs =>
     arg 2; arg 2; ext xJ
     rw [show (∑ U : Finset (Fin n), fourierCoeff f U *
@@ -687,7 +686,7 @@ lemma fourierCoeff_restrictToSubset
       fourierCoeff f U * chiOn Jᶜ (U.subtype (· ∈ Jᶜ)) z *
         ∑ xJ : ↥J → Bool, chiOn J (U.subtype (· ∈ J)) xJ * chiOn J S xJ from by
     congr 1; rw [Finset.sum_comm]; congr 1; ext U; rw [← Finset.mul_sum]]
-  simp_rw [sum_chiOn_mul_chiOn J]
+  simp_rw [sum_chiOn_mul_chiOn]
   simp only [mul_ite, mul_zero]
   conv_lhs =>
     arg 2; arg 2; ext U
@@ -708,20 +707,21 @@ lemma fourierCoeff_restrictToSubset
     (fun T => S.map (Function.Embedding.subtype _) ∪
       T.map (Function.Embedding.subtype _))
   · intro T _
-    exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, subtype_map_union_left J S T⟩
+    exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, subtype_map_union_left⟩
   · intro T₁ hT₁ T₂ hT₂ hTT
     have h' := congr_arg (Finset.subtype (· ∈ Jᶜ)) hTT
-    rwa [subtype_map_union_right J S T₁, subtype_map_union_right J S T₂] at h'
+    rwa [subtype_map_union_right, subtype_map_union_right] at h'
   · intro U hU
     have hUS : Finset.subtype (· ∈ J) U = S := (Finset.mem_filter.mp hU).2
     refine ⟨Finset.subtype (· ∈ Jᶜ) U, Finset.mem_univ _, ?_⟩
     show S.map _ ∪ (Finset.subtype (· ∈ Jᶜ) U).map _ = U
-    rw [← hUS, ← finset_subtype_map_union J U]
+    rw [← hUS, ← finset_subtype_map_union]
   · intro T _
     congr 1
-    rw [subtype_map_union_right J S T]
+    rw [subtype_map_union_right]
 
 end BooleanFourier
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-27

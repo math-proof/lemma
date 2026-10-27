@@ -2,6 +2,7 @@ import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
 import Lemma.Matrix.DetOfVecCons_FunPow.eq.MulPowSub1Prod
+import Syntax.LinearAlgebra.Matrix.Notation
 open Matrix Nat
 
 
@@ -10,15 +11,15 @@ private lemma main
   {n : ℕ}
   {r : ℝ} :
 -- imply
-  (Matrix.of fun (a j : Fin n) => if (a : ℕ) = 0 then 1 - r ^ ((j : ℕ) + 1) else ((j : ℝ) + 1) ^ (a : ℕ)).det =
+  ([a < n, j < n] if (a : ℕ) = 0 then 1 - r ^ ((j : ℕ) + 1) else ((j : ℝ) + 1) ^ (a : ℕ)).det =
     (1 - r) ^ n * ∏ i ∈ Finset.range n, (i ! : ℝ) := by
 -- proof
   cases n with
   | zero => simp
   | succ k =>
-    set V := Matrix.of fun (a j : Fin (k + 1)) => ((j : ℝ) + 1) ^ (a : ℕ) with hV
+    set V := [a < k + 1, j < k + 1] ((j : ℝ) + 1) ^ (a : ℕ) with hV
     set w : Fin (k + 1) → ℝ := fun j => r ^ ((j : ℕ) + 1) with hw
-    have hM : (Matrix.of fun (a j : Fin (k + 1)) => if (a : ℕ) = 0 then 1 - r ^ ((j : ℕ) + 1) else ((j : ℝ) + 1) ^ (a : ℕ)) =
+    have hM : ([a < k + 1, j < k + 1] if (a : ℕ) = 0 then 1 - r ^ ((j : ℕ) + 1) else ((j : ℝ) + 1) ^ (a : ℕ)) =
         V.updateRow 0 (V 0 + (-1 : ℝ) • w) := by
       ext a j
       refine Fin.cases ?_ (fun a => ?_) a
@@ -48,3 +49,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-27

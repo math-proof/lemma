@@ -1,6 +1,6 @@
 import Lemma.Hyperreal.StInv.eq.InvSt
 import Lemma.Rat.InvDiv.eq.Div
-open Hyperreal Rat
+open Hyperreal Rat ArchimedeanClass
 
 
 @[path, comm]

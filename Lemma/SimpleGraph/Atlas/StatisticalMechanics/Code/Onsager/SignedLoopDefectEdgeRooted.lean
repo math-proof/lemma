@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopDefectEdgeRooted
 open Finset SimpleGraph Filter StatMech StatMech.Onsager
 

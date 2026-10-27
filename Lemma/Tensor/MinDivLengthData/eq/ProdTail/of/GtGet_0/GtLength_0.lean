@@ -1,5 +1,5 @@
 import Lemma.Tensor.MinDivLengthData.eq.ProdTail.of.GtLength_0
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 open Tensor
 
 

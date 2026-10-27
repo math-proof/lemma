@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.FC.OeisA22030_conjecture.Part2
 open OeisA22030
 

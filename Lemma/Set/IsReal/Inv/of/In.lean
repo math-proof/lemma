@@ -1,5 +1,5 @@
-import sympy.functions.elementary.complexes
-import sympy.Basic
+import Notation.Analysis.Complex.Complexes
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -16,4 +16,4 @@ private lemma main
 
 
 -- created on 2020-06-21
--- updated on 2023-05-12
+-- updated on 2026-10-26

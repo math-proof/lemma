@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Class.v1.Atlas.NumberTheoryI.code.ConductorOrders.Part2
 open Ideal Polynomial Algebra IsDedekindDomain nonZeroDivisors
 open nonZeroDivisors

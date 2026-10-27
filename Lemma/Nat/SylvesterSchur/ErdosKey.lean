@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.SylvesterSchur.ResidualLarge
 import Def.NumberTheory.SylvesterSchur.ResidualLargeCertificates
 import Lemma.Nat.SylvesterSchur.ResidualLargeCertificates

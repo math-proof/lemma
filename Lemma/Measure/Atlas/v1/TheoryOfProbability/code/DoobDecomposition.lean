@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.TheoryOfProbability.code.DoobDecomposition
 open MeasureTheory Filter DoobDecomposition
 open scoped NNReal ENNReal MeasureTheory ProbabilityTheory

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberField_AdelicFourier
 import Lemma.Int.P2MUtil
 

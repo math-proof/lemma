@@ -1,4 +1,4 @@
-import sympy.stats.markov_chain_trajectory
+import Def.Probability.Process.MarkovChainTrajectory.Part2
 open MeasureTheory ProbabilityTheory Finset
 
 

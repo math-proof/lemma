@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open UpperHalfPlane Filter Asymptotics Function
 open scoped Real Topology Manifold
 

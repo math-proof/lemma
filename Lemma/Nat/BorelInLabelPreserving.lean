@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.Buildings.code.HeckeAlgebra.Generalized.Part3
 open GeneralizedHecke GeneralizedHecke.OmegaConvolutionData GeneralizedHecke.HeckeConvolutionIdentities
 

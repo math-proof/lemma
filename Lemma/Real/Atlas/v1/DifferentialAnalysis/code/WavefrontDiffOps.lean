@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontDiffOps
 open MeasureTheory ConeSupport WavefrontDiffOps
 open scoped SchwartzMap FourierTransform

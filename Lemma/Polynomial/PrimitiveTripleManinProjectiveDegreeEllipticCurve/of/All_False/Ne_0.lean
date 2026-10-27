@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.polys.agca.elliptic_curve.manin_projective_degree
+import Initialize.Tactic.Attr.Basic
+import Theorem.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
 
 open Polynomial
 
@@ -200,4 +200,4 @@ lemma projective_first_natDegree
 
 
 -- created on 2026-10-09
--- updated on 2026-10-23
+-- updated on 2026-10-26

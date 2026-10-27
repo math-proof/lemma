@@ -1,7 +1,7 @@
 import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Basic.Complex.Basic
-import sympy.sets.sets
-import sympy.Basic
+import Theorem.Data.Set.Sets
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

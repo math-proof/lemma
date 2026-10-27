@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
 open nonZeroDivisors RiemannRochCurves CanonicalSheafCurves DedekindCurve
 open scoped TensorProduct

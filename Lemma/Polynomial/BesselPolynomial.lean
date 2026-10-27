@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.Polynomial.BesselPolynomial
 open MetaMathlibExt
 open scoped BigOperators

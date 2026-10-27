@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.List.DropPermute__Neg.eq.Drop
 import Lemma.List.EqPermutePermute__Neg.of.In_Ioo_Length
 import Lemma.List.GetTakePermute__Neg.eq.Get
@@ -186,4 +186,4 @@ private lemma main
 
 
 -- created on 2025-10-26
--- updated on 2025-10-27
+-- updated on 2026-10-26

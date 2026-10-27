@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Geometry.Manifold.LocalParametrization
 open scoped Topology Manifold ContDiff
 open Manifold
@@ -240,4 +240,4 @@ private lemma ContDiff_isImmersion_graph_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.SimpleGraph.MengerEdge
 open MathlibExt.Combinatorics.SimpleGraph.MengerEdgeWanted
 
@@ -1633,4 +1633,4 @@ end MathlibExt.Combinatorics.SimpleGraph.MengerEdgeWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

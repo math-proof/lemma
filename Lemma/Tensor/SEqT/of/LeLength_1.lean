@@ -1,4 +1,4 @@
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
 open Bool List Tensor

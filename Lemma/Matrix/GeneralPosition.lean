@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.LinearAlgebra.GeneralPosition.Part2
 open Function
 open scoped Affine LinearAlgebra.Projectivization
@@ -89,4 +89,4 @@ end Projectivization
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

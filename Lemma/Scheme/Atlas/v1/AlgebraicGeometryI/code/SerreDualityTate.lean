@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate.Part3
 open SerreDualityTate SerreDualityTate.TateDualitySetup
 open CanonicalSheafCurves RiemannRochCurves SerreDualityP1

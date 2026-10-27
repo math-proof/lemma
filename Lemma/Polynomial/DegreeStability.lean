@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Algebra.Polynomial.L1Norm
 import Lemma.Polynomial.L1Norm
 
@@ -49,4 +49,4 @@ end Polynomial
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

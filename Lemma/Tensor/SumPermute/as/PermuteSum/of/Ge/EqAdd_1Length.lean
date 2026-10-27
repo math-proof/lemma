@@ -1,5 +1,5 @@
-import torch.Tensor.prod
-import torch.Tensor.permute
+import Def.Data.Holor.Prod
+import Notation.Data.Holor.Permute
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Int.OfNat.eq.Cast
 import Lemma.List.Append_TakeDrop.eq.Take.of.Ge
@@ -21,7 +21,7 @@ import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.Sum.eq.Sum_Select
 import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Vector.GetTranspose.eq.Get
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Nat Vector List Bool Int Tensor Fin Set
 set_option maxHeartbeats 250000
 
@@ -258,4 +258,4 @@ private lemma main
 
 
 -- created on 2025-11-16
--- updated on 2025-11-17
+-- updated on 2026-10-26

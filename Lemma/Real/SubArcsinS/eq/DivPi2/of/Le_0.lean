@@ -1,6 +1,6 @@
-import sympy.Basic
-import sympy.polys.polyroots
-import sympy.functions.elementary.trigonometric
+import Initialize.Tactic.Attr.Basic
+import Instance.Algebra.Polynomial.Polyroots
+import Def.Analysis.SpecialFunctions.Trigonometric.Part2
 
 
 @[path]

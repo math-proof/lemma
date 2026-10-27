@@ -1,4 +1,4 @@
-import sympy.sets.sets
+import Theorem.Data.Set.Sets
 import Lemma.Nat.LtSubS.of.Lt.Le
 open Nat
 
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2025-06-22
--- updated on 2025-10-10
+-- updated on 2026-10-26

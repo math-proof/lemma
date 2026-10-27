@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
 import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
 import Lemma.Nat.NonemptyBruhatCell

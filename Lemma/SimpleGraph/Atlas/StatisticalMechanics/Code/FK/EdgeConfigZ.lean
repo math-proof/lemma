@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.EdgeConfigZ.Part15
 open SimpleGraph Filter Topology Set StatMech StatMech.FK
 

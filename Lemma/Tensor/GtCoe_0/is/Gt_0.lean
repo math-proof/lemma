@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.GtCoe_0.is.Gt_0
 import Lemma.Tensor.Lt0Map.of.Gt_0.All_GtUFn_0
 import Lemma.Vector.GetMap.eq.UFnGet
-import sympy.core.relational
+import Theorem.Analysis.Real.Relational
 open Hyperreal Tensor Vector
 
 

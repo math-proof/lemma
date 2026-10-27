@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Ramanujan.Part1Ch3Section8Example1Summable
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 open Section8Example1Summable
@@ -116,4 +116,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example1Summable
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

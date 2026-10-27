@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.MeasureTheory.Integral.LyapunovConvexity
 open MeasureTheory Set Filter Topology
 open scoped RealInnerProductSpace
@@ -1852,4 +1852,4 @@ end MathlibExt.MeasureTheory.Integral.LyapunovConvexityWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

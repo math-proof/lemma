@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Section_3_3_fn
 import Lemma.Nat.EqF333c_CoeNonzeroAdd_1
 open Chapter3 hiding Nat Set
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-10-23
+-- updated on 2026-10-26

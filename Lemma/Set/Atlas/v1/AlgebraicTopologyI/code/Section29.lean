@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section29.Part7
 open DirectSum GradedMonoid CategoryTheory AlgebraicTopology Limits AlgebraicTopologyI SingularCohomology CupProduct
 open CategoryTheory AlgebraicTopology Limits AlgebraicTopologyI

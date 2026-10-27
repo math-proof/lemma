@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.ReciprocalCentralBinomialSums
+import Initialize.Tactic.Attr.Basic
+import Theorem.Data.Nat.Choose.ReciprocalCentralBinomialSums
 
 /--
 [ReciprocalCentralBinomialSums](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Series/ReciprocalCentralBinomialSums.lean)

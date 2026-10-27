@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.series.formal.InfiniteProducts
+import Initialize.Tactic.Attr.Basic
+import Def.RingTheory.PowerSeries.InfiniteProducts
 import Lemma.PowerSeries.Limits
 open PowerSeries
 open scoped BigOperators

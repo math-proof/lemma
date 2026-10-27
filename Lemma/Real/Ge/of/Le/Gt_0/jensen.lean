@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Convex.Deriv
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 /--

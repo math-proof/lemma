@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Geometry.Metric.Part2
 open scoped Finset
 
@@ -35,4 +35,4 @@ private lemma unitDistNum_eq_distanceMultiplicity_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

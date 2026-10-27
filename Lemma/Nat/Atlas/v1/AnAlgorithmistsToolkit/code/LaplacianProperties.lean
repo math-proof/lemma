@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.AnAlgorithmistsToolkit.code.LaplacianProperties
 open Matrix SimpleGraph Finset BigOperators PSDMatrix LaplacianProperties
 open scoped MatrixOrder

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Universality.RSWQOneInfiniteVolume
 open Set SimpleGraph MeasureTheory Filter Topology StatMech StatMech.Universality
 

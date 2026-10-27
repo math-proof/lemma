@@ -1,5 +1,5 @@
 import Macro.Order.ExprWithLimits
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

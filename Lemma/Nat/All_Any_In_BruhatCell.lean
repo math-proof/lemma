@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
 import Lemma.Nat.In_BruhatCell1.of.In_B
 import Lemma.Nat.NonemptyBruhatCell

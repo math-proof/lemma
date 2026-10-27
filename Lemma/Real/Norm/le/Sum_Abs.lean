@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Normed.Group.Constructions
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

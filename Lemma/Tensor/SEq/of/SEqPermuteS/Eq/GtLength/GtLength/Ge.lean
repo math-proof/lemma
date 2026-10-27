@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqPermutePermute__Neg.of.Ge
-import torch.Tensor.permute
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
 open Tensor
 

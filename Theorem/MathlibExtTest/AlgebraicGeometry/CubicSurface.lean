@@ -2,7 +2,7 @@
 
 
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import sympy.atlas.AlgebraicGeometry.CubicSurface
+import Def.AlgebraicGeometry.CubicSurface.Part2
 
 
 namespace AlgebraicGeometry

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part2
 open MathlibExtTest MathlibExtTest.EdgeIndexedMultigraph
 open scoped BigOperators

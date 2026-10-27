@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.MvPolynomial.RegularFunction.Part3
 open MvPolynomial
 

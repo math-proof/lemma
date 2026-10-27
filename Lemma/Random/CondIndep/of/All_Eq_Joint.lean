@@ -1,4 +1,4 @@
-import sympy.stats.hidden_markov_sequence
+import Def.Probability.Process.HiddenMarkovSequence.Part2
 import Lemma.Random.Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.MEqCondExp_Integral.of.Integrable.Measurable
@@ -204,4 +204,4 @@ private lemma main
 
 
 -- created on 2026-10-08
--- updated on 2026-10-12
+-- updated on 2026-10-26

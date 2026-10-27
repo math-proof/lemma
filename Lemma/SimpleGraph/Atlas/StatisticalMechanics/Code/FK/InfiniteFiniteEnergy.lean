@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy.Part2
 open MeasureTheory Set Filter Topology SimpleGraph StatMech StatMech.FK
 

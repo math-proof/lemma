@@ -1,4 +1,4 @@
-import stdlib.SEq
+import Theorem.Logic.SEq
 import Lemma.Vector.ValGetUnflatten.eq.ValArraySlice
 import Lemma.Vector.HEq.of.Val
 open Vector Nat

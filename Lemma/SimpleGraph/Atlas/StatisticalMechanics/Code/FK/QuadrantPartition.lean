@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.QuadrantPartition.Part9
 open SimpleGraph Filter Topology Set MeasureTheory StatMech StatMech.FK StatMech.FK.EdgeCount
 

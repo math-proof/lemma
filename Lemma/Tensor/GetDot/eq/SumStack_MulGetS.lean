@@ -1,5 +1,5 @@
-import torch.Tensor.unsqueeze
-import torch.Tensor.permute
+import Def.Data.Holor.Unsqueeze
+import Notation.Data.Holor.Permute
 import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
 import Lemma.Tensor.GetDot.eq.DotGetS
 import Lemma.Tensor.EqGetT
@@ -80,4 +80,4 @@ private lemma une
 
 
 -- created on 2026-08-14
--- updated on 2026-08-27
+-- updated on 2026-10-26

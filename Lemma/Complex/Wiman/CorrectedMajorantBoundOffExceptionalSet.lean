@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
 open Filter MeasureTheory Set
 open scoped ENNReal
@@ -81,4 +81,4 @@ end
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-26

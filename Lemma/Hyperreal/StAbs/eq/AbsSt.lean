@@ -3,7 +3,7 @@ import Lemma.Hyperreal.LeSt_0.of.Le_0
 import Lemma.Hyperreal.StNeg.eq.NegSt
 import Lemma.Int.EqAbs_Neg.of.Le_0
 import Lemma.Int.EqAbs.is.Ge_0
-open Hyperreal Int
+open Hyperreal Int ArchimedeanClass
 
 
 @[path]

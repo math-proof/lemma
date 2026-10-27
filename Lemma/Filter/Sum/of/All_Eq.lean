@@ -1,6 +1,6 @@
 import Mathlib.Order.Filter.Basic
 import Mathlib.Algebra.BigOperators.Pi
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]

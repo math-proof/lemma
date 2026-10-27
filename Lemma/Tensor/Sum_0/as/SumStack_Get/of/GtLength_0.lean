@@ -1,5 +1,5 @@
 import Lemma.Tensor.GtLength.of.GtLength_0
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 import Lemma.Tensor.Sum_0.eq.Sum_Stack_Get
 open Tensor
 
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2026-07-21
--- updated on 2026-07-22
+-- updated on 2026-10-26

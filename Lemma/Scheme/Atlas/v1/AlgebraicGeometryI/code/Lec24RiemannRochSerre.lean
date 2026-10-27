@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.Lec24RiemannRochSerre.Part5
 open Lec24 Lec24.SmoothCompleteCurveWithSheaves
 

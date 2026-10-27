@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailClosedBallRG.Part5
 open StatMech StatMech.Exact3D StatMech.Exact3D.FinitePlusTailClosedBallContractionCertificate StatMech.Exact3D.FinitePlusTailClosedBallRGPackage
 

@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import torch.functions
+import Theorem.Data.Holor.Functions
 open Bool
 
 

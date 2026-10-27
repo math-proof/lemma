@@ -32,7 +32,7 @@ WHERE BINARY CAST(jt.module AS CHAR CHARACTER SET utf8mb4) = BINARY CAST(? AS CH
 `;
 
 /**
- * @param {string} imp dotted path as in `import` lines, e.g. `Lemma.Tensor.Foo` or `stdlib.SEq`
+ * @param {string} imp dotted path as in `import` lines, e.g. `Lemma.Tensor.Foo` or `Theorem.Logic.SEq`
  * @returns {string | null} absolute `.lean` path under the repo, or null
  */
 function resolveImportToLeanPath(imp) {
@@ -96,7 +96,7 @@ function lemmaRootModulesForMysql(imports) {
 
 /**
  * @param {string[]} rootModulesSansLemma e.g. `['Tensor.SEq.is.SEqDataS.of.Eq']`
- * @param {string} targetImport e.g. `stdlib.SEq`
+ * @param {string} targetImport e.g. `Theorem.Logic.SEq`
  * @returns {Promise<number>} match count; 0 on missing pool / empty roots / SQL error
  */
 async function countMysqlTransitiveImportHits(rootModulesSansLemma, targetImport) {
@@ -119,8 +119,8 @@ async function countMysqlTransitiveImportHits(rootModulesSansLemma, targetImport
  * Whether `targetImport` is already satisfied by the current `Lemma.*` imports (MySQL deps first,
  * then disk `contains_module` over the same import list).
  *
- * @param {string[]} imports full dotted import list (e.g. `Lemma.Tensor.Foo`, `stdlib.SEq`)
- * @param {string} targetImport e.g. `stdlib.SEq`, `sympy.core.relational`
+ * @param {string[]} imports full dotted import list (e.g. `Lemma.Tensor.Foo`, `Theorem.Logic.SEq`)
+ * @param {string} targetImport e.g. `Theorem.Logic.SEq`, `Theorem.Analysis.Real.Relational`
  */
 export async function transitiveProvidesImport(imports, targetImport) {
   const target = String(targetImport).trim();
@@ -141,18 +141,19 @@ export async function transitiveProvidesImport(imports, targetImport) {
 
 /** Imports that `mergeSyntaxDrivenImports` may add and that PHP may skip when already transitive. */
 const PRUNABLE_SYNTAX_IMPORTS = [
-  'stdlib.SEq',
-  'sympy.core.relational',
-  'sympy.core.logic',
-  'sympy.core.power',
-  'sympy.sets.sets',
-  'sympy.concrete.quantifier',
-  'torch.stack',
-  'sympy.tensor.Basic',
-  'sympy.polys.domains',
-  'sympy.functions.special.tensor_functions',
-  'sympy.matrices.expressions.special',
-  'torch.functions',
+  'Theorem.Logic.SEq',
+  'Theorem.Analysis.Real.Relational',
+  'Def.Tactic.Logic.Part4',
+  'Theorem.Algebra.Power.Part2',
+  'Theorem.Data.Set.Sets',
+  'Macro.Logic.Quantifier.Part4',
+  'Def.Data.Holor.Stack.Part2',
+  'Def.Data.Holor.Defs.Part4',
+  'Instance.Data.Int.Integers',
+  'Def.Analysis.SpecialFunctions.TensorFunctions',
+  'Def.Data.Holor.BandPart',
+  'Instance.Data.Vector.Functions.Part2',
+  'Theorem.Data.Holor.Functions',
 ];
 
 /**

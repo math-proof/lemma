@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Lemma.IsDedekindDomain.FiniteUnitIdelesOutside
 import Def.M4aHerbrand_IdeleClassVocab
 import Lemma.NumberField.PlaceTransport

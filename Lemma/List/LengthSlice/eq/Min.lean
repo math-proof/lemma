@@ -1,4 +1,4 @@
-import stdlib.Slice
+import Def.Data.List.Slice
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 open Nat
 
@@ -16,4 +16,4 @@ private lemma main
 
 
 -- created on 2025-08-04
--- updated on 2026-08-24
+-- updated on 2026-10-26

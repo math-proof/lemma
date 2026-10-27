@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/Supersingular.lean -/
 
 
-import sympy.atlas.AlgebraicGeometry.EllipticCurve.Supersingular
+import Theorem.AlgebraicGeometry.EllipticCurve.Supersingular
 attribute [local instance] Classical.decEq
 
 

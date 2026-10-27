@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.SchurZassenhaus
 open scoped Pointwise
 open MulAction MulOpposite Subgroup QuotientGroup Function
@@ -432,4 +432,4 @@ end MathlibExt.GroupTheory.SchurZassenhausWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

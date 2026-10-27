@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.polys.agca.elliptic_curve.manin_sequence
+import Initialize.Tactic.Attr.Basic
+import Theorem.AlgebraicGeometry.EllipticCurve.ManinSequence.Part2
 
 open Int
 

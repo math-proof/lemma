@@ -1,5 +1,5 @@
 import Lemma.Vector.HEq.of.Val
-import torch.Tensor.prod
+import Def.Data.Holor.Prod
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
 open Tensor Vector Nat
 
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2025-05-23
--- updated on 2025-06-29
+-- updated on 2026-10-26

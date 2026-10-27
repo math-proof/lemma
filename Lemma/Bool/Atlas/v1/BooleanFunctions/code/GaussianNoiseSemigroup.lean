@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.BooleanFunctions.code.GaussianNoiseSemigroup
 open MeasureTheory ProbabilityTheory Real GaussianStability
 

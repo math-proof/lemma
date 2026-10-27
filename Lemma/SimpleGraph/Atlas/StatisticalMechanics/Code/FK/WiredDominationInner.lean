@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.FK.WiredDominationInner.Part3
 open SimpleGraph StatMech StatMech.FK
 

@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
-import stdlib.SEq
-import sympy.matrices.expressions.matmul
+import Theorem.Logic.SEq
+import Instance.LinearAlgebra.Matrix.Matmul
 open Bool
 
 

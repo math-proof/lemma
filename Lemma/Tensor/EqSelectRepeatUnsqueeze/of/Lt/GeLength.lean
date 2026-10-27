@@ -1,6 +1,6 @@
 import Lemma.List.GtLengthInsertIdx
-import torch.Tensor.unsqueeze
-import torch.Tensor.repeat
+import Def.Data.Holor.Unsqueeze
+import Def.Data.Holor.Repeat
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
 import Lemma.Nat.EqMod_1'0
@@ -33,4 +33,4 @@ private lemma main
 
 
 -- created on 2025-10-05
--- updated on 2025-10-07
+-- updated on 2026-10-26

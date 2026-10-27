@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingState.Part2
 open MeasureTheory Real Set Filter Topology StatMech StatMech.Sharpness
 

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.RealAnalysis.code.Series.Basic
 open Real_Analysis Real_Analysis.Series
 open Filter Finset

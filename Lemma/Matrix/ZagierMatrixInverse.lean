@@ -1,6 +1,7 @@
 import Mathlib
 import sympy.Basic
 import Def.LinearAlgebra.Matrix.ZagierMatrixInverse
+import Syntax.LinearAlgebra.Matrix.Notation
 open scoped BigOperators
 open MetaMathlibExt
 
@@ -926,65 +927,59 @@ lemma zagier_matrix_inverse
 -- given
   (hK : 1 < K) :
 -- imply
-  (Matrix.of (fun i j : Fin (K - 1) =>
-    (2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
+  ([i < K - 1, j < K - 1] ((2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
     ∑ n ∈ Finset.range (2 * K - 2 * (i.val + 1) + 1),
     (↑(Nat.choose (2 * (j.val + 1) - 1)
     (2 * K - 2 * (i.val + 1) - n + 1)) : ℚ) *
     (↑(Nat.choose (n + 2 * (i.val + 1) - 2) n) : ℚ) * bernoulli n) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
     =
-    (Matrix.of (fun i j : Fin (K - 1) =>
-    (-2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
+    ([i < K - 1, j < K - 1] ((-2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
     ∑ n ∈ Finset.range (2 * K - 2 * (i.val + 1) + 1),
     (↑(Nat.choose (2 * K - 2 * (j.val + 1))
     (2 * K - 2 * (i.val + 1) - n + 1)) : ℚ) *
     (↑(Nat.choose (n + 2 * (i.val + 1) - 2) n) : ℚ) * bernoulli n) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
-    ∧ (Matrix.of (fun i j : Fin (K - 1) =>
-    (↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * (i.val + 1) - 1)) : ℚ) +
+    ∧ ([i < K - 1, j < K - 1] ((↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * (i.val + 1) - 1)) : ℚ) +
     (↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * K - 2 * (i.val + 1))) : ℚ)) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
-    * (Matrix.of (fun i j : Fin (K - 1) =>
-    (2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
+    * ([i < K - 1, j < K - 1] ((2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
     ∑ n ∈ Finset.range (2 * K - 2 * (i.val + 1) + 1),
     (↑(Nat.choose (2 * (j.val + 1) - 1)
     (2 * K - 2 * (i.val + 1) - n + 1)) : ℚ) *
     (↑(Nat.choose (n + 2 * (i.val + 1) - 2) n) : ℚ) * bernoulli n) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
     = 1
-    ∧ (Matrix.of (fun i j : Fin (K - 1) =>
-    (2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
+    ∧ ([i < K - 1, j < K - 1] ((2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
     ∑ n ∈ Finset.range (2 * K - 2 * (i.val + 1) + 1),
     (↑(Nat.choose (2 * (j.val + 1) - 1)
     (2 * K - 2 * (i.val + 1) - n + 1)) : ℚ) *
     (↑(Nat.choose (n + 2 * (i.val + 1) - 2) n) : ℚ) * bernoulli n) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
-    * (Matrix.of (fun i j : Fin (K - 1) =>
-    (↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * (i.val + 1) - 1)) : ℚ) +
+    * ([i < K - 1, j < K - 1] ((↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * (i.val + 1) - 1)) : ℚ) +
     (↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * K - 2 * (i.val + 1))) : ℚ)) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
     = 1 := by
 -- proof
-  have hPQ := zagierInverseP_eq_zagierInverseQ K hK
-  have hPA := zagierInverseP_mul_zagierMatrix K hK
-  have hAP := zagierMatrix_mul_zagierInverseP K hK
+  have hPQ := zagierInverseP_eq_zagierInverseQ hK
+  have hPA := zagierInverseP_mul_zagierMatrix hK
+  have hAP := zagierMatrix_mul_zagierInverseP hK
   refine ⟨?_, ?_, ?_⟩
   · ext i j
-    simpa only [Matrix.of_apply, zagierInverseP, zagierInverseQ] using congrFun (congrFun hPQ i) j
+    simpa only [Matrix.ofFun_apply, zagierInverseP, zagierInverseQ] using congrFun (congrFun hPQ i) j
   · ext i j
     rw [Matrix.mul_apply, Matrix.one_apply]
     have hAPij := congrFun (congrFun hAP i) j
     rw [Matrix.mul_apply, Matrix.one_apply] at hAPij
-    simpa only [Matrix.of_apply, zagierMatrix, zagierInverseP] using hAPij
+    simpa only [Matrix.ofFun_apply, zagierMatrix, zagierInverseP] using hAPij
   · ext i j
     rw [Matrix.mul_apply, Matrix.one_apply]
     have hPAij := congrFun (congrFun hPA i) j
     rw [Matrix.mul_apply, Matrix.one_apply] at hPAij
-    simpa only [Matrix.of_apply, zagierInverseP, zagierMatrix] using hPAij
+    simpa only [Matrix.ofFun_apply, zagierInverseP, zagierMatrix] using hPAij
 end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-23
+-- updated on 2026-10-27

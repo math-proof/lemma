@@ -1,5 +1,5 @@
-import sympy.functions.combinatorial.factorials
-import sympy.Basic
+import Def.Data.Nat.Factorial.Factorials
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2020-10-07
--- updated on 2023-06-03
+-- updated on 2026-10-26

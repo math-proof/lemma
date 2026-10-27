@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part4
 open CategoryTheory MonoidalCategory Limits Finset TensorCategories CategoricalFusionData FusionCategoryBridge
 open TensorCategories

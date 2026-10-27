@@ -1,6 +1,6 @@
 import Lemma.Tensor.Sum.eq.OfVectorMapToVector
 import Lemma.Tensor.OfVectorMapToVector.eq.Stack
-import torch.Tensor.sum
+import Def.Data.Holor.Sum
 open Tensor
 
 
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2025-06-24
--- updated on 2025-07-13
+-- updated on 2026-10-26

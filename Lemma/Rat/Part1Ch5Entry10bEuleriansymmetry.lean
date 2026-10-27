@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.special.ramanujan.Part1Ch5Entry10bEuleriansymmetry
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.SpecialFunctions.Part1Ch5Entry10bEuleriansymmetry.Part3
 
 open Ramanujan.Part1Ch5.Entry10bEuleriansymmetry
 

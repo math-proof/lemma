@@ -1,7 +1,7 @@
 import Mathlib.Analysis.Convex.StdSimplex
 import Mathlib.LinearAlgebra.Matrix.DotProduct
 import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open scoped Matrix
 open Convexity
 

@@ -1,6 +1,6 @@
 import Lemma.Tensor.Eq_Stack
-import torch.functions
-import torch.stack
+import Theorem.Data.Holor.Functions
+import Def.Data.Holor.Stack.Part2
 import Lemma.Vector.FlattenPow.eq.PowFlattenS
 import Lemma.Vector.PowMapSRange.eq.MapFunPow
 import Lemma.Vector.MapMap.eq.Map_Comp
@@ -35,4 +35,4 @@ private lemma main
 
 
 -- created on 2019-10-19
--- updated on 2026-08-24
+-- updated on 2026-10-26

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Class.v1.Atlas.TensorCategories.code.Ext1UnitVanishing.Part2
 open CategoryTheory MonoidalCategory Category Limits TensorCategories
 

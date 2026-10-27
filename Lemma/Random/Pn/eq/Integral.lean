@@ -1,4 +1,4 @@
-import sympy.stats.policy_trajectory.gradient
+import Def.Dynamics.PolicyTrajectory.Gradient
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 

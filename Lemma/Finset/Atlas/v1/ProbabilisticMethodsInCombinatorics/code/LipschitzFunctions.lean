@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.LipschitzFunctions
 open NNReal MeasureTheory Measure Set Metric ENNReal LipschitzFunctions
 open MeasureTheory Measure NNReal Set Metric ENNReal
