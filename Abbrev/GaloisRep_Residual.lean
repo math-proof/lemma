@@ -1,5 +1,4 @@
-import Instance.EllipticCurve_FrobeniusTrace
-import Instance.FLTPrelim_Modularity
+import Structure.GaloisRep_Residual
 import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
 import Mathlib.LinearAlgebra.Charpoly.Basic
 import Mathlib.LinearAlgebra.Determinant
@@ -11,7 +10,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open scoped WeierstrassCurve.Affine TensorProduct
+open scoped TensorProduct
 open Polynomial
 
 

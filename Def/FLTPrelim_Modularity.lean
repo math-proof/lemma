@@ -3,9 +3,13 @@ import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
 import Mathlib.NumberTheory.ModularForms.ArithmeticSubgroups
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
-import Mathlib.Data.Finite.Card
+import Mathlib.Data.Finset.Attr
+import Mathlib.Tactic.Bound.Init
+import Mathlib.Tactic.Common
+import Mathlib.Tactic.Finiteness.Attr
+import Mathlib.Tactic.SetLike
+import Mathlib.Util.CompileInductive
 import Mathlib.Data.ZMod.Basic
-import Instance.FLTPrelim_Modularity
 import Structure.FLTPrelim_Modularity
 
 set_option autoImplicit false
@@ -44,6 +48,9 @@ private lemma Point.toOptionPair_injective :
     simp only [Point.toOptionPair, Option.some.injEq, Prod.mk.injEq, reduceCtorEq] at h
   · rfl
   · obtain ⟨rfl, rfl⟩ := h; rfl
+
+instance Point.instFinite [Finite R] : Finite W'.Point :=
+  Finite.of_injective _ Point.toOptionPair_injective
 
 end Affine
 

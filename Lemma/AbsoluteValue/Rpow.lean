@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.elementary.absolute_value.Rpow
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.AbsoluteValue.Rpow
 
 /--
 [rpow_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/AbsoluteValue/Rpow.lean)
@@ -17,4 +17,4 @@ private lemma rpow_apply_eq
 
 
 -- created on 2026-10-09
--- updated on 2026-10-24
+-- updated on 2026-10-26

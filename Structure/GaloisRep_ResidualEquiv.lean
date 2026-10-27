@@ -1,4 +1,4 @@
-import Instance.GaloisRep_Residual
+import Structure.GaloisRep_Residual
 
 open scoped TensorProduct
 

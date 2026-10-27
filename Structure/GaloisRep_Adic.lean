@@ -1,7 +1,6 @@
 import Mathlib.LinearAlgebra.Charpoly.BaseChange
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Instance.GaloisRep_Residual
 import Structure.GaloisRep_ResidualEquiv
 
 open scoped TensorProduct

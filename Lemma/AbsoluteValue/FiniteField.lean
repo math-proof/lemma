@@ -1,6 +1,6 @@
 import Mathlib
-import sympy.Basic
-import sympy.functions.elementary.absolute_value.FiniteField
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.AbsoluteValue.FiniteField
 
 open AbsoluteValue
 

@@ -6,7 +6,6 @@ import Mathlib.LinearAlgebra.Determinant
 import Mathlib.LinearAlgebra.TensorProduct.Tower
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.FieldTheory.Finiteness
-import Instance.GaloisRep_Residual
 import Structure.GaloisRep_Residual
 import Abbrev.GaloisRep_Residual
 

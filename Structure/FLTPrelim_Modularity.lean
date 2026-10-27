@@ -3,9 +3,13 @@ import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
 import Mathlib.NumberTheory.ModularForms.ArithmeticSubgroups
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
-import Mathlib.Data.Finite.Card
+import Mathlib.Data.Finset.Attr
+import Mathlib.Tactic.Bound.Init
+import Mathlib.Tactic.Common
+import Mathlib.Tactic.Finiteness.Attr
+import Mathlib.Tactic.SetLike
+import Mathlib.Util.CompileInductive
 import Mathlib.Data.ZMod.Basic
-import Instance.FLTPrelim_Modularity
 
 set_option autoImplicit false
 
