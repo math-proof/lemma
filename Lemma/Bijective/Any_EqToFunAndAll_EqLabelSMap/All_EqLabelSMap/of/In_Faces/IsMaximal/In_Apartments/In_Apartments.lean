@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.Building.MaximalApartments.Part2
 import Lemma.Bijective.All_EqImage.of.EqImage.All_IffIn_Faces_InImageFaces.Bijective.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments
 open scoped Classical
