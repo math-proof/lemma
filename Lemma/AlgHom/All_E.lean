@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open scoped TensorProduct
 open TensorProduct
 set_option autoImplicit false

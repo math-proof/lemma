@@ -1,7 +1,6 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Instance.Algebra.DirectLimit
-import Class.Mathlib_Algebra_IsDirectLimit
 open scoped Classical
 open MvPolynomial
 

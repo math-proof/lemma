@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Theorem.RingTheory.LocalRing.ResidueField.DVR.Part2
 open DVRResidue
 open AlgHom
@@ -70,4 +70,4 @@ private lemma residueFieldMapAlgHom_injective_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-24
+-- updated on 2026-10-26

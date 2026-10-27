@@ -1,6 +1,6 @@
 import Mathlib
 import Theorem.Algebra.AffineDilatation
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 open scoped nonZeroDivisors
 open AffineDilatation
 

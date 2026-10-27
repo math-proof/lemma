@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.LieGroups.code.BeilinsonBernstein.Part3
 open CategoryTheory BeilinsonBernstein
 
@@ -43,7 +43,8 @@ namespace BeilinsonBernstein
 lemma BBDataZero.a₀_factors (D : BBDataZero) :
   ∀ (x : @UniversalEnvelopingAlgebra ℂ D.gLie _ D.instLieRing D.instLieAlgebra),
     D.a₀ (D.proj₀ x) = D.actionMap x :=
-  fun x => AlgHom.liftOfSurjectiveNC_apply D.proj₀ D.proj₀_surjective D.actionMap D.ker_inclusion x
+  fun x => AlgHom.liftOfSurjectiveNC_apply (π := D.proj₀) (f := D.actionMap) (x := x)
+    D.proj₀_surjective D.ker_inclusion
 
 end BeilinsonBernstein
 
@@ -149,7 +150,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma BBDataZero.actionMap_surjective
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Surjective D.actionMap := by
 -- proof
@@ -179,7 +180,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma BBDataZero.incl_p_star_eq_symbolOfAction
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   ∀ x ∈ D.generators_grU₀_deg1, (D.incl_TstarF.comp D.p_star) x = D.symbolOfAction x :=
 -- proof
@@ -284,7 +285,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma incl_TstarF_inj
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Injective D.incl_TstarF :=
 -- proof
@@ -373,11 +374,11 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma incl_TstarF_injective
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Injective D.incl_TstarF :=
 -- proof
-  incl_TstarF_inj D
+  incl_TstarF_inj (D := D)
 
 end BeilinsonBernstein
 
@@ -388,7 +389,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma filtered_surj
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Surjective D.a₀ → Function.Surjective D.gr_a₀ := by
 -- proof
@@ -408,8 +409,7 @@ lemma filtered_surj
     simp only [filtPred] at hresid
     obtain ⟨x', hx'_mem, hx'_eq⟩ := ih (y - D.a₀ x) hresid
     refine ⟨x + x', ?_, ?_⟩
-    · exact Submodule.add_mem _ hx_mem
-      (D.filtration_U₀_mono (Nat.le_succ n) hx'_mem)
+    · exact Submodule.add_mem _ hx_mem (D.filtration_U₀_mono (Nat.le_succ n) hx'_mem)
     · rw [map_add, hx'_eq, add_sub_cancel]
 
 end BeilinsonBernstein
@@ -422,7 +422,7 @@ namespace BeilinsonBernstein
 @[path]
 lemma gr_a₀_surjective (D : BBDataZero) :
   Function.Surjective D.gr_a₀ :=
-  filtered_surj D (a₀_surj D)
+  filtered_surj (D := D) (a₀_surj D)
 
 end BeilinsonBernstein
 
@@ -433,14 +433,13 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma thm_29_1_factorization
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   D.actionMap = D.a₀.comp D.proj₀ := by
 -- proof
-  ext x
-  show D.actionMap (UniversalEnvelopingAlgebra.ι ℂ x) =
-    D.a₀ (D.proj₀ (UniversalEnvelopingAlgebra.ι ℂ x))
-  exact (a₀_comp_proj₀ D (UniversalEnvelopingAlgebra.ι ℂ x)).symm
+  apply AlgHom.ext
+  intro x
+  exact (a₀_comp_proj₀ D x).symm
 
 end BeilinsonBernstein
 
@@ -451,7 +450,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma thm_29_1_gr_eq_pullback
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   D.gr_a₀ = D.incl_TstarF.comp D.p_star := by
 -- proof
@@ -475,7 +474,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma thm_29_1_grDF_eq_O_TstarF
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Bijective D.incl_TstarF := by
 -- proof
@@ -501,7 +500,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma filtered_bij
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Bijective D.gr_a₀ → Function.Bijective D.a₀ := by
 -- proof
@@ -536,7 +535,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma thm_29_1_iso
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Bijective D.a₀ := by
 -- proof
@@ -553,7 +552,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma BBDataTwisted.aOfWeight_factors
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ (mu : D.WeightSpace) (x : @UniversalEnvelopingAlgebra ℂ D.gLie _ D.instLieRing D.instLieAlgebra), D.aOfWeight mu (D.projOfWeight mu x) = D.actionMapOfWeight mu x :=
 -- proof
@@ -568,7 +567,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma BBDataTwisted.actionMapOfWeight_surjective
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ (mu : D.WeightSpace), Function.Surjective (D.actionMapOfWeight mu) :=
 -- proof
@@ -583,7 +582,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma BBDataTwisted.gr_aOfWeight_eq_symbolOfAction
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ (mu : D.WeightSpace) (x : (D.grUOfWeight mu).carrier), x ∈ D.generators_grUOfWeight_deg1 mu → D.gr_aOfWeight mu x = D.symbolOfActionOfWeight mu x :=
 -- proof
@@ -598,7 +597,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma BBDataTwisted.incl_p_star_eq_symbolOfActionOfWeight
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ (mu : D.WeightSpace) (x : (D.grUOfWeight mu).carrier), x ∈ D.generators_grUOfWeight_deg1 mu → (D.incl_TstarFOfWeight mu).comp (D.p_starOfWeight mu) x = D.symbolOfActionOfWeight mu x :=
 -- proof
@@ -613,7 +612,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma BBDataTwisted.gr_aOfWeight_step_down
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ mu, Function.Injective (D.gr_aOfWeight mu) → ∀ n (x : (D.UOfWeight mu).carrier), x ∈ D.filtration_UOfWeight mu n → D.aOfWeight mu x ∈ filtPred (D.filtration_DOfWeight mu) n → x ∈ filtPred (D.filtration_UOfWeight mu) n := by
 -- proof
@@ -640,7 +639,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma BBDataTwisted.quotient_surj_from_aOfWeight
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ mu, Function.Surjective (D.aOfWeight mu) → ∀ (n : ℕ) (y : (D.DOfWeight mu).carrier) (hy : y ∈ D.filtration_DOfWeight mu n), ∃ x : (D.UOfWeight mu).carrier, ∃ hx : x ∈ D.filtration_UOfWeight mu n, D.quotient_DOfWeight mu n ⟨D.aOfWeight mu x, D.aOfWeight_filtration_preserving mu n x hx⟩ = D.quotient_DOfWeight mu n ⟨y, hy⟩ := by
 -- proof
@@ -656,7 +655,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma BBDataTwisted.gr_aOfWeight_step_up
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ mu, Function.Surjective (D.aOfWeight mu) → ∀ n (y : (D.DOfWeight mu).carrier), y ∈ D.filtration_DOfWeight mu n → ∃ x, x ∈ D.filtration_UOfWeight mu n ∧ y - D.aOfWeight mu x ∈ filtPred (D.filtration_DOfWeight mu) n := by
 -- proof
@@ -681,7 +680,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma BBDataTwisted.gr_aOfWeight_surj_of_levelwise_surj
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ mu, (∀ n (y : (D.DOfWeight mu).carrier), y ∈ D.filtration_DOfWeight mu n → ∃ x, x ∈ D.filtration_UOfWeight mu n ∧ D.aOfWeight mu x = y) → Function.Surjective (D.gr_aOfWeight mu) := by
 -- proof
@@ -702,7 +701,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma aOfWeight_factorization
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ (mu : D.WeightSpace) (x : @UniversalEnvelopingAlgebra ℂ D.gLie _ D.instLieRing D.instLieAlgebra), D.aOfWeight mu (D.projOfWeight mu x) = D.actionMapOfWeight mu x :=
 -- proof
@@ -717,7 +716,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma incl_TstarFOfWeight_inj
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ (mu : D.WeightSpace), Function.Injective (D.incl_TstarFOfWeight mu) :=
 -- proof
@@ -732,7 +731,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma aOfWeight_surj
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ (mu : D.WeightSpace), Function.Surjective (D.aOfWeight mu) := by
 -- proof
@@ -749,7 +748,7 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma gr_aOfWeight_eq_on_deg1
-  {D : BBDataTwisted} :
+  (D : BBDataTwisted) :
 -- imply
   ∀ (mu : D.WeightSpace) (x : (D.grUOfWeight mu).carrier), x ∈ D.generators_grUOfWeight_deg1 mu → D.gr_aOfWeight mu x = (D.incl_TstarFOfWeight mu).comp (D.p_starOfWeight mu) x := by
 -- proof
@@ -770,9 +769,9 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma aOfWeight_comp_proj
-  {D : BBDataTwisted}
-  {mu : D.WeightSpace}
-  {x : @UniversalEnvelopingAlgebra ℂ D.gLie _ D.instLieRing D.instLieAlgebra} :
+  (D : BBDataTwisted)
+  (mu : D.WeightSpace)
+  (x : @UniversalEnvelopingAlgebra ℂ D.gLie _ D.instLieRing D.instLieAlgebra) :
 -- imply
   D.aOfWeight mu (D.projOfWeight mu x) = D.actionMapOfWeight mu x :=
 -- proof
@@ -787,9 +786,9 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma gr_aOfWeight_eq_on_generators
-  {D : BBDataTwisted}
-  {mu : D.WeightSpace}
-  {x : (D.grUOfWeight mu).carrier} :
+  (D : BBDataTwisted)
+  (mu : D.WeightSpace)
+  (x : (D.grUOfWeight mu).carrier) :
 -- imply
   x ∈ D.generators_grUOfWeight mu → D.gr_aOfWeight mu x = (D.incl_TstarFOfWeight mu).comp (D.p_starOfWeight mu) x := by
 -- proof
@@ -810,8 +809,8 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma incl_TstarFOfWeight_injective
-  {D : BBDataTwisted}
-  {mu : D.WeightSpace} :
+  (D : BBDataTwisted)
+  (mu : D.WeightSpace) :
 -- imply
   Function.Injective (D.incl_TstarFOfWeight mu) :=
 -- proof
@@ -826,15 +825,14 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma thm_29_6_factorization
-  {D : BBDataTwisted}
-  {mu : D.WeightSpace} :
+  (D : BBDataTwisted)
+  (mu : D.WeightSpace) :
 -- imply
   D.actionMapOfWeight mu = (D.aOfWeight mu).comp (D.projOfWeight mu) := by
 -- proof
-  ext x
-  show D.actionMapOfWeight mu (UniversalEnvelopingAlgebra.ι ℂ x) =
-    D.aOfWeight mu (D.projOfWeight mu (UniversalEnvelopingAlgebra.ι ℂ x))
-  exact (aOfWeight_comp_proj D mu (UniversalEnvelopingAlgebra.ι ℂ x)).symm
+  apply AlgHom.ext
+  intro x
+  exact (aOfWeight_comp_proj D mu x).symm
 
 end BeilinsonBernstein
 
@@ -845,8 +843,8 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma thm_29_6_gr_eq_pullback
-  {D : BBDataTwisted}
-  {mu : D.WeightSpace} :
+  (D : BBDataTwisted)
+  (mu : D.WeightSpace) :
 -- imply
   D.gr_aOfWeight mu = (D.incl_TstarFOfWeight mu).comp (D.p_starOfWeight mu) := by
 -- proof
@@ -870,8 +868,8 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma filtered_surj_twisted
-  {D : BBDataTwisted}
-  {mu : D.WeightSpace} :
+  (D : BBDataTwisted)
+  (mu : D.WeightSpace) :
 -- imply
   Function.Surjective (D.aOfWeight mu) → Function.Surjective (D.gr_aOfWeight mu) := by
 -- proof
@@ -891,8 +889,7 @@ lemma filtered_surj_twisted
     simp only [filtPred] at hresid
     obtain ⟨x', hx'_mem, hx'_eq⟩ := ih (y - D.aOfWeight mu x) hresid
     refine ⟨x + x', ?_, ?_⟩
-    · exact Submodule.add_mem _ hx_mem
-      (D.filtration_UOfWeight_mono mu (Nat.le_succ n) hx'_mem)
+    · exact Submodule.add_mem _ hx_mem (D.filtration_UOfWeight_mono mu (Nat.le_succ n) hx'_mem)
     · rw [map_add, hx'_eq, add_sub_cancel]
 
 end BeilinsonBernstein
@@ -904,8 +901,8 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma gr_aOfWeight_surjective
-  {D : BBDataTwisted}
-  {mu : D.WeightSpace} :
+  (D : BBDataTwisted)
+  (mu : D.WeightSpace) :
 -- imply
   Function.Surjective (D.gr_aOfWeight mu) :=
 -- proof
@@ -920,8 +917,8 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma thm_29_6_grDF_eq_O_TstarF
-  {D : BBDataTwisted}
-  {mu : D.WeightSpace} :
+  (D : BBDataTwisted)
+  (mu : D.WeightSpace) :
 -- imply
   Function.Bijective (D.incl_TstarFOfWeight mu) := by
 -- proof
@@ -946,8 +943,8 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma filtered_bijOfWeight
-  {D : BBDataTwisted}
-  {mu : D.WeightSpace} :
+  (D : BBDataTwisted)
+  (mu : D.WeightSpace) :
 -- imply
   Function.Bijective (D.gr_aOfWeight mu) → Function.Bijective (D.aOfWeight mu) := by
 -- proof
@@ -982,15 +979,16 @@ namespace BeilinsonBernstein
 -/
 @[path]
 lemma thm_29_6_iso
-  {D : BBDataTwisted}
-  {mu : D.WeightSpace} :
+  (D : BBDataTwisted)
+  (mu : D.WeightSpace) :
 -- imply
   Function.Bijective (D.aOfWeight mu) := by
 -- proof
   apply filtered_bijOfWeight
-  rw [thm_29_6_gr_eq_pullback D mu]
+  rw [thm_29_6_gr_eq_pullback D (mu := mu)]
   exact (thm_29_6_grDF_eq_O_TstarF D mu).comp (D.p_starOfWeight_bijective mu)
-end
+
+end BeilinsonBernstein
 
 
 /--
@@ -998,166 +996,166 @@ end
 -/
 @[path]
 private lemma a_eq
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   ∀ (x : @UniversalEnvelopingAlgebra ℂ D.gLie _ D.instLieRing D.instLieAlgebra), D.a₀ (D.proj₀ x) = D.actionMap x := by
 -- proof
-  apply BeilinsonBernstein.BBDataZero.a D
+  exact BeilinsonBernstein.BBDataZero.a₀_factors D
 
 /--
 [BBDataZero.a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma a_eq_2
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   ∀ n (x : D.U₀.carrier), x ∈ D.filtration_U₀ n → D.a₀ x ∈ D.filtration_DF n := by
 -- proof
-  apply BeilinsonBernstein.BBDataZero.a D
+  exact BeilinsonBernstein.BBDataZero.a₀_filtration_preserving D
 
 /--
 [BBDataZero.gr_a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma gr_a_eq
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   ∀ n (x : D.U₀.carrier) (hx : x ∈ D.filtration_U₀ n), D.gr_a₀ (D.quotient_U₀ n ⟨x, hx⟩) = D.quotient_DF n ⟨D.a₀ x, D.a₀_filtration_preserving n x hx⟩ := by
 -- proof
-  apply BeilinsonBernstein.BBDataZero.gr_a D
+  exact BeilinsonBernstein.BBDataZero.gr_a₀_compat D
 
 /--
 [BBDataZero.a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma a_eq_3
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Surjective D.a₀ := by
 -- proof
-  apply BeilinsonBernstein.BBDataZero.a D
+  exact BeilinsonBernstein.a₀_surj D
 
 /--
 [BBDataZero.gr_a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma gr_a_eq_2
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   ∀ x ∈ D.generators_grU₀_deg1, D.gr_a₀ x = D.symbolOfAction x := by
 -- proof
-  apply BeilinsonBernstein.BBDataZero.gr_a D
+  exact BeilinsonBernstein.BBDataZero.gr_a₀_eq_symbolOfAction D
 
 /--
 [BBDataZero.gr_a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma gr_a_eq_3
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Injective D.gr_a₀ → ∀ n (x : D.U₀.carrier), x ∈ D.filtration_U₀ n → D.a₀ x ∈ filtPred D.filtration_DF n → x ∈ filtPred D.filtration_U₀ n := by
 -- proof
-  apply BeilinsonBernstein.BBDataZero.gr_a D
+  exact BeilinsonBernstein.BBDataZero.gr_a₀_step_down D
 
 /--
 [BBDataZero.quotient_surj_from_a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma quotient_surj_from_a_eq
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Surjective D.a₀ → ∀ (n : ℕ) (y : D.DF.carrier) (hy : y ∈ D.filtration_DF n), ∃ x : D.U₀.carrier, ∃ hx : x ∈ D.filtration_U₀ n, D.quotient_DF n ⟨D.a₀ x, D.a₀_filtration_preserving n x hx⟩ = D.quotient_DF n ⟨y, hy⟩ := by
 -- proof
-  apply BeilinsonBernstein.BBDataZero.quotient_surj_from_a D
+  exact BeilinsonBernstein.BBDataZero.quotient_surj_from_a₀ D
 
 /--
 [BBDataZero.gr_a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma gr_a_eq_4
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Surjective D.a₀ → ∀ n (y : D.DF.carrier), y ∈ D.filtration_DF n → ∃ x, x ∈ D.filtration_U₀ n ∧ y - D.a₀ x ∈ filtPred D.filtration_DF n := by
 -- proof
-  apply BeilinsonBernstein.BBDataZero.gr_a D
+  exact BeilinsonBernstein.BBDataZero.gr_a₀_step_up D
 
 /--
 [BBDataZero.gr_a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma gr_a_eq_5
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   (∀ n (y : D.DF.carrier), y ∈ D.filtration_DF n → ∃ x, x ∈ D.filtration_U₀ n ∧ D.a₀ x = y) → Function.Surjective D.gr_a₀ := by
 -- proof
-  apply BeilinsonBernstein.BBDataZero.gr_a D
+  exact BeilinsonBernstein.BBDataZero.gr_a₀_surj_of_levelwise_surj D
 
 /--
 [a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma a_eq_4
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   ∀ (x : @UniversalEnvelopingAlgebra ℂ D.gLie _ D.instLieRing D.instLieAlgebra), D.a₀ (D.proj₀ x) = D.actionMap x := by
 -- proof
-  apply BeilinsonBernstein.a D
+  exact BeilinsonBernstein.BBDataZero.a₀_factors D
 
 /--
 [a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma a_eq_5
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Surjective D.a₀ := by
 -- proof
-  apply BeilinsonBernstein.a D
+  exact BeilinsonBernstein.a₀_surj D
 
 /--
 [gr_a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma gr_a_eq_6
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   ∀ x ∈ D.generators_grU₀_deg1, D.gr_a₀ x = (D.incl_TstarF.comp D.p_star) x := by
 -- proof
-  apply BeilinsonBernstein.gr_a D
+  exact BeilinsonBernstein.gr_a₀_eq_on_deg1 D
 
 /--
 [a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma a_eq_6
-  {D : BBDataZero}
+  (D : BBDataZero)
   {x : @UniversalEnvelopingAlgebra ℂ D.gLie _ D.instLieRing D.instLieAlgebra} :
 -- imply
   D.a₀ (D.proj₀ x) = D.actionMap x := by
 -- proof
-  apply BeilinsonBernstein.a D x
+  exact BeilinsonBernstein.BBDataZero.a₀_factors D x
 
 /--
 [gr_a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma gr_a_eq_7
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   ∀ x ∈ D.generators_grU₀, D.gr_a₀ x = (D.incl_TstarF.comp D.p_star) x := by
 -- proof
-  apply BeilinsonBernstein.gr_a D
+  exact BeilinsonBernstein.gr_a₀_eq_on_generators D
 
 /--
 [gr_a](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BeilinsonBernstein.lean)
 -/
 @[path]
 private lemma gr_a_eq_8
-  {D : BBDataZero} :
+  (D : BBDataZero) :
 -- imply
   Function.Surjective D.gr_a₀ := by
 -- proof
-  apply BeilinsonBernstein.gr_a D
+  exact BeilinsonBernstein.gr_a₀_surjective D
 
 
 -- created on 2026-10-23
