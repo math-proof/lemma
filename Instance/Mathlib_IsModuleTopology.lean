@@ -1,12 +1,14 @@
 -- Carved from Lemma/Definitions/Def_Mathlib_IsModuleTopology.lean: instance decls only.
 import Mathlib
 import Class.Mathlib_IsModuleTopology
+import Lemma.IsInducing.topologicalModule
 
 section IsTopologicalModuleDep
 
 open Topology
 
 variable (R : Type*) [Ring R] [TopologicalSpace R]
+  (M : Type*) [AddCommGroup M] [Module R M] [TopologicalSpace M]
 
 variable [IsTopologicalModule R M]
 

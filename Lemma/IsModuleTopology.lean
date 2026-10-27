@@ -1,26 +1,9 @@
 import Mathlib
 import Instance.Mathlib_IsModuleTopology
 import Class.Mathlib_IsModuleTopology
+import Def.IsModuleTopology
+import Theorem.IsModuleTopology
 
-section IsTopologicalModuleDep
-
-open Topology
-
-variable (R : Type*) [Ring R] [TopologicalSpace R]
-  (M : Type*) [AddCommGroup M] [Module R M] [TopologicalSpace M]
-
-variable [IsTopologicalModule R M]
-
-protected theorem Topology.IsInducing.topologicalModule {F : Type*}
-    (R : Type*) [Ring R] [TopologicalSpace R]
-    {M : Type*} [AddCommGroup M] [Module R M] [TopologicalSpace M] [IsTopologicalModule R M]
-    {H : Type*} [AddCommGroup H] [Module R H] [TopologicalSpace H]
-    [FunLike F H M] [LinearMapClass F R H M] (f : F) (hf : IsInducing ⇑f) :
-    IsTopologicalModule R H where
-  continuous_smul := (hf.continuousSMul continuous_id (by intro c x; exact map_smul f c x)).continuous_smul
-  continuous_add := (hf.continuousAdd ..).continuous_add
-
-end IsTopologicalModuleDep
 
 section
 
@@ -30,79 +13,23 @@ variable {A B : Type*} (S' : Type*) {S : Type*}
     [Semiring S'] [Semiring S] [AddCommMonoid A] [AddCommMonoid B] [Module S A]
     [Module S B] [Module S' A] [Module S' B]
 
-def LinearMap.changeScalars (f : A →ₗ[S] B) [IsBiscalar S S' f] :
-    A →ₗ[S'] B where
-  __ := f
-  map_smul' s x := by simpa using IsBiscalar.map_smul₂ S s x
-
 theorem LinearMap.changeScalars_apply (f : A →ₗ[S] B) [IsBiscalar S S' f] (a : A) :
     LinearMap.changeScalars S' f a = f a := by
   simp [changeScalars]
-
-def LinearEquiv.changeScalars (f : A ≃ₗ[S] B) [IsBiscalar S S' f] :
-    A ≃ₗ[S'] B where
-  __ := LinearMap.changeScalars S' f.toLinearMap
-  invFun := f.invFun
-  left_inv (a : A) := by simp [LinearMap.changeScalars_apply]
-  right_inv (b : B) := by simp [LinearMap.changeScalars_apply]
 
 end linear
 
 section algebra
 
-@[simps! apply symm_apply]
-def AlgEquiv.extendScalars {A C D : Type*} (B : Type*) [CommSemiring A] [CommSemiring C]
-    [CommSemiring D] [Algebra A C] [Algebra A D] [CommSemiring B] [Algebra A B] [Algebra B C]
-    [IsScalarTower A B C] (f : C ≃ₐ[A] D) :
-    letI := (f.toAlgHom.restrictDomain B).toRingHom.toAlgebra
-    C ≃ₐ[B] D where
-  __ := (f.toAlgHom.restrictDomain B).toRingHom.toAlgebra
-  __ := f
-  invFun := f.symm
-  commutes' := fun _ => rfl
-
-theorem IsBiscalar.commutes {S : Type*} (S' : Type*) {A B : Type*} [CommSemiring S']
-    [CommSemiring S] [Semiring A] [Semiring B] [Algebra S' A] [Algebra S' B] [Algebra S A]
-    [Algebra S B] (f : A →ₐ[S] B) [IsBiscalar S S' f] (s : S') :
-    f (algebraMap S' A s) = algebraMap S' B s := by
-  simpa [Algebra.algebraMap_eq_smul_one] using IsBiscalar.map_smul₂ (f := f) S s 1
-
 variable {A B : Type*} (S' : Type*) {S : Type*}
     [CommSemiring A] [CommSemiring B] [CommSemiring S'] [CommSemiring S] [Algebra S A]
     [Algebra S B] [Algebra S' A] [Algebra S' B]
-
-def AlgHom.changeScalars (f : A →ₐ[S] B) [IsBiscalar S S' f] :
-    A →ₐ[S'] B where
-  __ := f
-  commutes' (r : _) := by simp [IsBiscalar.commutes]
 
 theorem AlgHom.changeScalars_apply (f : A →ₐ[S] B) [IsBiscalar S S' f] (a : A) :
     changeScalars S' f a = f a := by
   simp [changeScalars]
 
-def AlgEquiv.changeScalars (f : A ≃ₐ[S] B) [IsBiscalar S S' f.toAlgHom] :
-    A ≃ₐ[S'] B where
-  __ := AlgHom.changeScalars S' f.toAlgHom
-  invFun := f.invFun
-  left_inv (a : A) := by simp [AlgHom.changeScalars_apply]
-  right_inv (b : B) := by simp [AlgHom.changeScalars_apply]
-  commutes' := fun _ => by simp
-
 end algebra
-
-section diamond_checks
-
-example {S A B : Type*} [CommSemiring S] [CommSemiring A] [CommSemiring B]
-    [Algebra S A] [Algebra S B] (f : A →ₐ[S] B) [IsBiscalar S S f] :
-    AlgHom.changeScalars S f = f := rfl
-
-example {A B : Type*} (S' : Type*) {S : Type*}
-    [CommSemiring A] [CommSemiring B] [CommSemiring S'] [CommSemiring S] [Algebra S A]
-    [Algebra S B] [Algebra S' A] [Algebra S' B] (f : A →ₐ[S] B) [IsBiscalar S S' f]
-    [IsBiscalar S' S (AlgHom.changeScalars S' f)] :
-    (AlgHom.changeScalars S' f).changeScalars S = f := rfl
-
-end diamond_checks
 
 end
 
@@ -158,15 +85,6 @@ variable (R) [CommRing R] [TopologicalSpace R] [IsTopologicalRing R]
 variable (D : Type*) [Ring D] [Algebra R D] [Module.Finite R D]
 variable [TopologicalSpace D] [IsModuleTopology R D]
 
-open scoped TensorProduct
-
-@[continuity, fun_prop]
-theorem continuous_mul'
-    (R : Type*) [CommRing R] [TopologicalSpace R] [IsTopologicalRing R]
-    (D : Type*) [Ring D] [Algebra R D] [Module.Finite R D] [TopologicalSpace D]
-    [IsModuleTopology R D] : Continuous (fun ab ↦ ab.1 * ab.2 : D × D → D) :=
-  continuous_bilinear_of_finite_left (LinearMap.mul R D)
-
 include R in
 lemma topologicalSemiring : IsTopologicalSemiring D where
   continuous_add := (toContinuousAdd R D).1
@@ -179,16 +97,6 @@ section ring_algebra
 variable (R) [CommRing R] [TopologicalSpace R] [IsTopologicalRing R]
 variable (D : Type*) [Ring D] [Algebra R D] [Module.Finite R D]
 variable [TopologicalSpace D] [IsModuleTopology R D]
-
-open scoped TensorProduct
-
-include R in
-@[continuity, fun_prop]
-theorem continuous_mul : Continuous (fun ab ↦ ab.1 * ab.2 : D × D → D) := by
-  letI : TopologicalSpace (D ⊗[R] D) := moduleTopology R _
-  haveI : IsModuleTopology R (D ⊗[R] D) := { eq_moduleTopology' := rfl }
-  convert continuous_bilinear_of_finite_left <| (LinearMap.mul R D : D →ₗ[R] D →ₗ[R] D)
-  exact (LinearMap.mul_apply' _ _).symm
 
 include R in
 lemma Module.topologicalRing : IsTopologicalRing D where
@@ -344,77 +252,6 @@ theorem of_inverse (f : N →ₗ[R] M) (g : M → N) (hc : Continuous g) (hi : F
 
 end quotientMap
 
-@[simps!]
-def continuousLinearEquiv {A B R : Type*} [TopologicalSpace A]
-    [TopologicalSpace B] [TopologicalSpace R] [Semiring R] [AddCommMonoid A] [AddCommMonoid B]
-    [Module R A] [Module R B] [IsModuleTopology R A] [IsModuleTopology R B]
-    (e : A ≃ₗ[R] B) :
-    A ≃L[R] B where
-  toFun := e
-  __ := e
-  continuous_toFun :=
-    letI := IsModuleTopology.toContinuousAdd
-    IsModuleTopology.continuous_of_linearMap e.toLinearMap
-  continuous_invFun :=
-    letI := IsModuleTopology.toContinuousAdd
-    IsModuleTopology.continuous_of_linearMap e.symm.toLinearMap
-
-def continuousLinearEquivOfIsBiscalar {A B : Type*} (S' : Type*) {S : Type*}
-    [Semiring S'] [Semiring S] [AddCommMonoid A] [AddCommMonoid B] [Module S A]
-    [Module S B] [Module S' A] [Module S' B] [TopologicalSpace A] [TopologicalSpace B]
-    [TopologicalSpace S'] [IsModuleTopology S' A] [IsModuleTopology S' B] (e : A ≃ₗ[S] B)
-    [IsBiscalar S S' e] :
-    A ≃L[S] B where
-  toLinearEquiv := e
-  continuous_toFun := by
-    change Continuous (e.changeScalars S')
-    letI := IsModuleTopology.toContinuousAdd
-    exact IsModuleTopology.continuous_of_linearMap _
-  continuous_invFun := by
-    change Continuous (e.changeScalars S').symm
-    letI := IsModuleTopology.toContinuousAdd
-    exact IsModuleTopology.continuous_of_linearMap _
-
-def continuousAlgEquivOfIsBiscalar {A B : Type*} (S' : Type*) {S : Type*}
-    [CommSemiring A] [CommSemiring B] [CommSemiring S'] [CommSemiring S]
-    [Algebra S A] [Algebra S B] [Algebra S' A] [Algebra S' B] [TopologicalSpace A]
-    [TopologicalSpace B] [TopologicalSpace S'] [IsModuleTopology S' A]
-    [IsModuleTopology S' B] (e : A ≃ₐ[S] B) [IsBiscalar S S' e.toAlgHom] :
-    A ≃A[S] B where
-  toAlgEquiv := e
-  continuous_toFun := by
-
-    change Continuous (e.changeScalars S').toLinearEquiv
-
-    letI := IsModuleTopology.toContinuousAdd
-    exact IsModuleTopology.continuous_of_linearMap _
-  continuous_invFun := by
-    change Continuous (e.changeScalars S').toLinearEquiv.symm
-    letI := IsModuleTopology.toContinuousAdd
-    exact IsModuleTopology.continuous_of_linearMap _
-
-@[simp]
-theorem continuousAlgEquivOfIsBiscalar_apply {A B : Type*} (S' : Type*) {S : Type*}
-    [CommSemiring A] [CommSemiring B] [CommSemiring S'] [CommSemiring S]
-    [Algebra S A] [Algebra S B] [Algebra S' A] [Algebra S' B]
-    [TopologicalSpace A] [TopologicalSpace B] [TopologicalSpace S'] [IsModuleTopology S' A]
-    [IsModuleTopology S' B] (e : A ≃ₐ[S] B) [IsBiscalar S S' e.toAlgHom] (a : A) :
-    continuousAlgEquivOfIsBiscalar S' e a = e a :=
-  rfl
-
-def continuousAlgEquivOfAlgEquiv {A B R : Type*} [TopologicalSpace A]
-    [TopologicalSpace B] [TopologicalSpace R] [CommSemiring R] [Semiring A] [Semiring B]
-    [Algebra R A] [Algebra R B] [IsModuleTopology R A] [IsModuleTopology R B]
-    (e : A ≃ₐ[R] B) :
-    A ≃A[R] B where
-  __ := e
-  continuous_toFun :=
-    letI := IsModuleTopology.toContinuousAdd
-    IsModuleTopology.continuous_of_linearMap e.toLinearMap
-  continuous_invFun :=
-    letI := IsModuleTopology.toContinuousAdd
-    IsModuleTopology.continuous_of_linearMap e.symm.toLinearMap
-
 theorem t2Space (R : Type*) {M : Type*} [Semiring R] [AddCommGroup M] [Module R M] [Module.Free R M]
     [TopologicalSpace R] [TopologicalSpace M] [T2Space R]
     [ContinuousAdd R] [ContinuousMul R] [IsModuleTopology R M]
@@ -459,23 +296,6 @@ theorem locallyCompactSpaceOfFinite [LocallyCompactSpace R] [Module.Finite R M] 
     h ▸ Fintype.range_linearCombination R φ
 
 end locally_compact
-
-section ModuleFinite
-
-@[simps!]
-noncomputable
-def Module.Basis.equivFun_homeo (K R : Type*) [Field K] [Ring R] [Module K R]
-    [Module.Finite K R] [TopologicalSpace K] [TopologicalSpace R] [IsTopologicalRing R]
-    [IsTopologicalRing K] [IsModuleTopology K R] : R ≃L[K] (Fin (Module.finrank K R) → K) where
-  __ := Module.Basis.equivFun (Module.finBasisOfFinrankEq K R (rfl))
-  continuous_toFun :=
-    IsModuleTopology.continuous_of_linearMap
-      (Module.Basis.equivFun (Module.finBasisOfFinrankEq K R (rfl))).toLinearMap
-  continuous_invFun :=
-    IsModuleTopology.continuous_of_linearMap
-      (Module.Basis.equivFun (Module.finBasisOfFinrankEq K R (rfl))).symm.toLinearMap
-
-end ModuleFinite
 
 section SecondCountableTopology
 
