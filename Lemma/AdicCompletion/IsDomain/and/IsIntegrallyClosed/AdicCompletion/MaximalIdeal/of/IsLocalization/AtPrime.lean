@@ -1,4 +1,4 @@
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.Algebra.AdicCompletion.Localization
 import Instance.Algebra.AdicCompletion.Localization
 import Mathlib

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 
 /-!
 Port of FLT AssemblyProof helpers for the AdicCompletion ring-equiv criterion.
