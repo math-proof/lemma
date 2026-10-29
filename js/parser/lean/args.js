@@ -856,6 +856,15 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                             const s = this.strip_parenthesis();
                             return [s[1].toLatex(syntax)];
                         }
+                        case 'chiSquaredReal': {
+                            // `chiSquaredReal n` — peel grouping parens; `\mathcal{X}^{2}` is the format atom.
+                            let arg = args[1];
+                            if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
+                                arg = arg.arg;
+                            else
+                                arg = L.LeanParenthesis.peelLatex(arg);
+                            return [arg.toLatex(syntax)];
+                        }
                         default:
                     }
                     break;
@@ -993,6 +1002,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                             return '\\mathbf{0}_{%s}';
                         case 'Ones':
                             return '\\mathbf{1}_{%s}';
+                        case 'chiSquaredReal':
+                            // sympy `_latex`: `\mathcal{X}^{2}%s` with `%s` = `\left(n\right)` (one atom; no space before the paren).
+                            return '\\mathcal{X}^{2}\\left(%s\\right)';
                         default:
                     }
                     break;
