@@ -88,6 +88,27 @@ SELECT ROW_COUNT();
 
 
 src=$(normalize $1)
+
+# Append-only rename history (old → new). Survives as sh/rename.tsv (not *.log,
+# which is gitignored) so stale ?module= links can be remapped later.
+# Columns: timestamp, src, real_dst, dst, note
+# Override path with RENAME_LOG=/path/to/file.
+log_rename() {
+  local old_mod=$1
+  local new_mod=$2
+  local requested=$3
+  local note=${4:-}
+  local _sh_dir log_file ts
+  _sh_dir=$(CDPATH= cd -- "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+  log_file=${RENAME_LOG:-"$_sh_dir/rename.tsv"}
+  ts=$(date "+%Y-%m-%dT%H:%M:%S%z")
+  if [ ! -f "$log_file" ]; then
+    printf '# timestamp\tsrc\treal_dst\tdst\tnote\n' > "$log_file"
+  fi
+  printf '%s\t%s\t%s\t%s\t%s\n' "$ts" "$old_mod" "$new_mod" "$requested" "$note" >> "$log_file"
+  echo "logged rename: $old_mod -> $new_mod ($log_file)"
+}
+
 echo src = $src
 
 dst=$(normalize $2)
@@ -323,3 +344,9 @@ fi
 # Matches Node renameLemma when new_ has no lowercase sublemma suffix; for sublemma merges,
 # Lean imports already point at real_dst, so hierarchy must follow real_dst (not the @path suffix).
 update_axiom_module_row "$src" "$real_dst"
+
+note=
+if [ "$dst" != "$real_dst" ]; then
+  note="sublemma=${sublemma:-}"
+fi
+log_rename "$src" "$real_dst" "$dst" "$note"
