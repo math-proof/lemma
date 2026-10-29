@@ -19,7 +19,6 @@ from . import And
 from . import Sum
 from . import EqSum
 from . import Sum_Mul
-from . import Sum_SquareSub_DivSum
 from . import LeDiv
 from . import LeDivS
 from . import LeInv
