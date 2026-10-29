@@ -1418,6 +1418,9 @@ export class Lean extends IndentedNode {
      * - `(x)` → the head of `x`; a tuple `(s t, a t)` → each component's head;
      * - an ascription `x : T` → the head of `x` (a type is never random);
      * - a lambda `fun (ω : Ω) (i : Fin t) ↦ s i ω` → its binder names and the head of its body;
+     * - a big operator (`∑` / `∏` / `∫` / `∀`, …) → heads of the body only. The binder
+     *   (`k` in `∑ k : Fin n, x k`, `∑ k < n, x k`, `∑ k ∈ Finset.univ, x k`) is an index,
+     *   not a random variable;
      * - a qualified name / projection (`LeanProperty`) → none; a numeral → none;
      * - any other operator (`X + Y`) → the heads of its operands.
      * @param {unknown} x
@@ -1446,6 +1449,10 @@ export class Lean extends IndentedNode {
                 return [...binders, ...Lean.headTokens(m.rhs)];
             }
         }
+        // Bound index (`k` in `∑ k : Fin n` / `∑ k < n` / `k ∈ s`) is not an RV head.
+        // Walking `args` would paint that binder when the sum is the lhs of `∼` / `⟂ᵢ`.
+        if (x instanceof L.LeanBigOperator)
+            return x.scope ? Lean.headTokens(x.scope) : [];
         if (x instanceof LeanArgsCommaSeparated || Array.isArray(x.args))
             return x.args.flatMap((a) => Lean.headTokens(a));
         return [];

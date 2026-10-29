@@ -972,7 +972,9 @@ abstract class Lean extends IndentedNode
      * Head symbol(s) of a random-variable term, the only tokens an RV colouring paints (mirrors JS
      * `Lean.headTokens`): `s t` / `s (t + 1)` → `s`; `r[t + 1:]` → `r`; `(x)` → head of `x`; a tuple
      * → each component's head; `x : T` → head of `x`; `fun (ω : Ω) (i : Fin t) ↦ s i ω` → binder
-     * names and the body's head; `LeanProperty` and numerals → none; other operators → operands' heads.
+     * names and the body's head; a big operator (`∑` / `∏` / `∫` / `∀`, …) → heads of the body
+     * only (the binder is an index, not a random variable); `LeanProperty` and numerals → none;
+     * other operators → operands' heads.
      * @return LeanToken[]
      */
     public static function headTokens($x)
@@ -998,6 +1000,9 @@ abstract class Lean extends IndentedNode
                 return array_merge($binders, Lean::headTokens($m->args[1]));
             }
         }
+        // Bound index (`k` in `∑ k : Fin n` / `∑ k < n` / `k ∈ s`) is not an RV head.
+        if ($x instanceof LeanBigOperator)
+            return $x->scope ? Lean::headTokens($x->scope) : [];
         $out = [];
         if (isset($x->args) && is_array($x->args))
             foreach ($x->args as $a) $out = array_merge($out, Lean::headTokens($a));
