@@ -1,2 +1,2 @@
 from . import Distributed
-from . import Eq_Conditioned
+from . import All_Distributed_Gaussian
