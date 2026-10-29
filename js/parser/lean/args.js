@@ -863,6 +863,17 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                     switch (fn) {
                         case 'KroneckerDelta':
                             return [args[1].toLatex(syntax), args[2].toLatex(syntax)];
+                        case 'gaussianReal': {
+                            // `gaussianReal μ σ` — peel grouping parens; `\mathcal{N}` is the format atom.
+                            const peel = (arg) => {
+                                if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
+                                    arg = arg.arg;
+                                else
+                                    arg = L.LeanParenthesis.peelLatex(arg);
+                                return arg.toLatex(syntax);
+                            };
+                            return [peel(args[1]), peel(args[2])];
+                        }
                         default:
                     }
                     break;
@@ -907,19 +918,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             if (arg instanceof L.LeanParenthesis && !(arg.arg instanceof L.LeanColon))
                 arg = arg.arg;
             return [arg.toLatex(syntax)];
-        }
-        // `𝒩(μ, σ)` — paren (+ trailing args) only; `\\mathcal{N}` comes from latexFormat.
-        if (
-            func instanceof L.LeanToken &&
-            func.text === '𝒩' &&
-            args.length >= 2 &&
-            args[1] instanceof L.LeanParenthesis
-        ) {
-            return args.slice(1).map((arg) => {
-                if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
-                    arg = arg.arg;
-                return arg.toLatex(syntax);
-            });
         }
         return args.map((arg) => {
             if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
@@ -1002,6 +1000,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                     switch (func.text) {
                         case 'KroneckerDelta':
                             return '\\delta_{%s %s}';
+                        case 'gaussianReal':
+                            // sympy `_latex`: `\mathcal{N}%s` with `%s` = `\left(μ, σ\right)` (one atom; no space before the paren).
+                            return '\\mathcal{N}\\left(%s, %s\\right)';
                         default:
                     }
                     break;
@@ -1020,17 +1021,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 return '\\left|{%s}\\right|';
         }
         const n = args.length;
-        // `𝒩(μ, σ)` — sympy `_latex`: `\\mathcal{N}%s` (single atom; no space before paren/colorbox).
-        if (
-            func instanceof L.LeanToken &&
-            func.text === '𝒩' &&
-            n >= 2 &&
-            args[1] instanceof L.LeanParenthesis
-        ) {
-            let fmt = '\\mathcal{N}%s';
-            for (let i = 2; i < n; i++) fmt += '\\ {%s}';
-            return fmt;
-        }
         return Array(n)
             .fill('{%s}')
             .join('\\ ');
@@ -1087,18 +1077,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             }
             return out;
         }
-        // `𝒩(μ, σ)` — Lean notation `"𝒩(" μ ", " σ ")"` must echo without a space after 𝒩.
-        let out = '%s';
-        for (let j = start + 1; j < n; j++) {
-            const prev = args[j - 1];
-            const cur = args[j];
-            const glue =
-                prev instanceof L.LeanToken &&
-                prev.text === '𝒩' &&
-                cur instanceof L.LeanParenthesis;
-            out += glue ? '%s' : ' %s';
-        }
-        return out;
+        return Array(n - start).fill('%s').join(' ');
     }
 
     tactic_block_info() {

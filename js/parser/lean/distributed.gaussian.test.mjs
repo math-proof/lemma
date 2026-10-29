@@ -1,5 +1,5 @@
 /**
- * `𝒩(μ, σ)` stays glued; `x ∼[π] μ` parses as LeanDistributed (HasLaw).
+ * `gaussianReal μ σ` renders as glued `\mathcal{N}(μ, σ)`; `x ∼[π] μ` parses as LeanDistributed (HasLaw).
  * Run: `node js/parser/lean/distributed.gaussian.test.mjs`
  */
 import { compile } from '../lean.js';
@@ -14,17 +14,36 @@ function check(name, cond, detail = '') {
   }
 }
 
+/** Sympy single atom: `\mathcal{N}` immediately followed by `\left(`, not `{{\mathcal{N}}}` or a KaTeX space. */
+function checkGlued(name, latex) {
+  check(`${name} mathcal`, /\\mathcal\{N\}/.test(latex), latex);
+  check(`${name} no raw unicode`, !latex.includes('𝒩'), latex);
+  check(`${name} glued left`, /\\mathcal\{N\}\\left\(/.test(latex), latex);
+  check(`${name} not wrapped atom`, !/\{\\mathcal\{N\}\}/.test(latex), latex);
+  check(`${name} no space after N`, !/\\mathcal\{N\}[ {]/.test(latex) && !/\\mathcal\{N\}\\ /.test(latex), latex);
+}
+
 {
-  const src = 'lemma m : 𝒩(μ₀, σ₀) = μ := by sorry';
+  const src = 'lemma m : gaussianReal μ₀ σ₀ = μ := by sorry';
   const ast = compile(src);
   const str = String(ast);
-  check('𝒩( no space', str.includes('𝒩(μ₀, σ₀)'), JSON.stringify(str));
-  check('𝒩( not spaced', !str.includes('𝒩 ('), JSON.stringify(str));
-  const latex = ast.render2vue(false).lemma[0].imply.latex;
-  check('𝒩 mathcal', /\\mathcal\{N\}/.test(latex), latex);
-  check('𝒩 not raw unicode in latex', !latex.includes('𝒩'), latex);
-  check('𝒩 sympy glue', /\\mathcal\{N\}(\\colorbox|\{)/.test(latex), latex);
-  check('𝒩 not wrapped atom', !/\{\\mathcal\{N\}\}/.test(latex), latex);
+  check('gaussianReal spaced', str.includes('gaussianReal μ₀ σ₀'), JSON.stringify(str));
+  check('gaussianReal not call-paren', !str.includes('gaussianReal('), JSON.stringify(str));
+  checkGlued('bare app', ast.render2vue(false).lemma[0].imply.latex);
+}
+
+{
+  const src = 'lemma m : gaussianReal μ₀ σ₀² = μ := by sorry';
+  const latex = compile(src).render2vue(false).lemma[0].imply.latex;
+  checkGlued('variance square', latex);
+  check('variance square keeps ^2', /\^2/.test(latex), latex);
+}
+
+{
+  const src = 'lemma m : gaussianReal = μ := by sorry';
+  const latex = compile(src).render2vue(false).lemma[0].imply.latex;
+  check('bare token mathcal', /\\mathcal\{N\}/.test(latex), latex);
+  check('bare token no identifier', !latex.includes('gaussianReal'), latex);
 }
 
 {
@@ -39,10 +58,13 @@ function check(name, cond, detail = '') {
 }
 
 {
-  const src = 'lemma m : x ∼[π] 𝒩(μ₀, σ₀) := by sorry';
-  const str = String(compile(src));
-  check('combo str', str.includes('x ∼[π] 𝒩(μ₀, σ₀)'), JSON.stringify(str));
-  check('combo no 𝒩 space', !str.includes('𝒩 ('), JSON.stringify(str));
+  const src = 'lemma m : x ∼[π] gaussianReal μ₀ σ₀ := by sorry';
+  const m = compile(src);
+  const str = String(m);
+  check('combo str', str.includes('x ∼[π] gaussianReal μ₀ σ₀'), JSON.stringify(str));
+  const latex = m.render2vue(false).lemma[0].imply.latex;
+  checkGlued('combo', latex);
+  check('combo sim', /\\sim/.test(latex), latex);
 }
 
 {
@@ -57,25 +79,20 @@ function check(name, cond, detail = '') {
   check('simeq intact', /\\simeq/.test(latex), latex);
 }
 
-
 {
   // given-column path (hyp under LeanDistributed) must match imply: glued \mathcal{N}, no raw unicode
   const src = `lemma m
-  (h₁ : x ∼[π] 𝒩(μ₀, σ₀)) :
-  y ∼[π] 𝒩(μ₀ + μ₁, σ₀ + σ₁) := by sorry`;
+  (h₁ : x ∼[π] gaussianReal μ₀ σ₀²) :
+  y ∼[π] gaussianReal (μ₀ + μ₁) (σ₀² + σ₁²) := by sorry`;
   const vue = compile(src).render2vue(false).lemma[0];
   const gLatex = (vue.given || []).map((g) => g.latex).join('\n');
   const iLatex = vue.imply?.latex || '';
-  check('given has mathcal', /\\mathcal\{N\}/.test(gLatex), gLatex);
-  check('imply has mathcal', /\\mathcal\{N\}/.test(iLatex), iLatex);
-  check('given no raw 𝒩', !gLatex.includes('𝒩'), gLatex);
-  check('imply no raw 𝒩', !iLatex.includes('𝒩'), iLatex);
-  // sympy-style single atom: \mathcal{N} then colorbox/group, not {\mathcal{N}}{...}
-  check('given sympy mathcal glue', /\\mathcal\{N\}(\\colorbox|\{)/.test(gLatex), gLatex);
-  check('imply sympy mathcal glue', /\\mathcal\{N\}(\\colorbox|\{)/.test(iLatex), iLatex);
-  check('given not wrapped N atom', !/\{\\mathcal\{N\}\}/.test(gLatex), gLatex);
-  check('imply not wrapped N atom', !/\{\\mathcal\{N\}\}/.test(iLatex), iLatex);
-  check('given lean str glued', (vue.given || []).every((g) => !String(g.lean).includes('𝒩 (')), JSON.stringify(vue.given));
+  checkGlued('given', gLatex);
+  checkGlued('imply', iLatex);
+  check('given keeps variance square', /\^2/.test(gLatex), gLatex);
+  check('imply peels sums', /\\mathcal\{N\}\\left\([^)]*\+/.test(iLatex), iLatex);
+  check('given lean str spaced', (vue.given || []).every((g) => String(g.lean).includes('gaussianReal μ₀ σ₀²')), JSON.stringify(vue.given));
+  check('given lean not call-paren', (vue.given || []).every((g) => !String(g.lean).includes('gaussianReal(')), JSON.stringify(vue.given));
 }
 
 if (failed) {

@@ -243,7 +243,7 @@ export class Lean_perp extends LeanRelational {
  * `x ∼[π] μ` — density-free HasLaw / Distributed (`HasLaw x μ π`).
  * Bracketed measure `modifier` is required by the Lean notation and echoed;
  * elided in LaTeX (same convention as `⟂ᵢ[π]`). LHS is the random variable
- * (red); RHS is a law / measure (e.g. `𝒩(μ, σ)`), not marked as an RV.
+ * (red); RHS is a law / measure (e.g. `gaussianReal μ σ`), not marked as an RV.
  */
 export class LeanDistributed extends LeanRelational {
     static { this.register(); }
