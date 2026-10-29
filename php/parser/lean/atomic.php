@@ -200,7 +200,7 @@ class LeanToken extends Lean
 
     public function latexFormat()
     {
-        if ($this->text === '𝒩')
+        if ($this->text === '𝒩' || $this->text === 'gaussianReal')
             return '\\mathcal{N}';
         if ($this->text === '∇')
             return '\\nabla';
