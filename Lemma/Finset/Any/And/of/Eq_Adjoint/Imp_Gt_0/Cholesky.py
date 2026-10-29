@@ -10,7 +10,7 @@ def apply(eq, infer, L, i, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Bool, Tensor
+    from Lemma import Bool, Tensor, Matrix
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), complex=True)
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[0] & Eq[1], Eq[3], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Finset.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky, simplify=False, ret=0)
+    Eq << Eq[-1].this.expr.apply(Matrix.Eq_Mul_Adjoint.of.All_Eq_Lt.All_Lt0Dot_MulVec.EqAdjoint, simplify=False, ret=0)
 
     Eq << Bool.Any_UFn.given.Any_UFnUFn.apply(Eq[2], L, L_quote)
 
