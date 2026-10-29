@@ -13,8 +13,8 @@ namespace IsDedekindDomain.HeightOneSpectrum
 @[path]
 lemma finrank_adicCompletion_le
   [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
-  {v : HeightOneSpectrum (𝓞 K)}
-  {w : HeightOneSpectrum (𝓞 L)} [w.asIdeal.LiesOver v.asIdeal] :
+  (v : HeightOneSpectrum (𝓞 K))
+  (w : HeightOneSpectrum (𝓞 L)) [w.asIdeal.LiesOver v.asIdeal] :
 -- imply
   Module.finrank (v.adicCompletion K) (w.adicCompletion L) ≤
     Module.finrank K L := by

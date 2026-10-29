@@ -34,10 +34,10 @@ theorem siteCanonicalTrifurcationCount_le_boundary
 
 lemma siteCanonicalTrifurcationCount_eq_sum_indicator
     (eta : ConfigSpace (Site d)) (n : ℕ) :
-    (siteCanonicalTrifurcationCount eta n : ℝ≥0∞) =
+    (siteCanonicalTrifurcationCount eta n : ENNReal) =
       ∑ x ∈ boxFinsetBK d n,
         (SiteCanonicalTrifurcationEvent x).indicator
-          (fun _ ↦ (1 : ℝ≥0∞)) eta := by
+          (fun _ ↦ (1 : ENNReal)) eta := by
   classical
   unfold siteCanonicalTrifurcationCount canonicalTrifurcationsInBox boxFinsetBK
   simp only [Nat.add_sub_cancel, Finset.card_filter]
@@ -54,25 +54,25 @@ theorem expected_siteCanonicalTrifurcationCount
     (mu : Measure (ConfigSpace (Site d)))
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) mu)
     (n : ℕ) :
-    ∫⁻ eta, (siteCanonicalTrifurcationCount eta n : ℝ≥0∞) ∂mu =
+    ∫⁻ eta, (siteCanonicalTrifurcationCount eta n : ENNReal) ∂mu =
       (boxFinsetBK d n).card • mu (SiteCanonicalTrifurcationEvent 0) := by
   classical
   have hmeas : ∀ x : Site d, Measurable (fun eta ↦
       (SiteCanonicalTrifurcationEvent x).indicator
-        (fun _ ↦ (1 : ℝ≥0∞)) eta) := fun x ↦
+        (fun _ ↦ (1 : ENNReal)) eta) := fun x ↦
     Measurable.indicator measurable_const
       (measurableSet_siteCanonicalTrifurcationEvent x)
   calc
-    ∫⁻ eta, (siteCanonicalTrifurcationCount eta n : ℝ≥0∞) ∂mu =
+    ∫⁻ eta, (siteCanonicalTrifurcationCount eta n : ENNReal) ∂mu =
         ∫⁻ eta, ∑ x ∈ boxFinsetBK d n,
           (SiteCanonicalTrifurcationEvent x).indicator
-            (fun _ ↦ (1 : ℝ≥0∞)) eta ∂mu := by
+            (fun _ ↦ (1 : ENNReal)) eta ∂mu := by
       apply lintegral_congr
       intro eta
       exact siteCanonicalTrifurcationCount_eq_sum_indicator eta n
     _ = ∑ x ∈ boxFinsetBK d n, ∫⁻ eta,
           (SiteCanonicalTrifurcationEvent x).indicator
-            (fun _ ↦ (1 : ℝ≥0∞)) eta ∂mu := by
+            (fun _ ↦ (1 : ENNReal)) eta ∂mu := by
       rw [lintegral_finsetSum]
       intro x hx
       exact hmeas x
@@ -97,24 +97,24 @@ theorem siteCanonicalTrifurcation_prob_eq_zero_of_one_le
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) mu) :
     mu (SiteCanonicalTrifurcationEvent 0) = 0 := by
   classical
-  let p : ℝ≥0∞ := mu (SiteCanonicalTrifurcationEvent 0)
+  let p : ENNReal := mu (SiteCanonicalTrifurcationEvent 0)
   have hkey : ∀ n,
-      ((boxFinsetBK d n).card : ℝ≥0∞) * p ≤
-        (boxSV_boundaryCard d (n + 1) : ℝ≥0∞) := by
+      ((boxFinsetBK d n).card : ENNReal) * p ≤
+        (boxSV_boundaryCard d (n + 1) : ENNReal) := by
     intro n
     have hexp := expected_siteCanonicalTrifurcationCount mu hinv n
     rw [nsmul_eq_mul] at hexp
-    have hle : ∫⁻ eta, (siteCanonicalTrifurcationCount eta n : ℝ≥0∞) ∂mu ≤
-        (boxSV_boundaryCard d (n + 1) : ℝ≥0∞) := by
+    have hle : ∫⁻ eta, (siteCanonicalTrifurcationCount eta n : ENNReal) ∂mu ≤
+        (boxSV_boundaryCard d (n + 1) : ENNReal) := by
       calc
-        ∫⁻ eta, (siteCanonicalTrifurcationCount eta n : ℝ≥0∞) ∂mu ≤
-            ∫⁻ _eta, (boxSV_boundaryCard d (n + 1) : ℝ≥0∞) ∂mu := by
+        ∫⁻ eta, (siteCanonicalTrifurcationCount eta n : ENNReal) ∂mu ≤
+            ∫⁻ _eta, (boxSV_boundaryCard d (n + 1) : ENNReal) ∂mu := by
           apply lintegral_mono
           intro eta
-          change (siteCanonicalTrifurcationCount eta n : ℝ≥0∞) ≤
-            (boxSV_boundaryCard d (n + 1) : ℝ≥0∞)
+          change (siteCanonicalTrifurcationCount eta n : ENNReal) ≤
+            (boxSV_boundaryCard d (n + 1) : ENNReal)
           exact_mod_cast siteCanonicalTrifurcationCount_le_boundary eta n
-        _ = (boxSV_boundaryCard d (n + 1) : ℝ≥0∞) := by
+        _ = (boxSV_boundaryCard d (n + 1) : ENNReal) := by
           rw [lintegral_const]
           simp
     rwa [hexp] at hle
@@ -126,8 +126,8 @@ theorem siteCanonicalTrifurcation_prob_eq_zero_of_one_le
         (boxSV_boundaryCard d (n + 1) : ℝ) := by
     intro n
     have h := hkey n
-    have h' : (((boxFinsetBK d n).card : ℝ≥0∞) * p).toReal ≤
-        (boxSV_boundaryCard d (n + 1) : ℝ≥0∞).toReal :=
+    have h' : (((boxFinsetBK d n).card : ENNReal) * p).toReal ≤
+        (boxSV_boundaryCard d (n + 1) : ENNReal).toReal :=
       ENNReal.toReal_mono (by simp) h
     rw [ENNReal.toReal_mul] at h'
     simpa [ENNReal.toReal_natCast, pr] using h'

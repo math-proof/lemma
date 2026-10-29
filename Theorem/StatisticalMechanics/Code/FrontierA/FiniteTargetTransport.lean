@@ -34,14 +34,14 @@ theorem finiteTargetTransport_outgoing_eq_one
   rw [tsum_eq_sum (s := N)]
   · calc
       (∑ y ∈ N, finiteTargetTransport C N x y) =
-          ∑ _y ∈ N, ((N.card : ℝ≥0∞)⁻¹) := by
+          ∑ _y ∈ N, ((N.card : ENNReal)⁻¹) := by
         apply Finset.sum_congr rfl
         intro y hy
         simp [finiteTargetTransport, hx, hy]
-      _ = (N.card : ℝ≥0∞) * (N.card : ℝ≥0∞)⁻¹ := by
+      _ = (N.card : ENNReal) * (N.card : ENNReal)⁻¹ := by
         simp [nsmul_eq_mul]
       _ = 1 := by
-        have hcard : (N.card : ℝ≥0∞) ≠ 0 := by
+        have hcard : (N.card : ENNReal) ≠ 0 := by
           exact_mod_cast N.card_ne_zero.mpr hN
         exact ENNReal.mul_inv_cancel hcard (ENNReal.natCast_ne_top N.card)
   · intro y hy
@@ -65,7 +65,7 @@ theorem finiteTargetTransport_incoming_eq_top
     (_hN : N.Nonempty) {y : alpha} (hy : y ∈ N) :
     ∑' x : alpha, finiteTargetTransport C N x y = ⊤ := by
   classical
-  let c : ℝ≥0∞ := (N.card : ℝ≥0∞)⁻¹
+  let c : ENNReal := (N.card : ENNReal)⁻¹
   have hc : c ≠ 0 := by
     apply ENNReal.inv_ne_zero.mpr
     exact ENNReal.natCast_ne_top N.card

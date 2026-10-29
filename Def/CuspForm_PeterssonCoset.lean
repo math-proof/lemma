@@ -32,8 +32,8 @@ def splitEquiv : SL(2, ℤ) ≃ (SL(2, ℤ) ⧸ Λ) × Λ where
 
 variable [Fintype (SL(2, ℤ) ⧸ Λ)]
 
-def wt (x : ℍ) : ℝ≥0∞ :=
-  ∑ q : SL(2, ℤ) ⧸ Λ, (𝒟 : Set ℍ).indicator (fun _ => (1 : ℝ≥0∞)) ((q.out : SL(2, ℤ)) • x)
+def wt (x : ℍ) : ENNReal :=
+  ∑ q : SL(2, ℤ) ⧸ Λ, (𝒟 : Set ℍ).indicator (fun _ => (1 : ENNReal)) ((q.out : SL(2, ℤ)) • x)
 
 end weight
 

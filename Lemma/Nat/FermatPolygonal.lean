@@ -15,7 +15,7 @@ namespace Nat
 private lemma fermatPoly_even_sq_mod_eight {n : ℕ} (hn : Even n) :
   n ^ 2 % 8 = 0 ∨ n ^ 2 % 8 = 4 := by
   obtain ⟨k, rfl⟩ := hn
-  obtain ⟨j, rfl⟩ | ⟨j, rfl⟩ := Nat.even_or_odd k
+  rcases Nat.even_or_odd k with ⟨j, rfl⟩ | ⟨j, rfl⟩
   · left
     have h : (j + j + (j + j)) ^ 2 = 8 * (2 * j ^ 2) := by ring
     rw [h]
@@ -36,12 +36,12 @@ namespace Nat
 @[path]
 private lemma fermatPoly_odd_sq_mod_eight {n : ℕ} (hn : Odd n) : n ^ 2 % 8 = 1 := by
   obtain ⟨k, rfl⟩ := hn
-  obtain ⟨j, rfl⟩ | ⟨j, rfl⟩ := Nat.even_or_odd k
+  rcases Nat.even_or_odd k with ⟨j, rfl⟩ | ⟨j, rfl⟩
   · have hsq : (2 * (j + j) + 1) ^ 2 = 8 * (2 * j ^ 2 + j) + 1 := by ring
     rw [hsq]
     omega
   · have hsq : (2 * (2 * j + 1) + 1) ^ 2 = 8 * (2 * j ^ 2 + 3 * j + 1) + 1 := by
-    ring
+      ring
     rw [hsq]
     omega
 
@@ -55,7 +55,7 @@ namespace Nat
 @[path]
 private lemma fermatPoly_sq_mod_eight (n : ℕ) :
   n ^ 2 % 8 = 0 ∨ n ^ 2 % 8 = 1 ∨ n ^ 2 % 8 = 4 := by
-  obtain hn | hn := Nat.even_or_odd n
+  rcases Nat.even_or_odd n with hn | hn
   · rcases fermatPoly_even_sq_mod_eight hn with h | h
     · exact Or.inl h
     · exact Or.inr (Or.inr h)
@@ -74,7 +74,7 @@ private lemma fermatPoly_odd_iff_sq_mod_eight_eq_one (n : ℕ) :
   constructor
   · exact fermatPoly_odd_sq_mod_eight
   · intro hn
-    obtain he | ho := Nat.even_or_odd n
+    rcases Nat.even_or_odd n with he | ho
     · rcases fermatPoly_even_sq_mod_eight he with h | h <;> omega
     · exact ho
 
@@ -92,18 +92,18 @@ private lemma fermatPoly_not_exceptional_of_mod_eight_eq_three
   cases a with
   | zero => omega
   | succ a =>
-    cases a with
-    | zero => omega
-    | succ a =>
-      have hpow : 8 ∣ 4 ^ (Nat.succ (Nat.succ a)) := by
-        refine ⟨2 * 4 ^ a, ?_⟩
-        simp [pow_succ]
-        ring
-      have hzero : (4 ^ (Nat.succ (Nat.succ a)) * (8 * b + 7)) % 8 = 0 :=
-        Nat.mod_eq_zero_of_dvd (dvd_mul_of_dvd_left hpow _)
-      have hzero' : (4 ^ (a + 1 + 1) * (8 * b + 7)) % 8 = 0 := by
-        simpa only [Nat.succ_eq_add_one] using hzero
-      omega
+      cases a with
+      | zero => omega
+      | succ a =>
+          have hpow : 8 ∣ 4 ^ (Nat.succ (Nat.succ a)) := by
+            refine ⟨2 * 4 ^ a, ?_⟩
+            simp [pow_succ]
+            ring
+          have hzero : (4 ^ (Nat.succ (Nat.succ a)) * (8 * b + 7)) % 8 = 0 :=
+            Nat.mod_eq_zero_of_dvd (dvd_mul_of_dvd_left hpow _)
+          have hzero' : (4 ^ (a + 1 + 1) * (8 * b + 7)) % 8 = 0 := by
+            simpa only [Nat.succ_eq_add_one] using hzero
+          omega
 
 end Nat
 
@@ -115,12 +115,12 @@ namespace Nat
 @[path]
 private lemma fermatPoly_twice_triangular (n : ℕ) :
   2 * (n * (n + 1) / 2) = n * (n + 1) := by
-  obtain ⟨k, rfl⟩ | ⟨k, rfl⟩ := Nat.even_or_odd n
+  rcases Nat.even_or_odd n with ⟨k, rfl⟩ | ⟨k, rfl⟩
   · have h : (k + k) * (k + k + 1) = 2 * (k * (k + k + 1)) := by ring
     rw [h]
     simp
   · have h : (2 * k + 1) * (2 * k + 1 + 1) = 2 * ((2 * k + 1) * (k + 1)) := by
-    ring
+      ring
     rw [h]
     simp
 
@@ -132,8 +132,8 @@ namespace Nat
 [exists_eq_add_add_triangular](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FermatPolygonal.lean)
 -/
 @[path]
-lemma exists_eq_add_add_triangular
-  {n : ℕ} :
+private lemma exists_eq_add_add_triangular
+  (n : ℕ) :
 -- imply
   ∃ x y z : ℕ, n = polygonalNumber 3 x + polygonalNumber 3 y + polygonalNumber 3 z := by
 -- proof
@@ -144,13 +144,13 @@ lemma exists_eq_add_add_triangular
   have hsumMod : (x ^ 2 % 8 + y ^ 2 % 8 + z ^ 2 % 8) % 8 = 3 := by
     calc
       (x ^ 2 % 8 + y ^ 2 % 8 + z ^ 2 % 8) % 8 =
-        (x ^ 2 + y ^ 2 + z ^ 2) % 8 := by simp [Nat.add_mod]
+          (x ^ 2 + y ^ 2 + z ^ 2) % 8 := by simp [Nat.add_mod]
       _ = (8 * n + 3) % 8 := congrArg (· % 8) hxyz
       _ = 3 := hmod
   have hmods : x ^ 2 % 8 = 1 ∧ y ^ 2 % 8 = 1 ∧ z ^ 2 % 8 = 1 := by
-    obtain hx | hx | hx <;> := fermatPoly_sq_mod_eight x
-      obtain hy | hy | hy <;> := fermatPoly_sq_mod_eight y
-      obtain hz | hz | hz <;> omega := fermatPoly_sq_mod_eight z
+    rcases fermatPoly_sq_mod_eight x with hx | hx | hx <;>
+      rcases fermatPoly_sq_mod_eight y with hy | hy | hy <;>
+      rcases fermatPoly_sq_mod_eight z with hz | hz | hz <;> omega
   have hxodd := (fermatPoly_odd_iff_sq_mod_eight_eq_one x).mpr hmods.1
   have hyodd := (fermatPoly_odd_iff_sq_mod_eight_eq_one y).mpr hmods.2.1
   have hzodd := (fermatPoly_odd_iff_sq_mod_eight_eq_one z).mpr hmods.2.2
@@ -175,7 +175,7 @@ namespace Nat
 private lemma fermatPoly_order_three_squares {n x y z : ℕ}
   (h : x ^ 2 + y ^ 2 + z ^ 2 = n) :
   ∃ x' y' z' : ℕ, z' ≤ y' ∧ y' ≤ x' ∧ x' ^ 2 + y' ^ 2 + z' ^ 2 = n := by
-  obtain hxy | hyx := le_total x y
+  rcases le_total x y with hxy | hyx
   · rcases le_total y z with hyz | hzy
     · exact ⟨z, y, x, hxy, hyz, by rw [← h]; ring⟩
     · rcases le_total x z with hxz | hzx
@@ -247,7 +247,7 @@ private lemma fermatPoly_exists_signed_dvd_four {b x y z : ℕ}
   obtain ⟨X, hX⟩ := hx
   obtain ⟨Y, hY⟩ := hy
   obtain ⟨Z, hZ⟩ := hz
-  obtain ⟨r, hr⟩ | ⟨r, hr⟩ := Nat.even_or_odd (B + X + Y + Z)
+  rcases Nat.even_or_odd (B + X + Y + Z) with ⟨r, hr⟩ | ⟨r, hr⟩
   · refine ⟨(z : ℤ), Or.inl rfl, (r : ℤ) + 1, ?_⟩
     norm_num [hB, hX, hY, hZ] at ⊢
     have hr' : (B : ℤ) + X + Y + Z = r + r := by exact_mod_cast hr
@@ -265,7 +265,7 @@ namespace Nat
 [exists_sum_four_sq_eq_and_sum_eq_of_odd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FermatPolygonal.lean)
 -/
 @[path]
-lemma exists_sum_four_sq_eq_and_sum_eq_of_odd
+private lemma exists_sum_four_sq_eq_and_sum_eq_of_odd
   {a b : ℕ}
 -- given
   (ha : a % 2 = 1)
@@ -299,13 +299,13 @@ lemma exists_sum_four_sq_eq_and_sum_eq_of_odd
   have hsumMod : (x ^ 2 % 8 + y ^ 2 % 8 + z ^ 2 % 8) % 8 = 3 := by
     calc
       (x ^ 2 % 8 + y ^ 2 % 8 + z ^ 2 % 8) % 8 =
-        (x ^ 2 + y ^ 2 + z ^ 2) % 8 := by simp [Nat.add_mod]
+          (x ^ 2 + y ^ 2 + z ^ 2) % 8 := by simp [Nat.add_mod]
       _ = d % 8 := congrArg (· % 8) hxyz
       _ = 3 := hdMod
   have hmods : x ^ 2 % 8 = 1 ∧ y ^ 2 % 8 = 1 ∧ z ^ 2 % 8 = 1 := by
-    obtain hx | hx | hx <;> := fermatPoly_sq_mod_eight x
-      obtain hy | hy | hy <;> := fermatPoly_sq_mod_eight y
-      obtain hz | hz | hz <;> omega := fermatPoly_sq_mod_eight z
+    rcases fermatPoly_sq_mod_eight x with hx | hx | hx <;>
+      rcases fermatPoly_sq_mod_eight y with hy | hy | hy <;>
+      rcases fermatPoly_sq_mod_eight z with hz | hz | hz <;> omega
   have hx : Odd x := (fermatPoly_odd_iff_sq_mod_eight_eq_one x).mpr hmods.1
   have hy : Odd y := (fermatPoly_odd_iff_sq_mod_eight_eq_one y).mpr hmods.2.1
   have hz : Odd z := (fermatPoly_odd_iff_sq_mod_eight_eq_one z).mpr hmods.2.2
@@ -332,7 +332,7 @@ lemma exists_sum_four_sq_eq_and_sum_eq_of_odd
   have hBYdiv : (2 : ℤ) ∣ B + Y := by
     simpa [B, Y] using fermatPoly_two_dvd_int_add_of_odd hbOdd hy
   have hBWdiv : (2 : ℤ) ∣ B + w := by
-    obtain hw | hw := hw
+    rcases hw with hw | hw
     · simpa [B, hw] using fermatPoly_two_dvd_int_add_of_odd hbOdd hz
     · rw [hw]
       change (2 : ℤ) ∣ B - (z : ℤ)
@@ -352,21 +352,21 @@ lemma exists_sum_four_sq_eq_and_sum_eq_of_odd
   have hsumInt : S + T + U + V = B := by linarith
   have hrootSqNat : b ^ 2 + x ^ 2 + y ^ 2 + z ^ 2 = 4 * a := by omega
   have hrootSq : B ^ 2 + X ^ 2 + Y ^ 2 + w ^ 2 = 4 * (a : ℤ) := by
-    obtain hw | hw := hw
+    rcases hw with hw | hw
     · norm_num [B, X, Y, hw]
       exact_mod_cast hrootSqNat
     · norm_num [B, X, Y, hw]
       exact_mod_cast hrootSqNat
   have hfourSq : S ^ 2 + T ^ 2 + U ^ 2 + V ^ 2 = (a : ℤ) := by
     have hscaled :
-      16 * (S ^ 2 + T ^ 2 + U ^ 2 + V ^ 2) =
-        4 * (B ^ 2 + X ^ 2 + Y ^ 2 + w ^ 2) := by
+        16 * (S ^ 2 + T ^ 2 + U ^ 2 + V ^ 2) =
+          4 * (B ^ 2 + X ^ 2 + Y ^ 2 + w ^ 2) := by
       calc
         16 * (S ^ 2 + T ^ 2 + U ^ 2 + V ^ 2) =
-          (4 * S) ^ 2 + (4 * T) ^ 2 + (4 * U) ^ 2 + (4 * V) ^ 2 := by ring
+            (4 * S) ^ 2 + (4 * T) ^ 2 + (4 * U) ^ 2 + (4 * V) ^ 2 := by ring
         _ = (B + X + Y + w) ^ 2 + (B + X - Y - w) ^ 2 +
-          (B - X + Y - w) ^ 2 + (B - X - Y + w) ^ 2 := by
-          rw [hS4, hT4, hU4, hV4]
+              (B - X + Y - w) ^ 2 + (B - X - Y + w) ^ 2 := by
+              rw [hS4, hT4, hU4, hV4]
         _ = 4 * (B ^ 2 + X ^ 2 + Y ^ 2 + w ^ 2) := by ring
     rw [hrootSq] at hscaled
     nlinarith only [hscaled]
@@ -374,7 +374,7 @@ lemma exists_sum_four_sq_eq_and_sum_eq_of_odd
     dsimp [B, X, Y]
     exact_mod_cast hsumLt
   have hVnum : -4 < B - X - Y + w := by
-    obtain hw | hw := hw
+    rcases hw with hw | hw
     · rw [hw]
       dsimp [B, X, Y]
       omega
@@ -386,10 +386,10 @@ lemma exists_sum_four_sq_eq_and_sum_eq_of_odd
     have hXY : 0 ≤ X + Y := by positivity
     omega
   have hTnonneg : 0 ≤ T := by
-    obtain hw | hw := hw
+    rcases hw with hw | hw
     · have hzx : (z : ℤ) ≤ X := by
-      dsimp [X]
-      exact_mod_cast hzy.trans hyx
+        dsimp [X]
+        exact_mod_cast hzy.trans hyx
       rw [hw] at hT4 hV4
       omega
     · have hX : 0 ≤ X := by positivity
@@ -397,10 +397,10 @@ lemma exists_sum_four_sq_eq_and_sum_eq_of_odd
       rw [hw] at hT4 hV4
       omega
   have hUnonneg : 0 ≤ U := by
-    obtain hw | hw := hw
+    rcases hw with hw | hw
     · have hzyInt : (z : ℤ) ≤ Y := by
-      dsimp [Y]
-      exact_mod_cast hzy
+        dsimp [Y]
+        exact_mod_cast hzy
       rw [hw] at hU4 hV4
       omega
     · have hY : 0 ≤ Y := by positivity
@@ -418,6 +418,7 @@ lemma exists_sum_four_sq_eq_and_sum_eq_of_odd
     rw [Int.toNat_of_nonneg hSnonneg, Int.toNat_of_nonneg hTnonneg,
       Int.toNat_of_nonneg hUnonneg, Int.toNat_of_nonneg hVnonneg]
     exact hsumInt.symm
+
 end Nat
 
 
@@ -466,9 +467,9 @@ private lemma fermatPoly_four_polygonal_sum {m d b p q u v : ℕ}
   rw [hm]
   calc
     m * d + b = m * (Nat.choose p 2 + Nat.choose q 2 + Nat.choose u 2 +
-      Nat.choose v 2) + (p + q + u + v) := by rw [hchoose, hsum]
+        Nat.choose v 2) + (p + q + u + v) := by rw [hchoose, hsum]
     _ = m * Nat.choose p 2 + p + (m * Nat.choose q 2 + q) +
-      (m * Nat.choose u 2 + u) + (m * Nat.choose v 2 + v) := by ring
+        (m * Nat.choose u 2 + u) + (m * Nat.choose v 2 + v) := by ring
 
 end MetaMathlibExt
 
@@ -513,7 +514,7 @@ private lemma fermatPolyRoute_sound {m n : ℕ} (hm : 3 ≤ m) (h : fermatPolyRo
     Nat.exists_sum_four_sq_eq_and_sum_eq_of_odd ha hb hloNat hhiNat
   have hpoly := fermatPoly_four_polygonal_sum (m := m) hsq hsum
   have hnpoly : n = Nat.polygonalNumber (m + 2) p + Nat.polygonalNumber (m + 2) q +
-    Nat.polygonalNumber (m + 2) u + Nat.polygonalNumber (m + 2) v + r := by omega
+      Nat.polygonalNumber (m + 2) u + Nat.polygonalNumber (m + 2) v + r := by omega
   exact fermatPoly_four_add_ones (m := m) (p := p) (q := q) (u := u) (v := v)
     (by omega) hr hnpoly
 
@@ -630,16 +631,16 @@ private lemma fermatPoly_large_candidates (q : ℕ) (hq : 120 ≤ q) :
     have hprod : 0 ≤ ((u : ℤ) + 4 - c) * ((u : ℤ) + 4 + c) := by positivity
     nlinarith only [hauxZ, huSqZ, hcLowerZ, hprod]
   · have huEven : u % 2 = 0 := by
-    by_contra huEven
-    have huMod := Nat.mod_lt u (by norm_num : 0 < 2)
-    have hb0Eq : b0 = u + 2 := by simp [b0, huEven]
-    have huNextZ : 6 * (q : ℤ) < ((u : ℤ) + 1) ^ 2 := by exact_mod_cast huNext
-    have : good := by
-      dsimp [good]
-      rw [hb0Eq]
-      change 6 * (q : ℤ) < ((u : ℤ) + 2) ^ 2 - ((u : ℤ) + 2) + 4
-      nlinarith only [huNextZ]
-    exact hg this
+      by_contra huEven
+      have huMod := Nat.mod_lt u (by norm_num : 0 < 2)
+      have hb0Eq : b0 = u + 2 := by simp [b0, huEven]
+      have huNextZ : 6 * (q : ℤ) < ((u : ℤ) + 1) ^ 2 := by exact_mod_cast huNext
+      have : good := by
+        dsimp [good]
+        rw [hb0Eq]
+        change 6 * (q : ℤ) < ((u : ℤ) + 2) ^ 2 - ((u : ℤ) + 2) + 4
+        nlinarith only [huNextZ]
+      exact hg this
     have hb0Eq : b0 = u + 1 := by simp [b0, huEven]
     have hbEq : b = b0 + 2 := by simp [b, hg]
     have hc : c ≤ u + 5 := by omega
@@ -701,7 +702,7 @@ private lemma fermatPolyRoute_of_large {m n : ℕ} (hm : 3 ≤ m) (hn : 120 * m 
   by_cases hr : r0 ≤ m - 2
   · refine ⟨d, b, r0, hbodd, hr, hn0, ?_, ?_⟩
     · apply fermatPoly_large_lower_ineq (m := m) (q := q) (rho := rho)
-      (d := d) (c := b) (r := r0) hm hb2 hr
+        (d := d) (c := b) (r := r0) hm hb2 hr
       · omega
       · exact hbound b (by omega) (by omega)
     · exact fermatPoly_large_upper_ineq (q := q) (b := b) hdq (by omega) (by omega) hgood
@@ -710,7 +711,7 @@ private lemma fermatPolyRoute_of_large {m n : ℕ} (hm : 3 ≤ m) (hn : 120 * m 
     have heq : n = m * d + (b + 2) + (m - 3) := by omega
     refine ⟨d, b + 2, m - 3, by omega, hr', heq, ?_, ?_⟩
     · apply fermatPoly_large_lower_ineq (m := m) (q := q) (rho := rho)
-      (d := d) (c := b + 2) (r := m - 3) hm (by omega) hr'
+        (d := d) (c := b + 2) (r := m - 3) hm (by omega) hr'
       · omega
       · exact hbound (b + 2) (by omega) (by omega)
     · exact fermatPoly_large_upper_ineq (q := q) (b := b) hdq (by omega) (by omega) hgood
@@ -758,7 +759,7 @@ private lemma fermatPoly_list_add_ones {m n r : ℕ} (ks : List ℕ)
   apply fermatPoly_of_fin_sum (f := fun i ↦ all.get i)
   · simpa [all] using hlen
   have hof : List.ofFn (fun i ↦ Nat.polygonalNumber (m + 2) (all.get i)) =
-    all.map (Nat.polygonalNumber (m + 2)) := by
+      all.map (Nat.polygonalNumber (m + 2)) := by
     simp
   rw [hn, ← List.sum_ofFn]
   rw [hof]
@@ -777,7 +778,7 @@ private lemma fermatPolyFamB_sound {m n : ℕ} (hm : 3 ≤ m)
   ∃ (t : Finset ℕ) (k : ℕ → ℕ), t.card ≤ m + 2 ∧
     n = ∑ i ∈ t, Nat.polygonalNumber (m + 2) (k i) := by
   have hf := of_decide_eq_true h
-  obtain h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h := hf
+  rcases hf with h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h
   · apply fermatPoly_list_add_ones (ks := [2, 2]) (r := 0)
     · norm_num
     · rw [h]
@@ -902,7 +903,7 @@ private lemma fermatPolySmallGoodB_sound {m n : ℕ} (hm : 3 ≤ m)
   ∃ (t : Finset ℕ) (k : ℕ → ℕ), t.card ≤ m + 2 ∧
     n = ∑ i ∈ t, Nat.polygonalNumber (m + 2) (k i) := by
   simp only [fermatPolySmallGoodB, Bool.or_eq_true, decide_eq_true_eq] at h
-  obtain (h | h) | h := h
+  rcases h with (h | h) | h
   · exact fermatPolyRoute_sound hm (fermatPolyRouteB_sound h)
   · exact fermatPolyFamB_sound hm h
   · exact fermatPoly_ones (by omega)
@@ -1126,8 +1127,8 @@ namespace MetaMathlibExt
 @[path]
 private lemma fermatPoly_check_m22 : ∀ n < 120 * 22, fermatPolySmallGoodB 22 n = true := by
   decide +kernel
-set_option maxRecDepth 2000 in
 
+-- The larger bounded tables need additional kernel reduction depth.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1137,8 +1138,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma fermatPoly_check_m23 : ∀ n < 120 * 23, fermatPolySmallGoodB 23 n = true := by
-  decide +kernel
-set_option maxRecDepth 2000 in
+  set_option maxRecDepth 2000 in decide +kernel
 
 end MetaMathlibExt
 
@@ -1149,8 +1149,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma fermatPoly_check_m24 : ∀ n < 120 * 24, fermatPolySmallGoodB 24 n = true := by
-  decide +kernel
-set_option maxRecDepth 2000 in
+  set_option maxRecDepth 2000 in decide +kernel
 
 end MetaMathlibExt
 
@@ -1161,8 +1160,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma fermatPoly_check_m25 : ∀ n < 120 * 25, fermatPolySmallGoodB 25 n = true := by
-  decide +kernel
-set_option maxRecDepth 2000 in
+  set_option maxRecDepth 2000 in decide +kernel
 
 end MetaMathlibExt
 
@@ -1173,8 +1171,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma fermatPoly_check_m26 : ∀ n < 120 * 26, fermatPolySmallGoodB 26 n = true := by
-  decide +kernel
-set_option maxRecDepth 2000 in
+  set_option maxRecDepth 2000 in decide +kernel
 
 end MetaMathlibExt
 
@@ -1185,8 +1182,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma fermatPoly_check_m27 : ∀ n < 120 * 27, fermatPolySmallGoodB 27 n = true := by
-  decide +kernel
-set_option maxRecDepth 2000 in
+  set_option maxRecDepth 2000 in decide +kernel
 
 end MetaMathlibExt
 
@@ -1197,8 +1193,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma fermatPoly_check_m28 : ∀ n < 120 * 28, fermatPolySmallGoodB 28 n = true := by
-  decide +kernel
-set_option maxRecDepth 2000 in
+  set_option maxRecDepth 2000 in decide +kernel
 
 end MetaMathlibExt
 
@@ -1209,8 +1204,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma fermatPoly_check_m29 : ∀ n < 120 * 29, fermatPolySmallGoodB 29 n = true := by
-  decide +kernel
-set_option maxRecDepth 2000 in
+  set_option maxRecDepth 2000 in decide +kernel
 
 end MetaMathlibExt
 
@@ -1221,8 +1215,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma fermatPoly_check_m30 : ∀ n < 120 * 30, fermatPolySmallGoodB 30 n = true := by
-  decide +kernel
-set_option maxRecDepth 2000 in
+  set_option maxRecDepth 2000 in decide +kernel
 
 end MetaMathlibExt
 
@@ -1233,8 +1226,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma fermatPoly_check_m31 : ∀ n < 120 * 31, fermatPolySmallGoodB 31 n = true := by
-  decide +kernel
-set_option maxRecDepth 2000 in
+  set_option maxRecDepth 2000 in decide +kernel
 
 end MetaMathlibExt
 
@@ -1245,8 +1237,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma fermatPoly_check_m32 : ∀ n < 120 * 32, fermatPolySmallGoodB 32 n = true := by
-  decide +kernel
-set_option maxRecDepth 2000 in
+  set_option maxRecDepth 2000 in decide +kernel
 
 end MetaMathlibExt
 
@@ -1257,7 +1248,8 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma fermatPoly_check_m33 : ∀ n < 120 * 33, fermatPolySmallGoodB 33 n = true := by
-  decide +kernel
+  set_option maxRecDepth 2000 in decide +kernel
+
 
 end MetaMathlibExt
 
@@ -1335,20 +1327,20 @@ private lemma fermatPolyRoutePairB_sound {m n q rho : ℕ} (hm : 34 ≤ m) (hrho
   have hj : j < 17 := List.mem_range.mp hjmem
   have hb34 : b < 34 := by simp [b]; omega
   have hb : b % 2 = 1 := by simp [b]
-  obtain ⟨hbrho, hlo, hhi⟩ | ⟨hbrho, hq, hlo, hhi⟩ := h
+  rcases h with ⟨hbrho, hlo, hhi⟩ | ⟨hbrho, hq, hlo, hhi⟩
   · refine ⟨q, b, rho - b, hb, ?_, ?_, hlo, hhi⟩
     · have hb1 : 1 ≤ b := by
-      have hbmod := Nat.mod_lt b (by norm_num : 0 < 2)
-      omega
+        have hbmod := Nat.mod_lt b (by norm_num : 0 < 2)
+        omega
       omega
     · omega
   · have hbm : b ≤ m + rho := by omega
     refine ⟨q - 1, b, m + rho - b, hb, ?_, ?_, hlo, hhi⟩
     · omega
     · have hmul : m * (q - 1) + m = m * q := by
-      calc
-        m * (q - 1) + m = m * ((q - 1) + 1) := by ring
-        _ = m * q := by rw [Nat.sub_add_cancel hq]
+        calc
+          m * (q - 1) + m = m * ((q - 1) + 1) := by ring
+          _ = m * q := by rw [Nat.sub_add_cancel hq]
       omega
 
 end MetaMathlibExt
@@ -1370,11 +1362,11 @@ private lemma fermatPolyRoutePairB_high_sound {m n q rho : ℕ} (hm : 34 ≤ m)
   have hj : j < 17 := List.mem_range.mp hjmem
   have hblt : b < 34 := by simp [b]; omega
   have hb : b % 2 = 1 := by simp [b]
-  obtain ⟨hb34, hlo, hhi⟩ | ⟨hb36, hq, hlo, hhi⟩ := h
+  rcases h with ⟨hb34, hlo, hhi⟩ | ⟨hb36, hq, hlo, hhi⟩
   · refine ⟨q, b, rho - b, hb, ?_, ?_, hlo, hhi⟩
     · have hb1 : 1 ≤ b := by
-      have hbmod := Nat.mod_lt b (by norm_num : 0 < 2)
-      omega
+        have hbmod := Nat.mod_lt b (by norm_num : 0 < 2)
+        omega
       omega
     · omega
   · omega
@@ -1403,7 +1395,7 @@ private lemma fermatPolyFamPairB_lift {m n q rho : ℕ} (hn : n = m * q + rho)
   (h : fermatPolyFamPairB q rho = true) : fermatPolyFamB m n = true := by
   simp only [fermatPolyFamPairB, decide_eq_true_eq] at h
   simp only [fermatPolyFamB, decide_eq_true_eq]
-  obtain ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | := h
+  rcases h with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ |
     ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ |
     ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ |
     ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;> omega
@@ -1434,27 +1426,27 @@ private lemma fermatPoly_small_of_large_m {m n : ℕ} (hm : 34 ≤ m) (hn : n < 
   by_cases hrho34 : rho ≤ 34
   · have hgood := fermatPoly_check_large_pairs q hq rho hrho34
     simp only [fermatPolyPairGoodB, Bool.or_eq_true, decide_eq_true_eq] at hgood
-    obtain (hroute | hfam) | hones := hgood
+    rcases hgood with (hroute | hfam) | hones
     · exact fermatPolyRoute_sound (by omega) <|
-      fermatPolyRoutePairB_sound hm hrho hdecomp hroute
+        fermatPolyRoutePairB_sound hm hrho hdecomp hroute
     · exact fermatPolyFamB_sound (by omega) <|
-      fermatPolyFamPairB_lift hdecomp hfam
+        fermatPolyFamPairB_lift hdecomp hfam
     · apply fermatPoly_ones
-      obtain hq0 | ⟨hq1, hrho2⟩ := hones
+      rcases hones with hq0 | ⟨hq1, hrho2⟩
       · rw [hq0] at hdecomp
         omega
       · rw [hq1] at hdecomp
         omega
   · have hgood := fermatPoly_check_large_pairs q hq 34 (by omega)
     simp only [fermatPolyPairGoodB, Bool.or_eq_true, decide_eq_true_eq] at hgood
-    obtain (hroute | hfam) | hones := hgood
+    rcases hgood with (hroute | hfam) | hones
     · exact fermatPolyRoute_sound (by omega) <|
-      fermatPolyRoutePairB_high_sound hm hrho (by omega) hdecomp hroute
+        fermatPolyRoutePairB_high_sound hm hrho (by omega) hdecomp hroute
     · have : fermatPolyFamPairB q 34 = false := by simp [fermatPolyFamPairB]
       rw [this] at hfam
       contradiction
     · apply fermatPoly_ones
-      obtain hq0 | ⟨hq1, hfalse⟩ := hones
+      rcases hones with hq0 | ⟨hq1, hfalse⟩
       · rw [hq0] at hdecomp
         omega
       · omega
@@ -1501,7 +1493,7 @@ namespace MetaMathlibExt
 [fermat_polygonal_number_theorem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FermatPolygonal.lean)
 -/
 @[path]
-lemma fermat_polygonal_number_theorem
+private lemma fermat_polygonal_number_theorem
   :
 -- imply
   ∀ (s n : ℕ), 3 ≤ s →
@@ -1509,7 +1501,7 @@ lemma fermat_polygonal_number_theorem
     n = ∑ i ∈ t, Nat.polygonalNumber s (k i) := by
 -- proof
   intro s n hs
-  obtain hs3 | hs3 := eq_or_lt_of_le hs
+  rcases eq_or_lt_of_le hs with hs3 | hs3
   · subst s
     exact fermatPoly_three_case n
   by_cases hs4 : s = 4
@@ -1532,4 +1524,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

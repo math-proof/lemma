@@ -57,10 +57,10 @@ namespace Representation
 lemma artinLocalFactorRaw_eq_zero_iff
   {G : Type u} [Group G] [Finite G]
   {V : Type v} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] [Module.Finite ℂ V]
-  {ρ : Representation ℂ G V}
-  {p : Nat.Primes}
-  {d : ArtinLocalDatum G}
-  {s : ℂ} :
+  (ρ : Representation ℂ G V)
+  (p : Nat.Primes)
+  (d : ArtinLocalDatum G)
+  (s : ℂ) :
 -- imply
   artinLocalFactorRaw ρ p d s = 0 ↔ ¬ArtinLocalFactorRegular ρ p d s := by
 -- proof
@@ -117,8 +117,8 @@ lemma artinLocalFactorRaw_of_action_eq_id_general
     ((ρ.comp d.decomposition.subtype : Representation ℂ d.decomposition V).comp
       d.inertia.subtype)
   have hlin : (LinearMap.id : W →ₗ[ℂ] W) -
-    (p.1 : ℂ) ^ (-s) • LinearMap.id =
-    (1 - (p.1 : ℂ) ^ (-s)) • LinearMap.id := by
+      (p.1 : ℂ) ^ (-s) • LinearMap.id =
+      (1 - (p.1 : ℂ) ^ (-s)) • LinearMap.id := by
     apply LinearMap.ext
     intro x
     apply Subtype.ext
@@ -241,4 +241,4 @@ end Representation
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -11,7 +11,7 @@ open MeasureTheory Finset StatMech
 private lemma rc83_bk_increasing_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (hp : p ≤ 1)
@@ -43,7 +43,7 @@ private lemma rc83_disjointOccurrence_increasing_eq
 private lemma rc83_bk_triple_increasing_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {P Q R : Set (ConfigSpace E)}
 -- given
   (hp : p ≤ 1)
@@ -62,7 +62,7 @@ private lemma rc83_bk_triple_increasing_eq
 private lemma rc83_reimer_not_needed_for_increasing_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (hp : p ≤ 1)
@@ -116,7 +116,7 @@ private lemma rc83_downstream_audit_eq
   [Fintype V]
   [DecidableEq V]
   {G : SimpleGraph V}
-  {p : ℝ≥0}
+  {p : NNReal}
   {S : Set V}
   {u : V}
   {x y : V}

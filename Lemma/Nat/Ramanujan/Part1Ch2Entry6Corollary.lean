@@ -12,7 +12,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6Corollary
 -/
 @[path]
 lemma A_two_mul_add_one
-  {k : ℕ} :
+  (k : ℕ) :
 -- imply
   2 * A k + 1 = 3 ^ k := by
 -- proof
@@ -257,7 +257,6 @@ lemma ramanujan_part1_ch2_entry6_corollary_general
     ∑ j ∈ Finset.Icc (A (k - 1) + 1) (A k), (1 : ℚ) / ((3 * (j : ℚ)) ^ 3 - 3 * (j : ℚ)) := by
 -- proof
   exact main_aux r
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6Corollary
 
@@ -270,7 +269,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6Corollary
 lemma ramanujan_part1_ch2_entry6_corollary
   {r : ℕ}
 -- given
-  (hr : 0 < r) :
+  (_hr : 0 < r) :
 -- imply
   ∑ j ∈ Finset.Icc 1 (A r), (1 : ℚ) / (j : ℚ) = (r : ℚ) + 2 * ∑ k ∈ Finset.Icc 1 (r - 1),
     ((r - k : ℕ) : ℚ) *

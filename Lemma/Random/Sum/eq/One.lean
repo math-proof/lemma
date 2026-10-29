@@ -27,7 +27,7 @@ private lemma main
 -- proof
   obtain ⟨ρ, D, hρ⟩ := hP.exists_distribution
   have hρ' : π.map x = ReferenceMeasure.measure.withDensity ρ := hρ
-  have hp : Measurable ρ := D.measurable_density
+  have hp : Measurable ρ := D
   have hD : π.map x = Measure.count.withDensity ρ := by
     rw [hρ', hμ]
   -- the canonical density is `ρ` a.e. w.r.t. the counting measure, hence everywhere

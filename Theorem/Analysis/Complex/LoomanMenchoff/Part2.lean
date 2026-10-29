@@ -116,7 +116,7 @@ theorem looman_baire_boundedAt {f : ℂ → ℂ} {s C : Set ℂ} {r : ℝ}
   simpa [A] using nonempty_interior_of_iUnion_of_closed hAclosed hAuniv
 
 theorem looman_oneDimensional_estimate
-    {w : ℝ → ℝ} {F : Set ℝ} {a b : ℝ} {K : ℝ≥0}
+    {w : ℝ → ℝ} {F : Set ℝ} {a b : ℝ} {K : NNReal}
     (hab : a ≤ b) (hFclosed : IsClosed F) (hFne : F.Nonempty)
     (hF : F ⊆ Icc a b)
     (hdiff : ∀ x ∈ F, DifferentiableAt ℝ w x)

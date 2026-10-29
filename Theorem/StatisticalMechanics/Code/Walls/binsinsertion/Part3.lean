@@ -124,7 +124,7 @@ theorem bins_threeMeetBox_subset_iUnion_ShellExtEvent (n : ℕ) :
   exact ⟨⟨hu1', hu2', hu3'⟩, hcut12, hcut13, hcut23⟩
 
 
-theorem bins_exists_ShellExtEvent_pos (p : ℝ≥0) (hp1 : p ≤ 1) (n : ℕ)
+theorem bins_exists_ShellExtEvent_pos (p : NNReal) (hp1 : p ≤ 1) (n : ℕ)
     (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n)) :
     ∃ v₁ v₂ v₃ u₁ u₂ u₃ : Site 2,
       0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1

@@ -30,10 +30,10 @@ scoped instance rankOne :
         norm_num at h'⟩⟩
   haveI hle : (Valued.v : Valuation (LaurentSeries F) (WithZero (Multiplicative ℤ))).RankLeOne :=
     Valuation.RankLeOne.mk
-      ((WithZeroMulInt.toNNReal (by norm_num : (2 : ℝ≥0) ≠ 0)).comp
+      ((WithZeroMulInt.toNNReal (by norm_num : (2 : NNReal) ≠ 0)).comp
         MonoidWithZeroHom.ValueGroup₀.embedding)
       (fun a b hab =>
-        WithZeroMulInt.toNNReal_strictMono (by norm_num : (1 : ℝ≥0) < 2)
+        WithZeroMulInt.toNNReal_strictMono (by norm_num : (1 : NNReal) < 2)
           (MonoidWithZeroHom.ValueGroup₀.embedding_strictMono hab))
   exact Valuation.RankOne.mk
 

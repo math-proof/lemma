@@ -16,14 +16,15 @@ lemma periodic_strip_to_global
   (hf_per : Periodic f (1 : ℂ))
   (hC : ∀ s : ℂ, 0 ≤ s.re → s.re ≤ 1 → ‖f s‖ ≤ C * Real.exp |s.im|) :
 -- imply
-  ∀ s : ℂ, ‖f s‖ ≤ C * Real.exp := by
+  ∀ s : ℂ, ‖f s‖ ≤ C * Real.exp |s.im| := by
 -- proof
   intro s
   set n := ⌊s.re⌋
   have hsub : f s = f (s - ↑n) := by
     have h := hf_per.int_mul (-n) s
     simp only [mul_one, Int.cast_neg] at h
-    rwa [show s + -↑n = s - ↑n from by ring] at h
+    rw [show s + -↑n = s - ↑n from by ring] at h
+    exact h.symm
   rw [hsub]
   have him : (s - ↑n).im = s.im := by simp
   have hre_lo : 0 ≤ (s - ↑n).re := by simp; linarith [Int.floor_le s.re]
@@ -51,7 +52,7 @@ lemma sin_pi_mul_add_one
 [dense_sin_pi_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/ThetaFunction.lean)
 -/
 @[path]
-lemma dense_sin_pi_ne_zero
+lemma dense_sin_pi_ne_zero :
 -- imply
   Dense {z : ℂ | Complex.sin (↑Real.pi * z) ≠ 0} := by
 -- proof
@@ -76,7 +77,7 @@ lemma dense_sin_pi_ne_zero
 [sin_pi_half_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/ThetaFunction.lean)
 -/
 @[path]
-lemma sin_pi_half_ne_zero
+lemma sin_pi_half_ne_zero :
 -- imply
   Complex.sin (↑Real.pi * (1/2 : ℂ)) ≠ 0 := by
 -- proof
@@ -162,7 +163,7 @@ lemma dslope_sinpi_at_int_ne_zero
 [sinpi_differentiable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/ThetaFunction.lean)
 -/
 @[path]
-lemma sinpi_differentiable
+lemma sinpi_differentiable :
 -- imply
   Differentiable ℂ (fun z => Complex.sin ((↑Real.pi : ℂ) * z)) :=
 -- proof
@@ -188,9 +189,9 @@ lemma entire_quotient_by_sin_pi
     have hdiff_ratio : DifferentiableAt ℂ
       (fun z => dslope h ↑n z /
         dslope (fun w => Complex.sin ((↑Real.pi : ℂ) * w)) ↑n z) ↑n :=
-      (dslope_entire hh_diff n).differentiableAt.div
-        (dslope_entire sinpi_differentiable n).differentiableAt
-        (dslope_sinpi_at_int_ne_zero n)
+      (dslope_entire hh_diff).differentiableAt.div
+        (dslope_entire sinpi_differentiable).differentiableAt
+        (dslope_sinpi_at_int_ne_zero (n := n))
     apply hdiff_ratio.congr_of_eventuallyEq
     apply Filter.eventually_of_mem (Metric.ball_mem_nhds (↑n : ℂ) one_pos)
     intro z hz
@@ -198,10 +199,10 @@ lemma entire_quotient_by_sin_pi
       dslope (fun w => Complex.sin ((↑Real.pi : ℂ) * w)) ↑n z
     by_cases hzn : z = ↑n
     · subst hzn; simp only [mkQuotient]
-      rw [if_pos (by rw [sin_eq_zero_iff]; exact ⟨n, by ring⟩)]
+      rw [ite_eq_left (by rw [sin_eq_zero_iff]; exact ⟨n, by ring⟩)]
       congr 1 <;> simp [Complex.intCast_re, Int.floor_intCast]
-    · have hsin_ne := sin_pi_ne_zero_in_ball n z hz hzn
-      simp only [mkQuotient, if_neg hsin_ne]
+    · have hsin_ne := sin_pi_ne_zero_in_ball (n := n) (z := z) hz hzn
+      simp only [mkQuotient, ite_eq_right hsin_ne]
       have h1 : h z = (z - ↑n) * dslope h (↑n) z := by
         have := sub_smul_dslope h (↑n : ℂ) z
         simp only [smul_eq_mul] at this; rw [hh_zero n, sub_zero] at this; exact this.symm
@@ -231,7 +232,7 @@ lemma entire_quotient_by_sin_pi
 -/
 @[path]
 lemma normSq_sin
-  {z : ℂ} :
+  (z : ℂ) :
 -- imply
   Complex.normSq (Complex.sin z) = Real.sin z.re ^ 2 + Real.sinh z.im ^ 2 := by
 -- proof
@@ -248,7 +249,7 @@ lemma normSq_sin
 lemma norm_sin_ge_abs_sinh_im
   {z : ℂ} :
 -- imply
-  ‖Complex.sin z‖ ≥ := by
+  ‖Complex.sin z‖ ≥ |Real.sinh z.im| := by
 -- proof
   nlinarith [Complex.sq_norm (Complex.sin z), normSq_sin z, sq_nonneg (Real.sin z.re),
     sq_abs (Real.sinh z.im), norm_nonneg (Complex.sin z),
@@ -282,7 +283,7 @@ lemma norm_sin_pi_lower_bound
   have him_eq : (↑Real.pi * z).im = Real.pi * z.im := by
     simp [mul_im, ofReal_re, ofReal_im]
   calc ‖Complex.sin (↑Real.pi * z)‖
-    ≥ |Real.sinh (↑Real.pi * z).im| := norm_sin_ge_abs_sinh_im _
+    ≥ |Real.sinh (↑Real.pi * z).im| := norm_sin_ge_abs_sinh_im
     _ = |Real.sinh (Real.pi * z.im)| := by rw [him_eq]
     _ = Real.sinh |Real.pi * z.im| := Real.abs_sinh _
     _ = Real.sinh (Real.pi * |z.im|) := by rw [abs_mul, abs_of_pos Real.pi_pos]
@@ -293,7 +294,7 @@ lemma norm_sin_pi_lower_bound
 [strip_box_compact](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/ThetaFunction.lean)
 -/
 @[path]
-lemma strip_box_compact
+lemma strip_box_compact :
 -- imply
   IsCompact {z : ℂ | 0 ≤ z.re ∧ z.re ≤ 1 ∧ |z.im| ≤ 1} := by
 -- proof
@@ -313,13 +314,12 @@ lemma strip_box_compact
 -/
 @[path]
 lemma quotient_bounded_on_strip
-  {C : ℝ}
-  {g : ℂ → ℂ}
--- given
   (h : ℂ → ℂ)
-  (hh_diff : Differentiable ℂ h)
-  (hh_zero : ∀ n : ℤ, h n = 0)
+  (_hh_diff : Differentiable ℂ h)
+  (_hh_zero : ∀ n : ℤ, h n = 0)
+  (C : ℝ)
   (hC : ∀ s : ℂ, ‖h s‖ ≤ C * Real.exp |s.im|)
+  (g : ℂ → ℂ)
   (hg_diff : Differentiable ℂ g)
   (hg_eq : ∀ z, Complex.sin (↑Real.pi * z) ≠ 0 → g z = h z / Complex.sin (↑Real.pi * z)) :
 -- imply
@@ -344,13 +344,13 @@ lemma quotient_bounded_on_strip
       have : z.im = 0 := by rw [hz_eq]; simp
       rw [this] at him; simp at him; linarith
     rw [hg_eq z hsin_ne, norm_div]
-    have h_den := norm_sin_pi_lower_bound z him
+    have h_den := norm_sin_pi_lower_bound (z := z) him
     have h_den_pos : ‖Complex.sin (↑Real.pi * z)‖ > 0 := norm_pos_iff.mpr hsin_ne
     rw [div_le_iff₀ h_den_pos]
     calc ‖h z‖ ≤ C * Real.exp |z.im| := hC z
       _ ≤ C * Real.exp (Real.pi * |z.im|) := by
-        apply mul_le_mul_of_nonneg_left _ hC_nn
-        exact Real.exp_le_exp_of_le (by nlinarith [Real.pi_gt_three, abs_nonneg z.im])
+          apply mul_le_mul_of_nonneg_left _ hC_nn
+          exact Real.exp_le_exp_of_le (by nlinarith [Real.pi_gt_three, abs_nonneg z.im])
       _ ≤ 4 * C * ‖Complex.sin (↑Real.pi * z)‖ := by nlinarith
   exact ⟨max M₁ (4 * C), fun s hs0 hs1 => by
     by_cases him : |s.im| ≤ 1
@@ -365,11 +365,10 @@ lemma quotient_bounded_on_strip
 -/
 @[path]
 lemma entire_bounded_auxiliary
-  {f : ℂ → ℂ}
-  {C : ℝ}
--- given
+  (f : ℂ → ℂ)
   (hf_diff : Differentiable ℂ f)
   (hf_per : Periodic f (1 : ℂ))
+  (C : ℝ)
   (hC_global : ∀ s : ℂ, ‖f s‖ ≤ C * Real.exp |s.im|) :
 -- imply
   ∃ g : ℂ → ℂ, Differentiable ℂ g ∧ (∀ z, Complex.sin (↑Real.pi * z) ≠ 0 → g z = (f z - f 0) / Complex.sin (↑Real.pi * z)) ∧ Bornology.IsBounded (range g) := by
@@ -386,8 +385,8 @@ lemma entire_bounded_auxiliary
       _ ≤ ‖f s‖ + ‖f 0‖ := norm_sub_le _ _
       _ ≤ C * Real.exp |s.im| + ‖f 0‖ := by linarith [hC_global s]
       _ ≤ C * Real.exp |s.im| + ‖f 0‖ * Real.exp |s.im| := by
-        linarith [mul_le_mul_of_nonneg_left (Real.one_le_exp (abs_nonneg s.im))
-          (norm_nonneg (f 0))]
+          linarith [mul_le_mul_of_nonneg_left (Real.one_le_exp (abs_nonneg s.im))
+            (norm_nonneg (f 0))]
       _ = (C + ‖f 0‖) * Real.exp |s.im| := by ring
   obtain ⟨g, hg_diff, hg_eq⟩ := entire_quotient_by_sin_pi h hh_diff hh_zero
   refine ⟨g, hg_diff, hg_eq, ?_⟩
@@ -403,7 +402,7 @@ lemma entire_bounded_auxiliary
       exact this (dense_sin_pi_ne_zero.closure_eq ▸ mem_univ z)
     apply closure_minimal
     · intro w hw
-      simp only [mem_setOf_eq] at hw ⊢
+      simp only [mem_ofPred_eq] at hw ⊢
       have hw1 : Complex.sin (↑Real.pi * (w + 1)) ≠ 0 := by
         rw [sin_pi_mul_add_one]; exact neg_ne_zero.mpr hw
       rw [hg_eq (w + 1) hw1, hg_eq w hw, hh_per w, sin_pi_mul_add_one]
@@ -447,16 +446,15 @@ lemma entire_bounded_auxiliary
 -/
 @[path]
 lemma entire_periodic_exp_growth_bounded
-  {f : ℂ → ℂ}
-  {C : ℝ}
--- given
+  (f : ℂ → ℂ)
   (hf_diff : Differentiable ℂ f)
   (hf_per : Periodic f (1 : ℂ))
+  (C : ℝ)
   (hC : ∀ s : ℂ, 0 ≤ s.re → s.re ≤ 1 → ‖f s‖ ≤ C * Real.exp |s.im|) :
 -- imply
   Bornology.IsBounded (range f) := by
 -- proof
-  have hC_global := periodic_strip_to_global f hf_per C hC
+  have hC_global := periodic_strip_to_global (f := f) hf_per (C := C) hC
   obtain ⟨g, hg_diff, hg_eq, hg_bdd⟩ := entire_bounded_auxiliary f hf_diff hf_per C hC_global
   have ⟨c, hc⟩ : ∃ c, ∀ z, g z = c :=
     ⟨g 0, fun z => hg_diff.apply_eq_apply_of_bounded hg_bdd z 0⟩
@@ -502,7 +500,7 @@ lemma entire_periodic_exp_growth_bounded
 -/
 @[path]
 lemma periodic_entire_exp_growth_is_const
-  {f : ℂ → ℂ}
+  (f : ℂ → ℂ)
 -- given
   (hf_diff : Differentiable ℂ f)
   (hf_per : Periodic f (1 : ℂ))
@@ -516,3 +514,4 @@ lemma periodic_entire_exp_growth_is_const
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

@@ -44,9 +44,8 @@ lemma latticeDiscriminant_mono
 lemma latticeDiscriminant_le_span_singleton
   [CommRing A] [Field K] [Algebra A K]
   {L : Type u} [Field L] [Algebra K L] [Algebra A L] [FiniteDimensional K L] [hAKL : IsScalarTower A K L]
-  {bK : Module.Basis (Fin (Module.finrank K L)) K L}
-  {M : Submodule A L}
--- given
+  (bK : Module.Basis (Fin (Module.finrank K L)) K L)
+  (M : Submodule A L)
   (hM : M ≤ Submodule.span A (Set.range (bK : Fin _ → L))) :
 -- imply
   latticeDiscriminant A K M ≤
@@ -146,8 +145,8 @@ lemma latticeDiscriminant_isFractional_and_ne_bot
   IsFractional (nonZeroDivisors A) (latticeDiscriminant A K M) ∧
     latticeDiscriminant A K M ≠ ⊥ :=
 -- proof
-  ⟨latticeDiscriminant_isFractional A K M bN hMN,
-    latticeDiscriminant_ne_bot_of_basis A K M bK hKM⟩
+  ⟨latticeDiscriminant_isFractional (M := M) (bN := bN) hMN,
+    latticeDiscriminant_ne_bot_of_basis (M := M) (bK := bK) hKM⟩
 
 /--
 [latticeDiscriminant_eq_span_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/LatticeDiscriminant.lean)
@@ -156,8 +155,8 @@ lemma latticeDiscriminant_isFractional_and_ne_bot
 lemma latticeDiscriminant_eq_span_singleton
   [CommRing A] [Field K] [Algebra A K]
   {L : Type u} [Field L] [Algebra K L] [Algebra A L] [FiniteDimensional K L] [hAKL : IsScalarTower A K L]
-  {bK : Module.Basis (Fin (Module.finrank K L)) K L}
-  {M : Submodule A L}
+  (bK : Module.Basis (Fin (Module.finrank K L)) K L)
+  (M : Submodule A L)
 -- given
   (hM_le : M ≤ Submodule.span A (Set.range (bK : Fin _ → L)))
   (hM_ge : Set.range (bK : Fin _ → L) ⊆ M) :
@@ -180,13 +179,14 @@ lemma latticeDiscriminant_eq_span_singleton
 lemma latticeDiscriminant_eq_imp_eq
   [CommRing A] [Field K] [Algebra A K]
   {L : Type u} [Field L] [Algebra K L] [Algebra A L] [FiniteDimensional K L] [hAKL : IsScalarTower A K L] [Algebra.IsSeparable K L]
-  {M M' : Submodule A L}
-  {bK bK' : Module.Basis (Fin (Module.finrank K L)) K L}
 -- given
   (hAK : Function.Injective (algebraMap A K))
+  (M M' : Submodule A L)
   (hle : M' ≤ M)
+  (bK : Module.Basis (Fin (Module.finrank K L)) K L)
   (hM_le : M ≤ Submodule.span A (Set.range (bK : Fin _ → L)))
   (hM_ge : Set.range (bK : Fin _ → L) ⊆ M)
+  (bK' : Module.Basis (Fin (Module.finrank K L)) K L)
   (hM'_le : M' ≤ Submodule.span A (Set.range (bK' : Fin _ → L)))
   (hM'_ge : Set.range (bK' : Fin _ → L) ⊆ M')
   (hD : latticeDiscriminant A K M' = latticeDiscriminant A K M) :
@@ -326,4 +326,4 @@ lemma latticeDiscriminant_eq_imp_eq_of_isFractionRing
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

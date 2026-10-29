@@ -143,7 +143,7 @@ private lemma core
       obtain ⟨y, hy⟩ := RingHom.mem_range.1 hn
       refine ⟨n + 1, RingHom.mem_range.2 ⟨⟨_, ?_⟩, rfl⟩⟩
       rw [hS₁, Subfield.mem_comap, frobenius_def]
-      rw [pow_succ p n, ← pow_mul x (p ^ n) p, ← hy]
+      rw [pow_succ p n, pow_mul x (p ^ n) p, ← hy]
       apply pow_mem (pow_mem y.2 p)
     have hlt : Module.finrank S₁ E < d := by
       rw [← hd, hrel]

@@ -33,7 +33,5 @@ lemma test_isPrincipal_zmod_span_twelve
     norm_num
   have := IsDedekindDomain.isPrincipalIdealRing_quotient _ h12
   exact IsPrincipalIdealRing.principal J
+
 #print axioms IsDedekindDomain.isPrincipalIdealRing_quotient
-
-
--- created on 2026-10-23

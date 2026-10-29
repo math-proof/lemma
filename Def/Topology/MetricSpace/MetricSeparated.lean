@@ -35,7 +35,7 @@ In this section we define the predicate `Metric.IsSeparated'` for `ε`-separated
 
 /-- A set `s` is `≥ ε`-separated if its elements are pairwise at distance greater or equal to
  `ε` from each other. -/
-def IsSeparated' (ε : ℝ≥0∞) (s : Set X) : Prop := s.Pairwise (ε ≤ edist · ·)
+def IsSeparated' (ε : ENNReal) (s : Set X) : Prop := s.Pairwise (ε ≤ edist · ·)
 
 end Metric
 end

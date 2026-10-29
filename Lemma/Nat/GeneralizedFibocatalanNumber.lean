@@ -26,7 +26,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma fibonacciFactorial_pos
-  {n : ℕ} :
+  (n : ℕ) :
 -- imply
   0 < fibonacciFactorial n := by
 -- proof
@@ -47,7 +47,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma fibonacciFactorial_ne
-  {n : ℕ} :
+  (n : ℕ) :
 -- imply
   fibonacciFactorial n ≠ 0 :=
 -- proof
@@ -68,7 +68,7 @@ lemma fibonacciFactorial_one
 -- proof
   have hfib1 : Nat.fib 1 = 1 := by decide
   have h : fibonacciFactorial 1
-    = fibonacciFactorial 0 * (Nat.fib 1 : ℚ) := rfl
+      = fibonacciFactorial 0 * (Nat.fib 1 : ℚ) := rfl
   rw [h, hfib1, Nat.cast_one, fibonacciFactorial_zero, one_mul]
 
 end MetaMathlibExt
@@ -86,7 +86,7 @@ lemma fibonacciFactorial_two
 -- proof
   have hfib2 : Nat.fib 2 = 1 := by decide
   have h : fibonacciFactorial 2
-    = fibonacciFactorial 1 * (Nat.fib 2 : ℚ) := rfl
+      = fibonacciFactorial 1 * (Nat.fib 2 : ℚ) := rfl
   rw [h, hfib2, Nat.cast_one, fibonacciFactorial_one, one_mul]
 
 end MetaMathlibExt
@@ -104,7 +104,7 @@ lemma fibonacciFactorial_three
 -- proof
   have hfib3 : Nat.fib 3 = 2 := by decide
   have h : fibonacciFactorial 3
-    = fibonacciFactorial 2 * (Nat.fib 3 : ℚ) := rfl
+      = fibonacciFactorial 2 * (Nat.fib 3 : ℚ) := rfl
   rw [h, hfib3, fibonacciFactorial_two]
   norm_num
 
@@ -117,7 +117,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma fibonacciJordanQuotient_pos
-  {r : ℕ} :
+  (r : ℕ) :
 -- imply
   0 < fibonacciJordanQuotient r := by
 -- proof
@@ -245,9 +245,8 @@ namespace MetaMathlibExt
 
 /--
 [fib_pow_dvd_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedFibocatalanNumber.lean)
--/
-@[path]
 when `d` is minimal with the divisibility. -/
+@[path]
 private lemma fib_pow_dvd_iff (p t d : ℕ) (hd1 : 1 ≤ d)
   (hdvd : p ^ (t + 1) ∣ Nat.fib d)
   (hmin : ∀ m : ℕ, 1 ≤ m → p ^ (t + 1) ∣ Nat.fib m → d ≤ m)
@@ -287,7 +286,7 @@ private lemma level_count (p t N : ℕ)
     intro m hm1 hmd
     exact Nat.find_min' h ⟨hm1, hmd⟩
   have heq : (Finset.range N).filter (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))
-    = (Finset.range N).filter (fun i => Nat.find h ∣ (i + 1)) := by
+      = (Finset.range N).filter (fun i => Nat.find h ∣ (i + 1)) := by
     apply Finset.filter_congr
     intro i _
     exact fib_pow_dvd_iff p t (Nat.find h) hd1 hdvd hmin (i + 1)
@@ -347,44 +346,44 @@ private lemma fibFactNat_factorization (p N M : ℕ) (hp : p.Prime)
     intro x _
     exact ne_of_gt (Nat.fib_pos.mpr (Nat.succ_pos x))
   have hdvdc : ∀ (t i : ℕ),
-    (t < (Nat.fib (i + 1)).factorization p ↔ p ^ (t + 1) ∣ Nat.fib (i + 1)) := by
+      (t < (Nat.fib (i + 1)).factorization p ↔ p ^ (t + 1) ∣ Nat.fib (i + 1)) := by
     intro t i
     have hne_i : Nat.fib (i + 1) ≠ 0 :=
       ne_of_gt (Nat.fib_pos.mpr (Nat.succ_pos i))
     rw [Nat.Prime.pow_dvd_iff_le_factorization hp hne_i]
     omega
   have hlayer : ∀ i ∈ Finset.range N,
-    (Nat.fib (i + 1)).factorization p
-      = ∑ t ∈ Finset.range M,
-        (if t < (Nat.fib (i + 1)).factorization p then 1 else 0) := by
+      (Nat.fib (i + 1)).factorization p
+        = ∑ t ∈ Finset.range M,
+          (if t < (Nat.fib (i + 1)).factorization p then 1 else 0) := by
     intro i hi
     have hlt := hM i hi
     have hflt : (Finset.range M).filter
-      (fun t => t < (Nat.fib (i + 1)).factorization p)
-      = Finset.range ((Nat.fib (i + 1)).factorization p) := by
+          (fun t => t < (Nat.fib (i + 1)).factorization p)
+        = Finset.range ((Nat.fib (i + 1)).factorization p) := by
       ext t
       simp only [Finset.mem_filter, Finset.mem_range]
       omega
     rw [← Finset.card_filter, hflt, Finset.card_range]
   unfold fibFactNat
   calc (∏ i ∈ Finset.range N, Nat.fib (i + 1)).factorization p
-    = ∑ i ∈ Finset.range N, (Nat.fib (i + 1)).factorization p :=
-      Nat.factorization_prod_apply hne
-    _ = ∑ i ∈ Finset.range N, ∑ t ∈ Finset.range M,
-      (if t < (Nat.fib (i + 1)).factorization p then 1 else 0) :=
-      Finset.sum_congr rfl (fun i hi => hlayer i hi)
-    _ = ∑ t ∈ Finset.range M, ∑ i ∈ Finset.range N,
-      (if t < (Nat.fib (i + 1)).factorization p then 1 else 0) :=
-      Finset.sum_comm
-    _ = ∑ t ∈ Finset.range M, ((Finset.range N).filter
-      (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card := by
-      apply Finset.sum_congr rfl
-      intro t _
-      rw [← Finset.card_filter]
-      congr 1
-      apply Finset.filter_congr
-      intro i _
-      exact hdvdc t i
+        = ∑ i ∈ Finset.range N, (Nat.fib (i + 1)).factorization p :=
+          Nat.factorization_prod_apply hne
+      _ = ∑ i ∈ Finset.range N, ∑ t ∈ Finset.range M,
+            (if t < (Nat.fib (i + 1)).factorization p then 1 else 0) :=
+          Finset.sum_congr rfl (fun i hi => hlayer i hi)
+      _ = ∑ t ∈ Finset.range M, ∑ i ∈ Finset.range N,
+            (if t < (Nat.fib (i + 1)).factorization p then 1 else 0) :=
+          Finset.sum_comm
+      _ = ∑ t ∈ Finset.range M, ((Finset.range N).filter
+            (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card := by
+          apply Finset.sum_congr rfl
+          intro t _
+          rw [← Finset.card_filter]
+          congr 1
+          apply Finset.filter_congr
+          intro i _
+          exact hdvdc t i
 
 end MetaMathlibExt
 
@@ -425,21 +424,21 @@ private lemma floor_ineq (d r n : ℕ) (hd : 0 < d) :
   by_cases h0 : (n % d + r % d + 1) / d = 0
   · omega
   · have h1 : (n % d + r % d + 1) / d = 1 := by
-    obtain h | h := (Nat.le_one_iff_eq_zero_or_eq_one.mp hL)
-    · exact absurd h h0
-    · exact h
+      rcases (Nat.le_one_iff_eq_zero_or_eq_one.mp hL) with h | h
+      · exact absurd h h0
+      · exact h
     by_cases hA : (2 * (r % d) + 1) / d = 0
     · by_cases hB : (2 * (n % d)) / d = 0
       · have hge : d ≤ n % d + r % d + 1 := by
-        have hle : 1 ≤ (n % d + r % d + 1) / d := by omega
-        have h := (Nat.le_div_iff_mul_le hd).mp hle
-        omega
+          have hle : 1 ≤ (n % d + r % d + 1) / d := by omega
+          have h := (Nat.le_div_iff_mul_le hd).mp hle
+          omega
         have hltA : 2 * (r % d) + 1 < d := by
-          obtain h | h := (Nat.div_eq_zero_iff.mp hA)
+          rcases (Nat.div_eq_zero_iff.mp hA) with h | h
           · omega
           · exact h
         have hltB : 2 * (n % d) < d := by
-          obtain h | h := (Nat.div_eq_zero_iff.mp hB)
+          rcases (Nat.div_eq_zero_iff.mp hB) with h | h
           · omega
           · exact h
         omega
@@ -471,89 +470,89 @@ private lemma main_dvd (r n : ℕ) :
   intro p
   by_cases hp : p.Prime
   · set M := (fibFactNat r * fibFactNat n * fibFactNat (n + r + 1) *
-    (fibFactNat (2 * r + 1) * fibFactNat (2 * n))).factorization p + 1 with hMdef
+      (fibFactNat (2 * r + 1) * fibFactNat (2 * n))).factorization p + 1 with hMdef
     have hGRANDne : (fibFactNat r * fibFactNat n * fibFactNat (n + r + 1) *
-      (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) ≠ 0 :=
+        (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) ≠ 0 :=
       mul_ne_zero hneL hneR
     have hAr : fibFactNat r ∣ (fibFactNat r * fibFactNat n * fibFactNat (n + r + 1) *
-      (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
+        (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
       dvd_mul_of_dvd_left
         (dvd_mul_of_dvd_left (dvd_mul_of_dvd_left dvd_rfl _) _) _
     have hBr : fibFactNat n ∣ (fibFactNat r * fibFactNat n * fibFactNat (n + r + 1) *
-      (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
+        (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
       dvd_mul_of_dvd_left
         (dvd_mul_of_dvd_left (dvd_mul_of_dvd_right dvd_rfl _) _) _
     have hCr : fibFactNat (n + r + 1) ∣ (fibFactNat r * fibFactNat n *
-      fibFactNat (n + r + 1) *
-      (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
+        fibFactNat (n + r + 1) *
+        (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
       dvd_mul_of_dvd_left (dvd_mul_of_dvd_right dvd_rfl _) _
     have hDr : fibFactNat (2 * r + 1) ∣ (fibFactNat r * fibFactNat n *
-      fibFactNat (n + r + 1) *
-      (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
+        fibFactNat (n + r + 1) *
+        (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
       dvd_mul_of_dvd_right (dvd_mul_of_dvd_left dvd_rfl _) _
     have hEr : fibFactNat (2 * n) ∣ (fibFactNat r * fibFactNat n *
-      fibFactNat (n + r + 1) *
-      (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
+        fibFactNat (n + r + 1) *
+        (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
       dvd_mul_of_dvd_right (dvd_mul_of_dvd_right dvd_rfl _) _
     have hbound : ∀ (N : ℕ),
-      fibFactNat N ∣ (fibFactNat r * fibFactNat n * fibFactNat (n + r + 1) *
-        (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) →
-      ∀ i ∈ Finset.range N, (Nat.fib (i + 1)).factorization p < M := by
+        fibFactNat N ∣ (fibFactNat r * fibFactNat n * fibFactNat (n + r + 1) *
+          (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) →
+        ∀ i ∈ Finset.range N, (Nat.fib (i + 1)).factorization p < M := by
       intro N hN i hi
       have hdvd : Nat.fib (i + 1) ∣ (fibFactNat r * fibFactNat n *
-        fibFactNat (n + r + 1) * (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
+          fibFactNat (n + r + 1) * (fibFactNat (2 * r + 1) * fibFactNat (2 * n))) :=
         (fibFactNat_mem_dvd N i hi).trans hN
       have hle := factorization_le_of_dvd _ _ p hdvd hGRANDne
       omega
     have eA : (fibFactNat r).factorization p
-      = ∑ t ∈ Finset.range M, ((Finset.range r).filter
-        (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card :=
+        = ∑ t ∈ Finset.range M, ((Finset.range r).filter
+          (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card :=
       fibFactNat_factorization p r M hp (hbound r hAr)
     have eB : (fibFactNat n).factorization p
-      = ∑ t ∈ Finset.range M, ((Finset.range n).filter
-        (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card :=
+        = ∑ t ∈ Finset.range M, ((Finset.range n).filter
+          (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card :=
       fibFactNat_factorization p n M hp (hbound n hBr)
     have eC : (fibFactNat (n + r + 1)).factorization p
-      = ∑ t ∈ Finset.range M, ((Finset.range (n + r + 1)).filter
-        (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card :=
+        = ∑ t ∈ Finset.range M, ((Finset.range (n + r + 1)).filter
+          (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card :=
       fibFactNat_factorization p (n + r + 1) M hp (hbound (n + r + 1) hCr)
     have eD : (fibFactNat (2 * r + 1)).factorization p
-      = ∑ t ∈ Finset.range M, ((Finset.range (2 * r + 1)).filter
-        (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card :=
+        = ∑ t ∈ Finset.range M, ((Finset.range (2 * r + 1)).filter
+          (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card :=
       fibFactNat_factorization p (2 * r + 1) M hp (hbound (2 * r + 1) hDr)
     have eE : (fibFactNat (2 * n)).factorization p
-      = ∑ t ∈ Finset.range M, ((Finset.range (2 * n)).filter
-        (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card :=
+        = ∑ t ∈ Finset.range M, ((Finset.range (2 * n)).filter
+          (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card :=
       fibFactNat_factorization p (2 * n) M hp (hbound (2 * n) hEr)
     have hLHS : (fibFactNat r * fibFactNat n * fibFactNat (n + r + 1)).factorization p
-      = ∑ t ∈ Finset.range M, (((Finset.range r).filter
-        (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
-        ((Finset.range n).filter
-          (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
-        ((Finset.range (n + r + 1)).filter
-          (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card) := by
+        = ∑ t ∈ Finset.range M, (((Finset.range r).filter
+            (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
+          ((Finset.range n).filter
+            (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
+          ((Finset.range (n + r + 1)).filter
+            (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card) := by
       rw [Nat.factorization_mul hABne hCne, Nat.factorization_mul hAne hBne]
       simp only [Finsupp.add_apply]
       rw [eA, eB, eC, Finset.sum_add_distrib, Finset.sum_add_distrib]
     have hRHS : (fibFactNat (2 * r + 1) * fibFactNat (2 * n)).factorization p
-      = ∑ t ∈ Finset.range M, (((Finset.range (2 * r + 1)).filter
-        (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
-        ((Finset.range (2 * n)).filter
-          (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card) := by
+        = ∑ t ∈ Finset.range M, (((Finset.range (2 * r + 1)).filter
+            (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
+          ((Finset.range (2 * n)).filter
+            (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card) := by
       rw [Nat.factorization_mul hDne hEne]
       simp only [Finsupp.add_apply]
       rw [eD, eE, Finset.sum_add_distrib]
     have hlevel : ∀ t ∈ Finset.range M,
-      (((Finset.range r).filter
-        (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
-        ((Finset.range n).filter
-          (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
-        ((Finset.range (n + r + 1)).filter
-          (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card) ≤
-      (((Finset.range (2 * r + 1)).filter
-        (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
-        ((Finset.range (2 * n)).filter
-          (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card) := by
+        (((Finset.range r).filter
+            (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
+          ((Finset.range n).filter
+            (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
+          ((Finset.range (n + r + 1)).filter
+            (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card) ≤
+        (((Finset.range (2 * r + 1)).filter
+            (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card +
+          ((Finset.range (2 * n)).filter
+            (fun i => p ^ (t + 1) ∣ Nat.fib (i + 1))).card) := by
       intro t _
       by_cases ht : ∃ m : ℕ, 1 ≤ m ∧ p ^ (t + 1) ∣ Nat.fib m
       · have q1 := level_count p t r ht
@@ -623,8 +622,8 @@ lemma generalizedFibonacciCatalan_isPosInt
     fibonacciFactorial_eq_cast, fibonacciFactorial_eq_cast,
     fibonacciFactorial_eq_cast]
   have hkQ : (fibFactNat (2 * r + 1) : ℚ) * (fibFactNat (2 * n) : ℚ)
-    = ((fibFactNat r : ℚ) * (fibFactNat n : ℚ) *
-      (fibFactNat (n + r + 1) : ℚ)) * (k : ℚ) := by
+      = ((fibFactNat r : ℚ) * (fibFactNat n : ℚ) *
+        (fibFactNat (n + r + 1) : ℚ)) * (k : ℚ) := by
     exact_mod_cast hk
   have hB : (fibFactNat r : ℚ) ≠ 0 := by
     exact_mod_cast fibFactNat_ne_zero r
@@ -672,9 +671,9 @@ lemma generalizedFibonacciCatalan_r1
   rw [fibonacciJordanQuotient_r1]
   have e : n + 1 + 1 = n + 2 := by omega
   rw [e, mul_comm (fibonacciFactorial n) (fibonacciFactorial (n + 2))]
-end
 
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

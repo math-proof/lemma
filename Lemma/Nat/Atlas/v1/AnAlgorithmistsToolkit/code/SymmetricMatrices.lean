@@ -12,7 +12,7 @@ namespace SymmetricMatrixProperties
 lemma isHermitian_iff_transpose_eq
   [Fintype n]
   [DecidableEq n]
-  {M : Matrix n n ℝ} :
+  (M : Matrix n n ℝ) :
 -- imply
   M.IsHermitian ↔ Mᵀ = M := by
 -- proof
@@ -71,10 +71,9 @@ lemma eigenvector_linear_combination
   {M : Matrix n n ℝ}
   {v w : n → ℝ}
   {μ : ℝ}
-  {a b : ℝ}
--- given
   (hv : M.mulVec v = μ • v)
-  (hw : M.mulVec w = μ • w) :
+  (hw : M.mulVec w = μ • w)
+  (a b : ℝ) :
 -- imply
   M.mulVec (a • v + b • w) = μ • (a • v + b • w) := by
 -- proof
@@ -91,7 +90,7 @@ namespace SymmetricMatrixProperties
 lemma exists_orthonormalBasis_eigenvectors
   [Fintype n]
   [DecidableEq n]
-  {M : Matrix n n ℝ}
+  (M : Matrix n n ℝ)
 -- given
   (hM : M.IsHermitian) :
 -- imply
@@ -110,7 +109,7 @@ namespace SymmetricMatrixProperties
 lemma eq_eigenvectorUnitary_mul_diagonal_mul_transpose
   [Fintype n]
   [DecidableEq n]
-  {M : Matrix n n ℝ}
+  (M : Matrix n n ℝ)
 -- given
   (hM : M.IsHermitian) :
 -- imply

@@ -170,7 +170,7 @@ theorem surfaceEvent_dependsOn_outside (n : ℕ) (S : Finset (Site d)) :
   · rw [Set.indicator_of_notMem hω, Set.indicator_of_notMem (fun hc => hω (hiff.mpr hc))]
 
 
-theorem surface_withinConn_indep (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) (S : Finset (Site d))
+theorem surface_withinConn_indep (p : NNReal) (hp : p ≤ 1) (n : ℕ) (S : Finset (Site d))
     (o x : Site d) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
         (withinConnEvent d (S : Set (Site d)) o x ∩ surfaceEvent d n S)

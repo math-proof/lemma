@@ -98,7 +98,7 @@ theorem bc38_Tcount_le_boundary_of_spanning_cutGeometry (ω : ConfigSpace (Sym2 
     (bc38_selfDownArm_of_spanning_cutGeometry ω n hspan hgeo)
 
 
-theorem bc38_burton_keane_bernoulli_of_spanning_cutGeometry (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc38_burton_keane_bernoulli_of_spanning_cutGeometry (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hspan : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc38_ArmAdjSpanning ω n)
     (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc38_ArmCutGeometry ω n)

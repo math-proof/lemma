@@ -30,7 +30,7 @@ namespace MathlibExtTest.Combinatorics.Enumerative.GeneralizedCatalanSchroeder
 [catalan_recurrence_rat](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/GeneralizedCatalanSchroeder.lean)
 -/
 @[path]
-lemma catalan_recurrence_rat
+lemma catalan_recurrence_rat :
 -- imply
   ∀ n : ℕ, 2 ≤ n → (catalan n : ℚ) = 2 * (catalan (n - 1) : ℚ) + ∑ k ∈ Finset.range (n - 2), (catalan (k + 1) : ℚ) * (catalan (n - k - 2) : ℚ) := by
 -- proof
@@ -58,3 +58,4 @@ end MathlibExtTest.Combinatorics.Enumerative.GeneralizedCatalanSchroeder
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

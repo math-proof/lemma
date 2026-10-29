@@ -62,7 +62,7 @@ theorem shk_connected_iff_mem_iUnion_withinBox (omega : ConfigSpace (Sym2 (Site 
     exact hconn.connected
 
 
-theorem shk_connWithinBox_tendsto_twoPoint (p : ℝ≥0) (hp : p ≤ 1)
+theorem shk_connWithinBox_tendsto_twoPoint (p : NNReal) (hp : p ≤ 1)
     (x : Site d) :
     Tendsto (fun n =>
       (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
@@ -81,7 +81,7 @@ theorem shk_connWithinBox_tendsto_twoPoint (p : ℝ≥0) (hp : p ≤ 1)
   simpa only [Function.comp_apply, Measure.real, shk_twoPointProb, mu] using hreal
 
 
-theorem shk_twoPoint_partialSum_le (p : ℝ≥0) (hp : p ≤ 1)
+theorem shk_twoPoint_partialSum_le (p : NNReal) (hp : p ≤ 1)
     (S : Finset (Site d)) (h0S : origin d ∈ S)
     (hphi : phi d p hp S < 1) (T : Finset (Site d)) :
     ∑ x ∈ T, shk_twoPointProb p hp x ≤
@@ -115,7 +115,7 @@ theorem shk_twoPoint_partialSum_le (p : ℝ≥0) (hp : p ≤ 1)
         (mem_boxFinset.mpr (origin_mem_box' n)) hphi
 
 
-theorem shk_twoPoint_summable_of_phi_lt_one (p : ℝ≥0) (hp : p ≤ 1)
+theorem shk_twoPoint_summable_of_phi_lt_one (p : NNReal) (hp : p ≤ 1)
     (S : Finset (Site d)) (h0S : origin d ∈ S)
     (hphi : phi d p hp S < 1) :
     Summable (shk_twoPointProb (d := d) p hp) := by

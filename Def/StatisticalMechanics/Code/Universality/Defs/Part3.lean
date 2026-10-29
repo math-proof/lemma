@@ -29,7 +29,7 @@ open StatMech.Lattice StatMech.TwoDim
 variable {d : ℕ}
 
 
-noncomputable def percolationProbability (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) : ℝ≥0∞ :=
+noncomputable def percolationProbability (d : ℕ) (p : NNReal) (hp : p ≤ 1) : ENNReal :=
   bernoulliProductMeasure (E := Sym2 (Site d)) p hp (percolationEvent d)
 
 

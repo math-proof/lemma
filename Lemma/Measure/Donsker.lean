@@ -167,7 +167,7 @@ namespace MathlibExt.Probability.DonskerWanted
 -/
 @[path]
 private lemma donskerBrownianPath_apply_of_continuous {Ω' : Type*}
-  (B : ℝ≥0 → Ω' → ℝ) (ω : Ω') (hω : Continuous (fun s => B s ω))
+  (B : NNReal → Ω' → ℝ) (ω : Ω') (hω : Continuous (fun s => B s ω))
   (t : Set.Icc (0 : ℝ) 1) :
   donskerBrownianPath B ω t = B (iccToNNReal t) ω := by
   have h : Continuous (fun t : Set.Icc (0 : ℝ) 1 => B (iccToNNReal t) ω) :=
@@ -183,7 +183,7 @@ namespace MathlibExt.Probability.DonskerWanted
 -/
 @[path]
 private lemma donskerBrownianApproximation_aemeasurable {Ω' : Type*} [MeasurableSpace Ω']
-  {P' : Measure Ω'} (B : ℝ≥0 → Ω' → ℝ) (hB : IsPreBrownianReal B P') (n : ℕ) :
+  {P' : Measure Ω'} (B : NNReal → Ω' → ℝ) (hB : IsPreBrownianReal B P') (n : ℕ) :
   AEMeasurable (donskerBrownianApproximation n B) P' := by
   let hcoeff (k : Fin (n + 1)) := hB.aemeasurable (iccToNNReal (bernstein.z k))
   let coeff (k : Fin (n + 1)) := (hcoeff k).mk (B (iccToNNReal (bernstein.z k)))
@@ -212,7 +212,7 @@ namespace MathlibExt.Probability.DonskerWanted
 -/
 @[path]
 private lemma donskerBrownianApproximation_eq_bernstein {Ω' : Type*} (n : ℕ)
-  (B : ℝ≥0 → Ω' → ℝ) (ω : Ω') (hω : Continuous (fun s => B s ω)) :
+  (B : NNReal → Ω' → ℝ) (ω : Ω') (hω : Continuous (fun s => B s ω)) :
   donskerBrownianApproximation n B ω =
     bernsteinApproximation n (donskerBrownianPath B ω) := by
   unfold donskerBrownianApproximation bernsteinApproximation
@@ -229,7 +229,7 @@ namespace MathlibExt.Probability.DonskerWanted
 -/
 @[path]
 private lemma donskerBrownianApproximation_tendsto {Ω' : Type*}
-  (B : ℝ≥0 → Ω' → ℝ) (ω : Ω') (hω : Continuous (fun s => B s ω)) :
+  (B : NNReal → Ω' → ℝ) (ω : Ω') (hω : Continuous (fun s => B s ω)) :
   Filter.Tendsto (fun n => donskerBrownianApproximation n B ω) Filter.atTop
     (𝓝 (donskerBrownianPath B ω)) := by
   simpa only [donskerBrownianApproximation_eq_bernstein (B := B) (ω := ω) (hω := hω)] using
@@ -244,7 +244,7 @@ namespace MathlibExt.Probability.DonskerWanted
 -/
 @[path]
 private lemma donskerBrownianPath_aemeasurable {Ω' : Type*} [MeasurableSpace Ω']
-  {P' : Measure Ω'} (B : ℝ≥0 → Ω' → ℝ) (hB : IsBrownianReal B P') :
+  {P' : Measure Ω'} (B : NNReal → Ω' → ℝ) (hB : IsBrownianReal B P') :
   AEMeasurable (donskerBrownianPath B) P' := by
   apply aemeasurable_of_tendsto_metrizable_ae'
     (fun n => donskerBrownianApproximation_aemeasurable B hB.toIsPreBrownianReal n)
@@ -260,7 +260,7 @@ namespace MathlibExt.Probability.DonskerWanted
 -/
 @[path]
 private lemma donskerBrownianPath_ae_eq {Ω' : Type*} [MeasurableSpace Ω']
-  {P' : Measure Ω'} (B : ℝ≥0 → Ω' → ℝ) (hB : IsBrownianReal B P') :
+  {P' : Measure Ω'} (B : NNReal → Ω' → ℝ) (hB : IsBrownianReal B P') :
   ∀ᵐ ω ∂P', ∀ t : Set.Icc (0 : ℝ) 1,
     donskerBrownianPath B ω t = B (iccToNNReal t) ω := by
   filter_upwards [hB.cont] with ω hω
@@ -553,8 +553,8 @@ namespace MathlibExt.Probability.DonskerWanted
 @[path]
 private lemma normalized_brownian_increment_hasLaw
   {Ω' : Type*} [MeasurableSpace Ω'] {P' : Measure Ω'}
-  (B : ℝ≥0 → Ω' → ℝ) (hB : IsPreBrownianReal B P')
-  (a b : ℝ≥0) (hab : a < b) :
+  (B : NNReal → Ω' → ℝ) (hB : IsPreBrownianReal B P')
+  (a b : NNReal) (hab : a < b) :
   HasLaw (fun ω => (B b ω - B a ω) / Real.sqrt ((b : ℝ) - (a : ℝ)))
     (gaussianReal 0 1) P' := by
   have hd : 0 < (b : ℝ) - (a : ℝ) := sub_pos.mpr (by exact_mod_cast hab)
@@ -579,8 +579,8 @@ private lemma bsum_tendstoInDistribution_of_lt
   (X : ℕ → Ω → ℝ) (hIndep : iIndepFun X P)
   (hIdent : ∀ i, IdentDistrib (X i) (X 0) P P)
   (hMean : P[X 0] = 0) (hVar : Var[X 0; P] = 1)
-  (B : ℝ≥0 → Ω' → ℝ) (hB : IsPreBrownianReal B P')
-  (a b : ℝ≥0) (hab : a < b) :
+  (B : NNReal → Ω' → ℝ) (hB : IsPreBrownianReal B P')
+  (a b : NNReal) (hab : a < b) :
   TendstoInDistribution (fun n => bsum a b n X) atTop (B b - B a)
     (fun _ => P) P' := by
   let d : ℝ := (b : ℝ) - (a : ℝ)
@@ -651,8 +651,8 @@ private lemma bsum_tendstoInDistribution
   (X : ℕ → Ω → ℝ) (hIndep : iIndepFun X P)
   (hIdent : ∀ i, IdentDistrib (X i) (X 0) P P)
   (hMean : P[X 0] = 0) (hVar : Var[X 0; P] = 1)
-  (B : ℝ≥0 → Ω' → ℝ) (hB : IsPreBrownianReal B P')
-  (a b : ℝ≥0) (hab : a ≤ b) :
+  (B : NNReal → Ω' → ℝ) (hB : IsPreBrownianReal B P')
+  (a b : NNReal) (hab : a ≤ b) :
   TendstoInDistribution (fun n => bsum a b n X) atTop (B b - B a)
     (fun _ => P) P' := by
   obtain rfl | hab := hab.eq_or_lt
@@ -678,7 +678,7 @@ namespace MathlibExt.Probability.DonskerWanted
 private lemma indepFun_blockVec_bsum
   {d : ℕ} {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
   (X : ℕ → Ω → ℝ) (hMeas : ∀ i, Measurable (X i)) (hIndep : iIndepFun X P)
-  (u : Fin (d + 2) → ℝ≥0) (hu : Monotone u) (n : ℕ) :
+  (u : Fin (d + 2) → NNReal) (hu : Monotone u) (n : ℕ) :
   IndepFun
     (blockVec (fun i : Fin (d + 1) => u i.castSucc) n X)
     (bsum (u (Fin.last d).castSucc) (u (Fin.last d).succ) n X) P := by
@@ -760,8 +760,8 @@ namespace MathlibExt.Probability.DonskerWanted
 @[path]
 private lemma indepFun_brownian_blockVec_sub
   {d : ℕ} {Ω' : Type*} [MeasurableSpace Ω'] {P' : Measure Ω'}
-  (B : ℝ≥0 → Ω' → ℝ) (hB : IsPreBrownianReal B P')
-  (u : Fin (d + 2) → ℝ≥0) (hu : Monotone u) :
+  (B : NNReal → Ω' → ℝ) (hB : IsPreBrownianReal B P')
+  (u : Fin (d + 2) → NNReal) (hu : Monotone u) :
   IndepFun
     (brownianBlockVec (fun i : Fin (d + 1) => u i.castSucc) B)
     (B (u (Fin.last d).succ) - B (u (Fin.last d).castSucc)) P' := by
@@ -870,8 +870,8 @@ private lemma blockVec_tendstoInDistribution
   (X : ℕ → Ω → ℝ) (hMeas : ∀ i, Measurable (X i))
   (hIndep : iIndepFun X P) (hIdent : ∀ i, IdentDistrib (X i) (X 0) P P)
   (hMean : P[X 0] = 0) (hVar : Var[X 0; P] = 1)
-  (B : ℝ≥0 → Ω' → ℝ) (hB : IsPreBrownianReal B P')
-  (u : Fin (d + 1) → ℝ≥0) (hu : Monotone u) :
+  (B : NNReal → Ω' → ℝ) (hB : IsPreBrownianReal B P')
+  (u : Fin (d + 1) → NNReal) (hu : Monotone u) :
   TendstoInDistribution (fun n => blockVec u n X) atTop (brownianBlockVec u B)
     (fun _ => P) P' := by
   induction d with
@@ -886,14 +886,14 @@ private lemma blockVec_tendstoInDistribution
     refine hconst.congr (fun n => .of_forall fun ω => Subsingleton.elim _ _)
       (.of_forall fun ω => Subsingleton.elim _ _)
   | succ d ih =>
-    let u0 : Fin (d + 1) → ℝ≥0 := fun i => u i.castSucc
+    let u0 : Fin (d + 1) → NNReal := fun i => u i.castSucc
     have hu0 : Monotone u0 := by
       intro i j hij
       exact hu (by simpa using hij)
     have hprev : TendstoInDistribution (fun n => blockVec u0 n X) atTop
       (brownianBlockVec u0 B) (fun _ => P) P' := ih u0 hu0
-    let a : ℝ≥0 := u (Fin.last d).castSucc
-    let b : ℝ≥0 := u (Fin.last d).succ
+    let a : NNReal := u (Fin.last d).castSucc
+    let b : NNReal := u (Fin.last d).succ
     have hab : a ≤ b := hu (Fin.castSucc_le_succ (Fin.last d))
     have hlast : TendstoInDistribution (fun n => bsum a b n X) atTop (B b - B a)
       (fun _ => P) P' :=
@@ -964,7 +964,7 @@ namespace MathlibExt.Probability.DonskerWanted
 -/
 @[path]
 private lemma cumVec_blockVec_eq
-  {d : ℕ} {Ω : Type*} (u : Fin (d + 1) → ℝ≥0) (hu : Monotone u)
+  {d : ℕ} {Ω : Type*} (u : Fin (d + 1) → NNReal) (hu : Monotone u)
   (hu0 : u 0 = 0) (n : ℕ) (X : ℕ → Ω → ℝ) (ω : Ω) :
   cumVec (blockVec u n X ω) =
     WithLp.toLp 2 (fun j : Fin d =>
@@ -1015,8 +1015,8 @@ namespace MathlibExt.Probability.DonskerWanted
 -/
 @[path]
 private lemma cumVec_brownianBlockVec_eq
-  {d : ℕ} {Ω' : Type*} (u : Fin (d + 1) → ℝ≥0)
-  (B : ℝ≥0 → Ω' → ℝ) (ω : Ω') :
+  {d : ℕ} {Ω' : Type*} (u : Fin (d + 1) → NNReal)
+  (B : NNReal → Ω' → ℝ) (ω : Ω') :
   cumVec (brownianBlockVec u B ω) =
     WithLp.toLp 2 (fun j : Fin d => B (u j.succ) ω - B (u 0) ω) := by
   apply congrArg (WithLp.toLp 2)
@@ -1042,8 +1042,8 @@ private lemma prefixVec_tendstoInDistribution
   (X : ℕ → Ω → ℝ) (hMeas : ∀ i, Measurable (X i))
   (hIndep : iIndepFun X P) (hIdent : ∀ i, IdentDistrib (X i) (X 0) P P)
   (hMean : P[X 0] = 0) (hVar : Var[X 0; P] = 1)
-  (B : ℝ≥0 → Ω' → ℝ) (hB : IsPreBrownianReal B P')
-  (u : Fin (d + 1) → ℝ≥0) (hu : Monotone u) (hu0 : u 0 = 0) :
+  (B : NNReal → Ω' → ℝ) (hB : IsPreBrownianReal B P')
+  (u : Fin (d + 1) → NNReal) (hu : Monotone u) (hu0 : u 0 = 0) :
   TendstoInDistribution (fun n => prefixVec u n X) atTop (brownianValueVec u B)
     (fun _ => P) P' := by
   have hblock := blockVec_tendstoInDistribution X hMeas hIndep hIdent hMean hVar B hB u hu
@@ -1065,7 +1065,7 @@ namespace MathlibExt.Probability.DonskerWanted
 [interpolationCoeff_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/Donsker.lean)
 -/
 @[path]
-private lemma interpolationCoeff_nonneg (n : ℕ) (t : ℝ≥0) :
+private lemma interpolationCoeff_nonneg (n : ℕ) (t : NNReal) :
   0 ≤ interpolationCoeff n t := by
   rw [interpolationCoeff]
   split_ifs
@@ -1081,7 +1081,7 @@ namespace MathlibExt.Probability.DonskerWanted
 [interpolationCoeff_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/Donsker.lean)
 -/
 @[path]
-private lemma interpolationCoeff_le (n : ℕ) (t : ℝ≥0) :
+private lemma interpolationCoeff_le (n : ℕ) (t : NNReal) :
   interpolationCoeff n t ≤ (Real.sqrt (n : ℝ))⁻¹ := by
   rw [interpolationCoeff]
   split_ifs
@@ -1097,7 +1097,7 @@ namespace MathlibExt.Probability.DonskerWanted
 [interpolationCoeff_tendsto_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/Donsker.lean)
 -/
 @[path]
-private lemma interpolationCoeff_tendsto_zero (t : ℝ≥0) :
+private lemma interpolationCoeff_tendsto_zero (t : NNReal) :
   Tendsto (fun n => interpolationCoeff n t) atTop (nhds 0) := by
   apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds
     (tendsto_inv_atTop_zero.comp
@@ -1114,7 +1114,7 @@ namespace MathlibExt.Probability.DonskerWanted
 -/
 @[path]
 private lemma interpolationErrorVec_eq_sum {d : ℕ} {Ω : Type*}
-  (u : Fin d → ℝ≥0) (n : ℕ) (X : ℕ → Ω → ℝ) (ω : Ω) :
+  (u : Fin d → NNReal) (n : ℕ) (X : ℕ → Ω → ℝ) (ω : Ω) :
   interpolationErrorVec u n X ω =
     ∑ j : Fin d, PiLp.single 2 j
       (interpolationCoeff n (u j) * X (Nat.floor ((n : ℝ) * (u j : ℝ))) ω) := by
@@ -1135,9 +1135,9 @@ private lemma interpolationErrorVec_eLpNorm_tendsto_zero
   (X : ℕ → Ω → ℝ) (hMeas : ∀ i, Measurable (X i))
   (hMemLp : MemLp (X 0) 2 P)
   (hIdent : ∀ i, IdentDistrib (X i) (X 0) P P)
-  (u : Fin d → ℝ≥0) :
+  (u : Fin d → NNReal) :
   Tendsto (fun n => eLpNorm (interpolationErrorVec u n X) 2 P) atTop (nhds 0) := by
-  let C : ℝ≥0∞ := eLpNorm (X 0) 2 P
+  let C : ENNReal := eLpNorm (X 0) 2 P
   have hterm (j : Fin d) :
     Tendsto (fun n => ‖interpolationCoeff n (u j)‖ₑ * C) atTop (nhds 0) := by
     have hc : Tendsto (fun n => ‖interpolationCoeff n (u j)‖ₑ) atTop (nhds 0) := by
@@ -1161,7 +1161,7 @@ private lemma interpolationErrorVec_eLpNorm_tendsto_zero
         X (Nat.floor ((n : ℝ) * (u j : ℝ))) ω) by
     funext ω
     simpa only [Finset.sum_apply] using interpolationErrorVec_eq_sum u n X ω]
-  refine (eLpNorm_sum_le (p := (2 : ℝ≥0∞)) (by norm_num)).trans ?_
+  refine (eLpNorm_sum_le (p := (2 : ENNReal)) (by norm_num)).trans ?_
   apply Finset.sum_le_sum
   intro j _
   have hsingle : Continuous (fun x : ℝ =>
@@ -1212,9 +1212,9 @@ private lemma interpolationErrorVec_tendstoInMeasure
   (X : ℕ → Ω → ℝ) (hMeas : ∀ i, Measurable (X i))
   (hMemLp : MemLp (X 0) 2 P)
   (hIdent : ∀ i, IdentDistrib (X i) (X 0) P P)
-  (u : Fin d → ℝ≥0) :
+  (u : Fin d → NNReal) :
   TendstoInMeasure P (fun n => interpolationErrorVec u n X) atTop 0 := by
-  apply tendstoInMeasure_of_tendsto_eLpNorm (p := (2 : ℝ≥0∞)) (by norm_num)
+  apply tendstoInMeasure_of_tendsto_eLpNorm (p := (2 : ENNReal)) (by norm_num)
   simpa using interpolationErrorVec_eLpNorm_tendsto_zero X hMeas hMemLp hIdent u
 
 end MathlibExt.Probability.DonskerWanted
@@ -1228,7 +1228,7 @@ namespace MathlibExt.Probability.DonskerWanted
 private lemma interpolationErrorVec_measurable
   {d : ℕ} {Ω : Type*} [MeasurableSpace Ω]
   (X : ℕ → Ω → ℝ) (hMeas : ∀ i, Measurable (X i))
-  (u : Fin d → ℝ≥0) (n : ℕ) :
+  (u : Fin d → NNReal) (n : ℕ) :
   Measurable (interpolationErrorVec u n X) := by
   unfold interpolationErrorVec
   apply (WithLp.measurable_toLp 2 _).comp
@@ -1245,7 +1245,7 @@ namespace MathlibExt.Probability.DonskerWanted
 private lemma processValueVec_eq_prefix_add_error
   {d : ℕ} {Ω : Type*}
   (t : Fin d → Set.Icc (0 : ℝ) 1)
-  (u : Fin (d + 1) → ℝ≥0)
+  (u : Fin (d + 1) → NNReal)
   (htu : ∀ j, u j.succ = iccToNNReal (t j))
   (n : ℕ) (hn : n ≠ 0) (X : ℕ → Ω → ℝ) (ω : Ω) :
   processValueVec t n X ω =
@@ -1259,7 +1259,7 @@ private lemma processValueVec_eq_prefix_add_error
         X (Nat.floor ((n : ℝ) * (u j.succ : ℝ))) ω
   rw [donskerProcess_apply_eq n X ω (t j) hn]
   have htuR : (u j.succ : ℝ) = (t j : ℝ) := by
-    have h := congrArg ((↑) : ℝ≥0 → ℝ) (htu j)
+    have h := congrArg ((↑) : NNReal → ℝ) (htu j)
     change (u j.succ : ℝ) = (t j).1 at h
     exact h
   unfold interpolationCoeff
@@ -1306,9 +1306,9 @@ private lemma processValueVec_tendstoInDistribution
   (X : ℕ → Ω → ℝ) (hMeas : ∀ i, Measurable (X i))
   (hIndep : iIndepFun X P) (hIdent : ∀ i, IdentDistrib (X i) (X 0) P P)
   (hMemLp : MemLp (X 0) 2 P) (hMean : P[X 0] = 0) (hVar : Var[X 0; P] = 1)
-  (B : ℝ≥0 → Ω' → ℝ) (hB : IsPreBrownianReal B P')
+  (B : NNReal → Ω' → ℝ) (hB : IsPreBrownianReal B P')
   (t : Fin d → Set.Icc (0 : ℝ) 1)
-  (u : Fin (d + 1) → ℝ≥0) (hu : Monotone u) (hu0 : u 0 = 0)
+  (u : Fin (d + 1) → NNReal) (hu : Monotone u) (hu0 : u 0 = 0)
   (htu : ∀ j, u j.succ = iccToNNReal (t j)) :
   TendstoInDistribution (fun n => processValueVec t n X) atTop (brownianValueVec u B)
     (fun _ => P) P' := by
@@ -1447,7 +1447,7 @@ namespace MathlibExt.Probability.DonskerWanted
 @[path]
 private lemma orderedToFinset_brownianValueVec
   {Ω' : Type*} (I : Finset (Set.Icc (0 : ℝ) 1))
-  (B : ℝ≥0 → Ω' → ℝ) (ω : Ω') :
+  (B : NNReal → Ω' → ℝ) (ω : Ω') :
   orderedToFinset I (brownianValueVec (finsetTimesWithZero I) B ω) =
     I.restrict (fun t => B (iccToNNReal t) ω) := by
   ext i
@@ -1470,7 +1470,7 @@ private lemma finsetEval_tendstoInDistribution
   (X : ℕ → Ω → ℝ) (hMeas : ∀ i, Measurable (X i))
   (hIndep : iIndepFun X P) (hIdent : ∀ i, IdentDistrib (X i) (X 0) P P)
   (hMemLp : MemLp (X 0) 2 P) (hMean : P[X 0] = 0) (hVar : Var[X 0; P] = 1)
-  (B : ℝ≥0 → Ω' → ℝ) (hB : IsPreBrownianReal B P')
+  (B : NNReal → Ω' → ℝ) (hB : IsPreBrownianReal B P')
   (I : Finset (Set.Icc (0 : ℝ) 1)) :
   TendstoInDistribution
     (fun n ω => I.restrict (fun t => donskerProcess n X ω t)) atTop
@@ -1745,7 +1745,7 @@ lemma etemadi_maximal_inequality
     simp [level, psum]]
   change P (⋃ k ∈ Finset.range (n + 1), level X (3 * a) k) ≤
     3 * (⨆ k ∈ Finset.range (n + 1), P (level X a k))
-  let M : ℝ≥0∞ := ⨆ k ∈ Finset.range (n + 1), P (level X a k)
+  let M : ENNReal := ⨆ k ∈ Finset.range (n + 1), P (level X a k)
   have hM (k : ℕ) (hk : k ∈ Finset.range (n + 1)) : P (level X a k) ≤ M := by
     exact le_iSup_of_le k (le_iSup_of_le hk le_rfl)
   have htail (k : ℕ) (hk : k ∈ Finset.range (n + 1)) :
@@ -1963,21 +1963,21 @@ namespace MathlibExt.Probability.DonskerWanted
 private lemma donsker_gaussian_tail_fourth {a : ℝ} (ha : 0 < a) :
   a ^ 4 * (gaussianReal 0 1).real {x | a ≤ |x|} ≤ donskerGaussianFourthBound := by
   have h := mul_meas_ge_le_pow_eLpNorm' (gaussianReal 0 1)
-    (p := (4 : ℝ≥0∞)) (f := (id : ℝ → ℝ))
+    (p := (4 : ENNReal)) (f := (id : ℝ → ℝ))
     (by norm_num) (by norm_num) (ENNReal.ofReal a)
   have hset : {x : ℝ | ENNReal.ofReal a ≤ ‖id x‖ₑ} = {x | a ≤ |x|} := by
     ext x
     simp only [id_eq, Real.enorm_eq_ofReal_abs]
     exact ENNReal.ofReal_le_ofReal_iff (abs_nonneg x)
   rw [hset] at h
-  have hleft : (ENNReal.ofReal a ^ (4 : ℝ≥0∞).toReal *
+  have hleft : (ENNReal.ofReal a ^ (4 : ENNReal).toReal *
     gaussianReal 0 1 {x | a ≤ |x|}) ≠ ∞ := by
     finiteness
-  have hright : (eLpNorm id (4 : ℝ≥0∞) (gaussianReal 0 1) ^
-    (4 : ℝ≥0∞).toReal) ≠ ∞ := by
+  have hright : (eLpNorm id (4 : ENNReal) (gaussianReal 0 1) ^
+    (4 : ENNReal).toReal) ≠ ∞ := by
     apply ENNReal.rpow_ne_top_of_nonneg
     · norm_num
-    · exact (memLp_id_gaussianReal (4 : ℝ≥0)).eLpNorm_lt_top.ne
+    · exact (memLp_id_gaussianReal (4 : NNReal)).eLpNorm_lt_top.ne
   have ht := (ENNReal.toReal_le_toReal hleft hright).2 h
   simpa [donskerGaussianFourthBound, measureReal_def, ENNReal.toReal_mul,
     ENNReal.toReal_rpow, ENNReal.toReal_ofReal ha.le] using ht
@@ -2272,7 +2272,7 @@ private lemma donsker_etemadi_scaled_of_tail_bound
   c ^ 2 * P.real {ω | ∃ k ∈ Finset.range (m + 1),
     3 * (c * Real.sqrt (m : ℝ)) ≤ |psum Y k ω|} ≤ η := by
   have hc2 : 0 < c ^ 2 := sq_pos_of_pos hc
-  let M : ℝ≥0∞ := ⨆ k ∈ Finset.range (m + 1),
+  let M : ENNReal := ⨆ k ∈ Finset.range (m + 1),
     P {ω | c * Real.sqrt (m : ℝ) ≤ |psum Y k ω|}
   have hq : 0 ≤ (η / 3) / c ^ 2 := div_nonneg (div_nonneg hη.le (by norm_num)) hc2.le
   have hpoint (k : ℕ) (hk : k ∈ Finset.range (m + 1)) :
@@ -2298,7 +2298,7 @@ private lemma donsker_etemadi_scaled_of_tail_bound
     (c * Real.sqrt (m : ℝ))
   change P {ω | ∃ k ∈ Finset.range (m + 1),
     3 * (c * Real.sqrt (m : ℝ)) ≤ |psum Y k ω|} ≤ 3 * M at het
-  have hthreeMtop : (3 * M : ℝ≥0∞) ≠ ∞ := ENNReal.mul_ne_top (by norm_num) hMtop
+  have hthreeMtop : (3 * M : ENNReal) ≠ ∞ := ENNReal.mul_ne_top (by norm_num) hMtop
   have hetReal := (ENNReal.toReal_le_toReal (measure_ne_top P _) hthreeMtop).2 het
   have hmax : P.real {ω | ∃ k ∈ Finset.range (m + 1),
     3 * (c * Real.sqrt (m : ℝ)) ≤ |psum Y k ω|} ≤ 3 * M.toReal := by
@@ -3209,7 +3209,7 @@ namespace MathlibExt.Probability.DonskerWanted
 @[path]
 private lemma donskerBrownianPath_finsetEval_map
   {Ω' : Type*} [MeasurableSpace Ω'] {P' : Measure Ω'}
-  (B : ℝ≥0 → Ω' → ℝ) (hB : IsBrownianReal B P')
+  (B : NNReal → Ω' → ℝ) (hB : IsBrownianReal B P')
   (I : Finset (Set.Icc (0 : ℝ) 1)) :
   (P'.map (donskerBrownianPath B)).map
     (fun f : C(Set.Icc (0 : ℝ) 1, ℝ) => I.restrict (fun t => f t)) =
@@ -3236,7 +3236,7 @@ private lemma donsker_law_cluster_eq
   (X : ℕ → Ω → ℝ) (hMeas : ∀ i, Measurable (X i))
   (hIndep : iIndepFun X P) (hIdent : ∀ i, IdentDistrib (X i) (X 0) P P)
   (hMemLp : MemLp (X 0) 2 P) (hMean : P[X 0] = 0) (hVar : Var[X 0; P] = 1)
-  (B : ℝ≥0 → Ω' → ℝ) (hB : IsBrownianReal B P')
+  (B : NNReal → Ω' → ℝ) (hB : IsBrownianReal B P')
   (m : ℕ → ℕ) (hm : Tendsto m atTop atTop)
   (μ : ProbabilityMeasure C(Set.Icc (0 : ℝ) 1, ℝ))
   (hcluster : TendstoInDistribution
@@ -3287,7 +3287,7 @@ private lemma donsker_process_tendstoInDistribution
   (X : ℕ → Ω → ℝ) (hMeas : ∀ i, Measurable (X i))
   (hIndep : iIndepFun X P) (hIdent : ∀ i, IdentDistrib (X i) (X 0) P P)
   (hMemLp : MemLp (X 0) 2 P) (hMean : P[X 0] = 0) (hVar : Var[X 0; P] = 1)
-  (B : ℝ≥0 → Ω' → ℝ) (hB : IsBrownianReal B P') :
+  (B : NNReal → Ω' → ℝ) (hB : IsBrownianReal B P') :
   TendstoInDistribution (fun n ω => donskerProcess n X ω) atTop
     (donskerBrownianPath B) (fun _ => P) P' where
   forall_aemeasurable n :=
@@ -3369,7 +3369,7 @@ lemma donsker_invariance_principle
   (hMemLp : MemLp (X 0) 2 P)
   (hMean : P[X 0] = 0)
   (hVar : Var[X 0; P] = 1)
-  (B : ℝ≥0 → Ω' → ℝ)
+  (B : NNReal → Ω' → ℝ)
   (hB : IsBrownianReal B P') :
 -- imply
   ∃ (Y : Ω' → C(Set.Icc (0 : ℝ) 1, ℝ)),

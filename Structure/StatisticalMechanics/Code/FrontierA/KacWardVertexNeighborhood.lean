@@ -21,7 +21,7 @@ open Set
 
 structure KWVertexNeighborhoodData {n : ℕ} [NeZero n]
     (polygon : KWFiniteSimplePolygon n) where
-  scale : ℝ≥0
+  scale : NNReal
   scale_pos : 0 < scale
   vertex_separated : ∀ i j : Fin n, i ≠ j →
     (scale : ℝ) < dist (polygon.vertex i) (polygon.vertex j)

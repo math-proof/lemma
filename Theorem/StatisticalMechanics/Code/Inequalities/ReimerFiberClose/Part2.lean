@@ -184,7 +184,7 @@ set_option linter.unusedFintypeInType false in
 set_option linter.unusedDecidableInType false in
 
 
-theorem reimer_bernoulli_eq_of_determinedDisjoint [Fintype E] [DecidableEq E] {p : ℝ≥0}
+theorem reimer_bernoulli_eq_of_determinedDisjoint [Fintype E] [DecidableEq E] {p : NNReal}
     (hp : p ≤ 1) {A B : Set (ConfigSpace E)} {K L : Set E} (hKL : Disjoint K L)
     (hA : DeterminedBy A K) (hB : DeterminedBy B L) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
@@ -193,7 +193,7 @@ theorem reimer_bernoulli_eq_of_determinedDisjoint [Fintype E] [DecidableEq E] {p
   set φ : E → Bool → ℝ := fun (_ : E) (b : Bool) => (bernoulliMeasure p hp).real {b} with hφ
   have hφ1 : ∀ x, φ x false + φ x true = 1 := by
     intro _
-    have h1 : (bernoulliMeasure p hp).real {false} = ((1 - p : ℝ≥0) : ℝ) := by
+    have h1 : (bernoulliMeasure p hp).real {false} = ((1 - p : NNReal) : ℝ) := by
       rw [Measure.real, bernoulliMeasure_apply_false, ENNReal.coe_toReal]
     have h2 : (bernoulliMeasure p hp).real {true} = (p : ℝ) := by
       rw [Measure.real, bernoulliMeasure_apply_true, ENNReal.coe_toReal]
@@ -208,7 +208,7 @@ set_option linter.unusedFintypeInType false in
 set_option linter.unusedDecidableInType false in
 
 
-theorem reimer_inequality_determinedDisjoint [Fintype E] [DecidableEq E] {p : ℝ≥0}
+theorem reimer_inequality_determinedDisjoint [Fintype E] [DecidableEq E] {p : NNReal}
     (hp : p ≤ 1) {A B : Set (ConfigSpace E)} {K L : Set E} (hKL : Disjoint K L)
     (hA : DeterminedBy A K) (hB : DeterminedBy B L) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)

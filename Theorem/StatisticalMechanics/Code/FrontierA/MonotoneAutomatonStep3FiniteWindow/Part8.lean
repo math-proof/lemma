@@ -126,7 +126,7 @@ theorem step3TargetMultiplicity_le (T : MonotoneAutomaton d) (D N : ℕ)
 
 theorem highInsertionLowerBound_le_one
     (mu : Measure (FieldTriple d)) [IsProbabilityMeasure mu]
-    (t : NNReal) (epsilon : ℝ≥0∞)
+    (t : NNReal) (epsilon : ENNReal)
     (hinsert : HasHighInsertionLowerBound mu t epsilon) : epsilon ≤ 1 := by
   have hignore : TripleEventIgnoresHighAt (0 : Site d)
       (Set.univ : Set (FieldTriple d)) := by
@@ -143,7 +143,7 @@ theorem highInsertionLowerBound_le_one
 
 theorem step3SourceTarget_transfer
     (T : MonotoneAutomaton d) (mu : Measure (FieldTriple d))
-    [IsProbabilityMeasure mu] (D N : ℕ) (epsilon : ℝ≥0∞)
+    [IsProbabilityMeasure mu] (D N : ℕ) (epsilon : ENNReal)
     (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon)
     (i : (Finset (Site d) × Site d) × Site d) :
     epsilon ^ (boxFinsetBK d D).card * mu (step3SourceEvent T D N i) ≤
@@ -213,13 +213,13 @@ theorem measurableSet_step3SourceDegree (T : MonotoneAutomaton d)
 
 theorem step3FiniteWindow_probability_bound
     (T : MonotoneAutomaton d) (mu : Measure (FieldTriple d))
-    [IsProbabilityMeasure mu] (D N K : ℕ) (epsilon : ℝ≥0∞)
+    [IsProbabilityMeasure mu] (D N K : ℕ) (epsilon : ENNReal)
     (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon)
     (E : Set (FieldTriple d)) (hEmeas : MeasurableSet E)
     (hdegree : ∀ q ∈ E, K ≤ finiteEventMultiplicity
       (step3Indices (d := d) N) (step3SourceEvent T D N) q) :
     epsilon ^ (boxFinsetBK d D).card * K * mu E ≤
-      (((boxFinsetBK d D).card ^ 3 : ℕ) : ℝ≥0∞) := by
+      (((boxFinsetBK d D).card ^ 3 : ℕ) : ENNReal) := by
   apply finiteEventMultivalued_probability_bound mu
     (step3Indices (d := d) N) (step3SourceEvent T D N)
     (step3TargetEvent T D N)

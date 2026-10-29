@@ -60,7 +60,7 @@ lemma ringHaarChar_continuous :
   exact ⟨(↑p⁻¹ : R) , hps, p * x, hx, by simp⟩
 
 @[simps (isSimp := false)]
-noncomputable def ringHaarChar : Rˣ →ₜ* ℝ≥0 where
+noncomputable def ringHaarChar : Rˣ →ₜ* NNReal where
   toFun r := addEquivAddHaarChar (ContinuousAddEquiv.mulLeft r)
   map_one' := by convert addEquivAddHaarChar_refl (G := R); ext; simp
   map_mul' φ ψ := by
@@ -99,14 +99,14 @@ lemma ringHaarChar_mul_volume (μ : Measure R) [IsAddHaarMeasure μ] [μ.Regular
 
 open Pointwise ENNReal in
 lemma ringHaarChar_eq_of_measure_smul_eq_mul {μ : Measure R} [IsAddHaarMeasure μ] [μ.Regular]
-    {s : Set R} (hs₀ : μ s ≠ 0) (hs : μ s ≠ ∞) {r : ℝ≥0} {u : Rˣ}
+    {s : Set R} (hs₀ : μ s ≠ 0) (hs : μ s ≠ ∞) {r : NNReal} {u : Rˣ}
     (hμgs : μ (u • s) = r * μ s) : ringHaarChar u = r := by
   rw [ringHaarChar_mul_volume μ u, ENNReal.mul_left_inj hs₀ hs] at hμgs
   assumption_mod_cast
 
 variable (R) in
 
-noncomputable def ringHaarChar_ker := MonoidHom.ker (ringHaarChar : Rˣ →ₜ* ℝ≥0).toMonoidHom
+noncomputable def ringHaarChar_ker := MonoidHom.ker (ringHaarChar : Rˣ →ₜ* NNReal).toMonoidHom
 
 lemma mem_ringHaarChar_ker (x : Rˣ) : x ∈ ringHaarChar_ker R ↔ ringHaarChar x = 1 :=
   MonoidHom.mem_ker

@@ -2,7 +2,6 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.PrimeCounting.ChebyshevThetaLowerBound
 open Real
-open MetaMathlibExt
 
 
 /--
@@ -342,4 +341,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

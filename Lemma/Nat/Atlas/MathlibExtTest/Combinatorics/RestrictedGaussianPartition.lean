@@ -8,7 +8,7 @@ open MetaMathlibExt
 [isPrimePowTwo](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/RestrictedGaussianPartition.lean)
 -/
 @[path]
-lemma isPrimePowTwo
+lemma isPrimePowTwo :
 -- imply
   IsPrimePow 2 := by
 -- proof
@@ -18,7 +18,7 @@ lemma isPrimePowTwo
 [notPrimePowOne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/RestrictedGaussianPartition.lean)
 -/
 @[path]
-lemma notPrimePowOne
+lemma notPrimePowOne :
 -- imply
   ¬ IsPrimePow 1 := by
 -- proof
@@ -26,3 +26,4 @@ lemma notPrimePowOne
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

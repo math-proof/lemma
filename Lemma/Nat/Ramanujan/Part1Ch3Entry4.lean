@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry4
-open Entry9IiGeneralizedbellgeneratingDefining (generalizedBellGenerating)
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
+open Entry9IiGeneralizedbellgeneratingDefining (generalizedBellGenerating)
 open Entry4
 
 
@@ -15,7 +15,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 private lemma hasSum_exp_series (z : ℂ) :
   HasSum (fun n => z ^ n / (Nat.factorial n : ℂ)) (Complex.exp z) := by
   have h := NormedSpace.expSeries_div_hasSum_exp (𝔸 := ℂ) z
-  rwa [Complex.exp_eq_exp_ℂ]
+  rw [Complex.exp_eq_exp_ℂ]
+  exact h
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 
@@ -33,7 +34,7 @@ private lemma tail_exp_series (w : ℂ) :
   have hval := hsum.tsum_eq
   have hsplit := hsumm.tsum_eq_zero_add
   have key : w * (∑' n : ℕ, w ^ n / ((Nat.factorial (n + 1) : ℕ) : ℂ)) =
-    ∑' b : ℕ, w ^ (b + 1) / ((Nat.factorial (b + 1) : ℕ) : ℂ) := by
+      ∑' b : ℕ, w ^ (b + 1) / ((Nat.factorial (b + 1) : ℕ) : ℂ) := by
     rw [← tsum_mul_left]
     apply tsum_congr
     intro n
@@ -109,7 +110,7 @@ private lemma summable_pow_div_succ_factorial (w : ℂ) :
   Summable (fun n => w ^ n / ((Nat.factorial (n + 1) : ℕ) : ℂ)) := by
   apply Summable.of_norm
   have hnorm : ∀ n : ℕ, ‖w ^ n / ((Nat.factorial (n + 1) : ℕ) : ℂ)‖
-    = ‖w‖ ^ n / ((Nat.factorial (n + 1) : ℕ) : ℝ) := by
+      = ‖w‖ ^ n / ((Nat.factorial (n + 1) : ℕ) : ℝ) := by
     intro n
     rw [norm_div, norm_pow, Complex.norm_natCast]
   simp only [hnorm]
@@ -136,7 +137,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 private lemma real_exp_tsum (W : ℝ) :
   (∑' n : ℕ, W ^ n / (Nat.factorial n : ℝ)) = Real.exp W := by
   have h := NormedSpace.expSeries_div_hasSum_exp (𝔸 := ℝ) W
-  rwa [Real.exp_eq_exp_ℝ]
+  rw [Real.exp_eq_exp_ℝ]
+  exact h.tsum_eq
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 
@@ -148,8 +150,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 @[path]
 private lemma fiber_summable (a x : ℂ) (j : ℕ) : Summable (fun n => T a x j n) := by
   have heq : (fun n => T a x j n)
-    = (fun n => (a * (Complex.exp (-x) * (x ^ (j + 1) / (Nat.factorial j : ℂ))))
-      * ((a * (j + 1 : ℂ)) ^ n / ((Nat.factorial (n + 1) : ℕ) : ℂ))) := by
+      = (fun n => (a * (Complex.exp (-x) * (x ^ (j + 1) / (Nat.factorial j : ℂ))))
+        * ((a * (j + 1 : ℂ)) ^ n / ((Nat.factorial (n + 1) : ℕ) : ℂ))) := by
     funext n
     unfold T
     rw [mul_pow]
@@ -184,8 +186,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 @[path]
 private lemma fiber_norm_summable (a x : ℂ) (j : ℕ) : Summable (fun n => ‖T a x j n‖) := by
   have heq : (fun n => ‖T a x j n‖)
-    = (fun n => (‖a‖ * (‖Complex.exp (-x)‖ * (‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ))))
-      * ((‖a‖ * ((j : ℝ) + 1)) ^ n / ((Nat.factorial (n + 1) : ℕ) : ℝ))) := by
+      = (fun n => (‖a‖ * (‖Complex.exp (-x)‖ * (‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ))))
+        * ((‖a‖ * ((j : ℝ) + 1)) ^ n / ((Nat.factorial (n + 1) : ℕ) : ℝ))) := by
     funext n
     rw [norm_T, mul_pow]
     ring
@@ -205,8 +207,8 @@ private lemma fiber_norm_tsum_le (a x : ℂ) (j : ℕ) :
     ≤ (‖a‖ * (‖Complex.exp (-x)‖ * (‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ)))) *
       Real.exp (‖a‖ * ((j : ℝ) + 1)) := by
   have heq : (fun n => ‖T a x j n‖)
-    = (fun n => (‖a‖ * (‖Complex.exp (-x)‖ * (‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ))))
-      * ((‖a‖ * ((j : ℝ) + 1)) ^ n / ((Nat.factorial (n + 1) : ℕ) : ℝ))) := by
+      = (fun n => (‖a‖ * (‖Complex.exp (-x)‖ * (‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ))))
+        * ((‖a‖ * ((j : ℝ) + 1)) ^ n / ((Nat.factorial (n + 1) : ℕ) : ℝ))) := by
     funext n
     rw [norm_T, mul_pow]
     ring
@@ -219,12 +221,12 @@ private lemma fiber_norm_tsum_le (a x : ℂ) (j : ℕ) :
   rw [heq, tsum_mul_left]
   apply mul_le_mul_of_nonneg_left _ hCnn
   calc (∑' n, (‖a‖ * (↑j + 1)) ^ n / ((Nat.factorial (n + 1) : ℕ) : ℝ))
-    ≤ ∑' n, (‖a‖ * (↑j + 1)) ^ n / (Nat.factorial n : ℝ) := by
-      apply Summable.tsum_le_tsum _ hsum2 hsum3
-      intro n
-      have hfle := fact_le_succ_fact n
-      have hpos : (0:ℝ) ≤ (‖a‖ * (↑j + 1)) ^ n := by positivity
-      gcongr
+      ≤ ∑' n, (‖a‖ * (↑j + 1)) ^ n / (Nat.factorial n : ℝ) := by
+        apply Summable.tsum_le_tsum _ hsum2 hsum3
+        intro n
+        have hfle := fact_le_succ_fact n
+        have hpos : (0:ℝ) ≤ (‖a‖ * (↑j + 1)) ^ n := by positivity
+        gcongr
     _ = Real.exp (‖a‖ * (↑j + 1)) := real_exp_tsum _
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
@@ -239,9 +241,9 @@ private lemma outer_majorant_summable (a x : ℂ) :
   Summable (fun j => (‖a‖ * (‖Complex.exp (-x)‖ * (‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ)))) *
     Real.exp (‖a‖ * ((j : ℝ) + 1))) := by
   have heq : (fun j => (‖a‖ * (‖Complex.exp (-x)‖ * (‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ)))) *
-    Real.exp (‖a‖ * ((j : ℝ) + 1)))
-    = (fun j => (‖a‖ * (‖Complex.exp (-x)‖ * (‖x‖ * Real.exp ‖a‖))) *
-      ((‖x‖ * Real.exp ‖a‖) ^ j / (Nat.factorial j : ℝ))) := by
+        Real.exp (‖a‖ * ((j : ℝ) + 1)))
+      = (fun j => (‖a‖ * (‖Complex.exp (-x)‖ * (‖x‖ * Real.exp ‖a‖))) *
+        ((‖x‖ * Real.exp ‖a‖) ^ j / (Nat.factorial j : ℝ))) := by
     funext j
     have h1 : ‖a‖ * ((j : ℝ) + 1) = (j : ℝ) * ‖a‖ + ‖a‖ := by ring
     rw [mul_pow, h1, Real.exp_add, Real.exp_nat_mul]
@@ -295,11 +297,12 @@ private lemma tail_exp_series' (w : ℂ) :
   (∑' n, w ^ (n + 1) / ((Nat.factorial (n + 1) : ℕ) : ℂ)) = Complex.exp w - 1 := by
   have h := tail_exp_series w
   have heq : (fun n => w ^ (n + 1) / ((Nat.factorial (n + 1) : ℕ) : ℂ))
-    = (fun n => w * (w ^ n / ((Nat.factorial (n + 1) : ℕ) : ℂ))) := by
+      = (fun n => w * (w ^ n / ((Nat.factorial (n + 1) : ℕ) : ℂ))) := by
     funext n
     rw [pow_succ']
     ring
-  rwa [heq, tsum_mul_left]
+  rw [heq, tsum_mul_left]
+  exact h
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 
@@ -328,18 +331,19 @@ private lemma fiber_value (a x : ℂ) (ha : a ≠ 0) (j : ℕ) :
       ((Nat.factorial (j + 1) : ℕ) : ℂ)) := by
   have hw : a * ((j : ℂ) + 1) ≠ 0 := mul_ne_zero ha (coe_add_one_ne_zero j)
   have heq : (fun n => T a x j n)
-    = (fun n => (a * (Complex.exp (-x) * (x ^ (j + 1) / (Nat.factorial j : ℂ))))
-      * ((a * ((j : ℂ) + 1)) ^ n / ((Nat.factorial (n + 1) : ℕ) : ℂ))) := by
+      = (fun n => (a * (Complex.exp (-x) * (x ^ (j + 1) / (Nat.factorial j : ℂ))))
+        * ((a * ((j : ℂ) + 1)) ^ n / ((Nat.factorial (n + 1) : ℕ) : ℂ))) := by
     funext n
     unfold T
     rw [mul_pow]
     ring
   have htail := tail_exp_series (a * ((j : ℂ) + 1))
   have hS : (∑' n, (a * ((j : ℂ) + 1)) ^ n / ((Nat.factorial (n + 1) : ℕ) : ℂ))
-    = (Complex.exp (a * ((j : ℂ) + 1)) - 1) / (a * ((j : ℂ) + 1)) := by
-    rwa [eq_div_iff hw, mul_comm]
+      = (Complex.exp (a * ((j : ℂ) + 1)) - 1) / (a * ((j : ℂ) + 1)) := by
+    rw [eq_div_iff hw, mul_comm]
+    exact htail
   have hfact : ((Nat.factorial (j + 1) : ℕ) : ℂ)
-    = ((j : ℂ) + 1) * (Nat.factorial j : ℂ) := by
+      = ((j : ℂ) + 1) * (Nat.factorial j : ℂ) := by
     rw [Nat.factorial_succ]
     push_cast
     ring
@@ -387,26 +391,26 @@ private lemma outer_value (a x : ℂ) :
     (x ^ (j + 1) * (Complex.exp (a * ((j : ℂ) + 1)) - 1) / ((Nat.factorial (j + 1) : ℕ) : ℂ)))
   = Complex.exp (x * (Complex.exp a - 1)) - 1 := by
   have heq : (fun (j : ℕ) => Complex.exp (-x) *
-    (x ^ (j + 1) * (Complex.exp (a * ((j : ℂ) + 1)) - 1) / ((Nat.factorial (j + 1) : ℕ) : ℂ)))
-    = (fun (j : ℕ) => Complex.exp (-x) *
-      (((x * Complex.exp a) ^ (j + 1) - x ^ (j + 1)) / ((Nat.factorial (j + 1) : ℕ) : ℂ))) := by
+        (x ^ (j + 1) * (Complex.exp (a * ((j : ℂ) + 1)) - 1) / ((Nat.factorial (j + 1) : ℕ) : ℂ)))
+      = (fun (j : ℕ) => Complex.exp (-x) *
+        (((x * Complex.exp a) ^ (j + 1) - x ^ (j + 1)) / ((Nat.factorial (j + 1) : ℕ) : ℂ))) := by
     funext j
     rw [hexp_pow a j, mul_pow]
     ring
   have hs1 := htail_summ (x * Complex.exp a)
   have hs2 := htail_summ x
   have hsub : (∑' j, ((x * Complex.exp a) ^ (j + 1) - x ^ (j + 1)) /
-    ((Nat.factorial (j + 1) : ℕ) : ℂ))
-    = (Complex.exp (x * Complex.exp a) - 1) - (Complex.exp x - 1) := by
+        ((Nat.factorial (j + 1) : ℕ) : ℂ))
+      = (Complex.exp (x * Complex.exp a) - 1) - (Complex.exp x - 1) := by
     have hsplit : (fun (j : ℕ) => ((x * Complex.exp a) ^ (j + 1) - x ^ (j + 1)) /
-      ((Nat.factorial (j + 1) : ℕ) : ℂ))
-      = (fun (j : ℕ) => (x * Complex.exp a) ^ (j + 1) / ((Nat.factorial (j + 1) : ℕ) : ℂ) -
-        x ^ (j + 1) / ((Nat.factorial (j + 1) : ℕ) : ℂ)) := by
+          ((Nat.factorial (j + 1) : ℕ) : ℂ))
+        = (fun (j : ℕ) => (x * Complex.exp a) ^ (j + 1) / ((Nat.factorial (j + 1) : ℕ) : ℂ) -
+          x ^ (j + 1) / ((Nat.factorial (j + 1) : ℕ) : ℂ)) := by
       funext j
       ring
     rw [hsplit, hs1.tsum_sub hs2, tail_exp_series', tail_exp_series']
   have e1 : Complex.exp (-x) * Complex.exp (x * Complex.exp a)
-    = Complex.exp (x * (Complex.exp a - 1)) := by
+      = Complex.exp (x * (Complex.exp a - 1)) := by
     rw [← Complex.exp_add]
     congr 1
     ring
@@ -415,8 +419,8 @@ private lemma outer_value (a x : ℂ) :
     simp
   rw [heq, tsum_mul_left, hsub]
   have hdist : Complex.exp (-x) * ((Complex.exp (x * Complex.exp a) - 1) - (Complex.exp x - 1))
-    = (Complex.exp (-x) * Complex.exp (x * Complex.exp a)) -
-      (Complex.exp (-x) * Complex.exp x) := by
+      = (Complex.exp (-x) * Complex.exp (x * Complex.exp a)) -
+        (Complex.exp (-x) * Complex.exp x) := by
     ring
   rw [hdist, e1, e2]
 
@@ -468,8 +472,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 @[path]
 private lemma fiber_summable_j (a x : ℂ) (n : ℕ) : Summable (fun (j : ℕ) => T a x j n) := by
   have heq : (fun (j : ℕ) => T a x j n)
-    = (fun (j : ℕ) => (a ^ (n + 1) / ((Nat.factorial (n + 1) : ℕ) : ℂ) * Complex.exp (-x)) *
-      (((j + 1 : ℂ)) ^ n * x ^ (j + 1) / (Nat.factorial j : ℂ))) := by
+      = (fun (j : ℕ) => (a ^ (n + 1) / ((Nat.factorial (n + 1) : ℕ) : ℂ) * Complex.exp (-x)) *
+        (((j + 1 : ℂ)) ^ n * x ^ (j + 1) / (Nat.factorial j : ℂ))) := by
     funext j
     unfold T
     ring
@@ -486,8 +490,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 @[path]
 private lemma fiberN_norm_summable (a x : ℂ) (n : ℕ) : Summable (fun (j : ℕ) => ‖T a x j n‖) := by
   have heq : (fun (j : ℕ) => ‖T a x j n‖)
-    = (fun (j : ℕ) => (‖a‖ ^ (n + 1) / ((Nat.factorial (n + 1) : ℕ) : ℝ) * ‖Complex.exp (-x)‖) *
-      (((j : ℝ) + 1) ^ n * ‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ))) := by
+      = (fun (j : ℕ) => (‖a‖ ^ (n + 1) / ((Nat.factorial (n + 1) : ℕ) : ℝ) * ‖Complex.exp (-x)‖) *
+        (((j : ℝ) + 1) ^ n * ‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ))) := by
     funext j
     rw [norm_T]
     ring
@@ -532,7 +536,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 private lemma hTswap (a x : ℂ) : Summable (fun p : ℕ × ℕ => T a x p.2 p.1) := by
   have h := summable_T a x
   have heq : (fun p : ℕ × ℕ => T a x p.2 p.1)
-    = (fun p : ℕ × ℕ => T a x p.1 p.2) ∘ ⇑(Equiv.prodComm ℕ ℕ) := by
+      = (fun p : ℕ × ℕ => T a x p.1 p.2) ∘ ⇑(Equiv.prodComm ℕ ℕ) := by
     funext p
     rfl
   rw [heq]
@@ -549,7 +553,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 private lemma hTnorm_swap (a x : ℂ) : Summable (fun p : ℕ × ℕ => ‖T a x p.2 p.1‖) := by
   have h := summable_norm_T a x
   have heq : (fun p : ℕ × ℕ => ‖T a x p.2 p.1‖)
-    = (fun p : ℕ × ℕ => ‖T a x p.1 p.2‖) ∘ ⇑(Equiv.prodComm ℕ ℕ) := by
+      = (fun p : ℕ × ℕ => ‖T a x p.1 p.2‖) ∘ ⇑(Equiv.prodComm ℕ ℕ) := by
     funext p
     rfl
   rw [heq]
@@ -635,9 +639,9 @@ private lemma hval_of (a x : ℂ) (ha : a ≠ 0) :
   have hprod_sum2 : (∑' p : ℕ × ℕ, T a x p.1 p.2) = ∑' j, ∑' n, T a x j n :=
     (summable_T a x).tsum_prod
   have hfib : (∑' j, ∑' n, T a x j n)
-    = ∑' (j : ℕ), Complex.exp (-x) *
-      (x ^ (j + 1) * (Complex.exp (a * ((j : ℂ) + 1)) - 1) /
-        ((Nat.factorial (j + 1) : ℕ) : ℂ)) := by
+      = ∑' (j : ℕ), Complex.exp (-x) *
+        (x ^ (j + 1) * (Complex.exp (a * ((j : ℂ) + 1)) - 1) /
+          ((Nat.factorial (j + 1) : ℕ) : ℂ)) := by
     apply tsum_congr
     intro j
     exact fiber_value a x ha j
@@ -661,7 +665,8 @@ private lemma main_entry4 (a x : ℂ) :
       simp only [U, zero_pow (Nat.succ_ne_zero n), zero_div, zero_mul]
     have hshad : Summable (fun n => U 0 x (n + 1)) := by
       have heq : (fun n => U 0 x (n + 1)) = (fun _ => (0 : ℂ)) := funext hUs
-      rwa [heq]
+      rw [heq]
+      exact summable_zero
     have hsumU : Summable (U 0 x) := ((summable_nat_add_iff (f := U 0 x) 1).mp hshad)
     have hval : (∑' n, U 0 x n) = Complex.exp (x * (Complex.exp 0 - 1)) := by
       rw [hsumU.tsum_eq_zero_add, U_zero]
@@ -673,15 +678,17 @@ private lemma main_entry4 (a x : ℂ) :
     · rw [← hval]
       exact hsumU.hasSum
     · have hshadN : Summable (fun n => ‖U 0 x (n + 1)‖) := by
-      have heq : (fun n => ‖U 0 x (n + 1)‖) = (fun _ => (0 : ℝ)) := by
-        funext n
-        rw [hUs n, norm_zero]
-      rwa [heq]
+        have heq : (fun n => ‖U 0 x (n + 1)‖) = (fun _ => (0 : ℝ)) := by
+          funext n
+          rw [hUs n, norm_zero]
+        rw [heq]
+        exact summable_zero
       exact ((summable_nat_add_iff (f := fun n => ‖U 0 x n‖) 1).mp hshadN)
   · refine ⟨?_, hnormU_of a x⟩
     have hsumU := hsumU_of a x
     have hval := hval_of a x ha
-    rwa [← hval]
+    rw [← hval]
+    exact hsumU.hasSum
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 
@@ -706,4 +713,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

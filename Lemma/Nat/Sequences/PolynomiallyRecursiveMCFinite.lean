@@ -8,9 +8,8 @@ namespace MetaMathlibExt
 
 /--
 [mc_finite_of_zmod_periodic](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Sequences/PolynomiallyRecursiveMCFinite.lean)
--/
-@[path]
 with `c 0 = 1` and all other coefficients `0`. -/
+@[path]
 private lemma mc_finite_of_zmod_periodic (s : ℕ → ℤ) (m : ℕ)
   (hper : IsEventuallyPeriodic fun n => ((s n : ℤ) : ZMod m)) :
   ∃ p q : ℕ, 0 < p ∧ 0 < q ∧ ∃ c : Fin p → ℤ, ∀ n : ℕ, q ≤ n →
@@ -19,18 +18,18 @@ private lemma mc_finite_of_zmod_periodic (s : ℕ → ℤ) (m : ℕ)
   refine ⟨p, q + 1, hp, by omega, (fun i => if i.val = 0 then 1 else 0), ?_⟩
   intro n hn
   have hterm : ∀ i : Fin p, (if i.val = 0 then (1 : ℤ) else 0) * s (n + i.val)
-    = (if (⟨0, hp⟩ : Fin p) = i then s (n + i.val) else 0) := by
+      = (if (⟨0, hp⟩ : Fin p) = i then s (n + i.val) else 0) := by
     intro i
     by_cases hi : i.val = 0
     · have hfin : (⟨0, hp⟩ : Fin p) = i := Fin.ext hi.symm
       simp [hi, hfin]
     · have hfin : (⟨0, hp⟩ : Fin p) ≠ i := by
-      intro hcon
-      apply hi
-      exact (congrArg Fin.val hcon).symm
+        intro hcon
+        apply hi
+        exact (congrArg Fin.val hcon).symm
       simp [hi, hfin]
   have hsup : (∑ i : Fin p, (if i.val = 0 then (1 : ℤ) else 0) * s (n + i.val))
-    = s n := by
+      = s n := by
     simp_rw [hterm, Fintype.sum_ite_eq]
     show s (n + 0) = s n
     rw [Nat.add_zero]
@@ -76,7 +75,7 @@ lemma isMCFinite_of_mvPolynomial_recursion
           simp only []
           rw [hrec i n, MvPolynomial.map_eval]
           have hfun : (φ ∘ Sum.elim (fun j => u j n) (fun _ : Unit => (↑n : ℤ)))
-            = Sum.elim (fun j => φ (u j n)) (fun _ : Unit => φ (↑n : ℤ)) := by
+              = Sum.elim (fun j => φ (u j n)) (fun _ : Unit => φ (↑n : ℤ)) := by
             funext x
             cases x with
             | inl j => rfl
@@ -110,11 +109,12 @@ lemma IsPRecursiveSequence.isMCFinite
 -- proof
   intro m hm
   have hrec : ∀ n : ℕ, k ≤ n →
-    s n = ∑ i : Fin k, (Q i.succ).eval (↑n : ℤ) * s (n - (i.val + 1)) := by
+      s n = ∑ i : Fin k, (Q i.succ).eval (↑n : ℤ) * s (n - (i.val + 1)) := by
     intro n hn
     have h := hs n hn
-    rwa [hQ, Polynomial.eval_one, one_mul] at h
-  obtain rfl | hk := Nat.eq_zero_or_pos k
+    rw [hQ, Polynomial.eval_one, one_mul] at h
+    exact h
+  rcases Nat.eq_zero_or_pos k with rfl | hk
   · have h0 : ∀ n, s n = 0 := fun n => by simpa using hrec n (Nat.zero_le n)
     exact mc_finite_of_zmod_periodic s m (.of_periodic one_pos fun n => by rw [h0, h0])
   have : NeZero m := ⟨by omega⟩
@@ -131,35 +131,36 @@ lemma IsPRecursiveSequence.isMCFinite
       (by
         intro n
         have hceφ : ∀ j : Fin k, φ ((Q j.succ).eval (↑(n + k) : ℤ))
-          = ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ)) := by
+            = ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ)) := by
           intro j
           have h1 := Polynomial.hom_eval₂ (Q j.succ) (RingHom.id ℤ) φ
             (↑(n + k) : ℤ)
           rw [RingHom.comp_id, Polynomial.eval₂_eq_eval_map φ] at h1
           have eφ : φ ((↑(n + k) : ℕ) : ℤ) = φ (↑n : ℤ) + φ (↑k : ℤ) := by
             rw [Nat.cast_add, map_add]
-          rwa [eφ] at h1
+          rw [eφ] at h1
+          exact h1
         have hce : ∀ j : Fin k, (↑((Q j.succ).eval (↑(n + k) : ℤ)) : ZMod m)
-          = ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ)) :=
+            = ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ)) :=
           fun j => hceφ j
         have hse : ∀ j : Fin k, (↑(s (n + k - (j.val + 1))) : ZMod m)
-          = φ (s (n + (k - 1 - j.val))) := by
+            = φ (s (n + (k - 1 - j.val))) := by
           intro j
           have hj := j.isLt
           have e : n + k - (j.val + 1) = n + (k - 1 - j.val) := by omega
           have hcast : ∀ a : ℤ, (↑a : ZMod m) = φ a := fun a => rfl
           rw [e, hcast]
         have hterm : ∀ j : Fin k,
-          (↑((Q j.succ).eval (↑(n + k) : ℤ)) : ZMod m)
-            * (↑(s (n + k - (j.val + 1))) : ZMod m)
-          = ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ))
-            * φ (s (n + (k - 1 - j.val))) := by
+            (↑((Q j.succ).eval (↑(n + k) : ℤ)) : ZMod m)
+              * (↑(s (n + k - (j.val + 1))) : ZMod m)
+            = ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ))
+              * φ (s (n + (k - 1 - j.val))) := by
           intro j
           rw [hce j, hse j]
         have hsum : (↑(∑ i : Fin k, (Q i.succ).eval (↑(n + k) : ℤ)
-          * s (n + k - (i.val + 1))) : ZMod m)
-          = ∑ j : Fin k, ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ))
-            * φ (s (n + (k - 1 - j.val))) := by
+            * s (n + k - (i.val + 1))) : ZMod m)
+            = ∑ j : Fin k, ((Q j.succ).map φ).eval (φ (↑n : ℤ) + φ (↑k : ℤ))
+              * φ (s (n + (k - 1 - j.val))) := by
           rw [Int.cast_sum]
           refine Finset.sum_congr rfl (fun j _ => ?_)
           rw [Int.cast_mul]
@@ -175,7 +176,8 @@ lemma IsPRecursiveSequence.isMCFinite
             have hi2 := i.isLt
             have eN : n + 1 + i.val = n + k := by omega
             have hkn : k ≤ n + k := by omega
-            rwa [eN, hrec (n + k) hkn]
+            rw [eN, hrec (n + k) hkn]
+            exact hsum
         · simp only []
           rw [map_natCast, Nat.cast_add_one, map_natCast])
   refine mc_finite_of_zmod_periodic s m ⟨p, q0, hp, fun n hn => ?_⟩
@@ -242,4 +244,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

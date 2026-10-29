@@ -14,7 +14,7 @@ private lemma finiteEventMultiplicity_eq_sum_indicator_eq
   {A : I → Set Omega}
   {omega : Omega} :
 -- imply
-  (finiteEventMultiplicity J A omega : ℝ≥0∞) = ∑ i ∈ J, (A i).indicator (fun _ => (1 : ℝ≥0∞)) omega := by
+  (finiteEventMultiplicity J A omega : ENNReal) = ∑ i ∈ J, (A i).indicator (fun _ => (1 : ENNReal)) omega := by
 -- proof
   apply StatMech.FrontierA.finiteEventMultiplicity_eq_sum_indicator J A omega
 
@@ -30,7 +30,7 @@ private lemma lintegral_finiteEventMultiplicity_eq
 -- given
   (hA : ∀ i ∈ J, MeasurableSet (A i)) :
 -- imply
-  ∫⁻ omega, (finiteEventMultiplicity J A omega : ℝ≥0∞) ∂mu = ∑ i ∈ J, mu (A i) := by
+  ∫⁻ omega, (finiteEventMultiplicity J A omega : ENNReal) ∂mu = ∑ i ∈ J, mu (A i) := by
 -- proof
   apply StatMech.FrontierA.lintegral_finiteEventMultiplicity mu J A hA
 
@@ -50,7 +50,7 @@ private lemma finiteEventMultivalued_probability_bound_eq
   (hsourceMeas : ∀ i ∈ J, MeasurableSet (source i))
   (htargetMeas : ∀ i ∈ J, MeasurableSet (target i))
   (hEMeas : MeasurableSet E)
-  (c : ℝ≥0∞)
+  (c : ENNReal)
   (hsourceDegree : ∀ omega ∈ E, K ≤ finiteEventMultiplicity J source omega)
   (htargetDegree : ∀ omega, finiteEventMultiplicity J target omega ≤ L)
   (htransfer : ∀ i ∈ J, c * mu (source i) ≤ mu (target i)) :

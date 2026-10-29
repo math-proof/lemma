@@ -114,7 +114,7 @@ theorem ibk_section_disjointOccurrence_subset (A B : Set (ConfigSpace E))
     · simp [ih_fill, heF]
 
 
-theorem ibk_inequality_of_finite_dependsOn {p : ℝ≥0} (hp : p ≤ 1)
+theorem ibk_inequality_of_finite_dependsOn {p : NNReal} (hp : p ≤ 1)
     {A B : Set (ConfigSpace E)} (F : Finset E)
     (hAdep : DependsOn A (F : Set E)) (hBdep : DependsOn B (F : Set E))
     (hAinc : IsIncreasing A) (hBinc : IsIncreasing B) :
@@ -169,7 +169,7 @@ theorem ibk_inequality_of_finite_dependsOn {p : ℝ≥0} (hp : p ≤ 1)
       (congrArg₂ (· * ·) hAprob hBprob).symm
 
 
-theorem ibk_triple_of_finite_dependsOn {p : ℝ≥0} (hp : p ≤ 1)
+theorem ibk_triple_of_finite_dependsOn {p : NNReal} (hp : p ≤ 1)
     {P Q R : Set (ConfigSpace E)} (F : Finset E)
     (hPdep : DependsOn P (F : Set E)) (hQdep : DependsOn Q (F : Set E))
     (hRdep : DependsOn R (F : Set E))
@@ -193,7 +193,7 @@ theorem ibk_triple_of_finite_dependsOn {p : ℝ≥0} (hp : p ≤ 1)
     _ = mu.real P * mu.real Q * mu.real R := by ring
 
 
-theorem ibk_criterion_of_finite_dependsOn {I : Type*} {p : ℝ≥0} (hp : p ≤ 1)
+theorem ibk_criterion_of_finite_dependsOn {I : Type*} {p : NNReal} (hp : p ≤ 1)
     (s : Finset I) (P Q R : I → Set (ConfigSpace E)) (F : Finset E)
     (hPdep : ∀ i ∈ s, DependsOn (P i) (F : Set E))
     (hQdep : ∀ i ∈ s, DependsOn (Q i) (F : Set E))
@@ -241,7 +241,7 @@ theorem ibk_pivotalProb_nonneg [Fintype E] {r : ℝ} (hr0 : 0 ≤ r) (hr1 : r �
     (ibk_configWeight_nonneg hr0 hr1 omega)
 
 
-theorem ibk_measure_mono_parameter {p q : ℝ≥0} (hp : p ≤ 1) (hq : q ≤ 1)
+theorem ibk_measure_mono_parameter {p q : NNReal} (hp : p ≤ 1) (hq : q ≤ 1)
     (hpq : p ≤ q) {A : Set (ConfigSpace E)} (F : Finset E)
     (hAdep : DependsOn A (F : Set E)) (hAinc : IsIncreasing A) :
     (bernoulliProductMeasure (E := E) p hp).real A ≤

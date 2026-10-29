@@ -97,7 +97,7 @@ theorem dist_kwStairCorner_base_le (a b : ℂ) (N : ℕ)
 
 theorem KWFiniteSimplePolygon.kwStairCorner_mem_closedEdgeTube
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
-    (i : Fin n) (N : ℕ) (k : Fin (N + 1)) (r : ℝ≥0)
+    (i : Fin n) (N : ℕ) (k : Fin (N + 1)) (r : NNReal)
     (hmesh : ‖polygon.edgeVector i‖ / (N + 1 : ℝ) < r) :
     kwStairCorner (polygon.vertex i) (polygon.vertex (i + 1)) N k ∈
       polygon.closedEdgeTube r i := by
@@ -113,7 +113,7 @@ theorem KWFiniteSimplePolygon.kwStairCorner_mem_closedEdgeTube
 
 theorem KWFiniteSimplePolygon.exists_uniform_stair_mesh
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
-    (r : ℝ≥0) (hr : 0 < r) :
+    (r : NNReal) (hr : 0 < r) :
     ∃ N : ℕ, ∀ i : Fin n,
       ‖polygon.edgeVector i‖ / (N + 1 : ℝ) < r := by
   let totalLength : ℝ := ∑ i : Fin n, ‖polygon.edgeVector i‖
@@ -133,7 +133,7 @@ theorem KWFiniteSimplePolygon.exists_uniform_stair_mesh
 
 theorem KWFiniteSimplePolygon.exists_uniform_stair_corners_in_tubes
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
-    (r : ℝ≥0) (hr : 0 < r) :
+    (r : NNReal) (hr : 0 < r) :
     ∃ N : ℕ, ∀ i : Fin n, ∀ k : Fin (N + 1),
       kwStairCorner (polygon.vertex i) (polygon.vertex (i + 1)) N k ∈
         polygon.closedEdgeTube r i := by

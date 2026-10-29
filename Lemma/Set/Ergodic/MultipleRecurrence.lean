@@ -14,7 +14,7 @@ namespace MathlibExt.Dynamics.Ergodic.MultipleRecurrenceWanted
 @[path]
 private lemma furst_visitCount_eq_sum_indicator {α : Type*} (T : α → α) (A : Set α)
   (N : ℕ) (x : α) :
-  (furstVisitCount T A N x : ℝ≥0∞) =
+  (furstVisitCount T A N x : ENNReal) =
     ∑ m ∈ Finset.range N, (T^[m] ⁻¹' A).indicator 1 x := by
   classical
   simp only [furstVisitCount, Finset.card_eq_sum_ones, Nat.cast_sum, Finset.sum_filter,
@@ -32,7 +32,7 @@ namespace MathlibExt.Dynamics.Ergodic.MultipleRecurrenceWanted
 private lemma furst_visitCount_lintegral {α : Type*} [MeasurableSpace α]
   {μ : Measure α} {T : α → α} (hT : MeasurePreserving T μ μ)
   {A : Set α} (hA : MeasurableSet A) (N : ℕ) :
-  (∫⁻ x, (furstVisitCount T A N x : ℝ≥0∞) ∂μ) = (N : ℝ≥0∞) * μ A := by
+  (∫⁻ x, (furstVisitCount T A N x : ENNReal) ∂μ) = (N : ENNReal) * μ A := by
   classical
   simp_rw [furst_visitCount_eq_sum_indicator]
   rw [lintegral_finsetSum]
@@ -62,17 +62,17 @@ private lemma furst_goodSet_pos {α : Type*} [MeasurableSpace α]
     rw [ae_iff]
     simpa only [not_not, Set.ofPred_mem_eq] using hzero
   have hthreshold_nonneg : 0 ≤ (μ A).toReal / 2 * (N : ℝ) := by positivity
-  have hpointwise : ∀ᵐ x ∂μ, (furstVisitCount T A N x : ℝ≥0∞) ≤
+  have hpointwise : ∀ᵐ x ∂μ, (furstVisitCount T A N x : ENNReal) ≤
     ENNReal.ofReal ((μ A).toReal / 2 * (N : ℝ)) := by
     filter_upwards [houtside] with x hx
     apply (ENNReal.toReal_le_toReal (by simp) ENNReal.ofReal_ne_top).mp
     rw [ENNReal.toReal_natCast, ENNReal.toReal_ofReal hthreshold_nonneg]
     exact (lt_of_not_ge hx).le
-  have hint : (N : ℝ≥0∞) * μ A ≤
+  have hint : (N : ENNReal) * μ A ≤
     ENNReal.ofReal ((μ A).toReal / 2 * (N : ℝ)) := by
     rw [← furst_visitCount_lintegral hT hA N]
     calc
-      (∫⁻ x, (furstVisitCount T A N x : ℝ≥0∞) ∂μ) ≤
+      (∫⁻ x, (furstVisitCount T A N x : ENNReal) ∂μ) ≤
         ∫⁻ _x, ENNReal.ofReal ((μ A).toReal / 2 * (N : ℝ)) ∂μ :=
         lintegral_mono_ae hpointwise
       _ = ENNReal.ofReal ((μ A).toReal / 2 * (N : ℝ)) := by simp

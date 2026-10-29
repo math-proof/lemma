@@ -11,8 +11,8 @@ namespace TheoryOfProbability3
 -/
 @[path]
 lemma ennreal_tendsto_zero_of_squeeze
-  {a b : ℕ → ℝ≥0∞}
-  {c : ℝ≥0∞}
+  {a b : ℕ → ENNReal}
+  {c : ENNReal}
 -- given
   (hba : ∀ n, b n ≤ a n)
   (ha : Tendsto a atTop (𝓝 c))
@@ -27,7 +27,7 @@ lemma ennreal_tendsto_zero_of_squeeze
         ⟨⊥, fun _ _ => bot_le⟩ ha.isBoundedUnder_le |>.trans ha.limsup_eq.le)
   have ha_ne_top : ∀ᶠ n in atTop, a n ≠ ⊤ :=
     (ha.eventually (gt_mem_nhds (lt_top_iff_ne_top.mpr hc_ne_top))).mono fun _ h => h.ne
-  rw [show (0 : ℝ≥0∞) = c - c from (tsub_self c).symm]
+  rw [show (0 : ENNReal) = c - c from (tsub_self c).symm]
   exact (ENNReal.Tendsto.sub ha hab_tendsto (.inl hc_ne_top)).congr'
     (ha_ne_top.mono fun n hn => ENNReal.sub_sub_cancel hn (hba n))
 
@@ -83,7 +83,7 @@ lemma scheffe_lintegral_eq
 -- imply
   ∫⁻ x, (‖f n x‖ₑ + ‖g x‖ₑ - ‖f n x - g x‖ₑ) ∂μ = (eLpNorm (f n) 1 μ + eLpNorm g 1 μ) - eLpNorm (f n - g) 1 μ := by
 -- proof
-  set ψ : α → ℝ≥0∞ := fun x => ‖f n x - g x‖ₑ
+  set ψ : α → ENNReal := fun x => ‖f n x - g x‖ₑ
   have hψ_meas : AEMeasurable ψ μ := ((hfm n).sub hgm).enorm
   have hψ_ne_top : ∫⁻ x, ψ x ∂μ ≠ ⊤ := by
     have : (fun x => ‖f n x - g x‖ₑ) = (fun x => ‖(f n - g) x‖ₑ) := by
@@ -120,7 +120,7 @@ lemma scheffe_lemma
 -- imply
   Tendsto (fun n => eLpNorm (f n - g) 1 μ) atTop (𝓝 0) := by
 -- proof
-  set hn : ℕ → α → ℝ≥0∞ := fun n x => ‖f n x‖ₑ + ‖g x‖ₑ - ‖f n x - g x‖ₑ
+  set hn : ℕ → α → ENNReal := fun n x => ‖f n x‖ₑ + ‖g x‖ₑ - ‖f n x - g x‖ₑ
   have hn_tendsto_ae := scheffe_hn_tendsto_ae hae
   have C_le : eLpNorm g 1 μ + eLpNorm g 1 μ ≤ ∫⁻ x, liminf (hn · x) atTop ∂μ :=
     (show eLpNorm g 1 μ + eLpNorm g 1 μ = ∫⁻ x, (‖g x‖ₑ + ‖g x‖ₑ) ∂μ by
@@ -206,13 +206,13 @@ lemma eLpNorm_uniformly_bounded_of_tendsto_eLpNorm_sub
   (hg : MemLp g 1 μ)
   (hL1 : Tendsto (fun n => eLpNorm (f n - g) 1 μ) atTop (𝓝 0)) :
 -- imply
-  ∃ C : ℝ≥0, ∀ i, eLpNorm (f i) 1 μ ≤ C := by
+  ∃ C : NNReal, ∀ i, eLpNorm (f i) 1 μ ≤ C := by
 -- proof
   rw [ENNReal.tendsto_nhds_zero] at hL1
   obtain ⟨N, hN⟩ := (hL1 1 one_pos).exists_forall_of_atTop
   have hg_ne : eLpNorm g 1 μ ≠ ⊤ := hg.2.ne
-  set Ctail : ℝ≥0 := 1 + (eLpNorm g 1 μ).toNNReal
-  set Cinit : ℝ≥0 := (Finset.range N).sup fun n => (eLpNorm (f n) 1 μ).toNNReal
+  set Ctail : NNReal := 1 + (eLpNorm g 1 μ).toNNReal
+  set Cinit : NNReal := (Finset.range N).sup fun n => (eLpNorm (f n) 1 μ).toNNReal
   refine ⟨Cinit ⊔ Ctail, fun i => ?_⟩
   by_cases hi : i < N
   ·
@@ -229,7 +229,7 @@ lemma eLpNorm_uniformly_bounded_of_tendsto_eLpNorm_sub
       _ ≤ eLpNorm (f i - g) 1 μ + eLpNorm g 1 μ :=
         eLpNorm_add_le ((hf i).1.sub hg.1) hg.1 le_rfl
       _ ≤ 1 + eLpNorm g 1 μ := by gcongr; exact hN i hi
-      _ = ↑(1 : ℝ≥0) + ↑((eLpNorm g 1 μ).toNNReal) := by
+      _ = ↑(1 : NNReal) + ↑((eLpNorm g 1 μ).toNNReal) := by
         rw [ENNReal.coe_toNNReal hg_ne, ENNReal.coe_one]
       _ = ↑Ctail := by push_cast; rfl
       _ ≤ ↑(Cinit ⊔ Ctail) := ENNReal.coe_le_coe.mpr le_sup_right

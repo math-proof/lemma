@@ -126,8 +126,8 @@ theorem summable_comp_zpow_mul [CompleteSpace K] {F : K → K} (hq0 : q ≠ 0) (
     refine squeeze_zero_norm' ?_ hlim
     filter_upwards [hpow.eventually_lt_const hu'] with n hn
 
-    have hqpos : (0 : ℝ≥0) < ‖q‖₊ := by simpa [pos_iff_ne_zero] using hq0
-    have hqn : (0 : ℝ≥0) < ‖q‖₊ ^ (n + 1) := pow_pos hqpos _
+    have hqpos : (0 : NNReal) < ‖q‖₊ := by simpa [pos_iff_ne_zero] using hq0
+    have hqn : (0 : NNReal) < ‖q‖₊ ^ (n + 1) := pow_pos hqpos _
     have hnlt : ‖q‖₊ ^ (n + 1) < ‖u‖₊ := by
       have h1 : ‖q‖₊ ^ (n + 1) ≤ ‖q‖₊ ^ n :=
         pow_le_pow_of_le_one zero_le hq.le (Nat.le_succ n)
@@ -138,14 +138,14 @@ theorem summable_comp_zpow_mul [CompleteSpace K] {F : K → K} (hq0 : q ≠ 0) (
       rw [hexp, nnnorm_mul, nnnorm_inv, nnnorm_pow]
     have hgt : 1 < ‖q ^ (-((n : ℤ) + 1)) * u‖₊ := by
       rw [hval]
-      calc (1 : ℝ≥0) = (‖q‖₊ ^ (n + 1))⁻¹ * ‖q‖₊ ^ (n + 1) := (inv_mul_cancel₀ hqn.ne').symm
+      calc (1 : NNReal) = (‖q‖₊ ^ (n + 1))⁻¹ * ‖q‖₊ ^ (n + 1) := (inv_mul_cancel₀ hqn.ne').symm
         _ < (‖q‖₊ ^ (n + 1))⁻¹ * ‖u‖₊ :=
             mul_lt_mul_of_pos_left hnlt (pos_iff_ne_zero.mpr (inv_ne_zero hqn.ne'))
     have hbound : ‖F (q ^ (-((n : ℤ) + 1)) * u)‖₊ ≤ ‖q‖₊ ^ n * ‖u‖₊⁻¹ := by
       refine (hF₂ _ hgt).trans ?_
       rw [hval, mul_inv, inv_inv]
       exact mul_le_mul_left (pow_le_pow_of_le_one zero_le hq.le (Nat.le_succ n)) _
-    calc ‖F (q ^ (-((n : ℤ) + 1)) * u)‖ ≤ ((‖q‖₊ ^ n * ‖u‖₊⁻¹ : ℝ≥0) : ℝ) := by
+    calc ‖F (q ^ (-((n : ℤ) + 1)) * u)‖ ≤ ((‖q‖₊ ^ n * ‖u‖₊⁻¹ : NNReal) : ℝ) := by
           exact_mod_cast hbound
       _ = ‖q‖ ^ n * ‖u‖⁻¹ := by push_cast; ring
 

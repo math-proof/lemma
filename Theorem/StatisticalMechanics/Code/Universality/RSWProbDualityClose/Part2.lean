@@ -39,7 +39,7 @@ theorem rpd_map_reindexInv : Measure.map rpd_reindexInv halfMeasure = halfMeasur
   rw [rpd_reindexInv, halfMeasure]
   unfold bernoulliProductMeasure
   exact Measure.infinitePi_map_piCongrLeft
-    (fun _ : Sym2 (Site 2) => bernoulliMeasure (2⁻¹ : ℝ≥0) half_le_one) crossEdge.symm
+    (fun _ : Sym2 (Site 2) => bernoulliMeasure (2⁻¹ : NNReal) half_le_one) crossEdge.symm
 
 
 theorem rpd_reindexInv_dualConfig :

@@ -250,7 +250,7 @@ theorem KWStairParameterData.localVertex_range_subset_closedEdgeTube
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := S) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     (i : Fin n) :
     Set.range (data.localVertex i) ⊆ polygon.closedEdgeTube r i := by
   rintro z ⟨l, rfl⟩
@@ -261,7 +261,7 @@ theorem KWStairParameterData.localVertex_ranges_disjoint_of_nonincident
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := S) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     (htubes : ∀ i j : Fin n, KWEdgesNonincident i j →
       Disjoint (polygon.closedEdgeTube r i)
         (polygon.closedEdgeTube r j))
@@ -276,7 +276,7 @@ theorem KWStairParameterData.rawClosedEdge_even_subset_closedEdgeTube
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := S) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     (i : Fin n) (k : Fin S) :
     kwRawClosedEdge data.vertex (kwStairEvenIndex i k) ⊆
       polygon.closedEdgeTube r i := by
@@ -292,7 +292,7 @@ theorem KWStairParameterData.rawClosedEdge_odd_castSucc_subset_closedEdgeTube
     {n M : ℕ} [NeZero n]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := M + 1) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     (i : Fin n) (k : Fin M) :
     kwRawClosedEdge data.vertex (kwStairOddIndex i k.castSucc) ⊆
       polygon.closedEdgeTube r i := by
@@ -308,7 +308,7 @@ theorem KWStairParameterData.rawClosedEdge_odd_last_subset_closedEdgeTube
     {n M : ℕ} [NeZero n]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := M + 1) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     (i : Fin n) :
     kwRawClosedEdge data.vertex (kwStairOddIndex i (Fin.last M)) ⊆
       polygon.closedEdgeTube r i := by
@@ -325,7 +325,7 @@ theorem KWStairParameterData.rawClosedEdge_subset_ownerTube
     {n M : ℕ} [NeZero n]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := M + 1) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     (j : Fin (n * (2 * (M + 1)))) :
     ∃ i : Fin n, kwRawClosedEdge data.vertex j ⊆
       polygon.closedEdgeTube r i := by

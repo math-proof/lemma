@@ -2,6 +2,14 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.NumberTheory.SylvesterSchur.ResidualLarge
 import Def.NumberTheory.SylvesterSchur.ResidualLargeCertificates
+import Lemma.Nat.SylvesterSchur.BlockReductions
+import Lemma.Nat.SylvesterSchur.Conditional
+import Lemma.Nat.SylvesterSchur.ErdosLayers
+import Lemma.Nat.SylvesterSchur.ErdosPowerBounds
+import Lemma.Nat.SylvesterSchur.ResidualFinite
+import Lemma.Nat.SylvesterSchur.ResidualLarge.CentralOffsetBound
+import Lemma.Nat.SylvesterSchur.ResidualLarge.ScaledTernaryBound
+import Lemma.Nat.SylvesterSchur.ResidualLarge.TinyPrimeCountingBound
 import Lemma.Nat.SylvesterSchur.ResidualLargeCertificates
 open Nat Nat.SylvesterSchur
 open Finset Nat
@@ -67,15 +75,15 @@ private lemma erdos_choose_prime_factor_gt_small_length
   ∃ p : ℕ, p.Prime ∧ n < p ∧ p ∣ Nat.choose (k + n - 1) n := by
   interval_cases n
   · exact exists_prime_dvd_choose_of_large_prime_dvd_block
-    (consecutive_two (k := k) (by omega))
+      (consecutive_two (k := k) (by omega))
   · exact exists_prime_dvd_choose_of_large_prime_dvd_block
-    (consecutive_three (k := k) (by omega))
+      (consecutive_three (k := k) (by omega))
   · exact exists_prime_dvd_choose_of_large_prime_dvd_block
-    (consecutive_four (k := k) (by omega))
+      (consecutive_four (k := k) (by omega))
   · exact exists_prime_dvd_choose_of_large_prime_dvd_block
-    (consecutive_five (k := k) (by omega))
+      (consecutive_five (k := k) (by omega))
   · exact exists_prime_dvd_choose_of_large_prime_dvd_block
-    (consecutive_six (k := k) (by omega))
+      (consecutive_six (k := k) (by omega))
 
 end Nat.SylvesterSchur.Internal
 
@@ -151,11 +159,11 @@ private lemma erdos_choose_prime_factor_gt_bound_dispatch_tail (n k : ℕ)
         Nat.nthRoot 3 (k + n - 1) * Nat.log 2 (k + n - 1)) <
       k ^ n
   · exact exists_prime_dvd_choose_of_erdos_layers_three_layers_bound
-    (by omega) (by omega) herdos_three
+      (by omega) (by omega) herdos_three
   by_cases herdos_four :
     n ! * 4 ^ (n + Nat.sqrt (k + n - 1) * Nat.log 2 (k + n - 1)) < k ^ n
   · exact exists_prime_dvd_choose_of_erdos_layers_four_pow_bound
-    (by omega) (by omega) herdos_four
+      (by omega) (by omega) herdos_four
   exact hfallback hprimeCounting_lower hk_le_quadratic_start_bound
 
 end Nat.SylvesterSchur.Internal
@@ -189,7 +197,7 @@ private lemma erdos_choose_prime_factor_gt_bound_dispatch_core (n k : ℕ)
         else primorial (Nat.nthRoot (j + 1) (k + n - 1))) <
       k ^ n
   · exact exists_prime_dvd_choose_of_erdos_div_three_layers_bound
-    (by omega) (by omega) hdiv_three_erdos
+      (by omega) (by omega) hdiv_three_erdos
   by_cases herdos :
     n ! *
       (∏ j ∈ Finset.range (Nat.log 2 (k + n - 1)),
@@ -231,8 +239,8 @@ private lemma erdos_choose_prime_factor_gt_second_residual_large (n k : ℕ)
   ∃ p : ℕ, p.Prime ∧ n < p ∧ p ∣ Nat.choose (k + n - 1) n := by
   by_cases hN3 : 3 * n ≤ k + n - 1
   · have hNhi : k + n - 1 ≤ n ^ 2 + n := by
-    have hkquad := hk_le_quadratic_start_bound (by omega : 38 ≤ n)
-    omega
+      have hkquad := hk_le_quadratic_start_bound (by omega : 38 ≤ n)
+      omega
     exact False.elim <| hscaled_ternary ⟨hN3,
       first_residual_large_scaled_ternary_bound hn945 hN3 hNhi⟩
   exact False.elim <| hcentral_offset ⟨by omega,
@@ -298,7 +306,7 @@ private lemma erdos_choose_prime_factor_gt_second_residual (n k : ℕ)
       (by omega) (by omega) (by omega) (by omega) hcentral_bound
   by_cases hn945 : 945 ≤ n
   · exact erdos_choose_prime_factor_gt_second_residual_large n k hn945 hk
-    hscaled_ternary hcentral_offset hk_le_quadratic_start_bound
+      hscaled_ternary hcentral_offset hk_le_quadratic_start_bound
   have hnlt945 : n < 945 := by omega
   exact erdos_choose_prime_factor_gt_second_residual_finite n k hn hk hnlt945
     hprimeCounting_lower
@@ -349,8 +357,9 @@ private lemma erdos_choose_prime_factor_gt_bertrand_steps (n k : ℕ)
   · exact exists_prime_dvd_choose_of_block_interval hr (by omega) hr_gek (by omega)
   by_cases hr_easy : r = n + 2 ∧ ¬ r ∣ k - 1 ∧ ¬ r ∣ k - 2
   · obtain ⟨hr_n2, hr_not_one, hr_not_two⟩ := hr_easy
-    obtain ⟨i, hi, hr_dvd⟩ := exists_dvd_block_of_succ_succ_prime_not_dvd_pred
-      (n := n) (k := k) (s := r) (by omega) hr_n2 hr_not_one hr_not_two
+    obtain ⟨i, hi, hr_dvd⟩ :=
+      exists_dvd_block_of_succ_succ_prime_not_dvd_pred
+        (n := n) (k := k) (s := r) (by omega) hr_n2 hr_not_one hr_not_two
     exact ⟨r, hr, by omega, prime_dvd_seq_implies_choose hr (by omega) i hi hr_dvd⟩
   obtain ⟨t, ht, ht_gt, ht_le⟩ :=
     Nat.exists_prime_lt_and_le_two_mul (n + 2) (Nat.succ_ne_zero (n + 1))
@@ -372,11 +381,10 @@ namespace Nat.SylvesterSchur.Internal
 
 /--
 [erdos_choose_prime_factor_gt_hard](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ErdosKey.lean)
--/
-@[path]
 `Nat.choose (k + n - 1) n` has a prime factor greater than `n`.
 This packages the small-length cases, Bertrand steps, and residual estimates needed after
 the direct absorption cases have been eliminated. -/
+@[path]
 private lemma erdos_choose_prime_factor_gt_hard
   (n : ℕ) (hn : 2 ≤ n) (k : ℕ) (hk : n + 3 ≤ k) :
   ∃ p : ℕ, p.Prime ∧ n < p ∧ p ∣ Nat.choose (k + n - 1) n := by
@@ -394,10 +402,10 @@ namespace Nat.SylvesterSchur.Internal
 -/
 @[path]
 lemma erdos_choose_prime_factor_gt
-  {n : ℕ}
-  {k : ℕ}
+  (n : ℕ)
 -- given
   (hn : 1 ≤ n)
+  (k : ℕ)
   (hk : n < k) :
 -- imply
   ∃ p : ℕ, p.Prime ∧ n < p ∧ p ∣ Nat.choose (k + n - 1) n := by
@@ -418,3 +426,4 @@ end Nat.SylvesterSchur.Internal
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

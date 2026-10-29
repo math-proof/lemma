@@ -91,7 +91,7 @@ private lemma bgc_bc69_of_trifForest_eq
 private lemma bgc_bk_uniqueness_of_trifForest_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bgc_TrifForestData ω L R) :
@@ -107,7 +107,7 @@ private lemma bgc_bk_uniqueness_of_trifForest_eq
 private lemma bgc_top_null_of_trifForest_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bgc_TrifForestData ω L R) :
@@ -166,7 +166,7 @@ private lemma bgc_trifForestData_of_singleStar_eq
 private lemma bgc_status_eq
   {d : ℕ} :
 -- imply
-  (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ), bgc_TrifForestData ω L R → bc69_Gn_globalForest ω L R) ∧ (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bgc_TrifForestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (L : ℕ) (t a b : Site d), (openSubgraph d ω).Adj a b → a ∉ bc61_boxAround d L t → b ∉ bc61_boxAround d L t → (bc67_contractedLattice ω L t).Reachable a b) := by
+  (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ), bgc_TrifForestData ω L R → bc69_Gn_globalForest ω L R) ∧ (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bgc_TrifForestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (L : ℕ) (t a b : Site d), (openSubgraph d ω).Adj a b → a ∉ bc61_boxAround d L t → b ∉ bc61_boxAround d L t → (bc67_contractedLattice ω L t).Reachable a b) := by
 -- proof
   apply StatMech.Walls.bgc_status
 

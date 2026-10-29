@@ -416,21 +416,22 @@ private lemma unit_norm (u : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set 
   rw [Subalgebra.coe_mul, Subalgebra.coe_one] at hR
   rw [hrep, hcd] at hR
   have hprod2 : ((a : ℝ) + (b : ℝ) * ((1 + Real.sqrt 5) / 2)) * ((c : ℝ) + (d : ℝ) * ((1 + Real.sqrt 5) / 2))
-    = ((1 : ℤ) : ℝ) + ((0 : ℤ) : ℝ) * ((1 + Real.sqrt 5) / 2) := by
+      = ((1 : ℤ) : ℝ) + ((0 : ℤ) : ℝ) * ((1 + Real.sqrt 5) / 2) := by
     simpa using hR
   have hmul := mul_rep a b c d
   rw [hmul] at hprod2
   have huniq := uniq_rep _ _ 1 0 hprod2
   obtain ⟨h1, h2⟩ := huniq
   have hnorm2 : (a * c + b * d) ^ 2 + (a * c + b * d) * (a * d + c * b + b * d) - (a * d + c * b + b * d) ^ 2
-    = (a ^ 2 + a * b - b ^ 2) * (c ^ 2 + c * d - d ^ 2) := by ring
+      = (a ^ 2 + a * b - b ^ 2) * (c ^ 2 + c * d - d ^ 2) := by ring
   have hN : (a ^ 2 + a * b - b ^ 2) * (c ^ 2 + c * d - d ^ 2) = 1 := by
     have h0 : (a * c + b * d) ^ 2 + (a * c + b * d) * (a * d + c * b + b * d) - (a * d + c * b + b * d) ^ 2 = 1 := by
       rw [h1, h2]
       norm_num
-    rwa [← hnorm2]
+    rw [← hnorm2]
+    exact h0
   have hcase := Int.eq_one_or_neg_one_of_mul_eq_one hN
-  obtain h | h := hcase
+  rcases hcase with h | h
   · left
     exact h
   · right
@@ -455,14 +456,15 @@ private lemma no_unit_in_interval (a b : ℤ)
   have hadd : v + vp = (((2 * a + b : ℤ)) : ℝ) := trace_rep a b
   have hvpos : (0 : ℝ) < v := lt_of_lt_of_le (by norm_num) hv1
   have hvne : v ≠ 0 := ne_of_gt hvpos
-  obtain hN | hN := hnorm
+  rcases hnorm with hN | hN
   · have hN1 : (((a ^ 2 + a * b - b ^ 2 : ℤ)) : ℝ) = 1 := by rw [hN]; norm_num
     rw [hN1] at hmul
     have hcomm : vp * v = 1 := by rw [mul_comm]; exact hmul
     have hvp_eq : vp = 1 / v := eq_div_of_mul_eq hvne hcomm
     have hvp_pos : (0 : ℝ) < vp := by rw [hvp_eq]; exact div_pos (by norm_num) hvpos
     have hvp_le : vp ≤ 1 := by
-      rwa [hvp_eq, div_le_one hvpos]
+      rw [hvp_eq, div_le_one hvpos]
+      exact hv1
     have ht_gt : (1 : ℝ) < v + vp := by linarith
     have ht_lt : v + vp < 3 := by linarith [hv2, hvp_le, alpha_lt_two]
     have ht_eq : (2 * a + b) = 2 := by
@@ -499,7 +501,8 @@ private lemma no_unit_in_interval (a b : ℤ)
       rw [hneg] at hvp_eq
       linarith [hvp_eq, hpos]
     have hle : (1 : ℝ) / v ≤ 1 := by
-      rwa [div_le_one hvpos]
+      rw [div_le_one hvpos]
+      exact hv1
     have hvp_ge : (-1 : ℝ) ≤ vp := by
       have hneg : (-1 : ℝ) / v = -(1 / v) := by rw [neg_div]
       rw [hneg] at hvp_eq
@@ -533,7 +536,7 @@ private lemma no_unit_in_interval (a b : ℤ)
     have hv_eq : v = 1 := by
       have hfac : (v - 1) * (v + 1) = 0 := by nlinarith [hv_sq]
       have hor : v - 1 = 0 ∨ v + 1 = 0 := mul_eq_zero.mp hfac
-      obtain h | h := hor
+      rcases hor with h | h
       · linarith
       · have : v = -1 := by linarith
         linarith [hvpos, this]
@@ -565,16 +568,19 @@ private lemma log_sandwich (y : ℝ) (hy : (0 : ℝ) < y) :
     linarith [h]
   have hexp_le : Real.exp (((n : ℤ) : ℝ) * L) ≤ y := by
     have h := Real.exp_le_exp.mpr hle
-    rwa [Real.exp_log hy] at h
+    rw [Real.exp_log hy] at h
+    exact h
   have hexp_lt : y < Real.exp ((((n : ℤ) : ℝ) + 1) * L) := by
     have h := Real.exp_lt_exp.mpr hlt
-    rwa [Real.exp_log hy] at h
+    rw [Real.exp_log hy] at h
+    exact h
   have hpow_n : Real.exp (((n : ℤ) : ℝ) * L) = ((1 + Real.sqrt 5) / 2 : ℝ) ^ n := by
     have hlog : Real.log ((((1 + Real.sqrt 5) / 2 : ℝ) ^ n)) = ((n : ℤ) : ℝ) * L := by
       rw [Real.log_zpow]
     have hpos : (0 : ℝ) < (((1 + Real.sqrt 5) / 2 : ℝ) ^ n) := zpow_pos alpha_pos n
     have hexp := Real.exp_log hpos
-    rwa [hlog] at hexp
+    rw [hlog] at hexp
+    exact hexp
   have hpow_n1 : Real.exp ((((n : ℤ) : ℝ) + 1) * L) = ((1 + Real.sqrt 5) / 2 : ℝ) ^ (n + 1) := by
     have hlog : Real.log ((((1 + Real.sqrt 5) / 2 : ℝ) ^ (n + 1))) = ((((n + 1 : ℤ)) : ℝ)) * L := by
       rw [Real.log_zpow]
@@ -582,7 +588,8 @@ private lemma log_sandwich (y : ℝ) (hy : (0 : ℝ) < y) :
     rw [hcast] at hlog
     have hpos : (0 : ℝ) < (((1 + Real.sqrt 5) / 2 : ℝ) ^ (n + 1)) := zpow_pos alpha_pos (n + 1)
     have hexp := Real.exp_log hpos
-    rwa [hlog] at hexp
+    rw [hlog] at hexp
+    exact hexp
   rw [hpow_n] at hexp_le
   rw [hpow_n1] at hexp_lt
   exact ⟨n, hexp_le, hexp_lt⟩
@@ -622,7 +629,8 @@ private lemma pos_unit_eq_pow (u : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} 
       have hRs : (w : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) * (((w⁻¹ : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))ˣ) : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))) = 1 :=
         w.mul_inv
       have hR := congrArg (fun x : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ) => (x : ℝ)) hRs
-      rwa [Subalgebra.coe_mul, Subalgebra.coe_one] at hR
+      rw [Subalgebra.coe_mul, Subalgebra.coe_one] at hR
+      exact hR
     rw [hw] at hprod
     have h := eq_inv_of_mul_eq_one_left hprod
     -- h : ((w⁻¹..):ℝ)⁻¹ = α^n? Actually eq_inv_of_mul_eq_one_left: a*b=1 → b⁻¹=a? Here a=α^n, b=... gives b⁻¹=α^n → b=(α^n)⁻¹?
@@ -633,15 +641,16 @@ private lemma pos_unit_eq_pow (u : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} 
     exact h2
   -- v = image of u * w⁻¹
   have huv : ∃ uw : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))ˣ,
-    ((uw : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ) = v := by
+      ((uw : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ) = v := by
     refine ⟨u * w⁻¹, ?_⟩
     have hval : (((u * w⁻¹ : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))ˣ) : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ)
-      = ((u : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ) * (((((w⁻¹ : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))ˣ) : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))) : ℝ)) := by
+        = ((u : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ) * (((((w⁻¹ : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))ˣ) : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))) : ℝ)) := by
       have h1 : (((u * w⁻¹ : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))ˣ) : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)))
-        = (u : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) * (((w⁻¹ : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))ˣ) : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))) := by
+          = (u : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) * (((w⁻¹ : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))ˣ) : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))) := by
         simp [Units.val_mul]
       have hR := congrArg (fun x : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ) => (x : ℝ)) h1
-      rwa [Subalgebra.coe_mul] at hR
+      rw [Subalgebra.coe_mul] at hR
+      exact hR
     rw [hval, hw_inv_image]
     simp [hvdef, hy, div_eq_mul_inv]
   obtain ⟨uw, huw⟩ := huv
@@ -654,12 +663,13 @@ private lemma pos_unit_eq_pow (u : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} 
   -- norm of v is ±1
   have hnorm : a ^ 2 + a * b - b ^ 2 = 1 ∨ a ^ 2 + a * b - b ^ 2 = -1 := by
     have hrep : ((uw : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ) = (a : ℝ) + (b : ℝ) * ((1 + Real.sqrt 5) / 2 : ℝ) := by
-      rwa [← huw_symm]
+      rw [← huw_symm]
+      exact hab
     exact unit_norm uw a b hrep
   have hab2 : (a : ℝ) + (b : ℝ) * ((1 + Real.sqrt 5) / 2 : ℝ) = 1 := by
-    have hv1a : (1 : ℝ) ≤ (a : ℝ) + (b : ℝ) * ((1 + Real.sqrt 5) / 2 : ℝ) := hab ▸ hv1
-    have hv2a : (a : ℝ) + (b : ℝ) * ((1 + Real.sqrt 5) / 2 : ℝ) < (1 + Real.sqrt 5) / 2 := hab ▸ hv2
-    exact no_unit_in_interval a b hv1a hv2a hnorm
+      have hv1a : (1 : ℝ) ≤ (a : ℝ) + (b : ℝ) * ((1 + Real.sqrt 5) / 2 : ℝ) := hab ▸ hv1
+      have hv2a : (a : ℝ) + (b : ℝ) * ((1 + Real.sqrt 5) / 2 : ℝ) < (1 + Real.sqrt 5) / 2 := hab ▸ hv2
+      exact no_unit_in_interval a b hv1a hv2a hnorm
   have hv_eq_one : v = 1 := hab.trans hab2
   -- y / α^n = 1 → y = α^n
   have hy_eq : y / (((1 + Real.sqrt 5) / 2 : ℝ) ^ n) = 1 := by rw [← hvdef]; exact hv_eq_one
@@ -677,11 +687,11 @@ namespace MetaMathlibExt
 [golden_ratio_integer_ring_units](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/GoldenRatioIntegerRingUnits.lean)
 -/
 @[path]
-lemma golden_ratio_integer_ring_units
-  :
--- imply
-  let α : ℝ := by
--- proof
+lemma golden_ratio_integer_ring_units :
+  let α : ℝ := (1 + Real.sqrt 5) / 2
+  let R := Algebra.adjoin ℤ ({α} : Set ℝ)
+  Set.range (fun u : Rˣ => ((u : R) : ℝ)) =
+    {x : ℝ | ∃ n : ℤ, x = α ^ n ∨ x = -(α ^ n)} := by
   intro α R
   have hα : α = ((1 + Real.sqrt 5) / 2 : ℝ) := rfl
   have hR : R = Algebra.adjoin ℤ ({((1 + Real.sqrt 5) / 2 : ℝ)} : Set ℝ) := rfl
@@ -694,10 +704,11 @@ lemma golden_ratio_integer_ring_units
       have hRs : (u : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) * (((u⁻¹ : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))ˣ) : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))) = 1 :=
         u.mul_inv
       have hR := congrArg (fun x : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ) => (x : ℝ)) hRs
-      rwa [Subalgebra.coe_mul, Subalgebra.coe_one] at hR
+      rw [Subalgebra.coe_mul, Subalgebra.coe_one] at hR
+      exact hR
     have hx_ne : ((u : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ) ≠ 0 :=
       left_ne_zero_of_mul_eq_one hprod
-    obtain hneg | hpos := lt_or_gt_of_ne hx_ne
+    rcases lt_or_gt_of_ne hx_ne with hneg | hpos
     · -- x < 0: -x > 0 is a unit image
       have hpos_neg : (0 : ℝ) < -((u : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ) := by linarith [hneg]
       -- construct neg unit
@@ -717,7 +728,8 @@ lemma golden_ratio_integer_ring_units
         have h1 : ((r * s : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ) = (-((u : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ)) * (-((((u⁻¹ : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))ˣ) : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))) : ℝ)) := by
           simp [r, s]
         have h2 : (((1 : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))) : ℝ) = 1 := Subalgebra.coe_one _
-        rwa [h1, h2, neg_mul_neg]
+        rw [h1, h2, neg_mul_neg]
+        exact hprod
       have hsr : s * r = 1 := by rw [mul_comm]; exact hrs
       let uneg : (Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ))ˣ := Units.mk r s hrs hsr
       have huneg_coe : ((uneg : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ) = -((u : Algebra.adjoin ℤ ({(1 + Real.sqrt 5) / 2} : Set ℝ)) : ℝ) := rfl
@@ -747,4 +759,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

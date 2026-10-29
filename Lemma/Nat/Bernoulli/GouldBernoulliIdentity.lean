@@ -108,20 +108,20 @@ private lemma aux_pow_triple : ∀ n : ℕ,
         ((y - (k : ℚ)) ^ j - (y - (((k + 1 : ℕ)) : ℚ)) ^ j))
         = ∑ k ∈ Finset.range (n + 1), ∑ i ∈ Finset.range j,
           (-1 : ℚ) ^ k * (Nat.choose n k : ℚ) * ((Nat.choose j i : ℚ) * ((y - 1 - (k : ℚ)) ^ i)) := by
-          apply Finset.sum_congr rfl
-          intro k _
-          rw [inner k, Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro k _
+            rw [inner k, Finset.mul_sum]
         _ = ∑ i ∈ Finset.range j, ∑ k ∈ Finset.range (n + 1),
           (-1 : ℚ) ^ k * (Nat.choose n k : ℚ) * ((Nat.choose j i : ℚ) * ((y - 1 - (k : ℚ)) ^ i)) :=
           Finset.sum_comm
         _ = ∑ i ∈ Finset.range j, (Nat.choose j i : ℚ) *
           ∑ k ∈ Finset.range (n + 1), (-1 : ℚ) ^ k * (Nat.choose n k : ℚ) * ((y - 1 - (k : ℚ)) ^ i) := by
-          apply Finset.sum_congr rfl
-          intro i _
-          rw [Finset.mul_sum]
-          apply Finset.sum_congr rfl
-          intro k _
-          ring
+            apply Finset.sum_congr rfl
+            intro i _
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro k _
+            ring
     have E' : ∀ (j : ℕ) (y : ℚ),
       (∑ k ∈ Finset.range (n + 2), (-1 : ℚ) ^ k * (Nat.choose (n + 1) k : ℚ) * (y - (k : ℚ)) ^ j) =
       ∑ i ∈ Finset.range j, (Nat.choose j i : ℚ) *
@@ -133,10 +133,10 @@ private lemma aux_pow_triple : ∀ n : ℕ,
           aux_pascal_sum n (fun k => (y - (k : ℚ)) ^ j)
         _ = (∑ k ∈ Finset.range (n + 1), (-1 : ℚ) ^ k * (Nat.choose n k : ℚ) *
           ((y - (k : ℚ)) ^ j - (y - (((k + 1 : ℕ)) : ℚ)) ^ j)) := by
-          rw [← Finset.sum_sub_distrib]
-          apply Finset.sum_congr rfl
-          intro k _
-          ring
+            rw [← Finset.sum_sub_distrib]
+            apply Finset.sum_congr rfl
+            intro k _
+            ring
         _ = ∑ i ∈ Finset.range j, (Nat.choose j i : ℚ) *
           ∑ k ∈ Finset.range (n + 1), (-1 : ℚ) ^ k * (Nat.choose n k : ℚ) * ((y - 1 - (k : ℚ)) ^ i) :=
           expand j y
@@ -257,7 +257,7 @@ private lemma aux_main_succ (n : ℕ) (x : ℚ) :
     _ = ((n + 2 : ℕ) : ℚ) * ∑ k ∈ Finset.range (n + 1), (-1 : ℚ) ^ k * (Nat.choose n k : ℚ) *
       ((x - 1 - (k : ℚ)) ^ (n + 1)) := hstep
     _ = ((n + 2 : ℕ) : ℚ) * ((Nat.factorial (n + 1) : ℚ) * ((x - 1) - (n : ℚ) / 2)) := by
-      rw [hpow]
+        rw [hpow]
     _ = (Nat.factorial (n + 2) : ℚ) / 2 * (2 * x - ((n + 1 : ℕ) : ℚ) - 1) := by
       have hfact : Nat.factorial (n + 2) = (n + 2) * Nat.factorial (n + 1) := Nat.factorial_succ (n + 1)
       have hfactQ : (Nat.factorial (n + 2) : ℚ) = ((n + 2 : ℕ) : ℚ) * (Nat.factorial (n + 1) : ℚ) := by
@@ -299,4 +299,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

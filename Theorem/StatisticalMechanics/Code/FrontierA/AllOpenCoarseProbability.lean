@@ -197,10 +197,10 @@ theorem faithfulAllOpenTrifAt_prob_const
 
 lemma faithfulAllOpenTrifIndicesInBox_eq_sum_indicator
     (omega : ConfigSpace (Sym2 (Site 2))) (L N : ℕ) :
-    ((faithfulAllOpenTrifIndicesInBox omega L N).card : ℝ≥0∞) =
+    ((faithfulAllOpenTrifIndicesInBox omega L N).card : ENNReal) =
       ∑ j ∈ boxFinsetBK 2 N,
         ({omega' | FaithfulAllOpenTrifAt omega' L j}.indicator
-          (fun _ => (1 : ℝ≥0∞))) omega := by
+          (fun _ => (1 : ENNReal))) omega := by
   classical
   unfold faithfulAllOpenTrifIndicesInBox boxFinsetBK
   rw [Finset.card_filter]
@@ -216,22 +216,22 @@ theorem expected_faithfulAllOpenTrifIndicesInBox
     (hinv : IsTranslationInvariant (G := Multiplicative (Site 2)) mu)
     (L N : ℕ) :
     ∫⁻ omega,
-        ((faithfulAllOpenTrifIndicesInBox omega L N).card : ℝ≥0∞) ∂mu =
+        ((faithfulAllOpenTrifIndicesInBox omega L N).card : ENNReal) ∂mu =
       (boxFinsetBK 2 N).card •
         mu {omega | FaithfulAllOpenTrifAt omega L 0} := by
   classical
   calc
     ∫⁻ omega,
-        ((faithfulAllOpenTrifIndicesInBox omega L N).card : ℝ≥0∞) ∂mu =
+        ((faithfulAllOpenTrifIndicesInBox omega L N).card : ENNReal) ∂mu =
         ∫⁻ omega, ∑ j ∈ boxFinsetBK 2 N,
           ({omega' | FaithfulAllOpenTrifAt omega' L j}.indicator
-            (fun _ => (1 : ℝ≥0∞))) omega ∂mu := by
+            (fun _ => (1 : ENNReal))) omega ∂mu := by
       apply lintegral_congr
       intro omega
       exact faithfulAllOpenTrifIndicesInBox_eq_sum_indicator omega L N
     _ = ∑ j ∈ boxFinsetBK 2 N, ∫⁻ omega,
           ({omega' | FaithfulAllOpenTrifAt omega' L j}.indicator
-            (fun _ => (1 : ℝ≥0∞))) omega ∂mu := by
+            (fun _ => (1 : ENNReal))) omega ∂mu := by
       rw [lintegral_finsetSum]
       intro j hj
       exact Measurable.indicator measurable_const

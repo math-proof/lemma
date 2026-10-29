@@ -31,7 +31,7 @@ theorem toAbsoluteValue_isNontrivial (v : HeightOneSpectrum (𝓞 K)) :
     rw [HeightOneSpectrum.adicAbv_def]
     intro h
     have hne0 := HeightOneSpectrum.absNorm_ne_zero v
-    have hne : (Ideal.absNorm v.asIdeal : ℝ≥0) ≠ 1 :=
+    have hne : (Ideal.absNorm v.asIdeal : NNReal) ≠ 1 :=
       ne_of_gt (HeightOneSpectrum.one_lt_absNorm_nnreal v)
     have hNN : WithZeroMulInt.toNNReal hne0 (v.valuation K π) = 1 := by exact_mod_cast h
     rw [WithZeroMulInt.toNNReal_eq_one_iff _ hne0 hne] at hNN

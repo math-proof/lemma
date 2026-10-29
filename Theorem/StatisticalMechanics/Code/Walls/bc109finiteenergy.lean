@@ -30,7 +30,7 @@ open StatMech.Percolation
 variable {d : ℕ}
 
 
-theorem bc109_precursor_pp (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
+theorem bc109_precursor_pp (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
     (a₁ a₂ a₃ b₁ b₂ b₃ : Site d)
     (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
       (bc62_CoarseTrifPrecursor d L a₁ a₂ a₃ b₁ b₂ b₃)) :
@@ -41,7 +41,7 @@ theorem bc109_precursor_pp (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
     (bkc_bernoulli_hasFiniteEnergyMerge p hp1 hp0) L a₁ a₂ a₃ b₁ b₂ b₃ hpos
 
 
-theorem bc109_coarseTrifExistence_pp (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
+theorem bc109_coarseTrifExistence_pp (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
     (hcoarseRoute : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = ⊤} →
       ∃ a₁ a₂ a₃ b₁ b₂ b₃ : Site d,
@@ -53,7 +53,7 @@ theorem bc109_coarseTrifExistence_pp (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (bkc_bernoulli_hasFiniteEnergyMerge p hp1 hp0) L hcoarseRoute
 
 
-theorem bc109_bk_count_half_pp (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bc109_bk_count_half_pp (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d))
       (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1)) (L : ℕ)
     (hGlobal : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc69_Gn_globalForest ω L R)
@@ -84,7 +84,7 @@ theorem bc109_precursor_forced_coarseTrif_upperLines {L : ℕ} (hL : 3 ≤ L) :
   bc62_upperLines_forced_coarseTrif hL
 
 
-theorem bc109_status (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) :
+theorem bc109_status (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) :
     
     (∀ (L : ℕ) (a₁ a₂ a₃ b₁ b₂ b₃ : Site d),
       0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

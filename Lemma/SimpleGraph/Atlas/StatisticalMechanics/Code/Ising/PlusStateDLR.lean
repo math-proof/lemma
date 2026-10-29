@@ -271,7 +271,7 @@ private lemma fvMeasure_apply_eq_sum_eq
   (β h : ℝ)
   (ht : MeasurableSet t) :
 -- imply
-  (fvMeasure ω n B β h) t = ∑ τ : {x // x ∈ box d n} → Bool, ENNReal.ofReal (fvProb ω n B β h τ) * (Set.indicator t (1 : ConfigSpace (Site d) → ℝ≥0∞) (glue ω τ)) := by
+  (fvMeasure ω n B β h) t = ∑ τ : {x // x ∈ box d n} → Bool, ENNReal.ofReal (fvProb ω n B β h τ) * (Set.indicator t (1 : ConfigSpace (Site d) → ENNReal) (glue ω τ)) := by
 -- proof
   apply StatMech.Ising.fvMeasure_apply_eq_sum ω n B β h ht
 
@@ -291,7 +291,7 @@ private lemma fvMeasure_inter_outsideSigma_eq
   (hs : MeasurableSet[outsideSigma (box d n)] s)
   (ht : MeasurableSet t) :
 -- imply
-  (fvMeasure ω n B β h) (s ∩ t) = (Set.indicator s (1 : ConfigSpace (Site d) → ℝ≥0∞) ω) * (fvMeasure ω n B β h) t := by
+  (fvMeasure ω n B β h) (s ∩ t) = (Set.indicator s (1 : ConfigSpace (Site d) → ENNReal) ω) * (fvMeasure ω n B β h) t := by
 -- proof
   apply StatMech.Ising.fvMeasure_inter_outsideSigma n B β h hs ht ω
 

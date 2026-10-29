@@ -28,7 +28,7 @@ private lemma main
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
-  have hp : Measurable p := D.measurable_density
+  have hp : Measurable p := D
   refine ⟨?_, ?_⟩
   ·
     let q : α → ENNReal := fun «x.bvar» ↦ lintegral ν (fun «y.bvar» ↦ p («x.bvar», «y.bvar»))
@@ -39,7 +39,7 @@ private lemma main
     refine {
       toIsProbabilityMeasure := inferInstance
       aemeasurable := AEMeasurable.fst hP.aemeasurable
-      exists_distribution := ⟨q, ⟨hq⟩, ?_⟩ }
+      exists_distribution := ⟨q, hq, ?_⟩ }
     change π.map x = μ.withDensity q
     have hjoint' : π.map (x, y) = (μ.prod ν).withDensity p := hjoint
     rw [hmap, hjoint']
@@ -61,7 +61,7 @@ private lemma main
     refine {
       toIsProbabilityMeasure := inferInstance
       aemeasurable := AEMeasurable.snd hP.aemeasurable
-      exists_distribution := ⟨q, ⟨hq⟩, ?_⟩ }
+      exists_distribution := ⟨q, hq, ?_⟩ }
     change π.map y = ν.withDensity q
     have hjoint' : π.map (x, y) = (μ.prod ν).withDensity p := hjoint
     rw [hmap, hjoint']

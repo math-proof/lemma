@@ -221,9 +221,9 @@ lemma rademacher_integral_zero
   ∫ x, x ∂rademacherMeasure = 0 := by
 -- proof
   simp only [rademacherMeasure]
-  have h1 : Integrable (fun x : ℝ => x) ((2 : ℝ≥0∞)⁻¹ • Measure.dirac (1 : ℝ)) :=
+  have h1 : Integrable (fun x : ℝ => x) ((2 : ENNReal)⁻¹ • Measure.dirac (1 : ℝ)) :=
     (integrable_dirac (by simp)).smul_measure (by norm_num)
-  have h2 : Integrable (fun x : ℝ => x) ((2 : ℝ≥0∞)⁻¹ • Measure.dirac (-1 : ℝ)) :=
+  have h2 : Integrable (fun x : ℝ => x) ((2 : ENNReal)⁻¹ • Measure.dirac (-1 : ℝ)) :=
     (integrable_dirac (by simp)).smul_measure (by norm_num)
   rw [integral_add_measure h1 h2, integral_smul_measure, integral_smul_measure,
     integral_dirac, integral_dirac]

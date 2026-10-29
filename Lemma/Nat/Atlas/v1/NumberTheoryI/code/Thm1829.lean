@@ -44,7 +44,7 @@ namespace HarmonicSumAsymptotics
 -/
 @[path]
 lemma log_sub_log_floor_le
-  {x : ℝ}
+  (x : ℝ)
 -- given
   (hx : 1 ≤ x) :
 -- imply
@@ -54,8 +54,8 @@ lemma log_sub_log_floor_le
   calc Real.log x - Real.log ⌊x⌋₊
     = Real.log (x / ⌊x⌋₊) := by rw [Real.log_div (by linarith) (by linarith)]
     _ ≤ Real.log ((⌊x⌋₊ + 1) / ⌊x⌋₊) := by
-      apply Real.log_le_log (div_pos (by linarith) hn_pos)
-      exact div_le_div_of_nonneg_right (Nat.lt_floor_add_one x).le hn_pos.le
+        apply Real.log_le_log (div_pos (by linarith) hn_pos)
+        exact div_le_div_of_nonneg_right (Nat.lt_floor_add_one x).le hn_pos.le
     _ = Real.log (1 + 1 / ⌊x⌋₊) := by congr 1; field_simp
     _ ≤ 1 / ⌊x⌋₊ := by
       linarith [Real.log_le_sub_one_of_pos (by positivity : (0 : ℝ) < 1 + 1 / ⌊x⌋₊)]
@@ -68,7 +68,7 @@ namespace HarmonicSumAsymptotics
 [harmonic_floor_eq_log_add_euler_mascheroni_add_bigO](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Thm1829.lean)
 -/
 @[path]
-lemma harmonic_floor_eq_log_add_euler_mascheroni_add_bigO
+lemma harmonic_floor_eq_log_add_euler_mascheroni_add_bigO :
 -- imply
   (fun x : ℝ ↦ (harmonic ⌊x⌋₊ : ℝ) - Real.log x - Real.eulerMascheroniConstant) =O[atTop] (fun x ↦ x⁻¹) := by
 -- proof
@@ -113,7 +113,7 @@ namespace HarmonicSumAsymptotics
 [euler_mascheroni_eq_lim_harmonic_sub_log](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Thm1829.lean)
 -/
 @[path]
-lemma euler_mascheroni_eq_lim_harmonic_sub_log
+lemma euler_mascheroni_eq_lim_harmonic_sub_log :
 -- imply
   Tendsto (fun n : ℕ ↦ (harmonic n : ℝ) - Real.log n) atTop (𝓝 Real.eulerMascheroniConstant) :=
 -- proof
@@ -127,3 +127,4 @@ end Theorem1829
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

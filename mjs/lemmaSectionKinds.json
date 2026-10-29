@@ -1,5 +1,194 @@
 [
   {
+    "resolved": "AbsoluteValue",
+    "reason": "Mathlib `AbsoluteValue` is a structure",
+    "kind": "data type",
+    "folder": "AbsoluteValue",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "AbstractHeckeOperator",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "AdelicDock",
+    "decl": "missing"
+  },
+  {
+    "resolved": "AdicCompletion",
+    "reason": "Mathlib `AdicCompletion` is a def of a type former",
+    "kind": "data type",
+    "folder": "AdicCompletion",
+    "decl": "def-type"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "AdicCompletionGaloisAction",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "AdicCompletionLocalRing",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "AdicCompletionRestrictScalars",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "AdicCompletionRingFunctoriality",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "AdicCompletionTensorRing",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Algebra",
+    "reason": "Mathlib `Algebra` is a type class (`Lean.isClass`)",
+    "kind": "type class",
+    "folder": "Algebra",
+    "decl": "typeclass"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "AlgebraicCurve",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "AlgebraicGeometry",
+    "decl": "missing"
+  },
+  {
+    "resolved": "AlgEquiv",
+    "reason": "Mathlib `AlgEquiv` is a structure",
+    "kind": "data type",
+    "folder": "AlgEquiv",
+    "decl": "structure"
+  },
+  {
+    "resolved": "AlgHom",
+    "reason": "Mathlib `AlgHom` is a structure",
+    "kind": "data type",
+    "folder": "AlgHom",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Analysis",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "ArtinL",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "AutomorphicForm",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Function.Bijective",
+    "reason": "Mathlib `Function.Bijective` is a def of a type former",
+    "kind": "data type",
+    "folder": "Bijective",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "Bool",
+    "reason": "Mathlib `Bool` is an inductive (not a class)",
+    "kind": "data type",
+    "folder": "Bool",
+    "decl": "inductive"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "BoundedInterval",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Lean.Parser.Category",
+    "reason": "Mathlib `Lean.Parser.Category` is a structure",
+    "kind": "data type",
+    "folder": "Category",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "CategoryTheory",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "CerednikDrinfeld",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "ClassFunction",
+    "decl": "missing"
+  },
+  {
+    "resolved": "ClassGroup",
+    "reason": "Mathlib `ClassGroup` is a def of a type former",
+    "kind": "data type",
+    "folder": "ClassGroup",
+    "decl": "def-type"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "CohCarrier",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Compat",
+    "decl": "missing"
+  },
+  {
     "resolved": "Complex",
     "reason": "Mathlib `Complex` is a structure",
     "kind": "data type",
@@ -7,25 +196,823 @@
     "decl": "structure"
   },
   {
-    "resolved": "Field",
-    "reason": "Mathlib `Field` is a type class (`Lean.isClass`)",
+    "resolved": "ContinuousMap",
+    "reason": "Mathlib `ContinuousMap` is a structure",
+    "kind": "data type",
+    "folder": "ContinuousMap",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "ContinuousSemiflow",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Convex",
+    "reason": "Mathlib `Convex` is a def of a type former",
+    "kind": "data type",
+    "folder": "Convex",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "CuspForm",
+    "reason": "Mathlib `CuspForm` is a structure",
+    "kind": "data type",
+    "folder": "CuspForm",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "CuspidalType",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "CyclotomicUniv",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "DedekindDomain",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Deformations",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Dieudonne",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "DifferentFiltrationFormula",
+    "decl": "missing"
+  },
+  {
+    "resolved": "DirichletCharacter",
+    "reason": "Mathlib `DirichletCharacter` is a def of a type former",
+    "kind": "data type",
+    "folder": "DirichletCharacter",
+    "decl": "def-type"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "DrinfeldCurve",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "DualIsogenyAPI",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "DualIsogenyExistence",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "DualSelmer",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "EisensteinGeneral",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "EllipticCurve",
+    "decl": "missing"
+  },
+  {
+    "resolved": "ENNReal",
+    "reason": "Mathlib `ENNReal` is a def of a type former",
+    "kind": "data type",
+    "folder": "ENNReal",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "Equiv",
+    "reason": "Mathlib `Equiv` is a structure",
+    "kind": "data type",
+    "folder": "Equiv",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "ExtCitation",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "ExtEndgame",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "FieldTheory",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Filter",
+    "reason": "Mathlib `Filter` is a structure",
+    "kind": "data type",
+    "folder": "Filter",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Fin",
+    "reason": "Mathlib `Fin` is a structure",
+    "kind": "data type",
+    "folder": "Fin",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "FiniteFlat",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Finset",
+    "reason": "Mathlib `Finset` is a structure",
+    "kind": "data type",
+    "folder": "Finset",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Finsupp",
+    "reason": "Mathlib `Finsupp` is a structure",
+    "kind": "data type",
+    "folder": "Finsupp",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "FLTPrelim",
+    "decl": "missing"
+  },
+  {
+    "resolved": "FormalGroup",
+    "reason": "Mathlib `FormalGroup` is a structure",
+    "kind": "data type",
+    "folder": "FormalGroup",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "FreyPackage",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "FrobeniusDensity",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "FullLevelTate",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "GaloisRep",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "GaloisRepAdic",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Gamma0Away",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Gamma0AwayUnitsChar",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Gamma0CoeffCohomology",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Gamma0CoeffCohomologyEigen",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Gamma0HeckeOperatorHom",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Gamma0UnitsChar",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "GoodReductionJacobian",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "GroupCohomology",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "HaarMeasure",
+    "decl": "missing"
+  },
+  {
+    "resolved": "HahnSeries",
+    "reason": "Mathlib `HahnSeries` is a structure",
+    "kind": "data type",
+    "folder": "HahnSeries",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "HeckeEis",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "HeckeModule",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Hist",
+    "decl": "missing"
+  },
+  {
+    "resolved": "HopfAlgebra",
+    "reason": "Mathlib `HopfAlgebra` is a type class (`Lean.isClass`)",
     "kind": "type class",
-    "folder": "Field",
+    "folder": "HopfAlgebra",
     "decl": "typeclass"
   },
   {
-    "resolved": "IsAlgClosed",
-    "reason": "Mathlib `IsAlgClosed` is a type class (`Lean.isClass`)",
+    "resolved": "Hyperreal",
+    "reason": "Mathlib `Hyperreal` is a def of a type former",
+    "kind": "data type",
+    "folder": "Hyperreal",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "Ideal",
+    "reason": "Mathlib `Ideal` is a def of a type former",
+    "kind": "data type",
+    "folder": "Ideal",
+    "decl": "def-type"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "IharaAmalgam",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "IharaAmalgamMap",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "IharaGamma0Fin",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "IharaIota",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "IharaLemma",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "IharaMennickeCarrier",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "IncidenceSystem",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Int",
+    "reason": "Mathlib `Int` is an inductive (not a class)",
+    "kind": "data type",
+    "folder": "Int",
+    "decl": "inductive"
+  },
+  {
+    "resolved": "IntermediateField",
+    "reason": "Mathlib `IntermediateField` is a structure",
+    "kind": "data type",
+    "folder": "IntermediateField",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "IntMatrixOrder",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "InvariantBaseChange",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "InvariantsCompletion",
+    "decl": "missing"
+  },
+  {
+    "resolved": "IsDedekindDomain",
+    "reason": "Mathlib `IsDedekindDomain` is a type class (`Lean.isClass`)",
     "kind": "type class",
-    "folder": "IsAlgClosed",
+    "folder": "IsDedekindDomain",
     "decl": "typeclass"
   },
   {
-    "resolved": "CharZero",
-    "reason": "Mathlib `CharZero` is a type class (`Lean.isClass`)",
+    "resolved": "Topology.IsInducing",
+    "reason": "Mathlib `Topology.IsInducing` is a structure",
+    "kind": "data type",
+    "folder": "IsInducing",
+    "decl": "structure"
+  },
+  {
+    "resolved": "IsLocalRing",
+    "reason": "Mathlib `IsLocalRing` is a type class (`Lean.isClass`)",
     "kind": "type class",
-    "folder": "CharZero",
+    "folder": "IsLocalRing",
     "decl": "typeclass"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Isogeny",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "JacJ1",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "JPSS",
+    "decl": "missing"
+  },
+  {
+    "resolved": "ProbabilityTheory.Kernel",
+    "reason": "Mathlib `ProbabilityTheory.Kernel` is a structure",
+    "kind": "data type",
+    "folder": "Kernel",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "LanglandsTunnell",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "LatticeTreeBaseChange",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "LatticeTreeOrbital",
+    "decl": "missing"
+  },
+  {
+    "resolved": "LaurentPolynomial",
+    "reason": "Mathlib `LaurentPolynomial` is a def of a type former",
+    "kind": "data type",
+    "folder": "LaurentPolynomial",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "LaurentSeries",
+    "reason": "Mathlib `LaurentSeries` is a def of a type former",
+    "kind": "data type",
+    "folder": "LaurentSeries",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "LinearMap",
+    "reason": "Mathlib `LinearMap` is a structure",
+    "kind": "data type",
+    "folder": "LinearMap",
+    "decl": "structure"
+  },
+  {
+    "resolved": "List",
+    "reason": "Mathlib `List` is an inductive (not a class)",
+    "kind": "data type",
+    "folder": "List",
+    "decl": "inductive"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "LocalLanglands",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "LocalNewvector",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "LocalRing",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "LpSpace",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "M4aHerbrand",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Matrix",
+    "reason": "Mathlib `Matrix` is a def of a type former",
+    "kind": "data type",
+    "folder": "Matrix",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "MeasureTheory.Measure",
+    "reason": "Mathlib `MeasureTheory.Measure` is a structure",
+    "kind": "data type",
+    "folder": "Measure",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "MeasureTheory",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "ModelTransfer",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "ModularCurve",
+    "decl": "missing"
+  },
+  {
+    "resolved": "ModularForm",
+    "reason": "Mathlib `ModularForm` is a structure",
+    "kind": "data type",
+    "folder": "ModularForm",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Module",
+    "reason": "Mathlib `Module` is a type class (`Lean.isClass`)",
+    "kind": "type class",
+    "folder": "Module",
+    "decl": "typeclass"
+  },
+  {
+    "resolved": "MonoidAlgebra",
+    "reason": "Mathlib `MonoidAlgebra` is a structure",
+    "kind": "data type",
+    "folder": "MonoidAlgebra",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Multiset",
+    "reason": "Mathlib `Multiset` is a def of a type former",
+    "kind": "data type",
+    "folder": "Multiset",
+    "decl": "def-type"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "MvFormalGroup",
+    "decl": "missing"
+  },
+  {
+    "resolved": "MvPolynomial",
+    "reason": "Mathlib `MvPolynomial` is a def of a type former",
+    "kind": "data type",
+    "folder": "MvPolynomial",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "MvPowerSeries",
+    "reason": "Mathlib `MvPowerSeries` is a def of a type former",
+    "kind": "data type",
+    "folder": "MvPowerSeries",
+    "decl": "def-type"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "NarrowRayClassGroup",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Nat",
+    "reason": "Mathlib `Nat` is an inductive (not a class)",
+    "kind": "data type",
+    "folder": "Nat",
+    "decl": "inductive"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "NeronModelInfra",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "NetPairing",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "NormIndex",
+    "decl": "missing"
+  },
+  {
+    "resolved": "NumberField",
+    "reason": "Mathlib `NumberField` is a type class (`Lean.isClass`)",
+    "kind": "type class",
+    "folder": "NumberField",
+    "decl": "typeclass"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "NumberTheory",
+    "decl": "missing"
+  },
+  {
+    "resolved": "PadicAlgCl",
+    "reason": "Mathlib `PadicAlgCl` is a def of a type former",
+    "kind": "data type",
+    "folder": "PadicAlgCl",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "PadicComplex",
+    "reason": "Mathlib `PadicComplex` is a def of a type former",
+    "kind": "data type",
+    "folder": "PadicComplex",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "PadicInt",
+    "reason": "Mathlib `PadicInt` is a def of a type former",
+    "kind": "data type",
+    "folder": "PadicInt",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "Partition",
+    "reason": "Mathlib `Partition` is a structure",
+    "kind": "data type",
+    "folder": "Partition",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Patching",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "PDivisibleGroup",
+    "decl": "missing"
+  },
+  {
+    "resolved": "PeriodPair",
+    "reason": "Mathlib `PeriodPair` is a structure",
+    "kind": "data type",
+    "folder": "PeriodPair",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Polynomial",
+    "reason": "Mathlib `Polynomial` is a structure",
+    "kind": "data type",
+    "folder": "Polynomial",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "PolynomialCompletion",
+    "decl": "missing"
+  },
+  {
+    "resolved": "PowerSeries",
+    "reason": "Mathlib `PowerSeries` is a def of a type former",
+    "kind": "data type",
+    "folder": "PowerSeries",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "PresheafOfModules",
+    "reason": "Mathlib `PresheafOfModules` is a structure",
+    "kind": "data type",
+    "folder": "PresheafOfModules",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "PrimeNormIndex",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "ProjectiveLineMatrixAction",
+    "decl": "missing"
+  },
+  {
+    "resolved": "QuaternionAlgebra",
+    "reason": "Mathlib `QuaternionAlgebra` is a structure",
+    "kind": "data type",
+    "folder": "QuaternionAlgebra",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Random",
+    "reason": "repo special case: Lemma/Random is treated as a data-type section (Mathlib: Mathlib `Random` is a type class (`Lean.isClass`))",
+    "kind": "data type",
+    "folder": "Random",
+    "decl": "typeclass"
+  },
+  {
+    "resolved": "Rat",
+    "reason": "Mathlib `Rat` is a structure",
+    "kind": "data type",
+    "folder": "Rat",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "RatIdele",
+    "decl": "missing"
   },
   {
     "resolved": "Real",
@@ -33,5 +1020,229 @@
     "kind": "data type",
     "folder": "Real",
     "decl": "structure"
+  },
+  {
+    "resolved": "Rep",
+    "reason": "Mathlib `Rep` is a structure",
+    "kind": "data type",
+    "folder": "Rep",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Representation",
+    "reason": "Mathlib `Representation` is a def of a type former",
+    "kind": "data type",
+    "folder": "Representation",
+    "decl": "def-type"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "RepTheory",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Ideal.ResidueField",
+    "reason": "Mathlib `Ideal.ResidueField` is a def of a type former",
+    "kind": "data type",
+    "folder": "ResidueField",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "RingHom",
+    "reason": "Mathlib `RingHom` is a structure",
+    "kind": "data type",
+    "folder": "RingHom",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "RingTheory",
+    "decl": "missing"
+  },
+  {
+    "resolved": "AlgebraicGeometry.Scheme",
+    "reason": "Mathlib `AlgebraicGeometry.Scheme` is a structure",
+    "kind": "data type",
+    "folder": "Scheme",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "SchurMultiplierTrivial",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "SemilocalAdicCompletion",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Set",
+    "reason": "Mathlib `Set` is a def of a type former",
+    "kind": "data type",
+    "folder": "Set",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "SheafOfModules",
+    "reason": "Mathlib `SheafOfModules` is a structure",
+    "kind": "data type",
+    "folder": "SheafOfModules",
+    "decl": "structure"
+  },
+  {
+    "resolved": "SimpleGraph",
+    "reason": "Mathlib `SimpleGraph` is a structure",
+    "kind": "data type",
+    "folder": "SimpleGraph",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "SmoothOfClosedPoints",
+    "decl": "missing"
+  },
+  {
+    "resolved": "SpecialLinearGroup",
+    "reason": "Mathlib `SpecialLinearGroup` is a def of a type former",
+    "kind": "data type",
+    "folder": "SpecialLinearGroup",
+    "decl": "def-type"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "StabilizerCompletionAction",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Stickelberger",
+    "decl": "missing"
+  },
+  {
+    "resolved": "Subalgebra",
+    "reason": "Mathlib `Subalgebra` is a structure",
+    "kind": "data type",
+    "folder": "Subalgebra",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Submodule",
+    "reason": "Mathlib `Submodule` is a structure",
+    "kind": "data type",
+    "folder": "Submodule",
+    "decl": "structure"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "SymmetricPowerBlockwiseFTSym",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "TateCurve",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "TaylorWiles",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "repo special case: Lemma/Tensor is treated as a data-type section (Mathlib: no Mathlib constant whose last name component equals this folder)",
+    "kind": "data type",
+    "folder": "Tensor",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "TensorProductDomain",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Topology",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "TwistedNormClasses",
+    "decl": "missing"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "TwoChartCech",
+    "decl": "missing"
+  },
+  {
+    "resolved": "UpperHalfPlane",
+    "reason": "Mathlib `UpperHalfPlane` is a structure",
+    "kind": "data type",
+    "folder": "UpperHalfPlane",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Valuation",
+    "reason": "Mathlib `Valuation` is a structure",
+    "kind": "data type",
+    "folder": "Valuation",
+    "decl": "structure"
+  },
+  {
+    "resolved": "ValuationSubring",
+    "reason": "Mathlib `ValuationSubring` is a structure",
+    "kind": "data type",
+    "folder": "ValuationSubring",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Vector",
+    "reason": "Mathlib `Vector` is a structure",
+    "kind": "data type",
+    "folder": "Vector",
+    "decl": "structure"
+  },
+  {
+    "resolved": "WeierstrassCurve",
+    "reason": "Mathlib `WeierstrassCurve` is a structure",
+    "kind": "data type",
+    "folder": "WeierstrassCurve",
+    "decl": "structure"
+  },
+  {
+    "resolved": "ZMod",
+    "reason": "Mathlib `ZMod` is a def of a type former",
+    "kind": "data type",
+    "folder": "ZMod",
+    "decl": "def-type"
   }
 ]

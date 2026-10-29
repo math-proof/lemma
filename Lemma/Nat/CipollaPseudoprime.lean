@@ -160,14 +160,15 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma cipolla_pseudoprime_construction
-  {a p : ℕ}
+  (a p : ℕ)
 -- given
   (ha : 1 < a)
   (hp : p.Prime)
   (hnotdvd : ¬ p ∣ a * (a ^ 2 - 1)) :
--- imply
-  let n₁ := by
--- proof
+  let n₁ := (a ^ p - 1) / (a - 1)
+  let n₂ := (a ^ p + 1) / (a + 1)
+  let n := n₁ * n₂
+  Nat.FermatPsp n a := by
   have ha2 : 2 ≤ a := ha
   have htwo_dvd : 2 ∣ a * (a ^ 2 - 1) := by
     obtain he | ho := Nat.even_or_odd a

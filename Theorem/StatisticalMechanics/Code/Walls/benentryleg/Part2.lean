@@ -98,7 +98,7 @@ theorem ben_repRoute_of_residue (ω : ConfigSpace (Sym2 (Site d))) (L : ℕ) (x 
     (ben_entry_clause_of_residue ω L x tip b hrec hxb hxesc hbesc) htail
 
 
-theorem ben_bk_of_trifData (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem ben_bk_of_trifData (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bgc_TrifForestData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   bar_bk_uniqueness_of_trifData p hp1 hp0 hdata

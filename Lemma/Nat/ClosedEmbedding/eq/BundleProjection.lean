@@ -33,13 +33,13 @@ private lemma SpringerResolutionData.closedEmbedding_injective
 -/
 @[path]
 private lemma kirillovKostant_kernel
-  {k : Type*}
-  {𝔤 : Type*}
+  (k : Type*)
+  (𝔤 : Type*)
   [CommRing k]
   [LieRing 𝔤]
   [LieAlgebra k 𝔤]
-  {f : 𝔤 →ₗ[k] k}
-  {x : 𝔤} :
+  (f : 𝔤 →ₗ[k] k)
+  (x : 𝔤) :
 -- imply
   (∀ y : 𝔤, (kirillovKostantForm k 𝔤 f).bilin x y = 0) ↔ x ∈ coadjointStabilizer k 𝔤 f :=
 -- proof
@@ -50,13 +50,13 @@ Iff.rfl
 -/
 @[path]
 private lemma kirillovKostant_closed
-  {k : Type*}
-  {𝔤 : Type*}
+  (k : Type*)
+  (𝔤 : Type*)
   [CommRing k]
   [LieRing 𝔤]
   [LieAlgebra k 𝔤]
-  {f : 𝔤 →ₗ[k] k}
-  {x y z : 𝔤} :
+  (f : 𝔤 →ₗ[k] k)
+  (x y z : 𝔤) :
 -- imply
   f ⁅y, ⁅x, z⁆⁆ + f ⁅z, ⁅y, x⁆⁆ + f ⁅x, ⁅z, y⁆⁆ = 0 := by
 -- proof
@@ -68,6 +68,8 @@ private lemma kirillovKostant_closed
   set c := f ⁅y, ⁅x, z⁆⁆
   calc c + b + a = a + b + c := by ring
     _ = 0 := h
+
+attribute [instance] CoadjointOrbitData.instGroup
 
 /--
 [CoadjointOrbitData.mem_orbit_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BorelWeil.lean)
@@ -93,15 +95,15 @@ private lemma CoadjointOrbitData.Ad_inv_cancel_left
   [LieRing 𝔤']
   [LieAlgebra k' 𝔤']
   {data : CoadjointOrbitData k' 𝔤'}
-  {g : data.G}
-  {x : 𝔤'} :
+  (g : data.G)
+  (x : 𝔤') :
 -- imply
   (data.Ad g⁻¹) ((data.Ad g) x) = x := by
 -- proof
   have h : data.Ad g⁻¹ * data.Ad g = 1 := by
     rw [← data.Ad.map_mul, inv_mul_cancel, data.Ad.map_one]
   calc (data.Ad g⁻¹) ((data.Ad g) x)
-    = (data.Ad g⁻¹ * data.Ad g) x := (LinearEquiv.mul_apply _ _ _).symm
+      = (data.Ad g⁻¹ * data.Ad g) x := (LinearEquiv.mul_apply _ _ _).symm
     _ = (1 : 𝔤' ≃ₗ[k'] 𝔤') x := by rw [h]
     _ = x := by simp
 
@@ -113,10 +115,10 @@ private lemma kirillovKostant_G_invariant
   [CommRing k']
   [LieRing 𝔤']
   [LieAlgebra k' 𝔤']
-  {data : CoadjointOrbitData k' 𝔤'}
-  {g : data.G}
-  {f : 𝔤' →ₗ[k'] k'}
-  {y z : 𝔤'} :
+  (data : CoadjointOrbitData k' 𝔤')
+  (g : data.G)
+  (f : 𝔤' →ₗ[k'] k')
+  (y z : 𝔤') :
 -- imply
   data.coadjointAction g f ⁅data.Ad g y, data.Ad g z⁆ = f ⁅y, z⁆ := by
 -- proof
@@ -194,15 +196,18 @@ private lemma normalVariety_singular_locus_codim_ge_two
   IsRegularLocalRing (Localization.AtPrime 𝔭) := by
 -- proof
   set S := Localization.AtPrime 𝔭
-  haveI : IsIntegrallyClosed S :=
+
+  have : IsIntegrallyClosed S :=
     isIntegrallyClosed_of_isLocalization S 𝔭.primeCompl 𝔭.primeCompl_le_nonZeroDivisors
+
   have hdim : ringKrullDim S = 1 := by
     rw [IsLocalization.AtPrime.ringKrullDim_eq_height 𝔭 S]
     exact_mod_cast h𝔭
+
   have hunique : ∀ P : Ideal S, P ≠ ⊥ → P.IsPrime →
-    P = IsLocalRing.maximalIdeal S := by
+      P = IsLocalRing.maximalIdeal S := by
     intro P hP hPprime
-    haveI := hPprime
+    have := hPprime
     have hle := IsLocalRing.le_maximalIdeal (R := S) hPprime.ne_top
     by_contra hne
     have hlt : P < IsLocalRing.maximalIdeal S := lt_of_le_of_ne hle hne
@@ -225,10 +230,11 @@ private lemma normalVariety_singular_locus_codim_ge_two
       exact_mod_cast this
     rw [hmaxht] at hge2
     exact absurd hge2 (by norm_num)
+
   have hcond : IsIntegrallyClosed S ∧
-    ∀ P : Ideal S, P ≠ ⊥ → P.IsPrime → P = IsLocalRing.maximalIdeal S :=
+      ∀ P : Ideal S, P ≠ ⊥ → P.IsPrime → P = IsLocalRing.maximalIdeal S :=
     ⟨inferInstance, hunique⟩
-  haveI : IsPrincipalIdealRing S :=
+  have : IsPrincipalIdealRing S :=
     ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain S).out 3 0).mp hcond
   exact IsRegularLocalRing.instOfIsLocalRingOfIsDomainOfIsPrincipalIdealRing _
 
@@ -266,30 +272,37 @@ private lemma resolution_pullback_surjective
 -- imply
   Function.Surjective R.pStar := by
 -- proof
-  letI : Algebra R.OY R.OX := R.pStar.toAlgebra
+  let : Algebra R.OY R.OX := R.pStar.toAlgebra
   intro f
+
   have hf : IsIntegral R.OY f := R.hProper.isIntegral f
+
   obtain ⟨φ, hφ⟩ := R.hFracIso
+
   let ψ : R.OX →+* FractionRing R.OY :=
     φ.symm.toRingHom.comp (algebraMap R.OX (FractionRing R.OX))
+
   have hcomp : (algebraMap R.OY (FractionRing R.OY)).comp (RingHom.id R.OY) =
-    ψ.comp (algebraMap R.OY R.OX) := by
+      ψ.comp (algebraMap R.OY R.OX) := by
     ext r
     simp only [RingHom.comp_apply, RingHom.id_apply, ψ, RingEquiv.toRingHom_eq_coe,
       RingHom.coe_coe]
     rw [show algebraMap R.OY R.OX r = R.pStar r from rfl, ← hφ r]
     simp [RingEquiv.symm_apply_apply]
+
   have hf_integral : IsIntegral R.OY (ψ f) :=
     hf.map_of_comp_eq (RingHom.id R.OY) ψ hcomp
+
   obtain ⟨y, hy⟩ := (IsIntegrallyClosed.isIntegral_iff).mp hf_integral
+
   refine ⟨y, ?_⟩
   have h1 : φ (algebraMap R.OY (FractionRing R.OY) y) =
-    algebraMap R.OX (FractionRing R.OX) f := by
+      algebraMap R.OX (FractionRing R.OX) f := by
     rw [hy]
     simp only [ψ, RingEquiv.toRingHom_eq_coe, RingHom.coe_comp, Function.comp_apply,
       RingHom.coe_coe, RingEquiv.apply_symm_apply]
   have h2 : algebraMap R.OX (FractionRing R.OX) (R.pStar y) =
-    algebraMap R.OX (FractionRing R.OX) f := by
+      algebraMap R.OX (FractionRing R.OX) f := by
     rw [← hφ y, h1]
   exact IsFractionRing.injective R.OX (FractionRing R.OX) h2
 
@@ -335,10 +348,12 @@ private lemma graded_map_reflects_mem
 -- imply
   a ∈ 𝒜 n := by
 -- proof
+
   have naturality : ∀ (m : ℕ) (b : R),
-    f (↑((DirectSum.decompose 𝒜 b) m)) = ↑((DirectSum.decompose ℬ (f b)) m) := by
+      f (↑((DirectSum.decompose 𝒜 b) m)) = ↑((DirectSum.decompose ℬ (f b)) m) := by
     intro m b
     set 𝒜_sub := fun i => ↥(𝒜 i)
+
     let φ₁ : DirectSum ℕ 𝒜_sub →+ S :=
       { toFun := fun x => f (↑(x m) : R),
         map_zero' := by simp,
@@ -358,12 +373,14 @@ private lemma graded_map_reflects_mem
         rw [DirectSum.of_eq_same]
         exact (DirectSum.decompose_of_mem_same ℬ (hf_grade _ (↑y) y.prop)).symm
       · have : (DirectSum.of 𝒜_sub i y) m = 0 :=
-        DirectSum.of_eq_of_ne (β := 𝒜_sub) i m y (fun h => him (h.symm))
+          DirectSum.of_eq_of_ne (β := 𝒜_sub) i m y (fun h => him (h.symm))
         rw [this, ZeroMemClass.coe_zero, map_zero]
         exact (DirectSum.decompose_of_mem_ne ℬ (hf_grade i (↑y) y.prop) him).symm)
     have := congr_fun (congr_arg DFunLike.coe h_eq) (DirectSum.decompose 𝒜 b)
     simp only [φ₁, φ₂, AddMonoidHom.coe_mk, ZeroHom.coe_mk] at this
-    rwa [Equiv.symm_apply_apply] at this
+    rw [Equiv.symm_apply_apply] at this
+    exact this
+
   suffices h_zero : ∀ m : ℕ, m ≠ n → (DirectSum.decompose 𝒜 a) m = 0 by
     suffices ha_eq : a = ↑((DirectSum.decompose 𝒜 a) n) by
       rw [ha_eq]; exact SetLike.coe_mem _
@@ -410,13 +427,18 @@ private lemma springer_pullback_isIso
 -- imply
   ∃ (e : ON ≃ₐ[D.k] OTF), (∀ f : ON, e f = pstar f) ∧ IsGradedAlgEquiv 𝒩_grade TF_grade e := by
 -- proof
+
+
   let RD : ResolutionData D.k :=
     { OY := ON
       OX := OTF
       pStar := pstar.toRingHom
       hProper := hproper
       hFracIso := hbirational }
+
+
   have hbij : Function.Bijective pstar := resolution_pullback_isIso RD
+
   refine ⟨AlgEquiv.ofBijective pstar hbij,
     fun f => AlgEquiv.ofBijective_apply pstar hbij f,
     fun n a => ?_⟩
@@ -425,6 +447,8 @@ private lemma springer_pullback_isIso
   ·
     exact hpstar_preserves_grade n a
   ·
+
+
     exact graded_map_reflects_mem 𝒩_grade TF_grade pstar hpstar_preserves_grade hbij.1 n a
 
 /--
@@ -448,3 +472,4 @@ private lemma nilpotentCone_coordRing_isDomain_eq
 
 
 -- created on 2026-10-24
+-- updated on 2026-10-28

@@ -146,7 +146,7 @@ theorem KWAdaptivePatchedData.exists_remoteIncident_dist_separation
     (hcoords : ∀ j : Fin n,
       (polygon.edgeVector j).re ≠ 0 ∧ (polygon.edgeVector j).im ≠ 0)
     (i : Fin n) (first : Bool) :
-    ∃ r : ℝ≥0, 0 < r ∧
+    ∃ r : NNReal, 0 < r ∧
       ∀ x ∈ (if first then
           kwRawClosedEdge patch.vertex (kwStairEvenIndex i (Fin.last M))
         else kwRawClosedEdge patch.vertex (kwStairOddIndex i (Fin.last M))),

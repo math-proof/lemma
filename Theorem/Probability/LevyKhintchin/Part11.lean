@@ -35,16 +35,16 @@ namespace MetaMathlibExt
 
 lemma lk_canonicalBase_le (ρ : Measure ℝ) (hρ : IsProbabilityMeasure ρ) :
     (lkCanonicalBase ρ hρ : Measure ℝ) ≤ ρ := by
-  change ρ.withDensity (fun x ↦ (lkCanonicalWeightNN x : ℝ≥0∞)) ≤ ρ
+  change ρ.withDensity (fun x ↦ (lkCanonicalWeightNN x : ENNReal)) ≤ ρ
   simpa using withDensity_mono (μ := ρ)
     (ae_of_all ρ fun x ↦ lk_canonicalWeightNN_le_one x)
 
 lemma lk_canonicalMeasure_apply_le (ρ : Measure ℝ) (hρ : IsProbabilityMeasure ρ)
     (n : ℕ) (s : Set ℝ) :
-    ((lkCanonicalMeasure ρ hρ n s : ℝ≥0) : ℝ) ≤
+    ((lkCanonicalMeasure ρ hρ n s : NNReal) : ℝ) ≤
       (n + 1 : ℝ) * ρ.real s := by
   rw [lkCanonicalMeasure, FiniteMeasure.smul_apply]
-  change (((n + 1 : ℝ≥0) * lkCanonicalBase ρ hρ s : ℝ≥0) : ℝ) ≤ _
+  change (((n + 1 : NNReal) * lkCanonicalBase ρ hρ s : NNReal) : ℝ) ≤ _
   push_cast
   gcongr
   rw [← FiniteMeasure.measureReal_eq_coe_coeFn]
@@ -54,7 +54,7 @@ lemma lk_canonicalMeasure_apply_le (ρ : Measure ℝ) (hρ : IsProbabilityMeasur
 lemma lk_canonicalBase_mass (ρ : Measure ℝ) (hρ : IsProbabilityMeasure ρ) :
     ((lkCanonicalBase ρ hρ).mass : ℝ) = ∫ x, lkCanonicalWeight x ∂ρ := by
   rw [show ((lkCanonicalBase ρ hρ).mass : ℝ) =
-      (ρ.withDensity (fun x ↦ (lkCanonicalWeightNN x : ℝ≥0∞))).real Set.univ by rfl]
+      (ρ.withDensity (fun x ↦ (lkCanonicalWeightNN x : ENNReal))).real Set.univ by rfl]
   rw [Measure.real, withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ]
   have hint : Integrable (fun x ↦ (lkCanonicalWeightNN x : ℝ)) ρ := by
     apply (integrable_const (c := (1 : ℝ))).mono

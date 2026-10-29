@@ -3,6 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Farey
 open scoped Rat
 open Farey
+set_option maxHeartbeats 999999
 
 
 namespace Farey
@@ -161,8 +162,8 @@ namespace Farey
 -/
 @[path]
 lemma mediant_mem_next_of_sum_eq
-  {n : ℕ}
-  {x y : ℚ}
+  (n : ℕ)
+  (x y : ℚ)
 -- given
   (hx : x ∈ fareyFinset n)
   (hy : y ∈ fareyFinset n)
@@ -218,7 +219,7 @@ lemma mediant_strict_between_of_neighbor
 -- imply
   x < mediant x y ∧ mediant x y < y :=
 -- proof
-  mediant_between x y h.2.2.1
+  mediant_between h.2.2.1
 
 end Farey
 
@@ -247,8 +248,8 @@ namespace Farey
 -/
 @[path]
 lemma neighbor_den_sum_gt
-  {n : ℕ}
-  {x y : ℚ}
+  (n : ℕ)
+  (x y : ℚ)
 -- given
   (h : IsFareyNeighbor n x y) :
 -- imply
@@ -260,9 +261,9 @@ lemma neighbor_den_sum_gt
   have hy := h.2.1
   have hmed_mem : mediant x y ∈ fareyFinset n := by
     have h0 : 0 ≤ mediant x y :=
-      (mem_fareyFinset_iff n x).mp h.1 |>.1 |>.trans (mediant_between x y h.2.2.1).1.le
+      (mem_fareyFinset_iff n x).mp h.1 |>.1 |>.trans (mediant_between h.2.2.1).1.le
     have h1 : mediant x y ≤ 1 :=
-      (mediant_between x y h.2.2.1).2.le.trans ((mem_fareyFinset_iff n y).mp h.2.1).2.1
+      (mediant_between h.2.2.1).2.le.trans ((mem_fareyFinset_iff n y).mp h.2.1).2.1
     have hden : (mediant x y).den ≤ n := by
       have h_le_sum : (mediant x y).den ≤ x.den + y.den := by
         unfold mediant
@@ -272,7 +273,7 @@ lemma neighbor_den_sum_gt
       omega
     exact (mem_fareyFinset_iff n _).mpr ⟨by linarith [(mem_fareyFinset_iff n x |>.mp hx).1],
       by linarith [(mem_fareyFinset_iff n y |>.mp hy).2.1], hden⟩
-  exact h.2.2.2 (mediant x y) hmed_mem (mediant_between x y h.2.2.1)
+  exact h.2.2.2 (mediant x y) hmed_mem (mediant_between h.2.2.1)
 
 end Farey
 
@@ -283,8 +284,8 @@ namespace Farey
 -/
 @[path]
 lemma det_one_and_sum_gt_imp_neighbor
-  {n : ℕ}
-  {x y : ℚ}
+  (n : ℕ)
+  (x y : ℚ)
 -- given
   (hx : x ∈ fareyFinset n)
   (hy : y ∈ fareyFinset n)
@@ -316,7 +317,6 @@ lemma det_one_and_sum_gt_imp_neighbor
       nlinarith [show (0 : ℤ) < x.den by exact_mod_cast x.pos,
         show (0 : ℤ) < y.den by exact_mod_cast y.pos])
   omega
-set_option maxHeartbeats 800000 in
 
 end Farey
 
@@ -537,7 +537,7 @@ lemma IsFareyNeighbor.mediant_not_mem
   mediant x y ∉ fareyFinset n := by
 -- proof
   intro hmem
-  exact h.2.2.2 _ hmem (mediant_between x y h.2.2.1)
+  exact h.2.2.2 _ hmem (mediant_between h.2.2.1)
 
 end Farey
 
@@ -557,7 +557,6 @@ lemma IsFareyNeighbor.mediant_mem_succ
   mediant x y ∈ fareyFinset (n + 1) ∧ mediant x y ∉ fareyFinset n :=
 -- proof
   ⟨mediant_mem_next_of_sum_eq n x y h.1 h.2.1 hsum, h.mediant_not_mem⟩
-set_option maxHeartbeats 800000 in
 
 end Farey
 
@@ -678,7 +677,7 @@ lemma farey_succ_generation
         calc
           q = (q.num /. (q.den : ℤ) : ℚ) := (Rat.num_divInt_den q).symm
           _ = ((x.num + y.num) /. ((x.den + y.den : ℕ) : ℤ) : ℚ) := by
-            rw [hq_num_eq, hqden_eq, hsum_eq]
+              rw [hq_num_eq, hqden_eq, hsum_eq]
           _ = mediant x y := rfl
       exact ⟨x, y, hxy_neighbor, hsum_eq, hq_eq_mediant⟩
   · rintro (hq | ⟨x, y, hxy, hsum, rfl⟩)
@@ -713,4 +712,4 @@ private lemma mem_fareySeq_iff_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

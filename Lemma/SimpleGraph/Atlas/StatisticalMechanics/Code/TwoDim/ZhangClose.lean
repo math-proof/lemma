@@ -178,7 +178,7 @@ private lemma zhg_corLowerBound_eq
   (heq : ∀ n, halfMeasure.real (A n) = halfMeasure.real (B n))
   (hgeo : ZhangGeometricData halfMeasure A B) :
 -- imply
-  BoxCrossingProperty halfMeasure 2 → percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 := by
+  BoxCrossingProperty halfMeasure 2 → percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 := by
 -- proof
   apply StatMech.TwoDim.zhg_corLowerBound hpa hAinc hBinc hBm hHm hRmeas hRpres hdich heq hgeo
 

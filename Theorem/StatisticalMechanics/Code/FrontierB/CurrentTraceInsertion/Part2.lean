@@ -145,7 +145,7 @@ theorem boundaryCurrentPMF_map_forceCurrentEdgePositive_apply_bound
 
 theorem PMF.toMeasure_map_le_of_apply_le
     {alpha : Type*} [MeasurableSpace alpha] [MeasurableSingletonClass alpha]
-    (p : PMF alpha) (f : alpha → alpha) (c : ℝ≥0∞)
+    (p : PMF alpha) (f : alpha → alpha) (c : ENNReal)
     (hpoint : ∀ a, c * PMF.map f p a ≤ p a)
     (S : Set alpha) :
     c * (PMF.map f p).toMeasure S ≤ p.toMeasure S := by

@@ -27,7 +27,7 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-noncomputable def phi (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d)) : ℝ :=
+noncomputable def phi (d : ℕ) (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d)) : ℝ :=
   (p : ℝ) * ∑ e ∈ boundaryEdges d S, connWithinProb d p hp S e.1
 
 

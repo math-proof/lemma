@@ -27,7 +27,7 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-noncomputable def crossProb (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) : ℝ :=
+noncomputable def crossProb (d : ℕ) (p : NNReal) (hp : p ≤ 1) (n : ℕ) : ℝ :=
   (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (crossingEvent d n)
 
 

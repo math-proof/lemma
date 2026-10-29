@@ -25,7 +25,7 @@ structure KWAngularPortRadiusData
     {V : Type*} [Fintype V] [DecidableEq V]
     {G : SimpleGraph V} [DecidableRel G.Adj]
     (embedding : KWStraightLineEmbedding G) where
-  radius : ℝ≥0
+  radius : NNReal
   radius_pos : 0 < radius
   vertex_separated : ∀ v w : V, v ≠ w →
     4 * (radius : ℝ) < dist (embedding.vertex v) (embedding.vertex w)

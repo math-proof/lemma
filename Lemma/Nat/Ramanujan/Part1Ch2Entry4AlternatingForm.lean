@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry4AlternatingForm
@@ -107,7 +106,6 @@ lemma ramanujan_part1_ch2_entry4_alternating_form_general
         ring
       linear_combination ih + key
   exact gen n
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry4AlternatingForm
 
@@ -120,16 +118,16 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry4AlternatingForm
 lemma ramanujan_part1_ch2_entry4_alternating_form
   {n : ℕ}
 -- given
-  (hn : 0 < n) :
+  (_hn : 0 < n) :
 -- imply
   (1 : ℝ) + 2 * ∑ k ∈ Finset.Icc 1 n, (1 / ((4 * (k : ℝ)) ^ 3 - 4 * (k : ℝ))) =
     (∑ k ∈ Finset.Icc 1 (4 * n + 1), ((-1 : ℝ) ^ (k + 1) / (k : ℝ))) +
     (1 / 2 : ℝ) * ∑ k ∈ Finset.Icc 1 (2 * n), ((-1 : ℝ) ^ (k + 1) / (k : ℝ)) := by
 -- proof
-apply ramanujan_part1_ch2_entry4_alternating_form_general <;> assumption
+  apply ramanujan_part1_ch2_entry4_alternating_form_general
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry4AlternatingForm
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

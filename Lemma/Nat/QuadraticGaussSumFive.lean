@@ -13,7 +13,7 @@ namespace MetaMathlibExt
 @[path]
 private lemma exp_two : Complex.exp (2 * (Real.pi : ℂ) * Complex.I) = 1 := by
   have harg :
-    2 * (Real.pi : ℂ) * Complex.I = ((2 * Real.pi : ℝ) : ℂ) * Complex.I := by
+      2 * (Real.pi : ℂ) * Complex.I = ((2 * Real.pi : ℝ) : ℂ) * Complex.I := by
     simp
   rw [harg, Complex.exp_ofReal_mul_I, Real.cos_two_pi, Real.sin_two_pi]
   simp
@@ -35,9 +35,9 @@ private lemma exp_nat (m : ℕ) :
     rw [h0, Complex.exp_zero]
   | succ n ih =>
     have hsucc :
-      (((n + 1 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) =
-        (((n : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) +
-          (2 * (Real.pi : ℂ) * Complex.I) := by
+        (((n + 1 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) =
+          (((n : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) +
+            (2 * (Real.pi : ℂ) * Complex.I) := by
       simp
       ring
     rw [hsucc, Complex.exp_add, ih, exp_two, mul_one]
@@ -53,17 +53,18 @@ namespace MetaMathlibExt
 private lemma exp_neg_nat (m : ℕ) :
   Complex.exp (-(((m : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I))) = 1 := by
   have hpos :
-    Complex.exp (((m : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) = 1 :=
+      Complex.exp (((m : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) = 1 :=
     exp_nat m
   have hadd :
-    (-(((m : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I))) +
-      ((((m : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I))) = 0 := by
+      (-(((m : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I))) +
+        ((((m : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I))) = 0 := by
     ring
   have hmul :
-    Complex.exp (-(((m : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I))) *
-      Complex.exp (((m : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) = 1 := by
+      Complex.exp (-(((m : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I))) *
+        Complex.exp (((m : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) = 1 := by
     rw [←Complex.exp_add, hadd, Complex.exp_zero]
-  rwa [hpos, mul_one] at hmul
+  rw [hpos, mul_one] at hmul
+  exact hmul
 
 end MetaMathlibExt
 
@@ -79,15 +80,15 @@ private lemma add_five (a : ℤ) :
   apply Finset.sum_congr rfl
   intro n hn
   have harg :
-    2 * (Real.pi : ℂ) * Complex.I * ((a + 5 : ℤ) : ℂ) * (n : ℂ) ^ 2 / 5 =
-      2 * (Real.pi : ℂ) * Complex.I * (a : ℂ) * (n : ℂ) ^ 2 / 5 +
-        (n : ℂ) ^ 2 * (2 * (Real.pi : ℂ) * Complex.I) := by
+      2 * (Real.pi : ℂ) * Complex.I * ((a + 5 : ℤ) : ℂ) * (n : ℂ) ^ 2 / 5 =
+        2 * (Real.pi : ℂ) * Complex.I * (a : ℂ) * (n : ℂ) ^ 2 / 5 +
+          (n : ℂ) ^ 2 * (2 * (Real.pi : ℂ) * Complex.I) := by
     simp
     ring
   have hexp :
-    Complex.exp ((n : ℂ) ^ 2 * (2 * (Real.pi : ℂ) * Complex.I)) = 1 := by
+      Complex.exp ((n : ℂ) ^ 2 * (2 * (Real.pi : ℂ) * Complex.I)) = 1 := by
     have h :
-      Complex.exp (((n ^ 2 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) = 1 :=
+        Complex.exp (((n ^ 2 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) = 1 :=
       exp_nat (n ^ 2)
     simpa [Nat.cast_pow] using h
   rw [harg, Complex.exp_add, hexp, mul_one]
@@ -106,15 +107,15 @@ private lemma sub_five (a : ℤ) :
   apply Finset.sum_congr rfl
   intro n hn
   have harg :
-    2 * (Real.pi : ℂ) * Complex.I * ((a - 5 : ℤ) : ℂ) * (n : ℂ) ^ 2 / 5 =
-      2 * (Real.pi : ℂ) * Complex.I * (a : ℂ) * (n : ℂ) ^ 2 / 5 +
-        (-((n : ℂ) ^ 2 * (2 * (Real.pi : ℂ) * Complex.I))) := by
+      2 * (Real.pi : ℂ) * Complex.I * ((a - 5 : ℤ) : ℂ) * (n : ℂ) ^ 2 / 5 =
+        2 * (Real.pi : ℂ) * Complex.I * (a : ℂ) * (n : ℂ) ^ 2 / 5 +
+          (-((n : ℂ) ^ 2 * (2 * (Real.pi : ℂ) * Complex.I))) := by
     simp
     ring
   have hexp :
-    Complex.exp (-((n : ℂ) ^ 2 * (2 * (Real.pi : ℂ) * Complex.I))) = 1 := by
+      Complex.exp (-((n : ℂ) ^ 2 * (2 * (Real.pi : ℂ) * Complex.I))) = 1 := by
     have h :
-      Complex.exp (-(((n ^ 2 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I))) = 1 :=
+        Complex.exp (-(((n ^ 2 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I))) = 1 :=
       exp_neg_nat (n ^ 2)
     simpa [Nat.cast_pow] using h
   rw [harg, Complex.exp_add, hexp, mul_one]
@@ -194,24 +195,24 @@ private lemma term_nat (k n : ℕ) :
   have hdiv : 5 * ((k * n ^ 2) / 5) + (k * n ^ 2) % 5 = k * n ^ 2 :=
     Nat.div_add_mod (k * n ^ 2) 5
   have h2 :
-    ((k * n ^ 2 : ℕ) : ℂ) =
-      5 * (((k * n ^ 2) / 5 : ℕ) : ℂ) + (((k * n ^ 2) % 5 : ℕ) : ℂ) := by
+      ((k * n ^ 2 : ℕ) : ℂ) =
+        5 * (((k * n ^ 2) / 5 : ℕ) : ℂ) + (((k * n ^ 2) % 5 : ℕ) : ℂ) := by
     have hcast := congrArg (fun m : ℕ => (m : ℂ)) hdiv
     simpa [Nat.cast_add, Nat.cast_mul] using hcast.symm
   have harg :
-    2 * (Real.pi : ℂ) * Complex.I * ((k : ℕ) : ℂ) * (n : ℂ) ^ 2 / 5 =
-      (((k * n ^ 2) % 5 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I / 5) +
-        (((k * n ^ 2) / 5 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I) := by
+      2 * (Real.pi : ℂ) * Complex.I * ((k : ℕ) : ℂ) * (n : ℂ) ^ 2 / 5 =
+        (((k * n ^ 2) % 5 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I / 5) +
+          (((k * n ^ 2) / 5 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I) := by
     calc 2 * (Real.pi : ℂ) * Complex.I * ((k : ℕ) : ℂ) * (n : ℂ) ^ 2 / 5 =
-      2 * (Real.pi : ℂ) * Complex.I * (((k : ℕ) : ℂ) * (n : ℂ) ^ 2) / 5 := by ring
+        2 * (Real.pi : ℂ) * Complex.I * (((k : ℕ) : ℂ) * (n : ℂ) ^ 2) / 5 := by ring
       _ = 2 * (Real.pi : ℂ) * Complex.I * ((k * n ^ 2 : ℕ) : ℂ) / 5 := by rw [h1]
       _ = 2 * (Real.pi : ℂ) * Complex.I *
-        (5 * (((k * n ^ 2) / 5 : ℕ) : ℂ) + (((k * n ^ 2) % 5 : ℕ) : ℂ)) / 5 := by
-        rw [h2]
+          (5 * (((k * n ^ 2) / 5 : ℕ) : ℂ) + (((k * n ^ 2) % 5 : ℕ) : ℂ)) / 5 := by
+          rw [h2]
       _ = (((k * n ^ 2) % 5 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I / 5) +
-        (((k * n ^ 2) / 5 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I) := by ring
+          (((k * n ^ 2) / 5 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I) := by ring
   have hexp :
-    Complex.exp ((((k * n ^ 2) / 5 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) = 1 :=
+      Complex.exp ((((k * n ^ 2) / 5 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I)) = 1 :=
     exp_nat ((k * n ^ 2) / 5)
   unfold gaussFifthRoot
   rw [harg, Complex.exp_add, hexp, mul_one]
@@ -227,7 +228,7 @@ namespace MetaMathlibExt
 private lemma hc1 : 1 + 4 * Real.cos (2 * Real.pi / 5) = Real.sqrt 5 := by
   have hcos5 := Real.cos_pi_div_five
   have hdouble :
-    Real.cos (2 * (Real.pi / 5)) = 2 * Real.cos (Real.pi / 5) ^ 2 - 1 :=
+      Real.cos (2 * (Real.pi / 5)) = 2 * Real.cos (Real.pi / 5) ^ 2 - 1 :=
     Real.cos_two_mul (Real.pi / 5)
   have h2pi : 2 * Real.pi / 5 = 2 * (Real.pi / 5) := by ring
   have hsq : (Real.sqrt 5) ^ 2 = 5 := Real.sq_sqrt (by norm_num)
@@ -248,7 +249,7 @@ private lemma hc2 : 1 + 4 * Real.cos (4 * Real.pi / 5) = -Real.sqrt 5 := by
   have hcos5 := Real.cos_pi_div_five
   have h4pi : 4 * Real.pi / 5 = Real.pi - Real.pi / 5 := by ring
   have hcos4 :
-    Real.cos (4 * Real.pi / 5) = -Real.cos (Real.pi / 5) := by
+      Real.cos (4 * Real.pi / 5) = -Real.cos (Real.pi / 5) := by
     rw [h4pi, Real.cos_sub, Real.cos_pi, Real.sin_pi]
     simp
   rw [hcos4, hcos5]
@@ -335,8 +336,8 @@ private lemma E1 :
     ((Real.cos (2 * Real.pi / 5) : ℝ) : ℂ) +
       ((Real.sin (2 * Real.pi / 5) : ℝ) : ℂ) * Complex.I := by
   have harg :
-    ((1 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I / 5) =
-      ((2 * Real.pi / 5 : ℝ) : ℂ) * Complex.I := by
+      ((1 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I / 5) =
+        ((2 * Real.pi / 5 : ℝ) : ℂ) * Complex.I := by
     simp
     ring
   unfold gaussFifthRoot
@@ -355,8 +356,8 @@ private lemma E2 :
     ((Real.cos (4 * Real.pi / 5) : ℝ) : ℂ) +
       ((Real.sin (4 * Real.pi / 5) : ℝ) : ℂ) * Complex.I := by
   have harg :
-    ((2 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I / 5) =
-      ((4 * Real.pi / 5 : ℝ) : ℂ) * Complex.I := by
+      ((2 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I / 5) =
+        ((4 * Real.pi / 5 : ℝ) : ℂ) * Complex.I := by
     simp
     ring
   unfold gaussFifthRoot
@@ -375,8 +376,8 @@ private lemma E3 :
     ((Real.cos (6 * Real.pi / 5) : ℝ) : ℂ) +
       ((Real.sin (6 * Real.pi / 5) : ℝ) : ℂ) * Complex.I := by
   have harg :
-    ((3 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I / 5) =
-      ((6 * Real.pi / 5 : ℝ) : ℂ) * Complex.I := by
+      ((3 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I / 5) =
+        ((6 * Real.pi / 5 : ℝ) : ℂ) * Complex.I := by
     simp
     ring
   unfold gaussFifthRoot
@@ -395,8 +396,8 @@ private lemma E4 :
     ((Real.cos (8 * Real.pi / 5) : ℝ) : ℂ) +
       ((Real.sin (8 * Real.pi / 5) : ℝ) : ℂ) * Complex.I := by
   have harg :
-    ((4 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I / 5) =
-      ((8 * Real.pi / 5 : ℝ) : ℂ) * Complex.I := by
+      ((4 : ℕ) : ℂ) * (2 * (Real.pi : ℂ) * Complex.I / 5) =
+        ((8 * Real.pi / 5 : ℝ) : ℂ) * Complex.I := by
     simp
     ring
   unfold gaussFifthRoot
@@ -445,18 +446,18 @@ private lemma S1E :
     gaussFifthRoot 4) + gaussFifthRoot 1) =
     ((Real.sqrt 5 : ℝ) : ℂ) := by
   have h1 :
-    ((((gaussFifthRoot 0 + gaussFifthRoot 1) + gaussFifthRoot 4) +
-      gaussFifthRoot 4) + gaussFifthRoot 1) =
-      (1 : ℂ) + 4 * ((Real.cos (2 * Real.pi / 5) : ℝ) : ℂ) := by
+      ((((gaussFifthRoot 0 + gaussFifthRoot 1) + gaussFifthRoot 4) +
+        gaussFifthRoot 4) + gaussFifthRoot 1) =
+        (1 : ℂ) + 4 * ((Real.cos (2 * Real.pi / 5) : ℝ) : ℂ) := by
     calc ((((gaussFifthRoot 0 + gaussFifthRoot 1) + gaussFifthRoot 4) +
-      gaussFifthRoot 4) + gaussFifthRoot 1) =
-      gaussFifthRoot 0 + 2 * (gaussFifthRoot 1 + gaussFifthRoot 4) := by ring
+        gaussFifthRoot 4) + gaussFifthRoot 1) =
+        gaussFifthRoot 0 + 2 * (gaussFifthRoot 1 + gaussFifthRoot 4) := by ring
       _ = (1 : ℂ) + 2 * (2 * ((Real.cos (2 * Real.pi / 5) : ℝ) : ℂ)) := by
-        rw [E0, E14]
+          rw [E0, E14]
       _ = (1 : ℂ) + 4 * ((Real.cos (2 * Real.pi / 5) : ℝ) : ℂ) := by ring
   calc ((((gaussFifthRoot 0 + gaussFifthRoot 1) + gaussFifthRoot 4) +
-    gaussFifthRoot 4) + gaussFifthRoot 1) =
-    (1 : ℂ) + 4 * ((Real.cos (2 * Real.pi / 5) : ℝ) : ℂ) := h1
+      gaussFifthRoot 4) + gaussFifthRoot 1) =
+      (1 : ℂ) + 4 * ((Real.cos (2 * Real.pi / 5) : ℝ) : ℂ) := h1
     _ = ((1 + 4 * Real.cos (2 * Real.pi / 5) : ℝ) : ℂ) := by simp
     _ = ((Real.sqrt 5 : ℝ) : ℂ) := by rw [hc1]
 
@@ -473,18 +474,18 @@ private lemma S2E :
     gaussFifthRoot 3) + gaussFifthRoot 2) =
     -((Real.sqrt 5 : ℝ) : ℂ) := by
   have h1 :
-    ((((gaussFifthRoot 0 + gaussFifthRoot 2) + gaussFifthRoot 3) +
-      gaussFifthRoot 3) + gaussFifthRoot 2) =
-      (1 : ℂ) + 4 * ((Real.cos (4 * Real.pi / 5) : ℝ) : ℂ) := by
+      ((((gaussFifthRoot 0 + gaussFifthRoot 2) + gaussFifthRoot 3) +
+        gaussFifthRoot 3) + gaussFifthRoot 2) =
+        (1 : ℂ) + 4 * ((Real.cos (4 * Real.pi / 5) : ℝ) : ℂ) := by
     calc ((((gaussFifthRoot 0 + gaussFifthRoot 2) + gaussFifthRoot 3) +
-      gaussFifthRoot 3) + gaussFifthRoot 2) =
-      gaussFifthRoot 0 + 2 * (gaussFifthRoot 2 + gaussFifthRoot 3) := by ring
+        gaussFifthRoot 3) + gaussFifthRoot 2) =
+        gaussFifthRoot 0 + 2 * (gaussFifthRoot 2 + gaussFifthRoot 3) := by ring
       _ = (1 : ℂ) + 2 * (2 * ((Real.cos (4 * Real.pi / 5) : ℝ) : ℂ)) := by
-        rw [E0, E23]
+          rw [E0, E23]
       _ = (1 : ℂ) + 4 * ((Real.cos (4 * Real.pi / 5) : ℝ) : ℂ) := by ring
   calc ((((gaussFifthRoot 0 + gaussFifthRoot 2) + gaussFifthRoot 3) +
-    gaussFifthRoot 3) + gaussFifthRoot 2) =
-    (1 : ℂ) + 4 * ((Real.cos (4 * Real.pi / 5) : ℝ) : ℂ) := h1
+      gaussFifthRoot 3) + gaussFifthRoot 2) =
+      (1 : ℂ) + 4 * ((Real.cos (4 * Real.pi / 5) : ℝ) : ℂ) := h1
     _ = ((1 + 4 * Real.cos (4 * Real.pi / 5) : ℝ) : ℂ) := by simp
     _ = -((Real.sqrt 5 : ℝ) : ℂ) := by
       rw [hc2]
@@ -500,43 +501,44 @@ namespace MetaMathlibExt
 @[path]
 private lemma sum1 : quadraticGaussSum5 1 = ((Real.sqrt 5 : ℝ) : ℂ) := by
   have t0 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((1 : ℤ) : ℂ) *
-      ((0 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 0 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((1 : ℤ) : ℂ) *
+        ((0 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 0 := by
     have h := term_nat 1 0
     have hm : (1 * 0 ^ 2) % 5 = 0 := by decide
     rw [hm] at h
     simpa using h
   have t1 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((1 : ℤ) : ℂ) *
-      ((1 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 1 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((1 : ℤ) : ℂ) *
+        ((1 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 1 := by
     have h := term_nat 1 1
     have hm : (1 * 1 ^ 2) % 5 = 1 := by decide
     rw [hm] at h
     simpa using h
   have t2 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((1 : ℤ) : ℂ) *
-      ((2 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 4 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((1 : ℤ) : ℂ) *
+        ((2 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 4 := by
     have h := term_nat 1 2
     have hm : (1 * 2 ^ 2) % 5 = 4 := by decide
     rw [hm] at h
     simpa using h
   have t3 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((1 : ℤ) : ℂ) *
-      ((3 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 4 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((1 : ℤ) : ℂ) *
+        ((3 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 4 := by
     have h := term_nat 1 3
     have hm : (1 * 3 ^ 2) % 5 = 4 := by decide
     rw [hm] at h
     simpa using h
   have t4 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((1 : ℤ) : ℂ) *
-      ((4 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 1 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((1 : ℤ) : ℂ) *
+        ((4 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 1 := by
     have h := term_nat 1 4
     have hm : (1 * 4 ^ 2) % 5 = 1 := by decide
     rw [hm] at h
     simpa using h
   unfold quadraticGaussSum5
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add]
-  rwa [t0, t1, t2, t3, t4]
+  rw [t0, t1, t2, t3, t4]
+  exact S1E
 
 end MetaMathlibExt
 
@@ -548,43 +550,44 @@ namespace MetaMathlibExt
 @[path]
 private lemma sum2 : quadraticGaussSum5 2 = -((Real.sqrt 5 : ℝ) : ℂ) := by
   have t0 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((2 : ℤ) : ℂ) *
-      ((0 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 0 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((2 : ℤ) : ℂ) *
+        ((0 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 0 := by
     have h := term_nat 2 0
     have hm : (2 * 0 ^ 2) % 5 = 0 := by decide
     rw [hm] at h
     simpa using h
   have t1 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((2 : ℤ) : ℂ) *
-      ((1 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 2 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((2 : ℤ) : ℂ) *
+        ((1 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 2 := by
     have h := term_nat 2 1
     have hm : (2 * 1 ^ 2) % 5 = 2 := by decide
     rw [hm] at h
     simpa using h
   have t2 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((2 : ℤ) : ℂ) *
-      ((2 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 3 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((2 : ℤ) : ℂ) *
+        ((2 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 3 := by
     have h := term_nat 2 2
     have hm : (2 * 2 ^ 2) % 5 = 3 := by decide
     rw [hm] at h
     simpa using h
   have t3 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((2 : ℤ) : ℂ) *
-      ((3 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 3 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((2 : ℤ) : ℂ) *
+        ((3 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 3 := by
     have h := term_nat 2 3
     have hm : (2 * 3 ^ 2) % 5 = 3 := by decide
     rw [hm] at h
     simpa using h
   have t4 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((2 : ℤ) : ℂ) *
-      ((4 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 2 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((2 : ℤ) : ℂ) *
+        ((4 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 2 := by
     have h := term_nat 2 4
     have hm : (2 * 4 ^ 2) % 5 = 2 := by decide
     rw [hm] at h
     simpa using h
   unfold quadraticGaussSum5
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add]
-  rwa [t0, t1, t2, t3, t4]
+  rw [t0, t1, t2, t3, t4]
+  exact S2E
 
 end MetaMathlibExt
 
@@ -596,36 +599,36 @@ namespace MetaMathlibExt
 @[path]
 private lemma sum3 : quadraticGaussSum5 3 = -((Real.sqrt 5 : ℝ) : ℂ) := by
   have t0 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((3 : ℤ) : ℂ) *
-      ((0 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 0 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((3 : ℤ) : ℂ) *
+        ((0 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 0 := by
     have h := term_nat 3 0
     have hm : (3 * 0 ^ 2) % 5 = 0 := by decide
     rw [hm] at h
     simpa using h
   have t1 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((3 : ℤ) : ℂ) *
-      ((1 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 3 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((3 : ℤ) : ℂ) *
+        ((1 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 3 := by
     have h := term_nat 3 1
     have hm : (3 * 1 ^ 2) % 5 = 3 := by decide
     rw [hm] at h
     simpa using h
   have t2 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((3 : ℤ) : ℂ) *
-      ((2 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 2 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((3 : ℤ) : ℂ) *
+        ((2 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 2 := by
     have h := term_nat 3 2
     have hm : (3 * 2 ^ 2) % 5 = 2 := by decide
     rw [hm] at h
     simpa using h
   have t3 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((3 : ℤ) : ℂ) *
-      ((3 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 2 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((3 : ℤ) : ℂ) *
+        ((3 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 2 := by
     have h := term_nat 3 3
     have hm : (3 * 3 ^ 2) % 5 = 2 := by decide
     rw [hm] at h
     simpa using h
   have t4 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((3 : ℤ) : ℂ) *
-      ((4 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 3 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((3 : ℤ) : ℂ) *
+        ((4 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 3 := by
     have h := term_nat 3 4
     have hm : (3 * 4 ^ 2) % 5 = 3 := by decide
     rw [hm] at h
@@ -634,9 +637,9 @@ private lemma sum3 : quadraticGaussSum5 3 = -((Real.sqrt 5 : ℝ) : ℂ) := by
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add]
   rw [t0, t1, t2, t3, t4]
   calc ((((gaussFifthRoot 0 + gaussFifthRoot 3) + gaussFifthRoot 2) +
-    gaussFifthRoot 2) + gaussFifthRoot 3) =
-    ((((gaussFifthRoot 0 + gaussFifthRoot 2) + gaussFifthRoot 3) +
-      gaussFifthRoot 3) + gaussFifthRoot 2) := by ring
+      gaussFifthRoot 2) + gaussFifthRoot 3) =
+      ((((gaussFifthRoot 0 + gaussFifthRoot 2) + gaussFifthRoot 3) +
+        gaussFifthRoot 3) + gaussFifthRoot 2) := by ring
     _ = -((Real.sqrt 5 : ℝ) : ℂ) := S2E
 
 end MetaMathlibExt
@@ -649,36 +652,36 @@ namespace MetaMathlibExt
 @[path]
 private lemma sum4 : quadraticGaussSum5 4 = ((Real.sqrt 5 : ℝ) : ℂ) := by
   have t0 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((4 : ℤ) : ℂ) *
-      ((0 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 0 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((4 : ℤ) : ℂ) *
+        ((0 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 0 := by
     have h := term_nat 4 0
     have hm : (4 * 0 ^ 2) % 5 = 0 := by decide
     rw [hm] at h
     simpa using h
   have t1 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((4 : ℤ) : ℂ) *
-      ((1 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 4 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((4 : ℤ) : ℂ) *
+        ((1 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 4 := by
     have h := term_nat 4 1
     have hm : (4 * 1 ^ 2) % 5 = 4 := by decide
     rw [hm] at h
     simpa using h
   have t2 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((4 : ℤ) : ℂ) *
-      ((2 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 1 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((4 : ℤ) : ℂ) *
+        ((2 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 1 := by
     have h := term_nat 4 2
     have hm : (4 * 2 ^ 2) % 5 = 1 := by decide
     rw [hm] at h
     simpa using h
   have t3 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((4 : ℤ) : ℂ) *
-      ((3 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 1 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((4 : ℤ) : ℂ) *
+        ((3 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 1 := by
     have h := term_nat 4 3
     have hm : (4 * 3 ^ 2) % 5 = 1 := by decide
     rw [hm] at h
     simpa using h
   have t4 :
-    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((4 : ℤ) : ℂ) *
-      ((4 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 4 := by
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((4 : ℤ) : ℂ) *
+        ((4 : ℕ) : ℂ) ^ 2 / 5) = gaussFifthRoot 4 := by
     have h := term_nat 4 4
     have hm : (4 * 4 ^ 2) % 5 = 4 := by decide
     rw [hm] at h
@@ -687,9 +690,9 @@ private lemma sum4 : quadraticGaussSum5 4 = ((Real.sqrt 5 : ℝ) : ℂ) := by
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add]
   rw [t0, t1, t2, t3, t4]
   calc ((((gaussFifthRoot 0 + gaussFifthRoot 4) + gaussFifthRoot 1) +
-    gaussFifthRoot 1) + gaussFifthRoot 4) =
-    ((((gaussFifthRoot 0 + gaussFifthRoot 1) + gaussFifthRoot 4) +
-      gaussFifthRoot 4) + gaussFifthRoot 1) := by ring
+      gaussFifthRoot 1) + gaussFifthRoot 4) =
+      ((((gaussFifthRoot 0 + gaussFifthRoot 1) + gaussFifthRoot 4) +
+        gaussFifthRoot 4) + gaussFifthRoot 1) := by ring
     _ = ((Real.sqrt 5 : ℝ) : ℂ) := S1E
 
 end MetaMathlibExt
@@ -700,9 +703,7 @@ namespace MetaMathlibExt
 [leg1](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticGaussSumFive.lean)
 -/
 @[path]
-private lemma leg1 : legendreSym 5 1 = 1 := by
-norm_num
-
+private lemma leg1 : legendreSym 5 1 = 1 := by norm_num
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -711,9 +712,7 @@ namespace MetaMathlibExt
 [leg2](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticGaussSumFive.lean)
 -/
 @[path]
-private lemma leg2 : legendreSym 5 2 = -1 := by
-norm_num
-
+private lemma leg2 : legendreSym 5 2 = -1 := by norm_num
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -722,9 +721,7 @@ namespace MetaMathlibExt
 [leg3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticGaussSumFive.lean)
 -/
 @[path]
-private lemma leg3 : legendreSym 5 3 = -1 := by
-norm_num
-
+private lemma leg3 : legendreSym 5 3 = -1 := by norm_num
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -733,9 +730,7 @@ namespace MetaMathlibExt
 [leg4](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticGaussSumFive.lean)
 -/
 @[path]
-private lemma leg4 : legendreSym 5 4 = 1 := by
-norm_num
-
+private lemma leg4 : legendreSym 5 4 = 1 := by norm_num
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -819,7 +814,7 @@ lemma quadraticGaussSum5_eval
   have hbounds : 0 ≤ k % 5 ∧ k % 5 < 5 := by omega
   have hne : k % 5 ≠ 0 := by omega
   have hcases : k % 5 = 1 ∨ k % 5 = 2 ∨ k % 5 = 3 ∨ k % 5 = 4 := by omega
-  obtain h1|h2|h3|h4 := hcases
+  rcases hcases with h1|h2|h3|h4
   · rw [h1] at hgauss hleg; rw [hgauss, hleg]; exact case1
   · rw [h2] at hgauss hleg; rw [hgauss, hleg]; exact case2
   · rw [h3] at hgauss hleg; rw [hgauss, hleg]; exact case3
@@ -829,4 +824,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

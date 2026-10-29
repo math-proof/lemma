@@ -48,7 +48,7 @@ private lemma bfx_coarseSet_eq_fineSet_eq
 private lemma bfx_trifExistence_of_route_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hroute : ∀ n : ℕ, 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) → ∃ a₁ a₂ a₃ : Site d, 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (NeighborTrifPrecursor d a₁ a₂ a₃)) :
@@ -64,7 +64,7 @@ private lemma bfx_trifExistence_of_route_eq
 private lemma bfx_trifExistence_of_routingCover_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hrt : ∀ n : ℕ, hrHD_DisjointRouting d n) :
@@ -81,7 +81,7 @@ private lemma bfx_bk_of_route_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hroute : ∀ n : ℕ, 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) → ∃ a₁ a₂ a₃ : Site d, 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (NeighborTrifPrecursor d a₁ a₂ a₃)) :
@@ -98,7 +98,7 @@ private lemma bfx_bk_of_routingCover_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hrt : ∀ n : ℕ, hrHD_DisjointRouting d n) :
@@ -115,7 +115,7 @@ private lemma bfx_bk_atLeastTwo_of_route_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hroute : ∀ n : ℕ, 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) → ∃ a₁ a₂ a₃ : Site d, 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (NeighborTrifPrecursor d a₁ a₂ a₃)) :

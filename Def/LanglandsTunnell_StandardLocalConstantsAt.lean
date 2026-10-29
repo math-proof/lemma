@@ -64,7 +64,7 @@ def integersPositiveCompacts : TopologicalSpace.PositiveCompacts (v.adicCompleti
 def selfDualHaarAt : @Measure (v.adicCompletion K) (localBorel K v) := by
   letI := localBorel K v
   haveI : BorelSpace (v.adicCompletion K) := ⟨rfl⟩
-  exact ((Ideal.absNorm v.asIdeal : ℝ≥0) ^ (-(addCharLevel (psiLocal K v) : ℝ) / 2))
+  exact ((Ideal.absNorm v.asIdeal : NNReal) ^ (-(addCharLevel (psiLocal K v) : ℝ) / 2))
     • Measure.addHaarMeasure (integersPositiveCompacts K v)
 
 open Classical in

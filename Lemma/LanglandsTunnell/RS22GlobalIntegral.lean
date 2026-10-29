@@ -23,7 +23,7 @@ variable (F : Type) [Field F] [NumberField F]
 open scoped NNReal in
 
 def moduleChar : (AdeleRing (𝓞 F) F)ˣ →* ℝˣ :=
-  ((NNReal.toRealHom : ℝ≥0 →+* ℝ).toMonoidHom.comp (distribHaarChar (AdeleRing (𝓞 F) F))).toHomUnits
+  ((NNReal.toRealHom : NNReal →+* ℝ).toMonoidHom.comp (distribHaarChar (AdeleRing (𝓞 F) F))).toHomUnits
 
 theorem val_moduleChar_apply (x : (AdeleRing (𝓞 F) F)ˣ) :
     ((moduleChar F x : ℝˣ) : ℝ) = NumberField.TateGlobal.ideleNorm F x := rfl

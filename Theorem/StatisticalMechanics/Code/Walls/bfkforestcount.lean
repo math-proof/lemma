@@ -92,7 +92,7 @@ theorem bfk_datum_implies_count (ω : ConfigSpace (Sym2 (Site 2))) (R : ℕ)
   bca_datum_implies_count ω 0 R h
 
 
-theorem bfk_bk_of_datum (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bfk_bk_of_datum (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   bau_bk_of_subforestData p hp1 hp0 hdata
@@ -118,7 +118,7 @@ theorem bfk_forestCount_status :
     (∀ (ω : ConfigSpace (Sym2 (Site 2))) (R : ℕ),
       bau_ArmSubforestData ω 0 R → bc61_coarseTcount ω 0 R ≤ boxSV_boundaryCard 2 R) ∧
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p →
       (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) →
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩

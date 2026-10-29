@@ -349,7 +349,7 @@ private lemma aemeasurable_liminf_ennreal_eq
   {X : ℕ → α → ℝ}
   [IsFiniteMeasure μ]
 -- given
-  (g : ℕ → α → ℝ≥0∞)
+  (g : ℕ → α → ENNReal)
   (hg : ∀ n, AEMeasurable (g n) μ) :
 -- imply
   AEMeasurable (fun x => liminf (fun n => g n x) atTop) μ := by

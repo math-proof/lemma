@@ -12,11 +12,11 @@ namespace IsDedekindDomain.HeightOneSpectrum
 
 variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
 variable (v : HeightOneSpectrum (𝓞 K))
+omit [NumberField K] in
 /--
 [adicAbv_nontrivial](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FinitePlacesOverTensorProductSurjective.lean)
 -/
 @[path]
-omit [NumberField K] in
 private lemma adicAbv_nontrivial (w : v.placesOver L) :
   (NumberField.HeightOneSpectrum.adicAbv L w.val).IsNontrivial := by
   obtain ⟨a, ha_mem, ha_ne⟩ :=
@@ -38,11 +38,11 @@ namespace IsDedekindDomain.HeightOneSpectrum
 
 variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
 variable (v : HeightOneSpectrum (𝓞 K))
+omit [NumberField K] in
 /--
 [adicAbv_pairwise](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FinitePlacesOverTensorProductSurjective.lean)
 -/
 @[path]
-omit [NumberField K] in
 private lemma adicAbv_pairwise :
   Pairwise fun a b : v.placesOver L =>
     ¬(NumberField.HeightOneSpectrum.adicAbv L a.val).IsEquiv
@@ -79,11 +79,11 @@ namespace IsDedekindDomain.HeightOneSpectrum
 
 variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
 variable (v : HeightOneSpectrum (𝓞 K))
+omit [NumberField K] in
 /--
 [coord_isometry](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FinitePlacesOverTensorProductSurjective.lean)
 -/
 @[path]
-omit [NumberField K] in
 private lemma coord_isometry (w : v.placesOver L) :
   Isometry (coord v w) := by
   refine AddMonoidHomClass.isometry_of_norm _ (fun x => ?_)
@@ -106,11 +106,11 @@ namespace IsDedekindDomain.HeightOneSpectrum
 
 variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
 variable (v : HeightOneSpectrum (𝓞 K))
+omit [NumberField K] in
 /--
 [coord_comp_algebraMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FinitePlacesOverTensorProductSurjective.lean)
 -/
 @[path]
-omit [NumberField K] in
 private lemma coord_comp_algebraMap (w : v.placesOver L) :
   (⇑(coord v w) ∘
     algebraMap L
@@ -128,11 +128,11 @@ namespace IsDedekindDomain.HeightOneSpectrum
 
 variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
 variable (v : HeightOneSpectrum (𝓞 K))
+omit [NumberField K] in
 /--
 [coord_denseRange](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FinitePlacesOverTensorProductSurjective.lean)
 -/
 @[path]
-omit [NumberField K] in
 private lemma coord_denseRange (w : v.placesOver L) :
   DenseRange (coord v w) := by
   apply DenseRange.of_comp
@@ -169,7 +169,7 @@ namespace IsDedekindDomain.HeightOneSpectrum
 @[path]
 lemma denseRange_algebraMap_placesOver
   [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
-  {v : HeightOneSpectrum (𝓞 K)} :
+  (v : HeightOneSpectrum (𝓞 K)) :
 -- imply
   DenseRange (fun y : L => fun w : v.placesOver L =>
     algebraMap L (w.val.adicCompletion L) y) := by
@@ -211,9 +211,9 @@ namespace IsDedekindDomain.HeightOneSpectrum
 @[path]
 lemma denseRange_completionTensorProductMap
   [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
-  {v : HeightOneSpectrum (𝓞 K)} :
+  (v : HeightOneSpectrum (𝓞 K)) :
 -- imply
-  DenseRange (completionTensorProductMap (K := by
+  DenseRange (completionTensorProductMap (K := K) (L := L) v) := by
 -- proof
   apply DenseRange.of_comp
     (g := fun y : L => (1 : v.adicCompletion K) ⊗ₜ[K] y)
@@ -242,7 +242,7 @@ lemma completionTensorProductMap_surjective
   {v : HeightOneSpectrum (𝓞 K)} :
 -- imply
   Function.Surjective
-    (completionTensorProductMap (K := by
+    (completionTensorProductMap (K := K) (L := L) v) := by
 -- proof
   let f :=
     (completionTensorProductMap (K := K) (L := L) v).toLinearMap
@@ -262,11 +262,12 @@ lemma completionTensorProductMap_surjective
   have hDense : DenseRange f :=
     denseRange_completionTensorProductMap (K := K) (L := L) v
   have hRange : Set.range f = Set.univ := by
-    rwa [← hsRange, ← hsClosed.closure_eq, hsRange]
+    rw [← hsRange, ← hsClosed.closure_eq, hsRange]
+    exact hDense.closure_range
   exact Set.range_eq_univ.mp hRange
 
 end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

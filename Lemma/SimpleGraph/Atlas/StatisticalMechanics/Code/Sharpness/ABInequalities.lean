@@ -11,7 +11,7 @@ open MeasureTheory Set Finset StatMech StatMech.Sharpness
 private lemma pivotalProb_le_of_disjointOccurrence_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B C : Set (ConfigSpace E)}
 -- given
   (hp : p ≤ 1)
@@ -31,7 +31,7 @@ private lemma pivotalProb_le_of_disjointOccurrence_eq
 private lemma deriv_prob_le_sum_bk_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A : Set (ConfigSpace E)}
   {B C : E → Set (ConfigSpace E)}
 -- given

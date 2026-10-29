@@ -32,7 +32,7 @@ open StatMech.Lattice StatMech.Percolation
 variable {d : ℕ}
 
 
-noncomputable def shk_twoPointProb (p : ℝ≥0) (hp : p ≤ 1)
+noncomputable def shk_twoPointProb (p : NNReal) (hp : p ≤ 1)
     (x : Site d) : ℝ :=
   (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
     {omega | Connected d omega (origin d) x}

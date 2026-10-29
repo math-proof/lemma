@@ -6,10 +6,8 @@ open MetaMathlibExt
 
 namespace MetaMathlibExt
 
-/--
+/-!
 [prod_odd_of_all_odd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EulerPrime.lean)
--/
-@[path]
 # Euler primes of odd perfect numbers
 Source: Dris, JIS VOL15, <https://cs.uwaterloo.ca/journals/JIS/VOL15/Dris/dris8.tex>,
 SHA-256 `2dbbefa4b1d575ae9a14a4e8db3f03ad9303edb97cca2ba8e97afa06e61e89fb`.
@@ -35,6 +33,7 @@ their projections, and `euler_odd_perfect_form`. Elementary parity steps reuse
 Mathlib (`Odd.mul`, `Odd.pow`, `Even.add_odd`, `Odd.add_odd`, `Even.add_one`,
 `Odd.add_one`, `Nat.not_even_iff_odd`, `odd_one`); only the facts below need
 local proofs. -/
+@[path]
 private lemma prod_odd_of_all_odd {f : ℕ → ℕ} : ∀ (s : Finset ℕ),
   (∀ p ∈ s, Odd (f p)) → Odd (Finset.prod s f) := by
   intro s
@@ -684,4 +683,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

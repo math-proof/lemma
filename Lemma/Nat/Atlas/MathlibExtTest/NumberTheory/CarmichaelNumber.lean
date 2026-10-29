@@ -29,21 +29,35 @@ private lemma isCarmichaelNumber_561 : Nat.IsCarmichaelNumber 561 := by
     rw [h561eq] at hpdvd
     have h1 : p ∣ 3 * (11 * 17) := by rwa [mul_assoc] at hpdvd
     have h2 : p ∣ 3 ∨ p ∣ 11 * 17 := hp.dvd_mul.mp h1
-    obtain h3 | h3 := h2
+    rcases h2 with h3 | h3
     · have hEq : p = 3 :=
-      (Nat.prime_dvd_prime_iff_eq hp (by decide : Nat.Prime 3)).mp h3
+        (Nat.prime_dvd_prime_iff_eq hp (by decide : Nat.Prime 3)).mp h3
       rw [hEq]
       norm_num
     · have h4 : p ∣ 11 ∨ p ∣ 17 := hp.dvd_mul.mp h3
-      obtain h5 | h5 := h4
+      rcases h4 with h5 | h5
       · have hEq : p = 11 :=
-        (Nat.prime_dvd_prime_iff_eq hp (by decide : Nat.Prime 11)).mp h5
+          (Nat.prime_dvd_prime_iff_eq hp (by decide : Nat.Prime 11)).mp h5
         rw [hEq]
         norm_num
       · have hEq : p = 17 :=
-        (Nat.prime_dvd_prime_iff_eq hp (by decide : Nat.Prime 17)).mp h5
+          (Nat.prime_dvd_prime_iff_eq hp (by decide : Nat.Prime 17)).mp h5
         rw [hEq]
         norm_num
 
+example (x : ZMod 561) : x ^ 561 = x :=
+  ((Nat.isCarmichaelNumber_iff_zmod 561).mp isCarmichaelNumber_561).2.2 x
 
--- created on 2026-10-23
+example : ¬Nat.IsCarmichaelNumber 562 := by
+  intro h
+  have h562 : (1 : ℕ) < 562 := by norm_num
+  have hk := (Nat.isCarmichaelNumber_iff_korselt 562 h562).mp h
+  obtain ⟨_, hDiv, _⟩ := hk
+  have h281Prime : Nat.Prime 281 := by norm_num
+  have h281Dvd : 281 ∣ 562 := by norm_num
+  have h280Dvd : (281 - 1) ∣ (562 - 1) := hDiv 281 h281Prime h281Dvd
+  have hNot : ¬(280 ∣ 561) := by norm_num
+  have hEq1 : (281 - 1 : ℕ) = 280 := by norm_num
+  have hEq2 : (562 - 1 : ℕ) = 561 := by norm_num
+  rw [hEq1, hEq2] at h280Dvd
+  exact hNot h280Dvd

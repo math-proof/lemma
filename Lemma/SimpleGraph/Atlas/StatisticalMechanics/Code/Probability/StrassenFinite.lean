@@ -12,8 +12,8 @@ private lemma of_isMonotoneCoupling_eq
   [Fintype P]
   [PartialOrder P]
   [DecidableEq P]
-  {μ ν : P → ℝ≥0}
-  {π : P × P → ℝ≥0}
+  {μ ν : P → NNReal}
+  {π : P × P → NNReal}
 -- given
   (h : IsMonotoneCoupling μ ν π) :
 -- imply
@@ -29,12 +29,12 @@ private lemma exists_isMonotoneCoupling_of_stochasticDom_eq
   [Fintype P]
   [DecidableEq P]
   [PartialOrder P]
-  {μ ν : P → ℝ≥0}
+  {μ ν : P → NNReal}
 -- given
   (hTOT : ∑ x, μ x = ∑ x, ν x)
   (hSD : StochasticDom μ ν) :
 -- imply
-  ∃ π : P × P → ℝ≥0, IsMonotoneCoupling μ ν π := by
+  ∃ π : P × P → NNReal, IsMonotoneCoupling μ ν π := by
 -- proof
   apply StatMech.Probability.exists_isMonotoneCoupling_of_stochasticDom hTOT hSD
 
@@ -46,11 +46,11 @@ private lemma strassen_finite_eq
   [Fintype P]
   [DecidableEq P]
   [PartialOrder P]
-  {μ ν : P → ℝ≥0}
+  {μ ν : P → NNReal}
 -- given
   (hTOT : ∑ x, μ x = ∑ x, ν x) :
 -- imply
-  StochasticDom μ ν ↔ ∃ π : P × P → ℝ≥0, IsMonotoneCoupling μ ν π := by
+  StochasticDom μ ν ↔ ∃ π : P × P → NNReal, IsMonotoneCoupling μ ν π := by
 -- proof
   apply StatMech.Probability.strassen_finite hTOT
 

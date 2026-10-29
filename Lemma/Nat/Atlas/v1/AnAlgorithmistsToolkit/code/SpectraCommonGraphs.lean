@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Instance.v1.Atlas.AnAlgorithmistsToolkit.code.SpectraCommonGraphs
-open SpectraCommonGraphs GraphProductSpectrum
+open SpectraCommonGraphs
 open Real SimpleGraph Matrix
 open Matrix Finset
 
@@ -24,7 +24,7 @@ lemma cos_nat_mod_period
   have heq : (↑a : ℝ) = ↑(a % n) + ↑n * ↑(a / n) := by exact_mod_cast hdiv
   conv_rhs => rw [heq]
   have heq2 : 2 * π * ↑k * (↑(a % n) + ↑n * ↑(a / n)) / ↑n
-    = 2 * π * ↑k * ↑(a % n) / ↑n + ↑(a / n) * (↑k * (2 * π)) := by field_simp
+            = 2 * π * ↑k * ↑(a % n) / ↑n + ↑(a / n) * (↑k * (2 * π)) := by field_simp
   rw [heq2]
   exact ((cos_periodic.nat_mul k).nat_mul (a / n) _).symm
 
@@ -48,7 +48,7 @@ lemma sin_nat_mod_period
   have heq : (↑a : ℝ) = ↑(a % n) + ↑n * ↑(a / n) := by exact_mod_cast hdiv
   conv_rhs => rw [heq]
   have heq2 : 2 * π * ↑k * (↑(a % n) + ↑n * ↑(a / n)) / ↑n
-    = 2 * π * ↑k * ↑(a % n) / ↑n + ↑(a / n) * (↑k * (2 * π)) := by field_simp
+            = 2 * π * ↑k * ↑(a % n) / ↑n + ↑(a / n) * (↑k * (2 * π)) := by field_simp
   rw [heq2]
   exact ((sin_periodic.nat_mul k).nat_mul (a / n) _).symm
 
@@ -69,7 +69,7 @@ lemma cos_real_periodic_add
   cos (2 * π * ↑k * (a + ↑m) / ↑m) = cos (2 * π * ↑k * a / ↑m) := by
 -- proof
   have heq : 2 * π * (↑k : ℝ) * (a + ↑m) / ↑m
-    = 2 * π * (↑k : ℝ) * a / ↑m + ↑k * (2 * π) := by field_simp
+           = 2 * π * (↑k : ℝ) * a / ↑m + ↑k * (2 * π) := by field_simp
   rw [heq]; exact (cos_periodic.nat_mul k) _
 
 end SpectraCommonGraphs
@@ -89,7 +89,7 @@ lemma sin_real_periodic_add
   sin (2 * π * ↑k * (a + ↑m) / ↑m) = sin (2 * π * ↑k * a / ↑m) := by
 -- proof
   have heq : 2 * π * (↑k : ℝ) * (a + ↑m) / ↑m
-    = 2 * π * (↑k : ℝ) * a / ↑m + ↑k * (2 * π) := by field_simp
+           = 2 * π * (↑k : ℝ) * a / ↑m + ↑k * (2 * π) := by field_simp
   rw [heq]; exact (sin_periodic.nat_mul k) _
 
 end SpectraCommonGraphs
@@ -102,7 +102,7 @@ namespace SpectraCommonGraphs
 @[path]
 lemma fin_sub_one_ne_add_one
   {n : ℕ}
-  {v : Fin (n + 3)} :
+  (v : Fin (n + 3)) :
 -- imply
   v - 1 ≠ v + 1 := by
 -- proof
@@ -120,16 +120,16 @@ namespace SpectraCommonGraphs
 -/
 @[path]
 lemma lapMatrix_mulVec_cosEigenvector
-  {n : ℕ}
-  {k : ℕ} :
+  (n k : ℕ) :
 -- imply
   (lapMatrix ℝ (ringGraph (n + 3))).mulVec (cosEigenvector (n + 3) k) = ringEigenvalue (n + 3) k • cosEigenvector (n + 3) k := by
 -- proof
   ext ⟨u, hu⟩
   simp only [Pi.smul_apply, smul_eq_mul, ringGraph]
   rw [lapMatrix_mulVec_apply, cycleGraph_degree_three_le, cycleGraph_neighborFinset,
-    Finset.sum_pair (fin_sub_one_ne_add_one ⟨u, hu⟩)]
+      Finset.sum_pair (fin_sub_one_ne_add_one ⟨u, hu⟩)]
   simp only [cosEigenvector, ringEigenvalue]
+
   conv_lhs =>
     rw [show ((⟨u, hu⟩ - 1 : Fin (n + 3)).val : ℝ) = (((u + (n + 2)) % (n + 3) : ℕ) : ℝ) from
       congrArg (Nat.cast (R := ℝ)) (by simp [Fin.val_sub]; ring_nf)]
@@ -140,10 +140,11 @@ lemma lapMatrix_mulVec_cosEigenvector
   rw [show (↑(u + (n + 2)) : ℝ) = ↑u - 1 + ↑(n + 3) from by push_cast; ring]
   rw [show (↑(u + 1) : ℝ) = (↑u : ℝ) + 1 from by push_cast; ring]
   rw [cos_real_periodic_add k (n + 3) (by positivity)]
+
   have hplus : 2 * π * (↑k : ℝ) * ((↑u : ℝ) + 1) / ↑(n + 3)
-    = 2 * π * ↑k * ↑u / ↑(n + 3) + 2 * π * ↑k / ↑(n + 3) := by ring
+             = 2 * π * ↑k * ↑u / ↑(n + 3) + 2 * π * ↑k / ↑(n + 3) := by ring
   have hminus : 2 * π * (↑k : ℝ) * ((↑u : ℝ) - 1) / ↑(n + 3)
-    = 2 * π * ↑k * ↑u / ↑(n + 3) - 2 * π * ↑k / ↑(n + 3) := by ring
+              = 2 * π * ↑k * ↑u / ↑(n + 3) - 2 * π * ↑k / ↑(n + 3) := by ring
   rw [hplus, hminus, cos_add, cos_sub]
   push_cast
   ring
@@ -157,15 +158,14 @@ namespace SpectraCommonGraphs
 -/
 @[path]
 lemma lapMatrix_mulVec_sinEigenvector
-  {n : ℕ}
-  {k : ℕ} :
+  (n k : ℕ) :
 -- imply
   (lapMatrix ℝ (ringGraph (n + 3))).mulVec (sinEigenvector (n + 3) k) = ringEigenvalue (n + 3) k • sinEigenvector (n + 3) k := by
 -- proof
   ext ⟨u, hu⟩
   simp only [Pi.smul_apply, smul_eq_mul, ringGraph]
   rw [lapMatrix_mulVec_apply, cycleGraph_degree_three_le, cycleGraph_neighborFinset,
-    Finset.sum_pair (fin_sub_one_ne_add_one ⟨u, hu⟩)]
+      Finset.sum_pair (fin_sub_one_ne_add_one ⟨u, hu⟩)]
   simp only [sinEigenvector, ringEigenvalue]
   conv_lhs =>
     rw [show ((⟨u, hu⟩ - 1 : Fin (n + 3)).val : ℝ) = (((u + (n + 2)) % (n + 3) : ℕ) : ℝ) from
@@ -178,9 +178,9 @@ lemma lapMatrix_mulVec_sinEigenvector
   rw [show (↑(u + 1) : ℝ) = (↑u : ℝ) + 1 from by push_cast; ring]
   rw [sin_real_periodic_add k (n + 3) (by positivity)]
   have hplus : 2 * π * (↑k : ℝ) * ((↑u : ℝ) + 1) / ↑(n + 3)
-    = 2 * π * ↑k * ↑u / ↑(n + 3) + 2 * π * ↑k / ↑(n + 3) := by ring
+             = 2 * π * ↑k * ↑u / ↑(n + 3) + 2 * π * ↑k / ↑(n + 3) := by ring
   have hminus : 2 * π * (↑k : ℝ) * ((↑u : ℝ) - 1) / ↑(n + 3)
-    = 2 * π * ↑k * ↑u / ↑(n + 3) - 2 * π * ↑k / ↑(n + 3) := by ring
+              = 2 * π * ↑k * ↑u / ↑(n + 3) - 2 * π * ↑k / ↑(n + 3) := by ring
   rw [hplus, hminus, sin_add, sin_sub]
   push_cast
   ring
@@ -228,9 +228,9 @@ lemma kronecker_one_mulVec_tensor
   rw [Finset.sum_mul]
   congr 1; funext c
   have h : ∀ d : W, (A a c * if b = d then 1 else 0) * (v c * w d) =
-    if b = d then A a c * v c * w b else 0 := by
+      if b = d then A a c * v c * w b else 0 := by
     intro d; split_ifs with h; subst h; ring; ring
-  simp_rw [h, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  simp_rw [h, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
 
 end GraphProductSpectrum
 
@@ -259,7 +259,7 @@ lemma one_kronecker_mulVec_tensor
     split_ifs with h
     · subst h; apply Finset.sum_congr rfl; intro d _; ring
     · apply Finset.sum_eq_zero; intro d _; simp
-  · simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true, Finset.mul_sum]
+  · simp only [Finset.sum_ite_eq, Finset.mem_univ, ite_true, Finset.mul_sum]
 
 end GraphProductSpectrum
 
@@ -320,14 +320,14 @@ lemma boxProd_degree_eq
     · simp [Finset.card_map]
     · rw [Finset.disjoint_left]
       intro x hx1 hx2
-      simp only [Finset.mem_map, Function.Embedding.coeFn_mk] at hx1 hx2
+      simp only [Finset.mem_map] at hx1 hx2
       obtain ⟨a, ha, rfl⟩ := hx1
       obtain ⟨b, _, heq⟩ := hx2
       have h1 : a = v := congr_arg Prod.fst heq.symm
       subst h1; rw [SimpleGraph.mem_neighborFinset] at ha; exact G.irrefl ha
   · ext ⟨v', w'⟩
     simp only [SimpleGraph.mem_neighborFinset, Finset.mem_union, Finset.mem_map,
-      Function.Embedding.coeFn_mk, SimpleGraph.boxProd_adj]
+      SimpleGraph.boxProd_adj]
     constructor
     · rintro (⟨hG, rfl⟩ | ⟨hH, rfl⟩)
       · left; exact ⟨v', hG, rfl⟩
@@ -377,7 +377,7 @@ lemma lapMatrix_boxProd_eq_kronecker_sum
       simp [SimpleGraph.boxProd_adj, hv]
     simp only [show (G □ H).Adj (v₁, w₁) (v₂, w₁) = G.Adj v₁ v₂ from propext hadj]
   · have hadj : ¬(G □ H).Adj (v₁, w₁) (v₂, w₂) := by
-    rw [SimpleGraph.boxProd_adj]; push Not; exact ⟨fun _ => hw, fun _ => hv⟩
+      rw [SimpleGraph.boxProd_adj]; push Not; exact ⟨fun _ => hw, fun _ => hv⟩
     simp only [hv, hw, and_false, ite_false, hadj, mul_zero, zero_mul, add_zero,
       sub_zero]
 
@@ -414,3 +414,4 @@ end GraphProductSpectrum
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

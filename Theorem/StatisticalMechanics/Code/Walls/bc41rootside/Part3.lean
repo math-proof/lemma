@@ -55,7 +55,7 @@ theorem bc41_rootSideComparableArm_of_rootWardAvoidingWalk (ω : ConfigSpace (Sy
   rwa [daep_removeSites_singleton] at hconn_cut
 
 
-theorem bc41_burton_keane_bernoulli_of_rootWardAvoidingWalk (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc41_burton_keane_bernoulli_of_rootWardAvoidingWalk (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc40_ArmCutGeometryFixed' ω n)
     (hwalk : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →

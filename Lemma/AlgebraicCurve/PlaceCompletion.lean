@@ -230,7 +230,7 @@ variable {K F : Type*} [Field K] [Field F] [Algebra K F] (V : Place K F)
 @[implicit_reducible]
 noncomputable def kw_ffgc_rankOne_adicCompletion :
     (Valued.v : Valuation V.adicCompletion ℤᵐ⁰).RankOne :=
-  Valuation.IsRankOneDiscrete.rankOne _ (one_lt_two (α := ℝ≥0))
+  Valuation.IsRankOneDiscrete.rankOne _ (one_lt_two (α := NNReal))
 
 end SpectralSetup
 

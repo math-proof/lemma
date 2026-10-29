@@ -56,7 +56,7 @@ noncomputable def weightedGradientIntegral {Ω : Type*} [MeasurableSpace Ω]
       (1 - r) ^ β * r
 
 noncomputable def weightedGradientIntegralENNReal {Ω : Type*} [MeasurableSpace Ω]
-    (a : ℕ → Ω → ℝ) (β : ℝ) (ω : Ω) : ℝ≥0∞ :=
+    (a : ℕ → Ω → ℝ) (β : ℝ) (ω : Ω) : ENNReal :=
   ∫⁻ t : ℝ in Set.Icc 0 (2 * Real.pi),
     ∫⁻ r : ℝ in Set.Icc 0 1,
       ENNReal.ofReal

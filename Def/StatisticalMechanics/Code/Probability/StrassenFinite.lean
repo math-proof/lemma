@@ -27,7 +27,7 @@ section Defs
 variable [Fintype P]
 
 
-def StochasticDom [Preorder P] (μ ν : P → ℝ≥0) : Prop :=
+def StochasticDom [Preorder P] (μ ν : P → NNReal) : Prop :=
   ∀ U : Finset P, (∀ ⦃a b⦄, a ≤ b → a ∈ U → b ∈ U) → ∑ x ∈ U, μ x ≤ ∑ x ∈ U, ν x
 
 end Defs

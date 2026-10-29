@@ -121,7 +121,7 @@ private lemma ih_eq_cylinder_of_dependsOn_eq
 private lemma ih_harris_of_finite_dependsOn_eq
   [Countable E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
   {F : Finset E}
 -- given

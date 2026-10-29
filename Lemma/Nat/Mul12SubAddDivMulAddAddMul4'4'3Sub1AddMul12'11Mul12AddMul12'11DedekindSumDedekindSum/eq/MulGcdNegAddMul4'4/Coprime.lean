@@ -384,7 +384,7 @@ private lemma  swap_count (h k : ℕ) (hco : Nat.Coprime h k) (hh : 0 < h) (hk :
   have h1 : h - 1 + 1 = h := by omega
   calc 2 * (∑ r ∈ Finset.range k, r * (h * r / k)) + (∑ s ∈ Finset.range h, (k * s / h) ^ 2)
     + (∑ s ∈ Finset.range h, (k * s / h)) + 2 * (∑ r ∈ Finset.range k, r) = 2 * ((h - 1) * ∑ r ∈ Finset.range k, r) + 2 * (∑ r ∈ Finset.range k, r) := by
-    rw [← hfinal]; ring
+        rw [← hfinal]; ring
     _ = 2 * ((h - 1 + 1) * ∑ r ∈ Finset.range k, r) := by ring
     _ = 2 * h * (∑ r ∈ Finset.range k, r) := by rw [h1]; ring
 
@@ -1547,3 +1547,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

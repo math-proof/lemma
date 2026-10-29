@@ -25,7 +25,7 @@ variable {V : Type*} [Fintype V] [DecidableEq V]
 variable (G : SimpleGraph V) [DecidableRel G.Adj]
 
 noncomputable def freeParityRawMass (beta : ℝ)
-    (H : Finset (Sym2 V)) : ℝ≥0∞ :=
+    (H : Finset (Sym2 V)) : ENNReal :=
   ENNReal.ofReal
     (if H ⊆ G.edgeFinset ∧ IsEvenSubgraph H then
       Real.tanh beta ^ H.card else 0)

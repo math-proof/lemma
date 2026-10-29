@@ -121,13 +121,13 @@ theorem bfa_datum_implies_count (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ)
   bkg_coarseTcount_of_classical ω L R h
 
 
-theorem bfa_bk_of_classicalForest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bfa_bk_of_classicalForest (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   (bkg_bk_uniqueness_of_classical p hp1 hp0 hdata).2.1
 
 
-theorem bfa_bk_of_bc69Forest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bfa_bk_of_bc69Forest (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bc69_Gn_globalForest ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   bfa_bk_of_classicalForest p hp1 hp0
@@ -147,7 +147,7 @@ theorem bfa_status :
     (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ),
       bkg_ClassicalForestData ω L R → bc61_coarseTcount ω L R ≤ boxSV_boundaryCard d R) ∧
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p →
       (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) →
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
   refine ⟨?_, ?_, ?_, ?_⟩

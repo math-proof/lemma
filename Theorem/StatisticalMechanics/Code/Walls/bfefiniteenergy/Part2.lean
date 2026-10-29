@@ -36,7 +36,7 @@ open StatMech.Percolation
 variable {d : ℕ}
 
 
-theorem bfe_bk (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bfe_bk (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hexist : bc61_CoarseTrifExistence (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1) 0) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = 0} = 1 ∨
@@ -53,7 +53,7 @@ theorem bfe_bk (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
   exact bc120_uniqueness_of_top_null μ herg hfe htop
 
 
-theorem bfe_bk_atLeastTwo (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bfe_bk_atLeastTwo (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hexist : bc61_CoarseTrifExistence (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1) 0) :
     bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (atLeastTwoInfinite d) = 0 :=
   (bfe_bk hd p hp1 hp0 hexist).2.1

@@ -25,7 +25,7 @@ variable {α : Type*}
 
 section Conditions
 
-lemma FKGCondition.holleyLatticeCondition [Lattice α] {μ : α → ℝ≥0}
+lemma FKGCondition.holleyLatticeCondition [Lattice α] {μ : α → NNReal}
     (h : FKGCondition μ) : HolleyLatticeCondition μ μ := h
 
 end Conditions
@@ -48,7 +48,7 @@ theorem upper_indicator_monotone {β : Type*} [Preorder β] [DecidableEq β] (U 
 omit [DecidableEq α] in
 
 
-theorem holley_le_of_monotone {μ₁ μ₂ : α → ℝ≥0}
+theorem holley_le_of_monotone {μ₁ μ₂ : α → NNReal}
     (hsum : ∑ a, μ₁ a = ∑ a, μ₂ a) (hcond : HolleyLatticeCondition μ₁ μ₂)
     {t : α → ℝ} (ht : Monotone t) (ht0 : 0 ≤ t) :
     ∑ a, t a * (μ₁ a : ℝ) ≤ ∑ a, t a * (μ₂ a : ℝ) := by
@@ -61,7 +61,7 @@ theorem holley_le_of_monotone {μ₁ μ₂ : α → ℝ≥0}
   exact holley (fun a => (μ₁ a : ℝ)) (fun a => (μ₂ a : ℝ)) t ht0 h₁ h₂ ht hsumR hcondR
 
 
-theorem holley_domination {μ₁ μ₂ : α → ℝ≥0}
+theorem holley_domination {μ₁ μ₂ : α → NNReal}
     (hsum : ∑ a, μ₁ a = ∑ a, μ₂ a) (hcond : HolleyLatticeCondition μ₁ μ₂) :
     StochasticDom μ₁ μ₂ := by
   intro U hU
@@ -70,7 +70,7 @@ theorem holley_domination {μ₁ μ₂ : α → ℝ≥0}
     hsum hcond (upper_indicator_monotone U hU)
     (fun a => by dsimp only; split_ifs <;> norm_num)
   
-  have hL : ∀ (μ : α → ℝ≥0),
+  have hL : ∀ (μ : α → NNReal),
       ∑ a, (if a ∈ U then (1 : ℝ) else 0) * (μ a : ℝ) = ∑ a ∈ U, (μ a : ℝ) := by
     intro μ
     rw [← Finset.sum_filter_add_sum_filter_not (univ) (fun a => a ∈ U)]
@@ -96,15 +96,15 @@ variable [Fintype α] [DecidableEq α] [DistribLattice α]
   [DecidableRel ((· ≤ ·) : α → α → Prop)]
 
 
-theorem holley_exists_isMonotoneCoupling {μ₁ μ₂ : α → ℝ≥0}
+theorem holley_exists_isMonotoneCoupling {μ₁ μ₂ : α → NNReal}
     (hsum : ∑ a, μ₁ a = ∑ a, μ₂ a) (hcond : HolleyLatticeCondition μ₁ μ₂) :
-    ∃ π : α × α → ℝ≥0, IsMonotoneCoupling μ₁ μ₂ π :=
+    ∃ π : α × α → NNReal, IsMonotoneCoupling μ₁ μ₂ π :=
   exists_isMonotoneCoupling_of_stochasticDom hsum (holley_domination hsum hcond)
 
 
-theorem holley_domination_iff_monotoneCoupling {μ₁ μ₂ : α → ℝ≥0}
+theorem holley_domination_iff_monotoneCoupling {μ₁ μ₂ : α → NNReal}
     (hsum : ∑ a, μ₁ a = ∑ a, μ₂ a) (hcond : HolleyLatticeCondition μ₁ μ₂) :
-    StochasticDom μ₁ μ₂ ↔ ∃ π : α × α → ℝ≥0, IsMonotoneCoupling μ₁ μ₂ π :=
+    StochasticDom μ₁ μ₂ ↔ ∃ π : α × α → NNReal, IsMonotoneCoupling μ₁ μ₂ π :=
   ⟨fun _ => holley_exists_isMonotoneCoupling hsum hcond,
    fun ⟨_, hπ⟩ => StochasticDom.of_isMonotoneCoupling hπ⟩
 

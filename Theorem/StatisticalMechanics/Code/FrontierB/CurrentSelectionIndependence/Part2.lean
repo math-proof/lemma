@@ -110,7 +110,7 @@ theorem currentParityAvoidCylinder_eq_currentCylinder {E : Type*}
 theorem currentLimit_parityMarginal_eq_of_avoid_tendsto
     {E : Type*} [Countable E] [DecidableEq E]
     (mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E))
-    (havoid : ∀ A : Finset E, ∃ L : ℝ≥0∞,
+    (havoid : ∀ A : Finset E, ∃ L : ENNReal,
       Tendsto (fun n => (mu n : Measure (InfiniteCurrentConfig E))
         (currentParityAvoidCylinder A)) atTop (nhds L))
     (S : Finset E)
@@ -150,7 +150,7 @@ theorem currentLimit_parityMarginal_eq_of_avoid_tendsto
 theorem currentMarginal_eq_of_parityMarginal_eq_of_pattern_factor
     {E : Type*} [Countable E] [DecidableEq E]
     (mu nu : ProbabilityMeasure (InfiniteCurrentConfig E))
-    (S : Finset E) (kernel : (↑S → Bool) → (↑S → ℕ) → ℝ≥0∞)
+    (S : Finset E) (kernel : (↑S → Bool) → (↑S → ℕ) → ENNReal)
     (hparity : currentParityMarginalPMF mu S =
       currentParityMarginalPMF nu S)
     (hmu : ∀ a : ↑S → ℕ,
@@ -177,7 +177,7 @@ theorem currentMarginal_eq_of_parityMarginal_eq_of_pattern_factor
 theorem ProbabilityMeasure.ext_of_currentParity_and_pattern_factor
     {E : Type*} [Countable E] [DecidableEq E]
     (mu nu : ProbabilityMeasure (InfiniteCurrentConfig E))
-    (kernel : ∀ S : Finset E, (↑S → Bool) → (↑S → ℕ) → ℝ≥0∞)
+    (kernel : ∀ S : Finset E, (↑S → Bool) → (↑S → ℕ) → ENNReal)
     (hparity : ∀ S, currentParityMarginalPMF mu S =
       currentParityMarginalPMF nu S)
     (hmu : ∀ (S : Finset E) (a : ↑S → ℕ),
@@ -202,7 +202,7 @@ theorem WeakCurrentConverges.pattern_factor_of_eventually
     {mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E)}
     {nu : ProbabilityMeasure (InfiniteCurrentConfig E)}
     (hnu : WeakCurrentConverges mu nu)
-    (S : Finset E) (kernel : (↑S → Bool) → (↑S → ℕ) → ℝ≥0∞)
+    (S : Finset E) (kernel : (↑S → Bool) → (↑S → ℕ) → ENNReal)
     (hkernelTop : ∀ odd a, kernel odd a ≠ ⊤)
     (hfactor : ∀ a : ↑S → ℕ, ∀ᶠ n in atTop,
       (mu n : Measure (InfiniteCurrentConfig E)) (currentCylinder S {a}) =
@@ -230,11 +230,11 @@ theorem WeakCurrentConverges.pattern_factor_of_eventually
 theorem currentLimit_eq_of_avoid_tendsto_of_pattern_factor
     {E : Type*} [Countable E] [DecidableEq E]
     (mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E))
-    (havoid : ∀ A : Finset E, ∃ L : ℝ≥0∞,
+    (havoid : ∀ A : Finset E, ∃ L : ENNReal,
       Tendsto (fun n => (mu n : Measure (InfiniteCurrentConfig E))
         (currentParityAvoidCylinder A)) atTop (nhds L))
     (kernel : ∀ S : Finset E,
-      (↑S → Bool) → (↑S → ℕ) → ℝ≥0∞)
+      (↑S → Bool) → (↑S → ℕ) → ENNReal)
     {nu rho : ProbabilityMeasure (InfiniteCurrentConfig E)}
     {phi psi : ℕ → ℕ} (hphi : StrictMono phi) (hpsi : StrictMono psi)
     (hnu : WeakCurrentConverges (mu ∘ phi) nu)
@@ -576,7 +576,7 @@ theorem plusCurrentLimit_nonlattice_zero
         Measure (InfiniteCurrentConfig (Sym2 (Site d))))
         {m | m e = 0}) atTop (nhds 1) := by
     simpa only [plusBoxCurrentMeasure_nonlattice_zero d _ beta hbeta e he]
-      using (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1 : ℝ≥0∞)) atTop (nhds 1))
+      using (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1 : ENNReal)) atTop (nhds 1))
   exact tendsto_nhds_unique hlim hone
 
 theorem freeCurrentLimit_nonlattice_zero
@@ -600,7 +600,7 @@ theorem freeCurrentLimit_nonlattice_zero
         Measure (InfiniteCurrentConfig (Sym2 (Site d))))
         {m | m e = 0}) atTop (nhds 1) := by
     simpa only [freeBoxCurrentMeasure_nonlattice_zero d _ beta hbeta e he]
-      using (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1 : ℝ≥0∞)) atTop (nhds 1))
+      using (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1 : ENNReal)) atTop (nhds 1))
   exact tendsto_nhds_unique hlim hone
 
 end StatMech.FrontierB

@@ -334,7 +334,6 @@ lemma isUnit_localizeAtPrime_of_isUnit
 -- proof
   hI.map (extendedHomₐ (FractionRing A) (Localization.AtPrime 𝔪))
 open Classical in
-set_option maxHeartbeats 800000 in
 
 end FractionalIdeal
 
@@ -583,3 +582,4 @@ end
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

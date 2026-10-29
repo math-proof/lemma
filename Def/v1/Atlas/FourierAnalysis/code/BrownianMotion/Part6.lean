@@ -44,7 +44,7 @@ noncomputable def wienerCoeff (n : ℕ) (t : Fin n → ℝ) (c : Fin n → ℝ) 
   if k = 0 then wienerC0 * ∑ j : Fin n, c j * t j
   else wienerC1 * ∑ j : Fin n, c j * Real.sin (↑k * t j) / ↑k
 
-noncomputable def wienerCoeffVar (n : ℕ) (t : Fin n → ℝ) (c : Fin n → ℝ) : ℕ → ℝ≥0 :=
+noncomputable def wienerCoeffVar (n : ℕ) (t : Fin n → ℝ) (c : Fin n → ℝ) : ℕ → NNReal :=
   fun k => ⟨(wienerCoeff n t c k) ^ 2, sq_nonneg _⟩
 
 noncomputable def wienerBasisCoeff (s : ℝ) (k : ℕ) : ℝ :=

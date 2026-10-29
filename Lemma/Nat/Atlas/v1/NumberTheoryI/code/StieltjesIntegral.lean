@@ -16,15 +16,10 @@ lemma taggedPartitionOfPartition
 -- imply
   ∃ (PT : TaggedPartition a b), PT.toIntervalPartition = P :=
 -- proof
-  ⟨{ n := P.n
-    hn := P.hn
-    pts := P.pts
-    first := P.first
-    last := P.last
-    strict_mono := P.strict_mono
-    tags := fun k => P.pts ⟨k.val, Nat.lt_succ_of_lt k.isLt⟩
-    tag_mem := fun k =>
-      ⟨le_refl _, le_of_lt (P.strict_mono (Fin.mk_lt_mk.mpr (by omega)))⟩ },
+  ⟨(⟨P,
+      fun k => P.pts ⟨k.val, Nat.lt_succ_of_lt k.isLt⟩,
+      fun k => ⟨le_refl _, le_of_lt (P.strict_mono (Fin.mk_lt_mk.mpr (by omega)))⟩⟩ :
+      TaggedPartition a b),
     rfl⟩
 
 end RiemannStieltjes
@@ -38,7 +33,7 @@ namespace RiemannStieltjes
 lemma IntervalPartition.pts_mem_Icc
   {a b : ℝ}
   {P : IntervalPartition a b}
-  {i : Fin (P.n + 1)} :
+  (i : Fin (P.n + 1)) :
 -- imply
   P.pts i ∈ Set.Icc a b :=
 -- proof
@@ -178,7 +173,7 @@ lemma stieltjesIntegral_spec
   HasStieltjesIntegral f g a b (stieltjesIntegral f g a b) := by
 -- proof
   unfold stieltjesIntegral
-  rwa [dif_pos h]
+  rwa [dite_eq_left h]
 
 end RiemannStieltjes
 
@@ -368,7 +363,7 @@ namespace RiemannStieltjes
 -/
 @[path]
 lemma fin_sum_telescope
-  {a b : ℝ}
+  {_a _b : ℝ}
   {n : ℕ}
   {g : Fin (n + 1) → ℝ} :
 -- imply
@@ -385,7 +380,7 @@ lemma fin_sum_telescope
     ∑ i ∈ Finset.range n, (h (i + 1) - h i) := by
     rw [Finset.sum_fin_eq_sum_range]
     apply Finset.sum_congr rfl
-    intro i hi; rw [dif_pos (Finset.mem_range.mp hi)]
+    intro i hi; rw [dite_eq_left (Finset.mem_range.mp hi)]
   rw [hconv2, Finset.sum_range_sub]
   simp only [h, min_self, Nat.zero_min]
 
@@ -393,3 +388,4 @@ end RiemannStieltjes
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

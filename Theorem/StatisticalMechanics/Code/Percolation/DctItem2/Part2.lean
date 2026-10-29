@@ -45,7 +45,7 @@ theorem hasDerivAt_crossProbReal (n : ℕ) {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
   exact crossProbReal_eq_prob n (le_of_lt hs.1) (le_of_lt hs.2)
 
 
-theorem phi_ge_one_of_gt_tildePc {p : ℝ≥0} (hp : p ≤ 1) (hgt : tildePc d < p)
+theorem phi_ge_one_of_gt_tildePc {p : NNReal} (hp : p ≤ 1) (hgt : tildePc d < p)
     (S : Finset (Site d)) (h0S : origin d ∈ S) : 1 ≤ phi d p hp S := by
   by_contra hlt
   rw [not_le] at hlt
@@ -55,7 +55,7 @@ theorem phi_ge_one_of_gt_tildePc {p : ℝ≥0} (hp : p ≤ 1) (hgt : tildePc d <
   exact absurd hle (not_le.mpr hgt)
 
 
-theorem dct_diffineq_crossProbReal {q : ℝ≥0} (hq1 : (q : ℝ) < 1)
+theorem dct_diffineq_crossProbReal {q : NNReal} (hq1 : (q : ℝ) < 1)
     (htpc0 : 0 < (tildePc d : ℝ)) (n : ℕ) {t : ℝ}
     (ht : t ∈ Ioo (tildePc d : ℝ) (q : ℝ)) :
     deriv (crossPoly d n) t
@@ -63,7 +63,7 @@ theorem dct_diffineq_crossProbReal {q : ℝ≥0} (hq1 : (q : ℝ) < 1)
   obtain ⟨htlo, hthi⟩ := ht
   have ht0 : 0 < t := lt_trans htpc0 htlo
   have ht1 : t < 1 := lt_trans hthi hq1
-  set p : ℝ≥0 := t.toNNReal with hp_def
+  set p : NNReal := t.toNNReal with hp_def
   have hp_le1 : p ≤ 1 := Real.toNNReal_le_one.mpr (le_of_lt ht1)
   have hpt : (p : ℝ) = t := Real.coe_toNNReal t (le_of_lt ht0)
   have hp0 : 0 < (p : ℝ) := by rw [hpt]; exact ht0
@@ -93,7 +93,7 @@ theorem dct_diffineq_crossProbReal {q : ℝ≥0} (hq1 : (q : ℝ) < 1)
           (boxCrossingEvent d (n + 1)))) (p : ℝ) := hdi
 
 
-theorem theta_ge_meanField_unconditional (q : ℝ≥0) (hq : q ≤ 1)
+theorem theta_ge_meanField_unconditional (q : NNReal) (hq : q ≤ 1)
     (htpc0 : 0 < (tildePc d : ℝ)) (hgt : tildePc d < q) (hq1 : (q : ℝ) < 1) :
     theta d q hq ≥ ((q : ℝ) - (tildePc d : ℝ)) / ((q : ℝ) * (1 - (tildePc d : ℝ))) := by
   have haq : (tildePc d : ℝ) < (q : ℝ) := by exact_mod_cast hgt

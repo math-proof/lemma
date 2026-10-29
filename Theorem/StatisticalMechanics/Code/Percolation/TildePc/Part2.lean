@@ -27,7 +27,7 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-theorem phi_nonneg (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d)) :
+theorem phi_nonneg (d : ℕ) (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d)) :
     0 ≤ phi d p hp S := by
   unfold phi
   refine mul_nonneg p.coe_nonneg (Finset.sum_nonneg ?_)

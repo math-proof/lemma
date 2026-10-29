@@ -11,7 +11,7 @@ namespace FourierAnalysis
 [fourier_schwartz_equiv](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/FourierAnalysis.lean)
 -/
 @[path]
-lemma fourier_schwartz_equiv
+lemma fourier_schwartz_equiv :
 -- imply
   ∃ (Φ : SchwartzSpace ≃L[ℂ] SchwartzSpace), ∀ f : SchwartzSpace, (Φ f : ℝ → ℂ) = 𝓕 (f : ℝ → ℂ) :=
 -- proof
@@ -70,7 +70,7 @@ namespace FourierAnalysis
 -/
 @[path]
 lemma fderiv_fourier_eq_fourier_neg_smul
-  {f : SchwartzSpace} :
+  (f : SchwartzSpace) :
 -- imply
   SchwartzMap.fderivCLM ℂ ℝ ℂ (𝓕 f) = 𝓕 (-(2 * ↑π * Complex.I) • SchwartzMap.smulRightCLM ℂ ℂ (innerSL ℝ) f) :=
 -- proof
@@ -85,7 +85,7 @@ namespace FourierAnalysis
 -/
 @[path]
 lemma fourier_fderiv_eq_smul_fourier
-  {f : SchwartzSpace} :
+  (f : SchwartzSpace) :
 -- imply
   𝓕 (SchwartzMap.fderivCLM ℂ ℝ ℂ f) = (2 * ↑π * Complex.I) • SchwartzMap.smulRightCLM ℂ ℂ (innerSL ℝ) (𝓕 f) :=
 -- proof
@@ -146,3 +146,4 @@ end FourierAnalysis
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

@@ -27,7 +27,7 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-def PcContourBound (p : ℝ≥0) (hp : p ≤ 1) : Prop :=
+def PcContourBound (p : NNReal) (hp : p ≤ 1) : Prop :=
   1 - theta 2 p hp ≤ pcUpperBound (p : ℝ)
 
 

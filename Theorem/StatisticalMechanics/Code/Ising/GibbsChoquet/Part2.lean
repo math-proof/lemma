@@ -33,7 +33,7 @@ variable {d : ℕ}
 variable {E : Type*}
 
 
-@[simp] theorem gibbsMix_apply (a b : ℝ≥0∞) (μm μp : Measure (ConfigSpace E))
+@[simp] theorem gibbsMix_apply (a b : ENNReal) (μm μp : Measure (ConfigSpace E))
     (s : Set (ConfigSpace E)) :
     gibbsMix a b μm μp s = a * μm s + b * μp s := by
   simp [gibbsMix, Measure.add_apply, Measure.smul_apply]
@@ -47,7 +47,7 @@ variable {E : Type*}
     gibbsMix 0 1 μm μp = μp := by simp [gibbsMix]
 
 
-theorem isDLRState_gibbsMix (β h : ℝ) {a b : ℝ≥0∞} (hab : a + b = 1)
+theorem isDLRState_gibbsMix (β h : ℝ) {a b : ENNReal} (hab : a + b = 1)
     (μm μp : Measure (ConfigSpace (Site d))) [IsFiniteMeasure μm] [IsFiniteMeasure μp]
     [IsFiniteMeasure (gibbsMix a b μm μp)]
     (h₁ : IsDLRState d β h μm) (h₂ : IsDLRState d β h μp) :
@@ -56,7 +56,7 @@ theorem isDLRState_gibbsMix (β h : ℝ) {a b : ℝ≥0∞} (hab : a + b = 1)
   exact convex_isDLRState β h hab μm μp h₁ h₂
 
 
-theorem gibbsMix_isProbabilityMeasure {a b : ℝ≥0∞}
+theorem gibbsMix_isProbabilityMeasure {a b : ENNReal}
     (hab : a + b = 1) (μm μp : Measure (ConfigSpace E))
     [IsProbabilityMeasure μm] [IsProbabilityMeasure μp] :
     IsProbabilityMeasure (gibbsMix a b μm μp) := by
@@ -77,7 +77,7 @@ theorem exists_real_ne_of_ne {μm μp : Measure (ConfigSpace E)}
 
 theorem gibbsMix_coeff_unique {μm μp : Measure (ConfigSpace E)}
     [IsProbabilityMeasure μm] [IsProbabilityMeasure μp] (hne : μm ≠ μp)
-    {a b a' b' : ℝ≥0∞} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (ha' : a' ≠ ⊤) (hb' : b' ≠ ⊤)
+    {a b a' b' : ENNReal} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (ha' : a' ≠ ⊤) (hb' : b' ≠ ⊤)
     (hab : a + b = 1) (hab' : a' + b' = 1)
     (heq : gibbsMix a b μm μp = gibbsMix a' b' μm μp) : a = a' := by
   obtain ⟨A, hAm, hAne⟩ := exists_real_ne_of_ne hne
@@ -107,7 +107,7 @@ theorem gibbsMix_coeff_unique {μm μp : Measure (ConfigSpace E)}
 
 theorem gibbsMix_coeff_unique_pair {μm μp : Measure (ConfigSpace E)}
     [IsProbabilityMeasure μm] [IsProbabilityMeasure μp] (hne : μm ≠ μp)
-    {a b a' b' : ℝ≥0∞} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (ha' : a' ≠ ⊤) (hb' : b' ≠ ⊤)
+    {a b a' b' : ENNReal} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (ha' : a' ≠ ⊤) (hb' : b' ≠ ⊤)
     (hab : a + b = 1) (hab' : a' + b' = 1)
     (heq : gibbsMix a b μm μp = gibbsMix a' b' μm μp) : a = a' ∧ b = b' := by
   have ha_eq : a = a' := gibbsMix_coeff_unique hne ha hb ha' hb' hab hab' heq
@@ -120,7 +120,7 @@ theorem gibbsMix_coeff_unique_pair {μm μp : Measure (ConfigSpace E)}
 
 theorem gibbsMix_ne_minus {μm μp : Measure (ConfigSpace E)}
     [IsProbabilityMeasure μm] [IsProbabilityMeasure μp] (hne : μm ≠ μp)
-    {a b : ℝ≥0∞} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (hab : a + b = 1) (hb0 : b ≠ 0) :
+    {a b : ENNReal} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (hab : a + b = 1) (hb0 : b ≠ 0) :
     gibbsMix a b μm μp ≠ μm := by
   intro hcontra
   have hcontra' : gibbsMix a b μm μp = gibbsMix 1 0 μm μp :=
@@ -131,7 +131,7 @@ theorem gibbsMix_ne_minus {μm μp : Measure (ConfigSpace E)}
 
 theorem gibbsMix_ne_plus {μm μp : Measure (ConfigSpace E)}
     [IsProbabilityMeasure μm] [IsProbabilityMeasure μp] (hne : μm ≠ μp)
-    {a b : ℝ≥0∞} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (hab : a + b = 1) (ha0 : a ≠ 0) :
+    {a b : ENNReal} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (hab : a + b = 1) (ha0 : a ≠ 0) :
     gibbsMix a b μm μp ≠ μp := by
   intro hcontra
   have hcontra' : gibbsMix a b μm μp = gibbsMix 0 1 μm μp :=
@@ -142,7 +142,7 @@ theorem gibbsMix_ne_plus {μm μp : Measure (ConfigSpace E)}
 
 theorem minusState_extreme_in_segment {μm μp : Measure (ConfigSpace E)}
     [IsProbabilityMeasure μm] [IsProbabilityMeasure μp] (hne : μm ≠ μp)
-    {a b : ℝ≥0∞} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (hab : a + b = 1)
+    {a b : ENNReal} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (hab : a + b = 1)
     (heq : gibbsMix a b μm μp = μm) : a = 1 ∧ b = 0 := by
   have heq' : gibbsMix a b μm μp = gibbsMix 1 0 μm μp :=
     heq.trans (gibbsMix_one_zero μm μp).symm
@@ -151,7 +151,7 @@ theorem minusState_extreme_in_segment {μm μp : Measure (ConfigSpace E)}
 
 theorem plusState_extreme_in_segment {μm μp : Measure (ConfigSpace E)}
     [IsProbabilityMeasure μm] [IsProbabilityMeasure μp] (hne : μm ≠ μp)
-    {a b : ℝ≥0∞} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (hab : a + b = 1)
+    {a b : ENNReal} (ha : a ≠ ⊤) (hb : b ≠ ⊤) (hab : a + b = 1)
     (heq : gibbsMix a b μm μp = μp) : a = 0 ∧ b = 1 := by
   have heq' : gibbsMix a b μm μp = gibbsMix 0 1 μm μp :=
     heq.trans (gibbsMix_zero_one μm μp).symm
@@ -160,15 +160,15 @@ theorem plusState_extreme_in_segment {μm μp : Measure (ConfigSpace E)}
 
 theorem gibbsMix_param_injective {μm μp : Measure (ConfigSpace E)}
     [IsProbabilityMeasure μm] [IsProbabilityMeasure μp] (hne : μm ≠ μp)
-    {a a' : ℝ≥0∞} (ha : a ≤ 1) (ha' : a' ≤ 1)
+    {a a' : ENNReal} (ha : a ≤ 1) (ha' : a' ≤ 1)
     (heq : gibbsMix a (1 - a) μm μp = gibbsMix a' (1 - a') μm μp) : a = a' := by
   have hat : a ≠ ⊤ := ne_top_of_le_ne_top ENNReal.one_ne_top ha
   have hat' : a' ≠ ⊤ := ne_top_of_le_ne_top ENNReal.one_ne_top ha'
   have hbt : (1 - a) ≠ ⊤ := by
-    have : (1 : ℝ≥0∞) - a ≤ 1 := tsub_le_self
+    have : (1 : ENNReal) - a ≤ 1 := tsub_le_self
     exact ne_top_of_le_ne_top ENNReal.one_ne_top this
   have hbt' : (1 - a') ≠ ⊤ := by
-    have : (1 : ℝ≥0∞) - a' ≤ 1 := tsub_le_self
+    have : (1 : ENNReal) - a' ≤ 1 := tsub_le_self
     exact ne_top_of_le_ne_top ENNReal.one_ne_top this
   have hab : a + (1 - a) = 1 := add_tsub_cancel_of_le ha
   have hab' : a' + (1 - a') = 1 := add_tsub_cancel_of_le ha'

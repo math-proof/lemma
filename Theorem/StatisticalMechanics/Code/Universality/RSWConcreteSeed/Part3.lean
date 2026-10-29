@@ -102,7 +102,7 @@ theorem rcs_four_by_two_crossing_lower_bound (n : ℤ) (hn : 0 < n)
   obtain ⟨hright, hleft⟩ :=
     rlc_envelopeProperties_of_rightSafeTraceReachability hsafe
   have hseed := rlc_bernoulli_rsw_stopping_sixth_power
-    (E := Sym2 (Site 2)) (p := (2⁻¹ : ℝ≥0)) half_le_one
+    (E := Sym2 (Site 2)) (p := (2⁻¹ : NNReal)) half_le_one
     ((1 : ℝ) / 2) (by norm_num)
     (rlc_rightDiagonal n) (rlc_leftDiagonal n)
     (horizontalCrossingEvent (-2 * n) (2 * n) (-n) n)

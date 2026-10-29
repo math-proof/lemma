@@ -28,7 +28,7 @@ end MetaMathlibExt
 -/
 @[path]
 lemma lucasBracket_ne_zero
-  {P : LucasParameters}
+  (P : LucasParameters)
   {n : ℕ}
 -- given
   (hn : n ≠ 0) :

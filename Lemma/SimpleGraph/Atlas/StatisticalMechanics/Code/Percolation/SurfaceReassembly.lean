@@ -43,7 +43,7 @@ private lemma coord_true_prob_eq
   [DecidableEq E]
   {e : E}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := E) p hp).real {ω | ω e = true} = (p : ℝ) := by
@@ -176,7 +176,7 @@ private lemma lastExit_summand_factor_eq
   {x y : Site d}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hxK : x ∈ K) :
@@ -209,7 +209,7 @@ private lemma withinConn_edge_indep_eq
   {S : Finset (Site d)}
   {x y : Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hyS : y ∉ S) :
 -- imply
@@ -245,7 +245,7 @@ private lemma summand_per_K_le_eq
   {x y : Site d}
   {L m n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hy : y ∈ box d L)
@@ -265,7 +265,7 @@ private lemma sumK_explored_le_eq
   {S : Finset (Site d)}
   {x y : Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d))) :
 -- imply
@@ -283,7 +283,7 @@ private lemma sumK_summand_le_eq
   {x y : Site d}
   {L m n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hyS : y ∉ S)
@@ -305,7 +305,7 @@ private lemma subcritical_oneStep_eq
   {L : ℕ}
   {k : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hL : 1 ≤ L)
@@ -346,7 +346,7 @@ private lemma subcritical_geometric_eq
   {S : Finset (Site d)}
   {L : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hphi : phi d p hp S < 1)
@@ -366,7 +366,7 @@ private lemma subcritical_decay_unconditional_eq
   {S : Finset (Site d)}
   {L : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hphi : phi d p hp S < 1)

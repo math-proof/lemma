@@ -23,7 +23,7 @@ private lemma main
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
-  have hp : Measurable p := D.measurable_density
+  have hp : Measurable p := D
   have hjoint : π.map (x, y) = (μ.prod ν).withDensity p := hjoint
   let q : β → ENNReal := fun b ↦ lintegral μ (fun a ↦ p (a, b))
   have hq : Measurable q := hp.lintegral_prod_left'

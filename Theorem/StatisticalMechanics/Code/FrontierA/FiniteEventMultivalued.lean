@@ -22,8 +22,8 @@ variable {Omega I : Type*} [MeasurableSpace Omega]
 
 theorem finiteEventMultiplicity_eq_sum_indicator
     (J : Finset I) (A : I → Set Omega) (omega : Omega) :
-    (finiteEventMultiplicity J A omega : ℝ≥0∞) =
-      ∑ i ∈ J, (A i).indicator (fun _ => (1 : ℝ≥0∞)) omega := by
+    (finiteEventMultiplicity J A omega : ENNReal) =
+      ∑ i ∈ J, (A i).indicator (fun _ => (1 : ENNReal)) omega := by
   classical
   unfold finiteEventMultiplicity
   rw [Finset.card_filter]
@@ -38,17 +38,17 @@ theorem finiteEventMultiplicity_eq_sum_indicator
 theorem lintegral_finiteEventMultiplicity
     (mu : Measure Omega) (J : Finset I) (A : I → Set Omega)
     (hA : ∀ i ∈ J, MeasurableSet (A i)) :
-    ∫⁻ omega, (finiteEventMultiplicity J A omega : ℝ≥0∞) ∂mu =
+    ∫⁻ omega, (finiteEventMultiplicity J A omega : ENNReal) ∂mu =
       ∑ i ∈ J, mu (A i) := by
   classical
   calc
-    ∫⁻ omega, (finiteEventMultiplicity J A omega : ℝ≥0∞) ∂mu =
+    ∫⁻ omega, (finiteEventMultiplicity J A omega : ENNReal) ∂mu =
         ∫⁻ omega, ∑ i ∈ J,
-          (A i).indicator (fun _ => (1 : ℝ≥0∞)) omega ∂mu := by
+          (A i).indicator (fun _ => (1 : ENNReal)) omega ∂mu := by
       apply lintegral_congr
       exact fun omega => finiteEventMultiplicity_eq_sum_indicator J A omega
     _ = ∑ i ∈ J, ∫⁻ omega,
-        (A i).indicator (fun _ => (1 : ℝ≥0∞)) omega ∂mu := by
+        (A i).indicator (fun _ => (1 : ENNReal)) omega ∂mu := by
       rw [MeasureTheory.lintegral_finsetSum]
       intro i hi
       exact Measurable.indicator measurable_const (hA i hi)
@@ -64,7 +64,7 @@ theorem finiteEventMultivalued_probability_bound
     (hsourceMeas : ∀ i ∈ J, MeasurableSet (source i))
     (htargetMeas : ∀ i ∈ J, MeasurableSet (target i))
     (E : Set Omega) (hEMeas : MeasurableSet E)
-    (c : ℝ≥0∞) (K L : Nat)
+    (c : ENNReal) (K L : Nat)
     (hsourceDegree : ∀ omega ∈ E,
       K ≤ finiteEventMultiplicity J source omega)
     (htargetDegree : ∀ omega,
@@ -72,15 +72,15 @@ theorem finiteEventMultivalued_probability_bound
     (htransfer : ∀ i ∈ J, c * mu (source i) ≤ mu (target i)) :
     c * K * mu E ≤ L := by
   classical
-  have hsourceIntegral : (K : ℝ≥0∞) * mu E ≤
-      ∫⁻ omega, (finiteEventMultiplicity J source omega : ℝ≥0∞) ∂mu := by
+  have hsourceIntegral : (K : ENNReal) * mu E ≤
+      ∫⁻ omega, (finiteEventMultiplicity J source omega : ENNReal) ∂mu := by
     calc
-      (K : ℝ≥0∞) * mu E =
-          ∫⁻ omega, E.indicator (fun _ => (K : ℝ≥0∞)) omega ∂mu := by
+      (K : ENNReal) * mu E =
+          ∫⁻ omega, E.indicator (fun _ => (K : ENNReal)) omega ∂mu := by
         rw [lintegral_indicator hEMeas]
         simp
       _ ≤ ∫⁻ omega,
-          (finiteEventMultiplicity J source omega : ℝ≥0∞) ∂mu := by
+          (finiteEventMultiplicity J source omega : ENNReal) ∂mu := by
         apply lintegral_mono
         intro omega
         by_cases homega : omega ∈ E
@@ -88,20 +88,20 @@ theorem finiteEventMultivalued_probability_bound
           exact_mod_cast hsourceDegree omega homega
         · simp [Set.indicator_of_notMem homega]
   have htargetIntegral :
-      (∫⁻ omega, (finiteEventMultiplicity J target omega : ℝ≥0∞) ∂mu) ≤ L := by
+      (∫⁻ omega, (finiteEventMultiplicity J target omega : ENNReal) ∂mu) ≤ L := by
     calc
-      (∫⁻ omega, (finiteEventMultiplicity J target omega : ℝ≥0∞) ∂mu) ≤
-          ∫⁻ _omega : Omega, (L : ℝ≥0∞) ∂mu := by
+      (∫⁻ omega, (finiteEventMultiplicity J target omega : ENNReal) ∂mu) ≤
+          ∫⁻ _omega : Omega, (L : ENNReal) ∂mu := by
         apply lintegral_mono
         intro omega
-        change (finiteEventMultiplicity J target omega : ℝ≥0∞) ≤
-          (L : ℝ≥0∞)
+        change (finiteEventMultiplicity J target omega : ENNReal) ≤
+          (L : ENNReal)
         exact_mod_cast htargetDegree omega
       _ = L := by simp
   calc
-    c * K * mu E = c * ((K : ℝ≥0∞) * mu E) := by ring
+    c * K * mu E = c * ((K : ENNReal) * mu E) := by ring
     _ ≤ c * ∫⁻ omega,
-        (finiteEventMultiplicity J source omega : ℝ≥0∞) ∂mu := by
+        (finiteEventMultiplicity J source omega : ENNReal) ∂mu := by
       gcongr
     _ = c * ∑ i ∈ J, mu (source i) := by
       rw [lintegral_finiteEventMultiplicity mu J source hsourceMeas]
@@ -111,7 +111,7 @@ theorem finiteEventMultivalued_probability_bound
       gcongr with i hi
       exact htransfer i hi
     _ = ∫⁻ omega,
-        (finiteEventMultiplicity J target omega : ℝ≥0∞) ∂mu := by
+        (finiteEventMultiplicity J target omega : ENNReal) ∂mu := by
       rw [lintegral_finiteEventMultiplicity mu J target htargetMeas]
     _ ≤ L := htargetIntegral
 

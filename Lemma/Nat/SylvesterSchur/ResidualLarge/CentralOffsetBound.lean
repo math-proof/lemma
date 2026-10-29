@@ -1,6 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open Nat Nat.SylvesterSchur
+import Lemma.Nat.SylvesterSchur.ErdosPowerBounds
+import Lemma.Nat.SylvesterSchur.ResidualLarge.ScaledTernaryBound
+open Nat
 
 
 namespace Nat.SylvesterSchur.Internal
@@ -21,8 +23,8 @@ private lemma central_layers_le_four_pow_of_lt_three_mul {n N : ℕ}
   have hlayers := erdos_layers_le_four_pow_three_layers N (N / 3)
   calc
     (∏ j ∈ Finset.range (Nat.log 2 N),
-      if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N))
-      ≤ 4 ^ (N / 3 + Nat.sqrt N + Nat.nthRoot 3 N * Nat.log 2 N) := hlayers
+        if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N))
+        ≤ 4 ^ (N / 3 + Nat.sqrt N + Nat.nthRoot 3 N * Nat.log 2 N) := hlayers
     _ ≤ 4 ^ (N / 3 + n / 15 + n / 5) := by
       apply Nat.pow_le_pow_right (by norm_num : 0 < 4)
       omega
@@ -52,19 +54,19 @@ lemma second_residual_large_central_offset_bound
     dsimp [N]
     omega
   have hprod :
-    (∏ j ∈ Finset.range (Nat.log 2 N),
-      if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N)) ≤
-      4 ^ E := by
+      (∏ j ∈ Finset.range (Nat.log 2 N),
+          if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N)) ≤
+        4 ^ E := by
     dsimp [E]
     exact central_layers_le_four_pow_of_lt_three_mul hn hNlo (by simpa [N] using hcentral)
   have hnfac : n ≤ 4 ^ D := by
     dsimp [D]
     exact self_le_four_pow_div_one_twenty_eight_add_one (by omega : 512 ≤ n)
   have hleft :
-    n * (2 ^ i *
-      (∏ j ∈ Finset.range (Nat.log 2 N),
-        if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N))) ≤
-      4 ^ D * (2 ^ i * 4 ^ E) :=
+      n * (2 ^ i *
+        (∏ j ∈ Finset.range (Nat.log 2 N),
+          if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N))) ≤
+        4 ^ D * (2 ^ i * 4 ^ E) :=
     Nat.mul_le_mul hnfac (Nat.mul_le_mul_left (2 ^ i) hprod)
   have hexp : 2 * D + i + 2 * E < 19 * (i / 12) + 2 * n := by
     dsimp [D, E, i, N]
@@ -73,7 +75,9 @@ lemma second_residual_large_central_offset_bound
     four_pow_mul_two_pow_mul_four_pow_lt_three_pow_mul_four_pow hexp
   simpa [N, i] using hleft.trans_lt hright
 
+
 end Nat.SylvesterSchur.Internal
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

@@ -55,7 +55,7 @@ private lemma bc56_burton_keane_bernoulli_of_reachesNbr_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (h : ∀ n : ℕ, bc56_BoxClusterReachesNbr d n) :
@@ -263,7 +263,7 @@ private lemma bc56_status_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p) :
 -- imply

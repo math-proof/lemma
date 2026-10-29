@@ -23,7 +23,7 @@ open Set
 def KWStairParameterData.MeshWithin
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
-    (data : KWStairParameterData (S := S) polygon) (r : ℝ≥0) : Prop :=
+    (data : KWStairParameterData (S := S) polygon) (r : NNReal) : Prop :=
   ∀ i : Fin n, ∀ k : Fin S,
     (data.parameter i k.succ - data.parameter i k.castSucc) *
       ‖polygon.edgeVector i‖ < r

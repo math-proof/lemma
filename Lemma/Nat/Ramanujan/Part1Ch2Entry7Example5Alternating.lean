@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry7Example5Alternating
@@ -56,7 +55,8 @@ private lemma arctan_sub_of_nonneg {x y : ℝ} (_hx : 0 ≤ x) (hy : 0 ≤ y) (h
   have hhi : Real.arctan x - Real.arctan y < Real.pi / 2 := by linarith
   have hlo : -(Real.pi / 2) < Real.arctan x - Real.arctan y := by linarith
   have hmain := Real.arctan_tan hlo hhi
-  rwa [htan] at hmain
+  rw [htan] at hmain
+  exact hmain.symm
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry7Example5Alternating
 
@@ -225,4 +225,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry7Example5Alternating
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

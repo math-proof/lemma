@@ -20,7 +20,7 @@ open Set
 
 def KWFiniteSimplePolygon.closedEdgeCoreTube
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
-    (eps : ℝ) (r : ℝ≥0) (i : Fin n) : Set ℂ :=
+    (eps : ℝ) (r : NNReal) (i : Fin n) : Set ℂ :=
   {z | ∃ x ∈ polygon.closedEdgeCore eps i, dist z x < r}
 
 end StatMech.FrontierA

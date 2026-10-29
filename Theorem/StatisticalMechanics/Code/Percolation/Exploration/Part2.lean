@@ -30,7 +30,7 @@ section Finite
 variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
-theorem part_norm (p : ℝ≥0) (hp : p ≤ 1) (Sₜ : Type*) [Fintype Sₜ] [DecidableEq Sₜ] :
+theorem part_norm (p : NNReal) (hp : p ≤ 1) (Sₜ : Type*) [Fintype Sₜ] [DecidableEq Sₜ] :
     (∑ x : Sₜ → Bool, ∏ i, w1 p hp (x i)) = 1 := by
   classical
   rw [← Fintype.prod_sum (fun (_ : Sₜ) (b : Bool) => w1 p hp b)]
@@ -38,7 +38,7 @@ theorem part_norm (p : ℝ≥0) (hp : p ≤ 1) (Sₜ : Type*) [Fintype Sₜ] [De
   rw [Finset.prod_congr rfl (fun i _ => h i)]; simp
 
 
-theorem wsum_mul (p : ℝ≥0) (hp : p ≤ 1) (P : E → Prop) [DecidablePred P]
+theorem wsum_mul (p : NNReal) (hp : p ≤ 1) (P : E → Prop) [DecidablePred P]
     (f g : ConfigSpace E → ℝ)
     (hf : ∀ ω ω', (∀ e, P e → ω e = ω' e) → f ω = f ω')
     (hg : ∀ ω ω', (∀ e, ¬ P e → ω e = ω' e) → g ω = g ω') :
@@ -101,7 +101,7 @@ theorem wsum_mul (p : ℝ≥0) (hp : p ≤ 1) (P : E → Prop) [DecidablePred P]
   rw [lhs_eq, rhs1, rhs2]
 
 
-theorem real_eq_wsum (p : ℝ≥0) (hp : p ≤ 1) (A : Set (ConfigSpace E)) :
+theorem real_eq_wsum (p : NNReal) (hp : p ≤ 1) (A : Set (ConfigSpace E)) :
     (bernoulliProductMeasure (E := E) p hp).real A
       = wsum p hp (A.indicator (fun _ => (1 : ℝ))) := by
   classical
@@ -110,7 +110,7 @@ theorem real_eq_wsum (p : ℝ≥0) (hp : p ≤ 1) (A : Set (ConfigSpace E)) :
   exact Finset.sum_congr rfl (fun ω _ => by rw [bernoulliProductMeasure.real_singleton ω])
 
 
-theorem indep_cylinder (p : ℝ≥0) (hp : p ≤ 1) (P : E → Prop) [DecidablePred P]
+theorem indep_cylinder (p : NNReal) (hp : p ≤ 1) (P : E → Prop) [DecidablePred P]
     (A B : Set (ConfigSpace E))
     (hA : ∀ ω ω', (∀ e, P e → ω e = ω' e) → (ω ∈ A ↔ ω' ∈ A))
     (hB : ∀ ω ω', (∀ e, ¬ P e → ω e = ω' e) → (ω ∈ B ↔ ω' ∈ B)) :
@@ -156,7 +156,7 @@ theorem indic_iff {X : Set (ConfigSpace E)} {a b : ConfigSpace E}
     by_contra; rw [Set.indicator_of_mem hb] at h; norm_num at h
 
 
-theorem indep_cylinder_inf (p : ℝ≥0) (hp : p ≤ 1)
+theorem indep_cylinder_inf (p : NNReal) (hp : p ≤ 1)
     (A B : Set (ConfigSpace E)) (T U : Finset E) (hdisj : Disjoint T U)
     (hA : DependsOn (A.indicator (fun _ => (1 : ℝ))) (T : Set E))
     (hB : DependsOn (B.indicator (fun _ => (1 : ℝ))) (U : Set E)) :

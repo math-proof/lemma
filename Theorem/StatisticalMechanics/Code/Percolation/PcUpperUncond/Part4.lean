@@ -49,24 +49,24 @@ theorem cyclesAtLen_card (ℓ : ℕ) : (cyclesAtLen ℓ).card ≤ 2 * ℓ * 4 ^ 
 open Classical in
 
 
-theorem measure_cyclesAtLen_le (p : ℝ≥0) (hp : p ≤ 1) (ℓ : ℕ) :
+theorem measure_cyclesAtLen_le (p : NNReal) (hp : p ≤ 1) (ℓ : ℕ) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp)
         (⋃ σ ∈ cyclesAtLen ℓ, closedCircuitEvent σ.2)
-      ≤ (2 * ℓ * 4 ^ ℓ : ℕ) * ((1 - p : ℝ≥0) : ℝ≥0∞) ^ ℓ := by
+      ≤ (2 * ℓ * 4 ^ ℓ : ℕ) * ((1 - p : NNReal) : ENNReal) ^ ℓ := by
   calc (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp)
           (⋃ σ ∈ cyclesAtLen ℓ, closedCircuitEvent σ.2)
       ≤ ∑ σ ∈ cyclesAtLen ℓ, (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp)
             (closedCircuitEvent σ.2) := measure_biUnion_finset_le _ _
-    _ = ∑ _σ ∈ cyclesAtLen ℓ, ((1 - p : ℝ≥0) : ℝ≥0∞) ^ ℓ := by
+    _ = ∑ _σ ∈ cyclesAtLen ℓ, ((1 - p : NNReal) : ENNReal) ^ ℓ := by
         apply Finset.sum_congr rfl
         intro σ hσ
         unfold cyclesAtLen at hσ
         rw [Finset.mem_sigma, Finset.mem_filter, SimpleGraph.mem_finsetWalkLength_iff] at hσ
         obtain ⟨_, hlen, hcyc⟩ := hσ
         rw [measure_closedCircuitEvent_cycle p hp σ.2 hcyc, hlen]
-    _ = (cyclesAtLen ℓ).card * ((1 - p : ℝ≥0) : ℝ≥0∞) ^ ℓ := by
+    _ = (cyclesAtLen ℓ).card * ((1 - p : NNReal) : ENNReal) ^ ℓ := by
         rw [Finset.sum_const, nsmul_eq_mul]
-    _ ≤ (2 * ℓ * 4 ^ ℓ : ℕ) * ((1 - p : ℝ≥0) : ℝ≥0∞) ^ ℓ := by
+    _ ≤ (2 * ℓ * 4 ^ ℓ : ℕ) * ((1 - p : NNReal) : ENNReal) ^ ℓ := by
         apply mul_le_mul' _ (le_refl _)
         exact_mod_cast cyclesAtLen_card ℓ
 

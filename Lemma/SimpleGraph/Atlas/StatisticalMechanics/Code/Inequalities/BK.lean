@@ -403,7 +403,7 @@ private lemma bk_wprob_general_eq
 private lemma bernoulli_real_eq_wprob_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {S : Set (ConfigSpace E)}
 -- given
   (hp : p ≤ 1) :
@@ -419,7 +419,7 @@ private lemma bernoulli_real_eq_wprob_eq
 private lemma bk_inequality_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (hp : p ≤ 1)

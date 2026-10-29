@@ -29,16 +29,16 @@ theorem mem_percolationEvent {d : ℕ} {ω : ConfigSpace (Sym2 (Site d))} :
   Iff.rfl
 
 @[simp]
-theorem mem_subcriticalSet {d : ℕ} {p : ℝ≥0} :
+theorem mem_subcriticalSet {d : ℕ} {p : NNReal} :
     p ∈ subcriticalSet d ↔ ∃ hp : p ≤ 1, theta d p hp = 0 :=
   Iff.rfl
 
 
-theorem theta_nonneg (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) : 0 ≤ theta d p hp :=
+theorem theta_nonneg (d : ℕ) (p : NNReal) (hp : p ≤ 1) : 0 ≤ theta d p hp :=
   ENNReal.toReal_nonneg
 
 
-theorem theta_le_one (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) : theta d p hp ≤ 1 := by
+theorem theta_le_one (d : ℕ) (p : NNReal) (hp : p ≤ 1) : theta d p hp ≤ 1 := by
   unfold theta
   rw [Measure.real]
   refine ENNReal.toReal_le_of_le_ofReal (by norm_num) ?_

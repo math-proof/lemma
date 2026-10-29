@@ -22,8 +22,8 @@ namespace TwoDim
 open StatMech.Percolation StatMech.Lattice
 
 
-theorem theta_half_eq_zero_uncond (h12 : (1 / 2 : ℝ≥0) ≤ 1)
-    (cross : ℝ≥0 → ℕ → ℝ)
+theorem theta_half_eq_zero_uncond (h12 : (1 / 2 : NNReal) ≤ 1)
+    (cross : NNReal → ℕ → ℝ)
     (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
     (hpercToOne : 0 < theta 2 (1 / 2) h12 →
       Tendsto (cross (1 / 2)) atTop (𝓝 1)) :
@@ -40,33 +40,33 @@ theorem theta_half_eq_zero_uncond (h12 : (1 / 2 : ℝ≥0) ≤ 1)
   norm_num at hbad
 
 
-theorem half_mem_subcriticalSet_uncond (h12 : (1 / 2 : ℝ≥0) ≤ 1)
-    (cross : ℝ≥0 → ℕ → ℝ)
+theorem half_mem_subcriticalSet_uncond (h12 : (1 / 2 : NNReal) ≤ 1)
+    (cross : NNReal → ℕ → ℝ)
     (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
     (hpercToOne : 0 < theta 2 (1 / 2) h12 →
       Tendsto (cross (1 / 2)) atTop (𝓝 1)) :
-    (1 / 2 : ℝ≥0) ∈ subcriticalSet 2 :=
+    (1 / 2 : NNReal) ∈ subcriticalSet 2 :=
   ⟨h12, theta_half_eq_zero_uncond h12 cross hdualHalf hpercToOne⟩
 
 
-theorem kesten_half_le_pc (h12 : (1 / 2 : ℝ≥0) ≤ 1)
-    (cross : ℝ≥0 → ℕ → ℝ)
+theorem kesten_half_le_pc (h12 : (1 / 2 : NNReal) ≤ 1)
+    (cross : NNReal → ℕ → ℝ)
     (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
     (hpercToOne : 0 < theta 2 (1 / 2) h12 →
       Tendsto (cross (1 / 2)) atTop (𝓝 1)) :
-    (1 / 2 : ℝ≥0) ≤ pc 2 :=
+    (1 / 2 : NNReal) ≤ pc 2 :=
   le_pc_of_mem_subcriticalSet
     (half_mem_subcriticalSet_uncond h12 cross hdualHalf hpercToOne)
 
 
 theorem kesten_pc_le_half
-    (cross : ℝ≥0 → ℕ → ℝ)
-    (hmono : ∀ n, ∀ p q : ℝ≥0, p ≤ q → cross p n ≤ cross q n)
+    (cross : NNReal → ℕ → ℝ)
+    (hmono : ∀ n, ∀ p q : NNReal, p ≤ q → cross p n ≤ cross q n)
     (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
-    (hdecayToZero : ∀ p : ℝ≥0, ∀ hp : p ≤ 1,
+    (hdecayToZero : ∀ p : NNReal, ∀ hp : p ≤ 1,
         (∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n)) →
         Tendsto (cross p) atTop (𝓝 0)) :
-    pc 2 ≤ (1 / 2 : ℝ≥0) := by
+    pc 2 ≤ (1 / 2 : NNReal) := by
   
   obtain ⟨hsharp, hsub, -⟩ := sharpness_unconditional (d := 2) (by norm_num)
   
@@ -93,16 +93,16 @@ theorem kesten_pc_le_half
     norm_num at hlimge
 
 
-theorem kesten_pc_eq_half (h12 : (1 / 2 : ℝ≥0) ≤ 1)
-    (cross : ℝ≥0 → ℕ → ℝ)
-    (hmono : ∀ n, ∀ p q : ℝ≥0, p ≤ q → cross p n ≤ cross q n)
+theorem kesten_pc_eq_half (h12 : (1 / 2 : NNReal) ≤ 1)
+    (cross : NNReal → ℕ → ℝ)
+    (hmono : ∀ n, ∀ p q : NNReal, p ≤ q → cross p n ≤ cross q n)
     (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
     (hpercToOne : 0 < theta 2 (1 / 2) h12 →
       Tendsto (cross (1 / 2)) atTop (𝓝 1))
-    (hdecayToZero : ∀ p : ℝ≥0, ∀ hp : p ≤ 1,
+    (hdecayToZero : ∀ p : NNReal, ∀ hp : p ≤ 1,
         (∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n)) →
         Tendsto (cross p) atTop (𝓝 0)) :
-    pc 2 = (1 / 2 : ℝ≥0) :=
+    pc 2 = (1 / 2 : NNReal) :=
   le_antisymm
     (kesten_pc_le_half cross hmono hdualHalf hdecayToZero)
     (kesten_half_le_pc h12 cross hdualHalf hpercToOne)

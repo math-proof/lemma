@@ -16,7 +16,13 @@ lemma fermatNumber_mod_prime_exact_preperiod_period
   (hord : orderOf (2 : ZMod p) = 2 ^ v * w)
   (hw : Odd w) :
 -- imply
-  let k := by
+  let k := orderOf (2 : ZMod w)
+  Function.Periodic (fun n : ℕ => ((Nat.fermatNumber (v + n) : ℕ) : ZMod p)) k ∧
+    (∀ h < v, ¬∃ kp : ℕ, 0 < kp ∧
+      Function.Periodic (fun n : ℕ => ((Nat.fermatNumber (h + n) : ℕ) : ZMod p)) kp) ∧
+    ∀ kp : ℕ, 0 < kp →
+      Function.Periodic (fun n : ℕ => ((Nat.fermatNumber (v + n) : ℕ) : ZMod p)) kp →
+        k ∣ kp := by
 -- proof
   have hwpos : 0 < w := hw.pos
   have _neW : NeZero w := ⟨hwpos.ne'⟩
@@ -41,13 +47,6 @@ lemma fermatNumber_mod_prime_exact_preperiod_period
     have e : Nat.fermatNumber n = 2 ^ 2 ^ n + 1 := rfl
     rw [e]
     simp
-  show Function.Periodic (fun n : ℕ => ((Nat.fermatNumber (v + n) : ℕ) : ZMod p))
-    (orderOf (2 : ZMod w)) ∧
-    (∀ h < v, ¬∃ kp : ℕ, 0 < kp ∧
-      Function.Periodic (fun n : ℕ => ((Nat.fermatNumber (h + n) : ℕ) : ZMod p)) kp) ∧
-    ∀ kp : ℕ, 0 < kp →
-      Function.Periodic (fun n : ℕ => ((Nat.fermatNumber (v + n) : ℕ) : ZMod p)) kp →
-        orderOf (2 : ZMod w) ∣ kp
   have hk1 : (2 : ZMod w) ^ orderOf (2 : ZMod w) = 1 := pow_orderOf_eq_one _
   have h2kcast : ((2 ^ orderOf (2 : ZMod w) : ℕ) : ZMod w) = ((1 : ℕ) : ZMod w) := by
     have c1 : ((2 ^ orderOf (2 : ZMod w) : ℕ) : ZMod w)

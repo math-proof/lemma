@@ -27,7 +27,7 @@ private lemma le_raiseField_eq
   {xi : NonnegativeField d}
   {x : Site d}
 -- given
-  (r : ℝ≥0) :
+  (r : NNReal) :
 -- imply
   xi ≤ raiseField xi x r := by
 -- proof
@@ -58,7 +58,7 @@ private lemma siteCluster_raise_eq_of_infinite_of_not_mem_eq
   {xi : NonnegativeField d}
   {x y : Site d}
 -- given
-  (r : ℝ≥0)
+  (r : NNReal)
   (hinf : (siteCluster (T (raiseField xi x r)) y).Infinite)
   (hx : x ∉ siteCluster (T (raiseField xi x r)) y) :
 -- imply
@@ -74,7 +74,7 @@ private lemma raiseFields_empty_eq
   {d : ℕ}
   {xi : NonnegativeField d}
 -- given
-  (r : Site d → ℝ≥0) :
+  (r : Site d → NNReal) :
 -- imply
   raiseFields xi ∅ r = xi := by
 -- proof
@@ -90,7 +90,7 @@ private lemma raiseFields_insert_eq
   {S : Finset (Site d)}
   {x : Site d}
 -- given
-  (r : Site d → ℝ≥0)
+  (r : Site d → NNReal)
   (hx : x ∉ S) :
 -- imply
   raiseFields xi (insert x S) r = raiseField (raiseFields xi S r) x (r x) := by
@@ -106,7 +106,7 @@ private lemma le_raiseFields_eq
   {xi : NonnegativeField d}
   {S : Finset (Site d)}
 -- given
-  (r : Site d → ℝ≥0) :
+  (r : Site d → NNReal) :
 -- imply
   xi ≤ raiseFields xi S r := by
 -- proof
@@ -122,7 +122,7 @@ private lemma raiseFields_mono_set_eq
   {S U : Finset (Site d)}
 -- given
   (hSU : S ⊆ U)
-  (r : Site d → ℝ≥0) :
+  (r : Site d → NNReal) :
 -- imply
   raiseFields xi S r ≤ raiseFields xi U r := by
 -- proof
@@ -139,7 +139,7 @@ private lemma siteCluster_raiseFields_eq_of_infinite_of_avoids_eq
   {S : Finset (Site d)}
   {y : Site d}
 -- given
-  (r : Site d → ℝ≥0)
+  (r : Site d → NNReal)
   (hinf : (siteCluster (T xi) y).Infinite)
   (havoid : ∀ x ∈ S, x ∉ siteCluster (T (raiseFields xi S r)) y) :
 -- imply

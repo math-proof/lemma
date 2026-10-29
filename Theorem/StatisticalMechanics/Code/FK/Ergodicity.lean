@@ -28,7 +28,7 @@ open ConfigSpace
 variable {E G : Type*} [Group G] [MulAction G E]
 
 
-theorem bernoulli_iIndepFun (p : ℝ≥0) (hp : p ≤ 1) :
+theorem bernoulli_iIndepFun (p : NNReal) (hp : p ≤ 1) :
     iIndepFun (fun (e : E) (ω : ConfigSpace E) => ω e)
       (bernoulliProductMeasure (E := E) p hp) := by
   unfold bernoulliProductMeasure
@@ -36,7 +36,7 @@ theorem bernoulli_iIndepFun (p : ℝ≥0) (hp : p ≤ 1) :
     (X := fun _ (b : Bool) => b) (fun _ => measurable_id)
 
 
-theorem bernoulli_cylinder_factor (p : ℝ≥0) (hp : p ≤ 1) {s t : Finset E}
+theorem bernoulli_cylinder_factor (p : NNReal) (hp : p ≤ 1) {s t : Finset E}
     {S : Set (Π i : s, Bool)} {T : Set (Π i : t, Bool)}
     (hS : MeasurableSet S) (hT : MeasurableSet T) (hd : Disjoint s t) :
     bernoulliProductMeasure (E := E) p hp (cylinder s S ∩ cylinder t T)
@@ -91,7 +91,7 @@ theorem shift_preimage_cylinder [DecidableEq E] (g : G) (t : Finset E)
 
 theorem bernoulli_mixing_cylinder [Countable E] [DecidableEq E] [Infinite G]
     (hfin : ∀ a b : E, {g : G | g • a = b}.Finite)
-    (p : ℝ≥0) (hp : p ≤ 1) (s t : Finset E)
+    (p : NNReal) (hp : p ≤ 1) (s t : Finset E)
     (S : Set (Π i : s, Bool)) (T : Set (Π i : t, Bool))
     (hS : MeasurableSet S) (hT : MeasurableSet T) :
     ∃ g : G,
@@ -139,8 +139,8 @@ theorem generateFrom_cylinders_eq :
   generateFrom_measurableCylinders.symm
 
 
-theorem exists_cylinder_symmDiff_lt [Countable E] (p : ℝ≥0) (hp : p ≤ 1)
-    {A : Set (ConfigSpace E)} (hA : MeasurableSet A) {ε : ℝ≥0∞} (hε : 0 < ε) :
+theorem exists_cylinder_symmDiff_lt [Countable E] (p : NNReal) (hp : p ≤ 1)
+    {A : Set (ConfigSpace E)} (hA : MeasurableSet A) {ε : ENNReal} (hε : 0 < ε) :
     ∃ C ∈ measurableCylinders (fun _ : E => Bool),
       bernoulliProductMeasure (E := E) p hp (C ∆ A) < ε := by
   refine exists_measure_symmDiff_lt_of_generateFrom_isSetRing
@@ -158,7 +158,7 @@ theorem cylinder_eq_of_mem
 
 theorem bernoulli_ergodic [Countable E] [Infinite G]
     (hfin : ∀ a b : E, {g : G | g • a = b}.Finite)
-    (p : ℝ≥0) (hp : p ≤ 1) {s : Set (ConfigSpace E)} (hs : MeasurableSet s)
+    (p : NNReal) (hp : p ≤ 1) {s : Set (ConfigSpace E)} (hs : MeasurableSet s)
     (hinv : ∀ g : G, (shift g : ConfigSpace E → ConfigSpace E) ⁻¹' s = s) :
     bernoulliProductMeasure (E := E) p hp s = 0 ∨
       bernoulliProductMeasure (E := E) p hp s
@@ -282,7 +282,7 @@ theorem bernoulli_ergodic [Countable E] [Infinite G]
 
 theorem bernoulli_isErgodic [Countable E] [Infinite G]
     (hinj : ∀ a : E, Function.Injective (fun g : G => g • a))
-    (p : ℝ≥0) (hp : p ≤ 1) :
+    (p : NNReal) (hp : p ≤ 1) :
     ConfigSpace.IsErgodic (G := G) (bernoulliProductMeasure (E := E) p hp) := by
   refine ⟨Percolation.bernoulli_translationInvariant (E := E) (G := G) p hp, ?_⟩
   intro s hs hinv

@@ -349,7 +349,7 @@ lemma isDVRUnramified_implies_formallyUnramified
 -- proof
   have hsep := isDVRUnramified_isSeparable A K B L hunr
   exact Algebra.FormallyUnramified.of_isSeparable K L
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 999999 in
 
 /--
 [cyclotomic_dvr_unramified](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/LocalExtensions.lean)
@@ -631,7 +631,7 @@ lemma irreducible_of_mem_not_sq'
   have hassoc : Associated p x := ⟨hIsUnit.unit, by rw [hu]; simp [IsUnit.unit_spec]⟩
   exact Associated.irreducible hassoc hp.irreducible
 omit [Module.Finite A B] in
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 999999 in
 
 /--
 [uniformizer_in_adjoin](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/LocalExtensions.lean)

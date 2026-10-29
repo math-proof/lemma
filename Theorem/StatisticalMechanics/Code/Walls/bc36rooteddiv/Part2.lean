@@ -212,7 +212,7 @@ theorem bc36_Tcount_le_boundary_of_selfDownArm (ω : ConfigSpace (Sym2 (Site d))
     (bc36_rootedArmDivergence_of_selfDownArm ω n h)
 
 
-theorem bc36_burton_keane_bernoulli_of_selfDownArm (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc36_burton_keane_bernoulli_of_selfDownArm (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc36_SelfDownArm ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

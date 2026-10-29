@@ -23,7 +23,7 @@ variable {Ω : Type*} {m : MeasurableSpace Ω}
 
 /-- The process obtained from `B` by shifting time by the stopping time `T` and
 recentering at `B(T)`: `t ↦ B(T + t) - B(T)`. -/
-def stoppedShiftedProcess (B : ℝ≥0 → Ω → ℝ) (T : Ω → ℝ≥0∞) : ℝ≥0 → Ω → ℝ :=
+def stoppedShiftedProcess (B : NNReal → Ω → ℝ) (T : Ω → ENNReal) : NNReal → Ω → ℝ :=
   fun t ω => B ((T ω).toNNReal + t) ω - B ((T ω).toNNReal) ω
 
 end BrownianMotion

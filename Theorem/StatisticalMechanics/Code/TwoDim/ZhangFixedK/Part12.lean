@@ -62,7 +62,7 @@ theorem zfk_percolationProbability_zero_of_matched_half
       halfMeasure.real
         (StatMech.RSW.Box.horizontalCrossingEvent
           (-(N : ℤ)) ((N : ℤ) + 1) (-(N : ℤ)) (N : ℤ)) ≤ (1 : ℝ) / 2) :
-    Universality.percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 := by
+    Universality.percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 := by
   unfold Universality.percolationProbability
   have hr := zfk_thetaReal_zero_of_matched_half hpa hhalf
   have hle : halfMeasure (Universality.percolationEvent 2) ≤ 1 :=
@@ -74,7 +74,7 @@ theorem zfk_percolationProbability_zero_of_matched_half
 theorem zfk_percolationProbability_zero_of_faithful_exclusive
     (hpa : PositivelyAssociated halfMeasure)
     (hexcl : ∀ N : ℕ, zfk_FaithfulMatchedExclusive N) :
-    Universality.percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 :=
+    Universality.percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 :=
   zfk_percolationProbability_zero_of_matched_half hpa
     (fun N => zfk_matched_half_of_faithful_exclusive N (hexcl N))
 

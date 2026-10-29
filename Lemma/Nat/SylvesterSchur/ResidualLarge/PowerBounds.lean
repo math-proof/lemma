@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open Nat Nat.SylvesterSchur
+open Nat
 
 
 namespace Nat.SylvesterSchur.Internal
@@ -55,7 +55,7 @@ namespace Nat.SylvesterSchur.Internal
 -/
 @[path]
 lemma two_pow_nineteen_mul_div_twelve_le_three_pow
-  {n : ℕ} :
+  (n : ℕ) :
 -- imply
   2 ^ (19 * (n / 12)) ≤ 3 ^ n := by
 -- proof
@@ -66,9 +66,9 @@ lemma two_pow_nineteen_mul_div_twelve_le_three_pow
     exact Nat.mul_div_le n 12
   calc
     2 ^ (19 * (n / 12)) = (2 ^ 19) ^ m := by
-      dsimp [m]
-      rw [pow_mul]
-      norm_num
+        dsimp [m]
+        rw [pow_mul]
+        norm_num
     _ ≤ (3 ^ 12) ^ m := Nat.pow_le_pow_left hbase m
     _ = 3 ^ (12 * m) := by rw [pow_mul]
     _ ≤ 3 ^ n := Nat.pow_le_pow_right (by norm_num : 0 < 3) hm
@@ -98,7 +98,7 @@ lemma four_pow_mul_two_pow_mul_four_pow_lt_three_pow_mul_four_pow
   have hright : 2 ^ (19 * (i / 12) + 2 * n) ≤ 3 ^ i * 4 ^ n := by
     calc
       2 ^ (19 * (i / 12) + 2 * n) = 2 ^ (19 * (i / 12)) * 2 ^ (2 * n) := by
-        rw [pow_add]
+          rw [pow_add]
       _ ≤ 3 ^ i * 2 ^ (2 * n) :=
         Nat.mul_le_mul_right (2 ^ (2 * n)) (two_pow_nineteen_mul_div_twelve_le_three_pow i)
       _ = 3 ^ i * 4 ^ n := by
@@ -110,3 +110,4 @@ end Nat.SylvesterSchur.Internal
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

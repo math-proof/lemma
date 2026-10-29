@@ -3,10 +3,6 @@ import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.EgyptianFraction
 open scoped BigOperators
 open EgyptianFraction
-open IsNondecreasingEgyptian
-open IsStrictEgyptian
-open IsNondecreasingUnderapproximation
-open IsStrictUnderapproximation
 
 
 namespace EgyptianFraction.IsNondecreasingEgyptian
@@ -173,7 +169,7 @@ lemma denominator_ge_two
 -- imply
   2 ≤ a i :=
 -- proof
-  h.isNondecreasingEgyptian.1 i
+  h.1 i
 
 end EgyptianFraction.IsNondecreasingUnderapproximation
 
@@ -191,7 +187,7 @@ lemma monotone
 -- imply
   Monotone a :=
 -- proof
-  h.isNondecreasingEgyptian.2
+  h.2
 
 end EgyptianFraction.IsNondecreasingUnderapproximation
 
@@ -286,7 +282,7 @@ lemma denominator_ge_two
 -- imply
   2 ≤ a i :=
 -- proof
-  h.isStrictEgyptian.1 i
+  h.1 i
 
 end EgyptianFraction.IsStrictUnderapproximation
 
@@ -304,7 +300,7 @@ lemma strictMono
 -- imply
   StrictMono a :=
 -- proof
-  h.isStrictEgyptian.2
+  h.2
 
 end EgyptianFraction.IsStrictUnderapproximation
 
@@ -342,10 +338,10 @@ lemma toIsNondecreasingUnderapproximation
 -- imply
   IsNondecreasingUnderapproximation target a :=
 -- proof
-  ⟨h.nonempty, h.target_pos, h.isStrictEgyptian.toIsNondecreasingEgyptian, h.sum_lt⟩
+  ⟨h.1, h.2.1, ⟨h.2.2.1.1, h.2.2.1.2.monotone⟩, h.2.2.2⟩
 
 end EgyptianFraction.IsStrictUnderapproximation
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

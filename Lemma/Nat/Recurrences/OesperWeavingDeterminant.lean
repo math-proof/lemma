@@ -327,12 +327,16 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma oesper_weaving_three_determinant
-  {k : Nat}
+  (k : Nat)
 -- given
   (hk : 0 < k) :
--- imply
-  let C : Nat -> Int := by
--- proof
+  let C : Nat -> Int := fun j => Finset.sum (Finset.Icc 1 j)
+    (fun i => (-1 : Int) ^ (i + 1) * Nat.fib i);
+  let M : Matrix (Fin 3) (Fin 3) Int := !![2, -1, 0; 0, 0, 1; -1, 0, 2];
+  abs (Matrix.det
+        (((M ^ k) - 1).submatrix (Fin.succAbove (0 : Fin 3))
+          (Fin.succAbove (0 : Fin 3)))) =
+    -(C (2 * k - 2) + 1) * C (2 * k) + C (2 * k - 1) ^ 2 := by
   exact main_unfolded k hk
 
 end MetaMathlibExt

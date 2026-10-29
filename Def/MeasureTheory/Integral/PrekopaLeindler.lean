@@ -37,7 +37,7 @@ inequality holds for every `0 < t < 1` and all measurable `f g h` satisfying
 the pointwise geometric-mean bound. -/
 def PLProp (E : Type*) [Add E] [SMul ℝ E] [MeasurableSpace E]
     (μ : Measure E) : Prop :=
-  ∀ {t : ℝ} (_ : 0 < t) (_ : t < 1) {f g h : E → ℝ≥0∞},
+  ∀ {t : ℝ} (_ : 0 < t) (_ : t < 1) {f g h : E → ENNReal},
     Measurable f → Measurable g → Measurable h →
     (∀ x y : E, f x ^ (1 - t) * g y ^ t ≤ h ((1 - t) • x + t • y)) →
     (∫⁻ x, f x ∂μ) ^ (1 - t) * (∫⁻ x, g x ∂μ) ^ t ≤ ∫⁻ x, h x ∂μ

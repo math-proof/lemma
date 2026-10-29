@@ -11,7 +11,7 @@ open MeasureTheory Set Finset StatMech StatMech.Sharpness
 private lemma pivotalProb_le_union_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B₁ C₁ B₂ C₂ : Set (ConfigSpace E)}
   {e : E}
 -- given
@@ -35,7 +35,7 @@ private lemma pivotalProb_connEvent_le_eq
   [DecidableEq E]
   [Fintype V]
   [DecidableEq V]
-  {p : ℝ≥0}
+  {p : NNReal}
   {G : SimpleGraph V}
   {A : Set V}
   {u : V}
@@ -60,7 +60,7 @@ private lemma deriv_prob_connEvent_le_sum_eq
   [DecidableEq E]
   [Fintype V]
   [DecidableEq V]
-  {p : ℝ≥0}
+  {p : NNReal}
   {G : SimpleGraph V}
   {A : Set V}
   {u : V}

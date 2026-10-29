@@ -19,7 +19,7 @@ private lemma log_le_half_sub_inv {x : ℝ} (hx : 1 ≤ x) :
     · intro y hy
       have hypos : 0 < y := zero_lt_one.trans_le hy
       have hderiv : HasDerivAt f
-        (y⁻¹ - (1 - -(y ^ 2)⁻¹) / 2) y := by
+          (y⁻¹ - (1 - -(y ^ 2)⁻¹) / 2) y := by
         exact (Real.hasDerivAt_log hypos.ne').sub
           (((hasDerivAt_id y).sub (hasDerivAt_inv hypos.ne')).div_const 2)
       exact hderiv.continuousAt.continuousWithinAt
@@ -33,7 +33,7 @@ private lemma log_le_half_sub_inv {x : ℝ} (hx : 1 ≤ x) :
       have hy' := interior_subset hy
       have hypos : 0 < y := zero_lt_one.trans_le hy'
       have hderiv : HasDerivAt f
-        (y⁻¹ - (1 - -(y ^ 2)⁻¹) / 2) y := by
+          (y⁻¹ - (1 - -(y ^ 2)⁻¹) / 2) y := by
         exact (Real.hasDerivAt_log hypos.ne').sub
           (((hasDerivAt_id y).sub (hasDerivAt_inv hypos.ne')).div_const 2)
       rw [hderiv.deriv]
@@ -62,26 +62,25 @@ private lemma harmonicLowerApprox_mono : Monotone harmonicLowerApprox := by
       norm_num)
   rw [Real.log_div (by positivity) (by positivity)] at hlog
   have hharm : (harmonic (n + 2) : ℝ) =
-    harmonic (n + 1) + 1 / (n + 2 : ℝ) := by
+      harmonic (n + 1) + 1 / (n + 2 : ℝ) := by
     rw [show n + 2 = (n + 1) + 1 by omega, harmonic_succ]
     push_cast
     ring
   rw [harmonicLowerApprox, harmonicLowerApprox, hharm]
   norm_num only [Nat.cast_add, Nat.cast_one]
   have hid :
-    (((n + 2 : ℝ) / (n + 1 : ℝ) -
-      ((n + 2 : ℝ) / (n + 1 : ℝ))⁻¹) / 2) =
-      1 / (2 * (n + 1 : ℝ)) + 1 / (2 * (n + 2 : ℝ)) := by
+      (((n + 2 : ℝ) / (n + 1 : ℝ) -
+        ((n + 2 : ℝ) / (n + 1 : ℝ))⁻¹) / 2) =
+        1 / (2 * (n + 1 : ℝ)) + 1 / (2 * (n + 2 : ℝ)) := by
     field_simp
     ring
   rw [hid] at hlog
   have hhalf :
-    1 / (n + 2 : ℝ) - 1 / (2 * (n + 2 : ℝ)) = 1 / (2 * (n + 2 : ℝ)) := by
+      1 / (n + 2 : ℝ) - 1 / (2 * (n + 2 : ℝ)) = 1 / (2 * (n + 2 : ℝ)) := by
     field_simp
     ring
   rw [show (n : ℝ) + 1 + 1 = (n : ℝ) + 2 by ring]
   linarith
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -95,7 +94,7 @@ private lemma tendsto_harmonicLowerApprox :
     (nhds Real.eulerMascheroniConstant) := by
   have hmain := Real.tendsto_harmonic_sub_log.comp (Filter.tendsto_add_atTop_nat 1)
   have hinv : Filter.Tendsto (fun n : ℕ ↦ (1 / (2 * (n + 1 : ℝ)) : ℝ))
-    Filter.atTop (nhds 0) := by
+      Filter.atTop (nhds 0) := by
     simpa [one_div, mul_inv, mul_comm] using
       (tendsto_one_div_add_atTop_nhds_zero_nat.const_mul (1 / 2 : ℝ))
   change Filter.Tendsto (fun n : ℕ ↦
@@ -105,7 +104,6 @@ private lemma tendsto_harmonicLowerApprox :
   · funext n
     simp only [Function.comp_apply, Nat.cast_add, Nat.cast_one]
   · simp
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -140,7 +138,7 @@ private lemma harmonicLowerError_antitone : Antitone harmonicLowerError := by
   have hpos : (0 : ℝ) < 1 / (n + 1 : ℝ) := by positivity
   have hlog := Real.lt_log_one_add_of_pos hpos
   have hharm : (harmonic (n + 2) : ℝ) =
-    harmonic (n + 1) + 1 / (n + 2 : ℝ) := by
+      harmonic (n + 1) + 1 / (n + 2 : ℝ) := by
     rw [show n + 2 = (n + 1) + 1 by omega, harmonic_succ]
     push_cast
     ring
@@ -148,26 +146,25 @@ private lemma harmonicLowerError_antitone : Antitone harmonicLowerError := by
   norm_num only [Nat.cast_add, Nat.cast_one]
   rw [show (n : ℝ) + 1 + 1 = (n : ℝ) + 2 by ring]
   have hlog' : Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1) =
-    Real.log (1 + 1 / ((n : ℝ) + 1)) := by
+      Real.log (1 + 1 / ((n : ℝ) + 1)) := by
     rw [← Real.log_div (by positivity) (by positivity)]
     congr 1
     field_simp
     ring
   rw [← hlog'] at hlog
   have hrat : 1 / ((n : ℝ) + 2) + 1 / (2 * ((n : ℝ) + 1) + 1) -
-    1 / (2 * ((n : ℝ) + 2) + 1) ≤ 2 / (2 * ((n : ℝ) + 1) + 1) := by
+      1 / (2 * ((n : ℝ) + 2) + 1) ≤ 2 / (2 * ((n : ℝ) + 1) + 1) := by
     field_simp
     nlinarith [show (0 : ℝ) ≤ n by positivity]
   have hlog'' : 2 / (2 * ((n : ℝ) + 1) + 1) <
-    Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1) := by
+      Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1) := by
     calc
       2 / (2 * ((n : ℝ) + 1) + 1) =
-        2 * (1 / ((n : ℝ) + 1)) / (1 / ((n : ℝ) + 1) + 2) := by
+          2 * (1 / ((n : ℝ) + 1)) / (1 / ((n : ℝ) + 1) + 2) := by
         field_simp
         ring
       _ < _ := hlog
   linarith
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -181,7 +178,7 @@ private lemma tendsto_harmonicLowerError :
     (nhds Real.eulerMascheroniConstant) := by
   have hmain := Real.tendsto_harmonic_sub_log.comp (Filter.tendsto_add_atTop_nat 1)
   have hinv : Filter.Tendsto
-    (fun n : ℕ ↦ (1 / (2 * (n + 1 : ℝ) + 1) : ℝ)) Filter.atTop (nhds 0) := by
+      (fun n : ℕ ↦ (1 / (2 * (n + 1 : ℝ) + 1) : ℝ)) Filter.atTop (nhds 0) := by
     apply squeeze_zero (g := fun n : ℕ ↦ (1 / (n + 1 : ℝ)))
     · intro n
       positivity
@@ -198,7 +195,6 @@ private lemma tendsto_harmonicLowerError :
   · funext n
     simp only [Function.comp_apply, Nat.cast_add, Nat.cast_one]
   · simp
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -217,7 +213,6 @@ private lemma harmonic_ge_log_add_gamma_add_lower (n : ℕ) (hn : 0 < n) :
   have hnCast : ((n - 1 : ℕ) : ℝ) + 1 = (n : ℝ) := by exact_mod_cast hnEq
   rw [hnEq, hnCast] at hle
   linarith
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -239,7 +234,6 @@ private lemma harmonic_sub_lower (a b k : ℕ) (ha : 0 < a) (hk : 0 < k)
         rw [Real.log_mul (by positivity) (by positivity)]
       _ ≤ Real.log b := Real.log_le_log (by positivity) (by exact_mod_cast hab)
   linarith
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -277,7 +271,6 @@ private lemma harmonic_sub_upper_two (t w : ℕ) (ht : 0 < t) (hw : 0 < w)
           (show (0 : ℝ) < 1 + 1 / (2 * (t : ℝ)) by positivity)
         linarith
   linarith
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -295,6 +288,7 @@ private lemma gamma_gt_fiftySeven :
   have h2 := Real.log_two_lt_d9
   norm_num at h ⊢
   linarith
+
 open scoped BigOperators
 
 end MathlibExt.NumberTheory.PrimeCounting
@@ -309,7 +303,6 @@ private lemma invNatHom_prime_lt_one {p : ℕ} (hp : p.Prime) :
   ‖invNatHom p‖ < 1 := by
   rw [show invNatHom p = (p : ℝ)⁻¹ by rfl, norm_inv, Real.norm_natCast]
   exact inv_lt_one_of_one_lt₀ (by exact_mod_cast hp.one_lt)
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -327,7 +320,6 @@ private lemma radical_squarefree (n : ℕ) :
         (Nat.prime_of_mem_primeFactors hq)).mpr hpq)
   · intro p hp
     exact (Nat.prime_of_mem_primeFactors hp).squarefree
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -349,8 +341,8 @@ private lemma factored_inv_sum (r : ℕ) :
   have hscaled := hsum.mul_left (r : ℝ)⁻¹
   simp only [invNatHom, MonoidHom.coe_mk, OneHom.coe_mk] at hscaled
   have hvalue :
-    (r : ℝ)⁻¹ * ∏ p ∈ r.primeFactors, (1 - (p : ℝ)⁻¹)⁻¹ =
-      (Nat.totient r : ℝ)⁻¹ := by
+      (r : ℝ)⁻¹ * ∏ p ∈ r.primeFactors, (1 - (p : ℝ)⁻¹)⁻¹ =
+        (Nat.totient r : ℝ)⁻¹ := by
     rw [Finset.prod_inv_distrib]
     have htot := congrArg (fun x : ℚ ↦ (x : ℝ))
       (Nat.totient_eq_mul_prod_factors r)
@@ -417,7 +409,8 @@ private lemma radical_fiber_le (y r : ℕ) (hr : 0 < r) :
       exact dvd_mul_of_dvd_right hpm r
     have hpFact : p ∈ n.primeFactors :=
       Nat.mem_primeFactors.mpr ⟨hp, hpmn, hnpos.ne'⟩
-    rwa [← hnData.2, radical_primeFactors]
+    rw [← hnData.2, radical_primeFactors]
+    exact hpFact
   let e : {n // n ∈ A} → Nat.factoredNumbers r.primeFactors := fun n ↦
     ⟨n / r, hmem n n.2⟩
   have he : Function.Injective e := by
@@ -436,7 +429,7 @@ private lemma radical_fiber_le (y r : ℕ) (hr : 0 < r) :
   have hsum := factored_inv_sum r
   calc
     (∑ n ∈ (Finset.Icc 1 y).filter (fun n ↦ radical n = r), (n : ℝ)⁻¹) =
-      ∑ m ∈ Finset.image e A.attach, ((r : ℝ) * (m : ℕ))⁻¹ := by
+        ∑ m ∈ Finset.image e A.attach, ((r : ℝ) * (m : ℕ))⁻¹ := by
       rw [show (Finset.Icc 1 y).filter (fun n ↦ radical n = r) = A by rfl]
       rw [Finset.sum_image he.injOn]
       calc
@@ -451,10 +444,9 @@ private lemma radical_fiber_le (y r : ℕ) (hr : 0 < r) :
           change ((n : ℕ) : ℝ) = (r : ℝ) * (((n : ℕ) / r : ℕ) : ℝ)
           exact_mod_cast (Nat.mul_div_cancel' hdiv).symm
     _ ≤ ∑' m : Nat.factoredNumbers r.primeFactors,
-      ((r : ℝ) * (m : ℕ))⁻¹ := by
+        ((r : ℝ) * (m : ℕ))⁻¹ := by
       exact hsum.summable.sum_le_tsum _ (fun _ _ ↦ by positivity)
     _ = (Nat.totient r : ℝ)⁻¹ := hsum.tsum_eq
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -479,7 +471,7 @@ private lemma coprimeSixHarmonic_le_squarefreeTotient (y : ℕ) :
     rfl
   have hIR : I ⊆ R := by
     intro r hrI
-    obtain ⟨n, hnC, rfl⟩ := Finset.mem_image.mp hrI
+    rcases Finset.mem_image.mp hrI with ⟨n, hnC, rfl⟩
     have hnData := Finset.mem_filter.mp hnC
     have hnRange := Finset.mem_Icc.mp hnData.1
     have hnpos : 0 < n := by omega
@@ -501,7 +493,7 @@ private lemma coprimeSixHarmonic_le_squarefreeTotient (y : ℕ) :
         exact (Finset.mem_Icc.mp (Finset.mem_filter.mp hrR).1).1
       calc
         F r ≤ ∑ n ∈ (Finset.Icc 1 y).filter (fun n ↦ radical n = r),
-          (n : ℝ)⁻¹ := by
+            (n : ℝ)⁻¹ := by
           apply Finset.sum_le_sum_of_subset_of_nonneg
           · intro n hn
             have hnData := Finset.mem_filter.mp hn
@@ -525,7 +517,6 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 private lemma mem_sixMultipliers {m : ℕ} (hm : m ∈ sixMultipliers) :
   m = 1 ∨ m = 2 ∨ m = 3 ∨ m = 6 := by
   simpa only [sixMultipliers, Finset.mem_insert, Finset.mem_singleton] using hm
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -535,8 +526,7 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 -/
 @[path]
 private lemma sixMultiplier_dvd {m : ℕ} (hm : m ∈ sixMultipliers) : m ∣ 6 := by
-  obtain rfl | rfl | rfl | rfl <;> norm_num := mem_sixMultipliers hm
-
+  rcases mem_sixMultipliers hm with rfl | rfl | rfl | rfl <;> norm_num
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -547,13 +537,12 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 @[path]
 private lemma sixMultiplier_squarefree {m : ℕ} (hm : m ∈ sixMultipliers) :
   Squarefree m := by
-  obtain rfl | rfl | rfl | rfl := mem_sixMultipliers hm
+  rcases mem_sixMultipliers hm with rfl | rfl | rfl | rfl
   · exact squarefree_one
   · exact Nat.prime_two.squarefree
   · exact Nat.prime_three.squarefree
   · exact (Nat.squarefree_mul (by norm_num)).mpr
-    ⟨Nat.prime_two.squarefree, Nat.prime_three.squarefree⟩
-
+      ⟨Nat.prime_two.squarefree, Nat.prime_three.squarefree⟩
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -564,7 +553,7 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 @[path]
 private lemma gcd_mul_six {m r : ℕ} (hm : m ∈ sixMultipliers)
   (hr : Nat.Coprime r 6) : Nat.gcd (m * r) 6 = m := by
-  obtain rfl | rfl | rfl | rfl := mem_sixMultipliers hm
+  rcases mem_sixMultipliers hm with rfl | rfl | rfl | rfl
   · simpa using hr.gcd_eq_one
   · have hr3 : Nat.Coprime r 3 := hr.of_dvd_right (by norm_num)
     calc
@@ -577,9 +566,9 @@ private lemma gcd_mul_six {m r : ℕ} (hm : m ∈ sixMultipliers)
       _ = 3 * Nat.gcd r 2 := Nat.gcd_mul_left 3 r 2
       _ = 3 := by rw [hr2.gcd_eq_one]
   · calc
-    Nat.gcd (6 * r) 6 = Nat.gcd (6 * r) (6 * 1) := by norm_num
-    _ = 6 * Nat.gcd r 1 := Nat.gcd_mul_left 6 r 1
-    _ = 6 := by simp
+      Nat.gcd (6 * r) 6 = Nat.gcd (6 * r) (6 * 1) := by norm_num
+      _ = 6 * Nat.gcd r 1 := Nat.gcd_mul_left 6 r 1
+      _ = 6 := by simp
 
 end MathlibExt.NumberTheory.PrimeCounting
 
@@ -611,7 +600,7 @@ private lemma squarefreeTotientSum_ge_multiplierSum (z : ℕ) :
         gcd_mul_six hqProd.1 hqData.2.2.1] using hgcd
     apply Prod.ext hm
     have hmpos : 0 < p.1 := by
-      obtain h | h | h | h <;> omega := mem_sixMultipliers hpProd.1
+      rcases mem_sixMultipliers hpProd.1 with h | h | h | h <;> omega
     apply Nat.eq_of_mul_eq_mul_left hmpos
     simpa only [e, hm] using hpq
   have heA : Finset.image e P ⊆ A := by
@@ -620,7 +609,7 @@ private lemma squarefreeTotientSum_ge_multiplierSum (z : ℕ) :
     have hpData := Finset.mem_filter.mp hp
     have hpProd := Finset.mem_product.mp hpData.1
     have hmpos : 0 < p.1 := by
-      obtain h | h | h | h <;> omega := mem_sixMultipliers hpProd.1
+      rcases mem_sixMultipliers hpProd.1 with h | h | h | h <;> omega
     have hrpos : 0 < p.2 := (Finset.mem_Icc.mp hpProd.2).1
     have hmr : Nat.Coprime p.1 p.2 :=
       Nat.Coprime.of_dvd_left (sixMultiplier_dvd hpProd.1) hpData.2.2.1.symm
@@ -657,11 +646,11 @@ private lemma squarefreeTotientSum_ge_multiplierSum (z : ℕ) :
   intro m hm
   rw [Finset.mul_sum]
   have hmpos : 0 < m := by
-    obtain h | h | h | h <;> omega := mem_sixMultipliers hm
+    rcases mem_sixMultipliers hm with h | h | h | h <;> omega
   have hsets :
-    (Finset.Icc 1 (z / m)).filter (fun r ↦ Nat.Coprime r 6 ∧ Squarefree r) =
-      (Finset.Icc 1 z).filter (fun r ↦
-        r ≤ z / m ∧ Nat.Coprime r 6 ∧ Squarefree r) := by
+      (Finset.Icc 1 (z / m)).filter (fun r ↦ Nat.Coprime r 6 ∧ Squarefree r) =
+        (Finset.Icc 1 z).filter (fun r ↦
+          r ≤ z / m ∧ Nat.Coprime r 6 ∧ Squarefree r) := by
     ext r
     simp only [Finset.mem_filter, Finset.mem_Icc]
     constructor
@@ -671,13 +660,12 @@ private lemma squarefreeTotientSum_ge_multiplierSum (z : ℕ) :
       exact ⟨⟨h.1.1, h.2.1⟩, h.2.2.1, h.2.2.2⟩
   calc
     (∑ r ∈ (Finset.Icc 1 (z / m)).filter
-      (fun r ↦ Nat.Coprime r 6 ∧ Squarefree r),
-      (Nat.totient m : ℝ)⁻¹ * (Nat.totient r : ℝ)⁻¹) =
+        (fun r ↦ Nat.Coprime r 6 ∧ Squarefree r),
+        (Nat.totient m : ℝ)⁻¹ * (Nat.totient r : ℝ)⁻¹) =
       ∑ r ∈ (Finset.Icc 1 z).filter (fun r ↦
         r ≤ z / m ∧ Nat.Coprime r 6 ∧ Squarefree r),
         (Nat.totient m : ℝ)⁻¹ * (Nat.totient r : ℝ)⁻¹ := by rw [hsets]
     _ = _ := Finset.sum_filter _ _
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -693,10 +681,10 @@ private lemma squarefreeTotientSum_ge_harmonicCombination (z : ℕ) :
     squarefreeTotientSum z := by
   apply le_trans ?_ (squarefreeTotientSum_ge_multiplierSum z)
   have hsum :
-    (∑ m ∈ sixMultipliers, (Nat.totient m : ℝ)⁻¹ *
-      coprimeSixHarmonic (z / m)) ≤
-    ∑ m ∈ sixMultipliers, (Nat.totient m : ℝ)⁻¹ *
-      coprimeSquarefreeTotientSum (z / m) := by
+      (∑ m ∈ sixMultipliers, (Nat.totient m : ℝ)⁻¹ *
+        coprimeSixHarmonic (z / m)) ≤
+      ∑ m ∈ sixMultipliers, (Nat.totient m : ℝ)⁻¹ *
+        coprimeSquarefreeTotientSum (z / m) := by
     apply Finset.sum_le_sum
     intro m hm
     exact mul_le_mul_of_nonneg_left
@@ -712,7 +700,6 @@ private lemma squarefreeTotientSum_ge_harmonicCombination (z : ℕ) :
   norm_num [hphi2, hphi3, hphi6]
   ring_nf
   rfl
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -744,8 +731,8 @@ private lemma multiplesInvSum (n d : ℕ) (hd : 0 < d) :
     simp only [Finset.mem_filter, Finset.mem_Icc, Nat.dvd_mul_right]
     constructor
     · exact ⟨Nat.mul_pos hd (by omega), by
-      rw [mul_comm]
-      exact (Nat.le_div_iff_mul_le hd).mp hj.2⟩
+        rw [mul_comm]
+        exact (Nat.le_div_iff_mul_le hd).mp hj.2⟩
     · simp
   · intro k hk
     simp only [Finset.mem_filter] at hk
@@ -757,7 +744,6 @@ private lemma multiplesInvSum (n d : ℕ) (hd : 0 < d) :
       _ = (d : ℝ)⁻¹ * ((k / d : ℕ) : ℝ)⁻¹ := by
         push_cast
         rw [mul_inv]
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -785,17 +771,17 @@ private lemma coprimeSixHarmonic_eq (n : ℕ) : coprimeSixHarmonic n =
     (1 / 3 : ℝ) * harmonic (n / 3) + (1 / 6 : ℝ) * harmonic (n / 6) := by
   rw [coprimeSixHarmonic, Finset.sum_filter]
   have hpoint (k : ℕ) :
-    (if Nat.Coprime k 6 then (k : ℝ)⁻¹ else 0) =
-      (k : ℝ)⁻¹ - (if 2 ∣ k then (k : ℝ)⁻¹ else 0) -
-        (if 3 ∣ k then (k : ℝ)⁻¹ else 0) +
-          (if 6 ∣ k then (k : ℝ)⁻¹ else 0) := by
+      (if Nat.Coprime k 6 then (k : ℝ)⁻¹ else 0) =
+        (k : ℝ)⁻¹ - (if 2 ∣ k then (k : ℝ)⁻¹ else 0) -
+          (if 3 ∣ k then (k : ℝ)⁻¹ else 0) +
+            (if 6 ∣ k then (k : ℝ)⁻¹ else 0) := by
     simp only [coprimeSix_iff]
     by_cases h2 : 2 ∣ k <;> by_cases h3 : 3 ∣ k <;>
       simp only [h2, h3, not_true_eq_false, not_false_eq_true, and_self,
         false_and, ite_false, ite_true]
     · have h6 : 6 ∣ k := by
-      rw [show 6 = 2 * 3 by norm_num]
-      exact Nat.Coprime.mul_dvd_of_dvd_of_dvd (by norm_num) h2 h3
+        rw [show 6 = 2 * 3 by norm_num]
+        exact Nat.Coprime.mul_dvd_of_dvd_of_dvd (by norm_num) h2 h3
       simp [h6]
     all_goals
       have h6 : ¬6 ∣ k := by
@@ -830,7 +816,6 @@ private lemma btHarmonicCombination_sub (z : ℕ) :
   simp only [Nat.div_div_eq_div_mul]
   norm_num
   ring
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -866,47 +851,47 @@ private lemma btHarmonicCombination_sub_gt_half (z : ℕ) (hz : 100 ≤ z) :
   have hUV := harmonic_sub_lower V U 2 (by omega) (by norm_num) hVU₁
   have hWT := harmonic_sub_upper_two T W (by omega) (by omega) hTW₂
   have hBAcorr : (-21 / 4000 : ℝ) ≤
-    (1 / 2 : ℝ) * (1 / (2 * (B : ℝ) + 1) - 1 / (2 * (A : ℝ))) := by
+      (1 / 2 : ℝ) * (1 / (2 * (B : ℝ) + 1) - 1 / (2 * (A : ℝ))) := by
     have hinv : 1 / (4 * (A : ℝ) + 3) ≤ 1 / (2 * (B : ℝ) + 1) := by
       apply one_div_le_one_div_of_le (by positivity)
       exact_mod_cast (show 2 * B + 1 ≤ 4 * A + 3 by omega)
     calc
       (-21 / 4000 : ℝ) ≤
-        (1 / 2 : ℝ) * (1 / (4 * A + 3) - 1 / (2 * A)) := by
+          (1 / 2 : ℝ) * (1 / (4 * A + 3) - 1 / (2 * A)) := by
         field_simp
         nlinarith [show (25 : ℝ) ≤ A by exact_mod_cast hA]
       _ ≤ _ := by gcongr
   have hDCcorr : (-21 / 4000 : ℝ) ≤
-    (1 / 6 : ℝ) * (1 / (2 * (D : ℝ) + 1) - 1 / (2 * (C : ℝ))) := by
+      (1 / 6 : ℝ) * (1 / (2 * (D : ℝ) + 1) - 1 / (2 * (C : ℝ))) := by
     have hinv : 1 / (6 * (C : ℝ) + 5) ≤ 1 / (2 * (D : ℝ) + 1) := by
       apply one_div_le_one_div_of_le (by positivity)
       exact_mod_cast (show 2 * D + 1 ≤ 6 * C + 5 by omega)
     calc
       (-21 / 4000 : ℝ) ≤
-        (1 / 6 : ℝ) * (1 / (6 * C + 5) - 1 / (2 * C)) := by
+          (1 / 6 : ℝ) * (1 / (6 * C + 5) - 1 / (2 * C)) := by
         field_simp
         nlinarith [show (11 : ℝ) ≤ C by exact_mod_cast hC]
       _ ≤ _ := by gcongr
   have hUVcorr : (-3 / 1000 : ℝ) ≤
-    (1 / 12 : ℝ) * (1 / (2 * (U : ℝ) + 1) - 1 / (2 * (V : ℝ))) := by
+      (1 / 12 : ℝ) * (1 / (2 * (U : ℝ) + 1) - 1 / (2 * (V : ℝ))) := by
     have hinv : 1 / (4 * (V : ℝ) + 3) ≤ 1 / (2 * (U : ℝ) + 1) := by
       apply one_div_le_one_div_of_le (by positivity)
       exact_mod_cast (show 2 * U + 1 ≤ 4 * V + 3 by omega)
     calc
       (-3 / 1000 : ℝ) ≤
-        (1 / 12 : ℝ) * (1 / (4 * V + 3) - 1 / (2 * V)) := by
+          (1 / 12 : ℝ) * (1 / (4 * V + 3) - 1 / (2 * V)) := by
         field_simp
         nlinarith [show (8 : ℝ) ≤ V by exact_mod_cast hV]
       _ ≤ _ := by gcongr
   have hTcorr : (-7 / 480 : ℝ) ≤ (1 / 12 : ℝ) *
-    (-1 / (2 * (T : ℝ)) - 1 / (2 * (W : ℝ)) + 1 / (2 * T + 1)) := by
+      (-1 / (2 * (T : ℝ)) - 1 / (2 * (W : ℝ)) + 1 / (2 * T + 1)) := by
     have hinv : 1 / (2 * (W : ℝ)) ≤ 1 / (4 * (T : ℝ)) := by
       apply one_div_le_one_div_of_le (by positivity)
       have h : 4 * T ≤ 2 * W := by omega
       exact_mod_cast h
     calc
       (-7 / 480 : ℝ) ≤ (1 / 12 : ℝ) *
-        (-1 / (2 * T) - 1 / (4 * T) + 1 / (2 * T + 1)) := by
+          (-1 / (2 * T) - 1 / (4 * T) + 1 / (2 * T + 1)) := by
         field_simp
         nlinarith [show (2 : ℝ) ≤ T by exact_mod_cast hT]
       _ ≤ _ := by gcongr
@@ -916,27 +901,27 @@ private lemma btHarmonicCombination_sub_gt_half (z : ℕ) (hz : 100 ≤ z) :
   have hWT' := mul_le_mul_of_nonneg_left hWT (show (0 : ℝ) ≤ 1 / 12 by norm_num)
   norm_num only [Nat.cast_ofNat] at hBA' hDC' hUV'
   have hBAfinal : (1 / 2 : ℝ) * Real.log 2 - 21 / 4000 ≤
-    (1 / 2 : ℝ) * ((harmonic B : ℝ) - harmonic A) := by
+      (1 / 2 : ℝ) * ((harmonic B : ℝ) - harmonic A) := by
     linarith
   have hDCfinal : (1 / 6 : ℝ) * Real.log 3 - 21 / 4000 ≤
-    (1 / 6 : ℝ) * ((harmonic D : ℝ) - harmonic C) := by
+      (1 / 6 : ℝ) * ((harmonic D : ℝ) - harmonic C) := by
     linarith
   have hlast : (-3 / 1000 - 7 / 480 : ℝ) ≤
-    (1 / 12 : ℝ) *
-      ((harmonic U : ℝ) - harmonic V - harmonic W + harmonic T) := by
+      (1 / 12 : ℝ) *
+        ((harmonic U : ℝ) - harmonic V - harmonic W + harmonic T) := by
     calc
       (-3 / 1000 - 7 / 480 : ℝ) ≤
-        (1 / 12 : ℝ) * (1 / (2 * (U : ℝ) + 1) - 1 / (2 * (V : ℝ))) +
-        (1 / 12 : ℝ) *
-          (-1 / (2 * (T : ℝ)) - 1 / (2 * (W : ℝ)) + 1 / (2 * T + 1)) :=
+          (1 / 12 : ℝ) * (1 / (2 * (U : ℝ) + 1) - 1 / (2 * (V : ℝ))) +
+          (1 / 12 : ℝ) *
+            (-1 / (2 * (T : ℝ)) - 1 / (2 * (W : ℝ)) + 1 / (2 * T + 1)) :=
         by linarith [hUVcorr, hTcorr]
       _ = (1 / 12 : ℝ) *
-        (Real.log 2 + 1 / (2 * (U : ℝ) + 1) - 1 / (2 * (V : ℝ))) -
-        (1 / 12 : ℝ) *
-          (Real.log 2 + 1 / (2 * (T : ℝ)) + 1 / (2 * (W : ℝ)) -
-            1 / (2 * T + 1)) := by ring
+            (Real.log 2 + 1 / (2 * (U : ℝ) + 1) - 1 / (2 * (V : ℝ))) -
+          (1 / 12 : ℝ) *
+            (Real.log 2 + 1 / (2 * (T : ℝ)) + 1 / (2 * (W : ℝ)) -
+              1 / (2 * T + 1)) := by ring
       _ ≤ (1 / 12 : ℝ) * ((harmonic U : ℝ) - harmonic V) -
-        (1 / 12 : ℝ) * ((harmonic W : ℝ) - harmonic T) :=
+          (1 / 12 : ℝ) * ((harmonic W : ℝ) - harmonic T) :=
         sub_le_sub hUV' hWT'
       _ = _ := by ring
   rw [btHarmonicCombination_sub]
@@ -948,8 +933,8 @@ private lemma btHarmonicCombination_sub_gt_half (z : ℕ) (hz : 100 ≤ z) :
   have h3 := Real.log_three_gt_d9
   norm_num at h2 h3
   have hconst : (1 / 2 : ℝ) <
-    (1 / 2 : ℝ) * Real.log 2 + (1 / 6 : ℝ) * Real.log 3 -
-      21 / 4000 - 21 / 4000 - 3 / 1000 - 7 / 480 := by
+      (1 / 2 : ℝ) * Real.log 2 + (1 / 6 : ℝ) * Real.log 3 -
+        21 / 4000 - 21 / 4000 - 3 / 1000 - 7 / 480 := by
     nlinarith
   apply hconst.trans_le
   linarith [hBAfinal, hDCfinal, hlast]
@@ -983,7 +968,7 @@ private lemma btSquarefree_iff_small (n : ℕ) (hn : n < 100) :
       have hp8 : p ≠ 8 := by intro heq; subst p; norm_num at hp
       have hp9 : p ≠ 9 := by intro heq; subst p; norm_num at hp
       omega
-    obtain rfl | rfl | rfl | rfl := hpCases
+    rcases hpCases with rfl | rfl | rfl | rfl
     · norm_num at hsq
       exact h.1 hsq
     · norm_num at hsq
@@ -992,7 +977,6 @@ private lemma btSquarefree_iff_small (n : ℕ) (hn : n < 100) :
       exact h.2.2.1 hsq
     · norm_num at hsq
       exact h.2.2.2 hsq
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -1004,7 +988,6 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 private lemma btTotient_eq_small (n : ℕ) (hn : n < 100) :
   Nat.totient n = btSmallTotient n := by
   interval_cases n <;> decide
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -1040,10 +1023,9 @@ private lemma squarefreeTotientSum_eq_small (z : ℕ) (hz : z < 100) :
   induction z with
   | zero => simp [squarefreeTotientSum, btSmallSquarefreeTotientSum]
   | succ n ih =>
-    rw [squarefreeTotientSum_succ, btSmallSquarefreeTotientSum, ih (by omega)]
-    simp only [btSquarefree_iff_small (n + 1) (by omega)]
-    rw [btTotient_eq_small (n + 1) (by omega)]
-
+      rw [squarefreeTotientSum_succ, btSmallSquarefreeTotientSum, ih (by omega)]
+      simp only [btSquarefree_iff_small (n + 1) (by omega)]
+      rw [btTotient_eq_small (n + 1) (by omega)]
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -1061,7 +1043,6 @@ private lemma squarefreeTotientSum_mono : Monotone squarefreeTotientSum := by
     simp only [hs, ite_true]
     exact le_add_of_nonneg_right hnonneg
   · simp [hs]
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -1074,12 +1055,11 @@ private lemma btHarmonicMonotone : Monotone (fun n : ℕ ↦ (harmonic n : ℝ))
   apply monotone_nat_of_le_succ
   intro n
   have hsucc : (harmonic (n + 1) : ℝ) =
-    (harmonic n : ℝ) + ((n + 1 : ℕ) : ℝ)⁻¹ := by
+      (harmonic n : ℝ) + ((n + 1 : ℕ) : ℝ)⁻¹ := by
     have h := congrArg (fun q : ℚ ↦ (q : ℝ)) (harmonic_succ n)
     norm_num at h ⊢
   rw [hsucc]
   exact le_add_of_nonneg_right (by positivity)
-set_option maxHeartbeats 2000000 in
 
 end MathlibExt.NumberTheory.PrimeCounting
 
@@ -1093,8 +1073,8 @@ private lemma squarefreeTotientSum_gt_harmonic_small (z : ℕ) (hz : 6 ≤ z)
   (hz' : z < 100) :
   (harmonic z : ℝ) + 57 / 100 < squarefreeTotientSum z := by
   have hblock (L U : ℕ) (hL : L ≤ z) (hU : z ≤ U) (hL100 : L < 100)
-    (hnum : (harmonic U : ℝ) + 57 / 100 < btSmallSquarefreeTotientSum L) :
-    (harmonic z : ℝ) + 57 / 100 < squarefreeTotientSum z := by
+      (hnum : (harmonic U : ℝ) + 57 / 100 < btSmallSquarefreeTotientSum L) :
+      (harmonic z : ℝ) + 57 / 100 < squarefreeTotientSum z := by
     calc
       (harmonic z : ℝ) + 57 / 100 ≤ (harmonic U : ℝ) + 57 / 100 := by
         linarith [btHarmonicMonotone hU]
@@ -1103,52 +1083,51 @@ private lemma squarefreeTotientSum_gt_harmonic_small (z : ℕ) (hz : 6 ≤ z)
       _ ≤ squarefreeTotientSum z := squarefreeTotientSum_mono hL
   by_cases h7 : z ≤ 7
   · exact hblock 6 7 hz h7 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h9 : z ≤ 9
   · exact hblock 8 9 (by omega) h9 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h11 : z ≤ 11
   · exact hblock 10 11 (by omega) h11 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h13 : z ≤ 13
   · exact hblock 12 13 (by omega) h13 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h17 : z ≤ 17
   · exact hblock 14 17 (by omega) h17 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h20 : z ≤ 20
   · exact hblock 18 20 (by omega) h20 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h23 : z ≤ 23
   · exact hblock 21 23 (by omega) h23 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h27 : z ≤ 27
   · exact hblock 24 27 (by omega) h27 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h30 : z ≤ 30
   · exact hblock 28 30 (by omega) h30 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h36 : z ≤ 36
   · exact hblock 31 36 (by omega) h36 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h44 : z ≤ 44
   · exact hblock 37 44 (by omega) h44 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h55 : z ≤ 55
   · exact hblock 45 55 (by omega) h55 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h64 : z ≤ 64
   · exact hblock 56 64 (by omega) h64 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h75 : z ≤ 75
   · exact hblock 65 75 (by omega) h75 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   by_cases h90 : z ≤ 90
   · exact hblock 76 90 (by omega) h90 (by norm_num)
-    (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
+      (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
   exact hblock 91 99 (by omega) (by omega) (by norm_num)
     (by norm_num [btSmallSquarefreeTotientSum, btSmallSquarefree, btSmallTotient, harmonic])
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -1176,7 +1155,6 @@ private lemma eulerMascheroniSeq_hundred_gt_fiftySeven :
   rw [hlog101, hlog100]
   norm_num [harmonic] at ⊢
   linarith
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -1187,9 +1165,9 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 @[path]
 private lemma eulerMascheroniSeq_gt_fiftySeven (z : ℕ) (hz : 100 ≤ z) :
   (57 / 100 : ℝ) < (harmonic z : ℝ) - Real.log (z + 1) := by
-  rwa [← Real.eulerMascheroniSeq]
+  rw [← Real.eulerMascheroniSeq]
+  exact eulerMascheroniSeq_hundred_gt_fiftySeven.trans_le
     (Real.strictMono_eulerMascheroniSeq.monotone hz)
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -1200,9 +1178,9 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 @[path]
 private lemma eulerMascheroniSeq_gt_half (z : ℕ) (hz : 6 ≤ z) :
   (1 / 2 : ℝ) < (harmonic z : ℝ) - Real.log (z + 1) := by
-  rwa [← Real.eulerMascheroniSeq]
+  rw [← Real.eulerMascheroniSeq]
+  exact Real.one_half_lt_eulerMascheroniSeq_six.trans_le
     (Real.strictMono_eulerMascheroniSeq.monotone hz)
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -1223,7 +1201,6 @@ private lemma squarefreeTotientSum_gt_log_succ (z : ℕ) (hz : 6 ≤ z) :
     have hfinite := squarefreeTotientSum_gt_harmonic_small z hz hzlt
     have heuler := eulerMascheroniSeq_gt_half z hz
     linarith
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -1238,9 +1215,9 @@ private lemma moebiusTotientSum_eq_squarefree (z : ℕ) :
     squarefreeTotientSum z := by
   calc
     (∑ r ∈ Finset.Icc 1 z,
-      (((ArithmeticFunction.moebius r : ℤ) : ℝ) ^ 2 / Nat.totient r)) =
-      ∑ r ∈ Finset.Icc 1 z,
-        if Squarefree r then (Nat.totient r : ℝ)⁻¹ else 0 := by
+        (((ArithmeticFunction.moebius r : ℤ) : ℝ) ^ 2 / Nat.totient r)) =
+        ∑ r ∈ Finset.Icc 1 z,
+          if Squarefree r then (Nat.totient r : ℝ)⁻¹ else 0 := by
       apply Finset.sum_congr rfl
       intro r hr
       by_cases hsq : Squarefree r
@@ -1249,7 +1226,7 @@ private lemma moebiusTotientSum_eq_squarefree (z : ℕ) :
         have hmuReal : (((ArithmeticFunction.moebius r : ℤ) : ℝ) ^ 2) = 1 := by
           have hcast := congrArg (fun n : ℤ ↦ (n : ℝ)) hmu
           norm_num at hcast
-          obtain hcast | hcast := hcast
+          rcases hcast with hcast | hcast
           · rw [hcast]
             norm_num
           · rw [hcast]
@@ -1257,13 +1234,12 @@ private lemma moebiusTotientSum_eq_squarefree (z : ℕ) :
         rw [hmuReal]
         simp only [one_div]
       · rw [ite_eq_right hsq,
-        ArithmeticFunction.moebius_eq_zero_of_not_squarefree hsq]
+          ArithmeticFunction.moebius_eq_zero_of_not_squarefree hsq]
         norm_num
     _ = squarefreeTotientSum z := by
       rw [squarefreeTotientSum]
       exact (Finset.sum_filter (s := Finset.Icc 1 z) Squarefree
         (fun r : ℕ ↦ (Nat.totient r : ℝ)⁻¹)).symm
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 namespace MathlibExt.NumberTheory.PrimeCounting
@@ -1273,7 +1249,7 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 -/
 @[path]
 lemma moebiusSq_div_totient_sum_gt_log
-  {z : ℕ}
+  (z : ℕ)
 -- given
   (hz : 6 ≤ z) :
 -- imply
@@ -1283,9 +1259,8 @@ lemma moebiusSq_div_totient_sum_gt_log
 -- proof
   rw [moebiusTotientSum_eq_squarefree]
   exact squarefreeTotientSum_gt_log_succ z hz
-
 end MathlibExt.NumberTheory.PrimeCounting
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

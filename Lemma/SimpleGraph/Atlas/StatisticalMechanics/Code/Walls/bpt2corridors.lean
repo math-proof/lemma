@@ -159,7 +159,7 @@ private lemma bpt2_precursorPos_of_residues_eq
   {a₁ a₂ a₃ x₁ x₂ x₃ : Site 2}
   {η₀ : ConfigSpace ↥I}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)

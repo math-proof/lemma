@@ -182,7 +182,7 @@ theorem fsp_Tcount_le_boundary_of_rootedArmOrder (ω : ConfigSpace (Sym2 (Site d
   fsp_Tcount_le_boundary_of_treeSelector ω n hn (fsp_treeSelector_of_rootedArmOrder ω n h)
 
 
-theorem fsp_burton_keane_bernoulli_of_treeSelector (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem fsp_burton_keane_bernoulli_of_treeSelector (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → fsp_TreeSelector ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
@@ -201,7 +201,7 @@ theorem fsp_burton_keane_bernoulli_of_treeSelector (hd : 1 ≤ d) (p : ℝ≥0) 
     htrif
 
 
-theorem fsp_burton_keane_bernoulli_of_rootedArmOrder (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem fsp_burton_keane_bernoulli_of_rootedArmOrder (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → fsp_RootedArmOrder ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
@@ -227,7 +227,7 @@ theorem fsp_Tcount_le_boundary_of_divergentArmOrder (ω : ConfigSpace (Sym2 (Sit
     (fsp_rootedArmOrder_of_divergentArmOrder ω n h)
 
 
-theorem fsp_burton_keane_bernoulli_of_divergentArmOrder (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem fsp_burton_keane_bernoulli_of_divergentArmOrder (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → fsp_DivergentArmOrder ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

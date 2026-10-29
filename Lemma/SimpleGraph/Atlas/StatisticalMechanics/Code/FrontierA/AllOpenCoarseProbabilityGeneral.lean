@@ -83,7 +83,7 @@ private lemma bgfdFaithfulAllOpenTrifIndicesInBox_eq_sum_indicator_eq
   {omega : ConfigSpace (Sym2 (Site d))}
   {L N : ℕ} :
 -- imply
-  ((bgfdFaithfulAllOpenTrifIndicesInBox omega L N).card : ℝ≥0∞) = ∑ j ∈ boxFinsetBK d N, ({omega' | BgfdFaithfulAllOpenTrifAt omega' L j}.indicator (fun _ => (1 : ℝ≥0∞))) omega := by
+  ((bgfdFaithfulAllOpenTrifIndicesInBox omega L N).card : ENNReal) = ∑ j ∈ boxFinsetBK d N, ({omega' | BgfdFaithfulAllOpenTrifAt omega' L j}.indicator (fun _ => (1 : ENNReal))) omega := by
 -- proof
   apply StatMech.FrontierA.bgfdFaithfulAllOpenTrifIndicesInBox_eq_sum_indicator omega L N
 
@@ -98,7 +98,7 @@ private lemma expected_bgfdFaithfulAllOpenTrifIndicesInBox_eq
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) mu) :
 -- imply
-  ∫⁻ omega, ((bgfdFaithfulAllOpenTrifIndicesInBox omega L N).card : ℝ≥0∞) ∂mu = (boxFinsetBK d N).card • mu {omega | BgfdFaithfulAllOpenTrifAt omega L 0} := by
+  ∫⁻ omega, ((bgfdFaithfulAllOpenTrifIndicesInBox omega L N).card : ENNReal) ∂mu = (boxFinsetBK d N).card • mu {omega | BgfdFaithfulAllOpenTrifAt omega L 0} := by
 -- proof
   apply StatMech.FrontierA.expected_bgfdFaithfulAllOpenTrifIndicesInBox mu hinv L N
 

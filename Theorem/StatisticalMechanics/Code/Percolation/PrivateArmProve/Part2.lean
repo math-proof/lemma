@@ -82,7 +82,7 @@ theorem pap_Tcount_le_boundary_of_coherentSelector (ω : ConfigSpace (Sym2 (Site
   daepf_Tcount_le_boundary_of_privateArm ω n hn (pap_privateArm_of_coherentSelector ω n h)
 
 
-theorem pap_burton_keane_bernoulli_of_coherentSelector (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem pap_burton_keane_bernoulli_of_coherentSelector (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
       pap_CoherentSelector ω n)

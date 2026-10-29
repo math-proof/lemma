@@ -3,6 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.LucasSequence
 import Lemma.Nat.LucasSequence
 import Lemma.Nat.Recurrences.CohnTwiceSquareLucas
+import Lemma.Nat.Recurrences.SquareFibonacciLucas
 import Def.NumberTheory.Recurrences.CohnTwiceSquareLucas
 
 
@@ -10,8 +11,6 @@ namespace MetaMathlibExt
 
 /--
 [lucasNumber_add_fib](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/CohnSquareFibonacci.lean)
--/
-@[path]
 Source: Refik Keskin and Zafer Yosma, "On Fibonacci and Lucas Numbers of the
 Form cx^2", Journal of Integer Sequences 14 (2011), Theorem 2.1, source
 lines 129–132,
@@ -34,6 +33,7 @@ takes `(hn : 0 < n)` to formalize the intended positive-natural-index form.
 `Nat.fib` is the Fibonacci sequence and `MetaMathlibExt.lucasNumber` is the
 repository's canonical Lucas-number sequence; no parallel `Fₙ₋₁ + Fₙ₊₁`
 encoding is used. -/
+@[path]
 private lemma lucasNumber_add_fib (n : ℕ) : lucasNumber n + Nat.fib n = 2 * Nat.fib (n + 1) := by
   induction n using Nat.twoStepInduction with
   | zero => decide
@@ -42,7 +42,7 @@ private lemma lucasNumber_add_fib (n : ℕ) : lucasNumber n + Nat.fib n = 2 * Na
     have hL : lucasNumber (n + 2) = lucasNumber (n + 1) + lucasNumber n := rfl
     have hF : Nat.fib (n + 2) = Nat.fib n + Nat.fib (n + 1) := Nat.fib_add_two
     have hF2 : Nat.fib (n + 1 + 1 + 1)
-      = Nat.fib (n + 1) + Nat.fib (n + 1 + 1) :=
+        = Nat.fib (n + 1) + Nat.fib (n + 1 + 1) :=
       Nat.fib_add_two (n := n + 1)
     have : n + 2 + 1 = n + 1 + 1 + 1 := by omega
     rw [hL, hF, this, hF2]
@@ -126,13 +126,13 @@ private lemma fib_add_two_mul_add_neg_one_pow_mul (m k : ℕ) :
     have e2 : m + 2 + k = (m + k) + 2 := by omega
     rw [e1, e2]
     have r1 : ((Nat.fib ((m + 2 * k) + 2) : ℤ))
-      = (Nat.fib (m + 2 * k) : ℤ) + (Nat.fib ((m + 2 * k) + 1) : ℤ) := by
+        = (Nat.fib (m + 2 * k) : ℤ) + (Nat.fib ((m + 2 * k) + 1) : ℤ) := by
       exact_mod_cast Nat.fib_add_two
     have r2 : ((Nat.fib (m + 2) : ℤ))
-      = (Nat.fib m : ℤ) + (Nat.fib (m + 1) : ℤ) := by
+        = (Nat.fib m : ℤ) + (Nat.fib (m + 1) : ℤ) := by
       exact_mod_cast Nat.fib_add_two
     have r3 : ((Nat.fib ((m + k) + 2) : ℤ))
-      = (Nat.fib (m + k) : ℤ) + (Nat.fib ((m + k) + 1) : ℤ) := by
+        = (Nat.fib (m + k) : ℤ) + (Nat.fib ((m + k) + 1) : ℤ) := by
       exact_mod_cast Nat.fib_add_two
     have e3 : (m + 2 * k) + 1 = (m + 1) + 2 * k := by omega
     have e4 : (m + k) + 1 = (m + 1) + k := by omega
@@ -161,8 +161,8 @@ private lemma lucasNumber_dvd_fib_add_two_mul_mul_sub (k : ℕ) (hk : Even k) (m
     rw [hk1, one_mul] at hN4
     have hpow : (-1 : ℤ) ^ (j + 1) = (-1 : ℤ) ^ j * (-1) := by rw [pow_succ]
     have hdecomp : ((Nat.fib ((m + 2 * k * j) + 2 * k) : ℤ)) - (-1 : ℤ) ^ (j + 1) * (Nat.fib m : ℤ)
-      = ((lucasNumber k : ℤ)) * (Nat.fib (m + 2 * k * j + k) : ℤ)
-        - (((Nat.fib (m + 2 * k * j) : ℤ)) - (-1 : ℤ) ^ j * (Nat.fib m : ℤ)) := by
+        = ((lucasNumber k : ℤ)) * (Nat.fib (m + 2 * k * j + k) : ℤ)
+          - (((Nat.fib (m + 2 * k * j) : ℤ)) - (-1 : ℤ) ^ j * (Nat.fib m : ℤ)) := by
       rw [hpow]
       linear_combination hN4
     rw [hdecomp]
@@ -204,11 +204,13 @@ private lemma nat_gcd_fib_lucasNumber_dvd_two (m : ℕ) :
   have hN1 := lucasNumber_add_fib m
   have hdiv : g ∣ 2 * Nat.fib (m + 1) := by
     have := dvd_add h2 h1
-    rwa [hN1] at this
+    rw [hN1] at this
+    exact this
   have hcop : Nat.Coprime g (Nat.fib (m + 1)) :=
     (Nat.Coprime.coprime_dvd_left h1 (Nat.fib_coprime_fib_succ m))
   exact (Nat.Coprime.dvd_of_dvd_mul_right hcop hdiv)
 
+-- N9
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -246,7 +248,8 @@ private lemma lucasNumber_dvd_fib_add_one_of_mod_four_eq_one (n : ℕ)
   rw [hidx] at hN5
   -- hN5 : L_k ∣ F_n - (-1)*1 = F_n + 1
   have : ((Nat.fib n : ℤ)) - (-1 : ℤ) = (Nat.fib n : ℤ) + 1 := by ring
-  rwa [this] at hN5
+  rw [this] at hN5
+  exact hN5
 
 end MetaMathlibExt
 
@@ -284,7 +287,8 @@ private lemma lucasNumber_six_mul_add (q r : ℕ) :
       intro i
       rw [lucasNumber_add_six i]
       omega
-    rwa [h6]
+    rw [h6]
+    exact ih
 
 end MetaMathlibExt
 
@@ -307,7 +311,7 @@ private lemma lucasNumber_mod_four_of_even_of_not_three_dvd (k : ℕ)
       apply hk3
       omega
     omega
-  obtain h | h := hmod
+  rcases hmod with h | h
   · rw [h]; decide
   · rw [h]; decide
 
@@ -327,7 +331,8 @@ private lemma not_dvd_sq_add_one_of_mod_four_eq_three (b : ℕ) (hb : b % 4 = 3)
   have hmod : (-1 : ℤ) ≡ y ^ 2 [ZMOD (b : ℤ)] := by
     rw [Int.modEq_iff_dvd]
     have : y ^ 2 - (-1 : ℤ) = y ^ 2 + 1 := by ring
-    rwa [this]
+    rw [this]
+    exact hdiv
   have heq : (-1 : ℤ) % (b : ℤ) = (y ^ 2) % (b : ℤ) := hmod.eq
   have hjac : jacobiSym (-1 : ℤ) b = jacobiSym (y ^ 2) b := jacobiSym.mod_left' heq
   have hleft : jacobiSym (-1 : ℤ) b = -1 := by
@@ -336,12 +341,12 @@ private lemma not_dvd_sq_add_one_of_mod_four_eq_three (b : ℕ) (hb : b % 4 = 3)
   have hright : jacobiSym (y ^ 2 : ℤ) b = 0 ∨ jacobiSym (y ^ 2 : ℤ) b = 1 := by
     rw [jacobiSym.pow_left]
     have htri := jacobiSym.trichotomy y b
-    obtain h0 | h1 | hm1 := htri
+    rcases htri with h0 | h1 | hm1
     · simp [h0]
     · simp [h1]
     · simp [hm1]
   rw [hleft] at hjac
-  obtain h0 | h1 := hright
+  rcases hright with h0 | h1
   · omega
   · omega
 
@@ -389,7 +394,7 @@ private lemma lucasNumber_dvd_fib_add_one_of_mod_four_eq_three (n : ℕ) (hn : n
     rw [hF]; ring
   -- F_n + 1 = (F_{n+2} - -1) - F_{n+1}
   have hdecomp : ((Nat.fib n : ℤ)) + 1
-    = (((Nat.fib (n + 2) : ℤ)) - (-1 : ℤ)) - (Nat.fib (n + 1) : ℤ) := by
+      = (((Nat.fib (n + 2) : ℤ)) - (-1 : ℤ)) - (Nat.fib (n + 1) : ℤ) := by
     rw [hF]; ring
   rw [hdecomp]
   exact dvd_sub hN5_1 hN5_0
@@ -408,8 +413,8 @@ private lemma fib_odd_ne_sq (n x : ℕ) (hodd : Odd n) (hn1 : n ≠ 1)
     obtain ⟨t, ht⟩ := hodd
     omega
   obtain ⟨k, hke, hk3, hdiv⟩ :
-    ∃ k : ℕ, Even k ∧ ¬ 3 ∣ k ∧ ((lucasNumber k : ℤ)) ∣ (Nat.fib n : ℤ) + 1 := by
-    obtain h1 | h3 := hmod
+      ∃ k : ℕ, Even k ∧ ¬ 3 ∣ k ∧ ((lucasNumber k : ℤ)) ∣ (Nat.fib n : ℤ) + 1 := by
+    rcases hmod with h1 | h3
     · obtain ⟨k, hke, hk3, hd⟩ := lucasNumber_dvd_fib_add_one_of_mod_four_eq_one n h1 hn1
       exact ⟨k, hke, hk3, hd⟩
     · obtain ⟨k, hke, hk3, hd⟩ := lucasNumber_dvd_fib_add_one_of_mod_four_eq_three n h3
@@ -420,7 +425,8 @@ private lemma fib_odd_ne_sq (n x : ℕ) (hodd : Odd n) (hn1 : n ≠ 1)
   have hcast : ((Nat.fib n : ℤ)) = (x : ℤ) ^ 2 := by
     exact_mod_cast h
   have hdiv2 : ((lucasNumber k : ℤ)) ∣ (x : ℤ) ^ 2 + 1 := by
-    rwa [← hcast]
+    rw [← hcast]
+    exact hdiv
   exact not_dvd_sq_add_one_of_mod_four_eq_three (lucasNumber k) hLmod (x : ℤ) hdiv2
 
 end MetaMathlibExt
@@ -478,10 +484,10 @@ private lemma fib_two_mul_eq_sq_of_helpers (m x : ℕ) (hm : 0 < m)
   obtain ⟨c, hc⟩ := eq_gcd_mul_sq_of_mul_eq_sq (Nat.fib m) (lucasNumber m) x h
   have hg := nat_gcd_fib_lucasNumber_dvd_two m
   have hcases := (Nat.dvd_prime Nat.prime_two).mp hg
-  obtain hg1 | hg2 := hcases
+  rcases hcases with hg1 | hg2
   · have hL : lucasNumber m = c ^ 2 := by rw [hc, hg1, one_mul]
     have hm13 := cohn_square_lucas m c hm hL
-    obtain h1 | h3 := hm13
+    rcases hm13 with h1 | h3
     · left; exact h1
     · exfalso
       have hcontra : Nat.gcd (Nat.fib m) (lucasNumber m) = 2 := by
@@ -507,14 +513,14 @@ lemma cohn_square_fibonacci
 -- imply
   n = 1 ∨ n = 2 ∨ n = 12 := by
 -- proof
-  obtain heven | hodd := Nat.even_or_odd n
+  rcases Nat.even_or_odd n with heven | hodd
   · -- even case: n = 2m via the even-index helper
     obtain ⟨m, hm_eq⟩ := heven
     have hm : 0 < m := by omega
     have h2eq : 2 * m = n := by omega
     have h2 : Nat.fib (2 * m) = x ^ 2 := by rw [h2eq]; exact h
     have hmain := fib_two_mul_eq_sq_of_helpers m x hm h2
-    obtain h1 | h6 := hmain
+    rcases hmain with h1 | h6
     · subst h1
       right; left; omega
     · subst h6
@@ -523,9 +529,9 @@ lemma cohn_square_fibonacci
     by_cases hn1 : n = 1
     · left; exact hn1
     · exact (fib_odd_ne_sq n x hodd hn1 h).elim
-end
 
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -654,7 +654,6 @@ variable [Algebra K Khat] [Algebra L Lhat] [Algebra A Khat] [Algebra K Lhat]
 variable [IsScalarTower A K Khat] [IsScalarTower K Khat Lhat]
 variable [IsScalarTower K L Lhat] [IsScalarTower B L Lhat]
 variable [Algebra.IsIntegral B Bhat]
-set_option linter.unusedSectionVars false in
 end DifferentCompletion
 section Discriminant
 variable {n : ℕ} (R : Type*) {S : Type*}

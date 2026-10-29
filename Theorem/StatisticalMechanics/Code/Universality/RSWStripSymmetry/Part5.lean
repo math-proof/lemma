@@ -33,16 +33,16 @@ theorem rss_stripDualReflection_apply (n : ℤ)
 
 theorem rss_stripDualReflection_measurePreserving (n : ℤ) :
     MeasurePreserving (rss_stripDualReflection n)
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one)
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) := by
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one)
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) := by
   exact (rss_reflectConfig_measurePreserving n).comp
     fci_faceDualConfig_measurePreserving
 
 
 theorem rss_stripDualReflection_law (n : ℤ) :
     Measure.map (rss_stripDualReflection n)
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) =
-      bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one :=
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) =
+      bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one :=
   (rss_stripDualReflection_measurePreserving n).map_eq
 
 
@@ -59,8 +59,8 @@ theorem rss_strip_symmetry (n : ℤ) :
       RSW.dualBC (rss_halfWiredBoundary (rss_reflectEnd e)) =
         rss_halfWiredBoundary e) ∧
     MeasurePreserving (rss_stripDualReflection n)
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one)
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) := by
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one)
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) := by
   exact ⟨rss_mem_faceStrip_reflect n,
     rss_mem_bottom_reflect_iff_top n,
     rss_mem_top_reflect_iff_bottom n,

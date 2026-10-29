@@ -58,9 +58,11 @@ private lemma main
       ((Measure.count : Measure (Fin t → S × A)).prod ((ReferenceMeasure.measure (α := S)).prod ReferenceMeasure.measure))
     rw [hmap, ← hΦ.map_eq, hD']
     exact (withDensity_absolutelyContinuous _ _).map hΦ.measurable
-  apply SinglePSpace.of.AEMeasurable.Distributed (D := ⟨Measure.measurable_rnDeriv (π.map (x, (s, a)[:t], ((s t, a t) : Ω → S × A))) ReferenceMeasure.measure⟩)
+  apply SinglePSpace.of.AEMeasurable.Distributed
+    (Measure.measurable_rnDeriv (π.map (x, (s, a)[:t], ((s t, a t) : Ω → S × A))) ReferenceMeasure.measure)
     _ hY
   exact (withDensity_rnDeriv_eq _ _ hac).symm
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-29

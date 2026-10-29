@@ -119,7 +119,6 @@ lemma ideal_count_rpow_summable
       simp [Real.zero_rpow (neg_ne_zero.mpr (ne_of_gt (by linarith : (0 : ℝ) < σ)))]
     · rw [Complex.norm_natCast, Complex.ofReal_re, div_eq_mul_inv,
       ← Real.rpow_neg (Nat.cast_nonneg n)])
-set_option maxHeartbeats 400000 in
 
 end RayClassField
 

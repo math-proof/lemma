@@ -20,7 +20,7 @@ lemma continuous_of_seminorm_bound
   [NormedSpace ℂ F]
   {u : 𝓢(E, ℂ) →ₗ[ℂ] ℂ}
 -- given
-  (hbound : ∃ (s : Finset (ℕ × ℕ)) (C : ℝ≥0), (normSeminorm ℂ ℂ).comp u ≤ C • s.sup (schwartzSeminormFamily ℂ E ℂ)) :
+  (hbound : ∃ (s : Finset (ℕ × ℕ)) (C : NNReal), (normSeminorm ℂ ℂ).comp u ≤ C • s.sup (schwartzSeminormFamily ℂ E ℂ)) :
 -- imply
   Continuous u :=
 -- proof
@@ -41,7 +41,7 @@ lemma seminorm_bound_of_continuous
   [NormedSpace ℂ F]
   {u : 𝓢(E, ℂ) →L[ℂ] ℂ} :
 -- imply
-  ∃ (s : Finset (ℕ × ℕ)) (C : ℝ≥0), (normSeminorm ℂ ℂ).comp u.toLinearMap ≤ C • s.sup (schwartzSeminormFamily ℂ E ℂ) := by
+  ∃ (s : Finset (ℕ × ℕ)) (C : NNReal), (normSeminorm ℂ ℂ).comp u.toLinearMap ≤ C • s.sup (schwartzSeminormFamily ℂ E ℂ) := by
 -- proof
   have hcont : Continuous ((normSeminorm ℂ ℂ).comp u.toLinearMap) := by
     show Continuous (fun x => ‖u x‖)
@@ -64,7 +64,7 @@ lemma continuous_iff_seminorm_bound
   [NormedSpace ℂ F]
   {u : 𝓢(E, ℂ) →ₗ[ℂ] ℂ} :
 -- imply
-  Continuous u ↔ ∃ (s : Finset (ℕ × ℕ)) (C : ℝ≥0), (normSeminorm ℂ ℂ).comp u ≤ C • s.sup (schwartzSeminormFamily ℂ E ℂ) := by
+  Continuous u ↔ ∃ (s : Finset (ℕ × ℕ)) (C : NNReal), (normSeminorm ℂ ℂ).comp u ≤ C • s.sup (schwartzSeminormFamily ℂ E ℂ) := by
 -- proof
   constructor
   · intro hcont

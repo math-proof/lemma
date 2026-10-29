@@ -80,7 +80,7 @@ theorem mapsClosedBall_of_residual_and_lipschitz
 
 theorem contractingWith
     (C : FinitePlusTailLipschitzCertificate n α) :
-    ContractingWith (⟨C.c, C.c_nonneg⟩ : ℝ≥0) C.map := by
+    ContractingWith (⟨C.c, C.c_nonneg⟩ : NNReal) C.map := by
   constructor
   · exact_mod_cast C.c_lt_one
   · refine LipschitzWith.of_dist_le_mul ?_

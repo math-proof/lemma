@@ -9,7 +9,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma prime_gap_factorial_general
-  {n p r : ℕ}
+  (n p r : ℕ)
 -- given
   (hrmin : ∀ q : ℕ, q.Prime → n < q → r ≤ q)
   (hp : p.Prime)
@@ -53,7 +53,6 @@ lemma prime_gap_factorial_general
   have hrr : r ^ 2 ≤ p - Nat.factorial n :=
     le_trans (Nat.pow_le_pow_left hrle 2) hsq
   omega
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -66,8 +65,8 @@ namespace MetaMathlibExt
 lemma prime_gap_factorial
   {n p r : ℕ}
 -- given
-  (hr : r.Prime)
-  (hrn : n < r)
+  (_hr : r.Prime)
+  (_hrn : n < r)
   (hrmin : ∀ q : ℕ, q.Prime → n < q → r ≤ q)
   (hp : p.Prime)
   (hlo : Nat.factorial n + 1 < p)

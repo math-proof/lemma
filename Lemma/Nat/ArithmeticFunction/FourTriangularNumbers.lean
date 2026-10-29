@@ -54,7 +54,6 @@ private lemma ftn_mem_oddQuad (N a x b y : ℕ) :
       Finset.mem_product.mpr ⟨Finset.mem_Icc.mpr ⟨hx1, hxN⟩,
       Finset.mem_product.mpr ⟨Finset.mem_Icc.mpr ⟨hb1, hbN⟩,
       Finset.mem_Icc.mpr ⟨hy1, hyN⟩⟩⟩⟩
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -107,7 +106,6 @@ private lemma ftn_mem_liouvilleTriples (N c X b Y : ℕ) :
       Finset.mem_product.mpr ⟨Finset.mem_Icc.mpr ⟨hX1, hXN⟩,
       Finset.mem_product.mpr ⟨Finset.mem_Icc.mpr ⟨hb1, hbN⟩,
       Finset.mem_Icc.mpr ⟨hY1, hYN⟩⟩⟩⟩
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -157,19 +155,19 @@ private lemma ftn_wanted_card_eq_quadruple_card (j : ℕ) :
     refine ⟨Finset.mem_univ _, ?_⟩
     rw [Fin.sum_univ_four]
     change (a % (j + 1)) * ((a % (j + 1)) + 1) / 2 + (b % (j + 1)) * ((b % (j + 1)) + 1) / 2 +
-      (c % (j + 1)) * ((c % (j + 1)) + 1) / 2 + (d % (j + 1)) * ((d % (j + 1)) + 1) / 2 = j
+        (c % (j + 1)) * ((c % (j + 1)) + 1) / 2 + (d % (j + 1)) * ((d % (j + 1)) + 1) / 2 = j
     rw [Nat.mod_eq_of_lt ha, Nat.mod_eq_of_lt hb, Nat.mod_eq_of_lt hc,
       Nat.mod_eq_of_lt hd]
     simpa only [ftnTri] using hsum
   · intro t _
     have e0 : (⟨(t 0).val % (j + 1), Nat.mod_lt _ (Nat.zero_lt_succ j)⟩ : Fin (j + 1)) =
-      t 0 := Fin.ext (Nat.mod_eq_of_lt (t 0).isLt)
+        t 0 := Fin.ext (Nat.mod_eq_of_lt (t 0).isLt)
     have e1 : (⟨(t 1).val % (j + 1), Nat.mod_lt _ (Nat.zero_lt_succ j)⟩ : Fin (j + 1)) =
-      t 1 := Fin.ext (Nat.mod_eq_of_lt (t 1).isLt)
+        t 1 := Fin.ext (Nat.mod_eq_of_lt (t 1).isLt)
     have e2 : (⟨(t 2).val % (j + 1), Nat.mod_lt _ (Nat.zero_lt_succ j)⟩ : Fin (j + 1)) =
-      t 2 := Fin.ext (Nat.mod_eq_of_lt (t 2).isLt)
+        t 2 := Fin.ext (Nat.mod_eq_of_lt (t 2).isLt)
     have e3 : (⟨(t 3).val % (j + 1), Nat.mod_lt _ (Nat.zero_lt_succ j)⟩ : Fin (j + 1)) =
-      t 3 := Fin.ext (Nat.mod_eq_of_lt (t 3).isLt)
+        t 3 := Fin.ext (Nat.mod_eq_of_lt (t 3).isLt)
     simp only [e0, e1, e2, e3]
     funext i
     fin_cases i <;> rfl
@@ -188,7 +186,6 @@ private lemma ftn_wanted_card_eq_quadruple_card (j : ℕ) :
     change (((a % (j + 1), b % (j + 1)), (c % (j + 1), d % (j + 1)))) = (((a, b), (c, d)))
     rw [Nat.mod_eq_of_lt ha, Nat.mod_eq_of_lt hb, Nat.mod_eq_of_lt hc,
       Nat.mod_eq_of_lt hd]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -198,7 +195,7 @@ namespace MetaMathlibExt.FourTriangular
 -/
 @[path]
 private lemma ftn_le_tri (u : ℕ) : u ≤ ftnTri u := by
-  obtain rfl | hne := eq_or_ne u 0
+  rcases eq_or_ne u 0 with rfl | hne
   · exact Nat.zero_le _
   · have hpos : 0 < u := Nat.pos_of_ne_zero hne
     have heven : Even (u * (u + 1)) := Nat.even_mul_succ_self u
@@ -208,7 +205,6 @@ private lemma ftn_le_tri (u : ℕ) : u ≤ ftnTri u := by
       _ ≤ u * (u + 1) := mul_le_mul_right (by omega) u
     simp only [ftnTri]
     omega
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -235,7 +231,6 @@ private lemma ftn_pair_filter_eq (a M : ℕ) (h : a ≤ M) :
     refine ⟨⟨by omega, by omega⟩, hsum⟩
   · rintro ⟨⟨hu, hv⟩, hsum⟩
     exact ⟨⟨by omega, by omega⟩, hsum⟩
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -271,7 +266,6 @@ private lemma ftn_fiber_eq_product (j a : ℕ) (haj : a ≤ j) :
     refine ⟨?_, hfib'⟩
     change ftnTri u + ftnTri v + ftnTri w + ftnTri z = j
     omega
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -292,7 +286,6 @@ private lemma ftn_fiber_card (j a : ℕ) (ha : a ∈ Finset.range (j + 1)) :
   rw [ftn_fiber_eq_product j a haj, Finset.card_product]
   simp only [ftn_pair_filter_eq a j haj, ftn_pair_filter_eq (j - a) j (Nat.sub_le j a),
     ftnTriPairCount]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -305,13 +298,13 @@ private lemma ftn_quadruple_card_eq_sum_antidiagonal (j : ℕ) :
   (((Finset.range (j + 1) ×ˢ Finset.range (j + 1)) ×ˢ
     (Finset.range (j + 1) ×ˢ Finset.range (j + 1))).filter
     (fun q => ftnTri q.1.1 + ftnTri q.1.2 + ftnTri q.2.1 + ftnTri q.2.2 = j)).card =
-  ∑ p ∈ Finset.antidiagonal j, ftnTriPairCount p.1 * ftnTriPairCount p.2 := by
+  ∑ p ∈ Finset.HasAntidiagonal.antidiagonal j, ftnTriPairCount p.1 * ftnTriPairCount p.2 := by
   have Hmap : (↑(((Finset.range (j + 1) ×ˢ Finset.range (j + 1)) ×ˢ
-    (Finset.range (j + 1) ×ˢ Finset.range (j + 1))).filter
-    (fun q => ftnTri q.1.1 + ftnTri q.1.2 + ftnTri q.2.1 + ftnTri q.2.2 = j) :
-    Finset ((ℕ × ℕ) × (ℕ × ℕ))) : Set ((ℕ × ℕ) × (ℕ × ℕ))).MapsTo
-    (fun q : (ℕ × ℕ) × (ℕ × ℕ) => ftnTri q.1.1 + ftnTri q.1.2)
-    (Finset.range (j + 1)) := by
+      (Finset.range (j + 1) ×ˢ Finset.range (j + 1))).filter
+      (fun q => ftnTri q.1.1 + ftnTri q.1.2 + ftnTri q.2.1 + ftnTri q.2.2 = j) :
+      Finset ((ℕ × ℕ) × (ℕ × ℕ))) : Set ((ℕ × ℕ) × (ℕ × ℕ))).MapsTo
+      (fun q : (ℕ × ℕ) × (ℕ × ℕ) => ftnTri q.1.1 + ftnTri q.1.2)
+      (Finset.range (j + 1)) := by
     intro q hq
     have hsum : ftnTri q.1.1 + ftnTri q.1.2 + ftnTri q.2.1 + ftnTri q.2.2 = j :=
       (Finset.mem_filter.mp (Finset.mem_coe.mp hq)).2
@@ -325,8 +318,7 @@ private lemma ftn_quadruple_card_eq_sum_antidiagonal (j : ℕ) :
     intro a ha
     exact ftn_fiber_card j a ha
   · exact (Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk
-    (fun p : ℕ × ℕ => ftnTriPairCount p.1 * ftnTriPairCount p.2) j).symm
-
+      (fun p : ℕ × ℕ => ftnTriPairCount p.1 * ftnTriPairCount p.2) j).symm
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -340,7 +332,6 @@ private lemma ftn_norm_pair (x y : ℤ) :
   rw [Zsqrtd.norm_def]
   dsimp only
   ring
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -365,7 +356,6 @@ private lemma ftn_phi_injective :
     have hcast : (v : ℤ) = (v' : ℤ) := by omega
     exact_mod_cast hcast
   rw [hu, hv]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -382,7 +372,7 @@ private lemma ftn_phi_mem_region (a u v : ℕ) (hT : ftnTri u + ftnTri v = a) :
   have e2 : 2 * ftnTri v = v * (v + 1) :=
     Nat.two_mul_div_two_of_even (Nat.even_mul_succ_self v)
   have key : ((u:ℤ)+(v:ℤ)+1) * ((u:ℤ)+(v:ℤ)+1) + ((u:ℤ)-(v:ℤ)) * ((u:ℤ)-(v:ℤ))
-    = 2 * ((u:ℤ) * ((u:ℤ)+1) + (v:ℤ) * ((v:ℤ)+1)) + 1 := by ring
+      = 2 * ((u:ℤ) * ((u:ℤ)+1) + (v:ℤ) * ((v:ℤ)+1)) + 1 := by ring
   have e1c : (2:ℤ) * ((ftnTri u : ℕ):ℤ) = (u:ℤ) * ((u:ℤ)+1) := by
     exact_mod_cast e1
   have e2c : (2:ℤ) * ((ftnTri v : ℕ):ℤ) = (v:ℤ) * ((v:ℤ)+1) := by
@@ -390,19 +380,18 @@ private lemma ftn_phi_mem_region (a u v : ℕ) (hT : ftnTri u + ftnTri v = a) :
   have hTc : ((ftnTri u : ℕ):ℤ) + ((ftnTri v : ℕ):ℤ) = ((a : ℕ):ℤ) := by
     exact_mod_cast hT
   have hnorm : (⟨((u:ℤ)+(v:ℤ)+1), ((u:ℤ)-(v:ℤ))⟩ : GaussianInt).norm =
-    ((4 * a + 1 : ℕ):ℤ) := by
+      ((4 * a + 1 : ℕ):ℤ) := by
     have hcast4 : (((4 * a + 1 : ℕ)):ℤ) = 4 * ((a:ℕ):ℤ) + 1 := by
       push_cast
       ring
     rw [ftn_norm_pair, hcast4]
     linear_combination key - 2 * e1c - 2 * e2c + 4 * hTc
   have habs : |(⟨((u:ℤ)+(v:ℤ)+1), ((u:ℤ)-(v:ℤ))⟩ : GaussianInt).im| <
-    (⟨((u:ℤ)+(v:ℤ)+1), ((u:ℤ)-(v:ℤ))⟩ : GaussianInt).re := by
+      (⟨((u:ℤ)+(v:ℤ)+1), ((u:ℤ)-(v:ℤ))⟩ : GaussianInt).re := by
     dsimp only
     rw [abs_lt]
     constructor <;> omega
   exact ⟨habs, hnorm⟩
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -414,10 +403,10 @@ namespace MetaMathlibExt.FourTriangular
 private lemma ftn_triPairCount_eq_ncard_region (a : ℕ) :
   ftnTriPairCount a = (ftnGaussNormRegion (4 * a + 1)).ncard := by
   have himg : ftnGaussNormRegion (4 * a + 1) =
-    ((((Finset.range (a + 1) ×ˢ Finset.range (a + 1)).filter
-      (fun p => ftnTri p.1 + ftnTri p.2 = a)) : Finset (ℕ × ℕ)) : Set (ℕ × ℕ)).image
-      (fun p => (⟨(p.1 : ℤ) + (p.2 : ℤ) + 1, (p.1 : ℤ) - (p.2 : ℤ)⟩ :
-        GaussianInt)) := by
+      ((((Finset.range (a + 1) ×ˢ Finset.range (a + 1)).filter
+        (fun p => ftnTri p.1 + ftnTri p.2 = a)) : Finset (ℕ × ℕ)) : Set (ℕ × ℕ)).image
+        (fun p => (⟨(p.1 : ℤ) + (p.2 : ℤ) + 1, (p.1 : ℤ) - (p.2 : ℤ)⟩ :
+          GaussianInt)) := by
     ext z
     constructor
     · intro hz
@@ -431,14 +420,15 @@ private lemma ftn_triPairCount_eq_ncard_region (a : ℕ) :
           ftn_norm_pair P Q
         have hzpair : (⟨P, Q⟩ : GaussianInt) = z := Zsqrtd.ext_iff.mpr ⟨rfl, rfl⟩
         rw [hzpair] at h1
-        rwa [h1] at hnorm
+        rw [h1] at hnorm
+        exact hnorm
       have hP2 : P % 2 = 0 ∨ P % 2 = 1 := by omega
       have hQ2 : Q % 2 = 0 ∨ Q % 2 = 1 := by omega
       have hnorm2 : (P * P + Q * Q) % 2 = 1 := by
         rw [hnormPQ]
         omega
       have hPQmod : (P + Q) % 2 = 1 := by
-        obtain hP|hP <;> rcases hQ2 with hQ|hQ := hP2
+        rcases hP2 with hP|hP <;> rcases hQ2 with hQ|hQ
         · exfalso
           have eP : P * P % 2 = 0 := by rw [Int.mul_emod, hP]; decide
           have eQ : Q * Q % 2 = 0 := by rw [Int.mul_emod, hQ]; decide
@@ -469,10 +459,10 @@ private lemma ftn_triPairCount_eq_ncard_region (a : ℕ) :
       have hPre : P = ((U:ℕ):ℤ) + ((V:ℕ):ℤ) + 1 := by omega
       have hQe : Q = ((U:ℕ):ℤ) - ((V:ℕ):ℤ) := by omega
       have hexpand : P * P + Q * Q
-        = 2 * (((U:ℤ) * ((U:ℤ)+1) + (V:ℤ) * ((V:ℤ)+1))) + 1 := by
+          = 2 * (((U:ℤ) * ((U:ℤ)+1) + (V:ℤ) * ((V:ℤ)+1))) + 1 := by
         have key : ((U:ℤ)+(V:ℤ)+1) * ((U:ℤ)+(V:ℤ)+1) +
-          ((U:ℤ)-(V:ℤ)) * ((U:ℤ)-(V:ℤ))
-          = 2 * ((U:ℤ)*((U:ℤ)+1) + (V:ℤ)*((V:ℤ)+1)) + 1 := by ring
+            ((U:ℤ)-(V:ℤ)) * ((U:ℤ)-(V:ℤ))
+            = 2 * ((U:ℤ)*((U:ℤ)+1) + (V:ℤ)*((V:ℤ)+1)) + 1 := by ring
         rw [hPre, hQe, key]
       have eU : 2 * ftnTri U = U * (U + 1) :=
         Nat.two_mul_div_two_of_even (Nat.even_mul_succ_self U)
@@ -497,7 +487,7 @@ private lemma ftn_triPairCount_eq_ncard_region (a : ℕ) :
       rw [Set.mem_image]
       refine ⟨(U, V), ?_, ?_⟩
       · rw [Finset.mem_coe, Finset.mem_filter, Finset.mem_product, Finset.mem_range,
-        Finset.mem_range]
+          Finset.mem_range]
         exact ⟨⟨by omega, by omega⟩, hsum⟩
       · exact Zsqrtd.ext_iff.mpr ⟨hPre.symm, hQe.symm⟩
     · rintro ⟨⟨u, v⟩, hmem, rfl⟩
@@ -508,7 +498,6 @@ private lemma ftn_triPairCount_eq_ncard_region (a : ℕ) :
   rw [himg, Set.ncard_image_of_injective _ ftn_phi_injective,
     Set.ncard_coe_finset]
   rfl
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -527,10 +516,10 @@ private lemma ftn_le_of_norm (z : GaussianInt) (N : ℕ)
     have hre2 : 0 ≤ z.re * z.re := mul_self_nonneg _
     omega
   have hNN : N ≤ N * N := by
-    obtain rfl | hpos := Nat.eq_zero_or_pos N
+    rcases Nat.eq_zero_or_pos N with rfl | hpos
     · exact Nat.zero_le _
     · calc N = N * 1 := by ring
-      _ ≤ N * N := mul_le_mul_of_nonneg_left hpos (Nat.zero_le N)
+        _ ≤ N * N := mul_le_mul_of_nonneg_left hpos (Nat.zero_le N)
   have hsq_re : z.re ^ 2 ≤ (((N:ℕ):ℤ)) ^ 2 := by
     rw [pow_two, pow_two]
     exact le_trans h1 (by exact_mod_cast hNN)
@@ -540,7 +529,6 @@ private lemma ftn_le_of_norm (z : GaussianInt) (N : ℕ)
   obtain ⟨hr1, hr2⟩ := abs_le_of_sq_le_sq' hsq_re (Nat.cast_nonneg N)
   obtain ⟨hi1, hi2⟩ := abs_le_of_sq_le_sq' hsq_im (Nat.cast_nonneg N)
   exact ⟨hr1, hr2, hi1, hi2⟩
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -556,8 +544,8 @@ private lemma ftn_norm_eq_of_mem (N : ℕ) (z : GaussianInt)
   have h1 := ftn_norm_pair z.re z.im
   have hzpair : (⟨z.re, z.im⟩ : GaussianInt) = z := Zsqrtd.ext_iff.mpr ⟨rfl, rfl⟩
   rw [hzpair] at h1
-  rwa [h1] at h2
-
+  rw [h1] at h2
+  exact h2
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -568,16 +556,16 @@ namespace MetaMathlibExt.FourTriangular
 @[path]
 private lemma ftn_gaussNormSet_finite (N : ℕ) : (ftnGaussNormSet N).Finite := by
   have hinj : Set.InjOn (fun z : GaussianInt => (z.re, z.im))
-    (ftnGaussNormSet N) := by
+      (ftnGaussNormSet N) := by
     intro a _ b _ hab
     exact Zsqrtd.ext_iff.mpr
       ⟨congrArg Prod.fst hab, congrArg Prod.snd hab⟩
   have hbd : ∀ z ∈ ftnGaussNormSet N,
-    -(N:ℤ) ≤ z.re ∧ z.re ≤ (N:ℤ) ∧ -(N:ℤ) ≤ z.im ∧ z.im ≤ (N:ℤ) := by
+      -(N:ℤ) ≤ z.re ∧ z.re ≤ (N:ℤ) ∧ -(N:ℤ) ≤ z.im ∧ z.im ≤ (N:ℤ) := by
     intro z hzm
     exact ftn_le_of_norm z N (ftn_norm_eq_of_mem N z hzm)
   have hre : (fun z : GaussianInt => z.re) '' ftnGaussNormSet N ⊆
-    Set.Icc (-((N:ℕ):ℤ)) ((N:ℕ):ℤ) := by
+      Set.Icc (-((N:ℕ):ℤ)) ((N:ℕ):ℤ) := by
     rintro x hx
     obtain ⟨z, hzm, hzx⟩ := hx
     rw [← hzx]
@@ -586,7 +574,7 @@ private lemma ftn_gaussNormSet_finite (N : ℕ) : (ftnGaussNormSet N).Finite := 
     obtain ⟨hr1, hr2, -, -⟩ := hbd z hzm
     exact ⟨hr1, hr2⟩
   have him : (fun z : GaussianInt => z.im) '' ftnGaussNormSet N ⊆
-    Set.Icc (-((N:ℕ):ℤ)) ((N:ℕ):ℤ) := by
+      Set.Icc (-((N:ℕ):ℤ)) ((N:ℕ):ℤ) := by
     rintro x hx
     obtain ⟨z, hzm, hzx⟩ := hx
     rw [← hzx]
@@ -595,18 +583,17 @@ private lemma ftn_gaussNormSet_finite (N : ℕ) : (ftnGaussNormSet N).Finite := 
     obtain ⟨-, -, hi1, hi2⟩ := hbd z hzm
     exact ⟨hi1, hi2⟩
   have hpair : (fun z : GaussianInt => (z.re, z.im)) '' ftnGaussNormSet N ⊆
-    ((fun z : GaussianInt => z.re) '' ftnGaussNormSet N) ×ˢ
-      ((fun z : GaussianInt => z.im) '' ftnGaussNormSet N) := by
+      ((fun z : GaussianInt => z.re) '' ftnGaussNormSet N) ×ˢ
+        ((fun z : GaussianInt => z.im) '' ftnGaussNormSet N) := by
     rintro x hx
     obtain ⟨z, hzm, hzx⟩ := hx
     rw [← hzx]
     dsimp only
     exact ⟨⟨z, hzm, rfl⟩, ⟨z, hzm, rfl⟩⟩
   have hfin : ((fun z : GaussianInt => z.re) '' ftnGaussNormSet N) ×ˢ
-    ((fun z : GaussianInt => z.im) '' ftnGaussNormSet N) |>.Finite :=
+      ((fun z : GaussianInt => z.im) '' ftnGaussNormSet N) |>.Finite :=
     ((Set.finite_Icc _ _).subset hre).prod ((Set.finite_Icc _ _).subset him)
   exact Set.Finite.of_finite_image (hfin.subset hpair) hinj
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -620,7 +607,6 @@ private lemma ftn_rot_re (w : GaussianInt) :
   rw [Zsqrtd.re_mul]
   dsimp only
   ring
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -634,7 +620,6 @@ private lemma ftn_rot_im (w : GaussianInt) :
   rw [Zsqrtd.im_mul]
   dsimp only
   ring
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -649,9 +634,8 @@ private lemma ftn_rot_norm (w : GaussianInt) :
     rw [ftn_norm_pair]
     norm_num
   calc ((⟨0, 1⟩ : GaussianInt) * w).norm
-    = (⟨0, 1⟩ : GaussianInt).norm * w.norm := Zsqrtd.norm_mul _ _
+      = (⟨0, 1⟩ : GaussianInt).norm * w.norm := Zsqrtd.norm_mul _ _
     _ = w.norm := by rw [hu, one_mul]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -660,8 +644,7 @@ namespace MetaMathlibExt.FourTriangular
 [ftn_rot_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/FourTriangularNumbers.lean)
 -/
 @[path]
-private lemma ftn_rot_ne_zero : (⟨0, 1⟩ : GaussianInt) ≠ 0 := by
-decide
+private lemma ftn_rot_ne_zero : (⟨0, 1⟩ : GaussianInt) ≠ 0 := by decide
 
 end MetaMathlibExt.FourTriangular
 
@@ -684,12 +667,12 @@ private lemma ftn_odd_norm_one_region (z : GaussianInt) (hN : Odd z.norm) :
       exact ⟨by linarith, h1⟩
   have hsq : z.re * z.re = z.im * z.im := by
     have h2 : |z.re| ^ 2 = |z.im| ^ 2 := congrArg (· ^ 2) hab
-    rwa [sq_abs, sq_abs, pow_two, pow_two] at h2
+    rw [sq_abs, sq_abs, pow_two, pow_two] at h2
+    exact h2
   have hnorm2 : z.re * z.re + z.im * z.im = z.norm :=
     (ftn_norm_pair z.re z.im).symm
   obtain ⟨k, hk⟩ := hN
   omega
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -715,11 +698,12 @@ private lemma ftn_region1_eq_image (N : ℕ) :
           have hzpair : (⟨z.re, z.im⟩ : GaussianInt) = z :=
             Zsqrtd.ext_iff.mpr ⟨rfl, rfl⟩
           rw [hzpair] at h4
-          rwa [h4] at h2
+          rw [h4] at h2
+          exact h2
         rw [h1]
         linear_combination h3
     · have e1 : ((⟨0, 1⟩ : GaussianInt) * ⟨z.im, -z.re⟩).re = z.re := by
-      simp
+        simp
       have e2 : ((⟨0, 1⟩ : GaussianInt) * ⟨z.im, -z.re⟩).im = z.im := by
         simp
       exact Zsqrtd.ext_iff.mpr ⟨e1, e2⟩
@@ -730,7 +714,6 @@ private lemma ftn_region1_eq_image (N : ℕ) :
       exact hC
     · rw [ftn_rot_norm]
       exact hn
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -756,11 +739,12 @@ private lemma ftn_region2_eq_image (N : ℕ) :
           have hzpair : (⟨z.re, z.im⟩ : GaussianInt) = z :=
             Zsqrtd.ext_iff.mpr ⟨rfl, rfl⟩
           rw [hzpair] at h4
-          rwa [h4] at h2
+          rw [h4] at h2
+          exact h2
         rw [h1]
         linear_combination h3
     · have e1 : ((⟨0, 1⟩ : GaussianInt) * ⟨z.im, -z.re⟩).re = z.re := by
-      simp
+        simp
       have e2 : ((⟨0, 1⟩ : GaussianInt) * ⟨z.im, -z.re⟩).im = z.im := by
         simp
       exact Zsqrtd.ext_iff.mpr ⟨e1, e2⟩
@@ -771,7 +755,6 @@ private lemma ftn_region2_eq_image (N : ℕ) :
       exact hC
     · rw [ftn_rot_norm]
       exact hn
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -797,11 +780,12 @@ private lemma ftn_region3_eq_image (N : ℕ) :
           have hzpair : (⟨z.re, z.im⟩ : GaussianInt) = z :=
             Zsqrtd.ext_iff.mpr ⟨rfl, rfl⟩
           rw [hzpair] at h4
-          rwa [h4] at h2
+          rw [h4] at h2
+          exact h2
         rw [h1]
         linear_combination h3
     · have e1 : ((⟨0, 1⟩ : GaussianInt) * ⟨z.im, -z.re⟩).re = z.re := by
-      simp
+        simp
       have e2 : ((⟨0, 1⟩ : GaussianInt) * ⟨z.im, -z.re⟩).im = z.im := by
         simp
       exact Zsqrtd.ext_iff.mpr ⟨e1, e2⟩
@@ -812,7 +796,6 @@ private lemma ftn_region3_eq_image (N : ℕ) :
       exact hC
     · rw [ftn_rot_norm]
       exact hn
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -871,7 +854,6 @@ private lemma ftn_region_disjoint (N : ℕ) :
     rw [abs_lt] at hC0 hC1
     omega
   exact ⟨d01, d02, d03, d12, d13, d23⟩
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -889,7 +871,7 @@ private lemma ftn_gaussNormSet_eq_union (N : ℕ) (hN : Odd N) :
   · intro hz
     have hnorm : z.norm = (((N : ℕ)) : ℤ) := hz
     have hoddZ : Odd z.norm := hnorm.symm ▸ hoddN
-    obtain h0 | h1 | h2 | h3 := ftn_odd_norm_one_region z hoddZ
+    rcases ftn_odd_norm_one_region z hoddZ with h0 | h1 | h2 | h3
     · exact Or.inl (Or.inl (Or.inl ⟨h0, hnorm⟩))
     · exact Or.inl (Or.inl (Or.inr ⟨h1, hnorm⟩))
     · exact Or.inl (Or.inr ⟨h2, hnorm⟩)
@@ -899,7 +881,6 @@ private lemma ftn_gaussNormSet_eq_union (N : ℕ) (hN : Odd N) :
     · exact h1.2
     · exact h2.2
     · exact h3.2
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -933,7 +914,7 @@ private lemma ftn_ncard_gaussNormSet_eq_four_mul (N : ℕ) (hN : Odd N) :
   have fin2 : (ftnGaussNormRegion2 N).Finite := hfinS.subset sub2
   have fin3 : (ftnGaussNormRegion3 N).Finite := hfinS.subset sub3
   have hinj : Function.Injective
-    (fun w : GaussianInt => (⟨0, 1⟩ : GaussianInt) * w) :=
+      (fun w : GaussianInt => (⟨0, 1⟩ : GaussianInt) * w) :=
     mul_right_injective₀ ftn_rot_ne_zero
   have n1 : (ftnGaussNormRegion1 N).ncard = (ftnGaussNormRegion N).ncard := by
     rw [ftn_region1_eq_image N, Set.ncard_image_of_injective _ hinj]
@@ -943,30 +924,30 @@ private lemma ftn_ncard_gaussNormSet_eq_four_mul (N : ℕ) (hN : Odd N) :
     rw [ftn_region3_eq_image N, Set.ncard_image_of_injective _ hinj]
   obtain ⟨d01, d02, d03, d12, d13, d23⟩ := ftn_region_disjoint N
   have e1 : (ftnGaussNormRegion N ∪ ftnGaussNormRegion1 N).ncard =
-    (ftnGaussNormRegion N).ncard + (ftnGaussNormRegion1 N).ncard :=
+      (ftnGaussNormRegion N).ncard + (ftnGaussNormRegion1 N).ncard :=
     Set.ncard_union_eq d01 fin0 fin1
   have dj02 : Disjoint (ftnGaussNormRegion N ∪ ftnGaussNormRegion1 N)
-    (ftnGaussNormRegion2 N) := by
+      (ftnGaussNormRegion2 N) := by
     rw [Set.disjoint_left]
     rintro z (h0 | h1) h2
     · exact Set.disjoint_left.mp d02 h0 h2
     · exact Set.disjoint_left.mp d12 h1 h2
   have e2 : ((ftnGaussNormRegion N ∪ ftnGaussNormRegion1 N) ∪
-    ftnGaussNormRegion2 N).ncard =
-    (ftnGaussNormRegion N ∪ ftnGaussNormRegion1 N).ncard +
-      (ftnGaussNormRegion2 N).ncard :=
+      ftnGaussNormRegion2 N).ncard =
+      (ftnGaussNormRegion N ∪ ftnGaussNormRegion1 N).ncard +
+        (ftnGaussNormRegion2 N).ncard :=
     Set.ncard_union_eq dj02 (fin0.union fin1) fin2
   have dj03 : Disjoint ((ftnGaussNormRegion N ∪ ftnGaussNormRegion1 N) ∪
-    ftnGaussNormRegion2 N) (ftnGaussNormRegion3 N) := by
+      ftnGaussNormRegion2 N) (ftnGaussNormRegion3 N) := by
     rw [Set.disjoint_left]
     rintro z ((h0 | h1) | h2) h3
     · exact Set.disjoint_left.mp d03 h0 h3
     · exact Set.disjoint_left.mp d13 h1 h3
     · exact Set.disjoint_left.mp d23 h2 h3
   have e3 : (((ftnGaussNormRegion N ∪ ftnGaussNormRegion1 N) ∪
-    ftnGaussNormRegion2 N) ∪ ftnGaussNormRegion3 N).ncard =
-    ((ftnGaussNormRegion N ∪ ftnGaussNormRegion1 N) ∪
-      ftnGaussNormRegion2 N).ncard + (ftnGaussNormRegion3 N).ncard :=
+      ftnGaussNormRegion2 N) ∪ ftnGaussNormRegion3 N).ncard =
+      ((ftnGaussNormRegion N ∪ ftnGaussNormRegion1 N) ∪
+        ftnGaussNormRegion2 N).ncard + (ftnGaussNormRegion3 N).ncard :=
     Set.ncard_union_eq dj03 ((fin0.union fin1).union fin2) fin3
   have m2 : (ftnGaussNormRegion2 N).ncard = (ftnGaussNormRegion N).ncard :=
     n2.trans n1
@@ -974,7 +955,6 @@ private lemma ftn_ncard_gaussNormSet_eq_four_mul (N : ℕ) (hN : Odd N) :
     n3.trans m2
   rw [hunion, e3, e2, e1, n1, m2, m3]
   ring
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -987,7 +967,6 @@ private lemma ftn_gauss_norm_mul (p : ℕ) (w : GaussianInt) :
   (((p : ℕ) : GaussianInt) * w).norm = (p : ℤ) ^ 2 * w.norm := by
   rw [Zsqrtd.norm_mul, Zsqrtd.norm_natCast]
   ring
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1009,20 +988,20 @@ private lemma ftn_gauss_dvd_of_mem_three (p N : ℕ) (hp : Nat.Prime p)
     rw [hnorm] at e
     have c : ((((N : ℕ)) : ℤ) : GaussianInt) = ((N : ℕ) : GaussianInt) := by
       norm_cast
-    rwa [c] at e
+    rw [c] at e
+    exact e
   have hpdvd : ((p : ℕ) : GaussianInt) ∣ z * star z := by
     rw [← hmul]
     obtain ⟨t, ht⟩ := hdvd
     exact ⟨((t : ℕ) : GaussianInt), by exact_mod_cast ht⟩
-  obtain h | h := (hprime.dvd_mul).mp hpdvd
+  rcases (hprime.dvd_mul).mp hpdvd with h | h
   · exact h
   · obtain ⟨w, hw⟩ := h
     refine ⟨star w, ?_⟩
     have e2 : star (((p : ℕ) : GaussianInt) * w) =
-      ((p : ℕ) : GaussianInt) * star w := by
+        ((p : ℕ) : GaussianInt) * star w := by
       rw [star_mul, star_natCast, mul_comm (star w) _]
     rw [← e2, ← hw, star_star]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1036,7 +1015,7 @@ private lemma ftn_ncard_gaussNormSet_of_prime_three (p N : ℕ) (hp : Nat.Prime 
   (ftnGaussNormSet N).ncard =
     if p ^ 2 ∣ N then (ftnGaussNormSet (N / p ^ 2)).ncard else 0 := by
   have hinj : Function.Injective
-    (fun w : GaussianInt => ((p : ℕ) : GaussianInt) * w) :=
+      (fun w : GaussianInt => ((p : ℕ) : GaussianInt) * w) :=
     mul_right_injective₀ (by exact_mod_cast hp.ne_zero)
   by_cases h2 : p ^ 2 ∣ N
   · rw [ite_eq_left h2]
@@ -1047,10 +1026,11 @@ private lemma ftn_ncard_gaussNormSet_of_prime_three (p N : ℕ) (hp : Nat.Prime 
       have hcast : (↑(p ^ 2 * (N / p ^ 2)) : ℤ) = ((N : ℕ) : ℤ) := by
         exact_mod_cast hNM
       have hpow : (((p ^ 2 : ℕ)) : ℤ) = (p : ℤ) ^ 2 := Nat.cast_pow p 2
-      rwa [Nat.cast_mul, hpow] at hcast
+      rw [Nat.cast_mul, hpow] at hcast
+      exact hcast.symm
     have himg : ftnGaussNormSet N =
-      (fun w : GaussianInt => ((p : ℕ) : GaussianInt) * w) ''
-        ftnGaussNormSet (N / p ^ 2) := by
+        (fun w : GaussianInt => ((p : ℕ) : GaussianInt) * w) ''
+          ftnGaussNormSet (N / p ^ 2) := by
       ext z
       constructor
       · intro hz
@@ -1059,20 +1039,22 @@ private lemma ftn_ncard_gaussNormSet_of_prime_three (p N : ℕ) (hp : Nat.Prime 
           have e := ftn_gauss_norm_mul p w₀
           rw [← hw₀] at e
           have hzN : z.norm = ((N : ℕ) : ℤ) := hz
-          rwa [hzN] at e
+          rw [hzN] at e
+          exact e
         have hcancel : w₀.norm = (((N / p ^ 2 : ℕ)) : ℤ) := by
           have hp2 : (p : ℤ) ^ 2 ≠ 0 := by
             have hne : (p : ℤ) ≠ 0 := by exact_mod_cast hp.ne_zero
             exact pow_ne_zero 2 hne
           have e : (p : ℤ) ^ 2 * w₀.norm =
-            (p : ℤ) ^ 2 * (((N / p ^ 2 : ℕ)) : ℤ) := by
+              (p : ℤ) ^ 2 * (((N / p ^ 2 : ℕ)) : ℤ) := by
             rw [← hnormz, eN]
           exact mul_left_cancel₀ hp2 e
         exact ⟨w₀, hcancel, hw₀.symm⟩
       · rintro ⟨w, hw, rfl⟩
         have hwN : w.norm = (((N / p ^ 2 : ℕ)) : ℤ) := hw
         have e := ftn_gauss_norm_mul p w
-        rwa [hwN, ← eN] at e
+        rw [hwN, ← eN] at e
+        exact e
     rw [himg, Set.ncard_image_of_injective _ hinj]
   · rw [ite_eq_right h2]
     have hempty : ftnGaussNormSet N = ∅ := by
@@ -1084,14 +1066,14 @@ private lemma ftn_ncard_gaussNormSet_of_prime_three (p N : ℕ) (hp : Nat.Prime 
         have e := ftn_gauss_norm_mul p w₀
         rw [← hw₀] at e
         have hzN : z.norm = ((N : ℕ) : ℤ) := hz
-        rwa [hzN] at e
+        rw [hzN] at e
+        exact e
       have hdvdZ : (((p ^ 2 : ℕ)) : ℤ) ∣ ((N : ℕ) : ℤ) := by
         have hcast : (((p ^ 2 : ℕ)) : ℤ) = (p : ℤ) ^ 2 := Nat.cast_pow p 2
         rw [hcast]
         exact ⟨w₀.norm, hnormz⟩
       exact h2 (Int.natCast_dvd_natCast.mp hdvdZ)
     rw [hempty, Set.ncard_empty]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1106,7 +1088,6 @@ private lemma ftn_gauss_norm_nonneg (z : GaussianInt) : 0 ≤ z.norm := by
   rw [hz] at h1
   rw [h1]
   exact add_nonneg (mul_self_nonneg _) (mul_self_nonneg _)
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1119,7 +1100,6 @@ private lemma ftn_gauss_norm_dvd {x y : GaussianInt} (h : x ∣ y) :
   x.norm ∣ y.norm := by
   obtain ⟨v, hv⟩ := h
   exact ⟨v.norm, by rw [hv, Zsqrtd.norm_mul]⟩
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1137,8 +1117,8 @@ private lemma ftn_gauss_N_eq (N : ℕ) (z : GaussianInt)
   rw [hnorm] at e
   have c : ((((N : ℕ)) : ℤ) : GaussianInt) = ((N : ℕ) : GaussianInt) := by
     norm_cast
-  rwa [c] at e
-
+  rw [c] at e
+  exact e
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1153,9 +1133,10 @@ private lemma ftn_gauss_star_dvd (a b : GaussianInt) (h : a ∣ star b) :
   refine ⟨star w, ?_⟩
   have e : b = star w * star a := by
     have e1 : star (star b) = star (a * w) := congrArg star hw
-    rwa [star_star, star_mul] at e1
-  rwa [mul_comm (star a) (star w)]
-
+    rw [star_star, star_mul] at e1
+    exact e1
+  rw [mul_comm (star a) (star w)]
+  exact e
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1176,19 +1157,22 @@ private lemma ftn_prime_of_norm_prime (z : GaussianInt) (p : ℕ) (hp : Nat.Prim
   · intro x y hxy
     have hnab : x.norm * y.norm = ((p : ℕ) : ℤ) := by
       have e := congrArg Zsqrtd.norm hxy
-      rwa [Zsqrtd.norm_mul, hz] at e
+      rw [Zsqrtd.norm_mul, hz] at e
+      exact e.symm
     have ha_nn := ftn_gauss_norm_nonneg x
     have hb_nn := ftn_gauss_norm_nonneg y
     have hAB : x.norm.natAbs * y.norm.natAbs = p := by
       have h := congrArg Int.natAbs hnab
-      rwa [Int.natAbs_mul, Int.natAbs_natCast] at h
+      rw [Int.natAbs_mul, Int.natAbs_natCast] at h
+      exact h
     have hdvdA : x.norm.natAbs ∣ p := ⟨y.norm.natAbs, hAB.symm⟩
-    obtain hA1 | hAp := hp.eq_one_or_self_of_dvd _ hdvdA
+    rcases hp.eq_one_or_self_of_dvd _ hdvdA with hA1 | hAp
     · left
       have h1 : x.norm = 1 := by
         have e : (((x.norm.natAbs : ℕ)) : ℤ) = x.norm :=
           Int.natAbs_of_nonneg ha_nn
-        rwa [hA1, Nat.cast_one] at e
+        rw [hA1, Nat.cast_one] at e
+        exact e.symm
       exact (Zsqrtd.norm_eq_one_iff' (by norm_num : (-1 : ℤ) ≤ 0) x).mp h1
     · right
       have hB1 : y.norm.natAbs = 1 := by
@@ -1198,9 +1182,9 @@ private lemma ftn_prime_of_norm_prime (z : GaussianInt) (p : ℕ) (hp : Nat.Prim
       have h1 : y.norm = 1 := by
         have e : (((y.norm.natAbs : ℕ)) : ℤ) = y.norm :=
           Int.natAbs_of_nonneg hb_nn
-        rwa [hB1, Nat.cast_one] at e
+        rw [hB1, Nat.cast_one] at e
+        exact e.symm
       exact (Zsqrtd.norm_eq_one_iff' (by norm_num : (-1 : ℤ) ≤ 0) y).mp h1
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1213,16 +1197,17 @@ private lemma ftn_int_prime_dvd_of_dvd_four_mul_sq (p : ℕ) (hp : Nat.Prime p)
   (hmod : p % 4 = 1) (c : ℤ) (h : ((p : ℕ) : ℤ) ∣ 4 * c ^ 2) :
   ((p : ℕ) : ℤ) ∣ c := by
   have hprimeZ : Prime (((p : ℕ)) : ℤ) := Nat.prime_iff_prime_int.mp hp
-  obtain h4 | hc2 := (hprimeZ.dvd_mul).mp h
+  rcases (hprimeZ.dvd_mul).mp h with h4 | hc2
   · exfalso
     have h2 : ((p : ℕ) : ℤ) ∣ 2 := by
       have e4 : (4 : ℤ) = 2 * 2 := by norm_num
       rw [e4] at h4
-      obtain h | h <;> exact h := (hprimeZ.dvd_mul).mp h4
+      rcases (hprimeZ.dvd_mul).mp h4 with h | h <;> exact h
     have h2N : p ∣ 2 := by
       have h1 : ((p : ℕ) : ℤ) ∣ ((2 : ℕ) : ℤ) := by
         have c2 : (((2 : ℕ)) : ℤ) = 2 := by norm_num
-        rwa [c2]
+        rw [c2]
+        exact h2
       exact Int.natCast_dvd_natCast.mp h1
     have hle : p ≤ 2 := Nat.le_of_dvd (by norm_num) h2N
     have heq : p = 2 := by
@@ -1231,8 +1216,7 @@ private lemma ftn_int_prime_dvd_of_dvd_four_mul_sq (p : ℕ) (hp : Nat.Prime p)
     rw [heq] at hmod
     norm_num at hmod
   · rw [pow_two] at hc2
-    obtain h | h <;> exact h := (hprimeZ.dvd_mul).mp hc2
-
+    rcases (hprimeZ.dvd_mul).mp hc2 with h | h <;> exact h
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1250,10 +1234,11 @@ private lemma ftn_split_prime_not_dvd (p a b : ℕ) (hp : Nat.Prime p)
   have hnorm_pi : ((⟨(a : ℤ), (b : ℤ)⟩ : GaussianInt)).norm = ((p : ℕ) : ℤ) := by
     rw [ftn_norm_pair]
     have h2 := habZ
-    rwa [pow_two, pow_two] at h2
+    rw [pow_two, pow_two] at h2
+    exact h2
   have hpa : ((p : ℕ) : ℤ) ∣ (a : ℤ) := by
     have hsum : ((((⟨(a : ℤ), (b : ℤ)⟩ : GaussianInt)) +
-      star ((⟨(a : ℤ), (b : ℤ)⟩ : GaussianInt)))).norm = 4 * (a : ℤ) ^ 2 := by
+        star ((⟨(a : ℤ), (b : ℤ)⟩ : GaussianInt)))).norm = 4 * (a : ℤ) ^ 2 := by
       rw [Zsqrtd.star_mk, Zsqrtd.add_def, ftn_norm_pair]
       ring
     have hdvds := dvd_add (dvd_refl _) hd
@@ -1271,21 +1256,20 @@ private lemma ftn_split_prime_not_dvd (p a b : ℕ) (hp : Nat.Prime p)
         exact dvd_mul_of_dvd_left hpa _
       exact dvd_sub (dvd_refl _) ha2
     rw [pow_two] at hb2
-    obtain h | h <;> exact h := (hprimeZ.dvd_mul).mp hb2
+    rcases (hprimeZ.dvd_mul).mp hb2 with h | h <;> exact h
   obtain ⟨s, hs⟩ := hpa
   obtain ⟨t, ht⟩ := hpb
   rw [hs, ht] at habZ
   have hfac : ((p : ℕ) : ℤ) * (((p : ℕ) : ℤ) * (s ^ 2 + t ^ 2) - 1) = 0 := by
     linear_combination habZ
-  obtain hP0 | hS1 := mul_eq_zero.mp hfac
+  rcases mul_eq_zero.mp hfac with hP0 | hS1
   · exact hp.ne_zero (by exact_mod_cast hP0)
   · have hdvd1 : (p : ℕ) ∣ 1 := by
-    have h1 : ((p : ℕ) : ℤ) ∣ ((1 : ℕ) : ℤ) := by
-      rw [Nat.cast_one]
-      exact ⟨s ^ 2 + t ^ 2, (eq_of_sub_eq_zero hS1).symm⟩
-    exact Int.natCast_dvd_natCast.mp h1
+      have h1 : ((p : ℕ) : ℤ) ∣ ((1 : ℕ) : ℤ) := by
+        rw [Nat.cast_one]
+        exact ⟨s ^ 2 + t ^ 2, (eq_of_sub_eq_zero hS1).symm⟩
+      exact Int.natCast_dvd_natCast.mp h1
     exact hp.ne_one (Nat.dvd_one.mp hdvd1)
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1305,20 +1289,21 @@ private lemma ftn_split_prime_exists (p : ℕ) (hp : Nat.Prime p)
     rw [ftn_norm_pair]
     have habZ : (a : ℤ) ^ 2 + (b : ℤ) ^ 2 = ((p : ℕ) : ℤ) := by
       exact_mod_cast hab
-    rwa [pow_two, pow_two] at habZ
+    rw [pow_two, pow_two] at habZ
+    exact habZ
   have hprod : ((p : ℕ) : GaussianInt) =
-    (⟨(a : ℤ), (b : ℤ)⟩ : GaussianInt) *
-      star ((⟨(a : ℤ), (b : ℤ)⟩ : GaussianInt)) := by
+      (⟨(a : ℤ), (b : ℤ)⟩ : GaussianInt) *
+        star ((⟨(a : ℤ), (b : ℤ)⟩ : GaussianInt)) := by
     have e : (((⟨(a : ℤ), (b : ℤ)⟩ : GaussianInt).norm : ℤ) : GaussianInt) =
-      _ * star _ :=
+        _ * star _ :=
       Zsqrtd.norm_eq_mul_conj _
     rw [hnorm_pi] at e
     have c : ((((p : ℕ)) : ℤ) : GaussianInt) = ((p : ℕ) : GaussianInt) := by
       norm_cast
-    rwa [c] at e
+    rw [c] at e
+    exact e
   exact ⟨_, hnorm_pi, ftn_prime_of_norm_prime _ p hp hnorm_pi, hprod,
     ftn_split_prime_not_dvd p a b hp hmod hab⟩
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1346,14 +1331,14 @@ private lemma ftn_gauss_image_eq (c : GaussianInt) (p N M : ℕ)
         have e := congrArg Zsqrtd.norm hw₀
         rw [Zsqrtd.norm_mul, hnorm_c] at e
         have hzN : z.norm = ((N : ℕ) : ℤ) := hzS
-        rwa [hzN] at e
+        rw [hzN] at e
+        exact e
       have e2 : ((N : ℕ) : ℤ) = ((p : ℕ) : ℤ) * ((M : ℕ) : ℤ) := by
         exact_mod_cast hNM.symm
       have e : ((p : ℕ) : ℤ) * w₀.norm = ((p : ℕ) : ℤ) * ((M : ℕ) : ℤ) := by
         rw [← e1, e2]
       exact mul_left_cancel₀ hne e
     exact ⟨w₀, hcancel, hw₀.symm⟩
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1375,12 +1360,12 @@ private lemma ftn_gauss_union_eq (π : GaussianInt) (p N : ℕ)
     have hpi_N : π ∣ ((N : ℕ) : GaussianInt) :=
       dvd_trans ⟨star π, hprod⟩ ⟨((t : ℕ) : GaussianInt), by exact_mod_cast ht⟩
     have hpdvd : π ∣ z * star z := by
-      rwa [← ftn_gauss_N_eq N z hz]
-    obtain h | h := (hprime_pi.dvd_mul).mp hpdvd
+      rw [← ftn_gauss_N_eq N z hz]
+      exact hpi_N
+    rcases (hprime_pi.dvd_mul).mp hpdvd with h | h
     · exact Or.inl ⟨hz, h⟩
     · exact Or.inr ⟨hz, ftn_gauss_star_dvd π z h⟩
   · rintro (⟨hz, -⟩ | ⟨hz, -⟩) <;> exact hz
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1398,7 +1383,6 @@ private lemma ftn_gauss_inter_sup (π : GaussianInt) (p N : ℕ)
   constructor
   · exact ⟨hzS, dvd_trans ⟨star π, hprod⟩ hpdvd⟩
   · exact ⟨hzS, dvd_trans ⟨π, by rw [hprod]; ring⟩ hpdvd⟩
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1416,14 +1400,14 @@ private lemma ftn_gauss_inter_sub (π : GaussianInt) (p N : ℕ)
   rintro z ⟨⟨hzS, hpi_z⟩, ⟨-, hstar_z⟩⟩
   obtain ⟨w, hw⟩ := hstar_z
   have hdiv : π ∣ star π * w := by
-    rwa [← hw]
+    rw [← hw]
+    exact hpi_z
   have hpiw : π ∣ w := by
-    obtain h1 | h1 := (hprime_pi.dvd_mul).mp hdiv
+    rcases (hprime_pi.dvd_mul).mp hdiv with h1 | h1
     · exact absurd h1 hndvd
     · exact h1
   obtain ⟨v, hv⟩ := hpiw
   exact ⟨hzS, ⟨v, by rw [hw, hv, hprod]; ring⟩⟩
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1442,10 +1426,10 @@ private lemma ftn_ncard_gaussNormSet_of_prime_one (p N : ℕ) (hp : Nat.Prime p)
   have hfinS := ftn_gaussNormSet_finite N
   have hNdiv : p * (N / p) = N := Nat.mul_div_cancel' hdvd
   have hA_img : (fun w : GaussianInt => π * w) '' ftnGaussNormSet (N / p) =
-    {z ∈ ftnGaussNormSet N | π ∣ z} :=
+      {z ∈ ftnGaussNormSet N | π ∣ z} :=
     ftn_gauss_image_eq π p N (N / p) hnorm_pi hNdiv hp.ne_zero
   have hB_img : (fun w : GaussianInt => star π * w) '' ftnGaussNormSet (N / p) =
-    {z ∈ ftnGaussNormSet N | star π ∣ z} :=
+      {z ∈ ftnGaussNormSet N | star π ∣ z} :=
     ftn_gauss_image_eq (star π) p N (N / p)
       (by rw [Zsqrtd.norm_conj]; exact hnorm_pi) hNdiv hp.ne_zero
   have hunion := ftn_gauss_union_eq π p N hprime_pi hprod hdvd
@@ -1466,11 +1450,11 @@ private lemma ftn_ncard_gaussNormSet_of_prime_one (p N : ℕ) (hp : Nat.Prime p)
   have hnc := Set.ncard_union_add_ncard_inter _ _ hfinA hfinB
   rw [← hunion] at hnc
   have hAncard : ({z ∈ ftnGaussNormSet N | π ∣ z} : Set GaussianInt).ncard =
-    (ftnGaussNormSet (N / p)).ncard := by
+      (ftnGaussNormSet (N / p)).ncard := by
     rw [← hA_img]
     exact Set.ncard_image_of_injective _ (mul_right_injective₀ hpi_ne)
   have hBncard : ({z ∈ ftnGaussNormSet N | star π ∣ z} : Set GaussianInt).ncard =
-    (ftnGaussNormSet (N / p)).ncard := by
+      (ftnGaussNormSet (N / p)).ncard := by
     rw [← hB_img]
     exact Set.ncard_image_of_injective _ (mul_right_injective₀ hstar_ne)
   rw [hAncard, hBncard] at hnc
@@ -1482,13 +1466,13 @@ private lemma ftn_ncard_gaussNormSet_of_prime_one (p N : ℕ) (hp : Nat.Prime p)
     have hnorm_p : (((p : ℕ) : GaussianInt)).norm = (((p ^ 2 : ℕ)) : ℤ) := by
       rw [Zsqrtd.norm_natCast, Nat.cast_pow p 2, pow_two]
     have hAB_img : (fun w : GaussianInt => ((p : ℕ) : GaussianInt) * w) ''
-      ftnGaussNormSet (N / p ^ 2) =
-      {z ∈ ftnGaussNormSet N | ((p : ℕ) : GaussianInt) ∣ z} :=
+        ftnGaussNormSet (N / p ^ 2) =
+        {z ∈ ftnGaussNormSet N | ((p : ℕ) : GaussianInt) ∣ z} :=
       ftn_gauss_image_eq _ (p ^ 2) N (N / p ^ 2) hnorm_p hNdiv2
         (pow_ne_zero 2 hp.ne_zero)
     have hinter : {z ∈ ftnGaussNormSet N | π ∣ z} ∩
-      {z ∈ ftnGaussNormSet N | star π ∣ z} =
-      {z ∈ ftnGaussNormSet N | ((p : ℕ) : GaussianInt) ∣ z} :=
+        {z ∈ ftnGaussNormSet N | star π ∣ z} =
+        {z ∈ ftnGaussNormSet N | ((p : ℕ) : GaussianInt) ∣ z} :=
       Set.Subset.antisymm hAB_sub hAB_sup
     rw [hinter, ← hAB_img, Set.ncard_image_of_injective _
       (mul_right_injective₀ (by exact_mod_cast hp.ne_zero :
@@ -1496,12 +1480,12 @@ private lemma ftn_ncard_gaussNormSet_of_prime_one (p N : ℕ) (hp : Nat.Prime p)
     linear_combination hnc
   · rw [ite_eq_right h2]
     have hAB_empty : {z ∈ ftnGaussNormSet N | π ∣ z} ∩
-      {z ∈ ftnGaussNormSet N | star π ∣ z} = ∅ := by
+        {z ∈ ftnGaussNormSet N | star π ∣ z} = ∅ := by
       ext z
       simp only [Set.mem_empty_iff_false, iff_false, Set.mem_inter_iff]
       rintro ⟨⟨hzS, hpi_z⟩, ⟨-, hstar_z⟩⟩
       have hzmem : z ∈
-        {z ∈ ftnGaussNormSet N | ((p : ℕ) : GaussianInt) ∣ z} :=
+          {z ∈ ftnGaussNormSet N | ((p : ℕ) : GaussianInt) ∣ z} :=
         hAB_sub ⟨⟨hzS, hpi_z⟩, ⟨hzS, hstar_z⟩⟩
       obtain ⟨-, hpz⟩ := hzmem
       obtain ⟨w₀, hw₀⟩ := hpz
@@ -1509,14 +1493,14 @@ private lemma ftn_ncard_gaussNormSet_of_prime_one (p N : ℕ) (hp : Nat.Prime p)
         have e := ftn_gauss_norm_mul p w₀
         rw [← hw₀] at e
         have hzN : z.norm = ((N : ℕ) : ℤ) := hzS
-        rwa [hzN] at e
+        rw [hzN] at e
+        exact e
       have hdvdZ : (((p ^ 2 : ℕ)) : ℤ) ∣ ((N : ℕ) : ℤ) := by
         rw [Nat.cast_pow p 2]
         exact ⟨w₀.norm, hnormz⟩
       exact h2 (Int.natCast_dvd_natCast.mp hdvdZ)
     rw [hAB_empty, Set.ncard_empty] at hnc
     linear_combination hnc
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1559,7 +1543,6 @@ private lemma ftnChiFourDivisorSum_eq_conv (N : ℕ) :
   ftnChiFourDivisorSum N = (ftnChiFour * ↑ArithmeticFunction.zeta) N := by
   rw [ArithmeticFunction.coe_mul_zeta_apply]
   simp only [ftnChiFourDivisorSum, ftnChiFour_apply]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1578,7 +1561,6 @@ private lemma ftn_chi_mul_of_coprime {m n : ℕ} (h : m.Coprime n) :
   rw [ftnChiFourDivisorSum_eq_conv m, ftnChiFourDivisorSum_eq_conv n,
     ftnChiFourDivisorSum_eq_conv (m * n)]
   exact hH.map_mul_of_coprime h
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1591,12 +1573,11 @@ private lemma ftn_chi_prime_pow (p k : ℕ) (hp : Nat.Prime p) :
   ftnChiFourDivisorSum (p ^ k) =
     ∑ i ∈ Finset.range (k + 1), (ZMod.χ₄ ((p : ℕ) : ZMod 4)) ^ i := by
   have h1 : ftnChiFourDivisorSum (p ^ k) =
-    ∑ d ∈ (p ^ k).divisors, ftnChiFour d := by
+      ∑ d ∈ (p ^ k).divisors, ftnChiFour d := by
     simp only [ftnChiFourDivisorSum, ftnChiFour_apply]
   rw [h1, Nat.sum_divisors_prime_pow hp]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [ftnChiFour_apply, Nat.cast_pow, map_pow]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1619,7 +1600,6 @@ private lemma ftn_sum_neg_one_pow (k : ℕ) :
     · have heven : Even (k + 1) := Nat.even_add_one.mpr hk
       rw [ite_eq_right hk, heven.neg_one_pow, ite_eq_left heven]
       ring
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1631,7 +1611,6 @@ namespace MetaMathlibExt.FourTriangular
 private lemma ftn_sum_one_pow (k : ℕ) :
   ∑ i ∈ Finset.range (k + 1), (1 : ℤ) ^ i = ((k : ℕ) : ℤ) + 1 := by
   simp
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1644,7 +1623,6 @@ private lemma ftn_chi_one : ftnChiFourDivisorSum 1 = 1 := by
   change ∑ d ∈ Nat.divisors 1, ZMod.χ₄ ((d : ℕ) : ZMod 4) = 1
   rw [Nat.divisors_one, Finset.sum_singleton, Nat.cast_one]
   exact map_one _
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1660,7 +1638,7 @@ private lemma ftn_sq_dvd_iff (p k m : ℕ) (hp : Nat.Prime p) (hpm : ¬ p ∣ m)
     by_contra hlt
     push Not at hlt
     have hk01 : k = 0 ∨ k = 1 := by omega
-    obtain rfl | rfl := hk01
+    rcases hk01 with rfl | rfl
     · simp only [pow_zero, one_mul] at hd
       exact hpm (dvd_trans (dvd_pow_self p two_ne_zero) hd)
     · simp only [pow_one] at hd
@@ -1670,7 +1648,6 @@ private lemma ftn_sq_dvd_iff (p k m : ℕ) (hp : Nat.Prime p) (hpm : ¬ p ∣ m)
       exact hpm ⟨t, h2⟩
   · intro hle
     exact (pow_dvd_pow p hle).trans (dvd_mul_right _ _)
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1688,7 +1665,6 @@ private lemma ftn_div_pow_mul (p k m j : ℕ) (hle : j ≤ k) (hp0 : 0 < p)
     rw [pow_add]
   rw [hk, mul_assoc]
   exact Nat.mul_div_cancel_left _ (pow_pos hp0 j)
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1703,7 +1679,7 @@ private lemma ftn_chi_three (p N : ℕ) (hp : Nat.Prime p)
     if p ^ 2 ∣ N then ftnChiFourDivisorSum (N / p ^ 2) else 0 := by
   obtain ⟨k, m, hpm, hNk⟩ := Nat.exists_eq_pow_mul_and_not_dvd hN p hp.ne_one
   have hk1 : 1 ≤ k := by
-    obtain rfl | hpos := Nat.eq_zero_or_pos k
+    rcases Nat.eq_zero_or_pos k with rfl | hpos
     · exfalso
       rw [pow_zero, one_mul] at hNk
       rw [hNk] at hdvd
@@ -1711,7 +1687,7 @@ private lemma ftn_chi_three (p N : ℕ) (hp : Nat.Prime p)
     · exact hpos
   have hcop : (p ^ k).Coprime m := (hp.coprime_iff_not_dvd.mpr hpm).pow_left k
   have hsplit : ftnChiFourDivisorSum N =
-    ftnChiFourDivisorSum (p ^ k) * ftnChiFourDivisorSum m := by
+      ftnChiFourDivisorSum (p ^ k) * ftnChiFourDivisorSum m := by
     rw [hNk]
     exact ftn_chi_mul_of_coprime hcop
   have hchi : ZMod.χ₄ ((p : ℕ) : ZMod 4) = -1 := ZMod.χ₄_nat_three_mod_four hmod
@@ -1726,9 +1702,10 @@ private lemma ftn_chi_three (p N : ℕ) (hp : Nat.Prime p)
     obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le hk2
     have hdiv : N / p ^ 2 = p ^ t * m := by
       have h := ftn_div_pow_mul p (2 + t) m 2 (Nat.le_add_right 2 t) hp.pos N hNk
-      rwa [Nat.add_sub_cancel_left] at h
+      rw [Nat.add_sub_cancel_left] at h
+      exact h
     have hsplit2 : ftnChiFourDivisorSum (N / p ^ 2) =
-      ftnChiFourDivisorSum (p ^ t) * ftnChiFourDivisorSum m := by
+        ftnChiFourDivisorSum (p ^ t) * ftnChiFourDivisorSum m := by
       rw [hdiv]
       exact ftn_chi_mul_of_coprime ((hp.coprime_iff_not_dvd.mpr hpm).pow_left t)
     have hpp2 : ftnChiFourDivisorSum (p ^ t) = if Even t then 1 else 0 := by
@@ -1751,7 +1728,6 @@ private lemma ftn_chi_three (p N : ℕ) (hp : Nat.Prime p)
     rw [hsplit, hpp]
     have hne : ¬ Even (1 : ℕ) := by decide
     rw [ite_eq_right hne, zero_mul]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1767,7 +1743,7 @@ private lemma ftn_chi_one_mod (p N : ℕ) (hp : Nat.Prime p)
     2 * ftnChiFourDivisorSum (N / p) := by
   obtain ⟨k, m, hpm, hNk⟩ := Nat.exists_eq_pow_mul_and_not_dvd hN p hp.ne_one
   have hk1 : 1 ≤ k := by
-    obtain rfl | hpos := Nat.eq_zero_or_pos k
+    rcases Nat.eq_zero_or_pos k with rfl | hpos
     · exfalso
       rw [pow_zero, one_mul] at hNk
       rw [hNk] at hdvd
@@ -1775,7 +1751,7 @@ private lemma ftn_chi_one_mod (p N : ℕ) (hp : Nat.Prime p)
     · exact hpos
   have hcop : (p ^ k).Coprime m := (hp.coprime_iff_not_dvd.mpr hpm).pow_left k
   have hsplit : ftnChiFourDivisorSum N =
-    ftnChiFourDivisorSum (p ^ k) * ftnChiFourDivisorSum m := by
+      ftnChiFourDivisorSum (p ^ k) * ftnChiFourDivisorSum m := by
     rw [hNk]
     exact ftn_chi_mul_of_coprime hcop
   have hchi : ZMod.χ₄ ((p : ℕ) : ZMod 4) = 1 := ZMod.χ₄_nat_one_mod_four hmod
@@ -1788,9 +1764,10 @@ private lemma ftn_chi_one_mod (p N : ℕ) (hp : Nat.Prime p)
     exact ftn_sq_dvd_iff p k m hp hpm
   have hdiv1 : N / p = p ^ (k - 1) * m := by
     have h := ftn_div_pow_mul p k m 1 hk1 hp.pos N hNk
-    rwa [pow_one] at h
+    rw [pow_one] at h
+    exact h
   have hsplit1 : ftnChiFourDivisorSum (N / p) =
-    ftnChiFourDivisorSum (p ^ (k - 1)) * ftnChiFourDivisorSum m := by
+      ftnChiFourDivisorSum (p ^ (k - 1)) * ftnChiFourDivisorSum m := by
     rw [hdiv1]
     exact ftn_chi_mul_of_coprime ((hp.coprime_iff_not_dvd.mpr hpm).pow_left (k - 1))
   have c1 : ((((k - 1 : ℕ))) : ℤ) = ((k : ℕ) : ℤ) - 1 := by
@@ -1802,7 +1779,7 @@ private lemma ftn_chi_one_mod (p N : ℕ) (hp : Nat.Prime p)
     have hdiv2 : N / p ^ 2 = p ^ (k - 2) * m :=
       ftn_div_pow_mul p k m 2 hk2 hp.pos N hNk
     have hsplit2 : ftnChiFourDivisorSum (N / p ^ 2) =
-      ftnChiFourDivisorSum (p ^ (k - 2)) * ftnChiFourDivisorSum m := by
+        ftnChiFourDivisorSum (p ^ (k - 2)) * ftnChiFourDivisorSum m := by
       rw [hdiv2]
       exact ftn_chi_mul_of_coprime ((hp.coprime_iff_not_dvd.mpr hpm).pow_left (k - 2))
     have c2 : ((((k - 2 : ℕ))) : ℤ) = ((k : ℕ) : ℤ) - 2 := by
@@ -1819,7 +1796,6 @@ private lemma ftn_chi_one_mod (p N : ℕ) (hp : Nat.Prime p)
     subst hk_eq
     rw [hsplit, hpp 1, hsplit1, hpp (1 - 1), c1, Nat.cast_one]
     ring
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1850,7 +1826,7 @@ private lemma ftn_gaussNormRegion_one :
       have h0 : z.im * z.im = 0 := by
         rw [hre] at hnorm2
         linear_combination hnorm2
-      obtain h | h <;> exact h := mul_eq_zero.mp h0
+      rcases mul_eq_zero.mp h0 with h | h <;> exact h
     rw [Set.mem_singleton_iff, Zsqrtd.ext_iff]
     constructor
     · rw [hre]
@@ -1864,7 +1840,6 @@ private lemma ftn_gaussNormRegion_one :
     · rw [Zsqrtd.im_one, Zsqrtd.re_one]
       norm_num
     · simp
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1888,14 +1863,14 @@ private lemma ftn_ncard_gaussNormSet_eq_four_mul_chi (N : ℕ) (hN : Odd N) :
       rw [h4, hR, h1]
       norm_num
     · have hN0 : N ≠ 0 := by
-      rintro rfl
-      exact (by decide : ¬ Odd (0 : ℕ)) hN
+        rintro rfl
+        exact (by decide : ¬ Odd (0 : ℕ)) hN
       have hpos : 0 < N := Nat.pos_of_ne_zero hN0
       set p := N.minFac
       have hp : p.Prime := Nat.minFac_prime hN1
       have hdvd : p ∣ N := Nat.minFac_dvd N
       have hodd_p : Odd p := by
-        obtain hev | hodd := Nat.even_or_odd p
+        rcases Nat.even_or_odd p with hev | hodd
         · exfalso
           obtain ⟨a, ha⟩ := hev
           obtain ⟨t, ht⟩ := hdvd
@@ -1908,7 +1883,7 @@ private lemma ftn_ncard_gaussNormSet_eq_four_mul_chi (N : ℕ) (hN : Odd N) :
         exact (Nat.odd_mul.mp h).2
       have hlt_div : N / p < N := Nat.div_lt_self hpos hp.one_lt
       have hIH_div : ((ftnGaussNormSet (N / p)).ncard : ℤ) =
-        4 * ftnChiFourDivisorSum (N / p) :=
+          4 * ftnChiFourDivisorSum (N / p) :=
         ih (N / p) hlt_div hodd_div
       have hm0 : p % 4 ≠ 0 := by
         intro h
@@ -1934,7 +1909,7 @@ private lemma ftn_ncard_gaussNormSet_eq_four_mul_chi (N : ℕ) (hN : Odd N) :
           have h2 := Nat.pow_le_pow_left hp.two_le 2
           simpa using h2
         omega
-      obtain hmod1 | hmod3 := hmod
+      rcases hmod with hmod1 | hmod3
       · have hGn := ftn_ncard_gaussNormSet_of_prime_one p N hp hmod1 hdvd
         have hCh := ftn_chi_one_mod p N hp hmod1 hN0 hdvd
         by_cases h2 : p ^ 2 ∣ N
@@ -1947,16 +1922,16 @@ private lemma ftn_ncard_gaussNormSet_eq_four_mul_chi (N : ℕ) (hN : Odd N) :
             exact (Nat.odd_mul.mp h).2
           have hlt_div2 : N / p ^ 2 < N := Nat.div_lt_self hpos hp2
           have hIH2 : ((ftnGaussNormSet (N / p ^ 2)).ncard : ℤ) =
-            4 * ftnChiFourDivisorSum (N / p ^ 2) :=
+              4 * ftnChiFourDivisorSum (N / p ^ 2) :=
             ih (N / p ^ 2) hlt_div2 hodd_div2
           have hG : ((ftnGaussNormSet N).ncard : ℤ) +
-            ((ftnGaussNormSet (N / p ^ 2)).ncard : ℤ) =
-            2 * ((ftnGaussNormSet (N / p)).ncard : ℤ) := by
+              ((ftnGaussNormSet (N / p ^ 2)).ncard : ℤ) =
+              2 * ((ftnGaussNormSet (N / p)).ncard : ℤ) := by
             exact_mod_cast hGn
           linear_combination hG - hIH2 + 2 * hIH_div - 4 * hCh
         · rw [ite_eq_right h2] at hGn hCh
           have hG : ((ftnGaussNormSet N).ncard : ℤ) + 0 =
-            2 * ((ftnGaussNormSet (N / p)).ncard : ℤ) := by
+              2 * ((ftnGaussNormSet (N / p)).ncard : ℤ) := by
             exact_mod_cast hGn
           linear_combination hG + 2 * hIH_div - 4 * hCh
       · have hGn := ftn_ncard_gaussNormSet_of_prime_three p N hp hmod3 hdvd
@@ -1971,13 +1946,13 @@ private lemma ftn_ncard_gaussNormSet_eq_four_mul_chi (N : ℕ) (hN : Odd N) :
             exact (Nat.odd_mul.mp h).2
           have hlt_div2 : N / p ^ 2 < N := Nat.div_lt_self hpos hp2
           have hIH2 : ((ftnGaussNormSet (N / p ^ 2)).ncard : ℤ) =
-            4 * ftnChiFourDivisorSum (N / p ^ 2) :=
+              4 * ftnChiFourDivisorSum (N / p ^ 2) :=
             ih (N / p ^ 2) hlt_div2 hodd_div2
-          rwa [hGn, hCh]
+          rw [hGn, hCh]
+          exact hIH2
         · rw [ite_eq_right h2] at hGn hCh
           rw [hGn, hCh]
           simp
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -1991,7 +1966,6 @@ private lemma ftn_chi_eq_divisorsAntidiagonal_sum (m : ℕ) :
     ∑ p ∈ Nat.divisorsAntidiagonal m, ZMod.χ₄ ((p.1 : ℕ) : ZMod 4) := by
   simp only [ftnChiFourDivisorSum]
   exact (Nat.sum_divisorsAntidiagonal (fun d _ => ZMod.χ₄ ((d : ℕ) : ZMod 4))).symm
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2001,18 +1975,17 @@ namespace MetaMathlibExt.FourTriangular
 -/
 @[path]
 private lemma ftn_flat_eq_nested (n : ℕ) :
-  (∑ t ∈ (Finset.antidiagonal n).sigma
+  (∑ t ∈ (Finset.HasAntidiagonal.antidiagonal n).sigma
     (fun p => (Nat.divisorsAntidiagonal (4 * p.1 + 1)).sigma
       (fun _ => Nat.divisorsAntidiagonal (4 * p.2 + 1))),
     ZMod.χ₄ ((((t.2.1).1 : ℕ)) : ZMod 4) * ZMod.χ₄ ((((t.2.2).1 : ℕ)) : ZMod 4)) =
-  (∑ p ∈ Finset.antidiagonal n, ∑ d ∈ Nat.divisorsAntidiagonal (4 * p.1 + 1),
+  (∑ p ∈ Finset.HasAntidiagonal.antidiagonal n, ∑ d ∈ Nat.divisorsAntidiagonal (4 * p.1 + 1),
     ∑ e ∈ Nat.divisorsAntidiagonal (4 * p.2 + 1),
     ZMod.χ₄ ((d.1 : ℕ) : ZMod 4) * ZMod.χ₄ ((e.1 : ℕ) : ZMod 4)) := by
   rw [Finset.sum_sigma]
   refine Finset.sum_congr rfl ?_
   intro p _
   rw [Finset.sum_sigma]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2022,7 +1995,7 @@ namespace MetaMathlibExt.FourTriangular
 -/
 @[path]
 private lemma ftn_flat_eq_quad (n : ℕ) :
-  (∑ t ∈ (Finset.antidiagonal n).sigma
+  (∑ t ∈ (Finset.HasAntidiagonal.antidiagonal n).sigma
     (fun p => (Nat.divisorsAntidiagonal (4 * p.1 + 1)).sigma
       (fun _ => Nat.divisorsAntidiagonal (4 * p.2 + 1))),
     ZMod.χ₄ ((((t.2.1).1 : ℕ)) : ZMod 4) * ZMod.χ₄ ((((t.2.2).1 : ℕ)) : ZMod 4)) =
@@ -2039,7 +2012,7 @@ private lemma ftn_flat_eq_quad (n : ℕ) :
     obtain ⟨hpA, hqA⟩ := hmem
     have hmem2 := Finset.mem_sigma.mp hqA
     obtain ⟨hdA, heA⟩ := hmem2
-    have hpA' : a + b = n := Finset.mem_antidiagonal.mp hpA
+    have hpA' : a + b = n := Finset.HasAntidiagonal.mem_antidiagonal.mp hpA
     have hdx : d * x = 4 * a + 1 := (Nat.mem_divisorsAntidiagonal.mp hdA).1
     have hey : e * y = 4 * b + 1 := (Nat.mem_divisorsAntidiagonal.mp heA).1
     have heq : d * x + e * y = 4 * n + 2 := by omega
@@ -2084,7 +2057,7 @@ private lemma ftn_flat_eq_quad (n : ℕ) :
     have hab : (d * x - 1) / 4 + ((e * y - 1) / 4) = n := by omega
     rw [Finset.mem_sigma]
     refine ⟨?_, ?_⟩
-    · rw [Finset.mem_antidiagonal]
+    · rw [Finset.HasAntidiagonal.mem_antidiagonal]
       exact hab
     · rw [Finset.mem_sigma]
       refine ⟨?_, ?_⟩
@@ -2115,7 +2088,6 @@ private lemma ftn_flat_eq_quad (n : ℕ) :
     change ZMod.χ₄ ((d : ℕ) : ZMod 4) * ZMod.χ₄ ((e : ℕ) : ZMod 4) =
       ZMod.χ₄ ((d : ℕ) : ZMod 4) * ZMod.χ₄ ((e : ℕ) : ZMod 4)
     rfl
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2129,7 +2101,6 @@ private lemma ftn_chiFour_even (d : ℕ) (h : Even d) :
   obtain ⟨r, hr⟩ := h
   have h2 : d % 2 = 0 := by omega
   rw [ZMod.χ₄_nat_eq_if_mod_four, ite_eq_left h2]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2155,7 +2126,6 @@ private lemma ftn_oddQuad_even_of_even (N d x e y : ℕ)
   obtain ⟨s, hs⟩ := hEy
   obtain ⟨t, ht⟩ := hodd
   omega
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2185,7 +2155,7 @@ private lemma ftn_oddQuad_chi_add (n d x e y : ℕ)
     have hx4 : x % 4 = 1 ∨ x % 4 = 3 := by
       obtain ⟨k, hk⟩ := hxo
       omega
-    obtain h1 | h3 <;> rcases hx4 with g1 | g3 := hd4
+    rcases hd4 with h1 | h3 <;> rcases hx4 with g1 | g3
     · have hcond : 1 * 1 % 4 = 1 := by decide
       rw [ZMod.χ₄_nat_one_mod_four h1, ZMod.χ₄_nat_one_mod_four g1,
         Nat.mul_mod, h1, g1, ite_eq_left hcond]
@@ -2202,7 +2172,6 @@ private lemma ftn_oddQuad_chi_add (n d x e y : ℕ)
       rw [ZMod.χ₄_nat_three_mod_four h3, ZMod.χ₄_nat_three_mod_four g3,
         Nat.mul_mod, h3, g3, ite_eq_left hcond]
       ring
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2222,7 +2191,6 @@ private lemma ftn_quad_chi_add_eq (n : ℕ) :
   intro q hq
   obtain ⟨d, x, e, y⟩ := q
   exact ftn_oddQuad_chi_add n d x e y hq
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2243,7 +2211,6 @@ private lemma ftn_quad_chi_split (n : ℕ) :
   apply Finset.sum_congr rfl
   intro q _
   exact add_mul _ _ _
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2263,7 +2230,6 @@ private lemma ftn_quad_chi_swap_aux1 (n d x e y : ℕ)
     ftn_chiFour_even e (ftn_oddQuad_even_of_even (4 * n + 2) d x e y hq
       (hevd.mul_right x) ⟨2 * n + 1, by ring⟩)
   rw [he0, mul_zero]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2280,7 +2246,6 @@ private lemma ftn_quad_chi_swap_aux2 (n d x e y : ℕ)
   have hnod : ¬ Odd d := fun h => hqS (Finset.mem_filter.mpr ⟨hq, h⟩)
   have hevd : Even d := Nat.not_odd_iff_even.mp hnod
   rw [ftn_chiFour_even d hevd, zero_mul]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2295,23 +2260,23 @@ private lemma ftn_quad_chi_swap (n : ℕ) :
     ∑ q ∈ ftnOddQuad (4 * n + 2),
       ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := by
   have e1 : ∑ q ∈ (ftnOddQuad (4 * n + 2)).filter (fun q => Odd q.1),
-    ZMod.χ₄ (q.2.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) =
-    ∑ q ∈ ftnOddQuad (4 * n + 2),
-      ZMod.χ₄ (q.2.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) :=
+        ZMod.χ₄ (q.2.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) =
+      ∑ q ∈ ftnOddQuad (4 * n + 2),
+        ZMod.χ₄ (q.2.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) :=
     Finset.sum_subset (Finset.filter_subset _ _) (fun q hq hqS => by
       obtain ⟨d, x, e, y⟩ := q
       exact ftn_quad_chi_swap_aux1 n d x e y hq hqS)
   have e2 : ∑ q ∈ (ftnOddQuad (4 * n + 2)).filter (fun q => Odd q.1),
-    ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) =
-    ∑ q ∈ ftnOddQuad (4 * n + 2),
-      ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) :=
+        ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) =
+      ∑ q ∈ ftnOddQuad (4 * n + 2),
+        ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) :=
     Finset.sum_subset (Finset.filter_subset _ _) (fun q hq hqS => by
       obtain ⟨d, x, e, y⟩ := q
       exact ftn_quad_chi_swap_aux2 n d x e y hq hqS)
   have e3 : ∑ q ∈ (ftnOddQuad (4 * n + 2)).filter (fun q => Odd q.1),
-    ZMod.χ₄ (q.2.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) =
-    ∑ q ∈ (ftnOddQuad (4 * n + 2)).filter (fun q => Odd q.1),
-      ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := by
+        ZMod.χ₄ (q.2.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) =
+      ∑ q ∈ (ftnOddQuad (4 * n + 2)).filter (fun q => Odd q.1),
+        ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := by
     apply Finset.sum_nbij'
       (fun q => (q.2.1, (q.1, (q.2.2.1, q.2.2.2))))
       (fun q => (q.2.1, (q.1, (q.2.2.1, q.2.2.2)))) ?_ ?_ ?_ ?_ ?_
@@ -2323,7 +2288,7 @@ private lemma ftn_quad_chi_swap (n : ℕ) :
       rw [Finset.mem_filter]
       refine ⟨?_, ?_⟩
       · exact (ftn_mem_oddQuad (4 * n + 2) x d e y).mpr
-        ⟨hx1, hd1, he1, hy1, by rw [mul_comm x d]; exact heq, hod, hyo⟩
+          ⟨hx1, hd1, he1, hy1, by rw [mul_comm x d]; exact heq, hod, hyo⟩
       · exact hxo
     · intro q hq
       obtain ⟨d, x, e, y⟩ := q
@@ -2333,7 +2298,7 @@ private lemma ftn_quad_chi_swap (n : ℕ) :
       rw [Finset.mem_filter]
       refine ⟨?_, ?_⟩
       · exact (ftn_mem_oddQuad (4 * n + 2) x d e y).mpr
-        ⟨hx1, hd1, he1, hy1, by rw [mul_comm x d]; exact heq, hod, hyo⟩
+          ⟨hx1, hd1, he1, hy1, by rw [mul_comm x d]; exact heq, hod, hyo⟩
       · exact hxo
     · intro q hq
       obtain ⟨d, x, e, y⟩ := q
@@ -2345,14 +2310,13 @@ private lemma ftn_quad_chi_swap (n : ℕ) :
       obtain ⟨d, x, e, y⟩ := q
       rfl
   calc ∑ q ∈ ftnOddQuad (4 * n + 2),
-    ZMod.χ₄ (q.2.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4)
-    = ∑ q ∈ (ftnOddQuad (4 * n + 2)).filter (fun q => Odd q.1),
-      ZMod.χ₄ (q.2.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := e1.symm
+          ZMod.χ₄ (q.2.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4)
+      = ∑ q ∈ (ftnOddQuad (4 * n + 2)).filter (fun q => Odd q.1),
+          ZMod.χ₄ (q.2.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := e1.symm
     _ = ∑ q ∈ (ftnOddQuad (4 * n + 2)).filter (fun q => Odd q.1),
-      ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := e3
+          ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := e3
     _ = ∑ q ∈ ftnOddQuad (4 * n + 2),
-      ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := e2
-
+          ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := e2
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2362,15 +2326,15 @@ namespace MetaMathlibExt.FourTriangular
 -/
 @[path]
 private lemma ftn_sum_antidiagonal_chi_eq_oddQuad_sum (n : ℕ) :
-  ∑ p ∈ Finset.antidiagonal n,
+  ∑ p ∈ Finset.HasAntidiagonal.antidiagonal n,
     ftnChiFourDivisorSum (4 * p.1 + 1) * ftnChiFourDivisorSum (4 * p.2 + 1) =
     ∑ q ∈ ftnOddQuad (4 * n + 2),
       ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := by
-  have step1 : ∀ p ∈ Finset.antidiagonal n,
-    ftnChiFourDivisorSum (4 * p.1 + 1) * ftnChiFourDivisorSum (4 * p.2 + 1) =
-      ∑ d ∈ Nat.divisorsAntidiagonal (4 * p.1 + 1),
-        ∑ e ∈ Nat.divisorsAntidiagonal (4 * p.2 + 1),
-          ZMod.χ₄ ((d.1 : ℕ) : ZMod 4) * ZMod.χ₄ ((e.1 : ℕ) : ZMod 4) := by
+  have step1 : ∀ p ∈ Finset.HasAntidiagonal.antidiagonal n,
+      ftnChiFourDivisorSum (4 * p.1 + 1) * ftnChiFourDivisorSum (4 * p.2 + 1) =
+        ∑ d ∈ Nat.divisorsAntidiagonal (4 * p.1 + 1),
+          ∑ e ∈ Nat.divisorsAntidiagonal (4 * p.2 + 1),
+            ZMod.χ₄ ((d.1 : ℕ) : ZMod 4) * ZMod.χ₄ ((e.1 : ℕ) : ZMod 4) := by
     intro p _
     rw [ftn_chi_eq_divisorsAntidiagonal_sum, ftn_chi_eq_divisorsAntidiagonal_sum,
       Finset.sum_mul_sum]
@@ -2378,27 +2342,26 @@ private lemma ftn_sum_antidiagonal_chi_eq_oddQuad_sum (n : ℕ) :
   have hsplit := ftn_quad_chi_split n
   have hswap := ftn_quad_chi_swap n
   have hW : ∑ q ∈ (ftnOddQuad (4 * n + 2)).filter (fun q => q.1 * q.2.1 % 4 = 1),
-    ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) =
-    ∑ q ∈ ftnOddQuad (4 * n + 2),
-      ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := by
+        ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) =
+      ∑ q ∈ ftnOddQuad (4 * n + 2),
+        ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := by
     linarith
-  calc ∑ p ∈ Finset.antidiagonal n,
-    ftnChiFourDivisorSum (4 * p.1 + 1) * ftnChiFourDivisorSum (4 * p.2 + 1)
-    = ∑ p ∈ Finset.antidiagonal n, ∑ d ∈ Nat.divisorsAntidiagonal (4 * p.1 + 1),
-      ∑ e ∈ Nat.divisorsAntidiagonal (4 * p.2 + 1),
-        ZMod.χ₄ ((d.1 : ℕ) : ZMod 4) * ZMod.χ₄ ((e.1 : ℕ) : ZMod 4) :=
-      Finset.sum_congr rfl step1
-    _ = ∑ t ∈ (Finset.antidiagonal n).sigma
-      (fun p => (Nat.divisorsAntidiagonal (4 * p.1 + 1)).sigma
-        (fun _ => Nat.divisorsAntidiagonal (4 * p.2 + 1))),
-      ZMod.χ₄ ((((t.2.1).1 : ℕ)) : ZMod 4) *
-        ZMod.χ₄ ((((t.2.2).1 : ℕ)) : ZMod 4) := (ftn_flat_eq_nested n).symm
+  calc ∑ p ∈ Finset.HasAntidiagonal.antidiagonal n,
+          ftnChiFourDivisorSum (4 * p.1 + 1) * ftnChiFourDivisorSum (4 * p.2 + 1)
+      = ∑ p ∈ Finset.HasAntidiagonal.antidiagonal n, ∑ d ∈ Nat.divisorsAntidiagonal (4 * p.1 + 1),
+          ∑ e ∈ Nat.divisorsAntidiagonal (4 * p.2 + 1),
+            ZMod.χ₄ ((d.1 : ℕ) : ZMod 4) * ZMod.χ₄ ((e.1 : ℕ) : ZMod 4) :=
+        Finset.sum_congr rfl step1
+    _ = ∑ t ∈ (Finset.HasAntidiagonal.antidiagonal n).sigma
+          (fun p => (Nat.divisorsAntidiagonal (4 * p.1 + 1)).sigma
+            (fun _ => Nat.divisorsAntidiagonal (4 * p.2 + 1))),
+          ZMod.χ₄ ((((t.2.1).1 : ℕ)) : ZMod 4) *
+            ZMod.χ₄ ((((t.2.2).1 : ℕ)) : ZMod 4) := (ftn_flat_eq_nested n).symm
     _ = ∑ q ∈ (ftnOddQuad (4 * n + 2)).filter (fun q => q.1 * q.2.1 % 4 = 1),
-      ZMod.χ₄ ((q.1 : ℕ) : ZMod 4) * ZMod.χ₄ ((q.2.2.1 : ℕ) : ZMod 4) :=
-      ftn_flat_eq_quad n
+          ZMod.χ₄ ((q.1 : ℕ) : ZMod 4) * ZMod.χ₄ ((q.2.2.1 : ℕ) : ZMod 4) :=
+        ftn_flat_eq_quad n
     _ = ∑ q ∈ ftnOddQuad (4 * n + 2),
-      ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := hW
-
+          ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) := hW
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2413,20 +2376,20 @@ private lemma ftn_oddQuad_sum_sub_decomp (N : ℕ) (f : ℤ → ℤ) (hf : ∀ k
       2 * ∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => q.2.1 < q.2.2.2),
         f ((q.1 : ℕ) : ℤ) := by
   have Hsplit1 : (∑ q ∈ (ftnOddQuad N).filter (fun q => q.1 < q.2.2.1),
-    f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) +
-    (∑ q ∈ (ftnOddQuad N).filter (fun q => ¬ q.1 < q.2.2.1),
-      f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) =
-    ∑ q ∈ ftnOddQuad N, f ((q.1 : ℤ) - (q.2.2.1 : ℤ)) :=
+        f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) +
+      (∑ q ∈ (ftnOddQuad N).filter (fun q => ¬ q.1 < q.2.2.1),
+        f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) =
+      ∑ q ∈ ftnOddQuad N, f ((q.1 : ℤ) - (q.2.2.1 : ℤ)) :=
     Finset.sum_filter_add_sum_filter_not _ _ _
   have Hsplit2 : (∑ q ∈ ((ftnOddQuad N).filter fun q => ¬ q.1 < q.2.2.1).filter
-    (fun q => q.2.2.1 < q.1), f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) +
-    (∑ q ∈ ((ftnOddQuad N).filter fun q => ¬ q.1 < q.2.2.1).filter
-      (fun q => ¬ q.2.2.1 < q.1), f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) =
-    (∑ q ∈ (ftnOddQuad N).filter (fun q => ¬ q.1 < q.2.2.1),
-      f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) :=
+        (fun q => q.2.2.1 < q.1), f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) +
+      (∑ q ∈ ((ftnOddQuad N).filter fun q => ¬ q.1 < q.2.2.1).filter
+        (fun q => ¬ q.2.2.1 < q.1), f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) =
+      (∑ q ∈ (ftnOddQuad N).filter (fun q => ¬ q.1 < q.2.2.1),
+        f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) :=
     Finset.sum_filter_add_sum_filter_not _ _ _
   have E1 : (((ftnOddQuad N).filter fun q => ¬ q.1 < q.2.2.1).filter
-    fun q => q.2.2.1 < q.1) = (ftnOddQuad N).filter fun q => q.2.2.1 < q.1 := by
+      fun q => q.2.2.1 < q.1) = (ftnOddQuad N).filter fun q => q.2.2.1 < q.1 := by
     rw [Finset.filter_filter]
     apply Finset.filter_congr
     intro q _
@@ -2439,8 +2402,8 @@ private lemma ftn_oddQuad_sum_sub_decomp (N : ℕ) (f : ℤ → ℤ) (hf : ∀ k
       refine ⟨?_, h2'⟩
       omega
   have E2 : (((ftnOddQuad N).filter fun q => ¬ q.1 < q.2.2.1).filter
-    fun q => ¬ q.2.2.1 < q.1) =
-    (ftnOddQuad N).filter fun q => q.1 = q.2.2.1 := by
+      fun q => ¬ q.2.2.1 < q.1) =
+      (ftnOddQuad N).filter fun q => q.1 = q.2.2.1 := by
     rw [Finset.filter_filter]
     apply Finset.filter_congr
     intro q _
@@ -2457,9 +2420,9 @@ private lemma ftn_oddQuad_sum_sub_decomp (N : ℕ) (f : ℤ → ℤ) (hf : ∀ k
       · omega
   rw [E1, E2] at Hsplit2
   have Hswap : (∑ q ∈ (ftnOddQuad N).filter (fun q => q.1 < q.2.2.1),
-    f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) =
-    (∑ q ∈ (ftnOddQuad N).filter (fun q => q.2.2.1 < q.1),
-      f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) := by
+        f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) =
+      (∑ q ∈ (ftnOddQuad N).filter (fun q => q.2.2.1 < q.1),
+        f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) := by
     apply Finset.sum_nbij' (fun q => (q.2.2.1, (q.2.2.2, (q.1, q.2.1))))
       (fun q => (q.2.2.1, (q.2.2.2, (q.1, q.2.1)))) ?_ ?_ ?_ ?_ ?_
     · intro q hq
@@ -2497,9 +2460,9 @@ private lemma ftn_oddQuad_sum_sub_decomp (N : ℕ) (f : ℤ → ℤ) (hf : ∀ k
       rw [hneg]
       exact (hf _).symm
   have Hbij : (∑ q ∈ (ftnOddQuad N).filter (fun q => q.2.2.1 < q.1),
-    f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) =
-    (∑ r ∈ (ftnLiouvilleTriples N).filter (fun r => r.2.1 < r.2.2.2),
-      f ((r.1 : ℕ) : ℤ)) := by
+        f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) =
+      (∑ r ∈ (ftnLiouvilleTriples N).filter (fun r => r.2.1 < r.2.2.2),
+        f ((r.1 : ℕ) : ℤ)) := by
     apply Finset.sum_nbij'
       (fun q => (q.1 - q.2.2.1, (q.2.1, (q.2.2.1, q.2.1 + q.2.2.2))))
       (fun r => (r.2.2.1 + r.1, (r.2.1, (r.2.2.1, r.2.2.2 - r.2.1)))) ?_ ?_ ?_ ?_ ?_
@@ -2512,7 +2475,8 @@ private lemma ftn_oddQuad_sum_sub_decomp (N : ℕ) (f : ℤ → ℤ) (hf : ∀ k
       have hba_le : b ≤ a := le_of_lt hba'
       have key : (a - b) * x + b * x = a * x := by
         have h := congrArg (· * x) (Nat.sub_add_cancel hba_le)
-        rwa [add_mul] at h
+        rw [add_mul] at h
+        exact h
       have heqV : (a - b) * x + b * (x + y) = N := by
         have hmul2 : b * (x + y) = b * x + b * y := mul_add _ _ _
         omega
@@ -2520,7 +2484,7 @@ private lemma ftn_oddQuad_sum_sub_decomp (N : ℕ) (f : ℤ → ℤ) (hf : ∀ k
       rw [Finset.mem_filter]
       refine ⟨?_, ?_⟩
       · exact (ftn_mem_liouvilleTriples N (a - b) x b (x + y)).mpr
-        ⟨by omega, hx1, hb1, by omega, heqV, hxo, hYeven⟩
+          ⟨by omega, hx1, hb1, by omega, heqV, hxo, hYeven⟩
       · change x < x + y
         omega
     · intro r hr
@@ -2545,7 +2509,7 @@ private lemma ftn_oddQuad_sum_sub_decomp (N : ℕ) (f : ℤ → ℤ) (hf : ∀ k
       rw [Finset.mem_filter]
       refine ⟨?_, ?_⟩
       · exact (ftn_mem_oddQuad N (b + c) X b (Y - X)).mpr
-        ⟨by omega, hX1, hb1, by omega, heqQ, hXo, hyodd⟩
+          ⟨by omega, hX1, hb1, by omega, heqQ, hXo, hyodd⟩
       · change b < b + c
         omega
     · intro q hq
@@ -2573,10 +2537,10 @@ private lemma ftn_oddQuad_sum_sub_decomp (N : ℕ) (f : ℤ → ℤ) (hf : ∀ k
       change f ((a : ℤ) - (b : ℤ)) = f (((a - b : ℕ)) : ℤ)
       rw [hcast]
   have Hdiag : (∑ q ∈ (ftnOddQuad N).filter (fun q => q.1 = q.2.2.1),
-    f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) =
-    f 0 * ((((ftnOddQuad N).filter (fun q => q.1 = q.2.2.1)).card : ℕ) : ℤ) := by
+        f ((q.1 : ℤ) - (q.2.2.1 : ℤ))) =
+      f 0 * ((((ftnOddQuad N).filter (fun q => q.1 = q.2.2.1)).card : ℕ) : ℤ) := by
     have hterm : ∀ q ∈ (ftnOddQuad N).filter (fun q => q.1 = q.2.2.1),
-      f ((q.1 : ℤ) - (q.2.2.1 : ℤ)) = f 0 := by
+        f ((q.1 : ℤ) - (q.2.2.1 : ℤ)) = f 0 := by
       intro q hq
       have heq : q.1 = q.2.2.1 := (Finset.mem_filter.mp hq).2
       have h0 : ((q.1 : ℤ) - (q.2.2.1 : ℤ)) = 0 := by
@@ -2585,7 +2549,6 @@ private lemma ftn_oddQuad_sum_sub_decomp (N : ℕ) (f : ℤ → ℤ) (hf : ∀ k
     rw [Finset.sum_congr rfl hterm, Finset.sum_const, nsmul_eq_mul]
     ring
   linear_combination Hswap + Hdiag + 2 * Hbij - Hsplit1 - Hsplit2
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2601,20 +2564,20 @@ private lemma ftn_oddQuad_sum_add_decomp (N : ℕ) (f : ℤ → ℤ) :
       2 * ∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => q.2.2.1 < q.1),
         f ((q.1 : ℕ) : ℤ) := by
   have Hsplit1 : (∑ q ∈ (ftnOddQuad N).filter (fun q => q.2.2.2 < q.2.1),
-    f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) +
-    (∑ q ∈ (ftnOddQuad N).filter (fun q => ¬ q.2.2.2 < q.2.1),
-      f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) =
-    ∑ q ∈ ftnOddQuad N, f (((q.1 + q.2.2.1 : ℕ)) : ℤ) :=
+        f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) +
+      (∑ q ∈ (ftnOddQuad N).filter (fun q => ¬ q.2.2.2 < q.2.1),
+        f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) =
+      ∑ q ∈ ftnOddQuad N, f (((q.1 + q.2.2.1 : ℕ)) : ℤ) :=
     Finset.sum_filter_add_sum_filter_not _ _ _
   have Hsplit2 : (∑ q ∈ ((ftnOddQuad N).filter fun q => ¬ q.2.2.2 < q.2.1).filter
-    (fun q => q.2.1 < q.2.2.2), f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) +
-    (∑ q ∈ ((ftnOddQuad N).filter fun q => ¬ q.2.2.2 < q.2.1).filter
-      (fun q => ¬ q.2.1 < q.2.2.2), f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) =
-    (∑ q ∈ (ftnOddQuad N).filter (fun q => ¬ q.2.2.2 < q.2.1),
-      f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) :=
+        (fun q => q.2.1 < q.2.2.2), f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) +
+      (∑ q ∈ ((ftnOddQuad N).filter fun q => ¬ q.2.2.2 < q.2.1).filter
+        (fun q => ¬ q.2.1 < q.2.2.2), f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) =
+      (∑ q ∈ (ftnOddQuad N).filter (fun q => ¬ q.2.2.2 < q.2.1),
+        f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) :=
     Finset.sum_filter_add_sum_filter_not _ _ _
   have E1 : (((ftnOddQuad N).filter fun q => ¬ q.2.2.2 < q.2.1).filter
-    fun q => q.2.1 < q.2.2.2) = (ftnOddQuad N).filter fun q => q.2.1 < q.2.2.2 := by
+      fun q => q.2.1 < q.2.2.2) = (ftnOddQuad N).filter fun q => q.2.1 < q.2.2.2 := by
     rw [Finset.filter_filter]
     apply Finset.filter_congr
     intro q _
@@ -2627,8 +2590,8 @@ private lemma ftn_oddQuad_sum_add_decomp (N : ℕ) (f : ℤ → ℤ) :
       refine ⟨?_, h2'⟩
       omega
   have E2 : (((ftnOddQuad N).filter fun q => ¬ q.2.2.2 < q.2.1).filter
-    fun q => ¬ q.2.1 < q.2.2.2) =
-    (ftnOddQuad N).filter fun q => q.2.1 = q.2.2.2 := by
+      fun q => ¬ q.2.1 < q.2.2.2) =
+      (ftnOddQuad N).filter fun q => q.2.1 = q.2.2.2 := by
     rw [Finset.filter_filter]
     apply Finset.filter_congr
     intro q _
@@ -2645,9 +2608,9 @@ private lemma ftn_oddQuad_sum_add_decomp (N : ℕ) (f : ℤ → ℤ) :
       · omega
   rw [E1, E2] at Hsplit2
   have Hswap2 : (∑ q ∈ (ftnOddQuad N).filter (fun q => q.2.1 < q.2.2.2),
-    f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) =
-    (∑ q ∈ (ftnOddQuad N).filter (fun q => q.2.2.2 < q.2.1),
-      f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) := by
+        f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) =
+      (∑ q ∈ (ftnOddQuad N).filter (fun q => q.2.2.2 < q.2.1),
+        f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) := by
     apply Finset.sum_nbij' (fun q => (q.2.2.1, (q.2.2.2, (q.1, q.2.1))))
       (fun q => (q.2.2.1, (q.2.2.2, (q.1, q.2.1)))) ?_ ?_ ?_ ?_ ?_
     · intro q hq
@@ -2684,9 +2647,9 @@ private lemma ftn_oddQuad_sum_add_decomp (N : ℕ) (f : ℤ → ℤ) :
       change f (((a + b : ℕ)) : ℤ) = f (((b + a : ℕ)) : ℤ)
       rw [hab]
   have Hbij2 : (∑ q ∈ (ftnOddQuad N).filter (fun q => q.2.2.2 < q.2.1),
-    f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) =
-    (∑ r ∈ (ftnLiouvilleTriples N).filter (fun r => r.2.2.1 < r.1),
-      f ((r.1 : ℕ) : ℤ)) := by
+        f (((q.1 + q.2.2.1 : ℕ)) : ℤ)) =
+      (∑ r ∈ (ftnLiouvilleTriples N).filter (fun r => r.2.2.1 < r.1),
+        f ((r.1 : ℕ) : ℤ)) := by
     apply Finset.sum_nbij'
       (fun q => (q.1 + q.2.2.1, (q.2.2.2, (q.1, q.2.1 - q.2.2.2))))
       (fun r => (r.2.2.1, (r.2.1 + r.2.2.2, (r.1 - r.2.2.1, r.2.1)))) ?_ ?_ ?_ ?_ ?_
@@ -2698,7 +2661,8 @@ private lemma ftn_oddQuad_sum_add_decomp (N : ℕ) (f : ℤ → ℤ) :
       have hlt' : y < x := hlt
       have hkey : a * (x - y) + a * y = a * x := by
         have h := congrArg (a * ·) (Nat.sub_add_cancel (le_of_lt hlt'))
-        rwa [mul_add] at h
+        rw [mul_add] at h
+        exact h
       have heqV : (a + b) * y + a * (x - y) = N := by
         have hadd : (a + b) * y = a * y + b * y := add_mul _ _ _
         omega
@@ -2710,7 +2674,7 @@ private lemma ftn_oddQuad_sum_add_decomp (N : ℕ) (f : ℤ → ℤ) :
       rw [Finset.mem_filter]
       refine ⟨?_, ?_⟩
       · exact (ftn_mem_liouvilleTriples N (a + b) y a (x - y)).mpr
-        ⟨by omega, hy1, ha1, by omega, heqV, hyo, hYeven⟩
+          ⟨by omega, hy1, ha1, by omega, heqV, hyo, hYeven⟩
       · change a < a + b
         omega
     · intro r hr
@@ -2721,7 +2685,8 @@ private lemma ftn_oddQuad_sum_add_decomp (N : ℕ) (f : ℤ → ℤ) :
       have hlt' : b < c := hlt
       have hkey : (c - b) * X + b * X = c * X := by
         have h := congrArg (· * X) (Nat.sub_add_cancel (le_of_lt hlt'))
-        rwa [add_mul] at h
+        rw [add_mul] at h
+        exact h
       have heqQ : b * (X + Y) + (c - b) * X = N := by
         have hmul : b * (X + Y) = b * X + b * Y := mul_add _ _ _
         omega
@@ -2729,7 +2694,7 @@ private lemma ftn_oddQuad_sum_add_decomp (N : ℕ) (f : ℤ → ℤ) :
       rw [Finset.mem_filter]
       refine ⟨?_, ?_⟩
       · exact (ftn_mem_oddQuad N b (X + Y) (c - b) X).mpr
-        ⟨hb1, by omega, by omega, hX1, heqQ, hxodd, hXo⟩
+          ⟨hb1, by omega, by omega, hX1, heqQ, hxodd, hXo⟩
       · change X < X + Y
         omega
     · intro q hq
@@ -2753,7 +2718,6 @@ private lemma ftn_oddQuad_sum_add_decomp (N : ℕ) (f : ℤ → ℤ) :
       change f (((a + b : ℕ)) : ℤ) = f (((a + b : ℕ)) : ℤ)
       rfl
   linear_combination Hswap2 + 2 * Hbij2 - Hsplit1 - Hsplit2
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2780,21 +2744,21 @@ private lemma ftn_liouvilleTriples_shift (N : ℕ) (f : ℤ → ℤ) :
     obtain ⟨l, hl⟩ := hYe
     omega
   have HsplitX : (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => q.2.1 < q.2.2.2),
-    f ((q.1 : ℕ) : ℤ)) +
-    (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => ¬ q.2.1 < q.2.2.2),
-      f ((q.1 : ℕ) : ℤ)) =
-    ∑ q ∈ ftnLiouvilleTriples N, f ((q.1 : ℕ) : ℤ) :=
+        f ((q.1 : ℕ) : ℤ)) +
+      (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => ¬ q.2.1 < q.2.2.2),
+        f ((q.1 : ℕ) : ℤ)) =
+      ∑ q ∈ ftnLiouvilleTriples N, f ((q.1 : ℕ) : ℤ) :=
     Finset.sum_filter_add_sum_filter_not _ _ _
   have HsplitX2 : (∑ q ∈ ((ftnLiouvilleTriples N).filter fun q => ¬ q.2.1 < q.2.2.2).filter
-    (fun q => q.2.2.2 < q.2.1), f ((q.1 : ℕ) : ℤ)) +
-    (∑ q ∈ ((ftnLiouvilleTriples N).filter fun q => ¬ q.2.1 < q.2.2.2).filter
-      (fun q => ¬ q.2.2.2 < q.2.1), f ((q.1 : ℕ) : ℤ)) =
-    (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => ¬ q.2.1 < q.2.2.2),
-      f ((q.1 : ℕ) : ℤ)) :=
+        (fun q => q.2.2.2 < q.2.1), f ((q.1 : ℕ) : ℤ)) +
+      (∑ q ∈ ((ftnLiouvilleTriples N).filter fun q => ¬ q.2.1 < q.2.2.2).filter
+        (fun q => ¬ q.2.2.2 < q.2.1), f ((q.1 : ℕ) : ℤ)) =
+      (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => ¬ q.2.1 < q.2.2.2),
+        f ((q.1 : ℕ) : ℤ)) :=
     Finset.sum_filter_add_sum_filter_not _ _ _
   have F1 : (((ftnLiouvilleTriples N).filter fun q => ¬ q.2.1 < q.2.2.2).filter
-    fun q => q.2.2.2 < q.2.1) =
-    (ftnLiouvilleTriples N).filter fun q => q.2.2.2 < q.2.1 := by
+      fun q => q.2.2.2 < q.2.1) =
+      (ftnLiouvilleTriples N).filter fun q => q.2.2.2 < q.2.1 := by
     rw [Finset.filter_filter]
     apply Finset.filter_congr
     intro q _
@@ -2807,8 +2771,8 @@ private lemma ftn_liouvilleTriples_shift (N : ℕ) (f : ℤ → ℤ) :
       refine ⟨?_, h2'⟩
       omega
   have F2 : (((ftnLiouvilleTriples N).filter fun q => ¬ q.2.1 < q.2.2.2).filter
-    fun q => ¬ q.2.2.2 < q.2.1) =
-    (ftnLiouvilleTriples N).filter fun q => q.2.1 = q.2.2.2 := by
+      fun q => ¬ q.2.2.2 < q.2.1) =
+      (ftnLiouvilleTriples N).filter fun q => q.2.1 = q.2.2.2 := by
     rw [Finset.filter_filter]
     apply Finset.filter_congr
     intro q _
@@ -2825,21 +2789,21 @@ private lemma ftn_liouvilleTriples_shift (N : ℕ) (f : ℤ → ℤ) :
       · omega
   rw [F1, F2, Hempty, Finset.sum_empty] at HsplitX2
   have HsplitBC : (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => q.2.2.1 < q.1),
-    f ((q.1 : ℕ) : ℤ)) +
-    (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => ¬ q.2.2.1 < q.1),
-      f ((q.1 : ℕ) : ℤ)) =
-    ∑ q ∈ ftnLiouvilleTriples N, f ((q.1 : ℕ) : ℤ) :=
+        f ((q.1 : ℕ) : ℤ)) +
+      (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => ¬ q.2.2.1 < q.1),
+        f ((q.1 : ℕ) : ℤ)) =
+      ∑ q ∈ ftnLiouvilleTriples N, f ((q.1 : ℕ) : ℤ) :=
     Finset.sum_filter_add_sum_filter_not _ _ _
   have HsplitBC2 : (∑ q ∈ ((ftnLiouvilleTriples N).filter fun q => ¬ q.2.2.1 < q.1).filter
-    (fun q => q.1 < q.2.2.1), f ((q.1 : ℕ) : ℤ)) +
-    (∑ q ∈ ((ftnLiouvilleTriples N).filter fun q => ¬ q.2.2.1 < q.1).filter
-      (fun q => ¬ q.1 < q.2.2.1), f ((q.1 : ℕ) : ℤ)) =
-    (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => ¬ q.2.2.1 < q.1),
-      f ((q.1 : ℕ) : ℤ)) :=
+        (fun q => q.1 < q.2.2.1), f ((q.1 : ℕ) : ℤ)) +
+      (∑ q ∈ ((ftnLiouvilleTriples N).filter fun q => ¬ q.2.2.1 < q.1).filter
+        (fun q => ¬ q.1 < q.2.2.1), f ((q.1 : ℕ) : ℤ)) =
+      (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => ¬ q.2.2.1 < q.1),
+        f ((q.1 : ℕ) : ℤ)) :=
     Finset.sum_filter_add_sum_filter_not _ _ _
   have G1 : (((ftnLiouvilleTriples N).filter fun q => ¬ q.2.2.1 < q.1).filter
-    fun q => q.1 < q.2.2.1) =
-    (ftnLiouvilleTriples N).filter fun q => q.1 < q.2.2.1 := by
+      fun q => q.1 < q.2.2.1) =
+      (ftnLiouvilleTriples N).filter fun q => q.1 < q.2.2.1 := by
     rw [Finset.filter_filter]
     apply Finset.filter_congr
     intro q _
@@ -2852,8 +2816,8 @@ private lemma ftn_liouvilleTriples_shift (N : ℕ) (f : ℤ → ℤ) :
       refine ⟨?_, h2'⟩
       omega
   have G2 : (((ftnLiouvilleTriples N).filter fun q => ¬ q.2.2.1 < q.1).filter
-    fun q => ¬ q.1 < q.2.2.1) =
-    (ftnLiouvilleTriples N).filter fun q => q.2.2.1 = q.1 := by
+      fun q => ¬ q.1 < q.2.2.1) =
+      (ftnLiouvilleTriples N).filter fun q => q.2.2.1 = q.1 := by
     rw [Finset.filter_filter]
     apply Finset.filter_congr
     intro q _
@@ -2870,9 +2834,9 @@ private lemma ftn_liouvilleTriples_shift (N : ℕ) (f : ℤ → ℤ) :
       · omega
   rw [G1, G2] at HsplitBC2
   have Hshift : (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => q.1 < q.2.2.1),
-    f ((q.1 : ℕ) : ℤ)) =
-    (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => q.2.2.2 < q.2.1),
-      f ((q.1 : ℕ) : ℤ)) := by
+        f ((q.1 : ℕ) : ℤ)) =
+      (∑ q ∈ (ftnLiouvilleTriples N).filter (fun q => q.2.2.2 < q.2.1),
+        f ((q.1 : ℕ) : ℤ)) := by
     apply Finset.sum_nbij'
       (fun q => (q.1, (q.2.1 + q.2.2.2, (q.2.2.1 - q.1, q.2.2.2))))
       (fun r => (r.1, (r.2.1 - r.2.2.2, (r.2.2.1 + r.1, r.2.2.2)))) ?_ ?_ ?_ ?_ ?_
@@ -2885,7 +2849,8 @@ private lemma ftn_liouvilleTriples_shift (N : ℕ) (f : ℤ → ℤ) :
       have hcb_le : c ≤ b := le_of_lt hlt'
       have key : (b - c) * Y + c * Y = b * Y := by
         have h := congrArg (· * Y) (Nat.sub_add_cancel hcb_le)
-        rwa [add_mul] at h
+        rw [add_mul] at h
+        exact h
       have heqV : c * (X + Y) + (b - c) * Y = N := by
         have hmul : c * (X + Y) = c * X + c * Y := mul_add _ _ _
         omega
@@ -2893,7 +2858,7 @@ private lemma ftn_liouvilleTriples_shift (N : ℕ) (f : ℤ → ℤ) :
       rw [Finset.mem_filter]
       refine ⟨?_, ?_⟩
       · exact (ftn_mem_liouvilleTriples N c (X + Y) (b - c) Y).mpr
-        ⟨hc1, by omega, by omega, hY1, heqV, hXodd, hYe⟩
+          ⟨hc1, by omega, by omega, hY1, heqV, hXodd, hYe⟩
       · change Y < X + Y
         omega
     · intro r hr
@@ -2905,7 +2870,8 @@ private lemma ftn_liouvilleTriples_shift (N : ℕ) (f : ℤ → ℤ) :
       have hYXle : Y ≤ X := le_of_lt hlt'
       have key : c * (X - Y) + c * Y = c * X := by
         have h := congrArg (c * ·) (Nat.sub_add_cancel hYXle)
-        rwa [mul_add] at h
+        rw [mul_add] at h
+        exact h
       have heqQ : c * (X - Y) + (b + c) * Y = N := by
         have hadd : (b + c) * Y = b * Y + c * Y := add_mul _ _ _
         omega
@@ -2917,7 +2883,7 @@ private lemma ftn_liouvilleTriples_shift (N : ℕ) (f : ℤ → ℤ) :
       rw [Finset.mem_filter]
       refine ⟨?_, ?_⟩
       · exact (ftn_mem_liouvilleTriples N c (X - Y) (b + c) Y).mpr
-        ⟨hc1, by omega, by omega, hY1, heqQ, hxodd, hYe⟩
+          ⟨hc1, by omega, by omega, hY1, heqQ, hxodd, hYe⟩
       · change c < b + c
         omega
     · intro q hq
@@ -2941,7 +2907,6 @@ private lemma ftn_liouvilleTriples_shift (N : ℕ) (f : ℤ → ℤ) :
       change f (((c : ℕ)) : ℤ) = f (((c : ℕ)) : ℤ)
       rfl
   linear_combination HsplitX + HsplitX2 - HsplitBC - HsplitBC2 + Hshift
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2963,7 +2928,6 @@ private lemma ftn_diag_mul {n a x y s t : ℕ} (heq : a * x + a * y = 4 * n + 2)
     have e2 : (2 * n + 1) * 2 = 2 * (2 * n + 1) := by ring
     rw [e1, hmul, e2]
   exact mul_right_cancel₀ (by norm_num) h3
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2976,7 +2940,6 @@ private lemma ftn_diag_div (a m N : ℕ) (hane : a ≠ 0) (h : a * m = N) :
   N / a = m := by
   rw [← h]
   exact mul_div_cancel_left₀ _ hane
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -2989,7 +2952,7 @@ private lemma ftn_card_oddQuad_diag (n : ℕ) :
   ((ftnOddQuad (4 * n + 2)).filter (fun q => q.1 = q.2.2.1)).card =
     ∑ d ∈ Nat.divisors (2 * n + 1), d := by
   have Hbij : ((ftnOddQuad (4 * n + 2)).filter (fun q => q.1 = q.2.2.1)).card =
-    ((Nat.divisors (2 * n + 1)).sigma fun a => Finset.range ((2 * n + 1) / a)).card := by
+      ((Nat.divisors (2 * n + 1)).sigma fun a => Finset.range ((2 * n + 1) / a)).card := by
     apply Finset.card_bij'
       (fun q _ => (⟨q.1, (q.2.1 - 1) / 2⟩ : Σ _ : ℕ, ℕ))
       (fun p _ => (p.1, (2 * p.2 + 1, (p.1, 2 * ((2 * n + 1) / p.1) - 2 * p.2 - 1)))) ?_ ?_ ?_ ?_
@@ -3032,7 +2995,7 @@ private lemma ftn_card_oddQuad_diag (n : ℕ) :
       have h2M : a * (2 * ((2 * n + 1) / a)) = 2 * (a * ((2 * n + 1) / a)) := by ring
       have heqQ : a * (2 * k + 1) + a * (2 * ((2 * n + 1) / a) - 2 * k - 1) = 4 * n + 2 := by
         have h1 : a * (2 * k + 1) + a * (2 * ((2 * n + 1) / a) - 2 * k - 1) =
-          a * ((2 * k + 1) + (2 * ((2 * n + 1) / a) - 2 * k - 1)) := (mul_add _ _ _).symm
+            a * ((2 * k + 1) + (2 * ((2 * n + 1) / a) - 2 * k - 1)) := (mul_add _ _ _).symm
         rw [h1, hxy, h2M, hM]
         ring
       have hyodd : Odd (2 * ((2 * n + 1) / a) - 2 * k - 1) := by
@@ -3089,7 +3052,6 @@ namespace MetaMathlibExt.FourTriangular
 @[path]
 private lemma ftnFourInd_neg (k : ℤ) : ftnFourInd (-k) = ftnFourInd k := by
   simp only [ftnFourInd, dvd_neg]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -3101,7 +3063,6 @@ namespace MetaMathlibExt.FourTriangular
 private lemma ftnFourInd_pos (X w : ℤ) (h : X = 4 * w) : ftnFourInd X = 1 := by
   simp only [ftnFourInd]
   rw [ite_eq_left ⟨w, h⟩]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -3113,7 +3074,6 @@ namespace MetaMathlibExt.FourTriangular
 private lemma ftnFourInd_neg_zero (X : ℤ) (h : X % 4 ≠ 0) : ftnFourInd X = 0 := by
   simp only [ftnFourInd]
   rw [ite_eq_right (fun hd => h (Int.emod_eq_zero_of_dvd hd))]
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -3137,72 +3097,71 @@ private lemma ftn_chi_mul_eq_fourInd (a b : ℕ) :
       rw [Nat.even_iff]
       omega
     exact ftn_chiFour_even m hev
-  obtain ha0 | ha1 | ha2 | ha3 <;> rcases hb4 with hb0 | hb1 | hb2 | hb3 := ha4
+  rcases ha4 with ha0 | ha1 | ha2 | ha3 <;> rcases hb4 with hb0 | hb1 | hb2 | hb3
   · rw [e0 a (Or.inl ha0), e0 b (Or.inl hb0),
-    ftnFourInd_pos ((a : ℤ) - (b : ℤ)) ((a / 4 : ℤ) - (b / 4 : ℤ)) (by omega),
-    ftnFourInd_pos ((a : ℤ) + (b : ℤ)) ((a / 4 : ℤ) + (b / 4 : ℤ)) (by omega)]
+      ftnFourInd_pos ((a : ℤ) - (b : ℤ)) ((a / 4 : ℤ) - (b / 4 : ℤ)) (by omega),
+      ftnFourInd_pos ((a : ℤ) + (b : ℤ)) ((a / 4 : ℤ) + (b / 4 : ℤ)) (by omega)]
     ring
   · rw [e0 a (Or.inl ha0), e1 b hb1,
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
   · rw [e0 a (Or.inl ha0), e0 b (Or.inr hb2),
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
   · rw [e0 a (Or.inl ha0), e3 b hb3,
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
   · rw [e1 a ha1, e0 b (Or.inl hb0),
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
   · rw [e1 a ha1, e1 b hb1,
-    ftnFourInd_pos ((a : ℤ) - (b : ℤ)) ((a / 4 : ℤ) - (b / 4 : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_pos ((a : ℤ) - (b : ℤ)) ((a / 4 : ℤ) - (b / 4 : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
   · rw [e1 a ha1, e0 b (Or.inr hb2),
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
   · rw [e1 a ha1, e3 b hb3,
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_pos ((a : ℤ) + (b : ℤ)) ((a / 4 : ℤ) + (b / 4 : ℤ) + 1) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_pos ((a : ℤ) + (b : ℤ)) ((a / 4 : ℤ) + (b / 4 : ℤ) + 1) (by omega)]
     ring
   · rw [e0 a (Or.inr ha2), e0 b (Or.inl hb0),
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
   · rw [e0 a (Or.inr ha2), e1 b hb1,
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
   · rw [e0 a (Or.inr ha2), e0 b (Or.inr hb2),
-    ftnFourInd_pos ((a : ℤ) - (b : ℤ)) ((a / 4 : ℤ) - (b / 4 : ℤ)) (by omega),
-    ftnFourInd_pos ((a : ℤ) + (b : ℤ)) ((a / 4 : ℤ) + (b / 4 : ℤ) + 1) (by omega)]
+      ftnFourInd_pos ((a : ℤ) - (b : ℤ)) ((a / 4 : ℤ) - (b / 4 : ℤ)) (by omega),
+      ftnFourInd_pos ((a : ℤ) + (b : ℤ)) ((a / 4 : ℤ) + (b / 4 : ℤ) + 1) (by omega)]
     ring
   · rw [e0 a (Or.inr ha2), e3 b hb3,
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
   · rw [e3 a ha3, e0 b (Or.inl hb0),
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
   · rw [e3 a ha3, e1 b hb1,
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_pos ((a : ℤ) + (b : ℤ)) ((a / 4 : ℤ) + (b / 4 : ℤ) + 1) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_pos ((a : ℤ) + (b : ℤ)) ((a / 4 : ℤ) + (b / 4 : ℤ) + 1) (by omega)]
     ring
   · rw [e3 a ha3, e0 b (Or.inr hb2),
-    ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_neg_zero ((a : ℤ) - (b : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
   · rw [e3 a ha3, e3 b hb3,
-    ftnFourInd_pos ((a : ℤ) - (b : ℤ)) ((a / 4 : ℤ) - (b / 4 : ℤ)) (by omega),
-    ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
+      ftnFourInd_pos ((a : ℤ) - (b : ℤ)) ((a / 4 : ℤ) - (b / 4 : ℤ)) (by omega),
+      ftnFourInd_neg_zero ((a : ℤ) + (b : ℤ)) (by omega)]
     ring
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -3218,7 +3177,6 @@ private lemma ftn_four_not_dvd (m K : ℕ) (hdiv : m ∣ K) (hmod : K % 4 = 2) :
   obtain ⟨t, ht⟩ := hdiv
   obtain ⟨s, hs⟩ := dvd_trans hdN ⟨t, ht⟩
   omega
-
 end MetaMathlibExt.FourTriangular
 
 namespace MetaMathlibExt.FourTriangular
@@ -3232,18 +3190,18 @@ private lemma ftn_oddQuad_chi_sum_eq_sigma (n : ℕ) :
     ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) =
     (((∑ d ∈ Nat.divisors (2 * n + 1), d : ℕ)) : ℤ) := by
   have hterm : ∀ q ∈ ftnOddQuad (4 * n + 2),
-    ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) =
-      ftnFourInd ((q.1 : ℤ) - (q.2.2.1 : ℤ)) -
-        ftnFourInd (((q.1 + q.2.2.1 : ℕ)) : ℤ) := by
+      ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4) =
+        ftnFourInd ((q.1 : ℤ) - (q.2.2.1 : ℤ)) -
+          ftnFourInd (((q.1 + q.2.2.1 : ℕ)) : ℤ) := by
     intro q hq
     obtain ⟨d, x, e, y⟩ := q
     exact ftn_chi_mul_eq_fourInd d e
   have hsplit : (∑ q ∈ ftnOddQuad (4 * n + 2),
-    ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4)) =
-    (∑ q ∈ ftnOddQuad (4 * n + 2),
-      ftnFourInd ((q.1 : ℤ) - (q.2.2.1 : ℤ))) -
-    (∑ q ∈ ftnOddQuad (4 * n + 2),
-      ftnFourInd (((q.1 + q.2.2.1 : ℕ)) : ℤ)) := by
+        ZMod.χ₄ (q.1 : ZMod 4) * ZMod.χ₄ (q.2.2.1 : ZMod 4)) =
+      (∑ q ∈ ftnOddQuad (4 * n + 2),
+        ftnFourInd ((q.1 : ℤ) - (q.2.2.1 : ℤ))) -
+      (∑ q ∈ ftnOddQuad (4 * n + 2),
+        ftnFourInd (((q.1 + q.2.2.1 : ℕ)) : ℤ)) := by
     rw [← Finset.sum_sub_distrib]
     exact Finset.sum_congr rfl hterm
   have h10 := ftn_oddQuad_sum_sub_decomp (4 * n + 2) ftnFourInd
@@ -3251,8 +3209,8 @@ private lemma ftn_oddQuad_chi_sum_eq_sigma (n : ℕ) :
   have h11 := ftn_oddQuad_sum_add_decomp (4 * n + 2) ftnFourInd
   have h12 := ftn_liouvilleTriples_shift (4 * n + 2) ftnFourInd
   have hvanV : ∑ q ∈ (ftnLiouvilleTriples (4 * n + 2)).filter
-    (fun q => q.2.2.1 = q.1),
-    ftnFourInd ((q.1 : ℕ) : ℤ) = 0 := by
+        (fun q => q.2.2.1 = q.1),
+      ftnFourInd ((q.1 : ℕ) : ℤ) = 0 := by
     apply Finset.sum_eq_zero
     intro q hq
     obtain ⟨c, X, b, Y⟩ := q
@@ -3262,7 +3220,8 @@ private lemma ftn_oddQuad_chi_sum_eq_sigma (n : ℕ) :
     have hcb : b = c := hbc
     rw [hcb] at heq
     have heq' : c * (X + Y) = 4 * n + 2 := by
-      rwa [mul_add]
+      rw [mul_add]
+      exact heq
     have hnd : ¬ (4 : ℤ) ∣ ((c : ℕ) : ℤ) :=
       ftn_four_not_dvd c (4 * n + 2) ⟨X + Y, heq'.symm⟩ (by omega)
     have h0 : ftnFourInd ((c : ℕ) : ℤ) = 0 := by
@@ -3270,8 +3229,8 @@ private lemma ftn_oddQuad_chi_sum_eq_sigma (n : ℕ) :
       rw [ite_eq_right hnd]
     exact h0
   have hvanQ : ∑ q ∈ (ftnOddQuad (4 * n + 2)).filter
-    (fun q => q.2.1 = q.2.2.2),
-    ftnFourInd (((q.1 + q.2.2.1 : ℕ)) : ℤ) = 0 := by
+        (fun q => q.2.1 = q.2.2.2),
+      ftnFourInd (((q.1 + q.2.2.1 : ℕ)) : ℤ) = 0 := by
     apply Finset.sum_eq_zero
     intro q hq
     obtain ⟨a, x, b, y⟩ := q
@@ -3281,7 +3240,8 @@ private lemma ftn_oddQuad_chi_sum_eq_sigma (n : ℕ) :
     have hxy' : x = y := hxy
     rw [hxy'] at heq
     have heq' : (a + b) * x = 4 * n + 2 := by
-      rwa [hxy', add_mul]
+      rw [hxy', add_mul]
+      exact heq
     have hnd : ¬ (4 : ℤ) ∣ ((((a + b : ℕ))) : ℤ) :=
       ftn_four_not_dvd (a + b) (4 * n + 2) ⟨x, heq'.symm⟩ (by omega)
     have h0 : ftnFourInd ((((a + b : ℕ))) : ℤ) = 0 := by
@@ -3291,8 +3251,8 @@ private lemma ftn_oddQuad_chi_sum_eq_sigma (n : ℕ) :
   have hf0 : ftnFourInd 0 = 1 := by simp [ftnFourInd]
   rw [hf0, one_mul] at h10
   have hdiagZ : ((((ftnOddQuad (4 * n + 2)).filter
-    (fun q => q.1 = q.2.2.1)).card : ℕ) : ℤ) =
-    (((∑ d ∈ Nat.divisors (2 * n + 1), d : ℕ)) : ℤ) := by
+        (fun q => q.1 = q.2.2.1)).card : ℕ) : ℤ) =
+      (((∑ d ∈ Nat.divisors (2 * n + 1), d : ℕ)) : ℤ) := by
     exact_mod_cast ftn_card_oddQuad_diag n
   linarith
 end MetaMathlibExt.FourTriangular
@@ -3314,33 +3274,32 @@ lemma four_triangular_numbers_eq_divisor_sum
   rw [FourTriangular.ftn_wanted_card_eq_quadruple_card,
     FourTriangular.ftn_quadruple_card_eq_sum_antidiagonal]
   have hcast : ∀ a : ℕ, (FourTriangular.ftnTriPairCount a : ℤ) =
-    FourTriangular.ftnChiFourDivisorSum (4 * a + 1) := by
+      FourTriangular.ftnChiFourDivisorSum (4 * a + 1) := by
     intro a
     have hodd : Odd (4 * a + 1) := ⟨2 * a, by ring⟩
     have h3 := FourTriangular.ftn_triPairCount_eq_ncard_region a
     have h4 := FourTriangular.ftn_ncard_gaussNormSet_eq_four_mul (4 * a + 1) hodd
     have h8 := FourTriangular.ftn_ncard_gaussNormSet_eq_four_mul_chi (4 * a + 1) hodd
     have h4z : ((FourTriangular.ftnGaussNormSet (4 * a + 1)).ncard : ℤ) =
-      4 * ((FourTriangular.ftnGaussNormRegion (4 * a + 1)).ncard : ℤ) := by
+        4 * ((FourTriangular.ftnGaussNormRegion (4 * a + 1)).ncard : ℤ) := by
       exact_mod_cast h4
     have h3z : (FourTriangular.ftnTriPairCount a : ℤ) =
-      ((FourTriangular.ftnGaussNormRegion (4 * a + 1)).ncard : ℤ) := by
+        ((FourTriangular.ftnGaussNormRegion (4 * a + 1)).ncard : ℤ) := by
       exact_mod_cast h3
     linarith
-  have hterm : ∀ p ∈ Finset.antidiagonal j,
-    ((FourTriangular.ftnTriPairCount p.1 * FourTriangular.ftnTriPairCount p.2 : ℕ) : ℤ) =
-      FourTriangular.ftnChiFourDivisorSum (4 * p.1 + 1) *
-        FourTriangular.ftnChiFourDivisorSum (4 * p.2 + 1) := by
+  have hterm : ∀ p ∈ Finset.HasAntidiagonal.antidiagonal j,
+      ((FourTriangular.ftnTriPairCount p.1 * FourTriangular.ftnTriPairCount p.2 : ℕ) : ℤ) =
+        FourTriangular.ftnChiFourDivisorSum (4 * p.1 + 1) *
+          FourTriangular.ftnChiFourDivisorSum (4 * p.2 + 1) := by
     intro p _
     rw [Nat.cast_mul, hcast p.1, hcast p.2]
-  have hZ : ((∑ p ∈ Finset.antidiagonal j,
-    FourTriangular.ftnTriPairCount p.1 * FourTriangular.ftnTriPairCount p.2 : ℕ) : ℤ) =
-    (((∑ d ∈ Nat.divisors (2 * j + 1), d : ℕ)) : ℤ) := by
+  have hZ : ((∑ p ∈ Finset.HasAntidiagonal.antidiagonal j,
+      FourTriangular.ftnTriPairCount p.1 * FourTriangular.ftnTriPairCount p.2 : ℕ) : ℤ) =
+      (((∑ d ∈ Nat.divisors (2 * j + 1), d : ℕ)) : ℤ) := by
     rw [Nat.cast_sum, Finset.sum_congr rfl hterm,
       FourTriangular.ftn_sum_antidiagonal_chi_eq_oddQuad_sum]
     exact FourTriangular.ftn_oddQuad_chi_sum_eq_sigma j
   exact_mod_cast hZ
-
 end MetaMathlibExt
 
 

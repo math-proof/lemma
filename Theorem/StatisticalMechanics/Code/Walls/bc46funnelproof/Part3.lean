@@ -73,7 +73,7 @@ theorem bc46_selfDownArm_of_armFunnelGeometry (ω : ConfigSpace (Sym2 (Site d)))
     (bc46_armCutGeometryFixed'_of_armFunnelGeometry ω n hgeo)
 
 
-theorem bc46_burton_keane_bernoulli_of_armFunnelGeometry (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc46_burton_keane_bernoulli_of_armFunnelGeometry (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc46_ArmFunnelGeometry ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
@@ -91,7 +91,7 @@ theorem bc46_burton_keane_bernoulli_of_armFunnelGeometry (hd : 1 ≤ d) (p : ℝ
     (fun ω n hn => bc46_armCutGeometryFixed'_of_armFunnelGeometry ω n (hgeo ω n hn)) htrif
 
 
-theorem bc46_burton_keane_bernoulli_of_neighborArmFunnel (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc46_burton_keane_bernoulli_of_neighborArmFunnel (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc46_NeighborArmFunnel ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

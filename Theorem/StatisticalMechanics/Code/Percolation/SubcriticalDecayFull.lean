@@ -40,7 +40,7 @@ theorem shift_eq_piCongrLeft (g : G) :
   rw [shift_apply, he₁, MulAction.toPerm_symm_apply]
 
 
-theorem bernoulli_translationInvariant (p : ℝ≥0) (hp : p ≤ 1) [Countable E] :
+theorem bernoulli_translationInvariant (p : NNReal) (hp : p ≤ 1) [Countable E] :
     IsTranslationInvariant (G := G) (bernoulliProductMeasure (E := E) p hp) := by
   intro g
   refine ⟨measurable_shift g, ?_⟩

@@ -20,7 +20,7 @@ namespace StatMech
 
 namespace Universality
 
-theorem stt_const_mul_sum_ite (a : ℝ≥0∞) (g : LocalConfig → ℝ≥0∞) (P : LocalConfig → Prop)
+theorem stt_const_mul_sum_ite (a : ENNReal) (g : LocalConfig → ENNReal) (P : LocalConfig → Prop)
     [DecidablePred P] :
     (∑ ω : LocalConfig, if P ω then a * g ω else 0)
       = a * ∑ ω : LocalConfig, if P ω then g ω else 0 := by

@@ -52,7 +52,7 @@ theorem fvMeasure_apply_eq_sum (ω : ConfigSpace (Site d)) (n : ℕ)
     (ht : MeasurableSet t) :
     (fvMeasure ω n B β h) t
       = ∑ τ : {x // x ∈ box d n} → Bool,
-          ENNReal.ofReal (fvProb ω n B β h τ) * (Set.indicator t (1 : ConfigSpace (Site d) → ℝ≥0∞) (glue ω τ)) := by
+          ENNReal.ofReal (fvProb ω n B β h τ) * (Set.indicator t (1 : ConfigSpace (Site d) → ENNReal) (glue ω τ)) := by
   unfold fvMeasure
   rw [Measure.finsetSum_apply]
   refine Finset.sum_congr rfl (fun τ _ => ?_)
@@ -63,7 +63,7 @@ theorem fvMeasure_inter_outsideSigma (n : ℕ) (B : Finset (Sym2 (Site d))) (β 
     {s : Set (ConfigSpace (Site d))} (hs : MeasurableSet[outsideSigma (box d n)] s)
     {t : Set (ConfigSpace (Site d))} (ht : MeasurableSet t) (ω : ConfigSpace (Site d)) :
     (fvMeasure ω n B β h) (s ∩ t)
-      = (Set.indicator s (1 : ConfigSpace (Site d) → ℝ≥0∞) ω) * (fvMeasure ω n B β h) t := by
+      = (Set.indicator s (1 : ConfigSpace (Site d) → ENNReal) ω) * (fvMeasure ω n B β h) t := by
   have hst : MeasurableSet (s ∩ t) := ((outsideSigma_le (box d n)) s hs).inter ht
   rw [fvMeasure_apply_eq_sum ω n B β h hst, fvMeasure_apply_eq_sum ω n B β h ht,
     Finset.mul_sum]

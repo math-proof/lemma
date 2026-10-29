@@ -36,7 +36,7 @@ lemma orthogonality_group_normalized
   [AddCommGroup G]
   [Fintype G]
   [DecidableEq G]
-  {g₁ g₂ : G} :
+  (g₁ g₂ : G) :
 -- imply
   ((Fintype.card G : ℂ)⁻¹) * ∑ χ : AddChar G ℂ, χ g₁ * (starRingEnd ℂ) (χ g₂) = if g₁ = g₂ then 1 else 0 := by
 -- proof
@@ -77,7 +77,7 @@ namespace CharacterOrthogonality
 lemma orthogonality_char_normalized
   [AddCommGroup G]
   [Fintype G]
-  {χ₁ χ₂ : AddChar G ℂ} :
+  (χ₁ χ₂ : AddChar G ℂ) :
 -- imply
   ((Fintype.card G : ℂ)⁻¹) * ∑ g : G, χ₁ g * (starRingEnd ℂ) (χ₂ g) = if χ₁ = χ₂ then 1 else 0 := by
 -- proof

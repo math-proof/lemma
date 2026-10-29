@@ -67,7 +67,7 @@ theorem tic_restrict_compProd_trim_eq (β h : ℝ)
   exact tic_map_diag_restrict μ s hsn hf
 
 
-theorem tic_smul_compProd_trim_eq (β h : ℝ) (c : ℝ≥0∞) (hc : c ≠ ⊤)
+theorem tic_smul_compProd_trim_eq (β h : ℝ) (c : ENNReal) (hc : c ≠ ⊤)
     (μ : Measure (ConfigSpace (Site d))) [IsFiniteMeasure μ]
     (hμ : ∀ n, (μ.trim (outsideSigma_le (box d n))) ⊗ₘ (isingSpec n (bondFinsetTouch d n) β h)
       = @Measure.map (ConfigSpace (Site d)) (ConfigSpace (Site d) × ConfigSpace (Site d)) _

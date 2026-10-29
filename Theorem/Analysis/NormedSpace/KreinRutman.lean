@@ -338,7 +338,7 @@ theorem kr_resolvent_pos_sub
 -- N11
 theorem kr_sq_spectralRadius_mem_spectrum_sq
     {A : Type*} [NormedRing A] [NormedAlgebra ℝ A] [CompleteSpace A]
-    (a : A) (hpos : (0 : ℝ≥0∞) < spectralRadius ℝ a)
+    (a : A) (hpos : (0 : ENNReal) < spectralRadius ℝ a)
     (hfin : spectralRadius ℝ a ≠ ⊤) :
     (spectralRadius ℝ a).toReal ^ 2 ∈ spectrum ℝ (a ^ 2) ∧
     ∀ μ : ℝ, (spectralRadius ℝ a).toReal ^ 2 < μ → μ ∈ resolventSet ℝ (a ^ 2) := by
@@ -351,7 +351,7 @@ theorem kr_sq_spectralRadius_mem_spectrum_sq
       rw [spectralRadius_eq_of_unital, hcon]
       simp
     rw [hzero] at hpos
-    exact (lt_irrefl (0 : ℝ≥0∞) hpos).elim
+    exact (lt_irrefl (0 : ENNReal) hpos).elim
   have hor := Real.spectralRadius_mem_spectrum_or (a := a) hne
   have hmem : (spectralRadius ℝ a).toReal ^ 2 ∈ spectrum ℝ (a ^ 2) := by
     rcases hor with h | h
@@ -367,7 +367,7 @@ theorem kr_sq_spectralRadius_mem_spectrum_sq
   have hs_pos : 0 < Real.sqrt μ := Real.sqrt_pos.mpr hμpos2
   have hrad : spectralRadius ℝ a = ENNReal.ofReal (spectralRadius ℝ a).toReal :=
     (ENNReal.ofReal_toReal hfin).symm
-  have hs_coe : ((‖Real.sqrt μ‖₊ : NNReal) : ℝ≥0∞) = ENNReal.ofReal (Real.sqrt μ) := by
+  have hs_coe : ((‖Real.sqrt μ‖₊ : NNReal) : ENNReal) = ENNReal.ofReal (Real.sqrt μ) := by
     rw [Real.nnnorm_of_nonneg (Real.sqrt_nonneg μ), ← ENNReal.ofReal_coe_nnreal,
       NNReal.coe_mk]
   have hsr : spectralRadius ℝ a < ‖Real.sqrt μ‖₊ := by
@@ -687,13 +687,13 @@ theorem krein_rutman
     (T : C(K, ℝ) →L[ℝ] C(K, ℝ))
     (hT_compact : IsCompactOperator T)
     (hT_pos : ∀ f : C(K, ℝ), (∀ x, 0 ≤ f x) → ∀ x, 0 ≤ (T f) x)
-    (hr : (0 : ℝ≥0∞) < spectralRadius ℝ T) :
+    (hr : (0 : ENNReal) < spectralRadius ℝ T) :
     ∃ f : C(K, ℝ), f ≠ 0 ∧ (∀ x, 0 ≤ f x) ∧ T f = (spectralRadius ℝ T).toReal • f := by
   rcases isEmpty_or_nonempty K with hempty | hempty
   · have h0 : spectralRadius ℝ T = 0 :=
       spectrum.SpectralRadius.of_subsingleton T
     rw [h0] at hr
-    exact (lt_irrefl (0 : ℝ≥0∞) hr).elim
+    exact (lt_irrefl (0 : ENNReal) hr).elim
   · have : Nonempty K := hempty
     have hbdd : ∀ k ∈ spectrum ℝ T, ‖k‖₊ ≤ ‖T‖₊ := by
       intro k hk
@@ -705,7 +705,7 @@ theorem krein_rutman
       have hmem : k ∈ resolventSet ℝ T :=
         spectrum.mem_resolventSet_of_norm_lt (a := T) (k := k) hlt
       exact ((spectrum.mem_iff).mp hk) ((spectrum.mem_resolventSet_iff).mp hmem)
-    have hle : spectralRadius ℝ T ≤ ((‖T‖₊ : NNReal) : ℝ≥0∞) := by
+    have hle : spectralRadius ℝ T ≤ ((‖T‖₊ : NNReal) : ENNReal) := by
       rw [spectralRadius_eq_of_unital]
       apply iSup_le
       intro k

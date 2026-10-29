@@ -40,7 +40,7 @@ private lemma bc59_burton_keane_bernoulli_of_hasCorridors_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (h : ∀ n : ℕ, bc59_HasDisjointCorridors d n) :
@@ -397,7 +397,7 @@ private lemma bc59_status_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p) :
 -- imply

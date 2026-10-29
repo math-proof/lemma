@@ -23,7 +23,7 @@ variable {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableR
 
 
 noncomputable def fkWeightNN (p q : ℝ) (hp : 0 < p) (hp1 : p < 1) (hq : 0 < q)
-    (ω : ConfigSpace (Sym2 V)) : ℝ≥0 :=
+    (ω : ConfigSpace (Sym2 V)) : NNReal :=
   ⟨fkWeight G p q ω, fkWeight_nonneg G hp hp1 hq ω⟩
 
 end FK

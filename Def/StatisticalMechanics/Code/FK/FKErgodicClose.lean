@@ -31,7 +31,7 @@ variable {E : Type*} {G : Type*} [Group G] [MulAction G E]
 
 def IsInvariantExtremePoint (μ : Measure (ConfigSpace E)) : Prop :=
   IsTranslationInvariant (G := G) μ ∧ IsProbabilityMeasure μ ∧
-    ∀ (ν₁ ν₂ : Measure (ConfigSpace E)) (a b : ℝ≥0∞),
+    ∀ (ν₁ ν₂ : Measure (ConfigSpace E)) (a b : ENNReal),
       IsTranslationInvariant (G := G) ν₁ → IsTranslationInvariant (G := G) ν₂ →
         IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ →
           0 < a → 0 < b → a + b = 1 → μ = a • ν₁ + b • ν₂ → ν₁ = ν₂

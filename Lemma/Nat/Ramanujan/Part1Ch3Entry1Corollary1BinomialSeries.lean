@@ -199,7 +199,6 @@ lemma ramanujan_part1_ch3_entry1_corollary1_binomial_series_general
       rw [heq2] at hmul
       exact hmul.congr_fun heq1
     exact hsumF.hasSum.prod_fiberwise hfib
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry1Corollary1BinomialSeries
 
@@ -214,7 +213,7 @@ lemma ramanujan_part1_ch3_entry1_corollary1_binomial_series
   {Q : ℕ → ℂ}
 -- given
   (hx : ‖x‖ < 1)
-  (hQ : ∃ R : ℝ, 0 < R ∧ ∀ z : ℂ, ‖z‖ < R → Summable (fun k : ℕ => Q k * z ^ k))
+  (_hQ : ∃ R : ℝ, 0 < R ∧ ∀ z : ℂ, ‖z‖ < R → Summable (fun k : ℕ => Q k * z ^ k))
   (hsum : Summable (fun p : ℕ × ℕ => Q p.1 * (∏ j ∈ Finset.range (p.1 + p.2), (n - (j : ℂ))) * x ^ (p.1 + p.2) / (Nat.factorial p.2 : ℂ))) :
 -- imply
   ∃ s : ℂ,
@@ -223,7 +222,7 @@ lemma ramanujan_part1_ch3_entry1_corollary1_binomial_series
     HasSum (fun k : ℕ => Q k * (∏ j ∈ Finset.range k, (n - (j : ℂ))) * x ^ k *
     Complex.exp ((n - (k : ℂ)) * Complex.log (1 + x))) s := by
 -- proof
-apply ramanujan_part1_ch3_entry1_corollary1_binomial_series_general <;> assumption
+  apply ramanujan_part1_ch3_entry1_corollary1_binomial_series_general <;> assumption
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry1Corollary1BinomialSeries
 

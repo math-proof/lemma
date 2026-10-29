@@ -7,9 +7,8 @@ namespace MetaMathlibExt
 
 /--
 [factor_bound_aux](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Digits/ProdigiousCrtSolution.lean)
--/
-@[path]
 exponent of `n` is at most `M`. -/
+@[path]
 private lemma factor_bound_aux (n M p : ℕ) (hM : 0 < M) (hnM : n ∣ M)
   (hp : p.Prime) : n.factorization p ≤ M := by
   have h1 : p ^ n.factorization p ∣ M := (Nat.ordProj_dvd n p).trans hnM
@@ -25,9 +24,8 @@ namespace MetaMathlibExt
 
 /--
 [coprime_div_gcd_pow_aux](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Digits/ProdigiousCrtSolution.lean)
--/
-@[path]
 provided `K` exceeds all relevant valuations. -/
+@[path]
 private lemma coprime_div_gcd_pow_aux (b K n : ℕ) (hn : 0 < n)
   (hb : b ≠ 0)
   (hK : ∀ p, p.Prime → p ∣ b → n.factorization p ≤ K) :
@@ -52,12 +50,12 @@ private lemma coprime_div_gcd_pow_aux (b K n : ℕ) (hn : 0 < n)
     rw [Nat.factorization_pow, Finsupp.smul_apply, smul_eq_mul]
   have hfac : (n / n.gcd (b ^ K)).factorization p = 0 := by
     have e1 : (n / n.gcd (b ^ K)).factorization p =
-      n.factorization p - (n.gcd (b ^ K)).factorization p := by
+        n.factorization p - (n.gcd (b ^ K)).factorization p := by
       rw [hdiv]
       exact Finsupp.tsub_apply n.factorization
         (n.gcd (b ^ K)).factorization p
     have e2 : (n.gcd (b ^ K)).factorization p =
-      n.factorization p ⊓ (K * b.factorization p) := by
+        n.factorization p ⊓ (K * b.factorization p) := by
       rw [hgcd2, Finsupp.inf_apply, e3]
     have hKm : K * 1 ≤ K * b.factorization p := Nat.mul_le_mul (le_refl K) hbf
     rw [mul_one] at hKm
@@ -132,9 +130,8 @@ namespace MetaMathlibExt
 
 /--
 [digits_repunit_mul_aux](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Digits/ProdigiousCrtSolution.lean)
--/
-@[path]
 product is `1`. -/
+@[path]
 private lemma digits_repunit_mul_aux (b B M N e : ℕ) (hb : 1 < b)
   (hB : B = b ^ (e + 1)) (c : ℕ)
   (hc : c = b ^ M * ∑ j ∈ Finset.range N, B ^ j) (hN : 0 < N) :
@@ -149,33 +146,33 @@ private lemma digits_repunit_mul_aux (b B M N e : ℕ) (hb : 1 < b)
     rw [hL] at hy
     simp only [List.mem_append, List.mem_replicate, List.mem_flatten,
       List.mem_singleton] at hy
-    obtain ((⟨_, rfl⟩ | ⟨s, ⟨_, rfl⟩, hy2⟩) | rfl) := hy
+    rcases hy with ((⟨_, rfl⟩ | ⟨s, ⟨_, rfl⟩, hy2⟩) | rfl)
     · exact Or.inl rfl
     · rw [List.mem_cons, List.mem_replicate] at hy2
-      obtain rfl | ⟨_, rfl⟩ := hy2
+      rcases hy2 with rfl | ⟨_, rfl⟩
       · exact Or.inr rfl
       · exact Or.inl rfl
     · exact Or.inr rfl
   have hall : ∀ l ∈ L, l < b := by
     intro l hl
-    obtain rfl | rfl <;> omega := h01 l hl
+    rcases h01 l hl with rfl | rfl <;> omega
   have hlast : ∀ h : L ≠ [], L.getLast h ≠ 0 := by
     intro h
     simp only [hL, List.getLast_concat] at ⊢
     exact one_ne_zero
   have hblen : (1 :: List.replicate e 0).length = e + 1 := by simp
   have hlenflat : ((List.replicate N' (1 :: List.replicate e 0)).flatten).length
-    = N' * (e + 1) := by
+      = N' * (e + 1) := by
     rw [List.length_flatten, List.map_replicate, hblen, List.sum_replicate]
     simp
   have hA : Nat.ofDigits b (List.replicate M 0 ++
-    (List.replicate N' (1 :: List.replicate e 0)).flatten) =
-    b ^ M * ∑ j ∈ Finset.range N', B ^ j := by
+      (List.replicate N' (1 :: List.replicate e 0)).flatten) =
+      b ^ M * ∑ j ∈ Finset.range N', B ^ j := by
     rw [Nat.ofDigits_append, Nat.ofDigits_replicate_zero, List.length_replicate,
       ofDigits_blocks_aux b B N' e hB, zero_add]
   have hlenA : (List.replicate M 0 ++
-    (List.replicate N' (1 :: List.replicate e 0)).flatten).length
-    = M + N' * (e + 1) := by
+      (List.replicate N' (1 :: List.replicate e 0)).flatten).length
+      = M + N' * (e + 1) := by
     rw [List.length_append, List.length_replicate, hlenflat]
   have ho1 : Nat.ofDigits b [1] = 1 := by
     rw [Nat.ofDigits_cons, Nat.ofDigits_nil, mul_zero, add_zero]
@@ -193,7 +190,7 @@ private lemma digits_repunit_mul_aux (b B M N e : ℕ) (hb : 1 < b)
   intro y hy
   rw [List.mem_filter] at hy
   obtain ⟨hmem, hne⟩ := hy
-  obtain h0 | h1 := h01 y hmem
+  rcases h01 y hmem with h0 | h1
   · rw [h0] at hne
     simp at hne
   · exact h1
@@ -211,7 +208,7 @@ lemma exists_positive_crt_solution_nonzero_digit_product_one
   {r : Fin w → ℤ}
   {m : Fin w → ℕ}
 -- given
-  (hw : 0 < w)
+  (_hw : 0 < w)
   (hb : 3 ≤ b)
   (hmpos : ∀ v, 0 < m v)
   (hconsistent : ∃ x : ℤ, ∀ v, Int.ModEq (m v : ℤ) x (r v))
@@ -270,15 +267,16 @@ lemma exists_positive_crt_solution_nonzero_digit_product_one
       ring
     have e2 : X * (b ^ M) ^ (e + 1) + b ^ M * T ≡ X [MOD T] := by
       have g := ((Nat.ModEq.refl X).mul hE).add hNT
-      rwa [mul_one, add_zero] at g
+      rw [mul_one, add_zero] at g
+      exact g
     rw [e1]; exact e2
   have hkey : b ^ M * ∑ j ∈ Finset.range N, B ^ j ≡ X [MOD T] :=
     Nat.ModEq.trans ((Nat.ModEq.refl _).mul hsumN) h2
   have hkeyZ : ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) ≡ (X : ℤ)
-    [ZMOD (T : ℤ)] :=
+      [ZMOD (T : ℤ)] :=
     Int.modEq_iff_dvd.mpr (Nat.modEq_iff_dvd.mp hkey)
   have hTZ : ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) ≡ x
-    [ZMOD (T : ℤ)] :=
+      [ZMOD (T : ℤ)] :=
     hkeyZ.trans hXmod
   have hBpos : 0 < B := pow_pos hb0 _
   have hspos : 0 < ∑ j ∈ Finset.range N, B ^ j := by
@@ -290,43 +288,44 @@ lemma exists_positive_crt_solution_nonzero_digit_product_one
   have hcpos : 0 < b ^ M * ∑ j ∈ Finset.range N, B ^ j :=
     mul_pos (pow_pos hb0 M) hspos
   have hcv : ∀ v, Int.ModEq (m v : ℤ)
-    ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) (r v) := by
+      ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) (r v) := by
     intro v
     have hdvdm : (m v).gcd (b ^ M) ∣ m v := Nat.gcd_dvd_left _ _
     have hdvdp : (m v).gcd (b ^ M) ∣ b ^ M := Nat.gcd_dvd_right _ _
     have hmt : (m v).gcd (b ^ M) * (m v / (m v).gcd (b ^ M)) = m v :=
       Nat.mul_div_cancel' hdvdm
     have hcopdt : ((m v).gcd (b ^ M)).Coprime
-      (m v / (m v).gcd (b ^ M)) := by
+        (m v / (m v).gcd (b ^ M)) := by
       have h1 : (m v / (m v).gcd (b ^ M)).Coprime (b ^ M) :=
         (hcopt v).pow_right M
       have h3 : (m v / (m v).gcd (b ^ M)).Coprime ((m v).gcd (b ^ M)) :=
         h1.coprime_dvd_right hdvdp
       exact h3.symm
     have hdvd : ((((m v).gcd (b ^ M)) : ℕ) : ℤ) ∣
-      x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) := by
+        x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) := by
       by_cases hgc : (m v).gcd b = 1
       · have hd1 : (m v).gcd (b ^ M) = 1 := by
-        have hcb : (m v).Coprime b := hgc
-        have h1 : ((m v).gcd (b ^ M)).Coprime b :=
-          hcb.coprime_dvd_left hdvdm
-        have h2b : ((m v).gcd (b ^ M)).Coprime (b ^ M) := h1.pow_right M
-        exact h2b.eq_one_of_dvd hdvdp
+          have hcb : (m v).Coprime b := hgc
+          have h1 : ((m v).gcd (b ^ M)).Coprime b :=
+            hcb.coprime_dvd_left hdvdm
+          have h2b : ((m v).gcd (b ^ M)).Coprime (b ^ M) := h1.pow_right M
+          exact h2b.eq_one_of_dvd hdvdp
         rw [hd1, Nat.cast_one]
         exact one_dvd _
       · have hr0 : r v = 0 := hzero v hgc
         have hxv : x ≡ (0 : ℤ) [ZMOD (((m v) : ℕ) : ℤ)] := by
           have h := hx v
-          rwa [hr0] at h
+          rw [hr0] at h
+          exact h
         have h1 : ((((m v) : ℕ)) : ℤ) ∣ x :=
           Int.modEq_zero_iff_dvd.mp hxv
         have hxd : ((((m v).gcd (b ^ M)) : ℕ) : ℤ) ∣ x :=
           dvd_trans (Int.natCast_dvd_natCast.mpr hdvdm) h1
         have hcc : (m v).gcd (b ^ M)
-          ∣ b ^ M * ∑ j ∈ Finset.range N, B ^ j :=
+            ∣ b ^ M * ∑ j ∈ Finset.range N, B ^ j :=
           dvd_trans hdvdp (dvd_mul_right _ _)
         have hcd : ((((m v).gcd (b ^ M)) : ℕ) : ℤ) ∣
-          ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) :=
+            ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) :=
           Int.natCast_dvd_natCast.mpr hcc
         exact dvd_sub hxd hcd
     have htT : m v / (m v).gcd (b ^ M) ∣ T := by
@@ -338,26 +337,27 @@ lemma exists_positive_crt_solution_nonzero_digit_product_one
           (hcopt v).pow_right M
         exact h1.coprime_dvd_right hDdvdP
       have htmT : m v / (m v).gcd (b ^ M) ∣ M.gcd (b ^ M) * T := by
-        rwa [hDT]
+        rw [hDT]
+        exact htm
       exact hcopTD.dvd_of_dvd_mul_left htmT
     have hdvd2 : ((((m v / (m v).gcd (b ^ M)) : ℕ)) : ℤ) ∣
-      x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) :=
+        x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) :=
       Int.modEq_iff_dvd.mp
         (Int.ModEq.of_dvd (Int.natCast_dvd_natCast.mpr htT) hTZ)
     have hcomb : ((((m v) : ℕ)) : ℤ) ∣
-      x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) := by
+        x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ) := by
       have h1 : (m v).gcd (b ^ M)
-        ∣ (x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ)).natAbs :=
+          ∣ (x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ)).natAbs :=
         Int.natCast_dvd_natCast.mp (Int.dvd_natAbs.mpr hdvd)
       have h2n : m v / (m v).gcd (b ^ M)
-        ∣ (x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ)).natAbs :=
+          ∣ (x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ)).natAbs :=
         Int.natCast_dvd_natCast.mp (Int.dvd_natAbs.mpr hdvd2)
       have h3 : (m v).gcd (b ^ M) * (m v / (m v).gcd (b ^ M)) ∣
-        (x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ)).natAbs :=
+          (x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ)).natAbs :=
         hcopdt.mul_dvd_of_dvd_of_dvd h1 h2n
       rw [hmt] at h3
       have h6 : ((((m v) : ℕ)) : ℤ).natAbs ∣
-        (x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ)).natAbs := by
+          (x - ((b ^ M * ∑ j ∈ Finset.range N, B ^ j : ℕ) : ℤ)).natAbs := by
         simpa using h3
       exact Int.natAbs_dvd_natAbs.mp h6
     exact (Int.modEq_iff_dvd.mpr hcomb).trans (hx v)
@@ -369,4 +369,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

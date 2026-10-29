@@ -254,7 +254,7 @@ private lemma flc2_burton_keane_bernoulli_of_spanningTree_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → flc2_SpanningTreeLeafCount ω n)

@@ -87,7 +87,7 @@ theorem bc40_Tcount_le_boundary_of_cutGeometryFixed' (ω : ConfigSpace (Sym2 (Si
     (bc40_selfDownArm_of_cutGeometryFixed' ω n hgeo hroot_side)
 
 
-theorem bc40_burton_keane_bernoulli_of_cutGeometryFixed' (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc40_burton_keane_bernoulli_of_cutGeometryFixed' (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc40_ArmCutGeometryFixed' ω n)
     (hroot_side : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →

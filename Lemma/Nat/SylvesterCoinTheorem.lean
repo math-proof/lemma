@@ -16,7 +16,7 @@ lemma sylvester_coin_theorem
   {n : ℕ | ¬ ∃ x y : ℕ, n = a * x + b * y}.ncard =
     (a - 1) * (b - 1) / 2 := by
 -- proof
-  obtain rfl | ha0 := eq_or_ne a 0
+  rcases eq_or_ne a 0 with rfl | ha0
   · have hb1 : b = 1 := (Nat.coprime_zero_left b).mp hab
     subst hb1
     have hset : {n : ℕ | ¬ ∃ x y : ℕ, n = 0 * x + 1 * y} = ∅ := by
@@ -24,7 +24,7 @@ lemma sylvester_coin_theorem
       intro n hn
       exact hn ⟨0, n, by simp⟩
     rw [hset, Set.ncard_empty]
-  obtain rfl | hb0 := eq_or_ne b 0
+  rcases eq_or_ne b 0 with rfl | hb0
   · have ha1 : a = 1 := (Nat.coprime_zero_right a).mp hab
     subst ha1
     have hset : {n : ℕ | ¬ ∃ x y : ℕ, n = 1 * x + 0 * y} = ∅ := by
@@ -32,18 +32,18 @@ lemma sylvester_coin_theorem
       intro n hn
       exact hn ⟨n, 0, by simp⟩
     rw [hset, Set.ncard_empty]
-  obtain rfl | ha1 := eq_or_ne a 1
+  rcases eq_or_ne a 1 with rfl | ha1
   · have hset : {n : ℕ | ¬ ∃ x y : ℕ, n = 1 * x + b * y} = ∅ := by
-    apply Set.eq_empty_of_forall_notMem
-    intro n hn
-    exact hn ⟨n, 0, by simp⟩
+      apply Set.eq_empty_of_forall_notMem
+      intro n hn
+      exact hn ⟨n, 0, by simp⟩
     rw [hset, Set.ncard_empty]
     simp
-  obtain rfl | hb1 := eq_or_ne b 1
+  rcases eq_or_ne b 1 with rfl | hb1
   · have hset : {n : ℕ | ¬ ∃ x y : ℕ, n = a * x + 1 * y} = ∅ := by
-    apply Set.eq_empty_of_forall_notMem
-    intro n hn
-    exact hn ⟨0, n, by simp⟩
+      apply Set.eq_empty_of_forall_notMem
+      intro n hn
+      exact hn ⟨0, n, by simp⟩
     rw [hset, Set.ncard_empty]
     simp
   have ha2 : 2 ≤ a := by omega
@@ -88,7 +88,8 @@ lemma sylvester_coin_theorem
       have h1 : r1 < a := Finset.mem_range.mp hr1
       have h2 : r2 < a := Finset.mem_range.mp hr2
       have hcon : yinv (y r1) = yinv (y r2) := by rw [h]
-      rwa [hy_yinv r1 h1, hy_yinv r2 h2] at hcon
+      rw [hy_yinv r1 h1, hy_yinv r2 h2] at hcon
+      exact hcon
     · intro s hs
       have hs_lt : s < a := Finset.mem_range.mp hs
       exact ⟨yinv s, Finset.mem_range.mpr (hyinv_lt s), h_yinv_y s hs_lt⟩
@@ -242,46 +243,48 @@ lemma sylvester_coin_theorem
     intro r hr
     exact hF_card r (Finset.mem_range.mp hr)
   have hncard : {n : ℕ | ¬ ∃ x y0, n = a * x + b * y0}.ncard
-    = ∑ r ∈ Finset.range a, c r := by
+      = ∑ r ∈ Finset.range a, c r := by
     rw [← hSet_eq, Set.ncard_coe_finset, hcard_Gf]
   have hsum_eq : (∑ r ∈ Finset.range a, c r) * a + ∑ r ∈ Finset.range a, r
-    = b * ∑ r ∈ Finset.range a, r := by
+      = b * ∑ r ∈ Finset.range a, r := by
     have h1 : ∑ r ∈ Finset.range a, (c r * a + r)
-      = ∑ r ∈ Finset.range a, (b * y r) := by
+        = ∑ r ∈ Finset.range a, (b * y r) := by
       apply Finset.sum_congr rfl
       intro r hr
       exact hc_add r (Finset.mem_range.mp hr)
     rw [Finset.sum_add_distrib] at h1
     have h2 : ∑ r ∈ Finset.range a, c r * a
-      = (∑ r ∈ Finset.range a, c r) * a := by
+        = (∑ r ∈ Finset.range a, c r) * a := by
       rw [Finset.sum_mul]
     have h3 : ∑ r ∈ Finset.range a, b * y r
-      = b * ∑ r ∈ Finset.range a, r := by
+        = b * ∑ r ∈ Finset.range a, r := by
       rw [← Finset.mul_sum, hsum_y]
-    rwa [h2, h3] at h1
+    rw [h2, h3] at h1
+    exact h1
   have h_Sa : (∑ r ∈ Finset.range a, c r) * a
-    = (b - 1) * ∑ r ∈ Finset.range a, r := by
+      = (b - 1) * ∑ r ∈ Finset.range a, r := by
     have hbT : b * ∑ r ∈ Finset.range a, r
-      = (b - 1) * ∑ r ∈ Finset.range a, r + ∑ r ∈ Finset.range a, r := by
+        = (b - 1) * ∑ r ∈ Finset.range a, r + ∑ r ∈ Finset.range a, r := by
       have hb_eq : b = (b - 1) + 1 := by omega
       calc b * ∑ r ∈ Finset.range a, r
-        = ((b - 1) + 1) * ∑ r ∈ Finset.range a, r := by rw [← hb_eq]
+          = ((b - 1) + 1) * ∑ r ∈ Finset.range a, r := by rw [← hb_eq]
         _ = (b - 1) * ∑ r ∈ Finset.range a, r + ∑ r ∈ Finset.range a, r := by
-          rw [Nat.add_mul, Nat.one_mul]
+            rw [Nat.add_mul, Nat.one_mul]
     have h1 : (∑ r ∈ Finset.range a, c r) * a + ∑ r ∈ Finset.range a, r
-      = (b - 1) * ∑ r ∈ Finset.range a, r + ∑ r ∈ Finset.range a, r := by
-      rwa [← hbT]
+        = (b - 1) * ∑ r ∈ Finset.range a, r + ∑ r ∈ Finset.range a, r := by
+      rw [← hbT]
+      exact hsum_eq
     exact Nat.add_right_cancel h1
   have h2T : (∑ r ∈ Finset.range a, r) * 2 = a * (a - 1) :=
     Finset.sum_range_id_mul_two a
   have h3 : (2 * ∑ r ∈ Finset.range a, c r) * a
-    = ((a - 1) * (b - 1)) * a := by
+      = ((a - 1) * (b - 1)) * a := by
     calc (2 * ∑ r ∈ Finset.range a, c r) * a
-      = 2 * ((∑ r ∈ Finset.range a, c r) * a) := by ac_rfl
+        = 2 * ((∑ r ∈ Finset.range a, c r) * a) := by ac_rfl
       _ = 2 * ((b - 1) * ∑ r ∈ Finset.range a, r) := by rw [h_Sa]
       _ = (b - 1) * (2 * ∑ r ∈ Finset.range a, r) := by ac_rfl
       _ = (b - 1) * ((∑ r ∈ Finset.range a, r) * 2) := by
-        rw [Nat.mul_comm 2 (∑ r ∈ Finset.range a, r)]
+          rw [Nat.mul_comm 2 (∑ r ∈ Finset.range a, r)]
       _ = (b - 1) * (a * (a - 1)) := by rw [h2T]
       _ = ((a - 1) * (b - 1)) * a := by ac_rfl
   have h4 : 2 * ∑ r ∈ Finset.range a, c r = (a - 1) * (b - 1) :=
@@ -293,4 +296,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

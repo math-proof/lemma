@@ -17,7 +17,7 @@ private lemma Comm
   let ν : MeasureTheory.Measure β := ReferenceMeasure.measure
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
   let p' : β × α → ENNReal := p ∘ Prod.swap
-  have hp' : Measurable p' := D.measurable_density.comp measurable_swap
+  have hp' : Measurable p' := D.comp measurable_swap
   have hmap : π.map (y, x) = MeasureTheory.Measure.map Prod.swap (π.map (x, y)) :=
     (AEMeasurable.map_map_of_aemeasurable measurable_swap.aemeasurable
       hP.aemeasurable).symm
@@ -36,7 +36,7 @@ private lemma Comm
   exact {
     toIsProbabilityMeasure := inferInstance
     aemeasurable := measurable_swap.comp_aemeasurable hP.aemeasurable
-    exists_distribution := ⟨p', ⟨hp'⟩, hlaw⟩
+    exists_distribution := ⟨p', hp', hlaw⟩
   }
 
 

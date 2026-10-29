@@ -62,7 +62,7 @@ theorem shp_connWithinEvent_dependsOn {S : Finset (Site d)} {o x : Site d} :
   · rw [Set.indicator_of_notMem hω, Set.indicator_of_notMem (fun hc => hω (hiff.mpr hc))]
 
 
-theorem shp_connWithin_factor (p : ℝ≥0) (hp : p ≤ 1)
+theorem shp_connWithin_factor (p : NNReal) (hp : p ≤ 1)
     (S : Finset (Site d)) (o x : Site d)
     (B : Set (ConfigSpace (Sym2 (Site d)))) (U : Finset (Sym2 (Site d)))
     (hdisj : Disjoint (internalEdgesFinset S) U)
@@ -76,7 +76,7 @@ theorem shp_connWithin_factor (p : ℝ≥0) (hp : p ≤ 1)
     shp_connWithinEvent_dependsOn hB
 
 
-theorem shp_pivotal_factor (p : ℝ≥0) (hp : p ≤ 1)
+theorem shp_pivotal_factor (p : NNReal) (hp : p ≤ 1)
     (S : Finset (Site d)) (o x : Site d)
     (B : Set (ConfigSpace (Sym2 (Site d)))) (U : Finset (Sym2 (Site d)))
     (hUext : ∀ e ∈ U, ∃ a b : Site d, e = s(a, b) ∧ (a ∉ (S : Set (Site d)) ∨ b ∉ (S : Set (Site d))))

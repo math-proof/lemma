@@ -44,7 +44,7 @@ open Finset in
 
 /-- The Hoeffding sub-Gaussian parameter $c^{2}/4$ for a centred random variable bounded in an
 interval of length $c$, packaged as a non-negative real. -/
-noncomputable def hoeffdingSubGParam (c : ℝ) (_ : 0 ≤ c) : ℝ≥0 :=
+noncomputable def hoeffdingSubGParam (c : ℝ) (_ : 0 ≤ c) : NNReal :=
   ⟨c ^ 2 / 4, by positivity⟩
 
 end ShamirSpencer

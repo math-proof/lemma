@@ -102,7 +102,7 @@ theorem starTriangle_iff_isCriticalTri (p0 p1 p2 : ℝ) :
   ⟨isCriticalTri_of_starTriangle p0 p1 p2, stt_ABC p0 p1 p2⟩
 
 
-theorem bernoulliMeasure_map_not (p : ℝ≥0) (hp : p ≤ 1) :
+theorem bernoulliMeasure_map_not (p : NNReal) (hp : p ≤ 1) :
     Measure.map (fun b => !b) (bernoulliMeasure p hp)
       = bernoulliMeasure (1 - p) tsub_le_self := by
   have hmeas : Measurable (fun b : Bool => !b) := measurable_of_countable _
@@ -113,7 +113,7 @@ theorem bernoulliMeasure_map_not (p : ℝ≥0) (hp : p ≤ 1) :
   | false =>
     have hpre : (fun b => !b) ⁻¹' ({false} : Set Bool) = ({true} : Set Bool) := by
       ext b; cases b <;> simp
-    have harith : (1 : ℝ≥0) - (1 - p) = p := by
+    have harith : (1 : NNReal) - (1 - p) = p := by
       apply NNReal.coe_injective
       rw [NNReal.coe_sub tsub_le_self, NNReal.coe_sub hp]; ring
     rw [bernoulliMeasure_apply_false, harith, hpre, bernoulliMeasure_apply_true]
@@ -124,12 +124,12 @@ theorem bernoulliMeasure_map_not (p : ℝ≥0) (hp : p ≤ 1) :
       ENNReal.coe_sub, ENNReal.coe_one]
 
 
-theorem one_sub_half : (1 : ℝ≥0) - 2⁻¹ = 2⁻¹ := by
+theorem one_sub_half : (1 : NNReal) - 2⁻¹ = 2⁻¹ := by
   apply NNReal.coe_injective
   rw [NNReal.coe_sub (by norm_num)]; push_cast; norm_num
 
 
-theorem half_le_one : (2 : ℝ≥0)⁻¹ ≤ 1 := by
+theorem half_le_one : (2 : NNReal)⁻¹ ≤ 1 := by
   rw [inv_le_one₀ (by norm_num)]; norm_num
 
 

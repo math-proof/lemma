@@ -9,7 +9,7 @@ open TuranSystem
 [valid_332](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma valid_332
+lemma valid_332 :
 -- imply
   IsTuranSystem 3 3 2 (completeGraph 3 2) :=
 -- proof
@@ -19,7 +19,7 @@ lemma valid_332
 [valid_s_lt_n](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma valid_s_lt_n
+lemma valid_s_lt_n :
 -- imply
   IsTuranSystem 4 3 2 (completeGraph 4 2) :=
 -- proof
@@ -29,7 +29,7 @@ lemma valid_s_lt_n
 [uniform_direct](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma uniform_direct
+lemma uniform_direct :
 -- imply
   SetFamily.IsUniform (completeGraph 3 2) 2 :=
 -- proof
@@ -39,7 +39,7 @@ lemma uniform_direct
 [uniform_iff_use](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma uniform_iff_use
+lemma uniform_iff_use :
 -- imply
   SetFamily.IsUniform (completeGraph 3 2) 2 ↔ ∀ e ∈ completeGraph 3 2, e.card = 2 :=
 -- proof
@@ -49,7 +49,7 @@ lemma uniform_iff_use
 [uniform_explicit](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma uniform_explicit
+lemma uniform_explicit :
 -- imply
   SetFamily.IsUniform ({({0, 1} : Finset (Fin 3)), ({0, 2} : Finset (Fin 3))} : Finset (Finset (Fin 3))) 2 := by
 -- proof
@@ -60,7 +60,7 @@ lemma uniform_explicit
 [reject_empty_uncovered](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma reject_empty_uncovered
+lemma reject_empty_uncovered :
 -- imply
   ¬ IsTuranSystem 3 3 2 ∅ := by
 -- proof
@@ -76,7 +76,7 @@ lemma reject_empty_uncovered
 [reject_wrong_card](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma reject_wrong_card
+lemma reject_wrong_card :
 -- imply
   ¬ IsTuranSystem 3 3 2 ({({0} : Finset (Fin 3))} : Finset (Finset (Fin 3))) := by
 -- proof
@@ -93,7 +93,7 @@ lemma reject_wrong_card
 [direction_edge_sub](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma direction_edge_sub
+lemma direction_edge_sub :
 -- imply
   ∃ e ∈ completeGraph 4 2, e ⊆ ({0, 1, 2} : Finset (Fin 4)) ∧ ¬ ({0, 1, 2} : Finset (Fin 4)) ⊆ e := by
 -- proof
@@ -106,7 +106,7 @@ lemma direction_edge_sub
 [reject_r_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma reject_r_zero
+lemma reject_r_zero :
 -- imply
   ¬ IsTuranSystem 3 3 0 (completeGraph 3 0) := by
 -- proof
@@ -118,7 +118,7 @@ lemma reject_r_zero
 [reject_r_ge_s](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma reject_r_ge_s
+lemma reject_r_ge_s :
 -- imply
   ¬ IsTuranSystem 3 2 2 (completeGraph 3 2) := by
 -- proof
@@ -130,7 +130,7 @@ lemma reject_r_ge_s
 [reject_r_gt_s](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma reject_r_gt_s
+lemma reject_r_gt_s :
 -- imply
   ¬ IsTuranSystem 3 2 3 (completeGraph 3 3) := by
 -- proof
@@ -142,7 +142,7 @@ lemma reject_r_gt_s
 [reject_s_gt_n](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma reject_s_gt_n
+lemma reject_s_gt_n :
 -- imply
   ¬ IsTuranSystem 2 3 2 (completeGraph 2 2) := by
 -- proof
@@ -154,7 +154,7 @@ lemma reject_s_gt_n
 [uncovered_uniform](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma uncovered_uniform
+lemma uncovered_uniform :
 -- imply
   SetFamily.IsUniform ({({0, 1} : Finset (Fin 4))} : Finset (Finset (Fin 4))) 2 :=
 -- proof
@@ -164,7 +164,7 @@ lemma uncovered_uniform
 [uncovered_nonempty](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma uncovered_nonempty
+lemma uncovered_nonempty :
 -- imply
   ({({0, 1} : Finset (Fin 4))} : Finset (Finset (Fin 4))).Nonempty :=
 -- proof
@@ -174,7 +174,7 @@ lemma uncovered_nonempty
 [reject_uncovered_only](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma reject_uncovered_only
+lemma reject_uncovered_only :
 -- imply
   ¬ IsTuranSystem 4 3 2 ({({0, 1} : Finset (Fin 4))} : Finset (Finset (Fin 4))) := by
 -- proof
@@ -195,7 +195,7 @@ lemma reject_uncovered_only
 [realized_direct](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma realized_direct
+lemma realized_direct :
 -- imply
   (completeGraph 3 2).card ∈ realizedCounts 3 3 2 :=
 -- proof
@@ -205,7 +205,7 @@ lemma realized_direct
 [exists_system_use](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma exists_system_use
+lemma exists_system_use :
 -- imply
   ∃ H, IsTuranSystem 3 3 2 H :=
 -- proof
@@ -215,7 +215,7 @@ lemma exists_system_use
 [realized_nonempty_use](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma realized_nonempty_use
+lemma realized_nonempty_use :
 -- imply
   ∃ k, k ∈ realizedCounts 3 3 2 :=
 -- proof
@@ -225,7 +225,7 @@ lemma realized_nonempty_use
 [turan_mem_use](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma turan_mem_use
+lemma turan_mem_use :
 -- imply
   turanNumber 3 3 2 ∈ realizedCounts 3 3 2 :=
 -- proof
@@ -235,7 +235,7 @@ lemma turan_mem_use
 [turan_attains_use](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma turan_attains_use
+lemma turan_attains_use :
 -- imply
   ∃ H, IsTuranSystem 3 3 2 H ∧ H.card = turanNumber 3 3 2 :=
 -- proof
@@ -245,7 +245,7 @@ lemma turan_attains_use
 [turan_le_use](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma turan_le_use
+lemma turan_le_use :
 -- imply
   turanNumber 3 3 2 ≤ (completeGraph 3 2).card :=
 -- proof
@@ -255,7 +255,7 @@ lemma turan_le_use
 [one_edge_valid](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma one_edge_valid
+lemma one_edge_valid :
 -- imply
   IsTuranSystem 3 3 2 ({({0, 1} : Finset (Fin 3))} : Finset (Finset (Fin 3))) := by
 -- proof
@@ -296,7 +296,7 @@ lemma one_le_card_of_valid
 [turan_lower_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma turan_lower_one
+lemma turan_lower_one :
 -- imply
   1 ≤ turanNumber 3 3 2 := by
 -- proof
@@ -309,7 +309,7 @@ lemma turan_lower_one
 [turan_upper_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma turan_upper_one
+lemma turan_upper_one :
 -- imply
   turanNumber 3 3 2 ≤ 1 := by
 -- proof
@@ -323,7 +323,7 @@ lemma turan_upper_one
 [turan_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/TuranSystem.lean)
 -/
 @[path]
-lemma turan_eq_one
+lemma turan_eq_one :
 -- imply
   turanNumber 3 3 2 = 1 :=
 -- proof
@@ -331,3 +331,4 @@ lemma turan_eq_one
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

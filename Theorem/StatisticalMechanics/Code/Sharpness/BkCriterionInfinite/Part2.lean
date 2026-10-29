@@ -30,7 +30,7 @@ open StatMech.Lattice StatMech.Percolation
 variable {d : ℕ}
 
 
-theorem bk_criterion_infinite_lattice_singleton (p : ℝ≥0) (hp : p ≤ 1)
+theorem bk_criterion_infinite_lattice_singleton (p : NNReal) (hp : p ≤ 1)
     (Lam S : Finset (Site d)) (u x : Site d) (huS : u ∈ S) (hxS : x ∉ S) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
         (connEvent (hypercubicLattice d) (Lam : Set (Site d)) u {x}) ≤

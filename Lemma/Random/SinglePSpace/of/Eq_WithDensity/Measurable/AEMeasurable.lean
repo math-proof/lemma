@@ -28,7 +28,7 @@ private lemma main
   exact {
     toIsProbabilityMeasure := inferInstance
     aemeasurable := hxy
-    exists_distribution := ⟨p, ⟨hp⟩, hjoint⟩
+    exists_distribution := ⟨p, hp, hjoint⟩
   }
 
 

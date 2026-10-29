@@ -95,7 +95,7 @@ export const leanInfixContinue = Object.freeze({
     '=': 'LeanEq',
     '≤': 'Lean_le',
     '≥': 'Lean_ge',
-    '∼': 'Lean_simeq',
+    '∼': 'LeanDistributed',
     '⟂': 'Lean_perp',
     ...leanRelationalTokens,
 });
@@ -107,7 +107,7 @@ export function leanIsInfixContinue(next) {
 
 /** Lean identifier continuation token (supports Unicode letters like Ξ). */
 export function isIdentContinueToken(s) {
-    if ('ᵀ²³⁴'.includes(s)) return false;
+    if ('ᵀᴴ²³⁴'.includes(s)) return false;
     return /^[\p{L}\p{N}_'!?₀-₉]+$/u.test(s);
 }
 

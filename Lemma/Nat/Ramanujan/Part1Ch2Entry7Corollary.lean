@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Nat.Ramanujan.Part1Ch2Entry7
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 
 
@@ -31,4 +32,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry7Corollary
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

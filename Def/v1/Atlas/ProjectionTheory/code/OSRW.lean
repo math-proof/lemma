@@ -26,7 +26,7 @@ def orthProj (θ : ℝ) (x : EuclideanSpace ℝ (Fin 2)) : ℝ :=
 /-- The Hausdorff-dimension exceptional set: the set of directions `θ` for which the
 orthogonal projection `orthProj θ '' X` of `X ⊂ ℝ²` has Hausdorff dimension strictly
 less than `s`. -/
-def exceptionalSetHD (X : Set (EuclideanSpace ℝ (Fin 2))) (s : ℝ≥0∞) : Set ℝ :=
+def exceptionalSetHD (X : Set (EuclideanSpace ℝ (Fin 2))) (s : ENNReal) : Set ℝ :=
   {θ : ℝ | dimH (orthProj θ '' X) < s}
 
 end ProjectionTheory

@@ -139,7 +139,7 @@ private lemma pcContour_card_le_summand_eq
 @[path]
 private lemma theta_pos_of_contourBound_eq
   {d : ℕ}
-  {p : ℝ≥0}
+  {p : NNReal}
 -- given
   (hp : p ≤ 1)
   (hContour : PcContourBound p hp)
@@ -155,7 +155,7 @@ private lemma theta_pos_of_contourBound_eq
 @[path]
 private lemma not_mem_subcriticalSet_of_theta_pos_eq
   {d : ℕ}
-  {p : ℝ≥0}
+  {p : NNReal}
 -- given
   (hp : p ≤ 1)
   (hθ : 0 < theta 2 p hp) :
@@ -171,7 +171,7 @@ private lemma not_mem_subcriticalSet_of_theta_pos_eq
 private lemma pc_lt_one_eq
   {d : ℕ}
 -- given
-  (hGeom : ∃ p₀ : ℝ, p₀ < 1 ∧ ∀ (p : ℝ≥0) (hp : p ≤ 1), (p₀ : ℝ) < (p : ℝ) → PcContourBound p hp) :
+  (hGeom : ∃ p₀ : ℝ, p₀ < 1 ∧ ∀ (p : NNReal) (hp : p ≤ 1), (p₀ : ℝ) < (p : ℝ) → PcContourBound p hp) :
 -- imply
   pc 2 < 1 := by
 -- proof
@@ -184,7 +184,7 @@ private lemma pc_lt_one_eq
 private lemma pc_pos_and_lt_one_eq
   {d : ℕ}
 -- given
-  (hGeom : ∃ p₀ : ℝ, p₀ < 1 ∧ ∀ (p : ℝ≥0) (hp : p ≤ 1), (p₀ : ℝ) < (p : ℝ) → PcContourBound p hp) :
+  (hGeom : ∃ p₀ : ℝ, p₀ < 1 ∧ ∀ (p : NNReal) (hp : p ≤ 1), (p₀ : ℝ) < (p : ℝ) → PcContourBound p hp) :
 -- imply
   0 < pc 2 ∧ pc 2 < 1 := by
 -- proof

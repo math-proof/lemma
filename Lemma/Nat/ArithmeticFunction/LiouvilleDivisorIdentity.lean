@@ -224,14 +224,13 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma liouville_divisor_function_identity_general
-  {n : ℕ} :
+  (n : ℕ) :
 -- imply
   (∑ d ∈ n.divisors, d.divisors.card) ^ 2 =
     ∑ d ∈ n.divisors, (d.divisors.card) ^ 3 := by
 -- proof
   have h := congrArg (fun f => f n) FG_eq
   rwa [Fsq_apply, F_apply, G_apply] at h
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -244,7 +243,7 @@ namespace MetaMathlibExt
 lemma liouville_divisor_function_identity
   {n : ℕ}
 -- given
-  (hn : 0 < n) :
+  (_hn : 0 < n) :
 -- imply
   (∑ d ∈ n.divisors, d.divisors.card) ^ 2 =
     ∑ d ∈ n.divisors, (d.divisors.card) ^ 3 := by

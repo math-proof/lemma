@@ -35,7 +35,7 @@ variable {d : ℕ}
 variable {E : Type*}
 
 
-theorem gec_convexSummand_eq_on_clopen {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ℝ≥0∞}
+theorem gec_convexSummand_eq_on_clopen {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ENNReal}
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
     (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1) (hat : a ≠ ⊤) (hbt : b ≠ ⊤)
     (hconv : μ = a • ν₁ + b • ν₂)
@@ -78,7 +78,7 @@ theorem gec_convexSummand_eq_on_clopen {μ ν₁ ν₂ : Measure (ConfigSpace E)
   exact le_of_eq hp1eq
 
 
-theorem gec_max_extreme [Countable E] {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ℝ≥0∞}
+theorem gec_max_extreme [Countable E] {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ENNReal}
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
     (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1) (hat : a ≠ ⊤) (hbt : b ≠ ⊤)
     (hconv : μ = a • ν₁ + b • ν₂)
@@ -91,14 +91,14 @@ theorem gec_max_extreme [Countable E] {μ ν₁ ν₂ : Measure (ConfigSpace E)}
   exact ⟨gsi_clopen_antisymm h1 hμ1, gsi_clopen_antisymm h2 hμ2⟩
 
 
-theorem gec_min_extreme [Countable E] {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ℝ≥0∞}
+theorem gec_min_extreme [Countable E] {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ENNReal}
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
     (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1) (hat : a ≠ ⊤) (hbt : b ≠ ⊤)
     (hconv : μ = a • ν₁ + b • ν₂)
     (h1 : μ ≼c ν₁) (h2 : μ ≼c ν₂) :
     ν₁ = μ ∧ ν₂ = μ := by
   
-  have key : ∀ (w₁ w₂ : Measure (ConfigSpace E)) (s t : ℝ≥0∞),
+  have key : ∀ (w₁ w₂ : Measure (ConfigSpace E)) (s t : ENNReal),
       IsProbabilityMeasure w₁ → IsProbabilityMeasure w₂ → 0 < s → 0 < t → s + t = 1 →
       s ≠ ⊤ → t ≠ ⊤ → μ = s • w₁ + t • w₂ → μ ≼c w₁ → μ ≼c w₂ → w₁ ≼c μ := by
     intro w₁ w₂ s t hw1 hw2 hs ht hst hsT htT hcv hm1 hm2 A hAcl hAu
@@ -136,7 +136,7 @@ theorem gec_min_extreme [Countable E] {μ ν₁ ν₂ : Measure (ConfigSpace E)}
 theorem gec_plusState_extreme (β h : ℝ) (hβ : 0 ≤ β) (hh : 0 ≤ h)
     {ν₁ ν₂ : Measure (ConfigSpace (Site d))} [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
     (h₁ : IsDLRState d β h ν₁) (h₂ : IsDLRState d β h ν₂)
-    {a b : ℝ≥0∞} (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1) (hat : a ≠ ⊤) (hbt : b ≠ ⊤)
+    {a b : ENNReal} (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1) (hat : a ≠ ⊤) (hbt : b ≠ ⊤)
     (hconv : (plusState d β h : Measure (ConfigSpace (Site d))) = a • ν₁ + b • ν₂) :
     ν₁ = (plusState d β h : Measure (ConfigSpace (Site d)))
       ∧ ν₂ = (plusState d β h : Measure (ConfigSpace (Site d))) := by
@@ -150,7 +150,7 @@ theorem gec_plusState_extreme (β h : ℝ) (hβ : 0 ≤ β) (hh : 0 ≤ h)
 theorem gec_minusState_extreme (β h : ℝ) (hβ : 0 ≤ β) (hh : 0 ≤ h)
     {ν₁ ν₂ : Measure (ConfigSpace (Site d))} [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
     (h₁ : IsDLRState d β h ν₁) (h₂ : IsDLRState d β h ν₂)
-    {a b : ℝ≥0∞} (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1) (hat : a ≠ ⊤) (hbt : b ≠ ⊤)
+    {a b : ENNReal} (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1) (hat : a ≠ ⊤) (hbt : b ≠ ⊤)
     (hconv : (minusState d β h : Measure (ConfigSpace (Site d))) = a • ν₁ + b • ν₂) :
     ν₁ = (minusState d β h : Measure (ConfigSpace (Site d)))
       ∧ ν₂ = (minusState d β h : Measure (ConfigSpace (Site d))) := by
@@ -164,7 +164,7 @@ theorem gec_minusState_extreme (β h : ℝ) (hβ : 0 ≤ β) (hh : 0 ≤ h)
 theorem gec_plusState_no_proper_split (β h : ℝ) (hβ : 0 ≤ β) (hh : 0 ≤ h)
     {ν₁ ν₂ : Measure (ConfigSpace (Site d))} [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
     (h₁ : IsDLRState d β h ν₁) (h₂ : IsDLRState d β h ν₂)
-    {a b : ℝ≥0∞} (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1) (hat : a ≠ ⊤) (hbt : b ≠ ⊤)
+    {a b : ENNReal} (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1) (hat : a ≠ ⊤) (hbt : b ≠ ⊤)
     (hconv : (plusState d β h : Measure (ConfigSpace (Site d))) = a • ν₁ + b • ν₂) :
     ν₁ = ν₂ := by
   obtain ⟨e1, e2⟩ := gec_plusState_extreme β h hβ hh h₁ h₂ ha hb hab hat hbt hconv
@@ -174,7 +174,7 @@ theorem gec_plusState_no_proper_split (β h : ℝ) (hβ : 0 ≤ β) (hh : 0 ≤ 
 theorem gec_minusState_no_proper_split (β h : ℝ) (hβ : 0 ≤ β) (hh : 0 ≤ h)
     {ν₁ ν₂ : Measure (ConfigSpace (Site d))} [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
     (h₁ : IsDLRState d β h ν₁) (h₂ : IsDLRState d β h ν₂)
-    {a b : ℝ≥0∞} (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1) (hat : a ≠ ⊤) (hbt : b ≠ ⊤)
+    {a b : ENNReal} (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1) (hat : a ≠ ⊤) (hbt : b ≠ ⊤)
     (hconv : (minusState d β h : Measure (ConfigSpace (Site d))) = a • ν₁ + b • ν₂) :
     ν₁ = ν₂ := by
   obtain ⟨e1, e2⟩ := gec_minusState_extreme β h hβ hh h₁ h₂ ha hb hab hat hbt hconv
@@ -215,7 +215,7 @@ theorem gec_invariant_decomp {μ : Measure (ConfigSpace E)} [IsFiniteMeasure μ]
 theorem gec_ergodic_of_noProperSplit {μ : Measure (ConfigSpace E)} [IsProbabilityMeasure μ]
     (hti : IsTranslationInvariant (G := G) μ)
     (P : Measure (ConfigSpace E) → Prop)
-    (hsplit : ∀ (ν₁ ν₂ : Measure (ConfigSpace E)) (a b : ℝ≥0∞),
+    (hsplit : ∀ (ν₁ ν₂ : Measure (ConfigSpace E)) (a b : ENNReal),
       IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ → P ν₁ → P ν₂ →
         0 < a → 0 < b → a + b = 1 → a ≠ ⊤ → b ≠ ⊤ → μ = a • ν₁ + b • ν₂ → ν₁ = ν₂)
     (hclosure : ∀ {s : Set (ConfigSpace E)}, MeasurableSet s →

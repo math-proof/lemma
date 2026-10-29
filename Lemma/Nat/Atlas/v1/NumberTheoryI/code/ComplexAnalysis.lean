@@ -321,9 +321,9 @@ lemma complex_ftc_contour
 -/
 @[path]
 lemma cauchy_residue_circle
-  {f : ℂ → ℂ}
-  {a : ℂ}
-  {R : ℝ}
+  (f : ℂ → ℂ)
+  (a : ℂ)
+  (R : ℝ)
 -- given
   (hR : 0 < R)
   (hf : DifferentiableOn ℂ f (closedBall a R)) :

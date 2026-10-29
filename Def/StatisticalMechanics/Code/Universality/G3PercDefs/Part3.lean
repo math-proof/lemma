@@ -30,7 +30,7 @@ open StatMech.Lattice StatMech.TwoDim
 variable {d : ℕ}
 
 
-noncomputable def g3PercolationProbability (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) : ℝ≥0∞ :=
+noncomputable def g3PercolationProbability (d : ℕ) (p : NNReal) (hp : p ≤ 1) : ENNReal :=
   percolationProbability d p hp
 
 end Universality

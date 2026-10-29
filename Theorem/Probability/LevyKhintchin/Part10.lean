@@ -34,7 +34,7 @@ probability measures, with the hard truncation convention at radius one.
 namespace MetaMathlibExt
 
 lemma lk_canonicalWeightNN_le_one (x : ℝ) :
-    (lkCanonicalWeightNN x : ℝ≥0∞) ≤ 1 := by
+    (lkCanonicalWeightNN x : ENNReal) ≤ 1 := by
   rw [← ENNReal.coe_one]
   apply ENNReal.coe_le_coe.mpr
   exact_mod_cast lkCanonicalWeight_le_one x

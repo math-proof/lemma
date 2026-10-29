@@ -101,10 +101,10 @@ private lemma padicValRat_nonneg_of_sum_nonneg {p : ℕ} [Fact (Nat.Prime p)] {S
     by_cases h0 : F a + ∑ i ∈ s, F i = 0
     · simp [h0]
     · calc (0 : ℤ) ≤ min (padicValRat p (F a)) (padicValRat p (∑ i ∈ s, F i)) :=
-      le_min (hF a (Finset.mem_insert_self a s))
-        (ih (fun i hi => hF i (Finset.mem_insert_of_mem hi)))
-      _ ≤ padicValRat p (F a + ∑ i ∈ s, F i) :=
-        padicValRat.min_le_padicValRat_add h0
+            le_min (hF a (Finset.mem_insert_self a s))
+              (ih (fun i hi => hF i (Finset.mem_insert_of_mem hi)))
+          _ ≤ padicValRat p (F a + ∑ i ∈ s, F i) :=
+            padicValRat.min_le_padicValRat_add h0
 
 end MetaMathlibExt
 
@@ -138,8 +138,8 @@ lemma harmonic_partial_sum_not_int
   have hSne : ((n + 1 : ℕ) : ℚ) * (harmonic n - 1) ≠ 0 := mul_ne_zero hcast hH1
   have hV2 := padicValRat_two_harmonic_sub_one hn
   have hvalS : padicValRat 2 (((n + 1 : ℕ) : ℚ) * (harmonic n - 1))
-    = (((padicValNat 2 (n + 1) : ℕ)) : ℤ)
-      + -((((Nat.log 2 n : ℕ))) : ℤ) := by
+      = (((padicValNat 2 (n + 1) : ℕ)) : ℤ)
+        + -((((Nat.log 2 n : ℕ))) : ℤ) := by
     rw [padicValRat.mul hcast hH1, padicValRat.of_nat, hV2]
   by_cases hpow : ∃ m, n + 1 = 2 ^ m
   · -- When `n + 1` is a power of two, the `2`-adic argument fails, so use a
@@ -159,13 +159,13 @@ lemma harmonic_partial_sum_not_int
       have h10 : (3 : ℤ) * k = 10 := by exact_mod_cast h10q
       omega
     · have hm2 : 2 ≤ m := by
-      obtain h | h := Nat.lt_or_ge m 2
-      · interval_cases m
-        · rw [pow_zero] at hm
-          omega
-        · rw [pow_one] at hm
-          omega
-      · exact h
+        rcases Nat.lt_or_ge m 2 with h | h
+        · interval_cases m
+          · rw [pow_zero] at hm
+            omega
+          · rw [pow_one] at hm
+            omega
+        · exact h
       have hn4 : 4 ≤ n := by
         have h4m : 2 ^ 2 ≤ 2 ^ m := Nat.pow_le_pow_right (by norm_num) hm2
         have h42 : (4 : ℕ) = 2 ^ 2 := by norm_num
@@ -184,14 +184,14 @@ lemma harmonic_partial_sum_not_int
         Finset.mem_Icc.mpr ⟨hpP.two_le, hple⟩
       have hB := harmonic_sub_one n (by omega)
       have hsplit : (∑ j ∈ Finset.Icc 2 n, ((j : ℚ))⁻¹)
-        = ((p : ℚ))⁻¹ + ∑ j ∈ (Finset.Icc 2 n).erase p, ((j : ℚ))⁻¹ :=
+          = ((p : ℚ))⁻¹ + ∑ j ∈ (Finset.Icc 2 n).erase p, ((j : ℚ))⁻¹ :=
         (Finset.add_sum_erase _ _ hpmem).symm
       have hFp : padicValRat p (((p : ℚ)))⁻¹ = -1 := by
         rw [padicValRat.inv, padicValRat.self hpP.one_lt]
       have h2mem : 2 ∈ (Finset.Icc 2 n).erase p :=
         Finset.mem_erase.mpr ⟨by omega, Finset.mem_Icc.mpr ⟨le_refl 2, hn⟩⟩
       have hterm : ∀ i ∈ (Finset.Icc 2 n).erase p,
-        0 ≤ padicValRat p (((i : ℚ)))⁻¹ := by
+          0 ≤ padicValRat p (((i : ℚ)))⁻¹ := by
         intro j hj
         have hjI := Finset.mem_of_mem_erase hj
         have hj2 : 2 ≤ j := (Finset.mem_Icc.mp hjI).1
@@ -214,7 +214,7 @@ lemma harmonic_partial_sum_not_int
         have h0 : padicValNat p j = 0 := padicValNat.eq_zero_of_not_dvd hndvd
         simp [padicValRat.inv, padicValRat.of_nat, h0]
       have hRest : 0 ≤ padicValRat p
-        (∑ j ∈ (Finset.Icc 2 n).erase p, ((j : ℚ))⁻¹) :=
+          (∑ j ∈ (Finset.Icc 2 n).erase p, ((j : ℚ))⁻¹) :=
         padicValRat_nonneg_of_sum_nonneg hterm
       have hR'pos : 0 < ∑ j ∈ (Finset.Icc 2 n).erase p, ((j : ℚ))⁻¹ := by
         refine Finset.sum_pos (fun i hi => ?_) ⟨2, h2mem⟩
@@ -227,19 +227,21 @@ lemma harmonic_partial_sum_not_int
       have hpcast : ((p : ℚ)) ≠ 0 := by exact_mod_cast hpP.ne_zero
       have hqne : ((p : ℚ))⁻¹ ≠ 0 := inv_ne_zero hpcast
       have hRne : ((p : ℚ))⁻¹ + ∑ j ∈ (Finset.Icc 2 n).erase p, ((j : ℚ))⁻¹ ≠ 0 := by
-        rwa [← hsplit, ← hB]
+        rw [← hsplit, ← hB]
+        exact hH1
       have hltval : padicValRat p (((p : ℚ)))⁻¹
-        < padicValRat p (∑ j ∈ (Finset.Icc 2 n).erase p, ((j : ℚ))⁻¹) := by
+          < padicValRat p (∑ j ∈ (Finset.Icc 2 n).erase p, ((j : ℚ))⁻¹) := by
         rw [hFp]
         omega
       have hRp : padicValRat p (harmonic n - 1) = -1 := by
-        rwa [hB, hsplit, padicValRat.add_eq_of_lt hRne hqne hR'ne hltval]
+        rw [hB, hsplit, padicValRat.add_eq_of_lt hRne hqne hR'ne hltval]
+        exact hFp
       have hndvd : ¬ p ∣ n + 1 := by
         intro hdvd
         rw [hm] at hdvd
         have h2 : p ∣ 2 := hpP.dvd_of_dvd_pow hdvd
         have h12 := (Nat.dvd_prime Nat.prime_two).mp h2
-        obtain rfl | rfl := h12
+        rcases h12 with rfl | rfl
         · exact absurd rfl hpP.ne_one
         · omega
       have h0 : padicValNat p (n + 1) = 0 := padicValNat.eq_zero_of_not_dvd hndvd
@@ -263,7 +265,8 @@ lemma harmonic_partial_sum_not_int
       have h2k : 2 ^ Nat.log 2 n ≤ n := Nat.pow_log_le_self 2 (by omega)
       have hnk : n < 2 ^ (Nat.log 2 n + 1) := by
         have hlt2 := Nat.lt_pow_succ_log_self one_lt_two n
-        rwa [Nat.succ_eq_add_one] at hlt2
+        rw [Nat.succ_eq_add_one] at hlt2
+        exact hlt2
       have hdvd : 2 ^ Nat.log 2 n ∣ n + 1 :=
         (pow_dvd_pow 2 hkt).trans pow_padicValNat_dvd
       obtain ⟨m', hm'⟩ := hdvd
@@ -287,8 +290,8 @@ lemma harmonic_partial_sum_not_int
     have hnorm : 1 < padicNorm 2 ((((n + 1 : ℕ)) : ℚ) * (harmonic n - 1)) := by
       rw [padicNorm.eq_zpow_of_nonzero hSne, hvalS]
       have hexp : -((((padicValNat 2 (n + 1) : ℕ)) : ℤ)
-        + -((((Nat.log 2 n : ℕ))) : ℤ))
-        = ((((Nat.log 2 n - padicValNat 2 (n + 1) : ℕ))) : ℤ) := by
+          + -((((Nat.log 2 n : ℕ))) : ℤ))
+          = ((((Nat.log 2 n - padicValNat 2 (n + 1) : ℕ))) : ℤ) := by
         rw [Nat.cast_sub htk.le]
         ring
       rw [hexp, zpow_natCast]
@@ -305,4 +308,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

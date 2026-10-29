@@ -77,7 +77,7 @@ theorem zfk_pairError_tendsto_zero (x y : Site 2) :
     measure_mono_null (zfk_iInter_pairError_subset_atLeastTwo x y)
       zbd_atLeastTwo_halfMeasure_zero
   rw [hinter] at hlim
-  exact (ENNReal.tendsto_toReal (by simp : (0 : ℝ≥0∞) ≠ ∞)).comp hlim
+  exact (ENNReal.tendsto_toReal (by simp : (0 : ENNReal) ≠ ∞)).comp hlim
 
 
 theorem zfk_rightCentralBox_finite (k : ℕ) :

@@ -17,7 +17,7 @@ open MeasureTheory Measure PMF
 
 namespace BooleanFourier
 
-instance pBiasedMeasure.instIsProbabilityMeasure (n : ℕ) (p : ℝ≥0) (hp : p ≤ 1) :
+instance pBiasedMeasure.instIsProbabilityMeasure (n : ℕ) (p : NNReal) (hp : p ≤ 1) :
     IsProbabilityMeasure (pBiasedMeasure n p hp) :=
   Measure.pi.instIsProbabilityMeasure _
 

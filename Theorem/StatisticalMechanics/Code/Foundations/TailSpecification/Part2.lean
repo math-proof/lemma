@@ -51,7 +51,7 @@ theorem ts_smul_state
     {K : ∀ n, @Kernel (ConfigSpace E) (ConfigSpace E)
       (outsideSigma (window n)) inferInstance}
     [∀ n, IsSFiniteKernel (K n)]
-    (c : ℝ≥0∞) (hc : c ≠ ⊤)
+    (c : ENNReal) (hc : c ≠ ⊤)
     (mu : Measure (ConfigSpace E)) [IsFiniteMeasure mu]
     (hmu : IsTailSpecificationState window K mu) :
     haveI : IsFiniteMeasure (c • mu) := mu.smul_finite hc

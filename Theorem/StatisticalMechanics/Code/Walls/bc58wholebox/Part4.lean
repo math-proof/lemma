@@ -47,7 +47,7 @@ theorem bc58_hroute_of_originTrifModification
 
 
 theorem bc58_burton_keane_bernoulli_of_originTrifModification (hd : 1 ≤ d)
-    (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+    (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hmod : ∀ n : ℕ, bc58_OriginTrifModification d n) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = 0} = 1 ∨
@@ -150,7 +150,7 @@ theorem bc58_threeMeet_evenLines : bc57_evenLines ∈ threeMeetBox 2 6 :=
   bc57_mem_threeMeetBox
 
 
-theorem bc58_status (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) :
+theorem bc58_status (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) :
     
     ((∀ n : ℕ, bc58_OriginTrifModification d n) →
       (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

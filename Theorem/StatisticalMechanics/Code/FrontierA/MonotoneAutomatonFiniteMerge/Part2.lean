@@ -53,7 +53,7 @@ theorem exists_siteTwoMeetBox_pos
 
 theorem finite_constant_cluster_count_impossible
     (nu : Measure (ConfigSpace (Site d))) [IsProbabilityMeasure nu]
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon)
     {k : ℕ∞} (hk2 : 2 ≤ k) (hktop : k ≠ ⊤)
     (hk : nu {eta | numInfiniteClusters d (siteToBond eta) = k} = 1) : False := by
@@ -94,7 +94,7 @@ theorem finite_constant_cluster_count_impossible
 theorem site_cluster_count_ae_lt_two_or_infinite
     (nu : Measure (ConfigSpace (Site d))) [IsProbabilityMeasure nu]
     (herg : IsErgodic (G := Multiplicative (Site d)) nu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon) :
     ∃ k : ℕ∞,
       nu {eta | numInfiniteClusters d (siteToBond eta) = k} = 1 ∧
@@ -126,7 +126,7 @@ theorem site_cluster_count_ae_lt_two_or_infinite
 theorem site_cluster_count_ae_one_or_infinite
     (nu : Measure (ConfigSpace (Site d))) [IsProbabilityMeasure nu]
     (herg : IsErgodic (G := Multiplicative (Site d)) nu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon)
     (hperco : nu {eta | 1 ≤ numInfiniteClusters d (siteToBond eta)} = 1) :
     nu {eta | numInfiniteClusters d (siteToBond eta) = 1} = 1 ∨

@@ -123,7 +123,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma thue_lemma_general
-  {a n : ℤ}
+  (a n : ℤ)
 -- given
   (hn : 1 < n)
   (hcop : Int.gcd a n = 1) :
@@ -277,7 +277,6 @@ lemma thue_lemma_general
       rw [← Int.cast_abs]
       exact lt_of_le_of_lt (by exact_mod_cast hyb) hkR
     exact ⟨x, y, abs_pos.mpr hx0, hxbR, abs_pos.mpr hy0, hybR, hmod⟩
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -290,7 +289,7 @@ namespace MetaMathlibExt
 lemma thue_lemma
   {a n : ℤ}
 -- given
-  (ha : 1 < a)
+  (_ha : 1 < a)
   (hn : 1 < n)
   (hcop : Int.gcd a n = 1) :
 -- imply

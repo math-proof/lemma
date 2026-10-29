@@ -60,7 +60,7 @@ theorem bkw_count_half_of_forest
   exact hne hzero
 
 
-theorem bkw_bk_uniqueness_of_forest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bkw_bk_uniqueness_of_forest (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hforest : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bc69_Gn_globalForest ω L R) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
         {ω | numInfiniteClusters 2 ω = 0} = 1 ∨
@@ -79,7 +79,7 @@ theorem bkw_bk_uniqueness_of_forest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
   exact bc120_uniqueness_of_top_null μ herg hfe htop
 
 
-theorem bkw_top_null_of_forest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bkw_top_null_of_forest (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hforest : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bc69_Gn_globalForest ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
       {ω | numInfiniteClusters 2 ω = ⊤} = 0 := by
@@ -90,7 +90,7 @@ theorem bkw_top_null_of_forest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
   exact bkw_count_half_of_forest μ hinv hfe hforest
 
 
-theorem bkw_status (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) :
+theorem bkw_status (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) :
     
     (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) [IsProbabilityMeasure μ],
       IsTranslationInvariant (G := Multiplicative (Site 2)) μ → HasFiniteEnergyMerge μ →

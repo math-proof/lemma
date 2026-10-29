@@ -40,17 +40,16 @@ namespace MetaMathlibExt
 
 /--
 [genocchiPowerSeries_eq_bernoulli](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GenocchiBernoulli.lean)
--/
-@[path]
 `2 * x / (exp x - 1) - 4 * x / (exp (2 * x) - 1)`, i.e. `2 • B(x) - 2 • B(2 * x)` for the
 Bernoulli power series `B`. -/
+@[path]
 private lemma genocchiPowerSeries_eq_bernoulli :
   genocchiPowerSeries =
     2 • bernoulliPowerSeries ℚ - 2 • (PowerSeries.rescale 2) (bernoulliPowerSeries ℚ) := by
   have hB : bernoulliPowerSeries ℚ * (PowerSeries.exp ℚ - 1) = PowerSeries.X :=
     bernoulliPowerSeries_mul_exp_sub_one ℚ
   have hB2 : (PowerSeries.rescale 2) (bernoulliPowerSeries ℚ) * ((PowerSeries.exp ℚ) ^ 2 - 1)
-    = 2 • PowerSeries.X := by
+      = 2 • PowerSeries.X := by
     have h := congrArg (fun x : PowerSeries ℚ => (PowerSeries.rescale 2) x) hB
     simp only [map_mul, map_sub, map_one] at h
     have hsq : (PowerSeries.exp ℚ) ^ 2 = (PowerSeries.rescale 2) (PowerSeries.exp ℚ) := by
@@ -61,7 +60,8 @@ private lemma genocchiPowerSeries_eq_bernoulli :
       · subst hn
         simp [PowerSeries.coeff_X]
       · simp [PowerSeries.coeff_X, hn]
-    rwa [← hsq, hX] at h
+    rw [← hsq, hX] at h
+    exact h
   have hG : genocchiPowerSeries * (PowerSeries.exp ℚ + 1) = 2 * PowerSeries.X := by
     rw [genocchiPowerSeries_eq, mul_assoc, PowerSeries.inv_mul_cancel]
     · ring
@@ -70,15 +70,15 @@ private lemma genocchiPowerSeries_eq_bernoulli :
   rw [hG]
   apply mul_right_cancel₀ exp_sub_one_ne_zero
   calc 2 * PowerSeries.X * (PowerSeries.exp ℚ - 1)
-    = 2 • (bernoulliPowerSeries ℚ * (PowerSeries.exp ℚ - 1)) * (PowerSeries.exp ℚ + 1)
-      - 2 • ((PowerSeries.rescale 2) (bernoulliPowerSeries ℚ) *
-        ((PowerSeries.exp ℚ) ^ 2 - 1)) := by
-      rw [hB, hB2]
-      simp only [nsmul_eq_mul, Nat.cast_ofNat]
-      ring
+      = 2 • (bernoulliPowerSeries ℚ * (PowerSeries.exp ℚ - 1)) * (PowerSeries.exp ℚ + 1)
+        - 2 • ((PowerSeries.rescale 2) (bernoulliPowerSeries ℚ) *
+          ((PowerSeries.exp ℚ) ^ 2 - 1)) := by
+        rw [hB, hB2]
+        simp only [nsmul_eq_mul, Nat.cast_ofNat]
+        ring
     _ = _ := by
-      simp only [nsmul_eq_mul, Nat.cast_ofNat]
-      ring
+        simp only [nsmul_eq_mul, Nat.cast_ofNat]
+        ring
 
 end MetaMathlibExt
 
@@ -89,7 +89,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma genocchiNumber_eq_bernoulli
-  {n : ℕ} :
+  (n : ℕ) :
 -- imply
   genocchiNumber n = 2 * (1 - (2 : ℚ) ^ n) * bernoulli n := by
 -- proof
@@ -119,4 +119,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -160,7 +160,7 @@ private lemma kwStairCorner_mem_closedEdgeTube_eq
   {N : ℕ}
   {k : Fin (N + 1)}
 -- given
-  (r : ℝ≥0)
+  (r : NNReal)
   (hmesh : ‖polygon.edgeVector i‖ / (N + 1 : ℝ) < r) :
 -- imply
   kwStairCorner (polygon.vertex i) (polygon.vertex (i + 1)) N k ∈ polygon.closedEdgeTube r i := by
@@ -176,7 +176,7 @@ private lemma exists_uniform_stair_mesh_eq
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n}
 -- given
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r) :
 -- imply
   ∃ N : ℕ, ∀ i : Fin n, ‖polygon.edgeVector i‖ / (N + 1 : ℝ) < r := by
@@ -192,7 +192,7 @@ private lemma exists_uniform_stair_corners_in_tubes_eq
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n}
 -- given
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r) :
 -- imply
   ∃ N : ℕ, ∀ i : Fin n, ∀ k : Fin (N + 1), kwStairCorner (polygon.vertex i) (polygon.vertex (i + 1)) N k ∈ polygon.closedEdgeTube r i := by

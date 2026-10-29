@@ -284,7 +284,7 @@ theorem sourcelessCurrentPMF_map_currentParitySupport
   rw [PMF.map_apply, freeParityPMF_apply]
   simp only [sourcelessCurrentPMF]
   simp_rw [currentPMF_apply]
-  let Z : ℝ≥0∞ := ENNReal.ofReal (currentSum G beta (fun _ => 1) ∅)
+  let Z : ENNReal := ENNReal.ofReal (currentSum G beta (fun _ => 1) ∅)
   calc
     (∑' a : EdgeCurrent G,
         if H = currentParitySupport G a then
@@ -303,8 +303,8 @@ theorem sourcelessCurrentPMF_map_currentParitySupport
       rw [tsum_currentRawMass_fixedParity G beta hbeta H]
     _ = freeParityRawMass G beta H *
           (ENNReal.ofReal (freeParityPartition G beta))⁻¹ := by
-      let c : ℝ≥0∞ := ENNReal.ofReal (Real.cosh beta ^ G.edgeFinset.card)
-      let p : ℝ≥0∞ := ENNReal.ofReal (freeParityPartition G beta)
+      let c : ENNReal := ENNReal.ofReal (Real.cosh beta ^ G.edgeFinset.card)
+      let p : ENNReal := ENNReal.ofReal (freeParityPartition G beta)
       have hc0 : c ≠ 0 := (ENNReal.ofReal_pos.2 (by positivity)).ne'
       have hcTop : c ≠ ⊤ := ENNReal.ofReal_ne_top
       have hp0 : p ≠ 0 :=

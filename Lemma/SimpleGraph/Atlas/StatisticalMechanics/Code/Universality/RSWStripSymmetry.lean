@@ -131,7 +131,7 @@ private lemma rss_reflectConfig_apply_eq
 private lemma rss_reflectConfig_measurePreserving_eq
   {n : ℤ} :
 -- imply
-  MeasurePreserving (rss_reflectConfig n) (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) := by
+  MeasurePreserving (rss_reflectConfig n) (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) := by
 -- proof
   apply StatMech.Universality.rss_reflectConfig_measurePreserving n
 
@@ -155,7 +155,7 @@ private lemma rss_stripDualReflection_apply_eq
 private lemma rss_stripDualReflection_measurePreserving_eq
   {n : ℤ} :
 -- imply
-  MeasurePreserving (rss_stripDualReflection n) (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) := by
+  MeasurePreserving (rss_stripDualReflection n) (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) := by
 -- proof
   apply StatMech.Universality.rss_stripDualReflection_measurePreserving n
 
@@ -166,7 +166,7 @@ private lemma rss_stripDualReflection_measurePreserving_eq
 private lemma rss_stripDualReflection_law_eq
   {n : ℤ} :
 -- imply
-  Measure.map (rss_stripDualReflection n) (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) = bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one := by
+  Measure.map (rss_stripDualReflection n) (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) = bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one := by
 -- proof
   apply StatMech.Universality.rss_stripDualReflection_law n
 
@@ -177,7 +177,7 @@ private lemma rss_stripDualReflection_law_eq
 private lemma rss_strip_symmetry_eq
   {n : ℤ} :
 -- imply
-  (∀ x : Site 2, x ∈ rss_faceStrip n ↔ rss_stripReflect n x ∈ rss_faceStrip n) ∧ (∀ x : Site 2, x ∈ rss_bottomFaceLine n ↔ rss_stripReflect n x ∈ rss_topFaceLine n) ∧ (∀ x : Site 2, x ∈ rss_topFaceLine n ↔ rss_stripReflect n x ∈ rss_bottomFaceLine n) ∧ (∀ e : rss_StripEnd, RSW.dualBC (rss_halfWiredBoundary (rss_reflectEnd e)) = rss_halfWiredBoundary e) ∧ MeasurePreserving (rss_stripDualReflection n) (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) := by
+  (∀ x : Site 2, x ∈ rss_faceStrip n ↔ rss_stripReflect n x ∈ rss_faceStrip n) ∧ (∀ x : Site 2, x ∈ rss_bottomFaceLine n ↔ rss_stripReflect n x ∈ rss_topFaceLine n) ∧ (∀ x : Site 2, x ∈ rss_topFaceLine n ↔ rss_stripReflect n x ∈ rss_bottomFaceLine n) ∧ (∀ e : rss_StripEnd, RSW.dualBC (rss_halfWiredBoundary (rss_reflectEnd e)) = rss_halfWiredBoundary e) ∧ MeasurePreserving (rss_stripDualReflection n) (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) := by
 -- proof
   apply StatMech.Universality.rss_strip_symmetry n
 

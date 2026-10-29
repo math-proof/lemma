@@ -25,7 +25,7 @@ variable {α : Type*}
 
 
 noncomputable instance instCompleteSpace : CompleteSpace (SummableTail α) := by
-  haveI : Fact (1 ≤ (1 : ℝ≥0∞)) := ⟨le_rfl⟩
+  haveI : Fact (1 ≤ (1 : ENNReal)) := ⟨le_rfl⟩
   exact (completeSpace_congr (e := equivLpOne) isUniformEmbedding_equivLpOne).2
     inferInstance
 

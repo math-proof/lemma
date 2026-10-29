@@ -39,7 +39,7 @@ lemma minkowski_inequality_eLpNorm
   {m : MeasurableSpace α}
   {μ : Measure α}
   [NormedAddCommGroup E]
-  {p : ℝ≥0∞}
+  {p : ENNReal}
   {f g : α → E}
 -- given
   (hp_one : 1 < p)
@@ -63,7 +63,7 @@ namespace Integration
 lemma lintegral_eq_zero_iff_measure_pos_eq_zero
   [MeasurableSpace α]
   {μ : Measure α}
-  {f : α → ℝ≥0∞}
+  {f : α → ENNReal}
   {E : Set α}
 -- given
   (hf : Measurable f)
@@ -225,7 +225,7 @@ namespace Integration
 lemma fatou_lemma
   [MeasurableSpace α]
   {μ : Measure α}
-  {f : ℕ → α → ℝ≥0∞}
+  {f : ℕ → α → ENNReal}
 -- given
   (hf : ∀ n, Measurable (f n)) :
 -- imply

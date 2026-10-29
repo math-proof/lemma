@@ -74,7 +74,7 @@ theorem zbd_existsInfinite_halfMeasure_one
     (hpos : 0 < halfMeasure.real (Universality.percolationEvent 2)) :
     halfMeasure {ω : ConfigSpace (Sym2 (Site 2)) | ∃ x : Site 2,
       (cluster 2 ω x).Infinite} = 1 := by
-  have hbk := (bins_bk_unconditional (2⁻¹ : ℝ≥0) half_le_one
+  have hbk := (bins_bk_unconditional (2⁻¹ : NNReal) half_le_one
     (by norm_num) (by norm_num)).1
   rcases hbk with hzero | hone
   · have hsub : Universality.percolationEvent 2 ⊆
@@ -113,7 +113,7 @@ theorem zbd_boxHit_rotated_union_tendsto
   have hmeasure := tendsto_measure_iUnion_atTop (μ := halfMeasure) zbd_boxHitsInfinite_mono
   rw [zbd_iUnion_boxHitsInfinite, zbd_existsInfinite_halfMeasure_one hpos] at hmeasure
   have hreal : Tendsto (fun n => halfMeasure.real (zbd_boxHitsInfinite n)) atTop (nhds 1) := by
-    exact (ENNReal.tendsto_toReal (by norm_num : (1 : ℝ≥0∞) ≠ ∞)).comp hmeasure
+    exact (ENNReal.tendsto_toReal (by norm_num : (1 : ENNReal) ≠ ∞)).comp hmeasure
   apply tendsto_of_tendsto_of_tendsto_of_le_of_le hreal tendsto_const_nhds
   · intro n
     apply measureReal_mono (h₂ := measure_ne_top _ _)

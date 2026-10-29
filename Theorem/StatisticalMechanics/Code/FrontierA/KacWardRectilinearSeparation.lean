@@ -93,10 +93,10 @@ theorem KWFiniteSimplePolygon.closedEdge_disjoint_of_nonincident
 
 
 theorem exists_uniform_radius_finset
-    {ι : Type*} (s : Finset ι) (Q : ι → ℝ≥0 → Prop)
-    (hQ : ∀ i ∈ s, ∃ r : ℝ≥0, 0 < r ∧ Q i r)
-    (hmono : ∀ i ∈ s, ∀ {r r' : ℝ≥0}, r' ≤ r → Q i r → Q i r') :
-    ∃ r : ℝ≥0, 0 < r ∧ ∀ i ∈ s, Q i r := by
+    {ι : Type*} (s : Finset ι) (Q : ι → NNReal → Prop)
+    (hQ : ∀ i ∈ s, ∃ r : NNReal, 0 < r ∧ Q i r)
+    (hmono : ∀ i ∈ s, ∀ {r r' : NNReal}, r' ≤ r → Q i r → Q i r') :
+    ∃ r : NNReal, 0 < r ∧ ∀ i ∈ s, Q i r := by
   classical
   induction s using Finset.induction_on with
   | empty =>
@@ -115,14 +115,14 @@ theorem exists_uniform_radius_finset
 
 theorem KWFiniteSimplePolygon.exists_uniform_vertex_separation
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n) :
-    ∃ r : ℝ≥0, 0 < r ∧ ∀ i j : Fin n, i ≠ j →
+    ∃ r : NNReal, 0 < r ∧ ∀ i j : Fin n, i ≠ j →
       (r : ℝ) < dist (polygon.vertex i) (polygon.vertex j) := by
   classical
   let pairs : Finset (Fin n × Fin n) :=
     Finset.univ.filter (fun p ↦ p.1 ≠ p.2)
-  let Q : (Fin n × Fin n) → ℝ≥0 → Prop := fun p r ↦
-    (r : ℝ≥0∞) < edist (polygon.vertex p.1) (polygon.vertex p.2)
-  have hpair : ∀ p ∈ pairs, ∃ r : ℝ≥0, 0 < r ∧ Q p r := by
+  let Q : (Fin n × Fin n) → NNReal → Prop := fun p r ↦
+    (r : ENNReal) < edist (polygon.vertex p.1) (polygon.vertex p.2)
+  have hpair : ∀ p ∈ pairs, ∃ r : NNReal, 0 < r ∧ Q p r := by
     intro p hp
     have hne : p.1 ≠ p.2 := by
       simpa only [pairs, Finset.mem_filter, Finset.mem_univ, true_and] using hp
@@ -133,7 +133,7 @@ theorem KWFiniteSimplePolygon.exists_uniform_vertex_separation
     have hp := hsep (polygon.vertex p.1) rfl
       (polygon.vertex p.2) rfl
     exact ⟨r, hr, by simpa using hp⟩
-  have hmono : ∀ p ∈ pairs, ∀ {r r' : ℝ≥0},
+  have hmono : ∀ p ∈ pairs, ∀ {r r' : NNReal},
       r' ≤ r → Q p r → Q p r' := by
     intro p _ r r' hle h
     exact (ENNReal.coe_le_coe.mpr hle).trans_lt h
@@ -149,17 +149,17 @@ theorem KWFiniteSimplePolygon.exists_uniform_vertex_separation
 
 theorem KWFiniteSimplePolygon.exists_uniform_nonincident_edge_separation
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n) :
-    ∃ r : ℝ≥0, 0 < r ∧
+    ∃ r : NNReal, 0 < r ∧
       ∀ i j : Fin n, KWEdgesNonincident i j →
         ∀ x ∈ polygon.closedEdge i, ∀ y ∈ polygon.closedEdge j,
-          (r : ℝ≥0∞) < edist x y := by
+          (r : ENNReal) < edist x y := by
   classical
   let pairs : Finset (Fin n × Fin n) :=
     Finset.univ.filter (fun p ↦ KWEdgesNonincident p.1 p.2)
-  let Q : (Fin n × Fin n) → ℝ≥0 → Prop := fun p r ↦
+  let Q : (Fin n × Fin n) → NNReal → Prop := fun p r ↦
     ∀ x ∈ polygon.closedEdge p.1, ∀ y ∈ polygon.closedEdge p.2,
-      (r : ℝ≥0∞) < edist x y
-  have hpair : ∀ p ∈ pairs, ∃ r : ℝ≥0, 0 < r ∧ Q p r := by
+      (r : ENNReal) < edist x y
+  have hpair : ∀ p ∈ pairs, ∃ r : NNReal, 0 < r ∧ Q p r := by
     intro p hp
     have hnon : KWEdgesNonincident p.1 p.2 := by
       simpa only [pairs, Finset.mem_filter, Finset.mem_univ, true_and] using hp
@@ -167,7 +167,7 @@ theorem KWFiniteSimplePolygon.exists_uniform_nonincident_edge_separation
       (polygon.closedEdge_isCompact p.1)
       (polygon.closedEdge_isClosed p.2)
       (polygon.closedEdge_disjoint_of_nonincident hnon)
-  have hmono : ∀ p ∈ pairs, ∀ {r r' : ℝ≥0}, r' ≤ r → Q p r → Q p r' := by
+  have hmono : ∀ p ∈ pairs, ∀ {r r' : NNReal}, r' ≤ r → Q p r → Q p r' := by
     intro p _ r r' hle h x hx y hy
     exact (ENNReal.coe_le_coe.mpr hle).trans_lt (h x hx y hy)
   obtain ⟨r, hr, hruniform⟩ :=
@@ -182,7 +182,7 @@ theorem KWFiniteSimplePolygon.exists_uniform_nonincident_edge_separation
 
 theorem KWFiniteSimplePolygon.exists_uniform_nonincident_edge_dist_separation
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n) :
-    ∃ r : ℝ≥0, 0 < r ∧
+    ∃ r : NNReal, 0 < r ∧
       ∀ i j : Fin n, KWEdgesNonincident i j →
         ∀ x ∈ polygon.closedEdge i, ∀ y ∈ polygon.closedEdge j,
           (r : ℝ) < dist x y := by

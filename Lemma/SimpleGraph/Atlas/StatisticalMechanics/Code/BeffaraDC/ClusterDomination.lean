@@ -29,7 +29,7 @@ private lemma crossProb_geometricTail_eq
   {S : Finset (Site d)}
   {L : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hphi : phi d p hp S < 1)
@@ -49,7 +49,7 @@ private lemma clusterRadiusDomination_dist_eq
   {S : Finset (Site d)}
   {L : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hphi : phi d p hp S < 1)
@@ -70,7 +70,7 @@ private lemma clusterRadiusMoment_summable_eq
   {L : ℕ}
   {d' : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hphi : phi d p hp S < 1)
@@ -91,7 +91,7 @@ private lemma clusterRadiusMoment_lt_top_eq
   {L : ℕ}
   {d' : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hphi : phi d p hp S < 1)
@@ -110,7 +110,7 @@ private lemma clusterRadiusMoment_nonneg_eq
   {d : ℕ}
   {d' : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   0 ≤ clusterMoment (fun n => crossProb d p hp n) d' := by
@@ -194,7 +194,7 @@ private lemma clusterSizeLargeProb_le_crossProb_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (clusterSizeLargeEvent d n) ≤ crossProb d p hp n := by
@@ -210,7 +210,7 @@ private lemma clusterSizeTail_geometricTail_eq
   {S : Finset (Site d)}
   {L : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hphi : phi d p hp S < 1)
@@ -231,7 +231,7 @@ private lemma clusterSizeMoment_lt_top_eq
   {L : ℕ}
   {d' : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hphi : phi d p hp S < 1)

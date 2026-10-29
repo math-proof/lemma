@@ -82,7 +82,7 @@ theorem bins_NineMeetBox_subset_iUnion_NineShellEvent (n : ℕ) :
     exact hcut i j hij
 
 
-theorem bins_exists_NineShellEvent_pos (p : ℝ≥0) (hp1 : p ≤ 1) (n : ℕ)
+theorem bins_exists_NineShellEvent_pos (p : NNReal) (hp1 : p ≤ 1) (n : ℕ)
     (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
       (bins_NineMeetBox n)) :
     ∃ (v u : Fin 9 → Site 2),
@@ -101,7 +101,7 @@ theorem bins_exists_NineShellEvent_pos (p : ℝ≥0) (hp1 : p ≤ 1) (n : ℕ)
 
 
 theorem bins_exists_NineShellEvent_pos_of_threeMeetBox
-    (p : ℝ≥0) (hp1 : p ≤ 1) (n : ℕ)
+    (p : NNReal) (hp1 : p ≤ 1) (n : ℕ)
     (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
       (threeMeetBox 2 n)) :
     ∃ (m : ℕ) (v u : Fin 9 → Site 2),

@@ -23,7 +23,7 @@ variable {d : ℕ}
 
 
 def raiseFields (xi : NonnegativeField d) (S : Finset (Site d))
-    (r : Site d → ℝ≥0) : NonnegativeField d :=
+    (r : Site d → NNReal) : NonnegativeField d :=
   fun y => if y ∈ S then max (r y) (xi y) else xi y
 
 end StatMech.FrontierA

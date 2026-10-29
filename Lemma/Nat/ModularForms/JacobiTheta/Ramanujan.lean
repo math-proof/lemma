@@ -56,8 +56,8 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma ramanujanThetaTerm_neg
-  {a b : ℂ}
-  {n : ℤ} :
+  (a b : ℂ)
+  (n : ℤ) :
 -- imply
   ramanujanThetaTerm a b (-n) = ramanujanThetaTerm b a n := by
 -- proof
@@ -77,7 +77,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma ramanujanTheta_summable_symm
-  {a b : ℂ} :
+  (a b : ℂ) :
 -- imply
   Summable (ramanujanThetaTerm a b) ↔ Summable (ramanujanThetaTerm b a) := by
 -- proof
@@ -98,7 +98,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma ramanujanThetaRaw_symm
-  {a b : ℂ} :
+  (a b : ℂ) :
 -- imply
   ramanujanThetaRaw a b = ramanujanThetaRaw b a := by
 -- proof

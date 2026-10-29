@@ -29,7 +29,7 @@ set_option linter.unusedSectionVars false
 set_option maxRecDepth 4000
 
 
-theorem bep_hroute_of_encounter (p : ℝ≥0) (hp1 : p ≤ 1) (henc : bep_encounter p hp1) :
+theorem bep_hroute_of_encounter (p : NNReal) (hp1 : p ≤ 1) (henc : bep_encounter p hp1) :
     ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n) →
         ∃ a₁ a₂ a₃ : Site 2,
@@ -39,7 +39,7 @@ theorem bep_hroute_of_encounter (p : ℝ≥0) (hp1 : p ≤ 1) (henc : bep_encoun
   exact henc (lt_of_lt_of_le hn (measure_mono (bep_threeMeetBox_subset_top n)))
 
 
-theorem bep_encounter_of_hroute (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem bep_encounter_of_hroute (p : NNReal) (hp1 : p ≤ 1)
     (hroute : ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n) →
         ∃ a₁ a₂ a₃ : Site 2,
@@ -52,7 +52,7 @@ theorem bep_encounter_of_hroute (p : ℝ≥0) (hp1 : p ≤ 1)
   exact hroute n hn
 
 
-theorem bep_encounter_iff_hroute (p : ℝ≥0) (hp1 : p ≤ 1) :
+theorem bep_encounter_iff_hroute (p : NNReal) (hp1 : p ≤ 1) :
     bep_encounter p hp1 ↔
       (∀ n : ℕ,
         0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n) →
@@ -62,7 +62,7 @@ theorem bep_encounter_iff_hroute (p : ℝ≥0) (hp1 : p ≤ 1) :
   ⟨bep_hroute_of_encounter p hp1, bep_encounter_of_hroute p hp1⟩
 
 
-theorem bep_bk_of_encounter (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bep_bk_of_encounter (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (henc : bep_encounter p hp1) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
         {ω | numInfiniteClusters 2 ω = 0} = 1 ∨
@@ -74,7 +74,7 @@ theorem bep_bk_of_encounter (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
   bfx_bk_of_route (by norm_num) p hp1 hp0 (bep_hroute_of_encounter p hp1 henc)
 
 
-theorem bep_bk_atLeastTwo_of_encounter (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bep_bk_atLeastTwo_of_encounter (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (henc : bep_encounter p hp1) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   (bep_bk_of_encounter p hp1 hp0 henc).2.1

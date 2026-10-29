@@ -18,7 +18,7 @@ private lemma U_add (P Q : ℤ) (U : ℕ → ℤ)
   have hx1 : x - 1 + 1 = x := Nat.sub_add_cancel hx
   have hx2 : x - 1 + 2 = x + 1 := by omega
   have key : ∀ y : ℕ, (U x * U (y + 1) - Q * U (x - 1) * U y = U (x + y)) ∧
-    (U x * U (y + 2) - Q * U (x - 1) * U (y + 1) = U (x + (y + 1))) := by
+      (U x * U (y + 2) - Q * U (x - 1) * U (y + 1) = U (x + (y + 1))) := by
     intro y
     induction y with
     | zero =>
@@ -27,7 +27,8 @@ private lemma U_add (P Q : ℤ) (U : ℕ → ℤ)
       · have h2 : U 2 = P * U 1 - Q * U 0 := hUrec 0
         have hxU : U (x + 1) = P * U x - Q * U (x - 1) := by
           have h := hUrec (x - 1)
-          rwa [hx2, hx1] at h
+          rw [hx2, hx1] at h
+          exact h
         show U x * U 2 - Q * U (x - 1) * U 1 = U (x + 1)
         rw [h2, hU0, hU1, hxU]
         ring
@@ -147,9 +148,8 @@ namespace MetaMathlibExt
 
 /--
 [rank_aux](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedLucasnomialFussCatalan.lean)
--/
-@[path]
   `(p:ℤ)^e ∣ U k` iff the minimal such index divides `k`. -/
+@[path]
 private lemma rank_aux (P Q : ℤ) (U : ℕ → ℤ)
   (hU0 : U 0 = 0) (hU1 : U 1 = 1)
   (hUrec : ∀ n : ℕ, U (n + 2) = P * U (n + 1) - Q * U n)
@@ -167,10 +167,10 @@ private lemma rank_aux (P Q : ℤ) (U : ℕ → ℤ)
   · intro hdiv
     have hkz : k = Nat.find hex * (k / Nat.find hex) + k % Nat.find hex :=
       (Nat.div_add_mod k (Nat.find hex)).symm
-    obtain ht0 | htpos := Nat.eq_zero_or_pos (k % Nat.find hex)
+    rcases Nat.eq_zero_or_pos (k % Nat.find hex) with ht0 | htpos
     · exact Nat.dvd_of_mod_eq_zero ht0
     · have hkx : k = (k % Nat.find hex) + Nat.find hex * (k / Nat.find hex) := by
-      rw [add_comm]; exact hkz
+        rw [add_comm]; exact hkz
       have hUxz : (p : ℤ) ^ e ∣ U (Nat.find hex * (k / Nat.find hex)) :=
         dvd_trans hzdvd (U_dvd P Q U hU0 hU1 hUrec _ _ hz1
           (dvd_mul_right _ _))
@@ -178,11 +178,11 @@ private lemma rank_aux (P Q : ℤ) (U : ℕ → ℤ)
         (Nat.find hex * (k / Nat.find hex)) htpos
       rw [← hkx] at hadd
       have hB : (p : ℤ) ^ e ∣ Q * U (k % Nat.find hex - 1)
-        * U (Nat.find hex * (k / Nat.find hex)) :=
+          * U (Nat.find hex * (k / Nat.find hex)) :=
         dvd_mul_of_dvd_right hUxz _
       have hUk : (p : ℤ) ^ e ∣ U (k % Nat.find hex)
-        * U (Nat.find hex * (k / Nat.find hex) + 1)
-        - Q * U (k % Nat.find hex - 1) * U (Nat.find hex * (k / Nat.find hex)) := by
+          * U (Nat.find hex * (k / Nat.find hex) + 1)
+          - Q * U (k % Nat.find hex - 1) * U (Nat.find hex * (k / Nat.find hex)) := by
         rw [← hadd]; exact hdiv
       have hA := dvd_add hUk hB
       rw [sub_add_cancel] at hA
@@ -191,7 +191,7 @@ private lemma rank_aux (P Q : ℤ) (U : ℕ → ℤ)
         (Nat.find hex * (k / Nat.find hex))
       obtain ⟨w, hw⟩ := hUxz
       have hcopPe : IsCoprime ((p : ℤ) ^ e)
-        (U (Nat.find hex * (k / Nat.find hex) + 1)) :=
+          (U (Nat.find hex * (k / Nat.find hex) + 1)) :=
         ⟨u * w, v, by linear_combination huv - u * hw⟩
       have hUt := hcopPe.dvd_of_dvd_mul_left hA
       have hle := hzmin (k % Nat.find hex) htpos hUt
@@ -222,7 +222,8 @@ private lemma div_succ_eq (z M : ℕ) (hz : 1 ≤ z) :
     have hmod := Nat.div_add_mod M z
     have hmodz : (M % z + 1) % z = 0 := by
       have hme : M + 1 = z * (M / z) + (M % z + 1) := by omega
-      rwa [hme, add_comm (z * (M / z)) _, Nat.add_mul_mod_self_left] at emod1
+      rw [hme, add_comm (z * (M / z)) _, Nat.add_mul_mod_self_left] at emod1
+      exact emod1
     have heq : M % z + 1 = z := by
       have hdvd : z ∣ M % z + 1 := Nat.dvd_iff_mod_eq_zero.mpr hmodz
       have hge := Nat.le_of_dvd (by omega) hdvd
@@ -307,12 +308,12 @@ private lemma sum_Icc_dvd_eq (z s m : ℕ) (hz : 1 ≤ z) :
   ∑ k ∈ Finset.Icc (s + 1) (s + m), (if z ∣ k then (1 : ℕ) else 0)
     = (s + m) / z - s / z := by
   have hunion : Finset.Icc 1 (s + m)
-    = Finset.Icc 1 s ∪ Finset.Icc (s + 1) (s + m) := by
+      = Finset.Icc 1 s ∪ Finset.Icc (s + 1) (s + m) := by
     ext x
     simp only [Finset.mem_union, Finset.mem_Icc]
     omega
   have hdisj_f : Disjoint ((Finset.Icc 1 s).filter (fun k => z ∣ k))
-    ((Finset.Icc (s + 1) (s + m)).filter (fun k => z ∣ k)) := by
+      ((Finset.Icc (s + 1) (s + m)).filter (fun k => z ∣ k)) := by
     rw [Finset.disjoint_left]
     intro a ha hb
     rw [Finset.mem_filter, Finset.mem_Icc] at ha hb
@@ -322,7 +323,7 @@ private lemma sum_Icc_dvd_eq (z s m : ℕ) (hz : 1 ≤ z) :
     Finset.card_union_of_disjoint hdisj_f] at hcard
   rw [card_filter_dvd_Icc_one z s hz] at hcard
   have hfin : ∑ k ∈ Finset.Icc (s + 1) (s + m), (if z ∣ k then (1 : ℕ) else 0)
-    = ((Finset.Icc (s + 1) (s + m)).filter (fun k => z ∣ k)).card := by
+      = ((Finset.Icc (s + 1) (s + m)).filter (fun k => z ∣ k)).card := by
     rw [Finset.card_filter]
   rw [hfin]
   omega
@@ -333,9 +334,8 @@ namespace MetaMathlibExt
 
 /--
 [floor_key](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedLucasnomialFussCatalan.lean)
--/
-@[path]
   `(s, s + n - 1]` plus a possible contribution from `r`. -/
+@[path]
 private lemma floor_key (z s n r a : ℕ) (hz : 1 ≤ z) (hn : 1 ≤ n)
   (hs : s = (a - 1) * n + r) :
   n / z ≤ (if z ∣ r then 1 else 0) + ((s + n - 1) / z - s / z) := by
@@ -370,7 +370,7 @@ private lemma floor_key (z s n r a : ℕ) (hz : 1 ≤ z) (hn : 1 ≤ n)
         have hK1 : s / z + n / z - 1 + 1 = s / z + n / z := Nat.sub_add_cancel hK
         have hmul : z * (s / z + n / z - 1) + z = z * (s / z + n / z) := by
           calc z * (s / z + n / z - 1) + z
-            = z * (s / z + n / z - 1) + z * 1 := by rw [mul_one]
+              = z * (s / z + n / z - 1) + z * 1 := by rw [mul_one]
             _ = z * (s / z + n / z - 1 + 1) := by rw [mul_add]
             _ = z * (s / z + n / z) := by rw [hK1]
         omega
@@ -391,10 +391,11 @@ private lemma floor_key (z s n r a : ℕ) (hz : 1 ≤ z) (hn : 1 ≤ n)
       omega
     have hge : s / z + n / z ≤ (s + n - 1) / z := by
       have hle : z * (s / z + n / z) / z
-        ≤ (z * (s / z + n / z) + (s % z + n % z - 1)) / z :=
+          ≤ (z * (s / z + n / z) + (s % z + n % z - 1)) / z :=
         Nat.div_le_div_right (Nat.le_add_right _ _)
       rw [Nat.mul_div_cancel_left _ hzz] at hle
-      rwa [hsn]
+      rw [hsn]
+      exact hle
     have hle2 : n / z ≤ (s + n - 1) / z - s / z :=
       Nat.le_sub_of_add_le (by rw [add_comm]; exact hge)
     calc n / z ≤ (s + n - 1) / z - s / z := hle2
@@ -412,7 +413,7 @@ namespace MetaMathlibExt
 private lemma padic_prod (p : ℕ) (hp : p.Prime) (s : Finset ℕ) (f : ℕ → ℕ)
   (hf : ∀ x ∈ s, f x ≠ 0) :
   padicValNat p (∏ x ∈ s, f x) = ∑ x ∈ s, padicValNat p (f x) := by
-  haveI : Fact p.Prime := ⟨hp⟩
+  have : Fact p.Prime := ⟨hp⟩
   induction s using Finset.induction with
   | empty => simp
   | insert a s has ih =>
@@ -433,7 +434,7 @@ private lemma padic_eq_sum (p m E : ℕ) (hp : p.Prime) (hm : m ≠ 0)
   (hE : padicValNat p m ≤ E) :
   padicValNat p m
     = ∑ e ∈ Finset.range (E + 1), (if 1 ≤ e ∧ p ^ e ∣ m then (1 : ℕ) else 0) := by
-  haveI : Fact p.Prime := ⟨hp⟩
+  have : Fact p.Prime := ⟨hp⟩
   have hiff : ∀ e : ℕ, (1 ≤ e ∧ p ^ e ∣ m) ↔ e ∈ Finset.Icc 1 (padicValNat p m) := by
     intro e
     rw [Finset.mem_Icc]
@@ -443,16 +444,16 @@ private lemma padic_eq_sum (p m E : ℕ) (hp : p.Prime) (hm : m ≠ 0)
     · intro ⟨h1, h2⟩
       exact ⟨h1, (padicValNat_dvd_iff_le hm).mpr h2⟩
   have hsum : ∑ e ∈ Finset.range (E + 1), (if 1 ≤ e ∧ p ^ e ∣ m then (1 : ℕ) else 0)
-    = ∑ e ∈ Finset.range (E + 1),
-      (if e ∈ Finset.Icc 1 (padicValNat p m) then (1 : ℕ) else 0) := by
+      = ∑ e ∈ Finset.range (E + 1),
+        (if e ∈ Finset.Icc 1 (padicValNat p m) then (1 : ℕ) else 0) := by
     apply Finset.sum_congr rfl
     intro e _
     by_cases h : 1 ≤ e ∧ p ^ e ∣ m
     · rw [ite_eq_left h, ite_eq_left ((hiff e).mp h)]
     · rw [ite_eq_right h, ite_eq_right (fun h2 => h ((hiff e).mpr h2))]
   have hfil : (Finset.range (E + 1)).filter
-    (fun e => e ∈ Finset.Icc 1 (padicValNat p m))
-    = Finset.Icc 1 (padicValNat p m) := by
+        (fun e => e ∈ Finset.Icc 1 (padicValNat p m))
+      = Finset.Icc 1 (padicValNat p m) := by
     ext x
     simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_Icc]
     constructor
@@ -474,7 +475,8 @@ namespace MetaMathlibExt
 private lemma natAbs_dvd_to_dvd (p e : ℕ) (U : ℕ → ℤ) (k : ℕ)
   (h : p ^ e ∣ (U k).natAbs) : (p : ℤ) ^ e ∣ U k := by
   have h1 : ((p ^ e : ℕ) : ℤ).natAbs ∣ (U k).natAbs := by
-    rwa [Int.natAbs_natCast]
+    rw [Int.natAbs_natCast]
+    exact h
   have h2 := Int.natAbs_dvd_natAbs.mp h1
   have h3 : ((p : ℤ) ^ e) = (((p ^ e : ℕ)) : ℤ) := by push_cast; ring
   rwa [h3]
@@ -492,8 +494,8 @@ private lemma dvd_to_natAbs_dvd (p e : ℕ) (U : ℕ → ℤ) (k : ℕ)
   have h2 : ((p : ℤ) ^ e) = (((p ^ e : ℕ)) : ℤ) := by push_cast; ring
   rw [h2] at h
   have h3 := Int.natAbs_dvd_natAbs.mpr h
-  rwa [Int.natAbs_natCast] at h3
-
+  rw [Int.natAbs_natCast] at h3
+  exact h3
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -507,7 +509,7 @@ private lemma key_dvd (P Q : ℤ) (U : ℕ → ℤ)
   (hUrec : ∀ n : ℕ, U (n + 2) = P * U (n + 1) - Q * U n)
   (hreg : Int.gcd P Q = 1)
   (hnondeg : ∀ n : ℕ, n ≥ 1 → U n ≠ 0)
-  (r a n s : ℕ) (hr : r ≥ 1) (ha : a ≥ 2) (hn : n ≥ 1)
+  (r a n s : ℕ) (hr : r ≥ 1) (_ha : a ≥ 2) (hn : n ≥ 1)
   (hs : s = (a - 1) * n + r) :
   (∏ j ∈ Finset.range n, (U (j + 1)).natAbs)
     ∣ (U r).natAbs * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), (U k).natAbs := by
@@ -524,14 +526,14 @@ private lemma key_dvd (P Q : ℤ) (U : ℕ → ℤ)
   have hBpos : 0 < ∏ j ∈ Finset.range n, (U (j + 1)).natAbs :=
     Nat.pos_of_ne_zero (Finset.prod_ne_zero_iff.mpr hBf)
   have hCpos : 0 < (U r).natAbs
-    * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), (U k).natAbs :=
+      * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), (U k).natAbs :=
     Nat.pos_of_ne_zero (mul_ne_zero hVr (Finset.prod_ne_zero_iff.mpr hCf))
   have dvdB : ∀ j ∈ Finset.range n,
-    (U (j + 1)).natAbs ∣ ∏ j ∈ Finset.range n, (U (j + 1)).natAbs :=
+      (U (j + 1)).natAbs ∣ ∏ j ∈ Finset.range n, (U (j + 1)).natAbs :=
     fun j hj => Finset.dvd_prod_of_mem _ hj
   have dvdC : ∀ k ∈ Finset.Icc (s + 1) (s + n - 1),
-    (U k).natAbs ∣ (U r).natAbs
-      * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), (U k).natAbs :=
+      (U k).natAbs ∣ (U r).natAbs
+        * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), (U k).natAbs :=
     fun k hk => dvd_mul_of_dvd_right (Finset.dvd_prod_of_mem _ hk) _
   set B := ∏ j ∈ Finset.range n, (U (j + 1)).natAbs with hBdef
   set C := (U r).natAbs * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), (U k).natAbs
@@ -541,9 +543,10 @@ private lemma key_dvd (P Q : ℤ) (U : ℕ → ℤ)
   intro p hpmem
   have hprime : p.Prime := by
     have hmem : p ∈ B.primeFactors := by
-      rwa [← Nat.support_factorization]
+      rw [← Nat.support_factorization]
+      exact hpmem
     exact Nat.prime_of_mem_primeFactors hmem
-  haveI : Fact p.Prime := ⟨hprime⟩
+  have : Fact p.Prime := ⟨hprime⟩
   rw [Nat.factorization_def _ hprime, Nat.factorization_def _ hprime]
   rw [padic_prod p hprime (Finset.range n) _ hBf,
     padicValNat.mul hVr (Finset.prod_ne_zero_iff.mpr hCf),
@@ -554,7 +557,7 @@ private lemma key_dvd (P Q : ℤ) (U : ℕ → ℤ)
     have h2 : p ^ padicValNat p m ≤ m :=
       Nat.le_of_dvd (Nat.pos_of_ne_zero hm0) h1
     have h3 : padicValNat p m ≤ p ^ padicValNat p m := by
-      obtain h0 | h0 := eq_or_ne (padicValNat p m) 0
+      rcases eq_or_ne (padicValNat p m) 0 with h0 | h0
       · rw [h0]
         exact Nat.zero_le _
       · have hpp2 : 2 ≤ p := hprime.two_le
@@ -564,36 +567,36 @@ private lemma key_dvd (P Q : ℤ) (U : ℕ → ℤ)
         omega
     omega
   have hexpand : ∀ m : ℕ, m ≠ 0 → m ≤ B + C → padicValNat p m
-    = ∑ e ∈ Finset.range (B + C + 1),
-      (if 1 ≤ e ∧ p ^ e ∣ m then (1 : ℕ) else 0) :=
+      = ∑ e ∈ Finset.range (B + C + 1),
+        (if 1 ≤ e ∧ p ^ e ∣ m then (1 : ℕ) else 0) :=
     fun m hm0 hmE => padic_eq_sum p m (B + C) hprime hm0 (hbound m hm0 hmE)
   have hBL : (∑ j ∈ Finset.range n, padicValNat p ((U (j + 1)).natAbs))
-    = ∑ e ∈ Finset.range (B + C + 1), ∑ j ∈ Finset.range n,
-      (if 1 ≤ e ∧ p ^ e ∣ (U (j + 1)).natAbs then (1 : ℕ) else 0) := by
+      = ∑ e ∈ Finset.range (B + C + 1), ∑ j ∈ Finset.range n,
+        (if 1 ≤ e ∧ p ^ e ∣ (U (j + 1)).natAbs then (1 : ℕ) else 0) := by
     calc (∑ j ∈ Finset.range n, padicValNat p ((U (j + 1)).natAbs))
-      = ∑ j ∈ Finset.range n, ∑ e ∈ Finset.range (B + C + 1),
-        (if 1 ≤ e ∧ p ^ e ∣ (U (j + 1)).natAbs then (1 : ℕ) else 0) :=
-        Finset.sum_congr rfl (fun j hj =>
-          hexpand _ (hBf j hj) (le_trans (Nat.le_of_dvd hBpos (dvdB j hj))
-            (Nat.le_add_right _ _)))
+        = ∑ j ∈ Finset.range n, ∑ e ∈ Finset.range (B + C + 1),
+            (if 1 ≤ e ∧ p ^ e ∣ (U (j + 1)).natAbs then (1 : ℕ) else 0) :=
+          Finset.sum_congr rfl (fun j hj =>
+            hexpand _ (hBf j hj) (le_trans (Nat.le_of_dvd hBpos (dvdB j hj))
+              (Nat.le_add_right _ _)))
       _ = _ := Finset.sum_comm
   have eR : padicValNat p ((U r).natAbs)
-    = ∑ e ∈ Finset.range (B + C + 1),
-      (if 1 ≤ e ∧ p ^ e ∣ (U r).natAbs then (1 : ℕ) else 0) :=
+      = ∑ e ∈ Finset.range (B + C + 1),
+        (if 1 ≤ e ∧ p ^ e ∣ (U r).natAbs then (1 : ℕ) else 0) :=
     hexpand _ hVr (le_trans (Nat.le_of_dvd hCpos (dvd_mul_right _ _))
       (Nat.le_add_left _ _))
   have eK : (∑ k ∈ Finset.Icc (s + 1) (s + n - 1), padicValNat p ((U k).natAbs))
-    = ∑ k ∈ Finset.Icc (s + 1) (s + n - 1), ∑ e ∈ Finset.range (B + C + 1),
-      (if 1 ≤ e ∧ p ^ e ∣ (U k).natAbs then (1 : ℕ) else 0) :=
+      = ∑ k ∈ Finset.Icc (s + 1) (s + n - 1), ∑ e ∈ Finset.range (B + C + 1),
+        (if 1 ≤ e ∧ p ^ e ∣ (U k).natAbs then (1 : ℕ) else 0) :=
     Finset.sum_congr rfl (fun k hk =>
       hexpand _ (hCf k hk) (le_trans (Nat.le_of_dvd hCpos (dvdC k hk))
         (Nat.le_add_left _ _)))
   have hBR : padicValNat p ((U r).natAbs)
-    + ∑ k ∈ Finset.Icc (s + 1) (s + n - 1), padicValNat p ((U k).natAbs)
-    = ∑ e ∈ Finset.range (B + C + 1),
-      ((if 1 ≤ e ∧ p ^ e ∣ (U r).natAbs then (1 : ℕ) else 0)
-        + ∑ k ∈ Finset.Icc (s + 1) (s + n - 1),
-          (if 1 ≤ e ∧ p ^ e ∣ (U k).natAbs then (1 : ℕ) else 0)) := by
+        + ∑ k ∈ Finset.Icc (s + 1) (s + n - 1), padicValNat p ((U k).natAbs)
+      = ∑ e ∈ Finset.range (B + C + 1),
+        ((if 1 ≤ e ∧ p ^ e ∣ (U r).natAbs then (1 : ℕ) else 0)
+          + ∑ k ∈ Finset.Icc (s + 1) (s + n - 1),
+            (if 1 ≤ e ∧ p ^ e ∣ (U k).natAbs then (1 : ℕ) else 0)) := by
     rw [eR, eK,
       Finset.sum_comm (s := Finset.Icc (s + 1) (s + n - 1))
         (t := Finset.range (B + C + 1)),
@@ -605,47 +608,47 @@ private lemma key_dvd (P Q : ℤ) (U : ℕ → ℤ)
   · by_cases hex_e : ∃ m : ℕ, 1 ≤ m ∧ (p : ℤ) ^ e ∣ U m
     · obtain ⟨z, hz1, hchar⟩ := rank_aux P Q U hU0 hU1 hUrec hreg p e hex_e
       have ind_j : ∀ j ∈ Finset.range n,
-        (if 1 ≤ e ∧ p ^ e ∣ (U (j + 1)).natAbs then (1 : ℕ) else 0)
-        = (if z ∣ j + 1 then (1 : ℕ) else 0) := by
+          (if 1 ≤ e ∧ p ^ e ∣ (U (j + 1)).natAbs then (1 : ℕ) else 0)
+          = (if z ∣ j + 1 then (1 : ℕ) else 0) := by
         intro j _
         by_cases hj : p ^ e ∣ (U (j + 1)).natAbs
         · have hzjdvd : z ∣ j + 1 :=
-          (hchar (j + 1) (by omega)).mp (natAbs_dvd_to_dvd p e U (j + 1) hj)
+            (hchar (j + 1) (by omega)).mp (natAbs_dvd_to_dvd p e U (j + 1) hj)
           rw [ite_eq_left ⟨he1, hj⟩, ite_eq_left hzjdvd]
         · have hnz : ¬ (p : ℤ) ^ e ∣ U (j + 1) :=
-          fun hcon => hj (dvd_to_natAbs_dvd p e U (j + 1) hcon)
+            fun hcon => hj (dvd_to_natAbs_dvd p e U (j + 1) hcon)
           have hnz2 : ¬ z ∣ j + 1 :=
             fun hcon => hnz ((hchar (j + 1) (by omega)).mpr hcon)
           rw [ite_eq_right (fun hcon => hj hcon.2), ite_eq_right hnz2]
       have ind_r : (if 1 ≤ e ∧ p ^ e ∣ (U r).natAbs then (1 : ℕ) else 0)
-        = (if z ∣ r then (1 : ℕ) else 0) := by
+          = (if z ∣ r then (1 : ℕ) else 0) := by
         by_cases hr2 : p ^ e ∣ (U r).natAbs
         · have hzrdvd : z ∣ r :=
-          (hchar r (by omega)).mp (natAbs_dvd_to_dvd p e U r hr2)
+            (hchar r (by omega)).mp (natAbs_dvd_to_dvd p e U r hr2)
           rw [ite_eq_left ⟨he1, hr2⟩, ite_eq_left hzrdvd]
         · have hnz : ¬ (p : ℤ) ^ e ∣ U r :=
-          fun hcon => hr2 (dvd_to_natAbs_dvd p e U r hcon)
+            fun hcon => hr2 (dvd_to_natAbs_dvd p e U r hcon)
           have hnz2 : ¬ z ∣ r :=
             fun hcon => hnz ((hchar r (by omega)).mpr hcon)
           rw [ite_eq_right (fun hcon => hr2 hcon.2), ite_eq_right hnz2]
       have ind_k : ∀ k ∈ Finset.Icc (s + 1) (s + n - 1),
-        (if 1 ≤ e ∧ p ^ e ∣ (U k).natAbs then (1 : ℕ) else 0)
-        = (if z ∣ k then (1 : ℕ) else 0) := by
+          (if 1 ≤ e ∧ p ^ e ∣ (U k).natAbs then (1 : ℕ) else 0)
+          = (if z ∣ k then (1 : ℕ) else 0) := by
         intro k hk
         rw [Finset.mem_Icc] at hk
         by_cases hk2 : p ^ e ∣ (U k).natAbs
         · have hzkdvd : z ∣ k :=
-          (hchar k (by omega)).mp (natAbs_dvd_to_dvd p e U k hk2)
+            (hchar k (by omega)).mp (natAbs_dvd_to_dvd p e U k hk2)
           rw [ite_eq_left ⟨he1, hk2⟩, ite_eq_left hzkdvd]
         · have hnz : ¬ (p : ℤ) ^ e ∣ U k :=
-          fun hcon => hk2 (dvd_to_natAbs_dvd p e U k hcon)
+            fun hcon => hk2 (dvd_to_natAbs_dvd p e U k hcon)
           have hnz2 : ¬ z ∣ k :=
             fun hcon => hnz ((hchar k (by omega)).mpr hcon)
           rw [ite_eq_right (fun hcon => hk2 hcon.2), ite_eq_right hnz2]
       rw [Finset.sum_congr rfl ind_j, ind_r, Finset.sum_congr rfl ind_k,
         sum_range_dvd_eq z n hz1]
       have hIcc : Finset.Icc (s + 1) (s + n - 1)
-        = Finset.Icc (s + 1) (s + (n - 1)) := by
+          = Finset.Icc (s + 1) (s + (n - 1)) := by
         have hnm : s + (n - 1) = s + n - 1 := by omega
         rw [hnm]
       rw [hIcc, sum_Icc_dvd_eq z s (n - 1) hz1]
@@ -653,19 +656,19 @@ private lemma key_dvd (P Q : ℤ) (U : ℕ → ℤ)
       rw [hnm]
       exact floor_key z s n r a hz1 hn hs
     · have zero_j : ∀ j ∈ Finset.range n,
-      (if 1 ≤ e ∧ p ^ e ∣ (U (j + 1)).natAbs then (1 : ℕ) else 0) = 0 := by
-      intro j _
-      rw [ite_eq_right]
-      intro hcon
-      apply hex_e
-      exact ⟨j + 1, by omega, natAbs_dvd_to_dvd p e U (j + 1) hcon.2⟩
+          (if 1 ≤ e ∧ p ^ e ∣ (U (j + 1)).natAbs then (1 : ℕ) else 0) = 0 := by
+        intro j _
+        rw [ite_eq_right]
+        intro hcon
+        apply hex_e
+        exact ⟨j + 1, by omega, natAbs_dvd_to_dvd p e U (j + 1) hcon.2⟩
       have zero_r : (if 1 ≤ e ∧ p ^ e ∣ (U r).natAbs then (1 : ℕ) else 0) = 0 := by
         rw [ite_eq_right]
         intro hcon
         apply hex_e
         exact ⟨r, by omega, natAbs_dvd_to_dvd p e U r hcon.2⟩
       have zero_k : ∀ k ∈ Finset.Icc (s + 1) (s + n - 1),
-        (if 1 ≤ e ∧ p ^ e ∣ (U k).natAbs then (1 : ℕ) else 0) = 0 := by
+          (if 1 ≤ e ∧ p ^ e ∣ (U k).natAbs then (1 : ℕ) else 0) = 0 := by
         intro k hk
         rw [Finset.mem_Icc] at hk
         rw [ite_eq_right]
@@ -675,9 +678,9 @@ private lemma key_dvd (P Q : ℤ) (U : ℕ → ℤ)
       rw [Finset.sum_eq_zero zero_j, zero_r, Finset.sum_eq_zero zero_k,
         add_zero]
   · have zero_j : ∀ j ∈ Finset.range n,
-    (if 1 ≤ e ∧ p ^ e ∣ (U (j + 1)).natAbs then (1 : ℕ) else 0) = 0 := by
-    intro j _
-    rw [ite_eq_right (fun hcon => he1 hcon.1)]
+        (if 1 ≤ e ∧ p ^ e ∣ (U (j + 1)).natAbs then (1 : ℕ) else 0) = 0 := by
+      intro j _
+      rw [ite_eq_right (fun hcon => he1 hcon.1)]
     rw [Finset.sum_eq_zero zero_j]
     exact Nat.zero_le _
 
@@ -707,13 +710,14 @@ namespace MetaMathlibExt
 lemma generalized_lucasnomial_fuss_catalan_integral_general
   {P Q : ℤ}
   {U : ℕ → ℤ}
-  {r a n : ℕ}
 -- given
   (hU : IsLucasSequenceFirstKind P Q U)
   (hnondeg : ∀ n : ℕ, n ≥ 1 → U n ≠ 0)
   (hreg : Int.gcd P Q = 1)
+  (r a : ℕ)
   (hr : r ≥ 1)
   (ha : a ≥ 2)
+  (n : ℕ)
   (hn : n ≥ 1) :
 -- imply
   ∃ z : ℤ,
@@ -724,7 +728,8 @@ lemma generalized_lucasnomial_fuss_catalan_integral_general
 -- proof
   have hU0 := hU.initialZero
   have hU1 := hU.initialOne
-  have hUrec := hU.recurrenceStep
+  have hUrec : ∀ n : ℕ, U (n + 2) = P * U (n + 1) - Q * U n :=
+    fun n => hU.recurrenceStep (n := n)
   set s := (a - 1) * n + r with hsdef
   have hs : s = (a - 1) * n + r := hsdef
   have hs1 : 1 ≤ s := by omega
@@ -737,8 +742,9 @@ lemma generalized_lucasnomial_fuss_catalan_integral_general
   have hdiv_nat :=
     key_dvd P Q U hU0 hU1 hUrec hreg hnondeg r a n s hr ha hn hs
   have hdiv_int : (∏ j ∈ Finset.range n, U (j + 1))
-    ∣ U r * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), U k := by
-    rwa [← Int.natAbs_dvd_natAbs, natAbs_prod, Int.natAbs_mul, natAbs_prod]
+      ∣ U r * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), U k := by
+    rw [← Int.natAbs_dvd_natAbs, natAbs_prod, Int.natAbs_mul, natAbs_prod]
+    exact hdiv_nat
   obtain ⟨c, hc⟩ := hdiv_int
   have hae : a * n = (a - 1) * n + n := by
     have h1 : a - 1 + 1 = a := by omega
@@ -746,73 +752,74 @@ lemma generalized_lucasnomial_fuss_catalan_integral_general
       _ = (a - 1) * n + 1 * n := by rw [add_mul]
       _ = (a - 1) * n + n := by rw [one_mul]
   have hnum : (∏ j ∈ Finset.range n, ((U (a * n + r - 1 - j) : ℤ) : ℚ))
-    = ∏ k ∈ Finset.Icc s (s + n - 1), ((U k : ℤ) : ℚ) := by
+      = ∏ k ∈ Finset.Icc s (s + n - 1), ((U k : ℤ) : ℚ) := by
     have e : ∀ j ∈ Finset.range n, a * n + r - 1 - j = s + (n - 1 - j) := by
       intro j hj
       rw [Finset.mem_range] at hj
       omega
     calc (∏ j ∈ Finset.range n, ((U (a * n + r - 1 - j) : ℤ) : ℚ))
-      = ∏ j ∈ Finset.range n, ((U (s + (n - 1 - j)) : ℤ) : ℚ) :=
-        Finset.prod_congr rfl (fun j hj => by rw [e j hj])
+        = ∏ j ∈ Finset.range n, ((U (s + (n - 1 - j)) : ℤ) : ℚ) :=
+          Finset.prod_congr rfl (fun j hj => by rw [e j hj])
       _ = ∏ j ∈ Finset.range n, ((U (s + j) : ℤ) : ℚ) :=
-        Finset.prod_range_reflect (fun k => ((U (s + k) : ℤ) : ℚ)) n
+          Finset.prod_range_reflect (fun k => ((U (s + k) : ℤ) : ℚ)) n
       _ = ∏ k ∈ Finset.Ico s (s + n), ((U k : ℤ) : ℚ) := by
-        refine Finset.prod_bij (fun j _ => s + j) ?_ ?_ ?_ ?_
-        · intro j hj
-          rw [Finset.mem_range] at hj
-          rw [Finset.mem_Ico]
-          constructor <;> omega
-        · intro j1 _ j2 _ h12
-          omega
-        · intro k hk
-          rw [Finset.mem_Ico] at hk
-          refine ⟨k - s, ?_, ?_⟩
-          · rw [Finset.mem_range]
+          refine Finset.prod_bij (fun j _ => s + j) ?_ ?_ ?_ ?_
+          · intro j hj
+            rw [Finset.mem_range] at hj
+            rw [Finset.mem_Ico]
+            constructor <;> omega
+          · intro j1 _ j2 _ h12
             omega
-          · omega
-        · intro j hj
-          rfl
+          · intro k hk
+            rw [Finset.mem_Ico] at hk
+            refine ⟨k - s, ?_, ?_⟩
+            · rw [Finset.mem_range]
+              omega
+            · omega
+          · intro j hj
+            rfl
       _ = ∏ k ∈ Finset.Icc s (s + n - 1), ((U k : ℤ) : ℚ) := by
-        have hIcoIcc : Finset.Ico s (s + n)
-          = Finset.Icc s (s + n - 1) := by
-          ext x
-          simp only [Finset.mem_Ico, Finset.mem_Icc]
-          omega
-        rw [hIcoIcc]
+          have hIcoIcc : Finset.Ico s (s + n)
+              = Finset.Icc s (s + n - 1) := by
+            ext x
+            simp only [Finset.mem_Ico, Finset.mem_Icc]
+            omega
+          rw [hIcoIcc]
   have hsplit : (∏ k ∈ Finset.Icc s (s + n - 1), ((U k : ℤ) : ℚ))
-    = ((U s : ℤ) : ℚ)
-      * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), ((U k : ℤ) : ℚ) := by
+      = ((U s : ℤ) : ℚ)
+        * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), ((U k : ℤ) : ℚ) := by
     have hmem : s ∈ Finset.Icc s (s + n - 1) := by
       rw [Finset.mem_Icc]
       constructor <;> omega
     have herase : (Finset.Icc s (s + n - 1)).erase s
-      = Finset.Icc (s + 1) (s + n - 1) := by
+        = Finset.Icc (s + 1) (s + n - 1) := by
       ext x
       simp only [Finset.mem_erase, Finset.mem_Icc]
       omega
     have h := Finset.mul_prod_erase (Finset.Icc s (s + n - 1))
       (fun k => ((U k : ℤ) : ℚ)) hmem
-    rwa [herase] at h
+    rw [herase] at h
+    exact h.symm
   have hcQ : ((U r : ℤ) : ℚ)
-    * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), ((U k : ℤ) : ℚ)
-    = (∏ j ∈ Finset.range n, ((U (j + 1) : ℤ) : ℚ)) * ((c : ℤ) : ℚ) := by
+        * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), ((U k : ℤ) : ℚ)
+      = (∏ j ∈ Finset.range n, ((U (j + 1) : ℤ) : ℚ)) * ((c : ℤ) : ℚ) := by
     have hc' : ((((U r * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), U k : ℤ))) : ℚ)
-      = (((((∏ j ∈ Finset.range n, U (j + 1)) * c : ℤ))) : ℚ) := by
+        = (((((∏ j ∈ Finset.range n, U (j + 1)) * c : ℤ))) : ℚ) := by
       exact_mod_cast hc
-    rwa [Int.cast_mul, Int.cast_prod, Int.cast_mul, Int.cast_prod] at hc'
+    rw [Int.cast_mul, Int.cast_prod, Int.cast_mul, Int.cast_prod] at hc'
+    exact hc'
   refine ⟨c, ?_⟩
   rw [hnum, hsplit]
   have hBp : (∏ j ∈ Finset.range n, ((U (j + 1) : ℤ) : ℚ)) ≠ 0 := hden
   rw [div_mul_div_comm, div_eq_iff (mul_ne_zero hUs hBp)]
   calc ((U r : ℤ) : ℚ) * (((U s : ℤ) : ℚ)
-    * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), ((U k : ℤ) : ℚ))
-    = ((U s : ℤ) : ℚ) * (((U r : ℤ) : ℚ)
-      * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), ((U k : ℤ) : ℚ)) := by ring
+        * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), ((U k : ℤ) : ℚ))
+      = ((U s : ℤ) : ℚ) * (((U r : ℤ) : ℚ)
+        * ∏ k ∈ Finset.Icc (s + 1) (s + n - 1), ((U k : ℤ) : ℚ)) := by ring
     _ = ((U s : ℤ) : ℚ) * ((∏ j ∈ Finset.range n, ((U (j + 1) : ℤ) : ℚ))
-      * ((c : ℤ) : ℚ)) := by rw [hcQ]
+        * ((c : ℤ) : ℚ)) := by rw [hcQ]
     _ = ((c : ℤ) : ℚ) * (((U s : ℤ) : ℚ)
-      * ∏ j ∈ Finset.range n, ((U (j + 1) : ℤ) : ℚ)) := by ring
-set_option linter.unusedVariables false in
+        * ∏ j ∈ Finset.range n, ((U (j + 1) : ℤ) : ℚ)) := by ring
 
 end MetaMathlibExt
 
@@ -827,8 +834,8 @@ lemma generalized_lucasnomial_fuss_catalan_integral
   {U : ℕ → ℤ}
   {r a n : ℕ}
 -- given
-  (hP : P ≠ 0)
-  (hQ : Q ≠ 0)
+  (_hP : P ≠ 0)
+  (_hQ : Q ≠ 0)
   (hU0 : U 0 = 0)
   (hU1 : U 1 = 1)
   (hUrec : ∀ n : ℕ, U (n + 2) = P * U (n + 1) - Q * U n)
@@ -851,4 +858,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

@@ -62,7 +62,7 @@ private lemma bc120_bk_uniqueness_of_residues_eq
   {L : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hGlobal : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc69_Gn_globalForest ω L R)
@@ -81,7 +81,7 @@ private lemma bc120_top_null_of_residues_eq
   {L : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hGlobal : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc69_Gn_globalForest ω L R)
@@ -100,10 +100,10 @@ private lemma bc120_bk_uniqueness_via_bc73_eq
   {L : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
-  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂ bernoulliProductMeasure (E := Sym2 (Site d)) p hp1)
+  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂ bernoulliProductMeasure (E := Sym2 (Site d)) p hp1)
   (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R)
   (hexist : bc61_CoarseTrifExistence (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1) L) :
 -- imply
@@ -180,7 +180,7 @@ private lemma bc120_status_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p) :
 -- imply

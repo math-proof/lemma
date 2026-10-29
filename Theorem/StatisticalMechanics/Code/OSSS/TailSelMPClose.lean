@@ -76,8 +76,8 @@ theorem tsc_restrictedSum_of_recover {α β : Type*} [MeasurableSpace α] [Measu
     rw [← Set.iUnion_inter, hRpart, Set.univ_inter]
   
   simp_rw [hsummand T hT]
-  set a : ℕ → ℝ≥0∞ := fun k => μ (S k ∩ Φ k ⁻¹' T) with ha
-  set b : ℕ → ℝ≥0∞ := fun k => μ (S k ∩ Φ k ⁻¹' Tᶜ) with hb
+  set a : ℕ → ENNReal := fun k => μ (S k ∩ Φ k ⁻¹' T) with ha
+  set b : ℕ → ENNReal := fun k => μ (S k ∩ Φ k ⁻¹' Tᶜ) with hb
   
   have hab : ∀ k, a k + b k = μ (S k) := by
     intro k

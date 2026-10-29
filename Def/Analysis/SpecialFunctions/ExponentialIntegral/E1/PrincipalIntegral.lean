@@ -17,7 +17,7 @@ noncomputable section
 def expPosWeight (t : ℝ) : ℝ :=
   if 0 < t then Real.exp (-t) else 0
 
-def expPosDensity (t : ℝ) : ℝ≥0∞ :=
+def expPosDensity (t : ℝ) : ENNReal :=
   ENNReal.ofReal (expPosWeight t)
 
 def expPosMeasure : Measure ℝ :=

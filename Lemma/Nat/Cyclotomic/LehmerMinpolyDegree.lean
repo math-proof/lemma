@@ -24,7 +24,7 @@ lemma natDegree_realCyclotomicPolynomial
   have hζne : ζ ≠ 0 := hprim.ne_zero hn0
   -- Conjugation sends `ζ` to `ζ⁻¹` and fixes `α`.
   have hcw : starRingEnd ℂ (2 * (Real.pi : ℂ) * Complex.I / (n : ℂ))
-    = -(2 * (Real.pi : ℂ) * Complex.I / (n : ℂ)) := by
+      = -(2 * (Real.pi : ℂ) * Complex.I / (n : ℂ)) := by
     simp only [map_div₀, map_mul, Complex.conj_ofReal, Complex.conj_I, map_natCast,
       map_ofNat]
     ring
@@ -38,12 +38,12 @@ lemma natDegree_realCyclotomicPolynomial
   have hζZi : IsIntegral ℤ ζ⁻¹ := by
     refine ⟨Polynomial.X ^ n - 1, ?_, ?_⟩
     · have e : (Polynomial.X ^ n - 1 : Polynomial ℤ)
-      = Polynomial.X ^ n - Polynomial.C 1 := by
-      rw [Polynomial.C_1]
+          = Polynomial.X ^ n - Polynomial.C 1 := by
+        rw [Polynomial.C_1]
       rw [e]
       exact Polynomial.monic_X_pow_sub_C 1 (ne_of_gt hn0')
     · simp only [Polynomial.eval₂_sub, Polynomial.eval₂_pow, Polynomial.eval₂_X,
-      Polynomial.eval₂_one]
+        Polynomial.eval₂_one]
       rw [inv_pow, hprim.pow_eq_one, inv_one, sub_self]
   have hαZ : IsIntegral ℤ α := hζZ.add hζZi
   have hαQ : IsIntegral ℚ α := hαZ.tower_top
@@ -79,14 +79,14 @@ lemma natDegree_realCyclotomicPolynomial
     intro a
     simp
   have key : ∀ p : Polynomial ℚ,
-    starRingEnd ℂ (Polynomial.aeval α p) = Polynomial.aeval α p := by
+      starRingEnd ℂ (Polynomial.aeval α p) = Polynomial.aeval α p := by
     intro p
     induction p using Polynomial.induction_on with
     | C a => rw [Polynomial.aeval_C]; exact hrat a
     | add p q hp hq => rw [Polynomial.aeval_add, map_add, hp, hq]
     | monomial m a ih =>
       have e : Polynomial.C a * Polynomial.X ^ (m + 1)
-        = (Polynomial.C a * Polynomial.X ^ m) * Polynomial.X := by ring
+          = (Polynomial.C a * Polynomial.X ^ m) * Polynomial.X := by ring
       rw [e, Polynomial.aeval_mul, map_mul, ih, Polynomial.aeval_X, hconjα]
   have hfix : ∀ x ∈ K, starRingEnd ℂ x = x := by
     intro x hx
@@ -102,7 +102,8 @@ lemma natDegree_realCyclotomicPolynomial
     have h2 : ζ ^ 2 = 1 := by
       have h3 : ζ * ζ⁻¹ = 1 := mul_inv_cancel₀ hζne
       have h4 : ζ * ζ = ζ * ζ⁻¹ := by rw [h1]
-      rwa [pow_two, h4]
+      rw [pow_two, h4]
+      exact h3
     have hdvd : n ∣ 2 := hprim.dvd_of_pow_eq_one 2 h2
     have hle : n ≤ 2 := Nat.le_of_dvd (by norm_num) hdvd
     omega
@@ -115,24 +116,24 @@ lemma natDegree_realCyclotomicPolynomial
   have hvaly : (IntermediateField.val L).toRingHom y = ζ := rfl
   -- Transfer of evaluations from `L` to `ℂ`.
   have htransfer : ∀ p : Polynomial ↥K,
-    ((Polynomial.aeval y p : ↥L) : ℂ) = Polynomial.aeval (ζ : ℂ) p := by
+      ((Polynomial.aeval y p : ↥L) : ℂ) = Polynomial.aeval (ζ : ℂ) p := by
     intro p
     change (IntermediateField.val L).toRingHom (Polynomial.aeval y p) = _
     rw [Polynomial.aeval_def, Polynomial.hom_eval₂]
     have hcomp : ((IntermediateField.val L).toRingHom).comp (algebraMap ↥K ↥L)
-      = algebraMap ↥K ℂ := by
+        = algebraMap ↥K ℂ := by
       ext k
       change ((algebraMap ↥K ↥L k : ↥L) : ℂ) = algebraMap ↥K ℂ k
       exact hcoeAlg k
     rw [hcomp, hvaly, ← Polynomial.aeval_def]
   have hQaeval : ∀ t : Polynomial ℚ,
-    (IntermediateField.val L).toRingHom (Polynomial.aeval y t)
-      = Polynomial.aeval (ζ : ℂ) t := by
+      (IntermediateField.val L).toRingHom (Polynomial.aeval y t)
+        = Polynomial.aeval (ζ : ℂ) t := by
     intro t
     show (IntermediateField.val L).toRingHom (Polynomial.aeval y t) = _
     rw [Polynomial.aeval_def, Polynomial.hom_eval₂]
     have hcompQ : ((IntermediateField.val L).toRingHom).comp (algebraMap ℚ ↥L)
-      = algebraMap ℚ ℂ :=
+        = algebraMap ℚ ℂ :=
       Subsingleton.elim _ _
     rw [hcompQ, hvaly, ← Polynomial.aeval_def]
   -- `ζ` (hence `y`) satisfies `X² - αX + 1 = 0`.
@@ -149,10 +150,11 @@ lemma natDegree_realCyclotomicPolynomial
     have hinj :=
       RingHom.injective (R := ↥L) (S := ℂ) (IntermediateField.val L).toRingHom
     have h0 : (IntermediateField.val L).toRingHom (Polynomial.aeval y q)
-      = (IntermediateField.val L).toRingHom 0 := by
+        = (IntermediateField.val L).toRingHom 0 := by
       rw [map_zero]
       change ((Polynomial.aeval y q : ↥L) : ℂ) = 0
-      rwa [htransfer]
+      rw [htransfer]
+      exact hval_C
     exact hinj h0
   -- Degree bounds for `q`.
   have h1deg : (-(Polynomial.C a * Polynomial.X) + 1 : Polynomial ↥K).degree ≤ 1 := by
@@ -160,7 +162,7 @@ lemma natDegree_realCyclotomicPolynomial
     rw [Polynomial.degree_neg]
     refine max_le ?_ ?_
     · have e2 : (Polynomial.C a * Polynomial.X : Polynomial ↥K)
-      = Polynomial.C a * Polynomial.X ^ 1 := by rw [pow_one]
+          = Polynomial.C a * Polynomial.X ^ 1 := by rw [pow_one]
       rw [e2]
       exact Polynomial.degree_C_mul_X_pow_le 1 a
     · rw [Polynomial.degree_one]
@@ -169,16 +171,16 @@ lemma natDegree_realCyclotomicPolynomial
     lt_of_le_of_lt h1deg (by decide)
   have hmonic_q : q.Monic := by
     have e : (Polynomial.X ^ 2 - Polynomial.C a * Polynomial.X + 1 : Polynomial ↥K)
-      = Polynomial.X ^ 2 + (-(Polynomial.C a * Polynomial.X) + 1) := by ring
+        = Polynomial.X ^ 2 + (-(Polynomial.C a * Polynomial.X) + 1) := by ring
     rw [hqdef, e]
     exact Polynomial.monic_X_pow_add hbound
   have hq0 : q ≠ 0 := hmonic_q.ne_zero
   have hqdeg : q.natDegree ≤ 2 := by
     have e : (Polynomial.X ^ 2 - Polynomial.C a * Polynomial.X + 1 : Polynomial ↥K)
-      = Polynomial.X ^ 2 + (-(Polynomial.C a * Polynomial.X) + 1) := by ring
+        = Polynomial.X ^ 2 + (-(Polynomial.C a * Polynomial.X) + 1) := by ring
     rw [hqdef, e]
     have hdeg : (Polynomial.X ^ 2
-      + (-(Polynomial.C a * Polynomial.X) + 1) : Polynomial ↥K).degree ≤ 2 := by
+        + (-(Polynomial.C a * Polynomial.X) + 1) : Polynomial ↥K).degree ≤ 2 := by
       refine le_trans (Polynomial.degree_add_le _ _) ?_
       refine max_le ?_ ?_
       · rw [Polynomial.degree_X_pow]; simp
@@ -194,13 +196,15 @@ lemma natDegree_realCyclotomicPolynomial
     obtain ⟨k, hk⟩ := (minpoly.natDegree_eq_one_iff).mp h1
     have hkk : ((k : ↥K) : ℂ) = ζ := by
       have h2 := congrArg (fun w : ↥L => ((w : ↥L) : ℂ)) hk
-      rwa [hcoeAlg] at h2
+      rw [hcoeAlg] at h2
+      exact h2
     have hmemK : ζ ∈ K := by
       have hkK : ((k : ↥K) : ℂ) ∈ K := k.property
-      rwa [hkk] at hkK
+      rw [hkk] at hkK
+      exact hkK
     exact hζnK hmemK
   have hmin_pos : 1 ≤ (minpoly ↥K y).natDegree := by
-    obtain h0 | hpos := Nat.eq_zero_or_pos (minpoly ↥K y).natDegree
+    rcases Nat.eq_zero_or_pos (minpoly ↥K y).natDegree with h0 | hpos
     · exfalso
       have hC : minpoly ↥K y = Polynomial.C ((minpoly ↥K y).coeff 0) :=
         Polynomial.eq_C_of_natDegree_eq_zero h0
@@ -234,12 +238,13 @@ lemma natDegree_realCyclotomicPolynomial
       (IntermediateField.topEquiv (F := ↥K) (E := ↥L)).toLinearEquiv
     rw [heq] at hfr
     have h2 : (minpoly ↥K y).natDegree = 2 := by omega
-    rwa [hfr]
+    rw [hfr]
+    exact h2
   -- Tower law and the transfer `ℤ → ℚ`.
   have hfinK : Module.finrank ℚ ↥K = (minpoly ℚ α).natDegree :=
     IntermediateField.adjoin.finrank hαQ
   have htower : Module.finrank ℚ ↥K * Module.finrank ↥K ↥L
-    = Module.finrank ℚ ↥L :=
+      = Module.finrank ℚ ↥L :=
     Module.finrank_mul_finrank ℚ ↥K ↥L
   rw [hfinKL, hfinL] at htower
   have hmap : minpoly ℚ α = (minpoly ℤ α).map (algebraMap ℤ ℚ) := by
@@ -258,4 +263,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

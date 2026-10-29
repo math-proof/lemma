@@ -48,7 +48,7 @@ theorem G3PositivelyAssociated.sq_le_self {E : Type*} {μ : Measure (ConfigSpace
 
 
 theorem bernoulli_g3PositivelyAssociated {E : Type*} [Fintype E] [DecidableEq E]
-    {p : ℝ≥0} (hp : p ≤ 1) :
+    {p : NNReal} (hp : p ≤ 1) :
     G3PositivelyAssociated (bernoulliProductMeasure (E := E) p hp) :=
   fun _ _ hA hB => harris_inequality hp hA hB
 

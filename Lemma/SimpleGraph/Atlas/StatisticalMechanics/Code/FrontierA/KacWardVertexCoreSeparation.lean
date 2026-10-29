@@ -33,7 +33,7 @@ private lemma exists_uniform_vertex_core_separation_eq
 -- given
   (heps : 0 < eps ∧ eps < 1 / 2) :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ v i : Fin n, ∀ y ∈ polygon.closedEdgeCore eps i, (r : ℝ) < dist (polygon.vertex v) y := by
+  ∃ r : NNReal, 0 < r ∧ ∀ v i : Fin n, ∀ y ∈ polygon.closedEdgeCore eps i, (r : ℝ) < dist (polygon.vertex v) y := by
 -- proof
   apply StatMech.FrontierA.KWFiniteSimplePolygon.exists_uniform_vertex_core_separation polygon heps
 
@@ -46,7 +46,7 @@ private lemma vertexBall_disjoint_closedEdgeCoreTube_eq
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n}
   {eps : ℝ}
-  {r : ℝ≥0}
+  {r : NNReal}
   {v i : Fin n}
 -- given
   (hsep : ∀ v i : Fin n, ∀ y ∈ polygon.closedEdgeCore eps i, (r : ℝ) < dist (polygon.vertex v) y) :
@@ -67,7 +67,7 @@ private lemma exists_pairwise_vertexBall_coreTube_separation_eq
 -- given
   (heps : 0 < eps ∧ eps < 1 / 2) :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ v i : Fin n, Disjoint (Metric.ball (polygon.vertex v) (r : ℝ)) (polygon.closedEdgeCoreTube eps r i) := by
+  ∃ r : NNReal, 0 < r ∧ ∀ v i : Fin n, Disjoint (Metric.ball (polygon.vertex v) (r : ℝ)) (polygon.closedEdgeCoreTube eps r i) := by
 -- proof
   apply StatMech.FrontierA.KWFiniteSimplePolygon.exists_pairwise_vertexBall_coreTube_separation polygon heps
 

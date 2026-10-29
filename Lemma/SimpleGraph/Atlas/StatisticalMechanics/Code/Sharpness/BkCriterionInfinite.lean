@@ -82,7 +82,7 @@ private lemma bk_criterion_infinite_lattice_singleton_eq
   {Lam S : Finset (Site d)}
   {u x : Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (huS : u ∈ S)
   (hxS : x ∉ S) :

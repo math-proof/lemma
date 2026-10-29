@@ -144,7 +144,7 @@ lemma lem_15_7_arakelov_L_finite
   apply Set.Finite.of_injOn (f := fun x => (a : K) * x)
     (t := {y : K | IsIntegral ℤ y ∧ ∀ φ : K →+* ℂ, ‖φ y‖ ≤ B})
   · intro x hx
-    simp only [Set.mem_setOf_eq, arakelovL] at hx ⊢
+    simp only [Set.mem_ofPred_eq, arakelovL] at hx ⊢
     constructor
     · have h := ha_int x hx.1
       obtain ⟨c, hc⟩ := h
@@ -155,9 +155,9 @@ lemma lem_15_7_arakelov_L_finite
       calc ‖φ (a : K)‖ * ‖φ x‖
         = (InfinitePlace.mk φ) (a : K) * ‖φ x‖ := by rw [← InfinitePlace.apply φ]
         _ = (InfinitePlace.mk φ) (a : K) * (InfinitePlace.mk φ) x := by
-          rw [← InfinitePlace.apply φ x]
+            rw [← InfinitePlace.apply φ x]
         _ ≤ (InfinitePlace.mk φ) (a : K) * f (InfinitePlace.mk φ) := by
-          gcongr; exact hx.2 _
+            gcongr; exact hx.2 _
         _ ≤ B := Finset.le_sup'_of_le _ (Finset.mem_univ _) le_rfl
   · intro x _ y _ h
     exact mul_left_cancel₀ ha_ne h
@@ -265,7 +265,7 @@ lemma prop_15_9_L_contains_nonzero
   [Field K]
   [NumberField K]
   {I : (FractionalIdeal (𝓞 K)⁰ K)ˣ}
-  {f : InfinitePlace K → ℝ≥0}
+  {f : InfinitePlace K → NNReal}
 -- given
   (h : minkowskiBound K I < MeasureTheory.volume (convexBodyLT K f)) :
 -- imply
@@ -574,7 +574,7 @@ lemma arakelovL_exists_ne_zero
   [Field K]
   [NumberField K]
   {I : (FractionalIdeal (𝓞 K)⁰ K)ˣ}
-  {f : InfinitePlace K → ℝ≥0}
+  {f : InfinitePlace K → NNReal}
 -- given
   (h : minkowskiBound K I < MeasureTheory.volume (convexBodyLT K f)) :
 -- imply
@@ -694,3 +694,4 @@ lemma regulator_eq_det_of_fundSystem
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

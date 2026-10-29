@@ -29,7 +29,7 @@ private lemma reimer_wprob_general_of_core_eq
 private lemma reimer_inequality_of_core_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : ReimerWprobCore)
@@ -220,7 +220,7 @@ private lemma bk_wprob_decreasing_eq
 private lemma bk_inequality_decreasing_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (hp : p ≤ 1)

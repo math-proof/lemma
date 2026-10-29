@@ -53,7 +53,7 @@ set_option linter.unusedDecidableInType false in
 
 
 theorem rc5_core_reimer_inequality_of_injectionAll (h : rc5_BoxReflectInjectionAll) {E : Type*}
-    [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1) (A B : Set (ConfigSpace E)) :
+    [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1) (A B : Set (ConfigSpace E)) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A
         * (bernoulliProductMeasure (E := E) p hp).real B :=

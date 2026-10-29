@@ -53,23 +53,23 @@ theorem fci_faceOpenDual_eq_openSubgraph (w : ConfigSpace (Sym2 (Site 2))) :
 theorem fci_faceDualConfig_measurePreserving :
     MeasurePreserving
       (fci_faceDualConfig : ConfigSpace (Sym2 (Site 2)) → ConfigSpace (Sym2 (Site 2)))
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one)
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) := by
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one)
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) := by
   let reindex := Equiv.piCongrLeft (fun _ => Bool) fci_faceEdgeEquiv.symm
   have hreindex : MeasurePreserving reindex
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one)
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) := by
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one)
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) := by
     refine ⟨(MeasurableEquiv.piCongrLeft (fun _ => Bool) fci_faceEdgeEquiv.symm).measurable, ?_⟩
     unfold bernoulliProductMeasure
     exact Measure.infinitePi_map_piCongrLeft
-      (fun _ : Sym2 (Site 2) => bernoulliMeasure (2⁻¹ : ℝ≥0) half_le_one)
+      (fun _ : Sym2 (Site 2) => bernoulliMeasure (2⁻¹ : NNReal) half_le_one)
       fci_faceEdgeEquiv.symm
   have hcompl : MeasurePreserving
       (fun (eta : ConfigSpace (Sym2 (Site 2))) e => !(eta e))
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one)
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) := by
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one)
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) := by
     refine ⟨measurable_complement, ?_⟩
-    rw [map_complement (2⁻¹ : ℝ≥0) half_le_one]
+    rw [map_complement (2⁻¹ : NNReal) half_le_one]
     congr 1
     exact one_sub_half_eq
   have hcomp := hcompl.comp hreindex

@@ -23,7 +23,7 @@ private lemma psiComplex_mul_eq_exp_inner (z w : ℂ) :
   ring
 
 private lemma  tateFourier_psiComplex_complexTestFun_zero_impl :
-  tateFourier psiComplex ((2 : ℝ≥0∞) • volume) (complexTestFun 0) = complexTestFun 0 := by
+  tateFourier psiComplex ((2 : ENNReal) • volume) (complexTestFun 0) = complexTestFun 0 := by
   funext w
   rw [tateFourier, integral_smul_measure]
   have hker : ∀ z : ℂ, complexTestFun 0 z * psiComplex (z * w) = Complex.exp (-(2 * (π : ℂ)) * ‖z‖ ^ 2
@@ -59,7 +59,7 @@ private lemma  tateFourier_psiComplex_complexTestFun_zero_impl :
 private lemma main
   :
 -- imply
-  tateFourier psiComplex ((2 : ℝ≥0∞) • volume) (complexTestFun 0) = complexTestFun 0 :=
+  tateFourier psiComplex ((2 : ENNReal) • volume) (complexTestFun 0) = complexTestFun 0 :=
 -- proof
   tateFourier_psiComplex_complexTestFun_zero_impl
 

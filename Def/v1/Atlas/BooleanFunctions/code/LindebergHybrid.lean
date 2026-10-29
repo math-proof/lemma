@@ -18,7 +18,7 @@ open MeasureTheory Measure Finset BigOperators ENNReal
 namespace BooleanFourier
 
 def rademacherMeasure : Measure ℝ :=
-  (2 : ℝ≥0∞)⁻¹ • Measure.dirac (-1 : ℝ) + (2 : ℝ≥0∞)⁻¹ • Measure.dirac (1 : ℝ)
+  (2 : ENNReal)⁻¹ • Measure.dirac (-1 : ℝ) + (2 : ENNReal)⁻¹ • Measure.dirac (1 : ℝ)
 
 end BooleanFourier
 end

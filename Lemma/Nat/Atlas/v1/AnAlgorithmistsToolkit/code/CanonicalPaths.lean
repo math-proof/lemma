@@ -14,14 +14,14 @@ namespace CanonicalPaths
 lemma walk_crosses_cut
   [Fintype V]
   [DecidableEq V]
-  {G : SimpleGraph V}
+  (G : SimpleGraph V)
   [DecidableRel G.Adj]
-  {S : Finset V}
+  (S : Finset V)
   {u v : V}
-  {p : G.Walk u v}
 -- given
   (hu : u ∈ S)
-  (hv : v ∉ S) :
+  (hv : v ∉ S)
+  (p : G.Walk u v) :
 -- imply
   ∃ e ∈ p.edges, ∃ a b, e = s(a, b) ∧ a ∈ S ∧ b ∉ S := by
 -- proof
@@ -44,8 +44,6 @@ namespace CanonicalPaths
 lemma conductance_lower_bound
   [Fintype V]
   [DecidableEq V]
-  [Fintype V]
-  [DecidableEq V]
   {G : SimpleGraph V}
   [DecidableRel G.Adj]
   {paths : CanonicalPathSystem G}
@@ -63,7 +61,7 @@ lemma conductance_lower_bound
     unfold maxDegree at hdmax_nat
     have hne : ¬ (∀ v ∈ (Finset.univ : Finset V), G.degree v = 0) := by
       intro hall; have := (Finset.sup_eq_zero (f := fun v => G.degree v)).mpr hall; omega
-    push_neg at hne
+    push Not at hne
     obtain ⟨v, _, hv⟩ := hne
     obtain ⟨w, hw⟩ := (G.degree_pos_iff_exists_adj v).mp (by omega)
     exact Fintype.one_lt_card_iff.mpr ⟨v, w, hw.ne⟩
@@ -98,7 +96,7 @@ lemma conductance_lower_bound
           exact absurd (hz w hw)
             (by have := (G.degree_pos_iff_exists_adj w).mpr ⟨_, hadj⟩; omega)
     have hmin_ne : min (volume G S) (volume G (Finset.univ \ S)) ≠ 0 := by omega
-    unfold conductanceSet; rw [if_neg hmin_ne]
+    unfold conductanceSet; rw [ite_eq_right hmin_ne]
     have hmin_vol_posR : (0 : ℝ) < min (volume G S : ℝ) (volume G (Finset.univ \ S) : ℝ) := by
       rw [← Nat.cast_min]; exact_mod_cast hmin_vol_pos
     have hedge_bound : (S.card : ℝ) * ((Finset.univ \ S).card : ℝ) ≤
@@ -152,7 +150,7 @@ lemma conductance_lower_bound
         Finset.le_sup (f := fun v => G.degree v) (Finset.mem_univ v)) :
         volume G (Finset.univ \ S) ≤ (Finset.univ \ S).card * maxDegree G)
     have hnV_eq : (Fintype.card V : ℝ) = (S.card : ℝ) + ((Finset.univ \ S).card : ℝ) := by
-      exact_mod_cast (Finset.card_univ_diff S ▸
+      exact_mod_cast (Finset.card_univ_sdiff S ▸
         Nat.add_sub_cancel' (Finset.card_le_univ S) :
         S.card + (Finset.univ \ S).card = Fintype.card V).symm
     have hmin_vol_bound : min (volume G S : ℝ) (volume G (Finset.univ \ S) : ℝ) ≤
@@ -180,9 +178,9 @@ lemma conductance_lower_bound
     calc min (S.card : ℝ) ((Finset.univ \ S).card : ℝ) / (4 * b)
       ≤ (S.card : ℝ) * ((Finset.univ \ S).card : ℝ) /
         (b * (Fintype.card V : ℝ)) := by
-        rw [div_le_div_iff₀ (by positivity : (0:ℝ) < 4 * b)
-          (by positivity : (0:ℝ) < b * ↑(Fintype.card V))]
-        nlinarith [hkey]
+          rw [div_le_div_iff₀ (by positivity : (0:ℝ) < 4 * b)
+            (by positivity : (0:ℝ) < b * ↑(Fintype.card V))]
+          nlinarith [hkey]
       _ ≤ (edgesCut G S : ℝ) := by
         rw [div_le_iff₀ (by positivity : (0:ℝ) < b * ↑(Fintype.card V))]
         linarith
@@ -191,3 +189,4 @@ end CanonicalPaths
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

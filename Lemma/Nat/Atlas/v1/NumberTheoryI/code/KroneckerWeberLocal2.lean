@@ -10,7 +10,7 @@ namespace KroneckerWeberLocal2
 [Z2Z4_index2_count](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/KroneckerWeberLocal2.lean)
 -/
 @[path]
-lemma Z2Z4_index2_count
+lemma Z2Z4_index2_count :
 -- imply
   Nat.card {H : Subgroup (Multiplicative (ZMod 2 × ZMod 2 × ZMod 2 × ZMod 2)) // H.index = 2} = 15 :=
 -- proof
@@ -24,7 +24,7 @@ namespace KroneckerWeberLocal2
 [Z4Z3_cyclic_quartic_count](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/KroneckerWeberLocal2.lean)
 -/
 @[path]
-lemma Z4Z3_cyclic_quartic_count
+lemma Z4Z3_cyclic_quartic_count :
 -- imply
   Nat.card {H : Subgroup (Multiplicative (ZMod 4 × ZMod 4 × ZMod 4)) // H.index = 4 ∧ IsCyclic (Multiplicative (ZMod 4 × ZMod 4 × ZMod 4) ⧸ H)} = 28 :=
 -- proof
@@ -161,3 +161,4 @@ private lemma cyclic_normal_index_subgroups_card_eq_of_mulEquiv_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

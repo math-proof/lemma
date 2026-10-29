@@ -17,9 +17,9 @@ variable {Ω : Type*} {m : MeasurableSpace Ω}
 
 
 /-- **Continuous-time stopping time.** A random variable `S : Ω → [0, ∞]` is a
-stopping time relative to a continuous-time filtration `f` (indexed by `ℝ≥0`) when
+stopping time relative to a continuous-time filtration `f` (indexed by `NNReal`) when
 the event `{S > t}` lies in `f t` for every `t ≥ 0`. This is the continuous-time
 analogue used for Brownian motion and related processes. -/
-abbrev IsStoppingTimeContinuous (f : Filtration ℝ≥0 m) (S : Ω → ℝ≥0∞) : Prop :=
+abbrev IsStoppingTimeContinuous (f : Filtration NNReal m) (S : Ω → ENNReal) : Prop :=
   IsStoppingTime f S
 

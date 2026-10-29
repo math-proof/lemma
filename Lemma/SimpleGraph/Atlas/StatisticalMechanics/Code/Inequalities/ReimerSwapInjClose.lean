@@ -175,7 +175,7 @@ private lemma reimer_inequality_of_perOrbitCard_eq
   [DecidableEq α]
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : PerOrbitCardAll)

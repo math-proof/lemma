@@ -27,7 +27,7 @@ variable {E : Type*} [Fintype E] [DecidableEq E]
 
 omit [DecidableEq E] in
 theorem agreementFiberMeasure_singleton_ne_zero
-    (p : E → ℝ≥0) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
+    (p : E → NNReal) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
     (K : Set E) (omega : ConfigSpace E)
     (eta : AgreementFiberPoint K omega) :
     agreementFiberMeasure p (fun e => (hp1 e).le) K omega {eta} ≠ 0 := by

@@ -15,7 +15,7 @@ private lemma fmc_exists_cylinder_symmDiff_lt_eq
   {μ : Measure (ConfigSpace E)}
   [IsFiniteMeasure μ]
   {A : Set (ConfigSpace E)}
-  {ε : ℝ≥0∞}
+  {ε : ENNReal}
 -- given
   (hA : MeasurableSet A)
   (hε : 0 < ε) :

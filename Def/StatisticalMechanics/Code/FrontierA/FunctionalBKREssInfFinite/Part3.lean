@@ -26,7 +26,7 @@ variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
 noncomputable def functionalDisjointEssMaxAt
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1)
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1)
     (f g : ConfigSpace E → ℝ) (omega eta : ConfigSpace E) : ℝ :=
   (disjointCoordinatePairs E).sup' (disjointCoordinatePairs_nonempty (E := E))
     fun pair => cylinderEssInf p hp f pair.1 omega *
@@ -34,7 +34,7 @@ noncomputable def functionalDisjointEssMaxAt
 
 
 noncomputable def functionalDisjointEssMax
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1)
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1)
     (f g : ConfigSpace E → ℝ) (omega : ConfigSpace E) : ℝ :=
   functionalDisjointEssMaxAt p hp f g omega omega
 

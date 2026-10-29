@@ -33,7 +33,7 @@ set_option linter.unusedSectionVars false
 set_option maxRecDepth 4000
 
 
-def bins_Route (p : ℝ≥0) (hp1 : p ≤ 1) : Prop :=
+def bins_Route (p : NNReal) (hp1 : p ≤ 1) : Prop :=
   ∀ n : ℕ, 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n) →
     ∃ (I : Finset (Sym2 (Site 2))) (η₀ : ConfigSpace ↥I) (a₁ a₂ a₃ : Site 2)
       (X : Set (ConfigSpace (Sym2 (Site 2)))),

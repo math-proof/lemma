@@ -15,7 +15,7 @@ namespace LatticeBasics
 lemma isUnimodular_iff_isUnit_det
   [Fintype n]
   [DecidableEq n]
-  {U : Matrix n n ℤ} :
+  (U : Matrix n n ℤ) :
 -- imply
   IsUnimodular U ↔ IsUnit U.det := by
 -- proof
@@ -33,14 +33,15 @@ namespace LatticeBasics
 lemma isUnimodular_inv
   [Fintype n]
   [DecidableEq n]
-  {U : Matrix n n ℤ}
+  (U : Matrix n n ℤ)
 -- given
   (hU : IsUnimodular U) :
 -- imply
   IsUnimodular U⁻¹ := by
 -- proof
-  rw [isUnimodular_iff_isUnit_det] at hU ⊢
-  rwa [det_nonsing_inv]
+  rw [isUnimodular_iff_isUnit_det U] at hU ⊢
+  rw [det_nonsing_inv]
+  exact hU.ringInverse
 
 end LatticeBasics
 
@@ -60,7 +61,7 @@ lemma isUnimodular_inv_iff
   constructor
   · exact isUnimodular_inv U
   · intro hUinv
-    rw [isUnimodular_iff_isUnit_det] at hUinv ⊢
+    rw [isUnimodular_iff_isUnit_det U] at hUinv ⊢
     rw [det_nonsing_inv] at hUinv
     exact isUnit_ringInverse.mp hUinv
 
@@ -82,24 +83,32 @@ lemma equivalent_bases_iff
   lattice n m b₁ hli₁ = lattice n m b₂ hli₂ ↔ ∃ U : Matrix (Fin n) (Fin n) ℤ, IsUnimodular U ∧ ∀ j, b₂ j = ∑ i, (U i j : ℤ) • b₁ i := by
 -- proof
   simp only [lattice]
+
   have hli₁_ℤ : LinearIndependent ℤ b₁ := hli₁.restrict_scalars' ℤ
   constructor
   ·
     intro heq
+
     have hb₂_in_b₁ : ∀ j, b₂ j ∈ Submodule.span ℤ (Set.range b₁) := fun j => by
       rw [heq]; exact Submodule.subset_span (Set.mem_range_self j)
     have hb₁_in_b₂ : ∀ i, b₁ i ∈ Submodule.span ℤ (Set.range b₂) := fun i => by
       rw [← heq]; exact Submodule.subset_span (Set.mem_range_self i)
+
     choose U_coeff hU_eq using fun j =>
       (Submodule.mem_span_range_iff_exists_fun (R := ℤ)).mp (hb₂_in_b₁ j)
     choose V_coeff hV_eq using fun i =>
       (Submodule.mem_span_range_iff_exists_fun (R := ℤ)).mp (hb₁_in_b₂ i)
+
+
     let U : Matrix (Fin n) (Fin n) ℤ := fun i j => U_coeff j i
     let V : Matrix (Fin n) (Fin n) ℤ := fun i j => V_coeff j i
+
     have hUV : U * V = 1 := by
       have lindep := Fintype.linearIndependent_iffₛ.mp hli₁_ℤ
       ext k l
-      simp only [Matrix.mul_apply, Matrix.one_apply, U, V]
+      simp only [Matrix.one_apply, U, V]
+
+
       have key_eq : ∑ i, (fun i => ∑ j, U_coeff j i * V_coeff l j) i • b₁ i = b₁ l := by
         conv_rhs => rw [(hV_eq l).symm]
         simp_rw [fun j => (hU_eq j).symm]
@@ -113,8 +122,9 @@ lemma equivalent_bases_iff
       have triv_eq : ∑ i, (fun i => if i = l then (1 : ℤ) else 0) i • b₁ i = b₁ l := by
         simp [Finset.sum_ite_eq']
       exact lindep _ _ (key_eq.trans triv_eq.symm) k
+
     refine ⟨U, ?_, ?_⟩
-    · rw [isUnimodular_iff_isUnit_det]
+    · rw [isUnimodular_iff_isUnit_det U]
       exact Matrix.isUnit_det_of_right_inverse hUV
     · intro j; exact (hU_eq j).symm
   ·
@@ -122,6 +132,8 @@ lemma equivalent_bases_iff
     have hU_det_unit : IsUnit U.det := (isUnimodular_iff_isUnit_det U).mp hU_unimod
     apply Submodule.span_eq_span
     ·
+
+
       intro v hv
       obtain ⟨i, rfl⟩ := hv
       rw [SetLike.mem_coe, Submodule.mem_span_range_iff_exists_fun (R := ℤ)]
@@ -192,7 +204,7 @@ lemma basis_iff_fundamentalParallelepiped_inter
     intro heq
     ext v
     simp only [Set.mem_inter_iff, Set.mem_singleton_iff, SetLike.mem_coe,
-      fundamentalParallelepiped]
+               fundamentalParallelepiped]
     constructor
     · rintro ⟨⟨x, hx_range, hx_eq⟩, hv_in_Λ⟩
       rw [← heq] at hv_in_Λ
@@ -271,6 +283,7 @@ lemma basis_iff_fundamentalParallelepiped_inter
       rw [← hc_eq]
       congr 1; ext1 i
       rw [hc_int i]; simp only [Int.cast_smul_eq_zsmul]
+
 open MeasureTheory Measure
 
 end LatticeBasics
@@ -293,36 +306,46 @@ lemma blichfeldt
 -- imply
   ∃ z₁ z₂ : Fin n → ℝ, z₁ ∈ S ∧ z₂ ∈ S ∧ z₁ ≠ z₂ ∧ z₁ - z₂ ∈ lattice n n b hli := by
 -- proof
+
   have hdet_eq : latticeDet n n b = |(Matrix.of b).det| := latticeDet_eq_abs_det n b hli
   rw [hdet_eq] at hvol
+
   have hcard : Fintype.card (Fin n) = Module.finrank ℝ (Fin n → ℝ) := by
     rw [Fintype.card_fin, Module.finrank_fin_fun]
   let B := basisOfLinearIndependentOfCardEqFinrank hli hcard
   have hBcoe : (↑B : Fin n → (Fin n → ℝ)) = b :=
     coe_basisOfLinearIndependentOfCardEqFinrank hli hcard
+
   have hvol_fund : volume (ZSpan.fundamentalDomain B) = ENNReal.ofReal |(Matrix.of b).det| := by
     rw [ZSpan.volume_fundamentalDomain B]
     congr 2
     exact congrArg (fun f => (Matrix.of f).det) hBcoe
+
   have hspan_eq : Submodule.span ℤ (range (↑B : Fin n → (Fin n → ℝ))) =
-    Submodule.span ℤ (range b) := by
+      Submodule.span ℤ (range b) := by
     rw [hBcoe]
-  haveI : Countable (Submodule.span ℤ (range (↑B : Fin n → (Fin n → ℝ)))).toAddSubgroup := by
+
+  have : Countable (Submodule.span ℤ (range (↑B : Fin n → (Fin n → ℝ)))).toAddSubgroup := by
     change Countable ↥(Submodule.span ℤ (range (↑B : Fin n → (Fin n → ℝ))))
     infer_instance
+
   have hfund : IsAddFundamentalDomain
-    (Submodule.span ℤ (range (↑B : Fin n → (Fin n → ℝ)))).toAddSubgroup
-    (ZSpan.fundamentalDomain B) volume :=
+      (Submodule.span ℤ (range (↑B : Fin n → (Fin n → ℝ)))).toAddSubgroup
+      (ZSpan.fundamentalDomain B) volume :=
     ZSpan.isAddFundamentalDomain' B volume
+
   have hvol' : volume (ZSpan.fundamentalDomain B) < volume S := by
     rw [hvol_fund]; exact hvol
+
   obtain ⟨x, y, hxy, hnd⟩ :=
     exists_pair_mem_lattice_not_disjoint_vadd hfund hS.nullMeasurableSet hvol'
+
   rw [Set.not_disjoint_iff] at hnd
   obtain ⟨p, hpx, hpy⟩ := hnd
   rw [Set.mem_vadd_set] at hpx hpy
   obtain ⟨s₁, hs₁, hps₁⟩ := hpx
   obtain ⟨s₂, hs₂, hps₂⟩ := hpy
+
   have heq : (x : Fin n → ℝ) + s₁ = (y : Fin n → ℝ) + s₂ := by
     have : (x : Fin n → ℝ) +ᵥ s₁ = (y : Fin n → ℝ) +ᵥ s₂ := hps₁.trans hps₂.symm
     simpa [vadd_eq_add] using this
@@ -344,3 +367,4 @@ end LatticeBasics
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

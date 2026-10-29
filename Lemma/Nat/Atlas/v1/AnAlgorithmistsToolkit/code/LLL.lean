@@ -13,10 +13,9 @@ namespace LLL
 lemma gramSchmidtVec_norm_sq_half
   [NormedAddCommGroup E]
   [InnerProductSpace ℝ E]
-  {b : Fin n → E}
-  {i : Fin n}
--- given
+  (b : Fin n → E)
   (hred : IsLLLReduced b)
+  (i : Fin n)
   (hi : (i : ℕ) + 1 < n) :
 -- imply
   ‖gramSchmidtVec b ⟨i + 1, hi⟩‖ ^ 2 ≥ 1 / 2 * ‖gramSchmidtVec b i‖ ^ 2 := by

@@ -42,13 +42,13 @@ private lemma kummer_bernoulli_norm_le {p k : ℕ} [Fact (Nat.Prime p)]
   (hp2 : p ≠ 2) : padicNorm p (bernoulli k) ≤ (p : ℚ) := by
   have hp := (Fact.out : Nat.Prime p)
   have hpq : (1 : ℚ) ≤ p := by exact_mod_cast hp.one_le
-  obtain hk | rfl | hk := lt_trichotomy k 1
+  rcases lt_trichotomy k 1 with hk | rfl | hk
   · have hk0 : k = 0 := by omega
     subst k
     simpa [bernoulli_zero, padicNorm.one] using hpq
   · have hpdvd2 : ¬p ∣ 2 := by
-    intro h
-    exact hp2 ((Nat.prime_dvd_prime_iff_eq hp Nat.prime_two).mp h)
+      intro h
+      exact hp2 ((Nat.prime_dvd_prime_iff_eq hp Nat.prime_two).mp h)
     have hnorm2 : padicNorm p (2 : ℚ) = 1 := (padicNorm.nat_eq_one_iff 2).2 hpdvd2
     rw [bernoulli_one, padicNorm.div, padicNorm.neg, hnorm2]
     simpa [padicNorm.one] using hpq
@@ -58,8 +58,8 @@ private lemma kummer_bernoulli_norm_le {p k : ℕ} [Fact (Nat.Prime p)]
       rw [hkd]
       obtain ⟨z, hz⟩ := Bernoulli.vonStaudt_clausen d
       have hB : bernoulli (2 * d) = (z : ℚ) -
-        ∑ q ∈ Finset.range (2 * d + 2) with q.Prime ∧ q - 1 ∣ 2 * d,
-          (1 : ℚ) / q :=
+          ∑ q ∈ Finset.range (2 * d + 2) with q.Prime ∧ q - 1 ∣ 2 * d,
+            (1 : ℚ) / q :=
         eq_sub_iff_add_eq.mpr hz.symm
       rw [hB]
       refine padicNorm.sub.trans (max_le ?_ ?_)
@@ -71,8 +71,8 @@ private lemma kummer_bernoulli_norm_le {p k : ℕ} [Fact (Nat.Prime p)]
         · subst q
           simp [show (p : ℚ) ≠ 0 by positivity]
         · have hnot : ¬p ∣ q := by
-          intro hdvd
-          exact hqp ((Nat.prime_dvd_prime_iff_eq hp hqprime).mp hdvd).symm
+            intro hdvd
+            exact hqp ((Nat.prime_dvd_prime_iff_eq hp hqprime).mp hdvd).symm
           rw [padicNorm.div, padicNorm.one, (padicNorm.nat_eq_one_iff q).2 hnot]
           simpa using hpq
     · rw [bernoulli_eq_zero_of_odd hodd hk, padicNorm.zero]
@@ -155,9 +155,9 @@ private lemma kummer_pointwise_expansion (N c k j : ℕ) (hk : 0 < k) :
   calc
     (c * j) ^ k = (N * (c * j / N) + (c * j) % N) ^ k := congrArg (· ^ k) hdiv
     _ = ((c * j) % N) ^ k + k * (N * (c * j / N)) *
-      ((c * j) % N) ^ (k - 1) +
-      ∑ i ∈ Finset.Icc 2 k,
-        (N * (c * j / N)) ^ i * ((c * j) % N) ^ (k - i) * k.choose i :=
+        ((c * j) % N) ^ (k - 1) +
+        ∑ i ∈ Finset.Icc 2 k,
+          (N * (c * j / N)) ^ i * ((c * j) % N) ^ (k - i) * k.choose i :=
       kummer_add_pow_split _ _ _ hk
     _ = _ := by ring
 
@@ -175,21 +175,21 @@ private lemma kummer_power_sum_identity (N c k : ℕ) (hN : 0 < N)
     (∑ j ∈ Finset.range N, j ^ k) + k * N * kummer_R N c k + kummer_H N c k := by
   calc
     c ^ k * (∑ j ∈ Finset.range N, j ^ k) =
-      ∑ j ∈ Finset.range N, (c * j) ^ k := by
+        ∑ j ∈ Finset.range N, (c * j) ^ k := by
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro j _
       rw [mul_pow]
     _ = ∑ j ∈ Finset.range N,
-      (((c * j) % N) ^ k +
-        k * N * ((c * j / N) * ((c * j) % N) ^ (k - 1)) +
-        ∑ i ∈ Finset.Icc 2 k,
-          (N * (c * j / N)) ^ i * ((c * j) % N) ^ (k - i) * k.choose i) := by
+        (((c * j) % N) ^ k +
+          k * N * ((c * j / N) * ((c * j) % N) ^ (k - 1)) +
+          ∑ i ∈ Finset.Icc 2 k,
+            (N * (c * j / N)) ^ i * ((c * j) % N) ^ (k - i) * k.choose i) := by
       apply Finset.sum_congr rfl
       intro j _
       exact kummer_pointwise_expansion N c k j hk
     _ = (∑ j ∈ Finset.range N, ((c * j) % N) ^ k) +
-      k * N * kummer_R N c k + kummer_H N c k := by
+        k * N * kummer_R N c k + kummer_H N c k := by
       simp only [Finset.sum_add_distrib, kummer_R, kummer_H]
       rw [Finset.mul_sum]
     _ = _ := by rw [kummer_sum_mul_mod_pow N c k hN hc]
@@ -360,8 +360,8 @@ private lemma kummer_bound_p_pow {p s : ℕ} [Fact (Nat.Prime p)] :
   induction s with
   | zero => simp [kummer_padicBound]
   | succ s ih =>
-    rw [pow_succ]
-    simpa [Nat.cast_succ] using kummer_bound_mul ih (kummer_bound_p (p := p))
+      rw [pow_succ]
+      simpa [Nat.cast_succ] using kummer_bound_mul ih (kummer_bound_p (p := p))
 
 end MetaMathlibExt
 
@@ -407,7 +407,7 @@ private lemma kummer_H_bound {p s c k : ℕ} [Fact (Nat.Prime p)] (hk : 0 < k) :
   have hp0 : (p : ℚ) ≠ 0 := by exact_mod_cast (Fact.out : Nat.Prime p).ne_zero
   have hkq : (k : ℚ) ≠ 0 := by positivity
   have heq : (kummer_H (p ^ s) c k : ℚ) / ((k : ℚ) * (p ^ s : ℕ)) =
-    (p : ℚ) ^ s * ((A : ℚ) / k) := by
+      (p : ℚ) ^ s * ((A : ℚ) / k) := by
     rw [hA]
     push_cast
     field_simp
@@ -427,9 +427,9 @@ namespace MetaMathlibExt
 private lemma kummer_sum_range_pow_div (N k : ℕ) (hN : 0 < N) :
   (∑ j ∈ Finset.range N, (j : ℚ) ^ k) / (N : ℚ) = bernoulli k + kummer_E N k := by
   have hfactor :
-    (∑ i ∈ Finset.range k,
-      bernoulli i * (Nat.choose (k + 1) i : ℚ) * (N : ℚ) ^ (k + 1 - i) /
-        ((k : ℚ) + 1)) = (N : ℚ) * kummer_E N k := by
+      (∑ i ∈ Finset.range k,
+        bernoulli i * (Nat.choose (k + 1) i : ℚ) * (N : ℚ) ^ (k + 1 - i) /
+          ((k : ℚ) + 1)) = (N : ℚ) * kummer_E N k := by
     rw [kummer_E, Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro i hi
@@ -438,7 +438,7 @@ private lemma kummer_sum_range_pow_div (N k : ℕ) (hN : 0 < N) :
     ring
   rw [sum_range_pow, Finset.sum_range_succ, hfactor]
   have hlast : bernoulli k * (Nat.choose (k + 1) k : ℚ) *
-    (N : ℚ) ^ (k + 1 - k) / ((k : ℚ) + 1) = bernoulli k * N := by
+      (N : ℚ) ^ (k + 1 - k) / ((k : ℚ) + 1) = bernoulli k * N := by
     rw [show k + 1 - k = 1 by omega, Nat.choose_succ_self_right]
     push_cast
     field_simp
@@ -462,17 +462,17 @@ private lemma kummer_E_bound {p s k : ℕ} [Fact (Nat.Prime p)] (hp2 : p ≠ 2) 
   have hB : kummer_padicBound p (-1) (bernoulli i) := by
     simpa [kummer_padicBound] using kummer_bernoulli_norm_le (p := p) (k := i) hp2
   have hcoef : kummer_padicBound p (-(k + 1 : ℕ))
-    ((Nat.choose (k + 1) i : ℚ) / ((k : ℚ) + 1)) := by
+      ((Nat.choose (k + 1) i : ℚ) / ((k : ℚ) + 1)) := by
     simpa [Nat.cast_add, Nat.cast_one] using
       kummer_bound_nat_div (p := p) (Nat.choose (k + 1) i) (k + 1) (by omega)
   have hpow : kummer_padicBound p ((s * (k - i) : ℕ) : ℤ)
-    (((p ^ s : ℕ) : ℚ) ^ (k - i)) := by
+      (((p ^ s : ℕ) : ℚ) ^ (k - i)) := by
     simpa [pow_mul] using kummer_bound_p_pow (p := p) (s := s * (k - i))
   have hterm := kummer_bound_mul (kummer_bound_mul hB hcoef) hpow
   have heq : bernoulli i * (Nat.choose (k + 1) i : ℚ) *
-    ((p ^ s : ℕ) : ℚ) ^ (k - i) / ((k : ℚ) + 1) =
-    (bernoulli i * ((Nat.choose (k + 1) i : ℚ) / ((k : ℚ) + 1))) *
-      ((p ^ s : ℕ) : ℚ) ^ (k - i) := by ring
+      ((p ^ s : ℕ) : ℚ) ^ (k - i) / ((k : ℚ) + 1) =
+      (bernoulli i * ((Nat.choose (k + 1) i : ℚ) / ((k : ℚ) + 1))) *
+        ((p ^ s : ℕ) : ℚ) ^ (k - i) := by ring
   rw [heq]
   refine kummer_bound_mono ?_ hterm
   have hs : s ≤ s * (k - i) := by
@@ -498,11 +498,11 @@ private lemma kummer_voronoi_identity (N c k : ℕ) (hN : 0 < N)
       (((c : ℚ) ^ k - 1) / k) * kummer_E N k := by
   let S : ℚ := ∑ j ∈ Finset.range N, (j : ℚ) ^ k
   have hpower : (c : ℚ) ^ k * S = S +
-    (k : ℚ) * N * kummer_R N c k + kummer_H N c k := by
+      (k : ℚ) * N * kummer_R N c k + kummer_H N c k := by
     dsimp [S]
     exact_mod_cast kummer_power_sum_identity N c k hN hc hk
   have hmain : (((c : ℚ) ^ k - 1) * S) / ((k : ℚ) * N) =
-    kummer_R N c k + (kummer_H N c k : ℚ) / ((k : ℚ) * N) := by
+      kummer_R N c k + (kummer_H N c k : ℚ) / ((k : ℚ) * N) := by
     field_simp
     linear_combination hpower
   have hfaul : S / (N : ℚ) = bernoulli k + kummer_E N k := by
@@ -510,11 +510,11 @@ private lemma kummer_voronoi_identity (N c k : ℕ) (hN : 0 < N)
   have hB : bernoulli k = S / (N : ℚ) - kummer_E N k := by
     linarith
   have hRW : (kummer_R N c k : ℚ) -
-    (c : ℚ) ^ (k - 1) * kummer_W N c k = kummer_D N c k := by
+      (c : ℚ) ^ (k - 1) * kummer_W N c k = kummer_D N c k := by
     exact_mod_cast kummer_R_sub_W N c k
   calc
     ((c : ℚ) ^ k - 1) * bernoulli k / k -
-      (c : ℚ) ^ (k - 1) * kummer_W N c k =
+        (c : ℚ) ^ (k - 1) * kummer_W N c k =
       (((c : ℚ) ^ k - 1) * S) / ((k : ℚ) * N) -
         (((c : ℚ) ^ k - 1) / k) * kummer_E N k -
         (c : ℚ) ^ (k - 1) * kummer_W N c k := by
@@ -544,10 +544,10 @@ private lemma kummer_voronoi_bound {p s c k : ℕ} [Fact (Nat.Prime p)]
     apply kummer_bound_of_pow_dvd
     exact kummer_D_dvd (p ^ s) c k
   have hD : kummer_padicBound p ((s : ℤ) - 2 * k - 2)
-    (kummer_D (p ^ s) c k) := kummer_bound_mono (by omega) hD0
+      (kummer_D (p ^ s) c k) := kummer_bound_mono (by omega) hD0
   have hH0 := kummer_H_bound (p := p) (s := s) (c := c) hk
   have hH : kummer_padicBound p ((s : ℤ) - 2 * k - 2)
-    ((kummer_H (p ^ s) c k : ℚ) / ((k : ℚ) * (p ^ s : ℕ))) :=
+      ((kummer_H (p ^ s) c k : ℚ) / ((k : ℚ) * (p ^ s : ℕ))) :=
     kummer_bound_mono (by omega) hH0
   have hcpow : 1 ≤ c ^ k := Nat.one_le_pow k c hcpos
   have hcoef : kummer_padicBound p (-(k : ℤ)) (((c : ℚ) ^ k - 1) / k) := by
@@ -555,7 +555,7 @@ private lemma kummer_voronoi_bound {p s c k : ℕ} [Fact (Nat.Prime p)]
       kummer_bound_nat_div (p := p) (c ^ k - 1) k hk
   have hE := kummer_E_bound (p := p) (s := s) (k := k) hp2
   have hprod : kummer_padicBound p ((s : ℤ) - 2 * k - 2)
-    ((((c : ℚ) ^ k - 1) / k) * kummer_E (p ^ s) k) := by
+      ((((c : ℚ) ^ k - 1) / k) * kummer_E (p ^ s) k) := by
     have hprod0 := kummer_bound_mul hcoef hE
     convert hprod0 using 1
     ring
@@ -601,9 +601,9 @@ private lemma kummer_W_split (p s c k : ℕ) (hp : 0 < p) (hs : 0 < s) :
       _ = p ^ (s - 1) * p := pow_succ _ _
       _ = p * p ^ (s - 1) := mul_comm _ _
   have hmul :
-    (∑ j ∈ (Finset.range (p ^ s)).filter (fun j => p ∣ j),
-      j ^ (k - 1) * (c * j / p ^ s)) =
-      p ^ (k - 1) * kummer_W (p ^ (s - 1)) c k := by
+      (∑ j ∈ (Finset.range (p ^ s)).filter (fun j => p ∣ j),
+        j ^ (k - 1) * (c * j / p ^ s)) =
+        p ^ (k - 1) * kummer_W (p ^ (s - 1)) c k := by
     rw [kummer_W, Finset.mul_sum]
     symm
     refine Finset.sum_bij (fun i _ => p * i) ?_ ?_ ?_ ?_
@@ -630,10 +630,10 @@ private lemma kummer_W_split (p s c k : ℕ) (hp : 0 < p) (hs : 0 < s) :
   rw [kummer_W, kummer_U]
   calc
     (∑ j ∈ Finset.range (p ^ s), j ^ (k - 1) * (c * j / p ^ s)) =
-      (∑ j ∈ (Finset.range (p ^ s)).filter (fun j => ¬p ∣ j),
-        j ^ (k - 1) * (c * j / p ^ s)) +
-      ∑ j ∈ (Finset.range (p ^ s)).filter (fun j => p ∣ j),
-        j ^ (k - 1) * (c * j / p ^ s) := hpart.symm
+        (∑ j ∈ (Finset.range (p ^ s)).filter (fun j => ¬p ∣ j),
+          j ^ (k - 1) * (c * j / p ^ s)) +
+        ∑ j ∈ (Finset.range (p ^ s)).filter (fun j => p ∣ j),
+          j ^ (k - 1) * (c * j / p ^ s) := hpart.symm
     _ = _ := by rw [hmul]
 
 end MetaMathlibExt
@@ -651,13 +651,13 @@ private lemma kummer_modified_bound {p s c k : ℕ} [Fact (Nat.Prime p)]
       (c : ℚ) ^ (k - 1) * kummer_U p s c k) := by
   have hnow := kummer_voronoi_bound (p := p) (s := s) hp2 hc hcpos hk
   have hnow' : kummer_padicBound p ((s : ℤ) - 2 * k - 3)
-    (((c : ℚ) ^ k - 1) * bernoulli k / k -
-      (c : ℚ) ^ (k - 1) * kummer_W (p ^ s) c k) :=
+      (((c : ℚ) ^ k - 1) * bernoulli k / k -
+        (c : ℚ) ^ (k - 1) * kummer_W (p ^ s) c k) :=
     kummer_bound_mono (by omega) hnow
   have hprev0 := kummer_voronoi_bound (p := p) (s := s - 1) hp2 hc hcpos hk
   have hprev : kummer_padicBound p ((s : ℤ) - 2 * k - 3)
-    (((c : ℚ) ^ k - 1) * bernoulli k / k -
-      (c : ℚ) ^ (k - 1) * kummer_W (p ^ (s - 1)) c k) := by
+      (((c : ℚ) ^ k - 1) * bernoulli k / k -
+        (c : ℚ) ^ (k - 1) * kummer_W (p ^ (s - 1)) c k) := by
     apply kummer_bound_mono _ hprev0
     have hs' : ((s - 1 : ℕ) : ℤ) = (s : ℤ) - 1 := by omega
     rw [hs']
@@ -665,20 +665,20 @@ private lemma kummer_modified_bound {p s c k : ℕ} [Fact (Nat.Prime p)]
   have hpint : kummer_padicBound p 0 ((p : ℚ) ^ (k - 1)) := by
     simpa using kummer_bound_int (p := p) (((p ^ (k - 1) : ℕ) : ℤ))
   have hmul : kummer_padicBound p ((s : ℤ) - 2 * k - 3)
-    ((p : ℚ) ^ (k - 1) *
-      (((c : ℚ) ^ k - 1) * bernoulli k / k -
-        (c : ℚ) ^ (k - 1) * kummer_W (p ^ (s - 1)) c k)) := by
+      ((p : ℚ) ^ (k - 1) *
+        (((c : ℚ) ^ k - 1) * bernoulli k / k -
+          (c : ℚ) ^ (k - 1) * kummer_W (p ^ (s - 1)) c k)) := by
     simpa using kummer_bound_mul hpint hprev
   have hsplit : (kummer_W (p ^ s) c k : ℚ) =
-    kummer_U p s c k + (p : ℚ) ^ (k - 1) * kummer_W (p ^ (s - 1)) c k := by
+      kummer_U p s c k + (p : ℚ) ^ (k - 1) * kummer_W (p ^ (s - 1)) c k := by
     exact_mod_cast kummer_W_split p s c k (Fact.out : Nat.Prime p).pos hs
   have heq : ((c : ℚ) ^ k - 1) * kummer_beta p k -
-    (c : ℚ) ^ (k - 1) * kummer_U p s c k =
-    (((c : ℚ) ^ k - 1) * bernoulli k / k -
-      (c : ℚ) ^ (k - 1) * kummer_W (p ^ s) c k) -
-    (p : ℚ) ^ (k - 1) *
+      (c : ℚ) ^ (k - 1) * kummer_U p s c k =
       (((c : ℚ) ^ k - 1) * bernoulli k / k -
-        (c : ℚ) ^ (k - 1) * kummer_W (p ^ (s - 1)) c k) := by
+        (c : ℚ) ^ (k - 1) * kummer_W (p ^ s) c k) -
+      (p : ℚ) ^ (k - 1) *
+        (((c : ℚ) ^ k - 1) * bernoulli k / k -
+          (c : ℚ) ^ (k - 1) * kummer_W (p ^ (s - 1)) c k) := by
     rw [hsplit]
     unfold kummer_beta
     ring
@@ -719,7 +719,8 @@ private lemma kummer_exists_generator (p : ℕ) [Fact (Nat.Prime p)] :
   have hgpow : g ^ k = 1 := by
     apply Units.ext
     change (g : ZMod p) ^ k = 1
-    rwa [← hcval]
+    rw [← hcval]
+    exact hpowz
   apply hk
   rw [← horder]
   exact orderOf_dvd_iff_pow_eq_one.mpr hgpow
@@ -742,7 +743,8 @@ private lemma kummer_pow_modEq {p t a u v : ℕ} [Fact (Nat.Prime p)]
     rw [Nat.totient_prime_pow hp (by omega)]
     ac_rfl
   have huv' : u % (p ^ (t + 1)).totient = v % (p ^ (t + 1)).totient := by
-    rwa [htot]
+    rw [htot]
+    exact huv
   rw [Nat.ModEq]
   calc
     a ^ u % p ^ (t + 1) = a ^ (u % (p ^ (t + 1)).totient) % p ^ (t + 1) :=
@@ -794,8 +796,8 @@ private lemma kummer_approximants_bound {p m n t s c : ℕ} [Fact (Nat.Prime p)]
   have hmod := kummer_approximants_modEq (s := s) hc hm hn hcong
   have hdvd0 := hmod.dvd
   have hdvd : (p ^ (t + 1) : ℤ) ∣
-    (c ^ (m - 1) * kummer_U p s c m : ℤ) -
-      (c ^ (n - 1) * kummer_U p s c n : ℤ) := by
+      (c ^ (m - 1) * kummer_U p s c m : ℤ) -
+        (c ^ (n - 1) * kummer_U p s c n : ℤ) := by
     rw [← neg_sub]
     exact dvd_neg.mpr hdvd0
   have hb := kummer_bound_of_pow_dvd (p := p) (s := t + 1) hdvd
@@ -819,13 +821,14 @@ private lemma kummer_beta_norm_le_one {p c k X : ℕ} {e : ℤ} [Fact (Nat.Prime
     simpa using kummer_bound_int (p := p) ((X : ℤ))
   have hprod0 : kummer_padicBound p 0 (((c : ℚ) ^ k - 1) * kummer_beta p k) := by
     have heq : ((c : ℚ) ^ k - 1) * kummer_beta p k =
-      (((c : ℚ) ^ k - 1) * kummer_beta p k - X) + X := by ring
+        (((c : ℚ) ^ k - 1) * kummer_beta p k - X) + X := by ring
     rw [heq]
     exact kummer_bound_add happrox0 hX
   have hcpow : 1 ≤ c ^ k := Nat.one_le_pow k c hcpos
   have hunitNorm : padicNorm p ((c : ℚ) ^ k - 1) = 1 := by
     simpa [Nat.cast_sub hcpow] using (padicNorm.nat_eq_one_iff (p := p) (c ^ k - 1)).2 hunit
-  rwa [kummer_padicBound, neg_zero, zpow_zero, padicNorm.mul, hunitNorm, one_mul] at hprod0
+  rw [kummer_padicBound, neg_zero, zpow_zero, padicNorm.mul, hunitNorm, one_mul] at hprod0
+  exact hprod0
 
 end MetaMathlibExt
 
@@ -867,14 +870,14 @@ private lemma kummer_beta_difference_bound {p m n t : ℕ} [Fact (Nat.Prime p)]
   have hAn0 := kummer_modified_bound (p := p) (s := s) (c := c) (k := n)
     hp2 hc hcpos hs hn
   have hAm : kummer_padicBound p ((t : ℤ) + 1)
-    (((c : ℚ) ^ m - 1) * kummer_beta p m -
-      (c : ℚ) ^ (m - 1) * kummer_U p s c m) := by
+      (((c : ℚ) ^ m - 1) * kummer_beta p m -
+        (c : ℚ) ^ (m - 1) * kummer_U p s c m) := by
     apply kummer_bound_mono _ hAm0
     dsimp [s]
     omega
   have hAn : kummer_padicBound p ((t : ℤ) + 1)
-    (((c : ℚ) ^ n - 1) * kummer_beta p n -
-      (c : ℚ) ^ (n - 1) * kummer_U p s c n) := by
+      (((c : ℚ) ^ n - 1) * kummer_beta p n -
+        (c : ℚ) ^ (n - 1) * kummer_U p s c n) := by
     apply kummer_bound_mono _ hAn0
     dsimp [s]
     omega
@@ -887,25 +890,27 @@ private lemma kummer_beta_difference_bound {p m n t : ℕ} [Fact (Nat.Prime p)]
   have hX := kummer_approximants_bound (s := s) hc hm hn hcong
   have hcdiff := kummer_power_difference_bound hc hcong
   have hcorr : kummer_padicBound p ((t : ℤ) + 1)
-    (((c : ℚ) ^ n - (c : ℚ) ^ m) * kummer_beta p n) := by
+      (((c : ℚ) ^ n - (c : ℚ) ^ m) * kummer_beta p n) := by
     simpa using kummer_bound_mul hcdiff hbetaN0
   have htotal : kummer_padicBound p ((t : ℤ) + 1)
-    (((c : ℚ) ^ m - 1) * (kummer_beta p m - kummer_beta p n)) := by
+      (((c : ℚ) ^ m - 1) * (kummer_beta p m - kummer_beta p n)) := by
     have hsum := kummer_bound_add (kummer_bound_add (kummer_bound_sub hAm hAn) hX) hcorr
     have heq : ((c : ℚ) ^ m - 1) * (kummer_beta p m - kummer_beta p n) =
-      ((((c : ℚ) ^ m - 1) * kummer_beta p m -
-        (c : ℚ) ^ (m - 1) * kummer_U p s c m) -
-        (((c : ℚ) ^ n - 1) * kummer_beta p n -
-          (c : ℚ) ^ (n - 1) * kummer_U p s c n) +
-        ((c : ℚ) ^ (m - 1) * kummer_U p s c m -
-          (c : ℚ) ^ (n - 1) * kummer_U p s c n)) +
-        ((c : ℚ) ^ n - (c : ℚ) ^ m) * kummer_beta p n := by ring
-    rwa [heq]
+        ((((c : ℚ) ^ m - 1) * kummer_beta p m -
+            (c : ℚ) ^ (m - 1) * kummer_U p s c m) -
+          (((c : ℚ) ^ n - 1) * kummer_beta p n -
+            (c : ℚ) ^ (n - 1) * kummer_U p s c n) +
+          ((c : ℚ) ^ (m - 1) * kummer_U p s c m -
+            (c : ℚ) ^ (n - 1) * kummer_U p s c n)) +
+          ((c : ℚ) ^ n - (c : ℚ) ^ m) * kummer_beta p n := by ring
+    rw [heq]
+    exact hsum
   have hcpow : 1 ≤ c ^ m := Nat.one_le_pow m c hcpos
   have hunitNorm : padicNorm p ((c : ℚ) ^ m - 1) = 1 := by
     simpa [Nat.cast_sub hcpow] using
       (padicNorm.nat_eq_one_iff (p := p) (c ^ m - 1)).2 hmunit
-  rwa [kummer_padicBound, padicNorm.mul, hunitNorm, one_mul] at htotal
+  rw [kummer_padicBound, padicNorm.mul, hunitNorm, one_mul] at htotal
+  exact htotal
 
 end MetaMathlibExt
 
@@ -944,4 +949,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

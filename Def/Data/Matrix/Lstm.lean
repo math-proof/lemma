@@ -25,5 +25,4 @@ noncomputable def lstm {dx dh : ℕ} (W : Matrix (Fin dx) (Fin 4 × Fin dh) ℝ)
     (fun u => sigmoid (lstmGate W Wh b 3 (x (t + 1)) p.1 u) * Real.tanh (c' u), c')
 
 
--- created on 2026-09-27
 

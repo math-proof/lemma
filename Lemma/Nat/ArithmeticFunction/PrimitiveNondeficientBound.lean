@@ -174,7 +174,7 @@ private lemma sigma_prod (n : ℕ) (hn : n ≠ 0) :
   calc ((∑ d ∈ Nat.divisors n, d : ℕ) : ℝ)
     = ((((∏ p ∈ n.primeFactors,
       (∑ k ∈ Finset.range (n.factorization p + 1), p ^ k) : ℕ))) : ℝ) := by
-      rw [hnat]
+        rw [hnat]
     _ = _ := Nat.cast_prod _ _
 
 end MetaMathlibExt
@@ -520,7 +520,7 @@ private lemma step2 (n p : ℕ) (hn : n ≠ 0) (hp : p ∈ n.primeFactors)
       = ((∑ k ∈ Finset.range (b + 1 + 1), p ^ k : ℕ) : ℝ)
         * (((ArithmeticFunction.sigma 1) (n / p ^ (b + 1)) : ℕ) : ℝ)
         * (((∑ k ∈ Finset.range (b + 1), p ^ k : ℕ) : ℝ) * ((p : ℝ) - 1)) := by
-        rw [e1, ← g2]
+          rw [e1, ← g2]
       _ = (((∑ k ∈ Finset.range (b + 1 + 1), p ^ k : ℕ) : ℝ) * ((p : ℝ) - 1))
         * ((((∑ k ∈ Finset.range (b + 1), p ^ k : ℕ) : ℝ))
           * (((ArithmeticFunction.sigma 1) (n / p ^ (b + 1)) : ℕ) : ℝ)) := by
@@ -551,22 +551,22 @@ private lemma step2 (n p : ℕ) (hn : n ≠ 0) (hp : p ∈ n.primeFactors)
     rw [hps]; ring
   calc ((∑ d ∈ Nat.divisors n, d : ℕ) : ℝ) / (n : ℝ) * (((p : ℝ) ^ ((b + 1) + 1)) - (p : ℝ))
     = (((∑ d ∈ Nat.divisors n, d : ℕ) : ℝ) * (((p : ℝ) ^ (b + 1)) - 1) / (n : ℝ)) * (p : ℝ) := by
-      rw [e_xp]; field_simp
+        rw [e_xp]; field_simp
     _ = (((∑ d ∈ Nat.divisors (n / p), d : ℕ) : ℝ) * (((p : ℝ) ^ ((b + 1) + 1)) - 1) / (n : ℝ))
       * (p : ℝ) := by
-      rw [hsig]
+        rw [hsig]
     _ < (2 * ((n : ℝ) / (p : ℝ)) * (((p : ℝ) ^ ((b + 1) + 1)) - 1) / (n : ℝ)) * (p : ℝ) := by
-      have hfac1 : (((∑ d ∈ Nat.divisors (n / p), d : ℕ) : ℝ)
-        * (((p : ℝ) ^ ((b + 1) + 1)) - 1) / (n : ℝ)) * (p : ℝ)
-        = ((∑ d ∈ Nat.divisors (n / p), d : ℕ) : ℝ)
-          * (((((p : ℝ) ^ ((b + 1) + 1)) - 1) / (n : ℝ)) * (p : ℝ)) := by
-        ring
-      have hfac2 : (2 * ((n : ℝ) / (p : ℝ)) * (((p : ℝ) ^ ((b + 1) + 1)) - 1) / (n : ℝ)) * (p : ℝ)
-        = (2 * ((n : ℝ) / (p : ℝ)))
-          * (((((p : ℝ) ^ ((b + 1) + 1)) - 1) / (n : ℝ)) * (p : ℝ)) := by
-        ring
-      rw [hfac1, hfac2]
-      exact mul_lt_mul_of_pos_right hltR hposK
+        have hfac1 : (((∑ d ∈ Nat.divisors (n / p), d : ℕ) : ℝ)
+          * (((p : ℝ) ^ ((b + 1) + 1)) - 1) / (n : ℝ)) * (p : ℝ)
+          = ((∑ d ∈ Nat.divisors (n / p), d : ℕ) : ℝ)
+            * (((((p : ℝ) ^ ((b + 1) + 1)) - 1) / (n : ℝ)) * (p : ℝ)) := by
+          ring
+        have hfac2 : (2 * ((n : ℝ) / (p : ℝ)) * (((p : ℝ) ^ ((b + 1) + 1)) - 1) / (n : ℝ)) * (p : ℝ)
+          = (2 * ((n : ℝ) / (p : ℝ)))
+            * (((((p : ℝ) ^ ((b + 1) + 1)) - 1) / (n : ℝ)) * (p : ℝ)) := by
+          ring
+        rw [hfac1, hfac2]
+        exact mul_lt_mul_of_pos_right hltR hposK
     _ = 2 * (((p : ℝ) ^ ((b + 1) + 1)) - 1) := by
       field_simp
 
@@ -710,7 +710,7 @@ lemma primitive_nondeficient_prime_power_bound
     calc 1 - 1 / (2 * (∏ q ∈ n.primeFactors, (q : ℝ)))
       = 1 - (n.primeFactors.card : ℝ)
         / (2 * (n.primeFactors.card : ℝ) * (∏ q ∈ n.primeFactors, (q : ℝ))) := by
-        rw [hkk]
+          rw [hkk]
       _ ≤ (1 - 1 / (2 * (n.primeFactors.card : ℝ) * (∏ q ∈ n.primeFactors, (q : ℝ))))
         ^ n.primeFactors.card := hbern
       _ ≤ ∏ p ∈ n.primeFactors, (1 - 1 / ((p : ℝ) ^ (n.factorization p + 1))) := h1
@@ -849,4 +849,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

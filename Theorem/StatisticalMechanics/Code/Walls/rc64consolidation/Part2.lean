@@ -66,7 +66,7 @@ open Classical in
 
 
 theorem rc64_reimer_inequality_of_leaf (h : rc64_ReimerLeaf) {E : Type*} [Fintype E] [DecidableEq E]
-    {p : ℝ≥0} (hp : p ≤ 1) (A B : Set (ConfigSpace E)) :
+    {p : NNReal} (hp : p ≤ 1) (A B : Set (ConfigSpace E)) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A
         * (bernoulliProductMeasure (E := E) p hp).real B :=
@@ -75,7 +75,7 @@ theorem rc64_reimer_inequality_of_leaf (h : rc64_ReimerLeaf) {E : Type*} [Fintyp
 open Classical in
 
 theorem rc64_reimer_inequality_of_boxUnionBound (h : rc64_BoxUnionBound)
-    {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+    {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
     (A B : Set (ConfigSpace E)) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A
@@ -91,7 +91,7 @@ theorem rc64_all_reductions :
         #(rc20_famCylBox 𝒜 ℬ) ≤ #(rc10_reflInter 𝒜 ℬ)) ∧
     (rc64_BoxUnionBound → ReimerWprobCore) ∧
     (rc64_ReimerLeaf → ReimerWprobCore) ∧
-    (∀ (_h : ReimerWprobCore) (E : Type) [Fintype E] [DecidableEq E] (p : ℝ≥0) (hp : p ≤ 1)
+    (∀ (_h : ReimerWprobCore) (E : Type) [Fintype E] [DecidableEq E] (p : NNReal) (hp : p ≤ 1)
         (A B : Set (ConfigSpace E)),
         (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
           ≤ (bernoulliProductMeasure (E := E) p hp).real A

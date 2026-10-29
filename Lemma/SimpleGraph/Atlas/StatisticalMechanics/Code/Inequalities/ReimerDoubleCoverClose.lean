@@ -203,7 +203,7 @@ private lemma rdc_reimer_inequality_of_doubleCover_eq
   [DecidableEq α]
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : rdc_DoubleCoverAll)

@@ -1037,9 +1037,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry13
 
 /--
 [hasSum_entry13_at_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry13.lean)
--/
-@[path]
 so the series is `1` at `k = 0` and `0` elsewhere, summing to `x ^ (0 : ℝ) = 1`. -/
+@[path]
 private lemma hasSum_entry13_at_zero (a x : ℝ) :
   HasSum (fun k : ℕ => if k = 0 then (1 : ℝ) else (0 : ℝ) * ((0 : ℝ) + (k : ℝ)) ^ (k - 1) /
     (a ^ k * (Nat.factorial k : ℝ))) (x ^ (0 : ℝ)) := by
@@ -1187,4 +1186,4 @@ end
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

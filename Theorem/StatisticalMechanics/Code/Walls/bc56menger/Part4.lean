@@ -109,7 +109,7 @@ theorem bc56_offAxisLine_no_runsAlongAxis (j : Fin 2) :
   exact bc56_offAxisLine_no_originNbr (hrHD_rayPt j 1) (hrHD_adj_origin_rayPt_one j) hmem
 
 
-theorem bc56_status (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) :
+theorem bc56_status (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) :
     ((∀ n : ℕ, bc56_BoxClusterReachesNbr d n) →
       bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (atLeastTwoInfinite d) = 0) ∧
     (∀ j : Fin 2, ¬ crr_ClusterRunsAlongAxis bc56_offAxisLine (bc56_lp 0) j) :=

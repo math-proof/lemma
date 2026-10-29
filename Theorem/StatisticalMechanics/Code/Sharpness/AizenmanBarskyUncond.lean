@@ -32,7 +32,7 @@ open ConfigSpace StatMech SimpleGraph
 variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
-theorem pivotalProb_le_union {p : ℝ≥0} (hp : p ≤ 1)
+theorem pivotalProb_le_union {p : NNReal} (hp : p ≤ 1)
     {A B₁ C₁ B₂ C₂ : Set (ConfigSpace E)} {e : E}
     (hB₁ : IsIncreasing B₁) (hC₁ : IsIncreasing C₁)
     (hB₂ : IsIncreasing B₂) (hC₂ : IsIncreasing C₂)
@@ -59,7 +59,7 @@ theorem pivotalProb_le_union {p : ℝ≥0} (hp : p ≤ 1)
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
 
-theorem pivotalProb_connEvent_le {p : ℝ≥0} (hp : p ≤ 1)
+theorem pivotalProb_connEvent_le {p : NNReal} (hp : p ≤ 1)
     (G : SimpleGraph V) (A : Set V) (u : V) (B : Set V)
     (x y : V) (hu : u ∈ A) (hx : x ∈ A) (hy : y ∈ A) :
     pivotalProb (p : ℝ) (connEvent G A u B) s(x, y) ≤
@@ -71,7 +71,7 @@ theorem pivotalProb_connEvent_le {p : ℝ≥0} (hp : p ≤ 1)
     (sab_pivotal_subset_firstExit G A u B x y hu hx hy)
 
 
-theorem deriv_prob_connEvent_le_sum {p : ℝ≥0} (hp : p ≤ 1)
+theorem deriv_prob_connEvent_le_sum {p : NNReal} (hp : p ≤ 1)
     (G : SimpleGraph V) (A : Set V) (u : V) (B : Set V) (bnd : Sym2 V → ℝ)
     (hbnd : ∀ e, pivotalProb (p : ℝ) (connEvent G A u B) e ≤ bnd e) :
     deriv (fun q => prob q (connEvent G A u B)) (p : ℝ) ≤ ∑ e, bnd e := by

@@ -25,7 +25,7 @@ private lemma bel_leafOpenCount_eq_sum_indicator_eq
   {ω : ConfigSpace (Sym2 (Site d))}
   {F : Finset (Sym2 (Site d))} :
 -- imply
-  (bel_leafOpenCount F ω : ℝ≥0∞) = ∑ e ∈ F, ({ω' : ConfigSpace (Sym2 (Site d)) | ω' e = true}.indicator (fun _ => (1 : ℝ≥0∞))) ω := by
+  (bel_leafOpenCount F ω : ENNReal) = ∑ e ∈ F, ({ω' : ConfigSpace (Sym2 (Site d)) | ω' e = true}.indicator (fun _ => (1 : ENNReal))) ω := by
 -- proof
   apply StatMech.Walls.bel_leafOpenCount_eq_sum_indicator ω F
 
@@ -39,7 +39,7 @@ private lemma bel_expLeaf_le_eq
   [IsProbabilityMeasure μ]
   {F : Finset (Sym2 (Site d))} :
 -- imply
-  ∫⁻ ω, (bel_leafOpenCount F ω : ℝ≥0∞) ∂μ ≤ (F.card : ℝ≥0∞) := by
+  ∫⁻ ω, (bel_leafOpenCount F ω : ENNReal) ∂μ ≤ (F.card : ENNReal) := by
 -- proof
   apply StatMech.Walls.bel_expLeaf_le μ F
 
@@ -74,7 +74,7 @@ private lemma bel_bk_uniqueness_of_forest_open_eq
   {F : ℕ → Finset (Sym2 (Site d))}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bpe_CoarseForestNoBnd ω L R (bel_leafOpenCount (F R) ω))
@@ -95,7 +95,7 @@ private lemma bel_status_eq
   [IsProbabilityMeasure μ]
   {F : ℕ → Finset (Sym2 (Site d))} :
 -- imply
-  (∀ R : ℕ, ∫⁻ ω, (bel_leafOpenCount (F R) ω : ℝ≥0∞) ∂μ ≤ ((F R).card : ℝ≥0∞)) ∧ (IsTranslationInvariant (G := Multiplicative (Site d)) μ → 1 ≤ d → ∀ L : ℕ, (∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bpe_CoarseForestNoBnd ω L R (bel_leafOpenCount (F R) ω)) → Filter.Tendsto (fun R => ((F R).card : ℝ) / ((boxFinsetBK d R).card : ℝ)) Filter.atTop (nhds 0) → bc61_CoarseTrifExistence μ L → μ {ω | numInfiniteClusters d ω = ⊤} = 0) := by
+  (∀ R : ℕ, ∫⁻ ω, (bel_leafOpenCount (F R) ω : ENNReal) ∂μ ≤ ((F R).card : ENNReal)) ∧ (IsTranslationInvariant (G := Multiplicative (Site d)) μ → 1 ≤ d → ∀ L : ℕ, (∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bpe_CoarseForestNoBnd ω L R (bel_leafOpenCount (F R) ω)) → Filter.Tendsto (fun R => ((F R).card : ℝ) / ((boxFinsetBK d R).card : ℝ)) Filter.atTop (nhds 0) → bc61_CoarseTrifExistence μ L → μ {ω | numInfiniteClusters d ω = ⊤} = 0) := by
 -- proof
   apply StatMech.Walls.bel_status μ F
 

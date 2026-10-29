@@ -31,9 +31,9 @@ namespace Integration
 
 variable {X : Type*} [MeasurableSpace X]
 
-/-- The Lebesgue integral of a nonnegative `ℝ≥0∞`-valued function over a set `E`
+/-- The Lebesgue integral of a nonnegative `ENNReal`-valued function over a set `E`
 with respect to a measure `μ`. -/
-abbrev lebesgueIntegralNonneg (μ : Measure X) (f : X → ℝ≥0∞) (E : Set X) : ℝ≥0∞ :=
+abbrev lebesgueIntegralNonneg (μ : Measure X) (f : X → ENNReal) (E : Set X) : ENNReal :=
   ∫⁻ x in E, f x ∂μ
 
 end Integration

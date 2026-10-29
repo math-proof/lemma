@@ -25,7 +25,7 @@ variable {α : Type*}
 
 
 theorem isometry_toLpOne :
-    Isometry (toLpOne : SummableTail α → lp (fun _ : α => ℝ) (1 : ℝ≥0∞)) := by
+    Isometry (toLpOne : SummableTail α → lp (fun _ : α => ℝ) (1 : ENNReal)) := by
   apply Isometry.of_dist_eq
   intro u v
   simpa using dist_toLpOne u v
@@ -33,7 +33,7 @@ theorem isometry_toLpOne :
 
 theorem isUniformEmbedding_equivLpOne :
     IsUniformEmbedding
-      (equivLpOne : SummableTail α ≃ lp (fun _ : α => ℝ) (1 : ℝ≥0∞)) :=
+      (equivLpOne : SummableTail α ≃ lp (fun _ : α => ℝ) (1 : ENNReal)) :=
   isometry_toLpOne.isUniformEmbedding
 
 

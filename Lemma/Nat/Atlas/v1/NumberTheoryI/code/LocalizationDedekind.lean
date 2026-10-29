@@ -8,10 +8,13 @@ import Instance.v1.Atlas.NumberTheoryI.code.LocalizationDedekind
 -/
 @[path]
 lemma submodule_eq_iInf_localizedInField_maximal
-  {A : Type*}
+  (A : Type*)
   [CommRing A]
   [IsDomain A]
-  {M : Submodule A K} :
+  (K : Type*)
+  [Field K]
+  [Algebra A K]
+  (M : Submodule A K) :
 -- imply
   (⨅ (v : MaximalSpectrum A), M.localizedInField v.asIdeal.primeCompl) = M := by
 -- proof
@@ -40,10 +43,13 @@ lemma submodule_eq_iInf_localizedInField_maximal
 -/
 @[path]
 lemma submodule_eq_iInf_localizedInField_prime
-  {A : Type*}
+  (A : Type*)
   [CommRing A]
   [IsDomain A]
-  {M : Submodule A K} :
+  (K : Type*)
+  [Field K]
+  [Algebra A K]
+  (M : Submodule A K) :
 -- imply
   (⨅ (v : PrimeSpectrum A), M.localizedInField v.asIdeal.primeCompl) = M := by
 -- proof
@@ -62,10 +68,13 @@ lemma submodule_eq_iInf_localizedInField_prime
 -/
 @[path]
 lemma submodule_eq_iInf_localizedInField
-  {A : Type*}
+  (A : Type*)
   [CommRing A]
   [IsDomain A]
-  {M : Submodule A K} :
+  (K : Type*)
+  [Field K]
+  [Algebra A K]
+  (M : Submodule A K) :
 -- imply
   (⨅ (v : MaximalSpectrum A), M.localizedInField v.asIdeal.primeCompl) = M ∧ (⨅ (v : PrimeSpectrum A), M.localizedInField v.asIdeal.primeCompl) = M :=
 -- proof
@@ -78,7 +87,11 @@ lemma submodule_eq_iInf_localizedInField
 lemma subalgebra_iInf_localization_maximal_eq_bot
   {A : Type*}
   [CommRing A]
-  [IsDomain A] :
+  [IsDomain A]
+  {K : Type*}
+  [Field K]
+  [Algebra A K]
+  [IsFractionRing A K] :
 -- imply
   (⨅ v : MaximalSpectrum A, Localization.subalgebra.ofField K v.asIdeal.primeCompl v.asIdeal.primeCompl_le_nonZeroDivisors) = ⊥ := by
 -- proof
@@ -245,3 +258,4 @@ lemma pid_isDedekindDomain
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

@@ -10,7 +10,7 @@ open Filter
 
 /-- Identity gauge as a `HausdorffDimensionFunction`. -/
 def idHausdorffDimensionFunction : HausdorffDimensionFunction where
-  toContinuousOrderHom := ContinuousOrderHom.id ℝ≥0
+  toContinuousOrderHom := ContinuousOrderHom.id NNReal
   map_zero' := rfl
   map_pos' := fun hr => hr
 

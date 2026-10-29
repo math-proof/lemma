@@ -112,7 +112,7 @@ theorem boundarySourceCurrentPairPMF_superpositionEvent
   rw [PMF.toMeasure_apply_eq_tsum]
   let zFirst := boundarySourceCurrentSum G beta J interior internalSources
   let zSecond := currentSum G beta J exactSecondSources
-  let z : ℝ≥0∞ := (ENNReal.ofReal zFirst * ENNReal.ofReal zSecond)⁻¹
+  let z : ENNReal := (ENNReal.ofReal zFirst * ENNReal.ofReal zSecond)⁻¹
   have hpoint : ∀ pq : EdgeCurrent G × EdgeCurrent G,
       (sourcePairSuperpositionEvent G P).indicator
           (boundarySourceCurrentPairPMF G beta J hbeta hJ interior

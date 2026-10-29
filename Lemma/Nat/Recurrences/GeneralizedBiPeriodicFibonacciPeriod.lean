@@ -67,7 +67,8 @@ lemma generalizedBiPeriodicFibonacci_period_dvd_general
         rw [hk1, hk2, h0, h1] at h3
         rw [hF2] at hper2
         simp only [mul_one, mul_zero, add_zero] at h3
-        rwa [h3] at hper2
+        rw [h3] at hper2
+        exact hper2.symm
       have hcd : c = d := by
         have hF3 : F 3 = b * F 2 + d * F 1 := by
           have h := hodd 3 (by norm_num) (by decide)
@@ -294,7 +295,8 @@ lemma generalizedBiPeriodicFibonacci_period_dvd_general
         conv_lhs => rw [← hdiv]
         rw [pow_add, pow_mul]
       rw [hMt, one_pow, one_mul] at e
-      rwa [hMN] at e
+      rw [hMN] at e
+      exact e.symm
     have hr : N % t = 0 := by
       by_contra hne0
       have hpos : 0 < N % t := Nat.pos_of_ne_zero hne0
@@ -361,7 +363,6 @@ lemma generalizedBiPeriodicFibonacci_period_dvd_general
     obtain ⟨q, hq⟩ := htdvd2
     exact ⟨q, by have h1 : p - 1 = 2 * ((p - 1) / 2) := hhalf2.symm; rw [h1, hq, hk2t]; ring⟩
   exact ⟨hk_dvd1, hsecond⟩
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -374,7 +375,7 @@ namespace MetaMathlibExt
 lemma generalizedBiPeriodicFibonacci_period_dvd
   :
 -- imply
-  ∀ (p : ℕ) (hp : p.Prime) (hpOdd : Odd p)
+  ∀ (p : ℕ) (_hp : p.Prime) (_hpOdd : Odd p)
     (a b c d : ZMod p)
     (F : ℕ → ZMod p)
     (A Δ α β : ZMod p)

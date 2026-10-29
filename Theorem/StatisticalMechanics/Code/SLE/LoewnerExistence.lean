@@ -18,7 +18,7 @@ namespace StatMech.SLE
 
 theorem picard_exists_ball {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [CompleteSpace E] {f : ℝ → E → E} {tmin tmax : ℝ} {t₀ : Icc tmin tmax} {x₀ : E}
-    {a L K : ℝ≥0} (hf : IsPicardLindelof f t₀ x₀ a 0 L K) :
+    {a L K : NNReal} (hf : IsPicardLindelof f t₀ x₀ a 0 L K) :
     ∃ α : ℝ → E, α t₀ = x₀ ∧
       (∀ t ∈ Icc tmin tmax, HasDerivWithinAt α (f t (α t)) (Icc tmin tmax) t) ∧
       (∀ t, α t ∈ closedBall x₀ a) := by
@@ -36,14 +36,14 @@ theorem picard_exists_ball {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E
 theorem picard_exists_ball_family_lipschitz
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
     {f : ℝ → E → E} {tmin tmax : ℝ} {t₀ : Icc tmin tmax} {x₀ : E}
-    {a r L K : ℝ≥0} (hf : IsPicardLindelof f t₀ x₀ a r L K) :
+    {a r L K : NNReal} (hf : IsPicardLindelof f t₀ x₀ a r L K) :
     ∃ α : E → ℝ → E,
       (∀ x ∈ closedBall x₀ r,
         α x t₀ = x ∧
           (∀ t ∈ Icc tmin tmax,
             HasDerivWithinAt (α x) (f t (α x t)) (Icc tmin tmax) t) ∧
           (∀ t, α x t ∈ closedBall x₀ a)) ∧
-      ∃ C : ℝ≥0, ∀ t ∈ Icc tmin tmax,
+      ∃ C : NNReal, ∀ t ∈ Icc tmin tmax,
         LipschitzOnWith C (fun x ↦ α x t) (closedBall x₀ r) := by
   classical
   have hex (x : E) (hx : x ∈ closedBall x₀ r) :=
@@ -87,7 +87,7 @@ theorem loewner_local_flow_chart {W : ℝ → ℝ} (hW : Continuous W)
             HasDerivWithinAt (α z) (loewnerField W t (α z t))
               (Icc (t₀ - z₀.im ^ 2 / 16) (t₀ + z₀.im ^ 2 / 16)) t) ∧
           (∀ t, α z t ∈ loewnerStrip (z₀.im / 2))) ∧
-      ∃ C : ℝ≥0,
+      ∃ C : NNReal,
         ∀ t ∈ Icc (t₀ - z₀.im ^ 2 / 16) (t₀ + z₀.im ^ 2 / 16),
           LipschitzOnWith C (fun z ↦ α z t) (closedBall z₀ (z₀.im / 4)) := by
   have hpl := isPicardLindelof_loewnerField_neighborhood hW hz₀ t₀

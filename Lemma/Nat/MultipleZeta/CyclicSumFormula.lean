@@ -197,7 +197,7 @@ namespace MetaMathlibExt.CyclicSumFormula
 [sum_rotate_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumFormula.lean)
 -/
 @[path]
-private lemma sum_rotate_succ (k : List ℕ) (f : List ℕ → ℝ≥0∞) :
+private lemma sum_rotate_succ (k : List ℕ) (f : List ℕ → ENNReal) :
   ∑ j : Fin k.length, f (k.rotate (j.1 + 1)) = ∑ j : Fin k.length, f (k.rotate j.1) := by
   obtain rfl | hne := eq_or_ne k []
   · simp
@@ -262,13 +262,13 @@ namespace MetaMathlibExt.CyclicSumFormula
 [tailW_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumFormula.lean)
 -/
 @[path]
-private lemma tailW_sum (t : List ℕ) {ι : Type*} (s : Finset ι) (v : ι → ℕ → ℝ≥0∞) (A : ℕ) :
+private lemma tailW_sum (t : List ℕ) {ι : Type*} (s : Finset ι) (v : ι → ℕ → ENNReal) (A : ℕ) :
   tailW t (fun y => ∑ i ∈ s, v i y) A = ∑ i ∈ s, tailW t (v i) A := by
   induction t generalizing A with
   | nil => rfl
   | cons e t ih =>
     unfold tailW
-    trans ∑ y ∈ Finset.Ioo 0 A, ∑ i ∈ s, ((y : ℝ≥0∞) ^ e)⁻¹ * tailW t (v i) y
+    trans ∑ y ∈ Finset.Ioo 0 A, ∑ i ∈ s, ((y : ENNReal) ^ e)⁻¹ * tailW t (v i) y
     · apply Finset.sum_congr rfl
       intro y _
       rw [ih, Finset.mul_sum]
@@ -282,14 +282,14 @@ namespace MetaMathlibExt.CyclicSumFormula
 [tailW_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumFormula.lean)
 -/
 @[path]
-private lemma tailW_add (t : List ℕ) (w w' : ℕ → ℝ≥0∞) (A : ℕ) :
+private lemma tailW_add (t : List ℕ) (w w' : ℕ → ENNReal) (A : ℕ) :
   tailW t (fun y => w y + w' y) A = tailW t w A + tailW t w' A := by
   induction t generalizing A with
   | nil => rfl
   | cons e t ih =>
     unfold tailW
-    trans ∑ y ∈ Finset.Ioo 0 A, (((y : ℝ≥0∞) ^ e)⁻¹ * tailW t w y
-      + ((y : ℝ≥0∞) ^ e)⁻¹ * tailW t w' y)
+    trans ∑ y ∈ Finset.Ioo 0 A, (((y : ENNReal) ^ e)⁻¹ * tailW t w y
+      + ((y : ENNReal) ^ e)⁻¹ * tailW t w' y)
     · apply Finset.sum_congr rfl
       intro y _
       rw [ih, mul_add]
@@ -303,7 +303,7 @@ namespace MetaMathlibExt.CyclicSumFormula
 [tailW_const_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumFormula.lean)
 -/
 @[path]
-private lemma tailW_const_mul (t : List ℕ) (r : ℝ≥0∞) (w : ℕ → ℝ≥0∞) (A : ℕ) :
+private lemma tailW_const_mul (t : List ℕ) (r : ENNReal) (w : ℕ → ENNReal) (A : ℕ) :
   tailW t (fun y => r * w y) A = r * tailW t w A := by
   induction t generalizing A with
   | nil => rfl
@@ -322,7 +322,7 @@ namespace MetaMathlibExt.CyclicSumFormula
 [tailW_congr](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumFormula.lean)
 -/
 @[path]
-private lemma tailW_congr (t : List ℕ) (w w' : ℕ → ℝ≥0∞) (A : ℕ) (hA : 0 < A)
+private lemma tailW_congr (t : List ℕ) (w w' : ℕ → ENNReal) (A : ℕ) (hA : 0 < A)
   (h : ∀ y, 0 < y → y ≤ A → w y = w' y) : tailW t w A = tailW t w' A := by
   induction t generalizing A with
   | nil => exact h A hA (le_refl A)
@@ -343,7 +343,7 @@ namespace MetaMathlibExt.CyclicSumFormula
 [tailW_mono](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumFormula.lean)
 -/
 @[path]
-private lemma tailW_mono (t : List ℕ) (w w' : ℕ → ℝ≥0∞) (A : ℕ) (hA : 0 < A)
+private lemma tailW_mono (t : List ℕ) (w w' : ℕ → ENNReal) (A : ℕ) (hA : 0 < A)
   (h : ∀ y, 0 < y → y ≤ A → w y ≤ w' y) : tailW t w A ≤ tailW t w' A := by
   induction t generalizing A with
   | nil => exact h A hA (le_refl A)
@@ -363,9 +363,9 @@ namespace MetaMathlibExt.CyclicSumFormula
 [tailW_append](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumFormula.lean)
 -/
 @[path]
-private lemma tailW_append (t : List ℕ) (e : ℕ) (w : ℕ → ℝ≥0∞) (A : ℕ) :
+private lemma tailW_append (t : List ℕ) (e : ℕ) (w : ℕ → ENNReal) (A : ℕ) :
   tailW (t ++ [e]) w A
-    = tailW t (fun y => ∑ c ∈ Finset.Ioo 0 y, ((c : ℝ≥0∞) ^ e)⁻¹ * w c) A := by
+    = tailW t (fun y => ∑ c ∈ Finset.Ioo 0 y, ((c : ENNReal) ^ e)⁻¹ * w c) A := by
   induction t generalizing A with
   | nil => rfl
   | cons e' t ih =>
@@ -384,7 +384,7 @@ namespace MetaMathlibExt.CyclicSumFormula
 [tailW_tsum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumFormula.lean)
 -/
 @[path]
-private lemma tailW_tsum (t : List ℕ) {ι : Type*} (v : ι → ℕ → ℝ≥0∞) (A : ℕ) :
+private lemma tailW_tsum (t : List ℕ) {ι : Type*} (v : ι → ℕ → ENNReal) (A : ℕ) :
   (∑' i, tailW t (v i) A) = tailW t (fun y => ∑' i, v i y) A := by
   induction t generalizing A with
   | nil => rfl
@@ -403,7 +403,7 @@ namespace MetaMathlibExt.CyclicSumFormula
 [tsum_Ioo_swap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumFormula.lean)
 -/
 @[path]
-private lemma tsum_Ioo_swap (F : ℕ → ℕ → ℝ≥0∞) :
+private lemma tsum_Ioo_swap (F : ℕ → ℕ → ENNReal) :
   (∑' x : ℕ, (if 0 < x then ∑ y ∈ Finset.Ioo 0 x, F x y else 0))
     = ∑' y : ℕ, (if 0 < y then ∑' x : ℕ, (if y < x then F x y else 0) else 0) := by
   have h1 : ∀ x : ℕ, (∑ y ∈ Finset.Ioo 0 x, F x y)
@@ -461,38 +461,38 @@ namespace MetaMathlibExt.CyclicSumFormula
 -/
 @[path]
 private lemma partial_fraction_cyclic (x c L : ℕ) (hc : 1 ≤ c) (hcx : c < x) (hL : 1 ≤ L) :
-  ((x : ℝ≥0∞) ^ L)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹
+  ((x : ENNReal) ^ L)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹
     + ∑ i ∈ Finset.Icc 1 (L - 1),
-      ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ * ((c : ℝ≥0∞) ^ i)⁻¹
-    = (x : ℝ≥0∞)⁻¹ * ((c : ℝ≥0∞) ^ (L - 1))⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ := by
+      ((x : ENNReal) ^ (L - i + 1))⁻¹ * ((c : ENNReal) ^ i)⁻¹
+    = (x : ENNReal)⁻¹ * ((c : ENNReal) ^ (L - 1))⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ := by
   obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : L ≠ 0)
   simp only [Nat.succ_eq_add_one] at *
   rw [Nat.add_sub_cancel]
   have hx0 : x ≠ 0 := by omega
   have hc0' : c ≠ 0 := by omega
   have hsub0 : x - c ≠ 0 := by omega
-  have hxE0 : (x : ℝ≥0∞) ≠ 0 := by exact_mod_cast hx0
-  have hcE0 : (c : ℝ≥0∞) ≠ 0 := by exact_mod_cast hc0'
-  have hsubE0 : ((x - c : ℕ) : ℝ≥0∞) ≠ 0 := by exact_mod_cast hsub0
-  have hxET : (x : ℝ≥0∞) ≠ ⊤ := ENNReal.natCast_ne_top x
-  have hcET : (c : ℝ≥0∞) ≠ ⊤ := ENNReal.natCast_ne_top c
-  have hsubET : ((x - c : ℕ) : ℝ≥0∞) ≠ ⊤ := ENNReal.natCast_ne_top _
-  have hpowE_ne_zero : ∀ (a : ℝ≥0∞) (k : ℕ), a ≠ 0 → a ^ k ≠ 0 :=
+  have hxE0 : (x : ENNReal) ≠ 0 := by exact_mod_cast hx0
+  have hcE0 : (c : ENNReal) ≠ 0 := by exact_mod_cast hc0'
+  have hsubE0 : ((x - c : ℕ) : ENNReal) ≠ 0 := by exact_mod_cast hsub0
+  have hxET : (x : ENNReal) ≠ ⊤ := ENNReal.natCast_ne_top x
+  have hcET : (c : ENNReal) ≠ ⊤ := ENNReal.natCast_ne_top c
+  have hsubET : ((x - c : ℕ) : ENNReal) ≠ ⊤ := ENNReal.natCast_ne_top _
+  have hpowE_ne_zero : ∀ (a : ENNReal) (k : ℕ), a ≠ 0 → a ^ k ≠ 0 :=
     fun a k ha => ENNReal.pow_ne_zero ha k
-  have hA_ne : ((x : ℝ≥0∞) ^ (n + 1))⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ ≠ ⊤ :=
+  have hA_ne : ((x : ENNReal) ^ (n + 1))⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ ≠ ⊤ :=
     ENNReal.mul_ne_top (ENNReal.inv_ne_top.mpr (hpowE_ne_zero _ _ hxE0))
       (ENNReal.inv_ne_top.mpr hsubE0)
   have hS_ne : ∀ i ∈ Finset.Icc 1 n,
-    ((x : ℝ≥0∞) ^ (n + 1 - i + 1))⁻¹ * ((c : ℝ≥0∞) ^ i)⁻¹ ≠ ⊤ := by
+    ((x : ENNReal) ^ (n + 1 - i + 1))⁻¹ * ((c : ENNReal) ^ i)⁻¹ ≠ ⊤ := by
     intro i _
     exact ENNReal.mul_ne_top
       (ENNReal.inv_ne_top.mpr (hpowE_ne_zero _ _ hxE0))
       (ENNReal.inv_ne_top.mpr (hpowE_ne_zero _ _ hcE0))
-  have hLHS_ne : ((x : ℝ≥0∞) ^ (n + 1))⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹
+  have hLHS_ne : ((x : ENNReal) ^ (n + 1))⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹
     + ∑ i ∈ Finset.Icc 1 n,
-      ((x : ℝ≥0∞) ^ (n + 1 - i + 1))⁻¹ * ((c : ℝ≥0∞) ^ i)⁻¹ ≠ ⊤ :=
+      ((x : ENNReal) ^ (n + 1 - i + 1))⁻¹ * ((c : ENNReal) ^ i)⁻¹ ≠ ⊤ :=
     ENNReal.add_ne_top.mpr ⟨hA_ne, ENNReal.sum_ne_top.mpr hS_ne⟩
-  have hRHS_ne : (x : ℝ≥0∞)⁻¹ * ((c : ℝ≥0∞) ^ n)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ ≠ ⊤ :=
+  have hRHS_ne : (x : ENNReal)⁻¹ * ((c : ENNReal) ^ n)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ ≠ ⊤ :=
     ENNReal.mul_ne_top
       (ENNReal.mul_ne_top (ENNReal.inv_ne_top.mpr hxE0)
         (ENNReal.inv_ne_top.mpr (hpowE_ne_zero _ _ hcE0)))
@@ -611,8 +611,8 @@ namespace MetaMathlibExt.CyclicSumFormula
 -/
 @[path]
 private lemma prod_cons_split (h : ℕ) (tl : List ℕ) (y : ℕ) (n' : Fin tl.length → ℕ) :
-  (∏ a : Fin (tl.length + 1), ((Fin.cons (α := fun _ => ℕ) y n' a : ℝ≥0∞) ^ (h :: tl).get a)⁻¹)
-  = ((y : ℝ≥0∞) ^ h)⁻¹ * ∏ a', ((n' a' : ℝ≥0∞) ^ tl.get a')⁻¹ := by
+  (∏ a : Fin (tl.length + 1), ((Fin.cons (α := fun _ => ℕ) y n' a : ENNReal) ^ (h :: tl).get a)⁻¹)
+  = ((y : ENNReal) ^ h)⁻¹ * ∏ a', ((n' a' : ENNReal) ^ tl.get a')⁻¹ := by
   have hget0 : (h :: tl).get (0 : Fin (tl.length + 1)) = h := rfl
   have hgetS : ∀ i : Fin tl.length, (h :: tl).get i.succ = tl.get i := fun i => rfl
   rw [Fin.prod_univ_succ]
@@ -629,7 +629,7 @@ namespace MetaMathlibExt.CyclicSumFormula
 private lemma zetaE_bounded_eq_tailW (t : List ℕ) (A : ℕ) :
   (∑' n : Fin t.length → ℕ,
     if (∀ a b : Fin t.length, a < b → n b < n a) ∧ (∀ a, 0 < n a) ∧ (∀ a, n a < A)
-    then ∏ a, ((n a : ℝ≥0∞) ^ t.get a)⁻¹ else 0)
+    then ∏ a, ((n a : ENNReal) ^ t.get a)⁻¹ else 0)
   = tailW t (fun _ => 1) A := by
   induction t generalizing A with
   | nil =>
@@ -669,14 +669,14 @@ private lemma zetaE_bounded_eq_tailW (t : List ℕ) (A : ℕ) :
         ∧ (∀ a, 0 < Fin.cons (α := fun _ => ℕ) y n' a)
         ∧ (∀ a, Fin.cons (α := fun _ => ℕ) y n' a < A)
         then ∏ a : Fin (tl.length + 1),
-          ((Fin.cons (α := fun _ => ℕ) y n' a : ℝ≥0∞) ^ (h :: tl).get a)⁻¹ else 0))
-      = (if 0 < y ∧ y < A then ((y : ℝ≥0∞) ^ h)⁻¹ * tailW tl (fun _ => 1) y else 0) := by
+          ((Fin.cons (α := fun _ => ℕ) y n' a : ENNReal) ^ (h :: tl).get a)⁻¹ else 0))
+      = (if 0 < y ∧ y < A then ((y : ENNReal) ^ h)⁻¹ * tailW tl (fun _ => 1) y else 0) := by
       intro y
       by_cases hQ : 0 < y ∧ y < A
       · rw [ite_eq_left hQ]
-        trans ((y : ℝ≥0∞) ^ h)⁻¹ * ∑' n' : Fin tl.length → ℕ,
+        trans ((y : ENNReal) ^ h)⁻¹ * ∑' n' : Fin tl.length → ℕ,
           (if (∀ a b : Fin tl.length, a < b → n' b < n' a) ∧ (∀ a, 0 < n' a) ∧ (∀ a, n' a < y)
-            then ∏ a', ((n' a' : ℝ≥0∞) ^ tl.get a')⁻¹ else 0)
+            then ∏ a', ((n' a' : ENNReal) ^ tl.get a')⁻¹ else 0)
         · rw [← ENNReal.tsum_mul_left]
           apply tsum_congr
           intro n'
@@ -686,16 +686,16 @@ private lemma zetaE_bounded_eq_tailW (t : List ℕ) (A : ℕ) :
           · exact (mul_zero _).symm
         · rw [ih y]
       · rw [ite_eq_right hQ]
-        trans (∑' _ : Fin tl.length → ℕ, (0 : ℝ≥0∞))
+        trans (∑' _ : Fin tl.length → ℕ, (0 : ENNReal))
         · apply tsum_congr
           intro n'
           simp only [hcond y n']
           exact ite_eq_right (fun h => hQ h.1)
         · exact tsum_zero
-    trans ∑' y : ℕ, (if 0 < y ∧ y < A then ((y : ℝ≥0∞) ^ h)⁻¹ * tailW tl (fun _ => 1) y else 0)
+    trans ∑' y : ℕ, (if 0 < y ∧ y < A then ((y : ENNReal) ^ h)⁻¹ * tailW tl (fun _ => 1) y else 0)
     · exact tsum_congr hpoint
     · have hsupp : Function.support
-      (fun y : ℕ => if 0 < y ∧ y < A then ((y : ℝ≥0∞) ^ h)⁻¹ * tailW tl (fun _ => 1) y else 0)
+      (fun y : ℕ => if 0 < y ∧ y < A then ((y : ENNReal) ^ h)⁻¹ * tailW tl (fun _ => 1) y else 0)
       ⊆ ↑(Finset.Ioo 0 A) := by
       intro y hy
       simp only [Function.mem_support, ne_eq] at hy
@@ -704,7 +704,7 @@ private lemma zetaE_bounded_eq_tailW (t : List ℕ) (A : ℕ) :
       exact hy (ite_eq_right hcon)
       rw [tsum_eq_sum' hsupp]
       have hRHS : tailW (h :: tl) (fun _ => 1) A
-        = ∑ y ∈ Finset.Ioo 0 A, ((y : ℝ≥0∞) ^ h)⁻¹ * tailW tl (fun _ => 1) y := rfl
+        = ∑ y ∈ Finset.Ioo 0 A, ((y : ENNReal) ^ h)⁻¹ * tailW tl (fun _ => 1) y := rfl
       rw [hRHS]
       apply Finset.sum_congr rfl
       intro y hy
@@ -744,14 +744,14 @@ private lemma zetaE_cons_eq_zetaR (e : ℕ) (t : List ℕ) : zetaE (e :: t) = ze
       Fin.cons (α := fun _ => ℕ) x n' b < Fin.cons (α := fun _ => ℕ) x n' a)
       ∧ (∀ a, 0 < Fin.cons (α := fun _ => ℕ) x n' a)
       then ∏ a : Fin (t.length + 1),
-        ((Fin.cons (α := fun _ => ℕ) x n' a : ℝ≥0∞) ^ (e :: t).get a)⁻¹ else 0))
-    = (if 0 < x then ((x : ℝ≥0∞) ^ e)⁻¹ * tailW t (fun _ => 1) x else 0) := by
+        ((Fin.cons (α := fun _ => ℕ) x n' a : ENNReal) ^ (e :: t).get a)⁻¹ else 0))
+    = (if 0 < x then ((x : ENNReal) ^ e)⁻¹ * tailW t (fun _ => 1) x else 0) := by
     intro x
     by_cases hQ : 0 < x
     · rw [ite_eq_left hQ]
-      trans ((x : ℝ≥0∞) ^ e)⁻¹ * ∑' n' : Fin t.length → ℕ,
+      trans ((x : ENNReal) ^ e)⁻¹ * ∑' n' : Fin t.length → ℕ,
         (if (∀ a b : Fin t.length, a < b → n' b < n' a) ∧ (∀ a, 0 < n' a) ∧ (∀ a, n' a < x)
-          then ∏ a', ((n' a' : ℝ≥0∞) ^ t.get a')⁻¹ else 0)
+          then ∏ a', ((n' a' : ENNReal) ^ t.get a')⁻¹ else 0)
       · rw [← ENNReal.tsum_mul_left]
         apply tsum_congr
         intro n'
@@ -761,7 +761,7 @@ private lemma zetaE_cons_eq_zetaR (e : ℕ) (t : List ℕ) : zetaE (e :: t) = ze
         · exact (mul_zero _).symm
       · rw [zetaE_bounded_eq_tailW t x]
     · rw [ite_eq_right hQ]
-      trans (∑' _ : Fin t.length → ℕ, (0 : ℝ≥0∞))
+      trans (∑' _ : Fin t.length → ℕ, (0 : ENNReal))
       · apply tsum_congr
         intro n'
         simp only [hcond x n']
@@ -782,7 +782,7 @@ private lemma multipleZetaValue_eq_toReal_zetaE (l : List ℕ) :
   unfold multipleZetaValue zetaE
   have hne : ∀ n : Fin l.length → ℕ,
     (if (∀ a b : Fin l.length, a < b → n b < n a) ∧ (∀ a, 0 < n a) then
-      ∏ a, ((n a : ℝ≥0∞) ^ l.get a)⁻¹ else 0) ≠ ⊤ := by
+      ∏ a, ((n a : ENNReal) ^ l.get a)⁻¹ else 0) ≠ ⊤ := by
     intro n
     split_ifs with h
     · obtain ⟨-, hpos⟩ := h
@@ -1300,10 +1300,10 @@ namespace MetaMathlibExt.CyclicSumFormula
 -/
 @[path]
 private lemma tsum_inv_mul_inv_sub_eq (c A : ℕ) (hc : 1 ≤ c) (hca : c ≤ A) :
-  (∑' x : ℕ, (if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0))
-    = (c : ℝ≥0∞)⁻¹ * harmTail A c := by
+  (∑' x : ℕ, (if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0))
+    = (c : ENNReal)⁻¹ * harmTail A c := by
   have hne : ∀ x : ℕ,
-    (if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0) ≠ ⊤ := by
+    (if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0) ≠ ⊤ := by
     intro x
     split_ifs with hx
     · apply ENNReal.mul_ne_top
@@ -1315,11 +1315,11 @@ private lemma tsum_inv_mul_inv_sub_eq (c A : ℕ) (hc : 1 ≤ c) (hca : c ≤ A)
         exact_mod_cast this
     · exact bot_ne_top
   have hmain : (∑' x : ℕ,
-    (if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0)).toReal
+    (if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0)).toReal
     = (c : ℝ)⁻¹ * ∑ d ∈ Finset.range c, ((((A - d : ℕ)) : ℝ))⁻¹ := by
     rw [ENNReal.tsum_toReal_eq hne]
     have hterm : ∀ x : ℕ,
-      ((if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0)).toReal
+      ((if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0)).toReal
       = (if A < x then ((x : ℝ))⁻¹ * ((((x - c : ℕ)) : ℝ))⁻¹ else 0) := by
       intro x
       split_ifs with hx
@@ -1341,17 +1341,17 @@ private lemma tsum_inv_mul_inv_sub_eq (c A : ℕ) (hc : 1 ≤ c) (hca : c ≤ A)
         exact inv_pos.mpr hpos
       · exact Finset.nonempty_range_iff.mpr (by omega : c ≠ 0)
   have hfin : (∑' x : ℕ,
-    (if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0)) ≠ ⊤ := by
+    (if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0)) ≠ ⊤ := by
     intro hcon
     apply hval0
     have h0 : (∑' x : ℕ,
-      (if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0)).toReal = 0 := by
+      (if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0)).toReal = 0 := by
       rwa [hcon]
     rwa [hmain] at h0
   have hof := congrArg ENNReal.ofReal hmain
   rw [ENNReal.ofReal_toReal hfin] at hof
   have hfin_eq : ∀ d ∈ Finset.range c,
-    ENNReal.ofReal ((((A - d : ℕ)) : ℝ))⁻¹ = ((((A - d : ℕ)) : ℝ≥0∞))⁻¹ := by
+    ENNReal.ofReal ((((A - d : ℕ)) : ℝ))⁻¹ = ((((A - d : ℕ)) : ENNReal))⁻¹ := by
     intro d hd
     have hdc : d < c := Finset.mem_range.mp hd
     have hpos : (0:ℝ) < ((((A - d : ℕ)) : ℝ)) := by
@@ -1384,10 +1384,10 @@ private lemma cycT_add_sum_zetaR_eq (L : ℕ) (hL : 1 ≤ L) (rest : List ℕ) :
     + ∑ i ∈ Finset.Icc 1 (L - 1), zetaR ((L - i + 1) :: (rest ++ [i]))
     = zetaR ((L + 1) :: rest) + topSum 0 rest (wWeight L) := by
   have htailW : ∀ x : ℕ, 0 < x →
-    ((x : ℝ≥0∞) ^ L)⁻¹ * tailW rest (harmTail x) x
+    ((x : ENNReal) ^ L)⁻¹ * tailW rest (harmTail x) x
       + ∑ i ∈ Finset.Icc 1 (L - 1),
-        ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ * tailW (rest ++ [i]) (fun _ => 1) x
-    = ((x : ℝ≥0∞) ^ (L + 1))⁻¹ * tailW rest (fun _ => 1) x
+        ((x : ENNReal) ^ (L - i + 1))⁻¹ * tailW (rest ++ [i]) (fun _ => 1) x
+    = ((x : ENNReal) ^ (L + 1))⁻¹ * tailW rest (fun _ => 1) x
       + tailW rest (wWeight L x) x := by
     intro x hx
     simp only [tailW_append]
@@ -1397,28 +1397,28 @@ private lemma cycT_add_sum_zetaR_eq (L : ℕ) (hL : 1 ≤ L) (rest : List ℕ) :
     refine tailW_congr _ _ _ _ hx (fun y hy0 hyx => ?_)
     simp only [mul_one]
     have hsplit : harmTail x y
-      = ((x : ℝ≥0∞))⁻¹
-        + ∑ c ∈ Finset.Ioo 0 y, ((((x - c : ℕ)) : ℝ≥0∞))⁻¹ := by
+      = ((x : ENNReal))⁻¹
+        + ∑ c ∈ Finset.Ioo 0 y, ((((x - c : ℕ)) : ENNReal))⁻¹ := by
       unfold harmTail
       have hsplit' : Finset.range y = insert 0 (Finset.Ioo 0 y) := by
         ext c
         simp only [Finset.mem_range, Finset.mem_insert, Finset.mem_Ioo]
         omega
       rw [hsplit', Finset.sum_insert (by simp), Nat.sub_zero]
-    have hx0 : (x : ℝ≥0∞) ≠ 0 := by
+    have hx0 : (x : ENNReal) ≠ 0 := by
       have hx0' : x ≠ 0 := by omega
       exact_mod_cast hx0'
-    have hxT : (x : ℝ≥0∞) ≠ ⊤ := ENNReal.natCast_ne_top x
-    have hhead : ((x : ℝ≥0∞) ^ L)⁻¹ * (x : ℝ≥0∞)⁻¹
-      = ((x : ℝ≥0∞) ^ (L + 1))⁻¹ := by
-      have ha : ((x : ℝ≥0∞) ^ L) ≠ 0 ∨ (x : ℝ≥0∞) ≠ ⊤ := Or.inr hxT
-      have hb : ((x : ℝ≥0∞) ^ L) ≠ ⊤ ∨ (x : ℝ≥0∞) ≠ 0 := Or.inr hx0
+    have hxT : (x : ENNReal) ≠ ⊤ := ENNReal.natCast_ne_top x
+    have hhead : ((x : ENNReal) ^ L)⁻¹ * (x : ENNReal)⁻¹
+      = ((x : ENNReal) ^ (L + 1))⁻¹ := by
+      have ha : ((x : ENNReal) ^ L) ≠ 0 ∨ (x : ENNReal) ≠ ⊤ := Or.inr hxT
+      have hb : ((x : ENNReal) ^ L) ≠ ⊤ ∨ (x : ENNReal) ≠ 0 := Or.inr hx0
       rw [← ENNReal.mul_inv ha hb, ← pow_succ]
     have hswap : (∑ i ∈ Finset.Icc 1 (L - 1),
-      ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹
-        * ∑ c ∈ Finset.Ioo 0 y, ((c : ℝ≥0∞) ^ i)⁻¹)
+      ((x : ENNReal) ^ (L - i + 1))⁻¹
+        * ∑ c ∈ Finset.Ioo 0 y, ((c : ENNReal) ^ i)⁻¹)
       = ∑ c ∈ Finset.Ioo 0 y, ∑ i ∈ Finset.Icc 1 (L - 1),
-        ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ * ((c : ℝ≥0∞) ^ i)⁻¹ := by
+        ((x : ENNReal) ^ (L - i + 1))⁻¹ * ((c : ENNReal) ^ i)⁻¹ := by
       simp only [Finset.mul_sum]
       exact Finset.sum_comm
     rw [hsplit, mul_add, Finset.mul_sum, hhead, hswap, add_assoc]
@@ -1450,15 +1450,15 @@ namespace MetaMathlibExt.CyclicSumFormula
 -/
 @[path]
 private lemma cpow_succ_inv (L c : ℕ) (hL : 1 ≤ L) (hc : 1 ≤ c) :
-  ((c : ℝ≥0∞) ^ (L - 1))⁻¹ * (c : ℝ≥0∞)⁻¹ = ((c : ℝ≥0∞) ^ L)⁻¹ := by
+  ((c : ENNReal) ^ (L - 1))⁻¹ * (c : ENNReal)⁻¹ = ((c : ENNReal) ^ L)⁻¹ := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le' hL
   rw [Nat.add_sub_cancel]
-  have hc0 : (c : ℝ≥0∞) ≠ 0 := by
+  have hc0 : (c : ENNReal) ≠ 0 := by
     have hc0' : c ≠ 0 := by omega
     exact_mod_cast hc0'
-  have hcT : (c : ℝ≥0∞) ≠ ⊤ := ENNReal.natCast_ne_top c
-  have ha : ((c : ℝ≥0∞) ^ k) ≠ 0 ∨ (c : ℝ≥0∞) ≠ ⊤ := Or.inr hcT
-  have hb : ((c : ℝ≥0∞) ^ k) ≠ ⊤ ∨ (c : ℝ≥0∞) ≠ 0 := Or.inr hc0
+  have hcT : (c : ENNReal) ≠ ⊤ := ENNReal.natCast_ne_top c
+  have ha : ((c : ENNReal) ^ k) ≠ 0 ∨ (c : ENNReal) ≠ ⊤ := Or.inr hcT
+  have hb : ((c : ENNReal) ^ k) ≠ ⊤ ∨ (c : ENNReal) ≠ 0 := Or.inr hc0
   rw [pow_succ, ENNReal.mul_inv ha hb]
 
 end MetaMathlibExt.CyclicSumFormula
@@ -1485,14 +1485,14 @@ namespace MetaMathlibExt.CyclicSumFormula
 -/
 @[path]
 private lemma inner_single (L c y : ℕ) (hL : 1 ≤ L) (hc : 1 ≤ c) (hcy : c ≤ y) :
-  (∑' x : ℕ, (if y < x then (x : ℝ≥0∞)⁻¹ * ((c : ℝ≥0∞) ^ (L - 1))⁻¹
-    * ((((x - c : ℕ))) : ℝ≥0∞)⁻¹ else 0))
-  = ((c : ℝ≥0∞) ^ L)⁻¹ * harmTail y c := by
+  (∑' x : ℕ, (if y < x then (x : ENNReal)⁻¹ * ((c : ENNReal) ^ (L - 1))⁻¹
+    * ((((x - c : ℕ))) : ENNReal)⁻¹ else 0))
+  = ((c : ENNReal) ^ L)⁻¹ * harmTail y c := by
   have hfactor : ∀ x : ℕ,
-    (if y < x then (x : ℝ≥0∞)⁻¹ * ((c : ℝ≥0∞) ^ (L - 1))⁻¹
-      * ((((x - c : ℕ))) : ℝ≥0∞)⁻¹ else 0)
-    = ((c : ℝ≥0∞) ^ (L - 1))⁻¹
-      * (if y < x then (x : ℝ≥0∞)⁻¹ * ((((x - c : ℕ))) : ℝ≥0∞)⁻¹ else 0) := by
+    (if y < x then (x : ENNReal)⁻¹ * ((c : ENNReal) ^ (L - 1))⁻¹
+      * ((((x - c : ℕ))) : ENNReal)⁻¹ else 0)
+    = ((c : ENNReal) ^ (L - 1))⁻¹
+      * (if y < x then (x : ENNReal)⁻¹ * ((((x - c : ℕ))) : ENNReal)⁻¹ else 0) := by
     intro x
     split_ifs with h
     · ring
@@ -1511,11 +1511,11 @@ namespace MetaMathlibExt.CyclicSumFormula
 @[path]
 private lemma inner_tsum_wWeight (L : ℕ) (hL : 1 ≤ L) (y z : ℕ) (hzy : z ≤ y) :
   (∑' x : ℕ, (if y < x then wWeight L x z else 0))
-  = ∑ c ∈ Finset.Ioo 0 z, ((c : ℝ≥0∞) ^ L)⁻¹ * harmTail y c := by
+  = ∑ c ∈ Finset.Ioo 0 z, ((c : ENNReal) ^ L)⁻¹ * harmTail y c := by
   have hpush : ∀ x : ℕ, (if y < x then wWeight L x z else 0)
     = ∑ c ∈ Finset.Ioo 0 z,
-      (if y < x then (x : ℝ≥0∞)⁻¹ * ((c : ℝ≥0∞) ^ (L - 1))⁻¹
-        * ((((x - c : ℕ))) : ℝ≥0∞)⁻¹ else 0) := by
+      (if y < x then (x : ENNReal)⁻¹ * ((c : ENNReal) ^ (L - 1))⁻¹
+        * ((((x - c : ℕ))) : ENNReal)⁻¹ else 0) := by
     intro x
     unfold wWeight
     split_ifs with h
@@ -1545,7 +1545,7 @@ private lemma topSum_wWeight_eq_cycT (L : ℕ) (hL : 1 ≤ L) (rest : List ℕ) 
     simp only [List.nil_append]
     unfold cycT topSum
     simp only [pow_zero, inv_one, one_mul]
-    have hnil : ∀ (w : ℕ → ℝ≥0∞) (A : ℕ), tailW [] w A = w A := fun w A => rfl
+    have hnil : ∀ (w : ℕ → ENNReal) (A : ℕ), tailW [] w A = w A := fun w A => rfl
     simp only [hnil]
     unfold wWeight
     rw [tsum_Ioo_swap]
@@ -1557,7 +1557,7 @@ private lemma topSum_wWeight_eq_cycT (L : ℕ) (hL : 1 ≤ L) (rest : List ℕ) 
   | cons e r =>
     have htail : ∀ x : ℕ, tailW (e :: r) (wWeight L x) x
       = ∑ y ∈ Finset.Ioo 0 x,
-        ((y : ℝ≥0∞) ^ e)⁻¹ * tailW r (wWeight L x) y :=
+        ((y : ENNReal) ^ e)⁻¹ * tailW r (wWeight L x) y :=
       fun x => rfl
     unfold topSum
     simp only [pow_zero, inv_one, one_mul, htail]
@@ -1569,8 +1569,8 @@ private lemma topSum_wWeight_eq_cycT (L : ℕ) (hL : 1 ≤ L) (rest : List ℕ) 
     intro y
     split_ifs with hy0
     · have hf : ∀ x : ℕ,
-      (if y < x then ((y : ℝ≥0∞) ^ e)⁻¹ * tailW r (wWeight L x) y else 0)
-      = ((y : ℝ≥0∞) ^ e)⁻¹
+      (if y < x then ((y : ENNReal) ^ e)⁻¹ * tailW r (wWeight L x) y else 0)
+      = ((y : ENNReal) ^ e)⁻¹
         * (if y < x then tailW r (wWeight L x) y else 0) := by
       intro x
       split_ifs with h
@@ -1613,35 +1613,35 @@ namespace MetaMathlibExt.CyclicSumFormula
 -/
 @[path]
 private lemma harmTail_le_one_add (x y : ℕ) (hy0 : 0 < y) (hyx : y ≤ x) :
-  harmTail x y ≤ 1 + ∑ d ∈ Finset.Ioo 0 y, ((d : ℝ≥0∞) ^ 1)⁻¹ * 1 := by
+  harmTail x y ≤ 1 + ∑ d ∈ Finset.Ioo 0 y, ((d : ENNReal) ^ 1)⁻¹ * 1 := by
   simp only [pow_one, mul_one]
   have hterm : ∀ c ∈ Finset.range y,
-    ((((x - c : ℕ)) : ℝ≥0∞))⁻¹ ≤ ((((y - c : ℕ)) : ℝ≥0∞))⁻¹ := by
+    ((((x - c : ℕ)) : ENNReal))⁻¹ ≤ ((((y - c : ℕ)) : ENNReal))⁻¹ := by
     intro c hc
     apply ENNReal.inv_le_inv.mpr
     exact_mod_cast Nat.sub_le_sub_right hyx c
   have hsum1 : harmTail x y
-    ≤ ∑ c ∈ Finset.range y, ((((y - c : ℕ)) : ℝ≥0∞))⁻¹ := by
+    ≤ ∑ c ∈ Finset.range y, ((((y - c : ℕ)) : ENNReal))⁻¹ := by
     unfold harmTail
     exact Finset.sum_le_sum hterm
-  have hreflect : (∑ c ∈ Finset.range y, ((((y - c : ℕ)) : ℝ≥0∞))⁻¹)
-    = ∑ c ∈ Finset.range y, ((((c + 1 : ℕ)) : ℝ≥0∞))⁻¹ := by
+  have hreflect : (∑ c ∈ Finset.range y, ((((y - c : ℕ)) : ENNReal))⁻¹)
+    = ∑ c ∈ Finset.range y, ((((c + 1 : ℕ)) : ENNReal))⁻¹ := by
     have h1 : ∀ c ∈ Finset.range y,
-      ((((y - c : ℕ)) : ℝ≥0∞))⁻¹
-        = ((((y - 1 - c + 1 : ℕ)) : ℝ≥0∞))⁻¹ := by
+      ((((y - c : ℕ)) : ENNReal))⁻¹
+        = ((((y - 1 - c + 1 : ℕ)) : ENNReal))⁻¹ := by
       intro c hc
       have hcy : c < y := Finset.mem_range.mp hc
       have heq : y - c = y - 1 - c + 1 := by omega
       rw [heq]
-    trans ∑ c ∈ Finset.range y, ((((y - 1 - c + 1 : ℕ)) : ℝ≥0∞))⁻¹
+    trans ∑ c ∈ Finset.range y, ((((y - 1 - c + 1 : ℕ)) : ENNReal))⁻¹
     · exact Finset.sum_congr rfl h1
-    · exact Finset.sum_range_reflect (fun k => ((((k + 1 : ℕ)) : ℝ≥0∞))⁻¹) y
+    · exact Finset.sum_range_reflect (fun k => ((((k + 1 : ℕ)) : ENNReal))⁻¹) y
   obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le' (show 1 ≤ y by omega)
-  have hstep3 : (∑ c ∈ Finset.range (m + 1), ((((c + 1 : ℕ)) : ℝ≥0∞))⁻¹)
-    ≤ 1 + ∑ d ∈ Finset.Ioo 0 (m + 1), ((d : ℝ≥0∞))⁻¹ := by
+  have hstep3 : (∑ c ∈ Finset.range (m + 1), ((((c + 1 : ℕ)) : ENNReal))⁻¹)
+    ≤ 1 + ∑ d ∈ Finset.Ioo 0 (m + 1), ((d : ENNReal))⁻¹ := by
     rw [Finset.sum_range_succ]
-    have hIoo : (∑ d ∈ Finset.Ioo 0 (m + 1), ((d : ℝ≥0∞))⁻¹)
-      = ∑ c ∈ Finset.range m, ((((c + 1 : ℕ)) : ℝ≥0∞))⁻¹ := by
+    have hIoo : (∑ d ∈ Finset.Ioo 0 (m + 1), ((d : ENNReal))⁻¹)
+      = ∑ c ∈ Finset.range m, ((((c + 1 : ℕ)) : ENNReal))⁻¹ := by
       have hIoo_eq : Finset.Ioo 0 (m + 1) = Finset.Ico 1 (m + 1) := by
         ext d
         simp only [Finset.mem_Ioo, Finset.mem_Ico]
@@ -1652,21 +1652,21 @@ private lemma harmTail_le_one_add (x y : ℕ) (hy0 : 0 < y) (hyx : y ≤ x) :
       have hac : (1 : ℕ) + c = c + 1 := add_comm 1 c
       rw [hac]
     rw [hIoo]
-    have hle : ((((m + 1 : ℕ)) : ℝ≥0∞))⁻¹ ≤ 1 := by
-      have h1y : (1 : ℝ≥0∞) ≤ ((m + 1 : ℕ) : ℝ≥0∞) := by
+    have hle : ((((m + 1 : ℕ)) : ENNReal))⁻¹ ≤ 1 := by
+      have h1y : (1 : ENNReal) ≤ ((m + 1 : ℕ) : ENNReal) := by
         exact_mod_cast (by omega : (1 : ℕ) ≤ m + 1)
       have h2 := ENNReal.inv_le_inv.mpr h1y
       rwa [inv_one] at h2
-    calc (∑ c ∈ Finset.range m, ((((c + 1 : ℕ)) : ℝ≥0∞))⁻¹)
-      + ((((m + 1 : ℕ)) : ℝ≥0∞))⁻¹
-      ≤ (∑ c ∈ Finset.range m, ((((c + 1 : ℕ)) : ℝ≥0∞))⁻¹) + 1 :=
+    calc (∑ c ∈ Finset.range m, ((((c + 1 : ℕ)) : ENNReal))⁻¹)
+      + ((((m + 1 : ℕ)) : ENNReal))⁻¹
+      ≤ (∑ c ∈ Finset.range m, ((((c + 1 : ℕ)) : ENNReal))⁻¹) + 1 :=
         add_le_add_right hle _
-      _ = 1 + (∑ c ∈ Finset.range m, ((((c + 1 : ℕ)) : ℝ≥0∞))⁻¹) :=
+      _ = 1 + (∑ c ∈ Finset.range m, ((((c + 1 : ℕ)) : ENNReal))⁻¹) :=
         add_comm _ _
   calc harmTail x (m + 1)
-    ≤ ∑ c ∈ Finset.range (m + 1), ((((m + 1 - c : ℕ)) : ℝ≥0∞))⁻¹ := hsum1
-    _ = ∑ c ∈ Finset.range (m + 1), ((((c + 1 : ℕ)) : ℝ≥0∞))⁻¹ := hreflect
-    _ ≤ 1 + ∑ d ∈ Finset.Ioo 0 (m + 1), ((d : ℝ≥0∞))⁻¹ := hstep3
+    ≤ ∑ c ∈ Finset.range (m + 1), ((((m + 1 - c : ℕ)) : ENNReal))⁻¹ := hsum1
+    _ = ∑ c ∈ Finset.range (m + 1), ((((c + 1 : ℕ)) : ENNReal))⁻¹ := hreflect
+    _ ≤ 1 + ∑ d ∈ Finset.Ioo 0 (m + 1), ((d : ENNReal))⁻¹ := hstep3
 
 end MetaMathlibExt.CyclicSumFormula
 

@@ -82,7 +82,7 @@ private lemma X_pow_sub_one_eq_prod
     if h0 : (X ^ m - 1 : R[X]) - ∏ j ∈ range m, (X - C (ζ ^ j)) = 0 then
       rw [h0, Polynomial.degree_zero]; exact WithBot.bot_lt_coe m
     else
-      have := Polynomial.degree_sub_lt (p := (X ^ m - 1 : R[X])) (q := ∏ j ∈ range m, (X - C (ζ ^ j)))
+      have := Polynomial.degree_sub_lt_left (p := (X ^ m - 1 : R[X])) (q := ∏ j ∈ range m, (X - C (ζ ^ j)))
       (by rw [Polynomial.degree_eq_natDegree hPm.ne_zero, Polynomial.degree_eq_natDegree hQm.ne_zero, hPd, hQd])
       hPm.ne_zero (by rw [hPm.leadingCoeff, hQm.leadingCoeff])
       rwa [Polynomial.degree_eq_natDegree hPm.ne_zero, hPd] at this
@@ -105,7 +105,7 @@ private lemma helper_main
   have hD := congrArg (fun p : R[X] => (Polynomial.derivative p).eval 1) hfac
   simp only [Polynomial.derivative_sub, Polynomial.derivative_X_pow, Polynomial.derivative_one, sub_zero,
     Polynomial.eval_mul, Polynomial.eval_pow, Polynomial.eval_X, one_pow, mul_one, Polynomial.eval_C,
-    Polynomial.derivative_prod_finset, Polynomial.eval_finset_sum, Polynomial.derivative_sub,
+    Polynomial.derivative_prod_finset, Polynomial.eval_finsetSum, Polynomial.derivative_sub,
     Polynomial.derivative_X, Polynomial.derivative_C] at hD
   show IsUnit ((Nat.succ N : ℕ) : R)
   rw [hD, Finset.sum_eq_single_of_mem 0 (Finset.mem_range.mpr (Nat.succ_pos N))]
@@ -138,3 +138,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

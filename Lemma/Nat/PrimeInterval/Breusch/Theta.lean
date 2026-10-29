@@ -12,7 +12,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma M34_dvd
-  {t : ℕ} :
+  (t : ℕ) :
 -- imply
   (3*t)! * (2*t)! * t ! ∣ (6*t)! := by
 -- proof
@@ -35,7 +35,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma M34_pos
-  {t : ℕ} :
+  (t : ℕ) :
 -- imply
   0 < M34 t := by
 -- proof
@@ -51,7 +51,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma M34_eq_mul
-  {t : ℕ} :
+  (t : ℕ) :
 -- imply
   M34 t * ((3*t)! * (2*t)! * t !) = (6*t)! := by
 -- proof
@@ -67,7 +67,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma M34_eq_choose_mul
-  {t : ℕ} :
+  (t : ℕ) :
 -- imply
   M34 t = Nat.choose (6*t) (3*t) * Nat.choose (3*t) t := by
 -- proof
@@ -112,7 +112,8 @@ lemma choose_middle_half
     rwa [show (2*m-1)+1 = 2*m by omega, show (m-1)+1 = m by omega] at e
   have symm : Nat.choose (2*m-1) (m-1) = Nat.choose (2*m-1) m := by
     have h := Nat.choose_symm (show m-1 ≤ 2*m-1 by omega)
-    rwa [show 2*m-1-(m-1) = m by omega] at h
+    rw [show 2*m-1-(m-1) = m by omega] at h
+    exact h.symm
   have hsum : Nat.choose (2*m-1) (m-1) + Nat.choose (2*m-1) m
     ≤ ∑ k ∈ Finset.range (2*m), Nat.choose (2*m-1) k := by
     have hsub : ({m-1, m} : Finset ℕ) ⊆ Finset.range (2*m) := by
@@ -140,7 +141,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma multinomial3_le
-  {t : ℕ} :
+  (t : ℕ) :
 -- imply
   (3*t)! ≤ 3^(3*t) * (t !)^3 := by
 -- proof
@@ -177,7 +178,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma choose3_mul_choose2
-  {t : ℕ} :
+  (t : ℕ) :
 -- imply
   Nat.choose (3*t) t * Nat.choose (2*t) t * (t !)^3 = (3*t)! := by
 -- proof
@@ -189,12 +190,12 @@ lemma choose3_mul_choose2
   have h22 : (2*t) - t = t := by omega
   rw [h32] at e1; rw [h22] at e2
   calc Nat.choose (3*t) t * Nat.choose (2*t) t * (t !)^3
-    = Nat.choose (3*t) t * (t ! * (2*t)!) := by
-      have : Nat.choose (2*t) t * (t ! * t !) = (2*t)! := e2
-      calc Nat.choose (3*t) t * Nat.choose (2*t) t * (t !)^3
-        = Nat.choose (3*t) t * (Nat.choose (2*t) t * (t ! * t !) * t !) := by ring
-        _ = Nat.choose (3*t) t * ((2*t)! * t !) := by rw [this]
-        _ = Nat.choose (3*t) t * (t ! * (2*t)!) := by ring
+      = Nat.choose (3*t) t * (t ! * (2*t)!) := by
+        have : Nat.choose (2*t) t * (t ! * t !) = (2*t)! := e2
+        calc Nat.choose (3*t) t * Nat.choose (2*t) t * (t !)^3
+            = Nat.choose (3*t) t * (Nat.choose (2*t) t * (t ! * t !) * t !) := by ring
+          _ = Nat.choose (3*t) t * ((2*t)! * t !) := by rw [this]
+          _ = Nat.choose (3*t) t * (t ! * (2*t)!) := by ring
     _ = (3*t)! := e1
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -206,7 +207,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma four_pow_le
-  {t : ℕ} :
+  (t : ℕ) :
 -- imply
   4^t ≤ (2*t+1) * Nat.choose (2*t) t := by
 -- proof
@@ -233,7 +234,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma M34_key
-  {t : ℕ}
+  (t : ℕ)
 -- given
   (ht : 1 ≤ t) :
 -- imply
@@ -263,14 +264,13 @@ lemma M34_key
   have hM := M34_eq_choose_mul t
   have hmain : 2 * M34 t * Nat.choose (2*t) t ≤ 432^t * (2*t+1) * Nat.choose (2*t) t := by
     calc 2 * M34 t * Nat.choose (2*t) t
-      = (2 * Nat.choose (6*t) (3*t)) * (Nat.choose (3*t) t * Nat.choose (2*t) t) := by
-        rw [hM]; ring
+        = (2 * Nat.choose (6*t) (3*t)) * (Nat.choose (3*t) t * Nat.choose (2*t) t) := by
+          rw [hM]; ring
       _ ≤ 2^(6*t) * 3^(3*t) := Nat.mul_le_mul h1 h2
       _ = 432^t * 4^t := h3
       _ ≤ 432^t * ((2*t+1) * Nat.choose (2*t) t) := Nat.mul_le_mul_left _ h4
       _ = 432^t * (2*t+1) * Nat.choose (2*t) t := by ring
   exact le_of_mul_le_mul_right hmain hC
-set_option exponentiation.threshold 300000 in
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
@@ -280,11 +280,11 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [P34_base](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma P34_base
+lemma P34_base :
 -- imply
   10^(5*230-5) * 432^230 * (2*230+1) ≤ 2 * 34^(5*230-5) := by
 -- proof
-  decide
+  set_option exponentiation.threshold 2048 in decide
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
@@ -295,7 +295,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma P34_step
-  {t : ℕ}
+  (t : ℕ)
 -- given
   (ht : 230 ≤ t)
   (ih : 10 ^ (5 * t - 5) * 432 ^ t * (2 * t + 1) ≤ 2 * 34 ^ (5 * t - 5)) :
@@ -328,7 +328,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma P34
-  {t : ℕ}
+  (t : ℕ)
 -- given
   (ht : 230 ≤ t) :
 -- imply
@@ -347,7 +347,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma M34_bound_large
-  {t : ℕ}
+  (t : ℕ)
 -- given
   (ht : 230 ≤ t) :
 -- imply
@@ -363,9 +363,6 @@ lemma M34_bound_large
       _ = 10^(5*t-5) * 432^t * (2*t+1) := by ring
       _ ≤ 2 * 34^(5*t-5) := hP
   omega
-set_option exponentiation.threshold 2048 in
-set_option maxRecDepth 16384 in
-set_option maxHeartbeats 3200000 in
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
@@ -375,10 +372,12 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [M34_bound_small](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma M34_bound_small
+lemma M34_bound_small :
 -- imply
   ∀ k < 207, 10 ^ (5 * (23 + k) - 5) * M34 (23 + k) ≤ 34 ^ (5 * (23 + k) - 5) := by
 -- proof
+  set_option exponentiation.threshold 2048 in
+  set_option maxRecDepth 400000 in
   decide
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -390,7 +389,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma M34_bound
-  {t : ℕ}
+  (t : ℕ)
 -- given
   (ht : 23 ≤ t) :
 -- imply
@@ -410,7 +409,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma div_add_div_add_div_le
-  {a b c q : ℕ}
+  (a b c q : ℕ)
 -- given
   (hq : 0 < q) :
 -- imply
@@ -433,7 +432,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma vp_term_case1
-  {t p : ℕ}
+  (t p : ℕ)
 -- given
   (_ht : 1 ≤ t)
   (hlo : 3 * t < p)
@@ -455,7 +454,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma vp_term_case2
-  {t p : ℕ}
+  (t p : ℕ)
 -- given
   (_ht : 1 ≤ t)
   (hlo : 2 * t < p)
@@ -477,7 +476,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma vp_term_case3
-  {t p : ℕ}
+  (t p : ℕ)
 -- given
   (_ht : 1 ≤ t)
   (hlo : 3 * t < 2 * p)
@@ -499,7 +498,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma vp_term_case4
-  {t p : ℕ}
+  (t p : ℕ)
 -- given
   (ht : 1 ≤ t)
   (hlo : 6 * t < 5 * p)
@@ -521,7 +520,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma vp_term_case5
-  {t p : ℕ}
+  (t p : ℕ)
 -- given
   (_ht : 1 ≤ t)
   (hlo : t < p)
@@ -543,7 +542,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma vp_term1
-  {t p : ℕ}
+  (t p : ℕ)
 -- given
   (ht : 1 ≤ t)
   (hlo : t < p)
@@ -570,10 +569,10 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma vp_M34
-  {t : ℕ}
-  {p : ℕ}
+  (t : ℕ)
 -- given
   (ht : 1 ≤ t)
+  (p : ℕ)
   (hp : p.Prime)
   (hlo : t < p)
   (hhi : p ≤ 6 * t) :
@@ -673,7 +672,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma theta_le_M34
-  {m : ℕ}
+  (m : ℕ)
 -- given
   (hm : 1 ≤ m) :
 -- imply
@@ -712,7 +711,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [theta34_base](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma theta34_base
+lemma theta34_base :
 -- imply
   ∀ m : ℕ, m < 133 → 10^m * primorial m ≤ 34^m := by
 -- proof
@@ -744,7 +743,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma theta34_nat
-  {m : ℕ} :
+  (m : ℕ) :
 -- imply
   10^m * primorial m ≤ 34^m := by
 -- proof
@@ -775,11 +774,11 @@ lemma theta34_nat
           _ ≤ 34^(5*t-5) * 34^(m-t-(5*t-5)) := Nat.mul_le_mul hM h10
       have e2 : m = t + (m-t) := by omega
       calc 10^m * primorial m
-        = (10^t * 10^(m-t)) * primorial m := by
-          have hexp : (10:ℕ)^m = 10^t * 10^(m-t) := by
-            conv_lhs => rw [show m = t + (m - t) by omega]
-            rw [pow_add]
-          rw [hexp]
+          = (10^t * 10^(m-t)) * primorial m := by
+            have hexp : (10:ℕ)^m = 10^t * 10^(m-t) := by
+              conv_lhs => rw [show m = t + (m - t) by omega]
+              rw [pow_add]
+            rw [hexp]
         _ ≤ (10^t * 10^(m-t)) * (primorial t * M34 t) := by
           apply mul_le_mul_of_nonneg_left hle (by positivity)
         _ = (10^t * primorial t) * (10^(m-t) * M34 t) := by ring
@@ -936,7 +935,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [log2_gt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma log2_gt
+lemma log2_gt :
 -- imply
   (0.6931 : ℝ) < Real.log 2 := by
 -- proof
@@ -965,7 +964,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [log5_gt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma log5_gt
+lemma log5_gt :
 -- imply
   (1.6094 : ℝ) < Real.log 5 := by
 -- proof
@@ -994,7 +993,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [log3_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma log3_lt
+lemma log3_lt :
 -- imply
   Real.log 3 < (1.0987 : ℝ) := by
 -- proof
@@ -1023,7 +1022,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [log17_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma log17_lt
+lemma log17_lt :
 -- imply
   Real.log 17 < (2.8333 : ℝ) := by
 -- proof
@@ -1052,7 +1051,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [log10_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma log10_eq
+lemma log10_eq :
 -- imply
   Real.log (10 : ℝ) = Real.log 2 + Real.log 5 := by
 -- proof
@@ -1067,7 +1066,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [log9_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma log9_eq
+lemma log9_eq :
 -- imply
   Real.log (9 : ℝ) = 2 * Real.log 3 := by
 -- proof
@@ -1082,7 +1081,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [log34div10_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma log34div10_eq
+lemma log34div10_eq :
 -- imply
   Real.log (34 / 10 : ℝ) = Real.log 17 - Real.log 5 := by
 -- proof
@@ -1097,7 +1096,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [c9_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma c9_eq
+lemma c9_eq :
 -- imply
   (18900 / 279 + 18900 / 657 + 18900 / 963 : ℝ) = 28121100 / 242141 := by
 -- proof
@@ -1123,7 +1122,6 @@ lemma T03c_eqmain_margin
   have l3 := log3_lt
   have l17 := log17_lt
   linarith
-set_option maxRecDepth 16384 in
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
@@ -1133,10 +1131,11 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [pi_third_small](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma pi_third_small
+lemma pi_third_small :
 -- imply
   ∀ m : ℕ, 36 ≤ m → m < 156 → 3 * Nat.primeCounting m ≤ m := by
 -- proof
+  set_option maxRecDepth 400000 in
   decide
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -1148,7 +1147,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma pi_third_large
-  {m : ℕ}
+  (m : ℕ)
 -- given
   (hm : 156 ≤ m) :
 -- imply
@@ -1175,7 +1174,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma pi_third_nat
-  {m : ℕ}
+  (m : ℕ)
 -- given
   (hm36 : 36 ≤ m) :
 -- imply
@@ -1218,7 +1217,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [log10_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean)
 -/
 @[path]
-lemma log10_lt
+lemma log10_lt :
 -- imply
   Real.log 10 < (2.4 : ℝ) := by
 -- proof
@@ -1282,9 +1281,9 @@ lemma log_div_sqrt_decay
       = (Real.log a*(Real.sqrt a*Real.sqrt t))/Real.sqrt a by ring,
     lt_div_iff₀ hsa]
   calc (Real.log a + Real.log t) * Real.sqrt a
-    < (Real.log a + Real.log a * (Real.sqrt t - 1)) * Real.sqrt a := by
-      apply mul_lt_mul_of_pos_right _ hsa
-      linarith [hkey]
+      < (Real.log a + Real.log a * (Real.sqrt t - 1)) * Real.sqrt a := by
+        apply mul_lt_mul_of_pos_right _ hsa
+        linarith [hkey]
     _ = Real.log a * (Real.sqrt a * Real.sqrt t) := by ring
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -1296,7 +1295,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 -/
 @[path]
 lemma log_le_sqrt06
-  {x : ℝ}
+  (x : ℝ)
 -- given
   (hx : (10 ^ 7 : ℝ) ≤ x) :
 -- imply
@@ -1408,4 +1407,4 @@ end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

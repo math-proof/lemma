@@ -11,7 +11,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma arbitrarily_long_arithmetic_progressions_of_powerful_numbers_general
-  {k : ℕ} :
+  (k : ℕ) :
 -- imply
   ∃ a d : ℕ, 0 < a ∧ 0 < d ∧
     ∀ i : ℕ, i < k → Nat.IsKFull 2 (a + i * d) := by
@@ -33,7 +33,6 @@ lemma arbitrarily_long_arithmetic_progressions_of_powerful_numbers_general
     · exact hp.dvd_of_dvd_pow h
     · exact h.trans hmem
   exact dvd_mul_of_dvd_left (pow_dvd_pow_of_dvd hpL 2) _
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -46,7 +45,7 @@ namespace MetaMathlibExt
 lemma arbitrarily_long_arithmetic_progressions_of_powerful_numbers
   {k : ℕ}
 -- given
-  (hk : 3 ≤ k) :
+  (_hk : 3 ≤ k) :
 -- imply
   ∃ a d : ℕ, 0 < a ∧ 0 < d ∧
     ∀ i : ℕ, i < k →

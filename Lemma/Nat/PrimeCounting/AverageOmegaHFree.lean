@@ -20,7 +20,7 @@ private lemma log_factorial_eq_sum_vonMangoldt_mul_div (N : ℕ) :
     rw [Finset.mem_Ico] at hm
     exact_mod_cast ne_of_gt hm.1)]
   have h1 : ∀ m ∈ Finset.Ico 1 (N + 1), Real.log (m : ℝ) =
-    ∑ d ∈ Finset.Icc 1 N, (if d ∣ m then vonMangoldt d else 0) := by
+      ∑ d ∈ Finset.Icc 1 N, (if d ∣ m then vonMangoldt d else 0) := by
     intro m hm
     rw [Finset.mem_Ico] at hm
     have hmpos : 0 < m := hm.1
@@ -44,7 +44,7 @@ private lemma log_factorial_eq_sum_vonMangoldt_mul_div (N : ℕ) :
   intro d hd
   rw [← Finset.sum_filter]
   have hcard : ({m ∈ Finset.Ico 1 (N + 1) | d ∣ m}.card : ℝ)
-    = ((N / d : ℕ) : ℝ) := by
+      = ((N / d : ℕ) : ℝ) := by
     congr 1
     have hset : {m ∈ Finset.Ico 1 (N + 1) | d ∣ m} = {x ∈ Finset.Ioc 0 N | d ∣ x} := by
       ext x
@@ -53,6 +53,7 @@ private lemma log_factorial_eq_sum_vonMangoldt_mul_div (N : ℕ) :
     rw [hset, Nat.Ioc_filter_dvd_card_eq_div]
   simp [Finset.sum_const, nsmul_eq_mul, hcard, mul_comm]
 
+-- N2: Mertens I: |Σ_{n≤x} Λ(n)/n - log x| ≤ log 4 + 6.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -89,8 +90,8 @@ private lemma abs_sum_vonMangoldt_div_sub_log_le (x : ℝ) (hx : 1 ≤ x) :
     have hle : ((N / d : ℕ):ℝ) ≤ (N:ℝ)/(d:ℝ) := Nat.cast_div_le
     have hnn : 0 ≤ vonMangoldt d := vonMangoldt_nonneg
     calc vonMangoldt d * ((N/d:ℕ):ℝ)
-      ≤ vonMangoldt d * ((N:ℝ)/(d:ℝ)) :=
-        mul_le_mul_of_nonneg_left hle hnn
+        ≤ vonMangoldt d * ((N:ℝ)/(d:ℝ)) :=
+          mul_le_mul_of_nonneg_left hle hnn
       _ = (N:ℝ) * (vonMangoldt d / (d:ℝ)) := by ring
   have hStirl := Stirling.le_log_factorial_stirling (n := N) (by omega)
   have hlogNnn : 0 ≤ Real.log (N:ℝ) := Real.log_nonneg hNge1R
@@ -123,7 +124,7 @@ private lemma abs_sum_vonMangoldt_div_sub_log_le (x : ℝ) (hx : 1 ≤ x) :
     have hnn : 0 ≤ vonMangoldt d := vonMangoldt_nonneg
     have h1 := hdiff d hd
     have e1 : (N:ℝ) * (vonMangoldt d / (d:ℝ))
-      = vonMangoldt d * ((N:ℝ)/(d:ℝ)) := by ring
+        = vonMangoldt d * ((N:ℝ)/(d:ℝ)) := by ring
     rw [e1]
     have hmul := mul_le_mul_of_nonneg_left h1 hnn
     rw [mul_one] at hmul
@@ -136,7 +137,7 @@ private lemma abs_sum_vonMangoldt_div_sub_log_le (x : ℝ) (hx : 1 ≤ x) :
     have hle : ((N.factorial : ℕ):ℝ) ≤ ((N ^ N : ℕ):ℝ) := by exact_mod_cast h
     rw [Nat.cast_pow] at hle
     calc Real.log (N.factorial:ℝ) ≤ Real.log ((N:ℝ)^N) :=
-      Real.log_le_log hpos hle
+          Real.log_le_log hpos hle
       _ = (N:ℝ) * Real.log (N:ℝ) := by rw [Real.log_pow]
   have hpsile := Chebyshev.psi_le_const_mul_self (x := (N:ℝ)) (le_of_lt hNpos)
   have hAge1 : Real.log (N:ℝ) - 1 ≤ A := by
@@ -164,6 +165,8 @@ private lemma abs_sum_vonMangoldt_div_sub_log_le (x : ℝ) (hx : 1 ≤ x) :
   have h2 : -(Real.log 4 + 6) ≤ A - Real.log x := by linarith
   rw [abs_le]
   constructor <;> linarith
+
+-- Node proofs (n3).
 open MeasureTheory Set intervalIntegral
 
 end MetaMathlibExt
@@ -179,7 +182,7 @@ private lemma integral_inv_mul_log_facts_a (x : ℝ) (hx : 2 ≤ x) :
     = Real.log (Real.log x) - Real.log (Real.log 2) := by
   rw [← intervalIntegral.integral_of_le hx]
   have hderiv : ∀ t ∈ Set.uIcc (2:ℝ) x,
-    HasDerivAt (fun t => Real.log (Real.log t)) (1 / (t * Real.log t)) t := by
+      HasDerivAt (fun t => Real.log (Real.log t)) (1 / (t * Real.log t)) t := by
     intro t ht
     rw [Set.uIcc_of_le hx, Set.mem_Icc] at ht
     have htpos : 0 < t := by linarith
@@ -187,7 +190,8 @@ private lemma integral_inv_mul_log_facts_a (x : ℝ) (hx : 2 ≤ x) :
     have h1 : HasDerivAt Real.log t⁻¹ t := Real.hasDerivAt_log (ne_of_gt htpos)
     have h3 := h1.log (ne_of_gt hlogpos)
     have heq : t⁻¹ / Real.log t = 1 / (t * Real.log t) := by field_simp
-    rwa [heq] at h3
+    rw [heq] at h3
+    exact h3
   have hint : IntervalIntegrable (fun t => 1 / (t * Real.log t)) MeasureTheory.volume 2 x := by
     apply ContinuousOn.intervalIntegrable_of_Icc hx
     apply ContinuousOn.div continuousOn_const _ (fun t ht => by
@@ -199,6 +203,8 @@ private lemma integral_inv_mul_log_facts_a (x : ℝ) (hx : 2 ≤ x) :
       rw [Set.mem_Icc] at ht
       exact ne_of_gt (by linarith : (0:ℝ) < t)))
   rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hint]
+
+-- Node proofs (n3b).
 open MeasureTheory Set intervalIntegral
 
 end MetaMathlibExt
@@ -214,7 +220,7 @@ private lemma integral_inv_mul_log_sq_facts_b (x : ℝ) (hx : 2 ≤ x) :
     = 1 / Real.log 2 - 1 / Real.log x := by
   rw [← intervalIntegral.integral_of_le hx]
   have hderiv : ∀ t ∈ Set.uIcc (2:ℝ) x,
-    HasDerivAt (fun t => -(Real.log t)⁻¹) (1 / (t * Real.log t ^ 2)) t := by
+      HasDerivAt (fun t => -(Real.log t)⁻¹) (1 / (t * Real.log t ^ 2)) t := by
     intro t ht
     rw [Set.uIcc_of_le hx, Set.mem_Icc] at ht
     have htpos : 0 < t := by linarith
@@ -223,7 +229,8 @@ private lemma integral_inv_mul_log_sq_facts_b (x : ℝ) (hx : 2 ≤ x) :
     have h2 := h1.inv (ne_of_gt hlogpos)
     have h3 := h2.neg
     have heq : -(-t⁻¹ / Real.log t ^ 2) = 1 / (t * Real.log t ^ 2) := by field_simp
-    rwa [heq] at h3
+    rw [heq] at h3
+    exact h3
   have hlog : ContinuousOn (fun t : ℝ => Real.log t ^ 2) (Set.Icc 2 x) := by
     apply ContinuousOn.pow
     apply ContinuousOn.log continuousOn_id (fun t ht => by
@@ -241,6 +248,7 @@ private lemma integral_inv_mul_log_sq_facts_b (x : ℝ) (hx : 2 ≤ x) :
   rw [one_div, one_div]
   ring
 
+-- Node proofs (n5).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -266,7 +274,7 @@ private lemma geom_prime_pow_le (p N : ℕ) (hp : 2 ≤ p) :
     have hB : (0:ℝ) < (p:ℝ)^2 := by positivity
     rw [le_div_iff₀ hB]
     have e : (1:ℝ) / ((p:ℝ) * (p - 1)) * (p:ℝ)^2
-      = (p:ℝ)^2 / ((p:ℝ) * (p - 1)) := by ring
+        = (p:ℝ)^2 / ((p:ℝ) * (p - 1)) := by ring
     rw [e, div_le_iff₀ hA]
     nlinarith [mul_nonneg (le_of_lt hp0) (show (0:ℝ) ≤ p - 2 by linarith)]
   rw [key] at hgeom
@@ -301,6 +309,7 @@ private lemma nonprime_primePow_eq_prime_pow (N : ℕ) (n : ℕ)
       _ ≤ N := h2
   exact ⟨p, k, hp, hk2, hkN, hpN, rfl⟩
 
+-- N5: sum of 1/n over non-prime prime powers ≤ 2
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -311,18 +320,18 @@ namespace MetaMathlibExt
 @[path]
 private lemma sum_inv_nonprime_primePow_le_two (N : ℕ) :
   ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime), (1 : ℝ) / n ≤ 2 := by
-  obtain hN | hN := Nat.lt_or_ge N 1
+  rcases Nat.lt_or_ge N 1 with hN | hN
   · have hempty : (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime) = ∅ := by
-    apply Finset.eq_empty_of_forall_notMem
-    intro n hn
-    rw [Finset.mem_filter, Finset.mem_Icc] at hn
-    obtain ⟨⟨h1, h2⟩, -, -⟩ := hn
-    omega
+      apply Finset.eq_empty_of_forall_notMem
+      intro n hn
+      rw [Finset.mem_filter, Finset.mem_Icc] at hn
+      obtain ⟨⟨h1, h2⟩, -, -⟩ := hn
+      omega
     rw [hempty, Finset.sum_empty]
     norm_num
   · set T : Finset (ℕ × ℕ) :=
-    ((Finset.Icc 2 N) ×ˢ (Finset.Icc 2 N)).filter
-      (fun q => q.1.Prime ∧ q.1 ^ q.2 ≤ N) with hTdef
+      ((Finset.Icc 2 N) ×ˢ (Finset.Icc 2 N)).filter
+        (fun q => q.1.Prime ∧ q.1 ^ q.2 ≤ N) with hTdef
     set φ : ℕ × ℕ → ℕ := fun q => q.1 ^ q.2 with hφdef
     have hinj : ∀ a ∈ T, ∀ b ∈ T, φ a = φ b → a = b := by
       intro a ha b hb hab
@@ -334,7 +343,7 @@ private lemma sum_inv_nonprime_primePow_le_two (N : ℕ) :
       obtain ⟨h1, h2⟩ := h
       exact Prod.ext h1 h2
     have hmem : ∀ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
-      ∃ q ∈ T, φ q = n := by
+        ∃ q ∈ T, φ q = n := by
       intro n hn
       obtain ⟨p, k, hp, hk2, hkN, hpN, rfl⟩ := nonprime_primePow_eq_prime_pow N n hn
       have hPk : p ^ k ≤ N :=
@@ -344,9 +353,9 @@ private lemma sum_inv_nonprime_primePow_le_two (N : ℕ) :
       change ((2 ≤ p ∧ p ≤ N) ∧ 2 ≤ k ∧ k ≤ N) ∧ p.Prime ∧ p ^ k ≤ N
       exact ⟨⟨⟨hp.two_le, hpN⟩, ⟨hk2, hkN⟩⟩, hp, hPk⟩
     have h1 : ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime), (1:ℝ)/n
-      ≤ ∑ q ∈ T, (1:ℝ)/(φ q) := by
+        ≤ ∑ q ∈ T, (1:ℝ)/(φ q) := by
       have hsub : (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime)
-        ⊆ T.image φ := by
+          ⊆ T.image φ := by
         intro n hn
         obtain ⟨q, hqT, rfl⟩ := hmem n hn
         exact Finset.mem_image_of_mem φ hqT
@@ -354,9 +363,10 @@ private lemma sum_inv_nonprime_primePow_le_two (N : ℕ) :
         (fun n _ _ => by positivity : ∀ n ∈ T.image φ, n ∉ _ → (0:ℝ) ≤ 1/(n:ℝ))
       have heq : ∑ x ∈ T.image φ, (1:ℝ)/(x:ℝ) = ∑ q ∈ T, (1:ℝ)/((φ q : ℕ):ℝ) :=
         Finset.sum_image (fun a _ b _ hab => hinj a ‹_› b ‹_› hab)
-      rwa [heq] at hle
+      rw [heq] at hle
+      exact hle
     have h2 : ∑ q ∈ T, (1:ℝ)/(φ q)
-      ≤ ∑ p ∈ Finset.Icc 2 N, ∑ k ∈ Finset.Icc 2 N, ((1:ℝ)/p)^k := by
+        ≤ ∑ p ∈ Finset.Icc 2 N, ∑ k ∈ Finset.Icc 2 N, ((1:ℝ)/p)^k := by
       have hsub2 : T ⊆ (Finset.Icc 2 N) ×ˢ (Finset.Icc 2 N) := by
         rw [hTdef]
         exact Finset.filter_subset _ _
@@ -364,7 +374,7 @@ private lemma sum_inv_nonprime_primePow_le_two (N : ℕ) :
         (fun q _ _ => by positivity :
           ∀ q ∈ (Finset.Icc 2 N ×ˢ Finset.Icc 2 N), q ∉ T → (0:ℝ) ≤ 1 / (φ q))
       have heq : ∑ q ∈ (Finset.Icc 2 N ×ˢ Finset.Icc 2 N), (1:ℝ)/(φ q)
-        = ∑ p ∈ Finset.Icc 2 N, ∑ k ∈ Finset.Icc 2 N, ((1:ℝ)/p)^k := by
+          = ∑ p ∈ Finset.Icc 2 N, ∑ k ∈ Finset.Icc 2 N, ((1:ℝ)/p)^k := by
         rw [Finset.sum_product]
         apply Finset.sum_congr rfl
         intro p hp
@@ -376,7 +386,7 @@ private lemma sum_inv_nonprime_primePow_le_two (N : ℕ) :
         rw [Nat.cast_pow, div_pow, one_pow]
       exact le_trans hle (le_of_eq heq)
     have h3 : ∑ p ∈ Finset.Icc 2 N, ∑ k ∈ Finset.Icc 2 N, ((1:ℝ)/p)^k
-      ≤ ∑ p ∈ Finset.Icc 2 N, 2/(p:ℝ)^2 := by
+        ≤ ∑ p ∈ Finset.Icc 2 N, 2/(p:ℝ)^2 := by
       apply Finset.sum_le_sum
       intro p hp
       rw [Finset.mem_Icc] at hp
@@ -390,18 +400,19 @@ private lemma sum_inv_nonprime_primePow_le_two (N : ℕ) :
       have hsq := sum_Ioc_inv_sq_le_sub (α := ℝ) (k := 1) (n := N) (by norm_num) hN
       simp only [Nat.cast_one, inv_one] at hsq
       calc ∑ p ∈ Finset.Ioc 1 N, 2/(p:ℝ)^2
-        = 2 * ∑ i ∈ Finset.Ioc 1 N, ((i:ℝ)^2)⁻¹ := by
-          rw [Finset.mul_sum]
-          apply Finset.sum_congr rfl
-          intro i hi
-          ring
+          = 2 * ∑ i ∈ Finset.Ioc 1 N, ((i:ℝ)^2)⁻¹ := by
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro i hi
+            ring
         _ ≤ 2 * (1 - (N:ℝ)⁻¹) := by
-          apply mul_le_mul_of_nonneg_left hsq (by norm_num)
+            apply mul_le_mul_of_nonneg_left hsq (by norm_num)
         _ ≤ 2 := by
-          have hpos : (0:ℝ) ≤ (N:ℝ)⁻¹ := by positivity
-          linarith
+            have hpos : (0:ℝ) ≤ (N:ℝ)⁻¹ := by positivity
+            linarith
     exact le_trans (le_trans (le_trans h1 h2) h3) h4
 
+-- Node proofs (n13).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -461,7 +472,7 @@ private lemma hfree_term_bound (h N n : ℕ) (hh : 2 ≤ h)
     have hc : (1:ℝ) ≤ n.factorization p := by exact_mod_cast hpos
     linarith
   have hterm : ∀ p ∈ n.primeFactors,
-    (n.factorization p : ℝ) - 1 ≤ (if p ^ 2 ∣ n then ((h : ℝ) - 2) else 0) := by
+      (n.factorization p : ℝ) - 1 ≤ (if p ^ 2 ∣ n then ((h : ℝ) - 2) else 0) := by
     intro p hp
     have hpp : p.Prime := (Nat.mem_primeFactors.mp hp).1
     by_cases hdiv : p ^ 2 ∣ n
@@ -484,17 +495,18 @@ private lemma hfree_term_bound (h N n : ℕ) (hh : 2 ≤ h)
     exact Finset.sum_nonneg (fun p hp => hnonneg p hp)
   · rw [cardFactors_sub_card_primeFactors_eq]
     calc ∑ p ∈ n.primeFactors, ((n.factorization p : ℝ) - 1)
-      ≤ ∑ p ∈ n.primeFactors, (if p ^ 2 ∣ n then ((h : ℝ) - 2) else 0) :=
-        Finset.sum_le_sum (fun p hp => hterm p hp)
+        ≤ ∑ p ∈ n.primeFactors, (if p ^ 2 ∣ n then ((h : ℝ) - 2) else 0) :=
+          Finset.sum_le_sum (fun p hp => hterm p hp)
       _ ≤ ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-        (if p ^ 2 ∣ n then ((h : ℝ) - 2) else 0) := by
-        apply Finset.sum_le_sum_of_subset_of_nonneg hsub
-        intro p _ _
-        split_ifs with hdiv
-        · have hhR : (2:ℝ) ≤ h := by exact_mod_cast hh
-          linarith
-        · exact le_refl 0
+            (if p ^ 2 ∣ n then ((h : ℝ) - 2) else 0) := by
+          apply Finset.sum_le_sum_of_subset_of_nonneg hsub
+          intro p _ _
+          split_ifs with hdiv
+          · have hhR : (2:ℝ) ≤ h := by exact_mod_cast hh
+            linarith
+          · exact le_refl 0
 
+-- Icc 1 N = Ioc 0 N as finsets of naturals.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -508,6 +520,7 @@ private lemma Icc_one_eq_Ioc_zero (N : ℕ) : Finset.Icc 1 N = Finset.Ioc 0 N :=
   simp [Finset.mem_Icc, Finset.mem_Ioc]
   omega
 
+-- Count bound: #{n ∈ H(N) : p² ∣ n} ≤ N / p².
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -521,20 +534,21 @@ private lemma card_hfree_sq_dvd_le (N p h : ℕ) :
     (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h) | p ^ 2 ∣ n}.card : ℝ)
     ≤ (N : ℝ) / (p : ℝ) ^ 2 := by
   have hle : {n ∈ (Finset.Icc 1 N).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h) | p ^ 2 ∣ n}.card
-    ≤ N / p ^ 2 := by
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h) | p ^ 2 ∣ n}.card
+      ≤ N / p ^ 2 := by
     calc ({n ∈ (Finset.Icc 1 N).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h) | p ^ 2 ∣ n}.card : ℕ)
-      ≤ ({n ∈ Finset.Icc 1 N | p ^ 2 ∣ n}).card :=
-        Finset.card_le_card (Finset.filter_subset_filter _ (Finset.filter_subset _ _))
+          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h) | p ^ 2 ∣ n}.card : ℕ)
+          ≤ ({n ∈ Finset.Icc 1 N | p ^ 2 ∣ n}).card :=
+            Finset.card_le_card (Finset.filter_subset_filter _ (Finset.filter_subset _ _))
       _ = N / p ^ 2 := by
-        rw [Icc_one_eq_Ioc_zero]
-        exact Nat.Ioc_filter_dvd_card_eq_div N (p ^ 2)
+            rw [Icc_one_eq_Ioc_zero]
+            exact Nat.Ioc_filter_dvd_card_eq_div N (p ^ 2)
   have hcast : ((N / p ^ 2 : ℕ) : ℝ) ≤ (N : ℝ) / (p : ℝ) ^ 2 := by
     calc ((N / p ^ 2 : ℕ) : ℝ) ≤ (N : ℝ) / ((p ^ 2 : ℕ) : ℝ) := Nat.cast_div_le
       _ = (N : ℝ) / (p : ℝ) ^ 2 := by rw [Nat.cast_pow]
   exact le_trans (by exact_mod_cast hle) hcast
 
+-- Reciprocal square sum over primes ≤ 1.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -556,16 +570,17 @@ private lemma sum_inv_sq_primes_le_one (N : ℕ) (hN : 1 ≤ N) :
   have hsq := sum_Ioc_inv_sq_le_sub (α := ℝ) (k := 1) (n := N) (by norm_num) hN
   simp only [Nat.cast_one, inv_one] at hsq
   calc ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, (1:ℝ) / (p:ℝ)^2
-    = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, ((p:ℝ)^2)⁻¹ := by
-      apply Finset.sum_congr rfl
-      intro i hi
-      rw [one_div]
-    _ ≤ ∑ i ∈ Finset.Ioc 1 N, ((i:ℝ)^2)⁻¹ :=
-      Finset.sum_le_sum_of_subset_of_nonneg hsub (fun i _ _ => by positivity)
-    _ ≤ 1 := by
-      have hpos : (0:ℝ) ≤ (N:ℝ)⁻¹ := by positivity
-      linarith
+      = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, ((p:ℝ)^2)⁻¹ := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        rw [one_div]
+      _ ≤ ∑ i ∈ Finset.Ioc 1 N, ((i:ℝ)^2)⁻¹ :=
+        Finset.sum_le_sum_of_subset_of_nonneg hsub (fun i _ _ => by positivity)
+      _ ≤ 1 := by
+        have hpos : (0:ℝ) ≤ (N:ℝ)⁻¹ := by positivity
+        linarith
 
+-- N13: total Ω - ω over h-free numbers ≤ (h-2) * N.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -582,63 +597,64 @@ private lemma sum_cardFactors_sub_card_primeFactors_hfree_le (h N : ℕ) (hh : 2
       (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
       ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ))
       ≤ ((h : ℝ) - 2) * N := by
-  obtain hN | hN := Nat.lt_or_ge N 1
+  rcases Nat.lt_or_ge N 1 with hN | hN
   · have hempty : (Finset.Icc 1 N).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h) = ∅ := by
-    apply Finset.eq_empty_of_forall_notMem
-    intro n hn
-    rw [Finset.mem_filter, Finset.mem_Icc] at hn
-    obtain ⟨⟨h1, h2⟩, -⟩ := hn
-    omega
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h) = ∅ := by
+      apply Finset.eq_empty_of_forall_notMem
+      intro n hn
+      rw [Finset.mem_filter, Finset.mem_Icc] at hn
+      obtain ⟨⟨h1, h2⟩, -⟩ := hn
+      omega
     rw [hempty, Finset.sum_empty]
     refine ⟨le_refl 0, ?_⟩
     apply mul_nonneg _ (by positivity)
     have hhR : (2:ℝ) ≤ h := by exact_mod_cast hh
     linarith
   · have hhR : (0:ℝ) ≤ (h : ℝ) - 2 := by
-    have : (2:ℝ) ≤ h := by exact_mod_cast hh
-    linarith
+      have : (2:ℝ) ≤ h := by exact_mod_cast hh
+      linarith
     have hNR : (0:ℝ) ≤ N := by positivity
     constructor
     · apply Finset.sum_nonneg
       intro n hn
       exact (hfree_term_bound h N n hh hn).1
     · calc ∑ n ∈ (Finset.Icc 1 N).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-      ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ))
-      ≤ ∑ n ∈ (Finset.Icc 1 N).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-        (∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-          (if p ^ 2 ∣ n then ((h : ℝ) - 2) else 0)) :=
-        Finset.sum_le_sum (fun n hn => (hfree_term_bound h N n hh hn).2)
-      _ = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-        (∑ n ∈ (Finset.Icc 1 N).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-          (if p ^ 2 ∣ n then ((h : ℝ) - 2) else 0)) := Finset.sum_comm
-      _ = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-        (((h : ℝ) - 2) * {n ∈ (Finset.Icc 1 N).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)
-            | p ^ 2 ∣ n}.card) := by
-        apply Finset.sum_congr rfl
-        intro p hp
-        rw [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul]
-        ring
-      _ ≤ ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-        (((h : ℝ) - 2) * ((N : ℝ) / (p : ℝ) ^ 2)) := by
-        apply Finset.sum_le_sum
-        intro p hp
-        apply mul_le_mul_of_nonneg_left (card_hfree_sq_dvd_le N p h) hhR
-      _ = ((h : ℝ) - 2) * N * ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-        (1:ℝ) / (p:ℝ)^2 := by
-        rw [Finset.mul_sum]
-        apply Finset.sum_congr rfl
-        intro p hp
-        ring
-      _ ≤ ((h : ℝ) - 2) * N * 1 := by
-        apply mul_le_mul_of_nonneg_left (sum_inv_sq_primes_le_one N hN)
-        exact mul_nonneg hhR hNR
-      _ = ((h : ℝ) - 2) * N := by ring
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ))
+          ≤ ∑ n ∈ (Finset.Icc 1 N).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            (∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+              (if p ^ 2 ∣ n then ((h : ℝ) - 2) else 0)) :=
+            Finset.sum_le_sum (fun n hn => (hfree_term_bound h N n hh hn).2)
+        _ = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+            (∑ n ∈ (Finset.Icc 1 N).filter
+              (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+              (if p ^ 2 ∣ n then ((h : ℝ) - 2) else 0)) := Finset.sum_comm
+        _ = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+            (((h : ℝ) - 2) * {n ∈ (Finset.Icc 1 N).filter
+              (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)
+                | p ^ 2 ∣ n}.card) := by
+            apply Finset.sum_congr rfl
+            intro p hp
+            rw [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul]
+            ring
+        _ ≤ ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+            (((h : ℝ) - 2) * ((N : ℝ) / (p : ℝ) ^ 2)) := by
+            apply Finset.sum_le_sum
+            intro p hp
+            apply mul_le_mul_of_nonneg_left (card_hfree_sq_dvd_le N p h) hhR
+        _ = ((h : ℝ) - 2) * N * ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+            (1:ℝ) / (p:ℝ)^2 := by
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro p hp
+            ring
+        _ ≤ ((h : ℝ) - 2) * N * 1 := by
+            apply mul_le_mul_of_nonneg_left (sum_inv_sq_primes_le_one N hN)
+            exact mul_nonneg hhR hNR
+        _ = ((h : ℝ) - 2) * N := by ring
 
+-- N4: Mertens II, Lambda form (Abel summation).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -661,8 +677,8 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
     have h4 : (0:ℝ) ≤ Real.log 4 := Real.log_nonneg (by norm_num)
     linarith
   have hSeq : ∀ t : ℝ, 1 ≤ t →
-    (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ))
-      = ∑ k ∈ Finset.Icc 1 ⌊t⌋₊, vonMangoldt k / (k:ℝ) := by
+      (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ))
+        = ∑ k ∈ Finset.Icc 1 ⌊t⌋₊, vonMangoldt k / (k:ℝ) := by
     intro t ht
     have hM : 1 ≤ ⌊t⌋₊ := (Nat.one_le_floor_iff t).mpr ht
     have hsplit : Finset.Icc 0 ⌊t⌋₊ = insert 0 (Finset.Icc 1 ⌊t⌋₊) := by
@@ -672,8 +688,8 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
     rw [hsplit, Finset.sum_insert (by simp)]
     simp
   have hRbound : ∀ t : ℝ, 1 ≤ t →
-    |(∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t|
-      ≤ Real.log 4 + 6 := by
+      |(∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t|
+        ≤ Real.log 4 + 6 := by
     intro t ht
     rw [hSeq t ht]
     exact abs_sum_vonMangoldt_div_sub_log_le t ht
@@ -681,7 +697,7 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
   have hc1 : (fun k : ℕ => vonMangoldt k / (k:ℝ)) 1 = 0 := by
     simp [vonMangoldt_apply_one]
   have hdiff : ∀ t ∈ Set.Icc (2:ℝ) x,
-    DifferentiableAt ℝ (fun t : ℝ => (Real.log t)⁻¹) t := by
+      DifferentiableAt ℝ (fun t : ℝ => (Real.log t)⁻¹) t := by
     intro t ht
     rw [Set.mem_Icc] at ht
     have htpos : (0:ℝ) < t := by linarith
@@ -705,25 +721,26 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
       have hlp : (0:ℝ) < Real.log t := Real.log_pos (by linarith : (1:ℝ) < t)
       exact ne_of_gt (pow_pos hlp 2))
   have hint : MeasureTheory.IntegrableOn (deriv (fun t : ℝ => (Real.log t)⁻¹))
-    (Set.Icc 2 x) MeasureTheory.volume := by
+      (Set.Icc 2 x) MeasureTheory.volume := by
     have hde : deriv (fun t : ℝ => (Real.log t)⁻¹)
-      = fun t => -t⁻¹ / Real.log t ^ 2 :=
+        = fun t => -t⁻¹ / Real.log t ^ 2 :=
       funext fun t => Real.deriv_inv_log_apply
-    rwa [hde]
+    rw [hde]
+    exact hfrac.integrableOn_Icc
   have hAbel := sum_mul_eq_sub_integral_mul₁
     (c := fun k : ℕ => vonMangoldt k / (k:ℝ)) hc0 hc1 x hdiff hint
   have hmain : (∑ n ∈ Finset.Icc 0 ⌊x⌋₊, (Real.log (n:ℝ))⁻¹ * (vonMangoldt n / (n:ℝ)))
-    = (fun t : ℝ => (Real.log t)⁻¹) x
-      * (∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ))
-      - ∫ t in Set.Ioc 2 x, deriv (fun t : ℝ => (Real.log t)⁻¹) t
-        * (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) := hAbel
+      = (fun t : ℝ => (Real.log t)⁻¹) x
+        * (∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ))
+        - ∫ t in Set.Ioc 2 x, deriv (fun t : ℝ => (Real.log t)⁻¹) t
+          * (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) := hAbel
   have hfx : (fun t : ℝ => (Real.log t)⁻¹) x
-    * (∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ))
-    = 1 + ((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x)
-      / Real.log x := by
+        * (∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ))
+      = 1 + ((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x)
+        / Real.log x := by
     have hbx : (∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ))
-      = Real.log x + ((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ))
-        - Real.log x) := by ring
+        = Real.log x + ((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ))
+          - Real.log x) := by ring
     conv_lhs => rw [hbx]
     change (Real.log x)⁻¹ * (Real.log x
       + ((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x))
@@ -731,36 +748,37 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
         / Real.log x
     rw [mul_add, inv_mul_cancel₀ hlogx_ne, inv_mul_eq_div]
   have hDlog_int : MeasureTheory.IntegrableOn
-    (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t)
-    (Set.Icc 2 x) MeasureTheory.volume := by
-    have hcont : ContinuousOn
       (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t)
-      (Set.Icc 2 x) := by
+      (Set.Icc 2 x) MeasureTheory.volume := by
+    have hcont : ContinuousOn
+        (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t)
+        (Set.Icc 2 x) := by
       have hDf : ContinuousOn
-        (fun t : ℝ => deriv (fun t : ℝ => (Real.log t)⁻¹) t) (Set.Icc 2 x) := by
+          (fun t : ℝ => deriv (fun t : ℝ => (Real.log t)⁻¹) t) (Set.Icc 2 x) := by
         have hde : (fun t : ℝ => deriv (fun t : ℝ => (Real.log t)⁻¹) t)
-          = fun t => -t⁻¹ / Real.log t ^ 2 :=
+            = fun t => -t⁻¹ / Real.log t ^ 2 :=
           funext fun t => Real.deriv_inv_log_apply
-        rwa [hde]
+        rw [hde]
+        exact hfrac
       exact hDf.mul (ContinuousOn.log continuousOn_id (fun t ht => by
         rw [Set.mem_Icc] at ht
         exact ne_of_gt (by linarith : (0:ℝ) < t)))
     exact hcont.integrableOn_Icc
   have hwhole : MeasureTheory.IntegrableOn
-    (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t
-      * (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)))
-    (Set.Icc 2 x) MeasureTheory.volume :=
+      (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t
+        * (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)))
+      (Set.Icc 2 x) MeasureTheory.volume :=
     integrableOn_mul_sum_Icc (fun k : ℕ => vonMangoldt k / (k:ℝ))
       (show (0:ℝ) ≤ 2 by norm_num) hint
   have hR_int : MeasureTheory.IntegrableOn
-    (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t
-      * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t))
-    (Set.Icc 2 x) MeasureTheory.volume := by
+      (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t
+        * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t))
+      (Set.Icc 2 x) MeasureTheory.volume := by
     have heq : (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t
-      * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t))
-      = (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t
-        * (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)))
-        - (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t) := by
+          * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t))
+          = (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t
+            * (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)))
+            - (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t) := by
       funext t
       simp only [Pi.sub_apply]
       ring
@@ -770,15 +788,15 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
   have hwhole_Ioc := hwhole.mono_set Set.Ioc_subset_Icc_self
   have hR_Ioc := hR_int.mono_set Set.Ioc_subset_Icc_self
   have hsplit : (∫ t in Set.Ioc 2 x, deriv (fun t : ℝ => (Real.log t)⁻¹) t
-    * (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)))
-    = (∫ t in Set.Ioc 2 x, deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t)
-      + (∫ t in Set.Ioc 2 x, deriv (fun t : ℝ => (Real.log t)⁻¹) t
-        * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)) := by
-    have heq : (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t
-      * (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)))
-      = (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t)
-        + (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t
+        * (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)))
+      = (∫ t in Set.Ioc 2 x, deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t)
+        + (∫ t in Set.Ioc 2 x, deriv (fun t : ℝ => (Real.log t)⁻¹) t
           * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)) := by
+    have heq : (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t
+          * (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)))
+          = (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t)
+            + (fun t => deriv (fun t : ℝ => (Real.log t)⁻¹) t
+              * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)) := by
       funext t
       simp only [Pi.add_apply]
       ring
@@ -787,11 +805,11 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
   set IDR : ℝ := (∫ t in Set.Ioc 2 x, deriv (fun t : ℝ => (Real.log t)⁻¹) t
     * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)) with hIDRdef
   have hDall : ∀ t ∈ Set.Ioc (2:ℝ) x,
-    deriv (fun t : ℝ => (Real.log t)⁻¹) t = -t⁻¹ / Real.log t ^ 2 := fun t _ =>
+      deriv (fun t : ℝ => (Real.log t)⁻¹) t = -t⁻¹ / Real.log t ^ 2 := fun t _ =>
     Real.deriv_inv_log_apply
   have hDlog_pt : ∀ t ∈ Set.Ioc (2:ℝ) x,
-    deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t
-      = -(1/(t * Real.log t)) := by
+      deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t
+        = -(1/(t * Real.log t)) := by
     intro t ht
     have ht2 : (2:ℝ) < t ∧ t ≤ x := Set.mem_Ioc.mp ht
     have htpos : (0:ℝ) < t := by linarith
@@ -802,26 +820,26 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
     have h2ne : Real.log t ^ 2 ≠ 0 := pow_ne_zero 2 hlogne
     field_simp
   have hI1 : (∫ t in Set.Ioc 2 x, deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t)
-    = -((Real.log (Real.log x)) - Real.log (Real.log 2)) := by
+      = -((Real.log (Real.log x)) - Real.log (Real.log 2)) := by
     have hcongr : (∫ t in Set.Ioc 2 x,
-      deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t)
-      = ∫ t in Set.Ioc 2 x, -(1/(t * Real.log t)) :=
+          deriv (fun t : ℝ => (Real.log t)⁻¹) t * Real.log t)
+        = ∫ t in Set.Ioc 2 x, -(1/(t * Real.log t)) :=
       MeasureTheory.setIntegral_congr_ae measurableSet_Ioc
         (Filter.Eventually.of_forall (fun t ht => hDlog_pt t ht))
     rw [hcongr, MeasureTheory.integral_neg, integral_inv_mul_log_facts_a x hx]
   have hDR_pt : ∀ t ∈ Set.Ioc (2:ℝ) x,
-    -((Real.log 4 + 6) * (1/(t * Real.log t ^ 2)))
-      ≤ deriv (fun t : ℝ => (Real.log t)⁻¹) t
-        * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)
-      ∧ deriv (fun t : ℝ => (Real.log t)⁻¹) t
-        * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)
-        ≤ (Real.log 4 + 6) * (1/(t * Real.log t ^ 2)) := by
+      -((Real.log 4 + 6) * (1/(t * Real.log t ^ 2)))
+        ≤ deriv (fun t : ℝ => (Real.log t)⁻¹) t
+          * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)
+        ∧ deriv (fun t : ℝ => (Real.log t)⁻¹) t
+          * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)
+          ≤ (Real.log 4 + 6) * (1/(t * Real.log t ^ 2)) := by
     intro t ht
     have ht2 : (2:ℝ) < t ∧ t ≤ x := Set.mem_Ioc.mp ht
     have htpos : (0:ℝ) < t := by linarith
     have hlogpos : 0 < Real.log t := Real.log_pos (by linarith : (1:ℝ) < t)
     have hDeq : |deriv (fun t : ℝ => (Real.log t)⁻¹) t|
-      = 1/(t * Real.log t ^ 2) := by
+        = 1/(t * Real.log t ^ 2) := by
       rw [hDall t ht, abs_div, abs_neg, abs_inv, abs_of_pos htpos,
         abs_of_nonneg (pow_nonneg (le_of_lt hlogpos) 2)]
       have htne : t ≠ 0 := ne_of_gt htpos
@@ -833,27 +851,27 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
       apply mul_nonneg (le_of_lt htpos)
       exact pow_nonneg (le_of_lt hlogpos) 2
     have habs : |deriv (fun t : ℝ => (Real.log t)⁻¹) t
-      * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)|
-      ≤ (Real.log 4 + 6) * (1/(t * Real.log t ^ 2)) := by
+          * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)|
+        ≤ (Real.log 4 + 6) * (1/(t * Real.log t ^ 2)) := by
       have hRt := hRbound t (by linarith)
       rw [abs_mul, hDeq]
       calc (1/(t * Real.log t ^ 2))
-        * |(∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t|
-        = |(∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t|
-          * (1/(t * Real.log t ^ 2)) := by ring
+            * |(∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t|
+          = |(∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t|
+            * (1/(t * Real.log t ^ 2)) := by ring
         _ ≤ (Real.log 4 + 6) * (1/(t * Real.log t ^ 2)) :=
           mul_le_mul_of_nonneg_right hRt hnn
     refine ⟨?_, (abs_le.mp habs).2⟩
     calc -((Real.log 4 + 6) * (1/(t * Real.log t ^ 2)))
-      ≤ -|deriv (fun t : ℝ => (Real.log t)⁻¹) t
-        * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)| := by
-      linarith [habs]
+          ≤ -|deriv (fun t : ℝ => (Real.log t)⁻¹) t
+            * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)| := by
+          linarith [habs]
       _ ≤ deriv (fun t : ℝ => (Real.log t)⁻¹) t
-        * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t) :=
+          * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t) :=
         neg_abs_le _
   have hCh : MeasureTheory.IntegrableOn
-    (fun t => (Real.log 4 + 6) * (1/(t * Real.log t ^ 2)))
-    (Set.Icc 2 x) MeasureTheory.volume := by
+      (fun t => (Real.log 4 + 6) * (1/(t * Real.log t ^ 2)))
+      (Set.Icc 2 x) MeasureTheory.volume := by
     apply ContinuousOn.integrableOn_Icc
     refine ContinuousOn.mul continuousOn_const
       (ContinuousOn.div continuousOn_const ?_ ?_)
@@ -865,15 +883,15 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
       exact ne_of_gt (mul_pos htpos (pow_pos hlp 2))
   have hCh_Ioc := hCh.mono_set Set.Ioc_subset_Icc_self
   have hval : (∫ t in Set.Ioc 2 x, (Real.log 4 + 6) * (1/(t * Real.log t ^ 2)))
-    = (Real.log 4 + 6) * (1 / Real.log 2 - 1 / Real.log x) := by
+      = (Real.log 4 + 6) * (1 / Real.log 2 - 1 / Real.log x) := by
     rw [MeasureTheory.integral_const_mul, integral_inv_mul_log_sq_facts_b x hx]
   have hle : (Real.log 4 + 6) * (1 / Real.log 2 - 1 / Real.log x)
-    ≤ (Real.log 4 + 6) / Real.log 2 := by
+      ≤ (Real.log 4 + 6) / Real.log 2 := by
     have h1logx : (0:ℝ) ≤ 1 / Real.log x :=
       div_nonneg (by norm_num) (le_of_lt hlogx_pos)
     calc (Real.log 4 + 6) * (1 / Real.log 2 - 1 / Real.log x)
-      = (Real.log 4 + 6) * (1 / Real.log 2)
-        - (Real.log 4 + 6) * (1 / Real.log x) := by ring
+        = (Real.log 4 + 6) * (1 / Real.log 2)
+          - (Real.log 4 + 6) * (1 / Real.log x) := by ring
       _ ≤ (Real.log 4 + 6) * (1 / Real.log 2) :=
         sub_le_self _ (mul_nonneg hCnn h1logx)
       _ = (Real.log 4 + 6) / Real.log 2 := by ring
@@ -885,30 +903,31 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
   have hIDR_ge : -((Real.log 4 + 6) / Real.log 2) ≤ IDR := by
     rw [hIDRdef]
     have hpt : ∀ t ∈ Set.Ioc (2:ℝ) x,
-      -(deriv (fun t : ℝ => (Real.log t)⁻¹) t
-        * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t))
-        ≤ (Real.log 4 + 6) * (1/(t * Real.log t ^ 2)) := by
+        -(deriv (fun t : ℝ => (Real.log t)⁻¹) t
+          * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t))
+          ≤ (Real.log 4 + 6) * (1/(t * Real.log t ^ 2)) := by
       intro t ht
       have h := (hDR_pt t ht).1
       have h2 := neg_le_neg h
-      rwa [neg_neg] at h2
+      rw [neg_neg] at h2
+      exact h2
     have hRneg_Ioc : MeasureTheory.IntegrableOn
-      (fun t => -(deriv (fun t : ℝ => (Real.log t)⁻¹) t
-        * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)))
-      (Set.Ioc 2 x) MeasureTheory.volume := hR_Ioc.neg
+        (fun t => -(deriv (fun t : ℝ => (Real.log t)⁻¹) t
+          * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)))
+        (Set.Ioc 2 x) MeasureTheory.volume := hR_Ioc.neg
     have hmono2 := MeasureTheory.setIntegral_mono_on hRneg_Ioc hCh_Ioc
       measurableSet_Ioc hpt
     have hneg : (∫ t in Set.Ioc 2 x, -(deriv (fun t : ℝ => (Real.log t)⁻¹) t
-      * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)))
-      = -(∫ t in Set.Ioc 2 x, deriv (fun t : ℝ => (Real.log t)⁻¹) t
-        * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)) :=
+          * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)))
+        = -(∫ t in Set.Ioc 2 x, deriv (fun t : ℝ => (Real.log t)⁻¹) t
+          * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, vonMangoldt k / (k:ℝ)) - Real.log t)) :=
       MeasureTheory.integral_neg _
     linarith [hmono2, hval, hle, hneg]
   have heq : (∑ n ∈ Finset.Icc 0 ⌊x⌋₊, (Real.log (n:ℝ))⁻¹ * (vonMangoldt n / (n:ℝ)))
-    - Real.log (Real.log x)
-    = (1 - Real.log (Real.log 2))
-      + ((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x)
-        / Real.log x - IDR := by
+      - Real.log (Real.log x)
+      = (1 - Real.log (Real.log 2))
+        + ((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x)
+          / Real.log x - IDR := by
     have h := hmain
     rw [hfx, hsplit, hI1] at h
     linarith
@@ -917,43 +936,45 @@ private lemma abs_sum_vonMangoldt_div_mul_log_sub_loglog_le :
     calc |1 - Real.log (Real.log 2)| ≤ |1| + |Real.log (Real.log 2)| := abs_sub _ _
       _ = 1 + |Real.log (Real.log 2)| := by rw [abs_one]
   have e2 : |(∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x|
-    / Real.log x ≤ (Real.log 4 + 6) / Real.log 2 := by
+        / Real.log x ≤ (Real.log 4 + 6) / Real.log 2 := by
     rw [div_le_iff₀ hlogx_pos]
     have h1 : (1:ℝ) ≤ Real.log x / Real.log 2 := by
       rw [le_div_iff₀ hlog2_pos, one_mul]
       exact Real.log_le_log (by norm_num) (by linarith)
     calc |(∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x|
-      ≤ Real.log 4 + 6 := hRx
+          ≤ Real.log 4 + 6 := hRx
       _ = (Real.log 4 + 6) * 1 := by ring
       _ ≤ (Real.log 4 + 6) * (Real.log x / Real.log 2) :=
         mul_le_mul_of_nonneg_left h1 hCnn
       _ = ((Real.log 4 + 6) / Real.log 2) * Real.log x := by ring
   have e2d : |(((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x)
-    / Real.log x)| ≤ (Real.log 4 + 6) / Real.log 2 := by
-    rwa [abs_div, abs_of_pos hlogx_pos]
+        / Real.log x)| ≤ (Real.log 4 + 6) / Real.log 2 := by
+    rw [abs_div, abs_of_pos hlogx_pos]
+    exact e2
   have e3 : |IDR| ≤ (Real.log 4 + 6) / Real.log 2 := by
     rw [abs_le]
     exact ⟨hIDR_ge, hIDR_le⟩
   calc |(∑ n ∈ Finset.Icc 0 ⌊x⌋₊, (Real.log (n:ℝ))⁻¹ * (vonMangoldt n / (n:ℝ)))
-    - Real.log (Real.log x)|
-    = |(1 - Real.log (Real.log 2))
-      + ((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x)
-        / Real.log x - IDR| := by
-      rw [heq]
+        - Real.log (Real.log x)|
+      = |(1 - Real.log (Real.log 2))
+        + ((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x)
+          / Real.log x - IDR| := by
+        rw [heq]
     _ ≤ |(1 - Real.log (Real.log 2))
-      + ((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x)
-        / Real.log x| + |IDR| :=
+        + ((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x)
+          / Real.log x| + |IDR| :=
       abs_sub _ _
     _ ≤ (|1 - Real.log (Real.log 2)|
-      + |(((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x)
-        / Real.log x)|) + |IDR| :=
+        + |(((∑ k ∈ Finset.Icc 0 ⌊x⌋₊, vonMangoldt k / (k:ℝ)) - Real.log x)
+          / Real.log x)|) + |IDR| :=
       add_le_add_left (abs_add_le _ _) _
     _ ≤ (1 + |Real.log (Real.log 2)| + (Real.log 4 + 6) / Real.log 2)
-      + (Real.log 4 + 6) / Real.log 2 :=
+        + (Real.log 4 + 6) / Real.log 2 :=
       add_le_add (add_le_add e1 e2d) e3
     _ = 1 + 2 * (Real.log 4 + 6) / Real.log 2 + |Real.log (Real.log 2)| := by
       ring
 
+-- Pointwise form of `Nat.factorization_pow`.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -966,6 +987,7 @@ private lemma factorization_pow_apply (d h p : ℕ) :
   (d ^ h).factorization p = h * d.factorization p := by
   rw [Nat.factorization_pow, Finsupp.smul_apply, smul_eq_mul]
 
+-- N8(i): summability of the real Möbius-over-power series.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -990,6 +1012,7 @@ private lemma summable_moebius_div_pow (h : ℕ) (hh : 2 ≤ h) :
     exact div_le_div_of_nonneg_right (hmuR d) hnn
   exact Summable.of_norm_bounded hsum1 hbound
 
+-- N8 helper: `riemannZeta` at a natural is the cast of the real p-series tsum.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1006,6 +1029,7 @@ private lemma riemannZeta_natCast_eq_ofReal_tsum (h : ℕ) (hh : 2 ≤ h) :
   simp only [Complex.ofReal_one, Complex.ofReal_div, Complex.ofReal_pow,
     Complex.ofReal_natCast]
 
+-- N8(iii): the zeta value is at least 1.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1023,8 +1047,10 @@ private lemma one_le_riemannZeta_natCast_re (h : ℕ) (hh : 2 ≤ h) :
     simpa using hle
   have hre : (riemannZeta (h:ℂ)).re = ∑' n : ℕ, (1:ℝ)/(n:ℝ)^h := by
     rw [riemannZeta_natCast_eq_ofReal_tsum h hh, Complex.ofReal_re]
-  rwa [hre]
+  rw [hre]
+  exact h1
 
+-- N8(ii): the Möbius tsum is the reciprocal of the zeta value.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1042,7 +1068,7 @@ private lemma tsum_moebius_div_pow_eq (h : ℕ) (hh : 2 ≤ h) :
   have hmul := LSeries_zeta_mul_Lseries_moebius (s := (h:ℂ)) hs
   rw [LSeries_zeta_eq_riemannZeta hs] at hmul
   have hcastM : LSeries (fun n : ℕ => ((moebius n : ℤ) : ℂ)) (h:ℂ)
-    = ((∑' d : ℕ, (moebius d : ℝ) / (d : ℝ) ^ h : ℝ):ℂ) := by
+      = ((∑' d : ℕ, (moebius d : ℝ) / (d : ℝ) ^ h : ℝ):ℂ) := by
     unfold LSeries
     rw [Complex.ofReal_tsum]
     apply tsum_congr
@@ -1063,7 +1089,7 @@ private lemma tsum_moebius_div_pow_eq (h : ℕ) (hh : 2 ≤ h) :
     have hle := hsum1.le_tsum (1:ℕ) (fun j _ => by positivity)
     simpa using hle
   have hZS : (∑' n : ℕ, (1:ℝ)/(n:ℝ)^h) * (∑' d : ℕ, (moebius d:ℝ)/(d:ℝ)^h)
-    = 1 := by
+      = 1 := by
     have h := congrArg Complex.re hmul
     rw [← Complex.ofReal_mul, Complex.ofReal_re] at h
     simpa using h
@@ -1074,6 +1100,7 @@ private lemma tsum_moebius_div_pow_eq (h : ℕ) (hh : 2 ≤ h) :
   rw [hre, eq_div_iff hZne]
   exact (mul_comm _ _).trans hZS
 
+-- N7: Möbius indicator for h-free numbers.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1094,10 +1121,11 @@ private lemma sum_moebius_pow_dvd_eq_ite_hfree (h n : ℕ) (hh : 1 ≤ h)
   set r : ℕ := g.prod (· ^ ·) with hrdef
   have hsupp : g.support ⊆ n.primeFactors := by
     have h1 : g.support ⊆ n.factorization.support := Finsupp.support_mapRange
-    rwa [Nat.support_factorization] at h1
+    rw [Nat.support_factorization] at h1
+    exact h1
   have hprime : ∀ p ∈ g.support, Nat.Prime p :=
     fun p hp => Nat.prime_of_mem_primeFactors (hsupp hp)
-  have hrfac : r.factorization = g := Nat.prod_pow_factorization_eq_self hprime
+  have hrfac : r.factorization = g := Nat.factorization_prod_pow_eq_self hprime
   have hrpos : 0 < r := by
     have h0 : 0 ∉ g.support := by
       intro hcon
@@ -1139,19 +1167,20 @@ private lemma sum_moebius_pow_dvd_eq_ite_hfree (h n : ℕ) (hh : 1 ≤ h)
   rw [hset]
   have hsum : ∑ d ∈ r.divisors, moebius d = (1 : ArithmeticFunction ℤ) r := by
     have h1 : (zeta * moebius : ArithmeticFunction ℤ) r
-      = ∑ d ∈ r.divisors, moebius d :=
+        = ∑ d ∈ r.divisors, moebius d :=
       ArithmeticFunction.coe_zeta_mul_apply
-    rwa [ArithmeticFunction.coe_zeta_mul_moebius] at h1
+    rw [ArithmeticFunction.coe_zeta_mul_moebius] at h1
+    exact h1.symm
   rw [hsum, ArithmeticFunction.one_apply]
   by_cases hr1 : r = 1
   · have hcond : ∀ p ∈ n.primeFactors, n.factorization p < h := by
-    intro p hp
-    have hrfp : r.factorization p = 0 := by
-      rw [hr1]
-      simp [Nat.factorization_one]
-    rw [hrp p] at hrfp
-    have hdiv := (Nat.div_eq_zero_iff).mp hrfp
-    omega
+      intro p hp
+      have hrfp : r.factorization p = 0 := by
+        rw [hr1]
+        simp [Nat.factorization_one]
+      rw [hrp p] at hrfp
+      have hdiv := (Nat.div_eq_zero_iff).mp hrfp
+      omega
     rw [ite_eq_left hr1, ite_eq_left hcond]
   · rw [ite_eq_right hr1]
     have hneg : ¬ ∀ p ∈ n.primeFactors, n.factorization p < h := by
@@ -1164,14 +1193,17 @@ private lemma sum_moebius_pow_dvd_eq_ite_hfree (h n : ℕ) (hh : 1 ≤ h)
         by_cases hmem : p ∈ n.primeFactors
         · exact (Nat.div_eq_zero_iff).mpr (Or.inr (hall p hmem))
         · have hzero : n.factorization p = 0 := by
-          have hsup : p ∉ n.factorization.support := by
-            rwa [Nat.support_factorization]
-          exact Finsupp.notMem_support_iff.mp hsup
+            have hsup : p ∉ n.factorization.support := by
+              rw [Nat.support_factorization]
+              exact hmem
+            exact Finsupp.notMem_support_iff.mp hsup
           rw [hzero]
           exact Nat.zero_div h
-      rwa [hrp p, hzp]
+      rw [hrp p, hzp]
+      exact h1p.symm
     rw [ite_eq_right hneg]
 
+-- N10: tail bound for the Möbius partial sums.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1204,7 +1236,8 @@ private lemma abs_tsum_moebius_div_pow_sub_partial_le (h : ℕ) (hh : 2 ≤ h)
         _ ≤ y * y := mul_le_mul_of_nonneg_left hy (le_of_lt hypos)
         _ = y^2 := (pow_two y).symm
     have hle := Real.sqrt_le_sqrt hy2
-    rwa [Real.sqrt_sq (le_of_lt hypos)] at hle
+    rw [Real.sqrt_sq (le_of_lt hypos)] at hle
+    exact hle
   have hfsum : Summable f := summable_moebius_div_pow h hh
   have hSeq : ∑' d : ℕ, f d = 1 / (riemannZeta (h:ℂ)).re :=
     tsum_moebius_div_pow_eq h hh
@@ -1249,7 +1282,7 @@ private lemma abs_tsum_moebius_div_pow_sub_partial_le (h : ℕ) (hh : 2 ≤ h)
   set E' : Finset ℕ := (Finset.range (M+1)).filter (fun d => d ∉ D)
     with hEdef
   have hT2 : (∑ d ∈ Finset.range (M+1), f d) - (∑ d ∈ D, f d)
-    = ∑ d ∈ E', f d := by
+      = ∑ d ∈ E', f d := by
     linarith [hsplit]
   have hEbound : ∀ d ∈ E', d ≠ 0 → |f d| ≤ 1/y := by
     intro d hd hd0
@@ -1278,14 +1311,14 @@ private lemma abs_tsum_moebius_div_pow_sub_partial_le (h : ℕ) (hh : 2 ≤ h)
       Real.mul_self_sqrt (le_of_lt hypos)
     rw [div_le_div_iff₀ hypos hSpos]
     calc (M:ℝ) * Real.sqrt y ≤ Real.sqrt y * Real.sqrt y :=
-      mul_le_mul_of_nonneg_right hMle (le_of_lt hSpos)
+          mul_le_mul_of_nonneg_right hMle (le_of_lt hSpos)
       _ = y := hsq
       _ = 1 * y := (one_mul y).symm
   have hT2le : |(∑ d ∈ Finset.range (M+1), f d) - (∑ d ∈ D, f d)|
-    ≤ 1/Real.sqrt y := by
+      ≤ 1/Real.sqrt y := by
     rw [hT2]
     have hdrop : ∑ d ∈ E', |f d|
-      = ∑ d ∈ E'.filter (fun d => d ≠ 0), |f d| := by
+        = ∑ d ∈ E'.filter (fun d => d ≠ 0), |f d| := by
       have hsp := Finset.sum_filter_add_sum_filter_not E' (fun d => d ≠ 0)
         (fun d => |f d|)
       have hz : ∑ d ∈ E'.filter (fun d => ¬ d ≠ 0), |f d| = 0 := by
@@ -1295,7 +1328,8 @@ private lemma abs_tsum_moebius_div_pow_sub_partial_le (h : ℕ) (hh : 2 ≤ h)
         have hd0 : d = 0 := not_not.mp hd.2
         rw [hd0]
         simp [hf0]
-      rwa [hz, add_zero] at hsp
+      rw [hz, add_zero] at hsp
+      exact hsp.symm
     have hEsub : E'.filter (fun d => d ≠ 0) ⊆ Finset.Icc 1 M := by
       intro d hd
       rw [Finset.mem_filter] at hd
@@ -1311,22 +1345,22 @@ private lemma abs_tsum_moebius_div_pow_sub_partial_le (h : ℕ) (hh : 2 ≤ h)
       exact hEbound d hd.1 hd.2
     have hcard : (E'.filter (fun d => d ≠ 0)).card ≤ M := by
       calc (E'.filter (fun d => d ≠ 0)).card ≤ (Finset.Icc 1 M).card :=
-        Finset.card_le_card hEsub
+            Finset.card_le_card hEsub
         _ = M := by rw [Nat.card_Icc]; omega
     calc |∑ d ∈ E', f d| ≤ ∑ d ∈ E', |f d| :=
-      Finset.abs_sum_le_sum_abs f E'
+          Finset.abs_sum_le_sum_abs f E'
       _ = ∑ d ∈ E'.filter (fun d => d ≠ 0), |f d| := hdrop
       _ ≤ ∑ d ∈ E'.filter (fun d => d ≠ 0), 1/y :=
-        Finset.sum_le_sum (fun d hd => hterm d hd)
+          Finset.sum_le_sum (fun d hd => hterm d hd)
       _ = ((E'.filter (fun d => d ≠ 0)).card : ℝ)/y := by
-        rw [Finset.sum_const, nsmul_eq_mul]
-        ring
+          rw [Finset.sum_const, nsmul_eq_mul]
+          ring
       _ ≤ (M:ℝ)/y :=
-        div_le_div_of_nonneg_right (by exact_mod_cast hcard) (le_of_lt hypos)
+          div_le_div_of_nonneg_right (by exact_mod_cast hcard) (le_of_lt hypos)
       _ ≤ 1/Real.sqrt y := hMy
   have hsplitM := Summable.sum_add_tsum_nat_add (M+1) hfsum
   have hT1 : (∑' d : ℕ, f d) - (∑ d ∈ Finset.range (M+1), f d)
-    = ∑' i : ℕ, f (i + (M+1)) := by
+      = ∑' i : ℕ, f (i + (M+1)) := by
     linarith [hsplitM]
   have hgsum : Summable (fun n : ℕ => (1:ℝ)/(n:ℝ)^h) :=
     Real.summable_one_div_nat_pow.mpr (by omega : 1 < h)
@@ -1345,7 +1379,7 @@ private lemma abs_tsum_moebius_div_pow_sub_partial_le (h : ℕ) (hh : 2 ≤ h)
     rw [← Real.norm_eq_abs]
     exact norm_tsum_le_tsum_norm hnormsum
   have hT1b : (∑' i : ℕ, ‖f (i+(M+1))‖)
-    ≤ ∑' i : ℕ, (1:ℝ)/((i+(M+1):ℕ):ℝ)^h := by
+      ≤ ∑' i : ℕ, (1:ℝ)/((i+(M+1):ℕ):ℝ)^h := by
     apply Summable.tsum_le_tsum _ hnormsum hgsum'
     intro i
     rw [Real.norm_eq_abs]
@@ -1356,7 +1390,7 @@ private lemma abs_tsum_moebius_div_pow_sub_partial_le (h : ℕ) (hh : 2 ≤ h)
     have h := h2.comp_injective (add_left_injective (M+1))
     simpa [Function.comp_def] using h
   have hT1c : (∑' i : ℕ, (1:ℝ)/((i+(M+1):ℕ):ℝ)^h)
-    ≤ ∑' i : ℕ, (1:ℝ)/((i+(M+1):ℕ):ℝ)^2 := by
+      ≤ ∑' i : ℕ, (1:ℝ)/((i+(M+1):ℕ):ℝ)^2 := by
     apply Summable.tsum_le_tsum _ hgsum' hgsum2
     intro i
     have hbase : (1:ℝ) ≤ ((i+(M+1):ℕ):ℝ) := by
@@ -1381,11 +1415,11 @@ private lemma abs_tsum_moebius_div_pow_sub_partial_le (h : ℕ) (hh : 2 ≤ h)
     linarith [hM2]
   have htail : (∑' i : ℕ, (1:ℝ)/((i+(M+1):ℕ):ℝ)^2) ≤ 2/Real.sqrt y := by
     have hrange : ∀ K : ℕ, ∑ i ∈ Finset.range K, (1:ℝ)/((i+(M+1):ℕ):ℝ)^2
-      ≤ 2/Real.sqrt y := by
+        ≤ 2/Real.sqrt y := by
       intro K
       have hK : M + 1 + K - (M + 1) = K := by omega
       have hre : ∑ i ∈ Finset.range K, (1:ℝ)/((i+(M+1):ℕ):ℝ)^2
-        = ∑ j ∈ Finset.Ico (M+1) (M+1+K), (1:ℝ)/(j:ℝ)^2 := by
+          = ∑ j ∈ Finset.Ico (M+1) (M+1+K), (1:ℝ)/(j:ℝ)^2 := by
         have h := Finset.sum_Ico_eq_sum_range
           (fun j : ℕ => (1:ℝ)/(j:ℝ)^2) (M+1) (M+1+K)
         rw [hK] at h
@@ -1401,47 +1435,48 @@ private lemma abs_tsum_moebius_div_pow_sub_partial_le (h : ℕ) (hh : 2 ≤ h)
         rw [Finset.mem_Ioc]
         omega
       have hconv : ∑ j ∈ Finset.Ico (M+1) (M+1+K), (1:ℝ)/(j:ℝ)^2
-        = ∑ j ∈ Finset.Ico (M+1) (M+1+K), ((j:ℝ)^2)⁻¹ := by
+          = ∑ j ∈ Finset.Ico (M+1) (M+1+K), ((j:ℝ)^2)⁻¹ := by
         apply Finset.sum_congr rfl
         intro j hj
         rw [one_div]
       rw [hconv]
       calc ∑ j ∈ Finset.Ico (M+1) (M+1+K), ((j:ℝ)^2)⁻¹
-        ≤ ∑ j ∈ Finset.Ioc M (M+1+K), ((j:ℝ)^2)⁻¹ :=
-          Finset.sum_le_sum_of_subset_of_nonneg hsub
-            (fun j _ _ => by positivity)
+          ≤ ∑ j ∈ Finset.Ioc M (M+1+K), ((j:ℝ)^2)⁻¹ :=
+            Finset.sum_le_sum_of_subset_of_nonneg hsub
+              (fun j _ _ => by positivity)
         _ ≤ (M:ℝ)⁻¹ - ((M+1+K : ℕ):ℝ)⁻¹ :=
-          sum_Ioc_inv_sq_le_sub (α := ℝ) (by omega : M ≠ 0)
-            (by omega : M ≤ M+1+K)
+            sum_Ioc_inv_sq_le_sub (α := ℝ) (by omega : M ≠ 0)
+              (by omega : M ≤ M+1+K)
         _ ≤ (M:ℝ)⁻¹ := by
-          have hnn : (0:ℝ) ≤ ((M+1+K:ℕ):ℝ)⁻¹ := by positivity
-          linarith
+            have hnn : (0:ℝ) ≤ ((M+1+K:ℕ):ℝ)⁻¹ := by positivity
+            linarith
         _ = 1/(M:ℝ) := by rw [one_div]
         _ ≤ 2/Real.sqrt y := hMbound
     have hnn : ∀ i : ℕ, (0:ℝ) ≤ (1:ℝ)/((i+(M+1):ℕ):ℝ)^2 := fun i => by
       positivity
     exact Real.tsum_le_of_sum_range_le hnn hrange
   have hSR : |(∑' d : ℕ, f d) - (∑ d ∈ Finset.range (M+1), f d)|
-    ≤ 2/Real.sqrt y := by
+      ≤ 2/Real.sqrt y := by
     rw [hT1]
     calc |∑' i : ℕ, f (i+(M+1))| ≤ ∑' i : ℕ, ‖f (i+(M+1))‖ := hT1a
       _ ≤ ∑' i : ℕ, (1:ℝ)/((i+(M+1):ℕ):ℝ)^h := hT1b
       _ ≤ ∑' i : ℕ, (1:ℝ)/((i+(M+1):ℕ):ℝ)^2 := hT1c
       _ ≤ 2/Real.sqrt y := htail
   have hdecomp : (1/(riemannZeta (h:ℂ)).re) - (∑ d ∈ D, f d)
-    = ((∑' d : ℕ, f d) - (∑ d ∈ Finset.range (M+1), f d))
-      + ((∑ d ∈ Finset.range (M+1), f d) - (∑ d ∈ D, f d)) := by
+      = ((∑' d : ℕ, f d) - (∑ d ∈ Finset.range (M+1), f d))
+        + ((∑ d ∈ Finset.range (M+1), f d) - (∑ d ∈ D, f d)) := by
     rw [← hSeq]
     ring
   rw [hdecomp]
   calc |((∑' d : ℕ, f d) - (∑ d ∈ Finset.range (M+1), f d))
-    + ((∑ d ∈ Finset.range (M+1), f d) - (∑ d ∈ D, f d))|
-    ≤ |(∑' d : ℕ, f d) - (∑ d ∈ Finset.range (M+1), f d)|
-      + |(∑ d ∈ Finset.range (M+1), f d) - (∑ d ∈ D, f d)| :=
-      abs_add_le _ _
+        + ((∑ d ∈ Finset.range (M+1), f d) - (∑ d ∈ D, f d))|
+      ≤ |(∑' d : ℕ, f d) - (∑ d ∈ Finset.range (M+1), f d)|
+        + |(∑ d ∈ Finset.range (M+1), f d) - (∑ d ∈ D, f d)| :=
+        abs_add_le _ _
     _ ≤ 2/Real.sqrt y + 1/Real.sqrt y := add_le_add hSR hT2le
     _ = 3/Real.sqrt y := by ring
 
+-- N9: h-free count as a Möbius-weighted divisor sum.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1455,22 +1490,22 @@ private lemma card_hfree_eq_sum_moebius_mul_div (h N : ℕ) (hh : 1 ≤ h) :
     (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).card : ℕ):ℤ)
     = ∑ d ∈ Finset.Icc 1 N, moebius d * ((N / d ^ h : ℕ) : ℤ) := by
   have hcard : ((((Finset.Icc 1 N).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).card : ℕ):ℤ)
-    = ∑ n ∈ Finset.Icc 1 N,
-      (if (∀ p ∈ n.primeFactors, n.factorization p < h) then (1:ℤ)
-        else 0) := by
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).card : ℕ):ℤ)
+      = ∑ n ∈ Finset.Icc 1 N,
+        (if (∀ p ∈ n.primeFactors, n.factorization p < h) then (1:ℤ)
+          else 0) := by
     rw [Finset.card_filter, Nat.cast_sum]
     apply Finset.sum_congr rfl
     intro n hn
     split_ifs <;> simp
   have hinner : ∀ n ∈ Finset.Icc 1 N,
-    (∑ d ∈ n.divisors.filter (fun d => d ^ h ∣ n), moebius d)
-      = ∑ d ∈ Finset.Icc 1 N,
-        (if d ^ h ∣ n then moebius d else 0) := by
+      (∑ d ∈ n.divisors.filter (fun d => d ^ h ∣ n), moebius d)
+        = ∑ d ∈ Finset.Icc 1 N,
+          (if d ^ h ∣ n then moebius d else 0) := by
     intro n hn
     have hnIcc := Finset.mem_Icc.mp hn
     have hset : n.divisors.filter (fun d => d ^ h ∣ n)
-      = (Finset.Icc 1 N).filter (fun d => d ^ h ∣ n) := by
+        = (Finset.Icc 1 N).filter (fun d => d ^ h ∣ n) := by
       ext d
       simp only [Finset.mem_filter, Nat.mem_divisors, Finset.mem_Icc]
       constructor
@@ -1486,37 +1521,39 @@ private lemma card_hfree_eq_sum_moebius_mul_div (h N : ℕ) (hh : 1 ≤ h) :
         exact ⟨⟨hdvd, by omega⟩, hpow⟩
     rw [hset, Finset.sum_filter]
   have hstep : ∀ n ∈ Finset.Icc 1 N,
-    (if (∀ p ∈ n.primeFactors, n.factorization p < h) then (1:ℤ) else 0)
-      = ∑ d ∈ Finset.Icc 1 N,
-        (if d ^ h ∣ n then moebius d else 0) := by
+      (if (∀ p ∈ n.primeFactors, n.factorization p < h) then (1:ℤ) else 0)
+        = ∑ d ∈ Finset.Icc 1 N,
+          (if d ^ h ∣ n then moebius d else 0) := by
     intro n hn
     have hn1 : 1 ≤ n := (Finset.mem_Icc.mp hn).1
     calc (if (∀ p ∈ n.primeFactors, n.factorization p < h) then (1:ℤ) else 0)
-      = ∑ d ∈ n.divisors.filter (fun d => d ^ h ∣ n), moebius d :=
-        (sum_moebius_pow_dvd_eq_ite_hfree h n hh hn1).symm
+        = ∑ d ∈ n.divisors.filter (fun d => d ^ h ∣ n), moebius d :=
+          (sum_moebius_pow_dvd_eq_ite_hfree h n hh hn1).symm
       _ = ∑ d ∈ Finset.Icc 1 N, (if d ^ h ∣ n then moebius d else 0) :=
-        hinner n hn
+          hinner n hn
   have hswap : (∑ n ∈ Finset.Icc 1 N, ∑ d ∈ Finset.Icc 1 N,
-    (if d ^ h ∣ n then moebius d else 0))
-    = ∑ d ∈ Finset.Icc 1 N, moebius d * ((N / d ^ h : ℕ) : ℤ) := by
+        (if d ^ h ∣ n then moebius d else 0))
+      = ∑ d ∈ Finset.Icc 1 N, moebius d * ((N / d ^ h : ℕ) : ℤ) := by
     rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
     intro d hd
     have hcardd : (Finset.filter (fun n => d ^ h ∣ n) (Finset.Icc 1 N)).card
-      = N / d ^ h := by
+        = N / d ^ h := by
       rw [Icc_one_eq_Ioc_zero, Nat.Ioc_filter_dvd_card_eq_div]
     rw [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul, hcardd]
     ring
   calc ((((Finset.Icc 1 N).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).card : ℕ):ℤ)
-    = ∑ n ∈ Finset.Icc 1 N,
-      (if (∀ p ∈ n.primeFactors, n.factorization p < h) then (1:ℤ)
-        else 0) := hcard
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).card : ℕ):ℤ)
+      = ∑ n ∈ Finset.Icc 1 N,
+        (if (∀ p ∈ n.primeFactors, n.factorization p < h) then (1:ℤ)
+          else 0) := hcard
     _ = ∑ n ∈ Finset.Icc 1 N, ∑ d ∈ Finset.Icc 1 N,
-      (if d ^ h ∣ n then moebius d else 0) :=
-      Finset.sum_congr rfl hstep
+        (if d ^ h ∣ n then moebius d else 0) :=
+        Finset.sum_congr rfl hstep
     _ = ∑ d ∈ Finset.Icc 1 N, moebius d * ((N / d ^ h : ℕ) : ℤ) := hswap
 
+-- N6: Mertens II for primes, from the von Mangoldt form (N4) and the
+-- prime-power correction (N5).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1538,7 +1575,7 @@ private lemma abs_sum_prime_inv_sub_loglog_le :
   have hsplit1 := Finset.sum_filter_add_sum_filter_not (Finset.Icc 0 N)
     IsPrimePow f
   have hzero : ∑ n ∈ (Finset.Icc 0 N).filter (fun n => ¬ IsPrimePow n), f n
-    = 0 := by
+      = 0 := by
     apply Finset.sum_eq_zero
     intro n hn
     rw [Finset.mem_filter] at hn
@@ -1548,14 +1585,14 @@ private lemma abs_sum_prime_inv_sub_loglog_le :
   have hsplit2 := Finset.sum_filter_add_sum_filter_not
     ((Finset.Icc 0 N).filter IsPrimePow) Nat.Prime f
   have eS1 : ((Finset.Icc 0 N).filter IsPrimePow).filter Nat.Prime
-    = (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ n.Prime) := by
+      = (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ n.Prime) := by
     rw [Finset.filter_filter]
   have eS2 : ((Finset.Icc 0 N).filter IsPrimePow).filter (fun n => ¬ Nat.Prime n)
-    = (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime) := by
+      = (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime) := by
     rw [Finset.filter_filter]
   rw [eS1, eS2] at hsplit2
   have hS1 : (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ n.Prime)
-    = (Finset.Icc 1 N).filter Nat.Prime := by
+      = (Finset.Icc 1 N).filter Nat.Prime := by
     ext n
     simp only [Finset.mem_filter, Finset.mem_Icc]
     constructor
@@ -1564,7 +1601,7 @@ private lemma abs_sum_prime_inv_sub_loglog_le :
     · rintro ⟨⟨h1, hN⟩, hpp⟩
       exact ⟨⟨by omega, hN⟩, hpp.isPrimePow, hpp⟩
   have hS2 : (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime)
-    = (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime) := by
+      = (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime) := by
     ext n
     simp only [Finset.mem_filter, Finset.mem_Icc]
     constructor
@@ -1576,7 +1613,7 @@ private lemma abs_sum_prime_inv_sub_loglog_le :
     · rintro ⟨⟨h1, hN⟩, hpp, hnp⟩
       exact ⟨⟨by omega, hN⟩, hpp, hnp⟩
   have hterm1 : ∀ p ∈ (Finset.Icc 0 N).filter
-    (fun n => IsPrimePow n ∧ n.Prime), f p = (1 : ℝ) / (p : ℝ) := by
+      (fun n => IsPrimePow n ∧ n.Prime), f p = (1 : ℝ) / (p : ℝ) := by
     intro p hp
     rw [Finset.mem_filter] at hp
     obtain ⟨hpIcc, -, hpp⟩ := hp
@@ -1587,8 +1624,8 @@ private lemma abs_sum_prime_inv_sub_loglog_le :
     simp only [hfdef, vonMangoldt_apply_prime hpp, ← mul_div_assoc,
       inv_mul_cancel₀ hlog]
   have hterm2 : ∀ n ∈ (Finset.Icc 0 N).filter
-    (fun n => IsPrimePow n ∧ ¬ n.Prime),
-    0 ≤ f n ∧ f n ≤ (1 : ℝ) / (n : ℝ) := by
+      (fun n => IsPrimePow n ∧ ¬ n.Prime),
+      0 ≤ f n ∧ f n ≤ (1 : ℝ) / (n : ℝ) := by
     intro n hn
     rw [Finset.mem_filter] at hn
     obtain ⟨hnIcc, hpp, hnp⟩ := hn
@@ -1611,81 +1648,87 @@ private lemma abs_sum_prime_inv_sub_loglog_le :
     have hlognn : (0 : ℝ) ≤ (Real.log ((p ^ k : ℕ) : ℝ))⁻¹ :=
       inv_nonneg.mpr (le_of_lt hlogpos)
     have hdiv : vonMangoldt (p ^ k) / ((p ^ k : ℕ) : ℝ)
-      ≤ Real.log ((p ^ k : ℕ) : ℝ) / ((p ^ k : ℕ) : ℝ) :=
+        ≤ Real.log ((p ^ k : ℕ) : ℝ) / ((p ^ k : ℕ) : ℝ) :=
       (div_le_div_iff_of_pos_right hnpos).mpr hLle
     have h2 : (Real.log ((p ^ k : ℕ) : ℝ))⁻¹
-      * (Real.log ((p ^ k : ℕ) : ℝ) / ((p ^ k : ℕ) : ℝ))
-      = 1 / ((p ^ k : ℕ) : ℝ) := by
+          * (Real.log ((p ^ k : ℕ) : ℝ) / ((p ^ k : ℕ) : ℝ))
+        = 1 / ((p ^ k : ℕ) : ℝ) := by
       rw [← mul_div_assoc, inv_mul_cancel₀ hlogne]
     constructor
     · simp only [hfdef]
       exact mul_nonneg hlognn (div_nonneg hLnn (le_of_lt hnpos))
     · have h1 : f (p ^ k) ≤ (Real.log ((p ^ k : ℕ) : ℝ))⁻¹
-      * (Real.log ((p ^ k : ℕ) : ℝ) / ((p ^ k : ℕ) : ℝ)) := by
-      simp only [hfdef]
-      exact mul_le_mul_of_nonneg_left hdiv hlognn
-      rwa [h2] at h1
+          * (Real.log ((p ^ k : ℕ) : ℝ) / ((p ^ k : ℕ) : ℝ)) := by
+        simp only [hfdef]
+        exact mul_le_mul_of_nonneg_left hdiv hlognn
+      rw [h2] at h1
+      exact h1
   have hmem : ∀ n ∈ (Finset.Icc 1 N).filter
-    (fun n => IsPrimePow n ∧ ¬ n.Prime),
-    n ∈ (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime) := by
+      (fun n => IsPrimePow n ∧ ¬ n.Prime),
+      n ∈ (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime) := by
     intro n hn
-    rwa [hS2]
+    rw [hS2]
+    exact hn
   have h1 : ∑ n ∈ (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ n.Prime), f n
-    = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, (1 : ℝ) / p := by
+      = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, (1 : ℝ) / p := by
     rw [hS1]
     apply Finset.sum_congr rfl
     intro p hp
     apply hterm1
-    rwa [hS1]
+    rw [hS1]
+    exact hp
   have h2 : ∑ n ∈ (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime), f n
-    = ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
-      f n := by
+      = ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
+        f n := by
     rw [hS2]
   have htot : ∑ n ∈ Finset.Icc 0 N, f n
-    = ∑ n ∈ (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ n.Prime), f n
-      + ∑ n ∈ (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
-        f n := by
+      = ∑ n ∈ (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ n.Prime), f n
+        + ∑ n ∈ (Finset.Icc 0 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
+          f n := by
     have h0 : ∑ n ∈ (Finset.Icc 0 N).filter IsPrimePow, f n
-      = ∑ n ∈ Finset.Icc 0 N, f n := by
-      rwa [hzero, add_zero] at hsplit1
+        = ∑ n ∈ Finset.Icc 0 N, f n := by
+      rw [hzero, add_zero] at hsplit1
+      exact hsplit1
     rw [← h0, ← hsplit2]
   have hPE : ∑ n ∈ Finset.Icc 0 N, f n
-    = (∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, (1 : ℝ) / p)
-      + ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
-        f n := by
+      = (∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, (1 : ℝ) / p)
+        + ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
+          f n := by
     rw [htot, h1, h2]
   have hEnn : 0 ≤ ∑ n ∈ (Finset.Icc 1 N).filter
-    (fun n => IsPrimePow n ∧ ¬ n.Prime), f n := by
+      (fun n => IsPrimePow n ∧ ¬ n.Prime), f n := by
     apply Finset.sum_nonneg
     intro n hn
     exact (hterm2 n (hmem n hn)).1
   have hEle : ∑ n ∈ (Finset.Icc 1 N).filter
-    (fun n => IsPrimePow n ∧ ¬ n.Prime), f n ≤ 2 := by
+      (fun n => IsPrimePow n ∧ ¬ n.Prime), f n ≤ 2 := by
     calc ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime), f n
-      ≤ ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
-        (1 : ℝ) / n :=
-        Finset.sum_le_sum (fun n hn => (hterm2 n (hmem n hn)).2)
+        ≤ ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
+          (1 : ℝ) / n :=
+          Finset.sum_le_sum (fun n hn => (hterm2 n (hmem n hn)).2)
       _ ≤ 2 := sum_inv_nonprime_primePow_le_two N
   have hdecomp : (∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, (1 : ℝ) / p)
-    - Real.log (Real.log x)
-    = ((∑ n ∈ Finset.Icc 0 N, f n) - Real.log (Real.log x))
-      - ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
-        f n := by
+        - Real.log (Real.log x)
+      = ((∑ n ∈ Finset.Icc 0 N, f n) - Real.log (Real.log x))
+        - ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
+          f n := by
     rw [hPE]
     ring
   rw [hdecomp]
   calc |((∑ n ∈ Finset.Icc 0 N, f n) - Real.log (Real.log x))
-    - ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
-      f n|
-    ≤ |∑ n ∈ Finset.Icc 0 N, f n - Real.log (Real.log x)|
-      + |∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
-        f n| := abs_sub _ _
+        - ∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
+          f n|
+      ≤ |∑ n ∈ Finset.Icc 0 N, f n - Real.log (Real.log x)|
+        + |∑ n ∈ (Finset.Icc 1 N).filter (fun n => IsPrimePow n ∧ ¬ n.Prime),
+          f n| := abs_sub _ _
     _ ≤ C4 + 2 := by
-      have habs : |∑ n ∈ (Finset.Icc 1 N).filter
-        (fun n => IsPrimePow n ∧ ¬ n.Prime), f n| ≤ 2 := by
-        rwa [abs_of_nonneg hEnn]
-      linarith [h4, habs]
+        have habs : |∑ n ∈ (Finset.Icc 1 N).filter
+            (fun n => IsPrimePow n ∧ ¬ n.Prime), f n| ≤ 2 := by
+          rw [abs_of_nonneg hEnn]
+          exact hEle
+        linarith [h4, habs]
 
+-- Helper: partial sums of 1/√n are at most 2√N.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1733,6 +1776,7 @@ private lemma sum_inv_sqrt_le_two_sqrt (N : ℕ) :
       linarith
     linarith [ih, hkey]
 
+-- Helper: natural division approximates real division within 1.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1766,6 +1810,7 @@ private lemma abs_nat_div_sub_div_le_one (M b : ℕ) (hb : 0 < b) :
   rw [hdiff]
   exact le_of_lt hfrac
 
+-- N11: h-free counting function `x/ζ(h) + O(√x)`.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1783,7 +1828,8 @@ private lemma abs_card_hfree_sub_le (h : ℕ) (hh : 2 ≤ h) (y : ℝ) (hy : 0 �
   have hZpos : (0:ℝ) < (riemannZeta (h : ℂ)).re :=
     lt_of_lt_of_le (by norm_num) hZ1
   have hZinv_le : (1:ℝ) / (riemannZeta (h : ℂ)).re ≤ 1 := by
-    rwa [div_le_one hZpos]
+    rw [div_le_one hZpos]
+    exact hZ1
   by_cases hy1 : y < 1
   · have hN0 : ⌊y⌋₊ = 0 := Nat.floor_eq_zero.mpr hy1
     have hempty : Finset.Icc (1:ℕ) (0:ℕ) = ∅ := by decide
@@ -1792,7 +1838,7 @@ private lemma abs_card_hfree_sub_le (h : ℕ) (hh : 2 ≤ h) (y : ℝ) (hy : 0 �
     rw [abs_neg, abs_of_nonneg (div_nonneg hy (le_of_lt hZpos))]
     have hdiv_le : y / (riemannZeta (h : ℂ)).re ≤ y := by
       calc y / (riemannZeta (h : ℂ)).re = y * (1 / (riemannZeta (h : ℂ)).re) := by
-        ring
+            ring
         _ ≤ y * 1 := mul_le_mul_of_nonneg_left hZinv_le hy
         _ = y := mul_one y
     have hysq : y ^ 2 ≤ y := by
@@ -1817,8 +1863,8 @@ private lemma abs_card_hfree_sub_le (h : ℕ) (hh : 2 ≤ h) (y : ℝ) (hy : 0 �
     have hNy : (N:ℝ) ≤ y := Nat.floor_le hy
     have hN9 := card_hfree_eq_sum_moebius_mul_div h N (by omega : 1 ≤ h)
     have hN9R : ((((Finset.Icc 1 N).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).card : ℕ) : ℝ)
-      = ∑ d ∈ Finset.Icc 1 N, (moebius d : ℝ) * (((N / d ^ h : ℕ) : ℝ)) := by
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).card : ℕ) : ℝ)
+        = ∑ d ∈ Finset.Icc 1 N, (moebius d : ℝ) * (((N / d ^ h : ℕ) : ℝ)) := by
       have hcon := congrArg (Int.cast (R := ℝ)) hN9
       simp only [Int.cast_sum, Int.cast_mul, Int.cast_natCast] at hcon
       exact hcon
@@ -1826,7 +1872,7 @@ private lemma abs_card_hfree_sub_le (h : ℕ) (hh : 2 ≤ h) (y : ℝ) (hy : 0 �
     rw [hN_eq, hN9R]
     have hDsub : D ⊆ Finset.Icc 1 N := Finset.filter_subset _ _
     have hvanish : ∀ d ∈ Finset.Icc 1 N, d ∉ D →
-      (moebius d : ℝ) * (((N / d ^ h : ℕ) : ℝ)) = 0 := by
+        (moebius d : ℝ) * (((N / d ^ h : ℕ) : ℝ)) = 0 := by
       intro d hd hdD
       have hdR1 : (1:ℝ) ≤ (d:ℝ) := by
         rw [Finset.mem_Icc] at hd
@@ -1839,7 +1885,7 @@ private lemma abs_card_hfree_sub_le (h : ℕ) (hh : 2 ≤ h) (y : ℝ) (hy : 0 �
       have hdiv0 : N / d ^ h = 0 := Nat.div_eq_of_lt hlt
       rw [hdiv0, Nat.cast_zero, mul_zero]
     have hsumD : ∑ d ∈ Finset.Icc 1 N, (moebius d : ℝ) * (((N / d ^ h : ℕ) : ℝ))
-      = ∑ d ∈ D, (moebius d : ℝ) * (((N / d ^ h : ℕ) : ℝ)) :=
+        = ∑ d ∈ D, (moebius d : ℝ) * (((N / d ^ h : ℕ) : ℝ)) :=
       (Finset.sum_subset hDsub (fun d hd hdD => hvanish d hd hdD)).symm
     rw [hsumD]
     have hpart := abs_tsum_moebius_div_pow_sub_partial_le h hh y hy1le
@@ -1869,8 +1915,8 @@ private lemma abs_card_hfree_sub_le (h : ℕ) (hh : 2 ≤ h) (y : ℝ) (hy : 0 �
       rw [← h1] at hlt
       linarith
     have hrewrite : ∀ d ∈ D, (moebius d : ℝ) * (((N / d ^ h : ℕ) : ℝ))
-      = y * ((moebius d : ℝ) / (d:ℝ)^h)
-        - (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ)) := by
+        = y * ((moebius d : ℝ) / (d:ℝ)^h)
+          - (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ)) := by
       intro d hd
       rw [hDdef, Finset.mem_filter, Finset.mem_Icc] at hd
       obtain ⟨⟨hd1, -⟩, -⟩ := hd
@@ -1878,26 +1924,27 @@ private lemma abs_card_hfree_sub_le (h : ℕ) (hh : 2 ≤ h) (y : ℝ) (hy : 0 �
       rw [hcast]
       ring
     have hQeq : ∑ d ∈ D, (moebius d : ℝ) * (((N / d ^ h : ℕ) : ℝ))
-      = y * (∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h)
-        - ∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ)) := by
+        = y * (∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h)
+          - ∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ)) := by
       rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
       apply Finset.sum_congr rfl
       intro d hd
       exact hrewrite d hd
     rw [hQeq]
     have htail : |y * ((∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h) - 1 / (riemannZeta (h : ℂ)).re)|
-      ≤ 3 * Real.sqrt y := by
+        ≤ 3 * Real.sqrt y := by
       have habs : |(∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h) - 1 / (riemannZeta (h : ℂ)).re|
-        ≤ 3 / Real.sqrt y := by
-        rwa [abs_sub_comm]
+          ≤ 3 / Real.sqrt y := by
+        rw [abs_sub_comm]
+        exact hpart
       calc |y * ((∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h) - 1 / (riemannZeta (h : ℂ)).re)|
-        = y * |(∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h) - 1 / (riemannZeta (h : ℂ)).re| := by
-        rw [abs_mul, abs_of_nonneg hy]
+            = y * |(∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h) - 1 / (riemannZeta (h : ℂ)).re| := by
+            rw [abs_mul, abs_of_nonneg hy]
         _ ≤ y * (3 / Real.sqrt y) := mul_le_mul_of_nonneg_left habs hy
         _ = 3 * Real.sqrt y := by
-          have hsq : Real.sqrt y * Real.sqrt y = y := Real.mul_self_sqrt hy
-          field_simp
-          linarith [hsq]
+            have hsq : Real.sqrt y * Real.sqrt y = y := Real.mul_self_sqrt hy
+            field_simp
+            linarith [hsq]
     have hmu_le : ∀ d ∈ D, |(moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))| ≤ 1 := by
       intro d hd
       have hmu : |(moebius d : ℝ)| ≤ 1 := by
@@ -1910,7 +1957,7 @@ private lemma abs_card_hfree_sub_le (h : ℕ) (hh : 2 ≤ h) (y : ℝ) (hy : 0 �
         rw [abs_of_nonneg hth_nn]
         exact le_of_lt hth_lt
       calc |(moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))|
-        = |(moebius d : ℝ)| * |y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ)| := abs_mul _ _
+            = |(moebius d : ℝ)| * |y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ)| := abs_mul _ _
         _ ≤ 1 * 1 := mul_le_mul hmu hth_abs (abs_nonneg _) (by norm_num)
         _ = 1 := mul_one 1
     have hcard_le : (D.card : ℝ) ≤ Real.sqrt y := by
@@ -1937,34 +1984,35 @@ private lemma abs_card_hfree_sub_le (h : ℕ) (hh : 2 ≤ h) (y : ℝ) (hy : 0 �
       calc (D.card : ℝ) ≤ (M:ℝ) := by exact_mod_cast hcard
         _ ≤ Real.sqrt y := hMle
     have herr_le : |∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))|
-      ≤ Real.sqrt y := by
+        ≤ Real.sqrt y := by
       calc |∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))|
-        ≤ ∑ d ∈ D, |(moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))| :=
-        Finset.abs_sum_le_sum_abs _ _
+            ≤ ∑ d ∈ D, |(moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))| :=
+            Finset.abs_sum_le_sum_abs _ _
         _ ≤ ∑ d ∈ D, 1 := Finset.sum_le_sum (fun d hd => hmu_le d hd)
         _ = D.card := by simp only [Finset.sum_const, nsmul_eq_mul, mul_one]
         _ ≤ Real.sqrt y := hcard_le
     have hfinal : |y * (∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h)
-      - ∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))
-      - y / (riemannZeta (h : ℂ)).re| ≤ 4 * Real.sqrt y := by
+          - ∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))
+          - y / (riemannZeta (h : ℂ)).re| ≤ 4 * Real.sqrt y := by
       have heq : y * (∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h)
-        - ∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))
-        - y / (riemannZeta (h : ℂ)).re
-        = (y * ((∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h) - 1 / (riemannZeta (h : ℂ)).re))
-          - (∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))) := by
+            - ∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))
+            - y / (riemannZeta (h : ℂ)).re
+          = (y * ((∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h) - 1 / (riemannZeta (h : ℂ)).re))
+            - (∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))) := by
         have hdiv : y / (riemannZeta (h : ℂ)).re = y * (1 / (riemannZeta (h : ℂ)).re) := by ring
         rw [hdiv]
         ring
       rw [heq]
       calc |(y * ((∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h) - 1 / (riemannZeta (h : ℂ)).re))
-        - (∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ)))|
-        ≤ |y * ((∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h) - 1 / (riemannZeta (h : ℂ)).re)|
-          + |∑ d ∈ D, (moebius d : ℝ)
-            * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))| := abs_sub _ _
+            - (∑ d ∈ D, (moebius d : ℝ) * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ)))|
+            ≤ |y * ((∑ d ∈ D, (moebius d : ℝ) / (d:ℝ)^h) - 1 / (riemannZeta (h : ℂ)).re)|
+              + |∑ d ∈ D, (moebius d : ℝ)
+                * (y / ((d ^ h : ℕ):ℝ) - ((N / d ^ h : ℕ):ℝ))| := abs_sub _ _
         _ ≤ 3 * Real.sqrt y + Real.sqrt y := add_le_add htail herr_le
         _ = 4 * Real.sqrt y := by ring
     exact hfinal
 
+-- N14: prime-weighted h-free counts against the main term.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1989,10 +2037,10 @@ private lemma abs_sum_prime_card_hfree_sub_main_le (h : ℕ) (hh : 2 ≤ h)
   have hNx : (N:ℝ) ≤ x := Nat.floor_le hx0
   have hsqrtN_le : Real.sqrt (N:ℝ) ≤ Real.sqrt x := Real.sqrt_le_sqrt hNx
   have hterm : ∀ p ∈ S,
-    |((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
-      - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re|
-      ≤ 4 * Real.sqrt (x / (p:ℝ)) := by
+      |((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
+        - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re|
+        ≤ 4 * Real.sqrt (x / (p:ℝ)) := by
     intro p hp
     rw [hSdef, Finset.mem_filter] at hp
     obtain ⟨-, hpp⟩ := hp
@@ -2003,87 +2051,88 @@ private lemma abs_sum_prime_card_hfree_sub_main_le (h : ℕ) (hh : 2 ≤ h)
     have hy0 : (0:ℝ) ≤ x / (p:ℝ) := div_nonneg hx0 (le_of_lt hppos)
     exact abs_card_hfree_sub_le h hh (x / (p:ℝ)) hy0
   have hmain : (x / (riemannZeta (h : ℂ)).re)
-    * ∑ p ∈ S, (1:ℝ) / (p:ℝ)
-    = ∑ p ∈ S, (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re := by
+        * ∑ p ∈ S, (1:ℝ) / (p:ℝ)
+        = ∑ p ∈ S, (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re := by
     rw [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro p _
     ring
   have hdecomp : ∑ p ∈ S,
-    ((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
-    - (x / (riemannZeta (h : ℂ)).re) * ∑ p ∈ S, (1:ℝ) / (p:ℝ)
-    = ∑ p ∈ S, (((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
-      - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re) := by
+        ((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
+        - (x / (riemannZeta (h : ℂ)).re) * ∑ p ∈ S, (1:ℝ) / (p:ℝ)
+        = ∑ p ∈ S, (((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
+          - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re) := by
     rw [hmain, ← Finset.sum_sub_distrib]
   have hbound_each : ∀ p ∈ S,
-    |((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
-      - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re|
-      ≤ 4 * Real.sqrt x * ((1:ℝ) / Real.sqrt (p:ℝ)) := by
+      |((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
+        - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re|
+        ≤ 4 * Real.sqrt x * ((1:ℝ) / Real.sqrt (p:ℝ)) := by
     intro p hp
     have hle_term := hterm p hp
     have hsqrt_eq : Real.sqrt (x / (p:ℝ)) = Real.sqrt x / Real.sqrt (p:ℝ) :=
       Real.sqrt_div hx0 (p:ℝ)
     calc |((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
-      - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re|
-      ≤ 4 * Real.sqrt (x / (p:ℝ)) := hle_term
-      _ = 4 * Real.sqrt x * ((1:ℝ) / Real.sqrt (p:ℝ)) := by
-        rw [hsqrt_eq]
-        ring
+            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
+          - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re|
+          ≤ 4 * Real.sqrt (x / (p:ℝ)) := hle_term
+        _ = 4 * Real.sqrt x * ((1:ℝ) / Real.sqrt (p:ℝ)) := by
+            rw [hsqrt_eq]
+            ring
   have hsum_le : ∑ p ∈ S,
-    |((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
-      - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re|
-    ≤ 4 * Real.sqrt x * (2 * Real.sqrt (N:ℝ)) := by
+        |((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
+          - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re|
+        ≤ 4 * Real.sqrt x * (2 * Real.sqrt (N:ℝ)) := by
     have hle : ∑ p ∈ S, (4 * Real.sqrt x * ((1:ℝ) / Real.sqrt (p:ℝ)))
-      = 4 * Real.sqrt x * ∑ p ∈ S, ((1:ℝ) / Real.sqrt (p:ℝ)) := by
+        = 4 * Real.sqrt x * ∑ p ∈ S, ((1:ℝ) / Real.sqrt (p:ℝ)) := by
       rw [Finset.mul_sum]
     have hsub : ∑ p ∈ S, ((1:ℝ) / Real.sqrt (p:ℝ))
-      ≤ ∑ n ∈ Finset.Icc 1 N, ((1:ℝ) / Real.sqrt (n:ℝ)) := by
+        ≤ ∑ n ∈ Finset.Icc 1 N, ((1:ℝ) / Real.sqrt (n:ℝ)) := by
       apply Finset.sum_le_sum_of_subset_of_nonneg
       · exact Finset.filter_subset _ _
       · intro i _ _
         positivity
     have hsqrt_sum := sum_inv_sqrt_le_two_sqrt N
     calc ∑ p ∈ S,
-      |((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
-        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
-        - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re|
-      ≤ ∑ p ∈ S, (4 * Real.sqrt x * ((1:ℝ) / Real.sqrt (p:ℝ))) :=
-        Finset.sum_le_sum (fun p hp => hbound_each p hp)
-      _ = 4 * Real.sqrt x * ∑ p ∈ S, ((1:ℝ) / Real.sqrt (p:ℝ)) := hle
-      _ ≤ 4 * Real.sqrt x * (∑ n ∈ Finset.Icc 1 N, ((1:ℝ) / Real.sqrt (n:ℝ))) := by
-        apply mul_le_mul_of_nonneg_left hsub
-        positivity
-      _ ≤ 4 * Real.sqrt x * (2 * Real.sqrt (N:ℝ)) := by
-        apply mul_le_mul_of_nonneg_left hsqrt_sum
-        positivity
+            |((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
+              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
+              - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re|
+          ≤ ∑ p ∈ S, (4 * Real.sqrt x * ((1:ℝ) / Real.sqrt (p:ℝ))) :=
+            Finset.sum_le_sum (fun p hp => hbound_each p hp)
+        _ = 4 * Real.sqrt x * ∑ p ∈ S, ((1:ℝ) / Real.sqrt (p:ℝ)) := hle
+        _ ≤ 4 * Real.sqrt x * (∑ n ∈ Finset.Icc 1 N, ((1:ℝ) / Real.sqrt (n:ℝ))) := by
+            apply mul_le_mul_of_nonneg_left hsub
+            positivity
+        _ ≤ 4 * Real.sqrt x * (2 * Real.sqrt (N:ℝ)) := by
+            apply mul_le_mul_of_nonneg_left hsqrt_sum
+            positivity
   have hfinal_le : 4 * Real.sqrt x * (2 * Real.sqrt (N:ℝ)) ≤ 8 * x := by
     have hmul : Real.sqrt x * Real.sqrt (N:ℝ) ≤ x := by
       calc Real.sqrt x * Real.sqrt (N:ℝ)
-        ≤ Real.sqrt x * Real.sqrt x :=
-        mul_le_mul_of_nonneg_left hsqrtN_le hSx
+            ≤ Real.sqrt x * Real.sqrt x :=
+            mul_le_mul_of_nonneg_left hsqrtN_le hSx
         _ = x := hsqx
     linarith
   calc |∑ p ∈ S,
-    ((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
-    - (x / (riemannZeta (h : ℂ)).re) * ∑ p ∈ S, (1:ℝ) / (p:ℝ)|
-    = |∑ p ∈ S, (((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
-      - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re)| := by
-      rw [hdecomp]
-    _ ≤ ∑ p ∈ S,
-      |((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
-        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
-        - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re| :=
-      Finset.abs_sum_le_sum_abs _ _
-    _ ≤ 4 * Real.sqrt x * (2 * Real.sqrt (N:ℝ)) := hsum_le
-    _ ≤ 8 * x := hfinal_le
+          ((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
+            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
+        - (x / (riemannZeta (h : ℂ)).re) * ∑ p ∈ S, (1:ℝ) / (p:ℝ)|
+        = |∑ p ∈ S, (((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
+            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
+            - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re)| := by
+          rw [hdecomp]
+      _ ≤ ∑ p ∈ S,
+          |((((Finset.Icc 1 ⌊x / (p:ℝ)⌋₊).filter
+            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)
+            - (x / (p:ℝ)) / (riemannZeta (h : ℂ)).re| :=
+          Finset.abs_sum_le_sum_abs _ _
+      _ ≤ 4 * Real.sqrt x * (2 * Real.sqrt (N:ℝ)) := hsum_le
+      _ ≤ 8 * x := hfinal_le
 
+-- N12: double counting of prime factors over h-free numbers.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -2107,12 +2156,12 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
       (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
       (n.primeFactors.card : ℝ) ≤ x := by
   set N : ℕ := ⌊x⌋₊ with hNdef
-  obtain hN0 | hNpos := Nat.eq_zero_or_pos N
+  rcases Nat.eq_zero_or_pos N with hN0 | hNpos
   · have hIe : Finset.Icc (1 : ℕ) N = ∅ := by
-    rw [hN0]
-    decide
+      rw [hN0]
+      decide
     have hH0 : (Finset.Icc 1 N).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h) = ∅ := by
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h) = ∅ := by
       simp only [hIe, Finset.filter_empty]
     have hP0 : (Finset.Icc 1 N).filter Nat.Prime = ∅ := by
       simp only [hIe, Finset.filter_empty]
@@ -2123,7 +2172,7 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
       rw [hNdef]
       exact Nat.floor_le hx
     have hn0 : ∀ n ∈ (Finset.Icc 1 N).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h), n ≠ 0 := by
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h), n ≠ 0 := by
       intro n hn
       have hn1 : (1 : ℕ) ≤ n :=
         (Finset.mem_Icc.mp (Finset.mem_of_subset (Finset.filter_subset _ _) hn)).1
@@ -2132,8 +2181,8 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
       intro p hp
       exact (Finset.mem_filter.mp hp).2
     have hsubP : ∀ n ∈ (Finset.Icc 1 N).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-      n.primeFactors ⊆ (Finset.Icc 1 N).filter Nat.Prime := by
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+        n.primeFactors ⊆ (Finset.Icc 1 N).filter Nat.Prime := by
       intro n hn q hq
       obtain ⟨hqp, hqdvd, -⟩ := Nat.mem_primeFactors.mp hq
       have hnIcc : n ∈ Finset.Icc 1 N :=
@@ -2142,20 +2191,20 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
       have hqle : q ≤ N := le_trans (Nat.le_of_dvd (by omega) hqdvd) hn12.2
       exact Finset.mem_filter.mpr ⟨Finset.mem_Icc.mpr ⟨hqp.one_le, hqle⟩, hqp⟩
     have hterm : ∀ n ∈ (Finset.Icc 1 N).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-      ((n.primeFactors.card : ℕ) : ℝ)
-        = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-          (if p ∈ n.primeFactors then (1 : ℝ) else 0) := by
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+        ((n.primeFactors.card : ℕ) : ℝ)
+          = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+            (if p ∈ n.primeFactors then (1 : ℝ) else 0) := by
       intro n hn
       have hsub := hsubP n hn
       have eif : (∑ _x ∈ n.primeFactors, (1 : ℝ))
-        = ∑ p ∈ n.primeFactors, (if p ∈ n.primeFactors then (1 : ℝ) else 0) := by
+          = ∑ p ∈ n.primeFactors, (if p ∈ n.primeFactors then (1 : ℝ) else 0) := by
         apply Finset.sum_congr rfl
         intro p hp
         exact (ite_eq_left hp).symm
       have esub : (∑ p ∈ n.primeFactors, (if p ∈ n.primeFactors then (1 : ℝ) else 0))
-        = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-          (if p ∈ n.primeFactors then (1 : ℝ) else 0) := by
+          = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+            (if p ∈ n.primeFactors then (1 : ℝ) else 0) := by
         apply Finset.sum_subset hsub
         intro p _ hp
         exact ite_eq_right hp
@@ -2163,67 +2212,67 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
       simp only [Nat.cast_one]
       exact eif.trans esub
     have hA : (∑ n ∈ (Finset.Icc 1 N).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-      ((n.primeFactors.card : ℕ) : ℝ))
-      = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-        (((((Finset.Icc 1 N).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
-          (fun n => p ∣ n)).card : ℕ) : ℝ) := by
-      calc ∑ n ∈ (Finset.Icc 1 N).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-        ((n.primeFactors.card : ℕ) : ℝ)
-        = ∑ n ∈ (Finset.Icc 1 N).filter
           (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-          ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-          (if p ∈ n.primeFactors then (1 : ℝ) else 0) :=
-          Finset.sum_congr rfl (fun n hn => hterm n hn)
-        _ = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-          ∑ n ∈ (Finset.Icc 1 N).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-          (if p ∈ n.primeFactors then (1 : ℝ) else 0) :=
-          Finset.sum_comm
-        _ = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+          ((n.primeFactors.card : ℕ) : ℝ))
+        = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
           (((((Finset.Icc 1 N).filter
             (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
             (fun n => p ∣ n)).card : ℕ) : ℝ) := by
-          apply Finset.sum_congr rfl
-          intro p hp
-          have hpp := hprimeP p hp
-          have epred : ∀ n ∈ (Finset.Icc 1 N).filter
-            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-            (p ∈ n.primeFactors) = (p ∣ n) := by
-            intro n hn
-            apply propext
-            constructor
-            · exact Nat.dvd_of_mem_primeFactors
-            · intro hdvd
-              exact hpp.mem_primeFactors hdvd (hn0 n hn)
-          have efil : (∑ n ∈ (Finset.Icc 1 N).filter
-            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-            (if p ∈ n.primeFactors then (1 : ℝ) else 0))
-            = ∑ n ∈ (Finset.Icc 1 N).filter
+      calc ∑ n ∈ (Finset.Icc 1 N).filter
               (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-              (if p ∣ n then (1 : ℝ) else 0) := by
+              ((n.primeFactors.card : ℕ) : ℝ)
+          = ∑ n ∈ (Finset.Icc 1 N).filter
+              (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+              ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+              (if p ∈ n.primeFactors then (1 : ℝ) else 0) :=
+            Finset.sum_congr rfl (fun n hn => hterm n hn)
+        _ = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+              ∑ n ∈ (Finset.Icc 1 N).filter
+              (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+              (if p ∈ n.primeFactors then (1 : ℝ) else 0) :=
+            Finset.sum_comm
+        _ = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+              (((((Finset.Icc 1 N).filter
+                (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
+                (fun n => p ∣ n)).card : ℕ) : ℝ) := by
             apply Finset.sum_congr rfl
-            intro n hn
-            simp only [epred n hn]
-          rw [efil, Finset.sum_boole]
+            intro p hp
+            have hpp := hprimeP p hp
+            have epred : ∀ n ∈ (Finset.Icc 1 N).filter
+                (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+                (p ∈ n.primeFactors) = (p ∣ n) := by
+              intro n hn
+              apply propext
+              constructor
+              · exact Nat.dvd_of_mem_primeFactors
+              · intro hdvd
+                exact hpp.mem_primeFactors hdvd (hn0 n hn)
+            have efil : (∑ n ∈ (Finset.Icc 1 N).filter
+                  (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+                  (if p ∈ n.primeFactors then (1 : ℝ) else 0))
+                = ∑ n ∈ (Finset.Icc 1 N).filter
+                  (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+                  (if p ∣ n then (1 : ℝ) else 0) := by
+              apply Finset.sum_congr rfl
+              intro n hn
+              simp only [epred n hn]
+            rw [efil, Finset.sum_boole]
     have hfloor : ∀ p ∈ (Finset.Icc 1 N).filter Nat.Prime, ⌊x / (p : ℝ)⌋₊ = N / p := by
       intro p _
       rw [Nat.floor_div_natCast]
     have hQ : ∀ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-      (((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ)
-      = (((((Finset.Icc 1 (N / p)).filter
-        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ) := by
+        (((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ)
+        = (((((Finset.Icc 1 (N / p)).filter
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ) := by
       intro p hp
       rw [hfloor p hp]
     have hcard_eq : ∀ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-      ((((Finset.Icc 1 N).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
-        (fun n => p ∣ n)).card)
-      = (((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h)).card) := by
+        ((((Finset.Icc 1 N).filter
+          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
+          (fun n => p ∣ n)).card)
+        = (((Finset.Icc 1 (N / p)).filter
+          (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h)).card) := by
       intro p hp
       have hpp : p.Prime := (Finset.mem_filter.mp hp).2
       have hp0 : 0 < p := hpp.pos
@@ -2239,18 +2288,19 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
           calc (1 : ℕ) = 1 * 1 := (mul_one 1).symm
             _ ≤ p * m := Nat.mul_le_mul (by omega : (1 : ℕ) ≤ p) hm1
         · calc p * m ≤ p * (N / p) := Nat.mul_le_mul (le_refl p) hm2
-          _ ≤ N := Nat.mul_div_le N p
+            _ ≤ N := Nat.mul_div_le N p
       · intro n hn
         simp only [Finset.mem_coe, Finset.mem_filter, Finset.mem_Icc] at hn
         obtain ⟨⟨⟨hn1, hn2⟩, hfreeN⟩, hdvd⟩ := hn
         obtain ⟨k, rfl⟩ := hdvd
         have hk1 : 1 ≤ k := by
-          obtain h | h := Nat.eq_zero_or_pos k
+          rcases Nat.eq_zero_or_pos k with h | h
           · rw [h, mul_zero] at hn1
             omega
           · exact h
         have hkN : k ≤ N / p := by
-          rwa [Nat.le_div_iff_mul_le hp0, mul_comm]
+          rw [Nat.le_div_iff_mul_le hp0, mul_comm]
+          exact hn2
         have hkk2 : p * k / p = k := Nat.mul_div_cancel_left k hp0
         have hmem : p * k / p ∈ ((Finset.Icc 1 (N / p)).filter
           (fun (m : ℕ) => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h)) := by
@@ -2267,10 +2317,10 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
         change p * (n / p) = n
         exact Nat.mul_div_cancel' hdvd
     have hDsub : ∀ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-      ((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))
-      ⊆ ((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ m.primeFactors, m.factorization q < h)) := by
+        ((Finset.Icc 1 (N / p)).filter
+          (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))
+        ⊆ ((Finset.Icc 1 (N / p)).filter
+          (fun m => ∀ q ∈ m.primeFactors, m.factorization q < h)) := by
       intro p hp m hm
       have hpp : p.Prime := (Finset.mem_filter.mp hp).2
       have hp0 : 0 < p := hpp.pos
@@ -2286,15 +2336,15 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
           (dvd_trans (Nat.dvd_of_mem_primeFactors hq) (dvd_mul_left m p)) hpm0
       have hlt := hfree q hqmem
       have hfac : (p * m).factorization q
-        = p.factorization q + m.factorization q := by
+          = p.factorization q + m.factorization q := by
         rw [Nat.factorization_mul (ne_of_gt hp0) hm0, Finsupp.add_apply]
       omega
     have hbad : ∀ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-      ∀ m ∈ (((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ m.primeFactors, m.factorization q < h))
-        \ ((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))),
-      p ^ (h - 1) ∣ m := by
+        ∀ m ∈ (((Finset.Icc 1 (N / p)).filter
+          (fun m => ∀ q ∈ m.primeFactors, m.factorization q < h))
+          \ ((Finset.Icc 1 (N / p)).filter
+          (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))),
+        p ^ (h - 1) ∣ m := by
       intro p hp m hm
       have hpp : p.Prime := (Finset.mem_filter.mp hp).2
       have hp0 : 0 < p := hpp.pos
@@ -2309,7 +2359,7 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
         intro hall
         exact hmDn (Finset.mem_filter.mpr ⟨hmIcc, hall⟩)
       obtain ⟨q, hqmem, hqle⟩ : ∃ q ∈ (p * m).primeFactors,
-        h ≤ (p * m).factorization q := by
+          h ≤ (p * m).factorization q := by
         by_contra hcon
         apply hnot
         intro q hqmem
@@ -2319,28 +2369,29 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
         rw [Nat.primeFactors_mul (ne_of_gt hp0) hm0, hpp.primeFactors]
       have hqp : q = p := by
         rw [hpf, Finset.mem_union, Finset.mem_singleton] at hqmem
-        obtain hqp | hqM := hqmem
+        rcases hqmem with hqp | hqM
         · exact hqp
         · by_cases hqp2 : q = p
           · exact hqp2
           · exfalso
             have hltM := hfreeM q hqM
             have hfac : (p * m).factorization q
-              = p.factorization q + m.factorization q := by
+                = p.factorization q + m.factorization q := by
               rw [Nat.factorization_mul (ne_of_gt hp0) hm0, Finsupp.add_apply]
             have hpq0 : p.factorization q = 0 := by
               by_contra hcon
               have hsup : q ∈ p.factorization.support :=
                 Finsupp.mem_support_iff.mpr hcon
               have hmem : q ∈ p.primeFactors := by
-                rwa [Nat.support_factorization] at hsup
+                rw [Nat.support_factorization] at hsup
+                exact hsup
               rw [hpp.primeFactors, Finset.mem_singleton] at hmem
               exact hqp2 hmem
             omega
       rw [hqp] at hqle
       have hfacp : (p * m).factorization p = m.factorization p + 1 := by
         have hfac : (p * m).factorization p
-          = p.factorization p + m.factorization p := by
+            = p.factorization p + m.factorization p := by
           rw [Nat.factorization_mul (ne_of_gt hp0) hm0, Finsupp.add_apply]
         rw [hfac, hpp.factorization_self, add_comm]
       have hMp : m.factorization p = h - 1 := by
@@ -2348,35 +2399,36 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
         · have hlt := hfreeM p hmem
           omega
         · have h0 : m.factorization p = 0 := by
-          have hsup : p ∉ m.factorization.support := by
-            rwa [Nat.support_factorization]
-          exact Finsupp.notMem_support_iff.mp hsup
+            have hsup : p ∉ m.factorization.support := by
+              rw [Nat.support_factorization]
+              exact hmem
+            exact Finsupp.notMem_support_iff.mp hsup
           omega
       exact (hpp.pow_dvd_iff_le_factorization hm0).mpr (by omega)
     have hcard_le : ∀ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-      ((((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ m.primeFactors, m.factorization q < h))
-        \ ((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))).card)
-      ≤ (N / p) / p ^ (h - 1) := by
+        ((((Finset.Icc 1 (N / p)).filter
+          (fun m => ∀ q ∈ m.primeFactors, m.factorization q < h))
+          \ ((Finset.Icc 1 (N / p)).filter
+          (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))).card)
+        ≤ (N / p) / p ^ (h - 1) := by
       intro p hp
       calc ((((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ m.primeFactors, m.factorization q < h))
-        \ ((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))).card)
-        ≤ ((((Finset.Icc 1 (N / p)).filter (fun m => p ^ (h - 1) ∣ m)).card)) := by
-          apply Finset.card_le_card
-          intro m hm
-          have hdvd := hbad p hp m hm
-          have hmIcc : m ∈ Finset.Icc 1 (N / p) :=
-            Finset.mem_of_subset (Finset.filter_subset _ _)
-              (Finset.mem_of_subset Finset.sdiff_subset hm)
-          exact Finset.mem_filter.mpr ⟨hmIcc, hdvd⟩
+            (fun m => ∀ q ∈ m.primeFactors, m.factorization q < h))
+            \ ((Finset.Icc 1 (N / p)).filter
+            (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))).card)
+          ≤ ((((Finset.Icc 1 (N / p)).filter (fun m => p ^ (h - 1) ∣ m)).card)) := by
+            apply Finset.card_le_card
+            intro m hm
+            have hdvd := hbad p hp m hm
+            have hmIcc : m ∈ Finset.Icc 1 (N / p) :=
+              Finset.mem_of_subset (Finset.filter_subset _ _)
+                (Finset.mem_of_subset Finset.sdiff_subset hm)
+            exact Finset.mem_filter.mpr ⟨hmIcc, hdvd⟩
         _ = ((N / p) / p ^ (h - 1)) := by
-          rw [Icc_one_eq_Ioc_zero]
-          exact Nat.Ioc_filter_dvd_card_eq_div _ _
+            rw [Icc_one_eq_Ioc_zero]
+            exact Nat.Ioc_filter_dvd_card_eq_div _ _
     have hreal : ∀ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-      (((N / p) / p ^ (h - 1) : ℕ) : ℝ) ≤ (N : ℝ) / (p : ℝ) ^ 2 := by
+        (((N / p) / p ^ (h - 1) : ℕ) : ℝ) ≤ (N : ℝ) / (p : ℝ) ^ 2 := by
       intro p hp
       have hpp : p.Prime := (Finset.mem_filter.mp hp).2
       have hpR : (0 : ℝ) < (p : ℝ) := by exact_mod_cast hpp.pos
@@ -2386,14 +2438,14 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
         conv_rhs => rw [show h = (h - 1) + 1 from by omega, pow_succ']
       have h5 : (p : ℝ) ^ 2 ≤ (p : ℝ) ^ h := pow_le_pow_right₀ hpR1 hh
       have e1 : (((N / p) / p ^ (h - 1) : ℕ) : ℝ)
-        ≤ ((N / p : ℕ) : ℝ) / (((p ^ (h - 1) : ℕ) : ℝ)) :=
+          ≤ ((N / p : ℕ) : ℝ) / (((p ^ (h - 1) : ℕ) : ℝ)) :=
         Nat.cast_div_le
       have e2 : (((N / p : ℕ) : ℝ) ≤ (N : ℝ) / (p : ℝ)) := Nat.cast_div_le
       have e3 : (((p ^ (h - 1) : ℕ) : ℝ) = (p : ℝ) ^ (h - 1)) :=
         Nat.cast_pow p (h - 1)
       have epos : (0 : ℝ) < (p : ℝ) ^ (h - 1) := pow_pos hpR _
       have e4 : (((N / p : ℕ) : ℝ) / (((p ^ (h - 1) : ℕ) : ℝ)))
-        ≤ (((N : ℝ) / (p : ℝ)) / (p : ℝ) ^ (h - 1)) := by
+          ≤ (((N : ℝ) / (p : ℝ)) / (p : ℝ) ^ (h - 1)) := by
         rw [e3]
         exact div_le_div_of_nonneg_right e2 (le_of_lt epos)
       have e5 : ((((N : ℝ) / (p : ℝ)) / (p : ℝ) ^ (h - 1)) = (N : ℝ) / (p : ℝ) ^ h) := by
@@ -2401,44 +2453,44 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
       have e6 : ((N : ℝ) / (p : ℝ) ^ h ≤ (N : ℝ) / (p : ℝ) ^ 2) :=
         div_le_div_of_nonneg_left hNR (pow_pos hpR 2) h5
       calc (((N / p) / p ^ (h - 1) : ℕ) : ℝ)
-        ≤ (((N / p : ℕ) : ℝ) / (((p ^ (h - 1) : ℕ) : ℝ))) := e1
+          ≤ (((N / p : ℕ) : ℝ) / (((p ^ (h - 1) : ℕ) : ℝ))) := e1
         _ ≤ ((((N : ℝ) / (p : ℝ)) / (p : ℝ) ^ (h - 1))) := e4
         _ = ((N : ℝ) / (p : ℝ) ^ h) := e5
         _ ≤ ((N : ℝ) / (p : ℝ) ^ 2) := e6
     have hgap : ∀ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-      (((((Finset.Icc 1 (N / p)).filter
-        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ)
-      - ((((((Finset.Icc 1 N).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
-        (fun n => p ∣ n)).card : ℕ)) : ℝ) ≤ (N : ℝ) / (p : ℝ) ^ 2 := by
+        (((((Finset.Icc 1 (N / p)).filter
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ)
+        - ((((((Finset.Icc 1 N).filter
+          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
+          (fun n => p ∣ n)).card : ℕ)) : ℝ) ≤ (N : ℝ) / (p : ℝ) ^ 2 := by
       intro p hp
       have hCC : ((((((Finset.Icc 1 N).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
-        (fun n => p ∣ n)).card : ℕ)) : ℝ)
-        = (((((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h)).card
-          : ℕ)) : ℝ) := by
+          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
+          (fun n => p ∣ n)).card : ℕ)) : ℝ)
+          = (((((Finset.Icc 1 (N / p)).filter
+          (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h)).card
+            : ℕ)) : ℝ) := by
         rw [hcard_eq p hp]
       have hsd : (((((Finset.Icc 1 (N / p)).filter
-        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ)
-        - (((((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h)).card
-          : ℕ)) : ℝ)
-        = (((((((Finset.Icc 1 (N / p)).filter
-        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h))
-        \ ((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))).card
-          : ℕ)) : ℝ)) := by
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ)
+          - (((((Finset.Icc 1 (N / p)).filter
+          (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h)).card
+            : ℕ)) : ℝ)
+          = (((((((Finset.Icc 1 (N / p)).filter
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h))
+          \ ((Finset.Icc 1 (N / p)).filter
+          (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))).card
+            : ℕ)) : ℝ)) := by
         rw [Finset.card_sdiff_of_subset (hDsub p hp),
           Nat.cast_sub (Finset.card_le_card (hDsub p hp))]
       rw [hCC, hsd]
       calc (((((((Finset.Icc 1 (N / p)).filter
-        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h))
-        \ ((Finset.Icc 1 (N / p)).filter
-        (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))).card
-          : ℕ)) : ℝ))
-        ≤ (((((N / p) / p ^ (h - 1) : ℕ))) : ℝ) :=
-          Nat.cast_le.mpr (hcard_le p hp)
+            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h))
+            \ ((Finset.Icc 1 (N / p)).filter
+            (fun m => ∀ q ∈ (p * m).primeFactors, (p * m).factorization q < h))).card
+              : ℕ)) : ℝ))
+          ≤ (((((N / p) / p ^ (h - 1) : ℕ))) : ℝ) :=
+            Nat.cast_le.mpr (hcard_le p hp)
         _ ≤ ((N : ℝ) / (p : ℝ) ^ 2) := hreal p hp
     have hsq1 : (∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, (1 : ℝ) / (p : ℝ) ^ 2) ≤ 1 :=
       sum_inv_sq_primes_le_one N hN1
@@ -2449,37 +2501,37 @@ private lemma sum_card_primeFactors_hfree_double_count (h : ℕ)
       rw [hQ p hp, hcard_eq p hp]
       exact Nat.cast_le.mpr (Finset.card_le_card (hDsub p hp))
     · have hBB : (∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-      (((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ))
-      - (∑ n ∈ (Finset.Icc 1 N).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-        ((n.primeFactors.card : ℕ) : ℝ))
-      = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-        ((((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ)
-        - ((((((Finset.Icc 1 N).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
-          (fun n => p ∣ n)).card : ℕ)) : ℝ)) := by
-      rw [hA, ← Finset.sum_sub_distrib]
+          (((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ))
+          - (∑ n ∈ (Finset.Icc 1 N).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            ((n.primeFactors.card : ℕ) : ℝ))
+          = ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+            ((((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ)
+            - ((((((Finset.Icc 1 N).filter
+              (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
+              (fun n => p ∣ n)).card : ℕ)) : ℝ)) := by
+        rw [hA, ← Finset.sum_sub_distrib]
       rw [hBB]
       calc ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
-        ((((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ)
-        - ((((((Finset.Icc 1 N).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
-          (fun n => p ∣ n)).card : ℕ)) : ℝ))
-        ≤ ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, ((N : ℝ) / (p : ℝ) ^ 2) := by
-          apply Finset.sum_le_sum
-          intro p hp
-          rw [hQ p hp]
-          exact hgap p hp
+              ((((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ)) : ℝ)
+              - ((((((Finset.Icc 1 N).filter
+                (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h)).filter
+                (fun n => p ∣ n)).card : ℕ)) : ℝ))
+          ≤ ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, ((N : ℝ) / (p : ℝ) ^ 2) := by
+            apply Finset.sum_le_sum
+            intro p hp
+            rw [hQ p hp]
+            exact hgap p hp
         _ = (N : ℝ) * ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime, ((1 : ℝ) / (p : ℝ) ^ 2) := by
-          rw [Finset.mul_sum]
-          apply Finset.sum_congr rfl
-          intro p hp
-          rw [div_eq_mul_one_div]
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro p hp
+            rw [div_eq_mul_one_div]
         _ ≤ (N : ℝ) * 1 :=
-          mul_le_mul_of_nonneg_left hsq1 (Nat.cast_nonneg N)
+            mul_le_mul_of_nonneg_left hsq1 (Nat.cast_nonneg N)
         _ = (N : ℝ) := mul_one _
         _ ≤ x := hNx
 
@@ -2510,7 +2562,8 @@ lemma average_cardFactors_over_h_free
   have hZpos : (0 : ℝ) < (riemannZeta (h : ℂ)).re :=
     lt_of_lt_of_le (by norm_num) hZ1
   have hZinv_le : (1 : ℝ) / (riemannZeta (h : ℂ)).re ≤ 1 := by
-    rwa [div_le_one hZpos]
+    rw [div_le_one hZpos]
+    exact hZ1
   refine Asymptotics.IsBigO.of_bound ((h : ℝ) + 7 + |C6|) ?_
   filter_upwards [Filter.eventually_ge_atTop (2 : ℝ)] with x hx
   have hx0 : (0 : ℝ) ≤ x := by linarith
@@ -2520,261 +2573,112 @@ lemma average_cardFactors_over_h_free
   have hN14 := abs_sum_prime_card_hfree_sub_main_le h hh x hx1
   have hN6 := hC6 x hx
   have hSA : (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-    ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
-    = (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-      (ArithmeticFunction.cardFactors n : ℝ))
-      - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-      (n.primeFactors.card : ℝ)) := by
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+        ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
+      = (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+        (ArithmeticFunction.cardFactors n : ℝ))
+        - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+        (n.primeFactors.card : ℝ)) := by
     rw [Finset.sum_sub_distrib]
   have hE1nn : (0 : ℝ) ≤ (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-    ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ))) :=
+      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+      ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ))) :=
     hN13.1
   have hE1le : (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-    ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
-    ≤ ((h : ℝ) - 2) * (⌊x⌋₊ : ℝ) :=
+      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+      ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
+      ≤ ((h : ℝ) - 2) * (⌊x⌋₊ : ℝ) :=
     hN13.2
   have hAleB : (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-    (n.primeFactors.card : ℝ))
-    ≤ (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-      ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)) :=
+      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+      (n.primeFactors.card : ℝ))
+      ≤ (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+        ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ)) :=
     hN12.1
   have hE2le : (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-    ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-    - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-      (n.primeFactors.card : ℝ)) ≤ x :=
+        ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+      - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+        (n.primeFactors.card : ℝ)) ≤ x :=
     hN12.2
   have hE2nn : (0 : ℝ) ≤ (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-    ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-    - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-    (n.primeFactors.card : ℝ)) :=
+      ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+      - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+      (n.primeFactors.card : ℝ)) :=
     sub_nonneg.mpr hAleB
   have hE3 : |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-    ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-    - (x / (riemannZeta (h : ℂ)).re)
-      * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))|
-    ≤ 8 * x :=
+      ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+      - (x / (riemannZeta (h : ℂ)).re)
+        * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))|
+      ≤ 8 * x :=
     hN14
   have hE4 : |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-    - Real.log (Real.log x)| ≤ C6 :=
+      - Real.log (Real.log x)| ≤ C6 :=
     hN6
   have hNx : (⌊x⌋₊ : ℝ) ≤ x := Nat.floor_le hx0
   have hhR : (2 : ℝ) ≤ (h : ℝ) := by exact_mod_cast hh
   have hE1x : (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-    ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
-    ≤ ((h : ℝ) - 2) * x :=
+      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+      ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
+      ≤ ((h : ℝ) - 2) * x :=
     le_trans hE1le (mul_le_mul_of_nonneg_left hNx (by linarith))
   have hbd1 : |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-    ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))|
-    ≤ ((h : ℝ) - 2) * x := by
-    rwa [abs_of_nonneg hE1nn]
+      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+      ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))|
+      ≤ ((h : ℝ) - 2) * x := by
+    rw [abs_of_nonneg hE1nn]
+    exact hE1x
   have hbd2 : |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-    ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-      (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-    - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-    (n.primeFactors.card : ℝ))| ≤ x := by
-    rwa [abs_of_nonneg hE2nn]
+      ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+        (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+      - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+      (n.primeFactors.card : ℝ))| ≤ x := by
+    rw [abs_of_nonneg hE2nn]
+    exact hE2le
   have hZdiv_nn : (0 : ℝ) ≤ x / (riemannZeta (h : ℂ)).re :=
     div_nonneg hx0 (le_of_lt hZpos)
   have hbd4 : |(x / (riemannZeta (h : ℂ)).re)
-    * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-      - Real.log (Real.log x))| ≤ |C6| * x := by
-    have eabs : |(x / (riemannZeta (h : ℂ)).re)
       * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-        - Real.log (Real.log x))|
-      = (x / (riemannZeta (h : ℂ)).re)
-        * |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-          - Real.log (Real.log x)| := by
+        - Real.log (Real.log x))| ≤ |C6| * x := by
+    have eabs : |(x / (riemannZeta (h : ℂ)).re)
+        * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
+          - Real.log (Real.log x))|
+        = (x / (riemannZeta (h : ℂ)).re)
+          * |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
+            - Real.log (Real.log x)| := by
       rw [abs_mul, abs_of_nonneg hZdiv_nn]
     have ele : |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-      - Real.log (Real.log x)| ≤ |C6| :=
+        - Real.log (Real.log x)| ≤ |C6| :=
       le_trans hE4 (le_abs_self C6)
     have hle : (x / (riemannZeta (h : ℂ)).re)
-      * |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-        - Real.log (Real.log x)|
-      ≤ (x / (riemannZeta (h : ℂ)).re) * |C6| :=
+        * |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
+          - Real.log (Real.log x)|
+        ≤ (x / (riemannZeta (h : ℂ)).re) * |C6| :=
       mul_le_mul_of_nonneg_left ele hZdiv_nn
     have hxZ : x / (riemannZeta (h : ℂ)).re ≤ x := by
       calc x / (riemannZeta (h : ℂ)).re
-        = x * (1 / (riemannZeta (h : ℂ)).re) := by ring
+          = x * (1 / (riemannZeta (h : ℂ)).re) := by ring
         _ ≤ x * 1 := mul_le_mul_of_nonneg_left hZinv_le hx0
         _ = x := mul_one x
     have hfin : (x / (riemannZeta (h : ℂ)).re) * |C6| ≤ |C6| * x := by
       calc (x / (riemannZeta (h : ℂ)).re) * |C6|
-        = |C6| * (x / (riemannZeta (h : ℂ)).re) := mul_comm _ _
+          = |C6| * (x / (riemannZeta (h : ℂ)).re) := mul_comm _ _
         _ ≤ |C6| * x := mul_le_mul_of_nonneg_left hxZ (abs_nonneg _)
     rw [eabs]
     exact le_trans hle hfin
   have hdecomp : (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-    (ArithmeticFunction.cardFactors n : ℝ))
-    - (1 / (riemannZeta (h : ℂ)).re) * x * Real.log (Real.log x)
-    = (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-      ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
-      - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-        ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-        - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
         (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-        (n.primeFactors.card : ℝ)))
-      + ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-        ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-        - (x / (riemannZeta (h : ℂ)).re)
-          * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ)))
-      + ((x / (riemannZeta (h : ℂ)).re)
-        * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-          - Real.log (Real.log x))) := by
-    rw [hSA]
-    ring
-  have hexpand : ((h : ℝ) + 7 + |C6|) * x
-    = ((h : ℝ) - 2) * x + x + 8 * x + |C6| * x := by ring
-  have htot : |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-    (ArithmeticFunction.cardFactors n : ℝ))
-    - (1 / (riemannZeta (h : ℂ)).re) * x * Real.log (Real.log x)|
-    ≤ ((h : ℝ) + 7 + |C6|) * x := by
-    have g1 : |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-      ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
-      - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-        ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-        - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-        (n.primeFactors.card : ℝ)))|
-      ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-        ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))|
-        + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-          ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-          - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-          (n.primeFactors.card : ℝ))| :=
-      abs_sub _ _
-    have g2 : |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-      ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
-      - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-        ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-        - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-        (n.primeFactors.card : ℝ)))
-      + ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-        ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-        - (x / (riemannZeta (h : ℂ)).re)
-          * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ)))|
-      ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-        ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))|
-        + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-          ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-          - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-          (n.primeFactors.card : ℝ))|
-        + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-          ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-          - (x / (riemannZeta (h : ℂ)).re)
-            * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))| := by
-      calc |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-        ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
-        - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-          ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-          - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-          (n.primeFactors.card : ℝ)))
-        + ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-          ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-          - (x / (riemannZeta (h : ℂ)).re)
-            * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ)))|
-        ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-          ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
-          - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-            ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-            - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-            (n.primeFactors.card : ℝ)))|
-          + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-            ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-            - (x / (riemannZeta (h : ℂ)).re)
-              * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))| :=
-          abs_add_le _ _
-        _ ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-          ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))|
-          + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-            ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-            - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-            (n.primeFactors.card : ℝ))|
-          + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-            ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-            - (x / (riemannZeta (h : ℂ)).re)
-              * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))| :=
-          by linarith [g1]
-    have g3 : |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-      (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-      ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
-      - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-        ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-        - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-        (n.primeFactors.card : ℝ)))
-      + ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-        ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-          (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-        - (x / (riemannZeta (h : ℂ)).re)
-          * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ)))
-      + ((x / (riemannZeta (h : ℂ)).re)
-        * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-          - Real.log (Real.log x)))|
-      ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-        ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))|
-        + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-          ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-          - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-          (n.primeFactors.card : ℝ))|
-        + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
-          ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
-            (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
-          - (x / (riemannZeta (h : ℂ)).re)
-            * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))|
-        + |(x / (riemannZeta (h : ℂ)).re)
-          * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-            - Real.log (Real.log x))| := by
-      calc |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+        (ArithmeticFunction.cardFactors n : ℝ))
+        - (1 / (riemannZeta (h : ℂ)).re) * x * Real.log (Real.log x)
+      = (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
         (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
         ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
         - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
@@ -2790,8 +2694,36 @@ lemma average_cardFactors_over_h_free
             * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ)))
         + ((x / (riemannZeta (h : ℂ)).re)
           * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-            - Real.log (Real.log x)))|
+            - Real.log (Real.log x))) := by
+    rw [hSA]
+    ring
+  have hexpand : ((h : ℝ) + 7 + |C6|) * x
+      = ((h : ℝ) - 2) * x + x + 8 * x + |C6| * x := by ring
+  have htot : |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+        (ArithmeticFunction.cardFactors n : ℝ))
+        - (1 / (riemannZeta (h : ℂ)).re) * x * Real.log (Real.log x)|
+      ≤ ((h : ℝ) + 7 + |C6|) * x := by
+    have g1 : |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+          ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
+          - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+            ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+            - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            (n.primeFactors.card : ℝ)))|
         ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+          ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))|
+          + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+            ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+            - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            (n.primeFactors.card : ℝ))| :=
+      abs_sub _ _
+    have g2 : |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
           (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
           ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
           - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
@@ -2805,11 +2737,82 @@ lemma average_cardFactors_over_h_free
               (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
             - (x / (riemannZeta (h : ℂ)).re)
               * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ)))|
-          + |(x / (riemannZeta (h : ℂ)).re)
-            * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-              - Real.log (Real.log x))| :=
-          abs_add_le _ _
+        ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+          ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))|
+          + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+            ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+            - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            (n.primeFactors.card : ℝ))|
+          + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+            ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+            - (x / (riemannZeta (h : ℂ)).re)
+              * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))| := by
+      calc |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
+            - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+              (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+              (n.primeFactors.card : ℝ)))
+            + ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (x / (riemannZeta (h : ℂ)).re)
+                * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ)))|
+          ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
+            - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+              (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+              (n.primeFactors.card : ℝ)))|
+            + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (x / (riemannZeta (h : ℂ)).re)
+                * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))| :=
+            abs_add_le _ _
         _ ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))|
+            + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+              (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+              (n.primeFactors.card : ℝ))|
+            + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (x / (riemannZeta (h : ℂ)).re)
+                * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))| :=
+            by linarith [g1]
+    have g3 : |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+          (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+          ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
+          - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+            ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+            - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            (n.primeFactors.card : ℝ)))
+          + ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+            ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+              (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+            - (x / (riemannZeta (h : ℂ)).re)
+              * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ)))
+          + ((x / (riemannZeta (h : ℂ)).re)
+            * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
+              - Real.log (Real.log x)))|
+        ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
           (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
           ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))|
           + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
@@ -2825,20 +2828,74 @@ lemma average_cardFactors_over_h_free
               * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))|
           + |(x / (riemannZeta (h : ℂ)).re)
             * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
-              - Real.log (Real.log x))| :=
-          by linarith [g2]
+              - Real.log (Real.log x))| := by
+      calc |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
+            - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+              (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+              (n.primeFactors.card : ℝ)))
+            + ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (x / (riemannZeta (h : ℂ)).re)
+                * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ)))
+            + ((x / (riemannZeta (h : ℂ)).re)
+              * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
+                - Real.log (Real.log x)))|
+          ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))
+            - ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+              (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+              (n.primeFactors.card : ℝ)))
+            + ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (x / (riemannZeta (h : ℂ)).re)
+                * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ)))|
+            + |(x / (riemannZeta (h : ℂ)).re)
+              * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
+                - Real.log (Real.log x))| :=
+            abs_add_le _ _
+        _ ≤ |(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+            (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+            ((ArithmeticFunction.cardFactors n : ℝ) - (n.primeFactors.card : ℝ)))|
+            + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
+              (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+              (n.primeFactors.card : ℝ))|
+            + |(∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime,
+              ((((Finset.Icc 1 ⌊x / (p : ℝ)⌋₊).filter
+                (fun n => ∀ q ∈ n.primeFactors, n.factorization q < h)).card : ℕ) : ℝ))
+              - (x / (riemannZeta (h : ℂ)).re)
+                * (∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))|
+            + |(x / (riemannZeta (h : ℂ)).re)
+              * ((∑ p ∈ (Finset.Icc 1 ⌊x⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ))
+                - Real.log (Real.log x))| :=
+            by linarith [g2]
     rw [hdecomp, hexpand]
     linarith [g3, hbd1, hbd2, hE3, hbd4]
   have hnorm : ‖(∑ n ∈ (Finset.Icc 1 ⌊x⌋₊).filter
-    (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
-    (ArithmeticFunction.cardFactors n : ℝ))
-    - (1 / (riemannZeta (h : ℂ)).re) * x * Real.log (Real.log x)‖
-    ≤ ((h : ℝ) + 7 + |C6|) * ‖x‖ := by
-    rwa [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hx0]
+        (fun n => ∀ p ∈ n.primeFactors, n.factorization p < h),
+        (ArithmeticFunction.cardFactors n : ℝ))
+        - (1 / (riemannZeta (h : ℂ)).re) * x * Real.log (Real.log x)‖
+      ≤ ((h : ℝ) + 7 + |C6|) * ‖x‖ := by
+    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hx0]
+    exact htot
   exact hnorm
+
 end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

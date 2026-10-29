@@ -693,7 +693,7 @@ lemma injective_of_surjective_of_finrank_eq_of_domain
       exact isField_of_isIntegral_of_isField' (Field.toIsField (IsLocalRing.ResidueField A))
     letI := hC_field.toField
     exact φ.toRingHom.injective
-set_option maxHeartbeats 3200000 in
+set_option maxHeartbeats 999999 in
 
 /--
 [surjective_adjoinRoot_to_quotient](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/ResidueFieldFunctor.lean)

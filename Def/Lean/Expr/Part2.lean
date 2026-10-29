@@ -14,6 +14,7 @@ def UnaryPrefix.func : UnaryPrefix → Func
     | `Bool.not => ⟨40, "!", "\\text{!}"⟩  -- LeanNot
     | `Complement.complement => ⟨100, "~~~", "~~~"⟩
     | `Complex.conj => ⟨1024, "~", "\\overline"⟩  -- LeanConj, SymPy `~z` / `starRingEnd ℂ`
+    | `Star.star => ⟨1024, "~", "\\overline"⟩  -- Mathlib star / conjugate
     | `Complex.ofReal
     | `Hyperreal.ofReal
     | `Int.ofNat

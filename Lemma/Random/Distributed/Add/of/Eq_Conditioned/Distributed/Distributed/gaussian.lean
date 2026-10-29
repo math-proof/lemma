@@ -1,4 +1,5 @@
 import Mathlib.Probability.Distributions.Gaussian.Real
+import Notation.Probability.Gaussian
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 open scoped NNReal
@@ -8,17 +9,18 @@ open scoped NNReal
 private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω}
-  {x y : Ω → ℝ}
-  {μ₀ μ₁ : ℝ} {v₀ v₁ : ℝ≥0}
+  {x₀ x₁ : Ω → ℝ}
+  {μ₀ μ₁ : ℝ} {σ₀ σ₁ : NNReal}
 -- given
-  (h₀ : x ⟂ᵢ[π] y)
-  (h₁ : HasLaw x (gaussianReal μ₀ v₀) π)
-  (h₂ : HasLaw y (gaussianReal μ₁ v₁) π) :
+  (h₀ : x₀ ⟂ᵢ[π] x₁)
+  (h₁ : x₀ ∼[π] 𝒩(μ₀, σ₀))
+  (h₂ : x₁ ∼[π] 𝒩(μ₁, σ₁)) :
 -- imply
-  π.map (x + y) = gaussianReal (μ₀ + μ₁) (v₀ + v₁) :=
+  (x₀ + x₁) ∼[π] 𝒩(μ₀ + μ₁, σ₀ + σ₁) := by
 -- proof
-  gaussianReal_add_gaussianReal_of_indepFun h₀ h₁ h₂
+  refine ⟨h₁.aemeasurable.add h₂.aemeasurable, ?_⟩
+  apply gaussianReal_add_gaussianReal_of_indepFun h₀ h₁ h₂
 
 
 -- created on 2021-07-25
--- updated on 2026-10-26
+-- updated on 2026-10-29

@@ -1,9 +1,10 @@
 import Mathlib.MeasureTheory.Measure.Count
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.Probability.HasLaw
 import Lemma.Measure.Count.eq.ProdCountS
 import Structure.Probability.Rv
-open MeasureTheory
+open MeasureTheory ProbabilityTheory
 
 
 attribute [instance] ReferenceMeasure.toSigmaFinite
@@ -32,17 +33,12 @@ def Distribution.density
 
 
 /--
-`x ~ D` — binary operator asserting that the random variable `x` follows the distribution
-`D : Distribution π ρ`:
-`D.measure.map x = ReferenceMeasure.measure.withDensity D.density`.
+Density-free law: `Distributed X μ π` means `X` has law `μ` under `π`.
+Definitionally `HasLaw X μ π` (a.e. measurability + `π.map X = μ`).
 -/
-def Distributed
+abbrev Distributed
     {Ω α : Type*}
     [MeasurableSpace Ω]
-    [ReferenceMeasure α]
-    {π : Measure Ω} {ρ : α → ENNReal}
-    (x : Ω → α)
-    (_ : Distribution π ρ) :
-    Prop :=
-  π.map x = ReferenceMeasure.measure.withDensity ρ
-
+    [MeasurableSpace α]
+    (X : Ω → α) (μ : Measure α) (π : Measure Ω) : Prop :=
+  HasLaw X μ π

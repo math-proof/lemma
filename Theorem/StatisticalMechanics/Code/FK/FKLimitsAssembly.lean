@@ -33,14 +33,14 @@ variable {d : ℕ}
 
 
 theorem fla_fk_limits (d : ℕ) (hd : 1 ≤ d) {p : ℝ} (hp : 0 < p) (hp1 : p < 1)
-    (hextW : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ℝ≥0∞),
+    (hextW : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ENNReal),
       IsTranslationInvariant (G := Multiplicative (Site d)) ν₁ →
         IsTranslationInvariant (G := Multiplicative (Site d)) ν₂ →
           IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ →
             0 < a → 0 < b → a + b = 1 →
               (wiredInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 2)
                 : Measure (ConfigSpace (Sym2 (Site d)))) = a • ν₁ + b • ν₂ → ν₁ = ν₂)
-    (hextF : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ℝ≥0∞),
+    (hextF : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ENNReal),
       IsTranslationInvariant (G := Multiplicative (Site d)) ν₁ →
         IsTranslationInvariant (G := Multiplicative (Site d)) ν₂ →
           IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ →
@@ -103,7 +103,7 @@ theorem fla_fk_limits (d : ℕ) (hd : 1 ≤ d) {p : ℝ} (hp : 0 < p) (hp1 : p <
 
 
 example : True := by
-  have h : ∀ (hextW : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site 2)))) (a b : ℝ≥0∞),
+  have h : ∀ (hextW : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site 2)))) (a b : ENNReal),
       IsTranslationInvariant (G := Multiplicative (Site 2)) ν₁ →
         IsTranslationInvariant (G := Multiplicative (Site 2)) ν₂ →
           IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ →
@@ -111,7 +111,7 @@ example : True := by
               (wiredInfiniteVolume 2 (by norm_num : (0:ℝ) < 1/2) (by norm_num : (1:ℝ)/2 < 1)
                   (by norm_num : (0 : ℝ) < 2)
                 : Measure (ConfigSpace (Sym2 (Site 2)))) = a • ν₁ + b • ν₂ → ν₁ = ν₂)
-      (hextF : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site 2)))) (a b : ℝ≥0∞),
+      (hextF : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site 2)))) (a b : ENNReal),
       IsTranslationInvariant (G := Multiplicative (Site 2)) ν₁ →
         IsTranslationInvariant (G := Multiplicative (Site 2)) ν₂ →
           IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ →

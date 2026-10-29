@@ -16,7 +16,7 @@ lemma TM.step_of_accept
   {Γ : Type}
   [DecidableEq Q]
   {M : TM Q Γ}
-  {c : Config Q Γ}
+  (c : Config Q Γ)
 -- given
   (h : M.isAcceptConfig c) :
 -- imply
@@ -38,7 +38,7 @@ lemma TM.step_of_reject
   {Γ : Type}
   [DecidableEq Q]
   {M : TM Q Γ}
-  {c : Config Q Γ}
+  (c : Config Q Γ)
 -- given
   (h : M.isRejectConfig c) :
 -- imply
@@ -66,7 +66,7 @@ lemma TM.step_of_halt
 -- imply
   M.step c = c := by
 -- proof
-  obtain h | h := h
+  rcases h with h | h
   · exact M.step_of_accept c h
   · exact M.step_of_reject c h
 
@@ -94,7 +94,8 @@ lemma TM.accepts_stable
   | zero => exact h
   | succ n ih =>
     simp only [TM.run]
-    rwa [M.step_of_accept _ ih]
+    rw [M.step_of_accept _ ih]
+    exact ih
 
 end TuringMachine
 
@@ -172,7 +173,7 @@ namespace TuringMachine
 @[path]
 lemma countingTM_step_state
   {Q : Type}
-  {Γ : Type}
+  {_Γ : Type}
   [DecidableEq Q]
   {Γ : Type}
   {blank : Γ}
@@ -239,7 +240,7 @@ lemma isTuringEnumerable_of_isTuringRecognizable
   IsTuringEnumerable A := by
 -- proof
   obtain ⟨Q_M, hDecEq, M, hLang⟩ := h
-  letI : DecidableEq Q_M := hDecEq
+  let : DecidableEq Q_M := hDecEq
   let cTM := countingTM M.blank M.inputAlpha M.blank_not_in_inputAlpha
   let E : TuringEnumerator ℕ Γ := {
     toTM := cTM
@@ -248,7 +249,7 @@ lemma isTuringEnumerable_of_isTuringRecognizable
   refine ⟨ℕ, inferInstance, E, ?_⟩
   subst hLang
   ext w
-  simp only [TuringEnumerator.language, Set.mem_setOf_eq, TM.language, TM.accepts]
+  simp only [TuringEnumerator.language, Set.mem_ofPred_eq, TM.language, TM.accepts]
   constructor
   · rintro ⟨n, hw⟩
     have hstate : (E.run n).state = 2 + n := by
@@ -274,3 +275,4 @@ end TuringMachine
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

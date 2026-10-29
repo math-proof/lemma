@@ -109,7 +109,7 @@ theorem fld_Tcount_le_boundary_of_outwardArm (ω : ConfigSpace (Sym2 (Site d))) 
   aed_Tcount_le_boundary_of_globalForestArms ω n hn (fld_globalForestArms_of_outwardArm ω n h)
 
 
-theorem fld_burton_keane_bernoulli_of_outwardArm (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem fld_burton_keane_bernoulli_of_outwardArm (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → fld_OutwardArm ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

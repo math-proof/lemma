@@ -33,7 +33,7 @@ probability measures, with the hard truncation convention at radius one.
 
 namespace MetaMathlibExt
 
-noncomputable def lkRootScale (n : ℕ) : ℝ≥0∞ :=
+noncomputable def lkRootScale (n : ℕ) : ENNReal :=
   ENNReal.ofReal ((n : ℝ)⁻¹)
 
 noncomputable def lkRootMeasure (n : ℕ) (ν : Measure ℝ) : Measure ℝ :=

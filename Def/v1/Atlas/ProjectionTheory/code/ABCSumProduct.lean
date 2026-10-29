@@ -26,13 +26,13 @@ noncomputable def deltaCoveringNumberR (δ : ℝ) (X : Set ℝ) : ℕ∞ :=
 def IsDeltaRegularSetR (δ s C : ℝ) (X : Set ℝ) : Prop :=
   X ⊆ ball (0 : ℝ) 1 ∧
   ∀ (x : ℝ) (r : ℝ), δ ≤ r → r ≤ 1 →
-    (deltaCoveringNumberR δ (X ∩ ball x r) : ℝ≥0∞) ≤
-      ENNReal.ofReal (C * r ^ s) * (deltaCoveringNumberR δ X : ℝ≥0∞)
+    (deltaCoveringNumberR δ (X ∩ ball x r) : ENNReal) ≤
+      ENNReal.ofReal (C * r ^ s) * (deltaCoveringNumberR δ X : ENNReal)
 
 /-- `X` has covering exponent `s` (up to a multiplicative constant `C`) at scale `δ`:
 `C⁻¹ δ^{-s} ≤ |X|_δ ≤ C δ^{-s}`. This says `|X|_δ ∼ δ^{-s}`. -/
 def HasCoveringExponent (δ s C : ℝ) (X : Set ℝ) : Prop :=
-  ENNReal.ofReal (C⁻¹ * δ ^ (-s)) ≤ (deltaCoveringNumberR δ X : ℝ≥0∞) ∧
-  (deltaCoveringNumberR δ X : ℝ≥0∞) ≤ ENNReal.ofReal (C * δ ^ (-s))
+  ENNReal.ofReal (C⁻¹ * δ ^ (-s)) ≤ (deltaCoveringNumberR δ X : ENNReal) ∧
+  (deltaCoveringNumberR δ X : ENNReal) ≤ ENNReal.ofReal (C * δ ^ (-s))
 
 end ABCSumProduct

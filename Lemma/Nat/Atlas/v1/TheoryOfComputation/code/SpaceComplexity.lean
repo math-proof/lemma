@@ -603,7 +603,7 @@ namespace SpaceComplexity
 [formulaGameLanguage_eq_TQBF](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/SpaceComplexity.lean)
 -/
 @[path]
-lemma formulaGameLanguage_eq_TQBF
+lemma formulaGameLanguage_eq_TQBF :
 -- imply
   {ψ : QBF | ψ.IsFullyQuantified ∧ ψ.ExistsPlayerWins (fun _ => false)} = TQBF := by
 -- proof
@@ -881,7 +881,6 @@ lemma tqbfNTM_language
         simp only [NTM.isAcceptConfig, M_def, tqbfNTM, show ¬(w.length + 1 ≤ w.length) from by omega,
           ↓reduceIte]
 set_option maxRecDepth 2048 in
-set_option maxHeartbeats 1600000 in
 
 end SpaceComplexity
 
@@ -1291,3 +1290,4 @@ end SpaceComplexity
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

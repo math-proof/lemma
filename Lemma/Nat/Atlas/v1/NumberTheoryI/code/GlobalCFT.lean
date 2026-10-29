@@ -222,7 +222,6 @@ lemma summable_rpow_inv_absNorm_prime
   Summable (fun (𝔭 : S) => ((Ideal.absNorm (𝔭 : Prime' K).asIdeal : ℝ) ^ (-s))) :=
 -- proof
   partialDedekindZeta_dirichletSeries_summable S s hs
-set_option maxHeartbeats 400000 in
 
 end GlobalCFT
 
@@ -1482,3 +1481,4 @@ private lemma theorem_28_4_principal_in_ker_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

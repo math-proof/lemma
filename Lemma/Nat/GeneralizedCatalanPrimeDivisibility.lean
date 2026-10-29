@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Finset.Enumerative.FussCatalanDivisibility
 
 
 namespace MetaMathlibExt
@@ -29,7 +30,8 @@ private lemma exists_pow_of_digit_sum_eq_one {p : ℕ} (hp : 1 < p) (m : ℕ) :
   rw [Nat.digits_def' hp hm, List.sum_cons] at hs
   by_cases h0 : m / p = 0
   · have hmod : m % p = 1 := by
-    rwa [Nat.digits_eq_nil_iff_eq_zero.mpr h0, List.sum_nil, Nat.add_zero] at hs
+      rw [Nat.digits_eq_nil_iff_eq_zero.mpr h0, List.sum_nil, Nat.add_zero] at hs
+      exact hs
     have hmeq : p * (m / p) + m % p = m := Nat.div_add_mod m p
     rw [h0, mul_zero, zero_add] at hmeq
     have hm1 : m = 1 := by omega
@@ -98,23 +100,23 @@ lemma generalizedCatalan_prime_dvd_iff_not_geometric_sum
   have hm_pos : 0 < (p - 1) * n + 1 := by omega
   have hle1 : n ≤ p * n := Nat.le_mul_of_pos_left n hpos
   have hdiv : (p - 1) * n + 1 ∣ (p * n).choose n := by
-    obtain rfl | hn := Nat.eq_zero_or_pos n
+    rcases Nat.eq_zero_or_pos n with rfl | hn
     · simp
-    · exact fuss_catalan_dvd_choose p n hp.two_le hn
+    · exact fuss_catalan_dvd_choose (a := p) (n := n) hp.two_le hn
   have hpn := mul_eq_add_sub_mul (p := p) (n := n) hp1
   have hsub1 : p * n - n = (p - 1) * n := by omega
   -- Kummer's digit-sum formula for `C (p * n) n`.
   have hkummer :=
     sub_one_mul_padicValNat_choose_eq_sub_sum_digits (p := p) (k := n) (n := p * n) hle1
   have hdig_mul : (p.digits (p * n)).sum = (p.digits n).sum := by
-    obtain rfl | hn := eq_zero_or_pos n
+    rcases eq_zero_or_pos n with rfl | hn
     · simp
     · have h := Nat.digits_add p hp1lt 0 n hpos (Or.inr (by omega : n ≠ 0))
       rw [show (0 : ℕ) + p * n = p * n from by ring] at h
       rw [h, List.sum_cons, Nat.zero_add]
   rw [hsub1, hdig_mul] at hkummer
   have hval_choose : (p - 1) * padicValNat p ((p * n).choose n)
-    = (p.digits ((p - 1) * n)).sum := by
+      = (p.digits ((p - 1) * n)).sum := by
     omega
   -- The exact factorial valuations give the digit sum of `(p - 1) * n`.
   have hm_sub : (p - 1) * n + 1 - 1 = (p - 1) * n := by omega
@@ -122,71 +124,72 @@ lemma generalizedCatalan_prime_dvd_iff_not_geometric_sum
   have hleg2 := sub_one_mul_padicValNat_factorial (p := p) (((p - 1) * n + 1) - 1)
   rw [hm_sub] at hleg2
   have hfact : ((p - 1) * n + 1) * Nat.factorial ((p - 1) * n)
-    = Nat.factorial ((p - 1) * n + 1) :=
+      = Nat.factorial ((p - 1) * n + 1) :=
     Nat.mul_factorial_pred (by omega)
   have hm_ne : (p - 1) * n + 1 ≠ 0 := by omega
   have hvmul : padicValNat p (Nat.factorial ((p - 1) * n + 1))
-    = padicValNat p ((p - 1) * n + 1)
-      + padicValNat p (Nat.factorial ((p - 1) * n)) := by
+      = padicValNat p ((p - 1) * n + 1)
+        + padicValNat p (Nat.factorial ((p - 1) * n)) := by
     conv_lhs => rw [← hfact]
     exact padicValNat.mul (p := p) hm_ne (Nat.factorial_ne_zero _)
   have hdist2 : (p - 1) * padicValNat p (Nat.factorial ((p - 1) * n + 1))
-    = (p - 1) * padicValNat p (Nat.factorial ((p - 1) * n))
-      + (p - 1) * padicValNat p ((p - 1) * n + 1) := by
+      = (p - 1) * padicValNat p (Nat.factorial ((p - 1) * n))
+        + (p - 1) * padicValNat p ((p - 1) * n + 1) := by
     rw [← mul_add, hvmul, add_comm]
   have hS2_le : (p.digits ((p - 1) * n + 1)).sum ≤ (p - 1) * n + 1 :=
     Nat.digit_sum_le _ _
   have hS1_le : (p.digits ((p - 1) * n)).sum ≤ (p - 1) * n := Nat.digit_sum_le _ _
   have hs1 : 1 ≤ (p.digits ((p - 1) * n + 1)).sum := one_le_digit_sum (by omega)
   have hval_m : (p.digits ((p - 1) * n)).sum
-    = (p.digits ((p - 1) * n + 1)).sum - 1
-      + (p - 1) * padicValNat p ((p - 1) * n + 1) := by
+      = (p.digits ((p - 1) * n + 1)).sum - 1
+        + (p - 1) * padicValNat p ((p - 1) * n + 1) := by
     omega
   -- The valuation of the generalized Catalan number itself.
   have hchoose_ne : (p * n).choose n ≠ 0 := ne_of_gt (Nat.choose_pos hle1)
   have hC_ne : (p * n).choose n / ((p - 1) * n + 1) ≠ 0 :=
     ne_of_gt (Nat.div_pos (Nat.le_of_dvd (Nat.choose_pos hle1) hdiv) hm_pos)
   have hmul_eq : (p * n).choose n / ((p - 1) * n + 1) * ((p - 1) * n + 1)
-    = (p * n).choose n := Nat.div_mul_cancel hdiv
+      = (p * n).choose n := Nat.div_mul_cancel hdiv
   have hval_div : padicValNat p ((p * n).choose n)
-    = padicValNat p ((p * n).choose n / ((p - 1) * n + 1))
-      + padicValNat p ((p - 1) * n + 1) := by
+      = padicValNat p ((p * n).choose n / ((p - 1) * n + 1))
+        + padicValNat p ((p - 1) * n + 1) := by
     conv_lhs => rw [← hmul_eq]
     exact padicValNat.mul hC_ne hm_ne
   have hvalC : (p - 1) * padicValNat p ((p * n).choose n / ((p - 1) * n + 1))
-    = (p.digits ((p - 1) * n + 1)).sum - 1 := by
+      = (p.digits ((p - 1) * n + 1)).sum - 1 := by
     have hdist : (p - 1) * padicValNat p ((p * n).choose n / ((p - 1) * n + 1))
-      + (p - 1) * padicValNat p ((p - 1) * n + 1)
-      = (p - 1) * padicValNat p ((p * n).choose n) := by
+        + (p - 1) * padicValNat p ((p - 1) * n + 1)
+        = (p - 1) * padicValNat p ((p * n).choose n) := by
       rw [← mul_add, hval_div]
     omega
   -- `p` divides the quotient iff the digit sum is not `1`.
   have hiff1 : p ∣ (p * n).choose n / ((p - 1) * n + 1)
-    ↔ (p.digits ((p - 1) * n + 1)).sum ≠ 1 := by
+      ↔ (p.digits ((p - 1) * n + 1)).sum ≠ 1 := by
     constructor
     · intro hdvd heq
       have h1V : 1 ≤ padicValNat p ((p * n).choose n / ((p - 1) * n + 1)) := by
         have hpow : p ^ 1 ∣ (p * n).choose n / ((p - 1) * n + 1) := by rwa [pow_one]
-        obtain h0 | hle := (padicValNat_dvd_iff 1 _).mp hpow
+        rcases (padicValNat_dvd_iff 1 _).mp hpow with h0 | hle
         · omega
         · exact hle
       have hX : 0 < (p - 1)
-        * padicValNat p ((p * n).choose n / ((p - 1) * n + 1)) :=
+          * padicValNat p ((p * n).choose n / ((p - 1) * n + 1)) :=
         mul_pos (by omega) h1V
       omega
     · intro hne
       have hs2 : 2 ≤ (p.digits ((p - 1) * n + 1)).sum := by omega
       have hX : 1 ≤ (p - 1)
-        * padicValNat p ((p * n).choose n / ((p - 1) * n + 1)) := by
+          * padicValNat p ((p * n).choose n / ((p - 1) * n + 1)) := by
         omega
       have hV : 1 ≤ padicValNat p ((p * n).choose n / ((p - 1) * n + 1)) := by
-        obtain h0 | hpos' := eq_zero_or_pos (padicValNat p ((p * n).choose n / ((p - 1) * n + 1)))
+        rcases eq_zero_or_pos (padicValNat p ((p * n).choose n / ((p - 1) * n + 1))) with h0 | hpos'
         · exfalso
           rw [h0, mul_zero] at hX
           omega
         · exact hpos'
       have h := (padicValNat_dvd_iff 1 _).mpr (Or.inr hV)
-      rwa [pow_one] at h
+      rw [pow_one] at h
+      exact h
   -- Geometric-sum indices are exactly the prime powers of `(p - 1) * n + 1`.
   have hgeom : ∀ k, ((p - 1) * n + 1 = p ^ k) ↔ (n = (p ^ k - 1) / (p - 1)) := by
     intro k
@@ -215,4 +218,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

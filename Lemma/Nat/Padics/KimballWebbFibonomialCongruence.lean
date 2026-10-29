@@ -14,12 +14,12 @@ private lemma rho_facts (p rho : ℕ) (ε : ℤ) (hp : Nat.Prime p) (hp7 : 7 ≤
   (hε : ε = 1 ∨ ε = -1) (hrho : (rho : ℤ) = (p : ℤ) - ε) :
   Odd p ∧ Even rho ∧ 6 ≤ rho ∧ 1 ≤ rho := by
   have hmod : p % 2 = 1 := by
-    obtain h | h := hp.eq_two_or_odd
+    rcases hp.eq_two_or_odd with h | h
     · omega
     · exact h
   have hodd : Odd p := Nat.odd_iff.mpr hmod
   obtain ⟨t, ht⟩ := hodd
-  obtain rfl | rfl := hε
+  rcases hε with rfl | rfl
   · have hr : rho = p - 1 := by omega
     subst hr
     exact ⟨Nat.odd_iff.mpr hmod, ⟨t, by omega⟩, by omega, by omega⟩
@@ -27,6 +27,7 @@ private lemma rho_facts (p rho : ℕ) (ε : ℤ) (hp : Nat.Prime p) (hp7 : 7 ≤
     subst hr
     exact ⟨Nat.odd_iff.mpr hmod, (Nat.odd_iff.mpr hmod).add_one, by omega, by omega⟩
 
+-- Helper: (1+y)^m = 1 + m*y when y^2 = 0.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -41,12 +42,12 @@ private lemma one_add_pow_of_sq_eq_zero {R : Type*} [CommRing R] (y : R) (hy : y
   | m + 1 => by
     have ih := one_add_pow_of_sq_eq_zero y hy m
     calc (1 + y) ^ (m + 1) = (1 + y) ^ m * (1 + y) := by ring
-      _ = (1 + (m : R) * y) * (1 + y) :=
-rw [ih]
-  _ = 1 + (((m + 1 : ℕ)) : R) * y := by
-    push_cast
-    linear_combination (m : R) * hy
+        _ = (1 + (m : R) * y) * (1 + y) := by rw [ih]
+        _ = 1 + (((m + 1 : ℕ)) : R) * y := by
+            push_cast
+            linear_combination (m : R) * hy
 
+-- Helper: t^3 = 0 implies t^4 = 0 and related vanishing (Steps 2-3).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -73,6 +74,7 @@ private lemma cube_zero_sq_mul (R : Type*) [CommRing R] (t z : R) (ht : t ^ 3 = 
   have h : t ^ 2 * (t * z) = t ^ 3 * z := by ring
   rw [h, ht, zero_mul]
 
+-- Helper: (1 + 5b^2)(1 - 5b^2) = 1 when b^4 = 0 (Step 2a unit fact).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -85,6 +87,7 @@ private lemma one_add_five_sq_unit (R : Type*) [CommRing R] (b : R) (hb : b ^ 4 
   (1 + 5 * b ^ 2) * (1 - 5 * b ^ 2) = 1 := by
   linear_combination (-(25 * hb))
 
+-- Helper: Cassini corollary at even n (Step 2a core identity).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -98,7 +101,7 @@ private lemma cassini_even_int (n : ℤ) (heven : Even n) :
   have hcas := Int.fib_succ_mul_fib_pred_sub_fib_sq n
   have hsign : ((-1 : ℤ) ^ n.natAbs) = 1 := by
     have hev : Even n.natAbs := by
-      obtain ⟨r, hr⟩ := heven
+      rcases heven with ⟨r, hr⟩
       use r.natAbs
       omega
     exact Even.neg_one_pow hev
@@ -110,6 +113,7 @@ private lemma cassini_even_int (n : ℤ) (heven : Even n) :
   rw [hsplit] at hcas
   linarith
 
+-- Helper: projection R = ZMod (p^3) -> K = ZMod p.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -144,7 +148,8 @@ namespace MetaMathlibExt
 @[path]
 private lemma piHom_eq_zero_of_dvd (p a : ℕ) (h : p ∣ a) :
   piHom p (a : ZMod (p ^ 3)) = 0 := by
-  rwa [piHom_natCast, ZMod.natCast_eq_zero_iff]
+  rw [piHom_natCast, ZMod.natCast_eq_zero_iff]
+  exact h
 
 end MetaMathlibExt
 
@@ -202,8 +207,8 @@ private lemma small_triple_eq_zero (p : ℕ) [NeZero p] [NeZero (p ^ 3)]
   obtain ⟨z', rfl⟩ := small_exists_mul_p p z hz
   have h3 := pow_three_prime_pow_eq_zero p
   calc ((p : ZMod (p ^ 3)) * x') * ((p : ZMod (p ^ 3)) * y') *
-    ((p : ZMod (p ^ 3)) * z')
-    = (p : ZMod (p ^ 3)) ^ 3 * (x' * y' * z') := by ring
+      ((p : ZMod (p ^ 3)) * z')
+      = (p : ZMod (p ^ 3)) ^ 3 * (x' * y' * z') := by ring
     _ = 0 := by rw [h3, zero_mul]
 
 end MetaMathlibExt
@@ -267,7 +272,8 @@ namespace MetaMathlibExt
 @[path]
 private lemma two_unit_R (p : ℕ) (hodd : Odd p) :
   IsUnit ((2 : ℕ) : ZMod (p ^ 3)) := by
-  rwa [ZMod.isUnit_prime_iff_not_dvd Nat.prime_two]
+  rw [ZMod.isUnit_prime_iff_not_dvd Nat.prime_two]
+  exact hodd.pow.not_two_dvd_nat
 
 end MetaMathlibExt
 
@@ -293,6 +299,7 @@ private lemma prod_one_add_t_mul {R : Type*} [CommRing R] {ι : Type*}
       (h * ((∑ i ∈ s, f i) ^ 2 - ∑ i ∈ s, (f i) ^ 2) * f a) * ht
       - (t ^ 2 * (∑ i ∈ s, f i) * f a) * hh
 
+-- Helper: Fibonomial integrality. D(j) = prod_{i<j} F(i+1) divides P(m,j).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -316,43 +323,43 @@ private lemma fib_shift_prod_dvd : ∀ (m j : ℕ),
     | zero => exact dvd_refl _
     | succ j ihj =>
       have hD : (Finset.prod (Finset.range (j + 1)) (fun i => Nat.fib (i + 1)))
-        = (Finset.prod (Finset.range j) (fun i => Nat.fib (i + 1))) * Nat.fib (j + 1) :=
+          = (Finset.prod (Finset.range j) (fun i => Nat.fib (i + 1))) * Nat.fib (j + 1) :=
         Finset.prod_range_succ _ _
       -- key fib identity at (m+1, j): F_{m+j+2} = F_{m+1} F_j + F_{m+2} F_{j+1}
       have hfib : Nat.fib (m + 1 + j + 1) =
-        Nat.fib (m + 1) * Nat.fib j + Nat.fib (m + 2) * Nat.fib (j + 1) := by
+          Nat.fib (m + 1) * Nat.fib j + Nat.fib (m + 2) * Nat.fib (j + 1) := by
         have h := Nat.fib_add (m + 1) j
         have heq : m + 1 + j + 1 = (m + 1) + j + 1 := by ring
         rw [heq, h]
       -- peel the last factor off P(m+1, j+1)
       have hPs : (Finset.prod (Finset.range (j + 1)) (fun i => Nat.fib (m + 1 + i + 1)))
-        = (Finset.prod (Finset.range j) (fun i => Nat.fib (m + 1 + i + 1))) *
-          Nat.fib (m + 1 + j + 1) :=
+          = (Finset.prod (Finset.range j) (fun i => Nat.fib (m + 1 + i + 1))) *
+            Nat.fib (m + 1 + j + 1) :=
         Finset.prod_range_succ _ _
       -- peel the first factor off P(m, j+1): P(m,j+1) = Pshift * F_{m+1}
       have hshift : (Finset.prod (Finset.range (j + 1)) (fun i => Nat.fib (m + i + 1)))
-        = (Finset.prod (Finset.range j) (fun k => Nat.fib (m + (k + 1) + 1))) *
-          Nat.fib (m + 1) :=
+          = (Finset.prod (Finset.range j) (fun k => Nat.fib (m + (k + 1) + 1))) *
+            Nat.fib (m + 1) :=
         Finset.prod_range_succ' _ _
       have hshift2 : (Finset.prod (Finset.range j) (fun k => Nat.fib (m + (k + 1) + 1)))
-        = (Finset.prod (Finset.range j) (fun i => Nat.fib (m + 1 + i + 1))) :=
+          = (Finset.prod (Finset.range j) (fun i => Nat.fib (m + 1 + i + 1))) :=
         Finset.prod_congr rfl (fun i _ => by congr 1; omega)
       have hP : (Finset.prod (Finset.range (j + 1)) (fun i => Nat.fib (m + 1 + i + 1)))
-        = Nat.fib j *
-          (Finset.prod (Finset.range (j + 1)) (fun i => Nat.fib (m + i + 1)))
-          + Nat.fib (m + 2) * Nat.fib (j + 1) *
-            (Finset.prod (Finset.range j) (fun i => Nat.fib (m + 1 + i + 1))) := by
+          = Nat.fib j *
+              (Finset.prod (Finset.range (j + 1)) (fun i => Nat.fib (m + i + 1)))
+            + Nat.fib (m + 2) * Nat.fib (j + 1) *
+              (Finset.prod (Finset.range j) (fun i => Nat.fib (m + 1 + i + 1))) := by
         rw [hPs, hfib, hshift, hshift2]
         ring
       obtain ⟨a, ha⟩ := ihm (j + 1)
       obtain ⟨b, hb⟩ := ihj
       rw [hD] at ha
       have hd1 : (Finset.prod (Finset.range j) (fun i => Nat.fib (i + 1))) * Nat.fib (j + 1) ∣
-        Nat.fib j * (Finset.prod (Finset.range (j + 1)) (fun i => Nat.fib (m + i + 1))) :=
+          Nat.fib j * (Finset.prod (Finset.range (j + 1)) (fun i => Nat.fib (m + i + 1))) :=
         ⟨Nat.fib j * a, by rw [ha]; ring⟩
       have hd2 : (Finset.prod (Finset.range j) (fun i => Nat.fib (i + 1))) * Nat.fib (j + 1) ∣
-        Nat.fib (m + 2) * Nat.fib (j + 1) *
-          (Finset.prod (Finset.range j) (fun i => Nat.fib (m + 1 + i + 1))) :=
+          Nat.fib (m + 2) * Nat.fib (j + 1) *
+            (Finset.prod (Finset.range j) (fun i => Nat.fib (m + 1 + i + 1))) :=
         ⟨Nat.fib (m + 2) * b, by rw [hb]; ring⟩
       rw [hP, hD]
       exact dvd_add hd1 hd2
@@ -370,7 +377,8 @@ private lemma fib_add_shift (n i : ℕ) (hn : 1 ≤ n) :
   have h := Nat.fib_add (n - 1) i
   have heq1 : n - 1 + i + 1 = n + i := by omega
   have heq2 : n - 1 + 1 = n := Nat.sub_add_cancel hn
-  rwa [heq1, heq2] at h
+  rw [heq1, heq2] at h
+  exact h
 
 end MetaMathlibExt
 
@@ -386,10 +394,10 @@ private lemma fib_add_shift_R (p n i : ℕ) (hn : 1 ≤ n) :
       + (Nat.fib n : ZMod (p ^ 3)) * (Nat.fib (i + 1) : ZMod (p ^ 3)) := by
   have h := fib_add_shift n i hn
   calc (Nat.fib (n + i) : ZMod (p ^ 3))
-    = ((Nat.fib (n - 1) * Nat.fib i + Nat.fib n * Nat.fib (i + 1) : ℕ)
-      : ZMod (p ^ 3)) := by rw [h]
+      = ((Nat.fib (n - 1) * Nat.fib i + Nat.fib n * Nat.fib (i + 1) : ℕ)
+        : ZMod (p ^ 3)) := by rw [h]
     _ = (Nat.fib (n - 1) : ZMod (p ^ 3)) * (Nat.fib i : ZMod (p ^ 3))
-      + (Nat.fib n : ZMod (p ^ 3)) * (Nat.fib (i + 1) : ZMod (p ^ 3)) := by
+        + (Nat.fib n : ZMod (p ^ 3)) * (Nat.fib (i + 1) : ZMod (p ^ 3)) := by
       push_cast
       ring
 
@@ -433,7 +441,8 @@ private lemma fib_split_succ (i j : ℕ) (hij : i ≤ j) :
     = Nat.fib (j - i) * Nat.fib i + Nat.fib (j - i + 1) * Nat.fib (i + 1) := by
   have h := Nat.fib_add (j - i) i
   have heq : j - i + i + 1 = j + 1 := by omega
-  rwa [heq] at h
+  rw [heq] at h
+  exact h
 
 end MetaMathlibExt
 
@@ -449,7 +458,8 @@ private lemma fib_split (i j : ℕ) (hi : 1 ≤ i) (hij : i ≤ j) :
   have h := Nat.fib_add (j - i) (i - 1)
   have heq1 : j - i + (i - 1) + 1 = j := by omega
   have heq2 : i - 1 + 1 = i := Nat.sub_add_cancel hi
-  rwa [heq1, heq2] at h
+  rw [heq1, heq2] at h
+  exact h
 
 end MetaMathlibExt
 
@@ -481,7 +491,8 @@ private lemma fib_pair_nat (rho i : ℕ) (hiR : i < rho) :
   have h := Nat.fib_add i (rho - i - 1)
   have heq1 : i + (rho - i - 1) + 1 = rho := by omega
   have heq2 : rho - i - 1 + 1 = rho - i := by omega
-  rwa [heq1, heq2] at h
+  rw [heq1, heq2] at h
+  exact h
 
 end MetaMathlibExt
 
@@ -516,10 +527,11 @@ private lemma cassini_K (p i : ℕ) :
     have h := Int.fib_add_two ((i : ℤ) - 1)
     have e1 : ((i : ℤ) - 1) + 2 = (i : ℤ) + 1 := by ring
     have e2 : ((i : ℤ) - 1) + 1 = (i : ℤ) := by ring
-    rwa [e1, e2] at h
+    rw [e1, e2] at h
+    exact h
   have hgoal_int : Int.fib ((i : ℤ) + 1) ^ 2
-    - Int.fib ((i : ℤ) + 1) * Int.fib (i : ℤ) - Int.fib (i : ℤ) ^ 2
-    = (-1 : ℤ) ^ (i : ℤ).natAbs := by
+      - Int.fib ((i : ℤ) + 1) * Int.fib (i : ℤ) - Int.fib (i : ℤ) ^ 2
+      = (-1 : ℤ) ^ (i : ℤ).natAbs := by
     linear_combination hcas + Int.fib ((i : ℤ) + 1) * hsplit
   have hcast1 : (i : ℤ) + 1 = (((i + 1 : ℕ)) : ℤ) := by push_cast; ring
   have hfib1 : Int.fib ((i : ℤ) + 1) = (Nat.fib (i + 1) : ℤ) := by
@@ -572,19 +584,19 @@ private lemma docagne_K (p i j : ℕ) (hi : 1 ≤ i) (hij : i ≤ j) :
     = (-1 : ZMod p) ^ (i + 1) * ((((Nat.fib (j - i) : ℕ)) : ZMod p)) := by
   have hNat1 := fib_split_succ i j hij
   have h1 : ((((Nat.fib (j + 1) : ℕ)) : ZMod p))
-    = ((((Nat.fib (j - i) : ℕ)) : ZMod p))
-      * ((((Nat.fib i : ℕ)) : ZMod p))
-      + ((((Nat.fib (j - i + 1) : ℕ)) : ZMod p))
-      * ((((Nat.fib (i + 1) : ℕ)) : ZMod p)) := by
+      = ((((Nat.fib (j - i) : ℕ)) : ZMod p))
+        * ((((Nat.fib i : ℕ)) : ZMod p))
+        + ((((Nat.fib (j - i + 1) : ℕ)) : ZMod p))
+        * ((((Nat.fib (i + 1) : ℕ)) : ZMod p)) := by
     have hR := congrArg (Nat.cast : ℕ → ZMod p) hNat1
     push_cast at hR
     exact hR
   have hNat2 := fib_split i j hi hij
   have h2 : ((((Nat.fib j : ℕ)) : ZMod p))
-    = ((((Nat.fib (j - i) : ℕ)) : ZMod p))
-      * ((((Nat.fib (i - 1) : ℕ)) : ZMod p))
-      + ((((Nat.fib (j - i + 1) : ℕ)) : ZMod p))
-      * ((((Nat.fib i : ℕ)) : ZMod p)) := by
+      = ((((Nat.fib (j - i) : ℕ)) : ZMod p))
+        * ((((Nat.fib (i - 1) : ℕ)) : ZMod p))
+        + ((((Nat.fib (j - i + 1) : ℕ)) : ZMod p))
+        * ((((Nat.fib i : ℕ)) : ZMod p)) := by
     have hR := congrArg (Nat.cast : ℕ → ZMod p) hNat2
     push_cast at hR
     exact hR
@@ -615,18 +627,18 @@ private lemma q_injective (p rho i j : ℕ) [Fact p.Prime]
   have hne_j : ((((Nat.fib j : ℕ)) : ZMod p)) ≠ 0 :=
     fib_ne_zero_K p rho j hmin hj0 hjR
   have hdiv : ((((Nat.fib (i + 1) : ℕ)) : ZMod p))
-    / ((((Nat.fib i : ℕ)) : ZMod p))
-    = ((((Nat.fib (j + 1) : ℕ)) : ZMod p))
-    / ((((Nat.fib j : ℕ)) : ZMod p)) := by
+      / ((((Nat.fib i : ℕ)) : ZMod p))
+      = ((((Nat.fib (j + 1) : ℕ)) : ZMod p))
+      / ((((Nat.fib j : ℕ)) : ZMod p)) := by
     rw [div_eq_mul_inv, div_eq_mul_inv]
     unfold qFun at heq
     exact heq
   rw [div_eq_div_iff hne_i hne_j] at hdiv
   have hdoc := docagne_K p i j hi0 hij.le
   have hzero : ((((Nat.fib (j + 1) : ℕ)) : ZMod p))
-    * ((((Nat.fib i : ℕ)) : ZMod p))
-    - ((((Nat.fib (i + 1) : ℕ)) : ZMod p))
-    * ((((Nat.fib j : ℕ)) : ZMod p)) = 0 :=
+      * ((((Nat.fib i : ℕ)) : ZMod p))
+      - ((((Nat.fib (i + 1) : ℕ)) : ZMod p))
+      * ((((Nat.fib j : ℕ)) : ZMod p)) = 0 :=
     sub_eq_zero.mpr hdiv.symm
   rw [hzero] at hdoc
   have hneg : (-1 : ZMod p) ≠ 0 := neg_ne_zero.mpr one_ne_zero
@@ -634,12 +646,13 @@ private lemma q_injective (p rho i j : ℕ) [Fact p.Prime]
     pow_ne_zero _ hneg
   have hfib0 : ((((Nat.fib (j - i) : ℕ)) : ZMod p)) = 0 := by
     have hmul : (-1 : ZMod p) ^ (i + 1)
-      * ((((Nat.fib (j - i) : ℕ)) : ZMod p)) = 0 := hdoc.symm
-    obtain h | h := mul_eq_zero.mp hmul
+        * ((((Nat.fib (j - i) : ℕ)) : ZMod p)) = 0 := hdoc.symm
+    rcases mul_eq_zero.mp hmul with h | h
     · exact absurd h hpow_ne
     · exact h
   have hdvd : p ∣ Nat.fib (j - i) := by
-    rwa [← ZMod.natCast_eq_zero_iff]
+    rw [← ZMod.natCast_eq_zero_iff]
+    exact hfib0
   exact hmin (j - i) (by omega) (by omega) hdvd
 
 end MetaMathlibExt
@@ -656,10 +669,11 @@ private lemma q_rho_sub_one_eq_zero (p rho : ℕ) [Fact p.Prime]
   have hEq : rho - 1 + 1 = rho := Nat.sub_add_cancel hrho1
   have hdvd : p ∣ Nat.fib rho := Nat.dvd_of_mod_eq_zero hfib0
   have hzero : ((((Nat.fib rho : ℕ)) : ZMod p)) = 0 := by
-    rwa [ZMod.natCast_eq_zero_iff]
+    rw [ZMod.natCast_eq_zero_iff]
+    exact hdvd
   unfold qFun
   have hcast : ((((Nat.fib (rho - 1 + 1) : ℕ)) : ZMod p))
-    = ((((Nat.fib rho : ℕ)) : ZMod p)) := by rw [hEq]
+      = ((((Nat.fib rho : ℕ)) : ZMod p)) := by rw [hEq]
   rw [hcast, hzero, zero_mul]
 
 end MetaMathlibExt
@@ -704,7 +718,8 @@ private lemma zero_mem_Q (p rho : ℕ) [Fact p.Prime]
     rw [Finset.mem_image]
     exact ⟨rho - 2, hmem_range, by rw [hEq]⟩
   have h0 := q_rho_sub_one_eq_zero p rho hfib0 hrho1
-  rwa [h0] at hQ
+  rw [h0] at hQ
+  exact hQ
 
 end MetaMathlibExt
 
@@ -723,7 +738,8 @@ private lemma one_mem_Q (p rho : ℕ) [Fact p.Prime] (hrho2 : 2 ≤ rho) :
     rw [Finset.mem_image]
     exact ⟨0, hmem_range, rfl⟩
   have h1 := q_one_eq_one p
-  rwa [h1] at hQ
+  rw [h1] at hQ
+  exact hQ
 
 end MetaMathlibExt
 
@@ -758,13 +774,13 @@ private lemma Q_card (p rho : ℕ) [Fact p.Prime]
     rw [Finset.mem_coe, Finset.mem_range] at ha hb
     by_contra hne
     have hne' : a + 1 ≠ b + 1 := by omega
-    obtain hlt | hgt := lt_or_gt_of_ne hne'
+    rcases lt_or_gt_of_ne hne' with hlt | hgt
     · exact absurd hab
-      (q_injective p rho (a + 1) (b + 1) hmin (Nat.succ_pos a) (by omega)
-        (Nat.succ_pos b) (by omega) hlt)
+        (q_injective p rho (a + 1) (b + 1) hmin (Nat.succ_pos a) (by omega)
+          (Nat.succ_pos b) (by omega) hlt)
     · exact absurd hab.symm
-      (q_injective p rho (b + 1) (a + 1) hmin (Nat.succ_pos b) (by omega)
-        (Nat.succ_pos a) (by omega) hgt)
+        (q_injective p rho (b + 1) (a + 1) hmin (Nat.succ_pos b) (by omega)
+          (Nat.succ_pos a) (by omega) hgt)
   rw [QSet, Finset.card_image_of_injOn hinj, Finset.card_range]
 
 end MetaMathlibExt
@@ -825,8 +841,8 @@ private lemma q_succ_eq_T (p rho j : ℕ) [Fact p.Prime]
     fib_ne_zero_K p rho (j - 1) hmin hjm1_0 hjm1_R
   have hNat := fib_succ_eq j hj1
   have hFib : ((((Nat.fib (j + 1) : ℕ)) : ZMod p))
-    = ((((Nat.fib j : ℕ)) : ZMod p))
-      + ((((Nat.fib (j - 1) : ℕ)) : ZMod p)) := by
+      = ((((Nat.fib j : ℕ)) : ZMod p))
+        + ((((Nat.fib (j - 1) : ℕ)) : ZMod p)) := by
     have hR := congrArg (Nat.cast : ℕ → ZMod p) hNat
     push_cast at hR
     exact hR
@@ -868,7 +884,8 @@ private lemma T_mem_C (p rho : ℕ) [Fact p.Prime] [NeZero p]
   (c : ZMod p) (hc : c ∈ CSet p rho) : TFun p c ∈ CSet p rho := by
   have hcQ : c ∉ QSet p rho := by
     unfold CSet at hc
-    rwa [Finset.mem_sdiff] at hc
+    rw [Finset.mem_sdiff] at hc
+    exact hc.2
   have h0Q := zero_mem_Q p rho hfib0 hrho1 hrho2
   have hc_ne : c ≠ 0 := by
     intro h
@@ -882,23 +899,26 @@ private lemma T_mem_C (p rho : ℕ) [Fact p.Prime] [NeZero p]
     rw [Finset.mem_range] at ha_range
     have hj0 : 0 < a + 1 := Nat.succ_pos a
     have hjR : a + 1 < rho := by omega
-    obtain rfl | hpos := Nat.eq_zero_or_pos a
+    rcases Nat.eq_zero_or_pos a with rfl | hpos
     · have hq1 := q_one_eq_one p
       have hTc : TFun p c = 1 := by
         have : qFun p (0 + 1) = TFun p c := ha_eq
         simp only [Nat.zero_add] at this
-        rwa [hq1] at this
+        rw [hq1] at this
+        exact this.symm
       unfold TFun at hTc
       have hinv0 : c⁻¹ = 0 := by
         have hTc' : (1 : ZMod p) + c⁻¹ = 1 + 0 := by
-          rwa [add_zero]
+          rw [add_zero]
+          exact hTc
         exact add_left_cancel_iff.mp hTc'
       have hc0 : c = 0 := inv_eq_zero.mp hinv0
       exact hc_ne hc0
     · have hj2 : 2 ≤ a + 1 := by omega
       have hqT := q_succ_eq_T p rho (a + 1) hmin hj2 hjR
       have hTeq : TFun p c = TFun p (qFun p (a + 1 - 1)) := by
-        rwa [← hqT]
+        rw [← hqT]
+        exact ha_eq.symm
       have hc_eq : c = qFun p (a + 1 - 1) := T_inj p c _ hTeq
       have hjm1_0 : 0 < a + 1 - 1 := by omega
       have hjm1_R : a + 1 - 1 < rho := by omega
@@ -922,7 +942,8 @@ private lemma mem_C_ne_zero (p rho : ℕ) [Fact p.Prime] [NeZero p]
   (c : ZMod p) (hc : c ∈ CSet p rho) : c ≠ 0 := by
   have hcQ : c ∉ QSet p rho := by
     unfold CSet at hc
-    rwa [Finset.mem_sdiff] at hc
+    rw [Finset.mem_sdiff] at hc
+    exact hc.2
   have h0Q := zero_mem_Q p rho hfib0 hrho1 hrho2
   intro h
   rw [h] at hcQ
@@ -975,40 +996,42 @@ private lemma TT_eq_of_mem_C_two (p rho : ℕ) [Fact p.Prime] [NeZero p]
   have hTy_mem := T_mem_C p rho hmin hfib0 hrho1 hrho2 y hy_mem
   have hTx_or : TFun p x = x ∨ TFun p x = y := by
     rw [hC] at hTx_mem
-    obtain h | h := Finset.mem_insert.mp hTx_mem
+    rcases Finset.mem_insert.mp hTx_mem with h | h
     · exact Or.inl h
     · exact Or.inr (Finset.mem_singleton.mp h)
   have hTy_or : TFun p y = x ∨ TFun p y = y := by
     rw [hC] at hTy_mem
-    obtain h | h := Finset.mem_insert.mp hTy_mem
+    rcases Finset.mem_insert.mp hTy_mem with h | h
     · exact Or.inl h
     · exact Or.inr (Finset.mem_singleton.mp h)
   have hc_or : c = x ∨ c = y := by
     rw [hC] at hc
-    obtain h | h := Finset.mem_insert.mp hc
+    rcases Finset.mem_insert.mp hc with h | h
     · exact Or.inl h
     · exact Or.inr (Finset.mem_singleton.mp h)
-  obtain hcr | hcr := hc_or
+  rcases hc_or with hcr | hcr
   · rw [hcr]
-    obtain hTx | hTx := hTx_or
+    rcases hTx_or with hTx | hTx
     · rw [hTx]
       exact hTx
     · have hTy : TFun p y = x := by
-      obtain h | h := hTy_or
-      · exact h
-      · exfalso
-        have h_eq : TFun p x = TFun p y := by rw [hTx, h]
-        exact hxy (T_inj p x y h_eq)
-      rwa [hTx]
+        rcases hTy_or with h | h
+        · exact h
+        · exfalso
+          have h_eq : TFun p x = TFun p y := by rw [hTx, h]
+          exact hxy (T_inj p x y h_eq)
+      rw [hTx]
+      exact hTy
   · rw [hcr]
-    obtain hTy | hTy := hTy_or
+    rcases hTy_or with hTy | hTy
     · have hTx : TFun p x = y := by
-      obtain h | h := hTx_or
-      · exfalso
-        have h_eq : TFun p x = TFun p y := by rw [h, hTy]
-        exact hxy (T_inj p x y h_eq)
-      · exact h
-      rwa [hTy]
+        rcases hTx_or with h | h
+        · exfalso
+          have h_eq : TFun p x = TFun p y := by rw [h, hTy]
+          exact hxy (T_inj p x y h_eq)
+        · exact h
+      rw [hTy]
+      exact hTx
     · rw [hTy]
       exact hTy
 
@@ -1081,9 +1104,10 @@ private lemma prod_nonzero_eq_neg_one (p : ℕ) [Fact p.Prime] [NeZero p] :
   ∏ x ∈ Finset.univ \ {0}, (x : ZMod p) = -1 := by
   have hprod_units := FiniteField.prod_univ_units_id_eq_neg_one (K := ZMod p)
   have hval : ((((∏ x : (ZMod p)ˣ, x) : (ZMod p)ˣ)) : ZMod p) = -1 := by
-    rwa [hprod_units]
+    rw [hprod_units]
+    exact Units.coe_neg_one
   have hmap : ((((∏ x : (ZMod p)ˣ, x) : (ZMod p)ˣ)) : ZMod p)
-    = ∏ x : (ZMod p)ˣ, ((x : (ZMod p)ˣ) : ZMod p) := by
+      = ∏ x : (ZMod p)ˣ, ((x : (ZMod p)ˣ) : ZMod p) := by
     have h := map_prod (Units.coeHom (ZMod p))
       (fun x : (ZMod p)ˣ => x) Finset.univ
     simp only [Units.coeHom_apply] at h
@@ -1091,7 +1115,7 @@ private lemma prod_nonzero_eq_neg_one (p : ℕ) [Fact p.Prime] [NeZero p] :
   have hprod_val : ∏ x : (ZMod p)ˣ, ((x : (ZMod p)ˣ) : ZMod p) = -1 := by
     rw [← hmap, hval]
   have himage : Finset.image ((fun u : (ZMod p)ˣ => (u : ZMod p))) Finset.univ
-    = Finset.univ \ {0} := by
+      = Finset.univ \ {0} := by
     ext x
     simp only [Finset.mem_image, Finset.mem_univ, true_and,
       Finset.mem_sdiff, Finset.mem_univ, Finset.mem_singleton]
@@ -1101,17 +1125,18 @@ private lemma prod_nonzero_eq_neg_one (p : ℕ) [Fact p.Prime] [NeZero p] :
     · intro hx
       exact ⟨Units.mk0 x hx, rfl⟩
   have hinjSet : Set.InjOn ((fun u : (ZMod p)ˣ => (u : ZMod p)))
-    ↑(Finset.univ : Finset (ZMod p)ˣ) := by
+      ↑(Finset.univ : Finset (ZMod p)ˣ) := by
     intro x _ y _ h
     simp only at h
     exact Units.val_injective h
   have hprod_image : ∏ x ∈ Finset.image ((fun u : (ZMod p)ˣ => (u : ZMod p)))
-    (Finset.univ : Finset (ZMod p)ˣ), x
-    = ∏ u ∈ (Finset.univ : Finset (ZMod p)ˣ),
-      ((u : (ZMod p)ˣ) : ZMod p) :=
+      (Finset.univ : Finset (ZMod p)ˣ), x
+      = ∏ u ∈ (Finset.univ : Finset (ZMod p)ˣ),
+        ((u : (ZMod p)ˣ) : ZMod p) :=
     Finset.prod_image hinjSet
   rw [himage] at hprod_image
-  rwa [hprod_image]
+  rw [hprod_image]
+  exact hprod_val
 
 end MetaMathlibExt
 
@@ -1130,7 +1155,7 @@ private lemma g_q_eq (p rho i : ℕ) [Fact p.Prime]
     fib_ne_zero_K p rho i hmin hi0 hiR
   have hcas := cassini_K p i
   have hunit : ((((Nat.fib i : ℕ)) : ZMod p))
-    * ((((Nat.fib i : ℕ)) : ZMod p))⁻¹ = 1 :=
+      * ((((Nat.fib i : ℕ)) : ZMod p))⁻¹ = 1 :=
     mul_inv_cancel₀ hne
   unfold qFun gFun
   linear_combination ((((Nat.fib i : ℕ)) : ZMod p))⁻¹ ^ 2 * hcas
@@ -1152,19 +1177,19 @@ private lemma S_eq_sum_Q (p rho : ℕ) [Fact p.Prime]
   (hrho1 : 1 ≤ rho) :
   SDef p rho = ∑ q ∈ QSet p rho, gFun p q := by
   have hinj : ∀ x ∈ Finset.range (rho - 1), ∀ y ∈ Finset.range (rho - 1),
-    (fun i => qFun p (i + 1)) x = (fun i => qFun p (i + 1)) y → x = y := by
+      (fun i => qFun p (i + 1)) x = (fun i => qFun p (i + 1)) y → x = y := by
     intro a ha b hb hab
     simp only at hab
     rw [Finset.mem_range] at ha hb
     by_contra hne
     have hne' : a + 1 ≠ b + 1 := by omega
-    obtain hlt | hgt := lt_or_gt_of_ne hne'
+    rcases lt_or_gt_of_ne hne' with hlt | hgt
     · exact absurd hab
-      (q_injective p rho (a + 1) (b + 1) hmin (Nat.succ_pos a) (by omega)
-        (Nat.succ_pos b) (by omega) hlt)
+        (q_injective p rho (a + 1) (b + 1) hmin (Nat.succ_pos a) (by omega)
+          (Nat.succ_pos b) (by omega) hlt)
     · exact absurd hab.symm
-      (q_injective p rho (b + 1) (a + 1) hmin (Nat.succ_pos b) (by omega)
-        (Nat.succ_pos a) (by omega) hgt)
+        (q_injective p rho (b + 1) (a + 1) hmin (Nat.succ_pos b) (by omega)
+          (Nat.succ_pos a) (by omega) hgt)
   rw [QSet, Finset.sum_image hinj]
   unfold SDef
   refine Finset.sum_congr rfl fun i hi => ?_
@@ -1189,21 +1214,21 @@ private lemma S_eq_zero (p rho : ℕ) (ε : ℤ) [Fact p.Prime] [NeZero p]
   have hrho2 : 2 ≤ rho := by omega
   have hC_card := C_card p rho hmin h1
   have hC_sum : ∑ c ∈ CSet p rho, gFun p c = 0 := by
-    obtain rfl | rfl := hε
+    rcases hε with rfl | rfl
     · have hC2 : Finset.card (CSet p rho) = 2 := by
-      rw [hC_card]
-      omega
+        rw [hC_card]
+        omega
       exact Finset.sum_eq_zero fun c hc =>
         g_eq_zero_of_mem_C_two p rho hmin hfib0 h1 hrho2 hC2 c hc
     · have hC0 : Finset.card (CSet p rho) = 0 := by
-      rw [hC_card]
-      omega
+        rw [hC_card]
+        omega
       have hCempty : CSet p rho = ∅ := Finset.card_eq_zero.mp hC0
       rw [hCempty, Finset.sum_empty]
   have hQsub : QSet p rho ⊆ Finset.univ := Finset.subset_univ _
   have hsum : (∑ c ∈ CSet p rho, gFun p c)
-    + (∑ q ∈ QSet p rho, gFun p q)
-    = ∑ x ∈ Finset.univ, gFun p x := by
+      + (∑ q ∈ QSet p rho, gFun p q)
+      = ∑ x ∈ Finset.univ, gFun p x := by
     have h := Finset.sum_sdiff (s₁ := QSet p rho) (s₂ := Finset.univ)
       (f := gFun p) hQsub
     unfold CSet at ⊢
@@ -1229,7 +1254,8 @@ private lemma S_eq_zero (p rho : ℕ) (ε : ℤ) [Fact p.Prime] [NeZero p]
     unfold gFun
     rw [Finset.sum_sub_distrib, Finset.sum_sub_distrib]
     rw [h2_pow, h1_pow, h1_const, sub_zero, sub_zero]
-  rwa [hS_Q, hsum]
+  rw [hS_Q, hsum]
+  exact h_univ
 
 end MetaMathlibExt
 
@@ -1253,28 +1279,28 @@ private lemma pair_sum_eq (p rho i : ℕ) (hiR : i < rho)
     * ((((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3)))⁻¹ := by
   have hNat := fib_pair_nat rho i hiR
   have hAdd : (((Nat.fib rho : ℕ)) : ZMod (p ^ 3))
-    = (((Nat.fib i : ℕ)) : ZMod (p ^ 3))
-      * (((Nat.fib (rho - i - 1) : ℕ)) : ZMod (p ^ 3))
-      + (((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3))
-      * (((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3)) := by
+      = (((Nat.fib i : ℕ)) : ZMod (p ^ 3))
+        * (((Nat.fib (rho - i - 1) : ℕ)) : ZMod (p ^ 3))
+        + (((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3))
+        * (((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3)) := by
     have hR := congrArg (Nat.cast : ℕ → ZMod (p ^ 3)) hNat
     push_cast at hR
     exact hR
   have hNat2 := fib_succ_split rho i hiR
   have hSucc : (((Nat.fib (rho - i + 1) : ℕ)) : ZMod (p ^ 3))
-    = (((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3))
-      + (((Nat.fib (rho - i - 1) : ℕ)) : ZMod (p ^ 3)) := by
+      = (((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3))
+        + (((Nat.fib (rho - i - 1) : ℕ)) : ZMod (p ^ 3)) := by
     have hR := congrArg (Nat.cast : ℕ → ZMod (p ^ 3)) hNat2
     push_cast at hR
     exact hR
   have hunit1 : (((Nat.fib i : ℕ)) : ZMod (p ^ 3))
-    * ((((Nat.fib i : ℕ)) : ZMod (p ^ 3)))⁻¹ = 1 :=
+      * ((((Nat.fib i : ℕ)) : ZMod (p ^ 3)))⁻¹ = 1 :=
     ZMod.mul_inv_of_unit _ hu1
   have hunit2 : (((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3))
-    * ((((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3)))⁻¹ = 1 :=
+      * ((((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3)))⁻¹ = 1 :=
     ZMod.mul_inv_of_unit _ hu2
   linear_combination (-2 * ((((Nat.fib i : ℕ)) : ZMod (p ^ 3)))⁻¹
-    * ((((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3)))⁻¹) * hAdd
+      * ((((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3)))⁻¹) * hAdd
     + (2 * ((((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3)))⁻¹) * hSucc
     + (-2 * (((Nat.fib (rho - i - 1) : ℕ)) : ZMod (p ^ 3))
       * ((((Nat.fib (rho - i) : ℕ)) : ZMod (p ^ 3)))⁻¹ - 1) * hunit1
@@ -1298,10 +1324,11 @@ private lemma cassini_R (p i : ℕ) :
     have h := Int.fib_add_two ((i : ℤ) - 1)
     have e1 : ((i : ℤ) - 1) + 2 = (i : ℤ) + 1 := by ring
     have e2 : ((i : ℤ) - 1) + 1 = (i : ℤ) := by ring
-    rwa [e1, e2] at h
+    rw [e1, e2] at h
+    exact h
   have hgoal_int : Int.fib ((i : ℤ) + 1) ^ 2
-    - Int.fib ((i : ℤ) + 1) * Int.fib (i : ℤ) - Int.fib (i : ℤ) ^ 2
-    = (-1 : ℤ) ^ (i : ℤ).natAbs := by
+      - Int.fib ((i : ℤ) + 1) * Int.fib (i : ℤ) - Int.fib (i : ℤ) ^ 2
+      = (-1 : ℤ) ^ (i : ℤ).natAbs := by
     linear_combination hcas + Int.fib ((i : ℤ) + 1) * hsplit
   have hcast1 : (i : ℤ) + 1 = (((i + 1 : ℕ)) : ℤ) := by push_cast; ring
   have hfib1 : Int.fib ((i : ℤ) + 1) = (Nat.fib (i + 1) : ℤ) := by
@@ -1392,31 +1419,31 @@ private lemma nat_div_eq_prod_ratios (p rho n : ℕ) (hp : Nat.Prime p)
       ((Nat.fib (n + i + 1) : ZMod (p ^ 3)) * ((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹) := by
   have hYdvdX := fib_shift_prod_dvd n (rho - 1)
   have hBmul : (Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (n + i + 1)) /
-    Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1))) *
-    Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1))
-    = Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (n + i + 1)) :=
+      Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1))) *
+      Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1))
+      = Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (n + i + 1)) :=
     Nat.div_mul_cancel hYdvdX
   have hcast : ((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (n + i + 1)) /
-    Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ℕ)
-    : ZMod (p ^ 3))
-    * ((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ℕ)
+      Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ℕ)
       : ZMod (p ^ 3))
-    = ((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (n + i + 1)) : ℕ)
-      : ZMod (p ^ 3)) := by
+      * ((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ℕ)
+        : ZMod (p ^ 3))
+      = ((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (n + i + 1)) : ℕ)
+        : ZMod (p ^ 3)) := by
     rw [← Nat.cast_mul, hBmul]
   have hYunit : IsUnit (((Finset.prod (Finset.range (rho - 1))
-    (fun i => Nat.fib (i + 1)) : ℕ)) : ZMod (p ^ 3)) := by
+      (fun i => Nat.fib (i + 1)) : ℕ)) : ZMod (p ^ 3)) := by
     rw [Nat.cast_prod]
     rw [IsUnit.prod_iff]
     intro i hi
     simp only [Finset.mem_range] at hi
     exact fib_unit_R p rho (i + 1) hp hmin (Nat.succ_pos i) (by omega)
   have hprod : (∏ i ∈ Finset.range (rho - 1),
-    ((Nat.fib (n + i + 1) : ZMod (p ^ 3)) * ((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹))
-    * ((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ℕ)
-      : ZMod (p ^ 3))
-    = ((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (n + i + 1)) : ℕ)
-      : ZMod (p ^ 3)) := by
+      ((Nat.fib (n + i + 1) : ZMod (p ^ 3)) * ((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹))
+      * ((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ℕ)
+        : ZMod (p ^ 3))
+      = ((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (n + i + 1)) : ℕ)
+        : ZMod (p ^ 3)) := by
     rw [Nat.cast_prod, Nat.cast_prod, ← Finset.prod_mul_distrib]
     refine Finset.prod_congr rfl fun i hi => ?_
     simp only [Finset.mem_range] at hi
@@ -1424,12 +1451,13 @@ private lemma nat_div_eq_prod_ratios (p rho n : ℕ) (hp : Nat.Prime p)
     have hinv : ((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹ * (Nat.fib (i + 1) : ZMod (p ^ 3)) = 1 :=
       ZMod.inv_mul_of_unit _ hu
     calc ((Nat.fib (n + i + 1) : ZMod (p ^ 3)) * ((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹) *
-      (Nat.fib (i + 1) : ZMod (p ^ 3))
-      = (Nat.fib (n + i + 1) : ZMod (p ^ 3)) *
-        (((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹ * (Nat.fib (i + 1) : ZMod (p ^ 3))) := by ring
+          (Nat.fib (i + 1) : ZMod (p ^ 3))
+        = (Nat.fib (n + i + 1) : ZMod (p ^ 3)) *
+          (((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹ * (Nat.fib (i + 1) : ZMod (p ^ 3))) := by ring
       _ = (Nat.fib (n + i + 1) : ZMod (p ^ 3)) := by rw [hinv, mul_one]
   exact hYunit.mul_right_cancel (hcast.trans hprod.symm)
 
+-- Helper: p divides Fib rho and its multiples.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1457,6 +1485,7 @@ private lemma fib_k_rho_dvd (p rho k : ℕ) (hfib0 : Nat.fib rho % p = 0) :
     Nat.fib_dvd rho (k * rho) (Nat.dvd_mul_left rho k)
   exact h1.trans h2
 
+-- Helper: the k = 0 case of the congruence (both sides equal 1).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1512,7 +1541,8 @@ private lemma isUnit_of_pi_ne_zero (p : ℕ) (hp : Nat.Prime p) [NeZero p]
   have hndvd : ¬ p ∣ x.val := by
     intro hdvd
     apply hx
-    rwa [← ZMod.natCast_zmod_val x, piHom_natCast, ZMod.natCast_eq_zero_iff]
+    rw [← ZMod.natCast_zmod_val x, piHom_natCast, ZMod.natCast_eq_zero_iff]
+    exact hdvd
   have hcop : Nat.Coprime x.val p :=
     ((Nat.Prime.coprime_iff_not_dvd hp).mpr hndvd).symm
   exact Nat.Coprime.pow_right 3 hcop
@@ -1543,7 +1573,8 @@ private lemma a_isUnit_of_sq (p : ℕ) (a b : ZMod (p ^ 3))
   have hunit : (1 + 5 * b ^ 2) * (1 - 5 * b ^ 2) = 1 :=
     one_add_five_sq_unit (ZMod (p ^ 3)) b hb
   have hsq2 : a ^ 2 * (1 - 5 * b ^ 2) = 1 := by
-    rwa [hsq]
+    rw [hsq]
+    exact hunit
   have h1 : a * (a * (1 - 5 * b ^ 2)) = 1 := by
     have : a * (a * (1 - 5 * b ^ 2)) = a ^ 2 * (1 - 5 * b ^ 2) := by ring
     rw [this, hsq2]
@@ -1564,7 +1595,8 @@ private lemma a_inv_sq_eq (p : ℕ) (a b : ZMod (p ^ 3))
   have hunit : (1 + 5 * b ^ 2) * (1 - 5 * b ^ 2) = 1 :=
     one_add_five_sq_unit (ZMod (p ^ 3)) b hb
   have hsq2 : a ^ 2 * (1 - 5 * b ^ 2) = 1 := by
-    rwa [hsq]
+    rw [hsq]
+    exact hunit
   have ha : a * a⁻¹ = 1 := ZMod.mul_inv_of_unit a hu
   have hsq_inv : (a⁻¹) ^ 2 * a ^ 2 = 1 := by
     have hring : (a⁻¹) ^ 2 * a ^ 2 = (a * a⁻¹) ^ 2 := by ring
@@ -1613,9 +1645,9 @@ private lemma reflect_r_sum (p rho : ℕ) (hrho1 : 1 ≤ rho) :
   ∑ i ∈ Finset.range (rho - 1), rFun p (rho - (i + 1)) = e1Def p rho := by
   have hbase := Finset.sum_range_reflect (fun j => rFun p (j + 1)) (rho - 1)
   have href : (∑ i ∈ Finset.range (rho - 1), rFun p ((rho - 1 - 1 - i) + 1))
-    = e1Def p rho := by
-    have h2 : (∑ i ∈ Finset.range (rho - 1), (fun j => rFun p (j + 1)) (rho - 1 - 1 - i))
       = e1Def p rho := by
+    have h2 : (∑ i ∈ Finset.range (rho - 1), (fun j => rFun p (j + 1)) (rho - 1 - 1 - i))
+        = e1Def p rho := by
       rw [hbase]
       rfl
     simpa only [] using h2
@@ -1639,10 +1671,10 @@ private lemma e1_eq_fib_rho_mul_W (p rho : ℕ) (hp : Nat.Prime p)
   e1Def p rho
     = (((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) * WDef p rho := by
   have hpair : ∀ i ∈ Finset.range (rho - 1),
-    rFun p (i + 1) + rFun p (rho - (i + 1))
-      = 2 * (((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) *
-        ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ *
-        ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod (p ^ 3)))⁻¹ := by
+      rFun p (i + 1) + rFun p (rho - (i + 1))
+        = 2 * (((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) *
+          ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ *
+          ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod (p ^ 3)))⁻¹ := by
     intro i hi
     rw [Finset.mem_range] at hi
     have hi0 : 0 < i + 1 := Nat.succ_pos i
@@ -1657,28 +1689,28 @@ private lemma e1_eq_fib_rho_mul_W (p rho : ℕ) (hp : Nat.Prime p)
     unfold rFun
     exact h
   have hsum : (∑ i ∈ Finset.range (rho - 1),
-    (rFun p (i + 1) + rFun p (rho - (i + 1))))
-    = ∑ i ∈ Finset.range (rho - 1),
-      (2 * (((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) *
-        ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ *
-        ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod (p ^ 3)))⁻¹) :=
+        (rFun p (i + 1) + rFun p (rho - (i + 1))))
+      = ∑ i ∈ Finset.range (rho - 1),
+        (2 * (((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) *
+          ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ *
+          ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod (p ^ 3)))⁻¹) :=
     Finset.sum_congr rfl hpair
   rw [Finset.sum_add_distrib] at hsum
   have href := reflect_r_sum p rho hrho1
   have he1 : (∑ i ∈ Finset.range (rho - 1), rFun p (i + 1)) = e1Def p rho := rfl
   rw [he1, href] at hsum
   have hRHS : (∑ i ∈ Finset.range (rho - 1),
-    (2 * (((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) *
-      ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ *
-      ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod (p ^ 3)))⁻¹))
-    = 2 * ((((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) * WDef p rho) := by
+        (2 * (((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) *
+          ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ *
+          ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod (p ^ 3)))⁻¹))
+      = 2 * ((((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) * WDef p rho) := by
     have hfactor : ∀ i ∈ Finset.range (rho - 1),
-      (2 * (((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) *
-        ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ *
-        ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod (p ^ 3)))⁻¹)
-      = (2 * (((Nat.fib rho : ℕ)) : ZMod (p ^ 3))) *
-        (((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ *
-          ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod (p ^ 3)))⁻¹) := by
+        (2 * (((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) *
+          ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ *
+          ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod (p ^ 3)))⁻¹)
+        = (2 * (((Nat.fib rho : ℕ)) : ZMod (p ^ 3))) *
+          (((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ *
+            ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod (p ^ 3)))⁻¹) := by
       intro i _
       ring
     rw [Finset.sum_congr rfl hfactor, ← Finset.mul_sum]
@@ -1686,16 +1718,17 @@ private lemma e1_eq_fib_rho_mul_W (p rho : ℕ) (hp : Nat.Prime p)
     ring
   rw [hRHS] at hsum
   have h2 : 2 * e1Def p rho
-    = 2 * ((((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) * WDef p rho) := by
+      = 2 * ((((Nat.fib rho : ℕ)) : ZMod (p ^ 3)) * WDef p rho) := by
     have htwo : e1Def p rho + e1Def p rho = 2 * e1Def p rho := by ring
-    rwa [← htwo]
+    rw [← htwo]
+    exact hsum
   have hu2 : IsUnit ((2 : ZMod (p ^ 3))) := two_unit_R p hodd
   have hinv : ((2 : ZMod (p ^ 3)))⁻¹ * 2 = 1 := ZMod.inv_mul_of_unit _ hu2
   have hmul : ((2 : ZMod (p ^ 3)))⁻¹ * (2 * e1Def p rho)
-    = ((2 : ZMod (p ^ 3)))⁻¹ * (2 * (((Nat.fib rho : ℕ) : ZMod (p ^ 3)) * WDef p rho)) := by
+      = ((2 : ZMod (p ^ 3)))⁻¹ * (2 * (((Nat.fib rho : ℕ) : ZMod (p ^ 3)) * WDef p rho)) := by
     rw [h2]
-  rwa [← mul_assoc, ← mul_assoc, hinv, one_mul, one_mul] at hmul
-
+  rw [← mul_assoc, ← mul_assoc, hinv, one_mul, one_mul] at hmul
+  exact hmul
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1781,9 +1814,9 @@ private lemma pi_W_eq_zero (p rho : ℕ) (ε : ℤ) [Fact p.Prime] [NeZero p]
   have hc_ne : ((((Nat.fib (rho - 1) : ℕ)) : ZMod p)) ≠ 0 :=
     fib_ne_zero_K p rho (rho - 1) hmin (by omega) (by omega)
   have hpiW : piHom p (WDef p rho)
-    = ∑ i ∈ Finset.range (rho - 1),
-      ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ *
-        ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod p))⁻¹ := by
+      = ∑ i ∈ Finset.range (rho - 1),
+        ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ *
+          ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod p))⁻¹ := by
     unfold WDef
     rw [map_sum]
     refine Finset.sum_congr rfl fun i hi => ?_
@@ -1799,11 +1832,11 @@ private lemma pi_W_eq_zero (p rho : ℕ) (ε : ℤ) [Fact p.Prime] [NeZero p]
     rw [map_mul, piHom_inv_of_unit p _ hu1, piHom_inv_of_unit p _ hu2,
       piHom_natCast, piHom_natCast]
   have hterm : ∀ i ∈ Finset.range (rho - 1),
-    ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ *
-      ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod p))⁻¹
-      = (-((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹) *
-        ((-1 : ZMod p) ^ (i + 1) *
-          ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ ^ 2) := by
+      ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ *
+          ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod p))⁻¹
+        = (-((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹) *
+          ((-1 : ZMod p) ^ (i + 1) *
+            ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ ^ 2) := by
     intro i hi
     rw [Finset.mem_range] at hi
     have hi0 : 1 ≤ i + 1 := Nat.succ_pos i
@@ -1812,34 +1845,34 @@ private lemma pi_W_eq_zero (p rho : ℕ) (ε : ℤ) [Fact p.Prime] [NeZero p]
     have hF_ne : ((((Nat.fib (i + 1) : ℕ)) : ZMod p)) ≠ 0 :=
       fib_ne_zero_K p rho (i + 1) hmin (Nat.succ_pos i) hiR
     have hneg_self : (((-1 : ZMod p) ^ (i + 1 + 1))⁻¹)
-      = (-1 : ZMod p) ^ (i + 1 + 1) := by
+        = (-1 : ZMod p) ^ (i + 1 + 1) := by
       rw [← inv_pow, inv_neg_one]
     have hGinv : ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod p))⁻¹
-      = (-1 : ZMod p) ^ (i + 1 + 1) *
-        ((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹ *
-        ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ := by
+        = (-1 : ZMod p) ^ (i + 1 + 1) *
+          ((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹ *
+          ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ := by
       rw [hFib, mul_inv, mul_inv, hneg_self]
     have hpow : (-1 : ZMod p) ^ (i + 1 + 1) = -(-1 : ZMod p) ^ (i + 1) := by
       rw [pow_succ, mul_neg, mul_one]
     calc ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ *
-      ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod p))⁻¹
-      = ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ *
-        ((-1 : ZMod p) ^ (i + 1 + 1) *
-          ((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹ *
-          ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹) := by rw [hGinv]
+            ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod p))⁻¹
+        = ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ *
+            ((-1 : ZMod p) ^ (i + 1 + 1) *
+              ((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹ *
+              ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹) := by rw [hGinv]
       _ = (-1 : ZMod p) ^ (i + 1 + 1) *
-        ((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹ *
-        ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ ^ 2 := by ring
+            ((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹ *
+            ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ ^ 2 := by ring
       _ = -(-1 : ZMod p) ^ (i + 1) *
-        ((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹ *
-        ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ ^ 2 := by rw [hpow]
+            ((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹ *
+            ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ ^ 2 := by rw [hpow]
       _ = (-((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹) *
-        ((-1 : ZMod p) ^ (i + 1) *
-          ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ ^ 2) := by ring
+            ((-1 : ZMod p) ^ (i + 1) *
+              ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ ^ 2) := by ring
   have hsum : (∑ i ∈ Finset.range (rho - 1),
-    ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ *
-      ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod p))⁻¹)
-    = (-((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹) * SDef p rho := by
+        ((((Nat.fib (i + 1) : ℕ)) : ZMod p))⁻¹ *
+          ((((Nat.fib (rho - (i + 1)) : ℕ)) : ZMod p))⁻¹)
+      = (-((((Nat.fib (rho - 1) : ℕ)) : ZMod p))⁻¹) * SDef p rho := by
     rw [Finset.sum_congr rfl hterm, ← Finset.mul_sum]
     rfl
   rw [hpiW, hsum, hS0, mul_zero]
@@ -1866,12 +1899,12 @@ private lemma pi_SR_eq_S (p rho : ℕ) [Fact p.Prime] (hp : Nat.Prime p)
   have hneg : piHom p (-1 : ZMod (p ^ 3)) = (-1 : ZMod p) := by
     rw [map_neg, map_one]
   have hpow : piHom p ((-1 : ZMod (p ^ 3)) ^ (i + 1))
-    = (-1 : ZMod p) ^ (i + 1) := by
+      = (-1 : ZMod p) ^ (i + 1) := by
     rw [map_pow, hneg]
   have hF : piHom p ((Nat.fib (i + 1) : ZMod (p ^ 3)))
-    = ((Nat.fib (i + 1) : ZMod p)) := piHom_natCast p _
+      = ((Nat.fib (i + 1) : ZMod p)) := piHom_natCast p _
   have hFinv : piHom p (((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹)
-    = (((Nat.fib (i + 1) : ZMod p))⁻¹) := by
+      = (((Nat.fib (i + 1) : ZMod p))⁻¹) := by
     rw [piHom_inv_of_unit p _ hu, hF]
   rw [map_mul, hpow, map_pow, hFinv]
 
@@ -1888,9 +1921,9 @@ private lemma p2_eq (p rho : ℕ) (hp : Nat.Prime p)
   p2Def p rho
     = 5 * ((((rho - 1 : ℕ)) : ZMod (p ^ 3))) + 4 * SRDef p rho := by
   have hterm : ∀ i ∈ Finset.range (rho - 1),
-    (rFun p (i + 1)) ^ 2
-      = 5 + 4 * ((-1 : ZMod (p ^ 3)) ^ (i + 1) *
-        ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ ^ 2) := by
+      (rFun p (i + 1)) ^ 2
+        = 5 + 4 * ((-1 : ZMod (p ^ 3)) ^ (i + 1) *
+          ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ ^ 2) := by
     intro i hi
     rw [Finset.mem_range] at hi
     have hi0 : 0 < i + 1 := Nat.succ_pos i
@@ -1901,21 +1934,21 @@ private lemma p2_eq (p rho : ℕ) (hp : Nat.Prime p)
     unfold rFun at h ⊢
     linear_combination h
   have hsum : p2Def p rho
-    = (∑ i ∈ Finset.range (rho - 1), (5 : ZMod (p ^ 3)))
-      + ∑ i ∈ Finset.range (rho - 1),
-        (4 * ((-1 : ZMod (p ^ 3)) ^ (i + 1) *
-          ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ ^ 2)) := by
+      = (∑ i ∈ Finset.range (rho - 1), (5 : ZMod (p ^ 3)))
+        + ∑ i ∈ Finset.range (rho - 1),
+          (4 * ((-1 : ZMod (p ^ 3)) ^ (i + 1) *
+            ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ ^ 2)) := by
     unfold p2Def
     rw [Finset.sum_congr rfl hterm, Finset.sum_add_distrib]
   rw [hsum]
   have hconst : (∑ _i ∈ Finset.range (rho - 1), (5 : ZMod (p ^ 3)))
-    = 5 * ((((rho - 1 : ℕ)) : ZMod (p ^ 3))) := by
+      = 5 * ((((rho - 1 : ℕ)) : ZMod (p ^ 3))) := by
     rw [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
     ring
   have hmul : (∑ i ∈ Finset.range (rho - 1),
-    (4 * ((-1 : ZMod (p ^ 3)) ^ (i + 1) *
-      ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ ^ 2)))
-    = 4 * SRDef p rho := by
+        (4 * ((-1 : ZMod (p ^ 3)) ^ (i + 1) *
+          ((((Nat.fib (i + 1) : ℕ)) : ZMod (p ^ 3)))⁻¹ ^ 2)))
+      = 4 * SRDef p rho := by
     rw [← Finset.mul_sum]
     rfl
   rw [hconst, hmul]
@@ -1955,7 +1988,8 @@ private lemma b_mul_e1_eq_zero (p : ℕ) (a b : ZMod (p ^ 3))
     rw [hring, ha, mul_one]
   have h : a * ((b * a⁻¹) * e1) = b * e1 := by
     rw [← mul_assoc, hab]
-  rwa [ht0, mul_zero] at h
+  rw [ht0, mul_zero] at h
+  exact h.symm
 
 end MetaMathlibExt
 
@@ -2028,7 +2062,7 @@ private lemma B_eq_prod_linear (p rho n : ℕ) (hp : Nat.Prime p)
   have heq : n + i + 1 = n + (i + 1) := by ring
   have h := linear_factor p n (i + 1) half hn hu hh
   have hcast : ((Nat.fib (n + i + 1) : ZMod (p ^ 3)))
-    = ((Nat.fib (n + (i + 1)) : ZMod (p ^ 3))) := by rw [heq]
+      = ((Nat.fib (n + (i + 1)) : ZMod (p ^ 3))) := by rw [heq]
   rw [hcast]
   unfold rFun
   exact h
@@ -2067,19 +2101,19 @@ private lemma prod_linear_eq_expansion (p rho : ℕ)
       * (1 + t * e1Def p rho
         + t ^ 2 * half * ((e1Def p rho) ^ 2 - p2Def p rho)) := by
   have hfactor : ∀ i ∈ Finset.range (rho - 1),
-    (a + b * rFun p (i + 1)) = a * (1 + t * rFun p (i + 1)) := by
+      (a + b * rFun p (i + 1)) = a * (1 + t * rFun p (i + 1)) := by
     intro i _
     rw [ht_def]
     exact factor_a_add p a b _ hu
   have hprod : (∏ i ∈ Finset.range (rho - 1), (a + b * rFun p (i + 1)))
-    = (∏ i ∈ Finset.range (rho - 1), a)
-      * ∏ i ∈ Finset.range (rho - 1), (1 + t * rFun p (i + 1)) := by
+      = (∏ i ∈ Finset.range (rho - 1), a)
+        * ∏ i ∈ Finset.range (rho - 1), (1 + t * rFun p (i + 1)) := by
     rw [Finset.prod_congr rfl hfactor, Finset.prod_mul_distrib]
   have hconst : (∏ _i ∈ Finset.range (rho - 1), a) = a ^ (rho - 1) := by
     rw [Finset.prod_const, Finset.card_range]
   have hexp : (∏ i ∈ Finset.range (rho - 1), (1 + t * rFun p (i + 1)))
-    = 1 + t * e1Def p rho
-      + t ^ 2 * half * ((e1Def p rho) ^ 2 - p2Def p rho) := by
+      = 1 + t * e1Def p rho
+        + t ^ 2 * half * ((e1Def p rho) ^ 2 - p2Def p rho) := by
     have h := prod_one_add_t_mul t half ht3 hh
       (Finset.range (rho - 1)) (fun i => rFun p (i + 1))
     exact h
@@ -2101,7 +2135,7 @@ private lemma pow_mul_one_add_sq_eq_one (p rho : ℕ)
   have hy2 : (5 * b ^ 2) ^ 2 = 0 := by
     linear_combination 25 * hb4
   have hpow_y : (1 + 5 * b ^ 2) ^ (rho - 1)
-    = 1 + ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * (5 * b ^ 2) :=
+      = 1 + ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * (5 * b ^ 2) :=
     one_add_pow_of_sq_eq_zero (5 * b ^ 2) hy2 (rho - 1)
   have hpow_a : (a ^ (rho - 1)) ^ 2 = (a ^ 2) ^ (rho - 1) := by
     have h1 : (a ^ (rho - 1)) ^ 2 = a ^ ((rho - 1) * 2) :=
@@ -2110,26 +2144,26 @@ private lemma pow_mul_one_add_sq_eq_one (p rho : ℕ)
       (pow_mul a 2 (rho - 1)).symm
     rw [h1, h2, mul_comm]
   have ha_sq : (a ^ (rho - 1)) ^ 2
-    = 1 + ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * (5 * b ^ 2) := by
+      = 1 + ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * (5 * b ^ 2) := by
     rw [hpow_a, hsq, hpow_y]
   have hX2 : (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2) ^ 2 = 0 := by
     linear_combination ((-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3))) ^ 2 * hb4)
   have h1X : (1 + (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2)) ^ 2
-    = 1 + 2 * (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2) := by
+      = 1 + 2 * (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2) := by
     linear_combination hX2
   have h2X : (1 : ZMod (p ^ 3))
-    + 2 * (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2)
-    = 1 - ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * (5 * b ^ 2) := by
+        + 2 * (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2)
+      = 1 - ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * (5 * b ^ 2) := by
     linear_combination (-5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2 * hh)
   have h1X' : (1 + (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2)) ^ 2
-    = 1 - ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * (5 * b ^ 2) := by
+      = 1 - ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * (5 * b ^ 2) := by
     rw [h1X, h2X]
   have hy2' : (((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * (5 * b ^ 2)) ^ 2 = 0 := by
     linear_combination ((((((rho - 1 : ℕ))) : ZMod (p ^ 3))) ^ 2 * 25 * hb4)
   have hmul : (a ^ (rho - 1)
-    * (1 + (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2))) ^ 2
-    = ((a ^ (rho - 1)) ^ 2)
-      * ((1 + (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2)) ^ 2) := by
+        * (1 + (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2))) ^ 2
+      = ((a ^ (rho - 1)) ^ 2)
+        * ((1 + (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2)) ^ 2) := by
     rw [mul_pow]
   rw [hmul, ha_sq, h1X']
   linear_combination (-hy2')
@@ -2155,7 +2189,8 @@ private lemma telescoping_prod_eq_c (p rho : ℕ) [Fact p.Prime]
     have h1 : Nat.fib 1 = 1 := rfl
     rw [h1]
     simp
-  rwa [hF1, div_one] at htel
+  rw [hF1, div_one] at htel
+  exact htel
 
 end MetaMathlibExt
 
@@ -2175,11 +2210,11 @@ private lemma image_range_eq_Q_sdiff (p rho : ℕ) [Fact p.Prime] [NeZero p]
   have hmem : rho - 2 ∈ Finset.range (rho - 1) :=
     Finset.mem_range.mpr (by omega)
   have hrange : Finset.range (rho - 1)
-    = insert (rho - 2) (Finset.range (rho - 2)) := by
+      = insert (rho - 2) (Finset.range (rho - 2)) := by
     rw [hEq, Finset.range_add_one]
   have hQ : QSet p rho
-    = insert (qFun p (rho - 2 + 1))
-      (Finset.image (fun i => qFun p (i + 1)) (Finset.range (rho - 2))) := by
+      = insert (qFun p (rho - 2 + 1))
+        (Finset.image (fun i => qFun p (i + 1)) (Finset.range (rho - 2))) := by
     unfold QSet
     rw [hrange, Finset.image_insert]
   have hq0 : qFun p (rho - 2 + 1) = 0 := by
@@ -2188,7 +2223,7 @@ private lemma image_range_eq_Q_sdiff (p rho : ℕ) [Fact p.Prime] [NeZero p]
     exact q_rho_sub_one_eq_zero p rho hfib0 hrho1
   rw [hq0] at hQ
   have hnotmem : (0 : ZMod p) ∉ Finset.image (fun i => qFun p (i + 1))
-    (Finset.range (rho - 2)) := by
+      (Finset.range (rho - 2)) := by
     rw [Finset.mem_image]
     rintro ⟨a, ha_range, ha_eq⟩
     rw [Finset.mem_range] at ha_range
@@ -2209,7 +2244,7 @@ private lemma image_range_eq_Q_sdiff (p rho : ℕ) [Fact p.Prime] [NeZero p]
   · intro hx
     obtain ⟨hxQ, hx0⟩ := hx
     rw [hQ] at hxQ
-    obtain h | h := Finset.mem_insert.mp hxQ
+    rcases Finset.mem_insert.mp hxQ with h | h
     · exfalso
       exact hx0 h
     · exact h
@@ -2229,22 +2264,22 @@ private lemma prod_Q_sdiff_eq_c (p rho : ℕ) [Fact p.Prime] [NeZero p]
   have himage := image_range_eq_Q_sdiff p rho hmin hfib0 hrho1 hrho2
   have htel := telescoping_prod_eq_c p rho hmin hrho2
   have hinj : ∀ x ∈ Finset.range (rho - 2), ∀ y ∈ Finset.range (rho - 2),
-    (fun i => qFun p (i + 1)) x = (fun i => qFun p (i + 1)) y → x = y := by
+      (fun i => qFun p (i + 1)) x = (fun i => qFun p (i + 1)) y → x = y := by
     intro a ha b hb hab
     simp only at hab
     rw [Finset.mem_range] at ha hb
     by_contra hne
     have hne' : a + 1 ≠ b + 1 := by omega
-    obtain hlt | hgt := lt_or_gt_of_ne hne'
+    rcases lt_or_gt_of_ne hne' with hlt | hgt
     · exact absurd hab
-      (q_injective p rho (a + 1) (b + 1) hmin (Nat.succ_pos a) (by omega)
-        (Nat.succ_pos b) (by omega) hlt)
+        (q_injective p rho (a + 1) (b + 1) hmin (Nat.succ_pos a) (by omega)
+          (Nat.succ_pos b) (by omega) hlt)
     · exact absurd hab.symm
-      (q_injective p rho (b + 1) (a + 1) hmin (Nat.succ_pos b) (by omega)
-        (Nat.succ_pos a) (by omega) hgt)
+        (q_injective p rho (b + 1) (a + 1) hmin (Nat.succ_pos b) (by omega)
+          (Nat.succ_pos a) (by omega) hgt)
   have hprod : ∏ q ∈ Finset.image (fun i => qFun p (i + 1))
-    (Finset.range (rho - 2)), q
-    = ∏ i ∈ Finset.range (rho - 2), qFun p (i + 1) :=
+      (Finset.range (rho - 2)), q
+      = ∏ i ∈ Finset.range (rho - 2), qFun p (i + 1) :=
     Finset.prod_image hinj
   rw [himage] at hprod
   rw [hprod, htel]
@@ -2276,9 +2311,9 @@ private lemma prod_C_eq_neg_one_of_card_two (p rho : ℕ) [Fact p.Prime] [NeZero
     have hsub : (x ^ 2 - x - 1) - (y ^ 2 - y - 1) = 0 := by
       rw [hx0, hy0, sub_self]
     have hfactor : (x ^ 2 - x - 1) - (y ^ 2 - y - 1)
-      = (x - y) * (x + y - 1) := by ring
+        = (x - y) * (x + y - 1) := by ring
     rw [hfactor] at hsub
-    obtain h | h := mul_eq_zero.mp hsub
+    rcases mul_eq_zero.mp hsub with h | h
     · exfalso
       apply hxy
       have hxy0 : x - y = 0 := h
@@ -2310,7 +2345,7 @@ private lemma univ_sdiff_eq (p rho : ℕ) [Fact p.Prime] [NeZero p]
     rw [Finset.mem_sdiff] at hx ⊢
     exact ⟨Finset.mem_univ x, hx.2⟩
   have hsdiff_eq : (Finset.univ \ ({0} : Finset (ZMod p))) \ (QSet p rho \ {0})
-    = CSet p rho := by
+      = CSet p rho := by
     unfold CSet
     ext x
     simp only [Finset.mem_sdiff, Finset.mem_univ, Finset.mem_singleton, true_and]
@@ -2326,7 +2361,8 @@ private lemma univ_sdiff_eq (p rho : ℕ) [Fact p.Prime] [NeZero p]
   have hprod := Finset.prod_sdiff (s₁ := QSet p rho \ {0})
     (s₂ := Finset.univ \ ({0} : Finset (ZMod p))) (f := fun x : ZMod p => x) hsub
   rw [hsdiff_eq] at hprod
-  rwa [mul_comm] at hprod
+  rw [mul_comm] at hprod
+  exact hprod.symm
 
 end MetaMathlibExt
 
@@ -2348,30 +2384,33 @@ private lemma c_eq_eps (p rho : ℕ) (ε : ℤ) [Fact p.Prime] [NeZero p]
   have hN := prod_nonzero_eq_neg_one p
   have hC_card := C_card p rho hmin hrho1
   have hmain : (-1 : ZMod p)
-    = ((((Nat.fib (rho - 1) : ℕ)) : ZMod p)) * ∏ c ∈ CSet p rho, c := by
+      = ((((Nat.fib (rho - 1) : ℕ)) : ZMod p)) * ∏ c ∈ CSet p rho, c := by
     rw [← hN, hU, hQc]
-  obtain rfl | rfl := hε
+  rcases hε with rfl | rfl
   · have hC2 : Finset.card (CSet p rho) = 2 := by
-    rw [hC_card]
-    omega
+      rw [hC_card]
+      omega
     have hCprod := prod_C_eq_neg_one_of_card_two p rho hmin hfib0 hrho1 hrho2 hC2
     rw [hCprod] at hmain
     have hneg_ne : (-1 : ZMod p) ≠ 0 := neg_ne_zero.mpr one_ne_zero
     have h1 : (1 : ZMod p) * (-1) = ((((Nat.fib (rho - 1) : ℕ)) : ZMod p)) * (-1) := by
-      rwa [one_mul]
+      rw [one_mul]
+      exact hmain
     have hc : (1 : ZMod p) = ((((Nat.fib (rho - 1) : ℕ)) : ZMod p)) :=
       mul_right_cancel₀ hneg_ne h1
     have heps : (((1 : ℤ)) : ZMod p) = 1 := by simp
-    rwa [heps]
+    rw [heps]
+    exact hc.symm
   · have hC0 : Finset.card (CSet p rho) = 0 := by
-    rw [hC_card]
-    omega
+      rw [hC_card]
+      omega
     have hCempty : CSet p rho = ∅ := Finset.card_eq_zero.mp hC0
     have hCprod : ∏ c ∈ CSet p rho, c = 1 := by
       rw [hCempty, Finset.prod_empty]
     rw [hCprod, mul_one] at hmain
     have heps : (((-1 : ℤ)) : ZMod p) = -1 := by simp
-    rwa [heps]
+    rw [heps]
+    exact hmain.symm
 
 end MetaMathlibExt
 
@@ -2393,9 +2432,10 @@ private lemma fib_rho_add_one_eq_eps (p rho : ℕ) (ε : ℤ) [Fact p.Prime] [Ne
     have h2 := Nat.fib_add_two (n := rho - 1)
     rw [h1] at h2
     have h3 : rho - 1 + 1 = rho := Nat.sub_add_cancel hrho1
-    rwa [h3] at h2
+    rw [h3] at h2
+    exact h2
   have hR : ((((Nat.fib (rho + 1) : ℕ)) : ZMod p))
-    = ((((Nat.fib (rho - 1) : ℕ)) : ZMod p)) + ((((Nat.fib rho : ℕ)) : ZMod p)) := by
+      = ((((Nat.fib (rho - 1) : ℕ)) : ZMod p)) + ((((Nat.fib rho : ℕ)) : ZMod p)) := by
     have hcast := congrArg (Nat.cast : ℕ → ZMod p) hNat
     push_cast at hcast
     exact hcast
@@ -2403,7 +2443,8 @@ private lemma fib_rho_add_one_eq_eps (p rho : ℕ) (ε : ℤ) [Fact p.Prime] [Ne
     rw [ZMod.natCast_eq_zero_iff]
     exact Nat.dvd_of_mod_eq_zero hfib0
   have hc := c_eq_eps p rho ε _hp hp7 hε hrho hfib0 hmin hrho1 hrho2
-  rwa [hR, h0, add_zero]
+  rw [hR, h0, add_zero]
+  exact hc
 
 end MetaMathlibExt
 
@@ -2433,9 +2474,9 @@ private lemma fib_k_rho_add_one_eq_pow (p rho : ℕ) (ε : ℤ) [Fact p.Prime] [
     have heq : j * rho + rho + 1 = (j + 1) * rho + 1 := by ring
     rw [heq] at hNat
     have hR : ((((Nat.fib ((j + 1) * rho + 1) : ℕ)) : ZMod p))
-      = ((((Nat.fib (j * rho) : ℕ)) : ZMod p)) * ((((Nat.fib rho : ℕ)) : ZMod p))
-        + ((((Nat.fib (j * rho + 1) : ℕ)) : ZMod p))
-          * ((((Nat.fib (rho + 1) : ℕ)) : ZMod p)) := by
+        = ((((Nat.fib (j * rho) : ℕ)) : ZMod p)) * ((((Nat.fib rho : ℕ)) : ZMod p))
+          + ((((Nat.fib (j * rho + 1) : ℕ)) : ZMod p))
+            * ((((Nat.fib (rho + 1) : ℕ)) : ZMod p)) := by
       have hcast := congrArg (Nat.cast : ℕ → ZMod p) hNat
       push_cast at hcast
       exact hcast
@@ -2465,33 +2506,38 @@ private lemma pi_a_eq_eps_pow (p rho n k : ℕ) (ε : ℤ) [Fact p.Prime] [NeZer
   have hFib1 := fib_k_rho_add_one_eq_pow p rho ε hp hp7 hε hrho hfib0 hmin hrho1 hrho2 k
   have hn_eq : n + 1 = k * rho + 1 := by rw [hn]
   have hFib_n1 : ((((Nat.fib (n + 1) : ℕ)) : ZMod p)) = (((ε : ℤ) : ZMod p)) ^ k := by
-    rwa [hn_eq]
+    rw [hn_eq]
+    exact hFib1
   have hdvd : p ∣ Nat.fib (k * rho) := fib_k_rho_dvd p rho k hfib0
   have hfib_eq : Nat.fib n = Nat.fib (k * rho) := congrArg Nat.fib hn
   have hdvd_n : p ∣ Nat.fib n := by
-    rwa [hfib_eq]
+    rw [hfib_eq]
+    exact hdvd
   have h0n : ((((Nat.fib n : ℕ)) : ZMod p)) = 0 := by
-    rwa [ZMod.natCast_eq_zero_iff]
+    rw [ZMod.natCast_eq_zero_iff]
+    exact hdvd_n
   have hNat : Nat.fib (n + 1) = Nat.fib (n - 1) + Nat.fib n := by
     have h1 : n - 1 + 2 = n + 1 := by omega
     have h2 := Nat.fib_add_two (n := n - 1)
     rw [h1] at h2
     have h3 : n - 1 + 1 = n := Nat.sub_add_cancel hn1
-    rwa [h3] at h2
+    rw [h3] at h2
+    exact h2
   have hR : ((((Nat.fib (n + 1) : ℕ)) : ZMod p))
-    = ((((Nat.fib (n - 1) : ℕ)) : ZMod p)) + ((((Nat.fib n : ℕ)) : ZMod p)) := by
+      = ((((Nat.fib (n - 1) : ℕ)) : ZMod p)) + ((((Nat.fib n : ℕ)) : ZMod p)) := by
     have hcast := congrArg (Nat.cast : ℕ → ZMod p) hNat
     push_cast at hcast
     exact hcast
   have hFn1 : ((((Nat.fib (n - 1) : ℕ)) : ZMod p)) = (((ε : ℤ) : ZMod p)) ^ k := by
-    rwa [hR, h0n, add_zero] at hFib_n1
+    rw [hR, h0n, add_zero] at hFib_n1
+    exact hFib_n1
   have hpiFn1 : piHom p ((Nat.fib (n - 1) : ZMod (p ^ 3)))
-    = ((Nat.fib (n - 1) : ZMod p)) := piHom_natCast p _
+      = ((Nat.fib (n - 1) : ZMod p)) := piHom_natCast p _
   have hpiFn : piHom p ((Nat.fib n : ZMod (p ^ 3))) = 0 :=
     piHom_eq_zero_of_dvd p _ hdvd_n
   have hpi : piHom p ((Nat.fib (n - 1) : ZMod (p ^ 3)) + half * (Nat.fib n : ZMod (p ^ 3)))
-    = piHom p ((Nat.fib (n - 1) : ZMod (p ^ 3)))
-      + piHom p half * piHom p ((Nat.fib n : ZMod (p ^ 3))) := by
+      = piHom p ((Nat.fib (n - 1) : ZMod (p ^ 3)))
+        + piHom p half * piHom p ((Nat.fib n : ZMod (p ^ 3))) := by
     rw [map_add, map_mul]
   have hFn1' : ((Nat.fib (n - 1) : ZMod p)) = (((ε : ℤ) : ZMod p)) ^ k := hFn1
   rw [hpi, hpiFn1, hpiFn, mul_zero, add_zero, hFn1']
@@ -2513,20 +2559,21 @@ private lemma pi_B_eq_eps_pow (p rho _n k : ℕ) (ε : ℤ) [Fact p.Prime] [NeZe
   piHom p (∏ i ∈ Finset.range (rho - 1), (a + b * rFun p (i + 1)))
     = (((ε : ℤ) : ZMod p)) ^ k := by
   have hpiB : piHom p (∏ i ∈ Finset.range (rho - 1), (a + b * rFun p (i + 1)))
-    = (piHom p a) ^ (rho - 1) := by
+      = (piHom p a) ^ (rho - 1) := by
     rw [map_prod]
     have hterm : ∀ i ∈ Finset.range (rho - 1),
-      piHom p (a + b * rFun p (i + 1)) = piHom p a := by
+        piHom p (a + b * rFun p (i + 1)) = piHom p a := by
       intro i _
       rw [map_add, map_mul, hb0, zero_mul, add_zero]
     rw [Finset.prod_congr rfl hterm, Finset.prod_const, Finset.card_range]
   rw [hpiB, hpa]
   have heps_sq : ((((ε : ℤ)) : ZMod p)) ^ 2 = 1 := by
-    obtain rfl | rfl := hε
+    rcases hε with rfl | rfl
     · have h1 : ((((1 : ℤ))) : ZMod p) = 1 := by simp
       rw [h1, one_pow]
     · have h1 : ((((-1 : ℤ))) : ZMod p) = -1 := by simp
-      rwa [h1]
+      rw [h1]
+      exact neg_one_sq
   have heven_rho : Even rho := (rho_facts p rho ε hp hp7 hε hrho).2.1
   obtain ⟨t, ht⟩ := heven_rho
   have ht1 : 1 ≤ t := by omega
@@ -2541,7 +2588,7 @@ private lemma pi_B_eq_eps_pow (p rho _n k : ℕ) (ε : ℤ) [Fact p.Prime] [NeZe
   have hexp_eq : k * (rho - 1) = k + k * (rho - 2) := by
     rw [hrho_eq, Nat.mul_add, Nat.mul_one]
   have hpow_mul : ((((ε : ℤ) : ZMod p)) ^ k) ^ (rho - 1)
-    = ((((ε : ℤ)) : ZMod p)) ^ (k * (rho - 1)) := by
+      = ((((ε : ℤ)) : ZMod p)) ^ (k * (rho - 1)) := by
     rw [← pow_mul]
   rw [hpow_mul, hexp_eq, pow_add, hpow_even, mul_one]
 
@@ -2566,7 +2613,7 @@ lemma fibonomial_prime_cube_congr
     (ε ^ k) := by
 -- proof
   intro p rho ε k hp hp7 hε hrho hfib0 hmin
-  obtain rfl | _hpos := Nat.eq_zero_or_pos k
+  rcases Nat.eq_zero_or_pos k with rfl | _hpos
   · exact fibonomial_zero_case p rho ε 0 rfl hp hp7 hε hrho hfib0 hmin
   · -- Step 1 (hint): split the numerator and cancel the common factor,
     -- reducing the quotient to X / Y.
@@ -2576,16 +2623,16 @@ lemma fibonomial_prime_cube_congr
     have hN1pos : 0 < Finset.prod (Finset.range (k * rho)) (fun i => Nat.fib (i + 1)) :=
       Finset.prod_pos (fun i _ => Nat.fib_pos.mpr (Nat.succ_pos i))
     have hnum : Finset.prod (Finset.range ((k + 1) * rho - 1)) (fun i => Nat.fib (i + 1))
-      = (Finset.prod (Finset.range (k * rho)) (fun i => Nat.fib (i + 1))) *
-        (Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (k * rho + i + 1))) := by
+        = (Finset.prod (Finset.range (k * rho)) (fun i => Nat.fib (i + 1))) *
+          (Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (k * rho + i + 1))) := by
       rw [hsplit]
       exact Finset.prod_range_add _ _ _
     have hQ : (Finset.prod (Finset.range (k * rho)) (fun i => Nat.fib (i + 1))) *
-      (Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (k * rho + i + 1))) /
-      ((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1))) *
-        (Finset.prod (Finset.range (k * rho)) (fun i => Nat.fib (i + 1))))
-      = (Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (k * rho + i + 1))) /
-        (Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1))) := by
+          (Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (k * rho + i + 1))) /
+          ((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1))) *
+            (Finset.prod (Finset.range (k * rho)) (fun i => Nat.fib (i + 1))))
+        = (Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (k * rho + i + 1))) /
+          (Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1))) := by
       rw [mul_comm (Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)))
         (Finset.prod (Finset.range (k * rho)) (fun i => Nat.fib (i + 1)))]
       exact Nat.mul_div_mul_left _ _ hN1pos
@@ -2632,7 +2679,7 @@ lemma fibonomial_prime_cube_congr
       rw [ht_def]
       exact t_sq_eq_b_sq p a b hb4 hsq hu_a
     have he1 : e1Def p rho
-      = ((((Nat.fib rho : ℕ)) : ZMod (p ^ 3))) * WDef p rho :=
+        = ((((Nat.fib rho : ℕ)) : ZMod (p ^ 3))) * WDef p rho :=
       e1_eq_fib_rho_mul_W p rho hp hmin hrho1 hodd
     have hW0 : piHom p (WDef p rho) = 0 :=
       pi_W_eq_zero p rho ε hp hp7 hε hrho hfib0 hmin hrho1 hrho2
@@ -2642,12 +2689,13 @@ lemma fibonomial_prime_cube_congr
     have hSR0 : piHom p (SRDef p rho) = 0 := by
       rw [hSR_eq, hS0]
     have hp2 : p2Def p rho
-      = 5 * ((((rho - 1 : ℕ)) : ZMod (p ^ 3))) + 4 * SRDef p rho :=
+        = 5 * ((((rho - 1 : ℕ)) : ZMod (p ^ 3))) + 4 * SRDef p rho :=
       p2_eq p rho hp hmin
     have ht0 : t * e1Def p rho = 0 :=
       t_mul_e1_eq_zero p rho t ht_small hF_rho_small hW0 he1
     have ht0' : (b * a⁻¹) * e1Def p rho = 0 := by
-      rwa [← ht_def]
+      rw [← ht_def]
+      exact ht0
     have hb0 : b * e1Def p rho = 0 :=
       b_mul_e1_eq_zero p a b _ hu_a ht0'
     have hb_e1_sq : b ^ 2 * (e1Def p rho) ^ 2 = 0 :=
@@ -2655,41 +2703,42 @@ lemma fibonomial_prime_cube_congr
     have hb_SR : b ^ 2 * SRDef p rho = 0 :=
       b_sq_mul_SR_eq_zero p rho b hb_small hSR0
     have hB1 : ((Finset.prod (Finset.range (rho - 1))
-      (fun i => Nat.fib (n + i + 1)) /
-      Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ZMod (p ^ 3)))
-      = ∏ i ∈ Finset.range (rho - 1),
-        ((Nat.fib (n + i + 1) : ZMod (p ^ 3)) * ((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹) :=
+        (fun i => Nat.fib (n + i + 1)) /
+        Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ZMod (p ^ 3)))
+        = ∏ i ∈ Finset.range (rho - 1),
+          ((Nat.fib (n + i + 1) : ZMod (p ^ 3)) * ((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹) :=
       nat_div_eq_prod_ratios p rho n hp hmin hrho1
     have hB2 : (∏ i ∈ Finset.range (rho - 1),
-      ((Nat.fib (n + i + 1) : ZMod (p ^ 3)) * ((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹))
-      = ∏ i ∈ Finset.range (rho - 1), (a + b * rFun p (i + 1)) := by
+          ((Nat.fib (n + i + 1) : ZMod (p ^ 3)) * ((Nat.fib (i + 1) : ZMod (p ^ 3)))⁻¹))
+        = ∏ i ∈ Finset.range (rho - 1), (a + b * rFun p (i + 1)) := by
       have h := B_eq_prod_linear p rho n hp hmin hn1 half hh
-      rwa [← ha_def, ← hb_def] at h
+      rw [← ha_def, ← hb_def] at h
+      exact h
     have hB3 : (∏ i ∈ Finset.range (rho - 1), (a + b * rFun p (i + 1)))
-      = a ^ (rho - 1)
-        * (1 + t * e1Def p rho
-          + t ^ 2 * half * ((e1Def p rho) ^ 2 - p2Def p rho)) :=
+        = a ^ (rho - 1)
+          * (1 + t * e1Def p rho
+            + t ^ 2 * half * ((e1Def p rho) ^ 2 - p2Def p rho)) :=
       prod_linear_eq_expansion p rho a b t half ht_def hu_a ht3 hh
     have hE : (1 + t * e1Def p rho
-      + t ^ 2 * half * ((e1Def p rho) ^ 2 - p2Def p rho) : ZMod (p ^ 3))
-      = 1 + (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2) := by
+          + t ^ 2 * half * ((e1Def p rho) ^ 2 - p2Def p rho) : ZMod (p ^ 3))
+        = 1 + (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2) := by
       have h1 : t * e1Def p rho = 0 := ht0
       have h2 : t ^ 2 = b ^ 2 := ht2_eq
       have h3 : b ^ 2 * half * ((e1Def p rho) ^ 2
-        - (5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) + 4 * SRDef p rho))
-        = -half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2 := by
+          - (5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) + 4 * SRDef p rho))
+          = -half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2 := by
         linear_combination half * hb_e1_sq - half * 4 * hb_SR
       rw [h1, add_zero, h2, hp2, h3]
     have hB : ((Finset.prod (Finset.range (rho - 1))
-      (fun i => Nat.fib (n + i + 1)) /
-      Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ZMod (p ^ 3)))
-      = a ^ (rho - 1)
-        * (1 + (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2)) := by
+          (fun i => Nat.fib (n + i + 1)) /
+          Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ZMod (p ^ 3)))
+        = a ^ (rho - 1)
+          * (1 + (-half * 5 * ((((rho - 1 : ℕ))) : ZMod (p ^ 3)) * b ^ 2)) := by
       rw [hB1, hB2, hB3, hE]
     have hB_sq : ((Finset.prod (Finset.range (rho - 1))
-      (fun i => Nat.fib (n + i + 1)) /
-      Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ZMod (p ^ 3))) ^ 2
-      = 1 := by
+          (fun i => Nat.fib (n + i + 1)) /
+          Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ZMod (p ^ 3))) ^ 2
+        = 1 := by
       rw [hB]
       exact pow_mul_one_add_sq_eq_one p rho a b half hb4 hsq hh
     have hpa : piHom p a = (((ε : ℤ) : ZMod p)) ^ k := by
@@ -2698,18 +2747,19 @@ lemma fibonomial_prime_cube_congr
       exact pi_a_eq_eps_pow p rho n k ε hp hp7 hε hrho hfib0 hmin hrho1 hrho2
         hn_eq hn1 half
     have hpiB_prod : piHom p (∏ i ∈ Finset.range (rho - 1), (a + b * rFun p (i + 1)))
-      = (((ε : ℤ) : ZMod p)) ^ k :=
+        = (((ε : ℤ) : ZMod p)) ^ k :=
       pi_B_eq_eps_pow p rho n k ε hp hp7 hε hrho hrho1 hrho2 a b hb_small hpa
     have hpiB : piHom p ((Finset.prod (Finset.range (rho - 1))
-      (fun i => Nat.fib (n + i + 1)) /
-      Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ZMod (p ^ 3)))
-      = (((ε : ℤ) : ZMod p)) ^ k := by
+          (fun i => Nat.fib (n + i + 1)) /
+          Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ZMod (p ^ 3)))
+        = (((ε : ℤ) : ZMod p)) ^ k := by
       have hBB : ((Finset.prod (Finset.range (rho - 1))
-        (fun i => Nat.fib (n + i + 1)) /
-        Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ZMod (p ^ 3)))
-        = ∏ i ∈ Finset.range (rho - 1), (a + b * rFun p (i + 1)) := by
+            (fun i => Nat.fib (n + i + 1)) /
+            Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ZMod (p ^ 3)))
+          = ∏ i ∈ Finset.range (rho - 1), (a + b * rFun p (i + 1)) := by
         rw [hB1, hB2]
-      rwa [hBB]
+      rw [hBB]
+      exact hpiB_prod
     set B : ZMod (p ^ 3) := ((Finset.prod (Finset.range (rho - 1))
       (fun i => Nat.fib (n + i + 1)) /
       Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ZMod (p ^ 3)))
@@ -2718,7 +2768,7 @@ lemma fibonomial_prime_cube_congr
     have hB_sq' : B ^ 2 = 1 := hB_sq
     have hpiB' : piHom p B = (((ε : ℤ) : ZMod p)) ^ k := hpiB
     have heps_sq_int : ε ^ 2 = 1 := by
-      obtain rfl | rfl := hε
+      rcases hε with rfl | rfl
       · exact one_pow 2
       · exact neg_one_sq
     have hpow_int : (ε ^ k) ^ 2 = 1 := by
@@ -2748,9 +2798,10 @@ lemma fibonomial_prime_cube_congr
       rw [← Nat.cast_ofNat, ZMod.natCast_eq_zero_iff] at h0
       exact hndvd h0
     have heps_ne : ((((ε : ℤ)) : ZMod p)) ≠ 0 := by
-      obtain rfl | rfl := hε
+      rcases hε with rfl | rfl
       · have h1 : ((((1 : ℤ))) : ZMod p) = 1 := by simp
-        rwa [h1]
+        rw [h1]
+        exact one_ne_zero
       · have h1 : ((((-1 : ℤ))) : ZMod p) = -1 := by simp
         rw [h1]
         exact neg_ne_zero.mpr one_ne_zero
@@ -2769,13 +2820,13 @@ lemma fibonomial_prime_cube_congr
     have hB_eq : B = eR := sub_eq_zero.mp hBeq0
     have hmod : ((((p ^ 3 : ℕ))) : ℤ) = (p : ℤ) ^ 3 := by norm_cast
     have hR_eq : ((((Finset.prod (Finset.range (rho - 1))
-      (fun i => Nat.fib (n + i + 1)) /
-      Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ℕ)) : ℤ) : ZMod (p ^ 3))
-      = ((((ε ^ k : ℤ))) : ZMod (p ^ 3)) := by
-      have hcast : ((((Finset.prod (Finset.range (rho - 1))
         (fun i => Nat.fib (n + i + 1)) /
         Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ℕ)) : ℤ) : ZMod (p ^ 3))
-        = B := by
+        = ((((ε ^ k : ℤ))) : ZMod (p ^ 3)) := by
+      have hcast : ((((Finset.prod (Finset.range (rho - 1))
+          (fun i => Nat.fib (n + i + 1)) /
+          Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ℕ)) : ℤ) : ZMod (p ^ 3))
+          = B := by
         rw [hB_def]
         norm_cast
       rw [hcast, hB_eq, heR_def]
@@ -2783,10 +2834,12 @@ lemma fibonomial_prime_cube_congr
       (((Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (n + i + 1)) /
         Finset.prod (Finset.range (rho - 1)) (fun i => Nat.fib (i + 1)) : ℕ)) : ℤ)
       (ε ^ k) (p ^ 3)).mp hR_eq
-    rwa [hmod] at hmodEq
-end
+    rw [hmod] at hmodEq
+    exact hmodEq
+
+end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

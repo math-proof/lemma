@@ -77,7 +77,7 @@ theorem rlc_flip_upperToRight (n : ℤ)
   simpa [rlc_lowerToRight, rlc_upperToRight, rlc_flipY_image_univ,
     rlc_flipY_image_upper] using ht
 
-theorem rlc_rightToUpper_reflection_prob (p : ℝ≥0) (hp : p ≤ 1) (n : ℤ) :
+theorem rlc_rightToUpper_reflection_prob (p : NNReal) (hp : p ≤ 1) (n : ℤ) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (rlc_rightToUpper n) =
       (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (rlc_rightToLower n) := by
   let mu := bernoulliProductMeasure (E := Sym2 (Site 2)) p hp
@@ -97,7 +97,7 @@ theorem rlc_rightToUpper_reflection_prob (p : ℝ≥0) (hp : p ≤ 1) (n : ℤ) 
             Set.univ rlc_upperHalf)).nullMeasurableSet).symm
     _ = mu.real (rlc_rightToLower n) := by rw [hpre]
 
-theorem rlc_lowerToRight_reflection_prob (p : ℝ≥0) (hp : p ≤ 1) (n : ℤ) :
+theorem rlc_lowerToRight_reflection_prob (p : NNReal) (hp : p ≤ 1) (n : ℤ) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (rlc_lowerToRight n) =
       (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (rlc_upperToRight n) := by
   let mu := bernoulliProductMeasure (E := Sym2 (Site 2)) p hp
@@ -133,7 +133,7 @@ theorem rlc_horizontal_subset_left_halves (n : ℤ) :
   · exact Or.inr ⟨x, y, hx, Set.mem_univ _, hxy⟩
   · exact Or.inl ⟨x, y, hx, Set.mem_univ _, hxy⟩
 
-theorem rlc_rightToUpper_half_localization (p : ℝ≥0) (hp : p ≤ 1)
+theorem rlc_rightToUpper_half_localization (p : NNReal) (hp : p ≤ 1)
     (n : ℤ) (alpha : ℝ)
     (hcross : alpha ≤ (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real
       (horizontalCrossingEvent 0 (2 * n) (-n) n)) :
@@ -147,7 +147,7 @@ theorem rlc_rightToUpper_half_localization (p : ℝ≥0) (hp : p ≤ 1)
   rw [← rlc_rightToUpper_reflection_prob p hp n] at hunion
   linarith
 
-theorem rlc_lowerToRight_half_localization (p : ℝ≥0) (hp : p ≤ 1)
+theorem rlc_lowerToRight_half_localization (p : NNReal) (hp : p ≤ 1)
     (n : ℤ) (alpha : ℝ)
     (hcross : alpha ≤ (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real
       (horizontalCrossingEvent 0 (2 * n) (-n) n)) :
@@ -200,7 +200,7 @@ theorem rlc_verticalCrossing_dependsOn (a b c d : ℤ) :
       Set.indicator_of_notMem (fun h => hmem (hevent.mpr h))]
 
 
-theorem rlc_rightDiagonal_lower_bound (p : ℝ≥0) (hp : p ≤ 1)
+theorem rlc_rightDiagonal_lower_bound (p : NNReal) (hp : p ≤ 1)
     (n : ℤ) (hn : 0 < n) (alpha : ℝ) (halpha : 0 ≤ alpha)
     (hH : alpha ≤ (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real
       (horizontalCrossingEvent 0 (2 * n) (-n) n))

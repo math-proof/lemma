@@ -15,7 +15,7 @@ private lemma bc85_expectation_identity_eq
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) :
 -- imply
-  ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ := by
+  ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ := by
 -- proof
   apply StatMech.Walls.bc85_expectation_identity μ hinv L R
 

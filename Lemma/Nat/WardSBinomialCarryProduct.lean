@@ -11,7 +11,7 @@ import Lemma.Finset.Enumerative.WardGeneralizedBinomial
 private lemma card_filter_dvd_Icc (b t : Nat) (hb : 0 < b) :
   ((Finset.Icc 1 t).filter (fun i => b ∣ i)).card = t / b := by
   have h1 : ((Finset.Icc 1 t).filter (fun i => b ∣ i)) =
-    (Finset.Icc 1 (t / b)).image (fun k => b * k) := by
+      (Finset.Icc 1 (t / b)).image (fun k => b * k) := by
     ext x
     simp only [Finset.mem_filter, Finset.mem_Icc, Finset.mem_image]
     constructor
@@ -75,7 +75,7 @@ private lemma ffact_eq (s f : Nat → Int)
   (hf : ∀ k, 0 < k → f k = ∏ d ∈ Nat.divisors k, s d) (t : Nat) :
   (∏ i ∈ Finset.Icc 1 t, f i) = ∏ b ∈ Finset.Icc 1 t, s b ^ (t / b) := by
   have step1 : (∏ i ∈ Finset.Icc 1 t, f i)
-    = ∏ i ∈ Finset.Icc 1 t, ∏ b ∈ Finset.Icc 1 t, (if b ∣ i then s b else 1) := by
+      = ∏ i ∈ Finset.Icc 1 t, ∏ b ∈ Finset.Icc 1 t, (if b ∣ i then s b else 1) := by
     apply Finset.prod_congr rfl
     intro i hi
     simp only [Finset.mem_Icc] at hi
@@ -89,7 +89,7 @@ private lemma ffact_eq (s f : Nat → Int)
   simp only [Finset.mem_Icc] at hb
   have hbpos : 0 < b := by omega
   have h2 : (∏ i ∈ Finset.Icc 1 t, (if b ∣ i then s b else 1))
-    = ∏ i ∈ (Finset.Icc 1 t).filter (fun i => b ∣ i), s b := by
+      = ∏ i ∈ (Finset.Icc 1 t).filter (fun i => b ∣ i), s b := by
     rw [Finset.prod_filter]
   rw [h2, Finset.prod_const, card_filter_dvd_Icc b t hbpos]
 
@@ -129,11 +129,12 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma ward_sbinomial_carry_product_general
-  {s f : ℕ → ℤ}
-  {n m : ℕ}
+  (s : ℕ → ℤ)
 -- given
   (hs : ∀ b, 0 < b → s b ≠ 0)
-  (hf : ∀ k, 0 < k → f k = ∏ d ∈ Nat.divisors k, s d) :
+  (f : ℕ → ℤ)
+  (hf : ∀ k, 0 < k → f k = ∏ d ∈ Nat.divisors k, s d)
+  (n m : ℕ) :
 -- imply
   ((∏ i ∈ Finset.Icc 1 (n + m), f i : ℤ) : ℚ) /
     (((∏ i ∈ Finset.Icc 1 n, f i : ℤ) : ℚ) * ((∏ i ∈ Finset.Icc 1 m, f i : ℤ) : ℚ)) =
@@ -148,20 +149,20 @@ lemma ward_sbinomial_carry_product_general
   have e2 : (∏ i ∈ Finset.Icc 1 m, f i) = ∏ b ∈ Finset.Icc 1 (n + m), s b ^ (m / b) :=
     ffact_eq_extend s f hf m (n + m) hN2
   have cN : ((∏ i ∈ Finset.Icc 1 (n + m), f i : Int) : ℚ) =
-    ∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ ((n + m) / b) := by
+      ∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ ((n + m) / b) := by
     rw [eN]; push_cast; rfl
   have c1 : ((∏ i ∈ Finset.Icc 1 n, f i : Int) : ℚ) =
-    ∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ (n / b) := by
+      ∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ (n / b) := by
     rw [e1]; push_cast; rfl
   have c2 : ((∏ i ∈ Finset.Icc 1 m, f i : Int) : ℚ) =
-    ∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ (m / b) := by
+      ∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ (m / b) := by
     rw [e2]; push_cast; rfl
   rw [cN, c1, c2, wardGeneralizedBinomialCoefficient_eq_prod_Icc, Int.cast_prod]
   simp only [Int.cast_pow]
   have hstep : (∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ ((n + m) / b)) /
-    ((∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ (n / b)) *
-      (∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ (m / b))) =
-    ∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ ((n % b + m % b) / b) := by
+      ((∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ (n / b)) *
+       (∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ (m / b))) =
+      ∏ b ∈ Finset.Icc 1 (n + m), (s b : ℚ) ^ ((n % b + m % b) / b) := by
     rw [← Finset.prod_mul_distrib, ← Finset.prod_div_distrib]
     apply Finset.prod_congr rfl
     intro b hb
@@ -173,7 +174,7 @@ lemma ward_sbinomial_carry_product_general
     have hne2 : (s b : ℚ) ^ (m / b) ≠ 0 := pow_ne_zero _ hsQ
     have hne : (s b : ℚ) ^ (n / b) * (s b : ℚ) ^ (m / b) ≠ 0 := mul_ne_zero hne1 hne2
     have h1 : (s b : ℚ) ^ ((n + m) / b) / ((s b : ℚ) ^ (n / b) * (s b : ℚ) ^ (m / b))
-      = (s b : ℚ) ^ ((n % b + m % b) / b) := by
+        = (s b : ℚ) ^ ((n % b + m % b) / b) := by
       rw [hcarry, pow_add, pow_add, mul_div_cancel_left₀ _ hne]
     exact h1
   rw [hstep]
@@ -194,14 +195,15 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma ward_sbinomial_carry_product
-  {s f : Nat → Int}
-  {n m : Nat}
+  (s : Nat → Int)
 -- given
   (hs : ∀ b, s b ≠ 0)
-  (hf : ∀ k, f k = ∏ d ∈ Nat.divisors k, s d) :
--- imply
-  let fFactorial : Nat → Int := by
--- proof
+  (f : Nat → Int)
+  (hf : ∀ k, f k = ∏ d ∈ Nat.divisors k, s d)
+  (n m : Nat) :
+  let fFactorial : Nat → Int := fun t => ∏ i ∈ Finset.Icc 1 t, f i;
+  (fFactorial (n + m) : ℚ) / ((fFactorial n : ℚ) * (fFactorial m : ℚ)) =
+    ∏ b ∈ Finset.Icc 2 (n + m), (s b : ℚ) ^ ((n % b + m % b) / b) := by
   intro fFactorial
   have h := ward_sbinomial_carry_product_general s (fun b _ => hs b) f (fun k _ => hf k) n m
   rw [wardGeneralizedBinomialCoefficient_eq_prod_Icc] at h
@@ -211,4 +213,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

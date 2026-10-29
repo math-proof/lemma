@@ -25,7 +25,7 @@ namespace Universality
 open StatMech.Lattice
 
 
-theorem selfDual_density_iff (p : ℝ≥0) (hp : p ≤ 1) : 1 - p = p ↔ p = 2⁻¹ := by
+theorem selfDual_density_iff (p : NNReal) (hp : p ≤ 1) : 1 - p = p ↔ p = 2⁻¹ := by
   constructor
   · intro h
     apply NNReal.coe_injective
@@ -46,26 +46,26 @@ theorem selfDual_density_iff_real (p : ℝ) : 1 - p = p ↔ p = 1 / 2 := by
   constructor <;> intro h <;> linarith
 
 
-theorem one_sub_half_eq : (1 : ℝ≥0) - 2⁻¹ = 2⁻¹ :=
+theorem one_sub_half_eq : (1 : NNReal) - 2⁻¹ = 2⁻¹ :=
   (selfDual_density_iff 2⁻¹ half_le_one).2 rfl
 
 
 theorem bernoulliProductMeasure_selfDual_half :
-    Measure.map dualConfig (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one)
-      = bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one := by
-  rw [map_dualConfig (2⁻¹ : ℝ≥0) half_le_one]
+    Measure.map dualConfig (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one)
+      = bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one := by
+  rw [map_dualConfig (2⁻¹ : NNReal) half_le_one]
   congr 1
   exact one_sub_half_eq
 
 
-theorem selfDual_point_unique (p : ℝ≥0) (hp : p ≤ 1) :
+theorem selfDual_point_unique (p : NNReal) (hp : p ≤ 1) :
     (1 - p = p ↔ p = 2⁻¹) ∧
-      Measure.map dualConfig (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one)
-        = bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one :=
+      Measure.map dualConfig (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one)
+        = bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one :=
   ⟨selfDual_density_iff p hp, bernoulliProductMeasure_selfDual_half⟩
 
 
-theorem map_dualConfig_dualConfig (p : ℝ≥0) (hp : p ≤ 1) :
+theorem map_dualConfig_dualConfig (p : NNReal) (hp : p ≤ 1) :
     Measure.map dualConfig (Measure.map dualConfig (bernoulliProductMeasure p hp))
       = bernoulliProductMeasure p hp := by
   rw [map_dualConfig p hp, map_dualConfig (1 - p) tsub_le_self]

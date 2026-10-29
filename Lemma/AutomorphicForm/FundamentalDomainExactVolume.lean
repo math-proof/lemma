@@ -10,7 +10,7 @@ noncomputable section
 namespace FLT.FundamentalDomainExactVolume
 
 private lemma density_eq_ofReal_rpow {y : ℝ} (hy : 0 < y) :
-    (((1 / ‖y‖₊) ^ 2 : ℝ≥0) : ℝ≥0∞) = ENNReal.ofReal (y ^ (-2 : ℝ)) := by
+    (((1 / ‖y‖₊) ^ 2 : NNReal) : ENNReal) = ENNReal.ofReal (y ^ (-2 : ℝ)) := by
   rw [← ENNReal.ofReal_coe_nnreal]
   congr 1
   push_cast
@@ -19,7 +19,7 @@ private lemma density_eq_ofReal_rpow {y : ℝ} (hy : 0 < y) :
     one_div, inv_pow]
 
 theorem setLIntegral_Ici_density {c : ℝ} (hc : 0 < c) :
-    ∫⁻ y in Set.Ici c, (((1 / ‖y‖₊) ^ 2 : ℝ≥0) : ℝ≥0∞) = ENNReal.ofReal c⁻¹ := by
+    ∫⁻ y in Set.Ici c, (((1 / ‖y‖₊) ^ 2 : NNReal) : ENNReal) = ENNReal.ofReal c⁻¹ := by
 
   rw [← MeasureTheory.setLIntegral_congr
     (MeasureTheory.Ioi_ae_eq_Ici' (measure_singleton c))]
@@ -145,7 +145,7 @@ lemma image_image_fd :
       rw [this]
       exact abs_le.mpr ⟨by linarith [hx.1], hx.2⟩
 
-private def densityP (p : ℝ × ℝ) : ℝ≥0∞ := (((1 / ‖p.2‖₊) ^ 2 : ℝ≥0) : ℝ≥0∞)
+private def densityP (p : ℝ × ℝ) : ENNReal := (((1 / ‖p.2‖₊) ^ 2 : NNReal) : ENNReal)
 
 private lemma measurable_densityP : Measurable densityP := by
   unfold densityP
@@ -159,7 +159,7 @@ private lemma inner_slice (x : ℝ) :
   · rw [Set.indicator_of_mem hx]
     have hslice : (fun y => regionD.indicator densityP (x, y)) =
         (Set.Ici (lowerArc x)).indicator
-          (fun y => (((1 / ‖y‖₊) ^ 2 : ℝ≥0) : ℝ≥0∞)) := by
+          (fun y => (((1 / ‖y‖₊) ^ 2 : NNReal) : ENNReal)) := by
       funext y
       by_cases hy : lowerArc x ≤ y
       · rw [Set.indicator_of_mem (Set.mem_Ici.mpr hy),
@@ -179,7 +179,7 @@ theorem volume_fd_eq : volume 𝒟 = ENNReal.ofReal (Real.pi / 3) := by
 
   rw [UpperHalfPlane.volume_eq_lintegral]
 
-  have hfactor : ∀ z : ℂ, (((1 / ‖z.im‖₊) ^ 2 : ℝ≥0) : ℝ≥0∞) =
+  have hfactor : ∀ z : ℂ, (((1 / ‖z.im‖₊) ^ 2 : NNReal) : ENNReal) =
       densityP (Complex.measurableEquivRealProd z) := fun z => rfl
   simp only [hfactor]
   rw [Complex.volume_preserving_equiv_real_prod.setLIntegral_comp_emb

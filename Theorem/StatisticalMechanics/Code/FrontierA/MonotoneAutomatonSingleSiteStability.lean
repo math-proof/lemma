@@ -29,7 +29,7 @@ theorem siteOpenGraph_mono {eta eta' : ConfigSpace (Site d)} (h : eta ≤ eta') 
   · exact Bool.eq_true_of_true_le (hxy.2.2 ▸ h y)
 
 
-theorem le_raiseField (xi : NonnegativeField d) (x : Site d) (r : ℝ≥0) :
+theorem le_raiseField (xi : NonnegativeField d) (x : Site d) (r : NNReal) :
     xi ≤ raiseField xi x r := by
   intro y
   by_cases hy : y = x
@@ -60,7 +60,7 @@ theorem site_eq_true_of_siteCluster_infinite
 
 theorem siteCluster_raise_eq_of_infinite_of_not_mem
     (T : MonotoneAutomaton d) (xi : NonnegativeField d)
-    (x y : Site d) (r : ℝ≥0)
+    (x y : Site d) (r : NNReal)
     (hinf : (siteCluster (T (raiseField xi x r)) y).Infinite)
     (hx : x ∉ siteCluster (T (raiseField xi x r)) y) :
     siteCluster (T (raiseField xi x r)) y = siteCluster (T xi) y := by

@@ -25,11 +25,11 @@ theorem volume_smul_sl2z (γ : SL(2, ℤ)) (s : Set ℍ) : volume (γ • s) = v
   MeasureTheory.measure_smul (volume : Measure ℍ) γ s
 
 private lemma measurable_density :
-    Measurable fun z : ℂ => ((((1 : ℝ≥0) / ‖z.im‖₊) ^ 2 : ℝ≥0) : ℝ≥0∞) := by
+    Measurable fun z : ℂ => ((((1 : NNReal) / ‖z.im‖₊) ^ 2 : NNReal) : ENNReal) := by
   fun_prop
 
 private lemma density_ne_zero {w : ℂ} (hw : w ∈ Set.range (UpperHalfPlane.coe)) :
-    ((((1 : ℝ≥0) / ‖w.im‖₊) ^ 2 : ℝ≥0) : ℝ≥0∞) ≠ 0 := by
+    ((((1 : NNReal) / ‖w.im‖₊) ^ 2 : NNReal) : ENNReal) ≠ 0 := by
   obtain ⟨τ, rfl⟩ := hw
   have him : (τ : ℂ).im ≠ 0 := ne_of_gt τ.2
   simp only [ne_eq, ENNReal.coe_eq_zero, pow_eq_zero_iff, OfNat.ofNat_ne_zero,

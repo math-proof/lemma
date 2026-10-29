@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4InnerSummable
@@ -10,8 +9,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4InnerSummable
 -/
 @[path]
 lemma ramanujan_part1_ch3_entry4_inner_summable
-  {x : ℂ}
-  {n : ℕ} :
+  (x : ℂ)
+  (n : ℕ) :
 -- imply
   Summable (fun j : ℕ => ‖((j + 1 : ℂ) ^ n * x ^ (j + 1) / (Nat.factorial j : ℂ))‖) := by
 -- proof
@@ -53,4 +52,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry4InnerSummable
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

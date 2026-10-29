@@ -45,7 +45,8 @@ private lemma key_identity (K q : ℕ) (hK : 0 < K) (hq : 0 < q) :
   have e1 : Nat.fib (K + q) = Nat.fib K * Nat.fib (q - 1) + Nat.fib (K + 1) * Nat.fib q := by
     have h := Nat.fib_add (m := K) (n := q - 1)
     have hqq : K + (q - 1) + 1 = K + q := by omega
-    rwa [hqq, hqm] at h
+    rw [hqq, hqm] at h
+    exact h
   have e2 : Nat.fib (K + q + 1) = Nat.fib K * Nat.fib q + Nat.fib (K + 1) * Nat.fib (q + 1) := by
     have h := Nat.fib_add (m := K) (n := q)
     exact h
@@ -53,7 +54,8 @@ private lemma key_identity (K q : ℕ) (hK : 0 < K) (hq : 0 < q) :
     have h := Nat.fib_add (m := K - 1) (n := K + q)
     have hKK : (K - 1) + (K + q) + 1 = 2 * K + q := by omega
     have hKm : K - 1 + 1 = K := by omega
-    rwa [hKK, hKm] at h
+    rw [hKK, hKm] at h
+    exact h
   have e4 : Nat.fib (K + 1) = Nat.fib (K - 1) + Nat.fib K := Nat.fib_add_one (by omega : K ≠ 0)
   have e5 : Nat.fib (q + 1) = Nat.fib (q - 1) + Nat.fib q := Nat.fib_add_one (by omega : q ≠ 0)
   have hc := cassini_int q hq
@@ -234,7 +236,8 @@ private lemma summable_d : Summable (fun k : ℕ => (-1 : ℝ) ^ k / (Nat.fib (k
       exact_mod_cast le_of_lt this
     rw [Real.norm_of_nonneg hpos]
     rw [inv_eq_one_div]
-  rwa [hcongr]
+  rw [hcongr]
+  exact summable_inv_fib_sq
 
 end MetaMathlibExt
 
@@ -253,12 +256,14 @@ private lemma tendsto_d_zero : Filter.Tendsto (fun k : ℕ => (-1 : ℝ) ^ k / (
       exact_mod_cast this
     rw [Real.norm_of_nonneg (le_of_lt (pow_pos hpos 2))]
     have h := inv_fib_sq_le n
-    rwa [one_div] at h ⊢
+    rw [one_div] at h ⊢
+    exact h
   · have hlim : Filter.Tendsto (fun k : ℕ => (1 / 2 : ℝ) ^ k) Filter.atTop (nhds 0) :=
     tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num) (by norm_num)
     have : Filter.Tendsto (fun k : ℕ => 2 * (1 / 2 : ℝ) ^ k) Filter.atTop (nhds (2 * 0)) :=
       hlim.const_mul 2
-    rwa [mul_zero] at this
+    rw [mul_zero] at this
+    exact this
 
 end MetaMathlibExt
 
@@ -412,4 +417,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

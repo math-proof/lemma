@@ -7,11 +7,10 @@ namespace MetaMathlibExt
 
 /--
 [Qwit_two_step_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LaplaceQPolynomial.lean)
--/
-@[path]
 Parent concept jis_term_175f40eafad3fd8ef053fd1c, semantic child
 jis_sem_ec10d6c739532b64eed644f6, statement jis_aea8ce5c6ff12cefd7773f08,
 source SHA-256 1af295f0b6783f5333bea0a3a39b8eed4d23380a65b9a9f7cf5092c3abf14998. -/
+@[path]
 private lemma Qwit_two_step_add (n : ℕ) :
   Qwit (n + 2) = Polynomial.X * Qwit (n + 1) + (n + 2) • Qwit n :=
   rfl
@@ -22,11 +21,10 @@ namespace MetaMathlibExt
 
 /--
 [Qwit_first_eq_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LaplaceQPolynomial.lean)
--/
-@[path]
 Parent concept jis_term_175f40eafad3fd8ef053fd1c, semantic child
 jis_sem_ec10d6c739532b64eed644f6, statement jis_aea8ce5c6ff12cefd7773f08,
 source SHA-256 1af295f0b6783f5333bea0a3a39b8eed4d23380a65b9a9f7cf5092c3abf14998. -/
+@[path]
 private lemma Qwit_first_eq_add (n : ℕ) :
   Qwit (n + 1) = Pwit (n + 1) + Polynomial.derivative (Qwit n) := by
   have hP : Pwit (n + 1) = Qwit (n + 1) - Polynomial.derivative (Qwit n) := rfl
@@ -39,11 +37,10 @@ namespace MetaMathlibExt
 
 /--
 [positive_witness_is_family](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LaplaceQPolynomial.lean)
--/
-@[path]
 Parent concept jis_term_175f40eafad3fd8ef053fd1c, semantic child
 jis_sem_ec10d6c739532b64eed644f6, statement jis_aea8ce5c6ff12cefd7773f08,
 source SHA-256 1af295f0b6783f5333bea0a3a39b8eed4d23380a65b9a9f7cf5092c3abf14998. -/
+@[path]
 private lemma positive_witness_is_family :
   IsLaplaceQFamily Pwit Qwit := by
   unfold IsLaplaceQFamily
@@ -64,12 +61,11 @@ namespace MetaMathlibExt
 
 /--
 [negative_witness_fails](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LaplaceQPolynomial.lean)
--/
-@[path]
 at `k = 1`, hence fail the predicate.
 Parent concept jis_term_175f40eafad3fd8ef053fd1c, semantic child
 jis_sem_ec10d6c739532b64eed644f6, statement jis_aea8ce5c6ff12cefd7773f08,
 source SHA-256 1af295f0b6783f5333bea0a3a39b8eed4d23380a65b9a9f7cf5092c3abf14998. -/
+@[path]
 private lemma negative_witness_fails : ¬ IsLaplaceQFamily Pneg Qneg := by
   unfold IsLaplaceQFamily
   rintro ⟨_, hrec⟩
@@ -84,3 +80,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

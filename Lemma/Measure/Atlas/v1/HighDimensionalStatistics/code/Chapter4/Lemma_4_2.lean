@@ -400,7 +400,7 @@ lemma lemma_4_2_operator_norm_tail
           _ = 12 ^ (d + T) := (pow_add 12 d T).symm
       exact_mod_cast h_card
     _ = ENNReal.ofReal ((12 : ℝ) ^ (d + T) * Real.exp (-(t ^ 2 / (8 * σsq)))) := by
-      rw [show (12 : ℝ≥0∞) = ENNReal.ofReal 12 from by
+      rw [show (12 : ENNReal) = ENNReal.ofReal 12 from by
         rw [show (12 : ℝ) = ((12 : ℕ) : ℝ) from by norm_num,
           ENNReal.ofReal_natCast]; norm_num,
         ← ENNReal.ofReal_pow (by norm_num : (0:ℝ) ≤ 12),

@@ -23,12 +23,12 @@ open scoped ENNReal BigOperators
 open HexWalk
 
 
-noncomputable def hexZSummand (a : ℂ) (h0 : ℤ) (x : ℝ) (ts : List ℤ) : ℝ≥0∞ :=
+noncomputable def hexZSummand (a : ℂ) (h0 : ℤ) (x : ℝ) (ts : List ℤ) : ENNReal :=
   haveI := Classical.propDecidable ((ofTurns a h0 ts).IsLegalSAW)
   if (ofTurns a h0 ts).IsLegalSAW then ENNReal.ofReal (x ^ (ofTurns a h0 ts).numVertices) else 0
 
 
-noncomputable def hexZ (a : ℂ) (h0 : ℤ) (x : ℝ) : ℝ≥0∞ :=
+noncomputable def hexZ (a : ℂ) (h0 : ℤ) (x : ℝ) : ENNReal :=
   ∑' ts : List ℤ, hexZSummand a h0 x ts
 
 

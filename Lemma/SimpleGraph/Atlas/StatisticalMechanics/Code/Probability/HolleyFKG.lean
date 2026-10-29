@@ -10,7 +10,7 @@ open Finset StatMech StatMech.Probability
 @[path]
 private lemma holleyLatticeCondition_eq
   [Lattice α]
-  {μ : α → ℝ≥0}
+  {μ : α → NNReal}
 -- given
   (h : FKGCondition μ) :
 -- imply
@@ -26,7 +26,7 @@ private lemma holley_le_of_monotone_eq
   [Fintype α]
   [DecidableEq α]
   [DistribLattice α]
-  {μ₁ μ₂ : α → ℝ≥0}
+  {μ₁ μ₂ : α → NNReal}
   {t : α → ℝ}
 -- given
   (hsum : ∑ a, μ₁ a = ∑ a, μ₂ a)
@@ -46,7 +46,7 @@ private lemma holley_domination_eq
   [Fintype α]
   [DecidableEq α]
   [DistribLattice α]
-  {μ₁ μ₂ : α → ℝ≥0}
+  {μ₁ μ₂ : α → NNReal}
 -- given
   (hsum : ∑ a, μ₁ a = ∑ a, μ₂ a)
   (hcond : HolleyLatticeCondition μ₁ μ₂) :
@@ -63,12 +63,12 @@ private lemma holley_exists_isMonotoneCoupling_eq
   [Fintype α]
   [DecidableEq α]
   [DistribLattice α]
-  {μ₁ μ₂ : α → ℝ≥0}
+  {μ₁ μ₂ : α → NNReal}
 -- given
   (hsum : ∑ a, μ₁ a = ∑ a, μ₂ a)
   (hcond : HolleyLatticeCondition μ₁ μ₂) :
 -- imply
-  ∃ π : α × α → ℝ≥0, IsMonotoneCoupling μ₁ μ₂ π := by
+  ∃ π : α × α → NNReal, IsMonotoneCoupling μ₁ μ₂ π := by
 -- proof
   apply StatMech.Probability.holley_exists_isMonotoneCoupling hsum hcond
 
@@ -80,12 +80,12 @@ private lemma holley_domination_iff_monotoneCoupling_eq
   [Fintype α]
   [DecidableEq α]
   [DistribLattice α]
-  {μ₁ μ₂ : α → ℝ≥0}
+  {μ₁ μ₂ : α → NNReal}
 -- given
   (hsum : ∑ a, μ₁ a = ∑ a, μ₂ a)
   (hcond : HolleyLatticeCondition μ₁ μ₂) :
 -- imply
-  StochasticDom μ₁ μ₂ ↔ ∃ π : α × α → ℝ≥0, IsMonotoneCoupling μ₁ μ₂ π := by
+  StochasticDom μ₁ μ₂ ↔ ∃ π : α × α → NNReal, IsMonotoneCoupling μ₁ μ₂ π := by
 -- proof
   apply StatMech.Probability.holley_domination_iff_monotoneCoupling hsum hcond
 
@@ -119,7 +119,7 @@ private lemma fkg_conditioning_domination_eq
   [Fintype α]
   [DecidableEq α]
   [DistribLattice α]
-  {π : α → ℝ≥0}
+  {π : α → NNReal}
   {S : Finset α}
 -- given
   (hπ : FKGCondition π)

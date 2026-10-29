@@ -176,7 +176,7 @@ private lemma inverseReducedDensity_general_mem_Ioo_eq
 @[path]
 private lemma fkTheta_pos_of_bernoulliTheta_pos_general_eq
   {d : ℕ}
-  {r : ℝ≥0}
+  {r : NNReal}
   {q : ℝ}
 -- given
   (hr0 : 0 < r)
@@ -254,7 +254,7 @@ private lemma inverseReducedDensity_two_mem_Ioo_eq
 @[path]
 private lemma fkTheta_two_pos_of_bernoulliTheta_pos_eq
   {d : ℕ}
-  {r : ℝ≥0}
+  {r : NNReal}
 -- given
   (hr0 : 0 < r)
   (hr1 : r < 1)

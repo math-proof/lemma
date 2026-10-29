@@ -10,10 +10,10 @@ open MeasureTheory ProbabilityTheory StatMech StatMech.bernoulliProductMeasure
 @[path]
 private lemma bernoulliMeasure_apply_true_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
-  bernoulliMeasure p hp {true} = (p : ℝ≥0∞) := by
+  bernoulliMeasure p hp {true} = (p : ENNReal) := by
 -- proof
   apply StatMech.bernoulliMeasure_apply_true p hp
 
@@ -23,10 +23,10 @@ private lemma bernoulliMeasure_apply_true_eq
 @[path]
 private lemma bernoulliMeasure_apply_false_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
-  bernoulliMeasure p hp {false} = ((1 - p : ℝ≥0) : ℝ≥0∞) := by
+  bernoulliMeasure p hp {false} = ((1 - p : NNReal) : ENNReal) := by
 -- proof
   apply StatMech.bernoulliMeasure_apply_false p hp
 
@@ -35,7 +35,7 @@ private lemma bernoulliMeasure_apply_false_eq
 -/
 @[path]
 private lemma apply_singleton_eq
-  {p : ℝ≥0}
+  {p : NNReal}
   {hp : p ≤ 1}
   [Fintype E]
   {ω : ConfigSpace E} :
@@ -49,7 +49,7 @@ private lemma apply_singleton_eq
 -/
 @[path]
 private lemma real_singleton_eq
-  {p : ℝ≥0}
+  {p : NNReal}
   {hp : p ≤ 1}
   [Fintype E]
   {ω : ConfigSpace E} :
@@ -63,7 +63,7 @@ private lemma real_singleton_eq
 -/
 @[path]
 private lemma real_eq_sum_eq
-  {p : ℝ≥0}
+  {p : NNReal}
   {hp : p ≤ 1}
   [Fintype E]
   [DecidableEq E]
@@ -78,7 +78,7 @@ private lemma real_eq_sum_eq
 -/
 @[path]
 private lemma real_singleton_nonneg_eq
-  {p : ℝ≥0}
+  {p : NNReal}
   {hp : p ≤ 1}
   {ω : ConfigSpace E} :
 -- imply
@@ -91,7 +91,7 @@ private lemma real_singleton_nonneg_eq
 -/
 @[path]
 private lemma sum_real_singleton_eq
-  {p : ℝ≥0}
+  {p : NNReal}
   {hp : p ≤ 1}
   [Fintype E]
   [DecidableEq E] :
@@ -105,7 +105,7 @@ private lemma sum_real_singleton_eq
 -/
 @[path]
 private lemma real_singleton_logModular_eq
-  {p : ℝ≥0}
+  {p : NNReal}
   {hp : p ≤ 1}
   [Fintype E]
   {a b : ConfigSpace E} :

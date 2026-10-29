@@ -31,7 +31,7 @@ namespace MathlibExtTest.Combinatorics.SimpleGraph.FleischnerStrong
 [complete_three_hasStrongSquareCycle](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/FleischnerStrong.lean)
 -/
 @[path]
-lemma complete_three_hasStrongSquareCycle
+lemma complete_three_hasStrongSquareCycle :
 -- imply
   ∃ p : (⊤ : SimpleGraph (Fin 3)).square.Walk 0 0, p.IsHamiltonianCycle ∧ p.length = 3 ∧ (⊤ : SimpleGraph (Fin 3)).Adj 0 p.snd ∧ (⊤ : SimpleGraph (Fin 3)).Adj p.penultimate 0 := by
 -- proof
@@ -45,3 +45,4 @@ end MathlibExtTest.Combinatorics.SimpleGraph.FleischnerStrong
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

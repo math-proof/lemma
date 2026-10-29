@@ -433,7 +433,7 @@ namespace KroneckerWeber
 [Z4Z3_cyclic_quartic_count](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/KroneckerWeber.lean)
 -/
 @[path]
-lemma Z4Z3_cyclic_quartic_count
+lemma Z4Z3_cyclic_quartic_count :
 -- imply
   Nat.card {H : Subgroup (Multiplicative (ZMod 4 × ZMod 4 × ZMod 4)) // H.index = 4 ∧ IsCyclic (Multiplicative (ZMod 4 × ZMod 4 × ZMod 4) ⧸ H)} = 28 :=
 -- proof
@@ -625,7 +625,6 @@ lemma fixedField_isAbelianExtension
       intro a b
       show (⟦a * b⟧ : (K ≃ₐ[F] K) ⧸ H) = ⟦b * a⟧
       congr 1; exact hcomm a b
-set_option maxHeartbeats 1600000 in
 
 end KroneckerWeber
 
@@ -704,7 +703,7 @@ lemma adicCompletionIntegers_scalarTower
   exact IsScalarTower.of_algebraMap_eq (fun x => (h_compat x).symm)
 end
 set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 999999 in
 universe u_A₅ u_K₅ u_L₅ u_B₅ in
 
 
@@ -744,7 +743,6 @@ lemma withZero_mul_eq_exp_neg_one_aux
     exact_mod_cast show y = (1 : Multiplicative ℤ) by
       change Multiplicative.ofAdd (Multiplicative.toAdd y) = Multiplicative.ofAdd 0; rw [hm0]
 open IsDedekindDomain.HeightOneSpectrum in
-set_option maxHeartbeats 800000 in
 
 end KroneckerWeber
 
@@ -810,7 +808,6 @@ lemma prop_8_11_map_asIdeal_eq_maximalIdeal
     simp only [Set.singleton_subset_iff]
     exact Ideal.mem_map_of_mem _ hπ_mem
 set_option synthInstance.maxHeartbeats 200000 in
-set_option maxHeartbeats 1600000 in
 
 end KroneckerWeber
 
@@ -857,7 +854,6 @@ lemma prop_8_11_comap_maximalIdeal_pow
       ⟨↑π, π.2⟩ = (↑π : 𝔮.adicCompletion L) from rfl]
   rw [valuedAdicCompletion_eq_valuation' 𝔮 (algebraMap B L b), valuation_of_algebraMap, hVπn]
 set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 800000 in
 
 end KroneckerWeber
 
@@ -1184,7 +1180,6 @@ lemma ch8_10_completion_ramificationIdx_eq
   exact ⟨ch8_10_ramificationIdx_eq_aux (K := K) (L := L) 𝔭 𝔮,
     ch8_10_bddAbove_completion_aux (K := K) (L := L) 𝔭 𝔮 h_compat,
     ch8_10_bddAbove_original_aux (K := K) (L := L) 𝔭 𝔮 h_inj⟩
-set_option synthInstance.maxHeartbeats 400000 in
 
 end KroneckerWeber
 
@@ -1287,7 +1282,7 @@ lemma part_3a_ramification_idx_preserved
   ext n
   exact completion_ideal_power_iff 𝔭 𝔮 h_compat h_inj_AB n
 set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 999999 in
 universe u_A₇ u_K₇ u_L₇ u_B₇ in
 
 end KroneckerWeber
@@ -1436,7 +1431,7 @@ lemma completion_residueFieldEquiv_compat
     Ideal.Quotient.mk 𝔮.asIdeal ((algebraMap A B) a)
   rw [Ideal.quotientMap_mk]
 set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 999999 in
 universe u_A₈ u_K₈ u_L₈ u_B₈ in
 
 end KroneckerWeber
@@ -1878,3 +1873,4 @@ private lemma theorem_11_23_part2_unique_prime_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

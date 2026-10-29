@@ -29,8 +29,7 @@ private lemma main
   exact {
     toIsProbabilityMeasure := inferInstance
     aemeasurable := hx
-    exists_distribution := ⟨q, ⟨Measure.measurable_rnDeriv _ _⟩,
-      (Measure.withDensity_rnDeriv_eq _ _ hacc).symm⟩
+    exists_distribution := ⟨q, Measure.measurable_rnDeriv _ _, (Measure.withDensity_rnDeriv_eq _ _ hacc).symm⟩
   }
 
 

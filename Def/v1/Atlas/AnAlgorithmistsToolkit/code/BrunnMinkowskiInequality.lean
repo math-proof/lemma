@@ -29,7 +29,7 @@ open scoped ENNReal NNReal
 def parallelSlice {n : ℕ} (K : Set (Fin (n + 1) → ℝ)) (t : ℝ) : Set (Fin n → ℝ) :=
   {y : Fin n → ℝ | Fin.cons t y ∈ K}
 
-noncomputable def sliceVolume {n : ℕ} (K : Set (Fin (n + 1) → ℝ)) (t : ℝ) : ℝ≥0∞ :=
+noncomputable def sliceVolume {n : ℕ} (K : Set (Fin (n + 1) → ℝ)) (t : ℝ) : ENNReal :=
   volume (parallelSlice K t)
 
 noncomputable def brunnFunction (n : ℕ) (K : Set (Fin (n + 1) → ℝ)) (t : ℝ) : ℝ :=

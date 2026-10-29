@@ -78,7 +78,7 @@ private lemma ctp_canonTcount_eq_sum_indicator_eq
   {ω : ConfigSpace (Sym2 (Site d))}
   {n : ℕ} :
 -- imply
-  (ctc2_canonTcount d ω n : ℝ≥0∞) = ∑ x ∈ boxFinsetBK d n, ({ω' | IsCanonicalTrifurcation d ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω := by
+  (ctc2_canonTcount d ω n : ENNReal) = ∑ x ∈ boxFinsetBK d n, ({ω' | IsCanonicalTrifurcation d ω' x}.indicator (fun _ => (1 : ENNReal))) ω := by
 -- proof
   apply StatMech.Percolation.ctp_canonTcount_eq_sum_indicator ω n
 
@@ -93,7 +93,7 @@ private lemma ctp_expected_canonTcount_eq
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) :
 -- imply
-  ∫⁻ ω, (ctc2_canonTcount d ω n : ℝ≥0∞) ∂μ = (boxFinsetBK d n).card • μ {ω | IsCanonicalTrifurcation d ω 0} := by
+  ∫⁻ ω, (ctc2_canonTcount d ω n : ENNReal) ∂μ = (boxFinsetBK d n).card • μ {ω | IsCanonicalTrifurcation d ω 0} := by
 -- proof
   apply StatMech.Percolation.ctp_expected_canonTcount μ hinv n
 

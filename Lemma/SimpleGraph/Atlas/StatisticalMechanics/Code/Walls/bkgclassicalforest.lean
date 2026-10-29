@@ -163,7 +163,7 @@ private lemma bkg_bc69_of_classical_eq
 private lemma bkg_bk_uniqueness_of_classical_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) :
@@ -179,7 +179,7 @@ private lemma bkg_bk_uniqueness_of_classical_eq
 private lemma bkg_top_null_of_classical_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) :
@@ -195,7 +195,7 @@ private lemma bkg_top_null_of_classical_eq
 private lemma bkg_status_eq
   {d : ℕ} :
 -- imply
-  (∀ {V : Type} (Amb G : SimpleGraph V), G ≤ Amb → (∀ t a b, G.Adj t a → G.Adj t b → a ≠ b → ¬ (bkg_deleteVertex Amb t).Reachable a b) → G.IsAcyclic) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ), bkg_ClassicalForestData ω L R → bc69_Gn_globalForest ω L R) ∧ (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
+  (∀ {V : Type} (Amb G : SimpleGraph V), G ≤ Amb → (∀ t a b, G.Adj t a → G.Adj t b → a ≠ b → ¬ (bkg_deleteVertex Amb t).Reachable a b) → G.IsAcyclic) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ), bkg_ClassicalForestData ω L R → bc69_Gn_globalForest ω L R) ∧ (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
 -- proof
   apply StatMech.Walls.bkg_status
 

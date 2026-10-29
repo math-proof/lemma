@@ -135,7 +135,7 @@ private lemma bpt_count_of_partitionForest_eq
 private lemma bpt_bk_of_partitionForest_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) :

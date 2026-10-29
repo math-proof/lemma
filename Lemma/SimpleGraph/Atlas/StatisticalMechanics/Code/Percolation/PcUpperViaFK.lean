@@ -13,7 +13,7 @@ private lemma bernoulliProduct_map_injective_restrict_eq
   [Countable E]
   {f : I → E}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hf : Function.Injective f) :
 -- imply
@@ -88,7 +88,7 @@ private lemma bernoulliProduct_map_boxRestrict_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Measure.map (boxRestrict d n) (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) = bernoulliProductMeasure (E := Sym2 (boxVerts d n)) p hp := by
@@ -108,7 +108,7 @@ private lemma bernoulliProduct_boxRestrict_preimage_eq
   {n : ℕ}
   {A : Set (ConfigSpace (Sym2 (boxVerts d n)))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (boxRestrict d n ⁻¹' A) = (bernoulliProductMeasure (E := Sym2 (boxVerts d n)) p hp).real A := by
@@ -127,7 +127,7 @@ private lemma wiredFinite_boxBdryConnEvent_le_bernoulli_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp0 : 0 < p)
   (hp1 : p < 1) :
 -- imply
@@ -146,7 +146,7 @@ private lemma fkTheta_two_le_bernoulliTheta_eq
   [DecidableRel G.Adj]
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp0 : 0 < p)
   (hp1 : p < 1) :
 -- imply
@@ -227,7 +227,7 @@ private lemma bernoulliProduct_map_planeRestrict_eq
   {d : ℕ}
   {k : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Measure.map (pcv_planeRestrict k) (bernoulliProductMeasure (E := Sym2 (Site (2 + k))) p hp) = bernoulliProductMeasure (E := Sym2 (Site 2)) p hp := by
@@ -282,7 +282,7 @@ private lemma theta_two_le_theta_add_eq
   {d : ℕ}
   {k : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   theta 2 p hp ≤ theta (2 + k) p hp := by
@@ -295,7 +295,7 @@ private lemma theta_two_le_theta_add_eq
 @[path]
 private lemma theta_mono_parameter_eq
   {d : ℕ}
-  {p q : ℝ≥0}
+  {p q : NNReal}
 -- given
   (hp : p ≤ 1)
   (hq : q ≤ 1)
@@ -312,7 +312,7 @@ private lemma theta_mono_parameter_eq
 private lemma pc_le_of_theta_pos_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hpos : 0 < theta d p hp) :
 -- imply
@@ -327,7 +327,7 @@ private lemma pc_le_of_theta_pos_eq
 private lemma exists_theta_two_pos_below_one_eq
   {d : ℕ} :
 -- imply
-  ∃ (p : ℝ≥0) (hp1 : p < 1), 0 < theta 2 p hp1.le := by
+  ∃ (p : NNReal) (hp1 : p < 1), 0 < theta 2 p hp1.le := by
 -- proof
   apply StatMech.Percolation.exists_theta_two_pos_below_one
 

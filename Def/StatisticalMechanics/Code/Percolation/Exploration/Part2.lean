@@ -30,10 +30,10 @@ section Finite
 variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
-noncomputable def W (p : ℝ≥0) (hp : p ≤ 1) (ω : ConfigSpace E) : ℝ := ∏ e, w1 p hp (ω e)
+noncomputable def W (p : NNReal) (hp : p ≤ 1) (ω : ConfigSpace E) : ℝ := ∏ e, w1 p hp (ω e)
 
 
-noncomputable def wsum (p : ℝ≥0) (hp : p ≤ 1) (f : ConfigSpace E → ℝ) : ℝ :=
+noncomputable def wsum (p : NNReal) (hp : p ≤ 1) (f : ConfigSpace E → ℝ) : ℝ :=
   ∑ ω : ConfigSpace E, f ω * W p hp ω
 
 

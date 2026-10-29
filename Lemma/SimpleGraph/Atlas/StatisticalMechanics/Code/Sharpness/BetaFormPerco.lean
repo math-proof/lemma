@@ -56,7 +56,7 @@ private lemma bfp_meanfield_perco_beta_eq
 @[path]
 private lemma bfp_meanfield_perco_beta_crossProb_eq
   {d : ℕ}
-  {q : ℝ≥0}
+  {q : NNReal}
   {J β : ℝ}
   {n : ℕ}
 -- given

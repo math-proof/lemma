@@ -25,7 +25,7 @@ private lemma connWithinProb_le_one_su_eq
   {S : Finset (Site d)}
   {x : Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   connWithinProb d p hp S x ≤ 1 := by
@@ -52,7 +52,7 @@ private lemma phi_le_card_su_eq
   {d : ℕ}
   {S : Finset (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   phi d p hp S ≤ (p : ℝ) * (boundaryEdges d S).card := by
@@ -129,7 +129,7 @@ private lemma wordEvent_measure_one_eq
   {g : ℕ → Fin d × Bool}
   {n : ℕ}
 -- given
-  (h0 : (1 : ℝ≥0) ≤ 1) :
+  (h0 : (1 : NNReal) ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := Sym2 (Site d)) 1 h0) (wordEvent g n) = 1 := by
 -- proof
@@ -144,7 +144,7 @@ private lemma crossProb_one_eq
   {n : ℕ}
 -- given
   (hd : 0 < d)
-  (h0 : (1 : ℝ≥0) ≤ 1) :
+  (h0 : (1 : NNReal) ≤ 1) :
 -- imply
   crossProb d 1 h0 (n + 1) = 1 := by
 -- proof
@@ -158,7 +158,7 @@ private lemma theta_one_eq_one_eq
   {d : ℕ}
 -- given
   (hd : 0 < d)
-  (h0 : (1 : ℝ≥0) ≤ 1) :
+  (h0 : (1 : NNReal) ≤ 1) :
 -- imply
   theta d 1 h0 = 1 := by
 -- proof
@@ -173,7 +173,7 @@ private lemma theta_one_ne_zero_eq
 -- given
   (hd : 0 < d) :
 -- imply
-  ∀ h1 : (1 : ℝ≥0) ≤ 1, theta d 1 h1 ≠ 0 := by
+  ∀ h1 : (1 : NNReal) ≤ 1, theta d 1 h1 ≠ 0 := by
 -- proof
   apply StatMech.Percolation.theta_one_ne_zero hd
 
@@ -197,7 +197,7 @@ private lemma sharpness_unconditional_eq
 -- given
   (hd : 0 < d) :
 -- imply
-  tildePc d = pc d ∧ (∀ p ∈ tildePcSet d, ∀ hp : p ≤ 1, ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n)) ∧ (∀ q : ℝ≥0, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → theta d q hq ≥ ((q : ℝ) - (tildePc d : ℝ)) / ((q : ℝ) * (1 - (tildePc d : ℝ)))) := by
+  tildePc d = pc d ∧ (∀ p ∈ tildePcSet d, ∀ hp : p ≤ 1, ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n)) ∧ (∀ q : NNReal, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → theta d q hq ≥ ((q : ℝ) - (tildePc d : ℝ)) / ((q : ℝ) * (1 - (tildePc d : ℝ)))) := by
 -- proof
   apply StatMech.Percolation.sharpness_unconditional hd
 

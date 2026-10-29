@@ -66,9 +66,13 @@ namespace EtaleAlgebra
 -/
 @[path]
 lemma piRestr_surjective
+  {ι : Type*}
   [Field K]
   [Fintype ι]
   [DecidableEq ι]
+  {F : ι → Type*}
+  [∀ i, Field (F i)]
+  [∀ i, Algebra K (F i)]
   {S : Finset ι} :
 -- imply
   Function.Surjective (piRestr (K := K) (F := F) S) := by
@@ -85,9 +89,13 @@ namespace EtaleAlgebra
 -/
 @[path]
 lemma mem_ker_piRestr
+  {ι : Type*}
   [Field K]
   [Fintype ι]
   [DecidableEq ι]
+  {F : ι → Type*}
+  [∀ i, Field (F i)]
+  [∀ i, Algebra K (F i)]
   {S : Finset ι}
 -- given
   (f : ∀ i, F i) :
@@ -107,9 +115,13 @@ namespace EtaleAlgebra
 -/
 @[path]
 lemma ker_phi_eq_ker_piRestr
+  {ι : Type*}
   [Field K]
   [Fintype ι]
   [DecidableEq ι]
+  {F : ι → Type*}
+  [∀ i, Field (F i)]
+  [∀ i, Algebra K (F i)]
   [CommRing B]
   [Algebra K B]
 -- given
@@ -148,9 +160,13 @@ namespace EtaleAlgebra
 -/
 @[path]
 lemma surj_algHom_pi_fields_isSubproduct
+  {ι : Type*}
   [Field K]
   [Fintype ι]
   [DecidableEq ι]
+  {F : ι → Type*}
+  [∀ i, Field (F i)]
+  [∀ i, Algebra K (F i)]
   [CommRing B]
   [Algebra K B]
 -- given
@@ -277,9 +293,13 @@ end EtaleAlgebra
 -/
 @[path]
 private lemma piRestr_apply_eq
+  {ι : Type*}
   [Field K]
   [Fintype ι]
   [DecidableEq ι]
+  {F : ι → Type*}
+  [∀ i, Field (F i)]
+  [∀ i, Algebra K (F i)]
   {S : Finset ι}
   {j : S}
 -- given
@@ -291,3 +311,4 @@ private lemma piRestr_apply_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

@@ -20,7 +20,8 @@ lemma separableExtension_isCompletion_finitePlace
     (_ : Algebra.IsSeparable K L) (_ : FiniteDimensional K L)
     (w : HeightOneSpectrum (𝓞 L))
     (hw : w.asIdeal.LiesOver v.asIdeal),
-    let _ : w.asIdeal.LiesOver v.asIdeal := by
+    Module.finrank K L = Module.finrank (v.adicCompletion K) M ∧
+      Nonempty (M ≃ₐ[v.adicCompletion K] w.adicCompletion L) := by
 -- proof
   obtain ⟨f, hf, hirr, hsep, ⟨eMf⟩⟩ :=
     (Algebra.isSeparable_iff_exists_monic_irreducible_separable
@@ -52,27 +53,27 @@ lemma separableExtension_isCompletion_finitePlace
     dsimp [L]
     exact finrank_quotient_span_eq_natDegree
   have hfinrankM :
-    Module.finrank (v.adicCompletion K) M = f.natDegree := by
+      Module.finrank (v.adicCompletion K) M = f.natDegree := by
     calc
       Module.finrank (v.adicCompletion K) M =
-        Module.finrank (v.adicCompletion K) (AdjoinRoot f) :=
+          Module.finrank (v.adicCompletion K) (AdjoinRoot f) :=
         eMf.toLinearEquiv.finrank_eq
       _ = f.natDegree := finrank_quotient_span_eq_natDegree
   have hfinrank :
-    Module.finrank K L =
-      Module.finrank (v.adicCompletion K) M := by
+      Module.finrank K L =
+        Module.finrank (v.adicCompletion K) M := by
     rw [hfinrankL, hfinrankM, hdeg]
   let eL : L ≃ₐ[K] AdjoinRoot g := by
     dsimp [L]
     exact AlgEquiv.refl
   have hM :
-    Nonempty
-      (M ≃ₐ[v.adicCompletion K]
-        AdjoinRoot
-          (g.map (algebraMap K (v.adicCompletion K)))) :=
+      Nonempty
+        (M ≃ₐ[v.adicCompletion K]
+          AdjoinRoot
+            (g.map (algebraMap K (v.adicCompletion K)))) :=
     ⟨eMf.trans efg⟩
   have hcompletion :
-    Nonempty (M ≃ₐ[v.adicCompletion K] w.adicCompletion L) :=
+      Nonempty (M ≃ₐ[v.adicCompletion K] w.adicCompletion L) :=
     completion_algEquiv_of_adjoinRoot_globalEquiv
       v w g hmapirr eL hM
   exact
@@ -83,4 +84,4 @@ end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

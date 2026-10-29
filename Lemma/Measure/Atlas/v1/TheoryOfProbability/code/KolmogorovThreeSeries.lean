@@ -126,7 +126,7 @@ lemma ae_tendsto_centered_of_indep_summableVar
     exact eLpNorm_one_le_sqrt_integral_sq hS_memLp h_int_bound
   have hR_nn : (0 : ℝ) ≤ Real.sqrt C := Real.sqrt_nonneg _
   set R : NNReal := ⟨Real.sqrt C, hR_nn⟩
-  have hR_eq : (R : ℝ≥0∞) = ENNReal.ofReal (Real.sqrt C) := by
+  have hR_eq : (R : ENNReal) = ENNReal.ofReal (Real.sqrt C) := by
     simp [R, ENNReal.ofReal_eq_coe_nnreal hR_nn]
   have hR_bdd : ∀ n, eLpNorm (fun ω => ∑ k ∈ range (n + 1), Z k ω) 1 μ ≤ ↑R := by
     intro n; rw [hR_eq]; exact hR_bound n

@@ -10,8 +10,8 @@ open MeasureTheory Filter ENNReal Topology
 lemma monotone_convergence_theorem
   {m : MeasurableSpace α}
   {μ : Measure α}
-  {f : ℕ → α → ℝ≥0∞}
-  {g : α → ℝ≥0∞}
+  {f : ℕ → α → ENNReal}
+  {g : α → ENNReal}
 -- given
   (hf_meas : ∀ n, Measurable (f n))
   (hf_mono : Monotone f)

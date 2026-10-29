@@ -63,13 +63,13 @@ theorem ka_kesten_pc_eq_half
     (htinv : KaCrossingTranslationInvariant halfMeasure)
     
     (hCorLowerBound : BoxCrossingProperty halfMeasure 2 →
-        percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0)
+        percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0)
     
     (hHm : ∀ n, MeasurableSet (boxFam n))
     (hRmeas : Measurable R) (hRpres : Measure.map R halfMeasure = halfMeasure)
     (hdich : ∀ n, (boxFam n)ᶜ = (R ∘ dualConfig) ⁻¹' (boxFam n))
     
-    (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
+    (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
         Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
     criticalProbability 2 = 1 / 2 :=
   kesten_pc_eq_half_of_bxp (ρ := 2) (R := R) (boxFam := boxFam)
@@ -82,14 +82,14 @@ theorem ka_kesten_no_percolation_at_pc
     (hseed : KaSelfDualBoxSeed halfMeasure)
     (htinv : KaCrossingTranslationInvariant halfMeasure)
     (hCorLowerBound : BoxCrossingProperty halfMeasure 2 →
-        percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0)
+        percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0)
     (hHm : ∀ n, MeasurableSet (boxFam n))
     (hRmeas : Measurable R) (hRpres : Measure.map R halfMeasure = halfMeasure)
     (hdich : ∀ n, (boxFam n)ᶜ = (R ∘ dualConfig) ⁻¹' (boxFam n))
-    (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
+    (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
         Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
     criticalProbability 2 = 1 / 2 ∧
-      percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 :=
+      percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 :=
   ⟨ka_kesten_pc_eq_half hseed htinv hCorLowerBound hHm hRmeas hRpres hdich hSharpThreshold,
     hCorLowerBound (ka_bxp_half_of_rsw hseed htinv)⟩
 

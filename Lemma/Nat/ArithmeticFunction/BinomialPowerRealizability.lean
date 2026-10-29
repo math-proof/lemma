@@ -12,9 +12,9 @@ namespace MetaMathlibExt
 @[path]
 lemma doldRealizable_dvd
   {a : ℕ → ℤ}
-  {n : ℕ}
 -- given
   (h : doldRealizable a)
+  (n : ℕ)
   (hn : 0 < n) :
 -- imply
   (n : ℤ) ∣ ∑ d ∈ Nat.divisors n,
@@ -32,9 +32,9 @@ namespace MetaMathlibExt
 @[path]
 lemma doldRealizable_nonneg
   {a : ℕ → ℤ}
-  {n : ℕ}
 -- given
   (h : doldRealizable a)
+  (n : ℕ)
   (hn : 0 < n) :
 -- imply
   0 ≤ ∑ d ∈ Nat.divisors n,
@@ -71,7 +71,7 @@ namespace MetaMathlibExt
 private lemma binomialPowerSeq_one_zero (n : ℕ) : binomialPowerSeq 1 0 n = 2 ^ n := by
   unfold binomialPowerSeq
   have h : ∀ k : ℕ,
-    (Nat.choose n k) ^ 1 * (Nat.choose (n + k) k) ^ 0 = Nat.choose n k := by
+      (Nat.choose n k) ^ 1 * (Nat.choose (n + k) k) ^ 0 = Nat.choose n k := by
     intro k
     simp
   simp_rw [h]
@@ -94,7 +94,7 @@ private lemma binomialPowerSeq_term_ge_choose (r s n k : ℕ) (hr : 0 < r) (_hkn
   calc Nat.choose n k ≤ (Nat.choose n k) ^ r := h1
     _ = (Nat.choose n k) ^ r * 1 := (Nat.mul_one _).symm
     _ ≤ (Nat.choose n k) ^ r * (Nat.choose (n + k) k) ^ s :=
-      Nat.mul_le_mul_left _ h2
+        Nat.mul_le_mul_left _ h2
 
 end MetaMathlibExt
 
@@ -221,51 +221,51 @@ private lemma binomialPowerSeq_succ_term_ge (r s n j : ℕ) (hr : 0 < r) :
       (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s := by
   obtain ⟨t, rfl⟩ := Nat.exists_eq_add_one_of_ne_zero (ne_of_gt hr)
   have hpascal : Nat.choose (n + 1) (j + 1)
-    = Nat.choose n j + Nat.choose n (j + 1) :=
+      = Nat.choose n j + Nat.choose n (j + 1) :=
     Nat.choose_succ_succ' n j
   have hpow : (Nat.choose n j) ^ (t + 1) + (Nat.choose n (j + 1)) ^ (t + 1)
-    ≤ (Nat.choose (n + 1) (j + 1)) ^ (t + 1) := by
+      ≤ (Nat.choose (n + 1) (j + 1)) ^ (t + 1) := by
     rw [hpascal]
     exact add_pow_ge_add_pow _ _ t
   have hle1 : Nat.choose (n + j) j ≤ Nat.choose (n + 1 + (j + 1)) (j + 1) := by
     have h1 : Nat.choose (n + j) j ≤ Nat.choose (n + 1 + j) (j + 1) :=
       choose_shift_le n j
     have h2 : Nat.choose (n + 1 + j) (j + 1)
-      ≤ Nat.choose (n + 1 + (j + 1)) (j + 1) :=
+        ≤ Nat.choose (n + 1 + (j + 1)) (j + 1) :=
       Nat.choose_le_choose (j + 1) (by omega)
     exact le_trans h1 h2
   have hle2 : Nat.choose (n + (j + 1)) (j + 1)
-    ≤ Nat.choose (n + 1 + (j + 1)) (j + 1) :=
+      ≤ Nat.choose (n + 1 + (j + 1)) (j + 1) :=
     Nat.choose_le_choose (j + 1) (by omega)
   have hs1 : (Nat.choose (n + j) j) ^ s
-    ≤ (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
+      ≤ (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
     Nat.pow_le_pow_left hle1 s
   have hs2 : (Nat.choose (n + (j + 1)) (j + 1)) ^ s
-    ≤ (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
+      ≤ (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
     Nat.pow_le_pow_left hle2 s
   have h1 : (Nat.choose n j) ^ (t + 1) * (Nat.choose (n + j) j) ^ s
-    ≤ (Nat.choose n j) ^ (t + 1) *
-      (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
+      ≤ (Nat.choose n j) ^ (t + 1) *
+        (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
     Nat.mul_le_mul_left _ hs1
   have h2 : (Nat.choose n (j + 1)) ^ (t + 1) *
-    (Nat.choose (n + (j + 1)) (j + 1)) ^ s
-    ≤ (Nat.choose n (j + 1)) ^ (t + 1) *
-      (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
+        (Nat.choose (n + (j + 1)) (j + 1)) ^ s
+      ≤ (Nat.choose n (j + 1)) ^ (t + 1) *
+        (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
     Nat.mul_le_mul_left _ hs2
   calc (Nat.choose n j) ^ (t + 1) * (Nat.choose (n + j) j) ^ s +
-    (Nat.choose n (j + 1)) ^ (t + 1) *
-      (Nat.choose (n + (j + 1)) (j + 1)) ^ s
-    ≤ (Nat.choose n j) ^ (t + 1) *
-      (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s +
-      (Nat.choose n (j + 1)) ^ (t + 1) *
-        (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
-      Nat.add_le_add h1 h2
-    _ = ((Nat.choose n j) ^ (t + 1) + (Nat.choose n (j + 1)) ^ (t + 1)) *
-      (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
-      (Nat.add_mul _ _ _).symm
-    _ ≤ (Nat.choose (n + 1) (j + 1)) ^ (t + 1) *
-      (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
-      Nat.mul_le_mul_right _ hpow
+          (Nat.choose n (j + 1)) ^ (t + 1) *
+            (Nat.choose (n + (j + 1)) (j + 1)) ^ s
+        ≤ (Nat.choose n j) ^ (t + 1) *
+            (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s +
+            (Nat.choose n (j + 1)) ^ (t + 1) *
+              (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
+          Nat.add_le_add h1 h2
+      _ = ((Nat.choose n j) ^ (t + 1) + (Nat.choose n (j + 1)) ^ (t + 1)) *
+          (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
+          (Nat.add_mul _ _ _).symm
+      _ ≤ (Nat.choose (n + 1) (j + 1)) ^ (t + 1) *
+          (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s :=
+          Nat.mul_le_mul_right _ hpow
 
 end MetaMathlibExt
 
@@ -282,55 +282,55 @@ private lemma binomialPowerSeq_double (r s n : ℕ) (hr : 0 < r) :
   have hG0 : (Nat.choose (n + 1) 0) ^ r * (Nat.choose (n + 1 + 0) 0) ^ s = 1 :=
     binomialPowerSeq_term0_eq_one r s (n + 1)
   have hFn1 : (Nat.choose n (n + 1)) ^ r *
-    (Nat.choose (n + (n + 1)) (n + 1)) ^ s = 0 :=
+      (Nat.choose (n + (n + 1)) (n + 1)) ^ s = 0 :=
     binomialPowerSeq_term_zero r s n hr
   have hterm : ∀ j ∈ Finset.range (n + 1),
-    (Nat.choose n j) ^ r * (Nat.choose (n + j) j) ^ s +
-      (Nat.choose n (j + 1)) ^ r *
-        (Nat.choose (n + (j + 1)) (j + 1)) ^ s ≤
-      (Nat.choose (n + 1) (j + 1)) ^ r *
-        (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s := by
+      (Nat.choose n j) ^ r * (Nat.choose (n + j) j) ^ s +
+          (Nat.choose n (j + 1)) ^ r *
+            (Nat.choose (n + (j + 1)) (j + 1)) ^ s ≤
+        (Nat.choose (n + 1) (j + 1)) ^ r *
+          (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s := by
     intro j _
     exact binomialPowerSeq_succ_term_ge r s n j hr
   have hsumle : (∑ j ∈ Finset.range (n + 1),
-    ((Nat.choose n j) ^ r * (Nat.choose (n + j) j) ^ s +
-      (Nat.choose n (j + 1)) ^ r *
-        (Nat.choose (n + (j + 1)) (j + 1)) ^ s)) ≤
-    ∑ j ∈ Finset.range (n + 1),
-      ((Nat.choose (n + 1) (j + 1)) ^ r *
-        (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s) :=
+        ((Nat.choose n j) ^ r * (Nat.choose (n + j) j) ^ s +
+          (Nat.choose n (j + 1)) ^ r *
+            (Nat.choose (n + (j + 1)) (j + 1)) ^ s)) ≤
+      ∑ j ∈ Finset.range (n + 1),
+        ((Nat.choose (n + 1) (j + 1)) ^ r *
+          (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s) :=
     Finset.sum_le_sum hterm
   rw [Finset.sum_add_distrib] at hsumle
   have hsplitG : (∑ k ∈ Finset.range (n + 1 + 1),
-    ((Nat.choose (n + 1) k) ^ r * (Nat.choose (n + 1 + k) k) ^ s)) =
-    (∑ j ∈ Finset.range (n + 1),
-      ((Nat.choose (n + 1) (j + 1)) ^ r *
-        (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s)) +
-      ((Nat.choose (n + 1) 0) ^ r * (Nat.choose (n + 1 + 0) 0) ^ s) :=
+        ((Nat.choose (n + 1) k) ^ r * (Nat.choose (n + 1 + k) k) ^ s)) =
+      (∑ j ∈ Finset.range (n + 1),
+        ((Nat.choose (n + 1) (j + 1)) ^ r *
+          (Nat.choose (n + 1 + (j + 1)) (j + 1)) ^ s)) +
+        ((Nat.choose (n + 1) 0) ^ r * (Nat.choose (n + 1 + 0) 0) ^ s) :=
     Finset.sum_range_succ' _ (n + 1)
   have hsplitF : (∑ k ∈ Finset.range (n + 1 + 1),
-    ((Nat.choose n k) ^ r * (Nat.choose (n + k) k) ^ s)) =
-    (∑ j ∈ Finset.range (n + 1),
-      ((Nat.choose n (j + 1)) ^ r *
-        (Nat.choose (n + (j + 1)) (j + 1)) ^ s)) +
-      ((Nat.choose n 0) ^ r * (Nat.choose (n + 0) 0) ^ s) :=
+        ((Nat.choose n k) ^ r * (Nat.choose (n + k) k) ^ s)) =
+      (∑ j ∈ Finset.range (n + 1),
+        ((Nat.choose n (j + 1)) ^ r *
+          (Nat.choose (n + (j + 1)) (j + 1)) ^ s)) +
+        ((Nat.choose n 0) ^ r * (Nat.choose (n + 0) 0) ^ s) :=
     Finset.sum_range_succ' _ (n + 1)
   have hextF : (∑ k ∈ Finset.range (n + 1 + 1),
-    ((Nat.choose n k) ^ r * (Nat.choose (n + k) k) ^ s)) =
-    (∑ k ∈ Finset.range (n + 1),
-      ((Nat.choose n k) ^ r * (Nat.choose (n + k) k) ^ s)) +
-      ((Nat.choose n (n + 1)) ^ r *
-        (Nat.choose (n + (n + 1)) (n + 1)) ^ s) :=
+        ((Nat.choose n k) ^ r * (Nat.choose (n + k) k) ^ s)) =
+      (∑ k ∈ Finset.range (n + 1),
+        ((Nat.choose n k) ^ r * (Nat.choose (n + k) k) ^ s)) +
+        ((Nat.choose n (n + 1)) ^ r *
+          (Nat.choose (n + (n + 1)) (n + 1)) ^ s) :=
     Finset.sum_range_succ _ (n + 1)
   rw [hG0] at hsplitG
   rw [hF0] at hsplitF
   rw [hFn1] at hextF
   simp only [add_zero] at hsplitF hextF
   have hSeq : (∑ j ∈ Finset.range (n + 1),
-    ((Nat.choose n (j + 1)) ^ r *
-      (Nat.choose (n + (j + 1)) (j + 1)) ^ s)) + 1 =
-    ∑ k ∈ Finset.range (n + 1),
-      ((Nat.choose n k) ^ r * (Nat.choose (n + k) k) ^ s) := by
+        ((Nat.choose n (j + 1)) ^ r *
+          (Nat.choose (n + (j + 1)) (j + 1)) ^ s)) + 1 =
+      ∑ k ∈ Finset.range (n + 1),
+        ((Nat.choose n k) ^ r * (Nat.choose (n + k) k) ^ s) := by
     omega
   unfold binomialPowerSeq
   omega
@@ -392,11 +392,11 @@ private lemma div_image_inj (n : ℕ) (hn : 0 < n) :
   obtain ⟨c1, hc1⟩ := hdvd1
   obtain ⟨c2, hc2⟩ := hdvd2
   have hd1pos : 0 < d1 := by
-    obtain rfl | hpos := Nat.eq_zero_or_pos d1
+    rcases Nat.eq_zero_or_pos d1 with rfl | hpos
     · simp_all
     · exact hpos
   have hd2pos : 0 < d2 := by
-    obtain rfl | hpos := Nat.eq_zero_or_pos d2
+    rcases Nat.eq_zero_or_pos d2 with rfl | hpos
     · simp_all
     · exact hpos
   have e1 : n / d1 = c1 := by
@@ -405,12 +405,13 @@ private lemma div_image_inj (n : ℕ) (hn : 0 < n) :
     rw [hc2, Nat.mul_div_cancel_left _ hd2pos]
   rw [e1, e2] at heq
   have hc1pos : 0 < c1 := by
-    obtain rfl | hpos := Nat.eq_zero_or_pos c1
+    rcases Nat.eq_zero_or_pos c1 with rfl | hpos
     · rw [hc1] at hn
       simp at hn
     · exact hpos
   have hmul : d1 * c1 = d2 * c1 := by
-    rwa [← hc1, heq]
+    rw [← hc1, heq]
+    exact hc2
   exact Nat.mul_right_cancel hc1pos hmul
 
 end MetaMathlibExt
@@ -427,7 +428,7 @@ private lemma div_mem_range_of_erase (n d : ℕ) (hn : 0 < n)
   have hdvd := Nat.dvd_of_mem_divisors hmem
   have hdne : d ≠ 1 := Finset.ne_of_mem_erase hd
   have hdpos : 0 < d := by
-    obtain rfl | hpos := Nat.eq_zero_or_pos d
+    rcases Nat.eq_zero_or_pos d with rfl | hpos
     · simp_all
     · exact hpos
   have hd2 : 1 < d := by omega
@@ -446,7 +447,7 @@ private lemma div_ne_zero_of_erase (n d : ℕ) (hn : 0 < n)
   have hmem := Finset.mem_of_mem_erase hd
   have hdvd := Nat.dvd_of_mem_divisors hmem
   have hdpos : 0 < d := by
-    obtain rfl | hpos := Nat.eq_zero_or_pos d
+    rcases Nat.eq_zero_or_pos d with rfl | hpos
     · simp_all
     · exact hpos
   have hle : d ≤ n := Nat.le_of_dvd hn hdvd
@@ -467,12 +468,12 @@ private lemma binomialPowerSeq_erase_sum_le (r s n : ℕ) (hr : 0 < r)
     ≤ binomialPowerSeq r s n := by
   have hinj := div_image_inj n hn
   have himage : (∑ d ∈ (Nat.divisors n).erase 1,
-    binomialPowerSeq r s (n / d)) =
-    ∑ e ∈ ((Nat.divisors n).erase 1).image (fun d => n / d),
-      binomialPowerSeq r s e := by
+        binomialPowerSeq r s (n / d)) =
+      ∑ e ∈ ((Nat.divisors n).erase 1).image (fun d => n / d),
+        binomialPowerSeq r s e := by
     exact (Finset.sum_image (f := fun e => binomialPowerSeq r s e) hinj).symm
   have hsub : ((Nat.divisors n).erase 1).image (fun d => n / d)
-    ⊆ (Finset.range n).erase 0 := by
+      ⊆ (Finset.range n).erase 0 := by
     intro e he
     rw [Finset.mem_image] at he
     obtain ⟨d, hd, rfl⟩ := he
@@ -481,8 +482,8 @@ private lemma binomialPowerSeq_erase_sum_le (r s n : ℕ) (hr : 0 < r)
     · exact div_ne_zero_of_erase n d hn hd
     · exact Finset.mem_range.mpr (div_mem_range_of_erase n d hn hd)
   have hle1 : (∑ e ∈ ((Nat.divisors n).erase 1).image (fun d => n / d),
-    binomialPowerSeq r s e) ≤
-    ∑ e ∈ (Finset.range n).erase 0, binomialPowerSeq r s e :=
+        binomialPowerSeq r s e) ≤
+      ∑ e ∈ (Finset.range n).erase 0, binomialPowerSeq r s e :=
     Finset.sum_le_sum_of_subset_of_nonneg hsub
       (fun _ _ _ => Nat.zero_le _)
   have h0mem : 0 ∈ Finset.range n := Finset.mem_range.mpr hn
@@ -491,7 +492,7 @@ private lemma binomialPowerSeq_erase_sum_le (r s n : ℕ) (hr : 0 < r)
     (fun e => binomialPowerSeq r s e) h0mem
   rw [hA0] at hdecomp
   have hle2 : ∑ k ∈ Finset.range n, binomialPowerSeq r s k
-    ≤ binomialPowerSeq r s n :=
+      ≤ binomialPowerSeq r s n :=
     binomialPowerSeq_sum_range_lt r s hr n hn
   omega
 
@@ -506,7 +507,7 @@ namespace MetaMathlibExt
 private lemma moebius_ge_neg_one (d : ℕ) :
   -1 ≤ (⇑ArithmeticFunction.moebius d) := by
   have h := ArithmeticFunction.moebius_eq_or d
-  obtain h | h | h := h
+  rcases h with h | h | h
   · rw [h]
     omega
   · rw [h]
@@ -548,20 +549,20 @@ private lemma prod_Icc_add_mul_factorial (N K : ℕ) :
     simp
   | succ K ih =>
     have hprod : (∏ i ∈ Finset.Icc 1 (K + 1), (N + i)) =
-      (∏ i ∈ Finset.Icc 1 K, (N + i)) * (N + (K + 1)) :=
+        (∏ i ∈ Finset.Icc 1 K, (N + i)) * (N + (K + 1)) :=
       Finset.prod_Icc_succ_top (by omega : 1 ≤ K + 1) _
     have hNK : N + (K + 1) = (N + K) + 1 := by omega
     rw [hprod, hNK]
     have hfact : Nat.factorial (N + K) * ((N + K) + 1)
-      = Nat.factorial ((N + K) + 1) := by
+        = Nat.factorial ((N + K) + 1) := by
       rw [mul_comm]
       exact (Nat.factorial_succ (N + K)).symm
     calc (∏ i ∈ Finset.Icc 1 K, (N + i)) * ((N + K) + 1)
-      * Nat.factorial N
-      = (∏ i ∈ Finset.Icc 1 K, (N + i)) * Nat.factorial N
-        * ((N + K) + 1) := by
-        rw [mul_assoc, mul_comm ((N + K) + 1) (Nat.factorial N)]
-        rw [← mul_assoc]
+          * Nat.factorial N
+        = (∏ i ∈ Finset.Icc 1 K, (N + i)) * Nat.factorial N
+          * ((N + K) + 1) := by
+          rw [mul_assoc, mul_comm ((N + K) + 1) (Nat.factorial N)]
+          rw [← mul_assoc]
       _ = Nat.factorial (N + K) * ((N + K) + 1) := by rw [ih]
       _ = Nat.factorial ((N + K) + 1) := hfact
 
@@ -583,14 +584,15 @@ private lemma image_mul_eq_filter (p J : ℕ) (hp : 0 < p) :
     constructor
     · constructor
       · calc 1 ≤ p * 1 := by
-        rwa [mul_one]
-        _ ≤ p * t := by
-          exact Nat.mul_le_mul_left p h1t
+              rw [mul_one]
+              exact hp
+          _ ≤ p * t := by
+              exact Nat.mul_le_mul_left p h1t
       · exact Nat.mul_le_mul_left p htJ
     · exact Dvd.intro t rfl
   · rintro ⟨⟨h1i, hiJ⟩, ⟨t, rfl⟩⟩
     have htpos : 0 < t := by
-      obtain rfl | hpos := Nat.eq_zero_or_pos t
+      rcases Nat.eq_zero_or_pos t with rfl | hpos
       · simp at h1i
       · exact hpos
     have ht1 : 1 ≤ t := htpos
@@ -612,11 +614,11 @@ private lemma prod_filter_dvd_eq (p J : ℕ) (hp : 0 < p) :
     = p ^ J * ∏ t ∈ Finset.Icc 1 J, t := by
   have himg := image_mul_eq_filter p J hp
   have hinj : ∀ x ∈ Finset.Icc 1 J, ∀ y ∈ Finset.Icc 1 J,
-    p * x = p * y → x = y := by
+      p * x = p * y → x = y := by
     intro x _ y _ h
     exact Nat.mul_left_cancel hp h
   have hprod : (∏ i ∈ Finset.image (fun t => p * t) (Finset.Icc 1 J), i)
-    = ∏ t ∈ Finset.Icc 1 J, p * t := by
+      = ∏ t ∈ Finset.Icc 1 J, p * t := by
     exact Finset.prod_image hinj
   rw [himg] at hprod
   rw [hprod]
@@ -639,12 +641,12 @@ private lemma prod_filter_add_eq (p J M : ℕ) (hp : 0 < p) :
     = p ^ J * ∏ t ∈ Finset.Icc 1 J, (M + t) := by
   have himg := image_mul_eq_filter p J hp
   have hinj : ∀ x ∈ Finset.Icc 1 J, ∀ y ∈ Finset.Icc 1 J,
-    p * x = p * y → x = y := by
+      p * x = p * y → x = y := by
     intro x _ y _ h
     exact Nat.mul_left_cancel hp h
   have hprod : (∏ i ∈ Finset.image (fun t => p * t) (Finset.Icc 1 J),
-    (p * M + i))
-    = ∏ t ∈ Finset.Icc 1 J, (p * M + p * t) := by
+        (p * M + i))
+      = ∏ t ∈ Finset.Icc 1 J, (p * M + p * t) := by
     exact Finset.prod_image hinj
   rw [himg] at hprod
   rw [hprod]
@@ -674,13 +676,14 @@ private lemma choose_mul_prod_Icc (N K : ℕ) :
   have h3 := prod_Icc_one_eq_factorial K
   have hpos : 0 < Nat.factorial N := Nat.factorial_pos N
   have hmul : (Nat.choose (N + K) K * (∏ i ∈ Finset.Icc 1 K, i))
-    * Nat.factorial N
-    = (∏ i ∈ Finset.Icc 1 K, (N + i)) * Nat.factorial N := by
+      * Nat.factorial N
+      = (∏ i ∈ Finset.Icc 1 K, (N + i)) * Nat.factorial N := by
     rw [mul_assoc, h3]
     have hcomm : Nat.factorial K * Nat.factorial N
-      = Nat.factorial N * Nat.factorial K := by rw [mul_comm]
+        = Nat.factorial N * Nat.factorial K := by rw [mul_comm]
     rw [hcomm, ← mul_assoc]
-    rwa [h1]
+    rw [h1]
+    exact h2.symm
   exact Nat.mul_right_cancel hpos hmul
 
 end MetaMathlibExt
@@ -699,13 +702,13 @@ private lemma prod_unit_congr_add (p N K k : ℕ) (hNdiv : p ^ k ∣ N) :
   have hN0 : ((N : ℕ) : ZMod (p ^ k)) = 0 :=
     (ZMod.natCast_eq_zero_iff N (p ^ k)).mpr hNdiv
   have hterm : ∀ i ∈ (Finset.Icc 1 K).filter (fun i => ¬ p ∣ i),
-    (((N + i : ℕ)) : ZMod (p ^ k)) = ((i : ℕ) : ZMod (p ^ k)) := by
+      (((N + i : ℕ)) : ZMod (p ^ k)) = ((i : ℕ) : ZMod (p ^ k)) := by
     intro i _
     rw [Nat.cast_add, hN0, zero_add]
   have hprod : (∏ i ∈ (Finset.Icc 1 K).filter (fun i => ¬ p ∣ i),
-    (((N + i : ℕ)) : ZMod (p ^ k)))
-    = ∏ i ∈ (Finset.Icc 1 K).filter (fun i => ¬ p ∣ i),
-      ((i : ℕ) : ZMod (p ^ k)) :=
+        (((N + i : ℕ)) : ZMod (p ^ k)))
+      = ∏ i ∈ (Finset.Icc 1 K).filter (fun i => ¬ p ∣ i),
+        ((i : ℕ) : ZMod (p ^ k)) :=
     Finset.prod_congr rfl hterm
   simp only [Nat.cast_prod] at hprod ⊢
   exact hprod
@@ -750,11 +753,11 @@ private lemma choose_add_unit_eq (p N M K J : ℕ) (hp : 0 < p)
   have hsplitD := Finset.prod_filter_mul_prod_filter_not
     (Finset.Icc 1 K) (fun i => p ∣ i) (fun i => i)
   have hDp : ∏ i ∈ (Finset.Icc 1 K).filter (fun i => p ∣ i), i
-    = p ^ J * ∏ t ∈ Finset.Icc 1 J, t := by
+      = p ^ J * ∏ t ∈ Finset.Icc 1 J, t := by
     rw [hK]
     exact prod_filter_dvd_eq p J hp
   have hPp : ∏ i ∈ (Finset.Icc 1 K).filter (fun i => p ∣ i), (N + i)
-    = p ^ J * ∏ t ∈ Finset.Icc 1 J, (M + t) := by
+      = p ^ J * ∏ t ∈ Finset.Icc 1 J, (M + t) := by
     rw [hK, hN]
     exact prod_filter_add_eq p J M hp
   have hposP : 0 < p ^ J := Nat.pow_pos hp
@@ -766,18 +769,18 @@ private lemma choose_add_unit_eq (p N M K J : ℕ) (hp : 0 < p)
   have hposPE : 0 < p ^ J * ∏ t ∈ Finset.Icc 1 J, t :=
     Nat.mul_pos hposP hposE
   have heq : (p ^ J * ∏ t ∈ Finset.Icc 1 J, t) *
-    (Nat.choose (N + K) K *
-      ∏ i ∈ (Finset.Icc 1 K).filter (fun i => ¬ p ∣ i), i)
-    = (p ^ J * ∏ t ∈ Finset.Icc 1 J, t) *
-      (Nat.choose (M + J) J *
-        ∏ i ∈ (Finset.Icc 1 K).filter (fun i => ¬ p ∣ i), (N + i)) := by
+        (Nat.choose (N + K) K *
+          ∏ i ∈ (Finset.Icc 1 K).filter (fun i => ¬ p ∣ i), i)
+      = (p ^ J * ∏ t ∈ Finset.Icc 1 J, t) *
+        (Nat.choose (M + J) J *
+          ∏ i ∈ (Finset.Icc 1 K).filter (fun i => ¬ p ∣ i), (N + i)) := by
     have e1 : Nat.choose (N + K) K *
-      (∏ i ∈ Finset.Icc 1 K, i)
-      = ∏ i ∈ Finset.Icc 1 K, (N + i) := hCD1
+          (∏ i ∈ Finset.Icc 1 K, i)
+        = ∏ i ∈ Finset.Icc 1 K, (N + i) := hCD1
     rw [← hsplitD, ← hsplitP] at e1
     rw [hDp, hPp] at e1
     have e2 : ∏ t ∈ Finset.Icc 1 J, (M + t)
-      = Nat.choose (M + J) J * ∏ t ∈ Finset.Icc 1 J, t := by
+        = Nat.choose (M + J) J * ∏ t ∈ Finset.Icc 1 J, t := by
       exact hCD2.symm
     rw [e2] at e1
     ring_nf at e1 ⊢
@@ -818,18 +821,18 @@ private lemma prod_range_sub_mul_factorial (N K : ℕ) (hKN : K ≤ N) :
     have hKN' : K ≤ N := by omega
     have hsucc_le : K + 1 ≤ N := hKN
     have hprod : (∏ t ∈ Finset.range (K + 1), (N - t))
-      = (∏ t ∈ Finset.range K, (N - t)) * (N - K) := by
+        = (∏ t ∈ Finset.range K, (N - t)) * (N - K) := by
       rw [Finset.prod_range_succ]
     rw [hprod]
     have hsub : N - (K + 1) + 1 = N - K := by omega
     have hfact : Nat.factorial (N - K)
-      = (N - K) * Nat.factorial (N - (K + 1)) := by
+        = (N - K) * Nat.factorial (N - (K + 1)) := by
       rw [← hsub, Nat.factorial_succ]
     have ih' := ih N hKN'
     have hcalc : (∏ t ∈ Finset.range K, (N - t)) * (N - K)
-      * Nat.factorial (N - (K + 1))
-      = (∏ t ∈ Finset.range K, (N - t))
-        * Nat.factorial (N - K) := by
+        * Nat.factorial (N - (K + 1))
+        = (∏ t ∈ Finset.range K, (N - t))
+          * Nat.factorial (N - K) := by
       rw [hfact]
       ring
     rw [hcalc, ih']
@@ -869,12 +872,12 @@ private lemma prod_range_filter_sub_eq (p J M : ℕ) (hp : 0 < p) :
     = p ^ J * ∏ s ∈ Finset.range J, (M - s) := by
   have himg := image_range_mul_eq_filter p J hp
   have hinj : ∀ x ∈ Finset.range J, ∀ y ∈ Finset.range J,
-    p * x = p * y → x = y := by
+      p * x = p * y → x = y := by
     intro x _ y _ h
     exact Nat.mul_left_cancel hp h
   have hprod : (∏ t ∈ Finset.image (fun s => p * s) (Finset.range J),
-    (p * M - t))
-    = ∏ s ∈ Finset.range J, (p * M - p * s) := by
+        (p * M - t))
+      = ∏ s ∈ Finset.range J, (p * M - p * s) := by
     exact Finset.prod_image hinj
   rw [himg] at hprod
   rw [hprod]
@@ -922,7 +925,8 @@ private lemma prod_range_succ_filter_eq (p K : ℕ) :
     · rw [Finset.mem_range]
       omega
     · have e : i - 1 + 1 = i := Nat.sub_add_cancel hi1
-      rwa [e]
+      rw [e]
+      exact hdvd
   · intro t ht
     rfl
 
@@ -940,7 +944,7 @@ private lemma prod_range_dvd_succ_eq (p J : ℕ) (hp : 0 < p) :
   have h1 := prod_range_succ_filter_eq p (p * J)
   have h2 := prod_filter_dvd_eq p J hp
   have h3 : (∏ t ∈ Finset.Icc 1 J, t)
-    = ∏ s ∈ Finset.range J, (s + 1) := by
+      = ∏ s ∈ Finset.range J, (s + 1) := by
     rw [prod_Icc_one_eq_factorial, prod_range_add_one_eq_factorial]
   rw [h1, h2, h3]
 
@@ -997,23 +1001,24 @@ private lemma prod_range_notdvd_eq (p K : ℕ) :
     (Finset.Icc 1 K) (fun i => p ∣ i) (fun i => i)
   have hp_eq := prod_range_succ_filter_eq p K
   have hpos : 0 < ∏ t ∈ (Finset.range K).filter
-    (fun t => p ∣ t + 1), (t + 1) := by
+      (fun t => p ∣ t + 1), (t + 1) := by
     apply Finset.prod_pos
     intro t ht
     omega
   have heq : (∏ t ∈ (Finset.range K).filter
-    (fun t => p ∣ t + 1), (t + 1))
-    * (∏ t ∈ (Finset.range K).filter
-      (fun t => ¬ p ∣ t + 1), (t + 1))
-    = (∏ t ∈ (Finset.range K).filter
-      (fun t => p ∣ t + 1), (t + 1))
-      * (∏ i ∈ (Finset.Icc 1 K).filter (fun i => ¬ p ∣ i), i) := by
+        (fun t => p ∣ t + 1), (t + 1))
+        * (∏ t ∈ (Finset.range K).filter
+          (fun t => ¬ p ∣ t + 1), (t + 1))
+      = (∏ t ∈ (Finset.range K).filter
+        (fun t => p ∣ t + 1), (t + 1))
+        * (∏ i ∈ (Finset.Icc 1 K).filter (fun i => ¬ p ∣ i), i) := by
     have hfull : (∏ t ∈ Finset.range K, (t + 1))
-      = ∏ i ∈ Finset.Icc 1 K, i := by
+        = ∏ i ∈ Finset.Icc 1 K, i := by
       rw [hfullR, hfullI]
     rw [← hsplitR, ← hsplitI] at hfull
     rw [hp_eq] at hfull
-    rwa [hp_eq]
+    rw [hp_eq]
+    exact hfull
   exact Nat.mul_left_cancel hpos heq
 
 end MetaMathlibExt
@@ -1030,12 +1035,12 @@ private lemma prod_range_notdvd_t_eq (p J : ℕ) :
       (fun t => ¬ p ∣ t + 1), (t + 1) := by
   have hset := filter_range_eq_filter_Icc p (p * J) J rfl
   have h1 : (∏ t ∈ (Finset.range (p * J)).filter
-    (fun t => ¬ p ∣ t), t)
-    = ∏ i ∈ (Finset.Icc 1 (p * J)).filter (fun i => ¬ p ∣ i), i := by
+        (fun t => ¬ p ∣ t), t)
+      = ∏ i ∈ (Finset.Icc 1 (p * J)).filter (fun i => ¬ p ∣ i), i := by
     rw [hset]
   have h2 : (∏ t ∈ (Finset.range (p * J)).filter
-    (fun t => ¬ p ∣ t + 1), (t + 1))
-    = ∏ i ∈ (Finset.Icc 1 (p * J)).filter (fun i => ¬ p ∣ i), i :=
+        (fun t => ¬ p ∣ t + 1), (t + 1))
+      = ∏ i ∈ (Finset.Icc 1 (p * J)).filter (fun i => ¬ p ∣ i), i :=
     prod_range_notdvd_eq p (p * J)
   rw [h1, ← h2]
 
@@ -1054,7 +1059,7 @@ private lemma card_filter_dvd_range (p J : ℕ) (hp : 0 < p) :
     intro a b h
     exact Nat.mul_left_cancel hp h
   have hcard_img : (Finset.image (fun s => p * s)
-    (Finset.range J)).card = (Finset.range J).card :=
+      (Finset.range J)).card = (Finset.range J).card :=
     Finset.card_image_of_injective _ hinj
   rw [himg] at hcard_img
   rw [hcard_img, Finset.card_range]
@@ -1074,8 +1079,8 @@ private lemma card_filter_notdvd_range (p J : ℕ) (hp : 0 < p) :
     Finset.card_range _
   have hcard_p := card_filter_dvd_range p J hp
   have hadd : ((Finset.range (p * J)).filter (fun t => p ∣ t)).card +
-    ((Finset.range (p * J)).filter (fun t => ¬ p ∣ t)).card
-    = (Finset.range (p * J)).card :=
+      ((Finset.range (p * J)).filter (fun t => ¬ p ∣ t)).card
+      = (Finset.range (p * J)).card :=
     Finset.card_filter_add_card_filter_not _
   omega
 
@@ -1097,7 +1102,7 @@ private lemma card_filter_even_of_odd (p J : ℕ) [Fact (Nat.Prime p)]
   obtain ⟨k, hk⟩ := hodd
   have hpeq : p = 2 * k + 1 := hk
   have hcard_eq : ((Finset.range (p * J)).filter
-    (fun t => ¬ p ∣ t)).card = 2 * (k * J) := by
+      (fun t => ¬ p ∣ t)).card = 2 * (k * J) := by
     rw [hcard]
     have e1 : p * J = (2 * k + 1) * J := by rw [← hpeq]
     have e2 : (2 * k + 1) * J = 2 * (k * J) + J := by ring
@@ -1125,7 +1130,7 @@ private lemma card_filter_even_of_even_J (p J : ℕ) (hp : 0 < p)
       _ ≤ J * p := Nat.mul_le_mul_left J h1p
       _ = p * J := by rw [mul_comm]
   have hcard_eq : ((Finset.range (p * J)).filter
-    (fun t => ¬ p ∣ t)).card = (p - 1) * J := by
+      (fun t => ¬ p ∣ t)).card = (p - 1) * J := by
     rw [hcard]
     have e : p * J - J = (p - 1) * J := by
       have h : (p - 1) * J + J = p * J := by
@@ -1176,35 +1181,35 @@ private lemma prod_unit_sign (p N K J k : ℕ) (hK : K = p * J)
   have hN0 : ((N : ℕ) : ZMod (p ^ k)) = 0 :=
     (ZMod.natCast_eq_zero_iff N (p ^ k)).mpr hNdiv
   have hterm : ∀ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t),
-    (((N - t : ℕ)) : ZMod (p ^ k)) = -((t : ℕ) : ZMod (p ^ k)) := by
+      (((N - t : ℕ)) : ZMod (p ^ k)) = -((t : ℕ) : ZMod (p ^ k)) := by
     intro t ht
     have hmem := Finset.mem_filter.mp ht
     have htK : t < K := Finset.mem_range.mp hmem.1
     have htN : t ≤ N := by omega
     rw [Nat.cast_sub htN, hN0, zero_sub]
   have hprod : (∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t),
-    (((N - t : ℕ)) : ZMod (p ^ k)))
-    = ∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t),
-      (-((t : ℕ) : ZMod (p ^ k))) :=
+        (((N - t : ℕ)) : ZMod (p ^ k)))
+      = ∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t),
+        (-((t : ℕ) : ZMod (p ^ k))) :=
     Finset.prod_congr rfl hterm
   have hneg : (∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t),
-    (-((t : ℕ) : ZMod (p ^ k))))
-    = (-1) ^ ((Finset.range K).filter (fun t => ¬ p ∣ t)).card *
-      (∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t),
-        ((t : ℕ) : ZMod (p ^ k))) := by
+        (-((t : ℕ) : ZMod (p ^ k))))
+      = (-1) ^ ((Finset.range K).filter (fun t => ¬ p ∣ t)).card *
+        (∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t),
+          ((t : ℕ) : ZMod (p ^ k))) := by
     have e : ∀ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t),
-      (-((t : ℕ) : ZMod (p ^ k))) = (-1) * ((t : ℕ) : ZMod (p ^ k)) := by
+        (-((t : ℕ) : ZMod (p ^ k))) = (-1) * ((t : ℕ) : ZMod (p ^ k)) := by
       intro t _
       rw [neg_one_mul]
     rw [Finset.prod_congr rfl e]
     rw [Finset.prod_mul_distrib, Finset.prod_const]
   have hcastT : (∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t),
-    ((t : ℕ) : ZMod (p ^ k)))
-    = (((∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t), t : ℕ))
-      : ZMod (p ^ k)) := by
+        ((t : ℕ) : ZMod (p ^ k)))
+      = (((∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t), t : ℕ))
+        : ZMod (p ^ k)) := by
     simp only [Nat.cast_prod]
   have hTeq : (∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t), t)
-    = ∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t + 1), (t + 1) := by
+      = ∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t + 1), (t + 1) := by
     rw [hK]
     exact prod_range_notdvd_t_eq p J
   simp only [Nat.cast_prod] at hprod ⊢
@@ -1227,18 +1232,20 @@ private lemma choose_mul_prod_range_aux (N K : ℕ) :
     have h3 := prod_range_add_one_eq_factorial K
     have hpos : 0 < Nat.factorial (N - K) := Nat.factorial_pos _
     have hmul : (Nat.choose N K * (∏ t ∈ Finset.range K, (t + 1)))
-      * Nat.factorial (N - K)
-      = (∏ t ∈ Finset.range K, (N - t)) * Nat.factorial (N - K) := by
+        * Nat.factorial (N - K)
+        = (∏ t ∈ Finset.range K, (N - t)) * Nat.factorial (N - K) := by
       rw [mul_assoc, h3]
       have hcomm : Nat.factorial K * Nat.factorial (N - K)
-        = Nat.factorial (N - K) * Nat.factorial K := by
+          = Nat.factorial (N - K) * Nat.factorial K := by
         rw [mul_comm]
       rw [hcomm, ← mul_assoc]
       have h1' : Nat.choose N K * Nat.factorial (N - K)
-        * Nat.factorial K = Nat.factorial N := by
+          * Nat.factorial K = Nat.factorial N := by
         rw [mul_assoc] at h1 ⊢
-        rwa [mul_comm (Nat.factorial K) (Nat.factorial (N - K))] at h1
-      rwa [h1']
+        rw [mul_comm (Nat.factorial K) (Nat.factorial (N - K))] at h1
+        exact h1
+      rw [h1']
+      exact h2.symm
     exact Nat.mul_right_cancel hpos hmul
   · have hlt : N < K := by omega
     have hC0 : Nat.choose N K = 0 := Nat.choose_eq_zero_of_lt hlt
@@ -1269,11 +1276,11 @@ private lemma choose_range_unit_eq (p N M K J : ℕ) (hp : 0 < p)
   have hsplitD := Finset.prod_filter_mul_prod_filter_not
     (Finset.range K) (fun t => p ∣ t + 1) (fun t => t + 1)
   have hDp : ∏ t ∈ (Finset.range K).filter (fun t => p ∣ t + 1), (t + 1)
-    = p ^ J * ∏ s ∈ Finset.range J, (s + 1) := by
+      = p ^ J * ∏ s ∈ Finset.range J, (s + 1) := by
     rw [hK]
     exact prod_range_dvd_succ_eq p J hp
   have hPp : ∏ t ∈ (Finset.range K).filter (fun t => p ∣ t), (N - t)
-    = p ^ J * ∏ s ∈ Finset.range J, (M - s) := by
+      = p ^ J * ∏ s ∈ Finset.range J, (M - s) := by
     rw [hK, hN]
     exact prod_range_filter_sub_eq p J M hp
   have hposP : 0 < p ^ J := Nat.pow_pos hp
@@ -1284,17 +1291,17 @@ private lemma choose_range_unit_eq (p N M K J : ℕ) (hp : 0 < p)
   have hposPE : 0 < p ^ J * ∏ s ∈ Finset.range J, (s + 1) :=
     Nat.mul_pos hposP hposE
   have heq : (p ^ J * ∏ s ∈ Finset.range J, (s + 1)) *
-    (Nat.choose N K *
-      ∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t + 1), (t + 1))
-    = (p ^ J * ∏ s ∈ Finset.range J, (s + 1)) *
-      (Nat.choose M J *
-        ∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t), (N - t)) := by
+        (Nat.choose N K *
+          ∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t + 1), (t + 1))
+      = (p ^ J * ∏ s ∈ Finset.range J, (s + 1)) *
+        (Nat.choose M J *
+          ∏ t ∈ (Finset.range K).filter (fun t => ¬ p ∣ t), (N - t)) := by
     have e1 : Nat.choose N K * (∏ t ∈ Finset.range K, (t + 1))
-      = ∏ t ∈ Finset.range K, (N - t) := hCD1
+        = ∏ t ∈ Finset.range K, (N - t) := hCD1
     rw [← hsplitD, ← hsplitP] at e1
     rw [hDp, hPp] at e1
     have e2 : ∏ s ∈ Finset.range J, (M - s)
-      = Nat.choose M J * ∏ s ∈ Finset.range J, (s + 1) := by
+        = Nat.choose M J * ∏ s ∈ Finset.range J, (s + 1) := by
       exact hCD2.symm
     rw [e2] at e1
     ring_nf at e1 ⊢
@@ -1318,18 +1325,20 @@ private lemma choose_mul_prod_range (N K : ℕ) :
     have h3 := prod_range_add_one_eq_factorial K
     have hpos : 0 < Nat.factorial (N - K) := Nat.factorial_pos _
     have hmul : (Nat.choose N K * (∏ t ∈ Finset.range K, (t + 1)))
-      * Nat.factorial (N - K)
-      = (∏ t ∈ Finset.range K, (N - t)) * Nat.factorial (N - K) := by
+        * Nat.factorial (N - K)
+        = (∏ t ∈ Finset.range K, (N - t)) * Nat.factorial (N - K) := by
       rw [mul_assoc, h3]
       have hcomm : Nat.factorial K * Nat.factorial (N - K)
-        = Nat.factorial (N - K) * Nat.factorial K := by
+          = Nat.factorial (N - K) * Nat.factorial K := by
         rw [mul_comm]
       rw [hcomm, ← mul_assoc]
       have h1' : Nat.choose N K * Nat.factorial (N - K)
-        * Nat.factorial K = Nat.factorial N := by
+          * Nat.factorial K = Nat.factorial N := by
         rw [mul_assoc] at h1 ⊢
-        rwa [mul_comm (Nat.factorial K) (Nat.factorial (N - K))] at h1
-      rwa [h1']
+        rw [mul_comm (Nat.factorial K) (Nat.factorial (N - K))] at h1
+        exact h1
+      rw [h1']
+      exact h2.symm
     exact Nat.mul_right_cancel hpos hmul
   · have hlt : N < K := by omega
     have hC0 : Nat.choose N K = 0 := Nat.choose_eq_zero_of_lt hlt
@@ -1362,25 +1371,26 @@ private lemma choose_add_prime_pow_congr (p t n j : ℕ)
     (t + 1) hNdiv
   have hcop := coprime_prod_filter p (p * j) (t + 1)
   have hcast : (((Nat.choose (p ^ (t + 1) * n + p * j) (p * j) : ℕ))
-    : ZMod (p ^ (t + 1)))
-    * (((∏ i ∈ (Finset.Icc 1 (p * j)).filter
-      (fun i => ¬ p ∣ i), i : ℕ)) : ZMod (p ^ (t + 1)))
-    = (((Nat.choose (p ^ t * n + j) j : ℕ)) : ZMod (p ^ (t + 1)))
-    * (((∏ i ∈ (Finset.Icc 1 (p * j)).filter
-      (fun i => ¬ p ∣ i), (p ^ (t + 1) * n + i) : ℕ))
-      : ZMod (p ^ (t + 1))) := by
+      : ZMod (p ^ (t + 1)))
+      * (((∏ i ∈ (Finset.Icc 1 (p * j)).filter
+        (fun i => ¬ p ∣ i), i : ℕ)) : ZMod (p ^ (t + 1)))
+      = (((Nat.choose (p ^ t * n + j) j : ℕ)) : ZMod (p ^ (t + 1)))
+      * (((∏ i ∈ (Finset.Icc 1 (p * j)).filter
+        (fun i => ¬ p ∣ i), (p ^ (t + 1) * n + i) : ℕ))
+        : ZMod (p ^ (t + 1))) := by
     have h := congrArg (fun x : ℕ => ((x : ℕ) : ZMod (p ^ (t + 1)))) hunit
     simp only [Nat.cast_mul] at h
     exact h
   rw [hPuDu] at hcast
   have hunit_isunit : IsUnit
-    ((((∏ i ∈ (Finset.Icc 1 (p * j)).filter
-      (fun i => ¬ p ∣ i), i : ℕ))) : ZMod (p ^ (t + 1))) := by
+      ((((∏ i ∈ (Finset.Icc 1 (p * j)).filter
+        (fun i => ¬ p ∣ i), i : ℕ))) : ZMod (p ^ (t + 1))) := by
     have hu := (ZMod.unitOfCoprime _ hcop).isUnit
-    rwa [ZMod.coe_unitOfCoprime] at hu
+    rw [ZMod.coe_unitOfCoprime] at hu
+    exact hu
   have hZMod : (((Nat.choose (p ^ (t + 1) * n + p * j) (p * j) : ℕ))
-    : ZMod (p ^ (t + 1)))
-    = ((Nat.choose (p ^ t * n + j) j : ℕ) : ZMod (p ^ (t + 1))) :=
+      : ZMod (p ^ (t + 1)))
+      = ((Nat.choose (p ^ t * n + j) j : ℕ) : ZMod (p ^ (t + 1))) :=
     IsUnit.mul_right_cancel hunit_isunit hcast
   exact (ZMod.natCast_eq_natCast_iff _ _ _).mp hZMod
 
@@ -1402,10 +1412,10 @@ private lemma dvd_choose_of_not_dvd_aux (p N K m : ℕ)
   obtain ⟨K', rfl⟩ := Nat.exists_eq_add_one_of_ne_zero
     (by omega : K ≠ 0)
   have heq : (K' + 1) * Nat.choose (N' + 1) (K' + 1)
-    = (N' + 1) * Nat.choose N' K' := by
+      = (N' + 1) * Nat.choose N' K' := by
     have h := Nat.add_one_mul_choose_eq N' K'
     calc (K' + 1) * Nat.choose (N' + 1) (K' + 1)
-      = Nat.choose (N' + 1) (K' + 1) * (K' + 1) := by rw [mul_comm]
+        = Nat.choose (N' + 1) (K' + 1) * (K' + 1) := by rw [mul_comm]
       _ = (N' + 1) * Nat.choose N' K' := h.symm
   have hdvd : p ^ m ∣ (K' + 1) * Nat.choose (N' + 1) (K' + 1) := by
     rw [heq]
@@ -1442,87 +1452,90 @@ private lemma choose_prime_pow_congr_aux (p t n j : ℕ)
     rfl hNdiv hKN
   have hcop := coprime_prod_range_filter p (p * j) (t + 1)
   have hcast : (((Nat.choose (p ^ (t + 1) * n) (p * j) : ℕ))
-    : ZMod (p ^ (t + 1)))
-    * (((∏ u ∈ (Finset.range (p * j)).filter
-      (fun u => ¬ p ∣ u + 1), (u + 1) : ℕ)) : ZMod (p ^ (t + 1)))
-    = (((Nat.choose (p ^ t * n) j : ℕ)) : ZMod (p ^ (t + 1)))
-    * (((∏ u ∈ (Finset.range (p * j)).filter
-      (fun u => ¬ p ∣ u), (p ^ (t + 1) * n - u) : ℕ))
-      : ZMod (p ^ (t + 1))) := by
+      : ZMod (p ^ (t + 1)))
+      * (((∏ u ∈ (Finset.range (p * j)).filter
+        (fun u => ¬ p ∣ u + 1), (u + 1) : ℕ)) : ZMod (p ^ (t + 1)))
+      = (((Nat.choose (p ^ t * n) j : ℕ)) : ZMod (p ^ (t + 1)))
+      * (((∏ u ∈ (Finset.range (p * j)).filter
+        (fun u => ¬ p ∣ u), (p ^ (t + 1) * n - u) : ℕ))
+        : ZMod (p ^ (t + 1))) := by
     have h := congrArg (fun x : ℕ => ((x : ℕ) : ZMod (p ^ (t + 1)))) hunit
     simp only [Nat.cast_mul] at h
     exact h
   rw [hsign] at hcast
   have hunit_isunit : IsUnit
-    ((((∏ u ∈ (Finset.range (p * j)).filter
-      (fun u => ¬ p ∣ u + 1), (u + 1) : ℕ)))
-      : ZMod (p ^ (t + 1))) := by
+      ((((∏ u ∈ (Finset.range (p * j)).filter
+        (fun u => ¬ p ∣ u + 1), (u + 1) : ℕ)))
+        : ZMod (p ^ (t + 1))) := by
     have hu := (ZMod.unitOfCoprime _ hcop).isUnit
-    rwa [ZMod.coe_unitOfCoprime] at hu
+    rw [ZMod.coe_unitOfCoprime] at hu
+    exact hu
   have hcard := card_filter_notdvd_range p j hp0
   by_cases hp2 : p = 2
   · subst hp2
     by_cases hJeven : Even j
     · have heven : Even
-      ((Finset.range (2 * j)).filter (fun t => ¬ 2 ∣ t)).card :=
-      card_filter_even_of_even_J 2 j (by omega) hJeven
+          ((Finset.range (2 * j)).filter (fun t => ¬ 2 ∣ t)).card :=
+        card_filter_even_of_even_J 2 j (by omega) hJeven
       have hpow1 : ((-1 : ZMod (2 ^ (t + 1)))
-        ^ ((Finset.range (2 * j)).filter
-          (fun t => ¬ 2 ∣ t)).card) = 1 :=
+          ^ ((Finset.range (2 * j)).filter
+            (fun t => ¬ 2 ∣ t)).card) = 1 :=
         heven.neg_one_pow
       rw [hpow1, one_mul] at hcast
       have hZMod : (((Nat.choose (2 ^ (t + 1) * n) (2 * j) : ℕ))
-        : ZMod (2 ^ (t + 1)))
-        = ((Nat.choose (2 ^ t * n) j : ℕ) : ZMod (2 ^ (t + 1))) :=
+          : ZMod (2 ^ (t + 1)))
+          = ((Nat.choose (2 ^ t * n) j : ℕ) : ZMod (2 ^ (t + 1))) :=
         IsUnit.mul_right_cancel hunit_isunit hcast
       exact (ZMod.natCast_eq_natCast_iff _ _ _).mp hZMod
     · have hodd : Odd j := by
-      obtain h | h := Nat.even_or_odd j
-      · exact absurd h hJeven
-      · exact h
+        rcases Nat.even_or_odd j with h | h
+        · exact absurd h hJeven
+        · exact h
       have hpowm1 : ((-1 : ZMod (2 ^ (t + 1)))
-        ^ ((Finset.range (2 * j)).filter
-          (fun t => ¬ 2 ∣ t)).card) = -1 := by
+          ^ ((Finset.range (2 * j)).filter
+            (fun t => ¬ 2 ∣ t)).card) = -1 := by
         have hcardJ : ((Finset.range (2 * j)).filter
-          (fun t => ¬ 2 ∣ t)).card = j := by
+            (fun t => ¬ 2 ∣ t)).card = j := by
           have h := card_filter_notdvd_range 2 j (by omega)
           omega
-        rwa [hcardJ]
+        rw [hcardJ]
+        exact hodd.neg_one_pow
       rw [hpowm1] at hcast
       have hneg : (((Nat.choose (2 ^ (t + 1) * n) (2 * j) : ℕ))
-        : ZMod (2 ^ (t + 1)))
-        = -(((Nat.choose (2 ^ t * n) j : ℕ))
-          : ZMod (2 ^ (t + 1))) := by
-        have h' : (((Nat.choose (2 ^ (t + 1) * n) (2 * j) : ℕ))
           : ZMod (2 ^ (t + 1)))
-          * (((∏ u ∈ (Finset.range (2 * j)).filter
-            (fun u => ¬ 2 ∣ u + 1), (u + 1) : ℕ))
-            : ZMod (2 ^ (t + 1)))
-          = (-(((Nat.choose (2 ^ t * n) j : ℕ))
-            : ZMod (2 ^ (t + 1))))
-          * (((∏ u ∈ (Finset.range (2 * j)).filter
-            (fun u => ¬ 2 ∣ u + 1), (u + 1) : ℕ))
+          = -(((Nat.choose (2 ^ t * n) j : ℕ))
             : ZMod (2 ^ (t + 1))) := by
-          have hDu_eq : (((∏ t ∈ (Finset.range (2 * j)).filter
-            (fun t => ¬ 2 ∣ t + 1), (t + 1) : ℕ))
+        have h' : (((Nat.choose (2 ^ (t + 1) * n) (2 * j) : ℕ))
             : ZMod (2 ^ (t + 1)))
-            = (((∏ u ∈ (Finset.range (2 * j)).filter
+            * (((∏ u ∈ (Finset.range (2 * j)).filter
               (fun u => ¬ 2 ∣ u + 1), (u + 1) : ℕ))
-              : ZMod (2 ^ (t + 1))) :=
-            rfl
-          rw [hDu_eq] at hcast
-          have heq : (((Nat.choose (2 ^ t * n) j : ℕ))
-            : ZMod (2 ^ (t + 1)))
-            * ((-1) * (((∏ u ∈ (Finset.range (2 * j)).filter
-              (fun u => ¬ 2 ∣ u + 1), (u + 1) : ℕ))
-              : ZMod (2 ^ (t + 1))))
+              : ZMod (2 ^ (t + 1)))
             = (-(((Nat.choose (2 ^ t * n) j : ℕ))
               : ZMod (2 ^ (t + 1))))
             * (((∏ u ∈ (Finset.range (2 * j)).filter
               (fun u => ¬ 2 ∣ u + 1), (u + 1) : ℕ))
               : ZMod (2 ^ (t + 1))) := by
+          have hDu_eq : (((∏ t ∈ (Finset.range (2 * j)).filter
+              (fun t => ¬ 2 ∣ t + 1), (t + 1) : ℕ))
+              : ZMod (2 ^ (t + 1)))
+              = (((∏ u ∈ (Finset.range (2 * j)).filter
+                (fun u => ¬ 2 ∣ u + 1), (u + 1) : ℕ))
+                : ZMod (2 ^ (t + 1))) :=
+            rfl
+          rw [hDu_eq] at hcast
+          have heq : (((Nat.choose (2 ^ t * n) j : ℕ))
+              : ZMod (2 ^ (t + 1)))
+              * ((-1) * (((∏ u ∈ (Finset.range (2 * j)).filter
+                (fun u => ¬ 2 ∣ u + 1), (u + 1) : ℕ))
+                : ZMod (2 ^ (t + 1))))
+              = (-(((Nat.choose (2 ^ t * n) j : ℕ))
+                : ZMod (2 ^ (t + 1))))
+              * (((∏ u ∈ (Finset.range (2 * j)).filter
+                (fun u => ¬ 2 ∣ u + 1), (u + 1) : ℕ))
+                : ZMod (2 ^ (t + 1))) := by
             ring
-          rwa [heq] at hcast
+          rw [heq] at hcast
+          exact hcast
         exact IsUnit.mul_right_cancel hunit_isunit h'
       have h2dvd : 2 ^ t ∣ Nat.choose (2 ^ t * n) j := by
         have hJpos : 0 < j := by
@@ -1536,51 +1549,52 @@ private lemma choose_prime_pow_congr_aux (p t n j : ℕ)
         exact dvd_choose_of_not_dvd_aux 2 (2 ^ t * n) j t hJle hJpos hMdiv hndvd
       obtain ⟨c, hc⟩ := h2dvd
       have h2mul0 : (2 : ZMod (2 ^ (t + 1)))
-        * (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1))) = 0 := by
+          * (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1))) = 0 := by
         have hdiv : 2 ^ (t + 1) ∣ 2 * Nat.choose (2 ^ t * n) j := by
           rw [hc, pow_succ']
           exact Dvd.intro c (by ring)
         have hcast0 : ((((2 * Nat.choose (2 ^ t * n) j : ℕ)))
-          : ZMod (2 ^ (t + 1))) = 0 :=
+            : ZMod (2 ^ (t + 1))) = 0 :=
           (ZMod.natCast_eq_zero_iff _ _).mpr hdiv
         simp only [Nat.cast_mul, Nat.cast_ofNat] at hcast0
         exact hcast0
       have hselfneg : (-(((Nat.choose (2 ^ t * n) j : ℕ))
-        : ZMod (2 ^ (t + 1))))
-        = (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1))) := by
+          : ZMod (2 ^ (t + 1))))
+          = (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1))) := by
         have h2' : (((Nat.choose (2 ^ t * n) j : ℕ))
-          : ZMod (2 ^ (t + 1)))
-          + (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1))) = 0 := by
+            : ZMod (2 ^ (t + 1)))
+            + (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1))) = 0 := by
           have h := h2mul0
-          rwa [two_mul] at h
+          rw [two_mul] at h
+          exact h
         have h0 : (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1)))
-          + (-(((Nat.choose (2 ^ t * n) j : ℕ))
-            : ZMod (2 ^ (t + 1)))) = 0 :=
+            + (-(((Nat.choose (2 ^ t * n) j : ℕ))
+              : ZMod (2 ^ (t + 1)))) = 0 :=
           add_neg_cancel _
         have heq : (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1)))
-          + (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1)))
-          = (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1)))
-          + (-(((Nat.choose (2 ^ t * n) j : ℕ))
-            : ZMod (2 ^ (t + 1)))) := by
+            + (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1)))
+            = (((Nat.choose (2 ^ t * n) j : ℕ)) : ZMod (2 ^ (t + 1)))
+            + (-(((Nat.choose (2 ^ t * n) j : ℕ))
+              : ZMod (2 ^ (t + 1)))) := by
           rw [h2', h0]
         have hcancel := add_left_cancel heq
         exact hcancel.symm
       have hZMod : (((Nat.choose (2 ^ (t + 1) * n) (2 * j) : ℕ))
-        : ZMod (2 ^ (t + 1)))
-        = ((Nat.choose (2 ^ t * n) j : ℕ) : ZMod (2 ^ (t + 1))) := by
+          : ZMod (2 ^ (t + 1)))
+          = ((Nat.choose (2 ^ t * n) j : ℕ) : ZMod (2 ^ (t + 1))) := by
         rw [hneg, hselfneg]
       exact (ZMod.natCast_eq_natCast_iff _ _ _).mp hZMod
   · have heven : Even
-    ((Finset.range (p * j)).filter (fun t => ¬ p ∣ t)).card :=
-    card_filter_even_of_odd p j hp2
+        ((Finset.range (p * j)).filter (fun t => ¬ p ∣ t)).card :=
+      card_filter_even_of_odd p j hp2
     have hpow1 : ((-1 : ZMod (p ^ (t + 1)))
-      ^ ((Finset.range (p * j)).filter
-        (fun t => ¬ p ∣ t)).card) = 1 :=
+        ^ ((Finset.range (p * j)).filter
+          (fun t => ¬ p ∣ t)).card) = 1 :=
       heven.neg_one_pow
     rw [hpow1, one_mul] at hcast
     have hZMod : (((Nat.choose (p ^ (t + 1) * n) (p * j) : ℕ))
-      : ZMod (p ^ (t + 1)))
-      = ((Nat.choose (p ^ t * n) j : ℕ) : ZMod (p ^ (t + 1))) :=
+        : ZMod (p ^ (t + 1)))
+        = ((Nat.choose (p ^ t * n) j : ℕ) : ZMod (p ^ (t + 1))) :=
       IsUnit.mul_right_cancel hunit_isunit hcast
     exact (ZMod.natCast_eq_natCast_iff _ _ _).mp hZMod
 
@@ -1629,10 +1643,10 @@ private lemma dvd_choose_of_not_dvd (p N K m : ℕ) [Fact (Nat.Prime p)]
   obtain ⟨K', rfl⟩ := Nat.exists_eq_add_one_of_ne_zero
     (by omega : K ≠ 0)
   have heq : (K' + 1) * Nat.choose (N' + 1) (K' + 1)
-    = (N' + 1) * Nat.choose N' K' := by
+      = (N' + 1) * Nat.choose N' K' := by
     have h := Nat.add_one_mul_choose_eq N' K'
     calc (K' + 1) * Nat.choose (N' + 1) (K' + 1)
-      = Nat.choose (N' + 1) (K' + 1) * (K' + 1) := by rw [mul_comm]
+        = Nat.choose (N' + 1) (K' + 1) * (K' + 1) := by rw [mul_comm]
       _ = (N' + 1) * Nat.choose N' K' := h.symm
   have hdvd : p ^ m ∣ (K' + 1) * Nat.choose (N' + 1) (K' + 1) := by
     rw [heq]
@@ -1665,14 +1679,14 @@ private lemma binomialPowerSeq_moebius_nonneg (r s n : ℕ) (hr : 0 < r)
     ArithmeticFunction.moebius_apply_one
   have hn1 : n / 1 = n := Nat.div_one n
   have hterm1 : (⇑ArithmeticFunction.moebius 1) *
-    ((binomialPowerSeq r s (n / 1) : ℕ) : ℤ) =
-    ((binomialPowerSeq r s n : ℕ) : ℤ) := by
+      ((binomialPowerSeq r s (n / 1) : ℕ) : ℤ) =
+      ((binomialPowerSeq r s n : ℕ) : ℤ) := by
     rw [hmu1, hn1, one_mul]
   rw [hterm1] at hdecomp
   have hlower : ∀ d ∈ (Nat.divisors n).erase 1,
-    -((binomialPowerSeq r s (n / d) : ℕ) : ℤ) ≤
-      (⇑ArithmeticFunction.moebius d) *
-        ((binomialPowerSeq r s (n / d) : ℕ) : ℤ) := by
+      -((binomialPowerSeq r s (n / d) : ℕ) : ℤ) ≤
+        (⇑ArithmeticFunction.moebius d) *
+          ((binomialPowerSeq r s (n / d) : ℕ) : ℤ) := by
     intro d _
     have hmu := moebius_ge_neg_one d
     have hnn : 0 ≤ ((binomialPowerSeq r s (n / d) : ℕ) : ℤ) :=
@@ -1681,21 +1695,21 @@ private lemma binomialPowerSeq_moebius_nonneg (r s n : ℕ) (hr : 0 < r)
     simp only [neg_one_mul] at hmul
     exact hmul
   have hsumle : (∑ d ∈ (Nat.divisors n).erase 1,
-    (-((binomialPowerSeq r s (n / d) : ℕ) : ℤ))) ≤
-    ∑ d ∈ (Nat.divisors n).erase 1,
-      ((⇑ArithmeticFunction.moebius d) *
-        ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)) :=
+        (-((binomialPowerSeq r s (n / d) : ℕ) : ℤ))) ≤
+      ∑ d ∈ (Nat.divisors n).erase 1,
+        ((⇑ArithmeticFunction.moebius d) *
+          ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)) :=
     Finset.sum_le_sum hlower
   rw [Finset.sum_neg_distrib] at hsumle
   have hcast : (∑ d ∈ (Nat.divisors n).erase 1,
-    ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)) =
-    (((∑ d ∈ (Nat.divisors n).erase 1,
-      binomialPowerSeq r s (n / d)) : ℕ) : ℤ) := by
+        ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)) =
+      (((∑ d ∈ (Nat.divisors n).erase 1,
+        binomialPowerSeq r s (n / d)) : ℕ) : ℤ) := by
     simp only [Nat.cast_sum]
   have hnat := binomialPowerSeq_erase_sum_le r s n hr hn
   have hnatZ : (((∑ d ∈ (Nat.divisors n).erase 1,
-    binomialPowerSeq r s (n / d)) : ℕ) : ℤ) + 1 ≤
-    ((binomialPowerSeq r s n : ℕ) : ℤ) := by
+        binomialPowerSeq r s (n / d)) : ℕ) : ℤ) + 1 ≤
+      ((binomialPowerSeq r s n : ℕ) : ℤ) := by
     exact_mod_cast hnat
   omega
 
@@ -1726,7 +1740,7 @@ private lemma prime_dvd_choose_mul_of_not_dvd (p n k : ℕ) [Fact (Nat.Prime p)]
     rw [e1, e2]
     exact Nat.choose_eq_zero_of_lt hpos
   have ha0 : 0 < a := by
-    obtain rfl | h := Nat.eq_zero_or_pos a
+    rcases Nat.eq_zero_or_pos a with rfl | h
     · rw [pow_zero] at ha; omega
     · exact h
   have hprod : ∏ i ∈ Finset.range a, (p * n / p ^ i % p).choose (k / p ^ i % p) = 0 := by
@@ -1787,12 +1801,12 @@ private lemma prime_choose_mul_congr (p N Q : ℕ) [Fact (Nat.Prime p)] :
   have hGb : (N / p ^ b % p).choose (Q / p ^ b % p) = 1 := by
     simp only [htop2, htop2', Nat.choose_zero_right]
   have hmid : (∏ k ∈ Finset.range b, ((p * N) / p ^ (k + 1) % p).choose ((p * Q) / p ^ (k + 1) % p))
-    = ∏ k ∈ Finset.range b, (N / p ^ k % p).choose (Q / p ^ k % p) := by
+      = ∏ k ∈ Finset.range b, (N / p ^ k % p).choose (Q / p ^ k % p) := by
     apply Finset.prod_congr rfl
     intro j hj
     rw [hshift j, hshift2 j]
   have hprod_eq : (∏ i ∈ Finset.range (b + 1), ((p * N) / p ^ i % p).choose ((p * Q) / p ^ i % p))
-    = ∏ j ∈ Finset.range (b + 1), (N / p ^ j % p).choose (Q / p ^ j % p) := by
+      = ∏ j ∈ Finset.range (b + 1), (N / p ^ j % p).choose (Q / p ^ j % p) := by
     rw [Finset.prod_range_succ' (fun i => ((p * N) / p ^ i % p).choose ((p * Q) / p ^ i % p)) b]
     rw [Finset.prod_range_succ (fun j => (N / p ^ j % p).choose (Q / p ^ j % p)) b]
     rw [hmid, hF0, hGb, mul_one]
@@ -1812,8 +1826,8 @@ private lemma binomialPowerSeq_prime_mul_zmod (p r s n : ℕ) [Fact (Nat.Prime p
   have hp0 : 0 < p := hp.pos
   have hrne : r ≠ 0 := ne_of_gt hr
   have hcast : ∀ m : ℕ, ((binomialPowerSeq r s m : ℕ) : ZMod p)
-    = ∑ k ∈ Finset.range (m + 1),
-      (((Nat.choose m k : ℕ) : ZMod p) ^ r * (((Nat.choose (m + k) k : ℕ)) : ZMod p) ^ s) := by
+      = ∑ k ∈ Finset.range (m + 1),
+        (((Nat.choose m k : ℕ) : ZMod p) ^ r * (((Nat.choose (m + k) k : ℕ)) : ZMod p) ^ s) := by
     intro m
     unfold binomialPowerSeq
     rw [Nat.cast_sum]
@@ -1834,14 +1848,14 @@ private lemma binomialPowerSeq_prime_mul_zmod (p r s n : ℕ) [Fact (Nat.Prime p
       (CharP.cast_eq_zero_iff (ZMod p) p _).mpr hdvd
     simp [hF, hcast0, zero_pow hrne]
   have hsumfilter : ∑ k ∈ Finset.range (p * n + 1), F k
-    = ∑ k ∈ (Finset.range (p * n + 1)).filter (fun k => p ∣ k), F k := by
+      = ∑ k ∈ (Finset.range (p * n + 1)).filter (fun k => p ∣ k), F k := by
     apply Eq.symm
     apply Finset.sum_subset (Finset.filter_subset _ _)
     intro k hk hnk
     have hkd : ¬ p ∣ k := fun hd => hnk (Finset.mem_filter.mpr ⟨hk, hd⟩)
     exact hzero k hk hkd
   have hbij : ∑ k ∈ (Finset.range (p * n + 1)).filter (fun k => p ∣ k), F k
-    = ∑ q ∈ Finset.range (n + 1), G q := by
+      = ∑ q ∈ Finset.range (n + 1), G q := by
     apply Finset.sum_bij (fun k _ => k / p)
     · intro k hk
       rw [Finset.mem_filter] at hk
@@ -1874,18 +1888,19 @@ private lemma binomialPowerSeq_prime_mul_zmod (p r s n : ℕ) [Fact (Nat.Prime p
       have e : p * q / p = q := (by rw [mul_comm p q]; exact Nat.mul_div_cancel q hp0)
       rw [e]
       have e1 : (((Nat.choose (p * n) (p * q) : ℕ)) : ZMod p)
-        = (((Nat.choose n q : ℕ)) : ZMod p) :=
+          = (((Nat.choose n q : ℕ)) : ZMod p) :=
         (ZMod.natCast_eq_natCast_iff _ _ _).mpr (prime_choose_mul_congr p n q)
       have eeq : p * n + p * q = p * (n + q) := by ring
       have h2 : (p * (n + q)).choose (p * q) ≡ (n + q).choose q [MOD p] :=
         prime_choose_mul_congr p (n + q) q
       have e2 : (((Nat.choose (p * n + p * q) (p * q) : ℕ)) : ZMod p)
-        = (((Nat.choose (n + q) q : ℕ)) : ZMod p) := by
+          = (((Nat.choose (n + q) q : ℕ)) : ZMod p) := by
         rw [eeq]
         exact (ZMod.natCast_eq_natCast_iff _ _ _).mpr h2
       simp only [hF, hG]
       rw [e1, e2]
-  rwa [hsumfilter]
+  rw [hsumfilter]
+  exact hbij
 
 end MetaMathlibExt
 
@@ -1918,9 +1933,9 @@ private lemma binomialPowerSeq_prime_pow_zmod (p t r s n : ℕ)
     rw [pow_succ', mul_assoc]
   have hNdiv : p ^ (t + 1) ∣ p ^ (t + 1) * n := dvd_mul_right _ _
   have hcast : ∀ m : ℕ, ((binomialPowerSeq r s m : ℕ) : ZMod (p ^ (t + 1)))
-    = ∑ k ∈ Finset.range (m + 1),
-      (((Nat.choose m k : ℕ) : ZMod (p ^ (t + 1))) ^ r *
-        (((Nat.choose (m + k) k : ℕ)) : ZMod (p ^ (t + 1))) ^ s) := by
+      = ∑ k ∈ Finset.range (m + 1),
+        (((Nat.choose m k : ℕ) : ZMod (p ^ (t + 1))) ^ r *
+          (((Nat.choose (m + k) k : ℕ)) : ZMod (p ^ (t + 1))) ^ s) := by
     intro m
     unfold binomialPowerSeq
     rw [Nat.cast_sum]
@@ -1941,36 +1956,37 @@ private lemma binomialPowerSeq_prime_pow_zmod (p t r s n : ℕ)
     intro k hk hkd
     have hle : k ≤ N := Nat.lt_succ_iff.mp (Finset.mem_range.mp hk)
     have hkpos : 0 < k := by
-      obtain rfl | hpos := Nat.eq_zero_or_pos k
+      rcases Nat.eq_zero_or_pos k with rfl | hpos
       · simp at hkd
       · exact hpos
     have hNdiv' : p ^ (t + 1) ∣ N := by
-      rwa [hNdef]
+      rw [hNdef]
+      exact hNdiv
     have hdvd : p ^ (t + 1) ∣ Nat.choose N k :=
       dvd_choose_of_not_dvd p N k (t + 1) hle hkpos hNdiv' hkd
     have hpowdvd : p ^ (t + 1) ∣ (Nat.choose N k) ^ r := by
       obtain ⟨u, rfl⟩ := Nat.exists_eq_add_one_of_ne_zero hrne
       have e : (Nat.choose N k) ^ (u + 1)
-        = Nat.choose N k * (Nat.choose N k) ^ u :=
+          = Nat.choose N k * (Nat.choose N k) ^ u :=
         pow_succ' _ _
       rw [e]
       exact hdvd.mul_right _
     have hcast0 : (((Nat.choose N k : ℕ)) : ZMod (p ^ (t + 1))) ^ r = 0 := by
       have h0 : (((Nat.choose N k : ℕ)) : ZMod (p ^ (t + 1))) ^ r
-        = (((((Nat.choose N k) ^ r : ℕ))) : ZMod (p ^ (t + 1))) := by
+          = (((((Nat.choose N k) ^ r : ℕ))) : ZMod (p ^ (t + 1))) := by
         simp only [Nat.cast_pow]
       rw [h0]
       exact (ZMod.natCast_eq_zero_iff _ _).mpr hpowdvd
     simp [hF, hcast0]
   have hsumfilter : ∑ k ∈ Finset.range (N + 1), F k
-    = ∑ k ∈ (Finset.range (N + 1)).filter (fun k => p ∣ k), F k := by
+      = ∑ k ∈ (Finset.range (N + 1)).filter (fun k => p ∣ k), F k := by
     apply Eq.symm
     apply Finset.sum_subset (Finset.filter_subset _ _)
     intro k hk hnk
     have hkd : ¬ p ∣ k := fun hd => hnk (Finset.mem_filter.mpr ⟨hk, hd⟩)
     exact hzero k hk hkd
   have hbij : ∑ k ∈ (Finset.range (N + 1)).filter (fun k => p ∣ k), F k
-    = ∑ q ∈ Finset.range (M + 1), G q := by
+      = ∑ q ∈ Finset.range (M + 1), G q := by
     apply Finset.sum_bij (fun k _ => k / p)
     · intro k hk
       rw [Finset.mem_filter] at hk
@@ -2007,19 +2023,20 @@ private lemma binomialPowerSeq_prime_pow_zmod (p t r s n : ℕ)
       have e : p * q / p = q := (by rw [mul_comm p q]; exact Nat.mul_div_cancel q hp0)
       rw [e]
       have e1 : (((Nat.choose N (p * q) : ℕ)) : ZMod (p ^ (t + 1)))
-        = (((Nat.choose M q : ℕ)) : ZMod (p ^ (t + 1))) := by
+          = (((Nat.choose M q : ℕ)) : ZMod (p ^ (t + 1))) := by
         have hmod := choose_prime_pow_congr p t n q
         rw [hNdef, hMdef]
         exact (ZMod.natCast_eq_natCast_iff _ _ _).mpr hmod
       have e2 : (((Nat.choose (N + p * q) (p * q) : ℕ))
-        : ZMod (p ^ (t + 1)))
-        = (((Nat.choose (M + q) q : ℕ)) : ZMod (p ^ (t + 1))) := by
+          : ZMod (p ^ (t + 1)))
+          = (((Nat.choose (M + q) q : ℕ)) : ZMod (p ^ (t + 1))) := by
         have hmod := choose_add_prime_pow_congr p t n q
         rw [hNdef, hMdef]
         exact (ZMod.natCast_eq_natCast_iff _ _ _).mpr hmod
       simp only [hF, hG]
       rw [e1, e2]
-  rwa [hsumfilter]
+  rw [hsumfilter]
+  exact hbij
 
 end MetaMathlibExt
 
@@ -2193,10 +2210,10 @@ private lemma moebius_sum_reorg (p t m0 : ℕ) [Fact (Nat.Prime p)]
     (fun d => (⇑ArithmeticFunction.moebius d) *
       a ((p ^ (t + 1) * m0) / d))
   have hS1 : (∑ d ∈ (Nat.divisors (p ^ (t + 1) * m0)).filter
-    (fun d => ¬ p ∣ d),
-    (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
-    = ∑ e ∈ (Nat.divisors m0).filter (fun e => ¬ p ∣ e),
-      (⇑ArithmeticFunction.moebius e) * a (p ^ (t + 1) * (m0 / e)) := by
+        (fun d => ¬ p ∣ d),
+        (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
+      = ∑ e ∈ (Nat.divisors m0).filter (fun e => ¬ p ∣ e),
+        (⇑ArithmeticFunction.moebius e) * a (p ^ (t + 1) * (m0 / e)) := by
     have hset := filter_divisors_eq p t m0 hm0
     rw [hset]
     apply Finset.sum_congr rfl
@@ -2207,8 +2224,8 @@ private lemma moebius_sum_reorg (p t m0 : ℕ) [Fact (Nat.Prime p)]
       div_pow_mul_eq p t m0 e hdvd0
     rw [hdiv]
   have hS0 : (∑ d ∈ ((Nat.divisors (p ^ (t + 1) * m0)).filter
-    (fun d => p ∣ d)).filter (fun d => p * p ∣ d),
-    (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d)) = 0 := by
+        (fun d => p ∣ d)).filter (fun d => p * p ∣ d),
+        (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d)) = 0 := by
     apply Finset.sum_eq_zero
     intro d hd
     have hdvd : p * p ∣ d := (Finset.mem_filter.mp hd).2
@@ -2216,10 +2233,10 @@ private lemma moebius_sum_reorg (p t m0 : ℕ) [Fact (Nat.Prime p)]
       moebius_eq_zero_of_sq_dvd hdvd
     rw [hmu, zero_mul]
   have hS2 : (∑ d ∈ ((Nat.divisors (p ^ (t + 1) * m0)).filter
-    (fun d => p ∣ d)).filter (fun d => ¬ p * p ∣ d),
-    (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
-    = ∑ e ∈ (Nat.divisors m0).filter (fun e => ¬ p ∣ e),
-      (⇑ArithmeticFunction.moebius (p * e)) * a (p ^ t * (m0 / e)) := by
+        (fun d => p ∣ d)).filter (fun d => ¬ p * p ∣ d),
+        (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
+      = ∑ e ∈ (Nat.divisors m0).filter (fun e => ¬ p ∣ e),
+        (⇑ArithmeticFunction.moebius (p * e)) * a (p ^ t * (m0 / e)) := by
     apply Finset.sum_bij (fun d _ => d / p)
     · intro d hd
       simp only [Finset.mem_filter] at hd ⊢
@@ -2243,7 +2260,7 @@ private lemma moebius_sum_reorg (p t m0 : ℕ) [Fact (Nat.Prime p)]
       have hc0 : c ∣ m0 :=
         dvd_of_dvd_mul_pow_of_not_dvd p t m0 c hc_dvd hndvd_c
       have hcpos : 0 < c := by
-        obtain rfl | hpos := Nat.eq_zero_or_pos c
+        rcases Nat.eq_zero_or_pos c with rfl | hpos
         · simp_all
         · exact hpos
       rw [hdc]
@@ -2269,7 +2286,7 @@ private lemma moebius_sum_reorg (p t m0 : ℕ) [Fact (Nat.Prime p)]
       obtain ⟨hmem, hndvd⟩ := he
       have he0 : e ∣ m0 := Nat.dvd_of_mem_divisors hmem
       have hepos : 0 < e := by
-        obtain rfl | hpos := Nat.eq_zero_or_pos e
+        rcases Nat.eq_zero_or_pos e with rfl | hpos
         · simp_all
         · exact hpos
       have hpe_dvd : p * e ∣ p ^ (t + 1) * m0 :=
@@ -2310,11 +2327,11 @@ private lemma moebius_sum_reorg (p t m0 : ℕ) [Fact (Nat.Prime p)]
       have hc0 : c ∣ m0 :=
         dvd_of_dvd_mul_pow_of_not_dvd p t m0 c hc_dvd hndvd_c
       have hcpos : 0 < c := by
-        obtain rfl | hpos := Nat.eq_zero_or_pos c
+        rcases Nat.eq_zero_or_pos c with rfl | hpos
         · simp_all
         · exact hpos
       have hmu : (⇑ArithmeticFunction.moebius d)
-        = ⇑ArithmeticFunction.moebius (p * c) := by
+          = ⇑ArithmeticFunction.moebius (p * c) := by
         rw [hc]
       have hdiv : (p ^ (t + 1) * m0) / d = p ^ t * (m0 / c) := by
         have hpe : d = p * c := hc
@@ -2327,36 +2344,36 @@ private lemma moebius_sum_reorg (p t m0 : ℕ) [Fact (Nat.Prime p)]
     (fun d => (⇑ArithmeticFunction.moebius d) *
       a ((p ^ (t + 1) * m0) / d))
   have hS2neg : (∑ e ∈ (Nat.divisors m0).filter (fun e => ¬ p ∣ e),
-    (⇑ArithmeticFunction.moebius (p * e)) * a (p ^ t * (m0 / e)))
-    = ∑ e ∈ (Nat.divisors m0).filter (fun e => ¬ p ∣ e),
-      (⇑ArithmeticFunction.moebius e) * (-a (p ^ t * (m0 / e))) := by
+        (⇑ArithmeticFunction.moebius (p * e)) * a (p ^ t * (m0 / e)))
+      = ∑ e ∈ (Nat.divisors m0).filter (fun e => ¬ p ∣ e),
+        (⇑ArithmeticFunction.moebius e) * (-a (p ^ t * (m0 / e))) := by
     apply Finset.sum_congr rfl
     intro e he
     have hndvd : ¬ p ∣ e := (Finset.mem_filter.mp he).2
     have hmu := moebius_prime_mul hndvd
     rw [hmu, neg_mul, mul_neg]
   have hcombine : (∑ d ∈ Nat.divisors (p ^ (t + 1) * m0),
-    (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
-    = (∑ d ∈ (Nat.divisors (p ^ (t + 1) * m0)).filter (fun d => ¬ p ∣ d),
-      (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
-      + (∑ d ∈ ((Nat.divisors (p ^ (t + 1) * m0)).filter
-        (fun d => p ∣ d)).filter (fun d => ¬ p * p ∣ d),
-        (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d)) := by
-    have h1 : (∑ d ∈ Nat.divisors (p ^ (t + 1) * m0),
-      (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
-      = (∑ d ∈ (Nat.divisors (p ^ (t + 1) * m0)).filter (fun d => p ∣ d),
         (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
-        + (∑ d ∈ (Nat.divisors (p ^ (t + 1) * m0)).filter (fun d => ¬ p ∣ d),
-          (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d)) :=
-      hsplit1.symm
-    have h2 : (∑ d ∈ (Nat.divisors (p ^ (t + 1) * m0)).filter (fun d => p ∣ d),
-      (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
-      = (∑ d ∈ ((Nat.divisors (p ^ (t + 1) * m0)).filter
-        (fun d => p ∣ d)).filter (fun d => p * p ∣ d),
+      = (∑ d ∈ (Nat.divisors (p ^ (t + 1) * m0)).filter (fun d => ¬ p ∣ d),
         (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
         + (∑ d ∈ ((Nat.divisors (p ^ (t + 1) * m0)).filter
           (fun d => p ∣ d)).filter (fun d => ¬ p * p ∣ d),
-          (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d)) :=
+          (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d)) := by
+    have h1 : (∑ d ∈ Nat.divisors (p ^ (t + 1) * m0),
+          (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
+        = (∑ d ∈ (Nat.divisors (p ^ (t + 1) * m0)).filter (fun d => p ∣ d),
+          (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
+          + (∑ d ∈ (Nat.divisors (p ^ (t + 1) * m0)).filter (fun d => ¬ p ∣ d),
+            (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d)) :=
+      hsplit1.symm
+    have h2 : (∑ d ∈ (Nat.divisors (p ^ (t + 1) * m0)).filter (fun d => p ∣ d),
+          (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
+        = (∑ d ∈ ((Nat.divisors (p ^ (t + 1) * m0)).filter
+            (fun d => p ∣ d)).filter (fun d => p * p ∣ d),
+            (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d))
+          + (∑ d ∈ ((Nat.divisors (p ^ (t + 1) * m0)).filter
+            (fun d => p ∣ d)).filter (fun d => ¬ p * p ∣ d),
+            (⇑ArithmeticFunction.moebius d) * a ((p ^ (t + 1) * m0) / d)) :=
       hsplit2.symm
     rw [h1, h2, hS0, zero_add, add_comm]
   rw [hcombine, hS1, hS2, hS2neg]
@@ -2382,68 +2399,70 @@ lemma binomial_power_sequence_dold_realizable
   intro r s hr n hn
   constructor
   · have hppdvd : ∀ p t : ℕ, Nat.Prime p → p ^ (t + 1) ∣ n →
-    ((p ^ (t + 1) : ℕ) : ℤ) ∣ ∑ d ∈ Nat.divisors n,
-      (⇑ArithmeticFunction.moebius d) * ((binomialPowerSeq r s (n / d) : ℕ) : ℤ) := by
-    intro p t hp hdiv
-    have : Fact (Nat.Prime p) := ⟨hp⟩
-    obtain ⟨m, rfl⟩ := hdiv
-    have hm0 : 0 < m := by
-      obtain rfl | h := Nat.eq_zero_or_pos m
-      · simp at hn
-      · exact h
-    have hreorg := moebius_sum_reorg p t m hm0
-      (fun n => ((binomialPowerSeq r s n : ℕ) : ℤ))
-    have hsum : (∑ d ∈ Nat.divisors (p ^ (t + 1) * m),
-      (⇑ArithmeticFunction.moebius d) *
-        ((binomialPowerSeq r s ((p ^ (t + 1) * m) / d) : ℕ) : ℤ))
-      = ∑ e ∈ (Nat.divisors m).filter (fun e => ¬ p ∣ e),
-        (⇑ArithmeticFunction.moebius e) *
-          ((((binomialPowerSeq r s (p ^ (t + 1) * (m / e)) : ℕ)) : ℤ) -
-            (((binomialPowerSeq r s (p ^ t * (m / e)) : ℕ)) : ℤ)) := hreorg
-    rw [hsum]
-    apply Finset.dvd_sum
-    intro e _
-    have hmod := binomialPowerSeq_prime_pow_modEq p t r s (m / e) hr
-    have hI : (((binomialPowerSeq r s (p ^ (t + 1) * (m / e)) : ℕ)) : ℤ) ≡
-      (((binomialPowerSeq r s (p ^ t * (m / e)) : ℕ)) : ℤ)
-      [ZMOD ((p ^ (t + 1) : ℕ) : ℤ)] :=
-      Int.natCast_modEq_iff.mpr hmod
-    exact dvd_mul_of_dvd_right (Int.modEq_iff_dvd.mp hI.symm) _
+        ((p ^ (t + 1) : ℕ) : ℤ) ∣ ∑ d ∈ Nat.divisors n,
+          (⇑ArithmeticFunction.moebius d) * ((binomialPowerSeq r s (n / d) : ℕ) : ℤ) := by
+      intro p t hp hdiv
+      have : Fact (Nat.Prime p) := ⟨hp⟩
+      obtain ⟨m, rfl⟩ := hdiv
+      have hm0 : 0 < m := by
+        rcases Nat.eq_zero_or_pos m with rfl | h
+        · simp at hn
+        · exact h
+      have hreorg := moebius_sum_reorg p t m hm0
+        (fun n => ((binomialPowerSeq r s n : ℕ) : ℤ))
+      have hsum : (∑ d ∈ Nat.divisors (p ^ (t + 1) * m),
+            (⇑ArithmeticFunction.moebius d) *
+              ((binomialPowerSeq r s ((p ^ (t + 1) * m) / d) : ℕ) : ℤ))
+          = ∑ e ∈ (Nat.divisors m).filter (fun e => ¬ p ∣ e),
+            (⇑ArithmeticFunction.moebius e) *
+              ((((binomialPowerSeq r s (p ^ (t + 1) * (m / e)) : ℕ)) : ℤ) -
+                (((binomialPowerSeq r s (p ^ t * (m / e)) : ℕ)) : ℤ)) := hreorg
+      rw [hsum]
+      apply Finset.dvd_sum
+      intro e _
+      have hmod := binomialPowerSeq_prime_pow_modEq p t r s (m / e) hr
+      have hI : (((binomialPowerSeq r s (p ^ (t + 1) * (m / e)) : ℕ)) : ℤ) ≡
+          (((binomialPowerSeq r s (p ^ t * (m / e)) : ℕ)) : ℤ)
+          [ZMOD ((p ^ (t + 1) : ℕ) : ℤ)] :=
+        Int.natCast_modEq_iff.mpr hmod
+      exact dvd_mul_of_dvd_right (Int.modEq_iff_dvd.mp hI.symm) _
     have hne : n ≠ 0 := by omega
     by_cases hS0 : (∑ d ∈ Nat.divisors n,
-      (⇑ArithmeticFunction.moebius d) * ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)) = 0
+        (⇑ArithmeticFunction.moebius d) * ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)) = 0
     · rw [hS0]
       exact dvd_zero _
     · have hSne : (∑ d ∈ Nat.divisors n,
-      (⇑ArithmeticFunction.moebius d) *
-        ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)).natAbs ≠ 0 := by
-      intro hcon
-      exact hS0 (Int.natAbs_eq_zero.mp hcon)
+          (⇑ArithmeticFunction.moebius d) *
+            ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)).natAbs ≠ 0 := by
+        intro hcon
+        exact hS0 (Int.natAbs_eq_zero.mp hcon)
       have hndvd : n ∣ (∑ d ∈ Nat.divisors n,
-        (⇑ArithmeticFunction.moebius d) *
-          ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)).natAbs := by
+          (⇑ArithmeticFunction.moebius d) *
+            ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)).natAbs := by
         rw [← Nat.factorization_prime_le_iff_dvd hne hSne]
         intro q hq
         by_cases hk : n.factorization q = 0
         · rw [hk]
           exact zero_le
         · obtain ⟨t, ht⟩ : ∃ t, n.factorization q = t + 1 :=
-          ⟨n.factorization q - 1, by omega⟩
+            ⟨n.factorization q - 1, by omega⟩
           rw [ht]
           have hqp : q ^ (t + 1) ∣ n := by
             rw [← ht]
             exact Nat.ordProj_dvd n q
           have hz := hppdvd q t hq hqp
           have hq2 : q ^ (t + 1) ∣ (∑ d ∈ Nat.divisors n,
-            (⇑ArithmeticFunction.moebius d) *
-              ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)).natAbs := by
+              (⇑ArithmeticFunction.moebius d) *
+                ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)).natAbs := by
             have h3 := Int.natAbs_dvd_natAbs.mpr hz
-            rwa [Int.natAbs_natCast] at h3
+            rw [Int.natAbs_natCast] at h3
+            exact h3
           exact (hq.pow_dvd_iff_le_factorization hSne).mp hq2
       have hfin : ((n : ℤ)).natAbs ∣ (∑ d ∈ Nat.divisors n,
-        (⇑ArithmeticFunction.moebius d) *
-          ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)).natAbs := by
-        rwa [Int.natAbs_natCast]
+          (⇑ArithmeticFunction.moebius d) *
+            ((binomialPowerSeq r s (n / d) : ℕ) : ℤ)).natAbs := by
+        rw [Int.natAbs_natCast]
+        exact hndvd
       exact Int.natAbs_dvd_natAbs.mp hfin
   · exact binomialPowerSeq_moebius_nonneg r s n hr hn
 
@@ -2484,9 +2503,8 @@ lemma binomialPowerSeq_moebius_sum_nonneg
     ((binomialPowerSeq r s (n / d) : ℕ) : ℤ) :=
 -- proof
   doldRealizable_nonneg (binomial_power_sequence_dold_realizable r s hr) n hn
-end
-
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

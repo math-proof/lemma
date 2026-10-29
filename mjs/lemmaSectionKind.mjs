@@ -265,6 +265,25 @@ export function writeSectionKindCache(rows) {
   fs.writeFileSync(SECTION_KIND_CACHE, JSON.stringify(rows, null, 2) + '\n', 'utf8');
 }
 
+/** Repo treats these Lemma/ folder names as data-type sections even if Mathlib classifies otherwise. */
+const DATA_TYPE_SPECIAL_CASES = new Set(["Random", "Tensor"]);
+
+/**
+ * Override Mathlib kind for repo special-case data-type sections.
+ * @param {Array<Record<string, unknown>>} rows
+ * @returns {Array<Record<string, unknown>>}
+ */
+function applyDataTypeSpecialCases(rows) {
+  for (const r of rows) {
+    if (DATA_TYPE_SPECIAL_CASES.has(String(r.folder))) {
+      r.kind = "data type";
+      r.reason = `repo special case: Lemma/${r.folder} is treated as a data-type section` +
+        (r.reason ? ` (Mathlib: ${r.reason})` : "");
+    }
+  }
+  return rows;
+}
+
 export async function classifyLemmaSections(folders) {
   if (!folders.length) {
     throw new Error('no folders to classify');
@@ -293,7 +312,7 @@ export async function classifyLemmaSections(folders) {
     if (!arr) {
       throw new Error(`no JSON array in Lean output:\n${outText.slice(0, 8000)}`);
     }
-    return /** @type {Array<Record<string, unknown>>} */ (arr);
+    return applyDataTypeSpecialCases(/** @type {Array<Record<string, unknown>>} */ (arr));
   } finally {
     try {
       await fs.promises.unlink(tmpLean);

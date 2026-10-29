@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 999999
 open IntermediateField
 
 

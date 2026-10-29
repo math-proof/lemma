@@ -32,7 +32,7 @@ variable {d : ℕ}
 
 
 def AeApproxFarOut (μ : Measure (ConfigSpace (Site d))) (s : Set (ConfigSpace (Site d))) : Prop :=
-  ∀ (k : ℕ) (ε : ℝ≥0∞), 0 < ε →
+  ∀ (k : ℕ) (ε : ENNReal), 0 < ε →
     ∃ A : Set (ConfigSpace (Site d)), @MeasurableSet _ (outsideSigma (box d k)) A ∧ μ (s ∆ A) < ε
 
 

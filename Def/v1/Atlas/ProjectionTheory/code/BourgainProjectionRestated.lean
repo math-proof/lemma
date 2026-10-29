@@ -28,8 +28,8 @@ def IsDeltaSRegular1D (δ s C : ℝ) (D : Set ℝ) : Prop :=
   D ⊆ Icc 0 1 ∧
   ∀ (x : ℝ) (r : ℝ),
     δ ≤ r → r ≤ 1 →
-    (deltaCoveringNumberR δ (D ∩ Metric.ball x r) : ℝ≥0∞) ≤
-      ENNReal.ofReal (C * r ^ s) * (deltaCoveringNumberR δ D : ℝ≥0∞)
+    (deltaCoveringNumberR δ (D ∩ Metric.ball x r) : ENNReal) ≤
+      ENNReal.ofReal (C * r ^ s) * (deltaCoveringNumberR δ D : ENNReal)
 
 /-- The unit direction vector $(\cos\theta, \sin\theta) \in \mathbb{R}^2$ associated to the
 angle $\theta$. -/

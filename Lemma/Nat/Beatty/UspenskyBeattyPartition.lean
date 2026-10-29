@@ -4,11 +4,11 @@ import Initialize.Tactic.Attr.Basic
 
 namespace MetaMathlibExt
 
+open Classical in
 /--
 [count_beatty](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Beatty/UspenskyBeattyPartition.lean)
 -/
 @[path]
-open Classical in
 private lemma count_beatty (k : ℕ) (α : Fin k → ℝ)
   (hαpos : ∀ i, 0 < α i) (hαlt : ∀ i, α i < 1)
   (hdisj : (Set.univ : Set (Fin k)).PairwiseDisjoint
@@ -39,10 +39,11 @@ private lemma count_beatty (k : ℕ) (α : Fin k → ℝ)
       linarith [hβgt i]
     have hle : ⌊(a : ℝ) * (1 / α i)⌋ + 1 ≤ ⌊(b : ℝ) * (1 / α i)⌋ := by
       have hfl := Int.floor_le_floor (le_of_lt h3)
-      rwa [Int.floor_add_one] at hfl
+      rw [Int.floor_add_one] at hfl
+      exact hfl
     omega
   have hP1 : ∀ (i : Fin k) (n : ℤ), ⌊(n : ℝ) * (1 / α i)⌋ ≤ (N : ℤ) →
-    n ≤ ⌈((N : ℝ) + 1) * α i⌉ - 1 := by
+      n ≤ ⌈((N : ℝ) + 1) * α i⌉ - 1 := by
     intro i n hn
     have hlt : (n : ℝ) * (1 / α i) < (N : ℝ) + 1 := by
       have h := Int.floor_le_iff.mp hn
@@ -58,7 +59,7 @@ private lemma count_beatty (k : ℕ) (α : Fin k → ℝ)
     have hlt2 : n < ⌈((N : ℝ) + 1) * α i⌉ := by exact_mod_cast hle
     omega
   have hP2 : ∀ (i : Fin k) (n : ℤ), n ≤ ⌈((N : ℝ) + 1) * α i⌉ - 1 →
-    ⌊(n : ℝ) * (1 / α i)⌋ ≤ (N : ℤ) := by
+      ⌊(n : ℝ) * (1 / α i)⌋ ≤ (N : ℤ) := by
     intro i n hn
     have hnX : (n : ℝ) < ((N : ℝ) + 1) * α i := by
       have h1 : (n : ℝ) ≤ ((⌈((N : ℝ) + 1) * α i⌉ - 1 : ℤ) : ℝ) := by exact_mod_cast hn
@@ -72,7 +73,8 @@ private lemma count_beatty (k : ℕ) (α : Fin k → ℝ)
       rw [mul_assoc, hαβ i, mul_one]
     rw [heq] at hmul
     have hmul2 : (n : ℝ) * (1 / α i) < (((N : ℤ)) : ℝ) + 1 := by
-      rwa [Int.cast_natCast]
+      rw [Int.cast_natCast]
+      exact hmul
     exact Int.floor_le_iff.mpr hmul2
   have hP3 : ∀ (i : Fin k) (n : ℤ), 1 ≤ n → 1 ≤ ⌊(n : ℝ) * (1 / α i)⌋ := by
     intro i n hn
@@ -86,9 +88,9 @@ private lemma count_beatty (k : ℕ) (α : Fin k → ℝ)
     calc (1 : ℤ) ≤ ⌊(1 : ℝ) * (1 / α i)⌋ := h1
       _ ≤ ⌊(n : ℝ) * (1 / α i)⌋ := Int.floor_le_floor hnβ
   have hfilter : ∀ i : Fin k, (Finset.Icc (1 : ℤ) (N : ℤ)).filter
-    (fun x => x ∈ {x : ℤ | ∃ n : ℤ, 0 < n ∧ beattySeq (1 / α i) n = x}) =
-    (Finset.Icc (1 : ℤ) (⌈((N : ℝ) + 1) * α i⌉ - 1)).image
-      (fun (n : ℤ) => ⌊(n : ℝ) * (1 / α i)⌋) := by
+      (fun x => x ∈ {x : ℤ | ∃ n : ℤ, 0 < n ∧ beattySeq (1 / α i) n = x}) =
+      (Finset.Icc (1 : ℤ) (⌈((N : ℝ) + 1) * α i⌉ - 1)).image
+        (fun (n : ℤ) => ⌊(n : ℝ) * (1 / α i)⌋) := by
     intro i
     ext x
     rw [Finset.mem_filter, Finset.mem_Icc, Finset.mem_image]
@@ -103,8 +105,8 @@ private lemma count_beatty (k : ℕ) (α : Fin k → ℝ)
       have h1x : (1 : ℤ) ≤ x := hnx ▸ hP3 i n hnIcc.1
       exact ⟨⟨h1x, hxN⟩, n, by omega, hnx⟩
   have hTdisj : ((Finset.univ : Finset (Fin k)) : Set (Fin k)).PairwiseDisjoint
-    (fun i => (Finset.Icc (1 : ℤ) (N : ℤ)).filter
-      (fun x => x ∈ {x : ℤ | ∃ n : ℤ, 0 < n ∧ beattySeq (1 / α i) n = x})) := by
+      (fun i => (Finset.Icc (1 : ℤ) (N : ℤ)).filter
+        (fun x => x ∈ {x : ℤ | ∃ n : ℤ, 0 < n ∧ beattySeq (1 / α i) n = x})) := by
     intro i _ j _ hij
     show Disjoint _ _
     rw [Finset.disjoint_left]
@@ -115,9 +117,9 @@ private lemma count_beatty (k : ℕ) (α : Fin k → ℝ)
       (Finset.mem_filter.mp hxj).2
     exact Set.disjoint_left.mp (hdisj (Set.mem_univ i) (Set.mem_univ j) hij) hiS hjS
   have hTcover : Finset.univ.biUnion
-    (fun i => (Finset.Icc (1 : ℤ) (N : ℤ)).filter
-      (fun x => x ∈ {x : ℤ | ∃ n : ℤ, 0 < n ∧ beattySeq (1 / α i) n = x})) =
-    Finset.Icc (1 : ℤ) (N : ℤ) := by
+      (fun i => (Finset.Icc (1 : ℤ) (N : ℤ)).filter
+        (fun x => x ∈ {x : ℤ | ∃ n : ℤ, 0 < n ∧ beattySeq (1 / α i) n = x})) =
+      Finset.Icc (1 : ℤ) (N : ℤ) := by
     apply Finset.ext
     intro x
     constructor
@@ -139,8 +141,8 @@ private lemma count_beatty (k : ℕ) (α : Fin k → ℝ)
     have hrw : (N : ℤ) + 1 - 1 = (N : ℤ) := by ring
     rw [hrw, Int.toNat_natCast]
   have hTcard : ∀ i : Fin k, ((Finset.Icc (1 : ℤ) (N : ℤ)).filter
-    (fun x => x ∈ {x : ℤ | ∃ n : ℤ, 0 < n ∧ beattySeq (1 / α i) n = x})).card =
-    (⌈((N : ℝ) + 1) * α i⌉ - 1).toNat := by
+      (fun x => x ∈ {x : ℤ | ∃ n : ℤ, 0 < n ∧ beattySeq (1 / α i) n = x})).card =
+      (⌈((N : ℝ) + 1) * α i⌉ - 1).toNat := by
     intro i
     rw [hfilter i, Finset.card_image_of_injective _ (hmono i).injective, Int.card_Icc]
     have hrw : ⌈((N : ℝ) + 1) * α i⌉ - 1 + 1 - 1 = ⌈((N : ℝ) + 1) * α i⌉ - 1 := by ring
@@ -152,8 +154,8 @@ private lemma count_beatty (k : ℕ) (α : Fin k → ℝ)
     have h1 := Int.ceil_pos.mpr hpos
     omega
   have hsum : (Finset.Icc (1 : ℤ) (N : ℤ)).card = ∑ i : Fin k,
-    (((Finset.Icc (1 : ℤ) (N : ℤ)).filter
-      (fun x => x ∈ {x : ℤ | ∃ n : ℤ, 0 < n ∧ beattySeq (1 / α i) n = x})).card) := by
+      (((Finset.Icc (1 : ℤ) (N : ℤ)).filter
+        (fun x => x ∈ {x : ℤ | ∃ n : ℤ, 0 < n ∧ beattySeq (1 / α i) n = x})).card) := by
     have hbi := Finset.card_biUnion hTdisj
     rw [hTcover] at hbi
     simpa using hbi
@@ -167,13 +169,14 @@ private lemma count_beatty (k : ℕ) (α : Fin k → ℝ)
     rw [hTcard i]
     exact Int.toNat_of_nonneg (hcnonneg i)
   have hsub : (∑ i : Fin k, (⌈((N : ℝ) + 1) * α i⌉ - 1)) =
-    (∑ i : Fin k, ⌈((N : ℝ) + 1) * α i⌉) - (k : ℤ) := by
+      (∑ i : Fin k, ⌈((N : ℝ) + 1) * α i⌉) - (k : ℤ) := by
     rw [Finset.sum_sub_distrib]
     have hone : (∑ _x : Fin k, (1 : ℤ)) = (k : ℤ) := by simp
     rw [hone]
   rw [hsub] at hZ
   omega
 
+-- Ceil-sum identity for multiplier M ≥ 1 (from counting with N = M - 1).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -197,6 +200,7 @@ private lemma ceil_sum (k : ℕ) (α : Fin k → ℝ)
   rw [eR, eZ] at hN
   omega
 
+-- The densities sum to 1 (squeeze with Archimedean).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -215,34 +219,34 @@ private lemma sum_alpha (k : ℕ) (α : Fin k → ℝ)
   ∑ i : Fin k, α i = 1 := by
   set S := ∑ i : Fin k, α i with hSdef
   have hbnds : ∀ M : ℕ, 1 ≤ M →
-    (M : ℝ) * S ≤ ((∑ i : Fin k, ⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) ∧
-    ((∑ i : Fin k, ⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) < (M : ℝ) * S + (k : ℝ) := by
+      (M : ℝ) * S ≤ ((∑ i : Fin k, ⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) ∧
+      ((∑ i : Fin k, ⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) < (M : ℝ) * S + (k : ℝ) := by
     intro M _
     have hcast : ((∑ i : Fin k, ⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) =
-      ∑ i : Fin k, ((⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) := Int.cast_sum _ _
+        ∑ i : Fin k, ((⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) := Int.cast_sum _ _
     have hmul : (M : ℝ) * S = ∑ i : Fin k, (M : ℝ) * α i := by
       rw [hSdef, Finset.mul_sum]
     rw [hcast, hmul]
     constructor
     · exact Finset.sum_le_sum (fun i _ => Int.le_ceil _)
     · have hlt : ∑ i : Fin k, ((⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) <
-      ∑ i : Fin k, ((M : ℝ) * α i + 1) := by
-      apply Finset.sum_lt_sum
-      · intro i _
-        have h := Int.ceil_lt_add_one ((M : ℝ) * α i)
-        linarith
-      · have hne : Nonempty (Fin k) := ⟨⟨0, by omega⟩⟩
-        obtain ⟨i₀⟩ := hne
-        exact ⟨i₀, Finset.mem_univ i₀, by
-          have h := Int.ceil_lt_add_one ((M : ℝ) * α i₀)
-          linarith⟩
+          ∑ i : Fin k, ((M : ℝ) * α i + 1) := by
+        apply Finset.sum_lt_sum
+        · intro i _
+          have h := Int.ceil_lt_add_one ((M : ℝ) * α i)
+          linarith
+        · have hne : Nonempty (Fin k) := ⟨⟨0, by omega⟩⟩
+          obtain ⟨i₀⟩ := hne
+          exact ⟨i₀, Finset.mem_univ i₀, by
+            have h := Int.ceil_lt_add_one ((M : ℝ) * α i₀)
+            linarith⟩
       have heq : (∑ i : Fin k, ((M : ℝ) * α i + 1)) = (∑ i : Fin k, (M : ℝ) * α i) + (k : ℝ) := by
         rw [Finset.sum_add_distrib]
         congr 1
         simp
       linarith
   by_contra hne
-  obtain hlt | hgt := lt_or_gt_of_ne hne
+  rcases lt_or_gt_of_ne hne with hlt | hgt
   · -- S < 1: use upper bound with large M.
     have hδ : (0 : ℝ) < 1 - S := by linarith
     obtain ⟨n, hn⟩ := exists_nat_gt (1 / (1 - S))
@@ -280,6 +284,7 @@ private lemma sum_alpha (k : ℕ) (α : Fin k → ℝ)
     rw [hcast] at hlb
     nlinarith
 
+-- The complementary sum: ∑ (⌈Mαᵢ⌉ - Mαᵢ) = k - 1.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -299,13 +304,14 @@ private lemma tsum (k : ℕ) (α : Fin k → ℝ)
   ∑ i : Fin k, (((⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) - (M : ℝ) * α i) = (k : ℝ) - 1 := by
   have hceil := ceil_sum k α hαpos hαlt hdisj hcover M hM
   have h1 : ∑ i : Fin k, (((⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) - (M : ℝ) * α i) =
-    ((∑ i : Fin k, ⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) - (M : ℝ) * ∑ i : Fin k, α i := by
+      ((∑ i : Fin k, ⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) - (M : ℝ) * ∑ i : Fin k, α i := by
     rw [Int.cast_sum, Finset.sum_sub_distrib, ← Finset.mul_sum]
   rw [h1, hS]
   have h2 : ((∑ i : Fin k, ⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) = (M : ℝ) + (k : ℝ) - 1 := by
     exact_mod_cast hceil
   linarith
 
+-- No multiple of any αᵢ is an integer.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -332,28 +338,30 @@ private lemma fract_ne_zero (k : ℕ) (α : Fin k → ℝ)
     have hceil : ⌈(M : ℝ) * α i⌉ = ⌊(M : ℝ) * α i⌋ := by
       have hcc : ⌈(((⌊(M : ℝ) * α i⌋ : ℤ)) : ℝ)⌉ = ⌊(M : ℝ) * α i⌋ :=
         Int.ceil_intCast _
-      rwa [hfl] at hcc
-    rwa [hceil]
+      rw [hfl] at hcc
+      exact hcc
+    rw [hceil]
+    exact hfl
   have htsum := tsum k α hαpos hαlt hdisj hcover hS M hM
   have hti : ((⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) - (M : ℝ) * α i = 0 := by linarith [hx0]
   have hrest : ∑ j ∈ Finset.univ.erase i,
-    (((⌈(M : ℝ) * α j⌉ : ℤ) : ℝ) - (M : ℝ) * α j) = (k : ℝ) - 1 := by
+      (((⌈(M : ℝ) * α j⌉ : ℤ) : ℝ) - (M : ℝ) * α j) = (k : ℝ) - 1 := by
     have hsplit := Finset.sum_erase_add Finset.univ
       (fun j => ((⌈(M : ℝ) * α j⌉ : ℤ) : ℝ) - (M : ℝ) * α j) (Finset.mem_univ i)
     linarith [htsum, hti]
   have hlt : ∑ j ∈ Finset.univ.erase i,
-    (((⌈(M : ℝ) * α j⌉ : ℤ) : ℝ) - (M : ℝ) * α j) < (k : ℝ) - 1 := by
+      (((⌈(M : ℝ) * α j⌉ : ℤ) : ℝ) - (M : ℝ) * α j) < (k : ℝ) - 1 := by
     have hle1 : ∑ j ∈ Finset.univ.erase i,
-      (((⌈(M : ℝ) * α j⌉ : ℤ) : ℝ) - (M : ℝ) * α j) <
-      ∑ j ∈ Finset.univ.erase i, (1 : ℝ) := by
+        (((⌈(M : ℝ) * α j⌉ : ℤ) : ℝ) - (M : ℝ) * α j) <
+        ∑ j ∈ Finset.univ.erase i, (1 : ℝ) := by
       apply Finset.sum_lt_sum
       · intro j _
         have h := Int.ceil_lt_add_one ((M : ℝ) * α j)
         linarith
       · have hcard : 1 ≤ (Finset.univ.erase i).card := by
-        rw [Finset.card_erase_of_mem (Finset.mem_univ i), Finset.card_univ,
-          Fintype.card_fin]
-        omega
+          rw [Finset.card_erase_of_mem (Finset.mem_univ i), Finset.card_univ,
+            Fintype.card_fin]
+          omega
         obtain ⟨j0, hj0⟩ := Finset.card_pos.mp (by omega : 0 < (Finset.univ.erase i).card)
         exact ⟨j0, hj0, by
           have h := Int.ceil_lt_add_one ((M : ℝ) * α j0)
@@ -365,6 +373,7 @@ private lemma fract_ne_zero (k : ℕ) (α : Fin k → ℝ)
     linarith
   linarith [hrest, hlt]
 
+-- Ceil from floor for non-integers.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -385,6 +394,7 @@ private lemma ceil_eq_floor_succ (x : ℝ) (hx : Int.fract x ≠ 0) : ⌈x⌉ = 
     push_cast
     linarith
 
+-- Fractional parts sum to 1.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -404,7 +414,7 @@ private lemma fract_sum (k : ℕ) (α : Fin k → ℝ)
   ∑ i : Fin k, Int.fract ((M : ℝ) * α i) = 1 := by
   have htsum := tsum k α hαpos hαlt hdisj hcover hS M hM
   have hterm : ∀ i : Fin k, ((⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) - (M : ℝ) * α i =
-    1 - Int.fract ((M : ℝ) * α i) := by
+      1 - Int.fract ((M : ℝ) * α i) := by
     intro i
     have hne := fract_ne_zero k α hαpos hαlt hdisj hcover hk2 hS M hM i
     have hce := ceil_eq_floor_succ ((M : ℝ) * α i) hne
@@ -413,16 +423,17 @@ private lemma fract_sum (k : ℕ) (α : Fin k → ℝ)
     have hff := Int.floor_add_fract ((M : ℝ) * α i)
     linarith
   calc ∑ i : Fin k, Int.fract ((M : ℝ) * α i)
-    = (k : ℝ) - ∑ i : Fin k, (((⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) - (M : ℝ) * α i) := by
-      have hcongr : ∑ i : Fin k, (((⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) - (M : ℝ) * α i) =
-        ∑ i : Fin k, (1 - Int.fract ((M : ℝ) * α i)) :=
-        Finset.sum_congr rfl (fun i _ => hterm i)
-      rw [hcongr, Finset.sum_sub_distrib]
-      have hone : (∑ _x : Fin k, (1 : ℝ)) = (k : ℝ) := by simp
-      rw [hone]
-      ring
+      = (k : ℝ) - ∑ i : Fin k, (((⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) - (M : ℝ) * α i) := by
+        have hcongr : ∑ i : Fin k, (((⌈(M : ℝ) * α i⌉ : ℤ) : ℝ) - (M : ℝ) * α i) =
+            ∑ i : Fin k, (1 - Int.fract ((M : ℝ) * α i)) :=
+          Finset.sum_congr rfl (fun i _ => hterm i)
+        rw [hcongr, Finset.sum_sub_distrib]
+        have hone : (∑ _x : Fin k, (1 : ℝ)) = (k : ℝ) := by simp
+        rw [hone]
+        ring
     _ = 1 := by rw [htsum]; ring
 
+-- Floor-sum identity.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -447,14 +458,15 @@ private lemma floor_sum (k : ℕ) (α : Fin k → ℝ)
     have hce := ceil_eq_floor_succ ((N : ℝ) * α i) hne
     omega
   calc ∑ i : Fin k, ⌊(N : ℝ) * α i⌋
-    = ∑ i : Fin k, (⌈(N : ℝ) * α i⌉ - 1) :=
-      Finset.sum_congr rfl (fun i _ => hfl i)
+      = ∑ i : Fin k, (⌈(N : ℝ) * α i⌉ - 1) :=
+        Finset.sum_congr rfl (fun i _ => hfl i)
     _ = (∑ i : Fin k, ⌈(N : ℝ) * α i⌉) - (k : ℤ) := by
-      rw [Finset.sum_sub_distrib]
-      have hone : (∑ _x : Fin k, (1 : ℤ)) = (k : ℤ) := by simp
-      rw [hone]
+        rw [Finset.sum_sub_distrib]
+        have hone : (∑ _x : Fin k, (1 : ℤ)) = (k : ℤ) := by simp
+        rw [hone]
     _ = (N : ℤ) - 1 := by rw [hceil]; ring
 
+-- Consecutive floor-sums differ by exactly 1 in total.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -480,6 +492,7 @@ private lemma carry_sum (k : ℕ) (α : Fin k → ℝ)
   rw [eR, hH1, hH0, eZ]
   omega
 
+-- Two distinct indices cannot both carry.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -500,7 +513,7 @@ private lemma carry_unique (k : ℕ) (α : Fin k → ℝ)
   (hb : ⌊((N : ℝ) + 1) * α b⌋ - ⌊(N : ℝ) * α b⌋ = 1) : False := by
   have hcs := carry_sum k α hαpos hαlt hdisj hcover hk2 hS N hN
   have hnonneg : ∀ i ∈ (Finset.univ : Finset (Fin k)),
-    0 ≤ ⌊((N : ℝ) + 1) * α i⌋ - ⌊(N : ℝ) * α i⌋ := by
+      0 ≤ ⌊((N : ℝ) + 1) * α i⌋ - ⌊(N : ℝ) * α i⌋ := by
     intro i _
     have hle : ⌊(N : ℝ) * α i⌋ ≤ ⌊((N : ℝ) + 1) * α i⌋ := by
       apply Int.floor_le_floor
@@ -508,14 +521,14 @@ private lemma carry_unique (k : ℕ) (α : Fin k → ℝ)
       exact mul_le_mul_of_nonneg_right hNle (le_of_lt (hαpos i))
     omega
   have hsd : ∑ i ∈ ({a, b} : Finset (Fin k)),
-    (⌊((N : ℝ) + 1) * α i⌋ - ⌊(N : ℝ) * α i⌋) ≤
-    ∑ i ∈ Finset.univ,
-    (⌊((N : ℝ) + 1) * α i⌋ - ⌊(N : ℝ) * α i⌋) := by
+      (⌊((N : ℝ) + 1) * α i⌋ - ⌊(N : ℝ) * α i⌋) ≤
+      ∑ i ∈ Finset.univ,
+      (⌊((N : ℝ) + 1) * α i⌋ - ⌊(N : ℝ) * α i⌋) := by
     have hsub : ({a, b} : Finset (Fin k)) ⊆ Finset.univ := Finset.subset_univ _
     have hsdiff := Finset.sum_sdiff hsub
       (f := fun i => ⌊((N : ℝ) + 1) * α i⌋ - ⌊(N : ℝ) * α i⌋)
     have hnn : 0 ≤ ∑ i ∈ Finset.univ \ {a, b},
-      (⌊((N : ℝ) + 1) * α i⌋ - ⌊(N : ℝ) * α i⌋) :=
+        (⌊((N : ℝ) + 1) * α i⌋ - ⌊(N : ℝ) * α i⌋) :=
       Finset.sum_nonneg (fun i _ => hnonneg i (Finset.mem_univ i))
     linarith
   rw [Finset.sum_pair hab, ha, hb] at hsd
@@ -555,7 +568,7 @@ lemma uspensky_no_partition_into_three_or_more_beatty_sequences
       rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
     rw [hconst]
     calc ∑ _i : Fin k, α i₀ ≤ ∑ i : Fin k, α i :=
-      Finset.sum_le_sum (fun j _ => hmin' j)
+          Finset.sum_le_sum (fun j _ => hmin' j)
       _ = 1 := hS
   have h3mu : 3 * α i₀ ≤ 1 := by
     have h1 : (3 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
@@ -614,10 +627,10 @@ lemma uspensky_no_partition_into_three_or_more_beatty_sequences
   have eM : (M : ℝ) = (((M - 1 : ℕ)) : ℝ) + 1 := by
     rw [Nat.cast_sub hM1]; ring
   have hcarry : ∀ j : Fin k, j ≠ i₀ →
-    ⌊(M : ℝ) * α j⌋ - ⌊(((M - 1 : ℕ)) : ℝ) * α j⌋ = 1 := by
+      ⌊(M : ℝ) * α j⌋ - ⌊(((M - 1 : ℕ)) : ℝ) * α j⌋ = 1 := by
     intro j hj
     have h01 : ⌊(M : ℝ) * α j⌋ - ⌊(((M - 1 : ℕ)) : ℝ) * α j⌋ = 0 ∨
-      ⌊(M : ℝ) * α j⌋ - ⌊(((M - 1 : ℕ)) : ℝ) * α j⌋ = 1 := by
+        ⌊(M : ℝ) * α j⌋ - ⌊(((M - 1 : ℕ)) : ℝ) * α j⌋ = 1 := by
       have hle1 : ⌊(((M - 1 : ℕ)) : ℝ) * α j⌋ ≤ ⌊(M : ℝ) * α j⌋ := by
         apply Int.floor_le_floor
         apply mul_le_mul_of_nonneg_right _ (le_of_lt (hαpos j))
@@ -631,13 +644,14 @@ lemma uspensky_no_partition_into_three_or_more_beatty_sequences
         have hle : (((M - 1 : ℕ)) : ℝ) * α j + α j ≤ (((M - 1 : ℕ)) : ℝ) * α j + 1 := by
           linarith [hαlt j]
         have hfl := Int.floor_le_floor hle
-        rwa [Int.floor_add_one] at hfl
+        rw [Int.floor_add_one] at hfl
+        exact hfl
       omega
-    obtain h0 | h1 := h01
+    rcases h01 with h0 | h1
     · exfalso
       have hd0 : ⌊(M : ℝ) * α j⌋ = ⌊(((M - 1 : ℕ)) : ℝ) * α j⌋ := by omega
       have hd0R : ((⌊(M : ℝ) * α j⌋ : ℤ) : ℝ) =
-        ((⌊((((M - 1 : ℕ)) : ℝ)) * α j⌋ : ℤ) : ℝ) := by
+          ((⌊((((M - 1 : ℕ)) : ℝ)) * α j⌋ : ℤ) : ℝ) := by
         exact_mod_cast hd0
       have hffM := Int.floor_add_fract ((M : ℝ) * α j)
       have hffN := Int.floor_add_fract ((((M - 1 : ℕ)) : ℝ) * α j)
@@ -663,4 +677,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

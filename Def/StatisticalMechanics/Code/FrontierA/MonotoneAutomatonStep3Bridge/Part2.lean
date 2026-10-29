@@ -30,7 +30,7 @@ def TripleEventIgnoresHighAt (x : Site d) (A : Set (FieldTriple d)) : Prop :=
 
 
 def HasHighInsertionLowerBound (mu : Measure (FieldTriple d))
-    (t : NNReal) (epsilon : ℝ≥0∞) : Prop :=
+    (t : NNReal) (epsilon : ENNReal) : Prop :=
   ∀ (x : Site d) (A : Set (FieldTriple d)), MeasurableSet A →
     TripleEventIgnoresHighAt x A →
     epsilon * mu A ≤ mu (A ∩ {q | t ≤ q.2.2 x})

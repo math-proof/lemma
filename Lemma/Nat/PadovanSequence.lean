@@ -29,7 +29,7 @@ private lemma shiftedPadovanSequence_zero_eq
 -- imply
   shiftedPadovanSequence 0 = 1 := by
 -- proof
-  apply MetaMathlibExt.shiftedPadovanSequence_zero
+  rfl
 
 /--
 [shiftedPadovanSequence_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PadovanSequence.lean)
@@ -40,7 +40,7 @@ private lemma shiftedPadovanSequence_one_eq
 -- imply
   shiftedPadovanSequence 1 = 0 := by
 -- proof
-  apply MetaMathlibExt.shiftedPadovanSequence_one
+  rfl
 
 /--
 [shiftedPadovanSequence_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PadovanSequence.lean)
@@ -51,8 +51,8 @@ private lemma shiftedPadovanSequence_two_eq
 -- imply
   shiftedPadovanSequence 2 = 1 := by
 -- proof
-  apply MetaMathlibExt.shiftedPadovanSequence_two
+  rfl
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

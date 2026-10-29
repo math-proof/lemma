@@ -356,7 +356,7 @@ theorem stt_Tcount_le_boundary_of_rootedSpanningForest (ω : ConfigSpace (Sym2 (
     (stt_rootedColoredForest_of_rootedSpanningForest ω n h)
 
 
-theorem stt_burton_keane_bernoulli_of_rootedSpanningForest (hd : 1 ≤ d) (p : ℝ≥0)
+theorem stt_burton_keane_bernoulli_of_rootedSpanningForest (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
       stt_RootedSpanningForest ω n)

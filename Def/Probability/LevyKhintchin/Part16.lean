@@ -33,7 +33,7 @@ probability measures, with the hard truncation convention at radius one.
 
 namespace MetaMathlibExt
 
-noncomputable def lkInverseCanonicalWeight (x : ℝ) : ℝ≥0∞ :=
+noncomputable def lkInverseCanonicalWeight (x : ℝ) : ENNReal :=
   if x = 0 then 0 else ENNReal.ofReal ((1 + x ^ 2) / x ^ 2)
 
 noncomputable def lkLevyMeasure (K : FiniteMeasure ℝ) : Measure ℝ :=

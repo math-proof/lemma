@@ -24,7 +24,7 @@ lemma isSeparable_iff_exists_monic_irreducible_separable
       ⟨((IntermediateField.equivOfEq hα).trans IntermediateField.topEquiv).symm.trans
         (IntermediateField.adjoinRootEquivAdjoin K hα_int).symm⟩⟩
   · rintro ⟨f, hf_monic, hf_irr, hf_sep, ⟨e⟩⟩
-    haveI : Fact (Irreducible f) := ⟨hf_irr⟩
+    have : Fact (Irreducible f) := ⟨hf_irr⟩
     have hf_ne := hf_monic.ne_zero
     have hroot_sep : IsSeparable K (AdjoinRoot.root f) := by
       show (minpoly K (AdjoinRoot.root f)).Separable
@@ -35,7 +35,7 @@ lemma isSeparable_iff_exists_monic_irreducible_separable
         ← AdjoinRoot.powerBasis_gen hf_ne]
       exact PowerBasis.adjoin_gen_eq_top (AdjoinRoot.powerBasis hf_ne)
     rw [← isSeparable_adjoin_simple_iff_isSeparable] at hroot_sep
-    haveI : Algebra.IsSeparable K (AdjoinRoot f) :=
+    have : Algebra.IsSeparable K (AdjoinRoot f) :=
       Algebra.IsSeparable.of_algHom K (↥K⟮AdjoinRoot.root f⟯)
         (IntermediateField.topEquiv.symm.trans (IntermediateField.equivOfEq hgen).symm).toAlgHom
     exact Algebra.IsSeparable.of_algHom K (AdjoinRoot f) e.toAlgHom
@@ -132,3 +132,4 @@ end SeparableTowerProperties
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

@@ -274,7 +274,7 @@ private lemma bc61_coarseTrif_prob_eq_zero_eq
   {L : ℕ}
   {bdry : ℕ → ℕ}
 -- given
-  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
   (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc61_coarseTcount ω L R ≤ bdry R)
   (hvol : ∀ R, 0 < (boxFinsetBK d R).card)
   (hdens : Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK d R).card : ℝ)) Filter.atTop (nhds 0)) :
@@ -294,7 +294,7 @@ private lemma bc61_infiniteClusters_top_null_of_coarse_eq
   {L : ℕ}
   {bdry : ℕ → ℕ}
 -- given
-  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
   (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc61_coarseTcount ω L R ≤ bdry R)
   (hvol : ∀ R, 0 < (boxFinsetBK d R).card)
   (hdens : Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK d R).card : ℝ)) Filter.atTop (nhds 0))

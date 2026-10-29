@@ -39,8 +39,8 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
   - `instance` / `class` / `structure` / `macro` / `syntax` declarations are not allowed in `Lemma/` files.
   - each sub-folder is a section; a section name must be a math data type, not a type class.
   - check section kind with `node mjs/lemmaSectionKind.mjs` (optional folder names as args); classifies each `Lemma/` subfolder as data type / type class / topic via Mathlib (`Lean.isClass` / `isStructure`).
-- `Syntax/` holds user-defined `syntax` / related elaborator declarations. Do not put those in `Lemma/`.
-- Decl libraries (siblings of `Syntax/`): `Def/` (`def`), `Initialize/` (`initialize`), `Abbrev/` (`abbrev`), `Class/` (`class`), `Structure/` (`structure`), `Inductive/` (`inductive`), `Instance/` (`instance`), `Notation/` (`notation` / infix-family), `Macro/` (`macro`), `Theorem/` (`theorem`).
+- `Syntax/` holds user-defined `syntax`, its `macro_rules` expansions (a `macro_rules` expands some `syntax` and must not stand alone in another folder), and related elaborator declarations. Do not put those in `Lemma/` or `Macro/`.
+- Decl libraries (siblings of `Syntax/`): `Def/` (`def`), `Initialize/` (`initialize`), `Abbrev/` (`abbrev`), `Class/` (`class`), `Structure/` (`structure`), `Inductive/` (`inductive`), `Instance/` (`instance`), `Notation/` (`notation` / infix-family), `Macro/` (`macro` only — not `macro_rules`; those stay with their `syntax` in `Syntax/`), `Theorem/` (`theorem`).
 - `Theorem/` holds utility `theorem`s with attributes **other than** `@[main]` (helpers / internal API; not public rendered lemmas). Do not put `@[main]` results or `lemma`s here — those stay in `Lemma/`.
 - Prefer `Theorem/` for utility theorems with non-`@[main]` attributes. Never put a `lemma` or user-defined syntax in a decl library.
 - Scratch/temp files (probes, bisect scripts, ad-hoc `tmp_*` / `probe_*` / `test_*` files) live in the gitignored `tmp/` folder, not at the repo root.
@@ -75,4 +75,5 @@ When the user says to send this issue / problem / bug / job / task to **@AgentNa
 
 ## Git
 - Stay on `main`. Do not switch to any other branch; merge changes into `main` instead.
-- Work only in `/home/cosmos/github/lean`. Never edit or commit in `E:\github\lean` / `/mnt/e/github/lean`; the only git command allowed there is `git pull`.
+- Work only in `~/github/lean`. Never edit or commit in `E:\github\lean` / `/mnt/e/github/lean`; the only git command allowed there is `git pull`.
+- Never edit `~/github/lean/lean-toolchain` yourself. That file can only be edited by `sh/setup.sh`.

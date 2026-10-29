@@ -24,7 +24,7 @@ private lemma main
     let swap1' : (β × α) × γ → (α × β) × γ := Prod.map Prod.swap (id : γ → γ)
     have hswap1' : Measurable swap1' := measurable_swap.prodMap measurable_id
     let p' : (β × α) × γ → ENNReal := p ∘ swap1'
-    have hp' : Measurable p' := D.measurable_density.comp hswap1'
+    have hp' : Measurable p' := D.comp hswap1'
     have hmap : π.map ((y, x), z) = MeasureTheory.Measure.map swap1 (π.map ((x, y), z)) := by
       change π.map (fun ω ↦ ((y ω, x ω), z ω)) =
         MeasureTheory.Measure.map swap1 (π.map (fun ω ↦ ((x ω, y ω), z ω)))
@@ -52,7 +52,7 @@ private lemma main
     exact {
       toIsProbabilityMeasure := inferInstance
       aemeasurable := hswap1.comp_aemeasurable hL.aemeasurable
-      exists_distribution := ⟨p', ⟨hp'⟩, hlaw⟩
+      exists_distribution := ⟨p', hp', hlaw⟩
     }
   exact PSpace_Joint_Joint.of.PSpace_JointJoint hL'
 

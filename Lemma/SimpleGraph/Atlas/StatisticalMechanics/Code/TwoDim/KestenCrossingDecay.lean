@@ -12,7 +12,7 @@ private lemma kcd_localOneArm_prob_eq
   {x : Site 2}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (kcd_localOneArm x n) = crossProb 2 p hp n := by
@@ -39,7 +39,7 @@ private lemma kcd_horizontal_subset_localOneArm_eq
 private lemma kcd_horizontal_prob_le_box_mul_crossProb_eq
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hn : 0 < n) :
 -- imply
@@ -66,7 +66,7 @@ private lemma kcd_quadratic_mul_exp_tendsto_zero_eq
 @[path]
 private lemma kcd_horizontal_tendsto_zero_of_exp_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hdecay : ∃ c > 0, ∃ C > 0, ∀ n, 0 < n → crossProb 2 p hp n ≤ C * Real.exp (-c * n)) :
 -- imply
@@ -79,7 +79,7 @@ private lemma kcd_horizontal_tendsto_zero_of_exp_eq
 -/
 @[path]
 private lemma kcd_crossProb_mono_param_eq
-  {p q : ℝ≥0}
+  {p q : NNReal}
   {n : ℕ}
 -- given
   (hp : p ≤ 1)
@@ -97,7 +97,7 @@ private lemma kcd_crossProb_mono_param_eq
 @[path]
 private lemma kcd_horizontal_sharpThreshold_eq :
 -- imply
-  ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n : ℕ => (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (StatMech.RSW.Box.horizontalCrossingEvent 0 (n : ℤ) 0 (n : ℤ))) atTop (𝓝 0) := by
+  ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n : ℕ => (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (StatMech.RSW.Box.horizontalCrossingEvent 0 (n : ℤ) 0 (n : ℤ))) atTop (𝓝 0) := by
 -- proof
   apply StatMech.TwoDim.kcd_horizontal_sharpThreshold
 

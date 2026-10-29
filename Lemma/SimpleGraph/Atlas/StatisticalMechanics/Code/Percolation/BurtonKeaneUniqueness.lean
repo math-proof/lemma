@@ -124,7 +124,7 @@ private lemma Tcount_eq_sum_indicator_eq
   {ω : ConfigSpace (Sym2 (Site d))}
   {n : ℕ} :
 -- imply
-  (Tcount d ω n : ℝ≥0∞) = ∑ x ∈ boxFinsetBK d n, ({ω' | IsTrifurcation d ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω := by
+  (Tcount d ω n : ENNReal) = ∑ x ∈ boxFinsetBK d n, ({ω' | IsTrifurcation d ω' x}.indicator (fun _ => (1 : ENNReal))) ω := by
 -- proof
   apply StatMech.Percolation.Tcount_eq_sum_indicator ω n
 
@@ -139,7 +139,7 @@ private lemma expected_Tcount_eq
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) :
 -- imply
-  ∫⁻ ω, (Tcount d ω n : ℝ≥0∞) ∂μ = (boxFinsetBK d n).card • μ {ω | IsTrifurcation d ω 0} := by
+  ∫⁻ ω, (Tcount d ω n : ENNReal) ∂μ = (boxFinsetBK d n).card • μ {ω | IsTrifurcation d ω 0} := by
 -- proof
   apply StatMech.Percolation.expected_Tcount μ hinv n
 

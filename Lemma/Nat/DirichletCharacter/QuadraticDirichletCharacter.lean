@@ -133,7 +133,7 @@ private lemma jacobi_flip_of_one_mod_four (D : ℤ) (hD4 : D % 4 = 1) (t : ℕ)
   have hNodd : Odd D.natAbs := by rw [Nat.odd_iff]; omega
   obtain hDneg | hDpos := le_total D 0
   · have hDN : D = -((D.natAbs : ℕ) : ℤ) := by
-    rw [Int.natCast_natAbs, abs_of_nonpos hDneg, neg_neg]
+      rw [Int.natCast_natAbs, abs_of_nonpos hDneg, neg_neg]
     have hN4 : D.natAbs % 4 = 3 := by omega
     conv_lhs => rw [hDN]
     rw [jacobiSym.neg _ ht]
@@ -143,7 +143,7 @@ private lemma jacobi_flip_of_one_mod_four (D : ℤ) (hD4 : D % 4 = 1) (t : ℕ)
       rw [pow_mul, hN2odd.neg_one_pow, ZMod.χ₄_eq_neg_one_pow (Nat.odd_iff.mp ht)]
     rw [hrec, hpow, ← mul_assoc, ← sq, chi4_sq_of_odd t ht, one_mul]
   · have hDN : D = ((D.natAbs : ℕ) : ℤ) := by
-    rw [Int.natCast_natAbs, abs_of_nonneg hDpos]
+      rw [Int.natCast_natAbs, abs_of_nonneg hDpos]
     have hN4 : D.natAbs % 4 = 1 := by omega
     conv_lhs => rw [hDN]
     exact jacobiSym.quadratic_reciprocity_one_mod_four hN4 ht
@@ -197,13 +197,13 @@ private lemma jacobi_of_three_mod_four (m : ℤ) (hm4 : m % 4 = 3) (n : ℕ) (hn
     exact Odd.natAbs hmo
   obtain hmneg | hmpos := le_total m 0
   · have hmM : m = -((m.natAbs : ℕ) : ℤ) := by
-    rw [Int.natCast_natAbs, abs_of_nonpos hmneg, neg_neg]
+      rw [Int.natCast_natAbs, abs_of_nonpos hmneg, neg_neg]
     have hM4 : m.natAbs % 4 = 1 := by omega
     conv_lhs => rw [hmM]
     rw [jacobiSym.neg _ hn,
       jacobiSym.quadratic_reciprocity_one_mod_four hM4 hn]
   · have hmM : m = ((m.natAbs : ℕ) : ℤ) := by
-    rw [Int.natCast_natAbs, abs_of_nonneg hmpos]
+      rw [Int.natCast_natAbs, abs_of_nonneg hmpos]
     have hM4 : m.natAbs % 4 = 3 := by omega
     conv_lhs => rw [hmM]
     have hrec := jacobiSym.quadratic_reciprocity hModd hn
@@ -303,7 +303,7 @@ private lemma chi8_cube_of_odd (n : ℕ) (hn : Odd n) :
     rw [ZMod.χ₈_nat_eq_if_mod_eight]
     simp only [hn2]
     by_cases h8 : n % 8 = 1 ∨ n % 8 = 7 <;> simp [h8]
-  obtain h | h <;> rw [h] <;> norm_num := hpm
+  rcases hpm with h | h <;> rw [h] <;> norm_num
 
 end MetaMathlibExt
 
@@ -348,7 +348,7 @@ private lemma jacobi_k_one (k : ℤ) (hk4 : k % 4 = 1) (n : ℕ) (hn : Odd n) :
     exact Odd.natAbs hko
   obtain hkneg | hkpos := le_total k 0
   · have hkK : k = -((k.natAbs : ℕ) : ℤ) := by
-    rw [Int.natCast_natAbs, abs_of_nonpos hkneg, neg_neg]
+      rw [Int.natCast_natAbs, abs_of_nonpos hkneg, neg_neg]
     have hK4 : k.natAbs % 4 = 3 := by omega
     conv_lhs => rw [hkK]
     rw [jacobiSym.neg _ hn]
@@ -358,7 +358,7 @@ private lemma jacobi_k_one (k : ℤ) (hk4 : k % 4 = 1) (n : ℕ) (hn : Odd n) :
       rw [pow_mul, hK2odd.neg_one_pow, ZMod.χ₄_eq_neg_one_pow (Nat.odd_iff.mp hn)]
     rw [hrec, hpow, ← mul_assoc, ← sq, chi4_sq_of_odd n hn, one_mul]
   · have hkK : k = ((k.natAbs : ℕ) : ℤ) := by
-    rw [Int.natCast_natAbs, abs_of_nonneg hkpos]
+      rw [Int.natCast_natAbs, abs_of_nonneg hkpos]
     have hK4 : k.natAbs % 4 = 1 := by omega
     conv_lhs => rw [hkK]
     exact jacobiSym.quadratic_reciprocity_one_mod_four hK4 hn

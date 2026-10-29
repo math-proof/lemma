@@ -36,13 +36,13 @@ variable {E : Type*} [NormedAddCommGroup E]
 For $1 ≤ p < ∞$, this is $\|f\|_p = \left(\int |f|^p \, dμ\right)^{1/p}$, and for $p = ∞$
 it is the essential supremum $\|f\|_∞ = \operatorname{ess\,sup}|f|$. This is a thin wrapper
 around `MeasureTheory.eLpNorm`. -/
-def eLpNorm (f : α → E) (p : ℝ≥0∞) (μ : Measure α := by volume_tac) : ℝ≥0∞ :=
+def eLpNorm (f : α → E) (p : ENNReal) (μ : Measure α := by volume_tac) : ENNReal :=
   MeasureTheory.eLpNorm f p μ
 
 /-- The $L^p$ space $L^p(μ; E) = \{f : α → E : f \text{ measurable and } \|f\|_p < ∞\}$,
 quotiented by the equivalence relation of almost-everywhere equality. Implemented as a thin
 wrapper around `MeasureTheory.Lp`. -/
-def Lp (E : Type*) [NormedAddCommGroup E] (p : ℝ≥0∞)
+def Lp (E : Type*) [NormedAddCommGroup E] (p : ENNReal)
     {α : Type*} [MeasurableSpace α] (μ : Measure α) : Type _ :=
   ↥(MeasureTheory.Lp E p μ)
 

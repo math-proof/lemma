@@ -8,7 +8,7 @@ import Def.NumberTheory.CarmichaelNumber
 -/
 @[path]
 lemma Nat.isCarmichaelNumber_iff_zmod
-  {n : ℕ} :
+  (n : ℕ) :
 -- imply
   Nat.IsCarmichaelNumber n ↔
     1 < n ∧ ¬n.Prime ∧ ∀ x : ZMod n, x ^ n = x := by
@@ -19,7 +19,8 @@ lemma Nat.isCarmichaelNumber_iff_zmod
     refine ⟨hn, hNotPrime, fun x ↦ ?_⟩
     have hCast : ((x.val ^ n : ℕ) : ZMod n) = ((x.val : ℕ) : ZMod n) :=
       (ZMod.natCast_eq_natCast_iff _ _ _).mpr (hUniv x.val)
-    rwa [← ZMod.natCast_zmod_val x, ← Nat.cast_pow]
+    rw [← ZMod.natCast_zmod_val x, ← Nat.cast_pow]
+    exact hCast
   · rintro ⟨hn, hNotPrime, hUniv⟩
     refine ⟨hn, hNotPrime, fun a ↦ ?_⟩
     apply (ZMod.natCast_eq_natCast_iff _ _ _).mp
@@ -36,9 +37,9 @@ private lemma carmichael_prime_eq (p : ℕ) (hp : p.Prime) :
     have h1 : ArithmeticFunction.carmichael (2 ^ 1) = 2 ^ (1 - 1) := by
       apply ArithmeticFunction.carmichael_two_pow_of_le_two
       decide
-    simpa using h1
+    simp
   · have h : ArithmeticFunction.carmichael (p ^ 1) = (p ^ 1).totient :=
-    ArithmeticFunction.carmichael_pow_of_prime_ne_two 1 hp hp2
+      ArithmeticFunction.carmichael_pow_of_prime_ne_two 1 hp hp2
     simp only [pow_one] at h
     rw [h, Nat.totient_prime hp]
 
@@ -66,10 +67,11 @@ lemma Nat.isCarmichaelNumber_iff_korselt
       rw [isReduced_iff_pow_one_lt n hn]
       intro x hx
       have hPowEq : x ^ n = x := hUnivZMod x
-      rwa [hPowEq] at hx
+      rw [hPowEq] at hx
+      exact hx
     have hSF : Squarefree n := by
       have h := (isReduced_zmod (n := n)).mp hIsReduced
-      obtain h | h := h
+      rcases h with h | h
       · exact h
       · omega
     refine ⟨hSF, ?_, hNotPrime⟩
@@ -82,7 +84,8 @@ lemma Nat.isCarmichaelNumber_iff_korselt
       have hUN : u ^ n = u := by
         apply Units.ext
         show (↑(u ^ n) : ZMod n) = (↑u : ZMod n)
-        rwa [Units.val_pow_eq_pow_val]
+        rw [Units.val_pow_eq_pow_val]
+        exact hEq
       have hn_eq : n = (n - 1) + 1 := by omega
       have hPow : u ^ ((n - 1) + 1) = u := by rw [← hn_eq]; exact hUN
       rw [pow_succ] at hPow
@@ -138,15 +141,12 @@ lemma Nat.isCarmichaelNumber_iff_korselt
       by_cases hd0 : d = 0
       · simp [hd0]
       · have hProd : (∏ p ∈ n.primeFactors, p) ∣ d := by
-        apply (Nat.prod_primeFactors_dvd_iff hd0).mpr
-        intro p hp
-        have hmem : p ∈ d.primeFactors :=
-          Nat.mem_primeFactors.mpr
-            ⟨Nat.prime_of_mem_primeFactors hp, hDvdPerPrime p hp, hd0⟩
-        exact hmem
-        rwa [Nat.prod_primeFactors_of_squarefree hSF] at hProd
+          apply (Nat.prod_primeFactors_dvd_iff hd0).mpr
+          intro p hp
+          have hmem : p ∈ d.primeFactors :=
+            Nat.mem_primeFactors.mpr
+              ⟨Nat.prime_of_mem_primeFactors hp, hDvdPerPrime p hp, hd0⟩
+          exact hmem
+        rw [Nat.prod_primeFactors_of_squarefree hSF] at hProd
+        exact hProd
     exact (Nat.modEq_of_dvd' hLe hProdDvd).symm
-
-
--- created on 2026-10-20
--- updated on 2026-10-26

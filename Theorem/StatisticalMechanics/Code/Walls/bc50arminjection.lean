@@ -115,7 +115,7 @@ theorem bc50_ClassicalBoundaryArmInjection_of_armForest_all
   fun ω n => bc50_ClassicalBoundaryArmInjection_of_armForest ω n (h ω n)
 
 
-theorem bc50_burton_keane_bernoulli_of_armForest (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bc50_burton_keane_bernoulli_of_armForest (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (harm : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), sfa_ArmForestReaching ω n)
     (hroute : ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) →
@@ -134,7 +134,7 @@ theorem bc50_burton_keane_bernoulli_of_armForest (hd : 1 ≤ d) (p : ℝ≥0) (h
 
 
 theorem bc50_burton_keane_bernoulli_of_armForest_routingCover
-    (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+    (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (harm : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), sfa_ArmForestReaching ω n)
     (hrt : ∀ n : ℕ, hrHD_DisjointRouting d n) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

@@ -9,7 +9,7 @@ namespace MetaMathlibExt.SumTwoCoprimeSquares
 -/
 @[path]
 private lemma sq_mod_two (n : ℕ) : (n % 2) ^ 2 % 2 = n % 2 := by
-  obtain h | h <;> rw [h] <;> norm_num := Nat.mod_two_eq_zero_or_one n
+  rcases Nat.mod_two_eq_zero_or_one n with h | h <;> rw [h] <;> norm_num
 
 end MetaMathlibExt.SumTwoCoprimeSquares
 
@@ -31,7 +31,7 @@ namespace MetaMathlibExt.SumTwoCoprimeSquares
 -/
 @[path]
 private lemma sq_mod_four (n : ℕ) : n ^ 2 % 4 = 0 ∨ n ^ 2 % 4 = 1 := by
-  obtain ⟨r, rfl⟩ | ⟨r, rfl⟩ := Nat.even_or_odd n
+  rcases Nat.even_or_odd n with ⟨r, rfl⟩ | ⟨r, rfl⟩
   · left
     have hcon : (r + r) ^ 2 = 4 * (r * r) := by ring
     omega
@@ -48,7 +48,7 @@ namespace MetaMathlibExt.SumTwoCoprimeSquares
 -/
 @[path]
 private lemma even_of_sq_mod_four_zero (n : ℕ) (hn : n ^ 2 % 4 = 0) : Even n := by
-  obtain h | h := Nat.even_or_odd n
+  rcases Nat.even_or_odd n with h | h
   · exact h
   · exfalso
     obtain ⟨r, rfl⟩ := h
@@ -61,9 +61,8 @@ namespace MetaMathlibExt.SumTwoCoprimeSquares
 
 /--
 [key_core](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/SumTwoCoprimeSquares.lean)
--/
-@[path]
 with `x` and `y` coprime, is impossible. -/
+@[path]
 private lemma key_core {p x y ℓ : ℕ} (hℓ : ℓ.Prime) (hxy : Nat.Coprime x y)
   (h1 : ℓ ∣ p * x) (h2 : ℓ ∣ p * y) (hnp : ¬ ℓ ∣ p) : False := by
   have hx : ℓ ∣ x := ((Nat.Prime.dvd_mul hℓ).mp h1).resolve_left hnp
@@ -90,7 +89,7 @@ private lemma prime_rep (p : ℕ) (hpp : p.Prime) (hp1 : p % 4 = 1) :
     rintro rfl
     rw [zero_pow two_ne_zero, zero_add] at hwz
     have hd : z ∣ p := ⟨z, by rw [← hwz, pow_two]⟩
-    obtain rfl | hzp := hpp.eq_one_or_self_of_dvd _ hd
+    rcases hpp.eq_one_or_self_of_dvd _ hd with rfl | hzp
     · rw [one_pow] at hwz
       exact hpp.ne_one hwz.symm
     · rw [hzp] at hwz
@@ -110,8 +109,9 @@ private lemma prime_rep (p : ℕ) (hpp : p.Prime) (hp1 : p % 4 = 1) :
       dvd_trans (Nat.gcd_dvd_right x y) (dvd_pow_self y two_ne_zero)
     have e : Nat.gcd x y ∣ p := by
       have h := dvd_add e1 e2
-      rwa [hxy] at h
-    obtain h | h := hpp.eq_one_or_self_of_dvd _ e
+      rw [hxy] at h
+      exact h
+    rcases hpp.eq_one_or_self_of_dvd _ e with h | h
     · rwa [Nat.coprime_iff_gcd_eq_one]
     · exfalso
       have hpx : p ∣ x := by rw [← h]; exact Nat.gcd_dvd_left _ _
@@ -134,10 +134,9 @@ namespace MetaMathlibExt.SumTwoCoprimeSquares
 
 /--
 [compose_rep](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/SumTwoCoprimeSquares.lean)
--/
-@[path]
 The two Brahmagupta–Fibonacci combinations are examined over `ℤ`; at least
 one of them is primitive. -/
+@[path]
 private lemma compose_rep {p m u v x y : ℕ}
   (hu : 0 < u) (_hv : 0 < v) (hx : 0 < x) (hy : 0 < y)
   (huv : Nat.Coprime u v) (hxy : Nat.Coprime x y)
@@ -147,9 +146,9 @@ private lemma compose_rep {p m u v x y : ℕ}
   have cast1 : ((p * x : ℕ) : ℤ) = (p : ℤ) * (x : ℤ) := Nat.cast_mul _ _
   have cast2 : ((p * y : ℕ) : ℤ) = (p : ℤ) * (y : ℤ) := Nat.cast_mul _ _
   have key : ∀ A B : ℤ,
-    (A = (u : ℤ) * x + (v : ℤ) * y ∧ B = (u : ℤ) * y - (v : ℤ) * x) ∨
-    (A = (u : ℤ) * x - (v : ℤ) * y ∧ B = (u : ℤ) * y + (v : ℤ) * x) →
-    ∀ ℓ : ℕ, ℓ.Prime → (ℓ : ℤ) ∣ A → (ℓ : ℤ) ∣ B → ℓ ∣ p * x ∧ ℓ ∣ p * y := by
+      (A = (u : ℤ) * x + (v : ℤ) * y ∧ B = (u : ℤ) * y - (v : ℤ) * x) ∨
+      (A = (u : ℤ) * x - (v : ℤ) * y ∧ B = (u : ℤ) * y + (v : ℤ) * x) →
+      ∀ ℓ : ℕ, ℓ.Prime → (ℓ : ℤ) ∣ A → (ℓ : ℤ) ∣ B → ℓ ∣ p * x ∧ ℓ ∣ p * y := by
     intro A B hAB ℓ hℓ hA hB
     have back1 : (ℓ : ℤ) ∣ (p : ℤ) * (x : ℤ) → ℓ ∣ p * x := by
       intro h; rw [← Int.natCast_dvd_natCast, cast1]; exact h
@@ -163,16 +162,16 @@ private lemma compose_rep {p m u v x y : ℕ}
       dvd_trans (dvd_mul_left _ _) (mul_dvd_mul (dvd_refl _) hA)
     have hBv : (ℓ : ℤ) ∣ (u : ℤ) * B :=
       dvd_trans (dvd_mul_left _ _) (mul_dvd_mul (dvd_refl _) hB)
-    obtain ⟨hAeq, hBeq⟩ | ⟨hAeq, hBeq⟩ := hAB
+    rcases hAB with ⟨hAeq, hBeq⟩ | ⟨hAeq, hBeq⟩
     · have e1 : (u : ℤ) * A - (v : ℤ) * B = (p : ℤ) * x := by
-      rw [hAeq, hBeq, ← hp]; push_cast; ring
+        rw [hAeq, hBeq, ← hp]; push_cast; ring
       have e2 : (v : ℤ) * A + (u : ℤ) * B = (p : ℤ) * y := by
         rw [hAeq, hBeq, ← hp]; push_cast; ring
       refine ⟨back1 ?_, back2 ?_⟩
       · rw [← e1]; exact dvd_sub hAu hBu
       · rw [← e2]; exact dvd_add hAv hBv
     · have e1 : (u : ℤ) * A + (v : ℤ) * B = (p : ℤ) * x := by
-      rw [hAeq, hBeq, ← hp]; push_cast; ring
+        rw [hAeq, hBeq, ← hp]; push_cast; ring
       have e2 : (u : ℤ) * B - (v : ℤ) * A = (p : ℤ) * y := by
         rw [hAeq, hBeq, ← hp]; push_cast; ring
       refine ⟨back1 ?_, back2 ?_⟩
@@ -214,21 +213,21 @@ private lemma compose_rep {p m u v x y : ℕ}
     omega
   by_cases hC1 : Nat.Coprime A₁ B₁
   · have hB₁ne : B₁ ≠ 0 := by
-    intro hB0
-    have hg := hC1.gcd_eq_one
-    rw [hB0, Nat.gcd_zero_right] at hg
-    rw [hg, hB0] at sq1
-    simp at sq1
-    omega
+      intro hB0
+      have hg := hC1.gcd_eq_one
+      rw [hB0, Nat.gcd_zero_right] at hg
+      rw [hg, hB0] at sq1
+      simp at sq1
+      omega
     exact ⟨A₁, B₁, hA₁pos, Nat.pos_of_ne_zero hB₁ne, hC1, sq1⟩
   · by_cases hC2 : Nat.Coprime A₂ B₂
     · have hA₂ne : A₂ ≠ 0 := by
-      intro hA0
-      have hg := hC2.gcd_eq_one
-      rw [hA0, Nat.gcd_zero_left] at hg
-      rw [hg, hA0] at sq2
-      simp at sq2
-      omega
+        intro hA0
+        have hg := hC2.gcd_eq_one
+        rw [hA0, Nat.gcd_zero_left] at hg
+        rw [hg, hA0] at sq2
+        simp at sq2
+        omega
       exact ⟨A₂, B₂, Nat.pos_of_ne_zero hA₂ne, hB₂pos, hC2, sq2⟩
     · exfalso
       have g1ne : Nat.gcd A₁ B₁ ≠ 1 :=
@@ -292,7 +291,7 @@ private lemma compose_rep {p m u v x y : ℕ}
       have hpodd : p % 2 = 1 := by omega
       have strip2 : ∀ t : ℕ, p ∣ 2 * t → p ∣ t := by
         intro t ht
-        obtain h | h := (Nat.Prime.dvd_mul hpp).mp ht
+        rcases (Nat.Prime.dvd_mul hpp).mp ht with h | h
         · exfalso
           have h2 : p = 2 := (Nat.prime_dvd_prime_iff_eq hpp Nat.prime_two).mp h
           omega
@@ -302,7 +301,7 @@ private lemma compose_rep {p m u v x y : ℕ}
       have c3 : p ∣ u ∨ p ∣ x := (Nat.Prime.dvd_mul hpp).mp (strip2 _ d_ux)
       have c4 : p ∣ v ∨ p ∣ y := (Nat.Prime.dvd_mul hpp).mp (strip2 _ d_vy)
       have hcontra : (p ∣ u ∧ p ∣ v) ∨ (p ∣ x ∧ p ∣ y) := by tauto
-      obtain ⟨h1, h2⟩ | ⟨h1, h2⟩ := hcontra
+      rcases hcontra with ⟨h1, h2⟩ | ⟨h1, h2⟩
       · have hd : p ∣ Nat.gcd u v := Nat.dvd_gcd h1 h2
         rw [huv.gcd_eq_one] at hd
         exact hpp.ne_one (Nat.dvd_one.mp hd)
@@ -316,10 +315,9 @@ namespace MetaMathlibExt.SumTwoCoprimeSquares
 
 /--
 [exists_rep](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/SumTwoCoprimeSquares.lean)
--/
-@[path]
 coprime positive squares, by strong induction (peeling off one prime and
 recombining with `compose_rep`). -/
+@[path]
 private lemma exists_rep : ∀ q : ℕ, 1 < q → (∀ r ∈ q.primeFactors, r % 4 = 1) →
   ∃ a b : ℕ, 0 < a ∧ 0 < b ∧ Nat.Coprime a b ∧ a ^ 2 + b ^ 2 = q := by
   intro q
@@ -336,7 +334,7 @@ private lemma exists_rep : ∀ q : ℕ, 1 < q → (∀ r ∈ q.primeFactors, r %
     · subst hmq
       exact ⟨u, v, hu, hv, huv, huv2⟩
     · have hplt : p < q :=
-      Nat.lt_of_le_of_ne (Nat.le_of_dvd (by omega) hpq) (fun h => hmq h.symm)
+        Nat.lt_of_le_of_ne (Nat.le_of_dvd (by omega) hpq) (fun h => hmq h.symm)
       have hpm : p * (q / p) = q := Nat.mul_div_cancel' hpq
       have hmpos : 0 < q / p := Nat.div_pos (Nat.le_of_lt hplt) (by omega)
       have hm1 : 1 < q / p := by
@@ -354,7 +352,8 @@ private lemma exists_rep : ∀ q : ℕ, 1 < q → (∀ r ∈ q.primeFactors, r %
       obtain ⟨a, b, ha, hb, hab, hab2⟩ :=
         compose_rep hu hv hx hy huv hxy huv2 hxy2 (by omega) hpp hp1
       refine ⟨a, b, ha, hb, hab, ?_⟩
-      rwa [hab2]
+      rw [hab2]
+      exact hpm
 
 end MetaMathlibExt.SumTwoCoprimeSquares
 
@@ -362,9 +361,8 @@ namespace MetaMathlibExt.SumTwoCoprimeSquares
 
 /--
 [double_rep](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/SumTwoCoprimeSquares.lean)
--/
-@[path]
 then so is `2 * q`. -/
+@[path]
 private lemma double_rep {q a b : ℕ} (_hq1 : 1 < q) (hqodd : Odd q)
   (ha : 0 < a) (hb : 0 < b) (hab : Nat.Coprime a b) (hsq : a ^ 2 + b ^ 2 = q) :
   ∃ A B : ℕ, 0 < A ∧ 0 < B ∧ Nat.Coprime A B ∧ A ^ 2 + B ^ 2 = 2 * q := by
@@ -375,7 +373,7 @@ private lemma double_rep {q a b : ℕ} (_hq1 : 1 < q) (hqodd : Odd q)
     have h2 := Nat.odd_iff.mp hqodd
     omega
   have main : ∀ x y : ℕ, 0 < x → 0 < y → x < y → Nat.Coprime x y → x ^ 2 + y ^ 2 = q →
-    ∃ A B : ℕ, 0 < A ∧ 0 < B ∧ Nat.Coprime A B ∧ A ^ 2 + B ^ 2 = 2 * q := by
+      ∃ A B : ℕ, 0 < A ∧ 0 < B ∧ Nat.Coprime A B ∧ A ^ 2 + B ^ 2 = 2 * q := by
     intro x y hx hy hxy hcop hsq
     obtain ⟨k, hk⟩ := Nat.exists_eq_add_of_lt hxy
     set A := x + y with hA
@@ -402,13 +400,15 @@ private lemma double_rep {q a b : ℕ} (_hq1 : 1 < q) (hqodd : Odd q)
       have d2 : Nat.gcd A B ∣ 2 * x := by
         have h : Nat.gcd A B ∣ A - B :=
           Nat.dvd_sub (Nat.gcd_dvd_left _ _) (Nat.gcd_dvd_right _ _)
-        rwa [e2] at h
+        rw [e2] at h
+        exact h
       have d3 : Nat.gcd A B ∣ 2 := by
         have h2 : Nat.gcd (2 * x) (2 * y) = 2 := by
           rw [Nat.gcd_mul_left, hcop.gcd_eq_one, mul_one]
         have h4 : Nat.gcd A B ∣ Nat.gcd (2 * x) (2 * y) := Nat.dvd_gcd d2 d1
-        rwa [h2] at h4
-      obtain h | h := (Nat.dvd_prime Nat.prime_two).mp d3
+        rw [h2] at h4
+        exact h4
+      rcases (Nat.dvd_prime Nat.prime_two).mp d3 with h | h
       · rwa [Nat.coprime_iff_gcd_eq_one]
       · exfalso
         have h2A : 2 ∣ A := by
@@ -417,7 +417,7 @@ private lemma double_rep {q a b : ℕ} (_hq1 : 1 < q) (hqodd : Odd q)
         have h2 := Nat.odd_iff.mp hAodd
         omega
     exact ⟨A, B, hApos, hBpos, hcopAB, by rw [hsq2, hsq]⟩
-  obtain h | h := lt_or_gt_of_ne hab_ne
+  rcases lt_or_gt_of_ne hab_ne with h | h
   · exact main a b ha hb h hab hsq
   · exact main b a hb ha h hab.symm (by rw [add_comm (b ^ 2) (a ^ 2)]; exact hsq)
 
@@ -454,7 +454,7 @@ lemma sum_two_coprime_squares_characterization
     have h4 : ¬ 4 ∣ d := by
       intro h4d
       have hdm : (a ^ 2 + b ^ 2) % 4 = 0 := by rw [hsq]; omega
-      obtain ha4 | ha4 <;> rcases sq_mod_four b with hb4 | hb4 := sq_mod_four a
+      rcases sq_mod_four a with ha4 | ha4 <;> rcases sq_mod_four b with hb4 | hb4
       · have hea := even_of_sq_mod_four_zero a ha4
         have heb := even_of_sq_mod_four_zero b hb4
         obtain ⟨r, rfl⟩ := hea
@@ -472,11 +472,11 @@ lemma sum_two_coprime_squares_characterization
       · exfalso
         have hsum := Nat.add_mod (a ^ 2) (b ^ 2) 4
         omega
-    obtain hev | hodd := Nat.even_or_odd d
+    rcases Nat.even_or_odd d with hev | hodd
     · obtain ⟨q, hq⟩ := hev
       have hqd : d = 2 * q := by omega
       have hqodd : Odd q := by
-        obtain h | h := Nat.even_or_odd q
+        rcases Nat.even_or_odd q with h | h
         · exfalso
           obtain ⟨k, rfl⟩ := h
           exact h4 ⟨k, by omega⟩
@@ -487,7 +487,7 @@ lemma sum_two_coprime_squares_characterization
       have hrd : r ∈ d.primeFactors := by
         obtain ⟨hrp, hrm, -⟩ := Nat.mem_primeFactors.mp hr
         exact Nat.mem_primeFactors.mpr ⟨hrp, dvd_trans hrm ⟨2, by omega⟩, hd0⟩
-      obtain h | h := hmod r hrd
+      rcases hmod r hrd with h | h
       · exact h
       · exfalso
         subst h
@@ -497,7 +497,7 @@ lemma sum_two_coprime_squares_characterization
         omega
     · refine ⟨d, ?_, Or.inl rfl⟩
       intro r hr
-      obtain h | h := hmod r hr
+      rcases hmod r hr with h | h
       · exact h
       · exfalso
         subst h
@@ -511,7 +511,7 @@ lemma sum_two_coprime_squares_characterization
     · subst h1
       have hq1 : 1 < q := by omega
       have hqodd : Odd q := by
-        obtain h | h := Nat.even_or_odd q
+        rcases Nat.even_or_odd q with h | h
         · exfalso
           obtain ⟨k, rfl⟩ := h
           exact absurd (hq 2 (Nat.mem_primeFactors.mpr
@@ -525,4 +525,4 @@ end MetaMathlibExt.SumTwoCoprimeSquares
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

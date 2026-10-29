@@ -20,8 +20,6 @@ lemma adicCompletionMap_injective
 -- proof
   RingHom.injective _
 
-end IsDedekindDomain.HeightOneSpectrum
-
 /--
 [adicCompletionMap_algebraMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOver.lean)
 -/
@@ -49,6 +47,8 @@ private lemma continuous_adicCompletionMap_eq
   Continuous (adicCompletionMap v w) := by
 -- proof
   apply IsDedekindDomain.HeightOneSpectrum.continuous_adicCompletionMap v w
+
+end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20

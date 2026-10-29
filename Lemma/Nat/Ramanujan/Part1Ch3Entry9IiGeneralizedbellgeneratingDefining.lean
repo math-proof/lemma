@@ -46,7 +46,7 @@ private lemma summable_bellTerm (a b x : ℂ) (n : ℕ) :
       pow_le_pow_left₀ (norm_nonneg _) hP n
       _ = (‖a‖ + ‖b‖) ^ n * ((k + 1 : ℕ) : ℝ) ^ n := by rw [mul_pow]
       _ ≤ (‖a‖ + ‖b‖) ^ n * (((2 : ℝ) ^ (k + 1)) ^ n) := by
-        apply mul_le_mul_of_nonneg_left hpoly (pow_nonneg (by positivity) n)
+          apply mul_le_mul_of_nonneg_left hpoly (pow_nonneg (by positivity) n)
       _ = (‖a‖ + ‖b‖) ^ n * (2 ^ n) ^ (k + 1) := by rw [h2eq]
   have hnorm : ‖(a + b * (↑(k + 1) : ℂ)) ^ n * x ^ (k + 1) / (↑(Nat.factorial k) : ℂ)‖
     = ‖a + b * (↑(k + 1) : ℂ)‖ ^ n * ‖x‖ ^ (k + 1) / (Nat.factorial k : ℝ) := by
@@ -56,8 +56,8 @@ private lemma summable_bellTerm (a b x : ℂ) (n : ℕ) :
   have hXsucc : ‖x‖ ^ (k + 1) = ‖x‖ * ‖x‖ ^ k := pow_succ' _ _
   calc ‖a + b * (↑(k + 1) : ℂ)‖ ^ n * ‖x‖ ^ (k + 1) / (Nat.factorial k : ℝ)
     ≤ ((‖a‖ + ‖b‖) ^ n * (2 ^ n) ^ (k + 1)) * ‖x‖ ^ (k + 1) / (Nat.factorial k : ℝ) := by
-      apply div_le_div_of_nonneg_right _ (le_of_lt hfact_pos)
-      exact mul_le_mul_of_nonneg_right hPn (pow_nonneg (norm_nonneg _) _)
+        apply div_le_div_of_nonneg_right _ (le_of_lt hfact_pos)
+        exact mul_le_mul_of_nonneg_right hPn (pow_nonneg (norm_nonneg _) _)
     _ = (‖a‖ + ‖b‖) ^ n * 2 ^ n * ‖x‖ * ((2 ^ n * ‖x‖) ^ k / (Nat.factorial k : ℝ)) := by
       rw [h2succ, hXsucc, mul_pow]
       ring
@@ -71,8 +71,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry9IiGeneralizedbellgene
 -/
 @[path]
 lemma ramanujan_part1_ch3_entry9_ii_generalizedbellgenerating_defining
-  {a b x : ℂ}
-  {n : ℕ} :
+  (a b x : ℂ)
+  (n : ℕ) :
 -- imply
   HasSum (fun k : ℕ => (a + b * (↑(k + 1) : ℂ)) ^ n * x ^ (k + 1) / (↑(Nat.factorial k) : ℂ))
     (Complex.exp x * generalizedBellGenerating a b x n) := by
@@ -87,7 +87,8 @@ lemma ramanujan_part1_ch3_entry9_ii_generalizedbellgenerating_defining
     ∑' k : ℕ, (a + b * (↑(k + 1) : ℂ)) ^ n * x ^ (k + 1) / (↑(Nat.factorial k) : ℂ) := by
     rw [← mul_assoc, hexp, one_mul]
   unfold generalizedBellGenerating
-  rwa [hEq]
+  rw [hEq]
+  exact hSumm.hasSum
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry9IiGeneralizedbellgeneratingDefining
 

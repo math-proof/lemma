@@ -237,7 +237,7 @@ theorem zbd_boxHitsInfinite_tendsto_one
     Tendsto (fun n => halfMeasure.real (zbd_boxHitsInfinite n)) atTop (nhds 1) := by
   have hmeasure := tendsto_measure_iUnion_atTop (μ := halfMeasure) zbd_boxHitsInfinite_mono
   rw [zbd_iUnion_boxHitsInfinite, zbd_existsInfinite_halfMeasure_one hpos] at hmeasure
-  exact (ENNReal.tendsto_toReal (by norm_num : (1 : ℝ≥0∞) ≠ ∞)).comp hmeasure
+  exact (ENNReal.tendsto_toReal (by norm_num : (1 : ENNReal) ≠ ∞)).comp hmeasure
 
 
 theorem zbd_centeredSide_union_tendsto

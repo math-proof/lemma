@@ -12,7 +12,7 @@ private lemma w1_sum_eq
   [Fintype E]
   [DecidableEq E]
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (∑ b : Bool, w1 p hp b) = 1 := by
@@ -30,7 +30,7 @@ private lemma part_norm_eq
   [Fintype Sₜ]
   [DecidableEq Sₜ]
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (∑ x : Sₜ → Bool, ∏ i, w1 p hp (x i)) = 1 := by
@@ -47,7 +47,7 @@ private lemma wsum_mul_eq
   [DecidablePred P]
   {f g : ConfigSpace E → ℝ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (P : E → Prop)
   (hf : ∀ ω ω', (∀ e, P e → ω e = ω' e) → f ω = f ω')
@@ -66,7 +66,7 @@ private lemma real_eq_wsum_eq
   [DecidableEq E]
   {A : Set (ConfigSpace E)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := E) p hp).real A = wsum p hp (A.indicator (fun _ => (1 : ℝ))) := by
@@ -83,7 +83,7 @@ private lemma indep_cylinder_eq
   [DecidablePred P]
   {A B : Set (ConfigSpace E)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (P : E → Prop)
   (hA : ∀ ω ω', (∀ e, P e → ω e = ω' e) → (ω ∈ A ↔ ω' ∈ A))
@@ -119,7 +119,7 @@ private lemma indep_cylinder_inf_eq
   {A B : Set (ConfigSpace E)}
   {T U : Finset E}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hdisj : Disjoint T U)
   (hA : DependsOn (A.indicator (fun _ => (1 : ℝ))) (T : Set E))
@@ -366,7 +366,7 @@ private lemma exploration_decomposition_eq
   {B : Set (ConfigSpace (Sym2 (Site d)))}
   {U : Finset (Sym2 (Site d))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : o ∈ (S : Set (Site d)))
   (hdisj : Disjoint (incidentWithinFinset K S) U)

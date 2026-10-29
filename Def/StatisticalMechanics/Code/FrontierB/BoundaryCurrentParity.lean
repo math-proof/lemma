@@ -29,7 +29,7 @@ def boundaryParityAllowed (interior : Finset V)
     sources G (edgeIndicatorCurrent H) ∩ interior = ∅
 
 noncomputable def boundaryParityRawMass (beta : ℝ)
-    (interior : Finset V) (H : Finset (Sym2 V)) : ℝ≥0∞ := by
+    (interior : Finset V) (H : Finset (Sym2 V)) : ENNReal := by
   classical
   exact ENNReal.ofReal
     (if boundaryParityAllowed G interior H then

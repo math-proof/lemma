@@ -172,11 +172,11 @@ theorem rq1_centeredSquare_crossing_half (n : ℕ) (hn : 0 < n) :
 
 theorem rq1_finiteBernoulli_mixedSquare_eq (n : ℕ) :
     (bernoulliProductMeasure (E := Sym2 (boxVerts 2 n))
-      (2⁻¹ : ℝ≥0) half_le_one).real (rq1_finiteMixedSquareEvent n) =
+      (2⁻¹ : NNReal) half_le_one).real (rq1_finiteMixedSquareEvent n) =
       rba_selfDualMeasure.real
         (horizontalCrossingEvent (-(n : ℤ)) (n : ℤ) (-(n : ℤ)) (n : ℤ)) := by
   have hrestrict := bernoulliProduct_boxRestrict_preimage
-    (d := 2) (2⁻¹ : ℝ≥0) half_le_one n (rq1_finiteMixedSquareEvent n)
+    (d := 2) (2⁻¹ : NNReal) half_le_one n (rq1_finiteMixedSquareEvent n)
   rw [rq1_finiteMixedSquareEvent_preimage] at hrestrict
   simpa [rba_selfDualMeasure] using hrestrict.symm
 
@@ -193,7 +193,7 @@ theorem rq1_bcMixedSquare_crossing_half (n : ℕ) (hn : 0 < n)
         (horizontalCrossingEvent (-(n : ℤ)) (n : ℤ) (-(n : ℤ)) (n : ℤ)) :=
       rq1_centeredSquare_crossing_half n hn
     _ = (bernoulliProductMeasure (E := Sym2 (boxVerts 2 n))
-          (2⁻¹ : ℝ≥0) half_le_one).real (rq1_finiteMixedSquareEvent n) :=
+          (2⁻¹ : NNReal) half_le_one).real (rq1_finiteMixedSquareEvent n) :=
       (rq1_finiteBernoulli_mixedSquare_eq n).symm
     _ = ∑ eta : ConfigSpace (Sym2 (boxVerts 2 n)),
         (rq1_finiteMixedSquareEvent n).indicator (fun _ => (1 : ℝ)) eta *

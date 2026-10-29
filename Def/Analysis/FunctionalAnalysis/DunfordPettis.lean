@@ -51,13 +51,13 @@ noncomputable def dpcLpTwoToLpOneCLM
       have hfin : eLpNorm (⇑g) 2 μ ≠ ⊤ := (Lp.memLp g).eLpNorm_lt_top.ne
       have hle : eLpNorm (⇑g) 1 μ ≤
           eLpNorm (⇑g) 2 μ *
-            μ Set.univ ^ (1 / (1 : ℝ≥0∞).toReal - 1 / (2 : ℝ≥0∞).toReal) :=
+            μ Set.univ ^ (1 / (1 : ENNReal).toReal - 1 / (2 : ENNReal).toReal) :=
         eLpNorm_le_eLpNorm_mul_rpow_measure_univ one_le_two hmem
-      have hexp : 1 / (1 : ℝ≥0∞).toReal - 1 / (2 : ℝ≥0∞).toReal = 1 / 2 := by
+      have hexp : 1 / (1 : ENNReal).toReal - 1 / (2 : ENNReal).toReal = 1 / 2 := by
         rw [ENNReal.toReal_one, ENNReal.toReal_ofNat]
         norm_num
       have hMfin :
-          μ Set.univ ^ (1 / (1 : ℝ≥0∞).toReal - 1 / (2 : ℝ≥0∞).toReal) ≠ ⊤ := by
+          μ Set.univ ^ (1 / (1 : ENNReal).toReal - 1 / (2 : ENNReal).toReal) ≠ ⊤ := by
         rw [hexp]
         exact (ENNReal.rpow_lt_top_of_nonneg (by norm_num) (by finiteness)).ne
       have h2norm : ‖g‖ = (eLpNorm (⇑g) 2 μ).toReal := by
@@ -66,7 +66,7 @@ noncomputable def dpcLpTwoToLpOneCLM
       calc ‖((Lp.memLp g).mono_exponent one_le_two).toLp (⇑g)‖
             = (eLpNorm (⇑g) 1 μ).toReal := Lp.norm_toLp _ _
           _ ≤ (eLpNorm (⇑g) 2 μ *
-              μ Set.univ ^ (1 / (1 : ℝ≥0∞).toReal - 1 / (2 : ℝ≥0∞).toReal)).toReal :=
+              μ Set.univ ^ (1 / (1 : ENNReal).toReal - 1 / (2 : ENNReal).toReal)).toReal :=
               ENNReal.toReal_mono (ENNReal.mul_ne_top hfin hMfin) hle
           _ = (μ Set.univ).toReal ^ (1 / 2 : ℝ) * (eLpNorm (⇑g) 2 μ).toReal := by
               rw [ENNReal.toReal_mul, hexp, ← ENNReal.toReal_rpow, mul_comm]

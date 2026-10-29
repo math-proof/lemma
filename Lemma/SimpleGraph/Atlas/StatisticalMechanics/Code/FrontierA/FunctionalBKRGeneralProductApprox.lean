@@ -119,7 +119,7 @@ private lemma exists_finiteCoordinateSet_symmDiff_lt_eq
   [DecidableEq E]
   [∀ e, IsProbabilityMeasure (mu e)]
   {A : Set (∀ e, S e)}
-  {eps : ℝ≥0∞}
+  {eps : ENNReal}
 -- given
   (mu : ∀ e, Measure (S e))
   (hA : MeasurableSet A)
@@ -207,7 +207,7 @@ private lemma exists_finiteCoordinateSet_dependsOn_symmDiff_lt_eq
   [∀ e, IsProbabilityMeasure (mu e)]
   {K : Set E}
   {A : Set (∀ e, S e)}
-  {eps : ℝ≥0∞}
+  {eps : ENNReal}
 -- given
   (mu : ∀ e, Measure (S e))
   (hA : MeasurableSet A)
@@ -503,7 +503,7 @@ private lemma exists_finiteFactor_approx_simple_eq
   [∀ e, IsProbabilityMeasure (mu e)]
   {K : Set E}
   {C : ℝ}
-  {eps : ℝ≥0∞}
+  {eps : ENNReal}
 -- given
   (mu : ∀ e, Measure (S e))
   (s : SimpleFunc (∀ e, S e) ℝ)

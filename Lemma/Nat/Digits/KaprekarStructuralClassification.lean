@@ -22,7 +22,6 @@ private lemma sort_desc_of_perm {a b c e : ℕ} {l : List ℕ}
   have hperm2 : (List.insertionSort (· ≥ ·) l).Perm [a, b, c, e] :=
     (List.perm_insertionSort _ l).trans hperm.symm
   exact List.Perm.eq_of_sortedGE h1 h2 hperm2
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -76,7 +75,6 @@ private lemma kapFun_of_sort (B d1 d2 a b c e : ℕ)
     | [a, b, c, e] => (a - e, b - c)
     | _ => (0, 0)) = _
   rw [hs]
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -89,16 +87,16 @@ private lemma kapFun_zero {B d1 : ℕ} (h1 : 1 ≤ d1) (hB1 : d1 < B) :
   kapFun B (d1, 0) = (max (d1 - 1) (B - d1), min (d1 - 1) (B - d1)) := by
   by_cases h : d1 - 1 ≥ B - d1
   · have hsort : List.insertionSort (· ≥ ·) [d1 - 1, B - 1, B - 1, B - d1]
-    = [B - 1, B - 1, d1 - 1, B - d1] :=
-    sort_desc_of_perm
-      ((perm12 _ _ _ _).trans (perm01 _ _ _ _)) (by omega) (by omega) h
+        = [B - 1, B - 1, d1 - 1, B - d1] :=
+      sort_desc_of_perm
+        ((perm12 _ _ _ _).trans (perm01 _ _ _ _)) (by omega) (by omega) h
     have hk := kapFun_of_sort B d1 0 (B - 1) (B - 1) (d1 - 1) (B - d1)
       (by simpa using hsort)
     rw [max_eq_left h, min_eq_right h, hk, Prod.mk.injEq]
     exact ⟨by omega, by omega⟩
   · have h' : B - d1 ≥ d1 - 1 := by omega
     have hsort : List.insertionSort (· ≥ ·) [d1 - 1, B - 1, B - 1, B - d1]
-      = [B - 1, B - 1, B - d1, d1 - 1] :=
+        = [B - 1, B - 1, B - d1, d1 - 1] :=
       sort_desc_of_perm
         ((perm23 _ _ _ _).trans ((perm12 _ _ _ _).trans (perm01 _ _ _ _)))
         (by omega) (by omega) h'
@@ -107,7 +105,6 @@ private lemma kapFun_zero {B d1 : ℕ} (h1 : 1 ≤ d1) (hB1 : d1 < B) :
     have hle : d1 - 1 ≤ B - d1 := by omega
     rw [max_eq_right hle, min_eq_left hle, hk, Prod.mk.injEq]
     exact ⟨by omega, by omega⟩
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -147,18 +144,18 @@ private lemma kapFun_ne_of_ne {B d1 d2 S T : ℕ} (hB : Odd B)
     · have eS : S = 2 * d1 - B := by simp only [hS, hA, ite_true]
       have eT : T = 2 * d2 - B := by simp only [hT, hC, ite_true]
       subst eS; subst eT; clear hS hT hne hSodd hTodd
-      obtain hST | hST := h3
+      rcases h3 with hST | hST
       · have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [d1, d2 - 1, B - d2 - 1, B - d1] :=
-        sort_desc_of_perm List.Perm.rfl (by omega) (by omega) (by omega)
+            = [d1, d2 - 1, B - d2 - 1, B - d1] :=
+          sort_desc_of_perm List.Perm.rfl (by omega) (by omega) (by omega)
         have hK := kapFun_of_sort B d1 d2 d1 (d2 - 1) (B - d2 - 1) (B - d1)
           (by simp only [hne0, ite_false]; exact hsort)
         rw [hK, max_eq_left (by omega), min_eq_right (by omega), Prod.mk.injEq]
         exact ⟨by omega, by omega⟩
       · have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [d2 - 1, d1, B - d1, B - d2 - 1] :=
-        sort_desc_of_perm ((perm01 _ _ _ _).trans (perm23 _ _ _ _))
-          (by omega) (by omega) (by omega)
+            = [d2 - 1, d1, B - d1, B - d2 - 1] :=
+          sort_desc_of_perm ((perm01 _ _ _ _).trans (perm23 _ _ _ _))
+            (by omega) (by omega) (by omega)
         have hK := kapFun_of_sort B d1 d2 (d2 - 1) d1 (B - d1) (B - d2 - 1)
           (by simp only [hne0, ite_false]; exact hsort)
         rw [hK, max_eq_right (by omega), min_eq_left (by omega), Prod.mk.injEq]
@@ -166,20 +163,20 @@ private lemma kapFun_ne_of_ne {B d1 d2 S T : ℕ} (hB : Odd B)
     · have eS : S = 2 * d1 - B := by simp only [hS, hA, ite_true]
       have eT : T = B - 2 * d2 := by simp only [hT, hC, ite_false]
       subst eS; subst eT; clear hS hT hne hSodd hTodd
-      obtain hST | hST := h3
+      rcases h3 with hST | hST
       · have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [d1, B - d2 - 1, d2 - 1, B - d1] :=
-        sort_desc_of_perm (perm12 _ _ _ _)
-          (by omega) (by omega) (by omega)
+            = [d1, B - d2 - 1, d2 - 1, B - d1] :=
+          sort_desc_of_perm (perm12 _ _ _ _)
+            (by omega) (by omega) (by omega)
         have hK := kapFun_of_sort B d1 d2 d1 (B - d2 - 1) (d2 - 1) (B - d1)
           (by simp only [hne0, ite_false]; exact hsort)
         rw [hK, max_eq_left (by omega), min_eq_right (by omega), Prod.mk.injEq]
         exact ⟨by omega, by omega⟩
       · have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [B - d2 - 1, d1, B - d1, d2 - 1] :=
-        sort_desc_of_perm
-          ((perm01 _ _ _ _).trans ((perm23 _ _ _ _).trans (perm12 _ _ _ _)))
-          (by omega) (by omega) (by omega)
+            = [B - d2 - 1, d1, B - d1, d2 - 1] :=
+          sort_desc_of_perm
+            ((perm01 _ _ _ _).trans ((perm23 _ _ _ _).trans (perm12 _ _ _ _)))
+            (by omega) (by omega) (by omega)
         have hK := kapFun_of_sort B d1 d2 (B - d2 - 1) d1 (B - d1) (d2 - 1)
           (by simp only [hne0, ite_false]; exact hsort)
         rw [hK, max_eq_right (by omega), min_eq_left (by omega), Prod.mk.injEq]
@@ -188,22 +185,22 @@ private lemma kapFun_ne_of_ne {B d1 d2 S T : ℕ} (hB : Odd B)
     · have eS : S = B - 2 * d1 := by simp only [hS, hA, ite_false]
       have eT : T = 2 * d2 - B := by simp only [hT, hC, ite_true]
       subst eS; subst eT; clear hS hT hne hSodd hTodd
-      obtain hST | hST := h3
+      rcases h3 with hST | hST
       · have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [B - d1, d2 - 1, B - d2 - 1, d1] :=
-        sort_desc_of_perm
-          ((perm01 _ _ _ _).trans ((perm12 _ _ _ _).trans ((perm23 _ _ _ _).trans
-            ((perm12 _ _ _ _).trans (perm01 _ _ _ _)))))
-          (by omega) (by omega) (by omega)
+            = [B - d1, d2 - 1, B - d2 - 1, d1] :=
+          sort_desc_of_perm
+            ((perm01 _ _ _ _).trans ((perm12 _ _ _ _).trans ((perm23 _ _ _ _).trans
+              ((perm12 _ _ _ _).trans (perm01 _ _ _ _)))))
+            (by omega) (by omega) (by omega)
         have hK := kapFun_of_sort B d1 d2 (B - d1) (d2 - 1) (B - d2 - 1) d1
           (by simp only [hne0, ite_false]; exact hsort)
         rw [hK, max_eq_left (by omega), min_eq_right (by omega), Prod.mk.injEq]
         exact ⟨by omega, by omega⟩
       · have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [d2 - 1, B - d1, d1, B - d2 - 1] :=
-        sort_desc_of_perm
-          ((perm12 _ _ _ _).trans ((perm23 _ _ _ _).trans (perm01 _ _ _ _)))
-          (by omega) (by omega) (by omega)
+            = [d2 - 1, B - d1, d1, B - d2 - 1] :=
+          sort_desc_of_perm
+            ((perm12 _ _ _ _).trans ((perm23 _ _ _ _).trans (perm01 _ _ _ _)))
+            (by omega) (by omega) (by omega)
         have hK := kapFun_of_sort B d1 d2 (d2 - 1) (B - d1) d1 (B - d2 - 1)
           (by simp only [hne0, ite_false]; exact hsort)
         rw [hK, max_eq_right (by omega), min_eq_left (by omega), Prod.mk.injEq]
@@ -211,28 +208,27 @@ private lemma kapFun_ne_of_ne {B d1 d2 S T : ℕ} (hB : Odd B)
     · have eS : S = B - 2 * d1 := by simp only [hS, hA, ite_false]
       have eT : T = B - 2 * d2 := by simp only [hT, hC, ite_false]
       subst eS; subst eT; clear hS hT hne hSodd hTodd
-      obtain hST | hST := h3
+      rcases h3 with hST | hST
       · have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [B - d1, B - d2 - 1, d2 - 1, d1] :=
-        sort_desc_of_perm
-          ((perm23 _ _ _ _).trans ((perm12 _ _ _ _).trans ((perm01 _ _ _ _).trans
-            ((perm23 _ _ _ _).trans ((perm12 _ _ _ _).trans (perm23 _ _ _ _))))))
-          (by omega) (by omega) (by omega)
+            = [B - d1, B - d2 - 1, d2 - 1, d1] :=
+          sort_desc_of_perm
+            ((perm23 _ _ _ _).trans ((perm12 _ _ _ _).trans ((perm01 _ _ _ _).trans
+              ((perm23 _ _ _ _).trans ((perm12 _ _ _ _).trans (perm23 _ _ _ _))))))
+            (by omega) (by omega) (by omega)
         have hK := kapFun_of_sort B d1 d2 (B - d1) (B - d2 - 1) (d2 - 1) d1
           (by simp only [hne0, ite_false]; exact hsort)
         rw [hK, max_eq_left (by omega), min_eq_right (by omega), Prod.mk.injEq]
         exact ⟨by omega, by omega⟩
       · have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [B - d2 - 1, B - d1, d1, d2 - 1] :=
-        sort_desc_of_perm
-          ((perm01 _ _ _ _).trans ((perm12 _ _ _ _).trans ((perm01 _ _ _ _).trans
-            ((perm23 _ _ _ _).trans ((perm12 _ _ _ _).trans (perm23 _ _ _ _))))))
-          (by omega) (by omega) (by omega)
+            = [B - d2 - 1, B - d1, d1, d2 - 1] :=
+          sort_desc_of_perm
+            ((perm01 _ _ _ _).trans ((perm12 _ _ _ _).trans ((perm01 _ _ _ _).trans
+              ((perm23 _ _ _ _).trans ((perm12 _ _ _ _).trans (perm23 _ _ _ _))))))
+            (by omega) (by omega) (by omega)
         have hK := kapFun_of_sort B d1 d2 (B - d2 - 1) (B - d1) d1 (d2 - 1)
           (by simp only [hne0, ite_false]; exact hsort)
         rw [hK, max_eq_right (by omega), min_eq_left (by omega), Prod.mk.injEq]
         exact ⟨by omega, by omega⟩
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -261,7 +257,7 @@ private lemma kapFun_of_seq {B d1 d2 S T : ℕ} (hB : Odd B)
       have eT : T = 2 * d2 - B := by simp only [hT, hC, ite_true]
       subst eS; subst eT; clear hS hT hS1
       have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [d1, d2 - 1, B - d1, B - d2 - 1] :=
+            = [d1, d2 - 1, B - d1, B - d2 - 1] :=
         sort_desc_of_perm (perm23 _ _ _ _)
           (by omega) (by omega) (by omega)
       have hK := kapFun_of_sort B d1 d2 d1 (d2 - 1) (B - d1) (B - d2 - 1)
@@ -272,7 +268,7 @@ private lemma kapFun_of_seq {B d1 d2 S T : ℕ} (hB : Odd B)
       have eT : T = B - 2 * d2 := by simp only [hT, hC, ite_false]
       subst eS; subst eT; clear hS hT hS1
       have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [d1, B - d2 - 1, B - d1, d2 - 1] :=
+            = [d1, B - d2 - 1, B - d1, d2 - 1] :=
         sort_desc_of_perm ((perm23 _ _ _ _).trans (perm12 _ _ _ _))
           (by omega) (by omega) (by omega)
       have hK := kapFun_of_sort B d1 d2 d1 (B - d2 - 1) (B - d1) (d2 - 1)
@@ -284,7 +280,7 @@ private lemma kapFun_of_seq {B d1 d2 S T : ℕ} (hB : Odd B)
       have eT : T = 2 * d2 - B := by simp only [hT, hC, ite_true]
       subst eS; subst eT; clear hS hT hS1
       have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [B - d1, d2 - 1, d1, B - d2 - 1] :=
+            = [B - d1, d2 - 1, d1, B - d2 - 1] :=
         sort_desc_of_perm
           ((perm01 _ _ _ _).trans ((perm12 _ _ _ _).trans
             ((perm23 _ _ _ _).trans (perm01 _ _ _ _))))
@@ -297,7 +293,7 @@ private lemma kapFun_of_seq {B d1 d2 S T : ℕ} (hB : Odd B)
       have eT : T = B - 2 * d2 := by simp only [hT, hC, ite_false]
       subst eS; subst eT; clear hS hT hS1
       have hsort : List.insertionSort (· ≥ ·) [d1, d2 - 1, B - d2 - 1, B - d1]
-        = [B - d1, B - d2 - 1, d1, d2 - 1] :=
+            = [B - d1, B - d2 - 1, d1, d2 - 1] :=
         sort_desc_of_perm
           ((perm12 _ _ _ _).trans ((perm01 _ _ _ _).trans
             ((perm23 _ _ _ _).trans ((perm12 _ _ _ _).trans (perm23 _ _ _ _)))))
@@ -339,7 +335,6 @@ private lemma absdiff_mem {B d S : ℕ} (hB : Odd B)
     subst eS
     have h2d : B - 2 * d = 2 * (k - d) + 1 := by omega
     refine ⟨by rw [h2d]; exact ⟨_, rfl⟩, by omega, by omega⟩
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -353,14 +348,13 @@ private lemma ST_eq_of {B d1 d2 S T : ℕ} (hB : Odd B)
   (hT : T = if 2 * d2 ≥ B then 2 * d2 - B else B - 2 * d2)
   (h : d1 = d2 ∨ d1 + d2 = B) : S = T := by
   obtain ⟨k, hk⟩ := hB
-  obtain rfl | hsum := h
+  rcases h with rfl | hsum
   · rw [hS, hT]
   · by_cases hA : 2 * d1 ≥ B <;> by_cases hC : 2 * d2 ≥ B
     · simp only [hS, hT, hA, hC, ite_true]; omega
     · simp only [hS, hT, hA, hC, ite_true, ite_false]; omega
     · simp only [hS, hT, hA, hC, ite_false, ite_true]; omega
     · simp only [hS, hT, hA, hC, ite_false]; omega
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -411,7 +405,6 @@ private lemma kap_mem_T_of_STne {B d1 d2 S T : ℕ} (hB : Odd B)
     · rw [min_eq_left hle]; exact hSodd
     · rw [min_eq_right (by omega : T ≤ S)]; exact hTodd
   refine ⟨⟨hmax1, hmaxB, hminmax⟩, hminlt, hmin1, hmaxodd, hminodd⟩
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -425,7 +418,7 @@ private lemma kap_mem_T_of_ne {B d1 d2 : ℕ} (hB : Odd B)
   (hne12 : d1 ≠ d2) (hnesum : d1 + d2 ≠ B) :
   kapFun B (d1, d2) ∈ TBset B := by
   have hST : (if 2 * d1 ≥ B then 2 * d1 - B else B - 2 * d1) ≠
-    (if 2 * d2 ≥ B then 2 * d2 - B else B - 2 * d2) := by
+      (if 2 * d2 ≥ B then 2 * d2 - B else B - 2 * d2) := by
     intro heq
     by_cases hA : 2 * d1 ≥ B <;> by_cases hC : 2 * d2 ≥ B
     · simp only [hA, hC, ite_true] at heq; omega
@@ -433,7 +426,6 @@ private lemma kap_mem_T_of_ne {B d1 d2 : ℕ} (hB : Odd B)
     · simp only [hA, hC, ite_false, ite_true] at heq; omega
     · simp only [hA, hC, ite_false] at heq; omega
   exact kap_mem_T_of_STne hB rfl rfl h1 hB1 h2 hd2 hST
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -454,7 +446,6 @@ private lemma kap_maps_T (B : ℕ) (hB : Odd B) (_hB3 : 3 < B) :
   have h2' : d.2 ≤ d.1 := le_of_lt hlt
   have hd2 : 1 ≤ d.2 := hpos
   exact kap_mem_T_of_ne hB h1 hB1 h2' hd2 hne12 hnesum
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -470,7 +461,6 @@ private lemma kap_pt1 {B : ℕ} (hB3 : 3 < B) : kapFun B (2, 0) = (B - 2, 1) := 
   rw [e1, max_eq_right (by omega : (1 : ℕ) ≤ B - 2),
     min_eq_left (by omega : (1 : ℕ) ≤ B - 2)] at h
   exact h
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -481,14 +471,13 @@ namespace MetaMathlibExt
 @[path]
 private lemma kap_pt2 {B : ℕ} (hB3 : 3 < B) : kapFun B (B - 1, 0) = (B - 2, 1) := by
   have h : kapFun B (B - 1, 0) =
-    (max (B - 1 - 1) (B - (B - 1)), min (B - 1 - 1) (B - (B - 1))) :=
+      (max (B - 1 - 1) (B - (B - 1)), min (B - 1 - 1) (B - (B - 1))) :=
     kapFun_zero (by omega) (by omega)
   have e1 : B - (B - 1) = 1 := by omega
   have e2 : B - 1 - 1 = B - 2 := by omega
   rw [e1, e2, max_eq_left (by omega : (1 : ℕ) ≤ B - 2),
     min_eq_right (by omega : (1 : ℕ) ≤ B - 2)] at h
   exact h
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -504,12 +493,11 @@ private lemma kap_pt3 {B : ℕ} (hB : Odd B) (hB3 : 3 < B) :
   have h2m : 2 * ((B - 1) / 2) = B - 1 := Nat.two_mul_div_two_of_even hev
   have hcond : ¬ (2 * ((B - 1) / 2) ≥ B) := by omega
   have hS : (1 : ℕ) = if 2 * ((B - 1) / 2) ≥ B then 2 * ((B - 1) / 2) - B
-    else B - 2 * ((B - 1) / 2) := by
+      else B - 2 * ((B - 1) / 2) := by
     simp only [hcond, ite_false]
     omega
   have hK := kapFun_of_seq hB hS hS (by omega) (by omega) (by omega) (by omega) rfl
   simpa using hK
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -524,7 +512,6 @@ private lemma hmemB21 {B : ℕ} (hB : Odd B) (hB3 : 3 < B) : (B - 2, 1) ∈ TBse
     have e : B - 2 = 2 * (c - 1) + 1 := by omega
     rw [e]; exact ⟨_, rfl⟩
   refine ⟨⟨by omega, by omega, by omega⟩, by omega, by omega, hodd, ⟨0, rfl⟩⟩
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -547,34 +534,35 @@ private lemma kap_iter3 (B : ℕ) (hB : Odd B) (hB3 : 3 < B) :
   · have e : (d.1, d.2) = (d.1, 0) := by rw [hd2]
     rw [e]
     have hK0 : kapFun B (d.1, 0) =
-      (max (d.1 - 1) (B - d.1), min (d.1 - 1) (B - d.1)) :=
+        (max (d.1 - 1) (B - d.1), min (d.1 - 1) (B - d.1)) :=
       kapFun_zero h1 hB1
     rw [hK0]
     have hsum : max (d.1 - 1) (B - d.1) + min (d.1 - 1) (B - d.1) = B - 1 := by
       omega
     by_cases hy0 : min (d.1 - 1) (B - d.1) = 0
     · have hpair : (max (d.1 - 1) (B - d.1), min (d.1 - 1) (B - d.1))
-      = (B - 1, 0) := by
-      rw [Prod.mk.injEq]
-      exact ⟨by omega, hy0⟩
+          = (B - 1, 0) := by
+        rw [Prod.mk.injEq]
+        exact ⟨by omega, hy0⟩
       rw [hpair, kap_pt2 hB3]
       exact hstab hB21
     · by_cases hxy : max (d.1 - 1) (B - d.1) = min (d.1 - 1) (B - d.1)
       · have hxm : max (d.1 - 1) (B - d.1) = (B - 1) / 2 := by omega
         have hpair : (max (d.1 - 1) (B - d.1), min (d.1 - 1) (B - d.1)) =
-          ((B - 1) / 2, (B - 1) / 2) := by
+            ((B - 1) / 2, (B - 1) / 2) := by
           rw [Prod.mk.injEq]
           exact ⟨hxm, by omega⟩
-        rwa [hpair, kap_pt3 hB hB3, kap_pt1 hB3]
+        rw [hpair, kap_pt3 hB hB3, kap_pt1 hB3]
+        exact hB21
       · have h2T : kapFun B (max (d.1 - 1) (B - d.1),
-        min (d.1 - 1) (B - d.1)) ∈ TBset B := by
-        apply kap_mem_T_of_ne hB
-        · omega
-        · omega
-        · omega
-        · omega
-        · exact hxy
-        · omega
+            min (d.1 - 1) (B - d.1)) ∈ TBset B := by
+          apply kap_mem_T_of_ne hB
+          · omega
+          · omega
+          · omega
+          · omega
+          · exact hxy
+          · omega
         exact hstab h2T
   · have hd2' : 1 ≤ d.2 := by omega
     by_cases hST : S = T
@@ -587,7 +575,7 @@ private lemma kap_iter3 (B : ℕ) (hB : Odd B) (hB3 : 3 < B) :
         rw [hK1, e20, kap_pt1 hB3]
         exact hstab hB21
       · have hS3 : 3 ≤ S := by
-        obtain ⟨a, ha⟩ := hSodd; omega
+          obtain ⟨a, ha⟩ := hSodd; omega
         have ⟨k, hk⟩ := hB
         have ⟨a, ha⟩ := hSodd
         have h2T : kapFun B (S + 1, S - 1) ∈ TBset B := by
@@ -595,7 +583,7 @@ private lemma kap_iter3 (B : ℕ) (hB : Odd B) (hB3 : 3 < B) :
         rw [hK1]
         exact hstab h2T
     · have h1T : kapFun B (d.1, d.2) ∈ TBset B :=
-      kap_mem_T_of_STne hB hSdef hTdef h1 hB1 h2 hd2' hST
+        kap_mem_T_of_STne hB hSdef hTdef h1 hB1 h2 hd2' hST
       have h2T : kapFun B (kapFun B (d.1, d.2)) ∈ TBset B := hstab h1T
       exact hstab h2T
 
@@ -623,10 +611,10 @@ private lemma dbl_preserves {B : ℕ} (hB : Odd B) {S : Finset (Finset (ZMod B))
   obtain ⟨x1, hx10, hx1⟩ := hmem C1 (by simp)
   obtain ⟨x2, hx20, hx2⟩ := hmem C2 (by simp)
   have himg1 : Finset.image (fun x : ZMod B => x * 2) C1
-    = {x1 * 2, -(x1 * 2)} := by
+      = {x1 * 2, -(x1 * 2)} := by
     rw [hx1, Finset.image_insert, Finset.image_singleton, neg_mul]
   have himg2 : Finset.image (fun x : ZMod B => x * 2) C2
-    = {x2 * 2, -(x2 * 2)} := by
+      = {x2 * 2, -(x2 * 2)} := by
     rw [hx2, Finset.image_insert, Finset.image_singleton, neg_mul]
   have hy10 : x1 * 2 ≠ 0 := by
     intro hz
@@ -641,17 +629,16 @@ private lemma dbl_preserves {B : ℕ} (hB : Odd B) {S : Finset (Finset (ZMod B))
     change x2 * 2 = 0 * 2
     rw [hz, zero_mul]
   have h12' : Finset.image (fun x : ZMod B => x * 2) C1 ≠
-    Finset.image (fun x : ZMod B => x * 2) C2 := himj.ne h12
+      Finset.image (fun x : ZMod B => x * 2) C2 := himj.ne h12
   rw [himg1] at h12'
   rw [himg2] at h12'
   simp only [dblFun, Finset.image_insert, Finset.image_singleton, himg1, himg2]
   refine ⟨Finset.card_pair h12', ?_⟩
   intro C hC
   simp only [Finset.mem_insert, Finset.mem_singleton] at hC
-  obtain rfl | rfl := hC
+  rcases hC with rfl | rfl
   · exact ⟨x1 * 2, hy10, rfl⟩
   · exact ⟨x2 * 2, hy20, rfl⟩
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -666,7 +653,6 @@ private lemma cast_ne_zero_of_lt {B a : ℕ} (ha0 : 0 < a) (haB : a < B) :
   have hdvd : B ∣ a := (ZMod.natCast_eq_zero_iff a B).mp hz
   have hle : B ≤ a := Nat.le_of_dvd ha0 hdvd
   omega
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -682,11 +668,11 @@ private lemma classes_ne {B u v : ℕ} (hv0 : 0 < v) (hvu : v < u) (hsum : u + v
   have hvB : v < B := by omega
   intro heq
   have hcoe : ({(↑u : ZMod B), -(↑u : ZMod B)} : Set (ZMod B)) =
-    ({(↑v : ZMod B), -(↑v : ZMod B)} : Set (ZMod B)) := by
+      ({(↑v : ZMod B), -(↑v : ZMod B)} : Set (ZMod B)) := by
     have h2 := congrArg (fun s : Finset (ZMod B) => (s : Set (ZMod B))) heq
     simpa [Finset.coe_pair] using h2
   rw [Set.pair_eq_pair_iff] at hcoe
-  obtain ⟨h1, -⟩ | ⟨h1, -⟩ := hcoe
+  rcases hcoe with ⟨h1, -⟩ | ⟨h1, -⟩
   · -- straight: ↑u = ↑v forces u = v
     have hmod : u % B = v % B := (ZMod.natCast_eq_natCast_iff' u v B).mp h1
     rw [Nat.mod_eq_of_lt huB, Nat.mod_eq_of_lt hvB] at hmod
@@ -698,7 +684,6 @@ private lemma classes_ne {B u v : ℕ} (hv0 : 0 < v) (hvu : v < u) (hsum : u + v
     have hdvd : B ∣ (u + v) := (ZMod.natCast_eq_zero_iff (u + v) B).mp hsum0
     have hle : B ≤ u + v := Nat.le_of_dvd (by omega) hdvd
     omega
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -715,10 +700,9 @@ private lemma pair_mem_Proj {B u v : ℕ} (hv0 : 0 < v) (hvu : v < u) (hsum : u 
   refine ⟨Finset.card_pair (classes_ne hv0 hvu hsum), ?_⟩
   intro C hC
   simp only [Finset.mem_insert, Finset.mem_singleton] at hC
-  obtain rfl | rfl := hC
+  rcases hC with rfl | rfl
   · exact ⟨_, cast_ne_zero_of_lt (by omega) (by omega), rfl⟩
   · exact ⟨_, cast_ne_zero_of_lt hv0 (by omega), rfl⟩
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -743,7 +727,6 @@ private lemma phi_mem_Proj {B : ℕ} (d : ↥(TBset B)) : phiFun B d ∈ ProjSet
   · omega
   · omega
   · omega
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -755,8 +738,8 @@ namespace MetaMathlibExt
 private lemma cast_eq_cast {B a b : ℕ} (haB : a < B) (hbB : b < B)
   (h : (↑a : ZMod B) = ↑b) : a = b := by
   have hmod : a % B = b % B := (ZMod.natCast_eq_natCast_iff' a b B).mp h
-  rwa [Nat.mod_eq_of_lt haB, Nat.mod_eq_of_lt hbB] at hmod
-
+  rw [Nat.mod_eq_of_lt haB, Nat.mod_eq_of_lt hbB] at hmod
+  exact hmod
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -789,7 +772,6 @@ private lemma cast_eq_neg {B a b : ℕ} (ha0 : 0 < a) (haB : a < B)
     have h1 : B * 2 ≤ B * k := Nat.mul_le_mul (le_refl B) hk2
     omega
   omega
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -804,14 +786,13 @@ private lemma class_eq_nat {B a b : ℕ} (ha0 : 0 < a) (haB : a < B)
     ({(↑b : ZMod B), -(↑b : ZMod B)} : Finset (ZMod B))) :
   a = b ∨ a + b = B := by
   have hcoe : ({(↑a : ZMod B), -(↑a : ZMod B)} : Set (ZMod B)) =
-    ({(↑b : ZMod B), -(↑b : ZMod B)} : Set (ZMod B)) := by
+      ({(↑b : ZMod B), -(↑b : ZMod B)} : Set (ZMod B)) := by
     have h2 := congrArg (fun s : Finset (ZMod B) => (s : Set (ZMod B))) h
     simpa [Finset.coe_pair] using h2
   rw [Set.pair_eq_pair_iff] at hcoe
-  obtain ⟨h1, -⟩ | ⟨h1, -⟩ := hcoe
+  rcases hcoe with ⟨h1, -⟩ | ⟨h1, -⟩
   · exact Or.inl (cast_eq_cast haB hbB h1)
   · exact Or.inr (cast_eq_neg ha0 haB hb0 hbB h1)
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -841,8 +822,8 @@ private lemma uv_facts {B : ℕ} (d : ↥(TBset B)) :
   have h2le : d.1.2 ≤ d.1.1 := le_of_lt hlt
   have huv : (d.1.1 + d.1.2) / 2 + (d.1.1 - d.1.2) / 2 = d.1.1 := by omega
   refine ⟨h2u, h2v, huv, by omega, by omega, by omega, by omega, ?_⟩
-  rwa [huv]
-
+  rw [huv]
+  exact hodd1
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -867,32 +848,32 @@ private lemma phi_inj {B : ℕ} (hB : Odd B) {d d' : ↥(TBset B)}
   set v' : ℕ := (d'.1.1 - d'.1.2) / 2 with hv'
   simp only [phiFun] at h
   have houter : ({{(↑u : ZMod B), -(↑u : ZMod B)},
-    ({(↑v : ZMod B), -(↑v : ZMod B)} : Finset (ZMod B))} :
-    Set (Finset (ZMod B))) =
-    ({{(↑u' : ZMod B), -(↑u' : ZMod B)},
-    ({(↑v' : ZMod B), -(↑v' : ZMod B)} : Finset (ZMod B))} :
-    Set (Finset (ZMod B))) := by
+      ({(↑v : ZMod B), -(↑v : ZMod B)} : Finset (ZMod B))} :
+      Set (Finset (ZMod B))) =
+      ({{(↑u' : ZMod B), -(↑u' : ZMod B)},
+      ({(↑v' : ZMod B), -(↑v' : ZMod B)} : Finset (ZMod B))} :
+      Set (Finset (ZMod B))) := by
     have h2 := congrArg (fun s : Finset (Finset (ZMod B)) => (s : Set (Finset (ZMod B)))) h
     simpa [Finset.coe_pair] using h2
   rw [Set.pair_eq_pair_iff] at houter
   have hU : ({(↑u : ZMod B), -(↑u : ZMod B)} : Finset (ZMod B)) =
-    ({(↑u' : ZMod B), -(↑u' : ZMod B)} : Finset (ZMod B)) ∨
-    ({(↑u : ZMod B), -(↑u : ZMod B)} : Finset (ZMod B)) =
-    ({(↑v' : ZMod B), -(↑v' : ZMod B)} : Finset (ZMod B)) := by
-    obtain ⟨h1, -⟩ | ⟨h1, -⟩ := houter
+      ({(↑u' : ZMod B), -(↑u' : ZMod B)} : Finset (ZMod B)) ∨
+      ({(↑u : ZMod B), -(↑u : ZMod B)} : Finset (ZMod B)) =
+      ({(↑v' : ZMod B), -(↑v' : ZMod B)} : Finset (ZMod B)) := by
+    rcases houter with ⟨h1, -⟩ | ⟨h1, -⟩
     · exact Or.inl h1
     · exact Or.inr h1
   have hV : ({(↑v : ZMod B), -(↑v : ZMod B)} : Finset (ZMod B)) =
-    ({(↑v' : ZMod B), -(↑v' : ZMod B)} : Finset (ZMod B)) ∨
-    ({(↑v : ZMod B), -(↑v : ZMod B)} : Finset (ZMod B)) =
-    ({(↑u' : ZMod B), -(↑u' : ZMod B)} : Finset (ZMod B)) := by
-    obtain ⟨-, h2⟩ | ⟨-, h2⟩ := houter
+      ({(↑v' : ZMod B), -(↑v' : ZMod B)} : Finset (ZMod B)) ∨
+      ({(↑v : ZMod B), -(↑v : ZMod B)} : Finset (ZMod B)) =
+      ({(↑u' : ZMod B), -(↑u' : ZMod B)} : Finset (ZMod B)) := by
+    rcases houter with ⟨-, h2⟩ | ⟨-, h2⟩
     · exact Or.inl h2
     · exact Or.inr h2
   have hUUvv : u = u' ∧ v = v' := by
-    obtain hUu | hUv := hU
+    rcases hU with hUu | hUv
     · -- straight on U
-      obtain hUU | hUU := class_eq_nat hu0 huB hu0' huB' hUu
+      rcases class_eq_nat hu0 huB hu0' huB' hUu with hUU | hUU
       · rcases hV with hVv | hVu
         · rcases class_eq_nat hv0 hvB hv0' hvB' hVv with hVV | hVV
           · exact ⟨hUU, hVV⟩
@@ -901,7 +882,7 @@ private lemma phi_inj {B : ℕ} (hB : Odd B) {d d' : ↥(TBset B)}
           · exfalso; omega
           · exfalso; omega
       · -- u + u' = B contradicts parity
-        obtain hVv | hVu := hV
+        rcases hV with hVv | hVu
         · rcases class_eq_nat hv0 hvB hv0' hvB' hVv with hVV | hVV
           · have hE : Even ((u + v) + (u' + v')) := Odd.add_odd hodd hodd'
             have hT : (u + v) + (u' + v') = B + 2 * v := by omega
@@ -913,9 +894,9 @@ private lemma phi_inj {B : ℕ} (hB : Odd B) {d d' : ↥(TBset B)}
             omega
           · exfalso; omega
         · exfalso
-          obtain hVV | hVV <;> omega := class_eq_nat hv0 hvB hu0' huB' hVu
+          rcases class_eq_nat hv0 hvB hu0' huB' hVu with hVV | hVV <;> omega
     · -- crossed: U = V'
-      obtain hUV | hUV := class_eq_nat hu0 huB hv0' hvB' hUv
+      rcases class_eq_nat hu0 huB hv0' hvB' hUv with hUV | hUV
       · rcases hV with hVv | hVu
         · rcases class_eq_nat hv0 hvB hv0' hvB' hVv with hVV | hVV <;> omega
         · rcases class_eq_nat hv0 hvB hu0' huB' hVu with hVV | hVV <;> omega
@@ -926,7 +907,6 @@ private lemma phi_inj {B : ℕ} (hB : Odd B) {d d' : ↥(TBset B)}
   apply Subtype.ext
   rw [Prod.ext_iff]
   constructor <;> omega
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -951,10 +931,9 @@ private lemma class_small_rep {B : ℕ} [NeZero B] (hB : Odd B) {x : ZMod B}
     rw [Nat.cast_sub (le_of_lt hrB), ZMod.natCast_self, e1, zero_sub]
   have hsum : x.val + (B - x.val) = B := Nat.add_sub_cancel' (le_of_lt hrB)
   obtain ⟨c, hc⟩ := hB
-  obtain hle | hle := le_total x.val (B - x.val)
+  rcases le_total x.val (B - x.val) with hle | hle
   · refine ⟨x.val, hr0, by omega, Or.inl e1, Or.inl rfl⟩
   · refine ⟨B - x.val, by omega, by omega, Or.inr e2, Or.inr rfl⟩
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -986,19 +965,19 @@ private lemma exists_preimage_of_ordered {B : ℕ} (hB : Odd B) (hB3 : 3 < B)
     · have eU : ((p + q) + (p - q)) / 2 = p := by omega
       have eV : ((p + q) - (p - q)) / 2 = q := by omega
       have hV : (({(↑q : ZMod B), -(↑q : ZMod B)} : Finset (ZMod B))) = A := by
-        obtain hqa | hqa := hqa
+        rcases hqa with hqa | hqa
         · rw [hqa]; exact hA.symm
         · rw [hqa, neg_neg, Finset.pair_comm]; exact hA.symm
       have hU : (({(↑p : ZMod B), -(↑p : ZMod B)} : Finset (ZMod B))) = D := by
-        obtain hpa | hpa := hpa
+        rcases hpa with hpa | hpa
         · rw [hpa]; exact hD.symm
         · rw [hpa, neg_neg, Finset.pair_comm]; exact hD.symm
       simp only [phiFun]
       rw [eU, eV, hU, hV, Finset.pair_comm]
   · have hE : Even (p + q) := by
-    obtain hE | hO := Nat.even_or_odd (p + q)
-    · exact hE
-    · exact absurd hO hodd
+      rcases Nat.even_or_odd (p + q) with hE | hO
+      · exact hE
+      · exact absurd hO hodd
     have hcast : (((B - p : ℕ)) : ZMod B) = -↑p := by
       rw [Nat.cast_sub (le_of_lt hpB), ZMod.natCast_self, zero_sub]
     have hsumB : (B - p) + q < B := by omega
@@ -1014,18 +993,17 @@ private lemma exists_preimage_of_ordered {B : ℕ} (hB : Odd B) (hB3 : 3 < B)
     · have eU : (((B - p) + q) + ((B - p) - q)) / 2 = B - p := by omega
       have eV : (((B - p) + q) - ((B - p) - q)) / 2 = q := by omega
       have hV : (({(↑q : ZMod B), -(↑q : ZMod B)} : Finset (ZMod B))) = A := by
-        obtain hqa | hqa := hqa
+        rcases hqa with hqa | hqa
         · rw [hqa]; exact hA.symm
         · rw [hqa, neg_neg, Finset.pair_comm]; exact hA.symm
       have hU : (({(↑(B - p) : ZMod B), -(↑(B - p) : ZMod B)} :
-        Finset (ZMod B))) = D := by
+          Finset (ZMod B))) = D := by
         rw [hcast, neg_neg]
-        obtain hpa | hpa := hpa
+        rcases hpa with hpa | hpa
         · rw [hpa, Finset.pair_comm]; exact hD.symm
         · rw [hpa, neg_neg]; exact hD.symm
       simp only [phiFun]
       rw [eU, eV, hU, hV, Finset.pair_comm]
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1046,11 +1024,11 @@ private lemma phi_surj {B : ℕ} (hB : Odd B) (hB3 : 3 < B) {S : Finset (Finset 
   obtain ⟨q1, hq11, hq1m, hq1c, -⟩ := class_small_rep hB hx10
   obtain ⟨q2, hq21, hq2m, hq2c, -⟩ := class_small_rep hB hx20
   have mk : ∀ (x : ZMod B) (C : Finset (ZMod B)) (hC : C = {x, -x})
-    (h : ((q1 : ℕ) : ZMod B) = x ∨ ((q1 : ℕ) : ZMod B) = -x),
-    C = ({((q1 : ℕ) : ZMod B), -((q1 : ℕ) : ZMod B)} : Finset (ZMod B)) := by
+      (h : ((q1 : ℕ) : ZMod B) = x ∨ ((q1 : ℕ) : ZMod B) = -x),
+      C = ({((q1 : ℕ) : ZMod B), -((q1 : ℕ) : ZMod B)} : Finset (ZMod B)) := by
     intro x C hC h
     rw [hC]
-    obtain h | h := h
+    rcases h with h | h
     · rw [←h]
     · have h' : x = -((q1 : ℕ) : ZMod B) := by rw [h, neg_neg]
       rw [h', neg_neg, Finset.pair_comm]
@@ -1060,12 +1038,11 @@ private lemma phi_surj {B : ℕ} (hB : Odd B) (hB3 : 3 < B) {S : Finset (Finset 
     have e1 := mk x1 C1 hx1 hq1c
     have e2 := mk x2 C2 hx2 (by rw [heq]; exact hq2c)
     exact e1.trans e2.symm
-  obtain hlt | hgt := lt_or_gt_of_ne hne
+  rcases lt_or_gt_of_ne hne with hlt | hgt
   · obtain ⟨d, hd⟩ := exists_preimage_of_ordered hB hB3 hq11 hlt hq2m hq1c hq2c hx1 hx2
     exact ⟨d, hd⟩
   · obtain ⟨d, hd⟩ := exists_preimage_of_ordered hB hB3 hq21 hgt hq1m hq2c hq1c hx2 hx1
     exact ⟨d, by rw [hd, Finset.pair_comm]⟩
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1094,7 +1071,6 @@ private lemma dblFun_pair {B : ℕ} {x y : ZMod B} :
   ({{x * 2, -(x * 2)}, ({y * 2, -(y * 2)} : Finset (ZMod B))} :
     Finset (Finset (ZMod B))) := by
   simp only [dblFun, Finset.image_insert, Finset.image_singleton, neg_mul]
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1111,13 +1087,12 @@ private lemma dblFun_phiFun {B : ℕ} (p : ↥(TBset B)) :
       -((((p.1.1 - p.1.2) / 2 : ℕ) : ZMod B) * 2)} : Finset (ZMod B))} :
     Finset (Finset (ZMod B))) := by
   have hP : phiFun B p =
-    ({{(((p.1.1 + p.1.2) / 2 : ℕ) : ZMod B),
-      -(((p.1.1 + p.1.2) / 2 : ℕ) : ZMod B)},
-      ({(((p.1.1 - p.1.2) / 2 : ℕ) : ZMod B),
-        -(((p.1.1 - p.1.2) / 2 : ℕ) : ZMod B)} : Finset (ZMod B))} :
-      Finset (Finset (ZMod B))) := rfl
+      ({{(((p.1.1 + p.1.2) / 2 : ℕ) : ZMod B),
+          -(((p.1.1 + p.1.2) / 2 : ℕ) : ZMod B)},
+        ({(((p.1.1 - p.1.2) / 2 : ℕ) : ZMod B),
+          -(((p.1.1 - p.1.2) / 2 : ℕ) : ZMod B)} : Finset (ZMod B))} :
+        Finset (Finset (ZMod B))) := rfl
   rw [hP, dblFun_pair]
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1135,7 +1110,6 @@ private lemma ST_ne_of {B d1 d2 : ℕ} (hne12 : d1 ≠ d2) (hnesum : d1 + d2 ≠
   · simp only [hA, hC, ite_true, ite_false] at heq; omega
   · simp only [hA, hC, ite_false, ite_true] at heq; omega
   · simp only [hA, hC, ite_false] at heq; omega
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1160,7 +1134,7 @@ private lemma phi_conj {B : ℕ} (hB : Odd B) (_hB3 : 3 < B) (p : ↥(TBset B))
     obtain ⟨c, hc⟩ := hB
     omega
   have hST : (if 2 * p.1.1 ≥ B then 2 * p.1.1 - B else B - 2 * p.1.1) ≠
-    (if 2 * p.1.2 ≥ B then 2 * p.1.2 - B else B - 2 * p.1.2) :=
+      (if 2 * p.1.2 ≥ B then 2 * p.1.2 - B else B - 2 * p.1.2) :=
     ST_ne_of hne12 hnesum
   have hKd := kapFun_ne_of_ne (d1 := p.1.1) (d2 := p.1.2) hB
     rfl rfl h1 hB1 h2 hpos hST
@@ -1174,20 +1148,20 @@ private lemma phi_conj {B : ℕ} (hB : Odd B) (_hB3 : 3 < B) (p : ↥(TBset B))
   have hmu : (↑u * 2 : ZMod B) = 2 * (↑u : ZMod B) := mul_comm _ _
   have hmv : (↑v * 2 : ZMod B) = 2 * (↑v : ZMod B) := mul_comm _ _
   have hCuC : (({-(2 * (↑u : ZMod B)), -(-(2 * (↑u : ZMod B)))} :
-    Finset (ZMod B))) = {2 * (↑u : ZMod B), -(2 * (↑u : ZMod B))} := by
+      Finset (ZMod B))) = {2 * (↑u : ZMod B), -(2 * (↑u : ZMod B))} := by
     rw [neg_neg, Finset.pair_comm]
   by_cases hA : 2 * p.1.1 ≥ B <;> by_cases hC : 2 * p.1.2 ≥ B
   · have eS : (if 2 * p.1.1 ≥ B then 2 * p.1.1 - B else B - 2 * p.1.1)
-    = 2 * p.1.1 - B := ite_eq_left hA
+        = 2 * p.1.1 - B := ite_eq_left hA
     have eT : (if 2 * p.1.2 ≥ B then 2 * p.1.2 - B else B - 2 * p.1.2)
-      = 2 * p.1.2 - B := ite_eq_left hC
+        = 2 * p.1.2 - B := ite_eq_left hC
     have hSTS : 2 * p.1.2 - B ≤ 2 * p.1.1 - B := by omega
     have hKd12 : kapFun B p.1 = (2 * p.1.1 - B, 2 * p.1.2 - B) := by
       rw [hKd, eS, eT, max_eq_left hSTS, min_eq_right hSTS]
     have hmem12 : (2 * p.1.1 - B, 2 * p.1.2 - B) ∈ TBset B := by
       rw [←hKd12]; exact hmem
     have hQ : (⟨kapFun B p.1, hmem⟩ : ↥(TBset B))
-      = ⟨(2 * p.1.1 - B, 2 * p.1.2 - B), hmem12⟩ := Subtype.ext hKd12
+        = ⟨(2 * p.1.1 - B, 2 * p.1.2 - B), hmem12⟩ := Subtype.ext hKd12
     rw [hQ, phiFun_pair_eq hmem12]
     have eUK : ((2 * p.1.1 - B) + (2 * p.1.2 - B)) / 2 = p.1.1 + p.1.2 - B := by
       omega
@@ -1200,9 +1174,9 @@ private lemma phi_conj {B : ℕ} (hB : Odd B) (_hB3 : 3 < B) (p : ↥(TBset B))
         Nat.cast_ofNat]
     rw [hCu, hCv, hmu, hmv]
   · have eS : (if 2 * p.1.1 ≥ B then 2 * p.1.1 - B else B - 2 * p.1.1)
-    = 2 * p.1.1 - B := ite_eq_left hA
+        = 2 * p.1.1 - B := ite_eq_left hA
     have eT : (if 2 * p.1.2 ≥ B then 2 * p.1.2 - B else B - 2 * p.1.2)
-      = B - 2 * p.1.2 := ite_eq_right hC
+        = B - 2 * p.1.2 := ite_eq_right hC
     have h2lt : 2 * p.1.2 < B := lt_of_not_ge hC
     by_cases hAB : p.1.1 + p.1.2 ≥ B
     · have hSTle : B - 2 * p.1.2 ≤ 2 * p.1.1 - B := by omega
@@ -1211,7 +1185,7 @@ private lemma phi_conj {B : ℕ} (hB : Odd B) (_hB3 : 3 < B) (p : ↥(TBset B))
       have hmem12 : (2 * p.1.1 - B, B - 2 * p.1.2) ∈ TBset B := by
         rw [←hKd12]; exact hmem
       have hQ : (⟨kapFun B p.1, hmem⟩ : ↥(TBset B))
-        = ⟨(2 * p.1.1 - B, B - 2 * p.1.2), hmem12⟩ := Subtype.ext hKd12
+          = ⟨(2 * p.1.1 - B, B - 2 * p.1.2), hmem12⟩ := Subtype.ext hKd12
       rw [hQ, phiFun_pair_eq hmem12]
       have eUK : ((2 * p.1.1 - B) + (B - 2 * p.1.2)) / 2 = p.1.1 - p.1.2 := by
         omega
@@ -1230,12 +1204,12 @@ private lemma phi_conj {B : ℕ} (hB : Odd B) (_hB3 : 3 < B) (p : ↥(TBset B))
       have hmem12 : (B - 2 * p.1.2, 2 * p.1.1 - B) ∈ TBset B := by
         rw [←hKd12]; exact hmem
       have hQ : (⟨kapFun B p.1, hmem⟩ : ↥(TBset B))
-        = ⟨(B - 2 * p.1.2, 2 * p.1.1 - B), hmem12⟩ := Subtype.ext hKd12
+          = ⟨(B - 2 * p.1.2, 2 * p.1.1 - B), hmem12⟩ := Subtype.ext hKd12
       rw [hQ, phiFun_pair_eq hmem12]
       have eUK : ((B - 2 * p.1.2) + (2 * p.1.1 - B)) / 2 = p.1.1 - p.1.2 := by
         omega
       have eVK : ((B - 2 * p.1.2) - (2 * p.1.1 - B)) / 2
-        = B - (p.1.1 + p.1.2) := by omega
+          = B - (p.1.1 + p.1.2) := by omega
       rw [eUK, eVK]
       have hle : p.1.1 + p.1.2 ≤ B := le_of_lt hAB'
       have hCu' : ((((B - (p.1.1 + p.1.2) : ℕ))) : ZMod B) = -(2 * (↑u : ZMod B)) := by
@@ -1245,19 +1219,19 @@ private lemma phi_conj {B : ℕ} (hB : Odd B) (_hB3 : 3 < B) (p : ↥(TBset B))
       exact Finset.pair_comm _ _
   · exfalso; omega
   · have eS : (if 2 * p.1.1 ≥ B then 2 * p.1.1 - B else B - 2 * p.1.1)
-    = B - 2 * p.1.1 := ite_eq_right hA
+        = B - 2 * p.1.1 := ite_eq_right hA
     have eT : (if 2 * p.1.2 ≥ B then 2 * p.1.2 - B else B - 2 * p.1.2)
-      = B - 2 * p.1.2 := ite_eq_right hC
+        = B - 2 * p.1.2 := ite_eq_right hC
     have hSTle : B - 2 * p.1.1 ≤ B - 2 * p.1.2 := by omega
     have hKd12 : kapFun B p.1 = (B - 2 * p.1.2, B - 2 * p.1.1) := by
       rw [hKd, eS, eT, max_eq_right hSTle, min_eq_left hSTle]
     have hmem12 : (B - 2 * p.1.2, B - 2 * p.1.1) ∈ TBset B := by
       rw [←hKd12]; exact hmem
     have hQ : (⟨kapFun B p.1, hmem⟩ : ↥(TBset B))
-      = ⟨(B - 2 * p.1.2, B - 2 * p.1.1), hmem12⟩ := Subtype.ext hKd12
+        = ⟨(B - 2 * p.1.2, B - 2 * p.1.1), hmem12⟩ := Subtype.ext hKd12
     rw [hQ, phiFun_pair_eq hmem12]
     have eUK : ((B - 2 * p.1.2) + (B - 2 * p.1.1)) / 2
-      = B - (p.1.1 + p.1.2) := by omega
+        = B - (p.1.1 + p.1.2) := by omega
     have eVK : ((B - 2 * p.1.2) - (B - 2 * p.1.1)) / 2 = p.1.1 - p.1.2 := by
       omega
     rw [eUK, eVK]
@@ -1266,7 +1240,6 @@ private lemma phi_conj {B : ℕ} (hB : Odd B) (_hB3 : 3 < B) (p : ↥(TBset B))
       rw [Nat.cast_sub hle, ZMod.natCast_self, zero_sub, ←h2u, Nat.cast_mul,
         Nat.cast_ofNat]
     rw [hCu', hCv, hmu, hmv, hCuC]
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1285,7 +1258,6 @@ private lemma phi_bij {B : ℕ} (hB : Odd B) (hB3 : 3 < B) :
   · intro S
     obtain ⟨d, hd⟩ := phi_surj hB hB3 S.property
     exact ⟨d, Subtype.ext hd⟩
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1313,7 +1285,33 @@ lemma four_digit_kaprekar_structural_classification
   (hB : Odd B)
   (hB3 : 3 < B) :
 -- imply
-  let X_B : Set (ℕ × ℕ) := by
+  let X_B : Set (ℕ × ℕ) :=
+    {d | 1 ≤ d.1 ∧ d.1 < B ∧ d.2 ≤ d.1}
+  let T_B : Set (ℕ × ℕ) :=
+    {d | d ∈ X_B ∧ d.2 < d.1 ∧ 0 < d.2 ∧ Odd d.1 ∧ Odd d.2}
+  let kaprekar : ℕ × ℕ → ℕ × ℕ := fun d =>
+    match List.insertionSort (· ≥ ·)
+      (if d.2 = 0 then [d.1 - 1, B - 1, B - 1, B - d.1]
+        else [d.1, d.2 - 1, B - d.2 - 1, B - d.1]) with
+    | [a, b, c, e] => (a - e, b - c)
+    | _ => (0, 0)
+  let Phi : ↥T_B → Finset (Finset (ZMod B)) := fun d =>
+    let u : ZMod B := (((d.1.1 + d.1.2) / 2 : ℕ) : ZMod B)
+    let v : ZMod B := (((d.1.1 - d.1.2) / 2 : ℕ) : ZMod B)
+    {{u, -u}, {v, -v}}
+  let dbl : Finset (Finset (ZMod B)) → Finset (Finset (ZMod B)) :=
+    fun S => S.image (fun C => C.image (· * 2))
+  let Proj : Set (Finset (Finset (ZMod B))) :=
+    {S | S.card = 2 ∧ ∀ C ∈ S, ∃ x : ZMod B, x ≠ 0 ∧ C = {x, -x}}
+  ∃ hstable : Set.MapsTo kaprekar T_B T_B,
+    Set.MapsTo (kaprekar^[3]) X_B T_B ∧
+      (∀ S ∈ Proj, dbl S ∈ Proj) ∧
+      (∀ d : ↥T_B, Phi d ∈ Proj) ∧
+      ∃ e : ↥T_B ≃ ↥Proj,
+        (∀ d, (e d : Finset (Finset (ZMod B))) = Phi d) ∧
+          ∀ d : ↥T_B,
+            (e ⟨kaprekar d.1, hstable d.2⟩ : Finset (Finset (ZMod B))) =
+              dbl (Phi d) := by
 -- proof
   intro X_B T_B kaprekar Phi dbl Proj
   have hbij := phi_bij hB hB3

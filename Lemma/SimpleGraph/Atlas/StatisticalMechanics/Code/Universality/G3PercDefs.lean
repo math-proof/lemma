@@ -84,7 +84,7 @@ private lemma g3PercolationProbability_eq_eq
   {d : ℕ}
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   g3PercolationProbability d p hp = percolationProbability d p hp := by
@@ -167,7 +167,7 @@ private lemma bernoulli_g3PositivelyAssociated_eq
   {d : ℕ}
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
 -- given
   (hp : p ≤ 1) :
 -- imply

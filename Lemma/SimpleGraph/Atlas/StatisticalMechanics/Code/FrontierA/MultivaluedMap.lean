@@ -15,9 +15,9 @@ private lemma multivaluedMap_source_bound_eq
   {s : S}
 -- given
   (R : S → T → Prop)
-  (epsilon : ℝ≥0∞)
-  (sourceWeight : S → ℝ≥0∞)
-  (targetWeight : T → ℝ≥0∞)
+  (epsilon : ENNReal)
+  (sourceWeight : S → ENNReal)
+  (targetWeight : T → ENNReal)
   (hdegree : ∀ s, K ≤ (Finset.univ.filter (R s)).card)
   (hweight : ∀ s t, R s t → epsilon * sourceWeight s ≤ targetWeight t) :
 -- imply
@@ -36,9 +36,9 @@ private lemma multivaluedMap_weight_bound_eq
   {K L : ℕ}
 -- given
   (R : S → T → Prop)
-  (epsilon : ℝ≥0∞)
-  (sourceWeight : S → ℝ≥0∞)
-  (targetWeight : T → ℝ≥0∞)
+  (epsilon : ENNReal)
+  (sourceWeight : S → ENNReal)
+  (targetWeight : T → ENNReal)
   (hdegree : ∀ s, K ≤ (Finset.univ.filter (R s)).card)
   (hmultiplicity : ∀ t, (Finset.univ.filter (fun s => R s t)).card ≤ L)
   (hweight : ∀ s t, R s t → epsilon * sourceWeight s ≤ targetWeight t) :
@@ -58,9 +58,9 @@ private lemma multivaluedMap_probability_bound_eq
   {K L : ℕ}
 -- given
   (R : S → T → Prop)
-  (epsilon : ℝ≥0∞)
-  (sourceWeight : S → ℝ≥0∞)
-  (targetWeight : T → ℝ≥0∞)
+  (epsilon : ENNReal)
+  (sourceWeight : S → ENNReal)
+  (targetWeight : T → ENNReal)
   (hdegree : ∀ s, K ≤ (Finset.univ.filter (R s)).card)
   (hmultiplicity : ∀ t, (Finset.univ.filter (fun s => R s t)).card ≤ L)
   (hweight : ∀ s t, R s t → epsilon * sourceWeight s ≤ targetWeight t)

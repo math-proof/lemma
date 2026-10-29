@@ -350,7 +350,7 @@ theorem generalFreeCurrentLimit_diag_zero {d : Nat}
         {m | m e = 0}) atTop (nhds 1) := by
     simpa only [generalFreeBoxCurrentMeasure_diag_zero J hJ _ beta hbeta e he]
       using (tendsto_const_nhds :
-        Tendsto (fun _ : Nat ↦ (1 : ℝ≥0∞)) atTop (nhds 1))
+        Tendsto (fun _ : Nat ↦ (1 : ENNReal)) atTop (nhds 1))
   exact tendsto_nhds_unique hlim hone
 
 theorem nonDiagonalEdgeFinset_subset {V : Type*} [DecidableEq V]

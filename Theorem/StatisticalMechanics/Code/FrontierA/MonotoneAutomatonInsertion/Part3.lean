@@ -53,7 +53,7 @@ theorem measurable_forceSitesOccupied (S : Finset (Site d)) :
 
 
 theorem forceSitesOccupied_map_absolutelyContinuous
-    (nu : Measure (ConfigSpace (Site d))) (epsilon : ℝ≥0∞)
+    (nu : Measure (ConfigSpace (Site d))) (epsilon : ENNReal)
     (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon) (S : Finset (Site d)) :
     nu.map (forceSitesOccupied S) ≪ nu := by
@@ -74,7 +74,7 @@ theorem forceSitesOccupied_map_absolutelyContinuous
 
 
 theorem positive_of_forceSitesOccupied_preimage
-    (nu : Measure (ConfigSpace (Site d))) (epsilon : ℝ≥0∞)
+    (nu : Measure (ConfigSpace (Site d))) (epsilon : ENNReal)
     (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon)
     (S : Finset (Site d))

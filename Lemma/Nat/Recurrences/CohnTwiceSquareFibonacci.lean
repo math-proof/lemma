@@ -3,6 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.LucasSequence
 import Lemma.Nat.LucasSequence
 import Lemma.Nat.Recurrences.CohnTwiceSquareLucas
+import Lemma.Nat.Recurrences.SquareFibonacciLucas
 import Def.NumberTheory.Recurrences.CohnTwiceSquareLucas
 
 
@@ -10,8 +11,6 @@ namespace MetaMathlibExt
 
 /--
 [lucasNumber_add_fib](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/CohnTwiceSquareFibonacci.lean)
--/
-@[path]
 Source: Refik Keskin and Zafer Yosma, "On Fibonacci and Lucas Numbers of the
 Form cx^2", Journal of Integer Sequences 14 (2011), Theorem 2.1, source
 lines 129–132,
@@ -34,16 +33,17 @@ takes `(hn : 0 < n)` to formalize the intended positive-natural-index form.
 `Nat.fib` is the Fibonacci sequence and `MetaMathlibExt.lucasNumber` is the
 repository's canonical Lucas-number sequence; no parallel `Fₙ₋₁ + Fₙ₊₁`
 encoding is used. -/
+@[path]
 private lemma lucasNumber_add_fib (n : ℕ) : lucasNumber n + Nat.fib n = 2 * Nat.fib (n + 1) := by
   induction n using Nat.twoStepInduction with
   | zero => decide
   | one => decide
   | more n ih1 ih2 =>
-    have hL : lucasNumber (n + 2) = lucasNumber (n + 1) + lucasNumber n := rfl
-    rw [hL, Nat.fib_add_two]
-    have h1 : n + 2 + 1 = (n + 1) + 2 := by omega
-    rw [h1, Nat.fib_add_two]
-    omega
+      have hL : lucasNumber (n + 2) = lucasNumber (n + 1) + lucasNumber n := rfl
+      rw [hL, Nat.fib_add_two]
+      have h1 : n + 2 + 1 = (n + 1) + 2 := by omega
+      rw [h1, Nat.fib_add_two]
+      omega
 
 end MetaMathlibExt
 
@@ -74,12 +74,13 @@ private lemma fib_succ_sq_sub_fib_mul_sub_fib_sq (n : ℕ) :
   induction n with
   | zero => decide
   | succ n ih =>
-    have hfib : Nat.fib (n + 2) = Nat.fib n + Nat.fib (n + 1) := Nat.fib_add_two
-    have h1 : ((Nat.fib (n + 1 + 1) : ℤ)) = (Nat.fib n : ℤ) + (Nat.fib (n + 1) : ℤ) := by
-      exact_mod_cast hfib
-    rw [h1]
-    linear_combination -ih
+      have hfib : Nat.fib (n + 2) = Nat.fib n + Nat.fib (n + 1) := Nat.fib_add_two
+      have h1 : ((Nat.fib (n + 1 + 1) : ℤ)) = (Nat.fib n : ℤ) + (Nat.fib (n + 1) : ℤ) := by
+        exact_mod_cast hfib
+      rw [h1]
+      linear_combination -ih
 
+-- N4
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -93,62 +94,64 @@ private lemma fib_add_two_mul_add_neg_one_pow_mul (m k : ℕ) :
     = (Nat.fib (m + k) : ℤ) * (lucasNumber k : ℤ) := by
   induction m using Nat.twoStepInduction with
   | zero =>
-    have hN2 := fib_two_mul_eq_fib_mul_lucasNumber k
-    have hidx0 : 0 + 2 * k = 2 * k := by omega
-    have hidx1 : 0 + k = k := by omega
-    have hcast : ((Nat.fib (0 + 2 * k) : ℕ) : ℤ) = ((Nat.fib (2 * k) : ℕ) : ℤ) := by
-      rw [hidx0]
-    have hmk : ((Nat.fib (0 + k) : ℕ) : ℤ) = ((Nat.fib k : ℕ) : ℤ) := by
-      rw [hidx1]
-    have hthis :
-      ((Nat.fib (2 * k) : ℕ) : ℤ)
-        = ((Nat.fib k : ℕ) : ℤ) * ((lucasNumber k : ℕ) : ℤ) := by
-      exact_mod_cast hN2
-    simp only [Nat.fib_zero, Nat.cast_zero, mul_zero, add_zero]
-    rwa [hcast, hmk]
+      have hN2 := fib_two_mul_eq_fib_mul_lucasNumber k
+      have hidx0 : 0 + 2 * k = 2 * k := by omega
+      have hidx1 : 0 + k = k := by omega
+      have hcast : ((Nat.fib (0 + 2 * k) : ℕ) : ℤ) = ((Nat.fib (2 * k) : ℕ) : ℤ) := by
+        rw [hidx0]
+      have hmk : ((Nat.fib (0 + k) : ℕ) : ℤ) = ((Nat.fib k : ℕ) : ℤ) := by
+        rw [hidx1]
+      have hthis :
+          ((Nat.fib (2 * k) : ℕ) : ℤ)
+            = ((Nat.fib k : ℕ) : ℤ) * ((lucasNumber k : ℕ) : ℤ) := by
+        exact_mod_cast hN2
+      simp only [Nat.fib_zero, Nat.cast_zero, mul_zero, add_zero]
+      rw [hcast, hmk]
+      exact hthis
   | one =>
-    have hfib := Nat.fib_two_mul_add_one k
-    have hN1 := lucasNumber_add_fib k
-    have hN1z : (lucasNumber k : ℤ) = 2 * (Nat.fib (k + 1) : ℤ) - (Nat.fib k : ℤ) := by
-      have h2 : ((lucasNumber k : ℤ) + (Nat.fib k : ℤ) = 2 * (Nat.fib (k + 1) : ℤ)) := by
-        exact_mod_cast hN1
-      linarith
-    have hCass := fib_succ_sq_sub_fib_mul_sub_fib_sq k
-    have idx1 : 1 + 2 * k = 2 * k + 1 := by omega
-    have idx2 : 1 + k = k + 1 := by omega
-    have hcast : ((Nat.fib (1 + 2 * k) : ℕ) : ℤ) = ((Nat.fib (2 * k + 1) : ℕ) : ℤ) := by
-      rw [idx1]
-    have hmk : ((Nat.fib (1 + k) : ℕ) : ℤ) = ((Nat.fib (k + 1) : ℕ) : ℤ) := by
-      rw [idx2]
-    rw [hcast, hfib]
-    push_cast
-    rw [hmk, hN1z]
-    have hF1 : ((Nat.fib 1 : ℕ) : ℤ) = 1 := by decide
-    rw [hF1, mul_one]
-    linear_combination -hCass
+      have hfib := Nat.fib_two_mul_add_one k
+      have hN1 := lucasNumber_add_fib k
+      have hN1z : (lucasNumber k : ℤ) = 2 * (Nat.fib (k + 1) : ℤ) - (Nat.fib k : ℤ) := by
+        have h2 : ((lucasNumber k : ℤ) + (Nat.fib k : ℤ) = 2 * (Nat.fib (k + 1) : ℤ)) := by
+          exact_mod_cast hN1
+        linarith
+      have hCass := fib_succ_sq_sub_fib_mul_sub_fib_sq k
+      have idx1 : 1 + 2 * k = 2 * k + 1 := by omega
+      have idx2 : 1 + k = k + 1 := by omega
+      have hcast : ((Nat.fib (1 + 2 * k) : ℕ) : ℤ) = ((Nat.fib (2 * k + 1) : ℕ) : ℤ) := by
+        rw [idx1]
+      have hmk : ((Nat.fib (1 + k) : ℕ) : ℤ) = ((Nat.fib (k + 1) : ℕ) : ℤ) := by
+        rw [idx2]
+      rw [hcast, hfib]
+      push_cast
+      rw [hmk, hN1z]
+      have hF1 : ((Nat.fib 1 : ℕ) : ℤ) = 1 := by decide
+      rw [hF1, mul_one]
+      linear_combination -hCass
   | more m ih1 ih2 =>
-    have e1 : m + 2 + 2 * k = (m + 2 * k) + 2 := by omega
-    have e3 : m + 2 + k = (m + k) + 2 := by omega
-    have e5 : (m + 2 * k) + 1 = m + 1 + 2 * k := by omega
-    have e6 : (m + k) + 1 = m + 1 + k := by omega
-    have e7 : m + 2 = m + 1 + 1 := by omega
-    have f1 : Nat.fib (m + 2 + 2 * k) = Nat.fib (m + 2 * k) + Nat.fib (m + 1 + 2 * k) := by
-      conv_lhs => rw [e1]
-      rw [Nat.fib_add_two, e5]
-    have f2 : Nat.fib (m + 2 + k) = Nat.fib (m + k) + Nat.fib (m + 1 + k) := by
-      conv_lhs => rw [e3]
-      rw [Nat.fib_add_two, e6]
-    have f3 : Nat.fib (m + 2) = Nat.fib m + Nat.fib (m + 1) := Nat.fib_add_two
-    have g1 : ((Nat.fib (m + 2 + 2 * k) : ℕ) : ℤ)
-      = (Nat.fib (m + 2 * k) : ℤ) + (Nat.fib (m + 1 + 2 * k) : ℤ) := by exact_mod_cast f1
-    have g2 : ((Nat.fib (m + 2 + k) : ℕ) : ℤ)
-      = (Nat.fib (m + k) : ℤ) + (Nat.fib (m + 1 + k) : ℤ) := by exact_mod_cast f2
-    have g3 : ((Nat.fib (m + 2) : ℕ) : ℤ) =
-      (Nat.fib m : ℤ) + (Nat.fib (m + 1) : ℤ) := by
-      exact_mod_cast f3
-    rw [g1, g2, g3]
-    linear_combination ih1 + ih2
+      have e1 : m + 2 + 2 * k = (m + 2 * k) + 2 := by omega
+      have e3 : m + 2 + k = (m + k) + 2 := by omega
+      have e5 : (m + 2 * k) + 1 = m + 1 + 2 * k := by omega
+      have e6 : (m + k) + 1 = m + 1 + k := by omega
+      have e7 : m + 2 = m + 1 + 1 := by omega
+      have f1 : Nat.fib (m + 2 + 2 * k) = Nat.fib (m + 2 * k) + Nat.fib (m + 1 + 2 * k) := by
+        conv_lhs => rw [e1]
+        rw [Nat.fib_add_two, e5]
+      have f2 : Nat.fib (m + 2 + k) = Nat.fib (m + k) + Nat.fib (m + 1 + k) := by
+        conv_lhs => rw [e3]
+        rw [Nat.fib_add_two, e6]
+      have f3 : Nat.fib (m + 2) = Nat.fib m + Nat.fib (m + 1) := Nat.fib_add_two
+      have g1 : ((Nat.fib (m + 2 + 2 * k) : ℕ) : ℤ)
+          = (Nat.fib (m + 2 * k) : ℤ) + (Nat.fib (m + 1 + 2 * k) : ℤ) := by exact_mod_cast f1
+      have g2 : ((Nat.fib (m + 2 + k) : ℕ) : ℤ)
+          = (Nat.fib (m + k) : ℤ) + (Nat.fib (m + 1 + k) : ℤ) := by exact_mod_cast f2
+      have g3 : ((Nat.fib (m + 2) : ℕ) : ℤ) =
+          (Nat.fib m : ℤ) + (Nat.fib (m + 1) : ℤ) := by
+        exact_mod_cast f3
+      rw [g1, g2, g3]
+      linear_combination ih1 + ih2
 
+-- N5
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -163,22 +166,23 @@ private lemma lucasNumber_dvd_fib_add_two_mul_mul_sub (k : ℕ) (hk : Even k) (m
   induction j with
   | zero => simp
   | succ j ih =>
-    have hN4 := fib_add_two_mul_add_neg_one_pow_mul (m + 2 * k * j) k
-    have eA : (m + 2 * k * j) + 2 * k = m + 2 * k * (j + 1) := by ring
-    have eB : (m + 2 * k * j) + k = m + 2 * k * j + k := by ring
-    rw [eA, hk1, one_mul] at hN4
-    have hpow : ((-1 : ℤ)) ^ (j + 1) = -((-1) ^ j) := by ring
-    have hmem : ((lucasNumber k : ℕ) : ℤ) ∣
-      ((Nat.fib (m + 2 * k * j + k) : ℤ) * (lucasNumber k : ℤ)) :=
-      dvd_mul_left _ _
-    have key : (Nat.fib (m + 2 * k * (j + 1)) : ℤ) - (-1) ^ (j + 1) * (Nat.fib m : ℤ)
-      = ((Nat.fib (m + 2 * k * j + k) : ℤ) * (lucasNumber k : ℤ))
-      - ((Nat.fib (m + 2 * k * j) : ℤ) - (-1) ^ j * (Nat.fib m : ℤ)) := by
-      rw [hpow]
-      linear_combination hN4
-    rw [key]
-    exact dvd_sub hmem ih
+      have hN4 := fib_add_two_mul_add_neg_one_pow_mul (m + 2 * k * j) k
+      have eA : (m + 2 * k * j) + 2 * k = m + 2 * k * (j + 1) := by ring
+      have eB : (m + 2 * k * j) + k = m + 2 * k * j + k := by ring
+      rw [eA, hk1, one_mul] at hN4
+      have hpow : ((-1 : ℤ)) ^ (j + 1) = -((-1) ^ j) := by ring
+      have hmem : ((lucasNumber k : ℕ) : ℤ) ∣
+          ((Nat.fib (m + 2 * k * j + k) : ℤ) * (lucasNumber k : ℤ)) :=
+        dvd_mul_left _ _
+      have key : (Nat.fib (m + 2 * k * (j + 1)) : ℤ) - (-1) ^ (j + 1) * (Nat.fib m : ℤ)
+          = ((Nat.fib (m + 2 * k * j + k) : ℤ) * (lucasNumber k : ℤ))
+          - ((Nat.fib (m + 2 * k * j) : ℤ) - (-1) ^ j * (Nat.fib m : ℤ)) := by
+        rw [hpow]
+        linear_combination hN4
+      rw [key]
+      exact dvd_sub hmem ih
 
+-- N6 helper: six-step closed form
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -222,14 +226,15 @@ private lemma lucasNumber_period_aux (q r : ℕ) :
   induction q with
   | zero => simp
   | succ q ih =>
-    have h : 6 * (q + 1) + r = (6 * q + r) + 6 := by ring
-    rw [h]
-    have h2 : (6 * q + r) + 6 = (6 * q + r) + 6 := rfl
-    have hper := lucasNumber_add_six_mod_four (6 * q + r)
-    have hidx : (6 * q + r) + 6 = (6 * q + r) + 6 := rfl
-    rw [show (6 * q + r) + 6 = (6 * q + r) + 6 from rfl] at hper
-    rw [hper, ih]
+      have h : 6 * (q + 1) + r = (6 * q + r) + 6 := by ring
+      rw [h]
+      have h2 : (6 * q + r) + 6 = (6 * q + r) + 6 := rfl
+      have hper := lucasNumber_add_six_mod_four (6 * q + r)
+      have hidx : (6 * q + r) + 6 = (6 * q + r) + 6 := rfl
+      rw [show (6 * q + r) + 6 = (6 * q + r) + 6 from rfl] at hper
+      rw [hper, ih]
 
+-- N6
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -253,8 +258,9 @@ private lemma lucasNumber_mod_four_of_even_of_not_three_dvd (k : ℕ) (hk : Even
   have hdecomp : 6 * (k / 6) + k % 6 = k := by omega
   conv_lhs => rw [← hdecomp]
   rw [lucasNumber_period_aux]
-  obtain h | h <;> rw [h] <;> decide := hmod6
+  rcases hmod6 with h | h <;> rw [h] <;> decide
 
+-- N7
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -279,8 +285,9 @@ private lemma not_dvd_sq_add_one_of_mod_four_eq_three (b : ℕ) (hb : b % 4 = 3)
     exact ZMod.χ₄_nat_three_mod_four hb
   have hright : jacobiSym (y ^ 2) b = jacobiSym y b ^ 2 := jacobiSym.pow_left y 2 b
   rw [hright, hleft] at hjac
-  obtain h | h | h <;> rw [h] at hjac <;> norm_num at hjac := jacobiSym.trichotomy y b
+  rcases jacobiSym.trichotomy y b with h | h | h <;> rw [h] at hjac <;> norm_num at hjac
 
+-- N8
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -300,6 +307,7 @@ private lemma exists_eq_three_pow_mul_even_not_dvd (s : ℕ) (hs0 : s ≠ 0) (hs
   have hk2 : 2 ∣ k := (hcop.dvd_mul_left).mp h2dvd
   exact even_iff_two_dvd.mpr hk2
 
+-- N9
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -337,8 +345,10 @@ private lemma lucasNumber_dvd_fib_add_two_of_mod_four_eq_three
   have hcast : ((Nat.fib (3 + 2 * k * (3 ^ r)) : ℕ) : ℤ) = ((Nat.fib n : ℕ) : ℤ) := by rw [hidx]
   rw [hcast] at hN5
   have heq : (Nat.fib n : ℤ) - -1 * 2 = (Nat.fib n : ℤ) + 2 := by ring
-  rwa [heq] at hN5
+  rw [heq] at hN5
+  exact hN5
 
+-- N10
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -370,12 +380,12 @@ private lemma lucasNumber_dvd_fib_add_two_of_mod_four_eq_one (n : ℕ) (hn : n %
   rw [hjneg, hF0, mul_zero, sub_zero] at hN5a
   rw [hjneg, hF1, mul_one] at hN5b
   have hcast3 :
-    ((Nat.fib (0 + 2 * k * (3 ^ r)) : ℕ) : ℤ)
-      = ((Nat.fib (n + 3) : ℕ) : ℤ) := by
+      ((Nat.fib (0 + 2 * k * (3 ^ r)) : ℕ) : ℤ)
+        = ((Nat.fib (n + 3) : ℕ) : ℤ) := by
     rw [hidx3]
   have hcast4 :
-    ((Nat.fib (1 + 2 * k * (3 ^ r)) : ℕ) : ℤ)
-      = ((Nat.fib (n + 4) : ℕ) : ℤ) := by
+      ((Nat.fib (1 + 2 * k * (3 ^ r)) : ℕ) : ℤ)
+        = ((Nat.fib (n + 4) : ℕ) : ℤ) := by
     rw [hidx4]
   rw [hcast3] at hN5a
   rw [hcast4] at hN5b
@@ -389,22 +399,24 @@ private lemma lucasNumber_dvd_fib_add_two_of_mod_four_eq_one (n : ℕ) (hn : n %
     have h : n + 4 = (n + 2) + 2 := by omega
     rw [h]; exact Nat.fib_add_two
   have g1 : ((Nat.fib (n + 2) : ℕ) : ℤ) =
-    (Nat.fib n : ℤ) + (Nat.fib (n + 1) : ℤ) := by
+      (Nat.fib n : ℤ) + (Nat.fib (n + 1) : ℤ) := by
     exact_mod_cast e1
   have g2 : ((Nat.fib (n + 3) : ℕ) : ℤ) =
-    (Nat.fib (n + 1) : ℤ) + (Nat.fib (n + 2) : ℤ) := by
+      (Nat.fib (n + 1) : ℤ) + (Nat.fib (n + 2) : ℤ) := by
     exact_mod_cast e2
   have g3 : ((Nat.fib (n + 4) : ℕ) : ℤ) =
-    (Nat.fib (n + 2) : ℤ) + (Nat.fib (n + 3) : ℤ) := by
+      (Nat.fib (n + 2) : ℤ) + (Nat.fib (n + 3) : ℤ) := by
     exact_mod_cast e3
   have key : (Nat.fib n : ℤ) + 2 = 2 * ((Nat.fib (n + 4) : ℤ) + 1) - 3 * (Nat.fib (n + 3) : ℤ) := by
     linear_combination -g1 + g2 - 2 * g3
   have hN5b' : ((lucasNumber k : ℕ) : ℤ) ∣ (Nat.fib (n + 4) : ℤ) + 1 := by
     have : (Nat.fib (n + 4) : ℤ) - -1 = (Nat.fib (n + 4) : ℤ) + 1 := by ring
-    rwa [this] at hN5b
+    rw [this] at hN5b
+    exact hN5b
   rw [key]
   exact dvd_sub (hN5b'.mul_left 2) (hN5a.mul_left 3)
 
+-- N11
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -422,7 +434,7 @@ private lemma fib_odd_ne_two_mul_sq (n x : ℕ) (hodd : Odd n) (hn3 : n ≠ 3)
     intro h2
     omega
   have hex : ∃ k : ℕ, Even k ∧ ¬ 3 ∣ k ∧ ((lucasNumber k : ℕ) : ℤ) ∣ (Nat.fib n : ℤ) + 2 := by
-    obtain hm | hm := hmod
+    rcases hmod with hm | hm
     · exact lucasNumber_dvd_fib_add_two_of_mod_four_eq_one n hm
     · exact lucasNumber_dvd_fib_add_two_of_mod_four_eq_three n hm hn3
   obtain ⟨k, hkev, hk3, hdvd⟩ := hex
@@ -432,13 +444,15 @@ private lemma fib_odd_ne_two_mul_sq (n x : ℕ) (hodd : Odd n) (hn3 : n ≠ 3)
   have hcast : ((Nat.fib n : ℕ) : ℤ) = 2 * ((x : ℤ) ^ 2) := by exact_mod_cast h
   have h2dvd : ((lucasNumber k : ℕ) : ℤ) ∣ 2 * ((x : ℤ) ^ 2 + 1) := by
     have heq : ((Nat.fib n : ℕ) : ℤ) + 2 = 2 * ((x : ℤ) ^ 2 + 1) := by rw [hcast]; ring
-    rwa [heq] at hdvd
+    rw [heq] at hdvd
+    exact hdvd
   have hcop : Nat.Coprime (lucasNumber k) 2 := hbodd.coprime_two_right
   have hisocop : IsCoprime ((lucasNumber k : ℕ) : ℤ) (2 : ℤ) := hcop.isCoprime
   have h1dvd : ((lucasNumber k : ℕ) : ℤ) ∣ (x : ℤ) ^ 2 + 1 :=
     hisocop.dvd_of_dvd_mul_left h2dvd
   exact not_dvd_sq_add_one_of_mod_four_eq_three (lucasNumber k) hbmod _ h1dvd
 
+-- N12
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -454,12 +468,14 @@ private lemma nat_gcd_fib_lucasNumber_dvd_two (m : ℕ) :
   have hgr : Nat.gcd (Nat.fib m) (lucasNumber m) ∣ lucasNumber m := Nat.gcd_dvd_right _ _
   have hsum : Nat.gcd (Nat.fib m) (lucasNumber m) ∣ 2 * Nat.fib (m + 1) := by
     have : Nat.gcd (Nat.fib m) (lucasNumber m) ∣ lucasNumber m + Nat.fib m := dvd_add hgr hgl
-    rwa [hN1] at this
+    rw [hN1] at this
+    exact this
   have hcop : Nat.Coprime (Nat.fib m) (Nat.fib (m + 1)) := Nat.fib_coprime_fib_succ m
   have hcopg : Nat.Coprime (Nat.gcd (Nat.fib m) (lucasNumber m)) (Nat.fib (m + 1)) :=
     hcop.coprime_dvd_left hgl
   exact hcopg.dvd_of_dvd_mul_right hsum
 
+-- N13
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -474,15 +490,16 @@ private lemma eq_gcd_mul_sq_of_mul_eq_sq (a b y : ℕ) (h : a * b = y ^ 2) :
   set g := Nat.gcd a b with hgdef
   by_cases hg : g = 0
   · have hb0 : b = 0 := by
-    have hd : g ∣ b := by rw [hgdef]; exact Nat.gcd_dvd_right a b
-    rw [hg] at hd
-    exact zero_dvd_iff.mp hd
+      have hd : g ∣ b := by rw [hgdef]; exact Nat.gcd_dvd_right a b
+      rw [hg] at hd
+      exact zero_dvd_iff.mp hd
     refine ⟨0, by rw [hb0]; simp⟩
   · have hgpos : 0 < g := Nat.pos_of_ne_zero hg
     have h' : (a' * g) * (b' * g) = y ^ 2 := by
       have ha' : a = a' * g := ha
       have hb' : b = b' * g := hb
-      rwa [← ha', ← hb']
+      rw [← ha', ← hb']
+      exact h
     have hgab : a' * b' * (g ^ 2) = y ^ 2 := by linear_combination h'
     have hgdvd : g ^ 2 ∣ y ^ 2 :=
       ⟨a' * b', by rw [← hgab]; ring⟩
@@ -495,7 +512,8 @@ private lemma eq_gcd_mul_sq_of_mul_eq_sq (a b y : ℕ) (h : a * b = y ^ 2) :
     have hz2 : a' * b' = z ^ 2 :=
       Nat.eq_of_mul_eq_mul_left (pow_pos hgpos 2) e
     have hU : IsUnit (gcd b' a') := by
-      rwa [Nat.isUnit_iff]
+      rw [Nat.isUnit_iff]
+      exact hcop.symm
     obtain ⟨c, hc⟩ :=
       exists_eq_pow_of_mul_eq_pow hU
         (show b' * a' = z ^ 2 by rw [mul_comm]; exact hz2)
@@ -504,6 +522,10 @@ private lemma eq_gcd_mul_sq_of_mul_eq_sq (a b y : ℕ) (h : a * b = y ^ 2) :
     rw [hb', hc]
     ring
 
+-- The two Lucas classifications are proved in sibling modules and used here.
+-- See `cohn_square_lucas` and `cohn_twice_square_lucas`.
+
+-- N14
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -528,8 +550,8 @@ private lemma fib_two_mul_eq_two_mul_sq (m x : ℕ) (hm : 0 < m)
     have h2' : g ∣ 2 * lucasNumber m := h2.mul_left 2
     have hgcd : g ∣ Nat.gcd (2 * Nat.fib m) (2 * lucasNumber m) := Nat.dvd_gcd h1 h2'
     have hmul2 :
-      Nat.gcd (2 * Nat.fib m) (2 * lucasNumber m)
-        = 2 * Nat.gcd (Nat.fib m) (lucasNumber m) :=
+        Nat.gcd (2 * Nat.fib m) (2 * lucasNumber m)
+          = 2 * Nat.gcd (Nat.fib m) (lucasNumber m) :=
       Nat.gcd_mul_left 2 (Nat.fib m) (lucasNumber m)
     rw [hmul2] at hgcd
     have h12 := nat_gcd_fib_lucasNumber_dvd_two m
@@ -550,25 +572,27 @@ private lemma fib_two_mul_eq_two_mul_sq (m x : ℕ) (hm : 0 < m)
     · norm_num at hkk
       exact Or.inr (Or.inr hkk)
   have hm136 : m = 1 ∨ m = 3 ∨ m = 6 := by
-    obtain hg1 | hg2 | hg4v := hgmem
+    rcases hgmem with hg1 | hg2 | hg4v
     · have hsq : lucasNumber m = c ^ 2 := by
-      have : lucasNumber m = g * c ^ 2 := hc
-      rwa [hg1, one_mul] at this
-      obtain h1 | h3 := cohn_square_lucas m c hm hsq
+        have : lucasNumber m = g * c ^ 2 := hc
+        rw [hg1, one_mul] at this
+        exact this
+      rcases cohn_square_lucas m c hm hsq with h1 | h3
       · exact Or.inl h1
       · exact Or.inr (Or.inl h3)
     · have hsq : lucasNumber m = 2 * c ^ 2 := by
-      have : lucasNumber m = g * c ^ 2 := hc
-      rwa [hg2] at this
+        have : lucasNumber m = g * c ^ 2 := hc
+        rw [hg2] at this
+        exact this
       exact Or.inr (Or.inr (cohn_twice_square_lucas m c hm hsq))
     · have hsq : lucasNumber m = (2 * c) ^ 2 := by
-      have : lucasNumber m = g * c ^ 2 := hc
-      rw [hg4v] at this
-      rw [this]; ring
-      obtain h1 | h3 := cohn_square_lucas m (2 * c) hm hsq
+        have : lucasNumber m = g * c ^ 2 := hc
+        rw [hg4v] at this
+        rw [this]; ring
+      rcases cohn_square_lucas m (2 * c) hm hsq with h1 | h3
       · exact Or.inl h1
       · exact Or.inr (Or.inl h3)
-  obtain h1 | h3 | h6 := hm136
+  rcases hm136 with h1 | h3 | h6
   · have hF2 : Nat.fib 2 = 1 := by decide
     have h12 : (2 : ℕ) * m = 2 := by omega
     rw [h12, hF2] at h
@@ -605,7 +629,7 @@ lemma cohn_twice_square_fibonacci
 -- proof
   have hcopy := h
   clear h
-  obtain hev | hodd := Nat.even_or_odd n
+  rcases Nat.even_or_odd n with hev | hodd
   · obtain ⟨m, hm⟩ := hev
     have hmpos : 0 < m := by omega
     have h2m : 2 * m = n := by omega
@@ -615,9 +639,9 @@ lemma cohn_twice_square_fibonacci
   · by_cases hn3 : n = 3
     · exact Or.inl hn3
     · exact (fib_odd_ne_two_mul_sq n x hodd hn3 hcopy).elim
-end
 
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

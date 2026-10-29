@@ -50,7 +50,7 @@ theorem cti_map_translateConfig (v : Site 2) :
   rw [cti_translateConfig_eq, rba_selfDualMeasure]
   unfold bernoulliProductMeasure
   exact Measure.infinitePi_map_piCongrLeft
-    (fun _ : Sym2 (Site 2) => bernoulliMeasure (2⁻¹ : ℝ≥0) half_le_one) (cti_edgeEquiv v)
+    (fun _ : Sym2 (Site 2) => bernoulliMeasure (2⁻¹ : NNReal) half_le_one) (cti_edgeEquiv v)
 
 
 theorem cti_selfDual_shift_invariant (v : Site 2) :

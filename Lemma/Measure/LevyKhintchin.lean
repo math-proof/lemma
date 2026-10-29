@@ -1116,7 +1116,7 @@ private lemma lk_moment_mul_inverseCanonicalWeight_le (x : ℝ) :
     simp [lkInverseCanonicalWeight]
   simp only [lkInverseCanonicalWeight, hx, ↓reduceIte]
   rw [← ENNReal.ofReal_mul (by positivity : 0 ≤ (1 + x ^ 2) / x ^ 2)]
-  rw [show (2 : ℝ≥0∞) = ENNReal.ofReal 2 by norm_num]
+  rw [show (2 : ENNReal) = ENNReal.ofReal 2 by norm_num]
   apply ENNReal.ofReal_le_ofReal
   by_cases hx1 : x ^ 2 ≤ 1
   · rw [min_eq_right hx1]
@@ -1158,7 +1158,7 @@ private lemma lk_levyMeasure_moment (K : FiniteMeasure ℝ) :
   calc
     (∫⁻ x, (lkInverseCanonicalWeight *
       fun x : ℝ ↦ ENNReal.ofReal (min 1 (x ^ 2))) x ∂(K : Measure ℝ)) ≤
-      ∫⁻ _ : ℝ, (2 : ℝ≥0∞) ∂(K : Measure ℝ) :=
+      ∫⁻ _ : ℝ, (2 : ENNReal) ∂(K : Measure ℝ) :=
       lintegral_mono lk_moment_mul_inverseCanonicalWeight_le
     _ < ∞ := by
       rw [lintegral_const]

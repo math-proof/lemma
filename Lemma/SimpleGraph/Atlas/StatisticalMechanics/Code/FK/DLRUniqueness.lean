@@ -51,7 +51,7 @@ private lemma le_self_of_convexCombo_eq
   [Group G]
   [MulAction G E]
   {μ ν₁ ν₂ : Measure (ConfigSpace E)}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   {s : Set (ConfigSpace E)}
 -- given
   (hconv : μ = a • ν₁ + b • ν₂) :
@@ -68,7 +68,7 @@ private lemma convexSummand_eq_on_invariants_eq
   [Group G]
   [MulAction G E]
   {μ ν₁ ν₂ : Measure (ConfigSpace E)}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   [IsProbabilityMeasure μ]
   [IsProbabilityMeasure ν₁]
   {s : Set (ConfigSpace E)}
@@ -91,7 +91,7 @@ private lemma ergodic_eq_on_invariants_of_convexCombo_eq
   [Group G]
   [MulAction G E]
   {μ ν₁ ν₂ : Measure (ConfigSpace E)}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   [IsProbabilityMeasure μ]
   [IsProbabilityMeasure ν₁]
   [IsProbabilityMeasure ν₂]
@@ -116,7 +116,7 @@ private lemma ergodic_summands_eq_on_invariants_eq
   [Group G]
   [MulAction G E]
   {μ ν₁ ν₂ : Measure (ConfigSpace E)}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   [IsProbabilityMeasure μ]
   [IsProbabilityMeasure ν₁]
   [IsProbabilityMeasure ν₂]
@@ -184,7 +184,7 @@ private lemma extreme_on_invariants_off_countable_eq
   (hpm : ∀ p, IsProbabilityMeasure (φ p))
   (herg : ∀ p ∉ S, IsErgodic (G := G) (φ p)) :
 -- imply
-  ∀ p ∉ S, ∀ (ν₁ ν₂ : Measure (ConfigSpace E)) (a b : ℝ≥0∞), IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ → φ p = a • ν₁ + b • ν₂ → 0 < a → 0 < b → ∀ {s : Set (ConfigSpace E)}, MeasurableSet s → (∀ g : G, (shift g : ConfigSpace E → ConfigSpace E) ⁻¹' s = s) → ν₁ s = ν₂ s := by
+  ∀ p ∉ S, ∀ (ν₁ ν₂ : Measure (ConfigSpace E)) (a b : ENNReal), IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ → φ p = a • ν₁ + b • ν₂ → 0 < a → 0 < b → ∀ {s : Set (ConfigSpace E)}, MeasurableSet s → (∀ g : G, (shift g : ConfigSpace E → ConfigSpace E) ⁻¹' s = s) → ν₁ s = ν₂ s := by
 -- proof
   apply StatMech.FK.extreme_on_invariants_off_countable hpm herg
 

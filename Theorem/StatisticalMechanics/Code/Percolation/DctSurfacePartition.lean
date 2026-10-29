@@ -118,7 +118,7 @@ theorem restrict_image_pivotalEvent (A : Set (ConfigSpace (Sym2 (Site d))))
     exact hη
 
 
-theorem pivotalProb_eq_realPivotal (p : ℝ≥0) (hp : p ≤ 1)
+theorem pivotalProb_eq_realPivotal (p : NNReal) (hp : p ≤ 1)
     (A : Set (ConfigSpace (Sym2 (Site d)))) (F : Finset (Sym2 (Site d))) (e : Sym2 (Site d))
     (he : e ∈ F)
     (hA : DependsOn (A.indicator (fun _ => (1 : ℝ))) (F : Set (Sym2 (Site d)))) :
@@ -130,7 +130,7 @@ theorem pivotalProb_eq_realPivotal (p : ℝ≥0) (hp : p ≤ 1)
   rfl
 
 
-theorem deriv_boxCrossProb_inf (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem deriv_boxCrossProb_inf (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     deriv (fun q => prob q ((boxEdgeFinset d n).restrict '' (boxCrossingEvent d n))) (p : ℝ)
       = ∑ e : ↥(boxEdgeFinset d n),
           (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real

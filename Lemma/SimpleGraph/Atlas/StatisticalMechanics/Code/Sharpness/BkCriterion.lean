@@ -42,7 +42,7 @@ private lemma disjointOccurrence_isIncreasing_eq
 private lemma bk_triple_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {P Q R : Set (ConfigSpace E)}
 -- given
   (hp : p ≤ 1)
@@ -61,7 +61,7 @@ private lemma bk_triple_eq
 private lemma bk_criterion_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {s : Finset ι}
   {P Q R : ι → Set (ConfigSpace E)}
   {C : Set (ConfigSpace E)}
@@ -139,7 +139,7 @@ private lemma isIncreasing_edgeOpenEvent_eq
 private lemma bk_criterion_conn_eq
   [Fintype V]
   [DecidableEq V]
-  {p : ℝ≥0}
+  {p : NNReal}
   {G : SimpleGraph V}
   {A S B : Set V}
   {u : V}

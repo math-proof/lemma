@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Rightsummable
@@ -35,7 +34,7 @@ private lemma ramanujan_entry2_ratio (x z : ℂ) (hz : ∀ r : ℕ, z + (r : ℂ
   have hq : (0 : ℝ) < ‖z + ((j + 1 : ℕ) : ℂ)‖ :=
     norm_pos_iff.mpr (hz (j + 1))
   have hsplit : (∏ k ∈ Finset.range (j + 1 + 1), (z + (k : ℂ)))
-    = (∏ k ∈ Finset.range (j + 1), (z + (k : ℂ))) * (z + ((j + 1 : ℕ) : ℂ)) :=
+      = (∏ k ∈ Finset.range (j + 1), (z + (k : ℂ))) * (z + ((j + 1 : ℕ) : ℂ)) :=
     Finset.prod_range_succ (fun k => z + (k : ℂ)) (j + 1)
   rw [hsplit, norm_mul]
   have hA : ‖x‖ ^ (j + 1) ≠ 0 := ne_of_gt (pow_pos hpos _)
@@ -79,7 +78,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Rightsummable
 -/
 @[path]
 lemma ramanujan_part1_ch3_entry2_rightsummable
-  {x z : ℂ}
+  (x z : ℂ)
 -- given
   (hz : ∀ r : ℕ, z + (r : ℂ) ≠ 0) :
 -- imply
@@ -88,11 +87,12 @@ lemma ramanujan_part1_ch3_entry2_rightsummable
 -- proof
   by_cases hx0 : x = 0
   · have hzero : (fun j : ℕ => ((-1 : ℂ) ^ j * x ^ (j + 1) /
-    (∏ k ∈ Finset.range (j + 1), (z + (k : ℂ))))) = fun _ => 0 := by
-    funext j
-    rw [pow_succ, hx0]
-    simp
-    rwa [hzero]
+        (∏ k ∈ Finset.range (j + 1), (z + (k : ℂ))))) = fun _ => 0 := by
+      funext j
+      rw [pow_succ, hx0]
+      simp
+    rw [hzero]
+    exact summable_zero
   · refine summable_of_ratio_test_tendsto_lt_one (l := 0) zero_lt_one ?_ ?_
     · apply Filter.Eventually.of_forall
       intro j
@@ -102,12 +102,12 @@ lemma ramanujan_part1_ch3_entry2_rightsummable
         · exact pow_ne_zero _ hx0
       · exact Finset.prod_ne_zero_iff.mpr (fun k _ => hz k)
     · have hlim : Filter.Tendsto (fun j : ℕ => ‖x‖ / ‖z + ((j + 1 : ℕ) : ℂ)‖)
-      Filter.atTop (nhds 0) :=
-      Filter.Tendsto.const_div_atTop (ramanujan_entry2_denom_atTop z) ‖x‖
+          Filter.atTop (nhds 0) :=
+        Filter.Tendsto.const_div_atTop (ramanujan_entry2_denom_atTop z) ‖x‖
       exact hlim.congr (fun j => (ramanujan_entry2_ratio x z hz hx0 j).symm)
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Rightsummable
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

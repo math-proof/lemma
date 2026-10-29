@@ -44,7 +44,7 @@ theorem bxp_Y_subset_X : bxp_Y ⊆ bmf_X := by
     bxp_notConnected_removeSite ω hd23⟩
 
 
-theorem bxp_hXpos_of_fullPos (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem bxp_hXpos_of_fullPos (p : NNReal) (hp1 : p ≤ 1)
     (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 bxp_Y) :
     0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 bmf_X :=
   lt_of_lt_of_le hpos (measure_mono bxp_Y_subset_X)

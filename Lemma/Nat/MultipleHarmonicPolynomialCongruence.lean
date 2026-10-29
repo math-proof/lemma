@@ -49,7 +49,7 @@ namespace MetaMathlibExt
 @[path]
 private lemma pow_sum_small (p m : ℕ) (hp : p.Prime) (hm : m < p - 1) :
   (∑ k ∈ Finset.Icc 1 (p-1), ((k : ZMod p))^m) = if m = 0 then -1 else 0 := by
-  haveI : Fact (Nat.Prime p) := ⟨hp⟩
+  have : Fact (Nat.Prime p) := ⟨hp⟩
   have : NeZero p := ⟨hp.ne_zero⟩
   rw [icc_sum_eq_nonzero_sum]
   have hcard : Fintype.card (ZMod p) = p := ZMod.card p
@@ -73,7 +73,7 @@ private lemma pow_sum_small (p m : ℕ) (hp : p.Prime) (hm : m < p - 1) :
     rw [hsum1, hcast]
     simp
   · have huniv : ∑ x : ZMod p, x^m = 0 :=
-    FiniteField.sum_pow_lt_card_sub_one (K := ZMod p) m (by omega)
+      FiniteField.sum_pow_lt_card_sub_one (K := ZMod p) m (by omega)
     have hsplit : (∑ x ∈ (Finset.univ : Finset (ZMod p)) \ {0}, x^m) + (0 : ZMod p)^m = ∑ x : ZMod p, x^m := by
       have hunion : ((Finset.univ : Finset (ZMod p)) \ {0}) ∪ {0} = Finset.univ := Finset.sdiff_union_of_subset (Finset.subset_univ _)
       have hdisj : Disjoint ((Finset.univ : Finset (ZMod p)) \ {0}) ({0} : Finset (ZMod p)) := by
@@ -88,10 +88,10 @@ private lemma pow_sum_small (p m : ℕ) (hp : p.Prime) (hm : m < p - 1) :
     have h0pow : (0 : ZMod p)^m = 0 := zero_pow hm0
     have hA : (∑ x ∈ (Finset.univ : Finset (ZMod p)) \ {0}, x^m) = 0 := by
       rw [h0pow, add_zero] at hsplit
-      rwa [huniv] at hsplit
+      rw [huniv] at hsplit
+      exact hsplit
     rw [hA]
     rw [ite_eq_right hm0]
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -110,7 +110,8 @@ private lemma powersetCard_succ_insert {α : Type} [DecidableEq α] (a : α) (s 
     · right
       refine ⟨t.erase a, ⟨?_, ?_⟩, (Finset.insert_erase ha)⟩
       · have : t.erase a ⊆ (insert a s).erase a := Finset.erase_subset_erase _ hsub
-        rwa [Finset.erase_insert h] at this
+        rw [Finset.erase_insert h] at this
+        exact this
       · have hcard' : (t.erase a).card = t.card - 1 := Finset.card_erase_of_mem ha
         omega
     · left
@@ -118,7 +119,7 @@ private lemma powersetCard_succ_insert {α : Type} [DecidableEq α] (a : α) (s 
       intro x hx
       have hx' := hsub hx
       rw [Finset.mem_insert] at hx'
-      obtain rfl | hm := hx'
+      rcases hx' with rfl | hm
       · exact absurd hx ha
       · exact hm
   · rintro (⟨hsub, hcard⟩ | ⟨u, ⟨hsubu, hcardu⟩, rfl⟩)
@@ -128,11 +129,10 @@ private lemma powersetCard_succ_insert {α : Type} [DecidableEq α] (a : α) (s 
       refine ⟨?_, ?_⟩
       · intro x hx
         rw [Finset.mem_insert] at hx
-        obtain hxx | hm := hx
+        rcases hx with hxx | hm
         · subst hxx; exact Finset.mem_insert_self _ _
         · exact Finset.mem_insert_of_mem (hsubu hm)
       · rw [Finset.card_insert_of_notMem hau, hcardu]
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -153,7 +153,6 @@ private lemma powersetCard_succ_insert_disjoint {α : Type} [DecidableEq α] (a 
     have : insert a u ⊆ s := ht1.1
     exact fun hm => h (this hm)
   exact hat hau
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -176,7 +175,8 @@ private lemma sum_powersetCard_succ_insert {M : Type} [CommSemiring M] {α : Typ
     have hau : a ∉ u := fun hm => h (hu.1 hm)
     have hav : a ∉ v := fun hm => h (hv.1 hm)
     have : (insert a u).erase a = (insert a v).erase a := by rw [huv]
-    rwa [Finset.erase_insert hau, Finset.erase_insert hav] at this
+    rw [Finset.erase_insert hau, Finset.erase_insert hav] at this
+    exact this
   rw [Finset.sum_image hinj]
   rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
@@ -184,7 +184,6 @@ private lemma sum_powersetCard_succ_insert {M : Type} [CommSemiring M] {α : Typ
   rw [Finset.mem_powersetCard] at hu
   have hau : a ∉ u := fun hm => h (hu.1 hm)
   rw [Finset.prod_insert hau]
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -197,7 +196,6 @@ private lemma multipleHarmonic_zero (p r : ℕ) : multipleHarmonic p r 0 = 1 := 
   unfold multipleHarmonic
   rw [Finset.powersetCard_zero]
   simp
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -215,7 +213,6 @@ private lemma multipleHarmonic_succ (p r n : ℕ) :
   have hmem : (r+1) ∉ Finset.Icc 1 r := by simp [Finset.mem_Icc]
   rw [hIcc]
   exact sum_powersetCard_succ_insert (r+1) (Finset.Icc 1 r) n hmem (fun i => ((i : ZMod p))⁻¹)
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -263,7 +260,7 @@ private lemma choose_mul_identity (k j : ℕ) (hj : 1 ≤ j) (hjk : j ≤ k) :
   have hpos : 0 < j'.factorial * (k' - j').factorial := by positivity
   have e1' : ((k'+1).choose (j'+1) * (j'+1)) * (j'.factorial * (k'-j').factorial) = ((k'+1) * k'.choose j') * (j'.factorial * (k'-j').factorial) := by
     calc ((k'+1).choose (j'+1) * (j'+1)) * (j'.factorial * (k'-j').factorial)
-      = (k'+1).choose (j'+1) * ((j'+1) * j'.factorial) * (k'-j').factorial := by ring
+        = (k'+1).choose (j'+1) * ((j'+1) * j'.factorial) * (k'-j').factorial := by ring
       _ = (k'+1).factorial := e1
       _ = (k'+1) * k'.factorial := hfact2
       _ = (k'+1) * (k'.choose j' * j'.factorial * (k'-j').factorial) := by rw [e2]
@@ -295,7 +292,7 @@ namespace MetaMathlibExt
 @[path]
 private lemma pow_sum_general (p e : ℕ) (hp : p.Prime) :
   (∑ k ∈ Finset.Icc 1 (p-1), ((k : ZMod p))^e) = if (p - 1) ∣ e then -1 else 0 := by
-  haveI : Fact (Nat.Prime p) := ⟨hp⟩
+  have : Fact (Nat.Prime p) := ⟨hp⟩
   have hne : NeZero p := ⟨hp.ne_zero⟩
   have hp1 : 1 < p := hp.one_lt
   have hp1' : 0 < p - 1 := by omega
@@ -329,7 +326,7 @@ namespace MetaMathlibExt
 @[path]
 private lemma inv_pow_sum_general (p m : ℕ) (hp : p.Prime) (hp2 : 2 < p) :
   (∑ k ∈ Finset.Icc 1 (p-1), ((((k : ZMod p))⁻¹)^m)) = if (p - 1) ∣ m then -1 else 0 := by
-  haveI : Fact (Nat.Prime p) := ⟨hp⟩
+  have : Fact (Nat.Prime p) := ⟨hp⟩
   have hne : NeZero p := ⟨hp.ne_zero⟩
   -- each term: (k⁻¹)^m = k^(m*(p-2))
   have hterm : ∀ k ∈ Finset.Icc 1 (p-1), ((((k : ZMod p))⁻¹)^m) = ((k : ZMod p))^(m * (p - 2)) := by
@@ -357,6 +354,7 @@ private lemma inv_pow_sum_general (p m : ℕ) (hp : p.Prime) (hp2 : 2 < p) :
   · have : ¬ (p - 1) ∣ m * (p - 2) := fun hd => hdm (hcop.dvd_of_dvd_mul_right hd)
     rw [ite_eq_right hdm, ite_eq_right this]
 
+
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -367,7 +365,7 @@ namespace MetaMathlibExt
 @[path]
 private lemma choose_mod_prime (p j : ℕ) (hp : p.Prime) (hj : j < p) :
   (((p - 1).choose j : ℕ) : ZMod p) = (-1 : ZMod p) ^ j := by
-  haveI : Fact (Nat.Prime p) := ⟨hp⟩
+  have : Fact (Nat.Prime p) := ⟨hp⟩
   induction j with
   | zero => simp
   | succ j ih =>
@@ -384,7 +382,8 @@ private lemma choose_mod_prime (p j : ℕ) (hp : p.Prime) (hj : j < p) :
     have hcast : (((p-1).choose j : ℕ) : ZMod p) + (((p-1).choose (j+1) : ℕ) : ZMod p) = 0 := by
       have hcc := congrArg (fun n : ℕ => ((n : ℕ) : ZMod p)) hpascal
       simp only [Nat.cast_add] at hcc
-      rwa [hvanish] at hcc
+      rw [hvanish] at hcc
+      exact hcc.symm
     have ih' := ih hjp
     rw [ih'] at hcast
     have hnext : (((p-1).choose (j+1) : ℕ) : ZMod p) = -((-1 : ZMod p)^j) := eq_neg_of_add_eq_zero_right hcast
@@ -406,13 +405,13 @@ private lemma coeff_one_sub_X_pow (p k j : ℕ) :
   rw [h1, neg_pow, hC, ← map_pow, Polynomial.coeff_C_mul, Polynomial.coeff_X_add_C_pow]
   by_cases hjk : j ≤ k
   · have hpow : (-1 : ZMod p)^k * (-1 : ZMod p)^(k - j) = (-1 : ZMod p)^j := by
-    have e1 : (-1 : ZMod p)^k * (-1)^(k-j) = (-1)^(k + (k - j)) := by rw [← pow_add]
-    have e2 : k + (k - j) = j + 2 * (k - j) := by omega
-    rw [e1, e2, pow_add]
-    have hsq : (-1 : ZMod p)^(2 * (k - j)) = 1 := by
-      have heven : Even (2 * (k - j)) := even_two.mul_right _
-      exact Even.neg_one_pow heven
-    rw [hsq, mul_one]
+      have e1 : (-1 : ZMod p)^k * (-1)^(k-j) = (-1)^(k + (k - j)) := by rw [← pow_add]
+      have e2 : k + (k - j) = j + 2 * (k - j) := by omega
+      rw [e1, e2, pow_add]
+      have hsq : (-1 : ZMod p)^(2 * (k - j)) = 1 := by
+        have heven : Even (2 * (k - j)) := even_two.mul_right _
+        exact Even.neg_one_pow heven
+      rw [hsq, mul_one]
     calc (-1 : ZMod p)^k * ((-1)^(k-j) * _) = ((-1)^k * (-1)^(k-j)) * _ := by ring
       _ = (-1)^j * _ := by rw [hpow]
   · push Not at hjk
@@ -447,7 +446,7 @@ private lemma S_recurrence (p j m : ℕ) (hp : p.Prime) (hj1 : 1 ≤ j) (hjp1 : 
   (∑ k ∈ Finset.Icc (j+1) (p - 1), ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose j : ℕ) : ZMod p)) =
   ((((j : ZMod p))⁻¹) * ∑ k ∈ Finset.Icc j (p - 1), ((((k : ZMod p))⁻¹) ^ (m - 1)) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) -
   (∑ k ∈ Finset.Icc j (p - 1), ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) := by
-  haveI : Fact (Nat.Prime p) := ⟨hp⟩
+  have : Fact (Nat.Prime p) := ⟨hp⟩
   have hjp : j < p := by omega
   have hj0 : ((j : ZMod p)) ≠ 0 := by
     intro h0
@@ -459,9 +458,9 @@ private lemma S_recurrence (p j m : ℕ) (hp : p.Prime) (hj1 : 1 ≤ j) (hjp1 : 
   have hj_eq : j = (j - 1) + 1 := by omega
   -- term identity
   have hterm : ∀ k ∈ Finset.Icc j (p - 1),
-    ((((j : ZMod p))⁻¹) * ((((k : ZMod p))⁻¹) ^ (m - 1)) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) -
-    ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose (j - 1) : ℕ) : ZMod p) =
-    ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose j : ℕ) : ZMod p) := by
+      ((((j : ZMod p))⁻¹) * ((((k : ZMod p))⁻¹) ^ (m - 1)) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) -
+      ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose (j - 1) : ℕ) : ZMod p) =
+      ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose j : ℕ) : ZMod p) := by
     intro k hk
     rw [Finset.mem_Icc] at hk
     have hk1 : 1 ≤ k := by omega
@@ -479,21 +478,21 @@ private lemma S_recurrence (p j m : ℕ) (hp : p.Prime) (hj1 : 1 ≤ j) (hjp1 : 
       push_cast at h
       simpa using h
     have hJK : ((((j : ZMod p))⁻¹) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) =
-      ((((k : ZMod p))⁻¹) * (((k.choose j : ℕ)) : ZMod p)) := by
+        ((((k : ZMod p))⁻¹) * (((k.choose j : ℕ)) : ZMod p)) := by
       have eL : ((((j : ZMod p))⁻¹) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) * (((j : ZMod p)) * ((k : ZMod p))) =
-        (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((k : ZMod p)) := by
+          (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((k : ZMod p)) := by
         calc ((((j : ZMod p))⁻¹) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) * (((j : ZMod p)) * ((k : ZMod p))) =
-          (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((((j : ZMod p))⁻¹) * ((j : ZMod p))) * ((k : ZMod p)) := by ring
+            (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((((j : ZMod p))⁻¹) * ((j : ZMod p))) * ((k : ZMod p)) := by ring
           _ = (((k - 1).choose (j - 1) : ℕ) : ZMod p) * 1 * ((k : ZMod p)) := by rw [ZMod.inv_mul_of_unit _ hunit_j]
           _ = (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((k : ZMod p)) := by ring
       have eR : ((((k : ZMod p))⁻¹) * (((k.choose j : ℕ)) : ZMod p)) * (((j : ZMod p)) * ((k : ZMod p))) =
-        (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := by
+          (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := by
         calc ((((k : ZMod p))⁻¹) * (((k.choose j : ℕ)) : ZMod p)) * (((j : ZMod p)) * ((k : ZMod p))) =
-          (((k.choose j : ℕ)) : ZMod p) * ((((k : ZMod p))⁻¹) * ((k : ZMod p))) * ((j : ZMod p)) := by ring
+            (((k.choose j : ℕ)) : ZMod p) * ((((k : ZMod p))⁻¹) * ((k : ZMod p))) * ((j : ZMod p)) := by ring
           _ = (((k.choose j : ℕ)) : ZMod p) * 1 * ((j : ZMod p)) := by rw [ZMod.inv_mul_of_unit _ hunit_k]
           _ = (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := by ring
       have e_eq : (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((k : ZMod p)) =
-        (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := by
+          (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := by
         calc (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((k : ZMod p)) = ((k : ZMod p)) * (((k - 1).choose (j - 1) : ℕ) : ZMod p) := by ring
           _ = (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := hcm_cast.symm
       have e1 : ((((j : ZMod p))⁻¹) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) * (((j : ZMod p)) * ((k : ZMod p))) =
@@ -502,9 +501,9 @@ private lemma S_recurrence (p j m : ℕ) (hp : p.Prime) (hj1 : 1 ≤ j) (hjp1 : 
       have hne : ((j : ZMod p)) * ((k : ZMod p)) ≠ 0 := mul_ne_zero hj0 hk0
       exact mul_right_cancel₀ hne e1
     have hA : ((((j : ZMod p))⁻¹) * ((((k : ZMod p))⁻¹) ^ (m - 1)) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) =
-      (((((k : ZMod p))⁻¹) ^ (m - 1)) * ((((k : ZMod p))⁻¹))) * (((k.choose j : ℕ)) : ZMod p) := by
+        (((((k : ZMod p))⁻¹) ^ (m - 1)) * ((((k : ZMod p))⁻¹))) * (((k.choose j : ℕ)) : ZMod p) := by
       calc ((((j : ZMod p))⁻¹) * ((((k : ZMod p))⁻¹) ^ (m - 1)) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) =
-        ((((k : ZMod p))⁻¹) ^ (m - 1)) * ((((j : ZMod p))⁻¹) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) := by ring
+          ((((k : ZMod p))⁻¹) ^ (m - 1)) * ((((j : ZMod p))⁻¹) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) := by ring
         _ = ((((k : ZMod p))⁻¹) ^ (m - 1)) * ((((k : ZMod p))⁻¹) * (((k.choose j : ℕ)) : ZMod p)) := by rw [hJK]
         _ = (((((k : ZMod p))⁻¹) ^ (m - 1)) * ((((k : ZMod p))⁻¹))) * (((k.choose j : ℕ)) : ZMod p) := by ring
     have hpow : ((((k : ZMod p))⁻¹) ^ (m - 1)) * ((((k : ZMod p))⁻¹)) = ((((k : ZMod p))⁻¹) ^ m) := by
@@ -517,7 +516,8 @@ private lemma S_recurrence (p j m : ℕ) (hp : p.Prime) (hj1 : 1 ≤ j) (hjp1 : 
       simp only [Nat.succ_eq_add_one] at e
       have hk1' : (k - 1) + 1 = k := Nat.sub_add_cancel hk1
       have hj1' : (j - 1) + 1 = j := Nat.sub_add_cancel hj1
-      rwa [hk1', hj1'] at e
+      rw [hk1', hj1'] at e
+      exact e
     have hcast : (((k.choose j : ℕ)) : ZMod p) = (((k - 1).choose (j - 1) : ℕ) : ZMod p) + (((k - 1).choose j : ℕ) : ZMod p) := by
       have h := congrArg (fun n : ℕ => ((n : ℕ) : ZMod p)) hpascal
       simpa using h
@@ -525,26 +525,28 @@ private lemma S_recurrence (p j m : ℕ) (hp : p.Prime) (hj1 : 1 ≤ j) (hjp1 : 
     ring
   -- sum manipulation
   have hsum_eq : ((((j : ZMod p))⁻¹) * ∑ k ∈ Finset.Icc j (p - 1), ((((k : ZMod p))⁻¹) ^ (m - 1)) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) -
-    (∑ k ∈ Finset.Icc j (p - 1), ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) =
-    ∑ k ∈ Finset.Icc j (p - 1), ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose j : ℕ) : ZMod p) := by
+      (∑ k ∈ Finset.Icc j (p - 1), ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) =
+      ∑ k ∈ Finset.Icc j (p - 1), ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose j : ℕ) : ZMod p) := by
     rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
     apply Finset.sum_congr rfl
     intro k hk
     have h := hterm k hk
-    rwa [mul_assoc] at h
+    rw [mul_assoc] at h
+    exact h
   rw [hsum_eq]
   -- restrict from Icc j to Icc (j+1) since k=j term is zero
   have hsplit : Finset.Icc j (p - 1) = insert j (Finset.Icc (j + 1) (p - 1)) := by
     have hle : j ≤ p - 1 := by omega
     have hsucc : Order.succ j = j + 1 := rfl
     have h := Finset.insert_Icc_succ_left_eq_Icc (a := j) (b := p - 1) hle
-    rwa [hsucc] at h
+    rw [hsucc] at h
+    exact h.symm
   have hnotmem : j ∉ Finset.Icc (j + 1) (p - 1) := by simp [Finset.mem_Icc]
   have hterm_j : ((((j : ZMod p))⁻¹) ^ m) * ((((j - 1).choose j : ℕ)) : ZMod p) = 0 := by
     have h0 : (j - 1).choose j = 0 := Nat.choose_eq_zero_of_lt (by omega)
     rw [h0, Nat.cast_zero, mul_zero]
   have hsum_split : (∑ k ∈ Finset.Icc j (p - 1), ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose j : ℕ) : ZMod p)) =
-    (∑ k ∈ Finset.Icc (j + 1) (p - 1), ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose j : ℕ) : ZMod p)) := by
+      (∑ k ∈ Finset.Icc (j + 1) (p - 1), ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose j : ℕ) : ZMod p)) := by
     rw [hsplit, Finset.sum_insert hnotmem, hterm_j, zero_add]
   exact hsum_split.symm
 
@@ -557,7 +559,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma key_aux (p : ℕ) (hp : p.Prime) (hp2 : 2 < p) (j : ℕ) (hj1 : 1 ≤ j) :
-  ∀ (hjp : j ≤ p - 1) (m : ℕ) (hm : m < p - 1),
+  ∀ (_hjp : j ≤ p - 1) (m : ℕ) (_hm : m < p - 1),
   multipleHarmonic p (j - 1) m =
   (-1 : ZMod p) ^ (m + j) * ∑ k ∈ Finset.Icc j (p - 1), ((((k : ZMod p))⁻¹) ^ m) * (((k - 1).choose (j - 1) : ℕ) : ZMod p) := by
   induction j, hj1 using Nat.le_induction with
@@ -595,7 +597,7 @@ private lemma key_aux (p : ℕ) (hp : p.Prime) (hp2 : 2 < p) (j : ℕ) (hj1 : 1 
     intro hjp m hm
     have hj_le : j ≤ p - 1 := by omega
     have hp_ge : 2 < p := by omega
-    haveI : Fact (Nat.Prime p) := ⟨hp⟩
+    have : Fact (Nat.Prime p) := ⟨hp⟩
     have hjp_lt : j + 1 < p + 1 := by omega
     have hj_sub : (j + 1) - 1 = j := by omega
     rw [hj_sub]
@@ -606,7 +608,7 @@ private lemma key_aux (p : ℕ) (hp : p.Prime) (hp2 : 2 < p) (j : ℕ) (hj1 : 1 
       simp only [pow_zero, one_mul]
       -- hockey-stick with shift
       have hstick : (∑ k ∈ Finset.Icc (j+1) (p - 1), (((k - 1).choose j : ℕ) : ZMod p)) =
-        (((p - 1).choose (j+1) : ℕ) : ZMod p) := by
+          (((p - 1).choose (j+1) : ℕ) : ZMod p) := by
         have hbij : ∀ t ∈ Finset.Icc j (p - 2), ∃ k ∈ Finset.Icc (j+1) (p - 1), k - 1 = t := by
           intro t ht
           rw [Finset.mem_Icc] at ht
@@ -630,9 +632,10 @@ private lemma key_aux (p : ℕ) (hp : p.Prime) (hp2 : 2 < p) (j : ℕ) (hj1 : 1 
           -- Nat.sum_Icc_choose n k: ∑ m ∈ Icc k n, m.choose k = (n+1).choose (k+1)
           -- with n=p-2, k=j: ∑_{m∈Icc j (p-2)} = (p-2+1).choose (j+1) = (p-1).choose (j+1)
           have hp2 : p - 2 + 1 = p - 1 := by omega
-          rwa [hp2] at h2
+          rw [hp2] at h2
+          exact h2
         have hcast : (∑ k ∈ Finset.Icc (j+1) (p - 1), (((k - 1).choose j : ℕ) : ZMod p)) =
-          ((((∑ k ∈ Finset.Icc (j+1) (p - 1), (k-1).choose j : ℕ)) : ZMod p)) := by
+            ((((∑ k ∈ Finset.Icc (j+1) (p - 1), (k-1).choose j : ℕ)) : ZMod p)) := by
           push_cast
           rfl
         rw [hcast, hsum_nat]
@@ -653,7 +656,7 @@ private lemma key_aux (p : ℕ) (hp : p.Prime) (hp2 : 2 < p) (j : ℕ) (hj1 : 1 
       have hj_eq : j = (j - 1) + 1 := (Nat.sub_add_cancel hj1').symm
       -- H recurrence: H_j^{mt+1} = H_{j-1}^{mt+1} + j⁻¹ * H_{j-1}^{mt}
       have hHrec : multipleHarmonic p j (mt + 1) =
-        multipleHarmonic p (j - 1) (mt + 1) + ((((j : ℕ)) : ZMod p))⁻¹ * multipleHarmonic p (j - 1) mt := by
+          multipleHarmonic p (j - 1) (mt + 1) + ((((j : ℕ)) : ZMod p))⁻¹ * multipleHarmonic p (j - 1) mt := by
         have e := multipleHarmonic_succ p (j - 1) mt
         have hjc : (j - 1) + 1 = j := Nat.sub_add_cancel hj1'
         rw [hjc] at e
@@ -695,7 +698,7 @@ private lemma inv_mul_choose_identity (p k j : ℕ) (hp : p.Prime) (hj1 : 1 ≤ 
   (hkp : k < p) :
   ((((j : ZMod p))⁻¹) * ((((k - 1).choose (j - 1) : ℕ)) : ZMod p)) =
   ((((k : ZMod p))⁻¹) * ((((k.choose j : ℕ))) : ZMod p)) := by
-  haveI : Fact (Nat.Prime p) := ⟨hp⟩
+  have : Fact (Nat.Prime p) := ⟨hp⟩
   have hjp : j < p := by omega
   have hk0 : ((k : ZMod p)) ≠ 0 := by
     intro h0
@@ -712,42 +715,43 @@ private lemma inv_mul_choose_identity (p k j : ℕ) (hp : p.Prime) (hj1 : 1 ≤ 
   have hcm : k.choose j * j = k * ((k - 1).choose (j - 1)) :=
     choose_mul_identity k j hj1 hjk
   have hcm_cast : (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) =
-    ((k : ZMod p)) * (((k - 1).choose (j - 1) : ℕ) : ZMod p) := by
+      ((k : ZMod p)) * (((k - 1).choose (j - 1) : ℕ) : ZMod p) := by
     have h := congrArg (fun nn : ℕ => ((nn : ℕ) : ZMod p)) hcm
     push_cast at h
     simpa using h
   have eL : ((((j : ZMod p))⁻¹) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) *
-    (((j : ZMod p)) * ((k : ZMod p))) =
-    (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((k : ZMod p)) := by
+        (((j : ZMod p)) * ((k : ZMod p))) =
+        (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((k : ZMod p)) := by
     calc ((((j : ZMod p))⁻¹) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) *
-      (((j : ZMod p)) * ((k : ZMod p))) =
-      (((k - 1).choose (j - 1) : ℕ) : ZMod p) *
-        ((((j : ZMod p))⁻¹) * ((j : ZMod p))) * ((k : ZMod p)) := by ring
+            (((j : ZMod p)) * ((k : ZMod p))) =
+          (((k - 1).choose (j - 1) : ℕ) : ZMod p) *
+            ((((j : ZMod p))⁻¹) * ((j : ZMod p))) * ((k : ZMod p)) := by ring
       _ = (((k - 1).choose (j - 1) : ℕ) : ZMod p) * 1 * ((k : ZMod p)) := by
-        rw [ZMod.inv_mul_of_unit _ hunit_j]
+          rw [ZMod.inv_mul_of_unit _ hunit_j]
       _ = (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((k : ZMod p)) := by ring
   have eR : ((((k : ZMod p))⁻¹) * (((k.choose j : ℕ)) : ZMod p)) *
-    (((j : ZMod p)) * ((k : ZMod p))) =
-    (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := by
+        (((j : ZMod p)) * ((k : ZMod p))) =
+        (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := by
     calc ((((k : ZMod p))⁻¹) * (((k.choose j : ℕ)) : ZMod p)) *
-      (((j : ZMod p)) * ((k : ZMod p))) =
-      (((k.choose j : ℕ)) : ZMod p) * ((((k : ZMod p))⁻¹) * ((k : ZMod p))) *
-        ((j : ZMod p)) := by ring
+            (((j : ZMod p)) * ((k : ZMod p))) =
+          (((k.choose j : ℕ)) : ZMod p) * ((((k : ZMod p))⁻¹) * ((k : ZMod p))) *
+            ((j : ZMod p)) := by ring
       _ = (((k.choose j : ℕ)) : ZMod p) * 1 * ((j : ZMod p)) := by
-        rw [ZMod.inv_mul_of_unit _ hunit_k]
+          rw [ZMod.inv_mul_of_unit _ hunit_k]
       _ = (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := by ring
   have e_eq : (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((k : ZMod p)) =
-    (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := by
+      (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := by
     calc (((k - 1).choose (j - 1) : ℕ) : ZMod p) * ((k : ZMod p)) =
-      ((k : ZMod p)) * (((k - 1).choose (j - 1) : ℕ) : ZMod p) := by ring
+          ((k : ZMod p)) * (((k - 1).choose (j - 1) : ℕ) : ZMod p) := by ring
       _ = (((k.choose j : ℕ)) : ZMod p) * ((j : ZMod p)) := hcm_cast.symm
   have e1 : ((((j : ZMod p))⁻¹) * (((k - 1).choose (j - 1) : ℕ) : ZMod p)) *
-    (((j : ZMod p)) * ((k : ZMod p))) =
-    ((((k : ZMod p))⁻¹) * (((k.choose j : ℕ)) : ZMod p)) *
-      (((j : ZMod p)) * ((k : ZMod p))) :=
+          (((j : ZMod p)) * ((k : ZMod p))) =
+        ((((k : ZMod p))⁻¹) * (((k.choose j : ℕ)) : ZMod p)) *
+          (((j : ZMod p)) * ((k : ZMod p))) :=
     eL.trans (e_eq.trans eR.symm)
   have hne : ((j : ZMod p)) * ((k : ZMod p)) ≠ 0 := mul_ne_zero hj0 hk0
   exact mul_right_cancel₀ hne e1
+
 
 end MetaMathlibExt
 
@@ -773,7 +777,7 @@ lemma multiple_harmonic_polynomial_congruence
     (1 - (Polynomial.X : Polynomial (ZMod p))) ^ k := by
 -- proof
   have hp2 : 2 < p := by omega
-  haveI : Fact (Nat.Prime p) := ⟨hp⟩
+  have : Fact (Nat.Prime p) := ⟨hp⟩
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
   simp only [Nat.add_sub_cancel] at *
   have hmlt : m < p - 1 := by omega
@@ -783,31 +787,32 @@ lemma multiple_harmonic_polynomial_congruence
     omega
   have hsum_n : (∑ k ∈ Finset.Icc 1 (p - 1), ((((k : ZMod p))⁻¹) ^ (m + 1))) = 0 := by
     have h := inv_pow_sum_general p (m + 1) hp hp2
-    rwa [ite_eq_right hndvd] at h
+    rw [ite_eq_right hndvd] at h
+    exact h
   apply Polynomial.ext
   intro j
   have hLHS : (((∑ k ∈ Finset.Icc 1 (p - 1),
-    Polynomial.C (multipleHarmonic p (k - 1) m * (((k : ZMod p))⁻¹)) *
-      (Polynomial.X : Polynomial (ZMod p)) ^ k) : Polynomial (ZMod p)).coeff j) =
-    (if j ∈ Finset.Icc 1 (p - 1) then multipleHarmonic p (j - 1) m * (((j : ZMod p))⁻¹) else 0) := by
-    rw [Polynomial.finset_sum_coeff]
+      Polynomial.C (multipleHarmonic p (k - 1) m * (((k : ZMod p))⁻¹)) *
+        (Polynomial.X : Polynomial (ZMod p)) ^ k) : Polynomial (ZMod p)).coeff j) =
+      (if j ∈ Finset.Icc 1 (p - 1) then multipleHarmonic p (j - 1) m * (((j : ZMod p))⁻¹) else 0) := by
+    rw [Polynomial.finsetSum_coeff]
     have hterm : ∀ k ∈ Finset.Icc 1 (p - 1),
-      ((Polynomial.C (multipleHarmonic p (k - 1) m * (((k : ZMod p))⁻¹)) *
-        (Polynomial.X : Polynomial (ZMod p)) ^ k).coeff j) =
-      (if j = k then multipleHarmonic p (k - 1) m * (((k : ZMod p))⁻¹) else 0) := by
+        ((Polynomial.C (multipleHarmonic p (k - 1) m * (((k : ZMod p))⁻¹)) *
+          (Polynomial.X : Polynomial (ZMod p)) ^ k).coeff j) =
+        (if j = k then multipleHarmonic p (k - 1) m * (((k : ZMod p))⁻¹) else 0) := by
       intro k _
       rw [Polynomial.coeff_C_mul_X_pow]
     rw [Finset.sum_congr rfl hterm]
     exact Finset.sum_ite_eq _ _ _
   have hRHS : ((Polynomial.C ((-1 : ZMod p) ^ m) *
-    (∑ k ∈ Finset.Icc 1 (p - 1),
-      Polynomial.C (((((k : ZMod p))⁻¹) ^ (m + 1))) *
-        (1 - (Polynomial.X : Polynomial (ZMod p))) ^ k) : Polynomial (ZMod p)).coeff j) =
-    (-1 : ZMod p) ^ m * ∑ k ∈ Finset.Icc 1 (p - 1),
-      ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p)) := by
+      (∑ k ∈ Finset.Icc 1 (p - 1),
+        Polynomial.C (((((k : ZMod p))⁻¹) ^ (m + 1))) *
+          (1 - (Polynomial.X : Polynomial (ZMod p))) ^ k) : Polynomial (ZMod p)).coeff j) =
+      (-1 : ZMod p) ^ m * ∑ k ∈ Finset.Icc 1 (p - 1),
+        ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p)) := by
     rw [Polynomial.coeff_C_mul]
     congr 1
-    rw [Polynomial.finset_sum_coeff]
+    rw [Polynomial.finsetSum_coeff]
     apply Finset.sum_congr rfl
     intro k _
     rw [Polynomial.coeff_C_mul, coeff_one_sub_X_pow]
@@ -817,9 +822,9 @@ lemma multiple_harmonic_polynomial_congruence
     have hnot : (0 : ℕ) ∉ Finset.Icc 1 (p - 1) := by simp
     rw [ite_eq_right hnot]
     have hsum0 : (∑ k ∈ Finset.Icc 1 (p - 1),
-      ((((k : ZMod p))⁻¹) ^ (m + 1)) *
-      ((-1 : ZMod p) ^ (0 : ℕ) * (((k.choose 0 : ℕ)) : ZMod p))) =
-      ∑ k ∈ Finset.Icc 1 (p - 1), ((((k : ZMod p))⁻¹) ^ (m + 1)) := by
+          ((((k : ZMod p))⁻¹) ^ (m + 1)) *
+          ((-1 : ZMod p) ^ (0 : ℕ) * (((k.choose 0 : ℕ)) : ZMod p))) =
+        ∑ k ∈ Finset.Icc 1 (p - 1), ((((k : ZMod p))⁻¹) ^ (m + 1)) := by
       apply Finset.sum_congr rfl
       intro k _
       simp
@@ -832,47 +837,47 @@ lemma multiple_harmonic_polynomial_congruence
       have hsub : Finset.Icc j (p - 1) ⊆ Finset.Icc 1 (p - 1) :=
         Finset.Icc_subset_Icc (by omega) le_rfl
       have hpoint : ∀ k ∈ Finset.Icc j (p - 1),
-        ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((((k.choose j : ℕ))) : ZMod p) =
-        ((((j : ZMod p))⁻¹)) * (((((k : ZMod p))⁻¹) ^ m) * ((((k - 1).choose (j - 1) : ℕ)) : ZMod p)) := by
+          ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((((k.choose j : ℕ))) : ZMod p) =
+          ((((j : ZMod p))⁻¹)) * (((((k : ZMod p))⁻¹) ^ m) * ((((k - 1).choose (j - 1) : ℕ)) : ZMod p)) := by
         intro k hk
         rw [Finset.mem_Icc] at hk
         have hkp : k < p := by omega
         have hjk : j ≤ k := by omega
         have hJK := inv_mul_choose_identity p k j hp hj1 hjk hkp
         have hpow : ((((k : ZMod p))⁻¹) ^ (m + 1)) =
-          ((((k : ZMod p))⁻¹) ^ m) * ((((k : ZMod p))⁻¹)) := pow_succ _ _
+            ((((k : ZMod p))⁻¹) ^ m) * ((((k : ZMod p))⁻¹)) := pow_succ _ _
         rw [hpow]
         calc ((((k : ZMod p))⁻¹) ^ m * (((k : ZMod p))⁻¹)) * ((((k.choose j : ℕ))) : ZMod p)
-          = ((((k : ZMod p))⁻¹) ^ m) * (((((k : ZMod p))⁻¹) * ((((k.choose j : ℕ))) : ZMod p))) := by ring
+            = ((((k : ZMod p))⁻¹) ^ m) * (((((k : ZMod p))⁻¹) * ((((k.choose j : ℕ))) : ZMod p))) := by ring
           _ = ((((k : ZMod p))⁻¹) ^ m) * (((((j : ZMod p))⁻¹) * ((((k - 1).choose (j - 1) : ℕ)) : ZMod p))) := by rw [← hJK]
           _ = ((((j : ZMod p))⁻¹)) * (((((k : ZMod p))⁻¹) ^ m) * ((((k - 1).choose (j - 1) : ℕ)) : ZMod p)) := by ring
       have hvan : ∀ k ∈ Finset.Icc 1 (p - 1), k ∉ Finset.Icc j (p - 1) →
-        ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p)) = 0 := by
+          ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p)) = 0 := by
         intro k hk hkout
         rw [Finset.mem_Icc] at hk
         rw [Finset.mem_Icc] at hkout
-        push_neg at hkout
+        push Not at hkout
         have hkj : k < j := by omega
         have hC : k.choose j = 0 := Nat.choose_eq_zero_of_lt hkj
         rw [hC, Nat.cast_zero, mul_zero, mul_zero]
       have hrestr : (∑ k ∈ Finset.Icc 1 (p - 1),
-        ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p))) =
-        ∑ k ∈ Finset.Icc j (p - 1),
-          ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p)) := by
+            ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p))) =
+          ∑ k ∈ Finset.Icc j (p - 1),
+            ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p)) := by
         have h := Finset.sum_subset hsub (fun k hk hkout => hvan k hk hkout)
         exact h.symm
       rw [hrestr]
       have hfact : (∑ k ∈ Finset.Icc j (p - 1),
-        ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p))) =
-        ((-1 : ZMod p) ^ j * ((((j : ZMod p))⁻¹))) *
-          (∑ k ∈ Finset.Icc j (p - 1),
-            ((((k : ZMod p))⁻¹) ^ m) * ((((k - 1).choose (j - 1) : ℕ)) : ZMod p)) := by
+            ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p))) =
+          ((-1 : ZMod p) ^ j * ((((j : ZMod p))⁻¹))) *
+            (∑ k ∈ Finset.Icc j (p - 1),
+              ((((k : ZMod p))⁻¹) ^ m) * ((((k - 1).choose (j - 1) : ℕ)) : ZMod p)) := by
         rw [Finset.mul_sum]
         apply Finset.sum_congr rfl
         intro k hk
         have hp_k := hpoint k hk
         calc ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * ((((k.choose j : ℕ))) : ZMod p))
-          = ((-1 : ZMod p) ^ j) * (((((k : ZMod p))⁻¹) ^ (m + 1)) * ((((k.choose j : ℕ))) : ZMod p)) := by ring
+            = ((-1 : ZMod p) ^ j) * (((((k : ZMod p))⁻¹) ^ (m + 1)) * ((((k.choose j : ℕ))) : ZMod p)) := by ring
           _ = ((-1 : ZMod p) ^ j) * (((((j : ZMod p))⁻¹)) * (((((k : ZMod p))⁻¹) ^ m) * ((((k - 1).choose (j - 1) : ℕ)) : ZMod p))) := by rw [hp_k]
           _ = ((-1 : ZMod p) ^ j * ((((j : ZMod p))⁻¹))) * (((((k : ZMod p))⁻¹) ^ m) * ((((k - 1).choose (j - 1) : ℕ)) : ZMod p)) := by ring
       rw [hfact, hkey]
@@ -882,10 +887,10 @@ lemma multiple_harmonic_polynomial_congruence
     · rw [ite_eq_right hjmem]
       have hjgt : p - 1 < j := by
         rw [Finset.mem_Icc] at hjmem
-        push_neg at hjmem
+        push Not at hjmem
         omega
       have hzero : ∀ k ∈ Finset.Icc 1 (p - 1),
-        ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p)) = 0 := by
+          ((((k : ZMod p))⁻¹) ^ (m + 1)) * ((-1 : ZMod p) ^ j * (((k.choose j : ℕ)) : ZMod p)) = 0 := by
         intro k hk
         rw [Finset.mem_Icc] at hk
         have hC : k.choose j = 0 := Nat.choose_eq_zero_of_lt (by omega)
@@ -896,4 +901,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

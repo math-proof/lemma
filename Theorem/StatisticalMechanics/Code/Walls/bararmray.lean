@@ -209,7 +209,7 @@ theorem bar_trifForestData_of_arms_route (ω : ConfigSpace (Sym2 (Site d))) (L R
     exact hroute tip htipreach htipbdry
 
 
-theorem bar_bk_uniqueness_of_trifData (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bar_bk_uniqueness_of_trifData (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bgc_TrifForestData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   (bgc_bk_uniqueness_of_trifForest p hp1 hp0 hdata).2.1

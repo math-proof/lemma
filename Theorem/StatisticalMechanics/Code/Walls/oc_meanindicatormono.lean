@@ -23,19 +23,19 @@ variable {α : Type*} [MeasurableSpace α] (μ : Measure α)
 
 
 theorem oc_mean_indicator_mono {s t : Set α} (h : s ⊆ t) :
-    ∫⁻ x, s.indicator (fun _ => (1 : ℝ≥0∞)) x ∂μ
-      ≤ ∫⁻ x, t.indicator (fun _ => (1 : ℝ≥0∞)) x ∂μ :=
+    ∫⁻ x, s.indicator (fun _ => (1 : ENNReal)) x ∂μ
+      ≤ ∫⁻ x, t.indicator (fun _ => (1 : ENNReal)) x ∂μ :=
   lintegral_mono (Set.indicator_le_indicator_of_subset h (fun _ => zero_le'))
 
 
 theorem oc_mean_indicator_mono_pred {P Q : α → Prop} (h : ∀ x, P x → Q x) :
-    ∫⁻ x, {x | P x}.indicator (fun _ => (1 : ℝ≥0∞)) x ∂μ
-      ≤ ∫⁻ x, {x | Q x}.indicator (fun _ => (1 : ℝ≥0∞)) x ∂μ :=
+    ∫⁻ x, {x | P x}.indicator (fun _ => (1 : ENNReal)) x ∂μ
+      ≤ ∫⁻ x, {x | Q x}.indicator (fun _ => (1 : ENNReal)) x ∂μ :=
   oc_mean_indicator_mono μ (fun x hx => h x hx)
 
 
 theorem oc_indicator_mean_eq_measure {s : Set α} (hs : MeasurableSet s) :
-    ∫⁻ x, s.indicator (fun _ => (1 : ℝ≥0∞)) x ∂μ = μ s := by
+    ∫⁻ x, s.indicator (fun _ => (1 : ENNReal)) x ∂μ = μ s := by
   rw [lintegral_indicator_const hs]; simp
 
 

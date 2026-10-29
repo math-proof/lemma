@@ -12,7 +12,7 @@ private lemma bernoulli_iIndepFun_eq
   [Group G]
   [MulAction G E]
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   iIndepFun (fun (e : E) (ω : ConfigSpace E) => ω e) (bernoulliProductMeasure (E := E) p hp) := by
@@ -30,7 +30,7 @@ private lemma bernoulli_cylinder_factor_eq
   {S : Set (Π i : s, Bool)}
   {T : Set (Π i : t, Bool)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hS : MeasurableSet S)
   (hT : MeasurableSet T)
@@ -102,7 +102,7 @@ private lemma bernoulli_mixing_cylinder_eq
   {T : Set (Π i : t, Bool)}
 -- given
   (hfin : ∀ a b : E, {g : G | g • a = b}.Finite)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hS : MeasurableSet S)
   (hT : MeasurableSet T) :
@@ -144,9 +144,9 @@ private lemma exists_cylinder_symmDiff_lt_eq
   [MulAction G E]
   [Countable E]
   {A : Set (ConfigSpace E)}
-  {ε : ℝ≥0∞}
+  {ε : ENNReal}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hA : MeasurableSet A)
   (hε : 0 < ε) :
@@ -167,7 +167,7 @@ private lemma bernoulli_ergodic_eq
   {s : Set (ConfigSpace E)}
 -- given
   (hfin : ∀ a b : E, {g : G | g • a = b}.Finite)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hs : MeasurableSet s)
   (hinv : ∀ g : G, (shift g : ConfigSpace E → ConfigSpace E) ⁻¹' s = s) :
@@ -187,7 +187,7 @@ private lemma bernoulli_isErgodic_eq
   [Infinite G]
 -- given
   (hinj : ∀ a : E, Function.Injective (fun g : G => g • a))
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   ConfigSpace.IsErgodic (G := G) (bernoulliProductMeasure (E := E) p hp) := by

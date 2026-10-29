@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Eigenvalues
-open Module.End SimpleGraph Finset BigOperators EigenvalueBounds Matrix
+open Module.End SimpleGraph Finset BigOperators Matrix
 open Matrix SimpleGraph Finset BigOperators
 open Matrix SimpleGraph Finset BigOperators Module.End
 
@@ -15,7 +15,7 @@ namespace EigenvalueBounds
 lemma trace_lapMatrix_eq_sum_degrees
   [Fintype V]
   [DecidableEq V]
-  {G : SimpleGraph V}
+  (G : SimpleGraph V)
   [DecidableRel G.Adj] :
 -- imply
   (G.lapMatrix ℝ).trace = ∑ v : V, (G.degree v : ℝ) := by
@@ -62,9 +62,9 @@ lemma sum_eigenvalues₀_eq_sum_degrees_le_maxDegree_mul_card :
   refine ⟨sum_eigenvalues₀_eq_sum_degrees G, ?_⟩
   calc ∑ v : V, (G.degree v : ℝ)
     ≤ ∑ _v : V, (G.maxDegree : ℝ) := by
-      apply Finset.sum_le_sum
-      intro v _
-      exact_mod_cast G.degree_le_maxDegree v
+        apply Finset.sum_le_sum
+        intro v _
+        exact_mod_cast G.degree_le_maxDegree v
     _ = (G.maxDegree : ℝ) * (Fintype.card V : ℝ) := by
       simp [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, mul_comm]
 
@@ -89,7 +89,9 @@ lemma eigenvalues₀_min_eq_zero [Nonempty V] :
       fun i => lt_of_le_of_ne (hnn i) (Ne.symm (h i))
     have hPD : (lapMatrix ℝ G).PosDef := hL.posDef_iff_eigenvalues_pos.mpr hpos
     rw [posDef_iff_dotProduct_mulVec] at hPD
-    have h1 := lapMatrix_mulVec_const_eq_zero G (R := ℝ)
+    have h1 : (G.lapMatrix ℝ).mulVec (fun _ => (1 : ℝ)) = 0 := by
+      ext v
+      simp [SimpleGraph.lapMatrix_mulVec_apply']
     have hne : (fun (_ : V) => (1 : ℝ)) ≠ 0 := by
       intro heq; have := congr_fun heq (Classical.arbitrary V); simp at this
     have hgt := hPD.2 hne; simp only [star_trivial] at hgt; rw [h1] at hgt
@@ -102,7 +104,7 @@ lemma eigenvalues₀_min_eq_zero [Nonempty V] :
   have hlast_le : hL.eigenvalues₀ idx ≤ 0 := by
     calc hL.eigenvalues₀ idx
       ≤ hL.eigenvalues₀ ((Fintype.equivOfCardEq (Fintype.card_fin _)).symm i) := by
-        apply hL.eigenvalues₀_antitone; simp only [idx, Fin.le_def]; omega
+          apply hL.eigenvalues₀_antitone; simp only [idx, Fin.le_def]; omega
       _ = 0 := heq₀
   have hlast_nn : 0 ≤ hL.eigenvalues₀ idx := by
     have : hL.eigenvalues₀ idx =
@@ -122,12 +124,14 @@ namespace EigenvalueBounds
 lemma eigenvalue_second_smallest_le
   [Fintype V]
   [DecidableEq V]
-  {G : SimpleGraph V}
+  (G : SimpleGraph V)
   [DecidableRel G.Adj]
 -- given
   (hn : Fintype.card V ≥ 2) :
 -- imply
-  let hL := isHermitian_lapMatrix ℝ G let n := Fintype.card V hL.eigenvalues₀ ⟨n - 2, by omega⟩ ≤ (∑ v : V, (G.degree v : ℝ)) / ((n : ℝ) - 1) := by
+  let hL := isHermitian_lapMatrix ℝ G
+  let n := Fintype.card V
+  hL.eigenvalues₀ ⟨n - 2, by omega⟩ ≤ (∑ v : V, (G.degree v : ℝ)) / ((n : ℝ) - 1) := by
 -- proof
   intro hL n
   haveI : Nonempty V := Fintype.card_pos_iff.mp (by omega)
@@ -168,12 +172,14 @@ namespace EigenvalueBounds
 lemma eigenvalue_largest_ge
   [Fintype V]
   [DecidableEq V]
-  {G : SimpleGraph V}
+  (G : SimpleGraph V)
   [DecidableRel G.Adj]
 -- given
   (hn : Fintype.card V ≥ 2) :
 -- imply
-  let hL := isHermitian_lapMatrix ℝ G let n := Fintype.card V hL.eigenvalues₀ ⟨0, by omega⟩ ≥ (∑ v : V, (G.degree v : ℝ)) / ((n : ℝ) - 1) := by
+  let hL := isHermitian_lapMatrix ℝ G
+  let n := Fintype.card V
+  hL.eigenvalues₀ ⟨0, by omega⟩ ≥ (∑ v : V, (G.degree v : ℝ)) / ((n : ℝ) - 1) := by
 -- proof
   intro hL n
   haveI : Nonempty V := Fintype.card_pos_iff.mp (by omega)
@@ -212,12 +218,15 @@ namespace EigenvalueBounds
 lemma lemma22_eigenvalue_bounds
   [Fintype V]
   [DecidableEq V]
-  {G : SimpleGraph V}
+  (G : SimpleGraph V)
   [DecidableRel G.Adj]
 -- given
   (hn : Fintype.card V ≥ 2) :
 -- imply
-  let hL := isHermitian_lapMatrix ℝ G let n := Fintype.card V hL.eigenvalues₀ ⟨n - 2, by omega⟩ ≤ (∑ v : V, (G.degree v : ℝ)) / ((n : ℝ) - 1) ∧ hL.eigenvalues₀ ⟨0, by omega⟩ ≥ (∑ v : V, (G.degree v : ℝ)) / ((n : ℝ) - 1) :=
+  let hL := isHermitian_lapMatrix ℝ G
+  let n := Fintype.card V
+  hL.eigenvalues₀ ⟨n - 2, by omega⟩ ≤ (∑ v : V, (G.degree v : ℝ)) / ((n : ℝ) - 1) ∧
+    hL.eigenvalues₀ ⟨0, by omega⟩ ≥ (∑ v : V, (G.degree v : ℝ)) / ((n : ℝ) - 1) :=
 -- proof
   ⟨eigenvalue_second_smallest_le G hn, eigenvalue_largest_ge G hn⟩
 end EigenvalueBounds
@@ -316,14 +325,19 @@ lemma lapMatrix_eigenspace_zero_eq_span_ones
   constructor
   · intro hx
     obtain ⟨v₀⟩ := hconn.nonempty
-    have hadj_eq := eq_of_adj_of_lapMatrix_mulVec_eq_zero G x hx
-    have hconst := eq_const_of_adj_eq_connected G hconn x hadj_eq v₀
+    have hadj_eq : ∀ i j, G.Adj i j → x i = x j :=
+      fun i j hadj => eq_of_adj_of_lapMatrix_mulVec_eq_zero hx hadj
+    have hconst : ∀ w, x w = x v₀ :=
+      fun w => eq_const_of_adj_eq_connected (v₀ := v₀) (w := w) hconn hadj_eq
     exact ⟨x v₀, by
       ext w
       simp only [Pi.smul_apply, smul_eq_mul, mul_one]
       exact (hconst w).symm⟩
   · rintro ⟨c, rfl⟩
-    rw [mulVec_smul, lapMatrix_mulVec_const_eq_zero]
+    have h0 : (G.lapMatrix ℝ).mulVec (fun _ => (1 : ℝ)) = 0 := by
+      ext v
+      simp [SimpleGraph.lapMatrix_mulVec_apply']
+    rw [mulVec_smul, h0]
     exact smul_zero c
 end LapMatrixNullSpace
 end Matrix
@@ -340,13 +354,15 @@ namespace EigenvalueBounds
 lemma eigenvalue_second_smallest_pos
   [Fintype V]
   [DecidableEq V]
-  {G : SimpleGraph V}
+  (G : SimpleGraph V)
   [DecidableRel G.Adj]
 -- given
   (hn : Fintype.card V ≥ 2)
   (hconn : G.Connected) :
 -- imply
-  let hL := isHermitian_lapMatrix ℝ G let n := Fintype.card V 0 < hL.eigenvalues₀ ⟨n - 2, by omega⟩ := by
+  let hL := isHermitian_lapMatrix ℝ G
+  let n := Fintype.card V
+  0 < hL.eigenvalues₀ ⟨n - 2, by omega⟩ := by
 -- proof
   intro hL n
   haveI : Nonempty V := Fintype.card_pos_iff.mp (by omega)
@@ -459,3 +475,4 @@ private lemma eigenvalues_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

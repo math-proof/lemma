@@ -246,7 +246,7 @@ theorem bc43_selfDownArm_of_cutGeometryFixed'_rootParent (ω : ConfigSpace (Sym2
     (bc43_parentFunneling_of_cutGeometryFixed'_rootParent ω n hgeo hwalk)
 
 
-theorem bc43_burton_keane_bernoulli_of_rootWardRootParent (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc43_burton_keane_bernoulli_of_rootWardRootParent (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc40_ArmCutGeometryFixed' ω n)
     (hwalk : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →

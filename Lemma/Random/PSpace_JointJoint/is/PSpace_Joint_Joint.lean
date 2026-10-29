@@ -39,7 +39,7 @@ private lemma main
     intro hP
     obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
     let p' : α × (β × γ) → ENNReal := p ∘ e.symm
-    have hp' : Measurable p' := (D.measurable_density).comp e.symm.measurable
+    have hp' : Measurable p' := (D).comp e.symm.measurable
     have hmap : π.map (x, (y, z)) = Measure.map e (π.map ((x, y), z)) :=
       (AEMeasurable.map_map_of_aemeasurable e.measurable.aemeasurable
         hP.aemeasurable).symm
@@ -57,13 +57,13 @@ private lemma main
     exact {
       toIsProbabilityMeasure := inferInstance
       aemeasurable := e.measurable.comp_aemeasurable hP.aemeasurable
-      exists_distribution := ⟨p', ⟨hp'⟩, hlaw⟩
+      exists_distribution := ⟨p', hp', hlaw⟩
     }
   ·
     intro hP
     obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
     let p' : (α × β) × γ → ENNReal := p ∘ e
-    have hp' : Measurable p' := (D.measurable_density).comp e.measurable
+    have hp' : Measurable p' := (D).comp e.measurable
     have hmap : π.map ((x, y), z) = Measure.map e.symm (π.map (x, (y, z))) :=
       (AEMeasurable.map_map_of_aemeasurable e.symm.measurable.aemeasurable
         hP.aemeasurable).symm
@@ -81,7 +81,7 @@ private lemma main
     exact {
       toIsProbabilityMeasure := inferInstance
       aemeasurable := e.symm.measurable.comp_aemeasurable hP.aemeasurable
-      exists_distribution := ⟨p', ⟨hp'⟩, hlaw⟩
+      exists_distribution := ⟨p', hp', hlaw⟩
     }
 
 

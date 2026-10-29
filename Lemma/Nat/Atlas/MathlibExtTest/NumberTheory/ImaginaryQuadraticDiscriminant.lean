@@ -10,7 +10,7 @@ namespace ImaginaryQuadraticDiscriminant
 [mem_neg_three](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-lemma mem_neg_three
+lemma mem_neg_three :
 -- imply
   IsImaginaryQuadraticDiscriminant (-3 : Int) := by
 -- proof
@@ -25,7 +25,7 @@ namespace ImaginaryQuadraticDiscriminant
 [not_fund_neg_twelve_canonical](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-lemma not_fund_neg_twelve_canonical
+lemma not_fund_neg_twelve_canonical :
 -- imply
   ¬ MetaMathlibExt.IsFundamentalDiscriminant (-12 : Int) := by
 -- proof
@@ -42,7 +42,7 @@ end ImaginaryQuadraticDiscriminant
 [mem_neg_four](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-lemma mem_neg_four
+lemma mem_neg_four :
 -- imply
   IsImaginaryQuadraticDiscriminant (-4 : Int) := by
 -- proof
@@ -56,7 +56,7 @@ namespace ImaginaryQuadraticDiscriminant
 [not_mem_neg_five](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-lemma not_mem_neg_five
+lemma not_mem_neg_five :
 -- imply
   ¬ IsImaginaryQuadraticDiscriminant (-5 : Int) := by
 -- proof
@@ -71,7 +71,7 @@ namespace ImaginaryQuadraticDiscriminant
 [not_mem_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-lemma not_mem_zero
+lemma not_mem_zero :
 -- imply
   ¬ IsImaginaryQuadraticDiscriminant (0 : Int) := by
 -- proof
@@ -86,7 +86,7 @@ namespace ImaginaryQuadraticDiscriminant
 [mem_neg_twelve](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ImaginaryQuadraticDiscriminant.lean)
 -/
 @[path]
-lemma mem_neg_twelve
+lemma mem_neg_twelve :
 -- imply
   IsImaginaryQuadraticDiscriminant (-12 : Int) := by
 -- proof
@@ -117,3 +117,4 @@ private lemma fund_neg_three_eq :
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

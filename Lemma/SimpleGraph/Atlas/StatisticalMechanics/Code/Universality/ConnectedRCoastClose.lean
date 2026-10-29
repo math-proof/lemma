@@ -1263,7 +1263,7 @@ private lemma crr_faceDualConnection_half_law_eq
 -- given
   (hmeas : MeasurableSet (crr_FaceConnectionEvent n)) :
 -- imply
-  (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one) (crr_FaceDualConnectionEvent n) = (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one) (crr_FaceConnectionEvent n) := by
+  (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one) (crr_FaceDualConnectionEvent n) = (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one) (crr_FaceConnectionEvent n) := by
 -- proof
   apply StatMech.Universality.crr_faceDualConnection_half_law n hmeas
 
@@ -1292,9 +1292,9 @@ private lemma crr_square_half_of_frameArcOrder_and_faceComparison_eq
   (horder : ∀ ω : ConfigSpace (Sym2 (Site 2)), crr_LeftFillFrameArcOrder ω n)
   (hmeasH : MeasurableSet (horizontalCrossingEvent 0 n 0 n))
   (hmeasFace : MeasurableSet (crr_FaceConnectionEvent n))
-  (hcompare : (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one).real (crr_FaceConnectionEvent n) ≤ (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one).real (horizontalCrossingEvent 0 n 0 n)) :
+  (hcompare : (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one).real (crr_FaceConnectionEvent n) ≤ (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one).real (horizontalCrossingEvent 0 n 0 n)) :
 -- imply
-  (1 : ℝ) / 2 ≤ (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one).real (horizontalCrossingEvent 0 n 0 n) := by
+  (1 : ℝ) / 2 ≤ (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one).real (horizontalCrossingEvent 0 n 0 n) := by
 -- proof
   apply StatMech.Universality.crr_square_half_of_frameArcOrder_and_faceComparison n hn horder hmeasH hmeasFace hcompare
 

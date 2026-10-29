@@ -12,7 +12,7 @@ section Modulus
 
 variable {K : Type*} [Field K] [TopologicalSpace K] [IsTopologicalRing K] [LocallyCompactSpace K]
 
-def modulus (a : K) : ℝ≥0 := by
+def modulus (a : K) : NNReal := by
   classical exact if h : a = 0 then 0 else distribHaarChar K (Units.mk0 a h)
 
 end Modulus
@@ -50,7 +50,7 @@ variable {K : Type*} [Field K] [TopologicalSpace K] [IsTopologicalRing K] [Local
   [MeasurableSpace K]
 
 def mulMeasure (μ : Measure K) : Measure K :=
-  (μ.restrict {0}ᶜ).withDensity fun x => ((modulus x : ℝ≥0∞))⁻¹
+  (μ.restrict {0}ᶜ).withDensity fun x => ((modulus x : ENNReal))⁻¹
 
 def localZeta (μ : Measure K) (f : K → ℂ) (χ : Kˣ →* ℂˣ) (s : ℂ) : ℂ :=
   ∫ x, f x * charExt χ x * ((modulus x : ℝ) : ℂ) ^ s ∂(mulMeasure μ)

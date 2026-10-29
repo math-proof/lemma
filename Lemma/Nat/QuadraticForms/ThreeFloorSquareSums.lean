@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Nat.QuadraticForms.LegendreThreeSquare
 
 
 namespace MetaMathlibExt
@@ -38,7 +39,7 @@ private lemma sq_mod_eight (n : ℕ) :
     n % 8 = 4 ∨ n % 8 = 5 ∨ n % 8 = 6 ∨ n % 8 = 7 := by
     have hlt := Nat.mod_lt n (show 0 < 8 from by norm_num)
     omega
-  obtain h | h | h | h | h | h | h | h <;> rw [hpow, h] <;> decide := hdis
+  obtain h | h | h | h | h | h | h | h := hdis <;> rw [hpow, h] <;> decide
 
 end MetaMathlibExt
 
@@ -54,7 +55,7 @@ private lemma even_sq_mod_eight {x : ℕ} (h : Even x) :
   have h2 : x % 2 = 0 := Nat.even_iff.mp h
   have hlt := Nat.mod_lt x (show 0 < 8 from by norm_num)
   have hdis : x % 8 = 0 ∨ x % 8 = 2 ∨ x % 8 = 4 ∨ x % 8 = 6 := by omega
-  obtain h0 | h0 | h0 | h0 <;> rw [hpow, h0] <;> decide := hdis
+  obtain h0 | h0 | h0 | h0 := hdis <;> rw [hpow, h0] <;> decide
 
 end MetaMathlibExt
 
@@ -132,4 +133,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

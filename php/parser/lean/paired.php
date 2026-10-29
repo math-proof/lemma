@@ -364,8 +364,9 @@ class LeanParenthesis extends LeanPairedGroup
         $arg = $this->arg;
         if (!($arg instanceof LeanArithmetic))
             return false;
-        $childPri = get_class($arg)::$input_priority ?? 0;
-        $parentPri = get_class($p)::$input_priority ?? 0;
+        // Prefer instance priority (`*ᵥ` 73, `⬝ᵥ` 72) so given latex matches Def Expr.toLatex.
+        $childPri = $arg->input_priority ?? 0;
+        $parentPri = $p->input_priority ?? 0;
         return $childPri > $parentPri;
     }
 

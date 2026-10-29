@@ -77,7 +77,7 @@ theorem fcc_Tcount_le_boundary_of_armsPrivate (ω : ConfigSpace (Sym2 (Site d)))
     (fcc_rootedSpanningForest_of_armsPrivate ω n hcov hpriv)
 
 
-theorem fcc_burton_keane_bernoulli_of_armsPrivate (hd : 1 ≤ d) (p : ℝ≥0)
+theorem fcc_burton_keane_bernoulli_of_armsPrivate (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hcov : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → fcc_ThreeArmCover ω n)
     (hpriv : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → fcc_RootedPrivateArm ω n)

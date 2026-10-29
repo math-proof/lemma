@@ -120,7 +120,7 @@ private lemma bkc_factor_ac_eq
   {e : Sym2 (Site d)}
   {F : Finset (Sym2 (Site d))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hp0 : 0 < p) :
 -- imply
@@ -137,7 +137,7 @@ private lemma bkc_bernoulli_hasFiniteEnergyMerge_eq
   [∀ i, MeasurableSpace (X i)]
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hp0 : 0 < p) :
 -- imply
@@ -183,7 +183,7 @@ private lemma bkc_bernoulli_isErgodic_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   IsErgodic (G := Multiplicative (Site d)) (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) := by
@@ -247,7 +247,7 @@ private lemma bkc_burton_keane_bernoulli_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), Tcount d ω n ≤ boxSV_boundaryCard d n)

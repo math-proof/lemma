@@ -10,7 +10,7 @@ open Set SimpleGraph Finset MeasureTheory Filter Topology StatMech StatMech.Latt
 @[path]
 private lemma bfin_bk_of_subforestData_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) :
@@ -104,7 +104,7 @@ private lemma bfin_datum_of_noTrif_eq
 @[path]
 private lemma bfin_bk_of_globalArmForest_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bfin_GlobalArmForest ω L R) :
@@ -119,7 +119,7 @@ private lemma bfin_bk_of_globalArmForest_eq
 @[path]
 private lemma bfin_status_eq :
 -- imply
-  (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) ∧ (∀ {V : Type} {T G : SimpleGraph V}, T.IsAcyclic → G ≤ T → G.IsAcyclic) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), 1 ≤ R → (∀ y, y ∈ box 2 R → ¬ bc67_IsGnTrifurcation ω L y) → bau_ArmSubforestData ω L R) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R → bc61_coarseTcount ω L R ≤ boxSV_boundaryCard 2 R) := by
+  (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) ∧ (∀ {V : Type} {T G : SimpleGraph V}, T.IsAcyclic → G ≤ T → G.IsAcyclic) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), 1 ≤ R → (∀ y, y ∈ box 2 R → ¬ bc67_IsGnTrifurcation ω L y) → bau_ArmSubforestData ω L R) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R → bc61_coarseTcount ω L R ≤ boxSV_boundaryCard 2 R) := by
 -- proof
   apply StatMech.Walls.bfin_status
 

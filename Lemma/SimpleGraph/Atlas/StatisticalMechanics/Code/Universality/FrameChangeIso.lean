@@ -267,7 +267,7 @@ private lemma fci_faceDualConfig_measurePreserving_eq
   {ω : ConfigSpace (Sym2 (Site 2))}
   {n : ℤ} :
 -- imply
-  MeasurePreserving (fci_faceDualConfig : ConfigSpace (Sym2 (Site 2)) → ConfigSpace (Sym2 (Site 2))) (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) := by
+  MeasurePreserving (fci_faceDualConfig : ConfigSpace (Sym2 (Site 2)) → ConfigSpace (Sym2 (Site 2))) (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) := by
 -- proof
   apply StatMech.Universality.fci_faceDualConfig_measurePreserving
 

@@ -32,7 +32,7 @@ end MathlibExtTest.Combinatorics.SimpleGraph.EulerCircuit
 [connected_hasEulerian_concrete](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/EulerCircuit.lean)
 -/
 @[path]
-lemma connected_hasEulerian_concrete
+lemma connected_hasEulerian_concrete :
 -- imply
   ∃ (u : Fin 3) (p : triangle.Walk u u), p.IsTrail ∧ p.edges.countP (0 ∈ ·) = 2 := by
 -- proof
@@ -47,3 +47,4 @@ lemma connected_hasEulerian_concrete
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

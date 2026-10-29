@@ -49,7 +49,7 @@ theorem bcl_cylinder_measurable (I : Finset (Sym2 (Site 2))) (η₀ : ConfigSpac
   exact hrestr (MeasurableSet.of_discrete)
 
 
-theorem bcl_hindep (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem bcl_hindep (p : NNReal) (hp1 : p ≤ 1)
     (I : Finset (Sym2 (Site 2))) (a₁ a₂ a₃ x₁ x₂ x₃ : Site 2) (η₀ : ConfigSpace ↥I)
     (hExtMeas : MeasurableSet (bpt2_Ext I a₁ a₂ a₃ x₁ x₂ x₃)) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
@@ -64,7 +64,7 @@ theorem bcl_hindep (p : ℝ≥0) (hp1 : p ≤ 1)
     (bpt2_Ext_dependsOn I a₁ a₂ a₃ x₁ x₂ x₃)
 
 
-theorem bcl_precursorPos (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
+theorem bcl_precursorPos (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
     (I : Finset (Sym2 (Site 2))) (a₁ a₂ a₃ x₁ x₂ x₃ : Site 2) (η₀ : ConfigSpace ↥I)
     (hne : a₁ ≠ a₂ ∧ a₁ ≠ a₃ ∧ a₂ ≠ a₃)
     (hadj : (hypercubicLattice 2).Adj 0 a₁ ∧ (hypercubicLattice 2).Adj 0 a₂ ∧

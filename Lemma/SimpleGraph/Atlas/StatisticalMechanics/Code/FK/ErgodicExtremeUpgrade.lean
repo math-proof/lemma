@@ -34,13 +34,13 @@ private lemma ae_eq_const_of_ae_invariant_function_eq
   {μ : Measure (ConfigSpace E)}
   [IsProbabilityMeasure μ]
   [Countable G]
-  {φ : ConfigSpace E → ℝ≥0∞}
+  {φ : ConfigSpace E → ENNReal}
 -- given
   (hμ : IsErgodic (G := G) μ)
   (hφ : Measurable φ)
   (hinv : ∀ g : G, φ ∘ (shift g : ConfigSpace E → ConfigSpace E) =ᵐ[μ] φ) :
 -- imply
-  ∃ c : ℝ≥0∞, φ =ᵐ[μ] Function.const _ c := by
+  ∃ c : ENNReal, φ =ᵐ[μ] Function.const _ c := by
 -- proof
   apply StatMech.ConfigSpace.ae_eq_const_of_ae_invariant_function hμ hφ hinv
 
@@ -60,7 +60,7 @@ private lemma eq_smul_of_absolutelyContinuous_eq
   (hν : IsTranslationInvariant (G := G) ν)
   (hνμ : ν ≪ μ) :
 -- imply
-  ∃ c : ℝ≥0∞, ν = c • μ := by
+  ∃ c : ENNReal, ν = c • μ := by
 -- proof
   apply StatMech.ConfigSpace.eq_smul_of_absolutelyContinuous hμ hν hνμ
 
@@ -72,7 +72,7 @@ private lemma eeu_ergodic_summand_eq_eq
   [Group G]
   [MulAction G E]
   {μ ν₁ ν₂ : Measure (ConfigSpace E)}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   [IsProbabilityMeasure μ]
   [IsProbabilityMeasure ν₁]
   [Countable G]
@@ -94,7 +94,7 @@ private lemma eeu_ergodic_summands_eq_eq
   [Group G]
   [MulAction G E]
   {μ ν₁ ν₂ : Measure (ConfigSpace E)}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   [IsProbabilityMeasure μ]
   [IsProbabilityMeasure ν₁]
   [IsProbabilityMeasure ν₂]
@@ -160,7 +160,7 @@ private lemma eeu_wiredIV_extremePoint_clause_eq
   (hd : 1 ≤ d)
   (hp : 0 < p)
   (hp1 : p < 1)
-  (a b : ℝ≥0∞)
+  (a b : ENNReal)
   (h0 : IsTranslationInvariant (G := Multiplicative (Lattice.Site d)) ν₁)
   (h1 : IsTranslationInvariant (G := Multiplicative (Lattice.Site d)) ν₂)
   (hp1' : IsProbabilityMeasure ν₁)

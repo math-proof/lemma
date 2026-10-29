@@ -881,7 +881,6 @@ private lemma ch3E14_stirling_ratio_le (k : ℕ) (hk : 1 ≤ k) :
   rw [hleft, hright]
   exact div_le_div_of_nonneg_left (Real.exp_pos 2).le (mul_pos hK hsqrtK)
     (mul_le_mul_of_nonneg_left hsqrt hK.le)
-set_option maxHeartbeats 800000 in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry14LagrangeSeries
 
@@ -1646,7 +1645,6 @@ private lemma ch3E14_inv_sqrt_mul_inv (k : ℕ) (hk : 1 ≤ k) :
   rw [show (-(3 / 2 : ℝ)) = -(1 / 2) + -1 by norm_num,
     Real.rpow_add hK, Real.rpow_neg_one]
   ring
-set_option maxHeartbeats 800000 in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry14LagrangeSeries
 

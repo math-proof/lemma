@@ -28,7 +28,7 @@ section Conditioning
 variable [Fintype α] [DecidableEq α] [DistribLattice α]
 
 
-noncomputable def restrictTo (π : α → ℝ≥0) (S : Finset α) : α → ℝ≥0 :=
+noncomputable def restrictTo (π : α → NNReal) (S : Finset α) : α → NNReal :=
   fun a => if a ∈ S then π a else 0
 
 

@@ -33,8 +33,8 @@ variable {d : ℕ}
 
 theorem bc85_expectation_identity (μ : Measure (ConfigSpace (Sym2 (Site d))))
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) (L R : ℕ) :
-    ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-      = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ :=
+    ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+      = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ :=
   bc62_coarse_expectation μ hinv L R
 
 

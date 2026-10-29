@@ -164,10 +164,10 @@ namespace MathlibExt.Probability.KolmogorovExtensionWanted
 @[path]
 system contained in the ring is sigma-subadditive. -/
 private lemma IsSigmaSubadditive_of_compactSystem {α : Type*} {C : Set (Set α)}
-  {m : AddContent ℝ≥0∞ C} (hC : IsSetRing C)
+  {m : AddContent ENNReal C} (hC : IsSetRing C)
   (hm_top : ∀ s ∈ C, m s ≠ ∞)
   {K : Set (Set α)} (hK : IsCompactSystem K) (hKC : K ⊆ C)
-  (hApprox : ∀ s ∈ C, ∀ ε : ℝ≥0∞, ε ≠ 0 → ∃ k ∈ K, k ⊆ s ∧ m (s \ k) < ε) :
+  (hApprox : ∀ s ∈ C, ∀ ε : ENNReal, ε ≠ 0 → ∃ k ∈ K, k ⊆ s ∧ m (s \ k) < ε) :
   m.IsSigmaSubadditive := by
   refine isSigmaSubadditive_of_addContent_iUnion_eq_tsum hC ?_
   refine addContent_iUnion_eq_sum_of_tendsto_zero hC m hm_top ?_
@@ -182,18 +182,18 @@ private lemma IsSigmaSubadditive_of_compactSystem {α : Type*} {C : Set (Set α)
       calc m (s n) ≤ m (s 0) :=
         addContent_mono hC.isSetSemiring (hs n) (hs 0) (hAnti (Nat.zero_le n))
         _ < ∞ := lt_top_iff_ne_top.mpr (hm_top _ (hs 0))
-    · have hmul_ne : ∀ i : ℕ, (a * (2⁻¹ : ℝ≥0∞) ^ (i + 2)) ≠ 0 := by
+    · have hmul_ne : ∀ i : ℕ, (a * (2⁻¹ : ENNReal) ^ (i + 2)) ≠ 0 := by
       intro i hcon
       apply hane
-      have hw0 : ((2⁻¹ : ℝ≥0∞) ^ (i + 2)) ≠ 0 := by simp
-      have hwtop : ((2⁻¹ : ℝ≥0∞) ^ (i + 2)) ≠ ∞ := by simp
+      have hw0 : ((2⁻¹ : ENNReal) ^ (i + 2)) ≠ 0 := by simp
+      have hwtop : ((2⁻¹ : ENNReal) ^ (i + 2)) ≠ ∞ := by simp
       have hwinv := ENNReal.mul_inv_cancel hw0 hwtop
-      calc a = a * (((2⁻¹ : ℝ≥0∞) ^ (i + 2)) * (((2⁻¹ : ℝ≥0∞) ^ (i + 2)))⁻¹) := by
+      calc a = a * (((2⁻¹ : ENNReal) ^ (i + 2)) * (((2⁻¹ : ENNReal) ^ (i + 2)))⁻¹) := by
         rw [hwinv, mul_one]
-        _ = (a * ((2⁻¹ : ℝ≥0∞) ^ (i + 2))) * (((2⁻¹ : ℝ≥0∞) ^ (i + 2)))⁻¹ :=
+        _ = (a * ((2⁻¹ : ENNReal) ^ (i + 2))) * (((2⁻¹ : ENNReal) ^ (i + 2)))⁻¹ :=
           (mul_assoc _ _ _).symm
         _ = 0 := by rw [hcon, zero_mul]
-      have hδ : ∀ i : ℕ, ∃ k ∈ K, k ⊆ s i ∧ m (s i \ k) < a * (2⁻¹ : ℝ≥0∞) ^ (i + 2) := by
+      have hδ : ∀ i : ℕ, ∃ k ∈ K, k ⊆ s i ∧ m (s i \ k) < a * (2⁻¹ : ENNReal) ^ (i + 2) := by
         intro i
         exact hApprox _ (hs i) _ (hmul_ne i)
       choose k hkK hksub hkbnd using hδ
@@ -219,24 +219,24 @@ private lemma IsSigmaSubadditive_of_compactSystem {α : Type*} {C : Set (Set α)
             by_contra hxkj
             exact hcon j (Nat.lt_succ_of_le hjN) ⟨hxsj, hxkj⟩
         rwa [hN] at hxN
-      have h2inv : (2 : ℝ≥0∞) * 2⁻¹ = 1 :=
+      have h2inv : (2 : ENNReal) * 2⁻¹ = 1 :=
         ENNReal.mul_inv_cancel (by simp) (by simp)
-      have hcalc : (2 : ℝ≥0∞) * (2⁻¹) ^ 2 = 2⁻¹ := by
+      have hcalc : (2 : ENNReal) * (2⁻¹) ^ 2 = 2⁻¹ := by
         rw [sq, ← mul_assoc, h2inv, one_mul]
-      have hle : (∑ i ∈ Finset.range (N + 1), (2⁻¹ : ℝ≥0∞) ^ i) ≤ 2 :=
+      have hle : (∑ i ∈ Finset.range (N + 1), (2⁻¹ : ENNReal) ^ i) ≤ 2 :=
         (ENNReal.sum_le_tsum _).trans_eq ENNReal.tsum_geometric_two
-      have hle2 : (∑ i ∈ Finset.range (N + 1), (2⁻¹ : ℝ≥0∞) ^ i) * (2⁻¹ : ℝ≥0∞) ^ 2
-        ≤ 2 * (2⁻¹ : ℝ≥0∞) ^ 2 :=
+      have hle2 : (∑ i ∈ Finset.range (N + 1), (2⁻¹ : ENNReal) ^ i) * (2⁻¹ : ENNReal) ^ 2
+        ≤ 2 * (2⁻¹ : ENNReal) ^ 2 :=
         mul_le_mul_left hle _
-      have hgeom : ∑ i ∈ Finset.range (N + 1), a * (2⁻¹ : ℝ≥0∞) ^ (i + 2) ≤ a / 2 := by
-        calc ∑ i ∈ Finset.range (N + 1), a * (2⁻¹ : ℝ≥0∞) ^ (i + 2)
-          = ∑ i ∈ Finset.range (N + 1), a * ((2⁻¹ : ℝ≥0∞) ^ i * (2⁻¹) ^ 2) :=
+      have hgeom : ∑ i ∈ Finset.range (N + 1), a * (2⁻¹ : ENNReal) ^ (i + 2) ≤ a / 2 := by
+        calc ∑ i ∈ Finset.range (N + 1), a * (2⁻¹ : ENNReal) ^ (i + 2)
+          = ∑ i ∈ Finset.range (N + 1), a * ((2⁻¹ : ENNReal) ^ i * (2⁻¹) ^ 2) :=
             Finset.sum_congr rfl fun i _ ↦ by rw [pow_add]
-          _ = a * ∑ i ∈ Finset.range (N + 1), ((2⁻¹ : ℝ≥0∞) ^ i * (2⁻¹) ^ 2) :=
+          _ = a * ∑ i ∈ Finset.range (N + 1), ((2⁻¹ : ENNReal) ^ i * (2⁻¹) ^ 2) :=
             (Finset.mul_sum _ _ _).symm
-          _ = a * ((∑ i ∈ Finset.range (N + 1), (2⁻¹ : ℝ≥0∞) ^ i) * (2⁻¹) ^ 2) := by
+          _ = a * ((∑ i ∈ Finset.range (N + 1), (2⁻¹ : ENNReal) ^ i) * (2⁻¹) ^ 2) := by
             rw [Finset.sum_mul]
-          _ ≤ a * (2 * (2⁻¹ : ℝ≥0∞) ^ 2) := mul_le_mul_right hle2 _
+          _ ≤ a * (2 * (2⁻¹ : ENNReal) ^ 2) := mul_le_mul_right hle2 _
           _ = a / 2 := by
             rw [hcalc, ENNReal.div_eq_inv_mul, mul_comm]
       refine Filter.eventually_atTop.mpr ⟨N, fun n hn ↦ ?_⟩
@@ -245,7 +245,7 @@ private lemma IsSigmaSubadditive_of_compactSystem {α : Type*} {C : Set (Set α)
           (hC.biUnion_mem _ (fun i _ ↦ hmem i)) (hsub n hn)
         _ ≤ ∑ i ∈ Finset.range (N + 1), m (s i \ k i) :=
           addContent_biUnion_le hC (fun i _ ↦ hmem i)
-        _ ≤ ∑ i ∈ Finset.range (N + 1), a * (2⁻¹ : ℝ≥0∞) ^ (i + 2) :=
+        _ ≤ ∑ i ∈ Finset.range (N + 1), a * (2⁻¹ : ENNReal) ^ (i + 2) :=
           Finset.sum_le_sum fun i _ ↦ le_of_lt (hkbnd i)
         _ ≤ a / 2 := hgeom
         _ < a := ENNReal.half_lt_self hane hatop
@@ -268,7 +268,7 @@ lemma kolmogorov_extension
   ∃ μ : Measure (∀ i, α i), IsProjectiveLimit μ P := by
 -- proof
   have hNe : ∀ i, Nonempty (α i) := fun i ↦ factor_nonempty P i
-  have hApprox : ∀ s ∈ measurableCylinders α, ∀ ε : ℝ≥0∞, ε ≠ 0 →
+  have hApprox : ∀ s ∈ measurableCylinders α, ∀ ε : ENNReal, ε ≠ 0 →
     ∃ k ∈ closedCompactCylinders α, k ⊆ s ∧
       projectiveFamilyContent hP (s \ k) < ε := by
     intro s hs ε hε

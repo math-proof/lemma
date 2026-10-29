@@ -55,12 +55,12 @@ theorem tsum_pcSummandTwo (p : ℝ) : ∑' ℓ : ℕ, pcSummandTwo p ℓ = 2 * p
   exact tsum_congr (fun ℓ => pcSummandTwo_eq p ℓ)
 
 
-theorem ennSummand_eq_ofReal (p : ℝ≥0) (hp : p ≤ 1) (ℓ : ℕ) :
-    ((2 * ℓ * 4 ^ ℓ : ℕ) : ℝ≥0∞) * ((1 - p : ℝ≥0) : ℝ≥0∞) ^ ℓ
+theorem ennSummand_eq_ofReal (p : NNReal) (hp : p ≤ 1) (ℓ : ℕ) :
+    ((2 * ℓ * 4 ^ ℓ : ℕ) : ENNReal) * ((1 - p : NNReal) : ENNReal) ^ ℓ
       = ENNReal.ofReal (pcSummandTwo (p : ℝ) ℓ) := by
   have hpr : (p : ℝ) ≤ 1 := by exact_mod_cast hp
-  have hpow : ((1 - p : ℝ≥0) : ℝ≥0∞) ^ ℓ = ENNReal.ofReal ((1 - (p : ℝ)) ^ ℓ) := by
-    rw [show ((1 - p : ℝ≥0) : ℝ≥0∞) = ENNReal.ofReal ((1 - p : ℝ≥0) : ℝ) from
+  have hpow : ((1 - p : NNReal) : ENNReal) ^ ℓ = ENNReal.ofReal ((1 - (p : ℝ)) ^ ℓ) := by
+    rw [show ((1 - p : NNReal) : ENNReal) = ENNReal.ofReal ((1 - p : NNReal) : ℝ) from
           (ENNReal.ofReal_coe_nnreal).symm]
     rw [← ENNReal.ofReal_pow (by positivity)]
     congr 2

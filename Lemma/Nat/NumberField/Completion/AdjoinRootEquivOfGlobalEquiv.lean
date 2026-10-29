@@ -29,7 +29,7 @@ lemma adicCompletion_algEquiv_adjoinRoot_of_globalEquiv
         Polynomial.aeval_algHom_apply e.symm.toAlgHom (AdjoinRoot.root g) g
       _ = 0 := by simp
   have hx_completion :
-    Polynomial.aeval (algebraMap L (w.adicCompletion L) x) q = 0 := by
+      Polynomial.aeval (algebraMap L (w.adicCompletion L) x) q = 0 := by
     rw [Polynomial.aeval_map_algebraMap]
     change Polynomial.aeval ((Algebra.algHom K L (w.adicCompletion L)) x) g = 0
     rw [Polynomial.aeval_algHom_apply, hx, map_zero]
@@ -45,4 +45,4 @@ end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

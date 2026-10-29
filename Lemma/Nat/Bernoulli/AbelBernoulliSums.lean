@@ -246,7 +246,7 @@ private lemma abelCoeff_term (x : ℂ) (hx : x ≠ 0) (m l : ℕ) (hl : l ≤ m 
         ((-1 : ℂ) ^ (m + 1 - (k + 1)) * (x + ((k + 1 : ℕ) : ℂ)) ^ (m + 1 - (k + 1)))
         = x * ((-1 : ℂ) ^ (m + 1 - (k + 1)) *
           ((x + ((k + 1 : ℕ) : ℂ)) ^ k * (x + ((k + 1 : ℕ) : ℂ)) ^ (m + 1 - (k + 1)))) := by
-          ring
+            ring
         _ = x * ((-1 : ℂ) ^ (m + 1 - (k + 1)) * (x + ((k + 1 : ℕ) : ℂ)) ^ m) := by
           rw [hcombine]
     have hneg : -x - (((k + 1 : ℕ)) : ℂ) = -((x + ((k + 1 : ℕ) : ℂ))) := by ring
@@ -443,11 +443,11 @@ private lemma trinomial (n l i : ℕ) (h : l + i ≤ n) :
       * ((Nat.choose n l : ℂ) * (Nat.choose (n - l) i : ℂ))
       = ((Nat.choose n l : ℂ) * ((l ! : ℕ) : ℂ)) *
         ((Nat.choose (n - l) i : ℂ) * ((i ! : ℕ) : ℂ) * ((((n - l - i)! : ℕ)) : ℂ)) := by
-        ring
+          ring
       _ = ((Nat.choose n l : ℂ) * ((l ! : ℕ) : ℂ)) * ((((n - l)! : ℕ)) : ℂ) := by
-        rw [e2]
+          rw [e2]
       _ = (Nat.choose n l : ℂ) * ((l ! : ℕ) : ℂ) * ((((n - l)! : ℕ)) : ℂ) := by
-        ring
+          ring
       _ = (((n ! : ℕ)) : ℂ) := e1
   have key2 : (((l ! : ℕ) : ℂ) * ((i ! : ℕ) : ℂ) * ((((n - l - i)! : ℕ)) : ℂ))
     * ((Nat.choose n i : ℂ) * (Nat.choose (n - i) l : ℂ)) = (((n ! : ℕ)) : ℂ) := by
@@ -455,11 +455,11 @@ private lemma trinomial (n l i : ℕ) (h : l + i ≤ n) :
       * ((Nat.choose n i : ℂ) * (Nat.choose (n - i) l : ℂ))
       = ((Nat.choose n i : ℂ) * ((i ! : ℕ) : ℂ)) *
         ((Nat.choose (n - i) l : ℂ) * ((l ! : ℕ) : ℂ) * ((((n - l - i)! : ℕ)) : ℂ)) := by
-        ring
+          ring
       _ = ((Nat.choose n i : ℂ) * ((i ! : ℕ) : ℂ)) * ((((n - i)! : ℕ)) : ℂ) := by
-        rw [e4]
+          rw [e4]
       _ = (Nat.choose n i : ℂ) * ((i ! : ℕ) : ℂ) * ((((n - i)! : ℕ)) : ℂ) := by
-        ring
+          ring
       _ = (((n ! : ℕ)) : ℂ) := e3
   have hDD : (((l ! : ℕ) : ℂ) * ((i ! : ℕ) : ℂ) * ((((n - l - i)! : ℕ)) : ℂ))
     * ((Nat.choose n l : ℂ) * (Nat.choose (n - l) i : ℂ))
@@ -510,7 +510,8 @@ lemma abel_bernoulli_sum
     unfold AbelPoly at h
     simp only [Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
       Polynomial.eval_pow, Polynomial.eval_sub, Polynomial.eval_X, Polynomial.eval_add] at h
-    rwa [add_comm x w0]
+    rw [add_comm x w0]
+    exact h.symm
   have hterm : ∀ l ∈ Finset.range (n + 1),
     x * ((Nat.choose n l : ℂ) * (x + (l : ℂ)) ^ ((l : ℤ) - 1) *
       Polynomial.eval₂ (algebraMap ℚ ℂ) (y + ((n - l : ℕ) : ℂ))
@@ -613,4 +614,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

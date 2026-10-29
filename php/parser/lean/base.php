@@ -621,7 +621,16 @@ abstract class Lean extends IndentedNode
                     $this->text .= '*';
                     return $this;
                 }
-                return $this->push_arithmetic($token);
+                {
+                    $caret = $this->push_arithmetic($token);
+                    if (($tokens[$i + 1] ?? null) === 'ᵥ') {
+                        ++$i;
+                        $node = $caret ? $caret->parent : null;
+                        if ($node instanceof LeanMul)
+                            $node->subscript = 'ᵥ';
+                    }
+                    return $caret;
+                }
             case '|':
                 $next = $tokens[$i + 1];
                 if ($next == '|') {
@@ -709,9 +718,19 @@ abstract class Lean extends IndentedNode
                     ++$i;
                     return $this->push_arithmetic('//');
                 }
+            case '⬝':
+                {
+                    $caret = $this->push_arithmetic($token);
+                    if (($tokens[$i + 1] ?? null) === 'ᵥ') {
+                        ++$i;
+                        $node = $caret ? $caret->parent : null;
+                        if ($node instanceof Lean_cdotp)
+                            $node->subscript = 'ᵥ';
+                    }
+                    return $caret;
+                }
             case '%':
             case '×':
-            case '⬝':
             case '∘':
             case '•':
             case '⊙':
@@ -805,6 +824,8 @@ abstract class Lean extends IndentedNode
                 return $this->push_post_unary('LeanTesseract');
             case 'ᵀ':
                 return $this->push_post_unary('LeanTranspose');
+            case 'ᴴ':
+                return $this->push_post_unary('LeanAdjoint');
             case '⁺':
                 return $this->push_post_unary('LeanPosPart');
             case '⁻':

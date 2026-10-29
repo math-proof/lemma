@@ -36,8 +36,8 @@ def PowerSeries.partialSum (p : PowerSeries) (x : ℝ) (n : ℕ) : ℝ :=
 
 /-- The radius of convergence `ρ` of a real power series with coefficients `a : ℕ → ℝ`,
 defined via the Cauchy–Hadamard formula as the reciprocal of
-`limsup_{n → ∞} ‖aₙ‖^(1/n)`, taking values in `ℝ≥0∞`. -/
+`limsup_{n → ∞} ‖aₙ‖^(1/n)`, taking values in `ENNReal`. -/
 noncomputable def radiusOfConvergence (a : ℕ → ℝ) : ENNReal :=
-  (limsup (fun n => ((‖a n‖₊ ^ (1 / (n : ℝ)) : ℝ≥0) : ℝ≥0∞)) atTop)⁻¹
+  (limsup (fun n => ((‖a n‖₊ ^ (1 / (n : ℝ)) : NNReal) : ENNReal)) atTop)⁻¹
 
 end FunctionSequences

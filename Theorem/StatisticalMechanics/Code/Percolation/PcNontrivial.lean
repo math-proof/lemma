@@ -29,10 +29,10 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-theorem cylinder_all_open (p : ℝ≥0) (hp : p ≤ 1) (F : Finset (Sym2 (Site d))) :
+theorem cylinder_all_open (p : NNReal) (hp : p ≤ 1) (F : Finset (Sym2 (Site d))) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp)
       ((F : Set (Sym2 (Site d))).pi (fun _ => ({true} : Set Bool)))
-      = (p : ℝ≥0∞) ^ F.card := by
+      = (p : ENNReal) ^ F.card := by
   have key := Measure.infinitePi_pi (μ := fun _ : Sym2 (Site d) => bernoulliMeasure p hp)
     (s := F) (t := fun _ => ({true} : Set Bool)) (fun i _ => measurableSet_singleton _)
   rw [bernoulliProductMeasure, key]

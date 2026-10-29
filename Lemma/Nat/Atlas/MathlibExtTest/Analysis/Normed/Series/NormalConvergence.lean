@@ -12,7 +12,7 @@ open scoped ENNReal
 lemma supNormOn_oneTermSeries
   {n : ℕ} :
 -- imply
-  supNormOn (oneTermSeries n) ({0} : Set ℝ) = if n = 0 then (1 : ℝ≥0∞) else 0 := by
+  supNormOn (oneTermSeries n) ({0} : Set ℝ) = if n = 0 then (1 : ENNReal) else 0 := by
 -- proof
   have : Nonempty ↥(({0} : Set ℝ)) := ⟨⟨0, rfl⟩⟩
   unfold supNormOn
@@ -39,7 +39,7 @@ lemma supNormOn_oneTermSeries
 [oneTermSeries_normal](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Normed/Series/NormalConvergence.lean)
 -/
 @[path]
-lemma oneTermSeries_normal
+lemma oneTermSeries_normal :
 -- imply
   ConvergesNormallyOn oneTermSeries ({0} : Set ℝ) := by
 -- proof
@@ -50,3 +50,4 @@ lemma oneTermSeries_normal
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

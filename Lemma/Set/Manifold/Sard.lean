@@ -480,12 +480,12 @@ private lemma addHaar_image_null_of_holderOnWith
   borelize E8
   set p : ℕ := Module.finrank ℝ F8 with hp
   have hdimENN :
-    (Module.finrank ℝ E8 : ℝ≥0∞) < ((r * p : NNReal) : ℝ≥0∞) := by
+    (Module.finrank ℝ E8 : ENNReal) < ((r * p : NNReal) : ENNReal) := by
     exact_mod_cast hdim
-  have hdimH : dimH S < ((r * p : NNReal) : ℝ≥0∞) := by
+  have hdimH : dimH S < ((r * p : NNReal) : ENNReal) := by
     calc dimH S ≤ dimH (Set.univ : Set E8) := dimH_mono (Set.subset_univ _)
       _ = Module.finrank ℝ E8 := Real.dimH_univ_eq_finrank E8
-      _ < ((r * p : NNReal) : ℝ≥0∞) := hdimENN
+      _ < ((r * p : NNReal) : ENNReal) := hdimENN
   have hHzero : μH[(r : ℝ) * (p : ℝ)] S = 0 := by
     have h := hausdorffMeasure_of_dimH_lt hdimH
     simpa [NNReal.coe_mul] using h

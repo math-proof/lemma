@@ -29,7 +29,7 @@ variable (G : SimpleGraph V) [DecidableRel G.Adj]
 
 
 noncomputable def currentRawMass (beta : ℝ) (J : Sym2 V → ℝ) (A : Finset V)
-    (m : EdgeCurrent G) : ℝ≥0∞ :=
+    (m : EdgeCurrent G) : ENNReal :=
   ENNReal.ofReal
     (if sources G (ofEdgeFun G m) = A then weight G beta J (ofEdgeFun G m) else 0)
 

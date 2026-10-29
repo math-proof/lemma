@@ -65,7 +65,7 @@ namespace N329Test
 [complexOneTermSeries_convergesNormallyOn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/NormalConvergence.lean)
 -/
 @[path]
-lemma complexOneTermSeries_convergesNormallyOn
+lemma complexOneTermSeries_convergesNormallyOn :
 -- imply
   ConvergesNormallyOn complexOneTermSeries Set.univ := by
 -- proof
@@ -82,7 +82,7 @@ namespace N329Test
 [complexOneTermSeries_convergesLocallyNormallyOn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/NormalConvergence.lean)
 -/
 @[path]
-lemma complexOneTermSeries_convergesLocallyNormallyOn
+lemma complexOneTermSeries_convergesLocallyNormallyOn :
 -- imply
   ConvergesLocallyNormallyOn complexOneTermSeries Set.univ := by
 -- proof
@@ -94,3 +94,4 @@ end N329Test
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

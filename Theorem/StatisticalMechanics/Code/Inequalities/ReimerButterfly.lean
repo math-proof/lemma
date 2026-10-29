@@ -143,7 +143,7 @@ set_option linter.unusedFintypeInType false in
 set_option linter.unusedDecidableInType false in
 
 
-theorem reimerMixed_inequality [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+theorem reimerMixed_inequality [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
     {A B : Set (ConfigSpace E)} (hA : IsIncreasing A) (hB : IsDecreasing B) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A
@@ -152,7 +152,7 @@ theorem reimerMixed_inequality [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p
   have hφ0 : ∀ x b, 0 ≤ φ x b := fun _ _ => measureReal_nonneg
   have hφ1 : ∀ x, φ x false + φ x true = 1 := by
     intro _
-    have h1 : (bernoulliMeasure p hp).real {false} = ((1 - p : ℝ≥0) : ℝ) := by
+    have h1 : (bernoulliMeasure p hp).real {false} = ((1 - p : NNReal) : ℝ) := by
       rw [Measure.real, bernoulliMeasure_apply_false, ENNReal.coe_toReal]
     have h2 : (bernoulliMeasure p hp).real {true} = (p : ℝ) := by
       rw [Measure.real, bernoulliMeasure_apply_true, ENNReal.coe_toReal]

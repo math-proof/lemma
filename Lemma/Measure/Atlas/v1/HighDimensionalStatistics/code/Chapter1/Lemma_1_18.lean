@@ -124,7 +124,7 @@ lemma packing_card_le_real
   let μ := (volume : Measure (EuclideanSpace ℝ (Fin d)))
   have hfin_dim : Module.finrank ℝ (EuclideanSpace ℝ (Fin d)) = d :=
     finrank_euclideanSpace_fin
-  have hμ_pos : (0 : ℝ≥0∞) < μ (closedBall 0 1) := measure_closedBall_pos _ _ zero_lt_one
+  have hμ_pos : (0 : ENNReal) < μ (closedBall 0 1) := measure_closedBall_pos _ _ zero_lt_one
   have hμ_ne_top : μ (closedBall 0 1) ≠ ⊤ := measure_closedBall_lt_top.ne
   have hμ_ne_zero : μ (closedBall 0 1) ≠ 0 := ne_of_gt hμ_pos
   have hle_meas : μ (⋃ x ∈ S, closedBall x (ε / 2)) ≤ μ (closedBall 0 (1 + ε / 2)) :=
@@ -148,7 +148,7 @@ lemma packing_card_le_real
       _ ≤ μ (closedBall 0 (1 + ε / 2)) := hle_meas
       _ = ENNReal.ofReal ((1 + ε / 2) ^ d) * μ (closedBall 0 1) := hvol_big
   rw [nsmul_eq_mul, ← mul_assoc] at hcombine
-  have hcancel : (↑S.card : ℝ≥0∞) * ENNReal.ofReal ((ε / 2) ^ d) ≤
+  have hcancel : (↑S.card : ENNReal) * ENNReal.ofReal ((ε / 2) ^ d) ≤
     ENNReal.ofReal ((1 + ε / 2) ^ d) := by
     by_cases hS : S.card = 0
     · simp [hS]

@@ -19,7 +19,7 @@ namespace StatMech
 variable {E : Type*}
 
 
-theorem bernoulliMeasure_congr {p q : ℝ≥0} (hp : p ≤ 1) (hq : q ≤ 1)
+theorem bernoulliMeasure_congr {p q : NNReal} (hp : p ≤ 1) (hq : q ≤ 1)
     (h : p = q) : bernoulliMeasure p hp = bernoulliMeasure q hq := by
   subst q
   rfl

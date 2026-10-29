@@ -57,7 +57,7 @@ lemma adelicNorm_principalEmbedding
     ∏ w : NumberField.InfinitePlace K, w ((x : K)) ^ w.mult := by
     apply Finset.prod_congr rfl
     intro w _
-    rw [infinitePrincipalEmbedding_apply, Units.coe_map]
+    rw [infinitePrincipalEmbedding_apply (R := 𝓞 K), Units.coe_map]
     change ‖algebraMap K w.Completion (x : K)‖ ^ w.mult = w (x : K) ^ w.mult
     have hco : algebraMap K w.Completion ((x : K)) =
       ((WithAbs.equiv w.1).symm ((x : K)) : w.Completion) := rfl
@@ -68,7 +68,7 @@ lemma adelicNorm_principalEmbedding
       v.adicCompletion K))‖ =
       (NumberField.FinitePlace.equivHeightOneSpectrum.symm v) ((x : K)) := by
     intro v
-    rw [finitePrincipalEmbedding_apply, Units.coe_map]
+    rw [finitePrincipalEmbedding_apply (R := 𝓞 K), Units.coe_map]
     exact (NumberField.FinitePlace.equivHeightOneSpectrum_symm_apply
       v ((x : K))).symm
   have hfun : (fun v : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
@@ -109,4 +109,4 @@ end NumberField.TopologicalIdeleGroup
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

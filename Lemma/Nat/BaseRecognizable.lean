@@ -211,17 +211,18 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma isCanonicalBaseWord_baseDigits
-  {k n : ℕ}
+  {k : ℕ}
 -- given
-  (hk : 2 ≤ k) :
+  (hk : 2 ≤ k)
+  (n : ℕ) :
 -- imply
   IsCanonicalBaseWord (baseDigits hk n) := by
 -- proof
   by_cases hn : n = 0
   · subst n
-    simp
+    simp [baseDigits, IsCanonicalBaseWord]
   · have hd : Nat.digits k n ≠ [] := by
-    simpa [Nat.digits_eq_nil_iff_eq_zero] using hn
+      simpa [Nat.digits_eq_nil_iff_eq_zero] using hn
     have hdr : (Nat.digits k n).reverse ≠ [] := by simpa
     rw [baseDigits]
     cases hrev : (Nat.digits k n).reverse with
@@ -246,8 +247,8 @@ private lemma on_eq
 -- imply
   baseWordValue ([] : List (Fin k)) = 0 := by
 -- proof
-  apply on
+  exact baseWordValue_nil
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

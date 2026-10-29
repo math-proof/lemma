@@ -299,9 +299,10 @@ def Expr.asStack? : Expr → Option (String × Expr × Expr)
   | _ =>
     none
 
-/-- `Tensor.matProd n (fun i => body)` → `(i, n, body)`. -/
+/-- `Tensor.matProd` / `Matrix.matProd n (fun i => body)` → `(i, n, body)`. -/
 def Expr.asMatProd? : Expr → Option (String × Expr × Expr)
-  | Basic (.ExprWithAttr (.Lean_operatorname `Tensor.matProd)) [n, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _] _ =>
+  | Basic (.ExprWithAttr (.Lean_operatorname `Tensor.matProd)) [n, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _] _
+  | Basic (.ExprWithAttr (.Lean_operatorname `Matrix.matProd)) [n, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _] _ =>
     some (binderName.bvarLatex "\\ ", n, fn)
   | _ =>
     none

@@ -181,7 +181,8 @@ lemma finrank_adjoin_two_cos
       have hw2 : ζ = (w : ℂ) := by
         rw [← hw]
         rfl
-      rwa [hw2]
+      rw [hw2]
+      exact SetLike.coe_mem w
     exact hζnE hmem
   have hdegE2 : (minpoly ↥E ζ).natDegree = 2 := by omega
   -- relative degree is 2

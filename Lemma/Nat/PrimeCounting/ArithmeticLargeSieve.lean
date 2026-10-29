@@ -152,7 +152,7 @@ private lemma btFareyLargeSieve (N z : ℕ) (hz : 0 < z) (a : ℕ → ℂ) :
         a n * Complex.exp ((((2 * Real.pi *
           (n * btFareyPoint p) : ℝ) : ℝ) : ℂ) * Complex.I)‖ ^ 2 ≤
     ∑ n ∈ Finset.range N, ‖a n‖ ^ 2 := by
-  have h := weightedLargeSieve N btFareyPoint btFareyDelta a
+  have h := weightedLargeSieve (N := N) (x := btFareyPoint) (δ := btFareyDelta) (a := a)
     (btFareyDelta_pos hz) btFarey_separated
   convert h using 1
   apply Finset.sum_congr rfl
@@ -227,7 +227,7 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 @[path]
 private lemma btSieveWeight_nonneg (N z r : ℕ) :
   0 ≤ ((N : ℝ) + 3 * (r : ℝ) * z / 2)⁻¹ := by
-positivity
+  positivity
 
 end MathlibExt.NumberTheory.PrimeCounting
 
@@ -1070,7 +1070,8 @@ private lemma btSieveDensity_le_divisor_mul_restricted (N z q : ℕ) (hq : 0 < q
       Nat.mul_div_cancel' (Nat.gcd_dvd_left n q)
     have hcop : Nat.Coprime (n.gcd q) (n / n.gcd q) := by
       apply Nat.coprime_of_squarefree_mul
-      rwa [hprod]
+      rw [hprod]
+      exact hnData.2
     have hw :
       ((N : ℝ) + 3 * (n : ℝ) * z / 2)⁻¹ ≤
         ((N : ℝ) + 3 * ((n / n.gcd q : ℕ) : ℝ) * z / 2)⁻¹ := by
@@ -1337,4 +1338,4 @@ end MathlibExt.NumberTheory.PrimeCounting
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

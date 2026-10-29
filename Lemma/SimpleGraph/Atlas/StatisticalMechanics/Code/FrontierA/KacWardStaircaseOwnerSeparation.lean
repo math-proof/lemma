@@ -45,7 +45,7 @@ private lemma rawClosedEdge_subset_ownerTube_exact_eq
   {j : Fin (n * (2 * (M + 1)))}
 -- given
   (data : KWStairParameterData (S := M + 1) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r) :
 -- imply
@@ -64,7 +64,7 @@ private lemma rawClosedEdges_disjoint_of_owner_nonincident_eq
   {j l : Fin (n * (2 * (M + 1)))}
 -- given
   (data : KWStairParameterData (S := M + 1) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r)
   (htubes : ∀ i j : Fin n, KWEdgesNonincident i j → Disjoint (polygon.closedEdgeTube r i) (polygon.closedEdgeTube r j))

@@ -1,7 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 open Filter Topology
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry1Corollary
@@ -196,7 +195,8 @@ private lemma log_two_mul_sub_log :
     have h2N : ((2 * N : ℕ) : ℝ) = 2 * ((N : ℕ) : ℝ) := by push_cast; ring
     rw [h2N, Real.log_mul (by norm_num) hNne]
     ring
-  rwa [Filter.tendsto_congr' heq]
+  rw [Filter.tendsto_congr' heq]
+  exact tendsto_const_nhds
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry1Corollary
 
@@ -294,10 +294,11 @@ lemma ramanujan_part1_ch2_entry1_corollary
     ((1 : ℝ) / ((2 * (↑(n + 1) : ℝ)) ^ 3 - 2 * (↑(n + 1) : ℝ))))
     = (fun N : ℕ => (((harmonic (2 * N) : ℚ) : ℝ) + ((harmonic (2 * N + 1) : ℚ) : ℝ)
       - 2 * ((harmonic N : ℚ) : ℝ) - 1) / 2) := funext fun N => partial_sum N
-  rwa [h_eq]
+  rw [h_eq]
+  exact rhs_tendsto
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry1Corollary
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

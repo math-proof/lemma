@@ -120,7 +120,7 @@ private lemma rq1_finiteBernoulli_mixedSquare_eq_eq
   [DecidableRel G.Adj]
   {n : ℕ} :
 -- imply
-  (bernoulliProductMeasure (E := Sym2 (boxVerts 2 n)) (2⁻¹ : ℝ≥0) half_le_one).real (rq1_finiteMixedSquareEvent n) = rba_selfDualMeasure.real (horizontalCrossingEvent (-(n : ℤ)) (n : ℤ) (-(n : ℤ)) (n : ℤ)) := by
+  (bernoulliProductMeasure (E := Sym2 (boxVerts 2 n)) (2⁻¹ : NNReal) half_le_one).real (rq1_finiteMixedSquareEvent n) = rba_selfDualMeasure.real (horizontalCrossingEvent (-(n : ℤ)) (n : ℤ) (-(n : ℤ)) (n : ℤ)) := by
 -- proof
   apply StatMech.Universality.rq1_finiteBernoulli_mixedSquare_eq G n
 

@@ -34,7 +34,7 @@ variable {E : Type*} {G : Type*} [Group G] [MulAction G E]
 
 
 theorem fmc_exists_cylinder_symmDiff_lt [Countable E] (μ : Measure (ConfigSpace E))
-    [IsFiniteMeasure μ] {A : Set (ConfigSpace E)} (hA : MeasurableSet A) {ε : ℝ≥0∞} (hε : 0 < ε) :
+    [IsFiniteMeasure μ] {A : Set (ConfigSpace E)} (hA : MeasurableSet A) {ε : ENNReal} (hε : 0 < ε) :
     ∃ C ∈ measurableCylinders (fun _ : E => Bool), μ (C ∆ A) < ε := by
   refine exists_measure_symmDiff_lt_of_generateFrom_isSetRing
     isSetRing_measurableCylinders ?_ generateFrom_cylinders_eq hA hε

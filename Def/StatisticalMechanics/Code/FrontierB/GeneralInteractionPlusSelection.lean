@@ -23,7 +23,7 @@ open Sharpness Ising Lattice
 def GeneralPlusParityAvoidanceConverges {d : Nat}
     (J : Sym2 (Site d) → ℝ) (hJ : ∀ e, 0 ≤ J e)
     (beta : ℝ) (hbeta : 0 < beta) : Prop :=
-  ∀ F : Finset (Sym2 (Site d)), ∃ L : ℝ≥0∞, Tendsto
+  ∀ F : Finset (Sym2 (Site d)), ∃ L : ENNReal, Tendsto
     (fun n ↦ (generalPlusBoxCurrentMeasure J hJ n beta hbeta.le :
       Measure (InfiniteCurrentConfig (Sym2 (Site d))))
         (currentParityAvoidCylinder F)) atTop (nhds L)

@@ -26,7 +26,7 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-theorem crossProbReal_eq (d n : ℕ) (p : ℝ≥0) (hp : p ≤ 1) :
+theorem crossProbReal_eq (d n : ℕ) (p : NNReal) (hp : p ≤ 1) :
     crossProbReal d n (p : ℝ) = crossProb d p hp n := by
   unfold crossProbReal
   rw [dif_pos ⟨p.coe_nonneg, by exact_mod_cast hp⟩]
@@ -66,7 +66,7 @@ theorem percolationEvent_eq_iInter :
          fun h n => let ⟨v, hc, hb⟩ := h n; ⟨v, hb, hc⟩⟩
 
 
-theorem tendsto_crossProb_theta (p : ℝ≥0) (hp : p ≤ 1) :
+theorem tendsto_crossProb_theta (p : NNReal) (hp : p ≤ 1) :
     Tendsto (fun n => crossProb d p hp (n + 1)) atTop (𝓝 (theta d p hp)) := by
   set μ := bernoulliProductMeasure (E := Sym2 (Site d)) p hp with hμ
   have hanti : Antitone (fun n => crossingEvent d (n + 1)) :=
@@ -78,7 +78,7 @@ theorem tendsto_crossProb_theta (p : ℝ≥0) (hp : p ≤ 1) :
   exact (ENNReal.tendsto_toReal (measure_ne_top μ _)).comp htend
 
 
-theorem theta_eq_zero_of_crossProb_decay (p : ℝ≥0) (hp : p ≤ 1)
+theorem theta_eq_zero_of_crossProb_decay (p : NNReal) (hp : p ≤ 1)
     (hdecay : ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n)) :
     theta d p hp = 0 := by
   obtain ⟨c, hc, C, _, hbound⟩ := hdecay
@@ -97,7 +97,7 @@ theorem theta_eq_zero_of_crossProb_decay (p : ℝ≥0) (hp : p ≤ 1)
   push_cast; ring
 
 
-theorem theta_ge_meanField (q : ℝ≥0) (hq : q ≤ 1)
+theorem theta_ge_meanField (q : NNReal) (hq : q ≤ 1)
     (a : ℝ) (ha0 : 0 < a) (haq : a < (q : ℝ)) (hq1 : (q : ℝ) < 1)
     (F' : ℕ → ℝ → ℝ)
     (hcont : ∀ n, ContinuousOn (crossProbReal d (n + 1)) (Icc a (q : ℝ)))
@@ -114,7 +114,7 @@ theorem theta_ge_meanField (q : ℝ≥0) (hq : q ≤ 1)
   exact ge_of_tendsto (tendsto_crossProb_theta q hq) (Filter.Eventually.of_forall hbound)
 
 
-theorem theta_pos_of_meanField (q : ℝ≥0) (hq : q ≤ 1)
+theorem theta_pos_of_meanField (q : NNReal) (hq : q ≤ 1)
     (a : ℝ) (ha0 : 0 < a) (haq : a < (q : ℝ)) (hq1 : (q : ℝ) < 1)
     (F' : ℕ → ℝ → ℝ)
     (hcont : ∀ n, ContinuousOn (crossProbReal d (n + 1)) (Icc a (q : ℝ)))
@@ -146,8 +146,8 @@ theorem tildePc_le_pc
 
 
 theorem pc_le_tildePc
-    (htheta_one : ∀ h1 : (1 : ℝ≥0) ≤ 1, theta d 1 h1 ≠ 0)
-    (hmf : ∀ q : ℝ≥0, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → 0 < theta d q hq) :
+    (htheta_one : ∀ h1 : (1 : NNReal) ≤ 1, theta d 1 h1 ≠ 0)
+    (hmf : ∀ q : NNReal, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → 0 < theta d q hq) :
     pc d ≤ tildePc d := by
   unfold pc
   rcases (subcriticalSet d).eq_empty_or_nonempty with hempty | hne
@@ -168,33 +168,33 @@ theorem pc_le_tildePc
 
 
 theorem tildePc_eq_pc
-    (htheta_one : ∀ h1 : (1 : ℝ≥0) ≤ 1, theta d 1 h1 ≠ 0)
+    (htheta_one : ∀ h1 : (1 : NNReal) ≤ 1, theta d 1 h1 ≠ 0)
     (hsub : ∀ p ∈ tildePcSet d, ∀ hp : p ≤ 1,
         ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n))
-    (hmf : ∀ q : ℝ≥0, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → 0 < theta d q hq) :
+    (hmf : ∀ q : NNReal, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → 0 < theta d q hq) :
     tildePc d = pc d :=
   le_antisymm (tildePc_le_pc hsub) (pc_le_tildePc htheta_one hmf)
 
 
 theorem sharpness (htildePc_pos : 0 < (tildePc d : ℝ))
-    (htheta_one : ∀ h1 : (1 : ℝ≥0) ≤ 1, theta d 1 h1 ≠ 0)
+    (htheta_one : ∀ h1 : (1 : NNReal) ≤ 1, theta d 1 h1 ≠ 0)
     (hsub : ∀ p ∈ tildePcSet d, ∀ hp : p ≤ 1,
         ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n))
-    (F' : ℕ → ℝ≥0 → ℝ → ℝ)
-    (hcont : ∀ q : ℝ≥0, tildePc d < q → (q : ℝ) < 1 → ∀ n,
+    (F' : ℕ → NNReal → ℝ → ℝ)
+    (hcont : ∀ q : NNReal, tildePc d < q → (q : ℝ) < 1 → ∀ n,
         ContinuousOn (crossProbReal d (n + 1)) (Icc (tildePc d : ℝ) (q : ℝ)))
-    (hderiv : ∀ q : ℝ≥0, tildePc d < q → (q : ℝ) < 1 → ∀ n,
+    (hderiv : ∀ q : NNReal, tildePc d < q → (q : ℝ) < 1 → ∀ n,
         ∀ t ∈ Ioo (tildePc d : ℝ) (q : ℝ), HasDerivAt (crossProbReal d (n + 1)) (F' n q t) t)
-    (hdiffineq : ∀ q : ℝ≥0, tildePc d < q → (q : ℝ) < 1 → ∀ n,
+    (hdiffineq : ∀ q : NNReal, tildePc d < q → (q : ℝ) < 1 → ∀ n,
         ∀ t ∈ Ioo (tildePc d : ℝ) (q : ℝ),
         F' n q t ≥ (1 / (t * (1 - t))) * (1 - crossProbReal d (n + 1) t)) :
     tildePc d = pc d ∧
       (∀ p ∈ tildePcSet d, ∀ hp : p ≤ 1,
         ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n)) ∧
-      (∀ q : ℝ≥0, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 →
+      (∀ q : NNReal, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 →
         theta d q hq ≥ ((q : ℝ) - (tildePc d : ℝ)) / ((q : ℝ) * (1 - (tildePc d : ℝ)))) := by
   
-  have hmf : ∀ q : ℝ≥0, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → 0 < theta d q hq := by
+  have hmf : ∀ q : NNReal, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → 0 < theta d q hq := by
     intro q hq hlt hqlt1
     exact theta_pos_of_meanField q hq (tildePc d : ℝ) htildePc_pos
       (by exact_mod_cast hlt) hqlt1 (F' · q)

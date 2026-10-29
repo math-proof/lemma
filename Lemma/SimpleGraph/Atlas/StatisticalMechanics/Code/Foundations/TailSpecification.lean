@@ -68,7 +68,7 @@ private lemma ts_trim_smul_eq
   {mu : @Measure Omega mOmega}
 -- given
   (hm : m ≤ mOmega)
-  (a : ℝ≥0∞) :
+  (a : ENNReal) :
 -- imply
   (a • mu).trim hm = a • (mu.trim hm) := by
 -- proof
@@ -107,7 +107,7 @@ private lemma ts_smul_state_eq
   {mu : Measure (ConfigSpace E)}
   [IsFiniteMeasure mu]
 -- given
-  (c : ℝ≥0∞)
+  (c : ENNReal)
   (hc : c ≠ ⊤)
   (hmu : IsTailSpecificationState window K mu) :
 -- imply
@@ -193,7 +193,7 @@ private lemma ts_isErgodic_of_extreme_eq
   (hescape : ∀ (F : Finset E) (k : ℕ), ∃ g : H, (↑(F.image (fun e => g⁻¹ • e)) : Set E) ⊆ (window k)ᶜ)
   (hti : IsTranslationInvariant (G := H) mu)
   (hstate : IsTailSpecificationState window K mu)
-  (hext : ∀ (nu₁ nu₂ : Measure (ConfigSpace E)) (a b : ℝ≥0∞), IsProbabilityMeasure nu₁ → IsProbabilityMeasure nu₂ → IsTailSpecificationMeasure window K nu₁ → IsTailSpecificationMeasure window K nu₂ → 0 < a → 0 < b → a + b = 1 → a ≠ ⊤ → b ≠ ⊤ → mu = a • nu₁ + b • nu₂ → nu₁ = nu₂) :
+  (hext : ∀ (nu₁ nu₂ : Measure (ConfigSpace E)) (a b : ENNReal), IsProbabilityMeasure nu₁ → IsProbabilityMeasure nu₂ → IsTailSpecificationMeasure window K nu₁ → IsTailSpecificationMeasure window K nu₂ → 0 < a → 0 < b → a + b = 1 → a ≠ ⊤ → b ≠ ⊤ → mu = a • nu₁ + b • nu₂ → nu₁ = nu₂) :
 -- imply
   IsErgodic (G := H) mu := by
 -- proof

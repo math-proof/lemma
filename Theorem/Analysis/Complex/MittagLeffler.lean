@@ -56,10 +56,10 @@ theorem trunc (F : ℂ → ℂ) (R : ℝ) (hR : 0 < R)
     (hF : DifferentiableOn ℂ F (closedBall 0 R))
     (r' : ℝ) (hr'0 : 0 ≤ r') (hr' : r' < R) (ε : ℝ) (hε : 0 < ε) :
     ∃ Q : ℂ → ℂ, (∀ w, AnalyticAt ℂ Q w) ∧ ∀ z ∈ ball (0 : ℂ) r', ‖F z - Q z‖ ≤ ε := by
-  lift R to ℝ≥0 using hR.le with R'
-  lift r' to ℝ≥0 using hr'0 with r''
+  lift R to NNReal using hR.le with R'
+  lift r' to NNReal using hr'0 with r''
   have hp := hF.hasFPowerSeriesOnBall (by exact_mod_cast hR)
-  have hlt : (r'' : ℝ≥0∞) < (R' : ℝ≥0∞) := by exact_mod_cast hr'
+  have hlt : (r'' : ENNReal) < (R' : ENNReal) := by exact_mod_cast hr'
   have hunif := hp.tendstoUniformlyOn hlt
   rw [Metric.tendstoUniformlyOn_iff] at hunif
   obtain ⟨N, hN⟩ := (hunif ε hε).exists

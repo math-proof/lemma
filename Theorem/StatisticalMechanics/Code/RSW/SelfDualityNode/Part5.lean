@@ -78,7 +78,7 @@ theorem rsd_selfDualPoint_one : rsd_selfDualPoint 1 = 1 / 2 := by
   rw [Real.sqrt_one]; norm_num
 
 
-theorem rsd_planarDual_law (p : ℝ≥0) (hp : p ≤ 1) :
+theorem rsd_planarDual_law (p : NNReal) (hp : p ≤ 1) :
     Measure.map Lattice.dualConfig (bernoulliProductMeasure p hp)
       = bernoulliProductMeasure (1 - p) tsub_le_self :=
   Universality.map_dualConfig p hp
@@ -86,12 +86,12 @@ theorem rsd_planarDual_law (p : ℝ≥0) (hp : p ≤ 1) :
 
 theorem rsd_planarDual_selfDual_half :
     Measure.map Lattice.dualConfig
-        (bernoulliProductMeasure (2⁻¹ : ℝ≥0) Universality.half_le_one)
-      = bernoulliProductMeasure (2⁻¹ : ℝ≥0) Universality.half_le_one :=
+        (bernoulliProductMeasure (2⁻¹ : NNReal) Universality.half_le_one)
+      = bernoulliProductMeasure (2⁻¹ : NNReal) Universality.half_le_one :=
   Universality.bernoulliProductMeasure_selfDual_half
 
 
-theorem rsd_planarDual_invol (p : ℝ≥0) (hp : p ≤ 1) :
+theorem rsd_planarDual_invol (p : NNReal) (hp : p ≤ 1) :
     Measure.map Lattice.dualConfig
         (Measure.map Lattice.dualConfig (bernoulliProductMeasure p hp))
       = bernoulliProductMeasure p hp :=

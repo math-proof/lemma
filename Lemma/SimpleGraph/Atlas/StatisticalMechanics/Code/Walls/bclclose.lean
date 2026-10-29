@@ -37,7 +37,7 @@ private lemma bcl_hindep_eq
   {a₁ a₂ a₃ x₁ x₂ x₃ : Site 2}
   {η₀ : ConfigSpace ↥I}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hExtMeas : MeasurableSet (bpt2_Ext I a₁ a₂ a₃ x₁ x₂ x₃)) :
 -- imply
@@ -54,7 +54,7 @@ private lemma bcl_precursorPos_eq
   {a₁ a₂ a₃ x₁ x₂ x₃ : Site 2}
   {η₀ : ConfigSpace ↥I}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)
@@ -74,7 +74,7 @@ private lemma bcl_precursorPos_eq
 @[path]
 private lemma bcl_hroute_of_residue_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)
@@ -90,7 +90,7 @@ private lemma bcl_hroute_of_residue_eq
 @[path]
 private lemma bcl_bk_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)
@@ -106,7 +106,7 @@ private lemma bcl_bk_eq
 @[path]
 private lemma bcl_bk_atLeastTwo_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)

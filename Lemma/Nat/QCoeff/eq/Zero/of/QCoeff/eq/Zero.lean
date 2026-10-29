@@ -14,7 +14,7 @@ private lemma toCuspForm_eq_zero (Z : ModularForm 𝒮ℒ 14) (h0 : ModularFormC
 private lemma coe_eq_zero (Z : ModularForm 𝒮ℒ 14) (h0 : ModularFormClass.qCoeff ⇑Z 0 = 0) :
   (⇑Z : UpperHalfPlane → ℂ) = 0 := by
   show (⇑(ModularForm.toCuspForm Z h0) : UpperHalfPlane → ℂ) = 0
-  rw [toCuspForm_eq_zero Z h0, CuspForm.coe_zero]
+  rw [toCuspForm_eq_zero Z h0, FunLike.coe_zero]
 
 p2m_open_scoped "ModularForm" in
 
@@ -37,3 +37,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

@@ -66,7 +66,7 @@ lemma holder_integrable
   [MeasurableSpace α]
   {μ : Measure α}
   [NormedField 𝕜]
-  {p q : ℝ≥0∞}
+  {p q : ENNReal}
   {f g : α → 𝕜}
   [hpq : ENNReal.HolderConjugate p q]
 -- given
@@ -85,7 +85,7 @@ lemma holder_eLpNorm
   [MeasurableSpace α]
   {μ : Measure α}
   [NormedField 𝕜]
-  {p q : ℝ≥0∞}
+  {p q : ENNReal}
   {f g : α → 𝕜}
   [hpq : ENNReal.HolderConjugate p q]
 -- given
@@ -95,7 +95,7 @@ lemma holder_eLpNorm
   MeasureTheory.eLpNorm (f * g) 1 μ ≤ MeasureTheory.eLpNorm f p μ * MeasureTheory.eLpNorm g q μ := by
 -- proof
   have h :=
-    eLpNorm_smul_le_mul_eLpNorm (𝕜 := 𝕜) (E := 𝕜) (p := p) (q := q) (r := (1 : ℝ≥0∞))
+    eLpNorm_smul_le_mul_eLpNorm (𝕜 := 𝕜) (E := 𝕜) (p := p) (q := q) (r := (1 : ENNReal))
       (φ := f) (f := g) hf.aestronglyMeasurable hg.aestronglyMeasurable
   simpa [smul_eq_mul] using h
 
@@ -107,7 +107,7 @@ lemma holder_inequality
   [MeasurableSpace α]
   {μ : Measure α}
   [NormedField 𝕜]
-  {p q : ℝ≥0∞}
+  {p q : ENNReal}
   {f g : α → 𝕜}
   [hpq : ENNReal.HolderConjugate p q]
 -- given
@@ -127,7 +127,7 @@ lemma minkowski_inequality
   [MeasurableSpace α]
   {μ : Measure α}
   [NormedAddCommGroup E]
-  {p : ℝ≥0∞}
+  {p : ENNReal}
   {f g : α → E}
 -- given
   (hp : 1 ≤ p)
@@ -147,7 +147,7 @@ lemma riesz_fischer_Lp_completeSpace
   {μ : Measure α}
   [NormedAddCommGroup E]
   [CompleteSpace E]
-  {p : ℝ≥0∞}
+  {p : ENNReal}
   [Fact (1 ≤ p)] :
 -- imply
   CompleteSpace (MeasureTheory.Lp E p μ) :=
@@ -162,7 +162,7 @@ lemma lintegral_eq_iSup_lintegral_Icc_inter
   {S : Set ℝ}
 -- given
   (hS : MeasurableSet S)
-  (g : ℝ → ℝ≥0∞)
+  (g : ℝ → ENNReal)
   (hg : Measurable g) :
 -- imply
   ∫⁻ x in S, g x ∂volume = ⨆ n : ℕ, ∫⁻ x in (Set.Icc (-(n : ℝ)) n) ∩ S, g x ∂volume := by
@@ -172,7 +172,7 @@ lemma lintegral_eq_iSup_lintegral_Icc_inter
     ∫⁻ x, (Set.Icc (-(n : ℝ)) n ∩ S).indicator g x ∂volume :=
     fun n => (lintegral_indicator (measurableSet_Icc.inter hS) g).symm
   simp_rw [h_eq]
-  set F : ℕ → ℝ → ℝ≥0∞ := fun n => (Set.Icc (-(n : ℝ)) n ∩ S).indicator g with hF_def
+  set F : ℕ → ℝ → ENNReal := fun n => (Set.Icc (-(n : ℝ)) n ∩ S).indicator g with hF_def
   have h_mono : Monotone F := by
     intro m n hmn x
     apply Set.indicator_le_indicator_of_subset
@@ -210,7 +210,7 @@ lemma memLp_iff_iSup_lintegral_Icc_inter_lt_top
   [MeasurableSpace F]
   [BorelSpace F]
   [SecondCountableTopology F]
-  {p : ℝ≥0∞}
+  {p : ENNReal}
   {S : Set ℝ}
   {f : ℝ → F}
 -- given
@@ -241,7 +241,7 @@ lemma memLp_of_polynomial_decay
   {f : ℝ → E}
   {C : ℝ}
   {q : ℝ}
-  {p : ℝ≥0∞}
+  {p : ENNReal}
 -- given
   (hf_meas : AEStronglyMeasurable f volume)
   (hC : 0 ≤ C)
@@ -265,7 +265,7 @@ lemma memLp_of_polynomial_decay
   · have hp_ne_zero : p ≠ 0 := by positivity
     have hp_pos : 0 < p.toReal := ENNReal.toReal_pos hp_ne_zero hp_top
     have hp_ge_one : (1 : ℝ) ≤ p.toReal := by
-      have : (1 : ℝ≥0∞).toReal ≤ p.toReal :=
+      have : (1 : ENNReal).toReal ≤ p.toReal :=
         (ENNReal.toReal_le_toReal ENNReal.one_ne_top hp_top).mpr hp
       simpa using this
     have hqp : (Module.finrank ℝ ℝ : ℝ) < q * p.toReal := by

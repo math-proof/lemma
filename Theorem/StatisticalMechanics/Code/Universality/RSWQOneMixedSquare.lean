@@ -36,12 +36,12 @@ variable (G : SimpleGraph V) [DecidableRel G.Adj]
 
 theorem rq1_halfBernoulliMeasure_eq {E : Type*} [Countable E] :
     bernoulliProductMeasure (E := E)
-        (⟨(1 : ℝ) / 2, by norm_num⟩ : ℝ≥0)
+        (⟨(1 : ℝ) / 2, by norm_num⟩ : NNReal)
           (by
             change (1 : ℝ) / 2 ≤ 1
             norm_num) =
-      bernoulliProductMeasure (E := E) (2⁻¹ : ℝ≥0) half_le_one := by
-  have hp : (⟨(1 : ℝ) / 2, by norm_num⟩ : ℝ≥0) = (2⁻¹ : ℝ≥0) := by
+      bernoulliProductMeasure (E := E) (2⁻¹ : NNReal) half_le_one := by
+  have hp : (⟨(1 : ℝ) / 2, by norm_num⟩ : NNReal) = (2⁻¹ : NNReal) := by
     ext
     norm_num
   unfold bernoulliProductMeasure

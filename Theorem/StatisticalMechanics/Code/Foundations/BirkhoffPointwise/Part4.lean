@@ -64,7 +64,7 @@ theorem eLpNorm_birkhoffAverage_le (hT : MeasurePreserving T μ μ) (hf : Integr
     intro k
     rw [← memLp_one_iff_integrable] at hf
     exact (hf.comp_measurePreserving (hT.iterate k)).aestronglyMeasurable
-  have hsum : eLpNorm (fun x => ∑ k ∈ range n, f (T^[k] x)) 1 μ ≤ (n : ℝ≥0∞) * eLpNorm f 1 μ := by
+  have hsum : eLpNorm (fun x => ∑ k ∈ range n, f (T^[k] x)) 1 μ ≤ (n : ENNReal) * eLpNorm f 1 μ := by
     have hle := eLpNorm_sum_le (μ := μ) (p := 1) (f := fun k => fun x => f (T^[k] x))
       (s := range n) (le_refl 1)
     have heq1 : (∑ i ∈ range n, (fun k (x : α) => f (T^[k] x)) i)
@@ -82,10 +82,10 @@ theorem eLpNorm_birkhoffAverage_le (hT : MeasurePreserving T μ μ) (hf : Integr
   rw [hAdef]
   calc eLpNorm ((n : ℝ)⁻¹ • fun x => ∑ k ∈ range n, f (T^[k] x)) 1 μ
       ≤ ‖(n : ℝ)⁻¹‖ₑ * eLpNorm (fun x => ∑ k ∈ range n, f (T^[k] x)) 1 μ := eLpNorm_const_smul_le
-    _ ≤ ‖(n : ℝ)⁻¹‖ₑ * ((n : ℝ≥0∞) * eLpNorm f 1 μ) := by gcongr
+    _ ≤ ‖(n : ℝ)⁻¹‖ₑ * ((n : ENNReal) * eLpNorm f 1 μ) := by gcongr
     _ = eLpNorm f 1 μ := by
         rw [← mul_assoc]
-        have h1 : ‖(n : ℝ)⁻¹‖ₑ * (n : ℝ≥0∞) = 1 := by
+        have h1 : ‖(n : ℝ)⁻¹‖ₑ * (n : ENNReal) = 1 := by
           rw [Real.enorm_eq_ofReal (by positivity), ENNReal.ofReal_inv_of_pos (by exact_mod_cast hn),
             ENNReal.ofReal_natCast]
           exact ENNReal.inv_mul_cancel (by exact_mod_cast hn.ne') (by simp)

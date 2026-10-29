@@ -57,7 +57,7 @@ theorem blf_status :
     (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ),
       blf_AcyclicArmUnion ω L R → bc69_Gn_globalForest ω L R) ∧
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p →
       (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), blf_AcyclicArmUnion ω L R) →
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) ∧
     

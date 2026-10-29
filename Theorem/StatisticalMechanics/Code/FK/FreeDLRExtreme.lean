@@ -148,7 +148,7 @@ theorem freeInfiniteVolume_weakDLR_extreme {p q : ℝ}
     (hp : 0 < p) (hp1 : p < 1) (hq : 1 ≤ q)
     (phi1 phi2 : ProbabilityMeasure (ConfigSpace (Sym2 (Site d))))
     (hphi1 : IsFKDLR d p q phi1) (hphi2 : IsFKDLR d p q phi2)
-    (a b : ℝ≥0∞) (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1)
+    (a b : ENNReal) (ha : 0 < a) (hb : 0 < b) (hab : a + b = 1)
     (hconv : (freeInfiniteVolume d hp hp1 (zero_lt_one.trans_le hq) :
         Measure (ConfigSpace (Sym2 (Site d))))
       = a • (phi1 : Measure (ConfigSpace (Sym2 (Site d))))

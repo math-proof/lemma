@@ -25,7 +25,7 @@ namespace MeasuresAndSigmaAlgebras
 
 /-- Carathéodory measurability condition: `E` splits every test set `A` additively
 with respect to the outer measure `μ*`. -/
-def IsOuterMeasureMeasurable {X : Type*} (μstar : Set X → ℝ≥0∞) (E : Set X) : Prop :=
+def IsOuterMeasureMeasurable {X : Type*} (μstar : Set X → ENNReal) (E : Set X) : Prop :=
   ∀ A : Set X, μstar A = μstar (A ∩ E) + μstar (A ∩ Eᶜ)
 
 /-- The measure on the Carathéodory σ-algebra induced by an outer measure `μ` by

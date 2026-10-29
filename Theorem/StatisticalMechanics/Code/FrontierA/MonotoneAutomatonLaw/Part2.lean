@@ -22,12 +22,12 @@ open StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation
 variable {d : ℕ}
 
 
-@[simp] theorem raiseField_self (xi : NonnegativeField d) (x : Site d) (r : ℝ≥0) :
+@[simp] theorem raiseField_self (xi : NonnegativeField d) (x : Site d) (r : NNReal) :
     raiseField xi x r x = max r (xi x) := by
   simp [raiseField]
 
 @[simp] theorem raiseField_apply_of_ne (xi : NonnegativeField d)
-    {x y : Site d} (h : y ≠ x) (r : ℝ≥0) :
+    {x y : Site d} (h : y ≠ x) (r : NNReal) :
     raiseField xi x r y = xi y := by
   simp [raiseField, h]
 

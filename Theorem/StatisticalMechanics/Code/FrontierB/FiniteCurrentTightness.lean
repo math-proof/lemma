@@ -316,7 +316,7 @@ theorem sourcelessCurrentMeasure_edge_tail_le (beta : ℝ) (J : Sym2 V → ℝ)
     split
     · exact le_rfl
     · exact hweight_nonneg m
-  have hden : (1 : ℝ≥0∞) ≤ ENNReal.ofReal (currentSum G beta J ∅) := by
+  have hden : (1 : ENNReal) ≤ ENNReal.ofReal (currentSum G beta J ∅) := by
     rw [← ENNReal.ofReal_one]
     exact ENNReal.ofReal_le_ofReal (one_le_currentSum_empty G beta J hbeta hJ)
   have hinv : (ENNReal.ofReal (currentSum G beta J ∅))⁻¹ ≤ 1 :=
@@ -400,7 +400,7 @@ theorem sourcelessCurrentMeasure_finite_edges_tail_le_of_total_coupling
       S.card * ENNReal.ofReal ((C * Real.exp C) / K) := by
   let μ : Measure (EdgeCurrent G) :=
     sourcelessCurrentMeasure G beta J hbeta hJ
-  let B : ℝ≥0∞ := ENNReal.ofReal ((C * Real.exp C) / K)
+  let B : ENNReal := ENNReal.ofReal ((C * Real.exp C) / K)
   have hevent : {m : EdgeCurrent G | ∃ e ∈ S, K ≤ m e} =
       ⋃ e ∈ S, {m : EdgeCurrent G | K ≤ m e} := by
     ext m

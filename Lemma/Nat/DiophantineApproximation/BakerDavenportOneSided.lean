@@ -9,10 +9,10 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma bakerDavenport_reduction_oneSided_general
-  {N q : ℕ}
-  {γ A μ B ξ : ℝ}
+  (N q : ℕ)
 -- given
   (hq : 0 < q)
+  (γ A μ B ξ : ℝ)
   (hA : 0 < A)
   (hB : 1 < B)
   (hξ : ξ = |μ * (q : ℝ) - (round (μ * (q : ℝ)) : ℝ)| - (N : ℝ) * |γ * (q : ℝ) - (round (γ * (q : ℝ)) : ℝ)|)
@@ -107,7 +107,6 @@ lemma bakerDavenport_reduction_oneSided_general
       exact_mod_cast h
     have hSge : -|(u : ℝ) * e₁ + e₂| ≤ (u : ℝ) * e₁ + e₂ := neg_abs_le _
     linarith
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -124,7 +123,7 @@ lemma bakerDavenport_reduction_oneSided
   {A μ B ξ : ℝ}
 -- given
   (hN : 0 < N)
-  (hγ : Irrational γ)
+  (_hγ : Irrational γ)
   (hq : q = (γ.convergent j).den)
   (hqN : 6 * N < q)
   (hA : 0 < A)

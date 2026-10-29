@@ -24,7 +24,7 @@ open StatMech.Lattice StatMech.Universality StatMech.Percolation StatMech.Walls
 theorem zbd_atLeastTwo_halfMeasure_zero :
     halfMeasure (atLeastTwoInfinite 2) = 0 := by
   simpa [halfMeasure] using
-    (bins_bk_unconditional (2⁻¹ : ℝ≥0) half_le_one (by norm_num) (by norm_num)).2.1
+    (bins_bk_unconditional (2⁻¹ : NNReal) half_le_one (by norm_num) (by norm_num)).2.1
 
 
 end StatMech.TwoDim

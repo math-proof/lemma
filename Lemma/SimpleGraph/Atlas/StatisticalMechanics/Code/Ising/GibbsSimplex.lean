@@ -80,7 +80,7 @@ private lemma trim_smul_eq
   {μ : @Measure Ω mΩ}
 -- given
   (hm : m ≤ mΩ)
-  (a : ℝ≥0∞) :
+  (a : ENNReal) :
 -- imply
   (a • μ).trim hm = a • (μ.trim hm) := by
 -- proof
@@ -313,7 +313,7 @@ private lemma isDLRState_of_compProd_trim_eq
 @[path]
 private lemma isDLRState_add_smul_eq
   {d : ℕ}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   {μ₁ μ₂ : Measure (ConfigSpace (Site d))}
   [IsFiniteMeasure μ₁]
   [IsFiniteMeasure μ₂]
@@ -333,7 +333,7 @@ private lemma isDLRState_add_smul_eq
 @[path]
 private lemma convex_isDLRState_eq
   {d : ℕ}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   {μ₁ μ₂ : Measure (ConfigSpace (Site d))}
   [IsFiniteMeasure μ₁]
   [IsFiniteMeasure μ₂]

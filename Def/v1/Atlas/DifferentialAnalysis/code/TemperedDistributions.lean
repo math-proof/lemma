@@ -28,7 +28,7 @@ distribution it represents. -/
 def lpToTemperedDistributionCLM
     [MeasurableSpace E] [BorelSpace E] [CompleteSpace F]
     (μ : Measure E) [μ.HasTemperateGrowth]
-    (p : ℝ≥0∞) [Fact (1 ≤ p)] :
+    (p : ENNReal) [Fact (1 ≤ p)] :
     Lp F p μ →L[ℂ] 𝓢'(E, F) :=
   Lp.toTemperedDistributionCLM F μ p
 

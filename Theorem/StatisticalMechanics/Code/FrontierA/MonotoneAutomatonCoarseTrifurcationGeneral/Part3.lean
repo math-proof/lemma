@@ -56,7 +56,7 @@ theorem exists_siteThreeMeetBox_pos_general
 
 theorem siteBgfdFaithfulAllOpenTrif_pos_of_top
     (nu : Measure (ConfigSpace (Site d))) [IsProbabilityMeasure nu]
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon)
     (htop : 0 < nu {eta | numInfiniteClusters d (siteToBond eta) = ⊤}) :
     ∃ n : ℕ, 0 < nu (SiteBgfdFaithfulAllOpenTrifAt d n) := by
@@ -89,7 +89,7 @@ theorem site_cluster_count_top_null_general
     (nu : Measure (ConfigSpace (Site d))) [IsProbabilityMeasure nu]
     (hd : 1 ≤ d)
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) nu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon) :
     nu {eta | numInfiniteClusters d (siteToBond eta) = ⊤} = 0 := by
   by_contra hne
@@ -105,7 +105,7 @@ theorem site_cluster_count_ae_one_general
     (nu : Measure (ConfigSpace (Site d))) [IsProbabilityMeasure nu]
     (hd : 1 ≤ d)
     (herg : IsErgodic (G := Multiplicative (Site d)) nu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon)
     (hperco : nu {eta | 1 ≤ numInfiniteClusters d (siteToBond eta)} = 1) :
     nu {eta | numInfiniteClusters d (siteToBond eta) = 1} = 1 := by
@@ -121,7 +121,7 @@ theorem site_cluster_count_ae_zero_or_one_general
     (nu : Measure (ConfigSpace (Site d))) [IsProbabilityMeasure nu]
     (hd : 1 ≤ d)
     (herg : IsErgodic (G := Multiplicative (Site d)) nu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon) :
     nu {eta | numInfiniteClusters d (siteToBond eta) = 0} = 1 ∨
       nu {eta | numInfiniteClusters d (siteToBond eta) = 1} = 1 := by
@@ -147,7 +147,7 @@ theorem interpolatedSite_cluster_count_ae_zero_or_one_general
     [IsProbabilityMeasure mu]
     (hd : 1 ≤ d)
     (herg : IsTripleFieldErgodic mu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon) :
     (interpolatedSiteLaw T mu)
         {eta | numInfiniteClusters d (siteToBond eta) = 0} = 1 ∨

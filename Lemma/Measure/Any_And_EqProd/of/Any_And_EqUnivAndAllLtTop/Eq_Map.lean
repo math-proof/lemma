@@ -91,14 +91,14 @@ private lemma  slice_eq_smul
   have := slice_isFiniteMeasureOnCompacts ρ B hBfin
   have huniq := isAddLeftInvariant_eq_smul (slice ρ B) μ
   set c := (slice ρ B).addHaarScalarFactor μ with hc
-  have huniq' : slice ρ B = (c : ℝ≥0∞) • μ := by
+  have huniq' : slice ρ B = (c : ENNReal) • μ := by
     rw [huniq]
     exact Measure.ext fun s _ => by simp only [Measure.smul_apply, smul_eq_mul, ENNReal.smul_def]
   have hval : ρ (K₀ ×ˢ B) = c * μ K₀ := by
     have := congrArg (fun ν : Measure G => ν K₀) huniq'
     simp only [Measure.smul_apply, smul_eq_mul] at this
     rwa [slice_apply ρ B hK₀m] at this
-  have hc' : (c : ℝ≥0∞) = ρ (K₀ ×ˢ B) / μ K₀ := by
+  have hc' : (c : ENNReal) = ρ (K₀ ×ˢ B) / μ K₀ := by
     rw [hval, ENNReal.mul_div_cancel_right hK₀pos hK₀top]
   rw [huniq', hc']
 

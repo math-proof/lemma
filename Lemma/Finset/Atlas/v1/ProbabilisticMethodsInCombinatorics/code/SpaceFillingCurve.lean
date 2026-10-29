@@ -15,8 +15,8 @@ lemma holderWith_of_dist_bound
   [PseudoMetricSpace Y]
   {f : X → Y}
 -- given
-  (C : ℝ≥0)
-  (r : ℝ≥0)
+  (C : NNReal)
+  (r : NNReal)
   (h : ∀ x y, dist (f x) (f y) ≤ (C : ℝ) * dist x y ^ (r : ℝ)) :
 -- imply
   HolderWith C r f := by
@@ -39,16 +39,16 @@ namespace SpaceFillingCurve
 lemma holder_half_sq_bound
   [PseudoMetricSpace X]
   [PseudoMetricSpace Y]
-  {C : ℝ≥0}
+  {C : NNReal}
   {f : X → Y}
   {x y : X}
 -- given
-  (hf : HolderWith C (2⁻¹ : ℝ≥0) f) :
+  (hf : HolderWith C (2⁻¹ : NNReal) f) :
 -- imply
   dist (f x) (f y) ^ 2 ≤ (C : ℝ) ^ 2 * dist x y := by
 -- proof
   have h := hf.dist_le x y
-  have hr : ((2⁻¹ : ℝ≥0) : ℝ) = (1/2 : ℝ) := by norm_num
+  have hr : ((2⁻¹ : NNReal) : ℝ) = (1/2 : ℝ) := by norm_num
   rw [hr] at h
   have hdist : (0 : ℝ) ≤ dist x y := dist_nonneg
   calc dist (f x) (f y) ^ 2

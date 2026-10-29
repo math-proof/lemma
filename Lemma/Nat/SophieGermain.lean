@@ -29,13 +29,14 @@ private lemma powResidue (q p : ℕ) (hq : Nat.Prime q) (hqq : q = 2 * p + 1)
     rw [ha]
     exact zero_pow (by omega : p ≠ 0)
   · have hflt : (a : ZMod q) ^ (q - 1) = 1 :=
-    ZMod.pow_card_sub_one_eq_one ha
+      ZMod.pow_card_sub_one_eq_one ha
     have hq1 : q - 1 = 2 * p := by omega
     rw [hq1] at hflt
     have hsq : ((a : ZMod q) ^ p) ^ 2 = 1 := by
       rw [← pow_mul]
       have he : p * 2 = 2 * p := by ring
-      rwa [he]
+      rw [he]
+      exact hflt
     rw [sq_eq_one_iff] at hsq
     exact Or.inr hsq
 
@@ -51,11 +52,11 @@ private lemma sgCore (q : ℕ) (A B C : ZMod q)
   (hA : A = 0 ∨ A ^ 2 = 1) (hB : B = 0 ∨ B ^ 2 = 1)
   (hC : C = 0 ∨ C ^ 2 = 1) (hsum : A + B = C) (hq7 : 7 ≤ q) :
   A = 0 ∨ B = 0 ∨ C = 0 := by
-  obtain rfl | hA2 := hA
+  rcases hA with rfl | hA2
   · exact Or.inl rfl
-  obtain rfl | hB2 := hB
+  rcases hB with rfl | hB2
   · exact Or.inr (Or.inl rfl)
-  obtain rfl | hC2 := hC
+  rcases hC with rfl | hC2
   · exact Or.inr (Or.inr rfl)
   exfalso
   have hC2' : C ^ 2 = (A + B) ^ 2 := by rw [← hsum]
@@ -98,25 +99,26 @@ private lemma sgDvd (x y z p q : ℕ) (hq : Nat.Prime q) (hqq : q = 2 * p + 1)
   have hcast : (x : ZMod q) ^ p + (y : ZMod q) ^ p = (z : ZMod q) ^ p := by
     have h2 : ((x ^ p + y ^ p : ℕ) : ZMod q) = ((z ^ p : ℕ) : ZMod q) :=
       congrArg (fun n : ℕ => (n : ZMod q)) h
-    rwa [Nat.cast_add, Nat.cast_pow, Nat.cast_pow, Nat.cast_pow] at h2
+    rw [Nat.cast_add, Nat.cast_pow, Nat.cast_pow, Nat.cast_pow] at h2
+    exact h2
   have e1 : (x : ZMod q) ^ p = 0 ∨ ((x : ZMod q) ^ p) ^ 2 = 1 := by
-    obtain h0 | h1 | hm1 := hrx
+    rcases hrx with h0 | h1 | hm1
     · exact Or.inl h0
     · exact Or.inr (by rw [h1, one_pow])
     · exact Or.inr (by rw [hm1]; exact Even.neg_one_pow ⟨1, rfl⟩)
   have e2 : (y : ZMod q) ^ p = 0 ∨ ((y : ZMod q) ^ p) ^ 2 = 1 := by
-    obtain h0 | h1 | hm1 := hry
+    rcases hry with h0 | h1 | hm1
     · exact Or.inl h0
     · exact Or.inr (by rw [h1, one_pow])
     · exact Or.inr (by rw [hm1]; exact Even.neg_one_pow ⟨1, rfl⟩)
   have e3 : (z : ZMod q) ^ p = 0 ∨ ((z : ZMod q) ^ p) ^ 2 = 1 := by
-    obtain h0 | h1 | hm1 := hrz
+    rcases hrz with h0 | h1 | hm1
     · exact Or.inl h0
     · exact Or.inr (by rw [h1, one_pow])
     · exact Or.inr (by rw [hm1]; exact Even.neg_one_pow ⟨1, rfl⟩)
   have hdisj := sgCore q _ _ _ e1 e2 e3 hcast hq7
   have hpne : p ≠ 0 := by omega
-  obtain hx0 | hy0 | hz0 := hdisj
+  rcases hdisj with hx0 | hy0 | hz0
   · left
     have hx00 : (x : ZMod q) = 0 := (pow_eq_zero_iff hpne).mp hx0
     exact (zmodEqZero_iff_dvd x q).mp hx00
@@ -142,7 +144,8 @@ private lemma addPowFactor (X Y : ℤ) (p : ℕ) (hp : Odd p) :
     = X ^ p + Y ^ p := by
   have h := geom_sum₂_mul X (-Y) p
   rw [sub_neg_eq_add] at h
-  rwa [hp.neg_pow, sub_neg_eq_add] at h
+  rw [hp.neg_pow, sub_neg_eq_add] at h
+  exact h
 
 end MetaMathlibExt
 
@@ -209,7 +212,8 @@ private lemma natPowOfCoprimeMul (a b c p : ℕ) (hcop : Nat.Coprime a b)
   have hprodZ : ((a : ℕ) : ℤ) * ((b : ℕ) : ℤ) = ((c : ℕ) : ℤ) ^ p := by
     have h2 : ((((a * b : ℕ))) : ℤ) = (((c ^ p : ℕ)) : ℤ) :=
       congrArg (fun n : ℕ => (n : ℤ)) hprod
-    rwa [Nat.cast_mul, Nat.cast_pow] at h2
+    rw [Nat.cast_mul, Nat.cast_pow] at h2
+    exact h2
   obtain ⟨d, hd⟩ := (Int.eq_pow_of_mul_eq_pow_odd hI hp hprodZ).1
   have hd0 : 0 ≤ d := by
     by_contra hlt
@@ -223,7 +227,8 @@ private lemma natPowOfCoprimeMul (a b c p : ℕ) (hcop : Nat.Coprime a b)
   refine ⟨d.toNat, ?_⟩
   have hds : ((d.toNat : ℕ) : ℤ) = d := Int.toNat_of_nonneg hd0
   have hcast : ((a : ℕ) : ℤ) = ((d.toNat ^ p : ℕ) : ℤ) := by
-    rwa [Nat.cast_pow, hds]
+    rw [Nat.cast_pow, hds]
+    exact hd
   exact_mod_cast hcast
 
 end MetaMathlibExt
@@ -239,7 +244,8 @@ private lemma notDvdOfCoprimeDiv (q a b : ℕ) (hq7 : 7 ≤ q)
   intro hqb
   have h1 : q ∣ 1 := by
     have hgd := Nat.dvd_gcd hqa hqb
-    rwa [show Nat.gcd a b = 1 from hcop] at hgd
+    rw [show Nat.gcd a b = 1 from hcop] at hgd
+    exact hgd
   have hq1 : q = 1 := Nat.dvd_one.mp h1
   omega
 
@@ -262,11 +268,12 @@ private lemma coprime_add_cofactor (x y M z p : ℕ) (hp : Odd p)
   intro k hkprime hkx hkM
   have hxy0 : (x : ZMod k) + (y : ZMod k) = 0 := by
     have hcast : ((x + y : ℕ) : ZMod k) = 0 := (zmodEqZero_iff_dvd _ _).mpr hkx
-    rwa [Nat.cast_add] at hcast
+    rw [Nat.cast_add] at hcast
+    exact hcast
   have hX : (x : ZMod k) = -(y : ZMod k) := by linear_combination hxy0
   have hM0 : (M : ZMod k) = 0 := (zmodEqZero_iff_dvd _ _).mpr hkM
   have hMcast : (M : ZMod k) =
-    ∑ i ∈ Finset.range p, (x : ZMod k) ^ i * (-(y : ZMod k)) ^ (p - 1 - i) := by
+      ∑ i ∈ Finset.range p, (x : ZMod k) ^ i * (-(y : ZMod k)) ^ (p - 1 - i) := by
     have h2 := congrArg (fun z : ℤ => (z : ZMod k)) hMform
     push_cast at h2
     exact h2
@@ -274,8 +281,8 @@ private lemma coprime_add_cofactor (x y M z p : ℕ) (hp : Odd p)
     obtain ⟨t, ht⟩ := hp
     exact ⟨t, by omega⟩
   have hterm : ∀ i ∈ Finset.range p,
-    (x : ZMod k) ^ i * (-(y : ZMod k)) ^ (p - 1 - i)
-      = (y : ZMod k) ^ (p - 1) := by
+      (x : ZMod k) ^ i * (-(y : ZMod k)) ^ (p - 1 - i)
+        = (y : ZMod k) ^ (p - 1) := by
     intro i hi
     have hip : i + (p - 1 - i) = p - 1 := by
       have hmem := Finset.mem_range.mp hi
@@ -283,21 +290,23 @@ private lemma coprime_add_cofactor (x y M z p : ℕ) (hp : Odd p)
     rw [hX, ← pow_add, hip]
     exact heven.neg_pow _
   have hsum : ∑ i ∈ Finset.range p,
-    (x : ZMod k) ^ i * (-(y : ZMod k)) ^ (p - 1 - i)
-    = (p : ZMod k) * (y : ZMod k) ^ (p - 1) := by
+      (x : ZMod k) ^ i * (-(y : ZMod k)) ^ (p - 1 - i)
+      = (p : ZMod k) * (y : ZMod k) ^ (p - 1) := by
     rw [Finset.sum_congr rfl hterm, Finset.sum_const, Finset.card_range,
       nsmul_eq_mul]
   have hzero : (p : ZMod k) * (y : ZMod k) ^ (p - 1) = 0 := by
-    rwa [← hsum, ← hMcast]
+    rw [← hsum, ← hMcast]
+    exact hM0
   have hdvd : k ∣ p * y ^ (p - 1) := by
     have hcast0 : ((p * y ^ (p - 1) : ℕ) : ZMod k) = 0 := by
       push_cast
       exact hzero
     exact (zmodEqZero_iff_dvd _ _).mp hcast0
-  obtain hkp | hky := (hkprime.dvd_mul.mp hdvd)
+  rcases (hkprime.dvd_mul.mp hdvd) with hkp | hky
   · have hkeq : k = p := (Nat.prime_dvd_prime_iff_eq hkprime hpprime).mp hkp
     have hkx' : p ∣ x + y := by
-      rwa [← hkeq]
+      rw [← hkeq]
+      exact hkx
     have hdz : p ∣ z ^ p := by
       rw [← hprod]
       exact hkx'.mul_right M
@@ -305,10 +314,12 @@ private lemma coprime_add_cofactor (x y M z p : ℕ) (hp : Odd p)
   · have hky1 : k ∣ y := hkprime.dvd_of_dvd_pow hky
     have hkx1 : k ∣ x := by
       have hsub := Nat.dvd_sub hkx hky1
-      rwa [Nat.add_sub_cancel] at hsub
+      rw [Nat.add_sub_cancel] at hsub
+      exact hsub
     have h1 : k ∣ 1 := by
       have hgd := Nat.dvd_gcd hkx1 hky1
-      rwa [show Nat.gcd x y = 1 from hxy] at hgd
+      rw [show Nat.gcd x y = 1 from hxy] at hgd
+      exact hgd
     have hkeq1 : k = 1 := Nat.dvd_one.mp h1
     exact hkprime.ne_one hkeq1
 
@@ -331,38 +342,41 @@ private lemma coprime_sub_cofactor (z y L x p : ℕ) (hyz_le : y ≤ z)
   intro k hkprime hkz hkL
   have hZY0 : (z : ZMod k) - (y : ZMod k) = 0 := by
     have hcast : ((z - y : ℕ) : ZMod k) = 0 := (zmodEqZero_iff_dvd _ _).mpr hkz
-    rwa [Nat.cast_sub hyz_le] at hcast
+    rw [Nat.cast_sub hyz_le] at hcast
+    exact hcast
   have hZY : (z : ZMod k) = (y : ZMod k) := by linear_combination hZY0
   have hL0 : (L : ZMod k) = 0 := (zmodEqZero_iff_dvd _ _).mpr hkL
   have hLcast : (L : ZMod k) =
-    ∑ i ∈ Finset.range p, (z : ZMod k) ^ i * (y : ZMod k) ^ (p - 1 - i) := by
+      ∑ i ∈ Finset.range p, (z : ZMod k) ^ i * (y : ZMod k) ^ (p - 1 - i) := by
     have h2 := congrArg (fun z : ℤ => (z : ZMod k)) hLform
     push_cast at h2
     exact h2
   have hterm : ∀ i ∈ Finset.range p,
-    (z : ZMod k) ^ i * (y : ZMod k) ^ (p - 1 - i)
-      = (y : ZMod k) ^ (p - 1) := by
+      (z : ZMod k) ^ i * (y : ZMod k) ^ (p - 1 - i)
+        = (y : ZMod k) ^ (p - 1) := by
     intro i hi
     have hip : i + (p - 1 - i) = p - 1 := by
       have hmem := Finset.mem_range.mp hi
       omega
     rw [hZY, ← pow_add, hip]
   have hsum : ∑ i ∈ Finset.range p,
-    (z : ZMod k) ^ i * (y : ZMod k) ^ (p - 1 - i)
-    = (p : ZMod k) * (y : ZMod k) ^ (p - 1) := by
+      (z : ZMod k) ^ i * (y : ZMod k) ^ (p - 1 - i)
+      = (p : ZMod k) * (y : ZMod k) ^ (p - 1) := by
     rw [Finset.sum_congr rfl hterm, Finset.sum_const, Finset.card_range,
       nsmul_eq_mul]
   have hzero : (p : ZMod k) * (y : ZMod k) ^ (p - 1) = 0 := by
-    rwa [← hsum, ← hLcast]
+    rw [← hsum, ← hLcast]
+    exact hL0
   have hdvd : k ∣ p * y ^ (p - 1) := by
     have hcast0 : ((p * y ^ (p - 1) : ℕ) : ZMod k) = 0 := by
       push_cast
       exact hzero
     exact (zmodEqZero_iff_dvd _ _).mp hcast0
-  obtain hkp | hky := (hkprime.dvd_mul.mp hdvd)
+  rcases (hkprime.dvd_mul.mp hdvd) with hkp | hky
   · have hkeq : k = p := (Nat.prime_dvd_prime_iff_eq hkprime hpprime).mp hkp
     have hkz' : p ∣ z - y := by
-      rwa [← hkeq]
+      rw [← hkeq]
+      exact hkz
     have hdx : p ∣ x ^ p := by
       rw [← hprod]
       exact hkz'.mul_right L
@@ -370,10 +384,12 @@ private lemma coprime_sub_cofactor (z y L x p : ℕ) (hyz_le : y ≤ z)
   · have hky1 : k ∣ y := hkprime.dvd_of_dvd_pow hky
     have hkz1 : k ∣ z := by
       have hadd := Nat.dvd_add hkz hky1
-      rwa [Nat.sub_add_cancel hyz_le] at hadd
+      rw [Nat.sub_add_cancel hyz_le] at hadd
+      exact hadd
     have h1 : k ∣ 1 := by
       have hgd := Nat.dvd_gcd hky1 hkz1
-      rwa [show Nat.gcd y z = 1 from hyz] at hgd
+      rw [show Nat.gcd y z = 1 from hyz] at hgd
+      exact hgd
     have hkeq1 : k = 1 := Nat.dvd_one.mp h1
     exact hkprime.ne_one hkeq1
 
@@ -393,7 +409,8 @@ private lemma sumCofactorForm (x y z M p : ℕ) (hp : Odd p)
   have hcastprod : (((x + y : ℕ)) : ℤ) * ((M : ℕ) : ℤ) = (z : ℤ) ^ p := by
     have h2 : ((((x + y) * M : ℕ)) : ℤ) = (((z ^ p : ℕ)) : ℤ) :=
       congrArg (fun n : ℕ => (n : ℤ)) hprod
-    rwa [Nat.cast_mul, Nat.cast_pow] at h2
+    rw [Nat.cast_mul, Nat.cast_pow] at h2
+    exact h2
   have hne : (((x + y : ℕ)) : ℤ) ≠ 0 := by
     exact_mod_cast (ne_of_gt hxy0)
   have hform := addPowFactor (x : ℤ) (y : ℤ) p hp
@@ -402,7 +419,8 @@ private lemma sumCofactorForm (x y z M p : ℕ) (hp : Odd p)
   have hXpYp : (x : ℤ) ^ p + (y : ℤ) ^ p = (z : ℤ) ^ p := by
     have h2 : (((x ^ p + y ^ p : ℕ)) : ℤ) = (((z ^ p : ℕ)) : ℤ) :=
       congrArg (fun n : ℕ => (n : ℤ)) hsum
-    rwa [Nat.cast_add, Nat.cast_pow, Nat.cast_pow, Nat.cast_pow] at h2
+    rw [Nat.cast_add, Nat.cast_pow, Nat.cast_pow, Nat.cast_pow] at h2
+    exact h2
   apply mul_left_cancel₀ hne
   rw [hcastprod, hXY]
   rw [hXpYp] at hform
@@ -425,11 +443,13 @@ private lemma subCofactorForm (z y x L p : ℕ) (hyz : y ≤ z)
   have hcastprod : (((z - y : ℕ)) : ℤ) * ((L : ℕ) : ℤ) = (x : ℤ) ^ p := by
     have h2 : ((((z - y) * L : ℕ)) : ℤ) = (((x ^ p : ℕ)) : ℤ) :=
       congrArg (fun n : ℕ => (n : ℤ)) hprod
-    rwa [Nat.cast_mul, Nat.cast_pow] at h2
+    rw [Nat.cast_mul, Nat.cast_pow] at h2
+    exact h2
   have hXeq : (x : ℤ) ^ p = (z : ℤ) ^ p - (y : ℤ) ^ p := by
     have h2 : (((x ^ p : ℕ)) : ℤ) = (((z ^ p - y ^ p : ℕ)) : ℤ) :=
       congrArg (fun n : ℕ => (n : ℤ)) hdiff
-    rwa [Nat.cast_sub hle, Nat.cast_pow, Nat.cast_pow, Nat.cast_pow] at h2
+    rw [Nat.cast_sub hle, Nat.cast_pow, Nat.cast_pow, Nat.cast_pow] at h2
+    exact h2
   have hZY : (((z - y : ℕ)) : ℤ) = (z : ℤ) - (y : ℤ) := Nat.cast_sub hyz
   have hne : (((z - y : ℕ)) : ℤ) ≠ 0 := by
     have hpos : 0 < z - y := by omega
@@ -535,11 +555,12 @@ private lemma case_q_dvd_x (p x y z : ℕ)
   obtain ⟨l, hl⟩ := natPowOfCoprimeMul (x ^ p / (z - y)) (z - y) x p
     hcopK.symm hprodK' hp_odd
   have hcast : (x : ZMod (2 * p + 1)) ^ p + (y : ZMod (2 * p + 1)) ^ p
-    = (z : ZMod (2 * p + 1)) ^ p := by
+      = (z : ZMod (2 * p + 1)) ^ p := by
     have h2 : (((x ^ p + y ^ p : ℕ)) : ZMod (2 * p + 1))
-      = (((z ^ p : ℕ)) : ZMod (2 * p + 1)) :=
+        = (((z ^ p : ℕ)) : ZMod (2 * p + 1)) :=
       congrArg (fun n : ℕ => (n : ZMod (2 * p + 1))) h
-    rwa [Nat.cast_add, Nat.cast_pow, Nat.cast_pow, Nat.cast_pow] at h2
+    rw [Nat.cast_add, Nat.cast_pow, Nat.cast_pow, Nat.cast_pow] at h2
+    exact h2
   have hqy_n : ¬ (2 * p + 1) ∣ y :=
     notDvdOfCoprimeDiv (2 * p + 1) x y hq7 hxy hqx
   have hqz_n : ¬ (2 * p + 1) ∣ z :=
@@ -548,26 +569,31 @@ private lemma case_q_dvd_x (p x y z : ℕ)
     intro hqs
     have h1 : (2 * p + 1) ∣ x + y := by
       have hsp : (2 * p + 1) ∣ s ^ p := hqs.trans (dvd_pow_self s hpne)
-      rwa [← hs] at hsp
+      rw [← hs] at hsp
+      exact hsp
     have h2 : (2 * p + 1) ∣ y := by
       have hsub := Nat.dvd_sub h1 hqx
-      rwa [Nat.add_sub_cancel_left] at hsub
+      rw [Nat.add_sub_cancel_left] at hsub
+      exact hsub
     exact hqy_n h2
   have hqu_n : ¬ (2 * p + 1) ∣ u := by
     intro hqu
     have h1 : (2 * p + 1) ∣ z - x := by
       have hup : (2 * p + 1) ∣ u ^ p := hqu.trans (dvd_pow_self u hpne)
-      rwa [← hu] at hup
+      rw [← hu] at hup
+      exact hup
     have h2 : (2 * p + 1) ∣ z := by
       have hadd := Nat.dvd_add h1 hqx
-      rwa [Nat.sub_add_cancel (le_of_lt hxz_lt)] at hadd
+      rw [Nat.sub_add_cancel (le_of_lt hxz_lt)] at hadd
+      exact hadd
     exact hqz_n h2
   have hx0q : (x : ZMod (2 * p + 1)) = 0 :=
     (zmodEqZero_iff_dvd _ _).mpr hqx
   have hsx : (s : ZMod (2 * p + 1)) ^ p = (y : ZMod (2 * p + 1)) := by
     have h2 := congrArg (fun n : ℕ => (n : ZMod (2 * p + 1))) hs
     rw [Nat.cast_add, Nat.cast_pow] at h2
-    rwa [hx0q, zero_add] at h2
+    rw [hx0q, zero_add] at h2
+    exact h2.symm
   have hY2 : (y : ZMod (2 * p + 1)) ^ 2 = 1 := by
     have hsne : (s : ZMod (2 * p + 1)) ≠ 0 :=
       fun h0 => hqs_n ((zmodEqZero_iff_dvd _ _).mp h0)
@@ -575,13 +601,16 @@ private lemma case_q_dvd_x (p x y z : ℕ)
       ZMod.pow_card_sub_one_eq_one hsne
     rw [hq1] at hflt
     have hsq : ((s : ZMod (2 * p + 1)) ^ p) ^ 2 = 1 := by
-      rwa [← pow_mul, show p * 2 = 2 * p by ring]
-    rwa [hsx] at hsq
+      rw [← pow_mul, show p * 2 = 2 * p by ring]
+      exact hflt
+    rw [hsx] at hsq
+    exact hsq
   have hYpm : (y : ZMod (2 * p + 1)) = 1 ∨ (y : ZMod (2 * p + 1)) = -1 :=
     sq_eq_one_iff.mp hY2
   have huz : (u : ZMod (2 * p + 1)) ^ p = (z : ZMod (2 * p + 1)) := by
     have h2 := congrArg (fun n : ℕ => (n : ZMod (2 * p + 1))) hu
-    rwa [Nat.cast_sub (le_of_lt hxz_lt), Nat.cast_pow, hx0q, sub_zero] at h2
+    rw [Nat.cast_sub (le_of_lt hxz_lt), Nat.cast_pow, hx0q, sub_zero] at h2
+    exact h2.symm
   have hZ2 : (z : ZMod (2 * p + 1)) ^ 2 = 1 := by
     have hune : (u : ZMod (2 * p + 1)) ≠ 0 :=
       fun h0 => hqu_n ((zmodEqZero_iff_dvd _ _).mp h0)
@@ -589,47 +618,51 @@ private lemma case_q_dvd_x (p x y z : ℕ)
       ZMod.pow_card_sub_one_eq_one hune
     rw [hq1] at hflt
     have hsq : ((u : ZMod (2 * p + 1)) ^ p) ^ 2 = 1 := by
-      rwa [← pow_mul, show p * 2 = 2 * p by ring]
-    rwa [huz] at hsq
+      rw [← pow_mul, show p * 2 = 2 * p by ring]
+      exact hflt
+    rw [huz] at hsq
+    exact hsq
   have hZpm : (z : ZMod (2 * p + 1)) = 1 ∨ (z : ZMod (2 * p + 1)) = -1 :=
     sq_eq_one_iff.mp hZ2
   have htt : (t : ZMod (2 * p + 1)) ^ p
-    = (z : ZMod (2 * p + 1)) - (y : ZMod (2 * p + 1)) := by
+      = (z : ZMod (2 * p + 1)) - (y : ZMod (2 * p + 1)) := by
     have h2 := congrArg (fun n : ℕ => (n : ZMod (2 * p + 1))) ht
     rw [Nat.cast_pow] at h2
     have hZYcast : ((z - y : ℕ) : ZMod (2 * p + 1))
-      = (z : ZMod (2 * p + 1)) - (y : ZMod (2 * p + 1)) :=
+        = (z : ZMod (2 * p + 1)) - (y : ZMod (2 * p + 1)) :=
       Nat.cast_sub (le_of_lt hyz_lt)
-    rwa [hZYcast] at h2
+    rw [hZYcast] at h2
+    exact h2.symm
   have hZYeq : (z : ZMod (2 * p + 1)) = (y : ZMod (2 * p + 1)) := by
     by_cases hqt : (2 * p + 1) ∣ t
     · have ht0 : (t : ZMod (2 * p + 1)) = 0 :=
-      (zmodEqZero_iff_dvd _ _).mpr hqt
+        (zmodEqZero_iff_dvd _ _).mpr hqt
       have htp0 : (t : ZMod (2 * p + 1)) ^ p = 0 := by
         rw [ht0]
         exact zero_pow hpne
       rw [htp0] at htt
       exact sub_eq_zero.mp htt.symm
     · have htne : (t : ZMod (2 * p + 1)) ≠ 0 :=
-      fun h0 => hqt ((zmodEqZero_iff_dvd _ _).mp h0)
+        fun h0 => hqt ((zmodEqZero_iff_dvd _ _).mp h0)
       have hflt : (t : ZMod (2 * p + 1)) ^ ((2 * p + 1) - 1) = 1 :=
         ZMod.pow_card_sub_one_eq_one htne
       rw [hq1] at hflt
       have htsq : ((t : ZMod (2 * p + 1)) ^ p) ^ 2 = 1 := by
-        rwa [← pow_mul, show p * 2 = 2 * p by ring]
+        rw [← pow_mul, show p * 2 = 2 * p by ring]
+        exact hflt
       rw [htt] at htsq
       have hexpand : ((z : ZMod (2 * p + 1)) - (y : ZMod (2 * p + 1))) ^ 2
-        = 2 - 2 * (z : ZMod (2 * p + 1)) * (y : ZMod (2 * p + 1)) := by
+          = 2 - 2 * (z : ZMod (2 * p + 1)) * (y : ZMod (2 * p + 1)) := by
         linear_combination hZ2 + hY2
       have h2ZY : 2 * (z : ZMod (2 * p + 1)) * (y : ZMod (2 * p + 1)) = 1 := by
         linear_combination hexpand - htsq
       have e1 : (2 * (z : ZMod (2 * p + 1)) * (y : ZMod (2 * p + 1))) ^ 2
-        = 4 := by
+          = 4 := by
         rw [mul_pow, mul_pow, hZ2, hY2]
         ring
       have h4 : (4 : ZMod (2 * p + 1)) = 1 := by
         have hcongr : (2 * (z : ZMod (2 * p + 1)) * (y : ZMod (2 * p + 1))) ^ 2
-          = (1 : ZMod (2 * p + 1)) ^ 2 := by rw [h2ZY]
+            = (1 : ZMod (2 * p + 1)) ^ 2 := by rw [h2ZY]
         have h1sq : (1 : ZMod (2 * p + 1)) ^ 2 = 1 := one_pow 2
         linear_combination hcongr - e1 + h1sq
       have h3 : (3 : ZMod (2 * p + 1)) = 0 := by linear_combination h4
@@ -640,17 +673,17 @@ private lemma case_q_dvd_x (p x y z : ℕ)
       exfalso
       omega
   have hKq : ((x ^ p / (z - y) : ℕ) : ZMod (2 * p + 1))
-    = ∑ i ∈ Finset.range p, (z : ZMod (2 * p + 1)) ^ i
-      * (y : ZMod (2 * p + 1)) ^ (p - 1 - i) := by
+      = ∑ i ∈ Finset.range p, (z : ZMod (2 * p + 1)) ^ i
+        * (y : ZMod (2 * p + 1)) ^ (p - 1 - i) := by
     have h2 := congrArg (fun z : ℤ => (z : ZMod (2 * p + 1))) hKform
     push_cast at h2
     exact h2
   have hKval : ((x ^ p / (z - y) : ℕ) : ZMod (2 * p + 1))
-    = ((p : ℕ) : ZMod (2 * p + 1)) := by
+      = ((p : ℕ) : ZMod (2 * p + 1)) := by
     rw [hKq]
     have hterm : ∀ i ∈ Finset.range p,
-      (z : ZMod (2 * p + 1)) ^ i * (y : ZMod (2 * p + 1)) ^ (p - 1 - i)
-        = (y : ZMod (2 * p + 1)) ^ (p - 1) := by
+        (z : ZMod (2 * p + 1)) ^ i * (y : ZMod (2 * p + 1)) ^ (p - 1 - i)
+          = (y : ZMod (2 * p + 1)) ^ (p - 1) := by
       intro i hi
       have hip : i + (p - 1 - i) = p - 1 := by
         have hmem := Finset.mem_range.mp hi
@@ -659,15 +692,16 @@ private lemma case_q_dvd_x (p x y z : ℕ)
     rw [Finset.sum_congr rfl hterm, Finset.sum_const, Finset.card_range,
       nsmul_eq_mul]
     have hYp1 : (y : ZMod (2 * p + 1)) ^ (p - 1) = 1 := by
-      obtain h1 | h1 := hYpm
+      rcases hYpm with h1 | h1
       · rw [h1, one_pow]
       · rw [h1]
         exact Even.neg_one_pow heven
     rw [hYp1, mul_one]
   have hlp : ((l : ℕ) : ZMod (2 * p + 1)) ^ p
-    = ((x ^ p / (z - y) : ℕ) : ZMod (2 * p + 1)) := by
+      = ((x ^ p / (z - y) : ℕ) : ZMod (2 * p + 1)) := by
     have h2 := congrArg (fun n : ℕ => (n : ZMod (2 * p + 1))) hl
-    rwa [Nat.cast_pow] at h2
+    rw [Nat.cast_pow] at h2
+    exact h2.symm
   have hql : ¬ (2 * p + 1) ∣ l := by
     intro hql
     have hm10 : ((l : ℕ) : ZMod (2 * p + 1)) ^ p = 0 := by
@@ -675,34 +709,37 @@ private lemma case_q_dvd_x (p x y z : ℕ)
       rw [hl0]
       exact zero_pow hpne
     have hK0 : ((x ^ p / (z - y) : ℕ) : ZMod (2 * p + 1)) = 0 := by
-      rwa [← hlp]
+      rw [← hlp]
+      exact hm10
     rw [hKval] at hK0
     have hpdvd : (2 * p + 1) ∣ p := (zmodEqZero_iff_dvd _ _).mp hK0
     have hle : 2 * p + 1 ≤ p := Nat.le_of_dvd hp0 hpdvd
     omega
   have hfin : ((p : ℕ) : ZMod (2 * p + 1)) = 1
-    ∨ ((p : ℕ) : ZMod (2 * p + 1)) = -1 := by
+      ∨ ((p : ℕ) : ZMod (2 * p + 1)) = -1 := by
     have hlres := powResidue (2 * p + 1) p hqprime rfl hp0 l
-    obtain h0 | h1 | hm1 := hlres
+    rcases hlres with h0 | h1 | hm1
     · exfalso
       have hl0 : ((l : ℕ) : ZMod (2 * p + 1)) = 0 :=
         (pow_eq_zero_iff hpne).mp h0
       exact hql ((zmodEqZero_iff_dvd _ _).mp hl0)
     · left
-      rwa [← hKval, ← hlp]
+      rw [← hKval, ← hlp]
+      exact h1
     · right
-      rwa [← hKval, ← hlp]
-  obtain h1 | hm1 := hfin
+      rw [← hKval, ← hlp]
+      exact hm1
+  rcases hfin with h1 | hm1
   · have hcastp : ((p - 1 : ℕ) : ZMod (2 * p + 1)) = 0 := by
-    rw [Nat.cast_sub (by omega : 1 ≤ p), h1, Nat.cast_one, sub_self]
+      rw [Nat.cast_sub (by omega : 1 ≤ p), h1, Nat.cast_one, sub_self]
     have hdvd : (2 * p + 1) ∣ p - 1 := (zmodEqZero_iff_dvd _ _).mp hcastp
     have hle : 2 * p + 1 ≤ p - 1 := Nat.le_of_dvd (by omega) hdvd
     omega
   · have hcastp : ((p + 1 : ℕ) : ZMod (2 * p + 1)) = 0 := by
-    have e : ((p + 1 : ℕ) : ZMod (2 * p + 1))
-      = ((p : ℕ) : ZMod (2 * p + 1)) + 1 := by
-      rw [Nat.cast_add, Nat.cast_one]
-    rw [e, hm1, neg_add_cancel]
+      have e : ((p + 1 : ℕ) : ZMod (2 * p + 1))
+          = ((p : ℕ) : ZMod (2 * p + 1)) + 1 := by
+        rw [Nat.cast_add, Nat.cast_one]
+      rw [e, hm1, neg_add_cancel]
     have hdvd : (2 * p + 1) ∣ p + 1 := (zmodEqZero_iff_dvd _ _).mp hcastp
     have hle : 2 * p + 1 ≤ p + 1 := Nat.le_of_dvd (by positivity) hdvd
     omega
@@ -801,11 +838,12 @@ private lemma case_q_dvd_z (p x y z : ℕ)
   obtain ⟨m1, hm1⟩ := natPowOfCoprimeMul (z ^ p / (x + y)) (x + y) z p
     hcopM.symm hprodM' hp_odd
   have hcast : (x : ZMod (2 * p + 1)) ^ p + (y : ZMod (2 * p + 1)) ^ p
-    = (z : ZMod (2 * p + 1)) ^ p := by
+      = (z : ZMod (2 * p + 1)) ^ p := by
     have h2 : (((x ^ p + y ^ p : ℕ)) : ZMod (2 * p + 1))
-      = (((z ^ p : ℕ)) : ZMod (2 * p + 1)) :=
+        = (((z ^ p : ℕ)) : ZMod (2 * p + 1)) :=
       congrArg (fun n : ℕ => (n : ZMod (2 * p + 1))) h
-    rwa [Nat.cast_add, Nat.cast_pow, Nat.cast_pow, Nat.cast_pow] at h2
+    rw [Nat.cast_add, Nat.cast_pow, Nat.cast_pow, Nat.cast_pow] at h2
+    exact h2
   have hqx_n : ¬ (2 * p + 1) ∣ x :=
     notDvdOfCoprimeDiv (2 * p + 1) z x hq7 hxz.symm hqz
   have hqy_n : ¬ (2 * p + 1) ∣ y :=
@@ -814,26 +852,31 @@ private lemma case_q_dvd_z (p x y z : ℕ)
     intro hqu
     have h1 : (2 * p + 1) ∣ z - x := by
       have hup : (2 * p + 1) ∣ u ^ p := hqu.trans (dvd_pow_self u hpne)
-      rwa [← hu] at hup
+      rw [← hu] at hup
+      exact hup
     have h2 : (2 * p + 1) ∣ x := by
       have hsub := Nat.dvd_sub hqz h1
-      rwa [Nat.sub_sub_self (le_of_lt hxz_lt)] at hsub
+      rw [Nat.sub_sub_self (le_of_lt hxz_lt)] at hsub
+      exact hsub
     exact hqx_n h2
   have hqt_n : ¬ (2 * p + 1) ∣ t := by
     intro hqt
     have h1 : (2 * p + 1) ∣ z - y := by
       have htp : (2 * p + 1) ∣ t ^ p := hqt.trans (dvd_pow_self t hpne)
-      rwa [← ht] at htp
+      rw [← ht] at htp
+      exact htp
     have h2 : (2 * p + 1) ∣ y := by
       have hsub := Nat.dvd_sub hqz h1
-      rwa [Nat.sub_sub_self (le_of_lt hyz_lt)] at hsub
+      rw [Nat.sub_sub_self (le_of_lt hyz_lt)] at hsub
+      exact hsub
     exact hqy_n h2
   have hZ0 : (z : ZMod (2 * p + 1)) = 0 :=
     (zmodEqZero_iff_dvd _ _).mpr hqz
   have huX : (u : ZMod (2 * p + 1)) ^ p = -(x : ZMod (2 * p + 1)) := by
     have h2 := congrArg (fun n : ℕ => (n : ZMod (2 * p + 1))) hu
     rw [Nat.cast_sub (le_of_lt hxz_lt), Nat.cast_pow] at h2
-    rwa [hZ0, zero_sub] at h2
+    rw [hZ0, zero_sub] at h2
+    exact h2.symm
   have hX2 : (x : ZMod (2 * p + 1)) ^ 2 = 1 := by
     have hune : (u : ZMod (2 * p + 1)) ≠ 0 :=
       fun h0 => hqu_n ((zmodEqZero_iff_dvd _ _).mp h0)
@@ -841,23 +884,26 @@ private lemma case_q_dvd_z (p x y z : ℕ)
       ZMod.pow_card_sub_one_eq_one hune
     rw [hq1] at hflt
     have hsq : ((u : ZMod (2 * p + 1)) ^ p) ^ 2 = 1 := by
-      rwa [← pow_mul, show p * 2 = 2 * p by ring]
+      rw [← pow_mul, show p * 2 = 2 * p by ring]
+      exact hflt
     have e : ((u : ZMod (2 * p + 1)) ^ p) ^ 2
-      = (x : ZMod (2 * p + 1)) ^ 2 := by
+        = (x : ZMod (2 * p + 1)) ^ 2 := by
       rw [huX]
       exact Even.neg_pow ⟨1, rfl⟩ _
-    rwa [e] at hsq
+    rw [e] at hsq
+    exact hsq
   have hXpm : (x : ZMod (2 * p + 1)) = 1 ∨ (x : ZMod (2 * p + 1)) = -1 :=
     sq_eq_one_iff.mp hX2
   have hXp : (x : ZMod (2 * p + 1)) ^ p = (x : ZMod (2 * p + 1)) := by
-    obtain h1 | h1 := hXpm
+    rcases hXpm with h1 | h1
     · rw [h1, one_pow]
     · rw [h1]
       exact hp_odd.neg_one_pow
   have htY : (t : ZMod (2 * p + 1)) ^ p = -(y : ZMod (2 * p + 1)) := by
     have h2 := congrArg (fun n : ℕ => (n : ZMod (2 * p + 1))) ht
     rw [Nat.cast_sub (le_of_lt hyz_lt), Nat.cast_pow] at h2
-    rwa [hZ0, zero_sub] at h2
+    rw [hZ0, zero_sub] at h2
+    exact h2.symm
   have hY2 : (y : ZMod (2 * p + 1)) ^ 2 = 1 := by
     have htne : (t : ZMod (2 * p + 1)) ≠ 0 :=
       fun h0 => hqt_n ((zmodEqZero_iff_dvd _ _).mp h0)
@@ -865,16 +911,18 @@ private lemma case_q_dvd_z (p x y z : ℕ)
       ZMod.pow_card_sub_one_eq_one htne
     rw [hq1] at hflt
     have hsq : ((t : ZMod (2 * p + 1)) ^ p) ^ 2 = 1 := by
-      rwa [← pow_mul, show p * 2 = 2 * p by ring]
+      rw [← pow_mul, show p * 2 = 2 * p by ring]
+      exact hflt
     have e : ((t : ZMod (2 * p + 1)) ^ p) ^ 2
-      = (y : ZMod (2 * p + 1)) ^ 2 := by
+        = (y : ZMod (2 * p + 1)) ^ 2 := by
       rw [htY]
       exact Even.neg_pow ⟨1, rfl⟩ _
-    rwa [e] at hsq
+    rw [e] at hsq
+    exact hsq
   have hYpm : (y : ZMod (2 * p + 1)) = 1 ∨ (y : ZMod (2 * p + 1)) = -1 :=
     sq_eq_one_iff.mp hY2
   have hYp : (y : ZMod (2 * p + 1)) ^ p = (y : ZMod (2 * p + 1)) := by
-    obtain h1 | h1 := hYpm
+    rcases hYpm with h1 | h1
     · rw [h1, one_pow]
     · rw [h1]
       exact hp_odd.neg_one_pow
@@ -885,17 +933,17 @@ private lemma case_q_dvd_z (p x y z : ℕ)
   have hYX : (y : ZMod (2 * p + 1)) = -(x : ZMod (2 * p + 1)) := by
     linear_combination hcast
   have hM1q : ((z ^ p / (x + y) : ℕ) : ZMod (2 * p + 1))
-    = ∑ i ∈ Finset.range p, (x : ZMod (2 * p + 1)) ^ i
-      * (-(y : ZMod (2 * p + 1))) ^ (p - 1 - i) := by
+      = ∑ i ∈ Finset.range p, (x : ZMod (2 * p + 1)) ^ i
+        * (-(y : ZMod (2 * p + 1))) ^ (p - 1 - i) := by
     have h2 := congrArg (fun z : ℤ => (z : ZMod (2 * p + 1))) hMform
     push_cast at h2
     exact h2
   have hMval : ((z ^ p / (x + y) : ℕ) : ZMod (2 * p + 1))
-    = ((p : ℕ) : ZMod (2 * p + 1)) := by
+      = ((p : ℕ) : ZMod (2 * p + 1)) := by
     rw [hM1q]
     have hterm : ∀ i ∈ Finset.range p,
-      (x : ZMod (2 * p + 1)) ^ i * (-(y : ZMod (2 * p + 1))) ^ (p - 1 - i)
-        = (x : ZMod (2 * p + 1)) ^ (p - 1) := by
+        (x : ZMod (2 * p + 1)) ^ i * (-(y : ZMod (2 * p + 1))) ^ (p - 1 - i)
+          = (x : ZMod (2 * p + 1)) ^ (p - 1) := by
       intro i hi
       have hip : i + (p - 1 - i) = p - 1 := by
         have hmem := Finset.mem_range.mp hi
@@ -906,15 +954,16 @@ private lemma case_q_dvd_z (p x y z : ℕ)
     rw [Finset.sum_congr rfl hterm, Finset.sum_const, Finset.card_range,
       nsmul_eq_mul]
     have hXp1 : (x : ZMod (2 * p + 1)) ^ (p - 1) = 1 := by
-      obtain h1 | h1 := hXpm
+      rcases hXpm with h1 | h1
       · rw [h1, one_pow]
       · rw [h1]
         exact Even.neg_one_pow heven
     rw [hXp1, mul_one]
   have hcastm : ((z ^ p / (x + y) : ℕ) : ZMod (2 * p + 1))
-    = ((m1 : ℕ) : ZMod (2 * p + 1)) ^ p := by
+      = ((m1 : ℕ) : ZMod (2 * p + 1)) ^ p := by
     have h2 := congrArg (fun n : ℕ => (n : ZMod (2 * p + 1))) hm1
-    rwa [Nat.cast_pow] at h2
+    rw [Nat.cast_pow] at h2
+    exact h2
   have hpne0 : ((p : ℕ) : ZMod (2 * p + 1)) ≠ 0 := by
     intro h0
     have hdvd := (zmodEqZero_iff_dvd _ _).mp h0
@@ -927,32 +976,35 @@ private lemma case_q_dvd_z (p x y z : ℕ)
       rw [hm10']
       exact zero_pow hpne
     have hM0 : ((z ^ p / (x + y) : ℕ) : ZMod (2 * p + 1)) = 0 := by
-      rwa [hcastm]
+      rw [hcastm]
+      exact hm10
     rw [hMval] at hM0
     exact hpne0 hM0
   have hfin : ((p : ℕ) : ZMod (2 * p + 1)) = 1
-    ∨ ((p : ℕ) : ZMod (2 * p + 1)) = -1 := by
+      ∨ ((p : ℕ) : ZMod (2 * p + 1)) = -1 := by
     have hmres := powResidue (2 * p + 1) p hqprime rfl hp0 m1
-    obtain h0 | h1 | hm1' := hmres
+    rcases hmres with h0 | h1 | hm1'
     · exfalso
       have hm10 : ((m1 : ℕ) : ZMod (2 * p + 1)) = 0 :=
         (pow_eq_zero_iff hpne).mp h0
       exact hqm1 ((zmodEqZero_iff_dvd _ _).mp hm10)
     · left
-      rwa [← hMval, hcastm]
+      rw [← hMval, hcastm]
+      exact h1
     · right
-      rwa [← hMval, hcastm]
-  obtain h1 | hm1' := hfin
+      rw [← hMval, hcastm]
+      exact hm1'
+  rcases hfin with h1 | hm1'
   · have hcastp : ((p - 1 : ℕ) : ZMod (2 * p + 1)) = 0 := by
-    rw [Nat.cast_sub (by omega : 1 ≤ p), h1, Nat.cast_one, sub_self]
+      rw [Nat.cast_sub (by omega : 1 ≤ p), h1, Nat.cast_one, sub_self]
     have hdvd : (2 * p + 1) ∣ p - 1 := (zmodEqZero_iff_dvd _ _).mp hcastp
     have hle : 2 * p + 1 ≤ p - 1 := Nat.le_of_dvd (by omega) hdvd
     omega
   · have hcastp : ((p + 1 : ℕ) : ZMod (2 * p + 1)) = 0 := by
-    have e : ((p + 1 : ℕ) : ZMod (2 * p + 1))
-      = ((p : ℕ) : ZMod (2 * p + 1)) + 1 := by
-      rw [Nat.cast_add, Nat.cast_one]
-    rw [e, hm1', neg_add_cancel]
+      have e : ((p + 1 : ℕ) : ZMod (2 * p + 1))
+          = ((p : ℕ) : ZMod (2 * p + 1)) + 1 := by
+        rw [Nat.cast_add, Nat.cast_one]
+      rw [e, hm1', neg_add_cancel]
     have hdvd : (2 * p + 1) ∣ p + 1 := (zmodEqZero_iff_dvd _ _).mp hcastp
     have hle : 2 * p + 1 ≤ p + 1 := Nat.le_of_dvd (by positivity) hdvd
     omega
@@ -991,16 +1043,17 @@ lemma sophieGermain
       norm_num at hodd
     omega
   have hqxyz := sgDvd x y z p (2 * p + 1) hqprime rfl hpprime.pos h hq7
-  obtain hqx | hqy | hqz := hqxyz
+  rcases hqxyz with hqx | hqy | hqz
   · exact case_q_dvd_x p x y z hp_odd hpprime hqprime hx0 hy0 hz0 hxy hyz hxz
-    h hpx hpy hpz hqx
+      h hpx hpy hpz hqx
   · exact case_q_dvd_x p y x z hp_odd hpprime hqprime hy0 hx0 hz0 hxy.symm
-    hxz hyz ((add_comm _ _).trans h) hpy hpx hpz hqy
+      hxz hyz ((add_comm _ _).trans h) hpy hpx hpz hqy
   · exact case_q_dvd_z p x y z hp_odd hpprime hqprime hx0 hy0 hz0 hxy hyz hxz
-    h hpx hpy hpz hqz
+      h hpx hpy hpz hqz
+
 end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

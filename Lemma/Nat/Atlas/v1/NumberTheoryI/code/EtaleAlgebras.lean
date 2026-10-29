@@ -58,26 +58,31 @@ lemma irreducible_not_separable_iff_derivative_eq_zero
 -- proof
   constructor
   ·
+
     intro hinsep
     by_contra hf'
     apply hinsep
+
     apply EuclideanDomain.isCoprime_of_dvd
     · rintro ⟨-, h⟩; exact hf' h
     ·
       intro g hg_not_unit _ hg_dvd_f hg_dvd_f'
+
       obtain ⟨p, hp⟩ := hg_dvd_f
-      obtain hu | hu := hf.isUnit_or_isUnit hp
+      rcases hf.isUnit_or_isUnit hp with hu | hu
       · exact hg_not_unit hu
       ·
         have hf_dvd_f' : f ∣ derivative f := by
           obtain ⟨u, rfl⟩ := hu
           exact dvd_trans (hp ▸ Units.mul_right_dvd.mpr dvd_rfl) hg_dvd_f'
+
         exact absurd (natDegree_le_of_dvd hf_dvd_f' hf')
           (not_le.mpr (natDegree_derivative_lt (mt derivative_of_natDegree_zero hf')))
   ·
     intro hf' hsep
     rw [Polynomial.Separable, hf'] at hsep
     exact hf.not_isUnit (isCoprime_zero_right.mp hsep)
+
 end EtaleAlgebras
 section Corollary_4_5
 
@@ -94,18 +99,19 @@ lemma irreducible_eq_expand_separable
 -- imply
   ∃ (n : ℕ) (g : K[X]), Irreducible g ∧ g.Separable ∧ expand K ((ringChar K) ^ n) g = f := by
 -- proof
-  haveI hchar : CharP K (ringChar K) := ringChar.charP K
-  obtain hp | hp := CharP.char_is_prime_or_zero K (ringChar K)
+  have hchar : CharP K (ringChar K) := ringChar.charP K
+  rcases CharP.char_is_prime_or_zero K (ringChar K) with hp | hp
   ·
     obtain ⟨n, g, hg_sep, hgf⟩ := exists_separable_of_irreducible (ringChar K) hf hp.ne_zero
     refine ⟨n, g, ?_, hg_sep, hgf⟩
     have hpos : 0 < (ringChar K) ^ n := pow_pos hp.pos n
-    haveI := isLocalHom_expand K hpos
+    have := isLocalHom_expand K hpos
     exact Irreducible.of_map (f := expand K ((ringChar K) ^ n)) (by rwa [hgf])
   ·
-    haveI : CharZero K := by rw [hp] at hchar; exact CharP.charP_to_charZero K
+    have : CharZero K := by rw [hp] at hchar; exact CharP.charP_to_charZero K
     rw [hp]
     exact ⟨0, f, hf, hf.separable, by simp [expand_one]⟩
+
 end Corollary_4_5
 section Corollary_4_6
 
@@ -135,8 +141,8 @@ variable (K : Type*) (L : Type*) [Field K] [Field L] [Algebra K L]
 -/
 @[path]
 lemma algHom_card_eq_roots
-  {K : Type*}
-  {L : Type*}
+  (K : Type*)
+  (L : Type*)
   [Field K]
   [Field L]
   [Algebra K L]
@@ -153,8 +159,8 @@ lemma algHom_card_eq_roots
 -/
 @[path]
 lemma algHom_card_le_finrank
-  {K : Type*}
-  {L : Type*}
+  (K : Type*)
+  (L : Type*)
   [Field K]
   [Field L]
   [Algebra K L]
@@ -171,8 +177,8 @@ lemma algHom_card_le_finrank
 -/
 @[path]
 lemma algHom_card_eq_finrank_iff_separable
-  {K : Type*}
-  {L : Type*}
+  (K : Type*)
+  (L : Type*)
   [Field K]
   [Field L]
   [Algebra K L]
@@ -242,9 +248,10 @@ lemma exists_ringHom_extension_of_isAlgClosed
 -- imply
   ∃ φ_L : L →+* Ω, φ_L.comp (algebraMap K L) = φ_K := by
 -- proof
-  letI : Algebra K Ω := φ_K.toAlgebra
+  let : Algebra K Ω := φ_K.toAlgebra
   let φ_L : L →ₐ[K] Ω := IsAlgClosed.lift
   exact ⟨φ_L.toRingHom, by ext x; exact φ_L.commutes x⟩
+
 end Theorem_4_9
 noncomputable section
 open IntermediateField
@@ -308,13 +315,13 @@ lemma perfectField_iff_frobenius_surjective
 -- imply
   PerfectField K ↔ Function.Surjective (frobenius K p) := by
 -- proof
-  haveI : ExpChar K p := ExpChar.prime (Fact.out)
+  have : ExpChar K p := ExpChar.prime (Fact.out)
   constructor
   · intro h
-    haveI := PerfectField.toPerfectRing (K := K) p
+    have := PerfectField.toPerfectRing (K := K) p
     exact surjective_frobenius K p
   · intro h
-    haveI := PerfectRing.ofSurjective K p h
+    have := PerfectRing.ofSurjective K p h
     exact PerfectRing.toPerfectField K p
 
 /--
@@ -397,8 +404,9 @@ lemma hom_count_mul_tower
 -- imply
   finSepDegree K' F * finSepDegree F L = finSepDegree K' L := by
 -- proof
-  haveI : Algebra.IsAlgebraic F L := Algebra.IsAlgebraic.of_finite F L
+  have : Algebra.IsAlgebraic F L := Algebra.IsAlgebraic.of_finite F L
   exact finSepDegree_mul_finSepDegree_of_isAlgebraic K' F L
+
 end Lemma_4_10
 section Corollary_4_11
 
@@ -436,9 +444,9 @@ lemma purelyInseparable_prime_degree_structure
   [Field K]
   [Field L]
   [Algebra K L]
-  {K' : Type u}
-  {F : Type v}
-  {L : Type w}
+  {_K' : Type u}
+  {_F : Type v}
+  {_L : Type w}
   {K L : Type*}
   [Field K]
   [Field L]
@@ -454,20 +462,24 @@ lemma purelyInseparable_prime_degree_structure
   ∃ (α : L) (a : K), minpoly K α = X ^ p - C a ∧ (∀ b : K, b ^ p ≠ a) ∧ K⟮α⟯ = ⊤ := by
 -- proof
   have hp : p.Prime := Fact.out
+
   have hne : (⊥ : IntermediateField K L) ≠ ⊤ := by
     intro h
     have : Module.finrank K L = 1 := by rw [← finrank_top', ← h, IntermediateField.finrank_bot]
     linarith [hp.one_lt]
-  obtain ⟨α, -, hα_not_bot⟩ := SetLike.exists_of_lt (lt_of_le_of_ne bot_le hne)
-  haveI : ExpChar K p := ExpChar.prime hp
+  obtain ⟨α, -, hα_not_bot⟩ := IsConcreteLE.exists_of_lt (lt_of_le_of_ne bot_le hne)
+  have : ExpChar K p := ExpChar.prime hp
+
   obtain ⟨n, a, hmin⟩ := IsPurelyInseparable.minpoly_eq_X_pow_sub_C K p α
   have hα_int : IsIntegral K α := Algebra.IsIntegral.isIntegral α
   have hmin_deg : (minpoly K α).natDegree = p ^ n := by
     rw [hmin, natDegree_sub_C, natDegree_X_pow]
+
   have hdvd : p ^ n ∣ p := by
     have : Module.finrank K K⟮α⟯ ∣ Module.finrank K L :=
       ⟨Module.finrank (↥K⟮α⟯) L, (Module.finrank_mul_finrank K (↥K⟮α⟯) L).symm⟩
-    rwa [adjoin.finrank hα_int, hmin_deg, hdeg] at this
+    rw [adjoin.finrank hα_int, hmin_deg, hdeg] at this
+    exact this
   have hα_not_in_range : α ∉ Set.range (algebraMap K L) := by
     intro ⟨c, hc⟩
     exact hα_not_bot (IntermediateField.mem_bot.mpr ⟨c, hc⟩)
@@ -476,10 +488,11 @@ lemma purelyInseparable_prime_degree_structure
     push Not at h
     have heq1 : p ^ n = 1 := le_antisymm h (Nat.one_le_pow n p hp.pos)
     exact hα_not_in_range (minpoly.natDegree_eq_one_iff.mp (hmin_deg.trans heq1))
+
   have hn : n = 1 := by
-    obtain _ | m := n
+    rcases n with _ | m
     · simp at hdeg_gt1
-    obtain _ | k := m
+    rcases m with _ | k
     · rfl
     exfalso
     have h1 : p * p ≤ p ^ (k + 2) := by
@@ -488,9 +501,11 @@ lemma purelyInseparable_prime_degree_structure
     have h2 : p ^ (k + 2) ≤ p := Nat.le_of_dvd hp.pos hdvd
     nlinarith [hp.two_le]
   subst hn; simp only [pow_one] at hmin ⊢
+
   have htop : K⟮α⟯ = ⊤ := by
     rw [primitive_element_iff_minpoly_natDegree_eq K α]
     rw [hmin, natDegree_sub_C, natDegree_X_pow, hdeg]
+
   have ha : ∀ b : K, b ^ p ≠ a := by
     intro b hb
     have hirr := minpoly.irreducible hα_int
@@ -513,9 +528,9 @@ lemma separableClosure_isPurelyInseparable
   [Field K]
   [Field L]
   [Algebra K L]
-  {K' : Type u}
-  {F : Type v}
-  {L : Type w}
+  {_K' : Type u}
+  {_F : Type v}
+  {_L : Type w}
   {K L : Type*}
   [Field K]
   [Field L]
@@ -536,9 +551,9 @@ lemma separableClosure_decomposition
   [Field K]
   [Field L]
   [Algebra K L]
-  {K' : Type u}
-  {F : Type v}
-  {L : Type w}
+  {_K' : Type u}
+  {_F : Type v}
+  {_L : Type w}
   {K L : Type*}
   [Field K]
   [Field L]
@@ -561,9 +576,9 @@ lemma finInsepDegree_eq_expChar_pow
   [Field K]
   [Field L]
   [Algebra K L]
-  {K' : Type u}
-  {F : Type v}
-  {L : Type w}
+  {_K' : Type u}
+  {_F : Type v}
+  {_L : Type w}
   {K L : Type*}
   [Field K]
   [Field L]
@@ -589,9 +604,9 @@ lemma etale_base_change
   [Field K]
   [Field L]
   [Algebra K L]
-  {K' : Type u}
-  {F : Type v}
-  {L : Type w}
+  {_K' : Type u}
+  {_F : Type v}
+  {_L : Type w}
   {K K' : Type*}
   [Field K]
   [Field K']
@@ -616,9 +631,9 @@ lemma etale_finite_base_change
   [Field K]
   [Field L]
   [Algebra K L]
-  {K' : Type u}
-  {F : Type v}
-  {L : Type w}
+  {_K' : Type u}
+  {_F : Type v}
+  {_L : Type w}
   {K K' : Type*}
   [Field K]
   [Field K']
@@ -643,9 +658,9 @@ lemma etale_base_change_finrank_eq
   [Field K]
   [Field L]
   [Algebra K L]
-  {K' : Type u}
-  {F : Type v}
-  {L : Type w}
+  {_K' : Type u}
+  {_F : Type v}
+  {_L : Type w}
   {K K' : Type*}
   [Field K]
   [Field K']
@@ -658,7 +673,7 @@ lemma etale_base_change_finrank_eq
 -- imply
   Module.finrank K L = Module.finrank K' (K' ⊗[K] L) := by
 -- proof
-  haveI : Module.Free K L := inferInstance
+  have : Module.Free K L := inferInstance
   exact (Module.finrank_baseChange (S := K) (R := K')).symm
 
 /--
@@ -698,9 +713,9 @@ lemma semisimple_iff_reduced
   [Field K]
   [Field L]
   [Algebra K L]
-  {K' : Type u}
-  {F : Type v}
-  {L : Type w}
+  {_K' : Type u}
+  {_F : Type v}
+  {_L : Type w}
   {K : Type*}
   [Field K]
   {A : Type*}
@@ -710,11 +725,13 @@ lemma semisimple_iff_reduced
 -- imply
   IsSemisimpleRing A ↔ IsReduced A := by
 -- proof
-  haveI : IsArtinianRing A := IsArtinianRing.of_finite K A
+  have : IsArtinianRing A := IsArtinianRing.of_finite K A
   constructor
   · intro _; infer_instance
   · intro _; exact IsArtinianRing.isSemisimpleRing_of_isReduced A
+
 end EtaleBaseChange
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

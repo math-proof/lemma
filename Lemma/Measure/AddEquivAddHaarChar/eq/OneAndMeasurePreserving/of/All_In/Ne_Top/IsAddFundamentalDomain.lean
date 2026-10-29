@@ -20,7 +20,7 @@ private lemma helper_main
   have hφm : Measurable (φ : G → G) := φ.continuous.measurable
   set e : G ≃ᵐ G := φ.toHomeomorph.toMeasurableEquiv with he
   have hecoe : (e : G → G) = φ := rfl
-  set c : ℝ≥0 := addEquivAddHaarChar φ with hc
+  set c : NNReal := addEquivAddHaarChar φ with hc
   have hcμ : c • μ.map φ = μ := addEquivAddHaarChar_smul_map μ φ
   have hmp : MeasurePreserving (φ : G → G) μ (μ.map φ) := ⟨hφm, rfl⟩
   have hmp' : MeasurePreserving (e : G → G) μ (μ.map φ) := by rwa [hecoe]
@@ -52,13 +52,13 @@ private lemma helper_main
   have h1 : μ (φ '' F) = μ F := hF''.measure_eq hF
   have h2 : μ.map φ (φ '' F) = μ F := by
     rw [map_apply₀ hφm.aemeasurable hF'.nullMeasurableSet, Set.preimage_image_eq _ φ.injective]
-  have h3 : μ (φ '' F) = (c : ℝ≥0∞) * μ.map φ (φ '' F) := by
+  have h3 : μ (φ '' F) = (c : ENNReal) * μ.map φ (φ '' F) := by
     conv_lhs => rw [← hcμ]
     rfl
   rw [h1, h2] at h3
   have hμ0 : μ ≠ 0 := NeZero.ne μ
   have hF0 : μ F ≠ 0 := hF.measure_ne_zero hμ0
-  have hc1 : (c : ℝ≥0∞) = 1 := by
+  have hc1 : (c : ENNReal) = 1 := by
     have := (ENNReal.mul_eq_right hF0 hFtop).mp h3.symm
     exact this
   have hc1' : c = 1 := by exact_mod_cast hc1

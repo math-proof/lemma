@@ -172,7 +172,7 @@ theorem bc34_TavoidingRayData_of_globalCutArm (ω : ConfigSpace (Sym2 (Site d)))
   exact hbinf
 
 
-theorem bc34_burton_keane_bernoulli_of_globalCutArm (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc34_burton_keane_bernoulli_of_globalCutArm (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (rank : ConfigSpace (Sym2 (Site d)) → ℕ → Site d → ℕ ×ₗ ℕ)
     (bfun : ConfigSpace (Sym2 (Site d)) → ℕ → Site d → Site d)

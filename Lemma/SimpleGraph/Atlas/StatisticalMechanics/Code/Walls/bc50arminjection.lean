@@ -115,7 +115,7 @@ private lemma bc50_burton_keane_bernoulli_of_armForest_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (harm : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), sfa_ArmForestReaching ω n)
@@ -133,7 +133,7 @@ private lemma bc50_burton_keane_bernoulli_of_armForest_routingCover_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (harm : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), sfa_ArmForestReaching ω n)

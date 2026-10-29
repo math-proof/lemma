@@ -10,8 +10,13 @@ open scoped nonZeroDivisors
 -/
 @[path]
 lemma FractionalIdeal.unique_factorization_exists
+  {R : Type*}
   [CommRing R]
   [IsDedekindDomain R]
+  (K : Type*)
+  [Field K]
+  [Algebra R K]
+  [IsFractionRing R K]
   {I : FractionalIdeal R⁰ K}
 -- given
   (hI : I ≠ 0) :
@@ -25,15 +30,20 @@ lemma FractionalIdeal.unique_factorization_exists
 -/
 @[path]
 lemma FractionalIdeal.unique_factorization_unique
+  {R : Type*}
   [CommRing R]
   [IsDedekindDomain R]
+  (K : Type*)
+  [Field K]
+  [Algebra R K]
+  [IsFractionRing R K]
   {I : FractionalIdeal R⁰ K}
-  {e : HeightOneSpectrum R → ℤ}
-  {v : HeightOneSpectrum R}
 -- given
   (_hI : I ≠ 0)
+  (e : HeightOneSpectrum R → ℤ)
   (he : ∀ᶠ v : HeightOneSpectrum R in Filter.cofinite, e v = 0)
-  (hprod : ∏ᶠ v : HeightOneSpectrum R, (v.asIdeal : FractionalIdeal R⁰ K) ^ e v = I) :
+  (hprod : ∏ᶠ v : HeightOneSpectrum R, (v.asIdeal : FractionalIdeal R⁰ K) ^ e v = I)
+  (v : HeightOneSpectrum R) :
 -- imply
   e v = FractionalIdeal.count K v I := by
 -- proof
@@ -47,8 +57,13 @@ lemma FractionalIdeal.unique_factorization_unique
 -/
 @[path]
 lemma FractionalIdeal.unique_factorization
+  {R : Type*}
   [CommRing R]
   [IsDedekindDomain R]
+  (K : Type*)
+  [Field K]
+  [Algebra R K]
+  [IsFractionRing R K]
   {I : FractionalIdeal R⁰ K}
 -- given
   (hI : I ≠ 0) :
@@ -60,3 +75,4 @@ lemma FractionalIdeal.unique_factorization
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

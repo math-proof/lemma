@@ -1,6 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open Nat Nat.SylvesterSchur
+import Lemma.Nat.SylvesterSchur.Bridge
+import Lemma.Nat.SylvesterSchur.Conditional
+import Lemma.Nat.SylvesterSchur.ErdosPowerBounds
+open Nat
 open Finset Nat
 
 
@@ -22,6 +25,10 @@ lemma bertrand_base
   refine ⟨p - (n + 1), ?_, p, hp_prime, hp_gt, ?_⟩
   · omega
   · rw [Nat.add_sub_cancel' (by omega : n + 1 ≤ p)]
+
+/-!
+### From block divisibility to binomial divisibility
+-/
 
 end Nat.SylvesterSchur.Internal
 
@@ -126,7 +133,7 @@ private lemma block_term_mem_smoothNumbers_succ_of_no_large_prime_dvd_block {n k
   rw [Nat.mem_smoothNumbers']
   intro p hp hp_dvd
   have hp_le :
-    p ≤ n :=
+      p ≤ n :=
     block_term_prime_factors_le_of_no_large_prime_dvd_block hblock hi hp hp_dvd
   omega
 
@@ -168,7 +175,8 @@ private lemma block_length_le_smoothNumbersUpTo_bound_of_no_large_prime_dvd_bloc
   have h :=
     (block_length_le_smoothNumbersUpTo_card_of_no_large_prime_dvd_block hblock).trans
     (Nat.smoothNumbersUpTo_card_le (k + n - 1) (n + 1))
-  rwa [Nat.primeCounting, ← Nat.primesBelow_card_eq_primeCounting' (n + 1)]
+  rw [Nat.primeCounting, ← Nat.primesBelow_card_eq_primeCounting' (n + 1)]
+  exact h
 
 end Nat.SylvesterSchur.Internal
 
@@ -225,12 +233,14 @@ lemma exists_dvd_block_of_succ_succ_prime_not_dvd_pred
   ∃ i < n, s ∣ k + i := by
 -- proof
   rcases exists_dvd_block_or_dvd_recent_pred (n := n) (k := k) (p := s) hn (by omega)
-    with hblock | hpred
+      with hblock | hpred
   · exact hblock
   obtain ⟨j, hj1, hjle, hjdvd⟩ := hpred
-  obtain rfl | rfl := (by omega : j = 1 ∨ j = 2)
+  rcases (by omega : j = 1 ∨ j = 2) with rfl | rfl
   · exact (hnot_one hjdvd).elim
   · exact (hnot_two hjdvd).elim
+
+/-! ### Binomial criteria from block estimates -/
 
 end Nat.SylvesterSchur.Internal
 
@@ -396,7 +406,7 @@ lemma exists_prime_dvd_choose_of_erdos_layers_four_pow_bound
   ∃ p : ℕ, p.Prime ∧ n < p ∧ p ∣ Nat.choose (k + n - 1) n := by
 -- proof
   apply exists_prime_dvd_choose_of_erdos_layers_bound hn hk
-  have hprod := erdos_layers_le_four_pow (k + n - 1) n
+  have hprod := erdos_layers_le_four_pow (N := k + n - 1) (r := n)
   exact (Nat.mul_le_mul_left (n !) hprod).trans_lt hbound
 
 end Nat.SylvesterSchur.Internal
@@ -438,11 +448,13 @@ lemma exists_prime_dvd_choose_of_smooth_count_bound
   by_cases hblock : ∃ i < n, ∃ p : ℕ, p.Prime ∧ n < p ∧ p ∣ k + i
   · exact exists_prime_dvd_choose_of_large_prime_dvd_block hblock
   · have hle :=
-    block_length_le_smoothNumbersUpTo_bound_of_no_large_prime_dvd_block (n := n) (k := k)
-      hblock
+      block_length_le_smoothNumbersUpTo_bound_of_no_large_prime_dvd_block (n := n) (k := k)
+        hblock
     omega
+
 
 end Nat.SylvesterSchur.Internal
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

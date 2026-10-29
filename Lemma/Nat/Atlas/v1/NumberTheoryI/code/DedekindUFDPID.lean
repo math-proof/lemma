@@ -42,7 +42,7 @@ lemma isPrincipalIdealRing_iff_subsingleton_classGroup
     rw [← Fintype.card_le_one_iff_subsingleton]
     omega
   · intro
-    letI : Fintype (ClassGroup R) := Fintype.ofSubsingleton (default : ClassGroup R)
+    let : Fintype (ClassGroup R) := Fintype.ofSubsingleton (default : ClassGroup R)
     rw [← card_classGroup_eq_one_iff]
     exact Fintype.card_ofSubsingleton _
 
@@ -61,10 +61,11 @@ lemma uniqueFactorizationMonoid_iff_subsingleton_classGroup
 -- imply
   UniqueFactorizationMonoid R ↔ Subsingleton (ClassGroup R) :=
 -- proof
-  (uniqueFactorizationMonoid_iff_isPrincipalIdealRing R).trans
-    (isPrincipalIdealRing_iff_subsingleton_classGroup R)
+  uniqueFactorizationMonoid_iff_isPrincipalIdealRing.trans
+    isPrincipalIdealRing_iff_subsingleton_classGroup
 
 end IsDedekindDomain
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

@@ -33,7 +33,7 @@ probability measures, with the hard truncation convention at radius one.
 
 namespace MetaMathlibExt
 
-noncomputable def lkCanonicalWeightNN (x : ℝ) : ℝ≥0 :=
+noncomputable def lkCanonicalWeightNN (x : ℝ) : NNReal :=
   ⟨lkCanonicalWeight x, lkCanonicalWeight_nonneg x⟩
 
 end MetaMathlibExt

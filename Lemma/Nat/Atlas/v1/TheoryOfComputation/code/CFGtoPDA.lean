@@ -37,7 +37,6 @@ lemma toPDA_push_list
     · simp only [List.reverse_cons, List.map_append, List.map_cons, List.map_nil,
       List.append_assoc, List.singleton_append] at *
       exact ih _
-set_option maxRecDepth 1024 in
 
 end CFGtoPDA
 
@@ -60,7 +59,6 @@ lemma toPDA_pop_terminal
   have h := PDA.Step.mk (M := toPDA g) QState.loop QState.loop
     (some t) (some (some (Symbol.terminal t))) none input stack (by simp [toPDA])
   simpa [Option.toList] using h
-set_option maxRecDepth 1024 in
 
 end CFGtoPDA
 
@@ -373,7 +371,6 @@ lemma derives_cons_same
   | refl => exact Relation.ReflTransGen.refl
   | tail _ hstep ih =>
     exact ih.trans (Relation.ReflTransGen.single (hstep.append_left [s]))
-set_option maxRecDepth 2048 in
 
 end CFGtoPDA
 
@@ -493,7 +490,6 @@ lemma stepCount_of_reaches
   induction h with
   | refl => exact ⟨0, StepCount.refl _⟩
   | tail _ hs ih => obtain ⟨n, hn⟩ := ih; exact ⟨n + 1, hn.snoc hs⟩
-set_option maxRecDepth 2048 in
 
 end CFGtoPDA
 
@@ -521,7 +517,6 @@ lemma step_inv_aux
     simp only [Prod.mk.injEq] at hc
     obtain ⟨hq, hinp, hstk⟩ := hc; subst hq
     exact ⟨q', a, pop, push, inp, stk, hinp, hstk, rfl, hmem⟩
-set_option maxRecDepth 2048 in
 
 end CFGtoPDA
 
@@ -648,7 +643,6 @@ lemma pushing_needs_steps
               rw [hcfg] at hrest
               exact ihk (L := rest_L) hrest (by simp at hk ⊢; omega)
 set_option maxRecDepth 4096 in
-set_option maxHeartbeats 3200000 in
 
 end CFGtoPDA
 
@@ -769,7 +763,6 @@ open ContextFreeGrammar ContextFreeRule
 variable {T : Type u_pda}
 variable {g : ContextFreeGrammar T}
 set_option maxRecDepth 4096 in
-set_option maxHeartbeats 1600000 in
 
 end CFGtoPDA
 
@@ -853,7 +846,6 @@ lemma stack_invariant_step
             | nil => cases a with | some _ => simp [toPDA] at hmem | none => simp [toPDA] at hmem
             | cons _ _ => cases a with | some _ => simp [toPDA] at hmem | none => simp [toPDA] at hmem
           | accept => exact absurd rfl hna1
-set_option maxRecDepth 2048 in
 
 end CFGtoPDA
 
@@ -939,7 +931,6 @@ lemma stack_invariant_reaches
           exact no_target_start hmid_step heq
       exact stack_invariant_step hs_last hL' ha_acc hna2 hns_a
 set_option maxRecDepth 4096 in
-set_option maxHeartbeats 6400000 in
 
 end CFGtoPDA
 
@@ -1077,7 +1068,6 @@ lemma toPDA_language_backward
   intro ⟨q, hq, stk, hreach⟩
   simp [toPDA] at hq; subst hq
   exact toPDA_language_backward_aux g w stk hreach
-set_option maxRecDepth 2048 in
 
 end CFGtoPDA
 

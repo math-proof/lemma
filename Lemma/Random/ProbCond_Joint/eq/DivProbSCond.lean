@@ -42,7 +42,7 @@ private lemma main
                 π.condProb (x, z) (a, c) :=
     All_EqProbCondJoint hPyxz
   obtain ⟨p_xy, D_xy, hlaw_xy⟩ := hPxy_z.exists_distribution
-  have hp_xy : Measurable p_xy := D_xy.measurable_density
+  have hp_xy : Measurable p_xy := D_xy
   let swap1 : (α × β) × γ → (β × α) × γ := Prod.map Prod.swap (id : γ → γ)
   have hswap1 : Measurable swap1 := measurable_swap.prodMap measurable_id
   let swap1' : (β × α) × γ → (α × β) × γ := Prod.map Prod.swap (id : γ → γ)

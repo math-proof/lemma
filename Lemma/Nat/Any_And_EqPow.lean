@@ -20,7 +20,7 @@ private lemma main
   classical
   have hℓp : ℓ.Prime := Fact.out
   let _ : NeZero (ℓ : k) := ⟨hℓ⟩
-  obtain ⟨ζ₁, hζ₁⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot k ℓ
+  obtain ⟨ζ₁, hζ₁⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot k ℓ
   have hroot : ∀ x : k, ∃ z : k, z ^ ℓ = x := fun x => IsAlgClosed.exists_pow_nat_eq x hℓp.pos
   choose step hstep using hroot
   let ζ : ℕ → k := fun n => Nat.rec (motive := fun _ => k) 1 (fun m z => if m = 0 then ζ₁ else step z) n
@@ -68,3 +68,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-28

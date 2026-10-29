@@ -126,12 +126,12 @@ private lemma ka_kesten_pc_eq_half_eq
 -- given
   (hseed : KaSelfDualBoxSeed halfMeasure)
   (htinv : KaCrossingTranslationInvariant halfMeasure)
-  (hCorLowerBound : BoxCrossingProperty halfMeasure 2 → percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0)
+  (hCorLowerBound : BoxCrossingProperty halfMeasure 2 → percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0)
   (hHm : ∀ n, MeasurableSet (boxFam n))
   (hRmeas : Measurable R)
   (hRpres : Measure.map R halfMeasure = halfMeasure)
   (hdich : ∀ n, (boxFam n)ᶜ = (R ∘ dualConfig) ⁻¹' (boxFam n))
-  (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
+  (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
 -- imply
   criticalProbability 2 = 1 / 2 := by
 -- proof
@@ -147,14 +147,14 @@ private lemma ka_kesten_no_percolation_at_pc_eq
 -- given
   (hseed : KaSelfDualBoxSeed halfMeasure)
   (htinv : KaCrossingTranslationInvariant halfMeasure)
-  (hCorLowerBound : BoxCrossingProperty halfMeasure 2 → percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0)
+  (hCorLowerBound : BoxCrossingProperty halfMeasure 2 → percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0)
   (hHm : ∀ n, MeasurableSet (boxFam n))
   (hRmeas : Measurable R)
   (hRpres : Measure.map R halfMeasure = halfMeasure)
   (hdich : ∀ n, (boxFam n)ᶜ = (R ∘ dualConfig) ⁻¹' (boxFam n))
-  (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
+  (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
 -- imply
-  criticalProbability 2 = 1 / 2 ∧ percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 := by
+  criticalProbability 2 = 1 / 2 ∧ percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 := by
 -- proof
   apply StatMech.Universality.ka_kesten_no_percolation_at_pc hseed htinv hCorLowerBound hHm hRmeas hRpres hdich hSharpThreshold
 

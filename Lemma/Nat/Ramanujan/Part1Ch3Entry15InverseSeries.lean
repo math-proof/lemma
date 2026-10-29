@@ -42,7 +42,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry15InverseSeries
 -/
 @[path]
 private lemma hfun_analytic : AnalyticAt ℝ hfun 0 := by
-unfold hfun; fun_prop (disch := norm_num)
+  unfold hfun; fun_prop (disch := norm_num)
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry15InverseSeries
 

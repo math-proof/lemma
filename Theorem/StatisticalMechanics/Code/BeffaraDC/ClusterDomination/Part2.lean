@@ -27,21 +27,21 @@ open StatMech.Percolation StatMech.Lattice
 variable {d : ℕ}
 
 
-@[simp] theorem clusterRadiusDomination_dist (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+@[simp] theorem clusterRadiusDomination_dist (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (hphi : phi d p hp S < 1)
     (L : ℕ) (hL : 1 ≤ L) (hSbox : (S : Set (Site d)) ⊆ box d (L - 1)) :
     (clusterRadiusDomination p hp S hoS hphi L hL hSbox).dist
       = fun n => crossProb d p hp n := rfl
 
 
-theorem clusterRadiusMoment_summable (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem clusterRadiusMoment_summable (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (hphi : phi d p hp S < 1)
     (L : ℕ) (hL : 1 ≤ L) (hSbox : (S : Set (Site d)) ⊆ box d (L - 1)) (d' : ℕ) :
     Summable (fun n : ℕ => (n : ℝ) ^ d' * crossProb d p hp n) :=
   (clusterRadiusDomination p hp S hoS hphi L hL hSbox).summand_summable d'
 
 
-theorem clusterRadiusMoment_lt_top (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem clusterRadiusMoment_lt_top (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (hphi : phi d p hp S < 1)
     (L : ℕ) (hL : 1 ≤ L) (hSbox : (S : Set (Site d)) ⊆ box d (L - 1)) (d' : ℕ) :
     ∃ C r, 0 ≤ r ∧ r < 1 ∧
@@ -53,7 +53,7 @@ theorem clusterRadiusMoment_lt_top (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Sit
   simpa [hD] using this
 
 
-theorem clusterRadiusMoment_nonneg (p : ℝ≥0) (hp : p ≤ 1) (d' : ℕ) :
+theorem clusterRadiusMoment_nonneg (p : NNReal) (hp : p ≤ 1) (d' : ℕ) :
     0 ≤ clusterMoment (fun n => crossProb d p hp n) d' :=
   clusterMoment_nonneg (fun n => crossProb_nonneg d p hp n) d'
 

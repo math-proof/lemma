@@ -26,34 +26,34 @@ private lemma rhs_merge (n : ℕ) :
       (fun p => Nat.Prime p ∧ (p ∣ (n + 1) ∨ p ≤ (Nat.digits p (n + 1)).sum)))
     (fun p => p) := by
   have hAB : Disjoint
-    ((Finset.range (n + 2)).filter
-      (fun p => Nat.Prime p ∧ ¬ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum))
-    ((Finset.range (n + 2)).filter
-      (fun p => Nat.Prime p ∧ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum)) := by
+      ((Finset.range (n + 2)).filter
+        (fun p => Nat.Prime p ∧ ¬ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum))
+      ((Finset.range (n + 2)).filter
+        (fun p => Nat.Prime p ∧ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum)) := by
     rw [Finset.disjoint_filter]
     intro p _ h1 h2
     exact h1.2.1 h2.2.1
   have hABC : Disjoint
-    (((Finset.range (n + 2)).filter
-      (fun p => Nat.Prime p ∧ ¬ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum)) ∪
-    ((Finset.range (n + 2)).filter
-      (fun p => Nat.Prime p ∧ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum)))
-    ((Finset.range (n + 2)).filter
-      (fun p => Nat.Prime p ∧ p ∣ (n + 1) ∧ (Nat.digits p (n + 1)).sum < p)) := by
+      (((Finset.range (n + 2)).filter
+        (fun p => Nat.Prime p ∧ ¬ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum)) ∪
+      ((Finset.range (n + 2)).filter
+        (fun p => Nat.Prime p ∧ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum)))
+      ((Finset.range (n + 2)).filter
+        (fun p => Nat.Prime p ∧ p ∣ (n + 1) ∧ (Nat.digits p (n + 1)).sum < p)) := by
     rw [Finset.disjoint_union_left]
     constructor <;>
     · rw [Finset.disjoint_filter]
       intro p _ h1 h2
       omega
   have hunion :
-    (((Finset.range (n + 2)).filter
-      (fun p => Nat.Prime p ∧ ¬ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum)) ∪
-    ((Finset.range (n + 2)).filter
-      (fun p => Nat.Prime p ∧ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum)) ∪
-    ((Finset.range (n + 2)).filter
-      (fun p => Nat.Prime p ∧ p ∣ (n + 1) ∧ (Nat.digits p (n + 1)).sum < p))) =
-    ((Finset.range (n + 2)).filter
-      (fun p => Nat.Prime p ∧ (p ∣ (n + 1) ∨ p ≤ (Nat.digits p (n + 1)).sum))) := by
+      (((Finset.range (n + 2)).filter
+        (fun p => Nat.Prime p ∧ ¬ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum)) ∪
+      ((Finset.range (n + 2)).filter
+        (fun p => Nat.Prime p ∧ p ∣ (n + 1) ∧ p ≤ (Nat.digits p (n + 1)).sum)) ∪
+      ((Finset.range (n + 2)).filter
+        (fun p => Nat.Prime p ∧ p ∣ (n + 1) ∧ (Nat.digits p (n + 1)).sum < p))) =
+      ((Finset.range (n + 2)).filter
+        (fun p => Nat.Prime p ∧ (p ∣ (n + 1) ∨ p ≤ (Nat.digits p (n + 1)).sum))) := by
     ext p
     simp only [Finset.mem_union, Finset.mem_filter, Finset.mem_range]
     constructor
@@ -72,6 +72,7 @@ private lemma rhs_merge (n : ℕ) :
         | inr h' => exact h'
   rw [← hunion, Finset.prod_union hABC, Finset.prod_union hAB]
 
+-- Kummer consequence: q prime, q ∤ C(n,k) → digit sums satisfy s_q(k) ≤ s_q(n).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -92,6 +93,7 @@ private lemma kummer_digit_le {q k n : ℕ} (hq : Nat.Prime q) (hkn : k ≤ n)
   rw [hval, mul_zero] at hkum
   omega
 
+-- Coefficient form: every support index i satisfies i ≤ n.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -108,6 +110,7 @@ private lemma support_le {n i : ℕ} (hi : i ∈ (Polynomial.bernoulli n).suppor
     simp [Nat.not_le.mpr h]
   exact (Polynomial.mem_support_iff.mp hi) hcoeff
 
+-- Positivity of digit sums.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -127,6 +130,7 @@ private lemma digit_sum_pos {b m : ℕ} (hb : 1 < b) (hm : 0 < m) : 0 < (b.digit
   have hle := List.le_sum_of_mem hlast
   omega
 
+-- If (q-1) | k with k ≥ 1 then s_q(k) ≥ q-1 (multiple + positive).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -137,12 +141,12 @@ namespace MetaMathlibExt
 @[path]
 private lemma digit_sum_ge_of_dvd {q k : ℕ} (hq : Nat.Prime q) (hk1 : 1 ≤ k)
   (hdvd : q - 1 ∣ k) : q - 1 ≤ (q.digits k).sum := by
-  obtain rfl | hne2 := eq_or_ne q 2
+  rcases eq_or_ne q 2 with rfl | hne2
   · have hle := digit_sum_pos (show (1:ℕ) < 2 by norm_num) (show 0 < k by omega)
     omega
   · have hq3 : 3 ≤ q := by
-    have h2 := hq.two_le
-    omega
+      have h2 := hq.two_le
+      omega
     have hmod1 : q % (q - 1) = 1 := by
       have hqq : q = (q - 1) + 1 := by omega
       nth_rewrite 1 [hqq]
@@ -156,6 +160,7 @@ private lemma digit_sum_ge_of_dvd {q k : ℕ} (hq : Nat.Prime q) (hk1 : 1 ≤ k)
       digit_sum_pos hq.one_lt (show 0 < k by omega)
     exact Nat.le_of_dvd hpos hdvd2
 
+-- Kummer + divisibility: q ∈ T₀ (i.e. (q-1)|k, ¬ q|C(n,k)) gives s_q(n) ≥ q-1.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -203,7 +208,8 @@ private lemma digit_sum_succ_of_not_dvd {q n : ℕ} (hq : Nat.Prime q) (h : ¬ q
     exact hmod h2
   have hmodval : (n + 1) % q = n % q + 1 := by
     have h2 : (n + 1) % q = (n % q + 1 % q) % q := Nat.add_mod n 1 q
-    rwa [Nat.mod_eq_of_lt hq1, Nat.mod_eq_of_lt hlt] at h2
+    rw [Nat.mod_eq_of_lt hq1, Nat.mod_eq_of_lt hlt] at h2
+    exact h2
   have e1 : q.digits (n + 1) = ((n + 1) % q) :: q.digits ((n + 1) / q) :=
     Nat.digits_def' hq1 (Nat.succ_pos n)
   by_cases hn : n = 0
@@ -212,7 +218,8 @@ private lemma digit_sum_succ_of_not_dvd {q n : ℕ} (hq : Nat.Prime q) (h : ¬ q
       have e := Nat.digits_def' hq1 (show (0:ℕ) < 1 by norm_num)
       have m1 : (1:ℕ) % q = 1 := Nat.mod_eq_of_lt hq1
       have q1 : (1:ℕ) / q = 0 := Nat.div_eq_of_lt_le (by omega) (by omega)
-      rwa [m1, q1, Nat.digits_zero] at e
+      rw [m1, q1, Nat.digits_zero] at e
+      exact e
     change (q.digits (0 + 1)).sum = (q.digits 0).sum + 1
     rw [show (0:ℕ) + 1 = 1 from rfl, d1, Nat.digits_zero]
     simp
@@ -278,6 +285,7 @@ private lemma factF {q n : ℕ} (hq : Nat.Prime q) :
       · have := digit_sum_succ_of_not_dvd hq hdvd
         omega
 
+-- Binary digit sum of an odd m ≥ 3 is at least 2.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -304,6 +312,7 @@ private lemma two_le_digit_sum_of_odd {m : ℕ} (hodd : Odd m) (hm : 3 ≤ m) :
   have hle := List.le_sum_of_mem hlast
   omega
 
+-- 2 is always in S for n ≥ 1.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -329,6 +338,7 @@ private lemma two_mem_S {n : ℕ} (hn : 1 ≤ n) :
     have := two_le_digit_sum_of_odd hodd hm3
     simpa using this
 
+-- Upper bound, k = 0 case: den = 1.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -344,6 +354,7 @@ private lemma upper_k_zero {n : ℕ} (k : ℕ) (hk : k = 0) (S : Finset ℕ) :
   rw [Rat.den_natCast]
   exact one_dvd _
 
+-- Upper bound, odd k ≠ 1 case: bernoulli k = 0, den = 1.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -364,6 +375,7 @@ private lemma upper_k_odd {n k : ℕ} (hodd : Odd k) (hne1 : k ≠ 1) (S : Finse
   rw [hB, zero_mul, Rat.den_zero]
   exact one_dvd _
 
+-- Upper bound, k = 1 case: den divides 2 and 2 ∈ S.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -383,6 +395,7 @@ private lemma upper_k_one {n : ℕ} (hn : 1 ≤ n) :
   rw [hd, Rat.den_natCast, mul_one] at h2
   exact dvd_trans h2 (Finset.dvd_prod_of_mem _ (two_mem_S hn))
 
+-- Upper bound, even k ≥ 2 case via von Staudt–Clausen.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -400,16 +413,17 @@ private lemma upper_k_even {n k : ℕ} (hkn : k ≤ n) (h2 : 2 ≤ k) (heven : E
   subst hkm
   obtain ⟨z, hz⟩ := Bernoulli.vonStaudt_clausen m
   have hB : bernoulli (2 * m) =
-    (z : ℚ) - ∑ p ∈ (Finset.range (2 * m + 2)).filter
-      (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m), (1 : ℚ) / (p : ℚ) := by
+      (z : ℚ) - ∑ p ∈ (Finset.range (2 * m + 2)).filter
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m), (1 : ℚ) / (p : ℚ) := by
     have hz' : (z : ℚ) = bernoulli (2 * m) +
-      ∑ p ∈ (Finset.range (2 * m + 2)).filter
-        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m), (1 : ℚ) / (p : ℚ) := hz
-    rwa [eq_sub_iff_add_eq]
+        ∑ p ∈ (Finset.range (2 * m + 2)).filter
+          (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m), (1 : ℚ) / (p : ℚ) := hz
+    rw [eq_sub_iff_add_eq]
+    exact hz'.symm
   have hterm : ∀ p ∈ (Finset.range (2 * m + 2)).filter
-    (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-    (fun p => p ∣ n.choose (2 * m)),
-    (n.choose (2 * m) : ℚ) / (p : ℚ) = ((n.choose (2 * m) / p : ℕ) : ℚ) := by
+      (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+      (fun p => p ∣ n.choose (2 * m)),
+      (n.choose (2 * m) : ℚ) / (p : ℚ) = ((n.choose (2 * m) / p : ℕ) : ℚ) := by
     intro p hp
     have hpc : p ∣ n.choose (2 * m) := (Finset.mem_filter.mp hp).2
     have hpT := (Finset.mem_filter.mp hp).1
@@ -418,83 +432,83 @@ private lemma upper_k_even {n k : ℕ} (hkn : k ≤ n) (h2 : 2 ≤ k) (heven : E
     have hne : ((p : ℕ) : ℚ) ≠ 0 := by exact_mod_cast hprime.ne_zero
     exact (Nat.cast_div hpc hne).symm
   have hT1_int : ∑ p ∈ (Finset.range (2 * m + 2)).filter
-    (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-    (fun p => p ∣ n.choose (2 * m)),
-    (n.choose (2 * m) : ℚ) / (p : ℚ) =
-    (((∑ p ∈ (Finset.range (2 * m + 2)).filter
-      (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-      (fun p => p ∣ n.choose (2 * m)), n.choose (2 * m) / p : ℕ)) : ℚ) := by
-    calc ∑ p ∈ (Finset.range (2 * m + 2)).filter
       (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
       (fun p => p ∣ n.choose (2 * m)),
-      (n.choose (2 * m) : ℚ) / (p : ℚ)
-      = ∑ p ∈ (Finset.range (2 * m + 2)).filter
+      (n.choose (2 * m) : ℚ) / (p : ℚ) =
+      (((∑ p ∈ (Finset.range (2 * m + 2)).filter
         (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-        (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℚ) :=
-      Finset.sum_congr rfl hterm
+        (fun p => p ∣ n.choose (2 * m)), n.choose (2 * m) / p : ℕ)) : ℚ) := by
+    calc ∑ p ∈ (Finset.range (2 * m + 2)).filter
+          (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+          (fun p => p ∣ n.choose (2 * m)),
+          (n.choose (2 * m) : ℚ) / (p : ℚ)
+        = ∑ p ∈ (Finset.range (2 * m + 2)).filter
+          (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+          (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℚ) :=
+        Finset.sum_congr rfl hterm
       _ = (((∑ p ∈ (Finset.range (2 * m + 2)).filter
-        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-        (fun p => p ∣ n.choose (2 * m)), n.choose (2 * m) / p : ℕ)) : ℚ) :=
+          (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+          (fun p => p ∣ n.choose (2 * m)), n.choose (2 * m) / p : ℕ)) : ℚ) :=
         (Nat.cast_sum _ _).symm
   have hsplit : ∑ p ∈ (Finset.range (2 * m + 2)).filter
-    (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m), (n.choose (2 * m) : ℚ) / (p : ℚ) =
-    (∑ p ∈ (Finset.range (2 * m + 2)).filter
-      (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-      (fun p => p ∣ n.choose (2 * m)), (n.choose (2 * m) : ℚ) / (p : ℚ)) +
-    (∑ p ∈ (Finset.range (2 * m + 2)).filter
-      (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-      (fun p => ¬ p ∣ n.choose (2 * m)), (n.choose (2 * m) : ℚ) / (p : ℚ)) :=
+      (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m), (n.choose (2 * m) : ℚ) / (p : ℚ) =
+      (∑ p ∈ (Finset.range (2 * m + 2)).filter
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+        (fun p => p ∣ n.choose (2 * m)), (n.choose (2 * m) : ℚ) / (p : ℚ)) +
+      (∑ p ∈ (Finset.range (2 * m + 2)).filter
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+        (fun p => ¬ p ∣ n.choose (2 * m)), (n.choose (2 * m) : ℚ) / (p : ℚ)) :=
     (Finset.sum_filter_add_sum_filter_not _ (fun p => p ∣ n.choose (2 * m)) _).symm
   have hsum_eq : ∑ p ∈ (Finset.range (2 * m + 2)).filter
-    (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m),
-    ((1 : ℚ) / (p : ℚ)) * (n.choose (2 * m) : ℚ) =
-    ∑ p ∈ (Finset.range (2 * m + 2)).filter
-      (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m),
-      (n.choose (2 * m) : ℚ) / (p : ℚ) := by
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m),
+        ((1 : ℚ) / (p : ℚ)) * (n.choose (2 * m) : ℚ) =
+      ∑ p ∈ (Finset.range (2 * m + 2)).filter
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m),
+        (n.choose (2 * m) : ℚ) / (p : ℚ) := by
     apply Finset.sum_congr rfl
     intro p hp
     rw [div_mul_eq_mul_div, one_mul]
   have hT1_Q : ∑ p ∈ (Finset.range (2 * m + 2)).filter
-    (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-    (fun p => p ∣ n.choose (2 * m)),
-    (n.choose (2 * m) : ℚ) / (p : ℚ) =
-    ∑ p ∈ (Finset.range (2 * m + 2)).filter
-      (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-      (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℚ) :=
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+        (fun p => p ∣ n.choose (2 * m)),
+        (n.choose (2 * m) : ℚ) / (p : ℚ) =
+      ∑ p ∈ (Finset.range (2 * m + 2)).filter
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+        (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℚ) :=
     Finset.sum_congr rfl hterm
   have wdef : ∃ w : ℤ, bernoulli (2 * m) * (n.choose (2 * m) : ℚ) =
-    (w : ℚ) - ∑ p ∈ (Finset.range (2 * m + 2)).filter
-      (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-      (fun p => ¬ p ∣ n.choose (2 * m)), (n.choose (2 * m) : ℚ) / (p : ℚ) := by
+      (w : ℚ) - ∑ p ∈ (Finset.range (2 * m + 2)).filter
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+        (fun p => ¬ p ∣ n.choose (2 * m)), (n.choose (2 * m) : ℚ) / (p : ℚ) := by
     refine ⟨(n.choose (2 * m) : ℤ) * z -
       ∑ p ∈ (Finset.range (2 * m + 2)).filter
         (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
         (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℤ), ?_⟩
     have hwQ : ((((n.choose (2 * m) : ℤ) * z -
-      ∑ p ∈ (Finset.range (2 * m + 2)).filter
-        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-        (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℤ)) : ℤ) : ℚ) =
-      (n.choose (2 * m) : ℚ) * (z : ℚ) -
-      ∑ p ∈ (Finset.range (2 * m + 2)).filter
-        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-        (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℚ) := by
-      have h1 : ((((n.choose (2 * m) : ℤ) * z -
         ∑ p ∈ (Finset.range (2 * m + 2)).filter
           (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
           (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℤ)) : ℤ) : ℚ) =
-        ((((n.choose (2 * m) : ℤ) * z : ℤ)) : ℚ) -
-        ((((∑ p ∈ (Finset.range (2 * m + 2)).filter
-          (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-          (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℤ)) : ℤ)) : ℚ) :=
-        Int.cast_sub _ _
-      have h2 : ((((n.choose (2 * m) : ℤ) * z : ℤ)) : ℚ) =
-        (n.choose (2 * m) : ℚ) * (z : ℚ) := by simp
-      have h3 : ((((∑ p ∈ (Finset.range (2 * m + 2)).filter
-        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-        (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℤ)) : ℤ)) : ℚ) =
+        (n.choose (2 * m) : ℚ) * (z : ℚ) -
         ∑ p ∈ (Finset.range (2 * m + 2)).filter
           (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
           (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℚ) := by
+      have h1 : ((((n.choose (2 * m) : ℤ) * z -
+          ∑ p ∈ (Finset.range (2 * m + 2)).filter
+            (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+            (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℤ)) : ℤ) : ℚ) =
+          ((((n.choose (2 * m) : ℤ) * z : ℤ)) : ℚ) -
+          ((((∑ p ∈ (Finset.range (2 * m + 2)).filter
+            (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+            (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℤ)) : ℤ)) : ℚ) :=
+        Int.cast_sub _ _
+      have h2 : ((((n.choose (2 * m) : ℤ) * z : ℤ)) : ℚ) =
+          (n.choose (2 * m) : ℚ) * (z : ℚ) := by simp
+      have h3 : ((((∑ p ∈ (Finset.range (2 * m + 2)).filter
+            (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+            (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℤ)) : ℤ)) : ℚ) =
+          ∑ p ∈ (Finset.range (2 * m + 2)).filter
+            (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+            (fun p => p ∣ n.choose (2 * m)), ((n.choose (2 * m) / p : ℕ) : ℚ) := by
         simp only [Int.cast_sum]
         refine Finset.sum_congr rfl (fun p hp => ?_)
         exact Int.cast_natCast _
@@ -506,19 +520,19 @@ private lemma upper_k_even {n k : ℕ} (hkn : k ≤ n) (h2 : 2 ≤ k) (heven : E
     rw [eA]
   obtain ⟨w, hw⟩ := wdef
   have hden0 : (bernoulli (2 * m) * (n.choose (2 * m) : ℚ)).den =
-    (∑ p ∈ (Finset.range (2 * m + 2)).filter
-      (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-      (fun p => ¬ p ∣ n.choose (2 * m)),
-      (n.choose (2 * m) : ℚ) / (p : ℚ)).den := by
+      (∑ p ∈ (Finset.range (2 * m + 2)).filter
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+        (fun p => ¬ p ∣ n.choose (2 * m)),
+        (n.choose (2 * m) : ℚ) / (p : ℚ)).den := by
     rw [hw, Rat.intCast_sub_den]
   rw [hden0]
   have hstep1 : (∑ p ∈ (Finset.range (2 * m + 2)).filter
-    (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-    (fun p => ¬ p ∣ n.choose (2 * m)),
-    (n.choose (2 * m) : ℚ) / (p : ℚ)).den ∣
-    ∏ p ∈ (Finset.range (2 * m + 2)).filter
-      (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-      (fun p => ¬ p ∣ n.choose (2 * m)), p := by
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+        (fun p => ¬ p ∣ n.choose (2 * m)),
+        (n.choose (2 * m) : ℚ) / (p : ℚ)).den ∣
+      ∏ p ∈ (Finset.range (2 * m + 2)).filter
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+        (fun p => ¬ p ∣ n.choose (2 * m)), p := by
     apply dvd_trans (Finset.Rat.den_sum_dvd_prod_den _ _)
     apply Finset.prod_dvd_prod_of_dvd
     intro p hp
@@ -528,12 +542,13 @@ private lemma upper_k_even {n k : ℕ} (hkn : k ≤ n) (h2 : 2 ≤ k) (heven : E
     have hpos : 0 < p := hprime.pos
     have h := Rat.mul_den_dvd (n.choose (2 * m) : ℚ) ((p : ℚ)⁻¹)
     rw [Rat.den_natCast, Rat.inv_natCast_den_of_pos hpos, one_mul] at h
-    rwa [div_eq_mul_inv]
+    rw [div_eq_mul_inv]
+    exact h
   have hstep2 : ∏ p ∈ (Finset.range (2 * m + 2)).filter
-    (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
-    (fun p => ¬ p ∣ n.choose (2 * m)), p ∣
-    ∏ p ∈ (Finset.range (n + 2)).filter
-      (fun p => Nat.Prime p ∧ (p ∣ (n + 1) ∨ p ≤ (Nat.digits p (n + 1)).sum)), p := by
+        (fun p => Nat.Prime p ∧ p - 1 ∣ 2 * m) |>.filter
+        (fun p => ¬ p ∣ n.choose (2 * m)), p ∣
+      ∏ p ∈ (Finset.range (n + 2)).filter
+        (fun p => Nat.Prime p ∧ (p ∣ (n + 1) ∨ p ≤ (Nat.digits p (n + 1)).sum)), p := by
     apply Finset.prod_dvd_prod_of_subset
     intro q hq
     have hq0 := Finset.mem_filter.mp hq
@@ -552,6 +567,7 @@ private lemma upper_k_even {n k : ℕ} (hkn : k ≤ n) (h2 : 2 ≤ k) (heven : E
       (digit_sum_n_ge_of_mem hprime hkn (by omega) hdiv hnc)
   exact dvd_trans hstep1 hstep2
 
+-- Small digit sums: s_p(x) = x for x < p.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -562,13 +578,14 @@ namespace MetaMathlibExt
 @[path]
 private lemma digit_sum_small {p x : ℕ} (hp : 1 < p) (hx : x < p) :
   (p.digits x).sum = x := by
-  obtain rfl | hx0 := eq_or_ne x 0
+  rcases eq_or_ne x 0 with rfl | hx0
   · rw [Nat.digits_zero, List.sum_nil]
   · have hpos : 0 < x := Nat.pos_of_ne_zero hx0
     have e := Nat.digits_def' hp hpos
     rw [Nat.mod_eq_of_lt hx, Nat.div_eq_of_lt hx, Nat.digits_zero] at e
     rw [e, List.sum_cons, List.sum_nil, add_zero]
 
+-- Digit sum of r + p*q splits.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -583,12 +600,14 @@ private lemma digit_sum_add {p r q : ℕ} (hp : 1 < p) (hr : r < p) :
   · obtain ⟨rfl, rfl⟩ := h0
     simp
   · have hne : r ≠ 0 ∨ q ≠ 0 := by
-    by_cases h : r = 0
-    · exact Or.inr (fun hz => h0 ⟨h, hz⟩)
-    · exact Or.inl h
+      by_cases h : r = 0
+      · exact Or.inr (fun hz => h0 ⟨h, hz⟩)
+      · exact Or.inl h
     have e := Nat.digits_add p hp r q hr hne
     rw [e, List.sum_cons]
 
+-- No-borrow sub-number: for every t ≤ s_p(n) there is k ≤ n with s_p(k) = t
+-- and s_p(n-k) = s_p(n) - t.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -603,10 +622,10 @@ private lemma exists_digit_subnumber {p : ℕ} (hp : 1 < p) (n : ℕ) :
     (p.digits (n - k)).sum = (p.digits n).sum - t := by
   refine Nat.strong_induction_on n (fun n ih => ?_)
   intro t ht
-  obtain rfl | hn0 := eq_or_ne n 0
+  rcases eq_or_ne n 0 with rfl | hn0
   · have ht0 : t = 0 := by
-    simp only [Nat.digits_zero, List.sum_nil, Nat.le_zero] at ht
-    exact ht
+      simp only [Nat.digits_zero, List.sum_nil, Nat.le_zero] at ht
+      exact ht
     refine ⟨0, le_rfl, by simp [Nat.digits_zero, ht0], by simp [Nat.digits_zero, ht0]⟩
   · have hp0 : 0 < p := by omega
     have hr : n % p < p := Nat.mod_lt _ hp0
@@ -616,7 +635,8 @@ private lemma exists_digit_subnumber {p : ℕ} (hp : 1 < p) (n : ℕ) :
       · by_cases h2 : n / p = 0
         · exfalso
           apply hn0
-          rwa [h, h2, mul_zero, add_zero] at hdecomp
+          rw [h, h2, mul_zero, add_zero] at hdecomp
+          exact hdecomp.symm
         · exact Or.inr h2
       · exact Or.inl h
     have hsum : (p.digits n).sum = n % p + (p.digits (n / p)).sum := by
@@ -629,7 +649,7 @@ private lemma exists_digit_subnumber {p : ℕ} (hp : 1 < p) (n : ℕ) :
       · exact digit_sum_small hp (lt_of_le_of_lt htr hr)
       · have e : n - t = (n % p - t) + p * (n / p) := by omega
         have h1 : (p.digits (n - t)).sum =
-          (n % p - t) + (p.digits (n / p)).sum := by
+            (n % p - t) + (p.digits (n / p)).sum := by
           rw [e]
           exact digit_sum_add hp (by omega)
         rw [h1]
@@ -643,7 +663,7 @@ private lemma exists_digit_subnumber {p : ℕ} (hp : 1 < p) (n : ℕ) :
         have hkle : n % p + p * k' ≤ n := by omega
         exact hkle
       · have e : (p.digits (n % p + p * k')).sum =
-        n % p + (p.digits k').sum := digit_sum_add hp hr
+            n % p + (p.digits k').sum := digit_sum_add hp hr
         rw [e, hsk']
         omega
       · have hmul : p * k' ≤ p * (n / p) := Nat.mul_le_mul le_rfl hk'q
@@ -653,11 +673,12 @@ private lemma exists_digit_subnumber {p : ℕ} (hp : 1 < p) (n : ℕ) :
         have hnk : n - (n % p + p * k') = 0 + p * (n / p - k') := by
           rw [e1, e2, zero_add]
         have hsd_nk : (p.digits (n - (n % p + p * k'))).sum =
-          (p.digits (n / p - k')).sum := by
+            (p.digits (n / p - k')).sum := by
           rw [hnk, digit_sum_add hp (show (0:ℕ) < p by omega), zero_add]
         rw [hsd_nk, hsd']
         omega
 
+-- Even Bernoulli denominator divisibility.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -673,10 +694,12 @@ private lemma even_den_dvd {k p : ℕ} (hprime : Nat.Prime p) (heven : Even k) (
   have h2m : k = 2 * m := by omega
   have hm0 : 0 < m := by omega
   have hdvd2 : p - 1 ∣ 2 * m := by
-    rwa [← h2m]
+    rw [← h2m]
+    exact hdvd
   rw [h2m]
   exact Bernoulli.dvd_den_bernoulli hm0 hdvd2
 
+-- Lower bound core: every p ∈ S divides the support-lcm.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -709,20 +732,20 @@ private lemma lower_mem_S {n p : ℕ}
       omega
     rw [hrhs] at hkum
     have hv0 : padicValNat p (n.choose k) = 0 := by
-      obtain h | h := Nat.mul_eq_zero.mp hkum
+      rcases Nat.mul_eq_zero.mp hkum with h | h
       · omega
       · exact h
     rw [padicValNat.eq_zero_iff] at hv0
-    obtain h | h | h := hv0
+    rcases hv0 with h | h | h
     · exact absurd h hprime.ne_one
     · omega
     · exact h
   have hdvd_k : p - 1 ∣ k := by
-    obtain rfl | hne := eq_or_ne p 2
+    rcases eq_or_ne p 2 with rfl | hne
     · exact one_dvd k
     · have hp3 : 3 ≤ p := by
-      have h2 := hprime.two_le
-      omega
+        have h2 := hprime.two_le
+        omega
       have hmod1 : p % (p - 1) = 1 := by
         have hqq : p = (p - 1) + 1 := by omega
         nth_rewrite 1 [hqq]
@@ -733,66 +756,67 @@ private lemma lower_mem_S {n p : ℕ}
       have hz : p - 1 ≡ 0 [MOD p - 1] := Nat.modEq_zero_iff_dvd.mpr dvd_rfl
       exact Nat.modEq_zero_iff_dvd.mp (hme.trans hz)
   have hden : p ∣ (bernoulli k).den := by
-    obtain rfl | hne_p2 := eq_or_ne p 2
+    rcases eq_or_ne p 2 with rfl | hne_p2
     · by_cases hk1_eq : k = 1
       · subst hk1_eq
         rw [bernoulli_one]
         have hd : ((-1 / 2 : ℚ)).den = 2 := by norm_num
         rw [hd]
       · have heven_k : Even k := by
-        have hsk1 : (Nat.digits 2 k).sum = 1 := by omega
-        have hne1 : k % 2 ≠ 1 := by
-          intro hmod
-          have hdecomp := Nat.mod_add_div k 2
-          have hsum2 : (Nat.digits 2 (k % 2 + 2 * (k / 2))).sum =
-            k % 2 + (Nat.digits 2 (k / 2)).sum :=
-            digit_sum_add (by norm_num) (Nat.mod_lt _ (by norm_num))
-          rw [hdecomp] at hsum2
-          rw [hmod] at hsum2
-          have hq0 : k / 2 = 0 := by
-            by_contra hc
-            have hpos : 0 < k / 2 := Nat.pos_of_ne_zero hc
-            have hpos2 := digit_sum_pos (show (1:ℕ) < 2 by norm_num) hpos
+          have hsk1 : (Nat.digits 2 k).sum = 1 := by omega
+          have hne1 : k % 2 ≠ 1 := by
+            intro hmod
+            have hdecomp := Nat.mod_add_div k 2
+            have hsum2 : (Nat.digits 2 (k % 2 + 2 * (k / 2))).sum =
+                k % 2 + (Nat.digits 2 (k / 2)).sum :=
+              digit_sum_add (by norm_num) (Nat.mod_lt _ (by norm_num))
+            rw [hdecomp] at hsum2
+            rw [hmod] at hsum2
+            have hq0 : k / 2 = 0 := by
+              by_contra hc
+              have hpos : 0 < k / 2 := Nat.pos_of_ne_zero hc
+              have hpos2 := digit_sum_pos (show (1:ℕ) < 2 by norm_num) hpos
+              omega
+            have hk1eq : k = 1 := by omega
+            exact hk1_eq hk1eq
+          have hmod0 : k % 2 = 0 := by
+            have hlt : k % 2 < 2 := Nat.mod_lt _ (by norm_num)
             omega
-          have hk1eq : k = 1 := by omega
-          exact hk1_eq hk1eq
-        have hmod0 : k % 2 = 0 := by
-          have hlt : k % 2 < 2 := Nat.mod_lt _ (by norm_num)
-          omega
-        exact Nat.even_iff.mpr hmod0
+          exact Nat.even_iff.mpr hmod0
         have hk2 : 2 ≤ k := by
-          obtain ⟨m, hm⟩ := heven_k
+          rcases heven_k with ⟨m, hm⟩
           omega
         exact even_den_dvd hprime heven_k hk2 hdvd_k
     · have heven_k : Even k := by
-      have hodd_p : Odd p := hprime.odd_of_ne_two hne_p2
-      have heven_sub : Even (p - 1) := by
-        obtain ⟨j, hj⟩ := hodd_p
-        exact ⟨j, by omega⟩
-      obtain ⟨a, ha⟩ := heven_sub
-      obtain ⟨b, hb⟩ := hdvd_k
-      exact ⟨a * b, by rw [hb, ha]; ring⟩
+        have hodd_p : Odd p := hprime.odd_of_ne_two hne_p2
+        have heven_sub : Even (p - 1) := by
+          obtain ⟨j, hj⟩ := hodd_p
+          exact ⟨j, by omega⟩
+        obtain ⟨a, ha⟩ := heven_sub
+        obtain ⟨b, hb⟩ := hdvd_k
+        exact ⟨a * b, by rw [hb, ha]; ring⟩
       have hk2 : 2 ≤ k := by
-        obtain ⟨m, hm⟩ := heven_k
+        rcases heven_k with ⟨m, hm⟩
         omega
       exact even_den_dvd hprime heven_k hk2 hdvd_k
   have hcpos : 0 < n.choose k := Nat.choose_pos hkn
   have hne_c : ((n.choose k : ℕ) : ℚ) ≠ 0 := by exact_mod_cast ne_of_gt hcpos
   have hB_eq : bernoulli k =
-    (bernoulli k * (n.choose k : ℚ)) * (((n.choose k : ℕ) : ℚ))⁻¹ := by
+      (bernoulli k * (n.choose k : ℚ)) * (((n.choose k : ℕ) : ℚ))⁻¹ := by
     rw [mul_assoc, mul_inv_cancel₀ hne_c, mul_one]
   have hden_dvd : (bernoulli k).den ∣
-    (bernoulli k * (n.choose k : ℚ)).den * n.choose k := by
+      (bernoulli k * (n.choose k : ℚ)).den * n.choose k := by
     have h := Rat.mul_den_dvd (bernoulli k * (n.choose k : ℚ))
       ((((n.choose k : ℕ) : ℚ))⁻¹)
-    rwa [← hB_eq, Rat.inv_natCast_den_of_pos hcpos] at h
+    rw [← hB_eq, Rat.inv_natCast_den_of_pos hcpos] at h
+    exact h
   have hp_den : p ∣ (bernoulli k * (n.choose k : ℚ)).den := by
-    obtain h | h := hprime.dvd_mul.mp (dvd_trans hden hden_dvd)
+    rcases hprime.dvd_mul.mp (dvd_trans hden hden_dvd) with h | h
     · exact h
     · exact absurd h hnc
   have hkj : n - (n - k) = k := Nat.sub_sub_self hkn
   have hcoeff_j : (Polynomial.bernoulli n).coeff (n - k) =
-    bernoulli k * ((n.choose k : ℕ) : ℚ) := by
+      bernoulli k * ((n.choose k : ℕ) : ℚ) := by
     have hle : n - k ≤ n := Nat.sub_le n k
     rw [Polynomial.coeff_bernoulli, ite_eq_left hle, hkj, Nat.choose_symm hkn]
   have hmem_supp : n - k ∈ (Polynomial.bernoulli n).support := by
@@ -802,8 +826,8 @@ private lemma lower_mem_S {n p : ℕ}
     have hle1 : p ≤ 1 := Nat.le_of_dvd (by norm_num) hp_den
     omega
   have hmem2 : ((Polynomial.bernoulli n).coeff (n - k)).den ∣
-    (Polynomial.bernoulli n).support.lcm
-      (fun i => ((Polynomial.bernoulli n).coeff i).den) :=
+      (Polynomial.bernoulli n).support.lcm
+        (fun i => ((Polynomial.bernoulli n).coeff i).den) :=
     Finset.dvd_lcm hmem_supp
   rw [hcoeff_j] at hmem2
   exact dvd_trans hp_den hmem2
@@ -841,7 +865,7 @@ lemma kellner_sondow_bernoulli_denom
     intro i hi
     have hle : i ≤ n := support_le hi
     have hcoeff : (Polynomial.bernoulli n).coeff i =
-      bernoulli (n - i) * ((n.choose (n - i) : ℕ) : ℚ) := by
+        bernoulli (n - i) * ((n.choose (n - i) : ℕ) : ℚ) := by
       rw [Polynomial.coeff_bernoulli, ite_eq_left hle]
       have hkk : n - i ≤ n := Nat.sub_le n i
       have hCi : ((n.choose i : ℕ) : ℚ) = ((n.choose (n - i) : ℕ) : ℚ) := by
@@ -864,12 +888,14 @@ lemma kellner_sondow_bernoulli_denom
         · exact upper_k_odd hod hk1 _
   · apply Finset.prod_primes_dvd
     · intro a ha
-      rwa [Finset.mem_filter] at ha
+      rw [Finset.mem_filter] at ha
+      exact ha.2.1.prime
     · intro a ha
       exact lower_mem_S ha
+
 end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

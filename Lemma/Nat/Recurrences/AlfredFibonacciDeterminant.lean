@@ -16,7 +16,8 @@ private lemma fib_neg_eq (t : ℤ) : Int.fib (-t) = (-1 : ℤ) ^ ((t + 1).natAbs
     rw [h1.neg_one_pow]
     simp [ht]
   · have heven : Even (t + 1) := by
-    rwa [Int.even_add_one]
+      rw [Int.even_add_one]
+      exact ht
     have h1 : Even ((t + 1).natAbs) := Int.natAbs_even.mpr heven
     rw [h1.neg_one_pow]
     simp [ht]
@@ -103,7 +104,7 @@ private lemma E_base0 (m : ℤ) :
   conv_rhs => rw [fib_neg_eq m]
   have hsq := neg_one_pow_natAbs_sq (m + 1)
   have hassoc : (-1 : ℤ) ^ ((m + 1).natAbs) * ((-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib m) =
-    ((-1 : ℤ) ^ ((m + 1).natAbs) * (-1 : ℤ) ^ ((m + 1).natAbs)) * Int.fib m := by
+      ((-1 : ℤ) ^ ((m + 1).natAbs) * (-1 : ℤ) ^ ((m + 1).natAbs)) * Int.fib m := by
     ring
   rw [hassoc, hsq, one_mul]
 
@@ -133,8 +134,8 @@ private lemma E_base1 (m : ℤ) :
     rw [hA.neg_one_pow, hB.neg_one_pow]
     simp
   · have hB : Even (m.natAbs) := by
-    by_contra hcon
-    exact hA (hpar.mpr hcon)
+      by_contra hcon
+      exact hA (hpar.mpr hcon)
     have hAodd : Odd (((m + 1 : ℤ)).natAbs) := Nat.not_even_iff_odd.mp hA
     rw [hAodd.neg_one_pow, hB.neg_one_pow]
     simp
@@ -171,20 +172,20 @@ private lemma fib_E (m n : ℤ) :
   Int.fib m * Int.fib (n - 1) - Int.fib (m - 1) * Int.fib n =
     (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib (n - m) := by
   have step : ∀ t : ℤ, (Int.fib m * Int.fib ((t + 2) - 1) - Int.fib (m - 1) * Int.fib (t + 2) -
-    (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib ((t + 2) - m)) =
-    (Int.fib m * Int.fib (t - 1) - Int.fib (m - 1) * Int.fib t -
-      (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib (t - m)) +
-    (Int.fib m * Int.fib ((t + 1) - 1) - Int.fib (m - 1) * Int.fib (t + 1) -
-      (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib ((t + 1) - m)) := by
+      (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib ((t + 2) - m)) =
+      (Int.fib m * Int.fib (t - 1) - Int.fib (m - 1) * Int.fib t -
+        (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib (t - m)) +
+      (Int.fib m * Int.fib ((t + 1) - 1) - Int.fib (m - 1) * Int.fib (t + 1) -
+        (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib ((t + 1) - m)) := by
     intro t
     have hE := E_step m t
     have hR := RHS_step m t
     linarith
   have pos2 : ∀ t : ℕ,
-    (Int.fib m * Int.fib (((t : ℤ)) - 1) - Int.fib (m - 1) * Int.fib t -
-      (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib (t - m)) = 0 ∧
-    (Int.fib m * Int.fib ((((t + 1 : ℕ) : ℤ)) - 1) - Int.fib (m - 1) * Int.fib ((t + 1 : ℕ) : ℤ) -
-      (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib ((((t + 1 : ℕ) : ℤ)) - m)) = 0 := by
+      (Int.fib m * Int.fib (((t : ℤ)) - 1) - Int.fib (m - 1) * Int.fib t -
+        (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib (t - m)) = 0 ∧
+      (Int.fib m * Int.fib ((((t + 1 : ℕ) : ℤ)) - 1) - Int.fib (m - 1) * Int.fib ((t + 1 : ℕ) : ℤ) -
+        (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib ((((t + 1 : ℕ) : ℤ)) - m)) = 0 := by
     intro t
     induction t with
     | zero =>
@@ -208,13 +209,13 @@ private lemma fib_E (m n : ℤ) :
         rw [e2] at ih
         linarith [ih.1, ih.2, hs, hr]
   have pos : ∀ t : ℕ, (Int.fib m * Int.fib (((t : ℤ)) - 1) - Int.fib (m - 1) * Int.fib t -
-    (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib (t - m)) = 0 := fun t => (pos2 t).1
+      (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib (t - m)) = 0 := fun t => (pos2 t).1
   have neg2 : ∀ t : ℕ,
-    (Int.fib m * Int.fib (((-(t : ℤ))) - 1) - Int.fib (m - 1) * Int.fib (-(t : ℤ)) -
-      (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib ((-(t : ℤ)) - m)) = 0 ∧
-    (Int.fib m * Int.fib (((-(((t + 1 : ℕ)) : ℤ))) - 1) -
-      Int.fib (m - 1) * Int.fib (-(((t + 1 : ℕ)) : ℤ)) -
-      (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib (((-(((t + 1 : ℕ)) : ℤ))) - m)) = 0 := by
+      (Int.fib m * Int.fib (((-(t : ℤ))) - 1) - Int.fib (m - 1) * Int.fib (-(t : ℤ)) -
+        (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib ((-(t : ℤ)) - m)) = 0 ∧
+      (Int.fib m * Int.fib (((-(((t + 1 : ℕ)) : ℤ))) - 1) -
+        Int.fib (m - 1) * Int.fib (-(((t + 1 : ℕ)) : ℤ)) -
+        (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib (((-(((t + 1 : ℕ)) : ℤ))) - m)) = 0 := by
     intro t
     induction t with
     | zero =>
@@ -247,8 +248,8 @@ private lemma fib_E (m n : ℤ) :
         rw [eD] at ih hs
         linarith [ih.1, ih.2, hs]
   have neg : ∀ t : ℕ,
-    (Int.fib m * Int.fib (((-(t : ℤ))) - 1) - Int.fib (m - 1) * Int.fib (-(t : ℤ)) -
-      (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib ((-(t : ℤ)) - m)) = 0 := fun t => (neg2 t).1
+      (Int.fib m * Int.fib (((-(t : ℤ))) - 1) - Int.fib (m - 1) * Int.fib (-(t : ℤ)) -
+        (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib ((-(t : ℤ)) - m)) = 0 := fun t => (neg2 t).1
   obtain ⟨t, rfl | rfl⟩ := n.eq_nat_or_neg
   · have h := pos t
     linarith
@@ -267,13 +268,13 @@ private lemma fib_D (m n k : ℤ) :
   Int.fib m * Int.fib (n + k) - Int.fib n * Int.fib (m + k) =
     (-1 : ℤ) ^ ((m + 1).natAbs) * (Int.fib k * Int.fib (n - m)) := by
   have hE : Int.fib m * Int.fib (n - 1) - Int.fib n * Int.fib (m - 1) =
-    (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib (n - m) := by
+      (-1 : ℤ) ^ ((m + 1).natAbs) * Int.fib (n - m) := by
     have h := fib_E m n
     linarith
   have h1 := Int.fib_add n k
   have h2 := Int.fib_add m k
   have hD : Int.fib m * Int.fib (n + k) - Int.fib n * Int.fib (m + k) =
-    Int.fib k * (Int.fib m * Int.fib (n - 1) - Int.fib n * Int.fib (m - 1)) := by
+      Int.fib k * (Int.fib m * Int.fib (n - 1) - Int.fib n * Int.fib (m - 1)) := by
     linear_combination Int.fib m * h1 - Int.fib n * h2
   rw [hD, hE]
   ring
@@ -315,13 +316,13 @@ private lemma wsum_range (r : ℕ) :
   | zero => decide
   | succ r ih =>
     have hsplit : ∑ t ∈ Finset.range (r + 2), t * (r + 1 - t) =
-      ∑ t ∈ Finset.range (r + 1), t * (r + 1 - t) := by
+        ∑ t ∈ Finset.range (r + 1), t * (r + 1 - t) := by
       rw [Finset.sum_range_succ]
       simp
     rw [hsplit]
     have hdecomp : ∑ t ∈ Finset.range (r + 1), t * (r + 1 - t) =
-      (∑ t ∈ Finset.range (r + 1), t * (r - t)) +
-      (∑ t ∈ Finset.range (r + 1), t) := by
+        (∑ t ∈ Finset.range (r + 1), t * (r - t)) +
+        (∑ t ∈ Finset.range (r + 1), t) := by
       rw [← Finset.sum_add_distrib]
       apply Finset.sum_congr rfl
       intro t ht
@@ -335,8 +336,9 @@ private lemma wsum_range (r : ℕ) :
       have h := Nat.choose_succ_succ (r + 1) 2
       rw [show (r + 1).succ = r + 2 from rfl, show Nat.succ 2 = 3 from rfl] at h
       have h2 : Nat.choose (r + 1) 2 + Nat.choose (r + 1) 3 =
-        Nat.choose (r + 1) 3 + Nat.choose (r + 1) 2 := add_comm _ _
-      rwa [h2] at h
+          Nat.choose (r + 1) 3 + Nat.choose (r + 1) 2 := add_comm _ _
+      rw [h2] at h
+      exact h
     have hcard : ∑ t ∈ Finset.range (r + 1), t = Nat.choose (r + 1) 2 := by
       rw [Finset.sum_range_id, Nat.choose_two_right]
     rw [hcard]
@@ -356,7 +358,7 @@ private lemma wsum_fin (r : ℕ) :
   ∑ i : Fin (r + 1), (i.val * (Finset.Ioi i).card) = Nat.choose (r + 1) 3 := by
   have h0 := Fin.sum_univ_eq_sum_range (fun t => t * (r - t)) (r + 1)
   have h1 : ∑ i : Fin (r + 1), (i.val * (Finset.Ioi i).card) =
-    ∑ t ∈ Finset.range (r + 1), t * (r - t) := by
+      ∑ t ∈ Finset.range (r + 1), t * (r - t) := by
     rw [← h0]
     apply Finset.sum_congr rfl
     intro i _
@@ -379,12 +381,12 @@ private lemma pair_diff_prod_range (r : ℕ) (f : ℕ → ℤ) :
   | zero => simp
   | succ r ih =>
     have houter : ∏ t ∈ Finset.range (r + 2), ∏ u ∈ Finset.Ioc t (r + 1), f (u - t) =
-      ∏ t ∈ Finset.range (r + 1), ∏ u ∈ Finset.Ioc t (r + 1), f (u - t) := by
+        ∏ t ∈ Finset.range (r + 1), ∏ u ∈ Finset.Ioc t (r + 1), f (u - t) := by
       rw [Finset.prod_range_succ]
       simp
     rw [houter]
     have hinner : ∀ t ∈ Finset.range (r + 1), ∏ u ∈ Finset.Ioc t (r + 1), f (u - t) =
-      (∏ u ∈ Finset.Ioc t r, f (u - t)) * f ((r + 1) - t) := by
+        (∏ u ∈ Finset.Ioc t r, f (u - t)) * f ((r + 1) - t) := by
       intro t ht
       have htr : t ≤ r := by
         have := Finset.mem_range.mp ht
@@ -401,9 +403,9 @@ private lemma pair_diff_prod_range (r : ℕ) (f : ℕ → ℤ) :
     rw [Finset.prod_congr rfl hinner, Finset.prod_mul_distrib]
     rw [ih]
     have hnew : ∏ t ∈ Finset.range (r + 1), f ((r + 1) - t) =
-      ∏ ℓ ∈ Finset.Icc 1 (r + 1), f ℓ := by
+        ∏ ℓ ∈ Finset.Icc 1 (r + 1), f ℓ := by
       have hrefl : ∏ t ∈ Finset.range (r + 1), f ((r + 1) - t) =
-        ∏ t ∈ Finset.range (r + 1), f (t + 1) := by
+          ∏ t ∈ Finset.range (r + 1), f (t + 1) := by
         have h := Finset.prod_range_reflect (fun t => f (t + 1)) (r + 1)
         rw [← h]
         apply Finset.prod_congr rfl
@@ -429,9 +431,9 @@ private lemma pair_diff_prod_range (r : ℕ) (f : ℕ → ℤ) :
       omega
     rw [hnew]
     have hrhs : ∏ ℓ ∈ Finset.Icc 1 (r + 1), f ℓ ^ (r + 1 + 1 - ℓ) =
-      (∏ ℓ ∈ Finset.Icc 1 r, f ℓ ^ (r + 1 - ℓ)) * (∏ ℓ ∈ Finset.Icc 1 (r + 1), f ℓ) := by
+        (∏ ℓ ∈ Finset.Icc 1 r, f ℓ ^ (r + 1 - ℓ)) * (∏ ℓ ∈ Finset.Icc 1 (r + 1), f ℓ) := by
       have hexp : ∀ ℓ ∈ Finset.Icc 1 (r + 1), f ℓ ^ (r + 1 + 1 - ℓ) =
-        (f ℓ ^ (r + 1 - ℓ)) * f ℓ := by
+          (f ℓ ^ (r + 1 - ℓ)) * f ℓ := by
         intro ℓ hℓ
         have hℓr : ℓ ≤ r + 1 := (Finset.mem_Icc.mp hℓ).2
         have he : r + 1 + 1 - ℓ = (r + 1 - ℓ) + 1 := by omega
@@ -439,7 +441,7 @@ private lemma pair_diff_prod_range (r : ℕ) (f : ℕ → ℤ) :
       rw [Finset.prod_congr rfl hexp, Finset.prod_mul_distrib]
       congr 1
       have htop : ∏ ℓ ∈ Finset.Icc 1 (r + 1), f ℓ ^ (r + 1 - ℓ) =
-        ∏ ℓ ∈ Finset.Icc 1 r, f ℓ ^ (r + 1 - ℓ) := by
+          ∏ ℓ ∈ Finset.Icc 1 r, f ℓ ^ (r + 1 - ℓ) := by
         have hsplit :=
           Finset.prod_Icc_succ_top (show 1 ≤ r + 1 by omega) (fun ℓ => f ℓ ^ (r + 1 - ℓ))
         rw [hsplit]
@@ -463,7 +465,7 @@ private lemma pair_diff_prod_fin (r : ℕ) (f : ℕ → ℤ) :
   have h0 := Fin.prod_univ_eq_prod_range
     (fun t => ∏ u ∈ Finset.Ioc t r, f (u - t)) (r + 1)
   have h1 : ∏ i : Fin (r + 1), ∏ j ∈ Finset.Ioi i, f (j.val - i.val) =
-    ∏ t ∈ Finset.range (r + 1), ∏ u ∈ Finset.Ioc t r, f (u - t) := by
+      ∏ t ∈ Finset.range (r + 1), ∏ u ∈ Finset.Ioc t r, f (u - t) := by
     rw [← h0]
     apply Finset.prod_congr rfl
     intro i _
@@ -474,7 +476,7 @@ private lemma pair_diff_prod_fin (r : ℕ) (f : ℕ → ℤ) :
       simp only [Finset.mem_Ioo, Finset.mem_Ioc]
       omega
     have hinner : ∏ j ∈ Finset.Ioi i, f (j.val - i.val) =
-      ∏ u ∈ Finset.Ioo (i.val) (r + 1), f (u - i.val) := by
+        ∏ u ∈ Finset.Ioo (i.val) (r + 1), f (u - i.val) := by
       rw [← hmap]
       rw [Finset.prod_map]
       apply Finset.prod_congr rfl
@@ -506,8 +508,8 @@ lemma alfred_consecutive_fibonacci_powers_determinant
     (fun ℓ => Int.fib (k * (ℓ : ℤ)) ^ (r + 1 - ℓ))) := by
 -- proof
   have hmat : (fun (i j : Fin (r + 1)) =>
-    Int.fib (s + (i.val : ℤ) * k) ^ (r - j.val) *
-      Int.fib (s + ((i.val : ℤ) + 1) * k) ^ j.val) =
+      Int.fib (s + (i.val : ℤ) * k) ^ (r - j.val) *
+        Int.fib (s + ((i.val : ℤ) + 1) * k) ^ j.val) =
     Matrix.projVandermonde
       (fun i => Int.fib (s + ((i.val : ℤ) + 1) * k))
       (fun i => Int.fib (s + (i.val : ℤ) * k)) := by
@@ -516,60 +518,60 @@ lemma alfred_consecutive_fibonacci_powers_determinant
     ring
   rw [hmat, Matrix.det_projVandermonde]
   have hfactor : ∀ i : Fin (r + 1), ∀ j ∈ Finset.Ioi i,
-    (Int.fib (s + ((j.val : ℤ) + 1) * k) * Int.fib (s + (i.val : ℤ) * k) -
-      Int.fib (s + ((i.val : ℤ) + 1) * k) * Int.fib (s + (j.val : ℤ) * k)) =
-    (-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs) *
-      (Int.fib k * Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) := by
+      (Int.fib (s + ((j.val : ℤ) + 1) * k) * Int.fib (s + (i.val : ℤ) * k) -
+        Int.fib (s + ((i.val : ℤ) + 1) * k) * Int.fib (s + (j.val : ℤ) * k)) =
+      (-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs) *
+        (Int.fib k * Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) := by
     intro i j _
     have hcomm : Int.fib (s + ((j.val : ℤ) + 1) * k) * Int.fib (s + (i.val : ℤ) * k) -
-      Int.fib (s + ((i.val : ℤ) + 1) * k) * Int.fib (s + (j.val : ℤ) * k) =
-      Int.fib (s + (i.val : ℤ) * k) * Int.fib (s + ((j.val : ℤ) + 1) * k) -
-      Int.fib (s + (j.val : ℤ) * k) * Int.fib (s + ((i.val : ℤ) + 1) * k) := by
+        Int.fib (s + ((i.val : ℤ) + 1) * k) * Int.fib (s + (j.val : ℤ) * k) =
+        Int.fib (s + (i.val : ℤ) * k) * Int.fib (s + ((j.val : ℤ) + 1) * k) -
+        Int.fib (s + (j.val : ℤ) * k) * Int.fib (s + ((i.val : ℤ) + 1) * k) := by
       ring
     rw [hcomm]
     have h := fib_D (s + (i.val : ℤ) * k) (s + (j.val : ℤ) * k) k
     have hmk : (s + (i.val : ℤ) * k) + k = s + ((i.val : ℤ) + 1) * k := by ring
     have hnk : (s + (j.val : ℤ) * k) + k = s + ((j.val : ℤ) + 1) * k := by ring
     have hnm : (s + (j.val : ℤ) * k) - (s + (i.val : ℤ) * k) =
-      ((j.val : ℤ) - (i.val : ℤ)) * k := by ring
+        ((j.val : ℤ) - (i.val : ℤ)) * k := by ring
     rw [hmk, hnk, hnm] at h
     linarith
   have hrewrite : (∏ i : Fin (r + 1), ∏ j ∈ Finset.Ioi i,
-    (Int.fib (s + ((j.val : ℤ) + 1) * k) * Int.fib (s + (i.val : ℤ) * k) -
-      Int.fib (s + ((i.val : ℤ) + 1) * k) * Int.fib (s + (j.val : ℤ) * k))) =
-    ∏ i : Fin (r + 1), ∏ j ∈ Finset.Ioi i,
-    ((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs) *
-      (Int.fib k * Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k))) :=
+      (Int.fib (s + ((j.val : ℤ) + 1) * k) * Int.fib (s + (i.val : ℤ) * k) -
+        Int.fib (s + ((i.val : ℤ) + 1) * k) * Int.fib (s + (j.val : ℤ) * k))) =
+      ∏ i : Fin (r + 1), ∏ j ∈ Finset.Ioi i,
+      ((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs) *
+        (Int.fib k * Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k))) :=
     Finset.prod_congr rfl (fun i _ => Finset.prod_congr rfl (fun j hj => hfactor i j hj))
   rw [hrewrite]
   have hsplit_inner : ∀ i : Fin (r + 1),
-    ∏ j ∈ Finset.Ioi i, ((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs) *
-      (Int.fib k * Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k))) =
-    (((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs)) ^ (Finset.Ioi i).card) *
-      (((Int.fib k) ^ (Finset.Ioi i).card) *
-        ∏ j ∈ Finset.Ioi i, Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) := by
+      ∏ j ∈ Finset.Ioi i, ((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs) *
+        (Int.fib k * Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k))) =
+      (((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs)) ^ (Finset.Ioi i).card) *
+        (((Int.fib k) ^ (Finset.Ioi i).card) *
+          ∏ j ∈ Finset.Ioi i, Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) := by
     intro i
     rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib,
       Finset.prod_const, Finset.prod_const]
   rw [Finset.prod_congr rfl (fun i _ => hsplit_inner i)]
   have houter : ∏ i : Fin (r + 1), (((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs)) ^
-    (Finset.Ioi i).card) * (((Int.fib k) ^ (Finset.Ioi i).card) *
-      ∏ j ∈ Finset.Ioi i, Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) =
-    (∏ i : Fin (r + 1), ((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs)) ^
-      (Finset.Ioi i).card) *
-    ((∏ i : Fin (r + 1), (Int.fib k) ^ (Finset.Ioi i).card) *
-      ∏ i : Fin (r + 1), ∏ j ∈ Finset.Ioi i,
-        Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) := by
+      (Finset.Ioi i).card) * (((Int.fib k) ^ (Finset.Ioi i).card) *
+        ∏ j ∈ Finset.Ioi i, Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) =
+      (∏ i : Fin (r + 1), ((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs)) ^
+        (Finset.Ioi i).card) *
+      ((∏ i : Fin (r + 1), (Int.fib k) ^ (Finset.Ioi i).card) *
+        ∏ i : Fin (r + 1), ∏ j ∈ Finset.Ioi i,
+          Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) := by
     rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib]
   rw [houter]
   have hsign : (∏ i : Fin (r + 1), ((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs)) ^
-    (Finset.Ioi i).card) =
-    (-1 : ℤ) ^ (((s + 1) * (Nat.choose (r + 1) 2 : ℤ) +
-      k * (Nat.choose (r + 1) 3 : ℤ)).natAbs) := by
+      (Finset.Ioi i).card) =
+      (-1 : ℤ) ^ (((s + 1) * (Nat.choose (r + 1) 2 : ℤ) +
+        k * (Nat.choose (r + 1) 3 : ℤ)).natAbs) := by
     have hA : ∀ i : Fin (r + 1),
-      (((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs)) ^ (Finset.Ioi i).card) =
-      (-1 : ℤ) ^ (((((Finset.Ioi i).card : ℕ) : ℤ) *
-        ((s + (i.val : ℤ) * k) + 1)).natAbs) := by
+        (((-1 : ℤ) ^ (((s + (i.val : ℤ) * k) + 1).natAbs)) ^ (Finset.Ioi i).card) =
+        (-1 : ℤ) ^ (((((Finset.Ioi i).card : ℕ) : ℤ) *
+          ((s + (i.val : ℤ) * k) + 1)).natAbs) := by
       intro i
       rw [← pow_mul]
       congr 1
@@ -577,35 +579,35 @@ lemma alfred_consecutive_fibonacci_powers_determinant
     rw [Finset.prod_congr rfl (fun i _ => hA i)]
     rw [neg_one_natAbs_sum]
     have hsum : ∑ i : Fin (r + 1), (((Finset.Ioi i).card : ℕ) : ℤ) *
-      ((s + (i.val : ℤ) * k) + 1) =
-      (s + 1) * (Nat.choose (r + 1) 2 : ℤ) + k * (Nat.choose (r + 1) 3 : ℤ) := by
-      have hexpand : ∀ i : Fin (r + 1), (((Finset.Ioi i).card : ℕ) : ℤ) *
         ((s + (i.val : ℤ) * k) + 1) =
-        (s + 1) * ((Finset.Ioi i).card : ℤ) + k * ((i.val : ℤ) * ((Finset.Ioi i).card : ℤ)) := by
+        (s + 1) * (Nat.choose (r + 1) 2 : ℤ) + k * (Nat.choose (r + 1) 3 : ℤ) := by
+      have hexpand : ∀ i : Fin (r + 1), (((Finset.Ioi i).card : ℕ) : ℤ) *
+          ((s + (i.val : ℤ) * k) + 1) =
+          (s + 1) * ((Finset.Ioi i).card : ℤ) + k * ((i.val : ℤ) * ((Finset.Ioi i).card : ℤ)) := by
         intro i
         ring
       rw [Finset.sum_congr rfl (fun i _ => hexpand i)]
       rw [Finset.sum_add_distrib]
       have hleft : ∑ i : Fin (r + 1), (s + 1) * (((Finset.Ioi i).card : ℕ) : ℤ) =
-        (s + 1) * (Nat.choose (r + 1) 2 : ℤ) := by
+          (s + 1) * (Nat.choose (r + 1) 2 : ℤ) := by
         rw [← Finset.mul_sum]
         congr 1
         have h := card_pairs r
         have hc : ((Nat.choose (r + 1) 2 : ℕ) : ℤ) =
-          ∑ i : Fin (r + 1), ((((Finset.Ioi i).card) : ℕ) : ℤ) := by
+            ∑ i : Fin (r + 1), ((((Finset.Ioi i).card) : ℕ) : ℤ) := by
           rw [← Nat.cast_sum]
           congr 1
           exact h.symm
         have hc2 : (Nat.choose (r + 1) 2 : ℤ) =
-          ∑ i : Fin (r + 1), (((Finset.Ioi i).card : ℕ) : ℤ) := hc
+            ∑ i : Fin (r + 1), (((Finset.Ioi i).card : ℕ) : ℤ) := hc
         rw [hc2]
       have hright : ∑ i : Fin (r + 1), k * ((i.val : ℤ) * (((Finset.Ioi i).card : ℕ) : ℤ)) =
-        k * (Nat.choose (r + 1) 3 : ℤ) := by
+          k * (Nat.choose (r + 1) 3 : ℤ) := by
         rw [← Finset.mul_sum]
         congr 1
         have h := wsum_fin r
         have hc : ((Nat.choose (r + 1) 3 : ℕ) : ℤ) =
-          ∑ i : Fin (r + 1), ((((i.val * (Finset.Ioi i).card : ℕ))) : ℤ) := by
+            ∑ i : Fin (r + 1), ((((i.val * (Finset.Ioi i).card : ℕ))) : ℤ) := by
           rw [← Nat.cast_sum]
           congr 1
           exact h.symm
@@ -616,17 +618,17 @@ lemma alfred_consecutive_fibonacci_powers_determinant
       rw [hleft, hright]
     rw [hsum]
   have hfib : (∏ i : Fin (r + 1), (Int.fib k) ^ (Finset.Ioi i).card) =
-    Int.fib k ^ Nat.choose (r + 1) 2 := by
+      Int.fib k ^ Nat.choose (r + 1) 2 := by
     rw [Finset.prod_pow_eq_pow_sum]
     congr 1
     exact card_pairs r
   have hprod : (∏ i : Fin (r + 1), ∏ j ∈ Finset.Ioi i,
-    Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) =
-    Finset.prod (Finset.Icc 1 r)
-      (fun ℓ => Int.fib (k * (ℓ : ℤ)) ^ (r + 1 - ℓ)) := by
+        Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) =
+      Finset.prod (Finset.Icc 1 r)
+        (fun ℓ => Int.fib (k * (ℓ : ℤ)) ^ (r + 1 - ℓ)) := by
     have hbridge : ∀ i : Fin (r + 1), ∀ j ∈ Finset.Ioi i,
-      Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k) =
-      (fun d : ℕ => Int.fib (k * ((d : ℕ) : ℤ))) (j.val - i.val) := by
+        Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k) =
+        (fun d : ℕ => Int.fib (k * ((d : ℕ) : ℤ))) (j.val - i.val) := by
       intro i j hj
       have hlt : i.val < j.val := Fin.lt_def.mp (Finset.mem_Ioi.mp hj)
       have hle : i.val ≤ j.val := le_of_lt hlt
@@ -637,9 +639,9 @@ lemma alfred_consecutive_fibonacci_powers_determinant
       congr 1
       ring
     have hre : (∏ i : Fin (r + 1), ∏ j ∈ Finset.Ioi i,
-      Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) =
-      ∏ i : Fin (r + 1), ∏ j ∈ Finset.Ioi i,
-        (fun d : ℕ => Int.fib (k * ((d : ℕ) : ℤ))) (j.val - i.val) :=
+          Int.fib (((j.val : ℤ) - (i.val : ℤ)) * k)) =
+        ∏ i : Fin (r + 1), ∏ j ∈ Finset.Ioi i,
+          (fun d : ℕ => Int.fib (k * ((d : ℕ) : ℤ))) (j.val - i.val) :=
       Finset.prod_congr rfl (fun i _ => Finset.prod_congr rfl (fun j hj => hbridge i j hj))
     rw [hre]
     exact pair_diff_prod_fin r (fun d : ℕ => Int.fib (k * ((d : ℕ) : ℤ)))
@@ -649,4 +651,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

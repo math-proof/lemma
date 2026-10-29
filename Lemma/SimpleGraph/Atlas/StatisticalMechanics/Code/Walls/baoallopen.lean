@@ -135,7 +135,7 @@ private lemma bao_allOpen_not_frees_bridge_eq
 @[path]
 private lemma bao_bk_of_forest_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) :
@@ -153,7 +153,7 @@ private lemma bao_status_eq
 -- given
   (hL : 1 ≤ L) :
 -- imply
-  (∀ (ω : ConfigSpace (Sym2 (Site 2))), bao_AllOpenTrif ω L → bc67_IsGnTrifurcation ω L (0 : Site 2)) ∧ (bff_BoxAllOpen (bao_onlyBox0 L) L ∧ ¬ bsc_BoxesInternallyConnected (bao_onlyBox0 L) L (0 : Site 2)) ∧ (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
+  (∀ (ω : ConfigSpace (Sym2 (Site 2))), bao_AllOpenTrif ω L → bc67_IsGnTrifurcation ω L (0 : Site 2)) ∧ (bff_BoxAllOpen (bao_onlyBox0 L) L ∧ ¬ bsc_BoxesInternallyConnected (bao_onlyBox0 L) L (0 : Site 2)) ∧ (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
 -- proof
   apply StatMech.Walls.bao_status hL
 

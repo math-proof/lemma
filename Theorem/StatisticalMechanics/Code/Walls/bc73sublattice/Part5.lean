@@ -76,8 +76,8 @@ theorem bc73_const_boundary_vol_tendsto (d : ℕ) (hd : 1 ≤ d) (L : ℕ) :
 theorem bc73_coarseTrif_prob_eq_zero_of_sublatticeForest
     (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ] (hd : 1 ≤ d) (L : ℕ)
     (hexp : ∀ R : ℕ,
-      ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-        = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+      ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+        = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
     (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R) :
     μ {ω | bc61_IsCoarseTrifurcation ω L 0} = 0 :=
   bc61_coarseTrif_prob_eq_zero μ L (fun R => (2 * L + 1) ^ d * boxSV_boundaryCard d R)
@@ -90,8 +90,8 @@ theorem bc73_coarseTrif_prob_eq_zero_of_sublatticeForest
 theorem bc73_infiniteClusters_top_null
     (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ] (hd : 1 ≤ d) (L : ℕ)
     (hexp : ∀ R : ℕ,
-      ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-        = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+      ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+        = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
     (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R)
     (hexist : bc61_CoarseTrifExistence μ L) :
     μ {ω | numInfiniteClusters d ω = ⊤} = 0 :=

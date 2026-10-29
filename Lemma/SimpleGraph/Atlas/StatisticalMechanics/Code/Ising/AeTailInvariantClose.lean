@@ -123,7 +123,7 @@ private lemma aetc_invariant_approx_eq
   [IsFiniteMeasure μ]
   {s : Set (ConfigSpace (Site d))}
   {k : ℕ}
-  {ε : ℝ≥0∞}
+  {ε : ENNReal}
 -- given
   (hd : 1 ≤ d)
   (hμ : IsTranslationInvariant (G := Multiplicative (Site d)) μ)

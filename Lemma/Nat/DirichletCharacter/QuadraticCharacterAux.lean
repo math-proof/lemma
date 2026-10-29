@@ -11,7 +11,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma IsFundamentalDiscriminant.ne_zero
-  {D : ℤ}
+  (D : ℤ)
 -- given
   (hD : IsFundamentalDiscriminant D) :
 -- imply
@@ -27,7 +27,8 @@ lemma IsFundamentalDiscriminant.ne_zero
     have hm0 : m = 0 := by omega
     have hdvd : (2 : ℤ) * 2 ∣ 0 := dvd_zero _
     have hsq0 : Squarefree (0 : ℤ) := by
-      rwa [← hm0]
+      rw [← hm0]
+      exact hsqm
     have hunit : IsUnit (2 : ℤ) := hsq0 2 hdvd
     have h2not : ¬ IsUnit (2 : ℤ) := by
       rw [Int.isUnit_iff]
@@ -76,7 +77,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma kroneckerSym_one_left
-  {n : ℕ} :
+  (n : ℕ) :
 -- imply
   kroneckerSym 1 n = 1 := by
 -- proof
@@ -84,7 +85,7 @@ lemma kroneckerSym_one_left
   · subst hn0
     rw [kroneckerSym_zero]
     simp
-  · simp only [kroneckerSym, hn0, if_false]
+  · simp only [kroneckerSym, hn0, ite_false]
     apply List.prod_eq_one
     intro x hx
     obtain ⟨p, hp_mem, hpx⟩ := List.mem_map.mp hx
@@ -107,10 +108,10 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma kroneckerSym_mul
-  {D : ℤ}
-  {m n : ℕ}
+  (D : ℤ)
 -- given
-  (hD : D ≠ -1) :
+  (hD : D ≠ -1)
+  (m n : ℕ) :
 -- imply
   kroneckerSym D (m * n) =
     kroneckerSym D m * kroneckerSym D n := by
@@ -119,11 +120,11 @@ lemma kroneckerSym_mul
   · subst hm
     rw [zero_mul]
     have h0 : kroneckerSym D 0 =
-      if D.natAbs = 1 then 1 else 0 :=
+        if D.natAbs = 1 then 1 else 0 :=
       kroneckerSym_zero D
     by_cases hN : D.natAbs = 1
     · have hD1 : D = 1 :=
-      eq_one_of_natAbs_one_of_ne_neg_one D hN hD
+        eq_one_of_natAbs_one_of_ne_neg_one D hN hD
       subst hD1
       rw [kroneckerSym_one_left 0,
         kroneckerSym_one_left n, mul_one]
@@ -132,23 +133,24 @@ lemma kroneckerSym_mul
     · subst hn
       rw [mul_zero]
       have h0 : kroneckerSym D 0 =
-        if D.natAbs = 1 then 1 else 0 :=
+          if D.natAbs = 1 then 1 else 0 :=
         kroneckerSym_zero D
       by_cases hN : D.natAbs = 1
       · have hD1 : D = 1 :=
-        eq_one_of_natAbs_one_of_ne_neg_one D hN hD
+            eq_one_of_natAbs_one_of_ne_neg_one D hN hD
         subst hD1
         rw [kroneckerSym_one_left m,
           kroneckerSym_one_left 0, mul_one]
       · rw [h0, ite_eq_right hN, mul_zero]
     · have hmn : m * n ≠ 0 := mul_ne_zero hm hn
       have hperm : (m * n).primeFactorsList.Perm
-        (m.primeFactorsList ++ n.primeFactorsList) :=
+          (m.primeFactorsList ++ n.primeFactorsList) :=
         Nat.perm_primeFactorsList_mul hm hn
-      simp only [kroneckerSym, hmn, if_false, hm, hn]
+      simp only [kroneckerSym, hmn, ite_false, hm, hn]
       have hmap := hperm.map (kroneckerAtPrime D)
       have hperm_prod := hmap.prod_eq
-      rwa [List.map_append, List.prod_append] at hperm_prod
+      rw [List.map_append, List.prod_append] at hperm_prod
+      exact hperm_prod
 
 end MetaMathlibExt
 
@@ -159,8 +161,8 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma kroneckerSym_eq_jacobiSym_of_prime_ne_two
-  {D : ℤ}
-  {p : ℕ}
+  (D : ℤ)
+  (p : ℕ)
 -- given
   (hp : p.Prime)
   (hp2 : p ≠ 2) :
@@ -180,4 +182,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

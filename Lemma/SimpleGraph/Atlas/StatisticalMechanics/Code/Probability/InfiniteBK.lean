@@ -97,7 +97,7 @@ private lemma ibk_section_disjointOccurrence_subset_eq
 private lemma ibk_inequality_of_finite_dependsOn_eq
   [Countable E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
   {F : Finset E}
 -- given
@@ -118,7 +118,7 @@ private lemma ibk_inequality_of_finite_dependsOn_eq
 private lemma ibk_triple_of_finite_dependsOn_eq
   [Countable E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {P Q R : Set (ConfigSpace E)}
   {F : Finset E}
 -- given
@@ -141,7 +141,7 @@ private lemma ibk_triple_of_finite_dependsOn_eq
 private lemma ibk_criterion_of_finite_dependsOn_eq
   [Countable E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {s : Finset I}
   {P Q R : I → Set (ConfigSpace E)}
   {F : Finset E}
@@ -204,7 +204,7 @@ private lemma ibk_pivotalProb_nonneg_eq
 private lemma ibk_measure_mono_parameter_eq
   [Countable E]
   [DecidableEq E]
-  {p q : ℝ≥0}
+  {p q : NNReal}
   {A : Set (ConfigSpace E)}
   {F : Finset E}
 -- given

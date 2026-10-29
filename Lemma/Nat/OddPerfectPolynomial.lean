@@ -49,7 +49,7 @@ lemma odd_perfect_polynomial_is_square
     obtain h | h := h2 A.leadingCoeff
     · exact absurd h hlc
     · exact h
-  haveI : Fintype { d : Polynomial (ZMod 2) // d.Monic ∧ d ∣ A } :=
+  have : Fintype { d : Polynomial (ZMod 2) // d.Monic ∧ d ∣ A } :=
     Polynomial.fintypeSubtypeMonicDvd A hA0
   rw [finsum_eq_sum_of_fintype] at hperfect
   have hterm : ∀ d : { d : Polynomial (ZMod 2) // d.Monic ∧ d ∣ A }, d.val.eval 0 = 1 :=
@@ -115,4 +115,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

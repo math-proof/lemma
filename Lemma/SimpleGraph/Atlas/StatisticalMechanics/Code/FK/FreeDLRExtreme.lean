@@ -75,7 +75,7 @@ private lemma freeInfiniteVolume_weakDLR_extreme_eq
   (hq : 1 ≤ q)
   (hphi1 : IsFKDLR d p q phi1)
   (hphi2 : IsFKDLR d p q phi2)
-  (a b : ℝ≥0∞)
+  (a b : ENNReal)
   (ha : 0 < a)
   (hb : 0 < b)
   (hab : a + b = 1)

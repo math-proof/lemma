@@ -40,7 +40,7 @@ private lemma left
 -- proof
   simp
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
-  have hp : Measurable p := D.measurable_density
+  have hp : Measurable p := D
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   let q := fun «y.bvar» : β ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))
@@ -90,7 +90,7 @@ private lemma main
 -- proof
   simp
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
-  have hp : Measurable p := D.measurable_density
+  have hp : Measurable p := D
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   let q := fun «x.bvar» : α ↦ lintegral ν (fun «y.bvar» ↦ p («x.bvar», «y.bvar»))

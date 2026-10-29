@@ -1,7 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Padics.HilbertSymbol.Real
-open realHilbertSymbol
 
 
 namespace realHilbertSymbol
@@ -88,7 +87,8 @@ namespace realHilbertSymbol
 -/
 @[path]
 lemma eq_one_or_neg_one
-  {a b : ℝˣ} :
+-- given
+  (a b : ℝˣ) :
 -- imply
   realHilbertSymbol a b = 1 ∨ realHilbertSymbol a b = -1 :=
 -- proof
@@ -103,11 +103,12 @@ namespace realHilbertSymbol
 -/
 @[path]
 lemma sq
-  {a b : ℝˣ} :
+-- given
+  (a b : ℝˣ) :
 -- imply
   realHilbertSymbol a b ^ 2 = 1 := by
 -- proof
-  obtain h | h <;> simp [h] := eq_one_or_neg_one a b
+  rcases eq_one_or_neg_one a b with h | h <;> simp [h]
 
 end realHilbertSymbol
 
@@ -118,14 +119,15 @@ namespace realHilbertSymbol
 -/
 @[path]
 lemma ne_zero
-  {a b : ℝˣ} :
+-- given
+  (a b : ℝˣ) :
 -- imply
   realHilbertSymbol a b ≠ 0 := by
 -- proof
-  obtain h | h <;> simp [h] := eq_one_or_neg_one a b
+  rcases eq_one_or_neg_one a b with h | h <;> simp [h]
 
 end realHilbertSymbol
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

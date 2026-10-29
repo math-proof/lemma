@@ -20,9 +20,9 @@ variable {alpha : Type*}
 
 
 noncomputable def finiteTargetTransport (C : Set alpha) (N : Finset alpha)
-    (x y : alpha) : ℝ≥0∞ := by
+    (x y : alpha) : ENNReal := by
   classical
-  exact if x ∈ C ∧ y ∈ N then ((N.card : ℝ≥0∞)⁻¹) else 0
+  exact if x ∈ C ∧ y ∈ N then ((N.card : ENNReal)⁻¹) else 0
 
 
 end StatMech.FrontierA

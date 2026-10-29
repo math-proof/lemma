@@ -25,7 +25,7 @@ variable {d : ℕ} {E : Type*}
 
 def IsDiagonallyInvariantTransport
     [MulAction (Multiplicative (Site d)) E]
-    (F : Site d → Site d → ConfigSpace E → ℝ≥0∞) : Prop :=
+    (F : Site d → Site d → ConfigSpace E → ENNReal) : Prop :=
   ∀ (g : Multiplicative (Site d)) (x y : Site d) (omega : ConfigSpace E),
     F (g • x) (g • y) (shift g omega) = F x y omega
 

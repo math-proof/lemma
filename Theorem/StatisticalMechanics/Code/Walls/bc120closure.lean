@@ -63,7 +63,7 @@ theorem bc120_uniqueness_of_top_null (μ : Measure (ConfigSpace (Sym2 (Site d)))
     infiniteCluster_unique_ae μ herg hmerge⟩
 
 
-theorem bc120_bk_uniqueness_of_residues (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
+theorem bc120_bk_uniqueness_of_residues (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
     (hGlobal : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc69_Gn_globalForest ω L R)
     (hcoarseRoute : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = ⊤} →
@@ -88,7 +88,7 @@ theorem bc120_bk_uniqueness_of_residues (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p �
   exact bc120_uniqueness_of_top_null μ herg hfe htop
 
 
-theorem bc120_top_null_of_residues (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
+theorem bc120_top_null_of_residues (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
     (hGlobal : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc69_Gn_globalForest ω L R)
     (hcoarseRoute : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = ⊤} →
@@ -101,12 +101,12 @@ theorem bc120_top_null_of_residues (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) 
     (bkc_bernoulli_isErgodic hd p hp1).isTranslationInvariant L hGlobal hcoarseRoute
 
 
-theorem bc120_bk_uniqueness_via_bc73 (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
+theorem bc120_bk_uniqueness_via_bc73 (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
     (hexp : ∀ R : ℕ,
-      ((boxFinsetBK d R).card : ℝ≥0∞) *
+      ((boxFinsetBK d R).card : ENNReal) *
           bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
             {ω | bc61_IsCoarseTrifurcation ω L 0}
-        = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂ bernoulliProductMeasure (E := Sym2 (Site d)) p hp1)
+        = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂ bernoulliProductMeasure (E := Sym2 (Site d)) p hp1)
     (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R)
     (hexist : bc61_CoarseTrifExistence (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1) L) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
@@ -145,7 +145,7 @@ theorem bc120_full_separated_iff_gap2 (ω : ConfigSpace (Sym2 (Site d))) (L R : 
   bc112_boundaryLeafResidue_iff_full ω L R
 
 
-theorem bc120_status (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) :
+theorem bc120_status (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) :
     
     (∀ (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ],
       IsErgodic (G := Multiplicative (Site d)) μ → HasFiniteEnergyMerge μ →

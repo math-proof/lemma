@@ -10,7 +10,7 @@ namespace MathlibExtTest.Combinatorics.Enumerative.MedianGenocchiDivisibility
 [bernoulli_four_for_medianGenocchiOdd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MedianGenocchiDivisibility.lean)
 -/
 @[path]
-lemma bernoulli_four_for_medianGenocchiOdd
+lemma bernoulli_four_for_medianGenocchiOdd :
 -- imply
   bernoulli 4 = -1 / 30 := by
 -- proof
@@ -33,7 +33,7 @@ namespace MathlibExtTest.Combinatorics.Enumerative.MedianGenocchiDivisibility
 [bernoulli_six_for_medianGenocchiOdd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MedianGenocchiDivisibility.lean)
 -/
 @[path]
-lemma bernoulli_six_for_medianGenocchiOdd
+lemma bernoulli_six_for_medianGenocchiOdd :
 -- imply
   bernoulli 6 = 1 / 42 := by
 -- proof
@@ -60,7 +60,7 @@ namespace MathlibExtTest.Combinatorics.Enumerative.MedianGenocchiDivisibility
 [bernoulli_eight_for_medianGenocchiOdd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MedianGenocchiDivisibility.lean)
 -/
 @[path]
-lemma bernoulli_eight_for_medianGenocchiOdd
+lemma bernoulli_eight_for_medianGenocchiOdd :
 -- imply
   bernoulli 8 = -1 / 30 := by
 -- proof
@@ -90,7 +90,7 @@ namespace MathlibExtTest.Combinatorics.Enumerative.MedianGenocchiDivisibility
 [medianGenocchiOdd_four](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MedianGenocchiDivisibility.lean)
 -/
 @[path]
-lemma medianGenocchiOdd_four
+lemma medianGenocchiOdd_four :
 -- imply
   MetaMathlibExt.medianGenocchiOdd 4 = 56 := by
 -- proof
@@ -109,3 +109,4 @@ end MathlibExtTest.Combinatorics.Enumerative.MedianGenocchiDivisibility
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

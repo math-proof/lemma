@@ -584,7 +584,7 @@ lemma brownianChar_indep_increments
   haveI : IsProbabilityMeasure P := h.gaussian_process.isProbabilityMeasure
   have hmemLp := fun (k : Fin n) =>
     (h.gaussian_process.hasGaussianLaw_fun_sub (s := t k.succ) (t := t k.castSucc)).memLp_two
-  have hint := fun (k : Fin n) => (hmemLp k).integrable (by norm_num : (1 : ℝ≥0∞) ≤ 2)
+  have hint := fun (k : Fin n) => (hmemLp k).integrable (by norm_num : (1 : ENNReal) ≤ 2)
   have hmean_k : ∀ (k : Fin n), ∫ ω, (B (t k.succ) ω - B (t k.castSucc) ω) ∂P = 0 := by
     intro k
     rw [integral_sub
@@ -2187,7 +2187,7 @@ lemma variance_of_hasLaw
   [MeasurableSpace Ω]
   {P : Measure Ω}
   {X : Ω → ℝ}
-  {v : ℝ≥0}
+  {v : NNReal}
 -- given
   (hlaw : HasLaw X (gaussianReal 0 v) P) :
 -- imply
@@ -2210,7 +2210,7 @@ lemma integral_eq_zero_of_hasLaw
   [MeasurableSpace Ω]
   {P : Measure Ω}
   {X : Ω → ℝ}
-  {v : ℝ≥0}
+  {v : NNReal}
 -- given
   (hlaw : HasLaw X (gaussianReal 0 v) P) :
 -- imply
@@ -2232,7 +2232,7 @@ lemma hasGaussianLaw_of_hasLaw
   [MeasurableSpace Ω]
   {P : Measure Ω}
   {X : Ω → ℝ}
-  {v : ℝ≥0}
+  {v : NNReal}
 -- given
   (hlaw : HasLaw X (gaussianReal 0 v) P) :
 -- imply
@@ -2282,7 +2282,7 @@ lemma variance_icoSum_eq
   {P : Measure Ω}
   [IsProbabilityMeasure P]
   {X : ℕ → Ω → ℝ}
-  {v : ℕ → ℝ≥0}
+  {v : ℕ → NNReal}
   {n m : ℕ}
 -- given
   (hindep : iIndepFun X P)
@@ -2309,7 +2309,7 @@ namespace SumIndependentGaussians
 lemma sum_Ico_le_tsum_tail
   {n m : ℕ}
 -- given
-  (v : ℕ → ℝ≥0)
+  (v : ℕ → NNReal)
   (hsum : Summable v) :
 -- imply
   ∑ k ∈ Ico n m, (v k : ℝ) ≤ ∑' k, (v (k + n) : ℝ) := by
@@ -2334,7 +2334,7 @@ lemma dist_partialSumLp_le
   {P : Measure Ω}
   [IsProbabilityMeasure P]
   {X : ℕ → Ω → ℝ}
-  {v : ℕ → ℝ≥0}
+  {v : ℕ → NNReal}
   {n m : ℕ}
 -- given
   (hindep : iIndepFun X P)
@@ -2382,7 +2382,7 @@ lemma cauchySeq_partialSumLp
   [IsProbabilityMeasure P]
   {X : ℕ → Ω → ℝ}
 -- given
-  (v : ℕ → ℝ≥0)
+  (v : ℕ → NNReal)
   (hindep : iIndepFun X P)
   (hgauss : ∀ k, HasLaw (X k) (gaussianReal 0 (v k)) P)
   (hsum : Summable v) :
@@ -2409,7 +2409,7 @@ lemma exists_L2_limit
   [IsProbabilityMeasure P]
   {X : ℕ → Ω → ℝ}
 -- given
-  (v : ℕ → ℝ≥0)
+  (v : ℕ → NNReal)
   (hindep : iIndepFun X P)
   (hgauss : ∀ k, HasLaw (X k) (gaussianReal 0 (v k)) P)
   (hsum : Summable v) :
@@ -2417,7 +2417,7 @@ lemma exists_L2_limit
   ∃ S : Ω → ℝ, MemLp S 2 P ∧ Tendsto (fun n => eLpNorm (fun ω => (∑ k ∈ range n, X k ω) - S ω) 2 P) atTop (nhds 0) := by
 -- proof
   have hcauchy := cauchySeq_partialSumLp X v hindep hgauss hsum
-  have hfact : Fact (1 ≤ (2 : ℝ≥0∞)) := ⟨by norm_num⟩
+  have hfact : Fact (1 ≤ (2 : ENNReal)) := ⟨by norm_num⟩
   obtain ⟨L, hL⟩ := cauchySeq_tendsto_of_complete hcauchy
   set S := (L : Ω → ℝ)
   have hS_mem : MemLp S 2 P := Lp.memLp L
@@ -2445,7 +2445,7 @@ lemma hasGaussianLaw_partialSum
   {X : ℕ → Ω → ℝ}
   {n : ℕ}
 -- given
-  (v : ℕ → ℝ≥0)
+  (v : ℕ → NNReal)
   (hindep : iIndepFun X P)
   (hgauss : ∀ k, HasLaw (X k) (gaussianReal 0 (v k)) P) :
 -- imply
@@ -2479,7 +2479,7 @@ lemma hasLaw_partialSum
   {X : ℕ → Ω → ℝ}
   {n : ℕ}
 -- given
-  (v : ℕ → ℝ≥0)
+  (v : ℕ → NNReal)
   (hindep : iIndepFun X P)
   (hgauss : ∀ k, HasLaw (X k) (gaussianReal 0 (v k)) P) :
 -- imply
@@ -2525,7 +2525,7 @@ lemma hasLaw_of_L2_limit
   {X : ℕ → Ω → ℝ}
   {S : Ω → ℝ}
 -- given
-  (v : ℕ → ℝ≥0)
+  (v : ℕ → NNReal)
   (hindep : iIndepFun X P)
   (hgauss : ∀ k, HasLaw (X k) (gaussianReal 0 (v k)) P)
   (hsum : Summable v)
@@ -2540,7 +2540,7 @@ lemma hasLaw_of_L2_limit
   have hS_lim' : Tendsto (fun n => eLpNorm ((fun ω => ∑ k ∈ range n, X k ω) - S) 2 P)
     atTop (nhds 0) := hS_lim
   have hTIM : TendstoInMeasure P (fun n => fun ω => ∑ k ∈ range n, X k ω) atTop S :=
-    tendstoInMeasure_of_tendsto_eLpNorm (by norm_num : (2 : ℝ≥0∞) ≠ 0) hSn_aesm hS_aesm hS_lim'
+    tendstoInMeasure_of_tendsto_eLpNorm (by norm_num : (2 : ENNReal) ≠ 0) hSn_aesm hS_aesm hS_lim'
   have hTID := hTIM.tendstoInDistribution (fun n => (hSn_aesm n).aemeasurable)
   have hconv1 := hTID.tendsto
   have hlaw_n := hasLaw_partialSum X v hindep hgauss
@@ -2598,7 +2598,7 @@ lemma sum_independent_gaussians
   [IsProbabilityMeasure P]
   {X : ℕ → Ω → ℝ}
 -- given
-  (v : ℕ → ℝ≥0)
+  (v : ℕ → NNReal)
   (hindep : iIndepFun X P)
   (hgauss : ∀ k, HasLaw (X k) (gaussianReal 0 (v k)) P)
   (hsum : Summable v) :
@@ -3357,7 +3357,7 @@ lemma summable_wienerCoeffVar
   Summable (wienerCoeffVar n t c) := by
 -- proof
   rw [← NNReal.summable_coe]
-  show Summable (fun k => ((wienerCoeffVar n t c k : ℝ≥0) : ℝ))
+  show Summable (fun k => ((wienerCoeffVar n t c k : NNReal) : ℝ))
   simp only [wienerCoeffVar, NNReal.coe_mk]
   rw [← summable_nat_add_iff 1]
   have hpseries : Summable (fun n : ℕ => ((n : ℝ) ^ 2)⁻¹) :=
@@ -3430,7 +3430,7 @@ lemma integral_sq_of_std_gaussian
   {P : Measure Ω}
   {X : Ω → ℝ}
 -- given
-  (hlaw : HasLaw X (gaussianReal (0 : ℝ) (1 : ℝ≥0)) P) :
+  (hlaw : HasLaw X (gaussianReal (0 : ℝ) (1 : NNReal)) P) :
 -- imply
   ∫ ω, X ω ^ 2 ∂P = 1 := by
 -- proof
@@ -3440,7 +3440,7 @@ lemma integral_sq_of_std_gaussian
       integral_map hlaw.aemeasurable aestronglyMeasurable_id
     simp only [id] at this
     rw [← this, hlaw.map_eq, integral_id_gaussianReal]
-  have hvar : Var[X; P] = (1 : ℝ≥0) := by
+  have hvar : Var[X; P] = (1 : NNReal) := by
     have h1 : Var[X; P] = Var[id ∘ X; P] := by simp
     rw [h1, ← variance_map (by rw [hlaw.map_eq]; exact aemeasurable_id) hlaw.aemeasurable,
       hlaw.map_eq]
@@ -4169,7 +4169,7 @@ private lemma memLp_two_of_hasLaw_eq
   [MeasurableSpace Ω]
   {P : Measure Ω}
   {X : Ω → ℝ}
-  {v : ℝ≥0}
+  {v : NNReal}
 -- given
   (hlaw : HasLaw X (gaussianReal 0 v) P) :
 -- imply
@@ -4185,7 +4185,7 @@ private lemma memLp_partialSum_eq
   [MeasurableSpace Ω]
   {P : Measure Ω}
   {X : ℕ → Ω → ℝ}
-  {v : ℕ → ℝ≥0}
+  {v : ℕ → NNReal}
   {n : ℕ}
 -- given
   (hgauss : ∀ k, HasLaw (X k) (gaussianReal 0 (v k)) P) :

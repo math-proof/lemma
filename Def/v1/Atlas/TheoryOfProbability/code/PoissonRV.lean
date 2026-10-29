@@ -19,7 +19,7 @@ noncomputable section
 `r ≥ 0` under the measure `μ`: for every `k ∈ ℕ`, `P(X = k) = r^k e^{-r} / k!` (Lecture 17,
 *Definition (Poisson random variable)*). -/
 def IsPoissonRV {Ω : Type*} [MeasurableSpace Ω]
-    (X : Ω → ℕ) (μ : Measure Ω) (r : ℝ≥0) : Prop :=
+    (X : Ω → ℕ) (μ : Measure Ω) (r : NNReal) : Prop :=
   ∀ k : ℕ, μ (X ⁻¹' {k}) = ENNReal.ofReal (poissonPMFReal r k)
 
 end

@@ -146,7 +146,7 @@ private lemma rc17_reimer_inequality_of_nonMonotone_eq
   [DecidableEq α]
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : rc17_NonMonotoneDeficit)

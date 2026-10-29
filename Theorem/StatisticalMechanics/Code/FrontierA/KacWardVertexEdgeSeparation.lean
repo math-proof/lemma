@@ -55,9 +55,9 @@ theorem exists_uniform_vertexEdge_radius_finset
     (polygon : KWFiniteSimplePolygon n)
     (pairs : Finset (Fin n × Fin n))
     (hpairs : ∀ p ∈ pairs, p.1 ≠ p.2 ∧ p.1 ≠ p.2 + 1) :
-    ∃ r : ℝ≥0, 0 < r ∧ ∀ p ∈ pairs,
+    ∃ r : NNReal, 0 < r ∧ ∀ p ∈ pairs,
       ∀ y ∈ polygon.closedEdge p.2,
-        (r : ℝ≥0∞) < edist (polygon.vertex p.1) y := by
+        (r : ENNReal) < edist (polygon.vertex p.1) y := by
   classical
   induction pairs using Finset.induction_on with
   | empty => exact ⟨1, by norm_num, by simp⟩
@@ -78,7 +78,7 @@ theorem exists_uniform_vertexEdge_radius_finset
 
 theorem KWFiniteSimplePolygon.exists_uniform_vertex_edge_separation
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n) :
-    ∃ r : ℝ≥0, 0 < r ∧
+    ∃ r : NNReal, 0 < r ∧
       ∀ v j : Fin n, v ≠ j → v ≠ j + 1 →
         ∀ y ∈ polygon.closedEdge j,
           (r : ℝ) < dist (polygon.vertex v) y := by
@@ -97,7 +97,7 @@ theorem KWFiniteSimplePolygon.exists_uniform_vertex_edge_separation
 
 theorem KWFiniteSimplePolygon.vertexBall_disjoint_closedEdgeTube
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
-    {r : ℝ≥0}
+    {r : NNReal}
     (hsep : ∀ v j : Fin n, v ≠ j → v ≠ j + 1 →
       ∀ y ∈ polygon.closedEdge j,
         (r : ℝ) < dist (polygon.vertex v) y)

@@ -19,19 +19,19 @@ private lemma log_eq_sum_Lambda {R : Type*} [CommRing R]
   logW m = ∑ c ∈ (Finset.range (m + 1)).filter (fun c => c ∣ m), Λ c := by
   have hm0 : m ≠ 0 := by omega
   have step1 : (∑ c ∈ (Finset.range (m + 1)).filter (fun c => c ∣ m), Λ c)
-    = ∑ c ∈ (Finset.range (m + 1)).filter (fun c => c ∣ m),
-      ∑ d ∈ (Finset.range (c + 1)).filter (fun d => d ∣ c),
-        μ d * logW (c / d) := by
+      = ∑ c ∈ (Finset.range (m + 1)).filter (fun c => c ∣ m),
+        ∑ d ∈ (Finset.range (c + 1)).filter (fun d => d ∣ c),
+          μ d * logW (c / d) := by
     apply Finset.sum_congr rfl
     intro c _
     exact hLambda c
   rw [step1]
   have step2 : (∑ c ∈ (Finset.range (m + 1)).filter (fun c => c ∣ m),
-    ∑ d ∈ (Finset.range (c + 1)).filter (fun d => d ∣ c),
-      μ d * logW (c / d))
-    = ∑ t ∈ (Finset.range (m + 1)).filter (fun t => t ∣ m),
-      ∑ d ∈ (Finset.range (m / t + 1)).filter (fun d => d ∣ m / t),
-        μ d * logW t := by
+        ∑ d ∈ (Finset.range (c + 1)).filter (fun d => d ∣ c),
+          μ d * logW (c / d))
+      = ∑ t ∈ (Finset.range (m + 1)).filter (fun t => t ∣ m),
+        ∑ d ∈ (Finset.range (m / t + 1)).filter (fun d => d ∣ m / t),
+          μ d * logW t := by
     simp only [Finset.sum_sigma']
     refine Finset.sum_bij'
       (fun a _ => (⟨a.1 / a.2, a.2⟩ : Sigma fun _ => ℕ))
@@ -52,8 +52,8 @@ private lemma log_eq_sum_Lambda {R : Type*} [CommRing R]
       rw [Nat.mul_div_cancel_left _ hdpos]
       refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩⟩
       · have hkle : k ≤ d * k * j :=
-        le_trans (Nat.le_mul_of_pos_left k hdpos)
-          (Nat.le_mul_of_pos_right _ hjpos)
+          le_trans (Nat.le_mul_of_pos_left k hdpos)
+            (Nat.le_mul_of_pos_right _ hjpos)
         omega
       · exact ⟨d * j, by ring⟩
       · rw [hdiv]
@@ -70,8 +70,8 @@ private lemma log_eq_sum_Lambda {R : Type*} [CommRing R]
       obtain ⟨s, hs⟩ := hedvd
       refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩⟩
       · have hle : e * t ≤ m := by
-        have h1 : e * t ∣ m := ⟨s, by rw [← Nat.mul_div_cancel' htdvd, hs]; ring⟩
-        exact Nat.le_of_dvd (by omega) h1
+          have h1 : e * t ∣ m := ⟨s, by rw [← Nat.mul_div_cancel' htdvd, hs]; ring⟩
+          exact Nat.le_of_dvd (by omega) h1
         omega
       · exact ⟨s, by rw [← Nat.mul_div_cancel' htdvd, hs]; ring⟩
       · have hle2 : e ≤ e * t := Nat.le_mul_of_pos_right e htpos
@@ -96,9 +96,9 @@ private lemma log_eq_sum_Lambda {R : Type*} [CommRing R]
       rfl
   rw [step2]
   have step3 : ∀ t ∈ (Finset.range (m + 1)).filter (fun t => t ∣ m),
-    (∑ d ∈ (Finset.range (m / t + 1)).filter (fun d => d ∣ m / t),
-      μ d * logW t)
-    = (if m / t = 1 then logW t else 0) := by
+      (∑ d ∈ (Finset.range (m / t + 1)).filter (fun d => d ∣ m / t),
+        μ d * logW t)
+      = (if m / t = 1 then logW t else 0) := by
     intro t _
     rw [← Finset.sum_mul, hMu]
     split_ifs <;> simp [*]
@@ -107,7 +107,7 @@ private lemma log_eq_sum_Lambda {R : Type*} [CommRing R]
     simp only [Finset.mem_filter, Finset.mem_range]
     exact ⟨Nat.lt_succ_self m, dvd_rfl⟩
   have hvan : ∀ t ∈ (Finset.range (m + 1)).filter (fun t => t ∣ m),
-    t ≠ m → (if m / t = 1 then logW t else 0) = 0 := by
+      t ≠ m → (if m / t = 1 then logW t else 0) = 0 := by
     intro t ht htm
     simp only [Finset.mem_filter, Finset.mem_range] at ht
     obtain ⟨_, htdvd⟩ := ht
@@ -115,13 +115,14 @@ private lemma log_eq_sum_Lambda {R : Type*} [CommRing R]
       intro hcon
       apply htm
       have htm2 : t * (m / t) = m := Nat.mul_div_cancel' htdvd
-      rwa [hcon, mul_one] at htm2
+      rw [hcon, mul_one] at htm2
+      exact htm2
     simp [hne]
   have hmm : m / m = 1 := Nat.div_self (by omega)
   calc logW m = (if m / m = 1 then logW m else 0) := by simp [hmm]
   _ = ∑ x ∈ (Finset.range (m + 1)).filter (fun x => x ∣ m),
-    (if m / x = 1 then logW x else 0) :=
-    (Finset.sum_eq_single m hvan (by intro hcon; exact absurd hmem hcon)).symm
+        (if m / x = 1 then logW x else 0) :=
+      (Finset.sum_eq_single m hvan (by intro hcon; exact absurd hmem hcon)).symm
 
 end MetaMathlibExt
 
@@ -156,7 +157,8 @@ private lemma filter_div_eq (b n : ℕ) (hbn : b ∣ n)
       have hb0 : b ≠ 0 := by
         intro hb0
         apply hn0
-        rwa [hb0, zero_mul, zero_mul] at hk
+        rw [hb0, zero_mul, zero_mul] at hk
+        exact hk
       have hb1' : 1 ≤ b := Nat.pos_of_ne_zero hb0
       have hc1 : 1 ≤ c :=
         Nat.pos_of_dvd_of_pos (dvd_trans (dvd_mul_left c b) hbc') hn1
@@ -294,9 +296,9 @@ namespace MetaMathlibExt
 @[path]
 lemma vaughan_identity_general
   [CommRing R]
-  {μ Λ : ArithmeticFunction R}
-  {logW : ℕ → R}
-  {U V n : ℕ}
+  (μ Λ : ArithmeticFunction R)
+  (logW : ℕ → R)
+  (U V n : ℕ)
 -- given
   (hn : V < n)
   (hLambda : ∀ m, Λ m = ∑ d ∈ (Finset.range (m + 1)).filter (fun d => d ∣ m), μ d * logW (m / d))
@@ -313,44 +315,46 @@ lemma vaughan_identity_general
 -- proof
   have hn1 : 1 ≤ n := by omega
   have hTset : ((Finset.range (n + 1)).filter (fun b => b ∣ n)).filter
-    (fun b => U < b)
-    = (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b) := by
+      (fun b => U < b)
+      = (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b) := by
     rw [Finset.filter_filter]
   have hS1 : ((Finset.range (n + 1)).filter (fun b => b ∣ n)).filter
-    (fun b => ¬ U < b)
-    = (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U) := by
+      (fun b => ¬ U < b)
+      = (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U) := by
     ext b
     simp only [Finset.mem_filter, Finset.mem_range, not_lt, and_assoc]
   have hnest : (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n),
-    μ b * logW (n / b))
-    = (∑ b ∈ ((Finset.range (n + 1)).filter
-      (fun b => b ∣ n)).filter (fun b => ¬ U < b), μ b * logW (n / b))
-    + (∑ b ∈ ((Finset.range (n + 1)).filter
-      (fun b => b ∣ n)).filter (fun b => U < b), μ b * logW (n / b)) := by
+        μ b * logW (n / b))
+      = (∑ b ∈ ((Finset.range (n + 1)).filter
+          (fun b => b ∣ n)).filter (fun b => ¬ U < b), μ b * logW (n / b))
+      + (∑ b ∈ ((Finset.range (n + 1)).filter
+          (fun b => b ∣ n)).filter (fun b => U < b), μ b * logW (n / b)) := by
     have h := Finset.sum_filter_add_sum_filter_not
       ((Finset.range (n + 1)).filter (fun b => b ∣ n)) (fun b => U < b)
       (fun b => μ b * logW (n / b))
-    rwa [add_comm] at h
+    rw [add_comm] at h
+    exact h.symm
   have h1 : Λ n
-    = (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U),
-      μ b * logW (n / b))
-    + (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
-      μ b * logW (n / b)) := by
-    rwa [hLambda n, ← hS1, ← hTset]
+      = (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U),
+          μ b * logW (n / b))
+      + (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
+          μ b * logW (n / b)) := by
+    rw [hLambda n, ← hS1, ← hTset]
+    exact hnest
   have h2 : (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
-    μ b * logW (n / b))
-    = (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
-      ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
-        μ b * Λ c)
-    + (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
-      ∑ c ∈ (Finset.range (n + 1)).filter (fun c => V < c ∧ b * c ∣ n),
-        μ b * Λ c) := by
+          μ b * logW (n / b))
+      = (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
+          ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
+            μ b * Λ c)
+      + (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
+          ∑ c ∈ (Finset.range (n + 1)).filter (fun c => V < c ∧ b * c ∣ n),
+            μ b * Λ c) := by
     have per_b : ∀ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
-      μ b * logW (n / b)
-      = (∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
-        μ b * Λ c)
-      + (∑ c ∈ (Finset.range (n + 1)).filter (fun c => V < c ∧ b * c ∣ n),
-        μ b * Λ c) := by
+        μ b * logW (n / b)
+        = (∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
+            μ b * Λ c)
+        + (∑ c ∈ (Finset.range (n + 1)).filter (fun c => V < c ∧ b * c ∣ n),
+            μ b * Λ c) := by
       intro b hb
       rw [Finset.mem_filter] at hb
       obtain ⟨hbmem, hbdvd, -⟩ := hb
@@ -367,20 +371,20 @@ lemma vaughan_identity_general
       exact h.symm
     exact (Finset.sum_congr rfl per_b).trans Finset.sum_add_distrib
   have hcancel : (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
-    ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
-      μ b * Λ c)
-    + (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U),
-      ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
-        μ b * Λ c)
-    = 0 := by
+          ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
+            μ b * Λ c)
+      + (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U),
+          ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
+            μ b * Λ c)
+      = 0 := by
     have e1 : (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
-      ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
-        μ b * Λ c)
-      = ∑ b ∈ ((Finset.range (n + 1)).filter
-        (fun b => b ∣ n)).filter (fun b => U < b),
-        ∑ c ∈ ((Finset.range (n / b + 1)).filter
-          (fun c => c ∣ n / b)).filter (fun c => c ≤ V),
-          μ b * Λ c := by
+            ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
+              μ b * Λ c)
+        = ∑ b ∈ ((Finset.range (n + 1)).filter
+            (fun b => b ∣ n)).filter (fun b => U < b),
+          ∑ c ∈ ((Finset.range (n / b + 1)).filter
+            (fun c => c ∣ n / b)).filter (fun c => c ≤ V),
+            μ b * Λ c := by
       rw [← hTset]
       refine Finset.sum_congr rfl ?_
       intro b hb
@@ -390,13 +394,13 @@ lemma vaughan_identity_general
       obtain ⟨-, hbdvd⟩ := hbD
       rw [← inner_le_eq b n V hbdvd]
     have e2 : (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U),
-      ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
-        μ b * Λ c)
-      = ∑ b ∈ ((Finset.range (n + 1)).filter
-        (fun b => b ∣ n)).filter (fun b => ¬ U < b),
-        ∑ c ∈ ((Finset.range (n / b + 1)).filter
-          (fun c => c ∣ n / b)).filter (fun c => c ≤ V),
-          μ b * Λ c := by
+            ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
+              μ b * Λ c)
+        = ∑ b ∈ ((Finset.range (n + 1)).filter
+            (fun b => b ∣ n)).filter (fun b => ¬ U < b),
+          ∑ c ∈ ((Finset.range (n / b + 1)).filter
+            (fun c => c ∣ n / b)).filter (fun c => c ≤ V),
+            μ b * Λ c := by
       rw [← hS1]
       refine Finset.sum_congr rfl ?_
       intro b hb
@@ -406,19 +410,19 @@ lemma vaughan_identity_general
       obtain ⟨-, hbdvd⟩ := hbD
       rw [← inner_le_eq b n V hbdvd]
     have hcomb : (∑ b ∈ ((Finset.range (n + 1)).filter
-      (fun b => b ∣ n)).filter (fun b => U < b),
-      ∑ c ∈ ((Finset.range (n / b + 1)).filter
-        (fun c => c ∣ n / b)).filter (fun c => c ≤ V),
-        μ b * Λ c)
-      + (∑ b ∈ ((Finset.range (n + 1)).filter
-        (fun b => b ∣ n)).filter (fun b => ¬ U < b),
-        ∑ c ∈ ((Finset.range (n / b + 1)).filter
-          (fun c => c ∣ n / b)).filter (fun c => c ≤ V),
-          μ b * Λ c)
-      = ∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n),
-        ∑ c ∈ ((Finset.range (n / b + 1)).filter
-          (fun c => c ∣ n / b)).filter (fun c => c ≤ V),
-          μ b * Λ c :=
+            (fun b => b ∣ n)).filter (fun b => U < b),
+          ∑ c ∈ ((Finset.range (n / b + 1)).filter
+            (fun c => c ∣ n / b)).filter (fun c => c ≤ V),
+            μ b * Λ c)
+        + (∑ b ∈ ((Finset.range (n + 1)).filter
+            (fun b => b ∣ n)).filter (fun b => ¬ U < b),
+          ∑ c ∈ ((Finset.range (n / b + 1)).filter
+            (fun c => c ∣ n / b)).filter (fun c => c ≤ V),
+            μ b * Λ c)
+        = ∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n),
+          ∑ c ∈ ((Finset.range (n / b + 1)).filter
+            (fun c => c ∣ n / b)).filter (fun c => c ≤ V),
+            μ b * Λ c :=
       Finset.sum_filter_add_sum_filter_not _ _ _
     rw [e1, e2, hcomb, double_swap μ Λ n V hn1]
     refine Finset.sum_eq_zero ?_
@@ -436,26 +440,25 @@ lemma vaughan_identity_general
     rw [← Finset.sum_mul, hMu]
     simp [hnc]
   calc Λ n = (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U),
-    μ b * logW (n / b))
-    + (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
-      μ b * logW (n / b)) := h1
-    _ = (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U),
-      μ b * logW (n / b))
-      + ((∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
-        ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
-          μ b * Λ c)
+          μ b * logW (n / b))
         + (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
-          ∑ c ∈ (Finset.range (n + 1)).filter (fun c => V < c ∧ b * c ∣ n),
-            μ b * Λ c)) := by rw [h2]
+          μ b * logW (n / b)) := h1
     _ = (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U),
-      μ b * logW (n / b))
-      - (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U),
-        ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
-          μ b * Λ c)
-      + (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
-        ∑ c ∈ (Finset.range (n + 1)).filter (fun c => V < c ∧ b * c ∣ n),
-          μ b * Λ c) := by linear_combination hcancel
-set_option linter.unusedVariables false in
+          μ b * logW (n / b))
+        + ((∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
+            ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
+              μ b * Λ c)
+          + (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
+            ∑ c ∈ (Finset.range (n + 1)).filter (fun c => V < c ∧ b * c ∣ n),
+              μ b * Λ c)) := by rw [h2]
+    _ = (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U),
+          μ b * logW (n / b))
+        - (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ b ≤ U),
+            ∑ c ∈ (Finset.range (n + 1)).filter (fun c => c ≤ V ∧ b * c ∣ n),
+              μ b * Λ c)
+        + (∑ b ∈ (Finset.range (n + 1)).filter (fun b => b ∣ n ∧ U < b),
+            ∑ c ∈ (Finset.range (n + 1)).filter (fun c => V < c ∧ b * c ∣ n),
+              μ b * Λ c) := by linear_combination hcancel
 
 end MetaMathlibExt
 
@@ -471,8 +474,8 @@ lemma vaughan_identity
   {logW : ℕ → R}
   {U V n : ℕ}
 -- given
-  (hU : 1 ≤ U)
-  (hV : 1 ≤ V)
+  (_hU : 1 ≤ U)
+  (_hV : 1 ≤ V)
   (hn : V < n)
   (hLambda : ∀ m, Λ m = ∑ d ∈ (Finset.range (m + 1)).filter (fun d => d ∣ m), μ d * logW (m / d))
   (hMu : ∀ m, ∑ d ∈ (Finset.range (m + 1)).filter (fun d => d ∣ m), μ d = if m = 1 then 1 else 0) :
@@ -492,4 +495,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

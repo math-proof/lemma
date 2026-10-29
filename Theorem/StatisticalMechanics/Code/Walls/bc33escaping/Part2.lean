@@ -72,7 +72,7 @@ theorem bc33_Tcount_le_boundary_of_TavoidingRayData (ω : ConfigSpace (Sym2 (Sit
     (bc33_globalCutDownArmData_of_TavoidingRayData ω n rank h)
 
 
-theorem bc33_burton_keane_bernoulli_of_TavoidingRayData (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc33_burton_keane_bernoulli_of_TavoidingRayData (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (rank : ConfigSpace (Sym2 (Site d)) → ℕ → Site d → ℕ ×ₗ ℕ)
     (hinj : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ),

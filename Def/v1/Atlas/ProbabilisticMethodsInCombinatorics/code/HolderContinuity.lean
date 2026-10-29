@@ -20,7 +20,7 @@ open scoped NNReal ENNReal
 spaces is $\alpha$-Hölder continuous if there exists a constant $C \ge 0$ such that
 $d(f(x), f(y)) \le C \cdot d(x, y)^{\alpha}$ for all $x, y \in X$. -/
 def IsHolderContinuous {X Y : Type*} [PseudoEMetricSpace X] [PseudoEMetricSpace Y]
-    (α : ℝ≥0) (f : X → Y) : Prop :=
-  ∃ C : ℝ≥0, HolderWith C α f
+    (α : NNReal) (f : X → Y) : Prop :=
+  ∃ C : NNReal, HolderWith C α f
 
 end HolderContinuity

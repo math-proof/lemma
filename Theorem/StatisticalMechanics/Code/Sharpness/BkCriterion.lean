@@ -52,7 +52,7 @@ lemma disjointOccurrence_isIncreasing {A B : Set (ConfigSpace E)}
   exact ⟨K, L, hKL, OccursOn.mono_config hA hωω' hAK, OccursOn.mono_config hB hωω' hBL⟩
 
 
-lemma bk_triple [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+lemma bk_triple [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
     {P Q R : Set (ConfigSpace E)} (hP : IsIncreasing P) (hQ : IsIncreasing Q)
     (hR : IsIncreasing R) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence P (disjointOccurrence Q R))
@@ -68,7 +68,7 @@ lemma bk_triple [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
     _ = μ.real P * μ.real Q * μ.real R := by ring
 
 
-theorem bk_criterion {ι : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+theorem bk_criterion {ι : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
     (s : Finset ι) (P Q R : ι → Set (ConfigSpace E))
     (hP : ∀ i ∈ s, IsIncreasing (P i)) (hQ : ∀ i ∈ s, IsIncreasing (Q i))
     (hR : ∀ i ∈ s, IsIncreasing (R i))

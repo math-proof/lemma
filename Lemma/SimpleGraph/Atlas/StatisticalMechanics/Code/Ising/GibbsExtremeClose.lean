@@ -11,7 +11,7 @@ open MeasureTheory ProbabilityTheory MeasurableSpace Set Filter Topology StatMec
 private lemma gec_convexSummand_eq_on_clopen_eq
   {d : ℕ}
   {μ ν₁ ν₂ : Measure (ConfigSpace E)}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   [IsProbabilityMeasure μ]
   [IsProbabilityMeasure ν₁]
   [IsProbabilityMeasure ν₂]
@@ -37,7 +37,7 @@ private lemma gec_max_extreme_eq
   {d : ℕ}
   [Countable E]
   {μ ν₁ ν₂ : Measure (ConfigSpace E)}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   [IsProbabilityMeasure μ]
   [IsProbabilityMeasure ν₁]
   [IsProbabilityMeasure ν₂]
@@ -63,7 +63,7 @@ private lemma gec_min_extreme_eq
   {d : ℕ}
   [Countable E]
   {μ ν₁ ν₂ : Measure (ConfigSpace E)}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   [IsProbabilityMeasure μ]
   [IsProbabilityMeasure ν₁]
   [IsProbabilityMeasure ν₂]
@@ -90,7 +90,7 @@ private lemma gec_plusState_extreme_eq
   {ν₁ ν₂ : Measure (ConfigSpace (Site d))}
   [IsProbabilityMeasure ν₁]
   [IsProbabilityMeasure ν₂]
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
 -- given
   (β h : ℝ)
   (hβ : 0 ≤ β)
@@ -117,7 +117,7 @@ private lemma gec_minusState_extreme_eq
   {ν₁ ν₂ : Measure (ConfigSpace (Site d))}
   [IsProbabilityMeasure ν₁]
   [IsProbabilityMeasure ν₂]
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
 -- given
   (β h : ℝ)
   (hβ : 0 ≤ β)
@@ -144,7 +144,7 @@ private lemma gec_plusState_no_proper_split_eq
   {ν₁ ν₂ : Measure (ConfigSpace (Site d))}
   [IsProbabilityMeasure ν₁]
   [IsProbabilityMeasure ν₂]
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
 -- given
   (β h : ℝ)
   (hβ : 0 ≤ β)
@@ -171,7 +171,7 @@ private lemma gec_minusState_no_proper_split_eq
   {ν₁ ν₂ : Measure (ConfigSpace (Site d))}
   [IsProbabilityMeasure ν₁]
   [IsProbabilityMeasure ν₂]
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
 -- given
   (β h : ℝ)
   (hβ : 0 ≤ β)
@@ -241,7 +241,7 @@ private lemma gec_ergodic_of_noProperSplit_eq
 -- given
   (hti : IsTranslationInvariant (G := G) μ)
   (P : Measure (ConfigSpace E) → Prop)
-  (hsplit : ∀ (ν₁ ν₂ : Measure (ConfigSpace E)) (a b : ℝ≥0∞), IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ → P ν₁ → P ν₂ → 0 < a → 0 < b → a + b = 1 → a ≠ ⊤ → b ≠ ⊤ → μ = a • ν₁ + b • ν₂ → ν₁ = ν₂)
+  (hsplit : ∀ (ν₁ ν₂ : Measure (ConfigSpace E)) (a b : ENNReal), IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ → P ν₁ → P ν₂ → 0 < a → 0 < b → a + b = 1 → a ≠ ⊤ → b ≠ ⊤ → μ = a • ν₁ + b • ν₂ → ν₁ = ν₂)
   (hclosure : ∀ {s : Set (ConfigSpace E)}, MeasurableSet s → (∀ g : G, (shift g : ConfigSpace E → ConfigSpace E) ⁻¹' s = s) → μ s ≠ 0 → μ sᶜ ≠ 0 → P (μ[|s]) ∧ P (μ[|sᶜ])) :
 -- imply
   IsErgodic (G := G) μ := by

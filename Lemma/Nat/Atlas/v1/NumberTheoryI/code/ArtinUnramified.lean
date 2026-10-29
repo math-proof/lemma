@@ -33,6 +33,7 @@ lemma hilbert_theorem_90
     rw [div_eq_mul_inv]
     simp only [map_mul, Algebra.norm_inv, Algebra.norm_eq_of_algEquiv]
     exact mul_inv_cancel₀ (Algebra.norm_ne_zero_iff.2 β.isUnit.ne_zero)
+
 section CyclicCohomology
 variable {K L : Type*} [Field K] [Field L] [Algebra K L]
   [FiniteDimensional K L] [IsGalois K L]
@@ -66,6 +67,7 @@ lemma zpow_apply_eq_of_apply_eq
       change σ.symm x = x; rw [AlgEquiv.symm_apply_eq]; exact h.symm
     rw [this, ih]
 
+omit [FiniteDimensional K L] [IsGalois K L] in
 end ArtinUnramified
 
 namespace ArtinUnramified
@@ -106,7 +108,7 @@ lemma finrank_ker_sigmaMinusOneMap_eq_one
   Module.finrank K (LinearMap.ker (sigmaMinusOneMap σ)) = 1 := by
 -- proof
   have h_eq : LinearMap.ker (sigmaMinusOneMap σ) =
-    (⊥ : IntermediateField K L).toSubalgebra.toSubmodule := by
+      (⊥ : IntermediateField K L).toSubalgebra.toSubmodule := by
     ext x
     simp only [LinearMap.mem_ker, sigmaMinusOneMap, LinearMap.sub_apply, AlgEquiv.toLinearMap_apply,
       LinearMap.id_apply, sub_eq_zero]
@@ -195,11 +197,11 @@ lemma ker_trace_eq_range_sigmaMinusOne
   have hle := range_sigmaMinusOneMap_le_ker_trace (K := K) (L := L) σ
   have hker1 := finrank_ker_sigmaMinusOneMap_eq_one (K := K) (L := L) hσ
   have hrank_rng : Module.finrank K (LinearMap.range (sigmaMinusOneMap σ)) =
-    Module.finrank K L - 1 := by
+      Module.finrank K L - 1 := by
     have := LinearMap.finrank_range_add_finrank_ker (sigmaMinusOneMap σ)
     omega
   have hrank_ker : Module.finrank K (LinearMap.ker (Algebra.trace K L)) =
-    Module.finrank K L - 1 := by
+      Module.finrank K L - 1 := by
     have := LinearMap.finrank_range_add_finrank_ker (Algebra.trace K L)
     have := finrank_range_trace (K := K) (L := L)
     omega
@@ -245,7 +247,8 @@ lemma galois_fixed_point_in_base
     intro g _; obtain ⟨n, rfl⟩ := Subgroup.mem_zpowers_iff.mp (hσ g)
     exact zpow_apply_eq_of_apply_eq hx_fixed n
   rw [IsGalois.fixedField_top] at this
-  rwa [IntermediateField.mem_bot] at this
+  rw [IntermediateField.mem_bot] at this
+  exact this
 
 end ArtinUnramified
 
@@ -327,12 +330,17 @@ lemma normUnitsIndex_pos
   0 < normUnitsIndex K L := by
 -- proof
   unfold normUnitsIndex
+
   set n := Module.finrank K L with hn_def
   have hn_pos : 0 < n := Module.finrank_pos
   have hn_ne : n ≠ 0 := Nat.pos_iff_ne_zero.mp hn_pos
-  haveI : Group.FG (𝓞 K)ˣ := Group.fg_iff_monoid_fg.mpr inferInstance
+
+  have : Group.FG (𝓞 K)ˣ := Group.fg_iff_monoid_fg.mpr inferInstance
+
   have hfin : (powMonoidHom (α := (𝓞 K)ˣ) n).range.FiniteIndex :=
     Subgroup.finiteIndex_range_powMonoidHom_of_fg (𝓞 K)ˣ hn_ne
+
+
   have hle : (powMonoidHom (α := (𝓞 K)ˣ) n).range ≤ normImageUnits K L := by
     intro u hu
     rw [MonoidHom.mem_range] at hu
@@ -345,7 +353,8 @@ lemma normUnitsIndex_pos
     simp only [Units.coe_map, RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe,
       Units.val_pow_eq_pow_val, map_pow]
     exact Algebra.norm_algebraMap _
-  haveI : (normImageUnits K L).FiniteIndex := Subgroup.finiteIndex_of_le hle
+
+  have : (normImageUnits K L).FiniteIndex := Subgroup.finiteIndex_of_le hle
   exact Nat.pos_of_ne_zero Subgroup.FiniteIndex.index_ne_zero
 
 end ArtinUnramified
@@ -395,7 +404,7 @@ lemma normIntegerUnits_index_pos
 -- proof
   set n := Module.finrank K L with hn_def
   have hn_ne : n ≠ 0 := Nat.pos_iff_ne_zero.mp Module.finrank_pos
-  haveI : Group.FG (𝓞 K)ˣ := Group.fg_iff_monoid_fg.mpr inferInstance
+  have : Group.FG (𝓞 K)ˣ := Group.fg_iff_monoid_fg.mpr inferInstance
   have hfin : (powMonoidHom (α := (𝓞 K)ˣ) n).range.FiniteIndex :=
     Subgroup.finiteIndex_range_powMonoidHom_of_fg (𝓞 K)ˣ hn_ne
   have hle_int : (powMonoidHom (α := (𝓞 K)ˣ) n).range ≤ normIntegerUnits K L := by
@@ -411,7 +420,7 @@ lemma normIntegerUnits_index_pos
     rw [← IsScalarTower.algebraMap_apply (𝓞 K) (𝓞 L) L]
     rw [IsScalarTower.algebraMap_apply (𝓞 K) K L]
     exact Algebra.norm_algebraMap _
-  haveI : (normIntegerUnits K L).FiniteIndex := Subgroup.finiteIndex_of_le hle_int
+  have : (normIntegerUnits K L).FiniteIndex := Subgroup.finiteIndex_of_le hle_int
   exact Nat.pos_of_ne_zero Subgroup.FiniteIndex.index_ne_zero
 
 end ArtinUnramified
@@ -422,7 +431,7 @@ namespace ArtinUnramified
 [herbrand_quotient_computation_ch23](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/ArtinUnramified.lean)
 -/
 @[path]
-lemma herbrand_quotient_computation_ch23
+lemma herbrand_quotient_computation_ch23 :
 -- imply
   ∀ (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] [IsGalois K L] [FiniteDimensional K L] [IsCyclic (L ≃ₐ[K] L)], ∃ (h0 h_minus1 : ℕ), 0 < h_minus1 ∧ Nat.Coprime h0 h_minus1 ∧ h0 * Module.finrank K L = h_minus1 * e_inf K L := by
 -- proof
@@ -431,14 +440,14 @@ lemma herbrand_quotient_computation_ch23
   set e := e_inf K L
   have hn : 0 < n := Module.finrank_pos
   have hg : 0 < Nat.gcd e n := by
-    obtain h | h := Nat.eq_zero_or_pos (Nat.gcd e n)
+    rcases Nat.eq_zero_or_pos (Nat.gcd e n) with h | h
     · simp [Nat.eq_zero_of_gcd_eq_zero_right h] at hn
     · exact h
   refine ⟨e / Nat.gcd e n, n / Nat.gcd e n, ?_, ?_, ?_⟩
   · exact Nat.div_pos (Nat.le_of_dvd hn (Nat.gcd_dvd_right e n)) hg
   · exact Nat.coprime_div_gcd_div_gcd hg
   · rw [Nat.div_mul_right_comm (Nat.gcd_dvd_left e n),
-    Nat.div_mul_right_comm (Nat.gcd_dvd_right e n)]
+        Nat.div_mul_right_comm (Nat.gcd_dvd_right e n)]
     congr 1
     exact mul_comm e n
 
@@ -465,9 +474,11 @@ lemma normIntegerUnits_relIndex_pos
 -- proof
   set n := Module.finrank K L with hn_def
   have hn_ne : n ≠ 0 := Nat.pos_iff_ne_zero.mp Module.finrank_pos
-  haveI : Group.FG (𝓞 K)ˣ := Group.fg_iff_monoid_fg.mpr inferInstance
+  have : Group.FG (𝓞 K)ˣ := Group.fg_iff_monoid_fg.mpr inferInstance
   have hfin : (powMonoidHom (α := (𝓞 K)ˣ) n).range.FiniteIndex :=
     Subgroup.finiteIndex_range_powMonoidHom_of_fg (𝓞 K)ˣ hn_ne
+
+
   have hle_int : (powMonoidHom (α := (𝓞 K)ˣ) n).range ≤ normIntegerUnits K L := by
     intro u hu
     rw [MonoidHom.mem_range] at hu
@@ -481,8 +492,10 @@ lemma normIntegerUnits_relIndex_pos
     rw [← IsScalarTower.algebraMap_apply (𝓞 K) (𝓞 L) L]
     rw [IsScalarTower.algebraMap_apply (𝓞 K) K L]
     exact Algebra.norm_algebraMap _
-  haveI : (normIntegerUnits K L).FiniteIndex := Subgroup.finiteIndex_of_le hle_int
-  haveI : (normIntegerUnits K L).IsFiniteRelIndex (normImageUnits K L) := by
+
+  have : (normIntegerUnits K L).FiniteIndex := Subgroup.finiteIndex_of_le hle_int
+
+  have : (normIntegerUnits K L).IsFiniteRelIndex (normImageUnits K L) := by
     rw [Subgroup.isFiniteRelIndex_iff_finiteIndex]; exact inferInstance
   exact Nat.pos_of_ne_zero Subgroup.relIndex_ne_zero
 
@@ -598,8 +611,10 @@ lemma prop_15_9_raw_units
 -- imply
   ∃ u : InfinitePlace L → (𝓞 L)ˣ, (∀ (v w : InfinitePlace L), w ≠ v → w (u v) < 1) := by
 -- proof
+
+
   have h : ∀ v : InfinitePlace L, ∃ uv : (𝓞 L)ˣ,
-    ∀ w : InfinitePlace L, w ≠ v → w uv < 1 := by
+      ∀ w : InfinitePlace L, w ≠ v → w uv < 1 := by
     intro v
     obtain ⟨uv, huv⟩ := NumberField.Units.dirichletUnitTheorem.exists_unit L v
     exact ⟨uv, fun w hw => by
@@ -632,10 +647,12 @@ lemma infinitePlace_smul_galActsOnUnits
   w (σ • u : (𝓞 L)ˣ) = (σ⁻¹ • w) u := by
 -- proof
   show w ((σ • u : (𝓞 L)ˣ) : L) = (σ⁻¹ • w) ((u : 𝓞 L) : L)
+
   have h1 : ((σ • u : (𝓞 L)ˣ) : L) = σ ((u : 𝓞 L) : L) := by
     change ((galUnitsAutHom K L σ u : 𝓞 L) : L) = σ ((u : 𝓞 L) : L)
     simp [galUnitsAutHom, Units.mapEquiv, galRestrict]
   rw [h1]
+
   change w (σ ((u : 𝓞 L) : L)) =
     w ((σ⁻¹ : L ≃ₐ[K] L).symm ((u : 𝓞 L) : L))
   congr 1
@@ -661,14 +678,23 @@ lemma prop_15_9_and_averaging
   ∃ α : InfinitePlace L → (𝓞 L)ˣ, (∀ (v : InfinitePlace L) (τ : L ≃ₐ[K] L), τ • v = v → τ • α v = α v) ∧ (∀ (v w : InfinitePlace L), w ≠ v → w (α v) < 1) := by
 -- proof
   classical
+
   obtain ⟨u, hu⟩ := prop_15_9_raw_units K L
+
+
   let D : InfinitePlace L → Finset (L ≃ₐ[K] L) :=
     fun v => Finset.univ.filter (fun σ => σ • v = v)
   refine ⟨fun v => ∏ σ ∈ D v, σ • u v, ?_, ?_⟩
+
   · intro v τ hτ
+
+
     show τ • ∏ σ ∈ D v, σ • u v = ∏ σ ∈ D v, σ • u v
     rw [Finset.smul_prod']
+
+
     simp_rw [← mul_smul]
+
     apply Finset.prod_nbij (τ * ·)
     · intro σ hσ
       simp only [D, Finset.mem_filter, Finset.mem_univ, true_and] at hσ ⊢
@@ -677,15 +703,20 @@ lemma prop_15_9_and_averaging
       exact mul_left_cancel h
     · intro σ hσ
       simp only [D, Finset.mem_univ, true_and, Finset.coe_filter,
-        Set.mem_setOf_eq, Set.mem_image] at hσ ⊢
+        Set.mem_ofPred_eq, Set.mem_image] at hσ ⊢
+
       exact ⟨τ⁻¹ * σ, by
         show ((τ⁻¹ : L ≃ₐ[K] L) * σ) • v = v
         rw [mul_smul, hσ, inv_smul_eq_iff]
         exact hτ.symm, by group⟩
     · intro σ _
       rfl
+
   · intro v w hw
+
     rw [infinitePlace_prod_units]
+
+
     have hD_ne : (D v).Nonempty :=
       ⟨1, Finset.mem_filter.mpr ⟨Finset.mem_univ _, one_smul _ v⟩⟩
     have hfactor_pos : ∀ σ ∈ D v, 0 < w ((algebraMap (𝓞 L) L) ↑(σ • u v)) :=
@@ -694,6 +725,8 @@ lemma prop_15_9_and_averaging
       intro σ hσ
       rw [infinitePlace_smul_galActsOnUnits K L σ w (u v)]
       apply hu
+
+
       intro h_eq
       apply hw
       have hσv : σ • v = v := by
@@ -701,8 +734,8 @@ lemma prop_15_9_and_averaging
         exact hσ
       rw [← hσv, ← h_eq, smul_inv_smul]
     calc ∏ σ ∈ D v, w ((algebraMap (𝓞 L) L) ↑(σ • u v))
-      < ∏ _ ∈ D v, (1 : ℝ) :=
-        Finset.prod_lt_prod_of_nonempty hfactor_pos hfactor_lt hD_ne
+        < ∏ _ ∈ D v, (1 : ℝ) :=
+          Finset.prod_lt_prod_of_nonempty hfactor_pos hfactor_lt hD_ne
       _ = 1 := Finset.prod_const_one
 
 end ArtinUnramified
@@ -726,10 +759,13 @@ lemma herbrand_equivariant_diagonal_dominant_units
   ∃ β : InfinitePlace L → (𝓞 L)ˣ, (∀ (σ : L ≃ₐ[K] L) (w : InfinitePlace L), σ • β w = β (σ • w)) ∧ (∀ (v w : InfinitePlace L), w ≠ v → w (β v) < 1) := by
 -- proof
   classical
+
   obtain ⟨α, hα_fixed, hα_diag⟩ := prop_15_9_and_averaging K L
+
   let orbitQuot := MulAction.orbitRel (L ≃ₐ[K] L) (InfinitePlace L)
   let rep : InfinitePlace L → InfinitePlace L :=
     fun w => @Quotient.out _ orbitQuot (@Quotient.mk _ orbitQuot w)
+
   have hrep_orbit : ∀ w, ∃ σ : L ≃ₐ[K] L, σ • rep w = w := by
     intro w
     have h := @Quotient.out_eq _ orbitQuot (@Quotient.mk _ orbitQuot w)
@@ -738,30 +774,39 @@ lemma herbrand_equivariant_diagonal_dominant_units
     change g • w = rep w at hg
     exact ⟨g⁻¹, by rw [inv_smul_eq_iff, hg]⟩
   choose σ_w hσ_w using hrep_orbit
+
   have hrep_smul : ∀ (τ : L ≃ₐ[K] L) (w : InfinitePlace L), rep (τ • w) = rep w := by
     intro τ w
     show @Quotient.out _ orbitQuot (@Quotient.mk _ orbitQuot (τ • w)) =
-      @Quotient.out _ orbitQuot (@Quotient.mk _ orbitQuot w)
+         @Quotient.out _ orbitQuot (@Quotient.mk _ orbitQuot w)
     congr 1
     exact Quotient.sound ⟨τ, rfl⟩
+
   let β : InfinitePlace L → (𝓞 L)ˣ := fun w => σ_w w • α (rep w)
   refine ⟨β, ?_, ?_⟩
+
   · intro τ w
     show τ • (σ_w w • α (rep w)) = σ_w (τ • w) • α (rep (τ • w))
     rw [hrep_smul τ w, ← mul_smul]
+
+
     have h_stab : ((σ_w (τ • w))⁻¹ * (τ * σ_w w)) • rep w = rep w := by
       rw [mul_smul, mul_smul, hσ_w w]
       rw [inv_smul_eq_iff.mpr (hσ_w (τ • w)).symm, hrep_smul]
+
     have : (τ * σ_w w) • α (rep w) =
-      (σ_w (τ • w) * ((σ_w (τ • w))⁻¹ * (τ * σ_w w))) • α (rep w) := by
+        (σ_w (τ • w) * ((σ_w (τ • w))⁻¹ * (τ * σ_w w))) • α (rep w) := by
       rw [← mul_assoc, mul_inv_cancel, one_mul]
     rw [this, mul_smul, hα_fixed _ _ h_stab]
+
   · intro v w hw
     show w (σ_w v • α (rep v) : (𝓞 L)ˣ) < 1
     rw [infinitePlace_smul_galActsOnUnits K L (σ_w v) w (α (rep v))]
+
     apply hα_diag
     intro h_eq
     apply hw
+
     have : w = σ_w v • rep v := by rw [← h_eq, smul_inv_smul]
     rw [this, hσ_w]
 
@@ -797,13 +842,13 @@ lemma diag_dom_units_injective
     exact Units.ne_zero (β v₁) ((IsFractionRing.injective (𝓞 K) K) h)
   have hlt : ∏ w : InfinitePlace K, (w (β v₁)) ^ w.mult < 1 := by
     calc ∏ w : InfinitePlace K, (w (β v₁)) ^ w.mult
-      < ∏ _w : InfinitePlace K, (1 : ℝ) := by
-        apply Finset.prod_lt_prod_of_nonempty
-        · intro w _; exact pow_pos (hpos w) _
-        · intro w _
-          exact pow_lt_one₀ (le_of_lt (hpos w)) (hall w)
-            (Nat.pos_iff_ne_zero.mp InfinitePlace.mult_pos)
-        · exact Finset.univ_nonempty
+        < ∏ _w : InfinitePlace K, (1 : ℝ) := by
+          apply Finset.prod_lt_prod_of_nonempty
+          · intro w _; exact pow_pos (hpos w) _
+          · intro w _
+            exact pow_lt_one₀ (le_of_lt (hpos w)) (hall w)
+              (Nat.pos_iff_ne_zero.mp InfinitePlace.mult_pos)
+          · exact Finset.univ_nonempty
       _ = 1 := by simp
   linarith
 
@@ -827,8 +872,13 @@ lemma herbrand_step1_equivariant_units
 -- imply
   ∃ β : InfinitePlace L → (𝓞 L)ˣ, (∀ (σ : L ≃ₐ[K] L) (w : InfinitePlace L), σ • β w = β (σ • w)) ∧ Function.Injective β ∧ (Subgroup.closure (Set.range β)).FiniteIndex := by
 -- proof
+
+
   obtain ⟨β, hβ_equiv, hβ_diag⟩ := herbrand_equivariant_diagonal_dominant_units K L
+
   have hβ_inj : Function.Injective β := diag_dom_units_injective β hβ_diag
+
+
   exact ⟨β, hβ_equiv, hβ_inj, lemma_24_7 β hβ_diag⟩
 
 end ArtinUnramified
@@ -853,8 +903,9 @@ lemma zpow_closure_finiteIndex
   set H := Subgroup.closure (Set.range β)
   set n := n₀.natAbs
   have hna : n ≠ 0 := Int.natAbs_ne_zero.mpr hn₀
+
   have hcl_eq : Subgroup.closure (Set.range (fun w => β w ^ n₀)) =
-    Subgroup.closure (Set.range (fun w => β w ^ n)) := by
+      Subgroup.closure (Set.range (fun w => β w ^ n)) := by
     by_cases hn_sign : 0 ≤ n₀
     · congr 1; ext g; simp only [Set.mem_range]; constructor
       · rintro ⟨w, rfl⟩; exact ⟨w, by rw [← zpow_natCast, Int.natAbs_of_nonneg hn_sign]⟩
@@ -865,25 +916,30 @@ lemma zpow_closure_finiteIndex
         ext g; simp only [Set.mem_range, Set.mem_inv]; constructor
         · rintro ⟨w, rfl⟩; exact ⟨w, by rw [← zpow_natCast, hab, zpow_neg]⟩
         · rintro ⟨w, hw⟩; exact ⟨w, by
-          have h1 : β w ^ n₀.natAbs = (β w ^ n₀)⁻¹ := by
-            rw [← zpow_natCast, hab, zpow_neg]
-          rw [h1] at hw; exact inv_injective hw⟩
+            have h1 : β w ^ n₀.natAbs = (β w ^ n₀)⁻¹ := by
+              rw [← zpow_natCast, hab, zpow_neg]
+            rw [h1] at hw; exact inv_injective hw⟩
       rw [this, Subgroup.closure_inv]
+
   have hmap_eq : Subgroup.closure (Set.range (fun w => β w ^ n)) = H.map (powMonoidHom n) := by
     rw [MonoidHom.map_closure]
     congr 1; ext g; simp only [Set.mem_image, Set.mem_range, powMonoidHom_apply]
     constructor
     · rintro ⟨w, rfl⟩; exact ⟨β w, ⟨w, rfl⟩, rfl⟩
     · rintro ⟨_, ⟨w, rfl⟩, rfl⟩; exact ⟨w, rfl⟩
+
   have hH_fg : H.FG := by
     rw [Subgroup.fg_iff]; exact ⟨Set.range β, rfl, Set.finite_range β⟩
+
   have hrel : (H.map (powMonoidHom n)).IsFiniteRelIndex H :=
     Subgroup.isFiniteRelIndex_map_powMonoidHom_of_fg hH_fg hna
+
   have hle : H.map (powMonoidHom n) ≤ H := by
     intro g hg
     simp only [Subgroup.mem_map, powMonoidHom_apply] at hg
     obtain ⟨h, hh, rfl⟩ := hg
     exact H.pow_mem hh n
+
   rw [hcl_eq, hmap_eq]
   exact Subgroup.FiniteIndex.mk (by
     have h1 := Subgroup.relIndex_mul_index hle
@@ -938,11 +994,11 @@ lemma algebraMapToFixed_surjective
   intro ⟨u, hu⟩
   have hfixed : ∀ σ : L ≃ₐ[K] L, (galRestrict (𝓞 K) K L (𝓞 L) σ) (u : 𝓞 L) = (u : 𝓞 L) :=
     fun σ => congr_arg Units.val (hu σ)
-  letI := IsIntegralClosure.MulSemiringAction (𝓞 K) K L (𝓞 L)
+  let := IsIntegralClosure.MulSemiringAction (𝓞 K) K L (𝓞 L)
   obtain ⟨k, hk⟩ := (Algebra.isInvariant_of_isGalois (𝓞 K) K L (𝓞 L)).isInvariant (u : 𝓞 L)
     (fun σ => hfixed σ)
   have hfixed_inv : ∀ σ : L ≃ₐ[K] L,
-    (galRestrict (𝓞 K) K L (𝓞 L) σ) (↑u⁻¹ : 𝓞 L) = (↑u⁻¹ : 𝓞 L) := by
+      (galRestrict (𝓞 K) K L (𝓞 L) σ) (↑u⁻¹ : 𝓞 L) = (↑u⁻¹ : 𝓞 L) := by
     intro σ
     exact congr_arg Units.val (show (σ • u)⁻¹ = u⁻¹ from congr_arg Inv.inv (hu σ))
   obtain ⟨k', hk'⟩ := (Algebra.isInvariant_of_isGalois (𝓞 K) K L (𝓞 L)).isInvariant (↑u⁻¹ : 𝓞 L)
@@ -1013,8 +1069,8 @@ lemma tateH0Units_card_eq_normIntegerUnits_index
     (Subgroup.index_eq_card _).symm]
   have hsurj := algebraMapToFixed_surjective K L
   suffices heq : normIntegerUnits K L =
-    Subgroup.comap (algebraMapToFixed K L)
-      ((normImageUnitsSubgroup K L).subgroupOf (unitsFixed K L)) by
+      Subgroup.comap (algebraMapToFixed K L)
+        ((normImageUnitsSubgroup K L).subgroupOf (unitsFixed K L)) by
     rw [heq]
     exact (Subgroup.index_comap_of_surjective _ hsurj).symm
   ext u
@@ -1182,11 +1238,17 @@ lemma herbrand_quotient_ideals
 -- imply
   (d.cohomNormImage.subgroupOf d.fixedIdeals).index = d.e₀ * d.normImage.index := by
 -- proof
+
+
   change d.cohomNormImage.relIndex d.fixedIdeals = d.e₀ * d.normImage.index
+
   have h1 : d.cohomNormImage ≤ d.extendedIdeals := cohomNormImage_le_extendedIdeals d
   have h2 : d.extendedIdeals ≤ d.fixedIdeals := extendedIdeals_le_fixedIdeals d
   rw [← Subgroup.relIndex_mul_relIndex d.cohomNormImage d.extendedIdeals d.fixedIdeals h1 h2]
+
+
   rw [cohomNormImage_relIndex_extendedIdeals d]
+
   have h3 : d.extendedIdeals.relIndex d.fixedIdeals = d.e₀ := index_fixed_over_extended_eq_e₀ d
   rw [h3]
   ring
@@ -1258,9 +1320,11 @@ lemma norm_index_ineq_unramified
   have he1 : d.ram.e = 1 := hunr
   have hid := norm_index_identity_eq8 d
   rw [he1, mul_one] at hid
+
   have hh0 := d.hh0_pos
   have hnorm := d.hnorm_pos
   have hn := d.hn_pos
+
   calc d.n = 1 * 1 * d.n := by ring
     _ ≤ d.h0_ClL * d.norm_units_index * d.n := by
       apply Nat.mul_le_mul_right
@@ -1288,9 +1352,12 @@ lemma norm_index_equality_consequences
   have he1 : d.ram.e = 1 := hunr
   have hid := norm_index_identity_eq8 d
   rw [he1, mul_one, heq] at hid
+
   have hn_pos := d.hn_pos
   have hh0_pos := d.hh0_pos
   have hnorm_pos := d.hnorm_pos
+
+
   have hmul1 : d.h0_ClL * d.norm_units_index = 1 := by
     have hid' : d.h0_ClL * d.norm_units_index * d.n = 1 * d.n := by linarith
     exact Nat.eq_of_mul_eq_mul_right hn_pos hid'
@@ -1418,8 +1485,13 @@ lemma galActionOnFracIdealUnits_extensionMap_fixed
   rw [@FixedPoints.mem_subgroup _ _ _ _ (galActionOnFracIdealUnits K L)]
   intro σ
   obtain ⟨a, rfl⟩ := MonoidHom.mem_range.mp hu
+
+
   ext : 1
+
   exact galFracIdeal_extended_eq K L σ a.val
+
+
 end ArtinUnramified
 
 
@@ -1665,3 +1737,4 @@ private lemma index_fixed_over_extended_eq_e_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

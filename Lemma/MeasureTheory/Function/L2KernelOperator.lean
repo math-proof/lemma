@@ -63,7 +63,7 @@ theorem lintegral_enorm_kernelIntegral_sq_le {K : α × β → ℂ} {f : β → 
 theorem eLpNorm_kernelIntegral_le {K : α × β → ℂ} {f : β → ℂ}
     (hK : AEStronglyMeasurable K (μ.prod ν)) (hf : AEStronglyMeasurable f ν) :
     eLpNorm (kernelIntegral ν K f) 2 μ ≤ eLpNorm K 2 (μ.prod ν) * eLpNorm f 2 ν := by
-  have h2 : ((2 : ℝ≥0∞)).toReal = (2 : ℝ) := by norm_num
+  have h2 : ((2 : ENNReal)).toReal = (2 : ℝ) := by norm_num
   rw [eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num),
     eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num),
     eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num), h2,
@@ -86,18 +86,18 @@ theorem _root_.MeasureTheory.MemLp.ae_memLp_prodMk_left {K : α × β → ℂ}
   have hfin : ∀ᵐ x ∂μ, ∫⁻ y, ‖K (x, y)‖ₑ ^ (2 : ℝ) ∂ν < ∞ := by
     have h2 := hK.eLpNorm_lt_top
     rw [eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num)] at h2
-    have hfin' : ∫⁻ z, ‖K z‖ₑ ^ ((2 : ℝ≥0∞)).toReal ∂(μ.prod ν) ≠ ∞ := by
+    have hfin' : ∫⁻ z, ‖K z‖ₑ ^ ((2 : ENNReal)).toReal ∂(μ.prod ν) ≠ ∞ := by
       intro hcon
       rw [hcon] at h2
       simp at h2
-    rw [show ((2 : ℝ≥0∞)).toReal = (2 : ℝ) by norm_num] at hfin'
+    rw [show ((2 : ENNReal)).toReal = (2 : ℝ) by norm_num] at hfin'
     rw [lintegral_prod _ (hK.aestronglyMeasurable.enorm.pow_const _)] at hfin'
     exact ae_lt_top' (hK.aestronglyMeasurable.enorm.pow_const _).lintegral_prod_right' hfin'
   filter_upwards [hmeas, hfin] with x hx1 hx2
   refine ⟨hx1, ?_⟩
   rw [eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num)]
   exact ENNReal.rpow_lt_top_of_nonneg (by norm_num)
-    (by rw [show ((2 : ℝ≥0∞)).toReal = (2 : ℝ) by norm_num]; exact hx2.ne)
+    (by rw [show ((2 : ENNReal)).toReal = (2 : ℝ) by norm_num]; exact hx2.ne)
 
 theorem ae_integrable_kernelIntegral {K : α × β → ℂ} (hK : MemLp K 2 (μ.prod ν))
     {f : β → ℂ} (hf : MemLp f 2 ν) :
@@ -346,7 +346,7 @@ theorem indicatorConst_prod_mem_compactKernels {A : Set α} {B : Set β} (hA : M
   isCompactOperator_kernelIntegralCLM_indicatorConst_prod hA hB c
 
 theorem indicatorConstLp_congr_set {γ : Type*} [MeasurableSpace γ] {ρ : Measure γ}
-    {p : ℝ≥0∞} {S S' : Set γ} (h : S = S') (hS : MeasurableSet S) (hS' : MeasurableSet S')
+    {p : ENNReal} {S S' : Set γ} (h : S = S') (hS : MeasurableSet S) (hS' : MeasurableSet S')
     (hρS : ρ S ≠ ∞) (hρS' : ρ S' ≠ ∞) (c : ℂ) :
     indicatorConstLp p hS hρS c = indicatorConstLp p hS' hρS' c := by
   subst h; rfl
@@ -410,7 +410,7 @@ theorem indicatorConst_mem_compactKernels {S : Set (α × β)} (hS : MeasurableS
 
   have happrox : ∀ n : ℕ, ∃ T ∈ supClosure (Set.image2 (· ×ˢ ·)
       { s : Set α | MeasurableSet s } { t : Set β | MeasurableSet t }),
-      (μ.prod ν) (T ∆ S) < (n : ℝ≥0∞)⁻¹ := by
+      (μ.prod ν) (T ∆ S) < (n : ENNReal)⁻¹ := by
     intro n
     refine exists_measure_symmDiff_lt_of_generateFrom_isSetSemiring
       isSetSemiring_measurableRectangles ?_ generateFrom_prod.symm hS ?_

@@ -85,7 +85,7 @@ theorem volume_verticalStrip_le {A a : ℝ} (hA : 0 ≤ A) (ha : 0 < a) :
           ENNReal.ofReal_inv_of_pos (by norm_num), ENNReal.ofReal_ofNat,
           ENNReal.one_sub_inv_two, inv_inv]
     _ = ENNReal.ofReal (4 * A / a) := by
-        rw [show (2 : ℝ≥0∞) = ENNReal.ofReal (2 : ℝ) by
+        rw [show (2 : ENNReal) = ENNReal.ofReal (2 : ℝ) by
             rw [ENNReal.ofReal_ofNat],
           ← ENNReal.ofReal_mul (by positivity)]
         congr 1
@@ -106,7 +106,7 @@ theorem volume_cuspNeighbourhood_lt_top {T : ℝ} (hT : 0 < T) :
 theorem tendsto_volume_cuspNeighbourhood :
     Tendsto (fun T : ℝ => volume (cuspNeighbourhood T)) atTop (𝓝 0) := by
   have h2T : Tendsto (fun T : ℝ => ENNReal.ofReal (2 / T)) atTop (𝓝 0) := by
-    rw [show (0 : ℝ≥0∞) = ENNReal.ofReal 0 by simp]
+    rw [show (0 : ENNReal) = ENNReal.ofReal 0 by simp]
     refine ENNReal.tendsto_ofReal ?_
     have h := tendsto_inv_atTop_zero.const_mul (2 : ℝ)
     simp only [← div_eq_mul_inv, mul_zero] at h
@@ -148,7 +148,7 @@ theorem volume_cuspNeighbourhood_pos (T : ℝ) :
   exact lt_of_lt_of_le (FLT.HyperbolicMeasure.volume_pos_of_isOpen hUopen hUne)
     (measure_mono hUsub)
 
-def unipotentDiagonalSum (k : ℍ → ℍ → ℝ≥0∞) (z : ℍ) : ℝ≥0∞ :=
+def unipotentDiagonalSum (k : ℍ → ℍ → ENNReal) (z : ℍ) : ENNReal :=
   ∑' n : ℤ, if n = 0 then 0 else k z ((n : ℝ) +ᵥ z)
 
 @[simp] theorem unipotentDiagonalSum_zero (z : ℍ) :
@@ -221,7 +221,7 @@ private lemma volume_divBand_ge {Y₀ : ℝ} (hY : 0 < Y₀) (j : ℕ) :
   have hmeas : MeasurableSet obox :=
     Complex.measurableEquivRealProd.measurable (measurableSet_Ioo.prod measurableSet_Ioo)
   have hbound : ∀ w ∈ obox,
-      ENNReal.ofReal ((Y₀ * 2 ^ (j + 1))⁻¹ ^ 2) ≤ (((1 / ‖w.im‖₊) ^ 2 : ℝ≥0) : ℝ≥0∞) := by
+      ENNReal.ofReal ((Y₀ * 2 ^ (j + 1))⁻¹ ^ 2) ≤ (((1 / ‖w.im‖₊) ^ 2 : NNReal) : ENNReal) := by
     intro w hw
     simp only [hobox, Set.mem_preimage, Complex.measurableEquivRealProd_apply, Set.mem_prod,
       Set.mem_Ioo] at hw
@@ -244,7 +244,7 @@ private lemma volume_divBand_ge {Y₀ : ℝ} (hY : 0 < Y₀) (j : ℕ) :
         ring
     _ = ∫⁻ _ in obox, ENNReal.ofReal ((Y₀ * 2 ^ (j + 1))⁻¹ ^ 2) := by
         rw [setLIntegral_const]
-    _ ≤ ∫⁻ w in obox, (((1 / ‖w.im‖₊) ^ 2 : ℝ≥0) : ℝ≥0∞) := by
+    _ ≤ ∫⁻ w in obox, (((1 / ‖w.im‖₊) ^ 2 : NNReal) : ENNReal) := by
         rw [← lintegral_indicator hmeas, ← lintegral_indicator hmeas]
         refine lintegral_mono fun w => ?_
         by_cases hw : w ∈ obox
@@ -252,11 +252,11 @@ private lemma volume_divBand_ge {Y₀ : ℝ} (hY : 0 < Y₀) (j : ℕ) :
         · simp [Set.indicator_of_notMem hw]
 
 private lemma le_unipotentDiagonalSum_of_mem_divBand
-    (k : ℍ → ℍ → ℝ≥0∞) {δ : ℝ≥0∞} {c : ℝ}
+    (k : ℍ → ℍ → ENNReal) {δ : ENNReal} {c : ℝ}
     (hk : ∀ (z : ℍ) (n : ℤ), n ≠ 0 → |(n : ℝ)| ≤ c * z.im → δ ≤ k z ((n : ℝ) +ᵥ z))
     {Y₀ : ℝ} (hcY : 2 ≤ c * Y₀) (hY : 0 < Y₀)
     {j : ℕ} {z : ℍ} (hz : z ∈ divBand Y₀ j) :
-    (2 ^ j : ℝ≥0∞) * δ ≤ unipotentDiagonalSum k z := by
+    (2 ^ j : ENNReal) * δ ≤ unipotentDiagonalSum k z := by
   obtain ⟨-, hlo, -⟩ := hz
 
   have hinj : Function.Injective (fun m : ℕ => (m : ℤ) + 1) := fun a b h => by simpa using h
@@ -281,7 +281,7 @@ private lemma le_unipotentDiagonalSum_of_mem_divBand
       have h3 : c * (Y₀ * 2 ^ j) ≤ c * z.im := by nlinarith
       linarith
 
-  calc (2 ^ j : ℝ≥0∞) * δ
+  calc (2 ^ j : ENNReal) * δ
       = S.card • δ := by rw [hScard]; rw [nsmul_eq_mul]; norm_cast
     _ = ∑ _n ∈ S, δ := (Finset.sum_const δ).symm
     _ ≤ ∑ n ∈ S, (if n = 0 then 0 else k z ((n : ℝ) +ᵥ z)) := by
@@ -292,7 +292,7 @@ private lemma le_unipotentDiagonalSum_of_mem_divBand
     _ ≤ unipotentDiagonalSum k z := ENNReal.sum_le_tsum S
 
 theorem lintegral_fd_unipotentDiagonalSum_eq_top
-    (k : ℍ → ℍ → ℝ≥0∞) {δ : ℝ≥0∞} (hδ : δ ≠ 0) {c : ℝ} (hc : 0 < c)
+    (k : ℍ → ℍ → ENNReal) {δ : ENNReal} (hδ : δ ≠ 0) {c : ℝ} (hc : 0 < c)
     (hk : ∀ (z : ℍ) (n : ℤ), n ≠ 0 → |(n : ℝ)| ≤ c * z.im → δ ≤ k z ((n : ℝ) +ᵥ z)) :
     ∫⁻ z in 𝒟, unipotentDiagonalSum k z ∂volume = ⊤ := by
 
@@ -305,7 +305,7 @@ theorem lintegral_fd_unipotentDiagonalSum_eq_top
     linarith [mul_comm c Y₀]
 
   refine top_unique ?_
-  calc (⊤ : ℝ≥0∞)
+  calc (⊤ : ENNReal)
       = ∑' _j : ℕ, δ * ENNReal.ofReal ((4 * Y₀)⁻¹) := by
         refine (ENNReal.tsum_const_eq_top_of_ne_zero ?_).symm
         refine mul_ne_zero hδ ?_
@@ -315,13 +315,13 @@ theorem lintegral_fd_unipotentDiagonalSum_eq_top
         refine ENNReal.tsum_le_tsum fun j => ?_
 
         have hlow : ∀ z ∈ divBand Y₀ j,
-            (2 ^ j : ℝ≥0∞) * δ ≤ unipotentDiagonalSum k z := fun z hz =>
+            (2 ^ j : ENNReal) * δ ≤ unipotentDiagonalSum k z := fun z hz =>
           le_unipotentDiagonalSum_of_mem_divBand k hk hcY hY hz
         calc δ * ENNReal.ofReal ((4 * Y₀)⁻¹)
-            = ((2 ^ j : ℝ≥0∞) * δ) *
+            = ((2 ^ j : ENNReal) * δ) *
                 ENNReal.ofReal ((Y₀ * 2 ^ j) * (Y₀ * 2 ^ (j + 1))⁻¹ ^ 2) := by
 
-              rw [show ((2 : ℝ≥0∞) ^ j) = ENNReal.ofReal ((2 : ℝ) ^ j) by
+              rw [show ((2 : ENNReal) ^ j) = ENNReal.ofReal ((2 : ℝ) ^ j) by
                   rw [ENNReal.ofReal_pow (by norm_num), ENNReal.ofReal_ofNat],
                 mul_comm (ENNReal.ofReal ((2:ℝ) ^ j)) δ, mul_assoc,
                 ← ENNReal.ofReal_mul (by positivity)]
@@ -329,10 +329,10 @@ theorem lintegral_fd_unipotentDiagonalSum_eq_top
               have h2j : (0 : ℝ) < 2 ^ j := by positivity
               field_simp
               ring
-          _ ≤ ((2 ^ j : ℝ≥0∞) * δ) * volume (divBand Y₀ j) := by
+          _ ≤ ((2 ^ j : ENNReal) * δ) * volume (divBand Y₀ j) := by
               gcongr
               exact volume_divBand_ge hY j
-          _ = ∫⁻ _ in divBand Y₀ j, ((2 ^ j : ℝ≥0∞) * δ) ∂volume := by
+          _ = ∫⁻ _ in divBand Y₀ j, ((2 ^ j : ENNReal) * δ) ∂volume := by
               rw [setLIntegral_const]
           _ ≤ ∫⁻ z in divBand Y₀ j, unipotentDiagonalSum k z ∂volume := by
               rw [← lintegral_indicator (isOpen_divBand Y₀ j).measurableSet,
@@ -349,7 +349,7 @@ theorem lintegral_fd_unipotentDiagonalSum_eq_top
         exact Set.iUnion_subset fun j => divBand_subset_fd hY1 j
 
 private lemma unipotentDiagonalSum_le_of_bounded
-    (k : ℍ → ℍ → ℝ≥0∞) {M : ℝ≥0∞} {c : ℝ}
+    (k : ℍ → ℍ → ENNReal) {M : ENNReal} {c : ℝ}
     (hbd : ∀ z w, k z w ≤ M)
     (hsupp : ∀ (z : ℍ) (n : ℤ), c * z.im < |(n : ℝ)| → k z ((n : ℝ) +ᵥ z) = 0)
     {N : ℕ} {z : ℍ} (hzN : c * z.im ≤ N) :
@@ -402,7 +402,7 @@ private lemma unipotentDiagonalSum_le_of_bounded
         ring
 
 theorem lintegral_truncated_unipotentDiagonalSum_lt_top
-    (k : ℍ → ℍ → ℝ≥0∞) {M : ℝ≥0∞} (hM : M ≠ ⊤) {c : ℝ} (hc : 0 < c)
+    (k : ℍ → ℍ → ENNReal) {M : ENNReal} (hM : M ≠ ⊤) {c : ℝ} (hc : 0 < c)
     (hbd : ∀ z w, k z w ≤ M)
     (hsupp : ∀ (z : ℍ) (n : ℤ), c * z.im < |(n : ℝ)| → k z ((n : ℝ) +ᵥ z) = 0)
     (T : ℝ) :
@@ -431,10 +431,10 @@ theorem lintegral_truncated_unipotentDiagonalSum_lt_top
         · exact lt_of_le_of_lt
             (measure_mono fun z hz => hz.1) FLT.FundamentalDomainVolume.volume_fd_lt_top
 
-def windowIndicator : ℍ → ℍ → ℝ≥0∞ := fun z w => if |w.re - z.re| ≤ z.im then 1 else 0
+def windowIndicator : ℍ → ℍ → ENNReal := fun z w => if |w.re - z.re| ≤ z.im then 1 else 0
 
 theorem windowIndicator_lower (z : ℍ) (n : ℤ) (_ : n ≠ 0) (hn : |(n : ℝ)| ≤ 1 * z.im) :
-    (1 : ℝ≥0∞) ≤ windowIndicator z ((n : ℝ) +ᵥ z) := by
+    (1 : ENNReal) ≤ windowIndicator z ((n : ℝ) +ᵥ z) := by
   rw [windowIndicator, if_pos]
   rw [UpperHalfPlane.vadd_re]
   simpa using hn

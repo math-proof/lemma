@@ -46,7 +46,7 @@ lemma lk_canonicalMeasure_tail_le {ρ : Measure ℝ} {L : ℝ → ℂ}
     (hprob : IsProbabilityMeasure ρ) (hL : Continuous L) (n : ℕ)
     (hρ : ∀ t, charFun ρ t = Complex.exp (L t / ((n + 1 : ℕ) : ℝ)))
     {r : ℝ} (hr : 0 < r) :
-    ((lkCanonicalMeasure ρ hprob n {x | r < |x|} : ℝ≥0) : ℝ) ≤
+    ((lkCanonicalMeasure ρ hprob n {x | r < |x|} : NNReal) : ℝ) ≤
       (1 / 2 : ℝ) * r *
         ∫ t : ℝ in (-2 * r⁻¹)..(2 * r⁻¹), ‖L t‖ * Real.exp ‖L t‖ := by
   have htail := measureReal_abs_gt_le_integral_charFun (μ := ρ) hr
@@ -68,7 +68,7 @@ lemma lk_canonicalMeasure_tail_le {ρ : Measure ℝ} {L : ℝ → ℂ}
     rfl
   rw [hscale] at hnorm
   calc
-    ((lkCanonicalMeasure ρ hprob n {x | r < |x|} : ℝ≥0) : ℝ) ≤
+    ((lkCanonicalMeasure ρ hprob n {x | r < |x|} : NNReal) : ℝ) ≤
         (n + 1 : ℝ) * ρ.real {x | r < |x|} :=
       lk_canonicalMeasure_apply_le ρ hprob n _
     _ ≤ (n + 1 : ℝ) * ((1 / 2 : ℝ) * r *
@@ -83,7 +83,7 @@ lemma lk_canonicalMeasure_tight_bound {ρ : ℕ → Measure ℝ} {L : ℝ → �
     (hρ : ∀ n t, charFun (ρ n) t = Complex.exp (L t / ((n + 1 : ℕ) : ℝ)))
     {ε : ℝ} (hε : 0 < ε) :
     ∃ r > 0, ∀ n,
-      ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r < |x|} : ℝ≥0) : ℝ) ≤ ε := by
+      ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r < |x|} : NNReal) : ℝ) ≤ ε := by
   let g : ℝ → ℝ := fun t ↦ ‖L t‖ * Real.exp ‖L t‖
   have hg : Continuous g := by
     dsimp only [g]
@@ -118,12 +118,12 @@ lemma lk_canonicalMeasure_tight_bound {ρ : ℕ → Measure ℝ} {L : ℝ → �
       intervalIntegrable_const hg_bound
   rw [intervalIntegral.integral_const] at hint
   have htail := lk_canonicalMeasure_tail_le (hprob n) hL n (hρ n) hr
-  change ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r < |x|} : ℝ≥0) : ℝ) ≤ ε
+  change ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r < |x|} : NNReal) : ℝ) ≤ ε
   change _ ≤ (1 / 2 : ℝ) * r * (∫ t : ℝ in (-2 * r⁻¹)..(2 * r⁻¹), g t) at htail
   have hlen : 2 * r⁻¹ - -2 * r⁻¹ = 4 / r := by field_simp; ring
   rw [hlen, smul_eq_mul] at hint
   calc
-    ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r < |x|} : ℝ≥0) : ℝ) ≤
+    ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r < |x|} : NNReal) : ℝ) ≤
         (1 / 2 : ℝ) * r * (∫ t : ℝ in (-2 * r⁻¹)..(2 * r⁻¹), g t) := htail
     _ ≤ (1 / 2 : ℝ) * r * (4 / r * (ε / 2)) := by gcongr
     _ = ε := by field_simp; ring
@@ -134,12 +134,12 @@ lemma lk_exists_canonical_limit {ρ : ℕ → Measure ℝ} {L : ℝ → ℂ}
     ∃ K : FiniteMeasure ℝ, ∃ U : Ultrafilter ℕ, (U : Filter ℕ) ≤ Filter.atTop ∧
       Filter.Tendsto
         (fun n ↦ lkCanonicalMeasure (ρ n) (hprob n) n) U (𝓝 K) := by
-  let u : ℕ → ℝ≥0 := fun m ↦ 1 / ((m : ℝ≥0) + 1)
+  let u : ℕ → NNReal := fun m ↦ 1 / ((m : NNReal) + 1)
   have hu : Filter.Tendsto u Filter.atTop (𝓝 0) := by
     simpa only [u] using
-      (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ≥0))
+      (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := NNReal))
   have hex (m : ℕ) : ∃ r > 0, ∀ n,
-      ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r < |x|} : ℝ≥0) : ℝ) ≤
+      ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r < |x|} : NNReal) : ℝ) ≤
         (u m : ℝ) := by
     apply lk_canonicalMeasure_tight_bound hprob hL hL0 hρ
     dsimp only [u]
@@ -147,10 +147,10 @@ lemma lk_exists_canonical_limit {ρ : ℕ → Measure ℝ} {L : ℝ → ℂ}
   let r : ℕ → ℝ := fun m ↦ Classical.choose (hex m)
   have hr (m : ℕ) : 0 < r m := (Classical.choose_spec (hex m)).1
   have htail (m n : ℕ) :
-      ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r m < |x|} : ℝ≥0) : ℝ) ≤
+      ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r m < |x|} : NNReal) : ℝ) ≤
         (u m : ℝ) :=
     (Classical.choose_spec (hex m)).2 n
-  let C : ℝ≥0 := lkCanonicalMassBound L
+  let C : NNReal := lkCanonicalMassBound L
   let A : ℕ → Set ℝ := fun m ↦ Set.Icc (-(r m)) (r m)
   have hA (m : ℕ) : IsCompact (A m) := isCompact_Icc
   let Kseq : ℕ → FiniteMeasure ℝ := fun n ↦
@@ -167,7 +167,7 @@ lemma lk_exists_canonical_limit {ρ : ℕ → Measure ℝ} {L : ℝ → ℂ}
         grind
       rw [hset]
       apply NNReal.coe_le_coe.mp
-      change ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r m < |x|} : ℝ≥0) : ℝ) ≤
+      change ((lkCanonicalMeasure (ρ n) (hprob n) n {x | r m < |x|} : NNReal) : ℝ) ≤
         (u m : ℝ)
       exact htail m n
   have hcompact := isCompact_setOfPred_finiteMeasure_mass_le_compl_isCompact_le

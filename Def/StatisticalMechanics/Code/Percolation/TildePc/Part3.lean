@@ -27,8 +27,8 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-def tildePcSet (d : ℕ) : Set ℝ≥0 :=
-  {p : ℝ≥0 | ∃ hp : p ≤ 1, ∃ S : Finset (Site d), origin d ∈ S ∧ phi d p hp S < 1}
+def tildePcSet (d : ℕ) : Set NNReal :=
+  {p : NNReal | ∃ hp : p ≤ 1, ∃ S : Finset (Site d), origin d ∈ S ∧ phi d p hp S < 1}
 
 end Percolation
 end StatMech

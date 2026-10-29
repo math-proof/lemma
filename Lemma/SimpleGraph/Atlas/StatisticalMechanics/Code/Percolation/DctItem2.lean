@@ -53,7 +53,7 @@ private lemma coord_false_prob_eq
   {d : ℕ}
   {e : Sym2 (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real {ω | ω e = false} = 1 - (p : ℝ) := by
@@ -69,7 +69,7 @@ private lemma pivotalProb_closed_factor_eq
   {n : ℕ}
   {e : Sym2 (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (pivotalEvent e (boxCrossingEvent d n) ∩ {ω | ω e = false}) = (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (pivotalEvent e (boxCrossingEvent d n)) * (1 - (p : ℝ)) := by
@@ -287,7 +287,7 @@ private lemma perSurface_boundary_le_pivotal_eq
   {n : ℕ}
   {S : Finset (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (h0S : origin d ∈ S)
   (hSinner : (S : Set (Site d)) ⊆ box d (n - 1))
@@ -306,7 +306,7 @@ private lemma perSurface_boundary_eq_phi_eq
   {n : ℕ}
   {S : Finset (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hp0 : 0 < (p : ℝ))
   (h0S : origin d ∈ S) :
@@ -337,7 +337,7 @@ private lemma sum_inter_surface_le_eq
   {n : ℕ}
   {E : Set (ConfigSpace (Sym2 (Site d)))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hE : MeasurableSet E) :
 -- imply
@@ -365,7 +365,7 @@ private lemma sum_surfaceProb_origin_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   ∑ S ∈ (boxFinset d n).powerset.filter (fun S => origin d ∈ S), (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (surfaceEvent d n S) = 1 - boxCrossProb d p hp n := by
@@ -380,7 +380,7 @@ private lemma sum_pivotalClosed_eq_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   ∑ edge ∈ boxEdgeFinset d n, (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (pivotalEvent edge (boxCrossingEvent d n) ∩ {ω | ω edge = false}) = (1 - (p : ℝ)) * deriv (fun q => prob q ((boxEdgeFinset d n).restrict '' (boxCrossingEvent d n))) (p : ℝ) := by
@@ -396,7 +396,7 @@ private lemma dct_differential_inequality_eq
   {n : ℕ}
   {m : ℝ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hn : 1 ≤ n)
   (hp0 : 0 < (p : ℝ))
@@ -448,7 +448,7 @@ private lemma crossProb_eq_boxCrossProb_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hn : 1 ≤ n) :
 -- imply
@@ -510,7 +510,7 @@ private lemma hasDerivAt_crossProbReal_eq
 @[path]
 private lemma phi_ge_one_of_gt_tildePc_eq
   {d : ℕ}
-  {p : ℝ≥0}
+  {p : NNReal}
   {S : Finset (Site d)}
 -- given
   (hp : p ≤ 1)
@@ -527,7 +527,7 @@ private lemma phi_ge_one_of_gt_tildePc_eq
 @[path]
 private lemma dct_diffineq_crossProbReal_eq
   {d : ℕ}
-  {q : ℝ≥0}
+  {q : NNReal}
   {n : ℕ}
   {t : ℝ}
 -- given
@@ -546,7 +546,7 @@ private lemma dct_diffineq_crossProbReal_eq
 private lemma theta_ge_meanField_unconditional_eq
   {d : ℕ}
 -- given
-  (q : ℝ≥0)
+  (q : NNReal)
   (hq : q ≤ 1)
   (htpc0 : 0 < (tildePc d : ℝ))
   (hgt : tildePc d < q)

@@ -1,4 +1,5 @@
-import Lemma.Matrix.Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef
+import Lemma.Matrix.Any_And_Eq_Mul_Adjoint.of.PosDef
+import Instance.LinearAlgebra.Matrix.GetElem
 open Matrix
 
 
@@ -19,10 +20,15 @@ private lemma main
     ·
       rw [star_trivial]
       exact h₁ x hx
-  obtain ⟨L, hlow, hpos, hL⟩ := Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef hA
+  obtain ⟨L, htri, hL⟩ := Any_And_Eq_Mul_Adjoint.of.PosDef hA
+  have hlow : ∀ i j, i < j → L i j = 0 := fun i j hij => by
+    simpa [getElem_getElem] using (htri j).1 i hij
+  have hpos : ∀ i, 0 < L i i := fun i => by
+    simpa [getElem_getElem] using (htri i).2
   refine ⟨L, hlow, fun i => ?_, by rwa [Matrix.conjTranspose_eq_transpose_of_trivial] at hL⟩
   have := (RCLike.pos_iff.mp (hpos i)).1
   simpa using this
 
 
 -- created on 2023-07-02
+-- updated on 2026-10-28

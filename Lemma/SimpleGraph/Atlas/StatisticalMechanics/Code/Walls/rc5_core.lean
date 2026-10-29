@@ -175,7 +175,7 @@ private lemma rc5_core_injectionAll_of_residue_eq
 private lemma rc5_core_reimer_inequality_of_injectionAll_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : rc5_BoxReflectInjectionAll)

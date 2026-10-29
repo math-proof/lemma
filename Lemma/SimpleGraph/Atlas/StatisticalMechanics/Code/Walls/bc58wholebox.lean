@@ -250,7 +250,7 @@ private lemma bc58_burton_keane_bernoulli_of_originTrifModification_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hmod : ∀ n : ℕ, bc58_OriginTrifModification d n) :
@@ -371,7 +371,7 @@ private lemma bc58_status_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p) :
 -- imply

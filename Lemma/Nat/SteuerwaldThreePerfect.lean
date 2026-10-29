@@ -71,7 +71,7 @@ namespace MetaMathlibExt
 private lemma pow_eq_base_of_two_le {p e : ℕ} (hp : 2 ≤ p) (h : p ^ e = p) :
   e = 1 := by
   by_contra hc
-  obtain hlt | hgt := lt_or_gt_of_ne hc
+  rcases lt_or_gt_of_ne hc with hlt | hgt
   · have he0 : e = 0 := by omega
     subst he0
     simp at h
@@ -89,13 +89,12 @@ namespace MetaMathlibExt
 
 /--
 [pillaiA](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SteuerwaldThreePerfect.lean)
--/
-@[path]
   forces `(x, y) = (2, 1)`. -/
+@[path]
 private lemma pillaiA {x y : ℕ} (hx : 2 ≤ x) (h : 2 ^ x = 3 ^ y + 1) :
   x = 2 ∧ y = 1 := by
   have hy1 : 1 ≤ y := by
-    obtain rfl | hpos := Nat.eq_zero_or_pos y
+    rcases Nat.eq_zero_or_pos y with rfl | hpos
     · simp only [pow_zero] at h
       norm_num at h
       have hle : (2 : ℕ) ^ 2 ≤ 2 ^ x := pow_le_pow_right₀ (by norm_num) hx
@@ -136,7 +135,8 @@ private lemma pillaiA {x y : ℕ} (hx : 2 ≤ x) (h : 2 ^ x = 3 ^ y + 1) :
   have hsq : ((2 : ℕ) ^ u) ^ 2 = 3 ^ y + 1 := by
     rw [pow_two]
     have hpow : (2 : ℕ) ^ (u + u) = 2 ^ u * 2 ^ u := pow_add 2 u u
-    rwa [hpow] at h
+    rw [hpow] at h
+    exact h
   obtain ⟨v, hv⟩ := Nat.exists_eq_succ_of_ne_zero (show (2 : ℕ) ^ u ≠ 0 by positivity)
   have hv' : (2 : ℕ) ^ u = v + 1 := hv
   have hfactor : ((2 : ℕ) ^ u - 1) * ((2 : ℕ) ^ u + 1) = 3 ^ y := by
@@ -160,7 +160,8 @@ private lemma pillaiA {x y : ℕ} (hx : 2 ≤ x) (h : 2 ^ x = 3 ^ y + 1) :
   have htplus : (3 : ℕ) ^ t = 3 ^ s + 2 := by omega
   have h3s2 : (3 : ℕ) ^ s ∣ 2 := by
     have hmem : (3 : ℕ) ^ s ∣ 3 ^ s + 2 := by
-      rwa [← htplus]
+      rw [← htplus]
+      exact hdvdst
     exact (Nat.dvd_add_right (dvd_refl ((3 : ℕ) ^ s))).mp hmem
   have hs0 : s = 0 := by
     by_contra hc
@@ -201,7 +202,7 @@ namespace MetaMathlibExt
 private lemma pow_eq_pow_of_two_le {b m n : ℕ} (hb : 2 ≤ b) (h : b ^ m = b ^ n) :
   m = n := by
   by_contra hc
-  obtain hlt | hgt := lt_or_gt_of_ne hc
+  rcases lt_or_gt_of_ne hc with hlt | hgt
   · have hlt' := (pow_lt_pow_iff_right₀ (by omega : (1 : ℕ) < b)).mpr hlt
     omega
   · have hgt' := (pow_lt_pow_iff_right₀ (by omega : (1 : ℕ) < b)).mpr hgt
@@ -213,9 +214,8 @@ namespace MetaMathlibExt
 
 /--
 [pillaiB](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SteuerwaldThreePerfect.lean)
--/
-@[path]
   forces `(x, y) = (3, 2)`. -/
+@[path]
 private lemma pillaiB {x y : ℕ} (hy : 2 ≤ y) (h : 3 ^ y = 2 ^ x + 1) :
   x = 3 ∧ y = 2 := by
   have h9 : (9 : ℕ) ≤ 3 ^ y := by
@@ -259,7 +259,8 @@ private lemma pillaiB {x y : ℕ} (hy : 2 ≤ y) (h : 3 ^ y = 2 ^ x + 1) :
   have hsq : ((3 : ℕ) ^ v) ^ 2 = 2 ^ x + 1 := by
     rw [pow_two]
     have hpow : (3 : ℕ) ^ (v + v) = 3 ^ v * 3 ^ v := pow_add 3 v v
-    rwa [hpow] at h
+    rw [hpow] at h
+    exact h
   obtain ⟨w, hw⟩ := Nat.exists_eq_succ_of_ne_zero (show (3 : ℕ) ^ v ≠ 0 by positivity)
   have hw' : (3 : ℕ) ^ v = w + 1 := hw
   have hfactor : ((3 : ℕ) ^ v - 1) * ((3 : ℕ) ^ v + 1) = 2 ^ x := by
@@ -293,7 +294,8 @@ private lemma pillaiB {x y : ℕ} (hy : 2 ≤ y) (h : 3 ^ y = 2 ^ x + 1) :
     omega
   have h2s2 : (2 : ℕ) ^ s ∣ 2 := by
     have hmem : (2 : ℕ) ^ s ∣ 2 ^ s + 2 := by
-      rwa [← htplus]
+      rw [← htplus]
+      exact hdvdst
     exact (Nat.dvd_add_right (dvd_refl ((2 : ℕ) ^ s))).mp hmem
   have hs_eq1 : s = 1 := by
     by_contra hc
@@ -471,9 +473,8 @@ namespace MetaMathlibExt
 
 /--
 [pillaiC_finish](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SteuerwaldThreePerfect.lean)
--/
-@[path]
   `V` odd, conclude `(X, Y, Z) = (4, 2, 3)`. -/
+@[path]
 private lemma pillaiC_finish {U V W : ℕ} (hVod : Odd V)
   (h : 2 ^ (U + U) + 1 = 3 ^ (V + V) + 2 ^ (2 * W + 1)) :
   U + U = 4 ∧ V + V = 2 ∧ 2 * W + 1 = 3 := by
@@ -508,11 +509,11 @@ private lemma pillaiC_finish {U V W : ℕ} (hVod : Odd V)
       pow_le_pow_right₀ (by norm_num) hc'
     omega
   have hfactorZ : (2 : ℕ) ^ (2 * W + 1) * (2 ^ ((U + U) - (2 * W + 1)) - 1)
-    = 3 ^ (V + V) - 1 := by
+      = 3 ^ (V + V) - 1 := by
     have hXZ : (2 * W + 1) + ((U + U) - (2 * W + 1)) = U + U :=
       Nat.add_sub_cancel' (le_of_lt hXgtZ)
     have hpow : (2 : ℕ) ^ (U + U)
-      = 2 ^ (2 * W + 1) * 2 ^ ((U + U) - (2 * W + 1)) := by
+        = 2 ^ (2 * W + 1) * 2 ^ ((U + U) - (2 * W + 1)) := by
       conv_lhs => rw [← hXZ]
       rw [pow_add]
     obtain ⟨w, hw⟩ := Nat.exists_eq_succ_of_ne_zero
@@ -520,17 +521,18 @@ private lemma pillaiC_finish {U V W : ℕ} (hVod : Odd V)
     have hw' : (2 : ℕ) ^ ((U + U) - (2 * W + 1)) = w + 1 := hw
     rw [hw', Nat.add_sub_cancel]
     have hexp : (2 : ℕ) ^ (2 * W + 1) * (w + 1)
-      = 2 ^ (2 * W + 1) * w + 2 ^ (2 * W + 1) := by ring
+        = 2 ^ (2 * W + 1) * w + 2 ^ (2 * W + 1) := by ring
     rw [hpow, hw', hexp] at h
     have h1 : (2 : ℕ) ^ (2 * W + 1) * w + 1 + 2 ^ (2 * W + 1)
-      = 3 ^ (V + V) + 2 ^ (2 * W + 1) := by
+        = 3 ^ (V + V) + 2 ^ (2 * W + 1) := by
       rw [← h]
       ring
     have h2 : (2 : ℕ) ^ (2 * W + 1) * w + 1 = 3 ^ (V + V) :=
       Nat.add_right_cancel h1
     have e : (2 : ℕ) ^ (2 * W + 1) * w + 1 - 1
-      = (2 ^ (2 * W + 1)) * w := Nat.add_sub_cancel _ _
-    rwa [h2] at e
+        = (2 ^ (2 * W + 1)) * w := Nat.add_sub_cancel _ _
+    rw [h2] at e
+    exact e.symm
   obtain ⟨T, hT8, hTodd⟩ := h3Y8
   rw [hT8] at hfactorZ
   have hO1 : Odd ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1) := by
@@ -542,23 +544,23 @@ private lemma pillaiC_finish {U V W : ℕ} (hVod : Odd V)
     exact Nat.Even.sub_odd h1lt heven ⟨0, rfl⟩
   have hZ3 : 2 * W + 1 = 3 := by
     by_contra hc
-    obtain hlt | hgt := lt_or_gt_of_ne hc
+    rcases lt_or_gt_of_ne hc with hlt | hgt
     · have hle : 2 * W + 1 ≤ 3 := by omega
       have hZZ : (2 * W + 1) + (3 - (2 * W + 1)) = 3 :=
         Nat.add_sub_cancel' hle
       have h8 : (8 : ℕ) = 2 ^ (2 * W + 1) * 2 ^ (3 - (2 * W + 1)) := by
         have h3 : (2 : ℕ) ^ 3
-          = 2 ^ (2 * W + 1) * 2 ^ (3 - (2 * W + 1)) := by
+            = 2 ^ (2 * W + 1) * 2 ^ (3 - (2 * W + 1)) := by
           conv_lhs => rw [← hZZ]
           rw [pow_add]
         norm_num at h3 ⊢
         exact h3
       have h9 : (2 : ℕ) ^ (2 * W + 1) * ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1)
-        = 2 ^ (2 * W + 1) * (2 ^ (3 - (2 * W + 1)) * T) := by
+          = 2 ^ (2 * W + 1) * (2 ^ (3 - (2 * W + 1)) * T) := by
         rw [hfactorZ, h8]
         ring
       have hcancel : (2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1
-        = 2 ^ (3 - (2 * W + 1)) * T :=
+          = 2 ^ (3 - (2 * W + 1)) * T :=
         mul_left_cancel₀ (by positivity) h9
       have hevenR : Even ((2 : ℕ) ^ (3 - (2 * W + 1)) * T) :=
         Even.mul_right (even_two_pow (by omega)) T
@@ -574,19 +576,20 @@ private lemma pillaiC_finish {U V W : ℕ} (hVod : Odd V)
         rw [pow_add]
         norm_num
       have h9 : (8 : ℕ) * ((2 : ℕ) ^ ((2 * W + 1) - 3)
-        * ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1)) = 8 * T := by
+            * ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1)) = 8 * T := by
         have h10 : (2 : ℕ) ^ (2 * W + 1)
-          * ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1)
-          = 8 * ((2 : ℕ) ^ ((2 * W + 1) - 3)
-            * ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1)) := by
+            * ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1)
+            = 8 * ((2 : ℕ) ^ ((2 * W + 1) - 3)
+              * ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1)) := by
           rw [h2Z]
           ring
-        rwa [hfactorZ] at h10
+        rw [hfactorZ] at h10
+        exact h10.symm
       have hcancel : (2 : ℕ) ^ ((2 * W + 1) - 3)
-        * ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1) = T :=
+          * ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1) = T :=
         mul_left_cancel₀ (by norm_num) h9
       have hevenL : Even ((2 : ℕ) ^ ((2 * W + 1) - 3)
-        * ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1)) :=
+          * ((2 : ℕ) ^ ((U + U) - (2 * W + 1)) - 1)) :=
         Even.mul_right (even_two_pow (by omega)) _
       rw [hcancel] at hevenL
       obtain ⟨a, ha⟩ := hTodd
@@ -612,19 +615,20 @@ private lemma pillaiC_finish {U V W : ℕ} (hVod : Odd V)
     have e : ((2 : ℕ) ^ U) ^ 2 - ((3 : ℕ) ^ V) ^ 2 = 7 := by omega
     rw [hD] at e
     have e2' : ((3 : ℕ) ^ V + D) ^ 2 - (3 ^ V) ^ 2
-      = D * (2 * 3 ^ V + D) := by
+        = D * (2 * 3 ^ V + D) := by
       have hr : ((3 : ℕ) ^ V + D) ^ 2
-        = (3 ^ V) ^ 2 + D * (2 * 3 ^ V + D) := by ring
+          = (3 ^ V) ^ 2 + D * (2 * 3 ^ V + D) := by ring
       omega
-    rwa [e2'] at e
+    rw [e2'] at e
+    exact e
   have hDvd7 : D ∣ 7 := ⟨2 * (3 : ℕ) ^ V + D, hD7.symm⟩
   have hD17 : D = 1 ∨ D = 7 := by
     have h7 : Nat.Prime 7 := Nat.prime_seven
-    obtain h1 | h7eq := (Nat.dvd_prime h7).mp hDvd7
+    rcases (Nat.dvd_prime h7).mp hDvd7 with h1 | h7eq
     · exact Or.inl h1
     · exact Or.inr h7eq
   have hD1eq : D = 1 := by
-    obtain h1 | h7eq := hD17
+    rcases hD17 with h1 | h7eq
     · exact h1
     · exfalso
       rw [h7eq] at hD7
@@ -646,9 +650,8 @@ namespace MetaMathlibExt
 
 /--
 [pillaiC](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SteuerwaldThreePerfect.lean)
--/
-@[path]
   `Y ≥ 2` and `Z ≥ 1` forces `(X, Y, Z) = (4, 2, 3)`. -/
+@[path]
 private lemma pillaiC {X Y Z : ℕ} (hY : 2 ≤ Y) (hZ : 1 ≤ Z)
   (h : 2 ^ X + 1 = 3 ^ Y + 2 ^ Z) : X = 4 ∧ Y = 2 ∧ Z = 3 := by
   have h3Y9 : (9 : ℕ) ≤ 3 ^ Y := by
@@ -660,22 +663,22 @@ private lemma pillaiC {X Y Z : ℕ} (hY : 2 ≤ Y) (hZ : 1 ≤ Z)
     rw [show (3 : ℕ) % 3 = 0 from rfl] at hpm
     rw [zero_pow (by omega : Y ≠ 0)] at hpm
     simpa using hpm
-  obtain rfl | hZne := eq_or_ne Z 1
+  rcases eq_or_ne Z 1 with rfl | hZne
   · have hX2 : 2 ≤ X := by
-    by_contra hc
-    have hc' : X < 2 := not_le.mp hc
-    have hx1 : X ≤ 1 := by omega
-    have hle : (2 : ℕ) ^ X ≤ 2 ^ 1 := pow_le_pow_right₀ (by norm_num) hx1
-    norm_num at h
-    norm_num at hle
-    omega
+      by_contra hc
+      have hc' : X < 2 := not_le.mp hc
+      have hx1 : X ≤ 1 := by omega
+      have hle : (2 : ℕ) ^ X ≤ 2 ^ 1 := pow_le_pow_right₀ (by norm_num) hx1
+      norm_num at h
+      norm_num at hle
+      omega
     have hA : (2 : ℕ) ^ X = 3 ^ Y + 1 := by
       norm_num at h
       omega
     obtain ⟨-, hY1eq⟩ := pillaiA hX2 hA
     omega
   · have hZ2 : 2 ≤ Z := by omega
-    obtain hZe | hZo := Nat.even_or_odd Z
+    rcases Nat.even_or_odd Z with hZe | hZo
     · obtain ⟨W, rfl⟩ := hZe
       have h2Z1 : (2 ^ (W + W)) % 3 = 1 := by
         have h4 : (4 ^ W) % 3 = 1 := by
@@ -685,7 +688,8 @@ private lemma pillaiC {X Y Z : ℕ} (hY : 2 ≤ Y) (hZ : 1 ≤ Z)
         have e : (2 : ℕ) ^ (W + W) = 4 ^ W := by
           rw [pow_add, ← mul_pow]
           norm_num
-        rwa [e]
+        rw [e]
+        exact h4
       have hcon := congrArg (· % 3) h
       rw [Nat.add_mod (2 ^ X) 1 3, Nat.add_mod (3 ^ Y) (2 ^ (W + W)) 3,
         h3Y0, h2Z1] at hcon
@@ -712,7 +716,7 @@ private lemma pillaiC {X Y Z : ℕ} (hY : 2 ≤ Y) (hZ : 1 ≤ Z)
         have h2 := odd_pow_two_mod_three hc
         omega
       have hX1 : 1 ≤ X := by
-        obtain rfl | hpos := Nat.eq_zero_or_pos X
+        rcases Nat.eq_zero_or_pos X with rfl | hpos
         · norm_num at h
           have hle : (9 : ℕ) ≤ 2 := by
             calc (9 : ℕ) ≤ 3 ^ Y := h3Y9
@@ -758,15 +762,15 @@ private lemma pillaiC {X Y Z : ℕ} (hY : 2 ≤ Y) (hZ : 1 ≤ Z)
         Nat.add_mod (3 ^ (V + V)) (2 ^ (2 * W + 1)) 5, h2X4, h3Y9v, h2Z24,
         Nat.mul_mod] at hcon5
       have hU14 : (4 ^ U) % 5 = 1 ∨ (4 ^ U) % 5 = 4 := by
-        obtain hUe | hUo := Nat.even_or_odd U
+        rcases Nat.even_or_odd U with hUe | hUo
         · exact Or.inl (pow_four_mod_five_even hUe)
         · exact Or.inr (pow_four_mod_five_odd hUo)
       have hV14 : (9 ^ V) % 5 = 1 ∨ (9 ^ V) % 5 = 4 := by
-        obtain hVe | hVo := Nat.even_or_odd V
+        rcases Nat.even_or_odd V with hVe | hVo
         · exact Or.inl (pow_nine_mod_five_even hVe)
         · exact Or.inr (pow_nine_mod_five_odd hVo)
       have hW14 : (4 ^ W) % 5 = 1 ∨ (4 ^ W) % 5 = 4 := by
-        obtain hWe | hWo := Nat.even_or_odd W
+        rcases Nat.even_or_odd W with hWe | hWo
         · exact Or.inl (pow_four_mod_five_even hWe)
         · exact Or.inr (pow_four_mod_five_odd hWo)
       have hUeven : (4 ^ U) % 5 = 1 → Even U := by
@@ -788,8 +792,8 @@ private lemma pillaiC {X Y Z : ℕ} (hY : 2 ≤ Y) (hZ : 1 ≤ Z)
         have h1 := pow_four_mod_five_even hc
         omega
       have hpar : Even U ∧ Odd V ∧ Odd W := by
-        obtain hU | hU <;> rcases hV14 with hV | hV <;> := hU14
-          obtain hW | hW := hW14
+        rcases hU14 with hU | hU <;> rcases hV14 with hV | hV <;>
+          rcases hW14 with hW | hW
         all_goals
           rw [hU, hV, hW] at hcon5
           norm_num at hcon5
@@ -823,7 +827,7 @@ lemma pillai_equations_two_pow_three_pow
       by_cases hb2 : 2 ≤ b
       · exact Or.inr (pillaiB hb2 hn.symm)
       · have hb01 : b = 0 ∨ b = 1 := by omega
-        obtain rfl | rfl := hb01
+        rcases hb01 with rfl | rfl
         · norm_num at hn
         · norm_num at hn
           have haPow : (2 : ℕ) ^ a = 2 := by omega
@@ -834,7 +838,7 @@ lemma pillai_equations_two_pow_three_pow
     · intro h
       have hz : (2 : ℤ) ^ a + 1 = 3 ^ b + 2 ^ c := by omega
       have hn : (2 : ℕ) ^ a + 1 = 3 ^ b + 2 ^ c := by exact_mod_cast hz
-      obtain rfl | hbpos := Nat.eq_zero_or_pos b
+      rcases Nat.eq_zero_or_pos b with rfl | hbpos
       · norm_num at hn
         have hac : a = c := pow_eq_pow_of_two_le (b := 2) (by norm_num) (by omega)
         exact Or.inr (Or.inr ⟨rfl, hac.symm⟩)
@@ -912,9 +916,8 @@ namespace MetaMathlibExt
 
 /--
 [main_equation](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SteuerwaldThreePerfect.lean)
--/
-@[path]
   and the prime-power values. -/
+@[path]
 private lemma main_equation {N a b m : ℕ}
   (hperfect : (ArithmeticFunction.sigma 1) N = 3 * N)
   (hform : N = 2 ^ a * 3 ^ b * m)
@@ -935,15 +938,16 @@ private lemma main_equation {N a b m : ℕ}
     rw [pow_succ]
     ring
   have goal2 : (ArithmeticFunction.sigma 1) m
-    * ((2 ^ (a + 1) - 1) * (2 * (ArithmeticFunction.sigma 1) (3 ^ b)))
-    = m * (2 ^ (a + 1) * 3 ^ (b + 1)) := by
-    have e : (ArithmeticFunction.sigma 1) m
       * ((2 ^ (a + 1) - 1) * (2 * (ArithmeticFunction.sigma 1) (3 ^ b)))
-      = 2 * (((2 ^ (a + 1) - 1) * (ArithmeticFunction.sigma 1) (3 ^ b))
-        * (ArithmeticFunction.sigma 1) m) := by ring
+      = m * (2 ^ (a + 1) * 3 ^ (b + 1)) := by
+    have e : (ArithmeticFunction.sigma 1) m
+        * ((2 ^ (a + 1) - 1) * (2 * (ArithmeticFunction.sigma 1) (3 ^ b)))
+        = 2 * (((2 ^ (a + 1) - 1) * (ArithmeticFunction.sigma 1) (3 ^ b))
+          * (ArithmeticFunction.sigma 1) m) := by ring
     rw [e, hperfect, eA, eB]
     ring
-  rwa [← hC]
+  rw [← hC]
+  exact goal2
 
 end MetaMathlibExt
 
@@ -951,10 +955,9 @@ namespace MetaMathlibExt
 
 /--
 [gcd_reduction](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SteuerwaldThreePerfect.lean)
--/
-@[path]
   `m = (P * Q) * k` and `S = N'' * k`, plus valuation bounds and the
   explicit quotient formula for `N''`. -/
+@[path]
 private lemma gcd_reduction {a b m S : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b) (hm0 : m ≠ 0)
   (hS : S * ((2 ^ (a + 1) - 1) * (3 ^ (b + 1) - 1))
     = m * (2 ^ (a + 1) * 3 ^ (b + 1))) :
@@ -999,28 +1002,29 @@ private lemma gcd_reduction {a b m S : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b) (hm0 :
     have h2or3 : p ∣ 2 ^ (a + 1) ∨ p ∣ 3 ^ (b + 1) :=
       (hprime.dvd_mul).mp hpnum
     simp only [Finset.mem_insert, Finset.mem_singleton]
-    obtain h2 | h3 := h2or3
+    rcases h2or3 with h2 | h3
     · left
       have h2' : p ∣ 2 := hprime.dvd_of_dvd_pow h2
-      obtain h1 | h2eq := (Nat.dvd_prime Nat.prime_two).mp h2'
+      rcases (Nat.dvd_prime Nat.prime_two).mp h2' with h1 | h2eq
       · exact absurd h1 hprime.ne_one
       · exact h2eq
     · right
       have h3' : p ∣ 3 := hprime.dvd_of_dvd_pow h3
-      obtain h1 | h3eq := (Nat.dvd_prime Nat.prime_three).mp h3'
+      rcases (Nat.dvd_prime Nat.prime_three).mp h3' with h1 | h3eq
       · exact absurd h1 hprime.ne_one
       · exact h3eq
   have hdecomp : d = 2 ^ s * 3 ^ t := by
     have h0 : d ≠ 0 := ne_of_gt hdpos
     have hprod := Nat.prod_factorization_pow_eq_self h0
     have hsup : d.factorization.support ⊆ ({2, 3} : Finset ℕ) := by
-      rwa [Nat.support_factorization d]
+      rw [Nat.support_factorization d]
+      exact hprimes
     have hmid : d.factorization.prod (fun x1 x2 => x1 ^ x2)
-      = ∏ x ∈ ({2, 3} : Finset ℕ), x ^ (d.factorization x) :=
+        = ∏ x ∈ ({2, 3} : Finset ℕ), x ^ (d.factorization x) :=
       Finsupp.prod_of_support_subset d.factorization hsup _
         (fun i _ => pow_zero i)
     have h23 : (∏ x ∈ ({2, 3} : Finset ℕ), x ^ (d.factorization x))
-      = 2 ^ s * 3 ^ t := by
+        = 2 ^ s * 3 ^ t := by
       rw [Finset.prod_insert (by simp : (2 : ℕ) ∉ ({3} : Finset ℕ)),
         Finset.prod_singleton]
     exact hprod.symm.trans (hmid.trans h23)
@@ -1044,7 +1048,7 @@ private lemma gcd_reduction {a b m S : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b) (hm0 :
       obtain ⟨b, hb⟩ := heven
       omega
     have h2s : (2 : ℕ) ∣ 2 ^ s := by
-      obtain h | h := (Nat.prime_two.dvd_mul).mp h2d
+      rcases (Nat.prime_two.dvd_mul).mp h2d with h | h
       · exact h
       · exact absurd h h2ns3
     by_contra hc
@@ -1091,7 +1095,8 @@ private lemma gcd_reduction {a b m S : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b) (hm0 :
   have hs_le : s ≤ a + 1 := by
     have h2snum : (2 : ℕ) ^ s ∣ 2 ^ (a + 1) * 3 ^ (b + 1) := by
       have h := dvd_trans h2sd hdvdnum
-      rwa [hnum] at h
+      rw [hnum] at h
+      exact h
     have hcop23 : Nat.Coprime ((2 : ℕ) ^ s) (3 ^ (b + 1)) :=
       Nat.Coprime.pow_right (b + 1) (Nat.Coprime.pow_left s coprime_two_three)
     have h2s2a : (2 : ℕ) ^ s ∣ 2 ^ (a + 1) :=
@@ -1100,7 +1105,8 @@ private lemma gcd_reduction {a b m S : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b) (hm0 :
   have ht_le : t ≤ b + 1 := by
     have h3tnum : (3 : ℕ) ^ t ∣ 2 ^ (a + 1) * 3 ^ (b + 1) := by
       have h := dvd_trans h3td hdvdnum
-      rwa [hnum] at h
+      rw [hnum] at h
+      exact h
     have hcop32 : Nat.Coprime ((3 : ℕ) ^ t) (2 ^ (a + 1)) :=
       Nat.Coprime.pow_right (a + 1)
         (Nat.Coprime.pow_left t coprime_two_three.symm)
@@ -1146,7 +1152,8 @@ private lemma gcd_reduction {a b m S : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b) (hm0 :
   have hcopdiv : Nat.Coprime N'' (P * Q) := by
     have h0 : Nat.Coprime (num / d) (den / d) :=
       Nat.coprime_div_gcd_div_gcd hgcdpos
-    rwa [hNdiv, hPQdiv] at h0
+    rw [hNdiv, hPQdiv] at h0
+    exact h0
   have hDvd : (P * Q) ∣ m := by
     have h1 : (P * Q) ∣ m * N'' := by
       rw [← hred]
@@ -1171,13 +1178,15 @@ private lemma gcd_reduction {a b m S : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b) (hm0 :
     mul_pos (pow_pos (by norm_num) _) (pow_pos (by norm_num) _)
   have hpow2_split : (2 : ℕ) ^ (a + 1) = 2 ^ s * 2 ^ (a + 1 - s) := by
     have h := pow_add 2 s (a + 1 - s)
-    rwa [show s + (a + 1 - s) = a + 1 from by omega] at h
+    rw [show s + (a + 1 - s) = a + 1 from by omega] at h
+    exact h
   have hpow3_split : (3 : ℕ) ^ (b + 1) = 3 ^ t * 3 ^ (b + 1 - t) := by
     have h := pow_add 3 t (b + 1 - t)
-    rwa [show t + (b + 1 - t) = b + 1 from by omega] at h
+    rw [show t + (b + 1 - t) = b + 1 from by omega] at h
+    exact h
   have hNformula : N'' = 2 ^ (a + 1 - s) * 3 ^ (b + 1 - t) := by
     have h1 : N'' * (2 ^ s * 3 ^ t)
-      = (2 ^ (a + 1 - s) * 3 ^ (b + 1 - t)) * (2 ^ s * 3 ^ t) := by
+        = (2 ^ (a + 1 - s) * 3 ^ (b + 1 - t)) * (2 ^ s * 3 ^ t) := by
       rw [hNd, hnum, hpow2_split, hpow3_split]
       ring
     exact Nat.mul_right_cancel hSTpos h1
@@ -1214,7 +1223,7 @@ private lemma sigma_ge_three {m d1 d2 d3 : ℕ} (h1 : d1 ∈ m.divisors)
   have h := sigma_ge_sum_divisors (D := ({d1, d2, d3} : Finset ℕ)) (by
     intro d hd
     simp only [Finset.mem_insert, Finset.mem_singleton] at hd
-    obtain rfl | rfl | rfl := hd
+    rcases hd with rfl | rfl | rfl
     · exact h1
     · exact h2
     · exact h3)
@@ -1239,13 +1248,13 @@ private lemma sigma_ge_four {m d1 d2 d3 d4 : ℕ} (h1 : d1 ∈ m.divisors)
   have h := sigma_ge_sum_divisors (D := ({d1, d2, d3, d4} : Finset ℕ)) (by
     intro d hd
     simp only [Finset.mem_insert, Finset.mem_singleton] at hd
-    obtain rfl | rfl | rfl | rfl := hd
+    rcases hd with rfl | rfl | rfl | rfl
     · exact h1
     · exact h2
     · exact h3
     · exact h4)
   rw [Finset.sum_insert
-    (show d1 ∉ ({d2, d3, d4} : Finset ℕ) from by simp [h12, h13, h14]),
+      (show d1 ∉ ({d2, d3, d4} : Finset ℕ) from by simp [h12, h13, h14]),
     Finset.sum_insert (show d2 ∉ ({d3, d4} : Finset ℕ) from by simp [h23, h24]),
     Finset.sum_insert (show d3 ∉ ({d4} : Finset ℕ) from by simp [h34]),
     Finset.sum_singleton] at h
@@ -1257,16 +1266,15 @@ namespace MetaMathlibExt
 
 /--
 [caseA_ineq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SteuerwaldThreePerfect.lean)
--/
-@[path]
   `P * Y + Q * X + 1 < (M + 1) * X * Y`. -/
+@[path]
 private lemma caseA_ineq {P Q M X Y : ℕ} (hPM : P ≤ M) (hQM : Q ≤ M)
   (hX : 2 ≤ X) (hY : 3 ≤ Y) :
   P * Y + Q * X + 1 < (M + 1) * X * Y := by
   obtain ⟨u, rfl, hu⟩ : ∃ u, X = u + 1 ∧ 1 ≤ u := ⟨X - 1, by omega, by omega⟩
   obtain ⟨v, rfl, hv⟩ : ∃ v, Y = v + 1 ∧ 2 ≤ v := ⟨Y - 1, by omega, by omega⟩
   have hle : P * (v + 1) + Q * (u + 1) + 1
-    ≤ M * (v + 1) + M * (u + 1) + 1 := by
+      ≤ M * (v + 1) + M * (u + 1) + 1 := by
     have h1 : P * (v + 1) ≤ M * (v + 1) := Nat.mul_le_mul_right _ hPM
     have h2 : Q * (u + 1) ≤ M * (u + 1) := Nat.mul_le_mul_right _ hQM
     omega
@@ -1278,10 +1286,10 @@ private lemma caseA_ineq {P Q M X Y : ℕ} (hPM : P ≤ M) (hQM : Q ≤ M)
     Nat.mul_le_mul le_rfl hle_inner
   have hgt : 1 < u * v + u + v + 1 := by omega
   have hfin : M * (u + v + 2) + 1
-    < M * (u * v + u + v + 1) + (u * v + u + v + 1) :=
+      < M * (u * v + u + v + 1) + (u * v + u + v + 1) :=
     add_lt_add_of_le_of_lt hge hgt
   have e1 : (M + 1) * (u + 1) * (v + 1)
-    = M * (u * v + u + v + 1) + (u * v + u + v + 1) := by ring
+      = M * (u * v + u + v + 1) + (u * v + u + v + 1) := by ring
   have e2 : M * (v + 1) + M * (u + 1) = M * (u + v + 2) := by ring
   calc P * (v + 1) + Q * (u + 1) + 1 ≤ M * (v + 1) + M * (u + 1) + 1 := hle
     _ = M * (u + v + 2) + 1 := by rw [e2]
@@ -1294,9 +1302,8 @@ namespace MetaMathlibExt
 
 /--
 [caseB_ineq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SteuerwaldThreePerfect.lean)
--/
-@[path]
   with `X ≥ 2` forces `N'' < P * Q + P + Q + 1`. -/
+@[path]
 private lemma caseB_ineq {P Q N'' X : ℕ} (hX2 : 2 ≤ X)
   (hid : N'' * X = P * Q * X + P + Q * X + 1) :
   N'' < P * Q + P + Q + 1 := by
@@ -1310,7 +1317,8 @@ private lemma caseB_ineq {P Q N'' X : ℕ} (hX2 : 2 ≤ X)
     rw [eB]
     exact lt_add_of_pos_right _ hpos
   have hltX : N'' * X < (P * Q + P + Q + 1) * X := by
-    rwa [hXw]
+    rw [hXw]
+    exact hlt
   exact (Nat.mul_lt_mul_right (by omega)).mp hltX
 
 end MetaMathlibExt
@@ -1319,9 +1327,8 @@ namespace MetaMathlibExt
 
 /--
 [caseA](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SteuerwaldThreePerfect.lean)
--/
-@[path]
   and the first two Diophantine lemmas give `a = 1 ∨ b = 1`. -/
+@[path]
 private lemma caseA {a b m s t P Q k N'' : ℕ}
   (ha : 1 ≤ a) (hb : 1 ≤ b) (hm0 : m ≠ 0)
   (hs1 : 1 ≤ s) (ht1 : 1 ≤ t)
@@ -1337,10 +1344,12 @@ private lemma caseA {a b m s t P Q k N'' : ℕ}
   have hQM : Q ≤ M := le_max_right _ _
   have hX : (2 : ℕ) ≤ 2 ^ s := by
     have h := pow_le_pow_right₀ (show (1 : ℕ) ≤ 2 by norm_num) hs1
-    rwa [pow_one] at h
+    rw [pow_one] at h
+    exact h
   have hY : (3 : ℕ) ≤ 3 ^ t := by
     have h := pow_le_pow_right₀ (show (1 : ℕ) ≤ 3 by norm_num) ht1
-    rwa [pow_one] at h
+    rw [pow_one] at h
+    exact h
   have h2e : (2 : ℕ) ^ (a + 1) = 3 ^ t * P + 1 := by
     have h1 : 1 ≤ (2 : ℕ) ^ (a + 1) := one_le_pow₀ (by norm_num)
     omega
@@ -1348,7 +1357,7 @@ private lemma caseA {a b m s t P Q k N'' : ℕ}
     have h1 : 1 ≤ (3 : ℕ) ^ (b + 1) := one_le_pow₀ (by norm_num)
     omega
   have hid : N'' * 2 ^ s * 3 ^ t
-    = P * Q * 2 ^ s * 3 ^ t + P * 3 ^ t + Q * 2 ^ s + 1 := by
+      = P * Q * 2 ^ s * 3 ^ t + P * 3 ^ t + Q * 2 ^ s + 1 := by
     have h1 : N'' * 2 ^ s * 3 ^ t = 2 ^ (a + 1) * 3 ^ (b + 1) := by
       calc N'' * 2 ^ s * 3 ^ t = N'' * (2 ^ s * 3 ^ t) := by ring
         _ = 2 ^ (a + 1) * 3 ^ (b + 1) := hNd
@@ -1358,28 +1367,29 @@ private lemma caseA {a b m s t P Q k N'' : ℕ}
     mul_pos (pow_pos (by norm_num) _) (pow_pos (by norm_num) _)
   have hltXY : N'' * (2 ^ s * 3 ^ t) < (P * Q + M + 1) * (2 ^ s * 3 ^ t) := by
     have h1 : N'' * (2 ^ s * 3 ^ t)
-      = (P * Q) * (2 ^ s * 3 ^ t) + (P * 3 ^ t + Q * 2 ^ s + 1) := by
+        = (P * Q) * (2 ^ s * 3 ^ t) + (P * 3 ^ t + Q * 2 ^ s + 1) := by
       rw [show N'' * (2 ^ s * 3 ^ t) = N'' * 2 ^ s * 3 ^ t from by ring, hid]
       ring
     have h2 : (P * Q + M + 1) * (2 ^ s * 3 ^ t)
-      = (P * Q) * (2 ^ s * 3 ^ t) + (M + 1) * (2 ^ s * 3 ^ t) := by ring
+        = (P * Q) * (2 ^ s * 3 ^ t) + (M + 1) * (2 ^ s * 3 ^ t) := by ring
     have hineq : P * 3 ^ t + Q * 2 ^ s + 1 < (M + 1) * (2 ^ s * 3 ^ t) := by
       have h := caseA_ineq hPM hQM hX hY
-      rwa [show (M + 1) * 2 ^ s * 3 ^ t = (M + 1) * (2 ^ s * 3 ^ t) from by ring] at h
+      rw [show (M + 1) * 2 ^ s * 3 ^ t = (M + 1) * (2 ^ s * 3 ^ t) from by ring] at h
+      exact h
     rw [h1, h2]
     exact add_lt_add_of_le_of_lt le_rfl hineq
   have hsmaller : N'' < P * Q + M + 1 := (Nat.mul_lt_mul_right hXYpos).mp hltXY
   have hMkdvd : (M * k) ∣ m := by
-    obtain hle | hle := le_total P Q
+    rcases le_total P Q with hle | hle
     · have hM : M = Q := by rw [hMdef]; exact max_eq_right hle
       exact ⟨P, by rw [hmk, hM]; ring⟩
     · have hM : M = P := by rw [hMdef]; exact max_eq_left hle
       exact ⟨Q, by rw [hmk, hM]; ring⟩
-  obtain hMeq | hMne := eq_or_ne (M * k) m
+  rcases eq_or_ne (M * k) m with hMeq | hMne
   · have hMPQ : M = P * Q := by
-    have h1 : M * k = (P * Q) * k := by rw [← hmk]; exact hMeq
-    exact Nat.mul_right_cancel (by omega) h1
-    obtain hle | hle := le_total P Q
+      have h1 : M * k = (P * Q) * k := by rw [← hmk]; exact hMeq
+      exact Nat.mul_right_cancel (by omega) h1
+    rcases le_total P Q with hle | hle
     · have hM : M = Q := by rw [hMdef]; exact max_eq_right hle
       have hPQ : P * Q = 1 * Q := by rw [one_mul]; omega
       have hP1eq : P = 1 := Nat.mul_right_cancel (by omega) hPQ
@@ -1447,9 +1457,8 @@ namespace MetaMathlibExt
 
 /--
 [caseB](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SteuerwaldThreePerfect.lean)
--/
-@[path]
   `Q = 1`, and the second Diophantine lemma gives `b = 1`. -/
+@[path]
 private lemma caseB {a b m s t P Q k N'' : ℕ}
   (ha : 1 ≤ a) (hb : 1 ≤ b) (hm0 : m ≠ 0)
   (hs1 : 1 ≤ s) (ht0 : t = 0) (hPQne : P ≠ Q)
@@ -1465,20 +1474,20 @@ private lemma caseB {a b m s t P Q k N'' : ℕ}
     rw [ht0] at h
     simp only [pow_zero, one_mul] at h
     exact h
-  obtain hmin1 | hminne := eq_or_ne (min P Q) 1
+  rcases eq_or_ne (min P Q) 1 with hmin1 | hminne
   · have hPQ1 : P = 1 ∨ Q = 1 := by omega
-    obtain hPeq | hQeq := hPQ1
+    rcases hPQ1 with hPeq | hQeq
     · have h4 : (4 : ℕ) ≤ 2 ^ (a + 1) := by
-      have h :=
-        pow_le_pow_right₀ (show (1 : ℕ) ≤ 2 by norm_num) (show 2 ≤ a + 1 by omega)
-      norm_num at h
-      exact h
+        have h :=
+          pow_le_pow_right₀ (show (1 : ℕ) ≤ 2 by norm_num) (show 2 ≤ a + 1 by omega)
+        norm_num at h
+        exact h
       omega
     · have hB : (3 : ℕ) ^ (b + 1) = 2 ^ s + 1 := by
-      have h1 : 1 ≤ (3 : ℕ) ^ (b + 1) := one_le_pow₀ (by norm_num)
-      have hQf' := hQf
-      rw [hQeq, mul_one] at hQf'
-      omega
+        have h1 : 1 ≤ (3 : ℕ) ^ (b + 1) := one_le_pow₀ (by norm_num)
+        have hQf' := hQf
+        rw [hQeq, mul_one] at hQf'
+        omega
       have hcon := pillaiB (by omega : 2 ≤ b + 1) hB
       omega
   · have hP2 : 1 < P := by omega
@@ -1544,7 +1553,8 @@ private lemma caseB {a b m s t P Q k N'' : ℕ}
       ring
     have hX : (2 : ℕ) ≤ 2 ^ s := by
       have h := pow_le_pow_right₀ (show (1 : ℕ) ≤ 2 by norm_num) hs1
-      rwa [pow_one] at h
+      rw [pow_one] at h
+      exact h
     have hNlt : N'' < P * Q + P + Q + 1 := caseB_ineq hX hid
     have hlt : (ArithmeticFunction.sigma 1) m < m + P * k + Q * k + k := by
       have h2 : m + P * k + Q * k + k = (P * Q + P + Q + 1) * k := by
@@ -1560,9 +1570,8 @@ namespace MetaMathlibExt
 
 /--
 [caseC](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SteuerwaldThreePerfect.lean)
--/
-@[path]
   `a = 0`, contradicting `a ≥ 1`. -/
+@[path]
 private lemma caseC {a b s t P Q : ℕ}
   (ha : 1 ≤ a) (hb : 1 ≤ b) (hs1 : 1 ≤ s) (ht0 : t = 0) (hPQeq : P = Q)
   (hPf : 2 ^ (a + 1) - 1 = 3 ^ t * P)
@@ -1574,7 +1583,8 @@ private lemma caseC {a b s t P Q : ℕ}
     simp only [pow_zero, one_mul] at h
     exact h
   have hQfP : 3 ^ (b + 1) - 1 = 2 ^ s * P := by
-    rwa [← hPQeq] at hQf
+    rw [← hPQeq] at hQf
+    exact hQf
   have hC : (2 : ℕ) ^ (a + 1 + s) + 1 = 3 ^ (b + 1) + 2 ^ s := by
     have hpa : (2 : ℕ) ^ (a + 1 + s) = 2 ^ (a + 1) * 2 ^ s := pow_add 2 (a + 1) s
     have hA2 : (2 : ℕ) ^ (a + 1) = P + 1 := by
@@ -1626,11 +1636,11 @@ lemma steuerwald_three_perfect_exponents
     hPf, hQf, hP1, hQ1, hmk, hSk, hk1, -, hNd⟩ :=
     gcd_reduction ha hb hm0 hme
   have hstep3 : a = 1 ∨ b = 1 := by
-    obtain ht0 | htne := eq_or_ne t 0
+    rcases eq_or_ne t 0 with ht0 | htne
     · rcases eq_or_ne P Q with hPQeq | hPQne
       · exact False.elim (caseC ha hb hs1 ht0 hPQeq hPf hQf)
       · exact Or.inr
-        (caseB ha hb hm0 hs1 ht0 hPQne hPf hQf hP1 hQ1 hmk hSk hk1 hNd)
+          (caseB ha hb hm0 hs1 ht0 hPQne hPf hQf hP1 hQ1 hmk hSk hk1 hNd)
     · have ht1 : 1 ≤ t := Nat.pos_of_ne_zero htne
       exact caseA ha hb hm0 hs1 ht1 hPf hQf hP1 hQ1 hmk hSk hk1 hNd
   have hstep4 : ¬(a = 1 ∧ b = 1) := by
@@ -1644,10 +1654,11 @@ lemma steuerwald_three_perfect_exponents
       intro h2m
       have hdvd1 : (2 : ℕ) ∣ 1 := by
         have h := Nat.dvd_gcd (show (2 : ℕ) ∣ 6 by norm_num) h2m
-        rwa [show Nat.gcd 6 m = 1 from hcoprime] at h
+        rw [show Nat.gcd 6 m = 1 from hcoprime] at h
+        exact h
       omega
     have hodd : Odd m := by
-      obtain he | ho := Nat.even_or_odd m
+      rcases Nat.even_or_odd m with he | ho
       · exfalso
         exact h2nm (even_iff_two_dvd.mp he)
       · exact ho
@@ -1658,7 +1669,7 @@ lemma steuerwald_three_perfect_exponents
     obtain ⟨x, hx⟩ := heven
     obtain ⟨y, hy⟩ := hodd'
     omega
-  obtain ha1 | hb1 := hstep3
+  rcases hstep3 with ha1 | hb1
   · exact Or.inl ⟨ha1, fun hb1 => hstep4 ⟨ha1, hb1⟩⟩
   · exact Or.inr ⟨fun ha1 => hstep4 ⟨ha1, hb1⟩, hb1⟩
 
@@ -1666,4 +1677,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

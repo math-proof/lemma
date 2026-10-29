@@ -40,10 +40,12 @@ private lemma strong_exchange_from_bridge
   {cs : CoxeterSystem M W}
   {bridge : InversionDifferenceBridgeHyp cs} :
 -- imply
-  CoxeterBruhat.StrongExchangeForBruhat cs :=
+  CoxeterBruhat.StrongExchangeForBruhat cs := by
 -- proof
-  CoxeterBruhat.strong_exchange_of_reflection_id cs
-    (reflection_identification_genuine bridge)
+  intro v w t ht hvt hcover i hv_not_desc hw_desc
+  have hid := reflection_identification_genuine (bridge := bridge)
+  have := hid.identify v w t ht hvt hcover i hv_not_desc hw_desc
+  rwa [this] at hvt
 
 end CoxeterReflectionId
 

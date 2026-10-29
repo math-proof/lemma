@@ -68,7 +68,7 @@ private lemma bxp_Y_subset_X_eq
 private lemma bxp_hXpos_of_fullPos_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 bxp_Y) :
 -- imply
@@ -95,7 +95,7 @@ private lemma bxp_threeMeetBox_subset_iUnion_eq
 private lemma bxp_exists_triple_pos_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (htop : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 {ω | numInfiniteClusters d ω = ⊤}) :
 -- imply

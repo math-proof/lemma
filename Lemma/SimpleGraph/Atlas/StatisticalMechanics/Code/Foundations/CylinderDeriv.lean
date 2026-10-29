@@ -13,7 +13,7 @@ private lemma bernoulliMeasure_real_singleton_eq
   [DecidableEq E]
   {b : Bool}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliMeasure p hp).real {b} = if b then (p : ℝ) else 1 - p := by
@@ -30,7 +30,7 @@ private lemma realSingleton_eq_configWeight_eq
   [Fintype E]
   {ω : ConfigSpace E}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := E) p hp).real {ω} = configWeight (p : ℝ) ω := by
@@ -47,7 +47,7 @@ private lemma finiteRealProb_eq_prob_eq
   [Fintype E]
   {S : Set (ConfigSpace E)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := E) p hp).real S = prob (p : ℝ) S := by
@@ -95,7 +95,7 @@ private lemma bernoulliProductMeasure_cylinder_eq
   {F : Finset E}
   {S : Set (ConfigSpace ↥F)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   bernoulliProductMeasure (E := E) p hp (cylinder F S) = bernoulliProductMeasure (E := ↥F) p hp S := by
@@ -112,7 +112,7 @@ private lemma realProb_cylinder_eq
   {F : Finset E}
   {S : Set (ConfigSpace ↥F)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := E) p hp).real (cylinder F S) = (bernoulliProductMeasure (E := ↥F) p hp).real S := by
@@ -129,7 +129,7 @@ private lemma realProb_cylinder_eq_prob_eq
   {A : Set (ConfigSpace E)}
   {F : Finset E}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hA : DependsOn (A.indicator (fun _ => (1 : ℝ))) (F : Set E)) :
 -- imply
@@ -147,7 +147,7 @@ private lemma realProb_cylinder_eq_finsum_eq
   {A : Set (ConfigSpace E)}
   {F : Finset E}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hA : DependsOn (A.indicator (fun _ => (1 : ℝ))) (F : Set E)) :
 -- imply

@@ -41,7 +41,7 @@ theorem tfx_htrif_of_mergeFree
   exact bka_routing_of_mergeFree n (fun ω hω => hmf n ω hω)
 
 
-theorem bkc_htrif_bernoulli (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bkc_htrif_bernoulli (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hmf : ∀ (n : ℕ) (ω : ConfigSpace (Sym2 (Site d))),
       ω ∈ threeMeetBox d n → bka_MergeFree ω) :
     0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
@@ -52,7 +52,7 @@ theorem bkc_htrif_bernoulli (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (bkc_bernoulli_hasFiniteEnergyMerge p hp1 hp0) hmf
 
 
-theorem tfx_burton_keane_bernoulli_of_mergeFree (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem tfx_burton_keane_bernoulli_of_mergeFree (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p)
     (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ),
       Tcount d ω n ≤ boxSV_boundaryCard d n)

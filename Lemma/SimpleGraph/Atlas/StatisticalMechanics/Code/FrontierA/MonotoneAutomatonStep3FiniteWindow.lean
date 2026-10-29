@@ -15,7 +15,7 @@ private lemma siteCluster_raiseFields_eq_of_final_infinite_of_avoids_eq
   {S : Finset (Site d)}
   {y : Site d}
 -- given
-  (r : Site d → ℝ≥0)
+  (r : Site d → NNReal)
   (hinf : (siteCluster (T (raiseFields xi S r)) y).Infinite)
   (havoid : ∀ x ∈ S, x ∉ siteCluster (T (raiseFields xi S r)) y) :
 -- imply
@@ -491,7 +491,7 @@ private lemma highInsertionLowerBound_le_one_eq
   [IsProbabilityMeasure mu]
   {t : NNReal}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hinsert : HasHighInsertionLowerBound mu t epsilon) :
 -- imply
   epsilon ≤ 1 := by
@@ -510,7 +510,7 @@ private lemma step3SourceTarget_transfer_eq
   {D N : ℕ}
   {i : (Finset (Site d) × Site d) × Site d}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon) :
 -- imply
   epsilon ^ (boxFinsetBK d D).card * mu (step3SourceEvent T D N i) ≤ mu (step3TargetEvent T D N i) := by
@@ -559,12 +559,12 @@ private lemma step3FiniteWindow_probability_bound_eq
   {D N K : ℕ}
   {E : Set (FieldTriple d)}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon)
   (hEmeas : MeasurableSet E)
   (hdegree : ∀ q ∈ E, K ≤ finiteEventMultiplicity (step3Indices (d := d) N) (step3SourceEvent T D N) q) :
 -- imply
-  epsilon ^ (boxFinsetBK d D).card * K * mu E ≤ (((boxFinsetBK d D).card ^ 3 : ℕ) : ℝ≥0∞) := by
+  epsilon ^ (boxFinsetBK d D).card * K * mu E ≤ (((boxFinsetBK d D).card ^ 3 : ℕ) : ENNReal) := by
 -- proof
   apply StatMech.FrontierA.step3FiniteWindow_probability_bound T mu D N K epsilon hinsert E hEmeas hdegree
 
@@ -852,10 +852,10 @@ private lemma step3CoreWindow_probability_bound_eq
   [IsProbabilityMeasure mu]
   {D N K : ℕ}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon) :
 -- imply
-  epsilon ^ (boxFinsetBK d D).card * K * mu (step3CoreWindowEvent T D N K) ≤ (((boxFinsetBK d D).card ^ 3 : ℕ) : ℝ≥0∞) := by
+  epsilon ^ (boxFinsetBK d D).card * K * mu (step3CoreWindowEvent T D N K) ≤ (((boxFinsetBK d D).card ^ 3 : ℕ) : ENNReal) := by
 -- proof
   apply StatMech.FrontierA.step3CoreWindow_probability_bound T mu D N K epsilon hinsert
 
@@ -870,10 +870,10 @@ private lemma step3Distance_probability_bound_eq
   [IsProbabilityMeasure mu]
   {D K : ℕ}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon) :
 -- imply
-  epsilon ^ (boxFinsetBK d D).card * K * mu ((interpolatedHighPair T) ⁻¹' pairStep3DistanceAt (0 : Site d) D) ≤ (((boxFinsetBK d D).card ^ 3 : ℕ) : ℝ≥0∞) := by
+  epsilon ^ (boxFinsetBK d D).card * K * mu ((interpolatedHighPair T) ⁻¹' pairStep3DistanceAt (0 : Site d) D) ≤ (((boxFinsetBK d D).card ^ 3 : ℕ) : ENNReal) := by
 -- proof
   apply StatMech.FrontierA.step3Distance_probability_bound T mu D K epsilon hinsert
 
@@ -888,7 +888,7 @@ private lemma step3Distance_measure_zero_eq
   [IsProbabilityMeasure mu]
   {D : ℕ}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon) :
 -- imply
@@ -906,7 +906,7 @@ private lemma interpolatedHighPair_step3Core_measure_zero_eq
   {mu : Measure (FieldTriple d)}
   [IsProbabilityMeasure mu]
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon) :
 -- imply
@@ -926,7 +926,7 @@ private lemma monotoneAutomaton_infiniteCluster_uniqueness_eq
 -- given
   (hd : 1 ≤ d)
   (herg : IsTripleFieldErgodic mu)
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsertMiddle : HasMiddleInsertionLowerBound mu T.threshold epsilon)
   (hinsertHigh : HasHighInsertionLowerBound mu T.threshold epsilon)

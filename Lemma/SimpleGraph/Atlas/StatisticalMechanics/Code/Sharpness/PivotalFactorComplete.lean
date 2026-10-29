@@ -74,7 +74,7 @@ private lemma pivotal_surface_factor_eq
   {S : Finset (Site d)}
   {e : Site d × Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (h0S : origin d ∈ S)
   (hSinner : (S : Set (Site d)) ⊆ box d (n - 1))

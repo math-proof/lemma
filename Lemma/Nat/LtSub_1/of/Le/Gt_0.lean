@@ -16,8 +16,6 @@ private lemma main
   apply Nat.le_of_succ_le_succ
   simp
   rwa [EqAddSub.of.Ge]
-  linarith
-
 
 @[path, comm 2]
 private lemma left
@@ -32,4 +30,4 @@ private lemma left
 
 
 -- created on 2025-05-03
--- updated on 2025-06-21
+-- updated on 2026-10-28

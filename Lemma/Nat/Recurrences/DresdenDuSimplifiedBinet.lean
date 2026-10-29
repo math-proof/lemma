@@ -8,16 +8,15 @@ namespace MetaMathlibExt
 
 /--
 [alpha_gt_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/DresdenDuSimplifiedBinet.lean)
--/
-@[path]
 contains the terms `1` and `α`, so `α ^ k > 1`, forcing `α > 1`. -/
+@[path]
 private lemma alpha_gt_one (k : ℕ) (hk : 2 ≤ k) (α : ℝ) (hαpos : 0 < α)
   (hαroot : α ^ k = ∑ i ∈ Finset.range k, α ^ i) : 1 < α := by
   by_contra h
   push Not at h
   have hpow : α ^ k ≤ 1 := by
     calc α ^ k ≤ 1 ^ k := by
-      apply pow_le_pow_left₀ hαpos.le h k
+          apply pow_le_pow_left₀ hαpos.le h k
       _ = 1 := one_pow k
   have hsum : (1 : ℝ) < ∑ i ∈ Finset.range k, α ^ i := by
     have h01 : ({0, 1} : Finset ℕ) ⊆ Finset.range k := by
@@ -39,9 +38,8 @@ namespace MetaMathlibExt
 
 /--
 [alpha_key_identity](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/DresdenDuSimplifiedBinet.lean)
--/
-@[path]
 `α ^ k * (2 - α) = 1`. -/
+@[path]
 private lemma alpha_key_identity (k : ℕ) (α : ℝ) (hα1 : 1 < α)
   (hαroot : α ^ k = ∑ i ∈ Finset.range k, α ^ i) :
   α ^ k * (2 - α) = 1 := by
@@ -82,9 +80,9 @@ private lemma alpha_pow_ge (k : ℕ) (α : ℝ) (hα1 : 1 < α)
   rw [hαroot]
   calc (k : ℝ) = ∑ _i ∈ Finset.range k, (1 : ℝ) := by simp
     _ ≤ ∑ i ∈ Finset.range k, α ^ i := by
-      apply Finset.sum_le_sum
-      intro i _
-      exact one_le_pow₀ hα1.le
+        apply Finset.sum_le_sum
+        intro i _
+        exact one_le_pow₀ hα1.le
 
 end MetaMathlibExt
 
@@ -117,7 +115,7 @@ namespace MetaMathlibExt
 private lemma ddb_alpha_pow_pred_gt (k : ℕ) (hk : 2 ≤ k) (α : ℝ) (hα1 : 1 < α)
   (hαroot : α ^ k = ∑ i ∈ Finset.range k, α ^ i) :
   ((k : ℝ) + 1) / 2 < α ^ (k - 1) := by
-  obtain rfl | hk3 := eq_or_lt_of_le hk
+  rcases eq_or_lt_of_le hk with rfl | hk3
   · simp only [Nat.cast_ofNat, Nat.reduceSubDiff, pow_one]
     have hroot : α ^ 2 = α + 1 := by simpa using hαroot
     by_contra h
@@ -125,21 +123,21 @@ private lemma ddb_alpha_pow_pred_gt (k : ℕ) (hk : 2 ≤ k) (α : ℝ) (hα1 : 
     have hmul := mul_le_mul_of_nonneg_left h (show (0 : ℝ) ≤ α by linarith)
     nlinarith
   · have hsum : 1 + ((k : ℝ) - 1) * α ≤ α ^ k := by
-    have hsplit : ∑ i ∈ Finset.range k, α ^ i =
-      (∑ i ∈ Finset.range (k - 1), α ^ (i + 1)) + 1 := by
-      rw [show k = (k - 1) + 1 by omega, Finset.sum_range_succ']
-      simp
-    rw [hαroot, hsplit]
-    have hs : ∑ _i ∈ Finset.range (k - 1), α ≤
-      ∑ i ∈ Finset.range (k - 1), α ^ (i + 1) := by
-      apply Finset.sum_le_sum
-      intro i _
-      simpa using pow_le_pow_right₀ hα1.le (show 1 ≤ i + 1 by omega)
-    calc
-      1 + ((k : ℝ) - 1) * α = (∑ _i ∈ Finset.range (k - 1), α) + 1 := by
-        simp [Nat.cast_sub (show 1 ≤ k by omega), add_comm]
-      _ ≤ (∑ i ∈ Finset.range (k - 1), α ^ (i + 1)) + 1 :=
-        by simpa [add_comm] using add_le_add_right hs 1
+      have hsplit : ∑ i ∈ Finset.range k, α ^ i =
+          (∑ i ∈ Finset.range (k - 1), α ^ (i + 1)) + 1 := by
+        rw [show k = (k - 1) + 1 by omega, Finset.sum_range_succ']
+        simp
+      rw [hαroot, hsplit]
+      have hs : ∑ _i ∈ Finset.range (k - 1), α ≤
+          ∑ i ∈ Finset.range (k - 1), α ^ (i + 1) := by
+        apply Finset.sum_le_sum
+        intro i _
+        simpa using pow_le_pow_right₀ hα1.le (show 1 ≤ i + 1 by omega)
+      calc
+        1 + ((k : ℝ) - 1) * α = (∑ _i ∈ Finset.range (k - 1), α) + 1 := by
+          simp [Nat.cast_sub (show 1 ≤ k by omega), add_comm]
+        _ ≤ (∑ i ∈ Finset.range (k - 1), α ^ (i + 1)) + 1 :=
+          by simpa [add_comm] using add_le_add_right hs 1
     have hpow : α ^ k = α ^ (k - 1) * α := by
       calc
         α ^ k = α ^ ((k - 1) + 1) := by
@@ -157,9 +155,8 @@ namespace MetaMathlibExt
 
 /--
 [denom_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/DresdenDuSimplifiedBinet.lean)
--/
-@[path]
 `2 - α = 1 / α ^ k`, and `(k + 1) / α ^ k ≤ (k + 1) / k ≤ 3 / 2 < 2`. -/
+@[path]
 private lemma denom_pos (k : ℕ) (hk : 2 ≤ k) (α : ℝ) (hα1 : 1 < α)
   (hkey : α ^ k * (2 - α) = 1) (hge : (k : ℝ) ≤ α ^ k) :
   0 < 2 + ((k : ℝ) + 1) * (α - 2) := by
@@ -365,7 +362,7 @@ private lemma ddb_sum_reciprocal_powers (k : ℕ) (hk : 1 ≤ k) (α : ℝ)
   apply mul_left_cancel₀ hpowne (a := α ^ (k - 1))
   calc
     α ^ (k - 1) * ∑ i ∈ Finset.range k, α ^ (-(i : ℤ)) =
-      ∑ i ∈ Finset.range k, α ^ (((k - 1 - i : ℕ) : ℤ)) := by
+        ∑ i ∈ Finset.range k, α ^ (((k - 1 - i : ℕ) : ℤ)) := by
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro i hi
@@ -422,7 +419,7 @@ private lemma ddb_recurrence_step (k : ℕ) (hk : 1 ≤ k) (e : ℤ → ℝ)
     ring
   have hcur := hrec n (by omega)
   have hsplitNext : ∑ i ∈ Finset.range k, e (n - (i : ℤ)) =
-    (∑ i ∈ Finset.range (k - 1), e (n - 1 - (i : ℤ))) + e n := by
+      (∑ i ∈ Finset.range (k - 1), e (n - 1 - (i : ℤ))) + e n := by
     rw [show k = (k - 1) + 1 by omega, Finset.sum_range_succ']
     congr 1
     · apply Finset.sum_congr rfl
@@ -434,7 +431,7 @@ private lemma ddb_recurrence_step (k : ℕ) (hk : 1 ≤ k) (e : ℤ → ℝ)
       push_cast
       ring
   have hsplitCur : ∑ i ∈ Finset.range k, e (n - 1 - (i : ℤ)) =
-    (∑ i ∈ Finset.range (k - 1), e (n - 1 - (i : ℤ))) + e (n - (k : ℤ)) := by
+      (∑ i ∈ Finset.range (k - 1), e (n - 1 - (i : ℤ))) + e (n - (k : ℤ)) := by
     rw [show k = (k - 1) + 1 by omega, Finset.sum_range_succ]
     congr 1
     push_cast
@@ -465,9 +462,9 @@ private lemma ddb_weighted_sum_step (k : ℕ) (hk : 1 ≤ k) (α : ℝ) (hαne :
     congr 1
     ring
   have hsplitNext :
-    ∑ i ∈ Finset.range k, ddb_weight k α i * e (n + 1 - (i : ℤ)) =
-      (∑ i ∈ Finset.range (k - 1), ddb_weight k α (i + 1) * e (n - (i : ℤ))) +
-        ddb_weight k α 0 * e (n + 1) := by
+      ∑ i ∈ Finset.range k, ddb_weight k α i * e (n + 1 - (i : ℤ)) =
+        (∑ i ∈ Finset.range (k - 1), ddb_weight k α (i + 1) * e (n - (i : ℤ))) +
+          ddb_weight k α 0 * e (n + 1) := by
     rw [show k = (k - 1) + 1 by omega, Finset.sum_range_succ']
     congr 1
     · apply Finset.sum_congr rfl
@@ -477,27 +474,29 @@ private lemma ddb_weighted_sum_step (k : ℕ) (hk : 1 ≤ k) (α : ℝ) (hαne :
       ring
     · simp
   have hsplitCur :
-    ∑ i ∈ Finset.range k, ddb_weight k α i * e (n - (i : ℤ)) =
-      (∑ i ∈ Finset.range (k - 1), ddb_weight k α i * e (n - (i : ℤ))) +
-        ddb_weight k α (k - 1) * e (n - ((k - 1 : ℕ) : ℤ)) := by
+      ∑ i ∈ Finset.range k, ddb_weight k α i * e (n - (i : ℤ)) =
+        (∑ i ∈ Finset.range (k - 1), ddb_weight k α i * e (n - (i : ℤ))) +
+          ddb_weight k α (k - 1) * e (n - ((k - 1 : ℕ) : ℤ)) := by
     have h := Finset.sum_range_succ
       (fun i => ddb_weight k α i * e (n - (i : ℤ))) (k - 1)
-    rwa [show k - 1 + 1 = k by omega] at h
+    rw [show k - 1 + 1 = k by omega] at h
+    exact h
   have hsplitE : ∑ i ∈ Finset.range k, e (n - (i : ℤ)) =
-    (∑ i ∈ Finset.range (k - 1), e (n - (i : ℤ))) +
-      e (n - ((k - 1 : ℕ) : ℤ)) := by
+      (∑ i ∈ Finset.range (k - 1), e (n - (i : ℤ))) +
+        e (n - ((k - 1 : ℕ) : ℤ)) := by
     have h := Finset.sum_range_succ (fun i => e (n - (i : ℤ))) (k - 1)
-    rwa [show k - 1 + 1 = k by omega] at h
+    rw [show k - 1 + 1 = k by omega] at h
+    exact h
   have hprefix :
-    (∑ i ∈ Finset.range (k - 1), ddb_weight k α (i + 1) * e (n - (i : ℤ))) +
-      (α - 1) * ∑ i ∈ Finset.range (k - 1), e (n - (i : ℤ)) =
-      α * ∑ i ∈ Finset.range (k - 1), ddb_weight k α i * e (n - (i : ℤ)) := by
+      (∑ i ∈ Finset.range (k - 1), ddb_weight k α (i + 1) * e (n - (i : ℤ))) +
+          (α - 1) * ∑ i ∈ Finset.range (k - 1), e (n - (i : ℤ)) =
+        α * ∑ i ∈ Finset.range (k - 1), ddb_weight k α i * e (n - (i : ℤ)) := by
     rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro i _
     calc
       ddb_weight k α (i + 1) * e (n - (i : ℤ)) + (α - 1) * e (n - (i : ℤ)) =
-        (ddb_weight k α (i + 1) + (α - 1)) * e (n - (i : ℤ)) := by ring
+          (ddb_weight k α (i + 1) + (α - 1)) * e (n - (i : ℤ)) := by ring
       _ = (α * ddb_weight k α i) * e (n - (i : ℤ)) := by
         rw [ddb_weight_succ k i α hαne]
       _ = α * (ddb_weight k α i * e (n - (i : ℤ))) := by ring
@@ -507,17 +506,17 @@ private lemma ddb_weighted_sum_step (k : ℕ) (hk : 1 ≤ k) (α : ℝ) (hαne :
   rw [mul_add, mul_add]
   calc
     (∑ i ∈ Finset.range (k - 1), ddb_weight k α (i + 1) * e (n - (i : ℤ))) +
-      ((α - 1) * ∑ i ∈ Finset.range (k - 1), e (n - (i : ℤ)) +
-        (α - 1) * e (n - ((k - 1 : ℕ) : ℤ))) =
-      ((∑ i ∈ Finset.range (k - 1), ddb_weight k α (i + 1) * e (n - (i : ℤ))) +
-        (α - 1) * ∑ i ∈ Finset.range (k - 1), e (n - (i : ℤ))) +
-          (α - 1) * e (n - ((k - 1 : ℕ) : ℤ)) := by ring
+          ((α - 1) * ∑ i ∈ Finset.range (k - 1), e (n - (i : ℤ)) +
+            (α - 1) * e (n - ((k - 1 : ℕ) : ℤ))) =
+        ((∑ i ∈ Finset.range (k - 1), ddb_weight k α (i + 1) * e (n - (i : ℤ))) +
+          (α - 1) * ∑ i ∈ Finset.range (k - 1), e (n - (i : ℤ))) +
+            (α - 1) * e (n - ((k - 1 : ℕ) : ℤ)) := by ring
     _ = α * (∑ i ∈ Finset.range (k - 1), ddb_weight k α i * e (n - (i : ℤ))) +
-      (α - 1) * e (n - ((k - 1 : ℕ) : ℤ)) := by rw [hprefix]
+          (α - 1) * e (n - ((k - 1 : ℕ) : ℤ)) := by rw [hprefix]
     _ = α * (∑ i ∈ Finset.range (k - 1), ddb_weight k α i * e (n - (i : ℤ))) +
-      (α * ddb_weight k α (k - 1)) * e (n - ((k - 1 : ℕ) : ℤ)) := by rw [hlast]
+          (α * ddb_weight k α (k - 1)) * e (n - ((k - 1 : ℕ) : ℤ)) := by rw [hlast]
     _ = α * (∑ i ∈ Finset.range (k - 1), ddb_weight k α i * e (n - (i : ℤ))) +
-      α * (ddb_weight k α (k - 1) * e (n - ((k - 1 : ℕ) : ℤ))) := by ring
+          α * (ddb_weight k α (k - 1) * e (n - ((k - 1 : ℕ) : ℤ))) := by ring
 
 end MetaMathlibExt
 
@@ -555,24 +554,24 @@ private lemma ddb_positive_chain (k : ℕ) (e : ℤ → ℝ)
   induction j with
   | zero => simpa using hbad
   | succ j ih =>
-    have hjk : j < k := by omega
-    have hcur := ih hjk
-    have hqlo : 2 - (k : ℤ) ≤ m + (j : ℤ) - (k : ℤ) := by
-      omega
-    have hqlt : m + (j : ℤ) - (k : ℤ) < m := by
-      have hjz : ((j + 1 : ℕ) : ℤ) < (k : ℤ) := by exact_mod_cast hj
-      omega
-    have hq := hprev (m + (j : ℤ) - (k : ℤ)) hqlo hqlt
-    rw [abs_lt] at hq
-    have hs := hstep (m + (j : ℤ)) (by omega)
-    have heq : e (m + ((j + 1 : ℕ) : ℤ)) =
-      2 * e (m + (j : ℤ)) - e (m + (j : ℤ) - (k : ℤ)) := by
-      convert hs using 1
-      all_goals
-        push_cast
-        ring_nf
-    rw [heq]
-    linarith
+      have hjk : j < k := by omega
+      have hcur := ih hjk
+      have hqlo : 2 - (k : ℤ) ≤ m + (j : ℤ) - (k : ℤ) := by
+        omega
+      have hqlt : m + (j : ℤ) - (k : ℤ) < m := by
+        have hjz : ((j + 1 : ℕ) : ℤ) < (k : ℤ) := by exact_mod_cast hj
+        omega
+      have hq := hprev (m + (j : ℤ) - (k : ℤ)) hqlo hqlt
+      rw [abs_lt] at hq
+      have hs := hstep (m + (j : ℤ)) (by omega)
+      have heq : e (m + ((j + 1 : ℕ) : ℤ)) =
+          2 * e (m + (j : ℤ)) - e (m + (j : ℤ) - (k : ℤ)) := by
+        convert hs using 1
+        all_goals
+          push_cast
+          ring_nf
+      rw [heq]
+      linarith
 
 end MetaMathlibExt
 
@@ -591,24 +590,24 @@ private lemma ddb_negative_chain (k : ℕ) (e : ℤ → ℝ)
   induction j with
   | zero => simpa using hbad
   | succ j ih =>
-    have hjk : j < k := by omega
-    have hcur := ih hjk
-    have hqlo : 2 - (k : ℤ) ≤ m + (j : ℤ) - (k : ℤ) := by
-      omega
-    have hqlt : m + (j : ℤ) - (k : ℤ) < m := by
-      have hjz : ((j + 1 : ℕ) : ℤ) < (k : ℤ) := by exact_mod_cast hj
-      omega
-    have hq := hprev (m + (j : ℤ) - (k : ℤ)) hqlo hqlt
-    rw [abs_lt] at hq
-    have hs := hstep (m + (j : ℤ)) (by omega)
-    have heq : e (m + ((j + 1 : ℕ) : ℤ)) =
-      2 * e (m + (j : ℤ)) - e (m + (j : ℤ) - (k : ℤ)) := by
-      convert hs using 1
-      all_goals
-        push_cast
-        ring_nf
-    rw [heq]
-    linarith
+      have hjk : j < k := by omega
+      have hcur := ih hjk
+      have hqlo : 2 - (k : ℤ) ≤ m + (j : ℤ) - (k : ℤ) := by
+        omega
+      have hqlt : m + (j : ℤ) - (k : ℤ) < m := by
+        have hjz : ((j + 1 : ℕ) : ℤ) < (k : ℤ) := by exact_mod_cast hj
+        omega
+      have hq := hprev (m + (j : ℤ) - (k : ℤ)) hqlo hqlt
+      rw [abs_lt] at hq
+      have hs := hstep (m + (j : ℤ)) (by omega)
+      have heq : e (m + ((j + 1 : ℕ) : ℤ)) =
+          2 * e (m + (j : ℤ)) - e (m + (j : ℤ) - (k : ℤ)) := by
+        convert hs using 1
+        all_goals
+          push_cast
+          ring_nf
+      rw [heq]
+      linarith
 
 end MetaMathlibExt
 
@@ -626,78 +625,79 @@ private lemma ddb_error_bound (k : ℕ) (hk : 2 ≤ k) (α : ℝ) (hα1 : 1 < α
   (hinit : ∀ n : ℤ, 2 - (k : ℤ) ≤ n → n ≤ 1 → |e n| < 1 / 2) :
   ∀ n : ℤ, 2 - (k : ℤ) ≤ n → |e n| < 1 / 2 := by
   have hall : ∀ r : ℕ, ∀ q : ℤ, 2 - (k : ℤ) ≤ q →
-    q ≤ 2 - (k : ℤ) + (r : ℤ) → |e q| < 1 / 2 := by
+      q ≤ 2 - (k : ℤ) + (r : ℤ) → |e q| < 1 / 2 := by
     intro r
     induction r with
     | zero =>
-      intro q hqlo hqhi
-      apply hinit q hqlo
-      omega
-    | succ r ih =>
-      intro q hqlo hqhi
-      by_cases hqprev : q ≤ 2 - (k : ℤ) + (r : ℤ)
-      · exact ih q hqlo hqprev
-      · have hqeq : q = 2 - (k : ℤ) + ((r + 1 : ℕ) : ℤ) := by
-        push_cast at hqhi
+        intro q hqlo hqhi
+        apply hinit q hqlo
         omega
-        subst q
-        by_cases hsmall : 2 - (k : ℤ) + ((r + 1 : ℕ) : ℤ) ≤ 1
-        · exact hinit _ (by omega) hsmall
-        · have hm : 2 ≤ 2 - (k : ℤ) + ((r + 1 : ℕ) : ℤ) := by omega
-          let m : ℤ := 2 - (k : ℤ) + ((r + 1 : ℕ) : ℤ)
-          have hmdef : m = 2 - (k : ℤ) + ((r + 1 : ℕ) : ℤ) := rfl
-          have hprev : ∀ p : ℤ, 2 - (k : ℤ) ≤ p → p < m → |e p| < 1 / 2 := by
-            intro p hplo hplt
-            apply ih p hplo
-            rw [hmdef] at hplt
-            push_cast at hplt
+    | succ r ih =>
+        intro q hqlo hqhi
+        by_cases hqprev : q ≤ 2 - (k : ℤ) + (r : ℤ)
+        · exact ih q hqlo hqprev
+        · have hqeq : q = 2 - (k : ℤ) + ((r + 1 : ℕ) : ℤ) := by
+            push_cast at hqhi
             omega
-          by_contra hbound
-          push Not at hbound
-          obtain hsign | hsign := le_total 0 (e m)
-          · have hbad : (1 : ℝ) / 2 ≤ e m := by
-            rwa [abs_of_nonneg hsign] at hbound
-            have hchain := ddb_positive_chain k e hstep m (by simpa [hmdef] using hm)
-              hbad hprev
-            have hsumpos : 0 < ∑ i ∈ Finset.range k,
-              ddb_weight k α i * e (m + (k : ℤ) - 1 - (i : ℤ)) := by
-              apply Finset.sum_pos
-              · intro i hi
-                have hik : i < k := Finset.mem_range.mp hi
-                have hjk : k - 1 - i < k := by omega
-                have he := hchain (k - 1 - i) hjk
-                have hindex : m + (k : ℤ) - 1 - (i : ℤ) =
-                  m + ((k - 1 - i : ℕ) : ℤ) := by
-                  rw [Nat.cast_sub (show i ≤ k - 1 by omega),
-                    Nat.cast_sub (show 1 ≤ k by omega)]
-                  ring
-                rw [hindex]
-                exact mul_pos (ddb_weight_pos k α hα1 i hik) (by linarith)
-              · exact ⟨0, by simp; omega⟩
-            have hzero := hinv (m + (k : ℤ) - 1) (by omega)
-            linarith
-          · have hbad : e m ≤ -(1 : ℝ) / 2 := by
-            rw [abs_of_nonpos hsign] at hbound
-            linarith
-            have hchain := ddb_negative_chain k e hstep m (by simpa [hmdef] using hm)
-              hbad hprev
-            have hsumneg : ∑ i ∈ Finset.range k,
-              ddb_weight k α i * e (m + (k : ℤ) - 1 - (i : ℤ)) < 0 := by
-              apply Finset.sum_neg
-              · intro i hi
-                have hik : i < k := Finset.mem_range.mp hi
-                have hjk : k - 1 - i < k := by omega
-                have he := hchain (k - 1 - i) hjk
-                have hindex : m + (k : ℤ) - 1 - (i : ℤ) =
-                  m + ((k - 1 - i : ℕ) : ℤ) := by
-                  rw [Nat.cast_sub (show i ≤ k - 1 by omega),
-                    Nat.cast_sub (show 1 ≤ k by omega)]
-                  ring
-                rw [hindex]
-                exact mul_neg_of_pos_of_neg (ddb_weight_pos k α hα1 i hik) (by linarith)
-              · exact ⟨0, by simp; omega⟩
-            have hzero := hinv (m + (k : ℤ) - 1) (by omega)
-            linarith
+          subst q
+          by_cases hsmall : 2 - (k : ℤ) + ((r + 1 : ℕ) : ℤ) ≤ 1
+          · exact hinit _ (by omega) hsmall
+          · have hm : 2 ≤ 2 - (k : ℤ) + ((r + 1 : ℕ) : ℤ) := by omega
+            let m : ℤ := 2 - (k : ℤ) + ((r + 1 : ℕ) : ℤ)
+            have hmdef : m = 2 - (k : ℤ) + ((r + 1 : ℕ) : ℤ) := rfl
+            have hprev : ∀ p : ℤ, 2 - (k : ℤ) ≤ p → p < m → |e p| < 1 / 2 := by
+              intro p hplo hplt
+              apply ih p hplo
+              rw [hmdef] at hplt
+              push_cast at hplt
+              omega
+            by_contra hbound
+            push Not at hbound
+            rcases le_total 0 (e m) with hsign | hsign
+            · have hbad : (1 : ℝ) / 2 ≤ e m := by
+                rw [abs_of_nonneg hsign] at hbound
+                exact hbound
+              have hchain := ddb_positive_chain k e hstep m (by simpa [hmdef] using hm)
+                hbad hprev
+              have hsumpos : 0 < ∑ i ∈ Finset.range k,
+                  ddb_weight k α i * e (m + (k : ℤ) - 1 - (i : ℤ)) := by
+                apply Finset.sum_pos
+                · intro i hi
+                  have hik : i < k := Finset.mem_range.mp hi
+                  have hjk : k - 1 - i < k := by omega
+                  have he := hchain (k - 1 - i) hjk
+                  have hindex : m + (k : ℤ) - 1 - (i : ℤ) =
+                      m + ((k - 1 - i : ℕ) : ℤ) := by
+                    rw [Nat.cast_sub (show i ≤ k - 1 by omega),
+                      Nat.cast_sub (show 1 ≤ k by omega)]
+                    ring
+                  rw [hindex]
+                  exact mul_pos (ddb_weight_pos k α hα1 i hik) (by linarith)
+                · exact ⟨0, by simp; omega⟩
+              have hzero := hinv (m + (k : ℤ) - 1) (by omega)
+              linarith
+            · have hbad : e m ≤ -(1 : ℝ) / 2 := by
+                rw [abs_of_nonpos hsign] at hbound
+                linarith
+              have hchain := ddb_negative_chain k e hstep m (by simpa [hmdef] using hm)
+                hbad hprev
+              have hsumneg : ∑ i ∈ Finset.range k,
+                  ddb_weight k α i * e (m + (k : ℤ) - 1 - (i : ℤ)) < 0 := by
+                apply Finset.sum_neg
+                · intro i hi
+                  have hik : i < k := Finset.mem_range.mp hi
+                  have hjk : k - 1 - i < k := by omega
+                  have he := hchain (k - 1 - i) hjk
+                  have hindex : m + (k : ℤ) - 1 - (i : ℤ) =
+                      m + ((k - 1 - i : ℕ) : ℤ) := by
+                    rw [Nat.cast_sub (show i ≤ k - 1 by omega),
+                      Nat.cast_sub (show 1 ≤ k by omega)]
+                    ring
+                  rw [hindex]
+                  exact mul_neg_of_pos_of_neg (ddb_weight_pos k α hα1 i hik) (by linarith)
+                · exact ⟨0, by simp; omega⟩
+              have hzero := hinv (m + (k : ℤ) - 1) (by omega)
+              linarith
   intro n hn
   have hdiff : 0 ≤ n - (2 - (k : ℤ)) := by omega
   have hcast : (((n - (2 - (k : ℤ))).toNat : ℕ) : ℤ) = n - (2 - (k : ℤ)) :=
@@ -713,21 +713,20 @@ namespace MetaMathlibExt
 
 /--
 [binet_term_recurrence](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/DresdenDuSimplifiedBinet.lean)
--/
-@[path]
 this is the exact-sequence step of Dresden–Du, following from `hαroot`
 (`∑ i ∈ range k, α ^ (-(i + 1)) = 1` after clearing denominators). -/
+@[path]
 private lemma binet_term_recurrence (k : ℕ) (α : ℝ) (hαpos : 0 < α)
   (hαroot : α ^ k = ∑ i ∈ Finset.range k, α ^ i) (c : ℝ) (n : ℤ) :
   c * α ^ (n - 1) = ∑ i ∈ Finset.range k, c * α ^ (n - 1 - (i : ℤ) - 1) := by
   have hαne : α ≠ 0 := ne_of_gt hαpos
   have hexp : ∀ i ∈ Finset.range k,
-    c * α ^ (n - 1 - (i : ℤ) - 1) = (c * α ^ (n - 1)) * α ^ (-((i : ℤ) + 1)) := by
+      c * α ^ (n - 1 - (i : ℤ) - 1) = (c * α ^ (n - 1)) * α ^ (-((i : ℤ) + 1)) := by
     intro i _
     have hsplit : (n - 1 - (i : ℤ) - 1) = (n - 1) + (-((i : ℤ) + 1)) := by ring
     rw [hsplit, zpow_add₀ hαne, mul_assoc]
   have hmul : ∀ i ∈ Finset.range k,
-    (α ^ k : ℝ) * α ^ (-((i : ℤ) + 1)) = α ^ (((k - 1 - i : ℕ) : ℤ)) := by
+      (α ^ k : ℝ) * α ^ (-((i : ℤ) + 1)) = α ^ (((k - 1 - i : ℕ) : ℤ)) := by
     intro i hi
     have hik : i < k := Finset.mem_range.mp hi
     have h1 : (α ^ k : ℝ) = α ^ ((k : ℤ)) := by simp
@@ -739,12 +738,12 @@ private lemma binet_term_recurrence (k : ℕ) (α : ℝ) (hαpos : 0 < α)
     apply mul_left_cancel₀ hαk (a := (α ^ k : ℝ))
     rw [mul_one]
     have hmul_sum : (α ^ k : ℝ) * ∑ i ∈ Finset.range k, α ^ (-((i : ℤ) + 1))
-      = ∑ i ∈ Finset.range k, α ^ (((k - 1 - i : ℕ) : ℤ)) := by
+        = ∑ i ∈ Finset.range k, α ^ (((k - 1 - i : ℕ) : ℤ)) := by
       rw [Finset.mul_sum]
       exact Finset.sum_congr rfl hmul
     rw [hmul_sum]
     have hrefl : ∑ i ∈ Finset.range k, α ^ (((k - 1 - i : ℕ) : ℤ))
-      = ∑ j ∈ Finset.range k, α ^ (((j : ℕ) : ℤ)) := by
+        = ∑ j ∈ Finset.range k, α ^ (((j : ℕ) : ℤ)) := by
       have h := Finset.sum_range_reflect (fun j => α ^ (((j : ℕ) : ℤ))) k
       simpa using h
     rw [hrefl]
@@ -770,7 +769,7 @@ private lemma ddb_error_recurrence (k : ℕ) (F : ℤ → ℤ)
     ∑ i ∈ Finset.range k,
       (((F (n - 1 - (i : ℤ)) : ℤ) : ℝ) - c * α ^ (n - 1 - (i : ℤ) - 1)) := by
   have hFreal : (F n : ℝ) =
-    ∑ i ∈ Finset.range k, ((F (n - 1 - (i : ℤ)) : ℤ) : ℝ) := by
+      ∑ i ∈ Finset.range k, ((F (n - 1 - (i : ℤ)) : ℤ) : ℝ) := by
     exact_mod_cast hFrec n hn
   rw [hFreal, binet_term_recurrence k α hαpos hαroot c n]
   exact (Finset.sum_sub_distrib ..).symm
@@ -789,7 +788,7 @@ private lemma ddb_initial_error_bound (k : ℕ) (F : ℤ → ℤ)
   (hcone : c < 1) (hcdiv : c / α < 1 / 2) :
   ∀ n : ℤ, 2 - (k : ℤ) ≤ n → n ≤ 1 → |(F n : ℝ) - c * α ^ (n - 1)| < 1 / 2 := by
   intro n hnlo hn1
-  obtain hn | rfl := lt_or_eq_of_le hn1
+  rcases lt_or_eq_of_le hn1 with hn | rfl
   · have hpowpos : 0 < α ^ (n - 1) := zpow_pos (by linarith) _
     have hpowle : α ^ (n - 1) ≤ α ^ (-1 : ℤ) :=
       zpow_le_zpow_right₀ hα1.le (by omega)
@@ -798,7 +797,7 @@ private lemma ddb_initial_error_bound (k : ℕ) (F : ℤ → ℤ)
       simpa [zpow_neg_one, div_eq_mul_inv] using hmul
     rw [hFzero n hnlo hn]
     norm_num
-    rw [abs_of_pos hcpos, abs_of_pos hpowpos]
+    rw [abs_of_pos hcpos, abs_of_pos (show (0 : ℝ) < α by linarith)]
     linarith
   · rw [hFone]
     norm_num
@@ -823,13 +822,13 @@ private lemma ddb_initial_weighted_sum (k : ℕ) (hk : 1 ≤ k) (F : ℤ → ℤ
   ∑ i ∈ Finset.range k, ddb_weight k α i *
     ((F (1 - (i : ℤ)) : ℝ) - c * α ^ (1 - (i : ℤ) - 1)) = 0 := by
   have hFsum : ∑ i ∈ Finset.range k,
-    ddb_weight k α i * (F (1 - (i : ℤ)) : ℝ) = ddb_weight k α 0 := by
+      ddb_weight k α i * (F (1 - (i : ℤ)) : ℝ) = ddb_weight k α 0 := by
     have hsplit := Finset.sum_range_succ'
       (fun i => ddb_weight k α i * (F (1 - (i : ℤ)) : ℝ)) (k - 1)
     rw [show k - 1 + 1 = k by omega] at hsplit
     rw [hsplit]
     have hprefix : ∑ i ∈ Finset.range (k - 1),
-      ddb_weight k α (i + 1) * (F (1 - ((i + 1 : ℕ) : ℤ)) : ℝ) = 0 := by
+        ddb_weight k α (i + 1) * (F (1 - ((i + 1 : ℕ) : ℤ)) : ℝ) = 0 := by
       apply Finset.sum_eq_zero
       intro i hi
       rw [hFzero]
@@ -843,9 +842,9 @@ private lemma ddb_initial_weighted_sum (k : ℕ) (hk : 1 ≤ k) (F : ℤ → ℤ
     norm_num [hFone]
   calc
     ∑ i ∈ Finset.range k, ddb_weight k α i *
-      ((F (1 - (i : ℤ)) : ℝ) - c * α ^ (1 - (i : ℤ) - 1)) =
-      (∑ i ∈ Finset.range k, ddb_weight k α i * (F (1 - (i : ℤ)) : ℝ)) -
-        c * ∑ i ∈ Finset.range k, ddb_weight k α i * α ^ (-(i : ℤ)) := by
+        ((F (1 - (i : ℤ)) : ℝ) - c * α ^ (1 - (i : ℤ) - 1)) =
+        (∑ i ∈ Finset.range k, ddb_weight k α i * (F (1 - (i : ℤ)) : ℝ)) -
+          c * ∑ i ∈ Finset.range k, ddb_weight k α i * α ^ (-(i : ℤ)) := by
       rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
       apply Finset.sum_congr rfl
       intro i _
@@ -866,6 +865,8 @@ private lemma ddb_floor_of_abs_sub_lt (m : ℤ) (y : ℝ)
   rw [Int.floor_eq_iff]
   rw [abs_lt] at h
   constructor <;> linarith
+
+/-! # Simplified Binet formula for k-generalized Fibonacci numbers -/
 
 end MetaMathlibExt
 
@@ -908,7 +909,7 @@ lemma dresden_du_simplified_binet_of_initial_window
   have hcden : c * (2 + ((k : ℝ) + 1) * (α - 2)) = α - 1 := by
     exact div_mul_cancel₀ (α - 1) (ne_of_gt hden)
   have herec : ∀ m : ℤ, 1 < m →
-    e m = ∑ i ∈ Finset.range k, e (m - 1 - (i : ℤ)) := by
+      e m = ∑ i ∈ Finset.range k, e (m - 1 - (i : ℤ)) := by
     intro m hm
     simpa [e] using ddb_error_recurrence k F hFrec α hαpos hαroot c m hm
   have hstep : ∀ m : ℤ, 2 ≤ m → e (m + 1) = 2 * e m - e (m - (k : ℤ)) :=
@@ -917,7 +918,7 @@ lemma dresden_du_simplified_binet_of_initial_window
     simpa [e] using ddb_initial_weighted_sum k (by omega) F hFzero hFone α c hweightzero hnorm
       hcden
   have hinv : ∀ m : ℤ, 1 ≤ m →
-    ∑ i ∈ Finset.range k, ddb_weight k α i * e (m - (i : ℤ)) = 0 :=
+      ∑ i ∈ Finset.range k, ddb_weight k α i * e (m - (i : ℤ)) = 0 :=
     ddb_weighted_sum_zero k (by omega) α hαne hneg e herec hbase
   have hinit : ∀ m : ℤ, 2 - (k : ℤ) ≤ m → m ≤ 1 → |e m| < 1 / 2 := by
     intro m hmlo hmhi
@@ -950,9 +951,10 @@ lemma dresden_du_simplified_binet
   intro k hk F hFneg hFone hFrec α hαpos hαroot _hαuniq
   exact dresden_du_simplified_binet_of_initial_window k hk F (fun n _ hn => hFneg n hn)
     hFone hFrec α hαpos hαroot
+
 end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

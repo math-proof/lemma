@@ -73,7 +73,7 @@ theorem bfl_fineCount_of_armSubforest (ω : ConfigSpace (Sym2 (Site 2))) (R : �
   bca_datum_implies_count ω 0 R h
 
 
-theorem bfl_bk_of_fineArmSubforest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bfl_bk_of_fineArmSubforest (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   bau_bk_of_subforestData p hp1 hp0 hdata
@@ -110,7 +110,7 @@ theorem bfl_status :
     (∀ (ω : ConfigSpace (Sym2 (Site 2))) (R : ℕ),
       bau_ArmSubforestData ω 0 R → bc61_coarseTcount ω 0 R ≤ boxSV_boundaryCard 2 R) ∧
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p →
       (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) →
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩

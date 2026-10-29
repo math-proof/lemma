@@ -801,7 +801,7 @@ private lemma offLattice_of_nnnorm_eq_one (hq0 : q ≠ 0) (hq : ‖q‖₊ < 1) 
     have := congrArg (‖·‖₊) hk
     simpa [nnnorm_mul, nnnorm_zpow] using this
   have hk0 : k = 0 := by
-    have hq_pos : (0 : ℝ≥0) < ‖q‖₊ := by
+    have hq_pos : (0 : NNReal) < ‖q‖₊ := by
       simpa [pos_iff_ne_zero, nnnorm_eq_zero] using hq0
     have : ‖q‖₊ ^ k = ‖q‖₊ ^ (0 : ℤ) := by
       rw [zpow_zero]
@@ -816,7 +816,7 @@ private lemma one_add_pow_injective (hq0 : q ≠ 0) (hq : ‖q‖₊ < 1) {n m :
   have hpow : q ^ n = q ^ m := by linear_combination h
   have hnorm : ‖q‖₊ ^ (n : ℤ) = ‖q‖₊ ^ (m : ℤ) := by
     rw [zpow_natCast, zpow_natCast, ← nnnorm_pow, ← nnnorm_pow, hpow]
-  have hq_pos : (0 : ℝ≥0) < ‖q‖₊ := by
+  have hq_pos : (0 : NNReal) < ‖q‖₊ := by
     simpa [pos_iff_ne_zero, nnnorm_eq_zero] using hq0
   have := zpow_right_injective₀ hq_pos (ne_of_lt hq) hnorm
   exact_mod_cast this
@@ -855,7 +855,7 @@ private lemma lattice_mul_unique (hq0 : q ≠ 0) (hq : ‖q‖₊ < 1) (hu0 : u 
   obtain ⟨j, hj⟩ := h2
   have hcn := nnnorm_one_add_pow (q := q) hq hn
   have hcm := nnnorm_one_add_pow (q := q) hq hm
-  have hq_pos : (0 : ℝ≥0) < ‖q‖₊ := by
+  have hq_pos : (0 : NNReal) < ‖q‖₊ := by
     simpa [pos_iff_ne_zero, nnnorm_eq_zero] using hq0
   have hu_ne : ‖u‖₊ ≠ 0 := by simpa [nnnorm_eq_zero] using hu0
   have hnk : ‖q‖₊ ^ k * ‖u‖₊ = 1 := by
@@ -890,7 +890,7 @@ private lemma lattice_div_unique (hq0 : q ≠ 0) (hq : ‖q‖₊ < 1) (hu0 : u 
   have hcm := nnnorm_one_add_pow (q := q) hq hm
   have hcn0 := one_add_pow_ne_zero (q := q) hq hn
   have hcm0 := one_add_pow_ne_zero (q := q) hq hm
-  have hq_pos : (0 : ℝ≥0) < ‖q‖₊ := by
+  have hq_pos : (0 : NNReal) < ‖q‖₊ := by
     simpa [pos_iff_ne_zero, nnnorm_eq_zero] using hq0
   have hu_ne : ‖u‖₊ ≠ 0 := by simpa [nnnorm_eq_zero] using hu0
   have hnk : ‖q‖₊ ^ k * ‖u‖₊ = 1 := by

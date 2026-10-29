@@ -220,7 +220,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [Q9_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Lower.lean)
 -/
 @[path]
-lemma Q9_pos
+lemma Q9_pos :
 -- imply
   0 < Q9 := by
 -- proof
@@ -234,7 +234,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [Q9_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Lower.lean)
 -/
 @[path]
-lemma Q9_eq
+lemma Q9_eq :
 -- imply
   Q9 = 210 :=
 -- proof
@@ -494,7 +494,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [w9_mu_sum_Q](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Lower.lean)
 -/
 @[path]
-lemma w9_mu_sum_Q
+lemma w9_mu_sum_Q :
 -- imply
   w9.toFinset.sum (fun q : ℕ × ℤ => (q.2 : ℚ) / (q.1 : ℚ)) = 8/35 := by
 -- proof
@@ -513,7 +513,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [w9_mu_sum_R](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Lower.lean)
 -/
 @[path]
-lemma w9_mu_sum_R
+lemma w9_mu_sum_R :
 -- imply
   w9.toFinset.sum (fun q : ℕ × ℤ => (q.2 : ℝ) / (q.1 : ℝ)) = 8/35 := by
 -- proof
@@ -899,3 +899,4 @@ end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

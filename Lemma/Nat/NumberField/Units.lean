@@ -20,24 +20,24 @@ lemma finiteIndex_closure_range_of_lt_one_off_diagonal
 -- proof
   classical
   let v : {w : NumberField.InfinitePlace F // w ≠ dirichletUnitTheorem.w₀} →
-    dirichletUnitTheorem.logSpace F :=
+      dirichletUnitTheorem.logSpace F :=
     fun i => logEmbedding F (Additive.ofMul (u i.val))
   let B := Pi.basisFun ℝ
     {w : NumberField.InfinitePlace F // w ≠ dirichletUnitTheorem.w₀}
   have hneg : ∀ (k i : {w : NumberField.InfinitePlace F //
-    w ≠ dirichletUnitTheorem.w₀}),
-    i ∈ Finset.univ.erase k → (v k) i < 0 := by
+      w ≠ dirichletUnitTheorem.w₀}),
+      i ∈ Finset.univ.erase k → (v k) i < 0 := by
     intro k i hi
     have hne : i.val ≠ k.val := fun h => Finset.ne_of_mem_erase hi (Subtype.ext h)
     have hcomp : (v k) i =
-      ((mult i.val : ℝ) * Real.log (i.val (u k.val))) :=
+        ((mult i.val : ℝ) * Real.log (i.val (u k.val))) :=
       dirichletUnitTheorem.logEmbedding_component _ _
     rw [hcomp]
     refine mul_neg_of_pos_of_neg ?_
       (Real.log_neg (pos_at_place _ _) (hu k.val i.val hne))
     exact_mod_cast mult_pos
   have hpos : ∀ (k : {w : NumberField.InfinitePlace F //
-    w ≠ dirichletUnitTheorem.w₀}), 0 < ∑ i, (v k) i := by
+      w ≠ dirichletUnitTheorem.w₀}), 0 < ∑ i, (v k) i := by
     intro k
     rw [dirichletUnitTheorem.sum_logEmbedding_component (u k.val)]
     refine mul_pos_of_neg_of_neg ?_
@@ -49,7 +49,7 @@ lemma finiteIndex_closure_range_of_lt_one_off_diagonal
     simp_rw [Real.norm_eq_abs, B,
       Module.Basis.coePiBasisFun.toMatrix_eq_transpose, Matrix.transpose_apply]
     have e1 : ∑ i ∈ Finset.univ.erase k, |(v k) i| =
-      -(∑ i ∈ Finset.univ.erase k, (v k) i) := by
+        -(∑ i ∈ Finset.univ.erase k, (v k) i) := by
       rw [← Finset.sum_neg_distrib]
       exact Finset.sum_congr rfl (fun i hi => abs_of_neg (hneg k i hi))
     have hmem : k ∈ (Finset.univ : Finset _) := Finset.mem_univ k
@@ -64,10 +64,10 @@ lemma finiteIndex_closure_range_of_lt_one_off_diagonal
   have hmax : IsMaxRank (fun i : Fin (rank F) => u ((equivFinRank F i).val)) :=
     (linearIndependent_equiv (equivFinRank F)).mpr hLI
   have hfin : (Subgroup.closure (Set.range (fun i : Fin (rank F) =>
-    u ((equivFinRank F i).val)))).FiniteIndex :=
+      u ((equivFinRank F i).val)))).FiniteIndex :=
     isMaxRank_iff_closure_finiteIndex.mp hmax
   have hsub : Subgroup.closure (Set.range (fun i : Fin (rank F) =>
-    u ((equivFinRank F i).val))) ≤ Subgroup.closure (Set.range u) := by
+      u ((equivFinRank F i).val))) ≤ Subgroup.closure (Set.range u) := by
     apply Subgroup.closure_mono
     rintro _ ⟨i, rfl⟩
     exact ⟨(equivFinRank F i).val, rfl⟩
@@ -77,4 +77,4 @@ end NumberField.Units
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

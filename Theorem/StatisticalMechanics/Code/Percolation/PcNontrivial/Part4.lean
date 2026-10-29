@@ -99,9 +99,9 @@ theorem percolationEvent_subset_iUnion_wordEvent (hd : 0 < d) (n : ℕ) :
     exact (q.adj_getVert_succ hkq).2
 
 
-theorem measure_percolationEvent_le (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem measure_percolationEvent_le (hd : 0 < d) (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) (percolationEvent d)
-      ≤ ((2 * d : ℝ≥0) * p) ^ n := by
+      ≤ ((2 * d : NNReal) * p) ^ n := by
   classical
   set μ := bernoulliProductMeasure (E := Sym2 (Site d)) p hp with hμ
   
@@ -146,13 +146,13 @@ theorem measure_percolationEvent_le (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1) (n
   calc μ (percolationEvent d)
       ≤ ∑ w ∈ S, μ (wordEvent (ext w) n) :=
         le_trans (measure_mono hsubset) (measure_biUnion_finset_le _ _)
-    _ = ∑ _w ∈ S, (p : ℝ≥0∞) ^ n :=
+    _ = ∑ _w ∈ S, (p : ENNReal) ^ n :=
         Finset.sum_congr rfl (fun w hw => wordEvent_prob_good p hp _ n (Finset.mem_filter.1 hw).2)
-    _ = (S.card : ℝ≥0∞) * (p : ℝ≥0∞) ^ n := by rw [Finset.sum_const]; ring
-    _ ≤ ((Finset.univ : Finset (Fin n → Fin d × Bool)).card : ℝ≥0∞) * (p : ℝ≥0∞) ^ n := by
+    _ = (S.card : ENNReal) * (p : ENNReal) ^ n := by rw [Finset.sum_const]; ring
+    _ ≤ ((Finset.univ : Finset (Fin n → Fin d × Bool)).card : ENNReal) * (p : ENNReal) ^ n := by
         gcongr
         exact Finset.subset_univ S
-    _ = ((2 * d : ℝ≥0) * p) ^ n := by
+    _ = ((2 * d : NNReal) * p) ^ n := by
         rw [Finset.card_univ, Fintype.card_fun, Fintype.card_prod, Fintype.card_fin,
           Fintype.card_bool, Fintype.card_fin]
         push_cast
@@ -160,11 +160,11 @@ theorem measure_percolationEvent_le (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1) (n
         ring_nf
 
 
-theorem theta_le_pow (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
-    theta d p hp ≤ ((2 * d : ℝ≥0) * p) ^ n := by
+theorem theta_le_pow (hd : 0 < d) (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
+    theta d p hp ≤ ((2 * d : NNReal) * p) ^ n := by
   rw [theta, Measure.real]
-  rw [show (((2 * d : ℝ≥0) * p) ^ n : ℝ) = (((2 * d : ℝ≥0) * p) ^ n : ℝ≥0) by push_cast; ring]
-  rw [show ((((2 * d : ℝ≥0) * p) ^ n : ℝ≥0) : ℝ) = (((((2 * d : ℝ≥0) * p) ^ n : ℝ≥0) : ℝ≥0∞)).toReal
+  rw [show (((2 * d : NNReal) * p) ^ n : ℝ) = (((2 * d : NNReal) * p) ^ n : NNReal) by push_cast; ring]
+  rw [show ((((2 * d : NNReal) * p) ^ n : NNReal) : ℝ) = (((((2 * d : NNReal) * p) ^ n : NNReal) : ENNReal)).toReal
       from by rw [ENNReal.coe_toReal]]
   apply ENNReal.toReal_mono
   · exact ENNReal.coe_ne_top
@@ -172,12 +172,12 @@ theorem theta_le_pow (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
     exact measure_percolationEvent_le hd p hp n
 
 
-theorem theta_eq_zero_of_lt (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1)
-    (hsmall : ((2 * d : ℝ≥0) * p : ℝ) < 1) : theta d p hp = 0 := by
-  have hbase_nonneg : (0 : ℝ) ≤ ((2 * d : ℝ≥0) * p : ℝ) := by positivity
+theorem theta_eq_zero_of_lt (hd : 0 < d) (p : NNReal) (hp : p ≤ 1)
+    (hsmall : ((2 * d : NNReal) * p : ℝ) < 1) : theta d p hp = 0 := by
+  have hbase_nonneg : (0 : ℝ) ≤ ((2 * d : NNReal) * p : ℝ) := by positivity
   
   have htend :
-      Filter.Tendsto (fun n => ((2 * d : ℝ≥0) * p : ℝ) ^ n) Filter.atTop (nhds 0) :=
+      Filter.Tendsto (fun n => ((2 * d : NNReal) * p : ℝ) ^ n) Filter.atTop (nhds 0) :=
     tendsto_pow_atTop_nhds_zero_of_lt_one hbase_nonneg hsmall
   
   have hle : theta d p hp ≤ 0 :=
@@ -185,8 +185,8 @@ theorem theta_eq_zero_of_lt (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1)
   exact le_antisymm hle (theta_nonneg d p hp)
 
 
-theorem mem_subcriticalSet_of_lt (hd : 0 < d) (p : ℝ≥0) (hp : p ≤ 1)
-    (hsmall : ((2 * d : ℝ≥0) * p : ℝ) < 1) : p ∈ subcriticalSet d :=
+theorem mem_subcriticalSet_of_lt (hd : 0 < d) (p : NNReal) (hp : p ≤ 1)
+    (hsmall : ((2 * d : NNReal) * p : ℝ) < 1) : p ∈ subcriticalSet d :=
   ⟨hp, theta_eq_zero_of_lt hd p hp hsmall⟩
 
 
@@ -194,23 +194,23 @@ theorem subcriticalSet_bddAbove : BddAbove (subcriticalSet d) :=
   ⟨1, fun _ hx => hx.1⟩
 
 
-theorem le_pc_of_mem_subcriticalSet {p : ℝ≥0} (hp : p ∈ subcriticalSet d) :
+theorem le_pc_of_mem_subcriticalSet {p : NNReal} (hp : p ∈ subcriticalSet d) :
     p ≤ pc d :=
   le_csSup subcriticalSet_bddAbove hp
 
 
 theorem pc_pos (hd : 0 < d) : 0 < pc d := by
-  have hdpos : (0 : ℝ≥0) < d := by exact_mod_cast hd
+  have hdpos : (0 : NNReal) < d := by exact_mod_cast hd
   
-  set p : ℝ≥0 := 1 / (4 * d) with hp_def
+  set p : NNReal := 1 / (4 * d) with hp_def
   have hp_pos : 0 < p := by rw [hp_def]; positivity
   have hp1 : p ≤ 1 := by
     rw [hp_def, div_le_one (by positivity)]
-    have hd1 : (1 : ℝ≥0) ≤ d := by exact_mod_cast hd
+    have hd1 : (1 : NNReal) ≤ d := by exact_mod_cast hd
     nlinarith [hd1]
   
-  have hsmall : ((2 * d : ℝ≥0) * p : ℝ) < 1 := by
-    have h2 : (2 * (d : ℝ≥0)) * p < 1 := by
+  have hsmall : ((2 * d : NNReal) * p : ℝ) < 1 := by
+    have h2 : (2 * (d : NNReal)) * p < 1 := by
       rw [hp_def, mul_one_div, div_lt_one (by positivity)]
       nlinarith [hdpos]
     exact_mod_cast h2

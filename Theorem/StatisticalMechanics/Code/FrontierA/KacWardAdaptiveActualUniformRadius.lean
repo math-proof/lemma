@@ -17,10 +17,10 @@ namespace StatMech.FrontierA
 open scoped NNReal
 
 theorem exists_uniform_radius_finset
-    {ι : Type*} (s : Finset ι) (Q : ι → ℝ≥0 → Prop)
-    (hQ : ∀ i ∈ s, ∃ r : ℝ≥0, 0 < r ∧ Q i r)
-    (hmono : ∀ i ∈ s, ∀ {r r' : ℝ≥0}, r' ≤ r → Q i r → Q i r') :
-    ∃ r : ℝ≥0, 0 < r ∧ ∀ i ∈ s, Q i r := by
+    {ι : Type*} (s : Finset ι) (Q : ι → NNReal → Prop)
+    (hQ : ∀ i ∈ s, ∃ r : NNReal, 0 < r ∧ Q i r)
+    (hmono : ∀ i ∈ s, ∀ {r r' : NNReal}, r' ≤ r → Q i r → Q i r') :
+    ∃ r : NNReal, 0 < r ∧ ∀ i ∈ s, Q i r := by
   classical
   induction s using Finset.induction_on with
   | empty => exact ⟨1, by norm_num, by simp⟩
@@ -42,7 +42,7 @@ theorem KWAdaptivePatchedData.exists_uniform_remoteParameter_dist_separation
       (polygon.edgeVector (j + 1)) ≠ 0)
     (hcoords : ∀ j : Fin n,
       (polygon.edgeVector j).re ≠ 0 ∧ (polygon.edgeVector j).im ≠ 0) :
-    ∃ sep : ℝ≥0, 0 < sep ∧
+    ∃ sep : NNReal, 0 < sep ∧
       ∀ i : Fin n, ∀ first : Bool,
       ∀ x ∈ (if first then
           kwRawClosedEdge patch.idealVertex
@@ -53,7 +53,7 @@ theorem KWAdaptivePatchedData.exists_uniform_remoteParameter_dist_separation
         else patch.incomingParameterCarrier i),
         (sep : ℝ) < dist x y := by
   classical
-  let Q : (Fin n × Bool) → ℝ≥0 → Prop := fun p sep ↦
+  let Q : (Fin n × Bool) → NNReal → Prop := fun p sep ↦
     ∀ x ∈ (if p.2 then
         kwRawClosedEdge patch.idealVertex
           (kwStairEvenIndex p.1 (Fin.last M))
@@ -63,12 +63,12 @@ theorem KWAdaptivePatchedData.exists_uniform_remoteParameter_dist_separation
       else patch.incomingParameterCarrier p.1),
       (sep : ℝ) < dist x y
   have hQ : ∀ p ∈ (Finset.univ : Finset (Fin n × Bool)),
-      ∃ sep : ℝ≥0, 0 < sep ∧ Q p sep := by
+      ∃ sep : NNReal, 0 < sep ∧ Q p sep := by
     intro p _hp
     exact patch.exists_remoteParameter_dist_separation
       hcross hcoords p.1 p.2
   have hmono : ∀ p ∈ (Finset.univ : Finset (Fin n × Bool)),
-      ∀ {r r' : ℝ≥0}, r' ≤ r → Q p r → Q p r' := by
+      ∀ {r r' : NNReal}, r' ≤ r → Q p r → Q p r' := by
     intro p _hp r r' hle h x hx y hy
     exact_mod_cast (show (r' : ℝ) ≤ r from by exact_mod_cast hle).trans_lt
       (h x hx y hy)
@@ -85,7 +85,7 @@ theorem KWSmallAdaptiveConnectorScales.exists_uniform_remoteParameter_radius
       (polygon.edgeVector (j + 1)) ≠ 0)
     (hcoords : ∀ j : Fin n,
       (polygon.edgeVector j).re ≠ 0 ∧ (polygon.edgeVector j).im ≠ 0) :
-    ∃ sep : ℝ≥0, 0 < sep ∧
+    ∃ sep : NNReal, 0 < sep ∧
       ∀ {M : ℕ} [NeZero M] (hM : 2 ≤ M),
       let patch := scales.toPatchedData hM
       ∀ i : Fin n, ∀ first : Bool,
@@ -126,7 +126,7 @@ theorem KWSmallAdaptiveConnectorScales.exists_uniform_remoteParameter_radius
 theorem KWAdaptivePatchedData.firstConnector_disjoint_outgoingMiddle_of_fine
     {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    (r sep : ℝ≥0) (hr : 0 < r)
+    (r sep : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin patch.data r)
     (hsep : ∀ i : Fin n, ∀ first : Bool,
       ∀ x ∈ (if first then
@@ -151,7 +151,7 @@ theorem KWAdaptivePatchedData.firstConnector_disjoint_outgoingMiddle_of_fine
 theorem KWAdaptivePatchedData.secondConnector_disjoint_incomingMiddle_of_fine
     {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    (r sep : ℝ≥0) (hr : 0 < r)
+    (r sep : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin patch.data r)
     (hsep : ∀ i : Fin n, ∀ first : Bool,
       ∀ x ∈ (if first then
@@ -178,7 +178,7 @@ theorem KWAdaptivePatchedData.connector_disjoint_incomingMiddle_of_fine
     (patch : KWAdaptivePatchedData (M := M) polygon)
     (hcoords : ∀ j : Fin n,
       (polygon.edgeVector j).re ≠ 0 ∧ (polygon.edgeVector j).im ≠ 0)
-    (r sep : ℝ≥0) (hr : 0 < r)
+    (r sep : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin patch.data r)
     (hsep : ∀ i : Fin n, ∀ first : Bool,
       ∀ x ∈ (if first then
@@ -207,7 +207,7 @@ theorem KWAdaptivePatchedData.connector_disjoint_outgoingMiddle_of_fine
     (patch : KWAdaptivePatchedData (M := M) polygon)
     (hcoords : ∀ j : Fin n,
       (polygon.edgeVector j).re ≠ 0 ∧ (polygon.edgeVector j).im ≠ 0)
-    (r sep : ℝ≥0) (hr : 0 < r)
+    (r sep : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin patch.data r)
     (hsep : ∀ i : Fin n, ∀ first : Bool,
       ∀ x ∈ (if first then
@@ -234,7 +234,7 @@ theorem KWAdaptivePatchedData.connector_disjoint_outgoingMiddle_of_fine
 theorem KWSmallAdaptiveConnectorScales.exists_interiorMesh_patch
     {n : ℕ} [NeZero n] {polygon : KWFiniteSimplePolygon n}
     {R : ℝ} (scales : KWSmallAdaptiveConnectorScales polygon R)
-    (r : ℝ≥0) (hr : 0 < r) :
+    (r : NNReal) (hr : 0 < r) :
     ∃ M : ℕ, ∃ hM : 2 ≤ M,
       letI : NeZero M := ⟨by omega⟩
       KWEndpointInteriorMeshWithin (scales.toPatchedData hM).data r := by

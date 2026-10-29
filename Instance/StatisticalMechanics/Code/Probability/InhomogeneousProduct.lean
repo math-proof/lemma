@@ -20,7 +20,7 @@ namespace StatMech
 variable {E : Type*}
 
 
-instance (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1) :
+instance (p : E → NNReal) (hp : ∀ e, p e ≤ 1) :
     IsProbabilityMeasure (inhomBernoulliProductMeasure p hp) := by
   unfold inhomBernoulliProductMeasure
   infer_instance

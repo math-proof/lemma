@@ -87,8 +87,13 @@ function implyLetAlignLatex(imply, syntax) {
 function withImplyAssignLatex(latex, by) {
     if (!by || latex == null || latex === '') return latex;
     const word = by === 'by' ? '{\\color{#00f}by}' : by;
-    return latex + `\\tag*{ := ${word}}`;
+    const assign = ` := ${word}`;
+    // Always right-margin \tag* (same as given names / PHP module.php).
+    // Do not switch wide single-line implies to inline \quad — Body wants
+    // `:= by` aligned with h₀/h₁/… tags even when the formula is long.
+    return latex + `\\tag*{${assign}}`;
 }
+
 
 /**
  * Echo-style `:= by` proofs: `LeanTactic` may indent continuation lines (nested tactics under
@@ -1316,6 +1321,35 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
 }
 export class LeanModule extends LeanStatements {
     static { this.register(); }
+
+    /**
+     * Optional hook set by `js/parser/lean.js` (`compile`) so
+     * `new LeanModule(sourceText)` works like `compile(sourceText)`.
+     * @type {((code: string) => LeanModule) | null}
+     */
+    static compileSource = null;
+
+    /**
+     * @param {Lean[] | string} argsOrSource args array, or full Lean source text
+     * @param {number} [indent]
+     * @param {number} [level]
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(argsOrSource, indent = 0, level = 0, parent = null) {
+        if (typeof argsOrSource === 'string') {
+            const compileSource = LeanModule.compileSource;
+            if (typeof compileSource !== 'function') {
+                throw new TypeError(
+                    'LeanModule(source) needs js/parser/lean.js loaded (compileSource hook)',
+                );
+            }
+            const built = compileSource(argsOrSource);
+            super(built.args, 0, 0, null);
+            for (const a of this.args) if (a) a.parent = this;
+            return;
+        }
+        super(argsOrSource, indent, level, parent);
+    }
 
     get root() {
         return this;

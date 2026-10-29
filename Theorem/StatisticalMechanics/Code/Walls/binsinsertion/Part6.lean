@@ -192,7 +192,7 @@ theorem bins_NineShellEvent_three_same_side {n : ℕ} {v u : Fin 9 → Site 2}
       hcj.2.2.2 (by simpa [side] using hj), hck.2.2.2 (by simpa [side] using hk)⟩
 
 
-theorem bins_routePackage_of_corridors (p : ℝ≥0) (hp1 : p ≤ 1) (m : ℕ)
+theorem bins_routePackage_of_corridors (p : NNReal) (hp1 : p ≤ 1) (m : ℕ)
     (u₁ u₂ u₃ : Site 2) (I : Finset (Sym2 (Site 2)))
     (hu₁ : u₁ ≠ ![0, 0]) (hu₂ : u₂ ≠ ![0, 0]) (hu₃ : u₃ ≠ ![0, 0])
     (hC : bcor_Corridors m u₁ u₂ u₃)

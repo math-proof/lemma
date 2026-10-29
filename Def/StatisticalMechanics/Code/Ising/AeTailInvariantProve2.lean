@@ -33,7 +33,7 @@ variable {d : ℕ}
 def IsDLRExtremePoint (β h : ℝ) (μ : Measure (ConfigSpace (Site d))) : Prop :=
   ∀ (ν₁ ν₂ : Measure (ConfigSpace (Site d))) [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂],
     IsDLRState d β h ν₁ → IsDLRState d β h ν₂ →
-    ∀ (a b : ℝ≥0∞), 0 < a → 0 < b → a + b = 1 → a ≠ ⊤ → b ≠ ⊤ →
+    ∀ (a b : ENNReal), 0 < a → 0 < b → a + b = 1 → a ≠ ⊤ → b ≠ ⊤ →
       μ = a • ν₁ + b • ν₂ → ν₁ = ν₂
 
 

@@ -58,7 +58,7 @@ namespace NLStrictPSPACE
 [log_sq_little_o_id](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NLStrictPSPACE.lean)
 -/
 @[path]
-lemma log_sq_little_o_id
+lemma log_sq_little_o_id :
 -- imply
   IsAsympDominated (fun n => (Nat.log 2 n) ^ 2) (fun n => n) := by
 -- proof
@@ -178,7 +178,7 @@ namespace NLStrictPSPACE
 [log_sq_little_o_succ2](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NLStrictPSPACE.lean)
 -/
 @[path]
-lemma log_sq_little_o_succ2
+lemma log_sq_little_o_succ2 :
 -- imply
   IsAsympDominated (fun n => (Nat.log 2 n) ^ 2) (fun n => n + 2) := by
 -- proof
@@ -243,3 +243,4 @@ end NLStrictPSPACE
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

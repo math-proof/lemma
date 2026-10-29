@@ -76,37 +76,37 @@ noncomputable def rightIndex (k : List ℕ) (hk_pos : ∀ n ∈ k, 1 ≤ n)
 
 -- D1: nested finite sums over decreasing chains; bottom weight `w` at the chain bottom
 -- (or at `A` itself when the list is empty).
-noncomputable def tailW : List ℕ → (ℕ → ℝ≥0∞) → ℕ → ℝ≥0∞
+noncomputable def tailW : List ℕ → (ℕ → ENNReal) → ℕ → ENNReal
   | [], w, A => w A
-  | e :: t, w, A => ∑ y ∈ Finset.Ioo 0 A, ((y : ℝ≥0∞) ^ e)⁻¹ * tailW t w y
+  | e :: t, w, A => ∑ y ∈ Finset.Ioo 0 A, ((y : ENNReal) ^ e)⁻¹ * tailW t w y
 
 -- D2: top-level sum over the largest variable.
-noncomputable def topSum (e : ℕ) (t : List ℕ) (w : ℕ → ℕ → ℝ≥0∞) : ℝ≥0∞ :=
-  ∑' x : ℕ, if 0 < x then ((x : ℝ≥0∞) ^ e)⁻¹ * tailW t (w x) x else 0
+noncomputable def topSum (e : ℕ) (t : List ℕ) (w : ℕ → ℕ → ENNReal) : ENNReal :=
+  ∑' x : ℕ, if 0 < x then ((x : ENNReal) ^ e)⁻¹ * tailW t (w x) x else 0
 
 -- D3: ENNReal multiple zeta value in recursive form.
-noncomputable def zetaR : List ℕ → ℝ≥0∞
+noncomputable def zetaR : List ℕ → ENNReal
   | [] => 1
   | e :: t => topSum e t (fun _ _ => 1)
 
 -- D4: harmonic tail weight.
-noncomputable def harmTail (x y : ℕ) : ℝ≥0∞ :=
-  ∑ c ∈ Finset.range y, (((x - c : ℕ) : ℝ≥0∞))⁻¹
+noncomputable def harmTail (x y : ℕ) : ENNReal :=
+  ∑ c ∈ Finset.range y, (((x - c : ℕ) : ENNReal))⁻¹
 
 -- D5: auxiliary series T.
-noncomputable def cycT : List ℕ → ℝ≥0∞
+noncomputable def cycT : List ℕ → ENNReal
   | [] => 0
   | e :: t => topSum e t harmTail
 
 -- D6: remainder weight after splitting off the top variable.
-noncomputable def wWeight (L x y : ℕ) : ℝ≥0∞ :=
-  ∑ c ∈ Finset.Ioo 0 y, (x : ℝ≥0∞)⁻¹ * ((c : ℝ≥0∞) ^ (L - 1))⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹
+noncomputable def wWeight (L x y : ℕ) : ENNReal :=
+  ∑ c ∈ Finset.Ioo 0 y, (x : ENNReal)⁻¹ * ((c : ENNReal) ^ (L - 1))⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹
 
--- D7: ENNReal multiple zeta value in tuple form (Wanted summand with ℝ≥0∞).
-noncomputable def zetaE (l : List ℕ) : ℝ≥0∞ :=
+-- D7: ENNReal multiple zeta value in tuple form (Wanted summand with ENNReal).
+noncomputable def zetaE (l : List ℕ) : ENNReal :=
   ∑' n : Fin l.length → ℕ,
     if (∀ a b : Fin l.length, a < b → n b < n a) ∧ (∀ a, 0 < n a) then
-      ∏ a, ((n a : ℝ≥0∞) ^ l.get a)⁻¹
+      ∏ a, ((n a : ENNReal) ^ l.get a)⁻¹
     else 0
 
 end CyclicSumFormula

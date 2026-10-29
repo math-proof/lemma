@@ -186,10 +186,12 @@ private lemma hensel_nonmonic_adic
 -- proof
   classical
   let f' := derivative f
+
   let c : ℕ → R := fun n =>
     Nat.recOn n a₀ fun _ b => b - f.eval b * Ring.inverse (f'.eval b)
   have hc : ∀ n, c (n + 1) = c n - f.eval (c n) * Ring.inverse (f'.eval (c n)) := by
     intro n; simp only [c]
+
   have hc_mod : ∀ n, c n ≡ a₀ [SMOD I] := by
     intro n
     induction n with
@@ -201,16 +203,19 @@ private lemma hensel_nonmonic_adic
       refine I.mul_mem_right _ ?_
       rw [← SModEq.zero] at h₁ ⊢
       exact (ih.eval f).trans h₁
+
   have hf'c : ∀ n, IsUnit (f'.eval (c n)) := by
     intro n
-    haveI := isLocalHom_of_le_jacobson_bot I (IsAdicComplete.le_jacobson_bot I)
+    have := isLocalHom_of_le_jacobson_bot I (IsAdicComplete.le_jacobson_bot I)
     apply IsUnit.of_map (Ideal.Quotient.mk I)
     convert h₂ using 1
     exact SModEq.def.mp ((hc_mod n).eval _)
+
+
   have hfcI : ∀ n, f.eval (c n) ∈ I ^ (n + 1) := by
     intro n
     induction n with
-    | zero => simpa [Nat.rec_zero, zero_add, pow_one] using h₁
+    | zero => simpa only [Nat.rec_zero, zero_add, pow_one] using h₁
     | succ n ih =>
       rw [← taylor_eval_sub (c n), hc, sub_eq_add_neg, sub_eq_add_neg,
         add_neg_cancel_comm]
@@ -219,17 +224,21 @@ private lemma hensel_nonmonic_adic
       swap
       · intro i; rw [zero_mul]
       refine Ideal.add_mem _ ?_ ?_
+
       · rw [← one_add_one_eq_two, Finset.sum_range_succ, Finset.range_one, Finset.sum_singleton,
-        taylor_coeff_zero, taylor_coeff_one, pow_zero, pow_one, mul_one, mul_neg,
-        mul_left_comm, Ring.mul_inverse_cancel _ (hf'c n), mul_one, add_neg_cancel]
+          taylor_coeff_zero, taylor_coeff_one, pow_zero, pow_one, mul_one, mul_neg,
+          mul_left_comm, Ring.mul_inverse_cancel _ (hf'c n), mul_one, add_neg_cancel]
         exact Ideal.zero_mem _
+
+
       · refine Submodule.sum_mem _ ?_
         simp only [Finset.mem_Ico]
         rintro i ⟨h2i, _⟩
-        have aux : n + 2 ≤ i * (n + 1) := by trans 2 * (n + 1) <;> nlinarith [h2i]
+        have aux : n + 2 ≤ i * (n + 1) := by trans 2 * (n + 1) <;> nlinarith only [h2i]
         refine Ideal.mul_mem_left _ _ (Ideal.pow_le_pow_right aux ?_)
         rw [pow_mul']
         exact Ideal.pow_mem_pow ((Ideal.neg_mem_iff _).2 <| Ideal.mul_mem_right _ _ ih) _
+
   have cauchy : ∀ m n, m ≤ n → c m ≡ c n [SMOD (I ^ m • ⊤ : Ideal R)] := by
     intro m n hmn
     rw [← Ideal.one_eq_top, Ideal.smul_eq_mul, mul_one]
@@ -243,9 +252,12 @@ private lemma hensel_nonmonic_adic
       symm
       rw [SModEq.zero, Ideal.neg_mem_iff]
       refine Ideal.mul_mem_right _ _ (Ideal.pow_le_pow_right ?_ (hfcI _))
-      rwa [Nat.add_assoc]
+      rw [Nat.add_assoc]
+      exact le_self_add
+
   obtain ⟨a, ha⟩ := IsPrecomplete.prec' c (cauchy _ _)
   refine ⟨a, ?_, ?_⟩
+
   · show f.IsRoot a
     suffices ∀ n, f.eval a ≡ 0 [SMOD (I ^ n • ⊤ : Ideal R)] by exact IsHausdorff.haus' _ this
     intro n
@@ -254,6 +266,7 @@ private lemma hensel_nonmonic_adic
     refine (ha.symm.eval f).trans ?_
     rw [SModEq.zero]
     exact Ideal.pow_le_pow_right le_self_add (hfcI _)
+
   · show a - a₀ ∈ I
     specialize ha (0 + 1)
     rw [hc, pow_one, ← Ideal.one_eq_top, Ideal.smul_eq_mul, mul_one, sub_eq_add_neg] at ha
@@ -296,14 +309,14 @@ private lemma hensel_nonmonic_adic_newton
       exact (ih.eval f).trans h₁
   have hf'c : ∀ n, IsUnit ((derivative f).eval (c n)) := by
     intro n
-    haveI := isLocalHom_of_le_jacobson_bot I (IsAdicComplete.le_jacobson_bot I)
+    have := isLocalHom_of_le_jacobson_bot I (IsAdicComplete.le_jacobson_bot I)
     apply IsUnit.of_map (Ideal.Quotient.mk I)
     convert h₂ using 1
     exact SModEq.def.mp ((hc_mod n).eval _)
   have hfcI : ∀ n, f.eval (c n) ∈ I ^ (n + 1) := by
     intro n
     induction n with
-    | zero => simpa [Nat.rec_zero, zero_add, pow_one] using h₁
+    | zero => simpa only [Nat.rec_zero, zero_add, pow_one] using h₁
     | succ n ih =>
       rw [← taylor_eval_sub (c n), hc, sub_eq_add_neg, sub_eq_add_neg,
         add_neg_cancel_comm]
@@ -313,13 +326,13 @@ private lemma hensel_nonmonic_adic_newton
       · intro i; rw [zero_mul]
       refine Ideal.add_mem _ ?_ ?_
       · rw [← one_add_one_eq_two, Finset.sum_range_succ, Finset.range_one, Finset.sum_singleton,
-        taylor_coeff_zero, taylor_coeff_one, pow_zero, pow_one, mul_one, mul_neg,
-        mul_left_comm, Ring.mul_inverse_cancel _ (hf'c n), mul_one, add_neg_cancel]
+          taylor_coeff_zero, taylor_coeff_one, pow_zero, pow_one, mul_one, mul_neg,
+          mul_left_comm, Ring.mul_inverse_cancel _ (hf'c n), mul_one, add_neg_cancel]
         exact Ideal.zero_mem _
       · refine Submodule.sum_mem _ ?_
         simp only [Finset.mem_Ico]
         rintro i ⟨h2i, _⟩
-        have aux : n + 2 ≤ i * (n + 1) := by trans 2 * (n + 1) <;> nlinarith [h2i]
+        have aux : n + 2 ≤ i * (n + 1) := by trans 2 * (n + 1) <;> nlinarith only [h2i]
         refine Ideal.mul_mem_left _ _ (Ideal.pow_le_pow_right aux ?_)
         rw [pow_mul']
         exact Ideal.pow_mem_pow ((Ideal.neg_mem_iff _).2 <| Ideal.mul_mem_right _ _ ih) _
@@ -336,7 +349,8 @@ private lemma hensel_nonmonic_adic_newton
       symm
       rw [SModEq.zero, Ideal.neg_mem_iff]
       refine Ideal.mul_mem_right _ _ (Ideal.pow_le_pow_right ?_ (hfcI _))
-      rwa [Nat.add_assoc]
+      rw [Nat.add_assoc]
+      exact le_self_add
   obtain ⟨a, ha⟩ := IsPrecomplete.prec' c (cauchy _ _)
   refine ⟨a, ?_, ?_, ha, hfcI, hf'c⟩
   · show f.IsRoot a
@@ -354,7 +368,9 @@ private lemma hensel_nonmonic_adic_newton
     refine ha.symm.trans (SModEq.rfl.add ?_)
     rw [SModEq.zero, Ideal.neg_mem_iff]
     exact Ideal.mul_mem_right _ _ h₁
+
 end HenselsLemma
 
 
 -- created on 2026-10-24
+-- updated on 2026-10-28

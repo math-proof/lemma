@@ -654,7 +654,7 @@ private lemma zfk_percolationProbability_zero_of_matched_half_eq
   (hpa : PositivelyAssociated halfMeasure)
   (hhalf : ∀ N : ℕ, halfMeasure.real (StatMech.RSW.Box.horizontalCrossingEvent (-(N : ℤ)) ((N : ℤ) + 1) (-(N : ℤ)) (N : ℤ)) ≤ (1 : ℝ) / 2) :
 -- imply
-  Universality.percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 := by
+  Universality.percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 := by
 -- proof
   apply StatMech.TwoDim.zfk_percolationProbability_zero_of_matched_half hpa hhalf
 
@@ -667,7 +667,7 @@ private lemma zfk_percolationProbability_zero_of_faithful_exclusive_eq
   (hpa : PositivelyAssociated halfMeasure)
   (hexcl : ∀ N : ℕ, zfk_FaithfulMatchedExclusive N) :
 -- imply
-  Universality.percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 := by
+  Universality.percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 := by
 -- proof
   apply StatMech.TwoDim.zfk_percolationProbability_zero_of_faithful_exclusive hpa hexcl
 

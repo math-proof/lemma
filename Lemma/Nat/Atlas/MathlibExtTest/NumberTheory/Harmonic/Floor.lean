@@ -8,7 +8,7 @@ open Asymptotics Filter Real Topology
 [tendsto_centered_floor_harmonic_error_atTop](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Harmonic/Floor.lean)
 -/
 @[path]
-lemma tendsto_centered_floor_harmonic_error_atTop
+lemma tendsto_centered_floor_harmonic_error_atTop :
 -- imply
   Filter.Tendsto (fun x : ℝ => (harmonic ⌊x⌋₊ : ℝ) - Real.log x - eulerMascheroniConstant) Filter.atTop (nhds 0) :=
 -- proof
@@ -17,3 +17,4 @@ lemma tendsto_centered_floor_harmonic_error_atTop
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

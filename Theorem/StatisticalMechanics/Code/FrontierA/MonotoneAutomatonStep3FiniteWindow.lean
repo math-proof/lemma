@@ -26,7 +26,7 @@ variable {d : ℕ}
 
 theorem siteCluster_raiseFields_eq_of_final_infinite_of_avoids
     (T : MonotoneAutomaton d) (xi : NonnegativeField d)
-    (S : Finset (Site d)) (r : Site d → ℝ≥0) (y : Site d)
+    (S : Finset (Site d)) (r : Site d → NNReal) (y : Site d)
     (hinf : (siteCluster (T (raiseFields xi S r)) y).Infinite)
     (havoid : ∀ x ∈ S, x ∉ siteCluster (T (raiseFields xi S r)) y) :
     siteCluster (T (raiseFields xi S r)) y = siteCluster (T xi) y := by

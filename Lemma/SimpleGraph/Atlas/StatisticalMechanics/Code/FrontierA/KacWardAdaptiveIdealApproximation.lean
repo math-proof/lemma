@@ -17,7 +17,7 @@ private lemma dist_middleCorner_ideal_lt_two_mul_eq
   {q : Fin M}
 -- given
   (patch : KWAdaptivePatchedData (M := M) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hfine : patch.data.MeshWithin r) :
 -- imply
   dist (patch.middleCorner i q) (patch.idealMiddleCorner i q) < 2 * r := by
@@ -35,7 +35,7 @@ private lemma dist_vertex_idealVertex_lt_two_mul_eq
   {polygon : KWFiniteSimplePolygon n}
 -- given
   (patch : KWAdaptivePatchedData (M := M) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : patch.data.MeshWithin r) :
 -- imply
@@ -56,7 +56,7 @@ private lemma actual_nonincident_disjoint_of_close_to_ideal_eq
 -- given
   (patch : KWAdaptivePatchedData (M := M) polygon)
   (hideal : ideal.vertex = patch.idealVertex)
-  (r sep : ℝ≥0)
+  (r sep : NNReal)
   (hr : 0 < r)
   (hfine : patch.data.MeshWithin r)
   (hsep : ∀ i j, KWEdgesNonincident i j → ∀ x ∈ ideal.closedEdge i, ∀ y ∈ ideal.closedEdge j, (sep : ℝ) < dist x y)

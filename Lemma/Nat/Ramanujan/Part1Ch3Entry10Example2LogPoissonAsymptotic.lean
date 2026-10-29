@@ -91,10 +91,9 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example2LogPoissonAs
 
 /--
 [poisson_hasSum_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry10Example2LogPoissonAsymptotic.lean)
--/
-@[path]
 This is the probabilistic reading of the series (via `hasSum_one_poissonMeasure`); the
 factorial-moment identities needed for the `O(x⁻³)` bound are obtained by shifting this. -/
+@[path]
 private lemma poisson_hasSum_one {x : ℝ} (hx : 0 ≤ x) :
   HasSum (fun k : ℕ => Real.exp (-x) * x ^ k / (Nat.factorial k : ℝ)) 1 := by
   obtain ⟨r, rfl⟩ : ∃ r : NNReal, (r : ℝ) = x := ⟨⟨x, hx⟩, NNReal.coe_mk x hx⟩
@@ -630,9 +629,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example2LogPoissonAs
 
 /--
 [shifted_sixth_moment](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry10Example2LogPoissonAsymptotic.lean)
--/
-@[path]
 via `w_M / (M+1) = w_{M+1} / x`. -/
+@[path]
 private lemma shifted_sixth_moment {x : ℝ} (hx : 0 < x)
   (Hg : HasSum (fun K => w x K * ((K : ℝ) - x) ^ 6) (15 * x ^ 3 + 25 * x ^ 2 + x)) :
   ∃ Wval : ℝ, HasSum (fun M => w x M * ((M : ℝ) + 1 - x) ^ 6 / ((M : ℝ) + 1)) Wval
@@ -874,7 +872,7 @@ private lemma hterm_hasSum {x Wval : ℝ} (hx : 0 < x)
         mul_le_mul_of_nonneg_left hle (w_nonneg hx.le M)
       _ = (1 / (6 * x ^ 6)) * (w x M * ((M : ℝ) + 1 - x) ^ 6)
         + (1 / (6 * x ^ 5)) * (w x M * ((M : ℝ) + 1 - x) ^ 6 / ((M : ℝ) + 1)) := by
-        field_simp
+          field_simp
   have hAmaj : Summable (fun M => (1 / (6 * x ^ 6)) * (w x M * ((M : ℝ) + 1 - x) ^ 6)
     + (1 / (6 * x ^ 5)) * (w x M * ((M : ℝ) + 1 - x) ^ 6 / ((M : ℝ) + 1))) :=
     (Hnu6.summable.mul_left _).add (HW.summable.mul_left _)
@@ -1213,9 +1211,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example2LogPoissonAs
 
 /--
 [hlog_bounds](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry10Example2LogPoissonAsymptotic.lean)
--/
-@[path]
 below by `-(y-1)^6/6 * (1+1/y)`. -/
+@[path]
 private lemma hlog_bounds {y : ℝ} (hy : 0 < y) :
   hlog y ≤ 0 ∧ -(((y - 1) ^ 6 / 6) * (1 + 1 / y)) ≤ hlog y := by
   obtain hle | hle := le_total y 1
@@ -1400,9 +1397,9 @@ lemma ramanujan_part1_ch3_entry10_example2_log_poisson_asymptotic
     _ ≤ 50 / x ^ 3 := by
       rw [div_le_div_iff₀ hx3 hx3]
       linarith [hx3]
-end
+end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example2LogPoissonAsymptotic
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

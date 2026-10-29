@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Class.v1.Atlas.NumberTheoryI.code.ProductFormula
-open MeasureTheory Measure TopologicalSpace Pointwise Filter Topology MeasureTheory.Measure Metric in
+open MeasureTheory Measure TopologicalSpace Pointwise Filter Topology MeasureTheory.Measure Metric
 
 
 /--
@@ -16,7 +16,7 @@ lemma compact_group_finite_measure
   [MeasurableSpace G]
   [BorelSpace G]
   {μ : Measure G}
-  [μ.IsAddHaarMeasure] :
+  [IsAddHaarMeasure μ] :
 -- imply
   IsFiniteMeasure μ :=
 -- proof
@@ -37,8 +37,8 @@ lemma weil_uniqueness
   [BorelSpace G]
   [SecondCountableTopology G]
   {μ ν : Measure G}
-  [μ.IsAddHaarMeasure]
-  [ν.IsAddHaarMeasure] :
+  [IsAddHaarMeasure μ]
+  [IsAddHaarMeasure ν] :
 -- imply
   ∃ c : ENNReal, c ≠ 0 ∧ c ≠ ⊤ ∧ ν = c • μ := by
 -- proof
@@ -70,9 +70,7 @@ lemma mulLeftContinuousAddEquiv_preimage_smul
   (mulLeftContinuousAddEquiv ha) ⁻¹' (a • S) = S := by
 -- proof
   ext x
-  simp only [Set.mem_preimage, mulLeftContinuousAddEquiv_apply,
-    Set.mem_smul_set_iff_inv_smul_mem₀ ha, smul_eq_mul, ← mul_assoc,
-    inv_mul_cancel₀ ha, one_mul]
+  simp only [Set.mem_preimage, mulLeftContinuousAddEquiv_apply]
 
 /--
 [mulLeftContinuousAddEquiv_symm](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/ProductFormula.lean)
@@ -99,7 +97,7 @@ lemma proposition_13_16_haar_scaling
   [MeasurableSpace K]
   [BorelSpace K]
   {μ : Measure K}
-  [μ.IsAddHaarMeasure]
+  [IsAddHaarMeasure μ]
   [μ.Regular]
   {a : K}
   {S : Set K}
@@ -219,7 +217,7 @@ lemma isNormalizedAbsVal_unique
   ext a
   obtain ⟨U, hU_compact, hU_nhd⟩ := exists_compact_mem_nhds (0 : K)
   set μ : Measure K := addHaar with hμ_def
-  have hμ : μ.IsAddHaarMeasure := inferInstance
+  have hμ : IsAddHaarMeasure μ := inferInstance
   have hU_pos : μ U ≠ 0 := ne_of_gt (measure_pos_of_mem_nhds μ hU_nhd)
   have hU_fin : μ U ≠ ⊤ := ne_of_lt hU_compact.measure_lt_top
   have h1 := @hf.2 μ hμ a U
@@ -262,3 +260,4 @@ private lemma mulLeftContinuousAddEquiv_apply_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

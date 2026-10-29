@@ -17,7 +17,8 @@ private lemma indep_singleton_X : testMatroidTrans.Indep {RatFunc.X} := by
     {RatFunc.X} := by
     rw [AlgebraicIndependent.matroid_indep_iff]
     unfold AlgebraicIndepOn
-    rwa [algebraicIndependent_singleton_iff ⟨RatFunc.X, Set.mem_singleton RatFunc.X⟩]
+    rw [algebraicIndependent_singleton_iff ⟨RatFunc.X, Set.mem_singleton RatFunc.X⟩]
+    exact RatFunc.transcendental_X
   have hInj : Set.InjOn (id : RatFunc (ZMod 2) → RatFunc (ZMod 2)) {RatFunc.X} :=
     Set.injOn_id _
   have hSub : ({RatFunc.X} : Set (RatFunc (ZMod 2))) ⊆ Set.univ :=

@@ -122,8 +122,8 @@ theorem bc62_status :
     
     (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))),
       IsTranslationInvariant (G := Multiplicative (Site 2)) μ → ∀ (L R : ℕ),
-        ((boxFinsetBK 2 R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-          = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ) ∧
+        ((boxFinsetBK 2 R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+          = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ) ∧
     
     (∀ {L : ℕ}, 3 ≤ L →
       bc60_upperLines ∈ bc62_CoarseTrifPrecursor 2 L

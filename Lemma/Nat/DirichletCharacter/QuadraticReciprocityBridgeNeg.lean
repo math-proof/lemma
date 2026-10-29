@@ -1,5 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Def.NumberTheory.DirichletCharacter.Quadratic
+import Lemma.Nat.DirichletCharacter.QuadraticCharacterAux
+import Lemma.Nat.DirichletCharacter.QuadraticReciprocityBridge
 
 
 namespace MetaMathlibExt
@@ -9,13 +12,13 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma jacobiSym_natAbs_eq_kroneckerSym_of_prime_ne_two_of_one_mod_four_neg
-  {D : ℤ}
-  {p : ℕ}
+  (D : ℤ)
+  (p : ℕ)
 -- given
   (hp : p.Prime)
   (hp2 : p ≠ 2)
   (hneg : D < 0)
-  (h0 : D % 4 = 1) :
+  (_h0 : D % 4 = 1) :
 -- imply
   jacobiSym (p : ℤ) D.natAbs = kroneckerSym D p := by
 -- proof
@@ -30,13 +33,13 @@ lemma jacobiSym_natAbs_eq_kroneckerSym_of_prime_ne_two_of_one_mod_four_neg
   have hKR : kroneckerSym D p = jacobiSym D p :=
     kroneckerSym_eq_jacobiSym_of_prime_ne_two D p hp hp2
   have hDsplit : jacobiSym D p =
-    jacobiSym (-1) p * jacobiSym ((D.natAbs : ℕ) : ℤ) p := by
+      jacobiSym (-1) p * jacobiSym ((D.natAbs : ℕ) : ℤ) p := by
     conv_lhs => rw [hDeq2]
     rw [jacobiSym.mul_left]
   have hneg1 : jacobiSym (-1) p = ZMod.χ₄ p := by
     exact jacobiSym.at_neg_one hp_odd
   have hrec : jacobiSym ((D.natAbs : ℕ) : ℤ) p =
-    qrSign p D.natAbs * jacobiSym ((p : ℕ) : ℤ) D.natAbs := by
+      qrSign p D.natAbs * jacobiSym ((p : ℕ) : ℤ) D.natAbs := by
     exact jacobiSym.quadratic_reciprocity' hNodd hp_odd
   have hcancel : ZMod.χ₄ p * qrSign p D.natAbs = 1 := by
     have hp14 : p % 4 = 1 ∨ p % 4 = 3 := by
@@ -91,8 +94,8 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma jacobiSym_natAbs_eq_kroneckerSym_of_prime_ne_two_of_one_mod_four
-  {D : ℤ}
-  {p : ℕ}
+  (D : ℤ)
+  (p : ℕ)
 -- given
   (hp : p.Prime)
   (hp2 : p ≠ 2)
@@ -100,15 +103,15 @@ lemma jacobiSym_natAbs_eq_kroneckerSym_of_prime_ne_two_of_one_mod_four
 -- imply
   jacobiSym (p : ℤ) D.natAbs = kroneckerSym D p := by
 -- proof
-  obtain hneg | rfl | hpos := lt_trichotomy D 0
+  rcases lt_trichotomy D 0 with hneg | rfl | hpos
   · exact jacobiSym_natAbs_eq_kroneckerSym_of_prime_ne_two_of_one_mod_four_neg
-    D p hp hp2 hneg h1
+      D p hp hp2 hneg h0
   · omega
   · exact jacobiSym_natAbs_eq_kroneckerSym_of_prime_ne_two_of_one_mod_four_pos
-    D p hp hp2 hpos h1
+      D p hp hp2 hpos h0
 
 end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

@@ -33,7 +33,7 @@ probability measures, with the hard truncation convention at radius one.
 
 namespace MetaMathlibExt
 
-noncomputable def lkPoissonCoeff (ρ : Measure ℝ) (n : ℕ) : ℝ≥0∞ :=
+noncomputable def lkPoissonCoeff (ρ : Measure ℝ) (n : ℕ) : ENNReal :=
   ENNReal.ofReal (Real.exp (-ρ.real Set.univ) / (n.factorial : ℝ))
 
 noncomputable def lkCompoundPoisson (ρ : Measure ℝ) : Measure ℝ :=

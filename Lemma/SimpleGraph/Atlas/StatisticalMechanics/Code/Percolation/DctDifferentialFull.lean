@@ -85,7 +85,7 @@ private lemma connWithinProb_eq_eq
   {S : Finset (Site d)}
   {x : Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (h0 : origin d ∈ (S : Set (Site d)))
   (hx : x ∈ (S : Set (Site d))) :
@@ -105,7 +105,7 @@ private lemma withinConn_indep_eq
   {B : Set (ConfigSpace (Sym2 (Site d)))}
   {U : Finset (Sym2 (Site d))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hdisj : Disjoint (edgesWithinFinset S) U)
   (hB : DependsOn (B.indicator (fun _ => (1 : ℝ))) (U : Set (Sym2 (Site d)))) :
@@ -139,7 +139,7 @@ private lemma phi_reassembly_eq
   {B : Set (ConfigSpace (Sym2 (Site d)))}
   {U : Finset (Sym2 (Site d))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (h0 : origin d ∈ S)
   (hdisj : Disjoint (edgesWithinFinset S) U)
@@ -159,7 +159,7 @@ private lemma phi_surface_summand_eq
   {B : Set (ConfigSpace (Sym2 (Site d)))}
   {U : Finset (Sym2 (Site d))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (h0 : origin d ∈ S)
   (hp0 : 0 < (p : ℝ))

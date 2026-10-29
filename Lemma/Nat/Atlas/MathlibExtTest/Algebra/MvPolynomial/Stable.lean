@@ -11,7 +11,7 @@ namespace MathlibExtTest.Algebra.MvPolynomial.Stable
 [unitX_isStable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/MvPolynomial/Stable.lean)
 -/
 @[path]
-lemma unitX_isStable
+lemma unitX_isStable :
 -- imply
   (X () : MvPolynomial Unit ℂ).IsStable := by
 -- proof
@@ -36,3 +36,4 @@ end MathlibExtTest.Algebra.MvPolynomial.Stable
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

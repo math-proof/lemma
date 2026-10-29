@@ -13,7 +13,7 @@ private lemma measureProb_eq_measure_real_eq
   [DecidableEq E]
   {A : Set (ConfigSpace E)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   measureProb A (p : ℝ) = (bernoulliProductMeasure (E := E) p hp).real A := by
@@ -100,7 +100,7 @@ private lemma russo_derivative_measure_eq
   {A : Set (ConfigSpace E)}
 -- given
   (hA : IsIncreasing A)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (h0 : 0 < (p : ℝ))
   (h1 : (p : ℝ) < 1) :

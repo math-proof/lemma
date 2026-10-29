@@ -32,7 +32,7 @@ theorem weakConvergesTo_iff_forall_integral_tendsto
 theorem weakConvergesTo_iff_forall_lintegral_tendsto
     (μ : ℕ → ProbabilityMeasure (ConfigSpace E)) (ν : ProbabilityMeasure (ConfigSpace E)) :
     WeakConvergesTo μ ν ↔
-      ∀ f : (ConfigSpace E) →ᵇ ℝ≥0,
+      ∀ f : (ConfigSpace E) →ᵇ NNReal,
         Tendsto (fun n => ∫⁻ x, f x ∂(μ n : Measure (ConfigSpace E))) atTop
           (𝓝 (∫⁻ x, f x ∂(ν : Measure (ConfigSpace E)))) :=
   ProbabilityMeasure.tendsto_iff_forall_lintegral_tendsto

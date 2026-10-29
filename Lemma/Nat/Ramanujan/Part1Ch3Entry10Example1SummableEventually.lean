@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example1SummableEventually
@@ -51,7 +50,7 @@ lemma ramanujan_part1_ch3_entry10_example1_summable_eventually
   have hpow_nonneg : 0 ≤ |x| ^ (j + 1) := pow_nonneg (abs_nonneg _) _
   calc ‖x ^ (j + 1) * Real.sqrt (↑(j + 1) : ℝ) / (↑(Nat.factorial (j + 1)) : ℝ)‖
     = |x| ^ (j + 1) * Real.sqrt ((j + 1 : ℕ) : ℝ) / ((Nat.factorial (j + 1) : ℕ) : ℝ) := by
-      rw [Real.norm_eq_abs, abs_div, abs_mul, abs_pow, h1, habs]
+        rw [Real.norm_eq_abs, abs_div, abs_mul, abs_pow, h1, habs]
     _ ≤ |x| ^ (j + 1) * ((j + 1 : ℕ) : ℝ) / ((Nat.factorial (j + 1) : ℕ) : ℝ) := by
       apply div_le_div_of_nonneg_right _ (le_of_lt hpos)
       exact mul_le_mul_of_nonneg_left hle hpow_nonneg
@@ -60,4 +59,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example1SummableEventually
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

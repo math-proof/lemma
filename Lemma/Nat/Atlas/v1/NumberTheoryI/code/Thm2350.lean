@@ -12,9 +12,9 @@ lemma homology_les_exact
   [Abelian C]
   {c : ComplexShape ι}
   {S : ShortComplex (HomologicalComplex C c)}
-  {i j : ι}
 -- given
   (hS : S.ShortExact)
+  (i j : ι)
   (hij : c.Rel i j) :
 -- imply
   (HomologicalComplex.HomologySequence.composableArrows₅ hS i j hij).Exact :=
@@ -30,11 +30,11 @@ lemma homology_les_naturality
   [Abelian C]
   {c : ComplexShape ι}
   {S₁ S₂ : ShortComplex (HomologicalComplex C c)}
-  {φ : S₁ ⟶ S₂}
-  {i j : ι}
+  (φ : S₁ ⟶ S₂)
 -- given
   (hS₁ : S₁.ShortExact)
   (hS₂ : S₂.ShortExact)
+  (i j : ι)
   (hij : c.Rel i j) :
 -- imply
   hS₁.δ i j hij ≫ HomologicalComplex.homologyMap φ.τ₁ j = HomologicalComplex.homologyMap φ.τ₃ i ≫ hS₂.δ i j hij :=

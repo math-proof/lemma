@@ -45,7 +45,7 @@ theorem coord_true_dependsOn {E : Type*} (e : E) :
 
 
 theorem coord_true_prob {E : Type*} [Countable E] [DecidableEq E]
-    (p : ℝ≥0) (hp : p ≤ 1) (e : E) :
+    (p : NNReal) (hp : p ≤ 1) (e : E) :
     (bernoulliProductMeasure (E := E) p hp).real {ω | ω e = true} = (p : ℝ) := by
   classical
   haveI hu : Unique ↥({e} : Finset E) := by
@@ -223,7 +223,7 @@ theorem clusterInter_withinConn_dependsOn {S : Finset (Site d)} {K : Finset (Sit
   · rw [Set.indicator_of_notMem hmem, Set.indicator_of_notMem (fun hc => hmem (hiff.mpr hc))]
 
 
-theorem lastExit_summand_factor (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem lastExit_summand_factor (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (K : Finset (Site d)) (x y : Site d) (n : ℕ)
     (hxK : x ∈ K) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
@@ -263,7 +263,7 @@ theorem boundaryEdge_disjoint_within (S : Finset (Site d)) (x y : Site d) (hyS :
   · subst h1; subst h2; exact hyS ha
 
 
-theorem withinConn_edge_indep (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem withinConn_edge_indep (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (x y : Site d) (hyS : y ∉ S) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
         (withinConnEvent d (S : Set (Site d)) (origin d) x ∩ {ω | ω s(x, y) = true})
@@ -327,7 +327,7 @@ theorem crossingEvent_lastExit_finset (S : Finset (Site d))
     exact ⟨z, _hzbox, ⟨hybox, hy⟩, hz, hzconn⟩
 
 
-theorem summand_per_K_le (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem summand_per_K_le (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (K : Finset (Site d)) (x y : Site d)
     {L m n : ℕ} (hy : y ∈ box d L) (hmLn : m + L ≤ n) (hm : 1 ≤ m) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
@@ -357,7 +357,7 @@ theorem summand_per_K_le (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
     exact mul_nonneg measureReal_nonneg (crossProb_nonneg d p hp m)
 
 
-theorem sumK_explored_le (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem sumK_explored_le (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (x y : Site d) :
     ∑ K ∈ S.powerset,
       (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
@@ -398,7 +398,7 @@ theorem sumK_explored_le (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
   exact ⟨hwc, hbo.2.2.2⟩
 
 
-theorem sumK_summand_le (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem sumK_summand_le (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (x y : Site d) (hyS : y ∉ S)
     {L m n : ℕ} (hy : y ∈ box d L) (hmLn : m + L ≤ n) (hm : 1 ≤ m) :
     ∑ K ∈ S.powerset,
@@ -438,7 +438,7 @@ theorem sumK_summand_le (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
         rw [withinConn_edge_indep p hp S x y hyS]
 
 
-theorem subcritical_oneStep (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem subcritical_oneStep (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (L : ℕ) (hL : 1 ≤ L)
     (hSbox : (S : Set (Site d)) ⊆ box d (L - 1)) (k : ℕ) (hk : 1 ≤ k) :
     crossProb d p hp ((k + 1) * L) ≤ phi d p hp S * crossProb d p hp (k * L) := by
@@ -537,7 +537,7 @@ theorem geometric_subseq_antitone_decay' {f : ℕ → ℝ} {r C : ℝ} {L : ℕ}
     _ = C * r⁻¹ * Real.exp (-c * n) := by ring
 
 
-theorem subcritical_geometric (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem subcritical_geometric (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (hphi : phi d p hp S < 1)
     (L : ℕ) (hL : 1 ≤ L) (hSbox : (S : Set (Site d)) ⊆ box d (L - 1)) :
     ∃ r, 0 < r ∧ r < 1 ∧ ∀ k, crossProb d p hp (k * L) ≤ r⁻¹ * r ^ k := by
@@ -565,7 +565,7 @@ theorem subcritical_geometric (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
     exact hgj
 
 
-theorem subcritical_decay_unconditional (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem subcritical_decay_unconditional (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (hphi : phi d p hp S < 1)
     (L : ℕ) (hL : 1 ≤ L) (hSbox : (S : Set (Site d)) ⊆ box d (L - 1)) :
     ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n) := by

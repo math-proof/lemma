@@ -25,7 +25,7 @@ open StatMech.Lattice StatMech.TwoDim
 
 
 theorem halfMeasure_eq :
-    halfMeasure = bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one := rfl
+    halfMeasure = bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one := rfl
 
 
 theorem measurable_dualConfig :
@@ -65,7 +65,7 @@ theorem half_crossingProb_of_selfDual_dichotomy
   linarith
 
 
-theorem percolationProbability_congr {d : ℕ} {p q : ℝ≥0}
+theorem percolationProbability_congr {d : ℕ} {p q : NNReal}
     (hp : p ≤ 1) (hq : q ≤ 1) (h : p = q) :
     percolationProbability d p hp = percolationProbability d q hq := by
   subst h; rfl
@@ -76,21 +76,21 @@ theorem subcriticalDensities_bddAbove (d : ℕ) : BddAbove (subcriticalDensities
 
 
 theorem half_mem_subcriticalDensities
-    (h : percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0) :
+    (h : percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0) :
     ((1 : ℝ) / 2) ∈ subcriticalDensities 2 := by
   have hp0 : (0 : ℝ) ≤ 1 / 2 := by norm_num
   have hp1 : (1 : ℝ) / 2 ≤ 1 := by norm_num
   refine ⟨hp0, hp1, ?_⟩
   rw [percolationProbability_congr (by exact_mod_cast hp1) half_le_one
-    (show (⟨(1 : ℝ) / 2, hp0⟩ : ℝ≥0) = (2⁻¹ : ℝ≥0) by
+    (show (⟨(1 : ℝ) / 2, hp0⟩ : NNReal) = (2⁻¹ : NNReal) by
       apply NNReal.coe_injective
-      show (1 : ℝ) / 2 = ((2⁻¹ : ℝ≥0) : ℝ)
+      show (1 : ℝ) / 2 = ((2⁻¹ : NNReal) : ℝ)
       rw [NNReal.coe_inv]; norm_num)]
   exact h
 
 
 theorem half_le_criticalProbability_of_subcritical
-    (h : percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0) :
+    (h : percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0) :
     (1 : ℝ) / 2 ≤ criticalProbability 2 := by
   unfold criticalProbability
   exact le_csSup (subcriticalDensities_bddAbove 2) (half_mem_subcriticalDensities h)
@@ -98,19 +98,19 @@ theorem half_le_criticalProbability_of_subcritical
 
 theorem criticalProbability_le_half_of_sharpThreshold
     {boxFam : ℕ → Set (ConfigSpace (Sym2 (Site 2)))}
-    (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
+    (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
         Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0))
     (hbalance : ∀ n : ℕ, halfMeasure.real (boxFam n) = 1 / 2) :
     criticalProbability 2 ≤ (1 : ℝ) / 2 := by
   by_contra hgt
   rw [not_le] at hgt
   
-  have hlt : ((2⁻¹ : ℝ≥0) : ℝ) < criticalProbability 2 := by
-    have hc : ((2⁻¹ : ℝ≥0) : ℝ) = 1 / 2 := by rw [NNReal.coe_inv]; norm_num
+  have hlt : ((2⁻¹ : NNReal) : ℝ) < criticalProbability 2 := by
+    have hc : ((2⁻¹ : NNReal) : ℝ) = 1 / 2 := by rw [NNReal.coe_inv]; norm_num
     rw [hc]; exact hgt
-  have hT := hSharpThreshold (2⁻¹ : ℝ≥0) half_le_one hlt
+  have hT := hSharpThreshold (2⁻¹ : NNReal) half_le_one hlt
   
-  have hconst : (fun n => (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one).real (boxFam n))
+  have hconst : (fun n => (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one).real (boxFam n))
       = fun _ => (1 : ℝ) / 2 := funext hbalance
   rw [hconst] at hT
   have hcontra := tendsto_nhds_unique hT tendsto_const_nhds
@@ -124,13 +124,13 @@ theorem kesten_pc_eq_half_of_bxp
     (hbxp : BoxCrossingProperty halfMeasure ρ)
     
     (hCorLowerBound : BoxCrossingProperty halfMeasure ρ →
-        percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0)
+        percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0)
     
     (hHm : ∀ n, MeasurableSet (boxFam n))
     (hRmeas : Measurable R) (hRpres : Measure.map R halfMeasure = halfMeasure)
     (hdich : ∀ n, (boxFam n)ᶜ = (R ∘ dualConfig) ⁻¹' (boxFam n))
     
-    (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
+    (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
         Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
     criticalProbability 2 = 1 / 2 := by
   
@@ -149,14 +149,14 @@ theorem kesten_no_percolation_at_pc
     {boxFam : ℕ → Set (ConfigSpace (Sym2 (Site 2)))}
     (hbxp : BoxCrossingProperty halfMeasure ρ)
     (hCorLowerBound : BoxCrossingProperty halfMeasure ρ →
-        percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0)
+        percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0)
     (hHm : ∀ n, MeasurableSet (boxFam n))
     (hRmeas : Measurable R) (hRpres : Measure.map R halfMeasure = halfMeasure)
     (hdich : ∀ n, (boxFam n)ᶜ = (R ∘ dualConfig) ⁻¹' (boxFam n))
-    (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
+    (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
         Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
     criticalProbability 2 = 1 / 2 ∧
-      percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 :=
+      percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 :=
   ⟨kesten_pc_eq_half_of_bxp hbxp hCorLowerBound hHm hRmeas hRpres hdich hSharpThreshold,
     hCorLowerBound hbxp⟩
 

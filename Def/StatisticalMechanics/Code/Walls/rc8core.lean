@@ -23,7 +23,7 @@ open StatMech ConfigSpace
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
 
-noncomputable def rc8_half : ℝ≥0 := 1 / 2
+noncomputable def rc8_half : NNReal := 1 / 2
 
 
 end StatMech.Walls

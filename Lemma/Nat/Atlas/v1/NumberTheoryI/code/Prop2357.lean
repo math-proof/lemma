@@ -12,9 +12,9 @@ lemma proposition_23_57
   [Category.{v} C]
   [Abelian C]
   {M N : C}
-  {f : M ⟶ N}
-  {P : ProjectiveResolution M}
-  {Q : ProjectiveResolution N} :
+  (f : M ⟶ N)
+  (P : ProjectiveResolution M)
+  (Q : ProjectiveResolution N) :
 -- imply
   (∃ α : P.complex ⟶ Q.complex, α ≫ Q.π = P.π ≫ (ChainComplex.single₀ C).map f) ∧ (∀ (g h : P.complex ⟶ Q.complex), g ≫ Q.π = P.π ≫ (ChainComplex.single₀ C).map f → h ≫ Q.π = P.π ≫ (ChainComplex.single₀ C).map f → Nonempty (Homotopy g h)) :=
 -- proof
@@ -30,9 +30,9 @@ lemma proposition_23_57_injective
   [Category.{v} C]
   [Abelian C]
   {M N : C}
-  {f : M ⟶ N}
-  {I : InjectiveResolution M}
-  {J : InjectiveResolution N} :
+  (f : M ⟶ N)
+  (I : InjectiveResolution M)
+  (J : InjectiveResolution N) :
 -- imply
   (∃ α : I.cocomplex ⟶ J.cocomplex, I.ι ≫ α = (CochainComplex.single₀ C).map f ≫ J.ι) ∧ (∀ (g h : I.cocomplex ⟶ J.cocomplex), I.ι ≫ g = (CochainComplex.single₀ C).map f ≫ J.ι → I.ι ≫ h = (CochainComplex.single₀ C).map f ≫ J.ι → Nonempty (Homotopy g h)) :=
 -- proof

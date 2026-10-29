@@ -125,7 +125,7 @@ lemma azuma_inequality_alt
   (hc_pos : ∀ i, 0 ≤ c i)
   (hbdd : ∀ i : Fin n, ∀ᵐ ω ∂μ, |Z (↑i + 1) ω - Z ↑i ω| ≤ c i)
   (h_adapted : MeasureTheory.StronglyAdapted ℱ (fun i ω => Z (i + 1) ω - Z i ω))
-  (σ : ℕ → ℝ≥0)
+  (σ : ℕ → NNReal)
   (hσ : ∀ i (hi : i < n), (σ i : ℝ) = c ⟨i, hi⟩ ^ 2)
   (h0 : ProbabilityTheory.HasSubgaussianMGF (fun ω => Z 1 ω - Z 0 ω) (σ 0) μ)
   (h_subG : ∀ i, i < n - 1 → ProbabilityTheory.HasCondSubgaussianMGF (↑(ℱ i)) (ℱ.le i) (fun ω => Z (i + 2) ω - Z (i + 1) ω) (σ (i + 1)) μ)
@@ -217,7 +217,7 @@ lemma azuma_doob_martingale_subG
 -- imply
   μ.real {ω | ε ≤ ∑ i ∈ Finset.range n, Y i ω} ≤ Real.exp (-2 * ε ^ 2 / ∑ i ∈ Finset.range n, c i ^ 2) := by
 -- proof
-  set cY : ℕ → ℝ≥0 := fun i => hoeffdingSubGParam (c i) (hc i) with hcY_def
+  set cY : ℕ → NNReal := fun i => hoeffdingSubGParam (c i) (hc i) with hcY_def
   have hmain := ProbabilityTheory.measure_sum_ge_le_of_hasCondSubgaussianMGF
     (ℱ := ℱ) (cY := cY) h_adapted h0 n h_subG hε
   refine hmain.trans (Real.exp_le_exp.mpr ?_)

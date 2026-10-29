@@ -454,7 +454,7 @@ theorem bins_routePackage_of_nineShell_measure
   · simpa [B] using hpattern
 
 
-theorem bins_routePackage_of_nineShell (p : ℝ≥0) (hp1 : p ≤ 1) (m : ℕ)
+theorem bins_routePackage_of_nineShell (p : NNReal) (hp1 : p ≤ 1) (m : ℕ)
     (v u : Fin 9 → Site 2)
     (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
       (bins_NineShellEvent m v u)) :
@@ -471,13 +471,13 @@ theorem bins_routePackage_of_nineShell (p : ℝ≥0) (hp1 : p ≤ 1) (m : ℕ)
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1) m v u hpos
 
 
-theorem bins_route (p : ℝ≥0) (hp1 : p ≤ 1) : bins_Route p hp1 := by
+theorem bins_route (p : NNReal) (hp1 : p ≤ 1) : bins_Route p hp1 := by
   intro n hpos
   obtain ⟨m, v, u, hNine⟩ := bins_exists_NineShellEvent_pos_of_threeMeetBox p hp1 n hpos
   exact bins_routePackage_of_nineShell p hp1 m v u hNine
 
 
-theorem bins_bk_unconditional (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1) :
+theorem bins_bk_unconditional (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
         {omega | numInfiniteClusters 2 omega = 0} = 1 ∨
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1

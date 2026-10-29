@@ -143,10 +143,10 @@ lemma mk_one_ne_mk_omega_sq
   have hPrim :=
     omegaQuotient_isPrimitiveRoot (K := K) hZeta P hPprime hPbot hNormCoprime
   have hPow2 :
-    (Ideal.Quotient.mk P (omega (K := K) hZeta)) ^ 2 = 1 := by
+      (Ideal.Quotient.mk P (omega (K := K) hZeta)) ^ 2 = 1 := by
     rw [← map_pow, ← hEq, map_one]
   have hNe :
-    (Ideal.Quotient.mk P (omega (K := K) hZeta)) ^ 2 ≠ 1 :=
+      (Ideal.Quotient.mk P (omega (K := K) hZeta)) ^ 2 ≠ 1 :=
     hPrim.pow_ne_one_of_pos_of_lt (by norm_num) (by norm_num)
   exact hNe hPow2
 
@@ -176,7 +176,7 @@ lemma mk_omega_ne_mk_omega_sq
   have hPrim :=
     omegaQuotient_isPrimitiveRoot (K := K) hZeta P hPprime hPbot hNormCoprime
   have hMkNeZero :
-    Ideal.Quotient.mk P (omega (K := K) hZeta) ≠ 0 := by
+      Ideal.Quotient.mk P (omega (K := K) hZeta) ≠ 0 := by
     intro hZero
     have hpow : (Ideal.Quotient.mk P (omega (K := K) hZeta)) ^ 3 = 1 :=
       hPrim.pow_eq_one
@@ -184,37 +184,37 @@ lemma mk_omega_ne_mk_omega_sq
       rw [← hZero, hpow]
     simp at this
   have hPowEq :
-    Ideal.Quotient.mk P (omega (K := K) hZeta) =
-      Ideal.Quotient.mk P (omega (K := K) hZeta) ^ 2 := by
+      Ideal.Quotient.mk P (omega (K := K) hZeta) =
+        Ideal.Quotient.mk P (omega (K := K) hZeta) ^ 2 := by
     rw [← map_pow, hEq]
   have hIsMax : P.IsMaximal := Ideal.IsPrime.isMaximal hPprime hPbot
   let _ : Field (NumberField.RingOfIntegers K ⧸ P) :=
     Ideal.Quotient.field P
   have hMul :
-    Ideal.Quotient.mk P (omega (K := K) hZeta) *
-      (1 - Ideal.Quotient.mk P (omega (K := K) hZeta)) = 0 := by
+      Ideal.Quotient.mk P (omega (K := K) hZeta) *
+        (1 - Ideal.Quotient.mk P (omega (K := K) hZeta)) = 0 := by
     have hSub :
-      Ideal.Quotient.mk P (omega (K := K) hZeta) -
-        Ideal.Quotient.mk P (omega (K := K) hZeta) ^ 2 = 0 := by
+        Ideal.Quotient.mk P (omega (K := K) hZeta) -
+          Ideal.Quotient.mk P (omega (K := K) hZeta) ^ 2 = 0 := by
       rw [← hPowEq, sub_self]
     have h1 :
-      Ideal.Quotient.mk P (omega (K := K) hZeta) *
-        (1 - Ideal.Quotient.mk P (omega (K := K) hZeta)) =
-        Ideal.Quotient.mk P (omega (K := K) hZeta) -
-          Ideal.Quotient.mk P (omega (K := K) hZeta) ^ 2 := by
+        Ideal.Quotient.mk P (omega (K := K) hZeta) *
+            (1 - Ideal.Quotient.mk P (omega (K := K) hZeta)) =
+          Ideal.Quotient.mk P (omega (K := K) hZeta) -
+            Ideal.Quotient.mk P (omega (K := K) hZeta) ^ 2 := by
       ring
     rw [h1, hSub]
   rcases mul_eq_zero.mp hMul with hZero | hOne
   · exact hMkNeZero hZero
   · have hEqOne :
-    Ideal.Quotient.mk P (omega (K := K) hZeta) = 1 := by
-    have hSubZero :
-      1 - Ideal.Quotient.mk P (omega (K := K) hZeta) = 0 := hOne
-    have h2 :
-      Ideal.Quotient.mk P (omega (K := K) hZeta) =
-        1 - (1 - Ideal.Quotient.mk P (omega (K := K) hZeta)) := by
-      ring
-    rw [h2, hSubZero, sub_zero]
+        Ideal.Quotient.mk P (omega (K := K) hZeta) = 1 := by
+      have hSubZero :
+          1 - Ideal.Quotient.mk P (omega (K := K) hZeta) = 0 := hOne
+      have h2 :
+          Ideal.Quotient.mk P (omega (K := K) hZeta) =
+            1 - (1 - Ideal.Quotient.mk P (omega (K := K) hZeta)) := by
+        ring
+      rw [h2, hSubZero, sub_zero]
     exact hPrim.ne_one (by norm_num) hEqOne
 
 end MetaMathlibExt
@@ -274,10 +274,10 @@ lemma primeIdealValidCubicSymbol_unique
   have hValidSpec :=
     primeIdealValidCubicSymbol_spec hZeta P a hPprime hPbot hNormCoprime ha
   have hEq :
-    Ideal.Quotient.mk P c =
-      Ideal.Quotient.mk P
-        (primeIdealValidCubicSymbol hZeta P a hPprime hPbot
-          hNormCoprime ha) := by
+      Ideal.Quotient.mk P c =
+        Ideal.Quotient.mk P
+          (primeIdealValidCubicSymbol hZeta P a hPprime hPbot
+            hNormCoprime ha) := by
     rw [hcSpec, hValidSpec]
   have hPair :=
     cubicRoot_quotient_pairwise_distinct (K := K) hZeta P hPprime hPbot
@@ -291,41 +291,41 @@ lemma primeIdealValidCubicSymbol_unique
     · exact hV.symm
     · exfalso
       have :
-        Ideal.Quotient.mk P (1 : NumberField.RingOfIntegers K) =
-          Ideal.Quotient.mk P (omega (K := K) hZeta) := by
+          Ideal.Quotient.mk P (1 : NumberField.RingOfIntegers K) =
+            Ideal.Quotient.mk P (omega (K := K) hZeta) := by
         rw [hEq, hV]
       exact h1neW this
     · exfalso
       have :
-        Ideal.Quotient.mk P (1 : NumberField.RingOfIntegers K) =
-          Ideal.Quotient.mk P (omega (K := K) hZeta ^ 2) := by
+          Ideal.Quotient.mk P (1 : NumberField.RingOfIntegers K) =
+            Ideal.Quotient.mk P (omega (K := K) hZeta ^ 2) := by
         rw [hEq, hV]
       exact h1neW2 this
   · rcases hValidMem with hV | hV | hV
     · exfalso
       have :
-        Ideal.Quotient.mk P (omega (K := K) hZeta) =
-          Ideal.Quotient.mk P (1 : NumberField.RingOfIntegers K) := by
+          Ideal.Quotient.mk P (omega (K := K) hZeta) =
+            Ideal.Quotient.mk P (1 : NumberField.RingOfIntegers K) := by
         rw [hEq, hV]
       exact h1neW this.symm
     · exact hV.symm
     · exfalso
       have :
-        Ideal.Quotient.mk P (omega (K := K) hZeta) =
-          Ideal.Quotient.mk P (omega (K := K) hZeta ^ 2) := by
+          Ideal.Quotient.mk P (omega (K := K) hZeta) =
+            Ideal.Quotient.mk P (omega (K := K) hZeta ^ 2) := by
         rw [hEq, hV]
       exact hWneW2 this
   · rcases hValidMem with hV | hV | hV
     · exfalso
       have :
-        Ideal.Quotient.mk P (omega (K := K) hZeta ^ 2) =
-          Ideal.Quotient.mk P (1 : NumberField.RingOfIntegers K) := by
+          Ideal.Quotient.mk P (omega (K := K) hZeta ^ 2) =
+            Ideal.Quotient.mk P (1 : NumberField.RingOfIntegers K) := by
         rw [hEq, hV]
       exact h1neW2 this.symm
     · exfalso
       have :
-        Ideal.Quotient.mk P (omega (K := K) hZeta ^ 2) =
-          Ideal.Quotient.mk P (omega (K := K) hZeta) := by
+          Ideal.Quotient.mk P (omega (K := K) hZeta ^ 2) =
+            Ideal.Quotient.mk P (omega (K := K) hZeta) := by
         rw [hEq, hV]
       exact hWneW2 this.symm
     · exact hV.symm
@@ -362,6 +362,7 @@ lemma primeIdealValidCubicSymbol_characterization
   · intro ⟨hMem, hSpec⟩
     exact primeIdealValidCubicSymbol_unique hZeta P a hPprime hPbot
       hNormCoprime ha c hMem hSpec
+
 open Classical in
 
 end MetaMathlibExt
@@ -457,6 +458,7 @@ lemma primeIdealCubicSymbolFactorRaw_eq_one_of_isPrime_of_bot
 -- proof
   have hNotBot : ¬ (P ≠ ⊥) := by rw [hBot]; simp
   simp [primeIdealCubicSymbolFactorRaw, hPprime, hNotBot]
+
 open Classical in
 
 end MetaMathlibExt
@@ -483,14 +485,14 @@ lemma cubicResidueSymbolRaw_unit
   have hu0 : u ≠ 0 := IsUnit.ne_zero hu
   simp only [hu0, ↓reduceIte]
   have hSpanTop :
-    Ideal.span ({u} : Set (NumberField.RingOfIntegers K)) = ⊤ :=
+      Ideal.span ({u} : Set (NumberField.RingOfIntegers K)) = ⊤ :=
     Ideal.span_singleton_eq_top.mpr hu
   have hIsUnitIdeal :
-    IsUnit (Ideal.span ({u} : Set (NumberField.RingOfIntegers K))) := by
+      IsUnit (Ideal.span ({u} : Set (NumberField.RingOfIntegers K))) := by
     rw [Ideal.isUnit_iff, hSpanTop]
   have hFacs :
-    UniqueFactorizationMonoid.normalizedFactors
-      (Ideal.span ({u} : Set _)) = 0 := by
+      UniqueFactorizationMonoid.normalizedFactors
+          (Ideal.span ({u} : Set _)) = 0 := by
     exact UniqueFactorizationMonoid.normalizedFactors_of_isUnit hIsUnitIdeal
   simp [hFacs]
 
@@ -519,22 +521,22 @@ lemma cubicResidueSymbolRaw_mul
   have hmn : m * n ≠ 0 := mul_ne_zero hm hn
   simp only [hm, hn, hmn, ↓reduceIte]
   have hSpanMul :
-    Ideal.span ({m * n} : Set (NumberField.RingOfIntegers K)) =
-      Ideal.span ({m} : Set _) * Ideal.span ({n} : Set _) := by
+      Ideal.span ({m * n} : Set (NumberField.RingOfIntegers K)) =
+        Ideal.span ({m} : Set _) * Ideal.span ({n} : Set _) := by
     rw [Ideal.span_singleton_mul_span_singleton]
   have hmBot :
-    Ideal.span ({m} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
+      Ideal.span ({m} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
     rw [Ne, Ideal.span_singleton_eq_bot]; exact hm
   have hnBot :
-    Ideal.span ({n} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
+      Ideal.span ({n} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
     rw [Ne, Ideal.span_singleton_eq_bot]; exact hn
   have hFacMul :
-    UniqueFactorizationMonoid.normalizedFactors
-      (Ideal.span ({m * n} : Set _)) =
       UniqueFactorizationMonoid.normalizedFactors
-        (Ideal.span ({m} : Set _)) +
+          (Ideal.span ({m * n} : Set _)) =
         UniqueFactorizationMonoid.normalizedFactors
-          (Ideal.span ({n} : Set _)) := by
+            (Ideal.span ({m} : Set _)) +
+          UniqueFactorizationMonoid.normalizedFactors
+            (Ideal.span ({n} : Set _)) := by
     rw [hSpanMul]
     exact UniqueFactorizationMonoid.normalizedFactors_mul hmBot hnBot
   simp only [hFacMul, Multiset.map_add, Multiset.prod_add]
@@ -563,20 +565,20 @@ lemma cubicResidueSymbolRaw_prime
   unfold cubicResidueSymbolRaw
   simp only [hpNeZero, ↓reduceIte]
   have hSpanPrime :
-    (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))).IsPrime :=
+      (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))).IsPrime :=
     Ideal.isPrime_span_singleton_of_prime hpPrime
   have hSpanNeBot :
-    Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
+      Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
     rw [Ne, Ideal.span_singleton_eq_bot]; exact hpNeZero
   have hPrimeIdeal :
-    Prime (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))) :=
+      Prime (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))) :=
     Ideal.prime_of_isPrime hSpanNeBot hSpanPrime
   have hIrred :
-    Irreducible (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))) :=
+      Irreducible (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))) :=
     hPrimeIdeal.irreducible
   have hFac :
-    UniqueFactorizationMonoid.normalizedFactors
-      (Ideal.span ({p} : Set _)) = {Ideal.span {p}} := by
+      UniqueFactorizationMonoid.normalizedFactors
+          (Ideal.span ({p} : Set _)) = {Ideal.span {p}} := by
     rw [UniqueFactorizationMonoid.normalizedFactors_irreducible hIrred,
       normalize_eq]
   simp [hFac]
@@ -606,13 +608,13 @@ lemma cubicResidueSymbolRaw_prime_dvd
 -- proof
   rw [cubicResidueSymbolRaw_prime hZeta a p hpPrime hpNeZero]
   have hSpanPrime :
-    (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))).IsPrime :=
+      (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))).IsPrime :=
     Ideal.isPrime_span_singleton_of_prime hpPrime
   have hSpanNeBot :
-    Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
+      Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
     rw [Ne, Ideal.span_singleton_eq_bot]; exact hpNeZero
   have hMem :
-    a ∈ Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) :=
+      a ∈ Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) :=
     Ideal.mem_span_singleton.mpr hdvd
   simp only [primeIdealCubicSymbolFactorRaw,
     dite_eq_left hSpanPrime, dite_eq_left hSpanNeBot, dite_eq_left hNormCop, dite_eq_left hMem]
@@ -641,28 +643,28 @@ lemma cubicResidueSymbolRaw_prime_not_dvd
   cubicResidueSymbolRaw hZeta a p ∈ ({(1 : NumberField.RingOfIntegers K), omega hZeta, omega hZeta ^ 2} : Set _) ∧ Ideal.Quotient.mk (Ideal.span {p}) (cubicResidueSymbolRaw hZeta a p) = Ideal.Quotient.mk (Ideal.span {p}) a ^ ((Ideal.absNorm (Ideal.span {p}) - 1) / 3) := by
 -- proof
   have hNotMem :
-    a ∉ Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) := by
+      a ∉ Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) := by
     rwa [Ideal.mem_span_singleton]
   rw [cubicResidueSymbolRaw_prime hZeta a p hpPrime hpNeZero]
   have hSpanPrime :
-    (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))).IsPrime :=
+      (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))).IsPrime :=
     Ideal.isPrime_span_singleton_of_prime hpPrime
   have hSpanNeBot :
-    Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
+      Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
     rw [Ne, Ideal.span_singleton_eq_bot]; exact hpNeZero
   have hEq :
-    primeIdealCubicSymbolFactorRaw hZeta (Ideal.span {p}) a =
-      primeIdealValidCubicSymbol hZeta (Ideal.span {p}) a
-        hSpanPrime hSpanNeBot hNormCop hNotMem := by
+      primeIdealCubicSymbolFactorRaw hZeta (Ideal.span {p}) a =
+        primeIdealValidCubicSymbol hZeta (Ideal.span {p}) a
+          hSpanPrime hSpanNeBot hNormCop hNotMem := by
     simp only [primeIdealCubicSymbolFactorRaw,
       dite_eq_left hSpanPrime, dite_eq_left hSpanNeBot, dite_eq_left hNormCop,
       dite_eq_right hNotMem]
   rw [hEq]
   constructor
   · exact primeIdealValidCubicSymbol_mem hZeta _ _
-    hSpanPrime hSpanNeBot hNormCop hNotMem
+      hSpanPrime hSpanNeBot hNormCop hNotMem
   · exact primeIdealValidCubicSymbol_spec hZeta _ _
-    hSpanPrime hSpanNeBot hNormCop hNotMem
+      hSpanPrime hSpanNeBot hNormCop hNotMem
 
 end MetaMathlibExt
 

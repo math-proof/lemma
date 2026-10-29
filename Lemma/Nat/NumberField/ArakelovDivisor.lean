@@ -98,9 +98,9 @@ lemma ArakelovDivisor.sectionSet_finite
     rw [Algebra.smul_def] at hz
     exact hz ▸ RingOfIntegers.isIntegral_coe z
   · have hφx : ‖φ x‖ ≤ ((D.2 w₀ : ℝ)) := by
-    have h1 : (InfinitePlace.mk φ) x = ‖φ x‖ := rfl
-    rw [← h1]
-    exact le_trans (hxb (InfinitePlace.mk φ)) (hw₀ _ (Set.mem_univ _))
+      have h1 : (InfinitePlace.mk φ) x = ‖φ x‖ := rfl
+      rw [← h1]
+      exact le_trans (hxb (InfinitePlace.mk φ)) (hw₀ _ (Set.mem_univ _))
     rw [map_mul, norm_mul]
     exact mul_le_mul (hφ₀ _ (Set.mem_univ _)) hφx (norm_nonneg _) (norm_nonneg _)
 
@@ -147,8 +147,9 @@ namespace NumberField
 -/
 @[path]
 lemma size_principal
+  (K : Type*)
   [Field K] [NumberField K]
-  {x : Kˣ} :
+  (x : Kˣ) :
 -- imply
   ArakelovDivisor.sizeHom K (principalHom K x) = 1 := by
 -- proof
@@ -238,4 +239,4 @@ private lemma ArakelovDivisor_idealNorm_coe_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

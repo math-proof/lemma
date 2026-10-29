@@ -38,7 +38,7 @@ private lemma simple_inv
 -- imply
   (cs.simple i)⁻¹ = cs.simple i :=
 -- proof
-  inv_eq_of_mul_eq_one_right (simple_sq cs i)
+  inv_eq_of_mul_eq_one_right (simple_sq (cs := cs) (i := i))
 
 end CoxeterBruhat
 
@@ -60,8 +60,8 @@ private lemma reflection_sq
 -- proof
   obtain ⟨w, i, rfl⟩ := ht
   have h1 : (w * cs.simple i * w⁻¹) * (w * cs.simple i * w⁻¹)
-    = w * (cs.simple i * cs.simple i) * w⁻¹ := by group
-  rw [h1, simple_sq cs i]; group
+      = w * (cs.simple i * cs.simple i) * w⁻¹ := by group
+  rw [h1, simple_sq (cs := cs) (i := i)]; group
 
 end CoxeterBruhat
 
@@ -81,7 +81,7 @@ private lemma reflection_inv
 -- imply
   t⁻¹ = t :=
 -- proof
-  inv_eq_of_mul_eq_one_right (reflection_sq cs ht)
+  inv_eq_of_mul_eq_one_right (reflection_sq (cs := cs) ht)
 
 end CoxeterBruhat
 
@@ -122,7 +122,7 @@ private lemma simple_conj_reflection
 -- proof
   obtain ⟨w, j, rfl⟩ := ht
   refine ⟨cs.simple i * w, j, ?_⟩
-  rw [mul_inv_rev, simple_inv cs i]; group
+  rw [mul_inv_rev, simple_inv (cs := cs) (i := i)]; group
 
 end CoxeterBruhat
 
@@ -145,8 +145,8 @@ private lemma mul_simple_conj_eq
   (v * cs.simple i) * (cs.simple i * t * cs.simple i) = w * cs.simple i := by
 -- proof
   have : v * cs.simple i * (cs.simple i * t * cs.simple i)
-    = v * (cs.simple i * cs.simple i) * t * cs.simple i := by group
-  rw [this, simple_sq cs i, mul_one, ← hvw]
+      = v * (cs.simple i * cs.simple i) * t * cs.simple i := by group
+  rw [this, simple_sq (cs := cs) (i := i), mul_one, ← hvw]
 
 end CoxeterBruhat
 
@@ -168,7 +168,7 @@ private lemma mul_reflection_reverse
 -- imply
   b * t = a := by
 -- proof
-  rw [← h, mul_assoc, reflection_sq cs ht, mul_one]
+  rw [← h, mul_assoc, reflection_sq (cs := cs) ht, mul_one]
 
 end CoxeterBruhat
 
@@ -194,8 +194,8 @@ private lemma reflection_length_odd
   rw [cs.lengthParity_eq_ofAdd_length] at h
   have h1 : (cs.length (u * cs.simple j * u⁻¹) : ZMod 2) = ((1 : ℕ) : ZMod 2) := by
     have := Multiplicative.ofAdd.injective h; simpa using this
-  rwa [ZMod.natCast_eq_natCast_iff'] at h1
-
+  rw [ZMod.natCast_eq_natCast_iff'] at h1
+  exact h1
 end CoxeterBruhat
 
 namespace CoxeterBruhat
@@ -216,7 +216,7 @@ private lemma length_parity_ne_of_mul_reflection
   cs.length v % 2 ≠ cs.length w % 2 := by
 -- proof
   have h1 := cs.length_mul_mod_two v t; rw [hvw] at h1
-  have h2 := reflection_length_odd cs ht; omega
+  have h2 := reflection_length_odd (cs := cs) ht; omega
 
 end CoxeterBruhat
 
@@ -258,7 +258,7 @@ private lemma bruhatLE_length_le
 -- proof
   induction h with
   | refl => exact Nat.le_refl _
-  | @tail _ c _ hbc ih => exact le_of_lt (lt_of_le_of_lt ih (bruhatStep_length_lt cs hbc))
+  | @tail _ c _ hbc ih => exact le_of_lt (lt_of_le_of_lt ih (bruhatStep_length_lt (cs := cs) hbc))
 
 end CoxeterBruhat
 
@@ -297,7 +297,7 @@ private lemma bruhatLE_trans
 -- imply
   BruhatLE cs u w :=
 -- proof
-  h1.trans h2
+  h0.trans h1
 
 end CoxeterBruhat
 
@@ -338,8 +338,8 @@ private lemma bruhatStep_mul_simple_descent
 -- imply
   BruhatStep cs (v * cs.simple i) v :=
 -- proof
-  ⟨cs.simple i, simple_mem_reflections cs i,
-    by rw [mul_assoc, simple_sq cs i, mul_one], h⟩
+  ⟨cs.simple i, simple_mem_reflections (cs := cs) (i := i),
+    by rw [mul_assoc, simple_sq (cs := cs) (i := i), mul_one], h⟩
 
 end CoxeterBruhat
 
@@ -363,8 +363,8 @@ private lemma bruhatLE_eq_of_length_eq
   induction h with
   | refl => rfl
   | @tail _ c _ hbc ih =>
-    have hlen_bc := bruhatStep_length_lt cs hbc
-    have hlen_vb := bruhatLE_length_le cs (by assumption)
+    have hlen_bc := bruhatStep_length_lt (cs := cs) hbc
+    have hlen_vb := bruhatLE_length_le (cs := cs) (by assumption)
     omega
 
 end CoxeterBruhat
@@ -392,6 +392,7 @@ private lemma bruhat_lifting_lemma
 -- imply
   ¬cs.IsRightDescent w i ∧ BruhatStep cs (v * cs.simple i) (w * cs.simple i) := by
 -- proof
+
   have hw_up : ¬cs.IsRightDescent w i := by
     intro hw_desc
     exact hne (hSEC v w t ht hvt hcover i hv_up hw_desc)
@@ -400,9 +401,9 @@ private lemma bruhat_lifting_lemma
   ·
     rw [CoxeterSystem.not_isRightDescent_iff] at hv_up hw_up
     exact ⟨cs.simple i * t * cs.simple i,
-      simple_conj_reflection cs ht i,
-      mul_simple_conj_eq cs hvt i,
-      by rw [hv_up, hw_up]; omega⟩
+           simple_conj_reflection (cs := cs) ht (i := i),
+           mul_simple_conj_eq (cs := cs) hvt (i := i),
+           by rw [hv_up, hw_up]; omega⟩
 
 end CoxeterBruhat
 
@@ -425,23 +426,26 @@ private lemma bruhatStep_right_mul
   BruhatLE cs (v * cs.simple i) w ∨ BruhatLE cs (v * cs.simple i) (w * cs.simple i) := by
 -- proof
   obtain ⟨t, ht, hvt, hlen⟩ := hvw
+
   by_cases hv : cs.IsRightDescent v i
   ·
     left
-    exact (bruhatLE_of_step cs (bruhatStep_mul_simple_descent cs i hv)).trans
-      (bruhatLE_of_step cs ⟨t, ht, hvt, hlen⟩)
+    exact (bruhatLE_of_step (cs := cs) (bruhatStep_mul_simple_descent (cs := cs) (i := i) hv)).trans
+          (bruhatLE_of_step (cs := cs) ⟨t, ht, hvt, hlen⟩)
   ·
     rw [CoxeterSystem.not_isRightDescent_iff] at hv
+
     by_cases hw : cs.IsRightDescent w i
     ·
       rw [cs.isRightDescent_iff] at hw
+
       have ht' : cs.simple i * t * cs.simple i ∈ reflections M cs :=
-        simple_conj_reflection cs ht i
+        simple_conj_reflection (cs := cs) ht (i := i)
       have hvs_ws : (v * cs.simple i) * (cs.simple i * t * cs.simple i) =
-        w * cs.simple i := mul_simple_conj_eq cs hvt i
+          w * cs.simple i := mul_simple_conj_eq (cs := cs) hvt (i := i)
       by_cases heq : v * cs.simple i = w
       ·
-        left; rw [heq]; exact bruhatLE_refl cs w
+        left; rw [heq]; exact bruhatLE_refl (cs := cs) (w := w)
       ·
         by_cases hgap : cs.length v + 1 = cs.length w
         ·
@@ -450,20 +454,23 @@ private lemma bruhatStep_right_mul
             (by rwa [CoxeterSystem.not_isRightDescent_iff])
             (by rwa [cs.isRightDescent_iff]))
         ·
-          have hparity := length_parity_ne_of_mul_reflection cs ht hvt
+          have hparity := length_parity_ne_of_mul_reflection (cs := cs) ht hvt
+
           have hgap' : cs.length w ≥ cs.length v + 3 := by omega
+
           have h_lt : cs.length (v * cs.simple i) < cs.length (w * cs.simple i) := by
             rw [hv]; omega
           right
-          exact bruhatLE_of_step cs ⟨cs.simple i * t * cs.simple i, ht', hvs_ws, h_lt⟩
+          exact bruhatLE_of_step (cs := cs) ⟨cs.simple i * t * cs.simple i, ht', hvs_ws, h_lt⟩
     ·
       rw [CoxeterSystem.not_isRightDescent_iff] at hw
+
       right
       have h_lt : cs.length (v * cs.simple i) < cs.length (w * cs.simple i) := by
         rw [hv, hw]; exact Nat.add_lt_add_right hlen 1
-      exact bruhatLE_of_step cs
-        ⟨cs.simple i * t * cs.simple i, simple_conj_reflection cs ht i,
-          mul_simple_conj_eq cs hvt i, h_lt⟩
+      exact bruhatLE_of_step (cs := cs)
+        ⟨cs.simple i * t * cs.simple i, simple_conj_reflection (cs := cs) ht (i := i),
+         mul_simple_conj_eq (cs := cs) hvt (i := i), h_lt⟩
 
 end CoxeterBruhat
 
@@ -486,13 +493,13 @@ private lemma bruhat_right_mul
   BruhatLE cs (v * cs.simple i) w ∨ BruhatLE cs (v * cs.simple i) (w * cs.simple i) := by
 -- proof
   induction hvw with
-  | refl => right; exact bruhatLE_refl cs _
+  | refl => right; exact bruhatLE_refl (cs := cs)
   | @tail b c _ hbc ih =>
-    obtain ih_left | ih_right := ih
+    rcases ih with ih_left | ih_right
     ·
-      left; exact ih_left.trans (bruhatLE_of_step cs hbc)
+      left; exact ih_left.trans (bruhatLE_of_step (cs := cs) hbc)
     ·
-      obtain hbc_left | hbc_right := bruhatStep_right_mul cs hSEC hbc i
+      rcases bruhatStep_right_mul (cs := cs) hSEC hbc (i := i) with hbc_left | hbc_right
       · left; exact ih_right.trans hbc_left
       · right; exact ih_right.trans hbc_right
 

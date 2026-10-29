@@ -10,7 +10,7 @@ open MeasureTheory Set Filter Topology StatMech StatMech.TwoDim
 @[path]
 private lemma kzh_theta_real_eq :
 -- imply
-  (percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one).toReal = halfMeasure.real (percolationEvent 2) := by
+  (percolationProbability 2 (2⁻¹ : NNReal) half_le_one).toReal = halfMeasure.real (percolationEvent 2) := by
 -- proof
   apply StatMech.TwoDim.kzh_theta_real
 
@@ -22,7 +22,7 @@ private lemma kzh_percProb_eq_zero_of_thetaReal_zero_eq
 -- given
   (h : halfMeasure.real (percolationEvent 2) = 0) :
 -- imply
-  percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 := by
+  percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 := by
 -- proof
   apply StatMech.TwoDim.kzh_percProb_eq_zero_of_thetaReal_zero h
 
@@ -64,7 +64,7 @@ private lemma kzh_corLowerBound_eq
   (heq : ∀ n, halfMeasure.real (A n) = halfMeasure.real (B n))
   (hZhangUnion : BoxCrossingProperty halfMeasure 2 → 0 < halfMeasure.real (percolationEvent 2) → Tendsto (fun n => halfMeasure.real (A n ∪ B n)) atTop (𝓝 1)) :
 -- imply
-  BoxCrossingProperty halfMeasure 2 → percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 := by
+  BoxCrossingProperty halfMeasure 2 → percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 := by
 -- proof
   apply StatMech.TwoDim.kzh_corLowerBound hpa hAinc hBinc hBm hHm hRmeas hRpres hdich heq hZhangUnion
 

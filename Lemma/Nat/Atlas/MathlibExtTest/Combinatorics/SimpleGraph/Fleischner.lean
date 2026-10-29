@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExtTest MathlibExtTest.Combinatorics MathlibExtTest.Combinatorics.SimpleGraph
 
 
 namespace MathlibExtTest.Combinatorics.SimpleGraph.Fleischner
@@ -29,7 +28,7 @@ namespace MathlibExtTest.Combinatorics.SimpleGraph.Fleischner
 [fleischner_complete_three](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Fleischner.lean)
 -/
 @[path]
-lemma fleischner_complete_three
+lemma fleischner_complete_three :
 -- imply
   ∃ (x : Fin 3) (p : (⊤ : SimpleGraph (Fin 3)).Walk x x), @SimpleGraph.Walk.IsHamiltonianCycle (Fin 3) (fun a b ↦ Classical.propDecidable (a = b)) _ x p ∧ p.length = 3 := by
 -- proof
@@ -54,3 +53,4 @@ end MathlibExtTest.Combinatorics.SimpleGraph.Fleischner
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

@@ -58,7 +58,7 @@ private lemma summable_mul_cexp_neg_pi_mul_sq (c : ℤ → ℂ) (hc : ∀ n, ‖
   calc ‖c n * jacobiTheta₂_term n 0 (Complex.I * t)‖
     = ‖c n‖ * ‖jacobiTheta₂_term n 0 (Complex.I * t)‖ := norm_mul _ _
     _ ≤ 1 * ‖jacobiTheta₂_term n 0 (Complex.I * t)‖ := by
-      apply mul_le_mul_of_nonneg_right (hc n) (norm_nonneg _)
+        apply mul_le_mul_of_nonneg_right (hc n) (norm_nonneg _)
     _ = ‖jacobiTheta₂_term n 0 (Complex.I * t)‖ := one_mul _
 
 end MetaMathlibExt
@@ -297,8 +297,8 @@ private lemma ls_residue_poisson (P : ℕ) (hP : 0 < P) (r : ℤ) (t : ℂ) (ht 
         (-(Real.pi:ℂ) * t * (r:ℂ)^2) := by rw [hcancel, one_mul]
     _ = ∑' (k : ℤ), Complex.exp (-(Real.pi : ℂ) * (1 / (((P : ℂ)^2 * t))) * (k : ℂ)^2) * Complex.exp
       (2 * (Real.pi : ℂ) * Complex.I * (k : ℂ) * (r : ℂ) / (P : ℂ)) := by
-      rw [hpush]
-      apply tsum_congr hterm
+        rw [hpush]
+        apply tsum_congr hterm
 
 end MetaMathlibExt
 
@@ -340,7 +340,8 @@ private lemma ls_cusp_limit {α : Type*} {l : Filter α} (W : α → ℂ)
         (1:ℂ) := by
         funext x
         simp [hg0]
-      rwa [heq]
+      rw [heq]
+      exact tendsto_const_nhds
     · simp only [hk, ite_false]
       apply (tendsto_zero_iff_norm_tendsto_zero).mpr
       have hkr : ((k : ℝ)) ≠ 0 := by exact_mod_cast hk
@@ -368,9 +369,9 @@ private lemma ls_cusp_limit {α : Type*} {l : Filter α} (W : α → ℂ)
         mul_le_mul_of_nonneg_left (hg1 k) (norm_nonneg _)
       _ = Real.exp (-Real.pi * ((k:ℝ))^2 * (W x).re) := by rw [hnorm, mul_one]
       _ ≤ Real.exp (-Real.pi * ((k:ℝ))^2 * 1) := by
-        apply Real.exp_le_exp.mpr
-        apply mul_le_mul_of_nonpos_left hx
-        nlinarith [Real.pi_pos, sq_nonneg ((k:ℝ))]
+          apply Real.exp_le_exp.mpr
+          apply mul_le_mul_of_nonpos_left hx
+          nlinarith [Real.pi_pos, sq_nonneg ((k:ℝ))]
       _ = Real.exp (-Real.pi * ((k:ℝ))^2) := by ring_nf
   have hlim := tendsto_tsum_of_dominated_convergence hbound hpt hdom
   have hsum1 : (∑' (k : ℤ), (if k = 0 then (1:ℂ) else 0)) = 1 := by
@@ -1049,4 +1050,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

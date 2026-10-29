@@ -9,26 +9,6 @@ Ses traits principaux se résument ainsi : **preuve interactive (ITP)**, **axiom
 * **Axiomatisation** : dans le cadre de la théorie des types dépendants, chaque résultat établi se déduit en un nombre fini d'étapes à partir de schémas d'axiomes et de règles d'inférence ; cette orientation, inspirée du [programme formaliste de Hilbert](https://en.wikipedia.org/wiki/Hilbert%27s_program), privilégie la reproductibilité des preuves plutôt que les raccourcis du langage naturel.
 * **Programme comme preuve** : par l'isomorphisme de Curry–Howard, les propositions sont codées exactement en [Lean](https://lean-lang.org/) ; la preuve est un programme bien typé, sans recourir à des formules du type « évidemment », « il est facile de voir », « de même », « en général », « et ainsi de suite », « réciproquement », « pour conclure », « sans perte de généralité » à la place d'un enchaînement vérifiable ; sous la sémantique exacte des réels et hyperréels de Lean 4, il n'y a pas d'erreur d'arrondi en virgule flottante comme dans le code numérique ordinaire.
 
-Le site est accessible via google/baidu/bing : 定理库. Parmi les assistants de preuve et bibliothèques open source apparentés : [Lean/mathlib](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Algebra/Basic.html), [Coq](https://github.com/coq/coq) et [Isabelle](https://isabelle.in.tum.de/).
-
-Pour maîtriser ce système de dérivation, il est utile de connaître les modes de raisonnement suivants et leurs tactiques Lean associées :
-
-## Stratégies de raisonnement formalisé
-
-1. **Induction**  
-   Induction mathématique : établir une propriété sur les entiers naturels (ou une structure bien fondée) par le cas de base et l'hérédité. Tactique : `induction`
-2. **Déduction**  
-   Passage du général au particulier, avec introduction et élimination de quantificateurs universels. Tactiques : `specialize` / `intro` / `rintro`
-3. **Preuve par l'absurde**  
-   Raisonnement par l'absurde : supposer la négation de la conclusion et dériver une contradiction via le [tiers exclu](../?module=Bool.Or_Not). Tactique : `by_contra`
-4. **Diviser pour régner**  
-   Analyse par cas : décomposer l'objectif en cas mutuellement exclusifs et exhaustifs. Tactiques : `by_cases` / `interval_cases` / `rcases`
-5. **Raisonnement abductif**  
-   Recherche à rebours : partir du but et identifier des conditions suffisantes ou des lemmes applicables. Tactiques : `refine` / `apply`
-
-<br><br>
-------
-
 
 # Construction de la bibliothèque algorithmique
   <br>
@@ -53,12 +33,15 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
 * [Vector](../?module=Vector) Vecteurs (tenseurs unidimensionnels)
 * [Matrix](../?module=Matrix) Théorie des matrices, p. ex. :
   - [théorème d'Okishio](../?module=Matrix.Any_And_EqSMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
+  - [décomposition de Cholesky](../?module=Finset.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky)
+  - [décomposition PLU](../?module=Tensor.Eq.Dot.PLU.of.Eq.Eq_Dot.Eq_Ite)
 * [Tensor](../?module=Tensor) Calcul tensoriel formalisé, sémantiquement aligné sur **torch.Tensor**, pour la spécification et la vérification formelle d'algorithmes d'apprentissage profond, p. ex. :
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 * [Random](../?module=Random) Probabilités et processus stochastiques, p. ex. :
   - [classification de documents naïve bayésienne](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)
   - [fonction de perte CRF](../?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM), [Viterbi](../?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)
+  - [somme de gaussiennes indépendantes](../?module=Random.DistributedAdd.of.Distributed_Gaussian.Distributed_Gaussian.Indep)
   - [GAE (discret)](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Icc.In_Ico), [GAE (continu)](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico)
 
 <br><br>

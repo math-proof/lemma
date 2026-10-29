@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open Nat Nat.SylvesterSchur
+import Lemma.Nat.SylvesterSchur.ResidualLarge.PowerBounds
+open Nat
 
 
 namespace Nat.SylvesterSchur.Internal
@@ -27,9 +28,9 @@ private lemma scaled_ternary_bound_of_cancelled {n N A : ℕ}
   have hpos : 0 < 3 ^ n * 4 ^ n := by positivity
   calc
     n * (2 ^ n * ((3 * n) ^ n * 4 ^ (n + A)))
-      = 3 ^ n * 4 ^ n * (n * (2 ^ n * (n ^ n * 4 ^ A))) := by
-        rw [Nat.mul_pow, pow_add]
-        ring
+        = 3 ^ n * 4 ^ n * (n * (2 ^ n * (n ^ n * 4 ^ A))) := by
+          rw [Nat.mul_pow, pow_add]
+          ring
     _ < 3 ^ n * 4 ^ n * N ^ n := Nat.mul_lt_mul_of_pos_left h hpos
 
 end Nat.SylvesterSchur.Internal
@@ -46,7 +47,7 @@ private lemma cancelled_bound_of_base_pow_exponent_cap {n N B A E : ℕ}
   n * (2 ^ n * (n ^ n * 4 ^ A)) < N ^ n := by
   have hA4 : 4 ^ A ≤ 4 ^ E := Nat.pow_le_pow_right (by norm_num : 0 < 4) hA
   have hleft_le :
-    n * (2 ^ n * (n ^ n * 4 ^ A)) ≤ (n * (2 ^ n * 4 ^ E)) * n ^ n := by
+      n * (2 ^ n * (n ^ n * 4 ^ A)) ≤ (n * (2 ^ n * 4 ^ E)) * n ^ n := by
     calc
       n * (2 ^ n * (n ^ n * 4 ^ A)) = (n * (2 ^ n * 4 ^ A)) * n ^ n := by
         ring
@@ -73,7 +74,7 @@ private lemma cancelled_bound_of_base_pow_exponent_cap_le {n N B A E : ℕ}
   n * (2 ^ n * (n ^ n * 4 ^ A)) < N ^ n := by
   have hA4 : 4 ^ A ≤ 4 ^ E := Nat.pow_le_pow_right (by norm_num : 0 < 4) hA
   have hleft_le :
-    n * (2 ^ n * (n ^ n * 4 ^ A)) ≤ (n * (2 ^ n * 4 ^ E)) * n ^ n := by
+      n * (2 ^ n * (n ^ n * 4 ^ A)) ≤ (n * (2 ^ n * 4 ^ E)) * n ^ n := by
     calc
       n * (2 ^ n * (n ^ n * 4 ^ A)) = (n * (2 ^ n * 4 ^ A)) * n ^ n := by
         ring
@@ -98,7 +99,7 @@ private lemma base_two_pow_exp {b D E n : ℕ} (hn_self : n ≤ 2 ^ D)
   (hExp : D + n + 2 * E < b * n) :
   n * (2 ^ n * 4 ^ E) < (2 ^ b) ^ n := by
   have hleft :
-    n * (2 ^ n * 4 ^ E) ≤ 2 ^ D * (2 ^ n * 4 ^ E) :=
+      n * (2 ^ n * 4 ^ E) ≤ 2 ^ D * (2 ^ n * 4 ^ E) :=
     Nat.mul_le_mul_right _ hn_self
   have hpow : 2 ^ D * (2 ^ n * 4 ^ E) = 2 ^ (D + n + 2 * E) := by
     rw [four_pow_eq_two_pow_two_mul E]
@@ -124,8 +125,8 @@ private lemma self_le_two_pow_two_mul_div_one_twenty_eight_add_one {n : ℕ}
   have hself := self_le_four_pow_div_one_twenty_eight_add_one hn
   have hpow : 4 ^ (n / 128 + 1) = 2 ^ (2 * (n / 128 + 1)) :=
     four_pow_eq_two_pow_two_mul (n / 128 + 1)
-  rwa [hpow] at hself
-
+  rw [hpow] at hself
+  exact hself
 end Nat.SylvesterSchur.Internal
 
 namespace Nat.SylvesterSchur.Internal
@@ -141,10 +142,10 @@ private lemma range_3_base_exp {n : ℕ} (hn : 945 ≤ n) :
     dsimp [D]
     exact self_le_two_pow_two_mul_div_one_twenty_eight_add_one (by omega : 512 ≤ n)
   have hleft :
-    n * (2 ^ n * 4 ^ (4 * n / 15)) ≤ 2 ^ D * (2 ^ n * 4 ^ (4 * n / 15)) :=
+      n * (2 ^ n * 4 ^ (4 * n / 15)) ≤ 2 ^ D * (2 ^ n * 4 ^ (4 * n / 15)) :=
     Nat.mul_le_mul_right _ hn_self
   have hpow : 2 ^ D * (2 ^ n * 4 ^ (4 * n / 15)) =
-    2 ^ (D + n + 2 * (4 * n / 15)) := by
+      2 ^ (D + n + 2 * (4 * n / 15)) := by
     rw [four_pow_eq_two_pow_two_mul (4 * n / 15)]
     rw [← pow_add, ← pow_add]
     congr 1
@@ -238,13 +239,14 @@ private lemma range_512_base_exp (n : ℕ) :
     rw [show 512 = 2 ^ 9 by norm_num, ← pow_mul]
   calc
     n * (2 ^ n * 4 ^ (3 * n))
-      < 4 ^ n * (2 ^ n * 4 ^ (3 * n)) :=
-        Nat.mul_lt_mul_of_pos_right hn4 (by positivity)
+        < 4 ^ n * (2 ^ n * 4 ^ (3 * n)) :=
+          Nat.mul_lt_mul_of_pos_right hn4 (by positivity)
     _ = 512 ^ n := by
-      rw [h4, h43, h512]
-      rw [← pow_add, ← pow_add]
-      congr 1
-      ring
+          rw [h4, h43, h512]
+          rw [← pow_add, ← pow_add]
+          congr 1
+          ring
+
 
 end Nat.SylvesterSchur.Internal
 
@@ -291,14 +293,14 @@ private lemma sqrt_succ_pow_six_le_two_pow_two_mul_add_one {s : ℕ} (hs : 10 �
   induction s, hs using Nat.le_induction with
   | base => norm_num
   | succ s hs ih =>
-    calc
-      (s + 1 + 1) ^ 6 = (s + 2) ^ 6 := by ring
-      _ ≤ 4 * (s + 1) ^ 6 := pow_six_step_of_ten_le hs
-      _ ≤ 4 * 2 ^ (2 * s + 1) := Nat.mul_le_mul_left 4 ih
-      _ = 2 ^ (2 * (s + 1) + 1) := by
-        rw [show 4 = 2 ^ 2 by norm_num, ← pow_add]
-        congr 1
-        ring
+      calc
+        (s + 1 + 1) ^ 6 = (s + 2) ^ 6 := by ring
+        _ ≤ 4 * (s + 1) ^ 6 := pow_six_step_of_ten_le hs
+        _ ≤ 4 * 2 ^ (2 * s + 1) := Nat.mul_le_mul_left 4 ih
+        _ = 2 ^ (2 * (s + 1) + 1) := by
+          rw [show 4 = 2 ^ 2 by norm_num, ← pow_add]
+          congr 1
+          ring
 
 end Nat.SylvesterSchur.Internal
 
@@ -400,9 +402,9 @@ private lemma first_residual_large_root_log_le_two_mul_self {n N : ℕ}
     simpa [c] using nthRoot_three_pow_le_of_le hNhi
   by_cases hc100lt : c < 100
   · simpa [c] using
-    nthRoot_three_mul_log_le_of_nthRoot_lt
-      (N := N) (A := 100) (e := 20) (M := 2 * n)
-      (by simpa [c] using hc100lt) (by norm_num) (by norm_num) (by omega)
+      nthRoot_three_mul_log_le_of_nthRoot_lt
+        (N := N) (A := 100) (e := 20) (M := 2 * n)
+        (by simpa [c] using hc100lt) (by norm_num) (by norm_num) (by omega)
   · have hc100 : 100 ≤ c := by omega
     have hlog : Nat.log 2 N ≤ 2 * s := by
       dsimp [s, c]
@@ -499,9 +501,9 @@ private lemma const_log_product_le_one_fifth_of_le_four_mul {c n m : ℕ}
   rw [Nat.le_div_iff_mul_le (by norm_num : 0 < 5)]
   apply Nat.le_of_mul_le_mul_left (c := 4)
   · have hcubic : (20 * m) * c ≤ c ^ 3 := by
-    calc
-      (20 * m) * c ≤ c ^ 2 * c := Nat.mul_le_mul_right c hquad
-      _ = c ^ 3 := by ring
+      calc
+        (20 * m) * c ≤ c ^ 2 * c := Nat.mul_le_mul_right c hquad
+        _ = c ^ 3 := by ring
     calc
       4 * (c * m * 5) = (20 * m) * c := by ring
       _ ≤ c ^ 3 := hcubic
@@ -555,10 +557,10 @@ private lemma nthRoot_three_mul_log_le_one_fifth_of_nthRoot_ge
   have h10cs : 10 * (c * s) ≤ n := by
     apply Nat.le_of_mul_le_mul_left (c := 4)
     · calc
-      4 * (10 * (c * s)) = (40 * s) * c := by ring
-      _ ≤ c ^ 2 * c := Nat.mul_le_mul_right c h40
-      _ = c ^ 3 := by ring
-      _ ≤ 4 * n := by simpa [c] using hc3n
+        4 * (10 * (c * s)) = (40 * s) * c := by ring
+        _ ≤ c ^ 2 * c := Nat.mul_le_mul_right c h40
+        _ = c ^ 3 := by ring
+        _ ≤ 4 * n := by simpa [c] using hc3n
     · norm_num
   have htarget : c * (2 * s) ≤ n / 5 := by
     rw [Nat.le_div_iff_mul_le (by norm_num : 0 < 5)]
@@ -585,28 +587,28 @@ private lemma nthRoot_three_mul_log_le_one_fifth_of_ge_sixteen
   have hc16 : 16 ≤ c := by simpa [c] using hroot16
   by_cases hc20lt : c < 20
   · simpa [c] using
-    nthRoot_three_mul_log_le_one_fifth_of_lt
-      (N := N) (A := 20) (e := 13) (m := 12)
-      (by simpa [c] using hc20lt) (by norm_num) (by norm_num) (by omega)
-      (by nlinarith [hc16]) (by simpa [c] using hc3n)
+      nthRoot_three_mul_log_le_one_fifth_of_lt
+        (N := N) (A := 20) (e := 13) (m := 12)
+        (by simpa [c] using hc20lt) (by norm_num) (by norm_num) (by omega)
+        (by nlinarith [hc16]) (by simpa [c] using hc3n)
   by_cases hc32lt : c < 32
   · simpa [c] using
-    nthRoot_three_mul_log_le_one_fifth_of_lt
-      (N := N) (A := 32) (e := 15) (m := 14)
-      (by simpa [c] using hc32lt) (by norm_num) (by norm_num) (by omega)
-      (by nlinarith [Nat.le_of_not_gt hc20lt]) (by simpa [c] using hc3n)
+      nthRoot_three_mul_log_le_one_fifth_of_lt
+        (N := N) (A := 32) (e := 15) (m := 14)
+        (by simpa [c] using hc32lt) (by norm_num) (by norm_num) (by omega)
+        (by nlinarith [Nat.le_of_not_gt hc20lt]) (by simpa [c] using hc3n)
   by_cases hc64lt : c < 64
   · simpa [c] using
-    nthRoot_three_mul_log_le_one_fifth_of_lt
-      (N := N) (A := 64) (e := 18) (m := 17)
-      (by simpa [c] using hc64lt) (by norm_num) (by norm_num) (by omega)
-      (by nlinarith [Nat.le_of_not_gt hc32lt]) (by simpa [c] using hc3n)
+      nthRoot_three_mul_log_le_one_fifth_of_lt
+        (N := N) (A := 64) (e := 18) (m := 17)
+        (by simpa [c] using hc64lt) (by norm_num) (by norm_num) (by omega)
+        (by nlinarith [Nat.le_of_not_gt hc32lt]) (by simpa [c] using hc3n)
   by_cases hc100lt : c < 100
   · simpa [c] using
-    nthRoot_three_mul_log_le_one_fifth_of_lt
-      (N := N) (A := 100) (e := 20) (m := 19)
-      (by simpa [c] using hc100lt) (by norm_num) (by norm_num) (by omega)
-      (by nlinarith [Nat.le_of_not_gt hc64lt]) (by simpa [c] using hc3n)
+      nthRoot_three_mul_log_le_one_fifth_of_lt
+        (N := N) (A := 100) (e := 20) (m := 19)
+        (by simpa [c] using hc100lt) (by norm_num) (by norm_num) (by omega)
+        (by nlinarith [Nat.le_of_not_gt hc64lt]) (by simpa [c] using hc3n)
   have hc100 : 100 ≤ c := by omega
   simpa [c] using
     nthRoot_three_mul_log_le_one_fifth_of_nthRoot_ge
@@ -633,9 +635,9 @@ lemma nthRoot_three_mul_log_le_one_fifth_of_le_four_mul
     simpa [c] using nthRoot_three_pow_le_of_le hNhi
   by_cases hc16lt : c < 16
   · simpa [c] using
-    nthRoot_three_mul_log_le_of_nthRoot_lt
-      (N := N) (A := 16) (e := 12) (M := n / 5)
-      (by simpa [c] using hc16lt) (by norm_num) (by norm_num) (by omega)
+      nthRoot_three_mul_log_le_of_nthRoot_lt
+        (N := N) (A := 16) (e := 12) (M := n / 5)
+        (by simpa [c] using hc16lt) (by norm_num) (by norm_num) (by omega)
   exact nthRoot_three_mul_log_le_one_fifth_of_ge_sixteen
     (by simpa [c] using Nat.le_of_not_gt hc16lt) (by simpa [c] using hc3n)
 
@@ -655,6 +657,7 @@ private lemma first_residual_large_exponent_le_four_fifteenths {n N : ℕ}
   have hroot_log : Nat.nthRoot 3 N * Nat.log 2 N ≤ n / 5 :=
     nthRoot_three_mul_log_le_one_fifth_of_le_four_mul hn hNhi
   omega
+
 
 end Nat.SylvesterSchur.Internal
 
@@ -739,10 +742,10 @@ private lemma mul_three_mul_div_four_le_mul_div_of_scaled_sq {a b c n : ℕ}
   rw [Nat.le_div_iff_mul_le hb]
   apply Nat.le_of_mul_le_mul_left (c := 4)
   · calc
-    4 * (c * (3 * c / 4) * b) = b * c * (4 * (3 * c / 4)) := by ring
-    _ ≤ b * c * (3 * c) := Nat.mul_le_mul_left (b * c) hdivmul
-    _ = 3 * b * c ^ 2 := by ring
-    _ ≤ 4 * (a * n) := hsq
+      4 * (c * (3 * c / 4) * b) = b * c * (4 * (3 * c / 4)) := by ring
+      _ ≤ b * c * (3 * c) := Nat.mul_le_mul_left (b * c) hdivmul
+      _ = 3 * b * c ^ 2 := by ring
+      _ ≤ 4 * (a * n) := hsq
   · norm_num
 
 end Nat.SylvesterSchur.Internal
@@ -780,9 +783,9 @@ private lemma first_residual_large_root_log_le_three_tenths_of_le_eight_mul {n N
   let c := Nat.nthRoot 3 N
   by_cases hc20 : c < 20
   · simpa [c] using
-    nthRoot_three_mul_log_le_of_nthRoot_lt
-      (N := N) (A := 20) (e := 13) (M := 3 * n / 10)
-      (by simpa [c] using hc20) (by norm_num) (by norm_num) (by omega)
+      nthRoot_three_mul_log_le_of_nthRoot_lt
+        (N := N) (A := 20) (e := 13) (M := 3 * n / 10)
+        (by simpa [c] using hc20) (by norm_num) (by norm_num) (by omega)
   · have hc20le : 20 ≤ c := by omega
     have hc15 : 15 ≤ c := by omega
     have hc3n : c ^ 3 ≤ 8 * n := by
@@ -809,6 +812,7 @@ private lemma first_residual_large_exponent_le_two_fifths {n N : ℕ}
   have hroot_log : Nat.nthRoot 3 N * Nat.log 2 N ≤ 3 * n / 10 :=
     first_residual_large_root_log_le_three_tenths_of_le_eight_mul hn hNhi
   omega
+
 
 end Nat.SylvesterSchur.Internal
 
@@ -838,9 +842,9 @@ private lemma first_residual_large_root_log_le_three_fifths_of_le_sixteen_mul {n
   let c := Nat.nthRoot 3 N
   by_cases hc20 : c < 20
   · simpa [c] using
-    nthRoot_three_mul_log_le_of_nthRoot_lt
-      (N := N) (A := 20) (e := 13) (M := 3 * n / 5)
-      (by simpa [c] using hc20) (by norm_num) (by norm_num) (by omega)
+      nthRoot_three_mul_log_le_of_nthRoot_lt
+        (N := N) (A := 20) (e := 13) (M := 3 * n / 5)
+        (by simpa [c] using hc20) (by norm_num) (by norm_num) (by omega)
   · have hc20le : 20 ≤ c := by omega
     have hc15 : 15 ≤ c := by omega
     have hc3n : c ^ 3 ≤ 16 * n := by
@@ -867,6 +871,7 @@ private lemma first_residual_large_exponent_le_three_fourths {n N : ℕ}
   have hroot_log : Nat.nthRoot 3 N * Nat.log 2 N ≤ 3 * n / 5 :=
     first_residual_large_root_log_le_three_fifths_of_le_sixteen_mul hn hNhi
   omega
+
 
 end Nat.SylvesterSchur.Internal
 
@@ -896,9 +901,9 @@ private lemma const_log_product_le_two_thirds_of_le_sixty_four_mul {c n m : ℕ}
   rw [Nat.le_div_iff_mul_le (by norm_num : 0 < 3)]
   apply Nat.le_of_mul_le_mul_left (c := 32)
   · have hcubic : (96 * m) * c ≤ c ^ 3 := by
-    calc
-      (96 * m) * c ≤ c ^ 2 * c := Nat.mul_le_mul_right c hquad
-      _ = c ^ 3 := by ring
+      calc
+        (96 * m) * c ≤ c ^ 2 * c := Nat.mul_le_mul_right c hquad
+        _ = c ^ 3 := by ring
     calc
       32 * (c * m * 3) = (96 * m) * c := by ring
       _ ≤ c ^ 3 := hcubic
@@ -945,10 +950,10 @@ private lemma nthRoot_three_mul_log_le_two_thirds_of_nthRoot_ge
   have hsquare : 9 * c ^ 2 ≤ 8 * n := by
     apply Nat.le_of_mul_le_mul_left (c := 8)
     · have hc_sq : 72 * c ^ 2 ≤ c ^ 3 := by
-      calc
-        72 * c ^ 2 ≤ c * c ^ 2 :=
-          Nat.mul_le_mul_right (c ^ 2) hroot_c
-        _ = c ^ 3 := by ring
+        calc
+          72 * c ^ 2 ≤ c * c ^ 2 :=
+            Nat.mul_le_mul_right (c ^ 2) hroot_c
+          _ = c ^ 3 := by ring
       calc
         8 * (9 * c ^ 2) = 72 * c ^ 2 := by ring
         _ ≤ c ^ 3 := hc_sq
@@ -975,21 +980,21 @@ private lemma first_residual_large_root_log_le_two_thirds_of_le_sixty_four_mul {
     simpa [c] using nthRoot_three_pow_le_of_le hNhi
   by_cases hc40lt : c < 40
   · simpa [c] using
-    nthRoot_three_mul_log_le_of_nthRoot_lt
-      (N := N) (A := 40) (e := 16) (M := 2 * n / 3)
-      (by simpa [c] using hc40lt) (by norm_num) (by norm_num) (by omega)
+      nthRoot_three_mul_log_le_of_nthRoot_lt
+        (N := N) (A := 40) (e := 16) (M := 2 * n / 3)
+        (by simpa [c] using hc40lt) (by norm_num) (by norm_num) (by omega)
   by_cases hc42lt : c < 42
   · simpa [c] using
-    nthRoot_three_mul_log_le_two_thirds_of_lt
-      (N := N) (A := 42) (e := 17) (m := 16)
-      (by simpa [c] using hc42lt) (by norm_num) (by norm_num) (by omega)
-      (by nlinarith [Nat.le_of_not_gt hc40lt]) (by simpa [c] using hc3n)
+      nthRoot_three_mul_log_le_two_thirds_of_lt
+        (N := N) (A := 42) (e := 17) (m := 16)
+        (by simpa [c] using hc42lt) (by norm_num) (by norm_num) (by omega)
+        (by nlinarith [Nat.le_of_not_gt hc40lt]) (by simpa [c] using hc3n)
   by_cases hc72lt : c < 72
   · simpa [c] using
-    nthRoot_three_mul_log_le_two_thirds_of_lt
-      (N := N) (A := 72) (e := 19) (m := 18)
-      (by simpa [c] using hc72lt) (by norm_num) (by norm_num) (by omega)
-      (by nlinarith [Nat.le_of_not_gt hc42lt]) (by simpa [c] using hc3n)
+      nthRoot_three_mul_log_le_two_thirds_of_lt
+        (N := N) (A := 72) (e := 19) (m := 18)
+        (by simpa [c] using hc72lt) (by norm_num) (by norm_num) (by omega)
+        (by nlinarith [Nat.le_of_not_gt hc42lt]) (by simpa [c] using hc3n)
   · have hc72 : 72 ≤ c := by omega
     simpa [c] using
       nthRoot_three_mul_log_le_two_thirds_of_nthRoot_ge
@@ -1011,6 +1016,7 @@ private lemma first_residual_large_exponent_le_self {n N : ℕ}
   have hroot_log : Nat.nthRoot 3 N * Nat.log 2 N ≤ 2 * n / 3 :=
     first_residual_large_root_log_le_two_thirds_of_le_sixty_four_mul hn hNhi
   omega
+
 
 end Nat.SylvesterSchur.Internal
 
@@ -1053,9 +1059,9 @@ private lemma const_log_product_le_three_halves {c n m : ℕ}
   rw [Nat.le_div_iff_mul_le (by norm_num : 0 < 2)]
   apply Nat.le_of_mul_le_mul_left (c := 512)
   · have hcubic : (1024 * m) * c ≤ 3 * c ^ 3 := by
-    calc
-      (1024 * m) * c ≤ (3 * c ^ 2) * c := Nat.mul_le_mul_right c hquad
-      _ = 3 * c ^ 3 := by ring
+      calc
+        (1024 * m) * c ≤ (3 * c ^ 2) * c := Nat.mul_le_mul_right c hquad
+        _ = 3 * c ^ 3 := by ring
     calc
       512 * (c * m * 2) = (1024 * m) * c := by ring
       _ ≤ 3 * c ^ 3 := hcubic
@@ -1097,9 +1103,9 @@ private lemma nthRoot_three_sq_le_two_mul_of_ge_two_fifty_six
   let c := Nat.nthRoot 3 N
   apply Nat.le_of_mul_le_mul_left (c := 256)
   · have hc_sq : 256 * c ^ 2 ≤ c ^ 3 := by
-    calc
-      256 * c ^ 2 ≤ c * c ^ 2 := Nat.mul_le_mul_right (c ^ 2) (by simpa [c] using hroot)
-      _ = c ^ 3 := by ring
+      calc
+        256 * c ^ 2 ≤ c * c ^ 2 := Nat.mul_le_mul_right (c ^ 2) (by simpa [c] using hroot)
+        _ = c ^ 3 := by ring
     calc
       256 * c ^ 2 ≤ c ^ 3 := hc_sq
       _ ≤ 512 * n := by simpa [c] using hc3n
@@ -1166,27 +1172,27 @@ private lemma nthRoot_three_mul_log_le_three_halves_of_ge_seventy_nine
   have hc79 : 79 ≤ c := by simpa [c] using hroot79
   by_cases hc81lt : c < 81
   · simpa [c] using
-    nthRoot_three_mul_log_le_three_halves_of_lt_eighty_one
-      (N := N) (n := n) (by simpa [c] using hc79)
-      (by simpa [c] using hc81lt) (by simpa [c] using hc3n) hNhi
+      nthRoot_three_mul_log_le_three_halves_of_lt_eighty_one
+        (N := N) (n := n) (by simpa [c] using hc79)
+        (by simpa [c] using hc81lt) (by simpa [c] using hc3n) hNhi
   by_cases hc91lt : c < 91
   · simpa [c] using
-    nthRoot_three_mul_log_le_three_halves_of_lt
-      (N := N) (A := 91) (e := 20) (m := 19)
-      (by simpa [c] using hc91lt) (by norm_num) (by norm_num) (by omega)
-      (by nlinarith [Nat.le_of_not_gt hc81lt]) (by simpa [c] using hc3n)
+      nthRoot_three_mul_log_le_three_halves_of_lt
+        (N := N) (A := 91) (e := 20) (m := 19)
+        (by simpa [c] using hc91lt) (by norm_num) (by norm_num) (by omega)
+        (by nlinarith [Nat.le_of_not_gt hc81lt]) (by simpa [c] using hc3n)
   by_cases hc128lt : c < 128
   · simpa [c] using
-    nthRoot_three_mul_log_le_three_halves_of_lt
-      (N := N) (A := 128) (e := 21) (m := 20)
-      (by simpa [c] using hc128lt) (by norm_num) (by norm_num) (by omega)
-      (by nlinarith [Nat.le_of_not_gt hc91lt]) (by simpa [c] using hc3n)
+      nthRoot_three_mul_log_le_three_halves_of_lt
+        (N := N) (A := 128) (e := 21) (m := 20)
+        (by simpa [c] using hc128lt) (by norm_num) (by norm_num) (by omega)
+        (by nlinarith [Nat.le_of_not_gt hc91lt]) (by simpa [c] using hc3n)
   by_cases hc256lt : c < 256
   · simpa [c] using
-    nthRoot_three_mul_log_le_three_halves_of_lt
-      (N := N) (A := 256) (e := 24) (m := 23)
-      (by simpa [c] using hc256lt) (by norm_num) (by norm_num) (by omega)
-      (by nlinarith [Nat.le_of_not_gt hc128lt]) (by simpa [c] using hc3n)
+      nthRoot_three_mul_log_le_three_halves_of_lt
+        (N := N) (A := 256) (e := 24) (m := 23)
+        (by simpa [c] using hc256lt) (by norm_num) (by norm_num) (by omega)
+        (by nlinarith [Nat.le_of_not_gt hc128lt]) (by simpa [c] using hc3n)
   have hc256 : 256 ≤ c := by omega
   simpa [c] using
     nthRoot_three_mul_log_le_three_halves_of_sq_le
@@ -1210,9 +1216,9 @@ private lemma first_residual_large_root_log_le_three_halves_of_le_five_twelve_mu
     simpa [c] using nthRoot_three_pow_le_of_le hNhi
   by_cases hc79lt : c < 79
   · simpa [c] using
-    nthRoot_three_mul_log_le_of_nthRoot_lt
-      (N := N) (A := 79) (e := 19) (M := 3 * n / 2)
-      (by simpa [c] using hc79lt) (by norm_num) (by norm_num) (by omega)
+      nthRoot_three_mul_log_le_of_nthRoot_lt
+        (N := N) (A := 79) (e := 19) (M := 3 * n / 2)
+        (by simpa [c] using hc79lt) (by norm_num) (by norm_num) (by omega)
   exact nthRoot_three_mul_log_le_three_halves_of_ge_seventy_nine
     (by simpa [c] using Nat.le_of_not_gt hc79lt) (by simpa [c] using hc3n) hNhi
 
@@ -1232,6 +1238,8 @@ private lemma first_residual_large_exponent_le_nine_fourths {n N : ℕ}
   have hroot_log : Nat.nthRoot 3 N * Nat.log 2 N ≤ 3 * n / 2 :=
     first_residual_large_root_log_le_three_halves_of_le_five_twelve_mul hn hNhi
   omega
+
+/-! ### Range dispatch -/
 
 end Nat.SylvesterSchur.Internal
 
@@ -1374,3 +1382,4 @@ end Nat.SylvesterSchur.Internal
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

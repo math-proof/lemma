@@ -33,7 +33,7 @@ noncomputable def liftToNat {n : ℕ} (c : Fin n → ℝ) : ℕ → ℝ :=
 
 /-- The Hoeffding sub-Gaussian parameter $c^2/4$ associated with a bounded random variable
 of range $c$, packaged as a nonnegative real. -/
-noncomputable def hoeffdingParam (c : ℝ) (_hc : 0 ≤ c) : ℝ≥0 :=
+noncomputable def hoeffdingParam (c : ℝ) (_hc : 0 ≤ c) : NNReal :=
   ⟨c ^ 2 / 4, by positivity⟩
 
 end BoundedDifferences

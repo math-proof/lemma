@@ -32,7 +32,7 @@ set_option linter.unusedSectionVars false
 set_option maxRecDepth 4000
 
 
-def bcl_ArmResidue (p : ℝ≥0) (hp1 : p ≤ 1) : Prop :=
+def bcl_ArmResidue (p : NNReal) (hp1 : p ≤ 1) : Prop :=
   ∀ n : ℕ,
     0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n) →
       ∃ (I : Finset (Sym2 (Site 2))) (a₁ a₂ a₃ x₁ x₂ x₃ : Site 2) (η₀ : ConfigSpace ↥I),

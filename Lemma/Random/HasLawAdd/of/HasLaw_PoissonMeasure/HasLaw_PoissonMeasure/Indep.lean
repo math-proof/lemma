@@ -10,7 +10,7 @@ private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω}
   {x y : Ω → ℕ}
-  {r₀ r₁ : ℝ≥0}
+  {r₀ r₁ : NNReal}
 -- given
   (h₀ : x ⟂ᵢ[π] y)
   (h₁ : HasLaw x (poissonMeasure r₀) π)

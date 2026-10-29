@@ -26,7 +26,7 @@ variable {α : Type*}
 
 theorem norm_toLpOne_sub (u v : SummableTail α) :
     ‖toLpOne u - toLpOne v‖ = u.dist v := by
-  rw [lp.norm_eq_tsum_rpow (p := (1 : ℝ≥0∞)) (by norm_num)]
+  rw [lp.norm_eq_tsum_rpow (p := (1 : ENNReal)) (by norm_num)]
   change
     (∑' i : α, ‖(toLpOne u - toLpOne v) i‖ ^ (1 : ℝ)) ^
         (1 / (1 : ℝ)) =

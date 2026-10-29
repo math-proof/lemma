@@ -55,7 +55,7 @@ theorem bof2_interiorLeaf_obstruction :
     revert this; decide
 
 
-theorem bof2_bk_of_treeData (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bof2_bk_of_treeData (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   bcv_bk_of_treeData p hp1 hp0 hdata
@@ -81,7 +81,7 @@ theorem bof2_status :
       T ≤ G ∧ T.IsTree ∧ (∃ v, G.degree v = 2 ∧ T.degree v = 1 ∧ v ∉ B) ∧
       ¬ (∀ v, T.degree v = 1 → v ∈ B)) ∧
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p →
       (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) →
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
   refine ⟨?_, ?_, ?_, ?_⟩

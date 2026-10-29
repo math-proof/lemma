@@ -1,5 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Nat.SylvesterSchur.PrimeCounting
+import Lemma.Nat.SylvesterSchur.ChooseFactorization
 open scoped BigOperators
 open Finset Nat
 
@@ -8,40 +10,39 @@ namespace Nat.SylvesterSchur
 
 /--
 [pow_mul_descFactorial_le_pow_mul_descFactorial](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ErdosLayers.lean)
--/
-@[path]
 `N * (M - i) ≤ M * (N - i)` whenever `i ≤ M ≤ N`; multiplying over `i < r`
 gives the comparison used to lift lower bounds from `Nat.choose M r` to
 `Nat.choose N r`. -/
+@[path]
 private lemma pow_mul_descFactorial_le_pow_mul_descFactorial {M N r : ℕ}
   (hrM : r ≤ M) (hMN : M ≤ N) :
   N ^ r * M.descFactorial r ≤ M ^ r * N.descFactorial r := by
   rw [Nat.descFactorial_eq_prod_range, Nat.descFactorial_eq_prod_range]
   calc
     N ^ r * ∏ i ∈ Finset.range r, (M - i)
-      = (∏ _i ∈ Finset.range r, N) * ∏ i ∈ Finset.range r, (M - i) := by
-        simp
+        = (∏ _i ∈ Finset.range r, N) * ∏ i ∈ Finset.range r, (M - i) := by
+          simp
     _ = ∏ i ∈ Finset.range r, (N * (M - i)) := by
-      rw [Finset.prod_mul_distrib]
+          rw [Finset.prod_mul_distrib]
     _ ≤ ∏ i ∈ Finset.range r, (M * (N - i)) := by
-      apply Finset.prod_le_prod'
-      intro i hi
-      have hir : i < r := Finset.mem_range.mp hi
-      have hiM : i ≤ M := by omega
-      let d := N - M
-      have hN : N = M + d := by
-        dsimp [d]
-        omega
-      have hNsub : N - i = (M - i) + d := by
-        dsimp [d]
-        omega
-      rw [hNsub, hN]
-      have hsub : M - i ≤ M := Nat.sub_le M i
-      nlinarith
+          apply Finset.prod_le_prod
+          intro i hi
+          have hir : i < r := Finset.mem_range.mp hi
+          have hiM : i ≤ M := by omega
+          let d := N - M
+          have hN : N = M + d := by
+            dsimp [d]
+            omega
+          have hNsub : N - i = (M - i) + d := by
+            dsimp [d]
+            omega
+          rw [hNsub, hN]
+          have hsub : M - i ≤ M := Nat.sub_le M i
+          nlinarith
     _ = (∏ _i ∈ Finset.range r, M) * ∏ i ∈ Finset.range r, (N - i) := by
-      rw [Finset.prod_mul_distrib]
+          rw [Finset.prod_mul_distrib]
     _ = M ^ r * ∏ i ∈ Finset.range r, (N - i) := by
-      simp
+          simp
 
 end Nat.SylvesterSchur
 
@@ -65,7 +66,7 @@ lemma pow_mul_choose_le_pow_mul_choose
   rw [Nat.descFactorial_eq_factorial_mul_choose,
     Nat.descFactorial_eq_factorial_mul_choose] at hdesc
   have hmul :
-    r ! * (N ^ r * Nat.choose M r) ≤ r ! * (M ^ r * Nat.choose N r) := by
+      r ! * (N ^ r * Nat.choose M r) ≤ r ! * (M ^ r * Nat.choose N r) := by
     calc
       r ! * (N ^ r * Nat.choose M r) = N ^ r * (r ! * Nat.choose M r) := by
         ring
@@ -74,6 +75,7 @@ lemma pow_mul_choose_le_pow_mul_choose
         ring
   exact Nat.le_of_mul_le_mul_left hmul (Nat.factorial_pos r)
 
+/- Contrapositive of the `N / 3` first-layer Erdős bound. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -95,6 +97,7 @@ private lemma exists_large_prime_dvd_choose_of_prod_erdos_div_three_layers_lt_ch
     (choose_le_prod_erdos_div_three_layers_of_no_large hN hrN h2rN hN6 hsmall))
     hbound
 
+/- Rational lower-bound formulation using the `N / 3` first-layer Erdős bound. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -171,9 +174,9 @@ lemma exists_large_prime_dvd_choose_of_mul_prod_erdos_div_three_layers_lt_four_p
   by_contra hnot
   push Not at hnot
   have hmul :
-    r * Nat.choose N r ≤
-      r * (∏ j ∈ Finset.range (Nat.log 2 N),
-        if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N)) :=
+      r * Nat.choose N r ≤
+        r * (∏ j ∈ Finset.range (Nat.log 2 N),
+          if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N)) :=
     Nat.mul_le_mul_left r hnot
   exact (not_lt_of_ge hbound.le) (hlower.trans_le hmul)
 
@@ -181,4 +184,4 @@ end Nat.SylvesterSchur
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -29,12 +29,12 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-theorem boxCrossProb_nonneg (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem boxCrossProb_nonneg (d : ℕ) (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     0 ≤ boxCrossProb d p hp n :=
   measureReal_nonneg
 
 
-theorem boxCrossProb_eq_prob (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem boxCrossProb_eq_prob (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     boxCrossProb d p hp n
       = prob (p : ℝ) ((boxEdgeFinset d n).restrict '' (boxCrossingEvent d n)) := by
   unfold boxCrossProb

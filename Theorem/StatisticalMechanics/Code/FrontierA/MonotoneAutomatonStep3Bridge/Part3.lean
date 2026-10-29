@@ -50,7 +50,7 @@ theorem highOutput_eq_true_of_highThresholdOn
 
 
 theorem highInsertionLowerBound_finset
-    (mu : Measure (FieldTriple d)) (t : NNReal) (epsilon : ℝ≥0∞)
+    (mu : Measure (FieldTriple d)) (t : NNReal) (epsilon : ENNReal)
     (hinsert : HasHighInsertionLowerBound mu t epsilon)
     (S : Finset (Site d)) (A : Set (FieldTriple d))
     (hAmeas : MeasurableSet A) (hignore : TripleEventIgnoresHighOn S A) :

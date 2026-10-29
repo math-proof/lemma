@@ -21,7 +21,7 @@ open StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation
 variable {d : ℕ}
 
 
-abbrev NonnegativeField (d : ℕ) := Site d → ℝ≥0
+abbrev NonnegativeField (d : ℕ) := Site d → NNReal
 
 
 end StatMech.FrontierA

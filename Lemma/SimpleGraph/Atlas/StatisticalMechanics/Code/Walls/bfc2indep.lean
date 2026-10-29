@@ -27,7 +27,7 @@ private lemma bfc2_indep_finite_cofinite_eq
   {I : Finset E}
   {A B : Set (ConfigSpace E)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hAmeas : MeasurableSet A)
   (hBmeas : MeasurableSet B)

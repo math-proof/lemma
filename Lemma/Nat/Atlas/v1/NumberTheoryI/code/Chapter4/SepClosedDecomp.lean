@@ -9,10 +9,15 @@ open Polynomial TensorProduct Module SepClosedDecomposition
 -/
 @[path]
 private lemma algHom_card_eq_finrank_of_isSepClosed_eq
-  {K L Ω : Type*}
+  (K L Ω : Type*)
   [Field K]
   [Field L]
-  [Field Ω] :
+  [Field Ω]
+  [Algebra K L]
+  [Algebra K Ω]
+  [FiniteDimensional K L]
+  [Algebra.IsSeparable K L]
+  [IsSepClosed Ω] :
 -- imply
   Fintype.card (L →ₐ[K] Ω) = finrank K L := by
 -- proof
@@ -23,10 +28,15 @@ private lemma algHom_card_eq_finrank_of_isSepClosed_eq
 -/
 @[path]
 private lemma algHom_linearIndependent_eq
-  {K L Ω : Type*}
+  (K L Ω : Type*)
   [Field K]
   [Field L]
-  [Field Ω] :
+  [Field Ω]
+  [Algebra K L]
+  [Algebra K Ω]
+  [FiniteDimensional K L]
+  [Algebra.IsSeparable K L]
+  [IsSepClosed Ω] :
 -- imply
   LinearIndependent Ω (fun (σ : L →ₐ[K] Ω) (l : L) => σ l) := by
 -- proof
@@ -37,10 +47,15 @@ private lemma algHom_linearIndependent_eq
 -/
 @[path]
 private lemma column_functions_linearIndependent_eq
-  {K L Ω : Type*}
+  (K L Ω : Type*)
   [Field K]
   [Field L]
-  [Field Ω] :
+  [Field Ω]
+  [Algebra K L]
+  [Algebra K Ω]
+  [FiniteDimensional K L]
+  [Algebra.IsSeparable K L]
+  [IsSepClosed Ω] :
 -- imply
   LinearIndependent Ω (fun (i : Fin (finrank K L)) (φ : L →ₐ[K] Ω) => φ (finBasis K L i)) := by
 -- proof
@@ -51,10 +66,15 @@ private lemma column_functions_linearIndependent_eq
 -/
 @[path]
 private lemma tensorSepClosedAlgHom_injective_eq
-  {K L Ω : Type*}
+  (K L Ω : Type*)
   [Field K]
   [Field L]
-  [Field Ω] :
+  [Field Ω]
+  [Algebra K L]
+  [Algebra K Ω]
+  [FiniteDimensional K L]
+  [Algebra.IsSeparable K L]
+  [IsSepClosed Ω] :
 -- imply
   Function.Injective (tensorSepClosedAlgHom K L Ω) := by
 -- proof
@@ -65,10 +85,15 @@ private lemma tensorSepClosedAlgHom_injective_eq
 -/
 @[path]
 private lemma finrank_tensor_eq_finrank_pi_of_isSepClosed_eq
-  {K L Ω : Type*}
+  (K L Ω : Type*)
   [Field K]
   [Field L]
-  [Field Ω] :
+  [Field Ω]
+  [Algebra K L]
+  [Algebra K Ω]
+  [FiniteDimensional K L]
+  [Algebra.IsSeparable K L]
+  [IsSepClosed Ω] :
 -- imply
   finrank Ω (Ω ⊗[K] L) = finrank Ω ((L →ₐ[K] Ω) → Ω) := by
 -- proof
@@ -79,10 +104,15 @@ private lemma finrank_tensor_eq_finrank_pi_of_isSepClosed_eq
 -/
 @[path]
 private lemma tensorSepClosedAlgHom_surjective_eq
-  {K L Ω : Type*}
+  (K L Ω : Type*)
   [Field K]
   [Field L]
-  [Field Ω] :
+  [Field Ω]
+  [Algebra K L]
+  [Algebra K Ω]
+  [FiniteDimensional K L]
+  [Algebra.IsSeparable K L]
+  [IsSepClosed Ω] :
 -- imply
   Function.Surjective (tensorSepClosedAlgHom K L Ω) := by
 -- proof
@@ -93,10 +123,15 @@ private lemma tensorSepClosedAlgHom_surjective_eq
 -/
 @[path]
 private lemma tensorSepClosedAlgHom_bijective_eq
-  {K L Ω : Type*}
+  (K L Ω : Type*)
   [Field K]
   [Field L]
-  [Field Ω] :
+  [Field Ω]
+  [Algebra K L]
+  [Algebra K Ω]
+  [FiniteDimensional K L]
+  [Algebra.IsSeparable K L]
+  [IsSepClosed Ω] :
 -- imply
   Function.Bijective (tensorSepClosedAlgHom K L Ω) := by
 -- proof
@@ -104,3 +139,4 @@ private lemma tensorSepClosedAlgHom_bijective_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

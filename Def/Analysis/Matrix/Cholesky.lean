@@ -18,5 +18,4 @@ def IsCholeskyRec {𝕜 : Type*} [RCLike 𝕜] {n : ℕ} (A L : Matrix (Fin n) (
     else 0
 
 
--- created on 2026-09-27
 

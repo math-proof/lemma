@@ -65,18 +65,18 @@ noncomputable def donskerProcess {Ω : Type*} (n : ℕ) (X : ℕ → Ω → ℝ)
     let sqrtInv : ℝ := (Real.sqrt (n : ℝ))⁻¹
     sqrtInv • (Finset.sum (Finset.range n) fun i => (X i ω) • donskerWeightCM n i)
 
-/-- Inclusion of `Set.Icc 0 1` into `ℝ≥0`. -/
-noncomputable def iccToNNReal (t : Set.Icc (0 : ℝ) 1) : ℝ≥0 :=
+/-- Inclusion of `Set.Icc 0 1` into `NNReal`. -/
+noncomputable def iccToNNReal (t : Set.Icc (0 : ℝ) 1) : NNReal :=
   ⟨t.val, t.2.1⟩
 
-noncomputable def donskerBrownianPath {Ω' : Type*} (B : ℝ≥0 → Ω' → ℝ) (ω : Ω') :
+noncomputable def donskerBrownianPath {Ω' : Type*} (B : NNReal → Ω' → ℝ) (ω : Ω') :
     C(Set.Icc (0 : ℝ) 1, ℝ) := by
   classical
   exact if h : Continuous (fun t : Set.Icc (0 : ℝ) 1 => B (iccToNNReal t) ω) then
     ⟨fun t => B (iccToNNReal t) ω, h⟩ else 0
 
 noncomputable def donskerBrownianApproximation {Ω' : Type*} (n : ℕ)
-    (B : ℝ≥0 → Ω' → ℝ) (ω : Ω') : C(Set.Icc (0 : ℝ) 1, ℝ) :=
+    (B : NNReal → Ω' → ℝ) (ω : Ω') : C(Set.Icc (0 : ℝ) 1, ℝ) :=
   ∑ k : Fin (n + 1), bernstein n k •
     ContinuousMap.const _ (B (iccToNNReal (bernstein.z k)) ω)
 

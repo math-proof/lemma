@@ -24,7 +24,7 @@ set_option linter.unusedFintypeInType false in
 set_option linter.unusedDecidableInType false in
 
 
-theorem harris_inequality [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+theorem harris_inequality [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
     {A B : Set (ConfigSpace E)} (hA : IsIncreasing A) (hB : IsIncreasing B) :
     (bernoulliProductMeasure (E := E) p hp).real A
         * (bernoulliProductMeasure (E := E) p hp).real B

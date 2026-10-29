@@ -25,7 +25,7 @@ namespace Universality
 open StatMech.Lattice
 
 
-instance isProbabilityMeasure_map_dualConfig (p : ℝ≥0) (hp : p ≤ 1) :
+instance isProbabilityMeasure_map_dualConfig (p : NNReal) (hp : p ≤ 1) :
     IsProbabilityMeasure (Measure.map dualConfig (bernoulliProductMeasure p hp)) := by
   rw [map_dualConfig p hp]; infer_instance
 

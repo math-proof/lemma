@@ -196,10 +196,15 @@ export class LeanProperty extends LeanBinary {
                 case 'factorial':
                     return [this.lhs.toLatex(syntax)];
                 case 'det': {
-                    let arg = this.lhs;
-                    if (arg instanceof L.LeanParenthesis && !(arg.arg instanceof L.LeanColon))
-                        arg = arg.arg;
-                    return [arg.toLatex(syntax)];
+                    // `Matrix.det M` / `Tensor.det M` is printed by `LeanArgsSpaceSeparated` as `|M|`.
+                    // This arm is `M.det`.
+                    if (!(lhs instanceof L.LeanToken && this.parent instanceof L.LeanArgsSpaceSeparated && this.parent.args[0] === this)) {
+                        let arg = this.lhs;
+                        if (arg instanceof L.LeanParenthesis && !(arg.arg instanceof L.LeanColon))
+                            arg = arg.arg;
+                        return [arg.toLatex(syntax)];
+                    }
+                    break;
                 }
                 case 'natAbs': {
                     let arg = this.lhs;
@@ -276,7 +281,11 @@ export class LeanProperty extends LeanBinary {
                 case 'factorial':
                     return '{%s}\\ {!}';
                 case 'det':
-                    return '\\left|{%s}\\right|';
+                    // `M.det` → bars. `Matrix.det M` is the space-separated application.
+                    if (!(lhs instanceof L.LeanToken && this.parent instanceof L.LeanArgsSpaceSeparated && this.parent.args[0] === this)) {
+                        return '\\left|{%s}\\right|';
+                    }
+                    break;
                 case 'natAbs':
                     return '\\left|{%s}\\right|';
                 case 'toReal':

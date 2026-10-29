@@ -32,7 +32,7 @@ theorem stt_localWeight_nonneg (p0 p1 p2 : ℝ)
 
 theorem stt_sum_weighted_dirac_singleton {α : Type*} [MeasurableSpace α]
     [MeasurableSingletonClass α] [DecidableEq α]
-    (g : LocalConfig → ℝ≥0∞) (f : LocalConfig → α) (a : α) :
+    (g : LocalConfig → ENNReal) (f : LocalConfig → α) (a : α) :
     (∑ ω : LocalConfig, g ω • Measure.dirac (f ω)) {a}
       = ∑ ω : LocalConfig, if f ω = a then g ω else 0 := by
   rw [Measure.coe_finsetSum, Finset.sum_apply]

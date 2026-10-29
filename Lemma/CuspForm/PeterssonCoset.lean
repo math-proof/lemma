@@ -67,15 +67,15 @@ section weight
 variable (Λ : Subgroup SL(2, ℤ))
 
 
-theorem tsum_SL_eq (F : SL(2, ℤ) → ℝ≥0∞) :
+theorem tsum_SL_eq (F : SL(2, ℤ) → ENNReal) :
     ∑' σ : SL(2, ℤ), F σ = ∑' q : SL(2, ℤ) ⧸ Λ, ∑' h : Λ, F (q.out * (h : SL(2, ℤ))) := by
   rw [← (splitEquiv Λ).symm.tsum_eq, ENNReal.tsum_prod']
   rfl
 
-theorem tsum_SL_inv (F : SL(2, ℤ) → ℝ≥0∞) : ∑' σ : SL(2, ℤ), F σ = ∑' σ : SL(2, ℤ), F σ⁻¹ :=
+theorem tsum_SL_inv (F : SL(2, ℤ) → ENNReal) : ∑' σ : SL(2, ℤ), F σ = ∑' σ : SL(2, ℤ), F σ⁻¹ :=
   ((Equiv.inv SL(2, ℤ)).tsum_eq F).symm
 
-theorem tsum_Λ_inv (F : Λ → ℝ≥0∞) : ∑' h : Λ, F h = ∑' h : Λ, F h⁻¹ :=
+theorem tsum_Λ_inv (F : Λ → ENNReal) : ∑' h : Λ, F h = ∑' h : Λ, F h⁻¹ :=
   ((Equiv.inv Λ).tsum_eq F).symm
 
 variable [Fintype (SL(2, ℤ) ⧸ Λ)]
@@ -87,8 +87,8 @@ theorem measurable_wt : Measurable (wt Λ) := by
     (measurable_smul_SL _)
 
 theorem indicator_smul (σ : SL(2, ℤ)) (x : ℍ) :
-    (𝒟 : Set ℍ).indicator (fun _ => (1 : ℝ≥0∞)) (σ • x)
-      = (σ⁻¹ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ℝ≥0∞)) x := by
+    (𝒟 : Set ℍ).indicator (fun _ => (1 : ENNReal)) (σ • x)
+      = (σ⁻¹ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ENNReal)) x := by
   by_cases h : σ • x ∈ (𝒟 : Set ℍ)
   · rw [Set.indicator_of_mem h, Set.indicator_of_mem (Set.mem_inv_smul_set_iff.mpr h)]
   · rw [Set.indicator_of_notMem h, Set.indicator_of_notMem (fun h' => h (Set.mem_inv_smul_set_iff.mp h'))]
@@ -97,20 +97,20 @@ theorem tsum_wt_smul {x : ℍ} (hx : x ∈ FLT.ModularFundamentalDomain.goodSet)
     ∑' h : Λ, wt Λ ((h : SL(2, ℤ)) • x) = 2 := by
   calc ∑' h : Λ, wt Λ ((h : SL(2, ℤ)) • x)
       = ∑' h : Λ, ∑' q : SL(2, ℤ) ⧸ Λ,
-          (𝒟 : Set ℍ).indicator (fun _ => (1 : ℝ≥0∞)) ((q.out : SL(2, ℤ)) • (h : SL(2, ℤ)) • x) :=
+          (𝒟 : Set ℍ).indicator (fun _ => (1 : ENNReal)) ((q.out : SL(2, ℤ)) • (h : SL(2, ℤ)) • x) :=
         tsum_congr fun h => by rw [wt, tsum_fintype]
     _ = ∑' q : SL(2, ℤ) ⧸ Λ, ∑' h : Λ,
-          (𝒟 : Set ℍ).indicator (fun _ => (1 : ℝ≥0∞)) ((q.out : SL(2, ℤ)) • (h : SL(2, ℤ)) • x) :=
+          (𝒟 : Set ℍ).indicator (fun _ => (1 : ENNReal)) ((q.out : SL(2, ℤ)) • (h : SL(2, ℤ)) • x) :=
         ENNReal.tsum_comm
     _ = ∑' q : SL(2, ℤ) ⧸ Λ, ∑' h : Λ,
-          (𝒟 : Set ℍ).indicator (fun _ => (1 : ℝ≥0∞)) (((q.out : SL(2, ℤ)) * h) • x) :=
+          (𝒟 : Set ℍ).indicator (fun _ => (1 : ENNReal)) (((q.out : SL(2, ℤ)) * h) • x) :=
         tsum_congr fun q => tsum_congr fun h => by rw [mul_smul]
-    _ = ∑' σ : SL(2, ℤ), (𝒟 : Set ℍ).indicator (fun _ => (1 : ℝ≥0∞)) (σ • x) :=
-        (tsum_SL_eq Λ (fun σ => (𝒟 : Set ℍ).indicator (fun _ => (1 : ℝ≥0∞)) (σ • x))).symm
-    _ = ∑' σ : SL(2, ℤ), (σ⁻¹ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ℝ≥0∞)) x :=
+    _ = ∑' σ : SL(2, ℤ), (𝒟 : Set ℍ).indicator (fun _ => (1 : ENNReal)) (σ • x) :=
+        (tsum_SL_eq Λ (fun σ => (𝒟 : Set ℍ).indicator (fun _ => (1 : ENNReal)) (σ • x))).symm
+    _ = ∑' σ : SL(2, ℤ), (σ⁻¹ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ENNReal)) x :=
         tsum_congr fun σ => indicator_smul σ x
-    _ = ∑' σ : SL(2, ℤ), (σ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ℝ≥0∞)) x := by
-        rw [tsum_SL_inv (fun σ => (σ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ℝ≥0∞)) x)]
+    _ = ∑' σ : SL(2, ℤ), (σ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ENNReal)) x := by
+        rw [tsum_SL_inv (fun σ => (σ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ENNReal)) x)]
     _ = 2 := FLT.ModularFundamentalDomain.tsum_indicator_smul_fd hx
 
 theorem ae_tsum_wt_smul : ∀ᵐ x : ℍ, ∑' h : Λ, wt Λ ((h : SL(2, ℤ)) • x) = 2 := by
@@ -118,7 +118,7 @@ theorem ae_tsum_wt_smul : ∀ᵐ x : ℍ, ∑' h : Λ, wt Λ ((h : SL(2, ℤ)) �
     with x hx
   exact tsum_wt_smul Λ (by simpa using hx)
 
-theorem tsum_G_eq (U w : ℍ → ℝ≥0∞) (hUinv : ∀ h ∈ Λ, ∀ x : ℍ, U (h • x) = U x) (x : ℍ)
+theorem tsum_G_eq (U w : ℍ → ENNReal) (hUinv : ∀ h ∈ Λ, ∀ x : ℍ, U (h • x) = U x) (x : ℍ)
     (hwt : ∀ q : SL(2, ℤ) ⧸ Λ, ∑' h : Λ, w ((h : SL(2, ℤ)) • (q.out⁻¹ : SL(2, ℤ)) • x) = 2) :
     ∑' σ : SL(2, ℤ), U (σ • x) * w (σ • x)
       = 2 * ∑ q : SL(2, ℤ) ⧸ Λ, U ((q.out⁻¹ : SL(2, ℤ)) • x) := by
@@ -143,7 +143,7 @@ theorem tsum_G_eq (U w : ℍ → ℝ≥0∞) (hUinv : ∀ h ∈ Λ, ∀ x : ℍ,
     _ = 2 * ∑ q : SL(2, ℤ) ⧸ Λ, U ((q.out⁻¹ : SL(2, ℤ)) • x) := by
         rw [ENNReal.tsum_mul_right, tsum_fintype, mul_comm]
 
-theorem weight_lintegral (U w : ℍ → ℝ≥0∞) (hU : Measurable U) (hw : Measurable w)
+theorem weight_lintegral (U w : ℍ → ENNReal) (hU : Measurable U) (hw : Measurable w)
     (hUinv : ∀ h ∈ Λ, ∀ x : ℍ, U (h • x) = U x)
     (hwt : ∀ᵐ x : ℍ, ∑' h : Λ, w ((h : SL(2, ℤ)) • x) = 2) :
     ∫⁻ x, U x * w x = ∫⁻ x in (𝒟 : Set ℍ), ∑ q : SL(2, ℤ) ⧸ Λ, U ((q.out⁻¹ : SL(2, ℤ)) • x) := by
@@ -172,7 +172,7 @@ theorem weight_lintegral (U w : ℍ → ℝ≥0∞) (hU : Measurable U) (hw : Me
   have hD : ∫⁻ x in (𝒟 : Set ℍ), 2 * ∑ q : SL(2, ℤ) ⧸ Λ, U ((q.out⁻¹ : SL(2, ℤ)) • x)
       = 2 * ∫⁻ x in (𝒟 : Set ℍ), ∑ q : SL(2, ℤ) ⧸ Λ, U ((q.out⁻¹ : SL(2, ℤ)) • x) :=
     lintegral_const_mul 2 hmeasS
-  have key : (2 : ℝ≥0∞) * ∫⁻ x, U x * w x
+  have key : (2 : ENNReal) * ∫⁻ x, U x * w x
       = 2 * ∫⁻ x in (𝒟 : Set ℍ), ∑ q : SL(2, ℤ) ⧸ Λ, U ((q.out⁻¹ : SL(2, ℤ)) • x) := by
     rw [← hA, hB, hC, hD]
   exact (ENNReal.mul_right_inj two_ne_zero ENNReal.ofNat_ne_top).mp key
@@ -186,7 +186,7 @@ variable (Λ₁ Λ₂ : Subgroup SL(2, ℤ)) [Fintype (SL(2, ℤ) ⧸ Λ₁)] [F
 theorem cvn_lintegral (β : GL (Fin 2) ℝ) (c : Λ₁ ≃ Λ₂)
     (hc : ∀ h : Λ₁, β * (Matrix.SpecialLinearGroup.mapGL ℝ (h : SL(2, ℤ)) : GL (Fin 2) ℝ)
       = (Matrix.SpecialLinearGroup.mapGL ℝ ((c h : Λ₂) : SL(2, ℤ)) : GL (Fin 2) ℝ) * β)
-    (U : ℍ → ℝ≥0∞) (hU : Measurable U) (hUinv : ∀ h ∈ Λ₂, ∀ x : ℍ, U (h • x) = U x) :
+    (U : ℍ → ENNReal) (hU : Measurable U) (hUinv : ∀ h ∈ Λ₂, ∀ x : ℍ, U (h • x) = U x) :
     ∫⁻ x in (𝒟 : Set ℍ), ∑ q : SL(2, ℤ) ⧸ Λ₁, U (β • (q.out⁻¹ : SL(2, ℤ)) • x)
       = ∫⁻ x in (𝒟 : Set ℍ), ∑ q : SL(2, ℤ) ⧸ Λ₂, U ((q.out⁻¹ : SL(2, ℤ)) • x) := by
   have hUβinv : ∀ h ∈ Λ₁, ∀ x : ℍ, U (β • h • x) = U (β • x) := by
@@ -516,11 +516,11 @@ theorem pair_self_eq_lintegral {F : ℍ → ℂ} (hF : Continuous F) :
 theorem eq_zero_of_pair_self_eq_zero {F : ℍ → ℂ} (hF : Nice Λ k F) (h0 : pair Λ k F F = 0) :
     F = 0 := by
   obtain ⟨C, hC⟩ := hF.bdd
-  set U : ℍ → ℝ≥0∞ := fun x => ENNReal.ofReal (dens k F x) with hUdef
+  set U : ℍ → ENNReal := fun x => ENNReal.ofReal (dens k F x) with hUdef
   have hU : Measurable U := ENNReal.measurable_ofReal.comp (continuous_dens hF.cont).measurable
   have hUinv : ∀ h ∈ Λ, ∀ x, U (h • x) = U x := fun h hh x => by simp only [hUdef, hF.dens_smul hh]
 
-  set I : ℝ≥0∞ := ∫⁻ x in (𝒟 : Set ℍ), ∑ q : SL(2, ℤ) ⧸ Λ, U ((q.out⁻¹ : SL(2, ℤ)) • x) with hI
+  set I : ENNReal := ∫⁻ x in (𝒟 : Set ℍ), ∑ q : SL(2, ℤ) ⧸ Λ, U ((q.out⁻¹ : SL(2, ℤ)) • x) with hI
   have hIfin : I ≠ ⊤ := by
     refine ne_top_of_le_ne_top ?_ (lintegral_mono (g := fun _ => ∑ _q : SL(2, ℤ) ⧸ Λ, ENNReal.ofReal C)
       fun x => Finset.sum_le_sum fun q _ => ENNReal.ofReal_le_ofReal (hC _))
@@ -562,7 +562,7 @@ theorem eq_zero_of_pair_self_eq_zero {F : ℍ → ℂ} (hF : Nice Λ k F) (h0 : 
   have htot : ∫⁻ x, U x = 0 := by
     have h := FLT.ModularFundamentalDomain.tsum_setLIntegral_fd_smul U hU
     simp only [hall, tsum_zero] at h
-    have h2 : (2 : ℝ≥0∞) * ∫⁻ x, U x = 0 := h.symm
+    have h2 : (2 : ENNReal) * ∫⁻ x, U x = 0 := h.symm
     simpa using h2
   have hae : U =ᵐ[volume] 0 := (lintegral_eq_zero_iff hU).mp htot
   have hdens : dens k F = fun _ => 0 := by

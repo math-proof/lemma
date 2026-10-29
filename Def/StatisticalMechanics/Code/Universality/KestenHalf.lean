@@ -24,7 +24,7 @@ open StatMech.Lattice StatMech.TwoDim
 
 
 noncomputable def halfMeasure : Measure (ConfigSpace (Sym2 (Site 2))) :=
-  bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one
+  bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one
 
 end Universality
 end StatMech

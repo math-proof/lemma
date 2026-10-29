@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry12SummableSuccN
@@ -10,8 +9,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry12SummableSuccN
 -/
 @[path]
 lemma ramanujan_part1_ch3_entry12_summable_succ_n_general
-  {r : ℤ}
-  {n a : ℂ}
+  (r : ℤ)
+  (n a : ℂ)
 -- given
   (ha : norm a > Real.exp 1 ∨ (a = ↑(Real.exp 1) ∧ r ≤ -2)) :
 -- imply
@@ -292,7 +291,7 @@ lemma ramanujan_part1_ch3_entry12_summable_succ_n_general
         ≤ ((N+(k:ℝ))^k / (N+(k:ℝ))^((-(r+1)).toNat)) * (((k:ℝ)+1) * Real.sqrt ((k:ℝ)+1)) :=
           mul_le_mul_of_nonneg_right hAt hSpos.le
         _ = (N+(k:ℝ))^k * (((k:ℝ)+1) * Real.sqrt ((k:ℝ)+1)) / (N+(k:ℝ))^((-(r+1)).toNat) := by
-          rw [div_mul_eq_mul_div]
+            rw [div_mul_eq_mul_div]
         _ ≤ (Real.exp N * 2^((-(r+1)).toNat)) * (Real.exp 1^k * (k.factorial:ℝ)) := by
           rw [div_le_iff₀ hdenpos]
           refine le_trans (mul_le_mul hPD key hSpos.le hnn1) (le_of_eq ?_)
@@ -313,7 +312,6 @@ lemma ramanujan_part1_ch3_entry12_summable_succ_n_general
       = (Real.exp N * 2^((-(r+1)).toNat)) * (1/((((j+K0:ℕ)):ℝ)+1)^((3/2):ℝ)) := by
       rw [← hrpowX, div_eq_mul_one_div]
     exact le_trans h (le_of_eq step)
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry12SummableSuccN
 
@@ -328,14 +326,14 @@ lemma ramanujan_part1_ch3_entry12_summable_succ_n
   {n a : ℂ}
 -- given
   (ha : norm a > Real.exp 1 ∨ (a = ↑(Real.exp 1) ∧ r ≤ -2))
-  (hn : ∀ k : ℤ, 0 ≤ k → r + k < 0 → n + (k : ℂ) ≠ 0) :
+  (_hn : ∀ k : ℤ, 0 ≤ k → r + k < 0 → n + (k : ℂ) ≠ 0) :
 -- imply
   Summable (fun k : ℕ => norm ((n + (k : ℂ)) ^ (r + 1 + (k : ℤ)) / ((a ^ k) * (k.factorial : ℂ)))) := by
 -- proof
-apply ramanujan_part1_ch3_entry12_summable_succ_n_general <;> assumption
+  apply ramanujan_part1_ch3_entry12_summable_succ_n_general; assumption
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry12SummableSuccN
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

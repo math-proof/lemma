@@ -37,7 +37,7 @@ theorem ih_eq_cylinder_of_dependsOn {A : Set (ConfigSpace E)} (F : Finset E)
     rw [ih_fill, dif_pos heF]
     rfl)
 
-theorem ih_harris_of_finite_dependsOn {p : ℝ≥0} (hp : p ≤ 1)
+theorem ih_harris_of_finite_dependsOn {p : NNReal} (hp : p ≤ 1)
     {A B : Set (ConfigSpace E)} (F : Finset E)
     (hAdep : DependsOn A (F : Set E)) (hBdep : DependsOn B (F : Set E))
     (hAinc : IsIncreasing A) (hBinc : IsIncreasing B) :

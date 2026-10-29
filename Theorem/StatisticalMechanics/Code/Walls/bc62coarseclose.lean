@@ -267,9 +267,9 @@ theorem bc62_coarseTrifProb_const (μ : Measure (ConfigSpace (Sym2 (Site d))))
 
 
 theorem bc62_coarseTcount_eq_sum_indicator (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ) :
-    (bc61_coarseTcount ω L R : ℝ≥0∞) =
+    (bc61_coarseTcount ω L R : ENNReal) =
       ∑ y ∈ boxFinsetBK d R,
-        ({ω' | bc61_IsCoarseTrifurcation ω' L y}.indicator (fun _ => (1 : ℝ≥0∞))) ω := by
+        ({ω' | bc61_IsCoarseTrifurcation ω' L y}.indicator (fun _ => (1 : ENNReal))) ω := by
   classical
   rw [bc61_coarseTcount, bc61_coarseTrifFinset, Finset.card_filter]
   push_cast
@@ -282,13 +282,13 @@ theorem bc62_coarseTcount_eq_sum_indicator (ω : ConfigSpace (Sym2 (Site d))) (L
 
 theorem bc62_coarse_expectation (μ : Measure (ConfigSpace (Sym2 (Site d))))
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) (L R : ℕ) :
-    ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-      = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ := by
+    ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+      = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ := by
   classical
   have hmeas : ∀ y : Site d, Measurable
-      (fun ω => ({ω' | bc61_IsCoarseTrifurcation ω' L y}.indicator (fun _ => (1 : ℝ≥0∞))) ω) :=
+      (fun ω => ({ω' | bc61_IsCoarseTrifurcation ω' L y}.indicator (fun _ => (1 : ENNReal))) ω) :=
     fun y => Measurable.indicator measurable_const (bc62_measurableSet_coarseTrif L y)
-  calc ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+  calc ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
       = (boxFinsetBK d R).card • μ {ω | bc61_IsCoarseTrifurcation ω L 0} := by
         rw [nsmul_eq_mul]
     _ = ∑ _y ∈ boxFinsetBK d R, μ {ω | bc61_IsCoarseTrifurcation ω L 0} := by
@@ -296,13 +296,13 @@ theorem bc62_coarse_expectation (μ : Measure (ConfigSpace (Sym2 (Site d))))
     _ = ∑ y ∈ boxFinsetBK d R, μ {ω | bc61_IsCoarseTrifurcation ω L y} := by
         apply Finset.sum_congr rfl; intro y _; exact (bc62_coarseTrifProb_const μ hinv L y).symm
     _ = ∑ y ∈ boxFinsetBK d R,
-          ∫⁻ ω, ({ω' | bc61_IsCoarseTrifurcation ω' L y}.indicator (fun _ => (1 : ℝ≥0∞))) ω ∂μ := by
+          ∫⁻ ω, ({ω' | bc61_IsCoarseTrifurcation ω' L y}.indicator (fun _ => (1 : ENNReal))) ω ∂μ := by
         apply Finset.sum_congr rfl; intro y _
         rw [MeasureTheory.lintegral_indicator (bc62_measurableSet_coarseTrif L y)]; simp
     _ = ∫⁻ ω, ∑ y ∈ boxFinsetBK d R,
-          ({ω' | bc61_IsCoarseTrifurcation ω' L y}.indicator (fun _ => (1 : ℝ≥0∞))) ω ∂μ := by
+          ({ω' | bc61_IsCoarseTrifurcation ω' L y}.indicator (fun _ => (1 : ENNReal))) ω ∂μ := by
         rw [MeasureTheory.lintegral_finsetSum]; intro y _; exact hmeas y
-    _ = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ := by
+    _ = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ := by
         apply lintegral_congr; intro ω; exact (bc62_coarseTcount_eq_sum_indicator ω L R).symm
 
 

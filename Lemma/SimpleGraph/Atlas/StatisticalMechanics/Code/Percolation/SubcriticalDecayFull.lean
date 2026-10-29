@@ -26,7 +26,7 @@ private lemma bernoulli_translationInvariant_eq
   [MulAction G E]
   [Countable E]
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   IsTranslationInvariant (G := G) (bernoulliProductMeasure (E := E) p hp) := by
@@ -124,7 +124,7 @@ private lemma crossProbFrom_le_eq
   {y : Site d}
   {L m n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hy : y ∈ box d L)
   (hmLn : m + L ≤ n)
@@ -143,7 +143,7 @@ private lemma subcritical_decay_full_eq
   {S : Finset (Site d)}
   {L : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hS0 : origin d ∈ S)
   (hphi : phi d p hp S < 1)

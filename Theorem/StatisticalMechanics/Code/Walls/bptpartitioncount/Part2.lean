@@ -69,7 +69,7 @@ theorem bpt_count_of_partitionForest (ω : ConfigSpace (Sym2 (Site d))) (L R : �
   bfa_datum_implies_count ω L R h
 
 
-theorem bpt_bk_of_partitionForest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bpt_bk_of_partitionForest (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   (bkg_bk_uniqueness_of_classical p hp1 hp0 hdata).2.1

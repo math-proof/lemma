@@ -310,7 +310,7 @@ theorem bc45_selfDownArm_of_cutGeometryFixed' (ω : ConfigSpace (Sym2 (Site d)))
   bc37_selfDownArm_of_parentFunneling ω n (bc45_parentFunneling_of_cutGeometryFixed' ω n hgeo)
 
 
-theorem bc45_burton_keane_bernoulli (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc45_burton_keane_bernoulli (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc40_ArmCutGeometryFixed' ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

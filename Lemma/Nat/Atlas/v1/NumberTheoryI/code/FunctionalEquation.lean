@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.FunctionalEquation
-open Complex hiding exp continuous_exp Real Filter Topology Asymptotics FunctionalEquation
+open Complex hiding exp
 open Real Filter Topology Asymptotics
 
 
@@ -43,7 +43,7 @@ namespace FunctionalEquation
 [xi_differentiable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/FunctionalEquation.lean)
 -/
 @[path]
-lemma xi_differentiable
+lemma xi_differentiable :
 -- imply
   Differentiable ℂ xi := by
 -- proof
@@ -159,15 +159,17 @@ lemma xi_zero_re_in_critical_strip
 -- imply
   0 < s.re ∧ s.re < 1 := by
 -- proof
+
   have hs0 : s ≠ 0 := by
     intro h; rw [h] at hs; unfold xi at hs; simp at hs
   have hs1 : s ≠ 1 := by
     intro h; rw [h] at hs; unfold xi at hs; simp at hs
+
   rw [xi_eq_mul_completedZeta hs0 hs1] at hs
   have hfac : s * (s - 1) / 2 ≠ 0 :=
     div_ne_zero (mul_ne_zero hs0 (sub_ne_zero.mpr hs1)) two_ne_zero
   have hΛ : completedRiemannZeta s = 0 := by
-    obtain h | h := mul_eq_zero.mp hs
+    rcases mul_eq_zero.mp hs with h | h
     · exact absurd h hfac
     · exact h
   exact completedRiemannZeta_zero_re_in_critical_strip s hΛ hs0 hs1
@@ -180,7 +182,7 @@ namespace FunctionalEquation
 [xi_entire_functional_equation_and_critical_strip](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/FunctionalEquation.lean)
 -/
 @[path]
-lemma xi_entire_functional_equation_and_critical_strip
+lemma xi_entire_functional_equation_and_critical_strip :
 -- imply
   (Differentiable ℂ xi) ∧ (∀ s : ℂ, xi (1 - s) = xi s) ∧ (∀ s : ℂ, xi s = 0 → 0 < s.re ∧ s.re < 1) :=
 -- proof
@@ -190,3 +192,4 @@ end FunctionalEquation
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

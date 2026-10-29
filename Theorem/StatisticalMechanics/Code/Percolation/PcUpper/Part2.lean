@@ -27,14 +27,14 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-theorem theta_pos_of_contourBound {p : ℝ≥0} (hp : p ≤ 1)
+theorem theta_pos_of_contourBound {p : NNReal} (hp : p ≤ 1)
     (hContour : PcContourBound p hp) (hBound : pcUpperBound (p : ℝ) < 1) :
     0 < theta 2 p hp := by
   have h : 1 - theta 2 p hp ≤ pcUpperBound (p : ℝ) := hContour
   linarith
 
 
-theorem not_mem_subcriticalSet_of_theta_pos {p : ℝ≥0} (hp : p ≤ 1)
+theorem not_mem_subcriticalSet_of_theta_pos {p : NNReal} (hp : p ≤ 1)
     (hθ : 0 < theta 2 p hp) : p ∉ subcriticalSet 2 := by
   intro hmem
   obtain ⟨hp', hzero⟩ := hmem
@@ -45,7 +45,7 @@ theorem not_mem_subcriticalSet_of_theta_pos {p : ℝ≥0} (hp : p ≤ 1)
 
 theorem pc_lt_one
     (hGeom : ∃ p₀ : ℝ, p₀ < 1 ∧
-      ∀ (p : ℝ≥0) (hp : p ≤ 1), (p₀ : ℝ) < (p : ℝ) → PcContourBound p hp) :
+      ∀ (p : NNReal) (hp : p ≤ 1), (p₀ : ℝ) < (p : ℝ) → PcContourBound p hp) :
     pc 2 < 1 := by
   obtain ⟨p₁, hp₁lt, hp₁bound⟩ := exists_p_lt_one_pcUpperBound_lt_one
   obtain ⟨p₂, hp₂lt, hp₂geom⟩ := hGeom
@@ -61,7 +61,7 @@ theorem pc_lt_one
   have hslt : s < 1 := by rw [hs]; linarith
   have hs0 : (0 : ℝ) ≤ s := by rw [hs]; linarith
   
-  set sN : ℝ≥0 := s.toNNReal with hsN
+  set sN : NNReal := s.toNNReal with hsN
   have hsNcoe : (sN : ℝ) = s := by rw [hsN]; exact Real.coe_toNNReal s hs0
   have hsN1 : sN ≤ 1 := by
     rw [hsN, ← Real.toNNReal_one]; exact Real.toNNReal_le_toNNReal hslt.le
@@ -93,7 +93,7 @@ theorem pc_lt_one
 
 theorem pc_pos_and_lt_one
     (hGeom : ∃ p₀ : ℝ, p₀ < 1 ∧
-      ∀ (p : ℝ≥0) (hp : p ≤ 1), (p₀ : ℝ) < (p : ℝ) → PcContourBound p hp) :
+      ∀ (p : NNReal) (hp : p ≤ 1), (p₀ : ℝ) < (p : ℝ) → PcContourBound p hp) :
     0 < pc 2 ∧ pc 2 < 1 :=
   ⟨pc_pos (by norm_num), pc_lt_one hGeom⟩
 

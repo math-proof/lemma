@@ -17,7 +17,7 @@ def normOneIdeles : Subgroup (AdeleRing (𝓞 F) F)ˣ :=
   (distribHaarChar (AdeleRing (𝓞 F) F)).ker
 
 def ideleNorm (x : (AdeleRing (𝓞 F) F)ˣ) : ℝ :=
-  ((distribHaarChar (AdeleRing (𝓞 F) F) x : ℝ≥0) : ℝ)
+  ((distribHaarChar (AdeleRing (𝓞 F) F) x : NNReal) : ℝ)
 
 variable {F}
 

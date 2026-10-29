@@ -26,7 +26,7 @@ lemma exists_measure_extension
   {𝒜 : Set (Set α)}
 -- given
   (h𝒜 : IsSetAlgebra 𝒜)
-  (μ₀ : AddContent ℝ≥0∞ 𝒜)
+  (μ₀ : AddContent ENNReal 𝒜)
   (hμ₀_sigma : μ₀.IsSigmaSubadditive) :
 -- imply
   ∃ μ : @Measure α (generateFrom 𝒜), ∀ s ∈ 𝒜, μ s = μ₀ s := by
@@ -45,7 +45,7 @@ lemma caratheodory_extension_theorem
   {B : ℕ → Set α}
 -- given
   (h𝒜 : IsSetAlgebra 𝒜)
-  (μ₀ : AddContent ℝ≥0∞ 𝒜)
+  (μ₀ : AddContent ENNReal 𝒜)
   (hμ₀_sigma : μ₀.IsSigmaSubadditive)
   (hB_mem : ∀ i, B i ∈ 𝒜)
   (hB_cover : ⋃ i, B i = univ)

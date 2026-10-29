@@ -21,8 +21,8 @@ variable {S T : Type*} [Fintype T]
 
 theorem multivaluedMap_source_bound
     (R : S → T → Prop) [DecidableRel R]
-    (epsilon : ℝ≥0∞) (K : ℕ)
-    (sourceWeight : S → ℝ≥0∞) (targetWeight : T → ℝ≥0∞)
+    (epsilon : ENNReal) (K : ℕ)
+    (sourceWeight : S → ENNReal) (targetWeight : T → ENNReal)
     (hdegree : ∀ s, K ≤ (Finset.univ.filter (R s)).card)
     (hweight : ∀ s t, R s t →
       epsilon * sourceWeight s ≤ targetWeight t)
@@ -31,7 +31,7 @@ theorem multivaluedMap_source_bound
       ∑ t ∈ Finset.univ.filter (R s), targetWeight t := by
   calc
     epsilon * K * sourceWeight s = K * (epsilon * sourceWeight s) := by ring
-    _ ≤ ((Finset.univ.filter (R s)).card : ℝ≥0∞) *
+    _ ≤ ((Finset.univ.filter (R s)).card : ENNReal) *
         (epsilon * sourceWeight s) := by
       gcongr
       exact_mod_cast hdegree s
@@ -47,8 +47,8 @@ variable [Fintype S]
 
 theorem multivaluedMap_weight_bound
     (R : S → T → Prop) [DecidableRel R]
-    (epsilon : ℝ≥0∞) (K L : ℕ)
-    (sourceWeight : S → ℝ≥0∞) (targetWeight : T → ℝ≥0∞)
+    (epsilon : ENNReal) (K L : ℕ)
+    (sourceWeight : S → ENNReal) (targetWeight : T → ENNReal)
     (hdegree : ∀ s, K ≤ (Finset.univ.filter (R s)).card)
     (hmultiplicity : ∀ t,
       (Finset.univ.filter (fun s => R s t)).card ≤ L)
@@ -68,7 +68,7 @@ theorem multivaluedMap_weight_bound
         targetWeight t := by
       simp only [Finset.sum_filter]
       rw [Finset.sum_comm]
-    _ = ∑ t, ((Finset.univ.filter (fun s => R s t)).card : ℝ≥0∞) *
+    _ = ∑ t, ((Finset.univ.filter (fun s => R s t)).card : ENNReal) *
         targetWeight t := by
       apply Finset.sum_congr rfl
       intro t _
@@ -82,8 +82,8 @@ theorem multivaluedMap_weight_bound
 
 theorem multivaluedMap_probability_bound
     (R : S → T → Prop) [DecidableRel R]
-    (epsilon : ℝ≥0∞) (K L : ℕ)
-    (sourceWeight : S → ℝ≥0∞) (targetWeight : T → ℝ≥0∞)
+    (epsilon : ENNReal) (K L : ℕ)
+    (sourceWeight : S → ENNReal) (targetWeight : T → ENNReal)
     (hdegree : ∀ s, K ≤ (Finset.univ.filter (R s)).card)
     (hmultiplicity : ∀ t,
       (Finset.univ.filter (fun s => R s t)).card ≤ L)

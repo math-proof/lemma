@@ -61,7 +61,7 @@ namespace MathlibExtTest.EdgeIndexedMultigraph
 [indexedEulerian_concrete](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/EdgeIndexedMultigraph.lean)
 -/
 @[path]
-lemma indexedEulerian_concrete
+lemma indexedEulerian_concrete :
 -- imply
   ∃ (u : Fin 2) (p : double.IndexedWalk u u), p.IsTrail ∧ Sum.inl () ∈ p.edges ∧ Sum.inr () ∈ p.edges := by
 -- proof
@@ -75,3 +75,4 @@ end MathlibExtTest.EdgeIndexedMultigraph
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

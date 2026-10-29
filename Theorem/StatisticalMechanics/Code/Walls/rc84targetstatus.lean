@@ -24,7 +24,7 @@ open StatMech.Walls
 
 
 theorem rc84_target_is_genuine (h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E]
-    {p : ℝ≥0} (hp : p ≤ 1) (A B : Set (ConfigSpace E)) :
+    {p : NNReal} (hp : p ≤ 1) (A B : Set (ConfigSpace E)) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A
         * (bernoulliProductMeasure (E := E) p hp).real B :=
@@ -36,7 +36,7 @@ theorem rc84_minimal_residue (h : rc17_NonMonotoneDeficit) : ReimerWprobCore :=
 
 
 theorem rc84_reimer_of_minimal_residue (h : rc17_NonMonotoneDeficit)
-    {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+    {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
     (A B : Set (ConfigSpace E)) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A
@@ -61,7 +61,7 @@ theorem rc84_what_is_proved :
    fun 𝒜 ℬ => rc20_famCylBox_fin2 𝒜 ℬ⟩
 
 
-theorem rc84_off_critical_path {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0}
+theorem rc84_off_critical_path {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal}
     (hp : p ≤ 1) {A B : Set (ConfigSpace E)} (hA : IsIncreasing A) (hB : IsIncreasing B) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A
@@ -72,7 +72,7 @@ theorem rc84_off_critical_path {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ�
 theorem rc84_target_status :
     
     (ReimerWprobCore →
-      ∀ {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+      ∀ {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
         (A B : Set (ConfigSpace E)),
         (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
           ≤ (bernoulliProductMeasure (E := E) p hp).real A
@@ -80,7 +80,7 @@ theorem rc84_target_status :
     
     ∧ (rc17_NonMonotoneDeficit → ReimerWprobCore)
     
-    ∧ (∀ {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+    ∧ (∀ {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
         {A B : Set (ConfigSpace E)}, IsIncreasing A → IsIncreasing B →
         (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
           ≤ (bernoulliProductMeasure (E := E) p hp).real A

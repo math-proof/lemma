@@ -24,7 +24,7 @@ open StatMech.Sharpness
 variable {E : Type*}
 
 
-theorem rc83_bk_increasing [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+theorem rc83_bk_increasing [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
     {A B : Set (ConfigSpace E)} (hA : IsIncreasing A) (hB : IsIncreasing B) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A
@@ -38,7 +38,7 @@ theorem rc83_disjointOccurrence_increasing {A B : Set (ConfigSpace E)}
   disjointOccurrence_isIncreasing hA hB
 
 
-theorem rc83_bk_triple_increasing [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+theorem rc83_bk_triple_increasing [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
     {P Q R : Set (ConfigSpace E)} (hP : IsIncreasing P) (hQ : IsIncreasing Q)
     (hR : IsIncreasing R) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence P (disjointOccurrence Q R))
@@ -48,7 +48,7 @@ theorem rc83_bk_triple_increasing [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp 
   bk_triple hp hP hQ hR
 
 
-theorem rc83_reimer_not_needed_for_increasing [Fintype E] [DecidableEq E] {p : ℝ≥0}
+theorem rc83_reimer_not_needed_for_increasing [Fintype E] [DecidableEq E] {p : NNReal}
     (hp : p ≤ 1) {A B : Set (ConfigSpace E)} (hA : IsIncreasing A) (hB : IsIncreasing B) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A
@@ -74,7 +74,7 @@ theorem rc83_connEvent_triple_increasing_witness {V : Type*} [Fintype V] [Decida
 
 
 theorem rc83_downstream_audit {V : Type*} [Fintype V] [DecidableEq V]
-    (G : SimpleGraph V) {p : ℝ≥0} (hp : p ≤ 1) (S : Set V) (u : V) (x y : V) (A B : Set V) :
+    (G : SimpleGraph V) {p : NNReal} (hp : p ≤ 1) (S : Set V) (u : V) (x y : V) (A B : Set V) :
     (∀ (P Q R : Set (ConfigSpace (Sym2 V))),
         IsIncreasing P → IsIncreasing Q → IsIncreasing R →
         (bernoulliProductMeasure (E := Sym2 V) p hp).real

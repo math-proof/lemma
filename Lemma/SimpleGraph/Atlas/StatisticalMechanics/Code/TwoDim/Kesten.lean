@@ -10,8 +10,8 @@ open MeasureTheory Set Filter StatMech StatMech.TwoDim
 @[path]
 private lemma theta_half_eq_zero_eq
 -- given
-  (h12 : (1 / 2 : ℝ≥0) ≤ 1)
-  (cross : ℝ≥0 → ℕ → ℝ)
+  (h12 : (1 / 2 : NNReal) ≤ 1)
+  (cross : NNReal → ℕ → ℝ)
   (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
   (hpercToOne : 0 < theta 2 (1 / 2) h12 → Tendsto (cross (1 / 2)) atTop (𝓝 1)) :
 -- imply
@@ -25,12 +25,12 @@ private lemma theta_half_eq_zero_eq
 @[path]
 private lemma half_mem_subcriticalSet_eq
 -- given
-  (h12 : (1 / 2 : ℝ≥0) ≤ 1)
-  (cross : ℝ≥0 → ℕ → ℝ)
+  (h12 : (1 / 2 : NNReal) ≤ 1)
+  (cross : NNReal → ℕ → ℝ)
   (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
   (hpercToOne : 0 < theta 2 (1 / 2) h12 → Tendsto (cross (1 / 2)) atTop (𝓝 1)) :
 -- imply
-  (1 / 2 : ℝ≥0) ∈ subcriticalSet 2 := by
+  (1 / 2 : NNReal) ∈ subcriticalSet 2 := by
 -- proof
   apply StatMech.TwoDim.half_mem_subcriticalSet h12 cross hdualHalf hpercToOne
 
@@ -40,12 +40,12 @@ private lemma half_mem_subcriticalSet_eq
 @[path]
 private lemma half_le_pc_eq
 -- given
-  (h12 : (1 / 2 : ℝ≥0) ≤ 1)
-  (cross : ℝ≥0 → ℕ → ℝ)
+  (h12 : (1 / 2 : NNReal) ≤ 1)
+  (cross : NNReal → ℕ → ℝ)
   (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
   (hpercToOne : 0 < theta 2 (1 / 2) h12 → Tendsto (cross (1 / 2)) atTop (𝓝 1)) :
 -- imply
-  (1 / 2 : ℝ≥0) ≤ pc 2 := by
+  (1 / 2 : NNReal) ≤ pc 2 := by
 -- proof
   apply StatMech.TwoDim.half_le_pc h12 cross hdualHalf hpercToOne
 
@@ -56,13 +56,13 @@ private lemma half_le_pc_eq
 private lemma pc_le_half_eq
 -- given
   (hsharp : tildePc 2 = pc 2)
-  (cross : ℝ≥0 → ℕ → ℝ)
+  (cross : NNReal → ℕ → ℝ)
   (hsub : ∀ p ∈ tildePcSet 2, ∀ hp : p ≤ 1, ∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n))
-  (hmono : ∀ n, ∀ p q : ℝ≥0, p ≤ q → cross p n ≤ cross q n)
+  (hmono : ∀ n, ∀ p q : NNReal, p ≤ q → cross p n ≤ cross q n)
   (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
-  (hdecayToZero : ∀ p : ℝ≥0, ∀ hp : p ≤ 1, (∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n)) → Tendsto (cross p) atTop (𝓝 0)) :
+  (hdecayToZero : ∀ p : NNReal, ∀ hp : p ≤ 1, (∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n)) → Tendsto (cross p) atTop (𝓝 0)) :
 -- imply
-  pc 2 ≤ (1 / 2 : ℝ≥0) := by
+  pc 2 ≤ (1 / 2 : NNReal) := by
 -- proof
   apply StatMech.TwoDim.pc_le_half hsharp cross hsub hmono hdualHalf hdecayToZero
 
@@ -72,16 +72,16 @@ private lemma pc_le_half_eq
 @[path]
 private lemma pc_eq_half_eq
 -- given
-  (h12 : (1 / 2 : ℝ≥0) ≤ 1)
+  (h12 : (1 / 2 : NNReal) ≤ 1)
   (hsharp : tildePc 2 = pc 2)
-  (cross : ℝ≥0 → ℕ → ℝ)
+  (cross : NNReal → ℕ → ℝ)
   (hsub : ∀ p ∈ tildePcSet 2, ∀ hp : p ≤ 1, ∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n))
-  (hmono : ∀ n, ∀ p q : ℝ≥0, p ≤ q → cross p n ≤ cross q n)
+  (hmono : ∀ n, ∀ p q : NNReal, p ≤ q → cross p n ≤ cross q n)
   (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
   (hpercToOne : 0 < theta 2 (1 / 2) h12 → Tendsto (cross (1 / 2)) atTop (𝓝 1))
-  (hdecayToZero : ∀ p : ℝ≥0, ∀ hp : p ≤ 1, (∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n)) → Tendsto (cross p) atTop (𝓝 0)) :
+  (hdecayToZero : ∀ p : NNReal, ∀ hp : p ≤ 1, (∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n)) → Tendsto (cross p) atTop (𝓝 0)) :
 -- imply
-  pc 2 = (1 / 2 : ℝ≥0) := by
+  pc 2 = (1 / 2 : NNReal) := by
 -- proof
   apply StatMech.TwoDim.pc_eq_half h12 hsharp cross hsub hmono hdualHalf hpercToOne hdecayToZero
 

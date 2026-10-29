@@ -83,7 +83,7 @@ private lemma interpolatedSite_cluster_count_ae_one_of_lowOutput_eq
 -- given
   (hd : 1 ≤ d)
   (herg : IsTripleFieldErgodic mu)
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon)
   (hlow : mu {q | 1 ≤ numInfiniteClusters d (siteToBond (T q.1))} = 1) :
@@ -178,7 +178,7 @@ private lemma highInsertionLowerBound_finset_eq
   {S : Finset (Site d)}
   {A : Set (FieldTriple d)}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hinsert : HasHighInsertionLowerBound mu t epsilon)
   (hAmeas : MeasurableSet A)
   (hignore : TripleEventIgnoresHighOn S A) :
@@ -238,7 +238,7 @@ private lemma highOutput_cluster_count_ae_le_one_of_absorption_eq
 -- given
   (hd : 1 ≤ d)
   (herg : IsTripleFieldErgodic mu)
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon)
   (hmono : ∀ᵐ q ∂mu, IsMonotoneFieldTriple q)
@@ -261,7 +261,7 @@ private lemma highOutput_cluster_count_ae_one_of_absorption_eq
 -- given
   (hd : 1 ≤ d)
   (herg : IsTripleFieldErgodic mu)
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon)
   (hmono : ∀ᵐ q ∂mu, IsMonotoneFieldTriple q)

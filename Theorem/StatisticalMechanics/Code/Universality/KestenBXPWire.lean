@@ -93,13 +93,13 @@ theorem kbw_kesten_bxp_supplied
         = rba_selfDualMeasure.real (horizontalCrossingEvent 0 ((k0 : ℤ) * n) 0 n))
     
     (hCorLowerBound : BoxCrossingProperty halfMeasure 2 →
-        percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0)
+        percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0)
     
     (hHm : ∀ n, MeasurableSet (boxFam n))
     (hRmeas : Measurable R) (hRpres : Measure.map R halfMeasure = halfMeasure)
     (hdich : ∀ n, (boxFam n)ᶜ = (R ∘ dualConfig) ⁻¹' (boxFam n))
     
-    (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
+    (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
         Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
     criticalProbability 2 = 1 / 2 :=
   kesten_pc_eq_half_of_bxp (ρ := 2) (R := R) (boxFam := boxFam)
@@ -124,11 +124,11 @@ theorem kbw_criticalProbability_le_half_square_faithful
       (hmeasGenH _ _ hn hn) (hmeasFace _ hn) (hmeasThin _ hn)
   by_contra hgt
   rw [not_le] at hgt
-  have hlt : ((2⁻¹ : ℝ≥0) : ℝ) < criticalProbability 2 := by
+  have hlt : ((2⁻¹ : NNReal) : ℝ) < criticalProbability 2 := by
     norm_num
     exact hgt
   have hT := (TwoDim.kcd_horizontal_sharpThreshold
-    (2⁻¹ : ℝ≥0) half_le_one hlt).comp (tendsto_add_atTop_nat 1)
+    (2⁻¹ : NNReal) half_le_one hlt).comp (tendsto_add_atTop_nat 1)
   have hlimge : (1 / 2 : ℝ) ≤ 0 :=
     le_of_tendsto_of_tendsto tendsto_const_nhds hT
       (Filter.Eventually.of_forall hbalance)
@@ -148,7 +148,7 @@ theorem kbw_kesten_square_faithful
       (1 : ℝ) / 8 ≤ rba_selfDualMeasure.real
         (horizontalCrossingEvent 0 (2 * n) 0 n))
     (hCorLowerBound : BoxCrossingProperty halfMeasure 2 →
-      percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0)
+      percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0)
     : criticalProbability 2 = 1 / 2 := by
   have hbxp : BoxCrossingProperty halfMeasure 2 :=
     kbw_bxp_half_faithful hpa hmeasGenH hmeasGenV hmeasFace hmeasThin h2box
@@ -182,14 +182,14 @@ theorem kbw_kesten_no_percolation_supplied
       rba_selfDualMeasure.real (verticalCrossingEvent 0 n 0 ((k0 : ℤ) * n))
         = rba_selfDualMeasure.real (horizontalCrossingEvent 0 ((k0 : ℤ) * n) 0 n))
     (hCorLowerBound : BoxCrossingProperty halfMeasure 2 →
-        percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0)
+        percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0)
     (hHm : ∀ n, MeasurableSet (boxFam n))
     (hRmeas : Measurable R) (hRpres : Measure.map R halfMeasure = halfMeasure)
     (hdich : ∀ n, (boxFam n)ᶜ = (R ∘ dualConfig) ⁻¹' (boxFam n))
-    (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
+    (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
         Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
     criticalProbability 2 = 1 / 2 ∧
-      percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 := by
+      percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 := by
   have hbxp : BoxCrossingProperty halfMeasure 2 :=
     kbw_bxp_half_supplied hpa hβ hγ hmeas2box hmeasband hmeasGenH hmeasGenV
       hseed h2box hband hrefl 2 (by norm_num)

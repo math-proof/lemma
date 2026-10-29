@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions.Part4
-open Finset Real Filter Asymptotics DirichletCharacter in
+open Finset Real Filter Asymptotics DirichletCharacter
 open scoped Nat
 
 
@@ -20,7 +20,7 @@ lemma dirichletChar_factorsThrough_iff_ker_and_unique
 -- imply
   (χ₂.FactorsThrough m₁ ↔ (ZMod.unitsMap h).ker ≤ χ₂.toUnitHom.ker) ∧ (χ₂.FactorsThrough m₁ → ∃! χ₁ : DirichletCharacter R m₁, χ₂ = changeLevel h χ₁) :=
 -- proof
-  ⟨factorsThrough_iff_ker_unitsMap h, fun hf => hf.existsUnique⟩
+  ⟨DirichletCharacter.factorsThrough_iff_ker_unitsMap h, fun hf => hf.existsUnique⟩
 
 
 -- created on 2026-10-23

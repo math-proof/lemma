@@ -59,10 +59,10 @@ theorem KWStraightLineEmbedding.singleton_vertex_disjoint_dartClosedEdge
     (embedding.vertex_not_mem_dartClosedEdge v d hvfst hvsnd)
 
 theorem kw_exists_uniform_nnreal_finset
-    {α : Type*} (s : Finset α) (Q : α → ℝ≥0 → Prop)
-    (hQ : ∀ a ∈ s, ∃ r : ℝ≥0, 0 < r ∧ Q a r)
-    (hmono : ∀ a ∈ s, ∀ {r r' : ℝ≥0}, r' ≤ r → Q a r → Q a r') :
-    ∃ r : ℝ≥0, 0 < r ∧ ∀ a ∈ s, Q a r := by
+    {α : Type*} (s : Finset α) (Q : α → NNReal → Prop)
+    (hQ : ∀ a ∈ s, ∃ r : NNReal, 0 < r ∧ Q a r)
+    (hmono : ∀ a ∈ s, ∀ {r r' : NNReal}, r' ≤ r → Q a r → Q a r') :
+    ∃ r : NNReal, 0 < r ∧ ∀ a ∈ s, Q a r := by
   classical
   induction s using Finset.induction_on with
   | empty => exact ⟨1, by norm_num, by simp⟩
@@ -81,14 +81,14 @@ theorem KWStraightLineEmbedding.exists_uniform_vertex_separation
     {V : Type*} [Fintype V] [DecidableEq V]
     {G : SimpleGraph V} [DecidableRel G.Adj]
     (embedding : KWStraightLineEmbedding G) :
-    ∃ r : ℝ≥0, 0 < r ∧ ∀ v w : V, v ≠ w →
+    ∃ r : NNReal, 0 < r ∧ ∀ v w : V, v ≠ w →
       (r : ℝ) < dist (embedding.vertex v) (embedding.vertex w) := by
   classical
   let pairs : Finset (V × V) :=
     Finset.univ.filter (fun p ↦ p.1 ≠ p.2)
-  let Q : (V × V) → ℝ≥0 → Prop := fun p r ↦
-    (r : ℝ≥0∞) < edist (embedding.vertex p.1) (embedding.vertex p.2)
-  have hpair : ∀ p ∈ pairs, ∃ r : ℝ≥0, 0 < r ∧ Q p r := by
+  let Q : (V × V) → NNReal → Prop := fun p r ↦
+    (r : ENNReal) < edist (embedding.vertex p.1) (embedding.vertex p.2)
+  have hpair : ∀ p ∈ pairs, ∃ r : NNReal, 0 < r ∧ Q p r := by
     intro p hp
     have hne : p.1 ≠ p.2 := by
       simpa only [pairs, Finset.mem_filter, Finset.mem_univ, true_and] using hp
@@ -99,7 +99,7 @@ theorem KWStraightLineEmbedding.exists_uniform_vertex_separation
     refine ⟨r, hr, ?_⟩
     simpa [Q] using
       hsep (embedding.vertex p.1) rfl (embedding.vertex p.2) rfl
-  have hmono : ∀ p ∈ pairs, ∀ {r r' : ℝ≥0},
+  have hmono : ∀ p ∈ pairs, ∀ {r r' : NNReal},
       r' ≤ r → Q p r → Q p r' := by
     intro p _ r r' hle h
     exact (ENNReal.coe_le_coe.mpr hle).trans_lt h
@@ -116,22 +116,22 @@ theorem KWStraightLineEmbedding.exists_uniform_edge_length
     {V : Type*} [Fintype V] [DecidableEq V]
     {G : SimpleGraph V} [DecidableRel G.Adj]
     (embedding : KWStraightLineEmbedding G) :
-    ∃ r : ℝ≥0, 0 < r ∧ ∀ d : G.Dart,
+    ∃ r : NNReal, 0 < r ∧ ∀ d : G.Dart,
       (r : ℝ) < ‖embedding.vertex d.snd - embedding.vertex d.fst‖ := by
   classical
-  let Q : G.Dart → ℝ≥0 → Prop := fun d r ↦
+  let Q : G.Dart → NNReal → Prop := fun d r ↦
     (r : ℝ) < ‖embedding.vertex d.snd - embedding.vertex d.fst‖
   have hQ : ∀ d ∈ (Finset.univ : Finset G.Dart),
-      ∃ r : ℝ≥0, 0 < r ∧ Q d r := by
+      ∃ r : NNReal, 0 < r ∧ Q d r := by
     intro d _
     let length : ℝ := ‖embedding.vertex d.snd - embedding.vertex d.fst‖
     have hlength : 0 < length := norm_pos_iff.mpr (embedding.dartVector_ne_zero d)
-    let r : ℝ≥0 := ⟨length / 2, by positivity⟩
+    let r : NNReal := ⟨length / 2, by positivity⟩
     refine ⟨r, ?_, ?_⟩
     · exact_mod_cast half_pos hlength
     · change length / 2 < length
       linarith
-  have hmono : ∀ d ∈ (Finset.univ : Finset G.Dart), ∀ {r r' : ℝ≥0},
+  have hmono : ∀ d ∈ (Finset.univ : Finset G.Dart), ∀ {r r' : NNReal},
       r' ≤ r → Q d r → Q d r' := by
     intro d _ r r' hle h
     have hle' : (r' : ℝ) ≤ (r : ℝ) := by exact_mod_cast hle
@@ -144,17 +144,17 @@ theorem KWStraightLineEmbedding.exists_uniform_vertex_edge_separation
     {V : Type*} [Fintype V] [DecidableEq V]
     {G : SimpleGraph V} [DecidableRel G.Adj]
     (embedding : KWStraightLineEmbedding G) :
-    ∃ r : ℝ≥0, 0 < r ∧
+    ∃ r : NNReal, 0 < r ∧
       ∀ (v : V) (d : G.Dart), v ≠ d.fst → v ≠ d.snd →
         ∀ y ∈ embedding.dartClosedEdge d,
           (r : ℝ) < dist (embedding.vertex v) y := by
   classical
   let pairs : Finset (V × G.Dart) := Finset.univ.filter
     (fun p ↦ p.1 ≠ p.2.fst ∧ p.1 ≠ p.2.snd)
-  let Q : (V × G.Dart) → ℝ≥0 → Prop := fun p r ↦
+  let Q : (V × G.Dart) → NNReal → Prop := fun p r ↦
     ∀ y ∈ embedding.dartClosedEdge p.2,
-      (r : ℝ≥0∞) < edist (embedding.vertex p.1) y
-  have hpair : ∀ p ∈ pairs, ∃ r : ℝ≥0, 0 < r ∧ Q p r := by
+      (r : ENNReal) < edist (embedding.vertex p.1) y
+  have hpair : ∀ p ∈ pairs, ∃ r : NNReal, 0 < r ∧ Q p r := by
     intro p hp
     have hnon : p.1 ≠ p.2.fst ∧ p.1 ≠ p.2.snd := by
       simpa only [pairs, Finset.mem_filter, Finset.mem_univ, true_and] using hp
@@ -164,7 +164,7 @@ theorem KWStraightLineEmbedding.exists_uniform_vertex_edge_separation
       (embedding.singleton_vertex_disjoint_dartClosedEdge
         p.1 p.2 hnon.1 hnon.2)
     exact ⟨r, hr, fun y hy ↦ hsep (embedding.vertex p.1) rfl y hy⟩
-  have hmono : ∀ p ∈ pairs, ∀ {r r' : ℝ≥0},
+  have hmono : ∀ p ∈ pairs, ∀ {r r' : NNReal},
       r' ≤ r → Q p r → Q p r' := by
     intro p _ r r' hle h y hy
     exact (ENNReal.coe_le_coe.mpr hle).trans_lt (h y hy)

@@ -262,7 +262,7 @@ theorem fac_Tcount_le_boundary_of_pairwiseCutSeparation (ω : ConfigSpace (Sym2 
     (fac_globalForestArms_of_pairwiseCutSeparation ω n h)
 
 
-theorem fac_burton_keane_bernoulli_of_pairwiseCutSeparation (hd : 1 ≤ d) (p : ℝ≥0)
+theorem fac_burton_keane_bernoulli_of_pairwiseCutSeparation (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
       fac_PairwiseCutSeparation ω n)

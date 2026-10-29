@@ -99,8 +99,8 @@ theorem positivelyAssociated_of_measurablyPositivelyAssociated
 
 theorem bernoulli_exists_cylinder_symmDiff_lt
     {E : Type*} [Countable E]
-    (p : ℝ≥0) (hp : p ≤ 1) {A : Set (ConfigSpace E)}
-    (hA : MeasurableSet A) {ε : ℝ≥0∞} (hε : 0 < ε) :
+    (p : NNReal) (hp : p ≤ 1) {A : Set (ConfigSpace E)}
+    (hA : MeasurableSet A) {ε : ENNReal} (hε : 0 < ε) :
     ∃ C ∈ measurableCylinders (fun _ : E => Bool),
       bernoulliProductMeasure (E := E) p hp (C ∆ A) < ε :=
   FK.exists_cylinder_symmDiff_lt p hp hA hε

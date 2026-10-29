@@ -1,6 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open Nat Nat.SylvesterSchur
+import Lemma.Nat.SylvesterSchur.PrimeCounting
+import Lemma.Nat.SylvesterSchur.ChooseFactorization
+import Lemma.Nat.SylvesterSchur.ErdosLayers
+import Lemma.Nat.SylvesterSchur.ErdosPowerBounds
+open Nat
 open Finset Nat
 
 
@@ -14,21 +18,21 @@ private lemma three_mul_choose_two_mul_add_le_two_mul_choose_succ
   {n i : ℕ} (hi : i + 1 ≤ n) :
   3 * Nat.choose (2 * n + i) n ≤ 2 * Nat.choose (2 * n + i + 1) n := by
   have hchoose :
-    Nat.choose (2 * n + i + 1) n * (n + i + 1) =
-      Nat.choose (2 * n + i) n * (2 * n + i + 1) := by
+      Nat.choose (2 * n + i + 1) n * (n + i + 1) =
+        Nat.choose (2 * n + i) n * (2 * n + i + 1) := by
     have h := (Nat.choose_mul_succ_eq (2 * n + i) n).symm
     have h1 : 2 * n + i + 1 - n = n + i + 1 := by omega
     simpa [h1] using h
   apply Nat.le_of_mul_le_mul_right _ (by omega : 0 < n + i + 1)
   calc
     (3 * Nat.choose (2 * n + i) n) * (n + i + 1)
-      = Nat.choose (2 * n + i) n * (3 * (n + i + 1)) := by ring
+        = Nat.choose (2 * n + i) n * (3 * (n + i + 1)) := by ring
     _ ≤ Nat.choose (2 * n + i) n * (2 * (2 * n + i + 1)) := by
-      apply Nat.mul_le_mul_left
-      omega
+        apply Nat.mul_le_mul_left
+        omega
     _ = 2 * (Nat.choose (2 * n + i) n * (2 * n + i + 1)) := by ring
     _ = 2 * (Nat.choose (2 * n + i + 1) n * (n + i + 1)) := by
-      rw [← hchoose]
+        rw [← hchoose]
     _ = (2 * Nat.choose (2 * n + i + 1) n) * (n + i + 1) := by ring
 
 end Nat.SylvesterSchur.Internal
@@ -44,23 +48,23 @@ private lemma three_pow_mul_centralBinom_le_two_pow_mul_choose_two_mul_add
   3 ^ i * Nat.centralBinom n ≤ 2 ^ i * Nat.choose (2 * n + i) n := by
   induction i with
   | zero =>
-    simp [Nat.centralBinom, two_mul]
+      simp [Nat.centralBinom, two_mul]
   | succ i ih =>
-    have hi' : i ≤ n := by omega
-    have hstep := ih hi'
-    have hratio :
-      3 * Nat.choose (2 * n + i) n ≤
-        2 * Nat.choose (2 * n + i + 1) n :=
-      three_mul_choose_two_mul_add_le_two_mul_choose_succ hi
-    calc
-      3 ^ (i + 1) * Nat.centralBinom n
-        = 3 * (3 ^ i * Nat.centralBinom n) := by ring
-      _ ≤ 3 * (2 ^ i * Nat.choose (2 * n + i) n) :=
-        Nat.mul_le_mul_left 3 hstep
-      _ = 2 ^ i * (3 * Nat.choose (2 * n + i) n) := by ring
-      _ ≤ 2 ^ i * (2 * Nat.choose (2 * n + i + 1) n) :=
-        Nat.mul_le_mul_left _ hratio
-      _ = 2 ^ (i + 1) * Nat.choose (2 * n + (i + 1)) n := by ring_nf
+      have hi' : i ≤ n := by omega
+      have hstep := ih hi'
+      have hratio :
+          3 * Nat.choose (2 * n + i) n ≤
+            2 * Nat.choose (2 * n + i + 1) n :=
+        three_mul_choose_two_mul_add_le_two_mul_choose_succ hi
+      calc
+        3 ^ (i + 1) * Nat.centralBinom n
+            = 3 * (3 ^ i * Nat.centralBinom n) := by ring
+        _ ≤ 3 * (2 ^ i * Nat.choose (2 * n + i) n) :=
+          Nat.mul_le_mul_left 3 hstep
+        _ = 2 ^ i * (3 * Nat.choose (2 * n + i) n) := by ring
+        _ ≤ 2 ^ i * (2 * Nat.choose (2 * n + i + 1) n) :=
+          Nat.mul_le_mul_left _ hratio
+        _ = 2 ^ (i + 1) * Nat.choose (2 * n + (i + 1)) n := by ring_nf
 
 end Nat.SylvesterSchur.Internal
 
@@ -93,10 +97,10 @@ private lemma three_pow_mul_four_pow_lt_mul_two_pow_mul_choose_three_mul
   have hmul : 3 ^ n * 4 ^ n < 3 ^ n * (n * Nat.centralBinom n) :=
     (Nat.mul_lt_mul_left (pow_pos (by norm_num : 0 < 3) n)).mpr hcentral
   have hupper :
-    3 ^ n * (n * Nat.centralBinom n) ≤ n * (2 ^ n * Nat.choose (3 * n) n) := by
+      3 ^ n * (n * Nat.centralBinom n) ≤ n * (2 ^ n * Nat.choose (3 * n) n) := by
     calc
       3 ^ n * (n * Nat.centralBinom n)
-        = n * (3 ^ n * Nat.centralBinom n) := by ring
+          = n * (3 ^ n * Nat.centralBinom n) := by ring
       _ ≤ n * (2 ^ n * Nat.choose (3 * n) n) :=
         Nat.mul_le_mul_left n (three_pow_mul_centralBinom_le_two_pow_mul_choose_three_mul n)
   exact hmul.trans_le hupper
@@ -121,26 +125,26 @@ lemma exists_prime_dvd_choose_of_scaled_ternary_erdos_layers_bound
   apply exists_large_prime_dvd_choose_of_not_forall_prime_dvd_le
   intro hsmall
   have hchoose_upper :
-    Nat.choose N r ≤
-      4 ^ (r + Nat.sqrt N + Nat.nthRoot 3 N * Nat.log 2 N) := by
+      Nat.choose N r ≤
+        4 ^ (r + Nat.sqrt N + Nat.nthRoot 3 N * Nat.log 2 N) := by
     exact (choose_le_prod_erdos_layers_of_no_large (by omega) (by omega) hsmall).trans
       (erdos_layers_le_four_pow_three_layers N r)
   have hchoose_scaled :
-    N ^ r * Nat.choose (3 * r) r ≤ (3 * r) ^ r * Nat.choose N r :=
+      N ^ r * Nat.choose (3 * r) r ≤ (3 * r) ^ r * Nat.choose N r :=
     pow_mul_choose_le_pow_mul_choose (M := 3 * r) (N := N) (r := r)
       (by omega) hrN
   have hcentral :
-    3 ^ r * 4 ^ r < r * (2 ^ r * Nat.choose (3 * r) r) :=
+      3 ^ r * 4 ^ r < r * (2 ^ r * Nat.choose (3 * r) r) :=
     three_pow_mul_four_pow_lt_mul_two_pow_mul_choose_three_mul hr
   have hcentral_scaled :
-    3 ^ r * 4 ^ r * N ^ r <
-      r * (2 ^ r * (N ^ r * Nat.choose (3 * r) r)) := by
+      3 ^ r * 4 ^ r * N ^ r <
+        r * (2 ^ r * (N ^ r * Nat.choose (3 * r) r)) := by
     simpa [mul_assoc, mul_left_comm, mul_comm] using
       Nat.mul_lt_mul_of_pos_right hcentral (pow_pos (by omega : 0 < N) r)
   have hupper_scaled :
-    r * (2 ^ r * (N ^ r * Nat.choose (3 * r) r)) ≤
-      r * (2 ^ r * ((3 * r) ^ r *
-        4 ^ (r + Nat.sqrt N + Nat.nthRoot 3 N * Nat.log 2 N))) := by
+      r * (2 ^ r * (N ^ r * Nat.choose (3 * r) r)) ≤
+        r * (2 ^ r * ((3 * r) ^ r *
+          4 ^ (r + Nat.sqrt N + Nat.nthRoot 3 N * Nat.log 2 N))) := by
     exact Nat.mul_le_mul_left r <| Nat.mul_le_mul_left (2 ^ r) <|
       hchoose_scaled.trans <| Nat.mul_le_mul_left ((3 * r) ^ r) hchoose_upper
   exact (not_lt_of_ge (le_of_lt (hcentral_scaled.trans_le hupper_scaled))) hbound
@@ -167,32 +171,32 @@ lemma exists_prime_dvd_choose_of_central_offset_erdos_div_three_layers_bound
   apply exists_large_prime_dvd_choose_of_not_forall_prime_dvd_le
   intro hsmall
   have hchoose_upper :
-    Nat.choose N r ≤
-      ∏ j ∈ Finset.range (Nat.log 2 N),
-        if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N) := by
+      Nat.choose N r ≤
+        ∏ j ∈ Finset.range (Nat.log 2 N),
+          if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N) := by
     exact choose_le_prod_erdos_div_three_layers_of_no_large (by omega) (by omega)
       (by omega) hN6 hsmall
   have hcentral : 4 ^ r < r * Nat.centralBinom r :=
     Nat.four_pow_lt_mul_centralBinom r hr
   have hoffset :
-    3 ^ i * Nat.centralBinom r ≤ 2 ^ i * Nat.choose N r := by
+      3 ^ i * Nat.centralBinom r ≤ 2 ^ i * Nat.choose N r := by
     have h :=
       three_pow_mul_centralBinom_le_two_pow_mul_choose_two_mul_add (n := r) (i := i) hi
     simpa [hN] using h
   have hlower :
-    3 ^ i * 4 ^ r < r * (2 ^ i * Nat.choose N r) := by
+      3 ^ i * 4 ^ r < r * (2 ^ i * Nat.choose N r) := by
     calc
       3 ^ i * 4 ^ r
-        < 3 ^ i * (r * Nat.centralBinom r) :=
-          (Nat.mul_lt_mul_left (pow_pos (by norm_num : 0 < 3) i)).mpr hcentral
+          < 3 ^ i * (r * Nat.centralBinom r) :=
+            (Nat.mul_lt_mul_left (pow_pos (by norm_num : 0 < 3) i)).mpr hcentral
       _ = r * (3 ^ i * Nat.centralBinom r) := by ring
       _ ≤ r * (2 ^ i * Nat.choose N r) :=
-        Nat.mul_le_mul_left r hoffset
+            Nat.mul_le_mul_left r hoffset
   have hupper_mul :
-    r * (2 ^ i * Nat.choose N r) ≤
-      r * (2 ^ i *
-        (∏ j ∈ Finset.range (Nat.log 2 N),
-          if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N))) :=
+      r * (2 ^ i * Nat.choose N r) ≤
+        r * (2 ^ i *
+          (∏ j ∈ Finset.range (Nat.log 2 N),
+            if j = 0 then primorial (N / 3) else primorial (Nat.nthRoot (j + 1) N))) :=
     Nat.mul_le_mul_left r (Nat.mul_le_mul_left (2 ^ i) hchoose_upper)
   exact (not_lt_of_ge (le_of_lt (hlower.trans_le hupper_mul))) hbound
 
@@ -213,11 +217,12 @@ lemma exists_prime_dvd_choose_two_mul_add_two_small
   ∃ p : ℕ, p.Prime ∧ n < p ∧ p ∣ Nat.choose (2 * n + 2) n := by
 -- proof
   have hchoose : ∀ p : ℕ, p.Prime → n + 3 ≤ p → p ≤ 2 * n + 2 →
-    p ∣ Nat.choose (2 * n + 2) n := by
+      p ∣ Nat.choose (2 * n + 2) n := by
     intro p hp hp_low hp_high
     have hd : p ∣ Nat.choose (n + (n + 2)) n :=
       hp.dvd_choose_add (by omega) (by omega) (by omega)
-    rwa [show n + (n + 2) = 2 * n + 2 by omega] at hd
+    rw [show n + (n + 2) = 2 * n + 2 by omega] at hd
+    exact hd
   by_cases hn11 : n < 11
   · exact ⟨13, by norm_num, by omega, hchoose 13 (by norm_num) (by omega) (by omega)⟩
   by_cases hn21 : n < 21
@@ -565,17 +570,21 @@ private lemma exists_prime_near_mid_range_top {k : ℕ}
   · exact ⟨1279, by norm_num, by omega, by omega⟩
   exact ⟨1301, by norm_num, by omega, by omega⟩
 
+/- A prime-gap certificate for the mid residual range.
+
+For every `41 ≤ k < 1291`, one of the displayed primes lies in `[k, k + 21]`.
+Since the mid residual has block length at least `38`, this prime is one of the
+  terms in the block. -/
 end Nat.SylvesterSchur.Internal
 
 namespace Nat.SylvesterSchur.Internal
 
 /--
 [exists_prime_near_of_ge_forty_one_lt_1291](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualFinite.lean)
--/
-@[path]
 For every `41 ≤ k < 1291`, one of the displayed primes lies in `[k, k + 21]`.
 Since the mid residual has block length at least `38`, this prime is one of the
   terms in the block. -/
+@[path]
 private lemma exists_prime_near_of_ge_forty_one_lt_1291 {k : ℕ}
   (hk41 : 41 ≤ k) (hklt : k < 1291) :
   ∃ p : ℕ, p.Prime ∧ k ≤ p ∧ p ≤ k + 21 := by
@@ -607,7 +616,7 @@ lemma second_residual_tiny_has_large_prime_factor
 -- proof
   by_cases hn8 : 8 ≤ n
   · obtain ⟨p, hp, hkp, hp_le⟩ :=
-    exists_prime_near_seven_of_ge_ten_lt_100 (by omega) hklt
+      exists_prime_near_seven_of_ge_ten_lt_100 (by omega) hklt
     exact exists_large_prime_factor_in_block_of_prime_near (by omega) hklo hp hkp hp_le
   have hn_eq : n = 7 := by omega
   subst n
@@ -640,7 +649,9 @@ lemma second_residual_mid_has_large_prime_factor
     exists_prime_near_of_ge_forty_one_lt_1291 (by omega) hklt
   exact exists_large_prime_factor_in_block_of_prime_near (by omega) hklo hp hkp hp_le
 
+
 end Nat.SylvesterSchur.Internal
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

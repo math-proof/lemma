@@ -65,7 +65,7 @@ theorem bfc2_dependsOn_measurableSet_iSup {T : Set E}
   exact hπM hC
 
 
-theorem bfc2_indep_finite_cofinite (p : ℝ≥0) (hp : p ≤ 1)
+theorem bfc2_indep_finite_cofinite (p : NNReal) (hp : p ≤ 1)
     (I : Finset E) {A B : Set (ConfigSpace E)}
     (hAmeas : MeasurableSet A) (hBmeas : MeasurableSet B)
     (hA : DependsOn A (↑I : Set E)) (hB : DependsOn B (↑I : Set E)ᶜ) :

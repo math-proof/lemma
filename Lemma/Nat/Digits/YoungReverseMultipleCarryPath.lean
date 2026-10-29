@@ -10,11 +10,11 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma young_reverse_multiple_carry_path_iff_general
-  {g k n : ℕ}
-  {a : Fin n → ℕ}
+  (g k n : ℕ)
 -- given
   (hgk : 2 ≤ k)
   (hkg : k < g)
+  (a : Fin n → ℕ)
   (hdigit : ∀ i, a i < g) :
 -- imply
   k * (∑ i, a i * g ^ i.val) = ∑ i, a (Fin.rev i) * g ^ i.val ↔
@@ -87,10 +87,10 @@ lemma young_reverse_multiple_carry_path_iff_general
     set S : ℕ → ℤ := fun m => k * (∑ j ∈ Finset.range m, A j * (g:ℤ)^j)
       - ∑ j ∈ Finset.range m, B j * (g:ℤ)^j with hSdef
     have hZ : (k:ℤ) * (∑ i : Fin n, ((a i : ℕ):ℤ) * (g:ℤ)^i.val)
-      = ∑ i : Fin n, ((a (Fin.rev i) : ℕ):ℤ) * (g:ℤ)^i.val := by
+        = ∑ i : Fin n, ((a (Fin.rev i) : ℕ):ℤ) * (g:ℤ)^i.val := by
       exact_mod_cast h
     have hAfinZ : (∑ i : Fin n, ((a i : ℕ):ℤ) * (g:ℤ)^i.val)
-      = ∑ m ∈ Finset.range n, A m * (g:ℤ)^m := by
+        = ∑ m ∈ Finset.range n, A m * (g:ℤ)^m := by
       have e := Fin.sum_univ_eq_sum_range (fun m => A m * (g:ℤ)^m) n
       rw [← e]
       apply Finset.sum_congr rfl
@@ -98,7 +98,7 @@ lemma young_reverse_multiple_carry_path_iff_general
       show ((a i : ℕ):ℤ) * (g:ℤ)^i.val = A i.val * (g:ℤ)^i.val
       rw [hAm i.val i.isLt]
     have hBfinZ : (∑ i : Fin n, ((a (Fin.rev i) : ℕ):ℤ) * (g:ℤ)^i.val)
-      = ∑ m ∈ Finset.range n, B m * (g:ℤ)^m := by
+        = ∑ m ∈ Finset.range n, B m * (g:ℤ)^m := by
       have e := Fin.sum_univ_eq_sum_range (fun m => B m * (g:ℤ)^m) n
       rw [← e]
       apply Finset.sum_congr rfl
@@ -111,17 +111,17 @@ lemma young_reverse_multiple_carry_path_iff_general
       linear_combination hZ
     -- difference sums equal S
     have hS_eq : ∀ m, (∑ j ∈ Finset.range m, (k * A j - B j) * (g:ℤ)^j)
-      = k * (∑ j ∈ Finset.range m, A j * (g:ℤ)^j)
-        - ∑ j ∈ Finset.range m, B j * (g:ℤ)^j := by
+        = k * (∑ j ∈ Finset.range m, A j * (g:ℤ)^j)
+          - ∑ j ∈ Finset.range m, B j * (g:ℤ)^j := by
       intro m
       calc ∑ j ∈ Finset.range m, (k * A j - B j) * (g:ℤ)^j
-        = ∑ j ∈ Finset.range m, (k * (A j * (g:ℤ)^j) - B j * (g:ℤ)^j) :=
-          Finset.sum_congr rfl (fun j _ => by ring)
+          = ∑ j ∈ Finset.range m, (k * (A j * (g:ℤ)^j) - B j * (g:ℤ)^j) :=
+            Finset.sum_congr rfl (fun j _ => by ring)
         _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
     set q : ℕ → ℤ := fun m => (∑ j ∈ Finset.Ico m n, B j * (g:ℤ)^(j-m))
       - k * (∑ j ∈ Finset.Ico m n, A j * (g:ℤ)^(j-m)) with hqdef
     have hqeq : ∀ m, q m = (∑ j ∈ Finset.Ico m n, B j * (g:ℤ)^(j-m))
-      - k * (∑ j ∈ Finset.Ico m n, A j * (g:ℤ)^(j-m)) := by
+        - k * (∑ j ∈ Finset.Ico m n, A j * (g:ℤ)^(j-m)) := by
       intro m; simp only [hqdef]
     -- S m = G^m * q m
     have hSq : ∀ m, m ≤ n → S m = (g:ℤ)^m * q m := by
@@ -129,10 +129,10 @@ lemma young_reverse_multiple_carry_path_iff_general
       have h0 := Finset.sum_range_add_sum_Ico (fun j => (k * A j - B j) * (g:ℤ)^j) hm
       rw [hS_eq m, hS_eq n] at h0
       have hSn' : k * (∑ j ∈ Finset.range n, A j * (g:ℤ)^j)
-        - ∑ j ∈ Finset.range n, B j * (g:ℤ)^j = 0 := hSn
+          - ∑ j ∈ Finset.range n, B j * (g:ℤ)^j = 0 := hSn
       rw [hSn'] at h0
       have h2a : (∑ j ∈ Finset.Ico m n, (k * A j - B j) * (g:ℤ)^j)
-        = (g:ℤ)^m * (∑ j ∈ Finset.Ico m n, (k * A j - B j) * (g:ℤ)^(j-m)) := by
+          = (g:ℤ)^m * (∑ j ∈ Finset.Ico m n, (k * A j - B j) * (g:ℤ)^(j-m)) := by
         rw [Finset.mul_sum]
         apply Finset.sum_congr rfl
         intro j hj
@@ -142,19 +142,19 @@ lemma young_reverse_multiple_carry_path_iff_general
           rw [pow_add]
         rw [hp]; ring
       have h2b : (∑ j ∈ Finset.Ico m n, (k * A j - B j) * (g:ℤ)^(j-m))
-        = k * (∑ j ∈ Finset.Ico m n, A j * (g:ℤ)^(j-m))
-          - ∑ j ∈ Finset.Ico m n, B j * (g:ℤ)^(j-m) := by
+          = k * (∑ j ∈ Finset.Ico m n, A j * (g:ℤ)^(j-m))
+            - ∑ j ∈ Finset.Ico m n, B j * (g:ℤ)^(j-m) := by
         calc ∑ j ∈ Finset.Ico m n, (k * A j - B j) * (g:ℤ)^(j-m)
-          = ∑ j ∈ Finset.Ico m n,
-            (k * (A j * (g:ℤ)^(j-m)) - B j * (g:ℤ)^(j-m)) :=
-            Finset.sum_congr rfl (fun j _ => by ring)
+            = ∑ j ∈ Finset.Ico m n,
+              (k * (A j * (g:ℤ)^(j-m)) - B j * (g:ℤ)^(j-m)) :=
+              Finset.sum_congr rfl (fun j _ => by ring)
           _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
       have h2 : (∑ j ∈ Finset.Ico m n, (k * A j - B j) * (g:ℤ)^j)
-        = (g:ℤ)^m * (k * (∑ j ∈ Finset.Ico m n, A j * (g:ℤ)^(j-m))
-          - ∑ j ∈ Finset.Ico m n, B j * (g:ℤ)^(j-m)) := by
+          = (g:ℤ)^m * (k * (∑ j ∈ Finset.Ico m n, A j * (g:ℤ)^(j-m))
+            - ∑ j ∈ Finset.Ico m n, B j * (g:ℤ)^(j-m)) := by
         rw [h2a, h2b]
       have hSm' : S m = k * (∑ j ∈ Finset.range m, A j * (g:ℤ)^j)
-        - ∑ j ∈ Finset.range m, B j * (g:ℤ)^j := rfl
+          - ∑ j ∈ Finset.range m, B j * (g:ℤ)^j := rfl
       rw [h2] at h0
       rw [hqeq m, hSm']
       linear_combination h0
@@ -165,7 +165,7 @@ lemma young_reverse_multiple_carry_path_iff_general
         mul_nonneg (by exact_mod_cast Nat.zero_le k) (hLAge m)
       have h2 : (∑ j ∈ Finset.range m, B j * (g:ℤ)^j) < (g:ℤ)^m := hLBlt m
       have hS' : S m = k * (∑ j ∈ Finset.range m, A j * (g:ℤ)^j)
-        - ∑ j ∈ Finset.range m, B j * (g:ℤ)^j := rfl
+          - ∑ j ∈ Finset.range m, B j * (g:ℤ)^j := rfl
       rw [hS']
       linarith
     have hShi : ∀ m, S m < (k:ℤ) * (g:ℤ)^m := by
@@ -174,7 +174,7 @@ lemma young_reverse_multiple_carry_path_iff_general
         mul_lt_mul_of_pos_left (hLAlt m) (by omega)
       have h2 : 0 ≤ (∑ j ∈ Finset.range m, B j * (g:ℤ)^j) := hLBge m
       have hS' : S m = k * (∑ j ∈ Finset.range m, A j * (g:ℤ)^j)
-        - ∑ j ∈ Finset.range m, B j * (g:ℤ)^j := rfl
+          - ∑ j ∈ Finset.range m, B j * (g:ℤ)^j := rfl
       rw [hS']
       linarith
     -- q bounds
@@ -201,9 +201,9 @@ lemma young_reverse_multiple_carry_path_iff_general
       intro m hm
       have hSm : S (m+1) = S m + (g:ℤ)^m * (k * A m - B m) := by
         have hS1 : S (m+1) = k * (∑ j ∈ Finset.range (m+1), A j * (g:ℤ)^j)
-          - ∑ j ∈ Finset.range (m+1), B j * (g:ℤ)^j := rfl
+            - ∑ j ∈ Finset.range (m+1), B j * (g:ℤ)^j := rfl
         have hS0 : S m = k * (∑ j ∈ Finset.range m, A j * (g:ℤ)^j)
-          - ∑ j ∈ Finset.range m, B j * (g:ℤ)^j := rfl
+            - ∑ j ∈ Finset.range m, B j * (g:ℤ)^j := rfl
         rw [hS1, hS0, Finset.sum_range_succ, Finset.sum_range_succ]
         ring
       have h1 := hSq (m+1) (Nat.succ_le_of_lt hm)
@@ -217,11 +217,13 @@ lemma young_reverse_multiple_carry_path_iff_general
     have eA : ∀ i : Fin n, A i.val = (((a i : ℕ)):ℤ) := by
       intro i
       have h1 := hAm i.val i.isLt
-      rwa [Fin.eta i i.isLt] at h1
+      rw [Fin.eta i i.isLt] at h1
+      exact h1
     have eB : ∀ i : Fin n, B i.val = (((a (Fin.rev i) : ℕ)):ℤ) := by
       intro i
       have h1 := hBm i.val i.isLt
-      rwa [Fin.eta i i.isLt] at h1
+      rw [Fin.eta i i.isLt] at h1
+      exact h1
     have htoNat : ∀ m : ℤ, 0 ≤ m → m < (k:ℤ) → m.toNat < k := by
       intro m h0 hk
       have h1 : ((m.toNat : ℕ) : ℤ) = m := Int.toNat_of_nonneg h0
@@ -241,8 +243,8 @@ lemma young_reverse_multiple_carry_path_iff_general
       exact hs.resolve_left (pow_ne_zero _ hgneZ)
     -- witness satisfies the equations
     have hwit : ∀ i : Fin n, (q (i.val + 1)).toNat < k ∧
-      k * a i + (q i.val).toNat
-        = a (Fin.rev i) + (q (i.val + 1)).toNat * g := by
+        k * a i + (q i.val).toNat
+          = a (Fin.rev i) + (q (i.val + 1)).toNat * g := by
       intro i
       have hm1 : i.val + 1 ≤ n := Nat.succ_le_of_lt i.isLt
       have hm0 : i.val ≤ n := by have := i.isLt; omega
@@ -256,9 +258,9 @@ lemma young_reverse_multiple_carry_path_iff_general
       constructor
       · exact htoNat _ hq0i1 hqki1
       · have hz : (k:ℤ) * (((a i : ℕ)):ℤ) + q i.val
-        = (((a (Fin.rev i) : ℕ)):ℤ) + q (i.val + 1) * (g:ℤ) := by
-        rw [← eA i, ← eB i]
-        linarith
+            = (((a (Fin.rev i) : ℕ)):ℤ) + q (i.val + 1) * (g:ℤ) := by
+          rw [← eA i, ← eB i]
+          linarith
         rw [← hcast_eq, ← hsucc_eq] at hz
         exact_mod_cast hz
     -- assemble
@@ -277,7 +279,8 @@ lemma young_reverse_multiple_carry_path_iff_general
       have hss : (fun j => (q j.val).toNat) i.succ = (q (i.val + 1)).toNat := by
         change (q (i.succ).val).toNat = _
         rw [Fin.val_succ]
-      rwa [hcs, hss]
+      rw [hcs, hss]
+      exact hi
     · intro s hs
       obtain ⟨hs0, hsn, hseq⟩ := hs
       have hpoint : ∀ (m : ℕ) (h : m < n + 1), s ⟨m, h⟩ = (q m).toNat := by
@@ -297,7 +300,7 @@ lemma young_reverse_multiple_carry_path_iff_general
             apply Fin.ext
             simp
           have e2 : (⟨m, Nat.lt_succ_of_lt hm⟩ : Fin (n + 1))
-            = (⟨m, hm⟩ : Fin n).castSucc := by
+              = (⟨m, hm⟩ : Fin n).castSucc := by
             apply Fin.ext
             simp
           have ihc : s (⟨m, hm⟩ : Fin n).castSucc = (q m).toNat := by
@@ -308,22 +311,24 @@ lemma young_reverse_multiple_carry_path_iff_general
           simp only at hsi hwi
           have hcancel : s (⟨m, hm⟩ : Fin n).succ * g = (q (m + 1)).toNat * g := by
             have h1 : k * a ⟨m, hm⟩ + s (⟨m, hm⟩ : Fin n).castSucc
-              = a (Fin.rev ⟨m, hm⟩) + s (⟨m, hm⟩ : Fin n).succ * g := hsi
+                = a (Fin.rev ⟨m, hm⟩) + s (⟨m, hm⟩ : Fin n).succ * g := hsi
             rw [ihc] at h1
             have h2 : k * a ⟨m, hm⟩ + (q m).toNat
-              = a (Fin.rev ⟨m, hm⟩) + (q (m + 1)).toNat * g := hwi
+                = a (Fin.rev ⟨m, hm⟩) + (q (m + 1)).toNat * g := hwi
             have h3 : a (Fin.rev ⟨m, hm⟩) + s (⟨m, hm⟩ : Fin n).succ * g
-              = a (Fin.rev ⟨m, hm⟩) + (q (m + 1)).toNat * g := by
+                = a (Fin.rev ⟨m, hm⟩) + (q (m + 1)).toNat * g := by
               rw [← h1, ← h2]
             exact Nat.add_left_cancel h3
           have hseq2 : s (⟨m, hm⟩ : Fin n).succ = (q (m + 1)).toNat :=
             mul_right_cancel₀ hgne hcancel
-          rwa [e1]
+          rw [e1]
+          exact hseq2
       have hfun : s = (fun j => (q j.val).toNat) := by
         apply funext
         intro j
         have hj := hpoint j.val j.isLt
-        rwa [Fin.eta j j.isLt] at hj
+        rw [Fin.eta j j.isLt] at hj
+        exact hj
       exact hfun
   · rintro ⟨r, ⟨hr0, hrn, heq⟩, -⟩
     classical
@@ -345,12 +350,12 @@ lemma young_reverse_multiple_carry_path_iff_general
         apply Fin.ext; simp [Fin.val_last]
       rw [e, hlast]; exact hrn
     have hcastFin : ∀ i : Fin n,
-      i.castSucc = (⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ : Fin (n + 1)) := by
+        i.castSucc = (⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ : Fin (n + 1)) := by
       intro i
       apply Fin.ext
       simp [Fin.val_castSucc]
     have hsuccFin : ∀ i : Fin n,
-      i.succ = (⟨i.val + 1, Nat.add_lt_add_right i.isLt 1⟩ : Fin (n + 1)) := by
+        i.succ = (⟨i.val + 1, Nat.add_lt_add_right i.isLt 1⟩ : Fin (n + 1)) := by
       intro i
       apply Fin.ext
       simp [Fin.val_succ]
@@ -361,7 +366,7 @@ lemma young_reverse_multiple_carry_path_iff_general
       intro i
       rw [hRm (i.val + 1) (Nat.add_lt_add_right i.isLt 1), hsuccFin i]
     have key : ∀ m : ℕ, ∀ h : m < n,
-      (k * A m + R m) * g ^ m = B m * g ^ m + R (m + 1) * g ^ (m + 1) := by
+        (k * A m + R m) * g ^ m = B m * g ^ m + R (m + 1) * g ^ (m + 1) := by
       intro m h
       have heqi := (heq ⟨m, h⟩).2
       rw [hcast ⟨m, h⟩, hsucc ⟨m, h⟩] at heqi
@@ -369,23 +374,23 @@ lemma young_reverse_multiple_carry_path_iff_general
       rw [hAm m h, hBm m h, heqi, add_mul, pow_succ]
       ring
     have sumkey : ∑ m ∈ Finset.range n, ((k * A m + R m) * g ^ m) =
-      ∑ m ∈ Finset.range n, (B m * g ^ m + R (m + 1) * g ^ (m + 1)) :=
+        ∑ m ∈ Finset.range n, (B m * g ^ m + R (m + 1) * g ^ (m + 1)) :=
       Finset.sum_congr rfl (fun m hm => key m (Finset.mem_range.mp hm))
     rw [Finset.sum_add_distrib] at sumkey
     have hL : ∑ m ∈ Finset.range n, ((k * A m + R m) * g ^ m)
-      = k * (∑ m ∈ Finset.range n, A m * g ^ m) + ∑ m ∈ Finset.range n, R m * g ^ m := by
+        = k * (∑ m ∈ Finset.range n, A m * g ^ m) + ∑ m ∈ Finset.range n, R m * g ^ m := by
       rw [Finset.mul_sum, ← Finset.sum_add_distrib]
       apply Finset.sum_congr rfl
       intro m _
       ring
     have htele : ∑ m ∈ Finset.range n, R m * g ^ m =
-      ∑ m ∈ Finset.range n, R (m + 1) * g ^ (m + 1) := by
+        ∑ m ∈ Finset.range n, R (m + 1) * g ^ (m + 1) := by
       have h1 : ∑ m ∈ Finset.range (n + 1), R m * g ^ m =
-        ∑ m ∈ Finset.range n, R (m + 1) * g ^ (m + 1) + R 0 := by
+          ∑ m ∈ Finset.range n, R (m + 1) * g ^ (m + 1) + R 0 := by
         have h := Finset.sum_range_succ' (fun m => R m * g ^ m) n
         simpa [pow_zero] using h
       have h2 : ∑ m ∈ Finset.range (n + 1), R m * g ^ m =
-        ∑ m ∈ Finset.range n, R m * g ^ m + R n * g ^ n := Finset.sum_range_succ _ n
+          ∑ m ∈ Finset.range n, R m * g ^ m + R n * g ^ n := Finset.sum_range_succ _ n
       rw [hR0] at h1
       rw [hRn] at h2
       simp at h1 h2
@@ -398,7 +403,7 @@ lemma young_reverse_multiple_carry_path_iff_general
       show a i * g ^ i.val = A i.val * g ^ i.val
       rw [hAm i.val i.isLt]
     have hBfin : (∑ i : Fin n, a (Fin.rev i) * g ^ i.val) =
-      ∑ m ∈ Finset.range n, B m * g ^ m := by
+        ∑ m ∈ Finset.range n, B m * g ^ m := by
       have e := Fin.sum_univ_eq_sum_range (fun m => B m * g ^ m) n
       rw [← e]
       apply Finset.sum_congr rfl
@@ -408,9 +413,8 @@ lemma young_reverse_multiple_carry_path_iff_general
     rw [hL] at sumkey
     rw [htele] at sumkey
     have hfin : k * (∑ m ∈ Finset.range n, A m * g ^ m) =
-      ∑ m ∈ Finset.range n, B m * g ^ m := by linarith
+        ∑ m ∈ Finset.range n, B m * g ^ m := by linarith
     rw [hAfin, hBfin, hfin]
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -428,8 +432,8 @@ lemma young_reverse_multiple_carry_path_iff
   (hkg : k < g)
   (hn : 0 < n)
   (hdigit : ∀ i, a i < g)
-  (hfirst : a (Fin.rev ⟨0, hn⟩) ≠ 0)
-  (hlast : a ⟨0, hn⟩ ≠ 0) :
+  (_hfirst : a (Fin.rev ⟨0, hn⟩) ≠ 0)
+  (_hlast : a ⟨0, hn⟩ ≠ 0) :
 -- imply
   k * (∑ i, a i * g ^ i.val) = ∑ i, a (Fin.rev i) * g ^ i.val ↔
     ∃! r : Fin (n + 1) → ℕ,
@@ -443,4 +447,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

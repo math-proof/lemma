@@ -32,7 +32,7 @@ theorem kdi_map_rotConfig :
   rw [kdi_rotConfig, halfMeasure]
   unfold bernoulliProductMeasure
   exact Measure.infinitePi_map_piCongrLeft
-    (fun _ : Sym2 (Site 2) => bernoulliMeasure (2⁻¹ : ℝ≥0) half_le_one) kdi_rotEdgeEquiv
+    (fun _ : Sym2 (Site 2) => bernoulliMeasure (2⁻¹ : NNReal) half_le_one) kdi_rotEdgeEquiv
 
 
 theorem kdi_rotConfig_measurePreserving :

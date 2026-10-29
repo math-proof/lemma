@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Tiling.DominoTilings.Part13
 import Lemma.Nat.DominoTilings
-open DominoTilings
+open DominoTilings hiding reflectDomino3
 open Domino DominoTiling
 open Finset
 open Nat
@@ -53,3 +53,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-28

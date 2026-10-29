@@ -75,7 +75,7 @@ theorem bernoulliTheta_reduced_le_fkTheta
         ⟨reducedDensity p 2, (reducedDensity_mem_Ioo hp hp1 (by norm_num)).1.le⟩
         (reducedDensity_mem_Ioo hp hp1 (by norm_num)).2.le ≤
       fkTheta d hp hp1 (by norm_num : (0 : ℝ) < 2) (q := 2) := by
-  let r : ℝ≥0 :=
+  let r : NNReal :=
     ⟨reducedDensity p 2, (reducedDensity_mem_Ioo hp hp1 (by norm_num)).1.le⟩
   have hr1 : r ≤ 1 := (reducedDensity_mem_Ioo hp hp1 (by norm_num)).2.le
   have hbern := boxBdryConnEvent_real_tendsto_percolation (d := d)
@@ -244,7 +244,7 @@ theorem bernoulliTheta_reduced_le_fkTheta_general
         ⟨reducedDensity p q, (reducedDensity_mem_Ioo hp hp1 hq).1.le⟩
         (reducedDensity_mem_Ioo hp hp1 hq).2.le ≤
       fkTheta d hp hp1 (zero_lt_one.trans_le hq) (q := q) := by
-  let r : ℝ≥0 := ⟨reducedDensity p q, (reducedDensity_mem_Ioo hp hp1 hq).1.le⟩
+  let r : NNReal := ⟨reducedDensity p q, (reducedDensity_mem_Ioo hp hp1 hq).1.le⟩
   have hr1 : r ≤ 1 := (reducedDensity_mem_Ioo hp hp1 hq).2.le
   have hbern := boxBdryConnEvent_real_tendsto_percolation (d := d)
     (bernoulliProductMeasure (E := Sym2 (Site d)) r hr1)
@@ -324,7 +324,7 @@ theorem inverseReducedDensity_general_mem_Ioo
 
 
 theorem fkTheta_pos_of_bernoulliTheta_pos_general
-    {d : ℕ} {r : ℝ≥0} {q : ℝ} (hr0 : 0 < r) (hr1 : r < 1) (hq : 1 ≤ q)
+    {d : ℕ} {r : NNReal} {q : ℝ} (hr0 : 0 < r) (hr1 : r < 1) (hq : 1 ≤ q)
     (htheta : 0 < Percolation.theta d r hr1.le) :
     ∃ p : ℝ, ∃ hp : 0 < p, ∃ hp1 : p < 1,
       0 < fkTheta d hp hp1 (zero_lt_one.trans_le hq) (q := q) := by
@@ -370,7 +370,7 @@ theorem fkPc_lt_one_of_two_le {d : ℕ} {q : ℝ} (hd : 2 ≤ d) (hq : 1 ≤ q) 
   obtain ⟨beta, hbeta, hmag⟩ := IsingFK.pup_exists_positive_magnetization
   have hr0r : 0 < IsingFK.pOfBeta beta := Ising.pOfBeta_pos hbeta
   have hr1r : IsingFK.pOfBeta beta < 1 := Ising.pOfBeta_lt_one beta
-  let r : ℝ≥0 := ⟨IsingFK.pOfBeta beta, hr0r.le⟩
+  let r : NNReal := ⟨IsingFK.pOfBeta beta, hr0r.le⟩
   have hr0 : 0 < r := by exact_mod_cast hr0r
   have hr1 : r < 1 := by exact_mod_cast hr1r
   have hid : Ising.magnetization 2 beta =
@@ -408,7 +408,7 @@ theorem inverseReducedDensity_two_mem_Ioo {r : ℝ} (hr0 : 0 < r) (hr1 : r < 1) 
 
 
 theorem fkTheta_two_pos_of_bernoulliTheta_pos
-    {d : ℕ} {r : ℝ≥0} (hr0 : 0 < r) (hr1 : r < 1)
+    {d : ℕ} {r : NNReal} (hr0 : 0 < r) (hr1 : r < 1)
     (hθ : 0 < Percolation.theta d r hr1.le) :
     ∃ p : ℝ, ∃ hp : 0 < p, ∃ hp1 : p < 1,
       0 < fkTheta d hp hp1 (by norm_num : (0 : ℝ) < 2) (q := 2) := by
@@ -421,7 +421,7 @@ theorem fkTheta_two_pos_of_bernoulliTheta_pos
   have hdom := bernoulliTheta_reduced_le_fkTheta (d := d) hpIoo.1 hpIoo.2
   have hrnn :
       (⟨reducedDensity p 2,
-          (reducedDensity_mem_Ioo hpIoo.1 hpIoo.2 (by norm_num)).1.le⟩ : ℝ≥0) = r := by
+          (reducedDensity_mem_Ioo hpIoo.1 hpIoo.2 (by norm_num)).1.le⟩ : NNReal) = r := by
     exact NNReal.eq hred
   have hthetaEq :
       Percolation.theta d
@@ -455,7 +455,7 @@ theorem fkPc_two_lt_one_of_two_le {d : ℕ} (hd : 2 ≤ d) : fkPc d 2 < 1 := by
   obtain ⟨beta, hbeta, hmag⟩ := IsingFK.pup_exists_positive_magnetization
   have hr0r : 0 < IsingFK.pOfBeta beta := Ising.pOfBeta_pos hbeta
   have hr1r : IsingFK.pOfBeta beta < 1 := Ising.pOfBeta_lt_one beta
-  let r : ℝ≥0 := ⟨IsingFK.pOfBeta beta, hr0r.le⟩
+  let r : NNReal := ⟨IsingFK.pOfBeta beta, hr0r.le⟩
   have hr0 : 0 < r := by exact_mod_cast hr0r
   have hr1 : r < 1 := by exact_mod_cast hr1r
   have hid : Ising.magnetization 2 beta =

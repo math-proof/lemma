@@ -38,9 +38,8 @@ namespace MetaMathlibExt
 
 /--
 [prod_primeFactors_swap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/TotienomialCoefficient.lean)
--/
-@[path]
 each prime `p` occurring for the `K / p` multiples of `p`. -/
+@[path]
 private lemma prod_primeFactors_swap (g : ℕ → ℕ) (K : ℕ) :
   (∏ i ∈ Finset.Icc 1 K, ∏ p ∈ i.primeFactors, g p)
     = ∏ p ∈ Nat.primesLE K, g p ^ (K / p) := by
@@ -109,9 +108,8 @@ namespace MetaMathlibExt
 
 /--
 [totient_mul_prod_primeFactors](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/TotienomialCoefficient.lean)
--/
-@[path]
 over the same primes. -/
+@[path]
 private lemma totient_mul_prod_primeFactors (i : ℕ) (hi : 0 < i) :
   i.totient * ∏ p ∈ i.primeFactors, p = i * ∏ p ∈ i.primeFactors, (p - 1) := by
   have hne : i ≠ 0 := ne_of_gt hi
@@ -147,9 +145,8 @@ namespace MetaMathlibExt
 
 /--
 [prod_totient_mul_pow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/TotienomialCoefficient.lean)
--/
-@[path]
 equals `K !` times the corresponding `p - 1` powers. -/
+@[path]
 private lemma prod_totient_mul_pow (K : ℕ) :
   (∏ i ∈ Finset.Icc 1 K, i.totient) * ∏ p ∈ Nat.primesLE K, p ^ (K / p)
     = K.factorial * ∏ p ∈ Nat.primesLE K, (p - 1) ^ (K / p) := by
@@ -180,9 +177,8 @@ namespace MetaMathlibExt
 
 /--
 [legendre_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/TotienomialCoefficient.lean)
--/
-@[path]
 first-order digit carry `(n+m)/p - n/p - m/p`. -/
+@[path]
 private lemma legendre_le (n m p : ℕ) (hp : Nat.Prime p) :
   (n + m) / p - n / p - m / p ≤ Nat.factorization (Nat.choose (n + m) n) p := by
   have hlog : ∀ K : ℕ, K ≤ n + m → Nat.log p K < n + m + 1 := by
@@ -524,4 +520,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

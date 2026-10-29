@@ -27,13 +27,13 @@ variable {α : Type*} [PseudoMetricSpace α] {K S : Set α} {ε : ℝ}
 /-- The `ε`-covering number of `K`: the minimal size (possibly `∞`) of an
 `ε`-net covering `K`. Wrapper around Mathlib's `Metric.coveringNumber`. -/
 noncomputable def epsilonCoveringNumber {α : Type*} [PseudoEMetricSpace α]
-    (ε : ℝ≥0) (K : Set α) : ℕ∞ :=
+    (ε : NNReal) (K : Set α) : ℕ∞ :=
   Metric.coveringNumber ε K
 
 /-- The `ε`-packing number of `K`: the maximal size of an `ε`-separated subset
 of `K`. Wrapper around Mathlib's `Metric.packingNumber`. -/
 noncomputable def epsilonPackingNumber {α : Type*} [PseudoEMetricSpace α]
-    (ε : ℝ≥0) (K : Set α) : ℕ∞ :=
+    (ε : NNReal) (K : Set α) : ℕ∞ :=
   Metric.packingNumber ε K
 
 end IsEpsilonSeparated

@@ -46,7 +46,7 @@ theorem ergodic_invariant_event_eq_one_of_pos {μ : Measure (ConfigSpace E)}
   (ergodic_invariant_event_zero_or_one hμ hs hinv).resolve_left hpos.ne'
 
 
-theorem le_self_of_convexCombo {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ℝ≥0∞}
+theorem le_self_of_convexCombo {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ENNReal}
     (hconv : μ = a • ν₁ + b • ν₂) (s : Set (ConfigSpace E)) :
     a * ν₁ s ≤ μ s ∧ b * ν₂ s ≤ μ s := by
   constructor
@@ -54,7 +54,7 @@ theorem le_self_of_convexCombo {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b :
   · rw [hconv]; simp [Measure.add_apply, Measure.smul_apply]
 
 
-theorem convexSummand_eq_on_invariants {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ℝ≥0∞}
+theorem convexSummand_eq_on_invariants {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ENNReal}
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν₁]
     (hμ : IsErgodic (G := G) μ) (hconv : μ = a • ν₁ + b • ν₂) (ha : 0 < a)
     {s : Set (ConfigSpace E)} (hs : MeasurableSet s)
@@ -81,7 +81,7 @@ theorem convexSummand_eq_on_invariants {μ ν₁ ν₂ : Measure (ConfigSpace E)
     rw [this, h1]
 
 
-theorem ergodic_eq_on_invariants_of_convexCombo {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ℝ≥0∞}
+theorem ergodic_eq_on_invariants_of_convexCombo {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ENNReal}
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
     (hμ : IsErgodic (G := G) μ) (hconv : μ = a • ν₁ + b • ν₂) (ha : 0 < a) (hb : 0 < b)
     {s : Set (ConfigSpace E)} (hs : MeasurableSet s)
@@ -93,7 +93,7 @@ theorem ergodic_eq_on_invariants_of_convexCombo {μ ν₁ ν₂ : Measure (Confi
   rw [hconv, add_comm]
 
 
-theorem ergodic_summands_eq_on_invariants {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ℝ≥0∞}
+theorem ergodic_summands_eq_on_invariants {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ENNReal}
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
     (hμ : IsErgodic (G := G) μ) (hconv : μ = a • ν₁ + b • ν₂) (ha : 0 < a) (hb : 0 < b)
     {s : Set (ConfigSpace E)} (hs : MeasurableSet s)
@@ -125,7 +125,7 @@ theorem ergodic_off_countable {φ : ℝ → Measure (ConfigSpace E)} {S : Set �
 theorem extreme_on_invariants_off_countable {φ : ℝ → Measure (ConfigSpace E)} {S : Set ℝ}
     (hpm : ∀ p, IsProbabilityMeasure (φ p))
     (herg : ∀ p ∉ S, IsErgodic (G := G) (φ p)) :
-    ∀ p ∉ S, ∀ (ν₁ ν₂ : Measure (ConfigSpace E)) (a b : ℝ≥0∞),
+    ∀ p ∉ S, ∀ (ν₁ ν₂ : Measure (ConfigSpace E)) (a b : ENNReal),
       IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ →
         φ p = a • ν₁ + b • ν₂ → 0 < a → 0 < b →
           ∀ {s : Set (ConfigSpace E)}, MeasurableSet s →

@@ -15,7 +15,7 @@ private lemma bc77_expected_count_eq
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) :
 -- imply
-  ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ := by
+  ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ := by
 -- proof
   apply StatMech.Walls.bc77_expected_count μ hinv L R
 
@@ -30,7 +30,7 @@ private lemma bc77_coarseTrif_prob_eq_zero_ae_eq
   {L : ℕ}
   {bdry : ℕ → ℕ}
 -- given
-  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
   (hbound_ae : ∀ R : ℕ, ∀ᵐ ω ∂μ, bc61_coarseTcount ω L R ≤ bdry R)
   (hvol : ∀ R, 0 < (boxFinsetBK d R).card)
   (hdens : Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK d R).card : ℝ)) Filter.atTop (nhds 0)) :
@@ -50,7 +50,7 @@ private lemma bc77_top_null_of_ae_bound_eq
   {L : ℕ}
   {bdry : ℕ → ℕ}
 -- given
-  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
   (hbound_ae : ∀ R : ℕ, ∀ᵐ ω ∂μ, bc61_coarseTcount ω L R ≤ bdry R)
   (hvol : ∀ R, 0 < (boxFinsetBK d R).card)
   (hdens : Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK d R).card : ℝ)) Filter.atTop (nhds 0))
@@ -178,7 +178,7 @@ private lemma bc77_circularity_note_eq
 private lemma bc77_status_eq
   {d : ℕ} :
 -- imply
-  (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) [IsProbabilityMeasure μ] (L : ℕ) (bdry : ℕ → ℕ), (∀ R : ℕ, ((boxFinsetBK 2 R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ) → (∀ R : ℕ, ∀ᵐ ω ∂μ, bc61_coarseTcount ω L R ≤ bdry R) → (∀ R, 0 < (boxFinsetBK 2 R).card) → Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK 2 R).card : ℝ)) Filter.atTop (nhds 0) → bc61_CoarseTrifExistence μ L → μ {ω | numInfiniteClusters 2 ω = ⊤} = 0) ∧ (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) [IsProbabilityMeasure μ] (L : ℕ), IsTranslationInvariant (G := Multiplicative (Site 2)) μ → (∀ R : ℕ, ∀ᵐ ω ∂μ, bc73_SublatticeForest ω L R) → bc61_CoarseTrifExistence μ L → μ {ω | numInfiniteClusters 2 ω = ⊤} = 0) ∧ (({bc60_upperLines} : Set (ConfigSpace (Sym2 (Site 2)))) = {ω | ω = bc60_upperLines}) := by
+  (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) [IsProbabilityMeasure μ] (L : ℕ) (bdry : ℕ → ℕ), (∀ R : ℕ, ((boxFinsetBK 2 R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ) → (∀ R : ℕ, ∀ᵐ ω ∂μ, bc61_coarseTcount ω L R ≤ bdry R) → (∀ R, 0 < (boxFinsetBK 2 R).card) → Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK 2 R).card : ℝ)) Filter.atTop (nhds 0) → bc61_CoarseTrifExistence μ L → μ {ω | numInfiniteClusters 2 ω = ⊤} = 0) ∧ (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) [IsProbabilityMeasure μ] (L : ℕ), IsTranslationInvariant (G := Multiplicative (Site 2)) μ → (∀ R : ℕ, ∀ᵐ ω ∂μ, bc73_SublatticeForest ω L R) → bc61_CoarseTrifExistence μ L → μ {ω | numInfiniteClusters 2 ω = ⊤} = 0) ∧ (({bc60_upperLines} : Set (ConfigSpace (Sym2 (Site 2)))) = {ω | ω = bc60_upperLines}) := by
 -- proof
   apply StatMech.Walls.bc77_status
 

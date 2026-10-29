@@ -32,7 +32,7 @@ variable {ι : Type*} {X : ι → Type*} [∀ i, MeasurableSpace (X i)]
 variable {d : ℕ}
 
 
-instance bkc_isProbMeasure_factor (p : ℝ≥0) (hp : p ≤ 1) (e : Sym2 (Site d))
+instance bkc_isProbMeasure_factor (p : NNReal) (hp : p ≤ 1) (e : Sym2 (Site d))
     (F : Finset (Sym2 (Site d))) :
     IsProbabilityMeasure ((bernoulliMeasure p hp).map (fun b => if e ∈ F then true else b)) :=
   inferInstance

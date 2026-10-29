@@ -92,7 +92,7 @@ theorem daep_cutDisjoint_of_disjointArmEnds (ω : ConfigSpace (Sym2 (Site d))) (
     exact hdisj x hxbox htri y hybox htriy hxy
 
 
-theorem daep_burton_keane_bernoulli (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem daep_burton_keane_bernoulli (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
       daep_CutDisjointArmEnds ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

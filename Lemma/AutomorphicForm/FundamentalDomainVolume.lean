@@ -63,7 +63,7 @@ theorem volume_band_le {A a : ℝ} (hA : 0 ≤ A) (ha : 0 < a) (n : ℕ) :
   refine le_trans (lintegral_mono_set himg) ?_
 
   have hbound : ∀ w ∈ cbox (-A) A (a * 2 ^ n) (a * 2 ^ (n + 1)),
-      (((1 / ‖w.im‖₊) ^ 2 : ℝ≥0) : ℝ≥0∞) ≤ ENNReal.ofReal ((a * 2 ^ n)⁻¹ ^ 2) := by
+      (((1 / ‖w.im‖₊) ^ 2 : NNReal) : ENNReal) ≤ ENNReal.ofReal ((a * 2 ^ n)⁻¹ ^ 2) := by
     intro w hw
     obtain ⟨-, him₁, -⟩ := mem_cbox.mp hw
     have hwim : (0 : ℝ) < w.im := lt_of_lt_of_le h2n him₁

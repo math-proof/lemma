@@ -48,9 +48,9 @@ private lemma neg_fib_shift (n : ℤ) :
       rw [hFn]
       ring
     · have hne : ¬Even (n + 1) := by
-      obtain ⟨r, hr⟩ := hev
-      rintro ⟨s, hs⟩
-      omega
+        obtain ⟨r, hr⟩ := hev
+        rintro ⟨s, hs⟩
+        omega
       have hFn1 : Int.fib (-n - 1) = Int.fib (n + 1) := by
         have e : -n - 1 = -(n + 1) := by ring
         rw [e, Int.fib_neg, ite_eq_right hne]
@@ -59,15 +59,15 @@ private lemma neg_fib_shift (n : ℤ) :
       ring
   · refine ⟨-n, 1, Or.inl rfl, ?_, ?_⟩
     · have hne : ¬Even n := by
-      obtain ⟨k, hk⟩ := hodd
-      rintro ⟨s, hs⟩
-      omega
+        obtain ⟨k, hk⟩ := hodd
+        rintro ⟨s, hs⟩
+        omega
       have hFn : Int.fib (-n) = Int.fib n := by rw [Int.fib_neg, ite_eq_right hne]
       rw [hFn]
       ring
     · have hev2 : Even (n + 1) := by
-      obtain ⟨k, hk⟩ := hodd
-      exact ⟨k + 1, by omega⟩
+        obtain ⟨k, hk⟩ := hodd
+        exact ⟨k + 1, by omega⟩
       have hFn1 : Int.fib (-n - 1) = -Int.fib (n + 1) := by
         have e : -n - 1 = -(n + 1) := by ring
         rw [e, Int.fib_neg, ite_eq_left hev2]
@@ -117,7 +117,7 @@ private lemma fib_nonneg_key : ∀ m : ℕ, ∀ a b : ℤ, 0 ≤ a → 0 ≤ b �
         have hsq := sq_nonneg b
         have e : (0 : ℤ) ^ 2 - 0 * b - b ^ 2 = -(b ^ 2) := by ring
         rw [e] at hN
-        obtain h | h <;> linarith := hN
+        obtain h | h := hN <;> linarith
       obtain rfl | rfl := sq_eq_one_iff.mp hb2
       · exact ⟨0, Int.fib_zero.symm, by
         have e : (0 : ℤ) - 1 = -1 := by ring
@@ -130,7 +130,7 @@ private lemma fib_nonneg_key : ∀ m : ℕ, ∀ a b : ℤ, 0 ≤ a → 0 ≤ b �
           have hsq := sq_nonneg a
           have e : a ^ 2 - a * (0 : ℤ) - (0 : ℤ) ^ 2 = a ^ 2 := by ring
           rw [e] at hN
-          obtain h | h <;> linarith := hN
+          obtain h | h := hN <;> linarith
         obtain rfl | rfl := sq_eq_one_iff.mp ha2
         · exact ⟨1, Int.fib_one.symm, by
           have e : (1 : ℤ) - 1 = 0 := by ring
@@ -141,7 +141,7 @@ private lemma fib_nonneg_key : ∀ m : ℕ, ∀ a b : ℤ, 0 ≤ a → 0 ≤ b �
         have hb_pos : 0 < b := by omega
         by_cases hle : b ≤ a
         · have e : b ^ 2 - b * (a - b) - (a - b) ^ 2 = -(a ^ 2 - a * b - b ^ 2) := by
-          ring
+            ring_nf
           have hN' : b ^ 2 - b * (a - b) - (a - b) ^ 2 = 1 ∨
             b ^ 2 - b * (a - b) - (a - b) ^ 2 = -1 := by
             obtain h | h := hN
@@ -155,9 +155,10 @@ private lemma fib_nonneg_key : ∀ m : ℕ, ∀ a b : ℤ, 0 ≤ a → 0 ≤ b �
           refine ⟨n + 1, ?_, ?_⟩
           · rw [hF]
             linear_combination hn2 + hn1
-          · have e2 : n + 1 - 1 = n := by ring
-            rwa [e2]
-        · push_neg at hle
+          · have e2 : n + 1 - 1 = n := by omega
+            rw [e2]
+            exact hn1
+        · push Not at hle
           obtain ⟨d, rfl⟩ : ∃ d, b = a + d := ⟨b - a, by ring⟩
           have hd : 1 ≤ d := by omega
           have e : a ^ 2 - a * (a + d) - (a + d) ^ 2 = -(a ^ 2) - 3 * (a * d) - d ^ 2 := by
@@ -169,7 +170,7 @@ private lemma fib_nonneg_key : ∀ m : ℕ, ∀ a b : ℤ, 0 ≤ a → 0 ≤ b �
             nlinarith [h1, ha_pos, hd]
           have h5 : a ^ 2 - a * (a + d) - (a + d) ^ 2 ≤ -5 := by
             linarith [e, ha2, had, hd2]
-          obtain h | h <;> omega := hN
+          obtain h | h := hN <;> omega
 
 end FibonacciNormEquation
 
@@ -202,12 +203,12 @@ private lemma sign_reduce (x y : ℤ)
           omega
         · have hu1 : 1 ≤ u := by omega
           have hc : u ^ 2 - u * v - v ^ 2 ≤ 1 := by
-            obtain h | h <;> linarith := hN
+            obtain h | h := hN <;> linarith
           have hx2 : 1 ≤ u ^ 2 := by nlinarith [sq_nonneg (u - 1), hu1]
           have hprod : v * (-u - v) = (u ^ 2 - u * v - v ^ 2) - u ^ 2 := by ring
           have hle : v * (-u - v) ≤ 0 := by linarith [hprod, hc, hx2]
           by_contra hcon
-          push_neg at hcon
+          push Not at hcon
           have hpos := mul_pos_of_neg_of_neg hv' hcon
           linarith
       exact ⟨u, -u - v, hu, hb, hN', Or.inr ⟨rfl, by ring⟩⟩

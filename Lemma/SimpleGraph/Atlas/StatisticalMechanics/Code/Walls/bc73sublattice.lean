@@ -150,7 +150,7 @@ private lemma bc73_coarseTrif_prob_eq_zero_of_sublatticeForest_eq
   {L : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
   (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R) :
 -- imply
   μ {ω | bc61_IsCoarseTrifurcation ω L 0} = 0 := by
@@ -168,7 +168,7 @@ private lemma bc73_infiniteClusters_top_null_eq
   {L : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
   (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R)
   (hexist : bc61_CoarseTrifExistence μ L) :
 -- imply

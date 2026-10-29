@@ -12,10 +12,10 @@ private lemma cylinder_all_open_eq
   {d : ℕ}
   {F : Finset (Sym2 (Site d))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
-  (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) ((F : Set (Sym2 (Site d))).pi (fun _ => ({true} : Set Bool))) = (p : ℝ≥0∞) ^ F.card := by
+  (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) ((F : Set (Sym2 (Site d))).pi (fun _ => ({true} : Set Bool))) = (p : ENNReal) ^ F.card := by
 -- proof
   apply StatMech.Percolation.cylinder_all_open p hp F
 
@@ -112,11 +112,11 @@ private lemma wordEvent_prob_good_eq
   {g : ℕ → Fin d × Bool}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hg : goodWord g n) :
 -- imply
-  (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) (wordEvent g n) = (p : ℝ≥0∞) ^ n := by
+  (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) (wordEvent g n) = (p : ENNReal) ^ n := by
 -- proof
   apply StatMech.Percolation.wordEvent_prob_good p hp g n hg
 
@@ -179,10 +179,10 @@ private lemma measure_percolationEvent_le_eq
   {n : ℕ}
 -- given
   (hd : 0 < d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
-  (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) (percolationEvent d) ≤ ((2 * d : ℝ≥0) * p) ^ n := by
+  (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) (percolationEvent d) ≤ ((2 * d : NNReal) * p) ^ n := by
 -- proof
   apply StatMech.Percolation.measure_percolationEvent_le hd p hp n
 
@@ -195,10 +195,10 @@ private lemma theta_le_pow_eq
   {n : ℕ}
 -- given
   (hd : 0 < d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
-  theta d p hp ≤ ((2 * d : ℝ≥0) * p) ^ n := by
+  theta d p hp ≤ ((2 * d : NNReal) * p) ^ n := by
 -- proof
   apply StatMech.Percolation.theta_le_pow hd p hp n
 
@@ -210,9 +210,9 @@ private lemma theta_eq_zero_of_lt_eq
   {d : ℕ}
 -- given
   (hd : 0 < d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
-  (hsmall : ((2 * d : ℝ≥0) * p : ℝ) < 1) :
+  (hsmall : ((2 * d : NNReal) * p : ℝ) < 1) :
 -- imply
   theta d p hp = 0 := by
 -- proof
@@ -226,9 +226,9 @@ private lemma mem_subcriticalSet_of_lt_eq
   {d : ℕ}
 -- given
   (hd : 0 < d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
-  (hsmall : ((2 * d : ℝ≥0) * p : ℝ) < 1) :
+  (hsmall : ((2 * d : NNReal) * p : ℝ) < 1) :
 -- imply
   p ∈ subcriticalSet d := by
 -- proof
@@ -251,7 +251,7 @@ private lemma subcriticalSet_bddAbove_eq
 @[path]
 private lemma le_pc_of_mem_subcriticalSet_eq
   {d : ℕ}
-  {p : ℝ≥0}
+  {p : NNReal}
 -- given
   (hp : p ∈ subcriticalSet d) :
 -- imply

@@ -25,23 +25,23 @@ variable {α : Type*}
 
 
 noncomputable def toLpOne (u : SummableTail α) :
-    lp (fun _ : α => ℝ) (1 : ℝ≥0∞) :=
+    lp (fun _ : α => ℝ) (1 : ENNReal) :=
   ⟨u.coeff, by
-    change Memℓp u.coeff (1 : ℝ≥0∞)
-    rw [memℓp_gen_iff (p := (1 : ℝ≥0∞)) (by norm_num)]
+    change Memℓp u.coeff (1 : ENNReal)
+    rw [memℓp_gen_iff (p := (1 : ENNReal)) (by norm_num)]
     simpa [Real.norm_eq_abs] using u.summable_abs⟩
 
 
 noncomputable def ofLpOne
-    (f : lp (fun _ : α => ℝ) (1 : ℝ≥0∞)) : SummableTail α where
+    (f : lp (fun _ : α => ℝ) (1 : ENNReal)) : SummableTail α where
   coeff := fun a => f a
   summable_abs := by
-    have hf := (lp.memℓp f).summable (p := (1 : ℝ≥0∞)) (by norm_num)
+    have hf := (lp.memℓp f).summable (p := (1 : ENNReal)) (by norm_num)
     simpa [Real.norm_eq_abs] using hf
 
 
 noncomputable def equivLpOne :
-    SummableTail α ≃ lp (fun _ : α => ℝ) (1 : ℝ≥0∞) where
+    SummableTail α ≃ lp (fun _ : α => ℝ) (1 : ENNReal) where
   toFun := toLpOne
   invFun := ofLpOne
   left_inv := by

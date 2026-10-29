@@ -80,6 +80,8 @@ def BinaryInfix.func : BinaryInfix → Func
     | `List.IsPrefix => ⟨50, "<+:", "<+:"⟩
     | `List.IsSuffix => ⟨50, "<:+", "<:+"⟩
     | `List.IsInfix => ⟨50, "<:+:", "<:+:"⟩
+    | `Matrix.mulVec => ⟨73, "*ᵥₓ", "*_{\\mathrm{v}}"⟩
+    | `dotProduct => ⟨72, "·ᵥ", "\\cdot_{\\mathrm{v}}"⟩
     | _ => panic! s!"BinaryInfix.func : unknown operator {name}"
 
 

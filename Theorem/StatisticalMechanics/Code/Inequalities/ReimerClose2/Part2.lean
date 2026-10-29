@@ -43,7 +43,7 @@ set_option linter.unusedFintypeInType false in
 set_option linter.unusedDecidableInType false in
 
 
-theorem reimer_inequality_of_inter_empty [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+theorem reimer_inequality_of_inter_empty [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
     {A B : Set (ConfigSpace E)} (h : A ∩ B = ∅) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A

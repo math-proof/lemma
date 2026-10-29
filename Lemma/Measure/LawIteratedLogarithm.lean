@@ -870,7 +870,7 @@ private lemma lil_ae_summable_tailTerm
   have hLp : ∑' j, eLpNorm (f j) 1 μ ≠ ∞ := by
     simp_rw [hnorm]
     exact hIntegral.tsum_ofReal_ne_top
-  filter_upwards [summable_norm_of_tsum_eLpNorm_ne_top (p := (1 : ℝ≥0∞)) le_rfl hLp] with ω hω
+  filter_upwards [summable_norm_of_tsum_eLpNorm_ne_top (p := (1 : ENNReal)) le_rfl hLp] with ω hω
   simpa only [f, Real.norm_eq_abs, abs_of_nonneg (lilTailTerm_nonneg δ _ _)] using hω
 
 end MathlibExt.Probability.LawIteratedLogarithmWanted
@@ -1554,7 +1554,7 @@ namespace MathlibExt.Probability.LawIteratedLogarithmWanted
 private lemma lil_submartingale_maximal_measure_le
   {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsFiniteMeasure μ]
   {𝒢 : Filtration ℕ _} {M : ℕ → Ω → ℝ}
-  (hM : Submartingale M 𝒢 μ) (hMnonneg : 0 ≤ M) {ε : ℝ≥0} (hε : ε ≠ 0)
+  (hM : Submartingale M 𝒢 μ) (hMnonneg : 0 ≤ M) {ε : NNReal} (hε : ε ≠ 0)
   (n : ℕ) {B : ℝ} (hB : ∫ ω, M n ω ∂μ ≤ B) :
   μ {ω | (ε : ℝ) ≤
     (Finset.range (n + 1)).sup' Finset.nonempty_range_add_one fun k ↦ M k ω} ≤
@@ -1591,7 +1591,7 @@ private lemma lil_centered_maximal_measure_le
       ((n : ℝ) * ((1 : ℝ) / 2 + 2 * ρ / 9) * t ^ 2 - t * a)) := by
   let W := lilCentered μ X δ
   let M := fun i ω ↦ Real.exp (t * ∑ j ∈ Finset.range (i + 1), W j ω)
-  let ε : ℝ≥0 := ⟨Real.exp (t * a), (Real.exp_pos _).le⟩
+  let ε : NNReal := ⟨Real.exp (t * a), (Real.exp_pos _).le⟩
   have hsub : Submartingale M (Filtration.natural W fun j ↦
     (lilCentered_measurable X hMeas δ j).stronglyMeasurable) μ := by
     exact lil_exp_partial_sum_submartingale
@@ -1613,8 +1613,8 @@ private lemma lil_centered_maximal_measure_le
     (Finset.range n).sup' (Finset.nonempty_range_iff.mpr hn.ne') fun k ↦
       Real.exp (t * ∑ j ∈ Finset.range (k + 1), lilCentered μ X δ j ω)} ≤
     ENNReal.ofReal (Real.exp
-      ((n : ℝ) * ((1 : ℝ) / 2 + 2 * ρ / 9) * t ^ 2)) / (ε : ℝ≥0∞) at hmax
-  rw [show (ε : ℝ≥0∞) = ENNReal.ofReal (Real.exp (t * a)) by
+      ((n : ℝ) * ((1 : ℝ) / 2 + 2 * ρ / 9) * t ^ 2)) / (ε : ENNReal) at hmax
+  rw [show (ε : ENNReal) = ENNReal.ofReal (Real.exp (t * a)) by
     rw [ENNReal.coe_nnreal_eq]
     rfl,
     ← ENNReal.ofReal_div_of_pos (Real.exp_pos (t * a)), ← Real.exp_sub] at hmax
@@ -2063,7 +2063,7 @@ private lemma lil_upper_bad_tsum_ne_top
   let f := fun k : ℕ ↦ Real.exp
     (-(1 + 1 / (q : ℝ)) * lilLog (lilGrid q r k))
   let g := fun k : ℕ ↦
-    (⟨μ.real (lilUpperBad μ X q r k), measureReal_nonneg⟩ : ℝ≥0)
+    (⟨μ.real (lilUpperBad μ X q r k), measureReal_nonneg⟩ : NNReal)
   have hf : Summable f := lil_upper_exp_bound_summable hq r
   have hgreal : Summable (fun k ↦ (g k : ℝ)) := by
     apply hf.of_norm_bounded_eventually
@@ -2327,7 +2327,7 @@ private lemma lil_gaussian_tail_lower {y : ℝ} (hy : 1 ≤ y) :
       (Filter.Eventually.of_forall hsubset)
   have hgauss : (gaussianReal 0 1).real (Set.Ioi y) =
     ∫ x in Set.Ioi y, gaussianPDFReal 0 1 x := by
-    rw [Measure.real, gaussianReal_apply_eq_integral 0 (by norm_num : (1 : ℝ≥0) ≠ 0)]
+    rw [Measure.real, gaussianReal_apply_eq_integral 0 (by norm_num : (1 : NNReal) ≠ 0)]
     exact ENNReal.toReal_ofReal (integral_nonneg fun x ↦ gaussianPDFReal_nonneg 0 1 x)
   rw [hgauss]
   calc
@@ -3215,20 +3215,20 @@ namespace MathlibExt.Probability.LawIteratedLogarithmWanted
 @[path]
 private lemma lil_harmonic_ennreal_tsum_top (K : ℕ) :
   ∑' k : ℕ, ENNReal.ofReal (1 / (k + K + 2 : ℝ)) = ∞ := by
-  let f : ℕ → ℝ≥0 := fun k ↦ ⟨1 / (k + K + 2 : ℝ), by positivity⟩
+  let f : ℕ → NNReal := fun k ↦ ⟨1 / (k + K + 2 : ℝ), by positivity⟩
   have hnot : ¬ Summable (fun k : ℕ ↦ 1 / (k + K + 2 : ℝ)) := by
     intro hs
     have hs' : Summable (fun k : ℕ ↦ 1 / (k : ℝ)) := by
       apply (summable_nat_add_iff (K + 2)).1
       simpa only [Nat.cast_add, Nat.cast_ofNat, add_assoc] using hs
     exact Real.not_summable_one_div_natCast hs'
-  have htop : ∑' k : ℕ, ((f k : ℝ≥0) : ℝ≥0∞) = ∞ := by
+  have htop : ∑' k : ℕ, ((f k : NNReal) : ENNReal) = ∞ := by
     by_contra hne
     have hsf : Summable f := ENNReal.tsum_coe_ne_top_iff_summable.1 hne
     have hsreal : Summable (fun k ↦ (f k : ℝ)) := NNReal.summable_coe.2 hsf
     change Summable (fun k : ℕ ↦ 1 / (k + K + 2 : ℝ)) at hsreal
     exact hnot hsreal
-  have hterm (k : ℕ) : ((f k : ℝ≥0) : ℝ≥0∞) =
+  have hterm (k : ℕ) : ((f k : NNReal) : ENNReal) =
     ENNReal.ofReal (1 / (k + K + 2 : ℝ)) := by
     rw [ENNReal.coe_nnreal_eq]
     congr 1

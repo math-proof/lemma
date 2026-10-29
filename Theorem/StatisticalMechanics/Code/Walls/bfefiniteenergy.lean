@@ -61,17 +61,17 @@ theorem bfe_perConfig_count (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ) :
 
 theorem bfe_exp_eq (μ : Measure (ConfigSpace (Sym2 (Site d))))
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) (R : ℕ) :
-    ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω 0 0}
-      = ∫⁻ ω, (bc61_coarseTcount ω 0 R : ℝ≥0∞) ∂μ :=
+    ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω 0 0}
+      = ∫⁻ ω, (bc61_coarseTcount ω 0 R : ENNReal) ∂μ :=
   bc62_coarse_expectation μ hinv 0 R
 
 
 theorem bfe_expBound (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ] (R : ℕ) :
-    ∫⁻ ω, (bc61_coarseTcount ω 0 R : ℝ≥0∞) ∂μ ≤ (boxSV_boundaryCard d (R + 1) : ℝ≥0∞) := by
-  calc ∫⁻ ω, (bc61_coarseTcount ω 0 R : ℝ≥0∞) ∂μ
-      ≤ ∫⁻ _ω, (boxSV_boundaryCard d (R + 1) : ℝ≥0∞) ∂μ := by
+    ∫⁻ ω, (bc61_coarseTcount ω 0 R : ENNReal) ∂μ ≤ (boxSV_boundaryCard d (R + 1) : ENNReal) := by
+  calc ∫⁻ ω, (bc61_coarseTcount ω 0 R : ENNReal) ∂μ
+      ≤ ∫⁻ _ω, (boxSV_boundaryCard d (R + 1) : ENNReal) ∂μ := by
         apply lintegral_mono; intro ω; exact Nat.cast_le.mpr (bfe_perConfig_count ω R)
-    _ = (boxSV_boundaryCard d (R + 1) : ℝ≥0∞) := by
+    _ = (boxSV_boundaryCard d (R + 1) : ENNReal) := by
         rw [lintegral_const, measure_univ, mul_one]
 
 

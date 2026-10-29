@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Recurrences.GeneralizedFibonacciIdentities
+import Lemma.Nat.BinetClosedForm
 open MetaMathlibExt
 
 
@@ -52,9 +53,13 @@ lemma generalizedFibonacci_binet
 -- proof
   have hs2 : Real.sqrt (p ^ 2 + 4) ^ 2 = p ^ 2 + 4 := Real.sq_sqrt (by positivity)
   have hs : Real.sqrt (p ^ 2 + 4) ≠ 0 := (Real.sqrt_pos.mpr (by positivity)).ne'
-  rw [binet_closed_form_second_order W p (-1) ((p + Real.sqrt (p ^ 2 + 4)) / 2)
-    ((p - Real.sqrt (p ^ 2 + 4)) / 2) (by linear_combination hs2 / 4)
-    (by linear_combination hs2 / 4) (fun h => hs (by linarith)) (fun k => by rw [hW]; ring) n]
+  rw [MetaMathlibExt.binet_closed_form_second_order
+    (u := W) (P := p) (Q := -1)
+    (α := (p + Real.sqrt (p ^ 2 + 4)) / 2)
+    (β := (p - Real.sqrt (p ^ 2 + 4)) / 2)
+    (n := n)
+    (by linear_combination hs2 / 4)
+    (by linear_combination hs2 / 4) (fun h => hs (by linarith)) (fun k => by rw [hW]; ring)]
   rw [show (p + Real.sqrt (p ^ 2 + 4)) / 2 - (p - Real.sqrt (p ^ 2 + 4)) / 2 =
     Real.sqrt (p ^ 2 + 4) by ring]
   ring
@@ -290,7 +295,6 @@ lemma generalizedFibonacci_tendsto_ratio
   have hLim := hInner.const_mul α
   rw [mul_one] at hLim
   exact hLim.congr fun k => (hEq k).symm
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -344,4 +348,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

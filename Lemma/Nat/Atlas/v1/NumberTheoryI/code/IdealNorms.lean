@@ -269,7 +269,6 @@ lemma dedekind_kummer_multiplicity
 -- proof
   KummerDedekind.emultiplicity_factors_map_eq_emultiplicity hI hI' hx hx' hJ
 open Classical in
-set_option backward.isDefEq.respectTransparency false in
 
 end DedekindKummer
 
@@ -302,7 +301,6 @@ lemma dedekind_kummer_prime_formula
   KummerDedekind.normalizedFactorsMapEquivNormalizedFactorsMinPolyMk_symm_apply_eq_span
     hI hQ hI' hx hx'
 open Classical in
-set_option backward.isDefEq.respectTransparency false in
 
 end DedekindKummer
 
@@ -836,3 +834,4 @@ private lemma idealNorm_zero_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

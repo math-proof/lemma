@@ -10,10 +10,10 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma spectralNorm_le_one_iff_isIntegral
-  [CommRing A] [IsDomain A] [NontriviallyNormedField K] [Field L] [Algebra A K] [Algebra K L] [Algebra A L] [IsScalarTower A K L] [IsUltrametricDist K] [CompleteSpace K] [FiniteDimensional K L]
-  {x : L}
+  [CommRing A] [IsDomain A] [NontriviallyNormedField K] [Field L] [Algebra A K] [Algebra K L] [Algebra A L] [IsScalarTower A K L]   [IsUltrametricDist K] [CompleteSpace K] [FiniteDimensional K L]
 -- given
-  (hA : ∀ y : K, ‖y‖ ≤ 1 ↔ IsIntegral A y) :
+  (hA : ∀ y : K, ‖y‖ ≤ 1 ↔ IsIntegral A y)
+  (x : L) :
 -- imply
   spectralNorm K L x ≤ 1 ↔ IsIntegral A x := by
 -- proof
@@ -75,7 +75,8 @@ lemma spectralNorm_le_one_iff_exists_integralClosure
 -- imply
   spectralNorm K L x ≤ 1 ↔ ∃ b : B, algebraMap B L b = x := by
 -- proof
-  rwa [spectralNorm_le_one_iff_isIntegral hA x]
+  rw [spectralNorm_le_one_iff_isIntegral hA x]
+  exact IsIntegralClosure.isIntegral_iff
 
 end MetaMathlibExt
 

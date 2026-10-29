@@ -16,10 +16,11 @@ lemma det_leibniz_column
 -- imply
   M.det = ∑ σ : Equiv.Perm n, (Equiv.Perm.sign σ : ℤ) • ∏ i, M i (σ i) := by
 -- proof
-  rw [← det_transpose, det_apply]
+  rw [← Matrix.det_transpose, Matrix.det_apply]
   congr 1
 
 end Determinant
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

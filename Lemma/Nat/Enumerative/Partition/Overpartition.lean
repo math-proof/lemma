@@ -18,7 +18,7 @@ lemma isOverlined_full
 -- imply
   (full p).IsOverlined a ↔ a ∈ p.parts := by
 -- proof
-  simp [IsOverlined]
+  simp [IsOverlined, full, Multiset.mem_toFinset]
 
 end Nat.Overpartition
 
@@ -155,7 +155,7 @@ lemma not_isOverlined_ofPartition
 -- imply
   ¬ (ofPartition p).IsOverlined a := by
 -- proof
-  simp [IsOverlined]
+  simp [IsOverlined, ofPartition]
 
 end Nat.Overpartition
 
@@ -193,4 +193,4 @@ end Nat.Overpartition
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

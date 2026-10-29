@@ -23,13 +23,13 @@ open StatMech.Lattice StatMech.Universality
 
 
 theorem kzh_theta_real :
-    (percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one).toReal
+    (percolationProbability 2 (2⁻¹ : NNReal) half_le_one).toReal
       = halfMeasure.real (percolationEvent 2) := rfl
 
 
 theorem kzh_percProb_eq_zero_of_thetaReal_zero
     (h : halfMeasure.real (percolationEvent 2) = 0) :
-    percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 := by
+    percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 := by
   unfold percolationProbability
   have hle : halfMeasure (percolationEvent 2) ≤ 1 :=
     le_trans (measure_mono (subset_univ _)) (by simp [measure_univ])
@@ -80,7 +80,7 @@ theorem kzh_corLowerBound
         0 < halfMeasure.real (percolationEvent 2) →
         Tendsto (fun n => halfMeasure.real (A n ∪ B n)) atTop (𝓝 1)) :
     BoxCrossingProperty halfMeasure 2 →
-        percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 := by
+        percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 := by
   intro hbxp
   
   have hbalance : ∀ n : ℕ, halfMeasure.real (A n) = 1 / 2 := fun n =>

@@ -19,10 +19,10 @@ private lemma exists_norm_eq_one_re_mul_eq_norm {𝕜 : Type*} [RCLike 𝕜] (c 
     have hne : ‖c‖ ≠ 0 := ne_of_gt hpos
     refine ⟨(↑(‖c‖⁻¹) : 𝕜) * starRingEnd 𝕜 c, ?_, ?_⟩
     · rw [norm_mul, RCLike.norm_ofReal, RCLike.norm_conj,
-      abs_of_pos (inv_pos.mpr hpos), inv_mul_cancel₀ hne]
+        abs_of_pos (inv_pos.mpr hpos), inv_mul_cancel₀ hne]
     · have hcc : starRingEnd 𝕜 c * c = (↑‖c‖ : 𝕜) ^ 2 := by
-      rw [mul_comm]
-      exact RCLike.mul_conj c
+        rw [mul_comm]
+        exact RCLike.mul_conj c
       have hreal : ‖c‖⁻¹ * ‖c‖ ^ 2 = ‖c‖ := by
         rw [sq, ← mul_assoc, inv_mul_cancel₀ hne, one_mul]
       have hmul2 : (↑(‖c‖⁻¹) : 𝕜) * ((↑‖c‖ : 𝕜) ^ 2) = (↑‖c‖ : 𝕜) := by
@@ -36,9 +36,8 @@ namespace MetaMathlibExt
 
 /--
 [norm_eq_sSup_re_closedBall](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/BanachSpace.lean)
--/
-@[path]
 over the closed unit ball. -/
+@[path]
 private lemma norm_eq_sSup_re_closedBall {𝕜 : Type*} [RCLike 𝕜] {E : Type*}
   [NormedAddCommGroup E] [NormedSpace 𝕜 E] (y : StrongDual 𝕜 E) :
   ‖y‖ = sSup ((fun x => RCLike.re (y x)) '' Metric.closedBall (0 : E) 1) := by
@@ -74,10 +73,10 @@ private lemma norm_eq_sSup_re_closedBall {𝕜 : Type*} [RCLike 𝕜] {E : Type*
       have hmem : u • ((↑(‖x‖⁻¹) : 𝕜) • x) ∈ Metric.closedBall (0 : E) 1 := by
         rw [mem_closedBall_zero_iff, norm_smul, hu1, hvnorm, mul_one]
       have hre : RCLike.re (y (u • ((↑(‖x‖⁻¹) : 𝕜) • x)))
-        = ‖y ((↑(‖x‖⁻¹) : 𝕜) • x)‖ := by
+          = ‖y ((↑(‖x‖⁻¹) : 𝕜) • x)‖ := by
         rw [map_smul, smul_eq_mul, hu2]
       have hle : ‖y ((↑(‖x‖⁻¹) : 𝕜) • x)‖
-        ≤ sSup ((fun x => RCLike.re (y x)) '' Metric.closedBall (0 : E) 1) := by
+          ≤ sSup ((fun x => RCLike.re (y x)) '' Metric.closedBall (0 : E) 1) := by
         rw [← hre]
         exact le_csSup hbdd ⟨_, hmem, rfl⟩
       have e1 : (↑‖x‖ : 𝕜) • (y ((↑(‖x‖⁻¹) : 𝕜) • x)) = y x := by
@@ -116,7 +115,8 @@ private lemma ofReal_smul_weakDual {𝕜 : Type*} [RCLike 𝕜] {E : Type*}
   rw [one_smul] at h
   have h1 : r • (1 : 𝕜) = (↑r : 𝕜) := by
     rw [Algebra.smul_def, mul_one]
-  rwa [h1] at h
+  rw [h1] at h
+  exact h
 
 end MetaMathlibExt
 
@@ -138,15 +138,15 @@ private lemma convex_closure_image_closedBall
     rw [mem_closedBall_zero_iff] at hx₂
     rw [mem_closedBall_zero_iff]
     calc ‖(↑a : 𝕜) • x₁ + (↑b : 𝕜) • x₂‖
-      ≤ ‖(↑a : 𝕜) • x₁‖ + ‖(↑b : 𝕜) • x₂‖ := norm_add_le _ _
-      _ = a * ‖x₁‖ + b * ‖x₂‖ := by
-        rw [norm_smul, norm_smul, RCLike.norm_ofReal, RCLike.norm_ofReal,
-          abs_of_nonneg ha, abs_of_nonneg hb]
-      _ ≤ a * 1 + b * 1 := by
-        apply add_le_add
-        · exact mul_le_mul_of_nonneg_left hx₁ ha
-        · exact mul_le_mul_of_nonneg_left hx₂ hb
-      _ = 1 := by rw [mul_one, mul_one, hab]
+          ≤ ‖(↑a : 𝕜) • x₁‖ + ‖(↑b : 𝕜) • x₂‖ := norm_add_le _ _
+        _ = a * ‖x₁‖ + b * ‖x₂‖ := by
+          rw [norm_smul, norm_smul, RCLike.norm_ofReal, RCLike.norm_ofReal,
+            abs_of_nonneg ha, abs_of_nonneg hb]
+        _ ≤ a * 1 + b * 1 := by
+          apply add_le_add
+          · exact mul_le_mul_of_nonneg_left hx₁ ha
+          · exact mul_le_mul_of_nonneg_left hx₂ hb
+        _ = 1 := by rw [mul_one, mul_one, hab]
   · simp only [Function.comp_apply]
     rw [map_add, map_smul, map_smul, map_add, map_smul, map_smul]
     simp only [ofReal_smul_weakDual]
@@ -170,21 +170,23 @@ private lemma closure_image_closedBall_subset
   apply closure_minimal
   · rintro w ⟨x, hx, rfl⟩
     change WeakDual.toStrongDual
-      ((StrongDual.toWeakDual ∘ NormedSpace.inclusionInDoubleDual 𝕜 E) x)
+        ((StrongDual.toWeakDual ∘ NormedSpace.inclusionInDoubleDual 𝕜 E) x)
       ∈ Metric.closedBall (0 : StrongDual 𝕜 (StrongDual 𝕜 E)) 1
     rw [Function.comp_apply, StrongDual.toStrongDual_toWeakDual]
     have hLi : (NormedSpace.inclusionInDoubleDualLi 𝕜 (E := E)) x
-      = (NormedSpace.inclusionInDoubleDual 𝕜 E) x := rfl
+        = (NormedSpace.inclusionInDoubleDual 𝕜 E) x := rfl
     have hnorm := (NormedSpace.inclusionInDoubleDualLi 𝕜 (E := E)).norm_map x
     rw [hLi] at hnorm
     have hxnorm : ‖x‖ ≤ 1 := mem_closedBall_zero_iff.mp hx
     have hnorm1 : ‖(NormedSpace.inclusionInDoubleDual 𝕜 E) x‖ ≤ 1 := by
-      rwa [hnorm]
+      rw [hnorm]
+      exact hxnorm
     apply Metric.mem_closedBall.mpr
     have e : dist ((NormedSpace.inclusionInDoubleDual 𝕜 E) x) 0
-      = ‖(NormedSpace.inclusionInDoubleDual 𝕜 E) x‖ :=
+        = ‖(NormedSpace.inclusionInDoubleDual 𝕜 E) x‖ :=
       dist_zero_right ((NormedSpace.inclusionInDoubleDual 𝕜 E) x)
-    rwa [e]
+    rw [e]
+    exact hnorm1
   · exact WeakDual.isClosed_closedBall 0 1
 
 end MetaMathlibExt
@@ -193,9 +195,8 @@ namespace MetaMathlibExt
 
 /--
 [exists_separating_strongDual](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/BanachSpace.lean)
--/
-@[path]
 separated from that image by a functional of `StrongDual 𝕜 E`. -/
+@[path]
 private lemma exists_separating_strongDual
   {𝕜 : Type*} [RCLike 𝕜]
   {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
@@ -211,8 +212,8 @@ private lemma exists_separating_strongDual
     WithSeminorms.toLocallyConvexSpace (WeakDual.withSeminorms 𝕜 (StrongDual 𝕜 E))
   have hconv := convex_closure_image_closedBall (𝕜 := 𝕜) (E := E)
   have hclosed : IsClosed
-    (closure ((StrongDual.toWeakDual ∘ NormedSpace.inclusionInDoubleDual 𝕜 E) ''
-      Metric.closedBall (0 : E) 1)) := isClosed_closure
+      (closure ((StrongDual.toWeakDual ∘ NormedSpace.inclusionInDoubleDual 𝕜 E) ''
+        Metric.closedBall (0 : E) 1)) := isClosed_closure
   obtain ⟨φ, u, hφlt, hφu⟩ :=
     RCLike.geometric_hahn_banach_closed_point (𝕜 := 𝕜) hconv hclosed hzne
   have hsurj := LinearMap.dualEmbedding_surjective (𝕜 := 𝕜)
@@ -223,17 +224,19 @@ private lemma exists_separating_strongDual
   refine ⟨y, u, ?_, ?_⟩
   · intro x hx
     have hmem : (StrongDual.toWeakDual ∘ NormedSpace.inclusionInDoubleDual 𝕜 E) x
-      ∈ closure ((StrongDual.toWeakDual ∘ NormedSpace.inclusionInDoubleDual 𝕜 E) ''
-        Metric.closedBall (0 : E) 1) :=
+        ∈ closure ((StrongDual.toWeakDual ∘ NormedSpace.inclusionInDoubleDual 𝕜 E) ''
+          Metric.closedBall (0 : E) 1) :=
       subset_closure ⟨x, hx, rfl⟩
     have hlt := hφlt _ hmem
     have heq : RCLike.re (φ ((StrongDual.toWeakDual ∘ NormedSpace.inclusionInDoubleDual 𝕜 E) x))
-      = RCLike.re (y x) := by
+        = RCLike.re (y x) := by
       rw [hφ, Function.comp_apply, StrongDual.toWeakDual_apply,
         NormedSpace.dual_def]
-    rwa [heq] at hlt
+    rw [heq] at hlt
+    exact hlt
   · have hφz : φ z = z y := hφ z
-    rwa [hφz] at hφu
+    rw [hφz] at hφu
+    exact hφu
 
 end MetaMathlibExt
 
@@ -260,12 +263,13 @@ private lemma closedBall_subset_closure_image_closedBall
       Metric.mem_closedBall.mp hmem
     have e : dist (WeakDual.toStrongDual z) 0 = ‖WeakDual.toStrongDual z‖ :=
       dist_zero_right (WeakDual.toStrongDual z)
-    rwa [e] at hdist
+    rw [e] at hdist
+    exact hdist
   have hre : RCLike.re (z y) ≤ ‖y‖ := by
     have hzy : z y = (WeakDual.toStrongDual z) y := rfl
     rw [hzy]
     calc RCLike.re ((WeakDual.toStrongDual z) y) ≤ ‖(WeakDual.toStrongDual z) y‖ :=
-      RCLike.re_le_norm _
+          RCLike.re_le_norm _
       _ ≤ ‖WeakDual.toStrongDual z‖ * ‖y‖ := ContinuousLinearMap.le_opNorm _ _
       _ ≤ 1 * ‖y‖ := mul_le_mul_of_nonneg_right hz01 (norm_nonneg _)
       _ = ‖y‖ := one_mul _
@@ -302,4 +306,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-10
--- updated on 2026-10-26
+-- updated on 2026-10-28

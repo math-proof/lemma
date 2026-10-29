@@ -19,13 +19,14 @@ private lemma factorial_div_eq_ascFactorial (m l : ℕ) (hm : 2 ≤ m) :
   have h3 := Nat.factorial_mul_ascFactorial (m - 2) l
   rw [h1, h2] at h3
   have h3Q : ((Nat.factorial (m - 2) : ℚ)) * ((Nat.ascFactorial (m - 1) l : ℕ) : ℚ)
-    = ((Nat.factorial (m + l - 2) : ℕ) : ℚ) := by
+      = ((Nat.factorial (m + l - 2) : ℕ) : ℚ) := by
     exact_mod_cast h3
   have hne : (Nat.factorial (m - 2) : ℚ) ≠ 0 :=
     Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero _)
   field_simp
   linarith [h3Q]
 
+-- Step 1: the filtered piFinset equals the piAntidiag.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -52,6 +53,7 @@ private lemma filter_piFinset_eq_piAntidiag (m n : ℕ) :
     rw [hsum] at hi
     omega
 
+-- Step 3 key Nat identity: (k+1)^(j+1) = (j+1) * (k+1)^(j) + k^(j+1).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -66,9 +68,10 @@ private lemma asc_key (k j : ℕ) :
   rw [Nat.ascFactorial_succ, Nat.ascFactorial_succ]
   have e3 := Nat.succ_ascFactorial k j
   have hr : (k + 1 + j) * (k + 1).ascFactorial j
-    = (j + 1) * (k + 1).ascFactorial j + k * (k + 1).ascFactorial j := by ring
+      = (j + 1) * (k + 1).ascFactorial j + k * (k + 1).ascFactorial j := by ring
   rw [hr, e3]
 
+-- Step 3 divided form over ℚ, by induction on j.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -87,12 +90,12 @@ private lemma asc_div_sum (k : ℕ) (j : ℕ) :
     rw [Finset.sum_range_succ, ih]
     have hkey := asc_key k j
     have hkeyQ : ((Nat.ascFactorial (k + 1) (j + 1) : ℕ) : ℚ)
-      = ((j + 1 : ℕ) : ℚ) * ((Nat.ascFactorial (k + 1) j : ℕ) : ℚ)
-        + ((Nat.ascFactorial k (j + 1) : ℕ) : ℚ) := by
+        = ((j + 1 : ℕ) : ℚ) * ((Nat.ascFactorial (k + 1) j : ℕ) : ℚ)
+          + ((Nat.ascFactorial k (j + 1) : ℕ) : ℚ) := by
       exact_mod_cast hkey
     have hfact : Nat.factorial (j + 1) = (j + 1) * Nat.factorial j := Nat.factorial_succ j
     have hfactQ : ((Nat.factorial (j + 1) : ℕ) : ℚ)
-      = ((j + 1 : ℕ) : ℚ) * ((Nat.factorial j : ℕ) : ℚ) := by
+        = ((j + 1 : ℕ) : ℚ) * ((Nat.factorial j : ℕ) : ℚ) := by
       exact_mod_cast hfact
     have hj1 : ((j + 1 : ℕ) : ℚ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero j
     have hjF : ((Nat.factorial j : ℕ) : ℚ) ≠ 0 :=
@@ -100,6 +103,7 @@ private lemma asc_div_sum (k : ℕ) (j : ℕ) :
     rw [hkeyQ, hfactQ]
     field_simp
 
+-- Step 3 full form: ∑_{l ≤ j} C(j,l) k^(l) (j-l)! = (k+1)^(j) over ℚ.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -115,17 +119,17 @@ private lemma asc_sum_mul (k j : ℕ) :
     = ((Nat.ascFactorial (k + 1) j : ℕ) : ℚ) := by
   have hdiv := asc_div_sum k j
   have hterm : ∀ l ∈ Finset.range (j + 1),
-    ((Nat.choose j l : ℕ) : ℚ) * ((Nat.ascFactorial k l : ℕ) : ℚ)
-      * ((Nat.factorial (j - l) : ℕ) : ℚ)
-    = ((Nat.factorial j : ℕ) : ℚ)
-      * (((Nat.ascFactorial k l : ℕ) : ℚ) / ((Nat.factorial l : ℕ) : ℚ)) := by
+      ((Nat.choose j l : ℕ) : ℚ) * ((Nat.ascFactorial k l : ℕ) : ℚ)
+        * ((Nat.factorial (j - l) : ℕ) : ℚ)
+      = ((Nat.factorial j : ℕ) : ℚ)
+        * (((Nat.ascFactorial k l : ℕ) : ℚ) / ((Nat.factorial l : ℕ) : ℚ)) := by
     intro l hl
     have hle : l ≤ j := by
       have := Finset.mem_range.mp hl
       omega
     have hcc := Nat.choose_mul_factorial_mul_factorial hle
     have hccQ : ((Nat.choose j l : ℕ) : ℚ) * ((Nat.factorial l : ℕ) : ℚ)
-      * ((Nat.factorial (j - l) : ℕ) : ℚ) = ((Nat.factorial j : ℕ) : ℚ) := by
+          * ((Nat.factorial (j - l) : ℕ) : ℚ) = ((Nat.factorial j : ℕ) : ℚ) := by
       exact_mod_cast hcc
     have hlF : ((Nat.factorial l : ℕ) : ℚ) ≠ 0 :=
       Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero _)
@@ -134,6 +138,7 @@ private lemma asc_sum_mul (k j : ℕ) :
   rw [Finset.sum_congr rfl hterm, ← Finset.mul_sum, hdiv]
   field_simp
 
+-- Step 2: the two polynomials whose equality encodes the Hurwitz identity.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -154,27 +159,28 @@ private lemma deriv_hurwitzP_term (u : ℚ) (N a : ℕ) (ha : a ≤ N) :
   have hexp : N + 1 - a - 1 = N - a := by omega
   rw [hexp]
   have hcast : (((Nat.choose (N + 1) a : ℕ) : ℚ)) * (((N + 1 - a : ℕ)) : ℚ)
-    = ((N + 1 : ℕ) : ℚ) * (((Nat.choose N a : ℕ) : ℚ)) := by
+      = ((N + 1 : ℕ) : ℚ) * (((Nat.choose N a : ℕ) : ℚ)) := by
     have h2 : (((Nat.choose (N + 1) a : ℕ) : ℚ)) * (((N + 1 - a : ℕ)) : ℚ)
-      = (((Nat.choose N a : ℕ) : ℚ)) * (((N + 1 : ℕ)) : ℚ) := by
+        = (((Nat.choose N a : ℕ) : ℚ)) * (((N + 1 : ℕ)) : ℚ) := by
       exact_mod_cast hchoose.symm
     rw [h2]; ring
   have hC : Polynomial.C (((Nat.choose (N + 1) a : ℕ) : ℚ) * (u + (a : ℚ)) ^ a)
-    * (Polynomial.C (((N + 1 - a : ℕ)) : ℚ))
-    = Polynomial.C (((N + 1 : ℕ) : ℚ)) *
-      Polynomial.C (((Nat.choose N a : ℕ) : ℚ) * (u + (a : ℚ)) ^ a) := by
+        * (Polynomial.C (((N + 1 - a : ℕ)) : ℚ))
+      = Polynomial.C (((N + 1 : ℕ) : ℚ)) *
+        Polynomial.C (((Nat.choose N a : ℕ) : ℚ) * (u + (a : ℚ)) ^ a) := by
     rw [← Polynomial.C_mul, ← Polynomial.C_mul]
     congr 1
     linear_combination ((u + (a : ℚ)) ^ a) * hcast
   have hrw : Polynomial.C (((Nat.choose (N + 1) a : ℕ) : ℚ) * (u + (a : ℚ)) ^ a)
-    * (Polynomial.C (((N + 1 - a : ℕ)) : ℚ) *
-      ((Polynomial.X - Polynomial.C (a : ℚ)) ^ (N - a)))
-    = (Polynomial.C (((Nat.choose (N + 1) a : ℕ) : ℚ) * (u + (a : ℚ)) ^ a)
-      * (Polynomial.C (((N + 1 - a : ℕ)) : ℚ))) *
-        ((Polynomial.X - Polynomial.C (a : ℚ)) ^ (N - a)) := by ring
+        * (Polynomial.C (((N + 1 - a : ℕ)) : ℚ) *
+          ((Polynomial.X - Polynomial.C (a : ℚ)) ^ (N - a)))
+      = (Polynomial.C (((Nat.choose (N + 1) a : ℕ) : ℚ) * (u + (a : ℚ)) ^ a)
+        * (Polynomial.C (((N + 1 - a : ℕ)) : ℚ))) *
+          ((Polynomial.X - Polynomial.C (a : ℚ)) ^ (N - a)) := by ring
   rw [hrw, hC]
   ring
 
+-- Derivative of each summand of Q.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -195,27 +201,28 @@ private lemma deriv_hurwitzQ_term (u : ℚ) (N i : ℕ) (hi : i ≤ N) :
   have hexp : N + 1 - i - 1 = N - i := by omega
   rw [hexp]
   have hcast : (((Nat.choose (N + 1) i : ℕ) : ℚ)) * (((N + 1 - i : ℕ)) : ℚ)
-    = ((N + 1 : ℕ) : ℚ) * (((Nat.choose N i : ℕ) : ℚ)) := by
+      = ((N + 1 : ℕ) : ℚ) * (((Nat.choose N i : ℕ) : ℚ)) := by
     have h2 : (((Nat.choose (N + 1) i : ℕ) : ℚ)) * (((N + 1 - i : ℕ)) : ℚ)
-      = (((Nat.choose N i : ℕ) : ℚ)) * (((N + 1 : ℕ)) : ℚ) := by
+        = (((Nat.choose N i : ℕ) : ℚ)) * (((N + 1 : ℕ)) : ℚ) := by
       exact_mod_cast hchoose.symm
     rw [h2]; ring
   have hC : Polynomial.C (((Nat.choose (N + 1) i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ))
-    * (Polynomial.C (((N + 1 - i : ℕ)) : ℚ))
-    = Polynomial.C (((N + 1 : ℕ) : ℚ)) *
-      Polynomial.C (((Nat.choose N i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)) := by
+        * (Polynomial.C (((N + 1 - i : ℕ)) : ℚ))
+      = Polynomial.C (((N + 1 : ℕ) : ℚ)) *
+        Polynomial.C (((Nat.choose N i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)) := by
     rw [← Polynomial.C_mul, ← Polynomial.C_mul]
     congr 1
     linear_combination ((Nat.factorial i : ℕ) : ℚ) * hcast
   have hrw : Polynomial.C (((Nat.choose (N + 1) i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ))
-    * (Polynomial.C (((N + 1 - i : ℕ)) : ℚ) *
-      ((Polynomial.X + Polynomial.C u) ^ (N - i)))
-    = (Polynomial.C (((Nat.choose (N + 1) i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ))
-      * (Polynomial.C (((N + 1 - i : ℕ)) : ℚ))) *
-        ((Polynomial.X + Polynomial.C u) ^ (N - i)) := by ring
+        * (Polynomial.C (((N + 1 - i : ℕ)) : ℚ) *
+          ((Polynomial.X + Polynomial.C u) ^ (N - i)))
+      = (Polynomial.C (((Nat.choose (N + 1) i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ))
+        * (Polynomial.C (((N + 1 - i : ℕ)) : ℚ))) *
+          ((Polynomial.X + Polynomial.C u) ^ (N - i)) := by ring
   rw [hrw, hC]
   ring
 
+-- Full derivative laws, peeling off the top (constant) term.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -230,10 +237,10 @@ private lemma deriv_hurwitzP (u : ℚ) (N : ℕ) :
   simp only [hurwitzP]
   rw [Polynomial.derivative_sum, Finset.sum_range_succ]
   have htop : Polynomial.derivative
-    (Polynomial.C (((Nat.choose (N + 1) (N + 1) : ℕ) : ℚ) *
-      (u + ((N + 1 : ℕ) : ℚ)) ^ (N + 1)) *
-      ((Polynomial.X - Polynomial.C (((N + 1 : ℕ) : ℚ))) ^ (N + 1 - (N + 1))))
-    = 0 := by
+        (Polynomial.C (((Nat.choose (N + 1) (N + 1) : ℕ) : ℚ) *
+            (u + ((N + 1 : ℕ) : ℚ)) ^ (N + 1)) *
+          ((Polynomial.X - Polynomial.C (((N + 1 : ℕ) : ℚ))) ^ (N + 1 - (N + 1))))
+        = 0 := by
     have h0 : N + 1 - (N + 1) = 0 := by omega
     rw [h0, pow_zero, mul_one, Polynomial.derivative_C]
   rw [htop, add_zero, Finset.mul_sum]
@@ -258,10 +265,10 @@ private lemma deriv_hurwitzQ (u : ℚ) (N : ℕ) :
   simp only [hurwitzQ]
   rw [Polynomial.derivative_sum, Finset.sum_range_succ]
   have htop : Polynomial.derivative
-    (Polynomial.C (((Nat.choose (N + 1) (N + 1) : ℕ) : ℚ) *
-      ((Nat.factorial (N + 1) : ℕ) : ℚ)) *
-      ((Polynomial.X + Polynomial.C u) ^ (N + 1 - (N + 1))))
-    = 0 := by
+        (Polynomial.C (((Nat.choose (N + 1) (N + 1) : ℕ) : ℚ) *
+            ((Nat.factorial (N + 1) : ℕ) : ℚ)) *
+          ((Polynomial.X + Polynomial.C u) ^ (N + 1 - (N + 1))))
+        = 0 := by
     have h0 : N + 1 - (N + 1) = 0 := by omega
     rw [h0, pow_zero, mul_one, Polynomial.derivative_C]
   rw [htop, add_zero, Finset.mul_sum]
@@ -272,6 +279,7 @@ private lemma deriv_hurwitzQ (u : ℚ) (N : ℕ) :
     omega
   exact deriv_hurwitzQ_term u N i hi'
 
+-- Eval of Q at Y = -u: only the i = N term survives, giving N!.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -283,10 +291,10 @@ namespace MetaMathlibExt
 private lemma eval_neg_hurwitzQ (u : ℚ) (N : ℕ) :
   Polynomial.eval (-u) (hurwitzQ u N) = ((Nat.factorial N : ℕ) : ℚ) := by
   have hpush : ∀ i ∈ Finset.range (N + 1),
-    Polynomial.eval (-u)
-      (Polynomial.C (((Nat.choose N i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)) *
-        ((Polynomial.X + Polynomial.C u) ^ (N - i)))
-    = (((Nat.choose N i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)) * (-u + u) ^ (N - i) := by
+      Polynomial.eval (-u)
+        (Polynomial.C (((Nat.choose N i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)) *
+          ((Polynomial.X + Polynomial.C u) ^ (N - i)))
+      = (((Nat.choose N i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)) * (-u + u) ^ (N - i) := by
     intro i _
     rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_add,
       Polynomial.eval_X, Polynomial.eval_C]
@@ -302,6 +310,7 @@ private lemma eval_neg_hurwitzQ (u : ℚ) (N : ℕ) :
   · intro hN
     exact absurd (Finset.mem_range.mpr (Nat.lt_succ_self N)) hN
 
+-- Eval of P at Y = -u, via the N-th forward difference of t^N.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -313,10 +322,10 @@ namespace MetaMathlibExt
 private lemma eval_neg_hurwitzP (u : ℚ) (N : ℕ) :
   Polynomial.eval (-u) (hurwitzP u N) = ((Nat.factorial N : ℕ) : ℚ) := by
   have hpush : ∀ a ∈ Finset.range (N + 1),
-    Polynomial.eval (-u)
-      (Polynomial.C (((Nat.choose N a : ℕ) : ℚ) * (u + (a : ℚ)) ^ a) *
-        ((Polynomial.X - Polynomial.C (a : ℚ)) ^ (N - a)))
-    = (((-1 : ℚ) ^ (N - a) * ((Nat.choose N a : ℕ) : ℚ)) * (u + (a : ℚ)) ^ N) := by
+      Polynomial.eval (-u)
+        (Polynomial.C (((Nat.choose N a : ℕ) : ℚ) * (u + (a : ℚ)) ^ a) *
+          ((Polynomial.X - Polynomial.C (a : ℚ)) ^ (N - a)))
+      = (((-1 : ℚ) ^ (N - a) * ((Nat.choose N a : ℕ) : ℚ)) * (u + (a : ℚ)) ^ N) := by
     intro a ha
     have hle : a ≤ N := by
       have := Finset.mem_range.mp ha
@@ -324,29 +333,30 @@ private lemma eval_neg_hurwitzP (u : ℚ) (N : ℕ) :
     rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_sub,
       Polynomial.eval_X, Polynomial.eval_C]
     have hneg : (-u - (a : ℚ)) ^ (N - a)
-      = (-1) ^ (N - a) * (u + (a : ℚ)) ^ (N - a) := by
+        = (-1) ^ (N - a) * (u + (a : ℚ)) ^ (N - a) := by
       have h1 : (-u - (a : ℚ)) = (-1) * (u + (a : ℚ)) := by ring
       rw [h1, mul_pow]
     rw [hneg]
     have hpow : (u + (a : ℚ)) ^ a * (u + (a : ℚ)) ^ (N - a) = (u + (a : ℚ)) ^ N := by
       rw [← pow_add, Nat.add_sub_cancel' hle]
     calc (((Nat.choose N a : ℕ) : ℚ) * (u + (a : ℚ)) ^ a)
-      * ((-1) ^ (N - a) * (u + (a : ℚ)) ^ (N - a))
-      = (((-1) ^ (N - a) * ((Nat.choose N a : ℕ) : ℚ)))
-        * ((u + (a : ℚ)) ^ a * (u + (a : ℚ)) ^ (N - a)) := by ring
-      _ = (((-1) ^ (N - a) * ((Nat.choose N a : ℕ) : ℚ))) * (u + (a : ℚ)) ^ N := by
-        rw [hpow]
+            * ((-1) ^ (N - a) * (u + (a : ℚ)) ^ (N - a))
+          = (((-1) ^ (N - a) * ((Nat.choose N a : ℕ) : ℚ)))
+            * ((u + (a : ℚ)) ^ a * (u + (a : ℚ)) ^ (N - a)) := by ring
+        _ = (((-1) ^ (N - a) * ((Nat.choose N a : ℕ) : ℚ))) * (u + (a : ℚ)) ^ N := by
+            rw [hpow]
   have hshift := fwdDiff_iter_eq_sum_shift (1 : ℚ) (fun r : ℚ => r ^ N) N u
   simp only [nsmul_eq_mul, mul_one, zsmul_eq_mul] at hshift
   push_cast at hshift
   have hfact : ((fwdDiff (1 : ℚ))^[N] (fun r : ℚ => r ^ N)) u
-    = ((Nat.factorial N : ℕ) : ℚ) := by
+      = ((Nat.factorial N : ℕ) : ℚ) := by
     have h := fwdDiff_iter_eq_factorial (R := ℚ) (n := N)
     have h2 := congrFun h u
     simpa using h2
   simp only [hurwitzP, Polynomial.eval_finsetSum]
   rw [Finset.sum_congr rfl hpush, ← hshift, hfact]
 
+-- The two polynomials agree, by induction using the derivative laws.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -367,7 +377,7 @@ private lemma hurwitz_poly_eq (u : ℚ) (N : ℕ) : hurwitzP u N = hurwitzQ u N 
       ring
     have hC := Polynomial.eq_C_of_derivative_eq_zero hder
     have heval : Polynomial.eval (-u) (hurwitzP u (N + 1))
-      = Polynomial.eval (-u) (hurwitzQ u (N + 1)) := by
+        = Polynomial.eval (-u) (hurwitzQ u (N + 1)) := by
       rw [eval_neg_hurwitzP, eval_neg_hurwitzQ]
     have h0 : Polynomial.eval (-u) (hurwitzP u (N + 1) - hurwitzQ u (N + 1)) = 0 := by
       rw [Polynomial.eval_sub, heval, sub_self]
@@ -377,6 +387,7 @@ private lemma hurwitz_poly_eq (u : ℚ) (N : ℕ) : hurwitzP u N = hurwitzQ u N 
       rw [hC, h0, Polynomial.C_0]
     exact sub_eq_zero.mp hzero
 
+-- Step 2 numeric identity: evaluate the polynomial identity at Y.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -395,6 +406,7 @@ private lemma hurwitz_id (u Y : ℚ) (N : ℕ) :
     Polynomial.eval_pow, Polynomial.eval_sub, Polynomial.eval_add, Polynomial.eval_X] at h
   exact h
 
+-- Trinomial identity: C(n,a) C(n-a,l) = C(n,l) C(n-l,a).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -414,9 +426,11 @@ private lemma choose_trinomial_swap (n a l : ℕ) :
       have hsub2 : n - a - l = (n - l) - a := by omega
       have hsym2 : (n - l).choose (n - a - l) = (n - l).choose a := by
         have hthis := Nat.choose_symm hal
-        rwa [← hsub2] at hthis
+        rw [← hsub2] at hthis
+        exact hthis
       rw [hsym2] at hmul
-      rwa [← hsym] at hmul
+      rw [← hsym] at hmul
+      exact hmul
     · have hlt : n - a < l := by omega
       have h1 : (n - a).choose l = 0 := Nat.choose_eq_zero_of_lt hlt
       rw [h1, Nat.mul_zero]
@@ -434,6 +448,7 @@ private lemma choose_trinomial_swap (n a l : ℕ) :
     have h4 : (n - l).choose a = 0 := Nat.choose_eq_zero_of_lt h3
     rw [h1, h4, Nat.zero_mul, Nat.mul_zero]
 
+-- Trinomial reindex: C(n,l) C(n-l,i) = C(n,l+i) C(l+i,l).
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -447,8 +462,10 @@ private lemma choose_trinomial_reindex (n l i : ℕ) :
   have hle : l ≤ l + i := Nat.le_add_right l i
   have h := Nat.choose_mul (n := n) (k := l + i) (s := l) hle
   have hsub : l + i - l = i := by omega
-  rwa [hsub] at h
+  rw [hsub] at h
+  exact h.symm
 
+-- Filter description of triangular ranges.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -463,6 +480,7 @@ private lemma filter_range_add_le (n a : ℕ) (ha : a ≤ n) :
   simp only [Finset.mem_filter, Finset.mem_range]
   omega
 
+-- Triangle swap: double sums over a+l ≤ n commute.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -476,8 +494,8 @@ private lemma sum_triangle_swap (n : ℕ) {M : Type*} [AddCommMonoid M]
   ∑ a ∈ Finset.range (n + 1), ∑ l ∈ Finset.range (n - a + 1), f a l
     = ∑ l ∈ Finset.range (n + 1), ∑ a ∈ Finset.range (n - l + 1), f a l := by
   have h1 : ∀ a ∈ Finset.range (n + 1),
-    ∑ l ∈ Finset.range (n - a + 1), f a l
-      = ∑ l ∈ Finset.range (n + 1), (if a + l ≤ n then f a l else 0) := by
+      ∑ l ∈ Finset.range (n - a + 1), f a l
+        = ∑ l ∈ Finset.range (n + 1), (if a + l ≤ n then f a l else 0) := by
     intro a ha
     have ham : a ≤ n := by
       have := Finset.mem_range.mp ha
@@ -485,20 +503,21 @@ private lemma sum_triangle_swap (n : ℕ) {M : Type*} [AddCommMonoid M]
     have hfilt := filter_range_add_le n a ham
     rw [← hfilt, Finset.sum_filter]
   have h2 : ∀ l ∈ Finset.range (n + 1),
-    ∑ a ∈ Finset.range (n - l + 1), f a l
-      = ∑ a ∈ Finset.range (n + 1), (if a + l ≤ n then f a l else 0) := by
+      ∑ a ∈ Finset.range (n - l + 1), f a l
+        = ∑ a ∈ Finset.range (n + 1), (if a + l ≤ n then f a l else 0) := by
     intro l hl
     have hlm : l ≤ n := by
       have := Finset.mem_range.mp hl
       omega
     have hfilt : (Finset.range (n + 1)).filter (fun a => a + l ≤ n)
-      = Finset.range (n - l + 1) := by
+        = Finset.range (n - l + 1) := by
       ext a
       simp only [Finset.mem_filter, Finset.mem_range]
       omega
     rw [← hfilt, Finset.sum_filter]
   rw [Finset.sum_congr rfl h1, Finset.sum_congr rfl h2, Finset.sum_comm]
 
+-- Triangle reindex: (l,i) with l+i ≤ n ↔ (j,l) with l ≤ j ≤ n, i = j-l.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -516,12 +535,12 @@ private lemma sum_triangle_reindex (n : ℕ) {M : Type*} [AddCommMonoid M]
     simp
   | succ n ih =>
     have hLHS : ∑ l ∈ Finset.range (n + 1 + 1), ∑ i ∈ Finset.range (n + 1 - l + 1), F l i
-      = (∑ l ∈ Finset.range (n + 1), ∑ i ∈ Finset.range (n - l + 1), F l i)
-        + ∑ l ∈ Finset.range (n + 1 + 1), F l (n + 1 - l) := by
+        = (∑ l ∈ Finset.range (n + 1), ∑ i ∈ Finset.range (n - l + 1), F l i)
+          + ∑ l ∈ Finset.range (n + 1 + 1), F l (n + 1 - l) := by
       rw [Finset.sum_range_succ]
       have hsplit : ∀ l ∈ Finset.range (n + 1),
-        ∑ i ∈ Finset.range (n + 1 - l + 1), F l i
-          = (∑ i ∈ Finset.range (n - l + 1), F l i) + F l (n + 1 - l) := by
+          ∑ i ∈ Finset.range (n + 1 - l + 1), F l i
+            = (∑ i ∈ Finset.range (n - l + 1), F l i) + F l (n + 1 - l) := by
         intro l hl
         have hlm : l ≤ n := by
           have := Finset.mem_range.mp hl
@@ -531,22 +550,24 @@ private lemma sum_triangle_reindex (n : ℕ) {M : Type*} [AddCommMonoid M]
         rw [heq, Finset.sum_range_succ, heq2]
       rw [Finset.sum_congr rfl hsplit, Finset.sum_add_distrib]
       have htop : ∑ i ∈ Finset.range (n + 1 - (n + 1) + 1), F (n + 1) i
-        = F (n + 1) (n + 1 - (n + 1)) := by
+          = F (n + 1) (n + 1 - (n + 1)) := by
         have heq0 : n + 1 - (n + 1) + 1 = 1 := by omega
         rw [heq0]
         simp
       rw [htop]
       have hlast : ∑ l ∈ Finset.range (n + 1 + 1), F l (n + 1 - l)
-        = (∑ l ∈ Finset.range (n + 1), F l (n + 1 - l)) + F (n + 1) (n + 1 - (n + 1)) := by
+          = (∑ l ∈ Finset.range (n + 1), F l (n + 1 - l)) + F (n + 1) (n + 1 - (n + 1)) := by
         rw [Finset.sum_range_succ]
       rw [hlast]
       abel
     have hRHS : ∑ j ∈ Finset.range (n + 1 + 1), ∑ l ∈ Finset.range (j + 1), F l (j - l)
-      = (∑ j ∈ Finset.range (n + 1), ∑ l ∈ Finset.range (j + 1), F l (j - l))
-        + ∑ l ∈ Finset.range (n + 1 + 1), F l (n + 1 - l) := by
+        = (∑ j ∈ Finset.range (n + 1), ∑ l ∈ Finset.range (j + 1), F l (j - l))
+          + ∑ l ∈ Finset.range (n + 1 + 1), F l (n + 1 - l) := by
       rw [Finset.sum_range_succ]
     rw [hLHS, hRHS, ih]
 
+-- Step 4 statement (full Hurwitz identity over ℚ for a nonempty index finset).
+-- Base case: singleton.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -563,7 +584,7 @@ private lemma hurwitz_singleton (ι : Type*) [DecidableEq ι] (a : ι) (y : ι �
     (((Nat.choose n l : ℕ) : ℚ) * (((Nat.ascFactorial (({a} : Finset ι).card - 1) l : ℕ)) : ℚ)
       * ((∑ i ∈ ({a} : Finset ι), y i) + (n : ℚ)) ^ (n - l)) := by
   have hmem : ∀ f : ι → ℕ,
-    f ∈ ({a} : Finset ι).piAntidiag n ↔ f = Function.update (0 : ι → ℕ) a n := by
+      f ∈ ({a} : Finset ι).piAntidiag n ↔ f = Function.update (0 : ι → ℕ) a n := by
     intro f
     constructor
     · intro hf
@@ -576,10 +597,10 @@ private lemma hurwitz_singleton (ι : Type*) [DecidableEq ι] (a : ι) (y : ι �
         rw [hfa]
         simp
       · have h0 : f j = 0 := by
-        by_contra hne
-        have hja := hsupp j hne
-        rw [Finset.mem_singleton] at hja
-        exact hj hja
+          by_contra hne
+          have hja := hsupp j hne
+          rw [Finset.mem_singleton] at hja
+          exact hj hja
         simp [h0, hj]
     · intro hf
       rw [hf, Finset.mem_piAntidiag]
@@ -596,9 +617,9 @@ private lemma hurwitz_singleton (ι : Type*) [DecidableEq ι] (a : ι) (y : ι �
   have hmult : Nat.multinomial ({a} : Finset ι) (Function.update (0 : ι → ℕ) a n) = 1 :=
     Nat.multinomial_singleton a _
   have hprod : ∏ i ∈ ({a} : Finset ι),
-    (y i + (((Function.update (0 : ι → ℕ) a n i : ℕ)) : ℚ))
-      ^ Function.update (0 : ι → ℕ) a n i
-    = (y a + (n : ℚ)) ^ n := by
+        (y i + (((Function.update (0 : ι → ℕ) a n i : ℕ)) : ℚ))
+          ^ Function.update (0 : ι → ℕ) a n i
+      = (y a + (n : ℚ)) ^ n := by
     rw [Finset.prod_singleton]
     simp
   rw [hmult, Nat.cast_one, one_mul, hprod, Finset.card_singleton, Finset.sum_singleton]
@@ -615,6 +636,8 @@ private lemma hurwitz_singleton (ι : Type*) [DecidableEq ι] (a : ι) (y : ι �
   · intro h0
     exact absurd (Finset.mem_range.mpr (Nat.zero_lt_succ n)) h0
 
+-- Step 4 (full): Hurwitz multinomial identity over ℚ, by finset induction.
+-- Helper: term simplification for the cons step.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -651,17 +674,17 @@ private lemma hurwitz_cons_term_eq (ι : Type*) [DecidableEq ι] (a : ι) (s : F
       Finset.sum_congr rfl (fun t ht => hfg t ht)
     rw [hcongr, hsumg]
   have hmult : Nat.multinomial (Finset.cons a s h) f
-    = (f a + ∑ i ∈ s, f i).choose (f a) * Nat.multinomial s f :=
+      = (f a + ∑ i ∈ s, f i).choose (f a) * Nat.multinomial s f :=
     Nat.multinomial_cons h f
   have hmultf : Nat.multinomial s f = Nat.multinomial s g :=
     Nat.multinomial_congr hfg
   have hchoose : (f a + ∑ i ∈ s, f i).choose (f a) = n.choose pa := by
     rw [hfa, hsumf, hpn]
   have hmultQ : ((Nat.multinomial (Finset.cons a s h) f : ℕ) : ℚ)
-    = ((Nat.choose n pa : ℕ) : ℚ) * ((Nat.multinomial s g : ℕ) : ℚ) := by
+      = ((Nat.choose n pa : ℕ) : ℚ) * ((Nat.multinomial s g : ℕ) : ℚ) := by
     rw [hmult, hchoose, hmultf, Nat.cast_mul]
   have hprod : ∏ i ∈ Finset.cons a s h, (y i + ((f i : ℕ) : ℚ)) ^ f i
-    = (y a + (pa : ℚ)) ^ pa * ∏ i ∈ s, (y i + ((g i : ℕ) : ℚ)) ^ g i := by
+      = (y a + (pa : ℚ)) ^ pa * ∏ i ∈ s, (y i + ((g i : ℕ) : ℚ)) ^ g i := by
     rw [Finset.prod_cons h]
     have ha_eq : (y a + ((f a : ℕ) : ℚ)) ^ f a = (y a + (pa : ℚ)) ^ pa := by
       rw [hfa]
@@ -673,6 +696,7 @@ private lemma hurwitz_cons_term_eq (ι : Type*) [DecidableEq ι] (a : ι) (s : F
   rw [hmultQ, hprod]
   ring
 
+-- ℚ cast of trinomial swap.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -686,6 +710,7 @@ private lemma choose_trinomial_swap_Q (n a l : ℕ) :
     = (((n.choose l : ℕ)) : ℚ) * ((((n - l).choose a : ℕ)) : ℚ) := by
   exact_mod_cast choose_trinomial_swap n a l
 
+-- ℚ cast of trinomial reindex.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -699,6 +724,7 @@ private lemma choose_trinomial_reindex_Q (n l i : ℕ) :
     = (((n.choose (l + i) : ℕ)) : ℚ) * ((((l + i).choose l : ℕ)) : ℚ) := by
   exact_mod_cast choose_trinomial_reindex n l i
 
+-- Swap-term equality for fixed a0, l with a0+l ≤ n.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -723,25 +749,28 @@ private lemma swap_term_eq (n a0 l : ℕ) (S u : ℚ) (c : ℕ)
     rw [hcast]
     ring
   have hpow : (S + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l)
-    = ((S + (n : ℚ)) - (a0 : ℚ)) ^ (n - l - a0) := by
+      = ((S + (n : ℚ)) - (a0 : ℚ)) ^ (n - l - a0) := by
     rw [hexp, hbase]
   have hLHS : (((Nat.choose n a0 : ℕ) : ℚ) * (u + (a0 : ℚ)) ^ a0
-    * (((Nat.choose (n - a0) l : ℕ) : ℚ)
-      * ((Nat.ascFactorial (c - 1) l : ℕ) : ℚ)
-      * (S + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l)))
-    = (((Nat.choose n a0 : ℕ) : ℚ) * ((Nat.choose (n - a0) l : ℕ) : ℚ))
-      * ((u + (a0 : ℚ)) ^ a0 * ((Nat.ascFactorial (c - 1) l : ℕ) : ℚ)
-        * (S + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l)) := by
+        * (((Nat.choose (n - a0) l : ℕ) : ℚ)
+          * ((Nat.ascFactorial (c - 1) l : ℕ) : ℚ)
+          * (S + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l)))
+      = (((Nat.choose n a0 : ℕ) : ℚ) * ((Nat.choose (n - a0) l : ℕ) : ℚ))
+        * ((u + (a0 : ℚ)) ^ a0 * ((Nat.ascFactorial (c - 1) l : ℕ) : ℚ)
+          * (S + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l)) := by
     ring
   have hRHS : (((Nat.choose n l : ℕ) : ℚ) * ((Nat.ascFactorial (c - 1) l : ℕ) : ℚ))
-    * (((Nat.choose (n - l) a0 : ℕ) : ℚ) * (u + (a0 : ℚ)) ^ a0
-      * ((S + (n : ℚ)) - (a0 : ℚ)) ^ (n - l - a0))
-    = (((Nat.choose n l : ℕ) : ℚ) * ((Nat.choose (n - l) a0 : ℕ) : ℚ))
-      * ((u + (a0 : ℚ)) ^ a0 * ((Nat.ascFactorial (c - 1) l : ℕ) : ℚ)
-        * ((S + (n : ℚ)) - (a0 : ℚ)) ^ (n - l - a0)) := by
+        * (((Nat.choose (n - l) a0 : ℕ) : ℚ) * (u + (a0 : ℚ)) ^ a0
+          * ((S + (n : ℚ)) - (a0 : ℚ)) ^ (n - l - a0))
+      = (((Nat.choose n l : ℕ) : ℚ) * ((Nat.choose (n - l) a0 : ℕ) : ℚ))
+        * ((u + (a0 : ℚ)) ^ a0 * ((Nat.ascFactorial (c - 1) l : ℕ) : ℚ)
+          * ((S + (n : ℚ)) - (a0 : ℚ)) ^ (n - l - a0)) := by
     ring
   rw [hLHS, hRHS, hC, hpow]
 
+-- Base case is `hurwitz_singleton` above; the cons step (piAntidiag_cons
+-- disjiUnion manipulation, trinomial reindexing via `hurwitz_id` and
+-- `asc_sum_mul`) is the remaining gap.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -766,33 +795,33 @@ private lemma hurwitz_finset (ι : Type*) [DecidableEq ι] (s : Finset ι) (hs :
       Finset.sum_cons h
     -- Unfold LHS via piAntidiag_cons.
     have hLHS : ∑ f ∈ (Finset.cons a s h).piAntidiag n,
-      (((Nat.multinomial (Finset.cons a s h) f : ℕ)) : ℚ)
-        * ∏ i ∈ Finset.cons a s h, (y i + ((f i : ℕ) : ℚ)) ^ f i
-      = ∑ p ∈ Finset.antidiagonal n,
-        ((((Nat.choose n p.1 : ℕ)) : ℚ) * (y a + (p.1 : ℚ)) ^ p.1)
-          * ∑ l ∈ Finset.range (p.2 + 1),
-            (((Nat.choose p.2 l : ℕ) : ℚ)
-              * (((Nat.ascFactorial (s.card - 1) l : ℕ)) : ℚ)
-              * ((∑ i ∈ s, y i) + (p.2 : ℚ)) ^ (p.2 - l)) := by
+          (((Nat.multinomial (Finset.cons a s h) f : ℕ)) : ℚ)
+            * ∏ i ∈ Finset.cons a s h, (y i + ((f i : ℕ) : ℚ)) ^ f i
+        = ∑ p ∈ Finset.Nat.instHasAntidiagonal.antidiagonal n,
+          ((((Nat.choose n p.1 : ℕ)) : ℚ) * (y a + (p.1 : ℚ)) ^ p.1)
+            * ∑ l ∈ Finset.range (p.2 + 1),
+              (((Nat.choose p.2 l : ℕ) : ℚ)
+                * (((Nat.ascFactorial (s.card - 1) l : ℕ)) : ℚ)
+                * ((∑ i ∈ s, y i) + (p.2 : ℚ)) ^ (p.2 - l)) := by
       rw [Finset.piAntidiag_cons h n, Finset.sum_disjiUnion]
       simp only [Finset.sum_map]
       apply Finset.sum_congr rfl
       intro p hp
       have hpn : p.1 + p.2 = n := Finset.mem_antidiagonal.mp hp
       have hterm : ∀ g ∈ s.piAntidiag p.2,
-        (((Nat.multinomial (Finset.cons a s h)
-          ((addRightEmbedding (fun t => if t = a then p.1 else 0)) g) : ℕ)) : ℚ)
-          * ∏ i ∈ Finset.cons a s h,
-            (y i + ((((addRightEmbedding
-              (fun t => if t = a then p.1 else 0)) g) i : ℕ) : ℚ))
-              ^ ((addRightEmbedding
-                (fun t => if t = a then p.1 else 0)) g i)
-          = ((((Nat.choose n p.1 : ℕ)) : ℚ) * (y a + (p.1 : ℚ)) ^ p.1)
-            * ((((Nat.multinomial s g : ℕ)) : ℚ)
-              * ∏ i ∈ s, (y i + ((g i : ℕ) : ℚ)) ^ g i) := by
+          (((Nat.multinomial (Finset.cons a s h)
+                ((addRightEmbedding (fun t => if t = a then p.1 else 0)) g) : ℕ)) : ℚ)
+              * ∏ i ∈ Finset.cons a s h,
+                (y i + ((((addRightEmbedding
+                  (fun t => if t = a then p.1 else 0)) g) i : ℕ) : ℚ))
+                  ^ ((addRightEmbedding
+                    (fun t => if t = a then p.1 else 0)) g i)
+            = ((((Nat.choose n p.1 : ℕ)) : ℚ) * (y a + (p.1 : ℚ)) ^ p.1)
+              * ((((Nat.multinomial s g : ℕ)) : ℚ)
+                * ∏ i ∈ s, (y i + ((g i : ℕ) : ℚ)) ^ g i) := by
         intro g hg
         have heq : ((addRightEmbedding (fun t => if t = a then p.1 else 0)) g)
-          = g + (fun t => if t = a then p.1 else 0) := by
+            = g + (fun t => if t = a then p.1 else 0) := by
           simp
         rw [heq]
         exact hurwitz_cons_term_eq ι a s h y n p.1 p.2 hpn g hg
@@ -804,16 +833,16 @@ private lemma hurwitz_finset (ι : Type*) [DecidableEq ι] (s : Finset ι) (hs :
     rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
     -- Expand outer constant into inner sum.
     have hexpand : ∀ a0 ∈ Finset.range (n + 1),
-      ((((Nat.choose n a0 : ℕ)) : ℚ) * (y a + (a0 : ℚ)) ^ a0)
-        * ∑ l ∈ Finset.range (n - a0 + 1),
-          (((Nat.choose (n - a0) l : ℕ) : ℚ)
-            * (((Nat.ascFactorial (s.card - 1) l : ℕ)) : ℚ)
-            * ((∑ i ∈ s, y i) + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l))
-      = ∑ l ∈ Finset.range (n - a0 + 1),
-        ((((Nat.choose n a0 : ℕ)) : ℚ) * (y a + (a0 : ℚ)) ^ a0
-          * (((Nat.choose (n - a0) l : ℕ) : ℚ)
-            * (((Nat.ascFactorial (s.card - 1) l : ℕ)) : ℚ)
-            * ((∑ i ∈ s, y i) + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l))) := by
+        ((((Nat.choose n a0 : ℕ)) : ℚ) * (y a + (a0 : ℚ)) ^ a0)
+          * ∑ l ∈ Finset.range (n - a0 + 1),
+            (((Nat.choose (n - a0) l : ℕ) : ℚ)
+              * (((Nat.ascFactorial (s.card - 1) l : ℕ)) : ℚ)
+              * ((∑ i ∈ s, y i) + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l))
+        = ∑ l ∈ Finset.range (n - a0 + 1),
+            ((((Nat.choose n a0 : ℕ)) : ℚ) * (y a + (a0 : ℚ)) ^ a0
+              * (((Nat.choose (n - a0) l : ℕ) : ℚ)
+                * (((Nat.ascFactorial (s.card - 1) l : ℕ)) : ℚ)
+                * ((∑ i ∈ s, y i) + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l))) := by
       intro a0 _
       rw [Finset.mul_sum]
     rw [Finset.sum_congr rfl hexpand]
@@ -826,27 +855,27 @@ private lemma hurwitz_finset (ι : Type*) [DecidableEq ι] (s : Finset ι) (hs :
     rw [hswap]
     -- For fixed l, inner a-sum via Step 2.
     have hstep2 : ∀ l ∈ Finset.range (n + 1),
-      ∑ a0 ∈ Finset.range (n - l + 1),
-        (((Nat.choose n a0 : ℕ) : ℚ) * (y a + (a0 : ℚ)) ^ a0
-          * (((Nat.choose (n - a0) l : ℕ) : ℚ)
-            * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
-            * ((∑ i ∈ s, y i) + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l)))
-      = (((Nat.choose n l : ℕ) : ℚ) * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ))
-        * ∑ i ∈ Finset.range (n - l + 1),
-          (((Nat.choose (n - l) i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)
-            * (((∑ i ∈ s, y i) + (n : ℚ)) + y a) ^ (n - l - i)) := by
+        ∑ a0 ∈ Finset.range (n - l + 1),
+          (((Nat.choose n a0 : ℕ) : ℚ) * (y a + (a0 : ℚ)) ^ a0
+            * (((Nat.choose (n - a0) l : ℕ) : ℚ)
+              * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
+              * ((∑ i ∈ s, y i) + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l)))
+        = (((Nat.choose n l : ℕ) : ℚ) * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ))
+          * ∑ i ∈ Finset.range (n - l + 1),
+            (((Nat.choose (n - l) i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)
+              * (((∑ i ∈ s, y i) + (n : ℚ)) + y a) ^ (n - l - i)) := by
       intro l hl
       have hln : l ≤ n := by
         have := Finset.mem_range.mp hl
         omega
       have hterm : ∀ a0 ∈ Finset.range (n - l + 1),
-        (((Nat.choose n a0 : ℕ) : ℚ) * (y a + (a0 : ℚ)) ^ a0
-          * (((Nat.choose (n - a0) l : ℕ) : ℚ)
-            * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
-            * ((∑ i ∈ s, y i) + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l)))
-        = (((Nat.choose n l : ℕ) : ℚ) * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ))
-          * ((((Nat.choose (n - l) a0 : ℕ) : ℚ) * (y a + (a0 : ℚ)) ^ a0
-            * (((∑ i ∈ s, y i) + (n : ℚ)) - (a0 : ℚ)) ^ (n - l - a0))) := by
+          (((Nat.choose n a0 : ℕ) : ℚ) * (y a + (a0 : ℚ)) ^ a0
+            * (((Nat.choose (n - a0) l : ℕ) : ℚ)
+              * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
+              * ((∑ i ∈ s, y i) + ((n - a0 : ℕ) : ℚ)) ^ (n - a0 - l)))
+          = (((Nat.choose n l : ℕ) : ℚ) * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ))
+            * ((((Nat.choose (n - l) a0 : ℕ) : ℚ) * (y a + (a0 : ℚ)) ^ a0
+              * (((∑ i ∈ s, y i) + (n : ℚ)) - (a0 : ℚ)) ^ (n - l - a0))) := by
         intro a0 ha0
         have ha0le : a0 ≤ n - l := by
           have := Finset.mem_range.mp ha0
@@ -860,20 +889,20 @@ private lemma hurwitz_finset (ι : Type*) [DecidableEq ι] (s : Finset ι) (hs :
     rw [Finset.sum_congr rfl hstep2]
     -- Normalize W bases: (S+n)+y a = y a+S+n.
     have hW : ∀ k : ℕ, (((∑ i ∈ s, y i) + (n : ℚ)) + y a) ^ k
-      = (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ k := by
+        = (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ k := by
       intro k
       congr 1
       ring
     -- Expand to double sum F.
     have hexpand2 : ∀ l ∈ Finset.range (n + 1),
-      (((Nat.choose n l : ℕ) : ℚ) * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ))
-        * ∑ i ∈ Finset.range (n - l + 1),
-          (((Nat.choose (n - l) i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)
-            * (((∑ i ∈ s, y i) + (n : ℚ)) + y a) ^ (n - l - i))
-      = ∑ i ∈ Finset.range (n - l + 1),
-        (((Nat.choose n l : ℕ) : ℚ) * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
-          * (((Nat.choose (n - l) i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)
-            * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - l - i))) := by
+        (((Nat.choose n l : ℕ) : ℚ) * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ))
+          * ∑ i ∈ Finset.range (n - l + 1),
+            (((Nat.choose (n - l) i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)
+              * (((∑ i ∈ s, y i) + (n : ℚ)) + y a) ^ (n - l - i))
+        = ∑ i ∈ Finset.range (n - l + 1),
+            (((Nat.choose n l : ℕ) : ℚ) * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
+              * (((Nat.choose (n - l) i : ℕ) : ℚ) * ((Nat.factorial i : ℕ) : ℚ)
+                * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - l - i))) := by
       intro l _
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
@@ -895,15 +924,15 @@ private lemma hurwitz_finset (ι : Type*) [DecidableEq ι] (s : Finset ι) (hs :
       have := Finset.mem_range.mp hj
       omega
     have hterm2 : ∀ l ∈ Finset.range (j + 1),
-      (((Nat.choose n l : ℕ) : ℚ) * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
-        * (((Nat.choose (n - l) (j - l) : ℕ) : ℚ)
-          * ((Nat.factorial (j - l) : ℕ) : ℚ)
-          * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - l - (j - l))))
-      = (((Nat.choose n j : ℕ) : ℚ)
-        * ((((Nat.choose j l : ℕ) : ℚ)
-          * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
-          * ((Nat.factorial (j - l) : ℕ) : ℚ)))
-        * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j)) := by
+        (((Nat.choose n l : ℕ) : ℚ) * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
+          * (((Nat.choose (n - l) (j - l) : ℕ) : ℚ)
+            * ((Nat.factorial (j - l) : ℕ) : ℚ)
+            * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - l - (j - l))))
+        = (((Nat.choose n j : ℕ) : ℚ)
+            * ((((Nat.choose j l : ℕ) : ℚ)
+              * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
+              * ((Nat.factorial (j - l) : ℕ) : ℚ)))
+            * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j)) := by
       intro l hl
       have hlj : l ≤ j := by
         have := Finset.mem_range.mp hl
@@ -914,44 +943,44 @@ private lemma hurwitz_finset (ι : Type*) [DecidableEq ι] (s : Finset ι) (hs :
       rw [hadd] at htri
       -- htri : C(n,l)*C(n-l,j-l) = C(n,j)*C(j,l)
       have hpow : (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - l - (j - l))
-        = (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j) := by
+          = (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j) := by
         rw [hexp]
       -- Combine via ring + htri.
       have hLHS : (((Nat.choose n l : ℕ) : ℚ)
-        * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
-        * (((Nat.choose (n - l) (j - l) : ℕ) : ℚ)
-          * ((Nat.factorial (j - l) : ℕ) : ℚ)
-          * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - l - (j - l))))
-        = ((((Nat.choose n l : ℕ) : ℚ)
-          * ((Nat.choose (n - l) (j - l) : ℕ) : ℚ)))
-          * (((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
-            * ((Nat.factorial (j - l) : ℕ) : ℚ)
-            * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - l - (j - l))) := by
+            * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
+            * (((Nat.choose (n - l) (j - l) : ℕ) : ℚ)
+              * ((Nat.factorial (j - l) : ℕ) : ℚ)
+              * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - l - (j - l))))
+          = ((((Nat.choose n l : ℕ) : ℚ)
+            * ((Nat.choose (n - l) (j - l) : ℕ) : ℚ)))
+            * (((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
+              * ((Nat.factorial (j - l) : ℕ) : ℚ)
+              * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - l - (j - l))) := by
         ring
       have hRHS : (((Nat.choose n j : ℕ) : ℚ)
-        * ((((Nat.choose j l : ℕ) : ℚ)
-          * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
-          * ((Nat.factorial (j - l) : ℕ) : ℚ)))
-        * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j))
-        = ((((Nat.choose n j : ℕ) : ℚ) * ((Nat.choose j l : ℕ) : ℚ)))
-          * (((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
-            * ((Nat.factorial (j - l) : ℕ) : ℚ)
-            * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j)) := by
+            * ((((Nat.choose j l : ℕ) : ℚ)
+              * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
+              * ((Nat.factorial (j - l) : ℕ) : ℚ)))
+            * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j))
+          = ((((Nat.choose n j : ℕ) : ℚ) * ((Nat.choose j l : ℕ) : ℚ)))
+            * (((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
+              * ((Nat.factorial (j - l) : ℕ) : ℚ)
+              * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j)) := by
         ring
       rw [hLHS, hRHS, htri, hpow]
     rw [Finset.sum_congr rfl hterm2]
     have hfactor : ∑ l ∈ Finset.range (j + 1),
-      (((Nat.choose n j : ℕ) : ℚ)
-        * ((((Nat.choose j l : ℕ) : ℚ)
-          * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
-          * ((Nat.factorial (j - l) : ℕ) : ℚ)))
-        * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j))
-      = (((Nat.choose n j : ℕ) : ℚ)
-        * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j))
-        * ∑ l ∈ Finset.range (j + 1),
-          (((Nat.choose j l : ℕ) : ℚ)
-            * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
-            * ((Nat.factorial (j - l) : ℕ) : ℚ)) := by
+          (((Nat.choose n j : ℕ) : ℚ)
+            * ((((Nat.choose j l : ℕ) : ℚ)
+              * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
+              * ((Nat.factorial (j - l) : ℕ) : ℚ)))
+            * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j))
+        = (((Nat.choose n j : ℕ) : ℚ)
+            * (y a + (∑ i ∈ s, y i) + (n : ℚ)) ^ (n - j))
+          * ∑ l ∈ Finset.range (j + 1),
+            (((Nat.choose j l : ℕ) : ℚ)
+              * ((Nat.ascFactorial (s.card - 1) l : ℕ) : ℚ)
+              * ((Nat.factorial (j - l) : ℕ) : ℚ)) := by
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro l _
@@ -959,6 +988,7 @@ private lemma hurwitz_finset (ι : Type*) [DecidableEq ι] (s : Finset ι) (hs :
     rw [hfactor, asc_sum_mul (s.card - 1) j, hcard1]
     ring
 
+-- Umbral linear functional X^i ↦ B_i.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -974,6 +1004,7 @@ private lemma umbral_monomial (m : ℕ) (a : ℚ) :
     Polynomial.sum_monomial_index _ _ (by simp [LinearMap.mulRight_apply]),
     LinearMap.mulRight_apply]
 
+-- Expansion of (X + C t)^k as monomials.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -991,34 +1022,35 @@ private lemma X_add_C_pow_eq_sum (t : ℚ) (k : ℕ) :
   apply Finset.sum_congr rfl
   intro m hm
   have hC1 : (Polynomial.C t) ^ (k - m)
-    = Polynomial.C (t ^ (k - m)) := by
+      = Polynomial.C (t ^ (k - m)) := by
     rw [← map_pow]
   have hC2 : ((Nat.choose k m : Polynomial ℚ))
-    = Polynomial.C (((Nat.choose k m : ℕ) : ℚ)) := by
+      = Polynomial.C (((Nat.choose k m : ℕ) : ℚ)) := by
     exact (map_natCast _ _).symm
   -- Original term: X^m * (C t)^(k-m) * ↑choose
   rw [hC1, hC2]
   have hmul : Polynomial.X ^ m * Polynomial.C (t ^ (k - m))
-    * Polynomial.C (((Nat.choose k m : ℕ) : ℚ))
-    = Polynomial.C (((Nat.choose k m : ℕ) : ℚ) * t ^ (k - m))
-      * Polynomial.X ^ m := by
-    calc Polynomial.X ^ m * Polynomial.C (t ^ (k - m))
-      * Polynomial.C (((Nat.choose k m : ℕ) : ℚ))
-      = Polynomial.X ^ m
-        * (Polynomial.C (t ^ (k - m))
-          * Polynomial.C (((Nat.choose k m : ℕ) : ℚ))) := by
-        rw [mul_assoc]
-      _ = Polynomial.X ^ m
-        * Polynomial.C ((t ^ (k - m)) * ((Nat.choose k m : ℕ) : ℚ)) := by
-        rw [← Polynomial.C_mul]
-      _ = Polynomial.X ^ m
-        * Polynomial.C (((Nat.choose k m : ℕ) : ℚ) * t ^ (k - m)) := by
-        rw [mul_comm (t ^ (k - m)) (((Nat.choose k m : ℕ) : ℚ))]
-      _ = Polynomial.C (((Nat.choose k m : ℕ) : ℚ) * t ^ (k - m))
+        * Polynomial.C (((Nat.choose k m : ℕ) : ℚ))
+      = Polynomial.C (((Nat.choose k m : ℕ) : ℚ) * t ^ (k - m))
         * Polynomial.X ^ m := by
-        rw [mul_comm]
+    calc Polynomial.X ^ m * Polynomial.C (t ^ (k - m))
+            * Polynomial.C (((Nat.choose k m : ℕ) : ℚ))
+          = Polynomial.X ^ m
+            * (Polynomial.C (t ^ (k - m))
+              * Polynomial.C (((Nat.choose k m : ℕ) : ℚ))) := by
+            rw [mul_assoc]
+        _ = Polynomial.X ^ m
+            * Polynomial.C ((t ^ (k - m)) * ((Nat.choose k m : ℕ) : ℚ)) := by
+            rw [← Polynomial.C_mul]
+        _ = Polynomial.X ^ m
+            * Polynomial.C (((Nat.choose k m : ℕ) : ℚ) * t ^ (k - m)) := by
+            rw [mul_comm (t ^ (k - m)) (((Nat.choose k m : ℕ) : ℚ))]
+        _ = Polynomial.C (((Nat.choose k m : ℕ) : ℚ) * t ^ (k - m))
+            * Polynomial.X ^ m := by
+            rw [mul_comm]
   rw [hmul, Polynomial.C_mul_X_pow_eq_monomial]
 
+-- Umbral evaluation gives Bernoulli polynomials.
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -1032,17 +1064,17 @@ private lemma umbral_X_add_C_pow (t : ℚ) (k : ℕ) :
     = Polynomial.eval t (Polynomial.bernoulli k) := by
   rw [X_add_C_pow_eq_sum, map_sum]
   have hLHS : ∑ m ∈ Finset.range (k + 1),
-    umbral (Polynomial.monomial m (((Nat.choose k m : ℕ) : ℚ) * t ^ (k - m)))
-    = ∑ m ∈ Finset.range (k + 1),
-      (((Nat.choose k m : ℕ) : ℚ) * t ^ (k - m) * _root_.bernoulli m) := by
+        umbral (Polynomial.monomial m (((Nat.choose k m : ℕ) : ℚ) * t ^ (k - m)))
+      = ∑ m ∈ Finset.range (k + 1),
+        (((Nat.choose k m : ℕ) : ℚ) * t ^ (k - m) * _root_.bernoulli m) := by
     apply Finset.sum_congr rfl
     intro m _
     rw [umbral_monomial]
   rw [hLHS]
   have hbern := Polynomial.bernoulli_def k
   have hRHS : Polynomial.eval t (Polynomial.bernoulli k)
-    = ∑ i ∈ Finset.range (k + 1),
-      (_root_.bernoulli (k - i) * ((Nat.choose k i : ℕ) : ℚ) * t ^ i) := by
+      = ∑ i ∈ Finset.range (k + 1),
+        (_root_.bernoulli (k - i) * ((Nat.choose k i : ℕ) : ℚ) * t ^ i) := by
     rw [hbern, Polynomial.eval_finsetSum]
     apply Finset.sum_congr rfl
     intro i _
@@ -1060,13 +1092,13 @@ private lemma umbral_X_add_C_pow (t : ℚ) (k : ℕ) :
     have := Finset.mem_range.mp hi
     omega
   have hchoose : ((Nat.choose k (k - i) : ℕ) : ℚ)
-    = ((Nat.choose k i : ℕ) : ℚ) := by
+      = ((Nat.choose k i : ℕ) : ℚ) := by
     have h := Nat.choose_symm hik
     rw [← h]
   have hexp : k - (k - i) = i := Nat.sub_sub_self hik
   have hterm : ((Nat.choose k (k - i) : ℕ) : ℚ) * t ^ (k - (k - i))
-    * _root_.bernoulli (k - i)
-    = _root_.bernoulli (k - i) * ((Nat.choose k i : ℕ) : ℚ) * t ^ i := by
+        * _root_.bernoulli (k - i)
+      = _root_.bernoulli (k - i) * ((Nat.choose k i : ℕ) : ℚ) * t ^ i := by
     rw [hchoose, hexp]
     ring
   exact hterm
@@ -1113,9 +1145,9 @@ lemma abel_hurwitz_bernoulli_multinomial
     fun j => if j = r then Polynomial.X + Polynomial.C (x r) else Polynomial.C (x j)
     with hy_def
   have hsum_poly : ∑ j ∈ (Finset.univ : Finset (Fin m)), y_poly j
-    = Polynomial.X + Polynomial.C (∑ i, x i) := by
+      = Polynomial.X + Polynomial.C (∑ i, x i) := by
     have h1 : ∀ j ∈ (Finset.univ : Finset (Fin m)),
-      y_poly j = Polynomial.C (x j) + (if j = r then Polynomial.X else 0) := by
+        y_poly j = Polynomial.C (x j) + (if j = r then Polynomial.X else 0) := by
       intro j _
       simp only [hy_def]
       by_cases hj : j = r
@@ -1123,17 +1155,17 @@ lemma abel_hurwitz_bernoulli_multinomial
       · simp [hj]
     rw [Finset.sum_congr rfl h1, Finset.sum_add_distrib]
     have hC : ∑ j ∈ (Finset.univ : Finset (Fin m)), Polynomial.C (x j)
-      = Polynomial.C (∑ i, x i) := by
+        = Polynomial.C (∑ i, x i) := by
       rw [map_sum]
     have hX : ∑ j ∈ (Finset.univ : Finset (Fin m)),
-      (if j = r then Polynomial.X else (0 : Polynomial ℚ))
-      = Polynomial.X := by
+          (if j = r then Polynomial.X else (0 : Polynomial ℚ))
+        = Polynomial.X := by
       rw [Finset.sum_ite_eq']
       simp
     rw [hC, hX, add_comm]
   have hsum_poly_add : (∑ j ∈ (Finset.univ : Finset (Fin m)), y_poly j)
-    + Polynomial.C ((n : ℚ))
-    = Polynomial.X + Polynomial.C ((∑ i, x i) + (n : ℚ)) := by
+        + Polynomial.C ((n : ℚ))
+      = Polynomial.X + Polynomial.C ((∑ i, x i) + (n : ℚ)) := by
     rw [hsum_poly, add_assoc, ← Polynomial.C_add]
   -- Polynomial identity.
   set LHS_poly : Polynomial ℚ :=
@@ -1158,10 +1190,10 @@ lemma abel_hurwitz_bernoulli_multinomial
     intro q
     set y_q : Fin m → ℚ := fun j => Polynomial.eval q (y_poly j) with hyq_def
     have hLHS_eval : Polynomial.eval q LHS_poly
-      = ∑ f ∈ (Finset.univ : Finset (Fin m)).piAntidiag n,
-        (((Nat.multinomial Finset.univ f : ℕ)) : ℚ)
-          * ∏ i ∈ (Finset.univ : Finset (Fin m)),
-            (y_q i + ((f i : ℕ) : ℚ)) ^ f i := by
+        = ∑ f ∈ (Finset.univ : Finset (Fin m)).piAntidiag n,
+          (((Nat.multinomial Finset.univ f : ℕ)) : ℚ)
+            * ∏ i ∈ (Finset.univ : Finset (Fin m)),
+              (y_q i + ((f i : ℕ) : ℚ)) ^ f i := by
       simp only [hLHS_def, Polynomial.eval_finsetSum, Polynomial.eval_mul,
         Polynomial.eval_C, hyq_def]
       apply Finset.sum_congr rfl
@@ -1172,25 +1204,26 @@ lemma abel_hurwitz_bernoulli_multinomial
       intro i _
       simp only [Polynomial.eval_add, Polynomial.eval_pow, Polynomial.eval_C]
     have hRHS_eval : Polynomial.eval q RHS_poly
-      = ∑ l ∈ Finset.range (n + 1),
-        (((Nat.choose n l : ℕ) : ℚ)
-          * (((Nat.ascFactorial
-            ((Finset.univ : Finset (Fin m)).card - 1) l : ℕ)) : ℚ)
-          * ((∑ i ∈ (Finset.univ : Finset (Fin m)), y_q i)
-            + (n : ℚ)) ^ (n - l)) := by
+        = ∑ l ∈ Finset.range (n + 1),
+          (((Nat.choose n l : ℕ) : ℚ)
+            * (((Nat.ascFactorial
+              ((Finset.univ : Finset (Fin m)).card - 1) l : ℕ)) : ℚ)
+            * ((∑ i ∈ (Finset.univ : Finset (Fin m)), y_q i)
+              + (n : ℚ)) ^ (n - l)) := by
       simp only [hRHS_def, Polynomial.eval_finsetSum, Polynomial.eval_mul,
         Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_add, hyq_def,
         hcard_univ]
     have hhur := hurwitz_finset (Fin m) (Finset.univ : Finset (Fin m)) huniv_ne y_q n
-    rwa [hLHS_eval, hRHS_eval]
+    rw [hLHS_eval, hRHS_eval]
+    exact hhur
   -- Step 6: apply umbral.
   have humb := congrArg umbral hpoly
   have hLHS_umbral : umbral LHS_poly
-    = ∑ f ∈ (Finset.univ : Finset (Fin m)).piAntidiag n,
-      (((Nat.multinomial Finset.univ f : ℕ) : ℚ)
-        * (∏ j ∈ Finset.univ.erase r, (x j + ((f j : ℕ) : ℚ)) ^ f j)
-        * Polynomial.eval (x r + ((f r : ℕ) : ℚ))
-          (Polynomial.bernoulli (f r))) := by
+      = ∑ f ∈ (Finset.univ : Finset (Fin m)).piAntidiag n,
+        (((Nat.multinomial Finset.univ f : ℕ) : ℚ)
+          * (∏ j ∈ Finset.univ.erase r, (x j + ((f j : ℕ) : ℚ)) ^ f j)
+          * Polynomial.eval (x r + ((f r : ℕ) : ℚ))
+            (Polynomial.bernoulli (f r))) := by
     simp only [hLHS_def, map_sum]
     apply Finset.sum_congr rfl
     intro f hf
@@ -1206,45 +1239,45 @@ lemma abel_hurwitz_bernoulli_multinomial
       have hne : j ≠ r := (Finset.mem_erase.mp hj).1
       simp [hy_def, hne]
     have hr_factor : (y_poly r + Polynomial.C (((f r : ℕ)) : ℚ)) ^ f r
-      = (Polynomial.X + Polynomial.C (x r + ((f r : ℕ) : ℚ))) ^ f r := by
+        = (Polynomial.X + Polynomial.C (x r + ((f r : ℕ) : ℚ))) ^ f r := by
       congr 1
       rw [hy_r, add_assoc, ← Polynomial.C_add]
     have h_erase : ∏ j ∈ Finset.univ.erase r,
-      (y_poly j + Polynomial.C (((f j : ℕ)) : ℚ)) ^ f j
-      = Polynomial.C (∏ j ∈ Finset.univ.erase r,
-        (x j + ((f j : ℕ) : ℚ)) ^ f j) := by
+          (y_poly j + Polynomial.C (((f j : ℕ)) : ℚ)) ^ f j
+        = Polynomial.C (∏ j ∈ Finset.univ.erase r,
+          (x j + ((f j : ℕ) : ℚ)) ^ f j) := by
       have hterm : ∀ j ∈ Finset.univ.erase r,
-        (y_poly j + Polynomial.C (((f j : ℕ)) : ℚ)) ^ f j
-          = Polynomial.C ((x j + ((f j : ℕ) : ℚ)) ^ f j) := by
+          (y_poly j + Polynomial.C (((f j : ℕ)) : ℚ)) ^ f j
+            = Polynomial.C ((x j + ((f j : ℕ) : ℚ)) ^ f j) := by
         intro j hj
         rw [hy_ne j hj, ← Polynomial.C_add, ← map_pow]
       rw [Finset.prod_congr rfl hterm, ← map_prod]
     -- Combine C factors.
     have hterm_eq : Polynomial.C (((Nat.multinomial Finset.univ f : ℕ)) : ℚ)
-      * ∏ i ∈ (Finset.univ : Finset (Fin m)),
-        (y_poly i + Polynomial.C (((f i : ℕ)) : ℚ)) ^ f i
-      = Polynomial.C ((((Nat.multinomial Finset.univ f : ℕ)) : ℚ)
-        * ∏ j ∈ Finset.univ.erase r, (x j + ((f j : ℕ) : ℚ)) ^ f j)
-        * (Polynomial.X + Polynomial.C (x r + ((f r : ℕ) : ℚ))) ^ f r := by
+          * ∏ i ∈ (Finset.univ : Finset (Fin m)),
+            (y_poly i + Polynomial.C (((f i : ℕ)) : ℚ)) ^ f i
+        = Polynomial.C ((((Nat.multinomial Finset.univ f : ℕ)) : ℚ)
+            * ∏ j ∈ Finset.univ.erase r, (x j + ((f j : ℕ) : ℚ)) ^ f j)
+          * (Polynomial.X + Polynomial.C (x r + ((f r : ℕ) : ℚ))) ^ f r := by
       rw [← hsplit, hr_factor, h_erase]
       have hring : Polynomial.C (((Nat.multinomial Finset.univ f : ℕ)) : ℚ)
-        * ((Polynomial.X
-          + Polynomial.C (x r + ((f r : ℕ) : ℚ))) ^ f r
-          * Polynomial.C (∏ j ∈ Finset.univ.erase r,
-            (x j + ((f j : ℕ) : ℚ)) ^ f j))
-        = (Polynomial.C (((Nat.multinomial Finset.univ f : ℕ)) : ℚ)
-          * Polynomial.C (∏ j ∈ Finset.univ.erase r,
-            (x j + ((f j : ℕ) : ℚ)) ^ f j))
-          * (Polynomial.X + Polynomial.C (x r + ((f r : ℕ) : ℚ))) ^ f r := by
+            * ((Polynomial.X
+              + Polynomial.C (x r + ((f r : ℕ) : ℚ))) ^ f r
+              * Polynomial.C (∏ j ∈ Finset.univ.erase r,
+                (x j + ((f j : ℕ) : ℚ)) ^ f j))
+          = (Polynomial.C (((Nat.multinomial Finset.univ f : ℕ)) : ℚ)
+              * Polynomial.C (∏ j ∈ Finset.univ.erase r,
+                (x j + ((f j : ℕ) : ℚ)) ^ f j))
+            * (Polynomial.X + Polynomial.C (x r + ((f r : ℕ) : ℚ))) ^ f r := by
         ring
       rw [hring, ← Polynomial.C_mul]
     rw [hterm_eq, umbral_C_mul, umbral_X_add_C_pow]
   have hRHS_umbral : umbral RHS_poly
-    = ∑ l ∈ Finset.range (n + 1),
-      (((Nat.choose n l : ℕ) : ℚ)
-        * (((Nat.ascFactorial (m - 1) l : ℕ)) : ℚ)
-        * Polynomial.eval ((∑ i, x i) + (n : ℚ))
-          (Polynomial.bernoulli (n - l))) := by
+      = ∑ l ∈ Finset.range (n + 1),
+        (((Nat.choose n l : ℕ) : ℚ)
+          * (((Nat.ascFactorial (m - 1) l : ℕ)) : ℚ)
+          * Polynomial.eval ((∑ i, x i) + (n : ℚ))
+            (Polynomial.bernoulli (n - l))) := by
     simp only [hRHS_def, map_sum]
     apply Finset.sum_congr rfl
     intro l _
@@ -1253,48 +1286,50 @@ lemma abel_hurwitz_bernoulli_multinomial
   -- Convert to target via filter + factorial ratio.
   have hfilter := filter_piFinset_eq_piAntidiag m n
   have hfact : ∀ l ∈ Finset.range (n + 1),
-    (((Nat.ascFactorial (m - 1) l : ℕ)) : ℚ)
-      = ((Nat.factorial (m + l - 2) : ℚ)
-        / (Nat.factorial (m - 2) : ℚ)) := by
+      (((Nat.ascFactorial (m - 1) l : ℕ)) : ℚ)
+        = ((Nat.factorial (m + l - 2) : ℚ)
+          / (Nat.factorial (m - 2) : ℚ)) := by
     intro l _
     exact (factorial_div_eq_ascFactorial m l hm).symm
   rw [← hfilter] at humb
   -- humb now equates filter sum (with mult*prod*B) to range sum (with choose*asc*B).
   -- Target LHS has mult*(B*prod), target RHS has choose*(fact/fact)*B.
   have hLHS_target : ∑ l ∈ (Fintype.piFinset
-    (fun _ : Fin m => Finset.range (n + 1))).filter
-    (fun l => ∑ i, l i = n),
-    (Nat.multinomial Finset.univ l : ℚ) *
-      (Polynomial.eval (x r + (l r : ℚ)) (Polynomial.bernoulli (l r)) *
-      ∏ j ∈ Finset.univ.erase r, (x j + (l j : ℚ)) ^ l j)
-    = ∑ f ∈ (Fintype.piFinset
-      (fun _ : Fin m => Finset.range (n + 1))).filter
-      (fun l => ∑ i, l i = n),
-      (((Nat.multinomial Finset.univ f : ℕ) : ℚ)
-        * (∏ j ∈ Finset.univ.erase r, (x j + ((f j : ℕ) : ℚ)) ^ f j)
-        * Polynomial.eval (x r + ((f r : ℕ) : ℚ))
-          (Polynomial.bernoulli (f r))) := by
+          (fun _ : Fin m => Finset.range (n + 1))).filter
+          (fun l => ∑ i, l i = n),
+          (Nat.multinomial Finset.univ l : ℚ) *
+            (Polynomial.eval (x r + (l r : ℚ)) (Polynomial.bernoulli (l r)) *
+            ∏ j ∈ Finset.univ.erase r, (x j + (l j : ℚ)) ^ l j)
+      = ∑ f ∈ (Fintype.piFinset
+          (fun _ : Fin m => Finset.range (n + 1))).filter
+          (fun l => ∑ i, l i = n),
+        (((Nat.multinomial Finset.univ f : ℕ) : ℚ)
+          * (∏ j ∈ Finset.univ.erase r, (x j + ((f j : ℕ) : ℚ)) ^ f j)
+          * Polynomial.eval (x r + ((f r : ℕ) : ℚ))
+            (Polynomial.bernoulli (f r))) := by
     apply Finset.sum_congr rfl
     intro f _
     ring
   have hRHS_target : ∑ l ∈ Finset.range (n + 1),
-    (((Nat.choose n l : ℕ) : ℚ)
-      * (((Nat.ascFactorial (m - 1) l : ℕ)) : ℚ)
-      * Polynomial.eval ((∑ i, x i) + (n : ℚ))
-        (Polynomial.bernoulli (n - l)))
-    = ∑ l ∈ Finset.range (n + 1),
-      (Nat.choose n l : ℚ) *
-        ((Nat.factorial (m + l - 2) : ℚ)
-          / (Nat.factorial (m - 2) : ℚ)) *
-        Polynomial.eval ((∑ i, x i) + (n : ℚ))
-          (Polynomial.bernoulli (n - l)) := by
+        (((Nat.choose n l : ℕ) : ℚ)
+          * (((Nat.ascFactorial (m - 1) l : ℕ)) : ℚ)
+          * Polynomial.eval ((∑ i, x i) + (n : ℚ))
+            (Polynomial.bernoulli (n - l)))
+      = ∑ l ∈ Finset.range (n + 1),
+        (Nat.choose n l : ℚ) *
+          ((Nat.factorial (m + l - 2) : ℚ)
+            / (Nat.factorial (m - 2) : ℚ)) *
+          Polynomial.eval ((∑ i, x i) + (n : ℚ))
+            (Polynomial.bernoulli (n - l)) := by
     apply Finset.sum_congr rfl
     intro l hl
     rw [hfact l hl]
-  rwa [hLHS_target, ← hRHS_target]
+  rw [hLHS_target, ← hRHS_target]
+  exact humb
+
 end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

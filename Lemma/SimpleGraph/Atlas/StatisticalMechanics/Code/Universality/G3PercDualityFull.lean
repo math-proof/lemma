@@ -40,7 +40,7 @@ private lemma measurable_reindex_eq :
 @[path]
 private lemma map_complement_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Measure.map (fun (η : ConfigSpace (Sym2 (Site 2))) e => !(η e)) (bernoulliProductMeasure p hp) = bernoulliProductMeasure (1 - p) tsub_le_self := by
@@ -53,7 +53,7 @@ private lemma map_complement_eq
 @[path]
 private lemma map_reindex_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Measure.map (Equiv.piCongrLeft (fun _ => Bool) crossEdge) (bernoulliProductMeasure p hp) = bernoulliProductMeasure p hp := by
@@ -66,7 +66,7 @@ private lemma map_reindex_eq
 @[path]
 private lemma map_dualConfig_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Measure.map dualConfig (bernoulliProductMeasure p hp) = bernoulliProductMeasure (1 - p) tsub_le_self := by
@@ -79,7 +79,7 @@ private lemma map_dualConfig_eq
 @[path]
 private lemma selfDual_density_iff_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   1 - p = p ↔ p = 2⁻¹ := by
@@ -103,7 +103,7 @@ private lemma selfDual_density_iff_real_eq
 @[path]
 private lemma one_sub_half_eq_eq :
 -- imply
-  (1 : ℝ≥0) - 2⁻¹ = 2⁻¹ := by
+  (1 : NNReal) - 2⁻¹ = 2⁻¹ := by
 -- proof
   apply StatMech.Universality.one_sub_half_eq
 
@@ -113,7 +113,7 @@ private lemma one_sub_half_eq_eq :
 @[path]
 private lemma bernoulliProductMeasure_selfDual_half_eq :
 -- imply
-  Measure.map dualConfig (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) = bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one := by
+  Measure.map dualConfig (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) = bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one := by
 -- proof
   apply StatMech.Universality.bernoulliProductMeasure_selfDual_half
 
@@ -123,10 +123,10 @@ private lemma bernoulliProductMeasure_selfDual_half_eq :
 @[path]
 private lemma selfDual_point_unique_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
-  (1 - p = p ↔ p = 2⁻¹) ∧ Measure.map dualConfig (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) = bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one := by
+  (1 - p = p ↔ p = 2⁻¹) ∧ Measure.map dualConfig (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) = bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one := by
 -- proof
   apply StatMech.Universality.selfDual_point_unique p hp
 
@@ -136,7 +136,7 @@ private lemma selfDual_point_unique_eq
 @[path]
 private lemma map_dualConfig_dualConfig_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Measure.map dualConfig (Measure.map dualConfig (bernoulliProductMeasure p hp)) = bernoulliProductMeasure p hp := by

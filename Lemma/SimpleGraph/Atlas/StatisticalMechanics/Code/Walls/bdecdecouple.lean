@@ -37,7 +37,7 @@ private lemma bdec_posRouting_of_precursorPos_eq
   {n : ℕ}
   {a₁ a₂ a₃ : Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (NeighborTrifPrecursor d a₁ a₂ a₃)) :
 -- imply
@@ -54,7 +54,7 @@ private lemma bdec_cylinder_singleton_pos_eq
   {I : Finset (Sym2 (Site d))}
   {η₀ : ConfigSpace ↥I}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1) :
@@ -73,7 +73,7 @@ private lemma bdec_factor_finite_pos_eq
   {S : Set (∀ i : s, Bool)}
   {T : Set (∀ i : t, Bool)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hS : MeasurableSet S)
   (hT : MeasurableSet T)
@@ -96,7 +96,7 @@ private lemma bdec_precursorPos_of_decoupled_eq
   {η₀ : ConfigSpace ↥I}
   {X : Set (ConfigSpace (Sym2 (Site d)))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)
@@ -116,7 +116,7 @@ private lemma bdec_bk_of_precursorPos_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hpre : ∀ n : ℕ, ∃ a₁ a₂ a₃ : Site d, 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (NeighborTrifPrecursor d a₁ a₂ a₃)) :
@@ -133,7 +133,7 @@ private lemma bdec_bk_atLeastTwo_of_precursorPos_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hpre : ∀ n : ℕ, ∃ a₁ a₂ a₃ : Site d, 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (NeighborTrifPrecursor d a₁ a₂ a₃)) :

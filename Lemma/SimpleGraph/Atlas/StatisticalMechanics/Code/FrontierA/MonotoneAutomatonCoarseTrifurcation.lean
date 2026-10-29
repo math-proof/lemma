@@ -101,7 +101,7 @@ private lemma siteFaithfulAllOpenTrif_pos_of_top_eq
   {nu : Measure (ConfigSpace (Site 2))}
   [IsProbabilityMeasure nu]
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasSiteInsertionLowerBound nu epsilon)
   (htop : 0 < nu {eta | numInfiniteClusters 2 (siteToBond eta) = ⊤}) :
@@ -134,7 +134,7 @@ private lemma site_cluster_count_top_null_two_eq
   [IsProbabilityMeasure nu]
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site 2)) nu)
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasSiteInsertionLowerBound nu epsilon) :
 -- imply
@@ -151,7 +151,7 @@ private lemma site_cluster_count_ae_one_two_eq
   [IsProbabilityMeasure nu]
 -- given
   (herg : IsErgodic (G := Multiplicative (Site 2)) nu)
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasSiteInsertionLowerBound nu epsilon)
   (hperco : nu {eta | 1 ≤ numInfiniteClusters 2 (siteToBond eta)} = 1) :
@@ -169,7 +169,7 @@ private lemma site_cluster_count_ae_zero_or_one_two_eq
   [IsProbabilityMeasure nu]
 -- given
   (herg : IsErgodic (G := Multiplicative (Site 2)) nu)
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasSiteInsertionLowerBound nu epsilon) :
 -- imply
@@ -187,7 +187,7 @@ private lemma interpolatedSite_cluster_count_ae_zero_or_one_two_eq
   [IsProbabilityMeasure mu]
 -- given
   (herg : IsTripleFieldErgodic mu)
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon) :
 -- imply

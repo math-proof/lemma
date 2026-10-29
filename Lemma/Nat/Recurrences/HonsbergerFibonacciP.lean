@@ -46,7 +46,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma fibonacciP_rec
-  {p r : ℕ}
+  (p r : ℕ)
 -- given
   (hpr : p < r) :
 -- imply
@@ -75,7 +75,7 @@ lemma fibonacciP_one
   induction n using Nat.strong_induction_on with
   | _ n ih =>
     cases n with
-    | zero => simp
+    | zero => simp [fibonacciP_zero]
     | succ n =>
       cases n with
       | zero => simp [fibonacciP]
@@ -162,20 +162,20 @@ private lemma honsberger_base
     simp only [Finset.mem_range] at hj ⊢
     omega
   have hsum :
-    (∑ j ∈ Finset.range p,
-      f (m + 1 - (j + 1)) * f (n + (j + 1) + 1 - p)) =
-      ∑ j ∈ Finset.range m, f (n + j + 2 - p) := by
+      (∑ j ∈ Finset.range p,
+          f (m + 1 - (j + 1)) * f (n + (j + 1) + 1 - p)) =
+        ∑ j ∈ Finset.range m, f (n + j + 2 - p) := by
     calc
       (∑ j ∈ Finset.range p,
-        f (m + 1 - (j + 1)) * f (n + (j + 1) + 1 - p)) =
-        ∑ j ∈ Finset.range m,
-          f (m + 1 - (j + 1)) * f (n + (j + 1) + 1 - p) := by
-          symm
-          apply Finset.sum_subset hsubset
-          intro j hjp hjm
-          simp only [Finset.mem_range] at hjp hjm
-          have hidx : m + 1 - (j + 1) = 0 := by omega
-          rw [hidx, hzero, zero_mul]
+          f (m + 1 - (j + 1)) * f (n + (j + 1) + 1 - p)) =
+          ∑ j ∈ Finset.range m,
+            f (m + 1 - (j + 1)) * f (n + (j + 1) + 1 - p) := by
+            symm
+            apply Finset.sum_subset hsubset
+            intro j hjp hjm
+            simp only [Finset.mem_range] at hjp hjm
+            have hidx : m + 1 - (j + 1) = 0 := by omega
+            rw [hidx, hzero, zero_mul]
       _ = ∑ j ∈ Finset.range m, f (n + j + 2 - p) := by
         apply Finset.sum_congr rfl
         intro j hj
@@ -220,12 +220,12 @@ private lemma honsberger_induction_step
     f (m + n + 2) := by
   have hfm := honsberger_uniform_recurrence p f hzero hone hrec m (by omega)
   have hsum :
-    (∑ j ∈ Finset.range p,
-      f (m + 1 - (j + 1)) * f (n + (j + 1) + 1 - p)) =
       (∑ j ∈ Finset.range p,
-        f ((m - 1) + 1 - (j + 1)) * f (n + (j + 1) + 1 - p)) +
-      ∑ j ∈ Finset.range p,
-        f ((m - p - 1) + 1 - (j + 1)) * f (n + (j + 1) + 1 - p) := by
+          f (m + 1 - (j + 1)) * f (n + (j + 1) + 1 - p)) =
+        (∑ j ∈ Finset.range p,
+          f ((m - 1) + 1 - (j + 1)) * f (n + (j + 1) + 1 - p)) +
+        ∑ j ∈ Finset.range p,
+          f ((m - p - 1) + 1 - (j + 1)) * f (n + (j + 1) + 1 - p) := by
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro j hj
@@ -275,7 +275,7 @@ private lemma honsberger_generic
     by_cases hm : m ≤ p
     · exact honsberger_base p m n f hp hzero hone hrec hm
     · exact honsberger_induction_step p m n f hzero hone hrec (by omega)
-      (ih (m - 1) (by omega)) (ih (m - p - 1) (by omega))
+        (ih (m - 1) (by omega)) (ih (m - p - 1) (by omega))
 
 end MetaMathlibExt
 
@@ -289,10 +289,10 @@ lemma honsberger_fibonacciP
   {p m n : ℕ}
 -- given
   (hp : 0 < p)
-  (hm_pos : 0 < m)
-  (hn_pos : 0 < n)
-  (hm : p ≤ m + 1)
-  (hn : p ≤ n + 2) :
+  (_hm_pos : 0 < m)
+  (_hn_pos : 0 < n)
+  (_hm : p ≤ m + 1)
+  (_hn : p ≤ n + 2) :
 -- imply
   fibonacciP p 0 = 0 →
     (∀ r, 1 ≤ r → r ≤ p → fibonacciP p r = 1) →
@@ -312,4 +312,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

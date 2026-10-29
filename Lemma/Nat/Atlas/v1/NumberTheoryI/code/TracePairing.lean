@@ -25,12 +25,14 @@ lemma prop_5_17_isFractionRing
   {B : Type*}
   [CommRing B]
   [IsDomain B]
+  [Algebra A B]
   [Algebra B L]
+  [IsScalarTower A B L]
   [IsIntegralClosure B A L] :
 -- imply
   IsFractionRing B L :=
 -- proof
-  IsIntegralClosure.isFractionRing_of_finite_extension A K L B
+  IsIntegralClosure.isFractionRing_of_finite_extension A B
 
 /--
 [prop_5_18_norm_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/TracePairing.lean)
@@ -218,7 +220,6 @@ variable [IsDedekindDomain A] [Algebra.IsSeparable K L] in
 lemma prop_5_22_finite
   {A : Type*}
   [CommRing A]
-  [IsDomain A]
   {K : Type*}
   [Field K]
   [Algebra A K]
@@ -235,15 +236,13 @@ lemma prop_5_22_finite
   [Algebra B L]
   [IsIntegralClosure B A L]
   [Algebra.IsSeparable K L]
-  [IsDedekindDomain A]
-  [Algebra.IsSeparable K L] :
+  [IsDedekindDomain A] :
 -- imply
   Module.Finite A B :=
 -- proof
   IsIntegralClosure.finite A K L B
 omit [IsDomain B] in
 include K L in
-variable [IsDedekindDomain A] [Algebra.IsSeparable K L] in
 
 /--
 [prop_5_22_isNoetherian](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/TracePairing.lean)
@@ -252,7 +251,6 @@ variable [IsDedekindDomain A] [Algebra.IsSeparable K L] in
 lemma prop_5_22_isNoetherian
   {A : Type*}
   [CommRing A]
-  [IsDomain A]
   {K : Type*}
   [Field K]
   [Algebra A K]
@@ -269,10 +267,7 @@ lemma prop_5_22_isNoetherian
   [Algebra B L]
   [IsIntegralClosure B A L]
   [Algebra.IsSeparable K L]
-  [IsDedekindDomain A]
-  [Algebra.IsSeparable K L]
-  [IsDedekindDomain A]
-  [Algebra.IsSeparable K L] :
+  [IsDedekindDomain A] :
 -- imply
   IsNoetherian A B :=
 -- proof
@@ -281,3 +276,4 @@ alias traceForm_symmetric := thm_5_20_traceForm_symmetric
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

@@ -19,10 +19,10 @@ private lemma convex_midpoint_mul_le_integral (g : ℝ → ℝ) {A B c w : ℝ}
   (hsub : Icc (c - w / 2) (c + w / 2) ⊆ Icc A B) :
   w * g c ≤ ∫ x in Ioc (c - w / 2) (c + w / 2), g x := by
   have hId : IntegrableOn (fun x : ℝ => x)
-    (Ioc (c - w / 2) (c + w / 2)) volume :=
+      (Ioc (c - w / 2) (c + w / 2)) volume :=
     (continuous_id.continuousOn.integrableOn_Icc.mono_set Ioc_subset_Icc_self)
   have hInt : IntegrableOn (g ∘ fun x : ℝ => x)
-    (Ioc (c - w / 2) (c + w / 2)) volume := by
+      (Ioc (c - w / 2) (c + w / 2)) volume := by
     change IntegrableOn g (Ioc (c - w / 2) (c + w / 2)) volume
     exact (hgc.mono hsub).integrableOn_Icc.mono_set Ioc_subset_Icc_self
   have hJ := hg.map_set_average_le hgc isClosed_Icc
@@ -37,7 +37,7 @@ private lemma convex_midpoint_mul_le_integral (g : ℝ → ℝ) {A B c w : ℝ}
       exact hsub ⟨hx.1.le, hx.2⟩)
     hId hInt
   have hAvgId :
-    (⨍ x in Ioc (c - w / 2) (c + w / 2), x ∂volume) = c := by
+      (⨍ x in Ioc (c - w / 2) (c + w / 2), x ∂volume) = c := by
     rw [average_eq]
     simp only [MeasurableSet.univ, measureReal_restrict_apply, univ_inter,
       Real.volume_real_Ioc, add_sub_sub_cancel, add_halves, smul_eq_mul]
@@ -46,14 +46,14 @@ private lemma convex_midpoint_mul_le_integral (g : ℝ → ℝ) {A B c w : ℝ}
     field_simp
     ring
   have hAvgG :
-    (⨍ x in Ioc (c - w / 2) (c + w / 2), g x ∂volume) =
-      (1 / w) * ∫ x in Ioc (c - w / 2) (c + w / 2), g x := by
+      (⨍ x in Ioc (c - w / 2) (c + w / 2), g x ∂volume) =
+        (1 / w) * ∫ x in Ioc (c - w / 2) (c + w / 2), g x := by
     rw [average_eq]
     simp [hw.le]
   simp only [hAvgId, hAvgG] at hJ
   calc
     w * g c ≤ w * ((1 / w) *
-      ∫ x in Ioc (c - w / 2) (c + w / 2), g x) :=
+        ∫ x in Ioc (c - w / 2) (c + w / 2), g x) :=
       mul_le_mul_of_nonneg_left hJ hw.le
     _ = ∫ x in Ioc (c - w / 2) (c + w / 2), g x := by
       field_simp
@@ -81,7 +81,7 @@ private lemma convex_packed_sum_le_integral {ι : Type*} [Fintype ι]
     intro y hy
     exact ⟨(hleft i).trans hy.1, hy.2.trans (hright i)⟩
   have hmid (i : ι) :
-    w i * g (c i) ≤ ∫ y in J i, g y := by
+      w i * g (c i) ≤ ∫ y in J i, g y := by
     exact convex_midpoint_mul_le_integral g (hw i) hg hgc (hJsub i)
   have hdis : Set.Pairwise (Set.univ : Set ι) (Function.onFun Disjoint J) := by
     intro i _ j _ hij
@@ -90,7 +90,7 @@ private lemma convex_packed_sum_le_integral {ι : Type*} [Fintype ι]
     intro y hyi hyj
     simp only [J, mem_Ioc] at hyi hyj
     have hs := hsep i j hij
-    obtain hijc | hjic := le_total (c i) (c j)
+    rcases le_total (c i) (c j) with hijc | hjic
     · rw [abs_of_nonpos (sub_nonpos.mpr hijc)] at hs
       have hlt : c j - c i < (w i + w j) / 2 := by linarith
       nlinarith
@@ -157,7 +157,7 @@ private lemma hasDerivAt_cscSq {y : ℝ} (hy0 : 0 < y) (hy1 : y < 1) :
   · ext t
     rfl
   · simp only [cscSqDeriv, Pi.pow_apply, Nat.cast_ofNat, Nat.reduceSub,
-    pow_one, one_mul, zero_mul, zero_sub]
+      pow_one, one_mul, zero_mul, zero_sub]
     field_simp [ne_of_gt (sin_pi_mul_pos hy0 hy1)]
 
 end MathlibExt.NumberTheory.PrimeCounting
@@ -183,7 +183,7 @@ private lemma hasDerivAt_cscSqDeriv {y : ℝ} (hy0 : 0 < y) (hy1 : y < 1) :
   · ext t
     rfl
   · simp only [cscSqDeriv2, Pi.pow_apply, Nat.cast_ofNat, Nat.reduceSub,
-    pow_two]
+      pow_two]
     field_simp [ne_of_gt (sin_pi_mul_pos hy0 hy1)]
     nlinarith [Real.sin_sq_add_cos_sq (Real.pi * y)]
 
@@ -207,7 +207,7 @@ private lemma hasDerivAt_cscSq_of_sin_ne {y : ℝ}
   · ext t
     rfl
   · simp only [cscSqDeriv, Pi.pow_apply, Nat.cast_ofNat, Nat.reduceSub,
-    pow_one, one_mul, zero_mul, zero_sub]
+      pow_one, one_mul, zero_mul, zero_sub]
     field_simp [hne]
 
 end MathlibExt.NumberTheory.PrimeCounting
@@ -232,7 +232,7 @@ private lemma hasDerivAt_cscSqDeriv_of_sin_ne {y : ℝ}
   · ext t
     rfl
   · simp only [cscSqDeriv2, Pi.pow_apply, Nat.cast_ofNat, Nat.reduceSub,
-    pow_two]
+      pow_two]
     field_simp [hne]
     nlinarith [Real.sin_sq_add_cos_sq (Real.pi * y)]
 
@@ -321,7 +321,7 @@ private lemma hasDerivAt_cscSqProductDeriv {a y : ℝ}
       rfl
     · ring
   have hdv : HasDerivAt (fun t : ℝ => cscSqDeriv (t - a))
-    (cscSqDeriv2 (y - a)) y := by
+      (cscSqDeriv2 (y - a)) y := by
     convert (hasDerivAt_cscSqDeriv_of_sin_ne hya).comp y hshift using 1
     · ext t
       rfl
@@ -354,9 +354,9 @@ private lemma cscSqProductDeriv2_nonneg {a y : ℝ}
   have hs₂4 : 0 < s₂ ^ 4 := (by norm_num : Even 4).pow_pos hs₂
   have hden : 0 < s₁ ^ 4 * s₂ ^ 4 := mul_pos hs₁4 hs₂4
   rw [show cscSqProductDeriv2 a y =
-    2 * Real.pi ^ 2 /
-      (s₁ ^ 4 * s₂ ^ 4) *
-        (s₁ ^ 2 + s₂ ^ 2 + 2 * (c₁ * s₂ + c₂ * s₁) ^ 2) by
+      2 * Real.pi ^ 2 /
+        (s₁ ^ 4 * s₂ ^ 4) *
+          (s₁ ^ 2 + s₂ ^ 2 + 2 * (c₁ * s₂ + c₂ * s₁) ^ 2) by
     simp only [cscSqProductDeriv2, cscSqDeriv2, cscSqDeriv, cscSq,
       s₁, c₁, s₂, c₂]
     field_simp [hs₁, hs₂]
@@ -440,7 +440,7 @@ private lemma hasDerivAt_logAbsSinPi_of_sin_ne {y : ℝ}
   have harg : HasDerivAt (fun t : ℝ => Real.pi * t) Real.pi y := by
     simpa only [id_eq, mul_one] using (hasDerivAt_id y).const_mul Real.pi
   have hs := harg.sin
-  obtain hneg | hpos := lt_or_gt_of_ne hne
+  rcases lt_or_gt_of_ne hne with hneg | hpos
   · have habs := (hs.hasFDerivAt.abs_of_neg hneg).hasDerivAt
     have hlog := habs.log (abs_ne_zero.mpr hne)
     convert hlog using 1
@@ -474,9 +474,9 @@ private lemma cscSqProduct_identity {a y : ℝ}
     (cscSq y + cscSq (y - a) +
       2 * cotPi a * (cotPi y - cotPi (y - a))) := by
   have hdiff :
-    Real.sin (Real.pi * (y - a)) * Real.cos (Real.pi * y) -
-      Real.sin (Real.pi * y) * Real.cos (Real.pi * (y - a)) =
-        -Real.sin (Real.pi * a) := by
+      Real.sin (Real.pi * (y - a)) * Real.cos (Real.pi * y) -
+        Real.sin (Real.pi * y) * Real.cos (Real.pi * (y - a)) =
+          -Real.sin (Real.pi * a) := by
     calc
       _ = Real.sin (Real.pi * (y - a) - Real.pi * y) := by
         rw [Real.sin_sub]
@@ -485,30 +485,30 @@ private lemma cscSqProduct_identity {a y : ℝ}
       _ = -Real.sin (Real.pi * a) := by
         rw [show -Real.pi * a = -(Real.pi * a) by ring, Real.sin_neg]
   have hcosA :
-    1 - Real.cos (Real.pi * a) ^ 2 = Real.sin (Real.pi * a) ^ 2 := by
+      1 - Real.cos (Real.pi * a) ^ 2 = Real.sin (Real.pi * a) ^ 2 := by
     nlinarith [Real.sin_sq_add_cos_sq (Real.pi * a)]
   have hunitB :
-    Real.cos (Real.pi * (y - a)) ^ 2 +
-      Real.sin (Real.pi * (y - a)) ^ 2 = 1 := by
+      Real.cos (Real.pi * (y - a)) ^ 2 +
+        Real.sin (Real.pi * (y - a)) ^ 2 = 1 := by
     simpa only [add_comm] using Real.sin_sq_add_cos_sq (Real.pi * (y - a))
   have hquad :
-    Real.sin (Real.pi * (y - a)) ^ 2 + Real.sin (Real.pi * y) ^ 2 -
-      2 * Real.sin (Real.pi * y) * Real.sin (Real.pi * (y - a)) *
-        Real.cos (Real.pi * a) =
-      Real.sin (Real.pi * a) ^ 2 := by
+      Real.sin (Real.pi * (y - a)) ^ 2 + Real.sin (Real.pi * y) ^ 2 -
+          2 * Real.sin (Real.pi * y) * Real.sin (Real.pi * (y - a)) *
+            Real.cos (Real.pi * a) =
+        Real.sin (Real.pi * a) ^ 2 := by
     calc
       _ = (Real.cos (Real.pi * (y - a)) * Real.sin (Real.pi * a)) ^ 2 +
-        Real.sin (Real.pi * (y - a)) ^ 2 *
-          (1 - Real.cos (Real.pi * a) ^ 2) := by
+          Real.sin (Real.pi * (y - a)) ^ 2 *
+            (1 - Real.cos (Real.pi * a) ^ 2) := by
         rw [show Real.pi * y = Real.pi * (y - a) + Real.pi * a by ring,
           Real.sin_add]
         ring
       _ = (Real.cos (Real.pi * (y - a)) * Real.sin (Real.pi * a)) ^ 2 +
-        Real.sin (Real.pi * (y - a)) ^ 2 * Real.sin (Real.pi * a) ^ 2 := by
+          Real.sin (Real.pi * (y - a)) ^ 2 * Real.sin (Real.pi * a) ^ 2 := by
         rw [hcosA]
       _ = Real.sin (Real.pi * a) ^ 2 *
-        (Real.cos (Real.pi * (y - a)) ^ 2 +
-          Real.sin (Real.pi * (y - a)) ^ 2) := by ring
+          (Real.cos (Real.pi * (y - a)) ^ 2 +
+            Real.sin (Real.pi * (y - a)) ^ 2) := by ring
       _ = Real.sin (Real.pi * a) ^ 2 := by rw [hunitB, mul_one]
   simp only [cscSqProduct, cscSq, cotPi]
   field_simp [ha, hy, hya]
@@ -535,14 +535,14 @@ private lemma hasDerivAt_cscSqProductAnti {a y : ℝ}
     simpa only [id_eq, one_mul] using (hasDerivAt_id y).sub_const a
   have hcotY := hasDerivAt_cotPi_of_sin_ne hy
   have hcotShift : HasDerivAt (fun t : ℝ => cotPi (t - a))
-    (-Real.pi * cscSq (y - a)) y := by
+      (-Real.pi * cscSq (y - a)) y := by
     convert (hasDerivAt_cotPi_of_sin_ne hya).comp y hshift using 1
     · ext t
       rfl
     · ring
   have hlogY := hasDerivAt_logAbsSinPi_of_sin_ne hy
   have hlogShift : HasDerivAt (fun t : ℝ => logAbsSinPi (t - a))
-    (Real.pi * cotPi (y - a)) y := by
+      (Real.pi * cotPi (y - a)) y := by
     convert (hasDerivAt_logAbsSinPi_of_sin_ne hya).comp y hshift using 1
     · ext t
       rfl
@@ -576,9 +576,9 @@ private lemma integral_cscSqProduct {a A B : ℝ} (hAB : A ≤ B)
     rw [uIcc_of_le hAB] at hyI
     exact hasDerivAt_cscSqProductAnti ha (hy y hyI) (hya y hyI)
   · have hc : ContinuousOn (cscSqProduct a) (uIcc A B) := by
-    rw [uIcc_of_le hAB]
-    intro y hyI
-    exact (hasDerivAt_cscSqProduct (hy y hyI) (hya y hyI)).continuousAt.continuousWithinAt
+      rw [uIcc_of_le hAB]
+      intro y hyI
+      exact (hasDerivAt_cscSqProduct (hy y hyI) (hya y hyI)).continuousAt.continuousWithinAt
     exact hc.intervalIntegrable
 
 end MathlibExt.NumberTheory.PrimeCounting
@@ -665,15 +665,15 @@ private lemma cotPi_antitone {u v : ℝ} (hu : 0 < u) (huv : u ≤ v) (hv : v < 
     · positivity
     · nlinarith [Real.pi_pos]
   have hid : cotPi u - cotPi v =
-    Real.sin (Real.pi * (v - u)) /
-      (Real.sin (Real.pi * u) * Real.sin (Real.pi * v)) := by
+      Real.sin (Real.pi * (v - u)) /
+        (Real.sin (Real.pi * u) * Real.sin (Real.pi * v)) := by
     simp only [cotPi]
     field_simp [hsu.ne', hsv.ne']
     rw [show Real.pi * (v - u) = Real.pi * v - Real.pi * u by ring,
       Real.sin_sub]
     ring
   have hq : 0 ≤ Real.sin (Real.pi * (v - u)) /
-    (Real.sin (Real.pi * u) * Real.sin (Real.pi * v)) := by positivity
+      (Real.sin (Real.pi * u) * Real.sin (Real.pi * v)) := by positivity
   rw [← hid] at hq
   linarith
 
@@ -730,46 +730,46 @@ private lemma integral_cscSqProduct_two_arcs_le {a d e : ℝ}
   have hAB₁ : d / 2 ≤ a - e / 2 := by linarith
   have hAB₂ : a + e / 2 ≤ 1 - d / 2 := by linarith
   have hy₁ (y : ℝ) (hy : y ∈ Icc (d / 2) (a - e / 2)) :
-    Real.sin (Real.pi * y) ≠ 0 := by
+      Real.sin (Real.pi * y) ≠ 0 := by
     exact (sin_pi_mul_pos (by linarith [hy.1]) (by linarith [hy.2])).ne'
   have hya₁ (y : ℝ) (hy : y ∈ Icc (d / 2) (a - e / 2)) :
-    Real.sin (Real.pi * (y - a)) ≠ 0 := by
+      Real.sin (Real.pi * (y - a)) ≠ 0 := by
     have hs := sin_pi_mul_pos (by linarith [hy.2] : 0 < a - y)
       (by linarith [hy.1] : a - y < 1)
     rw [show Real.pi * (y - a) = -(Real.pi * (a - y)) by ring, Real.sin_neg]
     exact neg_ne_zero.mpr hs.ne'
   have hy₂ (y : ℝ) (hy : y ∈ Icc (a + e / 2) (1 - d / 2)) :
-    Real.sin (Real.pi * y) ≠ 0 := by
+      Real.sin (Real.pi * y) ≠ 0 := by
     exact (sin_pi_mul_pos (by linarith [hy.1]) (by linarith [hy.2])).ne'
   have hya₂ (y : ℝ) (hy : y ∈ Icc (a + e / 2) (1 - d / 2)) :
-    Real.sin (Real.pi * (y - a)) ≠ 0 := by
+      Real.sin (Real.pi * (y - a)) ≠ 0 := by
     exact (sin_pi_mul_pos (by linarith [hy.1]) (by linarith [hy.2])).ne'
   rw [integral_cscSqProduct hAB₁ haSin.ne' hy₁ hya₁,
     integral_cscSqProduct hAB₂ haSin.ne' hy₂ hya₂]
   have hEval :
-    (cscSqProductAnti a (a - e / 2) - cscSqProductAnti a (d / 2)) +
-      (cscSqProductAnti a (1 - d / 2) -
-        cscSqProductAnti a (a + e / 2)) =
-      cscSq a / Real.pi *
-        (2 * cotPi (d / 2) + 2 * cotPi (e / 2) -
-          cotPi (a - e / 2) - cotPi (a - d / 2) +
-          cotPi (a + d / 2) + cotPi (a + e / 2) +
-          2 * cotPi a *
-            (logAbsSinPi (a - e / 2) + logAbsSinPi (a - d / 2) -
-              logAbsSinPi (a + d / 2) - logAbsSinPi (a + e / 2))) := by
+      (cscSqProductAnti a (a - e / 2) - cscSqProductAnti a (d / 2)) +
+          (cscSqProductAnti a (1 - d / 2) -
+            cscSqProductAnti a (a + e / 2)) =
+        cscSq a / Real.pi *
+          (2 * cotPi (d / 2) + 2 * cotPi (e / 2) -
+              cotPi (a - e / 2) - cotPi (a - d / 2) +
+              cotPi (a + d / 2) + cotPi (a + e / 2) +
+            2 * cotPi a *
+              (logAbsSinPi (a - e / 2) + logAbsSinPi (a - d / 2) -
+                logAbsSinPi (a + d / 2) - logAbsSinPi (a + e / 2))) := by
     have hcotD : cotPi (-a + d * (1 / 2)) =
-      -cotPi (a + d * (-1 / 2)) := by
+        -cotPi (a + d * (-1 / 2)) := by
       rw [show -a + d * (1 / 2) = -(a + d * (-1 / 2)) by ring, cotPi_neg]
     have hlogD : logAbsSinPi (-a + d * (1 / 2)) =
-      logAbsSinPi (a + d * (-1 / 2)) := by
+        logAbsSinPi (a + d * (-1 / 2)) := by
       rw [show -a + d * (1 / 2) = -(a + d * (-1 / 2)) by ring,
         logAbsSinPi_neg]
     have hcotOne : cotPi (1 - a + d * (-1 / 2)) =
-      -cotPi (a + d * (1 / 2)) := by
+        -cotPi (a + d * (1 / 2)) := by
       rw [show 1 - a + d * (-1 / 2) = 1 - (a + d * (1 / 2)) by ring,
         cotPi_one_sub]
     have hlogOne : logAbsSinPi (1 - a + d * (-1 / 2)) =
-      logAbsSinPi (a + d * (1 / 2)) := by
+        logAbsSinPi (a + d * (1 / 2)) := by
       rw [show 1 - a + d * (-1 / 2) = 1 - (a + d * (1 / 2)) by ring,
         logAbsSinPi_one_sub]
     simp only [cscSqProductAnti]
@@ -789,8 +789,8 @@ private lemma integral_cscSqProduct_two_arcs_le {a d e : ℝ}
     (u := a - e / 2) (v := a + e / 2)
     (by linarith) (by linarith) (by linarith)
   have hcotCross :
-    -cotPi (a - e / 2) - cotPi (a - d / 2) +
-      cotPi (a + d / 2) + cotPi (a + e / 2) ≤ 0 := by
+      -cotPi (a - e / 2) - cotPi (a - d / 2) +
+          cotPi (a + d / 2) + cotPi (a + e / 2) ≤ 0 := by
     linarith
   have hsDm := sin_pi_mul_pos (by linarith : 0 < a - d / 2)
     (by linarith : a - d / 2 < 1)
@@ -810,31 +810,31 @@ private lemma integral_cscSqProduct_two_arcs_le {a d e : ℝ}
   have hlogTerm : 2 * cotPi a * L ≤ 0 := by
     by_cases hahalf : a ≤ 1 / 2
     · have hcos : 0 ≤ Real.cos (Real.pi * a) := by
-      apply Real.cos_nonneg_of_mem_Icc
-      constructor <;> nlinarith [Real.pi_pos]
+        apply Real.cos_nonneg_of_mem_Icc
+        constructor <;> nlinarith [Real.pi_pos]
       have hcot : 0 ≤ cotPi a := by
         simp only [cotPi]
         positivity
       have hcompD :
-        Real.sin (Real.pi * (a - d / 2)) ≤
-          Real.sin (Real.pi * (a + d / 2)) := by
+          Real.sin (Real.pi * (a - d / 2)) ≤
+            Real.sin (Real.pi * (a + d / 2)) := by
         have hdiff := sinPi_add_sub_diff a (d / 2)
         apply sub_nonneg.mp
         rw [hdiff]
         exact mul_nonneg (mul_nonneg (by norm_num) hcos) hsD.le
       have hcompE :
-        Real.sin (Real.pi * (a - e / 2)) ≤
-          Real.sin (Real.pi * (a + e / 2)) := by
+          Real.sin (Real.pi * (a - e / 2)) ≤
+            Real.sin (Real.pi * (a + e / 2)) := by
         have hdiff := sinPi_add_sub_diff a (e / 2)
         apply sub_nonneg.mp
         rw [hdiff]
         exact mul_nonneg (mul_nonneg (by norm_num) hcos) hsE.le
       have hlogD : logAbsSinPi (a - d / 2) ≤
-        logAbsSinPi (a + d / 2) := by
+          logAbsSinPi (a + d / 2) := by
         simp only [logAbsSinPi, abs_of_pos hsDm, abs_of_pos hsDp]
         exact Real.strictMonoOn_log.monotoneOn hsDm hsDp hcompD
       have hlogE : logAbsSinPi (a - e / 2) ≤
-        logAbsSinPi (a + e / 2) := by
+          logAbsSinPi (a + e / 2) := by
         simp only [logAbsSinPi, abs_of_pos hsEm, abs_of_pos hsEp]
         exact Real.strictMonoOn_log.monotoneOn hsEm hsEp hcompE
       have hL : L ≤ 0 := by
@@ -851,25 +851,27 @@ private lemma integral_cscSqProduct_two_arcs_le {a d e : ℝ}
         simp only [cotPi]
         exact div_nonpos_of_nonpos_of_nonneg hcos haSin.le
       have hcompD :
-        Real.sin (Real.pi * (a + d / 2)) ≤
-          Real.sin (Real.pi * (a - d / 2)) := by
+          Real.sin (Real.pi * (a + d / 2)) ≤
+            Real.sin (Real.pi * (a - d / 2)) := by
         have hdiff := sinPi_add_sub_diff a (d / 2)
         apply sub_nonpos.mp
-        rwa [hdiff]
+        rw [hdiff]
+        exact mul_nonpos_of_nonpos_of_nonneg
           (mul_nonpos_of_nonneg_of_nonpos (by norm_num) hcos) hsD.le
       have hcompE :
-        Real.sin (Real.pi * (a + e / 2)) ≤
-          Real.sin (Real.pi * (a - e / 2)) := by
+          Real.sin (Real.pi * (a + e / 2)) ≤
+            Real.sin (Real.pi * (a - e / 2)) := by
         have hdiff := sinPi_add_sub_diff a (e / 2)
         apply sub_nonpos.mp
-        rwa [hdiff]
+        rw [hdiff]
+        exact mul_nonpos_of_nonpos_of_nonneg
           (mul_nonpos_of_nonneg_of_nonpos (by norm_num) hcos) hsE.le
       have hlogD : logAbsSinPi (a + d / 2) ≤
-        logAbsSinPi (a - d / 2) := by
+          logAbsSinPi (a - d / 2) := by
         simp only [logAbsSinPi, abs_of_pos hsDp, abs_of_pos hsDm]
         exact Real.strictMonoOn_log.monotoneOn hsDp hsDm hcompD
       have hlogE : logAbsSinPi (a + e / 2) ≤
-        logAbsSinPi (a - e / 2) := by
+          logAbsSinPi (a - e / 2) := by
         simp only [logAbsSinPi, abs_of_pos hsEp, abs_of_pos hsEm]
         exact Real.strictMonoOn_log.monotoneOn hsEp hsEm hcompE
       have hL : 0 ≤ L := by
@@ -879,18 +881,18 @@ private lemma integral_cscSqProduct_two_arcs_le {a d e : ℝ}
         (mul_nonpos_of_nonneg_of_nonpos (by norm_num) hcot) hL
   dsimp only [L] at hlogTerm
   have hinside :
-    2 * cotPi (d / 2) + 2 * cotPi (e / 2) - cotPi (a - e / 2) -
-      cotPi (a - d / 2) + cotPi (a + d / 2) + cotPi (a + e / 2) +
-      2 * cotPi a *
-        (logAbsSinPi (a - e / 2) + logAbsSinPi (a - d / 2) -
-          logAbsSinPi (a + d / 2) - logAbsSinPi (a + e / 2)) ≤
-      2 * cotPi (d / 2) + 2 * cotPi (e / 2) := by
+      2 * cotPi (d / 2) + 2 * cotPi (e / 2) - cotPi (a - e / 2) -
+            cotPi (a - d / 2) + cotPi (a + d / 2) + cotPi (a + e / 2) +
+          2 * cotPi a *
+            (logAbsSinPi (a - e / 2) + logAbsSinPi (a - d / 2) -
+              logAbsSinPi (a + d / 2) - logAbsSinPi (a + e / 2)) ≤
+        2 * cotPi (d / 2) + 2 * cotPi (e / 2) := by
     linarith
   have hcotDhalf := cotPi_half_le hd hd1
   have hcotEhalf := cotPi_half_le he he1
   have hend :
-    2 * cotPi (d / 2) + 2 * cotPi (e / 2) ≤
-      4 / Real.pi * (1 / d + 1 / e) := by
+      2 * cotPi (d / 2) + 2 * cotPi (e / 2) ≤
+        4 / Real.pi * (1 / d + 1 / e) := by
     calc
       _ ≤ 2 * (2 / (Real.pi * d)) + 2 * (2 / (Real.pi * e)) := by
         linarith
@@ -902,13 +904,13 @@ private lemma integral_cscSqProduct_two_arcs_le {a d e : ℝ}
     positivity
   calc
     cscSq a / Real.pi *
-      (2 * cotPi (d / 2) + 2 * cotPi (e / 2) - cotPi (a - e / 2) -
-        cotPi (a - d / 2) + cotPi (a + d / 2) + cotPi (a + e / 2) +
-        2 * cotPi a *
-          (logAbsSinPi (a - e / 2) + logAbsSinPi (a - d / 2) -
-            logAbsSinPi (a + d / 2) - logAbsSinPi (a + e / 2))) ≤
-      cscSq a / Real.pi *
-        (2 * cotPi (d / 2) + 2 * cotPi (e / 2)) :=
+        (2 * cotPi (d / 2) + 2 * cotPi (e / 2) - cotPi (a - e / 2) -
+              cotPi (a - d / 2) + cotPi (a + d / 2) + cotPi (a + e / 2) +
+            2 * cotPi a *
+              (logAbsSinPi (a - e / 2) + logAbsSinPi (a - d / 2) -
+                logAbsSinPi (a + d / 2) - logAbsSinPi (a + e / 2))) ≤
+        cscSq a / Real.pi *
+          (2 * cotPi (d / 2) + 2 * cotPi (e / 2)) :=
       mul_le_mul_of_nonneg_left hinside hfactor
     _ ≤ cscSq a / Real.pi * (4 / Real.pi * (1 / d + 1 / e)) :=
       mul_le_mul_of_nonneg_left hend hfactor
@@ -956,7 +958,7 @@ private lemma integral_cscSq {A B : ℝ} (hA : 0 < A) (hAB : A ≤ B) (hB : B < 
     rw [uIcc_of_le hAB] at hy
     exact hasDerivAt_cscSqAnti (hA.trans_le hy.1) (hy.2.trans_lt hB)
   · have hc : ContinuousOn cscSq (uIcc A B) := by
-    simpa only [uIcc_of_le hAB] using cscSq_continuousOn hA hB
+      simpa only [uIcc_of_le hAB] using cscSq_continuousOn hA hB
     exact hc.intervalIntegrable
 
 end MathlibExt.NumberTheory.PrimeCounting
@@ -999,7 +1001,7 @@ private lemma circleCoord_norm_le_left {ι : Type*} (x : ι → ℝ) (s r : ι) 
   rw [← circleCoord_coe x s r]
   calc
     ‖((circleCoord x s r : ℝ) : AddCircle (1 : ℝ))‖ ≤
-      |circleCoord x s r| := QuotientAddGroup.norm_mk_le_norm
+        |circleCoord x s r| := QuotientAddGroup.norm_mk_le_norm
     _ = circleCoord x s r := abs_of_nonneg (circleCoord_mem x s r).1
 
 end MathlibExt.NumberTheory.PrimeCounting
@@ -1013,14 +1015,14 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 private lemma circleCoord_norm_le_right {ι : Type*} (x : ι → ℝ) (s r : ι) :
   ‖((x r - x s : ℝ) : AddCircle (1 : ℝ))‖ ≤ 1 - circleCoord x s r := by
   have hcoe :
-    (((circleCoord x s r - 1 : ℝ) : AddCircle (1 : ℝ))) =
-      ((x r - x s : ℝ) : AddCircle (1 : ℝ)) := by
+      (((circleCoord x s r - 1 : ℝ) : AddCircle (1 : ℝ))) =
+        ((x r - x s : ℝ) : AddCircle (1 : ℝ)) := by
     rw [AddCircle.coe_sub, circleCoord_coe]
     simp
   rw [← hcoe]
   calc
     ‖((circleCoord x s r - 1 : ℝ) : AddCircle (1 : ℝ))‖ ≤
-      |circleCoord x s r - 1| := QuotientAddGroup.norm_mk_le_norm
+        |circleCoord x s r - 1| := QuotientAddGroup.norm_mk_le_norm
     _ = 1 - circleCoord x s r := by
       rw [abs_of_nonpos]
       · ring
@@ -1053,7 +1055,8 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 private lemma circleCoord_dist_ge {ι : Type*} (x : ι → ℝ) (s r t : ι) :
   ‖((x r - x t : ℝ) : AddCircle (1 : ℝ))‖ ≤
     |circleCoord x s r - circleCoord x s t| := by
-  rwa [← circleCoord_sub_coe x s r t]
+  rw [← circleCoord_sub_coe x s r t]
+  exact QuotientAddGroup.norm_mk_le_norm
 
 end MathlibExt.NumberTheory.PrimeCounting
 
@@ -1067,7 +1070,7 @@ private lemma sin_pi_circleCoord_sq {ι : Type*} (x : ι → ℝ) (s r : ι) :
   Real.sin (Real.pi * (x r - x s)) ^ 2 =
     Real.sin (Real.pi * circleCoord x s r) ^ 2 := by
   have hzero :
-    (((x r - x s - circleCoord x s r : ℝ) : AddCircle (1 : ℝ))) = 0 := by
+      (((x r - x s - circleCoord x s r : ℝ) : AddCircle (1 : ℝ))) = 0 := by
     rw [AddCircle.coe_sub, circleCoord_coe]
     simp
   obtain ⟨n, hn⟩ := (AddCircle.coe_eq_zero_iff (1 : ℝ)).mp hzero
@@ -1096,13 +1099,13 @@ private lemma sin_pi_circleCoord_sub_sq {ι : Type*} (x : ι → ℝ) (s r t : �
   Real.sin (Real.pi * (x r - x t)) ^ 2 =
     Real.sin (Real.pi * (circleCoord x s r - circleCoord x s t)) ^ 2 := by
   have hzero :
-    (((x r - x t - (circleCoord x s r - circleCoord x s t) : ℝ) :
-      AddCircle (1 : ℝ))) = 0 := by
+      (((x r - x t - (circleCoord x s r - circleCoord x s t) : ℝ) :
+          AddCircle (1 : ℝ))) = 0 := by
     rw [AddCircle.coe_sub, circleCoord_sub_coe]
     simp
   obtain ⟨n, hn⟩ := (AddCircle.coe_eq_zero_iff (1 : ℝ)).mp hzero
   have hn' : (n : ℝ) =
-    x r - x t - (circleCoord x s r - circleCoord x s t) := by
+      x r - x t - (circleCoord x s r - circleCoord x s t) := by
     simpa using hn
   rw [show Real.pi * (x r - x t) =
     Real.pi * (circleCoord x s r - circleCoord x s t) + (n : ℝ) * Real.pi by
@@ -1147,11 +1150,11 @@ private lemma integral_cscSq_symmetric_le {d : ℝ} (hd : 0 < d) (hdhalf : d ≤
     rw [div_le_div_iff₀ hsin hz]
     simpa only [one_mul, mul_comm] using (le_div_iff₀ hcos).mp htan
   change -(-Real.cos z) / (Real.pi * Real.sin z) -
-    (-Real.cos z / (Real.pi * Real.sin z)) ≤ _
+      (-Real.cos z / (Real.pi * Real.sin z)) ≤ _
   calc
     -(-Real.cos z) / (Real.pi * Real.sin z) -
-      (-Real.cos z / (Real.pi * Real.sin z)) =
-      2 / Real.pi * (Real.cos z / Real.sin z) := by
+        (-Real.cos z / (Real.pi * Real.sin z)) =
+        2 / Real.pi * (Real.cos z / Real.sin z) := by
       field_simp [Real.pi_ne_zero, hsin.ne']
       ring
     _ ≤ 2 / Real.pi * (1 / z) := by
@@ -1181,7 +1184,7 @@ private lemma circle_cscSq_sum_le {ι : Type*} [Fintype ι] [DecidableEq ι]
     have hrs : r ≠ s := (Finset.mem_erase.mp hr).1
     have hssep := hsep s r (Ne.symm hrs)
     have hhalf :
-      ‖((x s - x r : ℝ) : AddCircle (1 : ℝ))‖ ≤ 1 / 2 := by
+        ‖((x s - x r : ℝ) : AddCircle (1 : ℝ))‖ ≤ 1 / 2 := by
       simpa only [abs_one, one_div] using
         (AddCircle.norm_le_half_period (1 : ℝ)
           (x := ((x s - x r : ℝ) : AddCircle (1 : ℝ))) (by norm_num))
@@ -1193,11 +1196,11 @@ private lemma circle_cscSq_sum_le {ι : Type*} [Fintype ι] [DecidableEq ι]
     have hBlt : 1 - δ s / 2 < 1 := by linarith
     have hAB : δ s / 2 ≤ 1 - δ s / 2 := by linarith
     have hleft (a : {r : ι // r ≠ s}) :
-      δ s / 2 ≤ c a - w a / 2 := by
+        δ s / 2 ≤ c a - w a / 2 := by
       have har := hsep a s a.property
       have hsa0 := hsep s a (Ne.symm a.property)
       have hsa : δ s ≤
-        ‖((x a - x s : ℝ) : AddCircle (1 : ℝ))‖ := by
+          ‖((x a - x s : ℝ) : AddCircle (1 : ℝ))‖ := by
         simpa only [AddCircle.coe_sub] using hsa0.trans_eq
           (norm_sub_rev ((x s : ℝ) : AddCircle (1 : ℝ))
             ((x a : ℝ) : AddCircle (1 : ℝ)))
@@ -1205,11 +1208,11 @@ private lemma circle_cscSq_sum_le {ι : Type*} [Fintype ι] [DecidableEq ι]
       dsimp only [c, w]
       linarith
     have hright (a : {r : ι // r ≠ s}) :
-      c a + w a / 2 ≤ 1 - δ s / 2 := by
+        c a + w a / 2 ≤ 1 - δ s / 2 := by
       have har := hsep a s a.property
       have hsa0 := hsep s a (Ne.symm a.property)
       have hsa : δ s ≤
-        ‖((x a - x s : ℝ) : AddCircle (1 : ℝ))‖ := by
+          ‖((x a - x s : ℝ) : AddCircle (1 : ℝ))‖ := by
         simpa only [AddCircle.coe_sub] using hsa0.trans_eq
           (norm_sub_rev ((x s : ℝ) : AddCircle (1 : ℝ))
             ((x a : ℝ) : AddCircle (1 : ℝ)))
@@ -1217,14 +1220,14 @@ private lemma circle_cscSq_sum_le {ι : Type*} [Fintype ι] [DecidableEq ι]
       dsimp only [c, w]
       linarith
     have hpsep (a b : {r : ι // r ≠ s}) (hab : a ≠ b) :
-      (w a + w b) / 2 ≤ |c a - c b| := by
+        (w a + w b) / 2 ≤ |c a - c b| := by
       have habv : (a : ι) ≠ b := by
         intro h
         exact hab (Subtype.ext h)
       have hab0 := hsep a b habv
       have hba0 := hsep b a (Ne.symm habv)
       have hba : δ b ≤
-        ‖((x a - x b : ℝ) : AddCircle (1 : ℝ))‖ := by
+          ‖((x a - x b : ℝ) : AddCircle (1 : ℝ))‖ := by
         simpa only [AddCircle.coe_sub] using hba0.trans_eq
           (norm_sub_rev ((x b : ℝ) : AddCircle (1 : ℝ))
             ((x a : ℝ) : AddCircle (1 : ℝ)))
@@ -1240,8 +1243,8 @@ private lemma circle_cscSq_sum_le {ι : Type*} [Fintype ι] [DecidableEq ι]
         simp only [cscSq]
         positivity)
     have hsum :
-      (∑ r ∈ Finset.univ.erase s, δ r * cscSq (circleCoord x s r)) =
-        ∑ a : {r : ι // r ≠ s}, w a * cscSq (c a) := by
+        (∑ r ∈ Finset.univ.erase s, δ r * cscSq (circleCoord x s r)) =
+          ∑ a : {r : ι // r ≠ s}, w a * cscSq (c a) := by
       rw [Finset.sum_subtype (p := fun r => r ≠ s) (Finset.univ.erase s)
         (by intro a; simp)
         (fun r => δ r * cscSq (circleCoord x s r))]
@@ -1303,7 +1306,7 @@ private lemma circle_cscSqProduct_sum_le {ι : Type*} [Fintype ι]
     rw [hre, sub_self, abs_zero] at hc
     linarith [hδ r]
   have houterLeft (r : ι) (hrs : r ≠ s) :
-    δ s / 2 ≤ circleCoord x s r - δ r / 2 := by
+      δ s / 2 ≤ circleCoord x s r - δ r / 2 := by
     have hrs0 := hsep r s hrs
     have hsr0 := hsep s r (Ne.symm hrs)
     have hsr : δ s ≤ ‖((x r - x s : ℝ) : AddCircle (1 : ℝ))‖ := by
@@ -1313,7 +1316,7 @@ private lemma circle_cscSqProduct_sum_le {ι : Type*} [Fintype ι]
     have hc := circleCoord_norm_le_left x s r
     linarith
   have houterRight (r : ι) (hrs : r ≠ s) :
-    circleCoord x s r + δ r / 2 ≤ 1 - δ s / 2 := by
+      circleCoord x s r + δ r / 2 ≤ 1 - δ s / 2 := by
     have hrs0 := hsep r s hrs
     have hsr0 := hsep s r (Ne.symm hrs)
     have hsr : δ s ≤ ‖((x r - x s : ℝ) : AddCircle (1 : ℝ))‖ := by
@@ -1323,7 +1326,7 @@ private lemma circle_cscSqProduct_sum_le {ι : Type*} [Fintype ι]
     have hc := circleCoord_norm_le_right x s r
     linarith
   have htLeft (r : ι) (hrt : r ≠ t) (hrpos : circleCoord x s r < a) :
-    circleCoord x s r + δ r / 2 ≤ a - δ t / 2 := by
+      circleCoord x s r + δ r / 2 ≤ a - δ t / 2 := by
     have hrt0 := hsep r t hrt
     have htr0 := hsep t r (Ne.symm hrt)
     have htr : δ t ≤ ‖((x r - x t : ℝ) : AddCircle (1 : ℝ))‖ := by
@@ -1335,7 +1338,7 @@ private lemma circle_cscSqProduct_sum_le {ι : Type*} [Fintype ι]
     rw [abs_of_nonpos (sub_nonpos.mpr hrpos.le)] at hc
     linarith
   have htRight (r : ι) (hrt : r ≠ t) (hrpos : a < circleCoord x s r) :
-    a + δ t / 2 ≤ circleCoord x s r - δ r / 2 := by
+      a + δ t / 2 ≤ circleCoord x s r - δ r / 2 := by
     have hrt0 := hsep r t hrt
     have htr0 := hsep t r (Ne.symm hrt)
     have htr : δ t ≤ ‖((x r - x t : ℝ) : AddCircle (1 : ℝ))‖ := by
@@ -1347,7 +1350,7 @@ private lemma circle_cscSqProduct_sum_le {ι : Type*} [Fintype ι]
     rw [abs_of_nonneg (sub_nonneg.mpr hrpos.le)] at hc
     linarith
   have hpsep (r u : ι) (hru : r ≠ u) :
-    (δ r + δ u) / 2 ≤ |circleCoord x s r - circleCoord x s u| := by
+      (δ r + δ u) / 2 ≤ |circleCoord x s r - circleCoord x s u| := by
     have hru0 := hsep r u hru
     have hur0 := hsep u r (Ne.symm hru)
     have hur : δ u ≤ ‖((x r - x u : ℝ) : AddCircle (1 : ℝ))‖ := by
@@ -1359,21 +1362,21 @@ private lemma circle_cscSqProduct_sum_le {ι : Type*} [Fintype ι]
   have hAB₁ : δ s / 2 ≤ a - δ t / 2 := by linarith
   have hAB₂ : a + δ t / 2 ≤ 1 - δ s / 2 := by linarith
   have hy₁ (y : ℝ) (hy : y ∈ Icc (δ s / 2) (a - δ t / 2)) :
-    Real.sin (Real.pi * y) ≠ 0 := by
+      Real.sin (Real.pi * y) ≠ 0 := by
     exact (sin_pi_mul_pos (by linarith [hy.1, hds])
       (by linarith [hy.2, hdt, ha1])).ne'
   have hya₁ (y : ℝ) (hy : y ∈ Icc (δ s / 2) (a - δ t / 2)) :
-    Real.sin (Real.pi * (y - a)) ≠ 0 := by
+      Real.sin (Real.pi * (y - a)) ≠ 0 := by
     have hsine := sin_pi_mul_pos (by linarith [hy.2, hdt] : 0 < a - y)
       (by linarith [hy.1, hds, ha1] : a - y < 1)
     rw [show Real.pi * (y - a) = -(Real.pi * (a - y)) by ring, Real.sin_neg]
     exact neg_ne_zero.mpr hsine.ne'
   have hy₂ (y : ℝ) (hy : y ∈ Icc (a + δ t / 2) (1 - δ s / 2)) :
-    Real.sin (Real.pi * y) ≠ 0 := by
+      Real.sin (Real.pi * y) ≠ 0 := by
     exact (sin_pi_mul_pos (by linarith [hy.1, hdt, ha0])
       (by linarith [hy.2, hds])).ne'
   have hya₂ (y : ℝ) (hy : y ∈ Icc (a + δ t / 2) (1 - δ s / 2)) :
-    Real.sin (Real.pi * (y - a)) ≠ 0 := by
+      Real.sin (Real.pi * (y - a)) ≠ 0 := by
     exact (sin_pi_mul_pos (by linarith [hy.1, hdt])
       (by linarith [hy.2, hds, ha0])).ne'
   let PL : ι → Prop := fun r => r ∈ U ∧ circleCoord x s r < a
@@ -1417,16 +1420,16 @@ private lemma circle_cscSqProduct_sum_le {ι : Type*} [Fintype ι]
     (cscSqProduct_continuousOn hy₂ hya₂)
     (by intro y hy; simp only [cscSqProduct, cscSq]; positivity)
   have hsumL :
-    (∑ r ∈ U.filter fun r => circleCoord x s r < a,
-      δ r * cscSqProduct a (circleCoord x s r)) =
-      ∑ r : Subtype PL, wL r * cscSqProduct a (cL r) := by
+      (∑ r ∈ U.filter fun r => circleCoord x s r < a,
+          δ r * cscSqProduct a (circleCoord x s r)) =
+        ∑ r : Subtype PL, wL r * cscSqProduct a (cL r) := by
     rw [Finset.sum_subtype (p := PL) (U.filter fun r => circleCoord x s r < a)
       (by intro r; simp [PL])
       (fun r => δ r * cscSqProduct a (circleCoord x s r))]
   have hsumR :
-    (∑ r ∈ U.filter fun r => ¬circleCoord x s r < a,
-      δ r * cscSqProduct a (circleCoord x s r)) =
-      ∑ r : Subtype PR, wR r * cscSqProduct a (cR r) := by
+      (∑ r ∈ U.filter fun r => ¬circleCoord x s r < a,
+          δ r * cscSqProduct a (circleCoord x s r)) =
+        ∑ r : Subtype PR, wR r * cscSqProduct a (cR r) := by
     rw [Finset.sum_subtype (p := PR) (U.filter fun r => ¬circleCoord x s r < a)
       (by intro r; simp [PR])
       (fun r => δ r * cscSqProduct a (circleCoord x s r))]
@@ -1435,14 +1438,15 @@ private lemma circle_cscSqProduct_sum_le {ι : Type*} [Fintype ι]
     (fun r => circleCoord x s r < a), hsumL, hsumR]
   calc
     (∑ r : Subtype PL, wL r * cscSqProduct a (cL r)) +
-      ∑ r : Subtype PR, wR r * cscSqProduct a (cR r) ≤
+        ∑ r : Subtype PR, wR r * cscSqProduct a (cR r) ≤
       (∫ y in δ s / 2..a - δ t / 2, cscSqProduct a y) +
         ∫ y in a + δ t / 2..1 - δ s / 2, cscSqProduct a y :=
       add_le_add hpackL hpackR
     _ ≤ 4 / Real.pi ^ 2 * (1 / δ s + 1 / δ t) * cscSq a :=
       integral_cscSqProduct_two_arcs_le (hδ s) (hδ t) haLeft haRight
     _ = 4 / Real.pi ^ 2 * (1 / δ s + 1 / δ t) *
-      cscSq (circleCoord x s t) := by rfl
+        cscSq (circleCoord x s t) := by rfl
+
 open scoped ComplexConjugate Matrix.Norms.L2Operator
 open Matrix
 
@@ -1461,7 +1465,7 @@ private lemma weightedMatrix_isHermitian {ι : Type*} (δ : ι → ℝ)
   apply Matrix.IsHermitian.ext
   intro r s
   change (starRingEnd ℂ)
-    (Complex.I * Real.sqrt (δ s) * Real.sqrt (δ r) * K s r) = _
+      (Complex.I * Real.sqrt (δ s) * Real.sqrt (δ r) * K s r) = _
   rw [hK r s]
   simp only [map_neg, map_mul, Complex.conj_I, Complex.conj_ofReal,
     Complex.ofReal_neg]
@@ -1485,7 +1489,7 @@ private lemma hermitian_norm_le_of_eigenvalues_le {ι : Type*} [Fintype ι]
   have hUD : ‖(U : Matrix ι ι ℂ) * D * star (U : Matrix ι ι ℂ)‖ ≤ ‖D‖ := by
     calc
       ‖(U : Matrix ι ι ℂ) * D * star (U : Matrix ι ι ℂ)‖ ≤
-        ‖(U : Matrix ι ι ℂ) * D‖ * ‖star (U : Matrix ι ι ℂ)‖ :=
+          ‖(U : Matrix ι ι ℂ) * D‖ * ‖star (U : Matrix ι ι ℂ)‖ :=
         Matrix.l2_opNorm_mul _ _
       _ ≤ (‖(U : Matrix ι ι ℂ)‖ * ‖D‖) * ‖star (U : Matrix ι ι ℂ)‖ := by
         gcongr
@@ -1526,8 +1530,8 @@ private lemma bilinear_le_of_weightedMatrix_norm {ι : Type*} [Fintype ι]
     rw [RCLike.norm_conj, abs_of_nonneg (Real.sqrt_nonneg _),
       Real.sq_sqrt (hδ r).le]
   have hinner :
-    inner ℂ w (Matrix.toEuclideanCLM (𝕜 := ℂ) (weightedMatrix δ K) w) =
-      Complex.I * ∑ r, ∑ s, z r * conj (z s) * K r s := by
+      inner ℂ w (Matrix.toEuclideanCLM (𝕜 := ℂ) (weightedMatrix δ K) w) =
+        Complex.I * ∑ r, ∑ s, z r * conj (z s) * K r s := by
     rw [PiLp.inner_apply]
     simp only [Matrix.ofLp_toEuclideanCLM]
     rw [Finset.mul_sum]
@@ -1548,13 +1552,13 @@ private lemma bilinear_le_of_weightedMatrix_norm {ι : Type*} [Fintype ι]
   rw [← hw_sq]
   calc
     ‖∑ r, ∑ s, z r * conj (z s) * K r s‖ =
-      ‖inner ℂ w (Matrix.toEuclideanCLM (𝕜 := ℂ) (weightedMatrix δ K) w)‖ := by
+        ‖inner ℂ w (Matrix.toEuclideanCLM (𝕜 := ℂ) (weightedMatrix δ K) w)‖ := by
       rw [hinner]
       simp
     _ ≤ ‖w‖ * ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (weightedMatrix δ K) w‖ :=
       norm_inner_le_norm _ _
     _ ≤ ‖w‖ *
-      (‖Matrix.toEuclideanCLM (𝕜 := ℂ) (weightedMatrix δ K)‖ * ‖w‖) := by
+        (‖Matrix.toEuclideanCLM (𝕜 := ℂ) (weightedMatrix δ K)‖ * ‖w‖) := by
       gcongr
       exact ContinuousLinearMap.le_opNorm _ _
     _ = ‖weightedMatrix δ K‖ * ‖w‖ ^ 2 := by
@@ -1605,15 +1609,15 @@ private lemma weightedKernel_main_terms_cancel {ι : Type*} [Fintype ι]
     ∑ r, ∑ s, ∑ t,
       (δ r * K s t * L r t : ℝ) * u s * conj (u t) := by
   have heigConj (s : ι) :
-    ∑ t, (K s t : ℂ) * conj (u t) =
-      Complex.I * μ * conj (u s) / δ s := by
+      ∑ t, (K s t : ℂ) * conj (u t) =
+        Complex.I * μ * conj (u s) / δ s := by
     have h := congrArg (starRingEnd ℂ) (heig s)
     simp only [map_sum, map_mul, Complex.conj_ofReal, map_div₀, map_neg,
       Complex.conj_I] at h
     convert h using 1
     all_goals ring
   have heigReverse (t : ι) :
-    ∑ s, (K s t : ℂ) * u s = Complex.I * μ * u t / δ t := by
+      ∑ s, (K s t : ℂ) * u s = Complex.I * μ * u t / δ t := by
     calc
       ∑ s, (K s t : ℂ) * u s = -∑ s, (K t s : ℂ) * u s := by
         rw [← Finset.sum_neg_distrib]
@@ -1625,9 +1629,9 @@ private lemma weightedKernel_main_terms_cancel {ι : Type*} [Fintype ι]
       _ = Complex.I * μ * u t / δ t := by rw [heig]; ring
   calc
     (∑ r, ∑ s, ∑ t,
-      (δ r * K s t * L r s : ℝ) * u s * conj (u t)) =
-      ∑ r, ∑ s, (δ r * L r s : ℂ) * u s *
-        (Complex.I * μ * conj (u s) / δ s) := by
+        (δ r * K s t * L r s : ℝ) * u s * conj (u t)) =
+        ∑ r, ∑ s, (δ r * L r s : ℂ) * u s *
+          (Complex.I * μ * conj (u s) / δ s) := by
       apply Finset.sum_congr rfl
       intro r _
       apply Finset.sum_congr rfl
@@ -1638,14 +1642,14 @@ private lemma weightedKernel_main_terms_cancel {ι : Type*} [Fintype ι]
       push_cast
       ring
     _ = ∑ r, ∑ t, (δ r * L r t : ℂ) *
-      (Complex.I * μ * u t / δ t) * conj (u t) := by
+          (Complex.I * μ * u t / δ t) * conj (u t) := by
       apply Finset.sum_congr rfl
       intro r _
       apply Finset.sum_congr rfl
       intro s _
       ring
     _ = ∑ r, ∑ t, ∑ s,
-      (δ r * K s t * L r t : ℝ) * u s * conj (u t) := by
+        (δ r * K s t * L r t : ℝ) * u s * conj (u t) := by
       apply Finset.sum_congr rfl
       intro r _
       apply Finset.sum_congr rfl
@@ -1656,7 +1660,7 @@ private lemma weightedKernel_main_terms_cancel {ι : Type*} [Fintype ι]
       push_cast
       ring
     _ = ∑ r, ∑ s, ∑ t,
-      (δ r * K s t * L r t : ℝ) * u s * conj (u t) := by
+        (δ r * K s t * L r t : ℝ) * u s * conj (u t) := by
       apply Finset.sum_congr rfl
       intro r _
       rw [Finset.sum_comm]
@@ -1686,11 +1690,11 @@ private lemma weightedKernel_triple_reduce {ι : Type*} [Fintype ι]
         ((δ s + δ t) * K s t * L s t : ℝ) * u s * conj (u t) := by
   have hcancel := weightedKernel_main_terms_cancel δ K L u μ hK heig
   have hmain :
-    (∑ r, ∑ s, ∑ t,
-      (δ r * (K s t * (L r s - L r t)) : ℝ) * u s * conj (u t)) = 0 := by
+      (∑ r, ∑ s, ∑ t,
+          (δ r * (K s t * (L r s - L r t)) : ℝ) * u s * conj (u t)) = 0 := by
     rw [show (0 : ℂ) =
       (∑ r, ∑ s, ∑ t,
-        (δ r * K s t * L r s : ℝ) * u s * conj (u t)) -
+          (δ r * K s t * L r s : ℝ) * u s * conj (u t)) -
         ∑ r, ∑ s, ∑ t,
           (δ r * K s t * L r t : ℝ) * u s * conj (u t) by rw [hcancel, sub_self]]
     simp_rw [← Finset.sum_sub_distrib]
@@ -1703,22 +1707,22 @@ private lemma weightedKernel_triple_reduce {ι : Type*} [Fintype ι]
     push_cast
     ring
   have hpoint (r s t : ι) :
-    (δ r * (K r s * K r t) : ℝ) * u s * conj (u t) =
-      (δ r * (K s t * (L r s - L r t)) : ℝ) * u s * conj (u t) +
-      (if r = s then (δ r * K s t * L s t : ℝ) * u s * conj (u t) else 0) +
-      (if r = t then (δ r * K s t * L s t : ℝ) * u s * conj (u t) else 0) +
-      (if s = t then (δ r * K r s ^ 2 : ℝ) * u s * conj (u t) else 0) := by
+      (δ r * (K r s * K r t) : ℝ) * u s * conj (u t) =
+        (δ r * (K s t * (L r s - L r t)) : ℝ) * u s * conj (u t) +
+        (if r = s then (δ r * K s t * L s t : ℝ) * u s * conj (u t) else 0) +
+        (if r = t then (δ r * K s t * L s t : ℝ) * u s * conj (u t) else 0) +
+        (if s = t then (δ r * K r s ^ 2 : ℝ) * u s * conj (u t) else 0) := by
     rw [hKL]
     split_ifs <;> push_cast <;> ring
   have hswap :
-    (∑ r, ∑ s,
-      (δ r : ℂ) * K s r * L s r * u s * conj (u r)) =
-      ∑ s, ∑ t,
-        (δ t : ℂ) * K s t * L s t * u s * conj (u t) := by
+      (∑ r, ∑ s,
+          (δ r : ℂ) * K s r * L s r * u s * conj (u r)) =
+        ∑ s, ∑ t,
+          (δ t : ℂ) * K s t * L s t * u s * conj (u t) := by
     rw [Finset.sum_comm]
   have hdiag :
-    (∑ r, ∑ s, (δ r : ℂ) * (K r s : ℂ) ^ 2 * u s * conj (u s)) =
-      ∑ s, ∑ r, (δ r : ℂ) * (K r s : ℂ) ^ 2 * (‖u s‖ : ℂ) ^ 2 := by
+      (∑ r, ∑ s, (δ r : ℂ) * (K r s : ℂ) ^ 2 * u s * conj (u s)) =
+        ∑ s, ∑ r, (δ r : ℂ) * (K r s : ℂ) ^ 2 * (‖u s‖ : ℂ) ^ 2 := by
     rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
     intro s _
@@ -1727,9 +1731,9 @@ private lemma weightedKernel_triple_reduce {ι : Type*} [Fintype ι]
     rw [← Complex.mul_conj']
     ring
   have hcorr :
-    (∑ s, ∑ t, ((δ s : ℂ) + δ t) * K s t * L s t * u s * conj (u t)) =
-      (∑ s, ∑ t, (δ s : ℂ) * K s t * L s t * u s * conj (u t)) +
-        ∑ s, ∑ t, (δ t : ℂ) * K s t * L s t * u s * conj (u t) := by
+      (∑ s, ∑ t, ((δ s : ℂ) + δ t) * K s t * L s t * u s * conj (u t)) =
+        (∑ s, ∑ t, (δ s : ℂ) * K s t * L s t * u s * conj (u t)) +
+          ∑ s, ∑ t, (δ t : ℂ) * K s t * L s t * u s * conj (u t) := by
     simp_rw [add_mul, Finset.sum_add_distrib]
   simp_rw [hpoint, Finset.sum_add_distrib, hmain, zero_add]
   simp only [Complex.ofReal_mul, Finset.sum_ite_irrel, Finset.sum_const_zero,
@@ -1767,7 +1771,7 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
   μ ^ 2 ≤ 9 / 4 := by
   have hδne : ∀ r, δ r ≠ 0 := fun r ↦ (hδ r).ne'
   have hμ : μ ^ 2 =
-    ∑ r, δ r * ‖∑ s, (K r s : ℂ) * u s‖ ^ 2 := by
+      ∑ r, δ r * ‖∑ s, (K r s : ℂ) * u s‖ ^ 2 := by
     calc
       μ ^ 2 = μ ^ 2 * (∑ r, ‖u r‖ ^ 2 / δ r) := by rw [hnorm, mul_one]
       _ = ∑ r, δ r * ‖-Complex.I * μ * u r / δ r‖ ^ 2 := by
@@ -1793,13 +1797,13 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
     have hc : ((μ ^ 2 : ℝ) : ℂ) = (T₁ : ℂ) + T₂ := by
       calc
         ((μ ^ 2 : ℝ) : ℂ) =
-          ((∑ r, δ r * ‖∑ s, (K r s : ℂ) * u s‖ ^ 2 : ℝ) : ℂ) := by
+            ((∑ r, δ r * ‖∑ s, (K r s : ℂ) * u s‖ ^ 2 : ℝ) : ℂ) := by
           rw [hμ]
         _ = ∑ r, ∑ t, ∑ s,
-          (δ r * (K r s * K r t) : ℝ) * u s * conj (u t) :=
+            (δ r * (K r s * K r t) : ℝ) * u s * conj (u t) :=
           weightedKernel_norm_sum_expand δ K u
         _ = ∑ r, ∑ s, ∑ t,
-          (δ r * (K r s * K r t) : ℝ) * u s * conj (u t) := by
+            (δ r * (K r s * K r t) : ℝ) * u s * conj (u t) := by
           apply Finset.sum_congr rfl
           intro r _
           rw [Finset.sum_comm]
@@ -1824,7 +1828,7 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
       _ = 811 / 2000 := by
         calc
           (∑ s, ‖u s‖ ^ 2 * ((811 / 2000 : ℝ) / δ s)) =
-            (811 / 2000 : ℝ) * ∑ s, ‖u s‖ ^ 2 / δ s := by
+              (811 / 2000 : ℝ) * ∑ s, ‖u s‖ ^ 2 / δ s := by
             rw [Finset.mul_sum]
             apply Finset.sum_congr rfl
             intro s _
@@ -1834,7 +1838,7 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
     calc
       T₂.re ≤ ‖T₂‖ := Complex.re_le_norm _
       _ ≤ ∑ s, ∑ t, ‖((δ s + δ t) * K s t * L s t : ℝ) *
-        u s * conj (u t)‖ := by
+          u s * conj (u t)‖ := by
         simp only [T₂]
         exact (norm_sum_le _ _).trans (Finset.sum_le_sum fun s _ ↦ norm_sum_le _ _)
       _ ≤ T₆ := by
@@ -1857,7 +1861,7 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
   have hT₆P : T₆ = 2 * P := by
     calc
       T₆ = (∑ s, ∑ t, δ s * K s t ^ 2 * ‖u s‖ * ‖u t‖) +
-        ∑ s, ∑ t, δ t * K s t ^ 2 * ‖u s‖ * ‖u t‖ := by
+          ∑ s, ∑ t, δ t * K s t ^ 2 * ‖u s‖ * ‖u t‖ := by
         simp only [T₆]
         rw [show (∑ s, ∑ t, (δ s + δ t) * K s t ^ 2 * ‖u s‖ * ‖u t‖) =
           ∑ s, ∑ t, (δ s * K s t ^ 2 * ‖u s‖ * ‖u t‖ +
@@ -1873,7 +1877,7 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
           ∑ s, ∑ t, δ s * K s t ^ 2 * ‖u s‖ * ‖u t‖ by
             calc
               (∑ s, ∑ t, δ t * K s t ^ 2 * ‖u s‖ * ‖u t‖) =
-                ∑ s, ∑ t, δ s * K t s ^ 2 * ‖u t‖ * ‖u s‖ := by
+                  ∑ s, ∑ t, δ s * K t s ^ 2 * ‖u t‖ * ‖u s‖ := by
                 rw [Finset.sum_comm]
               _ = ∑ s, ∑ t, δ s * K s t ^ 2 * ‖u s‖ * ‖u t‖ := by
                 apply Finset.sum_congr rfl
@@ -1899,13 +1903,13 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
     intro t _
     rw [div_pow, Real.sq_sqrt (hδ t).le]
   have hG :
-    ∑ t, (Real.sqrt (δ t) * ∑ s, δ s * ‖u s‖ * K s t ^ 2) ^ 2 = Q := by
+      ∑ t, (Real.sqrt (δ t) * ∑ s, δ s * ‖u s‖ * K s t ^ 2) ^ 2 = Q := by
     simp only [Q]
     apply Finset.sum_congr rfl
     intro t _
     rw [mul_pow, Real.sq_sqrt (hδ t).le]
   have hPfg : P = ∑ t, (‖u t‖ / Real.sqrt (δ t)) *
-    (Real.sqrt (δ t) * ∑ s, δ s * ‖u s‖ * K s t ^ 2) := by
+      (Real.sqrt (δ t) * ∑ s, δ s * ‖u s‖ * K s t ^ 2) := by
     simp only [P]
     apply Finset.sum_congr rfl
     intro t _
@@ -1915,21 +1919,21 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
     rw [hPfg]
     calc
       (∑ t, (‖u t‖ / Real.sqrt (δ t)) *
-        (Real.sqrt (δ t) * ∑ s, δ s * ‖u s‖ * K s t ^ 2)) ^ 2 ≤
-        (∑ t, (‖u t‖ / Real.sqrt (δ t)) ^ 2) *
-          ∑ t, (Real.sqrt (δ t) * ∑ s, δ s * ‖u s‖ * K s t ^ 2) ^ 2 :=
+          (Real.sqrt (δ t) * ∑ s, δ s * ‖u s‖ * K s t ^ 2)) ^ 2 ≤
+          (∑ t, (‖u t‖ / Real.sqrt (δ t)) ^ 2) *
+            ∑ t, (Real.sqrt (δ t) * ∑ s, δ s * ‖u s‖ * K s t ^ 2) ^ 2 :=
         Finset.sum_mul_sq_le_sq_mul_sq Finset.univ _ _
       _ = Q := by rw [hF, hG, one_mul]
   have hKdiag (s : ι) : K s s = 0 := by
     have hs := hK s s
     linarith
   have hQexpand : Q = ∑ s, ∑ l,
-    δ s * δ l * ‖u s‖ * ‖u l‖ *
-      ∑ t, δ t * K s t ^ 2 * K l t ^ 2 := by
+      δ s * δ l * ‖u s‖ * ‖u l‖ *
+        ∑ t, δ t * K s t ^ 2 * K l t ^ 2 := by
     calc
       Q = ∑ t, ∑ s, ∑ l,
-        δ t * (δ s * ‖u s‖ * K s t ^ 2) *
-          (δ l * ‖u l‖ * K l t ^ 2) := by
+          δ t * (δ s * ‖u s‖ * K s t ^ 2) *
+            (δ l * ‖u l‖ * K l t ^ 2) := by
         simp only [Q]
         apply Finset.sum_congr rfl
         intro t _
@@ -1943,15 +1947,15 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
         intro l _
         ring
       _ = ∑ s, ∑ l, ∑ t,
-        δ t * (δ s * ‖u s‖ * K s t ^ 2) *
-          (δ l * ‖u l‖ * K l t ^ 2) := by
+          δ t * (δ s * ‖u s‖ * K s t ^ 2) *
+            (δ l * ‖u l‖ * K l t ^ 2) := by
         rw [Finset.sum_comm]
         apply Finset.sum_congr rfl
         intro s _
         rw [Finset.sum_comm]
       _ = ∑ s, ∑ l,
-        δ s * δ l * ‖u s‖ * ‖u l‖ *
-          ∑ t, δ t * K s t ^ 2 * K l t ^ 2 := by
+          δ s * δ l * ‖u s‖ * ‖u l‖ *
+            ∑ t, δ t * K s t ^ 2 * K l t ^ 2 := by
         apply Finset.sum_congr rfl
         intro s _
         apply Finset.sum_congr rfl
@@ -1961,9 +1965,9 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
         intro t _
         ring
   have hInner (s l : ι) :
-    (∑ t, δ t * K s t ^ 2 * K l t ^ 2) ≤
-      (if s = l then (203 / 2000 : ℝ) / δ s ^ 3 else 0) +
-        (811 / 2000 : ℝ) * (1 / δ s + 1 / δ l) * K s l ^ 2 := by
+      (∑ t, δ t * K s t ^ 2 * K l t ^ 2) ≤
+        (if s = l then (203 / 2000 : ℝ) / δ s ^ 3 else 0) +
+          (811 / 2000 : ℝ) * (1 / δ s + 1 / δ l) * K s l ^ 2 := by
     by_cases hsl : s = l
     · subst l
       simp only [ite_true, hKdiag, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true,
@@ -1983,9 +1987,9 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
           rw [hKsq s t, hKsq l t]]
       exact hC s l hsl
   have hQraw : Q ≤ ∑ s, ∑ l,
-    δ s * δ l * ‖u s‖ * ‖u l‖ *
-      ((if s = l then (203 / 2000 : ℝ) / δ s ^ 3 else 0) +
-        (811 / 2000 : ℝ) * (1 / δ s + 1 / δ l) * K s l ^ 2) := by
+      δ s * δ l * ‖u s‖ * ‖u l‖ *
+        ((if s = l then (203 / 2000 : ℝ) / δ s ^ 3 else 0) +
+          (811 / 2000 : ℝ) * (1 / δ s + 1 / δ l) * K s l ^ 2) := by
     rw [hQexpand]
     apply Finset.sum_le_sum
     intro s _
@@ -2003,7 +2007,7 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
   have hD : D = 203 / 2000 := by
     calc
       D = ∑ s, δ s * δ s * ‖u s‖ * ‖u s‖ *
-        ((203 / 2000 : ℝ) / δ s ^ 3) := by
+          ((203 / 2000 : ℝ) / δ s ^ 3) := by
         simp only [D, mul_ite, mul_zero]
         simp
       _ = (203 / 2000 : ℝ) * ∑ s, ‖u s‖ ^ 2 / δ s := by
@@ -2015,7 +2019,7 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
   have hE : E = (811 / 2000 : ℝ) * T₆ := by
     calc
       E = ∑ s, ∑ l, (811 / 2000 : ℝ) *
-        ((δ s + δ l) * K s l ^ 2 * ‖u s‖ * ‖u l‖) := by
+          ((δ s + δ l) * K s l ^ 2 * ‖u s‖ * ‖u l‖) := by
         simp only [E]
         apply Finset.sum_congr rfl
         intro s _
@@ -2032,9 +2036,9 @@ private lemma weightedKernel_eigenvalue_sq_le {ι : Type*} [Fintype ι]
   have hQ : Q ≤ 203 / 2000 + (811 / 2000 : ℝ) * T₆ := by
     calc
       Q ≤ ∑ s, ∑ l,
-        δ s * δ l * ‖u s‖ * ‖u l‖ *
-          ((if s = l then (203 / 2000 : ℝ) / δ s ^ 3 else 0) +
-            (811 / 2000 : ℝ) * (1 / δ s + 1 / δ l) * K s l ^ 2) := hQraw
+          δ s * δ l * ‖u s‖ * ‖u l‖ *
+            ((if s = l then (203 / 2000 : ℝ) / δ s ^ 3 else 0) +
+              (811 / 2000 : ℝ) * (1 / δ s + 1 / δ l) * K s l ^ 2) := hQraw
       _ = D + E := by
         simp only [D, E]
         simp_rw [mul_add, Finset.sum_add_distrib]
@@ -2096,7 +2100,7 @@ private lemma weightedMatrix_norm_le_three_halves {ι : Type*} [Fintype ι]
         rw [hHerm.eigenvectorBasis.orthonormal.norm_eq_one i]
         norm_num
   have heig : ∀ r, ∑ s, (K r s : ℂ) * u s =
-    -Complex.I * hHerm.eigenvalues i * u r / δ r := by
+      -Complex.I * hHerm.eigenvalues i * u r / δ r := by
     intro r
     have he := congrFun (hHerm.mulVec_eigenvectorBasis i) r
     simp only [Matrix.mulVec, weightedMatrix, dotProduct, Pi.smul_apply] at he
@@ -2106,30 +2110,30 @@ private lemma weightedMatrix_norm_le_three_halves {ι : Type*} [Fintype ι]
     have hr : (Real.sqrt (δ r) : ℂ) ≠ 0 := by
       exact_mod_cast (Real.sqrt_pos.2 (hδ r)).ne'
     have he' : Complex.I * Real.sqrt (δ r) *
-      (∑ s, (K r s : ℂ) * (Real.sqrt (δ s) * v.ofLp s)) =
-      (hHerm.eigenvalues i : ℂ) * v.ofLp r := by
+        (∑ s, (K r s : ℂ) * (Real.sqrt (δ s) * v.ofLp s)) =
+        (hHerm.eigenvalues i : ℂ) * v.ofLp r := by
       rw [Finset.mul_sum]
       calc
         (∑ s, Complex.I * Real.sqrt (δ r) *
-          ((K r s : ℂ) * (Real.sqrt (δ s) * v.ofLp s))) =
-          ∑ s, Complex.I * Real.sqrt (δ r) * Real.sqrt (δ s) *
-            K r s * v.ofLp s := by
+            ((K r s : ℂ) * (Real.sqrt (δ s) * v.ofLp s))) =
+            ∑ s, Complex.I * Real.sqrt (δ r) * Real.sqrt (δ s) *
+              K r s * v.ofLp s := by
           apply Finset.sum_congr rfl
           intro s _
           ring
         _ = (hHerm.eigenvalues i : ℂ) * v.ofLp r := he
     calc
       (∑ s, (K r s : ℂ) * (Real.sqrt (δ s) * v.ofLp s)) =
-        (-Complex.I / Real.sqrt (δ r)) *
-          (Complex.I * Real.sqrt (δ r) *
-            ∑ s, (K r s : ℂ) * (Real.sqrt (δ s) * v.ofLp s)) := by
+          (-Complex.I / Real.sqrt (δ r)) *
+            (Complex.I * Real.sqrt (δ r) *
+              ∑ s, (K r s : ℂ) * (Real.sqrt (δ s) * v.ofLp s)) := by
         field_simp [hr]
         rw [Complex.I_sq]
         ring
       _ = (-Complex.I / Real.sqrt (δ r)) *
-        ((hHerm.eigenvalues i : ℂ) * v.ofLp r) := by rw [he']
+          ((hHerm.eigenvalues i : ℂ) * v.ofLp r) := by rw [he']
       _ = -Complex.I * hHerm.eigenvalues i *
-        (Real.sqrt (δ r) * v.ofLp r) / δ r := by
+          (Real.sqrt (δ r) * v.ofLp r) / δ r := by
         rw [show ((δ r : ℝ) : ℂ) = (Real.sqrt (δ r) : ℂ) ^ 2 by
           exact_mod_cast (Real.sq_sqrt (hδ r).le).symm]
         field_simp [hr]
@@ -2309,7 +2313,8 @@ private lemma two_circle_norm_le_abs_sin_pi (d : ℝ) :
     rw [show Real.pi * d = Real.pi * y + (n : ℝ) * Real.pi by
       rw [hn']; ring, Real.sin_add_int_mul_pi]
     simp
-  rwa [hynorm, hsin]
+  rw [hynorm, hsin]
+  exact hySin
 
 end MathlibExt.NumberTheory.PrimeCounting
 
@@ -2362,14 +2367,14 @@ private lemma cosecantKernel_sq_sum_le {ι : Type*} [Fintype ι]
   ∑ r, δ r * cosecantKernel x r s ^ 2 ≤
     (811 / 2000 : ℝ) / δ s := by
   have hsumErase :
-    (∑ r, δ r * cosecantKernel x r s ^ 2) =
-      ∑ r ∈ Finset.univ.erase s, δ r * cosecantKernel x r s ^ 2 := by
+      (∑ r, δ r * cosecantKernel x r s ^ 2) =
+        ∑ r ∈ Finset.univ.erase s, δ r * cosecantKernel x r s ^ 2 := by
     rw [← Finset.sum_erase_add _ _ (Finset.mem_univ s)]
     simp [cosecantKernel]
   rw [hsumErase]
   calc
     (∑ r ∈ Finset.univ.erase s, δ r * cosecantKernel x r s ^ 2) =
-      ∑ r ∈ Finset.univ.erase s, δ r * cscSq (circleCoord x s r) := by
+        ∑ r ∈ Finset.univ.erase s, δ r * cscSq (circleCoord x s r) := by
       apply Finset.sum_congr rfl
       intro r hr
       have hrs : r ≠ s := (Finset.mem_erase.mp hr).1
@@ -2404,7 +2409,7 @@ private lemma cosecantKernel_fourth_sum_le {ι : Type*} [Fintype ι]
     (203 / 2000 : ℝ) / δ s ^ 3 := by
   calc
     (∑ r, δ r * cosecantKernel x r s ^ 4) =
-      ∑ r, δ r * cosecantKernel x r s ^ 2 * cosecantKernel x r s ^ 2 := by
+        ∑ r, δ r * cosecantKernel x r s ^ 2 * cosecantKernel x r s ^ 2 := by
       apply Finset.sum_congr rfl
       intro r _
       ring
@@ -2416,7 +2421,7 @@ private lemma cosecantKernel_fourth_sum_le {ι : Type*} [Fintype ι]
           (hδ r).le)
         (sq_nonneg _)
     _ = (1 / (4 * δ s ^ 2)) *
-      ∑ r, δ r * cosecantKernel x r s ^ 2 := by
+        ∑ r, δ r * cosecantKernel x r s ^ 2 := by
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro r _
@@ -2447,18 +2452,18 @@ private lemma cosecantKernel_product_sum_le {ι : Type*} [Fintype ι]
   have htmem : t ∈ Finset.univ.erase s :=
     Finset.mem_erase.mpr ⟨Ne.symm hst, Finset.mem_univ t⟩
   have hsum :
-    (∑ r, δ r * cosecantKernel x r s ^ 2 * cosecantKernel x r t ^ 2) =
-      ∑ r ∈ (Finset.univ.erase s).erase t,
-        δ r * cosecantKernel x r s ^ 2 * cosecantKernel x r t ^ 2 := by
+      (∑ r, δ r * cosecantKernel x r s ^ 2 * cosecantKernel x r t ^ 2) =
+        ∑ r ∈ (Finset.univ.erase s).erase t,
+          δ r * cosecantKernel x r s ^ 2 * cosecantKernel x r t ^ 2 := by
     rw [← Finset.sum_erase_add _ _ (Finset.mem_univ s)]
     simp only [cosecantKernel, ↓reduceIte]
     rw [← Finset.sum_erase_add _ _ htmem]
     simp
   have hconvert :
-    (∑ r ∈ (Finset.univ.erase s).erase t,
-      δ r * cosecantKernel x r s ^ 2 * cosecantKernel x r t ^ 2) =
-      ∑ r ∈ (Finset.univ.erase s).erase t,
-        δ r * cscSqProduct (circleCoord x s t) (circleCoord x s r) := by
+      (∑ r ∈ (Finset.univ.erase s).erase t,
+          δ r * cosecantKernel x r s ^ 2 * cosecantKernel x r t ^ 2) =
+        ∑ r ∈ (Finset.univ.erase s).erase t,
+          δ r * cscSqProduct (circleCoord x s t) (circleCoord x s r) := by
     apply Finset.sum_congr rfl
     intro r hr
     have hrs : r ≠ s := (Finset.mem_erase.mp (Finset.mem_erase.mp hr).2).1
@@ -2474,16 +2479,16 @@ private lemma cosecantKernel_product_sum_le {ι : Type*} [Fintype ι]
     ring
   calc
     (∑ r, δ r * cosecantKernel x r s ^ 2 * cosecantKernel x r t ^ 2) =
-      ∑ r ∈ (Finset.univ.erase s).erase t,
-        δ r * cscSqProduct (circleCoord x s t) (circleCoord x s r) := by
+        ∑ r ∈ (Finset.univ.erase s).erase t,
+          δ r * cscSqProduct (circleCoord x s t) (circleCoord x s r) := by
       rw [hsum, hconvert]
     _ ≤ 4 / Real.pi ^ 2 * (1 / δ s + 1 / δ t) *
-      cscSq (circleCoord x s t) :=
+        cscSq (circleCoord x s t) :=
       circle_cscSqProduct_sum_le x δ hδ hsep s t hst
     _ = 4 / Real.pi ^ 2 * (1 / δ s + 1 / δ t) *
-      cosecantKernel x s t ^ 2 := by rw [hKst]
+        cosecantKernel x s t ^ 2 := by rw [hKst]
     _ ≤ (811 / 2000 : ℝ) * (1 / δ s + 1 / δ t) *
-      cosecantKernel x s t ^ 2 := by
+        cosecantKernel x s t ^ 2 := by
       have hp : 4 / Real.pi ^ 2 ≤ (811 / 2000 : ℝ) := by
         rw [div_le_iff₀ (sq_pos_of_pos Real.pi_pos)]
         have hpi := Real.pi_gt_d4
@@ -2506,8 +2511,8 @@ namespace MathlibExt.NumberTheory.PrimeCounting
 @[path]
 lemma weightedHilbertCosecant
   [Fintype ι] [DecidableEq ι]
-  {x δ : ι → ℝ}
-  {z : ι → ℂ}
+  (x δ : ι → ℝ)
+  (z : ι → ℂ)
 -- given
   (hδ : ∀ r, 0 < δ r)
   (hsep : ∀ r s, r ≠ s → δ r ≤ ‖((x r - x s : ℝ) : AddCircle (1 : ℝ))‖) :
@@ -2517,29 +2522,29 @@ lemma weightedHilbertCosecant
     3 / 2 * ∑ r, ‖z r‖ ^ 2 / δ r := by
 -- proof
   classical
-  obtain hι | hι := isEmpty_or_nonempty ι
+  rcases isEmpty_or_nonempty ι with hι | hι
   · simp
   · have hsin : ∀ r s, r ≠ s → Real.sin (Real.pi * (x r - x s)) ≠ 0 :=
-    sine_ne_zero_of_circle_separated x δ hδ hsep
+      sine_ne_zero_of_circle_separated x δ hδ hsep
     have hA : ∀ s, ∑ r, δ r * cosecantKernel x r s ^ 2 ≤
-      (811 / 2000 : ℝ) / δ s :=
+        (811 / 2000 : ℝ) / δ s :=
       cosecantKernel_sq_sum_le x δ hδ hsep
     have hB : ∀ s, ∑ r, δ r * cosecantKernel x r s ^ 4 ≤
-      (203 / 2000 : ℝ) / δ s ^ 3 :=
+        (203 / 2000 : ℝ) / δ s ^ 3 :=
       cosecantKernel_fourth_sum_le x δ hδ hsep hA
     have hC : ∀ s t, s ≠ t →
-      ∑ r, δ r * cosecantKernel x r s ^ 2 * cosecantKernel x r t ^ 2 ≤
-        (811 / 2000 : ℝ) * (1 / δ s + 1 / δ t) *
-          cosecantKernel x s t ^ 2 :=
+        ∑ r, δ r * cosecantKernel x r s ^ 2 * cosecantKernel x r t ^ 2 ≤
+          (811 / 2000 : ℝ) * (1 / δ s + 1 / δ t) *
+            cosecantKernel x s t ^ 2 :=
       cosecantKernel_product_sum_le x δ hδ hsep
     have hmatrix : ‖weightedMatrix δ (cosecantKernel x)‖ ≤ 3 / 2 :=
       weightedMatrix_norm_le_three_halves δ (cosecantKernel x) (cotangentKernel x)
         hδ (cosecantKernel_skew x) (cosecantKernel_mul_identity x hsin)
         (cotangentKernel_abs_le_cosecantKernel_abs x) hA hB hC
     have hsum :
-      (∑ r, ∑ s ∈ Finset.univ.erase r,
-        z r * conj (z s) / Real.sin (Real.pi * (x r - x s))) =
-        ∑ r, ∑ s, z r * conj (z s) * cosecantKernel x r s := by
+        (∑ r, ∑ s ∈ Finset.univ.erase r,
+            z r * conj (z s) / Real.sin (Real.pi * (x r - x s))) =
+          ∑ r, ∑ s, z r * conj (z s) * cosecantKernel x r s := by
       apply Finset.sum_congr rfl
       intro r _
       rw [← Finset.sum_erase_add _ _ (Finset.mem_univ r)]
@@ -2559,4 +2564,4 @@ end MathlibExt.NumberTheory.PrimeCounting
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

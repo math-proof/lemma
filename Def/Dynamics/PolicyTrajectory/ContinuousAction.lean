@@ -48,7 +48,7 @@ namespace DensityPolicy
 variable {Θ S A : Type*} [MeasurableSpace S] [ReferenceMeasure A]
 
 /-- ENNReal density of `π_θ(· | x)` w.r.t. the reference measure of `A` -/
-noncomputable def dens (p : DensityPolicy Θ S A) (θ : Θ) : S → A → ℝ≥0∞ :=
+noncomputable def dens (p : DensityPolicy Θ S A) (θ : Θ) : S → A → ENNReal :=
   fun x u => ENNReal.ofReal (p.prob θ x u)
 
 /-- the action law `π_θ(· | x)` as a Markov kernel `S → A` (density w.r.t. `ReferenceMeasure.measure`) -/

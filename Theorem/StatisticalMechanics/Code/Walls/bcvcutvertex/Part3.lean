@@ -45,7 +45,7 @@ theorem bcv_count_of_treeData (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ)
   bc69_count_via_leafBound ω L R (bcv_globalForest_of_treeData ω L R h)
 
 
-theorem bcv_bk_of_treeData (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bcv_bk_of_treeData (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 := by
   apply bgn_bk_of_forest p hp1 hp0

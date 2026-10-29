@@ -234,7 +234,6 @@ lemma normalizedFactors_card_le_log
       rw [h_prod.symm, h_eq]
     _ ≤ M := hIM
 open Ideal Finset in
-set_option maxHeartbeats 400000 in
 
 end GeometryOfNumbers
 
@@ -761,7 +760,7 @@ lemma arakelov_minkowski_bound
   [Field K]
   [NumberField K]
   {I : (FractionalIdeal (𝓞 K)⁰ K)ˣ}
-  {f : InfinitePlace K → ℝ≥0}
+  {f : InfinitePlace K → NNReal}
 -- given
   (hc : minkowskiBound K I < volume (convexBodyLT K f)) :
 -- imply

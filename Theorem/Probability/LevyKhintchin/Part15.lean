@@ -39,13 +39,13 @@ lemma lk_integral_canonicalMeasure (rho : Measure ℝ)
       ((n + 1 : ℕ) : ℂ) * ∫ x, lkSmoothJump t x ∂rho := by
   rw [lkCanonicalMeasure]
   change (∫ x, lkCanonicalIntegrand t x ∂
-      ((n + 1 : ℝ≥0) • (lkCanonicalBase rho hprob : Measure ℝ))) = _
+      ((n + 1 : NNReal) • (lkCanonicalBase rho hprob : Measure ℝ))) = _
   rw [integral_smul_nnreal_measure]
-  change ((n + 1 : ℝ≥0) : ℝ) •
+  change ((n + 1 : NNReal) : ℝ) •
       (∫ x, lkCanonicalIntegrand t x ∂rho.withDensity
-        (fun x ↦ (lkCanonicalWeightNN x : ℝ≥0∞))) = _
-  rw [show (fun x ↦ (lkCanonicalWeightNN x : ℝ≥0∞)) =
-      fun x ↦ ((lkCanonicalWeightNN x : ℝ≥0) : ℝ≥0∞) by rfl]
+        (fun x ↦ (lkCanonicalWeightNN x : ENNReal))) = _
+  rw [show (fun x ↦ (lkCanonicalWeightNN x : ENNReal)) =
+      fun x ↦ ((lkCanonicalWeightNN x : NNReal) : ENNReal) by rfl]
   have hweight : Measurable lkCanonicalWeightNN := by
     apply Continuous.measurable
     rw [show lkCanonicalWeightNN = fun x ↦ Real.toNNReal (lkCanonicalWeight x) by

@@ -119,7 +119,7 @@ theorem theta_ge_betaForm {J β : ℝ} (hJ : 0 < J) (hd : 0 < d)
     apply Real.exp_lt_exp.mpr; nlinarith
   have hpval0 : 0 < pBeta J β := by
     rw [pBeta]; rw [hβtc_val] at hptc0; linarith
-  set q : ℝ≥0 := (pBeta J β).toNNReal with hq_def
+  set q : NNReal := (pBeta J β).toNNReal with hq_def
   have hqcoe : (q : ℝ) = pBeta J β := Real.coe_toNNReal _ (le_of_lt hpval0)
   have hq1 : q ≤ 1 := pBeta_toNNReal_le_one J β
   have hq1r : (q : ℝ) < 1 := by rw [hqcoe]; exact hpval1

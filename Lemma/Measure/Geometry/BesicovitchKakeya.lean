@@ -13,7 +13,7 @@ namespace MathlibExt.MeasureTheory.Geometry.BesicovitchKakeyaWanted
 [kak_volume_le_of_slice_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/BesicovitchKakeya.lean)
 -/
 @[path]
-private lemma kak_volume_le_of_slice_le {A : Set (ℝ × ℝ)} {a b : ℝ} {c : ℝ≥0∞}
+private lemma kak_volume_le_of_slice_le {A : Set (ℝ × ℝ)} {a b : ℝ} {c : ENNReal}
   (hA : MeasurableSet A) (hsub : A ⊆ Set.univ ×ˢ Set.Icc a b)
   (hslice : ∀ s ∈ Set.Icc a b, volume {x : ℝ | (x, s) ∈ A} ≤ c) :
   volume A ≤ c * ENNReal.ofReal (b - a) := by
@@ -363,7 +363,7 @@ namespace MathlibExt.MeasureTheory.Geometry.BesicovitchKakeyaWanted
 [kak_isOpen_volume_inter_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/BesicovitchKakeya.lean)
 -/
 @[path]
-private lemma kak_isOpen_volume_inter_lt (C : Set (ℝ × ℝ)) (c : ℝ≥0∞) :
+private lemma kak_isOpen_volume_inter_lt (C : Set (ℝ × ℝ)) (c : ENNReal) :
   IsOpen {P : TopologicalSpace.NonemptyCompacts (ℝ × ℝ) |
     volume ((P : Set (ℝ × ℝ)) ∩ C) < c} := by
   rw [Metric.isOpen_iff]

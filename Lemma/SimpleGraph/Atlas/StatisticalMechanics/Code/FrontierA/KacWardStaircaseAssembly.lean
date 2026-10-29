@@ -566,7 +566,7 @@ private lemma corner_mem_closedEdgeTube_eq
   {k : Fin S}
 -- given
   (data : KWStairParameterData (S := S) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hfine : data.MeshWithin r) :
 -- imply
   data.corner i k ∈ polygon.closedEdgeTube r i := by
@@ -586,7 +586,7 @@ private lemma localVertex_mem_closedEdgeTube_eq
   {l : Fin (2 * S)}
 -- given
   (data : KWStairParameterData (S := S) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r) :
 -- imply
@@ -607,7 +607,7 @@ private lemma localVertex_ne_of_tubes_disjoint_eq
   {l q : Fin (2 * S)}
 -- given
   (data : KWStairParameterData (S := S) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r)
   (hdisjoint : Disjoint (polygon.closedEdgeTube r i) (polygon.closedEdgeTube r j)) :
@@ -629,7 +629,7 @@ private lemma localVertex_ne_of_nonincident_eq
   {l q : Fin (2 * S)}
 -- given
   (data : KWStairParameterData (S := S) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin (r / 2))
   (hsep : ∀ i j : Fin n, KWEdgesNonincident i j → ∀ x ∈ polygon.closedEdge i, ∀ y ∈ polygon.closedEdge j, (r : ℝ) < dist x y)
@@ -649,7 +649,7 @@ private lemma exists_fine_endpointParameterData_eq
   {polygon : KWFiniteSimplePolygon n}
 -- given
   (hcoords : ∀ i : Fin n, (polygon.edgeVector i).re ≠ 0 ∧ (polygon.edgeVector i).im ≠ 0)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r) :
 -- imply
   ∃ M : ℕ, ∃ beta : ℝ, ∃ alpha : Fin n → ℝ, ∃ data : KWStairParameterData (S := M + 2) polygon, 0 < M ∧ 0 < beta ∧ beta < 1 / 4 ∧ (∀ i, 0 < alpha i ∧ alpha i < beta) ∧ (∀ i, |alpha i * (-polygon.edgeVector (i - 1)).re| < |beta * (polygon.edgeVector i).re|) ∧ data.MeshWithin r := by

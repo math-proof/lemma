@@ -22,7 +22,7 @@ private lemma bcl2_threeMeetBox_subset_top_eq
 private lemma bcl2_tripleEvent_pos_of_threeMeetBox_eq
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n)) :
 -- imply
@@ -36,7 +36,7 @@ private lemma bcl2_tripleEvent_pos_of_threeMeetBox_eq
 @[path]
 private lemma bcl2_hroute_of_bridge_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)
@@ -52,7 +52,7 @@ private lemma bcl2_hroute_of_bridge_eq
 @[path]
 private lemma bcl2_bk_of_bridge_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)
@@ -68,7 +68,7 @@ private lemma bcl2_bk_of_bridge_eq
 @[path]
 private lemma bcl2_bk_atLeastTwo_of_bridge_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)

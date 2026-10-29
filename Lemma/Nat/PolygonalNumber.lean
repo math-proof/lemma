@@ -103,7 +103,7 @@ namespace Nat
 -/
 @[path]
 lemma polygonalNumber_four
-  {n : ℕ} :
+  (n : ℕ) :
 -- imply
   polygonalNumber 4 n = n ^ 2 := by
 -- proof
@@ -169,4 +169,4 @@ private lemma polygonalNumber_one_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

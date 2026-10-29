@@ -31,7 +31,7 @@ theorem tendsto_min_natCast (r : ℝ) :
 
 theorem tendsto_lintegral_of_monotone_ae
     {X : Type*} [MeasurableSpace X] (mu : Measure X)
-    (u : ℕ → X → ℝ≥0∞) (v : X → ℝ≥0∞)
+    (u : ℕ → X → ENNReal) (v : X → ENNReal)
     (hu : ∀ n, Measurable (u n)) (hmono : ∀ x, Monotone fun n => u n x)
     (hlim : ∀ᵐ x ∂mu, Tendsto (fun n => u n x) atTop (𝓝 (v x))) :
     Tendsto (fun n => ∫⁻ x, u n x ∂mu) atTop (𝓝 (∫⁻ x, v x ∂mu)) := by
@@ -201,8 +201,8 @@ theorem measurableFamilyBKR_and_dual
     (fun x n m hnm => ENNReal.ofReal_le_ofReal (hmonoSame x hnm))
     (ae_of_all _ fun x => (ENNReal.continuous_ofReal.tendsto _).comp (hlimSame x))
   constructor
-  · let BF : ℝ≥0∞ := ∫⁻ x, ENNReal.ofReal (piFunctionalFamilyMax F x) ∂Measure.pi mu
-    let BG : ℝ≥0∞ := ∫⁻ x, ENNReal.ofReal (piFunctionalFamilyMax G x) ∂Measure.pi mu
+  · let BF : ENNReal := ∫⁻ x, ENNReal.ofReal (piFunctionalFamilyMax F x) ∂Measure.pi mu
+    let BG : ENNReal := ∫⁻ x, ENNReal.ofReal (piFunctionalFamilyMax G x) ∂Measure.pi mu
     by_cases hbadF : BF = 0 ∧ BG = ∞
     · apply le_of_tendsto tDisjoint
       filter_upwards [] with n

@@ -28,7 +28,7 @@ theorem integral_chebyshevMeasure (f : ℝ → ℝ) :
   rw [Polynomial.Chebyshev.integral_measureT]
   unfold chebyshevMeasure
   rw [intervalIntegral.integral_of_le (by norm_num)]
-  let wnn : ℝ → ℝ≥0 := fun x =>
+  let wnn : ℝ → NNReal := fun x =>
     ⟨Real.sqrt (1 - x ^ 2)⁻¹, by positivity⟩
   have hdensity : (fun x => ENNReal.ofReal (chebyshevWeight x)) =
       (fun x => (wnn x : ENNReal)) := by

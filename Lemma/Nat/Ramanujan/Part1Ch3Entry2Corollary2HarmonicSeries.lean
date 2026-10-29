@@ -27,9 +27,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Corollary2HarmonicSer
 
 /--
 [harmonic_succ_aux](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry2Corollary2HarmonicSeries.lean)
--/
-@[path]
 `harmonic_succ` / `harmonic_zero`, so the whole proof uses the standard API. -/
+@[path]
 private lemma harmonic_succ_aux (n : ℕ) :
   _root_.harmonic (n + 1) = _root_.harmonic n + 1 / ((n + 1 : ℕ) : ℚ) := by
   rw [_root_.harmonic_succ, one_div]
@@ -102,7 +101,7 @@ private lemma summable_harm_aux (x : ℂ) : Summable (fun j : ℕ =>
   have hbase : Summable (fun j : ℕ => (‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ))) := by
     have h := Real.summable_pow_div_factorial ‖x‖
     have h2 : (fun j : ℕ => (‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ)))
-      = (fun j : ℕ => ‖x‖ * (‖x‖ ^ j / (Nat.factorial j : ℝ))) := by
+        = (fun j : ℕ => ‖x‖ * (‖x‖ ^ j / (Nat.factorial j : ℝ))) := by
       funext j
       rw [pow_succ']
       ring
@@ -112,7 +111,7 @@ private lemma summable_harm_aux (x : ℂ) : Summable (fun j : ℕ =>
   have hfact_pos : (0 : ℝ) < (Nat.factorial (j + 1) : ℝ) := by
     exact_mod_cast Nat.factorial_pos (j + 1)
   have hnorm : ‖(_root_.harmonic (j + 1) : ℂ) * x ^ (j + 1) / (Nat.factorial (j + 1) : ℂ)‖
-    = ‖(((_root_.harmonic (j + 1) : ℚ)) : ℂ)‖ * ‖x‖ ^ (j + 1) / (Nat.factorial (j + 1) : ℝ) := by
+      = ‖(((_root_.harmonic (j + 1) : ℚ)) : ℂ)‖ * ‖x‖ ^ (j + 1) / (Nat.factorial (j + 1) : ℝ) := by
     rw [norm_div, norm_mul, norm_pow, Complex.norm_natCast]
   rw [hnorm]
   have hfac_eq : ((Nat.factorial (j + 1) : ℕ) : ℝ) = ((j + 1 : ℕ) : ℝ) * (Nat.factorial j : ℝ) := by
@@ -120,12 +119,12 @@ private lemma summable_harm_aux (x : ℂ) : Summable (fun j : ℕ =>
     push_cast
     ring
   calc ‖(((_root_.harmonic (j + 1) : ℚ)) : ℂ)‖ * ‖x‖ ^ (j + 1) / (Nat.factorial (j + 1) : ℝ)
-    ≤ ((j + 1 : ℕ) : ℝ) * ‖x‖ ^ (j + 1) / (Nat.factorial (j + 1) : ℝ) := by
-      apply div_le_div_of_nonneg_right _ (le_of_lt hfact_pos)
-      exact mul_le_mul_of_nonneg_right (hnormH_aux j) (pow_nonneg (norm_nonneg _) _)
+      ≤ ((j + 1 : ℕ) : ℝ) * ‖x‖ ^ (j + 1) / (Nat.factorial (j + 1) : ℝ) := by
+        apply div_le_div_of_nonneg_right _ (le_of_lt hfact_pos)
+        exact mul_le_mul_of_nonneg_right (hnormH_aux j) (pow_nonneg (norm_nonneg _) _)
     _ = ‖x‖ ^ (j + 1) / (Nat.factorial j : ℝ) := by
-      rw [hfac_eq]
-      field_simp
+        rw [hfac_eq]
+        field_simp
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Corollary2HarmonicSeries
 
@@ -151,7 +150,7 @@ private lemma summable_alt_aux (x : ℂ) :
     Complex.norm_natCast _
   have e4 : ‖(((j + 1 : ℕ)) : ℂ)‖ = ((j + 1 : ℕ) : ℝ) := Complex.norm_natCast _
   have hnorm : ‖(-1 : ℂ) ^ j * x ^ (j + 1) / ((Nat.factorial (j + 1) : ℂ) * ((j + 1 : ℕ) : ℂ))‖
-    = ‖x‖ ^ (j + 1) / ((Nat.factorial (j + 1) : ℝ) * ((j + 1 : ℕ) : ℝ)) := by
+      = ‖x‖ ^ (j + 1) / ((Nat.factorial (j + 1) : ℝ) * ((j + 1 : ℕ) : ℝ)) := by
     rw [norm_div, norm_mul, e1, e2, norm_mul, e3, e4, one_mul]
   rw [hnorm]
   apply div_le_div_of_nonneg_left (pow_nonneg (norm_nonneg _) _) hfact_pos ?_
@@ -174,12 +173,12 @@ private lemma exp_hasSum_aux (x : ℂ) :
   HasSum (fun n : ℕ => x ^ n / (Nat.factorial n : ℂ)) (Complex.exp x) := by
   have h := NormedSpace.expSeries_hasSum_exp (𝕂 := ℂ) (𝔸 := ℂ) x
   have h2 : (fun n : ℕ => ((NormedSpace.expSeries ℂ ℂ n) fun _ => x))
-    = (fun n : ℕ => x ^ n / (Nat.factorial n : ℂ)) := by
+      = (fun n : ℕ => x ^ n / (Nat.factorial n : ℂ)) := by
     funext n
     exact NormedSpace.expSeries_apply_eq_div x n
   rw [h2] at h
-  rwa [← Complex.exp_eq_exp_ℂ] at h
-
+  rw [← Complex.exp_eq_exp_ℂ] at h
+  exact h
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Corollary2HarmonicSeries
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Corollary2HarmonicSeries
@@ -221,7 +220,8 @@ private lemma cauchyF_norm_aux (x : ℂ) : Summable (fun k => ‖cauchyF x k‖)
     funext k
     unfold cauchyF
     rw [norm_div, norm_pow, Complex.norm_natCast]
-  rwa [heq]
+  rw [heq]
+  exact h
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Corollary2HarmonicSeries
 
@@ -234,7 +234,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Corollary2HarmonicSer
 private lemma cauchyG_norm_aux (x : ℂ) : Summable (fun n => ‖cauchyG x n‖) := by
   have hbase := Real.summable_pow_div_factorial ‖x‖
   have heq : (fun n => ‖cauchyG x n‖)
-    = (fun n : ℕ => ‖x‖ ^ n / (((n : ℕ) : ℝ) * (Nat.factorial n : ℝ))) := by
+      = (fun n : ℕ => ‖x‖ ^ n / (((n : ℕ) : ℝ) * (Nat.factorial n : ℝ))) := by
     funext n
     unfold cauchyG
     have e1 : ‖(-1 : ℂ) ^ (n - 1)‖ = 1 := by simp
@@ -249,8 +249,8 @@ private lemma cauchyG_norm_aux (x : ℂ) : Summable (fun n => ‖cauchyG x n‖)
   · subst hn
     simp
   · have hnpos : (1 : ℝ) ≤ ((n : ℕ) : ℝ) := by
-    have h : (1 : ℕ) ≤ n := Nat.one_le_iff_ne_zero.mpr hn
-    exact_mod_cast h
+      have h : (1 : ℕ) ≤ n := Nat.one_le_iff_ne_zero.mpr hn
+      exact_mod_cast h
     have hfact_pos : (0 : ℝ) < (Nat.factorial n : ℝ) := by
       exact_mod_cast Nat.factorial_pos n
     apply div_le_div_of_nonneg_left (pow_nonneg (norm_nonneg _) _)
@@ -276,7 +276,7 @@ private lemma choose_ratio_aux (N k : ℕ) :
   have hnat : (N + 1) * Nat.choose N k = Nat.choose (N + 1) (k + 1) * (k + 1) :=
     Nat.add_one_mul_choose_eq N k
   have hcast : ((N + 1 : ℕ) : ℂ) * ((Nat.choose N k : ℕ) : ℂ)
-    = ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ) * ((k + 1 : ℕ) : ℂ) := by
+      = ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ) * ((k + 1 : ℕ) : ℂ) := by
     exact_mod_cast hnat
   field_simp
   linear_combination hcast
@@ -293,10 +293,10 @@ private lemma alt_choose_sum_aux (N : ℕ) :
   ∑ k ∈ Finset.range (N + 1), (-1 : ℂ) ^ k * ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ) = 1 := by
   have h := add_pow (-1 : ℂ) (1 : ℂ) (N + 1)
   have hsim : ∑ m ∈ Finset.range (N + 2), (-1 : ℂ) ^ m * ((Nat.choose (N + 1) m : ℕ) : ℂ)
-    = ((-1 : ℂ) + 1) ^ (N + 1) := by
+      = ((-1 : ℂ) + 1) ^ (N + 1) := by
     have h2 : ∑ m ∈ Finset.range (N + 1 + 1),
-      (-1 : ℂ) ^ m * (1 : ℂ) ^ (N + 1 - m) * ((Nat.choose (N + 1) m : ℕ) : ℂ)
-      = ∑ m ∈ Finset.range (N + 2), (-1 : ℂ) ^ m * ((Nat.choose (N + 1) m : ℕ) : ℂ) := by
+          (-1 : ℂ) ^ m * (1 : ℂ) ^ (N + 1 - m) * ((Nat.choose (N + 1) m : ℕ) : ℂ)
+        = ∑ m ∈ Finset.range (N + 2), (-1 : ℂ) ^ m * ((Nat.choose (N + 1) m : ℕ) : ℂ) := by
       apply Finset.sum_congr rfl
       intro m _
       simp
@@ -313,13 +313,13 @@ private lemma alt_choose_sum_aux (N : ℕ) :
   have h0 : (-1 : ℂ) ^ 0 * ((Nat.choose (N + 1) 0 : ℕ) : ℂ) = 1 := by simp
   rw [h0] at hsplit
   have hneg : ∑ k ∈ Finset.range (N + 1),
-    (-1 : ℂ) ^ (k + 1) * ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ) = -1 := by
+      (-1 : ℂ) ^ (k + 1) * ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ) = -1 := by
     have hsym : (∑ k ∈ Finset.range (N + 1),
       (-1 : ℂ) ^ (k + 1) * ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ)) + 1 = 0 := hsplit.symm
     exact eq_neg_of_add_eq_zero_left hsym
   have hrel : ∑ k ∈ Finset.range (N + 1), (-1 : ℂ) ^ k * ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ)
-    = - (∑ k ∈ Finset.range (N + 1),
-      (-1 : ℂ) ^ (k + 1) * ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ)) := by
+      = - (∑ k ∈ Finset.range (N + 1),
+        (-1 : ℂ) ^ (k + 1) * ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ)) := by
     rw [← Finset.sum_neg_distrib]
     apply Finset.sum_congr rfl
     intro k _
@@ -339,8 +339,8 @@ private lemma alt_T_aux (N : ℕ) :
   ∑ k ∈ Finset.range (N + 1), (-1 : ℂ) ^ k * (((Nat.choose N k : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ))
     = 1 / (((N + 1 : ℕ)) : ℂ) := by
   have hterm : ∀ k ∈ Finset.range (N + 1),
-    (-1 : ℂ) ^ k * (((Nat.choose N k : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ))
-    = (1 / (((N + 1 : ℕ)) : ℂ)) * ((-1 : ℂ) ^ k * ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ)) := by
+      (-1 : ℂ) ^ k * (((Nat.choose N k : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ))
+      = (1 / (((N + 1 : ℕ)) : ℂ)) * ((-1 : ℂ) ^ k * ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ)) := by
     intro k _
     rw [choose_ratio_aux N k]
     ring
@@ -362,10 +362,10 @@ private lemma harm_eq_aux (N : ℕ) : (((_root_.harmonic N : ℚ)) : ℂ)
     simp
   | succ N ih =>
     have hHs : (((_root_.harmonic (N + 1) : ℚ)) : ℂ)
-      = (((_root_.harmonic N : ℚ)) : ℂ) + 1 / (((N + 1 : ℕ)) : ℂ) := by
+        = (((_root_.harmonic N : ℚ)) : ℂ) + 1 / (((N + 1 : ℕ)) : ℂ) := by
       have h := harmonic_succ_aux N
       have hcast : (((_root_.harmonic (N + 1) : ℚ)) : ℂ)
-        = (((_root_.harmonic N : ℚ)) : ℂ) + ((1 / ((N + 1 : ℕ) : ℚ) : ℚ) : ℂ) := by
+          = (((_root_.harmonic N : ℚ)) : ℂ) + ((1 / ((N + 1 : ℕ) : ℚ) : ℚ) : ℂ) := by
         exact_mod_cast h
       rw [hcast]
       congr 1
@@ -373,21 +373,21 @@ private lemma harm_eq_aux (N : ℕ) : (((_root_.harmonic N : ℚ)) : ℂ)
       ring
     rw [hHs, ih]
     have hsplit : ∀ k ∈ Finset.range (N + 1),
-      (-1 : ℂ) ^ k * (((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ))
-      = (-1 : ℂ) ^ k * (((Nat.choose N k : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ))
-        + (-1 : ℂ) ^ k * (((Nat.choose N (k + 1) : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ)) := by
+        (-1 : ℂ) ^ k * (((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ))
+        = (-1 : ℂ) ^ k * (((Nat.choose N k : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ))
+          + (-1 : ℂ) ^ k * (((Nat.choose N (k + 1) : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ)) := by
       intro k _
       have hcc : ((Nat.choose (N + 1) (k + 1) : ℕ) : ℂ)
-        = ((Nat.choose N k : ℕ) : ℂ) + ((Nat.choose N (k + 1) : ℕ) : ℂ) := by
+          = ((Nat.choose N k : ℕ) : ℂ) + ((Nat.choose N (k + 1) : ℕ) : ℂ) := by
         have hnat : Nat.choose (N + 1) (k + 1) = Nat.choose N k + Nat.choose N (k + 1) :=
           Nat.choose_succ_succ N k
         exact_mod_cast hnat
       rw [hcc, add_div, mul_add]
     rw [Finset.sum_congr rfl hsplit, Finset.sum_add_distrib]
     have hsecond : ∑ k ∈ Finset.range (N + 1),
-      (-1 : ℂ) ^ k * (((Nat.choose N (k + 1) : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ))
-      = ∑ k ∈ Finset.range N,
-        (-1 : ℂ) ^ k * (((Nat.choose N (k + 1) : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ)) := by
+          (-1 : ℂ) ^ k * (((Nat.choose N (k + 1) : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ))
+        = ∑ k ∈ Finset.range N,
+          (-1 : ℂ) ^ k * (((Nat.choose N (k + 1) : ℕ) : ℂ) / (((k + 1 : ℕ)) : ℂ)) := by
       rw [Finset.sum_range_succ]
       have hlast : (-1 : ℂ) ^ N * (((Nat.choose N (N + 1) : ℕ) : ℂ) / (((N + 1 : ℕ)) : ℂ)) = 0 := by
         have hch : Nat.choose N (N + 1) = 0 := Nat.choose_eq_zero_of_lt (Nat.lt_succ_self N)
@@ -410,7 +410,7 @@ private lemma key_eq_aux (x : ℂ) (N k : ℕ) (hk : k < N) :
     = x ^ N * ((Nat.choose N k : ℕ) : ℂ) / (Nat.factorial N : ℂ) := by
   have hkN : k ≤ N := Nat.le_of_lt hk
   have hC : ((Nat.choose N k : ℕ) : ℂ) * (Nat.factorial k : ℂ) * (Nat.factorial (N - k) : ℂ)
-    = (Nat.factorial N : ℂ) := by
+      = (Nat.factorial N : ℂ) := by
     exact_mod_cast Nat.choose_mul_factorial_mul_factorial hkN
   have hpow : x ^ k * x ^ (N - k) = x ^ N := by
     rw [← pow_add, Nat.add_sub_cancel' hkN]
@@ -434,15 +434,15 @@ private lemma term_eq_aux (x : ℂ) (N k : ℕ) (hk : k < N) :
     ((-1 : ℂ) ^ (N - 1 - k) * (((Nat.choose N k : ℕ) : ℂ) / (((N - k : ℕ)) : ℂ))) := by
   have hexp : N - k - 1 = N - 1 - k := by omega
   have hfactor_lhs : cauchyF x k * cauchyG x (N - k)
-    = (((-1 : ℂ) ^ (N - 1 - k)) / (((N - k : ℕ)) : ℂ)) *
-      (x ^ k * x ^ (N - k) / ((Nat.factorial k : ℂ) * (Nat.factorial (N - k) : ℂ))) := by
+      = (((-1 : ℂ) ^ (N - 1 - k)) / (((N - k : ℕ)) : ℂ)) *
+        (x ^ k * x ^ (N - k) / ((Nat.factorial k : ℂ) * (Nat.factorial (N - k) : ℂ))) := by
     unfold cauchyF cauchyG
     rw [hexp]
     ring
   have hfactor_rhs : (x ^ N / (Nat.factorial N : ℂ)) *
-    ((-1 : ℂ) ^ (N - 1 - k) * (((Nat.choose N k : ℕ) : ℂ) / (((N - k : ℕ)) : ℂ)))
-    = (((-1 : ℂ) ^ (N - 1 - k)) / (((N - k : ℕ)) : ℂ)) *
-      (x ^ N * ((Nat.choose N k : ℕ) : ℂ) / (Nat.factorial N : ℂ)) := by
+      ((-1 : ℂ) ^ (N - 1 - k) * (((Nat.choose N k : ℕ) : ℂ) / (((N - k : ℕ)) : ℂ)))
+      = (((-1 : ℂ) ^ (N - 1 - k)) / (((N - k : ℕ)) : ℂ)) *
+        (x ^ N * ((Nat.choose N k : ℕ) : ℂ) / (Nat.factorial N : ℂ)) := by
     ring
   rw [hfactor_lhs, hfactor_rhs, key_eq_aux x N k hk]
 
@@ -478,10 +478,10 @@ private lemma conv_eq_aux (x : ℂ) (N : ℕ) :
     simp [cauchyG_zero_aux x]
   rw [hlast, add_zero]
   have hterm : ∀ k ∈ Finset.range N,
-    cauchyF x k * cauchyG x (N - k)
-      = (x ^ N / (Nat.factorial N : ℂ)) *
-        ((-1 : ℂ) ^ (N - 1 - k)
-          * (((Nat.choose N ((N - 1 - k) + 1) : ℕ) : ℂ) / ((((N - 1 - k) + 1 : ℕ)) : ℂ))) := by
+      cauchyF x k * cauchyG x (N - k)
+        = (x ^ N / (Nat.factorial N : ℂ)) *
+          ((-1 : ℂ) ^ (N - 1 - k)
+            * (((Nat.choose N ((N - 1 - k) + 1) : ℕ) : ℂ) / ((((N - 1 - k) + 1 : ℕ)) : ℂ))) := by
     intro k hk
     rw [Finset.mem_range] at hk
     rw [term_eq_aux x N k hk, bracket_eq_aux N k hk]
@@ -511,10 +511,10 @@ private lemma corollary2_core_aux (x : ℂ) :
         ((-1 : ℂ) ^ j * x ^ (j + 1) / ((Nat.factorial (j + 1) : ℂ) *
           ((j + 1 : ℕ) : ℂ)))) := by
   have hS1 : Summable
-    (fun j : ℕ => (_root_.harmonic (j + 1) : ℂ) * x ^ (j + 1) / (Nat.factorial (j + 1) : ℂ)) :=
+      (fun j : ℕ => (_root_.harmonic (j + 1) : ℂ) * x ^ (j + 1) / (Nat.factorial (j + 1) : ℂ)) :=
     summable_harm_aux x
   have hS2 : Summable (fun j : ℕ =>
-    ((-1 : ℂ) ^ j * x ^ (j + 1) / ((Nat.factorial (j + 1) : ℂ) * ((j + 1 : ℕ) : ℂ)))) :=
+      ((-1 : ℂ) ^ j * x ^ (j + 1) / ((Nat.factorial (j + 1) : ℂ) * ((j + 1 : ℕ) : ℂ)))) :=
     summable_alt_aux x
   refine ⟨hS1, hS2, ?_⟩
   have hCauchy := hasSum_sum_range_mul_of_summable_norm
@@ -527,24 +527,26 @@ private lemma corollary2_core_aux (x : ℂ) :
   have hGsumm : Summable (fun n : ℕ => cauchyG x n) :=
     Summable.of_norm (cauchyG_norm_aux x)
   have hGtsum : (∑' n : ℕ, cauchyG x n)
-    = (∑' j : ℕ, ((-1 : ℂ) ^ j * x ^ (j + 1)
-      / ((Nat.factorial (j + 1) : ℂ) * ((j + 1 : ℕ) : ℂ)))) := by
+      = (∑' j : ℕ, ((-1 : ℂ) ^ j * x ^ (j + 1)
+        / ((Nat.factorial (j + 1) : ℂ) * ((j + 1 : ℕ) : ℂ)))) := by
     have h0 : cauchyG x 0 = 0 := cauchyG_zero_aux x
     have hshift : (fun j : ℕ => cauchyG x (j + 1))
-      = (fun j : ℕ => ((-1 : ℂ) ^ j * x ^ (j + 1)
-        / ((Nat.factorial (j + 1) : ℂ) * ((j + 1 : ℕ) : ℂ)))) := by
+        = (fun j : ℕ => ((-1 : ℂ) ^ j * x ^ (j + 1)
+          / ((Nat.factorial (j + 1) : ℂ) * ((j + 1 : ℕ) : ℂ)))) := by
       funext j
       exact cauchyG_succ_aux x j
     have h := Summable.tsum_eq_zero_add hGsumm
-    rwa [h0, zero_add, hshift] at h
+    rw [h0, zero_add, hshift] at h
+    exact h
   have hconv : (fun n : ℕ => ∑ k ∈ Finset.range (n + 1), cauchyF x k * cauchyG x (n - k))
-    = (fun n : ℕ => cauchyH x n) := by
+      = (fun n : ℕ => cauchyH x n) := by
     funext n
     exact conv_eq_aux x n
   have hH : HasSum (fun n : ℕ => cauchyH x n) (Complex.exp x *
-    (∑' j : ℕ, ((-1 : ℂ) ^ j * x ^ (j + 1)
-      / ((Nat.factorial (j + 1) : ℂ) * ((j + 1 : ℕ) : ℂ))))) := by
-    rwa [← hconv, ← hFtsum, ← hGtsum]
+      (∑' j : ℕ, ((-1 : ℂ) ^ j * x ^ (j + 1)
+        / ((Nat.factorial (j + 1) : ℂ) * ((j + 1 : ℕ) : ℂ))))) := by
+    rw [← hconv, ← hFtsum, ← hGtsum]
+    exact hCauchy
   have hHsum : Summable (fun n : ℕ => cauchyH x n) := by
     have hshift : Summable (fun j : ℕ => cauchyH x (j + 1)) := by
       change Summable
@@ -552,11 +554,11 @@ private lemma corollary2_core_aux (x : ℂ) :
       exact hS1
     exact (summable_nat_add_iff 1).mp hshift
   have hteq : (∑' n : ℕ, cauchyH x n) = Complex.exp x *
-    (∑' j : ℕ, ((-1 : ℂ) ^ j * x ^ (j + 1)
-      / ((Nat.factorial (j + 1) : ℂ) * ((j + 1 : ℕ) : ℂ)))) :=
+      (∑' j : ℕ, ((-1 : ℂ) ^ j * x ^ (j + 1)
+        / ((Nat.factorial (j + 1) : ℂ) * ((j + 1 : ℕ) : ℂ)))) :=
     HasSum.tsum_eq hH
   have hHtransfer : (∑' n : ℕ, cauchyH x n)
-    = (∑' j : ℕ, (_root_.harmonic (j + 1) : ℂ) * x ^ (j + 1) / (Nat.factorial (j + 1) : ℂ)) := by
+      = (∑' j : ℕ, (_root_.harmonic (j + 1) : ℂ) * x ^ (j + 1) / (Nat.factorial (j + 1) : ℂ)) := by
     have h := Summable.tsum_eq_zero_add hHsum
     have h0 : cauchyH x 0 = 0 := by
       change ((_root_.harmonic 0 : ℚ) : ℂ) * x ^ 0 / (Nat.factorial 0 : ℂ) = 0
@@ -564,11 +566,13 @@ private lemma corollary2_core_aux (x : ℂ) :
       rw [hz]
       simp
     have hfun : (fun b : ℕ => cauchyH x (b + 1))
-      = (fun j : ℕ => (_root_.harmonic (j + 1) : ℂ) * x ^ (j + 1) /
-        (Nat.factorial (j + 1) : ℂ)) :=
+        = (fun j : ℕ => (_root_.harmonic (j + 1) : ℂ) * x ^ (j + 1) /
+          (Nat.factorial (j + 1) : ℂ)) :=
       rfl
-    rwa [h0, zero_add, hfun] at h
-  rwa [← hHtransfer]
+    rw [h0, zero_add, hfun] at h
+    exact h
+  rw [← hHtransfer]
+  exact hteq
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Corollary2HarmonicSeries
 
@@ -579,7 +583,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Corollary2HarmonicSer
 -/
 @[path]
 lemma ramanujan_part1_ch3_entry2_corollary2_harmonic_series_mathlib
-  {x : ℂ} :
+  (x : ℂ) :
 -- imply
   Summable (fun j : ℕ => (_root_.harmonic (j + 1) : ℂ) * x ^ (j + 1) /
     (Nat.factorial (j + 1) : ℂ)) ∧
@@ -616,9 +620,9 @@ lemma ramanujan_part1_ch3_entry2_corollary2_harmonic_series
   have h :=
     ramanujan_part1_ch3_entry2_corollary2_harmonic_series_mathlib x
   simpa [harmonic_eq_mathlib_harmonic] using h
-end
 
+end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Corollary2HarmonicSeries
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

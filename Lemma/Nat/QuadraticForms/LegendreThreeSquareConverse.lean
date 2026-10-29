@@ -14,7 +14,7 @@ private lemma sq_mod8 (n : Nat) : n ^ 2 % 8 = 0 ∨ n ^ 2 % 8 = 1 ∨ n ^ 2 % 8 
     n % 8 = 4 ∨ n % 8 = 5 ∨ n % 8 = 6 ∨ n % 8 = 7 := by
     have hlt := Nat.mod_lt n (show 0 < 8 from by norm_num)
     omega
-  obtain h|h|h|h|h|h|h|h <;> rw [hpow, h] <;> norm_num := h4
+  obtain h|h|h|h|h|h|h|h := h4 <;> rw [hpow, h] <;> norm_num
 
 end Nat
 
@@ -29,7 +29,7 @@ private lemma sq_mod4 (n : Nat) : n ^ 2 % 4 = 0 ∨ n ^ 2 % 4 = 1 := by
   have h4 : n % 4 = 0 ∨ n % 4 = 1 ∨ n % 4 = 2 ∨ n % 4 = 3 := by
     have hlt := Nat.mod_lt n (show 0 < 4 from by norm_num)
     omega
-  obtain h|h|h|h <;> rw [hpow, h] <;> norm_num := h4
+  obtain h|h|h|h := h4 <;> rw [hpow, h] <;> norm_num
 
 end Nat
 
@@ -89,8 +89,8 @@ private lemma key : ∀ (a : Nat) (b x y z : Nat),
     intro b x y z h
     have h0 : (4 : Nat) ^ 0 * (8 * b + 7) = 8 * b + 7 := by simp
     have hmod : (x ^ 2 + y ^ 2 + z ^ 2) % 8 = 7 := by omega
-    obtain hx|hx|hx <;> rcases sq_mod8 y with hy|hy|hy <;> := sq_mod8 x
-      obtain hz|hz|hz <;> omega := sq_mod8 z
+    rcases sq_mod8 x with hx | hx | hx <;> rcases sq_mod8 y with hy | hy | hy <;>
+      rcases sq_mod8 z with hz | hz | hz <;> omega
   | succ a ih =>
     intro b x y z h
     have h4 : x ^ 2 + y ^ 2 + z ^ 2 = 4 * (4 ^ a * (8 * b + 7)) := by

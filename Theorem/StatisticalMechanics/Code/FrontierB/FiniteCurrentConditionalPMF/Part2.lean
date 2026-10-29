@@ -83,10 +83,10 @@ theorem sourcelessCurrentPMF_apply_eq_parity_factor
           ENNReal.ofReal (freeParityPartition G beta) := by
       rw [currentSum_unit_eq_parityPartition G beta,
         ENNReal.ofReal_mul hcosh]
-    let c : ℝ≥0∞ := ENNReal.ofReal (Real.cosh beta ^ G.edgeFinset.card)
-    let t : ℝ≥0∞ := ENNReal.ofReal (Real.tanh beta ^ H.card)
-    let p : ℝ≥0∞ := ENNReal.ofReal (freeParityPartition G beta)
-    let k : ℝ≥0∞ := ENNReal.ofReal (parityCurrentKernel G beta H m)
+    let c : ENNReal := ENNReal.ofReal (Real.cosh beta ^ G.edgeFinset.card)
+    let t : ENNReal := ENNReal.ofReal (Real.tanh beta ^ H.card)
+    let p : ENNReal := ENNReal.ofReal (freeParityPartition G beta)
+    let k : ENNReal := ENNReal.ofReal (parityCurrentKernel G beta H m)
     have hc0 : c ≠ 0 := (ENNReal.ofReal_pos.2 (by positivity)).ne'
     have hcTop : c ≠ ⊤ := ENNReal.ofReal_ne_top
     simp only [currentRawMass, hsrc, if_true, freeParityRawMass,

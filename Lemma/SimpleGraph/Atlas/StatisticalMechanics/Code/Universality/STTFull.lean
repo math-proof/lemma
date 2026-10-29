@@ -34,7 +34,7 @@ private lemma stt_sum_weighted_dirac_singleton_eq
   {f : LocalConfig → α}
   {a : α}
 -- given
-  (g : LocalConfig → ℝ≥0∞) :
+  (g : LocalConfig → ENNReal) :
 -- imply
   (∑ ω : LocalConfig, g ω • Measure.dirac (f ω)) {a} = ∑ ω : LocalConfig, if f ω = a then g ω else 0 := by
 -- proof
@@ -187,8 +187,8 @@ private lemma stt_triLocalMeasure_singleton_eq
 private lemma stt_const_mul_sum_ite_eq
   [DecidablePred P]
 -- given
-  (a : ℝ≥0∞)
-  (g : LocalConfig → ℝ≥0∞)
+  (a : ENNReal)
+  (g : LocalConfig → ENNReal)
   (P : LocalConfig → Prop) :
 -- imply
   (∑ ω : LocalConfig, if P ω then a * g ω else 0) = a * ∑ ω : LocalConfig, if P ω then g ω else 0 := by

@@ -84,7 +84,7 @@ theorem bc28_Tcount_le_boundary_of_rootedArmDivergence (ω : ConfigSpace (Sym2 (
     (bc28_rootedTreeArmSelection_of_rootedArmDivergence ω n h)
 
 
-theorem bc28_burton_keane_bernoulli_of_rootedArmDivergence (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc28_burton_keane_bernoulli_of_rootedArmDivergence (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
       rfp_RootedArmDivergence ω n)

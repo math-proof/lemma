@@ -22,7 +22,7 @@ variable {E : Type*}
 
 namespace bernoulliProductMeasure
 
-variable {p : ℝ≥0} {hp : p ≤ 1}
+variable {p : NNReal} {hp : p ≤ 1}
 
 
 theorem apply_singleton [Fintype E] (ω : ConfigSpace E) :

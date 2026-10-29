@@ -181,7 +181,8 @@ lemma cobham_gap_theorem_general
       rwa [← hstates]
     have horiginalMember : blockPrefix r * k ^ r + remainder ∈ Set.range x := by
       have hm := (haccept _).1 horiginalAccepted
-      rwa [horiginalValue] at hm
+      rw [horiginalValue] at hm
+      exact hm.2
     apply hblock r (blockPrefix r * k ^ r + remainder)
       (Nat.le_add_right _ _) _ horiginalMember
     calc
@@ -259,7 +260,6 @@ lemma cobham_gap_theorem_general
     · exact_mod_cast hileft.le
   exact hratioBound.trans_le
     (Filter.le_limsup_of_frequently_le hfrequent)
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -274,7 +274,7 @@ lemma cobham_gap_theorem
   {x : ℕ → ℕ}
 -- given
   (hx : StrictMono x)
-  (hk : 2 ≤ k)
+  (_hk : 2 ≤ k)
   (hX : IsBaseRecognizable k (Set.range x)) :
 -- imply
   Filter.limsup

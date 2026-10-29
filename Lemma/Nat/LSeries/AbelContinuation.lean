@@ -9,9 +9,8 @@ open Filter Asymptotics MeasureTheory Topology Set Complex
 -/
 @[path]
 lemma abelSummatory_eq_zero_of_lt_one
-  {f : ℕ → ℂ}
   {t : ℝ}
--- given
+  (f : ℕ → ℂ)
   (ht : t < 1) :
 -- imply
   abelSummatory f t = 0 := by
@@ -29,7 +28,7 @@ lemma locallyIntegrableOn_abelSummatory
   LocallyIntegrableOn (abelSummatory f) (Set.Ioi (0 : ℝ)) := by
 -- proof
   have h : LocallyIntegrableOn (fun t : ℝ => (1 : ℂ) * ∑ k ∈ Finset.Icc 1 ⌊t⌋₊, f k)
-    (Set.Ici (0 : ℝ)) :=
+      (Set.Ici (0 : ℝ)) :=
     locallyIntegrableOn_mul_sum_Icc f le_rfl (locallyIntegrableOn_const 1)
   refine LocallyIntegrableOn.congr ?_ (h.mono_set Set.Ioi_subset_Ici_self)
   filter_upwards with t
@@ -48,10 +47,10 @@ lemma isBigO_abelSummatory_atTop
   (abelSummatory f) =O[atTop] fun t : ℝ => (t ^ σ : ℝ) := by
 -- proof
   have h1 : ((fun n => abelPartialSum f n) ∘ fun t : ℝ => ⌊t⌋₊) =O[atTop]
-    ((fun n : ℕ => ((n : ℝ) ^ σ : ℝ)) ∘ fun t : ℝ => ⌊t⌋₊) :=
+      ((fun n : ℕ => ((n : ℝ) ^ σ : ℝ)) ∘ fun t : ℝ => ⌊t⌋₊) :=
     hO.comp_tendsto tendsto_nat_floor_atTop
   have h2 : (fun t : ℝ => (((⌊t⌋₊ : ℕ) : ℝ) ^ σ : ℝ)) =O[atTop]
-    fun t => (t ^ σ : ℝ) :=
+      fun t => (t ^ σ : ℝ) :=
     ((Asymptotics.isEquivalent_nat_floor (R := ℝ)).symm.rpow (r := σ)
       (Pi.le_def.mpr fun _ => Nat.cast_nonneg _)).symm.isBigO
   exact h1.trans h2
@@ -87,16 +86,17 @@ lemma abelContinuation_eq_mul_mellin
   have hf_top : abelSummatory f =O[atTop] fun t : ℝ => (t ^ (- -σ) : ℝ) := by
     simpa using isBigO_abelSummatory_atTop f hO
   have hs_top : (-s).re < -σ := by
-    rwa [Complex.neg_re, neg_lt_neg_iff]
+    rw [Complex.neg_re, neg_lt_neg_iff]
+    exact hs
   have hf_bot :
-    abelSummatory f =O[𝓝[>] (0 : ℝ)] fun t : ℝ => (t ^ (-((-s).re - 1)) : ℝ) :=
+      abelSummatory f =O[𝓝[>] (0 : ℝ)] fun t : ℝ => (t ^ (-((-s).re - 1)) : ℝ) :=
     isBigO_abelSummatory_nhdsGT_zero f _
   have hs_bot : (-s).re - 1 < (-s).re := sub_lt_self _ one_pos
   have hconv : MellinConvergent (abelSummatory f) (-s) :=
     mellinConvergent_of_isBigO_rpow (locallyIntegrableOn_abelSummatory f)
       hf_top hs_top hf_bot hs_bot
   have hInt : IntegrableOn
-    (fun t : ℝ => (t : ℂ) ^ (-s - 1) • abelSummatory f t) (Set.Ioi (0 : ℝ)) :=
+      (fun t : ℝ => (t : ℂ) ^ (-s - 1) • abelSummatory f t) (Set.Ioi (0 : ℝ)) :=
     hconv
   rw [abelContinuation, mellin,
     (Set.Ioc_union_Ioi_eq_Ioi zero_le_one).symm,
@@ -104,7 +104,7 @@ lemma abelContinuation_eq_mul_mellin
       (hInt.mono_set Set.Ioc_subset_Ioi_self)
       (hInt.mono_set (Set.Ioi_subset_Ioi zero_le_one))]
   have hzero : (∫ t : ℝ in Set.Ioc 0 1,
-    (t : ℂ) ^ (-s - 1) • abelSummatory f t) = 0 := by
+      (t : ℂ) ^ (-s - 1) • abelSummatory f t) = 0 := by
     refine setIntegral_eq_zero_of_ae_eq_zero ?_
     have hnull : ∀ᵐ t : ℝ ∂volume, t ≠ 1 := by
       rw [ae_iff]
@@ -133,9 +133,10 @@ lemma differentiableAt_abelContinuation
   have hf_top : abelSummatory f =O[atTop] fun t : ℝ => (t ^ (- -σ) : ℝ) := by
     simpa using isBigO_abelSummatory_atTop f hO
   have hs_top : (-s).re < -σ := by
-    rwa [Complex.neg_re, neg_lt_neg_iff]
+    rw [Complex.neg_re, neg_lt_neg_iff]
+    exact hs
   have hf_bot :
-    abelSummatory f =O[𝓝[>] (0 : ℝ)] fun t : ℝ => (t ^ (-((-s).re - 1)) : ℝ) :=
+      abelSummatory f =O[𝓝[>] (0 : ℝ)] fun t : ℝ => (t ^ (-((-s).re - 1)) : ℝ) :=
     isBigO_abelSummatory_nhdsGT_zero f _
   have hs_bot : (-s).re - 1 < (-s).re := sub_lt_self _ one_pos
   have hdiff : DifferentiableAt ℂ (mellin (abelSummatory f)) (-s) :=
@@ -146,7 +147,7 @@ lemma differentiableAt_abelContinuation
   have hmul : DifferentiableAt ℂ (fun s => s * mellin (abelSummatory f) (-s)) s :=
     differentiableAt_id.mul hcomp
   have hev : (fun s => s * mellin (abelSummatory f) (-s)) =ᶠ[𝓝 s]
-    abelContinuation f := by
+      abelContinuation f := by
     have hopen : IsOpen {s : ℂ | σ < s.re} :=
       isOpen_lt continuous_const Complex.continuous_re
     filter_upwards [hopen.mem_nhds hs] with s' hs'
@@ -211,21 +212,21 @@ lemma tendsto_abelContinuation_Icc
     simp [hc_def, hk]
   have hsum_eq : ∀ n : ℕ, ∑ k ∈ Finset.Icc 0 n, c k = abelPartialSum f n := by
     intro n
-    obtain rfl | hn := eq_or_ne n 0
+    rcases eq_or_ne n 0 with rfl | hn
     · simp [hc0, abelPartialSum]
     · conv_lhs => rw [← Finset.insert_Icc_add_one_left_eq_Icc (Nat.zero_le n)]
       rw [Finset.sum_insert (by simp), hc0, zero_add]
       exact Finset.sum_congr rfl fun k hk => hc_eq k
         (zero_lt_one.trans_le (Finset.mem_Icc.mp hk).1).ne'
   have hO' : (fun n => ∑ k ∈ Finset.Icc 0 n, c k) =O[atTop]
-    fun n => ((n : ℝ) ^ σ : ℝ) := by
+      fun n => ((n : ℝ) ^ σ : ℝ) := by
     simpa only [hsum_eq] using hO
   have hfloor : (fun t : ℝ => (((⌊t⌋₊ : ℕ) : ℝ) ^ σ : ℝ)) =O[atTop]
-    fun t => (t ^ σ : ℝ) :=
+      fun t => (t ^ σ : ℝ) :=
     ((Asymptotics.isEquivalent_nat_floor (R := ℝ)).symm.rpow (r := σ)
       (Pi.le_def.mpr fun _ => Nat.cast_nonneg _)).symm.isBigO
   have hf_diff : ∀ t ∈ Set.Ici (1 : ℝ),
-    DifferentiableAt ℝ (fun x : ℝ => (x : ℂ) ^ (-s)) t := by
+      DifferentiableAt ℝ (fun x : ℝ => (x : ℂ) ^ (-s)) t := by
     intro t ht
     have ht0 : t ≠ 0 := ne_of_gt (zero_lt_one.trans_le ht)
     by_cases hs0 : s = 0
@@ -236,57 +237,58 @@ lemma tendsto_abelContinuation_Icc
       exact differentiableAt_const 1
     · exact differentiableAt_id.ofReal_cpow_const ht0 (neg_ne_zero.mpr hs0)
   have hf_int : LocallyIntegrableOn
-    (deriv fun x : ℝ => (x : ℂ) ^ (-s)) (Set.Ici 1) := by
+      (deriv fun x : ℝ => (x : ℂ) ^ (-s)) (Set.Ici 1) := by
     by_cases hs0 : s = 0
     · subst hs0
       have hfun : (fun x : ℝ => (x : ℂ) ^ (-(0 : ℂ))) = fun _ => 1 := by
         simp [neg_zero]
       have hderiv : deriv (fun x : ℝ => (x : ℂ) ^ (-(0 : ℂ))) = fun _ => 0 := by
         rw [hfun, deriv_const']
-      rwa [hderiv]
+      rw [hderiv]
+      exact locallyIntegrableOn_zero
     · have hRHS : ContinuousOn (fun x : ℝ => -s * (x : ℂ) ^ (-s - 1))
-      (Set.Ici 1) := by
-      refine ContinuousOn.mul continuousOn_const fun x hx => ?_
-      exact (Complex.continuousAt_ofReal_cpow_const _ _
-        (Or.inr (ne_of_gt (zero_lt_one.trans_le hx)))).continuousWithinAt
+          (Set.Ici 1) := by
+        refine ContinuousOn.mul continuousOn_const fun x hx => ?_
+        exact (Complex.continuousAt_ofReal_cpow_const _ _
+          (Or.inr (ne_of_gt (zero_lt_one.trans_le hx)))).continuousWithinAt
       have heq : Set.EqOn (deriv fun x : ℝ => (x : ℂ) ^ (-s))
-        (fun x : ℝ => -s * (x : ℂ) ^ (-s - 1)) (Set.Ici 1) := by
+          (fun x : ℝ => -s * (x : ℂ) ^ (-s - 1)) (Set.Ici 1) := by
         intro x hx
         exact Complex.deriv_ofReal_cpow_const
           (ne_of_gt (zero_lt_one.trans_le hx)) (neg_ne_zero.mpr hs0)
       exact (hRHS.congr heq).locallyIntegrableOn measurableSet_Ici
   have hlim : Tendsto
-    (fun n : ℕ => ((n : ℝ) : ℂ) ^ (-s) * ∑ k ∈ Finset.Icc 0 n, c k)
-    atTop (𝓝 0) := by
+      (fun n : ℕ => ((n : ℝ) : ℂ) ^ (-s) * ∑ k ∈ Finset.Icc 0 n, c k)
+      atTop (𝓝 0) := by
     have hlim0 : Tendsto (fun n : ℕ => (n : ℝ) ^ (-(s.re - σ))) atTop (𝓝 0) :=
       (tendsto_rpow_neg_atTop (by linarith)).comp tendsto_natCast_atTop_atTop
     refine (IsBigO.mul_atTop_rpow_natCast_of_isBigO_rpow (-s.re) _ _
       ?_ hO' ?_).trans_tendsto hlim0
     · exact isBigO_norm_left.mp
-      (norm_ofReal_cpow_eventually_eq_atTop _).isBigO.natCast_atTop
+        (norm_ofReal_cpow_eventually_eq_atTop _).isBigO.natCast_atTop
     · linarith
   have hexp : (-(s + 1)).re + σ < -1 := by
     simp only [Complex.neg_re, Complex.add_re, Complex.one_re]
     linarith
   have hg_dom : (fun t : ℝ => deriv (fun x : ℝ => (x : ℂ) ^ (-s)) t *
-    ∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k) =O[atTop]
-    fun t => (t : ℝ) ^ ((-(s + 1)).re + σ) := by
+      ∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k) =O[atTop]
+      fun t => (t : ℝ) ^ ((-(s + 1)).re + σ) := by
     refine IsBigO.mul_atTop_rpow_of_isBigO_rpow (-(s + 1)).re σ _
       ?_ ?_ le_rfl
     · simpa [-neg_add_rev, neg_add'] using!
-      isBigO_deriv_ofReal_cpow_const_atTop _
+        isBigO_deriv_ofReal_cpow_const_atTop _
     · exact (hO'.comp_tendsto tendsto_nat_floor_atTop).trans hfloor
   have habel := tendsto_sum_mul_atTop_nhds_one_sub_integral₀ (c := c)
     (f := fun x : ℝ => (x : ℂ) ^ (-s)) (l := 0) hc0 hf_diff hf_int hlim
     hg_dom (integrableAtFilter_rpow_atTop_iff.mpr hexp)
   have hterm : ∀ N : ℕ, (∑ k ∈ Finset.Icc 0 N, ((k : ℝ) : ℂ) ^ (-s) * c k) =
-    ∑ n ∈ Finset.Icc 1 N, LSeries.term f s n := by
+      ∑ n ∈ Finset.Icc 1 N, LSeries.term f s n := by
     intro N
-    obtain rfl | hN := eq_or_ne N 0
+    rcases eq_or_ne N 0 with rfl | hN
     · rw [Finset.Icc_self, Finset.sum_singleton, hc0, mul_zero,
-      show Finset.Icc 1 0 = (∅ : Finset ℕ) by simp, Finset.sum_empty]
+        show Finset.Icc 1 0 = (∅ : Finset ℕ) by simp, Finset.sum_empty]
     · rw [← Finset.insert_Icc_add_one_left_eq_Icc (Nat.zero_le N),
-      Finset.sum_insert (by simp), hc0, mul_zero, zero_add]
+        Finset.sum_insert (by simp), hc0, mul_zero, zero_add]
       refine Finset.sum_congr rfl fun k hk => ?_
       have hk0 : k ≠ 0 :=
         (zero_lt_one.trans_le (Finset.mem_Icc.mp hk).1).ne'
@@ -294,8 +296,8 @@ lemma tendsto_abelContinuation_Icc
       simp only [div_eq_mul_inv, Complex.ofReal_natCast, Complex.cpow_neg]
       exact mul_comm _ _
   have hderiv_eq : ∀ t ∈ Set.Ioi (1 : ℝ),
-    deriv (fun x : ℝ => (x : ℂ) ^ (-s)) t * ∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k =
-    -(s * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k) * (t : ℂ) ^ (-(s + 1)))) := by
+      deriv (fun x : ℝ => (x : ℂ) ^ (-s)) t * ∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k =
+      -(s * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k) * (t : ℂ) ^ (-(s + 1)))) := by
     intro t ht
     by_cases hs0 : s = 0
     · subst hs0
@@ -304,17 +306,17 @@ lemma tendsto_abelContinuation_Icc
       rw [hfun]
       simp
     · rw [Complex.deriv_ofReal_cpow_const (ne_of_gt (zero_lt_one.trans ht))
-      (neg_ne_zero.mpr hs0), show (-s - 1 : ℂ) = (-(s + 1)) by ring]
+        (neg_ne_zero.mpr hs0), show (-s - 1 : ℂ) = (-(s + 1)) by ring]
       ring
   have hcongr : ∀ t ∈ Set.Ioi (1 : ℝ),
-    -(deriv (fun x : ℝ => (x : ℂ) ^ (-s)) t *
-      ∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k) =
-    s * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k) * (t : ℂ) ^ (-(s + 1))) := by
+      -(deriv (fun x : ℝ => (x : ℂ) ^ (-s)) t *
+        ∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k) =
+      s * ((∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k) * (t : ℂ) ^ (-(s + 1))) := by
     intro t ht
     rw [hderiv_eq t ht, neg_neg]
   have hint : (0 : ℂ) - ∫ t : ℝ in Set.Ioi 1,
-    deriv (fun x : ℝ => (x : ℂ) ^ (-s)) t * ∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k =
-    abelContinuation f s := by
+      deriv (fun x : ℝ => (x : ℂ) ^ (-s)) t * ∑ k ∈ Finset.Icc 0 ⌊t⌋₊, c k =
+      abelContinuation f s := by
     rw [zero_sub, ← integral_neg,
       setIntegral_congr_fun measurableSet_Ioi hcongr, integral_const_mul,
       abelContinuation]
@@ -324,7 +326,3 @@ lemma tendsto_abelContinuation_Icc
     exact hsum_eq _
   rw [← hint]
   exact habel.congr fun N => hterm N
-
-
--- created on 2026-10-20
--- updated on 2026-10-26

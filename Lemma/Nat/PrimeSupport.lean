@@ -50,7 +50,7 @@ lemma SamePrimeSupport.trans
 -- imply
   SamePrimeSupport a c :=
 -- proof
-  fun p hp => Iff.trans (h1 p hp) (h2 p hp)
+  fun p hp => (h0 p hp).trans (h1 p hp)
 
 end Nat
 

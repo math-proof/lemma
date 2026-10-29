@@ -24,11 +24,11 @@ variable {α : Type*}
 
 section Conditions
 
-def HolleyLatticeCondition [Lattice α] (μ₁ μ₂ : α → ℝ≥0) : Prop :=
+def HolleyLatticeCondition [Lattice α] (μ₁ μ₂ : α → NNReal) : Prop :=
   ∀ x y, μ₁ x * μ₂ y ≤ μ₁ (x ⊓ y) * μ₂ (x ⊔ y)
 
 
-def FKGCondition [Lattice α] (μ : α → ℝ≥0) : Prop :=
+def FKGCondition [Lattice α] (μ : α → NNReal) : Prop :=
   ∀ x y, μ x * μ y ≤ μ (x ⊓ y) * μ (x ⊔ y)
 
 

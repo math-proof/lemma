@@ -29,7 +29,7 @@ set_option linter.unusedSectionVars false
 set_option maxRecDepth 4000
 
 
-theorem bcl2_hroute_of_bridge (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
+theorem bcl2_hroute_of_bridge (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
     (hbridge : bcl2_Bridge p hp1) :
     ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n) →
@@ -43,7 +43,7 @@ theorem bcl2_hroute_of_bridge (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt 
     bcl_precursorPos p hp1 hp0 hplt I a₁ a₂ a₃ x y z η₀ hne hadj hcorr hExtMeas hXpos⟩
 
 
-theorem bcl2_bk_of_bridge (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
+theorem bcl2_bk_of_bridge (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
     (hbridge : bcl2_Bridge p hp1) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
         {ω | numInfiniteClusters 2 ω = 0} = 1 ∨
@@ -55,7 +55,7 @@ theorem bcl2_bk_of_bridge (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p 
   bfx_bk_of_route (by norm_num) p hp1 hp0 (bcl2_hroute_of_bridge p hp1 hp0 hplt hbridge)
 
 
-theorem bcl2_bk_atLeastTwo_of_bridge (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
+theorem bcl2_bk_atLeastTwo_of_bridge (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
     (hbridge : bcl2_Bridge p hp1) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   (bcl2_bk_of_bridge p hp1 hp0 hplt hbridge).2.1

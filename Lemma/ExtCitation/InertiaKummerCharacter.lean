@@ -26,7 +26,7 @@ open scoped NNReal in
 
 theorem natCast_mem_nonunits_primeLocalPlace : ((q : ℕ) : AlgebraicClosure ℚ) ∈ (primeLocalPlace q).nonunits := by
   haveI : Fact (q : ℕ).Prime := ⟨q.2⟩
-  have hq : Valued.v ((q : ℕ) : PadicAlgCl q) = 1 / ((q : ℕ) : ℝ≥0) := PadicAlgCl.valuation_p q
+  have hq : Valued.v ((q : ℕ) : PadicAlgCl q) = 1 / ((q : ℕ) : NNReal) := PadicAlgCl.valuation_p q
   have hq2 : (2 : ℕ) ≤ (q : ℕ) := (Fact.out : (q : ℕ).Prime).two_le
   show ((q : ℕ) : AlgebraicClosure ℚ) ∈ (padicPlace (q : ℕ)).nonunits
   rw [padicPlace, mem_nonunits_comap_iff, ValuationSubring.mem_nonunits_iff,

@@ -231,7 +231,7 @@ lemma infinite_primes_in_residueClass_zmod
 -- imply
   {p : ℕ | p.Prime ∧ (p : ZMod q) = a}.Infinite :=
 -- proof
-  Nat.infinite_setOf_prime_and_eq_mod ha
+  Nat.infinite_setOfPred_prime_and_eq_mod ha
 @[deprecated (since := "2024-12-18")]
 alias thm_18_1_dirichlet_zmod := infinite_primes_in_residueClass_zmod
 
@@ -294,7 +294,7 @@ lemma infinite_primes_in_arithmeticProgression
 -- imply
   Set.Infinite {p : ℕ | p.Prime ∧ p ≡ a [MOD q]} :=
 -- proof
-  Nat.infinite_setOf_prime_and_modEq hq h
+  Nat.infinite_setOfPred_prime_and_modEq hq h
 @[deprecated (since := "2024-12-18")]
 alias thm_18_1_dirichlet_infinite := infinite_primes_in_arithmeticProgression
 
@@ -345,3 +345,4 @@ end DirichletLFunction
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

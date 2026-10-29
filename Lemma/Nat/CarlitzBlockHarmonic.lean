@@ -2,15 +2,14 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 
 
-/--
+/-!
 [inv_add_inv_of_isUnit](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CarlitzBlockHarmonic.lean)
--/
-@[path]
 # Carlitz block harmonic sum
 The block harmonic sum used in the classical application of Carlitz's
 generalization of Wolstenholme's lemma vanishes modulo `p ^ 2`.
 -/
 /-- Sum of two inverses as a product inverse, for units in `ZMod n`. -/
+@[path]
 private theorem ZMod.inv_add_inv_of_isUnit {n : ℕ} {a b : ZMod n}
   (ha : IsUnit a) (hb : IsUnit b) :
   a⁻¹ + b⁻¹ = (a + b) * (a * b)⁻¹ := by
@@ -19,7 +18,7 @@ private theorem ZMod.inv_add_inv_of_isUnit {n : ℕ} {a b : ZMod n}
     have e1 : a * a⁻¹ = 1 := ZMod.mul_inv_of_unit _ ha
     have e2 : b * b⁻¹ = 1 := ZMod.mul_inv_of_unit _ hb
     calc (a * b) * (a⁻¹ * b⁻¹)
-      = (a * a⁻¹) * (b * b⁻¹) := by ring
+        = (a * a⁻¹) * (b * b⁻¹) := by ring
       _ = 1 := by rw [e1, e2, mul_one]
   rw [hmul]
   have e1 : a * a⁻¹ = 1 := ZMod.mul_inv_of_unit _ ha
@@ -66,9 +65,8 @@ private lemma ZMod.sum_range_cast {M : Type*} [AddCommMonoid M] (p : ℕ) [NeZer
 
 /--
 [sum_Ico_cast](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CarlitzBlockHarmonic.lean)
--/
-@[path]
 equals the sum over `ZMod p`. -/
+@[path]
 private lemma ZMod.sum_Ico_cast {M : Type*} [AddCommMonoid M] (p : ℕ) [NeZero p]
   (φ : ZMod p → M) (hφ0 : φ 0 = 0) :
   ∑ r ∈ Finset.Ico 1 p, φ ((r : ℕ) : ZMod p) = ∑ x, φ x := by
@@ -83,15 +81,16 @@ private lemma ZMod.sum_Ico_cast {M : Type*} [AddCommMonoid M] (p : ℕ) [NeZero 
     omega
   rw [heq] at herase
   have hφ0' : φ (((0 : ℕ)) : ZMod p) = 0 := by
-    rwa [Nat.cast_zero]
+    rw [Nat.cast_zero]
+    exact hφ0
   rw [hφ0', zero_add] at herase
-  rwa [herase]
+  rw [herase]
+  exact hrange
 
 /--
 [eq_mul_p_of_castHom_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CarlitzBlockHarmonic.lean)
--/
-@[path]
 is a multiple of `p`. -/
+@[path]
 private lemma ZMod.eq_mul_p_of_castHom_eq_zero {p : ℕ} [NeZero (p ^ 2)]
   (H : ZMod (p ^ 2))
   (hH : ZMod.castHom (dvd_pow_self p two_ne_zero) (ZMod p) H = 0) :
@@ -99,9 +98,10 @@ private lemma ZMod.eq_mul_p_of_castHom_eq_zero {p : ℕ} [NeZero (p ^ 2)]
   set v := H.val with hv
   have hH2 : H = (((v : ℕ)) : ZMod (p ^ 2)) := (ZMod.natCast_zmod_val H).symm
   have hmap : ZMod.castHom (dvd_pow_self p two_ne_zero) (ZMod p) (((v : ℕ)) : ZMod (p ^ 2))
-    = (((v : ℕ)) : ZMod p) := map_natCast _ _
+      = (((v : ℕ)) : ZMod p) := map_natCast _ _
   have hcast : ((((v : ℕ))) : ZMod p) = 0 := by
-    rwa [← hmap, ← hH2]
+    rw [← hmap, ← hH2]
+    exact hH
   have hdvd : p ∣ v := (CharP.cast_eq_zero_iff (ZMod p) p v).mp hcast
   obtain ⟨t, ht⟩ := hdvd
   exact ⟨(((t : ℕ)) : ZMod (p ^ 2)), by rw [hH2, ht, Nat.cast_mul]⟩
@@ -119,9 +119,9 @@ lemma ZMod.carlitz_sum_inv_block_Ico_eq_zero_of_five_le
   (Finset.Ico 1 p).sum
     (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹)) = 0 := by
 -- proof
-  haveI : Fact p.Prime := ⟨hp⟩
-  haveI : NeZero p := ⟨hp.ne_zero⟩
-  haveI : NeZero (p ^ 2) := ⟨pow_ne_zero 2 hp.ne_zero⟩
+  have : Fact p.Prime := ⟨hp⟩
+  have : NeZero p := ⟨hp.ne_zero⟩
+  have : NeZero (p ^ 2) := ⟨pow_ne_zero 2 hp.ne_zero⟩
   have hcopA : ∀ r : ℕ, 1 ≤ r → r < p → Nat.Coprime (k * p + r) (p ^ 2) := by
     intro r hr1 hr2
     rw [Nat.coprime_pow_right_iff (by norm_num : 0 < 2)]
@@ -144,45 +144,45 @@ lemma ZMod.carlitz_sum_inv_block_Ico_eq_zero_of_five_le
     have h0 : p - r = 0 := Nat.eq_zero_of_dvd_of_lt hpr hlt
     omega
   have hUA : ∀ r : ℕ, 1 ≤ r → r < p →
-    IsUnit ((k * p + r : ℕ) : ZMod (p ^ 2)) := by
+      IsUnit ((k * p + r : ℕ) : ZMod (p ^ 2)) := by
     intro r hr1 hr2
     exact ⟨ZMod.unitOfCoprime _ (hcopA r hr1 hr2), ZMod.coe_unitOfCoprime _ _⟩
   have hUB : ∀ r : ℕ, 1 ≤ r → r < p →
-    IsUnit ((k * p + (p - r) : ℕ) : ZMod (p ^ 2)) := by
+      IsUnit ((k * p + (p - r) : ℕ) : ZMod (p ^ 2)) := by
     intro r hr1 hr2
     exact ⟨ZMod.unitOfCoprime _ (hcopB r hr1 hr2), ZMod.coe_unitOfCoprime _ _⟩
   have hpair : ∀ r : ℕ, 1 ≤ r → r < p →
-    ((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹ + ((k * p + (p - r) : ℕ) : ZMod (p ^ 2))⁻¹
-      = ((p : ℕ) : ZMod (p ^ 2)) * (((2 * k + 1 : ℕ) : ZMod (p ^ 2)) *
-        (((k * p + r : ℕ) : ZMod (p ^ 2)) * ((k * p + (p - r) : ℕ) : ZMod (p ^ 2)))⁻¹) := by
+      ((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹ + ((k * p + (p - r) : ℕ) : ZMod (p ^ 2))⁻¹
+        = ((p : ℕ) : ZMod (p ^ 2)) * (((2 * k + 1 : ℕ) : ZMod (p ^ 2)) *
+          (((k * p + r : ℕ) : ZMod (p ^ 2)) * ((k * p + (p - r) : ℕ) : ZMod (p ^ 2)))⁻¹) := by
     intro r hr1 hr2
     have hAB : ((k * p + r : ℕ) : ZMod (p ^ 2)) + ((k * p + (p - r) : ℕ) : ZMod (p ^ 2))
-      = ((p : ℕ) : ZMod (p ^ 2)) * ((2 * k + 1 : ℕ) : ZMod (p ^ 2)) := by
+        = ((p : ℕ) : ZMod (p ^ 2)) * ((2 * k + 1 : ℕ) : ZMod (p ^ 2)) := by
       have hnat : k * p + r + (k * p + (p - r)) = (2 * k + 1) * p := by
         have hr : r ≤ p := le_of_lt hr2
         have e : (2 * k + 1) * p = 2 * (k * p) + p := by ring
         omega
       have hcast : ((k * p + r + (k * p + (p - r)) : ℕ) : ZMod (p ^ 2))
-        = (((2 * k + 1) * p : ℕ) : ZMod (p ^ 2)) := by rw [hnat]
+          = (((2 * k + 1) * p : ℕ) : ZMod (p ^ 2)) := by rw [hnat]
       have e1 : ((k * p + r : ℕ) : ZMod (p ^ 2)) + ((k * p + (p - r) : ℕ) : ZMod (p ^ 2))
-        = ((k * p + r + (k * p + (p - r)) : ℕ) : ZMod (p ^ 2)) := by
+          = ((k * p + r + (k * p + (p - r)) : ℕ) : ZMod (p ^ 2)) := by
         push_cast
         ring
       have e2 : (((2 * k + 1) * p : ℕ) : ZMod (p ^ 2))
-        = ((p : ℕ) : ZMod (p ^ 2)) * ((2 * k + 1 : ℕ) : ZMod (p ^ 2)) := by
+          = ((p : ℕ) : ZMod (p ^ 2)) * ((2 * k + 1 : ℕ) : ZMod (p ^ 2)) := by
         push_cast
         ring
       rw [e1, hcast, e2]
     rw [ZMod.inv_add_inv_of_isUnit (hUA r hr1 hr2) (hUB r hr1 hr2), hAB, mul_assoc]
   have hSrange : (Finset.Ico 1 p).sum
-    (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹))
-    = ∑ j ∈ Finset.range (p - 1),
-      ((k * p + (1 + j) : ℕ) : ZMod (p ^ 2))⁻¹ := by
+        (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹))
+      = ∑ j ∈ Finset.range (p - 1),
+        ((k * p + (1 + j) : ℕ) : ZMod (p ^ 2))⁻¹ := by
     rw [Finset.sum_Ico_eq_sum_range]
   have hSmirror : (Finset.Ico 1 p).sum
-    (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹))
-    = ∑ j ∈ Finset.range (p - 1),
-      ((k * p + (p - (1 + j)) : ℕ) : ZMod (p ^ 2))⁻¹ := by
+        (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹))
+      = ∑ j ∈ Finset.range (p - 1),
+        ((k * p + (p - (1 + j)) : ℕ) : ZMod (p ^ 2))⁻¹ := by
     rw [hSrange, ← Finset.sum_range_reflect]
     apply Finset.sum_congr rfl
     intro j hj
@@ -193,11 +193,11 @@ lemma ZMod.carlitz_sum_inv_block_Ico_eq_zero_of_five_le
       = ((k * p + (p - (1 + j)) : ℕ) : ZMod (p ^ 2))⁻¹
     rw [e]
   have h2S : (2 : ZMod (p ^ 2)) * (Finset.Ico 1 p).sum
-    (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹))
-    = ((p : ℕ) : ZMod (p ^ 2)) * ∑ j ∈ Finset.range (p - 1),
-      ((2 * k + 1 : ℕ) : ZMod (p ^ 2)) *
-        (((k * p + (1 + j) : ℕ) : ZMod (p ^ 2)) *
-          ((k * p + (p - (1 + j)) : ℕ) : ZMod (p ^ 2)))⁻¹ := by
+        (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹))
+      = ((p : ℕ) : ZMod (p ^ 2)) * ∑ j ∈ Finset.range (p - 1),
+          ((2 * k + 1 : ℕ) : ZMod (p ^ 2)) *
+            (((k * p + (1 + j) : ℕ) : ZMod (p ^ 2)) *
+              ((k * p + (p - (1 + j)) : ℕ) : ZMod (p ^ 2)))⁻¹ := by
     rw [two_mul]
     nth_rewrite 1 [hSrange]
     rw [hSmirror, ← Finset.sum_add_distrib, Finset.mul_sum]
@@ -208,36 +208,36 @@ lemma ZMod.carlitz_sum_inv_block_Ico_eq_zero_of_five_le
     have hr2 : 1 + j < p := by omega
     exact hpair (1 + j) hr1 hr2
   have hπA : ∀ r : ℕ,
-    ZMod.castHom (dvd_pow_self p two_ne_zero) (ZMod p)
-      ((k * p + r : ℕ) : ZMod (p ^ 2)) = ((r : ℕ) : ZMod p) := by
+      ZMod.castHom (dvd_pow_self p two_ne_zero) (ZMod p)
+        ((k * p + r : ℕ) : ZMod (p ^ 2)) = ((r : ℕ) : ZMod p) := by
     intro r
     rw [map_natCast]
     have h0 : ((p : ℕ) : ZMod p) = 0 := ZMod.natCast_self p
     have hsplit : ((k * p + r : ℕ) : ZMod p)
-      = ((k : ℕ) : ZMod p) * ((p : ℕ) : ZMod p) + ((r : ℕ) : ZMod p) := by
+        = ((k : ℕ) : ZMod p) * ((p : ℕ) : ZMod p) + ((r : ℕ) : ZMod p) := by
       push_cast
       ring
     rw [hsplit, h0, mul_zero, zero_add]
   have hπB : ∀ r : ℕ, 1 ≤ r → r < p →
-    ZMod.castHom (dvd_pow_self p two_ne_zero) (ZMod p)
-      ((k * p + (p - r) : ℕ) : ZMod (p ^ 2)) = -((r : ℕ) : ZMod p) := by
+      ZMod.castHom (dvd_pow_self p two_ne_zero) (ZMod p)
+        ((k * p + (p - r) : ℕ) : ZMod (p ^ 2)) = -((r : ℕ) : ZMod p) := by
     intro r hr1 hr2
     rw [map_natCast]
     have h0 : ((p : ℕ) : ZMod p) = 0 := ZMod.natCast_self p
     have hrp : r ≤ p := le_of_lt hr2
     have hsub : ((p - r : ℕ) : ZMod p)
-      = ((p : ℕ) : ZMod p) - ((r : ℕ) : ZMod p) :=
+        = ((p : ℕ) : ZMod p) - ((r : ℕ) : ZMod p) :=
       Nat.cast_sub hrp
     have hsplit : ((k * p + (p - r) : ℕ) : ZMod p)
-      = ((k : ℕ) : ZMod p) * ((p : ℕ) : ZMod p) + ((p - r : ℕ) : ZMod p) := by
+        = ((k : ℕ) : ZMod p) * ((p : ℕ) : ZMod p) + ((p - r : ℕ) : ZMod p) := by
       push_cast
       ring
     rw [hsplit, hsub, h0, mul_zero, zero_add, zero_sub]
   have hπh : ∀ r : ℕ, 1 ≤ r → r < p →
-    ZMod.castHom (dvd_pow_self p two_ne_zero) (ZMod p)
-      (((2 * k + 1 : ℕ) : ZMod (p ^ 2)) *
-        (((k * p + r : ℕ) : ZMod (p ^ 2)) * ((k * p + (p - r) : ℕ) : ZMod (p ^ 2)))⁻¹)
-      = ((2 * k + 1 : ℕ) : ZMod p) * (-(((r : ℕ) : ZMod p) ^ 2))⁻¹ := by
+      ZMod.castHom (dvd_pow_self p two_ne_zero) (ZMod p)
+        (((2 * k + 1 : ℕ) : ZMod (p ^ 2)) *
+          (((k * p + r : ℕ) : ZMod (p ^ 2)) * ((k * p + (p - r) : ℕ) : ZMod (p ^ 2)))⁻¹)
+        = ((2 * k + 1 : ℕ) : ZMod p) * (-(((r : ℕ) : ZMod p) ^ 2))⁻¹ := by
     intro r hr1 hr2
     rw [map_mul, map_natCast,
       ZMod.map_inv_of_isUnit _ ((hUA r hr1 hr2).mul (hUB r hr1 hr2)),
@@ -259,46 +259,47 @@ lemma ZMod.carlitz_sum_inv_block_Ico_eq_zero_of_five_le
       intro x _
       exact (neg_inv).symm
     calc (∑ x : ZMod p, ((2 * k + 1 : ℕ) : ZMod p) * (-(x ^ 2))⁻¹)
-      = ((2 * k + 1 : ℕ) : ZMod p) * (∑ x : ZMod p, (-(x ^ 2))⁻¹) := by
-        rw [Finset.mul_sum]
+        = ((2 * k + 1 : ℕ) : ZMod p) * (∑ x : ZMod p, (-(x ^ 2))⁻¹) := by
+          rw [Finset.mul_sum]
       _ = 0 := by rw [hneg, h2, h0, mul_neg, mul_zero, neg_zero]
   have hφ0 : (fun x : ZMod p => ((2 * k + 1 : ℕ) : ZMod p) * (-(x ^ 2))⁻¹) 0 = 0 := by
     simp
   have huniv := ZMod.sum_Ico_cast p
     (fun x : ZMod p => ((2 * k + 1 : ℕ) : ZMod p) * (-(x ^ 2))⁻¹) hφ0
   have hπH : ZMod.castHom (dvd_pow_self p two_ne_zero) (ZMod p)
-    (∑ j ∈ Finset.range (p - 1),
-      ((2 * k + 1 : ℕ) : ZMod (p ^ 2)) *
-        (((k * p + (1 + j) : ℕ) : ZMod (p ^ 2)) *
-          ((k * p + (p - (1 + j)) : ℕ) : ZMod (p ^ 2)))⁻¹) = 0 := by
+        (∑ j ∈ Finset.range (p - 1),
+          ((2 * k + 1 : ℕ) : ZMod (p ^ 2)) *
+            (((k * p + (1 + j) : ℕ) : ZMod (p ^ 2)) *
+              ((k * p + (p - (1 + j)) : ℕ) : ZMod (p ^ 2)))⁻¹) = 0 := by
     rw [map_sum]
     have hsum : (∑ j ∈ Finset.range (p - 1),
-      ZMod.castHom (dvd_pow_self p two_ne_zero) (ZMod p)
-        (((2 * k + 1 : ℕ) : ZMod (p ^ 2)) *
-          (((k * p + (1 + j) : ℕ) : ZMod (p ^ 2)) *
-            ((k * p + (p - (1 + j)) : ℕ) : ZMod (p ^ 2)))⁻¹))
-      = ∑ j ∈ Finset.range (p - 1),
-        ((2 * k + 1 : ℕ) : ZMod p) * (-((((1 + j : ℕ) : ZMod p) ^ 2)))⁻¹ :=
+          ZMod.castHom (dvd_pow_self p two_ne_zero) (ZMod p)
+            (((2 * k + 1 : ℕ) : ZMod (p ^ 2)) *
+              (((k * p + (1 + j) : ℕ) : ZMod (p ^ 2)) *
+                ((k * p + (p - (1 + j)) : ℕ) : ZMod (p ^ 2)))⁻¹))
+        = ∑ j ∈ Finset.range (p - 1),
+          ((2 * k + 1 : ℕ) : ZMod p) * (-((((1 + j : ℕ) : ZMod p) ^ 2)))⁻¹ :=
       Finset.sum_congr rfl (fun j hj => by
         simp only [Finset.mem_range] at hj
         exact hπh (1 + j) (Nat.le_add_right 1 j) (by omega))
     rw [hsum]
     have hico : (∑ r ∈ Finset.Ico 1 p,
-      (fun x : ZMod p => ((2 * k + 1 : ℕ) : ZMod p) * (-(x ^ 2))⁻¹)
-        (((r : ℕ)) : ZMod p))
-      = ∑ j ∈ Finset.range (p - 1),
-        ((2 * k + 1 : ℕ) : ZMod p) * (-((((1 + j : ℕ) : ZMod p) ^ 2)))⁻¹ := by
+          (fun x : ZMod p => ((2 * k + 1 : ℕ) : ZMod p) * (-(x ^ 2))⁻¹)
+            (((r : ℕ)) : ZMod p))
+        = ∑ j ∈ Finset.range (p - 1),
+          ((2 * k + 1 : ℕ) : ZMod p) * (-((((1 + j : ℕ) : ZMod p) ^ 2)))⁻¹ := by
       rw [Finset.sum_Ico_eq_sum_range]
-    rwa [← hico, huniv]
+    rw [← hico, huniv]
+    exact hfield
   obtain ⟨H', hH'⟩ := ZMod.eq_mul_p_of_castHom_eq_zero _ hπH
   have hpp : ((p : ℕ) : ZMod (p ^ 2)) * ((p : ℕ) : ZMod (p ^ 2)) = 0 := by
     have h2 : (((p ^ 2 : ℕ)) : ZMod (p ^ 2))
-      = ((p : ℕ) : ZMod (p ^ 2)) * ((p : ℕ) : ZMod (p ^ 2)) := by
+        = ((p : ℕ) : ZMod (p ^ 2)) * ((p : ℕ) : ZMod (p ^ 2)) := by
       push_cast
       ring
     rw [← h2, ZMod.natCast_self]
   have h2S0 : (2 : ZMod (p ^ 2)) * (Finset.Ico 1 p).sum
-    (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹)) = 0 := by
+      (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹)) = 0 := by
     rw [h2S, hH', ← mul_assoc, hpp, zero_mul]
   have hU2 : IsUnit (2 : ZMod (p ^ 2)) := by
     have hcop2 : Nat.Coprime 2 (p ^ 2) := by
@@ -313,12 +314,8 @@ lemma ZMod.carlitz_sum_inv_block_Ico_eq_zero_of_five_le
     exact ⟨ZMod.unitOfCoprime 2 hcop2, h⟩
   have hinv : (2 : ZMod (p ^ 2))⁻¹ * 2 = 1 := ZMod.inv_mul_of_unit _ hU2
   calc (Finset.Ico 1 p).sum
-    (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹))
-    = (2 : ZMod (p ^ 2))⁻¹ * ((2 : ZMod (p ^ 2)) * (Finset.Ico 1 p).sum
-      (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹))) := by
-        rw [← mul_assoc, hinv, one_mul]
+        (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹))
+      = (2 : ZMod (p ^ 2))⁻¹ * ((2 : ZMod (p ^ 2)) * (Finset.Ico 1 p).sum
+        (fun r => (((k * p + r : ℕ) : ZMod (p ^ 2))⁻¹))) := by
+          rw [← mul_assoc, hinv, one_mul]
     _ = 0 := by rw [h2S0, mul_zero]
-
-
--- created on 2026-10-20
--- updated on 2026-10-26

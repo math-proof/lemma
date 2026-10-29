@@ -1,7 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 open Filter Metric
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry17
@@ -32,11 +31,13 @@ private lemma iteratedDeriv_eventuallyEq_aux {f g : ℝ → ℝ} {x : ℝ} {n : 
       have e2 : deriv^[k+1] g y = deriv (deriv^[k] g) y := by
         have h1 : deriv^[k+1] g y = deriv^[1+k] g y := by rw [add_comm 1 k]
         rw [h1, Function.iterate_add_apply, Function.iterate_one]
-      rwa [e1, e2]
+      rw [e1, e2]
+      exact h1.deriv_eq
   have hmn := key n
   have e1 : iteratedDeriv n f x = deriv^[n] f x := by rw [iteratedDeriv_eq_iterate]
   have e2 : iteratedDeriv n g x = deriv^[n] g x := by rw [iteratedDeriv_eq_iterate]
-  rwa [e1, e2]
+  rw [e1, e2]
+  exact hmn.self_of_nhds
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry17
 
@@ -56,7 +57,7 @@ private lemma iteratedDeriv_deriv_eq_aux {f : ℝ → ℝ} {x : ℝ} {m : ℕ} (
   simp only [Nat.add_sub_cancel]
   have hB : deriv^[k + 1] f x = deriv^[k] (deriv f) x := by
     have h0 := congrFun (Function.iterate_add_apply deriv k 1 f) x
-    simpa using h0
+    simp
   exact hB.symm
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry17
@@ -84,10 +85,11 @@ private lemma key_ode_eventually
   have hdist : dist h 0 < R := Metric.mem_ball.mp hmem
   have habs : |h| < R := by
     have e : dist h (0:ℝ) = |h| := by simp [dist_eq_norm, Real.norm_eq_abs, sub_zero]
-    rwa [e] at hdist
+    rw [e] at hdist
+    exact hdist
   obtain ⟨hpos, hlog⟩ := hball h habs
   have hEq1_ev : (fun h' => (1 + Real.log (x h')) * deriv x h')
-    =ᶠ[nhds h] (fun _ => (1:ℝ)) := by
+      =ᶠ[nhds h] (fun _ => (1:ℝ)) := by
     have hev_an_h : ∀ᶠ h' in nhds h, AnalyticAt ℝ x h' := hxh_an.eventually_analyticAt
     have hball_nhds : Metric.ball (0:ℝ) R ∈ nhds h :=
       Metric.isOpen_ball.mem_nhds hmem
@@ -99,7 +101,8 @@ private lemma key_ode_eventually
     have hdist' : dist h' 0 < R := Metric.mem_ball.mp hmem'
     have habs' : |h'| < R := by
       have e : dist h' (0:ℝ) = |h'| := by simp [dist_eq_norm, Real.norm_eq_abs, sub_zero]
-      rwa [e] at hdist'
+      rw [e] at hdist'
+      exact hdist'
     obtain ⟨hpos', hlog'⟩ := hball h' habs'
     have hx_d : HasDerivAt x (deriv x h') h' :=
       (hxh'_an.hasStrictDerivAt).hasDerivAt
@@ -107,18 +110,19 @@ private lemma key_ode_eventually
     have hf : HasDerivAt (fun y => y * Real.log y) (Real.log (x h') + 1) (x h') :=
       Real.hasDerivAt_mul_log hne
     have hcomp : HasDerivAt ((fun y => y * Real.log y) ∘ x)
-      ((Real.log (x h') + 1) * deriv x h') h' :=
+        ((Real.log (x h') + 1) * deriv x h') h' :=
       HasDerivAt.comp h' hf hx_d
     have hball_nhds' : Metric.ball (0:ℝ) R ∈ nhds h' :=
       Metric.isOpen_ball.mem_nhds hmem'
     have heq_ev : ((fun y => y * Real.log y) ∘ x) =ᶠ[nhds h']
-      (fun h'' => C + h'') := by
+        (fun h'' => C + h'') := by
       apply Filter.eventually_of_mem hball_nhds'
       intro h'' hhm
       have hdd : dist h'' 0 < R := Metric.mem_ball.mp hhm
       have haa : |h''| < R := by
         have e : dist h'' (0:ℝ) = |h''| := by simp [dist_eq_norm, Real.norm_eq_abs, sub_zero]
-        rwa [e] at hdd
+        rw [e] at hdd
+        exact hdd
       obtain ⟨_, hlg⟩ := hball h'' haa
       simp only [Function.comp_apply]
       exact hlg
@@ -139,7 +143,7 @@ private lemma key_ode_eventually
   have hU_d : HasDerivAt (fun h' => 1 + Real.log (x h')) ((deriv x h) / x h) h :=
     HasDerivAt.const_add 1 hlog_d
   have hprod : HasDerivAt (fun h' => (1 + Real.log (x h')) * deriv x h')
-    ((deriv x h / x h) * deriv x h + (1 + Real.log (x h)) * deriv (deriv x) h) h :=
+      ((deriv x h / x h) * deriv x h + (1 + Real.log (x h)) * deriv (deriv x) h) h :=
     hU_d.mul hx_dd
   have hzero : HasDerivAt (fun h' => (1 + Real.log (x h')) * deriv x h') 0 h := by
     have h1 : HasDerivAt (fun _ : ℝ => (1:ℝ)) 0 h := hasDerivAt_const h 1
@@ -149,21 +153,22 @@ private lemma key_ode_eventually
     hunique2
   have hH : (deriv x h) ^ 2 + (x h + C + h) * deriv (deriv x) h = 0 := by
     have h1 : x h * ((deriv x h / x h) * deriv x h +
-      (1 + Real.log (x h)) * deriv (deriv x) h) = 0 := by rw [hU_val]; ring
+        (1 + Real.log (x h)) * deriv (deriv x) h) = 0 := by rw [hU_val]; ring
     have h2 : x h * ((deriv x h / x h) * deriv x h) = (deriv x h) ^ 2 := by
       field_simp
     have h3 : x h * ((1 + Real.log (x h)) * deriv (deriv x) h)
-      = (x h + C + h) * deriv (deriv x) h := by
+        = (x h + C + h) * deriv (deriv x) h := by
       have hxl : x h * Real.log (x h) = C + h := hlog
       have hxx : x h * (1 + Real.log (x h)) = x h + C + h := by linear_combination hxl
       calc x h * ((1 + Real.log (x h)) * deriv (deriv x) h)
-        = (x h * (1 + Real.log (x h))) * deriv (deriv x) h := by ring
+          = (x h * (1 + Real.log (x h))) * deriv (deriv x) h := by ring
         _ = (x h + C + h) * deriv (deriv x) h := by rw [hxx]
     have h4 : x h * ((deriv x h / x h) * deriv x h +
-      (1 + Real.log (x h)) * deriv (deriv x) h)
-      = (deriv x h) ^ 2 + (x h + C + h) * deriv (deriv x) h := by
+        (1 + Real.log (x h)) * deriv (deriv x) h)
+        = (deriv x h) ^ 2 + (x h + C + h) * deriv (deriv x) h := by
       rw [mul_add, h2, h3]
-    rwa [h4] at h1
+    rw [h4] at h1
+    exact h1
   exact hH
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry17
@@ -175,7 +180,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry17
 -/
 @[path]
 private lemma expand_test
-  {R C : ℝ} {x : ℝ → ℝ}
+  {C : ℝ} {x : ℝ → ℝ}
   (hx_an : AnalyticAt ℝ x 0)
   (hevH : ∀ᶠ h in nhds (0:ℝ), (deriv x h) ^ 2 + (x h + C + h) * deriv (deriv x) h = 0)
   {n : ℕ} :
@@ -189,7 +194,8 @@ private lemma expand_test
     filter_upwards [hevH] with h hh
     simp only [hHdef, Pi.zero_apply]
     have : (deriv x h) * (deriv x h) = (deriv x h) ^ 2 := by ring
-    rwa [this]
+    rw [this]
+    exact hh
   have hH0 : iteratedDeriv n H 0 = 0 := by
     have h1 := iteratedDeriv_eventuallyEq_aux (n := n) (x := (0:ℝ)) hevH'
     have h2 : iteratedDeriv n (0 : ℝ → ℝ) 0 = 0 := by
@@ -197,7 +203,8 @@ private lemma expand_test
       rw [this]
       rw [iteratedDeriv_const]
       simp
-    rwa [h1]
+    rw [h1]
+    exact h2
   have hcu : ContDiffAt ℝ (n : WithTop ℕ∞) (deriv x) 0 := hx_an.deriv.contDiffAt
   have hcv : ContDiffAt ℝ (n : WithTop ℕ∞) (deriv (deriv x)) 0 :=
     (hx_an.deriv.deriv).contDiffAt
@@ -211,16 +218,16 @@ private lemma expand_test
   have hUU : ContDiffAt ℝ (n : WithTop ℕ∞) ((deriv x) * (deriv x)) 0 :=
     hcu.mul hcu
   have hWV : ContDiffAt ℝ (n : WithTop ℕ∞)
-    ((fun h => x h + C + h) * deriv (deriv x)) 0 := hcw.mul hcv
+      ((fun h => x h + C + h) * deriv (deriv x)) 0 := hcw.mul hcv
   have hHfun : H = ((deriv x) * (deriv x)) + ((fun h => x h + C + h) * deriv (deriv x)) := by
     funext h
     simp [hHdef, Pi.add_apply, Pi.mul_apply]
   have hexpand : iteratedDeriv n H 0 =
-    (∑ i ∈ Finset.range (n + 1), (n.choose i : ℝ) *
-      iteratedDeriv i (deriv x) 0 * iteratedDeriv (n - i) (deriv x) 0)
-    + (∑ j ∈ Finset.range (n + 1), (n.choose j : ℝ) *
-      iteratedDeriv j (fun h => x h + C + h) 0 *
-        iteratedDeriv (n - j) (deriv (deriv x)) 0) := by
+      (∑ i ∈ Finset.range (n + 1), (n.choose i : ℝ) *
+        iteratedDeriv i (deriv x) 0 * iteratedDeriv (n - i) (deriv x) 0)
+      + (∑ j ∈ Finset.range (n + 1), (n.choose j : ℝ) *
+        iteratedDeriv j (fun h => x h + C + h) 0 *
+          iteratedDeriv (n - j) (deriv (deriv x)) 0) := by
     rw [hHfun]
     rw [iteratedDeriv_add hUU hWV]
     congr 1
@@ -228,8 +235,8 @@ private lemma expand_test
     · exact iteratedDeriv_mul hcw hcv
   rw [hexpand] at hH0
   have c1 : ∀ i ∈ Finset.range (n + 1),
-    (n.choose i : ℝ) * iteratedDeriv i (deriv x) 0 * iteratedDeriv (n - i) (deriv x) 0
-    = (n.choose i : ℝ) * iteratedDeriv (i + 1) x 0 * iteratedDeriv (n - i + 1) x 0 := by
+      (n.choose i : ℝ) * iteratedDeriv i (deriv x) 0 * iteratedDeriv (n - i) (deriv x) 0
+      = (n.choose i : ℝ) * iteratedDeriv (i + 1) x 0 * iteratedDeriv (n - i + 1) x 0 := by
     intro i _
     have e1 : iteratedDeriv i (deriv x) 0 = iteratedDeriv (i + 1) x 0 := by
       have h := iteratedDeriv_deriv_eq_aux (f := x) (x := (0:ℝ)) (m := i + 1) (by omega)
@@ -239,24 +246,27 @@ private lemma expand_test
       simpa using h
     rw [e1, e2]
   have c2 : ∀ j ∈ Finset.range (n + 1),
-    (n.choose j : ℝ) * iteratedDeriv j (fun h => x h + C + h) 0 *
-      iteratedDeriv (n - j) (deriv (deriv x)) 0
-    = (n.choose j : ℝ) * iteratedDeriv j (fun h => x h + C + h) 0 *
-      iteratedDeriv (n - j + 2) x 0 := by
+      (n.choose j : ℝ) * iteratedDeriv j (fun h => x h + C + h) 0 *
+        iteratedDeriv (n - j) (deriv (deriv x)) 0
+      = (n.choose j : ℝ) * iteratedDeriv j (fun h => x h + C + h) 0 *
+        iteratedDeriv (n - j + 2) x 0 := by
     intro j _
     have e : iteratedDeriv (n - j) (deriv (deriv x)) 0 = iteratedDeriv (n - j + 2) x 0 := by
       have h1 := iteratedDeriv_deriv_eq_aux (f := deriv x) (x := (0:ℝ)) (m := n - j + 1) (by omega)
       have h2 := iteratedDeriv_deriv_eq_aux (f := x) (x := (0:ℝ)) (m := n - j + 2) (by omega)
       have e1 : iteratedDeriv (n - j) (deriv (deriv x)) 0 =
-        iteratedDeriv (n - j + 1) (deriv x) 0 := by
+          iteratedDeriv (n - j + 1) (deriv x) 0 := by
         have : n - j + 1 - 1 = n - j := by omega
-        rwa [← this]
+        rw [← this]
+        exact h1
       have e2 : iteratedDeriv (n - j + 1) (deriv x) 0 = iteratedDeriv (n - j + 2) x 0 := by
         have : n - j + 2 - 1 = n - j + 1 := by omega
-        rwa [← this]
+        rw [← this]
+        exact h2
       rw [e1, e2]
     rw [e]
-  rwa [Finset.sum_congr rfl c1, Finset.sum_congr rfl c2] at hH0
+  rw [Finset.sum_congr rfl c1, Finset.sum_congr rfl c2] at hH0
+  exact hH0
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry17
 
@@ -291,18 +301,18 @@ private lemma comb_identity {X : ℕ → ℝ} {n : ℕ} :
   + (∑ j ∈ Finset.Icc 2 n, (n.choose j : ℝ) * (X j * X (n + 2 - j)))
   = ∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k))) := by
   have hS : (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k))))
-    = ∑ i ∈ Finset.range (n + 1), (((n + 1).choose (i + 1) : ℝ) * (X (i + 1) * X (n + 2 - (i + 1)))) := by
+      = ∑ i ∈ Finset.range (n + 1), (((n + 1).choose (i + 1) : ℝ) * (X (i + 1) * X (n + 2 - (i + 1)))) := by
     rw [← range_succ_Icc]
   rw [hS]
   have hint : (∑ j ∈ Finset.Icc 2 n, (n.choose j : ℝ) * (X j * X (n + 2 - j)))
-    = ∑ i ∈ Finset.range (n + 1),
-      (if 2 ≤ i + 1 ∧ i + 1 ≤ n then (n.choose (i + 1) : ℝ) * (X (i + 1) * X (n + 2 - (i + 1))) else 0) := by
+      = ∑ i ∈ Finset.range (n + 1),
+        (if 2 ≤ i + 1 ∧ i + 1 ≤ n then (n.choose (i + 1) : ℝ) * (X (i + 1) * X (n + 2 - (i + 1))) else 0) := by
     have hsub : Finset.Icc 2 n ⊆ Finset.Icc 1 (n + 1) := by
       intro k hk
       simp only [Finset.mem_Icc] at hk ⊢
       omega
     have hside : ∀ k ∈ Finset.Icc 1 (n + 1), k ∉ Finset.Icc 2 n →
-      (if 2 ≤ k ∧ k ≤ n then (n.choose k : ℝ) * (X k * X (n + 2 - k)) else 0) = 0 := by
+        (if 2 ≤ k ∧ k ≤ n then (n.choose k : ℝ) * (X k * X (n + 2 - k)) else 0) = 0 := by
       intro k _ hnk
       have hnc : ¬ (2 ≤ k ∧ k ≤ n) := by
         simpa [Finset.mem_Icc] using hnk
@@ -310,8 +320,8 @@ private lemma comb_identity {X : ℕ → ℝ} {n : ℕ} :
     have hss := Finset.sum_subset hsub (f :=
       fun k => if 2 ≤ k ∧ k ≤ n then (n.choose k : ℝ) * (X k * X (n + 2 - k)) else 0) hside
     have hsub_ite : (∑ j ∈ Finset.Icc 2 n,
-      (if 2 ≤ j ∧ j ≤ n then (n.choose j : ℝ) * (X j * X (n + 2 - j)) else 0))
-      = ∑ j ∈ Finset.Icc 2 n, (n.choose j : ℝ) * (X j * X (n + 2 - j)) := by
+          (if 2 ≤ j ∧ j ≤ n then (n.choose j : ℝ) * (X j * X (n + 2 - j)) else 0))
+        = ∑ j ∈ Finset.Icc 2 n, (n.choose j : ℝ) * (X j * X (n + 2 - j)) := by
       apply Finset.sum_congr rfl
       intro j hj
       have hjc : (2 ≤ j ∧ j ≤ n) := Finset.mem_Icc.mp hj
@@ -319,7 +329,7 @@ private lemma comb_identity {X : ℕ → ℝ} {n : ℕ} :
     rw [← hsub_ite, hss, ← range_succ_Icc]
   rw [hint]
   have hextra : (n : ℝ) * (X 1 * X (n + 1))
-    = ∑ i ∈ Finset.range (n + 1), (if i = 0 then (n : ℝ) * (X 1 * X (n + 1)) else 0) := by
+      = ∑ i ∈ Finset.range (n + 1), (if i = 0 then (n : ℝ) * (X 1 * X (n + 1)) else 0) := by
     rw [Finset.sum_ite_eq']
     simp [Finset.mem_range]
   rw [hextra]
@@ -358,7 +368,7 @@ private lemma comb_identity {X : ℕ → ℝ} {n : ℕ} :
       rw [ite_eq_right hi0, ite_eq_left hif]
       simp only [zero_add]
       have hpas : ((n + 1).choose (i + 1) : ℝ)
-        = (n.choose i : ℝ) + (n.choose (i + 1) : ℝ) := by
+          = (n.choose i : ℝ) + (n.choose (i + 1) : ℝ) := by
         have hnat : (n + 1).choose (i + 1) = n.choose i + n.choose (i + 1) :=
           Nat.choose_succ_succ n i
         exact_mod_cast hnat
@@ -492,8 +502,8 @@ private lemma final_from_E {a A : ℝ} {n : ℕ} {X : ℕ → ℝ}
       + A⁻¹ * ∑ k ∈ Finset.Icc 1 (n + 1),
         (((n + 1).choose k : ℝ) * (((-a) ^ (k - 1) * X k) * ((-a) ^ (n + 1 - k) * X (n + 2 - k)))) := by
   have hsum : (∑ k ∈ Finset.Icc 1 (n + 1),
-    (((n + 1).choose k : ℝ) * (((-a) ^ (k - 1) * X k) * ((-a) ^ (n + 1 - k) * X (n + 2 - k)))))
-    = (-a) ^ n * (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k)))) := by
+        (((n + 1).choose k : ℝ) * (((-a) ^ (k - 1) * X k) * ((-a) ^ (n + 1 - k) * X (n + 2 - k)))))
+      = (-a) ^ n * (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k)))) := by
     rw [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro k hk
@@ -503,28 +513,29 @@ private lemma final_from_E {a A : ℝ} {n : ℕ} {X : ℕ → ℝ}
     have hpow : (-a : ℝ) ^ (k - 1) * (-a) ^ (n + 1 - k) = (-a) ^ n := by
       rw [← pow_add, hexp]
     calc ((n + 1).choose k : ℝ) * (((-a) ^ (k - 1) * X k) * ((-a) ^ (n + 1 - k) * X (n + 2 - k)))
-      = ((-a) ^ (k - 1) * (-a) ^ (n + 1 - k)) * (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k))) := by ring
+        = ((-a) ^ (k - 1) * (-a) ^ (n + 1 - k)) * (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k))) := by ring
       _ = (-a) ^ n * (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k))) := by rw [hpow]
   rw [hsum]
   have hpow_succ : (-a : ℝ) ^ (n + 1) = (-a) ^ n * (-a) := pow_succ _ _
   have hE' : (-a) * A * (X (n + 2)) = (n : ℝ) * (X (n + 1))
-    + (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k)))) := by
+      + (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k)))) := by
     have h1 : a * A * (X (n + 2)) = -((n : ℝ) * (X (n + 1))
-      + (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k))))) := by
+        + (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k))))) := by
       linarith [hE]
     have h2 : (-a) * A * (X (n + 2)) = -(a * A * (X (n + 2))) := by ring
     rw [h2, h1, neg_neg]
   have hcancel : (-a : ℝ) * (X (n + 2)) = A⁻¹ * ((n : ℝ) * (X (n + 1))
-    + (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k))))) := by
+      + (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k))))) := by
     rw [eq_inv_mul_iff_mul_eq₀ hA]
     have h3 : A * ((-a) * (X (n + 2))) = (-a) * A * (X (n + 2)) := by ring
-    rwa [h3]
+    rw [h3]
+    exact hE'
   calc (-a) ^ (n + 1) * (X (n + 2))
-    = (-a) ^ n * ((-a) * (X (n + 2))) := by rw [hpow_succ]; ring
+      = (-a) ^ n * ((-a) * (X (n + 2))) := by rw [hpow_succ]; ring
     _ = (-a) ^ n * (A⁻¹ * ((n : ℝ) * (X (n + 1))
-      + (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k)))))) := by rw [hcancel]
+        + (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k)))))) := by rw [hcancel]
     _ = A⁻¹ * (n : ℝ) * ((-a) ^ n * (X (n + 1)))
-      + A⁻¹ * ((-a) ^ n * (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k))))) := by ring
+        + A⁻¹ * ((-a) ^ n * (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k))))) := by ring
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry17
 
@@ -552,11 +563,11 @@ private lemma recurrence_generic {a R C A : ℝ} {x : ℝ → ℝ}
   have hRcast : (((n + 2 : ℕ)) : ℝ) - 2 = (n : ℝ) := by push_cast; ring
   have hevH : ∀ᶠ h in nhds (0:ℝ), (deriv x h) ^ 2 + (x h + C + h) * deriv (deriv x) h = 0 :=
     key_ode_eventually hRpos hx_an hball
-  have hexpand := expand_test (R := R) (C := C) (x := x) hx_an hevH (n := n)
+  have hexpand := expand_test (C := C) (x := x) hx_an hevH (n := n)
   have hsum_exp : (∑ k ∈ Finset.Icc 1 (n + 2 - 1), (((n + 2 - 1).choose k : ℝ) *
-    (((-a) ^ (k - 1) * iteratedDeriv k x 0) * ((-a) ^ (n + 2 - k - 1) * iteratedDeriv (n + 2 - k) x 0))))
-    = ∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) *
-      (((-a) ^ (k - 1) * iteratedDeriv k x 0) * ((-a) ^ (n + 1 - k) * iteratedDeriv (n + 2 - k) x 0))) := by
+        (((-a) ^ (k - 1) * iteratedDeriv k x 0) * ((-a) ^ (n + 2 - k - 1) * iteratedDeriv (n + 2 - k) x 0))))
+      = ∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) *
+        (((-a) ^ (k - 1) * iteratedDeriv k x 0) * ((-a) ^ (n + 1 - k) * iteratedDeriv (n + 2 - k) x 0))) := by
     rw [er1]
     apply Finset.sum_congr rfl
     intro k hk
@@ -578,22 +589,22 @@ private lemma recurrence_generic {a R C A : ℝ} {x : ℝ → ℝ}
     simp only [hWdef, hXdef]
     exact w_ge2 hx_an hj
   have hexpand_XW : (∑ i ∈ Finset.range (n + 1), ((n.choose i : ℝ) * X (i + 1) * X (n - i + 1)))
-    + (∑ j ∈ Finset.range (n + 1), ((n.choose j : ℝ) * W j * X (n - j + 2))) = 0 := by
+      + (∑ j ∈ Finset.range (n + 1), ((n.choose j : ℝ) * W j * X (n - j + 2))) = 0 := by
     have h := hexpand
     simp only [hXdef, hWdef] at h ⊢
     exact h
   by_cases hn0 : n = 0
   · subst hn0
     have hS1 : (∑ i ∈ Finset.range 1, ((Nat.choose 0 i : ℝ) * (X (i + 1) * X (0 - i + 1))))
-      = X 1 * X 1 := by simp [hXdef]
+        = X 1 * X 1 := by simp [hXdef]
     have hS2 : (∑ j ∈ Finset.range 1, ((Nat.choose 0 j : ℝ) * W j * X (0 - j + 2)))
-      = (a + C) * X 2 := by
+        = (a + C) * X 2 := by
       simp only [Finset.sum_range_one]
       simp [hW0]
     have h0 := hexpand_XW
     simp only [Nat.zero_add] at h0
     have hE : a * A * (X 2) + ((0 : ℕ) : ℝ) * (X 1)
-      + (∑ k ∈ Finset.Icc 1 1, (((1).choose k : ℝ) * (X k * X (2 - k)))) = 0 := by
+        + (∑ k ∈ Finset.Icc 1 1, (((1).choose k : ℝ) * (X k * X (2 - k)))) = 0 := by
       have hIcc : (∑ k ∈ Finset.Icc 1 1, (((1).choose k : ℝ) * (X k * X (2 - k)))) = X 1 * X 1 := by
         simp [Finset.Icc_self]
       rw [hIcc]
@@ -613,16 +624,16 @@ private lemma recurrence_generic {a R C A : ℝ} {x : ℝ → ℝ}
     have hn1 : n = m + 1 := hm
     set f : ℕ → ℝ := fun j => ((n.choose j : ℝ) * W j * X (n - j + 2)) with hfdef
     have hS2_eq : (∑ j ∈ Finset.range (n + 1), f j)
-      = (∑ i ∈ Finset.range m, f (i + 2)) + f 1 + f 0 := by
+        = (∑ i ∈ Finset.range m, f (i + 2)) + f 1 + f 0 := by
       have h1 : (∑ j ∈ Finset.range (m + 2), f j)
-        = (∑ j ∈ Finset.range (m + 1), f (j + 1)) + f 0 :=
+          = (∑ j ∈ Finset.range (m + 1), f (j + 1)) + f 0 :=
         Finset.sum_range_succ' f (m + 1)
       have h2 : (∑ j ∈ Finset.range (m + 1), f (j + 1))
-        = (∑ j ∈ Finset.range m, f (j + 1 + 1)) + f (0 + 1) :=
+          = (∑ j ∈ Finset.range m, f (j + 1 + 1)) + f (0 + 1) :=
         Finset.sum_range_succ' (fun j => f (j + 1)) m
       have hn_eq : n + 1 = m + 2 := by omega
       have hcongr : (∑ j ∈ Finset.range m, f (j + 1 + 1))
-        = ∑ i ∈ Finset.range m, f (i + 2) := by
+          = ∑ i ∈ Finset.range m, f (i + 2) := by
         apply Finset.sum_congr rfl
         intro j _
         rfl
@@ -639,9 +650,9 @@ private lemma recurrence_generic {a R C A : ℝ} {x : ℝ → ℝ}
       have e : n - 1 + 2 = n + 1 := by omega
       rw [c1, e, hW1]
     have hrest : (∑ i ∈ Finset.range m, f (i + 2))
-      = ∑ j ∈ Finset.Icc 2 n, ((n.choose j : ℝ) * (X j * X (n + 2 - j))) := by
+        = ∑ j ∈ Finset.Icc 2 n, ((n.choose j : ℝ) * (X j * X (n + 2 - j))) := by
       have hstep : (∑ i ∈ Finset.range m, f (i + 2))
-        = ∑ i ∈ Finset.range m, ((n.choose (i + 2) : ℝ) * (X (i + 2) * X (n + 2 - (i + 2)))) := by
+          = ∑ i ∈ Finset.range m, ((n.choose (i + 2) : ℝ) * (X (i + 2) * X (n + 2 - (i + 2)))) := by
         apply Finset.sum_congr rfl
         intro i hi
         have hi_le : i + 2 ≤ n := by
@@ -655,17 +666,18 @@ private lemma recurrence_generic {a R C A : ℝ} {x : ℝ → ℝ}
       rw [hstep]
       have hbb := rest_eq (G := fun j => ((n.choose j : ℝ) * (X j * X (n + 2 - j)))) (m := m)
       have hn_eq : m + 1 = n := by omega
-      rwa [hn_eq] at hbb
+      rw [hn_eq] at hbb
+      exact hbb
     have hcomb := comb_identity (X := X) (n := n)
     have hE : a * A * (X (n + 2)) + (n : ℝ) * (X (n + 1))
-      + (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k)))) = 0 := by
+        + (∑ k ∈ Finset.Icc 1 (n + 1), (((n + 1).choose k : ℝ) * (X k * X (n + 2 - k)))) = 0 := by
       have h0 := hexpand_XW
       rw [hS2_eq, hf0, hf1, hrest] at h0
       have hf1exp : (n : ℝ) * (X 1 + 1) * X (n + 1)
-        = (n : ℝ) * (X (n + 1)) + (n : ℝ) * (X 1 * X (n + 1)) := by ring
+          = (n : ℝ) * (X (n + 1)) + (n : ℝ) * (X 1 * X (n + 1)) := by ring
       rw [hf1exp, hCA] at h0
       have hS1congr : (∑ i ∈ Finset.range (n + 1), ((n.choose i : ℝ) * X (i + 1) * X (n - i + 1)))
-        = ∑ i ∈ Finset.range (n + 1), ((n.choose i : ℝ) * (X (i + 1) * X (n - i + 1))) := by
+          = ∑ i ∈ Finset.range (n + 1), ((n.choose i : ℝ) * (X (i + 1) * X (n - i + 1))) := by
         apply Finset.sum_congr rfl
         intro i _
         ring
@@ -702,7 +714,8 @@ lemma ramanujan_part1_ch3_entry17
     have h1 : Real.exp (-1) < a := by rw [← h1exp]; exact ha
     have h2 : Real.log (Real.exp (-1)) < Real.log a :=
       Real.log_lt_log (Real.exp_pos _) h1
-    rwa [Real.log_exp] at h2
+    rw [Real.log_exp] at h2
+    exact h2
   have hLa_pos : (0:ℝ) < 1 + Real.log a := by linarith
   have hA_ne : (1 + Real.log a) ≠ 0 := ne_of_gt hLa_pos
   have hderiv_ne : deriv (fun y => y * Real.log y) a ≠ 0 := by
@@ -717,11 +730,11 @@ lemma ramanujan_part1_ch3_entry17
     apply AnalyticAt.mul analyticAt_id
     apply AnalyticAt.log analyticAt_id ha_pos
   have hStrict : HasStrictDerivAt (fun y => y * Real.log y)
-    (deriv (fun y => y * Real.log y) a) a := hf_an.hasStrictDerivAt
+      (deriv (fun y => y * Real.log y) a) a := hf_an.hasStrictDerivAt
   have hFderiv : HasStrictFDerivAt (fun y => y * Real.log y) _ a :=
     hStrict.hasStrictFDerivAt_equiv hderiv_ne
   have hg_an : AnalyticAt ℝ (hStrict.localInverse _ _ _ hderiv_ne)
-    ((fun y => y * Real.log y) a) :=
+      ((fun y => y * Real.log y) a) :=
     hf_an.analyticAt_localInverse hderiv_ne
   have hg0 : hStrict.localInverse _ _ _ hderiv_ne ((fun y => y * Real.log y) a) = a :=
     hFderiv.localInverse_apply_image
@@ -735,33 +748,36 @@ lemma ramanujan_part1_ch3_entry17
     have h3 : AnalyticAt ℝ ((fun _ : ℝ => (fun y => y * Real.log y) a) +
       (fun h : ℝ => h)) (0:ℝ) := h1.add h2
     have heq : ((fun _ : ℝ => (fun y => y * Real.log y) a) + (fun h : ℝ => h)) =
-      (fun h : ℝ => (fun y => y * Real.log y) a + h) := by
+        (fun h : ℝ => (fun y => y * Real.log y) a + h) := by
       funext h; rfl
-    rwa [heq] at h3
+    rw [heq] at h3
+    exact h3
   have hinner0 : (fun h : ℝ => (fun y => y * Real.log y) a + h) (0:ℝ) =
-    (fun y => y * Real.log y) a := by simp
+      (fun y => y * Real.log y) a := by simp
   have hg_an' : AnalyticAt ℝ (hStrict.localInverse _ _ _ hderiv_ne)
-    ((fun h : ℝ => (fun y => y * Real.log y) a + h) (0:ℝ)) := by rwa [hinner0]
+      ((fun h : ℝ => (fun y => y * Real.log y) a + h) (0:ℝ)) := by rwa [hinner0]
   have hcomp := hg_an'.comp hinner
   have hx_an : AnalyticAt ℝ x 0 := by
     have heq : x = (hStrict.localInverse _ _ _ hderiv_ne) ∘
-      (fun h : ℝ => (fun y => y * Real.log y) a + h) := rfl
-    rwa [heq]
+        (fun h : ℝ => (fun y => y * Real.log y) a + h) := rfl
+    rw [heq]
+    exact hcomp
   have hx0 : x 0 = a := by
     have : x 0 = hStrict.localInverse _ _ _ hderiv_ne
       ((fun y => y * Real.log y) a + 0) := rfl
-    rwa [this, add_zero]
+    rw [this, add_zero]
+    exact hg0
   have hx_cont : ContinuousAt x 0 := hx_an.continuousAt
   have hev_pos : ∀ᶠ h in nhds (0:ℝ), 0 < x h := by
     have h0pos : 0 < x 0 := by rw [hx0]; exact ha_pos
     exact hx_cont.eventually (eventually_gt_nhds h0pos)
   have hev_inv : ∀ᶠ h in nhds (0:ℝ), (fun y => y * Real.log y) (x h) =
-    (fun y => y * Real.log y) a + h := by
+      (fun y => y * Real.log y) a + h := by
     have htend0 : Filter.Tendsto (fun h : ℝ => (fun y => y * Real.log y) a + h)
-      (nhds (0:ℝ)) (nhds ((fun y => y * Real.log y) a + 0)) :=
+        (nhds (0:ℝ)) (nhds ((fun y => y * Real.log y) a + 0)) :=
       tendsto_const_nhds.add Filter.tendsto_id
     have htend : Filter.Tendsto (fun h : ℝ => (fun y => y * Real.log y) a + h)
-      (nhds (0:ℝ)) (nhds ((fun y => y * Real.log y) a)) := by
+        (nhds (0:ℝ)) (nhds ((fun y => y * Real.log y) a)) := by
       simpa using htend0
     have hev2 := htend.eventually hevR
     simpa [hx_def] using hev2
@@ -770,7 +786,7 @@ lemma ramanujan_part1_ch3_entry17
   obtain ⟨R2, hR2, hball2⟩ := hev_inv
   have hRpos : 0 < min R1 R2 := lt_min hR1 hR2
   have hball_log : ∀ h : ℝ, |h| < min R1 R2 →
-    0 < x h ∧ x h * Real.log (x h) = (a * Real.log a) + h := by
+      0 < x h ∧ x h * Real.log (x h) = (a * Real.log a) + h := by
     intro h hh
     have hdist1 : dist h 0 < R1 := by
       have e : dist h (0:ℝ) = |h| := by simp [dist_eq_norm, Real.norm_eq_abs, sub_zero]
@@ -784,11 +800,11 @@ lemma ramanujan_part1_ch3_entry17
     have hm2 : h ∈ Metric.ball (0:ℝ) R2 := Metric.mem_ball.mpr hdist2
     have hpos : 0 < x h := hball1 h hm1
     have hfinv : (fun y => y * Real.log y) (x h) =
-      (fun y => y * Real.log y) a + h := hball2 h hm2
+        (fun y => y * Real.log y) a + h := hball2 h hm2
     refine ⟨hpos, ?_⟩
     simpa using hfinv
   have hball_all : ∀ h : ℝ, |h| < min R1 R2 →
-    0 < x h ∧ x h ^ x h = a ^ a * Real.exp h := by
+      0 < x h ∧ x h ^ x h = a ^ a * Real.exp h := by
     intro h hh
     obtain ⟨hpos, hlog_eq⟩ := hball_log h hh
     refine ⟨hpos, ?_⟩
@@ -799,27 +815,28 @@ lemma ramanujan_part1_ch3_entry17
     rw [hrpow_x, hrpow_a, hlog_eq, Real.exp_add]
   have hCA : a + (a * Real.log a) = a * (1 + Real.log a) := by ring
   have hRec : ∀ r : ℕ, 2 ≤ r →
-    (-a) ^ (r - 1) * iteratedDeriv r x 0 = (1 + Real.log a)⁻¹ * ((r : ℝ) - 2) *
-      ((-a) ^ (r - 2) * iteratedDeriv (r - 1) x 0) + (1 + Real.log a)⁻¹ *
-        ∑ k ∈ Finset.Icc 1 (r - 1), (Nat.choose (r - 1) k : ℝ) *
-          ((-a) ^ (k - 1) * iteratedDeriv k x 0) *
-            ((-a) ^ (r - k - 1) * iteratedDeriv (r - k) x 0) := by
+      (-a) ^ (r - 1) * iteratedDeriv r x 0 = (1 + Real.log a)⁻¹ * ((r : ℝ) - 2) *
+          ((-a) ^ (r - 2) * iteratedDeriv (r - 1) x 0) + (1 + Real.log a)⁻¹ *
+              ∑ k ∈ Finset.Icc 1 (r - 1), (Nat.choose (r - 1) k : ℝ) *
+                  ((-a) ^ (k - 1) * iteratedDeriv k x 0) *
+                      ((-a) ^ (r - k - 1) * iteratedDeriv (r - k) x 0) := by
     intro r hr
     have h := recurrence_generic (a := a) (R := min R1 R2) (C := a * Real.log a)
       (A := 1 + Real.log a) (x := x) hRpos hx_an hx0 hA_ne hCA hball_log r hr
     have hsum : (∑ k ∈ Finset.Icc 1 (r - 1), ((r - 1).choose k : ℝ) *
-      (((-a) ^ (k - 1) * iteratedDeriv k x 0) * ((-a) ^ (r - k - 1) * iteratedDeriv (r - k) x 0)))
-      = ∑ k ∈ Finset.Icc 1 (r - 1), ((r - 1).choose k : ℝ) *
-        ((-a) ^ (k - 1) * iteratedDeriv k x 0) *
-        ((-a) ^ (r - k - 1) * iteratedDeriv (r - k) x 0) := by
+        (((-a) ^ (k - 1) * iteratedDeriv k x 0) * ((-a) ^ (r - k - 1) * iteratedDeriv (r - k) x 0)))
+        = ∑ k ∈ Finset.Icc 1 (r - 1), ((r - 1).choose k : ℝ) *
+          ((-a) ^ (k - 1) * iteratedDeriv k x 0) *
+          ((-a) ^ (r - k - 1) * iteratedDeriv (r - k) x 0) := by
       apply Finset.sum_congr rfl
       intro k _
       ring
-    rwa [hsum] at h
+    rw [hsum] at h
+    exact h
   exact ⟨min R1 R2, x, hRpos, hx_an, hx0, hball_all, hRec⟩
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry17
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

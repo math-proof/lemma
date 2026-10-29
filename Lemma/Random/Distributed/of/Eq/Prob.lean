@@ -1,7 +1,6 @@
-import Mathlib.Probability.Independence.Integration
-import Def.Probability.Moments.Variance
+import Mathlib.Probability.HasLaw
 import Lemma.Random.Distributed.is.EqAe_Prob
-open MeasureTheory
+open MeasureTheory ProbabilityTheory
 
 
 @[path]
@@ -11,14 +10,15 @@ private lemma given
   {π : Measure Ω}
   {x : Ω → α}
   {ρ : α → ENNReal}
-  {D : Distribution π ρ}
 -- given
   [SinglePSpace π x]
+  (hρ : Measurable ρ)
   (h : π.prob x =ᵐ[ReferenceMeasure.measure] ρ) :
 -- imply
-  x ~ D := by
+  HasLaw x (ReferenceMeasure.measure.withDensity ρ) π := by
 -- proof
-  exact (Random.Distributed.is.EqAe_Prob D).mpr h
+  exact (Random.Distributed.is.EqAe_Prob hρ).mpr h
 
 
 -- created on 2023-04-30
+-- updated on 2026-10-29

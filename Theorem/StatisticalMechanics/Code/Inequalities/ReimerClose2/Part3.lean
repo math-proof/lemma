@@ -54,7 +54,7 @@ lemma not_isDecreasing_evXor : ¬ IsDecreasing evXor := by
 set_option linter.unusedSectionVars false in
 
 
-theorem reimer_xor_xnor_inequality {p : ℝ≥0} (hp : p ≤ 1) :
+theorem reimer_xor_xnor_inequality {p : NNReal} (hp : p ≤ 1) :
     (bernoulliProductMeasure (E := Fin 2) p hp).real (disjointOccurrence evXor evXnor)
       ≤ (bernoulliProductMeasure (E := Fin 2) p hp).real evXor
         * (bernoulliProductMeasure (E := Fin 2) p hp).real evXnor :=

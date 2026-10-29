@@ -15,7 +15,7 @@ private lemma agreementFiberMeasure_singleton_ne_zero_eq
   {omega : ConfigSpace E}
   {eta : AgreementFiberPoint K omega}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp0 : ∀ e, 0 < p e)
   (hp1 : ∀ e, p e < 1) :
 -- imply
@@ -34,7 +34,7 @@ private lemma cylinderEssInf_eq_cylinderMin_eq
   {K : Set E}
   {omega : ConfigSpace E}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp0 : ∀ e, 0 < p e)
   (hp1 : ∀ e, p e < 1) :
 -- imply
@@ -52,7 +52,7 @@ private lemma functionalDisjointEssMaxAt_eq_eq
   {f g : ConfigSpace E → ℝ}
   {omega eta : ConfigSpace E}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp0 : ∀ e, 0 < p e)
   (hp1 : ∀ e, p e < 1) :
 -- imply
@@ -70,7 +70,7 @@ private lemma functionalDisjointEssMax_eq_eq
   {f g : ConfigSpace E → ℝ}
   {omega : ConfigSpace E}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp0 : ∀ e, 0 < p e)
   (hp1 : ∀ e, p e < 1) :
 -- imply
@@ -86,7 +86,7 @@ private lemma bernoulliProductWeight_nonneg_eq
   [Fintype E]
   [DecidableEq E]
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp : ∀ e, p e ≤ 1) :
 -- imply
   ∀ e b, 0 ≤ bernoulliProductWeight p hp e b := by
@@ -101,7 +101,7 @@ private lemma bernoulliProductWeight_sum_eq
   [Fintype E]
   [DecidableEq E]
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp : ∀ e, p e ≤ 1) :
 -- imply
   ∀ e, bernoulliProductWeight p hp e false + bernoulliProductWeight p hp e true = 1 := by
@@ -117,7 +117,7 @@ private lemma integral_inhomBernoulli_eq_productExpectation_eq
   [DecidableEq E]
   {f : ConfigSpace E → ℝ}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp : ∀ e, p e ≤ 1) :
 -- imply
   ∫ omega, f omega ∂(inhomBernoulliProductMeasure p hp) = productExpectation (bernoulliProductWeight p hp) f := by
@@ -133,7 +133,7 @@ private lemma integral_prod_inhomBernoulli_eq_dualProductExpectation_eq
   [DecidableEq E]
   {F : ConfigSpace E × ConfigSpace E → ℝ}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp : ∀ e, p e ≤ 1) :
 -- imply
   ∫ pair, F pair ∂((inhomBernoulliProductMeasure p hp).prod (inhomBernoulliProductMeasure p hp)) = dualProductExpectation (bernoulliProductWeight p hp) F := by
@@ -149,7 +149,7 @@ private lemma functionalBKR_essInf_integral_eq
   [DecidableEq E]
   {f g : ConfigSpace E → ℝ}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp0 : ∀ e, 0 < p e)
   (hp1 : ∀ e, p e < 1)
   (hf0 : ∀ omega, 0 ≤ f omega)
@@ -168,7 +168,7 @@ private lemma dualFunctionalBKR_essInf_integral_eq
   [DecidableEq E]
   {f g : ConfigSpace E → ℝ}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp0 : ∀ e, 0 < p e)
   (hp1 : ∀ e, p e < 1)
   (hf0 : ∀ omega, 0 ≤ f omega)

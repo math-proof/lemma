@@ -124,7 +124,7 @@ private lemma boxCrossProb_nonneg_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   0 ≤ boxCrossProb d p hp n := by
@@ -139,7 +139,7 @@ private lemma boxCrossProb_eq_prob_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   boxCrossProb d p hp n = prob (p : ℝ) ((boxEdgeFinset d n).restrict '' (boxCrossingEvent d n)) := by

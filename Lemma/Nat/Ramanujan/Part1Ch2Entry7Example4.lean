@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry7Example4
@@ -155,4 +154,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry7Example4
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -14,7 +14,7 @@ private lemma connWithinProb_nonneg_eq
   {S : Finset (Site d)}
   {x : Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   0 ≤ connWithinProb d p hp S x := by
@@ -30,7 +30,7 @@ private lemma phi_nonneg_eq
   {d : ℕ}
   {S : Finset (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   0 ≤ phi d p hp S := by
@@ -44,7 +44,7 @@ private lemma phi_nonneg_eq
 private lemma mem_tildePcSet_eq
   {d : ℕ}
   {d : ℕ}
-  {p : ℝ≥0} :
+  {p : NNReal} :
 -- imply
   p ∈ tildePcSet d ↔ ∃ hp : p ≤ 1, ∃ S : Finset (Site d), origin d ∈ S ∧ phi d p hp S < 1 := by
 -- proof

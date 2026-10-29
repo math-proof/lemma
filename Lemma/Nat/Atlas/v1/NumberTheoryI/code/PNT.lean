@@ -1,7 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.PNT
-open Chebyshev Asymptotics Filter Topology MeasureTheory Finset Nat (primeCounting) Real (log exp) Chapter16
+import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Lem168
+open Chebyshev Asymptotics Filter Topology MeasureTheory Finset Chapter16
 open Nat (primeCounting)
 open Real (log exp)
 
@@ -51,7 +52,7 @@ namespace Chapter16
 [div_log_sq_isLittleO_div_log](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma div_log_sq_isLittleO_div_log
+lemma div_log_sq_isLittleO_div_log :
 -- imply
   (fun x : ℝ => x / log x ^ 2) =o[atTop] (fun x => x / log x) := by
 -- proof
@@ -71,7 +72,7 @@ namespace Chapter16
 [primeCounting_sub_theta_div_log_isLittleO](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma primeCounting_sub_theta_div_log_isLittleO
+lemma primeCounting_sub_theta_div_log_isLittleO :
 -- imply
   (fun x : ℝ => (↑(⌊x⌋₊.primeCounting) : ℝ) - θ x / log x) =o[atTop] (fun x => x / log x) :=
 -- proof
@@ -148,7 +149,7 @@ namespace Chapter16
 [thm_16_6_chebyshev_equiv](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma thm_16_6_chebyshev_equiv
+lemma thm_16_6_chebyshev_equiv :
 -- imply
   ((fun x : ℝ => (↑(⌊x⌋₊.primeCounting) : ℝ)) ~[atTop] (fun x => x / log x)) ↔ ((fun x : ℝ => θ x) ~[atTop] (fun x => x)) :=
 -- proof
@@ -170,7 +171,7 @@ lemma lem_16_8_integral_criterion
 -- imply
   (fun x : ℝ => f x) ~[atTop] (fun x => x) :=
 -- proof
-  Lem168.lem_16_8_integral_criterion f hf_mono hf_conv
+  lem_16_8 (f := f) hf_mono hf_conv
 
 end Chapter16
 
@@ -201,7 +202,8 @@ lemma theta_exp_eq_tsum
     obtain h | h := hmem
     · omega
     · have hle : (↑↑p : ℝ) ≤ exp t := by
-      rwa [← Real.log_le_iff_le_exp (by exact_mod_cast hp_pos : (0 : ℝ) < ↑↑p)]
+        rw [← Real.log_le_iff_le_exp (by exact_mod_cast hp_pos : (0 : ℝ) < ↑↑p)]
+        exact hlog
       exact absurd (Nat.le_floor hle) (not_le.mpr h)
   rw [h1, h2]
   apply Finset.sum_congr rfl
@@ -212,7 +214,7 @@ lemma theta_exp_eq_tsum
   have hlog : Real.log ↑(↑p : ℕ) ≤ t := by
     rw [Real.log_le_iff_le_exp hp_pos]
     exact le_trans (by exact_mod_cast hmem.2) (Nat.floor_le (le_of_lt (Real.exp_pos t)))
-  rw [if_pos hlog]
+  rw [ite_eq_left hlog]
 
 end Chapter16
 
@@ -507,17 +509,16 @@ lemma integrableOn_mul_exp_neg_Ioi'
           apply mul_le_mul_of_nonneg_left _ (by positivity)
           linarith [Real.add_one_le_exp (r / 2 * t)]
     calc t * Real.exp (-r * t)
-      = t * (Real.exp (-(r/2) * t) * Real.exp (-(r/2) * t)) := by
-        rw [← Real.exp_add]; congr 1; ring
+        = t * (Real.exp (-(r/2) * t) * Real.exp (-(r/2) * t)) := by
+          rw [← Real.exp_add]; congr 1; ring
       _ ≤ (2 / r) * Real.exp (r / 2 * t) *
-        (Real.exp (-(r / 2) * t) * Real.exp (-(r/2) * t)) := by
-        apply mul_le_mul_of_nonneg_right hle
-          (mul_nonneg (Real.exp_nonneg _) (Real.exp_nonneg _))
+          (Real.exp (-(r / 2) * t) * Real.exp (-(r/2) * t)) := by
+          apply mul_le_mul_of_nonneg_right hle
+            (mul_nonneg (Real.exp_nonneg _) (Real.exp_nonneg _))
       _ = (2 / r) * (Real.exp (r / 2 * t) * Real.exp (-(r / 2) * t)) *
-        Real.exp (-(r / 2) * t) := by ring
+          Real.exp (-(r / 2) * t) := by ring
       _ = 2 / r * Real.exp (-(r / 2) * t) := by
-        rw [← Real.exp_add]; simp only [neg_mul, add_neg_cancel, Real.exp_zero]; ring
-set_option maxHeartbeats 400000 in
+          rw [← Real.exp_add]; simp only [neg_mul, add_neg_cancel, Real.exp_zero]; ring
 
 end Chapter16
 
@@ -540,7 +541,7 @@ lemma laplace_holomorphic_of_exp_bound
     (volume.restrict (Set.Ioi (0 : ℝ)))
   ·
     intro s₀ hs₀
-    simp only [Set.mem_setOf_eq] at hs₀
+    simp only [Set.mem_ofPred_eq] at hs₀
     apply DifferentiableAt.differentiableWithinAt
     set μ := volume.restrict (Set.Ioi (0 : ℝ)) with hμ_def
     set δ := (s₀.re - a) / 2 with hδ_def
@@ -609,17 +610,17 @@ lemma laplace_holomorphic_of_exp_bound
       have hht : |h t| ≤ C * exp (a * t) := hbound t (le_of_lt ht)
       have hb : b ≤ z.re := hball_re z hz
       calc |t| * exp (-z.re * t) * |h t|
-        ≤ |t| * exp (-b * t) * |h t| := by
-          apply mul_le_mul_of_nonneg_right _ (abs_nonneg _)
-          exact mul_le_mul_of_nonneg_left
-            (Real.exp_le_exp_of_le (mul_le_mul_of_nonneg_right (neg_le_neg hb) (le_of_lt ht)))
-            (abs_nonneg _)
+          ≤ |t| * exp (-b * t) * |h t| := by
+            apply mul_le_mul_of_nonneg_right _ (abs_nonneg _)
+            exact mul_le_mul_of_nonneg_left
+              (Real.exp_le_exp_of_le (mul_le_mul_of_nonneg_right (neg_le_neg hb) (le_of_lt ht)))
+              (abs_nonneg _)
         _ ≤ |t| * exp (-b * t) * (C * exp (a * t)) := by
-          apply mul_le_mul_of_nonneg_left hht
-            (mul_nonneg (abs_nonneg _) (Real.exp_nonneg _))
+            apply mul_le_mul_of_nonneg_left hht
+              (mul_nonneg (abs_nonneg _) (Real.exp_nonneg _))
         _ = C * |t| * exp (-(b - a) * t) := by
-          rw [show -(b - a) * t = -b * t + a * t from by ring]
-          rw [Real.exp_add]; ring
+            rw [show -(b - a) * t = -b * t + a * t from by ring]
+            rw [Real.exp_add]; ring
     ·
       show IntegrableOn (fun t => C * |t| * exp (-(b - a) * t)) (Set.Ioi (0 : ℝ))
       have h1 : IntegrableOn (fun t => C * (t * exp (-(b - a) * t)))
@@ -669,7 +670,7 @@ namespace Chapter16
 [lem_16_10_holomorphic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma lem_16_10_holomorphic
+lemma lem_16_10_holomorphic :
 -- imply
   DifferentiableOn ℂ (fun s => laplace_transform (fun t => θ (exp t)) s) {s | 1 < s.re} := by
 -- proof
@@ -778,7 +779,7 @@ namespace Chapter16
 [meromorphicAt_riemannZeta_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma meromorphicAt_riemannZeta_one
+lemma meromorphicAt_riemannZeta_one :
 -- imply
   MeromorphicAt riemannZeta 1 :=
 -- proof
@@ -872,7 +873,6 @@ lemma prime_rpow_sub_one_pos
     have h0 : (1 : ℝ) = (↑↑p : ℝ) ^ (0 : ℝ) := by simp
     rw [h0]; exact Real.rpow_lt_rpow_of_exponent_lt hp (by linarith)
   linarith
-set_option maxHeartbeats 400000 in
 
 end Chapter16
 
@@ -900,7 +900,7 @@ lemma phiCorrection_term_differentiableOn
   · exact (hcpow_diff.differentiableOn.mul
     (hcpow_diff.differentiableOn.sub (differentiableOn_const _)))
   · intro w hw
-    simp only [Set.mem_setOf_eq] at hw
+    simp only [Set.mem_ofPred_eq] at hw
     have hpσ : (1 : ℝ) < (↑↑p : ℝ) ^ σ := by
       have h0 : (1 : ℝ) = (↑↑p : ℝ) ^ (0 : ℝ) := by simp
       rw [h0]; exact Real.rpow_lt_rpow_of_exponent_lt hp1 (by linarith)
@@ -911,7 +911,6 @@ lemma phiCorrection_term_differentiableOn
     exact mul_ne_zero
       (fun h => by rw [h, norm_zero] at hnorm; linarith)
       (fun h => by rw [sub_eq_zero] at h; rw [h, norm_one] at hnorm; linarith)
-set_option maxHeartbeats 400000 in
 
 end Chapter16
 
@@ -957,7 +956,6 @@ lemma phiCorrection_term_norm_bound
       congr 1; rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hlog_nn]
     _ ≤ Real.log (↑↑p : ℝ) / ((↑↑p : ℝ) ^ σ * ((↑↑p : ℝ) ^ σ - 1)) :=
       div_le_div_of_nonneg_left hlog_nn hdenom_pos hdenom_bound
-set_option maxHeartbeats 800000 in
 
 end Chapter16
 
@@ -1010,7 +1008,6 @@ lemma phiCorrection_summable_bound
         rw [← Real.rpow_add hp_pos]
         congr 1; simp only [α]; ring
   · exact (summable_primes_rpow_neg hα_gt).const_smul (1 / (ε * c))
-set_option maxHeartbeats 800000 in
 
 end Chapter16
 
@@ -1020,12 +1017,12 @@ namespace Chapter16
 [phiCorrection_holomorphic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma phiCorrection_holomorphic
+lemma phiCorrection_holomorphic :
 -- imply
   DifferentiableOn ℂ PhiCorrection {s : ℂ | 1/2 < s.re} := by
 -- proof
   intro s hs
-  simp only [Set.mem_setOf_eq] at hs
+  simp only [Set.mem_ofPred_eq] at hs
   obtain ⟨σ, hσ1, hσ2⟩ : ∃ σ : ℝ, 1 / 2 < σ ∧ σ < s.re :=
     ⟨(s.re + 1/2) / 2, by linarith, by linarith⟩
   have hU : IsOpen {w : ℂ | σ < w.re} := isOpen_lt continuous_const Complex.continuous_re
@@ -1110,7 +1107,7 @@ lemma vonMangoldt_LSeries_eq_double_sum
       rw [Nat.cast_pow, nsmul_eq_mul, ← Complex.natCast_cpow_natCast_mul]
   ·
     intro n hn
-    simp only [Function.mem_support, Set.mem_setOf_eq] at hn ⊢
+    simp only [Function.mem_support, Set.mem_ofPred_eq] at hn ⊢
     by_contra h_not
     apply hn
     simp only [LSeries.term]
@@ -1227,7 +1224,7 @@ namespace Chapter16
 [log_deriv_zeta_meromorphic_on_pos_re](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma log_deriv_zeta_meromorphic_on_pos_re
+lemma log_deriv_zeta_meromorphic_on_pos_re :
 -- imply
   MeromorphicOn (fun s => -(deriv riemannZeta s) / riemannZeta s) {s : ℂ | 0 < s.re} :=
 -- proof
@@ -1241,7 +1238,7 @@ namespace Chapter16
 [log_deriv_zeta_minus_pole_holomorphic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma log_deriv_zeta_minus_pole_holomorphic
+lemma log_deriv_zeta_minus_pole_holomorphic :
 -- imply
   ∃ h : ℂ → ℂ, DifferentiableOn ℂ h {s : ℂ | 1 ≤ s.re} ∧ ∀ s : ℂ, 1 < s.re → h s = -(deriv riemannZeta s) / riemannZeta s - 1 / (s - 1) := by
 -- proof
@@ -1278,7 +1275,7 @@ namespace Chapter16
 [lem_16_11_Phi_holomorphic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma lem_16_11_Phi_holomorphic
+lemma lem_16_11_Phi_holomorphic :
 -- imply
   ∃ g : ℂ → ℂ, DifferentiableOn ℂ g {s : ℂ | 1 ≤ s.re} ∧ ∀ s : ℂ, 1 < s.re → g s = Phi s - 1 / (s - 1) := by
 -- proof
@@ -1299,7 +1296,7 @@ namespace Chapter16
 [lem_16_11_Phi_meromorphic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma lem_16_11_Phi_meromorphic
+lemma lem_16_11_Phi_meromorphic :
 -- imply
   ∃ g : ℂ → ℂ, MeromorphicOn g {s : ℂ | 1/2 < s.re} ∧ ∀ s : ℂ, 1 < s.re → g s = Phi s - 1 / (s - 1) := by
 -- proof
@@ -1439,7 +1436,7 @@ namespace Chapter16
 [H_bounded](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma H_bounded
+lemma H_bounded :
 -- imply
   ∃ M : ℝ, ∀ t : ℝ, 0 ≤ t → := by
 -- proof
@@ -1541,14 +1538,14 @@ namespace Chapter16
 [cor_16_12_Phi_shift_meromorphic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma cor_16_12_Phi_shift_meromorphic
+lemma cor_16_12_Phi_shift_meromorphic :
 -- imply
   ∃ g : ℂ → ℂ, MeromorphicOn g {s : ℂ | -(1:ℝ)/2 < s.re} ∧ ∀ s : ℂ, 0 < s.re → g s = Phi (s + 1) - 1 / s := by
 -- proof
   obtain ⟨g₁, hg₁_mero, hg₁_eq⟩ := lem_16_11_Phi_meromorphic
   refine ⟨fun s => g₁ (s + 1), ?_, ?_⟩
   · intro x hx
-    simp only [Set.mem_setOf_eq] at hx
+    simp only [Set.mem_ofPred_eq] at hx
     have hx' : (1:ℝ)/2 < (x + 1).re := by
       simp [Complex.add_re]; linarith
     have hg_an : AnalyticAt ℂ (fun s : ℂ => s + 1) x := analyticAt_id.add analyticAt_const
@@ -1568,7 +1565,7 @@ namespace Chapter16
 [cor_16_12_laplace_H_holomorphic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
 -/
 @[path]
-lemma cor_16_12_laplace_H_holomorphic
+lemma cor_16_12_laplace_H_holomorphic :
 -- imply
   ∃ g : ℂ → ℂ, DifferentiableOn ℂ g {s : ℂ | 0 ≤ s.re} ∧ ∀ s : ℂ, 0 < s.re → g s = Phi (s + 1) / (s + 1) - 1 / s := by
 -- proof
@@ -1580,12 +1577,12 @@ lemma cor_16_12_laplace_H_holomorphic
       · exact DifferentiableOn.comp hg₁_diff
         (differentiableOn_id.add (differentiableOn_const 1))
         (fun s hs => by
-          simp only [Set.mem_setOf_eq] at hs ⊢
+          simp only [Set.mem_ofPred_eq] at hs ⊢
           simp [Complex.add_re]; linarith)
       · exact differentiableOn_const 1
     · exact differentiableOn_id.add (differentiableOn_const 1)
     · intro s hs
-      simp only [Set.mem_setOf_eq] at hs
+      simp only [Set.mem_ofPred_eq] at hs
       intro h
       have : (s + 1).re = 0 := by rw [show s + 1 = 0 from h]; simp
       simp [Complex.add_re] at this; linarith
@@ -1615,7 +1612,7 @@ namespace Chapter16
 lemma H_integral_change_of_variables
   {T : ℝ}
 -- given
-  (hT : 0 ≤ T) :
+  (_hT : 0 ≤ T) :
 -- imply
   ∫ t in Set.Ioc 0 T, H t = ∫ x in Set.Ioc 1 (exp T), (θ x - x) / x ^ 2 := by
 -- proof
@@ -1721,3 +1718,4 @@ private lemma F_eq :
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

@@ -223,18 +223,19 @@ private lemma btIntegralKernelLog_eq (C : ℝ) (z : ℕ) (hz : 6 ≤ z) :
   · intro t ht
     exact btSieveAntiderivative_hasDerivAt z C t (by linarith [ht.1])
   · have hcont :
-    ContinuousOn (fun t : ℝ ↦ btSieveKernel z t * (Real.log t + C))
-      (Set.Icc (6 : ℝ) z) := by
-    intro t ht
-    have htpos : 0 < t := by linarith [ht.1]
-    apply ContinuousAt.continuousWithinAt
-    apply ContinuousAt.mul
-    · unfold btSieveKernel
-      have hden : (z : ℝ) + t ≠ 0 := by positivity
-      exact continuousAt_const.div ((continuousAt_const.add continuousAt_id).pow 2)
-        (pow_ne_zero 2 hden)
-    · exact (Real.continuousAt_log htpos.ne').add continuousAt_const
-    rwa [intervalIntegrable_iff_integrableOn_Icc_of_le hzR]
+      ContinuousOn (fun t : ℝ ↦ btSieveKernel z t * (Real.log t + C))
+        (Set.Icc (6 : ℝ) z) := by
+      intro t ht
+      have htpos : 0 < t := by linarith [ht.1]
+      apply ContinuousAt.continuousWithinAt
+      apply ContinuousAt.mul
+      · unfold btSieveKernel
+        have hden : (z : ℝ) + t ≠ 0 := by positivity
+        exact continuousAt_const.div ((continuousAt_const.add continuousAt_id).pow 2)
+          (pow_ne_zero 2 hden)
+      · exact (Real.continuousAt_log htpos.ne').add continuousAt_const
+    rw [intervalIntegrable_iff_integrableOn_Icc_of_le hzR]
+    exact hcont.integrableOn_Icc
 
 end MathlibExt.NumberTheory.PrimeCounting
 
@@ -559,4 +560,4 @@ end MathlibExt.NumberTheory.PrimeCounting
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

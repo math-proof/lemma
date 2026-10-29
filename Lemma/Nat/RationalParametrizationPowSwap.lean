@@ -81,7 +81,8 @@ lemma rational_parametrization_pow_swap
     rw [Real.rpow_def_of_pos hyrpos]
     have he : Real.log (y : ℚ) * (((r : ℚ) : ℝ) - 1)
       = Real.log ((r : ℚ) : ℝ) := by
-      rwa [mul_comm]
+      rw [mul_comm]
+      exact hlogR.symm
     rw [he]
     exact (Real.exp_log hRpos).symm
   have hDdne : (Dd : ℚ) ≠ 0 := ne_of_gt (by exact_mod_cast hDd)

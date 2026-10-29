@@ -180,7 +180,7 @@ theorem bft_datum_sep_free (ω : ConfigSpace (Sym2 (Site 2))) (S : Finset (Site 
   · intro heq; exact hn₃ (by have := congrArg Subtype.val heq; rw [hιU] at this; exact this)
 
 
-theorem bft_bk (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bft_bk (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   bcv_bk_of_treeData p hp1 hp0 hdata
@@ -202,7 +202,7 @@ theorem bft_status :
         ¬ (bkg_deleteVertex (openSubgraph d ω) (f i : Site d)).Reachable (a₂ : Site d) (a₃ : Site d)) →
       ∀ (B : Finset {v // v ∈ S}), (∀ v, T.degree v = 1 → v ∈ B) → Fintype.card ι ≤ B.card) ∧
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p →
       (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) →
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
   refine ⟨?_, ?_, ?_⟩

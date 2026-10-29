@@ -27,12 +27,12 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-theorem crossProb_nonneg (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem crossProb_nonneg (d : ℕ) (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     0 ≤ crossProb d p hp n :=
   measureReal_nonneg
 
 
-theorem crossProb_le_one (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem crossProb_le_one (d : ℕ) (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     crossProb d p hp n ≤ 1 := by
   unfold crossProb
   rw [show (1 : ℝ) = (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real Set.univ by
@@ -40,7 +40,7 @@ theorem crossProb_le_one (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
   exact measureReal_mono (Set.subset_univ _)
 
 
-theorem crossProb_antitone (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) :
+theorem crossProb_antitone (d : ℕ) (p : NNReal) (hp : p ≤ 1) :
     Antitone (crossProb d p hp) :=
   fun m n hmn => measureReal_mono (crossingEvent_antitone m n hmn)
 
@@ -99,7 +99,7 @@ theorem step_with_pos_ratio {f : ℕ → ℝ} {r₀ : ℝ} (hfnn : ∀ k, 0 ≤ 
         mul_le_mul_of_nonneg_right (le_max_left _ _) (hfnn k)
 
 
-theorem subcritical_decay (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem subcritical_decay (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hS0 : origin d ∈ S) (hphi : phi d p hp S < 1)
     (L : ℕ) (hL : 1 ≤ L)
     (hstep : ∀ k, crossProb d p hp ((k + 1) * L) ≤ phi d p hp S * crossProb d p hp (k * L)) :

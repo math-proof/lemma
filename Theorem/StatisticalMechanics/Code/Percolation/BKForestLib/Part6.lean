@@ -158,7 +158,7 @@ theorem bkfl_forestPeel_of_twoTrif (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ)
       · exact absurd rfl hzy
 
 
-theorem bkfl_burton_keane_bernoulli_of_forestPeel (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem bkfl_burton_keane_bernoulli_of_forestPeel (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bkfl_ForestPeel ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

@@ -37,7 +37,7 @@ theorem KWStairParameterData.rawClosedEdge_subset_ownerTube_exact
     {n M : ℕ} [NeZero n]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := M + 1) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     (j : Fin (n * (2 * (M + 1)))) :
     kwRawClosedEdge data.vertex j ⊆
       polygon.closedEdgeTube r (kwStairOwner j) := by
@@ -54,7 +54,7 @@ theorem KWStairParameterData.rawClosedEdges_disjoint_of_owner_nonincident
     {n M : ℕ} [NeZero n]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := M + 1) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     (htubes : ∀ i j : Fin n, KWEdgesNonincident i j →
       Disjoint (polygon.closedEdgeTube r i)
         (polygon.closedEdgeTube r j))

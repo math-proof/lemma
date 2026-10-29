@@ -89,9 +89,9 @@ lemma deriv_four_exp_half_sq_zero :
 @[path]
 lemma mgf_standard_gaussian :
 -- imply
-  mgf id (gaussianReal (0 : ℝ) (1 : ℝ≥0)) = fun t => rexp (t ^ 2 / 2) := by
+  mgf id (gaussianReal (0 : ℝ) (1 : NNReal)) = fun t => rexp (t ^ 2 / 2) := by
 -- proof
-  simpa using (mgf_id_gaussianReal (μ := (0 : ℝ)) (v := (1 : ℝ≥0)))
+  simpa using (mgf_id_gaussianReal (μ := (0 : ℝ)) (v := (1 : NNReal)))
 
 /--
 [fourth_moment_standard_gaussian](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/FourierAnalysis/code/GaussianFourthMoment.lean)
@@ -99,9 +99,9 @@ lemma mgf_standard_gaussian :
 @[path]
 lemma fourth_moment_standard_gaussian :
 -- imply
-  ∫ x, x ^ 4 ∂(gaussianReal (0 : ℝ) (1 : ℝ≥0)) = 3 := by
+  ∫ x, x ^ 4 ∂(gaussianReal (0 : ℝ) (1 : NNReal)) = 3 := by
 -- proof
-  have h_int : (0 : ℝ) ∈ interior (integrableExpSet id (gaussianReal (0 : ℝ) (1 : ℝ≥0))) := by
+  have h_int : (0 : ℝ) ∈ interior (integrableExpSet id (gaussianReal (0 : ℝ) (1 : NNReal))) := by
     rw [integrableExpSet_id_gaussianReal, interior_univ]
     trivial
   have h4 := iteratedDeriv_mgf_zero h_int 4
@@ -190,7 +190,7 @@ lemma gaussian_fourth_moment_bound
   (hf_equi : ∀ i, ∫ ω, (f i ω) ^ 4 ∂μ = ∫ ω, (f 0 ω) ^ 4 ∂μ)
   (hf_abs_int : Integrable (fun ω => |f 0 ω * f 1 ω * f 2 ω * f 3 ω|) μ)
   (hf_gaussian : ∫ ω, (f 0 ω) ^ 4 ∂μ =
-      ∫ x, x ^ 4 ∂(gaussianReal (0 : ℝ) (1 : ℝ≥0))) :
+      ∫ x, x ^ 4 ∂(gaussianReal (0 : ℝ) (1 : NNReal))) :
 -- imply
   ∫ ω, |f 0 ω * f 1 ω * f 2 ω * f 3 ω| ∂μ ≤ 3 := by
 -- proof

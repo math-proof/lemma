@@ -89,7 +89,7 @@ theorem kernel_ae_eq_trim {Ω : Type*}
 
 
 theorem trim_smul {Ω : Type*} {m mΩ : MeasurableSpace Ω}
-    (μ : @Measure Ω mΩ) (hm : m ≤ mΩ) (a : ℝ≥0∞) :
+    (μ : @Measure Ω mΩ) (hm : m ≤ mΩ) (a : ENNReal) :
     (a • μ).trim hm = a • (μ.trim hm) :=
   @Measure.ext _ m _ _ (fun s hs => by
     rw [Measure.smul_apply, trim_measurableSet_eq hm hs, trim_measurableSet_eq hm hs,

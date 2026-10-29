@@ -203,8 +203,8 @@ namespace MetaMathlibExt
 private lemma field_inv_sum_zero (p k : ℕ) (hp : p.Prime) (hk2 : 2 ≤ k)
   (hk3 : k ≤ p - 3) :
   ∑ t ∈ Finset.Icc 1 (p - 1), ((((t : ZMod p) ^ k))⁻¹) = 0 := by
-  haveI := Fact.mk hp
-  haveI : NeZero p := ⟨hp.ne_zero⟩
+  have := Fact.mk hp
+  have : NeZero p := ⟨hp.ne_zero⟩
   have hcard : Fintype.card (ZMod p) = p := ZMod.card p
   have hklt : k < Fintype.card (ZMod p) - 1 := by omega
   have hfield : ∑ x : ZMod p, x ^ k = 0 :=
@@ -230,7 +230,8 @@ private lemma field_inv_sum_zero (p k : ℕ) (hp : p.Prime) (hk2 : 2 ≤ k)
       have hva : ((a : ZMod p)).val = a := ZMod.val_natCast_of_lt (by omega : a < p)
       have hvb : ((b : ZMod p)).val = b := ZMod.val_natCast_of_lt (by omega : b < p)
       rw [hab'] at hva
-      rwa [hvb] at hva
+      rw [hvb] at hva
+      exact hva.symm
     · intro x hx
       have hx' := Finset.mem_sdiff.mp hx
       have hxne : x ≠ 0 := fun h => hx'.2 (Finset.mem_singleton.mpr h)
@@ -308,9 +309,9 @@ lemma wolstenholme_harmonic_power_sum
 -- imply
   ∑ t ∈ Finset.Icc 1 (p - 1), (((t : ZMod (p ^ 2)) ^ ν)⁻¹) = 0 := by
 -- proof
-  haveI : NeZero (p ^ 2) := ⟨pow_ne_zero 2 hp.ne_zero⟩
-  haveI : NeZero p := ⟨hp.ne_zero⟩
-  haveI := Fact.mk hp
+  have : NeZero (p ^ 2) := ⟨pow_ne_zero 2 hp.ne_zero⟩
+  have : NeZero p := ⟨hp.ne_zero⟩
+  have := Fact.mk hp
   have hodd : Odd p := hp.odd_of_ne_two (by omega : p ≠ 2)
   have hpp : (p : ZMod (p ^ 2)) ^ 2 = 0 := sq_pp_eq_zero p
   have hpair : ∀ t ∈ Finset.Icc 1 (p - 1),
@@ -391,7 +392,8 @@ lemma wolstenholme_harmonic_power_sum
       = (p : ZMod (p ^ 2)) * ((w0 : ZMod (p ^ 2))) := by
       rw [Nat.cast_mul]
     rw [hw0] at h1
-    rwa [h2] at h1
+    rw [h2] at h1
+    exact h1.symm
   obtain ⟨w, hw⟩ := hUdiv
   have h2S0 : 2 * (∑ t ∈ Finset.Icc 1 (p - 1), ((((t : ZMod (p ^ 2)) ^ ν)⁻¹))) = 0 := by
     rw [h2S, hw]
@@ -412,4 +414,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

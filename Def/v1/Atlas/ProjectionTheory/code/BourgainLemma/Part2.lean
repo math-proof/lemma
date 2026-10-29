@@ -25,11 +25,11 @@ variable {d : ℕ}
 /-- `IsRegularSet δ s C X` says that $X$ is a $(\delta, s, C)$-regular set: for every scale
 $\rho \in [\delta, 1]$ and every $\rho$-mesh cube $Q$, $|X \cap Q|_\delta \leq C \rho^s |X|_\delta$,
 the discrete analogue of Frostman regularity with exponent $s$. -/
-def IsRegularSet (δ : ℝ) (s : ℝ) (C : ℝ≥0) (X : Set (EuclideanSpace ℝ (Fin d))) : Prop :=
+def IsRegularSet (δ : ℝ) (s : ℝ) (C : NNReal) (X : Set (EuclideanSpace ℝ (Fin d))) : Prop :=
   ∀ (ρ : ℝ), δ ≤ ρ → ρ ≤ 1 →
     ∀ k ∈ meshCubesIntersecting ρ X,
-      (meshCount δ (meshCube ρ k ∩ X) : ℝ≥0∞) ≤
-        C * (ENNReal.ofReal ρ) ^ s * (meshCount δ X : ℝ≥0∞)
+      (meshCount δ (meshCube ρ k ∩ X) : ENNReal) ≤
+        C * (ENNReal.ofReal ρ) ^ s * (meshCount δ X : ENNReal)
 
 end BourgainUniform
 end

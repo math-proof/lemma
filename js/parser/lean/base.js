@@ -769,6 +769,27 @@ export class Lean extends IndentedNode {
                 }
                 return caret;
             }
+            case '∼': {
+                // `x ∼[π] μ` — HasLaw / Distributed. Bracketed measure required by
+                // `notation:50 x:51 " ∼[" π:0 "] " μ:52 => HasLaw x μ π`.
+                // Bare `∼` (no `[`) stays a token; `≃` (U+2243) remains Lean_simeq.
+                let modifier = '';
+                if (tokens[self.start_idx + 1] === '[') {
+                    self.start_idx += 2; // skip `[`, point inside
+                    const startIdx = self.start_idx;
+                    while (self.start_idx < tokens.length && tokens[self.start_idx] !== ']')
+                        self.start_idx++;
+                    modifier = tokens.slice(startIdx, self.start_idx).join('');
+                    if (self.start_idx < tokens.length) self.start_idx++; // skip `]`
+                    self.start_idx--; // loop will increment
+                    const caret = this.push_binary(L.LeanDistributed);
+                    let p = caret;
+                    while (p && !(p instanceof L.LeanDistributed)) p = p.parent;
+                    if (p) p.modifier = modifier;
+                    return caret;
+                }
+                return this.parent.insert_word(this, token);
+            }
             case '=':
                 if (tokens[self.start_idx + 1] === '>') {
                     self.start_idx++;
@@ -1212,6 +1233,8 @@ export class Lean extends IndentedNode {
                 return this.push_post_unary('LeanTesseract');
             case 'ᵀ':
                 return this.push_post_unary('LeanTranspose');
+            case 'ᴴ':
+                return this.push_post_unary('LeanAdjoint');
             case '⁺':
                 return this.push_post_unary('LeanPosPart');
             case '⁻':

@@ -7,8 +7,6 @@ namespace MathlibExt.NumberTheory.Wolstenholme
 
 /--
 [eq_two_mul_half_add_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Wolstenholme.lean)
--/
-@[path]
 # Wolstenholme's lemma
 For a prime `p ≥ 5`, the sum of the reciprocals of `1, …, p - 1` vanishes in
 `ZMod (p ^ 2)`.
@@ -27,6 +25,7 @@ which states it modulo `p ^ 2` for primes `p ≥ 5` and cites J. Wolstenholme,
 "On certain properties of prime numbers", Quarterly Journal of Mathematics 5
 (1862), 35--39.
 -/
+@[path]
 private theorem eq_two_mul_half_add_one (p : ℕ) (hp : p.Prime) (h5 : 5 ≤ p) :
   p = 2 * ((p - 1) / 2) + 1 := by
   obtain ⟨m, hm⟩ := hp.odd_of_ne_two (by omega)
@@ -126,22 +125,23 @@ private lemma pair_inv (p k : ℕ) (hp : p.Prime) (h5 : 5 ≤ p)
     mul_inv_cancel_of_mem_Ico p k hp hkIco
   have hp2 : (p : ZMod (p ^ 2)) ^ 2 = 0 := by
     have h0 : ((p ^ 2 : ℕ) : ZMod (p ^ 2)) = 0 := ZMod.natCast_self _
-    rwa [Nat.cast_pow] at h0
+    rw [Nat.cast_pow] at h0
+    exact h0
   have hcast : ((p - k : ℕ) : ZMod (p ^ 2)) = (p : ZMod (p ^ 2)) - k := by
     rw [Nat.cast_sub hkp.le]
   have hRHS : ((p - k : ℕ) : ZMod (p ^ 2))
-    * (-((k : ZMod (p ^ 2))⁻¹)
-      - (p : ZMod (p ^ 2)) * ((k : ZMod (p ^ 2))⁻¹) ^ 2) = 1 := by
+      * (-((k : ZMod (p ^ 2))⁻¹)
+        - (p : ZMod (p ^ 2)) * ((k : ZMod (p ^ 2))⁻¹) ^ 2) = 1 := by
     rw [hcast]
     linear_combination (1 + (p : ZMod (p ^ 2)) * (k : ZMod (p ^ 2))⁻¹) * hk1
       - ((k : ZMod (p ^ 2))⁻¹) ^ 2 * hp2
   have hLHS : ((p - k : ℕ) : ZMod (p ^ 2))
-    * (((p - k : ℕ) : ZMod (p ^ 2))⁻¹) = 1 :=
+      * (((p - k : ℕ) : ZMod (p ^ 2))⁻¹) = 1 :=
     mul_inv_cancel_of_mem_Ico p (p - k) hp (mem_Ico_sub p k h5 hk)
   have hEq : ((p - k : ℕ) : ZMod (p ^ 2)) * (((p - k : ℕ) : ZMod (p ^ 2))⁻¹)
-    = ((p - k : ℕ) : ZMod (p ^ 2))
-      * (-((k : ZMod (p ^ 2))⁻¹)
-        - (p : ZMod (p ^ 2)) * ((k : ZMod (p ^ 2))⁻¹) ^ 2) := by
+      = ((p - k : ℕ) : ZMod (p ^ 2))
+        * (-((k : ZMod (p ^ 2))⁻¹)
+          - (p : ZMod (p ^ 2)) * ((k : ZMod (p ^ 2))⁻¹) ^ 2) := by
     rw [hLHS, hRHS]
   exact (isUnit_sub p k hp h5 hk).mul_left_cancel hEq
 
@@ -161,7 +161,7 @@ private lemma sum_Ico_pair (p : ℕ) (hp : p.Prime) (h5 : 5 ≤ p) (M : Type*)
   have hsplit := Finset.sum_Ico_consecutive f (show 1 ≤ (p - 1) / 2 + 1 by omega)
     (show (p - 1) / 2 + 1 ≤ p by omega)
   have hreindex : ∑ k ∈ Finset.Ico ((p - 1) / 2 + 1) p, f k
-    = ∑ k ∈ Finset.Ico 1 ((p - 1) / 2 + 1), f (p - k) := by
+      = ∑ k ∈ Finset.Ico 1 ((p - 1) / 2 + 1), f (p - k) := by
     apply Finset.sum_bij (fun k _ => p - k)
     · intro k hk
       rw [Finset.mem_Ico] at hk ⊢
@@ -345,7 +345,8 @@ private lemma sum_inv_sq_eq_sum_sq (p : ℕ) (hp : p.Prime) :
     have hinv := congrArg Inv.inv hcast
     rw [inv_inv, inv_inv] at hinv
     have hval := congrArg ZMod.val hinv
-    rwa [ZMod.val_natCast_of_lt ha.2, ZMod.val_natCast_of_lt hb.2] at hval
+    rw [ZMod.val_natCast_of_lt ha.2, ZMod.val_natCast_of_lt hb.2] at hval
+    exact hval
   · intro j hj
     refine ⟨(((j : ZMod p)⁻¹).val), mem_Ico_inv_val p j hp hj, ?_⟩
     have hj2 := (Finset.mem_Ico.mp hj).2
@@ -354,7 +355,8 @@ private lemma sum_inv_sq_eq_sum_sq (p : ℕ) (hp : p.Prime) :
     have hinv : ((((j : ZMod p)⁻¹).val : ℕ) : ZMod p)⁻¹ = (j : ZMod p) := by
       rw [hcast, inv_inv]
     have hval := congrArg ZMod.val hinv
-    rwa [ZMod.val_natCast_of_lt hj2] at hval
+    rw [ZMod.val_natCast_of_lt hj2] at hval
+    exact hval
   · intro k hk
     have hcast : ((((k : ZMod p)⁻¹).val : ℕ) : ZMod p) = (k : ZMod p)⁻¹ :=
       ZMod.natCast_zmod_val _
@@ -392,7 +394,7 @@ private lemma sum_sq_eq_zero (p : ℕ) (hp : p.Prime) (h5 : 5 ≤ p) :
     intro h
     have h23 : p ∣ 2 * 3 := by simpa using h
     have h2or3 := (Nat.Prime.dvd_mul hp).mp h23
-    obtain h2 | h3 := h2or3
+    rcases h2or3 with h2 | h3
     · have hle := Nat.le_of_dvd (by norm_num) h2
       omega
     · have hle := Nat.le_of_dvd (by norm_num) h3
@@ -432,9 +434,10 @@ private lemma sum_inv_sq_half_eq_zero (p : ℕ) (hp : p.Prime) (h5 : 5 ≤ p) :
     have h := (ZMod.isUnit_iff_coprime 2 p).mpr hcop2
     simpa using h
   have heq : (2 : ZMod p)
-    * (∑ k ∈ Finset.Ico 1 ((p - 1) / 2 + 1), ((k : ZMod p)⁻¹) ^ 2)
-    = 2 * 0 := by
-    rwa [mul_zero]
+      * (∑ k ∈ Finset.Ico 1 ((p - 1) / 2 + 1), ((k : ZMod p)⁻¹) ^ 2)
+      = 2 * 0 := by
+    rw [mul_zero]
+    exact hhalves.symm
   exact h2unit.mul_left_cancel heq
 
 end MathlibExt.NumberTheory.Wolstenholme
@@ -453,18 +456,19 @@ private lemma mul_sum_sq_eq_zero (p : ℕ) (hp : p.Prime) (h5 : 5 ≤ p) :
   have : NeZero (p ^ 2) := ⟨(pow_pos hp.pos 2).ne'⟩
   have hdvd : p ∣ p ^ 2 := dvd_pow_self p (by omega)
   have hcast : ∀ k ∈ Finset.Ico 1 ((p - 1) / 2 + 1),
-    ZMod.castHom hdvd (ZMod p) (k : ZMod (p ^ 2)) = (k : ZMod p) :=
+      ZMod.castHom hdvd (ZMod p) (k : ZMod (p ^ 2)) = (k : ZMod p) :=
     fun k _ => map_natCast (ZMod.castHom hdvd (ZMod p)) k
   have hφS : ZMod.castHom hdvd (ZMod p)
-    (∑ k ∈ Finset.Ico 1 ((p - 1) / 2 + 1), ((k : ZMod (p ^ 2))⁻¹) ^ 2)
-    = 0 := by
+      (∑ k ∈ Finset.Ico 1 ((p - 1) / 2 + 1), ((k : ZMod (p ^ 2))⁻¹) ^ 2)
+      = 0 := by
     rw [castHom_sum_sq p hp h5 (ZMod.castHom hdvd (ZMod p)) hcast,
       sum_inv_sq_half_eq_zero p hp h5]
   set S := ∑ k ∈ Finset.Ico 1 ((p - 1) / 2 + 1), ((k : ZMod (p ^ 2))⁻¹) ^ 2
   have hSval : ((S.val : ℕ) : ZMod (p ^ 2)) = S := ZMod.natCast_zmod_val S
   have hφSval : ZMod.castHom hdvd (ZMod p) S = ((S.val : ℕ) : ZMod p) := by
     have h := map_natCast (ZMod.castHom hdvd (ZMod p)) S.val
-    rwa [hSval] at h
+    rw [hSval] at h
+    exact h
   have hzero : ((S.val : ℕ) : ZMod p) = 0 := by rw [← hφSval, hφS]
   have hdvdS : p ∣ S.val := (ZMod.natCast_eq_zero_iff S.val p).mp hzero
   obtain ⟨t, ht⟩ := hdvdS
@@ -487,7 +491,7 @@ lemma wolstenholme
   {p : ℕ}
 -- given
   (hp : p.Prime)
-  (h0 : 5 ≤ p) :
+  (h5 : 5 ≤ p) :
 -- imply
   ∑ k ∈ Finset.Ico 1 p, ((k : ZMod (p ^ 2))⁻¹) = 0 := by
 -- proof
@@ -498,4 +502,4 @@ end MathlibExt.NumberTheory.Wolstenholme
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

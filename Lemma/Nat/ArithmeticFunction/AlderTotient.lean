@@ -11,7 +11,7 @@ namespace ArithmeticFunction
 -/
 @[path]
 lemma alderTotientTwo_apply
-  {k : ℕ} :
+  (k : ℕ) :
 -- imply
   alderTotientTwo k =
       ((Finset.range k).filter fun r =>

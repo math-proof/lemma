@@ -24,7 +24,7 @@ private lemma main
   velocity (fun s => WithLp.toLp 2 (fun i => x i s)) t =
     WithLp.toLp 2 (fun i => deriv (x i) t) := by
 -- proof
-  let e := (WithLp.linearEquiv (2 : ℝ≥0∞) ℝ (Fin d → ℝ)).toContinuousLinearEquiv
+  let e := (WithLp.linearEquiv (2 : ENNReal) ℝ (Fin d → ℝ)).toContinuousLinearEquiv
   have hpi : HasDerivAt (fun s => fun i => x i s) (fun i => deriv (x i) t) t :=
     hasDerivAt_pi.2 fun i => (hx i).hasDerivAt
   have hpath :

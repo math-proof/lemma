@@ -212,7 +212,7 @@ private lemma conj_pow_mul_pow_mul_phase_zpow {k : ℤ} {z : ℂ} (hz : z ≠ 0)
 
 private lemma complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex (u : ℂ) (k : ℤ) (s : ℂ)
   (hs : 0 < (s + (u + (k.natAbs : ℂ) / 2)).re) :
-  complexZeta ((2 : ℝ≥0∞) • volume) (complexTestFun k) (complexCharFun u k) s = (Real.pi : ℂ) * Complex.Gammaℂ (s + (u + (k.natAbs : ℂ) / 2)) := by
+  complexZeta ((2 : ENNReal) • volume) (complexTestFun k) (complexCharFun u k) s = (Real.pi : ℂ) * Complex.Gammaℂ (s + (u + (k.natAbs : ℂ) / 2)) := by
   set ζ : ℂ := s + (u + (k.natAbs : ℂ) / 2) with hζ
   set w : ℂ := 2 * ζ with hw
   have hhalf : w / 2 = ζ := by rw [hw]; ring

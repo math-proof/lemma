@@ -23,17 +23,17 @@ private lemma pell_complex_binet (P : ℕ → ℤ) (h0 : P 0 = 0) (h1 : P 1 = 1)
     rw [show (1 + s) - (1 - s) = 2 * s by ring,
       div_self (mul_ne_zero two_ne_zero hs0)]
   · have ha : (1 + s) ^ (n + 2) = 2 * (1 + s) ^ (n + 1) + (1 + s) ^ n := by
-    have h2 : (1 + s) ^ 2 = 2 * (1 + s) + 1 := by linear_combination hs2
-    calc (1 + s) ^ (n + 2) = (1 + s) ^ n * (1 + s) ^ 2 := by ring
-      _ = (1 + s) ^ n * (2 * (1 + s) + 1) := by rw [h2]
-      _ = 2 * (1 + s) ^ (n + 1) + (1 + s) ^ n := by ring
+      have h2 : (1 + s) ^ 2 = 2 * (1 + s) + 1 := by linear_combination hs2
+      calc (1 + s) ^ (n + 2) = (1 + s) ^ n * (1 + s) ^ 2 := by ring
+        _ = (1 + s) ^ n * (2 * (1 + s) + 1) := by rw [h2]
+        _ = 2 * (1 + s) ^ (n + 1) + (1 + s) ^ n := by ring
     have hb : (1 - s) ^ (n + 2) = 2 * (1 - s) ^ (n + 1) + (1 - s) ^ n := by
       have h2 : (1 - s) ^ 2 = 2 * (1 - s) + 1 := by linear_combination hs2
       calc (1 - s) ^ (n + 2) = (1 - s) ^ n * (1 - s) ^ 2 := by ring
         _ = (1 - s) ^ n * (2 * (1 - s) + 1) := by rw [h2]
         _ = 2 * (1 - s) ^ (n + 1) + (1 - s) ^ n := by ring
     have hrecC : ((P (n + 2) : ℤ) : ℂ)
-      = 2 * ((P (n + 1) : ℤ) : ℂ) + ((P n : ℤ) : ℂ) := by
+        = 2 * ((P (n + 1) : ℤ) : ℂ) + ((P n : ℤ) : ℂ) := by
       exact_mod_cast hrec n
     rw [hrecC, ih1, ih2, ← mul_div_assoc, ← add_div]
     congr 1
@@ -71,8 +71,8 @@ private lemma pell_binom_closed (P : ℕ → ℤ) (h0 : P 0 = 0) (h1 : P 1 = 1)
     ((2 + s) ^ n - (2 - s) ^ n) / (2 * s) := by
   have hbin := pell_complex_binet P h0 h1 hrec s hs2
   have e : ∀ i : ℕ, (n.choose i : ℂ) * (P i : ℂ) =
-    (((n.choose i : ℂ) * (1 + s) ^ i - (n.choose i : ℂ) * (1 - s) ^ i)
-      / (2 * s)) := by
+      (((n.choose i : ℂ) * (1 + s) ^ i - (n.choose i : ℂ) * (1 - s) ^ i)
+        / (2 * s)) := by
     intro i
     rw [hbin i]
     ring
@@ -191,8 +191,8 @@ private lemma kron_filter (s w : ℂ) (hs2 : s ^ 2 = 2) (hs0 : s ≠ 0)
     exact mul_left_cancel₀ hs0 h
   rw [omega_pow_mod w hw8 k, omega_pow3_mod w hw8 k]
   have h8 : k % 8 = 0 ∨ k % 8 = 1 ∨ k % 8 = 2 ∨ k % 8 = 3 ∨
-    k % 8 = 4 ∨ k % 8 = 5 ∨ k % 8 = 6 ∨ k % 8 = 7 := by omega
-  obtain h | h | h | h | h | h | h | h := h8
+      k % 8 = 4 ∨ k % 8 = 5 ∨ k % 8 = 6 ∨ k % 8 = 7 := by omega
+  rcases h8 with h | h | h | h | h | h | h | h
   · have hk2 : k % 2 = 0 := by omega
     have h3 : (3 * k) % 8 = 0 := by omega
     rw [h, hk2, h3, ite_eq_left rfl, pow_zero, inv_one]
@@ -248,18 +248,19 @@ private lemma kron_symm (w : ℂ) (hw0 : w ≠ 0) (n : ℕ) :
     have h1 : w ^ (a - b) * w ^ b = w ^ a := by
       rw [← pow_add, Nat.sub_add_cancel hab]
     have h2 : w ^ b ≠ 0 := pow_ne_zero b hw0
-    rwa [← div_eq_mul_inv, eq_div_iff h2]
+    rw [← div_eq_mul_inv, eq_div_iff h2]
+    exact h1
   have hC : ∀ j : ℕ, j ≤ n →
-    (2 * n).choose (n + (n - j)) = (2 * n).choose j := by
+      (2 * n).choose (n + (n - j)) = (2 * n).choose j := by
     intro j hjn
     have e1 : n + (n - j) = 2 * n - j := by omega
     rw [e1]
     exact Nat.choose_symm (by omega)
   have hFlower : ∀ j : ℕ, j ≤ n →
-    w ^ (n - j) + (w ^ (n - j))⁻¹ - w ^ (3 * (n - j)) -
-      (w ^ (3 * (n - j)))⁻¹ =
-    w ^ n * (w ^ j)⁻¹ + (w ^ n)⁻¹ * w ^ j - (w ^ 3) ^ n * ((w ^ 3) ^ j)⁻¹ -
-      ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ j := by
+      w ^ (n - j) + (w ^ (n - j))⁻¹ - w ^ (3 * (n - j)) -
+        (w ^ (3 * (n - j)))⁻¹ =
+      w ^ n * (w ^ j)⁻¹ + (w ^ n)⁻¹ * w ^ j - (w ^ 3) ^ n * ((w ^ 3) ^ j)⁻¹ -
+        ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ j := by
     intro j hjn
     have e1 := hpsd n j hjn
     have e3 : w ^ (3 * (n - j)) = (w ^ 3) ^ n * ((w ^ 3) ^ j)⁻¹ := by
@@ -270,10 +271,10 @@ private lemma kron_symm (w : ℂ) (hw0 : w ≠ 0) (n : ℕ) :
     rw [e1, e3, mul_inv_rev, mul_inv_rev, inv_inv, inv_inv,
       mul_comm (w ^ j) _, mul_comm ((w ^ 3) ^ j) _]
   have hFupper : ∀ m : ℕ, n ≤ m → m ≤ 2 * n →
-    w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
-      (w ^ (3 * (m - n)))⁻¹ =
-    w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
-      ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m := by
+      w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
+        (w ^ (3 * (m - n)))⁻¹ =
+      w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
+        ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m := by
     intro m hnm hmn
     have u1 := hpsd m n hnm
     have u3 : w ^ (3 * (m - n)) = (w ^ 3) ^ m * ((w ^ 3) ^ n)⁻¹ := by
@@ -285,21 +286,21 @@ private lemma kron_symm (w : ℂ) (hw0 : w ≠ 0) (n : ℕ) :
       mul_comm (w ^ m) _, mul_comm ((w ^ 3) ^ m) _]
     abel
   have hrefl : (∑ k ∈ Finset.range (n + 1),
-    (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
-    ((2 * n).choose (n + k) : ℂ)) =
-    ∑ j ∈ Finset.range (n + 1),
-      (w ^ n * (w ^ j)⁻¹ + (w ^ n)⁻¹ * w ^ j - (w ^ 3) ^ n * ((w ^ 3) ^ j)⁻¹ -
-        ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ j) * ((2 * n).choose j : ℂ) := by
+        (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
+        ((2 * n).choose (n + k) : ℂ)) =
+      ∑ j ∈ Finset.range (n + 1),
+        (w ^ n * (w ^ j)⁻¹ + (w ^ n)⁻¹ * w ^ j - (w ^ 3) ^ n * ((w ^ 3) ^ j)⁻¹ -
+          ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ j) * ((2 * n).choose j : ℂ) := by
     have hr := Finset.sum_range_reflect
       (fun k => (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
         ((2 * n).choose (n + k) : ℂ)) (n + 1)
     have hr' : (∑ j ∈ Finset.range (n + 1),
-      (w ^ (n + 1 - 1 - j) + (w ^ (n + 1 - 1 - j))⁻¹ -
-        w ^ (3 * (n + 1 - 1 - j)) - (w ^ (3 * (n + 1 - 1 - j)))⁻¹) *
-      ((2 * n).choose (n + (n + 1 - 1 - j)) : ℂ)) =
-      (∑ j ∈ Finset.range (n + 1),
-        (w ^ j + (w ^ j)⁻¹ - w ^ (3 * j) - (w ^ (3 * j))⁻¹) *
-        ((2 * n).choose (n + j) : ℂ)) := hr
+          (w ^ (n + 1 - 1 - j) + (w ^ (n + 1 - 1 - j))⁻¹ -
+            w ^ (3 * (n + 1 - 1 - j)) - (w ^ (3 * (n + 1 - 1 - j)))⁻¹) *
+          ((2 * n).choose (n + (n + 1 - 1 - j)) : ℂ)) =
+        (∑ j ∈ Finset.range (n + 1),
+          (w ^ j + (w ^ j)⁻¹ - w ^ (3 * j) - (w ^ (3 * j))⁻¹) *
+          ((2 * n).choose (n + j) : ℂ)) := hr
     rw [← hr']
     apply Finset.sum_congr rfl
     intro j hj
@@ -309,20 +310,20 @@ private lemma kron_symm (w : ℂ) (hw0 : w ≠ 0) (n : ℕ) :
     have e : n + 1 - 1 - j = n - j := by omega
     rw [e, hC j hjn, hFlower j hjn]
   have hVico : (∑ k ∈ Finset.range (n + 1),
-    (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
-    ((2 * n).choose (n + k) : ℂ)) =
-    ∑ m ∈ Finset.Ico n (2 * n + 1),
-      (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
-        (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ) := by
+        (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
+        ((2 * n).choose (n + k) : ℂ)) =
+      ∑ m ∈ Finset.Ico n (2 * n + 1),
+        (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
+          (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ) := by
     have h := Finset.sum_Ico_eq_sum_range
       (fun m => (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
         (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ)) n (2 * n + 1)
     have h' : (∑ m ∈ Finset.Ico n (2 * n + 1),
-      (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
-        (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ)) =
-      (∑ k ∈ Finset.range (2 * n + 1 - n),
-        (w ^ (n + k - n) + (w ^ (n + k - n))⁻¹ - w ^ (3 * (n + k - n)) -
-          (w ^ (3 * (n + k - n)))⁻¹) * ((2 * n).choose (n + k) : ℂ)) := h
+          (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
+            (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ)) =
+        (∑ k ∈ Finset.range (2 * n + 1 - n),
+          (w ^ (n + k - n) + (w ^ (n + k - n))⁻¹ - w ^ (3 * (n + k - n)) -
+            (w ^ (3 * (n + k - n)))⁻¹) * ((2 * n).choose (n + k) : ℂ)) := h
     have e1 : 2 * n + 1 - n = n + 1 := by omega
     rw [e1] at h'
     rw [h']
@@ -331,26 +332,26 @@ private lemma kron_symm (w : ℂ) (hw0 : w ≠ 0) (n : ℕ) :
     have e2 : n + k - n = k := by omega
     rw [e2]
   have hVsplit : (∑ m ∈ Finset.Ico n (2 * n + 1),
-    (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
-      (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ)) =
-    (w ^ 0 + (w ^ 0)⁻¹ - w ^ (3 * 0) - (w ^ (3 * 0))⁻¹) *
-      ((2 * n).choose n : ℂ) +
-    ∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
-      (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
-        (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ) := by
+        (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
+          (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ)) =
+      (w ^ 0 + (w ^ 0)⁻¹ - w ^ (3 * 0) - (w ^ (3 * 0))⁻¹) *
+        ((2 * n).choose n : ℂ) +
+      ∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
+        (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
+          (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ) := by
     have hcon := Finset.sum_Ico_consecutive
       (fun m => (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
         (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ))
       (Nat.le_succ n) (show n + 1 ≤ 2 * n + 1 by omega)
     have hcon' : (∑ m ∈ Finset.Ico n (n + 1),
-      (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
-        (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ)) +
-      (∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
-        (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
-          (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ)) =
-      ∑ m ∈ Finset.Ico n (2 * n + 1),
-        (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
-          (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ) := hcon
+          (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
+            (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ)) +
+        (∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
+          (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
+            (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ)) =
+        ∑ m ∈ Finset.Ico n (2 * n + 1),
+          (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
+            (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ) := hcon
     rw [← hcon']
     have hsing : Finset.Ico n (n + 1) = {n} := by
       ext m
@@ -360,39 +361,39 @@ private lemma kron_symm (w : ℂ) (hw0 : w ≠ 0) (n : ℕ) :
     have e0 : n - n = 0 := by omega
     rw [e0]
   have hFsplit : (∑ m ∈ Finset.range (2 * n + 1),
-    (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
-      ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ)) =
-    (∑ m ∈ Finset.range (n + 1),
-      (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
-        ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ)) +
-    ∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
-      (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
-        ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ) := by
+        (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
+          ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ)) =
+      (∑ m ∈ Finset.range (n + 1),
+        (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
+          ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ)) +
+      ∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
+        (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
+          ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ) := by
     have hcon := Finset.sum_Ico_consecutive
       (fun m => (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n *
         ((w ^ 3) ^ m)⁻¹ - ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) *
         ((2 * n).choose m : ℂ))
       (Nat.zero_le (n + 1)) (show n + 1 ≤ 2 * n + 1 by omega)
     have hcon' : (∑ m ∈ Finset.Ico 0 (n + 1),
-      (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n *
-        ((w ^ 3) ^ m)⁻¹ - ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) *
-      ((2 * n).choose m : ℂ)) +
-      (∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
-        (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n *
-          ((w ^ 3) ^ m)⁻¹ - ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) *
-        ((2 * n).choose m : ℂ)) =
-      ∑ m ∈ Finset.Ico 0 (2 * n + 1),
-        (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n *
-          ((w ^ 3) ^ m)⁻¹ - ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) *
-        ((2 * n).choose m : ℂ) := hcon
+          (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n *
+            ((w ^ 3) ^ m)⁻¹ - ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) *
+          ((2 * n).choose m : ℂ)) +
+        (∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
+          (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n *
+            ((w ^ 3) ^ m)⁻¹ - ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) *
+          ((2 * n).choose m : ℂ)) =
+        ∑ m ∈ Finset.Ico 0 (2 * n + 1),
+          (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n *
+            ((w ^ 3) ^ m)⁻¹ - ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) *
+          ((2 * n).choose m : ℂ) := hcon
     simp only [← Finset.range_eq_Ico] at hcon'
     exact hcon'.symm
   have hUpper : (∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
-    (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
-      (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ)) =
-    ∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
-      (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
-        ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ) := by
+        (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
+          (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ)) =
+      ∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
+        (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
+          ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ) := by
     apply Finset.sum_congr rfl
     intro m hm
     have hmem := Finset.mem_Ico.mp hm
@@ -400,24 +401,24 @@ private lemma kron_symm (w : ℂ) (hw0 : w ≠ 0) (n : ℕ) :
     have hmn : m ≤ 2 * n := by omega
     rw [hFupper m hnm hmn]
   have hF0 : (w ^ 0 + (w ^ 0)⁻¹ - w ^ (3 * 0) - (w ^ (3 * 0))⁻¹) *
-    ((2 * n).choose n : ℂ) = 0 := by
+      ((2 * n).choose n : ℂ) = 0 := by
     rw [mul_zero, pow_zero, inv_one]
     ring
   have e1 : (∑ k ∈ Finset.range (n + 1),
-    (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
-    ((2 * n).choose (n + k) : ℂ)) =
-    (w ^ 0 + (w ^ 0)⁻¹ - w ^ (3 * 0) - (w ^ (3 * 0))⁻¹) *
-      ((2 * n).choose n : ℂ) +
-    ∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
-      (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
-        (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ) :=
+        (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
+        ((2 * n).choose (n + k) : ℂ)) =
+      (w ^ 0 + (w ^ 0)⁻¹ - w ^ (3 * 0) - (w ^ (3 * 0))⁻¹) *
+        ((2 * n).choose n : ℂ) +
+      ∑ m ∈ Finset.Ico (n + 1) (2 * n + 1),
+        (w ^ (m - n) + (w ^ (m - n))⁻¹ - w ^ (3 * (m - n)) -
+          (w ^ (3 * (m - n)))⁻¹) * ((2 * n).choose m : ℂ) :=
     hVico.trans hVsplit
   have e2 : (∑ k ∈ Finset.range (n + 1),
-    (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
-    ((2 * n).choose (n + k) : ℂ)) =
-    ∑ m ∈ Finset.range (n + 1),
-      (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
-        ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ) := hrefl
+        (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
+        ((2 * n).choose (n + k) : ℂ)) =
+      ∑ m ∈ Finset.range (n + 1),
+        (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
+          ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ) := hrefl
   linear_combination e1 + e2 + hUpper - hFsplit + hF0
 
 end MetaMathlibExt
@@ -480,7 +481,8 @@ private theorem kron_geom (s w : ℂ) (hs2 : s ^ 2 = 2) (hs0 : s ≠ 0)
     calc w ^ 6 = w ^ 4 * w ^ 2 := by ring
       _ = -Complex.I := by rw [hw4, hw2]; ring
   have hw32 : (w ^ 3) ^ 2 = -Complex.I := by
-    rwa [← pow_mul]
+    rw [← pow_mul]
+    exact hw6
   have hswinv3 : s * (w ^ 3)⁻¹ = -1 - Complex.I := by
     have e : s * (w ^ 3)⁻¹ = (s * w⁻¹) * (w⁻¹) ^ 2 := by
       rw [← inv_pow]
@@ -501,23 +503,23 @@ private theorem kron_geom (s w : ℂ) (hs2 : s ^ 2 = 2) (hs0 : s ≠ 0)
     ring
   have hSq3i : (1 + (w ^ 3)⁻¹) ^ 2 = (2 - s) * (w ^ 3)⁻¹ := by
     have e : (1 + (w ^ 3)⁻¹) ^ 2
-      = 1 + 2 * (w ^ 3)⁻¹ + ((w ^ 3)⁻¹) ^ 2 := by ring
+        = 1 + 2 * (w ^ 3)⁻¹ + ((w ^ 3)⁻¹) ^ 2 := by ring
     have e2 : (2 - s) * (w ^ 3)⁻¹ = 2 * (w ^ 3)⁻¹ - (-1 - Complex.I) := by
       rw [sub_mul, hswinv3]
     rw [e, hu2, e2]
     ring
   have gS2 : (∑ m ∈ Finset.range (2 * n + 1),
-    ((w ^ n)⁻¹ * w ^ m) * ((2 * n).choose m : ℂ)) = (2 + s) ^ n := by
+        ((w ^ n)⁻¹ * w ^ m) * ((2 * n).choose m : ℂ)) = (2 + s) ^ n := by
     have e : ∀ m : ℕ, ((w ^ n)⁻¹ * w ^ m) * ((2 * n).choose m : ℂ) =
-      (w ^ n)⁻¹ * (((2 * n).choose m : ℂ) * w ^ m) := fun m => by ring
+        (w ^ n)⁻¹ * (((2 * n).choose m : ℂ) * w ^ m) := fun m => by ring
     simp only [e]
     rw [← Finset.mul_sum, binom_sum_pow, pow_mul, hSq1, mul_pow,
       ← mul_assoc, mul_comm ((w ^ n)⁻¹) _, mul_assoc,
       inv_mul_cancel₀ (pow_ne_zero n hw0), mul_one]
   have gS1 : (∑ m ∈ Finset.range (2 * n + 1),
-    (w ^ n * (w ^ m)⁻¹) * ((2 * n).choose m : ℂ)) = (2 + s) ^ n := by
+        (w ^ n * (w ^ m)⁻¹) * ((2 * n).choose m : ℂ)) = (2 + s) ^ n := by
     have e : ∀ m : ℕ, (w ^ n * (w ^ m)⁻¹) * ((2 * n).choose m : ℂ) =
-      w ^ n * (((2 * n).choose m : ℂ) * (w⁻¹) ^ m) := by
+        w ^ n * (((2 * n).choose m : ℂ) * (w⁻¹) ^ m) := by
       intro m
       rw [← inv_pow]
       ring
@@ -526,19 +528,19 @@ private theorem kron_geom (s w : ℂ) (hs2 : s ^ 2 = 2) (hs0 : s ≠ 0)
       ← mul_assoc, mul_comm (w ^ n) _, mul_assoc, ← mul_pow,
       mul_inv_cancel₀ hw0, one_pow, mul_one]
   have gS4 : (∑ m ∈ Finset.range (2 * n + 1),
-    (((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ)) =
-    (2 - s) ^ n := by
+        (((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ)) =
+      (2 - s) ^ n := by
     have e : ∀ m : ℕ, (((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ) =
-      ((w ^ 3) ^ n)⁻¹ * (((2 * n).choose m : ℂ) * (w ^ 3) ^ m) := fun m => by ring
+        ((w ^ 3) ^ n)⁻¹ * (((2 * n).choose m : ℂ) * (w ^ 3) ^ m) := fun m => by ring
     simp only [e]
     rw [← Finset.mul_sum, binom_sum_pow, pow_mul, hSq3, mul_pow,
       ← mul_assoc, mul_comm (((w ^ 3) ^ n)⁻¹) _, mul_assoc,
       inv_mul_cancel₀ (pow_ne_zero n (pow_ne_zero 3 hw0)), mul_one]
   have gS3 : (∑ m ∈ Finset.range (2 * n + 1),
-    ((w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹) * ((2 * n).choose m : ℂ)) =
-    (2 - s) ^ n := by
+        ((w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹) * ((2 * n).choose m : ℂ)) =
+      (2 - s) ^ n := by
     have e : ∀ m : ℕ, ((w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹) * ((2 * n).choose m : ℂ) =
-      (w ^ 3) ^ n * (((2 * n).choose m : ℂ) * ((w ^ 3)⁻¹) ^ m) := by
+        (w ^ 3) ^ n * (((2 * n).choose m : ℂ) * ((w ^ 3)⁻¹) ^ m) := by
       intro m
       rw [← inv_pow]
       ring
@@ -547,12 +549,12 @@ private theorem kron_geom (s w : ℂ) (hs2 : s ^ 2 = 2) (hs0 : s ≠ 0)
       ← mul_assoc, mul_comm ((w ^ 3) ^ n) _, mul_assoc, ← mul_pow,
       mul_inv_cancel₀ (pow_ne_zero 3 hw0), one_pow, mul_one]
   have hsplit : ∀ m : ℕ,
-    (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
-      ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ) =
-    (w ^ n * (w ^ m)⁻¹) * ((2 * n).choose m : ℂ) +
-      ((w ^ n)⁻¹ * w ^ m) * ((2 * n).choose m : ℂ) -
-      ((w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹) * ((2 * n).choose m : ℂ) -
-      (((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ) := by
+      (w ^ n * (w ^ m)⁻¹ + (w ^ n)⁻¹ * w ^ m - (w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹ -
+        ((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ) =
+      (w ^ n * (w ^ m)⁻¹) * ((2 * n).choose m : ℂ) +
+        ((w ^ n)⁻¹ * w ^ m) * ((2 * n).choose m : ℂ) -
+        ((w ^ 3) ^ n * ((w ^ 3) ^ m)⁻¹) * ((2 * n).choose m : ℂ) -
+        (((w ^ 3) ^ n)⁻¹ * (w ^ 3) ^ m) * ((2 * n).choose m : ℂ) := by
     intro m
     ring
   simp only [hsplit]
@@ -585,37 +587,38 @@ private lemma kron_sum_closed (s w : ℂ) (hs2 : s ^ 2 = 2) (hs0 : s ≠ 0)
     exact div_ne_zero h1I hs0
   have hF := kron_filter s w hs2 hs0 hw
   have e : ∀ k : ℕ,
-    (if k % 2 = 0 then (0 : ℂ)
-      else if k % 8 = 1 ∨ k % 8 = 7 then (1 : ℂ) else (-1 : ℂ)) *
-      ((2 * n).choose (n + k) : ℂ) =
-    ((w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
-      ((2 * n).choose (n + k) : ℂ)) / (2 * s) := by
+      (if k % 2 = 0 then (0 : ℂ)
+        else if k % 8 = 1 ∨ k % 8 = 7 then (1 : ℂ) else (-1 : ℂ)) *
+        ((2 * n).choose (n + k) : ℂ) =
+      ((w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
+        ((2 * n).choose (n + k) : ℂ)) / (2 * s) := by
     intro k
     have hk := hF k
     rw [eq_div_iff h2s]
     linear_combination ((2 * n).choose (n + k) : ℂ) * hk
   have hV : (∑ k ∈ Finset.range (n + 1),
-    (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
-    ((2 * n).choose (n + k) : ℂ)) = (2 + s) ^ n - (2 - s) ^ n := by
+        (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
+        ((2 * n).choose (n + k) : ℂ)) = (2 + s) ^ n - (2 - s) ^ n := by
     have hS := kron_symm w hw0 n
     have hG := kron_geom s w hs2 hs0 hw n
     have h2 : 2 * (∑ k ∈ Finset.range (n + 1),
-      (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
-      ((2 * n).choose (n + k) : ℂ)) = 2 * ((2 + s) ^ n - (2 - s) ^ n) := by
-      rwa [hS]
+          (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
+          ((2 * n).choose (n + k) : ℂ)) = 2 * ((2 + s) ^ n - (2 - s) ^ n) := by
+      rw [hS]
+      exact hG
     exact mul_left_cancel₀ two_ne_zero h2
   calc (∑ k ∈ Finset.range (n + 1),
-    (if k % 2 = 0 then (0 : ℂ)
-      else if k % 8 = 1 ∨ k % 8 = 7 then (1 : ℂ) else (-1 : ℂ)) *
-    ((2 * n).choose (n + k) : ℂ))
-    = ∑ k ∈ Finset.range (n + 1),
-      ((w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
-        ((2 * n).choose (n + k) : ℂ)) / (2 * s) :=
-      Finset.sum_congr rfl (fun k _ => e k)
+        (if k % 2 = 0 then (0 : ℂ)
+          else if k % 8 = 1 ∨ k % 8 = 7 then (1 : ℂ) else (-1 : ℂ)) *
+        ((2 * n).choose (n + k) : ℂ))
+      = ∑ k ∈ Finset.range (n + 1),
+        ((w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
+          ((2 * n).choose (n + k) : ℂ)) / (2 * s) :=
+        Finset.sum_congr rfl (fun k _ => e k)
     _ = (∑ k ∈ Finset.range (n + 1),
-      (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
-      ((2 * n).choose (n + k) : ℂ)) / (2 * s) :=
-      (Finset.sum_div _ _ _).symm
+        (w ^ k + (w ^ k)⁻¹ - w ^ (3 * k) - (w ^ (3 * k))⁻¹) *
+        ((2 * n).choose (n + k) : ℂ)) / (2 * s) :=
+        (Finset.sum_div _ _ _).symm
     _ = ((2 + s) ^ n - (2 - s) ^ n) / (2 * s) := by rw [hV]
 
 end MetaMathlibExt
@@ -647,23 +650,23 @@ lemma pell_binomial_transform
     rw [h] at hs2
     norm_num at hs2
   have hQ : ((∑ i ∈ Finset.range (n + 1), (n.choose i : ℤ) * P i : ℤ) : ℂ) =
-    ((2 + ((Real.sqrt 2 : ℝ) : ℂ)) ^ n - (2 - ((Real.sqrt 2 : ℝ) : ℂ)) ^ n) /
-    (2 * ((Real.sqrt 2 : ℝ) : ℂ)) := by
+      ((2 + ((Real.sqrt 2 : ℝ) : ℂ)) ^ n - (2 - ((Real.sqrt 2 : ℝ) : ℂ)) ^ n) /
+      (2 * ((Real.sqrt 2 : ℝ) : ℂ)) := by
     push_cast
     exact pell_binom_closed P h0 h1 hrec _ hs2 n
   have hS : ((∑ k ∈ Finset.range (n + 1),
-    (if k % 2 = 0 then (0 : ℤ)
-      else if k % 8 = 1 ∨ k % 8 = 7 then 1 else -1) *
-    ((2 * n).choose (n + k) : ℤ) : ℤ) : ℂ) =
-    ((2 + ((Real.sqrt 2 : ℝ) : ℂ)) ^ n - (2 - ((Real.sqrt 2 : ℝ) : ℂ)) ^ n) /
-    (2 * ((Real.sqrt 2 : ℝ) : ℂ)) := by
+      (if k % 2 = 0 then (0 : ℤ)
+        else if k % 8 = 1 ∨ k % 8 = 7 then 1 else -1) *
+      ((2 * n).choose (n + k) : ℤ) : ℤ) : ℂ) =
+      ((2 + ((Real.sqrt 2 : ℝ) : ℂ)) ^ n - (2 - ((Real.sqrt 2 : ℝ) : ℂ)) ^ n) /
+      (2 * ((Real.sqrt 2 : ℝ) : ℂ)) := by
     push_cast
     exact kron_sum_closed _ _ hs2 hs0 rfl n
   have hcast : ((∑ i ∈ Finset.range (n + 1), (n.choose i : ℤ) * P i : ℤ) : ℂ) =
-    ((∑ k ∈ Finset.range (n + 1),
-      (if k % 2 = 0 then (0 : ℤ)
-        else if k % 8 = 1 ∨ k % 8 = 7 then 1 else -1) *
-      ((2 * n).choose (n + k) : ℤ) : ℤ) : ℂ) := by
+      ((∑ k ∈ Finset.range (n + 1),
+        (if k % 2 = 0 then (0 : ℤ)
+          else if k % 8 = 1 ∨ k % 8 = 7 then 1 else -1) *
+        ((2 * n).choose (n + k) : ℤ) : ℤ) : ℂ) := by
     rw [hQ, hS]
   exact Int.cast_injective hcast
 
@@ -671,4 +674,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

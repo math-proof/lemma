@@ -108,7 +108,7 @@ private lemma bc46_burton_keane_bernoulli_of_armFunnelGeometry_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc46_ArmFunnelGeometry ω n)
@@ -126,7 +126,7 @@ private lemma bc46_burton_keane_bernoulli_of_neighborArmFunnel_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc46_NeighborArmFunnel ω n)
@@ -174,7 +174,7 @@ private lemma bc46_burton_keane_bernoulli_of_correctedParentGeometry_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc46_CorrectedParentGeometry ω n)

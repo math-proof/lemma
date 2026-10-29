@@ -248,7 +248,7 @@ private lemma exists_remoteIncident_dist_separation_eq
   (hcross : ∀ j : Fin n, kwComplexCross (polygon.edgeVector j) (polygon.edgeVector (j + 1)) ≠ 0)
   (hcoords : ∀ j : Fin n, (polygon.edgeVector j).re ≠ 0 ∧ (polygon.edgeVector j).im ≠ 0) :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ x ∈ (if first then kwRawClosedEdge patch.vertex (kwStairEvenIndex i (Fin.last M)) else kwRawClosedEdge patch.vertex (kwStairOddIndex i (Fin.last M))), ∀ y ∈ (if first then patch.outgoingRetainedCarrier (i + 1) else patch.incomingRetainedCarrier i), (r : ℝ) < dist x y := by
+  ∃ r : NNReal, 0 < r ∧ ∀ x ∈ (if first then kwRawClosedEdge patch.vertex (kwStairEvenIndex i (Fin.last M)) else kwRawClosedEdge patch.vertex (kwStairOddIndex i (Fin.last M))), ∀ y ∈ (if first then patch.outgoingRetainedCarrier (i + 1) else patch.incomingRetainedCarrier i), (r : ℝ) < dist x y := by
 -- proof
   apply StatMech.FrontierA.KWAdaptivePatchedData.exists_remoteIncident_dist_separation patch hcross hcoords i first
 

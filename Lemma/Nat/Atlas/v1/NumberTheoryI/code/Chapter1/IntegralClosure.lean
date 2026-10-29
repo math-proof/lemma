@@ -58,7 +58,7 @@ lemma corollary_1_21'
 [proposition_1_22](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter1/IntegralClosure.lean)
 -/
 @[path]
-lemma proposition_1_22
+lemma proposition_1_22 :
 -- imply
   IsIntegrallyClosed ℤ :=
 -- proof
@@ -134,3 +134,4 @@ lemma proposition_1_28
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

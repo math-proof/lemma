@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open Nat Nat.SylvesterSchur
+open Nat
 
 
 namespace Nat.SylvesterSchur.Internal
@@ -60,3 +60,4 @@ end Nat.SylvesterSchur.Internal
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

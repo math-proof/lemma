@@ -7,8 +7,6 @@ namespace MetaMathlibExt
 
 /--
 [minpoly_add_inv_dvd_of_minpoly_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Cyclotomic/LehmerCoprimeIndexMinpoly.lean)
--/
-@[path]
 Given primitive `n`-th roots `u`, `v` in `ℂ` with the same minpoly over `ℤ`,
 the minpoly of the trace `t' = v + v⁻¹` divides the minpoly of `t = u + u⁻¹`.
 The argument: with `P = minpoly ℤ t` of degree `m`, form
@@ -17,6 +15,7 @@ The argument: with `P = minpoly ℤ t` of degree `m`, form
 Since `aeval t P = 0`, we get `aeval u Q = 0`, hence `minpoly ℤ u ∣ Q`;
 by hypothesis the same holds for `v`, giving `aeval v Q = 0` and therefore
 `aeval t' P = 0` (as `v^m ≠ 0`), i.e. `minpoly ℤ t' ∣ P`. -/
+@[path]
 private lemma minpoly_add_inv_dvd_of_minpoly_eq (n : ℕ) (u v t t' : ℂ) (hn : 0 < n)
   (hu : IsPrimitiveRoot u n) (hv : IsPrimitiveRoot v n)
   (hμ : minpoly ℤ u = minpoly ℤ v)
@@ -136,7 +135,6 @@ lemma realCyclotomicPolynomial_eq_minpoly_two_cos
     = minpoly ℤ (((2 * Real.cos (2 * (k : ℝ) * Real.pi / (n : ℝ)) : ℝ)) : ℂ) :=
     Polynomial.eq_of_monic_of_dvd_of_natDegree_le hmonic2 hmonic1 h1 hle
   exact heq
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -150,8 +148,8 @@ lemma realCyclotomicPolynomial_eq_minpoly_two_cos_of_coprime
   {n k : ℕ}
 -- given
   (hn : 2 < n)
-  (hk1 : 1 ≤ k)
-  (hkn : k ≤ n)
+  (_hk1 : 1 ≤ k)
+  (_hkn : k ≤ n)
   (hcop : Nat.Coprime k n) :
 -- imply
   realCyclotomicPolynomial n =
@@ -163,4 +161,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

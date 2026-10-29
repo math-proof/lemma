@@ -78,7 +78,7 @@ theorem bc46_selfDownArm_of_correctedParentGeometry (ω : ConfigSpace (Sym2 (Sit
     (bc46_parentFunneling_of_correctedParentGeometry ω n hgeo)
 
 
-theorem bc46_burton_keane_bernoulli_of_correctedParentGeometry (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc46_burton_keane_bernoulli_of_correctedParentGeometry (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
       bc46_CorrectedParentGeometry ω n)

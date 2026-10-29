@@ -35,7 +35,7 @@ variable {E : Type*} [NormedAddCommGroup E]
 
 /-- $L^p(μ; E)$ is a normed additive commutative group for $1 ≤ p ≤ ∞$, with norm
 $\|\cdot\|_p$. This is part of the statement that $L^p(E)$ is a normed vector space. -/
-instance Lp_instNormedAddCommGroup {p : ℝ≥0∞} [Fact (1 ≤ p)] :
+instance Lp_instNormedAddCommGroup {p : ENNReal} [Fact (1 ≤ p)] :
     NormedAddCommGroup (Lp E p μ) :=
   MeasureTheory.Lp.instNormedAddCommGroup
 
@@ -43,7 +43,7 @@ instance Lp_instNormedAddCommGroup {p : ℝ≥0∞} [Fact (1 ≤ p)] :
 additive group instance, this gives the statement that $L^p(E)$ is a normed vector space
 under $\|\cdot\|_p$. -/
 instance Lp_instNormedSpace {𝕜 : Type*} [NormedField 𝕜] [NormedSpace 𝕜 E]
-    {p : ℝ≥0∞} [Fact (1 ≤ p)] :
+    {p : ENNReal} [Fact (1 ≤ p)] :
     NormedSpace 𝕜 (Lp E p μ) :=
   MeasureTheory.Lp.instNormedSpace
 

@@ -27,7 +27,7 @@ open StatMech.Percolation StatMech.Lattice
 variable {d : ℕ}
 
 
-noncomputable def clusterSizeDomination (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+noncomputable def clusterSizeDomination (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (hphi : phi d p hp S < 1)
     (L : ℕ) (hL : 1 ≤ L) (hSbox : (S : Set (Site d)) ⊆ box d (L - 1)) :
     ClusterSizeDomination :=

@@ -26,9 +26,9 @@ variable {d : ℕ}
 
 
 lemma Tcount_eq_sum_indicator (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ) :
-    (Tcount d ω n : ℝ≥0∞) =
+    (Tcount d ω n : ENNReal) =
       ∑ x ∈ boxFinsetBK d n,
-        ({ω' | IsTrifurcation d ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω := by
+        ({ω' | IsTrifurcation d ω' x}.indicator (fun _ => (1 : ENNReal))) ω := by
   classical
   unfold Tcount
   rw [Finset.card_filter]
@@ -44,18 +44,18 @@ lemma Tcount_eq_sum_indicator (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ) :
 
 theorem expected_Tcount (μ : Measure (ConfigSpace (Sym2 (Site d))))
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) (n : ℕ) :
-    ∫⁻ ω, (Tcount d ω n : ℝ≥0∞) ∂μ
+    ∫⁻ ω, (Tcount d ω n : ENNReal) ∂μ
       = (boxFinsetBK d n).card • μ {ω | IsTrifurcation d ω 0} := by
   classical
   have hmeas : ∀ x : Site d, Measurable
-      (fun ω => ({ω' | IsTrifurcation d ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω) :=
+      (fun ω => ({ω' | IsTrifurcation d ω' x}.indicator (fun _ => (1 : ENNReal))) ω) :=
     fun x => Measurable.indicator measurable_const (measurableSet_isTrifurcation x)
-  calc ∫⁻ ω, (Tcount d ω n : ℝ≥0∞) ∂μ
+  calc ∫⁻ ω, (Tcount d ω n : ENNReal) ∂μ
       = ∫⁻ ω, ∑ x ∈ boxFinsetBK d n,
-          ({ω' | IsTrifurcation d ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω ∂μ := by
+          ({ω' | IsTrifurcation d ω' x}.indicator (fun _ => (1 : ENNReal))) ω ∂μ := by
         apply lintegral_congr; intro ω; exact Tcount_eq_sum_indicator ω n
     _ = ∑ x ∈ boxFinsetBK d n,
-          ∫⁻ ω, ({ω' | IsTrifurcation d ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω ∂μ := by
+          ∫⁻ ω, ({ω' | IsTrifurcation d ω' x}.indicator (fun _ => (1 : ENNReal))) ω ∂μ := by
         rw [MeasureTheory.lintegral_finsetSum]
         intro x _; exact hmeas x
     _ = ∑ x ∈ boxFinsetBK d n, μ {ω | IsTrifurcation d ω x} := by
@@ -78,19 +78,19 @@ theorem trifurcation_prob_eq_zero (μ : Measure (ConfigSpace (Sym2 (Site d))))
       Filter.atTop (nhds 0)) :
     μ {ω | IsTrifurcation d ω 0} = 0 := by
   classical
-  set p : ℝ≥0∞ := μ {ω | IsTrifurcation d ω 0} with hp
+  set p : ENNReal := μ {ω | IsTrifurcation d ω 0} with hp
   
-  have hkey : ∀ n, ((boxFinsetBK d n).card : ℝ≥0∞) * p ≤ (bdry n : ℝ≥0∞) := by
+  have hkey : ∀ n, ((boxFinsetBK d n).card : ENNReal) * p ≤ (bdry n : ENNReal) := by
     intro n
     have hexp := expected_Tcount μ hinv n
     rw [nsmul_eq_mul] at hexp
-    have hle : ∫⁻ ω, (Tcount d ω n : ℝ≥0∞) ∂μ ≤ (bdry n : ℝ≥0∞) := by
-      calc ∫⁻ ω, (Tcount d ω n : ℝ≥0∞) ∂μ
-          ≤ ∫⁻ _ω, (bdry n : ℝ≥0∞) ∂μ := by
+    have hle : ∫⁻ ω, (Tcount d ω n : ENNReal) ∂μ ≤ (bdry n : ENNReal) := by
+      calc ∫⁻ ω, (Tcount d ω n : ENNReal) ∂μ
+          ≤ ∫⁻ _ω, (bdry n : ENNReal) ∂μ := by
             apply lintegral_mono; intro ω
             simp only
             exact_mod_cast hbound ω n
-        _ = (bdry n : ℝ≥0∞) := by rw [lintegral_const]; simp
+        _ = (bdry n : ENNReal) := by rw [lintegral_const]; simp
     rwa [hexp] at hle
   
   have hpfin : p ≠ ⊤ := by
@@ -102,7 +102,7 @@ theorem trifurcation_prob_eq_zero (μ : Measure (ConfigSpace (Sym2 (Site d))))
   have hkeyr : ∀ n, ((boxFinsetBK d n).card : ℝ) * pr ≤ (bdry n : ℝ) := by
     intro n
     have h := hkey n
-    have h' : (((boxFinsetBK d n).card : ℝ≥0∞) * p).toReal ≤ (bdry n : ℝ≥0∞).toReal :=
+    have h' : (((boxFinsetBK d n).card : ENNReal) * p).toReal ≤ (bdry n : ENNReal).toReal :=
       ENNReal.toReal_mono (by simp) h
     rw [ENNReal.toReal_mul] at h'
     simpa [ENNReal.toReal_natCast, hpr] using h'

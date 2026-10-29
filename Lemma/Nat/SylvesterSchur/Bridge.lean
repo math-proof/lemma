@@ -38,7 +38,7 @@ namespace Nat.SylvesterSchur
 -/
 @[path]
 lemma exists_dvd_consecutive_of_prime_dvd_choose
-  {n k p : ℕ}
+  (n k p : ℕ)
 -- given
   (hp : p.Prime)
   (hp_dvd : p ∣ Nat.choose (k + n - 1) n) :
@@ -79,4 +79,4 @@ end Nat.SylvesterSchur
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

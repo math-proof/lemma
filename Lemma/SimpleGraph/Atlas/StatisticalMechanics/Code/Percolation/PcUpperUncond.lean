@@ -12,10 +12,10 @@ private lemma cylinder_all_closed_eq
   {d : ℕ}
   {F : Finset (Sym2 (Site d))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
-  (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) ((F : Set (Sym2 (Site d))).pi (fun _ => ({false} : Set Bool))) = ((1 - p : ℝ≥0) : ℝ≥0∞) ^ F.card := by
+  (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) ((F : Set (Sym2 (Site d))).pi (fun _ => ({false} : Set Bool))) = ((1 - p : NNReal) : ENNReal) ^ F.card := by
 -- proof
   apply StatMech.Percolation.cylinder_all_closed p hp F
 
@@ -111,10 +111,10 @@ private lemma measure_closedCircuitEvent_eq
   {u v : Site 2}
   {c : (hypercubicLattice 2).Walk u v}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
-  (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedCircuitEvent c) = ((1 - p : ℝ≥0) : ℝ≥0∞) ^ (primalEdgeFinset c).card := by
+  (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedCircuitEvent c) = ((1 - p : NNReal) : ENNReal) ^ (primalEdgeFinset c).card := by
 -- proof
   apply StatMech.Percolation.measure_closedCircuitEvent p hp c
 
@@ -154,11 +154,11 @@ private lemma measure_closedCircuitEvent_cycle_eq
   {u : Site 2}
   {c : (hypercubicLattice 2).Walk u u}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hc : c.IsCycle) :
 -- imply
-  (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedCircuitEvent c) = ((1 - p : ℝ≥0) : ℝ≥0∞) ^ c.length := by
+  (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedCircuitEvent c) = ((1 - p : NNReal) : ENNReal) ^ c.length := by
 -- proof
   apply StatMech.Percolation.measure_closedCircuitEvent_cycle p hp c hc
 
@@ -191,10 +191,10 @@ private lemma cyclesAtLen_card_eq
 private lemma measure_cyclesAtLen_le_eq
   {ℓ : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
-  (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (⋃ σ ∈ cyclesAtLen ℓ, closedCircuitEvent σ.2) ≤ (2 * ℓ * 4 ^ ℓ : ℕ) * ((1 - p : ℝ≥0) : ℝ≥0∞) ^ ℓ := by
+  (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (⋃ σ ∈ cyclesAtLen ℓ, closedCircuitEvent σ.2) ≤ (2 * ℓ * 4 ^ ℓ : ℕ) * ((1 - p : NNReal) : ENNReal) ^ ℓ := by
 -- proof
   apply StatMech.Percolation.measure_cyclesAtLen_le p hp ℓ
 
@@ -255,10 +255,10 @@ private lemma tsum_pcSummandTwo_eq
 private lemma ennSummand_eq_ofReal_eq
   {ℓ : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
-  ((2 * ℓ * 4 ^ ℓ : ℕ) : ℝ≥0∞) * ((1 - p : ℝ≥0) : ℝ≥0∞) ^ ℓ = ENNReal.ofReal (pcSummandTwo (p : ℝ) ℓ) := by
+  ((2 * ℓ * 4 ^ ℓ : ℕ) : ENNReal) * ((1 - p : NNReal) : ENNReal) ^ ℓ = ENNReal.ofReal (pcSummandTwo (p : ℝ) ℓ) := by
 -- proof
   apply StatMech.Percolation.ennSummand_eq_ofReal p hp ℓ
 
@@ -338,7 +338,7 @@ private lemma percolationEventCompl_subset_eq
 private lemma measure_compl_percolationEvent_le_eq
 -- given
   (henc : PcAnchoredEnclosure)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hsum : ‖pcRatio (p : ℝ)‖ < 1) :
 -- imply
@@ -353,7 +353,7 @@ private lemma measure_compl_percolationEvent_le_eq
 private lemma one_sub_theta_le_eq
 -- given
   (henc : PcAnchoredEnclosure)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hsum : ‖pcRatio (p : ℝ)‖ < 1) :
 -- imply

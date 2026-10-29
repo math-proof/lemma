@@ -15,7 +15,7 @@ lemma lp_banach_space
   {μ : Measure X}
   [NormedAddCommGroup E]
   [CompleteSpace E]
-  {p : ℝ≥0∞}
+  {p : ENNReal}
   [hp : Fact (1 ≤ p)] :
 -- imply
   CompleteSpace (Lp E p μ) :=
@@ -32,7 +32,7 @@ namespace LpCompleteness
 @[path]
 lemma smooth_compactSupport_dense_Lp_Rn
   {n : ℕ}
-  {p : ℝ≥0∞}
+  {p : ENNReal}
   [hp : Fact (1 ≤ p)]
 -- given
   (hp_top : p ≠ ⊤) :

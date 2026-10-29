@@ -42,7 +42,7 @@ noncomputable def tvDist {Ω : Type*} [MeasurableSpace Ω]
   sSup {x : ℝ | ∃ S : Set Ω, MeasurableSet S ∧ x = |(P₀ S).toReal - (P₁ S).toReal|}
 
 /-- Real-valued version of the Kullback–Leibler divergence `klDiv P Q`, obtained by
-taking `toReal` of the `ℝ≥0∞`-valued divergence. -/
+taking `toReal` of the `ENNReal`-valued divergence. -/
 noncomputable def klDiv_real {Ω : Type*} [MeasurableSpace Ω]
     (P Q : Measure Ω) : ℝ :=
   (klDiv P Q).toReal

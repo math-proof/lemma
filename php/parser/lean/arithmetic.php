@@ -69,6 +69,9 @@ class LeanMul extends LeanArithmetic
     public function __get($vname)
     {
         switch ($vname) {
+            case 'input_priority':
+                // Mathlib Matrix.mulVec BinaryInfix 73 when `*ᵥ`
+                return (($this->subscript ?? '') === 'ᵥ') ? 73 : self::$input_priority;
             case 'command':
                 [$lhs, $rhs] = $this->args;
                 if (
@@ -78,7 +81,9 @@ class LeanMul extends LeanArithmetic
                     $lhs instanceof LeanMul && $lhs->command ||
                     $lhs->is_space_separated() ||
                     $lhs instanceof LeanFDiv ||
-                    $rhs instanceof LeanPow
+                    $rhs instanceof LeanPow ||
+                    $rhs instanceof LeanAdjoint ||
+                    $rhs instanceof LeanTranspose
                 )
                     return '\cdot';
                 if (
@@ -658,6 +663,9 @@ class Lean_cdotp extends LeanArithmetic
     public function __get($vname)
     {
         switch ($vname) {
+            case 'input_priority':
+                // Mathlib dotProduct BinaryInfix 72 when `⬝ᵥ`
+                return (($this->subscript ?? '') === 'ᵥ') ? 72 : self::$input_priority;
             case 'operator':
                 return '⬝';
             case 'command':
@@ -1204,7 +1212,33 @@ class LeanTranspose extends LeanUnaryArithmeticPost
             case 'operator':
                 return 'ᵀ';
             case 'command':
-                return '^\top';
+                return '^{\color{magenta} T}';
+            default:
+                return parent::__get($vname);
+        }
+    }
+    public function latexFormat()
+    {
+        return "{%s}$this->command";
+    }
+
+    public function strFormat()
+    {
+        return "%s$this->operator";
+    }
+
+}
+
+/** Postfix hermitian adjoint / conjTranspose `ᴴ`. */
+class LeanAdjoint extends LeanUnaryArithmeticPost
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return 'ᴴ';
+            case 'command':
+                return '^{\color{magenta} {\dagger}}';
             default:
                 return parent::__get($vname);
         }

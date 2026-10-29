@@ -25,7 +25,7 @@ open Set
 
 theorem KWFiniteSimplePolygon.closedEdgeTube_eq_add_ball
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
-    (r : ℝ≥0) (i : Fin n) :
+    (r : NNReal) (i : Fin n) :
     polygon.closedEdgeTube r i =
       polygon.closedEdge i + Metric.ball (0 : ℂ) (r : ℝ) := by
   ext z
@@ -44,14 +44,14 @@ theorem KWFiniteSimplePolygon.closedEdgeTube_eq_add_ball
 
 theorem KWFiniteSimplePolygon.closedEdgeTube_convex
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
-    (r : ℝ≥0) (i : Fin n) :
+    (r : NNReal) (i : Fin n) :
     Convex ℝ (polygon.closedEdgeTube r i) := by
   rw [polygon.closedEdgeTube_eq_add_ball]
   exact (convex_segment _ _).add (convex_ball (0 : ℂ) (r : ℝ))
 
 theorem KWFiniteSimplePolygon.closedEdge_subset_closedEdgeTube
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
-    {r : ℝ≥0} (hr : 0 < r) (i : Fin n) :
+    {r : NNReal} (hr : 0 < r) (i : Fin n) :
     polygon.closedEdge i ⊆ polygon.closedEdgeTube r i := by
   intro x hx
   exact ⟨x, hx, by simpa using hr⟩
@@ -59,7 +59,7 @@ theorem KWFiniteSimplePolygon.closedEdge_subset_closedEdgeTube
 
 theorem KWFiniteSimplePolygon.closedEdgeTube_disjoint_of_nonincident
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
-    {r : ℝ≥0}
+    {r : NNReal}
     (hsep : ∀ i j : Fin n, KWEdgesNonincident i j →
       ∀ x ∈ polygon.closedEdge i, ∀ y ∈ polygon.closedEdge j,
         (r : ℝ) < dist x y)
@@ -79,7 +79,7 @@ theorem KWFiniteSimplePolygon.closedEdgeTube_disjoint_of_nonincident
 
 theorem KWFiniteSimplePolygon.exists_pairwise_disjoint_nonincident_edgeTubes
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n) :
-    ∃ r : ℝ≥0, 0 < r ∧
+    ∃ r : NNReal, 0 < r ∧
       ∀ i j : Fin n, KWEdgesNonincident i j →
         Disjoint (polygon.closedEdgeTube (r / 2) i)
           (polygon.closedEdgeTube (r / 2) j) := by

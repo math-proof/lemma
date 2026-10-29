@@ -31,11 +31,11 @@ lemma tsum_measure_gt_eq_lintegral
 -- given
   (hT_meas : Measurable T) :
 -- imply
-  ∑' i, μ {ω | i < T ω} = ∫⁻ ω, (T ω : ℝ≥0∞) ∂μ := by
+  ∑' i, μ {ω | i < T ω} = ∫⁻ ω, (T ω : ENNReal) ∂μ := by
 -- proof
   have hmeas : ∀ i, MeasurableSet {ω : Ω | i < T ω} := fun i => hT_meas measurableSet_Ioi
-  have key : ∀ ω, (T ω : ℝ≥0∞) =
-    ∑' i, Set.indicator {ω | i < T ω} (fun _ => (1 : ℝ≥0∞)) ω := by
+  have key : ∀ ω, (T ω : ENNReal) =
+    ∑' i, Set.indicator {ω | i < T ω} (fun _ => (1 : ENNReal)) ω := by
     intro ω; simp only [Set.indicator, Set.mem_setOf_eq]
     rw [tsum_eq_sum (s := range (T ω))]
     · rw [Finset.sum_congr rfl (fun x hx => if_pos (Finset.mem_range.mp hx)),
@@ -46,7 +46,7 @@ lemma tsum_measure_gt_eq_lintegral
       congr 1; ext i; rw [lintegral_indicator (hmeas i), setLIntegral_one]
     _ = ∫⁻ ω, ∑' i, Set.indicator {ω | i < T ω} (fun _ => 1) ω ∂μ := by
       rw [lintegral_tsum (fun i => (measurable_const.indicator (hmeas i)).aemeasurable)]
-    _ = ∫⁻ ω, (T ω : ℝ≥0∞) ∂μ := by congr 1; ext ω; exact (key ω).symm
+    _ = ∫⁻ ω, (T ω : ENNReal) ∂μ := by congr 1; ext ω; exact (key ω).symm
 
 /--
 [nat_eq_tsum_indicator](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/WaldEquation.lean)
@@ -89,12 +89,12 @@ lemma integral_nat_eq_tsum_prob
     rw [hind n, integral_indicator_const _ (hmeas n), smul_eq_mul, mul_one, Measure.real]
   · intro n; rw [hind n]; exact aestronglyMeasurable_const.indicator (hmeas n)
   · have h1 : ∀ i a, ‖if i < T a then (1:ℝ) else 0‖ₑ =
-    Set.indicator {ω | i < T ω} (fun _ => (1 : ℝ≥0∞)) a := by
+    Set.indicator {ω | i < T ω} (fun _ => (1 : ENNReal)) a := by
     intro i a; simp only [Set.indicator, Set.mem_setOf_eq]; split_ifs with h <;> simp
     simp_rw [h1, lintegral_indicator (hmeas _), setLIntegral_one,
       tsum_measure_gt_eq_lintegral hT_meas]
     have hfi : ∫⁻ ω, ‖(T ω : ℝ)‖ₑ ∂μ < ⊤ := hT_int.2
-    rw [show (fun ω => ‖(T ω : ℝ)‖ₑ) = (fun ω => (T ω : ℝ≥0∞)) from ?_] at hfi
+    rw [show (fun ω => ‖(T ω : ℝ)‖ₑ) = (fun ω => (T ω : ENNReal)) from ?_] at hfi
     · exact hfi.ne
     · ext ω; simp [enorm]
 
@@ -273,7 +273,7 @@ lemma summability_condition
     · exact hX_int.2.ne
     · rw [tsum_measure_gt_eq_lintegral hT_meas]
       have hfi : ∫⁻ ω, ‖(T ω : ℝ)‖ₑ ∂μ < ⊤ := hT_int.2
-      rw [show (fun ω => ‖(T ω : ℝ)‖ₑ) = (fun ω => (T ω : ℝ≥0∞)) from by ext ω; simp [enorm]]
+      rw [show (fun ω => ‖(T ω : ℝ)‖ₑ) = (fun ω => (T ω : ENNReal)) from by ext ω; simp [enorm]]
         at hfi
       exact hfi.ne
   exact ne_top_of_le_ne_top hbound_ne_top (ENNReal.tsum_le_tsum key)

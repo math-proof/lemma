@@ -23,13 +23,14 @@ lemma ramanujan_part1_ch3_entry16
   n * varphi a x r n = varphi a x (r + 1) n - Complex.log x * varphi a x (r + 1) (n + 1) := by
 -- proof
   have hkey : n * Entry12.F r n a
-    = Entry12.F (r + 1) n a - a⁻¹ * Entry12.F (r + 1) (n + 1) a := by
+      = Entry12.F (r + 1) n a - a⁻¹ * Entry12.F (r + 1) (n + 1) a := by
     rw [Entry12.ramanujan_part1_ch3_entry12 r n a ha hn, one_div]
     ring
   -- Exponential identity
   set L : ℂ := Complex.log x with hL
   have hE1 : a * L = Complex.exp L := by
-    rwa [Complex.exp_log hx_ne]
+    rw [Complex.exp_log hx_ne]
+    exact hx_eq.symm
   have hexp : Complex.exp L * Complex.exp (-L) = 1 := by
     rw [← Complex.exp_add, add_neg_cancel, Complex.exp_zero]
   have hainv : a⁻¹ = L * Complex.exp (-L) := by
@@ -45,7 +46,7 @@ lemma ramanujan_part1_ch3_entry16
     rw [hainv, hE2]
     ring
   have hfin : a⁻¹ * Entry12.F (r + 1) (n + 1) a * Complex.exp (-n * L)
-    = L * (Entry12.F (r + 1) (n + 1) a * Complex.exp (-(n + 1) * L)) := by
+      = L * (Entry12.F (r + 1) (n + 1) a * Complex.exp (-(n + 1) * L)) := by
     rw [mul_right_comm, hE]
     ring
   -- Assemble
@@ -57,4 +58,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry16
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

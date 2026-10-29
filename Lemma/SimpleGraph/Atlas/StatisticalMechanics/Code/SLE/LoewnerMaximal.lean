@@ -870,7 +870,7 @@ private lemma loewnerMaximalMaps_local_lipschitz_of_lt_im_sq_div_sixteen_eq
   (hz₀ : 0 < z₀.im)
   (hlt : t < z₀.im ^ 2 / 16) :
 -- imply
-  ∃ C : ℝ≥0, closedBall z₀ (z₀.im / 4) ⊆ loewnerUnswallowedDomain W t ∧ LipschitzOnWith C (loewnerMaximalMaps W t) (closedBall z₀ (z₀.im / 4)) := by
+  ∃ C : NNReal, closedBall z₀ (z₀.im / 4) ⊆ loewnerUnswallowedDomain W t ∧ LipschitzOnWith C (loewnerMaximalMaps W t) (closedBall z₀ (z₀.im / 4)) := by
 -- proof
   apply StatMech.SLE.loewnerMaximalMaps_local_lipschitz_of_lt_im_sq_div_sixteen hW ht hz₀ hlt
 

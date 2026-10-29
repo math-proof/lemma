@@ -44,7 +44,7 @@ theorem rcs_diagonal_pair_lower_bound (n : ℤ) (hn : 0 < n) :
     alpha ^ 3 / 4 ≤ rba_selfDualMeasure.real (rlc_rightDiagonal n) ∧
       alpha ^ 3 / 4 ≤ rba_selfDualMeasure.real (rlc_leftDiagonal n) := by
   dsimp only
-  have hright := rlc_rightDiagonal_lower_bound (2⁻¹ : ℝ≥0) half_le_one n hn
+  have hright := rlc_rightDiagonal_lower_bound (2⁻¹ : NNReal) half_le_one n hn
     (rba_selfDualMeasure.real (horizontalCrossingEvent 0 (2 * n) (-n) n))
     measureReal_nonneg (le_refl _)
   have hvertical : rba_selfDualMeasure.real

@@ -33,8 +33,8 @@ variable {d : ℕ}
 
 theorem bel_leafOpenCount_eq_sum_indicator (ω : ConfigSpace (Sym2 (Site d)))
     (F : Finset (Sym2 (Site d))) :
-    (bel_leafOpenCount F ω : ℝ≥0∞) =
-      ∑ e ∈ F, ({ω' : ConfigSpace (Sym2 (Site d)) | ω' e = true}.indicator (fun _ => (1 : ℝ≥0∞))) ω := by
+    (bel_leafOpenCount F ω : ENNReal) =
+      ∑ e ∈ F, ({ω' : ConfigSpace (Sym2 (Site d)) | ω' e = true}.indicator (fun _ => (1 : ENNReal))) ω := by
   classical
   rw [bel_leafOpenCount, Finset.card_filter]
   push_cast
@@ -47,25 +47,25 @@ theorem bel_leafOpenCount_eq_sum_indicator (ω : ConfigSpace (Sym2 (Site d)))
 
 theorem bel_expLeaf_le (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ]
     (F : Finset (Sym2 (Site d))) :
-    ∫⁻ ω, (bel_leafOpenCount F ω : ℝ≥0∞) ∂μ ≤ (F.card : ℝ≥0∞) := by
+    ∫⁻ ω, (bel_leafOpenCount F ω : ENNReal) ∂μ ≤ (F.card : ENNReal) := by
   classical
   have hmeas : ∀ e : Sym2 (Site d), Measurable
       (fun ω : ConfigSpace (Sym2 (Site d)) =>
-        ({ω' | ω' e = true}.indicator (fun _ => (1 : ℝ≥0∞))) ω) :=
+        ({ω' | ω' e = true}.indicator (fun _ => (1 : ENNReal))) ω) :=
     fun e => Measurable.indicator measurable_const (bel_measurableSet_edgeOpen e)
-  calc ∫⁻ ω, (bel_leafOpenCount F ω : ℝ≥0∞) ∂μ
+  calc ∫⁻ ω, (bel_leafOpenCount F ω : ENNReal) ∂μ
       = ∫⁻ ω, ∑ e ∈ F,
-          ({ω' : ConfigSpace (Sym2 (Site d)) | ω' e = true}.indicator (fun _ => (1 : ℝ≥0∞))) ω ∂μ := by
+          ({ω' : ConfigSpace (Sym2 (Site d)) | ω' e = true}.indicator (fun _ => (1 : ENNReal))) ω ∂μ := by
         apply lintegral_congr; intro ω; exact bel_leafOpenCount_eq_sum_indicator ω F
     _ = ∑ e ∈ F, ∫⁻ ω,
-          ({ω' : ConfigSpace (Sym2 (Site d)) | ω' e = true}.indicator (fun _ => (1 : ℝ≥0∞))) ω ∂μ := by
+          ({ω' : ConfigSpace (Sym2 (Site d)) | ω' e = true}.indicator (fun _ => (1 : ENNReal))) ω ∂μ := by
         rw [MeasureTheory.lintegral_finsetSum]; intro e _; exact hmeas e
     _ = ∑ e ∈ F, μ {ω : ConfigSpace (Sym2 (Site d)) | ω e = true} := by
         apply Finset.sum_congr rfl; intro e _
         rw [MeasureTheory.lintegral_indicator (bel_measurableSet_edgeOpen e)]; simp
-    _ ≤ ∑ _e ∈ F, (1 : ℝ≥0∞) := by
+    _ ≤ ∑ _e ∈ F, (1 : ENNReal) := by
         apply Finset.sum_le_sum; intro e _; exact prob_le_one
-    _ = (F.card : ℝ≥0∞) := by simp
+    _ = (F.card : ENNReal) := by simp
 
 
 theorem bel_top_null_of_forest_open
@@ -83,7 +83,7 @@ theorem bel_top_null_of_forest_open
     (fun R => bel_expLeaf_le μ (F R)) hdens hexist
 
 
-theorem bel_bk_uniqueness_of_forest_open (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
+theorem bel_bk_uniqueness_of_forest_open (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
     (F : ℕ → Finset (Sym2 (Site d)))
     (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ),
       bpe_CoarseForestNoBnd ω L R (bel_leafOpenCount (F R) ω))
@@ -117,7 +117,7 @@ theorem bel_bk_uniqueness_of_forest_open (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p �
 theorem bel_status (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ]
     (F : ℕ → Finset (Sym2 (Site d))) :
     
-    (∀ R : ℕ, ∫⁻ ω, (bel_leafOpenCount (F R) ω : ℝ≥0∞) ∂μ ≤ ((F R).card : ℝ≥0∞)) ∧
+    (∀ R : ℕ, ∫⁻ ω, (bel_leafOpenCount (F R) ω : ENNReal) ∂μ ≤ ((F R).card : ENNReal)) ∧
     
     (IsTranslationInvariant (G := Multiplicative (Site d)) μ → 1 ≤ d → ∀ L : ℕ,
       (∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ),

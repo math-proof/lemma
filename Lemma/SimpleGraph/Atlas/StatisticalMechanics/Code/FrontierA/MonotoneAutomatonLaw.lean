@@ -63,7 +63,7 @@ private lemma raiseField_self_eq
   {xi : NonnegativeField d}
   {x : Site d}
 -- given
-  (r : ℝ≥0) :
+  (r : NNReal) :
 -- imply
   raiseField xi x r x = max r (xi x) := by
 -- proof
@@ -79,7 +79,7 @@ private lemma raiseField_apply_of_ne_eq
   {x y : Site d}
 -- given
   (h : y ≠ x)
-  (r : ℝ≥0) :
+  (r : NNReal) :
 -- imply
   raiseField xi x r y = xi y := by
 -- proof

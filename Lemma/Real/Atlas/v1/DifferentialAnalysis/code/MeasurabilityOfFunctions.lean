@@ -53,12 +53,12 @@ end MeasurabilityOfFunctions
 @[path]
 lemma ennrealRatEmbed_dense_Icc
 -- given
-  (C : ℝ≥0∞)
+  (C : ENNReal)
   (hC : C ≠ ⊤)
-  (ε : ℝ≥0∞)
+  (ε : ENNReal)
   (hε : 0 < ε) :
 -- imply
-  ∃ N : ℕ, ∀ v : ℝ≥0∞, v ≤ C → ∃ k : ℕ, k < N ∧ ennrealRatEmbed k ≤ v ∧ v - ennrealRatEmbed k < ε := by
+  ∃ N : ℕ, ∀ v : ENNReal, v ≤ C → ∃ k : ℕ, k < N ∧ ennrealRatEmbed k ≤ v ∧ v - ennrealRatEmbed k < ε := by
 -- proof
   obtain ⟨q, hq0, hq_pos_ennreal, hqε⟩ := ENNReal.lt_iff_exists_rat_btwn.mp hε
   have hq_pos : (0 : ℝ) < (q : ℝ) := by

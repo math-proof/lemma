@@ -36,9 +36,9 @@ example (μ : Measure ℝ) [IsProbabilityMeasure μ]
 example :
     ¬ ∀ n : ℕ, n ≠ 0 →
       ∃ ρ : Measure ℝ, IsProbabilityMeasure ρ ∧
-        (1 / 2 : ℝ≥0∞) • (Measure.dirac 0 + Measure.dirac 1) =
+        (1 / 2 : ENNReal) • (Measure.dirac 0 + Measure.dirac 1) =
           Nat.iterate (Measure.conv ρ) (n - 1) ρ := by
-  let μ : Measure ℝ := (1 / 2 : ℝ≥0∞) • (Measure.dirac 0 + Measure.dirac 1)
+  let μ : Measure ℝ := (1 / 2 : ENNReal) • (Measure.dirac 0 + Measure.dirac 1)
   change ¬ ∀ n : ℕ, n ≠ 0 →
     ∃ ρ : Measure ℝ, IsProbabilityMeasure ρ ∧
       μ = Nat.iterate (Measure.conv ρ) (n - 1) ρ

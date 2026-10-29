@@ -26,7 +26,7 @@ variable {E : Type u} [Fintype E] [DecidableEq E]
 theorem exists_finiteCoordinateSet_dependsOn_symmDiff_lt
     (mu : ∀ e, Measure (S e)) [∀ e, IsProbabilityMeasure (mu e)]
     (K : Set E) {A : Set (∀ e, S e)} (hA : MeasurableSet A)
-    (hdep : PiSetDependsOn K A) {eps : ℝ≥0∞} (heps : 0 < eps) :
+    (hdep : PiSetDependsOn K A) {eps : ENNReal} (heps : 0 < eps) :
     ∃ B, IsFiniteCoordinateSet B ∧ PiSetDependsOn K B ∧
       Measure.pi mu (B ∆ A) < eps := by
   classical

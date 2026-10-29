@@ -183,10 +183,15 @@ class LeanProperty extends LeanBinary
                 case 'factorial':
                     return [$this->lhs->toLatex($syntax)];
                 case 'det':
-                    $arg = $this->lhs;
-                    if ($arg instanceof LeanParenthesis && !($arg->arg instanceof LeanColon))
-                        $arg = $arg->arg;
-                    return [$arg->toLatex($syntax)];
+                    // `Matrix.det M` is printed by LeanArgsSpaceSeparated as `|M|`.
+                    // This arm is `M.det`.
+                    if (!($this->lhs instanceof LeanToken && $this->parent instanceof LeanArgsSpaceSeparated && $this->parent->args[0] === $this)) {
+                        $arg = $this->lhs;
+                        if ($arg instanceof LeanParenthesis && !($arg->arg instanceof LeanColon))
+                            $arg = $arg->arg;
+                        return [$arg->toLatex($syntax)];
+                    }
+                    break;
                 case 'toReal':
                     // ENNReal→ℝ: `ℙ[…](…).toReal` — keep the paren so Prob short-form / `\middle|` still run
                     return [$this->lhs->toLatex($syntax)];
@@ -248,7 +253,10 @@ class LeanProperty extends LeanBinary
                 case 'factorial':
                     return '{%s}!';
                 case 'det':
-                    return '\left|{%s}\right|';
+                    // `M.det` → bars. `Matrix.det M` is the space-separated application.
+                    if (!($this->lhs instanceof LeanToken && $this->parent instanceof LeanArgsSpaceSeparated && $this->parent->args[0] === $this))
+                        return '\left|{%s}\right|';
+                    break;
                 case 'toReal':
                     return '%s';
             }

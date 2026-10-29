@@ -60,7 +60,7 @@ theorem shk_shift_preimage_connWithinEvent (g : Multiplicative (Site d))
       (shk_connectedWithin_shift_iff g omega S ⟨u, hu⟩ ⟨x, hx⟩).2 hconn⟩
 
 
-theorem shk_connWithinEvent_prob_translate (p : ℝ≥0) (hp : p ≤ 1)
+theorem shk_connWithinEvent_prob_translate (p : NNReal) (hp : p ≤ 1)
     (g : Multiplicative (Site d)) (S : Finset (Site d))
     (u x : Site d) (hu : u ∈ S) (hx : x ∈ S) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real

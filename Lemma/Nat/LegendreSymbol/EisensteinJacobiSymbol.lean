@@ -64,11 +64,11 @@ namespace MetaMathlibExt
 private lemma sum_Ico_eq_card_lt_gen {m n : ℕ} :
   ∑ a ∈ Finset.Ico 1 (m / 2).succ, a * n / m =
     {x ∈ Finset.Ico 1 (m / 2).succ ×ˢ Finset.Ico 1 (n / 2).succ | x.2 * m ≤ x.1 * n}.card := by
-  obtain rfl | hm0 := eq_or_ne m 0
+  rcases eq_or_ne m 0 with rfl | hm0
   · simp
   calc
     ∑ a ∈ Finset.Ico 1 (m / 2).succ, a * n / m =
-      ∑ a ∈ Finset.Ico 1 (m / 2).succ, {x ∈ Finset.Ico 1 (n / 2).succ | x * m ≤ a * n}.card :=
+        ∑ a ∈ Finset.Ico 1 (m / 2).succ, {x ∈ Finset.Ico 1 (n / 2).succ | x * m ≤ a * n}.card :=
       Finset.sum_congr rfl fun x hx => ZMod.div_eq_filter_card (Nat.pos_of_ne_zero hm0) <|
         calc
           x * n / m ≤ m / 2 * n / m := by
@@ -87,9 +87,9 @@ namespace MetaMathlibExt
 private lemma sum_mul_div_add_sum_mul_div_gen (m n : ℕ) (hcop : Nat.Coprime m n) :
   (∑ a ∈ Finset.Ico 1 (m / 2).succ, a * n / m) +
     (∑ a ∈ Finset.Ico 1 (n / 2).succ, a * m / n) = m / 2 * (n / 2) := by
-  obtain rfl | hm0 := eq_or_ne m 0
+  rcases eq_or_ne m 0 with rfl | hm0
   · simp
-  obtain rfl | hn0 := eq_or_ne n 0
+  rcases eq_or_ne n 0 with rfl | hn0
   · simp
   have hswap :
     {x ∈ Finset.Ico 1 (n / 2).succ ×ˢ Finset.Ico 1 (m / 2).succ | x.2 * n ≤ x.1 * m}.card =
@@ -111,9 +111,9 @@ private lemma sum_mul_div_add_sum_mul_div_gen (m n : ℕ) (hcop : Nat.Coprime m 
     have hlt : m / 2 < m := Nat.div_lt_self (Nat.pos_of_ne_zero hm0) (by norm_num)
     omega
   have hunion :
-    {x ∈ Finset.Ico 1 (m / 2).succ ×ˢ Finset.Ico 1 (n / 2).succ | x.2 * m ≤ x.1 * n} ∪
-      {x ∈ Finset.Ico 1 (m / 2).succ ×ˢ Finset.Ico 1 (n / 2).succ | x.1 * n ≤ x.2 * m} =
-    Finset.Ico 1 (m / 2).succ ×ˢ Finset.Ico 1 (n / 2).succ :=
+      {x ∈ Finset.Ico 1 (m / 2).succ ×ˢ Finset.Ico 1 (n / 2).succ | x.2 * m ≤ x.1 * n} ∪
+        {x ∈ Finset.Ico 1 (m / 2).succ ×ˢ Finset.Ico 1 (n / 2).succ | x.1 * n ≤ x.2 * m} =
+      Finset.Ico 1 (m / 2).succ ×ˢ Finset.Ico 1 (n / 2).succ :=
     Finset.ext fun x => by
       have := le_total (x.2 * m) (x.1 * n)
       simp only [Finset.mem_union, Finset.mem_filter, Finset.mem_Ico, Finset.mem_product]
@@ -138,7 +138,7 @@ private lemma double_sum (m b : ℕ) (hb : Odd b) (hbpos : 0 < b) :
   unfold eisS gaussCount
   have hslt : ∀ x ∈ Finset.Ico 1 (b / 2).succ, (m * x) % b < b := fun x _ => Nat.mod_lt _ hbpos
   have hterm : ∀ x ∈ Finset.Ico 1 (b / 2).succ,
-    (2 * m) * x / b = 2 * (m * x / b) + (if b / 2 < (m * x) % b then 1 else 0) := by
+      (2 * m) * x / b = 2 * (m * x / b) + (if b / 2 < (m * x) % b then 1 else 0) := by
     intro x hx
     have h := Nat.div_add_mod (m * x) b
     have hdecomp : (2 * m) * x = 2 * ((m * x) % b) + 2 * (m * x / b) * b := by
@@ -182,12 +182,12 @@ private lemma fold_modEq (m b : ℕ) (hb : Odd b) (hcop : Nat.Coprime m b) :
     omega
   have hU : IsUnit (m : ZMod b) := (ZMod.isUnit_iff_coprime m b).mpr hcop
   have hmin : ∀ u v : ℕ, 0 < u → u < b → 0 < v → v < b →
-    min u (b - u) = min v (b - v) → u = v ∨ u + v = b := by
+      min u (b - u) = min v (b - v) → u = v ∨ u + v = b := by
     intro u v h0u hub h0v hvb h
     simp only [min_def] at h
     split_ifs at h <;> omega
   have hinj : ∀ x ∈ Finset.Ico 1 (b / 2).succ, ∀ y ∈ Finset.Ico 1 (b / 2).succ,
-    min ((m * x) % b) (b - (m * x) % b) = min ((m * y) % b) (b - (m * y) % b) → x = y := by
+      min ((m * x) % b) (b - (m * x) % b) = min ((m * y) % b) (b - (m * y) % b) → x = y := by
     intro x hx y hy hfeq
     have hx1 := (hmem x hx).1
     have hx2 := (hmem x hx).2
@@ -197,31 +197,32 @@ private lemma fold_modEq (m b : ℕ) (hb : Odd b) (hcop : Nat.Coprime m b) :
     have hsy0 := hsne y hy
     have hsxb := hslt x hx
     have hsyb := hslt y hy
-    obtain hcase | hcase := hmin _ _ (by omega) hsxb (by omega) hsyb hfeq
+    rcases hmin _ _ (by omega) hsxb (by omega) hsyb hfeq with hcase | hcase
     · have e1 : (m : ZMod b) * (x : ZMod b) = (m : ZMod b) * (y : ZMod b) := by
-      have h1 : ((m * x : ℕ) : ZMod b) = (m : ZMod b) * (x : ZMod b) := by push_cast; ring
-      have h2 : ((m * y : ℕ) : ZMod b) = (m : ZMod b) * (y : ZMod b) := by push_cast; ring
-      rw [← h1, ← h2]
-      have e0 : (((m * x) % b : ℕ) : ZMod b) = (((m * y) % b : ℕ) : ZMod b) := by rw [hcase]
-      rwa [ZMod.natCast_mod, ZMod.natCast_mod] at e0
+        have h1 : ((m * x : ℕ) : ZMod b) = (m : ZMod b) * (x : ZMod b) := by push_cast; ring
+        have h2 : ((m * y : ℕ) : ZMod b) = (m : ZMod b) * (y : ZMod b) := by push_cast; ring
+        rw [← h1, ← h2]
+        have e0 : (((m * x) % b : ℕ) : ZMod b) = (((m * y) % b : ℕ) : ZMod b) := by rw [hcase]
+        rw [ZMod.natCast_mod, ZMod.natCast_mod] at e0
+        exact e0
       have e3 : (x : ZMod b) = (y : ZMod b) := hU.mul_left_cancel e1
       have hM : x ≡ y [MOD b] := (ZMod.natCast_eq_natCast_iff x y b).mp e3
       exact hM.eq_of_lt_of_lt (by omega) (by omega)
     · have hmod : (m * (x + y)) % b = 0 := by
-      have hmul : m * (x + y) = m * x + m * y := by ring
-      rw [hmul, Nat.add_mod, hcase, Nat.mod_self]
+        have hmul : m * (x + y) = m * x + m * y := by ring
+        rw [hmul, Nat.add_mod, hcase, Nat.mod_self]
       have hdvd : b ∣ x + y := hcop.symm.dvd_of_dvd_mul_left (Nat.dvd_of_mod_eq_zero hmod)
       have hle : b ≤ x + y := Nat.le_of_dvd (by omega) hdvd
       omega
   have hXeq : (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)
-    = (∑ x ∈ Finset.Ico 1 (b / 2).succ with b / 2 < (m * x) % b, (b - (m * x) % b))
-    + (∑ x ∈ Finset.Ico 1 (b / 2).succ with ¬ b / 2 < (m * x) % b, (m * x) % b) := by
+      = (∑ x ∈ Finset.Ico 1 (b / 2).succ with b / 2 < (m * x) % b, (b - (m * x) % b))
+      + (∑ x ∈ Finset.Ico 1 (b / 2).succ with ¬ b / 2 < (m * x) % b, (m * x) % b) := by
     have hInjOn : Set.InjOn (fun x => min ((m * x) % b) (b - (m * x) % b))
-      ↑(Finset.Ico 1 (b / 2).succ) := by
+        ↑(Finset.Ico 1 (b / 2).succ) := by
       intro x hx y hy hfeq
       exact hinj x (Finset.mem_coe.mp hx) y (Finset.mem_coe.mp hy) hfeq
     have himg : Finset.image (fun x => min ((m * x) % b) (b - (m * x) % b))
-      (Finset.Ico 1 (b / 2).succ) = Finset.Ico 1 (b / 2).succ := by
+        (Finset.Ico 1 (b / 2).succ) = Finset.Ico 1 (b / 2).succ := by
       apply Finset.eq_of_subset_of_card_le
       · intro y hy
         rw [Finset.mem_image] at hy
@@ -237,7 +238,7 @@ private lemma fold_modEq (m b : ℕ) (hb : Odd b) (hcop : Nat.Coprime m b) :
         exact ⟨Nat.le_min.mpr ⟨hs1, hs2⟩, lt_of_le_of_lt hle (Nat.lt_succ_self _)⟩
       · rw [Finset.card_image_of_injOn hInjOn]
     have hsumimg : (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)
-      = ∑ x ∈ Finset.Ico 1 (b / 2).succ, min ((m * x) % b) (b - (m * x) % b) := by
+        = ∑ x ∈ Finset.Ico 1 (b / 2).succ, min ((m * x) % b) (b - (m * x) % b) := by
       conv_lhs => rw [← himg]
       exact Finset.sum_image hInjOn
     have hsplit := Finset.sum_filter_add_sum_filter_not (Finset.Ico 1 (b / 2).succ)
@@ -254,31 +255,31 @@ private lemma fold_modEq (m b : ℕ) (hb : Odd b) (hcop : Nat.Coprime m b) :
       have hle : (m * x) % b ≤ b / 2 := le_of_not_gt hx.2
       exact min_eq_left (by omega)
   have hSeq : (∑ x ∈ Finset.Ico 1 (b / 2).succ, (m * x) % b)
-    = (∑ x ∈ Finset.Ico 1 (b / 2).succ with b / 2 < (m * x) % b, (m * x) % b)
-    + (∑ x ∈ Finset.Ico 1 (b / 2).succ with ¬ b / 2 < (m * x) % b, (m * x) % b) := by
+      = (∑ x ∈ Finset.Ico 1 (b / 2).succ with b / 2 < (m * x) % b, (m * x) % b)
+      + (∑ x ∈ Finset.Ico 1 (b / 2).succ with ¬ b / 2 < (m * x) % b, (m * x) % b) := by
     have h := Finset.sum_filter_add_sum_filter_not (Finset.Ico 1 (b / 2).succ)
       (fun x => b / 2 < (m * x) % b) (fun x => (m * x) % b)
     rw [← h]
   have hLL : (∑ x ∈ Finset.Ico 1 (b / 2).succ with b / 2 < (m * x) % b, (m * x) % b)
-    + (∑ x ∈ Finset.Ico 1 (b / 2).succ with b / 2 < (m * x) % b, (b - (m * x) % b))
-    = gaussCount m b * b := by
+      + (∑ x ∈ Finset.Ico 1 (b / 2).succ with b / 2 < (m * x) % b, (b - (m * x) % b))
+      = gaussCount m b * b := by
     rw [← Finset.sum_add_distrib]
     have hterm : ∀ x ∈ Finset.filter (fun x => b / 2 < (m * x) % b)
-      (Finset.Ico 1 (b / 2).succ),
-      (m * x) % b + (b - (m * x) % b) = b := by
+        (Finset.Ico 1 (b / 2).succ),
+        (m * x) % b + (b - (m * x) % b) = b := by
       intro x _
       exact Nat.add_sub_cancel' (le_of_lt (Nat.mod_lt _ hbpos))
     rw [Finset.sum_congr rfl hterm, Finset.sum_const, nsmul_eq_mul]
     congr 1
   have hP3 : (∑ x ∈ Finset.Ico 1 (b / 2).succ, (m * x) % b)
-    + (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)
-    = 2 * (∑ x ∈ Finset.Ico 1 (b / 2).succ with ¬ b / 2 < (m * x) % b, (m * x) % b)
-    + gaussCount m b * b := by
+      + (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)
+      = 2 * (∑ x ∈ Finset.Ico 1 (b / 2).succ with ¬ b / 2 < (m * x) % b, (m * x) % b)
+      + gaussCount m b * b := by
     linear_combination hXeq + hSeq + hLL
   have hM : m * (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)
-    = eisS m b * b + (∑ x ∈ Finset.Ico 1 (b / 2).succ, (m * x) % b) := by
+      = eisS m b * b + (∑ x ∈ Finset.Ico 1 (b / 2).succ, (m * x) % b) := by
     have h1 : m * (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)
-      = ∑ x ∈ Finset.Ico 1 (b / 2).succ, m * x := (Finset.mul_sum _ _ _)
+        = ∑ x ∈ Finset.Ico 1 (b / 2).succ, m * x := (Finset.mul_sum _ _ _)
     have h2 : ∀ x ∈ Finset.Ico 1 (b / 2).succ, m * x = (m * x) / b * b + (m * x) % b := by
       intro x _
       rw [mul_comm ((m * x) / b) b]
@@ -286,24 +287,24 @@ private lemma fold_modEq (m b : ℕ) (hb : Odd b) (hcop : Nat.Coprime m b) :
     have hQ : (∑ x ∈ Finset.Ico 1 (b / 2).succ, (m * x) / b) = eisS m b := rfl
     rw [h1, Finset.sum_congr rfl h2, Finset.sum_add_distrib, ← Finset.sum_mul, hQ]
   have hE : m * (∑ x ∈ Finset.Ico 1 (b / 2).succ, x) + (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)
-    = eisS m b * b
-    + 2 * (∑ x ∈ Finset.Ico 1 (b / 2).succ with ¬ b / 2 < (m * x) % b, (m * x) % b)
-    + gaussCount m b * b := by
+      = eisS m b * b
+      + 2 * (∑ x ∈ Finset.Ico 1 (b / 2).succ with ¬ b / 2 < (m * x) % b, (m * x) % b)
+      + gaussCount m b * b := by
     linear_combination hM + hP3
   have hE2 : (m * (∑ x ∈ Finset.Ico 1 (b / 2).succ, x) + (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)) % 2
-    = (eisS m b * b
-    + 2 * (∑ x ∈ Finset.Ico 1 (b / 2).succ with ¬ b / 2 < (m * x) % b, (m * x) % b)
-    + gaussCount m b * b) % 2 := by rw [hE]
+      = (eisS m b * b
+      + 2 * (∑ x ∈ Finset.Ico 1 (b / 2).succ with ¬ b / 2 < (m * x) % b, (m * x) % b)
+      + gaussCount m b * b) % 2 := by rw [hE]
   have e1 : eisS m b * b = 2 * (k * eisS m b) + eisS m b := by rw [hk]; ring
   have e2 : gaussCount m b * b = 2 * (gaussCount m b * k) + gaussCount m b := by rw [hk]; ring
-  obtain hm_even | hm_odd := Nat.even_or_odd m
+  rcases Nat.even_or_odd m with hm_even | hm_odd
   · obtain ⟨t, ht⟩ := hm_even
     have hm_even2 : Even m := ⟨t, ht⟩
     have e3 : m * (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)
-      = 2 * (t * (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)) := by rw [ht]; ring
+        = 2 * (t * (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)) := by rw [ht]; ring
     rw [e1, e2, e3] at hE2
     have hif : (if Even m then (b ^ 2 - 1) / 8 else 0)
-      = (∑ x ∈ Finset.Ico 1 (b / 2).succ, x) := by
+        = (∑ x ∈ Finset.Ico 1 (b / 2).succ, x) := by
       have hT := tri_half_odd b ⟨k, hk⟩
       simp only [hm_even2, ite_true]
       exact hT.symm
@@ -313,8 +314,8 @@ private lemma fold_modEq (m b : ℕ) (hb : Odd b) (hcop : Nat.Coprime m b) :
   · obtain ⟨t, ht⟩ := hm_odd
     have hm_odd2 : Odd m := ⟨t, ht⟩
     have e3 : m * (∑ x ∈ Finset.Ico 1 (b / 2).succ, x)
-      = 2 * (t * (∑ x ∈ Finset.Ico 1 (b / 2).succ, x))
-      + (∑ x ∈ Finset.Ico 1 (b / 2).succ, x) := by rw [ht]; ring
+        = 2 * (t * (∑ x ∈ Finset.Ico 1 (b / 2).succ, x))
+        + (∑ x ∈ Finset.Ico 1 (b / 2).succ, x) := by rw [ht]; ring
     rw [e1, e2, e3] at hE2
     have hif : (if Even m then (b ^ 2 - 1) / 8 else 0) = 0 := by
       simp only [Nat.not_even_iff_odd.mpr hm_odd2, ite_false]
@@ -350,7 +351,7 @@ private lemma sq_sub_one_div_eight_mod_two (b : ℕ) (hb : Odd b) :
   have hb8 : b % 8 = 1 ∨ b % 8 = 3 ∨ b % 8 = 5 ∨ b % 8 = 7 := by
     obtain ⟨t, ht⟩ := hb; omega
   have hdm := Nat.div_add_mod b 8
-  obtain h | h | h | h := hb8
+  rcases hb8 with h | h | h | h
   · have hcond : b % 8 = 1 ∨ b % 8 = 7 := Or.inl h
     simp only [hcond, ite_true]
     have hbr : b = 8 * (b / 8) + 1 := by omega
@@ -449,12 +450,12 @@ private lemma double_modEq (m b : ℕ) (hb : Odd b) (hbpos : 0 < b) (hcopm : Nat
   have h2 := fold_modEq m b hb hcopm
   have hG : gaussCount m b % 2 = (eisS m b + (if Even m then (b ^ 2 - 1) / 8 else 0)) % 2 := h2
   have h4 : 2 * eisS m b + gaussCount m b
-    ≡ eisS m b + (if Even m then (b ^ 2 - 1) / 8 else 0) [MOD 2] := by
+      ≡ eisS m b + (if Even m then (b ^ 2 - 1) / 8 else 0) [MOD 2] := by
     change (2 * eisS m b + gaussCount m b) % 2
       = (eisS m b + (if Even m then (b ^ 2 - 1) / 8 else 0)) % 2
     by_cases hm : Even m <;> simp only [hm, ite_true, ite_false] at hG ⊢ <;> omega
-  rwa [← h1] at h4
-
+  rw [← h1] at h4
+  exact h4
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -469,7 +470,7 @@ private lemma eis_jacobi_gen (a : ℕ) : ∀ b : ℕ, Odd b → Nat.Coprime a b 
   | h a IHa =>
   intro b hb hcop
   have hbpos : 0 < b := hb.pos
-  obtain rfl | hb1 := eq_or_ne b 1
+  rcases eq_or_ne b 1 with rfl | hb1
   · rw [jacobiSym.one_right]
     have hS : eisS a 1 = 0 := by
       have h12 : (1 : ℕ) / 2 = 0 := by decide
@@ -500,7 +501,7 @@ private lemma eis_jacobi_gen (a : ℕ) : ∀ b : ℕ, Odd b → Nat.Coprime a b 
       change ((b ^ 2 - 1) / 8 + (eisS m b + (if Even m then (b ^ 2 - 1) / 8 else 0))) % 2
         = (eisS (2 * m) b + (b ^ 2 - 1) / 8) % 2
       have hs2 : (eisS (2 * m) b) % 2
-        = (eisS m b + (if Even m then (b ^ 2 - 1) / 8 else 0)) % 2 := hS
+          = (eisS m b + (if Even m then (b ^ 2 - 1) / 8 else 0)) % 2 := hS
       by_cases hme : Even m <;> simp only [hme, ite_true, ite_false] at hs2 ⊢ <;> omega
     · rcases eq_or_ne a 1 with rfl | ha1
       · simp only [Nat.cast_one, jacobiSym.one_left]
@@ -530,7 +531,7 @@ private lemma eis_jacobi_gen (a : ℕ) : ∀ b : ℕ, Odd b → Nat.Coprime a b 
         have hcorr_a : (if Even a then (b ^ 2 - 1) / 8 else 0) = 0 := by
           have hna : ¬ Even a := Nat.not_even_iff_odd.mpr ha
           simp only [hna, ite_false]
-        obtain hab | hab := lt_or_ge a b
+        rcases lt_or_ge a b with hab | hab
         · have hr_lt : b % a < a := Nat.mod_lt _ apos
           have hr0 : b % a ≠ 0 := by
             intro h0
@@ -542,14 +543,15 @@ private lemma eis_jacobi_gen (a : ℕ) : ∀ b : ℕ, Odd b → Nat.Coprime a b 
           have hcopr : Nat.Coprime (b % a) a := by
             change Nat.gcd (b % a) a = 1
             have h1 : Nat.gcd a b = Nat.gcd (b % a) a := Nat.gcd_rec a b
-            rwa [hcop.gcd_eq_one] at h1
+            rw [hcop.gcd_eq_one] at h1
+            exact h1.symm
           have IHr := IHa (b % a) hr_lt a ha hcopr
           have hbe : ((b : ℕ) : ℤ) = ((b % a : ℕ) : ℤ) + ((a : ℕ) : ℤ) * (((b / a : ℕ)) : ℤ) := by
             have hc : ((a : ℕ) : ℤ) * (((b / a : ℕ)) : ℤ) + ((b % a : ℕ) : ℤ) = ((b : ℕ) : ℤ) := by
               exact_mod_cast (Nat.div_add_mod b a)
             linear_combination -hc
           have hmod : ((b : ℕ) : ℤ) % ((a : ℕ) : ℤ)
-            = ((b % a : ℕ) : ℤ) % ((a : ℕ) : ℤ) := by
+              = ((b % a : ℕ) : ℤ) % ((a : ℕ) : ℤ) := by
             rw [hbe, Int.add_mul_emod_self_left]
           have hJr : jacobiSym ((b : ℕ) : ℤ) a = jacobiSym ((b % a : ℕ) : ℤ) a :=
             jacobiSym.mod_left' hmod
@@ -558,44 +560,45 @@ private lemma eis_jacobi_gen (a : ℕ) : ∀ b : ℕ, Odd b → Nat.Coprime a b 
             have h2 := tri_half_odd a ha
             have hb_eq : b = (b / a) * a + b % a := by
               have h := (Nat.div_add_mod b a).symm
-              rwa [mul_comm a (b / a)] at h
+              rw [mul_comm a (b / a)] at h
+              exact h
             conv_lhs => rw [hb_eq]
             rw [h1, h2]
           have hev := even_quot_add_ite ha hb (Nat.div_add_mod b a).symm
           rw [hrec, hJr, IHr, hcorr_a, ← pow_add]
           apply neg_one_pow_modEq
           change (a / 2 * (b / 2) +
-            (eisS (b % a) a + (if Even (b % a) then (a ^ 2 - 1) / 8 else 0))) % 2
+              (eisS (b % a) a + (if Even (b % a) then (a ^ 2 - 1) / 8 else 0))) % 2
             = (eisS a b + 0) % 2
           by_cases hr : Even (b % a)
           · have hc : (if Even (b % a) then (a ^ 2 - 1) / 8 else 0) = (a ^ 2 - 1) / 8 := by
-            simp only [hr, ite_true]
+              simp only [hr, ite_true]
             rw [hc]
             have hf2 : (eisS a b + eisS b a) % 2 = ((b / 2) * (a / 2)) % 2 := by rw [hfloor]
             have hs2 : (eisS b a) % 2
-              = ((b / a) * ((a ^ 2 - 1) / 8) + eisS (b % a) a) % 2 := by rw [hsplit_b]
+                = ((b / a) * ((a ^ 2 - 1) / 8) + eisS (b % a) a) % 2 := by rw [hsplit_b]
             have hev2 : (((b / a) + 1) * ((a ^ 2 - 1) / 8)) % 2 = 0 := by
               have hcc : ((b / a) + (if Even (b % a) then 1 else 0)) * ((a ^ 2 - 1) / 8)
-                = ((b / a) + 1) * ((a ^ 2 - 1) / 8) := by simp only [hr, ite_true]
+                  = ((b / a) + 1) * ((a ^ 2 - 1) / 8) := by simp only [hr, ite_true]
               rw [← hcc]
               exact Nat.even_iff.mp (hev.mul_right _)
             have hexpand : ((b / a) + 1) * ((a ^ 2 - 1) / 8)
-              = (b / a) * ((a ^ 2 - 1) / 8) + 1 * ((a ^ 2 - 1) / 8) := by ring
+                = (b / a) * ((a ^ 2 - 1) / 8) + 1 * ((a ^ 2 - 1) / 8) := by ring
             have eE : a / 2 * (b / 2) = (b / 2) * (a / 2) := mul_comm _ _
             omega
           · have hc : (if Even (b % a) then (a ^ 2 - 1) / 8 else 0) = 0 := by
-            simp only [hr, ite_false]
+              simp only [hr, ite_false]
             rw [hc]
             have hf2 : (eisS a b + eisS b a) % 2 = ((b / 2) * (a / 2)) % 2 := by rw [hfloor]
             have hs2 : (eisS b a) % 2
-              = ((b / a) * ((a ^ 2 - 1) / 8) + eisS (b % a) a) % 2 := by rw [hsplit_b]
+                = ((b / a) * ((a ^ 2 - 1) / 8) + eisS (b % a) a) % 2 := by rw [hsplit_b]
             have hev2 : (((b / a) + 0) * ((a ^ 2 - 1) / 8)) % 2 = 0 := by
               have hcc : ((b / a) + (if Even (b % a) then 1 else 0)) * ((a ^ 2 - 1) / 8)
-                = ((b / a) + 0) * ((a ^ 2 - 1) / 8) := by simp only [hr, ite_false]
+                  = ((b / a) + 0) * ((a ^ 2 - 1) / 8) := by simp only [hr, ite_false]
               rw [← hcc]
               exact Nat.even_iff.mp (hev.mul_right _)
             have hexpand : ((b / a) + 0) * ((a ^ 2 - 1) / 8)
-              = (b / a) * ((a ^ 2 - 1) / 8) + 0 * ((a ^ 2 - 1) / 8) := by ring
+                = (b / a) * ((a ^ 2 - 1) / 8) + 0 * ((a ^ 2 - 1) / 8) := by ring
             have eE : a / 2 * (b / 2) = (b / 2) * (a / 2) := mul_comm _ _
             omega
         · have hr'_lt : a % b < b := Nat.mod_lt _ hbpos
@@ -610,14 +613,15 @@ private lemma eis_jacobi_gen (a : ℕ) : ∀ b : ℕ, Odd b → Nat.Coprime a b 
             change Nat.gcd (a % b) b = 1
             have h1 : Nat.gcd b a = Nat.gcd (a % b) b := Nat.gcd_rec b a
             have h2 : Nat.gcd b a = 1 := Nat.Coprime.gcd_eq_one hcop.symm
-            rwa [h2] at h1
+            rw [h2] at h1
+            exact h1.symm
           have IHr' := IHa (a % b) hr'_lt_a b hb hcopr'
           have hbe' : ((a : ℕ) : ℤ) = ((a % b : ℕ) : ℤ) + ((b : ℕ) : ℤ) * (((a / b : ℕ)) : ℤ) := by
             have hc : ((b : ℕ) : ℤ) * (((a / b : ℕ)) : ℤ) + ((a % b : ℕ) : ℤ) = ((a : ℕ) : ℤ) := by
               exact_mod_cast (Nat.div_add_mod a b)
             linear_combination -hc
           have hmod' : ((a : ℕ) : ℤ) % ((b : ℕ) : ℤ)
-            = ((a % b : ℕ) : ℤ) % ((b : ℕ) : ℤ) := by
+              = ((a % b : ℕ) : ℤ) % ((b : ℕ) : ℤ) := by
             rw [hbe', Int.add_mul_emod_self_left]
           have hJr' : jacobiSym ((a : ℕ) : ℤ) b = jacobiSym ((a % b : ℕ) : ℤ) b :=
             jacobiSym.mod_left' hmod'
@@ -626,7 +630,8 @@ private lemma eis_jacobi_gen (a : ℕ) : ∀ b : ℕ, Odd b → Nat.Coprime a b 
             have h2 := tri_half_odd b hb
             have ha_eq : a = (a / b) * b + a % b := by
               have h := (Nat.div_add_mod a b).symm
-              rwa [mul_comm b (a / b)] at h
+              rw [mul_comm b (a / b)] at h
+              exact h
             conv_lhs => rw [ha_eq]
             rw [h1, h2]
           have hev' := even_quot_add_ite hb ha (Nat.div_add_mod a b).symm
@@ -636,30 +641,30 @@ private lemma eis_jacobi_gen (a : ℕ) : ∀ b : ℕ, Odd b → Nat.Coprime a b 
             = (eisS a b + 0) % 2
           by_cases hr : Even (a % b)
           · have hc : (if Even (a % b) then (b ^ 2 - 1) / 8 else 0) = (b ^ 2 - 1) / 8 := by
-            simp only [hr, ite_true]
+              simp only [hr, ite_true]
             rw [hc]
             have hs2 : (eisS a b) % 2
-              = ((a / b) * ((b ^ 2 - 1) / 8) + eisS (a % b) b) % 2 := by rw [hsplit_a]
+                = ((a / b) * ((b ^ 2 - 1) / 8) + eisS (a % b) b) % 2 := by rw [hsplit_a]
             have hev2 : (((a / b) + 1) * ((b ^ 2 - 1) / 8)) % 2 = 0 := by
               have hcc : ((a / b) + (if Even (a % b) then 1 else 0)) * ((b ^ 2 - 1) / 8)
-                = ((a / b) + 1) * ((b ^ 2 - 1) / 8) := by simp only [hr, ite_true]
+                  = ((a / b) + 1) * ((b ^ 2 - 1) / 8) := by simp only [hr, ite_true]
               rw [← hcc]
               exact Nat.even_iff.mp (hev'.mul_right _)
             have hexpand : ((a / b) + 1) * ((b ^ 2 - 1) / 8)
-              = (a / b) * ((b ^ 2 - 1) / 8) + 1 * ((b ^ 2 - 1) / 8) := by ring
+                = (a / b) * ((b ^ 2 - 1) / 8) + 1 * ((b ^ 2 - 1) / 8) := by ring
             omega
           · have hc : (if Even (a % b) then (b ^ 2 - 1) / 8 else 0) = 0 := by
-            simp only [hr, ite_false]
+              simp only [hr, ite_false]
             rw [hc]
             have hs2 : (eisS a b) % 2
-              = ((a / b) * ((b ^ 2 - 1) / 8) + eisS (a % b) b) % 2 := by rw [hsplit_a]
+                = ((a / b) * ((b ^ 2 - 1) / 8) + eisS (a % b) b) % 2 := by rw [hsplit_a]
             have hev2 : (((a / b) + 0) * ((b ^ 2 - 1) / 8)) % 2 = 0 := by
               have hcc : ((a / b) + (if Even (a % b) then 1 else 0)) * ((b ^ 2 - 1) / 8)
-                = ((a / b) + 0) * ((b ^ 2 - 1) / 8) := by simp only [hr, ite_false]
+                  = ((a / b) + 0) * ((b ^ 2 - 1) / 8) := by simp only [hr, ite_false]
               rw [← hcc]
               exact Nat.even_iff.mp (hev'.mul_right _)
             have hexpand : ((a / b) + 0) * ((b ^ 2 - 1) / 8)
-              = (a / b) * ((b ^ 2 - 1) / 8) + 0 * ((b ^ 2 - 1) / 8) := by ring
+                = (a / b) * ((b ^ 2 - 1) / 8) + 0 * ((b ^ 2 - 1) / 8) := by ring
             omega
 
 end MetaMathlibExt
@@ -671,7 +676,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma eisenstein_lemma_jacobi_symbol_general
-  {a b : ℕ}
+  (a b : ℕ)
 -- given
   (ha_odd : Odd a)
   (hb_odd : Odd b)
@@ -697,7 +702,6 @@ lemma eisenstein_lemma_jacobi_symbol_general
     intro x _
     rw [mul_comm]
   rw [hgen, hsum]
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -710,8 +714,8 @@ namespace MetaMathlibExt
 lemma eisenstein_lemma_jacobi_symbol
   {a b : ℕ}
 -- given
-  (ha_pos : 0 < a)
-  (hb_pos : 0 < b)
+  (_ha_pos : 0 < a)
+  (_hb_pos : 0 < b)
   (ha_odd : Odd a)
   (hb_odd : Odd b)
   (hab : Nat.Coprime a b) :
@@ -725,4 +729,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

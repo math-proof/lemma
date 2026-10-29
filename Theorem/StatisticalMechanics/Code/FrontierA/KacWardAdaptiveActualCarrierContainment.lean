@@ -178,7 +178,7 @@ theorem KWAdaptivePatchedData.secondConnector_disjoint_incomingParameterCarrier
 theorem KWAdaptivePatchedData.dist_middleCorner_ideal_lt_two_mul_of_interiorMesh
     {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    (r : ℝ≥0) (hfine : KWEndpointInteriorMeshWithin patch.data r)
+    (r : NNReal) (hfine : KWEndpointInteriorMeshWithin patch.data r)
     (i : Fin n) (q : Fin M) :
     dist (patch.middleCorner i q) (patch.idealMiddleCorner i q) < 2 * r := by
   let base := patch.data.base i q.succ.castSucc.castSucc
@@ -241,7 +241,7 @@ theorem KWAdaptivePatchedData.dist_middleCorner_ideal_lt_two_mul_of_interiorMesh
 theorem KWAdaptivePatchedData.dist_vertex_idealVertex_lt_two_mul_of_interiorMesh
     {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    (r : ℝ≥0) (hr : 0 < r)
+    (r : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin patch.data r) :
     ∀ j : Fin (n * (2 * (M + 1))),
       dist (patch.vertex j) (patch.idealVertex j) < 2 * r := by
@@ -261,7 +261,7 @@ theorem KWAdaptivePatchedData.dist_vertex_idealVertex_lt_two_mul_of_interiorMesh
 theorem KWAdaptivePatchedData.actualConnectorMiddle_disjoint_of_carrier
     {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    (r sep : ℝ≥0) (hr : 0 < r)
+    (r sep : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin patch.data r)
     (a : Fin (n * (2 * (M + 1))))
     (i : Fin n) (q : Fin M) (even : Bool) (carrier : Set ℂ)
@@ -308,7 +308,7 @@ theorem KWAdaptivePatchedData.exists_remoteParameter_dist_separation
     (hcoords : ∀ j : Fin n,
       (polygon.edgeVector j).re ≠ 0 ∧ (polygon.edgeVector j).im ≠ 0)
     (i : Fin n) (first : Bool) :
-    ∃ sep : ℝ≥0, 0 < sep ∧
+    ∃ sep : NNReal, 0 < sep ∧
       ∀ x ∈ (if first then
           kwRawClosedEdge patch.idealVertex
             (kwStairEvenIndex i (Fin.last M))

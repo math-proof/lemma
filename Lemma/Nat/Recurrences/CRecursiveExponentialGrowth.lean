@@ -81,10 +81,10 @@ lemma exists_norm_lt_pow_of_isSolution
               (pow_succ' _ _).symm
             rwa [heq] at hlt2
           calc ‖t (n + 1)‖ = ‖∑ i : Fin k, c i * t (n + 1 - k + ↑i.val)‖ := by
-            rw [htm]
+                rw [htm]
             _ ≤ ∑ i : Fin k, ‖c i‖ * (g : ℝ) ^ (n + 1) := hsum
             _ = (∑ i : Fin k, ‖c i‖) * (g : ℝ) ^ (n + 1) := by
-              rw [Finset.sum_mul]
+                rw [Finset.sum_mul]
             _ < (g : ℝ) ^ ((n + 1) + 1) := hAmul
       · exact ih _ (Nat.le_of_lt_succ hlt)
   exact ⟨g, hg1, fun n => key n n le_rfl⟩
@@ -105,10 +105,10 @@ lemma c_recursive_exponential_growth_bound
   ∃ g : ℤ, 1 ≤ g ∧ ∀ n : ℕ, ‖t n‖ < ((g : ℝ) ^ (n + 1)) := by
 -- proof
   obtain ⟨k, -, c, hrec⟩ := h
-  exact exists_norm_lt_pow_of_isSolution ⟨k, c⟩ t hrec
+  exact exists_norm_lt_pow_of_isSolution (E := ⟨k, c⟩) hrec
 
 end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

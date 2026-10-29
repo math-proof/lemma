@@ -47,7 +47,7 @@ namespace RegularLanguages
 [isRegular_empty](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/RegexToNFA.lean)
 -/
 @[path]
-lemma isRegular_empty
+lemma isRegular_empty :
 -- imply
   (0 : Language α).IsRegular := by
 -- proof
@@ -64,7 +64,7 @@ namespace RegularLanguages
 [isRegular_epsilon](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/RegexToNFA.lean)
 -/
 @[path]
-lemma isRegular_epsilon
+lemma isRegular_epsilon :
 -- imply
   (1 : Language α).IsRegular := by
 -- proof
@@ -132,7 +132,7 @@ lemma regex_language_isRegular
   induction R with
   | zero => exact isRegular_empty
   | epsilon => exact isRegular_epsilon
-  | char a => exact isRegular_char a
+  | char a => exact isRegular_char (a₀ := a)
   | plus P Q ihP ihQ =>
     simp only [RegularExpression.matches']
     exact ihP.add ihQ
@@ -147,3 +147,4 @@ end RegularLanguages
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

@@ -200,7 +200,7 @@ theorem rlc_axisGapConnector_half_of_adjacent {n : ℤ}
     exact rlc_mem_axisGapConnectorEvent_of_firstEdge_open G hadjGap omega homega
   have hprob : rba_selfDualMeasure.real Open = (1 : ℝ) / 2 := by
     simpa [Open, rba_selfDualMeasure] using
-      (coord_true_prob (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one G.firstEdge)
+      (coord_true_prob (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one G.firstEdge)
   rw [← hprob]
   exact measureReal_mono hsub
 

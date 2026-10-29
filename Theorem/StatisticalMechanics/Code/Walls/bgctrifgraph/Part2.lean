@@ -51,7 +51,7 @@ theorem bgc_bc69_of_trifForest (L R : ℕ)
   fun ω => bgc_globalForest_of_trifForestData ω L R (hdata ω)
 
 
-theorem bgc_bk_uniqueness_of_trifForest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bgc_bk_uniqueness_of_trifForest (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bgc_TrifForestData ω L R) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
         {ω | numInfiniteClusters 2 ω = 0} = 1 ∨
@@ -64,7 +64,7 @@ theorem bgc_bk_uniqueness_of_trifForest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 <
     (fun ω L R => bgc_globalForest_of_trifForestData ω L R (hdata ω L R))
 
 
-theorem bgc_top_null_of_trifForest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bgc_top_null_of_trifForest (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bgc_TrifForestData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
       {ω | numInfiniteClusters 2 ω = ⊤} = 0 :=
@@ -315,7 +315,7 @@ theorem bgc_status :
     (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ),
       bgc_TrifForestData ω L R → bc69_Gn_globalForest ω L R) ∧
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p →
       (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bgc_TrifForestData ω L R) →
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) ∧
     

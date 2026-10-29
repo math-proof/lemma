@@ -900,13 +900,26 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (
             func instanceof L.LeanProperty &&
             func.rhs instanceof L.LeanToken &&
-            func.rhs.text === 'card' &&
+            (func.rhs.text === 'card' || func.rhs.text === 'det') &&
             args.length === 2
         ) {
             let arg = args[1];
             if (arg instanceof L.LeanParenthesis && !(arg.arg instanceof L.LeanColon))
                 arg = arg.arg;
             return [arg.toLatex(syntax)];
+        }
+        // `𝒩(μ, σ)` — paren (+ trailing args) only; `\\mathcal{N}` comes from latexFormat.
+        if (
+            func instanceof L.LeanToken &&
+            func.text === '𝒩' &&
+            args.length >= 2 &&
+            args[1] instanceof L.LeanParenthesis
+        ) {
+            return args.slice(1).map((arg) => {
+                if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
+                    arg = arg.arg;
+                return arg.toLatex(syntax);
+            });
         }
         return args.map((arg) => {
             if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
@@ -1002,11 +1015,22 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             if (func.rhs.text === 'fmod' && args.length === 2) return '{%s}{%s}';
             if (func.rhs.text === 'choose' && (args.length === 2 || args.length === 3))
                 return '\\binom{%s}{%s}';
-            // `Finset.card {…}` — bars around the set, not the words `Finset.card`.
-            if (func.rhs.text === 'card' && args.length === 2)
+            // `Finset.card {…}` / `Matrix.det M` — bars around the arg, not the namespace.
+            if ((func.rhs.text === 'card' || func.rhs.text === 'det') && args.length === 2)
                 return '\\left|{%s}\\right|';
         }
         const n = args.length;
+        // `𝒩(μ, σ)` — sympy `_latex`: `\\mathcal{N}%s` (single atom; no space before paren/colorbox).
+        if (
+            func instanceof L.LeanToken &&
+            func.text === '𝒩' &&
+            n >= 2 &&
+            args[1] instanceof L.LeanParenthesis
+        ) {
+            let fmt = '\\mathcal{N}%s';
+            for (let i = 2; i < n; i++) fmt += '\\ {%s}';
+            return fmt;
+        }
         return Array(n)
             .fill('{%s}')
             .join('\\ ');
@@ -1063,7 +1087,18 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             }
             return out;
         }
-        return Array(n - start).fill('%s').join(' ');
+        // `𝒩(μ, σ)` — Lean notation `"𝒩(" μ ", " σ ")"` must echo without a space after 𝒩.
+        let out = '%s';
+        for (let j = start + 1; j < n; j++) {
+            const prev = args[j - 1];
+            const cur = args[j];
+            const glue =
+                prev instanceof L.LeanToken &&
+                prev.text === '𝒩' &&
+                cur instanceof L.LeanParenthesis;
+            out += glue ? '%s' : ' %s';
+        }
+        return out;
     }
 
     tactic_block_info() {

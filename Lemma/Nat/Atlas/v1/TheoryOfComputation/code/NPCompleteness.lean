@@ -11,7 +11,7 @@ namespace CookLevin
 [satNTM_runsInTime](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma satNTM_runsInTime
+lemma satNTM_runsInTime :
 -- imply
   satNTM.runsInTime (fun n => n + 2) := by
 -- proof
@@ -52,7 +52,7 @@ lemma satNTM_runsInTime
         exact ih_halt
       unfold NTM.step at hstep
       simp only [satNTM] at hstep
-      obtain hst | hst <;> := hstate_halt
+      obtain hst | hst := hstate_halt
         simp only [hst, or_true, true_or, ite_true] at hstep <;> {
         simp only [NTM.isHaltConfig, NTM.isAcceptConfig, NTM.isRejectConfig, satNTM]
         have : (branch ⟨j + 1, hj⟩).state = (branch ⟨j, ihjlt⟩).state := by
@@ -68,7 +68,7 @@ namespace CookLevin
 [satNTM_time_bound](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma satNTM_time_bound
+lemma satNTM_time_bound :
 -- imply
   IsBigO (fun n => n + 2) (fun n => n ^ 1) := by
 -- proof
@@ -93,7 +93,7 @@ namespace ThreeSATComplete
 [threeSATNTM_runsInTime](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma threeSATNTM_runsInTime
+lemma threeSATNTM_runsInTime :
 -- imply
   threeSATNTM.runsInTime (fun n => n + 2) := by
 -- proof
@@ -134,7 +134,7 @@ lemma threeSATNTM_runsInTime
         exact ih_halt
       unfold NTM.step at hstep
       simp only [threeSATNTM] at hstep
-      obtain hst | hst <;> := hstate_halt
+      obtain hst | hst := hstate_halt
         simp only [hst, or_true, true_or, ite_true] at hstep <;> {
         simp only [NTM.isHaltConfig, NTM.isAcceptConfig, NTM.isRejectConfig, threeSATNTM]
         have : (branch ⟨j + 1, hj⟩).state = (branch ⟨j, ihjlt⟩).state := by
@@ -150,7 +150,7 @@ namespace ThreeSATComplete
 [threeSATNTM_time_bound](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma threeSATNTM_time_bound
+lemma threeSATNTM_time_bound :
 -- imply
   IsBigO (fun n => n + 2) (fun n => n ^ 1) := by
 -- proof
@@ -452,7 +452,7 @@ namespace ThreeSATComplete
 [tseitinAux_fresh_mono](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma tseitinAux_fresh_mono
+lemma tseitinAux_fresh_mono :
 -- imply
   ∀ (φ : BoolFormula) (fresh : ℕ), fresh ≤ (tseitinAux φ fresh).2.2 :=
 -- proof
@@ -751,7 +751,7 @@ namespace ThreeSATComplete
 [satTo3SATFn_correct](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma satTo3SATFn_correct
+lemma satTo3SATFn_correct :
 -- imply
   ∀ w : List BoolFormula, w ∈ SATLang ↔ satTo3SATFn w ∈ ThreeSATLang := by
 -- proof
@@ -782,7 +782,7 @@ namespace HamiltonianPath
 [hampathNTM_decides](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma hampathNTM_decides
+lemma hampathNTM_decides :
 -- imply
   hampathNTM.decides HampathLang := by
 -- proof
@@ -949,7 +949,7 @@ namespace HamiltonianPath
 [hampathNTM_runsInTime](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma hampathNTM_runsInTime
+lemma hampathNTM_runsInTime :
 -- imply
   hampathNTM.runsInTime (fun n => n + 2) := by
 -- proof
@@ -990,7 +990,7 @@ lemma hampathNTM_runsInTime
         exact ih_halt
       unfold NTM.step at hstep
       simp only [hampathNTM] at hstep
-      obtain hst | hst <;> := hstate_halt
+      obtain hst | hst := hstate_halt
         simp only [hst, or_true, true_or, ite_true] at hstep <;> {
         simp only [NTM.isHaltConfig, NTM.isAcceptConfig, NTM.isRejectConfig, hampathNTM]
         have : (branch ⟨j + 1, hj⟩).state = (branch ⟨j, ihjlt⟩).state := by
@@ -1006,7 +1006,7 @@ namespace HamiltonianPath
 [hampathNTM_time_bound](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma hampathNTM_time_bound
+lemma hampathNTM_time_bound :
 -- imply
   IsBigO (fun n => n + 2) (fun n => n ^ 2) := by
 -- proof
@@ -1026,7 +1026,7 @@ namespace HamiltonianPath
 [hampath_in_NP_aux](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma hampath_in_NP_aux
+lemma hampath_in_NP_aux :
 -- imply
   ∃ (Q : Type) (_ : Fintype Q) (_ : DecidableEq Q) (M : NTM Q HampathSymbol) (t' : ℕ → ℕ), M.decides HampathLang ∧ M.runsInTime t' ∧ IsBigO t' (fun n => n ^ 2) :=
 -- proof
@@ -1041,7 +1041,7 @@ namespace HamiltonianPath
 [hampath_in_NP](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma hampath_in_NP
+lemma hampath_in_NP :
 -- imply
   InNP HampathLang :=
 -- proof
@@ -1091,3 +1091,4 @@ private lemma conjoinClauses_eval_eq :
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

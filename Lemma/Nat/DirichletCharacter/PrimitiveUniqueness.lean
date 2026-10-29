@@ -13,7 +13,7 @@ lemma conductor_eq_of_isPrimitive_changeLevel
   {n : ℕ} [NeZero n]
   {d : ℕ}
   {χ' : DirichletCharacter R d}
-  {χ : DirichletCharacter R n}
+  (χ : DirichletCharacter R n)
 -- given
   (hprim : χ'.IsPrimitive)
   (hd : d ∣ n)
@@ -39,7 +39,7 @@ lemma eq_primitiveCharacter_of_changeLevel_eq
   {n : ℕ} [NeZero n]
   {d : ℕ}
   {χ' : DirichletCharacter R d}
-  {χ : DirichletCharacter R n}
+  (χ : DirichletCharacter R n)
 -- given
   (hlev : d = χ.conductor)
   (hd : d ∣ n)
@@ -82,4 +82,4 @@ end DirichletCharacter
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

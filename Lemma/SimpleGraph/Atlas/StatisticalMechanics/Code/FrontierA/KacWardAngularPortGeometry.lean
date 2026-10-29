@@ -87,7 +87,7 @@ private lemma exists_uniform_vertex_separation_eq
   [DecidableRel G.Adj]
   {embedding : KWStraightLineEmbedding G} :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ v w : V, v ≠ w → (r : ℝ) < dist (embedding.vertex v) (embedding.vertex w) := by
+  ∃ r : NNReal, 0 < r ∧ ∀ v w : V, v ≠ w → (r : ℝ) < dist (embedding.vertex v) (embedding.vertex w) := by
 -- proof
   apply StatMech.FrontierA.KWStraightLineEmbedding.exists_uniform_vertex_separation embedding
 
@@ -102,7 +102,7 @@ private lemma exists_uniform_edge_length_eq
   [DecidableRel G.Adj]
   {embedding : KWStraightLineEmbedding G} :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ d : G.Dart, (r : ℝ) < ‖embedding.vertex d.snd - embedding.vertex d.fst‖ := by
+  ∃ r : NNReal, 0 < r ∧ ∀ d : G.Dart, (r : ℝ) < ‖embedding.vertex d.snd - embedding.vertex d.fst‖ := by
 -- proof
   apply StatMech.FrontierA.KWStraightLineEmbedding.exists_uniform_edge_length embedding
 
@@ -117,7 +117,7 @@ private lemma exists_uniform_vertex_edge_separation_eq
   [DecidableRel G.Adj]
   {embedding : KWStraightLineEmbedding G} :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ (v : V) (d : G.Dart), v ≠ d.fst → v ≠ d.snd → ∀ y ∈ embedding.dartClosedEdge d, (r : ℝ) < dist (embedding.vertex v) y := by
+  ∃ r : NNReal, 0 < r ∧ ∀ (v : V) (d : G.Dart), v ≠ d.fst → v ≠ d.snd → ∀ y ∈ embedding.dartClosedEdge d, (r : ℝ) < dist (embedding.vertex v) y := by
 -- proof
   apply StatMech.FrontierA.KWStraightLineEmbedding.exists_uniform_vertex_edge_separation embedding
 

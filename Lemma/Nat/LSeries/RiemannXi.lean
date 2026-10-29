@@ -1,7 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.LSeries.RiemannXi
-open critical strip `0 < s.re < 1` (the left half follows by reflecting
 open RiemannXi
 
 
@@ -31,7 +30,7 @@ namespace RiemannXi
 -/
 @[path]
 lemma riemannXi_one_sub
-  {s : ℂ} :
+  (s : ℂ) :
 -- imply
   riemannXi (1 - s) = riemannXi s := by
 -- proof
@@ -176,4 +175,4 @@ end RiemannXi
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

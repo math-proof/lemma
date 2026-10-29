@@ -12,8 +12,8 @@ namespace PadicInt
 @[path]
 lemma padicDigit_mul_pow
   {p : Nat} [hp : Fact p.Prime]
-  {a : ℤ_[p]}
-  {n : Nat} :
+  (a : ℤ_[p])
+  (n : Nat) :
 -- imply
   padicDigit a n * p ^ n = a.appr (n + 1) - a.appr n := by
 -- proof
@@ -30,8 +30,8 @@ namespace PadicInt
 @[path]
 lemma appr_succ_eq
   {p : Nat} [hp : Fact p.Prime]
-  {a : ℤ_[p]}
-  {n : Nat} :
+  (a : ℤ_[p])
+  (n : Nat) :
 -- imply
   a.appr (n + 1) = a.appr n + padicDigit a n * p ^ n := by
 -- proof
@@ -66,8 +66,8 @@ namespace PadicInt
 @[path]
 lemma appr_eq_sum_padicDigit
   {p : Nat} [hp : Fact p.Prime]
-  {a : ℤ_[p]}
-  {n : Nat} :
+  (a : ℤ_[p])
+  (n : Nat) :
 -- imply
   a.appr n = ∑ k ∈ Finset.range n, padicDigit a k * p ^ k := by
 -- proof

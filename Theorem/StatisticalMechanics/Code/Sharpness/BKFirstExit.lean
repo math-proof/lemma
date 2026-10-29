@@ -76,7 +76,7 @@ variable {V : Type*}
 
 
 theorem firstExit_target_bound {ι : Type*} [Fintype V] [DecidableEq V]
-    {p : ℝ≥0} (hp : p ≤ 1) (G : SimpleGraph V) (Lam S : Set V) (u x : V)
+    {p : NNReal} (hp : p ≤ 1) (G : SimpleGraph V) (Lam S : Set V) (u x : V)
     (s : Finset ι) (bp : ι → V × V)
     (hincl : connEvent G Lam u {x} ⊆
       ⋃ i ∈ s, disjointOccurrence (connEvent G S u {(bp i).1})
@@ -106,7 +106,7 @@ theorem firstExit_target_bound {ι : Type*} [Fintype V] [DecidableEq V]
 
 
 theorem susceptibility_self_consistent_bk
-    [Fintype V] [DecidableEq V] {p : ℝ≥0} (hp : p ≤ 1) (G : SimpleGraph V)
+    [Fintype V] [DecidableEq V] {p : NNReal} (hp : p ≤ 1) (G : SimpleGraph V)
     (Lam S : Finset V) (hSΛ : S ⊆ Lam) (u : V) {κ : Type*} (bnd : Finset κ)
     (bp : κ → V × V)
     

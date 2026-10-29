@@ -13,16 +13,16 @@ namespace FrobeniusDensity
 
 variable (K : Type*) [Field K] [NumberField K]
 
-noncomputable def normRpow (s : ℝ) (I : Ideal (𝓞 K)) : ℝ≥0∞ :=
-  (Ideal.absNorm I : ℝ≥0∞) ^ (-s)
+noncomputable def normRpow (s : ℝ) (I : Ideal (𝓞 K)) : ENNReal :=
+  (Ideal.absNorm I : ENNReal) ^ (-s)
 
-noncomputable def idealSum (s : ℝ) : ℝ≥0∞ :=
+noncomputable def idealSum (s : ℝ) : ENNReal :=
   ∑' I : {I : Ideal (𝓞 K) // I ≠ ⊥}, normRpow K s I.1
 
-noncomputable def primeSum (s : ℝ) : ℝ≥0∞ :=
+noncomputable def primeSum (s : ℝ) : ENNReal :=
   ∑' v : HeightOneSpectrum (𝓞 K), normRpow K s v.asIdeal
 
-noncomputable def primeSqSum (s : ℝ) : ℝ≥0∞ :=
+noncomputable def primeSqSum (s : ℝ) : ENNReal :=
   ∑' v : HeightOneSpectrum (𝓞 K), normRpow K s v.asIdeal ^ 2
 
 variable {K}
@@ -32,7 +32,7 @@ def IsFactoredBy (T : Finset (HeightOneSpectrum (𝓞 K))) (I : Ideal (𝓞 K)) 
 
 variable (K) in
 
-noncomputable def factoredSum (T : Finset (HeightOneSpectrum (𝓞 K))) (s : ℝ) : ℝ≥0∞ :=
+noncomputable def factoredSum (T : Finset (HeightOneSpectrum (𝓞 K))) (s : ℝ) : ENNReal :=
   ∑' I : {I : Ideal (𝓞 K) // IsFactoredBy T I}, normRpow K s I.1
 
 lemma one_le_absNorm {I : Ideal (𝓞 K)} (hI : I ≠ ⊥) : 1 ≤ Ideal.absNorm I :=
@@ -70,18 +70,18 @@ theorem ratBelow_prime (v : HeightOneSpectrum (𝓞 K)) : (ratBelow v).Prime :=
 
 variable (K)
 
-noncomputable def degOneSum (S₀ : Finset ℕ) (s : ℝ) : ℝ≥0∞ :=
-  ∑' ℓ : ℕ, (if ℓ ∈ S₀ then 0 else (degOneCount K ℓ : ℝ≥0∞)) * (ℓ : ℝ≥0∞) ^ (-s)
+noncomputable def degOneSum (S₀ : Finset ℕ) (s : ℝ) : ENNReal :=
+  ∑' ℓ : ℕ, (if ℓ ∈ S₀ then 0 else (degOneCount K ℓ : ENNReal)) * (ℓ : ENNReal) ^ (-s)
 
-noncomputable def cutSum (S₀ : Finset ℕ) (s : ℝ) : ℝ≥0∞ :=
-  ∑' ℓ : ℕ, (if ℓ ∈ S₀ then (degOneCount K ℓ : ℝ≥0∞) else 0) * (ℓ : ℝ≥0∞) ^ (-s)
+noncomputable def cutSum (S₀ : Finset ℕ) (s : ℝ) : ENNReal :=
+  ∑' ℓ : ℕ, (if ℓ ∈ S₀ then (degOneCount K ℓ : ENNReal) else 0) * (ℓ : ENNReal) ^ (-s)
 
-noncomputable def tailSum (s : ℝ) : ℝ≥0∞ :=
+noncomputable def tailSum (s : ℝ) : ENNReal :=
   ∑' v : HeightOneSpectrum (𝓞 K),
     if (Ideal.absNorm v.asIdeal).Prime then 0 else normRpow K s v.asIdeal
 
-noncomputable def tailConst : ℝ≥0∞ :=
-  ∑' ℓ : ℕ, if ℓ.Prime then ((ℓ : ℝ≥0∞) ^ 2)⁻¹ else 0
+noncomputable def tailConst : ENNReal :=
+  ∑' ℓ : ℕ, if ℓ.Prime then ((ℓ : ENNReal) ^ 2)⁻¹ else 0
 
 noncomputable def idealCount (n : ℕ) : ℕ :=
   Nat.card {I : Ideal (𝓞 K) // Ideal.absNorm I = n}

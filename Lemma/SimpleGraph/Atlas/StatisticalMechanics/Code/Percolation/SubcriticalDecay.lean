@@ -40,7 +40,7 @@ private lemma crossProb_nonneg_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   0 ≤ crossProb d p hp n := by
@@ -56,7 +56,7 @@ private lemma crossProb_le_one_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   crossProb d p hp n ≤ 1 := by
@@ -71,7 +71,7 @@ private lemma crossProb_antitone_eq
   {d : ℕ}
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Antitone (crossProb d p hp) := by
@@ -141,7 +141,7 @@ private lemma subcritical_decay_eq
   {S : Finset (Site d)}
   {L : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hS0 : origin d ∈ S)
   (hphi : phi d p hp S < 1)

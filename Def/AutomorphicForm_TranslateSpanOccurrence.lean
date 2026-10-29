@@ -15,9 +15,9 @@ namespace AutomorphicForm
 variable (F : Type) [Field F] [NumberField F]
 
 def IsInTranslateSpanOn (D : Set (AdelicGL2 (𝓞 F) F)) (φ φ' : AdelicGL2 (𝓞 F) F → ℂ) : Prop :=
-  ∀ ε : ℝ≥0∞, 0 < ε →
+  ∀ ε : ENNReal, 0 < ε →
     ∃ (s : Finset (AdelicGL2 (𝓞 F) F)) (l : AdelicGL2 (𝓞 F) F → ℂ),
-      ∫⁻ y in D, (‖φ' y - ∑ h ∈ s, l h * φ (y * h)‖₊ : ℝ≥0∞) ^ 2
+      ∫⁻ y in D, (‖φ' y - ∑ h ∈ s, l h * φ (y * h)‖₊ : ENNReal) ^ 2
         ∂(adelicGLHaar (Fin 2) (𝓞 F) F) < ε
 
 variable {F}

@@ -26,7 +26,7 @@ variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
 noncomputable def agreementFiberMeasure
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1) (K : Set E)
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1) (K : Set E)
     (omega : ConfigSpace E) : Measure (AgreementFiberPoint K omega) :=
   Measure.comap Subtype.val
     ((inhomBernoulliProductMeasure p hp).restrict

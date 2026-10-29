@@ -118,7 +118,7 @@ theorem setOf_mem_smul_fd_eq_pair {z : ℍ} (hz : z ∈ goodSet) :
     · exact Or.inr (by rw [inv_neg_eq, inv_inv])
 
 theorem tsum_indicator_smul_fd {z : ℍ} (hz : z ∈ goodSet) :
-    ∑' γ : SL(2, ℤ), (γ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ℝ≥0∞)) z = 2 := by
+    ∑' γ : SL(2, ℤ), (γ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ENNReal)) z = 2 := by
   obtain ⟨δ, hδ⟩ := setOf_mem_smul_fd_eq_pair hz
   have hpair : ∀ γ : SL(2, ℤ), z ∈ γ • (𝒟 : Set ℍ) ↔ (γ = δ ∨ γ = -δ) := by
     intro γ
@@ -132,7 +132,7 @@ theorem tsum_indicator_smul_fd {z : ℍ} (hz : z ∈ goodSet) :
       rw [← hδ] at this
       exact this
   have hsupp : ∀ γ : SL(2, ℤ), γ ∉ ({δ, -δ} : Finset SL(2, ℤ)) →
-      (γ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ℝ≥0∞)) z = 0 := by
+      (γ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ENNReal)) z = 0 := by
     intro γ hγ
     rw [Set.indicator_apply_eq_zero]
     intro hmem
@@ -143,7 +143,7 @@ theorem tsum_indicator_smul_fd {z : ℍ} (hz : z ∈ goodSet) :
     Set.indicator_of_mem ((hpair (-δ)).mpr (Or.inr rfl))]
   exact one_add_one_eq_two
 
-theorem setLIntegral_smul_fd (γ : SL(2, ℤ)) (F : ℍ → ℝ≥0∞) :
+theorem setLIntegral_smul_fd (γ : SL(2, ℤ)) (F : ℍ → ENNReal) :
     ∫⁻ w in (𝒟 : Set ℍ), F (γ • w) ∂volume = ∫⁻ u in γ • (𝒟 : Set ℍ), F u ∂volume := by
   have hemb : MeasurableEmbedding (fun w : ℍ => γ • w) :=
     (Homeomorph.smul γ (α := ℍ)).measurableEmbedding
@@ -155,7 +155,7 @@ theorem setLIntegral_smul_fd (γ : SL(2, ℤ)) (F : ℍ → ℝ≥0∞) :
   rw [hmp.setLIntegral_comp_emb hemb F (𝒟 : Set ℍ)]
   rfl
 
-theorem tsum_setLIntegral_fd_smul (F : ℍ → ℝ≥0∞) (hF : Measurable F) :
+theorem tsum_setLIntegral_fd_smul (F : ℍ → ENNReal) (hF : Measurable F) :
     ∑' γ : SL(2, ℤ), ∫⁻ w in (𝒟 : Set ℍ), F (γ • w) ∂volume =
       2 * ∫⁻ z, F z ∂volume := by
   calc ∑' γ : SL(2, ℤ), ∫⁻ w in (𝒟 : Set ℍ), F (γ • w) ∂volume
@@ -171,16 +171,16 @@ theorem tsum_setLIntegral_fd_smul (F : ℍ → ℝ≥0∞) (hF : Measurable F) :
         filter_upwards [measure_eq_zero_iff_ae_notMem.mp volume_compl_goodSet] with z hzc
         have hz : z ∈ goodSet := by simpa using hzc
         calc ∑' γ : SL(2, ℤ), (γ • (𝒟 : Set ℍ)).indicator F z
-            = ∑' γ : SL(2, ℤ), (γ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ℝ≥0∞)) z * F z := by
+            = ∑' γ : SL(2, ℤ), (γ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ENNReal)) z * F z := by
               refine tsum_congr fun γ => ?_
               by_cases h : z ∈ γ • (𝒟 : Set ℍ) <;>
                 simp [Set.indicator_of_mem, Set.indicator_of_notMem, h]
-          _ = (∑' γ : SL(2, ℤ), (γ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ℝ≥0∞)) z) * F z :=
+          _ = (∑' γ : SL(2, ℤ), (γ • (𝒟 : Set ℍ)).indicator (fun _ => (1 : ENNReal)) z) * F z :=
               ENNReal.tsum_mul_right
           _ = 2 * F z := by rw [tsum_indicator_smul_fd hz]
     _ = 2 * ∫⁻ z, F z ∂volume := lintegral_const_mul 2 hF
 
-theorem setLIntegral_fd_tsum_smul (F : ℍ → ℝ≥0∞) (hF : Measurable F) :
+theorem setLIntegral_fd_tsum_smul (F : ℍ → ENNReal) (hF : Measurable F) :
     ∫⁻ w in (𝒟 : Set ℍ), (∑' γ : SL(2, ℤ), F (γ • w)) ∂volume =
       2 * ∫⁻ z, F z ∂volume := by
   rw [← tsum_setLIntegral_fd_smul F hF]
@@ -189,14 +189,14 @@ theorem setLIntegral_fd_tsum_smul (F : ℍ → ℝ≥0∞) (hF : Measurable F) :
 
 theorem gate_two_routes :
     ∑' γ : SL(2, ℤ), ∫⁻ w in (𝒟 : Set ℍ),
-        (𝒟ᵒ : Set ℍ).indicator (fun _ => (1 : ℝ≥0∞)) (γ • w) ∂volume =
+        (𝒟ᵒ : Set ℍ).indicator (fun _ => (1 : ENNReal)) (γ • w) ∂volume =
       2 * ENNReal.ofReal (Real.pi / 3) := by
   rw [tsum_setLIntegral_fd_smul _ (measurable_const.indicator ModularGroup.isOpen_fdo.measurableSet),
     lintegral_indicator ModularGroup.isOpen_fdo.measurableSet, setLIntegral_one,
     volume_fdo_eq_volume_fd, volume_fd_eq]
 
 theorem gate_factor_two_load_bearing :
-    (2 : ℝ≥0∞) * ENNReal.ofReal (Real.pi / 3) ≠ ENNReal.ofReal (Real.pi / 3) := by
+    (2 : ENNReal) * ENNReal.ofReal (Real.pi / 3) ≠ ENNReal.ofReal (Real.pi / 3) := by
   intro h
   have hne : ENNReal.ofReal (Real.pi / 3) ≠ 0 := by
     rw [← volume_fd_eq]
@@ -206,8 +206,8 @@ theorem gate_factor_two_load_bearing :
   norm_num at this
 
 theorem gate_two_routes_ne_zero_ne_top :
-    (2 : ℝ≥0∞) * ENNReal.ofReal (Real.pi / 3) ≠ 0 ∧
-      (2 : ℝ≥0∞) * ENNReal.ofReal (Real.pi / 3) ≠ ⊤ := by
+    (2 : ENNReal) * ENNReal.ofReal (Real.pi / 3) ≠ 0 ∧
+      (2 : ENNReal) * ENNReal.ofReal (Real.pi / 3) ≠ ⊤ := by
   constructor
   · refine mul_ne_zero (by norm_num) ?_
     rw [← volume_fd_eq]

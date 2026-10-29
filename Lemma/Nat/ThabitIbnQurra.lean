@@ -67,21 +67,21 @@ private lemma thabit_parameter_product (n p q r : ℕ) (hn : 2 ≤ n)
   constructor
   · nlinarith
   · have hpow_next : 2 ^ (n + 1) = 4 * 2 ^ (n - 1) := by
-    rw [show n + 1 = 2 + (n - 1) by omega, pow_add]
-    norm_num
+      rw [show n + 1 = 2 + (n - 1) by omega, pow_add]
+      norm_num
     rw [hpow_next]
     have hsum : p * q + r + 9 * 2 ^ (n - 1) =
-      36 * 2 ^ (n - 1) * 2 ^ (n - 1) := by
+        36 * 2 ^ (n - 1) * 2 ^ (n - 1) := by
       nlinarith
     have hsub : 4 * 2 ^ (n - 1) - 1 + 1 = 4 * 2 ^ (n - 1) := by omega
     apply Nat.add_right_cancel (m := 9 * 2 ^ (n - 1))
     calc
       p * q + r + 9 * 2 ^ (n - 1) =
-        36 * 2 ^ (n - 1) * 2 ^ (n - 1) := hsum
+          36 * 2 ^ (n - 1) * 2 ^ (n - 1) := hsum
       _ = 9 * 2 ^ (n - 1) * (4 * 2 ^ (n - 1)) := by ring
       _ = 9 * 2 ^ (n - 1) * (4 * 2 ^ (n - 1) - 1 + 1) := by rw [hsub]
       _ = 9 * 2 ^ (n - 1) * (4 * 2 ^ (n - 1) - 1) +
-        9 * 2 ^ (n - 1) := by ring
+          9 * 2 ^ (n - 1) := by ring
 
 end MetaMathlibExt
 
@@ -199,10 +199,10 @@ lemma thabit_ibn_qurra
     simpa [mul_assoc] using
       (Nat.mul_lt_mul_left (Nat.two_pow_pos n)).mpr hpq_lt
   have hsigma_pqr : ∑ d ∈ Nat.divisors (2 ^ n * p * q), d =
-    2 ^ n * (p * q + r) :=
+      2 ^ n * (p * q + r) :=
     (thabit_sigma_pqr n p q pp pq h2p h2q hpq).trans htarget_pqr
   have hsigma_r : ∑ d ∈ Nat.divisors (2 ^ n * r), d =
-    2 ^ n * (p * q + r) :=
+      2 ^ n * (p * q + r) :=
     (thabit_sigma_r n r pr h2r).trans htarget_r
   have hproper_pqr : ∑ d ∈ Nat.properDivisors (2 ^ n * p * q), d = 2 ^ n * r := by
     apply Nat.add_right_cancel (m := 2 ^ n * p * q)
@@ -222,4 +222,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

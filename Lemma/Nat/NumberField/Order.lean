@@ -1,7 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.NumberField.Order
-open NumberField.IsOrder
 
 
 namespace NumberField.IsOrder
@@ -76,4 +75,4 @@ lemma NumberField.isOrder_integralClosure
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -117,7 +117,7 @@ private lemma bfk_datum_implies_count_eq
 private lemma bfk_bk_of_datum_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) :
@@ -133,7 +133,7 @@ private lemma bfk_bk_of_datum_eq
 private lemma bfk_forestCount_status_eq
   {d : ℕ} :
 -- imply
-  (∀ {V : Type} [Fintype V] [Nonempty V] {G : SimpleGraph V} [_i : DecidableRel G.Adj], G.IsAcyclic → (∀ v, 1 ≤ G.degree v) → (Finset.univ.filter (fun v => 3 ≤ G.degree v)).card ≤ (Finset.univ.filter (fun v => G.degree v = 1)).card) ∧ (∀ {V : Type} [Fintype V] [Nonempty V] {G : SimpleGraph V} [_i : DecidableRel G.Adj], G.IsAcyclic → (∀ v, 1 ≤ G.degree v) → ∀ {ι : Type} [Fintype ι] (f : ι → V), Function.Injective f → (∀ i, 3 ≤ G.degree (f i)) → ∀ (B : Finset V), (∀ v, G.degree v = 1 → v ∈ B) → Fintype.card ι ≤ B.card) ∧ (∀ {V : Type} {T : SimpleGraph V}, T.IsTree → ∀ {ι : Type} (Gs : ι → SimpleGraph V), (∀ i, Gs i ≤ T) → (⨆ i, Gs i).IsAcyclic) ∧ (Fintype.card (Fin 1) ≤ ({1, 2, 3} : Finset (Fin 4)).card) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (R : ℕ), bau_ArmSubforestData ω 0 R → bc61_coarseTcount ω 0 R ≤ boxSV_boundaryCard 2 R) ∧ (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
+  (∀ {V : Type} [Fintype V] [Nonempty V] {G : SimpleGraph V} [_i : DecidableRel G.Adj], G.IsAcyclic → (∀ v, 1 ≤ G.degree v) → (Finset.univ.filter (fun v => 3 ≤ G.degree v)).card ≤ (Finset.univ.filter (fun v => G.degree v = 1)).card) ∧ (∀ {V : Type} [Fintype V] [Nonempty V] {G : SimpleGraph V} [_i : DecidableRel G.Adj], G.IsAcyclic → (∀ v, 1 ≤ G.degree v) → ∀ {ι : Type} [Fintype ι] (f : ι → V), Function.Injective f → (∀ i, 3 ≤ G.degree (f i)) → ∀ (B : Finset V), (∀ v, G.degree v = 1 → v ∈ B) → Fintype.card ι ≤ B.card) ∧ (∀ {V : Type} {T : SimpleGraph V}, T.IsTree → ∀ {ι : Type} (Gs : ι → SimpleGraph V), (∀ i, Gs i ≤ T) → (⨆ i, Gs i).IsAcyclic) ∧ (Fintype.card (Fin 1) ≤ ({1, 2, 3} : Finset (Fin 4)).card) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (R : ℕ), bau_ArmSubforestData ω 0 R → bc61_coarseTcount ω 0 R ≤ boxSV_boundaryCard 2 R) ∧ (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
 -- proof
   apply StatMech.Walls.bfk_forestCount_status
 

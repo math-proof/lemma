@@ -28,11 +28,11 @@ section Conditioning
 variable [Fintype α] [DecidableEq α] [DistribLattice α]
 
 
-theorem fkg_conditioning_domination {π : α → ℝ≥0} (hπ : FKGCondition π)
+theorem fkg_conditioning_domination {π : α → NNReal} (hπ : FKGCondition π)
     {S : Finset α} (hS : ∀ ⦃a b⦄, a ≤ b → a ∈ S → b ∈ S) :
     StochasticDom ((∑ a ∈ S, π a) • π) ((∑ a, π a) • restrictTo π S) := by
-  set Z : ℝ≥0 := ∑ a, π a with hZ
-  set ZS : ℝ≥0 := ∑ a ∈ S, π a with hZS
+  set Z : NNReal := ∑ a, π a with hZ
+  set ZS : NNReal := ∑ a ∈ S, π a with hZS
   
   have hmass : ∑ a, (ZS • π) a = ∑ a, (Z • restrictTo π S) a := by
     simp only [Pi.smul_apply, smul_eq_mul]

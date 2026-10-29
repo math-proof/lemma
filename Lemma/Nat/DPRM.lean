@@ -105,7 +105,8 @@ private lemma dp_isPoly_natAbs_le {γ : Type} {f : (γ → ℕ) → ℤ}
     constructor <;> linarith
   have hcast : ((F v + G v : ℕ) : ℤ) = (F v : ℤ) + (G v : ℤ) := by push_cast; ring
   have hle' : ((((F v : ℤ) - (G v : ℤ)).natAbs : ℕ) : ℤ) ≤ ((F v + G v : ℕ) : ℤ) := by
-    rwa [Int.natCast_natAbs, hcast]
+    rw [Int.natCast_natAbs, hcast]
+    exact hle
   exact Int.ofNat_le.mp hle'
 
 end MathlibExt.NumberTheory.DPRMWanted
@@ -217,14 +218,15 @@ private lemma dp_fin_dummies {α : Type} {S : Set (α → ℕ)} (hS : Dioph S) :
         change (Sum.elim v t) (σ (Sum.inr b)) = t' b
         by_cases hb : b ∈ D
         · have hσ : σ (Sum.inr b) = Sum.inr (Fin.succ (e' ⟨b, hb⟩)) := by
-          simp [σ, hb]
+            simp [σ, hb]
           rw [hσ]
           simp [t', hb]
         · have hσ : σ (Sum.inr b) = Sum.inr 0 := by simp [σ, hb]
           rw [hσ]
           simp [t', hb]
     rw [Poly.map_apply] at ht
-    rwa [hcomp] at ht
+    rw [hcomp] at ht
+    exact ht
 
 end MathlibExt.NumberTheory.DPRMWanted
 
@@ -237,16 +239,16 @@ namespace MathlibExt.NumberTheory.DPRMWanted
 private lemma dp_pair_graph :
   Dioph {v : Vector3 ℕ 3 | Nat.pair (v &1) (v &2) = v &0} := by
   have hset : Dioph
-    {v : Vector3 ℕ 3 |
-      (v &1 < v &2 ∧ v &0 = v &2 * v &2 + v &1) ∨
-      (v &2 ≤ v &1 ∧ v &0 = v &1 * v &1 + v &1 + v &2)} :=
+      {v : Vector3 ℕ 3 |
+        (v &1 < v &2 ∧ v &0 = v &2 * v &2 + v &1) ∨
+        (v &2 ≤ v &1 ∧ v &0 = v &1 * v &1 + v &1 + v &2)} :=
     (D&1 D< D&2 D∧ D&0 D= D&2 D* D&2 D+ D&1) D∨
       (D&2 D≤ D&1 D∧ D&0 D= D&1 D* D&1 D+ D&1 D+ D&2)
   refine Dioph.ext hset fun v => ?_
   constructor
   · rintro (⟨hlt, heq⟩ | ⟨hle, heq⟩)
     · have hpair : Nat.pair (v &1) (v &2) = v &2 * v &2 + v &1 := by
-      simp [Nat.pair, hlt]
+        simp [Nat.pair, hlt]
       have hgoal : Nat.pair (v &1) (v &2) = v &0 := by rw [hpair, heq]
       exact hgoal
     · have hneg : ¬ v &1 < v &2 := Nat.not_lt.mpr hle
@@ -261,13 +263,15 @@ private lemma dp_pair_graph :
       refine ⟨hlt, ?_⟩
       have hpair : Nat.pair (v &1) (v &2) = v &2 * v &2 + v &1 := by
         simp [Nat.pair, hlt]
-      rwa [hpair] at heq0
+      rw [hpair] at heq0
+      exact heq0.symm
     · right
       have hle : v &2 ≤ v &1 := Nat.le_of_not_gt hlt
       refine ⟨hle, ?_⟩
       have hpair : Nat.pair (v &1) (v &2) = v &1 * v &1 + v &1 + v &2 := by
         simp [Nat.pair, hlt]
-      rwa [hpair] at heq0
+      rw [hpair] at heq0
+      exact heq0.symm
 
 end MathlibExt.NumberTheory.DPRMWanted
 
@@ -293,16 +297,16 @@ private lemma dp_unpair_fst_diophFn :
   Dioph.DiophFn (fun v : Vector3 ℕ 1 => (Nat.unpair (v &0)).1) := by
   have hS : Dioph {w : Vector3 ℕ 3 | Nat.pair (w &1) (w &0) = w &2} := by
     have hset : Dioph
-      {w : Vector3 ℕ 3 |
-        (w &1 < w &0 ∧ w &2 = w &0 * w &0 + w &1) ∨
-        (w &0 ≤ w &1 ∧ w &2 = w &1 * w &1 + w &1 + w &0)} :=
+        {w : Vector3 ℕ 3 |
+          (w &1 < w &0 ∧ w &2 = w &0 * w &0 + w &1) ∨
+          (w &0 ≤ w &1 ∧ w &2 = w &1 * w &1 + w &1 + w &0)} :=
       (D&1 D< D&0 D∧ D&2 D= D&0 D* D&0 D+ D&1) D∨
         (D&0 D≤ D&1 D∧ D&2 D= D&1 D* D&1 D+ D&1 D+ D&0)
     refine Dioph.ext hset fun w => ?_
     constructor
     · rintro (⟨hlt, heq⟩ | ⟨hle, heq⟩)
       · have hpair : Nat.pair (w &1) (w &0) = w &0 * w &0 + w &1 := by
-        simp [Nat.pair, hlt]
+          simp [Nat.pair, hlt]
         have hgoal : Nat.pair (w &1) (w &0) = w &2 := by rw [hpair, heq]
         exact hgoal
       · have hneg : ¬ w &1 < w &0 := Nat.not_lt.mpr hle
@@ -317,15 +321,17 @@ private lemma dp_unpair_fst_diophFn :
         refine ⟨hlt, ?_⟩
         have hpair : Nat.pair (w &1) (w &0) = w &0 * w &0 + w &1 := by
           simp [Nat.pair, hlt]
-        rwa [hpair] at heq0
+        rw [hpair] at heq0
+        exact heq0.symm
       · right
         have hle : w &0 ≤ w &1 := Nat.le_of_not_gt hlt
         refine ⟨hle, ?_⟩
         have hpair : Nat.pair (w &1) (w &0) = w &1 * w &1 + w &1 + w &0 := by
           simp [Nat.pair, hlt]
-        rwa [hpair] at heq0
+        rw [hpair] at heq0
+        exact heq0.symm
   have hex : Dioph {v : Vector3 ℕ 2 | ∃ x, (x :: v) ∈
-    {w : Vector3 ℕ 3 | Nat.pair (w &1) (w &0) = w &2}} :=
+      {w : Vector3 ℕ 3 | Nat.pair (w &1) (w &0) = w &2}} :=
     Dioph.vec_ex1_dioph 2 hS
   refine (Dioph.diophFn_vec _).2 ?_
   refine Dioph.ext hex fun v => ?_
@@ -370,16 +376,16 @@ private lemma dp_digit_main (u : ℕ) (hu : 2 ≤ u) (N : ℕ) (d : ℕ → ℕ)
     | succ N' =>
       have h0 : d 0 < u := hd 0 (Nat.zero_lt_succ N')
       have hT : (∑ i ∈ Finset.range N', d (i + 1) * u ^ (i + 1))
-        = u * (∑ i ∈ Finset.range N', d (i + 1) * u ^ i) := by
+          = u * (∑ i ∈ Finset.range N', d (i + 1) * u ^ i) := by
         rw [Finset.mul_sum]
         apply Finset.sum_congr rfl
         intro i _
         rw [pow_succ']
         ring
       have hsum : (∑ i ∈ Finset.range (N' + 1), d i * u ^ i)
-        = d 0 + u * (∑ i ∈ Finset.range N', d (i + 1) * u ^ i) := by
+          = d 0 + u * (∑ i ∈ Finset.range N', d (i + 1) * u ^ i) := by
         have h1 : (∑ i ∈ Finset.range (N' + 1), d i * u ^ i)
-          = (∑ i ∈ Finset.range N', d (i + 1) * u ^ (i + 1)) + d 0 := by
+            = (∑ i ∈ Finset.range N', d (i + 1) * u ^ (i + 1)) + d 0 := by
           rw [Finset.sum_range_succ']
           simp only [pow_zero, mul_one]
         rw [h1, hT]
@@ -394,27 +400,27 @@ private lemma dp_digit_main (u : ℕ) (hu : 2 ≤ u) (N : ℕ) (d : ℕ → ℕ)
       have hu0 : 0 < u := by omega
       have h0 : d 0 < u := hd 0 (Nat.zero_lt_succ N')
       have hT : (∑ i ∈ Finset.range N', d (i + 1) * u ^ (i + 1))
-        = u * (∑ i ∈ Finset.range N', d (i + 1) * u ^ i) := by
+          = u * (∑ i ∈ Finset.range N', d (i + 1) * u ^ i) := by
         rw [Finset.mul_sum]
         apply Finset.sum_congr rfl
         intro i _
         rw [pow_succ']
         ring
       have hsum : (∑ i ∈ Finset.range (N' + 1), d i * u ^ i)
-        = d 0 + u * (∑ i ∈ Finset.range N', d (i + 1) * u ^ i) := by
+          = d 0 + u * (∑ i ∈ Finset.range N', d (i + 1) * u ^ i) := by
         have h1 : (∑ i ∈ Finset.range (N' + 1), d i * u ^ i)
-          = (∑ i ∈ Finset.range N', d (i + 1) * u ^ (i + 1)) + d 0 := by
+            = (∑ i ∈ Finset.range N', d (i + 1) * u ^ (i + 1)) + d 0 := by
           rw [Finset.sum_range_succ']
           simp only [pow_zero, mul_one]
         rw [h1, hT]
         exact add_comm _ _
       have hdiv : (∑ i ∈ Finset.range (N' + 1), d i * u ^ i) / u
-        = ∑ i ∈ Finset.range N', d (i + 1) * u ^ i := by
+          = ∑ i ∈ Finset.range N', d (i + 1) * u ^ i := by
         rw [hsum, Nat.add_mul_div_left _ _ hu0, Nat.div_eq_of_lt h0, Nat.zero_add]
       have hdk : ∀ i < N', d (i + 1) < u := fun i hi =>
         hd (i + 1) (Nat.succ_lt_succ hi)
       have hstep : (∑ i ∈ Finset.range (N' + 1), d i * u ^ i) / u ^ (k + 1)
-        = (∑ i ∈ Finset.range N', d (i + 1) * u ^ i) / u ^ k := by
+          = (∑ i ∈ Finset.range N', d (i + 1) * u ^ i) / u ^ k := by
         rw [pow_succ, Nat.mul_comm (u ^ k) u, ← Nat.div_div_eq_div_mul, hdiv]
       rw [hstep, ih _ _ hdk]
       by_cases hk : k < N'
@@ -442,7 +448,7 @@ private lemma dp_choose_eq (n k : ℕ) :
       _ < 2 ^ n + 1 := Nat.lt_succ_self _
       _ = u := rfl
   have hpow : (u + 1) ^ n
-    = ∑ i ∈ Finset.range (n + 1), n.choose i * u ^ i := by
+      = ∑ i ∈ Finset.range (n + 1), n.choose i * u ^ i := by
     have h := add_pow u 1 n
     simp only [mul_one, one_pow] at h
     rw [h]
@@ -483,15 +489,15 @@ private lemma dp_choose_diophFn :
   have hpow2 : Dioph.DiophFn (fun v : Vector3 ℕ 2 => (2 ^ v &0 + 1) ^ v &1) :=
     Dioph.pow_dioph hu hk
   have hdiv : Dioph.DiophFn
-    (fun v : Vector3 ℕ 2 => (2 ^ v &0 + 1 + 1) ^ v &0 / (2 ^ v &0 + 1) ^ v &1) :=
+      (fun v : Vector3 ℕ 2 => (2 ^ v &0 + 1 + 1) ^ v &0 / (2 ^ v &0 + 1) ^ v &1) :=
     Dioph.div_dioph hpow1 hpow2
   have hmod : Dioph.DiophFn
-    (fun v : Vector3 ℕ 2 =>
-      ((2 ^ v &0 + 1 + 1) ^ v &0 / (2 ^ v &0 + 1) ^ v &1) % (2 ^ v &0 + 1)) :=
+      (fun v : Vector3 ℕ 2 =>
+        ((2 ^ v &0 + 1 + 1) ^ v &0 / (2 ^ v &0 + 1) ^ v &1) % (2 ^ v &0 + 1)) :=
     Dioph.mod_dioph hdiv hu
   have hfun : (fun v : Vector3 ℕ 2 => (v &0).choose (v &1))
-    = (fun v : Vector3 ℕ 2 =>
-      ((2 ^ v &0 + 1 + 1) ^ v &0 / (2 ^ v &0 + 1) ^ v &1) % (2 ^ v &0 + 1)) := by
+      = (fun v : Vector3 ℕ 2 =>
+        ((2 ^ v &0 + 1 + 1) ^ v &0 / (2 ^ v &0 + 1) ^ v &1) % (2 ^ v &0 + 1)) := by
     funext v
     exact dp_choose_eq (v &0) (v &1)
   exact hfun ▸ hmod
@@ -508,16 +514,16 @@ private lemma dp_unpair_snd_diophFn :
   Dioph.DiophFn (fun v : Vector3 ℕ 1 => (Nat.unpair (v &0)).2) := by
   have hS : Dioph {w : Vector3 ℕ 3 | Nat.pair (w &0) (w &1) = w &2} := by
     have hset : Dioph
-      {w : Vector3 ℕ 3 |
-        (w &0 < w &1 ∧ w &2 = w &1 * w &1 + w &0) ∨
-        (w &1 ≤ w &0 ∧ w &2 = w &0 * w &0 + w &0 + w &1)} :=
+        {w : Vector3 ℕ 3 |
+          (w &0 < w &1 ∧ w &2 = w &1 * w &1 + w &0) ∨
+          (w &1 ≤ w &0 ∧ w &2 = w &0 * w &0 + w &0 + w &1)} :=
       (D&0 D< D&1 D∧ D&2 D= D&1 D* D&1 D+ D&0) D∨
         (D&1 D≤ D&0 D∧ D&2 D= D&0 D* D&0 D+ D&0 D+ D&1)
     refine Dioph.ext hset fun w => ?_
     constructor
     · rintro (⟨hlt, heq⟩ | ⟨hle, heq⟩)
       · have hpair : Nat.pair (w &0) (w &1) = w &1 * w &1 + w &0 := by
-        simp [Nat.pair, hlt]
+          simp [Nat.pair, hlt]
         have hgoal : Nat.pair (w &0) (w &1) = w &2 := by rw [hpair, heq]
         exact hgoal
       · have hneg : ¬ w &0 < w &1 := Nat.not_lt.mpr hle
@@ -532,15 +538,17 @@ private lemma dp_unpair_snd_diophFn :
         refine ⟨hlt, ?_⟩
         have hpair : Nat.pair (w &0) (w &1) = w &1 * w &1 + w &0 := by
           simp [Nat.pair, hlt]
-        rwa [hpair] at heq0
+        rw [hpair] at heq0
+        exact heq0.symm
       · right
         have hle : w &1 ≤ w &0 := Nat.le_of_not_gt hlt
         refine ⟨hle, ?_⟩
         have hpair : Nat.pair (w &0) (w &1) = w &0 * w &0 + w &0 + w &1 := by
           simp [Nat.pair, hlt]
-        rwa [hpair] at heq0
+        rw [hpair] at heq0
+        exact heq0.symm
   have hex : Dioph {v : Vector3 ℕ 2 | ∃ x, (x :: v) ∈
-    {w : Vector3 ℕ 3 | Nat.pair (w &0) (w &1) = w &2}} :=
+      {w : Vector3 ℕ 3 | Nat.pair (w &0) (w &1) = w &2}} :=
     Dioph.vec_ex1_dioph 2 hS
   refine (Dioph.diophFn_vec _).2 ?_
   refine Dioph.ext hex fun v => ?_
@@ -586,30 +594,30 @@ private lemma dp_pow_le (a b n : ℕ) (h : b ≤ a) :
     have e1 : a ^ (n + 2) = a * a ^ (n + 1) := by rw [pow_succ']
     have e2 : b ^ (n + 2) = b * b ^ (n + 1) := by rw [pow_succ']
     have s1 : a * a ^ (n + 1)
-      ≤ a * (b ^ (n + 1) + (n + 1) * (a - b) * a ^ n) :=
+        ≤ a * (b ^ (n + 1) + (n + 1) * (a - b) * a ^ n) :=
       Nat.mul_le_mul_left _ ih
     have s1' : a * (b ^ (n + 1) + (n + 1) * (a - b) * a ^ n)
-      = a * b ^ (n + 1) + (n + 1) * (a - b) * a ^ (n + 1) := by
+        = a * b ^ (n + 1) + (n + 1) * (a - b) * a ^ (n + 1) := by
       have hpow : a * a ^ n = a ^ (n + 1) := by rw [pow_succ']
       have : a * ((n + 1) * (a - b) * a ^ n)
-        = (n + 1) * (a - b) * a ^ (n + 1) := by
+          = (n + 1) * (a - b) * a ^ (n + 1) := by
         rw [pow_succ']; ring
       rw [Nat.mul_add, this]
     have s2 : a * b ^ (n + 1)
-      ≤ b ^ (n + 2) + (a - b) * a ^ (n + 1) := by
+        ≤ b ^ (n + 2) + (a - b) * a ^ (n + 1) := by
       have ha : a * b ^ (n + 1)
-        = b * b ^ (n + 1) + (a - b) * b ^ (n + 1) := by
+          = b * b ^ (n + 1) + (a - b) * b ^ (n + 1) := by
         conv_lhs => rw [← hba]
         rw [Nat.add_mul]
       rw [ha, e2]
       exact Nat.add_le_add_left (Nat.mul_le_mul_left _ hb) _
     rw [e1]
     calc a * a ^ (n + 1)
-      ≤ a * (b ^ (n + 1) + (n + 1) * (a - b) * a ^ n) := s1
+        ≤ a * (b ^ (n + 1) + (n + 1) * (a - b) * a ^ n) := s1
       _ = a * b ^ (n + 1) + (n + 1) * (a - b) * a ^ (n + 1) := s1'
       _ ≤ (b ^ (n + 2) + (a - b) * a ^ (n + 1))
-        + (n + 1) * (a - b) * a ^ (n + 1) :=
-        Nat.add_le_add_right s2 _
+          + (n + 1) * (a - b) * a ^ (n + 1) :=
+          Nat.add_le_add_right s2 _
       _ = b ^ (n + 2) + (n + 2) * (a - b) * a ^ (n + 1) := by ring
 
 end MathlibExt.NumberTheory.DPRMWanted
@@ -650,58 +658,59 @@ private lemma dp_factorial_eq (n : ℕ) :
     have hple := dp_pow_le r (r - (m + 1)) m (by omega)
     rw [hrr] at hple
     have hgap : r ^ (m + 1) - F
-      ≤ (m + 1) * (m + 1) * r ^ m := by
+        ≤ (m + 1) * (m + 1) * r ^ m := by
       have hmem : r ^ (m + 1)
-        ≤ (r - (m + 1)) ^ (m + 1) + (m + 1) * (m + 1) * r ^ m := hple
+          ≤ (r - (m + 1)) ^ (m + 1) + (m + 1) * (m + 1) * r ^ m := hple
       have hle : (r - (m + 1)) ^ (m + 1) ≤ F := hFlow
       omega
     have h2sub : 2 * (r - (m + 1)) ≥ r := by omega
     have h2n : 2 ^ (m + 1) * (r - (m + 1)) ^ (m + 1) ≥ r ^ (m + 1) := by
       have hle : (2 * (r - (m + 1))) ^ (m + 1) ≥ r ^ (m + 1) :=
         Nat.pow_le_pow_left h2sub _
-      rwa [mul_pow] at hle
+      rw [mul_pow] at hle
+      exact hle
     have hfact : (m + 1)! ≤ (m + 1) ^ (m + 1) := Nat.factorial_le_pow _
     have hpos2 : 0 < 2 ^ (m + 1) := by positivity
     have hposF : 0 < (m + 1)! := Nat.factorial_pos _
     have hmain : (m + 1)! * (r ^ (m + 1) - F) * 2 ^ (m + 1)
-      < 2 ^ (m + 1) * F := by
+        < 2 ^ (m + 1) * F := by
       have e1 : (m + 1)! * (r ^ (m + 1) - F) * 2 ^ (m + 1)
-        ≤ (m + 1)! * ((m + 1) * (m + 1) * r ^ m) * 2 ^ (m + 1) := by
+          ≤ (m + 1)! * ((m + 1) * (m + 1) * r ^ m) * 2 ^ (m + 1) := by
         apply Nat.mul_le_mul_right
         apply Nat.mul_le_mul_left
         exact hgap
       have e2 : (m + 1)! * ((m + 1) * (m + 1) * r ^ m) * 2 ^ (m + 1)
-        = ((m + 1)! * (m + 1) ^ 2 * 2 ^ (m + 1)) * r ^ m := by
+          = ((m + 1)! * (m + 1) ^ 2 * 2 ^ (m + 1)) * r ^ m := by
         ring
       have e3 : (m + 1)! * (m + 1) ^ 2 * 2 ^ (m + 1)
-        ≤ (2 * (m + 1)) ^ ((m + 1) + 2) := by
+          ≤ (2 * (m + 1)) ^ ((m + 1) + 2) := by
         have hAC : (m + 1)! ≤ (m + 1) ^ (m + 1) * 4 := by
           calc (m + 1)! ≤ (m + 1) ^ (m + 1) := hfact
             _ = (m + 1) ^ (m + 1) * 1 := by ring
             _ ≤ (m + 1) ^ (m + 1) * 4 :=
-              Nat.mul_le_mul_left _ (by norm_num)
+                Nat.mul_le_mul_left _ (by norm_num)
         have hR : (2 * (m + 1)) ^ ((m + 1) + 2)
-          = ((m + 1) ^ (m + 1) * 4) * ((m + 1) ^ 2 * 2 ^ (m + 1)) := by
+            = ((m + 1) ^ (m + 1) * 4) * ((m + 1) ^ 2 * 2 ^ (m + 1)) := by
           rw [mul_pow]
           ring
         have hL : (m + 1)! * (m + 1) ^ 2 * 2 ^ (m + 1)
-          = (m + 1)! * ((m + 1) ^ 2 * 2 ^ (m + 1)) := by ring
+            = (m + 1)! * ((m + 1) ^ 2 * 2 ^ (m + 1)) := by ring
         rw [hL, hR]
         exact Nat.mul_le_mul hAC le_rfl
       have hXr : (m + 1)! * (m + 1) ^ 2 * 2 ^ (m + 1) < r := by
         calc (m + 1)! * (m + 1) ^ 2 * 2 ^ (m + 1)
-          ≤ (2 * (m + 1)) ^ ((m + 1) + 2) := e3
-          _ < r := hX
+              ≤ (2 * (m + 1)) ^ ((m + 1) + 2) := e3
+            _ < r := hX
       have e4 : ((m + 1)! * (m + 1) ^ 2 * 2 ^ (m + 1)) * r ^ m
-        < r * r ^ m :=
+          < r * r ^ m :=
         (Nat.mul_lt_mul_right (pow_pos (by omega : 0 < r) m)).mpr hXr
       have e5 : r * r ^ m = r ^ (m + 1) := by rw [pow_succ']
       have e6 : r ^ (m + 1) ≤ 2 ^ (m + 1) * (r - (m + 1)) ^ (m + 1) := h2n
       have e7 : 2 ^ (m + 1) * (r - (m + 1)) ^ (m + 1)
-        ≤ 2 ^ (m + 1) * F :=
+          ≤ 2 ^ (m + 1) * F :=
         Nat.mul_le_mul_left _ hFlow
       calc (m + 1)! * (r ^ (m + 1) - F) * 2 ^ (m + 1)
-        ≤ (m + 1)! * ((m + 1) * (m + 1) * r ^ m) * 2 ^ (m + 1) := e1
+          ≤ (m + 1)! * ((m + 1) * (m + 1) * r ^ m) * 2 ^ (m + 1) := e1
         _ = ((m + 1)! * (m + 1) ^ 2 * 2 ^ (m + 1)) * r ^ m := e2
         _ < r * r ^ m := e4
         _ = r ^ (m + 1) := e5
@@ -709,9 +718,10 @@ private lemma dp_factorial_eq (n : ℕ) :
         _ ≤ 2 ^ (m + 1) * F := e7
     have hkey : (m + 1)! * (r ^ (m + 1) - F) < F := by
       have hmain' : (m + 1)! * (r ^ (m + 1) - F) * 2 ^ (m + 1)
-        < F * 2 ^ (m + 1) := by
+          < F * 2 ^ (m + 1) := by
         have hrw : 2 ^ (m + 1) * F = F * 2 ^ (m + 1) := by ring
-        rwa [hrw] at hmain
+        rw [hrw] at hmain
+        exact hmain
       exact (Nat.mul_lt_mul_right hpos2).mp hmain'
     have hC : r ^ (m + 1) - F < r.choose (m + 1) := by
       have hmul : (m + 1)! * (r ^ (m + 1) - F) < (m + 1)! * r.choose (m + 1) := by
@@ -724,7 +734,7 @@ private lemma dp_factorial_eq (n : ℕ) :
       have hF2 : F + (r ^ (m + 1) - F) < F + r.choose (m + 1) :=
         Nat.add_lt_add_left hC _
       have hexpand : ((m + 1)! + 1) * r.choose (m + 1)
-        = F + r.choose (m + 1) := by
+          = F + r.choose (m + 1) := by
         rw [hF]; ring
       omega
     have hdiv := Nat.div_eq_of_lt_le hle1 hlt2
@@ -752,23 +762,23 @@ private lemma dp_factorial_diophFn :
   have hr : Dioph.DiophFn (fun v : Vector3 ℕ 1 => (2 * v &0) ^ (v &0 + 2) + 1) :=
     Dioph.add_dioph hrpow hc1
   have hpow1 : Dioph.DiophFn
-    (fun v : Vector3 ℕ 1 => ((2 * v &0) ^ (v &0 + 2) + 1) ^ v &0) :=
+      (fun v : Vector3 ℕ 1 => ((2 * v &0) ^ (v &0 + 2) + 1) ^ v &0) :=
     Dioph.pow_dioph hr hn
   have hchoose : Dioph.DiophFn
-    (fun v : Vector3 ℕ 1 => ((2 * v &0) ^ (v &0 + 2) + 1).choose (v &0)) :=
+      (fun v : Vector3 ℕ 1 => ((2 * v &0) ^ (v &0 + 2) + 1).choose (v &0)) :=
     Dioph.diophFn_comp dp_choose_diophFn
       [(fun v : Vector3 ℕ 1 => (2 * v &0) ^ (v &0 + 2) + 1),
-        (fun v : Vector3 ℕ 1 => v &0)]
+       (fun v : Vector3 ℕ 1 => v &0)]
       ⟨hr, hn⟩
   have hdiv : Dioph.DiophFn
-    (fun v : Vector3 ℕ 1 =>
-      ((2 * v &0) ^ (v &0 + 2) + 1) ^ v &0
-        / ((2 * v &0) ^ (v &0 + 2) + 1).choose (v &0)) :=
+      (fun v : Vector3 ℕ 1 =>
+        ((2 * v &0) ^ (v &0 + 2) + 1) ^ v &0
+          / ((2 * v &0) ^ (v &0 + 2) + 1).choose (v &0)) :=
     Dioph.div_dioph hpow1 hchoose
   have hfun : (fun v : Vector3 ℕ 1 => (v &0)!)
-    = (fun v : Vector3 ℕ 1 =>
-      ((2 * v &0) ^ (v &0 + 2) + 1) ^ v &0
-        / ((2 * v &0) ^ (v &0 + 2) + 1).choose (v &0)) := by
+      = (fun v : Vector3 ℕ 1 =>
+        ((2 * v &0) ^ (v &0 + 2) + 1) ^ v &0
+          / ((2 * v &0) ^ (v &0 + 2) + 1).choose (v &0)) := by
     funext v
     exact dp_factorial_eq (v &0)
   exact hfun ▸ hdiv
@@ -789,7 +799,7 @@ private lemma dp_descFactorial_diophFn :
     Dioph.diophFn_comp dp_factorial_diophFn [(fun v : Vector3 ℕ 2 => v &1)] h1
   have hmul := Dioph.mul_dioph hfact dp_choose_diophFn
   have hfun : (fun v : Vector3 ℕ 2 => (v &0).descFactorial (v &1))
-    = (fun v : Vector3 ℕ 2 => (v &1)! * (v &0).choose (v &1)) := by
+      = (fun v : Vector3 ℕ 2 => (v &1)! * (v &0).choose (v &1)) := by
     funext v
     exact Nat.descFactorial_eq_factorial_mul_choose (v &0) (v &1)
   exact hfun ▸ hmul
@@ -818,11 +828,11 @@ private lemma dp_beta_diophFn :
   have hden : Dioph.DiophFn (fun v : Vector3 ℕ 2 => (v &1 + 1) * (Nat.unpair (v &0)).2 + 1) :=
     Dioph.add_dioph (Dioph.mul_dioph hi1 hu2) hc1
   have hmod : Dioph.DiophFn
-    (fun v : Vector3 ℕ 2 => (Nat.unpair (v &0)).1 % ((v &1 + 1) * (Nat.unpair (v &0)).2 + 1)) :=
+      (fun v : Vector3 ℕ 2 => (Nat.unpair (v &0)).1 % ((v &1 + 1) * (Nat.unpair (v &0)).2 + 1)) :=
     Dioph.mod_dioph hu1 hden
   have hfun : (fun v : Vector3 ℕ 2 => Nat.beta (v &0) (v &1))
-    = (fun v : Vector3 ℕ 2 =>
-      (Nat.unpair (v &0)).1 % ((v &1 + 1) * (Nat.unpair (v &0)).2 + 1)) := by
+      = (fun v : Vector3 ℕ 2 =>
+        (Nat.unpair (v &0)).1 % ((v &1 + 1) * (Nat.unpair (v &0)).2 + 1)) := by
     funext v
     simp [Nat.beta]
   exact hfun ▸ hmod
@@ -879,10 +889,10 @@ private lemma dp_prod_lt (x t : ℕ) (ht : 1 ≤ t) :
   unfold dpProdN
   calc dpProdP x t ≤ (1 + x * t) ^ x := hle
     _ < t * (1 + x * t) ^ x + 1 := by
-      have : (1 + x * t) ^ x ≤ t * (1 + x * t) ^ x := by
-        calc (1 + x * t) ^ x = 1 * (1 + x * t) ^ x := by ring
-          _ ≤ t * (1 + x * t) ^ x := Nat.mul_le_mul_right _ ht
-      omega
+        have : (1 + x * t) ^ x ≤ t * (1 + x * t) ^ x := by
+          calc (1 + x * t) ^ x = 1 * (1 + x * t) ^ x := by ring
+            _ ≤ t * (1 + x * t) ^ x := Nat.mul_le_mul_right _ ht
+        omega
 
 end MathlibExt.NumberTheory.DPRMWanted
 
@@ -898,7 +908,8 @@ private lemma dp_modEq_prod (N x : ℕ) (f g : ℕ → ℕ)
   induction x with
   | zero => rfl
   | succ n ih =>
-    rwa [Finset.prod_range_succ, Finset.prod_range_succ]
+    rw [Finset.prod_range_succ, Finset.prod_range_succ]
+    exact Nat.ModEq.mul
       (ih fun j hj => h j (Finset.mem_range.mpr (lt_of_lt_of_le
         (Finset.mem_range.mp hj) (Nat.le_succ n))))
       (h n (Finset.mem_range.mpr (Nat.lt_succ_self n)))
@@ -921,7 +932,7 @@ private lemma dp_prod_key (x t q : ℕ)
   have htx : t ^ x = ∏ _j ∈ Finset.range x, t := by
     rw [Finset.prod_const, Finset.card_range]
   have hLHS : t ^ x * ((x)! * (q + x).choose x)
-    = ∏ j ∈ Finset.range x, (t * q + (j + 1) * t) := by
+      = ∏ j ∈ Finset.range x, (t * q + (j + 1) * t) := by
     rw [hasc, hprod, htx, ← Finset.prod_mul_distrib]
     apply Finset.prod_congr rfl
     intro j _
@@ -984,12 +995,12 @@ private lemma dp_prod_iff (x t z : ℕ) (ht : 1 ≤ t) :
     have hmod : t * q ≡ 1 [MOD dpProdN x t] := by
       simp only [Nat.ModEq, hq, Nat.mod_eq_of_lt hN1]
     have hkey : (t ^ x * ((x)! * (q + x).choose x)) % dpProdN x t
-      = dpProdP x t % dpProdN x t :=
+        = dpProdP x t % dpProdN x t :=
       dp_prod_key x t q hmod
     exact ⟨q, hmod, by rw [hz, hkey, hP]⟩
   · rintro ⟨q, hq, hz⟩
     have hkey : (t ^ x * ((x)! * (q + x).choose x)) % dpProdN x t
-      = dpProdP x t % dpProdN x t :=
+        = dpProdP x t % dpProdN x t :=
       dp_prod_key x t q hq
     rw [hz, hkey, hP]
 
@@ -1017,10 +1028,10 @@ private lemma dp_prodN_diophFn :
   have htpw : Dioph.DiophFn (fun w : Vector3 ℕ 4 => w &3 * (1 + w &2 * w &3) ^ w &2) :=
     Dioph.mul_dioph ht hpw
   have hN : Dioph.DiophFn
-    (fun w : Vector3 ℕ 4 => w &3 * (1 + w &2 * w &3) ^ w &2 + 1) :=
+      (fun w : Vector3 ℕ 4 => w &3 * (1 + w &2 * w &3) ^ w &2 + 1) :=
     Dioph.add_dioph htpw hc1
   have hfun : (fun w : Vector3 ℕ 4 => dpProdN (w &2) (w &3))
-    = (fun w : Vector3 ℕ 4 => w &3 * (1 + w &2 * w &3) ^ w &2 + 1) := by
+      = (fun w : Vector3 ℕ 4 => w &3 * (1 + w &2 * w &3) ^ w &2 + 1) := by
     funext w
     rfl
   exact hfun ▸ hN
@@ -1050,7 +1061,7 @@ private lemma dp_prodRHS_diophFn :
   have hqx : Dioph.DiophFn (fun w : Vector3 ℕ 4 => w &0 + w &2) :=
     Dioph.add_dioph hq hx
   have hchoose : Dioph.DiophFn
-    (fun w : Vector3 ℕ 4 => (w &0 + w &2).choose (w &2)) :=
+      (fun w : Vector3 ℕ 4 => (w &0 + w &2).choose (w &2)) :=
     Dioph.diophFn_comp dp_choose_diophFn
       [(fun w : Vector3 ℕ 4 => w &0 + w &2), (fun w : Vector3 ℕ 4 => w &2)]
       ⟨hqx, hx⟩
@@ -1077,17 +1088,17 @@ private lemma dp_prod_dioph :
   have h1t : Dioph {w : Vector3 ℕ 4 | 1 ≤ w &3} :=
     Dioph.le_dioph (Dioph.const_dioph 1) ht
   have hmod : Dioph {w : Vector3 ℕ 4 |
-    w &3 * w &0 ≡ 1 [MOD dpProdN (w &2) (w &3)]} :=
+      w &3 * w &0 ≡ 1 [MOD dpProdN (w &2) (w &3)]} :=
     Dioph.modEq_dioph (Dioph.mul_dioph ht hq) (Dioph.const_dioph 1)
       dp_prodN_diophFn
   have heq : Dioph {w : Vector3 ℕ 4 | w &1 =
-    (((w &3) ^ (w &2) * ((w &2)! * ((w &0 + w &2).choose (w &2))))
-      % dpProdN (w &2) (w &3))} :=
+      (((w &3) ^ (w &2) * ((w &2)! * ((w &0 + w &2).choose (w &2))))
+        % dpProdN (w &2) (w &3))} :=
     Dioph.eq_dioph hz dp_prodRHS_diophFn
   have hS4 : Dioph {w : Vector3 ℕ 4 | 1 ≤ w &3 ∧
-    w &3 * w &0 ≡ 1 [MOD dpProdN (w &2) (w &3)] ∧ w &1 =
-    (((w &3) ^ (w &2) * ((w &2)! * ((w &0 + w &2).choose (w &2))))
-      % dpProdN (w &2) (w &3))} :=
+      w &3 * w &0 ≡ 1 [MOD dpProdN (w &2) (w &3)] ∧ w &1 =
+      (((w &3) ^ (w &2) * ((w &2)! * ((w &0 + w &2).choose (w &2))))
+        % dpProdN (w &2) (w &3))} :=
     Dioph.ext ((h1t.inter hmod).inter heq) fun w => by
       simp only [Set.mem_inter_iff]
       constructor
@@ -1141,15 +1152,16 @@ private lemma dp_prec_fwd (f g : ℕ →. ℕ) (a : ℕ) :
   | succ n ih =>
     intro y hy
     have hyb : y ∈ (Nat.rec (motive := fun _ => Part ℕ) (f a)
-      (fun k (IH : Part ℕ) => do
-        let i ← IH; g (Nat.pair a (Nat.pair k i))) n).bind
-      (fun i => g (Nat.pair a (Nat.pair n i))) := hy
+        (fun k (IH : Part ℕ) => do
+          let i ← IH; g (Nat.pair a (Nat.pair k i))) n).bind
+        (fun i => g (Nat.pair a (Nat.pair n i))) := hy
     obtain ⟨i, hii, hgi⟩ := Part.mem_bind_iff.mp hyb
     obtain ⟨s, hs0, hsS, hsn⟩ := ih i hii
     refine ⟨fun k => if k = n + 1 then y else s k, ?_, ?_, ?_⟩
     · have e0 : (fun k => if k = n + 1 then y else s k) 0 = s 0 :=
-      ite_eq_right (by omega)
-      rwa [e0]
+        ite_eq_right (by omega)
+      rw [e0]
+      exact hs0
     · intro k hk
       by_cases hkk : k + 1 = n + 1
       · have hkn : k = n := by omega
@@ -1157,9 +1169,10 @@ private lemma dp_prec_fwd (f g : ℕ →. ℕ) (a : ℕ) :
           ite_eq_left hkk
         have e2 : (fun k => if k = n + 1 then y else s k) k = s k :=
           ite_eq_right (by omega)
-        rwa [e1, e2, hkn, hsn]
+        rw [e1, e2, hkn, hsn]
+        exact hgi
       · have e1 : (fun k => if k = n + 1 then y else s k) (k + 1) = s (k + 1) :=
-        ite_eq_right hkk
+          ite_eq_right hkk
         have e2 : (fun k => if k = n + 1 then y else s k) k = s k :=
           ite_eq_right (by omega)
         rw [e1, e2]
@@ -1189,12 +1202,13 @@ private lemma dp_prec_iff (f g : ℕ →. ℕ) (a n y : ℕ) :
     have hlen : (List.ofFn (fun k : Fin (n + 1) => s k)).length = n + 1 :=
       List.length_ofFn
     have digit : ∀ (i : ℕ)
-      (h : i < (List.ofFn (fun k : Fin (n + 1) => s k)).length),
-      (List.ofFn (fun k : Fin (n + 1) => s k))[i] = s i :=
+        (h : i < (List.ofFn (fun k : Fin (n + 1) => s k)).length),
+        (List.ofFn (fun k : Fin (n + 1) => s k))[i] = s i :=
       fun i h => List.getElem_ofFn h
     refine ⟨c, ?_, ?_, ?_⟩
     · have hb := hc 0 (by rw [hlen]; omega)
-      rwa [hb, digit 0 (by rw [hlen]; omega)]
+      rw [hb, digit 0 (by rw [hlen]; omega)]
+      exact hs0
     · intro k hk
       have hb1 := hc (k + 1) (by rw [hlen]; omega)
       have hb0 : Nat.beta c k = s k := by
@@ -1253,14 +1267,15 @@ private lemma dp_list_key (S : Set ℕ) (m : ℕ) (p : Poly (Unit ⊕ Fin m))
     obtain ⟨t, ht⟩ := (hp n).mp hn
     have hFG : F (Sum.elim (fun _ => n) t) = G (Sum.elim (fun _ => n) t) := by
       have h0 : (F (Sum.elim (fun _ => n) t) : ℤ) -
-        (G (Sum.elim (fun _ => n) t) : ℤ) = 0 := by
-        rwa [← hpFG]
+          (G (Sum.elim (fun _ => n) t) : ℤ) = 0 := by
+        rw [← hpFG]
+        exact ht
       omega
     refine ⟨List.ofFn t, ?_⟩
     have hval : (fun (i : Unit ⊕ Fin m) => match i with
-      | Sum.inl _ => (n, List.ofFn t).1
-      | Sum.inr j => (n, List.ofFn t).2.getD (j : ℕ) 0) =
-      Sum.elim (fun _ => n) t := by
+        | Sum.inl _ => (n, List.ofFn t).1
+        | Sum.inr j => (n, List.ofFn t).2.getD (j : ℕ) 0) =
+        Sum.elim (fun _ => n) t := by
       funext i
       cases i with
       | inl _ => rfl
@@ -1268,21 +1283,24 @@ private lemma dp_list_key (S : Set ℕ) (m : ℕ) (p : Poly (Unit ⊕ Fin m))
         change List.getD (List.ofFn t) (j : ℕ) 0 = t j
         have hlen : (List.ofFn t).length = m := List.length_ofFn
         have hn : (j : ℕ) < (List.ofFn t).length := by
-          rwa [hlen]
+          rw [hlen]
+          exact j.isLt
         rw [List.getD_eq_getElem _ _ hn]
         exact List.getElem_ofFn hn
-    rwa [hval]
+    rw [hval]
+    exact hFG
   · rintro ⟨l, hl⟩
     have hFG : F (Sum.elim (fun _ => n) (fun (j : Fin m) => l.getD (j : ℕ) 0)) =
-      G (Sum.elim (fun _ => n) (fun (j : Fin m) => l.getD (j : ℕ) 0)) := by
+        G (Sum.elim (fun _ => n) (fun (j : Fin m) => l.getD (j : ℕ) 0)) := by
       have hval : (fun (i : Unit ⊕ Fin m) => match i with
-        | Sum.inl _ => (n, l).1 | Sum.inr j => (n, l).2.getD (j : ℕ) 0) =
-        Sum.elim (fun _ => n) (fun (j : Fin m) => l.getD (j : ℕ) 0) := by
+          | Sum.inl _ => (n, l).1 | Sum.inr j => (n, l).2.getD (j : ℕ) 0) =
+          Sum.elim (fun _ => n) (fun (j : Fin m) => l.getD (j : ℕ) 0) := by
         funext i
         cases i with
         | inl _ => rfl
         | inr _ => rfl
-      rwa [hval] at hl
+      rw [hval] at hl
+      exact hl
     have hz : p (Sum.elim (fun _ => n) (fun (j : Fin m) => l.getD (j : ℕ) 0)) = 0 := by
       rw [hpFG]
       rw [hFG]
@@ -1305,7 +1323,7 @@ private lemma dp_bq_bound {α : Type} (m : ℕ) (p : Poly (Option (Option α) �
   (hk : k ≤ v none) (hy : ∀ i, y i ≤ u) :
   (p (Sum.elim (Option.elim' k v) y)).natAbs < dpBQ_Q m F G v u := by
   have hle : ∀ i, Sum.elim (Option.elim' k v) y i ≤
-    Sum.elim (Option.elim' (v none) v) (fun _ => u) i := by
+      Sum.elim (Option.elim' (v none) v) (fun _ => u) i := by
     intro i
     cases i with
     | inl o =>
@@ -1481,7 +1499,7 @@ private lemma dp_bq_factor_dvd {ℓ n : ℕ} (hℓ : Nat.Prime ℓ) :
   | succ u ih =>
     intro hdiv
     simp only [Nat.descFactorial_succ] at hdiv
-    obtain h | h := (Nat.Prime.dvd_mul hℓ).mp hdiv
+    rcases (Nat.Prime.dvd_mul hℓ).mp hdiv with h | h
     · exact ⟨u + 1, le_rfl, h⟩
     · obtain ⟨j, hj, hjd⟩ := ih h
       exact ⟨j, by omega, hjd⟩
@@ -1497,7 +1515,8 @@ namespace MathlibExt.NumberTheory.DPRMWanted
 private lemma dp_bq_natModEq_int {a b n : ℕ} (h : a ≡ b [MOD n]) :
   (a : ℤ) ≡ (b : ℤ) [ZMOD (n : ℤ)] := by
   rw [Int.modEq_iff_dvd]
-  rwa [Nat.modEq_iff_dvd] at h
+  rw [Nat.modEq_iff_dvd] at h
+  exact h
 
 end MathlibExt.NumberTheory.DPRMWanted
 
@@ -1520,11 +1539,12 @@ private lemma dp_dioph_fin_forall {V : Type} :
       simp
     have hempty : {w : V → ℕ | ∀ i, w ∈ S i} = Set.univ :=
       Set.eq_univ_of_forall fun w i => Fin.elim0 i
-    rwa [hempty]
+    rw [hempty]
+    exact huniv
   | succ m ih =>
     intro S hS
     have hsplit : {w : V → ℕ | ∀ i, w ∈ S i}
-      = S 0 ∩ {w | ∀ j : Fin m, w ∈ S j.succ} := by
+        = S 0 ∩ {w | ∀ j : Fin m, w ∈ S j.succ} := by
       ext w
       simp only [Set.mem_inter_iff]
       exact Fin.forall_fin_succ
@@ -1555,9 +1575,9 @@ private lemma dp_bq_iff {α : Type} (m : ℕ) (p : Poly (Option (Option α) ⊕ 
   constructor
   · intro H
     have Hfin : ∀ k : Fin x, ∃ y : Fin m → ℕ,
-      p (Sum.elim (Option.elim' (k : ℕ) v) y) = 0 := fun k => H _ k.isLt
+        p (Sum.elim (Option.elim' (k : ℕ) v) y) = 0 := fun k => H _ k.isLt
     have yex : ∀ k : ℕ, ∃ y0 : Fin m → ℕ,
-      k < x → p (Sum.elim (Option.elim' k v) y0) = 0 := by
+        k < x → p (Sum.elim (Option.elim' k v) y0) = 0 := by
       intro k
       by_cases hk : k < x
       · obtain ⟨y0, hy0⟩ := Hfin ⟨k, hk⟩
@@ -1568,7 +1588,7 @@ private lemma dp_bq_iff {α : Type} (m : ℕ) (p : Poly (Option (Option α) ⊕ 
       refine ⟨Finset.univ.sup (fun ki : Fin x × Fin m => yk ↑ki.1 ki.2), ?_⟩
       intro k hk i
       have hmem : ((⟨k, hk⟩ : Fin x), i) ∈
-        (Finset.univ : Finset (Fin x × Fin m)) := Finset.mem_univ _
+          (Finset.univ : Finset (Fin x × Fin m)) := Finset.mem_univ _
       have hle := Finset.le_sup (f := fun ki : Fin x × Fin m => yk ↑ki.1 ki.2) hmem
       simpa using hle
     obtain ⟨u, hub⟩ := hub
@@ -1577,9 +1597,9 @@ private lemma dp_bq_iff {α : Type} (m : ℕ) (p : Poly (Option (Option α) ⊕ 
     have ht1 : 1 ≤ t := by omega
     obtain ⟨c, hc⟩ := dp_bq_prod_form x t
     have hcop_all : ∀ j < x, ∀ k < x, j ≠ k →
-      Nat.Coprime (1 + (j + 1) * t) (1 + (k + 1) * t) := by
+        Nat.Coprime (1 + (j + 1) * t) (1 + (k + 1) * t) := by
       intro j hj k hk hjk
-      obtain h | h := lt_or_gt_of_ne hjk
+      rcases lt_or_gt_of_ne hjk with h | h
       · exact dp_bq_coprime m F G v u j k h hk t ht
       · exact (dp_bq_coprime m F G v u k j h hj t ht).symm
     by_cases hx0 : x = 0
@@ -1612,10 +1632,10 @@ private lemma dp_bq_iff {α : Type} (m : ℕ) (p : Poly (Option (Option α) ⊕ 
           intro k _
           omega
         have pp : Set.Pairwise (Finset.range x)
-          (Nat.Coprime on fun k => 1 + (k + 1) * t) := by
+            (Nat.Coprime on fun k => 1 + (k + 1) * t) := by
           intro j hj k hk hjk
           rw [Finset.mem_coe, Finset.mem_range] at hj hk
-          obtain h | h := lt_or_gt_of_ne hjk
+          rcases lt_or_gt_of_ne hjk with h | h
           · exact dp_bq_coprime m F G v u j k h hk t ht
           · exact (dp_bq_coprime m F G v u k j h hj t ht).symm
         obtain ⟨ai, hai⟩ :=
@@ -1641,39 +1661,40 @@ private lemma dp_bq_iff {α : Type} (m : ℕ) (p : Poly (Option (Option α) ⊕ 
             (Nat.modEq_iff_dvd' hle).mp hmod
           exact dvd_trans hdvd (dp_bq_descFactorial_dvd (a i) u (yk k i) (hub k hk i))
       · have hdivnat : ∀ k < x, (1 + (k + 1) * t) ∣
-        (p (Sum.elim (Option.elim' (c - 1) v) a)).natAbs := by
-        intro k hk
-        have hM : (1 + (k + 1) * t) ∣ 1 + c * t := by
-          rw [hc.symm]
-          exact Finset.dvd_prod_of_mem _ (Finset.mem_range.mpr hk)
-        have hcc : c ≡ k + 1 [MOD 1 + (k + 1) * t] := dp_bq_cong k c t hM
-        have hek : (((c - 1 : ℕ) : ℤ)) ≡ ((k : ℕ) : ℤ)
-          [ZMOD ((1 + (k + 1) * t : ℕ) : ℤ)] := by
-          rw [Int.modEq_iff_dvd]
-          rw [Nat.modEq_iff_dvd] at hcc
-          have hcc' : (k : ℤ) - ((c - 1 : ℕ) : ℤ)
-            = ((k + 1 : ℕ) : ℤ) - (c : ℤ) := by omega
-          rwa [hcc']
-        have hpoint : ∀ i : Option (Option α) ⊕ Fin m,
-          (((Sum.elim (Option.elim' (c - 1) v) a) i : ℕ) : ℤ) ≡
-          (((Sum.elim (Option.elim' k v) (yk k)) i : ℕ) : ℤ)
-          [ZMOD ((1 + (k + 1) * t : ℕ) : ℤ)] := by
-          intro i
-          cases i with
-          | inl o =>
-            cases o with
-            | none => exact hek
-            | some _ => exact Int.ModEq.refl _
-          | inr j => exact dp_bq_natModEq_int (ha j k hk)
-        have hcong : p (Sum.elim (Option.elim' (c - 1) v) a) ≡
-          p (Sum.elim (Option.elim' k v) (yk k))
-          [ZMOD ((1 + (k + 1) * t : ℕ) : ℤ)] :=
-          dp_isPoly_modEq p.isPoly hpoint
-        have hy0 := hyk k hk
-        rw [hy0, Int.modEq_zero_iff_dvd] at hcong
-        exact (Int.natCast_dvd).mp hcong
+            (p (Sum.elim (Option.elim' (c - 1) v) a)).natAbs := by
+          intro k hk
+          have hM : (1 + (k + 1) * t) ∣ 1 + c * t := by
+            rw [hc.symm]
+            exact Finset.dvd_prod_of_mem _ (Finset.mem_range.mpr hk)
+          have hcc : c ≡ k + 1 [MOD 1 + (k + 1) * t] := dp_bq_cong k c t hM
+          have hek : (((c - 1 : ℕ) : ℤ)) ≡ ((k : ℕ) : ℤ)
+              [ZMOD ((1 + (k + 1) * t : ℕ) : ℤ)] := by
+            rw [Int.modEq_iff_dvd]
+            rw [Nat.modEq_iff_dvd] at hcc
+            have hcc' : (k : ℤ) - ((c - 1 : ℕ) : ℤ)
+                = ((k + 1 : ℕ) : ℤ) - (c : ℤ) := by omega
+            rwa [hcc']
+          have hpoint : ∀ i : Option (Option α) ⊕ Fin m,
+              (((Sum.elim (Option.elim' (c - 1) v) a) i : ℕ) : ℤ) ≡
+              (((Sum.elim (Option.elim' k v) (yk k)) i : ℕ) : ℤ)
+              [ZMOD ((1 + (k + 1) * t : ℕ) : ℤ)] := by
+            intro i
+            cases i with
+            | inl o =>
+              cases o with
+              | none => exact hek
+              | some _ => exact Int.ModEq.refl _
+            | inr j => exact dp_bq_natModEq_int (ha j k hk)
+          have hcong : p (Sum.elim (Option.elim' (c - 1) v) a) ≡
+              p (Sum.elim (Option.elim' k v) (yk k))
+              [ZMOD ((1 + (k + 1) * t : ℕ) : ℤ)] :=
+            dp_isPoly_modEq p.isPoly hpoint
+          have hy0 := hyk k hk
+          rw [hy0, Int.modEq_zero_iff_dvd] at hcong
+          exact (Int.natCast_dvd).mp hcong
         have hprod := dp_bq_prod_dvd _ _ x hdivnat hcop_all
-        rwa [hc] at hprod
+        rw [hc] at hprod
+        exact hprod
   · rintro ⟨u, c, e, a, hi, hii, hiii, hiv⟩
     intro k hk
     have hx1 : x ≠ 0 := by omega
@@ -1713,8 +1734,8 @@ private lemma dp_bq_iff {α : Type} (m : ℕ) (p : Poly (Option (Option α) ⊕ 
     have hℓw0 : ((ℓ : ℕ) : ℤ) ∣ p (Sum.elim (Option.elim' e v) a) :=
       (Int.natCast_dvd).mpr (dvd_trans hℓct hiv)
     have hpoint : ∀ i : Option (Option α) ⊕ Fin m,
-      (((Sum.elim (Option.elim' k v) y) i : ℕ) : ℤ) ≡
-      (((Sum.elim (Option.elim' e v) a) i : ℕ) : ℤ) [ZMOD ((ℓ : ℕ) : ℤ)] := by
+        (((Sum.elim (Option.elim' k v) y) i : ℕ) : ℤ) ≡
+        (((Sum.elim (Option.elim' e v) a) i : ℕ) : ℤ) [ZMOD ((ℓ : ℕ) : ℤ)] := by
       intro i
       cases i with
       | inl o =>
@@ -1723,7 +1744,7 @@ private lemma dp_bq_iff {α : Type} (m : ℕ) (p : Poly (Option (Option α) ⊕ 
         | some _ => exact Int.ModEq.refl _
       | inr j => exact dp_bq_natModEq_int ((hy j).2.symm)
     have hcong : p (Sum.elim (Option.elim' k v) y) ≡
-      p (Sum.elim (Option.elim' e v) a) [ZMOD ((ℓ : ℕ) : ℤ)] :=
+        p (Sum.elim (Option.elim' e v) a) [ZMOD ((ℓ : ℕ) : ℤ)] :=
       dp_isPoly_modEq p.isPoly hpoint
     have hdvdint : ((ℓ : ℕ) : ℤ) ∣ p (Sum.elim (Option.elim' k v) y) := by
       have h0 : p (Sum.elim (Option.elim' e v) a) ≡ 0 [ZMOD ((ℓ : ℕ) : ℤ)] :=
@@ -1735,7 +1756,7 @@ private lemma dp_bq_iff {α : Type} (m : ℕ) (p : Poly (Option (Option α) ⊕ 
     have habs : |p (Sum.elim (Option.elim' k v) y)| < ((ℓ : ℕ) : ℤ) := by
       rw [← Int.natCast_natAbs]
       have h1 : (((p (Sum.elim (Option.elim' k v) y)).natAbs : ℕ) : ℤ) <
-        ((dpBQ_Q m F G v u) : ℤ) := by exact_mod_cast hbound
+          ((dpBQ_Q m F G v u) : ℤ) := by exact_mod_cast hbound
       have h2 : ((dpBQ_Q m F G v u) : ℤ) < ((ℓ : ℕ) : ℤ) := by exact_mod_cast hQℓ
       omega
     have hzero := Int.eq_zero_of_abs_lt_dvd hdvdint habs
@@ -1755,34 +1776,34 @@ private lemma dp_bq_dioph {α : Type} (S : Set (Option (Option α) → ℕ))
   obtain ⟨m, p, hp0⟩ := dp_fin_dummies hS
   obtain ⟨F, G, hF, hG, hpFG⟩ := dp_isPoly_split p.isPoly
   have hp : ∀ w : Option (Option α) → ℕ,
-    w ∈ S ↔ ∃ t : Fin m → ℕ, p (Sum.elim w t) = 0 := hp0
+      w ∈ S ↔ ∃ t : Fin m → ℕ, p (Sum.elim w t) = 0 := hp0
   have hrw : ∀ v : Option α → ℕ, (∀ k < v none, Option.elim' k v ∈ S) ↔
-    (∃ u c e : ℕ, ∃ a : Fin m → ℕ,
-      (1 + c * (dpBQ_Q m F G v u)!
-        = ∏ j ∈ Finset.range (v none), (1 + (j + 1) * (dpBQ_Q m F G v u)!))
-      ∧ (v none = 0 ∨ e + 1 = c)
-      ∧ (∀ i, (1 + c * (dpBQ_Q m F G v u)!) ∣ (a i).descFactorial (u + 1))
-      ∧ (1 + c * (dpBQ_Q m F G v u)!)
-        ∣ (p (Sum.elim (Option.elim' e v) a)).natAbs) := by
+      (∃ u c e : ℕ, ∃ a : Fin m → ℕ,
+        (1 + c * (dpBQ_Q m F G v u)!
+          = ∏ j ∈ Finset.range (v none), (1 + (j + 1) * (dpBQ_Q m F G v u)!))
+        ∧ (v none = 0 ∨ e + 1 = c)
+        ∧ (∀ i, (1 + c * (dpBQ_Q m F G v u)!) ∣ (a i).descFactorial (u + 1))
+        ∧ (1 + c * (dpBQ_Q m F G v u)!)
+          ∣ (p (Sum.elim (Option.elim' e v) a)).natAbs) := by
     intro v
     simp only [hp]
     exact dp_bq_iff m p F G hF hG hpFG v
   refine Dioph.ext ?_ (fun v => (hrw v).symm)
   have hxW : Dioph.DiophFn
-    (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ => w (Sum.inl none)) :=
+      (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ => w (Sum.inl none)) :=
     Dioph.proj_dioph _
   have hcW : Dioph.DiophFn
-    (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ => w (Sum.inr (Sum.inl 1))) :=
+      (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ => w (Sum.inr (Sum.inl 1))) :=
     Dioph.proj_dioph _
   have huW : Dioph.DiophFn
-    (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ => w (Sum.inr (Sum.inl 0))) :=
+      (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ => w (Sum.inr (Sum.inl 0))) :=
     Dioph.proj_dioph _
   have heW : Dioph.DiophFn
-    (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ => w (Sum.inr (Sum.inl 2))) :=
+      (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ => w (Sum.inr (Sum.inl 2))) :=
     Dioph.proj_dioph _
   have hσQ : ∀ w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ, w ∘ dpBQ_σQ m =
-    Sum.elim (Option.elim' (w (Sum.inl none)) (fun o => w (Sum.inl o)))
-      (fun _ => w (Sum.inr (Sum.inl 0))) := by
+      Sum.elim (Option.elim' (w (Sum.inl none)) (fun o => w (Sum.inl o)))
+        (fun _ => w (Sum.inr (Sum.inl 0))) := by
     intro w
     funext i
     cases i with
@@ -1792,8 +1813,8 @@ private lemma dp_bq_dioph {α : Type} (S : Set (Option (Option α) → ℕ))
       | some _ => rfl
     | inr _ => rfl
   have hσP : ∀ w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ, w ∘ dpBQ_σP m =
-    Sum.elim (Option.elim' (w (Sum.inr (Sum.inl 2))) (fun o => w (Sum.inl o)))
-      (fun j => w (Sum.inr (Sum.inr j))) := by
+      Sum.elim (Option.elim' (w (Sum.inr (Sum.inl 2))) (fun o => w (Sum.inl o)))
+        (fun j => w (Sum.inr (Sum.inr j))) := by
     intro w
     funext i
     cases i with
@@ -1803,64 +1824,64 @@ private lemma dp_bq_dioph {α : Type} (S : Set (Option (Option α) → ℕ))
       | some _ => rfl
     | inr _ => rfl
   have hFQ' : Dioph.DiophFn (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
-    F (Sum.elim (Option.elim' (w (Sum.inl none)) (fun o => w (Sum.inl o)))
-      (fun _ => w (Sum.inr (Sum.inl 0))))) := by
+      F (Sum.elim (Option.elim' (w (Sum.inl none)) (fun o => w (Sum.inl o)))
+        (fun _ => w (Sum.inr (Sum.inl 0))))) := by
     simpa only [hσQ] using Dioph.reindex_diophFn (dpBQ_σQ m)
       (dpNatPoly_diophFn hF)
   have hGQ' : Dioph.DiophFn (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
-    G (Sum.elim (Option.elim' (w (Sum.inl none)) (fun o => w (Sum.inl o)))
-      (fun _ => w (Sum.inr (Sum.inl 0))))) := by
+      G (Sum.elim (Option.elim' (w (Sum.inl none)) (fun o => w (Sum.inl o)))
+        (fun _ => w (Sum.inr (Sum.inl 0))))) := by
     simpa only [hσQ] using Dioph.reindex_diophFn (dpBQ_σQ m)
       (dpNatPoly_diophFn hG)
   have hQ : Dioph.DiophFn (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
-    dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0)))) :=
+      dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0)))) :=
     Dioph.add_dioph (Dioph.add_dioph (Dioph.add_dioph (Dioph.add_dioph hFQ' hGQ')
       hxW) huW) (Dioph.const_dioph 1)
   have htW : Dioph.DiophFn (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
-    (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!) :=
+      (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!) :=
     Dioph.diophFn_comp dp_factorial_diophFn
       [fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
         dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0)))] hQ
   have h1ct : Dioph.DiophFn (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
-    1 + w (Sum.inr (Sum.inl 1)) *
-      (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!) :=
+      1 + w (Sum.inr (Sum.inl 1)) *
+        (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!) :=
     Dioph.add_dioph (Dioph.const_dioph 1) (Dioph.mul_dioph hcW htW)
   have hvec : VectorAllP Dioph.DiophFn
-    [fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
-      1 + w (Sum.inr (Sum.inl 1)) *
-        (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!,
-      fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ => w (Sum.inl none),
-      fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
-        (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!] := by
+      [fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
+          1 + w (Sum.inr (Sum.inl 1)) *
+            (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!,
+        fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ => w (Sum.inl none),
+        fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
+          (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!] := by
     simp only [vectorAllP_cons, vectorAllP_nil, and_true]
     exact ⟨h1ct, hxW, htW⟩
   have Si : Dioph {w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ |
-    1 ≤ (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!
-    ∧ 1 + w (Sum.inr (Sum.inl 1)) *
-      (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!
-      = dpProdP (w (Sum.inl none))
-        ((dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!)} := by
+      1 ≤ (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!
+      ∧ 1 + w (Sum.inr (Sum.inl 1)) *
+          (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!
+        = dpProdP (w (Sum.inl none))
+          ((dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!)} := by
     refine Dioph.ext (Dioph.dioph_comp dp_prod_dioph
       [fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
-        1 + w (Sum.inr (Sum.inl 1)) *
-          (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!,
+          1 + w (Sum.inr (Sum.inl 1)) *
+            (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!,
         fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ => w (Sum.inl none),
         fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
           (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!]
       hvec) fun w => Iff.rfl
   have hA : Dioph {w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ |
-    w (Sum.inl none) = 0} := Dioph.eq_dioph hxW (Dioph.const_dioph 0)
+      w (Sum.inl none) = 0} := Dioph.eq_dioph hxW (Dioph.const_dioph 0)
   have hB : Dioph {w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ |
-    w (Sum.inr (Sum.inl 2)) + 1 = w (Sum.inr (Sum.inl 1))} :=
+      w (Sum.inr (Sum.inl 2)) + 1 = w (Sum.inr (Sum.inl 1))} :=
     Dioph.eq_dioph (Dioph.add_dioph heW (Dioph.const_dioph 1)) hcW
   have Sii : Dioph {w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ |
-    w (Sum.inl none) = 0
-    ∨ w (Sum.inr (Sum.inl 2)) + 1 = w (Sum.inr (Sum.inl 1))} :=
+      w (Sum.inl none) = 0
+      ∨ w (Sum.inr (Sum.inl 2)) + 1 = w (Sum.inr (Sum.inl 1))} :=
     Dioph.ext (Dioph.union hA hB) fun w => Iff.rfl
   have Siii : Dioph {w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ | ∀ i : Fin m,
-    (1 + w (Sum.inr (Sum.inl 1)) *
-      (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!)
-    ∣ ((w (Sum.inr (Sum.inr i))).descFactorial (w (Sum.inr (Sum.inl 0)) + 1))} := by
+      (1 + w (Sum.inr (Sum.inl 1)) *
+        (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!)
+      ∣ ((w (Sum.inr (Sum.inr i))).descFactorial (w (Sum.inr (Sum.inl 0)) + 1))} := by
     apply dp_dioph_fin_forall
     intro i
     exact Dioph.dvd_dioph h1ct (Dioph.diophFn_comp dp_descFactorial_diophFn
@@ -1869,32 +1890,32 @@ private lemma dp_bq_dioph {α : Type} (S : Set (Option (Option α) → ℕ))
           w (Sum.inr (Sum.inl 0)) + 1]
       ⟨Dioph.proj_dioph _, Dioph.add_dioph huW (Dioph.const_dioph 1)⟩)
   have hPQ' : Dioph.DiophFn (fun w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ =>
-    (p (Sum.elim (Option.elim' (w (Sum.inr (Sum.inl 2))) (fun o => w (Sum.inl o)))
-      (fun j => w (Sum.inr (Sum.inr j))))).natAbs) := by
+      (p (Sum.elim (Option.elim' (w (Sum.inr (Sum.inl 2))) (fun o => w (Sum.inl o)))
+        (fun j => w (Sum.inr (Sum.inr j))))).natAbs) := by
     simpa only [hσP] using Dioph.reindex_diophFn (dpBQ_σP m)
       (Dioph.abs_poly_dioph p)
   have Siv : Dioph {w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ |
-    (1 + w (Sum.inr (Sum.inl 1)) *
-      (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!)
-    ∣ (p (Sum.elim (Option.elim' (w (Sum.inr (Sum.inl 2))) (fun o => w (Sum.inl o)))
-      (fun j => w (Sum.inr (Sum.inr j))))).natAbs} :=
-    Dioph.dvd_dioph h1ct hPQ'
-  have hmat : Dioph {w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ |
-    (1 ≤ (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!
-      ∧ 1 + w (Sum.inr (Sum.inl 1)) *
-        (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!
-        = dpProdP (w (Sum.inl none))
-          ((dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!))
-    ∧ (w (Sum.inl none) = 0
-      ∨ w (Sum.inr (Sum.inl 2)) + 1 = w (Sum.inr (Sum.inl 1)))
-    ∧ (∀ i : Fin m,
       (1 + w (Sum.inr (Sum.inl 1)) *
         (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!)
-      ∣ ((w (Sum.inr (Sum.inr i))).descFactorial (w (Sum.inr (Sum.inl 0)) + 1)))
-    ∧ (1 + w (Sum.inr (Sum.inl 1)) *
-      (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!)
       ∣ (p (Sum.elim (Option.elim' (w (Sum.inr (Sum.inl 2))) (fun o => w (Sum.inl o)))
-        (fun j => w (Sum.inr (Sum.inr j))))).natAbs} := by
+        (fun j => w (Sum.inr (Sum.inr j))))).natAbs} :=
+    Dioph.dvd_dioph h1ct hPQ'
+  have hmat : Dioph {w : (Option α) ⊕ (Fin 3 ⊕ Fin m) → ℕ |
+      (1 ≤ (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!
+        ∧ 1 + w (Sum.inr (Sum.inl 1)) *
+            (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!
+          = dpProdP (w (Sum.inl none))
+            ((dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!))
+      ∧ (w (Sum.inl none) = 0
+        ∨ w (Sum.inr (Sum.inl 2)) + 1 = w (Sum.inr (Sum.inl 1)))
+      ∧ (∀ i : Fin m,
+        (1 + w (Sum.inr (Sum.inl 1)) *
+          (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!)
+        ∣ ((w (Sum.inr (Sum.inr i))).descFactorial (w (Sum.inr (Sum.inl 0)) + 1)))
+      ∧ (1 + w (Sum.inr (Sum.inl 1)) *
+          (dpBQ_Q m F G (fun o => w (Sum.inl o)) (w (Sum.inr (Sum.inl 0))))!)
+        ∣ (p (Sum.elim (Option.elim' (w (Sum.inr (Sum.inl 2))) (fun o => w (Sum.inl o)))
+          (fun j => w (Sum.inr (Sum.inr j))))).natAbs} := by
     refine Dioph.ext (Si.inter (Sii.inter (Siii.inter Siv))) fun w => ?_
     simp only [Set.mem_inter_iff, Set.mem_ofPred_eq]
   have hpeel := Dioph.ex_dioph hmat
@@ -1912,7 +1933,7 @@ private lemma dp_bq_dioph {α : Type} (S : Set (Option (Option α) → ℕ))
     refine ⟨Sum.elim (Fin.cons u (Fin.cons c (fun _ => e))) a, ?_⟩
     refine ⟨⟨?_, ?_⟩, ?_, ?_, ?_⟩
     · have ht1 : 1 ≤ (dpBQ_Q m F G v u)! :=
-      Nat.one_le_iff_ne_zero.mpr (Nat.factorial_ne_zero _)
+        Nat.one_le_iff_ne_zero.mpr (Nat.factorial_ne_zero _)
       exact ht1
     · exact hi
     · exact hii
@@ -1990,19 +2011,19 @@ private lemma dp_graph_pair {f g : ℕ →. ℕ}
       ⟨Dioph.proj_dioph_of_nat 1, Dioph.proj_dioph_of_nat 0⟩)
       (Dioph.proj_dioph_of_nat 3)
   have hmat : Dioph {w : Vector3 ℕ 4 |
-    (w &1 ∈ f (w &2) ∧ w &0 ∈ g (w &2))
-    ∧ Nat.pair (w &1) (w &0) = w &3} :=
+      (w &1 ∈ f (w &2) ∧ w &0 ∈ g (w &2))
+      ∧ Nat.pair (w &1) (w &0) = w &3} :=
     Dioph.ext ((h1.inter h2).inter h3) fun w => Iff.rfl
   have hpeel1 : Dioph {v3 : Vector3 ℕ 3 |
-    ∃ b, (b :: v3) ∈ {w : Vector3 ℕ 4 |
-      (w &1 ∈ f (w &2) ∧ w &0 ∈ g (w &2))
-      ∧ Nat.pair (w &1) (w &0) = w &3}} :=
-    Dioph.vec_ex1_dioph 3 hmat
-  have hpeel2 : Dioph {v : Vector3 ℕ 2 |
-    ∃ a, (a :: v) ∈ {v3 : Vector3 ℕ 3 |
       ∃ b, (b :: v3) ∈ {w : Vector3 ℕ 4 |
         (w &1 ∈ f (w &2) ∧ w &0 ∈ g (w &2))
-        ∧ Nat.pair (w &1) (w &0) = w &3}}} :=
+        ∧ Nat.pair (w &1) (w &0) = w &3}} :=
+    Dioph.vec_ex1_dioph 3 hmat
+  have hpeel2 : Dioph {v : Vector3 ℕ 2 |
+      ∃ a, (a :: v) ∈ {v3 : Vector3 ℕ 3 |
+        ∃ b, (b :: v3) ∈ {w : Vector3 ℕ 4 |
+          (w &1 ∈ f (w &2) ∧ w &0 ∈ g (w &2))
+          ∧ Nat.pair (w &1) (w &0) = w &3}}} :=
     Dioph.vec_ex1_dioph 2 hpeel1
   refine Dioph.ext hpeel2 fun v => ?_
   simp only [Set.mem_ofPred_eq, dp_pair_mem]
@@ -2147,7 +2168,7 @@ private lemma dp_graph_comp_case {f g : ℕ →. ℕ}
   have hmat : Dioph {w : Vector3 ℕ 3 | w &0 ∈ g (w &1) ∧ w &2 ∈ f (w &0)} :=
     Dioph.ext (h1.inter h2) fun w => Iff.rfl
   have hpeel : Dioph {v : Vector3 ℕ 2 |
-    ∃ z, (z :: v) ∈ {w : Vector3 ℕ 3 | w &0 ∈ g (w &1) ∧ w &2 ∈ f (w &0)}} :=
+      ∃ z, (z :: v) ∈ {w : Vector3 ℕ 3 | w &0 ∈ g (w &1) ∧ w &2 ∈ f (w &0)}} :=
     Dioph.vec_ex1_dioph 2 hmat
   refine Dioph.ext hpeel fun v => ?_
   simp only [Set.mem_ofPred_eq, dp_comp_mem]
@@ -2175,15 +2196,15 @@ private lemma dp_prec_mem {f g : ℕ →. ℕ} (x y : ℕ) :
   constructor
   · intro h
     have h' : y ∈ Nat.rec (motive := fun _ => Part ℕ) (f (Nat.unpair x).1)
-      (fun k (IH : Part ℕ) => do
-        let i ← IH; g (Nat.pair (Nat.unpair x).1 (Nat.pair k i)))
-      (Nat.unpair x).2 := h
+        (fun k (IH : Part ℕ) => do
+          let i ← IH; g (Nat.pair (Nat.unpair x).1 (Nat.pair k i)))
+        (Nat.unpair x).2 := h
     obtain ⟨c, h0, hS, hy⟩ := (dp_prec_iff f g _ _ y).mp h'
     exact ⟨_, _, c, ⟨⟨(Nat.pair_unpair x).symm, h0⟩, hS⟩, hy⟩
   · rintro ⟨a, n, c, ⟨⟨hpair, h0⟩, hS⟩, hy⟩
     subst hpair
     have hun : ∀ (F : ℕ → ℕ → Part ℕ) (a n : ℕ),
-      Nat.unpaired F (Nat.pair a n) = F a n := fun F a n => by
+        Nat.unpaired F (Nat.pair a n) = F a n := fun F a n => by
       simp only [Nat.unpaired, Nat.unpair_pair]
     rw [hun]
     change y ∈ Nat.rec (motive := fun _ => Part ℕ) (f a)
@@ -2205,7 +2226,7 @@ private lemma dp_graph_prec {f g : ℕ →. ℕ}
   Dioph {v : Vector3 ℕ 2 | v &1 ∈ Nat.unpaired (fun a n =>
     Nat.rec (motive := fun _ => Part ℕ) (f a)
       (fun k (IH : Part ℕ) => do
-        let i ← IH; g (Nat.pair a (Nat.pair k i))) n) (v &0)} :=
+        let i ← IH; g (Nat.pair a (Nat.pair k i))) n) (v &0)} := by
   have hP1 : Dioph {w : Vector3 ℕ 5 | w &3 = Nat.pair (w &2) (w &1)} :=
     Dioph.eq_dioph (Dioph.proj_dioph_of_nat 3)
       (Dioph.diophFn_comp dp_pair_diophFn
@@ -2325,7 +2346,8 @@ private lemma dp_rfind_mem {f : ℕ →. ℕ} (x y : ℕ) :
     · simp only [Part.map_eq_map, Part.mem_map_iff] at ht
       obtain ⟨m, hm, hdec⟩ := ht
       have hm0 : m = 0 := of_decide_eq_true hdec
-      rwa [hm0] at hm
+      rw [hm0] at hm
+      exact hm
     · have hfk := hf hk
       simp only [Part.map_eq_map, Part.mem_map_iff] at hfk
       obtain ⟨m, hm, hdec⟩ := hfk
@@ -2351,36 +2373,36 @@ private lemma dp_graph_rfind {f : ℕ →. ℕ}
   Dioph {v : Vector3 ℕ 2 | v &1 ∈ (fun a => Nat.rfind fun n =>
     (fun m => decide (m = 0)) <$> f (Nat.pair a n)) (v &0)} := by
   have hpairA : Dioph.DiophFn
-    (fun v : Vector3 ℕ 2 => Nat.pair (v &0) (v &1)) :=
+      (fun v : Vector3 ℕ 2 => Nat.pair (v &0) (v &1)) :=
     Dioph.diophFn_comp dp_pair_diophFn
       [fun v : Vector3 ℕ 2 => v &0, fun v : Vector3 ℕ 2 => v &1]
       ⟨Dioph.proj_dioph_of_nat 0, Dioph.proj_dioph_of_nat 1⟩
   have hA : Dioph {v : Vector3 ℕ 2 | 0 ∈ f (Nat.pair (v &0) (v &1))} :=
     dp_graph_comp ihf hpairA (Dioph.const_dioph 0)
   have hpairS : Dioph.DiophFn (fun w : Option (Option (Option Unit)) → ℕ =>
-    Nat.pair (w (some (some (some ())))) (w (some none))) :=
+      Nat.pair (w (some (some (some ())))) (w (some none))) :=
     Dioph.diophFn_comp2 (Dioph.proj_dioph _) (Dioph.proj_dioph _)
       dp_pair_diophFn
   have hA' : Dioph {w : Option (Option (Option Unit)) → ℕ |
-    w none ∈ f (Nat.pair (w (some (some (some ())))) (w (some none)))} :=
+      w none ∈ f (Nat.pair (w (some (some (some ())))) (w (some none)))} :=
     dp_graph_comp ihf hpairS (Dioph.proj_dioph _)
   have hB' : Dioph {w : Option (Option (Option Unit)) → ℕ | w none ≠ 0} :=
     Dioph.ne_dioph (Dioph.proj_dioph _) (Dioph.const_dioph 0)
   have hSmat : Dioph {w : Option (Option (Option Unit)) → ℕ |
-    (w none ∈ f (Nat.pair (w (some (some (some ())))) (w (some none)))) ∧
-    w none ≠ 0} :=
+      (w none ∈ f (Nat.pair (w (some (some (some ())))) (w (some none)))) ∧
+      w none ≠ 0} :=
     Dioph.ext (hA'.inter hB') fun w => Iff.rfl
   have hS : Dioph {u : Option (Option Unit) → ℕ |
-    ∃ m', Option.elim' m' u ∈ {w : Option (Option (Option Unit)) → ℕ |
-      (w none ∈ f (Nat.pair (w (some (some (some ())))) (w (some none)))) ∧
-      w none ≠ 0}} :=
+      ∃ m', Option.elim' m' u ∈ {w : Option (Option (Option Unit)) → ℕ |
+        (w none ∈ f (Nat.pair (w (some (some (some ())))) (w (some none)))) ∧
+        w none ≠ 0}} :=
     Dioph.ext (Dioph.ex1_dioph hSmat) fun u => Iff.rfl
   have hT := dp_bq_dioph _ hS
   let σ : Option Unit → Fin2 2 := fun o => match o with
     | none => &1
     | some _ => &0
   have hB : Dioph {v : Vector3 ℕ 2 | ∀ k < v &1,
-    ∃ m', m' ∈ f (Nat.pair (v &0) k) ∧ m' ≠ 0} :=
+      ∃ m', m' ∈ f (Nat.pair (v &0) k) ∧ m' ≠ 0} :=
     Dioph.ext (Dioph.reindex_dioph _ σ hT) fun v => Iff.rfl
   refine Dioph.ext (hA.inter hB) fun v => ?_
   simp only [Set.mem_inter_iff, dp_rfind_mem]
@@ -2422,46 +2444,47 @@ private lemma dp_re_to_dioph {S : Set ℕ}
   (hS : REPred (fun n => n ∈ S)) :
   Dioph {v : Unit → ℕ | v () ∈ S} := by
   have hmap : Partrec (fun a : ℕ =>
-    (Part.assert (a ∈ S) fun _ => Part.some ()).map (fun _ => (0 : ℕ))) :=
+      (Part.assert (a ∈ S) fun _ => Part.some ()).map (fun _ => (0 : ℕ))) :=
     hS.map (Computable.const (0 : ℕ)).to₂
   have hNat : Nat.Partrec (fun a : ℕ =>
-    (Part.assert (a ∈ S) fun _ => Part.some ()).map (fun _ => (0 : ℕ))) :=
+      (Part.assert (a ∈ S) fun _ => Part.some ()).map (fun _ => (0 : ℕ))) :=
     Partrec.nat_iff.mp hmap
   have hdom : ∀ n, ((Part.assert (n ∈ S) fun _ => Part.some ()).map
-    (fun _ => (0 : ℕ))).Dom ↔ n ∈ S := by
+      (fun _ => (0 : ℕ))).Dom ↔ n ∈ S := by
     intro n
     constructor
     · intro h
       obtain ⟨y, hy⟩ := Part.dom_iff_mem.mp h
       rw [Part.mem_map_iff] at hy
       obtain ⟨u, hu, -⟩ := hy
-      rwa [Part.mem_assert_iff] at hu
+      rw [Part.mem_assert_iff] at hu
+      exact hu.1
     · intro h
       apply Part.dom_iff_mem.mpr
       refine ⟨0, ?_⟩
       rw [Part.mem_map_iff]
       exact ⟨(), Part.mem_assert_iff.mpr ⟨h, Part.mem_some_iff.mpr rfl⟩, rfl⟩
   have hgraph : Dioph {v : Vector3 ℕ 2 | v &1 ∈ (fun a : ℕ =>
-    (Part.assert (a ∈ S) fun _ => Part.some ()).map
-      (fun _ => (0 : ℕ))) (v &0)} :=
+      (Part.assert (a ∈ S) fun _ => Part.some ()).map
+        (fun _ => (0 : ℕ))) (v &0)} :=
     dp_graph_dioph hNat
   have hswap : Dioph {w : Vector3 ℕ 2 | w &0 ∈ (fun a : ℕ =>
-    (Part.assert (a ∈ S) fun _ => Part.some ()).map
-      (fun _ => (0 : ℕ))) (w &1)} :=
+      (Part.assert (a ∈ S) fun _ => Part.some ()).map
+        (fun _ => (0 : ℕ))) (w &1)} :=
     dp_graph_comp (f := fun a : ℕ =>
       (Part.assert (a ∈ S) fun _ => Part.some ()).map
         (fun _ => (0 : ℕ))) hgraph
       (Dioph.proj_dioph_of_nat 1) (Dioph.proj_dioph_of_nat 0)
   have hpeel : Dioph {w : Vector3 ℕ 1 | ∃ y, (y :: w) ∈
-    {v : Vector3 ℕ 2 | v &0 ∈ (fun a : ℕ =>
-      (Part.assert (a ∈ S) fun _ => Part.some ()).map
-        (fun _ => (0 : ℕ))) (v &1)}} :=
+      {v : Vector3 ℕ 2 | v &0 ∈ (fun a : ℕ =>
+        (Part.assert (a ∈ S) fun _ => Part.some ()).map
+          (fun _ => (0 : ℕ))) (v &1)}} :=
     Dioph.vec_ex1_dioph 1 hswap
   let σ : Fin2 1 → Unit := fun _ => ()
   have hrei : Dioph {v : Unit → ℕ | ∃ y, (y :: v ∘ σ) ∈
-    {v : Vector3 ℕ 2 | v &0 ∈ (fun a : ℕ =>
-      (Part.assert (a ∈ S) fun _ => Part.some ()).map
-        (fun _ => (0 : ℕ))) (v &1)}} :=
+      {v : Vector3 ℕ 2 | v &0 ∈ (fun a : ℕ =>
+        (Part.assert (a ∈ S) fun _ => Part.some ()).map
+          (fun _ => (0 : ℕ))) (v &1)}} :=
     Dioph.ext (Dioph.reindex_dioph _ σ hpeel) fun v => Iff.rfl
   refine Dioph.ext hrei fun v => ?_
   simp only [Set.mem_ofPred_eq]
@@ -2471,7 +2494,7 @@ private lemma dp_re_to_dioph {S : Set ℕ}
   · intro h
     refine ⟨0, ?_⟩
     have h0 : (0 : ℕ) ∈ (Part.assert (v () ∈ S) fun _ => Part.some ()).map
-      (fun _ => (0 : ℕ)) := by
+        (fun _ => (0 : ℕ)) := by
       rw [Part.mem_map_iff]
       exact ⟨(), Part.mem_assert_iff.mpr
         ⟨h, Part.mem_some_iff.mpr rfl⟩, rfl⟩
@@ -2491,7 +2514,7 @@ private lemma dp_dioph_to_re {S : Set ℕ}
   obtain ⟨m, p, hp0⟩ := dp_fin_dummies hS
   obtain ⟨F, G, hF, hG, hpFG⟩ := dp_isPoly_split p.isPoly
   have hp : ∀ n : ℕ, n ∈ S ↔
-    ∃ t : Fin m → ℕ, p (Sum.elim (fun _ => n) t) = 0 := by
+      ∃ t : Fin m → ℕ, p (Sum.elim (fun _ => n) t) = 0 := by
     intro n
     have h := hp0 (fun _ => n)
     simp only [Set.mem_ofPred_eq] at h
@@ -2517,11 +2540,11 @@ private lemma dp_dioph_to_re {S : Set ℕ}
   · rintro ⟨w, hwT, -⟩
     rw [PFun.coe_val, Part.mem_some_iff] at hwT
     have hEq : F (fun i : Unit ⊕ Fin m => match i with
-      | Sum.inl _ => n
-      | Sum.inr j => (Denumerable.ofNat (List ℕ) w).getD (j : ℕ) 0) =
-      G (fun i : Unit ⊕ Fin m => match i with
-        | Sum.inl _ => n
-        | Sum.inr j => (Denumerable.ofNat (List ℕ) w).getD (j : ℕ) 0) := by
+          | Sum.inl _ => n
+          | Sum.inr j => (Denumerable.ofNat (List ℕ) w).getD (j : ℕ) 0) =
+        G (fun i : Unit ⊕ Fin m => match i with
+          | Sum.inl _ => n
+          | Sum.inr j => (Denumerable.ofNat (List ℕ) w).getD (j : ℕ) 0) := by
       simpa using hwT.symm
     exact (hlist n).mpr ⟨Denumerable.ofNat (List ℕ) w, by exact hEq⟩
   · intro hn
@@ -2529,18 +2552,20 @@ private lemma dp_dioph_to_re {S : Set ℕ}
     refine ⟨Encodable.encode l, ?_, ?_⟩
     · rw [PFun.coe_val, Part.mem_some_iff]
       have hEq : F (fun i : Unit ⊕ Fin m => match i with
-        | Sum.inl _ => n
-        | Sum.inr j =>
-          (Denumerable.ofNat (List ℕ) (Encodable.encode l)).getD (j : ℕ) 0) =
-        G (fun i : Unit ⊕ Fin m => match i with
-          | Sum.inl _ => n
-          | Sum.inr j =>
-            (Denumerable.ofNat (List ℕ) (Encodable.encode l)).getD (j : ℕ) 0) := by
-        rwa [Denumerable.ofNat_encode]
+            | Sum.inl _ => n
+            | Sum.inr j =>
+              (Denumerable.ofNat (List ℕ) (Encodable.encode l)).getD (j : ℕ) 0) =
+          G (fun i : Unit ⊕ Fin m => match i with
+            | Sum.inl _ => n
+            | Sum.inr j =>
+              (Denumerable.ofNat (List ℕ) (Encodable.encode l)).getD (j : ℕ) 0) := by
+        rw [Denumerable.ofNat_encode]
+        exact hl
       simpa using hEq
     · intro _ _
       rw [PFun.coe_val]
       exact Part.dom_iff_mem.mpr ⟨_, Part.mem_some_iff.mpr rfl⟩
+
 end MathlibExt.NumberTheory.DPRMWanted
 namespace MathlibExt.NumberTheory.DPRMWanted
 
@@ -2563,4 +2588,4 @@ end MathlibExt.NumberTheory.DPRMWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

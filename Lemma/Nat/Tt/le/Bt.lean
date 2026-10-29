@@ -21,7 +21,8 @@ private lemma Tt_le_Bt
 -- imply
   gbp.Tt ≤ gbp.Bt := by
 -- proof
-  rwa [gbp.Tt_eq]
+  rw [gbp.Tt_eq]
+  exact inf_le_left
 
 end GeneralizedBNPair
 
@@ -70,15 +71,20 @@ private lemma TypePreservingImpliesGlobal
 -- imply
   g ∈ gbp.G := by
 -- proof
+
+
   obtain ⟨h', hh'G, hh'stab, hh'types⟩ :=
     gbp.strong_transitivity_for_types (h⁻¹ * g * h) hpres
+
   have hprod_in_G : h' * (h⁻¹ * g * h) ∈ gbp.G :=
     gbp.building_uniqueness_lemma _ hh'stab hh'types
+
   have hconj_in_G : h⁻¹ * g * h ∈ gbp.G := by
     have : h⁻¹ * g * h = h'⁻¹ * (h' * (h⁻¹ * g * h)) := by
       rw [← mul_assoc, inv_mul_cancel, one_mul]
     rw [this]
     exact gbp.G.mul_mem (gbp.G.inv_mem hh'G) hprod_in_G
+
   have hg_eq : g = h * (h⁻¹ * g * h) * h⁻¹ := by
     simp [mul_assoc, mul_inv_cancel]
   rw [hg_eq]

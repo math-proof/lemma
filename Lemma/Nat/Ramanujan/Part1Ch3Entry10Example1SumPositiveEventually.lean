@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
+import Lemma.Nat.Ramanujan.Part1Ch3Entry10Example1SummableEventually
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example1SumPositiveEventually
@@ -28,4 +28,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example1SumPositiveEventua
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

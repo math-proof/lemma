@@ -190,7 +190,7 @@ private lemma rc_core_reimer_inequality_of_bridge_eq
   [DecidableEq α]
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : rc_core_CountBoxBridge)

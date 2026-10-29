@@ -93,7 +93,7 @@ private lemma pivotalProb_eq_realPivotal_eq
   {F : Finset (Sym2 (Site d))}
   {e : Sym2 (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (he : e ∈ F)
   (hA : DependsOn (A.indicator (fun _ => (1 : ℝ))) (F : Set (Sym2 (Site d)))) :
@@ -110,7 +110,7 @@ private lemma deriv_boxCrossProb_inf_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   deriv (fun q => prob q ((boxEdgeFinset d n).restrict '' (boxCrossingEvent d n))) (p : ℝ) = ∑ e : ↥(boxEdgeFinset d n), (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (pivotalEvent (↑e : Sym2 (Site d)) (boxCrossingEvent d n)) := by
@@ -193,7 +193,7 @@ private lemma sum_surfaceProb_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   ∑ S ∈ (boxFinset d n).powerset, (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (surfaceEvent d n S) = 1 := by
@@ -364,7 +364,7 @@ private lemma surface_withinConn_indep_eq
   {S : Finset (Site d)}
   {o x : Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (withinConnEvent d (S : Set (Site d)) o x ∩ surfaceEvent d n S) = (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (withinConnEvent d (S : Set (Site d)) o x) * (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (surfaceEvent d n S) := by

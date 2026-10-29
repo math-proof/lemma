@@ -1,4 +1,5 @@
-import Lemma.Matrix.Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef
+import Lemma.Matrix.Any_And_Eq_Mul_Adjoint.of.PosDef
+import Instance.LinearAlgebra.Matrix.GetElem
 import Lemma.Matrix.IsCholeskyRec_Mul_L.of.All_Gt_0.All_All_Eq_0
 open Matrix
 open scoped ComplexOrder
@@ -26,7 +27,11 @@ private lemma main
     exact (RCLike.pos_iff.mp (hind j hj).2.1).2
   refine ⟨?_, fun j hj => ?_⟩
   ·
-    obtain ⟨L₀, hlow, hpos, hL₀⟩ := Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef hA
+    obtain ⟨L₀, htri, hL₀⟩ := Any_And_Eq_Mul_Adjoint.of.PosDef hA
+    have hlow : ∀ i j, i < j → L₀ i j = 0 := fun i j hij => by
+      simpa [getElem_getElem] using (htri j).1 i hij
+    have hpos : ∀ i, 0 < L₀ i i := fun i => by
+      simpa [getElem_getElem] using (htri i).2
     have h₀rec : IsCholeskyRec A L₀ := by
       rw [hL₀]
       exact IsCholeskyRec_Mul_L.of.All_Gt_0.All_All_Eq_0 hlow hpos

@@ -22,8 +22,8 @@ lemma powerSum_vanishing_mod_prime
     exact dvd_rfl
   · have hle : 1 ≤ e := Nat.one_le_iff_ne_zero.mpr hne
     have hdiv : ¬ (p - 1) ∣ e := he hle
-    haveI := Fact.mk hp
-    haveI hNe : NeZero p := ⟨hp.ne_zero⟩
+    have := Fact.mk hp
+    have hNe : NeZero p := ⟨hp.ne_zero⟩
     have hcast : ((∑ t ∈ Finset.Icc 1 p, (t : ℤ) ^ e : ℤ) : ZMod p)
       = ∑ t ∈ Finset.Icc 1 p, ((t : ℕ) : ZMod p) ^ e := by simp
     have hIccIco : Finset.Icc 1 p = Finset.Ico 1 (p + 1) := by
@@ -46,7 +46,8 @@ lemma powerSum_vanishing_mod_prime
           rw [ZMod.natCast_val, ZMod.cast_id]
       have h1 := Fintype.sum_bijective _ he_bij
         (fun i : Fin p => f ((i.val : ℕ) : ZMod p)) f (fun i => rfl)
-      rwa [Fin.sum_univ_eq_sum_range (fun n : ℕ => f (n : ZMod p)) p] at h1
+      rw [Fin.sum_univ_eq_sum_range (fun n : ℕ => f (n : ZMod p)) p] at h1
+      exact h1.symm
     have hLHS : ∑ t ∈ Finset.Icc 1 p, ((t : ℕ) : ZMod p) ^ e
       = ∑ x : ZMod p, (1 + x) ^ e := by
       have h1 : ∑ t ∈ Finset.Icc 1 p, ((t : ℕ) : ZMod p) ^ e
@@ -98,4 +99,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

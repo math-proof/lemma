@@ -27,11 +27,11 @@ theorem KWFiniteSimplePolygon.exists_vertexNeighborhoodData
   obtain ⟨re, hre, he⟩ := polygon.exists_uniform_vertex_edge_separation
   refine ⟨⟨min rv re, lt_min hrv hre, ?_, ?_⟩⟩
   · intro i j hij
-    have hmin : ((min rv re : ℝ≥0) : ℝ) ≤ (rv : ℝ) := by
+    have hmin : ((min rv re : NNReal) : ℝ) ≤ (rv : ℝ) := by
       exact_mod_cast min_le_left rv re
     exact hmin.trans_lt (hv i j hij)
   · intro v j hvj y hy
-    have hmin : ((min rv re : ℝ≥0) : ℝ) ≤ (re : ℝ) := by
+    have hmin : ((min rv re : NNReal) : ℝ) ≤ (re : ℝ) := by
       exact_mod_cast min_le_right rv re
     exact hmin.trans_lt (he v j hvj.1 hvj.2 y hy)
 

@@ -194,13 +194,13 @@ namespace Matchings
 -/
 @[path]
 lemma pow_mul_lt_one_of_log_bound
-  {N : ℕ}
-  {r : ℝ}
-  {k : ℕ}
+  (N : ℕ)
 -- given
   (hN : 0 < N)
+  (r : ℝ)
   (hr_pos : 0 < r)
   (hr_lt : r < 1)
+  (k : ℕ)
   (hk : (k : ℝ) > Real.log N / Real.log (1 / r)) :
 -- imply
   r ^ k * (N : ℝ) < 1 := by
@@ -271,8 +271,8 @@ lemma matching_terminates_log_steps
       calc (S (⌈Real.log ↑N / Real.log (1 / r)⌉₊ + 1) : ℝ)
         ≤ r ^ (⌈Real.log ↑N / Real.log (1 / r)⌉₊ + 1) * S 0 := hbound
         _ ≤ r ^ (⌈Real.log ↑N / Real.log (1 / r)⌉₊ + 1) * N := by
-          apply mul_le_mul_of_nonneg_left hS0_le
-          exact le_of_lt (pow_pos hr_pos _)
+            apply mul_le_mul_of_nonneg_left hS0_le
+            exact le_of_lt (pow_pos hr_pos _)
         _ < 1 := hpow_bound
     have : S (⌈Real.log ↑N / Real.log (1 / r)⌉₊ + 1) < 1 := by exact_mod_cast hSk_lt
     omega
@@ -602,9 +602,9 @@ lemma matching_chain_conductance_concrete
     simp only [chainVol, chainDegree]
     calc (∑ v ∈ S, ((neighbors v).card : ℝ))
       ≤ ∑ _ ∈ S, ((n : ℝ) ^ 2) := by
-        apply Finset.sum_le_sum
-        intro v _
-        exact_mod_cast hmax_deg v
+          apply Finset.sum_le_sum
+          intro v _
+          exact_mod_cast hmax_deg v
       _ = (S.card : ℝ) * (n : ℝ) ^ 2 := by
         simp [Finset.sum_const, nsmul_eq_mul]
   have hvol_pos : ∀ S : Finset (ChainVertex G), S.Nonempty → 0 < chainVol neighbors S := by
@@ -703,9 +703,9 @@ lemma chain_canonical_paths_crossing
   {neighbors : ChainVertex G → Finset (ChainVertex G)}
   {path_assign : Finset (ChainVertex G) → ChainVertex G → ChainVertex G → ChainVertex G × ChainVertex G}
 -- given
-  (hn : 0 < n)
-  (hmin_deg : ∀ v : ChainVertex G, 0 < (neighbors v).card)
-  (hmax_deg : ∀ v : ChainVertex G, (neighbors v).card ≤ n ^ 2)
+  (_hn : 0 < n)
+  (_hmin_deg : ∀ v : ChainVertex G, 0 < (neighbors v).card)
+  (_hmax_deg : ∀ v : ChainVertex G, (neighbors v).card ≤ n ^ 2)
   (hassign_valid : ∀ S : Finset (ChainVertex G), S.Nonempty → S ≠ Finset.univ → ∀ s ∈ S, ∀ t ∈ Finset.univ \ S, (path_assign S s t).1 ∈ S ∧ (path_assign S s t).2 ∈ (neighbors (path_assign S s t).1).filter (· ∉ S))
   (hassign_bound : ∀ S : Finset (ChainVertex G), S.Nonempty → S ≠ Finset.univ → ∀ v ∈ S, ∀ w ∈ (neighbors v).filter (fun x => x ∉ S), ((S ×ˢ (Finset.univ \ S)).filter (fun p => path_assign S p.1 p.2 = (v, w))).card ≤ (n + 1) ^ 4) :
 -- imply
@@ -770,3 +770,4 @@ end Matchings
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

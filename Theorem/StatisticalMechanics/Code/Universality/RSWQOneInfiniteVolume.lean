@@ -84,7 +84,7 @@ theorem rq1_wiredFinite_graphCylinder_eq_bernoulli {N m : ℕ} (hNm : N ≤ m)
     (wiredFiniteMeasure d m hp hp1 (by norm_num : (0 : ℝ) < 1) :
         Measure (ConfigSpace (Sym2 (Site d)))).real (boxRestrict d N ⁻¹' S) =
       (bernoulliProductMeasure (E := Sym2 (Site d))
-        (⟨p, hp.le⟩ : ℝ≥0) (by exact_mod_cast hp1.le)).real
+        (⟨p, hp.le⟩ : NNReal) (by exact_mod_cast hp1.le)).real
         (boxRestrict d N ⁻¹' S) := by
   let T : Set (ConfigSpace (Sym2 (boxVerts d m))) := boxRestrictLE d hNm ⁻¹' S
   have hTdep : _root_.DependsOn (T.indicator (fun _ => (1 : ℝ)))
@@ -110,13 +110,13 @@ theorem rq1_wiredFinite_graphCylinder_eq_bernoulli {N m : ℕ} (hNm : N ≤ m)
       rw [← bcProb_clique_eq_wiredFkProb,
         rq1_bcProb_one_eq_fkProb]
     _ = (bernoulliProductMeasure (E := Sym2 (boxVerts d m))
-          (⟨p, hp.le⟩ : ℝ≥0) (by exact_mod_cast hp1.le)).real T :=
+          (⟨p, hp.le⟩ : NNReal) (by exact_mod_cast hp1.le)).real T :=
       fkProbOne_event_eq_bernoulli (boxGraph d m) hp hp1 T hTdep
     _ = (bernoulliProductMeasure (E := Sym2 (Site d))
-          (⟨p, hp.le⟩ : ℝ≥0) (by exact_mod_cast hp1.le)).real
+          (⟨p, hp.le⟩ : NNReal) (by exact_mod_cast hp1.le)).real
           (boxRestrict d m ⁻¹' T) :=
       (bernoulliProduct_boxRestrict_preimage
-        (d := d) (⟨p, hp.le⟩ : ℝ≥0)
+        (d := d) (⟨p, hp.le⟩ : NNReal)
         (by exact_mod_cast hp1.le) m T).symm
 
 
@@ -128,7 +128,7 @@ theorem rq1_wiredInfiniteVolume_graphCylinder_eq_bernoulli (N : ℕ)
     (wiredInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 1) :
         Measure (ConfigSpace (Sym2 (Site d)))).real (boxRestrict d N ⁻¹' S) =
       (bernoulliProductMeasure (E := Sym2 (Site d))
-        (⟨p, hp.le⟩ : ℝ≥0) (by exact_mod_cast hp1.le)).real
+        (⟨p, hp.le⟩ : NNReal) (by exact_mod_cast hp1.le)).real
         (boxRestrict d N ⁻¹' S) := by
   obtain ⟨phi, hphi, hconv⟩ :=
     wiredInfiniteVolume_isLimit d hp hp1 (by norm_num : (0 : ℝ) < 1)
@@ -140,7 +140,7 @@ theorem rq1_wiredInfiniteVolume_graphCylinder_eq_bernoulli (N : ℕ)
             Measure (ConfigSpace (Sym2 (Site d)))).real
             (boxRestrict d N ⁻¹' S)) =ᶠ[atTop]
         (fun _ => (bernoulliProductMeasure (E := Sym2 (Site d))
-          (⟨p, hp.le⟩ : ℝ≥0) (by exact_mod_cast hp1.le)).real
+          (⟨p, hp.le⟩ : NNReal) (by exact_mod_cast hp1.le)).real
           (boxRestrict d N ⁻¹' S)) := by
     filter_upwards [eventually_ge_atTop N] with k hk
     exact rq1_wiredFinite_graphCylinder_eq_bernoulli
@@ -151,7 +151,7 @@ theorem rq1_wiredInfiniteVolume_graphCylinder_eq_bernoulli (N : ℕ)
             Measure (ConfigSpace (Sym2 (Site d)))).real
             (boxRestrict d N ⁻¹' S)) atTop
       (nhds ((bernoulliProductMeasure (E := Sym2 (Site d))
-        (⟨p, hp.le⟩ : ℝ≥0) (by exact_mod_cast hp1.le)).real
+        (⟨p, hp.le⟩ : NNReal) (by exact_mod_cast hp1.le)).real
         (boxRestrict d N ⁻¹' S))) :=
     tendsto_const_nhds.congr' heq.symm
   exact tendsto_nhds_unique hlimit hconstant

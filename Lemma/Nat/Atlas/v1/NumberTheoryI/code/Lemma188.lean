@@ -12,10 +12,9 @@ open scoped Classical
 lemma ArithFunc.IsPeriodic.iterate
   {f : ArithFunc}
   {m : ℕ}
-  {k : ℕ}
-  {n : ℕ}
 -- given
-  (hf : ArithFunc.IsPeriodic f m) :
+  (hf : ArithFunc.IsPeriodic f m)
+  (k n : ℕ) :
 -- imply
   f (n + m * k) = f n := by
 -- proof
@@ -45,9 +44,9 @@ lemma ArithFunc.IsPeriodic.of_dvd
 lemma ArithFunc.IsPeriodic.eq_mod
   {f : ArithFunc}
   {m : ℕ}
-  {a : ℕ}
 -- given
-  (hf_per : ArithFunc.IsPeriodic f m) :
+  (hf_per : ArithFunc.IsPeriodic f m)
+  (a : ℕ) :
 -- imply
   f a = f (a % m) := by
 -- proof
@@ -81,7 +80,7 @@ lemma ArithFunc.period_pos'
 -- imply
   0 < ArithFunc.period f := by
 -- proof
-  unfold ArithFunc.period; rw [dif_pos hf]; exact (Nat.find_spec hf).1
+  unfold ArithFunc.period; rw [dite_eq_left hf]; exact (Nat.find_spec hf).1
 
 /--
 [ArithFunc.period_isPeriodic'](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Lemma188.lean)
@@ -94,7 +93,7 @@ lemma ArithFunc.period_isPeriodic'
 -- imply
   ArithFunc.IsPeriodic f (ArithFunc.period f) := by
 -- proof
-  unfold ArithFunc.period; rw [dif_pos hf]; exact (Nat.find_spec hf).2
+  unfold ArithFunc.period; rw [dite_eq_left hf]; exact (Nat.find_spec hf).2
 
 /--
 [ArithFunc.period_min'](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Lemma188.lean)
@@ -109,7 +108,7 @@ lemma ArithFunc.period_min'
 -- imply
   ArithFunc.period f ≤ k := by
 -- proof
-  unfold ArithFunc.period; rw [dif_pos hf]; exact Nat.find_min' hf hk
+  unfold ArithFunc.period; rw [dite_eq_left hf]; exact Nat.find_min' hf hk
 
 /--
 [ArithFunc.period_dvd_of_isPeriodic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Lemma188.lean)

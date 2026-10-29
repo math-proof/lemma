@@ -103,7 +103,7 @@ theorem highOutput_cluster_count_ae_le_one_of_absorption
     [IsProbabilityMeasure mu]
     (hd : 1 ≤ d)
     (herg : IsTripleFieldErgodic mu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon)
     (hmono : ∀ᵐ q ∂mu, IsMonotoneFieldTriple q)
     (hlow : mu {q | 1 ≤ numInfiniteClusters d (siteToBond (T q.1))} = 1)
@@ -160,7 +160,7 @@ theorem highOutput_cluster_count_ae_one_of_absorption
     [IsProbabilityMeasure mu]
     (hd : 1 ≤ d)
     (herg : IsTripleFieldErgodic mu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon)
     (hmono : ∀ᵐ q ∂mu, IsMonotoneFieldTriple q)
     (hlow : mu {q | 1 ≤ numInfiniteClusters d (siteToBond (T q.1))} = 1)

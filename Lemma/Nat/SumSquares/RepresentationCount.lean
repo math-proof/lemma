@@ -27,7 +27,7 @@ namespace SumSquares
 -/
 @[path]
 lemma solutions_finite
-  {k n : ℕ} :
+  (k n : ℕ) :
 -- imply
   Set.Finite (solutions k n) := by
 -- proof

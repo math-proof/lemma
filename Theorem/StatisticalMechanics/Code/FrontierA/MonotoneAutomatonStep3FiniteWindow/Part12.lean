@@ -193,11 +193,11 @@ theorem step3CoreWindow_sourceDegree
 
 theorem step3CoreWindow_probability_bound
     (T : MonotoneAutomaton d) (mu : Measure (FieldTriple d))
-    [IsProbabilityMeasure mu] (D N K : ℕ) (epsilon : ℝ≥0∞)
+    [IsProbabilityMeasure mu] (D N K : ℕ) (epsilon : ENNReal)
     (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon) :
     epsilon ^ (boxFinsetBK d D).card * K *
         mu (step3CoreWindowEvent T D N K) ≤
-      (((boxFinsetBK d D).card ^ 3 : ℕ) : ℝ≥0∞) := by
+      (((boxFinsetBK d D).card ^ 3 : ℕ) : ENNReal) := by
   apply step3FiniteWindow_probability_bound T mu D N K epsilon hinsert
     (step3CoreWindowEvent T D N K)
     (measurableSet_step3CoreWindowEvent T D N K)
@@ -206,16 +206,16 @@ theorem step3CoreWindow_probability_bound
 
 theorem step3Distance_probability_bound
     (T : MonotoneAutomaton d) (mu : Measure (FieldTriple d))
-    [IsProbabilityMeasure mu] (D K : ℕ) (epsilon : ℝ≥0∞)
+    [IsProbabilityMeasure mu] (D K : ℕ) (epsilon : ENNReal)
     (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon) :
     epsilon ^ (boxFinsetBK d D).card * K *
         mu ((interpolatedHighPair T) ⁻¹'
           pairStep3DistanceAt (0 : Site d) D) ≤
-      (((boxFinsetBK d D).card ^ 3 : ℕ) : ℝ≥0∞) := by
-  let c : ℝ≥0∞ := epsilon ^ (boxFinsetBK d D).card * K
+      (((boxFinsetBK d D).card ^ 3 : ℕ) : ENNReal) := by
+  let c : ENNReal := epsilon ^ (boxFinsetBK d D).card * K
   have hmono := step3CoreWindowEvent_mono T D K
   have hN : ∀ N, c * mu (step3CoreWindowEvent T D N K) ≤
-      (((boxFinsetBK d D).card ^ 3 : ℕ) : ℝ≥0∞) := by
+      (((boxFinsetBK d D).card ^ 3 : ℕ) : ENNReal) := by
     intro N
     exact step3CoreWindow_probability_bound T mu D N K epsilon hinsert
   rw [step3Distance_preimage_eq_iUnion_windows T D K,
@@ -226,24 +226,24 @@ theorem step3Distance_probability_bound
 
 theorem step3Distance_measure_zero
     (T : MonotoneAutomaton d) (mu : Measure (FieldTriple d))
-    [IsProbabilityMeasure mu] (D : ℕ) (epsilon : ℝ≥0∞)
+    [IsProbabilityMeasure mu] (D : ℕ) (epsilon : ENNReal)
     (hepsilon : epsilon ≠ 0)
     (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon) :
     mu ((interpolatedHighPair T) ⁻¹'
       pairStep3DistanceAt (0 : Site d) D) = 0 := by
-  let c : ℝ≥0∞ := epsilon ^ (boxFinsetBK d D).card
-  let p : ℝ≥0∞ := mu ((interpolatedHighPair T) ⁻¹'
+  let c : ENNReal := epsilon ^ (boxFinsetBK d D).card
+  let p : ENNReal := mu ((interpolatedHighPair T) ⁻¹'
     pairStep3DistanceAt (0 : Site d) D)
   by_contra hp
   have hc : c ≠ 0 := by
     exact pow_ne_zero _ hepsilon
   have hcp : c * p ≠ 0 := mul_ne_zero hc hp
-  let L : ℝ≥0∞ := (((boxFinsetBK d D).card ^ 3 : ℕ) : ℝ≥0∞)
+  let L : ENNReal := (((boxFinsetBK d D).card ^ 3 : ℕ) : ENNReal)
   obtain ⟨K, hK⟩ := ENNReal.exists_nat_mul_gt
     (a := c * p) (b := L) hcp (by simp [L])
   have hbound := step3Distance_probability_bound
     T mu D K epsilon hinsert
-  have hrewrite : c * (K : ℝ≥0∞) * p = (K : ℝ≥0∞) * (c * p) := by
+  have hrewrite : c * (K : ENNReal) * p = (K : ENNReal) * (c * p) := by
     ring
   rw [hrewrite] at hbound
   exact (not_lt_of_ge hbound) hK
@@ -251,7 +251,7 @@ theorem step3Distance_measure_zero
 
 theorem interpolatedHighPair_step3Core_measure_zero
     (T : MonotoneAutomaton d) (mu : Measure (FieldTriple d))
-    [IsProbabilityMeasure mu] (epsilon : ℝ≥0∞)
+    [IsProbabilityMeasure mu] (epsilon : ENNReal)
     (hepsilon : epsilon ≠ 0)
     (hinsert : HasHighInsertionLowerBound mu T.threshold epsilon) :
     (interpolatedHighPairLaw T mu)
@@ -272,7 +272,7 @@ theorem monotoneAutomaton_infiniteCluster_uniqueness
     (T : MonotoneAutomaton d) (mu : Measure (FieldTriple d))
     [IsProbabilityMeasure mu]
     (hd : 1 ≤ d) (herg : IsTripleFieldErgodic mu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsertMiddle : HasMiddleInsertionLowerBound mu T.threshold epsilon)
     (hinsertHigh : HasHighInsertionLowerBound mu T.threshold epsilon)
     (hmono : ∀ᵐ q ∂mu, IsMonotoneFieldTriple q)

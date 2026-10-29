@@ -101,7 +101,7 @@ namespace Section19
 lemma scaled_coord_diff_le_K
   {n d : ℕ}
   {f : (Fin d → ℝ) → (Fin n → ℝ)}
-  {K : ℝ≥0}
+  {K : NNReal}
   {y y' : Fin d → ℝ}
   {t : ℝ}
   {T : ℝ}
@@ -126,8 +126,7 @@ lemma scaled_coord_diff_le_K
     _ = ↑K * (t / T) := by ring
     _ ≤ ↑K * 1 := by gcongr; exact div_le_one_of_le₀ ht_le (le_of_lt hT_pos)
     _ = ↑K := by ring
-set_option maxHeartbeats 1600000 in
-set_option maxRecDepth 1024 in
+set_option maxHeartbeats 999999 in
 
 end Section19
 
@@ -142,7 +141,7 @@ lemma lipschitz_floor_image_card_bound
   {f : (Fin d → ℝ) → (Fin n → ℝ)}
   {t : ℝ}
 -- given
-  (K : ℝ≥0)
+  (K : NNReal)
   (hf : LipschitzWith K f)
   (ht : 1 ≤ t) :
 -- imply
@@ -263,7 +262,7 @@ lemma lipschitz_floor_image_finite
   {f : (Fin d → ℝ) → (Fin n → ℝ)}
   {t : ℝ}
 -- given
-  (K : ℝ≥0)
+  (K : NNReal)
   (hf : LipschitzWith K f)
   (ht : 1 ≤ t) :
 -- imply
@@ -332,7 +331,7 @@ lemma single_lipschitz_image_cube_count
   {n d : ℕ}
   {f : (Fin d → ℝ) → (Fin n → ℝ)}
 -- given
-  (K : ℝ≥0)
+  (K : NNReal)
   (hf : LipschitzWith K f) :
 -- imply
   ∃ C : ℝ, 0 < C ∧ ∀ t : ℝ, 1 ≤ t → Nat.card {v : Fin n → ℤ | ∃ y ∈ Set.pi Set.univ (fun _ => Set.Icc (0 : ℝ) 1), ∀ i, (v i : ℝ) ≤ t * (f y) i ∧ t * (f y) i < (v i : ℝ) + 1} ≤ C * t ^ d := by
@@ -1480,7 +1479,7 @@ namespace Section19
 [riemannZeta_meromorphicAt_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/AnalyticClassNumber.lean)
 -/
 @[path]
-lemma riemannZeta_meromorphicAt_one
+lemma riemannZeta_meromorphicAt_one :
 -- imply
   MeromorphicAt riemannZeta 1 := by
 -- proof
@@ -1579,7 +1578,7 @@ namespace Section19
 [riemannZeta_order_witness](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/AnalyticClassNumber.lean)
 -/
 @[path]
-lemma riemannZeta_order_witness
+lemma riemannZeta_order_witness :
 -- imply
   ∃ g : ℂ → ℂ, AnalyticAt ℂ g 1 ∧ g 1 ≠ 0 ∧ ∀ᶠ z in 𝓝[≠] (1 : ℂ), riemannZeta z = (z - 1) ^ (-1 : ℤ) • g z := by
 -- proof
@@ -1952,7 +1951,6 @@ lemma subgroup_dual_annihilator_mem
   g ∈ (subgroupDualOrderIso G).symm (OrderDual.toDual K) ↔ ∀ χ ∈ K, χ g = 1 :=
 -- proof
   CommGroup.mem_subgroupOrderIsoSubgroupMonoidHom_symm_iff ℂ K g
-set_option backward.isDefEq.respectTransparency false in
 
 end Section19
 
@@ -1996,7 +1994,6 @@ lemma subgroup_dual_card_dual_annihilator
     Nat.card (↥K →* ℂˣ) :=
     Nat.card_congr (QuotientGroup.quotientKerEquivOfSurjective _ hsurj).toEquiv
   rw [← hcard_dd, hlagrange, hquot, hcard_K_dual]
-set_option backward.isDefEq.respectTransparency false in
 
 end Section19
 
@@ -2436,7 +2433,6 @@ lemma dedekindZetaTerm_one
   rw [Nat.card_eq_one_iff_exists]
   exact ⟨⟨⊤, Ideal.absNorm_top⟩, fun ⟨I, hI⟩ => by
     simp only [Subtype.mk.injEq]; exact Ideal.absNorm_eq_one_iff.mp hI⟩
-set_option maxHeartbeats 400000 in
 
 end Section19
 
@@ -2574,7 +2570,6 @@ lemma dedekindZetaTerm_mul_coprime
   push_cast
   rw [Complex.natCast_mul_natCast_cpow m n s]
   ring
-set_option maxHeartbeats 800000 in
 
 end Section19
 
@@ -2736,3 +2731,4 @@ private lemma subgroup_dual_card_annihilator_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

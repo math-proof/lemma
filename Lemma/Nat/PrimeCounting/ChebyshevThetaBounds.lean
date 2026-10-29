@@ -4,7 +4,6 @@ import Def.NumberTheory.PrimeCounting.ChebyshevThetaBounds
 open Nat hiding log
 open Finset Real
 open ArithmeticFunction hiding log id
-open MetaMathlibExt
 
 
 /--
@@ -23,7 +22,7 @@ private lemma ctb_log_fact (N : ℕ) : Real.log (N ! : ℝ) =
         add_comm]
   rw [← hsum]
   have h : ∀ n : ℕ, Real.log (n : ℝ) =
-    (ArithmeticFunction.vonMangoldt * ArithmeticFunction.zeta) n := by
+      (ArithmeticFunction.vonMangoldt * ArithmeticFunction.zeta) n := by
     intro n
     rw [ArithmeticFunction.vonMangoldt_mul_zeta]
     exact (ArithmeticFunction.log_apply).symm
@@ -65,8 +64,8 @@ private lemma ctb_rescale (N d : ℕ) (hd : 0 < d) :
   ∑ n ∈ Finset.Ioc 0 N,
     ArithmeticFunction.vonMangoldt n * (((N / n) / d : ℕ) : ℝ) := by
   have hcongr : ∀ n ∈ Finset.Ioc 0 (N / d),
-    ArithmeticFunction.vonMangoldt n * (((N / d) / n : ℕ) : ℝ) =
-    ArithmeticFunction.vonMangoldt n * (((N / n) / d : ℕ) : ℝ) := by
+      ArithmeticFunction.vonMangoldt n * (((N / d) / n : ℕ) : ℝ) =
+      ArithmeticFunction.vonMangoldt n * (((N / n) / d : ℕ) : ℝ) := by
     intro n _
     congr 1
     rw [Nat.div_div_eq_div_mul N d n, Nat.div_div_eq_div_mul N n d,
@@ -105,8 +104,8 @@ private lemma ctbU_eq_sum (N : ℕ) : ctbU N =
   apply Finset.sum_congr rfl
   intro n _
   have hc : ((ctbW (N / n) : ℤ) : ℝ) = ((N / n : ℕ) : ℝ) -
-    ((((N / n) / 2 : ℕ)) : ℝ) - ((((N / n) / 3 : ℕ)) : ℝ) -
-    ((((N / n) / 5 : ℕ)) : ℝ) + ((((N / n) / 30 : ℕ)) : ℝ) := by
+      ((((N / n) / 2 : ℕ)) : ℝ) - ((((N / n) / 3 : ℕ)) : ℝ) -
+      ((((N / n) / 5 : ℕ)) : ℝ) + ((((N / n) / 30 : ℕ)) : ℝ) := by
     unfold ctbW
     simp only [Int.cast_sub, Int.cast_add, Int.cast_natCast]
   rw [hc]
@@ -129,23 +128,23 @@ private lemma ctb_sandwich_nat (N : ℕ) :
   Chebyshev.psi (N : ℝ) - Chebyshev.psi (((N / 6 : ℕ)) : ℝ) ≤ ctbU N ∧
   ctbU N ≤ Chebyshev.psi (N : ℝ) := by
   have hW : ∑ n ∈ Finset.Ioc 0 N,
-    ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ) =
-    (∑ n ∈ Finset.Ioc 0 (N / 6),
-      ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ)) +
-    (∑ n ∈ Finset.Ioc (N / 6) N,
-      ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ)) :=
+        ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ) =
+      (∑ n ∈ Finset.Ioc 0 (N / 6),
+        ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ)) +
+      (∑ n ∈ Finset.Ioc (N / 6) N,
+        ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ)) :=
     (Finset.sum_Ioc_consecutive _ (Nat.zero_le _) (Nat.div_le_self N 6)).symm
   have hL : (∑ n ∈ Finset.Ioc 0 (N / 6), ArithmeticFunction.vonMangoldt n) +
-    (∑ n ∈ Finset.Ioc (N / 6) N, ArithmeticFunction.vonMangoldt n) =
-    ∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n :=
+      (∑ n ∈ Finset.Ioc (N / 6) N, ArithmeticFunction.vonMangoldt n) =
+      ∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n :=
     Finset.sum_Ioc_consecutive _ (Nat.zero_le _) (Nat.div_le_self N 6)
   have h1 : (0 : ℝ) ≤ ∑ n ∈ Finset.Ioc 0 (N / 6),
-    ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ) :=
+      ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ) :=
     Finset.sum_nonneg (fun n _ => mul_nonneg
       ArithmeticFunction.vonMangoldt_nonneg (by exact_mod_cast ctbW_nonneg _))
   have hterm : ∀ n ∈ Finset.Ioc (N / 6) N,
-    ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ) =
-    ArithmeticFunction.vonMangoldt n := by
+      ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ) =
+      ArithmeticFunction.vonMangoldt n := by
     intro n hn
     simp only [Finset.mem_Ioc] at hn
     have hn0 : 0 < n := lt_of_le_of_lt (Nat.zero_le _) hn.1
@@ -160,9 +159,9 @@ private lemma ctb_sandwich_nat (N : ℕ) :
         _ ≤ 6 * n := by gcongr
     rw [ctbW_eq_one _ hNn1 hNn6, Int.cast_one, mul_one]
   have h2 : ∑ n ∈ Finset.Ioc (N / 6) N,
-    ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ) =
-    (∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n) -
-    (∑ n ∈ Finset.Ioc 0 (N / 6), ArithmeticFunction.vonMangoldt n) := by
+      ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ) =
+      (∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n) -
+      (∑ n ∈ Finset.Ioc 0 (N / 6), ArithmeticFunction.vonMangoldt n) := by
     rw [Finset.sum_congr rfl hterm]
     linarith
   constructor
@@ -174,9 +173,9 @@ private lemma ctb_sandwich_nat (N : ℕ) :
     have hwR : ((ctbW (N / n) : ℤ) : ℝ) ≤ 1 := by
       exact_mod_cast ctbW_le_one _
     calc ArithmeticFunction.vonMangoldt n * ((ctbW (N / n) : ℤ) : ℝ)
-      ≤ ArithmeticFunction.vonMangoldt n * 1 :=
-        mul_le_mul_of_nonneg_left hwR
-          ArithmeticFunction.vonMangoldt_nonneg
+        ≤ ArithmeticFunction.vonMangoldt n * 1 :=
+          mul_le_mul_of_nonneg_left hwR
+            ArithmeticFunction.vonMangoldt_nonneg
       _ = ArithmeticFunction.vonMangoldt n := mul_one _
 
 /--
@@ -192,7 +191,7 @@ private lemma ctb_sandwich_real (x : ℝ) :
   have e1 : Chebyshev.psi x = Chebyshev.psi ((⌊x⌋₊ : ℕ) : ℝ) :=
     Chebyshev.psi_eq_psi_coe_floor x
   have e2 : Chebyshev.psi (x / 6) =
-    Chebyshev.psi ((((⌊x⌋₊ / 6 : ℕ))) : ℝ) := by
+      Chebyshev.psi ((((⌊x⌋₊ / 6 : ℕ))) : ℝ) := by
     rw [Chebyshev.psi_eq_psi_coe_floor (x / 6), h6]
   rw [e1, e2]
   exact ctb_sandwich_nat ⌊x⌋₊
@@ -217,14 +216,14 @@ private lemma ctb_log_fact_int_upper (n : ℕ) (hn : 1 ≤ n) :
       Real.log_sqrt (by norm_num)]
     ring
   have e2 : Real.log (2 * ((k + 1 : ℕ) : ℝ)) =
-    Real.log 2 + Real.log ((k + 1 : ℕ) : ℝ) :=
+      Real.log 2 + Real.log ((k + 1 : ℕ) : ℝ) :=
     Real.log_mul (by norm_num) hcast
   have e4 : ((k + 1 : ℕ) : ℝ) *
-    Real.log (((k + 1 : ℕ) : ℝ) / Real.exp 1) =
-    ((k + 1 : ℕ) : ℝ) * Real.log ((k + 1 : ℕ) : ℝ) -
-      ((k + 1 : ℕ) : ℝ) := by
+      Real.log (((k + 1 : ℕ) : ℝ) / Real.exp 1) =
+      ((k + 1 : ℕ) : ℝ) * Real.log ((k + 1 : ℕ) : ℝ) -
+        ((k + 1 : ℕ) : ℝ) := by
     have e3 : Real.log (((k + 1 : ℕ) : ℝ) / Real.exp 1) =
-      Real.log ((k + 1 : ℕ) : ℝ) - 1 := by
+        Real.log ((k + 1 : ℕ) : ℝ) - 1 := by
       rw [Real.log_div hcast (by positivity), Real.log_exp]
     rw [e3]
     ring
@@ -248,30 +247,32 @@ private lemma ctb_log_fact_floor_upper (y : ℝ) (hy : 1 ≤ y) :
     Real.log_le_log hpos_n hle
   have hint := ctb_log_fact_int_upper ⌊y⌋₊ hn1
   have hmul : y - ((⌊y⌋₊ : ℕ) : ℝ) ≤
-    y * Real.log y - y * Real.log ((⌊y⌋₊ : ℕ) : ℝ) := by
+      y * Real.log y - y * Real.log ((⌊y⌋₊ : ℕ) : ℝ) := by
     have hdiv : Real.log (y / ((⌊y⌋₊ : ℕ) : ℝ)) =
-      Real.log y - Real.log ((⌊y⌋₊ : ℕ) : ℝ) :=
+        Real.log y - Real.log ((⌊y⌋₊ : ℕ) : ℝ) :=
       Real.log_div (ne_of_gt hpos_y) (ne_of_gt hpos_n)
     have hbase := Real.one_sub_inv_le_log_of_pos
       (div_pos hpos_y hpos_n)
     rw [hdiv] at hbase
     have h := mul_le_mul_of_nonneg_left hbase (le_of_lt hpos_y)
     have hinv : y * (1 - (y / ((⌊y⌋₊ : ℕ) : ℝ))⁻¹) =
-      y - ((⌊y⌋₊ : ℕ) : ℝ) := by
+        y - ((⌊y⌋₊ : ℕ) : ℝ) := by
       have hy0 : y ≠ 0 := ne_of_gt hpos_y
       rw [inv_div, mul_sub, mul_one, ← mul_div_assoc,
         mul_div_cancel_left₀ _ hy0]
-    rwa [hinv, mul_sub] at h
+    rw [hinv, mul_sub] at h
+    exact h
   have hgap : (0 : ℝ) ≤ y * Real.log ((⌊y⌋₊ : ℕ) : ℝ) -
-    ((⌊y⌋₊ : ℕ) : ℝ) * Real.log ((⌊y⌋₊ : ℕ) : ℝ) := by
+      ((⌊y⌋₊ : ℕ) : ℝ) * Real.log ((⌊y⌋₊ : ℕ) : ℝ) := by
     have hnn : (0 : ℝ) ≤ Real.log ((⌊y⌋₊ : ℕ) : ℝ) :=
       Real.log_nonneg (by exact_mod_cast hn1)
     have hprod := mul_nonneg (sub_nonneg.mpr hle) hnn
     have hbridge : (y - ((⌊y⌋₊ : ℕ) : ℝ)) * Real.log ((⌊y⌋₊ : ℕ) : ℝ) =
-      y * Real.log ((⌊y⌋₊ : ℕ) : ℝ) -
-        ((⌊y⌋₊ : ℕ) : ℝ) * Real.log ((⌊y⌋₊ : ℕ) : ℝ) := by
+        y * Real.log ((⌊y⌋₊ : ℕ) : ℝ) -
+          ((⌊y⌋₊ : ℕ) : ℝ) * Real.log ((⌊y⌋₊ : ℕ) : ℝ) := by
       ring
-    rwa [hbridge] at hprod
+    rw [hbridge] at hprod
+    exact hprod
   linarith
 
 /--
@@ -293,13 +294,15 @@ private lemma ctb_stirling_lower_mono (a b : ℝ) (ha : 2 ≤ a) (hab : a ≤ b)
     have hinv : b * (1 - a / b) = b - a := by
       rw [mul_sub, mul_one, ← mul_div_assoc,
         mul_div_cancel_left₀ _ (ne_of_gt hpos_b)]
-    rwa [hinv] at h
+    rw [hinv] at h
+    exact h
   have h2 : Real.log b - Real.log a ≤ (b - a) / a := by
     have hbase2 := Real.log_le_sub_one_of_pos (div_pos hpos_b hpos_a)
     rw [hdiv] at hbase2
     have heq : b / a - 1 = (b - a) / a := by
       rw [sub_div, div_self ha0]
-    rwa [heq] at hbase2
+    rw [heq] at hbase2
+    exact hbase2
   have hla : 1 / (2 * a) ≤ Real.log a := by
     have hlog2 : (1 / 4 : ℝ) < Real.log 2 := by
       have h := Real.log_two_gt_d9
@@ -314,15 +317,16 @@ private lemma ctb_stirling_lower_mono (a b : ℝ) (ha : 2 ≤ a) (hab : a ≤ b)
     have heq : (b - a) * (1 / (2 * a)) = (1 / 2) * ((b - a) / a) := by
       have h2a : (2 : ℝ) * a ≠ 0 := mul_ne_zero (by norm_num) ha0
       field_simp
-    rwa [heq] at h
+    rw [heq] at h
+    exact h
   have hb1 : b * (Real.log b - Real.log a) =
-    b * Real.log b - b * Real.log a := mul_sub _ _ _
+      b * Real.log b - b * Real.log a := mul_sub _ _ _
   have hb2 : b * Real.log a - a * Real.log a = (b - a) * Real.log a := by
     ring
   have hg1 : (1 / 2 : ℝ) * (Real.log b - Real.log a) =
-    (1 / 2) * Real.log b - (1 / 2) * Real.log a := mul_sub _ _ _
+      (1 / 2) * Real.log b - (1 / 2) * Real.log a := mul_sub _ _ _
   have h2s : (1 / 2 : ℝ) * (Real.log b - Real.log a) ≤
-    (1 / 2) * ((b - a) / a) :=
+      (1 / 2) * ((b - a) / a) :=
     mul_le_mul_of_nonneg_left h2 (by norm_num)
   linarith
 
@@ -337,7 +341,7 @@ private lemma ctb_le_log_fact_floor (y : ℝ) (hy : 1 ≤ y) :
   have hpos_y : (0 : ℝ) < y := by linarith
   have hle : ((⌊y⌋₊ : ℕ) : ℝ) ≤ y := Nat.floor_le (by linarith)
   have hlt : y < ((⌊y⌋₊ : ℕ) : ℝ) + 1 := Nat.lt_floor_add_one y
-  obtain hn_eq | hn_ge := eq_or_lt_of_le hn1
+  rcases eq_or_lt_of_le hn1 with hn_eq | hn_ge
   · -- Case `⌊y⌋₊ = 1`: the right side is `0`.
     have hn1' : ⌊y⌋₊ = 1 := hn_eq.symm
     rw [hn1', Nat.factorial_one, Nat.cast_one, Real.log_one]
@@ -350,7 +354,7 @@ private lemma ctb_le_log_fact_floor (y : ℝ) (hy : 1 ≤ y) :
         mul_nonneg (by linarith) (by linarith)
       linear_combination hnn
     have hcomb : y * Real.log y - (1 / 2) * Real.log y =
-      (y - 1 / 2) * Real.log y := by
+        (y - 1 / 2) * Real.log y := by
       ring
     linarith
   · -- Case `⌊y⌋₊ ≥ 2`: Stirling's lower bound at `⌊y⌋₊ + 1`, then monotonicity.
@@ -359,7 +363,7 @@ private lemma ctb_le_log_fact_floor (y : ℝ) (hy : 1 ≤ y) :
       omega
     have hS := Stirling.le_log_factorial_stirling hne
     have hfact : Real.log ((((⌊y⌋₊ + 1 : ℕ)) ! : ℕ) : ℝ) =
-      Real.log (((⌊y⌋₊ + 1 : ℕ)) : ℝ) + Real.log ((⌊y⌋₊ ! : ℕ) : ℝ) := by
+        Real.log (((⌊y⌋₊ + 1 : ℕ)) : ℝ) + Real.log ((⌊y⌋₊ ! : ℕ) : ℝ) := by
       rw [Nat.factorial_succ, Nat.cast_mul,
         Real.log_mul (by exact_mod_cast hne)
           (by exact_mod_cast Nat.factorial_ne_zero _)]
@@ -372,8 +376,8 @@ private lemma ctb_le_log_fact_floor (y : ℝ) (hy : 1 ≤ y) :
       rw [Real.log_exp] at h
       linarith
     have hM : ((⌊y⌋₊ + 1 : ℕ) : ℝ) * Real.log ((⌊y⌋₊ + 1 : ℕ) : ℝ) -
-      ((⌊y⌋₊ + 1 : ℕ) : ℝ) - (1 / 2) * Real.log ((⌊y⌋₊ + 1 : ℕ) : ℝ) +
-      1 / 2 ≤ Real.log ((⌊y⌋₊ ! : ℕ) : ℝ) := by
+        ((⌊y⌋₊ + 1 : ℕ) : ℝ) - (1 / 2) * Real.log ((⌊y⌋₊ + 1 : ℕ) : ℝ) +
+        1 / 2 ≤ Real.log ((⌊y⌋₊ ! : ℕ) : ℝ) := by
       linarith [hS, hfact, h2pi]
     have h2y : (2 : ℝ) ≤ y := by
       have h2 : 2 ≤ ⌊y⌋₊ := hn_ge
@@ -594,7 +598,7 @@ private lemma ctbU_lt_upper (x : ℝ) (hx : 1 ≤ x) :
     Real.log_div (ne_of_gt hx0) (by norm_num)
   have hid := ctb_main_identity x hx0
   have h30 := ctb_log30_eq
-  obtain hsmall | hbig := lt_or_ge x 30
+  rcases lt_or_ge x 30 with hsmall | hbig
   · rcases lt_or_ge x 5 with hsmall5 | hmid
     · -- Case `1 ≤ x < 5`.
       have hn1 : 1 ≤ ⌊x⌋₊ := (Nat.one_le_floor_iff x).mpr (by linarith)
@@ -608,7 +612,7 @@ private lemma ctbU_lt_upper (x : ℝ) (hx : 1 ≤ x) :
         unfold ctbU
         rw [hn30, Nat.factorial_zero, Nat.cast_one, Real.log_one]
         have hsub : ∀ d : ℕ, (0 : ℝ) ≤
-          Real.log ((((⌊x⌋₊ / d : ℕ)) ! : ℕ) : ℝ) := by
+            Real.log ((((⌊x⌋₊ / d : ℕ)) ! : ℕ) : ℝ) := by
           intro d
           apply Real.log_nonneg
           have h1d : 1 ≤ (⌊x⌋₊ / d)! :=
@@ -617,7 +621,7 @@ private lemma ctbU_lt_upper (x : ℝ) (hx : 1 ≤ x) :
         linarith [hsub 2, hsub 3, hsub 5]
       have hpos : 0 < ctbA0 * x := mul_pos ctbA0_pos hx0
       have hscale : (5 / 2 : ℝ) * Real.log ((⌊x⌋₊ : ℕ) : ℝ) ≤
-        (5 / 2) * Real.log x :=
+          (5 / 2) * Real.log x :=
         mul_le_mul_of_nonneg_left hlogx (by norm_num)
       linarith
     · -- Case `5 ≤ x < 30`.
@@ -642,7 +646,7 @@ private lemma ctbU_lt_upper (x : ℝ) (hx : 1 ≤ x) :
           rw [mul_sub, mul_inv_cancel₀ (ne_of_gt ht0), mul_one]
         rw [heq] at h3
         have hb : (x / 30) * (-Real.log (x / 30)) =
-          -((x / 30) * Real.log (x / 30)) := by
+            -((x / 30) * Real.log (x / 30)) := by
           ring
         linarith
       have h30x : (150 : ℝ) ≤ 30 * x := by linarith
@@ -695,7 +699,7 @@ private lemma ctb_lower_lt_U (x : ℝ) (hx : 1 < x) :
   have f30 : ⌊x / 30⌋₊ = ⌊x⌋₊ / 30 := by
     have hcast : (30 : ℝ) = ((30 : ℕ) : ℝ) := by norm_num
     rw [hcast, Nat.floor_div_natCast]
-  obtain hsmall | hbig := lt_or_ge x 30
+  rcases lt_or_ge x 30 with hsmall | hbig
   · rcases lt_or_ge x 5 with hsmall5 | hmid
     · -- Case `1 < x < 5`: `U ≥ 0` and the chord bound.
       have hU0 : (0 : ℝ) ≤ ctbU ⌊x⌋₊ := by
@@ -715,25 +719,27 @@ private lemma ctb_lower_lt_U (x : ℝ) (hx : 1 < x) :
       rw [Real.one_rpow, one_mul] at hamgm
       have hx5t : (5 : ℝ) ^ t ≤ x := by
         have heq : (1 - t) * 1 + t * 5 = x := by rw [htx]; ring
-        rwa [heq] at hamgm
+        rw [heq] at hamgm
+        exact hamgm
       have hlogt : t * Real.log 5 ≤ Real.log x := by
         have h := Real.log_le_log (by positivity : (0 : ℝ) < (5 : ℝ) ^ t) hx5t
-        rwa [Real.log_rpow (by norm_num)] at h
+        rw [Real.log_rpow (by norm_num)] at h
+        exact h
       have hc0 : ctbA0 - 1 < 0 := by linarith [ctbA0_lt_one]
       have hc1 : 5 * ctbA0 - (5 / 2) * Real.log 5 - 1 < 0 := by
         linarith [ctb_fiveA0]
       have hcomb : ctbA0 * x - (5 / 2) * (t * Real.log 5) - 1 =
-        (1 - t) * (ctbA0 - 1) +
-          t * (5 * ctbA0 - (5 / 2) * Real.log 5 - 1) := by
+          (1 - t) * (ctbA0 - 1) +
+            t * (5 * ctbA0 - (5 / 2) * Real.log 5 - 1) := by
         rw [htx]
         ring
       have htc : (1 - t) * (ctbA0 - 1) +
-        t * (5 * ctbA0 - (5 / 2) * Real.log 5 - 1) < 0 := by
-        obtain h0 | hpos := eq_or_lt_of_le ht0
+          t * (5 * ctbA0 - (5 / 2) * Real.log 5 - 1) < 0 := by
+        rcases eq_or_lt_of_le ht0 with h0 | hpos
         · rw [← h0]
           simpa using hc0
         · have e1 : (1 - t) * (ctbA0 - 1) ≤ 0 :=
-          mul_nonpos_of_nonneg_of_nonpos (by linarith) (le_of_lt hc0)
+            mul_nonpos_of_nonneg_of_nonpos (by linarith) (le_of_lt hc0)
           have e2t : t * (5 * ctbA0 - (5 / 2) * Real.log 5 - 1) < 0 :=
             mul_neg_of_pos_of_neg hpos hc1
           linarith
@@ -816,7 +822,7 @@ private lemma ctb_psi_upper_aux (k : ℕ) : ∀ x : ℝ, 1 ≤ x → x < (6 : �
       Real.log_div (ne_of_gt hx0) (by norm_num)
     have hle := (ctb_sandwich_real x).1
     have hU := ctbU_lt_upper x (by linarith)
-    obtain hx6 | hx6 := lt_or_ge x 6
+    rcases lt_or_ge x 6 with hx6 | hx6
     · -- Base: `x < 6`, so `ψ (x / 6) = 0`.
       have hpsi6 : Chebyshev.psi (x / 6) = 0 :=
         Chebyshev.psi_eq_zero_of_lt_two (by linarith)
@@ -824,25 +830,25 @@ private lemma ctb_psi_upper_aux (k : ℕ) : ∀ x : ℝ, 1 ≤ x → x < (6 : �
       have hψ : Chebyshev.psi x < ctbA0 * x + (5 / 2) * Real.log x := by
         linarith
       have g1 : (5 / (4 * Real.log 6)) * (Real.log 6 * Real.log x) =
-        (5 / 4) * Real.log x := by
+          (5 / 4) * Real.log x := by
         rw [← mul_assoc, hCL]
       have g2 : (5 / (4 * Real.log 6)) * (Real.log 6 / 2) ^ 2 =
-        (5 / 16) * Real.log 6 := by
+          (5 / 16) * Real.log 6 := by
         have e : (Real.log 6 / 2) ^ 2 =
-          Real.log 6 * (Real.log 6 / 4) := by
+            Real.log 6 * (Real.log 6 / 4) := by
           ring
         rw [e, ← mul_assoc, hCL]
         ring
       have hbridge : (5 / (4 * Real.log 6)) *
-        (Real.log x - Real.log 6 / 2) ^ 2 =
-        (5 / (4 * Real.log 6)) * (Real.log x) ^ 2 - (5 / 4) * Real.log x +
-          (5 / 16) * Real.log 6 := by
+          (Real.log x - Real.log 6 / 2) ^ 2 =
+          (5 / (4 * Real.log 6)) * (Real.log x) ^ 2 - (5 / 4) * Real.log x +
+            (5 / 16) * Real.log 6 := by
         have e : (Real.log x - Real.log 6 / 2) ^ 2 = (Real.log x) ^ 2 -
-          Real.log 6 * Real.log x + (Real.log 6 / 2) ^ 2 := by
+            Real.log 6 * Real.log x + (Real.log 6 / 2) ^ 2 := by
           ring
         rw [e, mul_add, mul_sub, g1, g2]
       have hsq : (0 : ℝ) ≤ (5 / (4 * Real.log 6)) *
-        (Real.log x - Real.log 6 / 2) ^ 2 :=
+          (Real.log x - Real.log 6 / 2) ^ 2 :=
         mul_nonneg hC (sq_nonneg _)
       rw [hbridge] at hsq
       have hA0x : (0 : ℝ) < (1 / 5) * ctbA0 * x :=
@@ -851,8 +857,8 @@ private lemma ctb_psi_upper_aux (k : ℕ) : ∀ x : ℝ, 1 ≤ x → x < (6 : �
         have h := ctb_log6_lt_two
         linarith
       have hbase : (0 : ℝ) < (1 / 5) * ctbA0 * x +
-        ((5 / (4 * Real.log 6)) * (Real.log x) ^ 2 - (5 / 4) * Real.log x +
-          1) := by
+          ((5 / (4 * Real.log 6)) * (Real.log x) ^ 2 - (5 / 4) * Real.log x +
+            1) := by
         linarith
       linarith
     · -- Step: `ψ x ≤ U + ψ (x / 6)`, induction at `x / 6`.
@@ -862,25 +868,25 @@ private lemma ctb_psi_upper_aux (k : ℕ) : ∀ x : ℝ, 1 ≤ x → x < (6 : �
       have hIH := ih (x / 6) (by linarith) h6k
       rw [e6] at hIH
       have g3 : (5 / (4 * Real.log 6)) * (2 * Real.log 6 * Real.log x) =
-        (5 / 2) * Real.log x := by
+          (5 / 2) * Real.log x := by
         have e : (2 : ℝ) * Real.log 6 * Real.log x =
-          Real.log 6 * (2 * Real.log x) := by
+            Real.log 6 * (2 * Real.log x) := by
           ring
         rw [e, ← mul_assoc, hCL]
         ring
       have g4 : (5 / (4 * Real.log 6)) * (Real.log 6) ^ 2 =
-        (5 / 4) * Real.log 6 := by
+          (5 / 4) * Real.log 6 := by
         have e : (Real.log 6) ^ 2 = Real.log 6 * Real.log 6 := by ring
         rw [e, ← mul_assoc, hCL]
       have hsq2 : (5 / (4 * Real.log 6)) * (Real.log x - Real.log 6) ^ 2 =
-        (5 / (4 * Real.log 6)) * (Real.log x) ^ 2 - (5 / 2) * Real.log x +
-          (5 / 4) * Real.log 6 := by
+          (5 / (4 * Real.log 6)) * (Real.log x) ^ 2 - (5 / 2) * Real.log x +
+            (5 / 4) * Real.log 6 := by
         have e : (Real.log x - Real.log 6) ^ 2 = (Real.log x) ^ 2 -
-          (2 * Real.log 6 * Real.log x) + (Real.log 6) ^ 2 := by
+            (2 * Real.log 6 * Real.log x) + (Real.log 6) ^ 2 := by
           ring
         rw [e, mul_add, mul_sub, g3, g4]
       have hm : (5 / 4 : ℝ) * (Real.log x - Real.log 6) =
-        (5 / 4) * Real.log x - (5 / 4) * Real.log 6 := mul_sub _ _ _
+          (5 / 4) * Real.log x - (5 / 4) * Real.log 6 := mul_sub _ _ _
       have hb6 : (6 / 5 : ℝ) * ctbA0 * (x / 6) = (1 / 5) * ctbA0 * x := by
         ring
       linarith
@@ -921,8 +927,8 @@ private lemma ctb_pair_sum_le (b : ℕ → ℝ) (M : ℕ)
       omega
     have hpair := h (M + 1) (by simp)
     have eL : ∑ n ∈ Finset.Icc 1 (2 * (M + 1) + 1), b n =
-      (∑ n ∈ Finset.Icc 1 (2 * M + 1), b n) + b (2 * (M + 1)) +
-        b (2 * (M + 1) + 1) := by
+        (∑ n ∈ Finset.Icc 1 (2 * M + 1), b n) + b (2 * (M + 1)) +
+          b (2 * (M + 1) + 1) := by
       have e1 : 2 * (M + 1) + 1 = (2 * M + 1) + 1 + 1 := by ring
       rw [e1, Finset.sum_Icc_succ_top (by omega),
         Finset.sum_Icc_succ_top (by omega)]
@@ -930,7 +936,7 @@ private lemma ctb_pair_sum_le (b : ℕ → ℝ) (M : ℕ)
       have p2 : (2 * M + 1) + 1 = 2 * (M + 1) := by ring
       rw [p1, p2]
     have eR : ∑ j ∈ Finset.Icc 1 (M + 1), b (2 * j) =
-      (∑ j ∈ Finset.Icc 1 M, b (2 * j)) + b (2 * (M + 1)) := by
+        (∑ j ∈ Finset.Icc 1 M, b (2 * j)) + b (2 * (M + 1)) := by
       have e1 : M + 1 = M + 1 := rfl
       rw [e1, Finset.sum_Icc_succ_top (by omega : 1 ≤ M + 1)]
     rw [eL, eR]
@@ -960,8 +966,8 @@ private lemma ctb_psi_lower_theta (x : ℝ) (hx : 1 ≤ x) :
   have hx0 : (0 : ℝ) ≤ x := by linarith
   have h1x : (1 : ℝ) ≤ x := hx
   have hmono : ∀ j ∈ Finset.Icc 1 ⌊Real.log x / Real.log 2⌋₊,
-    Chebyshev.theta (x ^ ((1 : ℝ) / (((2 * j + 1 : ℕ)) : ℝ))) ≤
-    Chebyshev.theta (x ^ ((1 : ℝ) / (((2 * j : ℕ)) : ℝ))) := by
+      Chebyshev.theta (x ^ ((1 : ℝ) / (((2 * j + 1 : ℕ)) : ℝ))) ≤
+      Chebyshev.theta (x ^ ((1 : ℝ) / (((2 * j : ℕ)) : ℝ))) := by
     intro j hj
     simp only [Finset.mem_Icc] at hj
     have hj1 : (1 : ℝ) ≤ ((j : ℕ) : ℝ) := by exact_mod_cast hj.1
@@ -975,7 +981,7 @@ private lemma ctb_psi_lower_theta (x : ℝ) (hx : 1 ≤ x) :
     apply Real.rpow_le_rpow_of_exponent_le h1x
     exact one_div_le_one_div_of_le h2j hle
   have hMle : ⌊Real.log (Real.sqrt x) / Real.log 2⌋₊ ≤
-    ⌊Real.log x / Real.log 2⌋₊ := by
+      ⌊Real.log x / Real.log 2⌋₊ := by
     apply Nat.floor_le_floor
     have hlogsqrt : Real.log (Real.sqrt x) ≤ Real.log x := by
       rw [Real.log_sqrt hx0]
@@ -984,19 +990,19 @@ private lemma ctb_psi_lower_theta (x : ℝ) (hx : 1 ≤ x) :
     have h2 : (0 : ℝ) < Real.log 2 := Real.log_pos (by norm_num)
     gcongr
   have h1 : Chebyshev.psi x =
-    ∑ n ∈ Finset.Icc 1 (2 * ⌊Real.log x / Real.log 2⌋₊ + 1),
-      Chebyshev.theta (x ^ ((1 : ℝ) / ((n : ℕ) : ℝ))) :=
+      ∑ n ∈ Finset.Icc 1 (2 * ⌊Real.log x / Real.log 2⌋₊ + 1),
+        Chebyshev.theta (x ^ ((1 : ℝ) / ((n : ℕ) : ℝ))) :=
     Chebyshev.psi_eq_sum_theta' hx0 (by omega)
   have hcomb : ∑ n ∈ Finset.Icc 1 (2 * ⌊Real.log x / Real.log 2⌋₊ + 1),
-    Chebyshev.theta (x ^ ((1 : ℝ) / ((n : ℕ) : ℝ))) ≤
-    Chebyshev.theta (x ^ ((1 : ℝ) / ((((1 : ℕ))) : ℝ))) +
-      2 * ∑ j ∈ Finset.Icc 1 ⌊Real.log x / Real.log 2⌋₊,
-        Chebyshev.theta (x ^ ((1 : ℝ) / ((((2 * j : ℕ))) : ℝ))) :=
+        Chebyshev.theta (x ^ ((1 : ℝ) / ((n : ℕ) : ℝ))) ≤
+      Chebyshev.theta (x ^ ((1 : ℝ) / ((((1 : ℕ))) : ℝ))) +
+        2 * ∑ j ∈ Finset.Icc 1 ⌊Real.log x / Real.log 2⌋₊,
+          Chebyshev.theta (x ^ ((1 : ℝ) / ((((2 * j : ℕ))) : ℝ))) :=
     ctb_pair_sum_le (fun n => Chebyshev.theta (x ^ ((1 : ℝ) / ((n : ℕ) : ℝ))))
       _ (fun j hj => hmono j hj)
   have hpsi2 : Chebyshev.psi (Real.sqrt x) =
-    ∑ j ∈ Finset.Icc 1 ⌊Real.log x / Real.log 2⌋₊,
-      Chebyshev.theta (x ^ ((1 : ℝ) / ((((2 * j : ℕ))) : ℝ))) := by
+      ∑ j ∈ Finset.Icc 1 ⌊Real.log x / Real.log 2⌋₊,
+        Chebyshev.theta (x ^ ((1 : ℝ) / ((((2 * j : ℕ))) : ℝ))) := by
     have hbase := Chebyshev.psi_eq_sum_theta'
       (Real.sqrt_nonneg x) hMle
     rw [hbase]
@@ -1013,10 +1019,11 @@ private lemma ctb_psi_lower_theta (x : ℝ) (hx : 1 ≤ x) :
     have hj0' : ((j : ℕ) : ℝ) ≠ 0 := hj0
     field_simp
   have hb1 : Chebyshev.theta (x ^ ((1 : ℝ) / ((((1 : ℕ))) : ℝ))) =
-    Chebyshev.theta x := by
+      Chebyshev.theta x := by
     congr 1
     rw [Nat.cast_one, div_one, Real.rpow_one]
   linarith
+
 section
 
 namespace MetaMathlibExt
@@ -1026,19 +1033,28 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma chebyshev_theta_explicit_bounds
-  {x : ℝ}
+  (x : ℝ)
 -- given
   (hx : 1 < x) :
--- imply
-  let A : ℝ := by
--- proof
+  let A : ℝ :=
+    Real.log (((2 : ℝ) ^ ((1 / 2 : ℝ)) * (3 : ℝ) ^ ((1 / 3 : ℝ)) *
+      (5 : ℝ) ^ ((1 / 5 : ℝ))) / (30 : ℝ) ^ ((1 / 30 : ℝ)));
+  Chebyshev.theta x <
+    (6 / 5 : ℝ) * A * x - A * Real.sqrt x +
+    (5 / (4 * Real.log 6)) * (Real.log x) ^ 2 +
+    (5 / 2 : ℝ) * Real.log x + 2 ∧
+  Chebyshev.theta x >
+    A * x - (12 / 5 : ℝ) * A * Real.sqrt x -
+    (5 / (8 * Real.log 6)) * (Real.log x) ^ 2 -
+    (15 / 4 : ℝ) * Real.log x - 3 := by
   intro A
   have hA : A = ctbA0 := ctbA0_eq_wanted
   rw [hA]
   have hx0 : (0 : ℝ) < x := by linarith
   have hs1 : (1 : ℝ) < Real.sqrt x := by
     have h := Real.sqrt_lt_sqrt (by norm_num : (0 : ℝ) ≤ 1) hx
-    rwa [Real.sqrt_one] at h
+    rw [Real.sqrt_one] at h
+    exact h
   have hL0 : Real.log 6 ≠ 0 := ne_of_gt ctb_log6_pos
   have h12a := ctb_theta_le x (le_of_lt hx)
   have h12b := ctb_psi_lower_theta x (le_of_lt hx)
@@ -1052,13 +1068,13 @@ lemma chebyshev_theta_explicit_bounds
   refine ⟨?_, ?_⟩
   · linarith
   · have hsq_bridge : 2 * ((5 / (4 * Real.log 6)) * (Real.log x / 2) ^ 2) =
-    (5 / (8 * Real.log 6)) * (Real.log x) ^ 2 := by
-    field_simp
-    ring
+        (5 / (8 * Real.log 6)) * (Real.log x) ^ 2 := by
+      field_simp
+      ring
     linarith
 
 end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

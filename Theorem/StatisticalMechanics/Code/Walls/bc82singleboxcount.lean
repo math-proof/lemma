@@ -30,8 +30,8 @@ variable {d : ℕ}
 
 theorem bc82_dc_expectation_identity (μ : Measure (ConfigSpace (Sym2 (Site d))))
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) (L R : ℕ) :
-    ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-      = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ :=
+    ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+      = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ :=
   bc62_coarse_expectation μ hinv L R
 
 
@@ -111,8 +111,8 @@ theorem bc82_cardinal_verdict (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsPr
     (hd : 1 ≤ d) (L : ℕ)
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) :
     
-    (∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-      = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ) ∧
+    (∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+      = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ) ∧
     
     (∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R →
       bc61_coarseTcount ω L R ≤ (2 * L + 1) ^ d * boxSV_boundaryCard d R) ∧
@@ -133,8 +133,8 @@ theorem bc82_status :
     
     (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) (L R : ℕ),
       IsTranslationInvariant (G := Multiplicative (Site 2)) μ →
-      ((boxFinsetBK 2 R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-        = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ) ∧
+      ((boxFinsetBK 2 R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+        = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ) ∧
     
     (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bc73_SublatticeForest ω L R →
       bc61_coarseTcount ω L R ≤ (2 * L + 1) ^ 2 * boxSV_boundaryCard 2 R) ∧

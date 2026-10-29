@@ -9,9 +9,8 @@ namespace MetaMathlibExt
 
 /--
 [sml_assemble](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/SkolemMahlerLech.lean)
--/
-@[path]
 finite set of progressions. -/
+@[path]
 private lemma sml_assemble {K : Type*} [Zero K] (u : ℕ → K) (N : ℕ) (hN : 0 < N)
   (h : ∀ a < N, (∀ t, u (a + N * t) = 0) ∨ (Set.Finite {t | u (a + N * t) = 0})) :
   ∃ (F : Finset ℕ) (P : Finset (ℕ × ℕ)), (∀ p ∈ P, 0 < p.2) ∧
@@ -983,4 +982,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

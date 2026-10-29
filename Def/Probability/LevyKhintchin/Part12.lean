@@ -33,7 +33,7 @@ probability measures, with the hard truncation convention at radius one.
 
 namespace MetaMathlibExt
 
-noncomputable def lkCanonicalMassBound (L : ℝ → ℂ) : ℝ≥0 :=
+noncomputable def lkCanonicalMassBound (L : ℝ → ℂ) : NNReal :=
   ⟨16 * ∫ t : ℝ in (-1)..1, ‖L t‖ * Real.exp ‖L t‖, by
     apply mul_nonneg (by norm_num)
     apply intervalIntegral.integral_nonneg (by norm_num)

@@ -20,11 +20,11 @@ namespace StatMech
 
 namespace Universality
 
-noncomputable def stt_starMass (p0 p1 p2 : ℝ) (c : Bool × Bool × Bool) : ℝ≥0∞ :=
+noncomputable def stt_starMass (p0 p1 p2 : ℝ) (c : Bool × Bool × Bool) : ENNReal :=
   ∑ ω : LocalConfig, if stt_starConn ω = c then stt_triW p0 p1 p2 ω else 0
 
 
-noncomputable def stt_triMass (p0 p1 p2 : ℝ) (c : Bool × Bool × Bool) : ℝ≥0∞ :=
+noncomputable def stt_triMass (p0 p1 p2 : ℝ) (c : Bool × Bool × Bool) : ENNReal :=
   ∑ ω : LocalConfig, if stt_triConn ω = c then stt_triW p0 p1 p2 ω else 0
 
 

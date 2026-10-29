@@ -549,11 +549,11 @@ end MathlibExt.NumberTheory.PrimeCounting.BrunTwinPrimeReciprocalsWanted
 
 namespace MathlibExt.NumberTheory.PrimeCounting.BrunTwinPrimeReciprocalsWanted
 
+open ArithmeticFunction in
 /--
 [summable_of_sum_Ico_pow_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/BrunTwinPrimeReciprocals.lean)
 -/
 @[path]
-open ArithmeticFunction in
 private lemma summable_of_sum_Ico_pow_le (f c : ℕ → ℝ) (B : ℕ) (hB : 2 ≤ B)
   (hf : ∀ n, 0 ≤ f n) (hc : Summable c)
   (hblock : ∀ j, ∑ n ∈ Finset.Ico (B ^ j) (B ^ (j + 1)), f n ≤ c j) :
@@ -746,4 +746,4 @@ private lemma brun_twin_prime_reciprocal_series_summable_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

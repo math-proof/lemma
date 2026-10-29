@@ -33,7 +33,7 @@ open StatMech.RSW.Strip
 
 theorem bernoulli_finiteCylinderPositivelyAssociated
     {E : Type*} [Countable E]
-    (p : ℝ≥0) (hp : p ≤ 1) :
+    (p : NNReal) (hp : p ≤ 1) :
     FiniteCylinderPositivelyAssociated
       (bernoulliProductMeasure (E := E) p hp) := by
   classical
@@ -52,7 +52,7 @@ theorem rba_selfDualMeasure_finiteCylinderPositivelyAssociated :
     FiniteCylinderPositivelyAssociated rba_selfDualMeasure := by
   simpa only [rba_selfDualMeasure] using
     (bernoulli_finiteCylinderPositivelyAssociated
-      (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one)
+      (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one)
 
 
 theorem FiniteCylinderPositivelyAssociated.triple

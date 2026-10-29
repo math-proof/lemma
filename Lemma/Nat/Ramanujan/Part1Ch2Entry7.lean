@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry7
@@ -10,8 +9,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry7
 -/
 @[path]
 lemma ramanujan_part1_ch2_entry7
-  {n : ℝ}
-  {r : ℕ}
+  (n : ℝ)
+  (r : ℕ)
 -- given
   (hn : 0 < n) :
 -- imply
@@ -66,4 +65,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry7
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

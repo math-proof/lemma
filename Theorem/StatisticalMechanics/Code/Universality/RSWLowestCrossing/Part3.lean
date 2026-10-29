@@ -85,7 +85,7 @@ theorem rlc_firstWitness_inter_pairwiseDisjoint {N : ℕ}
 
 
 theorem rlc_exploration_lower_bound {N : ℕ} [Countable E] [DecidableEq E]
-    (p : ℝ≥0) (hp : p ≤ 1)
+    (p : NNReal) (hp : p ≤ 1)
     (W X : Fin N → Set (ConfigSpace E))
     (T U : Fin N → Finset E) (Goal : Set (ConfigSpace E)) (c : ℝ)
     (_hc : 0 ≤ c)
@@ -135,7 +135,7 @@ theorem rlc_exploration_lower_bound {N : ℕ} [Countable E] [DecidableEq E]
 
 theorem rlc_stoppingPartition_lower_bound {I : Type*} [Fintype I]
     [Countable E] [DecidableEq E]
-    (p : ℝ≥0) (hp : p ≤ 1)
+    (p : NNReal) (hp : p ≤ 1)
     (H Goal : Set (ConfigSpace E))
     (Part X : I → Set (ConfigSpace E))
     (T U : I → Finset E) (c : ℝ) (_hc : 0 ≤ c)
@@ -185,7 +185,7 @@ theorem rlc_stoppingPartition_lower_bound {I : Type*} [Fintype I]
 
 theorem rlc_bernoulli_rsw_stopping_sixth_power
     {I : Type*} [Fintype I] [Countable E] [DecidableEq E]
-    (p : ℝ≥0) (hp : p ≤ 1) (α : ℝ) (hα : 0 ≤ α)
+    (p : NNReal) (hp : p ≤ 1) (α : ℝ) (hα : 0 ≤ α)
     (E₀ E₁ Goal : Set (ConfigSpace E))
     (S₀ S₁ : Finset E)
     (hE₀inc : IsIncreasing E₀) (hE₁inc : IsIncreasing E₁)
@@ -222,7 +222,7 @@ theorem rlc_bernoulli_rsw_stopping_sixth_power
 
 
 theorem rlc_bernoulli_rsw_sixth_power {N : ℕ} [Countable E] [DecidableEq E]
-    (p : ℝ≥0) (hp : p ≤ 1) (α : ℝ) (hα : 0 ≤ α)
+    (p : NNReal) (hp : p ≤ 1) (α : ℝ) (hα : 0 ≤ α)
     (E₀ E₁ Goal : Set (ConfigSpace E))
     (S₀ S₁ : Finset E)
     (hE₀inc : IsIncreasing E₀) (hE₁inc : IsIncreasing E₁)

@@ -125,7 +125,7 @@ theorem dependsOn_inter {E : Type*} {A B : Set (ConfigSpace E)} {T U : Set E}
   rw [hA (fun e he => h e (Or.inl he)), hB (fun e he => h e (Or.inr he))]
 
 
-theorem offCluster_factor (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem offCluster_factor (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (K : Finset (Site d)) (x y : Site d) (n : ℕ)
     (hxK : x ∈ K) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
@@ -155,7 +155,7 @@ theorem offClusterBox_subset_crossingFrom (C : Set (Site d)) (y : Site d) (n : �
   exact ⟨z, hconn.connected, hzbox⟩
 
 
-theorem offClusterBox_crossProb_le (p : ℝ≥0) (hp : p ≤ 1) (C : Set (Site d)) (y : Site d)
+theorem offClusterBox_crossProb_le (p : NNReal) (hp : p ≤ 1) (C : Set (Site d)) (y : Site d)
     {L m n : ℕ} (hy : y ∈ box d L) (hmLn : m + L ≤ n) (hm : 1 ≤ m) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
         {ω | offClusterBoxCrossing d C y n ω}

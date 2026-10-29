@@ -79,7 +79,7 @@ theorem shr_meanfield_beta (J β m fp' : ℝ) (f : ℝ → ℝ) (hJ : 0 < J) (h�
   linarith [step0, step1]
 
 
-theorem shr_meanfield_beta_crossProbReal {q : ℝ≥0} (J β : ℝ) (hJ : 0 < J) (hβ : 0 < β)
+theorem shr_meanfield_beta_crossProbReal {q : NNReal} (J β : ℝ) (hJ : 0 < J) (hβ : 0 < β)
     (hq1 : (q : ℝ) < 1) (htpc0 : 0 < (tildePc d : ℝ)) (n : ℕ)
     (ht : pBeta J β ∈ Ioo (tildePc d : ℝ) (q : ℝ)) :
     HasDerivAt (fun b => crossProbReal d (n + 1) (pBeta J b))

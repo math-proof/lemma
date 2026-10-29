@@ -4,6 +4,7 @@ import Theorem.NumberTheory.NumberField.RayClass.Modulus.Part5
 open scoped nonZeroDivisors
 open NumberField
 open Modulus
+open Classical
 
 
 namespace NumberField.Modulus
@@ -183,4 +184,4 @@ private lemma infinite_infinitePart_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

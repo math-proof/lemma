@@ -29,7 +29,7 @@ private lemma cauchy_of_tendsto_eq
 -- given
   (hF : Tendsto F atTop (𝓝 L)) :
 -- imply
-  ∀ c > 0, ∀ᶠ x in atTop, ∀ y, x ≤ y → := by
+  ∀ c > 0, ∀ᶠ x in atTop, ∀ y, x ≤ y → |F y - F x| < c := by
 -- proof
   apply IntegralCriterion.cauchy_of_tendsto hF
 

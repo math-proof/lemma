@@ -35,7 +35,7 @@ def IsFieldErgodic (mu : Measure (NonnegativeField d)) : Prop :=
       mu s = 0 ∨ mu s = mu Set.univ
 
 
-def raiseField (xi : NonnegativeField d) (x : Site d) (r : ℝ≥0) :
+def raiseField (xi : NonnegativeField d) (x : Site d) (r : NNReal) :
     NonnegativeField d := fun y => if y = x then max r (xi x) else xi y
 
 end StatMech.FrontierA

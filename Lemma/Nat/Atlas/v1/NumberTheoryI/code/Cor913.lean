@@ -22,7 +22,7 @@ lemma Polynomial.eval_and_derivative_eval_eq_zero_iff
     have hdvd : X ^ 2 ∣ taylor a f := by
       rw [X_pow_dvd_iff]
       intro d hd
-      obtain _ | _ | _ <;> simp_all := d
+      interval_cases d <;> simp_all
     obtain ⟨g, hg⟩ := hdvd
     refine ⟨taylor (-a) g, ?_⟩
     have key : f = taylor (-a) (taylor a f) := by

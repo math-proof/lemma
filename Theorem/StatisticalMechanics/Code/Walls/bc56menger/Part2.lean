@@ -45,7 +45,7 @@ theorem bc56_boxMengerAttachment_of_reachesNbr {n : ℕ}
   bma_boxMengerAttachment (bc56_boxClusterAttachment_of_reachesNbr h)
 
 
-theorem bc56_burton_keane_bernoulli_of_reachesNbr (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem bc56_burton_keane_bernoulli_of_reachesNbr (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p) (h : ∀ n : ℕ, bc56_BoxClusterReachesNbr d n) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = 0} = 1 ∨

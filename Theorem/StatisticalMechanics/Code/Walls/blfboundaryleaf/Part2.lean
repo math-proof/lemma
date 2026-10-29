@@ -34,7 +34,7 @@ theorem blf_bc69_of_acyclicArmUnion (ω : ConfigSpace (Sym2 (Site 2))) (L R : �
   exact blf_bc69_of_interiorDeg2 ω L R S hSfin hSne G hGdec ιU hac hmin hdeg3 hinj hint
 
 
-theorem blf_bk_of_acyclicArmUnion (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem blf_bk_of_acyclicArmUnion (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), blf_AcyclicArmUnion ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 := by
   apply bgn_bk_of_forest p hp1 hp0

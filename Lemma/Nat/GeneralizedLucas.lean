@@ -83,10 +83,10 @@ namespace Nat
 -/
 @[path]
 lemma kGeneralizedLucas_neg_eq_zero
-  {k : ℕ}
-  {n : ℤ}
+  (k : ℕ)
 -- given
   (hk : 3 ≤ k)
+  (n : ℤ)
   (h : 2 - (k : ℤ) ≤ n)
   (hn : n ≤ -1) :
 -- imply

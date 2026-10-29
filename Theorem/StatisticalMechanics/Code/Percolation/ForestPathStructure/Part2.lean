@@ -170,7 +170,7 @@ theorem fps_Tcount_le_boundary_of_twoSidedPrivateFar (ω : ConfigSpace (Sym2 (Si
     (fps_pairwiseCutSeparation_of_twoSidedPrivateFar ω n h)
 
 
-theorem fps_burton_keane_bernoulli_of_twoSidedPrivateFar (hd : 1 ≤ d) (p : ℝ≥0)
+theorem fps_burton_keane_bernoulli_of_twoSidedPrivateFar (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
       fps_TwoSidedPrivateFar ω n)

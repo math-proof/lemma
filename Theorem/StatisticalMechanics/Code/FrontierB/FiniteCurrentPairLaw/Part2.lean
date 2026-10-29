@@ -67,7 +67,7 @@ theorem sourceCurrentPairPMF_superpositionEvent
   rw [PMF.toMeasure_apply_eq_tsum]
   let zA := currentSum G beta J A
   let zB := currentSum G beta J B
-  let z : ℝ≥0∞ := (ENNReal.ofReal zA * ENNReal.ofReal zB)⁻¹
+  let z : ENNReal := (ENNReal.ofReal zA * ENNReal.ofReal zB)⁻¹
   have hpoint : ∀ pq : EdgeCurrent G × EdgeCurrent G,
       (sourcePairSuperpositionEvent G P).indicator
           (sourceCurrentPairPMF G beta J hbeta hJ A B hA hB) pq =

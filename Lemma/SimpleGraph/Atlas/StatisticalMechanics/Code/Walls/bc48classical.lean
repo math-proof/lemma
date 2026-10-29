@@ -190,7 +190,7 @@ private lemma bc48_Tcount_classical_eq_sum_indicator_eq
   {ω : ConfigSpace (Sym2 (Site d))}
   {n : ℕ} :
 -- imply
-  (bc48_Tcount_classical d ω n : ℝ≥0∞) = ∑ x ∈ boxFinsetBK d n, ({ω' | bc47_IsClassicalTrifurcation ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω := by
+  (bc48_Tcount_classical d ω n : ENNReal) = ∑ x ∈ boxFinsetBK d n, ({ω' | bc47_IsClassicalTrifurcation ω' x}.indicator (fun _ => (1 : ENNReal))) ω := by
 -- proof
   apply StatMech.Walls.bc48_Tcount_classical_eq_sum_indicator ω n
 
@@ -205,7 +205,7 @@ private lemma bc48_expected_Tcount_classical_eq
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) :
 -- imply
-  ∫⁻ ω, (bc48_Tcount_classical d ω n : ℝ≥0∞) ∂μ = (boxFinsetBK d n).card • μ {ω | bc47_IsClassicalTrifurcation ω 0} := by
+  ∫⁻ ω, (bc48_Tcount_classical d ω n : ENNReal) ∂μ = (boxFinsetBK d n).card • μ {ω | bc47_IsClassicalTrifurcation ω 0} := by
 -- proof
   apply StatMech.Walls.bc48_expected_Tcount_classical μ hinv n
 
@@ -298,7 +298,7 @@ private lemma bc48_burton_keane_bernoulli_classical_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), bc48_Tcount_classical d ω n ≤ boxSV_boundaryCard d n)
@@ -316,7 +316,7 @@ private lemma bc48_burton_keane_bernoulli_of_classicalInjection_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hinj : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), bc48_ClassicalBoundaryArmInjection ω n)

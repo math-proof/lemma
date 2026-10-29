@@ -29,11 +29,11 @@ private lemma pbs_pair_hasSum_abs (j : ℕ) (x y : ℝ) :
   have hprod := hx.mul hy huv
   have hscaled := hprod.mul_left ((j.factorial : ℝ) ^ 2)
   have hlimit :
-    (j.factorial : ℝ) ^ 2 *
-      ((Real.exp |x| * (Real.exp |x| - 1) ^ j / j.factorial) *
-        (Real.exp |y| * (Real.exp |y| - 1) ^ j / j.factorial)) =
-      Real.exp |x| * Real.exp |y| *
-        ((Real.exp |x| - 1) * (Real.exp |y| - 1)) ^ j := by
+      (j.factorial : ℝ) ^ 2 *
+        ((Real.exp |x| * (Real.exp |x| - 1) ^ j / j.factorial) *
+          (Real.exp |y| * (Real.exp |y| - 1) ^ j / j.factorial)) =
+        Real.exp |x| * Real.exp |y| *
+          ((Real.exp |x| - 1) * (Real.exp |y| - 1)) ^ j := by
     rw [mul_pow]
     field_simp
   rw [← hlimit]
@@ -83,11 +83,11 @@ private lemma pbs_pair_hasSum (j : ℕ) (x y : ℝ) :
     summable_mul_of_summable_norm hux hvy
   have hscaled := (hx.mul hy huv).mul_left ((j.factorial : ℝ) ^ 2)
   have hlimit :
-    (j.factorial : ℝ) ^ 2 *
-      ((Real.exp x * (Real.exp x - 1) ^ j / j.factorial) *
-        (Real.exp y * (Real.exp y - 1) ^ j / j.factorial)) =
-      Real.exp x * Real.exp y *
-        ((Real.exp x - 1) * (Real.exp y - 1)) ^ j := by
+      (j.factorial : ℝ) ^ 2 *
+        ((Real.exp x * (Real.exp x - 1) ^ j / j.factorial) *
+          (Real.exp y * (Real.exp y - 1) ^ j / j.factorial)) =
+        Real.exp x * Real.exp y *
+          ((Real.exp x - 1) * (Real.exp y - 1)) ^ j := by
     rw [mul_pow]
     field_simp
   rw [← hlimit]
@@ -121,7 +121,7 @@ private lemma pbs_triple_summable_abs (x y : ℝ)
   · intro j
     exact (pbs_pair_hasSum_abs j x y).summable
   · have hgeom :=
-    (summable_geometric_of_abs_lt_one habs).mul_left (Real.exp |x| * Real.exp |y|)
+      (summable_geometric_of_abs_lt_one habs).mul_left (Real.exp |x| * Real.exp |y|)
     apply hgeom.congr
     intro j
     exact (pbs_pair_hasSum_abs j x y).tsum_eq.symm
@@ -174,7 +174,7 @@ private lemma pbs_tsum_stirling_product (n k : ℕ) :
   have hmin : min n k < j := by
     simp only [Finset.mem_range, not_lt] at hj
     omega
-  obtain hnk | hkn := le_total n k
+  rcases le_total n k with hnk | hkn
   · rw [Nat.min_eq_left hnk] at hmin
     rw [Nat.stirlingSecond_eq_zero_of_lt (by omega : n + 1 < j + 1)]
     simp
@@ -199,7 +199,7 @@ private lemma pbs_stirling_product_summable (n k : ℕ) :
   have hmin : min n k < j := by
     simp only [Finset.mem_range, not_lt] at hj
     omega
-  obtain hnk | hkn := le_total n k
+  rcases le_total n k with hnk | hkn
   · rw [Nat.min_eq_left hnk] at hmin
     rw [Nat.stirlingSecond_eq_zero_of_lt (by omega : n + 1 < j + 1)]
     simp
@@ -257,11 +257,11 @@ private lemma pbs_rearrange (x y : ℝ)
       (x ^ p.1 / p.1.factorial) * (y ^ p.2 / p.2.factorial)
   have hF : Summable (Function.uncurry F) := pbs_triple_summable x y hxy
   have hfiber : ∀ n k : ℕ,
-    (∑ j ∈ Finset.range (min n k + 1),
-      (j.factorial : ℝ) ^ 2 * (Nat.stirlingSecond (n + 1) (j + 1) : ℝ) *
-        (Nat.stirlingSecond (k + 1) (j + 1) : ℝ)) *
-      (x ^ n / n.factorial) * (y ^ k / k.factorial) =
-      ∑' j : ℕ, F j (n, k) := by
+      (∑ j ∈ Finset.range (min n k + 1),
+        (j.factorial : ℝ) ^ 2 * (Nat.stirlingSecond (n + 1) (j + 1) : ℝ) *
+          (Nat.stirlingSecond (k + 1) (j + 1) : ℝ)) *
+        (x ^ n / n.factorial) * (y ^ k / k.factorial) =
+        ∑' j : ℕ, F j (n, k) := by
     intro n k
     let C : ℕ → ℝ := fun j =>
       (j.factorial : ℝ) ^ 2 * (Nat.stirlingSecond (n + 1) (j + 1) : ℝ) *
@@ -269,15 +269,15 @@ private lemma pbs_rearrange (x y : ℝ)
     have hC : Summable C := pbs_stirling_product_summable n k
     calc
       (∑ j ∈ Finset.range (min n k + 1),
-        (j.factorial : ℝ) ^ 2 * (Nat.stirlingSecond (n + 1) (j + 1) : ℝ) *
-          (Nat.stirlingSecond (k + 1) (j + 1) : ℝ)) *
-        (x ^ n / n.factorial) * (y ^ k / k.factorial) =
+          (j.factorial : ℝ) ^ 2 * (Nat.stirlingSecond (n + 1) (j + 1) : ℝ) *
+            (Nat.stirlingSecond (k + 1) (j + 1) : ℝ)) *
+          (x ^ n / n.factorial) * (y ^ k / k.factorial) =
         (∑' j : ℕ, C j) *
           ((x ^ n / n.factorial) * (y ^ k / k.factorial)) := by
             rw [pbs_tsum_stirling_product]
             ring
       _ = ∑' j : ℕ, C j *
-        ((x ^ n / n.factorial) * (y ^ k / k.factorial)) :=
+          ((x ^ n / n.factorial) * (y ^ k / k.factorial)) :=
         (hC.tsum_mul_right _).symm
       _ = ∑' j : ℕ, F j (n, k) := by
         apply tsum_congr
@@ -289,10 +289,10 @@ private lemma pbs_rearrange (x y : ℝ)
   have hratio := pbs_ratio_abs_lt_one x y hxy
   calc
     (∑' n : ℕ, ∑' k : ℕ,
-      (∑ j ∈ Finset.range (min n k + 1),
-        (j.factorial : ℝ) ^ 2 * (Nat.stirlingSecond (n + 1) (j + 1) : ℝ) *
-          (Nat.stirlingSecond (k + 1) (j + 1) : ℝ)) *
-        (x ^ n / n.factorial) * (y ^ k / k.factorial)) =
+        (∑ j ∈ Finset.range (min n k + 1),
+          (j.factorial : ℝ) ^ 2 * (Nat.stirlingSecond (n + 1) (j + 1) : ℝ) *
+            (Nat.stirlingSecond (k + 1) (j + 1) : ℝ)) *
+          (x ^ n / n.factorial) * (y ^ k / k.factorial)) =
       ∑' n : ℕ, ∑' k : ℕ, ∑' j : ℕ, F j (n, k) := by
         apply tsum_congr
         intro n
@@ -302,17 +302,17 @@ private lemma pbs_rearrange (x y : ℝ)
     _ = ∑' p : ℕ × ℕ, ∑' j : ℕ, F j p := hleft.tsum_prod.symm
     _ = ∑' j : ℕ, ∑' p : ℕ × ℕ, F j p := hF.tsum_comm
     _ = ∑' j : ℕ,
-      Real.exp x * Real.exp y *
-        ((Real.exp x - 1) * (Real.exp y - 1)) ^ j := by
+        Real.exp x * Real.exp y *
+          ((Real.exp x - 1) * (Real.exp y - 1)) ^ j := by
       apply tsum_congr
       intro j
       exact (pbs_pair_hasSum j x y).tsum_eq
     _ = Real.exp x * Real.exp y *
-      (1 - (Real.exp x - 1) * (Real.exp y - 1))⁻¹ :=
+        (1 - (Real.exp x - 1) * (Real.exp y - 1))⁻¹ :=
       ((hasSum_geometric_of_abs_lt_one hratio).mul_left
         (Real.exp x * Real.exp y)).tsum_eq
     _ = Real.exp (x + y) *
-      (1 - (Real.exp x - 1) * (Real.exp y - 1))⁻¹ := by
+        (1 - (Real.exp x - 1) * (Real.exp y - 1))⁻¹ := by
       rw [Real.exp_add]
 
 end MetaMathlibExt
@@ -351,7 +351,7 @@ lemma polyBernoulli_negative_symmetric_exponential_generating_function
 -- proof
   calc
     (∑' n : ℕ, ∑' k : ℕ,
-      B n k * (x ^ n / n.factorial) * (y ^ k / k.factorial)) =
+        B n k * (x ^ n / n.factorial) * (y ^ k / k.factorial)) =
       ∑' n : ℕ, ∑' k : ℕ,
         (∑ j ∈ Finset.range (min n k + 1),
           (j.factorial : ℝ) ^ 2 * (Nat.stirlingSecond (n + 1) (j + 1) : ℝ) *
@@ -363,14 +363,14 @@ lemma polyBernoulli_negative_symmetric_exponential_generating_function
             intro k
             rw [hB n k]
     _ = Real.exp (x + y) *
-      (1 - (Real.exp x - 1) * (Real.exp y - 1))⁻¹ :=
+        (1 - (Real.exp x - 1) * (Real.exp y - 1))⁻¹ :=
       pbs_rearrange x y hxy
     _ = Real.exp (x + y) /
-      (Real.exp x + Real.exp y - Real.exp (x + y)) := by
+        (Real.exp x + Real.exp y - Real.exp (x + y)) := by
       rw [div_eq_mul_inv, ← pbs_denominator]
 
 end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

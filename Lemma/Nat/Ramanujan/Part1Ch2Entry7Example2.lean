@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry7Example2
@@ -62,7 +61,8 @@ lemma ramanujan_part1_ch2_entry7_example2
       push_cast
       ring
     have hak : a k = Real.arctan (1 / (n + (k : ℝ))) := rfl
-    rwa [hak, hak2] at *
+    rw [hak, hak2]
+    exact hsub.symm
   have hnorm_sum : Summable (fun k : ℕ => ‖(-1 : ℝ) ^ k * Real.arctan (2 / (n + (k : ℝ) + 1) ^ 2)‖) := by
     have hbase : Summable (fun m : ℕ => (1:ℝ)/((m:ℝ)^2)) :=
       Real.summable_one_div_nat_pow.mpr (by norm_num)
@@ -170,7 +170,8 @@ lemma ramanujan_part1_ch2_entry7_example2
       have hn1 : (n:ℝ) + 1 ≠ 0 := by positivity
       field_simp
       ring
-    rwa [halg] at hsub
+    rw [halg] at hsub
+    exact hsub
   apply (hasSum_iff_tendsto_nat_of_summable_norm hnorm_sum).mpr
   have hsum_eq : (fun N : ℕ => ∑ k ∈ Finset.range N, ((-1:ℝ)^k * Real.arctan (2 / (n + (k:ℝ) + 1)^2)))
     = (fun N : ℕ => ∑ k ∈ Finset.range N, ((-1:ℝ)^k * (a k - a (k+2)))) := by
@@ -189,10 +190,11 @@ lemma ramanujan_part1_ch2_entry7_example2
     have hadd : Filter.Tendsto (fun N : ℕ => (-1:ℝ)^(N+1) * a N + (-1:ℝ)^(N+2) * a (N+1)) Filter.atTop (nhds (0+0)) :=
       hR1.add hR2
     simpa using tendsto_const_nhds.add hadd
-  rwa [htarget] at hlim_sum
+  rw [htarget] at hlim_sum
+  exact hlim_sum
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry7Example2
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

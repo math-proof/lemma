@@ -112,7 +112,7 @@ theorem bao_allOpen_not_frees_bridge {L : ℕ} (hL : 1 ≤ L) :
 #check @bao_allOpen_not_frees_bridge
 
 
-theorem bao_bk_of_forest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bao_bk_of_forest (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   bgn_bk_of_forest p hp1 hp0 hdata
@@ -126,7 +126,7 @@ theorem bao_status {L : ℕ} (hL : 1 ≤ L) :
     (bff_BoxAllOpen (bao_onlyBox0 L) L ∧
       ¬ bsc_BoxesInternallyConnected (bao_onlyBox0 L) L (0 : Site 2)) ∧
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p →
       (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) →
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) :=
   ⟨fun ω h => bao_allOpenTrif_imp_bc67 h,

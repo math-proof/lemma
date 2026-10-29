@@ -31,7 +31,7 @@ noncomputable def boundaryCurrentSum (beta : ℝ) (J : Sym2 V → ℝ)
 
 
 noncomputable def boundaryCurrentRawMass (beta : ℝ) (J : Sym2 V → ℝ)
-    (interior : Finset V) (m : EdgeCurrent G) : ℝ≥0∞ :=
+    (interior : Finset V) (m : EdgeCurrent G) : ENNReal :=
   ENNReal.ofReal
     (if (sources G (ofEdgeFun G m)) ∩ interior = ∅ then
       weight G beta J (ofEdgeFun G m) else 0)

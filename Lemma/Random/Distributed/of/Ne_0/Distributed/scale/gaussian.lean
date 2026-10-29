@@ -10,7 +10,7 @@ private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω}
   {x : Ω → ℝ}
-  {μ : ℝ} {v : ℝ≥0}
+  {μ : ℝ} {v : NNReal}
   {a b : ℝ}
 -- given
   (h₀ : a ≠ 0)

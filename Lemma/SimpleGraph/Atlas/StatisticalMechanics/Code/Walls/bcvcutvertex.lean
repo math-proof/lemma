@@ -188,7 +188,7 @@ private lemma bcv_count_of_treeData_eq
 @[path]
 private lemma bcv_bk_of_treeData_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) :

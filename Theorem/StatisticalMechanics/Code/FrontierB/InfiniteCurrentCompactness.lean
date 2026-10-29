@@ -40,7 +40,7 @@ theorem currentCoordinateBox_compl (K : E → ℕ) :
 
 theorem isTightMeasureSet_range_of_currentCoordinateBox
     (mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E))
-    (hbox : ∀ ε : ℝ≥0∞, 0 < ε → ∃ K : E → ℕ,
+    (hbox : ∀ ε : ENNReal, 0 < ε → ∃ K : E → ℕ,
       ∀ i, ∑' e : E, (mu i : Measure _) {n : InfiniteCurrentConfig E | K e ≤ n e} ≤ ε) :
     IsTightMeasureSet (Set.range fun i => (mu i : Measure (InfiniteCurrentConfig E))) := by
   rw [isTightMeasureSet_iff_exists_isCompact_measure_compl_le]
@@ -54,7 +54,7 @@ theorem isTightMeasureSet_range_of_currentCoordinateBox
 
 theorem isTightMeasureSet_range_of_coordinate_tight
     (mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E))
-    (hcoord : ∀ e : E, ∀ ε : ℝ≥0∞, 0 < ε → ∃ K : ℕ, ∀ i,
+    (hcoord : ∀ e : E, ∀ ε : ENNReal, 0 < ε → ∃ K : ℕ, ∀ i,
       (mu i : Measure _) {n : InfiniteCurrentConfig E | K ≤ n e} ≤ ε) :
     IsTightMeasureSet (Set.range fun i =>
       (mu i : Measure (InfiniteCurrentConfig E))) := by
@@ -68,7 +68,7 @@ theorem isTightMeasureSet_range_of_coordinate_tight
 
 
 theorem isTightMeasureSet_range_of_uniform_inverse_tail
-    (mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E)) (B : ℝ≥0∞)
+    (mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E)) (B : ENNReal)
     (hB : B ≠ ∞)
     (htail : ∀ i e (K : ℕ), 0 < K →
       (mu i : Measure _) {n : InfiniteCurrentConfig E | K ≤ n e} ≤ B / K) :
@@ -102,7 +102,7 @@ theorem weakCurrent_subsequence_of_tight
 
 
 theorem weakCurrent_subsequence_of_uniform_inverse_tail
-    (mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E)) (B : ℝ≥0∞)
+    (mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E)) (B : ENNReal)
     (hB : B ≠ ∞)
     (htail : ∀ i e (K : ℕ), 0 < K →
       (mu i : Measure _) {n : InfiniteCurrentConfig E | K ≤ n e} ≤ B / K) :

@@ -89,7 +89,7 @@ private lemma bof2_interiorLeaf_obstruction_eq :
 @[path]
 private lemma bof2_bk_of_treeData_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) :
@@ -104,7 +104,7 @@ private lemma bof2_bk_of_treeData_eq
 @[path]
 private lemma bof2_status_eq :
 -- imply
-  (∀ {V : Type} [Fintype V] [DecidableEq V] {T : SimpleGraph V} [_i : DecidableRel T.Adj], T.IsTree → (Finset.univ.filter (fun v => 3 ≤ T.degree v)).card ≤ (Finset.univ.filter (fun v => T.degree v = 1)).card) ∧ (∀ {V : Type} [Fintype V] [DecidableEq V] {H T : SimpleGraph V} [_i : DecidableRel T.Adj], T ≤ H → T.IsTree → ∀ {ι : Type} [Fintype ι] (f : ι → V), Function.Injective f → (∀ i, ∃ a₁ a₂ a₃ : V, a₁ ≠ f i ∧ a₂ ≠ f i ∧ a₃ ≠ f i ∧ ¬ (bkg_deleteVertex H (f i)).Reachable a₁ a₂ ∧ ¬ (bkg_deleteVertex H (f i)).Reachable a₁ a₃ ∧ ¬ (bkg_deleteVertex H (f i)).Reachable a₂ a₃) → ∀ (B : Finset V), (∀ v, T.degree v = 1 → v ∈ B) → Fintype.card ι ≤ B.card) ∧ (∃ (G T : SimpleGraph (Fin 4)) (_ : DecidableRel G.Adj) (_ : DecidableRel T.Adj) (B : Finset (Fin 4)), T ≤ G ∧ T.IsTree ∧ (∃ v, G.degree v = 2 ∧ T.degree v = 1 ∧ v ∉ B) ∧ ¬ (∀ v, T.degree v = 1 → v ∈ B)) ∧ (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
+  (∀ {V : Type} [Fintype V] [DecidableEq V] {T : SimpleGraph V} [_i : DecidableRel T.Adj], T.IsTree → (Finset.univ.filter (fun v => 3 ≤ T.degree v)).card ≤ (Finset.univ.filter (fun v => T.degree v = 1)).card) ∧ (∀ {V : Type} [Fintype V] [DecidableEq V] {H T : SimpleGraph V} [_i : DecidableRel T.Adj], T ≤ H → T.IsTree → ∀ {ι : Type} [Fintype ι] (f : ι → V), Function.Injective f → (∀ i, ∃ a₁ a₂ a₃ : V, a₁ ≠ f i ∧ a₂ ≠ f i ∧ a₃ ≠ f i ∧ ¬ (bkg_deleteVertex H (f i)).Reachable a₁ a₂ ∧ ¬ (bkg_deleteVertex H (f i)).Reachable a₁ a₃ ∧ ¬ (bkg_deleteVertex H (f i)).Reachable a₂ a₃) → ∀ (B : Finset V), (∀ v, T.degree v = 1 → v ∈ B) → Fintype.card ι ≤ B.card) ∧ (∃ (G T : SimpleGraph (Fin 4)) (_ : DecidableRel G.Adj) (_ : DecidableRel T.Adj) (B : Finset (Fin 4)), T ≤ G ∧ T.IsTree ∧ (∃ v, G.degree v = 2 ∧ T.degree v = 1 ∧ v ∉ B) ∧ ¬ (∀ v, T.degree v = 1 → v ∈ B)) ∧ (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
 -- proof
   apply StatMech.Walls.bof2_status
 

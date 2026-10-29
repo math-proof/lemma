@@ -42,9 +42,9 @@ theorem exists_uniform_vertexCore_radius_finset
     (polygon : KWFiniteSimplePolygon n) {eps : ℝ}
     (heps : 0 < eps ∧ eps < 1 / 2)
     (pairs : Finset (Fin n × Fin n)) :
-    ∃ r : ℝ≥0, 0 < r ∧ ∀ p ∈ pairs,
+    ∃ r : NNReal, 0 < r ∧ ∀ p ∈ pairs,
       ∀ y ∈ polygon.closedEdgeCore eps p.2,
-        (r : ℝ≥0∞) < edist (polygon.vertex p.1) y := by
+        (r : ENNReal) < edist (polygon.vertex p.1) y := by
   classical
   induction pairs using Finset.induction_on with
   | empty => exact ⟨1, by norm_num, by simp⟩
@@ -66,7 +66,7 @@ theorem exists_uniform_vertexCore_radius_finset
 theorem KWFiniteSimplePolygon.exists_uniform_vertex_core_separation
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
     {eps : ℝ} (heps : 0 < eps ∧ eps < 1 / 2) :
-    ∃ r : ℝ≥0, 0 < r ∧
+    ∃ r : NNReal, 0 < r ∧
       ∀ v i : Fin n, ∀ y ∈ polygon.closedEdgeCore eps i,
         (r : ℝ) < dist (polygon.vertex v) y := by
   obtain ⟨r, hr, hsep⟩ := exists_uniform_vertexCore_radius_finset
@@ -79,7 +79,7 @@ theorem KWFiniteSimplePolygon.exists_uniform_vertex_core_separation
 
 theorem KWFiniteSimplePolygon.vertexBall_disjoint_closedEdgeCoreTube
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
-    {eps : ℝ} {r : ℝ≥0}
+    {eps : ℝ} {r : NNReal}
     (hsep : ∀ v i : Fin n, ∀ y ∈ polygon.closedEdgeCore eps i,
       (r : ℝ) < dist (polygon.vertex v) y)
     (v i : Fin n) :
@@ -100,7 +100,7 @@ theorem KWFiniteSimplePolygon.vertexBall_disjoint_closedEdgeCoreTube
 theorem KWFiniteSimplePolygon.exists_pairwise_vertexBall_coreTube_separation
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
     {eps : ℝ} (heps : 0 < eps ∧ eps < 1 / 2) :
-    ∃ r : ℝ≥0, 0 < r ∧
+    ∃ r : NNReal, 0 < r ∧
       ∀ v i : Fin n,
         Disjoint (Metric.ball (polygon.vertex v) (r : ℝ))
           (polygon.closedEdgeCoreTube eps r i) := by

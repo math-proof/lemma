@@ -59,7 +59,7 @@ theorem daec_forestLeafInjection_of_disjoint (ω : ConfigSpace (Sym2 (Site d))) 
   bk2_distinctArmEnds_of_disjoint ω n hn hdisj
 
 
-theorem daec_burton_keane_bernoulli (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem daec_burton_keane_bernoulli (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
       daec_ForestLeafInjection ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

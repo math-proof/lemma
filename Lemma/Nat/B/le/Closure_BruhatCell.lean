@@ -179,7 +179,7 @@ private lemma closure_B_conjB_sub_closure_bruhatCell
 -- proof
   rw [Subgroup.closure_le]
   intro g hg
-  obtain hg_B | hg_conj := hg
+  rcases hg with hg_B | hg_conj
   · exact B_le_closure_bruhatCell bp w hg_B
   · obtain ⟨b, hb, hg_eq⟩ := hg_conj
     rw [hg_eq]

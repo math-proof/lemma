@@ -67,7 +67,7 @@ private lemma siteCanonicalTrifurcationCount_eq_sum_indicator_eq
   {eta : ConfigSpace (Site d)}
   {n : ℕ} :
 -- imply
-  (siteCanonicalTrifurcationCount eta n : ℝ≥0∞) = ∑ x ∈ boxFinsetBK d n, (SiteCanonicalTrifurcationEvent x).indicator (fun _ ↦ (1 : ℝ≥0∞)) eta := by
+  (siteCanonicalTrifurcationCount eta n : ENNReal) = ∑ x ∈ boxFinsetBK d n, (SiteCanonicalTrifurcationEvent x).indicator (fun _ ↦ (1 : ENNReal)) eta := by
 -- proof
   apply StatMech.FrontierA.siteCanonicalTrifurcationCount_eq_sum_indicator eta n
 
@@ -82,7 +82,7 @@ private lemma expected_siteCanonicalTrifurcationCount_eq
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) mu) :
 -- imply
-  ∫⁻ eta, (siteCanonicalTrifurcationCount eta n : ℝ≥0∞) ∂mu = (boxFinsetBK d n).card • mu (SiteCanonicalTrifurcationEvent 0) := by
+  ∫⁻ eta, (siteCanonicalTrifurcationCount eta n : ENNReal) ∂mu = (boxFinsetBK d n).card • mu (SiteCanonicalTrifurcationEvent 0) := by
 -- proof
   apply StatMech.FrontierA.expected_siteCanonicalTrifurcationCount mu hinv n
 

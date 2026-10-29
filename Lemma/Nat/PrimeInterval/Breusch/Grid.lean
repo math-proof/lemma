@@ -10,7 +10,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [w9_length](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma w9_length
+lemma w9_length :
 -- imply
   w9.length = 16 :=
 -- proof
@@ -24,7 +24,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [w9_complete](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma w9_complete
+lemma w9_complete :
 -- imply
   (w9.map Prod.fst).toFinset = Nat.divisors Q9 := by
 -- proof
@@ -38,12 +38,9 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [w9_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma w9_pos
+lemma w9_pos :
 -- imply
-  ∀ p ∈ w9, 1 ≤ p.1 := by
--- proof
-decide
-
+  ∀ p ∈ w9, 1 ≤ p.1 := by decide
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -52,12 +49,12 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [w9_dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma w9_dvd
+lemma w9_dvd :
 -- imply
-  ∀ p ∈ w9, p.1 ∣ Q9 := by
--- proof
-decide
+  ∀ p ∈ w9, p.1 ∣ Q9 := by decide
 
+-- Single `G`-term: each `Nat` floor is cast with `Int.ofNat` first, so the
+-- subtraction happens in `Int` (no `Nat` truncation).
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -66,13 +63,10 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [M9_block0](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma M9_block0
+lemma M9_block0 :
 -- imply
-  ∀ k < 2700, G9 (0 + k) ≤ 3 := by
--- proof
-decide
+  ∀ k < 2700, G9 (0 + k) ≤ 3 := by decide
 set_option maxRecDepth 65536 in
-set_option maxHeartbeats 2000000 in
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
@@ -82,13 +76,10 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [M9_block1](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma M9_block1
+lemma M9_block1 :
 -- imply
-  ∀ k < 2700, G9 (2700 + k) ≤ 3 := by
--- proof
-decide
+  ∀ k < 2700, G9 (2700 + k) ≤ 3 := by decide
 set_option maxRecDepth 65536 in
-set_option maxHeartbeats 2000000 in
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
@@ -98,13 +89,10 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [M9_block2](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma M9_block2
+lemma M9_block2 :
 -- imply
-  ∀ k < 2700, G9 (5400 + k) ≤ 3 := by
--- proof
-decide
+  ∀ k < 2700, G9 (5400 + k) ≤ 3 := by decide
 set_option maxRecDepth 65536 in
-set_option maxHeartbeats 2000000 in
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
@@ -114,13 +102,10 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [M9_block3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma M9_block3
+lemma M9_block3 :
 -- imply
-  ∀ k < 2700, G9 (8100 + k) ≤ 3 := by
--- proof
-decide
+  ∀ k < 2700, G9 (8100 + k) ≤ 3 := by decide
 set_option maxRecDepth 65536 in
-set_option maxHeartbeats 2000000 in
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
@@ -130,13 +115,10 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [M9_block4](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma M9_block4
+lemma M9_block4 :
 -- imply
-  ∀ k < 2700, G9 (10800 + k) ≤ 3 := by
--- proof
-decide
+  ∀ k < 2700, G9 (10800 + k) ≤ 3 := by decide
 set_option maxRecDepth 65536 in
-set_option maxHeartbeats 2000000 in
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
@@ -146,13 +128,10 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [M9_block5](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma M9_block5
+lemma M9_block5 :
 -- imply
-  ∀ k < 2700, G9 (13500 + k) ≤ 3 := by
--- proof
-decide
+  ∀ k < 2700, G9 (13500 + k) ≤ 3 := by decide
 set_option maxRecDepth 65536 in
-set_option maxHeartbeats 2000000 in
 
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
@@ -162,12 +141,9 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [M9_block6](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma M9_block6
+lemma M9_block6 :
 -- imply
-  ∀ k < 2700, G9 (16200 + k) ≤ 3 := by
--- proof
-decide
-
+  ∀ k < 2700, G9 (16200 + k) ≤ 3 := by decide
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -183,14 +159,14 @@ lemma M9_le
 -- proof
   intro j hj
   have hsplit :
-    j < 2700 ∨
-      2700 ≤ j ∧ j < 5400 ∨
-        5400 ≤ j ∧ j < 8100 ∨
-          8100 ≤ j ∧ j < 10800 ∨
-            10800 ≤ j ∧ j < 13500 ∨ 13500 ≤ j ∧ j < 16200 ∨
-              16200 ≤ j := by
+      j < 2700 ∨
+        2700 ≤ j ∧ j < 5400 ∨
+          5400 ≤ j ∧ j < 8100 ∨
+            8100 ≤ j ∧ j < 10800 ∨
+              10800 ≤ j ∧ j < 13500 ∨ 13500 ≤ j ∧ j < 16200 ∨
+                16200 ≤ j := by
     omega
-  obtain h | h | h | h | h | h | h := hsplit
+  rcases hsplit with h | h | h | h | h | h | h
   · obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le (Nat.zero_le j)
     exact M9_block0 k (by omega)
   · obtain ⟨lo, hi⟩ := h
@@ -222,11 +198,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 lemma jmin1_attained
   :
 -- imply
-  G9 279 ≥ 1 := by
--- proof
-decide
-set_option maxRecDepth 16384 in
-
+  G9 279 ≥ 1 := by decide
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -238,10 +210,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 lemma jmin1_core
   :
 -- imply
-  ∀ j < 279, 10 ≤ j → G9 j < 1 := by
--- proof
-decide
-
+  ∀ j < 279, 10 ≤ j → G9 j < 1 := by decide
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -268,11 +237,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 lemma jmin2_attained
   :
 -- imply
-  G9 657 ≥ 2 := by
--- proof
-decide
-set_option maxRecDepth 16384 in
-
+  G9 657 ≥ 2 := by decide
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -284,10 +249,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 lemma jmin2_core
   :
 -- imply
-  ∀ j < 657, 10 ≤ j → G9 j < 2 := by
--- proof
-decide
-
+  ∀ j < 657, 10 ≤ j → G9 j < 2 := by decide
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -314,11 +276,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 lemma jmin3_attained
   :
 -- imply
-  G9 963 ≥ 3 := by
--- proof
-decide
-set_option maxRecDepth 16384 in
-
+  G9 963 ≥ 3 := by decide
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -330,10 +288,7 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 lemma jmin3_core
   :
 -- imply
-  ∀ j < 963, 10 ≤ j → G9 j < 3 := by
--- proof
-decide
-
+  ∀ j < 963, 10 ≤ j → G9 j < 3 := by decide
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -357,12 +312,9 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [w9_mu_sign](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma w9_mu_sign
+lemma w9_mu_sign :
 -- imply
-  ∀ q ∈ w9, q.2 = 1 ∨ q.2 = -1 := by
--- proof
-decide
-
+  ∀ q ∈ w9, q.2 = 1 ∨ q.2 = -1 := by decide
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -371,12 +323,9 @@ namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 [w9_nodup](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
 -/
 @[path]
-lemma w9_nodup
+lemma w9_nodup :
 -- imply
-  w9.Nodup := by
--- proof
-decide
-
+  w9.Nodup := by decide
 end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
@@ -405,4 +354,4 @@ end MathlibExt.NumberTheory.BreuschWanted.Internal
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

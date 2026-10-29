@@ -13,9 +13,9 @@ namespace PageRank
 @[path]
 lemma pageRankVec_fixed_point
   {n : ℕ}
-  {α : ℝ}
-  {W : Matrix (Fin n) (Fin n) ℝ}
-  {s : Fin n → ℝ}
+  (α : ℝ)
+  (W : Matrix (Fin n) (Fin n) ℝ)
+  (s : Fin n → ℝ)
 -- given
   (hW : IsUnit ((1 : Matrix (Fin n) (Fin n) ℝ) - (1 - α) • W)) :
 -- imply
@@ -23,6 +23,7 @@ lemma pageRankVec_fixed_point
 -- proof
   set M := (1 : Matrix (Fin n) (Fin n) ℝ) - (1 - α) • W with hM_def
   set x := pageRankVec α W s
+
   suffices h : x - (1 - α) • (W *ᵥ x) = α • s from
     eq_add_of_sub_eq h
   have hMx : M *ᵥ x = α • s := by
@@ -41,26 +42,28 @@ namespace PageRank
 @[path]
 lemma pageRankVec_unique
   {n : ℕ}
-  {α : ℝ}
-  {W : Matrix (Fin n) (Fin n) ℝ}
-  {s : Fin n → ℝ}
-  {x : Fin n → ℝ}
+  (α : ℝ)
+  (W : Matrix (Fin n) (Fin n) ℝ)
+  (s : Fin n → ℝ)
 -- given
   (hW : IsUnit ((1 : Matrix (Fin n) (Fin n) ℝ) - (1 - α) • W))
+  (x : Fin n → ℝ)
   (hx : x = α • s + (1 - α) • (W *ᵥ x)) :
 -- imply
   x = pageRankVec α W s := by
 -- proof
   set M := (1 : Matrix (Fin n) (Fin n) ℝ) - (1 - α) • W with hM_def
+
   have hMx : M *ᵥ x = α • s := by
     have hM_expand : M *ᵥ x = x - (1 - α) • (W *ᵥ x) := by
       simp only [M, sub_mulVec, one_mulVec, smul_mulVec]
     rw [hM_expand]
     have hsub : x - (1 - α) • (W *ᵥ x) = α • s := sub_eq_of_eq_add hx
     exact hsub
+
   show x = M⁻¹ *ᵥ (α • s)
   calc x = (M⁻¹ * M) *ᵥ x := by
-    rw [nonsing_inv_mul _ (hW.map Matrix.detMonoidHom), one_mulVec]
+          rw [nonsing_inv_mul _ (hW.map Matrix.detMonoidHom), one_mulVec]
     _ = M⁻¹ *ᵥ (M *ᵥ x) := by rw [mulVec_mulVec]
     _ = M⁻¹ *ᵥ (α • s) := by rw [hMx]
 
@@ -110,7 +113,7 @@ lemma pageRankVec_comm_W_of_isUnit
   have hfp : x' = α • (W *ᵥ s) + (1 - α) • (W *ᵥ x') := by
     show W *ᵥ (pageRankVec α W s) = α • (W *ᵥ s) + (1 - α) • (W *ᵥ (W *ᵥ (pageRankVec α W s)))
     have key : α • (W *ᵥ s) + (1 - α) • (W *ᵥ (W *ᵥ (pageRankVec α W s)))
-      = W *ᵥ (α • s + (1 - α) • (W *ᵥ (pageRankVec α W s))) := by
+             = W *ᵥ (α • s + (1 - α) • (W *ᵥ (pageRankVec α W s))) := by
       simp only [mulVec_add, Matrix.mulVec_smul, mulVec_mulVec]
     rw [key, ← pageRankVec_fixed_point α W s hW]
   exact (pageRankVec_unique α W (W *ᵥ s) hW x' hfp).symm
@@ -174,7 +177,7 @@ lemma pageRankVec_smul
   pageRankVec α W (c • s) = c • pageRankVec α W s := by
 -- proof
   show ((1 : Matrix (Fin n) (Fin n) ℝ) - (1 - α) • W)⁻¹ *ᵥ (α • (c • s)) =
-    c • (((1 : Matrix (Fin n) (Fin n) ℝ) - (1 - α) • W)⁻¹ *ᵥ (α • s))
+       c • (((1 : Matrix (Fin n) (Fin n) ℝ) - (1 - α) • W)⁻¹ *ᵥ (α • s))
   rw [show α • (c • s) = c • (α • s) from smul_comm α c s, mulVec_smul]
 
 end PageRank
@@ -237,40 +240,60 @@ lemma pageRankVec_invariant_preserved
   let χ_u : Fin n → ℝ := Pi.single u 1 let p' := p + (α * r u) • χ_u let r' := r - r u • χ_u + ((1 - α) * r u) • (W *ᵥ χ_u) p' = pageRankVec α W (s - r') := by
 -- proof
   intro χ_u p' r'
+
   have hinv_sum : p + pageRankVec α W r = pageRankVec α W s := by
     rw [hinv, pageRankVec_sub, sub_add_cancel]
+
+
   have hkey : pageRankVec α W r = (α * r u) • χ_u + pageRankVec α W r' := by
+
     have hr_split : r = (r - r u • χ_u) + r u • χ_u := by
       ext i; simp [sub_add_cancel]
+
     have h1 : pageRankVec α W r =
-      pageRankVec α W (r - r u • χ_u) + pageRankVec α W (r u • χ_u) := by
+        pageRankVec α W (r - r u • χ_u) + pageRankVec α W (r u • χ_u) := by
       conv_lhs => rw [hr_split]
       exact pageRankVec_add α W _ _
+
     have h2 : pageRankVec α W (r u • χ_u) = r u • pageRankVec α W χ_u := by
       exact pageRankVec_smul α W (r u) χ_u
+
     have h3 : pageRankVec α W χ_u = α • χ_u + (1 - α) • pageRankVec α W (W *ᵥ χ_u) := by
       exact pageRankVec_eq2 α W χ_u hW hcomm
+
     rw [h2, h3] at h1
+
+
     have h4 : r u • (α • χ_u + (1 - α) • pageRankVec α W (W *ᵥ χ_u)) =
-      (α * r u) • χ_u + ((1 - α) * r u) • pageRankVec α W (W *ᵥ χ_u) := by
+        (α * r u) • χ_u + ((1 - α) * r u) • pageRankVec α W (W *ᵥ χ_u) := by
       rw [smul_add, smul_comm (r u) α, smul_smul, smul_comm (r u) (1 - α), smul_smul]
     rw [h4] at h1
+
+
     have h5 : ((1 - α) * r u) • pageRankVec α W (W *ᵥ χ_u) =
-      pageRankVec α W (((1 - α) * r u) • (W *ᵥ χ_u)) := by
+        pageRankVec α W (((1 - α) * r u) • (W *ᵥ χ_u)) := by
       exact (pageRankVec_smul α W ((1 - α) * r u) (W *ᵥ χ_u)).symm
     rw [h5] at h1
+
+
     have h6 : pageRankVec α W (r - r u • χ_u) + pageRankVec α W (((1 - α) * r u) • (W *ᵥ χ_u)) =
-      pageRankVec α W r' := by
+        pageRankVec α W r' := by
       rw [← pageRankVec_add]
+
     rw [show pageRankVec α W (r - r u • χ_u) + ((α * r u) • χ_u + pageRankVec α W (((1 - α) * r u) • (W *ᵥ χ_u)))
-      = (α * r u) • χ_u + (pageRankVec α W (r - r u • χ_u) + pageRankVec α W (((1 - α) * r u) • (W *ᵥ χ_u)))
-      from by abel] at h1
-    rwa [h6] at h1
+        = (α * r u) • χ_u + (pageRankVec α W (r - r u • χ_u) + pageRankVec α W (((1 - α) * r u) • (W *ᵥ χ_u)))
+        from by abel] at h1
+    rw [h6] at h1
+    exact h1
+
+
   have hgoal : p' + pageRankVec α W r' = pageRankVec α W s := by
     rw [show p' = p + (α * r u) • χ_u from rfl]
     rw [show p + (α * r u) • χ_u + pageRankVec α W r' =
-      p + ((α * r u) • χ_u + pageRankVec α W r') from add_assoc _ _ _]
-    rwa [← hkey]
+        p + ((α * r u) • χ_u + pageRankVec α W r') from add_assoc _ _ _]
+    rw [← hkey]
+    exact hinv_sum
+
   rw [pageRankVec_sub]
   exact eq_sub_of_add_eq hgoal
 
@@ -290,7 +313,7 @@ lemma l1norm_add_le
 -- proof
   unfold l1norm
   calc ∑ i, |(f + g) i| ≤ ∑ i, (|f i| + |g i|) :=
-    Finset.sum_le_sum (fun i _ => abs_add_le (f i) (g i))
+        Finset.sum_le_sum (fun i _ => abs_add_le (f i) (g i))
     _ = ∑ i, |f i| + ∑ i, |g i| := Finset.sum_add_distrib
 
 end PageRank
@@ -415,12 +438,17 @@ lemma residual_decrease_bound
   intro χ_u r'
   have hα_pos := hα
   have h1α_pos : (0 : ℝ) < 1 - α := by linarith
+
   have h1 : l1norm r' ≤ l1norm (r - r u • χ_u) + l1norm (((1 - α) * r u) • (W *ᵥ χ_u)) :=
     l1norm_add_le (r - r u • χ_u) (((1 - α) * r u) • (W *ᵥ χ_u))
+
   have h2 : l1norm (r - r u • χ_u) = l1norm r - r u := l1norm_sub_single r u hr
+
   have h3 : l1norm (((1 - α) * r u) • (W *ᵥ χ_u)) = (1 - α) * r u * l1norm (W *ᵥ χ_u) := by
     rw [l1norm_smul, abs_of_nonneg (mul_nonneg (le_of_lt h1α_pos) (hr u))]
+
   have h5 : l1norm (W *ᵥ χ_u) ≤ 1 := l1norm_mulVec_single_le W u hW
+
   have hle : l1norm (((1 - α) * r u) • (W *ᵥ χ_u)) ≤ (1 - α) * r u := by
     rw [h3]
     have : (1 - α) * r u * l1norm (W *ᵥ χ_u) ≤ (1 - α) * r u * 1 :=
@@ -451,11 +479,11 @@ lemma telescope_decrease
   | succ T' ih =>
     have h_last := h ⟨T', Nat.lt_succ_iff.mpr le_rfl⟩
     have ih' := ih (fun i => a ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ _)⟩)
-      (fun i => b ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ _)⟩)
-      (fun i => by exact h ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ _)⟩)
+        (fun i => b ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ _)⟩)
+        (fun i => by exact h ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ _)⟩)
     have h_sum : ∑ i : Fin (T' + 1), b i =
-      (∑ i : Fin T', b ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ _)⟩) +
-      b ⟨T', Nat.lt_succ_iff.mpr le_rfl⟩ := by
+        (∑ i : Fin T', b ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ _)⟩) +
+        b ⟨T', Nat.lt_succ_iff.mpr le_rfl⟩ := by
       rw [Fin.sum_univ_castSucc]; congr 1
     rw [h_sum]
     linarith
@@ -486,17 +514,20 @@ lemma pageRank_iteration_bound
 -- imply
   (T : ℝ) * (α * ε) ≤ residual_norms ⟨0, Nat.zero_lt_succ T⟩ := by
 -- proof
+
   have h_min_decrease : ∀ i : Fin T,
-    residual_norms ⟨i.val + 1, Nat.succ_lt_succ i.isLt⟩ ≤
-    residual_norms ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ - α * ε := by
+      residual_norms ⟨i.val + 1, Nat.succ_lt_succ i.isLt⟩ ≤
+      residual_norms ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ - α * ε := by
     intro i
     have hεd : ε ≤ residual_vals i :=
       calc ε = ε * 1 := (mul_one ε).symm
         _ ≤ ε * d (vertices i) := by gcongr; exact hd (vertices i)
         _ ≤ residual_vals i := h_select i
     linarith [h_decrease i, mul_le_mul_of_nonneg_left hεd (le_of_lt hα)]
+
   have h_tel := telescope_decrease residual_norms (fun _ => α * ε) h_min_decrease
   simp only [Finset.sum_const, Finset.card_fin, nsmul_eq_mul] at h_tel
+
   linarith [h_nonneg ⟨T, Nat.lt_succ_iff.mpr le_rfl⟩]
 
 end PageRank
@@ -523,13 +554,15 @@ lemma pageRank_degree_sum_bound
 -- imply
   α * ε * ∑ i : Fin T, d (vertices i) ≤ residual_norms ⟨0, Nat.zero_lt_succ T⟩ := by
 -- proof
+
   have h_tel := telescope_decrease residual_norms
-    (fun i => α * residual_vals i) h_decrease
+      (fun i => α * residual_vals i) h_decrease
+
   have h_sum_le : α * ε * ∑ i : Fin T, d (vertices i) ≤ ∑ i : Fin T, α * residual_vals i := by
     calc α * ε * ∑ i : Fin T, d (vertices i)
-      = ∑ i : Fin T, α * (ε * d (vertices i)) := by rw [Finset.mul_sum]; congr 1; ext i; ring
+        = ∑ i : Fin T, α * (ε * d (vertices i)) := by rw [Finset.mul_sum]; congr 1; ext i; ring
       _ ≤ ∑ i : Fin T, α * residual_vals i :=
-        Finset.sum_le_sum (fun i _ => mul_le_mul_of_nonneg_left (h_select i) (le_of_lt hα))
+          Finset.sum_le_sum (fun i _ => mul_le_mul_of_nonneg_left (h_select i) (le_of_lt hα))
   linarith [h_nonneg ⟨T, Nat.lt_succ_iff.mpr le_rfl⟩]
 
 end PageRank
@@ -559,10 +592,10 @@ lemma vol_supp_le_degree_sum
     obtain ⟨i, hi⟩ := h_supp_covered v hv
     exact Finset.mem_image.mpr ⟨i, Finset.mem_univ i, hi⟩
   calc ∑ x ∈ vecSupp p, d x
-    ≤ ∑ x ∈ Finset.univ.image vertices, d x :=
-      Finset.sum_le_sum_of_subset_of_nonneg h_sub (fun _ _ _ => hd _)
+      ≤ ∑ x ∈ Finset.univ.image vertices, d x :=
+        Finset.sum_le_sum_of_subset_of_nonneg h_sub (fun _ _ _ => hd _)
     _ ≤ ∑ i ∈ Finset.univ, d (vertices i) :=
-      Finset.sum_image_le_of_nonneg (fun u _ => hd u)
+        Finset.sum_image_le_of_nonneg (fun u _ => hd u)
 
 end PageRank
 
@@ -623,18 +656,18 @@ lemma pageRank_termination
   refine ⟨?_, ?_, ?_⟩
   ·
     have h := pageRank_iteration_bound α ε hα hε T d hd residual_norms h_nonneg
-      vertices residual_vals h_select h_decrease
+        vertices residual_vals h_select h_decrease
     linarith [h_init.symm ▸ h]
   ·
     exact pageRank_output_quality ε d r_final hd_pos h_term
   ·
     have h_vol := vol_supp_le_degree_sum d hd_nonneg p T vertices h_supp_covered
     have h_deg := pageRank_degree_sum_bound α ε hα T d residual_norms h_nonneg
-      vertices residual_vals h_select h_decrease
+        vertices residual_vals h_select h_decrease
     have hαε_pos : (0 : ℝ) < α * ε := mul_pos hα hε
     calc α * ε * vol d (vecSupp p)
-      ≤ α * ε * ∑ i : Fin T, d (vertices i) := by
-        gcongr
+        ≤ α * ε * ∑ i : Fin T, d (vertices i) := by
+          gcongr
       _ ≤ residual_norms ⟨0, Nat.zero_lt_succ T⟩ := h_deg
       _ = 1 := h_init
 
@@ -642,3 +675,4 @@ end PageRank
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

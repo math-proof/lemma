@@ -129,7 +129,7 @@ private lemma gibbsMix_apply_eq
   {μm μp : Measure (ConfigSpace E)}
   {s : Set (ConfigSpace E)}
 -- given
-  (a b : ℝ≥0∞) :
+  (a b : ENNReal) :
 -- imply
   gibbsMix a b μm μp s = a * μm s + b * μp s := by
 -- proof
@@ -165,7 +165,7 @@ private lemma gibbsMix_zero_one_eq
 @[path]
 private lemma isDLRState_gibbsMix_eq
   {d : ℕ}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   {μm μp : Measure (ConfigSpace (Site d))}
   [IsFiniteMeasure μm]
   [IsFiniteMeasure μp]
@@ -186,7 +186,7 @@ private lemma isDLRState_gibbsMix_eq
 @[path]
 private lemma gibbsMix_isProbabilityMeasure_eq
   {d : ℕ}
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
   {μm μp : Measure (ConfigSpace E)}
   [IsProbabilityMeasure μm]
   [IsProbabilityMeasure μp]
@@ -222,7 +222,7 @@ private lemma gibbsMix_coeff_unique_eq
   {μm μp : Measure (ConfigSpace E)}
   [IsProbabilityMeasure μm]
   [IsProbabilityMeasure μp]
-  {a b a' b' : ℝ≥0∞}
+  {a b a' b' : ENNReal}
 -- given
   (hne : μm ≠ μp)
   (ha : a ≠ ⊤)
@@ -246,7 +246,7 @@ private lemma gibbsMix_coeff_unique_pair_eq
   {μm μp : Measure (ConfigSpace E)}
   [IsProbabilityMeasure μm]
   [IsProbabilityMeasure μp]
-  {a b a' b' : ℝ≥0∞}
+  {a b a' b' : ENNReal}
 -- given
   (hne : μm ≠ μp)
   (ha : a ≠ ⊤)
@@ -270,7 +270,7 @@ private lemma gibbsMix_ne_minus_eq
   {μm μp : Measure (ConfigSpace E)}
   [IsProbabilityMeasure μm]
   [IsProbabilityMeasure μp]
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
 -- given
   (hne : μm ≠ μp)
   (ha : a ≠ ⊤)
@@ -291,7 +291,7 @@ private lemma gibbsMix_ne_plus_eq
   {μm μp : Measure (ConfigSpace E)}
   [IsProbabilityMeasure μm]
   [IsProbabilityMeasure μp]
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
 -- given
   (hne : μm ≠ μp)
   (ha : a ≠ ⊤)
@@ -312,7 +312,7 @@ private lemma minusState_extreme_in_segment_eq
   {μm μp : Measure (ConfigSpace E)}
   [IsProbabilityMeasure μm]
   [IsProbabilityMeasure μp]
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
 -- given
   (hne : μm ≠ μp)
   (ha : a ≠ ⊤)
@@ -333,7 +333,7 @@ private lemma plusState_extreme_in_segment_eq
   {μm μp : Measure (ConfigSpace E)}
   [IsProbabilityMeasure μm]
   [IsProbabilityMeasure μp]
-  {a b : ℝ≥0∞}
+  {a b : ENNReal}
 -- given
   (hne : μm ≠ μp)
   (ha : a ≠ ⊤)
@@ -354,7 +354,7 @@ private lemma gibbsMix_param_injective_eq
   {μm μp : Measure (ConfigSpace E)}
   [IsProbabilityMeasure μm]
   [IsProbabilityMeasure μp]
-  {a a' : ℝ≥0∞}
+  {a a' : ENNReal}
 -- given
   (hne : μm ≠ μp)
   (ha : a ≤ 1)

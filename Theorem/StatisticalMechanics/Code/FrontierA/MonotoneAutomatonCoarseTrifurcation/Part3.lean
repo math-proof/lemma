@@ -54,7 +54,7 @@ theorem exists_siteThreeMeetBox_pos
 
 theorem siteFaithfulAllOpenTrif_pos_of_top
     (nu : Measure (ConfigSpace (Site 2))) [IsProbabilityMeasure nu]
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon)
     (htop : 0 < nu {eta | numInfiniteClusters 2 (siteToBond eta) = ⊤}) :
     ∃ n : ℕ, 0 < nu (SiteFaithfulAllOpenTrifAt n) := by
@@ -85,7 +85,7 @@ theorem siteFaithfulAllOpenTrif_prob_eq_zero
 theorem site_cluster_count_top_null_two
     (nu : Measure (ConfigSpace (Site 2))) [IsProbabilityMeasure nu]
     (hinv : IsTranslationInvariant (G := Multiplicative (Site 2)) nu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon) :
     nu {eta | numInfiniteClusters 2 (siteToBond eta) = ⊤} = 0 := by
   by_contra hne
@@ -100,7 +100,7 @@ theorem site_cluster_count_top_null_two
 theorem site_cluster_count_ae_one_two
     (nu : Measure (ConfigSpace (Site 2))) [IsProbabilityMeasure nu]
     (herg : IsErgodic (G := Multiplicative (Site 2)) nu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon)
     (hperco : nu {eta | 1 ≤ numInfiniteClusters 2 (siteToBond eta)} = 1) :
     nu {eta | numInfiniteClusters 2 (siteToBond eta) = 1} = 1 := by
@@ -114,7 +114,7 @@ theorem site_cluster_count_ae_one_two
 theorem site_cluster_count_ae_zero_or_one_two
     (nu : Measure (ConfigSpace (Site 2))) [IsProbabilityMeasure nu]
     (herg : IsErgodic (G := Multiplicative (Site 2)) nu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon) :
     nu {eta | numInfiniteClusters 2 (siteToBond eta) = 0} = 1 ∨
       nu {eta | numInfiniteClusters 2 (siteToBond eta) = 1} = 1 := by
@@ -139,7 +139,7 @@ theorem interpolatedSite_cluster_count_ae_zero_or_one_two
     (T : MonotoneAutomaton 2) (mu : Measure (FieldTriple 2))
     [IsProbabilityMeasure mu]
     (herg : IsTripleFieldErgodic mu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon) :
     (interpolatedSiteLaw T mu)
         {eta | numInfiniteClusters 2 (siteToBond eta) = 0} = 1 ∨

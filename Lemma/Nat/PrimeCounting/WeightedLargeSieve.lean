@@ -113,16 +113,16 @@ private lemma btAddChar_sub_one (u : ℝ) :
   rw [show 2 * Real.pi * u = 2 * (Real.pi * u) by ring]
   apply Complex.ext
   · simp only [Complex.sub_re, Complex.add_re, Complex.mul_re,
-    Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im,
-    Complex.one_re, mul_zero, add_zero, sub_zero, zero_sub, mul_one]
+      Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im,
+      Complex.one_re, mul_zero, add_zero, sub_zero, zero_sub, mul_one]
     norm_num
     rw [← Complex.ofReal_mul]
     simp only [Complex.sin_ofReal_re, Complex.cos_ofReal_im]
     rw [Real.cos_two_mul]
     nlinarith [Real.sin_sq_add_cos_sq (Real.pi * u)]
   · simp only [Complex.sub_im, Complex.add_im, Complex.mul_im,
-    Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im,
-    Complex.one_im, mul_zero, add_zero, sub_zero, mul_one]
+      Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im,
+      Complex.one_im, mul_zero, add_zero, sub_zero, mul_one]
     norm_num
     rw [← Complex.ofReal_mul]
     simp only [Complex.cos_ofReal_re, Complex.sin_ofReal_im]
@@ -165,7 +165,7 @@ private lemma btGeomSum (N : ℕ) {u : ℝ}
       (btAddChar (-u / 2) - btAddChar ((N : ℝ) * u - u / 2)) /
         Real.sin (Real.pi * u) := by
   rw [show (∑ n ∈ Finset.range N, btAddChar (n * u)) =
-    ∑ n ∈ Finset.range N, btAddChar u ^ n by
+      ∑ n ∈ Finset.range N, btAddChar u ^ n by
     apply Finset.sum_congr rfl
     intro n _
     exact btAddChar_nat_mul n u]
@@ -182,7 +182,7 @@ private lemma btGeomSum (N : ℕ) {u : ℝ}
     btAddChar_neg (u / 2)
   rw [show -u / 2 = -(u / 2) by ring, hhalf]
   have hlast : btAddChar ((N : ℝ) * u - u / 2) =
-    btAddChar ((N : ℝ) * u) * (btAddChar (u / 2))⁻¹ := by
+      btAddChar ((N : ℝ) * u) * (btAddChar (u / 2))⁻¹ := by
     rw [btAddChar_sub, btAddChar_conj, hhalf]
   rw [hlast]
   have hsin' : (Real.sin (u * Real.pi) : ℂ) ≠ 0 := by
@@ -207,20 +207,20 @@ private lemma btSynthesis_expand {ι : Type*} [Fintype ι]
       ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s)) := by
   push_cast
   rw [show (∑ r, ∑ s, v r * conj (v s) *
-    ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) =
-    ∑ n ∈ Finset.range N, ∑ r, ∑ s,
-      v r * conj (v s) * btAddChar (n * (x r - x s)) by
+      ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) =
+      ∑ n ∈ Finset.range N, ∑ r, ∑ s,
+        v r * conj (v s) * btAddChar (n * (x r - x s)) by
     simp_rw [Finset.mul_sum]
     calc
       (∑ r, ∑ s, ∑ n ∈ Finset.range N,
-        v r * conj (v s) * btAddChar (n * (x r - x s))) =
-        ∑ r, ∑ n ∈ Finset.range N, ∑ s,
-          v r * conj (v s) * btAddChar (n * (x r - x s)) := by
+          v r * conj (v s) * btAddChar (n * (x r - x s))) =
+          ∑ r, ∑ n ∈ Finset.range N, ∑ s,
+            v r * conj (v s) * btAddChar (n * (x r - x s)) := by
         apply Finset.sum_congr rfl
         intro r _
         rw [Finset.sum_comm]
       _ = ∑ n ∈ Finset.range N, ∑ r, ∑ s,
-        v r * conj (v s) * btAddChar (n * (x r - x s)) := by
+          v r * conj (v s) * btAddChar (n * (x r - x s)) := by
         rw [Finset.sum_comm]]
   apply Finset.sum_congr rfl
   intro n hn
@@ -280,8 +280,8 @@ private lemma btPhase_pair {ι : Type*} (x : ι → ℝ) (v : ι → ℂ)
   rw [show -(c * x s) = c * (-x s) by ring]
   calc
     v r * btAddChar (c * x r) * (conj (v s) * btAddChar (c * -x s)) =
-      v r * conj (v s) *
-        (btAddChar (c * x r) * btAddChar (c * -x s)) := by ring
+        v r * conj (v s) *
+          (btAddChar (c * x r) * btAddChar (c * -x s)) := by ring
     _ = v r * conj (v s) * btAddChar (c * x r + c * -x s) := by
       rw [btAddChar_add]
     _ = v r * conj (v s) * btAddChar (c * (x r - x s)) := by
@@ -325,16 +325,16 @@ private lemma btCross_sum_le {ι : Type*} [Fintype ι] [DecidableEq ι]
   have hH₁ : ‖H₁‖ ≤ 3 / 2 * ∑ r, ‖v r‖ ^ 2 / δ r := by
     simpa only [H₁, hz₁] using weightedHilbertCosecant x δ z₁ hδ hsep
   have hcross :
-    (∑ r, ∑ s ∈ Finset.univ.erase r,
-      v r * conj (v s) *
-        ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) =
-      Complex.I / 2 * (H₀ - H₁) := by
+      (∑ r, ∑ s ∈ Finset.univ.erase r,
+          v r * conj (v s) *
+            ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) =
+        Complex.I / 2 * (H₀ - H₁) := by
     have hterm (r s : ι) (hrs : s ∈ Finset.univ.erase r) :
-      v r * conj (v s) *
-        (∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) =
-        Complex.I / 2 *
-          (z₀ r * conj (z₀ s) / Real.sin (Real.pi * (x r - x s)) -
-            z₁ r * conj (z₁ s) / Real.sin (Real.pi * (x r - x s))) := by
+        v r * conj (v s) *
+            (∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) =
+          Complex.I / 2 *
+            (z₀ r * conj (z₀ s) / Real.sin (Real.pi * (x r - x s)) -
+              z₁ r * conj (z₁ s) / Real.sin (Real.pi * (x r - x s))) := by
       have hrs' : r ≠ s := Ne.symm (Finset.mem_erase.mp hrs).1
       rw [btGeomSum N (btSine_ne_zero_of_circle_separated x δ hδ hsep r s hrs')]
       rw [show -(x r - x s) / 2 = c₀ * (x r - x s) by simp only [c₀]; ring]
@@ -345,11 +345,11 @@ private lemma btCross_sum_le {ι : Type*} [Fintype ι] [DecidableEq ι]
       push_cast
       ring
     rw [show (∑ r, ∑ s ∈ Finset.univ.erase r,
-      v r * conj (v s) *
-        ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) =
-      ∑ r, ∑ s ∈ Finset.univ.erase r, Complex.I / 2 *
-        (z₀ r * conj (z₀ s) / Real.sin (Real.pi * (x r - x s)) -
-          z₁ r * conj (z₁ s) / Real.sin (Real.pi * (x r - x s))) by
+        v r * conj (v s) *
+          ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) =
+        ∑ r, ∑ s ∈ Finset.univ.erase r, Complex.I / 2 *
+          (z₀ r * conj (z₀ s) / Real.sin (Real.pi * (x r - x s)) -
+            z₁ r * conj (z₁ s) / Real.sin (Real.pi * (x r - x s))) by
       apply Finset.sum_congr rfl
       intro r _
       apply Finset.sum_congr rfl
@@ -375,7 +375,7 @@ private lemma btCross_sum_le {ι : Type*} [Fintype ι] [DecidableEq ι]
       gcongr
       exact norm_sub_le H₀ H₁
     _ ≤ 1 / 2 * ((3 / 2 * ∑ r, ‖v r‖ ^ 2 / δ r) +
-      3 / 2 * ∑ r, ‖v r‖ ^ 2 / δ r) := by gcongr
+        3 / 2 * ∑ r, ‖v r‖ ^ 2 / δ r) := by gcongr
     _ = 3 / 2 * ∑ r, ‖v r‖ ^ 2 / δ r := by ring
 
 end MathlibExt.NumberTheory.PrimeCounting
@@ -399,9 +399,9 @@ private lemma btSynthesis_le {ι : Type*} [Fintype ι]
   have hC : ‖C‖ ≤ 3 / 2 * ∑ r, ‖v r‖ ^ 2 / δ r := by
     simpa only [C] using btCross_sum_le N x δ v hδ hsep
   have hdiag (r : ι) :
-    v r * conj (v r) *
-      (∑ n ∈ Finset.range N, btAddChar (n * (x r - x r))) =
-      ((N : ℝ) * ‖v r‖ ^ 2 : ℝ) := by
+      v r * conj (v r) *
+          (∑ n ∈ Finset.range N, btAddChar (n * (x r - x r))) =
+        ((N : ℝ) * ‖v r‖ ^ 2 : ℝ) := by
     rw [sub_self]
     simp only [mul_zero, btAddChar_zero, Finset.sum_const, Finset.card_range,
       nsmul_eq_mul]
@@ -409,50 +409,50 @@ private lemma btSynthesis_le {ι : Type*} [Fintype ι]
     rw [← Complex.mul_conj']
     ring
   have hfull :
-    ((∑ n ∈ Finset.range N,
-      ‖∑ r, v r * btAddChar (n * x r)‖ ^ 2 : ℝ) : ℂ) =
-      ((N : ℝ) * ∑ r, ‖v r‖ ^ 2 : ℝ) + C := by
+      ((∑ n ∈ Finset.range N,
+          ‖∑ r, v r * btAddChar (n * x r)‖ ^ 2 : ℝ) : ℂ) =
+        ((N : ℝ) * ∑ r, ‖v r‖ ^ 2 : ℝ) + C := by
     rw [btSynthesis_expand]
     simp only [C]
     calc
       (∑ r, ∑ s, v r * conj (v s) *
-        ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) =
-        ∑ r, ((∑ s ∈ Finset.univ.erase r,
-          v r * conj (v s) *
-            ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) +
-              v r * conj (v r) *
-                ∑ n ∈ Finset.range N, btAddChar (n * (x r - x r))) := by
+          ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) =
+          ∑ r, ((∑ s ∈ Finset.univ.erase r,
+            v r * conj (v s) *
+              ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) +
+                v r * conj (v r) *
+                  ∑ n ∈ Finset.range N, btAddChar (n * (x r - x r))) := by
         apply Finset.sum_congr rfl
         intro r _
         rw [Finset.sum_erase_add _ _ (Finset.mem_univ r)]
       _ = ∑ r, ((∑ s ∈ Finset.univ.erase r,
-        v r * conj (v s) *
-          ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) +
-            ((N : ℝ) * ‖v r‖ ^ 2 : ℝ)) := by
+            v r * conj (v s) *
+              ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s))) +
+                ((N : ℝ) * ‖v r‖ ^ 2 : ℝ)) := by
         apply Finset.sum_congr rfl
         intro r _
         rw [hdiag]
       _ = ((N : ℝ) * ∑ r, ‖v r‖ ^ 2 : ℝ) +
-        ∑ r, ∑ s ∈ Finset.univ.erase r,
-          v r * conj (v s) *
-            ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s)) := by
+          ∑ r, ∑ s ∈ Finset.univ.erase r,
+            v r * conj (v s) *
+              ∑ n ∈ Finset.range N, btAddChar (n * (x r - x s)) := by
         push_cast
         simp_rw [Finset.sum_add_distrib]
         rw [Finset.mul_sum]
         ring
   have hdecomp :
-    (∑ n ∈ Finset.range N, ‖∑ r, v r * btAddChar (n * x r)‖ ^ 2) =
-      (N : ℝ) * ∑ r, ‖v r‖ ^ 2 + C.re := by
+      (∑ n ∈ Finset.range N, ‖∑ r, v r * btAddChar (n * x r)‖ ^ 2) =
+        (N : ℝ) * ∑ r, ‖v r‖ ^ 2 + C.re := by
     have hre := congrArg Complex.re hfull
     simpa only [Complex.ofReal_re, Complex.add_re] using hre
   rw [hdecomp]
   calc
     (N : ℝ) * ∑ r, ‖v r‖ ^ 2 + C.re ≤
-      (N : ℝ) * ∑ r, ‖v r‖ ^ 2 + ‖C‖ := by
+        (N : ℝ) * ∑ r, ‖v r‖ ^ 2 + ‖C‖ := by
       gcongr
       exact Complex.re_le_norm C
     _ ≤ (N : ℝ) * ∑ r, ‖v r‖ ^ 2 +
-      3 / 2 * ∑ r, ‖v r‖ ^ 2 / δ r := by gcongr
+        3 / 2 * ∑ r, ‖v r‖ ^ 2 / δ r := by gcongr
     _ = ∑ r, (N + 3 / (2 * δ r)) * ‖v r‖ ^ 2 := by
       rw [Finset.mul_sum]
       simp_rw [add_mul, Finset.sum_add_distrib]
@@ -486,7 +486,7 @@ lemma weightedLargeSieve
 -- proof
   classical
   change ∑ r, (N + 3 / (2 * δ r))⁻¹ *
-    ‖∑ n ∈ Finset.range N, a n * btAddChar (n * x r)‖ ^ 2 ≤ _
+      ‖∑ n ∈ Finset.range N, a n * btAddChar (n * x r)‖ ^ 2 ≤ _
   let D : ι → ℝ := fun r => N + 3 / (2 * δ r)
   let S : ι → ℂ := fun r => ∑ n ∈ Finset.range N, a n * btAddChar (n * x r)
   let w : ι → ℝ := fun r => (D r)⁻¹
@@ -511,14 +511,15 @@ lemma weightedLargeSieve
     simp only [A]
     exact Finset.sum_nonneg fun n _ => sq_nonneg ‖a n‖
   have hsepNeg : ∀ r s, r ≠ s →
-    δ r ≤ ‖(((-x r) - (-x s) : ℝ) : AddCircle (1 : ℝ))‖ := by
+      δ r ≤ ‖(((-x r) - (-x s) : ℝ) : AddCircle (1 : ℝ))‖ := by
     intro r s hrs
     have h := hsep r s hrs
     have heq : ((-x r - -x s : ℝ) : AddCircle (1 : ℝ)) =
-      -((x r - x s : ℝ) : AddCircle (1 : ℝ)) := by
+        -((x r - x s : ℝ) : AddCircle (1 : ℝ)) := by
       congr 1
       ring
-    rwa [heq, norm_neg]
+    rw [heq, norm_neg]
+    exact h
   have hSynth : B ≤ ∑ r, D r * ‖v r‖ ^ 2 := by
     simpa only [B, T, D] using btSynthesis_le N (fun r => -x r) δ v hδ hsepNeg
   have hDv : ∑ r, D r * ‖v r‖ ^ 2 = L := by
@@ -531,8 +532,8 @@ lemma weightedLargeSieve
     field_simp
   have hB : B ≤ L := hSynth.trans_eq hDv
   have hconjS (r : ι) :
-    (∑ n ∈ Finset.range N, conj (a n) * btAddChar (n * (-x r))) =
-      conj (S r) := by
+      (∑ n ∈ Finset.range N, conj (a n) * btAddChar (n * (-x r))) =
+        conj (S r) := by
     simp only [S, map_sum, map_mul]
     apply Finset.sum_congr rfl
     intro n _
@@ -552,7 +553,7 @@ lemma weightedLargeSieve
         simp only [v]
         ring
       _ = ∑ r, ∑ n ∈ Finset.range N,
-        conj (a n) * (v r * btAddChar (n * (-x r))) := by
+          conj (a n) * (v r * btAddChar (n * (-x r))) := by
         apply Finset.sum_congr rfl
         intro r _
         rw [← hconjS r, Finset.mul_sum]
@@ -563,12 +564,12 @@ lemma weightedLargeSieve
         simp only [T]
         calc
           (∑ r, ∑ n ∈ Finset.range N,
-            conj (a n) * (v r * btAddChar (n * -x r))) =
-            ∑ n ∈ Finset.range N, ∑ r,
-              conj (a n) * (v r * btAddChar (n * -x r)) := by
+              conj (a n) * (v r * btAddChar (n * -x r))) =
+              ∑ n ∈ Finset.range N, ∑ r,
+                conj (a n) * (v r * btAddChar (n * -x r)) := by
             rw [Finset.sum_comm]
           _ = ∑ n ∈ Finset.range N, conj (a n) *
-            ∑ r, v r * btAddChar (n * -x r) := by
+              ∑ r, v r * btAddChar (n * -x r) := by
             apply Finset.sum_congr rfl
             intro n _
             rw [Finset.mul_sum]
@@ -590,7 +591,7 @@ lemma weightedLargeSieve
       L ^ 2 ≤ (∑ n ∈ Finset.range N, ‖a n‖ * ‖T n‖) ^ 2 :=
         pow_le_pow_left₀ hL0 htriangle 2
       _ ≤ (∑ n ∈ Finset.range N, ‖a n‖ ^ 2) *
-        ∑ n ∈ Finset.range N, ‖T n‖ ^ 2 :=
+          ∑ n ∈ Finset.range N, ‖T n‖ ^ 2 :=
         Finset.sum_mul_sq_le_sq_mul_sq (Finset.range N) _ _
       _ = A * B := by rfl
   have hsq' : L ^ 2 ≤ A * L := hsq.trans (mul_le_mul_of_nonneg_left hB hA0)
@@ -606,4 +607,4 @@ end MathlibExt.NumberTheory.PrimeCounting
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -138,7 +138,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma wintner_mean_value
-  {f : ArithmeticFunction ℂ}
+  (f : ArithmeticFunction ℂ)
 -- given
   (hsum : Summable (fun n : ℕ => ‖((↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) * f) n‖ / (n : ℝ))) :
 -- imply

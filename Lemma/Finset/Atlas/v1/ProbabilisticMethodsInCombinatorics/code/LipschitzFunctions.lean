@@ -16,7 +16,7 @@ lemma concentration_equivalence
   [MeasurableSpace Ω]
   [BorelSpace Ω]
   {t : ℝ}
-  {ε : ℝ≥0∞}
+  {ε : ENNReal}
 -- given
   (ht : 0 ≤ t) :
 -- imply
@@ -63,7 +63,7 @@ lemma concentration_equivalence
       _ = 1 - μ (Metric.cthickening t A) := prob_compl_eq_one_sub h_meas_cthick
       _ ≤ ε := by
         rw [tsub_le_iff_right]
-        calc (1 : ℝ≥0∞) ≤ (1 - ε) + ε := le_tsub_add
+        calc (1 : ENNReal) ≤ (1 - ε) + ε := le_tsub_add
           _ ≤ μ (Metric.cthickening t A) + ε := by gcongr
           _ = ε + μ (Metric.cthickening t A) := add_comm _ _
   ·

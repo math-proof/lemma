@@ -22,8 +22,8 @@ namespace TwoDim
 open StatMech.Percolation StatMech.Lattice
 
 
-theorem theta_half_eq_zero (h12 : (1 / 2 : ℝ≥0) ≤ 1)
-    (cross : ℝ≥0 → ℕ → ℝ)
+theorem theta_half_eq_zero (h12 : (1 / 2 : NNReal) ≤ 1)
+    (cross : NNReal → ℕ → ℝ)
     (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
     (hpercToOne : 0 < theta 2 (1 / 2) h12 →
       Tendsto (cross (1 / 2)) atTop (𝓝 1)) :
@@ -40,35 +40,35 @@ theorem theta_half_eq_zero (h12 : (1 / 2 : ℝ≥0) ≤ 1)
   norm_num at this
 
 
-theorem half_mem_subcriticalSet (h12 : (1 / 2 : ℝ≥0) ≤ 1)
-    (cross : ℝ≥0 → ℕ → ℝ)
+theorem half_mem_subcriticalSet (h12 : (1 / 2 : NNReal) ≤ 1)
+    (cross : NNReal → ℕ → ℝ)
     (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
     (hpercToOne : 0 < theta 2 (1 / 2) h12 →
       Tendsto (cross (1 / 2)) atTop (𝓝 1)) :
-    (1 / 2 : ℝ≥0) ∈ subcriticalSet 2 :=
+    (1 / 2 : NNReal) ∈ subcriticalSet 2 :=
   ⟨h12, theta_half_eq_zero h12 cross hdualHalf hpercToOne⟩
 
 
-theorem half_le_pc (h12 : (1 / 2 : ℝ≥0) ≤ 1)
-    (cross : ℝ≥0 → ℕ → ℝ)
+theorem half_le_pc (h12 : (1 / 2 : NNReal) ≤ 1)
+    (cross : NNReal → ℕ → ℝ)
     (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
     (hpercToOne : 0 < theta 2 (1 / 2) h12 →
       Tendsto (cross (1 / 2)) atTop (𝓝 1)) :
-    (1 / 2 : ℝ≥0) ≤ pc 2 :=
+    (1 / 2 : NNReal) ≤ pc 2 :=
   le_pc_of_mem_subcriticalSet (half_mem_subcriticalSet h12 cross hdualHalf hpercToOne)
 
 
 theorem pc_le_half
     (hsharp : tildePc 2 = pc 2)
-    (cross : ℝ≥0 → ℕ → ℝ)
+    (cross : NNReal → ℕ → ℝ)
     (hsub : ∀ p ∈ tildePcSet 2, ∀ hp : p ≤ 1,
         ∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n))
-    (hmono : ∀ n, ∀ p q : ℝ≥0, p ≤ q → cross p n ≤ cross q n)
+    (hmono : ∀ n, ∀ p q : NNReal, p ≤ q → cross p n ≤ cross q n)
     (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
-    (hdecayToZero : ∀ p : ℝ≥0, ∀ hp : p ≤ 1,
+    (hdecayToZero : ∀ p : NNReal, ∀ hp : p ≤ 1,
         (∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n)) →
         Tendsto (cross p) atTop (𝓝 0)) :
-    pc 2 ≤ (1 / 2 : ℝ≥0) := by
+    pc 2 ≤ (1 / 2 : NNReal) := by
   
   rw [← hsharp]
   
@@ -93,19 +93,19 @@ theorem pc_le_half
     norm_num at hlimge
 
 
-theorem pc_eq_half (h12 : (1 / 2 : ℝ≥0) ≤ 1)
+theorem pc_eq_half (h12 : (1 / 2 : NNReal) ≤ 1)
     (hsharp : tildePc 2 = pc 2)
-    (cross : ℝ≥0 → ℕ → ℝ)
+    (cross : NNReal → ℕ → ℝ)
     (hsub : ∀ p ∈ tildePcSet 2, ∀ hp : p ≤ 1,
         ∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n))
-    (hmono : ∀ n, ∀ p q : ℝ≥0, p ≤ q → cross p n ≤ cross q n)
+    (hmono : ∀ n, ∀ p q : NNReal, p ≤ q → cross p n ≤ cross q n)
     (hdualHalf : ∀ n, cross (1 / 2) n = 1 / 2)
     (hpercToOne : 0 < theta 2 (1 / 2) h12 →
       Tendsto (cross (1 / 2)) atTop (𝓝 1))
-    (hdecayToZero : ∀ p : ℝ≥0, ∀ hp : p ≤ 1,
+    (hdecayToZero : ∀ p : NNReal, ∀ hp : p ≤ 1,
         (∃ c > 0, ∃ C > 0, ∀ n, crossProb 2 p hp n ≤ C * Real.exp (-c * n)) →
         Tendsto (cross p) atTop (𝓝 0)) :
-    pc 2 = (1 / 2 : ℝ≥0) :=
+    pc 2 = (1 / 2 : NNReal) :=
   le_antisymm
     (pc_le_half hsharp cross hsub hmono hdualHalf hdecayToZero)
     (half_le_pc h12 cross hdualHalf hpercToOne)

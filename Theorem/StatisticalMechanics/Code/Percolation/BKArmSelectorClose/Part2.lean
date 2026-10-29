@@ -245,7 +245,7 @@ theorem bas_Tcount_le_boundary_of_rootedTreeArmSelection (ω : ConfigSpace (Sym2
     (bas_directionalDivergence_of_rootedTreeArmSelection ω n h)
 
 
-theorem bas_burton_keane_bernoulli_of_rootedTreeArmSelection (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bas_burton_keane_bernoulli_of_rootedTreeArmSelection (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
       bas_RootedTreeArmSelection ω n)

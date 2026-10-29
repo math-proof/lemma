@@ -100,7 +100,7 @@ theorem ati_exterior_approx_cylinder
     (window : Set E) {mu : Measure (ConfigSpace E)} [IsFiniteMeasure mu]
     {s : Set (ConfigSpace E)}
     (hs : @MeasurableSet _ (outsideSigma window) s)
-    {ε : ℝ≥0∞} (hε : 0 < ε) :
+    {ε : ENNReal} (hε : 0 < ε) :
     ∃ (F : Finset E) (S : Set (ConfigSpace F)),
       (↑F : Set E) ⊆ windowᶜ ∧
       mu (s ∆ MeasureTheory.cylinder F S) < ε := by
@@ -181,7 +181,7 @@ theorem ati_invariant_approx
     (hmu : IsTranslationInvariant (G := H) mu)
     {s : Set (ConfigSpace E)} (hs : MeasurableSet s)
     (hinv : ∀ g : H, shift g ⁻¹' s = s)
-    (k : ℕ) {ε : ℝ≥0∞} (hε : 0 < ε) :
+    (k : ℕ) {ε : ENNReal} (hε : 0 < ε) :
     ∃ A : Set (ConfigSpace E),
       @MeasurableSet _ (outsideSigma (window k)) A ∧ mu (s ∆ A) < ε := by
   have hcover : ∃ D : Set (Set (ConfigSpace E)), D.Countable ∧
@@ -218,7 +218,7 @@ theorem ati_sequenceInvariant_approx
     (hmu : IsTranslationInvariant (G := H) mu)
     {s : Set (ConfigSpace E)} (hs : MeasurableSet s)
     (hinv : ∀ n : ℕ, shift (g n) ⁻¹' s = s)
-    (k : ℕ) {ε : ℝ≥0∞} (hε : 0 < ε) :
+    (k : ℕ) {ε : ENNReal} (hε : 0 < ε) :
     ∃ A : Set (ConfigSpace E),
       @MeasurableSet _ (outsideSigma (window k)) A ∧ mu (s ∆ A) < ε := by
   have hcover : ∃ D : Set (Set (ConfigSpace E)), D.Countable ∧

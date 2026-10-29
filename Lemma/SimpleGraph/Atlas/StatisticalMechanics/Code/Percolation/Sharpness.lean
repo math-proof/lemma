@@ -34,7 +34,7 @@ private lemma crossProbReal_eq_eq
   {d : ℕ}
   {d n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   crossProbReal d n (p : ℝ) = crossProb d p hp n := by
@@ -97,7 +97,7 @@ private lemma percolationEvent_eq_iInter_eq
 private lemma tendsto_crossProb_theta_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Tendsto (fun n => crossProb d p hp (n + 1)) atTop (𝓝 (theta d p hp)) := by
@@ -111,7 +111,7 @@ private lemma tendsto_crossProb_theta_eq
 private lemma theta_eq_zero_of_crossProb_decay_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hdecay : ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n)) :
 -- imply
@@ -128,7 +128,7 @@ private lemma theta_ge_meanField_eq
   {a : ℝ}
   {F' : ℕ → ℝ → ℝ}
 -- given
-  (q : ℝ≥0)
+  (q : NNReal)
   (hq : q ≤ 1)
   (ha0 : 0 < a)
   (haq : a < (q : ℝ))
@@ -150,7 +150,7 @@ private lemma theta_pos_of_meanField_eq
   {a : ℝ}
   {F' : ℕ → ℝ → ℝ}
 -- given
-  (q : ℝ≥0)
+  (q : NNReal)
   (hq : q ≤ 1)
   (ha0 : 0 < a)
   (haq : a < (q : ℝ))
@@ -183,8 +183,8 @@ private lemma tildePc_le_pc_eq
 private lemma pc_le_tildePc_eq
   {d : ℕ}
 -- given
-  (htheta_one : ∀ h1 : (1 : ℝ≥0) ≤ 1, theta d 1 h1 ≠ 0)
-  (hmf : ∀ q : ℝ≥0, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → 0 < theta d q hq) :
+  (htheta_one : ∀ h1 : (1 : NNReal) ≤ 1, theta d 1 h1 ≠ 0)
+  (hmf : ∀ q : NNReal, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → 0 < theta d q hq) :
 -- imply
   pc d ≤ tildePc d := by
 -- proof
@@ -197,9 +197,9 @@ private lemma pc_le_tildePc_eq
 private lemma tildePc_eq_pc_eq
   {d : ℕ}
 -- given
-  (htheta_one : ∀ h1 : (1 : ℝ≥0) ≤ 1, theta d 1 h1 ≠ 0)
+  (htheta_one : ∀ h1 : (1 : NNReal) ≤ 1, theta d 1 h1 ≠ 0)
   (hsub : ∀ p ∈ tildePcSet d, ∀ hp : p ≤ 1, ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n))
-  (hmf : ∀ q : ℝ≥0, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → 0 < theta d q hq) :
+  (hmf : ∀ q : NNReal, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → 0 < theta d q hq) :
 -- imply
   tildePc d = pc d := by
 -- proof
@@ -213,14 +213,14 @@ private lemma sharpness_eq
   {d : ℕ}
 -- given
   (htildePc_pos : 0 < (tildePc d : ℝ))
-  (htheta_one : ∀ h1 : (1 : ℝ≥0) ≤ 1, theta d 1 h1 ≠ 0)
+  (htheta_one : ∀ h1 : (1 : NNReal) ≤ 1, theta d 1 h1 ≠ 0)
   (hsub : ∀ p ∈ tildePcSet d, ∀ hp : p ≤ 1, ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n))
-  (F' : ℕ → ℝ≥0 → ℝ → ℝ)
-  (hcont : ∀ q : ℝ≥0, tildePc d < q → (q : ℝ) < 1 → ∀ n, ContinuousOn (crossProbReal d (n + 1)) (Icc (tildePc d : ℝ) (q : ℝ)))
-  (hderiv : ∀ q : ℝ≥0, tildePc d < q → (q : ℝ) < 1 → ∀ n, ∀ t ∈ Ioo (tildePc d : ℝ) (q : ℝ), HasDerivAt (crossProbReal d (n + 1)) (F' n q t) t)
-  (hdiffineq : ∀ q : ℝ≥0, tildePc d < q → (q : ℝ) < 1 → ∀ n, ∀ t ∈ Ioo (tildePc d : ℝ) (q : ℝ), F' n q t ≥ (1 / (t * (1 - t))) * (1 - crossProbReal d (n + 1) t)) :
+  (F' : ℕ → NNReal → ℝ → ℝ)
+  (hcont : ∀ q : NNReal, tildePc d < q → (q : ℝ) < 1 → ∀ n, ContinuousOn (crossProbReal d (n + 1)) (Icc (tildePc d : ℝ) (q : ℝ)))
+  (hderiv : ∀ q : NNReal, tildePc d < q → (q : ℝ) < 1 → ∀ n, ∀ t ∈ Ioo (tildePc d : ℝ) (q : ℝ), HasDerivAt (crossProbReal d (n + 1)) (F' n q t) t)
+  (hdiffineq : ∀ q : NNReal, tildePc d < q → (q : ℝ) < 1 → ∀ n, ∀ t ∈ Ioo (tildePc d : ℝ) (q : ℝ), F' n q t ≥ (1 / (t * (1 - t))) * (1 - crossProbReal d (n + 1) t)) :
 -- imply
-  tildePc d = pc d ∧ (∀ p ∈ tildePcSet d, ∀ hp : p ≤ 1, ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n)) ∧ (∀ q : ℝ≥0, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → theta d q hq ≥ ((q : ℝ) - (tildePc d : ℝ)) / ((q : ℝ) * (1 - (tildePc d : ℝ)))) := by
+  tildePc d = pc d ∧ (∀ p ∈ tildePcSet d, ∀ hp : p ≤ 1, ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n)) ∧ (∀ q : NNReal, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 → theta d q hq ≥ ((q : ℝ) - (tildePc d : ℝ)) / ((q : ℝ) * (1 - (tildePc d : ℝ)))) := by
 -- proof
   apply StatMech.Percolation.sharpness htildePc_pos htheta_one hsub F' hcont hderiv hdiffineq
 

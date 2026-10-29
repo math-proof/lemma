@@ -145,11 +145,11 @@ private lemma closedDartContourEvent_eq_pi_eq
 private lemma measure_closedDartContourEvent_eq
   {ω : ConfigSpace (Sym2 (Site 2))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hfin : (cluster 2 ω (origin 2)).Finite) :
 -- imply
-  (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedDartContourEvent (ω := ω) hfin) = ((1 - p : ℝ≥0) : ℝ≥0∞) ^ (canonicalPrimalEdgeFinset (ω := ω) hfin).card := by
+  (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedDartContourEvent (ω := ω) hfin) = ((1 - p : NNReal) : ENNReal) ^ (canonicalPrimalEdgeFinset (ω := ω) hfin).card := by
 -- proof
   apply StatMech.Lattice.measure_closedDartContourEvent p hp hfin
 
@@ -216,11 +216,11 @@ private lemma canonicalPrimalEdgeFinset_card_eq
 private lemma measure_closedDartContourEvent_period_eq
   {ω : ConfigSpace (Sym2 (Site 2))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hfin : (cluster 2 ω (origin 2)).Finite) :
 -- imply
-  (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedDartContourEvent (ω := ω) hfin) = ((1 - p : ℝ≥0) : ℝ≥0∞) ^ (dartOrbitPeriod (cluster 2 ω (origin 2)) ⟨exitDart (ω := ω) hfin, exitDart_isBoundaryDart (ω := ω) hfin⟩) := by
+  (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedDartContourEvent (ω := ω) hfin) = ((1 - p : NNReal) : ENNReal) ^ (dartOrbitPeriod (cluster 2 ω (origin 2)) ⟨exitDart (ω := ω) hfin, exitDart_isBoundaryDart (ω := ω) hfin⟩) := by
 -- proof
   apply StatMech.Lattice.measure_closedDartContourEvent_period p hp hfin
 

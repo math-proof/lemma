@@ -155,7 +155,7 @@ theorem rlc_ray_eq_below_right_of_avoids {n : ℤ}
 
 
 theorem rlc_harris_cylinder {E : Type*} [Countable E] [DecidableEq E]
-    (p : ℝ≥0) (hp : p ≤ 1) {A B : Set (ConfigSpace E)}
+    (p : NNReal) (hp : p ≤ 1) {A B : Set (ConfigSpace E)}
     (hAinc : IsIncreasing A) (hBinc : IsIncreasing B)
     (T U : Finset E)
     (hA : DependsOn (A.indicator (fun _ => (1 : ℝ))) (T : Set E))
@@ -193,7 +193,7 @@ theorem rlc_harris_cylinder {E : Type*} [Countable E] [DecidableEq E]
 
 
 theorem rlc_harris_three_cylinder {E : Type*} [Countable E] [DecidableEq E]
-    (p : ℝ≥0) (hp : p ≤ 1) {A B C : Set (ConfigSpace E)}
+    (p : NNReal) (hp : p ≤ 1) {A B C : Set (ConfigSpace E)}
     (hAinc : IsIncreasing A) (hBinc : IsIncreasing B) (hCinc : IsIncreasing C)
     (T U V : Finset E)
     (hA : DependsOn (A.indicator (fun _ => (1 : ℝ))) (T : Set E))
@@ -219,7 +219,7 @@ theorem rlc_harris_three_cylinder {E : Type*} [Countable E] [DecidableEq E]
 
 
 theorem rlc_diagonal_event_lower_bound {E : Type*} [Countable E] [DecidableEq E]
-    (p : ℝ≥0) (hp : p ≤ 1) (α : ℝ) (hα : 0 ≤ α)
+    (p : NNReal) (hp : p ≤ 1) (α : ℝ) (hα : 0 ≤ α)
     (A B C Diag : Set (ConfigSpace E))
     (T U V : Finset E)
     (hAinc : IsIncreasing A) (hBinc : IsIncreasing B) (hCinc : IsIncreasing C)

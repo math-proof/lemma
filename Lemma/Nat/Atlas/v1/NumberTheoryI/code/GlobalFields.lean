@@ -140,7 +140,7 @@ lemma canonicalMap_tmul_one
   simp only [canonicalMap, Pi.algHom_apply,
     Algebra.TensorProduct.productMap_apply_tmul, map_one, algebraMapLToCompletion]
   exact mul_one _
-set_option maxHeartbeats 8000000
+set_option maxHeartbeats 999999
 
 /--
 [prop_4_36_tensorProduct_finite_isSemisimpleRing](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/GlobalFields.lean)
@@ -745,3 +745,4 @@ private lemma completionEmbedding_finite_continuous_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

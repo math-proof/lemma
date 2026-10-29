@@ -43,8 +43,8 @@ lemma rayleigh_spectral_expansion
     simp [conjTranspose, star] at this
     exact this
   have key : dotProduct x (A.mulVec x) =
-    ∑ i, dotProduct x (⇑(hA.eigenvectorBasis i)) *
-      dotProduct (⇑(hA.eigenvectorBasis i)) (A.mulVec x) := by
+      ∑ i, dotProduct x (⇑(hA.eigenvectorBasis i)) *
+        dotProduct (⇑(hA.eigenvectorBasis i)) (A.mulVec x) := by
     have h := hA.eigenvectorBasis.sum_inner_mul_inner
       (WithLp.toLp (p := 2) x) (WithLp.toLp (p := 2) (A.mulVec x))
     simp only [EuclideanSpace.inner_eq_star_dotProduct, star_trivial] at h
@@ -53,11 +53,12 @@ lemma rayleigh_spectral_expansion
   congr 1
   ext i
   have hmul : dotProduct (⇑(hA.eigenvectorBasis i)) (A.mulVec x) =
-    hA.eigenvalues i * dotProduct (⇑(hA.eigenvectorBasis i)) x := by
+      hA.eigenvalues i * dotProduct (⇑(hA.eigenvectorBasis i)) x := by
     rw [dotProduct_mulVec, ← mulVec_transpose, htrans, hA.mulVec_eigenvectorBasis i]
     simp only [smul_dotProduct, smul_eq_mul]
   rw [hmul, dotProduct_comm x]
   ring
+
 
 end CourantFischer
 
@@ -101,8 +102,7 @@ lemma parseval_eigenvectors
   congr 1
   ext i
   exact (h_norm_sq i).symm
-omit [NeZero m] in
-section LaplacianRayleigh
+
 
 end CourantFischer
 
@@ -121,7 +121,7 @@ lemma rayleigh_spectral_expansion_V
   {L : Matrix V V ℝ}
   {x : V → ℝ}
 -- given
-  (hA : A.IsHermitian)
+  (_hA : A.IsHermitian)
   (hL : L.IsHermitian) :
 -- imply
   dotProduct x (L.mulVec x) = ∑ i : V, hL.eigenvalues i * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
@@ -149,6 +149,7 @@ lemma rayleigh_spectral_expansion_V
   rw [h_eigval, real_inner_comm x' (b i), sq]
   ring
 
+
 end CourantFischer
 
 namespace CourantFischer
@@ -166,7 +167,7 @@ lemma parseval_eigenvectors_V
   {L : Matrix V V ℝ}
   {x : V → ℝ}
 -- given
-  (hA : A.IsHermitian)
+  (_hA : A.IsHermitian)
   (hL : L.IsHermitian) :
 -- imply
   ∑ i : V, (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 = dotProduct x x := by
@@ -201,7 +202,7 @@ lemma eigenvalue_eq_rayleigh_eigenvector_V
   {L : Matrix V V ℝ}
   {k : V}
 -- given
-  (hA : A.IsHermitian)
+  (_hA : A.IsHermitian)
   (hL : L.IsHermitian) :
 -- imply
   dotProduct (⇑(hL.eigenvectorBasis k)) (L.mulVec (⇑(hL.eigenvectorBasis k))) = hL.eigenvalues k := by
@@ -239,7 +240,7 @@ lemma eigenvector_dotProduct_one_V
   {L : Matrix V V ℝ}
   {k : V}
 -- given
-  (hA : A.IsHermitian)
+  (_hA : A.IsHermitian)
   (hL : L.IsHermitian) :
 -- imply
   dotProduct (⇑(hL.eigenvectorBasis k)) (⇑(hL.eigenvectorBasis k)) = 1 := by
@@ -300,6 +301,8 @@ lemma rayleighQuotient_orthogonal_isLeast
       rw [eigenvector_dotProduct_one_V hL k, div_one]
       exact eigenvalue_eq_rayleigh_eigenvector_V hL k
   ·
+
+
     intro r ⟨x, hx, horth, hxr⟩
     rw [← hxr]
     have hpos : (0 : ℝ) < dotProduct x x := by
@@ -307,22 +310,22 @@ lemma rayleighQuotient_orthogonal_isLeast
       obtain ⟨i, hi⟩ := this
       calc (0 : ℝ) < x i * x i := mul_self_pos.mpr hi
         _ ≤ ∑ j : V, x j * x j := Finset.single_le_sum
-          (f := fun j => x j * x j) (fun j _ => mul_self_nonneg (a := x j)) (Finset.mem_univ i)
+            (f := fun j => x j * x j) (fun j _ => mul_self_nonneg (a := x j)) (Finset.mem_univ i)
         _ = dotProduct x x := by simp [dotProduct]
     rw [le_div_iff₀ hpos]
     rw [rayleigh_spectral_expansion_V hL x]
     calc hL.eigenvalues k * dotProduct x x
-      = hL.eigenvalues k * ∑ i, (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
-        rw [parseval_eigenvectors_V hL x]
+        = hL.eigenvalues k * ∑ i, (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
+          rw [parseval_eigenvectors_V hL x]
       _ = ∑ i, hL.eigenvalues k * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
-        rw [Finset.mul_sum]
+          rw [Finset.mul_sum]
       _ ≤ ∑ i, hL.eigenvalues i * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
-        apply Finset.sum_le_sum
-        intro i _
-        by_cases hi : hL.eigenvalues i < hL.eigenvalues k
-        · simp [horth i hi]
-        · push Not at hi
-          exact mul_le_mul_of_nonneg_right hi (sq_nonneg _)
+          apply Finset.sum_le_sum
+          intro i _
+          by_cases hi : hL.eigenvalues i < hL.eigenvalues k
+          · simp [horth i hi]
+          · push Not at hi
+            exact mul_le_mul_of_nonneg_right hi (sq_nonneg _)
 
 end CourantFischer
 
@@ -347,7 +350,8 @@ lemma laplacian_quadratic_form_eq
   dotProduct x ((G.lapMatrix ℝ).mulVec x) = (∑ i : V, ∑ j : V, if G.Adj i j then (x i - x j) ^ 2 else 0) / 2 := by
 -- proof
   have h := lapMatrix_toLinearMap₂' ℝ G x
-  rwa [toLinearMap₂'_apply'] at h
+  rw [toLinearMap₂'_apply'] at h
+  exact h
 
 end CourantFischer
 
@@ -406,23 +410,23 @@ lemma laplacian_edge_sum_min_characterization
       obtain ⟨i, hi⟩ := this
       calc (0 : ℝ) < x i * x i := mul_self_pos.mpr hi
         _ ≤ ∑ j : V, x j * x j := Finset.single_le_sum
-          (f := fun j => x j * x j) (fun j _ => mul_self_nonneg (a := x j)) (Finset.mem_univ i)
+            (f := fun j => x j * x j) (fun j _ => mul_self_nonneg (a := x j)) (Finset.mem_univ i)
         _ = dotProduct x x := by simp [dotProduct]
     rw [← laplacian_quadratic_form_eq]
     rw [le_div_iff₀ hpos]
     rw [rayleigh_spectral_expansion_V hL x]
     calc hL.eigenvalues k * dotProduct x x
-      = hL.eigenvalues k * ∑ i, (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
-        rw [parseval_eigenvectors_V hL x]
+        = hL.eigenvalues k * ∑ i, (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
+          rw [parseval_eigenvectors_V hL x]
       _ = ∑ i, hL.eigenvalues k * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
-        rw [Finset.mul_sum]
+          rw [Finset.mul_sum]
       _ ≤ ∑ i, hL.eigenvalues i * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
-        apply Finset.sum_le_sum
-        intro i _
-        by_cases hi : hL.eigenvalues i < hL.eigenvalues k
-        · simp [horth i hi]
-        · push Not at hi
-          exact mul_le_mul_of_nonneg_right hi (sq_nonneg _)
+          apply Finset.sum_le_sum
+          intro i _
+          by_cases hi : hL.eigenvalues i < hL.eigenvalues k
+          · simp [horth i hi]
+          · push Not at hi
+            exact mul_le_mul_of_nonneg_right hi (sq_nonneg _)
 
 end CourantFischer
 
@@ -473,20 +477,20 @@ lemma laplacian_edge_sum_max_quotient_characterization
       obtain ⟨i, hi⟩ := this
       calc (0 : ℝ) < x i * x i := mul_self_pos.mpr hi
         _ ≤ ∑ j : V, x j * x j := Finset.single_le_sum
-          (f := fun j => x j * x j) (fun j _ => mul_self_nonneg (a := x j)) (Finset.mem_univ i)
+            (f := fun j => x j * x j) (fun j _ => mul_self_nonneg (a := x j)) (Finset.mem_univ i)
         _ = dotProduct x x := by simp [dotProduct]
     rw [← laplacian_quadratic_form_eq]
     rw [div_le_iff₀ hpos]
     rw [rayleigh_spectral_expansion_V hL x]
     calc ∑ i, hL.eigenvalues i * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2
-      ≤ ∑ i, hL.eigenvalues i₀ * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
-        apply Finset.sum_le_sum
-        intro i _
-        exact mul_le_mul_of_nonneg_right (hi₀ i) (sq_nonneg _)
+        ≤ ∑ i, hL.eigenvalues i₀ * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
+          apply Finset.sum_le_sum
+          intro i _
+          exact mul_le_mul_of_nonneg_right (hi₀ i) (sq_nonneg _)
       _ = hL.eigenvalues i₀ * ∑ i, (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
-        rw [Finset.mul_sum]
+          rw [Finset.mul_sum]
       _ = hL.eigenvalues i₀ * dotProduct x x := by
-        rw [parseval_eigenvectors_V hL x]
+          rw [parseval_eigenvectors_V hL x]
 
 end CourantFischer
 
@@ -506,7 +510,7 @@ lemma ones_ne_zero
   {G : SimpleGraph V}
   [DecidableRel G.Adj]
 -- given
-  (hA : A.IsHermitian) :
+  (_hA : A.IsHermitian) :
 -- imply
   (fun _ : V => (1 : ℝ)) ≠ 0 := by
 -- proof
@@ -575,7 +579,7 @@ lemma laplacian_rayleigh_nonneg
     apply le_of_lt
     calc (0 : ℝ) < x i * x i := mul_self_pos.mpr hi
       _ ≤ ∑ j : V, x j * x j := Finset.single_le_sum
-        (f := fun j => x j * x j) (fun j _ => mul_self_nonneg (a := x j)) (Finset.mem_univ i)
+          (f := fun j => x j * x j) (fun j _ => mul_self_nonneg (a := x j)) (Finset.mem_univ i)
       _ = dotProduct x x := by simp [dotProduct]
 
 end CourantFischer
@@ -661,26 +665,29 @@ lemma corollary24_rayleighQuotient
   IsLeast {r | ∃ x : V → ℝ, x ≠ 0 ∧ dotProduct x ((G.lapMatrix ℝ).mulVec x) / dotProduct x x = r} 0 ∧ IsLeast {r | ∃ x : V → ℝ, x ≠ 0 ∧ (∑ i, x i = 0) ∧ (∑ i : V, ∑ j : V, if G.Adj i j then (x i - x j) ^ 2 else 0) / 2 / dotProduct x x = r} (hL.eigenvalues k) ∧ IsGreatest {r | ∃ x : V → ℝ, x ≠ 0 ∧ (∑ i : V, ∑ j : V, if G.Adj i j then (x i - x j) ^ 2 else 0) / 2 / dotProduct x x = r} (hL.eigenvalues i₀) := by
 -- proof
   refine ⟨laplacian_rayleighQuotient_min_eq_zero G, ?_, laplacian_edge_sum_max_quotient_characterization G hL i₀ hi₀⟩
+
   have h := laplacian_edge_sum_min_characterization G hL k
   have hset : {r | ∃ x : V → ℝ, x ≠ 0 ∧
-    (∀ j : V, hL.eigenvalues j < hL.eigenvalues k →
-      dotProduct (⇑(hL.eigenvectorBasis j)) x = 0) ∧
-    (∑ i : V, ∑ j : V, if G.Adj i j then (x i - x j) ^ 2 else 0) / 2 /
-      dotProduct x x = r} =
+      (∀ j : V, hL.eigenvalues j < hL.eigenvalues k →
+        dotProduct (⇑(hL.eigenvectorBasis j)) x = 0) ∧
+      (∑ i : V, ∑ j : V, if G.Adj i j then (x i - x j) ^ 2 else 0) / 2 /
+        dotProduct x x = r} =
     {r | ∃ x : V → ℝ, x ≠ 0 ∧
       (∑ i, x i = 0) ∧
       (∑ i : V, ∑ j : V, if G.Adj i j then (x i - x j) ^ 2 else 0) / 2 /
         dotProduct x x = r} := by
     ext r
-    simp only [Set.mem_setOf_eq]
+    simp only [Set.mem_ofPred_eq]
     constructor
     · rintro ⟨x, hne, horth, hval⟩
       exact ⟨x, hne, (hk x).mp horth, hval⟩
     · rintro ⟨x, hne, hsum, hval⟩
       exact ⟨x, hne, (hk x).mpr hsum, hval⟩
-  rwa [← hset]
+  rw [← hset]
+  exact h
 
 end CourantFischer
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

@@ -30,7 +30,7 @@ variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
 theorem pivotalProb_le_of_disjointOccurrence
-    {p : ℝ≥0} (hp : p ≤ 1) {A B C : Set (ConfigSpace E)} (hA : IsIncreasing A)
+    {p : NNReal} (hp : p ≤ 1) {A B C : Set (ConfigSpace E)} (hA : IsIncreasing A)
     (hB : IsIncreasing B) (hC : IsIncreasing C)
     (hpiv : {ω | IsPivotal e A ω} ⊆ disjointOccurrence B C) :
     pivotalProb (p : ℝ) A e ≤ prob (p : ℝ) B * prob (p : ℝ) C := by
@@ -52,7 +52,7 @@ theorem pivotalProb_le_of_disjointOccurrence
 
 
 theorem deriv_prob_le_sum_bk
-    {p : ℝ≥0} (hp : p ≤ 1) {A : Set (ConfigSpace E)} (hA : IsIncreasing A)
+    {p : NNReal} (hp : p ≤ 1) {A : Set (ConfigSpace E)} (hA : IsIncreasing A)
     (B C : E → Set (ConfigSpace E))
     (hB : ∀ e, IsIncreasing (B e)) (hC : ∀ e, IsIncreasing (C e))
     (hpiv : ∀ e, {ω | IsPivotal e A ω} ⊆ disjointOccurrence (B e) (C e)) :

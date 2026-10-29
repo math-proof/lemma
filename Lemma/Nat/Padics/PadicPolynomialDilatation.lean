@@ -19,7 +19,8 @@ lemma padicPolynomialDilatation_exists
   classical
   have hp0 : (p : PadicInt p) ≠ 0 := by
     refine ne_of_apply_ne PadicInt.valuation ?_
-    rwa [PadicInt.valuation_p, PadicInt.valuation_zero]
+    rw [PadicInt.valuation_p, PadicInt.valuation_zero]
+    exact one_ne_zero
   have hf0 : f ≠ 0 := by
     intro hcon
     subst hcon
@@ -38,11 +39,11 @@ lemma padicPolynomialDilatation_exists
     intro hcon
     rw [hg0def] at hcon
     rw [Polynomial.comp_eq_zero_iff] at hcon
-    obtain h | ⟨_, hqq⟩ := hcon
+    rcases hcon with h | ⟨_, hqq⟩
     · exact hf0 h
     · have h2 : q.coeff 1 = 0 := by
-      rw [hqq]
-      exact hC0 _
+        rw [hqq]
+        exact hC0 _
       rw [hq1] at h2
       exact hp0 h2
   set T : Finset ℕ :=
@@ -91,18 +92,19 @@ lemma padicPolynomialDilatation_exists
     · rw [hi]
       exact dvd_zero _
     · have hspan :=
-      (PadicInt.mem_span_pow_iff_le_valuation (g0.coeff i) hi e).mpr (hle i hi)
+        (PadicInt.mem_span_pow_iff_le_valuation (g0.coeff i) hi e).mpr (hle i hi)
       exact Ideal.mem_span_singleton.mp hspan
   obtain ⟨g, hg⟩ : Polynomial.C ((p : PadicInt p) ^ e) ∣ g0 :=
     (Polynomial.C_dvd_iff_dvd_coeff _ _).mpr hdiv
   have hA : (p : Padic p) ^ e ≠ 0 := by
     apply pow_ne_zero
     refine ne_of_apply_ne Padic.valuation ?_
-    rwa [Padic.valuation_p, Padic.valuation_zero]
+    rw [Padic.valuation_p, Padic.valuation_zero]
+    exact one_ne_zero
   have hpe_ne : (p : PadicInt p) ^ e ≠ 0 := pow_ne_zero _ hp0
   have hmap : Polynomial.map (algebraMap (PadicInt p) (Padic p)) g0
-    = Polynomial.C ((p : Padic p) ^ e)
-      * Polynomial.map (algebraMap (PadicInt p) (Padic p)) g := by
+      = Polynomial.C ((p : Padic p) ^ e)
+        * Polynomial.map (algebraMap (PadicInt p) (Padic p)) g := by
     rw [hg, Polynomial.map_mul, Polynomial.map_C, map_pow, map_natCast]
   have hgj : g0.coeff j = (p : PadicInt p) ^ e * g.coeff j := by
     rw [hg]
@@ -112,8 +114,8 @@ lemma padicPolynomialDilatation_exists
     exact hj_ne (by rw [hgj, hcon, mul_zero])
   have hval_g : PadicInt.valuation (g.coeff j) = 0 := by
     have h1 : PadicInt.valuation (g0.coeff j)
-      = PadicInt.valuation ((p : PadicInt p) ^ e)
-        + PadicInt.valuation (g.coeff j) := by
+        = PadicInt.valuation ((p : PadicInt p) ^ e)
+          + PadicInt.valuation (g.coeff j) := by
       rw [hgj]
       exact PadicInt.valuation_mul hpe_ne hgj_ne
     have hpe_val : PadicInt.valuation ((p : PadicInt p) ^ e) = e := by
@@ -130,12 +132,8 @@ lemma padicPolynomialDilatation_exists
     have hcc := congrArg (fun r => Polynomial.coeff r j) hcon
     simpa [Polynomial.coeff_map] using hcc
   have hmap' : Polynomial.map (algebraMap (PadicInt p) (Padic p)) g
-    = Polynomial.C (((p : Padic p) ^ e)⁻¹)
-      * Polynomial.map (algebraMap (PadicInt p) (Padic p)) g0 := by
+      = Polynomial.C (((p : Padic p) ^ e)⁻¹)
+        * Polynomial.map (algebraMap (PadicInt p) (Padic p)) g0 := by
     rw [hmap, ← mul_assoc, ← Polynomial.C_mul, inv_mul_cancel₀ hA, Polynomial.C_1,
       one_mul]
   exact ⟨{ exp := e, poly := g, dilat_eq := hmap', red_ne_zero := hred }⟩
-
-
--- created on 2026-10-20
--- updated on 2026-10-26

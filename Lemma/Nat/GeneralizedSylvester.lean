@@ -46,10 +46,18 @@ lemma generalizedSylvester_pos
 -- imply
   0 < generalizedSylvester n k := by
 -- proof
-  cases k <;> simp
+  induction k with
+  | zero => simp [generalizedSylvester]
+  | succ k ih =>
+    rw [generalizedSylvester]
+    have ha : 0 < generalizedSylvester n k := ih
+    have hsq : generalizedSylvester n k ≤ generalizedSylvester n k ^ 2 := by
+      rw [pow_two]
+      exact Nat.le_mul_self _
+    omega
 
 end Nat
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

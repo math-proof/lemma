@@ -55,7 +55,7 @@ lemma tendsto_eLpNorm_of_tendsto_integral_norm_zero
     ext n
     rw [eLpNorm_one_eq_lintegral_enorm, ← ofReal_integral_norm_eq_lintegral_enorm (hint n)]
     congr 1
-  rw [heq, show (0 : ℝ≥0∞) = ENNReal.ofReal 0 from by simp]
+  rw [heq, show (0 : ENNReal) = ENNReal.ofReal 0 from by simp]
   exact ENNReal.tendsto_ofReal h
 
 /--
@@ -72,12 +72,12 @@ lemma eLpNorm_bound_of_L1_tendsto
   (hg : MemLp g 1 μ)
   (hL1 : Tendsto (fun n => eLpNorm (f n - g) 1 μ) atTop (nhds 0)) :
 -- imply
-  ∃ C : ℝ≥0, ∀ i, eLpNorm (f i) 1 μ ≤ C := by
+  ∃ C : NNReal, ∀ i, eLpNorm (f i) 1 μ ≤ C := by
 -- proof
   rw [ENNReal.tendsto_nhds_zero] at hL1
   obtain ⟨N, hN⟩ := (hL1 1 one_pos).exists_forall_of_atTop
-  set Ctail : ℝ≥0 := 1 + (eLpNorm g 1 μ).toNNReal
-  set Cinit : ℝ≥0 := (Finset.range N).sup fun n => (eLpNorm (f n) 1 μ).toNNReal
+  set Ctail : NNReal := 1 + (eLpNorm g 1 μ).toNNReal
+  set Cinit : NNReal := (Finset.range N).sup fun n => (eLpNorm (f n) 1 μ).toNNReal
   refine ⟨Cinit ⊔ Ctail, fun i => ?_⟩
   by_cases hi : i < N
   · calc eLpNorm (f i) 1 μ
@@ -92,7 +92,7 @@ lemma eLpNorm_bound_of_L1_tendsto
       _ ≤ eLpNorm (f i - g) 1 μ + eLpNorm g 1 μ :=
         eLpNorm_add_le ((hf i).1.sub hg.1) hg.1 le_rfl
       _ ≤ 1 + eLpNorm g 1 μ := by gcongr; exact hN i hi
-      _ = ↑(1 : ℝ≥0) + ↑((eLpNorm g 1 μ).toNNReal) := by
+      _ = ↑(1 : NNReal) + ↑((eLpNorm g 1 μ).toNNReal) := by
         rw [ENNReal.coe_toNNReal hg.2.ne, ENNReal.coe_one]
       _ = ↑Ctail := by push_cast; rfl
       _ ≤ ↑(Cinit ⊔ Ctail) := ENNReal.coe_le_coe.mpr le_sup_right

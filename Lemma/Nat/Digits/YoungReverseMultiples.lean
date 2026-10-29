@@ -82,13 +82,14 @@ private lemma chain_balance (g k : ℕ) (xs ys cs : List ℕ)
       simp only [Nat.ofDigits_cons, List.length_cons]
       have hlast' : (c₁ :: cs).getLast? = some cN := by
         have hgg := chain_getLast_cons c₀' c₁ cs
-        rwa [← hgg]
+        rw [← hgg]
+        exact hlast
       have ih' := ih cN hlast' c₁ cs rfl
       rw [pow_succ]
       have e1 : k * (x + g * Nat.ofDigits g xs) + c₀'
-        = (y + c₁ * g) + g * (k * Nat.ofDigits g xs) := by rw [← hstep]; ring
+          = (y + c₁ * g) + g * (k * Nat.ofDigits g xs) := by rw [← hstep]; ring
       have e2 : y + g * Nat.ofDigits g ys + cN * (g ^ xs.length * g)
-        = y + g * (Nat.ofDigits g ys + cN * g ^ xs.length) := by ring
+          = y + g * (Nat.ofDigits g ys + cN * g ^ xs.length) := by ring
       rw [e1, e2, ← ih']
       ring
 
@@ -152,7 +153,8 @@ private lemma chain_append (g k : ℕ) (xs1 ys1 cs1 : List ℕ)
     intro xs2 ys2 mid rest h2 hlast
     have hlast' : (c₁ :: cs).getLast? = some mid := by
       have hgg := chain_getLast_cons c₀' c₁ cs
-      rwa [← hgg]
+      rw [← hgg]
+      exact hlast
     have iht := ih xs2 ys2 mid rest h2 hlast'
     simp only [List.cons_append] at *
     exact IsCarryChain.cons x y c₀' c₁ (xs ++ xs2) (ys ++ ys2) (cs ++ rest) hstep iht
@@ -188,7 +190,7 @@ private lemma build_chain (g k : ℕ) (xs : List ℕ) (c₀ : ℕ) :
   | cons x xs ih =>
     have hstep : k * x + c₀ = (k * x + c₀) % g + ((k * x + c₀) / g) * g := by
       calc k * x + c₀
-        = g * ((k * x + c₀) / g) + (k * x + c₀) % g := (Nat.div_add_mod _ _).symm
+          = g * ((k * x + c₀) / g) + (k * x + c₀) % g := (Nat.div_add_mod _ _).symm
         _ = (k * x + c₀) % g + ((k * x + c₀) / g) * g := by ring
     simp only [buildDigits, buildCarries]
     obtain ⟨t, ht⟩ := buildCarries_form g k xs ((k * x + c₀) / g)
@@ -232,7 +234,8 @@ private lemma buildCarries_all_lt (g k : ℕ)
         omega
       have hlt : k * x + c₀ < k * g := lt_of_lt_of_le h2 h1
       have hlt' : k * x + c₀ < g * k := by
-        rwa [Nat.mul_comm g k]
+        rw [Nat.mul_comm g k]
+        exact hlt
       have hbound : (k * x + c₀) / g < k := Nat.div_lt_of_lt_mul hlt'
       exact ih ((k * x + c₀) / g) hbound hxtail c h
 
@@ -274,18 +277,18 @@ private lemma build_match (g k : ℕ) (hg : 0 < g)
       have hyhead : y < g := hy y (by simp)
       have hytail : ∀ y' ∈ ys', y' < g := fun y' hy' => hy y' (by simp [hy'])
       have hmod_lhs :
-        (k * (x + g * Nat.ofDigits g xs) + c₀) % g
-          = (k * x + c₀) % g := by
+          (k * (x + g * Nat.ofDigits g xs) + c₀) % g
+            = (k * x + c₀) % g := by
         have e : k * (x + g * Nat.ofDigits g xs) + c₀
-          = (k * x + c₀) + g * (k * Nat.ofDigits g xs) := by ring
+            = (k * x + c₀) + g * (k * Nat.ofDigits g xs) := by ring
         rw [e, Nat.add_mul_mod_self_left]
       have hmod_rhs : (y + g * Nat.ofDigits g ys' + cN * g ^ (xs.length + 1)) % g = y := by
         have e : y + g * Nat.ofDigits g ys' + cN * g ^ (xs.length + 1)
-          = y + g * (Nat.ofDigits g ys' + cN * g ^ xs.length) := by
+            = y + g * (Nat.ofDigits g ys' + cN * g ^ xs.length) := by
           rw [pow_succ]; ring
         rw [e, Nat.add_mul_mod_self_left, Nat.mod_eq_of_lt hyhead]
       have h : (k * (x + g * Nat.ofDigits g xs) + c₀) % g
-        = (y + g * Nat.ofDigits g ys' + cN * g ^ (xs.length + 1)) % g := by rw [hbal]
+          = (y + g * Nat.ofDigits g ys' + cN * g ^ (xs.length + 1)) % g := by rw [hbal]
       rw [hmod_lhs, hmod_rhs] at h
       have hhead : (k * x + c₀) % g = y := h
       have hq : k * x + c₀ = y + ((k * x + c₀) / g) * g := by
@@ -295,23 +298,24 @@ private lemma build_match (g k : ℕ) (hg : 0 < g)
         omega
       set q := (k * x + c₀) / g with hqdef
       have eL : k * (x + g * Nat.ofDigits g xs) + c₀
-        = (y + q * g) + g * (k * Nat.ofDigits g xs) := by rw [← hq]; ring
+          = (y + q * g) + g * (k * Nat.ofDigits g xs) := by rw [← hq]; ring
       have eR : y + g * Nat.ofDigits g ys' + cN * g ^ (xs.length + 1)
-        = y + g * (Nat.ofDigits g ys' + cN * g ^ xs.length) := by
+          = y + g * (Nat.ofDigits g ys' + cN * g ^ xs.length) := by
         rw [pow_succ]; ring
       rw [eL, eR] at hbal
       rw [Nat.add_assoc] at hbal
       have hcancel : q * g + g * (k * Nat.ofDigits g xs)
-        = g * (Nat.ofDigits g ys' + cN * g ^ xs.length) :=
+          = g * (Nat.ofDigits g ys' + cN * g ^ xs.length) :=
         Nat.add_left_cancel hbal
       have hfactor : g * (q + k * Nat.ofDigits g xs)
-        = g * (Nat.ofDigits g ys' + cN * g ^ xs.length) := by
+          = g * (Nat.ofDigits g ys' + cN * g ^ xs.length) := by
         have hc1 : q * g = g * q := Nat.mul_comm _ _
-        rwa [hc1, ← Nat.mul_add] at hcancel
+        rw [hc1, ← Nat.mul_add] at hcancel
+        exact hcancel
       have htail_bal : k * Nat.ofDigits g xs + q
-        = Nat.ofDigits g ys' + cN * g ^ xs.length := by
+          = Nat.ofDigits g ys' + cN * g ^ xs.length := by
         have hcc : q + k * Nat.ofDigits g xs
-          = Nat.ofDigits g ys' + cN * g ^ xs.length :=
+            = Nat.ofDigits g ys' + cN * g ^ xs.length :=
           mul_left_cancel₀ (ne_of_gt hg) hfactor
         omega
       have ih' := ih q ys' cN hytail hlen' htail_bal
@@ -322,11 +326,12 @@ private lemma build_match (g k : ℕ) (hg : 0 < g)
       · simp only [buildCarries]
         obtain ⟨t, ht⟩ := buildCarries_form g k xs q
         have hlast_eq : (c₀ :: buildCarries g k xs q).getLast?
-          = (buildCarries g k xs q).getLast? := by
+            = (buildCarries g k xs q).getLast? := by
           rw [ht]
           exact chain_getLast_cons c₀ q t
         rw [hlast_eq, ht] at ⊢
-        rwa [ht] at ih2
+        rw [ht] at ih2
+        exact ih2
 
 end MetaMathlibExt
 
@@ -488,7 +493,8 @@ private lemma chain_step_at (g k : ℕ) (xs ys cs : List ℕ) (h : IsCarryChain 
       simp only [List.drop_one, List.tail_cons]
     simp only [hdrop_succ, List.head_cons] at hh
     exact hh
-  rwa [hx', hy', hc0', hc1'] at hstep
+  rw [hx', hy', hc0', hc1'] at hstep
+  exact hstep
 
 end MetaMathlibExt
 
@@ -561,7 +567,7 @@ private lemma nodesOf_length (g k : ℕ) (D : List ℕ) :
     rw [List.length_reverse]
     omega
   have h2 : ((carriesOf g k D).reverse.take (D.length / 2 + 1)).length
-    = D.length / 2 + 1 :=
+      = D.length / 2 + 1 :=
     List.length_take_of_le hle
   omega
 
@@ -739,7 +745,7 @@ private lemma canon_of_revMult (g k : ℕ) (hg : 0 < g)
   have h2 := digitValue_eq g D.reverse
   rw [h1, h2, List.reverse_reverse] at hbal
   have hbal' : k * Nat.ofDigits g D.reverse + 0
-    = Nat.ofDigits g D + 0 * g ^ D.reverse.length := by
+      = Nat.ofDigits g D + 0 * g ^ D.reverse.length := by
     simp only [Nat.add_zero, Nat.zero_mul]
     exact hbal
   have hdig_rev : ∀ x ∈ D.reverse, x < g := by
@@ -764,15 +770,10 @@ namespace MetaMathlibExt
 private lemma labelsOf_get (D : List ℕ) (i : ℕ)
   (hi : i < D.length / 2) :
   (labelsOf D)[i]'(by rw [labelsOf_length]; exact hi)
-    = (D[i]'(by
-      have hle : D.length / 2 ≤ D.length :=
-        Nat.div_le_self D.length 2
-      omega),
+    = (D[i]'(Nat.lt_of_lt_of_le hi (Nat.div_le_self _ _)),
       D.reverse[i]'(by
-        have hle : D.length / 2 ≤ D.reverse.length := by
-          rw [List.length_reverse]
-          exact Nat.div_le_self D.length 2
-        omega)) :=
+        rw [List.length_reverse]
+        exact Nat.lt_of_lt_of_le hi (Nat.div_le_self _ _))) := by
   unfold labelsOf
   rw [List.getElem_zip, List.getElem_take, List.getElem_take]
 
@@ -788,15 +789,11 @@ private lemma nodesOf_get (g k : ℕ) (D : List ℕ) (i : ℕ)
   (hi : i < D.length / 2 + 1) :
   (nodesOf g k D)[i]'(by rw [nodesOf_length]; exact hi)
     = ((carriesOf g k D).reverse[i]'(by
-      have hcl := carriesOf_length g k D
-      have hle : D.length / 2 + 1
-        ≤ (carriesOf g k D).reverse.length := by
-        rw [List.length_reverse]
-        omega
-      omega),
+        rw [List.length_reverse, carriesOf_length]
+        omega),
       (carriesOf g k D)[i]'(by
-        have hcl := carriesOf_length g k D
-        omega)) :=
+        rw [carriesOf_length]
+        omega)) := by
   unfold nodesOf
   rw [List.getElem_zip, List.getElem_take, List.getElem_take]
 
@@ -862,10 +859,10 @@ private lemma nodesOf_head (g k : ℕ) (D : List ℕ)
     rw [List.head?_reverse, hlast]
   have hne : D.length / 2 + 1 ≠ 0 := by omega
   have hAt : ((carriesOf g k D).reverse.take
-    (D.length / 2 + 1)).head? = some 0 := by
+      (D.length / 2 + 1)).head? = some 0 := by
     rw [List.head?_take, ite_eq_right hne, hR0]
   have hBt : ((carriesOf g k D).take
-    (D.length / 2 + 1)).head? = some 0 := by
+      (D.length / 2 + 1)).head? = some 0 := by
     rw [List.head?_take, ite_eq_right hne, hC0]
   obtain ⟨Arest, ha⟩ := List.head?_eq_some_iff.mp hAt
   obtain ⟨Brest, hb⟩ := List.head?_eq_some_iff.mp hBt
@@ -901,10 +898,10 @@ private lemma labelsOf_first_nonzero (D : List ℕ)
     ⟨firstD, middle, last, heq, hfirst, hlast0⟩
   have hmpos : D.length / 2 ≠ 0 := by omega
   have hAt : (D.take (D.length / 2)).head?
-    = some firstD := by
+      = some firstD := by
     rw [List.head?_take, ite_eq_right hmpos, hDhead]
   have hBt : (D.reverse.take (D.length / 2)).head?
-    = some last := by
+      = some last := by
     rw [List.head?_take, ite_eq_right hmpos, hRhead]
   obtain ⟨Arest, ha⟩ := List.head?_eq_some_iff.mp hAt
   obtain ⟨Brest, hb⟩ := List.head?_eq_some_iff.mp hBt
@@ -955,14 +952,15 @@ private lemma fwd_forall2 (g k : ℕ) (D : List ℕ)
     rw [List.length_tail, hnod]
     omega
   have hzip : ((nodesOf g k D).zip
-    (nodesOf g k D).tail).length = D.length / 2 := by
+      (nodesOf g k D).tail).length = D.length / 2 := by
     rw [List.length_zip, hnod, htail]
     omega
   apply List.forall₂_of_length_eq_of_get ?_ ?_
   · rw [hlab, hzip]
   · intro i h1 h2
     have hi : i < D.length / 2 := by
-      rwa [hlab] at h1
+      rw [hlab] at h1
+      exact h1
     have hi1 : i < D.length / 2 + 1 := by omega
     have hi1' : i + 1 < D.length / 2 + 1 := by omega
     have hDle : D.length / 2 ≤ D.length := Nat.div_le_self _ _
@@ -974,7 +972,7 @@ private lemma fwd_forall2 (g k : ℕ) (D : List ℕ)
       rw [List.length_reverse]
       omega
     have hiRC1 : i + 1
-      < (carriesOf g k D).reverse.length := by
+        < (carriesOf g k D).reverse.length := by
       rw [List.length_reverse]
       omega
     have hlab_eq := labelsOf_get D i hi
@@ -997,62 +995,62 @@ private lemma fwd_forall2 (g k : ℕ) (D : List ℕ)
     have hrevCi := List.getElem_reverse
       (l := carriesOf g k D) (i := i) (h := hiRC)
     have hidxCi : (carriesOf g k D).length - 1 - i
-      = D.length - i := by omega
+        = D.length - i := by omega
     simp only [hidxCi] at hrevCi
     have hrevCi1 := List.getElem_reverse
       (l := carriesOf g k D) (i := i + 1) (h := hiRC1)
     have hidxCi1 : (carriesOf g k D).length - 1 - (i + 1)
-      = D.length - (i + 1) := by omega
+        = D.length - (i + 1) := by omega
     simp only [hidxCi1] at hrevCi1
     have hCj : (carriesOf g k D)[D.length - 1 - i]'(by omega)
-      = (carriesOf g k D)[D.length - (i + 1)]'(by omega) := by
+        = (carriesOf g k D)[D.length - (i + 1)]'(by omega) := by
       have hidx : D.length - 1 - i = D.length - (i + 1) := by omega
       simp only [hidx]
     have hCj1 : (carriesOf g k D)[D.length - 1 - i + 1]'(by omega)
-      = (carriesOf g k D)[D.length - i]'(by omega) := by
+        = (carriesOf g k D)[D.length - i]'(by omega) := by
       have hidx : D.length - 1 - i + 1 = D.length - i := by omega
       simp only [hidx]
     simp only [hrevj, hCj, hCj1] at hhigh
     simp only [hrevi] at hlow
     have hL1 : ((labelsOf D).get ⟨i, h1⟩).1
-      = D[i]'hiD := by
+        = D[i]'hiD := by
       have h := congrArg Prod.fst hlab_eq
       simp only at h
       exact h
     have hL2 : ((labelsOf D).get ⟨i, h1⟩).2
-      = D[D.length - 1 - i]'hjD := by
+        = D[D.length - 1 - i]'hjD := by
       have h := congrArg Prod.snd hlab_eq
       simp only [hrevi] at h
       exact h
     have hS2 : ((((nodesOf g k D).zip
-      (nodesOf g k D).tail).get ⟨i, h2⟩).1).2
-      = (carriesOf g k D)[i]'hiC := by
+        (nodesOf g k D).tail).get ⟨i, h2⟩).1).2
+        = (carriesOf g k D)[i]'hiC := by
       have hz := congrArg Prod.fst hzip_eq
       simp only [hnod_eq] at hz
       have h := congrArg Prod.snd hz
       simp only at h
       exact h
     have hT2 : ((((nodesOf g k D).zip
-      (nodesOf g k D).tail).get ⟨i, h2⟩).2).2
-      = (carriesOf g k D)[i + 1]'hiC1 := by
+        (nodesOf g k D).tail).get ⟨i, h2⟩).2).2
+        = (carriesOf g k D)[i + 1]'hiC1 := by
       have hz := congrArg Prod.snd hzip_eq
       simp only [htail_eq, hnod_eq1] at hz
       have h := congrArg Prod.snd hz
       simp only at h
       exact h
     have hS1 : ((((nodesOf g k D).zip
-      (nodesOf g k D).tail).get ⟨i, h2⟩).1).1
-      = (carriesOf g k D)[D.length - i]'
-        (by omega) := by
+        (nodesOf g k D).tail).get ⟨i, h2⟩).1).1
+        = (carriesOf g k D)[D.length - i]'
+          (by omega) := by
       have hz := congrArg Prod.fst hzip_eq
       simp only [hnod_eq, hrevCi] at hz
       have h := congrArg Prod.fst hz
       simp only at h
       exact h
     have hT1 : ((((nodesOf g k D).zip
-      (nodesOf g k D).tail).get ⟨i, h2⟩).2).1
-      = (carriesOf g k D)[D.length - (i + 1)]'
-        (by omega) := by
+        (nodesOf g k D).tail).get ⟨i, h2⟩).2).1
+        = (carriesOf g k D)[D.length - (i + 1)]'
+          (by omega) := by
       have hz := congrArg Prod.snd hzip_eq
       simp only [htail_eq, hnod_eq1, hrevCi1] at hz
       have h := congrArg Prod.fst hz
@@ -1079,12 +1077,12 @@ private lemma fwd_pivot_even (g k : ℕ) (D : List ℕ)
   have hlast := List.getLast?_eq_getLast_of_ne_nil hne
   have hget := List.getLast_eq_getElem hne
   have hlen1 : (nodesOf g k D).length - 1
-    = D.length / 2 := by
+      = D.length / 2 := by
     rw [hnod]
     omega
   have hidx : (nodesOf g k D)[(nodesOf g k D).length - 1]'
-    (by omega) = (nodesOf g k D)[D.length / 2]'
-    (by rw [hnod]; omega) := by
+      (by omega) = (nodesOf g k D)[D.length / 2]'
+      (by rw [hnod]; omega) := by
     simp only [hlen1]
   have hm : D.length / 2 < D.length / 2 + 1 := by omega
   have hnod_m := nodesOf_get g k D (D.length / 2) hm
@@ -1096,13 +1094,13 @@ private lemma fwd_pivot_even (g k : ℕ) (D : List ℕ)
       omega)
   have hcl := carriesOf_length g k D
   have hidx2 : (carriesOf g k D).length - 1 - D.length / 2
-    = D.length / 2 := by omega
+      = D.length / 2 := by omega
   simp only [hidx2] at hrev
   have hnod_eq : (nodesOf g k D)[D.length / 2]'(by
-    rw [hnod]
-    omega)
-    = ((carriesOf g k D)[D.length / 2]'(by omega),
-      (carriesOf g k D)[D.length / 2]'(by omega)) := by
+      rw [hnod]
+      omega)
+      = ((carriesOf g k D)[D.length / 2]'(by omega),
+        (carriesOf g k D)[D.length / 2]'(by omega)) := by
     rw [hnod_m, hrev]
   rw [hlast, hget, hidx, hnod_eq]
   exact ⟨_, rfl⟩
@@ -1130,12 +1128,12 @@ private lemma fwd_pivot_odd (g k : ℕ) (D : List ℕ)
   have hlast := List.getLast?_eq_getLast_of_ne_nil hne
   have hget := List.getLast_eq_getElem hne
   have hlen1 : (nodesOf g k D).length - 1
-    = D.length / 2 := by
+      = D.length / 2 := by
     rw [hnod]
     omega
   have hidx : (nodesOf g k D)[(nodesOf g k D).length - 1]'
-    (by omega) = (nodesOf g k D)[D.length / 2]'
-    (by rw [hnod]; omega) := by
+      (by omega) = (nodesOf g k D)[D.length / 2]'
+      (by rw [hnod]; omega) := by
     simp only [hlen1]
   have hm : D.length / 2 < D.length / 2 + 1 := by omega
   have hnod_m := nodesOf_get g k D (D.length / 2) hm
@@ -1147,13 +1145,13 @@ private lemma fwd_pivot_odd (g k : ℕ) (D : List ℕ)
       omega)
   have hcl := carriesOf_length g k D
   have hidx2 : (carriesOf g k D).length - 1 - D.length / 2
-    = D.length / 2 + 1 := by omega
+      = D.length / 2 + 1 := by omega
   simp only [hidx2] at hrev
   have hmD : D.length / 2 < D.length := by omega
   have hmid_lt : D[D.length / 2]'hmD < g :=
     hdig _ (List.getElem_mem hmD)
   have hdrop : (D.drop (D.length / 2)).head?
-    = some (D[D.length / 2]'hmD) := by
+      = some (D[D.length / 2]'hmD) := by
     rw [List.head?_drop, List.getElem?_eq_getElem hmD]
   have hstep := chain_step_at g k D.reverse D
     (carriesOf g k D) hchain (D.length / 2)
@@ -1162,18 +1160,18 @@ private lemma fwd_pivot_odd (g k : ℕ) (D : List ℕ)
     (i := D.length / 2)
     (h := by rw [List.length_reverse]; exact hmD)
   have hmid_idx : D.length - 1 - D.length / 2
-    = D.length / 2 := by omega
+      = D.length / 2 := by omega
   simp only [hmid_idx] at hrev_mid
   simp only [hrev_mid] at hstep
   have hnod_eq : (nodesOf g k D)[D.length / 2]'(by
-    rw [hnod]
-    omega)
-    = ((carriesOf g k D)[D.length / 2 + 1]'(by omega),
-      (carriesOf g k D)[D.length / 2]'(by omega)) := by
+      rw [hnod]
+      omega)
+      = ((carriesOf g k D)[D.length / 2 + 1]'(by omega),
+        (carriesOf g k D)[D.length / 2]'(by omega)) := by
     rw [hnod_m, hrev]
   have hlast_eq : (nodesOf g k D).getLast?
-    = some ((carriesOf g k D)[D.length / 2 + 1]'(by omega),
-      (carriesOf g k D)[D.length / 2]'(by omega)) := by
+      = some ((carriesOf g k D)[D.length / 2 + 1]'(by omega),
+        (carriesOf g k D)[D.length / 2]'(by omega)) := by
     rw [hlast, hget, hidx, hnod_eq]
   refine ⟨_, _, _, hlast_eq, hmid_lt, ⟨hstep, hstep⟩, hdrop⟩
 
@@ -1263,7 +1261,7 @@ private lemma low_chain_of_path (g k : ℕ)
       rw [hN2]
       simp only [List.tail_cons]
     have hzip_eq : N.zip N.tail
-      = (n0, n1) :: Nrest.zip Nrest.tail := by
+        = (n0, n1) :: Nrest.zip Nrest.tail := by
       rw [hN, hNr]
       simp only [List.tail_cons, List.zip_cons_cons]
     rw [hzip_eq] at hforall
@@ -1278,17 +1276,17 @@ private lemma low_chain_of_path (g k : ℕ)
       have htail_chain := ih Nrest hlen_rest htail
       have hstep := hhead.1
       have hmapL1 : (a :: L').map Prod.snd
-        = a.2 :: L'.map Prod.snd := by
+          = a.2 :: L'.map Prod.snd := by
         simp only [List.map_cons]
       have hmapL2 : (a :: L').map Prod.fst
-        = a.1 :: L'.map Prod.fst := by
+          = a.1 :: L'.map Prod.fst := by
         simp only [List.map_cons]
       have hmapN : N.map Prod.snd
-        = n0.2 :: n1.2 :: (Nrest2.map Prod.snd) := by
+          = n0.2 :: n1.2 :: (Nrest2.map Prod.snd) := by
         rw [hN2]
         simp only [List.map_cons]
       have hmapNr : Nrest.map Prod.snd
-        = n1.2 :: Nrest2.map Prod.snd := by
+          = n1.2 :: Nrest2.map Prod.snd := by
         rw [hNr]
         simp only [List.map_cons]
       rw [hmapNr] at htail_chain
@@ -1349,7 +1347,7 @@ private lemma high_chain_of_path (g k : ℕ)
       exact List.ne_nil_of_length_pos (by omega)
     obtain ⟨n1, Nrest2, hNr⟩ := List.exists_cons_of_ne_nil hNrest_ne
     have hzip_eq : N.zip N.tail
-      = (n0, n1) :: Nrest.zip Nrest.tail := by
+        = (n0, n1) :: Nrest.zip Nrest.tail := by
       rw [hN, hNr]
       simp only [List.tail_cons, List.zip_cons_cons]
     rw [hzip_eq] at hforall
@@ -1364,10 +1362,10 @@ private lemma high_chain_of_path (g k : ℕ)
       have ih_chain := ih Nrest hlen_rest htail
       have hstep : k * a.1 + n1.1 = a.2 + n0.1 * g := hhead.2
       have hlast : (Nrest.map Prod.fst).reverse.getLast?
-        = some n1.1 := by
+          = some n1.1 := by
         rw [List.getLast?_reverse]
         have hmap : Nrest.map Prod.fst
-          = n1.1 :: Nrest2.map Prod.fst := by
+            = n1.1 :: Nrest2.map Prod.fst := by
           rw [hNr]
           simp only [List.map_cons]
         rw [hmap]
@@ -1376,19 +1374,20 @@ private lemma high_chain_of_path (g k : ℕ)
         (L'.map Prod.snd).reverse (Nrest.map Prod.fst).reverse
         ih_chain a.1 a.2 n1.1 n0.1 hlast hstep
       have e1 : ((a :: L').map Prod.fst).reverse
-        = (L'.map Prod.fst).reverse ++ [a.1] := by
+          = (L'.map Prod.fst).reverse ++ [a.1] := by
         simp only [List.map_cons, List.reverse_cons]
       have e2 : ((a :: L').map Prod.snd).reverse
-        = (L'.map Prod.snd).reverse ++ [a.2] := by
+          = (L'.map Prod.snd).reverse ++ [a.2] := by
         simp only [List.map_cons, List.reverse_cons]
       have e3 : (N.map Prod.fst).reverse
-        = (Nrest.map Prod.fst).reverse ++ [n0.1] := by
+          = (Nrest.map Prod.fst).reverse ++ [n0.1] := by
         have hmapN : N.map Prod.fst
-          = n0.1 :: Nrest.map Prod.fst := by
+            = n0.1 :: Nrest.map Prod.fst := by
           rw [hN]
           simp only [List.map_cons]
         rw [hmapN, List.reverse_cons]
-      rwa [e1, e2, e3]
+      rw [e1, e2, e3]
+      exact hsnoc
 
 end MetaMathlibExt
 
@@ -1447,7 +1446,8 @@ private lemma reconOdd_mem_lt (g : ℕ) (L : List (ℕ × ℕ))
       obtain ⟨l, hl, rfl⟩ := List.mem_map.mp hA
       exact (hdig l hl).1
     | inr hmid_eq =>
-      rwa [hmid_eq]
+      rw [hmid_eq]
+      exact hmid
   | inr hB =>
     have hmem2 : d ∈ L.map Prod.snd := List.mem_reverse.mp hB
     obtain ⟨l, hl, rfl⟩ := List.mem_map.mp hmem2
@@ -1469,15 +1469,15 @@ private lemma reconEven_nonzero (L : List (ℕ × ℕ))
       first ≠ 0 ∧ last ≠ 0 := by
   obtain ⟨fl, rest, hL, h1, h2⟩ := hex
   have hA : L.map Prod.fst
-    = fl.1 :: rest.map Prod.fst := by
+      = fl.1 :: rest.map Prod.fst := by
     rw [hL]
     simp only [List.map_cons]
   have hB : L.map Prod.snd
-    = fl.2 :: rest.map Prod.snd := by
+      = fl.2 :: rest.map Prod.snd := by
     rw [hL]
     simp only [List.map_cons]
   have hBrev : (L.map Prod.snd).reverse
-    = (rest.map Prod.snd).reverse ++ [fl.2] := by
+      = (rest.map Prod.snd).reverse ++ [fl.2] := by
     rw [hB, List.reverse_cons]
   unfold reconEven
   rw [hA, hBrev, List.cons_append, ← List.append_assoc]
@@ -1499,15 +1499,15 @@ private lemma reconOdd_nonzero (L : List (ℕ × ℕ)) (mid : ℕ)
       first ≠ 0 ∧ last ≠ 0 := by
   obtain ⟨fl, rest, hL, h1, h2⟩ := hex
   have hA : L.map Prod.fst
-    = fl.1 :: rest.map Prod.fst := by
+      = fl.1 :: rest.map Prod.fst := by
     rw [hL]
     simp only [List.map_cons]
   have hB : L.map Prod.snd
-    = fl.2 :: rest.map Prod.snd := by
+      = fl.2 :: rest.map Prod.snd := by
     rw [hL]
     simp only [List.map_cons]
   have hBrev : (L.map Prod.snd).reverse
-    = (rest.map Prod.snd).reverse ++ [fl.2] := by
+      = (rest.map Prod.snd).reverse ++ [fl.2] := by
     rw [hB, List.reverse_cons]
   unfold reconOdd
   rw [hA, hBrev, List.cons_append, List.cons_append,
@@ -1600,7 +1600,7 @@ private lemma bwd_even_balance (g k : ℕ)
     rw [List.getLast?_map, hpiv]
     rfl
   have hhead_high : ((N.map Prod.fst).reverse).head?
-    = some r := by
+      = some r := by
     rw [List.head?_reverse, List.getLast?_map, hpiv]
     rfl
   obtain ⟨hrest, hhigh_cons⟩ :=
@@ -1610,18 +1610,18 @@ private lemma bwd_even_balance (g k : ℕ)
     rw [hL]
     simp only [List.length_cons, Nat.zero_lt_succ]
   have hhigh_len : ((N.map Prod.fst).reverse).length
-    = L.length + 1 := by
+      = L.length + 1 := by
     rw [List.length_reverse, List.length_map, hlen]
   have hrest_ne : hrest ≠ [] := by
     have hlen_hr : hrest.length + 1
-      = ((N.map Prod.fst).reverse).length := by
+        = ((N.map Prod.fst).reverse).length := by
       rw [hhigh_cons]
       simp only [List.length_cons]
     rw [hhigh_len] at hlen_hr
     exact List.ne_nil_of_length_pos (by omega)
   have hhigh_rw : IsCarryChain g k
-    ((L.map Prod.fst).reverse) ((L.map Prod.snd).reverse)
-    (r :: hrest) := hhigh_cons ▸ hhigh
+      ((L.map Prod.fst).reverse) ((L.map Prod.snd).reverse)
+      (r :: hrest) := hhigh_cons ▸ hhigh
   have hfull := chain_append g k (L.map Prod.snd)
     (L.map Prod.fst) (N.map Prod.snd) hlow
     ((L.map Prod.fst).reverse) ((L.map Prod.snd).reverse)
@@ -1632,39 +1632,42 @@ private lemma bwd_even_balance (g k : ℕ)
   obtain ⟨cs1rest, hcs1⟩ :=
     List.head?_eq_some_iff.mp hhead_low
   have hfull_cs : (N.map Prod.snd) ++ hrest
-    = 0 :: (cs1rest ++ hrest) := by
+      = 0 :: (cs1rest ++ hrest) := by
     rw [hcs1, List.cons_append]
   have hlast_high : ((N.map Prod.fst).reverse).getLast?
-    = some 0 := by
+      = some 0 := by
     rw [List.getLast?_reverse, List.head?_map, hhead]
     rfl
   have hrest_last : hrest.getLast? = some 0 := by
     have h1 : ((N.map Prod.fst).reverse).getLast?
-      = hrest.getLast? := by
+        = hrest.getLast? := by
       rw [hhigh_cons]
       exact List.getLast?_cons_of_ne_nil hrest_ne
-    rwa [hlast_high] at h1
+    rw [hlast_high] at h1
+    exact h1.symm
   have hfull_last : ((N.map Prod.snd) ++ hrest).getLast?
-    = some 0 := by
-    rwa [List.getLast?_append_of_ne_nil _ hrest_ne]
+      = some 0 := by
+    rw [List.getLast?_append_of_ne_nil _ hrest_ne]
+    exact hrest_last
   have hbal := chain_balance g k ((L.map Prod.snd)
-    ++ (L.map Prod.fst).reverse)
+      ++ (L.map Prod.fst).reverse)
     ((L.map Prod.fst) ++ (L.map Prod.snd).reverse)
     ((N.map Prod.snd) ++ hrest) hfull 0 hfull_last 0
     (cs1rest ++ hrest) hfull_cs
   have hxs_eq : (L.map Prod.snd) ++ (L.map Prod.fst).reverse
-    = (reconEven L).reverse := by
+      = (reconEven L).reverse := by
     rw [reconEven_reverse L]
   have hys_eq : (L.map Prod.fst) ++ (L.map Prod.snd).reverse
-    = reconEven L := rfl
+      = reconEven L := rfl
   rw [hxs_eq, hys_eq] at hbal
   have hbal_simple : k * Nat.ofDigits g (reconEven L).reverse
-    = Nat.ofDigits g (reconEven L) := by
+      = Nat.ofDigits g (reconEven L) := by
     simp only [Nat.add_zero, Nat.zero_mul] at hbal
     exact hbal
   have h1 := digitValue_eq g (reconEven L)
   have h2 := digitValue_eq g (reconEven L).reverse
-  rwa [h1, h2, List.reverse_reverse]
+  rw [h1, h2, List.reverse_reverse]
+  exact hbal_simple
 
 end MetaMathlibExt
 
@@ -1700,7 +1703,7 @@ private lemma bwd_odd_balance (g k : ℕ)
     (L.map Prod.fst) (N.map Prod.snd) hlow [mid] [mid]
     s [r] hmid_chain hlast_low
   have hhead_high : ((N.map Prod.fst).reverse).head?
-    = some r := by
+      = some r := by
     rw [List.head?_reverse, List.getLast?_map, hpiv_last]
     rfl
   obtain ⟨hrest, hhigh_cons⟩ :=
@@ -1710,20 +1713,20 @@ private lemma bwd_odd_balance (g k : ℕ)
     rw [hL]
     simp only [List.length_cons, Nat.zero_lt_succ]
   have hhigh_len : ((N.map Prod.fst).reverse).length
-    = L.length + 1 := by
+      = L.length + 1 := by
     rw [List.length_reverse, List.length_map, hlen]
   have hrest_ne : hrest ≠ [] := by
     have hlen_hr : hrest.length + 1
-      = ((N.map Prod.fst).reverse).length := by
+        = ((N.map Prod.fst).reverse).length := by
       rw [hhigh_cons]
       simp only [List.length_cons]
     rw [hhigh_len] at hlen_hr
     exact List.ne_nil_of_length_pos (by omega)
   have hhigh_rw : IsCarryChain g k
-    ((L.map Prod.fst).reverse) ((L.map Prod.snd).reverse)
-    (r :: hrest) := hhigh_cons ▸ hhigh
+      ((L.map Prod.fst).reverse) ((L.map Prod.snd).reverse)
+      (r :: hrest) := hhigh_cons ▸ hhigh
   have hlast_mid : ((N.map Prod.snd) ++ [r]).getLast?
-    = some r := by
+      = some r := by
     rw [List.getLast?_append_of_ne_nil _ (by simp)]
     simp only [List.getLast?_singleton]
   have hfull := chain_append g k ((L.map Prod.snd) ++ [mid])
@@ -1736,44 +1739,47 @@ private lemma bwd_odd_balance (g k : ℕ)
   obtain ⟨cs1rest, hcs1⟩ :=
     List.head?_eq_some_iff.mp hhead_low
   have hfull_cs : ((N.map Prod.snd) ++ [r]) ++ hrest
-    = 0 :: ((cs1rest ++ [r]) ++ hrest) := by
+      = 0 :: ((cs1rest ++ [r]) ++ hrest) := by
     rw [hcs1, List.cons_append, List.cons_append,
       List.append_assoc]
   have hlast_high : ((N.map Prod.fst).reverse).getLast?
-    = some 0 := by
+      = some 0 := by
     rw [List.getLast?_reverse, List.head?_map, hhead]
     rfl
   have hrest_last : hrest.getLast? = some 0 := by
     have h1 : ((N.map Prod.fst).reverse).getLast?
-      = hrest.getLast? := by
+        = hrest.getLast? := by
       rw [hhigh_cons]
       exact List.getLast?_cons_of_ne_nil hrest_ne
-    rwa [hlast_high] at h1
+    rw [hlast_high] at h1
+    exact h1.symm
   have hfull_last : (((N.map Prod.snd) ++ [r]) ++ hrest).getLast?
-    = some 0 := by
-    rwa [List.getLast?_append_of_ne_nil _ hrest_ne]
+      = some 0 := by
+    rw [List.getLast?_append_of_ne_nil _ hrest_ne]
+    exact hrest_last
   have hbal := chain_balance g k (((L.map Prod.snd) ++ [mid])
-    ++ (L.map Prod.fst).reverse)
+      ++ (L.map Prod.fst).reverse)
     (((L.map Prod.fst) ++ [mid]) ++ (L.map Prod.snd).reverse)
     (((N.map Prod.snd) ++ [r]) ++ hrest) hfull 0 hfull_last
     0 ((cs1rest ++ [r]) ++ hrest) hfull_cs
   have hxs_eq : ((L.map Prod.snd) ++ [mid])
-    ++ (L.map Prod.fst).reverse
-    = (reconOdd L mid).reverse := by
+      ++ (L.map Prod.fst).reverse
+      = (reconOdd L mid).reverse := by
     rw [reconOdd_reverse L mid, List.append_assoc]
   have hys_eq : ((L.map Prod.fst) ++ [mid])
-    ++ (L.map Prod.snd).reverse
-    = reconOdd L mid := by
+      ++ (L.map Prod.snd).reverse
+      = reconOdd L mid := by
     unfold reconOdd
     rw [List.append_assoc]
   rw [hxs_eq, hys_eq] at hbal
   have hbal_simple : k * Nat.ofDigits g (reconOdd L mid).reverse
-    = Nat.ofDigits g (reconOdd L mid) := by
+      = Nat.ofDigits g (reconOdd L mid) := by
     simp only [Nat.add_zero, Nat.zero_mul] at hbal
     exact hbal
   have h1 := digitValue_eq g (reconOdd L mid)
   have h2 := digitValue_eq g (reconOdd L mid).reverse
-  rwa [h1, h2, List.reverse_reverse]
+  rw [h1, h2, List.reverse_reverse]
+  exact hbal_simple
 
 end MetaMathlibExt
 
@@ -1793,13 +1799,13 @@ private lemma labelsOf_reconEven (L : List (ℕ × ℕ)) :
   have hlenA : (L.map Prod.fst).length = L.length :=
     List.length_map Prod.fst
   have htake1 : (reconEven L).take L.length
-    = L.map Prod.fst := by
+      = L.map Prod.fst := by
     unfold reconEven
     rw [← hlenA, List.take_left]
   have hlenB : (L.map Prod.snd).length = L.length :=
     List.length_map Prod.snd
   have htake2 : (reconEven L).reverse.take L.length
-    = L.map Prod.snd := by
+      = L.map Prod.snd := by
     rw [reconEven_reverse L, ← hlenB, List.take_left]
   rw [htake1, htake2, zip_map_roundtrip]
 
@@ -1821,13 +1827,13 @@ private lemma labelsOf_reconOdd (L : List (ℕ × ℕ))
   have hlenA : (L.map Prod.fst).length = L.length :=
     List.length_map Prod.fst
   have htake1 : (reconOdd L mid).take L.length
-    = L.map Prod.fst := by
+      = L.map Prod.fst := by
     unfold reconOdd
     rw [List.append_assoc, ← hlenA, List.take_left]
   have hlenB : (L.map Prod.snd).length = L.length :=
     List.length_map Prod.snd
   have htake2 : (reconOdd L mid).reverse.take L.length
-    = L.map Prod.snd := by
+      = L.map Prod.snd := by
     rw [reconOdd_reverse L mid, List.append_assoc, ← hlenB,
       List.take_left]
   rw [htake1, htake2, zip_map_roundtrip]
@@ -1846,29 +1852,30 @@ private lemma middle_unique (k r s g mid1 mid2 : ℕ)
   (h2 : k * mid2 + s = mid2 + r * g) :
   mid1 = mid2 := by
   have hL1 : k * mid1 + s + mid2
-    = mid1 + r * g + mid2 := by rw [h1]
+      = mid1 + r * g + mid2 := by rw [h1]
   have hL2 : k * mid2 + s + mid1
-    = mid2 + r * g + mid1 := by rw [h2]
+      = mid2 + r * g + mid1 := by rw [h2]
   have hR : mid1 + r * g + mid2
-    = mid2 + r * g + mid1 := by ring
+      = mid2 + r * g + mid1 := by ring
   have heq0 : k * mid1 + s + mid2
-    = k * mid2 + s + mid1 := by
-    rwa [hL1, hL2]
+      = k * mid2 + s + mid1 := by
+    rw [hL1, hL2]
+    exact hR
   have e1 : k * mid1 + s + mid2
-    = (k * mid1 + mid2) + s := by ring
+      = (k * mid1 + mid2) + s := by ring
   have e2 : k * mid2 + s + mid1
-    = (k * mid2 + mid1) + s := by ring
+      = (k * mid2 + mid1) + s := by ring
   rw [e1, e2] at heq0
   have heq1 : k * mid1 + mid2 = k * mid2 + mid1 :=
     Nat.add_right_cancel heq0
   obtain ⟨j, rfl⟩ :=
     Nat.exists_eq_succ_of_ne_zero (by omega : k ≠ 0)
   have e3 : j.succ * mid1 + mid2
-    = j * mid1 + (mid1 + mid2) := by
+      = j * mid1 + (mid1 + mid2) := by
     rw [Nat.succ_mul]
     ring
   have e4 : j.succ * mid2 + mid1
-    = j * mid2 + (mid2 + mid1) := by
+      = j * mid2 + (mid2 + mid1) := by
     rw [Nat.succ_mul]
     ring
   rw [e3, e4] at heq1
@@ -1895,9 +1902,10 @@ private lemma reverse_take_even_aux (A B : List ℕ) (r : ℕ)
   ((A ++ hrest).reverse.take B.length) = B := by
   have hB_eq : B = hrest.reverse ++ [r] := by
     have h1 : B.reverse.reverse = B := List.reverse_reverse B
-    rwa [hBrev, List.reverse_cons] at h1
+    rw [hBrev, List.reverse_cons] at h1
+    exact h1.symm
   have hrev_eq : (A ++ hrest).reverse
-    = hrest.reverse ++ A.reverse := by
+      = hrest.reverse ++ A.reverse := by
     rw [List.reverse_append]
   rw [hrev_eq]
   have hlen_hr : hrest.reverse.length = B.length - 1 := by
@@ -1914,10 +1922,10 @@ private lemma reverse_take_even_aux (A B : List ℕ) (r : ℕ)
     rw [List.length_reverse] at h1
     omega
   have htake_eq : ((hrest.reverse ++ A.reverse).take B.length)
-    = hrest.reverse ++ (A.reverse.take 1) := by
+      = hrest.reverse ++ (A.reverse.take 1) := by
     rw [List.take_append]
     have htake_hr : hrest.reverse.take B.length
-      = hrest.reverse := by
+        = hrest.reverse := by
       apply List.take_of_length_le
       omega
     rw [htake_hr]
@@ -1947,12 +1955,14 @@ private lemma reverse_take_odd_aux (A B : List ℕ) (r : ℕ)
   ((((A ++ [r]) ++ hrest).reverse.take B.length)) = B := by
   have hB_eq : B = hrest.reverse ++ [r] := by
     have h1 : B.reverse.reverse = B := List.reverse_reverse B
-    rwa [hBrev, List.reverse_cons] at h1
+    rw [hBrev, List.reverse_cons] at h1
+    exact h1.symm
   have hrev_eq : ((A ++ [r]) ++ hrest).reverse
-    = (hrest.reverse ++ [r]) ++ A.reverse := by
+      = (hrest.reverse ++ [r]) ++ A.reverse := by
     rw [List.reverse_append, List.reverse_append,
       List.reverse_singleton, ← List.append_assoc]
-  rwa [hrev_eq, hB_eq]
+  rw [hrev_eq, hB_eq]
+  exact List.take_left
 
 end MetaMathlibExt
 
@@ -1983,14 +1993,14 @@ private lemma nodesOf_reconEven (g k : ℕ) (hg : 0 < g)
     rw [List.getLast?_map, hpiv]
     rfl
   have hhead_high : ((N.map Prod.fst).reverse).head?
-    = some r := by
+      = some r := by
     rw [List.head?_reverse, List.getLast?_map, hpiv]
     rfl
   obtain ⟨hrest, hhigh_cons⟩ :=
     List.head?_eq_some_iff.mp hhead_high
   have hhigh_rw : IsCarryChain g k
-    ((L.map Prod.fst).reverse) ((L.map Prod.snd).reverse)
-    (r :: hrest) := hhigh_cons ▸ hhigh
+      ((L.map Prod.fst).reverse) ((L.map Prod.snd).reverse)
+      (r :: hrest) := hhigh_cons ▸ hhigh
   have hfull := chain_append g k (L.map Prod.snd)
     (L.map Prod.fst) (N.map Prod.snd) hlow
     ((L.map Prod.fst).reverse) ((L.map Prod.snd).reverse)
@@ -2004,15 +2014,15 @@ private lemma nodesOf_reconEven (g k : ℕ) (hg : 0 < g)
   obtain ⟨hdig_eq, hlast_canon, hall_canon, hchain_canon⟩ :=
     hcanon
   have hxs_eq : (L.map Prod.snd) ++ (L.map Prod.fst).reverse
-    = (reconEven L).reverse := by
+      = (reconEven L).reverse := by
     rw [reconEven_reverse L]
   have hys_eq : (L.map Prod.fst) ++ (L.map Prod.snd).reverse
-    = reconEven L := rfl
+      = reconEven L := rfl
   have hpath_rw : IsCarryChain g k (reconEven L).reverse
-    (reconEven L) ((N.map Prod.snd) ++ hrest) := by
+      (reconEven L) ((N.map Prod.snd) ++ hrest) := by
     have h1 : IsCarryChain g k (reconEven L).reverse
-      ((L.map Prod.fst) ++ (L.map Prod.snd).reverse)
-      ((N.map Prod.snd) ++ hrest) := hxs_eq ▸ hfull
+        ((L.map Prod.fst) ++ (L.map Prod.snd).reverse)
+        ((N.map Prod.snd) ++ hrest) := hxs_eq ▸ hfull
     exact hys_eq ▸ h1
   obtain ⟨t1, hC0_canon⟩ := carriesOf_form g k (reconEven L)
   have hhead_low : (N.map Prod.snd).head? = some 0 := by
@@ -2021,10 +2031,10 @@ private lemma nodesOf_reconEven (g k : ℕ) (hg : 0 < g)
   obtain ⟨cs1rest, hcs1⟩ :=
     List.head?_eq_some_iff.mp hhead_low
   have hC0_path : (N.map Prod.snd) ++ hrest
-    = 0 :: (cs1rest ++ hrest) := by
+      = 0 :: (cs1rest ++ hrest) := by
     rw [hcs1, List.cons_append]
   have hCeq : carriesOf g k (reconEven L)
-    = (N.map Prod.snd) ++ hrest :=
+      = (N.map Prod.snd) ++ hrest :=
     chain_unique g hg k (reconEven L).reverse (reconEven L)
       (carriesOf g k (reconEven L)) hchain_canon
       ((N.map Prod.snd) ++ hrest) hpath_rw 0 t1
@@ -2038,17 +2048,18 @@ private lemma nodesOf_reconEven (g k : ℕ) (hg : 0 < g)
   have hlenA : (N.map Prod.snd).length = N.length :=
     List.length_map Prod.snd
   have htake_low : (((N.map Prod.snd) ++ hrest).take N.length)
-    = N.map Prod.snd := by
+      = N.map Prod.snd := by
     rw [← hlenA, List.take_left]
   have hBlen : (N.map Prod.fst).length = N.length :=
     List.length_map Prod.fst
   have htake_high : (((N.map Prod.snd) ++ hrest).reverse.take
-    N.length) = N.map Prod.fst := by
+      N.length) = N.map Prod.fst := by
     have h := reverse_take_even_aux (N.map Prod.snd)
       (N.map Prod.fst) r hrest hhigh_cons hlast_low
-    rwa [hBlen] at h
+    rw [hBlen] at h
+    exact h
   have hnodes_eq : nodesOf g k (reconEven L)
-    = List.zip ((N.map Prod.fst)) (N.map Prod.snd) := by
+      = List.zip ((N.map Prod.fst)) (N.map Prod.snd) := by
     unfold nodesOf
     rw [hCeq, htake_amt, htake_high, htake_low]
   rw [hnodes_eq, zip_map_roundtrip]
@@ -2087,16 +2098,16 @@ private lemma nodesOf_reconOdd (g k : ℕ) (hg : 0 < g)
     (L.map Prod.fst) (N.map Prod.snd) hlow [mid] [mid]
     s [r] hmid_chain hlast_low
   have hhead_high : ((N.map Prod.fst).reverse).head?
-    = some r := by
+      = some r := by
     rw [List.head?_reverse, List.getLast?_map, hpiv_last]
     rfl
   obtain ⟨hrest, hhigh_cons⟩ :=
     List.head?_eq_some_iff.mp hhead_high
   have hhigh_rw : IsCarryChain g k
-    ((L.map Prod.fst).reverse) ((L.map Prod.snd).reverse)
-    (r :: hrest) := hhigh_cons ▸ hhigh
+      ((L.map Prod.fst).reverse) ((L.map Prod.snd).reverse)
+      (r :: hrest) := hhigh_cons ▸ hhigh
   have hlast_mid : ((N.map Prod.snd) ++ [r]).getLast?
-    = some r := by
+      = some r := by
     rw [List.getLast?_append_of_ne_nil _ (by simp)]
     simp only [List.getLast?_singleton]
   have hfull := chain_append g k ((L.map Prod.snd) ++ [mid])
@@ -2112,20 +2123,20 @@ private lemma nodesOf_reconOdd (g k : ℕ) (hg : 0 < g)
   obtain ⟨hdig_eq, hlast_canon, hall_canon, hchain_canon⟩ :=
     hcanon
   have hxs_eq : ((L.map Prod.snd) ++ [mid])
-    ++ (L.map Prod.fst).reverse
-    = (reconOdd L mid).reverse := by
+      ++ (L.map Prod.fst).reverse
+      = (reconOdd L mid).reverse := by
     rw [reconOdd_reverse L mid, List.append_assoc]
   have hys_eq : ((L.map Prod.fst) ++ [mid])
-    ++ (L.map Prod.snd).reverse
-    = reconOdd L mid := by
+      ++ (L.map Prod.snd).reverse
+      = reconOdd L mid := by
     unfold reconOdd
     rw [List.append_assoc]
   have hpath_rw : IsCarryChain g k (reconOdd L mid).reverse
-    (reconOdd L mid) (((N.map Prod.snd) ++ [r]) ++ hrest) := by
+      (reconOdd L mid) (((N.map Prod.snd) ++ [r]) ++ hrest) := by
     have h1 : IsCarryChain g k (reconOdd L mid).reverse
-      (((L.map Prod.fst) ++ [mid])
-        ++ (L.map Prod.snd).reverse)
-      (((N.map Prod.snd) ++ [r]) ++ hrest) :=
+        (((L.map Prod.fst) ++ [mid])
+          ++ (L.map Prod.snd).reverse)
+        (((N.map Prod.snd) ++ [r]) ++ hrest) :=
       hxs_eq ▸ hfull
     exact hys_eq ▸ h1
   obtain ⟨t1, hC0_canon⟩ := carriesOf_form g k (reconOdd L mid)
@@ -2135,11 +2146,11 @@ private lemma nodesOf_reconOdd (g k : ℕ) (hg : 0 < g)
   obtain ⟨cs1rest, hcs1⟩ :=
     List.head?_eq_some_iff.mp hhead_low
   have hC0_path : ((N.map Prod.snd) ++ [r]) ++ hrest
-    = 0 :: ((cs1rest ++ [r]) ++ hrest) := by
+      = 0 :: ((cs1rest ++ [r]) ++ hrest) := by
     rw [hcs1, List.cons_append, List.cons_append,
       List.append_assoc]
   have hCeq : carriesOf g k (reconOdd L mid)
-    = ((N.map Prod.snd) ++ [r]) ++ hrest :=
+      = ((N.map Prod.snd) ++ [r]) ++ hrest :=
     chain_unique g hg k (reconOdd L mid).reverse
       (reconOdd L mid) (carriesOf g k (reconOdd L mid))
       hchain_canon (((N.map Prod.snd) ++ [r]) ++ hrest)
@@ -2149,24 +2160,28 @@ private lemma nodesOf_reconOdd (g k : ℕ) (hg : 0 < g)
     rw [reconOdd_length]
     omega
   have htake_amt : (reconOdd L mid).length / 2 + 1
-    = N.length := by omega
+      = N.length := by omega
   have hlenA : (N.map Prod.snd).length = N.length :=
     List.length_map Prod.snd
   have htake_low : ((((N.map Prod.snd) ++ [r]) ++ hrest).take
-    N.length) = N.map Prod.snd := by
+      N.length) = N.map Prod.snd := by
     rw [List.append_assoc, ← hlenA, List.take_left]
   have hBlen : (N.map Prod.fst).length = N.length :=
     List.length_map Prod.fst
   have htake_high : ((((N.map Prod.snd) ++ [r]) ++ hrest).reverse.take
-    N.length) = N.map Prod.fst := by
+      N.length) = N.map Prod.fst := by
     have h := reverse_take_odd_aux (N.map Prod.snd)
       (N.map Prod.fst) r hrest hhigh_cons
-    rwa [hBlen] at h
+    rw [hBlen] at h
+    exact h
   have hnodes_eq : nodesOf g k (reconOdd L mid)
-    = List.zip (N.map Prod.fst) (N.map Prod.snd) := by
+      = List.zip (N.map Prod.fst) (N.map Prod.snd) := by
     unfold nodesOf
     rw [hCeq, htake_amt, htake_high, htake_low]
   rw [hnodes_eq, zip_map_roundtrip]
+
+/-! # Young's correspondence for reverse multiples
+-/
 
 end MetaMathlibExt
 
@@ -2177,13 +2192,60 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma young_reverse_multiples_equiv_pivot_paths
-  {g k : ℕ}
+  (g k : ℕ)
 -- given
   (hk : 2 ≤ k)
   (hkg : k < g) :
--- imply
-  let digitValue := by
--- proof
+  let digitValue := fun digits : List ℕ =>
+    digits.foldl (fun value digit => value * g + digit) 0
+  let IsReverseMultiple := fun digits : List ℕ =>
+    (∃ first middle last,
+        digits = first :: middle ++ [last] ∧ first ≠ 0 ∧ last ≠ 0) ∧
+      (∀ digit ∈ digits, digit < g) ∧
+      k * digitValue digits = digitValue digits.reverse
+  let Transition := fun (source : ℕ × ℕ) (label : ℕ × ℕ) (target : ℕ × ℕ) =>
+    k * label.2 + source.2 = label.1 + target.2 * g ∧
+      k * label.1 + target.1 = label.2 + source.1 * g
+  let IsPath := fun path : List (ℕ × ℕ) × List (ℕ × ℕ) =>
+    path.2.length = path.1.length + 1 ∧
+      path.2.head? = some (0, 0) ∧
+      (∀ node ∈ path.2, node.1 < k ∧ node.2 < k) ∧
+      (∀ label ∈ path.1, label.1 < g ∧ label.2 < g) ∧
+      (∃ first rest,
+        path.1 = first :: rest ∧ first.1 ≠ 0 ∧ first.2 ≠ 0) ∧
+      List.Forall₂
+        (fun label endpoints => Transition endpoints.1 label endpoints.2)
+        path.1 (path.2.zip path.2.tail)
+  let EvenReverseMultiples :=
+    {digits : List ℕ // IsReverseMultiple digits ∧ Even digits.length}
+  let OddReverseMultiples :=
+    {digits : List ℕ // IsReverseMultiple digits ∧ Odd digits.length}
+  let PathsToEvenPivots :=
+    {path : List (ℕ × ℕ) × List (ℕ × ℕ) //
+      IsPath path ∧ ∃ r, path.2.getLast? = some (r, r)}
+  let PathsToOddPivots :=
+    {path : List (ℕ × ℕ) × List (ℕ × ℕ) //
+      IsPath path ∧
+        ∃ r s middle,
+          path.2.getLast? = some (r, s) ∧ middle < g ∧
+            Transition (r, s) (middle, middle) (s, r)}
+  ∃ evenCorrespondence : EvenReverseMultiples ≃ PathsToEvenPivots,
+    ∃ oddCorrespondence : OddReverseMultiples ≃ PathsToOddPivots,
+      (∀ reverseMultiple,
+        (evenCorrespondence reverseMultiple).1.1 =
+          List.zip
+            (reverseMultiple.1.take (reverseMultiple.1.length / 2))
+            (reverseMultiple.1.reverse.take (reverseMultiple.1.length / 2))) ∧
+      (∀ reverseMultiple,
+        (oddCorrespondence reverseMultiple).1.1 =
+            List.zip
+              (reverseMultiple.1.take (reverseMultiple.1.length / 2))
+              (reverseMultiple.1.reverse.take (reverseMultiple.1.length / 2)) ∧
+          ∃ middle r s,
+            (reverseMultiple.1.drop (reverseMultiple.1.length / 2)).head? =
+              some middle ∧
+            (oddCorrespondence reverseMultiple).1.2.getLast? = some (r, s) ∧
+            Transition (r, s) (middle, middle) (s, r)) := by
   intro digitValue IsReverseMultiple Transition IsPath
     EvenReverseMultiples OddReverseMultiples
     PathsToEvenPivots PathsToOddPivots
@@ -2191,10 +2253,10 @@ lemma young_reverse_multiples_equiv_pivot_paths
   have hk0 : 0 < k := by omega
   refine ⟨?evenCorr, ?oddCorr, ?evenLabels, ?oddLabels⟩
   · refine
-    { toFun := ?toEven
-      invFun := ?invEven
-      left_inv := ?leftEven
-      right_inv := ?rightEven }
+      { toFun := ?toEven
+        invFun := ?invEven
+        left_inv := ?leftEven
+        right_inv := ?rightEven }
     · intro D
       refine ⟨(labelsOf D.1, nodesOf g k D.1), ?_, ?_⟩
       · obtain ⟨⟨hex, hdig, hbal⟩, heven⟩ := D.2
@@ -2242,10 +2304,10 @@ lemma young_reverse_multiples_equiv_pivot_paths
       · exact hlab
       · exact hnod
   · refine
-    { toFun := ?toOdd
-      invFun := ?invOdd
-      left_inv := ?leftOdd
-      right_inv := ?rightOdd }
+      { toFun := ?toOdd
+        invFun := ?invOdd
+        left_inv := ?leftOdd
+        right_inv := ?rightOdd }
     · intro D
       refine ⟨(labelsOf D.1, nodesOf g k D.1), ?_, ?_⟩
       · obtain ⟨⟨hex, hdig, hbal⟩, hodd⟩ := D.2
@@ -2272,9 +2334,9 @@ lemma young_reverse_multiples_equiv_pivot_paths
         exact ⟨r, s, mid, hlast, hmid_lt, htrans⟩
     · intro P
       have hex_mid : ∃ mid, ∃ r s,
-        P.1.2.getLast? = some (r, s) ∧ mid < g ∧
-          (k * mid + s = mid + r * g ∧
-            k * mid + s = mid + r * g) := by
+          P.1.2.getLast? = some (r, s) ∧ mid < g ∧
+            (k * mid + s = mid + r * g ∧
+              k * mid + s = mid + r * g) := by
         obtain ⟨⟨hlen, hhead, hnode_lt, hlabel_lt, hexL,
           hforall⟩, r, s, mid, hlast, hmid_lt, htrans⟩ := P.2
         exact ⟨mid, r, s, hlast, hmid_lt, htrans⟩
@@ -2286,7 +2348,7 @@ lemma young_reverse_multiples_equiv_pivot_paths
       have hexD := reconOdd_nonzero P.1.1
         (Classical.choose hex_mid) hexL
       have hdigD : ∀ d ∈ reconOdd P.1.1
-        (Classical.choose hex_mid), d < g :=
+          (Classical.choose hex_mid), d < g :=
         fun d hmem => reconOdd_mem_lt g P.1.1
           (Classical.choose hex_mid) hmid_lt hlabel_lt d hmem
       have hbalD := bwd_odd_balance g k P.1.1 P.1.2
@@ -2306,9 +2368,9 @@ lemma young_reverse_multiples_equiv_pivot_paths
       obtain ⟨r0, s0, mid0, hlast0, hmid0_lt, htrans0,
         hdrop0⟩ := hpiv0
       have hex_mid'' : ∃ mid, ∃ r s,
-        (nodesOf g k D.1).getLast? = some (r, s) ∧ mid < g ∧
-          (k * mid + s = mid + r * g ∧
-            k * mid + s = mid + r * g) :=
+          (nodesOf g k D.1).getLast? = some (r, s) ∧ mid < g ∧
+            (k * mid + s = mid + r * g ∧
+              k * mid + s = mid + r * g) :=
         ⟨mid0, r0, s0, hlast0, hmid0_lt, htrans0⟩
       have hspec'' := Classical.choose_spec hex_mid''
       obtain ⟨r1, s1, hlast1, hmid1_lt, htrans1⟩ := hspec''
@@ -2328,8 +2390,9 @@ lemma young_reverse_multiples_equiv_pivot_paths
       have hrecon0 := reconOdd_labelsOf_odd D.1
         (D.1.length / 2) mid0 rfl hodd_eq hdrop0
       have hgoal : reconOdd (labelsOf D.1)
-        (Classical.choose hex_mid'') = D.1 := by
-        rwa [hmid_eq]
+          (Classical.choose hex_mid'') = D.1 := by
+        rw [hmid_eq]
+        exact hrecon0
       exact hgoal
     · intro P
       apply Subtype.ext
@@ -2337,9 +2400,9 @@ lemma young_reverse_multiples_equiv_pivot_paths
       obtain ⟨⟨hlen, hhead, hnode_lt, hlabel_lt, hexL, hforall⟩,
         hpivot⟩ := P.2
       have hex_mid'' : ∃ mid, ∃ r s,
-        P.1.2.getLast? = some (r, s) ∧ mid < g ∧
-          (k * mid + s = mid + r * g ∧
-            k * mid + s = mid + r * g) := by
+          P.1.2.getLast? = some (r, s) ∧ mid < g ∧
+            (k * mid + s = mid + r * g ∧
+              k * mid + s = mid + r * g) := by
         obtain ⟨r, s, mid, hlast, hmid_lt, htrans⟩ := hpivot
         exact ⟨mid, r, s, hlast, hmid_lt, htrans⟩
       have hspec'' := Classical.choose_spec hex_mid''
@@ -2365,9 +2428,10 @@ lemma young_reverse_multiples_equiv_pivot_paths
       obtain ⟨r0, s0, mid0, hlast0, hmid0_lt, htrans0,
         hdrop0⟩ := hpiv0
       exact ⟨mid0, r0, s0, hdrop0, hlast0, htrans0⟩
+
 end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

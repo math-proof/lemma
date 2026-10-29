@@ -140,7 +140,7 @@ lemma integralClosure_formallyUnramified_of_hensel_lift
     exact map_maximalIdeal_eq_of_ramificationIdx_one A ↥C
       (hensel_lift_ramificationIdx_eq_one α hα β hβ)
   exact Algebra.FormallyUnramified.of_map_maximalIdeal hmap
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 999999 in
 set_option synthInstance.maxHeartbeats 400000 in
 
 /--
@@ -310,7 +310,7 @@ lemma thm_10_13_exists_unram_subext_of_degree_f
     exact integralClosure_formallyUnramified_of_hensel_lift A K B L α hα β hβ
   ·
     exact adjoin_degree_eq_resDeg_of_hensel_lift A K B L α hα β hβ
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 999999 in
 set_option synthInstance.maxHeartbeats 400000 in
 
 /--
@@ -897,7 +897,7 @@ lemma thm_10_23_part_i
 [thm_10_23_part_ii_degree](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Thm1023.lean)
 -/
 @[path]
-lemma thm_10_23_part_ii_degree
+lemma thm_10_23_part_ii_degree :
 -- imply
   Module.finrank (↥(maximalUnramifiedSubextension A K L)) L = AKLB_ramIdx A B := by
 -- proof
@@ -1871,3 +1871,4 @@ lemma thm_10_23
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

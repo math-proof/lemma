@@ -72,20 +72,20 @@ namespace MetaMathlibExt
 private lemma pp_dvd_or (d a b : ℕ) (hdiv : d ∣ a * b) (hpp : IsPrimePow d)
   (hcop : Nat.Coprime a b) : d ∣ a ∨ d ∣ b := by
   obtain ⟨p, k, hp, hk, heq⟩ := (isPrimePow_nat_iff d).mp hpp
-  obtain rfl | hk0 := eq_or_ne k 0
+  rcases eq_or_ne k 0 with rfl | hk0
   · simp only [pow_zero] at heq
     rw [← heq]
     exact Or.inl (one_dvd a)
   · have hpdvd : p ∣ d := heq ▸ dvd_pow_self p hk0
     have hpab : p ∣ a * b := dvd_trans hpdvd hdiv
     rw [hp.dvd_mul] at hpab
-    obtain hpa | hpb := hpab
+    rcases hpab with hpa | hpb
     · have hpcop : Nat.Coprime p b :=
-      Nat.Coprime.coprime_dvd_left hpa hcop
+        Nat.Coprime.coprime_dvd_left hpa hcop
       have hdcop : Nat.Coprime d b := heq ▸ hpcop.pow_left k
       exact Or.inl (Nat.Coprime.dvd_of_dvd_mul_right hdcop hdiv)
     · have hpcop : Nat.Coprime p a :=
-      Nat.Coprime.coprime_dvd_left hpb hcop.symm
+        Nat.Coprime.coprime_dvd_left hpb hcop.symm
       have hdcop : Nat.Coprime d a := heq ▸ hpcop.pow_left k
       exact Or.inr (Nat.Coprime.dvd_of_dvd_mul_left hdcop hdiv)
 
@@ -106,7 +106,7 @@ private lemma pp_divisors_union (a b : ℕ) (ha : a ≠ 0) (hb : b ≠ 0)
   simp only [Finset.mem_filter, Nat.mem_divisors, Finset.mem_union]
   constructor
   · rintro ⟨⟨hdiv, -⟩, hpp⟩
-    obtain hda | hdb := pp_dvd_or d a b hdiv hpp hcop
+    rcases pp_dvd_or d a b hdiv hpp hcop with hda | hdb
     · exact Or.inl ⟨⟨hda, ha⟩, hpp⟩
     · exact Or.inr ⟨⟨hdb, hb⟩, hpp⟩
   · rintro (⟨⟨hda, -⟩, hpp⟩ | ⟨⟨hdb, -⟩, hpp⟩)
@@ -131,12 +131,12 @@ private lemma not_pp_mul (a b : ℕ) (ha : 1 < a) (hb : 1 < b)
   obtain ⟨j, hjk, haj⟩ := haN
   obtain ⟨l, hlk, hbj⟩ := hbN
   have hj : 0 < j := by
-    obtain rfl | h := Nat.eq_zero_or_pos j
+    rcases Nat.eq_zero_or_pos j with rfl | h
     · simp at haj
       omega
     · exact h
   have hl : 0 < l := by
-    obtain rfl | h := Nat.eq_zero_or_pos l
+    rcases Nat.eq_zero_or_pos l with rfl | h
     · simp at hbj
       omega
     · exact h
@@ -191,10 +191,10 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma rearickLog_eq_pmul_log_mul_dirichletInverse
-  {f : ArithmeticFunction ℝ}
+  (f : ArithmeticFunction ℝ)
 -- given
   (hf : 0 < f 1)
-  (h0 : f 1 = 1) :
+  (h1 : f 1 = 1) :
 -- imply
   rearickLog f hf =
     f.pmul ArithmeticFunction.log *
@@ -219,16 +219,16 @@ lemma rearickLog_eq_pmul_log_mul_dirichletInverse
       simp [ArithmeticFunction.pmul_apply, ArithmeticFunction.log_apply]
     rw [hH1, zero_mul]
   · have hL : rearickLog f hf n =
-    ∑ d ∈ n.divisors,
-      f d *
-        ArithmeticFunction.dirichletInverse (⇑f)
-          (invertibleOfNonzero (ne_of_gt hf)) (n / d) *
-        Real.log (d : ℝ) := by
-    change (if n = 0 then (0 : ℝ) else if n = 1 then _ else _) = _
-    simp only [hn0, hn1, ↓reduceIte]
+      ∑ d ∈ n.divisors,
+        f d *
+          ArithmeticFunction.dirichletInverse (⇑f)
+            (invertibleOfNonzero (ne_of_gt hf)) (n / d) *
+          Real.log (d : ℝ) := by
+      change (if n = 0 then (0 : ℝ) else if n = 1 then _ else _) = _
+      simp only [hn0, hn1, ↓reduceIte]
     rw [hL]
     have hR : (f.pmul ArithmeticFunction.log *
-      ArithmeticFunction.dirichletInverse (⇑f) (invertibleOfNonzero (ne_of_gt hf))) n =
+        ArithmeticFunction.dirichletInverse (⇑f) (invertibleOfNonzero (ne_of_gt hf))) n =
       ∑ d ∈ n.divisors,
         (f.pmul ArithmeticFunction.log) d *
           ArithmeticFunction.dirichletInverse (⇑f)
@@ -292,7 +292,8 @@ private lemma f1_of_hL (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
   have hL1 : rearickLog f hf 1 = 0 := hL 1 h1
   have hlog : Real.log (f 1) = 0 := hL1
   have hexp : Real.exp (Real.log (f 1)) = f 1 := Real.exp_log hf
-  rwa [hlog, Real.exp_zero] at hexp
+  rw [hlog, Real.exp_zero] at hexp
+  exact hexp.symm
 
 end MetaMathlibExt
 
@@ -361,9 +362,9 @@ private lemma forward_vanish (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
   induction N using Nat.strong_induction_on with
   | _ N ih =>
     intro hNpp
-    obtain rfl | hN0 := eq_or_ne N 0
+    rcases eq_or_ne N 0 with rfl | hN0
     · rfl
-    obtain rfl | hN1 := eq_or_ne N 1
+    rcases eq_or_ne N 1 with rfl | hN1
     · have hlog : rearickLog f hf 1 = Real.log (f 1) := rfl
       rw [hlog, h1, Real.log_one]
     · have hNpos : 0 < N := Nat.pos_of_ne_zero hN0
@@ -379,12 +380,13 @@ private lemma forward_vanish (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
       have hNmem : N ∈ N.divisors := Nat.mem_divisors_self N hN0
       have hNN : N / N = 1 := Nat.div_self hNpos
       have hsplit : ∑ d ∈ N.divisors, rearickLog f hf d * f (N / d) =
-        rearickLog f hf N + ∑ d ∈ N.divisors.erase N, rearickLog f hf d * f (N / d) := by
+          rearickLog f hf N + ∑ d ∈ N.divisors.erase N, rearickLog f hf d * f (N / d) := by
         have h := Finset.add_sum_erase N.divisors (fun d => rearickLog f hf d * f (N / d)) hNmem
-        rwa [hNN, h1, mul_one] at h
+        rw [hNN, h1, mul_one] at h
+        exact h.symm
       rw [hsplit] at hE
       have hS : ∑ d ∈ N.divisors.erase N, rearickLog f hf d * f (N / d)
-        = f N * Real.log (N : ℝ) := by
+          = f N * Real.log (N : ℝ) := by
         have hsub1 : N.divisors.filter IsPrimePow ⊆ N.divisors.erase N := by
           intro d hd
           simp only [Finset.mem_filter, Finset.mem_erase, Nat.mem_divisors] at hd ⊢
@@ -394,7 +396,7 @@ private lemma forward_vanish (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
           rw [hdeq] at hpp
           exact hNpp hpp
         have hvan1 : ∀ x ∈ N.divisors.erase N,
-          x ∉ N.divisors.filter IsPrimePow → rearickLog f hf x * f (N / x) = 0 := by
+            x ∉ N.divisors.filter IsPrimePow → rearickLog f hf x * f (N / x) = 0 := by
           intro x hx hx_not
           have hx_mem : x ∈ N.divisors := Finset.mem_of_mem_erase hx
           have hx_pp : ¬ IsPrimePow x := by
@@ -407,12 +409,13 @@ private lemma forward_vanish (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
           have hLx : rearickLog f hf x = 0 := ih x hx_lt hx_pp
           rw [hLx, zero_mul]
         have hfilter_eq : ∑ d ∈ N.divisors.filter IsPrimePow, rearickLog f hf d * f (N / d) =
-          ∑ d ∈ N.divisors.erase N, rearickLog f hf d * f (N / d) :=
+            ∑ d ∈ N.divisors.erase N, rearickLog f hf d * f (N / d) :=
           Finset.sum_subset hsub1 hvan1
         have hunion : N.divisors.filter IsPrimePow =
-          (a.divisors.filter IsPrimePow) ∪ (b.divisors.filter IsPrimePow) := by
+            (a.divisors.filter IsPrimePow) ∪ (b.divisors.filter IsPrimePow) := by
           have h := pp_divisors_union a b ha0 hb0 hcop
-          rwa [hab] at h
+          rw [hab] at h
+          exact h
         have hdisj := Nat.disjoint_divisors_filter_isPrimePow hcop
         have hEa := rearickLog_sum_eq f hf h1 a
         have hEb := rearickLog_sum_eq f hf h1 b
@@ -423,10 +426,10 @@ private lemma forward_vanish (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
         have hlogN : Real.log (N : ℝ) = Real.log (a : ℝ) + Real.log (b : ℝ) := by
           rw [hcast, Real.log_mul haNe hbNe]
         have hA_eq : ∑ d ∈ a.divisors.filter IsPrimePow, rearickLog f hf d * f (a / d) =
-          f a * Real.log (a : ℝ) := by
+            f a * Real.log (a : ℝ) := by
           have hsubA : a.divisors.filter IsPrimePow ⊆ a.divisors := Finset.filter_subset _ _
           have hvanA : ∀ x ∈ a.divisors, x ∉ a.divisors.filter IsPrimePow →
-            rearickLog f hf x * f (a / x) = 0 := by
+              rearickLog f hf x * f (a / x) = 0 := by
             intro x hx hx_not
             have hx_pp : ¬ IsPrimePow x := by
               intro hpp
@@ -437,14 +440,15 @@ private lemma forward_vanish (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
             have hLx : rearickLog f hf x = 0 := ih x hx_lt hx_pp
             rw [hLx, zero_mul]
           have hsub_eq : ∑ d ∈ a.divisors.filter IsPrimePow, rearickLog f hf d * f (a / d) =
-            ∑ d ∈ a.divisors, rearickLog f hf d * f (a / d) :=
+              ∑ d ∈ a.divisors, rearickLog f hf d * f (a / d) :=
             Finset.sum_subset hsubA hvanA
-          rwa [hsub_eq]
+          rw [hsub_eq]
+          exact hEa.symm
         have hB_eq : ∑ d ∈ b.divisors.filter IsPrimePow, rearickLog f hf d * f (b / d) =
-          f b * Real.log (b : ℝ) := by
+            f b * Real.log (b : ℝ) := by
           have hsubB : b.divisors.filter IsPrimePow ⊆ b.divisors := Finset.filter_subset _ _
           have hvanB : ∀ x ∈ b.divisors, x ∉ b.divisors.filter IsPrimePow →
-            rearickLog f hf x * f (b / x) = 0 := by
+              rearickLog f hf x * f (b / x) = 0 := by
             intro x hx hx_not
             have hx_pp : ¬ IsPrimePow x := by
               intro hpp
@@ -455,13 +459,14 @@ private lemma forward_vanish (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
             have hLx : rearickLog f hf x = 0 := ih x hx_lt hx_pp
             rw [hLx, zero_mul]
           have hsub_eq : ∑ d ∈ b.divisors.filter IsPrimePow, rearickLog f hf d * f (b / d) =
-            ∑ d ∈ b.divisors, rearickLog f hf d * f (b / d) :=
+              ∑ d ∈ b.divisors, rearickLog f hf d * f (b / d) :=
             Finset.sum_subset hsubB hvanB
-          rwa [hsub_eq]
+          rw [hsub_eq]
+          exact hEb.symm
         have hA_rw : ∑ d ∈ a.divisors.filter IsPrimePow, rearickLog f hf d * f (N / d) =
-          (f a * Real.log (a : ℝ)) * f b := by
+            (f a * Real.log (a : ℝ)) * f b := by
           have hstep : ∀ d ∈ a.divisors.filter IsPrimePow,
-            rearickLog f hf d * f (N / d) = (rearickLog f hf d * f (a / d)) * f b := by
+              rearickLog f hf d * f (N / d) = (rearickLog f hf d * f (a / d)) * f b := by
             intro d hd
             have hd_mem : d ∈ a.divisors := Finset.mem_of_mem_filter d hd
             have hda : d ∣ a := (Nat.mem_divisors.mp hd_mem).1
@@ -476,9 +481,9 @@ private lemma forward_vanish (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
             ring
           rw [Finset.sum_congr rfl hstep, ← Finset.sum_mul, hA_eq]
         have hB_rw : ∑ d ∈ b.divisors.filter IsPrimePow, rearickLog f hf d * f (N / d) =
-          f a * (f b * Real.log (b : ℝ)) := by
+            f a * (f b * Real.log (b : ℝ)) := by
           have hstep : ∀ d ∈ b.divisors.filter IsPrimePow,
-            rearickLog f hf d * f (N / d) = f a * (rearickLog f hf d * f (b / d)) := by
+              rearickLog f hf d * f (N / d) = f a * (rearickLog f hf d * f (b / d)) := by
             intro d hd
             have hd_mem : d ∈ b.divisors := Finset.mem_of_mem_filter d hd
             have hdb : d ∣ b := (Nat.mem_divisors.mp hd_mem).1
@@ -492,7 +497,7 @@ private lemma forward_vanish (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
             rw [hNd, hmultd]
             ring
           have hsum : ∑ d ∈ b.divisors.filter IsPrimePow, rearickLog f hf d * f (N / d) =
-            ∑ d ∈ b.divisors.filter IsPrimePow, f a * (rearickLog f hf d * f (b / d)) :=
+              ∑ d ∈ b.divisors.filter IsPrimePow, f a * (rearickLog f hf d * f (b / d)) :=
             Finset.sum_congr rfl hstep
           rw [hsum, ← Finset.mul_sum, hB_eq]
         rw [← hfilter_eq, hunion, Finset.sum_union hdisj, hA_rw, hB_rw, hfab, hlogN]
@@ -515,11 +520,11 @@ private lemma reverse_mult_aux (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
   induction N using Nat.strong_induction_on with
   | _ N ih =>
     intro a b hab hcop
-    obtain rfl | hN0 := eq_or_ne N 0
+    rcases eq_or_ne N 0 with rfl | hN0
     · rcases Nat.mul_eq_zero.mp hab with rfl | rfl
       · simp [ArithmeticFunction.map_zero]
       · simp [ArithmeticFunction.map_zero]
-    obtain rfl | hN1 := eq_or_ne N 1
+    rcases eq_or_ne N 1 with rfl | hN1
     · have ha1 : a = 1 := Nat.eq_one_of_dvd_one (hab ▸ dvd_mul_right a b)
       have hb1 : b = 1 := Nat.eq_one_of_dvd_one (hab ▸ dvd_mul_left b a)
       simp [ha1, hb1, h1]
@@ -530,9 +535,9 @@ private lemma reverse_mult_aux (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
         · have haN : a = N := by rw [← hab, mul_one]
           rw [haN, h1, mul_one]
         · have ha0 : a ≠ 0 := by
-          intro ha0
-          rw [ha0, zero_mul] at hab
-          exact hN0 hab.symm
+            intro ha0
+            rw [ha0, zero_mul] at hab
+            exact hN0 hab.symm
           have hb0 : b ≠ 0 := by
             intro hb0
             rw [hb0, mul_zero] at hab
@@ -559,7 +564,7 @@ private lemma reverse_mult_aux (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
           have hlogPos : 0 < Real.log (N : ℝ) := Real.log_pos hNcast1
           have hlogNe : Real.log (N : ℝ) ≠ 0 := ne_of_gt hlogPos
           have hAllFilter : ∑ d ∈ N.divisors.filter IsPrimePow, rearickLog f hf d * f (N / d) =
-            ∑ d ∈ N.divisors, rearickLog f hf d * f (N / d) :=
+              ∑ d ∈ N.divisors, rearickLog f hf d * f (N / d) :=
             Finset.sum_subset (Finset.filter_subset _ _) (by
               intro x hx hx_not
               have hx_pp : ¬ IsPrimePow x := by
@@ -568,15 +573,16 @@ private lemma reverse_mult_aux (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
               have hLx : rearickLog f hf x = 0 := hL x hx_pp
               rw [hLx, zero_mul])
           have hunion : N.divisors.filter IsPrimePow =
-            (a.divisors.filter IsPrimePow) ∪ (b.divisors.filter IsPrimePow) := by
+              (a.divisors.filter IsPrimePow) ∪ (b.divisors.filter IsPrimePow) := by
             have h := pp_divisors_union a b ha0 hb0 hcop
-            rwa [hab] at h
+            rw [hab] at h
+            exact h
           have hdisj := Nat.disjoint_divisors_filter_isPrimePow hcop
           have hA_eq : ∑ d ∈ a.divisors.filter IsPrimePow, rearickLog f hf d * f (a / d) =
-            f a * Real.log (a : ℝ) := by
+              f a * Real.log (a : ℝ) := by
             have hsubA : a.divisors.filter IsPrimePow ⊆ a.divisors := Finset.filter_subset _ _
             have hvanA : ∀ x ∈ a.divisors, x ∉ a.divisors.filter IsPrimePow →
-              rearickLog f hf x * f (a / x) = 0 := by
+                rearickLog f hf x * f (a / x) = 0 := by
               intro x hx hx_not
               have hx_pp : ¬ IsPrimePow x := by
                 intro hpp
@@ -584,14 +590,15 @@ private lemma reverse_mult_aux (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
               have hLx : rearickLog f hf x = 0 := hL x hx_pp
               rw [hLx, zero_mul]
             have hsub_eq : ∑ d ∈ a.divisors.filter IsPrimePow, rearickLog f hf d * f (a / d) =
-              ∑ d ∈ a.divisors, rearickLog f hf d * f (a / d) :=
+                ∑ d ∈ a.divisors, rearickLog f hf d * f (a / d) :=
               Finset.sum_subset hsubA hvanA
-            rwa [hsub_eq]
+            rw [hsub_eq]
+            exact hEa.symm
           have hB_eq : ∑ d ∈ b.divisors.filter IsPrimePow, rearickLog f hf d * f (b / d) =
-            f b * Real.log (b : ℝ) := by
+              f b * Real.log (b : ℝ) := by
             have hsubB : b.divisors.filter IsPrimePow ⊆ b.divisors := Finset.filter_subset _ _
             have hvanB : ∀ x ∈ b.divisors, x ∉ b.divisors.filter IsPrimePow →
-              rearickLog f hf x * f (b / x) = 0 := by
+                rearickLog f hf x * f (b / x) = 0 := by
               intro x hx hx_not
               have hx_pp : ¬ IsPrimePow x := by
                 intro hpp
@@ -599,13 +606,14 @@ private lemma reverse_mult_aux (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
               have hLx : rearickLog f hf x = 0 := hL x hx_pp
               rw [hLx, zero_mul]
             have hsub_eq : ∑ d ∈ b.divisors.filter IsPrimePow, rearickLog f hf d * f (b / d) =
-              ∑ d ∈ b.divisors, rearickLog f hf d * f (b / d) :=
+                ∑ d ∈ b.divisors, rearickLog f hf d * f (b / d) :=
               Finset.sum_subset hsubB hvanB
-            rwa [hsub_eq]
+            rw [hsub_eq]
+            exact hEb.symm
           have hA_rw : ∑ d ∈ a.divisors.filter IsPrimePow, rearickLog f hf d * f (N / d) =
-            (f a * Real.log (a : ℝ)) * f b := by
+              (f a * Real.log (a : ℝ)) * f b := by
             have hstep : ∀ d ∈ a.divisors.filter IsPrimePow,
-              rearickLog f hf d * f (N / d) = (rearickLog f hf d * f (a / d)) * f b := by
+                rearickLog f hf d * f (N / d) = (rearickLog f hf d * f (a / d)) * f b := by
               intro d hd
               have hd_mem : d ∈ a.divisors := Finset.mem_of_mem_filter d hd
               have hda : d ∣ a := (Nat.mem_divisors.mp hd_mem).1
@@ -632,9 +640,9 @@ private lemma reverse_mult_aux (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
               ring
             rw [Finset.sum_congr rfl hstep, ← Finset.sum_mul, hA_eq]
           have hB_rw : ∑ d ∈ b.divisors.filter IsPrimePow, rearickLog f hf d * f (N / d) =
-            f a * (f b * Real.log (b : ℝ)) := by
+              f a * (f b * Real.log (b : ℝ)) := by
             have hstep : ∀ d ∈ b.divisors.filter IsPrimePow,
-              rearickLog f hf d * f (N / d) = f a * (rearickLog f hf d * f (b / d)) := by
+                rearickLog f hf d * f (N / d) = f a * (rearickLog f hf d * f (b / d)) := by
               intro d hd
               have hd_mem : d ∈ b.divisors := Finset.mem_of_mem_filter d hd
               have hdb : d ∣ b := (Nat.mem_divisors.mp hd_mem).1
@@ -659,11 +667,11 @@ private lemma reverse_mult_aux (f : ArithmeticFunction ℝ) (hf : 0 < f 1)
               rw [hmultd]
               ring
             have hsum : ∑ d ∈ b.divisors.filter IsPrimePow, rearickLog f hf d * f (N / d) =
-              ∑ d ∈ b.divisors.filter IsPrimePow, f a * (rearickLog f hf d * f (b / d)) :=
+                ∑ d ∈ b.divisors.filter IsPrimePow, f a * (rearickLog f hf d * f (b / d)) :=
               Finset.sum_congr rfl hstep
             rw [hsum, ← Finset.mul_sum, hB_eq]
           have hS : ∑ d ∈ N.divisors.filter IsPrimePow, rearickLog f hf d * f (N / d) =
-            (f a * f b) * Real.log (N : ℝ) := by
+              (f a * f b) * Real.log (N : ℝ) := by
             rw [hunion, Finset.sum_union hdisj, hA_rw, hB_rw, hlogN]
             ring
           rw [← hAllFilter, hS] at hE
@@ -697,4 +705,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

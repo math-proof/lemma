@@ -101,7 +101,7 @@ private lemma currentLimit_parityMarginal_eq_of_avoid_tendsto_eq
   {nu rho : ProbabilityMeasure (InfiniteCurrentConfig E)}
   {phi psi : ℕ → ℕ}
 -- given
-  (havoid : ∀ A : Finset E, ∃ L : ℝ≥0∞, Tendsto (fun n => (mu n : Measure (InfiniteCurrentConfig E)) (currentParityAvoidCylinder A)) atTop (nhds L))
+  (havoid : ∀ A : Finset E, ∃ L : ENNReal, Tendsto (fun n => (mu n : Measure (InfiniteCurrentConfig E)) (currentParityAvoidCylinder A)) atTop (nhds L))
   (hphi : StrictMono phi)
   (hpsi : StrictMono psi)
   (hnu : WeakCurrentConverges (mu ∘ phi) nu)
@@ -121,7 +121,7 @@ private lemma currentMarginal_eq_of_parityMarginal_eq_of_pattern_factor_eq
   {mu nu : ProbabilityMeasure (InfiniteCurrentConfig E)}
   {S : Finset E}
 -- given
-  (kernel : (↑S → Bool) → (↑S → ℕ) → ℝ≥0∞)
+  (kernel : (↑S → Bool) → (↑S → ℕ) → ENNReal)
   (hparity : currentParityMarginalPMF mu S = currentParityMarginalPMF nu S)
   (hmu : ∀ a : ↑S → ℕ, (mu : Measure (InfiniteCurrentConfig E)) (currentCylinder S {a}) = (mu : Measure (InfiniteCurrentConfig E)) (currentParityPatternCylinder S (currentLocalParity a)) * kernel (currentLocalParity a) a)
   (hnu : ∀ a : ↑S → ℕ, (nu : Measure (InfiniteCurrentConfig E)) (currentCylinder S {a}) = (nu : Measure (InfiniteCurrentConfig E)) (currentParityPatternCylinder S (currentLocalParity a)) * kernel (currentLocalParity a) a) :
@@ -139,7 +139,7 @@ private lemma ext_of_currentParity_and_pattern_factor_eq
   [DecidableEq E]
   {mu nu : ProbabilityMeasure (InfiniteCurrentConfig E)}
 -- given
-  (kernel : ∀ S : Finset E, (↑S → Bool) → (↑S → ℕ) → ℝ≥0∞)
+  (kernel : ∀ S : Finset E, (↑S → Bool) → (↑S → ℕ) → ENNReal)
   (hparity : ∀ S, currentParityMarginalPMF mu S = currentParityMarginalPMF nu S)
   (hmu : ∀ (S : Finset E) (a : ↑S → ℕ), (mu : Measure (InfiniteCurrentConfig E)) (currentCylinder S {a}) = (mu : Measure (InfiniteCurrentConfig E)) (currentParityPatternCylinder S (currentLocalParity a)) * kernel S (currentLocalParity a) a)
   (hnu : ∀ (S : Finset E) (a : ↑S → ℕ), (nu : Measure (InfiniteCurrentConfig E)) (currentCylinder S {a}) = (nu : Measure (InfiniteCurrentConfig E)) (currentParityPatternCylinder S (currentLocalParity a)) * kernel S (currentLocalParity a) a) :
@@ -161,7 +161,7 @@ private lemma pattern_factor_of_eventually_eq
   {a : ↑S → ℕ}
 -- given
   (hnu : WeakCurrentConverges mu nu)
-  (kernel : (↑S → Bool) → (↑S → ℕ) → ℝ≥0∞)
+  (kernel : (↑S → Bool) → (↑S → ℕ) → ENNReal)
   (hkernelTop : ∀ odd a, kernel odd a ≠ ⊤)
   (hfactor : ∀ a : ↑S → ℕ, ∀ᶠ n in atTop, (mu n : Measure (InfiniteCurrentConfig E)) (currentCylinder S {a}) = (mu n : Measure (InfiniteCurrentConfig E)) (currentParityPatternCylinder S (currentLocalParity a)) * kernel (currentLocalParity a) a) :
 -- imply
@@ -180,8 +180,8 @@ private lemma currentLimit_eq_of_avoid_tendsto_of_pattern_factor_eq
   {nu rho : ProbabilityMeasure (InfiniteCurrentConfig E)}
   {phi psi : ℕ → ℕ}
 -- given
-  (havoid : ∀ A : Finset E, ∃ L : ℝ≥0∞, Tendsto (fun n => (mu n : Measure (InfiniteCurrentConfig E)) (currentParityAvoidCylinder A)) atTop (nhds L))
-  (kernel : ∀ S : Finset E, (↑S → Bool) → (↑S → ℕ) → ℝ≥0∞)
+  (havoid : ∀ A : Finset E, ∃ L : ENNReal, Tendsto (fun n => (mu n : Measure (InfiniteCurrentConfig E)) (currentParityAvoidCylinder A)) atTop (nhds L))
+  (kernel : ∀ S : Finset E, (↑S → Bool) → (↑S → ℕ) → ENNReal)
   (hphi : StrictMono phi)
   (hpsi : StrictMono psi)
   (hnu : WeakCurrentConverges (mu ∘ phi) nu)

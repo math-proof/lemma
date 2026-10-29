@@ -60,7 +60,7 @@ theorem bins_iEqTop_subset_iUnion_NineMeetBox :
     exact hij (Fin.ext hijval)
 
 
-theorem bins_exists_NineMeetBox_pos (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem bins_exists_NineMeetBox_pos (p : NNReal) (hp1 : p ≤ 1)
     (htop : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
       {ω | numInfiniteClusters 2 ω = ⊤}) :
     ∃ n : ℕ, 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1

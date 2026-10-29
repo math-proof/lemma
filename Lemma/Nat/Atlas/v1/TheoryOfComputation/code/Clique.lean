@@ -247,7 +247,7 @@ namespace CliqueReduction
 [nil_not_mem_CLIQUEEnc](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/Clique.lean)
 -/
 @[path]
-lemma nil_not_mem_CLIQUEEnc
+lemma nil_not_mem_CLIQUEEnc :
 -- imply
   ([] : List SATCliqueSymbol) ∉ CLIQUEEnc := by
 -- proof
@@ -309,3 +309,4 @@ end CliqueReduction
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

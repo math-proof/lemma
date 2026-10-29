@@ -12,10 +12,10 @@ namespace MultiplicativeWeights
 @[path]
 lemma countRounds_succ
   {n : ℕ}
-  [DecidablePred P]
   {t : ℕ}
 -- given
-  (P : ℕ → Prop) :
+  (P : ℕ → Prop)
+  [DecidablePred P] :
 -- imply
   countRounds P (t + 1) = countRounds P t + if P t then 1 else 0 := by
 -- proof
@@ -35,17 +35,17 @@ namespace MultiplicativeWeights
 @[path]
 lemma weight_succ
   {n : ℕ}
-  [∀ i t, Decidable (wrong i t)]
   {ε : ℝ}
   {i : Fin n}
   {k : ℕ}
 -- given
-  (wrong : Fin n → ℕ → Prop) :
+  (wrong : Fin n → ℕ → Prop)
+  [∀ i t, Decidable (wrong i t)] :
 -- imply
   weight wrong ε i (k + 1) = weight wrong ε i k * if wrong i k then (1 - ε) else 1 := by
 -- proof
   simp only [weight, expertMistakes, countRounds_succ]
-  split_ifs with h <;> simp [pow_add, mul_comm]
+  split_ifs with h <;> simp [mul_comm]
 
 end MultiplicativeWeights
 
@@ -155,7 +155,7 @@ lemma Φ_upper_bound (wrong : Fin n → ℕ → Prop) [∀ i t, Decidable (wrong
       calc Φ wrong ε (T + 1)
         ≤ (1 - ε / 2) * Φ wrong ε T := hstep
         _ ≤ (1 - ε / 2) * ((n : ℝ) * (1 - ε / 2) ^ algMistakes wrong ε T) := by
-          apply mul_le_mul_of_nonneg_left ih (by linarith)
+            apply mul_le_mul_of_nonneg_left ih (by linarith)
         _ = (n : ℝ) * (1 - ε / 2) ^ (algMistakes wrong ε T + 1) := by
           rw [pow_succ]; ring
     ·
@@ -190,7 +190,7 @@ namespace MultiplicativeWeights
 -/
 @[path]
 lemma log_one_sub_half_eps_le
-  {n : ℕ}
+  {_n : ℕ}
   {ε : ℝ}
 -- given
   (hε_lt : ε < 2) :
@@ -208,7 +208,7 @@ namespace MultiplicativeWeights
 -/
 @[path]
 lemma neg_log_one_sub_le
-  {n : ℕ}
+  {_n : ℕ}
   {ε : ℝ}
 -- given
   (hε_pos : 0 < ε)
@@ -246,12 +246,12 @@ namespace MultiplicativeWeights
 @[path]
 lemma potential_inequality
   {n : ℕ}
-  [∀ i t, Decidable (wrong i t)]
   {ε : ℝ}
   {i : Fin n}
   {T : ℕ}
 -- given
   (wrong : Fin n → ℕ → Prop)
+  [∀ i t, Decidable (wrong i t)]
   (hε_pos : 0 < ε)
   (hε_lt : ε < 1) :
 -- imply
@@ -320,14 +320,13 @@ namespace MultiplicativeWeights
 @[path]
 lemma weighted_majority_regret_bound
   {n : ℕ}
-  {n : ℕ}
-  [∀ i t, Decidable (wrong i t)]
   {ε : ℝ}
   {i : Fin n}
   {T : ℕ}
 -- given
   (hn : 0 < n)
   (wrong : Fin n → ℕ → Prop)
+  [∀ i t, Decidable (wrong i t)]
   (hε_pos : 0 < ε)
   (hε_le : ε ≤ 1/2) :
 -- imply
@@ -371,7 +370,7 @@ namespace MultiplicativeWeights
 -/
 @[path]
 lemma corollary_algebraic_core
-  {n : ℕ}
+  {_n : ℕ}
   {totalExp expertTotal A B ρ logn δ : ℝ}
   {T : ℕ}
 -- given
@@ -432,8 +431,8 @@ lemma abs_penalty_sum_le
   have habs : ∑ t ∈ Finset.range T, |M i (outcomes t)| ≤ T * ρ := by
     calc ∑ t ∈ Finset.range T, |M i (outcomes t)|
       ≤ ∑ t ∈ Finset.range T, ρ := by
-        apply Finset.sum_le_sum; intro t _
-        exact abs_le.mpr ⟨by linarith [(hM i (outcomes t)).1], (hM i (outcomes t)).2⟩
+          apply Finset.sum_le_sum; intro t _
+          exact abs_le.mpr ⟨by linarith [(hM i (outcomes t)).1], (hM i (outcomes t)).2⟩
       _ = T * ρ := by simp [Finset.sum_const, nsmul_eq_mul]
   suffices h : ∑ t ∈ (Finset.range T).filter (fun t => M i (outcomes t) ≥ 0), M i (outcomes t) -
     ∑ t ∈ (Finset.range T).filter (fun t => M i (outcomes t) < 0), M i (outcomes t) ≤
@@ -457,3 +456,4 @@ end MultiplicativeWeights
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

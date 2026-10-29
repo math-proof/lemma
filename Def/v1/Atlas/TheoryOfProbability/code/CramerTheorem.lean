@@ -40,10 +40,10 @@ noncomputable def empiricalMeanMeasureVec {d : ℕ} {Ω : Type*} [MeasurableSpac
 /-- **Cramér rate function** `Λ*(x) = sup_λ {⟨λ, x⟩ − Λ(λ)}` (Lecture 13).
 
 The Legendre transform of the cumulant generating function `Λ = logMGFVec X μ`,
-viewed as an `ℝ≥0∞`-valued rate function for the large deviation principle of the
+viewed as an `ENNReal`-valued rate function for the large deviation principle of the
 empirical means of i.i.d. copies of `X`. -/
 noncomputable def cramerRateFunction {d : ℕ} {Ω : Type*} [MeasurableSpace Ω]
     (X : Ω → EuclideanSpace ℝ (Fin d)) (μ : Measure Ω)
-    (x : EuclideanSpace ℝ (Fin d)) : ℝ≥0∞ :=
+    (x : EuclideanSpace ℝ (Fin d)) : ENNReal :=
   ENNReal.ofReal (legendreTransform (logMGFVec X μ) x)
 

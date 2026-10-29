@@ -16,7 +16,7 @@ open Finset BigOperators ENNReal
 
 namespace BooleanFourier
 
-noncomputable def fourierWeight {n : ℕ} (f : (Fin n → Bool) → ℝ) (S : Finset (Fin n)) : ℝ≥0∞ :=
+noncomputable def fourierWeight {n : ℕ} (f : (Fin n → Bool) → ℝ) (S : Finset (Fin n)) : ENNReal :=
   ENNReal.ofReal (fourierCoeff f S ^ 2)
 
 noncomputable def spectralDist {n : ℕ} (f : (Fin n → Bool) → ℝ)

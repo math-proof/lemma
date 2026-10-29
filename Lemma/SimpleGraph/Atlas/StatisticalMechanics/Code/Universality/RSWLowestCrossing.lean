@@ -64,7 +64,7 @@ private lemma rlc_harris_cylinder_eq
   {A B : Set (ConfigSpace E)}
   {T U : Finset E}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hAinc : IsIncreasing A)
   (hBinc : IsIncreasing B)
@@ -85,7 +85,7 @@ private lemma rlc_harris_three_cylinder_eq
   {A B C : Set (ConfigSpace E)}
   {T U V : Finset E}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hAinc : IsIncreasing A)
   (hBinc : IsIncreasing B)
@@ -109,7 +109,7 @@ private lemma rlc_diagonal_event_lower_bound_eq
   {A B C Diag : Set (ConfigSpace E)}
   {T U V : Finset E}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hα : 0 ≤ α)
   (hAinc : IsIncreasing A)
@@ -263,7 +263,7 @@ private lemma rlc_exploration_lower_bound_eq
   {Goal : Set (ConfigSpace E)}
   {c : ℝ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (_hc : 0 ≤ c)
   (hW : ∀ i, DependsOn ((W i).indicator (fun _ => (1 : ℝ))) (T i : Set E))
@@ -289,7 +289,7 @@ private lemma rlc_stoppingPartition_lower_bound_eq
   {T U : I → Finset E}
   {c : ℝ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (_hc : 0 ≤ c)
   (hpart : (⋃ i, Part i) = H)
@@ -318,7 +318,7 @@ private lemma rlc_bernoulli_rsw_stopping_sixth_power_eq
   {Part X : I → Set (ConfigSpace E)}
   {T U : I → Finset E}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hα : 0 ≤ α)
   (hE₀inc : IsIncreasing E₀)
@@ -353,7 +353,7 @@ private lemma rlc_bernoulli_rsw_sixth_power_eq
   {W X : Fin N → Set (ConfigSpace E)}
   {T U : Fin N → Finset E}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hα : 0 ≤ α)
   (hE₀inc : IsIncreasing E₀)
@@ -661,7 +661,7 @@ private lemma rlc_measurable_flipYConfig_eq :
 @[path]
 private lemma rlc_flipY_measurePreserving_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   MeasurePreserving rlc_flipYConfig (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) := by
@@ -833,7 +833,7 @@ private lemma rlc_flip_upperToRight_eq
 private lemma rlc_rightToUpper_reflection_prob_eq
   {n : ℤ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (rlc_rightToUpper n) = (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (rlc_rightToLower n) := by
@@ -847,7 +847,7 @@ private lemma rlc_rightToUpper_reflection_prob_eq
 private lemma rlc_lowerToRight_reflection_prob_eq
   {n : ℤ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (rlc_lowerToRight n) = (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (rlc_upperToRight n) := by
@@ -884,7 +884,7 @@ private lemma rlc_rightToUpper_half_localization_eq
   {n : ℤ}
   {alpha : ℝ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hcross : alpha ≤ (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (horizontalCrossingEvent 0 (2 * n) (-n) n)) :
 -- imply
@@ -900,7 +900,7 @@ private lemma rlc_lowerToRight_half_localization_eq
   {n : ℤ}
   {alpha : ℝ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hcross : alpha ≤ (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (horizontalCrossingEvent 0 (2 * n) (-n) n)) :
 -- imply
@@ -927,7 +927,7 @@ private lemma rlc_rightDiagonal_lower_bound_eq
   {n : ℤ}
   {alpha : ℝ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hn : 0 < n)
   (halpha : 0 ≤ alpha)

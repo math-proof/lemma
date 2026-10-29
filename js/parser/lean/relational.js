@@ -1,6 +1,6 @@
 /**
  * Relational comparisons: `LeanRelational` and `>` / `<` / `≥` / `≤` / `=` /
- * `==` / `!=` / `≠` / `≡` / `≢` / `≃` / `≈` / `≍` / `∣` / `⟂`, plus JS `≪` / `≫`.
+ * `==` / `!=` / `≠` / `≡` / `≢` / `≃` / `≈` / `≍` / `∣` / `⟂` / `∼[π]`, plus JS `≪` / `≫`.
  *
  * `LeanFilterRelational` stays in this module (only `≥` / `≤` use it).
  * PHP `Lean_ll` / `Lean_gg` stay in the arithmetic module: there they extend
@@ -225,6 +225,56 @@ export class Lean_perp extends LeanRelational {
         if (syntax) syntax['⟂'] = true;
         if (this.isIndependence) for (const a of this.args) Lean_perp.markRandomVariableTerm(a);
         // keep a parenthesized pair rhs `(y, z)` intact — it is an argument, not grouping
+        return this.args.map((a) => a.toLatex(syntax));
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.opStr()}${sep}%s`;
+    }
+
+    latexFormat() {
+        const sep = this.sep();
+        return `{%s} ${this.opLatex()}${sep}{%s}`;
+    }
+}
+
+/**
+ * `x ∼[π] μ` — density-free HasLaw / Distributed (`HasLaw x μ π`).
+ * Bracketed measure `modifier` is required by the Lean notation and echoed;
+ * elided in LaTeX (same convention as `⟂ᵢ[π]`). LHS is the random variable
+ * (red); RHS is a law / measure (e.g. `𝒩(μ, σ)`), not marked as an RV.
+ */
+export class LeanDistributed extends LeanRelational {
+    static { this.register(); }
+
+    /** @type {string} bracketed measure, e.g. `π` — required by Lean notation, elided in LaTeX */
+    modifier = '';
+
+    get operator() {
+        return '∼';
+    }
+
+    get command() {
+        return '\\sim';
+    }
+
+    /** Echo operator: `∼` + `[modifier]`. */
+    opStr() {
+        let op = this.operator;
+        if (this.modifier) op += `[${this.modifier}]`;
+        return op;
+    }
+
+    /** LaTeX operator: `\sim`; measure bracket omitted. */
+    opLatex() {
+        return this.command;
+    }
+
+    latexArgs(syntax) {
+        if (syntax) syntax['∼'] = true;
+        // only the RV (lhs) is red; the law/measure on the rhs stays unmarked
+        Lean_perp.markRandomVariableTerm(this.args[0]);
         return this.args.map((a) => a.toLatex(syntax));
     }
 

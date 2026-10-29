@@ -25,7 +25,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma fib_conv_step
-  {n k i : ℕ}
+  (n k i : ℕ)
 -- given
   (hi : i ≤ n) :
 -- imply

@@ -326,7 +326,7 @@ private lemma generalFreeBoxCurrentMeasure_parityAvoid_full_tendsto_eq
   (hbeta : 0 < beta)
   (hFdiag : ∀ e ∈ F, ¬e.IsDiag) :
 -- imply
-  ∃ L : ℝ≥0∞, Tendsto (fun n => (generalFreeBoxCurrentMeasure J hJ n beta hbeta.le : Measure (InfiniteCurrentConfig (Sym2 (Site d)))) (currentParityAvoidCylinder F)) atTop (nhds L) := by
+  ∃ L : ENNReal, Tendsto (fun n => (generalFreeBoxCurrentMeasure J hJ n beta hbeta.le : Measure (InfiniteCurrentConfig (Sym2 (Site d)))) (currentParityAvoidCylinder F)) atTop (nhds L) := by
 -- proof
   apply StatMech.FrontierB.generalFreeBoxCurrentMeasure_parityAvoid_full_tendsto J hJ beta hbeta F hFdiag
 
@@ -402,7 +402,7 @@ private lemma generalFreeBoxCurrentMeasure_parityAvoid_full_tendsto_all_eq
   (hJ : ∀ e, 0 ≤ J e)
   (hbeta : 0 < beta) :
 -- imply
-  ∃ L : ℝ≥0∞, Tendsto (fun n => (generalFreeBoxCurrentMeasure J hJ n beta hbeta.le : Measure (InfiniteCurrentConfig (Sym2 (Site d)))) (currentParityAvoidCylinder F)) atTop (nhds L) := by
+  ∃ L : ENNReal, Tendsto (fun n => (generalFreeBoxCurrentMeasure J hJ n beta hbeta.le : Measure (InfiniteCurrentConfig (Sym2 (Site d)))) (currentParityAvoidCylinder F)) atTop (nhds L) := by
 -- proof
   apply StatMech.FrontierB.generalFreeBoxCurrentMeasure_parityAvoid_full_tendsto_all J hJ beta hbeta F
 

@@ -194,7 +194,7 @@ private lemma starTriangle_iff_isCriticalTri_eq
 @[path]
 private lemma bernoulliMeasure_map_not_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Measure.map (fun b => !b) (bernoulliMeasure p hp) = bernoulliMeasure (1 - p) tsub_le_self := by
@@ -207,7 +207,7 @@ private lemma bernoulliMeasure_map_not_eq
 @[path]
 private lemma one_sub_half_eq :
 -- imply
-  (1 : ℝ≥0) - 2⁻¹ = 2⁻¹ := by
+  (1 : NNReal) - 2⁻¹ = 2⁻¹ := by
 -- proof
   apply StatMech.Universality.one_sub_half
 
@@ -217,7 +217,7 @@ private lemma one_sub_half_eq :
 @[path]
 private lemma half_le_one_eq :
 -- imply
-  (2 : ℝ≥0)⁻¹ ≤ 1 := by
+  (2 : NNReal)⁻¹ ≤ 1 := by
 -- proof
   apply StatMech.Universality.half_le_one
 

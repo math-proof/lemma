@@ -131,7 +131,9 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `OTimes.otimes
     | `ODot.odot
     | `HSMul.hSMul
-    | `Bullet.bullet =>
+    | `Bullet.bullet
+    | `Matrix.mulVec
+    | `dotProduct =>
       return .Operator (.BinaryInfix ⟨declName⟩)
 
     | `Neg.neg
@@ -142,6 +144,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Root.cubic
     | `Root.quartic
     | `Complex.conj
+    | `Star.star
     | `Complex.ofReal
     | `Hyperreal.ofReal
     | `Int.ofNat

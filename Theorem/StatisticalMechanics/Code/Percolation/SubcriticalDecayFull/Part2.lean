@@ -95,7 +95,7 @@ theorem box_shift_mem {y v : Site d} {L m n : ℕ}
   omega
 
 
-theorem crossProbFrom_le (p : ℝ≥0) (hp : p ≤ 1) (y : Site d) {L m n : ℕ}
+theorem crossProbFrom_le (p : NNReal) (hp : p ≤ 1) (y : Site d) {L m n : ℕ}
     (hy : y ∈ box d L) (hmLn : m + L ≤ n) (hm : 1 ≤ m) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (crossingEventFrom d y n)
       ≤ crossProb d p hp m := by
@@ -127,7 +127,7 @@ theorem crossProbFrom_le (p : ℝ≥0) (hp : p ≤ 1) (y : Site d) {L m n : ℕ}
     _ = crossProb d p hp m := rfl
 
 
-theorem subcritical_decay_full (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem subcritical_decay_full (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hS0 : origin d ∈ S) (hphi : phi d p hp S < 1)
     (L : ℕ) (hL : 1 ≤ L)
     (hstep : ∀ k, crossProb d p hp ((k + 1) * L)

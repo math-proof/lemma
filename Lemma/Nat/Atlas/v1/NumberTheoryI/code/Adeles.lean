@@ -516,7 +516,6 @@ lemma intValuation_le_of_mem_pow_ge_crt
     _ = v.intValuation d := by
       conv_rhs => rw [← WithZero.exp_log hne]
       congr 1; rw [Int.toNat_of_nonneg (neg_nonneg.mpr hle), neg_neg]
-set_option maxHeartbeats 800000 in
 
 end NumberField.Adeles
 
@@ -544,7 +543,6 @@ lemma exists_integral_approx_at_place
       rw [sub_self]; exact (v.adicCompletionIntegers K).zero_mem⟩
   obtain ⟨c, hc⟩ := (v.denseRange_algebraMap K).exists_mem_open hU_open hU_ne
   exact ⟨c, hc⟩
-set_option maxHeartbeats 3200000 in
 
 end NumberField.Adeles
 
@@ -1787,8 +1785,7 @@ lemma infPlace_denseRange_algebraMap
     (@UniformSpace.Completion.denseRange_coe (WithAbs wi.1) _)
     ((WithAbs.equiv wi.1).symm.surjective.denseRange)
     (UniformSpace.Completion.continuous_coe _)
-set_option maxHeartbeats 1600000 in
-set_option synthInstance.maxHeartbeats 40000 in
+set_option maxHeartbeats 999999 in
 
 end NumberField.Adeles
 

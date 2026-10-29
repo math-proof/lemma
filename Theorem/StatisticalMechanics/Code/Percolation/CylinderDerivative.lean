@@ -22,7 +22,7 @@ namespace Percolation
 variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
-lemma measureProb_eq_measure_real (A : Set (ConfigSpace E)) (p : ℝ≥0) (hp : p ≤ 1) :
+lemma measureProb_eq_measure_real (A : Set (ConfigSpace E)) (p : NNReal) (hp : p ≤ 1) :
     measureProb A (p : ℝ) = (bernoulliProductMeasure (E := E) p hp).real A := by
   unfold measureProb
   have h0 : (0 : ℝ) ≤ (p : ℝ) := p.2
@@ -60,7 +60,7 @@ theorem russo_formula (A : Set (ConfigSpace E)) (hA : IsIncreasing A)
 
 
 theorem russo_derivative_measure (A : Set (ConfigSpace E)) (hA : IsIncreasing A)
-    (p : ℝ≥0) (hp : p ≤ 1) (h0 : 0 < (p : ℝ)) (h1 : (p : ℝ) < 1) :
+    (p : NNReal) (hp : p ≤ 1) (h0 : 0 < (p : ℝ)) (h1 : (p : ℝ) < 1) :
     HasDerivAt (fun q => measureProb A q) (∑ e, pivotalProb (p : ℝ) A e) (p : ℝ)
       ∧ measureProb A (p : ℝ) = (bernoulliProductMeasure (E := E) p hp).real A :=
   ⟨russo_derivative A hA h0 h1, measureProb_eq_measure_real A p hp⟩

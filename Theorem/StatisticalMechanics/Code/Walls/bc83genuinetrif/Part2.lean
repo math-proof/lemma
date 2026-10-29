@@ -63,8 +63,8 @@ theorem bc83_genuine_count_le_boundary_of_forest (ω : ConfigSpace (Sym2 (Site d
 
 theorem bc83_expected (μ : Measure (ConfigSpace (Sym2 (Site d))))
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) (L R : ℕ) :
-    ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc83_genuineTrif ω L 0}
-      = ∫⁻ ω, (bc83_genuineTrifCount ω L R : ℝ≥0∞) ∂μ := by
+    ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc83_genuineTrif ω L 0}
+      = ∫⁻ ω, (bc83_genuineTrifCount ω L R : ENNReal) ∂μ := by
   have hset : {ω : ConfigSpace (Sym2 (Site d)) | bc83_genuineTrif ω L 0}
       = {ω | bc61_IsCoarseTrifurcation ω L 0} := by
     ext ω; exact bc83_genuineTrif_iff_coarse ω L 0

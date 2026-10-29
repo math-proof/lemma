@@ -677,7 +677,7 @@ lemma tiling_2_to_sum_from_sum (x : (DominoTiling n 2) ⊕ (DominoTiling (n + 1)
           rw [← hd_cells]; exact Finset.mem_insert_self _ _
         simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq] at h1
         rcases h1 with ⟨h, _⟩ | ⟨h, _⟩ <;> omega
-    simp only [tiling_2_to_sum, dif_neg hv]
+    simp only [tiling_2_to_sum, dite_eq_right hv]
     -- The chosen dominos must be horizontal_1_1 and horizontal_1_2 by uniqueness
     have hpair := horizontalPair_of_not_hasVerticalFirstColumn (prependHorizontalPair T) hv
     have hd1_spec := Classical.choose_spec hpair.1
@@ -706,7 +706,7 @@ lemma tiling_2_to_sum_from_sum (x : (DominoTiling n 2) ⊕ (DominoTiling (n + 1)
       constructor
       · simp [prependVertical, vertical_1_1]
       · rfl
-    simp only [tiling_2_to_sum, dif_pos hv]
+    simp only [tiling_2_to_sum, dite_eq_left hv]
     -- The chosen domino must be vertical_1_1 by uniqueness
     have hv_spec := Classical.choose_spec hv
     have hv_eq : Classical.choose hv = vertical_1_1 :=
@@ -1413,7 +1413,7 @@ lemma TilingA_isFaultfree (n : ℕ) (hn : Even n) (hn_ge : n ≥ 2) :
     (TilingA n hn hn_ge).isFaultfree := by
   intro k hk_ge1 hk_lt_n
   unfold DominoTiling.hasFaultAt
-  push_neg
+  push Not
   intro _ _
   -- We need to find a domino that spans column k
   rcases Nat.even_or_odd k with hk_even | hk_odd
@@ -3247,7 +3247,7 @@ lemma no_vertical_implies_n_eq_2 (n : ℕ) (T : DominoTiling n 3)
     have hfault : T.hasFaultAt 2 := by
       refine ⟨by omega, hn_ge_3, ?_⟩
       intro d hd
-      push_neg
+      push Not
       intro hmin
       -- hmin : d.minCol ≤ 2, goal: d.maxCol ≤ 2
       have hd_in_rect := T.dominos_in_rect d hd
@@ -3265,7 +3265,7 @@ lemma no_vertical_implies_n_eq_2 (n : ℕ) (T : DominoTiling n 3)
           by_cases h : d.cell1.1 ≤ d.cell2.1
           · simp only [min_eq_left h] at hmin1
             exact ⟨d.cell1.2, by simp [Domino.cells]; left; rw [← hmin1]⟩
-          · push_neg at h
+          · push Not at h
             simp only [min_eq_right (le_of_lt h)] at hmin1
             exact ⟨d.cell2.2, by simp [Domino.cells]; right; rw [← hmin1]⟩
         -- d is not vertical (since no vertical in column 1)
@@ -3303,7 +3303,7 @@ lemma no_vertical_implies_n_eq_2 (n : ℕ) (T : DominoTiling n 3)
         have hcell2 : d.cell1.1 = 2 ∨ d.cell2.1 = 2 := by
           by_cases h : d.cell1.1 ≤ d.cell2.1
           · left; simp only [min_eq_left h] at hmin2; exact hmin2
-          · right; push_neg at h; simp only [min_eq_right (le_of_lt h)] at hmin2; exact hmin2
+          · right; push Not at h; simp only [min_eq_right (le_of_lt h)] at hmin2; exact hmin2
         -- This cell in column 2 is covered by some domino d' that covers column 1
         -- d' must be horizontal spanning 1-2 (since no vertical in column 1)
         -- So d and d' both cover a cell in column 2, contradicting disjointness (unless d = d')
@@ -3334,7 +3334,7 @@ lemma no_vertical_implies_n_eq_2 (n : ℕ) (T : DominoTiling n 3)
             by_cases h : d'.cell1.1 ≤ d'.cell2.1
             · simp only [min_eq_left h] at hd'_min_eq
               exact ⟨d'.cell1.2, by simp [Domino.cells]; left; rw [← hd'_min_eq]⟩
-            · push_neg at h
+            · push Not at h
               simp only [min_eq_right (le_of_lt h)] at hd'_min_eq
               exact ⟨d'.cell2.2, by simp [Domino.cells]; right; rw [← hd'_min_eq]⟩
           have hd'_novert : ¬d'.isVertical := by
@@ -3417,7 +3417,7 @@ lemma no_vertical_implies_n_eq_2 (n : ℕ) (T : DominoTiling n 3)
             by_cases h : d'.cell1.1 ≤ d'.cell2.1
             · simp only [min_eq_left h] at hd'_min_eq
               exact ⟨d'.cell1.2, by simp [Domino.cells]; left; rw [← hd'_min_eq]⟩
-            · push_neg at h
+            · push Not at h
               simp only [min_eq_right (le_of_lt h)] at hd'_min_eq
               exact ⟨d'.cell2.2, by simp [Domino.cells]; right; rw [← hd'_min_eq]⟩
           have hd'_novert : ¬d'.isVertical := by
@@ -5567,3 +5567,4 @@ private lemma pv_domino_at_n1_options
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

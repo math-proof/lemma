@@ -42,7 +42,7 @@ namespace GaussianLinearTransform
 
 /-- The partial sum $S_n = \sum_{k < n} X_k$ viewed as an element of $L^2(P)$. -/
 noncomputable def partialSumLp {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
-    {X : ℕ → Ω → ℝ} {v : ℕ → ℝ≥0}
+    {X : ℕ → Ω → ℝ} {v : ℕ → NNReal}
     (hgauss : ∀ k, HasLaw (X k) (gaussianReal 0 (v k)) P) (n : ℕ) :
     Lp ℝ 2 P :=
   (memLp_partialSum hgauss n).toLp _

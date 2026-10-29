@@ -62,7 +62,7 @@ private lemma rq1_wiredInfiniteVolume_rectangle_eq_bernoulli_eq
   (hp : 0 < p)
   (hp1 : p < 1) :
 -- imply
-  (wiredInfiniteVolume 2 hp hp1 (by norm_num : (0 : ℝ) < 1) : Measure (ConfigSpace (Sym2 (Site 2)))).real (horizontalCrossingEvent a b c d) = (bernoulliProductMeasure (E := Sym2 (Site 2)) (⟨p, hp.le⟩ : ℝ≥0) (by exact_mod_cast hp1.le)).real (horizontalCrossingEvent a b c d) := by
+  (wiredInfiniteVolume 2 hp hp1 (by norm_num : (0 : ℝ) < 1) : Measure (ConfigSpace (Sym2 (Site 2)))).real (horizontalCrossingEvent a b c d) = (bernoulliProductMeasure (E := Sym2 (Site 2)) (⟨p, hp.le⟩ : NNReal) (by exact_mod_cast hp1.le)).real (horizontalCrossingEvent a b c d) := by
 -- proof
   apply StatMech.Universality.rq1_wiredInfiniteVolume_rectangle_eq_bernoulli N a b c d hrect hp hp1
 

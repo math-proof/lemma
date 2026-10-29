@@ -24,7 +24,6 @@ lemma rayClassPartialZeta_residue_val_ne_zero
   apply div_ne_zero
   · exact_mod_cast NumberField.dedekindZeta_residue_ne_zero K
   · exact_mod_cast Fintype.card_ne_zero
-set_option checkBinderAnnotations false in
 
 end RayClassField
 
@@ -97,7 +96,6 @@ lemma rayClassPartialZeta_coeffs_sum_eq_count
       Ideal.absNorm I = x + 1 ∧ idealInRayClass 𝔪 I = γ} :=
       Fin.sum_univ_eq_sum_range (fun x => Nat.card {I : Ideal (𝓞 K) // I ≠ ⊥ ∧ IsCoprime I 𝔪.finitePartIdeal ∧
         Ideal.absNorm I = x + 1 ∧ idealInRayClass 𝔪 I = γ}) t
-set_option checkBinderAnnotations false in
 
 end RayClassField
 
@@ -239,7 +237,6 @@ lemma summand_fiber_eq
   split_ifs with hcop
   · rw [evalIdealExt_eq_char_idealInRayClass χ 𝔞.val 𝔞.prop hcop, hmem]
   · rw [RayClassChar.evalIdealExt_eq_zero_of_not_coprime χ 𝔞.val hcop, zero_mul]
-set_option maxHeartbeats 400000 in
 
 end RayClassField
 
@@ -393,7 +390,6 @@ lemma fiber_tsum_eq_LSeries
           (fun ⟨⟨I, hne, hcop, hclass⟩, hnorm⟩ => ⟨I, hne, hcop, hnorm, hclass⟩)
           (fun ⟨⟨I₁, _, _, _⟩, _⟩ ⟨⟨I₂, _, _, _⟩, _⟩ heq => by
             simp only [Subtype.mk.injEq] at heq; exact Subtype.ext (Subtype.ext heq))
-set_option maxHeartbeats 400000 in
 
 end RayClassField
 

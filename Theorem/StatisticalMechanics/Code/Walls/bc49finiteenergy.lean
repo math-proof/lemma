@@ -135,7 +135,7 @@ theorem bc49_classical_htrif_of_routingCover
   bc49_classical_htrif_of_route μ hfe (hrHD_route_of_routing μ hfe hrt)
 
 
-theorem bc49_burton_keane_bernoulli_of_route (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bc49_burton_keane_bernoulli_of_route (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hinj : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), bc48_ClassicalBoundaryArmInjection ω n)
     (hroute : ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) →
@@ -154,7 +154,7 @@ theorem bc49_burton_keane_bernoulli_of_route (hd : 1 ≤ d) (p : ℝ≥0) (hp1 :
       (bkc_bernoulli_hasFiniteEnergyMerge p hp1 hp0) hroute)
 
 
-theorem bc49_burton_keane_bernoulli_of_routingCover (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bc49_burton_keane_bernoulli_of_routingCover (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hinj : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), bc48_ClassicalBoundaryArmInjection ω n)
     (hrt : ∀ n : ℕ, hrHD_DisjointRouting d n) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

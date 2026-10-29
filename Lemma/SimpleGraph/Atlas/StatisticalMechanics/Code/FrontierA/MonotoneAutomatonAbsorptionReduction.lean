@@ -168,7 +168,7 @@ private lemma highOutput_cluster_count_ae_le_one_of_step3Core_eq
 -- given
   (hd : 1 ≤ d)
   (herg : IsTripleFieldErgodic mu)
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon)
   (hmono : ∀ᵐ q ∂mu, IsMonotoneFieldTriple q)

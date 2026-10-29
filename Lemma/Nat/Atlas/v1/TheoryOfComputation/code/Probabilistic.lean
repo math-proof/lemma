@@ -351,7 +351,7 @@ namespace BranchingPrograms
 [eqROBP_numBits_poly](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/Probabilistic.lean)
 -/
 @[path]
-lemma eqROBP_numBits_poly
+lemma eqROBP_numBits_poly :
 -- imply
   IsBigO eqROBP_numBits (fun n => n ^ 2) :=
 -- proof
@@ -573,3 +573,4 @@ end BranchingPrograms
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

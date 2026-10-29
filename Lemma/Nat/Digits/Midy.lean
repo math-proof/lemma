@@ -84,7 +84,6 @@ lemma midy_theorem_general
     (Nat.self_div_pow_eq_ofDigits_drop n _ (by norm_num)).symm
   rw [e1, e2, hmod, hdiv2]
   omega
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -98,8 +97,8 @@ lemma midy_theorem
   {p n : ℕ}
 -- given
   (hp : Nat.Prime p)
-  (h0 : p ≠ 2)
-  (h1 : p ≠ 5)
+  (_h0 : p ≠ 2)
+  (_h1 : p ≠ 5)
   (hn : 0 < n)
   (hdiv : p ∣ 10 ^ (2 * n) - 1)
   (hmin : ∀ m : ℕ, 0 < m → m < 2 * n → ¬p ∣ 10 ^ m - 1) :

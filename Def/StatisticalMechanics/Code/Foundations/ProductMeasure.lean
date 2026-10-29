@@ -19,7 +19,7 @@ namespace StatMech
 variable {E : Type*}
 
 
-noncomputable def bernoulliMeasure (p : ℝ≥0) (hp : p ≤ 1) : Measure Bool :=
+noncomputable def bernoulliMeasure (p : NNReal) (hp : p ≤ 1) : Measure Bool :=
   (PMF.bernoulli p hp).toMeasure
 
 end StatMech

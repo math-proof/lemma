@@ -193,7 +193,7 @@ private lemma ksAffine_cauchyBound_le {p q : Polynomial ℂ} {n : ℕ}
   rw [Polynomial.cauchyBound, hr.natDegree_eq, hr.leadingCoeff_eq]
   simp only [nnnorm_one, div_one, NNReal.coe_add, NNReal.coe_one]
   rw [add_le_add_iff_right]
-  let S : ℝ≥0 := ∑ i ∈ Finset.range n, (‖p.coeff i‖₊ + ‖q.coeff i‖₊)
+  let S : NNReal := ∑ i ∈ Finset.range n, (‖p.coeff i‖₊ + ‖q.coeff i‖₊)
   have htNorm : ‖(t : ℂ)‖₊ ≤ 1 := by
     rw [← NNReal.coe_le_coe]
     simpa [abs_of_nonneg ht.1] using ht.2

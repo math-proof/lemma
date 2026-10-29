@@ -56,7 +56,7 @@ private lemma of_xz
   exact {
     toIsProbabilityMeasure := inferInstance
     aemeasurable := hxz_m
-    exists_distribution := ⟨q, ⟨hq⟩, hlaw⟩
+    exists_distribution := ⟨q, hq, hlaw⟩
   }
 
 @[path]

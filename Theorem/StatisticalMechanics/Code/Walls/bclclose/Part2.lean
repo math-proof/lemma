@@ -32,7 +32,7 @@ set_option linter.unusedSectionVars false
 set_option maxRecDepth 4000
 
 
-theorem bcl_hroute_of_residue (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
+theorem bcl_hroute_of_residue (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
     (hres : bcl_ArmResidue p hp1) :
     ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n) →
@@ -45,7 +45,7 @@ theorem bcl_hroute_of_residue (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt 
     bcl_precursorPos p hp1 hp0 hplt I a₁ a₂ a₃ x₁ x₂ x₃ η₀ hne hadj hcorr hExtMeas hXpos⟩
 
 
-theorem bcl_bk (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
+theorem bcl_bk (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
     (hres : bcl_ArmResidue p hp1) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
         {ω | numInfiniteClusters 2 ω = 0} = 1 ∨
@@ -57,7 +57,7 @@ theorem bcl_bk (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
   bfx_bk_of_route (by norm_num) p hp1 hp0 (bcl_hroute_of_residue p hp1 hp0 hplt hres)
 
 
-theorem bcl_bk_atLeastTwo (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
+theorem bcl_bk_atLeastTwo (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
     (hres : bcl_ArmResidue p hp1) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   (bcl_bk p hp1 hp0 hplt hres).2.1

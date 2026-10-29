@@ -129,7 +129,7 @@ theorem generateFrom_isFiniteCoordinateSet :
 theorem exists_finiteCoordinateSet_symmDiff_lt
     (mu : ∀ e, Measure (S e)) [∀ e, IsProbabilityMeasure (mu e)]
     {A : Set (∀ e, S e)} (hA : MeasurableSet A)
-    {eps : ℝ≥0∞} (heps : 0 < eps) :
+    {eps : ENNReal} (heps : 0 < eps) :
     ∃ B, IsFiniteCoordinateSet B ∧
       Measure.pi mu (B ∆ A) < eps := by
   have huniv : IsFiniteCoordinateSet (Set.univ : Set (∀ e, S e)) :=

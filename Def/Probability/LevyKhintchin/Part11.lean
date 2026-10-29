@@ -36,20 +36,20 @@ namespace MetaMathlibExt
 noncomputable def lkCanonicalBase (ρ : Measure ℝ) (hρ : IsProbabilityMeasure ρ) :
     FiniteMeasure ℝ := by
   letI := hρ
-  let m := ρ.withDensity fun x ↦ (lkCanonicalWeightNN x : ℝ≥0∞)
+  let m := ρ.withDensity fun x ↦ (lkCanonicalWeightNN x : ENNReal)
   have hm : IsFiniteMeasure m := by
     apply isFiniteMeasure_withDensity
-    apply (lt_of_le_of_lt (b := ∫⁻ _ : ℝ in Set.univ, (1 : ℝ≥0∞) ∂ρ) ?_
+    apply (lt_of_le_of_lt (b := ∫⁻ _ : ℝ in Set.univ, (1 : ENNReal) ∂ρ) ?_
       (by
         rw [lintegral_one, Measure.restrict_univ]
         exact measure_lt_top ρ Set.univ)).ne
     simpa only [Measure.restrict_univ, lintegral_one] using
       (lintegral_mono lk_canonicalWeightNN_le_one :
-        (∫⁻ x, (lkCanonicalWeightNN x : ℝ≥0∞) ∂ρ) ≤ ∫⁻ _ : ℝ, (1 : ℝ≥0∞) ∂ρ)
+        (∫⁻ x, (lkCanonicalWeightNN x : ENNReal) ∂ρ) ≤ ∫⁻ _ : ℝ, (1 : ENNReal) ∂ρ)
   exact ⟨m, hm⟩
 
 noncomputable def lkCanonicalMeasure (ρ : Measure ℝ)
     (hρ : IsProbabilityMeasure ρ) (n : ℕ) : FiniteMeasure ℝ :=
-  (n + 1 : ℝ≥0) • lkCanonicalBase ρ hρ
+  (n + 1 : NNReal) • lkCanonicalBase ρ hρ
 
 end MetaMathlibExt

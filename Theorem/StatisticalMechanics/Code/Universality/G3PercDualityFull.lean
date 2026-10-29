@@ -44,7 +44,7 @@ theorem measurable_reindex :
   (MeasurableEquiv.piCongrLeft (fun _ => Bool) crossEdge).measurable
 
 
-theorem map_complement (p : ℝ≥0) (hp : p ≤ 1) :
+theorem map_complement (p : NNReal) (hp : p ≤ 1) :
     Measure.map (fun (η : ConfigSpace (Sym2 (Site 2))) e => !(η e))
         (bernoulliProductMeasure p hp)
       = bernoulliProductMeasure (1 - p) tsub_le_self := by
@@ -56,7 +56,7 @@ theorem map_complement (p : ℝ≥0) (hp : p ≤ 1) :
   exact bernoulliMeasure_map_not p hp
 
 
-theorem map_reindex (p : ℝ≥0) (hp : p ≤ 1) :
+theorem map_reindex (p : NNReal) (hp : p ≤ 1) :
     Measure.map (Equiv.piCongrLeft (fun _ => Bool) crossEdge)
         (bernoulliProductMeasure p hp)
       = bernoulliProductMeasure p hp := by
@@ -65,7 +65,7 @@ theorem map_reindex (p : ℝ≥0) (hp : p ≤ 1) :
     (fun _ : Sym2 (Site 2) => bernoulliMeasure p hp) crossEdge
 
 
-theorem map_dualConfig (p : ℝ≥0) (hp : p ≤ 1) :
+theorem map_dualConfig (p : NNReal) (hp : p ≤ 1) :
     Measure.map dualConfig (bernoulliProductMeasure p hp)
       = bernoulliProductMeasure (1 - p) tsub_le_self := by
   rw [dualConfig_eq_comp,

@@ -98,7 +98,7 @@ theorem bc51_globalArmForest_nonvacuous_star (ω : ConfigSpace (Sym2 (Site d))) 
   bc51_globalArmForest_star ω n a hsingle hxbox htri hadj habdry hxne hainj hsep
 
 
-theorem bc51_burton_keane_bernoulli_of_globalArmForest (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem bc51_burton_keane_bernoulli_of_globalArmForest (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p)
     (harm : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), bc51_GlobalArmForest ω n)
     (hroute : ∀ n : ℕ,

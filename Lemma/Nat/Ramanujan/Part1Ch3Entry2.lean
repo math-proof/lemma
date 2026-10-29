@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
+import Lemma.Nat.Ramanujan.Part1Ch3Entry2Rightsummable
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2
@@ -42,24 +42,24 @@ private lemma key_identity (z : ℂ) (hz : ∀ r : ℕ, (z + (r : ℂ)) ≠ 0) (
     intro i
     simp [hQdef]
   suffices h : (z + (n : ℂ)) * (∑ j ∈ Finset.range (n + 1),
-    ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ k ∈ Finset.range (j + 1), (z + (k : ℂ))))) =
-    1 / (Nat.factorial n : ℂ) by
+      ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ k ∈ Finset.range (j + 1), (z + (k : ℂ))))) =
+      1 / (Nat.factorial n : ℂ) by
     have hzne : (z + (n : ℂ)) ≠ 0 := hz n
     have hfn : ((Nat.factorial n : ℂ)) ≠ 0 := hfact n
     rw [eq_div_iff (mul_ne_zero hzne hfn)]
     have hring : (∑ j ∈ Finset.range (n + 1),
-      ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ k ∈ Finset.range (j + 1), (z + (k : ℂ))))) *
-      ((z + (n : ℂ)) * (Nat.factorial n : ℂ)) =
-      ((z + (n : ℂ)) * (∑ j ∈ Finset.range (n + 1),
-      ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ k ∈ Finset.range (j + 1), (z + (k : ℂ)))))) *
-      (Nat.factorial n : ℂ) := by ring
+        ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ k ∈ Finset.range (j + 1), (z + (k : ℂ))))) *
+        ((z + (n : ℂ)) * (Nat.factorial n : ℂ)) =
+        ((z + (n : ℂ)) * (∑ j ∈ Finset.range (n + 1),
+        ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ k ∈ Finset.range (j + 1), (z + (k : ℂ)))))) *
+        (Nat.factorial n : ℂ) := by ring
     rw [hring, h]
     field_simp
   set F : ℕ → ℂ := fun j => (-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * Q j) with hFdef
   set G : ℕ → ℂ := fun j => if j = n then 0 else (-1 : ℂ) ^ j / ((Nat.factorial (n - j - 1) : ℂ) * ∏ k ∈ Finset.range (j + 1), (z + (k : ℂ))) with hGdef
   have hGn : G n = 0 := by simp [hGdef]
   have hterm : ∀ j ∈ Finset.range (n + 1),
-    (z + (n : ℂ)) * ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ k ∈ Finset.range (j + 1), (z + (k : ℂ)))) = F j + G j := by
+      (z + (n : ℂ)) * ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ k ∈ Finset.range (j + 1), (z + (k : ℂ)))) = F j + G j := by
     intro j hj
     rw [Finset.mem_range] at hj
     have hjn : j ≤ n := Nat.le_of_lt_succ hj
@@ -95,7 +95,7 @@ private lemma key_identity (z : ℂ) (hz : ∀ r : ℕ, (z + (r : ℂ)) ≠ 0) (
     rw [hsplit, add_mul, e1, e2]
   rw [Finset.mul_sum]
   have hsum : ∑ j ∈ Finset.range (n + 1), ((z + (n : ℂ)) * ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ k ∈ Finset.range (j + 1), (z + (k : ℂ))))) =
-    ∑ j ∈ Finset.range (n + 1), F j + ∑ j ∈ Finset.range (n + 1), G j := by
+      ∑ j ∈ Finset.range (n + 1), F j + ∑ j ∈ Finset.range (n + 1), G j := by
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro j hj
@@ -129,7 +129,7 @@ private lemma key_identity (z : ℂ) (hz : ∀ r : ℕ, (z + (r : ℂ)) ≠ 0) (
   have hF0 : F 0 = 1 / (Nat.factorial n : ℂ) := by
     simp [hFdef, hQ0]
   calc (∑ i ∈ Finset.range n, F (i + 1)) + F 0 + ∑ i ∈ Finset.range n, G i
-    = ((∑ i ∈ Finset.range n, F (i + 1)) + ∑ i ∈ Finset.range n, G i) + F 0 := by ring
+      = ((∑ i ∈ Finset.range n, F (i + 1)) + ∑ i ∈ Finset.range n, G i) + F 0 := by ring
     _ = 0 + F 0 := by rw [hzero]
     _ = 1 / (Nat.factorial n : ℂ) := by rw [zero_add, hF0]
 
@@ -142,7 +142,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2
 -/
 @[path]
 lemma ramanujan_part1_ch3_entry2
-  {x z : ℂ}
+  (x z : ℂ)
 -- given
   (hz : ∀ r : ℕ, (z + (r : ℂ)) ≠ 0) :
 -- imply
@@ -152,10 +152,11 @@ lemma ramanujan_part1_ch3_entry2
 -- proof
   have hfExp : HasSum (fun m : ℕ => x ^ m / (Nat.factorial m : ℂ)) (Complex.exp x) := by
     have h := NormedSpace.expSeries_div_hasSum_exp (𝔸 := ℂ) x
-    rwa [← Complex.exp_eq_exp_ℂ] at h
+    rw [← Complex.exp_eq_exp_ℂ] at h
+    exact h
   have hEnorm : Summable fun m : ℕ => ‖x ^ m / (Nat.factorial m : ℂ)‖ := by
     have hEq : (fun m : ℕ => ‖x ^ m / (Nat.factorial m : ℂ)‖) =
-      (fun m : ℕ => ‖x‖ ^ m / (Nat.factorial m : ℝ)) := by
+        (fun m : ℕ => ‖x‖ ^ m / (Nat.factorial m : ℝ)) := by
       funext m
       rw [norm_div, norm_pow, Complex.norm_natCast]
     rw [hEq]
@@ -163,9 +164,9 @@ lemma ramanujan_part1_ch3_entry2
   have hBnorm := (Entry2Rightsummable.ramanujan_part1_ch3_entry2_rightsummable x z hz).norm
   have hcauchy := hasSum_sum_range_mul_of_summable_norm hEnorm hBnorm
   have hrefl : ∀ n : ℕ, (∑ k ∈ Finset.range (n + 1), (x ^ k / (Nat.factorial k : ℂ)) *
-    ((-1 : ℂ) ^ (n - k) * x ^ ((n - k) + 1) / ∏ kk ∈ Finset.range ((n - k) + 1), (z + (kk : ℂ))))
-    = ∑ j ∈ Finset.range (n + 1), (x ^ (n - j) / (Nat.factorial (n - j) : ℂ)) *
-      ((-1 : ℂ) ^ j * x ^ (j + 1) / ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ))) := by
+        ((-1 : ℂ) ^ (n - k) * x ^ ((n - k) + 1) / ∏ kk ∈ Finset.range ((n - k) + 1), (z + (kk : ℂ))))
+      = ∑ j ∈ Finset.range (n + 1), (x ^ (n - j) / (Nat.factorial (n - j) : ℂ)) *
+        ((-1 : ℂ) ^ j * x ^ (j + 1) / ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ))) := by
     intro n
     have h := Finset.sum_range_reflect
       (fun j => (x ^ (n - j) / (Nat.factorial (n - j) : ℂ)) *
@@ -176,40 +177,41 @@ lemma ramanujan_part1_ch3_entry2
     have hjn : j ≤ n := Nat.le_of_lt_succ hj
     have e : n + 1 - 1 - j = n - j := by omega
     show (x ^ j / (Nat.factorial j : ℂ)) *
-      ((-1 : ℂ) ^ (n - j) * x ^ ((n - j) + 1) / ∏ kk ∈ Finset.range ((n - j) + 1), (z + (kk : ℂ)))
+        ((-1 : ℂ) ^ (n - j) * x ^ ((n - j) + 1) / ∏ kk ∈ Finset.range ((n - j) + 1), (z + (kk : ℂ)))
       = (x ^ (n - (n + 1 - 1 - j)) / (Nat.factorial (n - (n + 1 - 1 - j)) : ℂ)) *
         ((-1 : ℂ) ^ (n + 1 - 1 - j) * x ^ ((n + 1 - 1 - j) + 1) / ∏ kk ∈ Finset.range ((n + 1 - 1 - j) + 1), (z + (kk : ℂ)))
     rw [e, Nat.sub_sub_self hjn]
   have hterm : ∀ n : ℕ, ∀ j ∈ Finset.range (n + 1),
-    (x ^ (n - j) / (Nat.factorial (n - j) : ℂ)) *
-      ((-1 : ℂ) ^ j * x ^ (j + 1) / ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ)))
-    = x ^ (n + 1) * ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ)))) := by
+      (x ^ (n - j) / (Nat.factorial (n - j) : ℂ)) *
+        ((-1 : ℂ) ^ j * x ^ (j + 1) / ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ)))
+      = x ^ (n + 1) * ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ)))) := by
     intro n j hj
     rw [Finset.mem_range] at hj
     have hjn : j ≤ n := Nat.le_of_lt_succ hj
     have hpow : x ^ (n - j) * x ^ (j + 1) = x ^ (n + 1) := by
       rw [← pow_add]; congr 1; omega
     calc (x ^ (n - j) / (Nat.factorial (n - j) : ℂ)) *
-      ((-1 : ℂ) ^ j * x ^ (j + 1) / ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ)))
-      = ((-1 : ℂ) ^ j * (x ^ (n - j) * x ^ (j + 1))) /
-        ((Nat.factorial (n - j) : ℂ) * ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ))) := by ring
+          ((-1 : ℂ) ^ j * x ^ (j + 1) / ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ)))
+        = ((-1 : ℂ) ^ j * (x ^ (n - j) * x ^ (j + 1))) /
+          ((Nat.factorial (n - j) : ℂ) * ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ))) := by ring
       _ = x ^ (n + 1) * ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ)))) := by
-        rw [hpow]; ring
+          rw [hpow]; ring
   have hconv : ∀ n : ℕ, (∑ k ∈ Finset.range (n + 1), (x ^ k / (Nat.factorial k : ℂ)) *
-    ((-1 : ℂ) ^ (n - k) * x ^ ((n - k) + 1) / ∏ kk ∈ Finset.range ((n - k) + 1), (z + (kk : ℂ))))
-    = x ^ (n + 1) / ((z + (n : ℂ)) * (Nat.factorial n : ℂ)) := by
+        ((-1 : ℂ) ^ (n - k) * x ^ ((n - k) + 1) / ∏ kk ∈ Finset.range ((n - k) + 1), (z + (kk : ℂ))))
+      = x ^ (n + 1) / ((z + (n : ℂ)) * (Nat.factorial n : ℂ)) := by
     intro n
     have e1 := hrefl n
     have e2 : (∑ j ∈ Finset.range (n + 1), (x ^ (n - j) / (Nat.factorial (n - j) : ℂ)) *
-      ((-1 : ℂ) ^ j * x ^ (j + 1) / ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ))))
-      = x ^ (n + 1) * (∑ j ∈ Finset.range (n + 1),
-        ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ))))) := by
+          ((-1 : ℂ) ^ j * x ^ (j + 1) / ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ))))
+        = x ^ (n + 1) * (∑ j ∈ Finset.range (n + 1),
+          ((-1 : ℂ) ^ j / ((Nat.factorial (n - j) : ℂ) * ∏ kk ∈ Finset.range (j + 1), (z + (kk : ℂ))))) := by
       rw [Finset.mul_sum]
       exact Finset.sum_congr rfl (fun j hj => hterm n j hj)
     rw [e1, e2, key_identity z hz n, mul_one_div]
   have hexp : (∑' m : ℕ, x ^ m / (Nat.factorial m : ℂ)) = Complex.exp x := hfExp.tsum_eq
   have hfin := hcauchy.congr_fun (fun n => (hconv n).symm)
-  rwa [hexp] at hfin
+  rw [hexp] at hfin
+  exact hfin
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2
 
@@ -232,4 +234,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Leftsummable
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

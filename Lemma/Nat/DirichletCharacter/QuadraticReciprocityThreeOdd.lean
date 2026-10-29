@@ -1,15 +1,30 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Def.NumberTheory.DirichletCharacter.Quadratic
+import Lemma.Nat.DirichletCharacter.KroneckerJacobiOdd
 
 
 namespace MetaMathlibExt
 
 /--
-[qrSign_eq_chi4_of_N_three_mod_four](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/QuadraticReciprocityThreeOdd.lean)
+[jacobiSym_four_mul_of_odd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
+lemma jacobiSym_four_mul_of_odd
+  (m : ℤ)
+  (p : ℕ)
+-- given
+  (hp_odd : Odd p) :
+-- imply
+  jacobiSym (4 * m) p = jacobiSym m p := by
+-- proof
+  rw [jacobiSym.mul_left, jacobiSym.at_four hp_odd, one_mul]
+
+/--
+[qrSign_eq_chi4_of_N_three_mod_four](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/QuadraticReciprocityThreeOdd.lean)
 `N / 2` is odd, so the `qrSign` exponent takes the parity of `p / 2`,
 which is exactly `χ₄ p`. -/
+@[path]
 private lemma qrSign_eq_chi4_of_N_three_mod_four (p N : ℕ) (hp_odd : Odd p)
   (hNodd : Odd N) (hN3 : N % 4 = 3) : qrSign p N = ZMod.χ₄ p := by
   have hp14 : p % 4 = 1 ∨ p % 4 = 3 := by
@@ -50,8 +65,8 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma chi4_mul_jacobiSym_natAbs_eq_kroneckerSym_of_odd_of_three_mod_four
-  {D : ℤ}
-  {p : ℕ}
+  (D : ℤ)
+  (p : ℕ)
 -- given
   (hp_odd : Odd p)
   (h0 : D % 4 = 3) :
@@ -63,11 +78,11 @@ lemma chi4_mul_jacobiSym_natAbs_eq_kroneckerSym_of_odd_of_three_mod_four
     kroneckerSym_eq_jacobiSym_of_odd D p hp_odd
   by_cases hpos : 0 < D
   · have hcast : ((D.natAbs : ℕ) : ℤ) = D := by
-    rw [Int.natCast_natAbs, abs_of_pos hpos]
+      rw [Int.natCast_natAbs, abs_of_pos hpos]
     have hNmod : D.natAbs % 4 = 3 := by omega
     have hNodd : Odd D.natAbs := Nat.odd_iff.mpr (by omega)
     have hrec : jacobiSym ((D.natAbs : ℕ) : ℤ) p =
-      qrSign p D.natAbs * jacobiSym ((p : ℕ) : ℤ) D.natAbs := by
+        qrSign p D.natAbs * jacobiSym ((p : ℕ) : ℤ) D.natAbs := by
       exact jacobiSym.quadratic_reciprocity' hNodd hp_odd
     have hsign : qrSign p D.natAbs = ZMod.χ₄ p :=
       qrSign_eq_chi4_of_N_three_mod_four p D.natAbs hp_odd hNodd hNmod
@@ -81,13 +96,13 @@ lemma chi4_mul_jacobiSym_natAbs_eq_kroneckerSym_of_odd_of_three_mod_four
     have hNmod : D.natAbs % 4 = 1 := by omega
     have hNodd : Odd D.natAbs := Nat.odd_iff.mpr (by omega)
     have hDsplit : jacobiSym D p
-      = jacobiSym (-1) p * jacobiSym ((D.natAbs : ℕ) : ℤ) p := by
+        = jacobiSym (-1) p * jacobiSym ((D.natAbs : ℕ) : ℤ) p := by
       conv_lhs => rw [hDeq2]
       rw [jacobiSym.mul_left]
     have hneg1 : jacobiSym (-1) p = ZMod.χ₄ p := by
       exact jacobiSym.at_neg_one hp_odd
     have hrec : jacobiSym ((D.natAbs : ℕ) : ℤ) p
-      = jacobiSym ((p : ℕ) : ℤ) D.natAbs := by
+        = jacobiSym ((p : ℕ) : ℤ) D.natAbs := by
       exact jacobiSym.quadratic_reciprocity_one_mod_four hNmod hp_odd
     rw [hKR, hDsplit, hneg1, hrec]
 
@@ -95,4 +110,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

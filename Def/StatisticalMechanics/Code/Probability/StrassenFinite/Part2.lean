@@ -30,7 +30,7 @@ variable [Fintype P] [DecidableEq P] [PartialOrder P]
   [DecidableRel ((· ≤ ·) : P → P → Prop)]
 
 
-noncomputable def piOfVec (c : OrderPairs P → ℝ) : P × P → ℝ≥0 :=
+noncomputable def piOfVec (c : OrderPairs P → ℝ) : P × P → NNReal :=
   fun p => if h : p.1 ≤ p.2 then (c ⟨p, h⟩).toNNReal else 0
 
 end Hard

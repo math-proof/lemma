@@ -230,7 +230,6 @@ lemma integrallyClosed_to_quotientPIR
   rw [hb, Ideal.map_span, Set.image_pair,
     Ideal.Quotient.eq_zero_iff_mem.mpr haI, Ideal.span_insert_zero]
   exact ⟨⟨(Ideal.Quotient.mk I) b, rfl⟩⟩
-set_option maxHeartbeats 800000 in
 
 end DedekindDomainEquiv
 
@@ -295,7 +294,6 @@ lemma quotientPIR_noetherian
   have hI_eq : I = Ideal.span {a, b} := le_antisymm hle hge
   rw [hI_eq]
   exact Submodule.fg_span (Set.toFinite {a, b})
-set_option maxHeartbeats 1600000 in
 
 end DedekindDomainEquiv
 
@@ -637,3 +635,4 @@ private lemma nonZeroDivisors_le_comap_localizationAtPrime_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

@@ -29,7 +29,7 @@ theorem KWStraightLineEmbedding.exists_angularPortRadiusData
   obtain ⟨rv, hrv, hv⟩ := embedding.exists_uniform_vertex_separation
   obtain ⟨re, hre, he⟩ := embedding.exists_uniform_edge_length
   obtain ⟨rve, hrve, hve⟩ := embedding.exists_uniform_vertex_edge_separation
-  let R : ℝ≥0 := min rv (min re rve) / 8
+  let R : NNReal := min rv (min re rve) / 8
   have hR : 0 < R := by
     dsimp only [R]
     positivity

@@ -17,7 +17,7 @@ open MeasureTheory Measure PMF
 
 namespace BooleanFourier
 
-noncomputable def pBiasedMeasure (n : ℕ) (p : ℝ≥0) (hp : p ≤ 1) :
+noncomputable def pBiasedMeasure (n : ℕ) (p : NNReal) (hp : p ≤ 1) :
     Measure (Fin n → Bool) :=
   Measure.pi (fun _ => pBiasedBit p hp)
 

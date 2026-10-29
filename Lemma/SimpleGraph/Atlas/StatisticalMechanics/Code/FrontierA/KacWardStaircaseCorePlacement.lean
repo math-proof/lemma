@@ -38,7 +38,7 @@ private lemma base_mem_closedEdgeCoreTube_eq
   {k : Fin (S + 1)}
 -- given
   (data : KWStairParameterData (S := S) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hk : data.parameter i k ∈ Icc eps (1 - eps)) :
 -- imply
@@ -60,7 +60,7 @@ private lemma corner_mem_closedEdgeCoreTube_eq
   {k : Fin S}
 -- given
   (data : KWStairParameterData (S := S) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hfine : data.MeshWithin r)
   (hk : data.parameter i k.castSucc ∈ Icc eps (1 - eps)) :
 -- imply
@@ -82,7 +82,7 @@ private lemma corner_mem_closedEdgeCoreTube_of_step_eq
   {k : Fin S}
 -- given
   (data : KWStairParameterData (S := S) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hk : data.parameter i k.castSucc ∈ Icc eps (1 - eps))
   (hstep : (data.parameter i k.succ - data.parameter i k.castSucc) * ‖polygon.edgeVector i‖ < r) :
 -- imply
@@ -104,7 +104,7 @@ private lemma rawClosedEdge_even_subset_closedEdgeCoreTube_eq
   {k : Fin S}
 -- given
   (data : KWStairParameterData (S := S) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r)
   (hk : data.parameter i k.castSucc ∈ Icc eps (1 - eps)) :
@@ -126,7 +126,7 @@ private lemma rawClosedEdge_odd_castSucc_subset_closedEdgeCoreTube_eq
   {k : Fin M}
 -- given
   (data : KWStairParameterData (S := M + 1) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r)
   (hk : data.parameter i k.castSucc.castSucc ∈ Icc eps (1 - eps))
@@ -219,7 +219,7 @@ private lemma exists_fixedEndpointParameterData_meshWithin_eq
   (hbeta : 0 < beta)
   (halpha : ∀ i, 0 < alpha i)
   (hsum : ∀ i, alpha i + beta < 1)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hbetaMesh : ∀ i : Fin n, beta * ‖polygon.edgeVector i‖ < r)
   (halphaMesh : ∀ i : Fin n, alpha (i + 1) * ‖polygon.edgeVector i‖ < r) :
@@ -242,7 +242,7 @@ private lemma exists_fixedEndpointParameterData_interiorMesh_eq
   (hbeta : 0 < beta)
   (halpha : ∀ i, 0 < alpha i)
   (hsum : ∀ i, alpha i + beta < 1)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r) :
 -- imply
   ∃ M : ℕ, ∃ data : KWStairParameterData (S := M + 2) polygon, 0 < M ∧ KWEndpointInteriorMeshWithin data r := by

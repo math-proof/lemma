@@ -25,7 +25,7 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 @[path]
 private lemma stdNormalCDF_le_one (w : ℝ) : stdNormalCDF w ≤ 1 := by
   unfold stdNormalCDF
-  have huniv : (gaussianReal 0 (1 : ℝ≥0)).real Set.univ = 1 := by
+  have huniv : (gaussianReal 0 (1 : NNReal)).real Set.univ = 1 := by
     rw [Measure.real, measure_univ, ENNReal.toReal_one]
   rw [← huniv]
   exact measureReal_mono (Set.subset_univ _) (measure_ne_top _ _)
@@ -47,11 +47,11 @@ private lemma stdNormalCDF_sub_eq_integral {a b : ℝ} (h : a ≤ b) :
     rw [Set.mem_Ioc] at hx2
     exact absurd (lt_of_le_of_lt hx1 hx2.1) (lt_irrefl _)
   have h2 : stdNormalCDF b
-    = stdNormalCDF a + (gaussianReal 0 (1 : ℝ≥0)).real (Set.Ioc a b) := by
+    = stdNormalCDF a + (gaussianReal 0 (1 : NNReal)).real (Set.Ioc a b) := by
     unfold stdNormalCDF
     rw [← Set.Iic_union_Ioc_eq_Iic h]
     exact measureReal_union hdisj measurableSet_Ioc (measure_ne_top _ _) (measure_ne_top _ _)
-  have h3 : (gaussianReal 0 (1 : ℝ≥0)).real (Set.Ioc a b)
+  have h3 : (gaussianReal 0 (1 : NNReal)).real (Set.Ioc a b)
     = ∫ x in a..b, gaussianPDFReal 0 1 x := by
     rw [intervalIntegral.integral_of_le h, Measure.real,
       gaussianReal_apply_eq_integral 0 one_ne_zero]
@@ -70,7 +70,7 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 -/
 @[path]
 private lemma continuous_gaussianPDFReal_std : Continuous (gaussianPDFReal 0 1) := by
-  have h := gaussianPDFReal_def (0 : ℝ) (1 : ℝ≥0)
+  have h := gaussianPDFReal_def (0 : ℝ) (1 : NNReal)
   rwa [h]
     (Real.continuous_exp.comp (((continuous_id.sub continuous_const).pow 2).neg.div_const _))
 
@@ -144,7 +144,7 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 -/
 @[path]
 private lemma map_neg_gaussianReal_std :
-  Measure.map (fun x : ℝ => -x) (gaussianReal 0 (1 : ℝ≥0)) = gaussianReal 0 1 := by
+  Measure.map (fun x : ℝ => -x) (gaussianReal 0 (1 : NNReal)) = gaussianReal 0 1 := by
   rw [gaussianReal_map_neg]
   simp
 
@@ -170,16 +170,16 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 -/
 @[path]
 private lemma gaussianReal_Iio_eq_Iic (w : ℝ) :
-  (gaussianReal 0 (1 : ℝ≥0)).real (Set.Iio w)
+  (gaussianReal 0 (1 : NNReal)).real (Set.Iio w)
     = (gaussianReal 0 1).real (Set.Iic w) := by
   have h1 : Set.Iic w = Set.Iio w ∪ {w} := by
     ext x
     simp only [Set.mem_Iic, Set.mem_Iio, Set.mem_union, Set.mem_singleton_iff,
       le_iff_lt_or_eq]
-  have hnull : (gaussianReal 0 (1 : ℝ≥0)).real {w} = 0 := by
-    have h0 : (gaussianReal 0 (1 : ℝ≥0)) {w} = 0 :=
+  have hnull : (gaussianReal 0 (1 : NNReal)).real {w} = 0 := by
+    have h0 : (gaussianReal 0 (1 : NNReal)) {w} = 0 :=
       @NullSingletonClass.measure_singleton _ _ _
-        (nullSingletonClass_gaussianReal (μ := (0 : ℝ)) (v := (1 : ℝ≥0)) one_ne_zero) w
+        (nullSingletonClass_gaussianReal (μ := (0 : ℝ)) (v := (1 : NNReal)) one_ne_zero) w
     unfold Measure.real
     rwa [h0]
   have hdisj : Disjoint (Set.Iio w) ({w} : Set ℝ) := by
@@ -189,7 +189,7 @@ private lemma gaussianReal_Iio_eq_Iic (w : ℝ) :
     rw [Set.mem_singleton_iff] at hx2
     rw [hx2] at hx1
     exact absurd hx1 (lt_irrefl _)
-  have h2 : (gaussianReal 0 (1 : ℝ≥0)).real (Set.Iio w ∪ {w})
+  have h2 : (gaussianReal 0 (1 : NNReal)).real (Set.Iio w ∪ {w})
     = (gaussianReal 0 1).real (Set.Iio w) := by
     rw [measureReal_union hdisj (measurableSet_singleton w)
       (measure_ne_top _ _) (measure_ne_top _ _), hnull, add_zero]
@@ -205,11 +205,11 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 @[path]
 private lemma stdNormalCDF_neg (w : ℝ) : stdNormalCDF (-w) = 1 - stdNormalCDF w := by
   unfold stdNormalCDF
-  have h1 : (gaussianReal 0 (1 : ℝ≥0)).real (Set.Iic (-w))
+  have h1 : (gaussianReal 0 (1 : NNReal)).real (Set.Iic (-w))
     = (gaussianReal 0 1).real (Set.Ici w) := by
     conv_lhs => rw [← map_neg_gaussianReal_std]
     rw [map_measureReal_apply measurable_neg measurableSet_Iic, neg_preimage_Iic_neg]
-  have h2 : (gaussianReal 0 (1 : ℝ≥0)).real (Set.Ici w)
+  have h2 : (gaussianReal 0 (1 : NNReal)).real (Set.Ici w)
     = 1 - (gaussianReal 0 1).real (Set.Iio w) := by
     rw [← Set.compl_Iio]
     exact probReal_compl_eq_one_sub measurableSet_Iio
@@ -226,7 +226,7 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 private lemma one_sub_stdNormalCDF_eq_integral_Ioi (w : ℝ) :
   1 - stdNormalCDF w = ∫ t in Set.Ioi w, gaussianPDFReal 0 1 t := by
   unfold stdNormalCDF
-  have h1 : (gaussianReal 0 (1 : ℝ≥0)).real (Set.Ioi w)
+  have h1 : (gaussianReal 0 (1 : NNReal)).real (Set.Ioi w)
     = 1 - (gaussianReal 0 1).real (Set.Iic w) := by
     rw [← Set.compl_Iic]
     exact probReal_compl_eq_one_sub measurableSet_Iic
@@ -244,11 +244,11 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 -/
 @[path]
 private lemma hasDerivAt_exponent_std (t : ℝ) :
-  HasDerivAt (fun u : ℝ => -(u - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ)))
-    (-(t - 0) / ((1 : ℝ≥0) : ℝ)) t := by
+  HasDerivAt (fun u : ℝ => -(u - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)))
+    (-(t - 0) / ((1 : NNReal) : ℝ)) t := by
   have h1 : HasDerivAt (fun u : ℝ => u - 0) 1 t := (hasDerivAt_id t).sub_const 0
   have h2 := h1.pow 2
-  have h3 := h2.neg.div_const (2 * ((1 : ℝ≥0) : ℝ))
+  have h3 := h2.neg.div_const (2 * ((1 : NNReal) : ℝ))
   refine h3.congr_deriv ?_
   simp only [NNReal.coe_one, mul_one]
   ring
@@ -263,21 +263,21 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 @[path]
 private lemma hasDerivAt_neg_gaussianPDFReal_std (t : ℝ) :
   HasDerivAt (fun u => -(gaussianPDFReal 0 1 u)) (t * gaussianPDFReal 0 1 t) t := by
-  have hdef := gaussianPDFReal_def (0 : ℝ) (1 : ℝ≥0)
-  have hexp : HasDerivAt (fun u : ℝ => Real.exp (-(u - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ))))
-    (Real.exp (-(t - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ)))
-      * (-(t - 0) / ((1 : ℝ≥0) : ℝ))) t :=
+  have hdef := gaussianPDFReal_def (0 : ℝ) (1 : NNReal)
+  have hexp : HasDerivAt (fun u : ℝ => Real.exp (-(u - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ))))
+    (Real.exp (-(t - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)))
+      * (-(t - 0) / ((1 : NNReal) : ℝ))) t :=
     (hasDerivAt_exponent_std t).exp
-  have hC := (hexp.const_mul ((√(2 * Real.pi * ((1 : ℝ≥0) : ℝ)))⁻¹)).neg
-  have hval : -((√(2 * Real.pi * ((1 : ℝ≥0) : ℝ)))⁻¹
-    * (Real.exp (-(t - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ)))
-      * (-(t - 0) / ((1 : ℝ≥0) : ℝ))))
+  have hC := (hexp.const_mul ((√(2 * Real.pi * ((1 : NNReal) : ℝ)))⁻¹)).neg
+  have hval : -((√(2 * Real.pi * ((1 : NNReal) : ℝ)))⁻¹
+    * (Real.exp (-(t - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)))
+      * (-(t - 0) / ((1 : NNReal) : ℝ))))
     = t * gaussianPDFReal 0 1 t := by
     rw [hdef]
     simp only [NNReal.coe_one, mul_one, sub_zero]
     ring
-  have hfun : (-(fun y : ℝ => (√(2 * Real.pi * ((1 : ℝ≥0) : ℝ)))⁻¹
-    * Real.exp (-(y - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ)))))
+  have hfun : (-(fun y : ℝ => (√(2 * Real.pi * ((1 : NNReal) : ℝ)))⁻¹
+    * Real.exp (-(y - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)))))
     = fun u => -(gaussianPDFReal 0 1 u) := by
     funext u
     rw [hdef]
@@ -295,8 +295,8 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 @[path]
 private lemma tendsto_neg_gaussianPDFReal_std_atTop :
   Filter.Tendsto (fun u => -(gaussianPDFReal 0 1 u)) Filter.atTop (nhds 0) := by
-  have hdef := gaussianPDFReal_def (0 : ℝ) (1 : ℝ≥0)
-  have htop : Filter.Tendsto (fun u : ℝ => -(u - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ)))
+  have hdef := gaussianPDFReal_def (0 : ℝ) (1 : NNReal)
+  have htop : Filter.Tendsto (fun u : ℝ => -(u - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)))
     Filter.atTop Filter.atBot := by
     have hpow : Filter.Tendsto (fun x : ℝ => x ^ 2) Filter.atTop Filter.atTop :=
       Filter.tendsto_pow_atTop (by norm_num)
@@ -306,13 +306,13 @@ private lemma tendsto_neg_gaussianPDFReal_std_atTop :
     simp only [Function.comp_def, NNReal.coe_one, mul_one]
     ring
   have hexp0 : Filter.Tendsto
-    (fun u : ℝ => Real.exp (-(u - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ))))
+    (fun u : ℝ => Real.exp (-(u - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ))))
     Filter.atTop (nhds 0) :=
     Real.tendsto_exp_atBot.comp htop
   have hphi0 : Filter.Tendsto (gaussianPDFReal 0 1) Filter.atTop (nhds 0) := by
-    have hC := hexp0.const_mul ((√(2 * Real.pi * ((1 : ℝ≥0) : ℝ)))⁻¹)
-    have hfun : (fun x : ℝ => (√(2 * Real.pi * ((1 : ℝ≥0) : ℝ)))⁻¹
-      * Real.exp (-(x - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ))))
+    have hC := hexp0.const_mul ((√(2 * Real.pi * ((1 : NNReal) : ℝ)))⁻¹)
+    have hfun : (fun x : ℝ => (√(2 * Real.pi * ((1 : NNReal) : ℝ)))⁻¹
+      * Real.exp (-(x - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ))))
       = gaussianPDFReal 0 1 := by
       rw [hdef]
     rw [hfun] at hC
@@ -330,13 +330,13 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 @[path]
 private lemma integrable_mul_gaussianPDFReal_std :
   Integrable (fun t => t * gaussianPDFReal 0 1 t) volume := by
-  have hdef := gaussianPDFReal_def (0 : ℝ) (1 : ℝ≥0)
+  have hdef := gaussianPDFReal_def (0 : ℝ) (1 : NNReal)
   have hbase := integrable_mul_exp_neg_mul_sq (show (0 : ℝ) < 1 / 2 by norm_num)
   have heq : (fun t => t * gaussianPDFReal 0 1 t)
-    = fun t => (√(2 * Real.pi * ((1 : ℝ≥0) : ℝ)))⁻¹
+    = fun t => (√(2 * Real.pi * ((1 : NNReal) : ℝ)))⁻¹
       * (t * Real.exp (-(1 / 2) * t ^ 2)) := by
     funext t
-    have hexp_eq : -(t - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ)) = -(1 / 2) * t ^ 2 := by
+    have hexp_eq : -(t - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)) = -(1 / 2) * t ^ 2 := by
       simp [NNReal.coe_one]
       ring
     simp only [hdef]
@@ -473,23 +473,23 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 -/
 @[path]
 private lemma gaussianPDFReal_mul_steinEg (w : ℝ) : gaussianPDFReal 0 1 w * steinEg w = 1 := by
-  have hdef := gaussianPDFReal_def (0 : ℝ) (1 : ℝ≥0)
-  have hsqrt : (√(2 * Real.pi * ((1 : ℝ≥0) : ℝ)))⁻¹ = (Real.sqrt (2 * Real.pi))⁻¹ := by
+  have hdef := gaussianPDFReal_def (0 : ℝ) (1 : NNReal)
+  have hsqrt : (√(2 * Real.pi * ((1 : NNReal) : ℝ)))⁻¹ = (Real.sqrt (2 * Real.pi))⁻¹ := by
     congr 1
     congr 1
     simp [NNReal.coe_one]
-  have e : Real.exp (-(w - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ))) * Real.exp (w ^ 2 / 2)
+  have e : Real.exp (-(w - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ))) * Real.exp (w ^ 2 / 2)
     = 1 := by
     rw [← Real.exp_add]
-    have hz : -(w - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ)) + w ^ 2 / 2 = 0 := by
+    have hz : -(w - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)) + w ^ 2 / 2 = 0 := by
       simp [NNReal.coe_one]
       ring
     rw [hz, Real.exp_zero]
   have assoc : (Real.sqrt (2 * Real.pi))⁻¹
-    * Real.exp (-(w - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ)))
+    * Real.exp (-(w - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)))
     * (Real.sqrt (2 * Real.pi) * Real.exp (w ^ 2 / 2))
     = ((Real.sqrt (2 * Real.pi))⁻¹ * Real.sqrt (2 * Real.pi))
-      * (Real.exp (-(w - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ))) * Real.exp (w ^ 2 / 2)) := by
+      * (Real.exp (-(w - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ))) * Real.exp (w ^ 2 / 2)) := by
     ring
   unfold steinEg
   rw [hdef, hsqrt, assoc, e, inv_mul_cancel₀]
@@ -637,9 +637,9 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 @[path]
 private lemma gaussianPDFReal_std_neg (w : ℝ) :
   gaussianPDFReal 0 1 (-w) = gaussianPDFReal 0 1 w := by
-  have hdef := gaussianPDFReal_def (0 : ℝ) (1 : ℝ≥0)
-  have e : -(-w - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ))
-    = -(w - 0) ^ 2 / (2 * ((1 : ℝ≥0) : ℝ)) := by
+  have hdef := gaussianPDFReal_def (0 : ℝ) (1 : NNReal)
+  have e : -(-w - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ))
+    = -(w - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)) := by
     simp only [NNReal.coe_one, mul_one, sub_zero, neg_sq]
   simp only [hdef, e]
 

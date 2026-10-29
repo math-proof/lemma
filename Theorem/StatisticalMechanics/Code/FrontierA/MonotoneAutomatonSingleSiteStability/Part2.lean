@@ -22,14 +22,14 @@ open StatMech.Lattice StatMech.Percolation StatMech.ConfigSpace
 variable {d : ℕ}
 
 
-@[simp] theorem raiseFields_empty (xi : NonnegativeField d) (r : Site d → ℝ≥0) :
+@[simp] theorem raiseFields_empty (xi : NonnegativeField d) (r : Site d → NNReal) :
     raiseFields xi ∅ r = xi := by
   funext y
   simp [raiseFields]
 
 
 theorem raiseFields_insert (xi : NonnegativeField d) (S : Finset (Site d))
-    (r : Site d → ℝ≥0) {x : Site d} (hx : x ∉ S) :
+    (r : Site d → NNReal) {x : Site d} (hx : x ∉ S) :
     raiseFields xi (insert x S) r = raiseField (raiseFields xi S r) x (r x) := by
   funext y
   by_cases hyx : y = x
@@ -41,7 +41,7 @@ theorem raiseFields_insert (xi : NonnegativeField d) (S : Finset (Site d))
 
 
 theorem le_raiseFields (xi : NonnegativeField d) (S : Finset (Site d))
-    (r : Site d → ℝ≥0) :
+    (r : Site d → NNReal) :
     xi ≤ raiseFields xi S r := by
   intro y
   by_cases hy : y ∈ S
@@ -50,7 +50,7 @@ theorem le_raiseFields (xi : NonnegativeField d) (S : Finset (Site d))
 
 
 theorem raiseFields_mono_set (xi : NonnegativeField d) {S U : Finset (Site d)}
-    (hSU : S ⊆ U) (r : Site d → ℝ≥0) :
+    (hSU : S ⊆ U) (r : Site d → NNReal) :
     raiseFields xi S r ≤ raiseFields xi U r := by
   intro y
   by_cases hyS : y ∈ S
@@ -63,7 +63,7 @@ theorem raiseFields_mono_set (xi : NonnegativeField d) {S U : Finset (Site d)}
 
 theorem siteCluster_raiseFields_eq_of_infinite_of_avoids
     (T : MonotoneAutomaton d) (xi : NonnegativeField d)
-    (S : Finset (Site d)) (r : Site d → ℝ≥0) (y : Site d)
+    (S : Finset (Site d)) (r : Site d → NNReal) (y : Site d)
     (hinf : (siteCluster (T xi) y).Infinite)
     (havoid : ∀ x ∈ S, x ∉ siteCluster (T (raiseFields xi S r)) y) :
     siteCluster (T (raiseFields xi S r)) y = siteCluster (T xi) y := by

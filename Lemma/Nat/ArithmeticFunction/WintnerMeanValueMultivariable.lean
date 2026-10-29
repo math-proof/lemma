@@ -163,7 +163,8 @@ private lemma sum_fin_divisors (N : ℕ) (H : ℕ → ℂ) :
     · rw [Finset.mem_filter]
       refine ⟨Finset.mem_univ _, ?_⟩
       change (e - 1 + 1 ∣ N)
-      rwa [Nat.sub_add_cancel hepos]
+      rw [Nat.sub_add_cancel hepos]
+      exact he.1
     · change (e - 1 + 1) = e
       exact Nat.sub_add_cancel hepos
   · intro d _
@@ -175,9 +176,8 @@ namespace MetaMathlibExt
 
 /--
 [moebius_inv_1d](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/WintnerMeanValueMultivariable.lean)
--/
-@[path]
   `∑_{d | N} ∑_{c | d} μ(c) Q(d/c) = Q(N)`. -/
+@[path]
 private lemma moebius_inv_1d (N : ℕ) (hN : 0 < N) (Q : ℕ → ℂ) :
   ∑ d ∈ N.divisors, ∑ c ∈ d.divisors, (ArithmeticFunction.moebius c : ℂ) * Q (d / c)
   = Q N := by
@@ -256,7 +256,8 @@ private lemma moebius_inv_1d (N : ℕ) (hN : 0 < N) (Q : ℕ → ℂ) :
       obtain ⟨k, hk⟩ := hcdvd
       have hcc : e * (N / e) = N := Nat.mul_div_cancel' hedvd2
       have hN_eq : N = e * (c * k) := by
-        rwa [hk] at hcc
+        rw [hk] at hcc
+        exact hcc.symm
       refine ⟨Sigma.mk (e * c) c, ?_, ?_⟩
       · rw [hSdef, Finset.mem_sigma]
         refine ⟨Nat.mem_divisors.mpr ⟨⟨k, by rw [hN_eq]; ring⟩, hNne⟩,
@@ -282,11 +283,12 @@ private lemma moebius_inv_1d (N : ℕ) (hN : 0 < N) (Q : ℕ → ℂ) :
       rw [Nat.div_self hN]
       simp
     · have hne : N / e ≠ 1 := by
-      intro hcon
-      apply h
-      rw [Nat.mem_divisors] at he
-      have hNe : N = e * (N / e) := (Nat.mul_div_cancel' he.1).symm
-      rwa [hcon, mul_one] at hNe
+        intro hcon
+        apply h
+        rw [Nat.mem_divisors] at he
+        have hNe : N = e * (N / e) := (Nat.mul_div_cancel' he.1).symm
+        rw [hcon, mul_one] at hNe
+        exact hNe.symm
       simp [h, hne]
   rw [collapse, hbij, ← expand, hfin, Finset.sum_ite_eq']
   have hmem : N ∈ N.divisors := Nat.mem_divisors.mpr ⟨dvd_rfl, hNne⟩
@@ -508,7 +510,8 @@ private lemma wG_inversion (k : ℕ) (f : (Fin k → ℕ) → ℂ) (n : (Fin k �
       (fun e => f (Fin.cons e (fun i => n i.succ)))
     have hcons : Fin.cons (n 0) (fun i => n i.succ) = n := Fin.cons_self_tail n
     have hfn : f n = f (Fin.cons (n 0) (fun i => n i.succ)) := congrArg f hcons.symm
-    rwa [hfn]
+    rw [hfn]
+    exact h1d.symm
 
 end MetaMathlibExt
 
@@ -674,7 +677,8 @@ private lemma box_avg_eq_tsum (k : ℕ) (f : (Fin k → ℕ) → ℂ) :
         Nat.div_eq_of_lt (lt_of_le_of_lt hi (Nat.lt_succ_self _))
       have hprod0 : ∏ j, ((((x j / (m j + 1) : ℕ))) : ℂ) = 0 := by
         apply Finset.prod_eq_zero (Finset.mem_univ i)
-        rwa [hzero]
+        rw [hzero]
+        exact Nat.cast_zero
       change ((wG k f (fun i => m i + 1) * ∏ i, ((((x i / (m i + 1) : ℕ))) : ℂ)) /
         ∏ i, (x i : ℂ)) = 0
       rw [hprod0, mul_zero, zero_div]
@@ -865,9 +869,8 @@ private lemma wF_bound (k : ℕ) (f : (Fin k → ℕ) → ℂ) (x m : (Fin k →
         _ = 1 * ∏ i, (x i : ℝ) := by ring
     calc ‖wG k f (fun i => m i + 1)‖ * ((∏ i, ((x i / (m i + 1) : ℕ) : ℝ)) / (∏ i, (x i : ℝ)))
       ≤ ‖wG k f (fun i => m i + 1)‖ * (1 / (∏ i, ((m i + 1 : ℕ) : ℝ))) := by
-        apply mul_le_mul_of_nonneg_left hle_div (norm_nonneg _)
+          apply mul_le_mul_of_nonneg_left hle_div (norm_nonneg _)
       _ = ‖wG k f (fun i => m i + 1)‖ / (∏ i, ((m i + 1 : ℕ) : ℝ)) := by ring
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -878,13 +881,27 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma wintner_mean_value_multivariable
-  {k : ℕ}
-  {f : (Fin k → ℕ) → ℂ}
+  (k : ℕ)
 -- given
-  (hk : 0 < k) :
--- imply
-  let mobiusConvolution : (Fin k → ℕ) → ℂ := by
--- proof
+  (_hk : 0 < k)
+  (f : (Fin k → ℕ) → ℂ) :
+  let mobiusConvolution : (Fin k → ℕ) → ℂ := (fun n =>
+    ∑ d : (i : Fin k) → Fin (n i),
+      if ∀ i, (d i : ℕ) + 1 ∣ n i then
+        (∏ i, (ArithmeticFunction.moebius ((d i : ℕ) + 1) : ℂ)) *
+          f (fun i => n i / ((d i : ℕ) + 1))
+      else 0);
+  Summable (fun m : Fin k → ℕ =>
+    ‖mobiusConvolution (fun i => m i + 1)‖ /
+      ∏ i, (m i + 1 : ℝ)) →
+    Filter.Tendsto
+      (fun x : Fin k → ℕ =>
+        (∑ n : (i : Fin k) → Fin (x i), f (fun i => (n i : ℕ) + 1)) /
+          ∏ i, (x i : ℂ))
+      Filter.atTop
+      (nhds (∑' m : Fin k → ℕ,
+        mobiusConvolution (fun i => m i + 1) /
+          ∏ i, (m i + 1 : ℂ))) := by
   intro mobiusConvolution hsum
   have heq : mobiusConvolution = wG k f := rfl
   have hcastR : ∀ m : Fin k → ℕ, ∏ i, ((m i + 1 : ℕ) : ℝ) = ∏ i, ((m i : ℝ) + 1) := by
@@ -932,4 +949,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -28,7 +28,7 @@ open StatMech.Percolation
 variable {d : ℕ}
 
 
-theorem bc55_hroute_of_routingCover (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bc55_hroute_of_routingCover (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hrt : ∀ n : ℕ, hrHD_DisjointRouting d n) :
     ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) →
@@ -39,7 +39,7 @@ theorem bc55_hroute_of_routingCover (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (bkc_bernoulli_hasFiniteEnergyMerge p hp1 hp0) hrt
 
 
-theorem bc55_hroute_of_boxMengerAttachment (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bc55_hroute_of_boxMengerAttachment (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hattach : ∀ n : ℕ, bmm_BoxMengerAttachment d n) :
     ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) →
@@ -50,7 +50,7 @@ theorem bc55_hroute_of_boxMengerAttachment (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 
     (fun n => bmm_disjointRouting_of_attachment (hattach n))
 
 
-theorem bc55_burton_keane_bernoulli_of_boxMenger (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem bc55_burton_keane_bernoulli_of_boxMenger (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p) (hattach : ∀ n : ℕ, bmm_BoxMengerAttachment d n) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = 0} = 1 ∨
@@ -63,7 +63,7 @@ theorem bc55_burton_keane_bernoulli_of_boxMenger (hd : 1 ≤ d) (p : ℝ≥0) (h
     (bc55_hroute_of_boxMengerAttachment p hp1 hp0 hattach)
 
 
-theorem bc55_burton_keane_bernoulli_of_routingCover (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem bc55_burton_keane_bernoulli_of_routingCover (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p) (hrt : ∀ n : ℕ, hrHD_DisjointRouting d n) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = 0} = 1 ∨
@@ -128,7 +128,7 @@ theorem bc55_boxMenger_zeroObstacle_witness (ω : ConfigSpace (Sym2 (Site d)))
   bmm_attachment_of_neighbour_witnesses ω x₁ x₂ x₃ hadj hri
 
 
-theorem bc55_status (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) :
+theorem bc55_status (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) :
     ((∀ n : ℕ, bmm_BoxMengerAttachment d n) →
       ∀ n : ℕ,
         0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) →

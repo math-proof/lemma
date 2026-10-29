@@ -53,7 +53,7 @@ private lemma emv_f_one {k : ℕ} (f : (Fin k → ℕ) → ℂ)
   have h := hmult 1 1 (fun _ => Nat.coprime_one_left 1)
   rw [h11] at h
   have hfac : f 1 * (f 1 - 1) = 0 := by linear_combination -h
-  obtain hz | hz := mul_eq_zero.mp hfac
+  rcases mul_eq_zero.mp hfac with hz | hz
   · exact Or.inl hz
   · exact Or.inr (sub_eq_zero.mp hz)
 
@@ -74,7 +74,8 @@ private lemma emv_f_zero_of_one_zero {k : ℕ} (f : (Fin k → ℕ) → ℂ)
   have hn : (fun i => n i * (1 : Fin k → ℕ) i) = n := by
     funext i
     simp
-  rwa [hn, h1, mul_zero] at h
+  rw [hn, h1, mul_zero] at h
+  exact h
 
 end MetaMathlibExt
 
@@ -99,8 +100,8 @@ private lemma emv_prod_decomp_aux {k : ℕ} (f : (Fin k → ℕ) → ℂ)
     rw [hempty, h1, Finset.prod_empty]
   | insert a s has ih =>
     have hfactor : (fun j => if j ∈ insert a s then n j else 1)
-      = (fun j => (if j ∈ s then n j else 1) *
-        Function.update (1 : Fin k → ℕ) a (n a) j) := by
+        = (fun j => (if j ∈ s then n j else 1) *
+          Function.update (1 : Fin k → ℕ) a (n a) j) := by
       funext j
       by_cases hja : j = a
       · subst hja
@@ -108,11 +109,11 @@ private lemma emv_prod_decomp_aux {k : ℕ} (f : (Fin k → ℕ) → ℂ)
           Function.update_apply, ite_eq_left rfl, one_mul]
       · by_cases hjs : j ∈ s
         · rw [ite_eq_left (Finset.mem_insert_of_mem hjs), ite_eq_left hjs,
-          Function.update_apply, ite_eq_right hja, Pi.one_apply, mul_one]
+            Function.update_apply, ite_eq_right hja, Pi.one_apply, mul_one]
         · rw [ite_eq_right (by simpa [hja] using hjs), ite_eq_right hjs,
-          Function.update_apply, ite_eq_right hja, one_mul, Pi.one_apply]
+            Function.update_apply, ite_eq_right hja, one_mul, Pi.one_apply]
     have hcop : ∀ j, Nat.Coprime ((if j ∈ s then n j else 1))
-      (Function.update (1 : Fin k → ℕ) a (n a) j) := by
+        (Function.update (1 : Fin k → ℕ) a (n a) j) := by
       intro j
       by_cases hja : j = a
       · subst hja
@@ -138,7 +139,7 @@ private lemma emv_prod_decomp {k : ℕ} (f : (Fin k → ℕ) → ℂ)
   f n = ∏ i, f (Function.update 1 i (n i)) := by
   have h := emv_prod_decomp_aux f hmult h1 Finset.univ (n := n)
   have huniv : (fun j => if j ∈ (Finset.univ : Finset (Fin k)) then n j else 1)
-    = n := by
+      = n := by
     funext j
     simp
   rw [huniv] at h
@@ -178,25 +179,25 @@ private lemma emvF_isMultiplicative {k : ℕ} (f : (Fin k → ℕ) → ℂ) (i :
   constructor
   · rw [emvF_one f i, h1]
   · intro m n hcop
-    obtain rfl | hm := eq_or_ne m 0
+    rcases eq_or_ne m 0 with rfl | hm
     · simp
-    obtain rfl | hn := eq_or_ne n 0
+    rcases eq_or_ne n 0 with rfl | hn
     · simp
     have hmn : m * n ≠ 0 := mul_ne_zero hm hn
     rw [emvF_apply _ _ hmn, emvF_apply _ _ hm, emvF_apply _ _ hn]
     have hupd : Function.update (1 : Fin k → ℕ) i (m * n)
-      = (fun j => Function.update (1 : Fin k → ℕ) i m j *
-        Function.update (1 : Fin k → ℕ) i n j) := by
+        = (fun j => Function.update (1 : Fin k → ℕ) i m j *
+          Function.update (1 : Fin k → ℕ) i n j) := by
       funext j
       by_cases hji : j = i
       · subst hji
         rw [Function.update_apply, Function.update_apply, Function.update_apply,
           ite_eq_left rfl, ite_eq_left rfl, ite_eq_left rfl]
       · rw [Function.update_apply, Function.update_apply, Function.update_apply,
-        ite_eq_right hji, ite_eq_right hji, ite_eq_right hji, Pi.one_apply,
-        mul_one]
+          ite_eq_right hji, ite_eq_right hji, ite_eq_right hji, Pi.one_apply,
+          mul_one]
     have hcop' : ∀ j, Nat.Coprime (Function.update (1 : Fin k → ℕ) i m j)
-      (Function.update (1 : Fin k → ℕ) i n j) := by
+        (Function.update (1 : Fin k → ℕ) i n j) := by
       intro j
       by_cases hji : j = i
       · subst hji
@@ -204,7 +205,7 @@ private lemma emvF_isMultiplicative {k : ℕ} (f : (Fin k → ℕ) → ℂ) (i :
           ite_eq_left rfl]
         exact hcop
       · rw [Function.update_apply, Function.update_apply, ite_eq_right hji,
-        ite_eq_right hji]
+          ite_eq_right hji]
         exact Nat.coprime_one_left _
     rw [hupd]
     exact hmult _ _ hcop'
@@ -250,9 +251,8 @@ namespace MetaMathlibExt
 
 /--
 [emv_G_eq_prod](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/EulerProductMeanValue.lean)
--/
-@[path]
 Moebius factors. -/
+@[path]
 private lemma emv_G_eq_prod {k : ℕ} (f : (Fin k → ℕ) → ℂ)
   (hmult : ∀ a b : Fin k → ℕ, (∀ i, Nat.Coprime (a i) (b i)) →
     f (fun i => a i * b i) = f a * f b)
@@ -262,7 +262,7 @@ private lemma emv_G_eq_prod {k : ℕ} (f : (Fin k → ℕ) → ℂ)
     f (fun i => p ^ (ν i) / d i))
   = ∏ i, emvG f i (p ^ (ν i)) := by
   have hmem : ∀ d ∈ Fintype.piFinset (fun i => Nat.divisors (p ^ (ν i))),
-    ∀ i, 1 ≤ p ^ (ν i) / d i := by
+      ∀ i, 1 ≤ p ^ (ν i) / d i := by
     intro d hd i
     have hi := Fintype.mem_piFinset.mp hd i
     rw [Nat.mem_divisors] at hi
@@ -270,34 +270,34 @@ private lemma emv_G_eq_prod {k : ℕ} (f : (Fin k → ℕ) → ℂ)
     exact Nat.div_pos (Nat.le_of_dvd hpos hi.1)
       (Nat.pos_of_dvd_of_pos hi.1 hpos)
   have hsummand : ∀ d ∈ Fintype.piFinset (fun i => Nat.divisors (p ^ (ν i))),
-    (∏ i, ((ArithmeticFunction.moebius (d i) : ℤ) : ℂ)) *
-      f (fun i => p ^ (ν i) / d i)
-    = ∏ i, (((ArithmeticFunction.moebius (d i) : ℤ) : ℂ) *
-      emvF f i (p ^ (ν i) / d i)) := by
+      (∏ i, ((ArithmeticFunction.moebius (d i) : ℤ) : ℂ)) *
+        f (fun i => p ^ (ν i) / d i)
+      = ∏ i, (((ArithmeticFunction.moebius (d i) : ℤ) : ℂ) *
+        emvF f i (p ^ (ν i) / d i)) := by
     intro d hd
     have hdecomp := emv_prod_decomp_apply f hmult h1
       (n := fun i => p ^ (ν i) / d i) (fun i => ne_of_gt (hmem d hd i))
     rw [hdecomp, Finset.prod_mul_distrib]
   calc (∑ d ∈ Fintype.piFinset (fun i => Nat.divisors (p ^ (ν i))),
-    (∏ i, ((ArithmeticFunction.moebius (d i) : ℤ) : ℂ)) *
-    f (fun i => p ^ (ν i) / d i))
-    = ∑ d ∈ Fintype.piFinset (fun i => Nat.divisors (p ^ (ν i))),
-      ∏ i, (((ArithmeticFunction.moebius (d i) : ℤ) : ℂ) *
-        emvF f i (p ^ (ν i) / d i)) :=
-      Finset.sum_congr rfl (fun d hd => hsummand d hd)
-    _ = ∏ i, ∑ u ∈ Nat.divisors (p ^ (ν i)),
-      (((ArithmeticFunction.moebius u : ℤ)) : ℂ) *
-        emvF f i (p ^ (ν i) / u) :=
-      (Finset.prod_univ_sum (fun i => Nat.divisors (p ^ (ν i)))
-        (fun i u => (((ArithmeticFunction.moebius u : ℤ)) : ℂ) *
-          emvF f i (p ^ (ν i) / u))).symm
-    _ = ∏ i, emvG f i (p ^ (ν i)) := by
-      apply Finset.prod_congr rfl
-      intro i _
-      rw [emvG_apply f i]
-      exact (Nat.sum_divisorsAntidiagonal
-        (fun a b => (((ArithmeticFunction.moebius a : ℤ)) : ℂ) *
-          emvF f i b)).symm
+          (∏ i, ((ArithmeticFunction.moebius (d i) : ℤ) : ℂ)) *
+          f (fun i => p ^ (ν i) / d i))
+        = ∑ d ∈ Fintype.piFinset (fun i => Nat.divisors (p ^ (ν i))),
+          ∏ i, (((ArithmeticFunction.moebius (d i) : ℤ) : ℂ) *
+            emvF f i (p ^ (ν i) / d i)) :=
+          Finset.sum_congr rfl (fun d hd => hsummand d hd)
+      _ = ∏ i, ∑ u ∈ Nat.divisors (p ^ (ν i)),
+          (((ArithmeticFunction.moebius u : ℤ)) : ℂ) *
+            emvF f i (p ^ (ν i) / u) :=
+          (Finset.prod_univ_sum (fun i => Nat.divisors (p ^ (ν i)))
+            (fun i u => (((ArithmeticFunction.moebius u : ℤ)) : ℂ) *
+              emvF f i (p ^ (ν i) / u))).symm
+      _ = ∏ i, emvG f i (p ^ (ν i)) := by
+          apply Finset.prod_congr rfl
+          intro i _
+          rw [emvG_apply f i]
+          exact (Nat.sum_divisorsAntidiagonal
+            (fun a b => (((ArithmeticFunction.moebius a : ℤ)) : ℂ) *
+              emvF f i b)).symm
 
 end MetaMathlibExt
 
@@ -323,11 +323,11 @@ private lemma emv_primePow_summable {k : ℕ} (f : (Fin k → ℕ) → ℂ)
     ‖emvG f i (((q.1 : ℕ)) ^ (q.2 + 1))‖ /
       ((((q.1 : ℕ))) : ℝ) ^ (q.2 + 1)) := by
   have hne : ∀ q : Nat.Primes × ℕ,
-    Pi.single i (q.2 + 1) ≠ (0 : Fin k → ℕ) := by
+      Pi.single i (q.2 + 1) ≠ (0 : Fin k → ℕ) := by
     intro q
     exact Pi.single_ne_zero_iff.mpr (Nat.succ_ne_zero _)
   let φ : Nat.Primes × ℕ →
-    { q : { p : ℕ // p.Prime } × (Fin k → ℕ) // q.2 ≠ 0 } :=
+      { q : { p : ℕ // p.Prime } × (Fin k → ℕ) // q.2 ≠ 0 } :=
     fun q => ⟨((⟨((q.1 : ℕ)), q.1.property⟩ : { p : ℕ // p.Prime }),
       Pi.single i (q.2 + 1)), hne q⟩
   have hφinj : Function.Injective φ := by
@@ -350,30 +350,30 @@ private lemma emv_primePow_summable {k : ℕ} (f : (Fin k → ℕ) → ℂ)
   obtain ⟨p, e⟩ := q
   simp only [Function.comp_apply]
   have hφpe : φ (p, e) = ⟨((⟨((p : ℕ)), p.property⟩ : { p : ℕ // p.Prime }),
-    Pi.single i (e + 1)), hne (p, e)⟩ := rfl
+      Pi.single i (e + 1)), hne (p, e)⟩ := rfl
   rw [hφpe]
   dsimp only []
   have hsingle0 : ∀ j : Fin k, j ≠ i →
-    emvG f j ((p : ℕ) ^ (Pi.single i (e + 1) j)) = 1 := by
+      emvG f j ((p : ℕ) ^ (Pi.single i (e + 1) j)) = 1 := by
     intro j hji
     have hsj : (Pi.single i (e + 1) : Fin k → ℕ) j = 0 := by
       rw [Pi.single_apply, ite_eq_right hji]
     rw [hsj, pow_zero]
     exact (emvG_isMultiplicative f j hmult h1).map_one
   have h0' : ∀ j ∈ (Finset.univ : Finset (Fin k)), j ≠ i →
-    emvG f j ((p : ℕ) ^ (Pi.single i (e + 1) j)) = 1 :=
+      emvG f j ((p : ℕ) ^ (Pi.single i (e + 1) j)) = 1 :=
     fun j _ hji => hsingle0 j hji
   have h1' : i ∉ (Finset.univ : Finset (Fin k)) →
-    emvG f i ((p : ℕ) ^ ((Pi.single i (e + 1) : Fin k → ℕ) i)) = 1 :=
+      emvG f i ((p : ℕ) ^ ((Pi.single i (e + 1) : Fin k → ℕ) i)) = 1 :=
     fun hcon => absurd (Finset.mem_univ i) hcon
   have hsinglei : (Pi.single i (e + 1) : Fin k → ℕ) i = e + 1 := by
     rw [Pi.single_apply, ite_eq_left rfl]
   have h0exp : ∀ j ∈ (Finset.univ : Finset (Fin k)), j ≠ i →
-    (Pi.single i (e + 1) : Fin k → ℕ) j = 0 := by
+      (Pi.single i (e + 1) : Fin k → ℕ) j = 0 := by
     intro j _ hji
     rw [Pi.single_apply, ite_eq_right hji]
   have h1exp : i ∉ (Finset.univ : Finset (Fin k)) →
-    (Pi.single i (e + 1) : Fin k → ℕ) i = 0 :=
+      (Pi.single i (e + 1) : Fin k → ℕ) i = 0 :=
     fun hcon => absurd (Finset.mem_univ i) hcon
   have hsumexp : ∑ j : Fin k, (Pi.single i (e + 1) : Fin k → ℕ) j = e + 1 := by
     rw [Finset.sum_eq_single i h0exp h1exp, Pi.single_apply, ite_eq_left rfl]
@@ -416,7 +416,7 @@ private lemma emv_summable_norm_div (g : ArithmeticFunction ℂ)
     intro q
     simp only [hFdef, hhdef, Nat.cast_pow]
   have hper : ∀ (p : ℕ) (hp : Nat.Prime p),
-    Summable (fun e : ℕ => h (p ^ e)) := by
+      Summable (fun e : ℕ => h (p ^ e)) := by
     intro p hp
     have hslice : Summable (fun e : ℕ => F ((⟨p, hp⟩ : Nat.Primes), e)) :=
       hF.comp_injective (fun a b hab => congrArg Prod.snd hab)
@@ -424,7 +424,7 @@ private lemma emv_summable_norm_div (g : ArithmeticFunction ℂ)
       hslice.congr (fun e => rfl)
     exact (summable_nat_add_iff 1).mp hshift
   have hpernorm : ∀ (p : ℕ) (hp : Nat.Prime p),
-    Summable (fun n : ℕ => ‖h (p ^ n)‖) := by
+      Summable (fun n : ℕ => ‖h (p ^ n)‖) := by
     intro p hp
     apply (hper p hp).congr
     intro e
@@ -433,29 +433,30 @@ private lemma emv_summable_norm_div (g : ArithmeticFunction ℂ)
     intro p hp
     exact hpernorm p hp
   have hfactor : ∀ (p : ℕ) (hp : Nat.Prime p),
-    (∑' n : ℕ, h (p ^ n)) = 1 + ∑' e : ℕ, F ((⟨p, hp⟩ : Nat.Primes), e) := by
+      (∑' n : ℕ, h (p ^ n)) = 1 + ∑' e : ℕ, F ((⟨p, hp⟩ : Nat.Primes), e) := by
     intro p hp
     have hsum_pe : Summable (fun n : ℕ => h (p ^ n)) := hper p hp
     have hdecomp := hsum_pe.sum_add_tsum_nat_add 1
     rw [Finset.sum_range_one] at hdecomp
     have hp0 : h (p ^ 0) = 1 := by
-      rwa [pow_zero]
+      rw [pow_zero]
+      exact h1
     rw [hp0] at hdecomp
     have hspe : (∑' n : ℕ, h (p ^ (n + 1)))
-      = ∑' e : ℕ, F ((⟨p, hp⟩ : Nat.Primes), e) := rfl
+        = ∑' e : ℕ, F ((⟨p, hp⟩ : Nat.Primes), e) := rfl
     rw [← hdecomp, hspe]
   have hS'sum : Summable (fun q : Nat.Primes => ∑' e : ℕ, F (q, e)) := hF.prod
   have hST : (∑' q : Nat.Primes, ∑' e : ℕ, F (q, e))
-    = ∑' q : Nat.Primes × ℕ, F q := hF.tsum_prod.symm
+      = ∑' q : Nat.Primes × ℕ, F q := hF.tsum_prod.symm
   -- bound for partial sums over `range (N+1)`
   have hbound : ∀ N : ℕ, ∑ n ∈ Finset.range (N + 1), h n ≤
-    Real.exp (∑' q : Nat.Primes × ℕ, F q) := by
+      Real.exp (∑' q : Nat.Primes × ℕ, F q) := by
     intro N
     obtain ⟨-, hHas⟩ :=
       EulerProduct.summable_and_hasSum_factoredNumbers_prod_filter_prime_tsum
         h1 hmul hper' (Finset.range (N + 1))
     have hmemfact : ∀ n ∈ Finset.range (N + 1), n ≠ 0 →
-      n ∈ Nat.factoredNumbers (Finset.range (N + 1)) := by
+        n ∈ Nat.factoredNumbers (Finset.range (N + 1)) := by
       intro n hn hne
       rw [Nat.mem_factoredNumbers]
       refine ⟨hne, fun p hp => ?_⟩
@@ -468,8 +469,8 @@ private lemma emv_summable_norm_div (g : ArithmeticFunction ℂ)
       Finset.subtype (· ∈ Nat.factoredNumbers (Finset.range (N + 1)))
         (Finset.range (N + 1)) with htdef
     have htsum_eq : ∑ n ∈ (Finset.range (N + 1)).filter
-      (· ∈ Nat.factoredNumbers (Finset.range (N + 1))), h n
-      = ∑ i ∈ t, h (i.val) := by
+        (· ∈ Nat.factoredNumbers (Finset.range (N + 1))), h n
+        = ∑ i ∈ t, h (i.val) := by
       refine Finset.sum_bij
         (fun n hn => (⟨n, (Finset.mem_filter.mp hn).2⟩ :
           ↥(Nat.factoredNumbers (Finset.range (N + 1))))) ?_ ?_ ?_ ?_
@@ -480,7 +481,7 @@ private lemma emv_summable_norm_div (g : ArithmeticFunction ℂ)
         exact congrArg Subtype.val heq
       · intro i hi
         have hi' : (i.val) ∈ (Finset.range (N + 1)).filter
-          (· ∈ Nat.factoredNumbers (Finset.range (N + 1))) := by
+            (· ∈ Nat.factoredNumbers (Finset.range (N + 1))) := by
           rw [Finset.mem_filter]
           exact ⟨Finset.mem_subtype.mp hi, i.property⟩
         refine ⟨i.val, hi', ?_⟩
@@ -488,26 +489,28 @@ private lemma emv_summable_norm_div (g : ArithmeticFunction ℂ)
       · intro n hn
         rfl
     have hfilter_eq : ∑ n ∈ (Finset.range (N + 1)).filter
-      (· ∈ Nat.factoredNumbers (Finset.range (N + 1))), h n
-      = ∑ n ∈ Finset.range (N + 1), h n := by
+        (· ∈ Nat.factoredNumbers (Finset.range (N + 1))), h n
+        = ∑ n ∈ Finset.range (N + 1), h n := by
       apply Finset.sum_subset (Finset.filter_subset _ _)
       intro n hn hnim
       have hn0 : n = 0 := by
         by_contra hne
         exact hnim (Finset.mem_filter.mpr ⟨hn, hmemfact n hn hne⟩)
-      rwa [hn0]
+      rw [hn0]
+      exact h0
     have hle_range : ∑ n ∈ Finset.range (N + 1), h n ≤
-      (∏ p ∈ Finset.range (N + 1) with p.Prime, ∑' n : ℕ, h (p ^ n)) := by
+        (∏ p ∈ Finset.range (N + 1) with p.Prime, ∑' n : ℕ, h (p ^ n)) := by
       rw [← hfilter_eq, htsum_eq]
       have hsumt := hHas.summable.sum_le_tsum t (fun i _ => hnn _)
-      rwa [hHas.tsum_eq] at hsumt
+      rw [hHas.tsum_eq] at hsumt
+      exact hsumt
     set u : Finset Nat.Primes :=
       ((Finset.range (N + 1)).filter Nat.Prime).attach.image
         (fun x => (⟨x.val, (Finset.mem_filter.mp x.property).2⟩ :
           Nat.Primes)) with hudef
     have hVtoU : (∏ p ∈ (Finset.range (N + 1)).filter Nat.Prime,
-      ∑' n : ℕ, h (p ^ n))
-      = ∏ q ∈ u, (∑' n : ℕ, h (((q : ℕ)) ^ n)) := by
+          ∑' n : ℕ, h (p ^ n))
+        = ∏ q ∈ u, (∑' n : ℕ, h (((q : ℕ)) ^ n)) := by
       refine Finset.prod_bij
         (fun p hp => (⟨p, (Finset.mem_filter.mp hp).2⟩ : Nat.Primes)) ?_ ?_ ?_ ?_
       · intro p hp
@@ -523,7 +526,7 @@ private lemma emv_summable_norm_div (g : ArithmeticFunction ℂ)
     have h0u : ∀ q ∈ u, (0 : ℝ) ≤ ∑' n : ℕ, h (((q : ℕ)) ^ n) :=
       fun q _ => tsum_nonneg (fun n => hnn _)
     have h1u : ∀ q ∈ u, (∑' n : ℕ, h (((q : ℕ)) ^ n))
-      ≤ Real.exp (∑' e : ℕ, F (q, e)) := by
+        ≤ Real.exp (∑' e : ℕ, F (q, e)) := by
       intro q _
       obtain ⟨p, hp⟩ := q
       change (∑' n : ℕ, h (p ^ n))
@@ -533,24 +536,25 @@ private lemma emv_summable_norm_div (g : ArithmeticFunction ℂ)
         (∑' e : ℕ, F ((⟨p, hp⟩ : Nat.Primes), e))
       linarith
     have hsum_le : (∑ q ∈ u, ∑' e : ℕ, F (q, e))
-      ≤ ∑' q : Nat.Primes × ℕ, F q := by
+        ≤ ∑' q : Nat.Primes × ℕ, F q := by
       have hfin := hS'sum.sum_le_tsum u
         (fun q _ => tsum_nonneg (fun e => hnn _))
-      rwa [hST] at hfin
+      rw [hST] at hfin
+      exact hfin
     have hVle : (∏ p ∈ Finset.range (N + 1) with p.Prime, ∑' n : ℕ, h (p ^ n))
-      ≤ Real.exp (∑' q : Nat.Primes × ℕ, F q) := by
+        ≤ Real.exp (∑' q : Nat.Primes × ℕ, F q) := by
       calc (∏ p ∈ Finset.range (N + 1) with p.Prime, ∑' n : ℕ, h (p ^ n))
-        = ∏ q ∈ u, (∑' n : ℕ, h (((q : ℕ)) ^ n)) := hVtoU
+          = ∏ q ∈ u, (∑' n : ℕ, h (((q : ℕ)) ^ n)) := hVtoU
         _ ≤ ∏ q ∈ u, Real.exp (∑' e : ℕ, F (q, e)) :=
-          Finset.prod_le_prod₀ h0u h1u
+            Finset.prod_le_prod₀ h0u h1u
         _ = Real.exp (∑ q ∈ u, ∑' e : ℕ, F (q, e)) :=
-          (Real.exp_sum _ _).symm
+            (Real.exp_sum _ _).symm
         _ ≤ Real.exp (∑' q : Nat.Primes × ℕ, F q) :=
-          Real.exp_le_exp.mpr hsum_le
+            Real.exp_le_exp.mpr hsum_le
     exact hle_range.trans hVle
   refine summable_of_sum_range_le (c := Real.exp (∑' q : Nat.Primes × ℕ, F q)) hnn
     (fun n => ?_)
-  obtain _ | n := n
+  rcases n with _ | n
   · rw [Finset.sum_range_zero]
     exact (Real.exp_pos _).le
   · exact hbound n
@@ -561,9 +565,8 @@ namespace MetaMathlibExt
 
 /--
 [emv_local_factor](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/EulerProductMeanValue.lean)
--/
-@[path]
 series. -/
+@[path]
 private lemma emv_local_factor (F : ArithmeticFunction ℂ) (p : ℕ)
   (hp : Nat.Prime p)
   (hs : Summable (fun e : ℕ =>
@@ -577,23 +580,23 @@ private lemma emv_local_factor (F : ArithmeticFunction ℂ) (p : ℕ)
     (↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) * F with hgdef
   have hident : g * (↑ArithmeticFunction.zeta : ArithmeticFunction ℂ) = F := by
     have e1 : g * (↑ArithmeticFunction.zeta : ArithmeticFunction ℂ)
-      = (↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) *
-        (F * (↑ArithmeticFunction.zeta : ArithmeticFunction ℂ)) := by
+        = (↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) *
+          (F * (↑ArithmeticFunction.zeta : ArithmeticFunction ℂ)) := by
       rw [hgdef, mul_assoc]
     have e2 : F * (↑ArithmeticFunction.zeta : ArithmeticFunction ℂ)
-      = (↑ArithmeticFunction.zeta : ArithmeticFunction ℂ) * F :=
+        = (↑ArithmeticFunction.zeta : ArithmeticFunction ℂ) * F :=
       mul_comm _ _
     have e3 : (↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) *
-      ((↑ArithmeticFunction.zeta : ArithmeticFunction ℂ) * F)
-      = ((↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) *
-        (↑ArithmeticFunction.zeta : ArithmeticFunction ℂ)) * F :=
+          ((↑ArithmeticFunction.zeta : ArithmeticFunction ℂ) * F)
+        = ((↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) *
+          (↑ArithmeticFunction.zeta : ArithmeticFunction ℂ)) * F :=
       (mul_assoc _ _ _).symm
     rw [e1, e2, e3, ArithmeticFunction.coe_moebius_mul_coe_zeta, one_mul]
   have hdiv : ∀ e : ℕ, F (p ^ e)
-    = ∑ j ∈ Finset.range (e + 1), g (p ^ j) := by
+      = ∑ j ∈ Finset.range (e + 1), g (p ^ j) := by
     intro e
     have h1 : (g * (↑ArithmeticFunction.zeta : ArithmeticFunction ℂ)) (p ^ e)
-      = F (p ^ e) := by rw [hident]
+        = F (p ^ e) := by rw [hident]
     rw [ArithmeticFunction.coe_mul_zeta_apply] at h1
     rw [← h1, Nat.divisors_prime_pow hp, Finset.sum_map]
     apply Finset.sum_congr rfl
@@ -611,8 +614,8 @@ private lemma emv_local_factor (F : ArithmeticFunction ℂ) (p : ℕ)
     rw [norm_pow, hxdef, norm_div, norm_one, Complex.norm_natCast, div_pow,
       one_pow]
   have hpt : ∀ j : ℕ, ‖g (p ^ j) * x ^ j‖
-    = ‖((↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) * F) (p ^ j)‖ /
-      ((p : ℝ) ^ j) := by
+      = ‖((↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) * F) (p ^ j)‖ /
+        ((p : ℝ) ^ j) := by
     intro j
     rw [norm_mul, hxxnorm j, hgdef]
     exact (div_eq_mul_one_div _ _).symm
@@ -622,8 +625,8 @@ private lemma emv_local_factor (F : ArithmeticFunction ℂ) (p : ℕ)
     (summable_geometric_of_lt_one (norm_nonneg _) hnormx).congr
       (fun m => (norm_pow _ _).symm)
   have hinner : ∀ e : ℕ,
-    (∑ k ∈ Finset.range (e + 1), g (p ^ k) * x ^ k * x ^ (e - k))
-    = F (p ^ e) * x ^ e := by
+      (∑ k ∈ Finset.range (e + 1), g (p ^ k) * x ^ k * x ^ (e - k))
+      = F (p ^ e) * x ^ e := by
     intro e
     rw [hdiv e, Finset.sum_mul]
     apply Finset.sum_congr rfl
@@ -633,7 +636,7 @@ private lemma emv_local_factor (F : ArithmeticFunction ℂ) (p : ℕ)
       rw [← pow_add, Nat.add_sub_cancel' hj]
     rw [mul_assoc, hpow]
   have htsum : (∑' j : ℕ, g (p ^ j) * x ^ j) * (∑' m : ℕ, x ^ m)
-    = ∑' e : ℕ, F (p ^ e) * x ^ e := by
+      = ∑' e : ℕ, F (p ^ e) * x ^ e := by
     rw [tsum_mul_tsum_eq_tsum_sum_range_of_summable_norm hgx hxx]
     apply tsum_congr
     intro e
@@ -649,9 +652,10 @@ private lemma emv_local_factor (F : ArithmeticFunction ℂ) (p : ℕ)
     intro a e
     rw [hxdef, div_pow, one_pow, div_eq_mul_one_div]
   have hmain : (∑' e : ℕ, g (p ^ e) * x ^ e)
-    = (1 - x) * (∑' e : ℕ, F (p ^ e) * x ^ e) := by
+      = (1 - x) * (∑' e : ℕ, F (p ^ e) * x ^ e) := by
     have h2 := congrArg ((1 - x) * ·) (hgeo ▸ htsum)
-    rwa [mul_left_comm, mul_inv_cancel₀ hx1, mul_one] at h2
+    rw [mul_left_comm, mul_inv_cancel₀ hx1, mul_one] at h2
+    exact h2
   have hnormF : Summable (fun e : ℕ => ‖F (p ^ e) * x ^ e‖) := by
     apply (summable_norm_sum_mul_range_of_summable_norm hgx hxx).congr
     intro e
@@ -662,18 +666,19 @@ private lemma emv_local_factor (F : ArithmeticFunction ℂ) (p : ℕ)
     rw [hconv]
   refine ⟨hnormF2, ?_⟩
   have hF2 : (∑' e : ℕ, F (p ^ e) / ((p : ℂ) ^ e))
-    = ∑' e : ℕ, F (p ^ e) * x ^ e :=
+      = ∑' e : ℕ, F (p ^ e) * x ^ e :=
     tsum_congr (fun e => hconv _ _)
   have hG2 : (∑' e : ℕ, g (p ^ e) / ((p : ℂ) ^ e))
-    = ∑' e : ℕ, g (p ^ e) * x ^ e :=
+      = ∑' e : ℕ, g (p ^ e) * x ^ e :=
     tsum_congr (fun e => hconv _ _)
   have hxeq : (1 : ℂ) - 1 / ((p : ℂ)) = 1 - x := by rw [hxdef]
   have hG2' : (∑' e : ℕ,
-    ((↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) * F) (p ^ e) /
-      ((p : ℂ) ^ e))
-    = ∑' e : ℕ, g (p ^ e) * x ^ e := by
+      ((↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) * F) (p ^ e) /
+        ((p : ℂ) ^ e))
+      = ∑' e : ℕ, g (p ^ e) * x ^ e := by
     rw [← hG2]
-  rwa [hG2', hF2, hxeq]
+  rw [hG2', hF2, hxeq]
+  exact hmain
 
 end MetaMathlibExt
 
@@ -699,44 +704,45 @@ private lemma emv_tsum_pi_prod {k : ℕ} (b : Fin k → ℕ → ℂ)
     obtain ⟨hsumT, htsumT⟩ :=
       ih (fun i e => b (Fin.succ i) e) (fun i => hb (Fin.succ i))
     have htsumT' : (∑' ν : Fin k → ℕ, ∏ i, b (Fin.succ i) (ν i))
-      = ∏ i, ∑' e, b (Fin.succ i) e := by
+        = ∏ i, ∑' e, b (Fin.succ i) e := by
       have h1 : (∑' ν : Fin k → ℕ, ∏ i, b (Fin.succ i) (ν i))
-        = ∑' ν : Fin k → ℕ, ∏ i, (fun i e => b (Fin.succ i) e) i (ν i) := by
+          = ∑' ν : Fin k → ℕ, ∏ i, (fun i e => b (Fin.succ i) e) i (ν i) := by
         apply tsum_congr
         intro ν
         exact Finset.prod_congr rfl (fun i _ => rfl)
       have h2 : (∏ i, ∑' e, b (Fin.succ i) e)
-        = ∏ i, ∑' e, (fun i e => b (Fin.succ i) e) i e :=
+          = ∏ i, ∑' e, (fun i e => b (Fin.succ i) e) i e :=
         Finset.prod_congr rfl (fun i _ => tsum_congr (fun e => rfl))
-      rwa [h1, h2]
+      rw [h1, h2]
+      exact htsumT
     have h0 : ∀ q : ℕ × (Fin k → ℕ),
-      (Fin.consEquiv (fun _ : Fin (k + 1) => ℕ)) q 0 = q.1 := by
+        (Fin.consEquiv (fun _ : Fin (k + 1) => ℕ)) q 0 = q.1 := by
       intro q
       rw [Fin.consEquiv_apply, Fin.cons_zero]
     have hs : ∀ (q : ℕ × (Fin k → ℕ)) (i : Fin k),
-      (Fin.consEquiv (fun _ : Fin (k + 1) => ℕ)) q (Fin.succ i) = q.2 i := by
+        (Fin.consEquiv (fun _ : Fin (k + 1) => ℕ)) q (Fin.succ i) = q.2 i := by
       intro q i
       rw [Fin.consEquiv_apply, Fin.cons_succ]
     have hprod : ∀ q : ℕ × (Fin k → ℕ),
-      (∏ i, b i ((Fin.consEquiv (fun _ : Fin (k + 1) => ℕ)) q i))
-        = b 0 q.1 * ∏ i, b (Fin.succ i) (q.2 i) := by
+        (∏ i, b i ((Fin.consEquiv (fun _ : Fin (k + 1) => ℕ)) q i))
+          = b 0 q.1 * ∏ i, b (Fin.succ i) (q.2 i) := by
       intro q
       have hY : (∏ i, b (Fin.succ i)
-        ((Fin.consEquiv (fun _ : Fin (k + 1) => ℕ)) q (Fin.succ i)))
-        = ∏ i, b (Fin.succ i) (q.2 i) :=
+            ((Fin.consEquiv (fun _ : Fin (k + 1) => ℕ)) q (Fin.succ i)))
+          = ∏ i, b (Fin.succ i) (q.2 i) :=
         Finset.prod_congr rfl (fun i _ => by rw [hs q i])
       rw [Fin.prod_univ_succ, h0 q, hY]
     have hbase := Summable.mul_norm (hb 0) hsumT
     have hnormprod : Summable (fun q : ℕ × (Fin k → ℕ) =>
-      ‖b 0 q.1 * ∏ i, b (Fin.succ i) (q.2 i)‖) := by
+        ‖b 0 q.1 * ∏ i, b (Fin.succ i) (q.2 i)‖) := by
       apply hbase.congr
       intro q
       have hqq : (∏ i, (fun i e => b (Fin.succ i) e) i (q.2 i))
-        = ∏ i, b (Fin.succ i) (q.2 i) :=
+          = ∏ i, b (Fin.succ i) (q.2 i) :=
         Finset.prod_congr rfl (fun i _ => rfl)
       rw [hqq]
     have hcomp : Summable ((fun ν : Fin (k + 1) → ℕ => ‖∏ i, b i (ν i)‖) ∘
-      (Fin.consEquiv (fun _ : Fin (k + 1) => ℕ))) := by
+        (Fin.consEquiv (fun _ : Fin (k + 1) => ℕ))) := by
       apply hnormprod.congr
       intro q
       simp only [Function.comp_apply]
@@ -745,26 +751,27 @@ private lemma emv_tsum_pi_prod {k : ℕ} (b : Fin k → ℕ → ℂ)
       (Fin.consEquiv (fun _ : Fin (k + 1) => ℕ)).summable_iff.mp hcomp
     have hmul0 := tsum_mul_tsum_of_summable_norm (hb 0) hsumT
     have hmul : (∑' e0 : ℕ, b 0 e0)
-      * (∑' ν : Fin k → ℕ, ∏ i, b (Fin.succ i) (ν i))
-      = ∑' q : ℕ × (Fin k → ℕ), b 0 q.1 * ∏ i, b (Fin.succ i) (q.2 i) := by
+          * (∑' ν : Fin k → ℕ, ∏ i, b (Fin.succ i) (ν i))
+        = ∑' q : ℕ × (Fin k → ℕ), b 0 q.1 * ∏ i, b (Fin.succ i) (q.2 i) := by
       have e1 : (∑' ν : Fin k → ℕ, ∏ i, b (Fin.succ i) (ν i))
-        = ∑' ν : Fin k → ℕ, ∏ i, (fun i e => b (Fin.succ i) e) i (ν i) := by
+          = ∑' ν : Fin k → ℕ, ∏ i, (fun i e => b (Fin.succ i) e) i (ν i) := by
         apply tsum_congr
         intro ν
         exact Finset.prod_congr rfl (fun i _ => rfl)
       have e2 : (∑' q : ℕ × (Fin k → ℕ), b 0 q.1 * ∏ i, b (Fin.succ i) (q.2 i))
-        = ∑' q : ℕ × (Fin k → ℕ),
-          b 0 q.1 * ∏ i, (fun i e => b (Fin.succ i) e) i (q.2 i) := by
+          = ∑' q : ℕ × (Fin k → ℕ),
+            b 0 q.1 * ∏ i, (fun i e => b (Fin.succ i) e) i (q.2 i) := by
         apply tsum_congr
         intro q
         have hqq : (∏ i, b (Fin.succ i) (q.2 i))
-          = ∏ i, (fun i e => b (Fin.succ i) e) i (q.2 i) :=
+            = ∏ i, (fun i e => b (Fin.succ i) e) i (q.2 i) :=
           Finset.prod_congr rfl (fun i _ => rfl)
         rw [hqq]
-      rwa [e1, e2]
+      rw [e1, e2]
+      exact hmul0
     have hback : (∑' q : ℕ × (Fin k → ℕ),
-      b 0 q.1 * ∏ i, b (Fin.succ i) (q.2 i))
-      = ∑' ν : Fin (k + 1) → ℕ, ∏ i, b i (ν i) := by
+          b 0 q.1 * ∏ i, b (Fin.succ i) (q.2 i))
+        = ∑' ν : Fin (k + 1) → ℕ, ∏ i, b i (ν i) := by
       rw [← (Fin.consEquiv (fun _ : Fin (k + 1) => ℕ)).tsum_eq
         (fun ν : Fin (k + 1) → ℕ => ∏ i, b i (ν i))]
       apply tsum_congr
@@ -772,9 +779,10 @@ private lemma emv_tsum_pi_prod {k : ℕ} (b : Fin k → ℕ → ℂ)
       exact (hprod q).symm
     refine ⟨hsum, ?_⟩
     have hR : (∏ i, ∑' e, b i e)
-      = (∑' e0 : ℕ, b 0 e0) * ∏ i, ∑' e, b (Fin.succ i) e := by
+        = (∑' e0 : ℕ, b 0 e0) * ∏ i, ∑' e, b (Fin.succ i) e := by
       rw [Fin.prod_univ_succ]
-    rwa [hR, ← htsumT', ← hback]
+    rw [hR, ← htsumT', ← hback]
+    exact hmul.symm
 
 end MetaMathlibExt
 
@@ -835,12 +843,12 @@ private lemma emv_slice_summable {k : ℕ} (f : (Fin k → ℕ) → ℂ)
   have hs0 : Summable (fun e : ℕ => Fp (p, e)) :=
     hprime.comp_injective hinj
   have hs0e : Summable (fun e : ℕ => ‖emvG f i ((((p : ℕ))) ^ (e + 1))‖ /
-    (((((p : ℕ))) : ℝ) ^ (e + 1))) := by
+      (((((p : ℕ))) : ℝ) ^ (e + 1))) := by
     apply hs0.congr
     intro e
     rfl
   have hs1 : Summable (fun e : ℕ => ‖emvG f i ((((p : ℕ))) ^ e)‖ /
-    (((((p : ℕ))) : ℝ) ^ e)) :=
+      (((((p : ℕ))) : ℝ) ^ e)) :=
     (summable_nat_add_iff (f := fun e => ‖emvG f i ((((p : ℕ))) ^ e)‖ /
       (((((p : ℕ))) : ℝ) ^ e)) 1).mp hs0e
   exact hs1
@@ -851,9 +859,8 @@ namespace MetaMathlibExt
 
 /--
 [emv_euler_hasProd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/EulerProductMeanValue.lean)
--/
-@[path]
 `emv_local_factor`. -/
+@[path]
 private lemma emv_euler_hasProd {k : ℕ} (f : (Fin k → ℕ) → ℂ)
   (hmult : ∀ a b : Fin k → ℕ, (∀ i, Nat.Coprime (a i) (b i)) →
     f (fun i => a i * b i) = f a * f b)
@@ -876,9 +883,9 @@ private lemma emv_euler_hasProd {k : ℕ} (f : (Fin k → ℕ) → ℂ)
     change emvG f i 1 / (((1 : ℕ)) : ℂ) = 1
     rw [hmulG.1, Nat.cast_one, div_one]
   have hmul : ∀ {m n : ℕ}, Nat.Coprime m n →
-    (fun n => emvG f i n / ((n : ℕ) : ℂ)) (m * n)
-      = (fun n => emvG f i n / ((n : ℕ) : ℂ)) m *
-        (fun n => emvG f i n / ((n : ℕ) : ℂ)) n := by
+      (fun n => emvG f i n / ((n : ℕ) : ℂ)) (m * n)
+        = (fun n => emvG f i n / ((n : ℕ) : ℂ)) m *
+          (fun n => emvG f i n / ((n : ℕ) : ℂ)) n := by
     intro m n hcop
     change emvG f i (m * n) / ((((m * n : ℕ))) : ℂ)
       = (emvG f i m / ((m : ℕ) : ℂ)) * (emvG f i n / ((n : ℕ) : ℂ))
@@ -896,27 +903,28 @@ private lemma emv_euler_hasProd {k : ℕ} (f : (Fin k → ℕ) → ℂ)
   have hEP := EulerProduct.eulerProduct_hasProd
     (f := fun n => emvG f i n / ((n : ℕ) : ℂ)) ha1 hmul hsum ha0
   have hslice : ∀ p : Nat.Primes, Summable (fun e : ℕ =>
-    ‖((↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) * emvF f i)
-      ((((p : ℕ))) ^ e)‖ / (((((p : ℕ))) : ℝ) ^ e)) :=
+      ‖((↑ArithmeticFunction.moebius : ArithmeticFunction ℂ) * emvF f i)
+        ((((p : ℕ))) ^ e)‖ / (((((p : ℕ))) : ℝ) ^ e)) :=
     fun p => emv_slice_summable f hmult h1 hsumm i p
   have hfactor : ∀ p : Nat.Primes,
-    (∑' e : ℕ, (fun n => emvG f i n / ((n : ℕ) : ℂ)) ((((p : ℕ))) ^ e))
-      = (1 - 1 / ((((p : ℕ))) : ℂ)) *
-        ∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e := by
+      (∑' e : ℕ, (fun n => emvG f i n / ((n : ℕ) : ℂ)) ((((p : ℕ))) ^ e))
+        = (1 - 1 / ((((p : ℕ))) : ℂ)) *
+          ∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e := by
     intro p
     have hN82 := (emv_local_factor (emvF f i) (((p : ℕ))) p.property
       (hslice p)).2
     have he : (∑' e : ℕ,
-      (fun n => emvG f i n / ((n : ℕ) : ℂ)) ((((p : ℕ))) ^ e))
-      = ∑' e : ℕ, emvG f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e := by
+          (fun n => emvG f i n / ((n : ℕ) : ℂ)) ((((p : ℕ))) ^ e))
+        = ∑' e : ℕ, emvG f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e := by
       apply tsum_congr
       intro e
       change emvG f i ((((p : ℕ))) ^ e) / ((((((p : ℕ))) ^ e : ℕ)) : ℂ)
         = emvG f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e
       rw [Nat.cast_pow]
-    rwa [he]
+    rw [he]
+    exact hN82
   have hval : (∑' n : ℕ, (fun n => emvG f i n / ((n : ℕ) : ℂ)) n)
-    = ∑' n : ℕ, emvG f i n / ((n : ℕ) : ℂ) :=
+      = ∑' n : ℕ, emvG f i n / ((n : ℕ) : ℂ) :=
     tsum_congr (fun n => rfl)
   rw [hval] at hEP
   exact hEP.congr_fun (fun p => (hfactor p).symm)
@@ -937,7 +945,7 @@ private lemma emv_cube_mean_eq {k : ℕ} (f : (Fin k → ℕ) → ℂ)
     ((N : ℂ) ^ k)
     = ∏ i, ((N : ℂ)⁻¹ * ∑ m ∈ Finset.Icc 1 N, emvF f i m) := by
   have hfn : ∀ n ∈ Fintype.piFinset (fun _ : Fin k => Finset.Icc 1 N),
-    f n = ∏ i, emvF f i (n i) := by
+      f n = ∏ i, emvF f i (n i) := by
     intro n hn
     apply emv_prod_decomp_apply f hmult h1
     intro j
@@ -973,71 +981,72 @@ lemma euler_product_mean_value
     (∑' (ν : Fin k → ℕ),
     f (fun i => (p : ℕ) ^ (ν i)) / (((p : ℕ) : ℂ) ^ (∑ i, ν i)))) := by
 -- proof
-  obtain h10 | h11 := emv_f_one f hmult
+  rcases emv_f_one f hmult with h10 | h11
   · refine ⟨0, ?_, ?_⟩
     · have havg : (fun N : ℕ =>
-      (∑ n ∈ Fintype.piFinset (fun _ : Fin k => Finset.Icc 1 N), f n) /
-        ((N : ℂ) ^ k)) = fun _ => (0 : ℂ) := by
-      funext N
-      rw [Finset.sum_congr rfl
-        (fun n _ => emv_f_zero_of_one_zero f hmult h10 n)]
-      simp
-      rwa [havg]
+          (∑ n ∈ Fintype.piFinset (fun _ : Fin k => Finset.Icc 1 N), f n) /
+            ((N : ℂ) ^ k)) = fun _ => (0 : ℂ) := by
+        funext N
+        rw [Finset.sum_congr rfl
+          (fun n _ => emv_f_zero_of_one_zero f hmult h10 n)]
+        simp
+      rw [havg]
+      exact tendsto_const_nhds
     · have hfac : ∀ p : { p : ℕ // p.Prime },
-      ((1 - 1 / ((p : ℕ) : ℂ)) ^ k *
-        (∑' (ν : Fin k → ℕ),
-          f (fun i => (p : ℕ) ^ (ν i)) / (((p : ℕ) : ℂ) ^ (∑ i, ν i)))) = 0 := by
-      intro p
-      have hz : (fun ν : Fin k → ℕ => f (fun i => (p : ℕ) ^ (ν i)) /
-        (((p : ℕ) : ℂ) ^ (∑ i, ν i))) = fun _ => 0 :=
-        funext (fun ν => by
-          rw [emv_f_zero_of_one_zero f hmult h10, zero_div])
-      rw [hz, tsum_zero, mul_zero]
+          ((1 - 1 / ((p : ℕ) : ℂ)) ^ k *
+            (∑' (ν : Fin k → ℕ),
+              f (fun i => (p : ℕ) ^ (ν i)) / (((p : ℕ) : ℂ) ^ (∑ i, ν i)))) = 0 := by
+        intro p
+        have hz : (fun ν : Fin k → ℕ => f (fun i => (p : ℕ) ^ (ν i)) /
+            (((p : ℕ) : ℂ) ^ (∑ i, ν i))) = fun _ => 0 :=
+          funext (fun ν => by
+            rw [emv_f_zero_of_one_zero f hmult h10, zero_div])
+        rw [hz, tsum_zero, mul_zero]
       exact (tprod_of_exists_eq_zero ⟨⟨2, Nat.prime_two⟩, hfac _⟩).symm
   · refine ⟨∏ i, ∑' n : ℕ, emvG f i n / ((n : ℕ) : ℂ), ?_, ?_⟩
     · have hlim : ∀ i : Fin k, Filter.Tendsto
-      (fun N : ℕ => ((N : ℂ)⁻¹) * ∑ m ∈ Finset.Icc 1 N, emvF f i m)
-      Filter.atTop (nhds (∑' n : ℕ, emvG f i n / ((n : ℕ) : ℂ))) :=
-      fun i => emv_mean_tendsto f hmult h11 hsumm i
+          (fun N : ℕ => ((N : ℂ)⁻¹) * ∑ m ∈ Finset.Icc 1 N, emvF f i m)
+          Filter.atTop (nhds (∑' n : ℕ, emvG f i n / ((n : ℕ) : ℂ))) :=
+        fun i => emv_mean_tendsto f hmult h11 hsumm i
       have hprod := tendsto_finsetProd Finset.univ (fun i _ => hlim i)
       exact hprod.congr' (Filter.Eventually.of_forall
         (fun N => (emv_cube_mean_eq f hmult h11 N).symm))
     · have hHP : ∀ i ∈ (Finset.univ : Finset (Fin k)), HasProd
-      (fun p : Nat.Primes => (1 - 1 / ((((p : ℕ))) : ℂ)) *
-        ∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e)
-      (∑' n : ℕ, emvG f i n / ((n : ℕ) : ℂ)) :=
-      fun i _ => emv_euler_hasProd f hmult h11 hsumm i
+          (fun p : Nat.Primes => (1 - 1 / ((((p : ℕ))) : ℂ)) *
+            ∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e)
+          (∑' n : ℕ, emvG f i n / ((n : ℕ) : ℂ)) :=
+        fun i _ => emv_euler_hasProd f hmult h11 hsumm i
       have hBIG := hasProd_prod hHP
       have hlocal : ∀ p : Nat.Primes,
-        (∏ i ∈ (Finset.univ : Finset (Fin k)),
-          ((1 - 1 / ((((p : ℕ))) : ℂ)) *
-            ∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e))
-        = ((1 - 1 / (((p : ℕ)) : ℂ)) ^ k *
-          (∑' (ν : Fin k → ℕ),
-            f (fun i => ((p : ℕ)) ^ (ν i)) / ((((p : ℕ)) : ℂ) ^ (∑ i, ν i)))) := by
+          (∏ i ∈ (Finset.univ : Finset (Fin k)),
+            ((1 - 1 / ((((p : ℕ))) : ℂ)) *
+              ∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e))
+          = ((1 - 1 / (((p : ℕ)) : ℂ)) ^ k *
+            (∑' (ν : Fin k → ℕ),
+              f (fun i => ((p : ℕ)) ^ (ν i)) / ((((p : ℕ)) : ℂ) ^ (∑ i, ν i)))) := by
         intro p
         have h1p : (∏ i ∈ (Finset.univ : Finset (Fin k)),
-          ((1 - 1 / ((((p : ℕ))) : ℂ)) *
-            ∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e))
-          = (1 - 1 / ((((p : ℕ))) : ℂ)) ^ k *
-            ∏ i ∈ (Finset.univ : Finset (Fin k)),
-              (∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e) := by
+              ((1 - 1 / ((((p : ℕ))) : ℂ)) *
+                ∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e))
+            = (1 - 1 / ((((p : ℕ))) : ℂ)) ^ k *
+              ∏ i ∈ (Finset.univ : Finset (Fin k)),
+                (∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e) := by
           rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ,
             Fintype.card_fin]
         have hnorm1 : ∀ i : Fin k, Summable (fun e : ℕ =>
-          ‖emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e‖) :=
+            ‖emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e‖) :=
           fun i => (emv_local_factor (emvF f i) (((p : ℕ))) p.property
             (emv_slice_summable f hmult h11 hsumm i p)).1
         have hN9 := (emv_tsum_pi_prod (fun i e => emvF f i ((((p : ℕ))) ^ e) /
-          ((((p : ℕ))) : ℂ) ^ e) hnorm1).2
+            ((((p : ℕ))) : ℂ) ^ e) hnorm1).2
         have hX : (∏ i ∈ (Finset.univ : Finset (Fin k)),
-          (∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e))
-          = ∑' (ν : Fin k → ℕ),
-            f (fun i => ((p : ℕ)) ^ (ν i)) / ((((p : ℕ)) : ℂ) ^ (∑ i, ν i)) := by
+              (∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e))
+            = ∑' (ν : Fin k → ℕ),
+              f (fun i => ((p : ℕ)) ^ (ν i)) / ((((p : ℕ)) : ℂ) ^ (∑ i, ν i)) := by
           have hstep : (∏ i ∈ (Finset.univ : Finset (Fin k)),
-            (∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e))
-            = ∑' (ν : Fin k → ℕ), ∏ i,
-              (emvF f i ((((p : ℕ))) ^ (ν i)) / ((((p : ℕ))) : ℂ) ^ (ν i)) :=
+                (∑' e : ℕ, emvF f i ((((p : ℕ))) ^ e) / ((((p : ℕ))) : ℂ) ^ e))
+              = ∑' (ν : Fin k → ℕ), ∏ i,
+                (emvF f i ((((p : ℕ))) ^ (ν i)) / ((((p : ℕ))) : ℂ) ^ (ν i)) :=
             hN9.symm
           rw [hstep]
           apply tsum_congr
@@ -1045,18 +1054,18 @@ lemma euler_product_mean_value
           have hne : ∀ i : Fin k, ((((p : ℕ))) ^ (ν i)) ≠ 0 :=
             fun i => pow_ne_zero _ (ne_of_gt p.property.pos)
           have hdecomp : f (fun i => ((((p : ℕ))) ^ (ν i)))
-            = ∏ i, emvF f i ((((p : ℕ))) ^ (ν i)) :=
+              = ∏ i, emvF f i ((((p : ℕ))) ^ (ν i)) :=
             emv_prod_decomp_apply f hmult h11 hne
           rw [hdecomp, Finset.prod_div_distrib]
           congr 1
           exact Finset.prod_pow_eq_pow_sum _ _ _
         rw [h1p, hX]
       have hBIG2 : HasProd (fun p : Nat.Primes =>
-        ((1 - 1 / (((p : ℕ)) : ℂ)) ^ k *
-          (∑' (ν : Fin k → ℕ),
-            f (fun i => ((p : ℕ)) ^ (ν i)) / ((((p : ℕ)) : ℂ) ^ (∑ i, ν i)))))
-        (∏ i ∈ (Finset.univ : Finset (Fin k)),
-          (∑' n : ℕ, emvG f i n / ((n : ℕ) : ℂ))) :=
+          ((1 - 1 / (((p : ℕ)) : ℂ)) ^ k *
+            (∑' (ν : Fin k → ℕ),
+              f (fun i => ((p : ℕ)) ^ (ν i)) / ((((p : ℕ)) : ℂ) ^ (∑ i, ν i)))))
+          (∏ i ∈ (Finset.univ : Finset (Fin k)),
+            (∑' n : ℕ, emvG f i n / ((n : ℕ) : ℂ))) :=
         hBIG.congr_fun (fun p => (hlocal p).symm)
       exact (HasProd.tprod_eq hBIG2).symm
 
@@ -1064,4 +1073,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

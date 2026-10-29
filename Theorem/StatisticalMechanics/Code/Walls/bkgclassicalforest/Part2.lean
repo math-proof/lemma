@@ -52,7 +52,7 @@ theorem bkg_bc69_of_classical (L R : ℕ)
   fun ω => bkg_globalForest_of_classical ω L R (hdata ω)
 
 
-theorem bkg_bk_uniqueness_of_classical (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bkg_bk_uniqueness_of_classical (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
         {ω | numInfiniteClusters 2 ω = 0} = 1 ∨
@@ -65,7 +65,7 @@ theorem bkg_bk_uniqueness_of_classical (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < 
     (fun ω L R => bkg_globalForest_of_classical ω L R (hdata ω L R))
 
 
-theorem bkg_top_null_of_classical (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bkg_top_null_of_classical (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
       {ω | numInfiniteClusters 2 ω = ⊤} = 0 :=
@@ -82,7 +82,7 @@ theorem bkg_status :
     (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ),
       bkg_ClassicalForestData ω L R → bc69_Gn_globalForest ω L R) ∧
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p →
       (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) →
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
   refine ⟨?_, ?_, ?_⟩

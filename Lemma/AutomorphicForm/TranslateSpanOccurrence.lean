@@ -20,9 +20,9 @@ variable {F}
 
 theorem isInTranslateSpanOn_iff (D : Set (AdelicGL2 (𝓞 F) F)) (φ φ' : AdelicGL2 (𝓞 F) F → ℂ) :
     IsInTranslateSpanOn F D φ φ' ↔
-      ∀ ε : ℝ≥0∞, 0 < ε →
+      ∀ ε : ENNReal, 0 < ε →
         ∃ (s : Finset (AdelicGL2 (𝓞 F) F)) (l : AdelicGL2 (𝓞 F) F → ℂ),
-          ∫⁻ y in D, (‖φ' y - ∑ h ∈ s, l h * φ (y * h)‖₊ : ℝ≥0∞) ^ 2
+          ∫⁻ y in D, (‖φ' y - ∑ h ∈ s, l h * φ (y * h)‖₊ : ENNReal) ^ 2
             ∂(adelicGLHaar (Fin 2) (𝓞 F) F) < ε := Iff.rfl
 
 theorem isInTranslateSpanOn_self (D : Set (AdelicGL2 (𝓞 F) F)) (φ : AdelicGL2 (𝓞 F) F → ℂ) :
@@ -30,7 +30,7 @@ theorem isInTranslateSpanOn_self (D : Set (AdelicGL2 (𝓞 F) F)) (φ : AdelicGL
   intro ε hε
   refine ⟨{1}, fun _ => 1, ?_⟩
   have h0 : (fun y : AdelicGL2 (𝓞 F) F =>
-      ((‖φ y - ∑ h ∈ ({1} : Finset (AdelicGL2 (𝓞 F) F)), (1 : ℂ) * φ (y * h)‖₊ : ℝ≥0∞) ^ 2))
+      ((‖φ y - ∑ h ∈ ({1} : Finset (AdelicGL2 (𝓞 F) F)), (1 : ℂ) * φ (y * h)‖₊ : ENNReal) ^ 2))
         = fun _ => 0 := by
     funext y
     simp

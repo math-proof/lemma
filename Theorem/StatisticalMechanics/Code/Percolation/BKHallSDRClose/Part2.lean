@@ -128,7 +128,7 @@ theorem bhs_hallArmEnds_of_noTrif (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ)
     exact Nat.zero_le _
 
 
-theorem bhs_burton_keane_bernoulli_of_hall (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bhs_burton_keane_bernoulli_of_hall (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bhs_HallArmEnds ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
           {ω | numInfiniteClusters d ω = ⊤} →

@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Abbrev.NumberTheory.NumberField.Idele.Part2
 open scoped RestrictedProduct NumberField.AdeleRing
-open InfinitePlace AbsoluteValue.Completion InfinitePlace.Completion IsDedekindDomain
+open NumberField.InfinitePlace NumberField.InfinitePlace.Completion AbsoluteValue.Completion IsDedekindDomain
 open NumberField
 open FiniteIdeleGroup
 open TopologicalIdeleGroup
@@ -106,8 +106,8 @@ lemma principalEmbedding_injective
 -- proof
   intro x y hxy
   have hmap :
-    unitsEquiv R K (Units.map (algebraMap K (AdeleRing R K)).toMonoidHom x) =
-      unitsEquiv R K (Units.map (algebraMap K (AdeleRing R K)).toMonoidHom y) := by
+      unitsEquiv R K (Units.map (algebraMap K (AdeleRing R K)).toMonoidHom x) =
+        unitsEquiv R K (Units.map (algebraMap K (AdeleRing R K)).toMonoidHom y) := by
     simpa only [unitsEquiv_globalUnit] using hxy
   exact Units.map_injective (AdeleRing.algebraMap_injective R K) <|
     (unitsEquiv R K).injective hmap
@@ -144,4 +144,4 @@ private lemma isOpen_localIntegralUnitSubgroup_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

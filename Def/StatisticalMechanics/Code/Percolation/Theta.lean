@@ -29,15 +29,15 @@ def percolationEvent (d : ℕ) : Set (ConfigSpace (Sym2 (Site d))) :=
   {ω | (StatMech.Lattice.cluster d ω (origin d)).Infinite}
 
 
-noncomputable def theta (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) : ℝ :=
+noncomputable def theta (d : ℕ) (p : NNReal) (hp : p ≤ 1) : ℝ :=
   (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (percolationEvent d)
 
 
-def subcriticalSet (d : ℕ) : Set ℝ≥0 :=
-  {p : ℝ≥0 | ∃ hp : p ≤ 1, theta d p hp = 0}
+def subcriticalSet (d : ℕ) : Set NNReal :=
+  {p : NNReal | ∃ hp : p ≤ 1, theta d p hp = 0}
 
 
-noncomputable def pc (d : ℕ) : ℝ≥0 :=
+noncomputable def pc (d : ℕ) : NNReal :=
   sSup (subcriticalSet d)
 
 end Percolation

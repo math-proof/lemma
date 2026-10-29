@@ -37,8 +37,7 @@ private lemma chi9 : (ZMod.χ₄ 9 : ℤ) = 1 :=
 [jacMain3_7](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacMain3_7 : jacobiSym ((7 : ℕ) : ℤ) (3 : ℤ).natAbs = 1 := by
-norm_num
+private lemma jacMain3_7 : jacobiSym ((7 : ℕ) : ℤ) (3 : ℤ).natAbs = 1 := by norm_num
 
 /--
 [kronMain3_7](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -90,8 +89,7 @@ private lemma bridgeMain3_7 :
 [jacMainNeg5_7](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacMainNeg5_7 : jacobiSym ((7 : ℕ) : ℤ) (-5 : ℤ).natAbs = -1 := by
-norm_num
+private lemma jacMainNeg5_7 : jacobiSym ((7 : ℕ) : ℤ) (-5 : ℤ).natAbs = -1 := by norm_num
 
 /--
 [kronMainNeg5_7](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -143,8 +141,7 @@ private lemma bridgeMainNeg5_7 :
 [jacMain7_5](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacMain7_5 : jacobiSym ((5 : ℕ) : ℤ) (7 : ℤ).natAbs = -1 := by
-norm_num
+private lemma jacMain7_5 : jacobiSym ((5 : ℕ) : ℤ) (7 : ℤ).natAbs = -1 := by norm_num
 
 /--
 [kronMain7_5](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -187,8 +184,7 @@ private lemma bridgeMain7_5 :
 [jacOut5_3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacOut5_3 : jacobiSym ((3 : ℕ) : ℤ) (5 : ℤ).natAbs = -1 := by
-norm_num
+private lemma jacOut5_3 : jacobiSym ((3 : ℕ) : ℤ) (5 : ℤ).natAbs = -1 := by norm_num
 
 /--
 [kronOut5_3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -250,8 +246,7 @@ private lemma kronComp3_9 : kroneckerSym (4 * (3 : ℤ)) 9 = 0 := by
 [jacComp3_9](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacComp3_9 : jacobiSym ((9 : ℕ) : ℤ) (3 : ℤ).natAbs = 0 := by
-norm_num
+private lemma jacComp3_9 : jacobiSym ((9 : ℕ) : ℤ) (3 : ℤ).natAbs = 0 := by norm_num
 
 /--
 [agreeComp3_9](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -306,8 +301,7 @@ private lemma kronComp7_9 : kroneckerSym (4 * (7 : ℤ)) 9 = 1 := by
 [jacComp7_9](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacComp7_9 : jacobiSym ((9 : ℕ) : ℤ) (7 : ℤ).natAbs = 1 := by
-norm_num
+private lemma jacComp7_9 : jacobiSym ((9 : ℕ) : ℤ) (7 : ℤ).natAbs = 1 := by norm_num
 
 /--
 [agreeComp7_9](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -362,8 +356,7 @@ private lemma kronCompNeg5_9 : kroneckerSym (4 * (-5 : ℤ)) 9 = 1 := by
 [jacCompNeg5_9](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacCompNeg5_9 : jacobiSym ((9 : ℕ) : ℤ) (-5 : ℤ).natAbs = 1 := by
-norm_num
+private lemma jacCompNeg5_9 : jacobiSym ((9 : ℕ) : ℤ) (-5 : ℤ).natAbs = 1 := by norm_num
 
 /--
 [agreeCompNeg5_9](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -396,8 +389,7 @@ private lemma chi15 : (ZMod.χ₄ 15 : ℤ) = -1 :=
 [jacComp7_15](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacComp7_15 : jacobiSym ((15 : ℕ) : ℤ) (7 : ℤ).natAbs = 1 := by
-norm_num
+private lemma jacComp7_15 : jacobiSym ((15 : ℕ) : ℤ) (7 : ℤ).natAbs = 1 := by norm_num
 
 /--
 [kronComp28_15](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -444,22 +436,19 @@ private lemma bridgeComp7_15 :
 [jac4_3_7](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jac4_3_7 : jacobiSym (4 * (3 : ℤ)) 7 = -1 := by
-norm_num
+private lemma jac4_3_7 : jacobiSym (4 * (3 : ℤ)) 7 = -1 := by norm_num
 
 /--
 [jacm_3_7](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacm_3_7 : jacobiSym (3 : ℤ) 7 = -1 := by
-norm_num
+private lemma jacm_3_7 : jacobiSym (3 : ℤ) 7 = -1 := by norm_num
 
 /--
 [jac2_3_7](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jac2_3_7 : jacobiSym (2 * (3 : ℤ)) 7 = -1 := by
-norm_num
+private lemma jac2_3_7 : jacobiSym (2 * (3 : ℤ)) 7 = -1 := by norm_num
 
 /--
 [chi8_7](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -505,22 +494,19 @@ private lemma bridgeRed2_3_7 :
 [jac4_5_3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jac4_5_3 : jacobiSym (4 * (5 : ℤ)) 3 = -1 := by
-norm_num
+private lemma jac4_5_3 : jacobiSym (4 * (5 : ℤ)) 3 = -1 := by norm_num
 
 /--
 [jacm_5_3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacm_5_3 : jacobiSym (5 : ℤ) 3 = -1 := by
-norm_num
+private lemma jacm_5_3 : jacobiSym (5 : ℤ) 3 = -1 := by norm_num
 
 /--
 [jac2_5_3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jac2_5_3 : jacobiSym (2 * (5 : ℤ)) 3 = 1 := by
-norm_num
+private lemma jac2_5_3 : jacobiSym (2 * (5 : ℤ)) 3 = 1 := by norm_num
 
 /--
 [chi8_3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -566,22 +552,19 @@ private lemma bridgeRed2_5_3 :
 [jac4_N3_5](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jac4_N3_5 : jacobiSym (4 * (-3 : ℤ)) 5 = -1 := by
-norm_num
+private lemma jac4_N3_5 : jacobiSym (4 * (-3 : ℤ)) 5 = -1 := by norm_num
 
 /--
 [jacm_N3_5](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacm_N3_5 : jacobiSym (-3 : ℤ) 5 = -1 := by
-norm_num
+private lemma jacm_N3_5 : jacobiSym (-3 : ℤ) 5 = -1 := by norm_num
 
 /--
 [jac2_N3_5](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jac2_N3_5 : jacobiSym (2 * (-3 : ℤ)) 5 = 1 := by
-norm_num
+private lemma jac2_N3_5 : jacobiSym (2 * (-3 : ℤ)) 5 = 1 := by norm_num
 
 /--
 [chi8_5](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -693,8 +676,7 @@ private lemma bridgeMul7_3_5 :
 [jacEqNeg1_9](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacEqNeg1_9 : jacobiSym (-1 : ℤ) 9 = 1 := by
-norm_num
+private lemma jacEqNeg1_9 : jacobiSym (-1 : ℤ) 9 = 1 := by norm_num
 
 /--
 [bridgeEqNeg1_9](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -728,8 +710,7 @@ private lemma bridgeOdd7_15 :
 [jacOddNeg1_9](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma jacOddNeg1_9 : jacobiSym ((9 : ℕ) : ℤ) (-1 : ℤ).natAbs = 1 := by
-norm_num
+private lemma jacOddNeg1_9 : jacobiSym ((9 : ℕ) : ℤ) (-1 : ℤ).natAbs = 1 := by norm_num
 
 /--
 [bridgeOddNeg1_9](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
@@ -745,57 +726,49 @@ private lemma bridgeOddNeg1_9 :
 [scope_mod3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma scope_mod3 : (3 : ℤ) % 4 = 3 := by
-decide
+private lemma scope_mod3 : (3 : ℤ) % 4 = 3 := by decide
 
 /--
 [scope_modNeg5](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma scope_modNeg5 : (-5 : ℤ) % 4 = 3 := by
-decide
+private lemma scope_modNeg5 : (-5 : ℤ) % 4 = 3 := by decide
 
 /--
 [scope_mod7](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma scope_mod7 : (7 : ℤ) % 4 = 3 := by
-decide
+private lemma scope_mod7 : (7 : ℤ) % 4 = 3 := by decide
 
 /--
 [scope_modNeg1](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma scope_modNeg1 : (-1 : ℤ) % 4 = 3 := by
-decide
+private lemma scope_modNeg1 : (-1 : ℤ) % 4 = 3 := by decide
 
 /--
 [scope_mod5](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma scope_mod5 : (5 : ℤ) % 4 = 1 := by
-decide
+private lemma scope_mod5 : (5 : ℤ) % 4 = 1 := by decide
 
 /--
 [scope_odd7](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma scope_odd7 : Odd (7 : ℕ) := by
-decide
+private lemma scope_odd7 : Odd (7 : ℕ) := by decide
 
 /--
 [scope_odd9](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma scope_odd9 : Odd (9 : ℕ) := by
-decide
+private lemma scope_odd9 : Odd (9 : ℕ) := by decide
 
 /--
 [scope_odd15](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean)
 -/
 @[path]
-private lemma scope_odd15 : Odd (15 : ℕ) := by
-decide
+private lemma scope_odd15 : Odd (15 : ℕ) := by decide
 
 
 -- created on 2026-10-23

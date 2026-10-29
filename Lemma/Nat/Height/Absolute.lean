@@ -45,7 +45,7 @@ namespace NumberField
 @[path]
 lemma primitiveIntMinpoly_natDegree
   [Field K] [Algebra ℚ K]
-  {x : K} :
+  (x : K) :
 -- imply
   (primitiveIntMinpoly x).natDegree = (minpoly ℚ x).natDegree := by
 -- proof
@@ -110,7 +110,7 @@ namespace NumberField
 @[path]
 lemma one_le_absMulHeight₁
   [Field L] [CharZero L]
-  {x : L} :
+  (x : L) :
 -- imply
   1 ≤ absMulHeight₁ x := by
 -- proof

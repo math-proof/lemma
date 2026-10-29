@@ -18,7 +18,7 @@ private lemma exists_uniform_remoteParameter_dist_separation_eq
   (hcross : ∀ j : Fin n, kwComplexCross (polygon.edgeVector j) (polygon.edgeVector (j + 1)) ≠ 0)
   (hcoords : ∀ j : Fin n, (polygon.edgeVector j).re ≠ 0 ∧ (polygon.edgeVector j).im ≠ 0) :
 -- imply
-  ∃ sep : ℝ≥0, 0 < sep ∧ ∀ i : Fin n, ∀ first : Bool, ∀ x ∈ (if first then kwRawClosedEdge patch.idealVertex (kwStairEvenIndex i (Fin.last M)) else kwRawClosedEdge patch.idealVertex (kwStairOddIndex i (Fin.last M))), ∀ y ∈ (if first then patch.outgoingParameterCarrier (i + 1) else patch.incomingParameterCarrier i), (sep : ℝ) < dist x y := by
+  ∃ sep : NNReal, 0 < sep ∧ ∀ i : Fin n, ∀ first : Bool, ∀ x ∈ (if first then kwRawClosedEdge patch.idealVertex (kwStairEvenIndex i (Fin.last M)) else kwRawClosedEdge patch.idealVertex (kwStairOddIndex i (Fin.last M))), ∀ y ∈ (if first then patch.outgoingParameterCarrier (i + 1) else patch.incomingParameterCarrier i), (sep : ℝ) < dist x y := by
 -- proof
   apply StatMech.FrontierA.KWAdaptivePatchedData.exists_uniform_remoteParameter_dist_separation patch hcross hcoords
 
@@ -36,7 +36,7 @@ private lemma exists_uniform_remoteParameter_radius_eq
   (hcross : ∀ j : Fin n, kwComplexCross (polygon.edgeVector j) (polygon.edgeVector (j + 1)) ≠ 0)
   (hcoords : ∀ j : Fin n, (polygon.edgeVector j).re ≠ 0 ∧ (polygon.edgeVector j).im ≠ 0) :
 -- imply
-  ∃ sep : ℝ≥0, 0 < sep ∧ ∀ {M : ℕ} [NeZero M] (hM : 2 ≤ M), let patch := scales.toPatchedData hM ∀ i : Fin n, ∀ first : Bool, ∀ x ∈ (if first then kwRawClosedEdge patch.idealVertex (kwStairEvenIndex i (Fin.last M)) else kwRawClosedEdge patch.idealVertex (kwStairOddIndex i (Fin.last M))), ∀ y ∈ (if first then patch.outgoingParameterCarrier (i + 1) else patch.incomingParameterCarrier i), (sep : ℝ) < dist x y := by
+  ∃ sep : NNReal, 0 < sep ∧ ∀ {M : ℕ} [NeZero M] (hM : 2 ≤ M), let patch := scales.toPatchedData hM ∀ i : Fin n, ∀ first : Bool, ∀ x ∈ (if first then kwRawClosedEdge patch.idealVertex (kwStairEvenIndex i (Fin.last M)) else kwRawClosedEdge patch.idealVertex (kwStairOddIndex i (Fin.last M))), ∀ y ∈ (if first then patch.outgoingParameterCarrier (i + 1) else patch.incomingParameterCarrier i), (sep : ℝ) < dist x y := by
 -- proof
   apply StatMech.FrontierA.KWSmallAdaptiveConnectorScales.exists_uniform_remoteParameter_radius scales hcross hcoords
 
@@ -54,7 +54,7 @@ private lemma firstConnector_disjoint_outgoingMiddle_of_fine_eq
   {even : Bool}
 -- given
   (patch : KWAdaptivePatchedData (M := M) polygon)
-  (r sep : ℝ≥0)
+  (r sep : NNReal)
   (hr : 0 < r)
   (hfine : KWEndpointInteriorMeshWithin patch.data r)
   (hsep : ∀ i : Fin n, ∀ first : Bool, ∀ x ∈ (if first then kwRawClosedEdge patch.idealVertex (kwStairEvenIndex i (Fin.last M)) else kwRawClosedEdge patch.idealVertex (kwStairOddIndex i (Fin.last M))), ∀ y ∈ (if first then patch.outgoingParameterCarrier (i + 1) else patch.incomingParameterCarrier i), (sep : ℝ) < dist x y)
@@ -78,7 +78,7 @@ private lemma secondConnector_disjoint_incomingMiddle_of_fine_eq
   {even : Bool}
 -- given
   (patch : KWAdaptivePatchedData (M := M) polygon)
-  (r sep : ℝ≥0)
+  (r sep : NNReal)
   (hr : 0 < r)
   (hfine : KWEndpointInteriorMeshWithin patch.data r)
   (hsep : ∀ i : Fin n, ∀ first : Bool, ∀ x ∈ (if first then kwRawClosedEdge patch.idealVertex (kwStairEvenIndex i (Fin.last M)) else kwRawClosedEdge patch.idealVertex (kwStairOddIndex i (Fin.last M))), ∀ y ∈ (if first then patch.outgoingParameterCarrier (i + 1) else patch.incomingParameterCarrier i), (sep : ℝ) < dist x y)
@@ -103,7 +103,7 @@ private lemma connector_disjoint_incomingMiddle_of_fine_eq
 -- given
   (patch : KWAdaptivePatchedData (M := M) polygon)
   (hcoords : ∀ j : Fin n, (polygon.edgeVector j).re ≠ 0 ∧ (polygon.edgeVector j).im ≠ 0)
-  (r sep : ℝ≥0)
+  (r sep : NNReal)
   (hr : 0 < r)
   (hfine : KWEndpointInteriorMeshWithin patch.data r)
   (hsep : ∀ i : Fin n, ∀ first : Bool, ∀ x ∈ (if first then kwRawClosedEdge patch.idealVertex (kwStairEvenIndex i (Fin.last M)) else kwRawClosedEdge patch.idealVertex (kwStairOddIndex i (Fin.last M))), ∀ y ∈ (if first then patch.outgoingParameterCarrier (i + 1) else patch.incomingParameterCarrier i), (sep : ℝ) < dist x y)
@@ -129,7 +129,7 @@ private lemma connector_disjoint_outgoingMiddle_of_fine_eq
 -- given
   (patch : KWAdaptivePatchedData (M := M) polygon)
   (hcoords : ∀ j : Fin n, (polygon.edgeVector j).re ≠ 0 ∧ (polygon.edgeVector j).im ≠ 0)
-  (r sep : ℝ≥0)
+  (r sep : NNReal)
   (hr : 0 < r)
   (hfine : KWEndpointInteriorMeshWithin patch.data r)
   (hsep : ∀ i : Fin n, ∀ first : Bool, ∀ x ∈ (if first then kwRawClosedEdge patch.idealVertex (kwStairEvenIndex i (Fin.last M)) else kwRawClosedEdge patch.idealVertex (kwStairOddIndex i (Fin.last M))), ∀ y ∈ (if first then patch.outgoingParameterCarrier (i + 1) else patch.incomingParameterCarrier i), (sep : ℝ) < dist x y)
@@ -151,7 +151,7 @@ private lemma exists_interiorMesh_patch_eq
   {R : ℝ}
   {scales : KWSmallAdaptiveConnectorScales polygon R}
 -- given
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r) :
 -- imply
   ∃ M : ℕ, ∃ hM : 2 ≤ M, letI : NeZero M := ⟨by omega⟩ KWEndpointInteriorMeshWithin (scales.toPatchedData hM).data r := by

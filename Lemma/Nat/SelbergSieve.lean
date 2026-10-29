@@ -11,8 +11,8 @@ namespace MathlibExt.SelbergSieve
 -/
 @[path]
 lemma levelSum_ge_one
-  {s : BoundingSieve}
-  {R : ℕ}
+  (s : BoundingSieve)
+  (R : ℕ)
 -- given
   (hR : 1 ≤ R) :
 -- imply
@@ -40,11 +40,11 @@ end MathlibExt.SelbergSieve
 
 namespace MathlibExt.SelbergSieve
 
+open ArithmeticFunction in
 /--
 [sum_moebius_div_filter_dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SelbergSieve.lean)
 -/
 @[path]
-open ArithmeticFunction in
 private lemma sum_moebius_div_filter_dvd (m l : ℕ) (hm : m ≠ 0) :
   (∑ d ∈ m.divisors.filter (fun d ↦ l ∣ d),
     ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ)) =
@@ -62,8 +62,8 @@ private lemma sum_moebius_div_filter_dvd (m l : ℕ) (hm : m ≠ 0) :
     have hlk0 : l * k ≠ 0 := mul_ne_zero hl0 hk0
     have hlpos : 0 < l := Nat.pos_of_ne_zero hl0
     have hbij : ∑ d ∈ (l * k).divisors.filter (fun d ↦ l ∣ d),
-      ((moebius ((l * k) / d) : ℤ) : ℝ) =
-      ∑ e ∈ k.divisors, ((moebius (k / e) : ℤ) : ℝ) := by
+          ((moebius ((l * k) / d) : ℤ) : ℝ) =
+        ∑ e ∈ k.divisors, ((moebius (k / e) : ℤ) : ℝ) := by
       apply Finset.sum_nbij' (fun d ↦ d / l) (fun e ↦ l * e)
       · intro d hd
         simp only [Finset.mem_filter, Nat.mem_divisors] at hd
@@ -71,7 +71,8 @@ private lemma sum_moebius_div_filter_dvd (m l : ℕ) (hm : m ≠ 0) :
         have hddvd : d / l ∣ k := by
           have hmul : l * (d / l) = d := Nat.mul_div_cancel' hld
           have hmulDvd : l * (d / l) ∣ l * k := by
-            rwa [hmul]
+            rw [hmul]
+            exact hdvd
           exact (Nat.mul_dvd_mul_iff_left hlpos).mp hmulDvd
         exact Nat.mem_divisors.mpr ⟨hddvd, hk0⟩
       · intro e he
@@ -94,31 +95,31 @@ private lemma sum_moebius_div_filter_dvd (m l : ℕ) (hm : m ≠ 0) :
     rw [hbij]
     rw [Nat.sum_div_divisors k (fun e ↦ ((moebius e : ℤ) : ℝ))]
     have hzetaK : (↑moebius * ↑zeta : ArithmeticFunction ℝ) k =
-      (1 : ArithmeticFunction ℝ) k := by
+        (1 : ArithmeticFunction ℝ) k := by
       rw [coe_moebius_mul_coe_zeta]
     rw [coe_mul_zeta_apply] at hzetaK
     simp only [one_apply] at hzetaK
     have hagree : ∀ e : ℕ, ((↑moebius : ArithmeticFunction ℝ) e) =
-      ((moebius e : ℤ) : ℝ) := by
+        ((moebius e : ℤ) : ℝ) := by
       intro e
       rw [intCoe_apply]
     have hsum : (∑ e ∈ k.divisors, ((moebius e : ℤ) : ℝ)) =
-      (if k = 1 then 1 else 0) := by
+        (if k = 1 then 1 else 0) := by
       simpa [hagree] using hzetaK
     rw [hsum]
     by_cases hk1 : k = 1
     · subst k
       simp
     · have hne : ¬l * k = l := by
-      intro hcon
-      apply hk1
-      exact Nat.mul_left_cancel hlpos (by simpa using hcon)
+        intro hcon
+        apply hk1
+        exact Nat.mul_left_cancel hlpos (by simpa using hcon)
       simp [hk1, hne]
   · have hempty : m.divisors.filter (fun d ↦ l ∣ d) = ∅ := by
-    apply Finset.eq_empty_of_forall_notMem
-    intro d hd
-    simp only [Finset.mem_filter, Nat.mem_divisors] at hd
-    exact hlm (hd.2.trans hd.1.1)
+      apply Finset.eq_empty_of_forall_notMem
+      intro d hd
+      simp only [Finset.mem_filter, Nat.mem_divisors] at hd
+      exact hlm (hd.2.trans hd.1.1)
     rw [hempty, Finset.sum_empty]
     have hne : m ≠ l := by
       rintro rfl
@@ -146,21 +147,21 @@ lemma levelWeights_inner
   have hP0 := BoundingSieve.prodPrimes_ne_zero (s := s)
   have hlD : l ∈ s.prodPrimes.divisors := Nat.mem_divisors.mpr ⟨hl, hP0⟩
   have hcancel : ∀ d ∈ s.prodPrimes.divisors,
-    s.nu d * levelWeights s R d =
-      ∑ m ∈ s.prodPrimes.divisors,
-        if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-          levelY s R m else 0 := by
+      s.nu d * levelWeights s R d =
+        ∑ m ∈ s.prodPrimes.divisors,
+          if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
+            levelY s R m else 0 := by
     intro d hd
     rw [Nat.mem_divisors] at hd
     have hne := BoundingSieve.nu_ne_zero (s := s) hd.1
     unfold levelWeights
     rw [← mul_assoc, mul_inv_cancel₀ hne, one_mul]
   have hdouble : (∑ d ∈ s.prodPrimes.divisors,
-    if l ∣ d then s.nu d * levelWeights s R d else 0) =
-    ∑ d ∈ s.prodPrimes.divisors, ∑ m ∈ s.prodPrimes.divisors,
-      if l ∣ d ∧ d ∣ m then
-        ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-          levelY s R m else 0 := by
+        if l ∣ d then s.nu d * levelWeights s R d else 0) =
+      ∑ d ∈ s.prodPrimes.divisors, ∑ m ∈ s.prodPrimes.divisors,
+        if l ∣ d ∧ d ∣ m then
+          ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
+            levelY s R m else 0 := by
     apply Finset.sum_congr rfl
     intro d hd
     by_cases hld : l ∣ d
@@ -177,11 +178,11 @@ lemma levelWeights_inner
       rw [ite_eq_right (fun h ↦ hld h.1)]
   rw [hdouble, Finset.sum_comm]
   have hinner : ∀ m ∈ s.prodPrimes.divisors,
-    (∑ d ∈ s.prodPrimes.divisors,
-      if l ∣ d ∧ d ∣ m then
-        ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-          levelY s R m else 0) =
-      (if m = l then levelY s R m else 0) := by
+      (∑ d ∈ s.prodPrimes.divisors,
+        if l ∣ d ∧ d ∣ m then
+          ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
+            levelY s R m else 0) =
+        (if m = l then levelY s R m else 0) := by
     intro m hm
     rw [Nat.mem_divisors] at hm
     have hm0 : m ≠ 0 := by
@@ -189,7 +190,7 @@ lemma levelWeights_inner
       subst m
       exact hP0 (by simpa only [zero_dvd_iff] using hm.1)
     have hset : s.prodPrimes.divisors.filter (fun d ↦ l ∣ d ∧ d ∣ m) =
-      m.divisors.filter (fun d ↦ l ∣ d) := by
+        m.divisors.filter (fun d ↦ l ∣ d) := by
       ext d
       simp only [Finset.mem_filter, Nat.mem_divisors]
       constructor
@@ -199,11 +200,11 @@ lemma levelWeights_inner
         exact ⟨⟨hdm.trans hm.1, hP0⟩, hld, hdm⟩
     rw [← Finset.sum_filter, hset]
     have hfactor : (∑ d ∈ m.divisors.filter (fun d ↦ l ∣ d),
-      ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-        levelY s R m) =
-      (∑ d ∈ m.divisors.filter (fun d ↦ l ∣ d),
-        ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ)) *
-          levelY s R m := by
+          ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
+            levelY s R m) =
+        (∑ d ∈ m.divisors.filter (fun d ↦ l ∣ d),
+          ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ)) *
+            levelY s R m := by
       rw [Finset.sum_mul]
     rw [hfactor, sum_moebius_div_filter_dvd m l hm0]
     by_cases hml : m = l
@@ -233,8 +234,8 @@ lemma levelWeights_one
   have hG0 : levelSum s R ≠ 0 := by linarith
   have hnu1 : s.nu 1 = 1 := s.nu_mult.map_one
   have hw1 : levelWeights s R 1 =
-    ∑ m ∈ s.prodPrimes.divisors,
-      ((ArithmeticFunction.moebius m : ℤ) : ℝ) * levelY s R m := by
+      ∑ m ∈ s.prodPrimes.divisors,
+        ((ArithmeticFunction.moebius m : ℤ) : ℝ) * levelY s R m := by
     unfold levelWeights
     rw [hnu1, inv_one, one_mul]
     apply Finset.sum_congr rfl
@@ -242,9 +243,9 @@ lemma levelWeights_one
     rw [ite_eq_left (one_dvd m), Nat.div_one]
   rw [hw1]
   have hterm : ∀ m ∈ s.prodPrimes.divisors,
-    ((ArithmeticFunction.moebius m : ℤ) : ℝ) * levelY s R m =
-      (if m ∈ levelSet s R then
-        s.selbergTerms m / levelSum s R else 0) := by
+      ((ArithmeticFunction.moebius m : ℤ) : ℝ) * levelY s R m =
+        (if m ∈ levelSet s R then
+          s.selbergTerms m / levelSum s R else 0) := by
     intro m hm
     unfold levelY
     by_cases hmem : m ∈ levelSet s R
@@ -252,7 +253,7 @@ lemma levelWeights_one
       rw [Nat.mem_divisors] at hm
       have hsq := BoundingSieve.squarefree_of_dvd_prodPrimes (s := s) hm.1
       have hmu : ((ArithmeticFunction.moebius m : ℤ) : ℝ) *
-        ((ArithmeticFunction.moebius m : ℤ) : ℝ) = 1 := by
+          ((ArithmeticFunction.moebius m : ℤ) : ℝ) = 1 := by
         have h1 := ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq
         have h2 : ((ArithmeticFunction.moebius m ^ 2 : ℤ) : ℝ) = 1 := by
           exact_mod_cast h1
@@ -260,19 +261,19 @@ lemma levelWeights_one
         simpa only [pow_two] using h2
       calc
         ((ArithmeticFunction.moebius m : ℤ) : ℝ) *
-          (((ArithmeticFunction.moebius m : ℤ) : ℝ) * s.selbergTerms m /
-            levelSum s R) =
-          (((ArithmeticFunction.moebius m : ℤ) : ℝ) *
-            ((ArithmeticFunction.moebius m : ℤ) : ℝ) * s.selbergTerms m) /
-              levelSum s R := by ring
+            (((ArithmeticFunction.moebius m : ℤ) : ℝ) * s.selbergTerms m /
+              levelSum s R) =
+            (((ArithmeticFunction.moebius m : ℤ) : ℝ) *
+              ((ArithmeticFunction.moebius m : ℤ) : ℝ) * s.selbergTerms m) /
+                levelSum s R := by ring
         _ = s.selbergTerms m / levelSum s R := by rw [hmu, one_mul]
     · rw [ite_eq_right hmem, ite_eq_right hmem, mul_zero]
   rw [Finset.sum_congr rfl hterm]
   have hfilter : (∑ m ∈ s.prodPrimes.divisors,
-    if m ∈ levelSet s R then
-      s.selbergTerms m / levelSum s R else 0) =
-    ∑ m ∈ levelSet s R,
-      s.selbergTerms m / levelSum s R := by
+        if m ∈ levelSet s R then
+          s.selbergTerms m / levelSum s R else 0) =
+      ∑ m ∈ levelSet s R,
+        s.selbergTerms m / levelSum s R := by
     rw [← Finset.sum_filter]
     congr 1
     ext m
@@ -309,11 +310,11 @@ lemma levelWeights_mainSum
   have hG0 : levelSum s R ≠ 0 := by linarith
   rw [BoundingSieve.mainSum_lambdaSquared_eq_sum_mul_sum_sq]
   have hterm : ∀ l ∈ s.prodPrimes.divisors,
-    (s.selbergTerms l)⁻¹ *
-      (∑ d ∈ s.prodPrimes.divisors,
-        if l ∣ d then s.nu d * levelWeights s R d else 0) ^ 2 =
-      (if l ∈ levelSet s R then
-        s.selbergTerms l / (levelSum s R) ^ 2 else 0) := by
+      (s.selbergTerms l)⁻¹ *
+        (∑ d ∈ s.prodPrimes.divisors,
+          if l ∣ d then s.nu d * levelWeights s R d else 0) ^ 2 =
+        (if l ∈ levelSet s R then
+          s.selbergTerms l / (levelSum s R) ^ 2 else 0) := by
     intro l hl
     rw [Nat.mem_divisors] at hl
     rw [levelWeights_inner s R l hl.1]
@@ -323,7 +324,7 @@ lemma levelWeights_mainSum
       have hsq := BoundingSieve.squarefree_of_dvd_prodPrimes (s := s) hl.1
       have hpos := BoundingSieve.selbergTerms_pos (s := s) hl.1
       have hmu : ((ArithmeticFunction.moebius l : ℤ) : ℝ) *
-        ((ArithmeticFunction.moebius l : ℤ) : ℝ) = 1 := by
+          ((ArithmeticFunction.moebius l : ℤ) : ℝ) = 1 := by
         have h1 := ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq
         have h2 : ((ArithmeticFunction.moebius l ^ 2 : ℤ) : ℝ) = 1 := by
           exact_mod_cast h1
@@ -331,11 +332,11 @@ lemma levelWeights_mainSum
         simpa only [pow_two] using h2
       calc
         (s.selbergTerms l)⁻¹ *
-          (((ArithmeticFunction.moebius l : ℤ) : ℝ) * s.selbergTerms l /
-            levelSum s R) ^ 2 =
-          (((ArithmeticFunction.moebius l : ℤ) : ℝ) *
-            ((ArithmeticFunction.moebius l : ℤ) : ℝ)) * s.selbergTerms l /
-              (levelSum s R) ^ 2 := by
+            (((ArithmeticFunction.moebius l : ℤ) : ℝ) * s.selbergTerms l /
+              levelSum s R) ^ 2 =
+            (((ArithmeticFunction.moebius l : ℤ) : ℝ) *
+              ((ArithmeticFunction.moebius l : ℤ) : ℝ)) * s.selbergTerms l /
+                (levelSum s R) ^ 2 := by
           field_simp
         _ = s.selbergTerms l / (levelSum s R) ^ 2 := by
           rw [hmu, one_mul]
@@ -343,10 +344,10 @@ lemma levelWeights_mainSum
       simp
   rw [Finset.sum_congr rfl hterm]
   have hfilter : (∑ l ∈ s.prodPrimes.divisors,
-    if l ∈ levelSet s R then
-      s.selbergTerms l / (levelSum s R) ^ 2 else 0) =
-    ∑ l ∈ levelSet s R,
-      s.selbergTerms l / (levelSum s R) ^ 2 := by
+        if l ∈ levelSet s R then
+          s.selbergTerms l / (levelSum s R) ^ 2 else 0) =
+      ∑ l ∈ levelSet s R,
+        s.selbergTerms l / (levelSum s R) ^ 2 := by
     rw [← Finset.sum_filter]
     congr 1
     ext l
@@ -384,9 +385,9 @@ lemma levelWeights_nu_mul_abs_le
   have hG0 := hGpos.ne'
   have hnu := BoundingSieve.nu_ne_zero (s := s) hd
   have hcancel : s.nu d * levelWeights s R d =
-    ∑ m ∈ s.prodPrimes.divisors,
-      if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-        levelY s R m else 0 := by
+      ∑ m ∈ s.prodPrimes.divisors,
+        if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
+          levelY s R m else 0 := by
     unfold levelWeights
     rw [← mul_assoc, mul_inv_cancel₀ hnu, one_mul]
   rw [hcancel]
@@ -394,39 +395,39 @@ lemma levelWeights_nu_mul_abs_le
     intro n
     exact_mod_cast ArithmeticFunction.abs_moebius_le_one
   have hterm : ∀ m ∈ s.prodPrimes.divisors,
-    |if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-      levelY s R m else 0| ≤
-      if m ∈ levelSet s R then
-        s.selbergTerms m / levelSum s R else 0 := by
+      |if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
+        levelY s R m else 0| ≤
+        if m ∈ levelSet s R then
+          s.selbergTerms m / levelSum s R else 0 := by
     intro m hm
     by_cases hdm : d ∣ m
     · rw [ite_eq_left hdm, abs_mul]
       have hY : |levelY s R m| ≤
-        if m ∈ levelSet s R then
-          s.selbergTerms m / levelSum s R else 0 := by
+          if m ∈ levelSet s R then
+            s.selbergTerms m / levelSum s R else 0 := by
         unfold levelY
         by_cases hmem : m ∈ levelSet s R
         · rw [ite_eq_left hmem, ite_eq_left hmem, abs_div, abs_mul,
-          abs_of_nonneg hGpos.le]
+            abs_of_nonneg hGpos.le]
           rw [Nat.mem_divisors] at hm
           have hg := (BoundingSieve.selbergTerms_pos (s := s) hm.1).le
           rw [abs_of_nonneg hg]
           calc
             |((ArithmeticFunction.moebius m : ℤ) : ℝ)| * s.selbergTerms m /
-              levelSum s R ≤
-              1 * s.selbergTerms m / levelSum s R := by
+                levelSum s R ≤
+                1 * s.selbergTerms m / levelSum s R := by
               gcongr
               exact hmu m
             _ = s.selbergTerms m / levelSum s R := by ring
         · rw [ite_eq_right hmem, ite_eq_right hmem, abs_zero]
       calc
         |((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ)| *
-          |levelY s R m| ≤
-          1 * |levelY s R m| := by
+            |levelY s R m| ≤
+            1 * |levelY s R m| := by
           gcongr
           exact hmu (m / d)
         _ ≤ if m ∈ levelSet s R then
-          s.selbergTerms m / levelSum s R else 0 := by
+            s.selbergTerms m / levelSum s R else 0 := by
           simpa using hY
     · rw [ite_eq_right hdm, abs_zero]
       by_cases hmem : m ∈ levelSet s R
@@ -436,19 +437,19 @@ lemma levelWeights_nu_mul_abs_le
       · rw [ite_eq_right hmem]
   calc
     |∑ m ∈ s.prodPrimes.divisors, if d ∣ m then
-      ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-        levelY s R m else 0| ≤
-      ∑ m ∈ s.prodPrimes.divisors, |if d ∣ m then
         ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-          levelY s R m else 0| := Finset.abs_sum_le_sum_abs _ _
+          levelY s R m else 0| ≤
+        ∑ m ∈ s.prodPrimes.divisors, |if d ∣ m then
+          ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
+            levelY s R m else 0| := Finset.abs_sum_le_sum_abs _ _
     _ ≤ ∑ m ∈ s.prodPrimes.divisors,
-      if m ∈ levelSet s R then
-        s.selbergTerms m / levelSum s R else 0 :=
+        if m ∈ levelSet s R then
+          s.selbergTerms m / levelSum s R else 0 :=
       Finset.sum_le_sum hterm
     _ = 1 := by
       rw [← Finset.sum_filter]
       have hfilter : s.prodPrimes.divisors.filter
-        (fun m ↦ m ∈ levelSet s R) = levelSet s R := by
+          (fun m ↦ m ∈ levelSet s R) = levelSet s R := by
         ext m
         simp only [Finset.mem_filter]
         constructor
@@ -522,7 +523,7 @@ private lemma sum_divisors_selbergTerms_mul_div
   have hcop := div_coprime_of_mem_levelSet_filter_dvd hm
   calc
     ∑ e ∈ d.divisors, s.selbergTerms (m / d * e) =
-      ∑ e ∈ d.divisors, s.selbergTerms (m / d) * s.selbergTerms e := by
+        ∑ e ∈ d.divisors, s.selbergTerms (m / d) * s.selbergTerms e := by
       apply Finset.sum_congr rfl
       intro e he
       apply BoundingSieve.selbergTerms_isMultiplicative.map_mul_of_coprime
@@ -616,16 +617,16 @@ private lemma inv_nu_mul_levelSet_filter_sum_le_levelSum
     ∑ m ∈ (levelSet s R).filter (fun n ↦ d ∣ n), s.selbergTerms m ≤
     levelSum s R := by
   have hexpand :
-    (s.nu d)⁻¹ *
-      ∑ m ∈ (levelSet s R).filter (fun n ↦ d ∣ n), s.selbergTerms m =
-      ∑ x ∈ (levelSet s R).filter (fun n ↦ d ∣ n) ×ˢ d.divisors,
-        s.selbergTerms (x.1 / d * x.2) := by
+      (s.nu d)⁻¹ *
+          ∑ m ∈ (levelSet s R).filter (fun n ↦ d ∣ n), s.selbergTerms m =
+        ∑ x ∈ (levelSet s R).filter (fun n ↦ d ∣ n) ×ˢ d.divisors,
+          s.selbergTerms (x.1 / d * x.2) := by
     rw [Finset.sum_product, Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro m hm
     exact (sum_divisors_selbergTerms_mul_div s R d m hm).symm
   change (s.nu d)⁻¹ *
-    ∑ m ∈ (levelSet s R).filter (fun n ↦ d ∣ n), s.selbergTerms m ≤
+      ∑ m ∈ (levelSet s R).filter (fun n ↦ d ∣ n), s.selbergTerms m ≤
     ∑ m ∈ levelSet s R, s.selbergTerms m
   rw [hexpand]
   apply Finset.sum_le_sum_of_injOn (fun x : ℕ × ℕ ↦ x.1 / d * x.2)
@@ -654,11 +655,11 @@ private lemma levelY_abs_le
   unfold levelY
   by_cases hmem : m ∈ levelSet s R
   · rw [ite_eq_left hmem, ite_eq_left hmem, abs_div, abs_mul,
-    abs_of_nonneg hGpos.le]
+      abs_of_nonneg hGpos.le]
     rw [abs_of_nonneg (BoundingSieve.selbergTerms_pos (s := s) hm).le]
     calc
       |((ArithmeticFunction.moebius m : ℤ) : ℝ)| * s.selbergTerms m /
-        levelSum s R ≤ 1 * s.selbergTerms m / levelSum s R := by
+          levelSum s R ≤ 1 * s.selbergTerms m / levelSum s R := by
         apply div_le_div_of_nonneg_right _ hGpos.le
         apply mul_le_mul_of_nonneg_right _
           (BoundingSieve.selbergTerms_pos (s := s) hm).le
@@ -680,17 +681,17 @@ private lemma levelWeights_nu_mul_abs_le_filter
     (∑ m ∈ (levelSet s R).filter (fun n ↦ d ∣ n), s.selbergTerms m) /
       levelSum s R := by
   have hcancel : s.nu d * levelWeights s R d =
-    ∑ m ∈ s.prodPrimes.divisors,
-      if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-        levelY s R m else 0 := by
+      ∑ m ∈ s.prodPrimes.divisors,
+        if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
+          levelY s R m else 0 := by
     unfold levelWeights
     rw [← mul_assoc, mul_inv_cancel₀ (BoundingSieve.nu_ne_zero (s := s) hd), one_mul]
   rw [hcancel]
   have hterm : ∀ m ∈ s.prodPrimes.divisors,
-    |if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-      levelY s R m else 0| ≤
-      if m ∈ (levelSet s R).filter (fun n ↦ d ∣ n) then
-        s.selbergTerms m / levelSum s R else 0 := by
+      |if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
+        levelY s R m else 0| ≤
+        if m ∈ (levelSet s R).filter (fun n ↦ d ∣ n) then
+          s.selbergTerms m / levelSum s R else 0 := by
     intro m hm
     have hmP := (Nat.mem_divisors.mp hm).1
     by_cases hdm : d ∣ m
@@ -698,28 +699,28 @@ private lemma levelWeights_nu_mul_abs_le_filter
       have hY := levelY_abs_le s R m hR hmP
       calc
         |((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ)| * |levelY s R m| ≤
-          1 * |levelY s R m| := by
+            1 * |levelY s R m| := by
           apply mul_le_mul_of_nonneg_right _ (abs_nonneg _)
           exact_mod_cast ArithmeticFunction.abs_moebius_le_one
         _ ≤ if m ∈ levelSet s R then
-          s.selbergTerms m / levelSum s R else 0 := by simpa using hY
+            s.selbergTerms m / levelSum s R else 0 := by simpa using hY
         _ = if m ∈ (levelSet s R).filter (fun n ↦ d ∣ n) then
-          s.selbergTerms m / levelSum s R else 0 := by
+            s.selbergTerms m / levelSum s R else 0 := by
           simp only [Finset.mem_filter, hdm, and_true]
     · rw [ite_eq_right hdm, abs_zero]
       simp only [Finset.mem_filter, hdm, and_false, ↓reduceIte]
       exact le_rfl
   calc
     |∑ m ∈ s.prodPrimes.divisors, if d ∣ m then
-      ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) * levelY s R m else 0| ≤
-      ∑ m ∈ s.prodPrimes.divisors, |if d ∣ m then
-        ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) * levelY s R m else 0| :=
+        ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) * levelY s R m else 0| ≤
+        ∑ m ∈ s.prodPrimes.divisors, |if d ∣ m then
+          ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) * levelY s R m else 0| :=
       Finset.abs_sum_le_sum_abs _ _
     _ ≤ ∑ m ∈ s.prodPrimes.divisors,
-      if m ∈ (levelSet s R).filter (fun n ↦ d ∣ n) then
-        s.selbergTerms m / levelSum s R else 0 := Finset.sum_le_sum hterm
+        if m ∈ (levelSet s R).filter (fun n ↦ d ∣ n) then
+          s.selbergTerms m / levelSum s R else 0 := Finset.sum_le_sum hterm
     _ = ∑ m ∈ (levelSet s R).filter (fun n ↦ d ∣ n),
-      s.selbergTerms m / levelSum s R := by
+        s.selbergTerms m / levelSum s R := by
       rw [← Finset.sum_filter]
       congr 1
       ext m
@@ -729,7 +730,7 @@ private lemma levelWeights_nu_mul_abs_le_filter
       · intro hm
         exact ⟨(Finset.mem_filter.mp hm.1).1, hm⟩
     _ = (∑ m ∈ (levelSet s R).filter (fun n ↦ d ∣ n),
-      s.selbergTerms m) / levelSum s R := by rw [Finset.sum_div]
+        s.selbergTerms m) / levelSum s R := by rw [Finset.sum_div]
 
 end MathlibExt.SelbergSieve
 
@@ -758,11 +759,11 @@ lemma levelWeights_abs_le
       rw [eq_div_iff hnupos.ne']
       rw [abs_mul, abs_of_pos hnupos, mul_comm]
     _ ≤ ((∑ m ∈ (levelSet s R).filter (fun n ↦ d ∣ n),
-      s.selbergTerms m) / levelSum s R) / s.nu d :=
+        s.selbergTerms m) / levelSum s R) / s.nu d :=
       div_le_div_of_nonneg_right hweighted hnupos.le
     _ = ((s.nu d)⁻¹ *
-      ∑ m ∈ (levelSet s R).filter (fun n ↦ d ∣ n),
-        s.selbergTerms m) / levelSum s R := by
+        ∑ m ∈ (levelSet s R).filter (fun n ↦ d ∣ n),
+          s.selbergTerms m) / levelSum s R := by
       field_simp
     _ ≤ levelSum s R / levelSum s R :=
       div_le_div_of_nonneg_right hsubset hGpos.le
@@ -784,10 +785,11 @@ private lemma levelWeights_abs_le_nat
   have hnuw := levelWeights_nu_mul_abs_le s R d hR hd
   have hnuabs : |s.nu d| = s.nu d := abs_of_pos hnupos
   have hinv : (s.nu d)⁻¹ ≤ (d : ℝ) := by
-    rwa [inv_le_iff_one_le_mul₀ hnupos]
+    rw [inv_le_iff_one_le_mul₀ hnupos]
+    exact hnu
   calc
     |levelWeights s R d| =
-      |s.nu d * levelWeights s R d| / s.nu d := by
+        |s.nu d * levelWeights s R d| / s.nu d := by
       rw [eq_div_iff hnupos.ne']
       rw [abs_mul, hnuabs, mul_comm]
     _ ≤ 1 / s.nu d := div_le_div_of_nonneg_right hnuw hnupos.le
@@ -812,15 +814,15 @@ lemma levelWeights_support
 -- proof
   have hP0 := BoundingSieve.prodPrimes_ne_zero (s := s)
   have hsum : (∑ m ∈ s.prodPrimes.divisors,
-    if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-      levelY s R m else 0) ≠ 0 := by
+      if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
+        levelY s R m else 0) ≠ 0 := by
     intro hzero
     apply hd
     unfold levelWeights
     rw [hzero, mul_zero]
   have hex : ∃ m ∈ s.prodPrimes.divisors,
-    (if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
-      levelY s R m else 0) ≠ 0 := by
+      (if d ∣ m then ((ArithmeticFunction.moebius (m / d) : ℤ) : ℝ) *
+        levelY s R m else 0) ≠ 0 := by
     by_contra h
     push Not at h
     exact hsum (Finset.sum_eq_zero h)
@@ -860,15 +862,15 @@ private lemma lambdaSquared_abs_le
   unfold BoundingSieve.lambdaSquared
   calc
     |∑ d1 ∈ d.divisors, ∑ d2 ∈ d.divisors,
-      if d = Nat.lcm d1 d2 then levelWeights s R d1 *
-        levelWeights s R d2 else 0| ≤
-      ∑ d1 ∈ d.divisors, |∑ d2 ∈ d.divisors,
         if d = Nat.lcm d1 d2 then levelWeights s R d1 *
-          levelWeights s R d2 else 0| :=
+          levelWeights s R d2 else 0| ≤
+        ∑ d1 ∈ d.divisors, |∑ d2 ∈ d.divisors,
+          if d = Nat.lcm d1 d2 then levelWeights s R d1 *
+            levelWeights s R d2 else 0| :=
       Finset.abs_sum_le_sum_abs _ _
     _ ≤ ∑ d1 ∈ d.divisors, ∑ d2 ∈ d.divisors,
-      |if d = Nat.lcm d1 d2 then levelWeights s R d1 *
-        levelWeights s R d2 else 0| :=
+        |if d = Nat.lcm d1 d2 then levelWeights s R d1 *
+          levelWeights s R d2 else 0| :=
       Finset.sum_le_sum fun d1 _ ↦ Finset.abs_sum_le_sum_abs _ _
     _ ≤ ∑ _d1 ∈ d.divisors, ∑ _d2 ∈ d.divisors, (d : ℝ) * d := by
       apply Finset.sum_le_sum
@@ -915,8 +917,8 @@ private lemma lambdaSquared_support
   d ≤ R ^ 2 := by
   unfold BoundingSieve.lambdaSquared at hd
   have hex : ∃ d1 ∈ d.divisors, ∃ d2 ∈ d.divisors,
-    (if d = Nat.lcm d1 d2 then levelWeights s R d1 *
-      levelWeights s R d2 else 0) ≠ 0 := by
+      (if d = Nat.lcm d1 d2 then levelWeights s R d1 *
+        levelWeights s R d2 else 0) ≠ 0 := by
     by_contra h
     push Not at h
     apply hd
@@ -979,9 +981,9 @@ lemma levelWeights_errSum_le
 -- proof
   have hP0 := BoundingSieve.prodPrimes_ne_zero (s := s)
   have heach : ∀ d ∈ s.prodPrimes.divisors,
-    |BoundingSieve.lambdaSquared (levelWeights s R) d| *
-      |s.rem d| ≤
-      if d ≤ R ^ 2 then (d : ℝ) ^ 4 * d else 0 := by
+      |BoundingSieve.lambdaSquared (levelWeights s R) d| *
+          |s.rem d| ≤
+        if d ≤ R ^ 2 then (d : ℝ) ^ 4 * d else 0 := by
     intro d hd
     rw [Nat.mem_divisors] at hd
     by_cases hdR : d ≤ R ^ 2
@@ -990,19 +992,19 @@ lemma levelWeights_errSum_le
         (hrem d hd.1) (abs_nonneg _) (by positivity)
     · rw [ite_eq_right hdR]
       have hlam : BoundingSieve.lambdaSquared
-        (levelWeights s R) d = 0 := by
+          (levelWeights s R) d = 0 := by
         by_contra hzero
         exact hdR (lambdaSquared_support s R d hzero)
       rw [hlam, abs_zero, zero_mul]
   calc
     s.errSum (BoundingSieve.lambdaSquared (levelWeights s R)) =
-      ∑ d ∈ s.prodPrimes.divisors,
-        |BoundingSieve.lambdaSquared (levelWeights s R) d| *
-          |s.rem d| := rfl
+        ∑ d ∈ s.prodPrimes.divisors,
+          |BoundingSieve.lambdaSquared (levelWeights s R) d| *
+            |s.rem d| := rfl
     _ ≤ ∑ d ∈ s.prodPrimes.divisors,
-      if d ≤ R ^ 2 then (d : ℝ) ^ 4 * d else 0 := Finset.sum_le_sum heach
+        if d ≤ R ^ 2 then (d : ℝ) ^ 4 * d else 0 := Finset.sum_le_sum heach
     _ = ∑ d ∈ s.prodPrimes.divisors.filter (fun d ↦ d ≤ R ^ 2),
-      (d : ℝ) ^ 4 * d := by rw [Finset.sum_filter]
+        (d : ℝ) ^ 4 * d := by rw [Finset.sum_filter]
     _ ≤ ∑ d ∈ Finset.Icc 1 (R ^ 2), (d : ℝ) ^ 4 * d := by
       apply Finset.sum_le_sum_of_subset_of_nonneg
       · intro d hd
@@ -1011,9 +1013,9 @@ lemma levelWeights_errSum_le
       · intro d _ _
         positivity
     _ ≤ ((Finset.Icc 1 (R ^ 2)).card : ℝ) *
-      (((R ^ 2 : ℕ) : ℝ) ^ 4 * (R ^ 2 : ℕ)) := by
+        (((R ^ 2 : ℕ) : ℝ) ^ 4 * (R ^ 2 : ℕ)) := by
       have hle : ∀ d ∈ Finset.Icc 1 (R ^ 2),
-        (d : ℝ) ^ 4 * d ≤ (((R ^ 2 : ℕ) : ℝ) ^ 4 * (R ^ 2 : ℕ)) := by
+          (d : ℝ) ^ 4 * d ≤ (((R ^ 2 : ℕ) : ℝ) ^ 4 * (R ^ 2 : ℕ)) := by
         intro d hd
         have hdR : (d : ℝ) ≤ (R ^ 2 : ℕ) := by
           exact_mod_cast (Finset.mem_Icc.mp hd).2
@@ -1022,7 +1024,8 @@ lemma levelWeights_errSum_le
       have h := Finset.sum_le_card_nsmul (Finset.Icc 1 (R ^ 2))
         (fun d ↦ (d : ℝ) ^ 4 * d)
         (((R ^ 2 : ℕ) : ℝ) ^ 4 * (R ^ 2 : ℕ)) hle
-      rwa [nsmul_eq_mul] at h
+      rw [nsmul_eq_mul] at h
+      exact h
     _ = (R : ℝ) ^ 12 := by
       rw [Nat.card_Icc]
       simp only [Nat.add_sub_cancel, Nat.cast_pow]
@@ -1032,4 +1035,4 @@ end MathlibExt.SelbergSieve
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

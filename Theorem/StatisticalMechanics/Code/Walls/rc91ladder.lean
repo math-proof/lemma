@@ -106,7 +106,7 @@ theorem rc91_chain :
         #(rc20_famCylBox 𝒜 ℬ) ≤ #(rc10_reflInter 𝒜 ℬ)) ∧
     (rc60_BoxUnionBound → ReimerWprobCore) ∧
     (rc20_FamCylBoxResidue → ReimerWprobCore) ∧
-    (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+    (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
         (A B : Set (ConfigSpace E)),
         (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
           ≤ (bernoulliProductMeasure (E := E) p hp).real A
@@ -133,7 +133,7 @@ theorem rc91_status :
     (rc60_BoxUnionBound → ReimerWprobCore) ∧
     (rc60_BoxUnionBound → ∀ (m : ℕ) (𝒜 ℬ : Finset (Finset (Fin m))),
         #(rc20_famCylBox 𝒜 ℬ) ≤ #(rc10_reflInter 𝒜 ℬ)) ∧
-    (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+    (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
         (A B : Set (ConfigSpace E)),
         (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
           ≤ (bernoulliProductMeasure (E := E) p hp).real A
@@ -182,7 +182,7 @@ theorem rc91_status :
       (∀ A B : Finset (ConfigSpace (Fin 2)),
         (rc75_disjOccF A B).card ≤ (rc79_reflInterF A B).card)) ∧
     
-    (∀ {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+    (∀ {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
         {A B : Set (ConfigSpace E)}, IsIncreasing A → IsIncreasing B →
         (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
           ≤ (bernoulliProductMeasure (E := E) p hp).real A

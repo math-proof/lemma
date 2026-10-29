@@ -385,7 +385,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma dilcher_finite_multiple_harmonic_identity_general
-  {m n : ℕ}
+  (m n : ℕ)
 -- given
   (hn : 0 < n) :
 -- imply
@@ -397,7 +397,6 @@ lemma dilcher_finite_multiple_harmonic_identity_general
 -- proof
   obtain ⟨N, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
   exact dilcher_main N m
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -410,7 +409,7 @@ namespace MetaMathlibExt
 lemma dilcher_finite_multiple_harmonic_identity
   {m n : ℕ}
 -- given
-  (hm : 0 < m)
+  (_hm : 0 < m)
   (hn : 0 < n) :
 -- imply
   (∑ k ∈ Finset.Icc 1 n,

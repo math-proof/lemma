@@ -20,7 +20,7 @@ namespace StatMech
 
 namespace Universality
 
-noncomputable abbrev stt_triW (p0 p1 p2 : ℝ) (ω : LocalConfig) : ℝ≥0∞ :=
+noncomputable abbrev stt_triW (p0 p1 p2 : ℝ) (ω : LocalConfig) : ENNReal :=
   ENNReal.ofReal (localWeight p0 p1 p2 ω)
 
 

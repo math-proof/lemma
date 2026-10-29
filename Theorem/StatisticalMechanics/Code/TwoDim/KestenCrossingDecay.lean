@@ -23,7 +23,7 @@ namespace StatMech.TwoDim
 open StatMech.Lattice StatMech.Percolation StatMech.Universality
 
 
-theorem kcd_localOneArm_prob (p : ℝ≥0) (hp : p ≤ 1) (x : Site 2) (n : ℕ) :
+theorem kcd_localOneArm_prob (p : NNReal) (hp : p ≤ 1) (x : Site 2) (n : ℕ) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real (kcd_localOneArm x n)
       = crossProb 2 p hp n := by
   unfold kcd_localOneArm crossProb
@@ -76,7 +76,7 @@ theorem kcd_horizontal_subset_localOneArm (n : ℕ) (hn : 0 < n) :
     omega
 
 
-theorem kcd_horizontal_prob_le_box_mul_crossProb (p : ℝ≥0) (hp : p ≤ 1)
+theorem kcd_horizontal_prob_le_box_mul_crossProb (p : NNReal) (hp : p ≤ 1)
     (n : ℕ) (hn : 0 < n) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real
         (StatMech.RSW.Box.horizontalCrossingEvent 0 (n : ℤ) 0 (n : ℤ))
@@ -116,7 +116,7 @@ theorem kcd_quadratic_mul_exp_tendsto_zero {c C : ℝ} (hc : 0 < c) :
   · simp
 
 
-theorem kcd_horizontal_tendsto_zero_of_exp (p : ℝ≥0) (hp : p ≤ 1)
+theorem kcd_horizontal_tendsto_zero_of_exp (p : NNReal) (hp : p ≤ 1)
     (hdecay : ∃ c > 0, ∃ C > 0,
       ∀ n, 0 < n → crossProb 2 p hp n ≤ C * Real.exp (-c * n)) :
     Tendsto (fun n : ℕ =>
@@ -142,7 +142,7 @@ theorem kcd_horizontal_tendsto_zero_of_exp (p : ℝ≥0) (hp : p ≤ 1)
       ring
 
 
-theorem kcd_crossProb_mono_param {p q : ℝ≥0} (hp : p ≤ 1) (hq : q ≤ 1)
+theorem kcd_crossProb_mono_param {p q : NNReal} (hp : p ≤ 1) (hq : q ≤ 1)
     (hpq : p ≤ q) {n : ℕ} (hn : 0 < n) :
     crossProb 2 p hp n ≤ crossProb 2 q hq n := by
   obtain ⟨k, hk⟩ := Nat.exists_eq_add_of_le hn
@@ -170,7 +170,7 @@ theorem kcd_crossProb_mono_param {p q : ℝ≥0} (hp : p ≤ 1) (hq : q ≤ 1)
 
 
 theorem kcd_horizontal_sharpThreshold :
-    ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
+    ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 →
       Tendsto (fun n : ℕ =>
         (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp).real
           (StatMech.RSW.Box.horizontalCrossingEvent 0 (n : ℤ) 0 (n : ℤ)))
@@ -187,7 +187,7 @@ theorem kcd_horizontal_sharpThreshold :
     by_contra h
     have hempty : tildePcSet 2 = ∅ := Set.not_nonempty_iff_eq_empty.mp h
     rw [tildePc, hempty, csSup_empty] at hp_tilde
-    exact (not_lt_of_ge (bot_le : (0 : ℝ≥0) ≤ p)) hp_tilde
+    exact (not_lt_of_ge (bot_le : (0 : NNReal) ≤ p)) hp_tilde
   obtain ⟨q, hq, hpq⟩ := (lt_csSup_iff hbdd hne).1 hp_tilde
   have hq1 : q ≤ 1 := (mem_tildePcSet.mp hq).choose
   have hqdecay := hsub q hq hq1

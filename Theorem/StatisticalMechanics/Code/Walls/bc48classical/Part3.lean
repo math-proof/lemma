@@ -220,9 +220,9 @@ theorem bc48_classicalTrifProb_const (μ : Measure (ConfigSpace (Sym2 (Site d)))
 
 
 theorem bc48_Tcount_classical_eq_sum_indicator (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ) :
-    (bc48_Tcount_classical d ω n : ℝ≥0∞) =
+    (bc48_Tcount_classical d ω n : ENNReal) =
       ∑ x ∈ boxFinsetBK d n,
-        ({ω' | bc47_IsClassicalTrifurcation ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω := by
+        ({ω' | bc47_IsClassicalTrifurcation ω' x}.indicator (fun _ => (1 : ENNReal))) ω := by
   classical
   rw [bc48_Tcount_classical_eq, bc48_classicalTrifFinset, Finset.card_filter]
   push_cast
@@ -235,18 +235,18 @@ theorem bc48_Tcount_classical_eq_sum_indicator (ω : ConfigSpace (Sym2 (Site d))
 
 theorem bc48_expected_Tcount_classical (μ : Measure (ConfigSpace (Sym2 (Site d))))
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) (n : ℕ) :
-    ∫⁻ ω, (bc48_Tcount_classical d ω n : ℝ≥0∞) ∂μ
+    ∫⁻ ω, (bc48_Tcount_classical d ω n : ENNReal) ∂μ
       = (boxFinsetBK d n).card • μ {ω | bc47_IsClassicalTrifurcation ω 0} := by
   classical
   have hmeas : ∀ x : Site d, Measurable
-      (fun ω => ({ω' | bc47_IsClassicalTrifurcation ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω) :=
+      (fun ω => ({ω' | bc47_IsClassicalTrifurcation ω' x}.indicator (fun _ => (1 : ENNReal))) ω) :=
     fun x => Measurable.indicator measurable_const (bc48_measurableSet_isClassicalTrifurcation x)
-  calc ∫⁻ ω, (bc48_Tcount_classical d ω n : ℝ≥0∞) ∂μ
+  calc ∫⁻ ω, (bc48_Tcount_classical d ω n : ENNReal) ∂μ
       = ∫⁻ ω, ∑ x ∈ boxFinsetBK d n,
-          ({ω' | bc47_IsClassicalTrifurcation ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω ∂μ := by
+          ({ω' | bc47_IsClassicalTrifurcation ω' x}.indicator (fun _ => (1 : ENNReal))) ω ∂μ := by
         apply lintegral_congr; intro ω; exact bc48_Tcount_classical_eq_sum_indicator ω n
     _ = ∑ x ∈ boxFinsetBK d n,
-          ∫⁻ ω, ({ω' | bc47_IsClassicalTrifurcation ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω ∂μ := by
+          ∫⁻ ω, ({ω' | bc47_IsClassicalTrifurcation ω' x}.indicator (fun _ => (1 : ENNReal))) ω ∂μ := by
         rw [MeasureTheory.lintegral_finsetSum]
         intro x _; exact hmeas x
     _ = ∑ x ∈ boxFinsetBK d n, μ {ω | bc47_IsClassicalTrifurcation ω x} := by
@@ -269,16 +269,16 @@ theorem bc48_classicalTrif_prob_eq_zero (μ : Measure (ConfigSpace (Sym2 (Site d
       Filter.atTop (nhds 0)) :
     μ {ω | bc47_IsClassicalTrifurcation ω 0} = 0 := by
   classical
-  set p : ℝ≥0∞ := μ {ω | bc47_IsClassicalTrifurcation ω 0} with hp
-  have hkey : ∀ n, ((boxFinsetBK d n).card : ℝ≥0∞) * p ≤ (bdry n : ℝ≥0∞) := by
+  set p : ENNReal := μ {ω | bc47_IsClassicalTrifurcation ω 0} with hp
+  have hkey : ∀ n, ((boxFinsetBK d n).card : ENNReal) * p ≤ (bdry n : ENNReal) := by
     intro n
     have hexp := bc48_expected_Tcount_classical μ hinv n
     rw [nsmul_eq_mul] at hexp
-    have hle : ∫⁻ ω, (bc48_Tcount_classical d ω n : ℝ≥0∞) ∂μ ≤ (bdry n : ℝ≥0∞) := by
-      calc ∫⁻ ω, (bc48_Tcount_classical d ω n : ℝ≥0∞) ∂μ
-          ≤ ∫⁻ _ω, (bdry n : ℝ≥0∞) ∂μ := by
+    have hle : ∫⁻ ω, (bc48_Tcount_classical d ω n : ENNReal) ∂μ ≤ (bdry n : ENNReal) := by
+      calc ∫⁻ ω, (bc48_Tcount_classical d ω n : ENNReal) ∂μ
+          ≤ ∫⁻ _ω, (bdry n : ENNReal) ∂μ := by
             apply lintegral_mono; intro ω; simp only; exact_mod_cast hbound ω n
-        _ = (bdry n : ℝ≥0∞) := by rw [lintegral_const]; simp
+        _ = (bdry n : ENNReal) := by rw [lintegral_const]; simp
     rwa [hexp] at hle
   have hpfin : p ≠ ⊤ := by rw [hp]; exact (measure_ne_top μ _)
   set pr : ℝ := p.toReal with hpr
@@ -286,7 +286,7 @@ theorem bc48_classicalTrif_prob_eq_zero (μ : Measure (ConfigSpace (Sym2 (Site d
   have hkeyr : ∀ n, ((boxFinsetBK d n).card : ℝ) * pr ≤ (bdry n : ℝ) := by
     intro n
     have h := hkey n
-    have h' : (((boxFinsetBK d n).card : ℝ≥0∞) * p).toReal ≤ (bdry n : ℝ≥0∞).toReal :=
+    have h' : (((boxFinsetBK d n).card : ENNReal) * p).toReal ≤ (bdry n : ENNReal).toReal :=
       ENNReal.toReal_mono (by simp) h
     rw [ENNReal.toReal_mul] at h'
     simpa [ENNReal.toReal_natCast, hpr] using h'
@@ -391,7 +391,7 @@ theorem bc48_burton_keane_uniqueness_via_merge_classical
     infiniteCluster_unique_ae μ herg hmerge⟩
 
 
-theorem bc48_burton_keane_bernoulli_classical (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bc48_burton_keane_bernoulli_classical (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ),
       bc48_Tcount_classical d ω n ≤ boxSV_boundaryCard d n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
@@ -415,7 +415,7 @@ theorem bc48_burton_keane_bernoulli_classical (hd : 1 ≤ d) (p : ℝ≥0) (hp1 
     (fun k hk2 hktop hk => hmergeGeom_discharged _ k hk2 hktop hk)
 
 
-theorem bc48_burton_keane_bernoulli_of_classicalInjection (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc48_burton_keane_bernoulli_of_classicalInjection (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hinj : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), bc48_ClassicalBoundaryArmInjection ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

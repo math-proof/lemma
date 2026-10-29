@@ -29,7 +29,7 @@ open Matrix Finset BigOperators MeasureTheory ProbabilityTheory Real ENNReal
 
 /-- The Rademacher distribution on `ℝ`: a fair mixture of point masses at `+1` and `-1`. -/
 noncomputable def rademacherMeasure : Measure ℝ :=
-  (2 : ℝ≥0∞)⁻¹ • Measure.dirac (1 : ℝ) + (2 : ℝ≥0∞)⁻¹ • Measure.dirac (-1 : ℝ)
+  (2 : ENNReal)⁻¹ • Measure.dirac (1 : ℝ) + (2 : ENNReal)⁻¹ • Measure.dirac (-1 : ℝ)
 
 /-- An `n × d` random matrix `X` is *i.i.d. Rademacher* if its entries are jointly
 independent, each marginal equals the Rademacher distribution under the pushforward of `μ`,
@@ -52,5 +52,5 @@ def AssumptionINC {n d : ℕ} (X : Matrix (Fin n) (Fin d) ℝ) (k : ℕ) : Prop 
 
 /-- The fair coin distribution on `Fin 2`, used to model a single Rademacher bit. -/
 noncomputable def coinMeasure : Measure (Fin 2) :=
-  (2 : ℝ≥0∞)⁻¹ • Measure.dirac (0 : Fin 2) + (2 : ℝ≥0∞)⁻¹ • Measure.dirac (1 : Fin 2)
+  (2 : ENNReal)⁻¹ • Measure.dirac (0 : Fin 2) + (2 : ENNReal)⁻¹ • Measure.dirac (1 : Fin 2)
 

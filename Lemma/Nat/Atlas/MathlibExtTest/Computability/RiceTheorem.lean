@@ -19,7 +19,7 @@ lemma riceTheoremTest_standardNumbering_row
 [riceTheoremTest_standardNumbering_univ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Computability/RiceTheorem.lean)
 -/
 @[path]
-lemma riceTheoremTest_standardNumbering_univ
+lemma riceTheoremTest_standardNumbering_univ :
 -- imply
   Nat.Partrec (Nat.unpaired riceTheoremTest_standardNumbering) := by
 -- proof
@@ -67,3 +67,4 @@ lemma riceTheoremTest_standardNumbering_smn
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

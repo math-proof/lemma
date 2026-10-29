@@ -57,12 +57,12 @@ theorem ati_aeTail_of_approxFarOut {window : ℕ → Set E}
     {mu : Measure (ConfigSpace E)} [IsFiniteMeasure mu]
     {s : Set (ConfigSpace E)} (happ : AtiApproxFarOut window mu s) :
     ∃ s' : Set (ConfigSpace E), AtiTailEvent window s' ∧ s =ᵐ[mu] s' := by
-  have hpos : ∀ n : ℕ, (0 : ℝ≥0∞) < ((2 : ℝ≥0∞)⁻¹) ^ n :=
+  have hpos : ∀ n : ℕ, (0 : ENNReal) < ((2 : ENNReal)⁻¹) ^ n :=
     fun n => ENNReal.pow_pos (by simp) n
   have hchoice : ∀ n : ℕ, ∃ A : Set (ConfigSpace E),
       @MeasurableSet _ (outsideSigma (window n)) A ∧
-        mu (s ∆ A) < ((2 : ℝ≥0∞)⁻¹) ^ n :=
-    fun n => happ n (((2 : ℝ≥0∞)⁻¹) ^ n) (hpos n)
+        mu (s ∆ A) < ((2 : ENNReal)⁻¹) ^ n :=
+    fun n => happ n (((2 : ENNReal)⁻¹) ^ n) (hpos n)
   choose A hAmeas hAlt using hchoice
   refine ⟨⋃ N, ⋂ i, A (i + N), atiTailEvent_liminf hwindow A hAmeas, ?_⟩
   have hsumm : ∑' n, mu (s ∆ A n) ≠ ⊤ := by

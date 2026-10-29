@@ -62,7 +62,7 @@ theorem rlc_half_rightDiagonal_lower_bound (n : ℤ) (hn : 0 < n)
     (hV : (1 : ℝ) / 2 ≤ rba_selfDualMeasure.real
       (verticalCrossingEvent 0 (2 * n) (-n) n)) :
     (1 : ℝ) / 32 ≤ rba_selfDualMeasure.real (rlc_rightDiagonal n) := by
-  have h := rlc_rightDiagonal_lower_bound (2⁻¹ : ℝ≥0) half_le_one n hn
+  have h := rlc_rightDiagonal_lower_bound (2⁻¹ : NNReal) half_le_one n hn
     ((1 : ℝ) / 2) (by norm_num) hH hV
   norm_num at h
   simpa [rba_selfDualMeasure] using h

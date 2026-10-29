@@ -35,7 +35,7 @@ private lemma rq1_wiredFinite_graphCylinder_eq_bernoulli_eq
   (hp1 : p < 1)
   (hS : _root_.DependsOn (S.indicator (fun _ => (1 : ℝ))) ((boxGraph d N).edgeFinset : Set (Sym2 (boxVerts d N)))) :
 -- imply
-  (wiredFiniteMeasure d m hp hp1 (by norm_num : (0 : ℝ) < 1) : Measure (ConfigSpace (Sym2 (Site d)))).real (boxRestrict d N ⁻¹' S) = (bernoulliProductMeasure (E := Sym2 (Site d)) (⟨p, hp.le⟩ : ℝ≥0) (by exact_mod_cast hp1.le)).real (boxRestrict d N ⁻¹' S) := by
+  (wiredFiniteMeasure d m hp hp1 (by norm_num : (0 : ℝ) < 1) : Measure (ConfigSpace (Sym2 (Site d)))).real (boxRestrict d N ⁻¹' S) = (bernoulliProductMeasure (E := Sym2 (Site d)) (⟨p, hp.le⟩ : NNReal) (by exact_mod_cast hp1.le)).real (boxRestrict d N ⁻¹' S) := by
 -- proof
   apply StatMech.Universality.rq1_wiredFinite_graphCylinder_eq_bernoulli hNm hp hp1 S hS
 
@@ -53,7 +53,7 @@ private lemma rq1_wiredInfiniteVolume_graphCylinder_eq_bernoulli_eq
   (hp1 : p < 1)
   (hS : _root_.DependsOn (S.indicator (fun _ => (1 : ℝ))) ((boxGraph d N).edgeFinset : Set (Sym2 (boxVerts d N)))) :
 -- imply
-  (wiredInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 1) : Measure (ConfigSpace (Sym2 (Site d)))).real (boxRestrict d N ⁻¹' S) = (bernoulliProductMeasure (E := Sym2 (Site d)) (⟨p, hp.le⟩ : ℝ≥0) (by exact_mod_cast hp1.le)).real (boxRestrict d N ⁻¹' S) := by
+  (wiredInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 1) : Measure (ConfigSpace (Sym2 (Site d)))).real (boxRestrict d N ⁻¹' S) = (bernoulliProductMeasure (E := Sym2 (Site d)) (⟨p, hp.le⟩ : NNReal) (by exact_mod_cast hp1.le)).real (boxRestrict d N ⁻¹' S) := by
 -- proof
   apply StatMech.Universality.rq1_wiredInfiniteVolume_graphCylinder_eq_bernoulli N hp hp1 S hS
 

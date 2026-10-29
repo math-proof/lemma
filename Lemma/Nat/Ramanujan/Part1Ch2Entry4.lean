@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry4
@@ -163,7 +162,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry4
 -/
 @[path]
 lemma ramanujan_part1_ch2_entry4_general
-  {n : ℕ} :
+  (n : ℕ) :
 -- imply
   (∑ k ∈ Finset.Icc 1 n, (1 : ℝ) / ((n : ℝ) + (k : ℝ))) + (∑ k ∈ Finset.Icc 0 n, (1 : ℝ) /
     (2 * (n : ℝ) + 2 * (k : ℝ) + 1)) =
@@ -191,7 +190,6 @@ lemma ramanujan_part1_ch2_entry4_general
     have e1 : n + 1 + 1 = n + 2 := by omega
     rw [e1] at hL1s
     linear_combination ih + hL1s - hL1n + hL2s - hL2n + st1 + st2 + kk - 2 * hrhs
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry4
 
@@ -204,7 +202,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry4
 lemma ramanujan_part1_ch2_entry4
   {n : ℕ}
 -- given
-  (hn : 0 < n) :
+  (_hn : 0 < n) :
 -- imply
   (∑ k ∈ Finset.Icc 1 n, (1 : ℝ) / ((n : ℝ) + (k : ℝ))) + (∑ k ∈ Finset.Icc 0 n, (1 : ℝ) /
     (2 * (n : ℝ) + 2 * (k : ℝ) + 1)) =
@@ -216,4 +214,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry4
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

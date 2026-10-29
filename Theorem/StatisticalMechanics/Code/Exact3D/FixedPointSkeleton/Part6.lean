@@ -27,13 +27,13 @@ theorem contractingWith_liftMap_of_l1_contraction {n : ℕ}
     {F : (Fin n → ℝ) → Fin n → ℝ} {c : ℝ}
     (hc_nonneg : 0 ≤ c) (hc_lt_one : c < 1)
     (hLip : LipschitzWithConstant F c) :
-    ContractingWith (⟨c, hc_nonneg⟩ : ℝ≥0) (L1Vector.liftMap F) := by
+    ContractingWith (⟨c, hc_nonneg⟩ : NNReal) (L1Vector.liftMap F) := by
   constructor
   · exact_mod_cast hc_lt_one
   · refine LipschitzWith.of_dist_le_mul ?_
     intro x y
     change l1Dist (F x.coord) (F y.coord) ≤
-      ((⟨c, hc_nonneg⟩ : ℝ≥0) : ℝ) * l1Dist x.coord y.coord
+      ((⟨c, hc_nonneg⟩ : NNReal) : ℝ) * l1Dist x.coord y.coord
     simpa using hLip x.coord y.coord
 
 

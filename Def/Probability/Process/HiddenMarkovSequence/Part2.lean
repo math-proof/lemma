@@ -32,6 +32,4 @@ def IsHiddenMarkovPr {Ω Y X : Type*} [MeasurableSpace Ω] [ReferenceMeasure Y] 
           (ℙ[π]((x (t + 1)) = xo (t + 1) | (y (t + 1)) = ys (t + 1)) : ℝ))
 
 
--- created on 2026-09-27
--- updated on 2026-10-22
 

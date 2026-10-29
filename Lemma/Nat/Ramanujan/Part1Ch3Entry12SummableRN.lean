@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Nat.Ramanujan.Part1Ch3Entry12SummableSuccN
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 
 
@@ -14,7 +15,7 @@ lemma ramanujan_part1_ch3_entry12_summable_r_n
   {n a : ℂ}
 -- given
   (ha : ‖a‖ > Real.exp 1 ∨ (a = (Real.exp 1 : ℂ) ∧ r ≤ -2))
-  (hn : ∀ k : ℕ, r + (k : ℤ) < 0 → n + (k : ℂ) ≠ 0) :
+  (_hn : ∀ k : ℕ, r + (k : ℤ) < 0 → n + (k : ℂ) ≠ 0) :
 -- imply
   Summable (fun k : ℕ => ‖(n + (k : ℂ)) ^ (r + (k : ℤ)) / (a ^ k * (Nat.factorial k : ℂ))‖) := by
 -- proof
@@ -26,4 +27,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry12SummableRN
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -26,8 +26,8 @@ namespace MetaMathlibExt
 @[path]
 lemma lucas_binet_formulas_of_field
   [Field K]
-  {params : LucasSequenceParams}
-  {alpha beta : K}
+  (params : LucasSequenceParams)
+  (alpha beta : K)
 -- given
   (hsum : alpha + beta = (params.p : K))
   (hprod : alpha * beta = (params.q : K)) :
@@ -132,7 +132,7 @@ lemma lucas_binet_formulas
     (lucasV params n : K) = 2 * alpha ^ n) :=
 -- proof
   lucas_binet_formulas_of_field params alpha beta hsum hprod
-end
+end MetaMathlibExt
 
 
 

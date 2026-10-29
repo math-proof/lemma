@@ -1,6 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Definitions.Def_EllipticCurve_FrobeniusTrace
+import Def.FLTPrelim_Ramification
+import Def.EllipticCurve_FrobeniusTrace
+import Lemma.EllipticCurve.FrobeniusTrace
 
 
 /-- ported from external source -/

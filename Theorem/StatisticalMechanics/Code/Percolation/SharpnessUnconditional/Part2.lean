@@ -37,12 +37,12 @@ theorem lineWord_coord0 (hd : 0 < d) (k : ℕ) :
     push_cast; ring
 
 
-theorem wordEvent_measure_one (g : ℕ → Fin d × Bool) (n : ℕ) (h1 : (1 : ℝ≥0) ≤ 1) :
+theorem wordEvent_measure_one (g : ℕ → Fin d × Bool) (n : ℕ) (h1 : (1 : NNReal) ≤ 1) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) 1 h1) (wordEvent g n) = 1 := by
   rw [wordEvent_eq_pi, cylinder_all_open]; simp
 
 
-theorem crossProb_one (hd : 0 < d) (h1 : (1 : ℝ≥0) ≤ 1) (n : ℕ) :
+theorem crossProb_one (hd : 0 < d) (h1 : (1 : NNReal) ≤ 1) (n : ℕ) :
     crossProb d 1 h1 (n + 1) = 1 := by
   refine le_antisymm (crossProb_le_one d 1 h1 (n + 1)) ?_
   have hsub : wordEvent (lineWord hd) (n + 1) ⊆ crossingEvent d (n + 1) := by
@@ -63,7 +63,7 @@ theorem crossProb_one (hd : 0 < d) (h1 : (1 : ℝ≥0) ≤ 1) (n : ℕ) :
         measureReal_mono hsub (measure_ne_top _ _)
 
 
-theorem theta_one_eq_one (hd : 0 < d) (h1 : (1 : ℝ≥0) ≤ 1) : theta d 1 h1 = 1 := by
+theorem theta_one_eq_one (hd : 0 < d) (h1 : (1 : NNReal) ≤ 1) : theta d 1 h1 = 1 := by
   have htend := tendsto_crossProb_theta (d := d) 1 h1
   have heq : (fun n => crossProb d 1 h1 (n + 1)) = (fun _ => (1 : ℝ)) := by
     funext n; exact crossProb_one hd h1 n
@@ -71,7 +71,7 @@ theorem theta_one_eq_one (hd : 0 < d) (h1 : (1 : ℝ≥0) ≤ 1) : theta d 1 h1 
   exact tendsto_nhds_unique htend tendsto_const_nhds
 
 
-theorem theta_one_ne_zero (hd : 0 < d) : ∀ h1 : (1 : ℝ≥0) ≤ 1, theta d 1 h1 ≠ 0 := by
+theorem theta_one_ne_zero (hd : 0 < d) : ∀ h1 : (1 : NNReal) ≤ 1, theta d 1 h1 ≠ 0 := by
   intro h1; rw [theta_one_eq_one hd h1]; norm_num
 
 
@@ -91,7 +91,7 @@ theorem sharpness_unconditional (hd : 0 < d) :
     tildePc d = pc d ∧
       (∀ p ∈ tildePcSet d, ∀ hp : p ≤ 1,
         ∃ c > 0, ∃ C > 0, ∀ n, crossProb d p hp n ≤ C * Real.exp (-c * n)) ∧
-      (∀ q : ℝ≥0, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 →
+      (∀ q : NNReal, ∀ hq : q ≤ 1, tildePc d < q → (q : ℝ) < 1 →
         theta d q hq ≥ ((q : ℝ) - (tildePc d : ℝ)) / ((q : ℝ) * (1 - (tildePc d : ℝ)))) :=
   sharpness (tildePc_pos hd) (theta_one_ne_zero hd) hsub_unconditional
     (fun n _ t => deriv (crossPoly d n) t)

@@ -51,9 +51,9 @@ private lemma primeCounting_le_small_sieve (n : ℕ) :
     have hpr : p.Prime := (Finset.mem_filter.mp hp).2
     by_cases hp29 : p ≤ 29
     · exact Finset.mem_union_left _
-      (prime_mem_smallSievePrimes_of_le_twenty_nine hpr hp29)
+        (prime_mem_smallSievePrimes_of_le_twenty_nine hpr hp29)
     · exact Finset.mem_union_right _ <| Finset.mem_filter.mpr ⟨hp_mem_range, hpr.ne_one,
-      prime_coprime_smallSieveProduct_of_twenty_nine_lt hpr (by omega)⟩
+        prime_coprime_smallSieveProduct_of_twenty_nine_lt hpr (by omega)⟩
   exact (Finset.card_le_card hsubset).trans (Finset.card_union_le _ _)
 
 end Nat.SylvesterSchur.Internal
@@ -67,8 +67,8 @@ namespace Nat.SylvesterSchur.Internal
 private lemma primeCounting_le_of_factorial_sieve_card {n c B : ℕ}
   (hcard : (factorialSieveCandidates n).card = c)
   (hbound : smallSievePrimes.card + c ≤ B) :
-  Nat.primeCounting n ≤ B :=
-(primeCounting_le_small_sieve n).trans (by rwa [hcard])
+  Nat.primeCounting n ≤ B := by
+  exact (primeCounting_le_small_sieve n).trans (by rw [hcard]; exact hbound)
 
 end Nat.SylvesterSchur.Internal
 
@@ -155,8 +155,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_0_99](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_0_99 : (sieveChunk 0 99).card ≤ 15 := by
-decide
+private lemma sieveChunk_card_le_0_99 : (sieveChunk 0 99).card ≤ 15 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -166,8 +165,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_100_199](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_100_199 : (sieveChunk 100 199).card ≤ 21 := by
-decide
+private lemma sieveChunk_card_le_100_199 : (sieveChunk 100 199).card ≤ 21 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -177,8 +175,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_200_299](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_200_299 : (sieveChunk 200 299).card ≤ 16 := by
-decide
+private lemma sieveChunk_card_le_200_299 : (sieveChunk 200 299).card ≤ 16 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -188,8 +185,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_300_399](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_300_399 : (sieveChunk 300 399).card ≤ 16 := by
-decide
+private lemma sieveChunk_card_le_300_399 : (sieveChunk 300 399).card ≤ 16 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -199,8 +195,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_400_499](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_400_499 : (sieveChunk 400 499).card ≤ 17 := by
-decide
+private lemma sieveChunk_card_le_400_499 : (sieveChunk 400 499).card ≤ 17 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -210,8 +205,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_500_509](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_500_509 : (sieveChunk 500 509).card ≤ 2 := by
-decide
+private lemma sieveChunk_card_le_500_509 : (sieveChunk 500 509).card ≤ 2 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -221,8 +215,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_500_599](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_500_599 : (sieveChunk 500 599).card ≤ 14 := by
-decide
+private lemma sieveChunk_card_le_500_599 : (sieveChunk 500 599).card ≤ 14 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -232,8 +225,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_600_699](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_600_699 : (sieveChunk 600 699).card ≤ 16 := by
-decide
+private lemma sieveChunk_card_le_600_699 : (sieveChunk 600 699).card ≤ 16 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -243,8 +235,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_700_715](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_700_715 : (sieveChunk 700 715).card ≤ 2 := by
-decide
+private lemma sieveChunk_card_le_700_715 : (sieveChunk 700 715).card ≤ 2 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -254,8 +245,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_700_799](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_700_799 : (sieveChunk 700 799).card ≤ 14 := by
-decide
+private lemma sieveChunk_card_le_700_799 : (sieveChunk 700 799).card ≤ 14 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -265,8 +255,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_800_855](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_800_855 : (sieveChunk 800 855).card ≤ 8 := by
-decide
+private lemma sieveChunk_card_le_800_855 : (sieveChunk 800 855).card ≤ 8 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -276,8 +265,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_800_899](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_800_899 : (sieveChunk 800 899).card ≤ 15 := by
-decide
+private lemma sieveChunk_card_le_800_899 : (sieveChunk 800 899).card ≤ 15 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -287,8 +275,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_900_917](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_900_917 : (sieveChunk 900 917).card ≤ 2 := by
-decide
+private lemma sieveChunk_card_le_900_917 : (sieveChunk 900 917).card ≤ 2 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -298,8 +285,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_900_940](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_900_940 : (sieveChunk 900 940).card ≤ 5 := by
-decide
+private lemma sieveChunk_card_le_900_940 : (sieveChunk 900 940).card ≤ 5 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -309,8 +295,7 @@ namespace Nat.SylvesterSchur.Internal
 [sieveChunk_card_le_900_944](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
 -/
 @[path]
-private lemma sieveChunk_card_le_900_944 : (sieveChunk 900 944).card ≤ 6 := by
-decide
+private lemma sieveChunk_card_le_900_944 : (sieveChunk 900 944).card ≤ 6 := by decide
 
 end Nat.SylvesterSchur.Internal
 
@@ -318,9 +303,8 @@ namespace Nat.SylvesterSchur.Internal
 
 /--
 [primeCounting_le_75](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/ResidualLargeCertificates.lean)
--/
-@[path]
 below packages the table as a single mathematical estimate. -/
+@[path]
 private lemma primeCounting_le_75 : Nat.primeCounting 75 ≤ 21 :=
   primeCounting_le_of_factorial_sieve_card (c := 11) (by decide) (by decide)
 
@@ -1249,3 +1233,4 @@ end Nat.SylvesterSchur.Internal
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

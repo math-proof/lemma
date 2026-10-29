@@ -174,9 +174,9 @@ theorem ctp_canonicalTrifurcationProb_const (μ : Measure (ConfigSpace (Sym2 (Si
 open Classical in
 
 lemma ctp_canonTcount_eq_sum_indicator (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ) :
-    (ctc2_canonTcount d ω n : ℝ≥0∞) =
+    (ctc2_canonTcount d ω n : ENNReal) =
       ∑ x ∈ boxFinsetBK d n,
-        ({ω' | IsCanonicalTrifurcation d ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω := by
+        ({ω' | IsCanonicalTrifurcation d ω' x}.indicator (fun _ => (1 : ENNReal))) ω := by
   classical
   unfold ctc2_canonTcount
   rw [Finset.card_filter]
@@ -192,18 +192,18 @@ lemma ctp_canonTcount_eq_sum_indicator (ω : ConfigSpace (Sym2 (Site d))) (n : �
 
 theorem ctp_expected_canonTcount (μ : Measure (ConfigSpace (Sym2 (Site d))))
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) (n : ℕ) :
-    ∫⁻ ω, (ctc2_canonTcount d ω n : ℝ≥0∞) ∂μ
+    ∫⁻ ω, (ctc2_canonTcount d ω n : ENNReal) ∂μ
       = (boxFinsetBK d n).card • μ {ω | IsCanonicalTrifurcation d ω 0} := by
   classical
   have hmeas : ∀ x : Site d, Measurable
-      (fun ω => ({ω' | IsCanonicalTrifurcation d ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω) :=
+      (fun ω => ({ω' | IsCanonicalTrifurcation d ω' x}.indicator (fun _ => (1 : ENNReal))) ω) :=
     fun x => Measurable.indicator measurable_const (ctp_measurableSet_isCanonicalTrifurcation x)
-  calc ∫⁻ ω, (ctc2_canonTcount d ω n : ℝ≥0∞) ∂μ
+  calc ∫⁻ ω, (ctc2_canonTcount d ω n : ENNReal) ∂μ
       = ∫⁻ ω, ∑ x ∈ boxFinsetBK d n,
-          ({ω' | IsCanonicalTrifurcation d ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω ∂μ := by
+          ({ω' | IsCanonicalTrifurcation d ω' x}.indicator (fun _ => (1 : ENNReal))) ω ∂μ := by
         apply lintegral_congr; intro ω; exact ctp_canonTcount_eq_sum_indicator ω n
     _ = ∑ x ∈ boxFinsetBK d n,
-          ∫⁻ ω, ({ω' | IsCanonicalTrifurcation d ω' x}.indicator (fun _ => (1 : ℝ≥0∞))) ω ∂μ := by
+          ∫⁻ ω, ({ω' | IsCanonicalTrifurcation d ω' x}.indicator (fun _ => (1 : ENNReal))) ω ∂μ := by
         rw [MeasureTheory.lintegral_finsetSum]
         intro x _; exact hmeas x
     _ = ∑ x ∈ boxFinsetBK d n, μ {ω | IsCanonicalTrifurcation d ω x} := by
@@ -224,20 +224,20 @@ theorem ctp_canonical_trifurcation_prob_eq_zero (μ : Measure (ConfigSpace (Sym2
       Filter.atTop (nhds 0)) :
     μ {ω | IsCanonicalTrifurcation d ω 0} = 0 := by
   classical
-  set p : ℝ≥0∞ := μ {ω | IsCanonicalTrifurcation d ω 0} with hp
+  set p : ENNReal := μ {ω | IsCanonicalTrifurcation d ω 0} with hp
   have hkey : ∀ n, 1 ≤ n →
-      ((boxFinsetBK d n).card : ℝ≥0∞) * p ≤ (boxSV_boundaryCard d (n + 1) : ℝ≥0∞) := by
+      ((boxFinsetBK d n).card : ENNReal) * p ≤ (boxSV_boundaryCard d (n + 1) : ENNReal) := by
     intro n hn
     have hexp := ctp_expected_canonTcount μ hinv n
     rw [nsmul_eq_mul] at hexp
-    have hle : ∫⁻ ω, (ctc2_canonTcount d ω n : ℝ≥0∞) ∂μ
-        ≤ (boxSV_boundaryCard d (n + 1) : ℝ≥0∞) := by
-      calc ∫⁻ ω, (ctc2_canonTcount d ω n : ℝ≥0∞) ∂μ
-          ≤ ∫⁻ _ω, (boxSV_boundaryCard d (n + 1) : ℝ≥0∞) ∂μ := by
+    have hle : ∫⁻ ω, (ctc2_canonTcount d ω n : ENNReal) ∂μ
+        ≤ (boxSV_boundaryCard d (n + 1) : ENNReal) := by
+      calc ∫⁻ ω, (ctc2_canonTcount d ω n : ENNReal) ∂μ
+          ≤ ∫⁻ _ω, (boxSV_boundaryCard d (n + 1) : ENNReal) ∂μ := by
             apply lintegral_mono; intro ω
             simp only
             exact_mod_cast dfc_canonTcount_le_boundary_succ ω n hn
-        _ = (boxSV_boundaryCard d (n + 1) : ℝ≥0∞) := by rw [lintegral_const]; simp
+        _ = (boxSV_boundaryCard d (n + 1) : ENNReal) := by rw [lintegral_const]; simp
     rwa [hexp] at hle
   have hpfin : p ≠ ⊤ := by rw [hp]; exact measure_ne_top μ _
   set pr : ℝ := p.toReal with hpr
@@ -246,8 +246,8 @@ theorem ctp_canonical_trifurcation_prob_eq_zero (μ : Measure (ConfigSpace (Sym2
       ((boxFinsetBK d n).card : ℝ) * pr ≤ (boxSV_boundaryCard d (n + 1) : ℝ) := by
     intro n hn
     have h := hkey n hn
-    have h' : (((boxFinsetBK d n).card : ℝ≥0∞) * p).toReal
-        ≤ (boxSV_boundaryCard d (n + 1) : ℝ≥0∞).toReal := ENNReal.toReal_mono (by simp) h
+    have h' : (((boxFinsetBK d n).card : ENNReal) * p).toReal
+        ≤ (boxSV_boundaryCard d (n + 1) : ENNReal).toReal := ENNReal.toReal_mono (by simp) h
     rw [ENNReal.toReal_mul] at h'
     simpa [ENNReal.toReal_natCast, hpr] using h'
   have hvolr : ∀ n, (0 : ℝ) < ((boxFinsetBK d n).card : ℝ) := fun n => by exact_mod_cast hvol n

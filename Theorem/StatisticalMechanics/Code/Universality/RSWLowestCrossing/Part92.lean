@@ -139,7 +139,7 @@ theorem rlc_dualReflectConfig_measurePreserving :
     unfold bernoulliProductMeasure
     exact Measure.infinitePi_map_piCongrLeft
       (fun _ : Sym2 (Site 2) =>
-        bernoulliMeasure (2⁻¹ : ℝ≥0) half_le_one)
+        bernoulliMeasure (2⁻¹ : NNReal) half_le_one)
       rlc_dualReflectEdge
   exact hreindex.comp fci_faceDualConfig_measurePreserving
 

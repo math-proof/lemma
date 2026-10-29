@@ -30,7 +30,7 @@ open StatMech.Lattice StatMech.TwoDim
 variable {d : ℕ}
 
 
-theorem g3PercolationProbability_eq (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) :
+theorem g3PercolationProbability_eq (d : ℕ) (p : NNReal) (hp : p ≤ 1) :
     g3PercolationProbability d p hp = percolationProbability d p hp := rfl
 
 

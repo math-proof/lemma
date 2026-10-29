@@ -424,8 +424,8 @@ theorem jInversionStep_eq_self_iff {j₀ q : K} (hj₀ : j₀ ≠ 0) :
 
 theorem nnnorm_jInversionStep {j₀ q : K} (hj : 1 < ‖j₀‖₊) (hq : ‖q‖₊ ≤ ‖j₀‖₊⁻¹) :
     ‖jInversionStep j₀ q‖₊ = ‖j₀‖₊⁻¹ := by
-  have hpos : (0 : ℝ≥0) < ‖j₀‖₊ := lt_trans zero_lt_one hj
-  have hρpos : (0 : ℝ≥0) < ‖j₀‖₊⁻¹ := by
+  have hpos : (0 : NNReal) < ‖j₀‖₊ := lt_trans zero_lt_one hj
+  have hρpos : (0 : NNReal) < ‖j₀‖₊⁻¹ := by
     rw [inv_pos]; exact hpos
   have hρlt : ‖j₀‖₊⁻¹ < 1 := by
     have h := mul_lt_mul_of_pos_left hj (inv_pos.mpr hpos)
@@ -454,7 +454,7 @@ theorem nnnorm_jInversionStep_sub_le {j₀ q₁ q₂ : K} (hj : 1 < ‖j₀‖�
     (hq₁ : ‖q₁‖₊ < 1) (hq₂ : ‖q₂‖₊ < 1) :
     ‖jInversionStep j₀ q₁ - jInversionStep j₀ q₂‖₊
       ≤ max (max ‖q₁‖₊ ‖q₂‖₊) ‖j₀‖₊⁻¹ * ‖q₁ - q₂‖₊ := by
-  have hpos : (0 : ℝ≥0) < ‖j₀‖₊ := lt_trans zero_lt_one hj
+  have hpos : (0 : NNReal) < ‖j₀‖₊ := lt_trans zero_lt_one hj
   have hc₄₁ : ‖(curve q₁).c₄‖₊ = 1 := nnnorm_c₄ hq₁
   have hc₄₂ : ‖(curve q₂).c₄‖₊ = 1 := nnnorm_c₄ hq₂
 
@@ -500,17 +500,17 @@ theorem nnnorm_jInversionStep_sub_le {j₀ q₁ q₂ : K} (hj : 1 < ‖j₀‖�
 
 theorem exists_tateParameter_c₄ (j₀ : K) (hj : 1 < ‖j₀‖₊) :
     ∃ q : K, q ≠ 0 ∧ ‖q‖₊ = ‖j₀‖₊⁻¹ ∧ (curve q).c₄ ^ 3 = j₀ * (curve q).Δ := by
-  have hpos : (0 : ℝ≥0) < ‖j₀‖₊ := lt_trans zero_lt_one hj
+  have hpos : (0 : NNReal) < ‖j₀‖₊ := lt_trans zero_lt_one hj
   have hj₀0 : j₀ ≠ 0 := by
     intro h
     rw [h, nnnorm_zero] at hj
     exact (lt_irrefl _ (lt_trans zero_lt_one hj)).elim
-  have hρpos : (0 : ℝ≥0) < ‖j₀‖₊⁻¹ := by rw [inv_pos]; exact hpos
+  have hρpos : (0 : NNReal) < ‖j₀‖₊⁻¹ := by rw [inv_pos]; exact hpos
   have hρlt : ‖j₀‖₊⁻¹ < 1 := by
     have h := mul_lt_mul_of_pos_left hj (inv_pos.mpr hpos)
     rwa [mul_one, inv_mul_cancel₀ hpos.ne'] at h
 
-  set B : Set K := Metric.closedBall (0 : K) ((‖j₀‖₊⁻¹ : ℝ≥0) : ℝ) with hBdef
+  set B : Set K := Metric.closedBall (0 : K) ((‖j₀‖₊⁻¹ : NNReal) : ℝ) with hBdef
   have hmem : ∀ x : K, x ∈ B ↔ ‖x‖₊ ≤ ‖j₀‖₊⁻¹ := by
     intro x
     rw [hBdef, Metric.mem_closedBall, dist_zero_right, ← coe_nnnorm, NNReal.coe_le_coe]
@@ -540,12 +540,12 @@ theorem exists_tateParameter_c₄ (j₀ : K) (hj : 1 < ‖j₀‖₊) :
           rw [show dist (φ x) (φ y)
               = dist (jInversionStep j₀ (x : K)) (jInversionStep j₀ (y : K)) from rfl,
             dist_eq_norm]
-      _ ≤ ((‖j₀‖₊⁻¹ * ‖(x : K) - (y : K)‖₊ : ℝ≥0) : ℝ) := by
+      _ ≤ ((‖j₀‖₊⁻¹ * ‖(x : K) - (y : K)‖₊ : NNReal) : ℝ) := by
           rw [← coe_nnnorm]
           exact_mod_cast key
-      _ = (‖j₀‖₊⁻¹ : ℝ≥0) * dist (x : K) (y : K) := by
+      _ = (‖j₀‖₊⁻¹ : NNReal) * dist (x : K) (y : K) := by
           rw [NNReal.coe_mul, coe_nnnorm, dist_eq_norm]
-      _ = (‖j₀‖₊⁻¹ : ℝ≥0) * dist x y := rfl
+      _ = (‖j₀‖₊⁻¹ : NNReal) * dist x y := rfl
   have hcontract : ContractingWith ‖j₀‖₊⁻¹ φ := ⟨hρlt, hlip⟩
 
   obtain ⟨x, hfixB⟩ : ∃ y : B, φ y = y :=
@@ -565,7 +565,7 @@ theorem tateParameter_unique {j₀ q₁ q₂ : K} (hj : 1 < ‖j₀‖₊)
     (hq₁ : ‖q₁‖₊ < 1) (hq₂ : ‖q₂‖₊ < 1)
     (h₁ : (curve q₁).c₄ ^ 3 = j₀ * (curve q₁).Δ)
     (h₂ : (curve q₂).c₄ ^ 3 = j₀ * (curve q₂).Δ) : q₁ = q₂ := by
-  have hpos : (0 : ℝ≥0) < ‖j₀‖₊ := lt_trans zero_lt_one hj
+  have hpos : (0 : NNReal) < ‖j₀‖₊ := lt_trans zero_lt_one hj
   have hj₀0 : j₀ ≠ 0 := by
     intro h
     rw [h, nnnorm_zero] at hj
@@ -574,7 +574,7 @@ theorem tateParameter_unique {j₀ q₁ q₂ : K} (hj : 1 < ‖j₀‖₊)
     have h := mul_lt_mul_of_pos_left hj (inv_pos.mpr hpos)
     rwa [mul_one, inv_mul_cancel₀ hpos.ne'] at h
   by_contra hne
-  have hd : (0 : ℝ≥0) < ‖q₁ - q₂‖₊ := by
+  have hd : (0 : NNReal) < ‖q₁ - q₂‖₊ := by
     rw [pos_iff_ne_zero, ne_eq, nnnorm_eq_zero, sub_eq_zero]
     exact hne
   have hfix₁ : jInversionStep j₀ q₁ = q₁ := (jInversionStep_eq_self_iff hj₀0).mpr h₁
@@ -614,7 +614,7 @@ theorem exists_tateParameter (j₀ : K) (hj : 1 < ‖j₀‖₊) :
     ∃ q : K, ∃ (hq0 : q ≠ 0) (hq : ‖q‖₊ < 1),
       ‖q‖₊ = ‖j₀‖₊⁻¹ ∧ (haveI := isElliptic hq0 hq; (curve q).j) = j₀ := by
   obtain ⟨q, hq0, hqnorm, halg⟩ := exists_tateParameter_c₄ j₀ hj
-  have hpos : (0 : ℝ≥0) < ‖j₀‖₊ := lt_trans zero_lt_one hj
+  have hpos : (0 : NNReal) < ‖j₀‖₊ := lt_trans zero_lt_one hj
   have hρlt : ‖j₀‖₊⁻¹ < 1 := by
     have h := mul_lt_mul_of_pos_left hj (inv_pos.mpr hpos)
     rwa [mul_one, inv_mul_cancel₀ hpos.ne'] at h

@@ -41,7 +41,7 @@ private lemma susceptibility_self_consistent_eq
 private lemma firstExit_target_bound_eq
   [Fintype V]
   [DecidableEq V]
-  {p : ℝ≥0}
+  {p : NNReal}
   {G : SimpleGraph V}
   {Lam S : Set V}
   {u x : V}
@@ -63,7 +63,7 @@ private lemma firstExit_target_bound_eq
 private lemma susceptibility_self_consistent_bk_eq
   [Fintype V]
   [DecidableEq V]
-  {p : ℝ≥0}
+  {p : NNReal}
   {G : SimpleGraph V}
   {Lam S : Finset V}
   {u : V}

@@ -107,7 +107,7 @@ theorem interpolatedSite_cluster_count_ae_one_of_lowOutput
     [IsProbabilityMeasure mu]
     (hd : 1 ≤ d)
     (herg : IsTripleFieldErgodic mu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon)
     (hlow : mu {q | 1 ≤ numInfiniteClusters d (siteToBond (T q.1))} = 1) :
     (interpolatedSiteLaw T mu)

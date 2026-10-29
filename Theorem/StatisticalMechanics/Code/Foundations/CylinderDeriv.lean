@@ -20,7 +20,7 @@ namespace StatMech
 variable {E : Type*} [Countable E] [DecidableEq E]
 
 
-lemma bernoulliMeasure_real_singleton (p : ℝ≥0) (hp : p ≤ 1) (b : Bool) :
+lemma bernoulliMeasure_real_singleton (p : NNReal) (hp : p ≤ 1) (b : Bool) :
     (bernoulliMeasure p hp).real {b} = if b then (p : ℝ) else 1 - p := by
   cases b with
   | true => rw [Measure.real, bernoulliMeasure_apply_true]; simp
@@ -31,7 +31,7 @@ lemma bernoulliMeasure_real_singleton (p : ℝ≥0) (hp : p ≤ 1) (b : Bool) :
 omit [Countable E] [DecidableEq E] in
 
 
-lemma realSingleton_eq_configWeight [Fintype E] (p : ℝ≥0) (hp : p ≤ 1)
+lemma realSingleton_eq_configWeight [Fintype E] (p : NNReal) (hp : p ≤ 1)
     (ω : ConfigSpace E) :
     (bernoulliProductMeasure (E := E) p hp).real {ω} = configWeight (p : ℝ) ω := by
   rw [bernoulliProductMeasure.real_singleton]
@@ -41,7 +41,7 @@ lemma realSingleton_eq_configWeight [Fintype E] (p : ℝ≥0) (hp : p ≤ 1)
 omit [Countable E] in
 
 
-lemma finiteRealProb_eq_prob [Fintype E] (p : ℝ≥0) (hp : p ≤ 1)
+lemma finiteRealProb_eq_prob [Fintype E] (p : NNReal) (hp : p ≤ 1)
     (S : Set (ConfigSpace E)) :
     (bernoulliProductMeasure (E := E) p hp).real S = prob (p : ℝ) S := by
   rw [bernoulliProductMeasure.real_eq_sum]

@@ -21,7 +21,7 @@ private lemma bep_threeMeetBox_subset_top_eq
 @[path]
 private lemma bep_hroute_of_encounter_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (henc : bep_encounter p hp1) :
 -- imply
@@ -35,7 +35,7 @@ private lemma bep_hroute_of_encounter_eq
 @[path]
 private lemma bep_encounter_of_hroute_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hroute : ∀ n : ℕ, 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n) → ∃ a₁ a₂ a₃ : Site 2, 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (NeighborTrifPrecursor 2 a₁ a₂ a₃)) :
 -- imply
@@ -49,7 +49,7 @@ private lemma bep_encounter_of_hroute_eq
 @[path]
 private lemma bep_encounter_iff_hroute_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1) :
 -- imply
   bep_encounter p hp1 ↔ (∀ n : ℕ, 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n) → ∃ a₁ a₂ a₃ : Site 2, 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (NeighborTrifPrecursor 2 a₁ a₂ a₃)) := by
@@ -62,7 +62,7 @@ private lemma bep_encounter_iff_hroute_eq
 @[path]
 private lemma bep_bk_of_encounter_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (henc : bep_encounter p hp1) :
@@ -77,7 +77,7 @@ private lemma bep_bk_of_encounter_eq
 @[path]
 private lemma bep_bk_atLeastTwo_of_encounter_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (henc : bep_encounter p hp1) :

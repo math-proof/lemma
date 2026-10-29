@@ -22,7 +22,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma lz_six : lz 6 = 18 := by
-decide
+  decide
 
 end MetaMathlibExt
 
@@ -33,7 +33,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma lz_add_two (n : ℕ) : lz (n + 2) = lz (n + 1) + lz n := by
-simp [lz, lucasNumber]
+  simp [lz, lucasNumber]
 
 end MetaMathlibExt
 
@@ -45,7 +45,7 @@ namespace MetaMathlibExt
 @[path]
 private lemma lucN_add_two (n : ℕ) : lucasNumber (n + 2) = lucasNumber (n + 1) + lucasNumber
   n := by
-simp [lucasNumber]
+  simp [lucasNumber]
 
 end MetaMathlibExt
 
@@ -261,7 +261,7 @@ private lemma pow2_not3dvd (g : ℕ) (hg : 2 ≤ g) : ¬ 3 ∣ lucasNumber (2 ^ 
       (2 ^ (1 + g')) % 3 = 2 := by
       have hlt := Nat.mod_lt (lucasNumber (2 ^ (1 + g'))) (by norm_num : 0 < 3)
       omega
-    obtain h | h | h <;> rw [e3, h] <;> decide := hc
+    obtain h | h | h := hc <;> rw [e3, h] <;> decide
   omega
 
 end MetaMathlibExt
@@ -320,9 +320,9 @@ private lemma mod12_cases (n x : ℕ) (h : lucasNumber n = 2 * x ^ 2) : n % 12 =
   have hcases : x % 8 = 0 ∨ x % 8 = 1 ∨ x % 8 = 2 ∨ x % 8 = 3 ∨ x % 8 = 4 ∨ x % 8 = 5 ∨ x % 8 = 6 ∨
     x % 8 = 7 := by omega
   have hsq : x ^ 2 % 8 = 0 ∨ x ^ 2 % 8 = 1 ∨ x ^ 2 % 8 = 4 := by
-    obtain h | h | h | h | h | h | h | h <;> rw [e1, h] <;> decide := hcases
+    obtain h | h | h | h | h | h | h | h := hcases <;> rw [e1, h] <;> decide
   have h28 : (2 * x ^ 2) % 8 = 0 ∨ (2 * x ^ 2) % 8 = 2 := by
-    obtain h | h | h <;> rw [e2, h] <;> decide := hsq
+    obtain h | h | h := hsq <;> rw [e2, h] <;> decide
   have hlt : n % 12 < 12 := Nat.mod_lt (n) (by norm_num)
   have hn12 : n % 12 = 0 ∨ n % 12 = 1 ∨ n % 12 = 2 ∨ n % 12 = 3 ∨ n % 12 = 4 ∨ n % 12 = 5 ∨ n % 12 =
     6 ∨ n % 12 = 7 ∨ n % 12 = 8 ∨ n % 12 = 9 ∨ n % 12 = 10 ∨ n % 12 = 11 := by omega
@@ -330,35 +330,35 @@ private lemma mod12_cases (n x : ℕ) (h : lucasNumber n = 2 * x ^ 2) : n % 12 =
   · exact Or.inl h
   · exfalso; rw [h] at hper
     have hRv := hper.symm.trans hL
-    obtain h2 | h2 <;> rw [h2] at hRv <;> revert hRv <;> decide := h28
+    obtain h2 | h2 := h28 <;> rw [h2] at hRv <;> revert hRv <;> decide
   · exfalso; rw [h] at hper
     have hRv := hper.symm.trans hL
-    obtain h2 | h2 <;> rw [h2] at hRv <;> revert hRv <;> decide := h28
+    obtain h2 | h2 := h28 <;> rw [h2] at hRv <;> revert hRv <;> decide
   · exfalso; rw [h] at hper
     have hRv := hper.symm.trans hL
-    obtain h2 | h2 <;> rw [h2] at hRv <;> revert hRv <;> decide := h28
+    obtain h2 | h2 := h28 <;> rw [h2] at hRv <;> revert hRv <;> decide
   · exfalso; rw [h] at hper
     have hRv := hper.symm.trans hL
-    obtain h2 | h2 <;> rw [h2] at hRv <;> revert hRv <;> decide := h28
+    obtain h2 | h2 := h28 <;> rw [h2] at hRv <;> revert hRv <;> decide
   · exfalso; rw [h] at hper
     have hRv := hper.symm.trans hL
-    obtain h2 | h2 <;> rw [h2] at hRv <;> revert hRv <;> decide := h28
+    obtain h2 | h2 := h28 <;> rw [h2] at hRv <;> revert hRv <;> decide
   · exact Or.inr h
   · exfalso; rw [h] at hper
     have hRv := hper.symm.trans hL
-    obtain h2 | h2 <;> rw [h2] at hRv <;> revert hRv <;> decide := h28
+    obtain h2 | h2 := h28 <;> rw [h2] at hRv <;> revert hRv <;> decide
   · exfalso; rw [h] at hper
     have hRv := hper.symm.trans hL
-    obtain h2 | h2 <;> rw [h2] at hRv <;> revert hRv <;> decide := h28
+    obtain h2 | h2 := h28 <;> rw [h2] at hRv <;> revert hRv <;> decide
   · exfalso; rw [h] at hper
     have hRv := hper.symm.trans hL
-    obtain h2 | h2 <;> rw [h2] at hRv <;> revert hRv <;> decide := h28
+    obtain h2 | h2 := h28 <;> rw [h2] at hRv <;> revert hRv <;> decide
   · exfalso; rw [h] at hper
     have hRv := hper.symm.trans hL
-    obtain h2 | h2 <;> rw [h2] at hRv <;> revert hRv <;> decide := h28
+    obtain h2 | h2 := h28 <;> rw [h2] at hRv <;> revert hRv <;> decide
   · exfalso; rw [h] at hper
     have hRv := hper.symm.trans hL
-    obtain h2 | h2 <;> rw [h2] at hRv <;> revert hRv <;> decide := h28
+    obtain h2 | h2 := h28 <;> rw [h2] at hRv <;> revert hRv <;> decide
 
 end MetaMathlibExt
 
@@ -394,7 +394,7 @@ private lemma jacobi_contra (b c : ℕ) (x : ℤ) (hodd : Odd b) (hmod : b % 4 =
   have hLHS : jacobiSym (x ^ 2) b = 0 ∨ jacobiSym (x ^ 2) b = 1 := by
     have e2 : jacobiSym (x ^ 2) b = jacobiSym x b ^ 2 := jacobiSym.pow_left x 2 b
     rw [e2]
-    obtain h | h | h <;> rw [h] <;> decide := jacobiSym.trichotomy x b
+    obtain h | h | h := jacobiSym.trichotomy x b <;> rw [h] <;> decide
   rw [hJeq, hRHS] at hLHS
   omega
 
@@ -563,7 +563,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma cohn_twice_square_lucas
-  {n x : ℕ}
+  (n x : ℕ)
 -- given
   (hn : 0 < n)
   (h : lucasNumber n = 2 * x ^ 2) :
@@ -582,7 +582,7 @@ lemma cohn_twice_square_lucas
         exact case_six_a n x h h24a hn6
       · exfalso
         exact case_six_b n x h h24b
-end
+end MetaMathlibExt
 
 
 

@@ -27,7 +27,7 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-noncomputable def tildePc (d : ℕ) : ℝ≥0 :=
+noncomputable def tildePc (d : ℕ) : NNReal :=
   sSup (tildePcSet d)
 
 end Percolation

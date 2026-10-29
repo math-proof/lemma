@@ -33,7 +33,7 @@ noncomputable def boundaryNonnegativeParityPMF
 
 noncomputable def boundaryNonnegativeParityRawMass
     (beta : ℝ) (J : Sym2 V → ℝ) (interior : Finset V)
-    (H : Finset (Sym2 V)) : ℝ≥0∞ := by
+    (H : Finset (Sym2 V)) : ENNReal := by
   classical
   exact if boundaryParityAllowed G interior H then
     ENNReal.ofReal

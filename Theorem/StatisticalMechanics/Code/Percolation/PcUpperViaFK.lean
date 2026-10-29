@@ -29,7 +29,7 @@ open StatMech.Lattice
 
 theorem bernoulliProduct_map_injective_restrict
     {I E : Type*} [Countable I] [Countable E]
-    (p : ℝ≥0) (hp : p ≤ 1) (f : I → E) (hf : Function.Injective f) :
+    (p : NNReal) (hp : p ≤ 1) (f : I → E) (hf : Function.Injective f) :
     Measure.map (fun (omega : ConfigSpace E) (i : I) => omega (f i))
         (bernoulliProductMeasure (E := E) p hp) =
       bernoulliProductMeasure (E := I) p hp := by
@@ -235,7 +235,7 @@ theorem connToBdryEvent_dependsOn (G : SimpleGraph V) [DecidableRel G.Adj]
 variable {d : ℕ}
 
 
-theorem bernoulliProduct_map_boxRestrict (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem bernoulliProduct_map_boxRestrict (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     Measure.map (boxRestrict d n)
         (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) =
       bernoulliProductMeasure (E := Sym2 (boxVerts d n)) p hp := by
@@ -244,7 +244,7 @@ theorem bernoulliProduct_map_boxRestrict (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) 
       (edgeIncl_injective d n))
 
 
-theorem bernoulliProduct_boxRestrict_preimage (p : ℝ≥0) (hp : p ≤ 1)
+theorem bernoulliProduct_boxRestrict_preimage (p : NNReal) (hp : p ≤ 1)
     (n : ℕ) (A : Set (ConfigSpace (Sym2 (boxVerts d n)))) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
         (boxRestrict d n ⁻¹' A) =
@@ -258,7 +258,7 @@ theorem bernoulliProduct_boxRestrict_preimage (p : ℝ≥0) (hp : p ≤ 1)
 
 
 theorem wiredFinite_boxBdryConnEvent_le_bernoulli
-    (p : ℝ≥0) (hp0 : 0 < p) (hp1 : p < 1) (n : ℕ) :
+    (p : NNReal) (hp0 : 0 < p) (hp1 : p < 1) (n : ℕ) :
     (wiredFiniteMeasure d n (by exact_mod_cast hp0) (by exact_mod_cast hp1)
         (by norm_num : (0 : ℝ) < 2) :
       Measure (ConfigSpace (Sym2 (Site d)))).real (boxBdryConnEvent d n) ≤
@@ -292,7 +292,7 @@ theorem wiredFinite_boxBdryConnEvent_le_bernoulli
 
 
 theorem fkTheta_two_le_bernoulliTheta
-    (p : ℝ≥0) (hp0 : 0 < p) (hp1 : p < 1) :
+    (p : NNReal) (hp0 : 0 < p) (hp1 : p < 1) :
     fkTheta d (by exact_mod_cast hp0) (by exact_mod_cast hp1)
         (by norm_num : (0 : ℝ) < 2) (q := 2) ≤
       Percolation.theta d p hp1.le := by

@@ -29,14 +29,14 @@ theorem r90_reindex_measurePreserving :
     MeasurePreserving (Equiv.piCongrLeft (fun _ => Bool) (crossEdge : Sym2 (Site 2) ≃ Sym2 (Site 2)))
       rba_selfDualMeasure rba_selfDualMeasure :=
   ⟨measurable_reindex, by
-    rw [rba_selfDualMeasure]; exact map_reindex (2⁻¹ : ℝ≥0) half_le_one⟩
+    rw [rba_selfDualMeasure]; exact map_reindex (2⁻¹ : NNReal) half_le_one⟩
 
 
 theorem r90_complement_measurePreserving :
     MeasurePreserving (fun (η : ConfigSpace (Sym2 (Site 2))) e => !(η e))
       rba_selfDualMeasure rba_selfDualMeasure :=
   ⟨measurable_complement, by
-    rw [rba_selfDualMeasure, map_complement (2⁻¹ : ℝ≥0) half_le_one]
+    rw [rba_selfDualMeasure, map_complement (2⁻¹ : NNReal) half_le_one]
     congr 1
     exact one_sub_half_eq⟩
 

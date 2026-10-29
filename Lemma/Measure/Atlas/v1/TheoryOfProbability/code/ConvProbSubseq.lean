@@ -45,7 +45,7 @@ lemma convergence_in_prob_iff_subseq_ae_real
       (exists_seq_tendstoInMeasure_atTop_iff hX).mpr hsub
     rw [tendstoInMeasure_iff_enorm] at hTIM
     intro ε hε
-    have hε_ennreal : (0 : ℝ≥0∞) < ENNReal.ofReal ε := ENNReal.ofReal_pos.mpr hε
+    have hε_ennreal : (0 : ENNReal) < ENNReal.ofReal ε := ENNReal.ofReal_pos.mpr hε
     have hε_ne_top : ENNReal.ofReal ε ≠ ⊤ := ENNReal.ofReal_ne_top
     specialize hTIM (ENNReal.ofReal ε) hε_ennreal hε_ne_top
     apply tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hTIM

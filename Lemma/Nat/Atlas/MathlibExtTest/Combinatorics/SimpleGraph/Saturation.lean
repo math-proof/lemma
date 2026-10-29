@@ -8,7 +8,7 @@ open SimpleGraph
 [edgeOne_saturated_bot_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Saturation.lean)
 -/
 @[path]
-lemma edgeOne_saturated_bot_one
+lemma edgeOne_saturated_bot_one :
 -- imply
   (edge (0 : Fin 2) 1).IsSaturated (⊥ : SimpleGraph (Fin 1)) := by
 -- proof
@@ -22,3 +22,4 @@ lemma edgeOne_saturated_bot_one
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

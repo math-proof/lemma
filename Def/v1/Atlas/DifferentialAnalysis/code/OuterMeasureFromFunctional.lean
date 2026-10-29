@@ -36,7 +36,7 @@ def IsPositiveLinearFunctional (u : C₀(X, ℝ) →L[ℝ] ℝ) : Prop :=
 /-- The premeasure of an open set `U` associated to a positive linear functional `u`:
 the supremum of `u f` over all `f : C₀(X, ℝ)` with `0 ≤ f ≤ 1` and `tsupport f ⊆ U` compact.
 This is the open-set value used to induce an outer measure (Section 1.11 of Melrose). -/
-def functionalMeasureOpen (u : C₀(X, ℝ) →L[ℝ] ℝ) (U : Set X) (_ : IsOpen U) : ℝ≥0∞ :=
+def functionalMeasureOpen (u : C₀(X, ℝ) →L[ℝ] ℝ) (U : Set X) (_ : IsOpen U) : ENNReal :=
   ⨆ (f : C₀(X, ℝ)) (_ : (∀ x, f x ∈ Set.Icc (0 : ℝ) 1) ∧
     IsCompact (tsupport f) ∧ tsupport f ⊆ U),
     ENNReal.ofReal (u f)

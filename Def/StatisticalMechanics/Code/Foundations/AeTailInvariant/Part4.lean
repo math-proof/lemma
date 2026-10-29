@@ -29,7 +29,7 @@ variable {E H : Type*} [Countable E] [DecidableEq E]
 
 def AtiApproxFarOut (window : ℕ → Set E)
     (mu : Measure (ConfigSpace E)) (s : Set (ConfigSpace E)) : Prop :=
-  ∀ (k : ℕ) (ε : ℝ≥0∞), 0 < ε →
+  ∀ (k : ℕ) (ε : ENNReal), 0 < ε →
     ∃ A : Set (ConfigSpace E),
       @MeasurableSet _ (outsideSigma (window k)) A ∧ mu (s ∆ A) < ε
 

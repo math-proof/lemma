@@ -24,8 +24,8 @@ abbrev UnifAbsContIntegrals (f : ι → α → ℝ) (μ : Measure α) : Prop :=
   UnifIntegrable f 1 μ
 
 /-- A uniform `L¹`-bound on the family `f : ι → α → ℝ`:
-there exists `C : ℝ≥0` with `‖f i‖₁ ≤ C` for all `i`. -/
+there exists `C : NNReal` with `‖f i‖₁ ≤ C` for all `i`. -/
 abbrev UnifL1Bound (f : ι → α → ℝ) (μ : Measure α) : Prop :=
-  ∃ C : ℝ≥0, ∀ i, eLpNorm (f i) 1 μ ≤ ↑C
+  ∃ C : NNReal, ∀ i, eLpNorm (f i) 1 μ ≤ ↑C
 
 end TheoryOfProbability3

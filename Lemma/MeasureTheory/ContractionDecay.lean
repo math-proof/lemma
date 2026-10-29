@@ -129,7 +129,7 @@ theorem measure_le_two_mul_measure_inter (μ : Measure G) [μ.IsMulLeftInvariant
         measure_iUnion (pairwise_disjoint_shell S φ hc hr) (measurableSet_shell hS hφ c r)
     _ ≤ ∑' k, 2⁻¹ ^ k * μ (shell S φ c r 0) :=
         ENNReal.tsum_le_tsum (measure_shell_le μ hS hφ hc hr hp hq hpq)
-    _ = (∑' k, (2⁻¹ : ℝ≥0∞) ^ k) * μ (shell S φ c r 0) := ENNReal.tsum_mul_right
+    _ = (∑' k, (2⁻¹ : ENNReal) ^ k) * μ (shell S φ c r 0) := ENNReal.tsum_mul_right
     _ = 2 * μ (S ∩ φ ⁻¹' Iio (r * c)) := by
         rw [ENNReal.tsum_geometric, ENNReal.one_sub_inv_two, inv_inv, shell_zero_eq S φ r hSc]
 

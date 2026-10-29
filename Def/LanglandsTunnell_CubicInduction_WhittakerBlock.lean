@@ -40,11 +40,11 @@ def zerothShell (S : Finset (HeightOneSpectrum (𝓞 ℚ))) :
 
 def block (pins : AutomorphicForm.CarrierPins ℚ) (ψ : AddChar (AdeleRing (𝓞 ℚ) ℚ) ℂ)
     (f : AdelicGL 3 (𝓞 ℚ) ℚ → ℂ) (Φ : (Fin 3 → AdeleRing (𝓞 ℚ) ℚ) → ℂ) (σ : ℝ)
-    (S : Finset (HeightOneSpectrum (𝓞 ℚ))) : ℝ≥0∞ :=
+    (S : Finset (HeightOneSpectrum (𝓞 ℚ))) : ENNReal :=
   letI : MeasurableSpace (AdelicGL 3 (𝓞 ℚ) ℚ) := glBorel (Fin 3) (𝓞 ℚ) ℚ
   ∫⁻ q in zerothShell S,
-    ((‖whittaker3 pins ψ f q.out‖₊ : ℝ≥0∞) ^ 2 *
-      (‖Φ fun j : Fin 3 => (q.out : Matrix (Fin 3) (Fin 3) (AdeleRing (𝓞 ℚ) ℚ)) 2 j‖₊ : ℝ≥0∞) *
+    ((‖whittaker3 pins ψ f q.out‖₊ : ENNReal) ^ 2 *
+      (‖Φ fun j : Fin 3 => (q.out : Matrix (Fin 3) (Fin 3) (AdeleRing (𝓞 ℚ) ℚ)) 2 j‖₊ : ENNReal) *
       ENNReal.ofReal (NumberField.TateGlobal.ideleNorm ℚ (Matrix.GeneralLinearGroup.det q.out) ^ σ))
     ∂quotientMeasure
 

@@ -25,8 +25,8 @@ namespace Complex.WeierstrassPreparationWanted
 theorem wprep_changeOrigin_norm_le {𝕜 : Type*} [NontriviallyNormedField 𝕜]
     {W F : Type*} [NormedAddCommGroup W] [NormedSpace 𝕜 W]
     [NormedAddCommGroup F] [NormedSpace 𝕜 F]
-    (p : FormalMultilinearSeries 𝕜 W F) {r₁ r' : ℝ≥0} (hr' : 0 < r')
-    (hr : (r₁ : ℝ≥0∞) + (r' : ℝ≥0∞) < p.radius) :
+    (p : FormalMultilinearSeries 𝕜 W F) {r₁ r' : NNReal} (hr' : 0 < r')
+    (hr : (r₁ : ENNReal) + (r' : ENNReal) < p.radius) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ (y : W), ‖y‖ ≤ (r₁ : ℝ) →
       ∀ k : ℕ, ‖p.changeOrigin y k‖ ≤ C / (r' : ℝ) ^ k := by
   have hsumm : Summable (fun s : (Σ k l : ℕ,
@@ -34,16 +34,16 @@ theorem wprep_changeOrigin_norm_le {𝕜 : Type*} [NontriviallyNormedField 𝕜]
       ‖p (s.1 + s.2.1)‖₊ * r₁ ^ s.2.1 * r' ^ s.1) :=
     p.changeOriginSeries_summable_aux₁ hr
   refine ⟨((∑' s : (Σ k l : ℕ, { s : Finset (Fin (k + l)) // s.card = l }),
-      ‖p (s.1 + s.2.1)‖₊ * r₁ ^ s.2.1 * r' ^ s.1 : ℝ≥0) : ℝ),
+      ‖p (s.1 + s.2.1)‖₊ * r₁ ^ s.2.1 * r' ^ s.1 : NNReal) : ℝ),
     NNReal.coe_nonneg _, fun y hy k => ?_⟩
   have hy1 : ‖y‖₊ ≤ r₁ := NNReal.coe_le_coe.mpr hy
-  have hylt : (‖y‖₊ : ℝ≥0∞) < p.radius := by
-    have h1 : (‖y‖₊ : ℝ≥0∞) ≤ (r₁ : ℝ≥0∞) := ENNReal.coe_le_coe.mpr hy1
-    have h2 : (r₁ : ℝ≥0∞) + 0 < (r₁ : ℝ≥0∞) + (r' : ℝ≥0∞) := by
+  have hylt : (‖y‖₊ : ENNReal) < p.radius := by
+    have h1 : (‖y‖₊ : ENNReal) ≤ (r₁ : ENNReal) := ENNReal.coe_le_coe.mpr hy1
+    have h2 : (r₁ : ENNReal) + 0 < (r₁ : ENNReal) + (r' : ENNReal) := by
       have h2' : r₁ + 0 < r₁ + r' := add_lt_add_right hr' r₁
       exact_mod_cast h2'
-    calc (‖y‖₊ : ℝ≥0∞) ≤ (r₁ : ℝ≥0∞) + 0 := by rwa [add_zero]
-      _ < (r₁ : ℝ≥0∞) + (r' : ℝ≥0∞) := h2
+    calc (‖y‖₊ : ENNReal) ≤ (r₁ : ENNReal) + 0 := by rwa [add_zero]
+      _ < (r₁ : ENNReal) + (r' : ENNReal) := h2
       _ < p.radius := hr
   have hfib : Summable (fun s : (Σ l : ℕ,
       { s : Finset (Fin (k + l)) // s.card = l }) =>
@@ -102,9 +102,9 @@ theorem wprep_changeOrigin_norm_le {𝕜 : Type*} [NontriviallyNormedField 𝕜]
 theorem wprep_hasSum_arc_integral_changeOrigin
     {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
     (H : V × ℂ → ℂ) (p : FormalMultilinearSeries ℂ (V × ℂ) ℂ)
-    (v₀ : V) (ζ₁ : ℂ) (r : ℝ≥0∞)
+    (v₀ : V) (ζ₁ : ℂ) (r : ENNReal)
     (hH : HasFPowerSeriesOnBall H p (v₀, ζ₁) r)
-    (s : ℝ≥0) (hs0 : 0 < s) (hss : ((s + s : ℝ≥0) : ℝ≥0∞) < r)
+    (s : NNReal) (hs0 : 0 < s) (hss : ((s + s : NNReal) : ENNReal) < r)
     (c : ℂ) (R : ℝ) (θ₁ θ₂ : ℝ)
     (hcov : ∀ θ ∈ Set.uIcc θ₁ θ₂, ‖circleMap c R θ - ζ₁‖ ≤ (s : ℝ))
     (h : V) (hh : ‖h‖ < (s : ℝ)) :
@@ -112,14 +112,14 @@ theorem wprep_hasSum_arc_integral_changeOrigin
         deriv (circleMap c R) θ • ((p.changeOrigin ((0 : V), circleMap c R θ - ζ₁) k)
           fun _ => (h, (0 : ℂ))))
       (∫ θ in θ₁..θ₂, deriv (circleMap c R) θ • H (v₀ + h, circleMap c R θ)) := by
-  have hrad : (0:ℝ≥0∞) < p.radius :=
+  have hrad : (0:ENNReal) < p.radius :=
     lt_of_le_of_lt zero_le (lt_of_lt_of_le hss hH.r_le)
-  have hs_lt_radius : ((s : ℝ≥0) : ℝ≥0∞) < p.radius := by
-    have h1 : ((s : ℝ≥0) : ℝ≥0∞) ≤ (((s + s : ℝ≥0))) := by
+  have hs_lt_radius : ((s : NNReal) : ENNReal) < p.radius := by
+    have h1 : ((s : NNReal) : ENNReal) ≤ (((s + s : NNReal))) := by
       rw [ENNReal.coe_add]
       exact le_add_of_nonneg_right zero_le
     exact lt_of_le_of_lt h1 (lt_of_lt_of_le hss hH.r_le)
-  have hradius : (s : ℝ≥0∞) + (s : ℝ≥0∞) < p.radius := by
+  have hradius : (s : ENNReal) + (s : ENNReal) < p.radius := by
     have h := lt_of_lt_of_le hss hH.r_le
     rwa [ENNReal.coe_add] at h
   obtain ⟨C, hC0, hC⟩ := wprep_changeOrigin_norm_le p hs0 hradius
@@ -158,8 +158,8 @@ theorem wprep_hasSum_arc_integral_changeOrigin
       have g2 : ‖((0 : V), circleMap c R θ - ζ₁)‖₊ ≤ s :=
         NNReal.coe_le_coe.mpr hyleR
       rw [mem_eball_zero_iff, enorm_eq_nnnorm]
-      calc ((‖((0 : V), circleMap c R θ - ζ₁)‖₊ : ℝ≥0) : ℝ≥0∞)
-          ≤ ((s : ℝ≥0) : ℝ≥0∞) := ENNReal.coe_le_coe.mpr g2
+      calc ((‖((0 : V), circleMap c R θ - ζ₁)‖₊ : NNReal) : ENNReal)
+          ≤ ((s : NNReal) : ENNReal) := ENNReal.coe_le_coe.mpr g2
         _ < p.radius := hs_lt_radius
     have hcoeff : ContinuousOn
         (fun θ => (p.changeOrigin ((0 : V), circleMap c R θ - ζ₁) n) fun _ => (h, (0 : ℂ)))
@@ -224,11 +224,11 @@ theorem wprep_hasSum_arc_integral_changeOrigin
     intro θ hθ
     have hyle : ‖((0 : V), circleMap c R θ - ζ₁)‖ ≤ (s:ℝ) := by
       simpa [Prod.norm_mk] using hcov θ (Set.uIoc_subset_uIcc hθ)
-    have hylt : ((‖((0 : V), circleMap c R θ - ζ₁)‖₊ : ℝ≥0) : ℝ≥0∞) < r := by
+    have hylt : ((‖((0 : V), circleMap c R θ - ζ₁)‖₊ : NNReal) : ENNReal) < r := by
       have g2 : ‖((0 : V), circleMap c R θ - ζ₁)‖₊ ≤ s :=
         NNReal.coe_le_coe.mpr hyle
-      have g1 : ((‖((0 : V), circleMap c R θ - ζ₁)‖₊ : ℝ≥0) : ℝ≥0∞)
-          ≤ (((s + s : ℝ≥0)) : ℝ≥0∞) := by
+      have g1 : ((‖((0 : V), circleMap c R θ - ζ₁)‖₊ : NNReal) : ENNReal)
+          ≤ (((s + s : NNReal)) : ENNReal) := by
         have g3 : ‖((0 : V), circleMap c R θ - ζ₁)‖₊ ≤ s + s :=
           le_trans g2 (le_add_of_nonneg_right zero_le)
         exact ENNReal.coe_le_coe.mpr g3
@@ -245,12 +245,12 @@ theorem wprep_hasSum_arc_integral_changeOrigin
         NNReal.coe_le_coe.mpr hyle
       have g3 : ‖(h, (0 : ℂ))‖₊ + ‖((0 : V), circleMap c R θ - ζ₁)‖₊ < s + s :=
         add_lt_add_of_lt_of_le g1 g2
-      have g4 : ((‖(h, (0 : ℂ))‖₊ + ‖((0 : V), circleMap c R θ - ζ₁)‖₊ : ℝ≥0) : ℝ≥0∞)
-          < (((s + s : ℝ≥0)) : ℝ≥0∞) := by
+      have g4 : ((‖(h, (0 : ℂ))‖₊ + ‖((0 : V), circleMap c R θ - ζ₁)‖₊ : NNReal) : ENNReal)
+          < (((s + s : NNReal)) : ENNReal) := by
         exact_mod_cast g3
       rw [ENNReal.coe_add] at g4
-      have g5 : ((‖(h, (0 : ℂ))‖₊ : ℝ≥0) : ℝ≥0∞) +
-          ((‖((0 : V), circleMap c R θ - ζ₁)‖₊ : ℝ≥0) : ℝ≥0∞) < r :=
+      have g5 : ((‖(h, (0 : ℂ))‖₊ : NNReal) : ENNReal) +
+          ((‖((0 : V), circleMap c R θ - ζ₁)‖₊ : NNReal) : ENNReal) < r :=
         lt_of_lt_of_le g4 (le_of_lt hss)
       rw [mem_eball_zero_iff, enorm_eq_nnnorm, lt_tsub_iff_right]
       exact g5
@@ -265,16 +265,16 @@ theorem wprep_hasSum_arc_integral_changeOrigin
 theorem wprep_analyticAt_arc_integral
     {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
     (H : V × ℂ → ℂ) (p : FormalMultilinearSeries ℂ (V × ℂ) ℂ)
-    (v₀ : V) (ζ₁ : ℂ) (r : ℝ≥0∞)
+    (v₀ : V) (ζ₁ : ℂ) (r : ENNReal)
     (hH : HasFPowerSeriesOnBall H p (v₀, ζ₁) r)
-    (s : ℝ≥0) (hs0 : 0 < s) (hss : ((s + s : ℝ≥0) : ℝ≥0∞) < r)
+    (s : NNReal) (hs0 : 0 < s) (hss : ((s + s : NNReal) : ENNReal) < r)
     (c : ℂ) (R : ℝ) (θ₁ θ₂ : ℝ)
     (hcov : ∀ θ ∈ Set.uIcc θ₁ θ₂, ‖circleMap c R θ - ζ₁‖ ≤ (s : ℝ)) :
     AnalyticAt ℂ (fun v => ∫ θ in θ₁..θ₂,
       deriv (circleMap c R) θ • H (v, circleMap c R θ)) v₀ := by
-  have hrad : (0:ℝ≥0∞) < p.radius :=
+  have hrad : (0:ENNReal) < p.radius :=
     lt_of_le_of_lt zero_le (lt_of_lt_of_le hss hH.r_le)
-  have hradius : (s : ℝ≥0∞) + (s : ℝ≥0∞) < p.radius := by
+  have hradius : (s : ENNReal) + (s : ENNReal) < p.radius := by
     have h := lt_of_lt_of_le hss hH.r_le
     rwa [ENNReal.coe_add] at h
   obtain ⟨C, hC0, hC⟩ := wprep_changeOrigin_norm_le p hs0 hradius
@@ -299,14 +299,14 @@ theorem wprep_analyticAt_arc_integral
       simpa [Prod.norm_mk] using hcov θ hθ
     have g2 : ‖((0 : V), circleMap c R θ - ζ₁)‖₊ ≤ s :=
       NNReal.coe_le_coe.mpr hyleR
-    have hs_lt : ((s : ℝ≥0) : ℝ≥0∞) < p.radius := by
-      have h1 : ((s : ℝ≥0) : ℝ≥0∞) ≤ (((s + s : ℝ≥0))) := by
+    have hs_lt : ((s : NNReal) : ENNReal) < p.radius := by
+      have h1 : ((s : NNReal) : ENNReal) ≤ (((s + s : NNReal))) := by
         rw [ENNReal.coe_add]
         exact le_add_of_nonneg_right zero_le
       exact lt_of_le_of_lt h1 (lt_of_lt_of_le hss hH.r_le)
     rw [mem_eball_zero_iff, enorm_eq_nnnorm]
-    calc ((‖((0 : V), circleMap c R θ - ζ₁)‖₊ : ℝ≥0) : ℝ≥0∞)
-        ≤ ((s : ℝ≥0) : ℝ≥0∞) := ENNReal.coe_le_coe.mpr g2
+    calc ((‖((0 : V), circleMap c R θ - ζ₁)‖₊ : NNReal) : ENNReal)
+        ≤ ((s : NNReal) : ENNReal) := ENNReal.coe_le_coe.mpr g2
       _ < p.radius := hs_lt
   set Q : FormalMultilinearSeries ℂ V ℂ := fun k =>
     ∫ θ in θ₁..θ₂, deriv (circleMap c R) θ •
@@ -396,7 +396,7 @@ theorem wprep_analyticAt_arc_integral
             rw [hQdef]
             exact intervalIntegral.norm_integral_le_of_norm_le_const (fun θ hθ => hper θ hθ)
       _ = |θ₂ - θ₁| * (|R| * (C / (s:ℝ) ^ k)) := by ring
-  have hrad_Q : ((s : ℝ≥0) : ℝ≥0∞) ≤ Q.radius := by
+  have hrad_Q : ((s : NNReal) : ENNReal) ≤ Q.radius := by
     refine Q.le_radius_of_bound (|θ₂ - θ₁| * (|R| * C)) fun k => ?_
     have hSk : (s:ℝ) ^ k ≠ 0 := (pow_pos hsR k).ne'
     calc ‖Q k‖ * (s:ℝ) ^ k
@@ -425,18 +425,18 @@ theorem wprep_analyticAt_circleIntegral
     (H : V × ℂ → ℂ) (v₀ : V) (c : ℂ) (R : ℝ) (hR : 0 < R)
     (hH : ∀ ζ ∈ Metric.sphere c R, AnalyticAt ℂ H (v₀, ζ)) :
     AnalyticAt ℂ (fun v => ∮ ζ in C(c, R), H (v, ζ)) v₀ := by
-  have hall : ∀ θ : ℝ, ∃ (p : FormalMultilinearSeries ℂ (V × ℂ) ℂ) (r : ℝ≥0∞),
-      HasFPowerSeriesOnBall H p (v₀, circleMap c R θ) r ∧ ∃ (s : ℝ≥0),
-        0 < s ∧ ((s + s : ℝ≥0) : ℝ≥0∞) < r := by
+  have hall : ∀ θ : ℝ, ∃ (p : FormalMultilinearSeries ℂ (V × ℂ) ℂ) (r : ENNReal),
+      HasFPowerSeriesOnBall H p (v₀, circleMap c R θ) r ∧ ∃ (s : NNReal),
+        0 < s ∧ ((s + s : NNReal) : ENNReal) < r := by
     intro θ
     have hmem : circleMap c R θ ∈ Metric.sphere c R :=
       circleMap_mem_sphere c hR.le θ
     obtain ⟨p, r, hpr⟩ := hH _ hmem
     obtain ⟨s₀, hs0a, hs0b⟩ := ENNReal.lt_iff_exists_nnreal_btwn.mp hpr.r_pos
-    have hs0' : (0 : ℝ≥0) < s₀ := by exact_mod_cast hs0a
+    have hs0' : (0 : NNReal) < s₀ := by exact_mod_cast hs0a
     refine ⟨p, r, hpr, s₀ / 2, by positivity, ?_⟩
     have hadd : s₀ / 2 + s₀ / 2 = s₀ := add_halves _
-    calc (((s₀ / 2 + s₀ / 2 : ℝ≥0)) : ℝ≥0∞) = ((s₀ : ℝ≥0) : ℝ≥0∞) := by
+    calc (((s₀ / 2 + s₀ / 2 : NNReal)) : ENNReal) = ((s₀ : NNReal) : ENNReal) := by
           rw [hadd]
       _ < r := hs0b
   choose p r hpr s hs0 hss using hall
@@ -448,7 +448,7 @@ theorem wprep_analyticAt_circleIntegral
     intro t ht
     rw [Set.mem_iUnion]
     refine ⟨t, Metric.mem_ball_self ?_⟩
-    show (0 : ℝ) < ((s t : ℝ≥0) : ℝ)
+    show (0 : ℝ) < ((s t : NNReal) : ℝ)
     exact_mod_cast hs0 t
   obtain ⟨δ, hδ0, hδ⟩ := lebesgue_number_lemma_of_metric isCompact_Icc hopen hcover
   obtain ⟨n, hn⟩ := exists_nat_gt (2 * Real.pi / δ)
@@ -508,7 +508,7 @@ theorem wprep_analyticAt_circleIntegral
       Set.mem_Icc.mpr ⟨htk0 k, htkn k (le_of_lt hkn)⟩
     obtain ⟨θk, hθk⟩ := hδ (t k) hmem
     have hcov : ∀ θ ∈ Set.uIcc (t k) (t (k + 1)),
-        ‖circleMap c R θ - circleMap c R θk‖ ≤ ((s θk : ℝ≥0) : ℝ) := by
+        ‖circleMap c R θ - circleMap c R θk‖ ≤ ((s θk : NNReal) : ℝ) := by
       intro θ hθ
       have hIk : θ ∈ Set.Icc (t k) (t (k + 1)) := by
         rw [← Set.uIcc_of_le (htle k)]
@@ -524,7 +524,7 @@ theorem wprep_analyticAt_circleIntegral
       have hU : circleMap c R θ ∈ Metric.ball (circleMap c R θk) (s θk) :=
         hθk hmem2
       have hball : dist (circleMap c R θ) (circleMap c R θk)
-          < ((s θk : ℝ≥0) : ℝ) :=
+          < ((s θk : NNReal) : ℝ) :=
         Metric.mem_ball.mp hU
       rw [dist_eq_norm] at hball
       exact le_of_lt hball

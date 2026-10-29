@@ -35,7 +35,7 @@ theorem lattice_mass_transport
     [MulAction (Multiplicative (Site d)) E]
     (mu : Measure (ConfigSpace E))
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) mu)
-    (F : Site d → Site d → ConfigSpace E → ℝ≥0∞)
+    (F : Site d → Site d → ConfigSpace E → ENNReal)
     (hF : ∀ x y, Measurable (F x y))
     (hdiag : IsDiagonallyInvariantTransport F) :
     ∫⁻ omega, ∑' y : Site d, F 0 y omega ∂mu =
@@ -75,7 +75,7 @@ theorem lattice_mass_transport_infinite_receiver_null
     [MulAction (Multiplicative (Site d)) E]
     (mu : Measure (ConfigSpace E)) [IsProbabilityMeasure mu]
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) mu)
-    (F : Site d → Site d → ConfigSpace E → ℝ≥0∞)
+    (F : Site d → Site d → ConfigSpace E → ENNReal)
     (hF : ∀ x y, Measurable (F x y))
     (hdiag : IsDiagonallyInvariantTransport F)
     (hout : ∀ omega, ∑' y : Site d, F 0 y omega ≤ 1) :
@@ -84,7 +84,7 @@ theorem lattice_mass_transport_infinite_receiver_null
   have houtIntegral : (∫⁻ omega, ∑' y : Site d, F 0 y omega ∂mu) ≤ 1 := by
     calc
       (∫⁻ omega, ∑' y : Site d, F 0 y omega ∂mu) ≤
-          ∫⁻ _omega, (1 : ℝ≥0∞) ∂mu := lintegral_mono hout
+          ∫⁻ _omega, (1 : ENNReal) ∂mu := lintegral_mono hout
       _ = 1 := by simp
   have hinIntegral : (∫⁻ omega, ∑' x : Site d, F x 0 omega ∂mu) ≠ ⊤ := by
     exact ne_top_of_le_ne_top ENNReal.one_ne_top (hmass ▸ houtIntegral)
@@ -96,7 +96,7 @@ theorem lattice_mass_transport_forbidden_event_null
     [MulAction (Multiplicative (Site d)) E]
     (mu : Measure (ConfigSpace E)) [IsProbabilityMeasure mu]
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) mu)
-    (F : Site d → Site d → ConfigSpace E → ℝ≥0∞)
+    (F : Site d → Site d → ConfigSpace E → ENNReal)
     (hF : ∀ x y, Measurable (F x y))
     (hdiag : IsDiagonallyInvariantTransport F)
     (hout : ∀ omega, ∑' y : Site d, F 0 y omega ≤ 1)

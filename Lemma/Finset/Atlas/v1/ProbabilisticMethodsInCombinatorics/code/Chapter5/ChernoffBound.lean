@@ -34,20 +34,20 @@ lemma chernoff_bound
     ext; simp [NNReal.coe_pow, NNReal.coe_div]
     norm_num
   have h_sum : HasSubgaussianMGF (fun ω => ∑ i, X i ω)
-    (∑ _i ∈ (Finset.univ : Finset (Fin n)), (1 : ℝ≥0)) μ :=
+    (∑ _i ∈ (Finset.univ : Finset (Fin n)), (1 : NNReal)) μ :=
     HasSubgaussianMGF.sum_of_iIndepFun h_indep (fun i _ => h_subG i)
   have haε : 0 ≤ a * Real.sqrt n := by positivity
   have key := h_sum.measure_ge_le haε
-  suffices h_eq : -(a * √↑n) ^ 2 / (2 * ↑(∑ _i ∈ (Finset.univ : Finset (Fin n)), (1 : ℝ≥0)))
+  suffices h_eq : -(a * √↑n) ^ 2 / (2 * ↑(∑ _i ∈ (Finset.univ : Finset (Fin n)), (1 : NNReal)))
     = -a ^ 2 / 2 by
     rwa [h_eq] at key
-  have h_sum_val : (∑ _i ∈ (Finset.univ : Finset (Fin n)), (1 : ℝ≥0) : ℝ≥0) = (n : ℝ≥0) := by
+  have h_sum_val : (∑ _i ∈ (Finset.univ : Finset (Fin n)), (1 : NNReal) : NNReal) = (n : NNReal) := by
     simp [Finset.sum_const, Finset.card_univ, Fintype.card_fin]
   rw [h_sum_val]
   have hn_pos : (0 : ℝ) < n := Nat.cast_pos.mpr hn
   have hn_ne : (n : ℝ) ≠ 0 := ne_of_gt hn_pos
   simp only [mul_pow, Real.sq_sqrt (le_of_lt hn_pos)]
-  rw [show (↑(n : ℝ≥0) : ℝ) = (n : ℝ) from by simp]
+  rw [show (↑(n : NNReal) : ℝ) = (n : ℝ) from by simp]
   field_simp
 
 end ChernoffBound

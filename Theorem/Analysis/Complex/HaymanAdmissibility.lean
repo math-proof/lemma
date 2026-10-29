@@ -44,8 +44,8 @@ theorem hayman_powerSeries_coefficient_eq_circleIntegral
     coeff n = (2 * Real.pi * Complex.I : ℂ)⁻¹ *
       ∮ z in C(0, r), z ^ (-(n : ℤ) - 1) * G z := by
   let p : FormalMultilinearSeries ℂ ℂ ℂ := FormalMultilinearSeries.ofScalars ℂ coeff
-  let R : ℝ≥0 := ⟨ρ, hρ.le⟩
-  have hp_radius : (R : ℝ≥0∞) ≤ p.radius := by
+  let R : NNReal := ⟨ρ, hρ.le⟩
+  have hp_radius : (R : ENNReal) ≤ p.radius := by
     apply ENNReal.le_of_forall_nnreal_lt
     intro s hs
     have hsρ : (s : ℝ) < ρ := by
@@ -64,7 +64,7 @@ theorem hayman_powerSeries_coefficient_eq_circleIntegral
       exact_mod_cast hzR
     simpa [p, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul, mul_comm] using
       hsum z hzρ
-  let rnn : ℝ≥0 := ⟨r, hr.le⟩
+  let rnn : NNReal := ⟨r, hr.le⟩
   have hd : DifferentiableOn ℂ G (Metric.closedBall 0 r) := by
     apply hp.differentiableOn.mono
     intro z hz

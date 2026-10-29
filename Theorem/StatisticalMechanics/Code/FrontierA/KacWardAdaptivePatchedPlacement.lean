@@ -73,7 +73,7 @@ theorem KWAdaptivePatchedData.middleCorner_mem_coreTube
     {n M : ℕ} [NeZero n] [NeZero M]
     {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    {eps : ℝ} (r : ℝ≥0) (hr : 0 < r)
+    {eps : ℝ} (r : NNReal) (hr : 0 < r)
     (hmesh : KWEndpointInteriorMeshWithin patch.data r)
     (hepsBeta : eps ≤ patch.beta)
     (hepsAlpha : ∀ i, eps ≤ patch.alpha i)
@@ -111,7 +111,7 @@ theorem KWAdaptivePatchedData.pathBase_mem_coreTube
     {n M : ℕ} [NeZero n] [NeZero M]
     {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    {eps : ℝ} (r : ℝ≥0) (hr : 0 < r)
+    {eps : ℝ} (r : NNReal) (hr : 0 < r)
     (hepsBeta : eps ≤ patch.beta)
     (hepsAlpha : ∀ i, eps ≤ patch.alpha i)
     (i : Fin n) (q : Fin M) :
@@ -157,7 +157,7 @@ theorem KWAdaptivePatchedData.pathBase_succ_mem_coreTube
     {n M : ℕ} [NeZero n] [NeZero M]
     {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    {eps : ℝ} (r : ℝ≥0) (hr : 0 < r)
+    {eps : ℝ} (r : NNReal) (hr : 0 < r)
     (hepsBeta : eps ≤ patch.beta)
     (hepsAlpha : ∀ i, eps ≤ patch.alpha i)
     (i : Fin n) (q : Fin M) :
@@ -196,7 +196,7 @@ theorem KWAdaptivePatchedData.middle_rawClosedEdges_subset_coreTube
     {n M : ℕ} [NeZero n] [NeZero M]
     {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    {eps : ℝ} (r : ℝ≥0) (hr : 0 < r)
+    {eps : ℝ} (r : NNReal) (hr : 0 < r)
     (hmesh : KWEndpointInteriorMeshWithin patch.data r)
     (hepsBeta : eps ≤ patch.beta)
     (hepsAlpha : ∀ i, eps ≤ patch.alpha i)

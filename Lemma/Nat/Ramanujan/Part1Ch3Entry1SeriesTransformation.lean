@@ -127,7 +127,6 @@ lemma ramanujan_part1_ch3_entry1_series_transformation_general
   · have hFib := hSumm.hasSum.tsum_fiberwise (fun p : ℕ × ℕ => p.1 + p.2)
     exact hFib.congr_fun (fun n => (fibSum_eq Q f n).symm)
   · exact HasSum.prod_fiberwise hSumm.hasSum (fun j => rowHasSum R₁ hR₁ f hf Q j)
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry1SeriesTransformation
 
@@ -144,7 +143,7 @@ lemma ramanujan_part1_ch3_entry1_series_transformation
 -- given
   (hR₁ : 1 < R₁)
   (hf : AnalyticOn ℂ f (Metric.ball (0 : ℂ) R₁))
-  (hQ : ∃ R₂ : ℝ, 0 < R₂ ∧ ∀ z : ℂ, ‖z‖ < R₂ → Summable (fun n : ℕ => Q n * z ^ n))
+  (_hQ : ∃ R₂ : ℝ, 0 < R₂ ∧ ∀ z : ℂ, ‖z‖ < R₂ → Summable (fun n : ℕ => Q n * z ^ n))
   (hSumm : Summable (fun p : ℕ × ℕ => Q p.1 * iteratedDeriv (p.1 + p.2) f (0 : ℂ) / ((Nat.factorial p.2 : ℂ)))) :
 -- imply
   ∃ v : ℂ,
@@ -152,7 +151,7 @@ lemma ramanujan_part1_ch3_entry1_series_transformation
     iteratedDeriv n f (0 : ℂ)) v ∧
     HasSum (fun n : ℕ => Q n * iteratedDeriv n f (1 : ℂ)) v := by
 -- proof
-apply ramanujan_part1_ch3_entry1_series_transformation_general <;> assumption
+  apply ramanujan_part1_ch3_entry1_series_transformation_general <;> assumption
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry1SeriesTransformation
 

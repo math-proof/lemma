@@ -48,12 +48,12 @@ private lemma ridout_padicNorm_product_eq_inv (S : Finset Nat.Primes)
     (((∏ l ∈ S, l.1 ^ padicValInt l.1 r.num) *
       (∏ l ∈ S, l.1 ^ padicValNat l.1 r.den) : ℕ) : ℝ)⁻¹ := by
   have hnum : ∀ l : Nat.Primes,
-    padicNorm l.1 (r.num : ℚ) =
-      (((l.1 ^ padicValInt l.1 r.num : ℕ) : ℚ))⁻¹ :=
+      padicNorm l.1 (r.num : ℚ) =
+        (((l.1 ^ padicValInt l.1 r.num : ℕ) : ℚ))⁻¹ :=
     fun l ↦ ridout_padicNorm_int l r.num (Rat.num_ne_zero.mpr hr)
   have hden : ∀ l : Nat.Primes,
-    padicNorm l.1 (r.den : ℚ) =
-      (((l.1 ^ padicValNat l.1 r.den : ℕ) : ℚ))⁻¹ :=
+      padicNorm l.1 (r.den : ℚ) =
+        (((l.1 ^ padicValNat l.1 r.den : ℕ) : ℚ))⁻¹ :=
     fun l ↦ ridout_padicNorm_nat l r.den r.den_nz
   simp_rw [hnum, hden, ← mul_inv]
   rw [Finset.prod_inv_distrib]
@@ -171,7 +171,7 @@ private lemma ridout_basic_bounds (ξ ε : ℝ) (S : Finset Nat.Primes)
   have hden : ridoutDenPart S r ≤ r.den := by
     exact Nat.le_of_dvd r.pos (by simpa [ridoutDenPart] using hdenDvd)
   have hparts : (0 : ℝ) <
-    ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) := by
+      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) := by
     exact_mod_cast Nat.mul_pos
       (show 0 < ridoutNumPart S r by
         dsimp [ridoutNumPart]
@@ -182,8 +182,8 @@ private lemma ridout_basic_bounds (ξ ε : ℝ) (S : Finset Nat.Primes)
   refine ⟨hnum, hden, ?_⟩
   rw [ridout_padicNorm_product_eq_inv S r hr] at happrox
   change (((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ))⁻¹ *
-    |ξ - (r : ℝ)| <
-      (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ at happrox
+      |ξ - (r : ℝ)| <
+        (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ at happrox
   exact (inv_mul_lt_iff₀ hparts).mp happrox
 
 end MetaMathlibExt
@@ -231,16 +231,16 @@ private lemma ridout_dist_lt_one (ξ ε : ℝ) (hε : 0 < ε)
   have hH : (1 : ℝ) ≤ ridoutHeight r := by
     exact_mod_cast ridout_height_pos r
   have hparts : ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) ≤
-    (ridoutHeight r : ℝ) ^ 2 := by
+      (ridoutHeight r : ℝ) ^ 2 := by
     exact_mod_cast ridout_parts_le_height_sq S r hr
   have hpowNonneg : 0 ≤ (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ := by
     positivity
   calc
     |ξ - (r : ℝ)| <
-      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) *
-        (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ := hraw
+        ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) *
+          (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ := hraw
     _ ≤ (ridoutHeight r : ℝ) ^ 2 *
-      (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ :=
+          (((ridoutHeight r : ℕ) : ℝ) ^ (2 + ε))⁻¹ :=
       mul_le_mul_of_nonneg_right hparts hpowNonneg
     _ = Real.rpow (ridoutHeight r : ℝ) (-ε) := by
       rw [← Real.rpow_natCast]
@@ -315,8 +315,8 @@ private lemma ridout_exists_rpow_bucket (d x τ : ℝ) (K : ℕ)
   have hupper : x < Real.rpow d (τ * (k + 1)) := by
     by_cases hk : k < K
     · have hnP : ¬P (k + 1) :=
-      Nat.findGreatest_is_greatest (P := P) (Nat.lt_succ_self k)
-        (Nat.succ_le_iff.mpr hk)
+        Nat.findGreatest_is_greatest (P := P) (Nat.lt_succ_self k)
+          (Nat.succ_le_iff.mpr hk)
       apply lt_of_not_ge
       simpa [P] using hnP
     · have hkeq : k = K := le_antisymm hkK (Nat.le_of_not_gt hk)
@@ -381,12 +381,12 @@ private lemma ridout_approximation_with_den (ξ ε : ℝ) (hε : 0 < ε)
     exact_mod_cast (le_max_right r.num.natAbs r.den)
   have hexp : 0 ≤ 2 + ε := by linarith
   have hpows : Real.rpow (r.den : ℝ) (2 + ε) ≤
-    Real.rpow (ridoutHeight r : ℝ) (2 + ε) :=
+      Real.rpow (ridoutHeight r : ℝ) (2 + ε) :=
     Real.rpow_le_rpow (by positivity) hdenHeight hexp
   have hheightPos : (0 : ℝ) < ridoutHeight r := by
     exact_mod_cast ridout_height_pos r
   have hinv : (Real.rpow (ridoutHeight r : ℝ) (2 + ε))⁻¹ ≤
-    (Real.rpow (r.den : ℝ) (2 + ε))⁻¹ := by
+      (Real.rpow (r.den : ℝ) (2 + ε))⁻¹ := by
     exact (inv_le_inv₀ (Real.rpow_pos_of_pos hheightPos _)
       (Real.rpow_pos_of_pos (by positivity) _)).mpr hpows
   exact hraw.trans_le (mul_le_mul_of_nonneg_left hinv (by positivity))
@@ -411,40 +411,40 @@ private lemma ridout_bucket_product_bounds {ι : Type*} [Fintype ι]
       Real.rpow d (∑ i, (τ * (k i + 1) + τ * (l i + 1))) := by
   constructor
   · calc
-    Real.rpow d (∑ i, (τ * k i + τ * l i)) =
-      ∏ i, Real.rpow d (τ * k i + τ * l i) :=
-      Real.rpow_sum_of_pos hd _ Finset.univ
-    _ = ∏ i, (Real.rpow d (τ * k i) * Real.rpow d (τ * l i)) := by
-      apply Finset.prod_congr rfl
-      intro i _hi
-      exact Real.rpow_add hd _ _
-    _ ≤ ∏ i, (x i * y i) := by
-      apply Finset.prod_le_prod₀
-      · intro i _hi
-        exact mul_nonneg (Real.rpow_nonneg hd.le _) (Real.rpow_nonneg hd.le _)
-      · intro i _hi
-        exact mul_le_mul (hxlow i) (hylow i)
-          (Real.rpow_nonneg hd.le _) ((Real.rpow_nonneg hd.le _).trans (hxlow i))
-    _ = (∏ i, x i) * ∏ i, y i := Finset.prod_mul_distrib
+      Real.rpow d (∑ i, (τ * k i + τ * l i)) =
+          ∏ i, Real.rpow d (τ * k i + τ * l i) :=
+        Real.rpow_sum_of_pos hd _ Finset.univ
+      _ = ∏ i, (Real.rpow d (τ * k i) * Real.rpow d (τ * l i)) := by
+        apply Finset.prod_congr rfl
+        intro i _hi
+        exact Real.rpow_add hd _ _
+      _ ≤ ∏ i, (x i * y i) := by
+        apply Finset.prod_le_prod₀
+        · intro i _hi
+          exact mul_nonneg (Real.rpow_nonneg hd.le _) (Real.rpow_nonneg hd.le _)
+        · intro i _hi
+          exact mul_le_mul (hxlow i) (hylow i)
+            (Real.rpow_nonneg hd.le _) ((Real.rpow_nonneg hd.le _).trans (hxlow i))
+      _ = (∏ i, x i) * ∏ i, y i := Finset.prod_mul_distrib
   · calc
-    (∏ i, x i) * ∏ i, y i = ∏ i, (x i * y i) :=
-      Finset.prod_mul_distrib.symm
-    _ ≤ ∏ i, (Real.rpow d (τ * (k i + 1)) *
-      Real.rpow d (τ * (l i + 1))) := by
-      apply Finset.prod_le_prod₀
-      · intro i _hi
-        exact mul_nonneg ((Real.rpow_nonneg hd.le _).trans (hxlow i))
-          ((Real.rpow_nonneg hd.le _).trans (hylow i))
-      · intro i _hi
-        exact mul_le_mul (hxhigh i) (hyhigh i)
-          ((Real.rpow_nonneg hd.le _).trans (hylow i))
-          (Real.rpow_nonneg hd.le _)
-    _ = ∏ i, Real.rpow d (τ * (k i + 1) + τ * (l i + 1)) := by
-      apply Finset.prod_congr rfl
-      intro i _hi
-      exact (Real.rpow_add hd _ _).symm
-    _ = Real.rpow d (∑ i, (τ * (k i + 1) + τ * (l i + 1))) :=
-      (Real.rpow_sum_of_pos hd _ Finset.univ).symm
+      (∏ i, x i) * ∏ i, y i = ∏ i, (x i * y i) :=
+        Finset.prod_mul_distrib.symm
+      _ ≤ ∏ i, (Real.rpow d (τ * (k i + 1)) *
+          Real.rpow d (τ * (l i + 1))) := by
+        apply Finset.prod_le_prod₀
+        · intro i _hi
+          exact mul_nonneg ((Real.rpow_nonneg hd.le _).trans (hxlow i))
+            ((Real.rpow_nonneg hd.le _).trans (hylow i))
+        · intro i _hi
+          exact mul_le_mul (hxhigh i) (hyhigh i)
+            ((Real.rpow_nonneg hd.le _).trans (hylow i))
+            (Real.rpow_nonneg hd.le _)
+      _ = ∏ i, Real.rpow d (τ * (k i + 1) + τ * (l i + 1)) := by
+        apply Finset.prod_congr rfl
+        intro i _hi
+        exact (Real.rpow_add hd _ _).symm
+      _ = Real.rpow d (∑ i, (τ * (k i + 1) + τ * (l i + 1))) :=
+        (Real.rpow_sum_of_pos hd _ Finset.univ).symm
 
 end MetaMathlibExt
 
@@ -480,10 +480,10 @@ private lemma ridout_exists_value_buckets (S : Finset Nat.Primes)
         nlinarith [show (1 : ℝ) ≤ r.den by exact_mod_cast r.pos]
       _ = Real.rpow (r.den : ℝ) 2 := (Real.rpow_two _).symm
   have hnumBucket : ∀ i : ↥S, ∃ k : Fin (K + 1),
-    Real.rpow (r.den : ℝ) (τ * (k : ℕ)) ≤
-      (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num ∧
-      (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num <
-        Real.rpow (r.den : ℝ) (τ * ((k : ℕ) + 1)) := by
+      Real.rpow (r.den : ℝ) (τ * (k : ℕ)) ≤
+          (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num ∧
+        (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num <
+          Real.rpow (r.den : ℝ) (τ * ((k : ℕ) + 1)) := by
     intro i
     apply ridout_exists_rpow_bucket (r.den : ℝ)
       ((i.1.1 : ℝ) ^ padicValInt i.1.1 r.num) τ K hdreal
@@ -494,20 +494,20 @@ private lemma ridout_exists_value_buckets (S : Finset Nat.Primes)
     · exact hτ
     · exact hK
   have hdenBucket : ∀ i : ↥S, ∃ l : Fin (K + 1),
-    Real.rpow (r.den : ℝ) (τ * (l : ℕ)) ≤
-      (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den ∧
-      (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den <
-        Real.rpow (r.den : ℝ) (τ * ((l : ℕ) + 1)) := by
+      Real.rpow (r.den : ℝ) (τ * (l : ℕ)) ≤
+          (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den ∧
+        (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den <
+          Real.rpow (r.den : ℝ) (τ * ((l : ℕ) + 1)) := by
     intro i
     apply ridout_exists_rpow_bucket (r.den : ℝ)
       ((i.1.1 : ℝ) ^ padicValNat i.1.1 r.den) τ K hdreal
     · exact one_le_pow₀ (by exact_mod_cast i.1.2.one_le)
     · have hval : i.1.1 ^ padicValNat i.1.1 r.den ≤ r.den :=
-      Nat.le_of_dvd r.pos (pow_padicValNat_dvd (p := i.1.1) (n := r.den))
+        Nat.le_of_dvd r.pos (pow_padicValNat_dvd (p := i.1.1) (n := r.den))
       have hvalR : (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den ≤ r.den := by
         calc
           (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den =
-            ((i.1.1 ^ padicValNat i.1.1 r.den : ℕ) : ℝ) := by norm_cast
+              ((i.1.1 ^ padicValNat i.1.1 r.den : ℕ) : ℝ) := by norm_cast
           _ ≤ (r.den : ℝ) := by exact_mod_cast hval
       exact hvalR.trans hdenSq
     · exact hτ
@@ -559,12 +559,12 @@ private lemma ridout_exists_core_bucket (ξ ε : ℝ) (hε : 0 < ε)
     (fun i ↦ (hl i).1) (fun i ↦ (hl i).2.le)
   have hnumEq : (ridoutNumPart S r : ℝ) = ∏ i : ↥S, x i := by
     have hattach : (∏ i : ↥S, x i) =
-      ∏ q ∈ S, (q.1 : ℝ) ^ padicValInt q.1 r.num := by
+        ∏ q ∈ S, (q.1 : ℝ) ^ padicValInt q.1 r.num := by
       calc
         (∏ i : ↥S, x i) = ∏ i ∈ S.attach, x i :=
           Finset.prod_coe_sort_eq_attach S x
         _ = ∏ i ∈ S.attach,
-          (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num := by rfl
+            (i.1.1 : ℝ) ^ padicValInt i.1.1 r.num := by rfl
         _ = ∏ q ∈ S, (q.1 : ℝ) ^ padicValInt q.1 r.num :=
           Finset.prod_attach S
             (fun q : Nat.Primes ↦ (q.1 : ℝ) ^ padicValInt q.1 r.num)
@@ -573,12 +573,12 @@ private lemma ridout_exists_core_bucket (ξ ε : ℝ) (hε : 0 < ε)
     exact hattach.symm
   have hdenEq : (ridoutDenPart S r : ℝ) = ∏ i : ↥S, y i := by
     have hattach : (∏ i : ↥S, y i) =
-      ∏ q ∈ S, (q.1 : ℝ) ^ padicValNat q.1 r.den := by
+        ∏ q ∈ S, (q.1 : ℝ) ^ padicValNat q.1 r.den := by
       calc
         (∏ i : ↥S, y i) = ∏ i ∈ S.attach, y i :=
           Finset.prod_coe_sort_eq_attach S y
         _ = ∏ i ∈ S.attach,
-          (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den := by rfl
+            (i.1.1 : ℝ) ^ padicValNat i.1.1 r.den := by rfl
         _ = ∏ q ∈ S, (q.1 : ℝ) ^ padicValNat q.1 r.den :=
           Finset.prod_attach S
             (fun q : Nat.Primes ↦ (q.1 : ℝ) ^ padicValNat q.1 r.den)
@@ -586,31 +586,32 @@ private lemma ridout_exists_core_bucket (ξ ε : ℝ) (hε : 0 < ε)
     push_cast
     exact hattach.symm
   have hpartsEq :
-    ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) =
-      (∏ i, x i) * ∏ i, y i := by
+      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) =
+        (∏ i, x i) * ∏ i, y i := by
     push_cast
     rw [hnumEq, hdenEq]
   have hlower : Real.rpow (r.den : ℝ) σ ≤
-    ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) := by
+      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) := by
     rw [hpartsEq]
     simpa [σ] using hprod.1
   have hupperExp :
-    (∑ i : ↥S, (τ * ((k i : ℕ) + 1) + τ * ((l i : ℕ) + 1))) =
-      σ + 2 * (S.card : ℝ) * τ := by
+      (∑ i : ↥S, (τ * ((k i : ℕ) + 1) + τ * ((l i : ℕ) + 1))) =
+        σ + 2 * (S.card : ℝ) * τ := by
     calc
       (∑ i : ↥S, (τ * ((k i : ℕ) + 1) + τ * ((l i : ℕ) + 1))) =
-        ∑ i : ↥S, ((τ * (k i : ℕ) + τ * (l i : ℕ)) + 2 * τ) := by
+          ∑ i : ↥S, ((τ * (k i : ℕ) + τ * (l i : ℕ)) + 2 * τ) := by
         apply Finset.sum_congr rfl
         intro i _hi
         ring
       _ = (∑ i : ↥S, (τ * (k i : ℕ) + τ * (l i : ℕ))) +
-        ∑ _i : ↥S, 2 * τ := Finset.sum_add_distrib
+          ∑ _i : ↥S, 2 * τ := Finset.sum_add_distrib
       _ = σ + 2 * (S.card : ℝ) * τ := by simp [σ]; ring
   have hupper :
-    ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) ≤
-      Real.rpow (r.den : ℝ) (σ + 2 * (S.card : ℝ) * τ) := by
+      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) ≤
+        Real.rpow (r.den : ℝ) (σ + 2 * (S.card : ℝ) * τ) := by
     rw [hpartsEq]
-    rwa [← hupperExp]
+    rw [← hupperExp]
+    exact hprod.2
   have hbasic := ridout_basic_bounds ξ ε S r hr happrox
   have habs := ridout_abs_rat_le ξ ε hε S r hr happrox
   have hnumC : (r.num.natAbs : ℝ) ≤ (|ξ| + 1) * r.den := by
@@ -623,11 +624,11 @@ private lemma ridout_exists_core_bucket (ξ ε : ℝ) (hε : 0 < ε)
       _ ≤ (|ξ| + 1) * r.den :=
         mul_le_mul_of_nonneg_right habs (by positivity)
   have hpartsC :
-    ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) ≤
-      (|ξ| + 1) * (r.den : ℝ) ^ 2 := by
+      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) ≤
+        (|ξ| + 1) * (r.den : ℝ) ^ 2 := by
     calc
       ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) ≤
-        (r.num.natAbs : ℝ) * r.den := by
+          (r.num.natAbs : ℝ) * r.den := by
         exact_mod_cast Nat.mul_le_mul hbasic.1 hbasic.2.1
       _ ≤ ((|ξ| + 1) * r.den) * r.den :=
         mul_le_mul_of_nonneg_right hnumC (by positivity)
@@ -635,15 +636,15 @@ private lemma ridout_exists_core_bucket (ξ ε : ℝ) (hε : 0 < ε)
   have hCstrict : |ξ| + 1 < Real.rpow (r.den : ℝ) (ε / 2) := by
     linarith
   have hpartsStrict :
-    ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) <
-      Real.rpow (r.den : ℝ) (2 + ε / 2) := by
+      ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) <
+        Real.rpow (r.den : ℝ) (2 + ε / 2) := by
     refine hpartsC.trans_lt ?_
     calc
       (|ξ| + 1) * (r.den : ℝ) ^ 2 <
-        Real.rpow (r.den : ℝ) (ε / 2) * (r.den : ℝ) ^ 2 :=
+          Real.rpow (r.den : ℝ) (ε / 2) * (r.den : ℝ) ^ 2 :=
         mul_lt_mul_of_pos_right hCstrict (sq_pos_of_pos (by positivity))
       _ = Real.rpow (r.den : ℝ) (ε / 2) *
-        Real.rpow (r.den : ℝ) 2 := by
+          Real.rpow (r.den : ℝ) 2 := by
         congr 1
         exact (Real.rpow_two _).symm
       _ = Real.rpow (r.den : ℝ) (ε / 2 + 2) :=
@@ -654,21 +655,21 @@ private lemma ridout_exists_core_bucket (ξ ε : ℝ) (hε : 0 < ε)
     (Real.rpow_lt_rpow_left_iff hdOne).mp (hlower.trans_lt hpartsStrict)
   have hdenApprox := ridout_approximation_with_den ξ ε hε S r hr happrox
   have happCore : |ξ - (r : ℝ)| <
-    1 / Real.rpow (r.den : ℝ) (2 + ε / 2 - σ) := by
+      1 / Real.rpow (r.den : ℝ) (2 + ε / 2 - σ) := by
     refine hdenApprox.trans_le ?_
     calc
       ((ridoutNumPart S r * ridoutDenPart S r : ℕ) : ℝ) *
-        (Real.rpow (r.den : ℝ) (2 + ε))⁻¹ ≤
-        Real.rpow (r.den : ℝ) (σ + 2 * (S.card : ℝ) * τ) *
-          (Real.rpow (r.den : ℝ) (2 + ε))⁻¹ :=
+          (Real.rpow (r.den : ℝ) (2 + ε))⁻¹ ≤
+          Real.rpow (r.den : ℝ) (σ + 2 * (S.card : ℝ) * τ) *
+            (Real.rpow (r.den : ℝ) (2 + ε))⁻¹ :=
         mul_le_mul_of_nonneg_right hupper
           (inv_nonneg.mpr (Real.rpow_nonneg (by positivity) _))
       _ = Real.rpow (r.den : ℝ) (σ + 2 * (S.card : ℝ) * τ) *
-        Real.rpow (r.den : ℝ) (-(2 + ε)) := by
+          Real.rpow (r.den : ℝ) (-(2 + ε)) := by
         congr 1
         exact (Real.rpow_neg (by positivity) _).symm
       _ = Real.rpow (r.den : ℝ)
-        ((σ + 2 * (S.card : ℝ) * τ) + -(2 + ε)) :=
+          ((σ + 2 * (S.card : ℝ) * τ) + -(2 + ε)) :=
         (Real.rpow_add (by positivity) _ _).symm
       _ ≤ Real.rpow (r.den : ℝ) (-(2 + ε / 2 - σ)) := by
         apply Real.rpow_le_rpow_of_exponent_le hdOne.le
@@ -732,7 +733,7 @@ private lemma ridout_padic_roth_small (ξ : ℝ) (hξ : IsAlgebraic ℚ ξ)
       linarith
     calc
       2 * (S.card : ℝ) * τ =
-        (ε / 2) * ((S.card : ℝ) / ((S.card : ℝ) + 1)) := by
+          (ε / 2) * ((S.card : ℝ) / ((S.card : ℝ) + 1)) := by
         dsimp [τ]
         field_simp
         ring
@@ -752,14 +753,14 @@ private lemma ridout_padic_roth_small (ξ : ℝ) (hξ : IsAlgebraic ℚ ξ)
       if ∑ i, (τ * (k i : ℕ) + τ * (l i : ℕ)) < 2 + ε / 2 then
         {r : ℚ |
           |ξ - (r : ℝ)| <
-            1 / Real.rpow (r.den : ℝ)
-              (2 + ε / 2 - ∑ i, (τ * (k i : ℕ) + τ * (l i : ℕ))) ∧
+              1 / Real.rpow (r.den : ℝ)
+                (2 + ε / 2 - ∑ i, (τ * (k i : ℕ) + τ * (l i : ℕ))) ∧
             ∃ a b : ↥S → ℕ,
               ((∏ i, i.1.1 ^ a i : ℕ) : ℤ) ∣ r.num ∧
               (∏ i, i.1.1 ^ b i) ∣ r.den ∧
               ∀ i,
                 Real.rpow (r.den : ℝ) (τ * (k i : ℕ)) ≤
-                  (i.1.1 : ℝ) ^ a i ∧
+                    (i.1.1 : ℝ) ^ a i ∧
                   Real.rpow (r.den : ℝ) (τ * (l i : ℕ)) ≤
                     (i.1.1 : ℝ) ^ b i}
       else ∅
@@ -776,11 +777,12 @@ private lemma ridout_padic_roth_small (ξ : ℝ) (hξ : IsAlgebraic ℚ ξ)
           (by intro i hi; positivity) (by intro i hi; positivity) (by simpa using hσ)
       simpa using hcore
     · dsimp only [Core]
-      rwa [ite_eq_right hσ]
+      rw [ite_eq_right hσ]
+      exact Set.finite_empty
   have hCoresFinite : (⋃ k, ⋃ l, Core k l).Finite :=
     Set.finite_iUnion fun k ↦ Set.finite_iUnion fun l ↦ hCoreFinite k l
   have hSmall :
-    {r : ℚ | r ∈ ridoutApproximants ξ ε S ∧ r.den ≤ B₀}.Finite := by
+      {r : ℚ | r ∈ ridoutApproximants ξ ε S ∧ r.den ≤ B₀}.Finite := by
     refine (ridout_finite_rat_of_abs_le_of_den_le (|ξ| + 1) B₀).subset ?_
     intro r hr
     refine ⟨?_, hr.2⟩
@@ -790,8 +792,8 @@ private lemma ridout_padic_roth_small (ξ : ℝ) (hξ : IsAlgebraic ℚ ξ)
         (show (0 : ℝ) ≤ |ξ| + 1 by positivity)
     · exact ridout_abs_rat_le ξ ε hε S r hr0 hr.1
   have hLarge :
-    {r : ℚ | r ∈ ridoutApproximants ξ ε S ∧ B₀ < r.den} ⊆
-      ⋃ k, ⋃ l, Core k l := by
+      {r : ℚ | r ∈ ridoutApproximants ξ ε S ∧ B₀ < r.den} ⊆
+        ⋃ k, ⋃ l, Core k l := by
     intro r hr
     have hr0 : r ≠ 0 := by
       intro hz
@@ -846,7 +848,7 @@ lemma ridout_padic_roth
   have hε₁one : ε₁ ≤ 1 := min_le_right _ _
   have hsmall := ridout_padic_roth_small ξ hξ ε₁ hε₁ hε₁one S
   have hsmallIrrational :
-    Set.Finite {r : ℚ | r ∈ ridoutApproximants ξ ε₁ S ∧ ξ ≠ (r : ℝ)} :=
+      Set.Finite {r : ℚ | r ∈ ridoutApproximants ξ ε₁ S ∧ ξ ≠ (r : ℝ)} :=
     hsmall.subset (by
       intro r hr
       exact hr.1)
@@ -866,12 +868,12 @@ lemma ridout_padic_roth
   have hheight : (1 : ℝ) ≤ ridoutHeight r := by
     exact_mod_cast ridout_height_pos r
   have hpows : Real.rpow (ridoutHeight r : ℝ) (2 + ε₁) ≤
-    Real.rpow (ridoutHeight r : ℝ) (2 + ε) :=
+      Real.rpow (ridoutHeight r : ℝ) (2 + ε) :=
     Real.rpow_le_rpow_of_exponent_le hheight (by
       dsimp [ε₁]
       linarith [min_le_left ε 1])
   have hinv : (Real.rpow (ridoutHeight r : ℝ) (2 + ε))⁻¹ ≤
-    (Real.rpow (ridoutHeight r : ℝ) (2 + ε₁))⁻¹ := by
+      (Real.rpow (ridoutHeight r : ℝ) (2 + ε₁))⁻¹ := by
     exact (inv_le_inv₀
       (Real.rpow_pos_of_pos (lt_of_lt_of_le zero_lt_one hheight) _)
       (Real.rpow_pos_of_pos (lt_of_lt_of_le zero_lt_one hheight) _)).mpr hpows
@@ -881,4 +883,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

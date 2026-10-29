@@ -10,5 +10,4 @@ def convNd {D d d' : ℕ} {T : Type*} [Fintype T] (off : T → Fin D → ℤ)
   ∑ t, ∑ c, x (p + off t) c * w t c s
 
 
--- created on 2026-09-27
 

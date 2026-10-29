@@ -254,7 +254,7 @@ private lemma rb3_reimerWprobCore_eq :
 private lemma rb3_thm_reimer_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (StatMech.ConfigSpace E)}
 -- given
   (hp : p ≤ 1) :

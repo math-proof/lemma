@@ -30,7 +30,7 @@ namespace MathlibExtTest.Combinatorics.SimpleGraph.Contraction
 [collapseOutside_concrete](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Contraction.lean)
 -/
 @[path]
-lemma collapseOutside_concrete
+lemma collapseOutside_concrete :
 -- imply
   SimpleGraph.collapseOutside retained 0 = some zero ∧ SimpleGraph.collapseOutside retained 2 = none := by
 -- proof
@@ -42,3 +42,4 @@ end MathlibExtTest.Combinatorics.SimpleGraph.Contraction
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

@@ -8,8 +8,6 @@ namespace MetaMathlibExt
 
 /--
 [lucas_rec](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/SquareFibonacciLucas.lean)
--/
-@[path]
 Source: Refik Keskin and Zafer Yosma, "On Fibonacci and Lucas Numbers of the
 Form cx^2", Journal of Integer Sequences 14 (2011), Theorem 2.1, source
 lines 129–132,
@@ -32,6 +30,7 @@ takes `(hn : 0 < n)` to formalize the intended positive-natural-index form.
 `Nat.fib` is the Fibonacci sequence and `MetaMathlibExt.lucasNumber` is the
 repository's canonical Lucas-number sequence; no parallel `Fₙ₋₁ + Fₙ₊₁`
 encoding is used. -/
+@[path]
 private lemma lucas_rec (m : ℕ) :
   lucasNumber (m + 2) = lucasNumber (m + 1) + lucasNumber m :=
   rfl
@@ -260,7 +259,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma v0 : lucasNumber 0 % 4 = 2 := by
-decide
+  decide
 
 end MetaMathlibExt
 
@@ -271,7 +270,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma v1 : lucasNumber 1 % 4 = 1 := by
-decide
+  decide
 
 end MetaMathlibExt
 
@@ -282,7 +281,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma v2 : lucasNumber 2 % 4 = 3 := by
-decide
+  decide
 
 end MetaMathlibExt
 
@@ -293,7 +292,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma v3 : lucasNumber 3 % 4 = 0 := by
-decide
+  decide
 
 end MetaMathlibExt
 
@@ -304,7 +303,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma v4 : lucasNumber 4 % 4 = 3 := by
-decide
+  decide
 
 end MetaMathlibExt
 
@@ -315,7 +314,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma v5 : lucasNumber 5 % 4 = 3 := by
-decide
+  decide
 
 end MetaMathlibExt
 
@@ -328,7 +327,7 @@ namespace MetaMathlibExt
 private lemma sq_mod4 (x : ℕ) : x ^ 2 % 4 = 0 ∨ x ^ 2 % 4 = 1 := by
   have h4 : x % 4 = 0 ∨ x % 4 = 1 ∨ x % 4 = 2 ∨ x % 4 = 3 := by omega
   have hp : (x ^ 2) % 4 = ((x % 4) ^ 2) % 4 := Nat.pow_mod x 2 4
-  obtain h | h | h | h <;> rw [hp, h] <;> decide := h4
+  obtain h | h | h | h := h4 <;> rw [hp, h] <;> decide
 
 end MetaMathlibExt
 
@@ -482,7 +481,7 @@ namespace MetaMathlibExt
 private lemma jacobi_sq_nonneg {y : ℤ} {b : ℕ} :
   jacobiSym (y ^ 2) b = 0 ∨ jacobiSym (y ^ 2) b = 1 := by
   have hpow : jacobiSym (y ^ 2) b = jacobiSym y b ^ 2 := jacobiSym.pow_left y 2 b
-  obtain h | h | h <;> rw [hpow, h] <;> decide := jacobiSym.trichotomy y b
+  obtain h | h | h := jacobiSym.trichotomy y b <;> rw [hpow, h] <;> decide
 
 end MetaMathlibExt
 
@@ -547,7 +546,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma cohn_square_lucas
-  {n x : ℕ}
+  (n x : ℕ)
 -- given
   (hn : 0 < n)
   (h : lucasNumber n = x ^ 2) :
@@ -560,9 +559,9 @@ lemma cohn_square_lucas
   by_cases h3 : n = 3
   · exact Or.inr h3
   have hn5 : 5 ≤ n := by
-    obtain hm | hm <;> omega := hmod6
+    obtain hm | hm := hmod6 <;> omega
   have hn2 : n % 2 = 1 := by
-    obtain hm | hm <;> omega := hmod6
+    obtain hm | hm := hmod6 <;> omega
   have hn4 : n % 4 = 1 ∨ n % 4 = 3 := (Nat.odd_mod_four_iff).mp hn2
   obtain h41 | h43 := hn4
   · have hL1 : lucasNumber 1 = 1 ^ 2 := by decide
@@ -613,9 +612,9 @@ lemma cohn_square_lucas
     have h1 : n = 3 + 2 * m := by omega
     have hn_eq : n = 3 + 2 * k * (3 ^ r) := by rw [h1, hmk]; ring
     exact False.elim (key hkeven hk3 hL3 (Or.inr rfl) hr_odd hn_eq h)
-end
+end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

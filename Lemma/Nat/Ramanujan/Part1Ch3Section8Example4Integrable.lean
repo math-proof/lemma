@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Ramanujan.Part1Ch3Section8Example4Integrable
-open Entry9IiGeneralizedbellgeneratingDefining (generalizedBellGenerating)
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
+open Entry9IiGeneralizedbellgeneratingDefining (generalizedBellGenerating)
 open Section8Example4Integrable
 
 
@@ -55,7 +55,7 @@ private lemma real_pow_le_aux (k j : ℕ) : ((j : ℝ) + 1) ^ k ≤ ((2 ^ k : �
     push_cast at h2 ⊢
     linarith
   calc ((j : ℝ) + 1) ^ k ≤ ((2 ^ j : ℕ) : ℝ) ^ k :=
-    pow_le_pow_left₀ (by positivity) hle k
+        pow_le_pow_left₀ (by positivity) hle k
     _ = (((2 : ℝ) ^ j) ^ k) := by push_cast; ring_nf
     _ = (((2 : ℝ) ^ k) ^ j) := by rw [← pow_mul, ← pow_mul, mul_comm]
     _ = (((2 ^ k : ℕ) : ℝ) ^ j) := by push_cast; ring_nf
@@ -81,13 +81,13 @@ private lemma summable_bound_aux (k : ℕ) (R : ℝ) (hR : 0 ≤ R) :
     exact_mod_cast Nat.zero_le _
   have hRpow : (0 : ℝ) ≤ R ^ (j + 1) := pow_nonneg hR _
   have h2 : ((j : ℝ) + 1) ^ k * R ^ (j + 1) / (Nat.factorial j : ℝ)
-    ≤ ((2 ^ k : ℕ) : ℝ) ^ j * R ^ (j + 1) / (Nat.factorial j : ℝ) := by
+      ≤ ((2 ^ k : ℕ) : ℝ) ^ j * R ^ (j + 1) / (Nat.factorial j : ℝ) := by
     exact div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_right hle hRpow) hfact
   calc ((j : ℝ) + 1) ^ k * R ^ (j + 1) / (Nat.factorial j : ℝ)
-    ≤ ((2 ^ k : ℕ) : ℝ) ^ j * R ^ (j + 1) / (Nat.factorial j : ℝ) := h2
-    _ = R * (((2 ^ k : ℕ) : ℝ) * R) ^ j / (Nat.factorial j : ℝ) := by
-      rw [mul_pow, pow_succ']
-      ring
+        ≤ ((2 ^ k : ℕ) : ℝ) ^ j * R ^ (j + 1) / (Nat.factorial j : ℝ) := h2
+      _ = R * (((2 ^ k : ℕ) : ℝ) * R) ^ j / (Nat.factorial j : ℝ) := by
+        rw [mul_pow, pow_succ']
+        ring
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example4Integrable
 
@@ -130,7 +130,7 @@ private lemma norm_bound_aux (k : ℕ) (x : ℂ) (j : ℕ) (t : ℝ) (ht : t ∈
   have hy : ‖((t : ℂ) * x)‖ ≤ ‖x‖ := by
     rw [norm_mul, Complex.norm_real, Real.norm_eq_abs]
     calc |t| * ‖x‖ ≤ 1 * ‖x‖ := by
-      apply mul_le_mul_of_nonneg_right habs hR
+          apply mul_le_mul_of_nonneg_right habs hR
       _ = ‖x‖ := one_mul _
   have hyPow : ‖(((t : ℂ) * x) ^ (j + 1))‖ ≤ ‖x‖ ^ (j + 1) := by
     rw [norm_pow]
@@ -139,10 +139,9 @@ private lemma norm_bound_aux (k : ℕ) (x : ℂ) (j : ℕ) (t : ℝ) (ht : t ∈
   have hfact_nonneg : (0 : ℝ) ≤ (Nat.factorial j : ℝ) := by
     exact_mod_cast Nat.zero_le _
   have hmul : ((j : ℝ) + 1) ^ k * ‖(((t : ℂ) * x) ^ (j + 1))‖
-    ≤ ((j : ℝ) + 1) ^ k * ‖x‖ ^ (j + 1) := by
+      ≤ ((j : ℝ) + 1) ^ k * ‖x‖ ^ (j + 1) := by
     exact mul_le_mul_of_nonneg_left hyPow (by positivity)
   exact div_le_div_of_nonneg_right hmul hfact_nonneg
-set_option backward.proofsInPublic true in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example4Integrable
 
@@ -165,10 +164,11 @@ lemma ramanujan_part1_ch3_section8_example4_integrable
     have hn : (⟨((0 : ℕ) : ℤ) - 1, by omega⟩ : { n : ℤ // -1 ≤ n }).val = -1 := by
       simp
     have hfun : (fun t : ℝ => x * f ⟨((0 : ℕ) : ℤ) - 1, by omega⟩ ((t : ℂ) * x))
-      = (fun _ : ℝ => x * 1) := by
+        = (fun _ : ℝ => x * 1) := by
       funext t
       simp [f]
-    rwa [hfun]
+    rw [hfun]
+    exact continuousOn_const
   | succ k =>
     have hval : (⟨(((k + 1 : ℕ) : ℤ)) - 1, by omega⟩ : { n : ℤ // -1 ≤ n }).val = (k : ℤ) := by
       push_cast
@@ -180,15 +180,15 @@ lemma ramanujan_part1_ch3_section8_example4_integrable
       rw [hval]
       exact Int.toNat_natCast k
     have hfun : (fun t : ℝ => x * f ⟨(((k + 1 : ℕ) : ℤ)) - 1, by omega⟩ ((t : ℂ) * x))
-      = (fun t : ℝ => x * (Complex.exp (-((t : ℂ) * x)) *
-        ∑' (j : ℕ), (↑((j + 1) ^ k : ℕ) : ℂ) * (((t : ℂ) * x) ^ (j + 1)) /
-          (↑(Nat.factorial j) : ℂ))) := by
+        = (fun t : ℝ => x * (Complex.exp (-((t : ℂ) * x)) *
+          ∑' (j : ℕ), (↑((j + 1) ^ k : ℕ) : ℂ) * (((t : ℂ) * x) ^ (j + 1)) /
+            (↑(Nat.factorial j) : ℂ))) := by
       funext t
       simp [f, generalizedBellGenerating]
     rw [hfun]
     have hS : ContinuousOn
-      (fun t : ℝ => ∑' (j : ℕ), (↑((j + 1) ^ k : ℕ) : ℂ) * (((t : ℂ) * x) ^ (j + 1)) /
-        (↑(Nat.factorial j) : ℂ)) (Set.Icc 0 1) := by
+        (fun t : ℝ => ∑' (j : ℕ), (↑((j + 1) ^ k : ℕ) : ℂ) * (((t : ℂ) * x) ^ (j + 1)) /
+          (↑(Nat.factorial j) : ℂ)) (Set.Icc 0 1) := by
       apply continuousOn_tsum (fun j => (cont_each_aux k x j).continuousOn)
         (summable_bound_aux k ‖x‖ (norm_nonneg _))
       intro j t ht
@@ -202,4 +202,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example4Integrable
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -14,8 +14,8 @@ namespace An_Algorithmists_Toolkit
 -/
 @[path]
 lemma fin_telescope_sum
-  {k : ℕ}
-  {f : Fin (k + 1) → ℝ} :
+  (k : ℕ)
+  (f : Fin (k + 1) → ℝ) :
 -- imply
   ∑ i : Fin k, (f (Fin.castSucc i) - f (Fin.succ i)) = f 0 - f (Fin.last k) := by
 -- proof
@@ -52,8 +52,8 @@ lemma edge_loewner_path
   {L_path : Matrix (Fin n) (Fin n) ℝ}
   {x : Fin n → ℝ}
 -- given
-  (hk : 0 < k)
-  (hinj : Function.Injective path)
+  (_hk : 0 < k)
+  (_hinj : Function.Injective path)
   (hu : path 0 = u)
   (hv : path ⟨k, Nat.lt_succ_iff.mpr le_rfl⟩ = v)
   (hLe : ∀ x : Fin n → ℝ, dotProduct x (L_e.mulVec x) = (x u - x v) ^ 2)
@@ -72,7 +72,7 @@ lemma edge_loewner_path
     linarith
   calc (x u - x v) ^ 2
     = (∑ i : Fin k, (x (path (Fin.castSucc i)) - x (path (Fin.succ i)))) ^ 2 := by
-      rw [htele]
+        rw [htele]
     _ ≤ ↑k * ∑ i : Fin k, (x (path (Fin.castSucc i)) - x (path (Fin.succ i))) ^ 2 := by
       have cs := @sq_sum_le_card_mul_sum_sq (Fin k) ℝ _ _ _ _
         Finset.univ (fun i => x (path (Fin.castSucc i)) - x (path (Fin.succ i)))
@@ -120,14 +120,13 @@ namespace An_Algorithmists_Toolkit
 @[path]
 lemma iter_error_step
   {n : ℕ}
-  {A L S : Matrix (Fin n) (Fin n) ℝ}
+  (A L S : Matrix (Fin n) (Fin n) ℝ)
   [Invertible L]
-  {b : Fin n → ℝ}
-  {x_star : Fin n → ℝ}
-  {xk : Fin n → ℝ}
--- given
   (hA : A = L + S)
-  (hx : A.mulVec x_star = b) :
+  (b : Fin n → ℝ)
+  (x_star : Fin n → ℝ)
+  (hx : A.mulVec x_star = b)
+  (xk : Fin n → ℝ) :
 -- imply
   (⅟L).mulVec (b - S.mulVec xk) - x_star = -((⅟L * S).mulVec (xk - x_star)) := by
 -- proof
@@ -155,7 +154,7 @@ lemma iterative_solver_convergence
   {k : ℕ}
 -- given
   (hA : A = L + S)
-  (hρ : ρ < 1)
+  (_hρ : ρ < 1)
   (hρ_pos : 0 ≤ ρ)
   (hρ_spec : ∀ v : Fin n → ℝ, ‖(⅟L * S).mulVec v‖ ≤ ρ * ‖v‖)
   (hx : A.mulVec x_star = b)
@@ -173,7 +172,7 @@ lemma iterative_solver_convergence
     calc ‖(⅟L * S).mulVec (x k - x_star)‖
       ≤ ρ * ‖x k - x_star‖ := hρ_spec _
       _ ≤ ρ * (ρ ^ k * ‖x 0 - x_star‖) := by
-        apply mul_le_mul_of_nonneg_left ih hρ_pos
+          apply mul_le_mul_of_nonneg_left ih hρ_pos
       _ = ρ ^ (k + 1) * ‖x 0 - x_star‖ := by ring
 end An_Algorithmists_Toolkit
 open SimpleGraph Finset

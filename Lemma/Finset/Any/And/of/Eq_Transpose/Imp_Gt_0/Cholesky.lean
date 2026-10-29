@@ -1,5 +1,6 @@
 import Lemma.Matrix.IsCholeskyRec_Mul_L.of.All_Gt_0.All_All_Eq_0
-import Lemma.Matrix.Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef
+import Instance.LinearAlgebra.Matrix.GetElem
+import Lemma.Matrix.Any_And_Eq_Mul_Adjoint.of.PosDef
 open Matrix
 
 
@@ -20,7 +21,11 @@ private lemma main
     ·
       rw [star_trivial]
       exact h₁ x hx
-  obtain ⟨L, hlow, hpos, hL⟩ := Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef hA
+  obtain ⟨L, htri, hL⟩ := Any_And_Eq_Mul_Adjoint.of.PosDef hA
+  have hlow : ∀ i j, i < j → L i j = 0 := fun i j hij => by
+    simpa [getElem_getElem] using (htri j).1 i hij
+  have hpos : ∀ i, 0 < L i i := fun i => by
+    simpa [getElem_getElem] using (htri i).2
   have h := IsCholeskyRec_Mul_L.of.All_Gt_0.All_All_Eq_0 hlow hpos
   rw [← hL] at h
   refine ⟨L, by rwa [Matrix.conjTranspose_eq_transpose_of_trivial] at hL, fun i j => ?_⟩
@@ -30,3 +35,4 @@ private lemma main
 
 
 -- created on 2023-07-02
+-- updated on 2026-10-28

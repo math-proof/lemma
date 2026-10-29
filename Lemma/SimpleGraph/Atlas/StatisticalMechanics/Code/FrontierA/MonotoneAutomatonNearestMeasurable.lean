@@ -148,7 +148,7 @@ private lemma measurable_pairNearestTransport_eq
   {d : ℕ}
   {x y : Site d} :
 -- imply
-  Measurable (pairNearestTransport x y : PairSiteConfig d → ℝ≥0∞) := by
+  Measurable (pairNearestTransport x y : PairSiteConfig d → ENNReal) := by
 -- proof
   apply StatMech.FrontierA.measurable_pairNearestTransport x y
 

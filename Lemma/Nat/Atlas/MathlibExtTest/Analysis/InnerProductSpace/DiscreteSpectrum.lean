@@ -33,7 +33,7 @@ namespace NonnegativeDiscreteSpectrumTest
 [dup_sublevelFinset_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/InnerProductSpace/DiscreteSpectrum.lean)
 -/
 @[path]
-lemma dup_sublevelFinset_one
+lemma dup_sublevelFinset_one :
 -- imply
   dupSpectrum.sublevelFinset 1 = {0, 1} := by
 -- proof
@@ -49,7 +49,7 @@ namespace NonnegativeDiscreteSpectrumTest
 [dup_counting_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/InnerProductSpace/DiscreteSpectrum.lean)
 -/
 @[path]
-lemma dup_counting_one
+lemma dup_counting_one :
 -- imply
   dupSpectrum.countingFunction 1 = 2 := by
 -- proof
@@ -61,3 +61,4 @@ end NonnegativeDiscreteSpectrumTest
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

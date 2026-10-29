@@ -28,7 +28,7 @@ open StatMech.Lattice StatMech.Percolation StatMech.Ising
 variable {d : ℕ}
 
 
-noncomputable def bondParam (β : ℝ) : ℝ≥0 := Real.toNNReal (1 - Real.exp (-β))
+noncomputable def bondParam (β : ℝ) : NNReal := Real.toNNReal (1 - Real.exp (-β))
 
 
 end Sharpness

@@ -1,15 +1,13 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry11CorollaryNewtonGirard
 
 /--
 [tendsto_sum_exhaust](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry11CorollaryNewtonGirard.lean)
--/
-@[path]
 by finite sets. -/
+@[path]
 private lemma tendsto_sum_exhaust {α : Type*} {f : α → ℂ} {s : ℂ} (hs : HasSum f s)
   (G : ℕ → Finset α) (hsub : ∀ N M : ℕ, N ≤ M → G N ⊆ G M)
   (hcover : ∀ x, ∃ N, x ∈ G N) :
@@ -104,7 +102,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry11CorollaryNewtonGirar
 -/
 @[path]
 lemma ramanujan_part1_ch3_entry11_corollary_newton_girard_general
-  {a e p : ℕ → ℂ}
+  (a e p : ℕ → ℂ)
 -- given
   (he : ∀ n : ℕ, HasSum (fun s : { s : Finset ℕ // s.card = n } => ∏ j ∈ (s : Finset ℕ), a j) (e n))
   (hp : ∀ k : ℕ, 1 ≤ k → HasSum (fun j : ℕ => (a j) ^ k) (p k)) :
@@ -225,11 +223,10 @@ lemma ramanujan_part1_ch3_entry11_corollary_newton_girard_general
       calc (-1 : ℂ) ^ (k - 1) * p k * e (n - k)
         = (-1 : ℂ) ^ (k - 1) * (p k * e (n - k)) := by ring
         _ = (-1 : ℂ) ^ ((n + 1) + (n - k)) * (e (n - k) * p k) := by
-          rw [hsign]; ring
+            rw [hsign]; ring
         _ = (-1 : ℂ) ^ (n + 1) * ((-1 : ℂ) ^ (n - k) * e (n - k) * p k) := by
           rw [pow_add]; ring
   exact heq.trans hrearr
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry11CorollaryNewtonGirard
 
@@ -242,7 +239,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry11CorollaryNewtonGirar
 lemma ramanujan_part1_ch3_entry11_corollary_newton_girard
   {a e p : ℕ → ℂ}
 -- given
-  (ha : Summable (fun j : ℕ => ‖a j‖))
+  (_ha : Summable (fun j : ℕ => ‖a j‖))
   (he : ∀ n : ℕ, HasSum (fun s : { s : Finset ℕ // s.card = n } => ∏ j ∈ (s : Finset ℕ), a j) (e n))
   (hp : ∀ k : ℕ, 1 ≤ k → HasSum (fun j : ℕ => (a j) ^ k) (p k)) :
 -- imply
@@ -254,4 +251,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry11CorollaryNewtonGirard
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

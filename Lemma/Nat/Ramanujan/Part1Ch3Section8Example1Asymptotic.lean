@@ -115,12 +115,12 @@ private lemma sec8Ex1_sign_coeff (n j : ℕ) :
   rw [sec8Ex1Coeff]
   calc
     (-1 : ℂ) ^ j *
-      ((-1 : ℂ) ^ (n + 1 + (j + 1)) *
-        (Nat.stirlingSecond (n + 1) (j + 1) : ℂ)) =
-      ((-1 : ℂ) ^ j * (-1 : ℂ) ^ (n + 1 + (j + 1))) *
-        (Nat.stirlingSecond (n + 1) (j + 1) : ℂ) := by ring
+        ((-1 : ℂ) ^ (n + 1 + (j + 1)) *
+          (Nat.stirlingSecond (n + 1) (j + 1) : ℂ)) =
+        ((-1 : ℂ) ^ j * (-1 : ℂ) ^ (n + 1 + (j + 1))) *
+          (Nat.stirlingSecond (n + 1) (j + 1) : ℂ) := by ring
     _ = (-1 : ℂ) ^ (j + (n + 1 + (j + 1))) *
-      (Nat.stirlingSecond (n + 1) (j + 1) : ℂ) := by rw [← pow_add]
+          (Nat.stirlingSecond (n + 1) (j + 1) : ℂ) := by rw [← pow_add]
     _ = (-1 : ℂ) ^ n * (Nat.stirlingSecond (n + 1) (j + 1) : ℂ) := by
       rw [show j + (n + 1 + (j + 1)) = n + 2 * (j + 1) by omega,
         sec8Ex1_negOne_pow_add_even]
@@ -171,10 +171,10 @@ private lemma sec8Ex1FiniteApprox_swap (a : ℕ → ℂ) (N : ℕ) (z : ℂ) :
       intro j hj
       rw [Finset.mul_sum]
     _ = ∑ n ∈ Finset.range (N + 2), ∑ j ∈ Finset.range (N + 1),
-      (-1 : ℂ) ^ j * a j * (sec8Ex1Coeff n (j + 1) / z ^ n) :=
+          (-1 : ℂ) ^ j * a j * (sec8Ex1Coeff n (j + 1) / z ^ n) :=
       Finset.sum_comm
     _ = ∑ n ∈ Finset.range (N + 2), ∑ j ∈ Finset.range (N + 1),
-      (-1 : ℂ) ^ j * a j * sec8Ex1Coeff n (j + 1) / z ^ n := by
+          (-1 : ℂ) ^ j * a j * sec8Ex1Coeff n (j + 1) / z ^ n := by
       apply Finset.sum_congr rfl
       intro n hn
       apply Finset.sum_congr rfl
@@ -205,21 +205,21 @@ private lemma sec8Ex1FiniteApprox_row (a : ℕ → ℂ) {n N : ℕ} (hn : n ≤ 
       intro j hj
       calc
         (-1 : ℂ) ^ j * a j * sec8Ex1Coeff (n + 1) (j + 1) / z ^ (n + 1) =
-          a j * ((-1 : ℂ) ^ j * sec8Ex1Coeff (n + 1) (j + 1)) /
-            z ^ (n + 1) := by ring
+            a j * ((-1 : ℂ) ^ j * sec8Ex1Coeff (n + 1) (j + 1)) /
+              z ^ (n + 1) := by ring
         _ = a j *
-          ((-1 : ℂ) ^ n * (Nat.stirlingSecond (n + 1) (j + 1) : ℂ)) /
-            z ^ (n + 1) := by rw [sec8Ex1_sign_coeff]
+            ((-1 : ℂ) ^ n * (Nat.stirlingSecond (n + 1) (j + 1) : ℂ)) /
+              z ^ (n + 1) := by rw [sec8Ex1_sign_coeff]
         _ = (-1 : ℂ) ^ n *
-          (a j * (Nat.stirlingSecond (n + 1) (j + 1) : ℂ)) /
-            z ^ (n + 1) := by ring
+            (a j * (Nat.stirlingSecond (n + 1) (j + 1) : ℂ)) /
+              z ^ (n + 1) := by ring
     _ = (-1 : ℂ) ^ n *
-      (∑ j ∈ Finset.range (N + 1),
-        a j * (Nat.stirlingSecond (n + 1) (j + 1) : ℂ)) / z ^ (n + 1) := by
+        (∑ j ∈ Finset.range (N + 1),
+          a j * (Nat.stirlingSecond (n + 1) (j + 1) : ℂ)) / z ^ (n + 1) := by
       rw [Finset.mul_sum, Finset.sum_div]
     _ = (-1 : ℂ) ^ n *
-      (∑ j ∈ Finset.range (n + 1),
-        a j * (Nat.stirlingSecond (n + 1) (j + 1) : ℂ)) / z ^ (n + 1) := by
+        (∑ j ∈ Finset.range (n + 1),
+          a j * (Nat.stirlingSecond (n + 1) (j + 1) : ℂ)) / z ^ (n + 1) := by
       rw [sec8Ex1_stirling_row_truncate a hn]
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example1Asymptotic
@@ -234,7 +234,7 @@ private lemma sec8Ex1FiniteApprox_eq_main (a : ℕ → ℂ) (N : ℕ) (z : ℂ) 
   sec8Ex1FiniteApprox a N z = sec8Ex1Main a N z := by
   rw [sec8Ex1FiniteApprox_swap, Finset.sum_range_succ']
   have hzero : (∑ j ∈ Finset.range (N + 1),
-    (-1 : ℂ) ^ j * a j * sec8Ex1Coeff 0 (j + 1) / z ^ 0) = 0 := by
+      (-1 : ℂ) ^ j * a j * sec8Ex1Coeff 0 (j + 1) / z ^ 0) = 0 := by
     apply Finset.sum_eq_zero
     intro j hj
     simp [sec8Ex1Coeff]
@@ -276,15 +276,15 @@ private lemma sec8Ex1Approx_succ (k N : ℕ) (z : ℂ) :
   rw [hzero, zero_div, add_zero, sec8Ex1Approx, sec8Ex1Approx]
   calc
     (∑ n ∈ Finset.range (N + 1), sec8Ex1Coeff (n + 1) (k + 1) / z ^ (n + 1)) =
-      ∑ n ∈ Finset.range (N + 1),
-        (sec8Ex1Coeff n k / z ^ n / z -
-          (k + 1 : ℂ) * (sec8Ex1Coeff n (k + 1) / z ^ n) / z) := by
+        ∑ n ∈ Finset.range (N + 1),
+          (sec8Ex1Coeff n k / z ^ n / z -
+            (k + 1 : ℂ) * (sec8Ex1Coeff n (k + 1) / z ^ n) / z) := by
       apply Finset.sum_congr rfl
       intro n hn
       exact sec8Ex1Coeff_div_succ n k z
     _ = (∑ n ∈ Finset.range (N + 1), sec8Ex1Coeff n k / z ^ n) / z -
-      (k + 1 : ℂ) *
-        (∑ n ∈ Finset.range (N + 1), sec8Ex1Coeff n (k + 1) / z ^ n) / z := by
+        (k + 1 : ℂ) *
+          (∑ n ∈ Finset.range (N + 1), sec8Ex1Coeff n (k + 1) / z ^ n) / z := by
       rw [Finset.sum_sub_distrib]
       congr 1
       · rw [← Finset.sum_div]
@@ -354,9 +354,9 @@ private lemma sec8Ex1_pow_norm_le_norm_prod (z : ℂ) (hre : 0 ≤ z.re) (k : �
   induction k with
   | zero => simp [sec8Ex1Prod]
   | succ k ih =>
-    rw [sec8Ex1Prod_succ, norm_mul, pow_succ]
-    exact mul_le_mul ih (sec8Ex1_norm_le_norm_add_nat z hre (k + 1))
-      (norm_nonneg z) (norm_nonneg (sec8Ex1Prod k z))
+      rw [sec8Ex1Prod_succ, norm_mul, pow_succ]
+      exact mul_le_mul ih (sec8Ex1_norm_le_norm_add_nat z hre (k + 1))
+        (norm_nonneg z) (norm_nonneg (sec8Ex1Prod k z))
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example1Asymptotic
 
@@ -383,8 +383,8 @@ private lemma sec8Ex1Approx_zero (N : ℕ) (z : ℂ) :
   induction N with
   | zero => simp [sec8Ex1Approx, sec8Ex1Coeff]
   | succ N ih =>
-    rw [sec8Ex1Approx, Finset.sum_range_succ, ← sec8Ex1Approx, ih]
-    simp [sec8Ex1Coeff]
+      rw [sec8Ex1Approx, Finset.sum_range_succ, ← sec8Ex1Approx, ih]
+      simp [sec8Ex1Coeff]
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example1Asymptotic
 
@@ -441,52 +441,52 @@ private lemma sec8Ex1_expansion_bound (N k : ℕ) :
     ‖sec8Ex1Recip k z - sec8Ex1Approx k N z‖ ≤ C / ‖z‖ ^ (N + 1) := by
   induction N generalizing k with
   | zero =>
-    cases k with
-    | zero =>
-      refine ⟨0, le_rfl, fun z hre hnorm => ?_⟩
-      simp [sec8Ex1Recip, sec8Ex1Prod, sec8Ex1Approx_zero]
-    | succ k =>
-      refine ⟨1, zero_le_one, fun z hre hnorm => ?_⟩
-      rw [sec8Ex1Approx_zero_succ, sub_zero]
-      simpa only [zero_add, pow_one] using sec8Ex1_norm_recip_le z hre hnorm k
+      cases k with
+      | zero =>
+          refine ⟨0, le_rfl, fun z hre hnorm => ?_⟩
+          simp [sec8Ex1Recip, sec8Ex1Prod, sec8Ex1Approx_zero]
+      | succ k =>
+          refine ⟨1, zero_le_one, fun z hre hnorm => ?_⟩
+          rw [sec8Ex1Approx_zero_succ, sub_zero]
+          simpa only [zero_add, pow_one] using sec8Ex1_norm_recip_le z hre hnorm k
   | succ N ih =>
-    cases k with
-    | zero =>
-      refine ⟨0, le_rfl, fun z hre hnorm => ?_⟩
-      simp [sec8Ex1Recip, sec8Ex1Prod, sec8Ex1Approx_zero]
-    | succ k =>
-      obtain ⟨C₁, hC₁, h₁⟩ := ih k
-      obtain ⟨C₂, hC₂, h₂⟩ := ih (k + 1)
-      refine ⟨C₁ + (k + 1 : ℝ) * C₂, by positivity, fun z hre hnorm => ?_⟩
-      have hzpos : 0 < ‖z‖ := lt_of_lt_of_le zero_lt_one hnorm
-      have hkNorm : ‖(k + 1 : ℂ)‖ = (k + 1 : ℝ) := by
-        rw [show (k + 1 : ℂ) = (((k : ℝ) + 1 : ℝ) : ℂ) by norm_num,
-          Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg]
-        positivity
-      rw [sec8Ex1_error_succ k N z hre hnorm]
-      calc
-        ‖(sec8Ex1Recip k z - sec8Ex1Approx k N z) / z -
-          (k + 1 : ℂ) *
-            (sec8Ex1Recip (k + 1) z - sec8Ex1Approx (k + 1) N z) / z‖ ≤
-          ‖(sec8Ex1Recip k z - sec8Ex1Approx k N z) / z‖ +
-            ‖(k + 1 : ℂ) *
-              (sec8Ex1Recip (k + 1) z - sec8Ex1Approx (k + 1) N z) / z‖ :=
-          norm_sub_le _ _
-        _ = ‖sec8Ex1Recip k z - sec8Ex1Approx k N z‖ / ‖z‖ +
-          (k + 1 : ℝ) *
-            ‖sec8Ex1Recip (k + 1) z - sec8Ex1Approx (k + 1) N z‖ / ‖z‖ := by
-          simp only [norm_div, norm_mul, hkNorm]
-        _ ≤ (C₁ / ‖z‖ ^ (N + 1)) / ‖z‖ +
-          (k + 1 : ℝ) * (C₂ / ‖z‖ ^ (N + 1)) / ‖z‖ := by
-          apply add_le_add
-          · exact div_le_div_of_nonneg_right (h₁ z hre hnorm) (norm_nonneg z)
-          · exact div_le_div_of_nonneg_right
-            (mul_le_mul_of_nonneg_left (h₂ z hre hnorm) (by positivity))
-            (norm_nonneg z)
-        _ = (C₁ + (k + 1 : ℝ) * C₂) / ‖z‖ ^ (N + 1 + 1) := by
-          rw [pow_succ]
-          field_simp
-          ring
+      cases k with
+      | zero =>
+          refine ⟨0, le_rfl, fun z hre hnorm => ?_⟩
+          simp [sec8Ex1Recip, sec8Ex1Prod, sec8Ex1Approx_zero]
+      | succ k =>
+          obtain ⟨C₁, hC₁, h₁⟩ := ih k
+          obtain ⟨C₂, hC₂, h₂⟩ := ih (k + 1)
+          refine ⟨C₁ + (k + 1 : ℝ) * C₂, by positivity, fun z hre hnorm => ?_⟩
+          have hzpos : 0 < ‖z‖ := lt_of_lt_of_le zero_lt_one hnorm
+          have hkNorm : ‖(k + 1 : ℂ)‖ = (k + 1 : ℝ) := by
+            rw [show (k + 1 : ℂ) = (((k : ℝ) + 1 : ℝ) : ℂ) by norm_num,
+              Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg]
+            positivity
+          rw [sec8Ex1_error_succ k N z hre hnorm]
+          calc
+            ‖(sec8Ex1Recip k z - sec8Ex1Approx k N z) / z -
+                (k + 1 : ℂ) *
+                  (sec8Ex1Recip (k + 1) z - sec8Ex1Approx (k + 1) N z) / z‖ ≤
+                ‖(sec8Ex1Recip k z - sec8Ex1Approx k N z) / z‖ +
+                  ‖(k + 1 : ℂ) *
+                    (sec8Ex1Recip (k + 1) z - sec8Ex1Approx (k + 1) N z) / z‖ :=
+              norm_sub_le _ _
+            _ = ‖sec8Ex1Recip k z - sec8Ex1Approx k N z‖ / ‖z‖ +
+                (k + 1 : ℝ) *
+                  ‖sec8Ex1Recip (k + 1) z - sec8Ex1Approx (k + 1) N z‖ / ‖z‖ := by
+              simp only [norm_div, norm_mul, hkNorm]
+            _ ≤ (C₁ / ‖z‖ ^ (N + 1)) / ‖z‖ +
+                (k + 1 : ℝ) * (C₂ / ‖z‖ ^ (N + 1)) / ‖z‖ := by
+              apply add_le_add
+              · exact div_le_div_of_nonneg_right (h₁ z hre hnorm) (norm_nonneg z)
+              · exact div_le_div_of_nonneg_right
+                  (mul_le_mul_of_nonneg_left (h₂ z hre hnorm) (by positivity))
+                  (norm_nonneg z)
+            _ = (C₁ + (k + 1 : ℝ) * C₂) / ‖z‖ ^ (N + 1 + 1) := by
+              rw [pow_succ]
+              field_simp
+              ring
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example1Asymptotic
 
@@ -506,11 +506,11 @@ private lemma sec8Ex1_finite_part_bound (a : ℕ → ℂ) (N : ℕ) :
   intro z hre hnorm
   rw [← sec8Ex1FiniteApprox_eq_main]
   have hsum :
-    (∑ j ∈ Finset.range (N + 1), sec8Ex1Term a j z) -
-      sec8Ex1FiniteApprox a N z =
-      ∑ j ∈ Finset.range (N + 1),
-        (-1 : ℂ) ^ j * a j *
-          (sec8Ex1Recip (j + 1) z - sec8Ex1Approx (j + 1) (N + 1) z) := by
+      (∑ j ∈ Finset.range (N + 1), sec8Ex1Term a j z) -
+          sec8Ex1FiniteApprox a N z =
+        ∑ j ∈ Finset.range (N + 1),
+          (-1 : ℂ) ^ j * a j *
+            (sec8Ex1Recip (j + 1) z - sec8Ex1Approx (j + 1) (N + 1) z) := by
     rw [sec8Ex1FiniteApprox, ← Finset.sum_sub_distrib]
     apply Finset.sum_congr rfl
     intro j hj
@@ -519,14 +519,14 @@ private lemma sec8Ex1_finite_part_bound (a : ℕ → ℂ) (N : ℕ) :
   rw [hsum]
   calc
     ‖∑ j ∈ Finset.range (N + 1),
-      (-1 : ℂ) ^ j * a j *
-        (sec8Ex1Recip (j + 1) z - sec8Ex1Approx (j + 1) (N + 1) z)‖ ≤
-      ∑ j ∈ Finset.range (N + 1),
-        ‖(-1 : ℂ) ^ j * a j *
-          (sec8Ex1Recip (j + 1) z - sec8Ex1Approx (j + 1) (N + 1) z)‖ :=
+        (-1 : ℂ) ^ j * a j *
+          (sec8Ex1Recip (j + 1) z - sec8Ex1Approx (j + 1) (N + 1) z)‖ ≤
+        ∑ j ∈ Finset.range (N + 1),
+          ‖(-1 : ℂ) ^ j * a j *
+            (sec8Ex1Recip (j + 1) z - sec8Ex1Approx (j + 1) (N + 1) z)‖ :=
       norm_sum_le _ _
     _ = ∑ j ∈ Finset.range (N + 1),
-      ‖a j‖ * ‖sec8Ex1Recip (j + 1) z - sec8Ex1Approx (j + 1) (N + 1) z‖ := by
+        ‖a j‖ * ‖sec8Ex1Recip (j + 1) z - sec8Ex1Approx (j + 1) (N + 1) z‖ := by
       apply Finset.sum_congr rfl
       intro j hj
       simp
@@ -569,7 +569,7 @@ private lemma sec8Ex1_norm_prod_ofReal {x : ℝ} (hx : 0 ≤ x) (j : ℕ) :
   apply Finset.prod_congr rfl
   intro k hk
   have hcast : (x : ℂ) + ((k + 1 : ℕ) : ℂ) =
-    ((x + ((k + 1 : ℕ) : ℝ) : ℝ) : ℂ) := by norm_num
+      ((x + ((k + 1 : ℕ) : ℝ) : ℝ) : ℂ) := by norm_num
   rw [hcast, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg]
   positivity
 
@@ -600,12 +600,12 @@ private lemma sec8Ex1RealProd_shift_two (x : ℝ) (j : ℕ) :
     (x + 1) * (x + 2) * sec8Ex1RealProd (x + 2) j := by
   induction j with
   | zero =>
-    simp only [sec8Ex1RealProd, Finset.prod_range_succ, Finset.prod_range_zero]
-    ring
+      simp only [sec8Ex1RealProd, Finset.prod_range_succ, Finset.prod_range_zero]
+      ring
   | succ j ih =>
-    rw [sec8Ex1RealProd_succ, sec8Ex1RealProd_succ]
-    push_cast at ih ⊢
-    convert congrArg (fun t : ℝ => t * (x + (j : ℝ) + 4)) ih using 1 <;> ring
+      rw [sec8Ex1RealProd_succ, sec8Ex1RealProd_succ]
+      push_cast at ih ⊢
+      convert congrArg (fun t : ℝ => t * (x + (j : ℝ) + 4)) ih using 1 <;> ring
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example1Asymptotic
 
@@ -675,11 +675,11 @@ private lemma sec8Ex1_reference_summable (a : ℕ → ℂ) {x : ℝ} (hx : 0 ≤
     rw [sec8Ex1_norm_ratio a hx j, ← sec8Ex1_norm_term_ofReal a hx j]
     have hj0 : 0 ≤ (j : ℝ) := Nat.cast_nonneg j
     have hden : ((j : ℝ) + 1) ^ 2 ≤
-      (x + ((j + 2 : ℕ) : ℝ)) * (x + ((j + 3 : ℕ) : ℝ)) := by
+        (x + ((j + 2 : ℕ) : ℝ)) * (x + ((j + 3 : ℕ) : ℝ)) := by
       push_cast
       nlinarith
     have hden_pos : 0 <
-      (x + ((j + 2 : ℕ) : ℝ)) * (x + ((j + 3 : ℕ) : ℝ)) := by positivity
+        (x + ((j + 2 : ℕ) : ℝ)) * (x + ((j + 3 : ℕ) : ℝ)) := by positivity
     have hsq_pos : 0 < ((j : ℝ) + 1) ^ 2 := by positivity
     have hnum : ‖sec8Ex1Term a j (x : ℂ)‖ * ((x + 1) * (x + 2)) ≤ K := by
       dsimp [K]
@@ -687,9 +687,9 @@ private lemma sec8Ex1_reference_summable (a : ℕ → ℂ) {x : ℝ} (hx : 0 ≤
       nlinarith [hterm j]
     calc
       ‖sec8Ex1Term a j (x : ℂ)‖ * ((x + 1) * (x + 2)) /
-        ((x + ((j + 2 : ℕ) : ℝ)) * (x + ((j + 3 : ℕ) : ℝ))) ≤
-        K / ((x + ((j + 2 : ℕ) : ℝ)) * (x + ((j + 3 : ℕ) : ℝ))) :=
-          div_le_div_of_nonneg_right hnum hden_pos.le
+          ((x + ((j + 2 : ℕ) : ℝ)) * (x + ((j + 3 : ℕ) : ℝ))) ≤
+          K / ((x + ((j + 2 : ℕ) : ℝ)) * (x + ((j + 3 : ℕ) : ℝ))) :=
+            div_le_div_of_nonneg_right hnum hden_pos.le
       _ ≤ K / (((j : ℝ) + 1) ^ 2) :=
         div_le_div_of_nonneg_left (by dsimp [K]; positivity) hsq_pos hden
       _ = K * (1 / (((j : ℝ) + 1) ^ 2)) := by ring
@@ -776,16 +776,16 @@ private lemma sec8Ex1_tail_term_le (a : ℕ → ℂ) {x : ℝ} {z : ℂ} (hx : 0
     exact sec8Ex1RealProd_split x N n
   have hpowpos : 0 < ‖z‖ ^ (N + 2) := pow_pos (lt_of_lt_of_le zero_lt_one hnorm) _
   have hlower : ‖z‖ ^ (N + 2) * T ≤
-    ‖sec8Ex1Prod (n + (N + 1) + 1) z‖ :=
+      ‖sec8Ex1Prod (n + (N + 1) + 1) z‖ :=
     sec8Ex1_tail_prod_lower hx hz N n
   rw [sec8Ex1Term, norm_div, norm_mul]
   simp only [norm_pow, norm_neg, norm_one, one_pow, one_mul]
   calc
     ‖a (n + (N + 1))‖ / ‖sec8Ex1Prod (n + (N + 1) + 1) z‖ ≤
-      ‖a (n + (N + 1))‖ / (‖z‖ ^ (N + 2) * T) :=
+        ‖a (n + (N + 1))‖ / (‖z‖ ^ (N + 2) * T) :=
       div_le_div_of_nonneg_left (norm_nonneg _) (mul_pos hpowpos hTpos) hlower
     _ = D * (‖a (n + (N + 1))‖ / sec8Ex1RealProd x (n + (N + 1))) /
-      ‖z‖ ^ (N + 2) := by
+        ‖z‖ ^ (N + 2) := by
       rw [hreal]
       field_simp
 
@@ -802,7 +802,7 @@ private lemma sec8Ex1_tail_bound (a : ℕ → ℂ) {x : ℝ} (hx : 0 ≤ x)
   ∃ C : ℝ, 0 ≤ C ∧ ∀ z : ℂ, x ≤ z.re → 1 ≤ ‖z‖ →
     ‖∑' n : ℕ, sec8Ex1Term a (n + (N + 1)) z‖ ≤ C / ‖z‖ ^ (N + 2) := by
   have hshift : Summable (fun n : ℕ =>
-    ‖a (n + (N + 1))‖ / sec8Ex1RealProd x (n + (N + 1))) :=
+      ‖a (n + (N + 1))‖ / sec8Ex1RealProd x (n + (N + 1))) :=
     hq.comp_injective (fun _ _ h => Nat.add_right_cancel h)
   let D : ℝ := sec8Ex1RealProd x (N + 1)
   let S : ℝ := ∑' n : ℕ,
@@ -817,10 +817,10 @@ private lemma sec8Ex1_tail_bound (a : ℕ → ℂ) {x : ℝ} (hx : 0 ≤ x)
   let K : ℝ := D / ‖z‖ ^ (N + 2)
   have hK : 0 ≤ K := div_nonneg hD (pow_nonneg (norm_nonneg z) _)
   have hmajor : Summable (fun n : ℕ => K *
-    (‖a (n + (N + 1))‖ / sec8Ex1RealProd x (n + (N + 1)))) :=
+      (‖a (n + (N + 1))‖ / sec8Ex1RealProd x (n + (N + 1)))) :=
     hshift.mul_left K
   have hterm (n : ℕ) : ‖sec8Ex1Term a (n + (N + 1)) z‖ ≤ K *
-    (‖a (n + (N + 1))‖ / sec8Ex1RealProd x (n + (N + 1))) := by
+      (‖a (n + (N + 1))‖ / sec8Ex1RealProd x (n + (N + 1))) := by
     dsimp [K, D]
     convert sec8Ex1_tail_term_le a hx hz hnorm N n using 1
     all_goals ring
@@ -828,10 +828,10 @@ private lemma sec8Ex1_tail_bound (a : ℕ → ℂ) {x : ℝ} (hx : 0 ≤ x)
     Summable.of_nonneg_of_le (fun n => norm_nonneg _) hterm hmajor
   calc
     ‖∑' n : ℕ, sec8Ex1Term a (n + (N + 1)) z‖ ≤
-      ∑' n : ℕ, ‖sec8Ex1Term a (n + (N + 1)) z‖ :=
+        ∑' n : ℕ, ‖sec8Ex1Term a (n + (N + 1)) z‖ :=
       norm_tsum_le_tsum_norm habs
     _ ≤ ∑' n : ℕ, K *
-      (‖a (n + (N + 1))‖ / sec8Ex1RealProd x (n + (N + 1))) :=
+        (‖a (n + (N + 1))‖ / sec8Ex1RealProd x (n + (N + 1))) :=
       Summable.tsum_le_tsum hterm habs hmajor
     _ = K * S := by
       rw [hshift.tsum_mul_left]
@@ -940,16 +940,17 @@ private lemma sec8Ex1_asymptotic (a : ℕ → ℂ) (ψ : ℂ → ℂ) (x₁ r ep
   have htailz := htail z hre hnorm_one
   have hsplit := hsum.summable.sum_add_tsum_nat_add (N + 1)
   have hpsi : ψ z = (∑ j ∈ Finset.range (N + 1), sec8Ex1Term a j z) +
-    ∑' n : ℕ, sec8Ex1Term a (n + (N + 1)) z := by
-    rwa [hsum.tsum_eq] at hsplit
+      ∑' n : ℕ, sec8Ex1Term a (n + (N + 1)) z := by
+    rw [hsum.tsum_eq] at hsplit
+    exact hsplit.symm
   rw [hpsi]
   calc
     ‖(∑ j ∈ Finset.range (N + 1), sec8Ex1Term a j z) +
-      (∑' n : ℕ, sec8Ex1Term a (n + (N + 1)) z) - sec8Ex1Main a N z‖ =
-      ‖((∑ j ∈ Finset.range (N + 1), sec8Ex1Term a j z) - sec8Ex1Main a N z) +
-        ∑' n : ℕ, sec8Ex1Term a (n + (N + 1)) z‖ := by ring_nf
+          (∑' n : ℕ, sec8Ex1Term a (n + (N + 1)) z) - sec8Ex1Main a N z‖ =
+        ‖((∑ j ∈ Finset.range (N + 1), sec8Ex1Term a j z) - sec8Ex1Main a N z) +
+          ∑' n : ℕ, sec8Ex1Term a (n + (N + 1)) z‖ := by ring_nf
     _ ≤ ‖(∑ j ∈ Finset.range (N + 1), sec8Ex1Term a j z) - sec8Ex1Main a N z‖ +
-      ‖∑' n : ℕ, sec8Ex1Term a (n + (N + 1)) z‖ := norm_add_le _ _
+        ‖∑' n : ℕ, sec8Ex1Term a (n + (N + 1)) z‖ := norm_add_le _ _
     _ ≤ Cfin / ‖z‖ ^ (N + 2) + Ctail / ‖z‖ ^ (N + 2) :=
       add_le_add hfinz htailz
     _ = (Cfin + Ctail) / ‖z‖ ^ (N + 2) := by ring
@@ -986,61 +987,61 @@ lemma ramanujan_part1_ch3_section8_example1_asymptotic
 -- proof
   induction lam with
   | bot =>
-    have hpole : ∀ n : ℕ, (0 : ℂ) ≠ -((n + 1 : ℕ) : ℂ) := by
-      intro n hn
-      have hre := congrArg Complex.re hn
-      simp at hre
-      have hn0 : 0 ≤ (n : ℝ) := Nat.cast_nonneg n
-      linarith
-    have href : Summable (fun j : ℕ => sec8Ex1Term a j (0 : ℂ)) := by
-      have h := (hsum 0 hpole (by simp)).summable
-      simpa only [sec8Ex1Term, sec8Ex1Prod] using h
-    have hcore := sec8Ex1_asymptotic a ψ 0 0 eps (by norm_num) heps_pos
-      (heps_lt_pi_div_two_bot rfl) href
-    intro N
-    obtain ⟨C, R, hR, hC, hbound⟩ := hcore N
-    refine ⟨C, R, hR, hC, ?_⟩
-    intro z hpolez hlam hsector hnorm
-    have hsumz : HasSum (fun j : ℕ => sec8Ex1Term a j z) (ψ z) := by
-      simpa only [sec8Ex1Term, sec8Ex1Prod] using hsum z hpolez hlam
-    have harg : |Complex.arg (z - (0 : ℂ))| ≤ Real.pi / 2 - eps := by
-      simpa using hsector.1 rfl
-    simpa only [sec8Ex1Main] using hbound z hsumz harg hnorm
+      have hpole : ∀ n : ℕ, (0 : ℂ) ≠ -((n + 1 : ℕ) : ℂ) := by
+        intro n hn
+        have hre := congrArg Complex.re hn
+        simp at hre
+        have hn0 : 0 ≤ (n : ℝ) := Nat.cast_nonneg n
+        linarith
+      have href : Summable (fun j : ℕ => sec8Ex1Term a j (0 : ℂ)) := by
+        have h := (hsum 0 hpole (by simp)).summable
+        simpa only [sec8Ex1Term, sec8Ex1Prod] using h
+      have hcore := sec8Ex1_asymptotic a ψ 0 0 eps (by norm_num) heps_pos
+        (heps_lt_pi_div_two_bot rfl) href
+      intro N
+      obtain ⟨C, R, hR, hC, hbound⟩ := hcore N
+      refine ⟨C, R, hR, hC, ?_⟩
+      intro z hpolez hlam hsector hnorm
+      have hsumz : HasSum (fun j : ℕ => sec8Ex1Term a j z) (ψ z) := by
+        simpa only [sec8Ex1Term, sec8Ex1Prod] using hsum z hpolez hlam
+      have harg : |Complex.arg (z - (0 : ℂ))| ≤ Real.pi / 2 - eps := by
+        simpa using hsector.1 rfl
+      simpa only [sec8Ex1Main] using hbound z hsumz harg hnorm
   | coe r =>
-    let x₁ : ℝ := max r 0 + 1
-    have hx₁ : 0 ≤ x₁ := by
-      dsimp [x₁]
-      linarith [le_max_right r 0]
-    have hrx₁ : r < x₁ := by
-      dsimp [x₁]
-      linarith [le_max_left r 0]
-    have hpole : ∀ n : ℕ, (x₁ : ℂ) ≠ -((n + 1 : ℕ) : ℂ) := by
-      intro n hn
-      have hre := congrArg Complex.re hn
-      have hx₁pos : 0 < x₁ := lt_of_lt_of_le zero_lt_one (by
+      let x₁ : ℝ := max r 0 + 1
+      have hx₁ : 0 ≤ x₁ := by
         dsimp [x₁]
-        linarith [le_max_right r 0])
-      simp only [Complex.ofReal_re, Complex.neg_re, Complex.natCast_re] at hre
-      have hn : 0 < ((n + 1 : ℕ) : ℝ) := by positivity
-      linarith
-    have href : Summable (fun j : ℕ => sec8Ex1Term a j (x₁ : ℂ)) := by
-      have hlt : (↑r : WithBot ℝ) < (↑x₁ : WithBot ℝ) := by simpa using hrx₁
-      have h := (hsum (x₁ : ℂ) hpole hlt).summable
-      simpa only [sec8Ex1Term, sec8Ex1Prod] using h
-    have hcore := sec8Ex1_asymptotic a ψ x₁ r eps hx₁ heps_pos
-      (heps_lt_pi_div_two (by simp)) href
-    intro N
-    obtain ⟨C, R, hR, hC, hbound⟩ := hcore N
-    refine ⟨C, R, hR, hC, ?_⟩
-    intro z hpolez hlam hsector hnorm
-    have hsumz : HasSum (fun j : ℕ => sec8Ex1Term a j z) (ψ z) := by
-      simpa only [sec8Ex1Term, sec8Ex1Prod] using hsum z hpolez hlam
-    have harg : |Complex.arg (z - (r : ℂ))| ≤ Real.pi / 2 - eps :=
-      hsector.2 r rfl
-    simpa only [sec8Ex1Main] using hbound z hsumz harg hnorm
+        linarith [le_max_right r 0]
+      have hrx₁ : r < x₁ := by
+        dsimp [x₁]
+        linarith [le_max_left r 0]
+      have hpole : ∀ n : ℕ, (x₁ : ℂ) ≠ -((n + 1 : ℕ) : ℂ) := by
+        intro n hn
+        have hre := congrArg Complex.re hn
+        have hx₁pos : 0 < x₁ := lt_of_lt_of_le zero_lt_one (by
+          dsimp [x₁]
+          linarith [le_max_right r 0])
+        simp only [Complex.ofReal_re, Complex.neg_re, Complex.natCast_re] at hre
+        have hn : 0 < ((n + 1 : ℕ) : ℝ) := by positivity
+        linarith
+      have href : Summable (fun j : ℕ => sec8Ex1Term a j (x₁ : ℂ)) := by
+        have hlt : (↑r : WithBot ℝ) < (↑x₁ : WithBot ℝ) := by simpa using hrx₁
+        have h := (hsum (x₁ : ℂ) hpole hlt).summable
+        simpa only [sec8Ex1Term, sec8Ex1Prod] using h
+      have hcore := sec8Ex1_asymptotic a ψ x₁ r eps hx₁ heps_pos
+        (heps_lt_pi_div_two (by simp)) href
+      intro N
+      obtain ⟨C, R, hR, hC, hbound⟩ := hcore N
+      refine ⟨C, R, hR, hC, ?_⟩
+      intro z hpolez hlam hsector hnorm
+      have hsumz : HasSum (fun j : ℕ => sec8Ex1Term a j z) (ψ z) := by
+        simpa only [sec8Ex1Term, sec8Ex1Prod] using hsum z hpolez hlam
+      have harg : |Complex.arg (z - (r : ℂ))| ≤ Real.pi / 2 - eps :=
+        hsector.2 r rfl
+      simpa only [sec8Ex1Main] using hbound z hsumz harg hnorm
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example1Asymptotic
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

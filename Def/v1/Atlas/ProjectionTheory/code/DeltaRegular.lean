@@ -34,7 +34,7 @@ def IsDeltaSRegular (δ s C : ℝ) (E : Set (EuclideanSpace ℝ (Fin d))) : Prop
   E ⊆ Metric.ball 0 1 ∧
   ∀ (x : EuclideanSpace ℝ (Fin d)) (r : ℝ),
     δ ≤ r → r ≤ 1 →
-    (deltaCoveringNumber δ (E ∩ Metric.ball x r) : ℝ≥0∞) ≤
-      ENNReal.ofReal (C * r ^ s) * (deltaCoveringNumber δ E : ℝ≥0∞)
+    (deltaCoveringNumber δ (E ∩ Metric.ball x r) : ENNReal) ≤
+      ENNReal.ofReal (C * r ^ s) * (deltaCoveringNumber δ E : ENNReal)
 
 end DeltaRegular

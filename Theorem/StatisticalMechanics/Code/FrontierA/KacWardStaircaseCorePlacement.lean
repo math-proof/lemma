@@ -33,7 +33,7 @@ theorem KWStairParameterData.base_mem_closedEdgeCoreTube
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := S) polygon)
-    {eps : ℝ} (r : ℝ≥0) (hr : 0 < r)
+    {eps : ℝ} (r : NNReal) (hr : 0 < r)
     (i : Fin n) (k : Fin (S + 1))
     (hk : data.parameter i k ∈ Icc eps (1 - eps)) :
     data.base i k ∈ polygon.closedEdgeCoreTube eps r i := by
@@ -44,7 +44,7 @@ theorem KWStairParameterData.corner_mem_closedEdgeCoreTube
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := S) polygon)
-    {eps : ℝ} (r : ℝ≥0) (hfine : data.MeshWithin r)
+    {eps : ℝ} (r : NNReal) (hfine : data.MeshWithin r)
     (i : Fin n) (k : Fin S)
     (hk : data.parameter i k.castSucc ∈ Icc eps (1 - eps)) :
     data.corner i k ∈ polygon.closedEdgeCoreTube eps r i := by
@@ -63,7 +63,7 @@ theorem KWStairParameterData.corner_mem_closedEdgeCoreTube_of_step
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := S) polygon)
-    {eps : ℝ} (r : ℝ≥0)
+    {eps : ℝ} (r : NNReal)
     (i : Fin n) (k : Fin S)
     (hk : data.parameter i k.castSucc ∈ Icc eps (1 - eps))
     (hstep : (data.parameter i k.succ - data.parameter i k.castSucc) *
@@ -83,7 +83,7 @@ theorem KWStairParameterData.rawClosedEdge_even_subset_closedEdgeCoreTube
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := S) polygon)
-    {eps : ℝ} (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    {eps : ℝ} (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     (i : Fin n) (k : Fin S)
     (hk : data.parameter i k.castSucc ∈ Icc eps (1 - eps)) :
     kwRawClosedEdge data.vertex (kwStairEvenIndex i k) ⊆
@@ -99,7 +99,7 @@ theorem KWStairParameterData.rawClosedEdge_odd_castSucc_subset_closedEdgeCoreTub
     {n M : ℕ} [NeZero n]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := M + 1) polygon)
-    {eps : ℝ} (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    {eps : ℝ} (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     (i : Fin n) (k : Fin M)
     (hk : data.parameter i k.castSucc.castSucc ∈ Icc eps (1 - eps))
     (hnext : data.parameter i k.castSucc.succ ∈ Icc eps (1 - eps)) :
@@ -209,7 +209,7 @@ theorem KWFiniteSimplePolygon.exists_fixedEndpointParameterData_meshWithin
     (beta : ℝ) (alpha : Fin n → ℝ)
     (hbeta : 0 < beta) (halpha : ∀ i, 0 < alpha i)
     (hsum : ∀ i, alpha i + beta < 1)
-    (r : ℝ≥0) (hr : 0 < r)
+    (r : NNReal) (hr : 0 < r)
     (hbetaMesh : ∀ i : Fin n, beta * ‖polygon.edgeVector i‖ < r)
     (halphaMesh : ∀ i : Fin n,
       alpha (i + 1) * ‖polygon.edgeVector i‖ < r) :
@@ -243,7 +243,7 @@ theorem KWFiniteSimplePolygon.exists_fixedEndpointParameterData_interiorMesh
     (beta : ℝ) (alpha : Fin n → ℝ)
     (hbeta : 0 < beta) (halpha : ∀ i, 0 < alpha i)
     (hsum : ∀ i, alpha i + beta < 1)
-    (r : ℝ≥0) (hr : 0 < r) :
+    (r : NNReal) (hr : 0 < r) :
     ∃ M : ℕ, ∃ data : KWStairParameterData (S := M + 2) polygon,
       0 < M ∧ KWEndpointInteriorMeshWithin data r := by
   obtain ⟨N, hmesh⟩ := polygon.exists_uniform_stair_mesh r hr

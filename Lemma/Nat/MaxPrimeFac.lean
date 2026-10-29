@@ -1,4 +1,4 @@
-import Mathlib
+import Mathlib.Tactic
 import Initialize.Tactic.Attr.Basic
 import Theorem.Data.Nat.MaxPrimeFac
 open Nat
@@ -10,7 +10,7 @@ namespace Nat
 [maxPrimeFac_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Data/Nat/MaxPrimeFac.lean)
 -/
 @[path]
-lemma maxPrimeFac_zero
+lemma maxPrimeFac_zero :
 -- imply
   maxPrimeFac 0 = 0 := by
 -- proof
@@ -24,7 +24,7 @@ namespace Nat
 [maxPrimeFac_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Data/Nat/MaxPrimeFac.lean)
 -/
 @[path]
-lemma maxPrimeFac_one
+lemma maxPrimeFac_one :
 -- imply
   maxPrimeFac 1 = 0 := by
 -- proof
@@ -39,7 +39,7 @@ namespace Nat
 -/
 @[path]
 lemma prime_maxPrimeFac_of_one_lt
-  {n : ℕ}
+  (n : ℕ)
 -- given
   (h : 1 < n) :
 -- imply
@@ -48,7 +48,8 @@ lemma prime_maxPrimeFac_of_one_lt
   have hne : n.primeFactors.Nonempty := Nat.nonempty_primeFactors.mpr h
   obtain ⟨a, hmem, heq⟩ := Finset.exists_mem_eq_sup n.primeFactors hne id
   have hprime : a.Prime := (Nat.mem_primeFactors.mp hmem).1
-  rwa [maxPrimeFac, heq]
+  rw [maxPrimeFac, heq]
+  exact hprime
 
 end Nat
 
@@ -65,13 +66,14 @@ lemma maxPrimeFac_dvd
 -- imply
   maxPrimeFac n ∣ n := by
 -- proof
-  obtain rfl | hn0 := eq_or_ne n 0
+  rcases eq_or_ne n 0 with rfl | hn0
   · simp
   · have hlt : 1 < n := by omega
     obtain ⟨a, hmem, heq⟩ :=
       Finset.exists_mem_eq_sup n.primeFactors (Nat.nonempty_primeFactors.mpr hlt) id
     have hdvd : a ∣ n := (Nat.mem_primeFactors.mp hmem).2.1
-    rwa [maxPrimeFac, heq]
+    rw [maxPrimeFac, heq]
+    exact hdvd
 
 end Nat
 
@@ -103,7 +105,7 @@ namespace Nat
 -/
 @[path]
 lemma maxPrimeFac_eq_of_dvd_of_le
-  {n p : ℕ}
+  (n p : ℕ)
 -- given
   (hn : 0 < n)
   (hp : p.Prime)
@@ -147,14 +149,14 @@ lemma maxPrimeFac_eq_self_iff
 -- proof
   constructor
   · intro h
-    obtain rfl | hn0 := eq_or_ne n 0
+    rcases eq_or_ne n 0 with rfl | hn0
     · exact Or.inl rfl
     · rcases eq_or_ne n 1 with rfl | hn1
-      · simp at h
+      · exact absurd (h.symm.trans maxPrimeFac_one) (by decide)
       · have hlt : 1 < n := by omega
         exact Or.inr (h ▸ prime_maxPrimeFac_of_one_lt n hlt)
   · rintro (rfl | hn)
-    · simp
+    · exact maxPrimeFac_zero
     · exact hn.maxPrimeFac_eq_self
 
 end Nat
@@ -183,8 +185,8 @@ lemma maxPrimeFac_mul
     ⟨zero_lt_of_lt hm_lt, zero_lt_of_lt hn_lt, Or.inl hm_lt⟩
   apply le_antisymm
   · have hp : Nat.Prime (maxPrimeFac (m * n)) :=
-    prime_maxPrimeFac_of_one_lt (m * n) hmn_lt
-    obtain hpm | hpn := hp.dvd_mul.mp (maxPrimeFac_dvd (ne_of_gt hmn_lt))
+      prime_maxPrimeFac_of_one_lt (m * n) hmn_lt
+    rcases hp.dvd_mul.mp (maxPrimeFac_dvd (ne_of_gt hmn_lt)) with hpm | hpn
     · exact (le_maxPrimeFac hm hp hpm).trans (le_max_left _ _)
     · exact (le_maxPrimeFac hn hp hpn).trans (le_max_right _ _)
   · apply max_le
@@ -235,10 +237,10 @@ lemma maxPrimeFac_le
 -- imply
   maxPrimeFac n ≤ n := by
 -- proof
-  obtain rfl | hn0 := eq_or_ne n 0
-  · simp
-  obtain rfl | hn1 := eq_or_ne n 1
-  · simp
+  rcases eq_or_ne n 0 with rfl | hn0
+  · simp [maxPrimeFac_zero]
+  rcases eq_or_ne n 1 with rfl | hn1
+  · simp [maxPrimeFac_one]
   · exact Nat.le_of_dvd (Nat.pos_of_ne_zero hn0) (maxPrimeFac_dvd hn1)
 
 end Nat
@@ -296,13 +298,14 @@ lemma one_lt_maxPrimeFac_iff
 -- imply
   1 < maxPrimeFac n ↔ 1 < n := by
 -- proof
-  obtain hn | rfl | hn := lt_trichotomy n 1
+  rcases lt_trichotomy n 1 with hn | rfl | hn
   · simp only [lt_one_iff] at hn
-    simp [hn]
-  · simp
+    simp [hn, maxPrimeFac_zero]
+  · simp [maxPrimeFac_one]
   · simpa [hn] using (prime_maxPrimeFac_of_one_lt n hn).one_lt
 
 end Nat
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

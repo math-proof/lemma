@@ -93,7 +93,7 @@ private lemma rc3_reimer_inequality_of_perKeyAll_eq
   [DecidableEq α]
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : rc3_PerKeyAll)

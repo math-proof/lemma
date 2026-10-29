@@ -33,7 +33,7 @@ variable {d : ℕ}
 variable {E : Type*}
 
 
-noncomputable def gibbsMix (a b : ℝ≥0∞) (μm μp : Measure (ConfigSpace E)) :
+noncomputable def gibbsMix (a b : ENNReal) (μm μp : Measure (ConfigSpace E)) :
     Measure (ConfigSpace E) :=
   a • μm + b • μp
 

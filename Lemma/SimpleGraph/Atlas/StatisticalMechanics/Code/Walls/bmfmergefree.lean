@@ -252,7 +252,7 @@ private lemma bmf_hgeo_eq :
 @[path]
 private lemma bmf_precursorPos_of_residues_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)

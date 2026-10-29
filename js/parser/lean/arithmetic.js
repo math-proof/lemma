@@ -67,6 +67,11 @@ export class LeanMul extends LeanArithmetic {
 
     static input_priority = 70;
 
+    /** Mathlib `Matrix.mulVec` is BinaryInfix 73; bare `*` stays 70. */
+    get input_priority() {
+        return this.subscript === 'ᵥ' ? 73 : this.constructor.input_priority;
+    }
+
     get command() {
         if (this.subscript) {
             const map = L.LeanToken.subscript;
@@ -88,7 +93,10 @@ export class LeanMul extends LeanArithmetic {
             (lhs instanceof LeanMul && lhs.command) ||
             lhs.is_space_separated() ||
             lhs instanceof LeanFDiv ||
-            rhs instanceof LeanPow || 
+            rhs instanceof LeanPow ||
+            // postfix † / T read as one symbol when juxtaposed (`L L†`); same as LeanPow
+            rhs instanceof LeanAdjoint ||
+            rhs instanceof LeanTranspose ||
             lhs instanceof LeanModular ||
             // juxtaposition would read as function application / swallow the lambda
             rhs instanceof L.Lean_fun ||
@@ -599,6 +607,11 @@ export class Lean_cdotp extends LeanArithmetic {
 
     static input_priority = 71;
 
+    /** Mathlib `dotProduct` / `⬝ᵥ` is BinaryInfix 72; bare `⬝` stays 71. */
+    get input_priority() {
+        return this.subscript === 'ᵥ' ? 72 : this.constructor.input_priority;
+    }
+
     get operator() {
         return this.subscript ? `⬝${this.subscript}` : '⬝';
     }
@@ -1044,7 +1057,19 @@ export class LeanTranspose extends LeanUnaryArithmeticPost {
         return 'ᵀ';
     }
     get command() {
-        return '^{T}';
+        return '^{\\color{magenta} T}';
+    }
+}
+
+/** Postfix hermitian adjoint / conjTranspose `ᴴ`. */
+export class LeanAdjoint extends LeanUnaryArithmeticPost {
+    static { this.register(); }
+
+    get operator() {
+        return 'ᴴ';
+    }
+    get command() {
+        return '^{\\color{magenta} {\\dagger}}';
     }
 }
 

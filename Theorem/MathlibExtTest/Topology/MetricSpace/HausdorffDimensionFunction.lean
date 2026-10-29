@@ -14,32 +14,32 @@ open Filter
 example (ψ φ : HausdorffDimensionFunction) (h : ∀ r, ψ r = φ r) : ψ = φ :=
   HausdorffDimensionFunction.ext h
 
-example : Continuous (idHausdorffDimensionFunction : ℝ≥0 → ℝ≥0) :=
+example : Continuous (idHausdorffDimensionFunction : NNReal → NNReal) :=
   idHausdorffDimensionFunction.continuous
 
-example : Monotone (idHausdorffDimensionFunction : ℝ≥0 → ℝ≥0) :=
+example : Monotone (idHausdorffDimensionFunction : NNReal → NNReal) :=
   idHausdorffDimensionFunction.monotone
 
-example : ContinuousOrderHomClass HausdorffDimensionFunction ℝ≥0 ℝ≥0 := inferInstance
+example : ContinuousOrderHomClass HausdorffDimensionFunction NNReal NNReal := inferInstance
 
-example : idHausdorffDimensionFunction (0 : ℝ≥0) = 0 :=
+example : idHausdorffDimensionFunction (0 : NNReal) = 0 :=
   idHausdorffDimensionFunction.map_zero
 
-example {r : ℝ≥0} (hr : 0 < r) : 0 < idHausdorffDimensionFunction r :=
+example {r : NNReal} (hr : 0 < r) : 0 < idHausdorffDimensionFunction r :=
   idHausdorffDimensionFunction.map_pos hr
 
-example {r : ℝ≥0} : idHausdorffDimensionFunction r = 0 ↔ r = 0 :=
+example {r : NNReal} : idHausdorffDimensionFunction r = 0 ↔ r = 0 :=
   idHausdorffDimensionFunction.map_eq_zero_iff
 
-example : Tendsto (idHausdorffDimensionFunction : ℝ≥0 → ℝ≥0)
-    (𝓝[>] (0 : ℝ≥0)) (𝓝 0) :=
+example : Tendsto (idHausdorffDimensionFunction : NNReal → NNReal)
+    (𝓝[>] (0 : NNReal)) (𝓝 0) :=
   idHausdorffDimensionFunction.tendsto_zero
 
 -- Function coercion evaluates as identity.
-example : (idHausdorffDimensionFunction : ℝ≥0 → ℝ≥0) 3 = 3 := rfl
+example : (idHausdorffDimensionFunction : NNReal → NNReal) 3 = 3 := rfl
 
 -- Weak monotonicity admits plateaus.
 example : cappedHausdorffDimensionFunction 1 = cappedHausdorffDimensionFunction 2 := by
-  change min (1 : ℝ≥0) 1 = min 2 1
+  change min (1 : NNReal) 1 = min 2 1
   norm_num
 

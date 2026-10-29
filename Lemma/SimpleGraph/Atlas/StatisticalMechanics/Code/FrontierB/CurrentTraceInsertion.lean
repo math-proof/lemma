@@ -432,7 +432,7 @@ private lemma toMeasure_map_le_of_apply_le_eq
   {f : alpha → alpha}
   {S : Set alpha}
 -- given
-  (c : ℝ≥0∞)
+  (c : ENNReal)
   (hpoint : ∀ a, c * PMF.map f p a ≤ p a) :
 -- imply
   c * (PMF.map f p).toMeasure S ≤ p.toMeasure S := by

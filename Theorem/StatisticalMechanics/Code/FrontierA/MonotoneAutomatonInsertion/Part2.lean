@@ -65,7 +65,7 @@ theorem siteEventIgnores_forceSiteOccupied_preimage (x : Site d)
 
 
 theorem forceSiteOccupied_map_absolutelyContinuous
-    (nu : Measure (ConfigSpace (Site d))) (epsilon : ℝ≥0∞)
+    (nu : Measure (ConfigSpace (Site d))) (epsilon : ENNReal)
     (hepsilon : epsilon ≠ 0)
     (hinsert : HasSiteInsertionLowerBound nu epsilon) (x : Site d) :
     nu.map (forceSiteOccupied x) ≪ nu := by

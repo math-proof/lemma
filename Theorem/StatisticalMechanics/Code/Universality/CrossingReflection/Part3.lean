@@ -40,7 +40,7 @@ theorem crf_map_swapConfig :
   rw [crf_swapConfig, rba_selfDualMeasure]
   unfold bernoulliProductMeasure
   exact Measure.infinitePi_map_piCongrLeft
-    (fun _ : Sym2 (Site 2) => bernoulliMeasure (2⁻¹ : ℝ≥0) half_le_one) crf_edgeEquiv
+    (fun _ : Sym2 (Site 2) => bernoulliMeasure (2⁻¹ : NNReal) half_le_one) crf_edgeEquiv
 
 
 theorem crf_swap_invariant :

@@ -34,7 +34,7 @@ open scoped BoundedContinuousFunction CompactlySupported ENNReal
 namespace MathlibExt.MeasureTheory.OptimalTransport.KantorovichWanted
 
 /-- ENNReal subtraction reverses strict inequality on compacta: helper for outer regularity. -/
-theorem ennreal_sub_lt_of_lt {a b r : ℝ≥0∞}
+theorem ennreal_sub_lt_of_lt {a b r : ENNReal}
     (ha : a ≠ ∞) (hb : b ≠ ∞) (hr : r ≠ ∞) (hbr : b < r) (hra : r ≤ a) :
     a - r < a - b := by
   have hba : b ≤ a := hbr.le.trans hra

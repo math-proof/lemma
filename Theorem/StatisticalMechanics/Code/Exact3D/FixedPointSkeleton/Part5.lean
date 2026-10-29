@@ -53,15 +53,15 @@ theorem lipschitz_coord {n : ℕ} :
     LipschitzWith 1 (fun x : L1Vector n => x.coord) := by
   refine LipschitzWith.of_dist_le_mul ?_
   intro x y
-  change dist x.coord y.coord ≤ (1 : ℝ≥0) * l1Dist x.coord y.coord
+  change dist x.coord y.coord ≤ (1 : NNReal) * l1Dist x.coord y.coord
   simpa using pi_dist_le_l1Dist x.coord y.coord
 
 
 theorem lipschitz_ofFun {n : ℕ} :
-    LipschitzWith (n : ℝ≥0) (ofFun : (Fin n → ℝ) → L1Vector n) := by
+    LipschitzWith (n : NNReal) (ofFun : (Fin n → ℝ) → L1Vector n) := by
   refine LipschitzWith.of_dist_le_mul ?_
   intro x y
-  change l1Dist x y ≤ ((n : ℝ≥0) : ℝ) * dist x y
+  change l1Dist x y ≤ ((n : NNReal) : ℝ) * dist x y
   simpa using l1Dist_le_nat_mul_pi_dist x y
 
 

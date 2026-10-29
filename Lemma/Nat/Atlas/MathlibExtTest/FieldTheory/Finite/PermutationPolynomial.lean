@@ -5,9 +5,8 @@ import Theorem.MathlibExtTest.FieldTheory.Finite.PermutationPolynomial
 
 /--
 [bijective_add_const_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/Finite/PermutationPolynomial.lean)
--/
-@[path]
 is bijective on `ZMod 5`. -/
+@[path]
 private lemma bijective_add_const_mul {c : ZMod 5} (hc : (1 : ZMod 5) + c ≠ 0) :
   Function.Bijective fun x : ZMod 5 => x + c * x := by
   have hfun : (fun x : ZMod 5 => x + c * x) =
@@ -25,3 +24,4 @@ private lemma bijective_add_const_mul {c : ZMod 5} (hc : (1 : ZMod 5) + c ≠ 0)
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

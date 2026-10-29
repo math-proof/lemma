@@ -52,7 +52,7 @@ namespace MeasureTheory
 lemma lintegral_add_of_measurable
   [MeasurableSpace α]
   {μ : Measure α}
-  {f g : α → ℝ≥0∞}
+  {f g : α → ENNReal}
 -- given
   (hf : Measurable f)
   (_hg : Measurable g) :
@@ -72,7 +72,7 @@ namespace MeasureTheory
 lemma monotone_convergence_lintegral
   [MeasurableSpace α]
   {μ : Measure α}
-  {f : ℕ → α → ℝ≥0∞}
+  {f : ℕ → α → ENNReal}
 -- given
   (hf : ∀ n, Measurable (f n))
   (h_mono : Monotone f) :
@@ -92,8 +92,8 @@ namespace MeasureTheory
 lemma monotone_convergence_lintegral_tendsto
   [MeasurableSpace α]
   {μ : Measure α}
-  {f : ℕ → α → ℝ≥0∞}
-  {g : α → ℝ≥0∞}
+  {f : ℕ → α → ENNReal}
+  {g : α → ENNReal}
 -- given
   (hf : ∀ n, Measurable (f n))
   (h_mono : Monotone f)
@@ -121,7 +121,7 @@ namespace MeasureTheory
 lemma fatou_lemma
   [MeasurableSpace α]
   {μ : Measure α}
-  {f : ℕ → α → ℝ≥0∞}
+  {f : ℕ → α → ENNReal}
 -- given
   (hf : ∀ n, Measurable (f n)) :
 -- imply
@@ -140,7 +140,7 @@ namespace MeasureTheory
 lemma measure_setOf_eq_top_of_lintegral_lt_top
   [MeasurableSpace α]
   {μ : Measure α}
-  {f : α → ℝ≥0∞}
+  {f : α → ENNReal}
 -- given
   (hf : Measurable f)
   (hfint : ∫⁻ x, f x ∂μ < ⊤) :

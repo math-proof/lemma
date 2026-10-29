@@ -505,8 +505,8 @@ private lemma FHasSum (x : ℝ) (hx : 0 < x) (errV : ℝ)
     = x^n * Real.sqrt (n:ℝ) / (Nat.factorial n : ℝ) := by
     calc Real.exp x * (pw x n * Real.sqrt (n:ℝ))
       = (Real.exp x * Real.exp (-x)) * (x^n * Real.sqrt (n:ℝ) / (Nat.factorial n : ℝ)) := by
-        unfold pw
-        field_simp
+          unfold pw
+          field_simp
       _ = x^n * Real.sqrt (n:ℝ) / (Nat.factorial n : ℝ) := by
         rw [hexp, one_mul]
   change x^n * Real.sqrt (n:ℝ) / (Nat.factorial n : ℝ)
@@ -679,8 +679,8 @@ private lemma finalBound (x errV : ℝ) (hx : 8 ≤ x)
       calc 15/(64*x^3) + 7/(256*x^3) + 861/(16*x^3)
         = (15/64 + 7/256 + 861/16)*(1/x^3) := by ring
         _ ≤ 56*(1/x^3) := by
-          apply mul_le_mul_of_nonneg_right _ (le_of_lt hx3p)
-          norm_num
+            apply mul_le_mul_of_nonneg_right _ (le_of_lt hx3p)
+            norm_num
         _ = 56/x^3 := by ring
     rw [abs_le]
     constructor
@@ -947,7 +947,7 @@ lemma ramanujan_part1_ch3_entry10_example1_sqrt_poisson_asymptotic
   have hS := Aux.SHasSum x hxp errV herr
   have hStsum := hS.tsum_eq
   exact Aux.finalBound x errV hx herr_nn herr_le hStsum
-end
+end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10Example1SqrtPoissonAsymptotic
 
 
 

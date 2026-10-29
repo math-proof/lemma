@@ -60,7 +60,6 @@ lemma euler_fermat_prime_power_congruence_general
     conv_lhs => rw [hexp, pow_add]
     have hmul := (Nat.ModEq.refl (a ^ (p ^ (r - 1)))).mul hkey
     simpa using hmul
-set_option linter.unusedVariables false in
 
 end Nat
 
@@ -73,7 +72,7 @@ namespace Nat
 lemma euler_fermat_prime_power_congruence
   {a p r : ℕ}
 -- given
-  (ha : 0 < a)
+  (_ha : 0 < a)
   (hp : Nat.Prime p)
   (hr : 1 ≤ r) :
 -- imply

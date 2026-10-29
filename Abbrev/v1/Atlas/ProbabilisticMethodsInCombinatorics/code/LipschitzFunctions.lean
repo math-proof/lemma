@@ -19,7 +19,7 @@ variable {X : Type*} {Y : Type*}
 /-- Definition 9.4.7 (Lipschitz functions). A function $f : X \to Y$ is $C$-Lipschitz iff
 $d(f(x), f(y)) \le C \cdot d(x, y)$ for all $x, y \in X$. -/
 abbrev IsLipschitz [PseudoEMetricSpace X] [PseudoEMetricSpace Y]
-    (C : ℝ≥0) (f : X → Y) : Prop :=
+    (C : NNReal) (f : X → Y) : Prop :=
   LipschitzWith C f
 
 end LipschitzFunctions

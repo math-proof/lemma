@@ -12,9 +12,9 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example1Summable
 -/
 @[path]
 lemma ramanujan_part1_ch3_section8_example1_summable_general
-  {a : ℕ → ℂ}
-  {lam : Option ℝ}
-  {eps : ℝ}
+  (a : ℕ → ℂ)
+  (lam : Option ℝ)
+  (eps : ℝ)
 -- given
   (heps_pos : 0 < eps)
   (hSumm : ∀ z : ℂ, (∀ n : ℕ, z ≠ -((n + 1 : ℕ) : ℂ)) → (∀ l : ℝ, lam = some l → l < z.re) → Summable (fun j : ℕ => ((-1 : ℂ) ^ j * a j) / ((Finset.range (j + 1)).prod fun k : ℕ => z + ((k + 1 : ℕ) : ℂ)))) :
@@ -87,7 +87,6 @@ lemma ramanujan_part1_ch3_section8_example1_summable_general
     · intro l' hl'
       obtain rfl := Option.some_inj.mp hl'
       exact hRe
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example1Summable
 
@@ -103,7 +102,7 @@ lemma ramanujan_part1_ch3_section8_example1_summable
   {eps : ℝ}
 -- given
   (heps_pos : 0 < eps)
-  (heps_lt : match lam with | some _ => eps < Real.pi / 2 | none => eps < Real.pi)
+  (_heps_lt : match lam with | some _ => eps < Real.pi / 2 | none => eps < Real.pi)
   (hSumm : ∀ z : ℂ, (∀ n : ℕ, z ≠ -((n + 1 : ℕ) : ℂ)) → (∀ l : ℝ, lam = some l → l < z.re) → Summable (fun j : ℕ => ((-1 : ℂ) ^ j * a j) / ((Finset.range (j + 1)).prod fun k : ℕ => z + ((k + 1 : ℕ) : ℂ)))) :
 -- imply
   ∃ R : ℝ, ∀ z : ℂ, sector lam eps z → R < ‖z‖ →

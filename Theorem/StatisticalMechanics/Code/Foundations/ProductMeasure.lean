@@ -20,15 +20,15 @@ namespace StatMech
 variable {E : Type*}
 
 
-@[simp] lemma bernoulliMeasure_apply_true (p : ℝ≥0) (hp : p ≤ 1) :
-    bernoulliMeasure p hp {true} = (p : ℝ≥0∞) := by
+@[simp] lemma bernoulliMeasure_apply_true (p : NNReal) (hp : p ≤ 1) :
+    bernoulliMeasure p hp {true} = (p : ENNReal) := by
   unfold bernoulliMeasure
   rw [PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _), PMF.bernoulli_apply]
   rfl
 
 
-@[simp] lemma bernoulliMeasure_apply_false (p : ℝ≥0) (hp : p ≤ 1) :
-    bernoulliMeasure p hp {false} = ((1 - p : ℝ≥0) : ℝ≥0∞) := by
+@[simp] lemma bernoulliMeasure_apply_false (p : NNReal) (hp : p ≤ 1) :
+    bernoulliMeasure p hp {false} = ((1 - p : NNReal) : ENNReal) := by
   unfold bernoulliMeasure
   rw [PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _), PMF.bernoulli_apply]
   rfl

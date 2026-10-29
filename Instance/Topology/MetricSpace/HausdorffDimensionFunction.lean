@@ -7,7 +7,7 @@ open scoped NNReal Topology
 open Filter
 
 
-instance : FunLike HausdorffDimensionFunction ℝ≥0 ℝ≥0 where
+instance : FunLike HausdorffDimensionFunction NNReal NNReal where
   coe ψ := ψ.toContinuousOrderHom
   coe_injective ψ φ h := by
     cases ψ
@@ -15,7 +15,7 @@ instance : FunLike HausdorffDimensionFunction ℝ≥0 ℝ≥0 where
     simp only [HausdorffDimensionFunction.mk.injEq]
     exact ContinuousOrderHom.ext fun r ↦ congrFun h r
 
-instance : ContinuousOrderHomClass HausdorffDimensionFunction ℝ≥0 ℝ≥0 where
+instance : ContinuousOrderHomClass HausdorffDimensionFunction NNReal NNReal where
   map_monotone ψ := ψ.toContinuousOrderHom.monotone
   map_continuous ψ := ψ.toContinuousOrderHom.continuous_toFun
 

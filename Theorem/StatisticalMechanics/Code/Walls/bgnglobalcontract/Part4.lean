@@ -77,7 +77,7 @@ theorem bgn_count_of_forest (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ)
   bpt_count_of_partitionForest ω L R h
 
 
-theorem bgn_bk_of_forest (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bgn_bk_of_forest (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   bpt_bk_of_partitionForest p hp1 hp0 hdata
@@ -100,7 +100,7 @@ theorem bgn_status :
     (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ),
       bkg_ClassicalForestData ω L R ↔ bc69_Gn_globalForest ω L R) ∧
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p →
       (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) →
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
   refine ⟨fun L hL => bgn_ground_common L hL, fun ω L R u a b => bgn_sameTrif_classes_laminar ω L R u a b,

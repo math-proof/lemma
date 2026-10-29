@@ -121,17 +121,17 @@ theorem tfc_trifurcation_prob_eq_zero (μ : Measure (ConfigSpace (Sym2 (Site d))
     (hdens : Tendsto (fun n => (bdry n : ℝ) / ((boxFinsetBK d n).card : ℝ)) atTop (𝓝 0)) :
     μ {ω | IsTrifurcation d ω 0} = 0 := by
   classical
-  set p : ℝ≥0∞ := μ {ω | IsTrifurcation d ω 0} with hp
-  have hkey : ∀ n, 1 ≤ n → ((boxFinsetBK d n).card : ℝ≥0∞) * p ≤ (bdry n : ℝ≥0∞) := by
+  set p : ENNReal := μ {ω | IsTrifurcation d ω 0} with hp
+  have hkey : ∀ n, 1 ≤ n → ((boxFinsetBK d n).card : ENNReal) * p ≤ (bdry n : ENNReal) := by
     intro n hn
     have hexp := expected_Tcount μ hinv n
     rw [nsmul_eq_mul] at hexp
-    have hle : ∫⁻ ω, (Tcount d ω n : ℝ≥0∞) ∂μ ≤ (bdry n : ℝ≥0∞) := by
-      calc ∫⁻ ω, (Tcount d ω n : ℝ≥0∞) ∂μ
-          ≤ ∫⁻ _ω, (bdry n : ℝ≥0∞) ∂μ := by
+    have hle : ∫⁻ ω, (Tcount d ω n : ENNReal) ∂μ ≤ (bdry n : ENNReal) := by
+      calc ∫⁻ ω, (Tcount d ω n : ENNReal) ∂μ
+          ≤ ∫⁻ _ω, (bdry n : ENNReal) ∂μ := by
             apply lintegral_mono; intro ω; simp only
             exact_mod_cast hbound ω n hn
-        _ = (bdry n : ℝ≥0∞) := by rw [lintegral_const]; simp
+        _ = (bdry n : ENNReal) := by rw [lintegral_const]; simp
     rwa [hexp] at hle
   have hpfin : p ≠ ⊤ := by rw [hp]; exact (measure_ne_top μ _)
   set pr : ℝ := p.toReal with hpr
@@ -139,7 +139,7 @@ theorem tfc_trifurcation_prob_eq_zero (μ : Measure (ConfigSpace (Sym2 (Site d))
   have hkeyr : ∀ n, 1 ≤ n → ((boxFinsetBK d n).card : ℝ) * pr ≤ (bdry n : ℝ) := by
     intro n hn
     have h := hkey n hn
-    have h' : (((boxFinsetBK d n).card : ℝ≥0∞) * p).toReal ≤ (bdry n : ℝ≥0∞).toReal :=
+    have h' : (((boxFinsetBK d n).card : ENNReal) * p).toReal ≤ (bdry n : ENNReal).toReal :=
       ENNReal.toReal_mono (by simp) h
     rw [ENNReal.toReal_mul] at h'
     simpa [ENNReal.toReal_natCast, hpr] using h'
@@ -222,7 +222,7 @@ theorem tfc_burton_keane_uniqueness_full
     infiniteCluster_unique_ae μ herg hmerge⟩
 
 
-theorem tfc_burton_keane_bernoulli (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem tfc_burton_keane_bernoulli (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
       tfc_DistinctArmEnds ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

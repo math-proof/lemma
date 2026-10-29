@@ -129,7 +129,7 @@ private lemma bfl_fineCount_of_armSubforest_eq
 private lemma bfl_bk_of_fineArmSubforest_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) :
@@ -156,7 +156,7 @@ private lemma bfl_arbitrary_tree_fails_hleaf_eq
 private lemma bfl_status_eq
   {d : ℕ} :
 -- imply
-  (∀ (ω : ConfigSpace (Sym2 (Site 2))) {T : SimpleGraph (Site 2)}, T ≤ openSubgraph 2 ω → T ≤ hypercubicLattice 2) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (T : SimpleGraph (Site 2)) [LocallyFinite T], T ≤ openSubgraph 2 ω → ∀ {w x : Site 2} {R : ℕ}, 1 ≤ R → w ≠ x → w ∈ box 2 R → (ray34_AvoidCluster T {x} w).Infinite → ∃ r : ℕ → Site 2, r 0 = w ∧ Function.Injective r ∧ (∀ k, T.Adj (r k) (r (k + 1))) ∧ (∀ k, r k ≠ x) ∧ (∃ k, r k ∈ vertexBoundary 2 R)) ∧ (∀ {V : Type} {T : SimpleGraph V}, T.IsTree → ∀ {ι : Type} (Gs : ι → SimpleGraph V), (∀ i, Gs i ≤ T) → (⨆ i, Gs i).IsAcyclic) ∧ (∃ (G T : SimpleGraph (Fin 4)) (_ : DecidableRel G.Adj) (_ : DecidableRel T.Adj) (B : Finset (Fin 4)), T ≤ G ∧ T.IsTree ∧ (∃ v, G.degree v = 2 ∧ T.degree v = 1 ∧ v ∉ B) ∧ ¬ (∀ v, T.degree v = 1 → v ∈ B)) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (R : ℕ), bau_ArmSubforestData ω 0 R → bc61_coarseTcount ω 0 R ≤ boxSV_boundaryCard 2 R) ∧ (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
+  (∀ (ω : ConfigSpace (Sym2 (Site 2))) {T : SimpleGraph (Site 2)}, T ≤ openSubgraph 2 ω → T ≤ hypercubicLattice 2) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (T : SimpleGraph (Site 2)) [LocallyFinite T], T ≤ openSubgraph 2 ω → ∀ {w x : Site 2} {R : ℕ}, 1 ≤ R → w ≠ x → w ∈ box 2 R → (ray34_AvoidCluster T {x} w).Infinite → ∃ r : ℕ → Site 2, r 0 = w ∧ Function.Injective r ∧ (∀ k, T.Adj (r k) (r (k + 1))) ∧ (∀ k, r k ≠ x) ∧ (∃ k, r k ∈ vertexBoundary 2 R)) ∧ (∀ {V : Type} {T : SimpleGraph V}, T.IsTree → ∀ {ι : Type} (Gs : ι → SimpleGraph V), (∀ i, Gs i ≤ T) → (⨆ i, Gs i).IsAcyclic) ∧ (∃ (G T : SimpleGraph (Fin 4)) (_ : DecidableRel G.Adj) (_ : DecidableRel T.Adj) (B : Finset (Fin 4)), T ≤ G ∧ T.IsTree ∧ (∃ v, G.degree v = 2 ∧ T.degree v = 1 ∧ v ∉ B) ∧ ¬ (∀ v, T.degree v = 1 → v ∈ B)) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (R : ℕ), bau_ArmSubforestData ω 0 R → bc61_coarseTcount ω 0 R ≤ boxSV_boundaryCard 2 R) ∧ (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
 -- proof
   apply StatMech.Walls.bfl_status
 

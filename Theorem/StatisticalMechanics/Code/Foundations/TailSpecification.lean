@@ -87,7 +87,7 @@ theorem ts_map_diag_restrict {Omega : Type*}
 
 theorem ts_trim_smul {Omega : Type*}
     {m mOmega : MeasurableSpace Omega}
-    (mu : @Measure Omega mOmega) (hm : m ≤ mOmega) (a : ℝ≥0∞) :
+    (mu : @Measure Omega mOmega) (hm : m ≤ mOmega) (a : ENNReal) :
     (a • mu).trim hm = a • (mu.trim hm) :=
   @Measure.ext _ m _ _ (fun s hs => by
     rw [Measure.smul_apply, trim_measurableSet_eq hm hs,

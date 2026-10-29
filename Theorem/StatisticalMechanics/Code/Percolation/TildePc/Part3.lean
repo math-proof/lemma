@@ -28,7 +28,7 @@ variable {d : ℕ}
 
 
 @[simp]
-theorem mem_tildePcSet {d : ℕ} {p : ℝ≥0} :
+theorem mem_tildePcSet {d : ℕ} {p : NNReal} :
     p ∈ tildePcSet d ↔
       ∃ hp : p ≤ 1, ∃ S : Finset (Site d), origin d ∈ S ∧ phi d p hp S < 1 :=
   Iff.rfl

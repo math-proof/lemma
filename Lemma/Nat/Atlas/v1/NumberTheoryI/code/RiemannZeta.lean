@@ -94,7 +94,7 @@ namespace RiemannZetaFunction
 [riemannZeta_residue_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/RiemannZeta.lean)
 -/
 @[path]
-lemma riemannZeta_residue_eq_one
+lemma riemannZeta_residue_eq_one :
 -- imply
   Tendsto (fun s ↦ (s - 1) * riemannZeta s) (𝓝[≠] 1) (𝓝 1) :=
 -- proof
@@ -108,7 +108,7 @@ namespace RiemannZetaFunction
 [riemannZeta_meromorphic_with_residue](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/RiemannZeta.lean)
 -/
 @[path]
-lemma riemannZeta_meromorphic_with_residue
+lemma riemannZeta_meromorphic_with_residue :
 -- imply
   (∀ s : ℂ, s ≠ 1 → DifferentiableAt ℂ riemannZeta s) ∧ Tendsto (fun s ↦ (s - 1) * riemannZeta s) (𝓝[≠] 1) (𝓝 1) :=
 -- proof
@@ -159,3 +159,4 @@ end RiemannZetaFunction
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

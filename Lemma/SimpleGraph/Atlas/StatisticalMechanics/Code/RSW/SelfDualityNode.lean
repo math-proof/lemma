@@ -216,7 +216,7 @@ private lemma rsd_planarDual_law_eq
   [Fintype V]
   [DecidableEq V]
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Measure.map Lattice.dualConfig (bernoulliProductMeasure p hp) = bernoulliProductMeasure (1 - p) tsub_le_self := by
@@ -231,7 +231,7 @@ private lemma rsd_planarDual_selfDual_half_eq
   [Fintype V]
   [DecidableEq V] :
 -- imply
-  Measure.map Lattice.dualConfig (bernoulliProductMeasure (2⁻¹ : ℝ≥0) Universality.half_le_one) = bernoulliProductMeasure (2⁻¹ : ℝ≥0) Universality.half_le_one := by
+  Measure.map Lattice.dualConfig (bernoulliProductMeasure (2⁻¹ : NNReal) Universality.half_le_one) = bernoulliProductMeasure (2⁻¹ : NNReal) Universality.half_le_one := by
 -- proof
   apply StatMech.RSW.rsd_planarDual_selfDual_half
 
@@ -243,7 +243,7 @@ private lemma rsd_planarDual_invol_eq
   [Fintype V]
   [DecidableEq V]
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Measure.map Lattice.dualConfig (Measure.map Lattice.dualConfig (bernoulliProductMeasure p hp)) = bernoulliProductMeasure p hp := by

@@ -37,7 +37,7 @@ theorem feu_wiredIV_isErgodic (hd : 1 ≤ d) {p : ℝ} (hp : 0 < p) (hp1 : p < 1
 
 
 theorem feu_wiredIV_extreme_on_invariants (hd : 1 ≤ d) {p : ℝ} (hp : 0 < p) (hp1 : p < 1)
-    (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ℝ≥0∞)
+    (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ENNReal)
     [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
     (ha : 0 < a) (hb : 0 < b)
     (hconv : (wiredInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 2)
@@ -50,7 +50,7 @@ theorem feu_wiredIV_extreme_on_invariants (hd : 1 ≤ d) {p : ℝ} (hp : 0 < p) 
 
 
 theorem feu_fk_limits_wired_unconditional (d : ℕ) (hd : 1 ≤ d) {p : ℝ} (hp : 0 < p) (hp1 : p < 1)
-    (hextF : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ℝ≥0∞),
+    (hextF : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ENNReal),
       IsTranslationInvariant (G := Multiplicative (Site d)) ν₁ →
         IsTranslationInvariant (G := Multiplicative (Site d)) ν₂ →
           IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ →

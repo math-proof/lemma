@@ -39,8 +39,8 @@ private lemma helper_main
   (τ : Measure G) [SFinite τ] [τ.IsMulRightInvariant]
   (μ : Measure X) [SFinite μ] [μ.IsNegInvariant]
   (n : X → G) (hn : Measurable n) (hn_add : ∀ x y, n (x + y) = n x * n y)
-  (Φ : G → ℝ≥0∞) (hΦ : Measurable Φ) (hΦn : ∀ g x, Φ (g * n x) = Φ g)
-  (w w₀ : G → ℝ≥0∞) (hw : Measurable w) (hw₀ : Measurable w₀)
+  (Φ : G → ENNReal) (hΦ : Measurable Φ) (hΦn : ∀ g x, Φ (g * n x) = Φ g)
+  (w w₀ : G → ENNReal) (hw : Measurable w) (hw₀ : Measurable w₀)
   (h1 : ∀ᵐ g ∂τ, ∫⁻ x, w (g * n x) ∂μ = 1) (h1₀ : ∀ᵐ g ∂τ, ∫⁻ x, w₀ (g * n x) ∂μ = 1) :
   ∫⁻ g, w g * Φ g ∂τ = ∫⁻ g, w₀ g * Φ g ∂τ := by
   have hF : Measurable fun p : G × X => w p.1 * Φ p.1 * w₀ (p.1 * n p.2) :=
@@ -85,7 +85,7 @@ private lemma main
   {μ : Measure X} [SFinite μ] [μ.IsNegInvariant]
   {n : X → G}
 -- given
-  (Φ w w₀ : G → ℝ≥0∞)
+  (Φ w w₀ : G → ENNReal)
   (hn : Measurable n)
   (hn_add : ∀ x y, n (x + y) = n x * n y)
   (hΦ : Measurable Φ)

@@ -26,7 +26,7 @@ private lemma lattice_mass_transport_eq
   {mu : Measure (ConfigSpace E)}
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) mu)
-  (F : Site d → Site d → ConfigSpace E → ℝ≥0∞)
+  (F : Site d → Site d → ConfigSpace E → ENNReal)
   (hF : ∀ x y, Measurable (F x y))
   (hdiag : IsDiagonallyInvariantTransport F) :
 -- imply
@@ -45,7 +45,7 @@ private lemma lattice_mass_transport_infinite_receiver_null_eq
   [IsProbabilityMeasure mu]
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) mu)
-  (F : Site d → Site d → ConfigSpace E → ℝ≥0∞)
+  (F : Site d → Site d → ConfigSpace E → ENNReal)
   (hF : ∀ x y, Measurable (F x y))
   (hdiag : IsDiagonallyInvariantTransport F)
   (hout : ∀ omega, ∑' y : Site d, F 0 y omega ≤ 1) :
@@ -66,7 +66,7 @@ private lemma lattice_mass_transport_forbidden_event_null_eq
   {bad : Set (ConfigSpace E)}
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) mu)
-  (F : Site d → Site d → ConfigSpace E → ℝ≥0∞)
+  (F : Site d → Site d → ConfigSpace E → ENNReal)
   (hF : ∀ x y, Measurable (F x y))
   (hdiag : IsDiagonallyInvariantTransport F)
   (hout : ∀ omega, ∑' y : Site d, F 0 y omega ≤ 1)

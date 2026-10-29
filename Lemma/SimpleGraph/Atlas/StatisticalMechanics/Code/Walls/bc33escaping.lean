@@ -131,7 +131,7 @@ private lemma bc33_burton_keane_bernoulli_of_TavoidingRayData_eq
   {rank : ConfigSpace (Sym2 (Site d)) → ℕ → Site d → ℕ ×ₗ ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hinj : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), ∀ x, x ∈ box d n → IsTrifurcation d ω x → ∀ y, y ∈ box d n → IsTrifurcation d ω y → x ≠ y → Connected d ω x y → rank ω n x ≠ rank ω n y)

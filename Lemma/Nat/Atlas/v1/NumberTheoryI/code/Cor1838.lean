@@ -13,7 +13,7 @@ namespace CharacterOrthogonality
 lemma sum_char_ne_zero_iff
   [AddCommGroup G]
   [Fintype G]
-  {χ : AddChar G ℂ} :
+  (χ : AddChar G ℂ) :
 -- imply
   ∑ g : G, χ g ≠ 0 ↔ χ = 0 := by
 -- proof
@@ -39,7 +39,7 @@ lemma sum_dual_ne_zero_iff
   [AddCommGroup G]
   [Fintype G]
   [DecidableEq G]
-  {g : G} :
+  (g : G) :
 -- imply
   ∑ χ : AddChar G ℂ, χ g ≠ 0 ↔ g = 0 := by
 -- proof

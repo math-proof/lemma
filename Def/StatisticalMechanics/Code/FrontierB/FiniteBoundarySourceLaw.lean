@@ -25,7 +25,7 @@ variable (G : SimpleGraph V) [DecidableRel G.Adj]
 
 noncomputable def boundarySourceCurrentRawMass
     (beta : ℝ) (J : Sym2 V → ℝ)
-    (interior internalSources : Finset V) (m : EdgeCurrent G) : ℝ≥0∞ :=
+    (interior internalSources : Finset V) (m : EdgeCurrent G) : ENNReal :=
   ENNReal.ofReal
     (if sources G (ofEdgeFun G m) ∩ interior = internalSources then
       weight G beta J (ofEdgeFun G m)

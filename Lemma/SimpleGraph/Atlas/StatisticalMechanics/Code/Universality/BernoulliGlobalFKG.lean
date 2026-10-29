@@ -11,7 +11,7 @@ open MeasureTheory Set Filter StatMech StatMech.Universality
 private lemma bernoulli_finiteCylinderPositivelyAssociated_eq
   [Countable E]
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   FiniteCylinderPositivelyAssociated (bernoulliProductMeasure (E := E) p hp) := by
@@ -121,9 +121,9 @@ private lemma positivelyAssociated_of_measurablyPositivelyAssociated_eq
 private lemma bernoulli_exists_cylinder_symmDiff_lt_eq
   [Countable E]
   {A : Set (ConfigSpace E)}
-  {ε : ℝ≥0∞}
+  {ε : ENNReal}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hA : MeasurableSet A)
   (hε : 0 < ε) :

@@ -189,7 +189,7 @@ theorem str_spanningTree_of_forestLeafSelection
     str_spanningTreeLeafCount_of_forestLeafSelection ω n (hsel ω n hn) (hbase ω n hn)
 
 
-theorem str_burton_keane_bernoulli_of_forestLeafSelection (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem str_burton_keane_bernoulli_of_forestLeafSelection (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p)
     (hsel : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → str_ForestLeafSelection ω n)
     (hbase : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →

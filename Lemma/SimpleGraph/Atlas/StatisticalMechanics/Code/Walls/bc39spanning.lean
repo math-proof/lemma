@@ -170,7 +170,7 @@ private lemma bc39_burton_keane_bernoulli_of_cutGeometryFixed_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc39_ArmCutGeometryFixed ω n)

@@ -77,7 +77,7 @@ theorem shk_boundaryEdges_translate (g : Multiplicative (Site d))
       (hyper_adj_smul g q0.1 q0.2).2 hqadj⟩
 
 
-theorem shk_boundaryConnSum_translate (p : ℝ≥0) (hp : p ≤ 1)
+theorem shk_boundaryConnSum_translate (p : NNReal) (hp : p ≤ 1)
     (g : Multiplicative (Site d)) (S : Finset (Site d))
     (h0 : origin d ∈ S) :
     ∑ q ∈ boundaryEdges d (shk_translateFinset g S),
@@ -97,7 +97,7 @@ theorem shk_boundaryConnSum_translate (p : ℝ≥0) (hp : p ≤ 1)
   exact (shk_pairSmul_injective g).injOn
 
 
-theorem shk_phi_translate (p : ℝ≥0) (hp : p ≤ 1)
+theorem shk_phi_translate (p : NNReal) (hp : p ≤ 1)
     (g : Multiplicative (Site d)) (S : Finset (Site d))
     (h0 : origin d ∈ S) :
     (p : ℝ) * ∑ q ∈ boundaryEdges d (shk_translateFinset g S),

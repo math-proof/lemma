@@ -14,7 +14,7 @@ namespace SchwartzDensity
 @[path]
 lemma schwartz_dense_Lp
   {n : ℕ}
-  {p : ℝ≥0∞}
+  {p : ENNReal}
   [Fact (1 ≤ p)]
 -- given
   (hp : p ≠ ⊤) :

@@ -41,7 +41,7 @@ private lemma bfe_exp_eq_eq
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) :
 -- imply
-  ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω 0 0} = ∫⁻ ω, (bc61_coarseTcount ω 0 R : ℝ≥0∞) ∂μ := by
+  ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω 0 0} = ∫⁻ ω, (bc61_coarseTcount ω 0 R : ENNReal) ∂μ := by
 -- proof
   apply StatMech.Walls.bfe_exp_eq μ hinv R
 
@@ -55,7 +55,7 @@ private lemma bfe_expBound_eq
   [IsProbabilityMeasure μ]
   {R : ℕ} :
 -- imply
-  ∫⁻ ω, (bc61_coarseTcount ω 0 R : ℝ≥0∞) ∂μ ≤ (boxSV_boundaryCard d (R + 1) : ℝ≥0∞) := by
+  ∫⁻ ω, (bc61_coarseTcount ω 0 R : ENNReal) ∂μ ≤ (boxSV_boundaryCard d (R + 1) : ENNReal) := by
 -- proof
   apply StatMech.Walls.bfe_expBound μ R
 
@@ -125,7 +125,7 @@ private lemma bfe_bk_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hexist : bc61_CoarseTrifExistence (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1) 0) :
@@ -142,7 +142,7 @@ private lemma bfe_bk_atLeastTwo_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hexist : bc61_CoarseTrifExistence (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1) 0) :

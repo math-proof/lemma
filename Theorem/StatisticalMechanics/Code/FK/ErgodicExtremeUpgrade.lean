@@ -61,9 +61,9 @@ theorem aeconst_of_ae_invariant
 theorem ae_eq_const_of_ae_invariant_function
     {μ : Measure (ConfigSpace E)} [IsProbabilityMeasure μ] [Countable G]
     (hμ : IsErgodic (G := G) μ)
-    {φ : ConfigSpace E → ℝ≥0∞} (hφ : Measurable φ)
+    {φ : ConfigSpace E → ENNReal} (hφ : Measurable φ)
     (hinv : ∀ g : G, φ ∘ (shift g : ConfigSpace E → ConfigSpace E) =ᵐ[μ] φ) :
-    ∃ c : ℝ≥0∞, φ =ᵐ[μ] Function.const _ c := by
+    ∃ c : ENNReal, φ =ᵐ[μ] Function.const _ c := by
   apply Filter.exists_eventuallyEq_const_of_forall_separating (p := MeasurableSet)
   intro U hU
   have hpre : MeasurableSet (φ ⁻¹' U) := hφ hU
@@ -85,7 +85,7 @@ theorem eq_smul_of_absolutelyContinuous
     {μ ν : Measure (ConfigSpace E)} [IsProbabilityMeasure μ] [IsFiniteMeasure ν] [Countable G]
     (hμ : IsErgodic (G := G) μ)
     (hν : IsTranslationInvariant (G := G) ν) (hνμ : ν ≪ μ) :
-    ∃ c : ℝ≥0∞, ν = c • μ := by
+    ∃ c : ENNReal, ν = c • μ := by
   have hcomp : ∀ g : G,
       ν.rnDeriv μ ∘ (shift g : ConfigSpace E → ConfigSpace E) =ᵐ[μ] ν.rnDeriv μ :=
     fun g => MeasureTheory.MeasurePreserving.rnDeriv_comp_aeEq (hν g) (hμ.1 g)
@@ -99,7 +99,7 @@ theorem eq_smul_of_absolutelyContinuous
 
 
 theorem eeu_ergodic_summand_eq
-    {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ℝ≥0∞}
+    {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ENNReal}
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν₁] [Countable G]
     (hμ : IsErgodic (G := G) μ) (hν₁ : IsTranslationInvariant (G := G) ν₁)
     (hconv : μ = a • ν₁ + b • ν₂) (ha : 0 < a) :
@@ -114,7 +114,7 @@ theorem eeu_ergodic_summand_eq
 
 
 theorem eeu_ergodic_summands_eq
-    {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ℝ≥0∞}
+    {μ ν₁ ν₂ : Measure (ConfigSpace E)} {a b : ENNReal}
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂] [Countable G]
     (hμ : IsErgodic (G := G) μ)
     (hν₁ : IsTranslationInvariant (G := G) ν₁) (hν₂ : IsTranslationInvariant (G := G) ν₂)
@@ -153,7 +153,7 @@ theorem eeu_wiredIV_isInvariantExtremePoint {d : ℕ} (hd : 1 ≤ d) {p : ℝ}
 
 
 theorem eeu_wiredIV_extremePoint_clause {d : ℕ} (hd : 1 ≤ d) {p : ℝ} (hp : 0 < p) (hp1 : p < 1)
-    (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Lattice.Site d)))) (a b : ℝ≥0∞)
+    (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Lattice.Site d)))) (a b : ENNReal)
     (h1 : IsTranslationInvariant (G := Multiplicative (Lattice.Site d)) ν₁)
     (h2 : IsTranslationInvariant (G := Multiplicative (Lattice.Site d)) ν₂)
     (hp1' : IsProbabilityMeasure ν₁) (hp2' : IsProbabilityMeasure ν₂)

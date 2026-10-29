@@ -165,7 +165,7 @@ private lemma finite_constant_cluster_count_impossible_eq
   [IsProbabilityMeasure nu]
   {k : ℕ∞}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasSiteInsertionLowerBound nu epsilon)
   (hk2 : 2 ≤ k)
@@ -186,7 +186,7 @@ private lemma site_cluster_count_ae_lt_two_or_infinite_eq
   [IsProbabilityMeasure nu]
 -- given
   (herg : IsErgodic (G := Multiplicative (Site d)) nu)
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasSiteInsertionLowerBound nu epsilon) :
 -- imply
@@ -204,7 +204,7 @@ private lemma site_cluster_count_ae_one_or_infinite_eq
   [IsProbabilityMeasure nu]
 -- given
   (herg : IsErgodic (G := Multiplicative (Site d)) nu)
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasSiteInsertionLowerBound nu epsilon)
   (hperco : nu {eta | 1 ≤ numInfiniteClusters d (siteToBond eta)} = 1) :

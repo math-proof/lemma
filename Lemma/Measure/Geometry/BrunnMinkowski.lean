@@ -63,7 +63,7 @@ namespace MathlibExt.MeasureTheory.Geometry.BrunnMinkowskiWanted
 [bm_exists_ofReal_pow_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/BrunnMinkowski.lean)
 -/
 @[path]
-private lemma bm_exists_ofReal_pow_eq (n : ℕ) (hn : 0 < n) (α : ℝ≥0∞)
+private lemma bm_exists_ofReal_pow_eq (n : ℕ) (hn : 0 < n) (α : ENNReal)
   (h0 : α ≠ 0) (htop : α ≠ ⊤) :
   0 < Real.rpow α.toReal ((1 : ℝ) / (n : ℝ)) ∧
     α = ENNReal.ofReal ((Real.rpow α.toReal ((1 : ℝ) / (n : ℝ))) ^ n) ∧
@@ -104,14 +104,14 @@ private lemma bm_volume_rpow_mul_le_of_convex_combination {n : ℕ}
     ENNReal.rpow ((volume : Measure (EuclideanSpace ℝ (Fin n))) L) t ≤
     (volume : Measure (EuclideanSpace ℝ (Fin n))) M := by
   have h1t : (0 : ℝ) < 1 - t := by linarith
-  have hf : Measurable (K.indicator 1 : EuclideanSpace ℝ (Fin n) → ℝ≥0∞) :=
+  have hf : Measurable (K.indicator 1 : EuclideanSpace ℝ (Fin n) → ENNReal) :=
     measurable_one.indicator hK
-  have hg : Measurable (L.indicator 1 : EuclideanSpace ℝ (Fin n) → ℝ≥0∞) :=
+  have hg : Measurable (L.indicator 1 : EuclideanSpace ℝ (Fin n) → ENNReal) :=
     measurable_one.indicator hL
-  have hh : Measurable (M.indicator 1 : EuclideanSpace ℝ (Fin n) → ℝ≥0∞) :=
+  have hh : Measurable (M.indicator 1 : EuclideanSpace ℝ (Fin n) → ENNReal) :=
     measurable_one.indicator hM
-  have hzmt : ENNReal.rpow (0 : ℝ≥0∞) (1 - t) = 0 := ENNReal.zero_rpow_of_pos h1t
-  have hzt : ENNReal.rpow (0 : ℝ≥0∞) t = 0 := ENNReal.zero_rpow_of_pos ht0
+  have hzmt : ENNReal.rpow (0 : ENNReal) (1 - t) = 0 := ENNReal.zero_rpow_of_pos h1t
+  have hzt : ENNReal.rpow (0 : ENNReal) t = 0 := ENNReal.zero_rpow_of_pos ht0
   have hfgh : ∀ x y : EuclideanSpace ℝ (Fin n),
     ENNReal.rpow (K.indicator 1 x) (1 - t) *
       ENNReal.rpow (L.indicator 1 y) t ≤

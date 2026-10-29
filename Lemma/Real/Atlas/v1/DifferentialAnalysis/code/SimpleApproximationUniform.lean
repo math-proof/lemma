@@ -12,11 +12,11 @@ namespace SimpleApproximation
 @[path]
 lemma eapprox_uniform_on_bounded_strict
   [MeasurableSpace X]
-  {f : X → ℝ≥0∞}
+  {f : X → ENNReal}
 -- given
   (hf : Measurable f)
-  (c : ℝ≥0)
-  (ε : ℝ≥0∞)
+  (c : NNReal)
+  (ε : ENNReal)
   (hε : 0 < ε) :
 -- imply
   ∃ N : ℕ, ∀ n, N ≤ n → ∀ x, f x ≤ ↑c → f x - SimpleFunc.eapprox f n x < ε := by

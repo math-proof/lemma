@@ -10,12 +10,11 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry3InfiniteEvaluation
 
 /--
 [arctan_err](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch2.lean)
--/
-@[path]
 `t ^ 3 - t + arctan t` is monotone on `[0, ∞)` (its derivative is nonnegative). -/
+@[path]
 private lemma arctan_err (x : ℝ) (hx : 0 ≤ x) : x - arctan x ≤ x ^ 3 := by
   have hd : ∀ y : ℝ, HasDerivAt (fun t => t ^ 3 - t + arctan t) (3 * y ^ 2 - 1 + 1 / (1 + y ^ 2))
-    y := by
+      y := by
     intro y
     have h1 : HasDerivAt (fun t : ℝ => t ^ 3) (3 * y ^ 2) y := by
       simpa using hasDerivAt_pow 3 y
@@ -43,13 +42,12 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry3InfiniteEvaluation
 
 /--
 [partial_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch2.lean)
--/
-@[path]
 identity `Entry3.ramanujan_part1_ch2_entry3_general`. -/
+@[path]
 private lemma partial_sum (N : ℕ) :
   ∑ n ∈ Finset.range N, f n = (∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), g k) - π / 4 := by
   have hl : ∑ k ∈ Finset.Icc 1 (2 * N + 1), arctan (1 / ((N : ℝ) + k)) =
-    ∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), g k := by
+      ∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), g k := by
     have h := Finset.sum_Ico_add' g 1 (2 * N + 1 + 1) N
     rw [show 1 + N = N + 1 by omega, show 2 * N + 1 + 1 + N = 3 * N + 2 by omega,
       Finset.Ico_add_one_right_eq_Icc] at h
@@ -57,8 +55,8 @@ private lemma partial_sum (N : ℕ) :
     refine Finset.sum_congr rfl fun k _ => ?_
     simp only [g, Nat.cast_add, add_comm]
   have hr : ∑ k ∈ Finset.Icc 1 N,
-    arctan (10 * (k : ℝ) / ((3 * (k : ℝ) ^ 2 + 2) * (9 * (k : ℝ) ^ 2 - 1))) =
-    ∑ n ∈ Finset.range N, f n := by
+      arctan (10 * (k : ℝ) / ((3 * (k : ℝ) ^ 2 + 2) * (9 * (k : ℝ) ^ 2 - 1))) =
+      ∑ n ∈ Finset.range N, f n := by
     have h := Finset.sum_Ico_add'
       (fun k : ℕ => arctan (10 * (k : ℝ) / ((3 * (k : ℝ) ^ 2 + 2) * (9 * (k : ℝ) ^ 2 - 1)))) 0 N 1
     rw [zero_add, Finset.Ico_add_one_right_eq_Icc] at h
@@ -84,12 +82,12 @@ private lemma W_tendsto :
     have hx0 : 0 < x := lt_of_lt_of_le ha hx.1
     simp only; gcongr
   have reindex : ∀ N : ℕ, ∑ i ∈ Finset.Ico N (3 * N + 1), ((↑(i + 1) : ℝ))⁻¹
-    = ∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), ((k : ℝ))⁻¹ := by
+      = ∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), ((k : ℝ))⁻¹ := by
     intro N
     rw [Finset.sum_Ico_eq_sum_range, Finset.sum_Ico_eq_sum_range]
     apply Finset.sum_congr (by congr 1; omega); intro i _; congr 2; omega
   have hlow : ∀ N : ℕ, Real.log ((3 * (N : ℝ) + 2) / ((N : ℝ) + 1))
-    ≤ ∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), ((k : ℝ))⁻¹ := by
+      ≤ ∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), ((k : ℝ))⁻¹ := by
     intro N
     have hanti : AntitoneOn (fun x : ℝ => x⁻¹) (Set.Icc ((N + 1 : ℕ) : ℝ) ((3 * N + 2 : ℕ) : ℝ)) :=
       anti _ _ (by exact_mod_cast Nat.succ_pos N)
@@ -97,10 +95,11 @@ private lemma W_tendsto :
       (by omega) hanti
     rw [integral_inv_of_pos (by positivity) (by positivity)] at h
     have hcast : Real.log ((((3 * N + 2 : ℕ) : ℝ)) / (((N + 1 : ℕ) : ℝ)))
-      = Real.log ((3 * (N : ℝ) + 2) / ((N : ℝ) + 1)) := by push_cast; ring_nf
-    rwa [hcast] at h
+        = Real.log ((3 * (N : ℝ) + 2) / ((N : ℝ) + 1)) := by push_cast; ring_nf
+    rw [hcast] at h
+    exact h
   have hup : ∀ N : ℕ, 1 ≤ N → (∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), ((k : ℝ))⁻¹)
-    ≤ Real.log ((3 * (N : ℝ) + 1) / (N : ℝ)) := by
+      ≤ Real.log ((3 * (N : ℝ) + 1) / (N : ℝ)) := by
     intro N hN
     have hanti : AntitoneOn (fun x : ℝ => x⁻¹) (Set.Icc ((N : ℕ) : ℝ) ((3 * N + 1 : ℕ) : ℝ)) :=
       anti _ _ (by exact_mod_cast hN)
@@ -108,10 +107,11 @@ private lemma W_tendsto :
       (by omega) hanti
     rw [reindex N, integral_inv_of_pos (by exact_mod_cast hN) (by positivity)] at h
     have hcast : Real.log ((((3 * N + 1 : ℕ) : ℝ)) / ((N : ℕ) : ℝ))
-      = Real.log ((3 * (N : ℝ) + 1) / (N : ℝ)) := by push_cast; ring_nf
-    rwa [hcast] at h
+        = Real.log ((3 * (N : ℝ) + 1) / (N : ℝ)) := by push_cast; ring_nf
+    rw [hcast] at h
+    exact h
   have hr1 : Tendsto (fun N : ℕ => Real.log ((3 * (N : ℝ) + 2) / ((N : ℝ) + 1))) atTop
-    (𝓝 (Real.log 3)) := by
+      (𝓝 (Real.log 3)) := by
     have hratio : Tendsto (fun N : ℕ => (3 * (N : ℝ) + 2) / ((N : ℝ) + 1)) atTop (𝓝 3) := by
       have heq : ∀ N : ℕ, (3 * (N : ℝ) + 2) / ((N : ℝ) + 1) = 3 - 1 / ((N : ℝ) + 1) := by
         intro N
@@ -121,7 +121,7 @@ private lemma W_tendsto :
       simpa using tendsto_const_nhds.sub (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ))
     exact (Real.continuousAt_log (by norm_num)).tendsto.comp hratio
   have hr2 : Tendsto (fun N : ℕ => Real.log ((3 * (N : ℝ) + 1) / (N : ℝ))) atTop
-    (𝓝 (Real.log 3)) := by
+      (𝓝 (Real.log 3)) := by
     have hratio : Tendsto (fun N : ℕ => (3 * (N : ℝ) + 1) / (N : ℝ)) atTop (𝓝 3) := by
       have hev : ∀ᶠ N : ℕ in atTop, (3 * (N : ℝ) + 1) / (N : ℝ) = 3 + 1 / (N : ℝ) := by
         filter_upwards [eventually_gt_atTop 0] with N hN
@@ -156,28 +156,28 @@ private lemma E_tendsto :
     simpa using this
   apply squeeze_zero (fun N => ?_) (fun N => ?_) hub
   · exact Finset.sum_nonneg (fun k _ => by
-    have : arctan ((k : ℝ))⁻¹ ≤ ((k : ℝ))⁻¹ := arctan_le_self (by positivity)
-    linarith)
+      have : arctan ((k : ℝ))⁻¹ ≤ ((k : ℝ))⁻¹ := arctan_le_self (by positivity)
+      linarith)
   · have hcard : (Finset.Ico (N + 1) (3 * N + 2)).card = 2 * N + 1 := by rw [Nat.card_Ico]; omega
     have hupos : (0 : ℝ) < (N : ℝ) + 1 := by positivity
     calc ∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), (((k : ℝ))⁻¹ - arctan ((k : ℝ))⁻¹)
-      ≤ ∑ _k ∈ Finset.Ico (N + 1) (3 * N + 2), (((N : ℝ) + 1)⁻¹) ^ 3 := by
-        apply Finset.sum_le_sum
-        intro k hk
-        have hk1 : N + 1 ≤ k := (Finset.mem_Ico.mp hk).1
-        have hkR : ((N : ℝ) + 1) ≤ (k : ℝ) := by exact_mod_cast hk1
-        have h1 : ((k : ℝ))⁻¹ ≤ ((N : ℝ) + 1)⁻¹ := by gcongr
-        have h2 : ((k : ℝ))⁻¹ - arctan ((k : ℝ))⁻¹ ≤ ((k : ℝ))⁻¹ ^ 3 := arctan_err _
-          (by positivity)
-        have h3 : ((k : ℝ))⁻¹ ^ 3 ≤ (((N : ℝ) + 1)⁻¹) ^ 3 := by gcongr
-        linarith
+        ≤ ∑ _k ∈ Finset.Ico (N + 1) (3 * N + 2), (((N : ℝ) + 1)⁻¹) ^ 3 := by
+          apply Finset.sum_le_sum
+          intro k hk
+          have hk1 : N + 1 ≤ k := (Finset.mem_Ico.mp hk).1
+          have hkR : ((N : ℝ) + 1) ≤ (k : ℝ) := by exact_mod_cast hk1
+          have h1 : ((k : ℝ))⁻¹ ≤ ((N : ℝ) + 1)⁻¹ := by gcongr
+          have h2 : ((k : ℝ))⁻¹ - arctan ((k : ℝ))⁻¹ ≤ ((k : ℝ))⁻¹ ^ 3 := arctan_err _
+              (by positivity)
+          have h3 : ((k : ℝ))⁻¹ ^ 3 ≤ (((N : ℝ) + 1)⁻¹) ^ 3 := by gcongr
+          linarith
       _ = (2 * (N : ℝ) + 1) * (((N : ℝ) + 1)⁻¹) ^ 3 := by
-        rw [Finset.sum_const, hcard, nsmul_eq_mul]; push_cast; ring
+          rw [Finset.sum_const, hcard, nsmul_eq_mul]; push_cast; ring
       _ ≤ 2 * (((N : ℝ) + 1)⁻¹) ^ 2 := by
-        have hui : ((N : ℝ) + 1) * ((N : ℝ) + 1)⁻¹ = 1 := by field_simp
-        have hu0 : (0 : ℝ) ≤ ((N : ℝ) + 1)⁻¹ := by positivity
-        nlinarith [hui, hu0, sq_nonneg (((N : ℝ) + 1)⁻¹), mul_nonneg hu0
-          (sq_nonneg (((N : ℝ) + 1)⁻¹))]
+          have hui : ((N : ℝ) + 1) * ((N : ℝ) + 1)⁻¹ = 1 := by field_simp
+          have hu0 : (0 : ℝ) ≤ ((N : ℝ) + 1)⁻¹ := by positivity
+          nlinarith [hui, hu0, sq_nonneg (((N : ℝ) + 1)⁻¹), mul_nonneg hu0
+              (sq_nonneg (((N : ℝ) + 1)⁻¹))]
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry3InfiniteEvaluation
 
@@ -190,8 +190,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry3InfiniteEvaluation
 private lemma A_tendsto :
   Tendsto (fun N : ℕ => ∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), g k) atTop (𝓝 (Real.log 3)) := by
   have hAeq : (fun N : ℕ => ∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), g k)
-    = (fun N : ℕ => (∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), ((k : ℝ))⁻¹)
-      - (∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), (((k : ℝ))⁻¹ - arctan ((k : ℝ))⁻¹))) := by
+      = (fun N : ℕ => (∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), ((k : ℝ))⁻¹)
+          - (∑ k ∈ Finset.Ico (N + 1) (3 * N + 2), (((k : ℝ))⁻¹ - arctan ((k : ℝ))⁻¹))) := by
     funext N
     rw [← Finset.sum_sub_distrib]
     apply Finset.sum_congr rfl
@@ -227,7 +227,7 @@ lemma ramanujan_part1_ch2_entry3_infinite_evaluation
     nlinarith [hn, mul_nonneg hn hn]
   refine (hasSum_iff_tendsto_nat_of_nonneg hf_nonneg (Real.log 3 - Real.pi / 4)).mpr ?_
   have hps : (fun n : ℕ => ∑ i ∈ Finset.range n, f i)
-    = (fun n : ℕ => (∑ k ∈ Finset.Ico (n + 1) (3 * n + 2), g k) - Real.pi / 4) := by
+      = (fun n : ℕ => (∑ k ∈ Finset.Ico (n + 1) (3 * n + 2), g k) - Real.pi / 4) := by
     funext n; exact partial_sum n
   rw [hps]
   simpa using A_tendsto.sub_const (Real.pi / 4)
@@ -236,4 +236,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry3InfiniteEvaluation
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

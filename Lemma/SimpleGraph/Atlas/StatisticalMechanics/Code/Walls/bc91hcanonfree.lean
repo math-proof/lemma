@@ -138,7 +138,7 @@ private lemma bc91_as_residue_eq
   {L : ℕ}
   {bdry : ℕ → ℕ}
 -- given
-  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
   (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc61_coarseTcount ω L R ≤ bdry R)
   (hvol : ∀ R, 0 < (boxFinsetBK d R).card)
   (hdens : Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK d R).card : ℝ)) Filter.atTop (nhds 0)) :
@@ -154,7 +154,7 @@ private lemma bc91_as_residue_eq
 private lemma bc91_status_eq
   {d : ℕ} :
 -- imply
-  (¬ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L : ℕ) (y : Site 2), bc61_IsCoarseTrifurcation ω L y → bc89_GenuineTrif 2 ω y)) ∧ (∀ {L : ℕ}, 3 ≤ L → bc61_IsCoarseTrifurcation bc60_upperLines L (0 : Site 2) ∧ ¬ bc89_GenuineTrif 2 bc60_upperLines (0 : Site 2)) ∧ (¬ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (x : Site 2), IsTrifurcation 2 ω x → bc89_GenuineTrif 2 ω x)) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (x : Site 2), bc89_GenuineTrif 2 ω x → bc61_IsCoarseTrifurcation ω 0 x) ∧ (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) [IsProbabilityMeasure μ] (L : ℕ) (bdry : ℕ → ℕ), (∀ R : ℕ, ((boxFinsetBK 2 R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ) → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (R : ℕ), bc61_coarseTcount ω L R ≤ bdry R) → (∀ R, 0 < (boxFinsetBK 2 R).card) → Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK 2 R).card : ℝ)) Filter.atTop (nhds 0) → μ {ω | bc61_IsCoarseTrifurcation ω L 0} = 0) := by
+  (¬ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L : ℕ) (y : Site 2), bc61_IsCoarseTrifurcation ω L y → bc89_GenuineTrif 2 ω y)) ∧ (∀ {L : ℕ}, 3 ≤ L → bc61_IsCoarseTrifurcation bc60_upperLines L (0 : Site 2) ∧ ¬ bc89_GenuineTrif 2 bc60_upperLines (0 : Site 2)) ∧ (¬ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (x : Site 2), IsTrifurcation 2 ω x → bc89_GenuineTrif 2 ω x)) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (x : Site 2), bc89_GenuineTrif 2 ω x → bc61_IsCoarseTrifurcation ω 0 x) ∧ (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) [IsProbabilityMeasure μ] (L : ℕ) (bdry : ℕ → ℕ), (∀ R : ℕ, ((boxFinsetBK 2 R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ) → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (R : ℕ), bc61_coarseTcount ω L R ≤ bdry R) → (∀ R, 0 < (boxFinsetBK 2 R).card) → Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK 2 R).card : ℝ)) Filter.atTop (nhds 0) → μ {ω | bc61_IsCoarseTrifurcation ω L 0} = 0) := by
 -- proof
   apply StatMech.Walls.bc91_status
 

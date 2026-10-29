@@ -18,9 +18,10 @@ lemma laplacian_mulVec_ones_eq_zero
   {G : SimpleGraph V}
   [DecidableRel G.Adj] :
 -- imply
-  (G.lapMatrix ℝ).mulVec (fun _ => (1 : ℝ)) = 0 :=
+  (G.lapMatrix ℝ).mulVec (fun _ => (1 : ℝ)) = 0 := by
 -- proof
-  SimpleGraph.lapMatrix_mulVec_const_eq_zero G
+  ext v
+  simp [SimpleGraph.lapMatrix_mulVec_apply']
 
 end GraphMatrices
 

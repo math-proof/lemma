@@ -32,7 +32,7 @@ open StatMech.RSW.Strip
 
 
 noncomputable def rba_selfDualMeasure : Measure (ConfigSpace (Sym2 (Site 2))) :=
-  bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one
+  bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one
 
 end Universality
 end StatMech

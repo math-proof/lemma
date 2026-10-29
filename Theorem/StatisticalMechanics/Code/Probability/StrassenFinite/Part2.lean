@@ -32,7 +32,7 @@ variable [Fintype P] [DecidableEq P] [PartialOrder P]
 
 omit [Fintype P] [DecidableEq P] in
 theorem piOfVec_coe (c : OrderPairs P → ℝ) (hc : ∀ q, 0 ≤ c q) (p : P × P) :
-    ((piOfVec c p : ℝ≥0) : ℝ) = if h : p.1 ≤ p.2 then c ⟨p, h⟩ else 0 := by
+    ((piOfVec c p : NNReal) : ℝ) = if h : p.1 ≤ p.2 then c ⟨p, h⟩ else 0 := by
   unfold piOfVec
   by_cases h : p.1 ≤ p.2
   · rw [dif_pos h, dif_pos h, Real.coe_toNNReal _ (hc _)]
@@ -114,7 +114,7 @@ theorem col_reindex (c : OrderPairs P → ℝ) (y : P) :
 omit [DecidableRel ((· ≤ ·) : P → P → Prop)] in
 
 
-theorem down_dom_of_stochasticDom {μ ν : P → ℝ≥0}
+theorem down_dom_of_stochasticDom {μ ν : P → NNReal}
     (hTOT : ∑ x, μ x = ∑ x, ν x) (hSD : StochasticDom μ ν)
     (D : Finset P) (hD : Transport.IsDown D) :
     ∑ x ∈ D, (ν x : ℝ) ≤ ∑ x ∈ D, (μ x : ℝ) := by
@@ -137,9 +137,9 @@ theorem down_dom_of_stochasticDom {μ ν : P → ℝ≥0}
   linarith
 
 
-theorem exists_isMonotoneCoupling_of_stochasticDom {μ ν : P → ℝ≥0}
+theorem exists_isMonotoneCoupling_of_stochasticDom {μ ν : P → NNReal}
     (hTOT : ∑ x, μ x = ∑ x, ν x) (hSD : StochasticDom μ ν) :
-    ∃ π : P × P → ℝ≥0, IsMonotoneCoupling μ ν π := by
+    ∃ π : P × P → NNReal, IsMonotoneCoupling μ ν π := by
   rcases isEmpty_or_nonempty P with hP | hP
   · 
     refine ⟨fun _ => 0, ⟨⟨fun x => (IsEmpty.false x).elim, fun y => (IsEmpty.false y).elim⟩,
@@ -152,13 +152,13 @@ theorem exists_isMonotoneCoupling_of_stochasticDom {μ ν : P → ℝ≥0}
         (fun D hD => down_dom_of_stochasticDom hTOT hSD D hD)
     refine ⟨piOfVec c, ⟨⟨fun x => ?_, fun y => ?_⟩, fun x y h => piOfVec_supp c x y h⟩⟩
     · 
-      have hcoe : ((∑ y, piOfVec c (x, y) : ℝ≥0) : ℝ) = (μ x : ℝ) := by
+      have hcoe : ((∑ y, piOfVec c (x, y) : NNReal) : ℝ) = (μ x : ℝ) := by
         push_cast
         rw [Finset.sum_congr rfl (fun y _ => piOfVec_coe c hcpos (x, y)),
           row_reindex c x, hrow x]
       exact_mod_cast hcoe
     · 
-      have hcoe : ((∑ x, piOfVec c (x, y) : ℝ≥0) : ℝ) = (ν y : ℝ) := by
+      have hcoe : ((∑ x, piOfVec c (x, y) : NNReal) : ℝ) = (ν y : ℝ) := by
         push_cast
         rw [Finset.sum_congr rfl (fun x _ => piOfVec_coe c hcpos (x, y)),
           col_reindex c y, hcol y]
@@ -173,8 +173,8 @@ variable [Fintype P] [DecidableEq P] [PartialOrder P]
   [DecidableRel ((· ≤ ·) : P → P → Prop)]
 
 
-theorem strassen_finite {μ ν : P → ℝ≥0} (hTOT : ∑ x, μ x = ∑ x, ν x) :
-    StochasticDom μ ν ↔ ∃ π : P × P → ℝ≥0, IsMonotoneCoupling μ ν π := by
+theorem strassen_finite {μ ν : P → NNReal} (hTOT : ∑ x, μ x = ∑ x, ν x) :
+    StochasticDom μ ν ↔ ∃ π : P × P → NNReal, IsMonotoneCoupling μ ν π := by
   constructor
   · intro hSD; exact exists_isMonotoneCoupling_of_stochasticDom hTOT hSD
   · rintro ⟨π, hπ⟩; exact StochasticDom.of_isMonotoneCoupling hπ

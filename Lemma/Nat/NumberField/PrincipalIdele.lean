@@ -9,10 +9,9 @@ namespace NumberField.TopologicalIdeleGroup
 variable (K : Type*) [Field K] [NumberField K]
 /--
 [exists_mem_ringOfIntegers_of_mem_range](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/PrincipalIdele.lean)
--/
-@[path]
 i.e. the range of `RestrictedProduct.structureMap`, then `x` is an algebraic
 integer. -/
+@[path]
 private lemma exists_mem_ringOfIntegers_of_mem_range (x : Kˣ)
   (hx : finitePrincipalEmbedding (𝓞 K) K x ∈ Set.range
     (RestrictedProduct.structureMap
@@ -110,15 +109,15 @@ lemma principalIdeles_discrete
   set U : Set (TopologicalIdeleGroup (𝓞 K) K) := UInf ×ˢ UFin with hU
   refine ⟨U, ?_, ?_⟩
   · have hInf : IsOpen UInf := by
-    have : UInf = ⋂ w : InfinitePlace K,
-      {a | ‖(a w : w.Completion) - 1‖ < 1} := by
-      ext a
-      simp [hUInf]
-    rw [this]
-    exact isOpen_iInter_of_finite fun w => isOpen_lt
-      (continuous_norm.comp
-        ((Units.continuous_val.comp (continuous_apply w)).sub continuous_const))
-      continuous_const
+      have : UInf = ⋂ w : InfinitePlace K,
+          {a | ‖(a w : w.Completion) - 1‖ < 1} := by
+        ext a
+        simp [hUInf]
+      rw [this]
+      exact isOpen_iInter_of_finite fun w => isOpen_lt
+        (continuous_norm.comp
+          ((Units.continuous_val.comp (continuous_apply w)).sub continuous_const))
+        continuous_const
     have hFin : IsOpen UFin := by
       rw [hUFin]
       exact (RestrictedProduct.isOpenEmbedding_structureMap
@@ -133,24 +132,26 @@ lemma principalIdeles_discrete
     · rintro ⟨hInf, hFin⟩
       obtain ⟨x, hx⟩ := a.property
       have hsnd : finitePrincipalEmbedding (𝓞 K) K x =
-        (a : TopologicalIdeleGroup (𝓞 K) K).2 := by
-        rw [← principalEmbedding_snd (𝓞 K) K x]
+          (a : TopologicalIdeleGroup (𝓞 K) K).2 := by
+        rw [← principalEmbedding_snd (R := 𝓞 K) (x := x)]
         exact congrArg (fun z : TopologicalIdeleGroup (𝓞 K) K => z.2) hx
       have hfst : infinitePrincipalEmbedding K x =
-        (a : TopologicalIdeleGroup (𝓞 K) K).1 := by
-        rw [← principalEmbedding_fst (𝓞 K) K x]
+          (a : TopologicalIdeleGroup (𝓞 K) K).1 := by
+        rw [← principalEmbedding_fst (R := 𝓞 K) (x := x)]
         exact congrArg (fun z : TopologicalIdeleGroup (𝓞 K) K => z.1) hx
       have hfinmem : finitePrincipalEmbedding (𝓞 K) K x ∈ UFin := by
-        rwa [hsnd]
+        rw [hsnd]
+        exact hFin
       obtain ⟨k, hk⟩ := exists_mem_ringOfIntegers_of_mem_range K x hfinmem
       have hnorm : ∀ w : InfinitePlace K,
         ‖algebraMap K w.Completion (k : K) - 1‖ < 1 := by
         intro w
         have hw := hInf w
-        rw [← hfst, infinitePrincipalEmbedding_apply,
+        rw [← hfst, infinitePrincipalEmbedding_apply (R := 𝓞 K),
           Units.coe_map] at hw
         have hkk : (x : K) = (k : K) := hk.symm
-        rwa [hkk] at hw
+        rw [hkk] at hw
+        exact hw
       have hk1 : k = 1 := eq_one_of_forall_infinitePlace_norm_sub_one_lt_one K k hnorm
       have hx1 : x = 1 := by
         apply Units.ext
@@ -179,4 +180,4 @@ end NumberField.TopologicalIdeleGroup
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

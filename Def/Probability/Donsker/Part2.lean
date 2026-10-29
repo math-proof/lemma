@@ -45,12 +45,12 @@ def bsum {Ω : Type*} (a b : ℝ) (n : ℕ) (X : ℕ → Ω → ℝ) (ω : Ω) :
     ∑ i ∈ Finset.range (bsize a b n), X (Nat.floor ((n : ℝ) * a) + i) ω
 
 noncomputable def blockVec {d : ℕ} {Ω : Type*}
-    (u : Fin (d + 1) → ℝ≥0) (n : ℕ) (X : ℕ → Ω → ℝ) (ω : Ω) :
+    (u : Fin (d + 1) → NNReal) (n : ℕ) (X : ℕ → Ω → ℝ) (ω : Ω) :
     EuclideanSpace ℝ (Fin d) :=
   WithLp.toLp 2 (fun j => bsum (u j.castSucc) (u j.succ) n X ω)
 
 noncomputable def brownianBlockVec {d : ℕ} {Ω' : Type*}
-    (u : Fin (d + 1) → ℝ≥0) (B : ℝ≥0 → Ω' → ℝ) (ω : Ω') :
+    (u : Fin (d + 1) → NNReal) (B : NNReal → Ω' → ℝ) (ω : Ω') :
     EuclideanSpace ℝ (Fin d) :=
   WithLp.toLp 2 (fun j => B (u j.succ) ω - B (u j.castSucc) ω)
 
@@ -64,25 +64,25 @@ noncomputable def cumVec {d : ℕ} :
     ∑ k : Fin (j + 1), v ⟨k, lt_of_lt_of_le k.isLt (Nat.succ_le_iff.mpr j.isLt)⟩)
 
 noncomputable def prefixVec {d : ℕ} {Ω : Type*}
-    (u : Fin (d + 1) → ℝ≥0) (n : ℕ) (X : ℕ → Ω → ℝ) (ω : Ω) :
+    (u : Fin (d + 1) → NNReal) (n : ℕ) (X : ℕ → Ω → ℝ) (ω : Ω) :
     EuclideanSpace ℝ (Fin d) :=
   WithLp.toLp 2 (fun j =>
     (Real.sqrt (n : ℝ))⁻¹ *
       ∑ i ∈ Finset.range (Nat.floor ((n : ℝ) * (u j.succ : ℝ))), X i ω)
 
 noncomputable def brownianValueVec {d : ℕ} {Ω' : Type*}
-    (u : Fin (d + 1) → ℝ≥0) (B : ℝ≥0 → Ω' → ℝ) (ω : Ω') :
+    (u : Fin (d + 1) → NNReal) (B : NNReal → Ω' → ℝ) (ω : Ω') :
     EuclideanSpace ℝ (Fin d) :=
   WithLp.toLp 2 (fun j => B (u j.succ) ω)
 
-noncomputable def interpolationCoeff (n : ℕ) (t : ℝ≥0) : ℝ :=
+noncomputable def interpolationCoeff (n : ℕ) (t : NNReal) : ℝ :=
   if Nat.floor ((n : ℝ) * (t : ℝ)) < n then
     (Real.sqrt (n : ℝ))⁻¹ *
       ((n : ℝ) * (t : ℝ) - Nat.floor ((n : ℝ) * (t : ℝ)))
   else 0
 
 noncomputable def interpolationErrorVec {d : ℕ} {Ω : Type*}
-    (u : Fin d → ℝ≥0) (n : ℕ) (X : ℕ → Ω → ℝ) (ω : Ω) :
+    (u : Fin d → NNReal) (n : ℕ) (X : ℕ → Ω → ℝ) (ω : Ω) :
     EuclideanSpace ℝ (Fin d) :=
   WithLp.toLp 2 (fun j =>
     interpolationCoeff n (u j) * X (Nat.floor ((n : ℝ) * (u j : ℝ))) ω)
@@ -97,7 +97,7 @@ noncomputable def finsetTimes
   fun j => (I.orderIsoOfFin rfl j).1
 
 noncomputable def finsetTimesWithZero
-    (I : Finset (Set.Icc (0 : ℝ) 1)) : Fin (I.card + 1) → ℝ≥0 :=
+    (I : Finset (Set.Icc (0 : ℝ) 1)) : Fin (I.card + 1) → NNReal :=
   Fin.cases 0 (fun j => iccToNNReal (finsetTimes I j))
 
 noncomputable def orderedToFinset

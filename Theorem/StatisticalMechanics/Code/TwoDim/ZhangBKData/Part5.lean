@@ -118,7 +118,7 @@ theorem zbd_twoScaleError_tendsto_zero (L R : Set (Site 2)) :
     measure_mono_null (zbd_iInter_twoScaleError_subset_atLeastTwo L R)
       zbd_atLeastTwo_halfMeasure_zero
   rw [hinter] at hlim
-  exact (ENNReal.tendsto_toReal (by simp : (0 : ℝ≥0∞) ≠ ∞)).comp hlim
+  exact (ENNReal.tendsto_toReal (by simp : (0 : ENNReal) ≠ ∞)).comp hlim
 
 
 theorem zbd_exists_diagonal_outerRadius

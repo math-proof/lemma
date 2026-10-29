@@ -30,7 +30,7 @@ def boundarySourceParityAllowed (interior internalSources : Finset V)
 
 noncomputable def boundarySourceParityRawMass (beta : ℝ)
     (interior internalSources : Finset V)
-    (H : Finset (Sym2 V)) : ℝ≥0∞ := by
+    (H : Finset (Sym2 V)) : ENNReal := by
   classical
   exact ENNReal.ofReal
     (if boundarySourceParityAllowed G interior internalSources H then

@@ -140,8 +140,8 @@ theorem bc74_sublatticeForest_of_noTrif (ω : ConfigSpace (Sym2 (Site d))) (L R 
 theorem bc74_bk_count_closed
     (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ] (hd : 1 ≤ d) (L : ℕ)
     (hexp : ∀ R : ℕ,
-      ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-        = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+      ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+        = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
     (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R)
     (hexist : bc61_CoarseTrifExistence μ L) :
     μ {ω | numInfiniteClusters d ω = ⊤} = 0 :=
@@ -151,8 +151,8 @@ theorem bc74_bk_count_closed
 theorem bc74_bk_count_closed_of_globalForest
     (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ] (hd : 1 ≤ d) (L : ℕ)
     (hexp : ∀ R : ℕ,
-      ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-        = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+      ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+        = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
     (hGlobal : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc69_Gn_globalForest ω L R)
     (hexist : bc61_CoarseTrifExistence μ L) :
     μ {ω | numInfiniteClusters d ω = ⊤} = 0 :=

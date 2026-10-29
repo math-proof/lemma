@@ -2,14 +2,12 @@ import Mathlib.MeasureTheory.Measure.Count
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import Lemma.Measure.Count.eq.ProdCountS
-import Notation.Probability.Rv
+import Class.Probability.Rv.Part2
+import Instance.Probability.Rv.Part2
 open MeasureTheory
 
 
 attribute [instance] ReferenceMeasure.toSigmaFinite
-
-attribute [simp] CountableMeasure.measure_eq_count
-
 
 /--
 [sympy.PSpace](https://github.com/sympy/sympy/blob/master/sympy/stats/rv.py)
@@ -33,10 +31,10 @@ class PSpace
 [sympy.SinglePSpace](https://github.com/sympy/sympy/blob/master/sympy/stats/rv.py)
 
 The probability space of a single random variable `x` whose distribution admits a
-probability density function with respect to the reference measure `ReferenceMeasure α`
-(`x ~ D` for some `D : Distribution π ρ`). Extends `PSpace`, so `[SinglePSpace π x]` also
-provides `[PSpace π x]` (probability measure + a.e. measurability). Required by the density
-based notions `π.prob`, `π.condProb`, `ℙ[π](…)` and the conditional expectations.
+probability density function with respect to the reference measure `ReferenceMeasure α`.
+Extends `PSpace`, so `[SinglePSpace π x]` also provides `[PSpace π x]` (probability measure +
+a.e. measurability). Required by the density based notions `π.prob`, `π.condProb`, `ℙ[π](…)`
+and the conditional expectations.
 -/
 class SinglePSpace
     {Ω α : Type*}
@@ -45,5 +43,6 @@ class SinglePSpace
     (π : Measure Ω)
     (x : Ω → α) :
     Prop extends PSpace π x where
-  exists_distribution : ∃ (ρ : α → ENNReal) (D : Distribution π ρ), x ~ D
-
+  exists_distribution :
+    ∃ ρ : α → ENNReal,
+      Measurable ρ ∧ π.map x = ReferenceMeasure.measure.withDensity ρ

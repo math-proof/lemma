@@ -63,7 +63,7 @@ namespace BooleanFourier
 lemma pi_rademacher_eq_sum_dirac
   {n : ℕ} :
 -- imply
-  Measure.pi (fun _ : Fin n => rademacherMeasure) = ((2 : ℝ≥0∞)⁻¹ ^ n) • ∑ b : Fin n → Bool, Measure.dirac (boolToRealVec b) := by
+  Measure.pi (fun _ : Fin n => rademacherMeasure) = ((2 : ENNReal)⁻¹ ^ n) • ∑ b : Fin n → Bool, Measure.dirac (boolToRealVec b) := by
 -- proof
   open Classical in
   apply @Measure.pi_eq (Fin n) (fun _ => ℝ) _ _ (fun _ : Fin n => rademacherMeasure)
@@ -80,16 +80,16 @@ lemma pi_rademacher_eq_sum_dirac
   simp only [Measure.dirac_apply' _ hpi_meas, Set.indicator_apply, Pi.one_apply,
     Set.mem_univ_pi, boolToRealVec]
   simp_rw [show ∀ x : Fin n → Bool,
-    (if ∀ i : Fin n, boolToReal (x i) ∈ s i then (1 : ℝ≥0∞) else 0) =
+    (if ∀ i : Fin n, boolToReal (x i) ∈ s i then (1 : ENNReal) else 0) =
     ∏ i : Fin n, (if boolToReal (x i) ∈ s i then 1 else 0) from fun x => by
     rw [Finset.prod_boole]; simp]
   have swap : ∑ x : Fin n → Bool,
-    ∏ i : Fin n, (if boolToReal (x i) ∈ s i then (1 : ℝ≥0∞) else 0) =
+    ∏ i : Fin n, (if boolToReal (x i) ∈ s i then (1 : ENNReal) else 0) =
     ∏ i : Fin n, ∑ b : Bool, (if boolToReal b ∈ s i then 1 else 0) := by
-    have h := @Finset.prod_univ_sum (Fin n) ℝ≥0∞ _ _ (fun _ => Bool) _
+    have h := @Finset.prod_univ_sum (Fin n) ENNReal _ _ (fun _ => Bool) _
       (fun _ => Finset.univ) (fun i b => if boolToReal b ∈ s i then 1 else 0)
     rw [Fintype.piFinset_univ] at h; exact h.symm
-  rw [swap, show (2 : ℝ≥0∞)⁻¹ ^ n = ∏ _i : Fin n, (2 : ℝ≥0∞)⁻¹ from by
+  rw [swap, show (2 : ENNReal)⁻¹ ^ n = ∏ _i : Fin n, (2 : ENNReal)⁻¹ from by
     simp [Finset.prod_const]]
   rw [← Finset.prod_mul_distrib]
   congr 1; funext i

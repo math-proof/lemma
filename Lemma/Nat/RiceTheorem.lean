@@ -1,6 +1,13 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 
+/--
+[riceTheorem_partrec₂](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Computability/RiceTheorem.lean)
+-/
+@[path]
+private lemma riceTheorem_partrec₂ {φ : ℕ → ℕ →. ℕ}
+  (huniv : Nat.Partrec (fun p => φ (Nat.unpair p).1 (Nat.unpair p).2)) : Partrec₂ φ :=
+  Partrec₂.unpaired'.1 huniv
 
 namespace MetaMathlibExt
 
@@ -22,7 +29,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma acceptableNumbering_fixed_point
-  {φ : ℕ → ℕ →. ℕ}
+  (φ : ℕ → ℕ →. ℕ)
   {h : ℕ → ℕ}
 -- given
   (huniv : Nat.Partrec (fun p => φ (Nat.unpair p).1 (Nat.unpair p).2))
@@ -109,15 +116,6 @@ lemma rice_theorem
 
 end MetaMathlibExt
 
-/--
-[riceTheorem_partrec₂](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Computability/RiceTheorem.lean)
--/
-@[path]
-private lemma riceTheorem_partrec₂ {φ : ℕ → ℕ →. ℕ}
-  (huniv : Nat.Partrec (fun p => φ (Nat.unpair p).1 (Nat.unpair p).2)) : Partrec₂ φ :=
-  Partrec₂.unpaired'.1 huniv
-
-
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

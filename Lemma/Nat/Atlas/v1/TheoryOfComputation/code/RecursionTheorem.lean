@@ -11,8 +11,8 @@ namespace RecursionTheorem
 -/
 @[path]
 lemma recursion_theorem
-  {C : TMCoding Γ}
-  {t : C.TMIndex → C.TMIndex}
+  (C : TMCoding Γ)
+  (t : C.TMIndex → C.TMIndex)
 -- given
   (ht : C.IsComputable t) :
 -- imply
@@ -42,7 +42,7 @@ lemma recursion_theorem_language
 -- proof
   obtain ⟨R, hR⟩ := recursion_theorem C t ht
   exact ⟨R, Set.ext fun w => by
-    simp only [TMCoding.languageOf, Set.mem_setOf_eq, hR w]⟩
+    simp only [TMCoding.languageOf, Set.mem_ofPred_eq, hR w]⟩
 
 end RecursionTheorem
 

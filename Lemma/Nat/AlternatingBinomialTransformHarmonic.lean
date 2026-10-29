@@ -82,7 +82,7 @@ private lemma gamma_add_nat_ne_zero (s : ℂ) (w : ℕ)
   have hsm : s = -((((m' + w : ℕ)) : ℂ)) := by
     rw [hcast]
     linear_combination hm'
-  obtain h0 | hpos := Nat.eq_zero_or_pos (m' + w)
+  rcases Nat.eq_zero_or_pos (m' + w) with h0 | hpos
   · rw [h0] at hsm
     simp at hsm
     exact hs0 hsm
@@ -121,7 +121,7 @@ private lemma ratio_lemma (s : ℂ) (n t u : ℕ) (hn : n = t + 1 + u)
   have hNt1 : (((t : ℂ) + 1 + (u : ℂ) + s) - ((t : ℂ) + 1)) + 1 = s + ((u : ℂ) + 1) := by ring
   rw [hcast1, ht1, hNt, hNt1]
   have hG1 : Complex.Gamma (((t : ℂ) + 1 + (u : ℂ) + s) + 1)
-    = ((t : ℂ) + 1 + (u : ℂ) + s) * Complex.Gamma ((t : ℂ) + 1 + (u : ℂ) + s) :=
+      = ((t : ℂ) + 1 + (u : ℂ) + s) * Complex.Gamma ((t : ℂ) + 1 + (u : ℂ) + s) :=
     Complex.Gamma_add_one _ hN
   have ht1ne : ((t : ℂ) + 1) ≠ 0 := by
     have heq : ((t : ℂ) + 1) = (((t + 1 : ℕ)) : ℂ) := by push_cast; ring
@@ -169,7 +169,7 @@ private lemma pascal_lemma (s : ℂ) (m w : ℕ)
     have heq : (((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1)) = s + (w : ℂ) := by ring
     rw [heq]
     intro hc
-    obtain rfl | hw := Nat.eq_zero_or_pos w
+    rcases Nat.eq_zero_or_pos w with rfl | hw
     · simp at hc
       exact hs0 hc
     · obtain ⟨v, rfl⟩ : ∃ v, w = v + 1 := ⟨w - 1, by omega⟩
@@ -189,20 +189,20 @@ private lemma pascal_lemma (s : ℂ) (m w : ℕ)
     rw [heq]
     exact Nat.cast_ne_zero.mpr (by omega)
   have hG1 : Complex.Gamma (((m : ℂ) + 1 + (w : ℂ) + s) + 1)
-    = ((m : ℂ) + 1 + (w : ℂ) + s) * Complex.Gamma ((m : ℂ) + 1 + (w : ℂ) + s) :=
+      = ((m : ℂ) + 1 + (w : ℂ) + s) * Complex.Gamma ((m : ℂ) + 1 + (w : ℂ) + s) :=
     Complex.Gamma_add_one _ hNne
   have hG2 : Complex.Gamma (((m : ℂ) + 1) + 1) = ((m : ℂ) + 1) * Complex.Gamma ((m : ℂ) + 1) :=
     Complex.Gamma_add_one _ hane
   have hG3 : Complex.Gamma (((m : ℂ) + 1 + (w : ℂ) + s) - (m : ℂ))
-    = (((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1)) *
-      Complex.Gamma (((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1)) := by
+      = (((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1)) *
+        Complex.Gamma (((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1)) := by
     have heq : (((m : ℂ) + 1 + (w : ℂ) + s) - (m : ℂ))
-      = ((((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1))) + 1 := by ring
+        = ((((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1))) + 1 := by ring
     rw [heq]
     exact Complex.Gamma_add_one _ hNa
   have hG4 : Complex.Gamma ((((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1)) + 1)
-    = (((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1)) *
-      Complex.Gamma (((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1)) :=
+      = (((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1)) *
+        Complex.Gamma (((m : ℂ) + 1 + (w : ℂ) + s) - ((m : ℂ) + 1)) :=
     Complex.Gamma_add_one _ hNa
   have gN : Complex.Gamma ((m : ℂ) + 1 + (w : ℂ) + s) ≠ 0 := by
     have heq : ((m : ℂ) + 1 + (w : ℂ) + s) = s + ((((m + 1 + w : ℕ)) : ℂ)) := by
@@ -225,6 +225,7 @@ private lemma pascal_lemma (s : ℂ) (m w : ℕ)
   rw [hG1, hG2, hG3, hG4]
   field_simp
   ring
+
 end Work
 
 
@@ -253,11 +254,11 @@ private lemma partial_sum (s : ℂ) (n : ℕ)
     have h01 : (0 : ℕ) + 1 = 1 := rfl
     rw [h01, Finset.sum_range_one]
     simp only [pow_zero, one_mul, Nat.cast_zero, sub_zero, zero_add]
-    have gN : Complex.Gamma ((n : ℂ) + s) ≠ 0 := gamma_N_ne_zero s n hs hn
+    have gN : Complex.Gamma ((n : ℂ) + s) ≠ 0 := Work.gamma_N_ne_zero s n hs hn
     have gN1 : Complex.Gamma (((n : ℂ) + s) + 1) ≠ 0 := by
       have heq : (((n : ℂ) + s) + 1) = s + (((n : ℕ) : ℂ) + 1) := by ring
       rw [heq]
-      exact gamma_ne_zero_of_hs s hs n
+      exact Work.gamma_ne_zero_of_hs s hs n
     rw [Complex.Gamma_one, one_mul, one_mul, div_self gN1, div_self gN]
   | succ k ih =>
     intro hk1
@@ -265,12 +266,13 @@ private lemma partial_sum (s : ℂ) (n : ℕ)
     have ihk := ih hkn
     obtain ⟨w, rfl⟩ : ∃ w, n = k + 1 + w := ⟨n - (k + 1), by omega⟩
     rw [Finset.sum_range_succ, ihk]
-    have pascal := pascal_lemma s k w hs hs0
+    have pascal := Work.pascal_lemma s k w hs hs0
     rw [pascal]
     have hpow : ((-1 : ℂ) ^ (k + 1)) = -(-1 : ℂ) ^ k := by
       rw [pow_succ]; ring
     rw [hpow]
     ring
+
 end Work2
 
 
@@ -289,23 +291,25 @@ private lemma interchange (F : ℕ → ℕ → ℂ) (n : ℕ) :
     rw [Finset.sum_Icc_succ_top (by omega : 1 ≤ n + 1) (fun k => ∑ j ∈ Finset.Icc 1 k, F k j)]
     rw [ih]
     have hinner : ∀ j ∈ Finset.Icc 1 (n + 1), (∑ k ∈ Finset.Icc j (n + 1), F k j)
-      = (∑ k ∈ Finset.Icc j n, F k j) + F (n + 1) j := by
+        = (∑ k ∈ Finset.Icc j n, F k j) + F (n + 1) j := by
       intro j hj
       have hj1 : j ≤ n + 1 := (Finset.mem_Icc.mp hj).2
       exact Finset.sum_Icc_succ_top hj1 (fun k => F k j)
     have hempty : (∑ k ∈ Finset.Icc (n + 1) n, F k (n + 1)) = 0 := by
-      rwa [Finset.Icc_eq_empty (by omega : ¬ n + 1 ≤ n)]
+      rw [Finset.Icc_eq_empty (by omega : ¬ n + 1 ≤ n)]
+      exact Finset.sum_empty
     have hsplit : (∑ j ∈ Finset.Icc 1 (n + 1), ∑ k ∈ Finset.Icc j n, F k j)
-      = (∑ j ∈ Finset.Icc 1 n, ∑ k ∈ Finset.Icc j n, F k j) := by
+        = (∑ j ∈ Finset.Icc 1 n, ∑ k ∈ Finset.Icc j n, F k j) := by
       have h := Finset.sum_Icc_succ_top (show 1 ≤ n + 1 by omega)
         (fun j => ∑ k ∈ Finset.Icc j n, F k j)
-      rwa [hempty, add_zero] at h
+      rw [hempty, add_zero] at h
+      exact h
     have hRHS : (∑ j ∈ Finset.Icc 1 (n + 1), ∑ k ∈ Finset.Icc j (n + 1), F k j)
-      = (∑ j ∈ Finset.Icc 1 n, ∑ k ∈ Finset.Icc j n, F k j)
-        + ∑ j ∈ Finset.Icc 1 (n + 1), F (n + 1) j := by
+        = (∑ j ∈ Finset.Icc 1 n, ∑ k ∈ Finset.Icc j n, F k j)
+          + ∑ j ∈ Finset.Icc 1 (n + 1), F (n + 1) j := by
       have hcongr : (∑ j ∈ Finset.Icc 1 (n + 1), ∑ k ∈ Finset.Icc j (n + 1), F k j)
-        = ∑ j ∈ Finset.Icc 1 (n + 1),
-          ((∑ k ∈ Finset.Icc j n, F k j) + F (n + 1) j) :=
+          = ∑ j ∈ Finset.Icc 1 (n + 1),
+            ((∑ k ∈ Finset.Icc j n, F k j) + F (n + 1) j) :=
         Finset.sum_congr rfl (fun j hj => hinner j hj)
       rw [hcongr, Finset.sum_add_distrib, hsplit]
     rw [hRHS]
@@ -324,6 +328,7 @@ private lemma hHlemma (k : ℕ) :
   apply Finset.sum_congr rfl
   intro j _
   rw [Rat.cast_inv, Rat.cast_natCast]
+
 end Work3
 
 
@@ -342,7 +347,7 @@ private lemma hB0lemma (s : ℂ) (n : ℕ)
   have gN1 : Complex.Gamma (((n : ℂ) + s) + 1) ≠ 0 := by
     have heq : (((n : ℂ) + s) + 1) = s + (((n : ℕ) : ℂ) + 1) := by ring
     rw [heq]
-    exact gamma_ne_zero_of_hs s hs n
+    exact Work.gamma_ne_zero_of_hs s hs n
   rw [zero_add, Complex.Gamma_one, one_mul]
   exact div_self gN1
 
@@ -370,7 +375,7 @@ private lemma inner_sum (s : ℂ) (n : ℕ)
       (Complex.Gamma (((n : ℂ) + s)) /
         (Complex.Gamma ((((u : ℕ)) : ℂ) + 1) *
           Complex.Gamma (((((n : ℂ) + s)) - ((((u : ℕ)) : ℂ)))))) := by
-  have hP := partial_sum s n hs hs0 hn
+  have hP := Work2.partial_sum s n hs hs0 hn
   have hIco : Finset.Icc (u + 1) n = Finset.Ico (u + 1) (n + 1) := by
     rw [Finset.Ico_add_one_right_eq_Icc]
   rw [hIco, Finset.sum_Ico_eq_sub _ (by omega : u + 1 ≤ n + 1)]
@@ -399,13 +404,14 @@ private lemma second_sum (s : ℂ) (n : ℕ)
       (Complex.Gamma (((n : ℂ) + s)) /
         (Complex.Gamma ((((n : ℕ)) : ℂ) + 1) *
           Complex.Gamma (((((n : ℂ) + s)) - ((((n : ℕ)) : ℂ)))))) - 1 := by
-  have hP := partial_sum s n hs hs0 hn
+  have hP := Work2.partial_sum s n hs hs0 hn
   have hB0 := hB0lemma s n hs
   have hIco : Finset.Icc 1 n = Finset.Ico 1 (n + 1) := by
     rw [Finset.Ico_add_one_right_eq_Icc]
   rw [hIco, Finset.sum_Ico_eq_sub _ (by omega : 1 ≤ n + 1)]
   rw [hP n (by omega), Finset.sum_range_one]
   rw [hB0, pow_zero, mul_one]
+
 end Work4
 
 
@@ -439,91 +445,92 @@ private lemma main_ne (s : ℂ) (n : ℕ)
   rw [hD1, hD3, hNsn]
   have hN : (((n : ℂ) + s)) ≠ 0 := by
     rw [← hNsn]
-    exact add_ne_zero_of_hs s n hs hn
+    exact Work.add_ne_zero_of_hs s n hs hn
   have e1 : (∑ k ∈ Finset.Icc 1 n,
-    ((-1 : ℂ) ^ k *
-      (Complex.Gamma ((((n : ℂ) + s)) + 1) /
-        (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
-          Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1))) *
-      ((((harmonic k : ℚ))) : ℂ)))
-    = ∑ k ∈ Finset.Icc 1 n, ∑ j ∈ Finset.Icc 1 k,
-      (((-1 : ℂ) ^ k *
-        (Complex.Gamma ((((n : ℂ) + s)) + 1) /
-          (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
-            Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1)))) *
-        (((((j : ℕ))) : ℂ))⁻¹) :=
-    Finset.sum_congr rfl (fun k _ => by rw [hHlemma k, Finset.mul_sum])
-  rw [e1, interchange]
-  have e2 : (∑ j ∈ Finset.Icc 1 n, ∑ k ∈ Finset.Icc j n,
-    (((-1 : ℂ) ^ k *
-      (Complex.Gamma ((((n : ℂ) + s)) + 1) /
-        (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
-          Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1)))) *
-      (((((j : ℕ))) : ℂ))⁻¹))
-    = ∑ j ∈ Finset.Icc 1 n,
-      ((∑ k ∈ Finset.Icc j n,
         ((-1 : ℂ) ^ k *
           (Complex.Gamma ((((n : ℂ) + s)) + 1) /
             (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
-              Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1))))) *
-        (((((j : ℕ))) : ℂ))⁻¹) :=
+              Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1))) *
+          ((((harmonic k : ℚ))) : ℂ)))
+      = ∑ k ∈ Finset.Icc 1 n, ∑ j ∈ Finset.Icc 1 k,
+        (((-1 : ℂ) ^ k *
+          (Complex.Gamma ((((n : ℂ) + s)) + 1) /
+            (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
+              Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1)))) *
+          (((((j : ℕ))) : ℂ))⁻¹) :=
+    Finset.sum_congr rfl (fun k _ => by rw [Work3.hHlemma k, Finset.mul_sum])
+  rw [e1, Work3.interchange]
+  have e2 : (∑ j ∈ Finset.Icc 1 n, ∑ k ∈ Finset.Icc j n,
+        (((-1 : ℂ) ^ k *
+          (Complex.Gamma ((((n : ℂ) + s)) + 1) /
+            (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
+              Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1)))) *
+          (((((j : ℕ))) : ℂ))⁻¹))
+      = ∑ j ∈ Finset.Icc 1 n,
+        ((∑ k ∈ Finset.Icc j n,
+          ((-1 : ℂ) ^ k *
+            (Complex.Gamma ((((n : ℂ) + s)) + 1) /
+              (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
+                Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1))))) *
+          (((((j : ℕ))) : ℂ))⁻¹) :=
     Finset.sum_congr rfl (fun j _ => (Finset.sum_mul _ _ _).symm)
   rw [e2]
   have e3 : ∀ j ∈ Finset.Icc 1 n,
-    (∑ k ∈ Finset.Icc j n,
-      ((-1 : ℂ) ^ k *
-        (Complex.Gamma ((((n : ℂ) + s)) + 1) /
-          (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
-            Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1)))))
-    = (-1 : ℂ) ^ n *
-      (Complex.Gamma (((n : ℂ) + s)) /
-        (Complex.Gamma ((((n : ℕ)) : ℂ) + 1) *
-          Complex.Gamma (((((n : ℂ) + s)) - ((((n : ℕ)) : ℂ)))))) +
-      (-1 : ℂ) ^ j *
-      (Complex.Gamma (((n : ℂ) + s)) /
-        (Complex.Gamma ((((j - 1 : ℕ)) : ℂ) + 1) *
-          Complex.Gamma (((((n : ℂ) + s)) - ((((j - 1 : ℕ)) : ℂ)))))) := by
-    intro j hj
-    have hj1 : 1 ≤ j := (Finset.mem_Icc.mp hj).1
-    have hjn : j ≤ n := (Finset.mem_Icc.mp hj).2
-    obtain ⟨u, rfl⟩ : ∃ u, j = u + 1 := ⟨j - 1, by omega⟩
-    have h := inner_sum s n hs hs0 hn u (by omega)
-    rwa [Nat.add_sub_cancel]
-  have e5 : (∑ j ∈ Finset.Icc 1 n,
-    ((∑ k ∈ Finset.Icc j n,
-      ((-1 : ℂ) ^ k *
-        (Complex.Gamma ((((n : ℂ) + s)) + 1) /
-          (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
-            Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1))))) *
-      (((((j : ℕ))) : ℂ))⁻¹))
-    = ∑ j ∈ Finset.Icc 1 n,
-      (((-1 : ℂ) ^ n *
+      (∑ k ∈ Finset.Icc j n,
+        ((-1 : ℂ) ^ k *
+          (Complex.Gamma ((((n : ℂ) + s)) + 1) /
+            (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
+              Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1)))))
+      = (-1 : ℂ) ^ n *
         (Complex.Gamma (((n : ℂ) + s)) /
           (Complex.Gamma ((((n : ℕ)) : ℂ) + 1) *
             Complex.Gamma (((((n : ℂ) + s)) - ((((n : ℕ)) : ℂ)))))) +
         (-1 : ℂ) ^ j *
         (Complex.Gamma (((n : ℂ) + s)) /
           (Complex.Gamma ((((j - 1 : ℕ)) : ℂ) + 1) *
-            Complex.Gamma (((((n : ℂ) + s)) - ((((j - 1 : ℕ)) : ℂ))))))) *
-        (((((j : ℕ))) : ℂ))⁻¹) :=
-    Finset.sum_congr rfl (fun j hj => by rw [e3 j hj])
-  rw [e5]
-  have erat : ∀ j ∈ Finset.Icc 1 n,
-    (((-1 : ℂ) ^ j *
-      (Complex.Gamma (((n : ℂ) + s)) /
-        (Complex.Gamma ((((j - 1 : ℕ)) : ℂ) + 1) *
-          Complex.Gamma (((((n : ℂ) + s)) - ((((j - 1 : ℕ)) : ℂ))))))) *
-      (((((j : ℕ))) : ℂ))⁻¹)
-    = ((((n : ℂ) + s)))⁻¹ *
-      ((-1 : ℂ) ^ j *
-        (Complex.Gamma ((((n : ℂ) + s)) + 1) /
-          (Complex.Gamma ((((j : ℕ)) : ℂ) + 1) *
-            Complex.Gamma (((((n : ℂ) + s)) - ((((j : ℕ)) : ℂ))) + 1)))) := by
+            Complex.Gamma (((((n : ℂ) + s)) - ((((j - 1 : ℕ)) : ℂ)))))) := by
     intro j hj
     have hj1 : 1 ≤ j := (Finset.mem_Icc.mp hj).1
     have hjn : j ≤ n := (Finset.mem_Icc.mp hj).2
     obtain ⟨u, rfl⟩ : ∃ u, j = u + 1 := ⟨j - 1, by omega⟩
-    have hr := ratio_lemma s n u (n - (u + 1)) (by omega : n = u + 1 + (n - (u + 1))) hs
+    have h := Work4.inner_sum s n hs hs0 hn u (by omega)
+    rw [Nat.add_sub_cancel]
+    exact h
+  have e5 : (∑ j ∈ Finset.Icc 1 n,
+        ((∑ k ∈ Finset.Icc j n,
+          ((-1 : ℂ) ^ k *
+            (Complex.Gamma ((((n : ℂ) + s)) + 1) /
+              (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
+                Complex.Gamma (((((n : ℂ) + s)) - ((((k : ℕ)) : ℂ))) + 1))))) *
+          (((((j : ℕ))) : ℂ))⁻¹))
+      = ∑ j ∈ Finset.Icc 1 n,
+        (((-1 : ℂ) ^ n *
+          (Complex.Gamma (((n : ℂ) + s)) /
+            (Complex.Gamma ((((n : ℕ)) : ℂ) + 1) *
+              Complex.Gamma (((((n : ℂ) + s)) - ((((n : ℕ)) : ℂ)))))) +
+          (-1 : ℂ) ^ j *
+          (Complex.Gamma (((n : ℂ) + s)) /
+            (Complex.Gamma ((((j - 1 : ℕ)) : ℂ) + 1) *
+              Complex.Gamma (((((n : ℂ) + s)) - ((((j - 1 : ℕ)) : ℂ))))))) *
+          (((((j : ℕ))) : ℂ))⁻¹) :=
+    Finset.sum_congr rfl (fun j hj => by rw [e3 j hj])
+  rw [e5]
+  have erat : ∀ j ∈ Finset.Icc 1 n,
+      (((-1 : ℂ) ^ j *
+        (Complex.Gamma (((n : ℂ) + s)) /
+          (Complex.Gamma ((((j - 1 : ℕ)) : ℂ) + 1) *
+            Complex.Gamma (((((n : ℂ) + s)) - ((((j - 1 : ℕ)) : ℂ))))))) *
+        (((((j : ℕ))) : ℂ))⁻¹)
+      = ((((n : ℂ) + s)))⁻¹ *
+        ((-1 : ℂ) ^ j *
+          (Complex.Gamma ((((n : ℂ) + s)) + 1) /
+            (Complex.Gamma ((((j : ℕ)) : ℂ) + 1) *
+              Complex.Gamma (((((n : ℂ) + s)) - ((((j : ℕ)) : ℂ))) + 1)))) := by
+    intro j hj
+    have hj1 : 1 ≤ j := (Finset.mem_Icc.mp hj).1
+    have hjn : j ≤ n := (Finset.mem_Icc.mp hj).2
+    obtain ⟨u, rfl⟩ : ∃ u, j = u + 1 := ⟨j - 1, by omega⟩
+    have hr := Work.ratio_lemma s n u (n - (u + 1)) (by omega : n = u + 1 + (n - (u + 1))) hs
     have hcast : ((((u + 1 : ℕ))) : ℂ) = ((((u : ℕ)) : ℂ) + 1) := by push_cast; ring
     rw [Nat.add_sub_cancel]
     rw [hcast] at hr ⊢
@@ -531,52 +538,53 @@ private lemma main_ne (s : ℂ) (n : ℕ)
     simp only [div_eq_mul_inv] at h2
     linear_combination ((-1 : ℂ) ^ (u + 1)) * h2
   have e6 : (∑ j ∈ Finset.Icc 1 n,
-    (((-1 : ℂ) ^ n *
-      (Complex.Gamma (((n : ℂ) + s)) /
-        (Complex.Gamma ((((n : ℕ)) : ℂ) + 1) *
-          Complex.Gamma (((((n : ℂ) + s)) - ((((n : ℕ)) : ℂ)))))) +
-      (-1 : ℂ) ^ j *
-      (Complex.Gamma (((n : ℂ) + s)) /
-        (Complex.Gamma ((((j - 1 : ℕ)) : ℂ) + 1) *
-          Complex.Gamma (((((n : ℂ) + s)) - ((((j - 1 : ℕ)) : ℂ))))))) *
-      (((((j : ℕ))) : ℂ))⁻¹))
-    = (-1 : ℂ) ^ n *
-      (Complex.Gamma (((n : ℂ) + s)) /
-        (Complex.Gamma ((((n : ℕ)) : ℂ) + 1) *
-          Complex.Gamma (((((n : ℂ) + s)) - ((((n : ℕ)) : ℂ)))))) *
-      (∑ j ∈ Finset.Icc 1 n, (((((j : ℕ))) : ℂ))⁻¹) +
-      ((((n : ℂ) + s)))⁻¹ *
-      (∑ j ∈ Finset.Icc 1 n,
-        ((-1 : ℂ) ^ j *
-          (Complex.Gamma ((((n : ℂ) + s)) + 1) /
-            (Complex.Gamma ((((j : ℕ)) : ℂ) + 1) *
-              Complex.Gamma (((((n : ℂ) + s)) - ((((j : ℕ)) : ℂ))) + 1))))) := by
-    have e6a : ∀ j ∈ Finset.Icc 1 n,
-      (((-1 : ℂ) ^ n *
-        (Complex.Gamma (((n : ℂ) + s)) /
-          (Complex.Gamma ((((n : ℕ)) : ℂ) + 1) *
-            Complex.Gamma (((((n : ℂ) + s)) - ((((n : ℕ)) : ℂ)))))) +
-        (-1 : ℂ) ^ j *
-        (Complex.Gamma (((n : ℂ) + s)) /
-          (Complex.Gamma ((((j - 1 : ℕ)) : ℂ) + 1) *
-            Complex.Gamma (((((n : ℂ) + s)) - ((((j - 1 : ℕ)) : ℂ))))))) *
-        (((((j : ℕ))) : ℂ))⁻¹)
-      = ((-1 : ℂ) ^ n *
+        (((-1 : ℂ) ^ n *
+          (Complex.Gamma (((n : ℂ) + s)) /
+            (Complex.Gamma ((((n : ℕ)) : ℂ) + 1) *
+              Complex.Gamma (((((n : ℂ) + s)) - ((((n : ℕ)) : ℂ)))))) +
+          (-1 : ℂ) ^ j *
+          (Complex.Gamma (((n : ℂ) + s)) /
+            (Complex.Gamma ((((j - 1 : ℕ)) : ℂ) + 1) *
+              Complex.Gamma (((((n : ℂ) + s)) - ((((j - 1 : ℕ)) : ℂ))))))) *
+          (((((j : ℕ))) : ℂ))⁻¹))
+      = (-1 : ℂ) ^ n *
         (Complex.Gamma (((n : ℂ) + s)) /
           (Complex.Gamma ((((n : ℕ)) : ℂ) + 1) *
             Complex.Gamma (((((n : ℂ) + s)) - ((((n : ℕ)) : ℂ)))))) *
-        (((((j : ℕ))) : ℂ))⁻¹) +
-        (((((n : ℂ) + s)))⁻¹ *
-        ((-1 : ℂ) ^ j *
-          (Complex.Gamma ((((n : ℂ) + s)) + 1) /
-            (Complex.Gamma ((((j : ℕ)) : ℂ) + 1) *
-              Complex.Gamma (((((n : ℂ) + s)) - ((((j : ℕ)) : ℂ))) + 1))))) := by
+        (∑ j ∈ Finset.Icc 1 n, (((((j : ℕ))) : ℂ))⁻¹) +
+        ((((n : ℂ) + s)))⁻¹ *
+        (∑ j ∈ Finset.Icc 1 n,
+          ((-1 : ℂ) ^ j *
+            (Complex.Gamma ((((n : ℂ) + s)) + 1) /
+              (Complex.Gamma ((((j : ℕ)) : ℂ) + 1) *
+                Complex.Gamma (((((n : ℂ) + s)) - ((((j : ℕ)) : ℂ))) + 1))))) := by
+    have e6a : ∀ j ∈ Finset.Icc 1 n,
+        (((-1 : ℂ) ^ n *
+          (Complex.Gamma (((n : ℂ) + s)) /
+            (Complex.Gamma ((((n : ℕ)) : ℂ) + 1) *
+              Complex.Gamma (((((n : ℂ) + s)) - ((((n : ℕ)) : ℂ)))))) +
+          (-1 : ℂ) ^ j *
+          (Complex.Gamma (((n : ℂ) + s)) /
+            (Complex.Gamma ((((j - 1 : ℕ)) : ℂ) + 1) *
+              Complex.Gamma (((((n : ℂ) + s)) - ((((j - 1 : ℕ)) : ℂ))))))) *
+          (((((j : ℕ))) : ℂ))⁻¹)
+        = ((-1 : ℂ) ^ n *
+          (Complex.Gamma (((n : ℂ) + s)) /
+            (Complex.Gamma ((((n : ℕ)) : ℂ) + 1) *
+              Complex.Gamma (((((n : ℂ) + s)) - ((((n : ℕ)) : ℂ)))))) *
+          (((((j : ℕ))) : ℂ))⁻¹) +
+          (((((n : ℂ) + s)))⁻¹ *
+          ((-1 : ℂ) ^ j *
+            (Complex.Gamma ((((n : ℂ) + s)) + 1) /
+              (Complex.Gamma ((((j : ℕ)) : ℂ) + 1) *
+                Complex.Gamma (((((n : ℂ) + s)) - ((((j : ℕ)) : ℂ))) + 1))))) := by
       intro j hj
       rw [add_mul, erat j hj]
     rw [Finset.sum_congr rfl (fun j hj => e6a j hj), Finset.sum_add_distrib,
       (Finset.mul_sum _ _ _).symm, (Finset.mul_sum _ _ _).symm]
-  rw [e6, ← hHlemma n, second_sum s n hs hs0 hn]
+  rw [e6, ← Work3.hHlemma n, Work4.second_sum s n hs hs0 hn]
   ring
+
 end Work5
 
 
@@ -598,7 +606,7 @@ private lemma chooseB_eq (n k : ℕ) (hkn : k ≤ n) :
     Complex.Gamma_nat_eq_factorial]
   have h := Nat.choose_mul_factorial_mul_factorial hkn
   have hC : ((n.choose k : ℕ) : ℂ) * ((k.factorial : ℕ) : ℂ) * ((((n - k).factorial : ℕ)) : ℂ)
-    = ((n.factorial : ℕ) : ℂ) := by
+      = ((n.factorial : ℕ) : ℂ) := by
     exact_mod_cast h
   have hk : ((k.factorial : ℕ) : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero _)
   have hnk : ((((n - k).factorial : ℕ)) : ℂ) ≠ 0 :=
@@ -636,7 +644,7 @@ private lemma partial_sum_zero (N m : ℕ) :
   = (-1 : ℂ) ^ m * (N.choose m : ℂ) := by
   have h := Int.alternating_sum_range_choose_eq_choose (n := N) (m := m)
   have step1 : (∑ k ∈ Finset.range (m + 1), ((-1 : ℂ) ^ k * ((N + 1).choose k : ℂ)))
-    = Int.cast (∑ k ∈ Finset.range (m + 1), (-1 : ℤ) ^ k * ((N + 1).choose k : ℤ)) := by
+      = Int.cast (∑ k ∈ Finset.range (m + 1), (-1 : ℤ) ^ k * ((N + 1).choose k : ℤ)) := by
     rw [Int.cast_sum]
     apply Finset.sum_congr rfl
     intro k _
@@ -644,10 +652,11 @@ private lemma partial_sum_zero (N m : ℕ) :
     ring
   rw [h] at step1
   have hcc2 : Int.cast ((-1 : ℤ) ^ m * (N.choose m : ℤ))
-    = (-1 : ℂ) ^ m * (N.choose m : ℂ) := by
+      = (-1 : ℂ) ^ m * (N.choose m : ℂ) := by
     push_cast
     ring
-  rwa [hcc2] at step1
+  rw [hcc2] at step1
+  exact step1
 
 end Work6
 
@@ -661,14 +670,15 @@ private lemma full_zero (n : ℕ) (hn : 0 < n) :
   ∑ k ∈ Finset.range (n + 1), ((-1 : ℂ) ^ k * (n.choose k : ℂ)) = 0 := by
   have h := Int.alternating_sum_range_choose_of_ne (show n ≠ 0 by omega)
   have step1 : (∑ k ∈ Finset.range (n + 1), ((-1 : ℂ) ^ k * (n.choose k : ℂ)))
-    = Int.cast (∑ k ∈ Finset.range (n + 1), (-1 : ℤ) ^ k * (n.choose k : ℤ)) := by
+      = Int.cast (∑ k ∈ Finset.range (n + 1), (-1 : ℤ) ^ k * (n.choose k : ℤ)) := by
     rw [Int.cast_sum]
     apply Finset.sum_congr rfl
     intro k _
     push_cast
     ring
   rw [h] at step1
-  rwa [Int.cast_zero] at step1
+  rw [Int.cast_zero] at step1
+  exact step1
 
 end Work6
 
@@ -683,7 +693,7 @@ private lemma ratio_zero (N u : ℕ) :
   = ((((N + 1).choose (u + 1) : ℕ)) : ℂ) / ((((N : ℕ)) : ℂ) + 1) := by
   have h := Nat.add_one_mul_choose_eq N u
   have h2 : ((((N + 1 : ℕ))) : ℂ) * ((N.choose u : ℂ))
-    = ((((N + 1).choose (u + 1) : ℕ)) : ℂ) * ((((u + 1 : ℕ))) : ℂ) := by
+      = ((((N + 1).choose (u + 1) : ℕ)) : ℂ) * ((((u + 1 : ℕ))) : ℂ) := by
     exact_mod_cast h
   have eN : ((((N + 1 : ℕ))) : ℂ) = ((((N : ℕ)) : ℂ) + 1) := Nat.cast_add_one N
   have eu : ((((u + 1 : ℕ))) : ℂ) = ((((u : ℕ)) : ℂ) + 1) := Nat.cast_add_one u
@@ -734,6 +744,7 @@ private lemma second_sum_zero (N : ℕ) :
   rw [hIco, Finset.sum_Ico_eq_sub _ (by omega : 1 ≤ N + 1 + 1)]
   rw [full_zero (N + 1) (by omega), Finset.sum_range_one]
   simp [Nat.choose_zero_right]
+
 end Work6
 
 
@@ -761,53 +772,54 @@ private lemma main_zero (n : ℕ) (hn : 0 < n) :
       1 / (0 + (n : ℂ)) := by
   obtain ⟨N, rfl⟩ : ∃ N, n = N + 1 := ⟨n - 1, by omega⟩
   have eB : ∀ k ∈ Finset.Icc 1 (N + 1),
-    ((-1 : ℂ) ^ k *
-      (Complex.Gamma ((((N + 1 : ℕ) : ℂ) + (0 : ℂ)) + 1) /
-        (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
-          Complex.Gamma (((((N + 1 : ℕ) : ℂ) + (0 : ℂ))) - ((((k : ℕ)) : ℂ)) + 1))) *
-      ((((harmonic k : ℚ))) : ℂ))
-    = (((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ)) * ((((harmonic k : ℚ))) : ℂ)) := by
+      ((-1 : ℂ) ^ k *
+        (Complex.Gamma ((((N + 1 : ℕ) : ℂ) + (0 : ℂ)) + 1) /
+          (Complex.Gamma ((((k : ℕ)) : ℂ) + 1) *
+            Complex.Gamma (((((N + 1 : ℕ) : ℂ) + (0 : ℂ))) - ((((k : ℕ)) : ℂ)) + 1))) *
+        ((((harmonic k : ℚ))) : ℂ))
+      = (((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ)) * ((((harmonic k : ℚ))) : ℂ)) := by
     intro k hk
     have hkn : k ≤ N + 1 := (Finset.mem_Icc.mp hk).2
-    rw [chooseB_eq (N + 1) k hkn]
+    rw [Work6.chooseB_eq (N + 1) k hkn]
   rw [Finset.sum_congr rfl (fun k hk => eB k hk)]
   have e1z : (∑ k ∈ Finset.Icc 1 (N + 1),
-    (((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ)) * ((((harmonic k : ℚ))) : ℂ)))
-    = ∑ k ∈ Finset.Icc 1 (N + 1), ∑ j ∈ Finset.Icc 1 k,
-      (((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹) :=
-    Finset.sum_congr rfl (fun k _ => by rw [hHlemma k, Finset.mul_sum])
-  rw [e1z, interchange]
+        (((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ)) * ((((harmonic k : ℚ))) : ℂ)))
+      = ∑ k ∈ Finset.Icc 1 (N + 1), ∑ j ∈ Finset.Icc 1 k,
+        (((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹) :=
+    Finset.sum_congr rfl (fun k _ => by rw [Work3.hHlemma k, Finset.mul_sum])
+  rw [e1z, Work3.interchange]
   have e2z : (∑ j ∈ Finset.Icc 1 (N + 1), ∑ k ∈ Finset.Icc j (N + 1),
-    (((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹))
-    = ∑ j ∈ Finset.Icc 1 (N + 1),
-      ((∑ k ∈ Finset.Icc j (N + 1), ((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ))) *
-        (((((j : ℕ))) : ℂ))⁻¹) :=
+        (((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹))
+      = ∑ j ∈ Finset.Icc 1 (N + 1),
+        ((∑ k ∈ Finset.Icc j (N + 1), ((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ))) *
+          (((((j : ℕ))) : ℂ))⁻¹) :=
     Finset.sum_congr rfl (fun j _ => (Finset.sum_mul _ _ _).symm)
   rw [e2z]
   have e3z : ∀ j ∈ Finset.Icc 1 (N + 1),
-    (∑ k ∈ Finset.Icc j (N + 1), ((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ)))
-    = (-1 : ℂ) ^ j * (((N.choose (j - 1) : ℕ)) : ℂ) := by
+      (∑ k ∈ Finset.Icc j (N + 1), ((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ)))
+      = (-1 : ℂ) ^ j * (((N.choose (j - 1) : ℕ)) : ℂ) := by
     intro j hj
     have hj1 : 1 ≤ j := (Finset.mem_Icc.mp hj).1
     have hjn : j ≤ N + 1 := (Finset.mem_Icc.mp hj).2
     obtain ⟨u, rfl⟩ : ∃ u, j = u + 1 := ⟨j - 1, by omega⟩
-    have h := inner_sum_zero N u (by omega)
-    rwa [Nat.add_sub_cancel]
+    have h := Work6.inner_sum_zero N u (by omega)
+    rw [Nat.add_sub_cancel]
+    exact h
   have e5z : (∑ j ∈ Finset.Icc 1 (N + 1),
-    ((∑ k ∈ Finset.Icc j (N + 1), ((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ))) *
-      (((((j : ℕ))) : ℂ))⁻¹))
-    = ∑ j ∈ Finset.Icc 1 (N + 1),
-      (((-1 : ℂ) ^ j * (((N.choose (j - 1) : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹) :=
+        ((∑ k ∈ Finset.Icc j (N + 1), ((-1 : ℂ) ^ k * ((((N + 1).choose k : ℕ)) : ℂ))) *
+          (((((j : ℕ))) : ℂ))⁻¹))
+      = ∑ j ∈ Finset.Icc 1 (N + 1),
+        (((-1 : ℂ) ^ j * (((N.choose (j - 1) : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹) :=
     Finset.sum_congr rfl (fun j hj => by rw [e3z j hj])
   rw [e5z]
   have eratz : ∀ j ∈ Finset.Icc 1 (N + 1),
-    (((-1 : ℂ) ^ j * (((N.choose (j - 1) : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹)
-    = ((((N : ℕ)) : ℂ) + 1)⁻¹ * ((-1 : ℂ) ^ j * ((((N + 1).choose j : ℕ)) : ℂ)) := by
+      (((-1 : ℂ) ^ j * (((N.choose (j - 1) : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹)
+      = ((((N : ℕ)) : ℂ) + 1)⁻¹ * ((-1 : ℂ) ^ j * ((((N + 1).choose j : ℕ)) : ℂ)) := by
     intro j hj
     have hj1 : 1 ≤ j := (Finset.mem_Icc.mp hj).1
     have hjn : j ≤ N + 1 := (Finset.mem_Icc.mp hj).2
     obtain ⟨u, rfl⟩ : ∃ u, j = u + 1 := ⟨j - 1, by omega⟩
-    have hr := ratio_zero N u
+    have hr := Work6.ratio_zero N u
     rw [Nat.add_sub_cancel]
     have ecast : ((((u + 1 : ℕ))) : ℂ) = ((((u : ℕ)) : ℂ) + 1) := Nat.cast_add_one u
     rw [ecast]
@@ -815,20 +827,21 @@ private lemma main_zero (n : ℕ) (hn : 0 < n) :
     rw [div_eq_mul_inv, div_eq_mul_inv] at h2
     linear_combination ((-1 : ℂ) ^ (u + 1)) * h2
   have e6z : (∑ j ∈ Finset.Icc 1 (N + 1),
-    (((-1 : ℂ) ^ j * (((N.choose (j - 1) : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹))
-    = ((((N : ℕ)) : ℂ) + 1)⁻¹ *
-      (∑ j ∈ Finset.Icc 1 (N + 1), ((-1 : ℂ) ^ j * ((((N + 1).choose j : ℕ)) : ℂ))) := by
+        (((-1 : ℂ) ^ j * (((N.choose (j - 1) : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹))
+      = ((((N : ℕ)) : ℂ) + 1)⁻¹ *
+        (∑ j ∈ Finset.Icc 1 (N + 1), ((-1 : ℂ) ^ j * ((((N + 1).choose j : ℕ)) : ℂ))) := by
     have e6a : ∀ j ∈ Finset.Icc 1 (N + 1),
-      (((-1 : ℂ) ^ j * (((N.choose (j - 1) : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹)
-      = ((((N : ℕ)) : ℂ) + 1)⁻¹ * ((-1 : ℂ) ^ j * ((((N + 1).choose j : ℕ)) : ℂ)) :=
+        (((-1 : ℂ) ^ j * (((N.choose (j - 1) : ℕ)) : ℂ)) * (((((j : ℕ))) : ℂ))⁻¹)
+        = ((((N : ℕ)) : ℂ) + 1)⁻¹ * ((-1 : ℂ) ^ j * ((((N + 1).choose j : ℕ)) : ℂ)) :=
       fun j hj => eratz j hj
     rw [Finset.sum_congr rfl (fun j hj => e6a j hj), ← Finset.mul_sum]
-  rw [e6z, second_sum_zero N]
-  have eD := chooseD_zero (N + 1)
+  rw [e6z, Work6.second_sum_zero N]
+  have eD := Work6.chooseD_zero (N + 1)
   have h0N : (0 : ℂ) + ((((N + 1 : ℕ))) : ℂ) = ((((N + 1 : ℕ))) : ℂ) := by ring
   have ecastN : ((((N + 1 : ℕ))) : ℂ) = ((((N : ℕ)) : ℂ) + 1) := Nat.cast_add_one N
   rw [eD, h0N, ecastN]
   ring
+
 end Work7
 
 
@@ -870,4 +883,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

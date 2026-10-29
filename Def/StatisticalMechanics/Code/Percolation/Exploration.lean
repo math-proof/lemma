@@ -29,7 +29,7 @@ section Finite
 variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
-noncomputable def w1 (p : ℝ≥0) (hp : p ≤ 1) (b : Bool) : ℝ := (bernoulliMeasure p hp).real {b}
+noncomputable def w1 (p : NNReal) (hp : p ≤ 1) (b : Bool) : ℝ := (bernoulliMeasure p hp).real {b}
 
 
 end Finite

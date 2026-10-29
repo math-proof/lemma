@@ -18,7 +18,7 @@ private lemma main
 -- imply
   HasDerivAt polar_radial (polar_angular θ) θ := by
 -- proof
-  let e := (WithLp.linearEquiv (2 : ℝ≥0∞) ℝ (Fin 2 → ℝ)).toContinuousLinearEquiv
+  let e := (WithLp.linearEquiv (2 : ENNReal) ℝ (Fin 2 → ℝ)).toContinuousLinearEquiv
   have hpi :
       HasDerivAt (fun φ : ℝ => (![Real.cos φ, Real.sin φ] : Fin 2 → ℝ))
         (![(-Real.sin θ), Real.cos θ] : Fin 2 → ℝ) θ := by

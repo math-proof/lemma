@@ -342,7 +342,7 @@ private lemma bc75_bk_count_closed_of_gnTrifData_eq
   {L : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+  (hexp : ∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
   (hData : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ) (c : Fin d → Fin (2 * L + 1)), bc75_FiberGnTrifData ω L R c)
   (hexist : bc61_CoarseTrifExistence μ L) :
 -- imply

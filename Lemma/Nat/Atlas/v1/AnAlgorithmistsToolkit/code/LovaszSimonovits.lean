@@ -56,7 +56,6 @@ lemma all_one_of_sum_ge_n
   have : univ.sum c < univ.sum (fun _ : Fin n => (1 : ℝ)) :=
     Finset.sum_lt_sum (fun j _ => hc1 j) ⟨i, Finset.mem_univ _, hlt⟩
   simp at this; linarith
-set_option maxRecDepth 1000 in
 
 end LovaszSimonovits
 
@@ -110,7 +109,6 @@ lemma antitone_weighted_sum_le
     linarith [hc1 i, mul_le_mul_of_nonneg_right (hc1 i) hwpos]
   · have hle : k ≤ i := Fin.le_def.mpr (by omega)
     exact mul_nonpos_of_nonneg_of_nonpos (hc0 i) (sub_nonpos.mpr (hw hle))
-set_option maxRecDepth 1000 in
 
 end LovaszSimonovits
 

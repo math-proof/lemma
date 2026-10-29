@@ -107,7 +107,7 @@ theorem bsd_collapse_survives (L : ℕ) :
   bc64_arms_can_share_boundary L
 
 
-theorem bsd_bk_of_bc69_forall (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bsd_bk_of_bc69_forall (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bc69_Gn_globalForest ω L R) :
     bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0 :=
   bfa_bk_of_bc69Forest p hp1 hp0 hdata

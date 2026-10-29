@@ -151,7 +151,7 @@ private lemma bgn_count_of_forest_eq
 private lemma bgn_bk_of_forest_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) :
@@ -167,7 +167,7 @@ private lemma bgn_bk_of_forest_eq
 private lemma bgn_status_eq
   {d : ℕ} :
 -- imply
-  (∀ (L : ℕ), 1 ≤ L → bgn_idx L (bc57_pt ((L : ℤ) + 1) 1) = bgn_idx L (bc57_pt (2 * (L : ℤ) + 1) 0) ∧ bgn_idx L (bc57_pt ((L : ℤ) + 1) 1) ≠ bgn_idx L (0 : Site 2)) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ) (u a b : Site d), bgn_boundaryClass ω L R u a = bgn_boundaryClass ω L R u b ∨ Disjoint (bgn_boundaryClass ω L R u a) (bgn_boundaryClass ω L R u b)) ∧ ((bkg_deleteVertex bgn_W 0).Reachable 1 6 ∧ (bkg_deleteVertex bgn_W 1).Reachable 0 6 ∧ (bkg_deleteVertex bgn_W 0).Reachable 1 4 ∧ ¬ (bkg_deleteVertex bgn_W 1).Reachable 0 4 ∧ (bkg_deleteVertex bgn_W 1).Reachable 0 2 ∧ ¬ (bkg_deleteVertex bgn_W 0).Reachable 1 2) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ), bkg_ClassicalForestData ω L R ↔ bc69_Gn_globalForest ω L R) ∧ (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
+  (∀ (L : ℕ), 1 ≤ L → bgn_idx L (bc57_pt ((L : ℤ) + 1) 1) = bgn_idx L (bc57_pt (2 * (L : ℤ) + 1) 0) ∧ bgn_idx L (bc57_pt ((L : ℤ) + 1) 1) ≠ bgn_idx L (0 : Site 2)) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ) (u a b : Site d), bgn_boundaryClass ω L R u a = bgn_boundaryClass ω L R u b ∨ Disjoint (bgn_boundaryClass ω L R u a) (bgn_boundaryClass ω L R u b)) ∧ ((bkg_deleteVertex bgn_W 0).Reachable 1 6 ∧ (bkg_deleteVertex bgn_W 1).Reachable 0 6 ∧ (bkg_deleteVertex bgn_W 0).Reachable 1 4 ∧ ¬ (bkg_deleteVertex bgn_W 1).Reachable 0 4 ∧ (bkg_deleteVertex bgn_W 1).Reachable 0 2 ∧ ¬ (bkg_deleteVertex bgn_W 0).Reachable 1 2) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (L R : ℕ), bkg_ClassicalForestData ω L R ↔ bc69_Gn_globalForest ω L R) ∧ (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bkg_ClassicalForestData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
 -- proof
   apply StatMech.Walls.bgn_status
 

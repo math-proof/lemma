@@ -35,7 +35,7 @@ theorem bc59_originTrifModification_of_hasCorridors {n : ℕ}
 
 
 theorem bc59_burton_keane_bernoulli_of_hasCorridors (hd : 1 ≤ d)
-    (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+    (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (h : ∀ n : ℕ, bc59_HasDisjointCorridors d n) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = 0} = 1 ∨

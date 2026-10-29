@@ -32,10 +32,10 @@ private lemma chi_natAbs_ne_zero_iff {χ : ℤ →* R} [Nontrivial R]
   [IsCancelMulZero R] (n : ℤ) :
   χ n ≠ 0 ↔ χ ((n.natAbs : ℕ) : ℤ) ≠ 0 := by
   set N : ℕ := n.natAbs with hN
-  obtain h | h := Int.natAbs_eq n
+  rcases Int.natAbs_eq n with h | h
   · rw [h]
   · have hmap : χ (-((N : ℕ) : ℤ)) = χ (-1) * χ ((N : ℕ) : ℤ) := by
-    rw [show (-((N : ℕ) : ℤ)) = (-1) * ((N : ℕ) : ℤ) by ring, map_mul]
+      rw [show (-((N : ℕ) : ℤ)) = (-1) * ((N : ℕ) : ℤ) by ring, map_mul]
     rw [h, hmap]
     exact ⟨fun hne h0 => hne (by rw [h0, mul_zero]),
       fun hne => mul_ne_zero chi_neg_one_ne_zero hne⟩
@@ -60,9 +60,8 @@ namespace MonoidHom
 variable [MonoidWithZero R]
 /--
 [period_dvd_of_min](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/Period.lean)
--/
-@[path]
 `d % m` inherits periodicity, so minimality forces it to vanish). -/
+@[path]
 private lemma period_dvd_of_min {χ : ℤ →* R} {m : ℕ} (hm : 0 < m)
   (hper : Function.Periodic χ (m : ℤ))
   (hmin : ∀ d : ℕ, 0 < d → Function.Periodic χ (d : ℤ) → m ≤ d)
@@ -115,7 +114,8 @@ private lemma periodic_eq_of_add_mul {χ : ℤ →* R} {m : ℕ}
   (hper : Function.Periodic χ (m : ℤ)) (a t : ℤ) :
   χ (a + (m : ℤ) * t) = χ a := by
   have h := hper.zsmul t a
-  rwa [Int.zsmul_eq_mul, mul_comm t] at h
+  rw [Int.zsmul_eq_mul, mul_comm t] at h
+  exact h
 
 end MonoidHom
 
@@ -141,10 +141,9 @@ namespace MonoidHom
 variable [MonoidWithZero R]
 /--
 [nonzero_imp_coprime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/Period.lean)
--/
-@[path]
 would give `χ p ≠ 0` (else `χ n = 0`) while `m / p` is a smaller period
 (cancelling the nonzero `χ p`). -/
+@[path]
 private lemma nonzero_imp_coprime {χ : ℤ →* R} [IsCancelMulZero R] {m : ℕ}
   (hm : 0 < m)
   (hper : Function.Periodic χ (m : ℤ))
@@ -183,9 +182,8 @@ namespace MonoidHom
 variable [MonoidWithZero R]
 /--
 [coprime_imp_nonzero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/Period.lean)
--/
-@[path]
 `N ^ φ ≡ 1 [MOD m]`, so `χ N ^ φ = χ 1 = 1`. -/
+@[path]
 private lemma coprime_imp_nonzero {χ : ℤ →* R} [Nontrivial R]
   [IsCancelMulZero R] {m : ℕ} (hm : 0 < m)
   (hper : Function.Periodic χ (m : ℤ))
@@ -199,7 +197,8 @@ private lemma coprime_imp_nonzero {χ : ℤ →* R} [Nontrivial R]
   have hχpow : χ ((n.natAbs ^ m.totient : ℕ) : ℤ) = χ 1 := by
     apply periodic_eq_of_modEq hper
     have hI := Int.natCast_modEq_iff.mpr heuler
-    rwa [Nat.cast_one] at hI
+    rw [Nat.cast_one] at hI
+    exact hI
   have h0pow : χ ((n.natAbs ^ m.totient : ℕ) : ℤ) = 0 := by
     rw [Nat.cast_pow, map_pow, h0]
     exact zero_pow (ne_of_gt htot)
@@ -251,7 +250,8 @@ lemma isDirichletCharacterModulus_iff
     · intro hne
       have hcopm := nonzero_imp_coprime hm hper hmin hne
       have hmk : IsCoprime (((m ^ k : ℕ)) : ℤ) n := by
-        rwa [Nat.cast_pow]
+        rw [Nat.cast_pow]
+        exact hcopm.pow_left
       exact hmk.of_isCoprime_of_dvd_left (by exact_mod_cast hk)
     · intro hcop
       have hcopm : IsCoprime ((m : ℕ) : ℤ) n :=
@@ -284,4 +284,4 @@ end MonoidHom
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

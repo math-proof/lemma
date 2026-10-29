@@ -151,7 +151,7 @@ private lemma bc62_coarseTcount_eq_sum_indicator_eq
   {ω : ConfigSpace (Sym2 (Site d))}
   {L R : ℕ} :
 -- imply
-  (bc61_coarseTcount ω L R : ℝ≥0∞) = ∑ y ∈ boxFinsetBK d R, ({ω' | bc61_IsCoarseTrifurcation ω' L y}.indicator (fun _ => (1 : ℝ≥0∞))) ω := by
+  (bc61_coarseTcount ω L R : ENNReal) = ∑ y ∈ boxFinsetBK d R, ({ω' | bc61_IsCoarseTrifurcation ω' L y}.indicator (fun _ => (1 : ENNReal))) ω := by
 -- proof
   apply StatMech.Walls.bc62_coarseTcount_eq_sum_indicator ω L R
 
@@ -166,7 +166,7 @@ private lemma bc62_coarse_expectation_eq
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) :
 -- imply
-  ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ := by
+  ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ := by
 -- proof
   apply StatMech.Walls.bc62_coarse_expectation μ hinv L R
 
@@ -328,7 +328,7 @@ private lemma bc62_upperLines_forced_coarseTrif_eq
 private lemma bc62_status_eq
   {d : ℕ} :
 -- imply
-  (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))), IsTranslationInvariant (G := Multiplicative (Site 2)) μ → ∀ (L R : ℕ), ((boxFinsetBK 2 R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ) ∧ (∀ {L : ℕ}, 3 ≤ L → bc60_upperLines ∈ bc62_CoarseTrifPrecursor 2 L (bc57_pt ((L : ℤ) + 1) 1) (bc57_pt ((L : ℤ) + 1) 2) (bc57_pt ((L : ℤ) + 1) 3) (bc57_pt (L : ℤ) 1) (bc57_pt (L : ℤ) 2) (bc57_pt (L : ℤ) 3)) := by
+  (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))), IsTranslationInvariant (G := Multiplicative (Site 2)) μ → ∀ (L R : ℕ), ((boxFinsetBK 2 R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ) ∧ (∀ {L : ℕ}, 3 ≤ L → bc60_upperLines ∈ bc62_CoarseTrifPrecursor 2 L (bc57_pt ((L : ℤ) + 1) 1) (bc57_pt ((L : ℤ) + 1) 2) (bc57_pt ((L : ℤ) + 1) 3) (bc57_pt (L : ℤ) 1) (bc57_pt (L : ℤ) 2) (bc57_pt (L : ℤ) 3)) := by
 -- proof
   apply StatMech.Walls.bc62_status
 

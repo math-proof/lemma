@@ -70,7 +70,7 @@ theorem looman_boxAdditive_eq_zero
     let ε' := ε / (C + 1)
     have hC1 : 0 < C + 1 := by linarith
     have hε' : 0 < ε' := div_pos hε hC1
-    let c : ℝ≥0 := I.distortion
+    let c : NNReal := I.distortion
     let r : (ι → ℝ) → Ioi (0 : ℝ) := fun x ↦
       min (hqBox.convergenceR ε' c x) (r₀ x)
     obtain ⟨π, hπ, hπpart⟩ := IntegrationParams.GP.exists_memBaseSet_isPartition

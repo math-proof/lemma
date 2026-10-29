@@ -76,7 +76,7 @@ theorem isDLRState_of_compProd_trim (β h : ℝ)
   rw [hη, isingSpec_apply]
 
 
-theorem isDLRState_add_smul (β h : ℝ) {a b : ℝ≥0∞} (hab : a + b = 1)
+theorem isDLRState_add_smul (β h : ℝ) {a b : ENNReal} (hab : a + b = 1)
     (μ₁ μ₂ : Measure (ConfigSpace (Site d))) [IsFiniteMeasure μ₁] [IsFiniteMeasure μ₂]
     (h₁ : IsDLRState d β h μ₁) (h₂ : IsDLRState d β h μ₂) :
     haveI : IsFiniteMeasure (a • μ₁ + b • μ₂) := by
@@ -117,7 +117,7 @@ theorem isDLRState_add_smul (β h : ℝ) {a b : ℝ≥0∞} (hab : a + b = 1)
   rw [hLHS, hRHS, e₁, e₂]
 
 
-theorem convex_isDLRState (β h : ℝ) {a b : ℝ≥0∞} (hab : a + b = 1)
+theorem convex_isDLRState (β h : ℝ) {a b : ENNReal} (hab : a + b = 1)
     (μ₁ μ₂ : Measure (ConfigSpace (Site d))) [IsFiniteMeasure μ₁] [IsFiniteMeasure μ₂]
     [IsFiniteMeasure (a • μ₁ + b • μ₂)]
     (h₁ : IsDLRState d β h μ₁) (h₂ : IsDLRState d β h μ₂) :

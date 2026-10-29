@@ -118,7 +118,7 @@ private lemma ati_exterior_approx_cylinder_eq
   {mu : Measure (ConfigSpace E)}
   [IsFiniteMeasure mu]
   {s : Set (ConfigSpace E)}
-  {ε : ℝ≥0∞}
+  {ε : ENNReal}
 -- given
   (hs : @MeasurableSet _ (outsideSigma window) s)
   (hε : 0 < ε) :
@@ -189,7 +189,7 @@ private lemma ati_invariant_approx_eq
   [IsFiniteMeasure mu]
   {s : Set (ConfigSpace E)}
   {k : ℕ}
-  {ε : ℝ≥0∞}
+  {ε : ENNReal}
 -- given
   (hescape : ∀ (F : Finset E) (k : ℕ), ∃ g : H, (↑(F.image (fun e => g⁻¹ • e)) : Set E) ⊆ (window k)ᶜ)
   (hmu : IsTranslationInvariant (G := H) mu)
@@ -214,7 +214,7 @@ private lemma ati_sequenceInvariant_approx_eq
   [IsFiniteMeasure mu]
   {s : Set (ConfigSpace E)}
   {k : ℕ}
-  {ε : ℝ≥0∞}
+  {ε : ENNReal}
 -- given
   (hescape : ∀ (F : Finset E) (k : ℕ), ∃ n : ℕ, (↑(F.image (fun e => (g n)⁻¹ • e)) : Set E) ⊆ (window k)ᶜ)
   (hmu : IsTranslationInvariant (G := H) mu)

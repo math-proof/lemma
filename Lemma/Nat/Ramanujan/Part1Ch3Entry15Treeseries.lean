@@ -99,9 +99,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry15Treeseries
 
 /--
 [abel_deriv_value_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry15Treeseries.lean)
--/
-@[path]
 size-`n` sum. -/
+@[path]
 private lemma abel_deriv_value_eq (n : ℕ) (y : ℝ)
   (ih : ∀ t : ℝ, ∑ k ∈ Finset.range (n + 1),
     (n.choose k : ℝ) * (((k : ℝ) + 1) ^ (k - 1)) * ((t - (k : ℝ)) ^ (n - k)) = (t + 1) ^ n) :
@@ -1090,9 +1089,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry15Treeseries
 
 /--
 [hasSum_treeCoeff_mul_exp](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry15Treeseries.lean)
--/
-@[path]
 `∑ c(n) * (u*exp(-u))^n = exp u` for `0 ≤ u < 1`. -/
+@[path]
 private lemma hasSum_treeCoeff_mul_exp (u : ℝ) (hu0 : 0 ≤ u)
   (hu : u < 1) :
   HasSum (fun n : ℕ => treeCoeff n * (u * Real.exp (-u)) ^ n)
@@ -1158,9 +1156,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry15Treeseries
 
 /--
 [term_eq_treeTerm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry15Treeseries.lean)
--/
-@[path]
 where `c = 1 + x ^ 2 / 2 = u - log u`. -/
+@[path]
 private lemma term_eq_treeTerm {x u : ℝ} (hu_pos : 0 < u)
   (hu_eq : u - Real.log u = 1 + x ^ 2 / 2) (k : ℕ) :
   ((k + 1 : ℝ) ^ (k - 1) / (Nat.factorial k : ℝ)) *
@@ -1222,4 +1219,4 @@ end
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

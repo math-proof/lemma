@@ -87,7 +87,8 @@ private lemma bernoulli_comp_add_C (k : ℕ) (a : ℚ) :
           push_cast at hQ
           have e1 : ((((t + 1 : ℕ))) : ℚ) = ((t : ℚ) + 1) := by simp
           have e2 : ((((k + 1 : ℕ))) : ℚ) = ((k : ℚ) + 1) := by simp
-          rwa [e1, e2]
+          rw [e1, e2]
+          exact hQ.symm
         have hpow : k + 1 - (t + 1) = k - t := by omega
         rw [hpow, show t + 1 - 1 = t from Nat.add_sub_cancel t 1]
         have hC1 : Polynomial.C ((((k + 1).choose (t + 1) : ℕ)) : ℚ) *
@@ -100,16 +101,16 @@ private lemma bernoulli_comp_add_C (k : ℕ) (a : ℚ) :
           = (Polynomial.C ((((k + 1).choose (t + 1) : ℕ)) : ℚ) *
             (((t + 1 : ℕ)) : Polynomial ℚ)) *
             (Polynomial.C (a ^ (k - t)) * Polynomial.bernoulli t) := by
-            rw [Polynomial.C_mul]
-            ring
+              rw [Polynomial.C_mul]
+              ring
           _ = ((((k + 1 : ℕ)) : Polynomial ℚ) *
             Polynomial.C ((((k.choose t : ℕ))) : ℚ)) *
             (Polynomial.C (a ^ (k - t)) * Polynomial.bernoulli t) := by
-            rw [hC1]
+              rw [hC1]
           _ = (((k + 1 : ℕ)) : Polynomial ℚ) * (Polynomial.C ((((k.choose t : ℕ)) : ℚ) *
             a ^ (k - t)) * Polynomial.bernoulli t) := by
-            rw [Polynomial.C_mul]
-            ring
+              rw [Polynomial.C_mul]
+              ring
       exact hRHS.symm
     · rw [Polynomial.eval_comp]
       simp only [Polynomial.eval_add, Polynomial.eval_X, Polynomial.eval_C, zero_add]
@@ -216,8 +217,8 @@ lemma faulhaber_bernoulli_polynomial_sum
       Polynomial.bernoulli s
       = ∑ j ∈ Finset.range n, Polynomial.C (k.choose s : ℚ) *
         (Polynomial.C (((j : ℚ) + 1) ^ (k - s)) * Polynomial.bernoulli s) := by
-        refine Finset.sum_congr rfl fun j _ => ?_
-        rw [Polynomial.C_mul, mul_assoc]
+          refine Finset.sum_congr rfl fun j _ => ?_
+          rw [Polynomial.C_mul, mul_assoc]
       _ = Polynomial.C (k.choose s : ℚ) *
         ∑ j ∈ Finset.range n, (Polynomial.C (((j : ℚ) + 1) ^ (k - s)) *
           Polynomial.bernoulli s) := by
@@ -233,7 +234,7 @@ lemma faulhaber_bernoulli_polynomial_sum
       _ = Polynomial.C ((k.choose s : ℚ) *
         ∑ j ∈ Finset.range n, ((j : ℚ) + 1) ^ (k - s)) *
         Polynomial.bernoulli s := by
-        rw [Polynomial.C_mul, mul_assoc]
+          rw [Polynomial.C_mul, mul_assoc]
   have e3 : (∑ s ∈ Finset.range (k + 1), ∑ j ∈ Finset.range n,
     Polynomial.C ((k.choose s : ℚ) * ((j : ℚ) + 1) ^ (k - s)) *
       Polynomial.bernoulli s)
@@ -292,7 +293,7 @@ lemma faulhaber_bernoulli_polynomial_sum
         ((Polynomial.bernoulli ((k - s) + 1)).eval ((n : ℚ) + 1) +
           (-1 : ℚ) ^ (k - s) * _root_.bernoulli ((k - s) + 1))) *
         Polynomial.bernoulli s := by
-        rw [hscal]
+          rw [hscal]
       _ = Polynomial.C (1 / ((k : ℚ) + 1)) *
         (Polynomial.C ((Nat.choose (k + 1) ((k - s) + 1) : ℚ) *
           ((Polynomial.bernoulli ((k - s) + 1)).eval ((n : ℚ) + 1) +
@@ -312,4 +313,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

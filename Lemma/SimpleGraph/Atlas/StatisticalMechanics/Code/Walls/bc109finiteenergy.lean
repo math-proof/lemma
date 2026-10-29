@@ -13,7 +13,7 @@ private lemma bc109_precursor_pp_eq
   {L : ℕ}
   {a₁ a₂ a₃ b₁ b₂ b₃ : Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (bc62_CoarseTrifPrecursor d L a₁ a₂ a₃ b₁ b₂ b₃)) :
@@ -30,7 +30,7 @@ private lemma bc109_coarseTrifExistence_pp_eq
   {d : ℕ}
   {L : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hcoarseRoute : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 {ω | numInfiniteClusters d ω = ⊤} → ∃ a₁ a₂ a₃ b₁ b₂ b₃ : Site d, 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (bc62_CoarseTrifPrecursor d L a₁ a₂ a₃ b₁ b₂ b₃)) :
@@ -48,7 +48,7 @@ private lemma bc109_bk_count_half_pp_eq
   {L : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1))
@@ -95,7 +95,7 @@ private lemma bc109_status_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p) :
 -- imply

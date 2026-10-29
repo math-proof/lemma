@@ -143,12 +143,12 @@ theorem percolationEvent_subset_crossingEvent (n : ℕ) :
   exact ⟨v, hv, hvnot⟩
 
 
-theorem theta_le_crossProb (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem theta_le_crossProb (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     theta d p hp ≤ crossProb d p hp n :=
   measureReal_mono (percolationEvent_subset_crossingEvent n)
 
 
-theorem item1_meanfield_lower_bound (p : ℝ≥0) (hp : p ≤ 1)
+theorem item1_meanfield_lower_bound (p : NNReal) (hp : p ≤ 1)
     (p₀ : ℝ) (hp₀ : 0 < p₀) (hp₀1 : p₀ < 1)
     (f : ℕ → ℝ → ℝ)
     (hfval : ∀ n, f n (p : ℝ) = crossProb d p hp n)
@@ -178,7 +178,7 @@ theorem susceptibility_finite (chi Sval phival : ℝ)
   nlinarith [hself]
 
 
-theorem subcritical_exp_decay (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem subcritical_exp_decay (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hS0 : origin d ∈ S) (hphi : phi d p hp S < 1)
     (L : ℕ) (hL : 1 ≤ L)
     (hstep : ∀ k, crossProb d p hp ((k + 1) * L)
@@ -188,7 +188,7 @@ theorem subcritical_exp_decay (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
 
 
 theorem pc_le_tildePc
-    (hpos : ∀ t : ℝ≥0, tildePc d < t → ∀ ht : t ≤ 1, 0 < theta d t ht) :
+    (hpos : ∀ t : NNReal, tildePc d < t → ∀ ht : t ≤ 1, 0 < theta d t ht) :
     pc d ≤ tildePc d := by
   
   
@@ -217,7 +217,7 @@ theorem tildePc_le_pc
 
 
 theorem bc_eq
-    (hpos : ∀ t : ℝ≥0, tildePc d < t → ∀ ht : t ≤ 1, 0 < theta d t ht)
+    (hpos : ∀ t : NNReal, tildePc d < t → ∀ ht : t ≤ 1, 0 < theta d t ht)
     (hzero : ∀ t ∈ tildePcSet d, ∀ ht : t ≤ 1, theta d t ht = 0) :
     pc d = tildePc d :=
   le_antisymm (pc_le_tildePc hpos) (tildePc_le_pc hzero)

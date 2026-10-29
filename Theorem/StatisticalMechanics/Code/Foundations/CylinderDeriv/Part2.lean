@@ -48,7 +48,7 @@ lemma eq_cylinder_restrict_image (A : Set (ConfigSpace E)) (F : Finset E)
 omit [DecidableEq E] in
 
 
-lemma bernoulliProductMeasure_cylinder (p : ℝ≥0) (hp : p ≤ 1) (F : Finset E)
+lemma bernoulliProductMeasure_cylinder (p : NNReal) (hp : p ≤ 1) (F : Finset E)
     (S : Set (ConfigSpace ↥F)) :
     bernoulliProductMeasure (E := E) p hp (cylinder F S)
       = bernoulliProductMeasure (E := ↥F) p hp S := by
@@ -60,14 +60,14 @@ lemma bernoulliProductMeasure_cylinder (p : ℝ≥0) (hp : p ≤ 1) (F : Finset 
 omit [DecidableEq E] in
 
 
-lemma realProb_cylinder (p : ℝ≥0) (hp : p ≤ 1) (F : Finset E)
+lemma realProb_cylinder (p : NNReal) (hp : p ≤ 1) (F : Finset E)
     (S : Set (ConfigSpace ↥F)) :
     (bernoulliProductMeasure (E := E) p hp).real (cylinder F S)
       = (bernoulliProductMeasure (E := ↥F) p hp).real S := by
   rw [Measure.real, Measure.real, bernoulliProductMeasure_cylinder]
 
 
-theorem realProb_cylinder_eq_prob (p : ℝ≥0) (hp : p ≤ 1)
+theorem realProb_cylinder_eq_prob (p : NNReal) (hp : p ≤ 1)
     (A : Set (ConfigSpace E)) (F : Finset E)
     (hA : DependsOn (A.indicator (fun _ => (1 : ℝ))) (F : Set E)) :
     (bernoulliProductMeasure (E := E) p hp).real A
@@ -76,7 +76,7 @@ theorem realProb_cylinder_eq_prob (p : ℝ≥0) (hp : p ≤ 1)
   rw [realProb_cylinder, finiteRealProb_eq_prob]
 
 
-theorem realProb_cylinder_eq_finsum (p : ℝ≥0) (hp : p ≤ 1)
+theorem realProb_cylinder_eq_finsum (p : NNReal) (hp : p ≤ 1)
     (A : Set (ConfigSpace E)) (F : Finset E)
     (hA : DependsOn (A.indicator (fun _ => (1 : ℝ))) (F : Set E)) :
     (bernoulliProductMeasure (E := E) p hp).real A

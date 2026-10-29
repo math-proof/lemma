@@ -16,9 +16,8 @@ private lemma mertensAcoeff_nonneg (n : ℕ) : 0 ≤ mertensAcoeff n := by
   by_cases hn : n = 0
   · simp [hn]
   · have h1 : (1 : ℝ) ≤ (n : ℝ) := by
-    exact_mod_cast Nat.one_le_iff_ne_zero.mpr hn
+      exact_mod_cast Nat.one_le_iff_ne_zero.mpr hn
     exact mul_nonneg (Nat.cast_nonneg n) (Real.log_nonneg h1)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -43,7 +42,6 @@ private lemma mertensP_pos (x : ℝ) : 0 < mertensP x := by
         _ = 1/2 := by norm_num
     linarith
   exact inv_pos.mpr h0
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -57,7 +55,6 @@ private lemma mertensS_nonneg (x : ℝ) : 0 ≤ mertensS x := by
   apply Finset.sum_nonneg
   intro n _
   exact div_nonneg ArithmeticFunction.vonMangoldt_nonneg (Nat.cast_nonneg n)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -73,7 +70,6 @@ private lemma mertensA_mono : Monotone mertensA := by
   · exact Finset.Icc_subset_Icc (le_refl 0) (Nat.floor_mono hxy)
   · intro i _ _
     exact mertensAcoeff_nonneg i
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -147,6 +143,7 @@ private lemma one_le_inv_one_sub_inv_prime (p : ℕ) (hp : p.Prime) :
   calc (1 : ℝ) = (1 : ℝ)⁻¹ := by norm_num
     _ ≤ (1 - (p : ℝ)⁻¹)⁻¹ := (inv_le_inv₀ zero_lt_one h0).mpr hle
 
+-- Mertens' first theorem, weak form.
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -185,7 +182,6 @@ private lemma mertensS_natCast (N : ℕ) :
   have hx00 : x = 0 := by omega
   rw [hx00]
   simp
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -199,10 +195,10 @@ private lemma mertens_first_bound_nat (N : ℕ) (hN : 1 ≤ N) :
   have hN0 : (0 : ℝ) < (N : ℝ) := by
     exact_mod_cast (by omega : 0 < N)
   have hlog_fact : Real.log ((Nat.factorial N : ℕ) : ℝ) =
-    ∑ d ∈ Finset.Ioc 0 N,
-      ArithmeticFunction.vonMangoldt d * ((N / d : ℕ) : ℝ) := by
+      ∑ d ∈ Finset.Ioc 0 N,
+        ArithmeticFunction.vonMangoldt d * ((N / d : ℕ) : ℝ) := by
     have hfactR : ((Nat.factorial N : ℕ) : ℝ) =
-      ∏ n ∈ Finset.Ioc 0 N, (n : ℝ) := by
+        ∏ n ∈ Finset.Ioc 0 N, (n : ℝ) := by
       rw [← Nat.cast_prod, ← prod_Ioc_eq_factorial]
     have hne : ∀ n ∈ Finset.Ioc 0 N, ((n : ℕ) : ℝ) ≠ 0 := by
       intro n hn
@@ -216,7 +212,7 @@ private lemma mertens_first_bound_nat (N : ℕ) (hN : 1 ≤ N) :
     intro n hn
     rw [ArithmeticFunction.vonMangoldt_mul_zeta, ArithmeticFunction.log_apply]
   have hdiv_le : ∀ d ∈ Finset.Ioc 0 N,
-    ((N / d : ℕ) : ℝ) ≤ (N : ℝ) / (d : ℝ) := by
+      ((N / d : ℕ) : ℝ) ≤ (N : ℝ) / (d : ℝ) := by
     intro d hd
     rw [Finset.mem_Ioc] at hd
     have hdd : (0 : ℝ) < (d : ℝ) := by
@@ -225,10 +221,10 @@ private lemma mertens_first_bound_nat (N : ℕ) (hN : 1 ≤ N) :
     have hle : N / d * d ≤ N := Nat.div_mul_le_self N d
     have hcast : ((N / d * d : ℕ) : ℝ) ≤ (N : ℝ) := by exact_mod_cast hle
     calc ((N / d : ℕ) : ℝ) * (d : ℝ) = ((N / d * d : ℕ) : ℝ) := by
-      rw [Nat.cast_mul]
+          rw [Nat.cast_mul]
       _ ≤ (N : ℝ) := hcast
   have hdiv_lt : ∀ d ∈ Finset.Ioc 0 N,
-    (N : ℝ) / (d : ℝ) - 1 < ((N / d : ℕ) : ℝ) := by
+      (N : ℝ) / (d : ℝ) - 1 < ((N / d : ℕ) : ℝ) := by
     intro d hd
     rw [Finset.mem_Ioc] at hd
     have hdd : (0 : ℝ) < (d : ℝ) := by
@@ -242,65 +238,70 @@ private lemma mertens_first_bound_nat (N : ℕ) (hN : 1 ≤ N) :
       linarith
     have hgoal : (N : ℝ) < (d : ℝ) * (((N / d : ℕ) : ℝ) + 1) := by
       have heq : (d : ℝ) * (((N / d : ℕ) : ℝ) + 1) =
-        ((N / d : ℕ) : ℝ) * (d : ℝ) + (d : ℝ) := by ring
-      rwa [heq]
+          ((N / d : ℕ) : ℝ) * (d : ℝ) + (d : ℝ) := by ring
+      rw [heq]
+      exact hN
     have hlt : (N : ℝ) / (d : ℝ) < ((N / d : ℕ) : ℝ) + 1 := by
-      rwa [div_lt_iff₀' hdd]
+      rw [div_lt_iff₀' hdd]
+      exact hgoal
     linarith [hlt]
   have hNS : ∑ n ∈ Finset.Ioc 0 N,
-    ArithmeticFunction.vonMangoldt n * ((N : ℝ) / (n : ℝ)) =
-    (N : ℝ) * ∑ n ∈ Finset.Ioc 0 N,
-      ArithmeticFunction.vonMangoldt n / (n : ℝ) := by
+        ArithmeticFunction.vonMangoldt n * ((N : ℝ) / (n : ℝ)) =
+        (N : ℝ) * ∑ n ∈ Finset.Ioc 0 N,
+          ArithmeticFunction.vonMangoldt n / (n : ℝ) := by
     rw [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro n hn
     ring
   have hSand1 : (N : ℝ) *
-    (∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n / (n : ℝ)) -
-    (∑ d ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt d) ≤
-    Real.log ((Nat.factorial N : ℕ) : ℝ) := by
+        (∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n / (n : ℝ)) -
+        (∑ d ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt d) ≤
+        Real.log ((Nat.factorial N : ℕ) : ℝ) := by
     rw [hlog_fact]
     have hpt : ∀ d ∈ Finset.Ioc 0 N,
-      ArithmeticFunction.vonMangoldt d * ((N : ℝ) / (d : ℝ)) -
-        ArithmeticFunction.vonMangoldt d ≤
-        ArithmeticFunction.vonMangoldt d * ((N / d : ℕ) : ℝ) := by
+        ArithmeticFunction.vonMangoldt d * ((N : ℝ) / (d : ℝ)) -
+          ArithmeticFunction.vonMangoldt d ≤
+          ArithmeticFunction.vonMangoldt d * ((N / d : ℕ) : ℝ) := by
       intro d hd
       have hΛ : 0 ≤ ArithmeticFunction.vonMangoldt d :=
         ArithmeticFunction.vonMangoldt_nonneg
       have hmul := mul_le_mul_of_nonneg_left (le_of_lt (hdiv_lt d hd)) hΛ
       have heq : ArithmeticFunction.vonMangoldt d * ((N : ℝ) / (d : ℝ)) -
-        ArithmeticFunction.vonMangoldt d =
-        ArithmeticFunction.vonMangoldt d * ((N : ℝ) / (d : ℝ) - 1) := by ring
+          ArithmeticFunction.vonMangoldt d =
+          ArithmeticFunction.vonMangoldt d * ((N : ℝ) / (d : ℝ) - 1) := by ring
       rwa [heq]
     have hsum := Finset.sum_le_sum hpt
     rw [Finset.sum_sub_distrib] at hsum
-    rwa [hNS] at hsum
+    rw [hNS] at hsum
+    exact hsum
   have hSand2 : Real.log ((Nat.factorial N : ℕ) : ℝ) ≤ (N : ℝ) *
-    (∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n / (n : ℝ)) := by
+      (∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n / (n : ℝ)) := by
     rw [hlog_fact]
     have hpt : ∀ d ∈ Finset.Ioc 0 N,
-      ArithmeticFunction.vonMangoldt d * ((N / d : ℕ) : ℝ) ≤
-        ArithmeticFunction.vonMangoldt d * ((N : ℝ) / (d : ℝ)) := by
+        ArithmeticFunction.vonMangoldt d * ((N / d : ℕ) : ℝ) ≤
+          ArithmeticFunction.vonMangoldt d * ((N : ℝ) / (d : ℝ)) := by
       intro d hd
       have hΛ : 0 ≤ ArithmeticFunction.vonMangoldt d :=
         ArithmeticFunction.vonMangoldt_nonneg
       exact mul_le_mul_of_nonneg_left (hdiv_le d hd) hΛ
     have hsum := Finset.sum_le_sum hpt
-    rwa [hNS] at hsum
+    rw [hNS] at hsum
+    exact hsum
   have hfact_pos : (0 : ℝ) < ((Nat.factorial N : ℕ) : ℝ) := by
     have hpos : 0 < Nat.factorial N := Nat.factorial_pos N
     exact_mod_cast hpos
   have hfact_le : Real.log ((Nat.factorial N : ℕ) : ℝ) ≤
-    (N : ℝ) * Real.log (N : ℝ) := by
+      (N : ℝ) * Real.log (N : ℝ) := by
     have hle : Nat.factorial N ≤ N ^ N := Nat.factorial_le_pow N
     have hleR : ((Nat.factorial N : ℕ) : ℝ) ≤ ((N ^ N : ℕ) : ℝ) := by
       exact_mod_cast hle
     have hlog := Real.log_le_log hfact_pos hleR
-    rwa [Nat.cast_pow, Real.log_pow] at hlog
+    rw [Nat.cast_pow, Real.log_pow] at hlog
+    exact hlog
   have hfact_ge : (N : ℝ) * Real.log (N : ℝ) - (N : ℝ) ≤
-    Real.log ((Nat.factorial N : ℕ) : ℝ) := by
+      Real.log ((Nat.factorial N : ℕ) : ℝ) := by
     have hStirling : (N : ℝ) ^ N / ((Nat.factorial N : ℕ) : ℝ) ≤
-      Real.exp (N : ℝ) :=
+        Real.exp (N : ℝ) :=
       Real.pow_div_factorial_le_exp (N : ℝ) (Nat.cast_nonneg N) N
     have hNp : (0 : ℝ) < (N : ℝ) ^ N := pow_pos hN0 N
     have hfact_ne : ((Nat.factorial N : ℕ) : ℝ) ≠ 0 := ne_of_gt hfact_pos
@@ -309,9 +310,9 @@ private lemma mertens_first_bound_nat (N : ℕ) (hN : 1 ≤ N) :
     rw [Real.log_div hNp_ne hfact_ne, Real.log_pow, Real.log_exp] at hlog
     linarith [hlog]
   have hψ : ∑ d ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt d ≤
-    (Real.log 4 + 4) * (N : ℝ) := by
+      (Real.log 4 + 4) * (N : ℝ) := by
     have h1 : ∑ d ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt d ≤
-      Chebyshev.psi (N : ℝ) := by
+        Chebyshev.psi (N : ℝ) := by
       rw [Chebyshev.psi_eq_sum_Icc, Nat.floor_natCast]
       apply Finset.sum_le_sum_of_subset_of_nonneg Finset.Ioc_subset_Icc_self
       intro i _ _
@@ -320,22 +321,22 @@ private lemma mertens_first_bound_nat (N : ℕ) (hN : 1 ≤ N) :
       Chebyshev.psi_le_const_mul_self (Nat.cast_nonneg N)
     linarith [h1, h2]
   have hS_lo : Real.log (N : ℝ) - 1 ≤
-    ∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n / (n : ℝ) := by
+      ∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n / (n : ℝ) := by
     have h1 : (N : ℝ) * (Real.log (N : ℝ) - 1) ≤ (N : ℝ) *
-      (∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n / (n : ℝ)) := by
+        (∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n / (n : ℝ)) := by
       have heq : (N : ℝ) * (Real.log (N : ℝ) - 1) =
-        (N : ℝ) * Real.log (N : ℝ) - (N : ℝ) := by ring
+          (N : ℝ) * Real.log (N : ℝ) - (N : ℝ) := by ring
       rw [heq]
       linarith [hSand2, hfact_ge]
     exact le_of_mul_le_mul_left h1 hN0
   have hS_hi : ∑ n ∈ Finset.Ioc 0 N,
-    ArithmeticFunction.vonMangoldt n / (n : ℝ) ≤
-    Real.log (N : ℝ) + (Real.log 4 + 4) := by
+      ArithmeticFunction.vonMangoldt n / (n : ℝ) ≤
+      Real.log (N : ℝ) + (Real.log 4 + 4) := by
     have h2 : (N : ℝ) *
-      (∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n / (n : ℝ)) ≤
-      (N : ℝ) * (Real.log (N : ℝ) + (Real.log 4 + 4)) := by
+        (∑ n ∈ Finset.Ioc 0 N, ArithmeticFunction.vonMangoldt n / (n : ℝ)) ≤
+        (N : ℝ) * (Real.log (N : ℝ) + (Real.log 4 + 4)) := by
       have heq : (N : ℝ) * (Real.log (N : ℝ) + (Real.log 4 + 4)) =
-        (N : ℝ) * Real.log (N : ℝ) + (Real.log 4 + 4) * (N : ℝ) := by ring
+          (N : ℝ) * Real.log (N : ℝ) + (Real.log 4 + 4) * (N : ℝ) := by ring
       rw [heq]
       linarith [hSand1, hfact_le, hψ]
     exact le_of_mul_le_mul_left h2 hN0
@@ -345,7 +346,6 @@ private lemma mertens_first_bound_nat (N : ℕ) (hN : 1 ≤ N) :
   constructor
   · linarith [hS_lo, hlog4]
   · linarith [hS_hi]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -360,7 +360,8 @@ private lemma mertens_first_bound :
   refine ⟨Real.log 4 + 5, fun x hx => ?_⟩
   have hN1 : 1 ≤ ⌊x⌋₊ := by
     have h := Nat.floor_mono hx
-    rwa [Nat.floor_one] at h
+    rw [Nat.floor_one] at h
+    exact h
   have hSx : mertensS x = mertensS ((⌊x⌋₊ : ℕ) : ℝ) := by
     unfold mertensS
     rw [Nat.floor_natCast]
@@ -370,7 +371,8 @@ private lemma mertens_first_bound :
       have h := Real.add_one_le_exp (1 : ℝ)
       linarith
     have h := Real.log_le_log (by norm_num : (0 : ℝ) < 2) h2e
-    rwa [Real.log_exp] at h
+    rw [Real.log_exp] at h
+    exact h
   have hNx : ((⌊x⌋₊ : ℕ) : ℝ) ≤ x := Nat.floor_le (by linarith : (0 : ℝ) ≤ x)
   have hN0 : (0 : ℝ) < ((⌊x⌋₊ : ℕ) : ℝ) := by
     have hpos : 0 < ⌊x⌋₊ := by omega
@@ -390,17 +392,17 @@ private lemma mertens_first_bound :
       Real.log ((⌊x⌋₊ : ℕ) : ℝ) - Real.log x ≤ 0)]
     linarith [hlogx_le]
   have htri : |mertensS ((⌊x⌋₊ : ℕ) : ℝ) - Real.log x| ≤
-    |mertensS ((⌊x⌋₊ : ℕ) : ℝ) - Real.log ((⌊x⌋₊ : ℕ) : ℝ)| +
-      |Real.log ((⌊x⌋₊ : ℕ) : ℝ) - Real.log x| := by
+      |mertensS ((⌊x⌋₊ : ℕ) : ℝ) - Real.log ((⌊x⌋₊ : ℕ) : ℝ)| +
+        |Real.log ((⌊x⌋₊ : ℕ) : ℝ) - Real.log x| := by
     have h := abs_add_le (mertensS ((⌊x⌋₊ : ℕ) : ℝ) - Real.log ((⌊x⌋₊ : ℕ) : ℝ))
       (Real.log ((⌊x⌋₊ : ℕ) : ℝ) - Real.log x)
     have heq : (mertensS ((⌊x⌋₊ : ℕ) : ℝ) - Real.log ((⌊x⌋₊ : ℕ) : ℝ)) +
-      (Real.log ((⌊x⌋₊ : ℕ) : ℝ) - Real.log x) =
-      mertensS ((⌊x⌋₊ : ℕ) : ℝ) - Real.log x := by ring
-    rwa [heq] at h
+        (Real.log ((⌊x⌋₊ : ℕ) : ℝ) - Real.log x) =
+        mertensS ((⌊x⌋₊ : ℕ) : ℝ) - Real.log x := by ring
+    rw [heq] at h
+    exact h
   rw [hSx]
   linarith [htri, hnat, habs, hlog2]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -412,7 +414,6 @@ namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 private lemma mertensS_coeff_zero :
   (fun k : ℕ => ArithmeticFunction.vonMangoldt k / (k : ℝ)) 0 = 0 := by
   simp
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -424,7 +425,6 @@ namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 private lemma mertensS_coeff_one :
   (fun k : ℕ => ArithmeticFunction.vonMangoldt k / (k : ℝ)) 1 = 0 := by
   simp
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -439,7 +439,6 @@ private lemma mertensA_term_eq (k : ℕ) :
   unfold mertensAcoeff
   rw [div_eq_mul_inv, div_eq_mul_inv, mul_inv]
   ring
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -453,7 +452,6 @@ private lemma mertensA_sum_eq (x : ℝ) :
     (Real.log (k : ℝ))⁻¹ * (ArithmeticFunction.vonMangoldt k / (k : ℝ)) := by
   unfold mertensA
   exact Finset.sum_congr rfl fun k _ => (mertensA_term_eq k).symm
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -468,7 +466,6 @@ private lemma mertensA_diff_on (x : ℝ) :
   intro t ht
   have h2 : (2 : ℝ) ≤ t := ht.1
   exact Real.differentiableAt_inv_log (by linarith) (by linarith) (by linarith)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -488,7 +485,6 @@ private lemma mertensA_deriv_integrable (x : ℝ) :
     apply pow_ne_zero 2
     apply Real.log_ne_zero_of_pos_of_ne_one <;> linarith [hz.1]
   exact ContinuousAt.continuousWithinAt <| by fun_prop
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -503,6 +499,8 @@ private lemma mertensA_deriv_mul_eq (t : ℝ) :
   rw [Real.deriv_inv_log_apply, div_eq_mul_inv, div_eq_mul_inv, mul_inv]
   ring
 
+-- Abel summation: A in terms of S.
+-- Template: Chebyshev.primeCounting_eq_theta_div_log_add_integral.
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -515,11 +513,11 @@ private lemma mertensA_eq_abel (x : ℝ) (hx : 2 ≤ x) :
   mertensA x = mertensS x / Real.log x +
     ∫ t in (2 : ℝ)..x, mertensS t / (t * (Real.log t) ^ 2) := by
   have hS : ∀ t : ℝ, (∑ k ∈ Finset.Icc 0 ⌊t⌋₊,
-    ArithmeticFunction.vonMangoldt k / (k : ℝ)) = mertensS t :=
+      ArithmeticFunction.vonMangoldt k / (k : ℝ)) = mertensS t :=
     fun _ => rfl
   have hint : (∫ t in (2 : ℝ)..x,
-    deriv (fun n : ℝ => (Real.log n)⁻¹) t * mertensS t) =
-    -(∫ t in (2 : ℝ)..x, mertensS t / (t * (Real.log t) ^ 2)) := by
+        deriv (fun n : ℝ => (Real.log n)⁻¹) t * mertensS t) =
+      -(∫ t in (2 : ℝ)..x, mertensS t / (t * (Real.log t) ^ 2)) := by
     rw [← intervalIntegral.integral_neg]
     exact intervalIntegral.integral_congr fun t _ => mertensA_deriv_mul_eq t
   rw [mertensA_sum_eq x,
@@ -529,7 +527,6 @@ private lemma mertensA_eq_abel (x : ℝ) (hx : 2 ≤ x) :
   simp only [hS]
   rw [hint, sub_neg_eq_add, div_eq_mul_inv]
   ring
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -545,7 +542,6 @@ private lemma mertensS_mono : Monotone mertensS := by
   · exact Finset.Icc_subset_Icc (le_refl 0) (Nat.floor_mono hxy)
   · intro i _ _
     exact div_nonneg ArithmeticFunction.vonMangoldt_nonneg (Nat.cast_nonneg i)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -571,7 +567,6 @@ private lemma mertensAcoeff_mul_inv (n : ℕ) :
   unfold mertensAcoeff
   rw [div_eq_mul_inv, mul_inv]
   ring
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -593,7 +588,6 @@ private lemma mertensAcoeff_le (n : ℕ) (hn : 2 ≤ n) :
     div_nonneg ArithmeticFunction.vonMangoldt_nonneg (Nat.cast_nonneg n)
   rw [mertensAcoeff_mul_inv, div_eq_mul_inv]
   exact mul_le_mul_of_nonneg_left hinv hΛ
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -613,12 +607,12 @@ private lemma mertensA_le_mertensS_div (x : ℝ) :
   by_cases hn2 : 2 ≤ n
   · exact mertensAcoeff_le n hn2
   · have ha0 : mertensAcoeff n = 0 := by
-    push Not at hn2
-    have hn01 : n = 0 ∨ n = 1 := by omega
-    obtain rfl | rfl <;> simp [mertensAcoeff] := hn01
-    rwa [ha0]
+      push Not at hn2
+      have hn01 : n = 0 ∨ n = 1 := by omega
+      rcases hn01 with rfl | rfl <;> simp [mertensAcoeff]
+    rw [ha0]
+    exact div_nonneg
       (div_nonneg ArithmeticFunction.vonMangoldt_nonneg (Nat.cast_nonneg n)) hlog2
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -634,7 +628,6 @@ private lemma hasDerivAt_log_log (t : ℝ) (ht : 2 ≤ t) :
   have h := (Real.hasDerivAt_log (ne_of_gt ht0)).log (ne_of_gt hlog)
   rwa [show t⁻¹ / Real.log t = (t * Real.log t)⁻¹ by
     rw [div_eq_mul_inv, mul_inv]] at h
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -647,25 +640,24 @@ private lemma integral_inv_mul_log (x : ℝ) (hx : 2 ≤ x) :
   (∫ t in (2 : ℝ)..x, (t * Real.log t)⁻¹) =
     Real.log (Real.log x) - Real.log (Real.log 2) := by
   have hderiv : ∀ t ∈ Set.uIcc (2 : ℝ) x,
-    HasDerivAt (fun t => Real.log (Real.log t)) ((t * Real.log t)⁻¹) t := by
+      HasDerivAt (fun t => Real.log (Real.log t)) ((t * Real.log t)⁻¹) t := by
     rw [Set.uIcc_of_le hx]
     intro t ht
     exact hasDerivAt_log_log t ht.1
   have hint : IntervalIntegrable (fun t => (t * Real.log t)⁻¹)
-    MeasureTheory.volume (2 : ℝ) x := by
+      MeasureTheory.volume (2 : ℝ) x := by
     refine ContinuousOn.intervalIntegrable fun t ht ↦
       ContinuousAt.continuousWithinAt ?_
     rw [Set.mem_uIcc] at ht
     have ht0 : (0 : ℝ) < t := by
-      obtain ⟨h1, _⟩ | ⟨h1, _⟩ <;> linarith [hx] := ht
+      rcases ht with ⟨h1, _⟩ | ⟨h1, _⟩ <;> linarith [hx]
     have ht1 : t ≠ 0 := ne_of_gt ht0
     have hlog : Real.log t ≠ 0 := by
       apply Real.log_ne_zero_of_pos_of_ne_one ht0
-      obtain ⟨h1, _⟩ | ⟨h1, _⟩ <;> linarith [hx] := ht
+      rcases ht with ⟨h1, _⟩ | ⟨h1, _⟩ <;> linarith [hx]
     have htm : t * Real.log t ≠ 0 := mul_ne_zero ht1 hlog
     fun_prop
   exact intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hint
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -690,7 +682,7 @@ private lemma mertensS_div_integrable (x : ℝ) :
   MeasureTheory.IntegrableOn (fun t => mertensS t / (t * (Real.log t) ^ 2))
     (Set.Icc 2 x) := by
   have hg : MeasureTheory.IntegrableOn (fun t : ℝ => (t * (Real.log t) ^ 2)⁻¹)
-    (Set.Icc 2 x) := by
+      (Set.Icc 2 x) := by
     refine ContinuousOn.integrableOn_Icc fun t ht ↦
       ContinuousAt.continuousWithinAt ?_
     have ht2 : (2 : ℝ) ≤ t := ht.1
@@ -705,15 +697,15 @@ private lemma mertensS_div_integrable (x : ℝ) :
     (fun k : ℕ => ArithmeticFunction.vonMangoldt k / (k : ℝ)) (m := 0)
     (show (0 : ℝ) ≤ 2 by norm_num) hg
   have heq : (fun t : ℝ => (t * (Real.log t) ^ 2)⁻¹ *
-    (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt k / (k : ℝ))) =
-    (fun t : ℝ => mertensS t / (t * (Real.log t) ^ 2)) := by
+      (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt k / (k : ℝ))) =
+      (fun t : ℝ => mertensS t / (t * (Real.log t) ^ 2)) := by
     funext t
     show (t * (Real.log t) ^ 2)⁻¹ *
-      (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt k / (k : ℝ)) =
-      mertensS t / (t * (Real.log t) ^ 2)
+        (∑ k ∈ Finset.Icc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt k / (k : ℝ)) =
+        mertensS t / (t * (Real.log t) ^ 2)
     rw [mertensS_fold t, div_eq_mul_inv, mul_comm]
-  rwa [heq] at hmul
-
+  rw [heq] at hmul
+  exact hmul
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -727,7 +719,6 @@ private lemma mertensS_div_intervalIntegrable (x : ℝ) (hx : 2 ≤ x) :
     MeasureTheory.volume (2 : ℝ) x := by
   rw [intervalIntegrable_iff_integrableOn_Icc_of_le hx]
   exact mertensS_div_integrable x
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -743,15 +734,14 @@ private lemma log_div_intervalIntegrable (x : ℝ) (hx : 2 ≤ x) :
     ContinuousAt.continuousWithinAt ?_
   rw [Set.mem_uIcc] at ht
   have ht0 : (0 : ℝ) < t := by
-    obtain ⟨h1, _⟩ | ⟨h1, _⟩ <;> linarith [hx] := ht
+    rcases ht with ⟨h1, _⟩ | ⟨h1, _⟩ <;> linarith [hx]
   have ht1 : t ≠ 0 := ne_of_gt ht0
   have hlog : Real.log t ≠ 0 := by
     apply Real.log_ne_zero_of_pos_of_ne_one ht0
-    obtain ⟨h1, _⟩ | ⟨h1, _⟩ <;> linarith [hx] := ht
+    rcases ht with ⟨h1, _⟩ | ⟨h1, _⟩ <;> linarith [hx]
   have hlog2 : Real.log t ^ 2 ≠ 0 := pow_ne_zero 2 hlog
   have htm : t * Real.log t ^ 2 ≠ 0 := mul_ne_zero ht1 hlog2
   fun_prop
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -765,13 +755,12 @@ private lemma mertensR_div_intervalIntegrable (x : ℝ) (hx : 2 ≤ x) :
     (fun t => (mertensS t - Real.log t) / (t * (Real.log t) ^ 2))
     MeasureTheory.volume (2 : ℝ) x := by
   have hfun : (fun t : ℝ => (mertensS t - Real.log t) / (t * (Real.log t) ^ 2)) =
-    (fun t : ℝ => mertensS t / (t * (Real.log t) ^ 2) -
-      Real.log t / (t * (Real.log t) ^ 2)) := by
+      (fun t : ℝ => mertensS t / (t * (Real.log t) ^ 2) -
+        Real.log t / (t * (Real.log t) ^ 2)) := by
     funext t
     exact sub_div _ _ _
   rw [hfun]
   exact (mertensS_div_intervalIntegrable x hx).sub (log_div_intervalIntegrable x hx)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -787,7 +776,6 @@ private lemma mertensS_div_log_eq (x : ℝ) (hx : 2 ≤ x) :
     apply Real.log_ne_zero_of_pos_of_ne_one (by linarith) (by linarith)
   rw [sub_div, div_self hlogx]
   ring
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -804,7 +792,6 @@ private lemma log_div_eq_inv_mul_log (t : ℝ) (ht : 2 ≤ t) :
   have htm : t * Real.log t ≠ 0 := mul_ne_zero ht0 hlog
   have htm2 : t * (Real.log t) ^ 2 ≠ 0 := mul_ne_zero ht0 (pow_ne_zero 2 hlog)
   field_simp
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -818,22 +805,21 @@ private lemma mertensS_integral_split (x : ℝ) (hx : 2 ≤ x) :
     (∫ t in (2 : ℝ)..x, (mertensS t - Real.log t) / (t * (Real.log t) ^ 2)) +
       (Real.log (Real.log x) - Real.log (Real.log 2)) := by
   have hfun : (fun t : ℝ => (mertensS t - Real.log t) / (t * (Real.log t) ^ 2) +
-    Real.log t / (t * (Real.log t) ^ 2)) =
-    (fun t : ℝ => mertensS t / (t * (Real.log t) ^ 2)) := by
+      Real.log t / (t * (Real.log t) ^ 2)) =
+      (fun t : ℝ => mertensS t / (t * (Real.log t) ^ 2)) := by
     funext t
     rw [← add_div, sub_add_cancel]
   have hlogint : (∫ t in (2 : ℝ)..x, Real.log t / (t * (Real.log t) ^ 2)) =
-    (∫ t in (2 : ℝ)..x, (t * Real.log t)⁻¹) := by
+      (∫ t in (2 : ℝ)..x, (t * Real.log t)⁻¹) := by
     apply intervalIntegral.integral_congr
     intro t ht
     rw [Set.mem_uIcc] at ht
     have ht2 : (2 : ℝ) ≤ t := by
-      obtain ⟨h1, _⟩ | ⟨h1, h2⟩ <;> linarith [hx] := ht
+      rcases ht with ⟨h1, _⟩ | ⟨h1, h2⟩ <;> linarith [hx]
     exact log_div_eq_inv_mul_log t ht2
   rw [← hfun, intervalIntegral.integral_add
     (mertensR_div_intervalIntegrable x hx) (log_div_intervalIntegrable x hx),
     hlogint, integral_inv_mul_log x hx]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -848,7 +834,6 @@ private lemma mertensA_sub_loglog_eq (x : ℝ) (hx : 2 ≤ x) :
       ∫ t in (2 : ℝ)..x, (mertensS t - Real.log t) / (t * (Real.log t) ^ 2) := by
   rw [mertensA_eq_abel x hx, mertensS_div_log_eq x hx, mertensS_integral_split x hx]
   ring
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -866,8 +851,8 @@ private lemma hasDerivAt_neg_inv_log (t : ℝ) (ht : 2 ≤ t) :
   have heq : -(-t⁻¹ / Real.log t ^ 2) = (t * (Real.log t) ^ 2)⁻¹ := by
     have htm : t * Real.log t ^ 2 ≠ 0 := mul_ne_zero ht0 (pow_ne_zero 2 hlog)
     field_simp
-  rwa [heq] at h
-
+  rw [heq] at h
+  exact h
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -880,7 +865,7 @@ private lemma integrableOn_inv_mul_log_sq :
   MeasureTheory.IntegrableOn (fun t : ℝ => (t * (Real.log t) ^ 2)⁻¹)
     (Set.Ioi 2) := by
   have hderiv : ∀ t ∈ Set.Ici (2 : ℝ),
-    HasDerivAt (fun t => -(Real.log t)⁻¹) ((t * (Real.log t) ^ 2)⁻¹) t := by
+      HasDerivAt (fun t => -(Real.log t)⁻¹) ((t * (Real.log t) ^ 2)⁻¹) t := by
     intro t ht
     rw [Set.mem_Ici] at ht
     exact hasDerivAt_neg_inv_log t ht
@@ -891,13 +876,12 @@ private lemma integrableOn_inv_mul_log_sq :
     apply mul_nonneg (by linarith)
     exact sq_nonneg _
   have hlim : Filter.Tendsto (fun t : ℝ => -(Real.log t)⁻¹)
-    Filter.atTop (nhds 0) := by
+      Filter.atTop (nhds 0) := by
     have h1 : Filter.Tendsto (fun t : ℝ => (Real.log t)⁻¹)
-      Filter.atTop (nhds 0) :=
+        Filter.atTop (nhds 0) :=
       Filter.Tendsto.inv_tendsto_atTop Real.tendsto_log_atTop
     simpa using h1.neg
   exact MeasureTheory.integrableOn_Ioi_deriv_of_nonneg' hderiv hpos hlim
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -911,13 +895,13 @@ private lemma mertensR_div_log_tendsto_zero (C : ℝ)
   Filter.Tendsto (fun x => (mertensS x - Real.log x) / Real.log x)
     Filter.atTop (nhds 0) := by
   have hlog : Filter.Tendsto (fun x : ℝ => Real.log x)
-    Filter.atTop Filter.atTop :=
+      Filter.atTop Filter.atTop :=
     Real.tendsto_log_atTop
   have hpos : Filter.Tendsto (fun x : ℝ => C / Real.log x)
-    Filter.atTop (nhds 0) :=
+      Filter.atTop (nhds 0) :=
     Filter.Tendsto.const_div_atTop hlog C
   have hneg : Filter.Tendsto (fun x : ℝ => -C / Real.log x)
-    Filter.atTop (nhds 0) :=
+      Filter.atTop (nhds 0) :=
     Filter.Tendsto.const_div_atTop hlog (-C)
   refine tendsto_of_tendsto_of_tendsto_of_le_of_le' hneg hpos ?_ ?_
   · filter_upwards [Filter.eventually_ge_atTop 2] with x hx
@@ -934,7 +918,6 @@ private lemma mertensR_div_log_tendsto_zero (C : ℝ)
     have hlogx : (0 : ℝ) < Real.log x := Real.log_pos (by linarith)
     rw [div_le_div_iff_of_pos_right hlogx]
     linarith
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -952,20 +935,21 @@ private lemma mertensR_div_integrable_Ioi (C : ℝ)
     have h1 := hC 1 le_rfl
     exact le_trans (abs_nonneg _) h1
   have hmeas : MeasureTheory.AEStronglyMeasurable
-    (fun t : ℝ => (mertensS t - Real.log t) / (t * (Real.log t) ^ 2))
-    (MeasureTheory.volume.restrict (Set.Ioi 2)) := by
+      (fun t : ℝ => (mertensS t - Real.log t) / (t * (Real.log t) ^ 2))
+      (MeasureTheory.volume.restrict (Set.Ioi 2)) := by
     apply Measurable.aestronglyMeasurable
     exact (mertensS_measurable.sub Real.measurable_log).div
       (measurable_id.mul (Real.measurable_log.pow_const 2))
   have hdom : MeasureTheory.Integrable
-    (fun t : ℝ => C / (t * (Real.log t) ^ 2))
-    (MeasureTheory.volume.restrict (Set.Ioi 2)) := by
+      (fun t : ℝ => C / (t * (Real.log t) ^ 2))
+      (MeasureTheory.volume.restrict (Set.Ioi 2)) := by
     have hcm := integrableOn_inv_mul_log_sq.const_mul C
     have heq : (fun t : ℝ => C * (t * (Real.log t) ^ 2)⁻¹) =
-      (fun t : ℝ => C / (t * (Real.log t) ^ 2)) := by
+        (fun t : ℝ => C / (t * (Real.log t) ^ 2)) := by
       funext t
       rw [div_eq_mul_inv]
-    rwa [heq] at hcm
+    rw [heq] at hcm
+    exact hcm
   refine MeasureTheory.Integrable.mono' hdom hmeas ?_
   rw [MeasureTheory.ae_restrict_iff' measurableSet_Ioi]
   filter_upwards with t ht
@@ -980,6 +964,7 @@ private lemma mertensR_div_integrable_Ioi (C : ℝ)
     div_le_div_iff_of_pos_right hpos]
   exact habs
 
+-- Mertens second theorem, prime-power form (limit exists).
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1030,8 +1015,8 @@ private lemma gronwall_mertensA_le_log (C : ℝ)
   have hlog2 : (0 : ℝ) < Real.log 2 := Real.log_pos (by norm_num)
   calc mertensA t ≤ mertensS t / Real.log 2 := h1
     _ ≤ (Real.log t + C) / Real.log 2 := by
-      rwa [div_le_div_iff_of_pos_right hlog2]
-
+        rw [div_le_div_iff_of_pos_right hlog2]
+        exact hS
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1052,7 +1037,6 @@ private lemma gronwall_mertensA_eq_sum_Icc1 (t : ℝ) :
     exact hx2 ⟨h1x, hx1.2⟩
   rw [hx0]
   simp [mertensAcoeff]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1064,7 +1048,6 @@ namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 private lemma gronwall_mertensA_nonneg (x : ℝ) : 0 ≤ mertensA x := by
   unfold mertensA
   exact Finset.sum_nonneg (fun i _ => mertensAcoeff_nonneg i)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1076,11 +1059,11 @@ namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 private lemma gronwall_zeta_term_eq (σ : ℝ) (n : ℕ) :
   ArithmeticFunction.vonMangoldt n / ((n : ℝ) ^ (1 + σ) * Real.log n) =
     mertensAcoeff n / (n : ℝ) ^ σ := by
-  obtain rfl | hn0 := eq_or_ne n 0
+  rcases eq_or_ne n 0 with rfl | hn0
   · have ha0 : mertensAcoeff 0 = 0 := by simp [mertensAcoeff]
     rw [ha0]
     simp
-  obtain rfl | hn1 := eq_or_ne n 1
+  rcases eq_or_ne n 1 with rfl | hn1
   · have ha1 : mertensAcoeff 1 = 0 := by simp [mertensAcoeff]
     rw [ha1]
     simp
@@ -1097,7 +1080,6 @@ private lemma gronwall_zeta_term_eq (σ : ℝ) (n : ℕ) :
     rw [hsplit]
     unfold mertensAcoeff
     field_simp
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1127,17 +1109,18 @@ private lemma gronwall_partials_isBigO (C : ℝ)
   have hσ2 : (0 : ℝ) < σ / 2 := by linarith
   have hratio := gronwall_log_rpow_ratio_nat σ hσ
   have hlog_ev : ∀ᶠ n : ℕ in Filter.atTop,
-    Real.log (n : ℝ) ≤ (n : ℝ) ^ (σ / 2) := by
+      Real.log (n : ℝ) ≤ (n : ℝ) ^ (σ / 2) := by
     have h1 : ∀ᶠ n : ℕ in Filter.atTop,
-      Real.log (n : ℝ) / (n : ℝ) ^ (σ / 2) ≤ 1 :=
+        Real.log (n : ℝ) / (n : ℝ) ^ (σ / 2) ≤ 1 :=
       hratio.eventually_le_const (by norm_num : (0 : ℝ) < 1)
     filter_upwards [h1, Filter.eventually_ge_atTop 1] with n hn1 hn2
     have hpos : (0 : ℝ) < (n : ℝ) ^ (σ / 2) :=
       Real.rpow_pos_of_pos (by exact_mod_cast (by omega : 0 < n)) _
     rw [div_le_iff₀ hpos] at hn1
-    rwa [one_mul] at hn1
+    rw [one_mul] at hn1
+    exact hn1
   have htop : Filter.Tendsto (fun n : ℕ => (n : ℝ) ^ (σ / 2))
-    Filter.atTop Filter.atTop :=
+      Filter.atTop Filter.atTop :=
     (tendsto_rpow_atTop hσ2).comp tendsto_natCast_atTop_atTop
   have hC_ev : ∀ᶠ n : ℕ in Filter.atTop, |C| ≤ (n : ℝ) ^ (σ / 2) :=
     htop.eventually_ge_atTop |C|
@@ -1161,10 +1144,9 @@ private lemma gronwall_partials_isBigO (C : ℝ)
     calc mertensA (n : ℝ) ≤ (Real.log (n : ℝ) + C) / Real.log 2 := hA
       _ = (1 / Real.log 2) * (Real.log (n : ℝ) + C) := by ring
       _ ≤ (1 / Real.log 2) * (2 * (n : ℝ) ^ (σ / 2)) :=
-        mul_le_mul_of_nonneg_left h1 (div_nonneg zero_le_one hlog2.le)
+          mul_le_mul_of_nonneg_left h1 (div_nonneg zero_le_one hlog2.le)
       _ = (2 / Real.log 2) * (n : ℝ) ^ (σ / 2) := by ring
   exact hfin
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1199,33 +1181,34 @@ private lemma gronwall_integrand_integrable (C : ℝ)
     have hpos : (0 : ℝ) < t ^ (σ / 2) :=
       Real.rpow_pos_of_pos (by linarith : (0 : ℝ) < t) _
     rw [div_le_iff₀ hpos] at ht1
-    rwa [one_mul] at ht1
+    rw [one_mul] at ht1
+    exact ht1
   have hCR : ∀ᶠ t in Filter.atTop, |C| ≤ t ^ (σ / 2) :=
     (tendsto_rpow_atTop hσ2).eventually_ge_atTop |C|
   obtain ⟨T, hT⟩ := Filter.eventually_atTop.mp
     (hlogR.and (hCR.and (Filter.eventually_ge_atTop 1)))
   have hT01 : (1 : ℝ) ≤ max T 1 := le_max_right _ _
   have hBlo : ∀ t : ℝ, max T 1 ≤ t →
-    Real.log t ≤ t ^ (σ / 2) ∧ |C| ≤ t ^ (σ / 2) := by
+      Real.log t ≤ t ^ (σ / 2) ∧ |C| ≤ t ^ (σ / 2) := by
     intro t ht
     have h := hT t (le_trans (le_max_left T 1) ht)
     exact ⟨h.1, h.2.1⟩
   have hIcc : MeasureTheory.IntegrableOn (fun t => mertensA t * t ^ (-σ - 1))
-    (Set.Ioc 1 (max T 1)) := by
+      (Set.Ioc 1 (max T 1)) := by
     have gcont : ContinuousOn (fun t : ℝ => t ^ (-σ - 1))
-      (Set.Icc 1 (max T 1)) := by
+        (Set.Icc 1 (max T 1)) := by
       intro t ht
       rw [Set.mem_Icc] at ht
       have ht0 : t ≠ 0 := ne_of_gt (by linarith [ht.1] : (0 : ℝ) < t)
       exact (Real.continuousAt_rpow_const t (-σ - 1)
         (Or.inl ht0)).continuousWithinAt
     have hg : MeasureTheory.IntegrableOn (fun t : ℝ => t ^ (-σ - 1))
-      (Set.Icc 1 (max T 1)) :=
+        (Set.Icc 1 (max T 1)) :=
       gcont.integrableOn_Icc
     have hmul := integrableOn_mul_sum_Icc (fun k : ℕ => mertensAcoeff k)
       (m := 1) (show (0 : ℝ) ≤ 1 by norm_num) hg
     have hcongr : MeasureTheory.IntegrableOn
-      (fun t => mertensA t * t ^ (-σ - 1)) (Set.Icc 1 (max T 1)) := by
+        (fun t => mertensA t * t ^ (-σ - 1)) (Set.Icc 1 (max T 1)) := by
       refine hmul.congr_fun ?_ measurableSet_Icc
       intro t ht
       change t ^ (-σ - 1) * (∑ k ∈ Finset.Icc 1 ⌊t⌋₊, mertensAcoeff k)
@@ -1235,14 +1218,14 @@ private lemma gronwall_integrand_integrable (C : ℝ)
       rw [hA, mul_comm]
     exact hcongr.mono_set Set.Ioc_subset_Icc_self
   have hIoi : MeasureTheory.IntegrableOn (fun t => mertensA t * t ^ (-σ - 1))
-    (Set.Ioi (max T 1)) := by
+      (Set.Ioi (max T 1)) := by
     have hdom : MeasureTheory.IntegrableOn
-      (fun t => (2 / Real.log 2) * t ^ (-1 - σ / 2)) (Set.Ioi (max T 1)) :=
+        (fun t => (2 / Real.log 2) * t ^ (-1 - σ / 2)) (Set.Ioi (max T 1)) :=
       MeasureTheory.Integrable.const_mul
         (integrableOn_Ioi_rpow_of_lt (show -1 - σ / 2 < -1 by linarith)
           (by linarith [hT01] : (0 : ℝ) < max T 1)) (2 / Real.log 2)
     have gcont' : ContinuousOn (fun t : ℝ => t ^ (-σ - 1))
-      (Set.Ioi (max T 1)) := by
+        (Set.Ioi (max T 1)) := by
       intro t ht
       rw [Set.mem_Ioi] at ht
       have ht0 : t ≠ 0 := ne_of_gt (by linarith [hT01, ht] : (0 : ℝ) < t)
@@ -1266,25 +1249,25 @@ private lemma gronwall_integrand_integrable (C : ℝ)
     rw [e0]
     have hlog2 : (0 : ℝ) < Real.log 2 := Real.log_pos (by norm_num)
     have h1 : mertensA t * t ^ (-σ - 1)
-      ≤ ((2 * t ^ (σ / 2)) / Real.log 2) * t ^ (-σ - 1) := by
+        ≤ ((2 * t ^ (σ / 2)) / Real.log 2) * t ^ (-σ - 1) := by
       apply mul_le_mul_of_nonneg_right _ hpow_nn
       calc mertensA t ≤ (Real.log t + C) / Real.log 2 :=
-        gronwall_mertensA_le_log C hC t ht1
+            gronwall_mertensA_le_log C hC t ht1
         _ ≤ (2 * t ^ (σ / 2)) / Real.log 2 := by
-          rw [div_le_div_iff_of_pos_right hlog2]
-          have hC' : C ≤ |C| := le_abs_self C
-          linarith [hb.1, hb.2]
+            rw [div_le_div_iff_of_pos_right hlog2]
+            have hC' : C ≤ |C| := le_abs_self C
+            linarith [hb.1, hb.2]
     have h2 : ((2 * t ^ (σ / 2)) / Real.log 2) * t ^ (-σ - 1)
-      = (2 / Real.log 2) * t ^ (-1 - σ / 2) := by
+        = (2 / Real.log 2) * t ^ (-1 - σ / 2) := by
       have hrw : t ^ (σ / 2) * t ^ (-σ - 1) = t ^ (-1 - σ / 2) := by
         rw [← Real.rpow_add ht0]
         congr 1
         ring
       calc ((2 * t ^ (σ / 2)) / Real.log 2) * t ^ (-σ - 1)
-        = (2 / Real.log 2) * (t ^ (σ / 2) * t ^ (-σ - 1)) := by ring
+          = (2 / Real.log 2) * (t ^ (σ / 2) * t ^ (-σ - 1)) := by ring
         _ = (2 / Real.log 2) * t ^ (-1 - σ / 2) := by rw [hrw]
     calc mertensA t * t ^ (-σ - 1)
-      ≤ ((2 * t ^ (σ / 2)) / Real.log 2) * t ^ (-σ - 1) := h1
+        ≤ ((2 * t ^ (σ / 2)) / Real.log 2) * t ^ (-σ - 1) := h1
       _ = (2 / Real.log 2) * t ^ (-1 - σ / 2) := h2
   have hunion : Set.Ioc (1 : ℝ) (max T 1) ∪ Set.Ioi (max T 1) = Set.Ioi 1 := by
     ext v
@@ -1299,7 +1282,6 @@ private lemma gronwall_integrand_integrable (C : ℝ)
       · exact Or.inr (lt_of_not_ge hle)
   rw [← hunion]
   exact hIcc.union hIoi
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1316,18 +1298,17 @@ private lemma gronwall_LSeries_eq_log_zeta (σ : ℝ) (hσ : 0 < σ) :
   have ha0 : mertensAcoeff 0 = 0 := by simp [mertensAcoeff]
   have hf0 : (fun n => ((mertensAcoeff n : ℝ) : ℂ)) 0 = 0 := by simp [ha0]
   have htermC : ∀ n : ℕ, ((mertensAcoeff n : ℝ) : ℂ) / ((n : ℂ) ^ ((σ : ℝ) : ℂ))
-    = ((mertensAcoeff n / (n : ℝ) ^ σ : ℝ) : ℂ) := by
+      = ((mertensAcoeff n / (n : ℝ) ^ σ : ℝ) : ℂ) := by
     intro n
     rw [Complex.ofReal_div, Complex.ofReal_cpow (Nat.cast_nonneg n) σ,
       Complex.ofReal_natCast]
   have step1 : LSeries (fun n => ((mertensAcoeff n : ℝ) : ℂ)) ((σ : ℝ) : ℂ)
-    = ∑' n, ((mertensAcoeff n : ℝ) : ℂ) / ((n : ℂ) ^ ((σ : ℝ) : ℂ)) :=
+      = ∑' n, ((mertensAcoeff n : ℝ) : ℂ) / ((n : ℂ) ^ ((σ : ℝ) : ℂ)) :=
     LSeries_def₀ hf0 _
   rw [step1, tsum_congr htermC, ← Complex.ofReal_tsum]
   congr 1
   rw [hzeta]
   exact (tsum_congr (gronwall_zeta_term_eq σ)).symm
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1347,7 +1328,6 @@ private lemma gronwall_LSeries_integral (σ : ℝ) (hσ : 0 < σ) (C : ℝ)
     (show (0 : ℝ) ≤ σ / 2 by linarith)
     (show σ / 2 < (((σ : ℝ) : ℂ)).re by simpa using half_lt_self hσ) hO
     mertensAcoeff_nonneg
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1370,7 +1350,6 @@ private lemma gronwall_exp_pullback_eq (σ v : ℝ) :
     show Real.exp v * (mertensA (Real.exp v) * (Real.exp v) ^ (-σ - 1))
       = mertensA (Real.exp v) * (Real.exp v * (Real.exp v) ^ (-σ - 1)) by ring,
     key]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1391,7 +1370,6 @@ private lemma gronwall_pullback_integrable (σ : ℝ)
   refine (hbase.mpr hInt1).congr_fun ?_ measurableSet_Ioi
   intro v hv
   exact gronwall_exp_pullback_eq σ v
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1410,19 +1388,19 @@ private lemma log_zeta_eq_laplace_mertensA (σ : ℝ) (hσ : 0 < σ) :
   have hLC := gronwall_LSeries_eq_log_zeta σ hσ
   have hLI := gronwall_LSeries_integral σ hσ C hC
   have hInt_eq : (∫ t in Set.Ioi (1 : ℝ),
-    ((∑ k ∈ Finset.Icc 1 ⌊t⌋₊, ((mertensAcoeff k : ℝ) : ℂ))
-      * (t : ℂ) ^ (-(((σ : ℝ) : ℂ) + 1))))
-    = (((∫ t in Set.Ioi (1 : ℝ), mertensA t * t ^ (-σ - 1) : ℝ)) : ℂ) := by
+        ((∑ k ∈ Finset.Icc 1 ⌊t⌋₊, ((mertensAcoeff k : ℝ) : ℂ))
+          * (t : ℂ) ^ (-(((σ : ℝ) : ℂ) + 1))))
+      = (((∫ t in Set.Ioi (1 : ℝ), mertensA t * t ^ (-σ - 1) : ℝ)) : ℂ) := by
     rw [← integral_complex_ofReal]
     apply MeasureTheory.setIntegral_congr_fun measurableSet_Ioi
     intro t ht
     change ((∑ k ∈ Finset.Icc 1 ⌊t⌋₊, ((mertensAcoeff k : ℝ) : ℂ))
-      * (t : ℂ) ^ (-(((σ : ℝ) : ℂ) + 1)))
+        * (t : ℂ) ^ (-(((σ : ℝ) : ℂ) + 1)))
       = (((mertensA t * t ^ (-σ - 1) : ℝ)) : ℂ)
     rw [Set.mem_Ioi] at ht
     have ht0 : (0 : ℝ) ≤ t := by linarith [ht]
     have hsum : (∑ k ∈ Finset.Icc 1 ⌊t⌋₊, ((mertensAcoeff k : ℝ) : ℂ))
-      = ((∑ k ∈ Finset.Icc 1 ⌊t⌋₊, mertensAcoeff k : ℝ) : ℂ) :=
+        = ((∑ k ∈ Finset.Icc 1 ⌊t⌋₊, mertensAcoeff k : ℝ) : ℂ) :=
       (Complex.ofReal_sum _ _).symm
     have hexp : (-(((σ : ℝ) : ℂ) + 1)) = (((-σ - 1 : ℝ)) : ℂ) := by
       push_cast
@@ -1430,12 +1408,12 @@ private lemma log_zeta_eq_laplace_mertensA (σ : ℝ) (hσ : 0 < σ) :
     rw [hsum, hexp, ← Complex.ofReal_cpow ht0, ← Complex.ofReal_mul,
       gronwall_mertensA_eq_sum_Icc1]
   have hReal : Real.log (riemannZeta ((1 + σ : ℝ) : ℂ)).re
-    = σ * (∫ t in Set.Ioi (1 : ℝ), mertensA t * t ^ (-σ - 1)) := by
+      = σ * (∫ t in Set.Ioi (1 : ℝ), mertensA t * t ^ (-σ - 1)) := by
     have hCD := hLC.symm.trans hLI
     rw [hInt_eq, ← Complex.ofReal_mul] at hCD
     exact Complex.ofReal_injective hCD
   have hexp_change : (∫ t in Set.Ioi (1 : ℝ), mertensA t * t ^ (-σ - 1))
-    = ∫ v in Set.Ioi (0 : ℝ), mertensA (Real.exp v) * Real.exp (-σ * v) := by
+      = ∫ v in Set.Ioi (0 : ℝ), mertensA (Real.exp v) * Real.exp (-σ * v) := by
     have hbase := MeasureTheory.integral_comp_exp_Ioi
       (fun y : ℝ => mertensA y * y ^ (-σ - 1)) (0 : ℝ)
     rw [Real.exp_zero] at hbase
@@ -1445,7 +1423,6 @@ private lemma log_zeta_eq_laplace_mertensA (σ : ℝ) (hσ : 0 < σ) :
     exact gronwall_exp_pullback_eq σ v
   refine ⟨?_, gronwall_pullback_integrable σ hInt1⟩
   rw [hReal, hexp_change]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1458,7 +1435,6 @@ private lemma gronwall_exp_le_one (σ v : ℝ) (hσ : 0 < σ) (hv : 0 ≤ v) :
   Real.exp (-σ * v) ≤ 1 := by
   rw [Real.exp_le_one_iff]
   exact mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hσ.le) hv
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1469,7 +1445,6 @@ namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 @[path]
 private lemma gronwall_norm_exp (x : ℝ) : ‖Real.exp x‖ = Real.exp x := by
   rw [Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1504,7 +1479,6 @@ private lemma gronwall_Ioc_union_Ioi (T' : ℝ) (hT' : 0 ≤ T') :
     by_cases hle : v ≤ T'
     · exact Or.inl ⟨h0, hle⟩
     · exact Or.inr (lt_of_not_ge hle)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1522,7 +1496,6 @@ private lemma gronwall_tendsto_norm_sub (h : ℝ → ℝ) (c : ℝ)
     hlim.sub hc
   rw [sub_self] at hsub
   simpa using hsub.norm
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1540,7 +1513,6 @@ private lemma gronwall_laplace_eventually_bound (h : ℝ → ℝ) (c : ℝ)
   rw [Filter.eventually_atTop] at hle
   obtain ⟨T, hT⟩ := hle
   exact ⟨T, fun v hv => hT v hv⟩
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1565,7 +1537,6 @@ private lemma gronwall_laplace_integrable_Ioc (h : ℝ → ℝ) (σ T' : ℝ)
   calc ‖h v * Real.exp (-σ * v)‖ = ‖h v‖ * Real.exp (-σ * v) := e1
     _ ≤ ‖h v‖ * 1 := mul_le_mul_of_nonneg_left hexp (norm_nonneg _)
     _ = ‖h v‖ := mul_one _
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1580,11 +1551,11 @@ private lemma gronwall_laplace_integrable_Ioi (h : ℝ → ℝ) (c σ T' : ℝ)
   MeasureTheory.IntegrableOn (fun v => h v * Real.exp (-σ * v))
     (Set.Ioi T') := by
   have hexp : MeasureTheory.IntegrableOn (fun v => Real.exp (-σ * v))
-    (Set.Ioi T') :=
+      (Set.Ioi T') :=
     integrableOn_exp_mul_Ioi (show -σ < 0 by linarith) T'
   have hdom : MeasureTheory.Integrable
-    (fun v => (|c| + 1) * Real.exp (-σ * v))
-    (MeasureTheory.volume.restrict (Set.Ioi T')) :=
+      (fun v => (|c| + 1) * Real.exp (-σ * v))
+      (MeasureTheory.volume.restrict (Set.Ioi T')) :=
     MeasureTheory.Integrable.const_mul hexp (|c| + 1)
   refine MeasureTheory.Integrable.mono' hdom
     (gronwall_laplace_measurable h σ hmeas).aestronglyMeasurable ?_
@@ -1595,8 +1566,7 @@ private lemma gronwall_laplace_integrable_Ioi (h : ℝ → ℝ) (c σ T' : ℝ)
     rw [norm_mul, gronwall_norm_exp]
   calc ‖h v * Real.exp (-σ * v)‖ = ‖h v‖ * Real.exp (-σ * v) := e1
     _ ≤ (|c| + 1) * Real.exp (-σ * v) :=
-      mul_le_mul_of_nonneg_right (hB v hv.le) (Real.exp_pos _).le
-
+        mul_le_mul_of_nonneg_right (hB v hv.le) (Real.exp_pos _).le
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1624,7 +1594,6 @@ private lemma gronwall_laplace_integrable (h : ℝ → ℝ) (c : ℝ)
       linarith)
   rw [← gronwall_Ioc_union_Ioi (max T 0) hT']
   exact hIoc.union hIoi
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1639,7 +1608,6 @@ private lemma gronwall_exp_laplace_one (σ : ℝ) (hσ : 0 < σ) :
   have h := integral_exp_mul_Ioi (show -σ < 0 by linarith) (0 : ℝ)
   rw [h, mul_zero, Real.exp_zero, neg_div_neg_eq, one_div]
   exact mul_inv_cancel₀ hσ0
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1656,14 +1624,13 @@ private lemma gronwall_laplace_sub (h : ℝ → ℝ) (c σ : ℝ) (hσ : 0 < σ)
   σ * (∫ v in Set.Ioi (0 : ℝ), h v * Real.exp (-σ * v)) - c =
     σ * (∫ v in Set.Ioi (0 : ℝ), (h v - c) * Real.exp (-σ * v)) := by
   have econgr : (∫ v in Set.Ioi (0 : ℝ), (h v - c) * Real.exp (-σ * v)) =
-    (∫ v in Set.Ioi (0 : ℝ),
-      (h v * Real.exp (-σ * v) - c * Real.exp (-σ * v))) :=
+      (∫ v in Set.Ioi (0 : ℝ),
+        (h v * Real.exp (-σ * v) - c * Real.exp (-σ * v))) :=
     MeasureTheory.setIntegral_congr_fun measurableSet_Ioi (fun v _ => by ring)
   have hc : σ * (c * (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v))) = c := by
     rw [mul_left_comm, gronwall_exp_laplace_one σ hσ, mul_one]
   rw [econgr, MeasureTheory.integral_sub he hce,
     MeasureTheory.integral_const_mul, mul_sub, hc]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1694,11 +1661,11 @@ private lemma tendsto_mul_laplace_of_tendsto (h : ℝ → ℝ) (c : ℝ)
   have hK0 : (0 : ℝ) ≤ K := by rw [hKdef]; exact hK0'
   have hKp1 : (0 : ℝ) < K + 1 := by linarith [hK0]
   have hconst : MeasureTheory.IntegrableOn (fun _ => |c|)
-    (Set.Ioc (0 : ℝ) (max Tε 0)) :=
+      (Set.Ioc (0 : ℝ) (max Tε 0)) :=
     ((continuous_const.continuousOn).integrableOn_Icc).mono_set
       Set.Ioc_subset_Icc_self
   have hdomK : MeasureTheory.IntegrableOn (fun v => ‖h v‖ + |c|)
-    (Set.Ioc (0 : ℝ) (max Tε 0)) :=
+      (Set.Ioc (0 : ℝ) (max Tε 0)) :=
     (hint (max Tε 0)).norm.add hconst
   have hdisj : Disjoint (Set.Ioc (0 : ℝ) (max Tε 0)) (Set.Ioi (max Tε 0)) := by
     rw [Set.disjoint_left]
@@ -1711,127 +1678,132 @@ private lemma tendsto_mul_laplace_of_tendsto (h : ℝ → ℝ) (c : ℝ)
   have hσ0 : (0 : ℝ) < σ := Set.mem_Ioi.mp hmem
   have hσδ : σ < (ε / 2) / (K + 1) := by
     have hd := hdist
-    rwa [Real.dist_eq, sub_zero, abs_of_pos hσ0] at hd
+    rw [Real.dist_eq, sub_zero, abs_of_pos hσ0] at hd
+    exact hd
   have he := (gronwall_laplace_integrable h c hmeas hint hlim) σ hσ0
   have hce : MeasureTheory.IntegrableOn (fun v => c * Real.exp (-σ * v))
-    (Set.Ioi (0 : ℝ)) :=
+      (Set.Ioi (0 : ℝ)) :=
     MeasureTheory.Integrable.const_mul
       (integrableOn_exp_mul_Ioi (show -σ < 0 by linarith) 0) c
   have hsub : MeasureTheory.IntegrableOn
-    (fun v => h v * Real.exp (-σ * v) - c * Real.exp (-σ * v))
-    (Set.Ioi (0 : ℝ)) :=
+      (fun v => h v * Real.exp (-σ * v) - c * Real.exp (-σ * v))
+      (Set.Ioi (0 : ℝ)) :=
     he.sub hce
   have h_hce : MeasureTheory.IntegrableOn
-    (fun v => (h v - c) * Real.exp (-σ * v)) (Set.Ioi (0 : ℝ)) :=
+      (fun v => (h v - c) * Real.exp (-σ * v)) (Set.Ioi (0 : ℝ)) :=
     hsub.congr (Filter.Eventually.of_forall (fun v => by ring))
   have h_Ioc_hce : MeasureTheory.IntegrableOn
-    (fun v => (h v - c) * Real.exp (-σ * v))
-    (Set.Ioc (0 : ℝ) (max Tε 0)) :=
+      (fun v => (h v - c) * Real.exp (-σ * v))
+      (Set.Ioc (0 : ℝ) (max Tε 0)) :=
     h_hce.mono_set (fun v hv => (Set.mem_Ioc.mp hv).1)
   have h_Ioi_hce : MeasureTheory.IntegrableOn
-    (fun v => (h v - c) * Real.exp (-σ * v)) (Set.Ioi (max Tε 0)) :=
+      (fun v => (h v - c) * Real.exp (-σ * v)) (Set.Ioi (max Tε 0)) :=
     h_hce.mono_set (fun v hv => lt_of_le_of_lt hT'0 (Set.mem_Ioi.mp hv))
   have hexp : σ * (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v)) = 1 :=
     gronwall_exp_laplace_one σ hσ0
   have hFeq : (fun σ => σ * (∫ v in Set.Ioi (0 : ℝ),
-    h v * Real.exp (-σ * v))) σ - c =
-    σ * (∫ v in Set.Ioi (0 : ℝ), (h v - c) * Real.exp (-σ * v)) :=
+      h v * Real.exp (-σ * v))) σ - c =
+      σ * (∫ v in Set.Ioi (0 : ℝ), (h v - c) * Real.exp (-σ * v)) :=
     gronwall_laplace_sub h c σ hσ0 he hce
   have hsplit : (∫ v in Set.Ioi (0 : ℝ), (h v - c) * Real.exp (-σ * v)) =
-    (∫ v in Set.Ioc (0 : ℝ) (max Tε 0), (h v - c) * Real.exp (-σ * v)) +
-    (∫ v in Set.Ioi (max Tε 0), (h v - c) * Real.exp (-σ * v)) := by
+      (∫ v in Set.Ioc (0 : ℝ) (max Tε 0), (h v - c) * Real.exp (-σ * v)) +
+      (∫ v in Set.Ioi (max Tε 0), (h v - c) * Real.exp (-σ * v)) := by
     have h := MeasureTheory.setIntegral_union
       (s := Set.Ioc (0 : ℝ) (max Tε 0)) (t := Set.Ioi (max Tε 0))
       hdisj measurableSet_Ioi h_Ioc_hce h_Ioi_hce
-    rwa [gronwall_Ioc_union_Ioi (max Tε 0) hT'0] at h
+    rw [gronwall_Ioc_union_Ioi (max Tε 0) hT'0] at h
+    exact h
   have hIoc_est : ‖∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
-    (h v - c) * Real.exp (-σ * v)‖ ≤ K := by
+      (h v - c) * Real.exp (-σ * v)‖ ≤ K := by
     have h1 : ‖∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
-      (h v - c) * Real.exp (-σ * v)‖ ≤
-      ∫ v in Set.Ioc (0 : ℝ) (max Tε 0), ‖(h v - c) * Real.exp (-σ * v)‖ :=
+        (h v - c) * Real.exp (-σ * v)‖ ≤
+        ∫ v in Set.Ioc (0 : ℝ) (max Tε 0), ‖(h v - c) * Real.exp (-σ * v)‖ :=
       MeasureTheory.norm_integral_le_integral_norm _
     have h2 : (∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
-      ‖(h v - c) * Real.exp (-σ * v)‖) ≤
-      ∫ v in Set.Ioc (0 : ℝ) (max Tε 0), (‖h v‖ + |c|) := by
+        ‖(h v - c) * Real.exp (-σ * v)‖) ≤
+        ∫ v in Set.Ioc (0 : ℝ) (max Tε 0), (‖h v‖ + |c|) := by
       apply MeasureTheory.setIntegral_mono_on h_Ioc_hce.norm hdomK
         measurableSet_Ioc
       intro v hv
       have e1 : ‖(h v - c) * Real.exp (-σ * v)‖
-        = ‖h v - c‖ * Real.exp (-σ * v) := by
+          = ‖h v - c‖ * Real.exp (-σ * v) := by
         rw [norm_mul, gronwall_norm_exp]
       rw [Set.mem_Ioc] at hv
       rw [e1]
       calc ‖h v - c‖ * Real.exp (-σ * v)
-        ≤ (‖h v‖ + |c|) * Real.exp (-σ * v) := by
-          apply mul_le_mul_of_nonneg_right _ (Real.exp_pos _).le
-          calc ‖h v - c‖ ≤ ‖h v‖ + ‖c‖ := norm_sub_le _ _
-            _ = ‖h v‖ + |c| := by rw [Real.norm_eq_abs c]
+          ≤ (‖h v‖ + |c|) * Real.exp (-σ * v) := by
+            apply mul_le_mul_of_nonneg_right _ (Real.exp_pos _).le
+            calc ‖h v - c‖ ≤ ‖h v‖ + ‖c‖ := norm_sub_le _ _
+              _ = ‖h v‖ + |c| := by rw [Real.norm_eq_abs c]
         _ ≤ ‖h v‖ + |c| := by
-          have hexp : Real.exp (-σ * v) ≤ 1 :=
-            gronwall_exp_le_one σ v hσ0 hv.1.le
-          have hnn : (0 : ℝ) ≤ ‖h v‖ + |c| :=
-            add_nonneg (norm_nonneg _) (abs_nonneg _)
-          calc (‖h v‖ + |c|) * Real.exp (-σ * v)
-            ≤ (‖h v‖ + |c|) * 1 :=
-            mul_le_mul_of_nonneg_left hexp hnn
-            _ = ‖h v‖ + |c| := mul_one _
+            have hexp : Real.exp (-σ * v) ≤ 1 :=
+              gronwall_exp_le_one σ v hσ0 hv.1.le
+            have hnn : (0 : ℝ) ≤ ‖h v‖ + |c| :=
+              add_nonneg (norm_nonneg _) (abs_nonneg _)
+            calc (‖h v‖ + |c|) * Real.exp (-σ * v)
+                ≤ (‖h v‖ + |c|) * 1 :=
+                mul_le_mul_of_nonneg_left hexp hnn
+              _ = ‖h v‖ + |c| := mul_one _
     have h2' : (∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
-      ‖(h v - c) * Real.exp (-σ * v)‖) ≤ K := by
-      rwa [hKdef]
+        ‖(h v - c) * Real.exp (-σ * v)‖) ≤ K := by
+      rw [hKdef]
+      exact h2
     exact h1.trans h2'
   have hIoi_est : ‖∫ v in Set.Ioi (max Tε 0),
-    (h v - c) * Real.exp (-σ * v)‖ ≤
-    (ε / 2) * (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v)) := by
-    have h1 : ‖∫ v in Set.Ioi (max Tε 0),
       (h v - c) * Real.exp (-σ * v)‖ ≤
-      ∫ v in Set.Ioi (max Tε 0), ‖(h v - c) * Real.exp (-σ * v)‖ :=
+      (ε / 2) * (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v)) := by
+    have h1 : ‖∫ v in Set.Ioi (max Tε 0),
+        (h v - c) * Real.exp (-σ * v)‖ ≤
+        ∫ v in Set.Ioi (max Tε 0), ‖(h v - c) * Real.exp (-σ * v)‖ :=
       MeasureTheory.norm_integral_le_integral_norm _
     have hce_Ioi : MeasureTheory.IntegrableOn
-      (fun v => (ε / 2) * Real.exp (-σ * v)) (Set.Ioi (max Tε 0)) :=
+        (fun v => (ε / 2) * Real.exp (-σ * v)) (Set.Ioi (max Tε 0)) :=
       MeasureTheory.Integrable.const_mul
         (integrableOn_exp_mul_Ioi (show -σ < 0 by linarith) (max Tε 0)) (ε / 2)
     have h2 : (∫ v in Set.Ioi (max Tε 0),
-      ‖(h v - c) * Real.exp (-σ * v)‖) ≤
-      ∫ v in Set.Ioi (max Tε 0), (ε / 2) * Real.exp (-σ * v) := by
+        ‖(h v - c) * Real.exp (-σ * v)‖) ≤
+        ∫ v in Set.Ioi (max Tε 0), (ε / 2) * Real.exp (-σ * v) := by
       apply MeasureTheory.setIntegral_mono_on h_Ioi_hce.norm hce_Ioi
         measurableSet_Ioi
       intro v hv
       have e1 : ‖(h v - c) * Real.exp (-σ * v)‖
-        = ‖h v - c‖ * Real.exp (-σ * v) := by
+          = ‖h v - c‖ * Real.exp (-σ * v) := by
         rw [norm_mul, gronwall_norm_exp]
       rw [Set.mem_Ioi] at hv
-      rwa [e1]
+      rw [e1]
+      exact mul_le_mul_of_nonneg_right
         (hTε v (le_trans (le_max_left Tε 0) hv.le)) (Real.exp_pos _).le
     have h3 : (∫ v in Set.Ioi (max Tε 0), (ε / 2) * Real.exp (-σ * v))
-      = (ε / 2) * (∫ v in Set.Ioi (max Tε 0), Real.exp (-σ * v)) := by
+        = (ε / 2) * (∫ v in Set.Ioi (max Tε 0), Real.exp (-σ * v)) := by
       rw [MeasureTheory.integral_const_mul]
     have he_Ioc : MeasureTheory.IntegrableOn (fun v => Real.exp (-σ * v))
-      (Set.Ioc (0 : ℝ) (max Tε 0)) :=
+        (Set.Ioc (0 : ℝ) (max Tε 0)) :=
       (integrableOn_exp_mul_Ioi (show -σ < 0 by linarith) 0).mono_set
         (fun v hv => (Set.mem_Ioc.mp hv).1)
     have he_Ioi : MeasureTheory.IntegrableOn (fun v => Real.exp (-σ * v))
-      (Set.Ioi (max Tε 0)) :=
+        (Set.Ioi (max Tε 0)) :=
       integrableOn_exp_mul_Ioi (show -σ < 0 by linarith) (max Tε 0)
     have hsplit_e : (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v)) =
-      (∫ v in Set.Ioc (0 : ℝ) (max Tε 0), Real.exp (-σ * v)) +
-      (∫ v in Set.Ioi (max Tε 0), Real.exp (-σ * v)) := by
+        (∫ v in Set.Ioc (0 : ℝ) (max Tε 0), Real.exp (-σ * v)) +
+        (∫ v in Set.Ioi (max Tε 0), Real.exp (-σ * v)) := by
       have h := MeasureTheory.setIntegral_union
         (s := Set.Ioc (0 : ℝ) (max Tε 0)) (t := Set.Ioi (max Tε 0))
         hdisj measurableSet_Ioi he_Ioc he_Ioi
-      rwa [gronwall_Ioc_union_Ioi (max Tε 0) hT'0] at h
+      rw [gronwall_Ioc_union_Ioi (max Tε 0) hT'0] at h
+      exact h
     have hnn_e : (0 : ℝ) ≤
-      ∫ v in Set.Ioc (0 : ℝ) (max Tε 0), Real.exp (-σ * v) :=
+        ∫ v in Set.Ioc (0 : ℝ) (max Tε 0), Real.exp (-σ * v) :=
       MeasureTheory.setIntegral_nonneg measurableSet_Ioc
         (fun v _ => (Real.exp_pos _).le)
     have hleE : (∫ v in Set.Ioi (max Tε 0), Real.exp (-σ * v)) ≤
-      (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v)) := by
+        (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v)) := by
       linarith [hsplit_e, hnn_e]
     calc ‖∫ v in Set.Ioi (max Tε 0), (h v - c) * Real.exp (-σ * v)‖
-      ≤ ∫ v in Set.Ioi (max Tε 0), ‖(h v - c) * Real.exp (-σ * v)‖ := h1
+        ≤ ∫ v in Set.Ioi (max Tε 0), ‖(h v - c) * Real.exp (-σ * v)‖ := h1
       _ ≤ ∫ v in Set.Ioi (max Tε 0), (ε / 2) * Real.exp (-σ * v) := h2
       _ = (ε / 2) * (∫ v in Set.Ioi (max Tε 0), Real.exp (-σ * v)) := h3
       _ ≤ (ε / 2) * (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v)) :=
-        mul_le_mul_of_nonneg_left hleE (le_of_lt (half_pos hε))
+          mul_le_mul_of_nonneg_left hleE (le_of_lt (half_pos hε))
   have hKlt : σ * K < ε / 2 := by
     have h1 : σ * K ≤ σ * (K + 1) :=
       mul_le_mul_of_nonneg_left (by linarith [hK0]) hσ0.le
@@ -1841,45 +1813,47 @@ private lemma tendsto_mul_laplace_of_tendsto (h : ℝ → ℝ) (c : ℝ)
       div_mul_cancel₀ _ (ne_of_gt hKp1)
     linarith
   have hE2 : σ * ((ε / 2) * (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v)))
-    = ε / 2 := by
+      = ε / 2 := by
     rw [← mul_assoc, mul_comm σ (ε / 2), mul_assoc, hexp, mul_one]
   have hIoc_σ : ‖σ * (∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
-    (h v - c) * Real.exp (-σ * v))‖ < ε / 2 := by
+      (h v - c) * Real.exp (-σ * v))‖ < ε / 2 := by
     have eσ : ‖σ * (∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
-      (h v - c) * Real.exp (-σ * v))‖
-      = σ * ‖∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
-        (h v - c) * Real.exp (-σ * v)‖ := by
+        (h v - c) * Real.exp (-σ * v))‖
+        = σ * ‖∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
+          (h v - c) * Real.exp (-σ * v)‖ := by
       rw [norm_mul, Real.norm_eq_abs, abs_of_pos hσ0]
     rw [eσ]
     calc σ * ‖∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
-      (h v - c) * Real.exp (-σ * v)‖ ≤ σ * K :=
-        mul_le_mul_of_nonneg_left hIoc_est hσ0.le
+        (h v - c) * Real.exp (-σ * v)‖ ≤ σ * K :=
+          mul_le_mul_of_nonneg_left hIoc_est hσ0.le
       _ < ε / 2 := hKlt
   have hIoi_σ : ‖σ * (∫ v in Set.Ioi (max Tε 0),
-    (h v - c) * Real.exp (-σ * v))‖ ≤ ε / 2 := by
+      (h v - c) * Real.exp (-σ * v))‖ ≤ ε / 2 := by
     have eσ : ‖σ * (∫ v in Set.Ioi (max Tε 0),
-      (h v - c) * Real.exp (-σ * v))‖
-      = σ * ‖∫ v in Set.Ioi (max Tε 0),
-        (h v - c) * Real.exp (-σ * v)‖ := by
+        (h v - c) * Real.exp (-σ * v))‖
+        = σ * ‖∫ v in Set.Ioi (max Tε 0),
+          (h v - c) * Real.exp (-σ * v)‖ := by
       rw [norm_mul, Real.norm_eq_abs, abs_of_pos hσ0]
     rw [eσ]
     calc σ * ‖∫ v in Set.Ioi (max Tε 0),
-      (h v - c) * Real.exp (-σ * v)‖
-      ≤ σ * ((ε / 2) * (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v))) :=
-        mul_le_mul_of_nonneg_left hIoi_est hσ0.le
+        (h v - c) * Real.exp (-σ * v)‖
+        ≤ σ * ((ε / 2) * (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v))) :=
+          mul_le_mul_of_nonneg_left hIoi_est hσ0.le
       _ = ε / 2 := hE2
   rw [dist_eq_norm, hFeq, hsplit, mul_add]
   calc ‖σ * (∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
-    (h v - c) * Real.exp (-σ * v)) +
-    σ * (∫ v in Set.Ioi (max Tε 0), (h v - c) * Real.exp (-σ * v))‖
-    ≤ ‖σ * (∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
-      (h v - c) * Real.exp (-σ * v))‖ +
-      ‖σ * (∫ v in Set.Ioi (max Tε 0),
-        (h v - c) * Real.exp (-σ * v))‖ :=
-      norm_add_le _ _
+      (h v - c) * Real.exp (-σ * v)) +
+      σ * (∫ v in Set.Ioi (max Tε 0), (h v - c) * Real.exp (-σ * v))‖
+      ≤ ‖σ * (∫ v in Set.Ioc (0 : ℝ) (max Tε 0),
+        (h v - c) * Real.exp (-σ * v))‖ +
+        ‖σ * (∫ v in Set.Ioi (max Tε 0),
+          (h v - c) * Real.exp (-σ * v))‖ :=
+        norm_add_le _ _
     _ < ε / 2 + ε / 2 := add_lt_add_of_lt_of_le hIoc_σ hIoi_σ
     _ = ε := add_halves ε
 
+-- Laplace transform of log: ∫ log u e^{-u} = -γ.
+-- Complex form, following RegularizedIntegral.lean.
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1899,12 +1873,11 @@ private lemma laplace_log_complex_int :
       with s hs
     exact Complex.Gamma_eq_integral hs
   have hd : deriv Complex.Gamma (1 : ℂ) =
-    ∫ t : ℝ in Set.Ioi 0, (t : ℂ) ^ ((1 : ℂ) - 1) *
-      (Real.log t * Real.exp (-t)) := by
+      ∫ t : ℝ in Set.Ioi 0, (t : ℂ) ^ ((1 : ℂ) - 1) *
+        (Real.log t * Real.exp (-t)) := by
     rw [hEq.deriv_eq, hGI.deriv]
   rw [Complex.hasDerivAt_Gamma_one.deriv] at hd
   simpa [mul_comm] using hd.symm
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1940,7 +1913,6 @@ private lemma laplace_log_complex_integrable :
       (by norm_num)).1
   simpa only [MellinConvergent, sub_self, Complex.cpow_zero, one_smul,
     Complex.real_smul, one_mul, mul_comm] using hm
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1955,7 +1927,7 @@ private lemma laplace_log_eq :
   (∫ u in Set.Ioi (0 : ℝ), Real.log u * Real.exp (-u)) =
     -Real.eulerMascheroniConstant := by
   have hfun : (fun t : ℝ => (Real.exp (-t) * Real.log t : ℂ)) =
-    (fun t : ℝ => ((Real.log t * Real.exp (-t) : ℝ) : ℂ)) := by
+      (fun t : ℝ => ((Real.log t * Real.exp (-t) : ℝ) : ℂ)) := by
     ext t
     push_cast
     ring
@@ -1965,7 +1937,6 @@ private lemma laplace_log_eq :
   refine ⟨MeasureTheory.Integrable.iff_ofReal.mpr hC, ?_⟩
   rw [integral_complex_ofReal] at hV
   exact_mod_cast hV
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1979,7 +1950,6 @@ private lemma integral_exp_neg_mul_Ioi_zero (σ : ℝ) (hσ : 0 < σ) :
   have h := integral_exp_mul_Ioi (a := -σ) (by linarith : -σ < 0) (0 : ℝ)
   rw [mul_zero, Real.exp_zero] at h
   rw [h, neg_div_neg_eq, one_div]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -1995,24 +1965,24 @@ private lemma laplace_log_scaling (σ : ℝ) (hσ : 0 < σ) :
     -Real.eulerMascheroniConstant - Real.log σ := by
   have hbase := laplace_log_eq
   have hexp : MeasureTheory.IntegrableOn (fun v : ℝ => Real.exp (-σ * v))
-    (Set.Ioi (0 : ℝ)) :=
+      (Set.Ioi (0 : ℝ)) :=
     integrableOn_exp_mul_Ioi (by linarith : -σ < 0) 0
   have hcomp : MeasureTheory.IntegrableOn
-    (fun v : ℝ => Real.log (σ * v) * Real.exp (-(σ * v))) (Set.Ioi (0 : ℝ)) := by
+      (fun v : ℝ => Real.log (σ * v) * Real.exp (-(σ * v))) (Set.Ioi (0 : ℝ)) := by
     have hiff := MeasureTheory.integrableOn_Ioi_comp_mul_left_iff
       (fun u : ℝ => Real.log u * Real.exp (-u)) (0 : ℝ) (a := σ) hσ
     rw [mul_zero] at hiff
     exact hiff.mpr hbase.1
   have hsplit : ∀ v ∈ Set.Ioi (0 : ℝ),
-    Real.log (σ * v) * Real.exp (-(σ * v)) =
-      Real.log σ * Real.exp (-σ * v) + Real.log v * Real.exp (-σ * v) := by
+      Real.log (σ * v) * Real.exp (-(σ * v)) =
+        Real.log σ * Real.exp (-σ * v) + Real.log v * Real.exp (-σ * v) := by
     intro v hv
     have hv0 : (0 : ℝ) < v := Set.mem_Ioi.mp hv
     have hexp_eq : Real.exp (-(σ * v)) = Real.exp (-σ * v) := by rw [neg_mul]
     rw [Real.log_mul (ne_of_gt hσ) (ne_of_gt hv0), hexp_eq]
     ring
   have htarget : MeasureTheory.IntegrableOn
-    (fun v : ℝ => Real.log v * Real.exp (-σ * v)) (Set.Ioi (0 : ℝ)) := by
+      (fun v : ℝ => Real.log v * Real.exp (-σ * v)) (Set.Ioi (0 : ℝ)) := by
     have hcm := MeasureTheory.Integrable.const_mul hexp (Real.log σ)
     have hsub := hcomp.sub hcm
     refine hsub.congr_fun ?h measurableSet_Ioi
@@ -2024,19 +1994,19 @@ private lemma laplace_log_scaling (σ : ℝ) (hσ : 0 < σ) :
     ring
   refine ⟨htarget, ?_⟩
   have hsub : (∫ v in Set.Ioi (0 : ℝ), Real.log (σ * v) * Real.exp (-(σ * v))) =
-    σ⁻¹ * (∫ u in Set.Ioi (0 : ℝ), Real.log u * Real.exp (-u)) := by
+      σ⁻¹ * (∫ u in Set.Ioi (0 : ℝ), Real.log u * Real.exp (-u)) := by
     have h := MeasureTheory.integral_comp_mul_left_Ioi
       (fun u : ℝ => Real.log u * Real.exp (-u)) (0 : ℝ) (b := σ) hσ
     rw [mul_zero] at h
     simpa [smul_eq_mul] using h
   have hsplit_int :
-    (∫ v in Set.Ioi (0 : ℝ), Real.log (σ * v) * Real.exp (-(σ * v))) =
-      Real.log σ * (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v)) +
-        (∫ v in Set.Ioi (0 : ℝ), Real.log v * Real.exp (-σ * v)) := by
-    have hcongr :
       (∫ v in Set.Ioi (0 : ℝ), Real.log (σ * v) * Real.exp (-(σ * v))) =
-        ∫ v in Set.Ioi (0 : ℝ), (Real.log σ * Real.exp (-σ * v) +
-          Real.log v * Real.exp (-σ * v)) :=
+        Real.log σ * (∫ v in Set.Ioi (0 : ℝ), Real.exp (-σ * v)) +
+          (∫ v in Set.Ioi (0 : ℝ), Real.log v * Real.exp (-σ * v)) := by
+    have hcongr :
+        (∫ v in Set.Ioi (0 : ℝ), Real.log (σ * v) * Real.exp (-(σ * v))) =
+          ∫ v in Set.Ioi (0 : ℝ), (Real.log σ * Real.exp (-σ * v) +
+            Real.log v * Real.exp (-σ * v)) :=
       MeasureTheory.setIntegral_congr_fun measurableSet_Ioi hsplit
     rw [hcongr, MeasureTheory.integral_add
       (MeasureTheory.Integrable.const_mul hexp (Real.log σ)) htarget,
@@ -2045,11 +2015,10 @@ private lemma laplace_log_scaling (σ : ℝ) (hσ : 0 < σ) :
   rw [hsub, hbase.2, hexp_val] at hsplit_int
   have hσ' : σ ≠ 0 := ne_of_gt hσ
   have hT : (∫ v in Set.Ioi (0 : ℝ), Real.log v * Real.exp (-σ * v)) =
-    σ⁻¹ * -Real.eulerMascheroniConstant - Real.log σ * σ⁻¹ := by
+      σ⁻¹ * -Real.eulerMascheroniConstant - Real.log σ * σ⁻¹ := by
     linarith [hsplit_int]
   rw [hT]
   field_simp
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2063,7 +2032,7 @@ private lemma tendsto_mertensA_sub_loglog_eulerMascheroni :
     Filter.atTop (nhds Real.eulerMascheroniConstant) := by
   obtain ⟨c, hc⟩ := exists_tendsto_mertensA_sub_loglog
   have hlim : Filter.Tendsto (fun v => mertensA (Real.exp v) - Real.log v)
-    Filter.atTop (nhds c) := by
+      Filter.atTop (nhds c) := by
     have hcomp := hc.comp Real.tendsto_exp_atTop
     refine Filter.Tendsto.congr' ?_ hcomp
     filter_upwards with v
@@ -2071,14 +2040,14 @@ private lemma tendsto_mertensA_sub_loglog_eulerMascheroni :
   have hmeas : Measurable (fun v => mertensA (Real.exp v) - Real.log v) :=
     (mertensA_measurable.comp Real.measurable_exp).sub Real.measurable_log
   have hint : ∀ T : ℝ, MeasureTheory.IntegrableOn
-    (fun v => mertensA (Real.exp v) - Real.log v) (Set.Ioc 0 T) := by
+      (fun v => mertensA (Real.exp v) - Real.log v) (Set.Ioc 0 T) := by
     intro T
     have hA_int : MeasureTheory.IntegrableOn (fun v => mertensA (Real.exp v))
-      (Set.Ioc 0 T) := by
+        (Set.Ioc 0 T) := by
       have hmem : Measurable (fun v => mertensA (Real.exp v)) :=
         mertensA_measurable.comp Real.measurable_exp
       have hdom : MeasureTheory.IntegrableOn (fun _ => mertensA (Real.exp T))
-        (Set.Ioc 0 T) :=
+          (Set.Ioc 0 T) :=
         ((continuous_const.continuousOn).integrableOn_Icc).mono_set
           Set.Ioc_subset_Icc_self
       refine MeasureTheory.Integrable.mono' hdom hmem.aestronglyMeasurable ?_
@@ -2089,66 +2058,67 @@ private lemma tendsto_mertensA_sub_loglog_eulerMascheroni :
       rw [Real.norm_eq_abs, abs_of_nonneg hnn]
       exact mertensA_mono (Real.exp_le_exp.mpr hv.2)
     have hlog_int : MeasureTheory.IntegrableOn (fun v => Real.log v)
-      (Set.Ioc 0 T) := by
+        (Set.Ioc 0 T) := by
       by_cases hT : (0 : ℝ) ≤ T
       · exact (intervalIntegrable_iff_integrableOn_Ioc_of_le
-        hT).mp intervalIntegral.intervalIntegrable_log'
+          hT).mp intervalIntegral.intervalIntegrable_log'
       · have hempty : Set.Ioc (0 : ℝ) T = ∅ :=
-        Set.Ioc_eq_empty (not_lt.mpr (le_of_lt (lt_of_not_ge hT)))
-        rwa [hempty]
+          Set.Ioc_eq_empty (not_lt.mpr (le_of_lt (lt_of_not_ge hT)))
+        rw [hempty]
+        exact MeasureTheory.integrableOn_empty
     exact hA_int.sub hlog_int
   have hN5 := tendsto_mul_laplace_of_tendsto
     (fun v => mertensA (Real.exp v) - Real.log v) c hmeas hint hlim
   have hγc : Filter.Tendsto (fun _ : ℝ => Real.eulerMascheroniConstant)
-    (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds Real.eulerMascheroniConstant) :=
+      (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds Real.eulerMascheroniConstant) :=
     tendsto_const_nhds
   have hG : Filter.Tendsto
-    (fun σ => σ * (∫ v in Set.Ioi (0 : ℝ),
-      (mertensA (Real.exp v) - Real.log v) * Real.exp (-σ * v))
-      - Real.eulerMascheroniConstant)
-    (nhdsWithin (0 : ℝ) (Set.Ioi 0))
-    (nhds (c - Real.eulerMascheroniConstant)) :=
+      (fun σ => σ * (∫ v in Set.Ioi (0 : ℝ),
+        (mertensA (Real.exp v) - Real.log v) * Real.exp (-σ * v))
+        - Real.eulerMascheroniConstant)
+      (nhdsWithin (0 : ℝ) (Set.Ioi 0))
+      (nhds (c - Real.eulerMascheroniConstant)) :=
     hN5.2.sub hγc
   have key : ∀ σ : ℝ, 0 < σ →
-    Real.log (riemannZeta ((1 + σ : ℝ) : ℂ)).re + Real.log σ
-    = σ * (∫ v in Set.Ioi (0 : ℝ),
-      (mertensA (Real.exp v) - Real.log v) * Real.exp (-σ * v))
-      - Real.eulerMascheroniConstant := by
+      Real.log (riemannZeta ((1 + σ : ℝ) : ℂ)).re + Real.log σ
+      = σ * (∫ v in Set.Ioi (0 : ℝ),
+          (mertensA (Real.exp v) - Real.log v) * Real.exp (-σ * v))
+        - Real.eulerMascheroniConstant := by
     intro σ hσ
     have hN4 := (log_zeta_eq_laplace_mertensA σ hσ).1
     have hN6 := laplace_log_scaling σ hσ
     have hN5i := hN5.1 σ hσ
     have e1 : (∫ v in Set.Ioi (0 : ℝ),
-      mertensA (Real.exp v) * Real.exp (-σ * v))
-      = (∫ v in Set.Ioi (0 : ℝ),
-        (mertensA (Real.exp v) - Real.log v) * Real.exp (-σ * v))
-        + (∫ v in Set.Ioi (0 : ℝ), Real.log v * Real.exp (-σ * v)) := by
+          mertensA (Real.exp v) * Real.exp (-σ * v))
+        = (∫ v in Set.Ioi (0 : ℝ),
+            (mertensA (Real.exp v) - Real.log v) * Real.exp (-σ * v))
+          + (∫ v in Set.Ioi (0 : ℝ), Real.log v * Real.exp (-σ * v)) := by
       have ec : (∫ v in Set.Ioi (0 : ℝ),
-        mertensA (Real.exp v) * Real.exp (-σ * v))
-        = ∫ v in Set.Ioi (0 : ℝ),
-          ((mertensA (Real.exp v) - Real.log v) * Real.exp (-σ * v)
-            + Real.log v * Real.exp (-σ * v)) :=
+            mertensA (Real.exp v) * Real.exp (-σ * v))
+          = ∫ v in Set.Ioi (0 : ℝ),
+            ((mertensA (Real.exp v) - Real.log v) * Real.exp (-σ * v)
+              + Real.log v * Real.exp (-σ * v)) :=
         MeasureTheory.setIntegral_congr_fun measurableSet_Ioi (fun v _ => by ring)
       rw [ec, MeasureTheory.integral_add hN5i hN6.1]
     rw [hN4, e1, mul_add, hN6.2]
     ring
   have hF : Filter.Tendsto
-    (fun σ => Real.log (riemannZeta ((1 + σ : ℝ) : ℂ)).re + Real.log σ)
-    (nhdsWithin (0 : ℝ) (Set.Ioi 0))
-    (nhds (c - Real.eulerMascheroniConstant)) := by
+      (fun σ => Real.log (riemannZeta ((1 + σ : ℝ) : ℂ)).re + Real.log σ)
+      (nhdsWithin (0 : ℝ) (Set.Ioi 0))
+      (nhds (c - Real.eulerMascheroniConstant)) := by
     refine Filter.Tendsto.congr' ?_ hG
     filter_upwards [self_mem_nhdsWithin] with σ hσ
     exact (key σ (Set.mem_Ioi.mp hσ)).symm
   have hF0 : Filter.Tendsto
-    (fun σ => Real.log (riemannZeta ((1 + σ : ℝ) : ℂ)).re + Real.log σ)
-    (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 0) := by
+      (fun σ => Real.log (riemannZeta ((1 + σ : ℝ) : ℂ)).re + Real.log σ)
+      (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 0) := by
     have hzeta := ZetaAsymptotics.tendsto_riemannZeta_sub_one_div_nhds_right
     have hmap : Filter.Tendsto (fun σ : ℝ => (1 + σ : ℝ))
-      (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhdsWithin (1 : ℝ) (Set.Ioi 1)) := by
+        (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhdsWithin (1 : ℝ) (Set.Ioi 1)) := by
       have h1 : Filter.Tendsto (fun σ : ℝ => (1 + σ : ℝ)) (nhds (0 : ℝ))
-        (nhds (1 : ℝ)) := by
+          (nhds (1 : ℝ)) := by
         have hc1 : Filter.Tendsto (fun _ : ℝ => (1 : ℝ)) (nhds (0 : ℝ))
-          (nhds 1) := tendsto_const_nhds
+            (nhds 1) := tendsto_const_nhds
         have hid : Filter.Tendsto (fun σ : ℝ => σ) (nhds (0 : ℝ)) (nhds 0) :=
           Filter.tendsto_id
         have h := hc1.add hid
@@ -2160,32 +2130,33 @@ private lemma tendsto_mertensA_sub_loglog_eulerMascheroni :
         have h := Set.mem_Ioi.mp hσ
         linarith)
     have hcomp : Filter.Tendsto
-      (fun σ : ℝ => riemannZeta ((1 + σ : ℝ) : ℂ)
-        - 1 / (((1 + σ : ℝ) : ℂ) - 1))
-      (nhdsWithin (0 : ℝ) (Set.Ioi 0))
-      (nhds ((Real.eulerMascheroniConstant : ℝ) : ℂ)) :=
+        (fun σ : ℝ => riemannZeta ((1 + σ : ℝ) : ℂ)
+          - 1 / (((1 + σ : ℝ) : ℂ) - 1))
+        (nhdsWithin (0 : ℝ) (Set.Ioi 0))
+        (nhds ((Real.eulerMascheroniConstant : ℝ) : ℂ)) :=
       hzeta.comp hmap
     have h0c : Filter.Tendsto (fun σ : ℝ => ((σ : ℝ) : ℂ)) (nhds (0 : ℝ))
-      (nhds ((0 : ℝ) : ℂ)) :=
+        (nhds ((0 : ℝ) : ℂ)) :=
       Complex.continuous_ofReal.tendsto 0
     have hσ0 : Filter.Tendsto (fun σ : ℝ => ((σ : ℝ) : ℂ))
-      (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 0) := by
+        (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 0) := by
       have h : Filter.Tendsto (fun σ : ℝ => ((σ : ℝ) : ℂ))
-        (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds ((0 : ℝ) : ℂ)) :=
+          (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds ((0 : ℝ) : ℂ)) :=
         h0c.mono_left nhdsWithin_le_nhds
-      rwa [Complex.ofReal_zero] at h
+      rw [Complex.ofReal_zero] at h
+      exact h
     have hmul : Filter.Tendsto (fun σ : ℝ => ((σ : ℝ) : ℂ)
-      * (riemannZeta ((1 + σ : ℝ) : ℂ) - 1 / (((1 + σ : ℝ) : ℂ) - 1)))
-      (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 0) := by
+          * (riemannZeta ((1 + σ : ℝ) : ℂ) - 1 / (((1 + σ : ℝ) : ℂ) - 1)))
+        (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 0) := by
       have h := hσ0.mul hcomp
       simpa using h
     have h_sz : Filter.Tendsto
-      (fun σ : ℝ => ((σ : ℝ) : ℂ) * riemannZeta ((1 + σ : ℝ) : ℂ))
-      (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 1) := by
+        (fun σ : ℝ => ((σ : ℝ) : ℂ) * riemannZeta ((1 + σ : ℝ) : ℂ))
+        (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 1) := by
       have hsub : ∀ σ : ℝ, σ ∈ Set.Ioi (0 : ℝ) →
-        ((σ : ℝ) : ℂ) * (riemannZeta ((1 + σ : ℝ) : ℂ)
-          - 1 / (((1 + σ : ℝ) : ℂ) - 1))
-        = ((σ : ℝ) : ℂ) * riemannZeta ((1 + σ : ℝ) : ℂ) - 1 := by
+          ((σ : ℝ) : ℂ) * (riemannZeta ((1 + σ : ℝ) : ℂ)
+            - 1 / (((1 + σ : ℝ) : ℂ) - 1))
+          = ((σ : ℝ) : ℂ) * riemannZeta ((1 + σ : ℝ) : ℂ) - 1 := by
         intro σ hσ
         have hσ0 : ((σ : ℝ) : ℂ) ≠ 0 :=
           by exact_mod_cast ne_of_gt (Set.mem_Ioi.mp hσ)
@@ -2194,21 +2165,21 @@ private lemma tendsto_mertensA_sub_loglog_eulerMascheroni :
           ring
         rw [hexp, mul_sub, mul_one_div_cancel hσ0]
       have hmul' : Filter.Tendsto (fun σ : ℝ => ((σ : ℝ) : ℂ)
-        * riemannZeta ((1 + σ : ℝ) : ℂ) - 1)
-        (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 0) := by
+            * riemannZeta ((1 + σ : ℝ) : ℂ) - 1)
+          (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 0) := by
         refine Filter.Tendsto.congr' ?_ hmul
         filter_upwards [self_mem_nhdsWithin] with σ hσ
         exact hsub σ hσ
       have h1c : Filter.Tendsto (fun _ : ℝ => (1 : ℂ))
-        (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 1) := tendsto_const_nhds
+          (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 1) := tendsto_const_nhds
       have h2 := hmul'.add h1c
       rw [zero_add] at h2
       refine Filter.Tendsto.congr' ?_ h2
       filter_upwards with σ
       rw [sub_add_cancel]
     have h_re : Filter.Tendsto
-      (fun σ : ℝ => σ * (riemannZeta ((1 + σ : ℝ) : ℂ)).re)
-      (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 1) := by
+        (fun σ : ℝ => σ * (riemannZeta ((1 + σ : ℝ) : ℂ)).re)
+        (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds 1) := by
       have h := (Complex.continuous_re.tendsto (1 : ℂ)).comp h_sz
       have hre1 : ((1 : ℂ)).re = 1 := Complex.one_re
       rw [hre1] at h
@@ -2218,20 +2189,21 @@ private lemma tendsto_mertensA_sub_loglog_eulerMascheroni :
       rw [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul,
         sub_zero]
     have h_log : Filter.Tendsto
-      (fun σ : ℝ => Real.log (σ * (riemannZeta ((1 + σ : ℝ) : ℂ)).re))
-      (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds (Real.log 1)) :=
+        (fun σ : ℝ => Real.log (σ * (riemannZeta ((1 + σ : ℝ) : ℂ)).re))
+        (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (nhds (Real.log 1)) :=
       h_re.log (by norm_num : (1 : ℝ) ≠ 0)
     rw [Real.log_one] at h_log
     have hpos : ∀ᶠ σ in nhdsWithin (0 : ℝ) (Set.Ioi 0),
-      0 < (riemannZeta ((1 + σ : ℝ) : ℂ)).re := by
+        0 < (riemannZeta ((1 + σ : ℝ) : ℂ)).re := by
       have h1 : ∀ᶠ σ in nhdsWithin (0 : ℝ) (Set.Ioi 0),
-        (1 : ℝ) / 2 < σ * (riemannZeta ((1 + σ : ℝ) : ℂ)).re :=
+          (1 : ℝ) / 2 < σ * (riemannZeta ((1 + σ : ℝ) : ℂ)).re :=
         h_re.eventually (Ioi_mem_nhds (by norm_num : (1 : ℝ) / 2 < 1))
       filter_upwards [h1, self_mem_nhdsWithin] with σ hσ hσ0
       have hσpos : (0 : ℝ) < σ := Set.mem_Ioi.mp hσ0
       have hdiv : (0 : ℝ) < σ * (riemannZeta ((1 + σ : ℝ) : ℂ)).re / σ :=
         div_pos (by linarith [hσ]) hσpos
-      rwa [mul_div_cancel_left₀ _ (ne_of_gt hσpos)] at hdiv
+      rw [mul_div_cancel_left₀ _ (ne_of_gt hσpos)] at hdiv
+      exact hdiv
     refine Filter.Tendsto.congr' ?_ h_log
     filter_upwards [hpos, self_mem_nhdsWithin] with σ hσ hσ0
     have hσpos : (0 : ℝ) < σ := Set.mem_Ioi.mp hσ0
@@ -2240,8 +2212,10 @@ private lemma tendsto_mertensA_sub_loglog_eulerMascheroni :
   have hceq : c - Real.eulerMascheroniConstant = 0 :=
     tendsto_nhds_unique hF hF0
   have hcγ : c = Real.eulerMascheroniConstant := by linarith
-  rwa [hcγ] at hc
+  rw [hcγ] at hc
+  exact hc
 
+-- Truncated log-series bound.
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2260,12 +2234,13 @@ private lemma neg_log_one_sub_inv_sub_primeTail {p N : ℕ} (hp : p.Prime) (h : 
     apply inv_lt_one_of_one_lt₀
     linarith
   have habs : |(p : ℝ)⁻¹| < 1 := by
-    rwa [abs_of_nonneg h0p]
+    rw [abs_of_nonneg h0p]
+    exact h1p
   have hHasSum : HasSum (fun n : ℕ => ((p : ℝ)⁻¹) ^ (n + 1) / ((n : ℝ) + 1))
-    (-Real.log (1 - (p : ℝ)⁻¹)) :=
+      (-Real.log (1 - (p : ℝ)⁻¹)) :=
     Real.hasSum_pow_div_log_of_abs_lt_one habs
   have hS : Summable
-    (fun n : ℕ => ((p : ℝ)⁻¹) ^ (n + 1) / ((n : ℝ) + 1)) :=
+      (fun n : ℕ => ((p : ℝ)⁻¹) ^ (n + 1) / ((n : ℝ) + 1)) :=
     hHasSum.summable
   have hf0 : ∀ j : ℕ, 0 ≤ ((p : ℝ)⁻¹) ^ (j + 1) / ((j : ℝ) + 1) := by
     intro j
@@ -2273,10 +2248,10 @@ private lemma neg_log_one_sub_inv_sub_primeTail {p N : ℕ} (hp : p.Prime) (h : 
     have hj : (0 : ℝ) ≤ (j : ℝ) := Nat.cast_nonneg j
     linarith
   have hT_eq : primeTail p N = ∑ j ∈ Finset.range (Nat.log p N),
-    (((p : ℝ)⁻¹) ^ (j + 1) / ((j : ℝ) + 1)) := by
+      (((p : ℝ)⁻¹) ^ (j + 1) / ((j : ℝ) + 1)) := by
     unfold primeTail
     have hIcc : Finset.Icc 1 (Nat.log p N) =
-      Finset.Ico 1 (Nat.log p N + 1) :=
+        Finset.Ico 1 (Nat.log p N + 1) :=
       (Finset.Ico_add_one_right_eq_Icc_of_not_isMax
         (not_isMax_of_lt (Nat.lt_succ_self _)) 1).symm
     rw [hIcc, Finset.sum_Ico_eq_sum_range, Nat.add_sub_cancel]
@@ -2291,37 +2266,38 @@ private lemma neg_log_one_sub_inv_sub_primeTail {p N : ℕ} (hp : p.Prime) (h : 
   have hsplit := Summable.sum_add_tsum_nat_add (Nat.log p N) hS
   have htsum := hHasSum.tsum_eq
   have hsplit' : (∑ j ∈ Finset.range (Nat.log p N),
-    (((p : ℝ)⁻¹) ^ (j + 1) / ((j : ℝ) + 1))) +
-    (∑' j : ℕ, ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) /
-      ((((j + Nat.log p N : ℕ)) : ℝ) + 1)) =
-    ∑' j : ℕ, (((p : ℝ)⁻¹) ^ (j + 1) / ((j : ℝ) + 1)) := hsplit
+        (((p : ℝ)⁻¹) ^ (j + 1) / ((j : ℝ) + 1))) +
+        (∑' j : ℕ, ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) /
+          ((((j + Nat.log p N : ℕ)) : ℝ) + 1)) =
+        ∑' j : ℕ, (((p : ℝ)⁻¹) ^ (j + 1) / ((j : ℝ) + 1)) := hsplit
   have hR_sum : Summable (fun j : ℕ => ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) /
-    ((((j + Nat.log p N : ℕ)) : ℝ) + 1)) :=
+      ((((j + Nat.log p N : ℕ)) : ℝ) + 1)) :=
     (summable_nat_add_iff (Nat.log p N)).mpr hS
   have hgeom_sum : (∑' j : ℕ, ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * ((p : ℝ)⁻¹) ^ j) =
-    ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * (1 - (p : ℝ)⁻¹)⁻¹ := by
+      ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * (1 - (p : ℝ)⁻¹)⁻¹ := by
     rw [tsum_mul_left, tsum_geometric_of_lt_one h0p h1p]
   have hSg : Summable
-    (fun j : ℕ => ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * ((p : ℝ)⁻¹) ^ j) :=
+      (fun j : ℕ => ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * ((p : ℝ)⁻¹) ^ j) :=
     Summable.mul_left _ (summable_geometric_of_lt_one h0p h1p)
   have hgeom_has : HasSum
-    (fun j : ℕ => ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * ((p : ℝ)⁻¹) ^ j)
-    (((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * (1 - (p : ℝ)⁻¹)⁻¹) := by
+      (fun j : ℕ => ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * ((p : ℝ)⁻¹) ^ j)
+      (((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * (1 - (p : ℝ)⁻¹)⁻¹) := by
     have h := hSg.hasSum
-    rwa [hgeom_sum] at h
+    rw [hgeom_sum] at h
+    exact h
   have hpartial : ∀ J : ℕ, (∑ j ∈ Finset.range J,
-    ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) /
-      ((((j + Nat.log p N : ℕ)) : ℝ) + 1)) ≤
-    ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * (1 - (p : ℝ)⁻¹)⁻¹ := by
+      ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) /
+        ((((j + Nat.log p N : ℕ)) : ℝ) + 1)) ≤
+      ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * (1 - (p : ℝ)⁻¹)⁻¹ := by
     intro J
     have hpt : ∀ j ∈ Finset.range J,
-      ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) /
-        ((((j + Nat.log p N : ℕ)) : ℝ) + 1) ≤
-        ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * ((p : ℝ)⁻¹) ^ j := by
+        ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) /
+          ((((j + Nat.log p N : ℕ)) : ℝ) + 1) ≤
+          ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * ((p : ℝ)⁻¹) ^ j := by
       intro j hj
       have h1 : ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) /
-        ((((j + Nat.log p N : ℕ)) : ℝ) + 1) ≤
-        ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) := by
+          ((((j + Nat.log p N : ℕ)) : ℝ) + 1) ≤
+          ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) := by
         apply div_le_self (pow_nonneg h0p _)
         have h1N : (1 : ℝ) ≤ ((((j + Nat.log p N : ℕ)) : ℝ) + 1) := by
           have hnn : (0 : ℝ) ≤ ((((j + Nat.log p N : ℕ)) : ℝ)) :=
@@ -2329,19 +2305,19 @@ private lemma neg_log_one_sub_inv_sub_primeTail {p N : ℕ} (hp : p.Prime) (h : 
           linarith
         exact h1N
       have h2 : ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) =
-        ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * ((p : ℝ)⁻¹) ^ j := by
+          ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * ((p : ℝ)⁻¹) ^ j := by
         rw [show (j + Nat.log p N) + 1 = (Nat.log p N + 1) + j by omega, pow_add]
       linarith [h1, h2]
     have hsum := Finset.sum_le_sum hpt
     have hpg : (∑ j ∈ Finset.range J,
-      ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * ((p : ℝ)⁻¹) ^ j) ≤
-      ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * (1 - (p : ℝ)⁻¹)⁻¹ :=
+        ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * ((p : ℝ)⁻¹) ^ j) ≤
+        ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * (1 - (p : ℝ)⁻¹)⁻¹ :=
       sum_le_hasSum _ (fun j _ =>
         mul_nonneg (pow_nonneg h0p _) (pow_nonneg h0p _)) hgeom_has
     linarith [hsum, hpg]
   have hR_le : (∑' j : ℕ, ((p : ℝ)⁻¹) ^ ((j + Nat.log p N) + 1) /
-    ((((j + Nat.log p N : ℕ)) : ℝ) + 1)) ≤
-    ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * (1 - (p : ℝ)⁻¹)⁻¹ := by
+      ((((j + Nat.log p N : ℕ)) : ℝ) + 1)) ≤
+      ((p : ℝ)⁻¹) ^ (Nat.log p N + 1) * (1 - (p : ℝ)⁻¹)⁻¹ := by
     apply le_of_tendsto hR_sum.hasSum.tendsto_sum_nat
     exact Filter.Eventually.of_forall hpartial
   have hpr : (p : ℝ)⁻¹ ≤ 1 / 2 := by
@@ -2351,14 +2327,16 @@ private lemma neg_log_one_sub_inv_sub_primeTail {p N : ℕ} (hp : p.Prime) (h : 
     have h := (inv_le_inv₀ (by linarith [hpr] : (0 : ℝ) < 1 - (p : ℝ)⁻¹)
       (by norm_num : (0 : ℝ) < 1 / 2)).mpr (by linarith [hpr] : (1 / 2 : ℝ) ≤ 1 - (p : ℝ)⁻¹)
     have h2inv : ((1 / 2 : ℝ))⁻¹ = 2 := by norm_num
-    rwa [h2inv] at h
+    rw [h2inv] at h
+    exact h
   have hplt : N < p ^ (Nat.log p N).succ :=
     Nat.lt_pow_succ_log_self hp.one_lt N
   have hNp1 : (N : ℝ) + 1 ≤ (p : ℝ) ^ (Nat.log p N + 1) := by
     have h1 : N + 1 ≤ p ^ (Nat.log p N).succ := hplt
     have h2 : ((N + 1 : ℕ) : ℝ) ≤ ((p ^ (Nat.log p N).succ : ℕ) : ℝ) := by
       exact_mod_cast h1
-    rwa [Nat.cast_add, Nat.cast_one, Nat.cast_pow] at h2
+    rw [Nat.cast_add, Nat.cast_one, Nat.cast_pow] at h2
+    exact h2
   have hNpos : (0 : ℝ) < (N : ℝ) + 1 := by
     have h0N : (0 : ℝ) < (N : ℝ) := by
       have hpos : 0 < N := by omega
@@ -2378,7 +2356,6 @@ private lemma neg_log_one_sub_inv_sub_primeTail {p N : ℕ} (hp : p.Prime) (h : 
   constructor
   · linarith [hle1]
   · linarith [hsplit', htsum, hR_le, h3, hT_eq]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2404,7 +2381,6 @@ private lemma mertensAcoeff_prime_pow {p k : ℕ} (hp : p.Prime) (hk : 1 ≤ k) 
   rw [hΛ, hlog]
   push_cast
   field_simp
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2418,6 +2394,7 @@ private lemma mertensAcoeff_eq_zero_of_not_isPrimePow {n : ℕ}
   unfold mertensAcoeff
   rw [ArithmeticFunction.vonMangoldt_eq_zero_iff.mpr hn, zero_div]
 
+-- Prime-power regrouping: A(N) = ∑ T(p,N).
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2429,7 +2406,7 @@ namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 private lemma mertensA_natCast_eq_sum_primeTail (N : ℕ) :
   mertensA (N : ℝ) = ∑ p ∈ Nat.primesLE N, primeTail p N := by
   have hLHS : mertensA (N : ℝ)
-    = ∑ n ∈ (Finset.Icc 0 N).filter IsPrimePow, mertensAcoeff n := by
+      = ∑ n ∈ (Finset.Icc 0 N).filter IsPrimePow, mertensAcoeff n := by
     unfold mertensA
     rw [Nat.floor_natCast]
     refine (Finset.sum_subset (Finset.filter_subset _ _) fun n hnIcc hnfil => ?_).symm
@@ -2437,13 +2414,13 @@ private lemma mertensA_natCast_eq_sum_primeTail (N : ℕ) :
     push Not at hnfil
     exact mertensAcoeff_eq_zero_of_not_isPrimePow (hnfil hnIcc)
   have hterm : ∀ p ∈ Nat.primesLE N, ∀ k ∈ Finset.Icc 1 (Nat.log p N),
-    (1 : ℝ) / ((k : ℝ) * (p : ℝ) ^ k) = mertensAcoeff (p ^ k) := by
+      (1 : ℝ) / ((k : ℝ) * (p : ℝ) ^ k) = mertensAcoeff (p ^ k) := by
     intro p hp k hk
     rw [Finset.mem_Icc] at hk
     exact (mertensAcoeff_prime_pow (Nat.prime_of_mem_primesLE hp) hk.1).symm
   have hRHS : (∑ p ∈ Nat.primesLE N, primeTail p N)
-    = ∑ x ∈ (Nat.primesLE N).sigma (fun p => Finset.Icc 1 (Nat.log p N)),
-      mertensAcoeff (x.1 ^ x.2) := by
+      = ∑ x ∈ (Nat.primesLE N).sigma (fun p => Finset.Icc 1 (Nat.log p N)),
+        mertensAcoeff (x.1 ^ x.2) := by
     unfold primeTail
     rw [Finset.sum_sigma']
     refine Finset.sum_congr rfl fun x hx => ?_
@@ -2462,7 +2439,8 @@ private lemma mertensA_natCast_eq_sum_primeTail (N : ℕ) :
       omega
     have hpow_le : a.1 ^ a.2 ≤ N := Nat.pow_le_of_le_log hN0 hak.2
     have hppow : IsPrimePow (a.1 ^ a.2) := by
-      rwa [isPrimePow_pow_iff (by omega : a.2 ≠ 0)]
+      rw [isPrimePow_pow_iff (by omega : a.2 ≠ 0)]
+      exact hpp.isPrimePow
     rw [Finset.mem_filter, Finset.mem_Icc]
     exact ⟨⟨Nat.zero_le _, hpow_le⟩, hppow⟩
   · intro a₁ ha₁ a₂ ha₂ h
@@ -2488,7 +2466,6 @@ private lemma mertensA_natCast_eq_sum_primeTail (N : ℕ) :
     · exact Nat.le_log_of_pow_le hpprime.one_lt hnN
   · intro a _
     rfl
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2500,7 +2477,6 @@ namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 private lemma mertensP_floor (x : ℝ) : mertensP x = mertensP (⌊x⌋₊ : ℝ) := by
   unfold mertensP
   rw [Nat.floor_natCast]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2512,7 +2488,6 @@ namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 private lemma mertensA_floor (x : ℝ) : mertensA x = mertensA (⌊x⌋₊ : ℝ) := by
   unfold mertensA
   rw [Nat.floor_natCast]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2537,7 +2512,6 @@ private lemma log_mertensP_eq (N : ℕ) :
       apply inv_lt_one_of_one_lt₀
       linarith
     exact inv_ne_zero (ne_of_gt (by linarith : (0 : ℝ) < 1 - (p : ℝ)⁻¹))
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2552,14 +2526,14 @@ private lemma log_mertensP_sub_mertensA_bound (N : ℕ) :
       2 * ((Nat.primesLE N).card : ℝ) / ((N : ℝ) + 1) := by
   rw [log_mertensP_eq N, mertensA_natCast_eq_sum_primeTail N]
   have hterm : ∀ p ∈ Nat.primesLE N,
-    0 ≤ -Real.log (1 - (p : ℝ)⁻¹) - primeTail p N ∧
-      -Real.log (1 - (p : ℝ)⁻¹) - primeTail p N ≤ 2 / ((N : ℝ) + 1) := by
+      0 ≤ -Real.log (1 - (p : ℝ)⁻¹) - primeTail p N ∧
+        -Real.log (1 - (p : ℝ)⁻¹) - primeTail p N ≤ 2 / ((N : ℝ) + 1) := by
     intro p hp
     rw [Nat.mem_primesLE] at hp
     exact neg_log_one_sub_inv_sub_primeTail hp.2 hp.1
   have hsub : (∑ p ∈ Nat.primesLE N, -Real.log (1 - (p : ℝ)⁻¹)) -
-    (∑ p ∈ Nat.primesLE N, primeTail p N) =
-    ∑ p ∈ Nat.primesLE N, (-Real.log (1 - (p : ℝ)⁻¹) - primeTail p N) := by
+      (∑ p ∈ Nat.primesLE N, primeTail p N) =
+      ∑ p ∈ Nat.primesLE N, (-Real.log (1 - (p : ℝ)⁻¹) - primeTail p N) := by
     rw [Finset.sum_sub_distrib]
   rw [hsub]
   refine ⟨Finset.sum_nonneg (fun p hp => (hterm p hp).1), ?_⟩
@@ -2568,9 +2542,8 @@ private lemma log_mertensP_sub_mertensA_bound (N : ℕ) :
     (fun p hp => (hterm p hp).2)
   rw [nsmul_eq_mul] at h3
   calc ∑ p ∈ Nat.primesLE N, (-Real.log (1 - (p : ℝ)⁻¹) - primeTail p N)
-    ≤ ((Nat.primesLE N).card : ℝ) * (2 / ((N : ℝ) + 1)) := h3
+      ≤ ((Nat.primesLE N).card : ℝ) * (2 / ((N : ℝ) + 1)) := h3
     _ = 2 * ((Nat.primesLE N).card : ℝ) / ((N : ℝ) + 1) := by ring
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2584,7 +2557,7 @@ private lemma tendsto_primeCounting_div : Filter.Tendsto
   Filter.atTop (nhds 0) := by
   have hbound := Chebyshev.eventually_primeCounting_le (show (0 : ℝ) < 1 by norm_num)
   have hlim : Filter.Tendsto (fun x : ℝ => 2 * (Real.log 4 + 1) / Real.log x)
-    Filter.atTop (nhds 0) :=
+      Filter.atTop (nhds 0) :=
     Filter.Tendsto.const_div_atTop Real.tendsto_log_atTop _
   refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hlim ?_ ?_
   · filter_upwards [Filter.eventually_ge_atTop 1] with x hx
@@ -2596,14 +2569,14 @@ private lemma tendsto_primeCounting_div : Filter.Tendsto
     have hne_x : (x : ℝ) ≠ 0 := ne_of_gt hx0
     have hne_log : Real.log x ≠ 0 := ne_of_gt hlog
     have h2 : 2 * ((Nat.primeCounting ⌊x⌋₊ : ℕ) : ℝ) / x ≤
-      2 * ((Real.log 4 + 1) * x / Real.log x) / x := by
+        2 * ((Real.log 4 + 1) * x / Real.log x) / x := by
       rw [div_le_div_iff_of_pos_right hx0]
       linarith [hpi]
     have h4 : 2 * ((Real.log 4 + 1) * x / Real.log x) / x =
-      2 * (Real.log 4 + 1) / Real.log x := by
+        2 * (Real.log 4 + 1) / Real.log x := by
       field_simp
-    rwa [h4] at h2
-
+    rw [h4] at h2
+    exact h2
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2630,12 +2603,11 @@ private lemma tendsto_log_mertensP_sub_mertensA :
     have hle := (log_mertensP_sub_mertensA_bound ⌊x⌋₊).2
     rw [Nat.primesLE_card_eq_primeCounting] at hle
     have hπnn : (0 : ℝ) ≤
-      2 * ((Nat.primeCounting ⌊x⌋₊ : ℕ) : ℝ) :=
+        2 * ((Nat.primeCounting ⌊x⌋₊ : ℕ) : ℝ) :=
       mul_nonneg (by norm_num) (Nat.cast_nonneg _)
     refine hle.trans ?_
     rw [div_eq_mul_inv, div_eq_mul_inv]
     exact mul_le_mul_of_nonneg_left ((inv_le_inv₀ hN1 hx0).mpr hxN1) hπnn
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2655,6 +2627,7 @@ private lemma tendsto_log_mertensP_sub_loglog :
   filter_upwards with x
   ring
 
+-- Mertens' third theorem.
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2690,7 +2663,6 @@ private lemma inv_one_sub_inv_eq (p : ℕ) (hp : 2 ≤ p) :
   have hp1 : ((p : ℝ) - 1) ≠ 0 := ne_of_gt (by linarith : (0 : ℝ) < (p : ℝ) - 1)
   field_simp
   ring
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2716,7 +2688,6 @@ private lemma prod_le_prod_of_nonneg {ι : Type*} {s : Finset ι} {f g : ι → 
     have hag : f a ≤ g a := h1 a (Finset.mem_insert_self a t)
     have ha0 : 0 ≤ f a := h0 a (Finset.mem_insert_self a t)
     exact mul_le_mul hag (ih h0t h1t) (Finset.prod_nonneg h0t) (le_trans ha0 hag)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2740,7 +2711,6 @@ private lemma one_le_prod_of_one_le {ι : Type*} {s : Finset ι} {f : ι → ℝ
     calc (1 : ℝ) ≤ ∏ i ∈ t, f i := h1t
       _ ≤ f a * ∏ i ∈ t, f i :=
         le_mul_of_one_le_left (zero_le_one.trans h1t) ha
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2763,7 +2733,6 @@ private lemma pow_card_le_prod_of_le {ι : Type*} {s : Finset ι} {f : ι → �
     have ha : r ≤ f a := h a (Finset.mem_insert_self a t)
     have h0t : ∀ i ∈ t, 0 ≤ f i := fun i hi => le_trans hr (ht i hi)
     exact mul_le_mul (ih ht) ha hr (Finset.prod_nonneg h0t)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2779,7 +2748,7 @@ private lemma sigma_prime_pow_div_le (p a : ℕ) (hp : p.Prime) :
   push_cast
   rw [div_eq_mul_inv, Finset.sum_mul]
   have hre : ∀ k ∈ Finset.range (a + 1),
-    (p : ℝ) ^ k * ((p : ℝ) ^ a)⁻¹ = ((p : ℝ)⁻¹) ^ (a - k) := by
+      (p : ℝ) ^ k * ((p : ℝ) ^ a)⁻¹ = ((p : ℝ)⁻¹) ^ (a - k) := by
     intro k hk
     have hka : k ≤ a := by
       have hmem := Finset.mem_range.mp hk
@@ -2804,7 +2773,6 @@ private lemma sigma_prime_pow_div_le (p a : ℕ) (hp : p.Prime) :
     hasSum_geometric_of_lt_one h0p h1p
   exact sum_le_hasSum (Finset.range (a + 1))
     (fun j _ => pow_nonneg h0p j) hgeom
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2827,7 +2795,6 @@ private lemma prod_le_pow_card_of_le {ι : Type*} {s : Finset ι}
     have ht : ∀ i ∈ t, f i ≤ r := fun i hi => h i (Finset.mem_insert_of_mem hi)
     have ha : f a ≤ r := h a (Finset.mem_insert_self a t)
     exact mul_le_mul ha (ih h0t ht) (Finset.prod_nonneg h0t) hr
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -2845,14 +2812,15 @@ private lemma sigma_div_self_le_mertensP_mul_exp (n : ℕ) (hn : 1 ≤ n) (y : �
       (k := 1) (n := n) hn0
   have hn_eq : (∏ p ∈ n.primeFactors, p ^ n.factorization p) = n := by
     have h := Nat.prod_factorization_pow_eq_self hn0
-    rwa [Nat.prod_factorization_eq_prod_primeFactors] at h
+    rw [Nat.prod_factorization_eq_prod_primeFactors] at h
+    exact h
   have hfac : ∀ p ∈ n.primeFactors,
-    ((∑ i ∈ Finset.range (n.factorization p + 1), p ^ (i * 1) : ℕ) : ℝ) /
-      ((p ^ n.factorization p : ℕ) : ℝ) ≤ (1 - (p : ℝ)⁻¹)⁻¹ := by
+      ((∑ i ∈ Finset.range (n.factorization p + 1), p ^ (i * 1) : ℕ) : ℝ) /
+        ((p ^ n.factorization p : ℕ) : ℝ) ≤ (1 - (p : ℝ)⁻¹)⁻¹ := by
     intro p hpmem
     have hpp : p.Prime := Nat.prime_of_mem_primeFactors hpmem
     have hS : (∑ i ∈ Finset.range (n.factorization p + 1), p ^ (i * 1)) =
-      ArithmeticFunction.sigma 1 (p ^ n.factorization p) := by
+        ArithmeticFunction.sigma 1 (p ^ n.factorization p) := by
       rw [ArithmeticFunction.sigma_one_apply_prime_pow hpp]
       apply Finset.sum_congr rfl
       intro i _
@@ -2860,19 +2828,19 @@ private lemma sigma_div_self_le_mertensP_mul_exp (n : ℕ) (hn : 1 ≤ n) (y : �
     rw [hS]
     exact sigma_prime_pow_div_le p _ hpp
   have hσ_cast : ((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) =
-    ∏ p ∈ n.primeFactors,
-      ((∑ i ∈ Finset.range (n.factorization p + 1), p ^ (i * 1) : ℕ) : ℝ) := by
+      ∏ p ∈ n.primeFactors,
+        ((∑ i ∈ Finset.range (n.factorization p + 1), p ^ (i * 1) : ℕ) : ℝ) := by
     conv_lhs => rw [hsigma]
     rw [Nat.cast_prod]
   have hn_cast : (n : ℝ) =
-    ∏ p ∈ n.primeFactors, ((p ^ n.factorization p : ℕ) : ℝ) := by
+      ∏ p ∈ n.primeFactors, ((p ^ n.factorization p : ℕ) : ℝ) := by
     conv_lhs => rw [← hn_eq]
     rw [Nat.cast_prod]
   conv_lhs => rw [hσ_cast, hn_cast, ← Finset.prod_div_distrib]
   have hstep1 : ∏ p ∈ n.primeFactors,
-    (((∑ i ∈ Finset.range (n.factorization p + 1), p ^ (i * 1) : ℕ) : ℝ) /
-      ((p ^ n.factorization p : ℕ) : ℝ)) ≤
-    ∏ p ∈ n.primeFactors, (1 - (p : ℝ)⁻¹)⁻¹ :=
+        (((∑ i ∈ Finset.range (n.factorization p + 1), p ^ (i * 1) : ℕ) : ℝ) /
+          ((p ^ n.factorization p : ℕ) : ℝ)) ≤
+      ∏ p ∈ n.primeFactors, (1 - (p : ℝ)⁻¹)⁻¹ :=
     prod_le_prod_of_nonneg
       (fun p _ => div_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)) hfac
   refine le_trans hstep1 ?_
@@ -2880,50 +2848,50 @@ private lemma sigma_div_self_le_mertensP_mul_exp (n : ℕ) (hn : 1 ≤ n) (y : �
     (fun p => p ≤ ⌊y⌋₊) (fun p => (1 - (p : ℝ)⁻¹)⁻¹)
   rw [← hsplit]
   have hsmall : ∏ p ∈ n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊),
-    (1 - (p : ℝ)⁻¹)⁻¹ ≤ mertensP y := by
+      (1 - (p : ℝ)⁻¹)⁻¹ ≤ mertensP y := by
     have hsub : n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊) ⊆
-      Nat.primesLE ⌊y⌋₊ := by
+        Nat.primesLE ⌊y⌋₊ := by
       intro p hp
       rw [Finset.mem_filter] at hp
       rw [Nat.mem_primesLE]
       exact ⟨hp.2, Nat.prime_of_mem_primeFactors hp.1⟩
     have h1 : ∀ p ∈ Nat.primesLE ⌊y⌋₊,
-      p ∉ n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊) →
-      1 ≤ (1 - (p : ℝ)⁻¹)⁻¹ := by
+        p ∉ n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊) →
+        1 ≤ (1 - (p : ℝ)⁻¹)⁻¹ := by
       intro p hp _
       exact one_le_inv_one_sub_inv_prime p (Nat.prime_of_mem_primesLE hp)
     have hdecomp : (∏ p ∈ Nat.primesLE ⌊y⌋₊ \
-      n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊), (1 - (p : ℝ)⁻¹)⁻¹) *
-      (∏ p ∈ n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊),
-        (1 - (p : ℝ)⁻¹)⁻¹) =
-      ∏ p ∈ Nat.primesLE ⌊y⌋₊, (1 - (p : ℝ)⁻¹)⁻¹ :=
+        n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊), (1 - (p : ℝ)⁻¹)⁻¹) *
+        (∏ p ∈ n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊),
+          (1 - (p : ℝ)⁻¹)⁻¹) =
+        ∏ p ∈ Nat.primesLE ⌊y⌋₊, (1 - (p : ℝ)⁻¹)⁻¹ :=
       Finset.prod_sdiff hsub
     have hdiff1 : 1 ≤ ∏ p ∈ Nat.primesLE ⌊y⌋₊ \
-      n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊), (1 - (p : ℝ)⁻¹)⁻¹ := by
+        n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊), (1 - (p : ℝ)⁻¹)⁻¹ := by
       apply one_le_prod_of_one_le
       intro p hp
       rw [Finset.mem_sdiff] at hp
       exact h1 p hp.1 hp.2
     have hfilter1 : ∀ p ∈ n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊),
-      (1 : ℝ) ≤ (1 - (p : ℝ)⁻¹)⁻¹ := by
+        (1 : ℝ) ≤ (1 - (p : ℝ)⁻¹)⁻¹ := by
       intro p hp
       rw [Finset.mem_filter] at hp
       exact one_le_inv_one_sub_inv_prime p
         (Nat.prime_of_mem_primeFactors hp.1)
     have hnonneg : 0 ≤ ∏ p ∈ n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊),
-      (1 - (p : ℝ)⁻¹)⁻¹ :=
+        (1 - (p : ℝ)⁻¹)⁻¹ :=
       Finset.prod_nonneg (fun p hp => le_trans zero_le_one (hfilter1 p hp))
     have hle : ∏ p ∈ n.primeFactors.filter (fun p => p ≤ ⌊y⌋₊),
-      (1 - (p : ℝ)⁻¹)⁻¹ ≤ ∏ p ∈ Nat.primesLE ⌊y⌋₊, (1 - (p : ℝ)⁻¹)⁻¹ := by
+        (1 - (p : ℝ)⁻¹)⁻¹ ≤ ∏ p ∈ Nat.primesLE ⌊y⌋₊, (1 - (p : ℝ)⁻¹)⁻¹ := by
       rw [← hdecomp]
       exact le_mul_of_one_le_left hnonneg hdiff1
     have hP : mertensP y = ∏ p ∈ Nat.primesLE ⌊y⌋₊, (1 - (p : ℝ)⁻¹)⁻¹ := rfl
     rwa [hP]
   have hlarge : ∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊),
-    (1 - (p : ℝ)⁻¹)⁻¹ ≤
-    Real.exp (Real.log n / ((y - 1) * Real.log y)) := by
+      (1 - (p : ℝ)⁻¹)⁻¹ ≤
+      Real.exp (Real.log n / ((y - 1) * Real.log y)) := by
     have hplt : ∀ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊),
-      y < (p : ℝ) := by
+        y < (p : ℝ) := by
       intro p hp
       rw [Finset.mem_filter] at hp
       have h1 : ⌊y⌋₊ < p := Nat.lt_of_not_ge hp.2
@@ -2935,7 +2903,7 @@ private lemma sigma_div_self_le_mertensP_mul_exp (n : ℕ) (hn : 1 ≤ n) (y : �
         exact_mod_cast h5
       linarith
     have hfac_le : ∀ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊),
-      (1 - (p : ℝ)⁻¹)⁻¹ ≤ Real.exp (1 / (y - 1)) := by
+        (1 - (p : ℝ)⁻¹)⁻¹ ≤ Real.exp (1 / (y - 1)) := by
       intro p hp
       rw [Finset.mem_filter] at hp
       have hpp : p.Prime := Nat.prime_of_mem_primeFactors hp.1
@@ -2943,7 +2911,7 @@ private lemma sigma_div_self_le_mertensP_mul_exp (n : ℕ) (hn : 1 ≤ n) (y : �
       have hpy : y < (p : ℝ) := hplt p (Finset.mem_filter.mpr hp)
       rw [inv_one_sub_inv_eq p hp2]
       have h1 : (1 : ℝ) + 1 / ((p : ℝ) - 1) ≤
-        Real.exp (1 / ((p : ℝ) - 1)) := by
+          Real.exp (1 / ((p : ℝ) - 1)) := by
         rw [add_comm (1 : ℝ)]
         exact Real.add_one_le_exp _
       have h2 : (1 : ℝ) / ((p : ℝ) - 1) ≤ 1 / (y - 1) := by
@@ -2953,7 +2921,7 @@ private lemma sigma_div_self_le_mertensP_mul_exp (n : ℕ) (hn : 1 ≤ n) (y : �
       calc (1 : ℝ) + 1 / ((p : ℝ) - 1) ≤ Real.exp (1 / ((p : ℝ) - 1)) := h1
         _ ≤ Real.exp (1 / (y - 1)) := Real.exp_le_exp.mpr h2
     have h0fac : ∀ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊),
-      0 ≤ (1 - (p : ℝ)⁻¹)⁻¹ := by
+        0 ≤ (1 - (p : ℝ)⁻¹)⁻¹ := by
       intro p hp
       rw [Finset.mem_filter] at hp
       have h1 := one_le_inv_one_sub_inv_prime p
@@ -2961,39 +2929,39 @@ private lemma sigma_div_self_le_mertensP_mul_exp (n : ℕ) (hn : 1 ≤ n) (y : �
       linarith
     have hexp0 : (0 : ℝ) ≤ Real.exp (1 / (y - 1)) := (Real.exp_pos _).le
     have hprod_pow : ∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊),
-      (1 - (p : ℝ)⁻¹)⁻¹ ≤
-      Real.exp (1 / (y - 1)) ^
-        (n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card :=
+        (1 - (p : ℝ)⁻¹)⁻¹ ≤
+        Real.exp (1 / (y - 1)) ^
+          (n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card :=
       prod_le_pow_card_of_le h0fac hexp0 hfac_le
     have hy0 : (0 : ℝ) < y := by linarith
     have hpow_le : y ^ (n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card ≤
-      ∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊), (p : ℝ) :=
+        ∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊), (p : ℝ) :=
       pow_card_le_prod_of_le hy0.le (fun p hp => le_of_lt (hplt p hp))
     have hle1 : ∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊), (p : ℝ) ≤
-      ∏ p ∈ n.primeFactors, (p : ℝ) := by
+        ∏ p ∈ n.primeFactors, (p : ℝ) := by
       have hsubf : n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊) ⊆
-        n.primeFactors :=
+          n.primeFactors :=
         Finset.filter_subset _ _
       have h1 : ∀ p ∈ n.primeFactors,
-        p ∉ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊) →
-        (1 : ℝ) ≤ (p : ℝ) := by
+          p ∉ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊) →
+          (1 : ℝ) ≤ (p : ℝ) := by
         intro p hpmem _
         have h2 : 2 ≤ p := (Nat.prime_of_mem_primeFactors hpmem).two_le
         have h2r : (2 : ℝ) ≤ (p : ℝ) := by exact_mod_cast h2
         linarith
       have hdecompf : (∏ p ∈ n.primeFactors \
-        n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊), (p : ℝ)) *
-        (∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊), (p : ℝ)) =
-        ∏ p ∈ n.primeFactors, (p : ℝ) :=
+          n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊), (p : ℝ)) *
+          (∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊), (p : ℝ)) =
+          ∏ p ∈ n.primeFactors, (p : ℝ) :=
         Finset.prod_sdiff hsubf
       have hdiff1 : 1 ≤ ∏ p ∈ n.primeFactors \
-        n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊), (p : ℝ) := by
+          n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊), (p : ℝ) := by
         apply one_le_prod_of_one_le
         intro p hp
         rw [Finset.mem_sdiff] at hp
         exact h1 p hp.1 hp.2
       have hnonneg : 0 ≤ ∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊),
-        (p : ℝ) :=
+          (p : ℝ) :=
         Finset.prod_nonneg (fun p _ => Nat.cast_nonneg p)
       rw [← hdecompf]
       exact le_mul_of_one_le_left hnonneg hdiff1
@@ -3003,14 +2971,15 @@ private lemma sigma_div_self_le_mertensP_mul_exp (n : ℕ) (hn : 1 ≤ n) (y : �
         Nat.le_of_dvd (by omega : 0 < n) hdvd
       have hcast : ((∏ p ∈ n.primeFactors, p : ℕ) : ℝ) ≤ (n : ℝ) :=
         Nat.cast_le.mpr hle_nat
-      rwa [Nat.cast_prod] at hcast
+      rw [Nat.cast_prod] at hcast
+      exact hcast
     have hlog : ((n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card : ℝ) *
-      Real.log y ≤ Real.log n := by
+        Real.log y ≤ Real.log n := by
       have hpos1 : (0 : ℝ) <
-        y ^ (n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card :=
+          y ^ (n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card :=
         pow_pos hy0 _
       have hpos2 : (0 : ℝ) <
-        ∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊), (p : ℝ) := by
+          ∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊), (p : ℝ) := by
         apply Finset.prod_pos
         intro p hp
         rw [Finset.mem_filter] at hp
@@ -3022,43 +2991,43 @@ private lemma sigma_div_self_le_mertensP_mul_exp (n : ℕ) (hn : 1 ≤ n) (y : �
         have hpos : 0 < p := (Nat.prime_of_mem_primeFactors hpmem).pos
         exact_mod_cast hpos
       calc ((n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card : ℝ) *
-        Real.log y
-        = Real.log (y ^ (n.primeFactors.filter
-          (fun p => ¬ p ≤ ⌊y⌋₊)).card) := by rw [Real.log_pow]
+            Real.log y
+          = Real.log (y ^ (n.primeFactors.filter
+            (fun p => ¬ p ≤ ⌊y⌋₊)).card) := by rw [Real.log_pow]
         _ ≤ Real.log (∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊),
-          (p : ℝ)) := Real.log_le_log hpos1 hpow_le
+            (p : ℝ)) := Real.log_le_log hpos1 hpow_le
         _ ≤ Real.log (∏ p ∈ n.primeFactors, (p : ℝ)) :=
-          Real.log_le_log hpos2 hle1
+            Real.log_le_log hpos2 hle1
         _ ≤ Real.log n := Real.log_le_log hpos3 hle2
     have hy1 : (0 : ℝ) < y - 1 := by linarith
     have hlogy : (0 : ℝ) < Real.log y := Real.log_pos (by linarith : (1 : ℝ) < y)
     have hexp_eq : Real.exp (1 / (y - 1)) ^
-      (n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card =
-      Real.exp (((n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card : ℝ) /
-        (y - 1)) := by
+        (n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card =
+        Real.exp (((n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card : ℝ) /
+          (y - 1)) := by
       rw [← Real.exp_nat_mul]
       congr 1
       ring
     have hfrac : ((n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card : ℝ) /
-      (y - 1) ≤ Real.log n / ((y - 1) * Real.log y) := by
+        (y - 1) ≤ Real.log n / ((y - 1) * Real.log y) := by
       have hpos : (0 : ℝ) < (y - 1) * Real.log y := mul_pos hy1 hlogy
       rw [div_le_div_iff₀ hy1 hpos]
       have hmul := mul_le_mul_of_nonneg_right hlog hy1.le
       have heq : ((n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card : ℝ) *
-        ((y - 1) * Real.log y) =
-        (((n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card : ℝ) *
-          Real.log y) * (y - 1) := by ring
+          ((y - 1) * Real.log y) =
+          (((n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card : ℝ) *
+            Real.log y) * (y - 1) := by ring
       rwa [heq]
     calc ∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊),
-      (1 - (p : ℝ)⁻¹)⁻¹
-      ≤ Real.exp (1 / (y - 1)) ^
-        (n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card := hprod_pow
+          (1 - (p : ℝ)⁻¹)⁻¹
+        ≤ Real.exp (1 / (y - 1)) ^
+          (n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card := hprod_pow
       _ = Real.exp (((n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊)).card : ℝ) /
-        (y - 1)) := hexp_eq
+          (y - 1)) := hexp_eq
       _ ≤ Real.exp (Real.log n / ((y - 1) * Real.log y)) :=
-        Real.exp_le_exp.mpr hfrac
+          Real.exp_le_exp.mpr hfrac
   have hlarge0 : 0 ≤ ∏ p ∈ n.primeFactors.filter (fun p => ¬ p ≤ ⌊y⌋₊),
-    (1 - (p : ℝ)⁻¹)⁻¹ := by
+      (1 - (p : ℝ)⁻¹)⁻¹ := by
     apply Finset.prod_nonneg
     intro p hp
     rw [Finset.mem_filter] at hp
@@ -3068,6 +3037,7 @@ private lemma sigma_div_self_le_mertensP_mul_exp (n : ℕ) (hn : 1 ≤ n) (y : �
   have hP0 : 0 ≤ mertensP y := le_trans zero_le_one (mertensP_ge_one y)
   exact mul_le_mul hsmall hlarge hlarge0 hP0
 
+-- Witness family lower bound.
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3086,20 +3056,19 @@ private lemma prod_primesLE_pow_ge_one_log (m a : ℕ) :
     have hpp := Nat.prime_of_mem_primesLE hp
     exact one_le_pow₀ hpp.one_lt.le
   · have hne : ∀ p ∈ Nat.primesLE m, (((p ^ a : ℕ)) : ℝ) ≠ 0 := by
-    intro p hp
-    have hpp := Nat.prime_of_mem_primesLE hp
-    have hpa : p ^ a ≠ 0 := by
-      apply pow_ne_zero
-      exact ne_of_gt hpp.pos
-    exact Nat.cast_ne_zero.mpr hpa
+      intro p hp
+      have hpp := Nat.prime_of_mem_primesLE hp
+      have hpa : p ^ a ≠ 0 := by
+        apply pow_ne_zero
+        exact ne_of_gt hpp.pos
+      exact Nat.cast_ne_zero.mpr hpa
     rw [Nat.cast_prod, Real.log_prod hne]
     have hterm : ∀ p ∈ Nat.primesLE m,
-      Real.log (((p ^ a : ℕ)) : ℝ) = (a : ℝ) * Real.log (p : ℝ) := by
+        Real.log (((p ^ a : ℕ)) : ℝ) = (a : ℝ) * Real.log (p : ℝ) := by
       intro p hp
       rw [Nat.cast_pow, Real.log_pow]
     rw [Finset.sum_congr rfl hterm, Chebyshev.theta_eq_sum_primesLE_log,
       ← Finset.mul_sum]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3117,7 +3086,6 @@ private lemma inv_pow_eq_rpow_neg (a : ℕ) :
       Real.rpow_natCast, pow_succ']
     ring
   rw [hrw, inv_pow]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3133,7 +3101,7 @@ private lemma sigma_prime_pow_div_eq (p a : ℕ) (hp : p.Prime) :
   push_cast
   rw [div_eq_mul_inv, Finset.sum_mul]
   have hre : ∀ k ∈ Finset.range (a + 1),
-    (p : ℝ) ^ k * ((p : ℝ) ^ a)⁻¹ = ((p : ℝ)⁻¹) ^ (a - k) := by
+      (p : ℝ) ^ k * ((p : ℝ) ^ a)⁻¹ = ((p : ℝ)⁻¹) ^ (a - k) := by
     intro k hk
     have hka : k ≤ a := by
       have hmem := Finset.mem_range.mp hk
@@ -3157,14 +3125,14 @@ private lemma sigma_prime_pow_div_eq (p a : ℕ) (hp : p.Prime) :
   have hne2 : (1 : ℝ) - (p : ℝ)⁻¹ ≠ 0 := ne_of_gt (by linarith : (0 : ℝ) < 1 - (p : ℝ)⁻¹)
   have hgeom := geom_sum_mul ((p : ℝ)⁻¹) (a + 1)
   have hdiv : ∑ j ∈ Finset.range (a + 1), ((p : ℝ)⁻¹) ^ j =
-    (((p : ℝ)⁻¹) ^ (a + 1) - 1) / ((p : ℝ)⁻¹ - 1) := by
-    rwa [eq_div_iff hne1]
+      (((p : ℝ)⁻¹) ^ (a + 1) - 1) / ((p : ℝ)⁻¹ - 1) := by
+    rw [eq_div_iff hne1]
+    exact hgeom
   rw [hdiv]
   have h3 : (1 - (p : ℝ)⁻¹)⁻¹ = -(((p : ℝ)⁻¹ - 1)⁻¹) := by
     rw [show (1 : ℝ) - (p : ℝ)⁻¹ = -((p : ℝ)⁻¹ - 1) by ring, inv_neg]
   rw [h3, div_eq_mul_inv]
   ring
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3178,25 +3146,26 @@ private lemma sigma_div_prod_primesLE_pow_ge (m a : ℕ) :
     ((ArithmeticFunction.sigma 1 (∏ p ∈ Nat.primesLE m, p ^ a) : ℕ) : ℝ) /
       ((∏ p ∈ Nat.primesLE m, p ^ a : ℕ) : ℝ) := by
   have hpair : ((Nat.primesLE m : Finset ℕ) : Set ℕ).Pairwise
-    (Function.onFun Nat.Coprime fun p => p ^ a) := by
+      (Function.onFun Nat.Coprime fun p => p ^ a) := by
     intro x hx y hy hxy
     have hxp : x.Prime := Nat.prime_of_mem_primesLE (Finset.mem_coe.mp hx)
     have hyp : y.Prime := Nat.prime_of_mem_primesLE (Finset.mem_coe.mp hy)
     have hcop : Nat.Coprime x y := (Nat.coprime_primes hxp hyp).mpr hxy
     change Nat.Coprime (x ^ a) (y ^ a)
-    obtain rfl | ha := eq_or_ne a 0
+    rcases eq_or_ne a 0 with rfl | ha
     · simp only [pow_zero]
       exact Nat.coprime_one_left 1
     · have ha0 : 0 < a := Nat.pos_of_ne_zero ha
-      rwa [Nat.coprime_pow_left_iff ha0, Nat.coprime_pow_right_iff ha0]
+      rw [Nat.coprime_pow_left_iff ha0, Nat.coprime_pow_right_iff ha0]
+      exact hcop
   have hσ_prod : ArithmeticFunction.sigma 1 (∏ p ∈ Nat.primesLE m, p ^ a) =
-    ∏ p ∈ Nat.primesLE m, ArithmeticFunction.sigma 1 (p ^ a) :=
+      ∏ p ∈ Nat.primesLE m, ArithmeticFunction.sigma 1 (p ^ a) :=
     ArithmeticFunction.isMultiplicative_sigma.map_prod _ _ hpair
   have hdiv2 : ((ArithmeticFunction.sigma 1 (∏ p ∈ Nat.primesLE m, p ^ a) : ℕ) : ℝ) /
-    ((∏ p ∈ Nat.primesLE m, p ^ a : ℕ) : ℝ) =
-    ∏ p ∈ Nat.primesLE m,
-      (((ArithmeticFunction.sigma 1 (p ^ a) : ℕ) : ℝ) /
-        ((p ^ a : ℕ) : ℝ)) := by
+        ((∏ p ∈ Nat.primesLE m, p ^ a : ℕ) : ℝ) =
+        ∏ p ∈ Nat.primesLE m,
+          (((ArithmeticFunction.sigma 1 (p ^ a) : ℕ) : ℝ) /
+            ((p ^ a : ℕ) : ℝ)) := by
     rw [hσ_prod]
     simp only [Nat.cast_prod]
     rw [← Finset.prod_div_distrib]
@@ -3208,8 +3177,8 @@ private lemma sigma_div_prod_primesLE_pow_ge (m a : ℕ) :
     exact pow_le_one₀ (by norm_num : (0 : ℝ) ≤ (2 : ℝ)⁻¹)
       (by norm_num : (2 : ℝ)⁻¹ ≤ 1)
   have hfac_ge : ∀ p ∈ Nat.primesLE m,
-    (1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) * (1 - (p : ℝ)⁻¹)⁻¹ ≤
-      ((ArithmeticFunction.sigma 1 (p ^ a) : ℕ) : ℝ) / ((p ^ a : ℕ) : ℝ) := by
+      (1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) * (1 - (p : ℝ)⁻¹)⁻¹ ≤
+        ((ArithmeticFunction.sigma 1 (p ^ a) : ℕ) : ℝ) / ((p ^ a : ℕ) : ℝ) := by
     intro p hp
     have hpp : p.Prime := Nat.prime_of_mem_primesLE hp
     rw [sigma_prime_pow_div_eq p a hpp]
@@ -3221,7 +3190,8 @@ private lemma sigma_div_prod_primesLE_pow_ge (m a : ℕ) :
       have h0p : (0 : ℝ) ≤ (p : ℝ)⁻¹ := inv_nonneg.mpr (Nat.cast_nonneg p)
       have h1 : ((p : ℝ)⁻¹) ^ (a + 1) ≤ ((2 : ℝ)⁻¹) ^ (a + 1) :=
         pow_le_pow_left₀ h0p hle_r (a + 1)
-      rwa [inv_pow_eq_rpow_neg] at h1
+      rw [inv_pow_eq_rpow_neg] at h1
+      exact h1
     have hnonneg : (0 : ℝ) ≤ (1 - (p : ℝ)⁻¹)⁻¹ := by
       have h1 := one_le_inv_one_sub_inv_prime p hpp
       linarith
@@ -3229,10 +3199,10 @@ private lemma sigma_div_prod_primesLE_pow_ge (m a : ℕ) :
       linarith [hδ]
     exact mul_le_mul_of_nonneg_right hle hnonneg
   have hge1 : ∏ p ∈ Nat.primesLE m,
-    ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) * (1 - (p : ℝ)⁻¹)⁻¹) ≤
-    ∏ p ∈ Nat.primesLE m,
-      (((ArithmeticFunction.sigma 1 (p ^ a) : ℕ) : ℝ) /
-        ((p ^ a : ℕ) : ℝ)) :=
+        ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) * (1 - (p : ℝ)⁻¹)⁻¹) ≤
+      ∏ p ∈ Nat.primesLE m,
+        (((ArithmeticFunction.sigma 1 (p ^ a) : ℕ) : ℝ) /
+          ((p ^ a : ℕ) : ℝ)) :=
     prod_le_prod_of_nonneg (fun p hp => by
       have hpp := Nat.prime_of_mem_primesLE hp
       have h1 := one_le_inv_one_sub_inv_prime p hpp
@@ -3243,20 +3213,20 @@ private lemma sigma_div_prod_primesLE_pow_ge (m a : ℕ) :
     unfold mertensP
     rw [Nat.floor_natCast]
   have hprod_split : ∏ p ∈ Nat.primesLE m,
-    ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) * (1 - (p : ℝ)⁻¹)⁻¹) =
-    ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ (Nat.primesLE m).card) *
-      mertensP (m : ℝ) := by
+        ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) * (1 - (p : ℝ)⁻¹)⁻¹) =
+        ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ (Nat.primesLE m).card) *
+          mertensP (m : ℝ) := by
     rw [Finset.prod_mul_distrib, Finset.prod_const, hPm]
   have hbern : ∀ n : ℕ, 1 - (n : ℝ) * (2 : ℝ) ^ (-((a : ℝ) + 1)) ≤
-    (1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ n := by
+      (1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ n := by
     intro n
     have h := one_add_mul_le_pow (a := -((2 : ℝ) ^ (-((a : ℝ) + 1))))
       (show (-2 : ℝ) ≤ -((2 : ℝ) ^ (-((a : ℝ) + 1))) from by
         linarith [hδ0, hδ10]) n
     have e1 : (1 : ℝ) - (n : ℝ) * (2 : ℝ) ^ (-((a : ℝ) + 1)) =
-      1 + (n : ℝ) * -((2 : ℝ) ^ (-((a : ℝ) + 1))) := by ring
+        1 + (n : ℝ) * -((2 : ℝ) ^ (-((a : ℝ) + 1))) := by ring
     have e2 : ((1 : ℝ) - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ n =
-      (1 + -((2 : ℝ) ^ (-((a : ℝ) + 1)))) ^ n := by rw [sub_eq_add_neg]
+        (1 + -((2 : ℝ) ^ (-((a : ℝ) + 1)))) ^ n := by rw [sub_eq_add_neg]
     rwa [e1, e2]
   have hcard : (Nat.primesLE m).card ≤ m := by
     have hsub : Nat.primesLE m ⊆ Finset.Icc 1 m := by
@@ -3266,36 +3236,35 @@ private lemma sigma_div_prod_primesLE_pow_ge (m a : ℕ) :
       rw [Finset.mem_Icc]
       exact ⟨hpp.one_lt.le, hp.1⟩
     calc (Nat.primesLE m).card ≤ (Finset.Icc 1 m).card :=
-      Finset.card_le_card hsub
+          Finset.card_le_card hsub
       _ = m := by rw [Nat.card_Icc]; omega
   have hbern_m : 1 - (m : ℝ) * (2 : ℝ) ^ (-((a : ℝ) + 1)) ≤
-    (1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ (Nat.primesLE m).card := by
+      (1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ (Nat.primesLE m).card := by
     have h1 := hbern (Nat.primesLE m).card
     have hcardR : (((Nat.primesLE m).card : ℕ) : ℝ) ≤ (m : ℝ) := by
       exact_mod_cast hcard
     have hmul : ((Nat.primesLE m).card : ℝ) * (2 : ℝ) ^ (-((a : ℝ) + 1)) ≤
-      (m : ℝ) * (2 : ℝ) ^ (-((a : ℝ) + 1)) :=
+        (m : ℝ) * (2 : ℝ) ^ (-((a : ℝ) + 1)) :=
       mul_le_mul_of_nonneg_right hcardR hδ0
     linarith [h1, hmul]
   have hP0 : 0 ≤ mertensP (m : ℝ) := (mertensP_pos _).le
   have hmul_le : mertensP (m : ℝ) * (1 - (m : ℝ) * (2 : ℝ) ^ (-((a : ℝ) + 1))) ≤
-    mertensP (m : ℝ) *
-      ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ (Nat.primesLE m).card) :=
+      mertensP (m : ℝ) *
+        ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ (Nat.primesLE m).card) :=
     mul_le_mul_of_nonneg_left hbern_m hP0
   calc mertensP (m : ℝ) * (1 - (m : ℝ) * (2 : ℝ) ^ (-((a : ℝ) + 1)))
-    ≤ mertensP (m : ℝ) *
-      ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ (Nat.primesLE m).card) := hmul_le
+      ≤ mertensP (m : ℝ) *
+        ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ (Nat.primesLE m).card) := hmul_le
     _ = ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) ^ (Nat.primesLE m).card) *
-      mertensP (m : ℝ) := mul_comm _ _
+        mertensP (m : ℝ) := mul_comm _ _
     _ = ∏ p ∈ Nat.primesLE m,
-      ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) * (1 - (p : ℝ)⁻¹)⁻¹) :=
-      hprod_split.symm
+        ((1 - (2 : ℝ) ^ (-((a : ℝ) + 1))) * (1 - (p : ℝ)⁻¹)⁻¹) :=
+        hprod_split.symm
     _ ≤ ∏ p ∈ Nat.primesLE m,
-      (((ArithmeticFunction.sigma 1 (p ^ a) : ℕ) : ℝ) /
-        ((p ^ a : ℕ) : ℝ)) := hge1
+        (((ArithmeticFunction.sigma 1 (p ^ a) : ℕ) : ℝ) /
+          ((p ^ a : ℕ) : ℝ)) := hge1
     _ = ((ArithmeticFunction.sigma 1 (∏ p ∈ Nat.primesLE m, p ^ a) : ℕ) : ℝ) /
-      ((∏ p ∈ Nat.primesLE m, p ^ a : ℕ) : ℝ) := hdiv2.symm
-
+        ((∏ p ∈ Nat.primesLE m, p ^ a : ℕ) : ℝ) := hdiv2.symm
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3337,7 +3306,7 @@ private lemma tendsto_gronwall_err : Filter.Tendsto
     ((Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ))))
   Filter.atTop (nhds 0) := by
   have htop : Filter.Tendsto (fun n : ℕ => 2 / Real.log (Real.log (n : ℝ)))
-    Filter.atTop (nhds 0) :=
+      Filter.atTop (nhds 0) :=
     Filter.Tendsto.const_div_atTop
       (Real.tendsto_log_atTop.comp tendsto_log_natCast_atTop) 2
   refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds htop ?_ ?_
@@ -3348,7 +3317,7 @@ private lemma tendsto_gronwall_err : Filter.Tendsto
     have hlogy : (0 : ℝ) < Real.log (Real.log (n : ℝ)) :=
       Real.log_pos (by linarith)
     have hden : (0 : ℝ) ≤
-      (Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ)) :=
+        (Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ)) :=
       mul_nonneg (by linarith) hlogy.le
     exact div_nonneg (Real.log_nonneg (by linarith)) hden
   · filter_upwards [Filter.eventually_ge_atTop 16] with n hn
@@ -3361,12 +3330,14 @@ private lemma tendsto_gronwall_err : Filter.Tendsto
       rw [div_le_iff₀ (show (0 : ℝ) < Real.log (n : ℝ) - 1 by linarith)]
       linarith
     have h2 : Real.log (n : ℝ) /
-      ((Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ))) =
-      (Real.log (n : ℝ) / (Real.log (n : ℝ) - 1)) /
-        Real.log (Real.log (n : ℝ)) := by
+        ((Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ))) =
+        (Real.log (n : ℝ) / (Real.log (n : ℝ) - 1)) /
+          Real.log (Real.log (n : ℝ)) := by
       rw [div_div]
-    rwa [h2, div_le_div_iff_of_pos_right hlogy]
+    rw [h2, div_le_div_iff_of_pos_right hlogy]
+    exact h1
 
+-- Eventual upper bound for Gronwall's f.
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3381,15 +3352,16 @@ private lemma gronwall_eventually_le (ε : ℝ) (hε : 0 < ε) :
       ((n : ℝ) * Real.log (Real.log n)) ≤
       Real.exp Real.eulerMascheroniConstant + ε := by
   have hP : Filter.Tendsto
-    (fun n : ℕ => mertensP (Real.log n) / Real.log (Real.log n))
-    Filter.atTop (nhds (Real.exp Real.eulerMascheroniConstant)) :=
+      (fun n : ℕ => mertensP (Real.log n) / Real.log (Real.log n))
+      Filter.atTop (nhds (Real.exp Real.eulerMascheroniConstant)) :=
     tendsto_mertensP_div_log.comp tendsto_log_natCast_atTop
   have hexp : Filter.Tendsto
-    (fun n : ℕ => Real.exp (Real.log (n : ℝ) /
-      ((Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ)))))
-    Filter.atTop (nhds 1) := by
+      (fun n : ℕ => Real.exp (Real.log (n : ℝ) /
+        ((Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ)))))
+      Filter.atTop (nhds 1) := by
     have h := (Real.continuous_exp.tendsto 0).comp tendsto_gronwall_err
-    rwa [Real.exp_zero] at h
+    rw [Real.exp_zero] at h
+    exact h
   have hprod := hP.mul hexp
   rw [mul_one] at hprod
   have hev := hprod.eventually_le_const
@@ -3404,30 +3376,30 @@ private lemma gronwall_eventually_le (ε : ℝ) (hε : 0 < ε) :
     Real.log_pos (by linarith)
   have hN11 := sigma_div_self_le_mertensP_mul_exp n hn1 (Real.log n) hy2
   have hdiv : ((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) /
-    ((n : ℝ) * Real.log (Real.log n)) =
-    (((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) / (n : ℝ)) /
-      Real.log (Real.log n) := by
+      ((n : ℝ) * Real.log (Real.log n)) =
+      (((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) / (n : ℝ)) /
+        Real.log (Real.log n) := by
     rw [div_div]
   rw [hdiv]
   have hle2 : ((((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) / (n : ℝ)) /
-    Real.log (Real.log n)) ≤
-    ((mertensP (Real.log n) *
+      Real.log (Real.log n)) ≤
+      ((mertensP (Real.log n) *
+        Real.exp (Real.log (n : ℝ) /
+          ((Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ))))) /
+        Real.log (Real.log n)) := by
+    rw [div_le_div_iff_of_pos_right hlogy]
+    exact hN11
+  have hmul : (mertensP (Real.log n) *
       Real.exp (Real.log (n : ℝ) /
         ((Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ))))) /
-      Real.log (Real.log n)) := by
-    rwa [div_le_div_iff_of_pos_right hlogy]
-  have hmul : (mertensP (Real.log n) *
-    Real.exp (Real.log (n : ℝ) /
-      ((Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ))))) /
-    Real.log (Real.log n) =
-    (mertensP (Real.log n) / Real.log (Real.log n)) *
-      Real.exp (Real.log (n : ℝ) /
-        ((Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ)))) := by
+      Real.log (Real.log n) =
+      (mertensP (Real.log n) / Real.log (Real.log n)) *
+        Real.exp (Real.log (n : ℝ) /
+          ((Real.log (n : ℝ) - 1) * Real.log (Real.log (n : ℝ)))) := by
     rw [div_eq_mul_inv, div_eq_mul_inv]
     ring
   rw [hmul] at hle2
   exact hle2.trans hle
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3442,7 +3414,6 @@ private lemma gronwallWit_mem_two (k : ℕ) (hk : 1 ≤ k) :
   refine ⟨?_, Nat.prime_two⟩
   calc 2 = 2 ^ 1 := (pow_one 2).symm
     _ ≤ 2 ^ k := pow_le_pow_right₀ (by norm_num) hk
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3457,7 +3428,6 @@ private lemma gronwallWit_pow_le (k : ℕ) (hk : 1 ≤ k) :
   exact Finset.single_le_prod
     (fun i hi => Nat.one_le_pow _ _ (Nat.prime_of_mem_primesLE hi).pos)
     (gronwallWit_mem_two k hk)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3470,7 +3440,6 @@ private lemma gronwallWit_ge_one (k : ℕ) : 1 ≤ gronwallWit k := by
   unfold gronwallWit
   exact Finset.one_le_prod
     (fun i hi => Nat.one_le_pow _ _ (Nat.prime_of_mem_primesLE hi).pos)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3483,7 +3452,6 @@ private lemma tendsto_two_pow_natCast_atTop : Filter.Tendsto
   (fun k : ℕ => (((2 ^ k : ℕ)) : ℝ)) Filter.atTop Filter.atTop := by
   simpa only [Nat.cast_pow, Nat.cast_ofNat] using
     tendsto_pow_atTop_atTop_of_one_lt (show (1 : ℝ) < 2 by norm_num)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3501,7 +3469,6 @@ private lemma gronwallWit_corr_eq (k : ℕ) :
   congr 1
   push_cast
   ring
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3513,22 +3480,21 @@ namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 private lemma tendsto_rpow_neg_add_one : Filter.Tendsto
   (fun k : ℕ => (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) Filter.atTop (nhds 0) := by
   have heq : ∀ k : ℕ, (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1)) =
-    1 / (2 * (2 : ℝ) ^ (k : ℕ)) := by
+      1 / (2 * (2 : ℝ) ^ (k : ℕ)) := by
     intro k
     rw [Real.rpow_neg (by norm_num), Real.rpow_add (by norm_num), Real.rpow_one,
       Real.rpow_natCast, one_div]
     congr 1
     ring
   have hlim : Filter.Tendsto (fun k : ℕ => 1 / (2 * (2 : ℝ) ^ (k : ℕ)))
-    Filter.atTop (nhds 0) := by
+      Filter.atTop (nhds 0) := by
     apply Filter.Tendsto.const_div_atTop _ 1
     exact Filter.Tendsto.const_mul_atTop (by norm_num)
       (tendsto_pow_atTop_atTop_of_one_lt (by norm_num))
   have heqEv : (fun k : ℕ => 1 / (2 * (2 : ℝ) ^ (k : ℕ))) =ᶠ[Filter.atTop]
-    (fun k : ℕ => (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) :=
+      (fun k : ℕ => (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) :=
     Filter.Eventually.of_forall (fun k => (heq k).symm)
   exact Filter.Tendsto.congr' heqEv hlim
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3541,7 +3507,7 @@ private lemma tendsto_gronwallWit_atTop : Filter.Tendsto
   (fun k : ℕ => ((gronwallWit k : ℕ) : ℝ)) Filter.atTop Filter.atTop := by
   refine Filter.tendsto_atTop_mono (fun k => ?_)
     tendsto_two_pow_natCast_atTop
-  obtain rfl | hk0 := eq_or_ne k 0
+  rcases eq_or_ne k 0 with rfl | hk0
   · simp only [pow_zero, Nat.cast_one]
     exact_mod_cast gronwallWit_ge_one 0
   · have hk : 1 ≤ k := Nat.one_le_iff_ne_zero.mpr hk0
@@ -3549,7 +3515,6 @@ private lemma tendsto_gronwallWit_atTop : Filter.Tendsto
       pow_le_pow_right₀ (by norm_num) (by omega)
     have h2 : (2 ^ (2 * k) : ℕ) ≤ gronwallWit k := gronwallWit_pow_le k hk
     exact_mod_cast le_trans h1 h2
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3561,7 +3526,6 @@ namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 private lemma gronwall_log_two_pow (k : ℕ) :
   Real.log (((2 ^ k : ℕ)) : ℝ) = (k : ℝ) * Real.log 2 := by
   rw [Nat.cast_pow, Nat.cast_ofNat, Real.log_pow]
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3575,7 +3539,7 @@ private lemma gronwallWit_log_gt_one (k : ℕ) (hk : 1 ≤ k) :
   have hle : (2 : ℝ) ^ (2 * k) ≤ (gronwallWit k : ℝ) := by
     have h := gronwallWit_pow_le k hk
     calc (2 : ℝ) ^ (2 * k) = (((2 ^ (2 * k) : ℕ)) : ℝ) := by
-      rw [Nat.cast_pow, Nat.cast_ofNat]
+            rw [Nat.cast_pow, Nat.cast_ofNat]
       _ ≤ ((gronwallWit k : ℕ) : ℝ) := by exact_mod_cast h
   have hlog := Real.log_le_log (pow_pos (by norm_num : (0 : ℝ) < 2) _) hle
   rw [Real.log_pow] at hlog
@@ -3589,10 +3553,9 @@ private lemma gronwallWit_log_gt_one (k : ℕ) (hk : 1 ≤ k) :
   have hmono : 2 * Real.log 2 ≤ 2 * (k : ℝ) * Real.log 2 := by
     calc 2 * Real.log 2 = (2 * Real.log 2) * 1 := by ring
       _ ≤ (2 * Real.log 2) * (k : ℝ) :=
-        mul_le_mul_of_nonneg_left hk1 (by linarith)
+          mul_le_mul_of_nonneg_left hk1 (by linarith)
       _ = 2 * (k : ℝ) * Real.log 2 := by ring
   linarith
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3617,7 +3580,7 @@ private lemma gronwallWit_loglog_le (k : ℕ) (hk : 1 ≤ k) :
   have hm0 : (0 : ℝ) < (((2 ^ k : ℕ)) : ℝ) := by
     exact_mod_cast pow_pos (show (0 : ℕ) < 2 by norm_num) k
   have hle1 : Real.log (gronwallWit k : ℝ) ≤
-    (2 * (k : ℝ)) * (Real.log 4 * (((2 ^ k : ℕ)) : ℝ)) := by
+      (2 * (k : ℝ)) * (Real.log 4 * (((2 ^ k : ℕ)) : ℝ)) := by
     rw [hlog_eq]
     exact mul_le_mul_of_nonneg_left hθ (by
       have hkk : (0 : ℝ) ≤ (k : ℝ) := Nat.cast_nonneg _
@@ -3627,16 +3590,16 @@ private lemma gronwallWit_loglog_le (k : ℕ) (hk : 1 ≤ k) :
     have h4 : (0 : ℝ) < Real.log 4 := Real.log_pos (by norm_num)
     exact mul_pos (mul_pos (by norm_num) hk0) h4
   have hle2 : Real.log (Real.log (gronwallWit k : ℝ)) ≤
-    Real.log ((2 * (k : ℝ)) * (Real.log 4 * (((2 ^ k : ℕ)) : ℝ))) :=
+      Real.log ((2 * (k : ℝ)) * (Real.log 4 * (((2 ^ k : ℕ)) : ℝ))) :=
     Real.log_le_log (by linarith) hle1
   have hsplit : Real.log ((2 * (k : ℝ)) * (Real.log 4 * (((2 ^ k : ℕ)) : ℝ))) =
-    Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2 := by
+      Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2 := by
     have heq : (2 * (k : ℝ)) * (Real.log 4 * (((2 ^ k : ℕ)) : ℝ)) =
-      (2 * (k : ℝ) * Real.log 4) * (((2 ^ k : ℕ)) : ℝ) := by ring
+        (2 * (k : ℝ) * Real.log 4) * (((2 ^ k : ℕ)) : ℝ) := by ring
     rw [heq, Real.log_mul (ne_of_gt hpos1) (ne_of_gt hm0),
       gronwall_log_two_pow]
-  rwa [hsplit] at hle2
-
+  rw [hsplit] at hle2
+  exact hle2
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3651,8 +3614,8 @@ private lemma gronwallWit_sigma_div_ge (k : ℕ) :
       ((gronwallWit k : ℕ) : ℝ) := by
   have hN12 := sigma_div_prod_primesLE_pow_ge (2 ^ k) (2 * k)
   have hwit : (∏ p ∈ Nat.primesLE (2 ^ k), p ^ (2 * k)) = gronwallWit k := rfl
-  rwa [hwit, gronwallWit_corr_eq] at hN12
-
+  rw [hwit, gronwallWit_corr_eq] at hN12
+  exact hN12
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3681,46 +3644,47 @@ private lemma gronwallWit_f_ge (k : ℕ) (hk : 1 ≤ k) :
   have hll_pos : (0 : ℝ) < Real.log (Real.log (gronwallWit k : ℝ)) :=
     Real.log_pos hgt
   have hU_pos : (0 : ℝ) <
-    Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2 := by
+      Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2 := by
     linarith
   have hσ0 : (0 : ℝ) ≤ ((ArithmeticFunction.sigma 1 (gronwallWit k) : ℕ) : ℝ) /
-    ((gronwallWit k : ℕ) : ℝ) :=
+      ((gronwallWit k : ℕ) : ℝ) :=
     div_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)
   have hstep : mertensP (((2 ^ k : ℕ)) : ℝ) *
-    (1 - (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) /
-    (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2) ≤
-    (((ArithmeticFunction.sigma 1 (gronwallWit k) : ℕ) : ℝ) /
-      ((gronwallWit k : ℕ) : ℝ)) /
-      Real.log (Real.log (gronwallWit k : ℝ)) := by
-    have h1 : mertensP (((2 ^ k : ℕ)) : ℝ) *
-      (1 - (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) /
-      (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2) ≤
-      (((ArithmeticFunction.sigma 1 (gronwallWit k) : ℕ) : ℝ) /
-        ((gronwallWit k : ℕ) : ℝ)) /
-        (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2) :=
-      (div_le_div_iff_of_pos_right hU_pos).mpr hσ
-    have h2 : ((((ArithmeticFunction.sigma 1 (gronwallWit k) : ℕ) : ℝ) /
-      ((gronwallWit k : ℕ) : ℝ)) /
-      (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2)) ≤
+        (1 - (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) /
+        (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2) ≤
       (((ArithmeticFunction.sigma 1 (gronwallWit k) : ℕ) : ℝ) /
         ((gronwallWit k : ℕ) : ℝ)) /
         Real.log (Real.log (gronwallWit k : ℝ)) := by
-      rwa [div_eq_mul_inv, div_eq_mul_inv]
+    have h1 : mertensP (((2 ^ k : ℕ)) : ℝ) *
+          (1 - (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) /
+          (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2) ≤
+        (((ArithmeticFunction.sigma 1 (gronwallWit k) : ℕ) : ℝ) /
+          ((gronwallWit k : ℕ) : ℝ)) /
+          (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2) :=
+      (div_le_div_iff_of_pos_right hU_pos).mpr hσ
+    have h2 : ((((ArithmeticFunction.sigma 1 (gronwallWit k) : ℕ) : ℝ) /
+          ((gronwallWit k : ℕ) : ℝ)) /
+          (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2)) ≤
+        (((ArithmeticFunction.sigma 1 (gronwallWit k) : ℕ) : ℝ) /
+          ((gronwallWit k : ℕ) : ℝ)) /
+          Real.log (Real.log (gronwallWit k : ℝ)) := by
+      rw [div_eq_mul_inv, div_eq_mul_inv]
+      exact mul_le_mul_of_nonneg_left
         ((inv_le_inv₀ hU_pos hll_pos).mpr hU) hσ0
     exact h1.trans h2
   have hid : (mertensP (((2 ^ k : ℕ)) : ℝ) / Real.log (((2 ^ k : ℕ)) : ℝ)) *
-    (1 - (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) *
-    (Real.log (((2 ^ k : ℕ)) : ℝ) /
-      (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2)) =
-    mertensP (((2 ^ k : ℕ)) : ℝ) *
-      (1 - (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) /
-      (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2) := by
+        (1 - (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) *
+        (Real.log (((2 ^ k : ℕ)) : ℝ) /
+          (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2)) =
+      mertensP (((2 ^ k : ℕ)) : ℝ) *
+        (1 - (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) /
+        (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2) := by
     have h1 : Real.log (((2 ^ k : ℕ)) : ℝ) ≠ 0 := ne_of_gt hlogm_pos
     have h2 : Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2 ≠ 0 :=
       ne_of_gt hU_pos
     field_simp
-  rwa [hid, ← div_div]
-
+  rw [hid, ← div_div]
+  exact hstep
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3759,22 +3723,21 @@ private lemma gronwall_Ck_div_tendsto : Filter.Tendsto
   (fun k : ℕ => Real.log (2 * (k : ℝ) * Real.log 4) / (k : ℝ))
   Filter.atTop (nhds 0) := by
   have hsplit : (fun k : ℕ => Real.log (k : ℝ) / (k : ℝ) +
-    Real.log (2 * Real.log 4) / (k : ℝ)) =ᶠ[Filter.atTop]
-    (fun k : ℕ => Real.log (2 * (k : ℝ) * Real.log 4) / (k : ℝ)) := by
+      Real.log (2 * Real.log 4) / (k : ℝ)) =ᶠ[Filter.atTop]
+      (fun k : ℕ => Real.log (2 * (k : ℝ) * Real.log 4) / (k : ℝ)) := by
     filter_upwards [Filter.eventually_ge_atTop 1] with k hk
     have hk0 : (k : ℝ) ≠ 0 := by exact_mod_cast (by omega : k ≠ 0)
     have h4 : (2 : ℝ) * Real.log 4 ≠ 0 :=
       mul_ne_zero (by norm_num) (Real.log_ne_zero_of_pos_of_ne_one
         (by norm_num) (by norm_num))
     have heq : Real.log (2 * (k : ℝ) * Real.log 4) =
-      Real.log (k : ℝ) + Real.log (2 * Real.log 4) := by
+        Real.log (k : ℝ) + Real.log (2 * Real.log 4) := by
       rw [show 2 * (k : ℝ) * Real.log 4 = (k : ℝ) * (2 * Real.log 4) by ring,
         Real.log_mul hk0 h4]
     rw [heq, add_div]
   have h := gronwall_log_div_nat_tendsto.add gronwall_const_div_nat_tendsto
   rw [add_zero] at h
   exact Filter.Tendsto.congr' hsplit h
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3789,18 +3752,19 @@ private lemma gronwall_logwit_ratio_tendsto : Filter.Tendsto
   Filter.atTop (nhds 1) := by
   have hlog2 : (0 : ℝ) < Real.log 2 := Real.log_pos (by norm_num)
   have hconst : Filter.Tendsto (fun _ : ℕ => Real.log 2)
-    Filter.atTop (nhds (Real.log 2)) := tendsto_const_nhds
+      Filter.atTop (nhds (Real.log 2)) := tendsto_const_nhds
   have hden : Filter.Tendsto
-    (fun k : ℕ => Real.log 2 + Real.log (2 * (k : ℝ) * Real.log 4) / (k : ℝ))
-    Filter.atTop (nhds (Real.log 2)) := by
+      (fun k : ℕ => Real.log 2 + Real.log (2 * (k : ℝ) * Real.log 4) / (k : ℝ))
+      Filter.atTop (nhds (Real.log 2)) := by
     have h := hconst.add gronwall_Ck_div_tendsto
-    rwa [add_zero] at h
+    rw [add_zero] at h
+    exact h
   have hdiv := hconst.div hden hlog2.ne'
   rw [div_self hlog2.ne'] at hdiv
   have hdiv' : Filter.Tendsto
-    (fun k : ℕ => Real.log 2 /
-      (Real.log 2 + Real.log (2 * (k : ℝ) * Real.log 4) / (k : ℝ)))
-    Filter.atTop (nhds 1) := hdiv
+      (fun k : ℕ => Real.log 2 /
+        (Real.log 2 + Real.log (2 * (k : ℝ) * Real.log 4) / (k : ℝ)))
+      Filter.atTop (nhds 1) := hdiv
   refine Filter.Tendsto.congr' ?_ hdiv'
   filter_upwards [Filter.eventually_ge_atTop 1] with k hk
   have hk0 : (k : ℝ) ≠ 0 := by exact_mod_cast (by omega : k ≠ 0)
@@ -3818,12 +3782,12 @@ private lemma gronwall_logwit_ratio_tendsto : Filter.Tendsto
       calc (1 : ℝ) ≤ 2 * Real.log 4 := hlog4
         _ = (2 * Real.log 4) * 1 := by ring
         _ ≤ (2 * Real.log 4) * (k : ℝ) :=
-          mul_le_mul_of_nonneg_left hk1 (by linarith)
+            mul_le_mul_of_nonneg_left hk1 (by linarith)
         _ = (k : ℝ) * (2 * Real.log 4) := by ring
     have heq : 2 * (k : ℝ) * Real.log 4 = (k : ℝ) * (2 * Real.log 4) := by ring
     rwa [heq]
   have hUpos : (0 : ℝ) <
-    Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2 := by
+      Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2 := by
     have hpos : (0 : ℝ) < (k : ℝ) * Real.log 2 :=
       mul_pos (by exact_mod_cast (by omega : 0 < k)) hlog2
     linarith
@@ -3837,7 +3801,7 @@ private lemma gronwall_logwit_ratio_tendsto : Filter.Tendsto
     exact ne_of_gt hpos
   rw [div_eq_div_iff hden0 hU0]
   have hcancel : (k : ℝ) * (Real.log (2 * (k : ℝ) * Real.log 4) / (k : ℝ)) =
-    Real.log (2 * (k : ℝ) * Real.log 4) :=
+      Real.log (2 * (k : ℝ) * Real.log 4) :=
     mul_div_cancel₀ _ hk0
   rw [mul_add, mul_add,
     show (k : ℝ) * Real.log 2 * (Real.log (2 * (k : ℝ) * Real.log 4) / (k : ℝ)) =
@@ -3845,7 +3809,6 @@ private lemma gronwall_logwit_ratio_tendsto : Filter.Tendsto
       ring,
     hcancel]
   ring
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3873,8 +3836,8 @@ private lemma gronwall_corr_tendsto : Filter.Tendsto
   have h1 : Filter.Tendsto (fun _ : ℕ => (1 : ℝ)) Filter.atTop (nhds 1) :=
     tendsto_const_nhds
   have h := h1.sub tendsto_rpow_neg_add_one
-  rwa [sub_zero] at h
-
+  rw [sub_zero] at h
+  exact h
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3891,15 +3854,15 @@ private lemma gronwall_g_tendsto : Filter.Tendsto
       (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2)))
   Filter.atTop (nhds (Real.exp Real.eulerMascheroniConstant)) := by
   have h3 : Filter.Tendsto
-    (fun k : ℕ => Real.log (((2 ^ k : ℕ)) : ℝ) /
-      (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2))
-    Filter.atTop (nhds 1) := by
+      (fun k : ℕ => Real.log (((2 ^ k : ℕ)) : ℝ) /
+        (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2))
+      Filter.atTop (nhds 1) := by
     refine Filter.Tendsto.congr' ?_ gronwall_logwit_ratio_tendsto
     filter_upwards with k
     rw [gronwall_log_two_pow]
   have h := (gronwall_mertens_two_pow_tendsto.mul gronwall_corr_tendsto).mul h3
-  rwa [mul_one, mul_one] at h
-
+  rw [mul_one, mul_one] at h
+  exact h
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3921,20 +3884,19 @@ private lemma gronwall_frequently_ge (ε : ℝ) (hε : 0 < ε) :
     hwit_top.eventually_ge_atTop N
   have hev1 : ∀ᶠ k : ℕ in Filter.atTop, 1 ≤ k := Filter.eventually_ge_atTop 1
   have hev2 : ∀ᶠ k : ℕ in Filter.atTop,
-    Real.exp Real.eulerMascheroniConstant - ε ≤
-      (mertensP (((2 ^ k : ℕ)) : ℝ) / Real.log (((2 ^ k : ℕ)) : ℝ)) *
-        (1 - (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) *
-        (Real.log (((2 ^ k : ℕ)) : ℝ) /
-          (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2)) := by
+      Real.exp Real.eulerMascheroniConstant - ε ≤
+        (mertensP (((2 ^ k : ℕ)) : ℝ) / Real.log (((2 ^ k : ℕ)) : ℝ)) *
+          (1 - (2 : ℝ) ^ (-(((k : ℕ) : ℝ) + 1))) *
+          (Real.log (((2 ^ k : ℕ)) : ℝ) /
+            (Real.log (2 * (k : ℝ) * Real.log 4) + (k : ℝ) * Real.log 2)) := by
     have hlt : Real.exp Real.eulerMascheroniConstant - ε <
-      Real.exp Real.eulerMascheroniConstant := by linarith
+        Real.exp Real.eulerMascheroniConstant := by linarith
     have h := gronwall_g_tendsto.eventually (Ioi_mem_nhds hlt)
     filter_upwards [h] with k hk
     exact (Set.mem_Ioi.mp hk).le
   obtain ⟨k, hk1, hkN, hkg⟩ := (hev1.and (hevW.and hev2)).exists
   refine ⟨gronwallWit k, hkN, ?_⟩
   exact le_trans hkg (gronwallWit_f_ge k hk1)
-
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 namespace MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3956,29 +3918,29 @@ lemma gronwall_sigma_limsup
     apply le_of_forall_pos_le_add
     intro ε hε
     have hcob : Filter.IsCoboundedUnder (fun x1 x2 : ℝ => x1 ≤ x2) Filter.atTop
-      (fun n : ℕ => ((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) /
-        ((n : ℝ) * Real.log (Real.log n))) :=
+        (fun n : ℕ => ((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) /
+          ((n : ℝ) * Real.log (Real.log n))) :=
       Filter.IsCoboundedUnder.of_frequently_ge
         (gronwall_frequently_ge 1 one_pos)
     have hev := gronwall_eventually_le ε hε
     have hle : Filter.limsup
-      (fun n : ℕ => ((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) /
-        ((n : ℝ) * Real.log (Real.log n))) Filter.atTop ≤
-      Real.exp Real.eulerMascheroniConstant + ε :=
+        (fun n : ℕ => ((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) /
+          ((n : ℝ) * Real.log (Real.log n))) Filter.atTop ≤
+        Real.exp Real.eulerMascheroniConstant + ε :=
       Filter.limsup_le_of_le hcob hev
     exact hle
   · -- Lower: exp γ - ε ≤ limsup for every ε > 0 (frequent lower bound + eventual boundedness).
     apply le_of_forall_pos_le_add
     intro ε hε
     have hbdd : Filter.IsBoundedUnder (fun x1 x2 : ℝ => x1 ≤ x2) Filter.atTop
-      (fun n : ℕ => ((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) /
-        ((n : ℝ) * Real.log (Real.log n))) :=
+        (fun n : ℕ => ((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) /
+          ((n : ℝ) * Real.log (Real.log n))) :=
       Filter.isBoundedUnder_of_eventually_le
         (gronwall_eventually_le 1 one_pos)
     have hfreq := gronwall_frequently_ge ε hε
     have hle : Real.exp Real.eulerMascheroniConstant - ε ≤ Filter.limsup
-      (fun n : ℕ => ((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) /
-        ((n : ℝ) * Real.log (Real.log n))) Filter.atTop :=
+        (fun n : ℕ => ((ArithmeticFunction.sigma 1 n : ℕ) : ℝ) /
+          ((n : ℝ) * Real.log (Real.log n))) Filter.atTop :=
       Filter.le_limsup_of_frequently_le hfreq hbdd
     linarith
 end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
@@ -3986,4 +3948,4 @@ end MathlibExt.NumberTheory.ArithmeticFunction.GronwallSigmaLimsupWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

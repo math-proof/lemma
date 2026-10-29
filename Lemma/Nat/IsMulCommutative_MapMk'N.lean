@@ -11,8 +11,8 @@ end Definitions
 
 namespace MathlibExt.GroupTheory.SchurZassenhausWanted
 
-/-- Local copy: atlas `clsC` is private and not visible across modules. -/
-private def clsC
+/-- Local copy: atlas `localClsC` is private and not visible across modules. -/
+private def localClsC
   [Group G] (H : Subgroup G) [IsMulCommutative H] [H.FiniteIndex]
   (K : Subgroup G)
 -- given
@@ -23,17 +23,17 @@ private def clsC
   ⟦⟨(K : Set G), hK.symm⟩⟧
 
 /--
-[stabilizer_clsC](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/SchurZassenhaus.lean)
+[stabilizer_localClsC](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/SchurZassenhaus.lean)
 -/
 @[path]
-private lemma stabilizer_clsC
+private lemma stabilizer_localClsC
   [Group G] [Finite G] (H : Subgroup G) [H.Normal]
   [IsMulCommutative H] (K : Subgroup G)
 -- given
   (hH : (Nat.card H).Coprime H.index)
   (hK : H.IsComplement' K) :
 -- imply
-  stabilizer G (clsC H K hK) = K := by
+  stabilizer G (localClsC H K hK) = K := by
 -- proof
   refine (eq_of_le_of_card_ge ?_ (le_of_eq
       (Nat.eq_of_mul_eq_mul_left Nat.card_pos
@@ -69,13 +69,13 @@ private lemma abelian_conj
 -- imply
   ∃ g : G, g ∈ H ∧ K₁.map (MulAut.conj g).toMonoidHom = K₂ := by
 -- proof
-  obtain ⟨h, hh⟩ := exists_smul_eq hH (clsC H K₁ h₀) (clsC H K₂ h₁)
+  obtain ⟨h, hh⟩ := exists_smul_eq hH (localClsC H K₁ h₀) (localClsC H K₂ h₁)
   refine ⟨(h : G), h.2, ?_⟩
-  have hg : (h : G) • (clsC H K₁ h₀) = clsC H K₂ h₁ := hh
-  have key : stabilizer G (clsC H K₂ h₁) =
-      (stabilizer G (clsC H K₁ h₀)).map (MulAut.conj (h : G)).toMonoidHom := by
+  have hg : (h : G) • (localClsC H K₁ h₀) = localClsC H K₂ h₁ := hh
+  have key : stabilizer G (localClsC H K₂ h₁) =
+      (stabilizer G (localClsC H K₁ h₀)).map (MulAut.conj (h : G)).toMonoidHom := by
     rw [← hg, stabilizer_smul_eq_stabilizer_map_conj]
-  rwa [stabilizer_clsC H K₁ hH h₀, stabilizer_clsC H K₂ hH h₁, Eq.comm] at key
+  rwa [stabilizer_localClsC H K₁ hH h₀, stabilizer_localClsC H K₂ hH h₁, Eq.comm] at key
 
 /--
 [card_map_mk'_of_disjoint](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/SchurZassenhaus.lean)

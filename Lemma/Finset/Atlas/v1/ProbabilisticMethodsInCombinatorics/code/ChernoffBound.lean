@@ -31,13 +31,13 @@ lemma chernoff_bound_bounded_rv
     intro i _
     have h := hasSubgaussianMGF_of_mem_Icc_of_integral_eq_zero (h_meas i) (h_bounded i) (h_mean i)
     convert h using 1
-    show (1 : ℝ≥0) = (‖(1 : ℝ) - (-1)‖₊ / 2) ^ 2
+    show (1 : NNReal) = (‖(1 : ℝ) - (-1)‖₊ / 2) ^ 2
     simp only [show (1 : ℝ) - (-1) = (2 : ℝ) from by ring, Real.nnnorm_two]
     norm_num
   have hε : (0 : ℝ) ≤ t * Real.sqrt n := by positivity
   have hn_cast : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.pos_iff_ne_zero.mp hn)
   calc μ.real {ω | t * Real.sqrt n ≤ ∑ i ∈ Finset.range n, X i ω}
-    ≤ Real.exp (-(t * Real.sqrt n) ^ 2 / (2 * ↑n * ↑(1 : ℝ≥0))) :=
+    ≤ Real.exp (-(t * Real.sqrt n) ^ 2 / (2 * ↑n * ↑(1 : NNReal))) :=
       HasSubgaussianMGF.measure_sum_range_ge_le_of_iIndepFun h_indep h_subG hε
     _ = Real.exp (-t ^ 2 / 2) := by
       congr 1
@@ -83,7 +83,7 @@ lemma chernoff_bernoulli_upper_tail
       ext i ω; simp [Function.comp]
     rw [this]
     exact h_indep.comp _ (fun _ => measurable_sub_const _)
-  have h_subG : ∀ i < n, HasSubgaussianMGF (fun ω => X i ω - μ[X i]) (1 : ℝ≥0) μ := by
+  have h_subG : ∀ i < n, HasSubgaussianMGF (fun ω => X i ω - μ[X i]) (1 : NNReal) μ := by
     intro i _
     have h_int : Integrable (X i) μ :=
       (integrable_const (1 : ℝ)).mono' (h_meas i).aestronglyMeasurable (by
@@ -120,7 +120,7 @@ lemma chernoff_bernoulli_upper_tail
     have h := hasSubgaussianMGF_of_mem_Icc_of_integral_eq_zero
       ((h_meas i).sub aemeasurable_const) h_bounded h_mean
     convert h using 1
-    show (1 : ℝ≥0) = (‖(1 : ℝ) - (-1)‖₊ / 2) ^ 2
+    show (1 : NNReal) = (‖(1 : ℝ) - (-1)‖₊ / 2) ^ 2
     simp only [show (1 : ℝ) - (-1) = (2 : ℝ) from by ring, Real.nnnorm_two]
     norm_num
   have hε : (0 : ℝ) ≤ t * Real.sqrt n := by positivity
@@ -170,7 +170,7 @@ lemma chernoff_bernoulli_lower_tail
       ext i ω; simp [Function.comp]
     rw [this]
     exact h_indep.comp _ (fun _ => measurable_const.sub measurable_id)
-  have h_subG : ∀ i < n, HasSubgaussianMGF (fun ω => μ[X i] - X i ω) (1 : ℝ≥0) μ := by
+  have h_subG : ∀ i < n, HasSubgaussianMGF (fun ω => μ[X i] - X i ω) (1 : NNReal) μ := by
     intro i _
     have h_int : Integrable (X i) μ :=
       (integrable_const (1 : ℝ)).mono' (h_meas i).aestronglyMeasurable (by
@@ -207,7 +207,7 @@ lemma chernoff_bernoulli_lower_tail
     have h := hasSubgaussianMGF_of_mem_Icc_of_integral_eq_zero
       (aemeasurable_const.sub (h_meas i)) h_bounded h_mean
     convert h using 1
-    show (1 : ℝ≥0) = (‖(1 : ℝ) - (-1)‖₊ / 2) ^ 2
+    show (1 : NNReal) = (‖(1 : ℝ) - (-1)‖₊ / 2) ^ 2
     simp only [show (1 : ℝ) - (-1) = (2 : ℝ) from by ring, Real.nnnorm_two]
     norm_num
   have hε : (0 : ℝ) ≤ t * Real.sqrt n := by positivity

@@ -1,8 +1,10 @@
 import fs from "fs";
+import { homedir } from "os";
+import path from "path";
 import { compile } from "../../../js/parser/lean.js";
 import "../../../js/py.js";
 
-const abs = "/home/cosmos/src/lean/Lemma/Int/WeightSubspace/eq/ToSubmoduleWeightSpace.lean";
+const abs = path.join(homedir(), "src/lean/Lemma/Int/WeightSubspace/eq/ToSubmoduleWeightSpace.lean");
 const src = fs.readFileSync(abs, "utf8");
 const lines = src.split("\n");
 const starts = [];

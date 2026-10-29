@@ -8,7 +8,7 @@ open scoped FourierTransform
 [gaussian_fourier_self](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/GammaFunction.lean)
 -/
 @[path]
-lemma gaussian_fourier_self
+lemma gaussian_fourier_self :
 -- imply
   (𝓕 fun (x : ℝ) ↦ cexp (-(π : ℂ) * (x : ℂ) ^ 2)) = fun (y : ℝ) ↦ cexp (-(π : ℂ) * (y : ℂ) ^ 2) := by
 -- proof
@@ -18,3 +18,4 @@ lemma gaussian_fourier_self
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

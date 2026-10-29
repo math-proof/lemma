@@ -219,7 +219,7 @@ private lemma rc7_reimerCardFormAll_iff_residue_eq :
 private lemma rc7_reimer_inequality_of_deficitBridge_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : rc7_DeficitBridge)

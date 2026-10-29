@@ -41,10 +41,10 @@ theorem closedCircuitEvent_eq_pi {u v : Site 2} (c : (hypercubicLattice 2).Walk 
   · intro h D hD; exact h _ D hD rfl
 
 
-theorem measure_closedCircuitEvent (p : ℝ≥0) (hp : p ≤ 1) {u v : Site 2}
+theorem measure_closedCircuitEvent (p : NNReal) (hp : p ≤ 1) {u v : Site 2}
     (c : (hypercubicLattice 2).Walk u v) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedCircuitEvent c)
-      = ((1 - p : ℝ≥0) : ℝ≥0∞) ^ (primalEdgeFinset c).card := by
+      = ((1 - p : NNReal) : ENNReal) ^ (primalEdgeFinset c).card := by
   rw [closedCircuitEvent_eq_pi, cylinder_all_closed]
 
 
@@ -68,10 +68,10 @@ theorem primalEdgeFinset_card_cycle {u : Site 2} (c : (hypercubicLattice 2).Walk
   rw [List.toFinset_card_of_nodup (primalEdgeList_nodup c hc), List.length_map, c.length_darts]
 
 
-theorem measure_closedCircuitEvent_cycle (p : ℝ≥0) (hp : p ≤ 1) {u : Site 2}
+theorem measure_closedCircuitEvent_cycle (p : NNReal) (hp : p ≤ 1) {u : Site 2}
     (c : (hypercubicLattice 2).Walk u u) (hc : c.IsCycle) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedCircuitEvent c)
-      = ((1 - p : ℝ≥0) : ℝ≥0∞) ^ c.length := by
+      = ((1 - p : NNReal) : ENNReal) ^ c.length := by
   rw [measure_closedCircuitEvent p hp c, primalEdgeFinset_card_cycle c hc]
 
 

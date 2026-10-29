@@ -28,14 +28,14 @@ variable {Ω : Type*} {m : MeasurableSpace Ω} {d : ℕ}
 
 /-- The path of `B` shifted by the (possibly infinite) stopping time `S`: at sample `ω`
 returns the path `t ↦ B (S ω + t) ω`. -/
-def pathShiftAtStopping (B : ℝ≥0 → Ω → Rd d) (S : Ω → ℝ≥0∞) (ω : Ω) :
-    ℝ≥0 → Rd d :=
+def pathShiftAtStopping (B : NNReal → Ω → Rd d) (S : Ω → ENNReal) (ω : Ω) :
+    NNReal → Rd d :=
   fun t => B ((S ω).toNNReal + t) ω
 
 /-- The function `(t, x) ↦ E_x[Y t (B_·)]`: integrating the time-indexed path
 functional `Y` against the Brownian motion law started from `x`. -/
-def bmExpectation (B : ℝ≥0 → Ω → Rd d) (P : Rd d → Measure Ω)
-    (Y : ℝ≥0 → (ℝ≥0 → Rd d) → ℝ) (t : ℝ≥0) (x : Rd d) : ℝ :=
+def bmExpectation (B : NNReal → Ω → Rd d) (P : Rd d → Measure Ω)
+    (Y : NNReal → (NNReal → Rd d) → ℝ) (t : NNReal) (x : Rd d) : ℝ :=
   ∫ ω, Y t (fun s => B s ω) ∂(P x)
 
 end StrongMarkovBMGoal98

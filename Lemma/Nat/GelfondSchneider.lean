@@ -9,10 +9,8 @@ open MathlibExt.NumberTheory.TranscendenceWanted
 
 namespace MathlibExt.NumberTheory.TranscendenceWanted
 
-/--
+/-!
 [gs_freq_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GelfondSchneider.lean)
--/
-@[path]
 # Gelfond–Schneider lemma
 This file proves the Gelfond–Schneider theorem in its every-value complex form
 (`gelfondSchneider_complex_exp`) and derives the real `Real.rpow` specialization
@@ -28,6 +26,7 @@ the frequency map `t ↦ i + j * b` on `Fin (L * L)` is injective, where
 Note: `(finProdFinEquiv.symm t).1 : Fin L` has no direct coercion to `ℂ`,
 so the statement uses the `ℕ` components `(...).1.val` and `(...).2.val`
 cast to `ℂ`. -/
+@[path]
 private theorem gs_freq_injective (b : ℂ) (hb : b ∉ Set.range (algebraMap ℚ ℂ)) (L : ℕ) :
   Function.Injective (fun t : Fin (L * L) =>
     ((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : ℂ) +
@@ -37,7 +36,7 @@ private theorem gs_freq_injective (b : ℂ) (hb : b ∉ Set.range (algebraMap �
   set p := E.symm a
   set q := E.symm c
   have h : (p.1.val : ℂ) + (p.2.val : ℂ) * b
-    = (q.1.val : ℂ) + (q.2.val : ℂ) * b := hac
+      = (q.1.val : ℂ) + (q.2.val : ℂ) * b := hac
   have key : p = q := by
     by_cases hjj : p.2.val = q.2.val
     · -- Equal second coordinates: cancel the `b` terms, compare naturals.
@@ -50,10 +49,10 @@ private theorem gs_freq_injective (b : ℂ) (hb : b ∉ Set.range (algebraMap �
       have hneC : (p.2.val : ℂ) ≠ (q.2.val : ℂ) := by exact_mod_cast hjj
       have hJ : ((p.2.val : ℂ) - (q.2.val : ℂ)) ≠ 0 := sub_ne_zero.mpr hneC
       have hmul : ((p.2.val : ℂ) - (q.2.val : ℂ)) * b
-        = (q.1.val : ℂ) - (p.1.val : ℂ) := by linear_combination h
+          = (q.1.val : ℂ) - (p.1.val : ℂ) := by linear_combination h
       have hb_eq : b
-        = ((((q.1.val : ℚ) - (p.1.val : ℚ))
-          / ((p.2.val : ℚ) - (q.2.val : ℚ))) : ℂ) := by
+          = ((((q.1.val : ℚ) - (p.1.val : ℚ))
+              / ((p.2.val : ℚ) - (q.2.val : ℚ))) : ℂ) := by
         simp only [Rat.cast_natCast]
         rw [eq_div_iff hJ]
         linear_combination hmul
@@ -119,7 +118,7 @@ private lemma gs_summand_iter (k : ℕ) (a b : ℂ) (w : ℂ) :
   iteratedDeriv k (fun z : ℂ => a * Complex.exp (b * z)) w
     = a * b ^ k * Complex.exp (b * w) := by
   have h : iteratedDeriv k (fun z : ℂ => Complex.exp (b * z)) w
-    = b ^ k * Complex.exp (b * w) :=
+      = b ^ k * Complex.exp (b * w) :=
     congrFun (iteratedDeriv_cexp_const_mul k b) w
   rw [iteratedDeriv_const_mul_field, h, mul_assoc]
 
@@ -137,8 +136,8 @@ private lemma gs_iteratedDeriv_expSum (k : ℕ) (u v : Fin m → ℂ) (w : ℂ) 
     = ∑ t, u t * (v t) ^ k * Complex.exp (v t * w) := by
   trans ∑ t, iteratedDeriv k (fun z : ℂ => u t * Complex.exp (v t * z)) w
   · exact iteratedDeriv_fun_sum (f := fun (t : Fin m) (z : ℂ) => u t * Complex.exp (v t * z))
-    (I := Finset.univ)
-    (fun t _ => (gs_summand_contdiff k (u t) (v t)).contDiffAt)
+      (I := Finset.univ)
+      (fun t _ => (gs_summand_contdiff k (u t) (v t)).contDiffAt)
   · exact Finset.sum_congr rfl (fun t _ => gs_summand_iter k (u t) (v t) w)
 
 end MathlibExt.NumberTheory.TranscendenceWanted
@@ -147,9 +146,8 @@ namespace MathlibExt.NumberTheory.TranscendenceWanted
 
 /--
 [gs_zero_estimate](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GelfondSchneider.lean)
--/
-@[path]
   sampled against distinct nodes cannot vanish at all powers below `n`. -/
+@[path]
 private lemma gs_zero_estimate {n : ℕ} {v : Fin n → ℂ} (hv : Function.Injective v)
   {u : Fin n → ℂ} (hu : u ≠ 0) (w₀ : ℂ) :
   ∃ k : Fin n, ∑ t : Fin n, u t * v t ^ (k : ℕ) * Complex.exp (v t * w₀) ≠ 0 := by
@@ -157,7 +155,7 @@ private lemma gs_zero_estimate {n : ℕ} {v : Fin n → ℂ} (hv : Function.Inje
   push Not at hcon
   -- Fold the exponential factor into the coefficients.
   have hsum : ∀ k : Fin n,
-    ∑ j : Fin n, (u j * Complex.exp (v j * w₀)) * v j ^ (k : ℕ) = 0 := by
+      ∑ j : Fin n, (u j * Complex.exp (v j * w₀)) * v j ^ (k : ℕ) = 0 := by
     intro k
     rw [← hcon k]
     apply Finset.sum_congr rfl
@@ -172,6 +170,7 @@ private lemma gs_zero_estimate {n : ℕ} {v : Fin n → ℂ} (hv : Function.Inje
     have ht : u t * Complex.exp (v t * w₀) = 0 := congrFun hu' t
     exact (mul_eq_zero.mp ht).resolve_right (Complex.exp_ne_zero _)
   exact hu hu0
+
 section GS_AN
 open scoped Topology ENNReal
 open Filter
@@ -200,14 +199,15 @@ namespace MathlibExt.NumberTheory.TranscendenceWanted
 -/
 @[path]
 private lemma gs_coeff_eq_div {f : ℂ → ℂ} {x : ℂ}
-  {p : FormalMultilinearSeries ℂ ℂ ℂ} {t : ℝ≥0∞}
+  {p : FormalMultilinearSeries ℂ ℂ ℂ} {t : ENNReal}
   (hr : HasFPowerSeriesOnBall f p x t) (n : ℕ) :
   p.coeff n = iteratedDeriv n f x / (n.factorial : ℂ) := by
   have hfactC : ((n.factorial : ℕ) : ℂ) ≠ 0 :=
     Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero n)
   have h1 := hr.factorial_smul (1 : ℂ) n
   rw [nsmul_eq_mul] at h1
-  rwa [eq_div_iff hfactC, mul_comm, iteratedDeriv_eq_iteratedFDeriv]
+  rw [eq_div_iff hfactC, mul_comm, iteratedDeriv_eq_iteratedFDeriv]
+  exact h1
 
 end MathlibExt.NumberTheory.TranscendenceWanted
 
@@ -248,20 +248,22 @@ private lemma gs_trailingCoeff_eq {f : ℂ → ℂ} {x : ℂ} {s : ℕ}
   have hfg : ∀ z : ℂ, f z = (z - x) ^ s • ((Function.swap dslope x)^[s] f) z := by
     intro z
     have h := hp.eq_pow_order_mul_iterate_dslope z
-    rwa [hord] at h
+    rw [hord] at h
+    exact h
   have hser : HasFPowerSeriesAt ((Function.swap dslope x)^[s] f)
-    ((FormalMultilinearSeries.fslope^[s] p)) x :=
+      ((FormalMultilinearSeries.fslope^[s] p)) x :=
     hp.has_fpower_series_iterate_dslope_fslope s
   have hgan : AnalyticAt ℂ ((Function.swap dslope x)^[s] f) x := hser.analyticAt
   have h1 := hser.coeff_zero (1 : Fin 0 → ℂ)
   have h2 : (FormalMultilinearSeries.fslope^[s] p).coeff 0 = p.coeff (0 + s) :=
     FormalMultilinearSeries.coeff_iterate_fslope s 0
   rw [show (FormalMultilinearSeries.fslope^[s] p) 0 1
-    = (FormalMultilinearSeries.fslope^[s] p).coeff 0 from rfl,
+      = (FormalMultilinearSeries.fslope^[s] p).coeff 0 from rfl,
     h2, zero_add] at h1
   have hcs_ne : p.coeff s ≠ 0 := FormalMultilinearSeries.coeff_eq_zero.not.mpr hps
   have hgne : ((Function.swap dslope x)^[s] f) x ≠ 0 := by
-    rwa [← h1]
+    rw [← h1]
+    exact hcs_ne
   have hev : f =ᶠ[𝓝[≠] x] fun z => (z - x) ^ (s : ℤ) • ((Function.swap dslope x)^[s] f) z := by
     filter_upwards with z
     rw [zpow_natCast]
@@ -310,6 +312,7 @@ private lemma gs_order_ge_of_vanish {f : ℂ → ℂ} {z : ℂ} {s : ℕ}
     intro k hk
     by_contra hne'
     exact (Nat.find_min H hk) hne'
+
 section GS_JENSEN
 open scoped Topology ENNReal
 open Filter
@@ -344,14 +347,15 @@ private lemma gs_jensen_bound (F : ℂ → ℂ) (hF : Differentiable ℂ F) (c :
     rw [Metric.mem_closedBall, dist_self]
     exact abs_nonneg _
   have hcRmem : c ∈ Metric.closedBall c R := by
-    rwa [Metric.mem_closedBall, dist_self]
+    rw [Metric.mem_closedBall, dist_self]
+    exact hR.le
   have hAt_c : AnalyticAt ℂ F c := hA c hcRmem
   -- (3) divisor at `c` and trailing coefficient from iterated derivatives
   have hord_c : analyticOrderAt F c = s := gs_order_eq_of_vanish hAt_c hzero hne
   have hDc : MeromorphicOn.divisor F (Metric.closedBall c |R|) c = (s : ℤ) :=
     gs_divisor_apply_of_order hA' hcmem hord_c
   have htrail : meromorphicTrailingCoeffAt F c
-    = iteratedDeriv s F c / (s.factorial : ℂ) :=
+      = iteratedDeriv s F c / (s.factorial : ℂ) :=
     gs_trailingCoeff_eq hAt_c hzero hne
   -- (2) Jensen's formula
   have hjensen := hM'.circleAverage_log_norm hRne
@@ -364,7 +368,7 @@ private lemma gs_jensen_bound (F : ℂ → ℂ) (hF : Differentiable ℂ F) (c :
     intro x hx
     rw [hspheq] at hx
     have hBx := hbound x hx
-    obtain h0 | h0 := eq_or_ne (‖F x‖) 0
+    rcases eq_or_ne (‖F x‖) 0 with h0 | h0
     · rw [h0, Real.log_zero]
       exact Real.log_nonneg hB
     · have hpos : 0 < ‖F x‖ := lt_of_le_of_ne (norm_nonneg _) (Ne.symm h0)
@@ -391,35 +395,35 @@ private lemma gs_jensen_bound (F : ℂ → ℂ) (hF : Differentiable ℂ F) (c :
     rwa [norm_sub_rev]
   -- (5) every Jensen summand is nonnegative
   have hlog_nn : ∀ u ∈ Metric.closedBall c |R|,
-    0 ≤ Real.log (R * ‖c - u‖⁻¹) := by
+      0 ≤ Real.log (R * ‖c - u‖⁻¹) := by
     intro u hu
-    obtain rfl | hne' := eq_or_ne u c
+    rcases eq_or_ne u c with rfl | hne'
     · simp
     · have hpos : 0 < ‖c - u‖ := by
-      rw [norm_pos_iff]
-      exact sub_ne_zero.mpr (Ne.symm hne')
+        rw [norm_pos_iff]
+        exact sub_ne_zero.mpr (Ne.symm hne')
       have h1 : (1 : ℝ) ≤ R * ‖c - u‖⁻¹ := by
         rw [le_mul_inv_iff₀ hpos]
         simpa using hle_of_mem u hu
       exact Real.log_nonneg h1
   have hDnn : ∀ u, (0 : ℝ)
-    ≤ (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ) := by
+      ≤ (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ) := by
     intro u
     exact_mod_cast MeromorphicOn.AnalyticOnNhd.divisor_nonneg hA' u
   have hgnn : ∀ u, 0 ≤ (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ)
-    * Real.log (R * ‖c - u‖⁻¹) := by
+      * Real.log (R * ‖c - u‖⁻¹) := by
     intro u
     by_cases hu : u ∈ Metric.closedBall c |R|
     · exact mul_nonneg (hDnn u) (hlog_nn u hu)
     · have h0 : MeromorphicOn.divisor F (Metric.closedBall c |R|) u = 0 := by
-      by_contra hne'
-      exact hu ((MeromorphicOn.divisor F (Metric.closedBall c |R|)).supportWithinDomain
-        (Function.mem_support.mpr hne'))
+        by_contra hne'
+        exact hu ((MeromorphicOn.divisor F (Metric.closedBall c |R|)).supportWithinDomain
+          (Function.mem_support.mpr hne'))
       rw [h0]
       simp
   -- (6) divisor at `z ∈ P` is at least `s`
   have hDz : ∀ z ∈ P, (s : ℝ)
-    ≤ (MeromorphicOn.divisor F (Metric.closedBall c |R|) z : ℝ) := by
+      ≤ (MeromorphicOn.divisor F (Metric.closedBall c |R|) z : ℝ) := by
     intro z hz
     obtain ⟨r, hsr, hr⟩ :=
       gs_order_ge_of_vanish (hA' z (hPmem z hz)) (hPzero z hz) (hPne z hz)
@@ -428,8 +432,8 @@ private lemma gs_jensen_bound (F : ℂ → ℂ) (hF : Differentiable ℂ F) (c :
     rw [hDv]
     exact_mod_cast hsr
   have hPbound : ∀ z ∈ P, (s : ℝ) * Real.log (R * ‖c - z‖⁻¹)
-    ≤ (MeromorphicOn.divisor F (Metric.closedBall c |R|) z : ℝ)
-      * Real.log (R * ‖c - z‖⁻¹) := by
+      ≤ (MeromorphicOn.divisor F (Metric.closedBall c |R|) z : ℝ)
+        * Real.log (R * ‖c - z‖⁻¹) := by
     intro z hz
     exact mul_le_mul_of_nonneg_right (hDz z hz) (hlog_nn z (hPmem z hz))
   -- finsum lower bound over the finite set `hg.toFinset ∪ P`
@@ -437,7 +441,7 @@ private lemma gs_jensen_bound (F : ℂ → ℂ) (hF : Differentiable ℂ F) (c :
     (MeromorphicOn.divisor F (Metric.closedBall c |R|)).finiteSupport
       (isCompact_closedBall _ _)
   have hg : (fun u => (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ)
-    * Real.log (R * ‖c - u‖⁻¹)).HasFiniteSupport := by
+      * Real.log (R * ‖c - u‖⁻¹)).HasFiniteSupport := by
     apply hsuppD.subset
     intro u hu
     rw [Function.mem_support] at hu ⊢
@@ -446,33 +450,33 @@ private lemma gs_jensen_bound (F : ℂ → ℂ) (hF : Differentiable ℂ F) (c :
     rw [hcon]
     simp
   have hG : (∑ᶠ u, (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ)
-    * Real.log (R * ‖c - u‖⁻¹))
-    = ∑ u ∈ hg.toFinset ∪ P, (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ)
-      * Real.log (R * ‖c - u‖⁻¹) := by
+        * Real.log (R * ‖c - u‖⁻¹))
+      = ∑ u ∈ hg.toFinset ∪ P, (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ)
+        * Real.log (R * ‖c - u‖⁻¹) := by
     rw [finsum_eq_sum_of_support_subset (s := hg.toFinset ∪ P)]
     intro u hu
     apply Finset.mem_coe.mpr
     exact Finset.mem_union_left P (hg.mem_toFinset.mpr hu)
   have hPlower : (∑ z ∈ P, (s : ℝ) * Real.log (R * ‖c - z‖⁻¹))
-    ≤ ∑ u ∈ hg.toFinset ∪ P, (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ)
-      * Real.log (R * ‖c - u‖⁻¹) := by
-    calc (∑ z ∈ P, (s : ℝ) * Real.log (R * ‖c - z‖⁻¹))
-      ≤ ∑ z ∈ P, (MeromorphicOn.divisor F (Metric.closedBall c |R|) z : ℝ)
-        * Real.log (R * ‖c - z‖⁻¹) :=
-        Finset.sum_le_sum (fun i hi => hPbound i hi)
-      _ ≤ ∑ u ∈ hg.toFinset ∪ P, (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ)
+      ≤ ∑ u ∈ hg.toFinset ∪ P, (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ)
         * Real.log (R * ‖c - u‖⁻¹) := by
-        apply Finset.sum_le_sum_of_subset_of_nonneg Finset.subset_union_right
-        intro i _ hni
-        exact hgnn i
+    calc (∑ z ∈ P, (s : ℝ) * Real.log (R * ‖c - z‖⁻¹))
+        ≤ ∑ z ∈ P, (MeromorphicOn.divisor F (Metric.closedBall c |R|) z : ℝ)
+            * Real.log (R * ‖c - z‖⁻¹) :=
+          Finset.sum_le_sum (fun i hi => hPbound i hi)
+      _ ≤ ∑ u ∈ hg.toFinset ∪ P, (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ)
+            * Real.log (R * ‖c - u‖⁻¹) := by
+          apply Finset.sum_le_sum_of_subset_of_nonneg Finset.subset_union_right
+          intro i _ hni
+          exact hgnn i
   have hle : (∑ z ∈ P, (s : ℝ) * Real.log (R * ‖c - z‖⁻¹))
-    ≤ (∑ᶠ u, (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ)
-      * Real.log (R * ‖c - u‖⁻¹)) := by
+      ≤ (∑ᶠ u, (MeromorphicOn.divisor F (Metric.closedBall c |R|) u : ℝ)
+        * Real.log (R * ‖c - u‖⁻¹)) := by
     rw [hG]; exact hPlower
   have hcast : (((s : ℤ)) : ℝ) = (s : ℝ) := Int.cast_natCast s
   rw [hDc, htrail, hcast] at hjensen
   have hcomb : Real.log ‖iteratedDeriv s F c / (s.factorial : ℂ)‖ + (s : ℝ) * Real.log R
-    + (∑ z ∈ P, (s : ℝ) * Real.log (R * ‖c - z‖⁻¹)) ≤ Real.log B := by
+      + (∑ z ∈ P, (s : ℝ) * Real.log (R * ‖c - z‖⁻¹)) ≤ Real.log B := by
     linarith
   -- (7) fold into one log and conclude by monotonicity
   have hfact_pos : (0 : ℝ) < (s.factorial : ℝ) := by
@@ -487,31 +491,32 @@ private lemma gs_jensen_bound (F : ℂ → ℂ) (hF : Differentiable ℂ F) (c :
     intro z hz
     exact pow_pos (div_pos hR (hnorm_pos z hz)) s
   have hLHSpos : (0 : ℝ) < ‖iteratedDeriv s F c‖ / (s.factorial : ℝ) * R ^ s
-    * ∏ z ∈ P, (R / ‖c - z‖) ^ s :=
+      * ∏ z ∈ P, (R / ‖c - z‖) ^ s :=
     mul_pos (mul_pos hTpos hRpow) hprod_pos
   apply (Real.log_le_log_iff hLHSpos hBpos).mp
   have hnormtrail : ‖iteratedDeriv s F c / (s.factorial : ℂ)‖
-    = ‖iteratedDeriv s F c‖ / (s.factorial : ℝ) := by
+      = ‖iteratedDeriv s F c‖ / (s.factorial : ℝ) := by
     rw [norm_div, Complex.norm_natCast]
   have e1 : Real.log (‖iteratedDeriv s F c‖ / (s.factorial : ℝ) * R ^ s)
-    = Real.log ‖iteratedDeriv s F c‖ - Real.log (s.factorial : ℝ)
-      + (s : ℝ) * Real.log R := by
+      = Real.log ‖iteratedDeriv s F c‖ - Real.log (s.factorial : ℝ)
+        + (s : ℝ) * Real.log R := by
     rw [Real.log_mul (div_ne_zero hdnorm hfact_ne) (pow_ne_zero s hRne),
       Real.log_div hdnorm hfact_ne, Real.log_pow]
   have e2 : Real.log (∏ z ∈ P, (R / ‖c - z‖) ^ s)
-    = ∑ z ∈ P, (s : ℝ) * Real.log (R * ‖c - z‖⁻¹) := by
+      = ∑ z ∈ P, (s : ℝ) * Real.log (R * ‖c - z‖⁻¹) := by
     rw [Real.log_prod (fun z hz => pow_ne_zero s
       (div_ne_zero hRne (ne_of_gt (hnorm_pos z hz))))]
     apply Finset.sum_congr rfl
     intro z _
     rw [Real.log_pow, div_eq_mul_inv]
   have e3 : Real.log ‖iteratedDeriv s F c / (s.factorial : ℂ)‖
-    = Real.log ‖iteratedDeriv s F c‖ - Real.log (s.factorial : ℝ) := by
+      = Real.log ‖iteratedDeriv s F c‖ - Real.log (s.factorial : ℝ) := by
     rw [hnormtrail, Real.log_div hdnorm hfact_ne]
   rw [Real.log_mul (mul_ne_zero (div_ne_zero hdnorm hfact_ne) (pow_ne_zero s hRne))
     (Finset.prod_ne_zero_iff.mpr (fun z hz => pow_ne_zero s
       (div_ne_zero hRne (ne_of_gt (hnorm_pos z hz))))), e1, e2, ← e3]
   exact hcomb
+
 section GS_NF
 open scoped NumberField
 
@@ -521,9 +526,8 @@ namespace MathlibExt.NumberTheory.TranscendenceWanted
 
 /--
 [gs_siegel_exist](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GelfondSchneider.lean)
--/
-@[path]
 solution of an underdetermined linear system over `𝓞 K`, with house bounds. -/
+@[path]
 private lemma gs_siegel_exist (K : Type*) [Field K] [NumberField K] :
   ∃ C₀ : ℝ, ∀ (α β : Type*) [Fintype α] [Fintype β] (a : Matrix α β (𝓞 K)),
     a ≠ 0 → ∀ (p q : ℕ), 0 < p → p < q → Fintype.card β = q → ∀ (A : ℝ),
@@ -544,9 +548,8 @@ namespace MathlibExt.NumberTheory.TranscendenceWanted
 
 /--
 [gs_liouville](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GelfondSchneider.lean)
--/
-@[path]
 at one embedding relative to its house. -/
+@[path]
 private lemma gs_liouville (K : Type*) [Field K] [NumberField K] (σ : K →+* ℂ)
   (Γ : 𝓞 K) (hΓ : Γ ≠ 0) (Y : ℝ)
   (hY : NumberField.house ((Γ : 𝓞 K) : K) ≤ Y) :
@@ -558,13 +561,14 @@ private lemma gs_liouville (K : Type*) [Field K] [NumberField K] (σ : K →+* �
     exact_mod_cast Int.one_le_abs hN
   have hmain := NumberField.norm_norm_le_norm_mul_house_pow ((Γ : 𝓞 K) : K) σ
   have hpow : NumberField.house ((Γ : 𝓞 K) : K) ^ (Module.finrank ℚ K - 1) ≤
-    Y ^ (Module.finrank ℚ K - 1) :=
+      Y ^ (Module.finrank ℚ K - 1) :=
     pow_le_pow_left₀ (NumberField.house_nonneg _) hY _
   calc (1 : ℝ) ≤ ‖Algebra.norm ℚ ((Γ : 𝓞 K) : K)‖ := h1
     _ ≤ ‖σ ((Γ : 𝓞 K) : K)‖ * NumberField.house ((Γ : 𝓞 K) : K) ^ (Module.finrank ℚ K - 1) :=
-      hmain
+        hmain
     _ ≤ ‖σ ((Γ : 𝓞 K) : K)‖ * Y ^ (Module.finrank ℚ K - 1) :=
-      mul_le_mul_of_nonneg_left hpow (norm_nonneg _)
+        mul_le_mul_of_nonneg_left hpow (norm_nonneg _)
+
 section GS_SETUP
 open scoped NumberField
 
@@ -622,11 +626,12 @@ private lemma gs_finiteDimensional (a b c : ℂ) (ha : IsAlgebraic ℚ a)
   have : Finite ({a, b, c} : Set ℂ) := Finite.of_fintype _
   refine IntermediateField.finiteDimensional_adjoin fun x hx => ?_
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hx
-  obtain rfl | rfl | rfl := hx
+  rcases hx with rfl | rfl | rfl
   · exact isAlgebraic_iff_isIntegral.mp ha
   · exact isAlgebraic_iff_isIntegral.mp hb
   · exact isAlgebraic_iff_isIntegral.mp hc
 
+-- Characteristic zero via the embedding into ℂ.
 end MathlibExt.NumberTheory.TranscendenceWanted
 
 namespace MathlibExt.NumberTheory.TranscendenceWanted
@@ -666,10 +671,11 @@ private lemma gs_finrank_pos (a b c : ℂ) (ha : IsAlgebraic ℚ a)
   (hb : IsAlgebraic ℚ b) (hc : IsAlgebraic ℚ c) :
   0 < Module.finrank ℚ (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)) := by
   have hFin : Module.Finite ℚ
-    (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)) :=
+      (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)) :=
     @NumberField.to_finiteDimensional _ _
       (gs_numberField a b c ha hb hc)
   exact @Module.finrank_pos ℚ _ _ _ _ _ hFin _ _ _
+
 section GS_DENOM
 open scoped NumberField
 
@@ -730,7 +736,7 @@ private lemma gs_clear_denominators (a b c : ℂ) (ha : IsAlgebraic ℚ a)
     · rw [h, hz, Nat.cast_zero]
     · rw [h, hz, Nat.cast_zero, neg_zero]
   have hN : ((((δ₀.natAbs : ℕ))) : ℤ) = δ₀ ∨
-    ((((δ₀.natAbs : ℕ))) : ℤ) = -δ₀ := by
+      ((((δ₀.natAbs : ℕ))) : ℤ) = -δ₀ := by
     obtain h | h := Int.natAbs_eq δ₀
     · exact Or.inl h.symm
     · refine Or.inr ?_
@@ -756,70 +762,70 @@ private lemma gs_clear_denominators (a b c : ℂ) (ha : IsAlgebraic ℚ a)
     · rw [h]; exact hdc
     · rw [h, neg_smul]; exact hdc.neg
   have hfinj : Function.Injective
-    (((IntermediateField.val
-      (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ)) :=
+      (((IntermediateField.val
+        (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ)) :=
     Subtype.val_injective
   have hKa : IsIntegral ℤ ((δ₀.natAbs : ℕ) •
-    (⟨a, gs_mem_adjoin_a a b c⟩ :
-      IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) := by
+      (⟨a, gs_mem_adjoin_a a b c⟩ :
+        IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) := by
     have hmap : (((IntermediateField.val
-      (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
-      ((δ₀.natAbs : ℕ) • (⟨a, gs_mem_adjoin_a a b c⟩ :
-        IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) =
-      (δ₀.natAbs : ℕ) • a := by
-      have e : (((IntermediateField.val
         (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
-        (⟨a, gs_mem_adjoin_a a b c⟩ :
-          IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)) = a := rfl
+        ((δ₀.natAbs : ℕ) • (⟨a, gs_mem_adjoin_a a b c⟩ :
+          IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) =
+        (δ₀.natAbs : ℕ) • a := by
+      have e : (((IntermediateField.val
+          (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
+          (⟨a, gs_mem_adjoin_a a b c⟩ :
+            IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)) = a := rfl
       rw [map_nsmul, e]
     have hccK : IsIntegral ℤ ((((IntermediateField.val
-      (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
-      ((δ₀.natAbs : ℕ) • (⟨a, gs_mem_adjoin_a a b c⟩ :
-        IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)))) := by
+        (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
+        ((δ₀.natAbs : ℕ) • (⟨a, gs_mem_adjoin_a a b c⟩ :
+          IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)))) := by
       rw [hmap]; exact hca
     exact (isIntegral_algHom_iff
       (((IntermediateField.val
         (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
       hfinj).mp hccK
   have hKb : IsIntegral ℤ ((δ₀.natAbs : ℕ) •
-    (⟨b, gs_mem_adjoin_b a b c⟩ :
-      IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) := by
+      (⟨b, gs_mem_adjoin_b a b c⟩ :
+        IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) := by
     have hmap : (((IntermediateField.val
-      (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
-      ((δ₀.natAbs : ℕ) • (⟨b, gs_mem_adjoin_b a b c⟩ :
-        IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) =
-      (δ₀.natAbs : ℕ) • b := by
-      have e : (((IntermediateField.val
         (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
-        (⟨b, gs_mem_adjoin_b a b c⟩ :
-          IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)) = b := rfl
+        ((δ₀.natAbs : ℕ) • (⟨b, gs_mem_adjoin_b a b c⟩ :
+          IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) =
+        (δ₀.natAbs : ℕ) • b := by
+      have e : (((IntermediateField.val
+          (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
+          (⟨b, gs_mem_adjoin_b a b c⟩ :
+            IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)) = b := rfl
       rw [map_nsmul, e]
     have hccK : IsIntegral ℤ ((((IntermediateField.val
-      (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
-      ((δ₀.natAbs : ℕ) • (⟨b, gs_mem_adjoin_b a b c⟩ :
-        IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)))) := by
+        (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
+        ((δ₀.natAbs : ℕ) • (⟨b, gs_mem_adjoin_b a b c⟩ :
+          IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)))) := by
       rw [hmap]; exact hcb
     exact (isIntegral_algHom_iff
       (((IntermediateField.val
         (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
       hfinj).mp hccK
   have hKc : IsIntegral ℤ ((δ₀.natAbs : ℕ) •
-    (⟨c, gs_mem_adjoin_c a b c⟩ :
-      IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) := by
+      (⟨c, gs_mem_adjoin_c a b c⟩ :
+        IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) := by
     have hmap : (((IntermediateField.val
-      (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
-      ((δ₀.natAbs : ℕ) • (⟨c, gs_mem_adjoin_c a b c⟩ :
-        IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) =
-      (δ₀.natAbs : ℕ) • c := by
-      have e : (((IntermediateField.val
         (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
-        (⟨c, gs_mem_adjoin_c a b c⟩ :
-          IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)) = c := rfl
+        ((δ₀.natAbs : ℕ) • (⟨c, gs_mem_adjoin_c a b c⟩ :
+          IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))) =
+        (δ₀.natAbs : ℕ) • c := by
+      have e : (((IntermediateField.val
+          (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
+          (⟨c, gs_mem_adjoin_c a b c⟩ :
+            IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)) = c := rfl
       rw [map_nsmul, e]
     have hccK : IsIntegral ℤ ((((IntermediateField.val
-      (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
-      ((δ₀.natAbs : ℕ) • (⟨c, gs_mem_adjoin_c a b c⟩ :
-        IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)))) := by
+        (IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ))).restrictScalars ℤ))
+        ((δ₀.natAbs : ℕ) • (⟨c, gs_mem_adjoin_c a b c⟩ :
+          IntermediateField.adjoin ℚ ({a, b, c} : Set ℂ)))) := by
       rw [hmap]; exact hcc
     exact (isIntegral_algHom_iff
       (((IntermediateField.val
@@ -838,6 +844,7 @@ private lemma gs_clear_denominators (a b c : ℂ) (ha : IsAlgebraic ℚ a)
   · rfl
   · rfl
   · rfl
+
 section GS_NF2
 open scoped NumberField
 
@@ -854,10 +861,11 @@ private lemma gs_exp_values {ℓ a b c : ℂ} (h1 : Complex.exp ℓ = a)
   Complex.exp (((i : ℂ) + (j : ℂ) * b) * ((n : ℂ) * ℓ)) =
     a ^ (i * n) * c ^ (j * n) := by
   have harg : ((i : ℂ) + (j : ℂ) * b) * ((n : ℂ) * ℓ)
-    = ((i * n : ℕ) : ℂ) * ℓ + ((j * n : ℕ) : ℂ) * (b * ℓ) := by
+      = ((i * n : ℕ) : ℂ) * ℓ + ((j * n : ℕ) : ℂ) * (b * ℓ) := by
     push_cast
     ring
   rw [harg, Complex.exp_add, Complex.exp_nat_mul, Complex.exp_nat_mul, h1, h2]
+
 section GS_DEFS
 open scoped NumberField
 
@@ -867,9 +875,8 @@ namespace MathlibExt.NumberTheory.TranscendenceWanted
 
 /--
 [gs_entry](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GelfondSchneider.lean)
--/
-@[path]
 exponential-sum term, in `K` and in `ℂ`, and satisfies the house bound. -/
+@[path]
 private lemma gs_entry (K : Type*) [Field K] [NumberField K] (ι : K →+* ℂ)
   {δ L E' k n : ℕ} {H : ℝ} {a b c : ℂ} {aK bK cK : K}
   {α' β' γ' : 𝓞 K} {t : Fin (L * L)}
@@ -892,76 +899,76 @@ private lemma gs_entry (K : Type*) [Field K] [NumberField K] (ι : K →+* ℂ)
     ∧ NumberField.house (algebraMap (𝓞 K) K (gs_e K δ L α' β' γ' E' k n t))
       ≤ H ^ E' * (2 * (L : ℝ)) ^ k := by
   have hexp : (E' - k - ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-    ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) + k +
-    (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) +
-    (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) = E' := by
+      ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) + k +
+      (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) +
+      (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) = E' := by
     omega
   have e_δ : algebraMap (𝓞 K) K ((δ : 𝓞 K) ^ (E' - k -
-    ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-    ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
-    = (δ : K) ^ (E' - k -
       ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-      ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) := by
+      ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
+      = (δ : K) ^ (E' - k -
+        ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+        ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) := by
     rw [map_pow, map_natCast]
   have e_mid : algebraMap (𝓞 K) K
-    (((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : 𝓞 K)) * (δ : 𝓞 K) +
-      ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : 𝓞 K)) * β')
-    = (δ : K) * gs_ωK K L bK t := by
+      (((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : 𝓞 K)) * (δ : 𝓞 K) +
+        ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : 𝓞 K)) * β')
+      = (δ : K) * gs_ωK K L bK t := by
     simp only [map_add, map_mul, map_natCast,
       ← NumberField.RingOfIntegers.coe_eq_algebraMap]
     rw [hβ, nsmul_eq_mul]
     unfold gs_ωK
     ring
   have e_α : algebraMap (𝓞 K) K
-    (α' ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n))
-    = (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-      aK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) := by
+      (α' ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n))
+      = (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+        aK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) := by
     rw [map_pow]
     simp only [← NumberField.RingOfIntegers.coe_eq_algebraMap]
     rw [hα, nsmul_eq_mul, mul_pow]
   have e_γ : algebraMap (𝓞 K) K
-    (γ' ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
-    = (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
-      cK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) := by
+      (γ' ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
+      = (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
+        cK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) := by
     rw [map_pow]
     simp only [← NumberField.RingOfIntegers.coe_eq_algebraMap]
     rw [hγ, nsmul_eq_mul, mul_pow]
   have hK : algebraMap (𝓞 K) K (gs_e K δ L α' β' γ' E' k n t)
-    = (δ : K) ^ E' * ((gs_ωK K L bK t) ^ k *
-      aK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-      cK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) := by
+      = (δ : K) ^ E' * ((gs_ωK K L bK t) ^ k *
+        aK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+        cK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) := by
     have step : algebraMap (𝓞 K) K (gs_e K δ L α' β' γ' E' k n t)
-      = (((δ : K) ^ (E' - k -
-        ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-        ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
-        (δ : K) ^ k *
-        (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-        (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) *
-        ((gs_ωK K L bK t) ^ k *
-          aK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-          cK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))) := by
+        = (((δ : K) ^ (E' - k -
+            ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+            ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
+          (δ : K) ^ k *
+          (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+          (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) *
+          ((gs_ωK K L bK t) ^ k *
+            aK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+            cK ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))) := by
       unfold gs_e
       rw [map_mul, map_mul, map_mul, e_δ, e_α, e_γ, map_pow, e_mid, mul_pow]
       ring
     have hHpow : ((δ : K) ^ (E' - k -
-      ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-      ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
+        ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+        ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
       (δ : K) ^ k *
       (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
       (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) =
         (δ : K) ^ E' := by
       calc ((δ : K) ^ (E' - k -
-        ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-        ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
-        (δ : K) ^ k *
-        (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-        (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
-        = (δ : K) ^ ((E' - k -
-          ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-          ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) + k +
-          (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) +
-          (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) := by
-          rw [← pow_add, ← pow_add, ← pow_add]
+            ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+            ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
+          (δ : K) ^ k *
+          (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+          (δ : K) ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
+          = (δ : K) ^ ((E' - k -
+            ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+            ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) + k +
+            (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) +
+            (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) := by
+            rw [← pow_add, ← pow_add, ← pow_add]
         _ = (δ : K) ^ E' := by rw [hexp]
     rw [step, hHpow]
   have hω : ι (gs_ωK K L bK t) = gs_ω b L t := by
@@ -969,9 +976,9 @@ private lemma gs_entry (K : Type*) [Field K] [NumberField K] (ι : K →+* ℂ)
     simp only [map_add, map_mul, map_natCast]
     rw [hbK]
   have hC : ι (algebraMap (𝓞 K) K (gs_e K δ L α' β' γ' E' k n t))
-    = (δ : ℂ) ^ E' * ((gs_ω b L t) ^ k *
-      a ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-      c ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) := by
+      = (δ : ℂ) ^ E' * ((gs_ω b L t) ^ k *
+        a ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+        c ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) := by
     rw [hK, map_mul, map_mul, map_mul, map_pow, map_pow, map_pow, map_pow,
       map_natCast, hω, haK, hcK]
   have hH0 : (0 : ℝ) ≤ H := by linarith
@@ -981,7 +988,7 @@ private lemma gs_entry (K : Type*) [Field K] [NumberField K] (ι : K →+* ℂ)
       map_intCast, NumberField.house_intCast, Int.cast_abs, Int.cast_natCast,
       abs_of_nonneg (Nat.cast_nonneg r)]
   have hnat : ∀ r : ℕ,
-    NumberField.house (algebraMap (𝓞 K) K ((r : 𝓞 K))) = (r : ℝ) := by
+      NumberField.house (algebraMap (𝓞 K) K ((r : 𝓞 K))) = (r : ℝ) := by
     intro r
     rw [← NumberField.RingOfIntegers.coe_eq_algebraMap]
     exact hnat_coe r
@@ -996,92 +1003,92 @@ private lemma gs_entry (K : Type*) [Field K] [NumberField K] (ι : K →+* ℂ)
   have hjR : ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : ℝ)) ≤ (L : ℝ) := by
     exact_mod_cast Nat.le_of_lt (Fin.is_lt _)
   have h1 : NumberField.house (algebraMap (𝓞 K) K
-    (((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : 𝓞 K)) * (δ : 𝓞 K)))
-    ≤ (L : ℝ) * H := by
+      (((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : 𝓞 K)) * (δ : 𝓞 K)))
+      ≤ (L : ℝ) * H := by
     rw [map_mul]
     refine (NumberField.house_mul_le _ _).trans ?_
     rw [hnat, hnat]
     exact mul_le_mul hiR hδH (Nat.cast_nonneg _) (Nat.cast_nonneg _)
   have h2 : NumberField.house (algebraMap (𝓞 K) K
-    (((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : 𝓞 K)) * β'))
-    ≤ (L : ℝ) * H := by
+      (((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : 𝓞 K)) * β'))
+      ≤ (L : ℝ) * H := by
     rw [map_mul]
     refine (NumberField.house_mul_le _ _).trans ?_
     rw [hnat]
     exact mul_le_mul hjR hβh (NumberField.house_nonneg _) (Nat.cast_nonneg _)
   have hmid : NumberField.house (algebraMap (𝓞 K) K
-    (((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : 𝓞 K)) * (δ : 𝓞 K) +
-      ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : 𝓞 K)) * β'))
-    ≤ 2 * (L : ℝ) * H := by
+      (((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : 𝓞 K)) * (δ : 𝓞 K) +
+        ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : 𝓞 K)) * β'))
+      ≤ 2 * (L : ℝ) * H := by
     rw [map_add]
     refine (NumberField.house_add_le _ _).trans ((add_le_add h1 h2).trans ?_)
     have heq : (L : ℝ) * H + (L : ℝ) * H = 2 * (L : ℝ) * H := by ring
     rw [heq]
   have hA : NumberField.house ((algebraMap (𝓞 K) K (δ : 𝓞 K)) ^ (E' - k -
-    ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-    ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
-    ≤ H ^ (E' - k -
       ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-      ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) := by
+      ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
+      ≤ H ^ (E' - k -
+        ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+        ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) := by
     rw [NumberField.house_pow, hnat]
     exact pow_le_pow_left₀ (Nat.cast_nonneg _) hδH _
   have hB : NumberField.house (algebraMap (𝓞 K) K
-    (((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : 𝓞 K)) * (δ : 𝓞 K) +
-      ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : 𝓞 K)) * β') ^ k)
-    ≤ (2 * (L : ℝ) * H) ^ k := by
+      (((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : 𝓞 K)) * (δ : 𝓞 K) +
+        ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : 𝓞 K)) * β') ^ k)
+      ≤ (2 * (L : ℝ) * H) ^ k := by
     rw [NumberField.house_pow]
     exact pow_le_pow_left₀ (NumberField.house_nonneg _) hmid _
   have hCα : NumberField.house ((algebraMap (𝓞 K) K α') ^
-    (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n))
-    ≤ H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) := by
+      (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n))
+      ≤ H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) := by
     rw [NumberField.house_pow]
     exact pow_le_pow_left₀ (NumberField.house_nonneg _) hαh _
   have hDγ : NumberField.house ((algebraMap (𝓞 K) K γ') ^
-    (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
-    ≤ H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) := by
+      (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
+      ≤ H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) := by
     rw [NumberField.house_pow]
     exact pow_le_pow_left₀ (NumberField.house_nonneg _) hγh _
   have hfin2 : (H ^ (E' - k -
-    ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-    ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
-    (2 * (L : ℝ) * H) ^ k) *
-    (H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-      H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
-    = H ^ E' * (2 * (L : ℝ)) ^ k := by
-    have e : (H ^ (E' - k -
       ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
       ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
       (2 * (L : ℝ) * H) ^ k) *
       (H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
         H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
-      = (H ^ (E' - k -
+      = H ^ E' * (2 * (L : ℝ)) ^ k := by
+    have e : (H ^ (E' - k -
         ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
         ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
-        H ^ k *
-        H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-        H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) *
-        (2 * (L : ℝ)) ^ k := by
+        (2 * (L : ℝ) * H) ^ k) *
+        (H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+          H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
+        = (H ^ (E' - k -
+          ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+          ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
+          H ^ k *
+          H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+          H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) *
+          (2 * (L : ℝ)) ^ k := by
       rw [mul_pow]; ring
     have hHpow : (H ^ (E' - k -
-      ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-      ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
-      H ^ k *
-      H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-      H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) =
-        H ^ E' := by
-      calc (H ^ (E' - k -
         ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
         ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
         H ^ k *
         H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-        H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
-        = H ^ ((E' - k -
-          ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-          ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) + k +
-          (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) +
-          (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) := by
-          rw [← pow_add, ← pow_add, ← pow_add]
-        _ = H ^ E' := by rw [hexp]
+        H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) =
+          H ^ E' := by
+      calc (H ^ (E' - k -
+              ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+              ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
+            H ^ k *
+            H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+            H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n))
+            = H ^ ((E' - k -
+              ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+              ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) + k +
+              (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) +
+              (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) := by
+              rw [← pow_add, ← pow_add, ← pow_add]
+          _ = H ^ E' := by rw [hexp]
     rw [e, hHpow]
   refine ⟨hK, hC, ?_⟩
   unfold gs_e
@@ -1091,21 +1098,21 @@ private lemma gs_entry (K : Type*) [Field K] [NumberField K] (ι : K →+* ℂ)
     (NumberField.house_nonneg _) (mul_nonneg (NumberField.house_nonneg _)
       (NumberField.house_nonneg _))).trans ?_
   have hABCD : (NumberField.house ((algebraMap (𝓞 K) K (δ : 𝓞 K)) ^ (E' - k -
-    ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-    ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) *
-    NumberField.house (algebraMap (𝓞 K) K
-      (((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : 𝓞 K)) * (δ : 𝓞 K) +
-        ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : 𝓞 K)) * β') ^ k)) *
-    (NumberField.house ((algebraMap (𝓞 K) K α') ^
-      (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n)) *
-    NumberField.house ((algebraMap (𝓞 K) K γ') ^
-      (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)))
-    ≤ (H ^ (E' - k -
-      ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-      ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
-      (2 * (L : ℝ) * H) ^ k) *
-      (H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-        H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) := by
+        ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+        ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) *
+      NumberField.house (algebraMap (𝓞 K) K
+        (((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : 𝓞 K)) * (δ : 𝓞 K) +
+          ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : 𝓞 K)) * β') ^ k)) *
+      (NumberField.house ((algebraMap (𝓞 K) K α') ^
+        (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n)) *
+      NumberField.house ((algebraMap (𝓞 K) K γ') ^
+        (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)))
+      ≤ (H ^ (E' - k -
+        ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+        ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) *
+        (2 * (L : ℝ) * H) ^ k) *
+        (H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+          H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)) := by
     have hnn2LH : (0 : ℝ) ≤ 2 * (L : ℝ) * H :=
       mul_nonneg (mul_nonneg (by norm_num) (Nat.cast_nonneg _)) hH0
     have hnnB : (0 : ℝ) ≤ (2 * (L : ℝ) * H) ^ k := pow_nonneg hnn2LH _
@@ -1114,8 +1121,8 @@ private lemma gs_entry (K : Type*) [Field K] [NumberField K] (ι : K →+* ℂ)
     have hnnD : (0 : ℝ) ≤ H ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) :=
       pow_nonneg hH0 _
     have hnnE0 : (0 : ℝ) ≤ H ^ (E' - k -
-      ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
-      ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) :=
+        ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n -
+        ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) :=
       pow_nonneg hH0 _
     have hAB := mul_le_mul hA hB (NumberField.house_nonneg _) hnnE0
     have hCD := mul_le_mul hCα hDγ (NumberField.house_nonneg _) hnnC
@@ -1129,9 +1136,8 @@ namespace MathlibExt.NumberTheory.TranscendenceWanted
 
 /--
 [gs_aux_function](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GelfondSchneider.lean)
--/
-@[path]
 with vanishing derivatives at the sample points. -/
+@[path]
 private lemma gs_aux_function (K : Type*) [Field K] [NumberField K]
   {a b c ℓ : ℂ} {δ L M m E : ℕ} {H A X : ℝ}
   {ι : K →+* ℂ} {aK bK cK : K} {α' β' γ' : 𝓞 K}
@@ -1168,13 +1174,13 @@ private lemma gs_aux_function (K : Type*) [Field K] [NumberField K]
   have hm0 : 0 < m := h1m
   -- The Siegel matrix is nonzero: entry `(0, 0), t₀` maps to `δ ^ E ≠ 0` in `K`.
   have hΦne : (fun p : Fin M × Fin m => fun t : Fin (L * L) =>
-    gs_e K δ L α' β' γ' E p.1.val (p.2.val + 1) t) ≠ 0 := by
+      gs_e K δ L α' β' γ' E p.1.val (p.2.val + 1) t) ≠ 0 := by
     intro hcon
     have hLL : 0 < L * L := Nat.mul_pos hL0 hL0
     set t₀ : Fin (L * L) :=
       (finProdFinEquiv (m := L) (n := L)) (⟨0, hL0⟩, ⟨0, hL0⟩) with ht₀
     have hsym : (finProdFinEquiv (m := L) (n := L)).symm t₀
-      = (⟨0, hL0⟩, ⟨0, hL0⟩) := Equiv.symm_apply_apply _ _
+        = (⟨0, hL0⟩, ⟨0, hL0⟩) := Equiv.symm_apply_apply _ _
     have hi0 : (((finProdFinEquiv (m := L) (n := L)).symm t₀).1.val) = 0 := by
       simp [hsym]
     have hj0 : (((finProdFinEquiv (m := L) (n := L)).symm t₀).2.val) = 0 := by
@@ -1191,8 +1197,8 @@ private lemma gs_aux_function (K : Type*) [Field K] [NumberField K]
     exact pow_ne_zero E hδK hK0.symm
   -- Entry houses are bounded by `A`.
   have habs : ∀ k l, NumberField.house (algebraMap (𝓞 K) K
-    ((fun p : Fin M × Fin m => fun t : Fin (L * L) =>
-      gs_e K δ L α' β' γ' E p.1.val (p.2.val + 1) t) k l)) ≤ A := by
+      ((fun p : Fin M × Fin m => fun t : Fin (L * L) =>
+        gs_e K δ L α' β' γ' E p.1.val (p.2.val + 1) t) k l)) ≤ A := by
     rintro ⟨k', r'⟩ t
     change NumberField.house (algebraMap (𝓞 K) K
       (gs_e K δ L α' β' γ' E k'.val (r'.val + 1) t)) ≤ A
@@ -1207,11 +1213,11 @@ private lemma gs_aux_function (K : Type*) [Field K] [NumberField K]
       have hLp : (0 : ℝ) ≤ (L : ℝ) := Nat.cast_nonneg _
       linarith
     calc NumberField.house (algebraMap (𝓞 K) K
-      (gs_e K δ L α' β' γ' E k'.val (r'.val + 1) t))
-      ≤ H ^ E * (2 * (L : ℝ)) ^ k'.val := hhouse
+          (gs_e K δ L α' β' γ' E k'.val (r'.val + 1) t))
+        ≤ H ^ E * (2 * (L : ℝ)) ^ k'.val := hhouse
       _ ≤ H ^ E * (2 * (L : ℝ)) ^ M := by
-        apply mul_le_mul_of_nonneg_left _ (pow_nonneg hH0 _)
-        exact pow_le_pow_right₀ h2L hkp
+          apply mul_le_mul_of_nonneg_left _ (pow_nonneg hH0 _)
+          exact pow_le_pow_right₀ h2L hkp
   have hcardα : Fintype.card (Fin M × Fin m) = M * m := by
     rw [Fintype.card_prod, Fintype.card_fin, Fintype.card_fin]
   have hpq : M * m < L * L := by omega
@@ -1224,7 +1230,7 @@ private lemma gs_aux_function (K : Type*) [Field K] [NumberField K]
     rw [hq]; push_cast; ring
   have hexp1 : ((M * m : ℕ) : ℝ) / (((L * L : ℕ) : ℝ) - ((M * m : ℕ) : ℝ)) = 1 := by
     have e : (2 : ℝ) * ((M * m : ℕ) : ℝ) - ((M * m : ℕ) : ℝ)
-      = ((M * m : ℕ) : ℝ) := by ring
+        = ((M * m : ℕ) : ℝ) := by ring
     rw [hLq, e, div_self hX0]
   have hq2 : ((L * L : ℕ) : ℝ) = (L : ℝ) ^ 2 := by push_cast; ring
   have hA0 : (0 : ℝ) ≤ A := by
@@ -1236,15 +1242,16 @@ private lemma gs_aux_function (K : Type*) [Field K] [NumberField K]
   have hξbound : ∀ t, NumberField.house ((ξ t) : K) ≤ X := by
     intro t
     have h1 : NumberField.house ((ξ t) : K)
-      ≤ C₀ * (C₀ * ((L * L : ℕ) : ℝ) * A) := by
+        ≤ C₀ * (C₀ * ((L * L : ℕ) : ℝ) * A) := by
       have ht := hξb t
-      rwa [hexp1, Real.rpow_one] at ht
+      rw [hexp1, Real.rpow_one] at ht
+      exact ht
     calc NumberField.house ((ξ t) : K)
-      ≤ C₀ * (C₀ * ((L * L : ℕ) : ℝ) * A) := h1
+        ≤ C₀ * (C₀ * ((L * L : ℕ) : ℝ) * A) := h1
       _ = C₀ ^ 2 * (((L * L : ℕ) : ℝ) * A) := by ring
       _ ≤ H * (((L * L : ℕ) : ℝ) * A) :=
-        mul_le_mul_of_nonneg_right hC₂
-          (mul_nonneg (Nat.cast_nonneg _) hA0)
+          mul_le_mul_of_nonneg_right hC₂
+            (mul_nonneg (Nat.cast_nonneg _) hA0)
       _ = H * (L : ℝ) ^ 2 * A := by rw [hq2, mul_assoc]
       _ = X := by rw [hX]
   -- Vanishing of the derivatives at the sample points.
@@ -1252,39 +1259,39 @@ private lemma gs_aux_function (K : Type*) [Field K] [NumberField K]
   intro k n hkM hn1 hn2
   have hnm : n - 1 < m := by omega
   have hFk : iteratedDeriv k (fun w : ℂ => ∑ t, ι ((ξ t) : K) *
-    Complex.exp (gs_ω b L t * w)) ((n : ℂ) * ℓ)
-    = ∑ t, ι ((ξ t) : K) * (gs_ω b L t) ^ k *
-      Complex.exp (gs_ω b L t * ((n : ℂ) * ℓ)) :=
+      Complex.exp (gs_ω b L t * w)) ((n : ℂ) * ℓ)
+      = ∑ t, ι ((ξ t) : K) * (gs_ω b L t) ^ k *
+        Complex.exp (gs_ω b L t * ((n : ℂ) * ℓ)) :=
     gs_iteratedDeriv_expSum k _ _ _
   have hrow : Matrix.mulVec (fun p : Fin M × Fin m => fun t : Fin (L * L) =>
-    gs_e K δ L α' β' γ' E p.1.val (p.2.val + 1) t) ξ
-    (⟨k, hkM⟩, ⟨n - 1, hnm⟩) = 0 :=
+      gs_e K δ L α' β' γ' E p.1.val (p.2.val + 1) t) ξ
+      (⟨k, hkM⟩, ⟨n - 1, hnm⟩) = 0 :=
     congrFun hΦ0 _
   have hterm : ∀ t : Fin (L * L), (δ : ℂ) ^ E *
-    (ι ((ξ t) : K) * (gs_ω b L t) ^ k *
-      Complex.exp (gs_ω b L t * ((n : ℂ) * ℓ)))
-    = ι (algebraMap (𝓞 K) K (((fun p : Fin M × Fin m => fun s : Fin (L * L) =>
-      gs_e K δ L α' β' γ' E p.1.val (p.2.val + 1) s)
-      (⟨k, hkM⟩, ⟨n - 1, hnm⟩)) t * ξ t)) := by
+      (ι ((ξ t) : K) * (gs_ω b L t) ^ k *
+        Complex.exp (gs_ω b L t * ((n : ℂ) * ℓ)))
+      = ι (algebraMap (𝓞 K) K (((fun p : Fin M × Fin m => fun s : Fin (L * L) =>
+        gs_e K δ L α' β' γ' E p.1.val (p.2.val + 1) s)
+        (⟨k, hkM⟩, ⟨n - 1, hnm⟩)) t * ξ t)) := by
     intro t
     have hle2 := hE k n t hkM hn2
     obtain ⟨-, hC2, -⟩ :=
       gs_entry K ι haK hbK hcK hα hβ hγ hle2 hH hδH hHα hHβ hHγ
     have hexp : Complex.exp (gs_ω b L t * ((n : ℂ) * ℓ))
-      = a ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-        c ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) := by
+        = a ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+          c ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n) := by
       unfold gs_ω
       exact gs_exp_values hℓa hℓc _ _ _
     rw [hexp]
     change (δ : ℂ) ^ E * (ι ((ξ t) : K) * (gs_ω b L t) ^ k *
-      (a ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
-        c ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)))
+        (a ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n) *
+          c ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n)))
       = ι (algebraMap (𝓞 K) K
         (gs_e K δ L α' β' γ' E k (n - 1 + 1) t * ↑(ξ t)))
     rw [Nat.sub_add_cancel hn1, map_mul, map_mul, hC2]
     ring
   have hδE0 : (δ : ℂ) ^ E * iteratedDeriv k (fun w : ℂ => ∑ t, ι ((ξ t) : K) *
-    Complex.exp (gs_ω b L t * w)) ((n : ℂ) * ℓ) = 0 := by
+      Complex.exp (gs_ω b L t * w)) ((n : ℂ) * ℓ) = 0 := by
     rw [hFk, Finset.mul_sum]
     trans ∑ t : Fin (L * L), ι (algebraMap (𝓞 K) K
       (((fun p : Fin M × Fin m => fun s : Fin (L * L) =>
@@ -1305,9 +1312,8 @@ namespace MathlibExt.NumberTheory.TranscendenceWanted
 
 /--
 [gs_upper_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GelfondSchneider.lean)
--/
-@[path]
 nonvanishing derivative. -/
+@[path]
 private lemma gs_upper_bound {b ℓ : ℂ} {L M m T s n₀ : ℕ} {H X : ℝ}
   {u : Fin (L * L) → ℂ} {F : ℂ → ℂ}
   (hb : b ∉ Set.range (algebraMap ℚ ℂ))
@@ -1356,7 +1362,7 @@ private lemma gs_upper_bound {b ℓ : ℂ} {L M m T s n₀ : ℕ} {H X : ℝ}
   have hn0Rm : (n₀ : ℝ) ≤ (m : ℝ) := by exact_mod_cast hn₀m
   have hn₀mem : n₀ ∈ Finset.Icc 1 m := Finset.mem_Icc.mpr ⟨hn₀1, hn₀m⟩
   have hcP : ((n₀ : ℂ) * ℓ) ∉
-    Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀) := by
+      Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀) := by
     intro hmem
     obtain ⟨n, hnmem, hneq⟩ := Finset.mem_image.mp hmem
     have hcc : (n : ℂ) = (n₀ : ℂ) := mul_right_cancel₀ hℓ (by simpa using hneq)
@@ -1382,7 +1388,7 @@ private lemma gs_upper_bound {b ℓ : ℂ} {L M m T s n₀ : ℕ} {H X : ℝ}
     rw [e1, norm_mul, Complex.norm_real, Real.norm_eq_abs]
     exact mul_le_mul habs hℓH (norm_nonneg _) (Nat.cast_nonneg _)
   have hPR : ∀ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-    ‖z - (n₀ : ℂ) * ℓ‖ ≤ (s : ℝ) / (L : ℝ) := by
+      ‖z - (n₀ : ℂ) * ℓ‖ ≤ (s : ℝ) / (L : ℝ) := by
     intro z hz
     obtain ⟨n, hnmem, rfl⟩ := Finset.mem_image.mp hz
     rw [Finset.mem_erase, Finset.mem_Icc] at hnmem
@@ -1391,19 +1397,20 @@ private lemma gs_upper_bound {b ℓ : ℂ} {L M m T s n₀ : ℕ} {H X : ℝ}
   have hzero : ∀ k < s, iteratedDeriv k F ((n₀ : ℂ) * ℓ) = 0 :=
     fun k hk => hvan n₀ k hn₀1 hn₀m hk
   have hPzero : ∀ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-    ∀ k < s, iteratedDeriv k F z = 0 := by
+      ∀ k < s, iteratedDeriv k F z = 0 := by
     intro z hz k hk
     obtain ⟨n, hnmem, rfl⟩ := Finset.mem_image.mp hz
     rw [Finset.mem_erase, Finset.mem_Icc] at hnmem
     exact hvan n k hnmem.2.1 hnmem.2.2 hk
   have hPne : ∀ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-    ∃ k₀, iteratedDeriv k₀ F z ≠ 0 := by
+      ∃ k₀, iteratedDeriv k₀ F z ≠ 0 := by
     intro z hz
     obtain ⟨k, hk⟩ := gs_zero_estimate hinj hu0 z
     refine ⟨k.val, ?_⟩
     rw [hFlam]
     have hN2 := gs_iteratedDeriv_expSum k.val u (gs_ω b L) z
-    rwa [hN2]
+    rw [hN2]
+    exact hk
   have hωnorm : ∀ t : Fin (L * L), ‖gs_ω b L t‖ ≤ 2 * (L : ℝ) * H := by
     intro t
     have hiRL : ((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : ℝ)) ≤ (L : ℝ) := by
@@ -1412,89 +1419,90 @@ private lemma gs_upper_bound {b ℓ : ℂ} {L M m T s n₀ : ℕ} {H X : ℝ}
       exact_mod_cast Nat.le_of_lt (Fin.is_lt _)
     unfold gs_ω
     calc ‖((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : ℂ) +
-      ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : ℂ)) * b)‖
-      ≤ ‖((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : ℂ))‖ +
-        ‖((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : ℂ)) * b‖ :=
-        norm_add_le _ _
+          ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : ℂ)) * b)‖
+        ≤ ‖((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : ℂ))‖ +
+          ‖((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : ℂ)) * b‖ :=
+          norm_add_le _ _
       _ = ((((finProdFinEquiv (m := L) (n := L)).symm t).1.val : ℝ)) +
-        ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : ℝ)) * ‖b‖ := by
-        rw [norm_mul, Complex.norm_natCast, Complex.norm_natCast]
+          ((((finProdFinEquiv (m := L) (n := L)).symm t).2.val : ℝ)) * ‖b‖ := by
+          rw [norm_mul, Complex.norm_natCast, Complex.norm_natCast]
       _ ≤ (L : ℝ) + (L : ℝ) * H :=
-        add_le_add hiRL (mul_le_mul hjRL hbH (norm_nonneg _) (Nat.cast_nonneg _))
+          add_le_add hiRL (mul_le_mul hjRL hbH (norm_nonneg _) (Nat.cast_nonneg _))
       _ ≤ 2 * (L : ℝ) * H := by
-        have hLH : (L : ℝ) ≤ (L : ℝ) * H :=
-          calc (L : ℝ) = (L : ℝ) * 1 := by ring
-            _ ≤ (L : ℝ) * H := mul_le_mul_of_nonneg_left hH (Nat.cast_nonneg _)
-        linarith
+          have hLH : (L : ℝ) ≤ (L : ℝ) * H :=
+            calc (L : ℝ) = (L : ℝ) * 1 := by ring
+              _ ≤ (L : ℝ) * H := mul_le_mul_of_nonneg_left hH (Nat.cast_nonneg _)
+          linarith
   have hcnorm : ‖((n₀ : ℂ) * ℓ)‖ ≤ (m : ℝ) * H := by
     rw [norm_mul, Complex.norm_natCast]
     exact mul_le_mul hn0Rm hℓH (norm_nonneg _) (Nat.cast_nonneg _)
   have hwnorm : ∀ w ∈ Metric.sphere ((n₀ : ℂ) * ℓ) ((s : ℝ) / (L : ℝ)),
-    ‖w‖ ≤ (s : ℝ) / (L : ℝ) + (m : ℝ) * H := by
+      ‖w‖ ≤ (s : ℝ) / (L : ℝ) + (m : ℝ) * H := by
     intro w hw
     have hdist : ‖w - (n₀ : ℂ) * ℓ‖ = (s : ℝ) / (L : ℝ) := by
       have hmem2 := Metric.mem_sphere.mp hw
-      rwa [dist_eq_norm] at hmem2
+      rw [dist_eq_norm] at hmem2
+      exact hmem2
     calc ‖w‖ = ‖(w - (n₀ : ℂ) * ℓ) + (n₀ : ℂ) * ℓ‖ := by rw [sub_add_cancel]
       _ ≤ ‖w - (n₀ : ℂ) * ℓ‖ + ‖(n₀ : ℂ) * ℓ‖ := norm_add_le _ _
       _ ≤ (s : ℝ) / (L : ℝ) + (m : ℝ) * H := add_le_add (le_of_eq hdist) hcnorm
   have hterm0 : ∀ (t : Fin (L * L)) (w : ℂ),
-    ‖u t * Complex.exp (gs_ω b L t * w)‖
-      ≤ ‖u t‖ * Real.exp (‖gs_ω b L t‖ * ‖w‖) := by
+      ‖u t * Complex.exp (gs_ω b L t * w)‖
+        ≤ ‖u t‖ * Real.exp (‖gs_ω b L t‖ * ‖w‖) := by
     intro t w
     rw [norm_mul]
     apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
     calc ‖Complex.exp (gs_ω b L t * w)‖ ≤ Real.exp ‖gs_ω b L t * w‖ :=
-      Complex.norm_exp_le_exp_norm _
+          Complex.norm_exp_le_exp_norm _
       _ = Real.exp (‖gs_ω b L t‖ * ‖w‖) := by rw [norm_mul]
   have hB : (1 : ℝ) ≤ (L : ℝ) ^ 2 * X *
-    Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H)) := by
+      Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H)) := by
     have harg0 : (0 : ℝ) ≤ 2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H) := by
       positivity
     apply one_le_mul_of_one_le_of_one_le
     · exact one_le_mul_of_one_le_of_one_le (one_le_pow₀ hLR) h1X
     · exact Real.one_le_exp harg0
   have hbound : ∀ w ∈ Metric.sphere ((n₀ : ℂ) * ℓ) ((s : ℝ) / (L : ℝ)),
-    ‖F w‖ ≤ (L : ℝ) ^ 2 * X *
-      Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H)) := by
+      ‖F w‖ ≤ (L : ℝ) ^ 2 * X *
+        Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H)) := by
     intro w hw
     rw [hFlam]
     change ‖∑ t : Fin (L * L), u t * Complex.exp (gs_ω b L t * w)‖ ≤ _
     have hterm_le : ∀ t : Fin (L * L), ‖u t‖ * Real.exp (‖gs_ω b L t‖ * ‖w‖)
-      ≤ X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H)) := by
+        ≤ X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H)) := by
       intro t
       have e1 : ‖u t‖ * Real.exp (‖gs_ω b L t‖ * ‖w‖)
-        ≤ X * Real.exp (‖gs_ω b L t‖ * ‖w‖) :=
+          ≤ X * Real.exp (‖gs_ω b L t‖ * ‖w‖) :=
         mul_le_mul_of_nonneg_right (hu t) (le_of_lt (Real.exp_pos _))
       have e2 : (‖gs_ω b L t‖ * ‖w‖)
-        ≤ (2 * (L : ℝ) * H) * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H) :=
+          ≤ (2 * (L : ℝ) * H) * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H) :=
         mul_le_mul (hωnorm t) (hwnorm w hw) (norm_nonneg _) (by positivity)
       have e3 : Real.exp (‖gs_ω b L t‖ * ‖w‖)
-        ≤ Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H)) :=
+          ≤ Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H)) :=
         Real.exp_le_exp.mpr e2
       calc ‖u t‖ * Real.exp (‖gs_ω b L t‖ * ‖w‖)
-        ≤ X * Real.exp (‖gs_ω b L t‖ * ‖w‖) := e1
+          ≤ X * Real.exp (‖gs_ω b L t‖ * ‖w‖) := e1
         _ ≤ X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H)) :=
-          mul_le_mul_of_nonneg_left e3 (le_trans zero_le_one h1X)
+            mul_le_mul_of_nonneg_left e3 (le_trans zero_le_one h1X)
     calc ‖∑ t : Fin (L * L), u t * Complex.exp (gs_ω b L t * w)‖
-      ≤ ∑ t : Fin (L * L), (‖u t‖ * Real.exp (‖gs_ω b L t‖ * ‖w‖)) := by
-        refine (norm_sum_le _ _).trans ?_
-        exact Finset.sum_le_sum (fun t _ => hterm0 t w)
+        ≤ ∑ t : Fin (L * L), (‖u t‖ * Real.exp (‖gs_ω b L t‖ * ‖w‖)) := by
+          refine (norm_sum_le _ _).trans ?_
+          exact Finset.sum_le_sum (fun t _ => hterm0 t w)
       _ ≤ ∑ _t : Fin (L * L),
-        (X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) :=
-        Finset.sum_le_sum (fun t _ => hterm_le t)
+            (X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) :=
+          Finset.sum_le_sum (fun t _ => hterm_le t)
       _ = (Finset.univ.card) •
-        (X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) := by
-        rw [Finset.sum_const]
+          (X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) := by
+          rw [Finset.sum_const]
       _ = ((L * L : ℕ) : ℝ) *
-        (X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) := by
-        rw [Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+          (X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) := by
+          rw [Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
       _ = (L : ℝ) ^ 2 * X *
-        Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H)) := by
-        push_cast
-        ring
+          Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H)) := by
+          push_cast
+          ring
   have hnorm_pos : ∀ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-    0 < ‖(n₀ : ℂ) * ℓ - z‖ := by
+      0 < ‖(n₀ : ℂ) * ℓ - z‖ := by
     intro z hz
     obtain ⟨n, hnmem, rfl⟩ := Finset.mem_image.mp hz
     rw [Finset.mem_erase] at hnmem
@@ -1510,47 +1518,47 @@ private lemma gs_upper_bound {b ℓ : ℂ} {L M m T s n₀ : ℕ} {H X : ℝ}
   have hpos1 : (0 : ℝ) < (s.factorial : ℝ) := by exact_mod_cast Nat.factorial_pos s
   have hpos2 : (0 : ℝ) < (((s : ℝ) / (L : ℝ)) ^ s) := pow_pos hR s
   have hpos3 : (0 : ℝ) < ∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ)
-    ((Finset.Icc 1 m).erase n₀), (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s := by
+      ((Finset.Icc 1 m).erase n₀), (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s := by
     apply Finset.prod_pos
     intro z hz
     exact pow_pos (div_pos hR (hnorm_pos z hz)) s
   have hQ : (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-    (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ^ s)
-    = (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-      (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s)⁻¹ := by
+        (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ^ s)
+      = (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
+        (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s)⁻¹ := by
     rw [← Finset.prod_inv_distrib]
     apply Finset.prod_congr rfl
     intro z hz
     rw [← inv_pow, inv_div]
   have s1 : (‖iteratedDeriv s F ((n₀ : ℂ) * ℓ)‖ / (s.factorial : ℝ)) *
-    (((s : ℝ) / (L : ℝ)) ^ s)
-    ≤ ((L : ℝ) ^ 2 * X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) /
-      (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-        (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s) :=
+        (((s : ℝ) / (L : ℝ)) ^ s)
+      ≤ ((L : ℝ) ^ 2 * X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) /
+        (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
+          (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s) :=
     (le_div_iff₀ hpos3).mpr hJensen
   have s2 : (‖iteratedDeriv s F ((n₀ : ℂ) * ℓ)‖ / (s.factorial : ℝ))
-    ≤ ((((L : ℝ) ^ 2 * X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) /
-      (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-        (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s)) / (((s : ℝ) / (L : ℝ)) ^ s)) :=
+      ≤ ((((L : ℝ) ^ 2 * X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) /
+        (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
+          (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s)) / (((s : ℝ) / (L : ℝ)) ^ s)) :=
     (le_div_iff₀ hpos2).mpr s1
   have s3 : ‖iteratedDeriv s F ((n₀ : ℂ) * ℓ)‖
-    ≤ (((((L : ℝ) ^ 2 * X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) /
-      (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-        (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s)) / (((s : ℝ) / (L : ℝ)) ^ s)) *
-      (s.factorial : ℝ)) :=
+      ≤ (((((L : ℝ) ^ 2 * X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) /
+        (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
+          (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s)) / (((s : ℝ) / (L : ℝ)) ^ s)) *
+        (s.factorial : ℝ)) :=
     (div_le_iff₀ hpos1).mp s2
   have hbridge : (((((L : ℝ) ^ 2 * X *
-    Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) /
-    (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-      (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s)) / (((s : ℝ) / (L : ℝ)) ^ s)) *
-    (s.factorial : ℝ))
-    = ((s.factorial : ℝ) / (((s : ℝ) / (L : ℝ)) ^ s)) *
-      ((L : ℝ) ^ 2 * X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) *
-      (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-        (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ^ s) := by
+        Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) /
+        (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
+          (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s)) / (((s : ℝ) / (L : ℝ)) ^ s)) *
+        (s.factorial : ℝ))
+      = ((s.factorial : ℝ) / (((s : ℝ) / (L : ℝ)) ^ s)) *
+        ((L : ℝ) ^ 2 * X * Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))) *
+        (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
+          (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ^ s) := by
     have hne2 : ((((s : ℝ) / (L : ℝ)) ^ s)) ≠ 0 := ne_of_gt hpos2
     have hne3 : (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-      (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s) ≠ 0 := ne_of_gt hpos3
+        (((s : ℝ) / (L : ℝ)) / ‖(n₀ : ℂ) * ℓ - z‖) ^ s) ≠ 0 := ne_of_gt hpos3
     rw [hQ, div_div, div_mul_eq_mul_div, div_mul_eq_mul_div, div_mul_eq_mul_div,
       inv_eq_one_div, mul_one_div, div_div, mul_comm _ _]
   have hfact : (s.factorial : ℝ) / (((s : ℝ) / (L : ℝ)) ^ s) ≤ (L : ℝ) ^ s := by
@@ -1559,10 +1567,10 @@ private lemma gs_upper_bound {b ℓ : ℂ} {L M m T s n₀ : ℕ} {H X : ℝ}
     rw [div_pow, div_eq_mul_inv, inv_div, ← mul_div_assoc,
       div_le_iff₀ (pow_pos hsRpos s)]
     calc (s.factorial : ℝ) * (L : ℝ) ^ s ≤ (s : ℝ) ^ s * (L : ℝ) ^ s :=
-      mul_le_mul_of_nonneg_right hFL (pow_nonneg hLR0 _)
+          mul_le_mul_of_nonneg_right hFL (pow_nonneg hLR0 _)
       _ = (L : ℝ) ^ s * (s : ℝ) ^ s := mul_comm _ _
   have hfac : ∀ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-    (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ≤ ((m : ℝ) * H / (T : ℝ)) := by
+      (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ≤ ((m : ℝ) * H / (T : ℝ)) := by
     intro z hz
     have h1 : ‖(n₀ : ℂ) * ℓ - z‖ ≤ (m : ℝ) * H := by
       rw [norm_sub_rev]
@@ -1572,11 +1580,11 @@ private lemma gs_upper_bound {b ℓ : ℂ} {L M m T s n₀ : ℕ} {H X : ℝ}
       exact hmem n (Finset.mem_Icc.mpr ⟨hnmem.2.1, hnmem.2.2⟩)
     rw [div_le_div_iff₀ hR hT0]
     calc ‖(n₀ : ℂ) * ℓ - z‖ * (T : ℝ) ≤ ((m : ℝ) * H) * (T : ℝ) :=
-      mul_le_mul_of_nonneg_right h1 (le_of_lt hT0)
+          mul_le_mul_of_nonneg_right h1 (le_of_lt hT0)
       _ ≤ ((m : ℝ) * H) * ((s : ℝ) / (L : ℝ)) :=
-        mul_le_mul_of_nonneg_left hTR (mul_nonneg hmR0 hH0)
+          mul_le_mul_of_nonneg_left hTR (mul_nonneg hmR0 hH0)
   have hPcard : (Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀)).card
-    = m - 1 := by
+      = m - 1 := by
     have hinjN : Function.Injective (fun n : ℕ => (n : ℂ) * ℓ) := by
       intro a b hab
       have hcc : (a : ℂ) = (b : ℂ) := mul_right_cancel₀ hℓ (by simpa using hab)
@@ -1585,34 +1593,34 @@ private lemma gs_upper_bound {b ℓ : ℂ} {L M m T s n₀ : ℕ} {H X : ℝ}
       Nat.card_Icc]
     omega
   have hprod : (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-    (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ^ s)
-    ≤ (((((m : ℝ) * H / (T : ℝ)) ^ s) ^
-      ((Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀)).card))) := by
+        (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ^ s)
+      ≤ (((((m : ℝ) * H / (T : ℝ)) ^ s) ^
+        ((Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀)).card))) := by
     calc (∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-      (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ^ s)
-      ≤ ∏ _z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
-        (((m : ℝ) * H / (T : ℝ)) ^ s) := by
-        apply Finset.prod_le_prod₀
-        · intro z hz
-          exact pow_nonneg (div_nonneg (norm_nonneg _) hR.le) s
-        · intro z hz
-          exact pow_le_pow_left₀ (div_nonneg (norm_nonneg _) hR.le) (hfac z hz) s
+          (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ^ s)
+        ≤ ∏ _z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀),
+            (((m : ℝ) * H / (T : ℝ)) ^ s) := by
+          apply Finset.prod_le_prod₀
+          · intro z hz
+            exact pow_nonneg (div_nonneg (norm_nonneg _) hR.le) s
+          · intro z hz
+            exact pow_le_pow_left₀ (div_nonneg (norm_nonneg _) hR.le) (hfac z hz) s
       _ = (((m : ℝ) * H / (T : ℝ)) ^ s) ^
-        ((Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀)).card) := by
-        rw [Finset.prod_const]
+          ((Finset.image (fun n : ℕ => (n : ℂ) * ℓ) ((Finset.Icc 1 m).erase n₀)).card) := by
+          rw [Finset.prod_const]
   have hBexp : Real.exp (2 * (L : ℝ) * H * ((s : ℝ) / (L : ℝ) + (m : ℝ) * H))
-    = Real.exp (2 * H * (s : ℝ) + 2 * (L : ℝ) * (m : ℝ) * H ^ 2) := by
+      = Real.exp (2 * H * (s : ℝ) + 2 * (L : ℝ) * (m : ℝ) * H ^ 2) := by
     congr 1
     field_simp
   have hBnn : (0 : ℝ) ≤ (L : ℝ) ^ 2 * X *
-    Real.exp (2 * H * (s : ℝ) + 2 * (L : ℝ) * (m : ℝ) * H ^ 2) := by
+      Real.exp (2 * H * (s : ℝ) + 2 * (L : ℝ) * (m : ℝ) * H ^ 2) := by
     apply mul_nonneg
     · apply mul_nonneg
       · exact sq_nonneg _
       · exact le_trans zero_le_one h1X
     · exact le_of_lt (Real.exp_pos _)
   have hQnn : (0 : ℝ) ≤ ∏ z ∈ Finset.image (fun n : ℕ => (n : ℂ) * ℓ)
-    ((Finset.Icc 1 m).erase n₀), (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ^ s :=
+      ((Finset.Icc 1 m).erase n₀), (‖(n₀ : ℂ) * ℓ - z‖ / ((s : ℝ) / (L : ℝ))) ^ s :=
     Finset.prod_nonneg (fun z hz => pow_nonneg (div_nonneg (norm_nonneg _) hR.le) s)
   have hLsnn : (0 : ℝ) ≤ (L : ℝ) ^ s := pow_nonneg hLR0 _
   rw [hPcard] at hprod
@@ -1628,10 +1636,9 @@ namespace MathlibExt.NumberTheory.TranscendenceWanted
 
 /--
 [gs_lower_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GelfondSchneider.lean)
--/
-@[path]
 `γ` cannot be too small, since `δ ^ E'` times `γ` is the image of a nonzero
 algebraic integer. -/
+@[path]
 private lemma gs_lower_bound (K : Type*) [Field K] [NumberField K]
   {a b c ℓ : ℂ} {δ L m s n₀ d : ℕ} {H X : ℝ}
   {ι : K →+* ℂ} {aK bK cK : K} {α' β' γ' : 𝓞 K}
@@ -1658,8 +1665,8 @@ private lemma gs_lower_bound (K : Type*) [Field K] [NumberField K]
   -- The uniform exponent, and the side condition for the matrix-entry lemma.
   set E' := s + 2 * (L * m) with hE'def
   have hside : ∀ t : Fin (L * L),
-    s + ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n₀ +
-      ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n₀ ≤ E' := by
+      s + ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n₀ +
+        ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n₀ ≤ E' := by
     intro t
     rw [hE'def]
     have hi : ((finProdFinEquiv (m := L) (n := L)).symm t).1.val ≤ L :=
@@ -1673,51 +1680,53 @@ private lemma gs_lower_bound (K : Type*) [Field K] [NumberField K]
     omega
   -- The complex value of each entry, and its house bound.
   have hentry : ∀ t : Fin (L * L),
-    ι (algebraMap (𝓞 K) K (gs_e K δ L α' β' γ' E' s n₀ t))
-      = (δ : ℂ) ^ E' * ((gs_ω b L t) ^ s *
-        a ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n₀) *
-        c ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n₀)) :=
+      ι (algebraMap (𝓞 K) K (gs_e K δ L α' β' γ' E' s n₀ t))
+        = (δ : ℂ) ^ E' * ((gs_ω b L t) ^ s *
+          a ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n₀) *
+          c ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n₀)) :=
     fun t => (gs_entry K ι haK hbK hcK hα hβ hγ (hside t) hH hδH hHα hHβ hHγ).2.1
   have hhouse : ∀ t : Fin (L * L),
-    NumberField.house (algebraMap (𝓞 K) K (gs_e K δ L α' β' γ' E' s n₀ t))
-      ≤ H ^ E' * (2 * (L : ℝ)) ^ s :=
+      NumberField.house (algebraMap (𝓞 K) K (gs_e K δ L α' β' γ' E' s n₀ t))
+        ≤ H ^ E' * (2 * (L : ℝ)) ^ s :=
     fun t => (gs_entry K ι haK hbK hcK hα hβ hγ (hside t) hH hδH hHα hHβ hHγ).2.2
   have hξ' : ∀ t : Fin (L * L),
-    NumberField.house (algebraMap (𝓞 K) K (ξ t)) ≤ X := by
+      NumberField.house (algebraMap (𝓞 K) K (ξ t)) ≤ X := by
     intro t
     have h := hξ t
-    rwa [NumberField.RingOfIntegers.coe_eq_algebraMap] at h
+    rw [NumberField.RingOfIntegers.coe_eq_algebraMap] at h
+    exact h
   -- The algebraic integer whose image is `δ ^ E'` times the derivative value.
   set Γ : 𝓞 K := ∑ t, ξ t * gs_e K δ L α' β' γ' E' s n₀ t with hΓdef
   have hexp : ∀ t : Fin (L * L), Complex.exp (gs_ω b L t * ((n₀ : ℂ) * ℓ))
-    = a ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n₀) *
-      c ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n₀) := by
+      = a ^ (((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n₀) *
+        c ^ (((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n₀) := by
     intro t
     unfold gs_ω
     exact gs_exp_values hℓa hℓc _ _ _
   have hFderiv : iteratedDeriv s F ((n₀ : ℂ) * ℓ)
-    = ∑ t, ι ((ξ t : 𝓞 K) : K) * (gs_ω b L t) ^ s *
-      Complex.exp (gs_ω b L t * ((n₀ : ℂ) * ℓ)) := by
+      = ∑ t, ι ((ξ t : 𝓞 K) : K) * (gs_ω b L t) ^ s *
+        Complex.exp (gs_ω b L t * ((n₀ : ℂ) * ℓ)) := by
     have hFlam : F = fun w : ℂ => ∑ t, ι ((ξ t : 𝓞 K) : K) *
-      Complex.exp (gs_ω b L t * w) := funext hF
+        Complex.exp (gs_ω b L t * w) := funext hF
     rw [hFlam]
     exact gs_iteratedDeriv_expSum s _ _ _
   have hterm : ∀ t : Fin (L * L),
-    ι (algebraMap (𝓞 K) K (ξ t * gs_e K δ L α' β' γ' E' s n₀ t))
-      = (δ : ℂ) ^ E' * (ι ((ξ t : 𝓞 K) : K) * (gs_ω b L t) ^ s *
-        Complex.exp (gs_ω b L t * ((n₀ : ℂ) * ℓ))) := by
+      ι (algebraMap (𝓞 K) K (ξ t * gs_e K δ L α' β' γ' E' s n₀ t))
+        = (δ : ℂ) ^ E' * (ι ((ξ t : 𝓞 K) : K) * (gs_ω b L t) ^ s *
+          Complex.exp (gs_ω b L t * ((n₀ : ℂ) * ℓ))) := by
     intro t
     rw [map_mul, map_mul]
     rw [← NumberField.RingOfIntegers.coe_eq_algebraMap (ξ t), hentry t, hexp t]
     ring
   have hbase : ι (algebraMap (𝓞 K) K Γ)
-    = (δ : ℂ) ^ E' * iteratedDeriv s F ((n₀ : ℂ) * ℓ) := by
+      = (δ : ℂ) ^ E' * iteratedDeriv s F ((n₀ : ℂ) * ℓ) := by
     rw [hΓdef, hFderiv, Finset.mul_sum]
     simp only [map_sum]
     exact Finset.sum_congr rfl (fun t _ => hterm t)
   have hσΓ : ι ((Γ : 𝓞 K) : K)
-    = (δ : ℂ) ^ E' * iteratedDeriv s F ((n₀ : ℂ) * ℓ) := by
-    rwa [← NumberField.RingOfIntegers.coe_eq_algebraMap] at hbase
+      = (δ : ℂ) ^ E' * iteratedDeriv s F ((n₀ : ℂ) * ℓ) := by
+    rw [← NumberField.RingOfIntegers.coe_eq_algebraMap] at hbase
+    exact hbase
   have hΓne : Γ ≠ 0 := by
     intro hcon
     have hδE : ((δ : ℕ) : ℂ) ^ E' ≠ 0 := pow_ne_zero _ hδC
@@ -1732,22 +1741,23 @@ private lemma gs_lower_bound (K : Type*) [Field K] [NumberField K]
       rw [hΓdef]
       have hcard0 : (Finset.univ : Finset (Fin (0 * 0))).card = 0 := by
         rw [Finset.card_univ, Fintype.card_fin, Nat.zero_mul]
-      rwa [Finset.card_eq_zero.mp hcard0]
+      rw [Finset.card_eq_zero.mp hcard0]
+      exact Finset.sum_empty
     · have hpos : 0 < L * L :=
-      Nat.mul_pos (Nat.pos_of_ne_zero hL) (Nat.pos_of_ne_zero hL)
+        Nat.mul_pos (Nat.pos_of_ne_zero hL) (Nat.pos_of_ne_zero hL)
       have hne2 : Nonempty (Fin (L * L)) := ⟨⟨0, hpos⟩⟩
       obtain ⟨t⟩ := hne2
       exact (NumberField.house_nonneg _).trans (hξ' t)
   -- The house of `Γ`.
   have hhouseΓ : NumberField.house ((Γ : 𝓞 K) : K)
-    ≤ (L : ℝ) ^ 2 * X * H ^ E' * (2 * (L : ℝ)) ^ s := by
-    have hle : NumberField.house (algebraMap (𝓞 K) K Γ)
       ≤ (L : ℝ) ^ 2 * X * H ^ E' * (2 * (L : ℝ)) ^ s := by
+    have hle : NumberField.house (algebraMap (𝓞 K) K Γ)
+        ≤ (L : ℝ) ^ 2 * X * H ^ E' * (2 * (L : ℝ)) ^ s := by
       rw [hΓdef, map_sum]
       refine (NumberField.house_sum_le_sum_house _ _).trans ?_
       have hsum : ∑ t, NumberField.house (algebraMap (𝓞 K) K
-        (ξ t * gs_e K δ L α' β' γ' E' s n₀ t))
-        ≤ ∑ _t : Fin (L * L), X * (H ^ E' * (2 * (L : ℝ)) ^ s) := by
+          (ξ t * gs_e K δ L α' β' γ' E' s n₀ t))
+          ≤ ∑ _t : Fin (L * L), X * (H ^ E' * (2 * (L : ℝ)) ^ s) := by
         apply Finset.sum_le_sum
         intro t _
         rw [map_mul]
@@ -1756,7 +1766,8 @@ private lemma gs_lower_bound (K : Type*) [Field K] [NumberField K]
       refine hsum.trans ?_
       rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
       exact le_of_eq (by push_cast; ring)
-    rwa [NumberField.RingOfIntegers.coe_eq_algebraMap]
+    rw [NumberField.RingOfIntegers.coe_eq_algebraMap]
+    exact hle
   -- Liouville, and conversion of the norm and house bounds to real powers.
   have hliou := gs_liouville K ι Γ hΓne
     ((L : ℝ) ^ 2 * X * H ^ E' * (2 * (L : ℝ)) ^ s) hhouseΓ
@@ -1766,8 +1777,8 @@ private lemma gs_lower_bound (K : Type*) [Field K] [NumberField K]
     push_cast
     ring
   have hnorm : ‖ι ((Γ : 𝓞 K) : K)‖
-    ≤ H ^ ((s : ℝ) + 2 * (L : ℝ) * (m : ℝ)) *
-      ‖iteratedDeriv s F ((n₀ : ℂ) * ℓ)‖ := by
+      ≤ H ^ ((s : ℝ) + 2 * (L : ℝ) * (m : ℝ)) *
+        ‖iteratedDeriv s F ((n₀ : ℂ) * ℓ)‖ := by
     rw [hσΓ, norm_mul, norm_pow, Complex.norm_natCast]
     have h2 : (δ : ℝ) ^ E' ≤ H ^ E' :=
       pow_le_pow_left₀ (Nat.cast_nonneg _) hδH _
@@ -1780,7 +1791,7 @@ private lemma gs_lower_bound (K : Type*) [Field K] [NumberField K]
       (pow_nonneg (mul_nonneg (show (0 : ℝ) ≤ 2 by norm_num)
         (Nat.cast_nonneg _)) _)
   have hYeq : (L : ℝ) ^ 2 * X * H ^ E' * (2 * (L : ℝ)) ^ s
-    = (L : ℝ) ^ 2 * X * H ^ (2 * (L : ℝ) * (m : ℝ)) * (2 * (L : ℝ) * H) ^ s := by
+      = (L : ℝ) ^ 2 * X * H ^ (2 * (L : ℝ) * (m : ℝ)) * (2 * (L : ℝ) * H) ^ s := by
     have e1 : (H : ℝ) ^ E' = H ^ (2 * (L : ℝ) * (m : ℝ)) * H ^ ((s : ℕ) : ℝ) := by
       have hrw : (H : ℝ) ^ E' = H ^ (((E' : ℕ)) : ℝ) :=
         (Real.rpow_natCast H E').symm
@@ -1791,14 +1802,14 @@ private lemma gs_lower_bound (K : Type*) [Field K] [NumberField K]
     rw [e1, e2]
     ring
   have hfin : ‖ι ((Γ : 𝓞 K) : K)‖
-    * ((L : ℝ) ^ 2 * X * H ^ E' * (2 * (L : ℝ)) ^ s) ^ (d - 1)
-    ≤ (H ^ ((s : ℝ) + 2 * (L : ℝ) * (m : ℝ)) *
-      ‖iteratedDeriv s F ((n₀ : ℂ) * ℓ)‖) *
-      ((L : ℝ) ^ 2 * X * H ^ (2 * (L : ℝ) * (m : ℝ))
-        * (2 * (L : ℝ) * H) ^ s) ^ (d - 1) := by
+      * ((L : ℝ) ^ 2 * X * H ^ E' * (2 * (L : ℝ)) ^ s) ^ (d - 1)
+      ≤ (H ^ ((s : ℝ) + 2 * (L : ℝ) * (m : ℝ)) *
+          ‖iteratedDeriv s F ((n₀ : ℂ) * ℓ)‖) *
+        ((L : ℝ) ^ 2 * X * H ^ (2 * (L : ℝ) * (m : ℝ))
+          * (2 * (L : ℝ) * H) ^ s) ^ (d - 1) := by
     have hB : ((L : ℝ) ^ 2 * X * H ^ E' * (2 * (L : ℝ)) ^ s) ^ (d - 1)
-      ≤ ((L : ℝ) ^ 2 * X * H ^ (2 * (L : ℝ) * (m : ℝ))
-        * (2 * (L : ℝ) * H) ^ s) ^ (d - 1) := by
+        ≤ ((L : ℝ) ^ 2 * X * H ^ (2 * (L : ℝ) * (m : ℝ))
+          * (2 * (L : ℝ) * H) ^ s) ^ (d - 1) := by
       rw [hYeq]
     exact mul_le_mul hnorm hB (pow_nonneg hY0 _)
       (mul_nonneg (Real.rpow_nonneg hH0 _) (norm_nonneg _))
@@ -1842,17 +1853,17 @@ private lemma gs_arith_Q
     · apply one_le_pow₀
       linarith
   have hY2 : (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) ^ M
-    ≤ (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) ^ s := by
+      ≤ (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) ^ s := by
     rw [← Real.rpow_natCast _ s]
     exact Real.rpow_le_rpow_of_exponent_le hY1 hMs
   have hLXnn : (0 : ℝ) ≤ L ^ 2 * X := mul_nonneg (sq_nonneg L) hX0
   have step1 : (L ^ 2 * X) ^ d ≤ ((H ^ 3 * (2 * L) ^ 2) ^ M) ^ d :=
     pow_le_pow_left₀ hLXnn hLX d
   have step2 : (((H ^ 3 * (2 * L) ^ 2) ^ M) ^ d : ℝ)
-    = (H ^ 3 * (2 * L) ^ 2) ^ (M * (d : ℝ)) := by
+      = (H ^ 3 * (2 * L) ^ 2) ^ (M * (d : ℝ)) := by
     rw [← Real.rpow_natCast _ d, ← Real.rpow_mul hZ0]
   have step3 : ((H ^ 3 * (2 * L) ^ 2) ^ (M * (d : ℝ)) : ℝ)
-    = H ^ (3 * (M * (d : ℝ))) * (2 * L) ^ (2 * (M * (d : ℝ))) := by
+      = H ^ (3 * (M * (d : ℝ))) * (2 * L) ^ (2 * (M * (d : ℝ))) := by
     rw [Real.mul_rpow (pow_nonneg hH0 3) (pow_nonneg h2L0 2),
       ← Real.rpow_natCast H 3, ← Real.rpow_natCast (2 * L) 2,
       ← Real.rpow_mul hH0, ← Real.rpow_mul h2L0]
@@ -1862,61 +1873,62 @@ private lemma gs_arith_Q
       push_cast; ring
     rw [c3, c2]
   have hLXb : (L ^ 2 * X) ^ d
-    ≤ H ^ (3 * (M * (d : ℝ))) * (2 * L) ^ (2 * (M * (d : ℝ))) := by
-    rwa [← step3, ← step2]
+      ≤ H ^ (3 * (M * (d : ℝ))) * (2 * L) ^ (2 * (M * (d : ℝ))) := by
+    rw [← step3, ← step2]
+    exact step1
   have step5 : Real.exp (2 * L * (m : ℝ) * H ^ 2) ≤ Real.exp (H ^ 2 * M) := by
     apply Real.exp_le_exp.mpr
     rw [mul_comm (H ^ 2) M]
     exact mul_le_mul_of_nonneg_right h2Lm (sq_nonneg H)
   have step6 : 2 * L * (m : ℝ) * (d : ℝ) + 3 * (M * (d : ℝ))
-    ≤ 4 * (d : ℝ) * M := by
+      ≤ 4 * (d : ℝ) * M := by
     have h := mul_le_mul_of_nonneg_right h2Lm hd0
     have h2 : M * (d : ℝ) = (d : ℝ) * M := mul_comm _ _
     linarith
   have eH : H ^ (2 * L * (m : ℝ) * (d : ℝ) + 3 * (M * (d : ℝ)))
-    ≤ H ^ (4 * (d : ℝ) * M) :=
+      ≤ H ^ (4 * (d : ℝ) * M) :=
     Real.rpow_le_rpow_of_exponent_le hH step6
   have e2 : (2 * L) ^ (2 * (M * (d : ℝ))) = (2 * L) ^ (2 * (d : ℝ) * M) := by
     congr 1; ring
   have eY : (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) ^ M
-    = H ^ (4 * (d : ℝ) * M) * Real.exp (H ^ 2 * M)
-      * (2 * L) ^ (2 * (d : ℝ) * M) := by
+      = H ^ (4 * (d : ℝ) * M) * Real.exp (H ^ 2 * M)
+        * (2 * L) ^ (2 * (d : ℝ) * M) := by
     have c1 : ((4 * d : ℕ) : ℝ) * M = 4 * (d : ℝ) * M := by push_cast; ring
     have c2 : ((2 * d : ℕ) : ℝ) * M = 2 * (d : ℝ) * M := by push_cast; ring
     rw [Real.mul_rpow (mul_nonneg (pow_nonneg hH0 _) (le_of_lt (Real.exp_pos _)))
-      (pow_nonneg h2L0 _),
+        (pow_nonneg h2L0 _),
       Real.mul_rpow (pow_nonneg hH0 _) (le_of_lt (Real.exp_pos _)),
       ← Real.rpow_natCast H (4 * d), ← Real.rpow_mul hH0,
       ← Real.rpow_natCast (2 * L) (2 * d), ← Real.rpow_mul h2L0,
       ← Real.exp_mul, c1, c2]
   have hpos1 : (0 : ℝ)
-    ≤ H ^ (2 * L * (m : ℝ) * (d : ℝ)) * Real.exp (2 * L * (m : ℝ) * H ^ 2) :=
+      ≤ H ^ (2 * L * (m : ℝ) * (d : ℝ)) * Real.exp (2 * L * (m : ℝ) * H ^ 2) :=
     mul_nonneg (Real.rpow_nonneg hH0 _) (le_of_lt (Real.exp_pos _))
   have g1 : H ^ (2 * L * (m : ℝ) * (d : ℝ)) * H ^ (3 * (M * (d : ℝ)))
-    ≤ H ^ (4 * (d : ℝ) * M) := by
+      ≤ H ^ (4 * (d : ℝ) * M) := by
     have q3 : H ^ (2 * L * (m : ℝ) * (d : ℝ)) * H ^ (3 * (M * (d : ℝ)))
-      = H ^ (2 * L * (m : ℝ) * (d : ℝ) + 3 * (M * (d : ℝ))) :=
+        = H ^ (2 * L * (m : ℝ) * (d : ℝ) + 3 * (M * (d : ℝ))) :=
       (Real.rpow_add hHpos _ _).symm
     rw [q3]; exact eH
   have hfin : H ^ (2 * L * (m : ℝ) * (d : ℝ)) * Real.exp (2 * L * (m : ℝ) * H ^ 2)
-    * (L ^ 2 * X) ^ d
-    ≤ H ^ (4 * (d : ℝ) * M) * Real.exp (H ^ 2 * M)
-      * (2 * L) ^ (2 * (d : ℝ) * M) := by
+        * (L ^ 2 * X) ^ d
+      ≤ H ^ (4 * (d : ℝ) * M) * Real.exp (H ^ 2 * M)
+        * (2 * L) ^ (2 * (d : ℝ) * M) := by
     calc H ^ (2 * L * (m : ℝ) * (d : ℝ)) * Real.exp (2 * L * (m : ℝ) * H ^ 2)
-      * (L ^ 2 * X) ^ d
-      ≤ H ^ (2 * L * (m : ℝ) * (d : ℝ)) * Real.exp (2 * L * (m : ℝ) * H ^ 2)
-        * (H ^ (3 * (M * (d : ℝ))) * (2 * L) ^ (2 * (M * (d : ℝ)))) :=
-        mul_le_mul_of_nonneg_left hLXb hpos1
+            * (L ^ 2 * X) ^ d
+        ≤ H ^ (2 * L * (m : ℝ) * (d : ℝ)) * Real.exp (2 * L * (m : ℝ) * H ^ 2)
+            * (H ^ (3 * (M * (d : ℝ))) * (2 * L) ^ (2 * (M * (d : ℝ)))) :=
+          mul_le_mul_of_nonneg_left hLXb hpos1
       _ = (H ^ (2 * L * (m : ℝ) * (d : ℝ)) * H ^ (3 * (M * (d : ℝ))))
-        * Real.exp (2 * L * (m : ℝ) * H ^ 2) * (2 * L) ^ (2 * (M * (d : ℝ))) := by
-        ring
+            * Real.exp (2 * L * (m : ℝ) * H ^ 2) * (2 * L) ^ (2 * (M * (d : ℝ))) := by
+          ring
       _ ≤ H ^ (4 * (d : ℝ) * M) * Real.exp (H ^ 2 * M)
-        * (2 * L) ^ (2 * (M * (d : ℝ))) := by
-        apply mul_le_mul_of_nonneg_right _ (Real.rpow_nonneg h2L0 _)
-        exact (mul_le_mul_of_nonneg_right g1 (le_of_lt (Real.exp_pos _))).trans
-          (mul_le_mul_of_nonneg_left step5 (Real.rpow_nonneg hH0 _))
+            * (2 * L) ^ (2 * (M * (d : ℝ))) := by
+          apply mul_le_mul_of_nonneg_right _ (Real.rpow_nonneg h2L0 _)
+          exact (mul_le_mul_of_nonneg_right g1 (le_of_lt (Real.exp_pos _))).trans
+            (mul_le_mul_of_nonneg_left step5 (Real.rpow_nonneg hH0 _))
       _ = H ^ (4 * (d : ℝ) * M) * Real.exp (H ^ 2 * M)
-        * (2 * L) ^ (2 * (d : ℝ) * M) := by rw [e2]
+            * (2 * L) ^ (2 * (d : ℝ) * M) := by rw [e2]
   exact ⟨by rw [eY]; exact hfin, hY2⟩
 
 end MathlibExt.NumberTheory.TranscendenceWanted
@@ -1946,30 +1958,30 @@ private lemma gs_arith_ZY
   have hA : H * H ^ (d - 1) * H ^ (4 * d) = H ^ (5 * d) := by
     have h5 : 1 + ((d - 1) + 4 * d) = 5 * d := by omega
     calc H * H ^ (d - 1) * H ^ (4 * d)
-      = H ^ 1 * (H ^ (d - 1) * H ^ (4 * d)) := by rw [pow_one, mul_assoc]
+        = H ^ 1 * (H ^ (d - 1) * H ^ (4 * d)) := by rw [pow_one, mul_assoc]
       _ = H ^ 1 * H ^ ((d - 1) + 4 * d) := by rw [← pow_add]
       _ = H ^ (1 + ((d - 1) + 4 * d)) := by rw [← pow_add]
       _ = H ^ (5 * d) := by rw [h5]
   have e1 : H * (2 * L * H) ^ (d - 1) * H ^ (4 * d)
-    = H ^ (5 * d) * (2 * L) ^ (d - 1) := by
+      = H ^ (5 * d) * (2 * L) ^ (d - 1) := by
     rw [mul_pow]
     calc H * ((2 * L) ^ (d - 1) * H ^ (d - 1)) * H ^ (4 * d)
-      = (H * H ^ (d - 1) * H ^ (4 * d)) * (2 * L) ^ (d - 1) := by ring
+        = (H * H ^ (d - 1) * H ^ (4 * d)) * (2 * L) ^ (d - 1) := by ring
       _ = H ^ (5 * d) * (2 * L) ^ (d - 1) := by rw [hA]
   have h3 : (d - 1) + 2 * d + 1 = 3 * d := by omega
   have e2 : L * (2 * L) ^ (d - 1) * (2 * L) ^ (2 * d)
-    ≤ (2 * L) ^ (3 * d) := by
+      ≤ (2 * L) ^ (3 * d) := by
     calc L * (2 * L) ^ (d - 1) * (2 * L) ^ (2 * d)
-      = L * ((2 * L) ^ (d - 1) * (2 * L) ^ (2 * d)) := by rw [mul_assoc]
+        = L * ((2 * L) ^ (d - 1) * (2 * L) ^ (2 * d)) := by rw [mul_assoc]
       _ = L * (2 * L) ^ ((d - 1) + 2 * d) := by rw [← pow_add]
       _ ≤ (2 * L) * (2 * L) ^ ((d - 1) + 2 * d) :=
-        mul_le_mul_of_nonneg_right (by linarith) (pow_nonneg h2L0 _)
+          mul_le_mul_of_nonneg_right (by linarith) (pow_nonneg h2L0 _)
       _ = (2 * L) ^ (((d - 1) + 2 * d) + 1) := by rw [pow_succ']
       _ = (2 * L) ^ (3 * d) := by rw [h3]
   have e3 : Real.exp (2 * H) * Real.exp (H ^ 2) = Real.exp (2 * H + H ^ 2) :=
     (Real.exp_add _ _).symm
   have e4 : (((m : ℝ) * H) / T) ^ (m - 1)
-    = ((m : ℝ) * H) ^ (3 * d + 1) / T ^ (3 * d + 1) := by
+      = ((m : ℝ) * H) ^ (3 * d + 1) / T ^ (3 * d + 1) := by
     rw [hm1, div_pow]
   have e5 : (2 * L) ^ (3 * d) = (4 * (m : ℝ)) ^ (3 * d) * T ^ (3 * d) := by
     have h2L : (2 : ℝ) * L = (4 * (m : ℝ)) * T := by rw [hL]; ring
@@ -1981,47 +1993,47 @@ private lemma gs_arith_ZY
       (pow_nonneg hT0 _)
   have hT3 : T ^ (3 * d) ≠ 0 := pow_ne_zero _ (ne_of_gt hT)
   have stepA : H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-    * (((m : ℝ) * H) / T) ^ (m - 1)
-    * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d))
-    = (H ^ (5 * d) * (2 * L) ^ (d - 1)) * (L * (2 * L) ^ (2 * d))
-      * Real.exp (2 * H + H ^ 2)
-      * (((m : ℝ) * H) ^ (3 * d + 1) / T ^ (3 * d + 1)) := by
+        * (((m : ℝ) * H) / T) ^ (m - 1)
+        * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d))
+      = (H ^ (5 * d) * (2 * L) ^ (d - 1)) * (L * (2 * L) ^ (2 * d))
+        * Real.exp (2 * H + H ^ 2)
+        * (((m : ℝ) * H) ^ (3 * d + 1) / T ^ (3 * d + 1)) := by
     have rearr : H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-      * (((m : ℝ) * H) / T) ^ (m - 1)
-      * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d))
-      = (H * (2 * L * H) ^ (d - 1) * H ^ (4 * d))
-        * (L * (2 * L) ^ (2 * d))
-        * (Real.exp (2 * H) * Real.exp (H ^ 2))
-        * ((((m : ℝ) * H) / T) ^ (m - 1)) := by ring
+          * (((m : ℝ) * H) / T) ^ (m - 1)
+          * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d))
+        = (H * (2 * L * H) ^ (d - 1) * H ^ (4 * d))
+          * (L * (2 * L) ^ (2 * d))
+          * (Real.exp (2 * H) * Real.exp (H ^ 2))
+          * ((((m : ℝ) * H) / T) ^ (m - 1)) := by ring
     rw [rearr, e1, e3, e4]
   have stepB : (H ^ (5 * d) * (2 * L) ^ (d - 1)) * (L * (2 * L) ^ (2 * d))
-    * Real.exp (2 * H + H ^ 2)
-    * (((m : ℝ) * H) ^ (3 * d + 1) / T ^ (3 * d + 1))
-    ≤ (H ^ (5 * d) * Real.exp (2 * H + H ^ 2) * (2 * L) ^ (3 * d))
-      * (((m : ℝ) * H) ^ (3 * d + 1) / T ^ (3 * d + 1)) := by
+        * Real.exp (2 * H + H ^ 2)
+        * (((m : ℝ) * H) ^ (3 * d + 1) / T ^ (3 * d + 1))
+      ≤ (H ^ (5 * d) * Real.exp (2 * H + H ^ 2) * (2 * L) ^ (3 * d))
+        * (((m : ℝ) * H) ^ (3 * d + 1) / T ^ (3 * d + 1)) := by
     apply mul_le_mul_of_nonneg_right _ posD
     have rearr2 : (H ^ (5 * d) * (2 * L) ^ (d - 1)) * (L * (2 * L) ^ (2 * d))
-      * Real.exp (2 * H + H ^ 2)
-      = (H ^ (5 * d) * Real.exp (2 * H + H ^ 2))
-        * (L * (2 * L) ^ (d - 1) * (2 * L) ^ (2 * d)) := by ring
+          * Real.exp (2 * H + H ^ 2)
+        = (H ^ (5 * d) * Real.exp (2 * H + H ^ 2))
+          * (L * (2 * L) ^ (d - 1) * (2 * L) ^ (2 * d)) := by ring
     rw [rearr2]
     exact mul_le_mul_of_nonneg_left e2 (mul_nonneg posH5 posE)
   have stepC : (H ^ (5 * d) * Real.exp (2 * H + H ^ 2) * (2 * L) ^ (3 * d))
-    * (((m : ℝ) * H) ^ (3 * d + 1) / T ^ (3 * d + 1))
-    = (H ^ (5 * d) * Real.exp (2 * H + H ^ 2) * (4 * (m : ℝ)) ^ (3 * d)
-      * (((m : ℝ) * H) ^ (3 * d + 1))) * T ^ (3 * d) / T ^ (3 * d + 1) := by
+        * (((m : ℝ) * H) ^ (3 * d + 1) / T ^ (3 * d + 1))
+      = (H ^ (5 * d) * Real.exp (2 * H + H ^ 2) * (4 * (m : ℝ)) ^ (3 * d)
+          * (((m : ℝ) * H) ^ (3 * d + 1))) * T ^ (3 * d) / T ^ (3 * d + 1) := by
     rw [e5]; ring
   have hps : T ^ (3 * d + 1) = T ^ (3 * d) * T := pow_succ T (3 * d)
   have stepD : (H ^ (5 * d) * Real.exp (2 * H + H ^ 2) * (4 * (m : ℝ)) ^ (3 * d)
-    * (((m : ℝ) * H) ^ (3 * d + 1))) * T ^ (3 * d) / T ^ (3 * d + 1)
-    ≤ (H ^ (5 * d) * Real.exp (2 * H + H ^ 2) * (4 * (m : ℝ)) ^ (3 * d)
-      * (((m : ℝ) * H) ^ (3 * d + 1))) / T := by
+          * (((m : ℝ) * H) ^ (3 * d + 1))) * T ^ (3 * d) / T ^ (3 * d + 1)
+      ≤ (H ^ (5 * d) * Real.exp (2 * H + H ^ 2) * (4 * (m : ℝ)) ^ (3 * d)
+          * (((m : ℝ) * H) ^ (3 * d + 1))) / T := by
     rw [hps, div_le_div_iff₀ (mul_pos (pow_pos hT _) hT) hT]
     exact le_of_eq (by ring)
   calc H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-    * (((m : ℝ) * H) / T) ^ (m - 1)
-    * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d))
-    = _ := stepA
+          * (((m : ℝ) * H) / T) ^ (m - 1)
+          * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d))
+      = _ := stepA
     _ ≤ _ := stepB
     _ = _ := stepC
     _ ≤ _ := stepD
@@ -2032,10 +2044,9 @@ namespace MathlibExt.NumberTheory.TranscendenceWanted
 
 /--
 [gs_arith_final](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GelfondSchneider.lean)
--/
-@[path]
 lower bound regroups to `1 ≤ Z₁ ^ s * Q`,
 which contradicts `Z₁ ^ s * Q ≤ (Z₁ * Y) ^ s < 1`. -/
+@[path]
 private lemma gs_arith_final
   {H T L M X g : ℝ} {d m s : ℕ}
   (hH : 1 ≤ H) (hd : 1 ≤ d) (hm : m = 3 * d + 2)
@@ -2062,7 +2073,7 @@ private lemma gs_arith_final
     one_le_pow₀
       (one_le_mul_of_one_le_of_one_le (by linarith [hmR5]) hH)
   have hK01 : 1 ≤ H ^ (5 * d) * Real.exp (2 * H + H ^ 2) * (4 * (m : ℝ)) ^ (3 * d)
-    * (((m : ℝ) * H) ^ (3 * d + 1)) := by
+      * (((m : ℝ) * H) ^ (3 * d + 1)) := by
     apply one_le_mul_of_one_le_of_one_le
     · apply one_le_mul_of_one_le_of_one_le
       · apply one_le_mul_of_one_le_of_one_le
@@ -2076,11 +2087,11 @@ private lemma gs_arith_final
   have hC0 : (0 : ℝ) ≤ (4 * (m : ℝ)) ^ (3 * d) :=
     pow_nonneg (by linarith [hmR5]) _
   have hKC1 : (4 * (m : ℝ)) ^ (3 * d)
-    ≤ (H ^ (5 * d) * Real.exp (2 * H + H ^ 2)) * (4 * (m : ℝ)) ^ (3 * d) :=
+      ≤ (H ^ (5 * d) * Real.exp (2 * H + H ^ 2)) * (4 * (m : ℝ)) ^ (3 * d) :=
     le_mul_of_one_le_left hC0 hAB
   have hKC : (4 * (m : ℝ)) ^ (3 * d)
-    ≤ H ^ (5 * d) * Real.exp (2 * H + H ^ 2) * (4 * (m : ℝ)) ^ (3 * d)
-      * (((m : ℝ) * H) ^ (3 * d + 1)) :=
+      ≤ H ^ (5 * d) * Real.exp (2 * H + H ^ 2) * (4 * (m : ℝ)) ^ (3 * d)
+        * (((m : ℝ) * H) ^ (3 * d + 1)) :=
     le_trans hKC1
       (le_mul_of_one_le_right
         (mul_nonneg (mul_nonneg (pow_nonneg hH0 _)
@@ -2108,7 +2119,7 @@ private lemma gs_arith_final
     have hnn : (0 : ℝ) ≤ (2 * (m : ℝ) * T) * (T - 2 * (m : ℝ)) :=
       mul_nonneg (mul_nonneg (by linarith [hmR0]) hT0) (by linarith [hT2m])
     have heq : (2 : ℝ) * (2 * (m : ℝ) * T) * (m : ℝ)
-      + (2 * (m : ℝ) * T) * (T - 2 * (m : ℝ)) = 2 * (m : ℝ) * T ^ 2 := by
+        + (2 * (m : ℝ) * T) * (T - 2 * (m : ℝ)) = 2 * (m : ℝ) * T ^ 2 := by
       ring
     rw [hM, hL]
     linarith [hnn, heq]
@@ -2129,21 +2140,21 @@ private lemma gs_arith_final
       rw [← Real.rpow_natCast]
       exact Real.rpow_le_rpow_of_exponent_le (by linarith [hL1]) h4M
     calc L ^ 4 ≤ (2 * L) ^ 4 :=
-      pow_le_pow_left₀ hL0 (by linarith) 4
+          pow_le_pow_left₀ hL0 (by linarith) 4
       _ ≤ (2 * L) ^ M := h1
   have hsplit : L ^ 2 * X
-    = H ^ (1 + (M + 2 * L * (m : ℝ))) * L ^ 4 * (2 * L) ^ M := by
+      = H ^ (1 + (M + 2 * L * (m : ℝ))) * L ^ 4 * (2 * L) ^ M := by
     have hH1 : (H : ℝ) = H ^ ((1 : ℝ)) := (Real.rpow_one H).symm
     have rearr : L ^ 2 * (H ^ ((1 : ℝ)) * L ^ 2 * H ^ (M + 2 * L * (m : ℝ))
-      * (2 * L) ^ M)
-      = (H ^ ((1 : ℝ)) * H ^ (M + 2 * L * (m : ℝ))) * (L ^ 2 * L ^ 2)
-        * (2 * L) ^ M := by ring
+        * (2 * L) ^ M)
+        = (H ^ ((1 : ℝ)) * H ^ (M + 2 * L * (m : ℝ))) * (L ^ 2 * L ^ 2)
+          * (2 * L) ^ M := by ring
     rw [hX]
     nth_rewrite 1 [hH1]
     rw [rearr, ← Real.rpow_add hHpos]
     ring
   have hY3 : ((H ^ 3 * (2 * L) ^ 2) ^ M : ℝ)
-    = H ^ (3 * M) * ((2 * L) ^ M * (2 * L) ^ M) := by
+      = H ^ (3 * M) * ((2 * L) ^ M * (2 * L) ^ M) := by
     have c3 : ((3 : ℕ) : ℝ) * M = 3 * M := by push_cast; ring
     have hMM : ((2 : ℕ) : ℝ) * M = M + M := by push_cast; ring
     rw [Real.mul_rpow (pow_nonneg hH0 3) (pow_nonneg h2L0 2),
@@ -2159,7 +2170,7 @@ private lemma gs_arith_final
       (show (0 : ℝ) ≤ H ^ (3 * M) * (2 * L) ^ M from
         mul_nonneg (Real.rpow_nonneg hH0 _) (Real.rpow_nonneg h2L0 _))
     calc H ^ (1 + (M + 2 * L * (m : ℝ))) * L ^ 4 * (2 * L) ^ M
-      = H ^ (1 + (M + 2 * L * (m : ℝ))) * (L ^ 4 * (2 * L) ^ M) := by ring
+        = H ^ (1 + (M + 2 * L * (m : ℝ))) * (L ^ 4 * (2 * L) ^ M) := by ring
       _ ≤ H ^ (3 * M) * (L ^ 4 * (2 * L) ^ M) := hA
       _ = (H ^ (3 * M) * (2 * L) ^ M) * L ^ 4 := by ring
       _ ≤ (H ^ (3 * M) * (2 * L) ^ M) * (2 * L) ^ M := hB
@@ -2169,7 +2180,7 @@ private lemma gs_arith_final
   have hnn1 : (0 : ℝ) ≤ H ^ ((s : ℝ) + 2 * L * (m : ℝ)) :=
     Real.rpow_nonneg hH0 _
   have hnn2 : (0 : ℝ)
-    ≤ (L ^ 2 * X * H ^ (2 * L * (m : ℝ)) * (2 * L * H) ^ s) ^ (d - 1) := by
+      ≤ (L ^ 2 * X * H ^ (2 * L * (m : ℝ)) * (2 * L * H) ^ s) ^ (d - 1) := by
     apply pow_nonneg
     apply mul_nonneg
     · apply mul_nonneg
@@ -2177,25 +2188,25 @@ private lemma gs_arith_final
       · exact Real.rpow_nonneg hH0 _
     · exact pow_nonneg h2LH0 _
   have hsub : H ^ ((s : ℝ) + 2 * L * (m : ℝ)) * g
-    * (L ^ 2 * X * H ^ (2 * L * (m : ℝ)) * (2 * L * H) ^ s) ^ (d - 1)
-    ≤ H ^ ((s : ℝ) + 2 * L * (m : ℝ))
-      * (L ^ s
-        * (L ^ 2 * X * Real.exp (2 * H * (s : ℝ) + 2 * L * (m : ℝ) * H ^ 2))
-        * (((((m : ℝ) * H) / T) ^ (s * (m - 1)))))
-      * (L ^ 2 * X * H ^ (2 * L * (m : ℝ)) * (2 * L * H) ^ s) ^ (d - 1) := by
+        * (L ^ 2 * X * H ^ (2 * L * (m : ℝ)) * (2 * L * H) ^ s) ^ (d - 1)
+      ≤ H ^ ((s : ℝ) + 2 * L * (m : ℝ))
+        * (L ^ s
+          * (L ^ 2 * X * Real.exp (2 * H * (s : ℝ) + 2 * L * (m : ℝ) * H ^ 2))
+          * (((((m : ℝ) * H) / T) ^ (s * (m - 1)))))
+        * (L ^ 2 * X * H ^ (2 * L * (m : ℝ)) * (2 * L * H) ^ s) ^ (d - 1) := by
     apply mul_le_mul_of_nonneg_right _ hnn2
     exact mul_le_mul_of_nonneg_left hU hnn1
   have r1 : H ^ ((s : ℝ) + 2 * L * (m : ℝ)) = H ^ s * H ^ (2 * L * (m : ℝ)) := by
     rw [Real.rpow_add hHpos, Real.rpow_natCast]
   have r2 : Real.exp (2 * H * (s : ℝ) + 2 * L * (m : ℝ) * H ^ 2)
-    = (Real.exp (2 * H)) ^ s * Real.exp (2 * L * (m : ℝ) * H ^ 2) := by
+      = (Real.exp (2 * H)) ^ s * Real.exp (2 * L * (m : ℝ) * H ^ 2) := by
     have e : 2 * H * (s : ℝ) = (s : ℝ) * (2 * H) := by ring
     rw [Real.exp_add, e, Real.exp_nat_mul]
   have r3 : ((((m : ℝ) * H) / T) ^ (s * (m - 1)))
-    = ((((m : ℝ) * H) / T) ^ (m - 1)) ^ s := by
+      = ((((m : ℝ) * H) / T) ^ (m - 1)) ^ s := by
     rw [← pow_mul]; congr 1; exact mul_comm _ _
   have r4 : (((2 * L * H) ^ s) ^ ((d - 1) : ℕ))
-    = ((((2 * L * H) ^ ((d - 1) : ℕ)) ^ s)) := by
+      = ((((2 * L * H) ^ ((d - 1) : ℕ)) ^ s)) := by
     rw [← pow_mul, ← pow_mul]; congr 1; exact mul_comm _ _
   have r5 : (L ^ 2 * X) * (L ^ 2 * X) ^ ((d - 1) : ℕ) = (L ^ 2 * X) ^ d := by
     nth_rewrite 1 [← pow_one (L ^ 2 * X)]
@@ -2203,39 +2214,39 @@ private lemma gs_arith_final
     congr 1
     omega
   have r6 : (H ^ (2 * L * (m : ℝ))) ^ ((d - 1) : ℕ)
-    = H ^ (2 * L * (m : ℝ) * ((d : ℝ) - 1)) := by
+      = H ^ (2 * L * (m : ℝ) * ((d : ℝ) - 1)) := by
     rw [← Real.rpow_natCast _ (d - 1), ← Real.rpow_mul hH0, Nat.cast_sub hd,
       Nat.cast_one]
   have r7a : H ^ (2 * L * (m : ℝ)) * H ^ (2 * L * (m : ℝ) * ((d : ℝ) - 1))
-    = H ^ (2 * L * (m : ℝ) * (d : ℝ)) := by
+      = H ^ (2 * L * (m : ℝ) * (d : ℝ)) := by
     rw [← Real.rpow_add hHpos]; congr 1; ring
   have zexp : (H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-    * ((((m : ℝ) * H) / T) ^ (m - 1))) ^ s
-    = H ^ s * L ^ s * (Real.exp (2 * H)) ^ s * (((2 * L * H) ^ (d - 1)) ^ s)
-      * (((((m : ℝ) * H) / T) ^ (m - 1)) ^ s) := by
+        * ((((m : ℝ) * H) / T) ^ (m - 1))) ^ s
+      = H ^ s * L ^ s * (Real.exp (2 * H)) ^ s * (((2 * L * H) ^ (d - 1)) ^ s)
+        * (((((m : ℝ) * H) / T) ^ (m - 1)) ^ s) := by
     rw [mul_pow, mul_pow, mul_pow, mul_pow]
   have hreg : H ^ ((s : ℝ) + 2 * L * (m : ℝ))
-    * (L ^ s
-      * (L ^ 2 * X * Real.exp (2 * H * (s : ℝ) + 2 * L * (m : ℝ) * H ^ 2))
-      * (((((m : ℝ) * H) / T) ^ (s * (m - 1)))))
-    * (L ^ 2 * X * H ^ (2 * L * (m : ℝ)) * (2 * L * H) ^ s) ^ (d - 1)
-    = (H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-      * ((((m : ℝ) * H) / T) ^ (m - 1))) ^ s
-      * (H ^ (2 * L * (m : ℝ) * (d : ℝ))
-        * Real.exp (2 * L * (m : ℝ) * H ^ 2) * (L ^ 2 * X) ^ d) := by
+        * (L ^ s
+          * (L ^ 2 * X * Real.exp (2 * H * (s : ℝ) + 2 * L * (m : ℝ) * H ^ 2))
+          * (((((m : ℝ) * H) / T) ^ (s * (m - 1)))))
+        * (L ^ 2 * X * H ^ (2 * L * (m : ℝ)) * (2 * L * H) ^ s) ^ (d - 1)
+      = (H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
+          * ((((m : ℝ) * H) / T) ^ (m - 1))) ^ s
+        * (H ^ (2 * L * (m : ℝ) * (d : ℝ))
+          * Real.exp (2 * L * (m : ℝ) * H ^ 2) * (L ^ 2 * X) ^ d) := by
     conv_lhs => rw [r1, r2, mul_pow, mul_pow, r4, r6, r3]
     rw [zexp, ← r5, ← r7a]
     ring
   have hmain : (1 : ℝ)
-    ≤ (H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-      * ((((m : ℝ) * H) / T) ^ (m - 1))) ^ s
-      * (H ^ (2 * L * (m : ℝ) * (d : ℝ))
-        * Real.exp (2 * L * (m : ℝ) * H ^ 2) * (L ^ 2 * X) ^ d) :=
+      ≤ (H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
+          * ((((m : ℝ) * H) / T) ^ (m - 1))) ^ s
+        * (H ^ (2 * L * (m : ℝ) * (d : ℝ))
+          * Real.exp (2 * L * (m : ℝ) * H ^ 2) * (L ^ 2 * X) ^ d) :=
     hLo.trans (hsub.trans hreg.le)
   have hQ := gs_arith_Q hH hL1 hd hsM h2Lm hX0 hLX
   have hB := gs_arith_ZY hH hT hd hm hL
   have hZ1nn : (0 : ℝ) ≤ H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-    * ((((m : ℝ) * H) / T) ^ (m - 1)) := by
+      * ((((m : ℝ) * H) / T) ^ (m - 1)) := by
     apply mul_nonneg
     · apply mul_nonneg
       · apply mul_nonneg
@@ -2244,44 +2255,44 @@ private lemma gs_arith_final
       · exact pow_nonneg h2LH0 _
     · exact pow_nonneg (div_nonneg (mul_nonneg hmR0 hH0) hT0) _
   have hYnn : (0 : ℝ)
-    ≤ H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d) := by
+      ≤ H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d) := by
     apply mul_nonneg
     · apply mul_nonneg
       · exact pow_nonneg hH0 _
       · exact le_of_lt (Real.exp_pos _)
     · exact pow_nonneg h2L0 _
   have hZYnn : (0 : ℝ) ≤ (H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-    * ((((m : ℝ) * H) / T) ^ (m - 1)))
-    * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) :=
+      * ((((m : ℝ) * H) / T) ^ (m - 1)))
+      * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) :=
     mul_nonneg hZ1nn hYnn
   have hZYlt1 : (H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-    * ((((m : ℝ) * H) / T) ^ (m - 1)))
-    * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) < 1 :=
+      * ((((m : ℝ) * H) / T) ^ (m - 1)))
+      * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) < 1 :=
     lt_of_le_of_lt hB ((div_lt_one hT).mpr hK)
   have hs0 : s ≠ 0 := by
     rintro rfl
     simp only [Nat.cast_zero] at hsM
     linarith [hM4]
   have hQle : H ^ (2 * L * (m : ℝ) * (d : ℝ))
-    * Real.exp (2 * L * (m : ℝ) * H ^ 2) * (L ^ 2 * X) ^ d
-    ≤ (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) ^ s :=
+        * Real.exp (2 * L * (m : ℝ) * H ^ 2) * (L ^ 2 * X) ^ d
+      ≤ (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) ^ s :=
     hQ.1.trans hQ.2
   have hle : (H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-    * ((((m : ℝ) * H) / T) ^ (m - 1))) ^ s
-    * (H ^ (2 * L * (m : ℝ) * (d : ℝ))
-      * Real.exp (2 * L * (m : ℝ) * H ^ 2) * (L ^ 2 * X) ^ d)
-    ≤ (H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-      * ((((m : ℝ) * H) / T) ^ (m - 1))) ^ s
-      * ((H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) ^ s) :=
+        * ((((m : ℝ) * H) / T) ^ (m - 1))) ^ s
+        * (H ^ (2 * L * (m : ℝ) * (d : ℝ))
+          * Real.exp (2 * L * (m : ℝ) * H ^ 2) * (L ^ 2 * X) ^ d)
+      ≤ (H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
+        * ((((m : ℝ) * H) / T) ^ (m - 1))) ^ s
+        * ((H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d)) ^ s) :=
     mul_le_mul_of_nonneg_left hQle (pow_nonneg hZ1nn s)
   rw [← mul_pow] at hle
   have hcontra1 : (1 : ℝ) ≤ ((H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-    * ((((m : ℝ) * H) / T) ^ (m - 1)))
-    * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d))) ^ s :=
+      * ((((m : ℝ) * H) / T) ^ (m - 1)))
+      * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d))) ^ s :=
     hmain.trans hle
   have hcontra2 : ((H * L * Real.exp (2 * H) * (2 * L * H) ^ (d - 1)
-    * ((((m : ℝ) * H) / T) ^ (m - 1)))
-    * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d))) ^ s < 1 :=
+      * ((((m : ℝ) * H) / T) ^ (m - 1)))
+      * (H ^ (4 * d) * Real.exp (H ^ 2) * (2 * L) ^ (2 * d))) ^ s < 1 :=
     pow_lt_one₀ hZYnn hZYlt1 hs0
   linarith [hcontra1, hcontra2]
 
@@ -2313,16 +2324,16 @@ lemma gelfondSchneider_complex_exp
   obtain ⟨δ, hδpos, α', β', γ', hα, hβ, hγ⟩ :=
     gs_clear_denominators a b c ha hb hc
   obtain ⟨C₀, hC₀⟩ : ∃ C₀ : ℝ, ∀ (α β : Type) [Fintype α] [Fintype β]
-    (ma : Matrix α β (NumberField.RingOfIntegers (gs_K a b c))),
-    ma ≠ 0 → ∀ (p q : ℕ), 0 < p → p < q → Fintype.card β = q → ∀ (A : ℝ),
-      (∀ k l, NumberField.house
-        (algebraMap (NumberField.RingOfIntegers (gs_K a b c))
-          (gs_K a b c) (ma k l)) ≤ A) →
-        Fintype.card α = p →
-        ∃ ξ : β → NumberField.RingOfIntegers (gs_K a b c), ξ ≠ 0 ∧
-          ma.mulVec ξ = 0 ∧
-          ∀ l, NumberField.house ((ξ l) : (gs_K a b c)) ≤
-            C₀ * (C₀ * q * A) ^ ((p : ℝ) / (q - p)) :=
+      (ma : Matrix α β (NumberField.RingOfIntegers (gs_K a b c))),
+      ma ≠ 0 → ∀ (p q : ℕ), 0 < p → p < q → Fintype.card β = q → ∀ (A : ℝ),
+        (∀ k l, NumberField.house
+          (algebraMap (NumberField.RingOfIntegers (gs_K a b c))
+            (gs_K a b c) (ma k l)) ≤ A) →
+          Fintype.card α = p →
+          ∃ ξ : β → NumberField.RingOfIntegers (gs_K a b c), ξ ≠ 0 ∧
+            ma.mulVec ξ = 0 ∧
+            ∀ l, NumberField.house ((ξ l) : (gs_K a b c)) ≤
+              C₀ * (C₀ * q * A) ^ ((p : ℝ) / (q - p)) :=
     gs_siegel_exist (gs_K a b c)
   set d : ℕ := Module.finrank ℚ (gs_K a b c) with hddef
   have hd_pos : 0 < d := gs_finrank_pos a b c ha hb hc
@@ -2342,17 +2353,17 @@ lemma gelfondSchneider_complex_exp
     simp only [le_max_iff]
     exact Or.inr (Or.inl le_rfl)
   have hHα : NumberField.house
-    ((α' : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c)) ≤ H := by
+      ((α' : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c)) ≤ H := by
     rw [hHdef]
     simp only [le_max_iff]
     exact Or.inr (Or.inr (Or.inl le_rfl))
   have hHβ : NumberField.house
-    ((β' : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c)) ≤ H := by
+      ((β' : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c)) ≤ H := by
     rw [hHdef]
     simp only [le_max_iff]
     exact Or.inr (Or.inr (Or.inr (Or.inl le_rfl)))
   have hHγ : NumberField.house
-    ((γ' : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c)) ≤ H := by
+      ((γ' : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c)) ≤ H := by
     rw [hHdef]
     simp only [le_max_iff]
     exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inl le_rfl))))
@@ -2406,8 +2417,8 @@ lemma gelfondSchneider_complex_exp
     rw [hMdef, hLdef]
     ring
   have hE : ∀ (k n : ℕ) (t : Fin (L * L)), k < M → n ≤ m →
-    k + ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n +
-      ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n ≤ E := by
+      k + ((finProdFinEquiv (m := L) (n := L)).symm t).1.val * n +
+        ((finProdFinEquiv (m := L) (n := L)).symm t).2.val * n ≤ E := by
     intro k n t hkM hnm
     rw [hEdef]
     have hi : ((finProdFinEquiv (m := L) (n := L)).symm t).1.val ≤ L :=
@@ -2431,52 +2442,52 @@ lemma gelfondSchneider_complex_exp
       (((ξ t : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c))) *
       Complex.exp (gs_ω b L t * w) with hFdef
   have hvanF : ∀ (k n : ℕ), k < M → 1 ≤ n → n ≤ m →
-    iteratedDeriv k F ((n : ℂ) * z) = 0 :=
+      iteratedDeriv k F ((n : ℂ) * z) = 0 :=
     fun k n hk hn1 hnm => hvan k n hk hn1 hnm
   have hu12 : ∀ t : Fin (L * L),
-    ‖(algebraMap (gs_K a b c) ℂ)
-      (((ξ t : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c)))‖ ≤
-      X := by
+      ‖(algebraMap (gs_K a b c) ℂ)
+        (((ξ t : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c)))‖ ≤
+        X := by
     intro t
     exact (NumberField.norm_embedding_le_house _ _).trans (hξb t)
   -- The frequency map is injective, and the coefficient function is nonzero.
   have hinj : Function.Injective (gs_ω b L) := gs_freq_injective b hbrat L
   have hu0 : (fun t : Fin (L * L) => (algebraMap (gs_K a b c) ℂ)
-    (((ξ t : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c)))) ≠
-    0 := by
+      (((ξ t : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c)))) ≠
+      0 := by
     obtain ⟨t₀, ht₀⟩ := Function.ne_iff.mp hξne
     intro hcon
     apply ht₀
     have ht : (algebraMap (gs_K a b c) ℂ)
-      (((ξ t₀ : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c))) =
-      0 := congrFun hcon t₀
+        (((ξ t₀ : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c))) =
+        0 := congrFun hcon t₀
     have hinjι : Function.Injective (algebraMap (gs_K a b c) ℂ) :=
       RingHom.injective _
     have hK0 : (((ξ t₀ : NumberField.RingOfIntegers (gs_K a b c)) :
-      (gs_K a b c))) = 0 := hinjι (by rw [map_zero]; exact ht)
+        (gs_K a b c))) = 0 := hinjι (by rw [map_zero]; exact ht)
     have h00 : ξ t₀ = 0 :=
       NumberField.RingOfIntegers.coe_injective (by rw [map_zero]; exact hK0)
     exact h00
   -- Some derivative at the first sample point is nonzero; take the least order.
   obtain ⟨k, hk⟩ := gs_zero_estimate hinj hu0 z
   have hFlam : F = fun w : ℂ => ∑ t : Fin (L * L),
-    (algebraMap (gs_K a b c) ℂ)
-      (((ξ t : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c))) *
-      Complex.exp (gs_ω b L t * w) := rfl
+      (algebraMap (gs_K a b c) ℂ)
+        (((ξ t : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c))) *
+        Complex.exp (gs_ω b L t * w) := rfl
   have hkv : iteratedDeriv k.val F (((1 : ℕ) : ℂ) * z) ≠ 0 := by
     rw [hFlam, gs_iteratedDeriv_expSum]
     simp only [Nat.cast_one, one_mul]
     exact hk
   have h1mem : (1 : ℕ) ∈ Finset.Icc 1 m := Finset.mem_Icc.mpr ⟨le_rfl, h1m⟩
   have hex : ∃ kk : ℕ, ∃ n ∈ Finset.Icc 1 m,
-    iteratedDeriv kk F ((n : ℂ) * z) ≠ 0 :=
+      iteratedDeriv kk F ((n : ℂ) * z) ≠ 0 :=
     ⟨k.val, 1, h1mem, hkv⟩
   obtain ⟨n₀, hn₀mem, hsne⟩ := Nat.find_spec hex
   set s : ℕ := Nat.find hex with hsdef
   have hn₀1 : 1 ≤ n₀ := (Finset.mem_Icc.mp hn₀mem).1
   have hn₀m : n₀ ≤ m := (Finset.mem_Icc.mp hn₀mem).2
   have hmin : ∀ (n kk : ℕ), 1 ≤ n → n ≤ m → kk < s →
-    iteratedDeriv kk F ((n : ℂ) * z) = 0 := by
+      iteratedDeriv kk F ((n : ℂ) * z) = 0 := by
     intro n kk hn1 hnm hks
     by_contra hne'
     have hmem : n ∈ Finset.Icc 1 m := Finset.mem_Icc.mpr ⟨hn1, hnm⟩
@@ -2502,9 +2513,9 @@ lemma gelfondSchneider_complex_exp
       exact one_le_pow₀ hLR
     · exact hA1
   have hF12 : ∀ w : ℂ, F w = ∑ t : Fin (L * L),
-    (algebraMap (gs_K a b c) ℂ)
-      (((ξ t : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c))) *
-      Complex.exp (gs_ω b L t * w) := fun w => rfl
+      (algebraMap (gs_K a b c) ℂ)
+        (((ξ t : NumberField.RingOfIntegers (gs_K a b c)) : (gs_K a b c))) *
+        Complex.exp (gs_ω b L t * w) := fun w => rfl
   -- The threshold exceeds `m * H`.
   have hmH1 : (1 : ℝ) ≤ (m : ℝ) * H :=
     one_le_mul_of_one_le_of_one_le (by exact_mod_cast h1m) hH
@@ -2522,7 +2533,7 @@ lemma gelfondSchneider_complex_exp
     rw [hK0def]
     apply le_trans hD
     have hABC : (1 : ℝ) ≤ H ^ (5 * d) * Real.exp (2 * H + H ^ 2)
-      * (4 * (m : ℝ)) ^ (3 * d) :=
+        * (4 * (m : ℝ)) ^ (3 * d) :=
       one_le_mul_of_one_le_of_one_le
         (one_le_mul_of_one_le_of_one_le hA1K hB1K) hC1K
     have hD0 : (0 : ℝ) ≤ ((m : ℝ) * H) ^ (3 * d + 1) :=
@@ -2540,7 +2551,7 @@ lemma gelfondSchneider_complex_exp
   have hM : ((M : ℕ) : ℝ) = 2 * (m : ℝ) * (T : ℝ) ^ 2 := by simp [hMdef]
   have hsMr : (M : ℝ) ≤ (s : ℝ) := by exact_mod_cast hsM
   have hXr : X = H * (L : ℝ) ^ 2 * H ^ ((M : ℝ) + 2 * (L : ℝ) * (m : ℝ)) *
-    (2 * (L : ℝ)) ^ ((M : ℝ)) := by
+      (2 * (L : ℝ)) ^ ((M : ℝ)) := by
     rw [hXdef, hAdef]
     have hEcast : ((E : ℕ) : ℝ) = (M : ℝ) + 2 * (L : ℝ) * (m : ℝ) := by
       rw [hEdef]
@@ -2549,13 +2560,13 @@ lemma gelfondSchneider_complex_exp
     rw [← hEcast, ← Real.rpow_natCast H E, ← Real.rpow_natCast (2 * (L : ℝ)) M]
     ring
   have hU : ‖iteratedDeriv s F ((n₀ : ℂ) * z)‖ ≤ (L : ℝ) ^ s *
-    ((L : ℝ) ^ 2 * X * Real.exp (2 * H * (s : ℝ) + 2 * (L : ℝ) * (m : ℝ) *
-      H ^ 2)) *
-    ((((m : ℝ) * H / (T : ℝ)) ^ (s * (m - 1)))) := hUpper
+      ((L : ℝ) ^ 2 * X * Real.exp (2 * H * (s : ℝ) + 2 * (L : ℝ) * (m : ℝ) *
+        H ^ 2)) *
+      ((((m : ℝ) * H / (T : ℝ)) ^ (s * (m - 1)))) := hUpper
   have hLo : 1 ≤ H ^ ((s : ℝ) + 2 * (L : ℝ) * (m : ℝ)) *
-    ‖iteratedDeriv s F ((n₀ : ℂ) * z)‖ *
-    (((L : ℝ) ^ 2 * X * H ^ (2 * (L : ℝ) * (m : ℝ)) *
-      (2 * (L : ℝ) * H) ^ s)) ^ (d - 1) := hLower
+      ‖iteratedDeriv s F ((n₀ : ℂ) * z)‖ *
+      (((L : ℝ) ^ 2 * X * H ^ (2 * (L : ℝ) * (m : ℝ)) *
+        (2 * (L : ℝ) * H) ^ s)) ^ (d - 1) := hLower
   exact gs_arith_final hH hd1 hmdef hK hL hM hsMr hXr hU hLo
 
 end MathlibExt.NumberTheory.TranscendenceWanted
@@ -2577,13 +2588,16 @@ lemma gelfondSchneider_real_rpow
   intro halg
   -- Transfer algebraicity along `ℝ → ℂ`.
   have hcoeinj : Function.Injective (algebraMap ℝ ℂ) := by
-    rwa [RCLike.algebraMap_eq_ofReal]
+    rw [RCLike.algebraMap_eq_ofReal]
+    exact RCLike.ofReal_injective
   have h1 : IsAlgebraic ℚ ((α : ℝ) : ℂ) := by
     have h := (isAlgebraic_algebraMap_iff hcoeinj).mpr ha
-    rwa [RCLike.algebraMap_eq_ofReal] at h
+    rw [RCLike.algebraMap_eq_ofReal] at h
+    exact h
   have h2 : IsAlgebraic ℚ ((β : ℝ) : ℂ) := by
     have h := (isAlgebraic_algebraMap_iff hcoeinj).mpr hb
-    rwa [RCLike.algebraMap_eq_ofReal] at h
+    rw [RCLike.algebraMap_eq_ofReal] at h
+    exact h
   have h3 : ((α : ℝ) : ℂ) ≠ 1 := by
     intro hcon
     apply hne
@@ -2602,22 +2616,24 @@ lemma gelfondSchneider_real_rpow
   have h0 : Real.rpow α β = Real.exp (Real.log α * β) :=
     Real.rpow_def_of_pos hpos β
   have hexp : Complex.exp (((β : ℝ) : ℂ) * (((Real.log α : ℝ)) : ℂ))
-    = ((Real.rpow α β : ℝ) : ℂ) := by
+      = ((Real.rpow α β : ℝ) : ℂ) := by
     conv_rhs => rw [h0]
     rw [Complex.ofReal_exp, Complex.ofReal_mul]
     congr 1
     ring
   have halgC : IsAlgebraic ℚ ((Real.rpow α β : ℝ) : ℂ) := by
     have h := (isAlgebraic_algebraMap_iff hcoeinj).mpr halg
-    rwa [RCLike.algebraMap_eq_ofReal] at h
+    rw [RCLike.algebraMap_eq_ofReal] at h
+    exact h
   have hcon : Transcendental ℚ
-    (Complex.exp (((β : ℝ) : ℂ) * (((Real.log α : ℝ)) : ℂ))) :=
+      (Complex.exp (((β : ℝ) : ℂ) * (((Real.log α : ℝ)) : ℂ))) :=
     gelfondSchneider_complex_exp h1 h2 h3 h4 h5
   rw [hexp] at hcon
   exact hcon halgC
+
 end MathlibExt.NumberTheory.TranscendenceWanted
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

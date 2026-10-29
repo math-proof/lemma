@@ -20,7 +20,7 @@ namespace StatMech
 variable {E : Type*}
 
 
-noncomputable def inhomBernoulliProductMeasure (p : E → ℝ≥0)
+noncomputable def inhomBernoulliProductMeasure (p : E → NNReal)
     (hp : ∀ e, p e ≤ 1) : Measure (ConfigSpace E) :=
   Measure.infinitePi (fun e => bernoulliMeasure (p e) (hp e))
 

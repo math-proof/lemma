@@ -73,7 +73,7 @@ private lemma shk_connWithinEvent_prob_translate_eq
   {S : Finset (Site d)}
   {u x : Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hu : u ∈ S)
   (hx : x ∈ S) :
@@ -116,7 +116,7 @@ private lemma shk_boundaryConnSum_translate_eq
   {g : Multiplicative (Site d)}
   {S : Finset (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (h0 : origin d ∈ S) :
 -- imply
@@ -133,7 +133,7 @@ private lemma shk_phi_translate_eq
   {g : Multiplicative (Site d)}
   {S : Finset (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (h0 : origin d ∈ S) :
 -- imply
@@ -149,7 +149,7 @@ private lemma shk_restrictedSusceptibility_le_eq
   {d : ℕ}
   {S Lam : Finset (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (h0S : origin d ∈ S)
   (h0Lam : origin d ∈ Lam)
@@ -165,7 +165,7 @@ private lemma shk_restrictedSusceptibility_le_eq
 @[path]
 private lemma shk_connWithinProb_mono_eq
   {d : ℕ}
-  {p q : ℝ≥0}
+  {p q : NNReal}
   {S : Finset (Site d)}
   {x : Site d}
 -- given
@@ -183,7 +183,7 @@ private lemma shk_connWithinProb_mono_eq
 @[path]
 private lemma shk_phi_mono_eq
   {d : ℕ}
-  {p q : ℝ≥0}
+  {p q : NNReal}
   {S : Finset (Site d)}
 -- given
   (hp : p ≤ 1)
@@ -252,7 +252,7 @@ private lemma shk_connWithinBox_tendsto_twoPoint_eq
   {d : ℕ}
   {x : Site d}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   Tendsto (fun n => (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (connWithinEvent d (box d n) (origin d) x)) atTop (nhds (shk_twoPointProb p hp x)) := by
@@ -268,7 +268,7 @@ private lemma shk_twoPoint_partialSum_le_eq
   {S : Finset (Site d)}
   {T : Finset (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (h0S : origin d ∈ S)
   (hphi : phi d p hp S < 1) :
@@ -285,7 +285,7 @@ private lemma shk_twoPoint_summable_of_phi_lt_one_eq
   {d : ℕ}
   {S : Finset (Site d)}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (h0S : origin d ∈ S)
   (hphi : phi d p hp S < 1) :

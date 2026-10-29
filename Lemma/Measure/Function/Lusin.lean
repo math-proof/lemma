@@ -30,12 +30,12 @@ lemma lusin
   -- Error budgets: `H` for the large compact, `Q` for each inner/outer approximation.
   have hH0 : (0 : ℝ) < ε / 2 := by linarith
   have hQ0 : (0 : ℝ) < ε / 4 := by linarith
-  set H : ℝ≥0∞ := ENNReal.ofReal (ε / 2) with hH
-  set Q : ℝ≥0∞ := ENNReal.ofReal (ε / 4) with hQ
+  set H : ENNReal := ENNReal.ofReal (ε / 2) with hH
+  set Q : ENNReal := ENNReal.ofReal (ε / 4) with hQ
   have hHne : H ≠ 0 := (ENNReal.ofReal_pos.mpr hH0).ne'
   have hQne : Q ≠ 0 := (ENNReal.ofReal_pos.mpr hQ0).ne'
   obtain ⟨e, hpos, hsum⟩ := ENNReal.exists_pos_sum_of_countable hQne ↥T
-  set S : ℝ≥0∞ := ∑' b : ↥T, (e b : ℝ≥0∞) with hS
+  set S : ENNReal := ∑' b : ↥T, (e b : ENNReal) with hS
   have hsum' : S < Q := hsum
   -- Basic opens of `β` are open and have measurable, finite-measure preimages.
   have hopen : ∀ b : ↥T, IsOpen (b.val : Set β) := fun b =>
@@ -44,11 +44,11 @@ lemma lusin
     hf (hopen b).measurableSet
   have hAfin : ∀ b : ↥T, μ (f ⁻¹' (b.val : Set β)) ≠ ∞ := fun _ =>
     measure_ne_top μ _
-  have hene : ∀ b : ↥T, ((e b : ℝ≥0∞) ≠ 0) := fun b => by
+  have hene : ∀ b : ↥T, ((e b : ENNReal) ≠ 0) := fun b => by
     exact_mod_cast (hpos b).ne'
   -- Outer approximations of the preimages.
   have outer : ∀ b : ↥T, ∃ U ⊇ f ⁻¹' (b.val : Set β), IsOpen U ∧
-    μ (U \ f ⁻¹' (b.val : Set β)) < (e b : ℝ≥0∞) := by
+    μ (U \ f ⁻¹' (b.val : Set β)) < (e b : ENNReal) := by
     intro b
     obtain ⟨U, hAU, hUo, -, hU⟩ :=
       (hAmeas b).exists_isOpen_sdiff_lt (hAfin b) (hene b)
@@ -56,7 +56,7 @@ lemma lusin
   choose V hAV hVopen hVμ using outer
   -- Inner compact approximations of the preimages.
   have inner : ∀ b : ↥T, ∃ K ⊆ f ⁻¹' (b.val : Set β), IsCompact K ∧
-    μ (f ⁻¹' (b.val : Set β) \ K) < (e b : ℝ≥0∞) :=
+    μ (f ⁻¹' (b.val : Set β) \ K) < (e b : ENNReal) :=
     fun b => (hAmeas b).exists_isCompact_sdiff_lt (hAfin b) (hene b)
   choose K hKA hKcomp hKμ using inner
   -- A large compact set.

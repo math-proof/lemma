@@ -71,7 +71,7 @@ lemma prod_one_sub_ne_zero
   [DecidableEq ι]
   {S : Finset ι}
 -- given
-  (x : ι → ℝ≥0∞)
+  (x : ι → ENNReal)
   (hx : ∀ i ∈ S, x i < 1) :
 -- imply
   ∏ j ∈ S, (1 - x j) ≠ 0 := by
@@ -95,7 +95,7 @@ lemma prod_one_sub_ne_top
   [MeasurableSpace Ω]
   {S : Finset ι}
 -- given
-  (x : ι → ℝ≥0∞) :
+  (x : ι → ENNReal) :
 -- imply
   ∏ j ∈ S, (1 - x j) ≠ ⊤ :=
 -- proof
@@ -113,7 +113,7 @@ lemma prod_le_prod_of_superset
   [MeasurableSpace Ω]
   [DecidableEq ι]
   {S₁ S₂ : Finset ι}
-  {f : ι → ℝ≥0∞}
+  {f : ι → ENNReal}
 -- given
   (h : S₁ ⊆ S₂)
   (hf : ∀ i ∈ S₂, f i ≤ 1) :
@@ -143,7 +143,7 @@ lemma avoidSet_ge_prod
   {ν : Measure Ω}
   [IsProbabilityMeasure ν]
   {A : Fin n → Set Ω}
-  {x : Fin n → ℝ≥0∞}
+  {x : Fin n → ENNReal}
   {S : Finset (Fin n)}
 -- given
   (hA : ∀ i, MeasurableSet (A i))
@@ -188,7 +188,7 @@ lemma key_bound
   {i : Fin n}
 -- given
   (hA : ∀ i, MeasurableSet (A i))
-  (x : Fin n → ℝ≥0∞)
+  (x : Fin n → ENNReal)
   (hx_lt : ∀ i, x i < 1)
   (hlop : ∀ (i : Fin n) (S : Finset (Fin n)), S ⊆ Finset.univ \ (N i ∪ {i}) → μ[A i | avoidSet A S] ≤ μ (A i))
   (hbound : ∀ i, μ (A i) ≤ x i * ∏ j ∈ N i, (1 - x j))
@@ -289,7 +289,7 @@ lemma lopsided_local_lemma
   {N : Fin n → Finset (Fin n)}
 -- given
   (hA : ∀ i, MeasurableSet (A i))
-  (x : Fin n → ℝ≥0∞)
+  (x : Fin n → ENNReal)
   (hx_lt : ∀ i, x i < 1)
   (hlop : ∀ (i : Fin n) (S : Finset (Fin n)), S ⊆ Finset.univ \ (N i ∪ {i}) → μ[A i | avoidSet A S] ≤ μ (A i))
   (hbound : ∀ i, μ (A i) ≤ x i * ∏ j ∈ N i, (1 - x j)) :

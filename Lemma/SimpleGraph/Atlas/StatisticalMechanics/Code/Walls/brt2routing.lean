@@ -29,7 +29,7 @@ private lemma brt2_precursor_pos_of_forceOpen_pos_eq
 private lemma brt2_route_of_posRouting_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hpr : ∀ n : ℕ, brt2_PosRouting (d := d) p hp1 n) :
@@ -46,7 +46,7 @@ private lemma brt2_posRouting_of_routingCover_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hrt : hrHD_DisjointRouting d n) :
 -- imply
@@ -62,7 +62,7 @@ private lemma brt2_bk_of_posRouting_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hpr : ∀ n : ℕ, brt2_PosRouting (d := d) p hp1 n) :
@@ -79,7 +79,7 @@ private lemma brt2_bk_atLeastTwo_of_posRouting_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hpr : ∀ n : ℕ, brt2_PosRouting (d := d) p hp1 n) :

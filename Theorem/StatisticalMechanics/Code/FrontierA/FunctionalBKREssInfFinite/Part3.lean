@@ -26,7 +26,7 @@ variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
 theorem functionalDisjointEssMaxAt_eq
-    (p : E → ℝ≥0) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
+    (p : E → NNReal) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
     (f g : ConfigSpace E → ℝ) (omega eta : ConfigSpace E) :
     functionalDisjointEssMaxAt p (fun e => (hp1 e).le) f g omega eta =
       functionalDisjointMaxAt f g omega eta := by
@@ -37,7 +37,7 @@ theorem functionalDisjointEssMaxAt_eq
     cylinderEssInf_eq_cylinderMin p hp0 hp1]
 
 theorem functionalDisjointEssMax_eq
-    (p : E → ℝ≥0) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
+    (p : E → NNReal) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
     (f g : ConfigSpace E → ℝ) (omega : ConfigSpace E) :
     functionalDisjointEssMax p (fun e => (hp1 e).le) f g omega =
       functionalDisjointMax f g omega :=

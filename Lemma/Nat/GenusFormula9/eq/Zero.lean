@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Definitions.Def_ModularCurve_GenusNumerics
+import Def.ModularCurve_GenusNumerics
 open ModularCurve
 
 

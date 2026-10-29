@@ -83,7 +83,7 @@ theorem coord_false_dependsOn {E : Type*} (e : E) :
       Set.indicator_of_notMem (by simp only [Set.mem_setOf_eq, ← he]; exact hmem)]
 
 
-theorem coord_false_prob (p : ℝ≥0) (hp : p ≤ 1) (e : Sym2 (Site d)) :
+theorem coord_false_prob (p : NNReal) (hp : p ≤ 1) (e : Sym2 (Site d)) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real {ω | ω e = false}
       = 1 - (p : ℝ) := by
   classical
@@ -96,7 +96,7 @@ theorem coord_false_prob (p : ℝ≥0) (hp : p ≤ 1) (e : Sym2 (Site d)) :
   rw [hcompl, measureReal_compl hmeas, probReal_univ, coord_true_prob p hp]
 
 
-theorem pivotalProb_closed_factor (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) (e : Sym2 (Site d)) :
+theorem pivotalProb_closed_factor (p : NNReal) (hp : p ≤ 1) (n : ℕ) (e : Sym2 (Site d)) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
         (pivotalEvent e (boxCrossingEvent d n) ∩ {ω | ω e = false})
       = (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
@@ -298,7 +298,7 @@ theorem withinConn_surf_subset_pivotalClosed {n : ℕ} {S : Finset (Site d)}
     exact surface_boundary_edge_closed hS hadj h1S h2box h2S
 
 
-theorem perSurface_boundary_le_pivotal (p : ℝ≥0) (hp : p ≤ 1) {n : ℕ} {S : Finset (Site d)}
+theorem perSurface_boundary_le_pivotal (p : NNReal) (hp : p ≤ 1) {n : ℕ} {S : Finset (Site d)}
     (h0S : origin d ∈ S) (hSinner : (S : Set (Site d)) ⊆ box d (n - 1)) (hn : 1 ≤ n) :
     ∑ e' ∈ boundaryEdges d S,
         (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
@@ -321,7 +321,7 @@ theorem perSurface_boundary_le_pivotal (p : ℝ≥0) (hp : p ≤ 1) {n : ℕ} {S
     (fun edge _ => measureReal_nonneg)
 
 
-theorem perSurface_boundary_eq_phi (p : ℝ≥0) (hp : p ≤ 1) (hp0 : 0 < (p : ℝ))
+theorem perSurface_boundary_eq_phi (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < (p : ℝ))
     {n : ℕ} {S : Finset (Site d)} (h0S : origin d ∈ S) :
     ∑ e' ∈ boundaryEdges d S,
         (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
@@ -344,7 +344,7 @@ theorem measurableSet_pivotalClosed (n : ℕ) (edge : Sym2 (Site d)) :
       (by simpa using coord_false_dependsOn (E := Sym2 (Site d)) edge)
 
 
-theorem sum_inter_surface_le (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ)
+theorem sum_inter_surface_le (p : NNReal) (hp : p ≤ 1) (n : ℕ)
     {E : Set (ConfigSpace (Sym2 (Site d)))} (hE : MeasurableSet E) :
     ∑ S ∈ (boxFinset d n).powerset.filter (fun S => origin d ∈ S),
         (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (E ∩ surfaceEvent d n S)
@@ -388,7 +388,7 @@ theorem biUnion_surface_not_origin (n : ℕ) :
     exact hnc hω
 
 
-theorem sum_surfaceProb_origin (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem sum_surfaceProb_origin (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     ∑ S ∈ (boxFinset d n).powerset.filter (fun S => origin d ∈ S),
         (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (surfaceEvent d n S)
       = 1 - boxCrossProb d p hp n := by
@@ -422,7 +422,7 @@ theorem sum_surfaceProb_origin (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
   linarith [hsplit]
 
 
-theorem sum_pivotalClosed_eq (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem sum_pivotalClosed_eq (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     ∑ edge ∈ boxEdgeFinset d n,
         (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
           (pivotalEvent edge (boxCrossingEvent d n) ∩ {ω | ω edge = false})
@@ -436,7 +436,7 @@ theorem sum_pivotalClosed_eq (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
   rw [pivotalProb_closed_factor p hp n (↑e : Sym2 (Site d))]; ring
 
 
-theorem dct_differential_inequality (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) (hn : 1 ≤ n)
+theorem dct_differential_inequality (p : NNReal) (hp : p ≤ 1) (n : ℕ) (hn : 1 ≤ n)
     (hp0 : 0 < (p : ℝ)) (hp1 : (p : ℝ) < 1) (m : ℝ)
     (hm : ∀ S : Finset (Site d), origin d ∈ S → m ≤ phi d p hp S) :
     deriv (fun q => prob q ((boxEdgeFinset d n).restrict '' (boxCrossingEvent d n))) (p : ℝ)
@@ -598,7 +598,7 @@ theorem crossingEvent_eq_boxCrossingEvent (n : ℕ) (hn : 1 ≤ n) :
     exact ⟨x, hconn.connected, hxb.2⟩
 
 
-theorem crossProb_eq_boxCrossProb (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) (hn : 1 ≤ n) :
+theorem crossProb_eq_boxCrossProb (p : NNReal) (hp : p ≤ 1) (n : ℕ) (hn : 1 ≤ n) :
     crossProb d p hp n = boxCrossProb d p hp n := by
   unfold crossProb boxCrossProb
   rw [crossingEvent_eq_boxCrossingEvent n hn]

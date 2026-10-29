@@ -23,7 +23,7 @@ private lemma main
   have h_decomp : P = ε • broadcast ν + (1 - ε) • Q := by
     unfold Q
     simp [hnonzero]
-  let K : ℝ≥0 := ⟨1 - ε, hε0⟩
+  let K : NNReal := ⟨1 - ε, hε0⟩
   refine ⟨K, ⟨?_, ⟨?_, ?_⟩⟩⟩
   ·
     exact_mod_cast (by grind : 0 < 1 - ε)

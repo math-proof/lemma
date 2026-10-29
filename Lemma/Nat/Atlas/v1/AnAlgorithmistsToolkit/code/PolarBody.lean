@@ -41,7 +41,7 @@ lemma polarBody_polarBody_eq
 -- imply
   polarBody (polarBody K) = K := by
 -- proof
-  apply Set.Subset.antisymm _ (subset_polarBody_polarBody K)
+  refine Set.Subset.antisymm ?_ (subset_polarBody_polarBody (K := K))
   intro y hy
   by_contra h
   obtain ⟨f, u, hfK, hfy⟩ := geometric_hahn_banach_closed_point hK_convex hK_closed h

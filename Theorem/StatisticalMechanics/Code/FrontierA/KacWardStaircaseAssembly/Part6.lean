@@ -45,7 +45,7 @@ theorem KWStairParameterData.corner_mem_closedEdgeTube
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := S) polygon)
-    (r : ℝ≥0) (hfine : data.MeshWithin r)
+    (r : NNReal) (hfine : data.MeshWithin r)
     (i : Fin n) (k : Fin S) :
     data.corner i k ∈ polygon.closedEdgeTube r i := by
   refine ⟨data.base i k.castSucc, data.base_mem_closedEdge i k.castSucc, ?_⟩
@@ -62,7 +62,7 @@ theorem KWStairParameterData.localVertex_mem_closedEdgeTube
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := S) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     (i : Fin n) (l : Fin (2 * S)) :
     data.localVertex i l ∈ polygon.closedEdgeTube r i := by
   obtain ⟨k, rfl | rfl⟩ := kwStairLocal_even_or_odd l
@@ -76,7 +76,7 @@ theorem KWStairParameterData.localVertex_ne_of_tubes_disjoint
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := S) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin r)
+    (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin r)
     {i j : Fin n}
     (hdisjoint : Disjoint (polygon.closedEdgeTube r i)
       (polygon.closedEdgeTube r j))
@@ -93,7 +93,7 @@ theorem KWStairParameterData.localVertex_ne_of_nonincident
     {n S : ℕ} [NeZero n] [NeZero S]
     {polygon : KWFiniteSimplePolygon n}
     (data : KWStairParameterData (S := S) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : data.MeshWithin (r / 2))
+    (r : NNReal) (hr : 0 < r) (hfine : data.MeshWithin (r / 2))
     (hsep : ∀ i j : Fin n, KWEdgesNonincident i j →
       ∀ x ∈ polygon.closedEdge i, ∀ y ∈ polygon.closedEdge j,
         (r : ℝ) < dist x y)
@@ -109,7 +109,7 @@ theorem KWFiniteSimplePolygon.exists_fine_endpointParameterData
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
     (hcoords : ∀ i : Fin n,
       (polygon.edgeVector i).re ≠ 0 ∧ (polygon.edgeVector i).im ≠ 0)
-    (r : ℝ≥0) (hr : 0 < r) :
+    (r : NNReal) (hr : 0 < r) :
     ∃ M : ℕ, ∃ beta : ℝ, ∃ alpha : Fin n → ℝ,
       ∃ data : KWStairParameterData (S := M + 2) polygon,
         0 < M ∧ 0 < beta ∧ beta < 1 / 4 ∧

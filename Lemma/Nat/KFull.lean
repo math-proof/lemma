@@ -20,20 +20,20 @@ lemma powerfulPart_factorization
   rw [Nat.factorization_prod_apply (fun q hq =>
     pow_ne_zero _ (Nat.prime_of_mem_primeFactors (Finset.mem_of_mem_filter q hq)).ne_zero)]
   have hterm : ∀ q : ℕ, q ∈ n.primeFactors.filter (fun q => 2 ≤ n.factorization q) →
-    (q ^ n.factorization q).factorization p =
-      if q = p then n.factorization q else 0 := by
+      (q ^ n.factorization q).factorization p =
+        if q = p then n.factorization q else 0 := by
     intro q hq
     have hqprime : q.Prime :=
       Nat.prime_of_mem_primeFactors (Finset.mem_of_mem_filter q hq)
     by_cases hqp : q = p
     · subst hqp
-      rw [if_pos rfl, Nat.factorization_pow_self hqprime]
-    · rw [if_neg hqp, Nat.factorization_pow, Finsupp.smul_apply,
-      hqprime.factorization, Finsupp.single_apply, if_neg hqp,
-      smul_eq_mul, mul_zero]
+      rw [ite_eq_left rfl, Nat.factorization_pow_self hqprime]
+    · rw [ite_eq_right hqp, Nat.factorization_pow, Finsupp.smul_apply,
+        hqprime.factorization, Finsupp.single_apply, ite_eq_right hqp,
+        smul_eq_mul, mul_zero]
   rw [Finset.sum_congr rfl hterm, Finset.sum_ite_eq']
   by_cases hp2 : 2 ≤ n.factorization p
-  · rw [if_pos hp2]
+  · rw [ite_eq_left hp2]
     have hn0 : n ≠ 0 := by
       rintro rfl
       simp at hp2
@@ -48,11 +48,11 @@ lemma powerfulPart_factorization
     have hpmem : p ∈ n.primeFactors.filter (fun q => 2 ≤ n.factorization q) := by
       rw [Finset.mem_filter]
       exact ⟨Nat.mem_primeFactors.mpr ⟨hprime, hdvd, hn0⟩, hp2⟩
-    rw [if_pos hpmem]
-  · rw [if_neg hp2]
+    rw [ite_eq_left hpmem]
+  · rw [ite_eq_right hp2]
     have hnotmem : p ∉ n.primeFactors.filter (fun q => 2 ≤ n.factorization q) :=
       fun h => hp2 (Finset.mem_filter.mp h).2
-    rw [if_neg hnotmem]
+    rw [ite_eq_right hnotmem]
 
 end Nat
 
@@ -67,14 +67,14 @@ lemma powerfulPart_dvd
 -- imply
   powerfulPart n ∣ n := by
 -- proof
-  obtain rfl | hn := eq_or_ne n 0
+  rcases eq_or_ne n 0 with rfl | hn
   · rw [powerfulPart_zero]
     exact one_dvd 0
   · have hpos : powerfulPart n ≠ 0 := by
-    unfold powerfulPart
-    exact Finset.prod_ne_zero_iff.mpr fun q hq =>
-      pow_ne_zero _ (Nat.prime_of_mem_primeFactors
-        (Finset.mem_of_mem_filter q hq)).ne_zero
+      unfold powerfulPart
+      exact Finset.prod_ne_zero_iff.mpr fun q hq =>
+        pow_ne_zero _ (Nat.prime_of_mem_primeFactors
+          (Finset.mem_of_mem_filter q hq)).ne_zero
     rw [← Nat.factorization_le_iff_dvd hpos hn]
     intro q
     rw [powerfulPart_factorization]
@@ -248,4 +248,4 @@ private lemma powerfulPart_one_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

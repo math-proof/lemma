@@ -1,15 +1,13 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10PoissonSummable
 
 /--
 [summable_majorant_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry10PoissonSummable.lean)
--/
-@[path]
   pp. 67-68. -/
+@[path]
 private lemma summable_majorant_pos (C R : ℝ) (p : ℕ) (hC : 0 ≤ C) (hR : 0 < R) :
   Summable (fun n : ℕ => C * R ^ n * (n : ℝ) ^ p / (n.factorial : ℝ)) := by
   by_cases hC0 : C = 0
@@ -151,11 +149,11 @@ lemma ramanujan_part1_ch3_entry10_poisson_summable
   calc |x| ^ j * ‖φ (j : ℝ)‖ / (j.factorial : ℝ)
     = (|x| ^ j / (j.factorial : ℝ)) * ‖φ (j : ℝ)‖ := by ring
     _ ≤ (|x| ^ j / (j.factorial : ℝ)) * (C * (j : ℝ) ^ p) := by
-      apply mul_le_mul_of_nonneg_left hφj (by positivity)
+        apply mul_le_mul_of_nonneg_left hφj (by positivity)
     _ = C * |x| ^ j * (j : ℝ) ^ p / (j.factorial : ℝ) := by ring
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10PoissonSummable
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

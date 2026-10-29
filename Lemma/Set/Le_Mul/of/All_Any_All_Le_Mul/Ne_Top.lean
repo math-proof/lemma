@@ -16,7 +16,7 @@ private lemma main
   {S : Set α}
 -- given
   (P : β → α → Prop)
-  (K : ℝ≥0∞)
+  (K : ENNReal)
   (hK : K ≠ ⊤)
   (h : ∀ x ∈ S, ∃ δ > 0, ∀ ρ ∈ Set.Ioo 0 δ, μ {b | ∃ y ∈ Metric.closedBall x ρ, P b y} ≤ K * ν (Metric.closedBall x ρ)) :
 -- imply
@@ -43,7 +43,7 @@ private lemma main
         ENNReal.tsum_le_tsum fun x => hδ x (tS x.2) (r x) (hr x x.2)
     _ = K * ∑' x : t, ν (closedBall (x : α) (r x)) := ENNReal.tsum_mul_left
     _ ≤ K * (ν S + η) := by gcongr
-    _ = K * ν S + η * K := by rw [mul_add, mul_comm K (η : ℝ≥0∞)]
+    _ = K * ν S + η * K := by rw [mul_add, mul_comm K (η : ENNReal)]
     _ ≤ K * ν S + ε := by gcongr
 
 

@@ -31,9 +31,8 @@ namespace MetaMathlibExtTest
 
 /--
 [poincareCoefficients_finiteSupport](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/GradedAlgebra/MultigradedPoincarePolynomial.lean)
--/
-@[path]
 basis index type is empty, hence finite and empty above bound `0`. -/
+@[path]
 private theorem poincareCoefficients_finiteSupport :
   Function.HasFiniteSupport (MetaMathlibExt.multigradedPoincareCoefficients bc) :=
   MetaMathlibExt.multigradedPoincareCoefficients_hasFiniteSupport_of_finiteResolution
@@ -43,3 +42,4 @@ end MetaMathlibExtTest
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

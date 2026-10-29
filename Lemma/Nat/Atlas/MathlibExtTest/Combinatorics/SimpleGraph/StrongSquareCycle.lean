@@ -10,7 +10,7 @@ namespace MathlibExtTest.Combinatorics.SimpleGraph.StrongSquareCycle
 [complete_three_hasStrongSquareCycle](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/StrongSquareCycle.lean)
 -/
 @[path]
-lemma complete_three_hasStrongSquareCycle
+lemma complete_three_hasStrongSquareCycle :
 -- imply
   (⊤ : SimpleGraph (Fin 3)).HasStrongSquareCycle 0 := by
 -- proof
@@ -26,3 +26,4 @@ end MathlibExtTest.Combinatorics.SimpleGraph.StrongSquareCycle
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

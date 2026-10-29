@@ -552,8 +552,9 @@ export class LeanParenthesis extends LeanPairedGroup {
         const arg = this.arg;
         if (!(arg instanceof L.LeanArithmetic)) return false;
         if (this.latexParenRequired()) return false; // `(· + 1) * 2`
-        const childPri = arg.constructor.input_priority ?? 0;
-        const parentPri = p.constructor.input_priority ?? 0;
+        // Prefer instance priority (`*ᵥ` 73, `⬝ᵥ` 72) so given latex matches Def Expr.toLatex.
+        const childPri = arg.input_priority ?? arg.constructor.input_priority ?? 0;
+        const parentPri = p.input_priority ?? p.constructor.input_priority ?? 0;
         return childPri > parentPri;
     }
 

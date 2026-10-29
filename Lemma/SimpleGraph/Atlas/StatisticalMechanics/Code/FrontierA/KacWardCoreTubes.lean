@@ -30,7 +30,7 @@ private lemma closedEdgeCoreTube_eq_add_ball_eq
   {eps : ℝ}
   {i : Fin n}
 -- given
-  (r : ℝ≥0) :
+  (r : NNReal) :
 -- imply
   polygon.closedEdgeCoreTube eps r i = polygon.closedEdgeCore eps i + Metric.ball (0 : ℂ) (r : ℝ) := by
 -- proof
@@ -47,7 +47,7 @@ private lemma closedEdgeCoreTube_convex_eq
   {eps : ℝ}
   {i : Fin n}
 -- given
-  (r : ℝ≥0) :
+  (r : NNReal) :
 -- imply
   Convex ℝ (polygon.closedEdgeCoreTube eps r i) := by
 -- proof
@@ -58,10 +58,10 @@ private lemma closedEdgeCoreTube_convex_eq
 -/
 @[path]
 private lemma nnreal_lt_edist_iff_lt_dist_eq
-  {r : ℝ≥0}
+  {r : NNReal}
   {x y : ℂ} :
 -- imply
-  (r : ℝ≥0∞) < edist x y ↔ (r : ℝ) < dist x y := by
+  (r : ENNReal) < edist x y ↔ (r : ℝ) < dist x y := by
 -- proof
   apply StatMech.FrontierA.nnreal_lt_edist_iff_lt_dist
 
@@ -74,10 +74,10 @@ private lemma closedEdgeCoreTube_disjoint_of_separation_eq
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n}
   {eps : ℝ}
-  {r : ℝ≥0}
+  {r : NNReal}
   {i j : Fin n}
 -- given
-  (hsep : ∀ i j : Fin n, i ≠ j → ∀ x ∈ polygon.closedEdgeCore eps i, ∀ y ∈ polygon.closedEdgeCore eps j, (r : ℝ≥0∞) < edist x y)
+  (hsep : ∀ i j : Fin n, i ≠ j → ∀ x ∈ polygon.closedEdgeCore eps i, ∀ y ∈ polygon.closedEdgeCore eps j, (r : ENNReal) < edist x y)
   (hij : i ≠ j) :
 -- imply
   Disjoint (polygon.closedEdgeCoreTube eps (r / 2) i) (polygon.closedEdgeCoreTube eps (r / 2) j) := by
@@ -96,7 +96,7 @@ private lemma exists_pairwise_disjoint_closedEdgeCoreTubes_eq
 -- given
   (heps : 0 < eps ∧ eps < 1 / 2) :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ i j : Fin n, i ≠ j → Disjoint (polygon.closedEdgeCoreTube eps r i) (polygon.closedEdgeCoreTube eps r j) := by
+  ∃ r : NNReal, 0 < r ∧ ∀ i j : Fin n, i ≠ j → Disjoint (polygon.closedEdgeCoreTube eps r i) (polygon.closedEdgeCoreTube eps r j) := by
 -- proof
   apply StatMech.FrontierA.KWFiniteSimplePolygon.exists_pairwise_disjoint_closedEdgeCoreTubes polygon heps
 

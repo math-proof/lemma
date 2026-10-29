@@ -7,14 +7,13 @@ open Polynomial
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
 
-/--
+/-!
 [alh_gaussNorm_map_intCast_eq_one_of_isPrimitive](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Height/AbsoluteLogHeightRoots.lean)
--/
-@[path]
 # Absolute logarithmic height via Mahler measure of a primitive integral minpoly
 Private helpers proving `absLogHeight₁_eq_log_leadingCoeff_add_sum_log_roots`.
 -/
 -- Gauss norm of a primitive integral polynomial is 1.
+@[path]
 private lemma alh_gaussNorm_map_intCast_eq_one_of_isPrimitive
   {R : Type*} [Field R] (v : AbsoluteValue R ℝ)
   (hna : IsNonarchimedean v) (q : ℤ[X]) (hq : q.IsPrimitive) :
@@ -27,7 +26,8 @@ private lemma alh_gaussNorm_map_intCast_eq_one_of_isPrimitive
     rw [hi, one_pow, mul_one, Polynomial.coeff_map]
     exact hcast _
   have hne : q.support.Nonempty := by
-    rwa [Polynomial.support_nonempty]
+    rw [Polynomial.support_nonempty]
+    exact hq.ne_zero
   have hge : 1 ≤ (q.map (Int.castRingHom R)).gaussNorm v 1 := by
     have hcont : q.support.gcd q.coeff = 1 :=
       Polynomial.isPrimitive_iff_content_eq_one.mp hq
@@ -35,33 +35,34 @@ private lemma alh_gaussNorm_map_intCast_eq_one_of_isPrimitive
     have hsum : (∑ a ∈ q.support, q.coeff a * f a) = 1 := by
       rw [← hf, hcont]
     have h1eq : ((1 : ℤ) : R)
-      = ∑ a ∈ q.support, ((q.coeff a * f a : ℤ) : R) := by
+        = ∑ a ∈ q.support, ((q.coeff a * f a : ℤ) : R) := by
       rw [← hsum, Int.cast_sum]
     have hval : (1 : ℝ)
-      = v (∑ a ∈ q.support, ((q.coeff a * f a : ℤ) : R)) := by
+        = v (∑ a ∈ q.support, ((q.coeff a * f a : ℤ) : R)) := by
       rw [← h1eq, Int.cast_one, map_one]
     have hsup := hna.apply_sum_le_sup (s := q.support)
       (g := fun a => ((q.coeff a * f a : ℤ) : R)) hne
     have hsup_le : q.support.sup' hne
-      (fun a => v ((q.coeff a * f a : ℤ) : R))
-      ≤ (q.map (Int.castRingHom R)).gaussNorm v 1 := by
+        (fun a => v ((q.coeff a * f a : ℤ) : R))
+        ≤ (q.map (Int.castRingHom R)).gaussNorm v 1 := by
       rw [Finset.sup'_le_iff]
       intro a _
       rw [Int.cast_mul, map_mul]
       have hcoeff : v ((q.map (Int.castRingHom R)).coeff a)
-        = v ((q.coeff a : ℤ) : R) := by
+          = v ((q.coeff a : ℤ) : R) := by
         rw [Polynomial.coeff_map]
         rfl
       have hgauss := (q.map (Int.castRingHom R)).le_gaussNorm v zero_le_one a
       rw [one_pow, mul_one, hcoeff] at hgauss
       calc v ((q.coeff a : ℤ) : R) * v ((f a : ℤ) : R)
-        ≤ v ((q.coeff a : ℤ) : R) * 1 :=
-          mul_le_mul_of_nonneg_left (hcast _) (AbsoluteValue.nonneg v _)
+          ≤ v ((q.coeff a : ℤ) : R) * 1 :=
+            mul_le_mul_of_nonneg_left (hcast _) (AbsoluteValue.nonneg v _)
         _ = v ((q.coeff a : ℤ) : R) := mul_one _
         _ ≤ (q.map (Int.castRingHom R)).gaussNorm v 1 := hgauss
     exact hval.trans_le (hsup.trans hsup_le)
   exact le_antisymm hle hge
 
+-- Auxiliary. Gauss norm of a single linear factor.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -78,9 +79,11 @@ private lemma alh_gaussNorm_X_sub_C
   have hge : max (v β) 1 ≤ (X - C β : R[X]).gaussNorm v 1 := by
     apply max_le
     · have h := (X - C β : R[X]).le_gaussNorm v zero_le_one 0
-      rwa [one_pow, mul_one, h0, map_neg_eq_map] at h
+      rw [one_pow, mul_one, h0, map_neg_eq_map] at h
+      exact h
     · have h := (X - C β : R[X]).le_gaussNorm v zero_le_one 1
-      rwa [one_pow, mul_one, h1, map_one] at h
+      rw [one_pow, mul_one, h1, map_one] at h
+      exact h
   have hle : (X - C β : R[X]).gaussNorm v 1 ≤ max (v β) 1 := by
     obtain ⟨i, hi⟩ := Polynomial.exists_eq_gaussNorm v 1 (X - C β : R[X])
     rw [hi, one_pow, mul_one]
@@ -100,6 +103,7 @@ private lemma alh_gaussNorm_X_sub_C
         exact (zero_le_one).trans (le_max_right _ _)
   exact le_antisymm hle hge
 
+-- Gauss norm of a split linear-factor product.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -123,6 +127,7 @@ private lemma alh_gaussNorm_C_mul_prod_X_sub_C
       alh_gaussNorm_X_sub_C v b]
     ring
 
+-- Local Gauss-norm identity for a primitive polynomial that splits.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -148,6 +153,7 @@ private lemma alh_abs_leadingCoeff_mul_prod_max_roots_eq_one
     alh_gaussNorm_map_intCast_eq_one_of_isPrimitive v hna q hq] at hgauss
   exact hgauss
 
+-- Finite multiplicative support of the max-with-one functions.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -164,10 +170,11 @@ private lemma alh_hasFiniteMulSupport_max_finitePlace
     have heq : (fun v : NumberField.FinitePlace E => max (v (0 : E)) 1) = 1 := by
       funext v
       simp
-    rwa [heq]
+    rw [heq]
+    exact Function.hasFiniteMulSupport_fun_one
   · exact Function.HasFiniteMulSupport.max
-    (NumberField.FinitePlace.hasFiniteMulSupport hβ)
-    Function.hasFiniteMulSupport_fun_one
+      (NumberField.FinitePlace.hasFiniteMulSupport hβ)
+      Function.hasFiniteMulSupport_fun_one
 
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
@@ -191,6 +198,7 @@ private lemma alh_hasFiniteMulSupport_prod_max_finitePlace
     exact Function.HasFiniteMulSupport.mul
       (alh_hasFiniteMulSupport_max_finitePlace a) ih
 
+-- Auxiliary. The supremum over `Fin 2` is a max.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -211,6 +219,7 @@ private lemma alh_iSup_fin_two (f : Fin 2 → ℝ) :
     · exact le_ciSup (Set.finite_range f).bddAbove 0
     · exact le_ciSup (Set.finite_range f).bddAbove 1
 
+-- Ideal norm times the finite part equals the denominator power.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -229,14 +238,14 @@ private lemma alh_absNorm_span_mul_finprod_max_eq_pow
   have hnO : ((n : ℕ) : NumberField.RingOfIntegers E) ≠ 0 :=
     Nat.cast_ne_zero.mpr hn
   have htuple_ne : (![b, ((n : ℕ) : NumberField.RingOfIntegers E)] :
-    Fin 2 → NumberField.RingOfIntegers E) ≠ 0 := by
+      Fin 2 → NumberField.RingOfIntegers E) ≠ 0 := by
     intro hcon
     apply hnO
     have h1 := congrFun hcon 1
     simpa using h1
   have hspan : Ideal.span
-    (Set.range ![b, ((n : ℕ) : NumberField.RingOfIntegers E)])
-    = Ideal.span ({((n : ℕ) : NumberField.RingOfIntegers E), b} : Set _) := by
+      (Set.range ![b, ((n : ℕ) : NumberField.RingOfIntegers E)])
+      = Ideal.span ({((n : ℕ) : NumberField.RingOfIntegers E), b} : Set _) := by
     congr 1
     ext y
     simp only [Set.mem_range, Set.mem_insert_iff, Set.mem_singleton_iff]
@@ -249,15 +258,15 @@ private lemma alh_absNorm_span_mul_finprod_max_eq_pow
   have key := NumberField.absNorm_mul_finprod_finitePlace_eq_one htuple_ne
   rw [hspan] at key
   have hiSup : ∀ w : NumberField.FinitePlace E,
-    (⨆ i : Fin 2, w (((![b, ((n : ℕ) : NumberField.RingOfIntegers E)] i :
-      NumberField.RingOfIntegers E)) : E))
-      = w (n : E) * max (w β) 1 := by
+      (⨆ i : Fin 2, w (((![b, ((n : ℕ) : NumberField.RingOfIntegers E)] i :
+        NumberField.RingOfIntegers E)) : E))
+        = w (n : E) * max (w β) 1 := by
     intro w
     have e0 : (((![b, ((n : ℕ) : NumberField.RingOfIntegers E)] 0 :
-      NumberField.RingOfIntegers E)) : E) = (b : E) := by
+        NumberField.RingOfIntegers E)) : E) = (b : E) := by
       simp [Matrix.cons_val_zero]
     have e1 : (((![b, ((n : ℕ) : NumberField.RingOfIntegers E)] 1 :
-      NumberField.RingOfIntegers E)) : E) = (n : E) := by
+        NumberField.RingOfIntegers E)) : E) = (n : E) := by
       simp
     have hpos : 0 < w (n : E) :=
       NumberField.FinitePlace.pos_iff.mpr hnE
@@ -265,17 +274,18 @@ private lemma alh_absNorm_span_mul_finprod_max_eq_pow
       NumberField.RingOfIntegers E)] i : NumberField.RingOfIntegers E)) : E))
     rw [h2, e0, e1, ← h, map_mul, mul_max_of_nonneg _ _ hpos.le, mul_one]
   have hsplit : (∏ᶠ w : NumberField.FinitePlace E, (⨆ i : Fin 2,
-    w (((![b, ((n : ℕ) : NumberField.RingOfIntegers E)] i :
-      NumberField.RingOfIntegers E)) : E)))
-    = (∏ᶠ w : NumberField.FinitePlace E, w (n : E)) *
-      (∏ᶠ w : NumberField.FinitePlace E, max (w β) 1) := by
+      w (((![b, ((n : ℕ) : NumberField.RingOfIntegers E)] i :
+        NumberField.RingOfIntegers E)) : E)))
+      = (∏ᶠ w : NumberField.FinitePlace E, w (n : E)) *
+        (∏ᶠ w : NumberField.FinitePlace E, max (w β) 1) := by
     have e := finprod_congr hiSup
-    rwa [e]
+    rw [e]
+    exact finprod_mul_distrib
       (NumberField.FinitePlace.hasFiniteMulSupport hnE)
       (alh_hasFiniteMulSupport_max_finitePlace β)
   rw [hsplit] at key
   have hP : (∏ᶠ w : NumberField.FinitePlace E, w (n : E)) *
-    ((n : ℝ) ^ Module.finrank ℚ E) = 1 := by
+      ((n : ℝ) ^ Module.finrank ℚ E) = 1 := by
     have h2 : (n : E) = algebraMap ℚ E ((n : ℕ) : ℚ) := (map_natCast _ _).symm
     have hP0 := NumberField.FinitePlace.prod_eq_inv_abs_norm hnE
     rw [h2, Algebra.norm_algebraMap, Rat.cast_inv, Rat.cast_abs, Rat.cast_pow,
@@ -284,20 +294,20 @@ private lemma alh_absNorm_span_mul_finprod_max_eq_pow
     rw [← h2] at hP0
     rw [hP0, inv_mul_cancel₀ (pow_ne_zero _ (by exact_mod_cast hn))]
   have hND : ((Ideal.span ({(n : NumberField.RingOfIntegers E), b} :
-    Set _)).absNorm : ℝ) *
-    ∏ᶠ v : NumberField.FinitePlace E, max (v β) 1
-    = (((Ideal.span ({(n : NumberField.RingOfIntegers E), b} : Set _)).absNorm :
-      ℝ) * ((∏ᶠ w : NumberField.FinitePlace E, w (n : E)) *
-      (∏ᶠ w : NumberField.FinitePlace E, max (w β) 1))) *
-      ((n : ℝ) ^ Module.finrank ℚ E) := by
-    have h2 : (((Ideal.span ({(n : NumberField.RingOfIntegers E), b} : Set _)).absNorm :
-      ℝ) * ((∏ᶠ w : NumberField.FinitePlace E, w (n : E)) *
-      (∏ᶠ w : NumberField.FinitePlace E, max (w β) 1))) *
-      ((n : ℝ) ^ Module.finrank ℚ E)
+      Set _)).absNorm : ℝ) *
+      ∏ᶠ v : NumberField.FinitePlace E, max (v β) 1
       = (((Ideal.span ({(n : NumberField.RingOfIntegers E), b} : Set _)).absNorm :
-        ℝ) * (∏ᶠ w : NumberField.FinitePlace E, max (w β) 1)) *
-        ((∏ᶠ w : NumberField.FinitePlace E, w (n : E)) *
-          ((n : ℝ) ^ Module.finrank ℚ E)) := by
+        ℝ) * ((∏ᶠ w : NumberField.FinitePlace E, w (n : E)) *
+        (∏ᶠ w : NumberField.FinitePlace E, max (w β) 1))) *
+        ((n : ℝ) ^ Module.finrank ℚ E) := by
+    have h2 : (((Ideal.span ({(n : NumberField.RingOfIntegers E), b} : Set _)).absNorm :
+        ℝ) * ((∏ᶠ w : NumberField.FinitePlace E, w (n : E)) *
+        (∏ᶠ w : NumberField.FinitePlace E, max (w β) 1))) *
+        ((n : ℝ) ^ Module.finrank ℚ E)
+        = (((Ideal.span ({(n : NumberField.RingOfIntegers E), b} : Set _)).absNorm :
+          ℝ) * (∏ᶠ w : NumberField.FinitePlace E, max (w β) 1)) *
+          ((∏ᶠ w : NumberField.FinitePlace E, w (n : E)) *
+            ((n : ℝ) ^ Module.finrank ℚ E)) := by
       ring
     rw [h2, hP, mul_one]
   rw [hND, key, one_mul]
@@ -318,28 +328,29 @@ private lemma alh_finprod_max_algebraMap_eq_pow
   obtain ⟨n, hn, b, hnb, -⟩ :=
     NumberField.exists_nat_ne_zero_exists_integer_mul_eq_and_absNorm_span_eq_pow β
   have hcoe : ∀ y : NumberField.RingOfIntegers E,
-    algebraMap E L (y : E)
-      = ((algebraMap (NumberField.RingOfIntegers E)
-        (NumberField.RingOfIntegers L) y : NumberField.RingOfIntegers L) : L) := by
+      algebraMap E L (y : E)
+        = ((algebraMap (NumberField.RingOfIntegers E)
+          (NumberField.RingOfIntegers L) y : NumberField.RingOfIntegers L) : L) := by
     intro y
     rw [show algebraMap (NumberField.RingOfIntegers E)
-      (NumberField.RingOfIntegers L) y
-      = NumberField.RingOfIntegers.mapRingHom (algebraMap E L) y from rfl]
+        (NumberField.RingOfIntegers L) y
+        = NumberField.RingOfIntegers.mapRingHom (algebraMap E L) y from rfl]
     exact (NumberField.RingOfIntegers.mapRingHom_apply _ _).symm
   have hL : (n : L) * algebraMap E L β
-    = ((algebraMap (NumberField.RingOfIntegers E)
-      (NumberField.RingOfIntegers L) b : NumberField.RingOfIntegers L) : L) := by
+      = ((algebraMap (NumberField.RingOfIntegers E)
+        (NumberField.RingOfIntegers L) b : NumberField.RingOfIntegers L) : L) := by
     have h2 := congrArg (algebraMap E L) hnb
-    rwa [map_mul, map_natCast, hcoe] at h2
+    rw [map_mul, map_natCast, hcoe] at h2
+    exact h2
   have hE := alh_absNorm_span_mul_finprod_max_eq_pow β n hn b hnb
   have hL2 := alh_absNorm_span_mul_finprod_max_eq_pow (algebraMap E L β) n hn _ hL
   have hIdeal : Ideal.span ({((n : ℕ) : NumberField.RingOfIntegers L),
-    algebraMap (NumberField.RingOfIntegers E)
-      (NumberField.RingOfIntegers L) b} : Set (NumberField.RingOfIntegers L))
-    = Ideal.map (algebraMap (NumberField.RingOfIntegers E)
-      (NumberField.RingOfIntegers L))
-      (Ideal.span ({((n : ℕ) : NumberField.RingOfIntegers E), b} :
-        Set (NumberField.RingOfIntegers E))) := by
+      algebraMap (NumberField.RingOfIntegers E)
+        (NumberField.RingOfIntegers L) b} : Set (NumberField.RingOfIntegers L))
+      = Ideal.map (algebraMap (NumberField.RingOfIntegers E)
+        (NumberField.RingOfIntegers L))
+        (Ideal.span ({((n : ℕ) : NumberField.RingOfIntegers E), b} :
+          Set (NumberField.RingOfIntegers E))) := by
     rw [Ideal.map_span]
     congr 1
     ext y
@@ -356,13 +367,13 @@ private lemma alh_finprod_max_algebraMap_eq_pow
     (Ideal.span ({((n : ℕ) : NumberField.RingOfIntegers E), b} :
       Set (NumberField.RingOfIntegers E)))
   have hfr : Module.finrank E L
-    = Module.finrank (NumberField.RingOfIntegers E)
-      (NumberField.RingOfIntegers L) :=
+      = Module.finrank (NumberField.RingOfIntegers E)
+        (NumberField.RingOfIntegers L) :=
     IsFractionRing.finrank_eq _ _ _ _
   have hmul : Module.finrank ℚ E * Module.finrank E L = Module.finrank ℚ L :=
     Module.finrank_mul_finrank _ _ _
   have hNE : (Ideal.span ({((n : ℕ) : NumberField.RingOfIntegers E), b} :
-    Set (NumberField.RingOfIntegers E))).absNorm ≠ 0 := by
+      Set (NumberField.RingOfIntegers E))).absNorm ≠ 0 := by
     rw [ne_eq, Ideal.absNorm_eq_zero_iff]
     intro hbot
     have hmem := Ideal.subset_span (s := ({((n : ℕ) : NumberField.RingOfIntegers E), b} :
@@ -376,15 +387,15 @@ private lemma alh_finprod_max_algebraMap_eq_pow
   have hEpow := congrArg (· ^ Module.finrank E L) hE
   rw [mul_pow, ← pow_mul, hmul] at hEpow
   have hcancel : (((Ideal.span ({((n : ℕ) : NumberField.RingOfIntegers E), b} :
-    Set (NumberField.RingOfIntegers E))).absNorm : ℕ) : ℝ) ^ Module.finrank E L *
-    (∏ᶠ w : NumberField.FinitePlace L, max (w (algebraMap E L β)) 1)
-    = (((Ideal.span ({((n : ℕ) : NumberField.RingOfIntegers E), b} :
-    Set (NumberField.RingOfIntegers E))).absNorm : ℕ) : ℝ) ^ Module.finrank E L *
-    ((∏ᶠ v : NumberField.FinitePlace E, max (v β) 1) ^ Module.finrank E L) :=
+      Set (NumberField.RingOfIntegers E))).absNorm : ℕ) : ℝ) ^ Module.finrank E L *
+      (∏ᶠ w : NumberField.FinitePlace L, max (w (algebraMap E L β)) 1)
+      = (((Ideal.span ({((n : ℕ) : NumberField.RingOfIntegers E), b} :
+      Set (NumberField.RingOfIntegers E))).absNorm : ℕ) : ℝ) ^ Module.finrank E L *
+      ((∏ᶠ v : NumberField.FinitePlace E, max (v β) 1) ^ Module.finrank E L) :=
     hL2.trans hEpow.symm
   have hpos : (((Ideal.span ({((n : ℕ) : NumberField.RingOfIntegers E), b} :
-    Set (NumberField.RingOfIntegers E))).absNorm : ℕ) : ℝ) ^ Module.finrank E L
-    ≠ 0 :=
+      Set (NumberField.RingOfIntegers E))).absNorm : ℕ) : ℝ) ^ Module.finrank E L
+      ≠ 0 :=
     pow_ne_zero _ (Nat.cast_ne_zero.mpr hNE)
   exact mul_left_cancel₀ hpos hcancel
 
@@ -403,13 +414,14 @@ private lemma alh_finprod_max_ringHom_pow_eq
     = (∏ᶠ v : NumberField.FinitePlace E, max (v β) 1) ^ Module.finrank ℚ L := by
   let _ := τ.toAlgebra
   have h6 : (∏ᶠ w : NumberField.FinitePlace L, max (w (τ β)) 1)
-    = (∏ᶠ v : NumberField.FinitePlace E, max (v β) 1) ^ Module.finrank E L :=
+      = (∏ᶠ v : NumberField.FinitePlace E, max (v β) 1) ^ Module.finrank E L :=
     alh_finprod_max_algebraMap_eq_pow β
   have hmul : Module.finrank ℚ E * Module.finrank E L = Module.finrank ℚ L :=
     Module.finrank_mul_finrank _ _ _
   have hpow := congrArg (· ^ Module.finrank ℚ E) h6
-  rwa [← pow_mul, mul_comm (Module.finrank E L) _, hmul] at hpow
-
+  rw [← pow_mul, mul_comm (Module.finrank E L) _, hmul] at hpow
+  exact hpow
+-- Auxiliary. Swap a finprod over finite places with a multiset product.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -430,6 +442,7 @@ private lemma alh_finprod_prod_max_swap
     rw [finprod_mul_distrib (alh_hasFiniteMulSupport_max_finitePlace b)
       (alh_hasFiniteMulSupport_prod_max_finitePlace s), ih]
 
+-- Product over roots of the finite parts equals the leading-coefficient power.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -446,46 +459,48 @@ private lemma alh_prod_roots_finprod_max_eq_pow
     ∏ᶠ w : NumberField.FinitePlace L, max (w β) 1).prod)
     = (((|q.leadingCoeff| : ℤ) : ℝ) ^ Module.finrank ℚ L) := by
   have hna : ∀ w : NumberField.FinitePlace L,
-    IsNonarchimedean (w.val : AbsoluteValue L ℝ) := by
+      IsNonarchimedean (w.val : AbsoluteValue L ℝ) := by
     intro w
     exact NumberField.FinitePlace.add_le w
   have hlc : q.leadingCoeff ≠ 0 :=
     Polynomial.leadingCoeff_ne_zero.mpr hq.ne_zero
   have ha : (((q.leadingCoeff : ℤ)) : L) ≠ 0 := Int.cast_ne_zero.mpr hlc
   have hloc : ∀ w : NumberField.FinitePlace L,
-    (w (((q.leadingCoeff : ℤ)) : L)) *
-      ((((q.map (Int.castRingHom L)).roots).map fun β => max (w β) 1).prod)
-      = 1 := by
+      (w (((q.leadingCoeff : ℤ)) : L)) *
+        ((((q.map (Int.castRingHom L)).roots).map fun β => max (w β) 1).prod)
+        = 1 := by
     intro w
     have h3 := alh_abs_leadingCoeff_mul_prod_max_roots_eq_one (w.val) (hna w) q hq
       hsplit
     simpa only [← NumberField.FinitePlace.coe_apply] using h3
   have hfin : (∏ᶠ w : NumberField.FinitePlace L, w (((q.leadingCoeff : ℤ)) : L)) *
-    (((q.map (Int.castRingHom L)).roots.map fun β =>
-      ∏ᶠ w : NumberField.FinitePlace L, max (w β) 1).prod) = 1 := by
+      (((q.map (Int.castRingHom L)).roots.map fun β =>
+        ∏ᶠ w : NumberField.FinitePlace L, max (w β) 1).prod) = 1 := by
     have h1 : (∏ᶠ w : NumberField.FinitePlace L,
-      ((w (((q.leadingCoeff : ℤ)) : L)) *
-        ((((q.map (Int.castRingHom L)).roots).map fun β => max (w β) 1).prod)))
-      = 1 :=
+        ((w (((q.leadingCoeff : ℤ)) : L)) *
+          ((((q.map (Int.castRingHom L)).roots).map fun β => max (w β) 1).prod)))
+        = 1 :=
       finprod_eq_one_of_forall_eq_one hloc
     rw [finprod_mul_distrib (NumberField.FinitePlace.hasFiniteMulSupport ha)
       (alh_hasFiniteMulSupport_prod_max_finitePlace _),
       alh_finprod_prod_max_swap] at h1
     exact h1
   have hPa : (∏ᶠ w : NumberField.FinitePlace L, w (((q.leadingCoeff : ℤ)) : L))
-    = (((|Algebra.norm ℚ (((q.leadingCoeff : ℤ)) : L)|⁻¹ : ℚ)) : ℝ) :=
+      = (((|Algebra.norm ℚ (((q.leadingCoeff : ℤ)) : L)|⁻¹ : ℚ)) : ℝ) :=
     NumberField.FinitePlace.prod_eq_inv_abs_norm ha
   have hnormQ : Algebra.norm ℚ (((q.leadingCoeff : ℤ)) : L)
-    = (((q.leadingCoeff : ℤ)) : ℚ) ^ Module.finrank ℚ L := by
+      = (((q.leadingCoeff : ℤ)) : ℚ) ^ Module.finrank ℚ L := by
     have hcast : (((q.leadingCoeff : ℤ)) : L)
-      = algebraMap ℚ L (((q.leadingCoeff : ℤ)) : ℚ) := (map_intCast _ _).symm
+        = algebraMap ℚ L (((q.leadingCoeff : ℤ)) : ℚ) := (map_intCast _ _).symm
     rw [hcast, Algebra.norm_algebraMap]
   have habs : |Algebra.norm ℚ (((q.leadingCoeff : ℤ)) : L)|
-    = (((|q.leadingCoeff| : ℤ)) : ℚ) ^ Module.finrank ℚ L := by
+      = (((|q.leadingCoeff| : ℤ)) : ℚ) ^ Module.finrank ℚ L := by
     rw [hnormQ, abs_pow, Int.cast_abs]
   have hG := eq_inv_of_mul_eq_one_right hfin
-  rwa [hPa, Rat.cast_inv, inv_inv, habs, Rat.cast_pow, Rat.cast_intCast] at hG
+  rw [hPa, Rat.cast_inv, inv_inv, habs, Rat.cast_pow, Rat.cast_intCast] at hG
+  exact hG
 
+-- Properties of the primitive integral minpoly.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -500,54 +515,55 @@ private lemma alh_primitiveIntMinpoly_map_eq_C_mul_minpoly
     = C ((NumberField.primitiveIntMinpoly x).leadingCoeff : ℚ) * minpoly ℚ x := by
   have hmin_ne : minpoly ℚ x ≠ 0 := minpoly.ne_zero hx
   have hN_ne :
-    IsLocalization.integerNormalization (nonZeroDivisors ℤ) (minpoly ℚ x) ≠ 0 := by
+      IsLocalization.integerNormalization (nonZeroDivisors ℤ) (minpoly ℚ x) ≠ 0 := by
     intro hcon
     rw [IsFractionRing.integerNormalization_eq_zero_iff] at hcon
     exact hmin_ne hcon
   have haevalN :
-    aeval x (IsLocalization.integerNormalization (nonZeroDivisors ℤ)
-      (minpoly ℚ x)) = 0 :=
+      aeval x (IsLocalization.integerNormalization (nonZeroDivisors ℤ)
+        (minpoly ℚ x)) = 0 :=
     IsLocalization.integerNormalization_aeval_eq_zero _ _ (minpoly.aeval ℚ x)
   have hcontent_ne :
-    (IsLocalization.integerNormalization (nonZeroDivisors ℤ)
-      (minpoly ℚ x)).content ≠ 0 :=
+      (IsLocalization.integerNormalization (nonZeroDivisors ℤ)
+        (minpoly ℚ x)).content ≠ 0 :=
     fun hc => hN_ne (Polynomial.content_eq_zero_iff.mp hc)
   have haeval_prim :
-    aeval x (IsLocalization.integerNormalization (nonZeroDivisors ℤ)
-      (minpoly ℚ x)).primPart = 0 := by
+      aeval x (IsLocalization.integerNormalization (nonZeroDivisors ℤ)
+        (minpoly ℚ x)).primPart = 0 := by
     have hmul := congrArg (aeval x)
       (Polynomial.eq_C_content_mul_primPart
         (IsLocalization.integerNormalization (nonZeroDivisors ℤ) (minpoly ℚ x)))
     rw [map_mul, Polynomial.aeval_C] at hmul
     rw [haevalN] at hmul
     have hcK : (((IsLocalization.integerNormalization (nonZeroDivisors ℤ)
-      (minpoly ℚ x)).content : ℤ)) ≠ 0 :=
+        (minpoly ℚ x)).content : ℤ)) ≠ 0 :=
       hcontent_ne
     have hcast_ne : ((((IsLocalization.integerNormalization (nonZeroDivisors ℤ)
-      (minpoly ℚ x)).content : ℤ)) : K) ≠ 0 :=
+        (minpoly ℚ x)).content : ℤ)) : K) ≠ 0 :=
       Int.cast_ne_zero.mpr hcK
     have hC : algebraMap ℤ K (IsLocalization.integerNormalization
-      (nonZeroDivisors ℤ) (minpoly ℚ x)).content
-      = ((((IsLocalization.integerNormalization (nonZeroDivisors ℤ)
-      (minpoly ℚ x)).content : ℤ)) : K) := by
+        (nonZeroDivisors ℤ) (minpoly ℚ x)).content
+        = ((((IsLocalization.integerNormalization (nonZeroDivisors ℤ)
+        (minpoly ℚ x)).content : ℤ)) : K) := by
       simp
     rw [hC] at hmul
-    obtain h | h := mul_eq_zero.mp hmul.symm
+    rcases mul_eq_zero.mp hmul.symm with h | h
     · exact absurd h hcast_ne
     · exact h
   have haeval_map :
-    aeval x ((IsLocalization.integerNormalization (nonZeroDivisors ℤ)
-      (minpoly ℚ x)).primPart.map (Int.castRingHom ℚ)) = 0 := by
-    rwa [← algebraMap_int_eq, Polynomial.aeval_map_algebraMap]
+      aeval x ((IsLocalization.integerNormalization (nonZeroDivisors ℤ)
+        (minpoly ℚ x)).primPart.map (Int.castRingHom ℚ)) = 0 := by
+    rw [← algebraMap_int_eq, Polynomial.aeval_map_algebraMap]
+    exact haeval_prim
   have hdvd : minpoly ℚ x ∣ (IsLocalization.integerNormalization
-    (nonZeroDivisors ℤ) (minpoly ℚ x)).primPart.map (Int.castRingHom ℚ) :=
+      (nonZeroDivisors ℤ) (minpoly ℚ x)).primPart.map (Int.castRingHom ℚ) :=
     minpoly.dvd ℚ x haeval_map
   have hprim : NumberField.primitiveIntMinpoly x
-    = (IsLocalization.integerNormalization (nonZeroDivisors ℤ)
-      (minpoly ℚ x)).primPart := rfl
+      = (IsLocalization.integerNormalization (nonZeroDivisors ℤ)
+        (minpoly ℚ x)).primPart := rfl
   have hdeg : ((IsLocalization.integerNormalization (nonZeroDivisors ℤ)
-    (minpoly ℚ x)).primPart.map
-    (Int.castRingHom ℚ)).natDegree ≤ (minpoly ℚ x).natDegree := by
+      (minpoly ℚ x)).primPart.map
+      (Int.castRingHom ℚ)).natDegree ≤ (minpoly ℚ x).natDegree := by
     rw [Polynomial.natDegree_map_eq_of_injective
       (RingHom.injective_int (Int.castRingHom ℚ)), ← hprim]
     exact le_of_eq (NumberField.primitiveIntMinpoly_natDegree x)
@@ -577,7 +593,7 @@ private lemma alh_primitiveIntMinpoly_map_roots_eq_aroots
     Subsingleton.elim _ _
   rw [hcomp] at hmapE
   have hcE : algebraMap ℚ E
-    ((NumberField.primitiveIntMinpoly x).leadingCoeff : ℚ) ≠ 0 := by
+      ((NumberField.primitiveIntMinpoly x).leadingCoeff : ℚ) ≠ 0 := by
     rw [map_intCast]
     exact Int.cast_ne_zero.mpr (Polynomial.leadingCoeff_ne_zero.mpr
       (NumberField.primitiveIntMinpoly_ne_zero x))
@@ -599,6 +615,7 @@ private lemma alh_primitiveIntMinpoly_map_roots_nodup
   apply Polynomial.nodup_roots
   exact ((minpoly.irreducible hx).separable).map
 
+-- Finite part at the generator equals the absolute leading coefficient.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -616,14 +633,14 @@ private lemma alh_finprod_max_gen_eq_abs_leadingCoeff
     = (((|(NumberField.primitiveIntMinpoly x).leadingCoeff| : ℤ)) : ℝ) := by
   have hNFL : NumberField (Polynomial.SplittingField (minpoly ℚ x)) := ⟨⟩
   have hroots : ((NumberField.primitiveIntMinpoly x).map
-    (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots
-    = (minpoly ℚ x).aroots (Polynomial.SplittingField (minpoly ℚ x)) :=
+      (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots
+      = (minpoly ℚ x).aroots (Polynomial.SplittingField (minpoly ℚ x)) :=
     alh_primitiveIntMinpoly_map_roots_eq_aroots hx _
   have hspl := Polynomial.SplittingField.splits (minpoly ℚ x)
   have hsplit : ((NumberField.primitiveIntMinpoly x).map
-    (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots.card
-    = ((NumberField.primitiveIntMinpoly x).map
-      (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).natDegree := by
+      (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots.card
+      = ((NumberField.primitiveIntMinpoly x).map
+        (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).natDegree := by
     rw [hroots, Polynomial.aroots_def, ← hspl.natDegree_eq_card_roots,
       Polynomial.natDegree_map_eq_of_injective
         (FaithfulSMul.algebraMap_injective ℚ _) _,
@@ -634,18 +651,19 @@ private lemma alh_finprod_max_gen_eq_abs_leadingCoeff
     (NumberField.primitiveIntMinpoly x)
     (NumberField.primitiveIntMinpoly_isPrimitive x) hsplit
   have hmem : ∀ β ∈ ((NumberField.primitiveIntMinpoly x).map
-    (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots,
-    β ∈ (minpoly ℚ x).aroots (Polynomial.SplittingField (minpoly ℚ x)) := by
+      (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots,
+      β ∈ (minpoly ℚ x).aroots (Polynomial.SplittingField (minpoly ℚ x)) := by
     intro β hβ
-    rwa [hroots] at hβ
+    rw [hroots] at hβ
+    exact hβ
   have hN7 : ∀ β ∈ ((NumberField.primitiveIntMinpoly x).map
-    (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots,
-    ((∏ᶠ w : NumberField.FinitePlace
-      (Polynomial.SplittingField (minpoly ℚ x)), max (w β) 1)
-      ^ Module.finrank ℚ ↥(IntermediateField.adjoin ℚ {x}))
-    = ((∏ᶠ v : NumberField.FinitePlace ↥(IntermediateField.adjoin ℚ {x}),
-      max (v (IntermediateField.AdjoinSimple.gen ℚ x)) 1)
-      ^ Module.finrank ℚ (Polynomial.SplittingField (minpoly ℚ x))) := by
+      (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots,
+      ((∏ᶠ w : NumberField.FinitePlace
+        (Polynomial.SplittingField (minpoly ℚ x)), max (w β) 1)
+        ^ Module.finrank ℚ ↥(IntermediateField.adjoin ℚ {x}))
+      = ((∏ᶠ v : NumberField.FinitePlace ↥(IntermediateField.adjoin ℚ {x}),
+        max (v (IntermediateField.AdjoinSimple.gen ℚ x)) 1)
+        ^ Module.finrank ℚ (Polynomial.SplittingField (minpoly ℚ x))) := by
     intro β hβ
     let σ := (IntermediateField.algHomAdjoinIntegralEquiv ℚ (K := Polynomial.SplittingField
       (minpoly ℚ x)) hx).symm ⟨β, hmem β hβ⟩
@@ -656,25 +674,25 @@ private lemma alh_finprod_max_gen_eq_abs_leadingCoeff
       σ.toRingHom (IntermediateField.AdjoinSimple.gen ℚ x)
     rwa [happly] at hτ
   have hfinF : Module.finrank ℚ ↥(IntermediateField.adjoin ℚ {x})
-    = (minpoly ℚ x).natDegree :=
+      = (minpoly ℚ x).natDegree :=
     IntermediateField.adjoin.finrank hx
   have hcardR : ((NumberField.primitiveIntMinpoly x).map
-    (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots.card
-    = (minpoly ℚ x).natDegree := by
+      (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots.card
+      = (minpoly ℚ x).natDegree := by
     rw [hsplit, Polynomial.natDegree_map_eq_of_injective
       (RingHom.injective_int (Int.castRingHom _)) _,
       NumberField.primitiveIntMinpoly_natDegree]
   have hmap : ((NumberField.primitiveIntMinpoly x).map
-    (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots.map
-    (fun β => (∏ᶠ w : NumberField.FinitePlace
-      (Polynomial.SplittingField (minpoly ℚ x)), max (w β) 1)
-      ^ Module.finrank ℚ ↥(IntermediateField.adjoin ℚ {x}))
-    = Multiset.replicate
-      ((NumberField.primitiveIntMinpoly x).map
-        (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots.card
-      ((∏ᶠ v : NumberField.FinitePlace ↥(IntermediateField.adjoin ℚ {x}),
-        max (v (IntermediateField.AdjoinSimple.gen ℚ x)) 1)
-        ^ Module.finrank ℚ (Polynomial.SplittingField (minpoly ℚ x))) := by
+      (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots.map
+      (fun β => (∏ᶠ w : NumberField.FinitePlace
+        (Polynomial.SplittingField (minpoly ℚ x)), max (w β) 1)
+        ^ Module.finrank ℚ ↥(IntermediateField.adjoin ℚ {x}))
+      = Multiset.replicate
+        ((NumberField.primitiveIntMinpoly x).map
+          (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots.card
+        ((∏ᶠ v : NumberField.FinitePlace ↥(IntermediateField.adjoin ℚ {x}),
+          max (v (IntermediateField.AdjoinSimple.gen ℚ x)) 1)
+          ^ Module.finrank ℚ (Polynomial.SplittingField (minpoly ℚ x))) := by
     rw [← Multiset.map_const']
     apply Multiset.map_congr rfl
     intro β hβ
@@ -688,15 +706,16 @@ private lemma alh_finprod_max_gen_eq_abs_leadingCoeff
   have hA : (0 : ℝ) ≤ (((|(NumberField.primitiveIntMinpoly x).leadingCoeff| : ℤ)) : ℝ) := by
     positivity
   have hG : (0 : ℝ) ≤ (∏ᶠ v : NumberField.FinitePlace ↥(IntermediateField.adjoin ℚ {x}),
-    max (v (IntermediateField.AdjoinSimple.gen ℚ x)) 1) := by
+      max (v (IntermediateField.AdjoinSimple.gen ℚ x)) 1) := by
     apply finprod_nonneg
     intro v
     exact zero_le_one.trans (le_max_right _ _)
   have hne : Module.finrank ℚ (Polynomial.SplittingField (minpoly ℚ x))
-    * (minpoly ℚ x).natDegree ≠ 0 :=
+      * (minpoly ℚ x).natDegree ≠ 0 :=
     Nat.mul_ne_zero hFL hd
   exact (pow_left_inj₀ hG hA hne).mp hpow8
 
+-- Infinite places with multiplicity are complex embeddings.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -716,14 +735,15 @@ private lemma alh_prod_infinitePlace_pow_mult_eq_prod_embeddings
     (fun φ => h (NumberField.InfinitePlace.mk φ))]
   refine Finset.prod_congr rfl fun w _ => ?_
   have hconst : ∀ φ ∈ Finset.univ.filter
-    (fun φ : E →+* ℂ => NumberField.InfinitePlace.mk φ = w),
-    h (NumberField.InfinitePlace.mk φ) = h w := by
+      (fun φ : E →+* ℂ => NumberField.InfinitePlace.mk φ = w),
+      h (NumberField.InfinitePlace.mk φ) = h w := by
     intro φ hφ
     rw [Finset.mem_filter] at hφ
     rw [hφ.2]
   rw [Finset.prod_congr rfl hconst, Finset.prod_const,
     NumberField.InfinitePlace.card_filter_mk_eq]
 
+-- Multiplicative height at the generator is the Mahler measure.
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 namespace MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -740,34 +760,35 @@ private lemma alh_mulHeight₁_gen_eq_mahlerMeasure
     = Polynomial.mahlerMeasure
       ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)) := by
   have h11 : (∏ w : NumberField.InfinitePlace ↥(IntermediateField.adjoin ℚ {x}),
-    max (w (IntermediateField.AdjoinSimple.gen ℚ x)) 1 ^ w.mult)
-    = ∏ φ : ↥(IntermediateField.adjoin ℚ {x}) →+* ℂ,
-      max ((NumberField.InfinitePlace.mk φ)
-        (IntermediateField.AdjoinSimple.gen ℚ x)) 1 :=
+      max (w (IntermediateField.AdjoinSimple.gen ℚ x)) 1 ^ w.mult)
+      = ∏ φ : ↥(IntermediateField.adjoin ℚ {x}) →+* ℂ,
+        max ((NumberField.InfinitePlace.mk φ)
+          (IntermediateField.AdjoinSimple.gen ℚ x)) 1 :=
     alh_prod_infinitePlace_pow_mult_eq_prod_embeddings _
   have hrootsC : ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)).roots
-    = (minpoly ℚ x).aroots ℂ :=
+      = (minpoly ℚ x).aroots ℂ :=
     alh_primitiveIntMinpoly_map_roots_eq_aroots hx ℂ
   have hnodup := alh_primitiveIntMinpoly_map_roots_nodup hx ℂ
   have hval : ∀ ψ : ↥(IntermediateField.adjoin ℚ {x}) →ₐ[ℚ] ℂ,
-    (((IntermediateField.algHomAdjoinIntegralEquiv ℚ (K := ℂ) hx) ψ :
-      {y : ℂ // y ∈ (minpoly ℚ x).aroots ℂ}) : ℂ)
-    = ψ (IntermediateField.AdjoinSimple.gen ℚ x) := by
+      (((IntermediateField.algHomAdjoinIntegralEquiv ℚ (K := ℂ) hx) ψ :
+        {y : ℂ // y ∈ (minpoly ℚ x).aroots ℂ}) : ℂ)
+      = ψ (IntermediateField.AdjoinSimple.gen ℚ x) := by
     intro ψ
     have h := IntermediateField.algHomAdjoinIntegralEquiv_symm_apply_gen ℚ (K := ℂ)
       hx ((IntermediateField.algHomAdjoinIntegralEquiv ℚ (K := ℂ) hx) ψ)
-    rwa [Equiv.symm_apply_apply] at h
+    rw [Equiv.symm_apply_apply] at h
+    exact h.symm
   have htrans : (∏ φ : ↥(IntermediateField.adjoin ℚ {x}) →+* ℂ,
-    max ‖φ (IntermediateField.AdjoinSimple.gen ℚ x)‖ 1)
-    = ∏ y : {y : ℂ // y ∈ (minpoly ℚ x).aroots ℂ}, max ‖(y : ℂ)‖ 1 := by
+      max ‖φ (IntermediateField.AdjoinSimple.gen ℚ x)‖ 1)
+      = ∏ y : {y : ℂ // y ∈ (minpoly ℚ x).aroots ℂ}, max ‖(y : ℂ)‖ 1 := by
     apply Fintype.prod_equiv ((RingHom.equivRatAlgHom _ _).trans
       (IntermediateField.algHomAdjoinIntegralEquiv ℚ (K := ℂ) hx))
     intro φ
     simp only [Equiv.trans_apply]
     rw [hval, RingHom.equivRatAlgHom_apply, RingHom.toRatAlgHom_apply]
   have hsub : (∏ y : {y : ℂ // y ∈ (minpoly ℚ x).aroots ℂ}, max ‖(y : ℂ)‖ 1)
-    = (Multiset.map (fun a => max ‖a‖ 1)
-      ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)).roots).prod := by
+      = (Multiset.map (fun a => max ‖a‖ 1)
+        ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)).roots).prod := by
     let hFI : Fintype {y : ℂ // y ∈ (minpoly ℚ x).aroots ℂ} :=
       Multiset.Subtype.fintype _
     have hps := Finset.prod_subtype (F := hFI) ((minpoly ℚ x).aroots ℂ).toFinset
@@ -775,24 +796,24 @@ private lemma alh_mulHeight₁_gen_eq_mahlerMeasure
     have hnodA : ((minpoly ℚ x).aroots ℂ).Nodup := by
       rwa [← hrootsC]
     have hdedup : ((minpoly ℚ x).aroots ℂ).dedup
-      = ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)).roots := by
+        = ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)).roots := by
       rw [hnodA.dedup, ← hrootsC]
     have e1 : (∏ a ∈ ((minpoly ℚ x).aroots ℂ).toFinset, max ‖a‖ 1)
-      = (Multiset.map (fun z => max ‖z‖ 1)
-        ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)).roots).prod := by
+        = (Multiset.map (fun z => max ‖z‖ 1)
+          ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)).roots).prod := by
       rw [Finset.prod_eq_multiset_prod, Multiset.toFinset_val, hdedup]
     exact hps.symm.trans e1
   have hflip : (Multiset.map (fun a => max ‖a‖ 1)
-    ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)).roots).prod
-    = (Multiset.map (fun a => max 1 ‖a‖)
-      ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)).roots).prod := by
+      ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)).roots).prod
+      = (Multiset.map (fun a => max 1 ‖a‖)
+        ((NumberField.primitiveIntMinpoly x).map (Int.castRingHom ℂ)).roots).prod := by
     congr 1
     exact Multiset.map_congr rfl (fun a _ => max_comm _ _)
   have hlcC : ‖((NumberField.primitiveIntMinpoly x).map
-    (Int.castRingHom ℂ)).leadingCoeff‖
-    = (((|(NumberField.primitiveIntMinpoly x).leadingCoeff| : ℤ)) : ℝ) := by
+      (Int.castRingHom ℂ)).leadingCoeff‖
+      = (((|(NumberField.primitiveIntMinpoly x).leadingCoeff| : ℤ)) : ℝ) := by
     have e : (Int.castRingHom ℂ) ((NumberField.primitiveIntMinpoly x).leadingCoeff)
-      = (((NumberField.primitiveIntMinpoly x).leadingCoeff : ℤ) : ℂ) := rfl
+        = (((NumberField.primitiveIntMinpoly x).leadingCoeff : ℤ) : ℂ) := rfl
     rw [Polynomial.leadingCoeff_map_of_injective
       (RingHom.injective_int (Int.castRingHom ℂ)) _, e, Complex.norm_intCast]
     exact Int.cast_abs.symm
@@ -936,4 +957,4 @@ end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

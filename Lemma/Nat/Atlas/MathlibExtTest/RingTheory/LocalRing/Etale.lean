@@ -86,6 +86,3 @@ lemma test_etale_iff_dedekind_finite_torsionFree
   let _ : Algebra.FinitePresentation R S :=
     Algebra.FinitePresentation.of_finitePresentation R S
   exact Algebra.etale_iff_exists_adjoin_eq_top_and_separable_map_minpoly
-
-
--- created on 2026-10-23

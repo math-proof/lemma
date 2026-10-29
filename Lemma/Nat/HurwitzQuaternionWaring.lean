@@ -31,17 +31,19 @@ private lemma sum_snoc {M : Type*} [AddCommMonoid M] {n : ℕ}
   · intro j
     by_cases hj : j.val < n
     · have hj' : j = Fin.castSucc ⟨j.val, hj⟩ := by
-      ext
-      rfl
+        ext
+        rfl
       rw [hj', Fin.snoc_castSucc]
       exact hf _
     · have hjm : j.val = n := by
-      have hlt := j.isLt
-      omega
+        have hlt := j.isLt
+        omega
       have hj' : j = Fin.last n := by
         ext
-        rwa [Fin.val_last]
-      rwa [hj', Fin.snoc_last]
+        rw [Fin.val_last]
+        exact hjm
+      rw [hj', Fin.snoc_last]
+      exact hc
   · rw [Fin.sum_univ_castSucc]
     simp only [Fin.snoc_castSucc, Fin.snoc_last]
 
@@ -122,32 +124,33 @@ private lemma sum_snoc_pow {M : Type*} [AddCommMonoid M] [Pow M ℕ] {n : ℕ}
   · intro j
     by_cases hj : j.val < n
     · have hj' : j = Fin.castSucc ⟨j.val, hj⟩ := by
-      ext
-      rfl
+        ext
+        rfl
       rw [hj']
       simp only [Fin.snoc_castSucc]
       exact hf _
     · have hjm : j.val = n := by
-      have hlt := j.isLt
-      omega
+        have hlt := j.isLt
+        omega
       have hj' : j = Fin.last n := by
         ext
-        rwa [Fin.val_last]
+        rw [Fin.val_last]
+        exact hjm
       rw [hj']
       simp only [Fin.snoc_last]
       exact hc
   · have hcast : ∀ i : Fin n,
-    (Fin.snoc (α := fun _ => M) f c i.castSucc) ^ ℓ = (f i) ^ ℓ := by
-    intro i
-    simp only [Fin.snoc_castSucc]
+        (Fin.snoc (α := fun _ => M) f c i.castSucc) ^ ℓ = (f i) ^ ℓ := by
+      intro i
+      simp only [Fin.snoc_castSucc]
     have hlast : (Fin.snoc (α := fun _ => M) f c (Fin.last n)) ^ ℓ = c ^ ℓ := by
       simp only [Fin.snoc_last]
     have hsum : (∑ i : Fin (n + 1), (Fin.snoc (α := fun _ => M) f c i) ^ ℓ) =
-      (∑ i : Fin n, (Fin.snoc (α := fun _ => M) f c i.castSucc) ^ ℓ) +
-      (Fin.snoc (α := fun _ => M) f c (Fin.last n)) ^ ℓ :=
+        (∑ i : Fin n, (Fin.snoc (α := fun _ => M) f c i.castSucc) ^ ℓ) +
+        (Fin.snoc (α := fun _ => M) f c (Fin.last n)) ^ ℓ :=
       Fin.sum_univ_castSucc _
     have hS : (∑ i : Fin n, (Fin.snoc (α := fun _ => M) f c i.castSucc) ^ ℓ) =
-      ∑ i : Fin n, (f i) ^ ℓ :=
+        ∑ i : Fin n, (f i) ^ ℓ :=
       Finset.sum_congr rfl (fun i _ => hcast i)
     rw [hsum, hS, hlast]
 
@@ -178,7 +181,7 @@ private lemma sum_combine_pow {M : Type*} [AddCommMonoid M] [Pow M ℕ]
     obtain ⟨h, hh, hsum⟩ := sum_snoc_pow h' (g (Fin.last n)) P ℓ hh' (hg _)
     refine ⟨h, hh, ?_⟩
     have hcast : (∑ i : Fin (n + 1), (g i) ^ ℓ) =
-      (∑ i : Fin n, (g i.castSucc) ^ ℓ) + (g (Fin.last n)) ^ ℓ :=
+        (∑ i : Fin n, (g i.castSucc) ^ ℓ) + (g (Fin.last n)) ^ ℓ :=
       Fin.sum_univ_castSucc _
     rw [hsum, hsum', hcast, add_assoc]
 
@@ -214,8 +217,8 @@ private lemma sum_kpiece_pow {M : Type*} [AddCommMonoid M] [Pow M ℕ]
       sum_combine_pow H' (fun b => F (Fin.last k) b) P ℓ hP' (fun b => hF _ _)
     refine ⟨H, hP, ?_⟩
     have hcast : (∑ a : Fin (k + 1), ∑ b, (F a b) ^ ℓ) =
-      (∑ a : Fin k, ∑ b, (F a.castSucc b) ^ ℓ) +
-      (∑ b, (F (Fin.last k) b) ^ ℓ) :=
+        (∑ a : Fin k, ∑ b, (F a.castSucc b) ^ ℓ) +
+        (∑ b, (F (Fin.last k) b) ^ ℓ) :=
       Fin.sum_univ_castSucc _
     rw [hsum, hsum', hcast]
 
@@ -237,34 +240,34 @@ private lemma Hdiff_step (ℓ t : ℕ) (m : ℤ) :
     push_cast
     ring
   have hsplit : ∀ j ∈ Finset.range (ℓ + 1),
-    (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * (((ℓ + 1).choose (j + 1) : ℕ) : ℤ) *
-      (m + ((j + 1 : ℕ) : ℤ)) ^ t =
-    ((-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose j : ℕ) : ℤ) * ((m + 1) + (j : ℤ)) ^ t) +
-    ((-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
-      ((m + 1) + (j : ℤ)) ^ t) := by
+      (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * (((ℓ + 1).choose (j + 1) : ℕ) : ℤ) *
+        (m + ((j + 1 : ℕ) : ℤ)) ^ t =
+      ((-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose j : ℕ) : ℤ) * ((m + 1) + (j : ℤ)) ^ t) +
+      ((-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
+        ((m + 1) + (j : ℤ)) ^ t) := by
     intro j hj
     rw [h1 j hj, h2 j, Nat.choose_succ_succ', Nat.cast_add]
     ring
   have hshift : ∀ j ∈ Finset.range (ℓ + 1),
-    (-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
-      ((m + 1) + (j : ℤ)) ^ t =
-    (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
-      (m + ((j + 1 : ℕ) : ℤ)) ^ t := by
+      (-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
+        ((m + 1) + (j : ℤ)) ^ t =
+      (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
+        (m + ((j + 1 : ℕ) : ℤ)) ^ t := by
     intro j hj
     rw [h1 j hj, h2 j]
   have h0 : (-1 : ℤ) ^ (ℓ + 1 - 0) * ((((ℓ + 1).choose 0 : ℕ)) : ℤ) *
-    (m + ((0 : ℕ) : ℤ)) ^ t =
-    (-1 : ℤ) ^ (ℓ + 1 - 0) * (((ℓ.choose 0 : ℕ)) : ℤ) *
-      (m + ((0 : ℕ) : ℤ)) ^ t := by
+        (m + ((0 : ℕ) : ℤ)) ^ t =
+      (-1 : ℤ) ^ (ℓ + 1 - 0) * (((ℓ.choose 0 : ℕ)) : ℤ) *
+        (m + ((0 : ℕ) : ℤ)) ^ t := by
     rw [Nat.choose_zero_right, Nat.choose_zero_right]
   have hlt : ℓ < ℓ + 1 := by omega
   have hlast : (-1 : ℤ) ^ (ℓ + 1 - (ℓ + 1)) * (((ℓ.choose (ℓ + 1) : ℕ)) : ℤ) *
-    (m + (((ℓ + 1 : ℕ)) : ℤ)) ^ t = 0 := by
+      (m + (((ℓ + 1 : ℕ)) : ℤ)) ^ t = 0 := by
     rw [Nat.choose_eq_zero_of_lt hlt]
     simp only [Nat.cast_zero, mul_zero, zero_mul]
   have hneg : ∀ k ∈ Finset.range (ℓ + 1),
-    (-1 : ℤ) ^ (ℓ + 1 - k) * ((ℓ.choose k : ℕ) : ℤ) * (m + (k : ℤ)) ^ t =
-    -((-1 : ℤ) ^ (ℓ - k) * ((ℓ.choose k : ℕ) : ℤ) * (m + (k : ℤ)) ^ t) := by
+      (-1 : ℤ) ^ (ℓ + 1 - k) * ((ℓ.choose k : ℕ) : ℤ) * (m + (k : ℤ)) ^ t =
+      -((-1 : ℤ) ^ (ℓ - k) * ((ℓ.choose k : ℕ) : ℤ) * (m + (k : ℤ)) ^ t) := by
     intro k hk
     have hkk : k ≤ ℓ := by
       have hmem := Finset.mem_range.mp hk
@@ -273,73 +276,74 @@ private lemma Hdiff_step (ℓ t : ℕ) (m : ℤ) :
     rw [he, pow_succ]
     ring
   have hF0 : Hdiff (ℓ + 1) t m =
-    (∑ j ∈ Finset.range (ℓ + 1),
-      (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * (((ℓ + 1).choose (j + 1) : ℕ) : ℤ) *
-      (m + ((j + 1 : ℕ) : ℤ)) ^ t) +
-    ((-1 : ℤ) ^ (ℓ + 1 - 0) * ((((ℓ + 1).choose 0 : ℕ)) : ℤ) *
-      (m + ((0 : ℕ) : ℤ)) ^ t) := by
+      (∑ j ∈ Finset.range (ℓ + 1),
+        (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * (((ℓ + 1).choose (j + 1) : ℕ) : ℤ) *
+        (m + ((j + 1 : ℕ) : ℤ)) ^ t) +
+      ((-1 : ℤ) ^ (ℓ + 1 - 0) * ((((ℓ + 1).choose 0 : ℕ)) : ℤ) *
+        (m + ((0 : ℕ) : ℤ)) ^ t) := by
     unfold Hdiff
     exact Finset.sum_range_succ' _ _
   have hsum : (∑ j ∈ Finset.range (ℓ + 1),
-    (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * (((ℓ + 1).choose (j + 1) : ℕ) : ℤ) *
-    (m + ((j + 1 : ℕ) : ℤ)) ^ t) =
-    (∑ j ∈ Finset.range (ℓ + 1),
-      (-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose j : ℕ) : ℤ) *
-      ((m + 1) + (j : ℤ)) ^ t) +
-    (∑ j ∈ Finset.range (ℓ + 1),
-      (-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
-      ((m + 1) + (j : ℤ)) ^ t) := by
+        (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * (((ℓ + 1).choose (j + 1) : ℕ) : ℤ) *
+        (m + ((j + 1 : ℕ) : ℤ)) ^ t) =
+      (∑ j ∈ Finset.range (ℓ + 1),
+        (-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose j : ℕ) : ℤ) *
+        ((m + 1) + (j : ℤ)) ^ t) +
+      (∑ j ∈ Finset.range (ℓ + 1),
+        (-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
+        ((m + 1) + (j : ℤ)) ^ t) := by
     rw [← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl (fun j hj => hsplit j hj)
   have hback : (∑ j ∈ Finset.range (ℓ + 1),
-    (-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
-    ((m + 1) + (j : ℤ)) ^ t) =
-    ∑ j ∈ Finset.range (ℓ + 1),
-      (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
-      (m + ((j + 1 : ℕ) : ℤ)) ^ t :=
+        (-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
+        ((m + 1) + (j : ℤ)) ^ t) =
+      ∑ j ∈ Finset.range (ℓ + 1),
+        (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
+        (m + ((j + 1 : ℕ) : ℤ)) ^ t :=
     Finset.sum_congr rfl (fun j hj => hshift j hj)
   have hA : (∑ j ∈ Finset.range (ℓ + 1),
-    (-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose j : ℕ) : ℤ) *
-    ((m + 1) + (j : ℤ)) ^ t) = Hdiff ℓ t (m + 1) := rfl
+      (-1 : ℤ) ^ (ℓ - j) * ((ℓ.choose j : ℕ) : ℤ) *
+      ((m + 1) + (j : ℤ)) ^ t) = Hdiff ℓ t (m + 1) := rfl
   have h5 : (∑ k ∈ Finset.range (ℓ + 1),
-    (-1 : ℤ) ^ (ℓ + 1 - k) * ((ℓ.choose k : ℕ) : ℤ) *
-    (m + (k : ℤ)) ^ t) = -(Hdiff ℓ t m) := by
-    have hcongr : (∑ k ∈ Finset.range (ℓ + 1),
       (-1 : ℤ) ^ (ℓ + 1 - k) * ((ℓ.choose k : ℕ) : ℤ) *
-      (m + (k : ℤ)) ^ t) =
-      ∑ k ∈ Finset.range (ℓ + 1),
-        -((-1 : ℤ) ^ (ℓ - k) * ((ℓ.choose k : ℕ) : ℤ) *
-        (m + (k : ℤ)) ^ t) :=
+      (m + (k : ℤ)) ^ t) = -(Hdiff ℓ t m) := by
+    have hcongr : (∑ k ∈ Finset.range (ℓ + 1),
+        (-1 : ℤ) ^ (ℓ + 1 - k) * ((ℓ.choose k : ℕ) : ℤ) *
+        (m + (k : ℤ)) ^ t) =
+        ∑ k ∈ Finset.range (ℓ + 1),
+          -((-1 : ℤ) ^ (ℓ - k) * ((ℓ.choose k : ℕ) : ℤ) *
+          (m + (k : ℤ)) ^ t) :=
       Finset.sum_congr rfl (fun k hk => hneg k hk)
     rw [hcongr, Finset.sum_neg_distrib]
     rfl
   have h3 : (∑ j ∈ Finset.range (ℓ + 1),
-    (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
-    (m + ((j + 1 : ℕ) : ℤ)) ^ t) +
-    ((-1 : ℤ) ^ (ℓ + 1 - 0) * (((ℓ.choose 0 : ℕ)) : ℤ) *
-      (m + ((0 : ℕ) : ℤ)) ^ t) =
-    ∑ k ∈ Finset.range (ℓ + 1 + 1),
-      (-1 : ℤ) ^ (ℓ + 1 - k) * ((ℓ.choose k : ℕ) : ℤ) *
-      (m + ((k : ℕ) : ℤ)) ^ t :=
+        (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
+        (m + ((j + 1 : ℕ) : ℤ)) ^ t) +
+      ((-1 : ℤ) ^ (ℓ + 1 - 0) * (((ℓ.choose 0 : ℕ)) : ℤ) *
+        (m + ((0 : ℕ) : ℤ)) ^ t) =
+      ∑ k ∈ Finset.range (ℓ + 1 + 1),
+        (-1 : ℤ) ^ (ℓ + 1 - k) * ((ℓ.choose k : ℕ) : ℤ) *
+        (m + ((k : ℕ) : ℤ)) ^ t :=
     (Finset.sum_range_succ' (fun k =>
       (-1 : ℤ) ^ (ℓ + 1 - k) * ((ℓ.choose k : ℕ) : ℤ) *
       (m + ((k : ℕ) : ℤ)) ^ t) (ℓ + 1)).symm
   have h4 : (∑ k ∈ Finset.range (ℓ + 1 + 1),
-    (-1 : ℤ) ^ (ℓ + 1 - k) * ((ℓ.choose k : ℕ) : ℤ) *
-    (m + ((k : ℕ) : ℤ)) ^ t) =
-    (∑ k ∈ Finset.range (ℓ + 1),
       (-1 : ℤ) ^ (ℓ + 1 - k) * ((ℓ.choose k : ℕ) : ℤ) *
-      (m + (k : ℤ)) ^ t) +
-    ((-1 : ℤ) ^ (ℓ + 1 - (ℓ + 1)) * (((ℓ.choose (ℓ + 1) : ℕ)) : ℤ) *
-      (m + (((ℓ + 1 : ℕ)) : ℤ)) ^ t) :=
+      (m + ((k : ℕ) : ℤ)) ^ t) =
+      (∑ k ∈ Finset.range (ℓ + 1),
+        (-1 : ℤ) ^ (ℓ + 1 - k) * ((ℓ.choose k : ℕ) : ℤ) *
+        (m + (k : ℤ)) ^ t) +
+      ((-1 : ℤ) ^ (ℓ + 1 - (ℓ + 1)) * (((ℓ.choose (ℓ + 1) : ℕ)) : ℤ) *
+        (m + (((ℓ + 1 : ℕ)) : ℤ)) ^ t) :=
     Finset.sum_range_succ _ _
   have hG : (∑ j ∈ Finset.range (ℓ + 1),
-    (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
-    (m + ((j + 1 : ℕ) : ℤ)) ^ t) +
-    ((-1 : ℤ) ^ (ℓ + 1 - 0) * (((ℓ.choose 0 : ℕ)) : ℤ) *
-      (m + ((0 : ℕ) : ℤ)) ^ t) =
-    -(Hdiff ℓ t m) := by
-    rwa [h3, h4, hlast, add_zero]
+        (-1 : ℤ) ^ (ℓ + 1 - (j + 1)) * ((ℓ.choose (j + 1) : ℕ) : ℤ) *
+        (m + ((j + 1 : ℕ) : ℤ)) ^ t) +
+      ((-1 : ℤ) ^ (ℓ + 1 - 0) * (((ℓ.choose 0 : ℕ)) : ℤ) *
+        (m + ((0 : ℕ) : ℤ)) ^ t) =
+      -(Hdiff ℓ t m) := by
+    rw [h3, h4, hlast, add_zero]
+    exact h5
   rw [hF0, hsum, h0, hback, add_assoc, hG, hA, sub_eq_add_neg]
 
 end MetaMathlibExt
@@ -354,73 +358,73 @@ private lemma Hdiff_expand (K T : ℕ) (m : ℤ) :
   Hdiff K T m = ∑ s ∈ Finset.range (T + 1),
     m ^ s * ((T.choose s : ℕ) : ℤ) * Hdiff K (T - s) 0 := by
   have hexpand : ∀ j : ℕ, (m + (j : ℤ)) ^ T =
-    ∑ s ∈ Finset.range (T + 1),
-      m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ) := by
+      ∑ s ∈ Finset.range (T + 1),
+        m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ) := by
     intro j
     exact add_pow m (j : ℤ) T
   have hA : Hdiff K T m = ∑ j ∈ Finset.range (K + 1),
-    ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
-    (∑ s ∈ Finset.range (T + 1),
-      m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ)) := by
+      ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
+      (∑ s ∈ Finset.range (T + 1),
+        m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ)) := by
     have hrfl : Hdiff K T m = ∑ j ∈ Finset.range (K + 1),
-      (-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ) * (m + (j : ℤ)) ^ T := rfl
+        (-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ) * (m + (j : ℤ)) ^ T := rfl
     rw [hrfl]
     exact Finset.sum_congr rfl (fun j _ => by rw [hexpand j])
   have hB : (∑ j ∈ Finset.range (K + 1),
-    ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
-    (∑ s ∈ Finset.range (T + 1),
-      m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ))) =
-    ∑ j ∈ Finset.range (K + 1), ∑ s ∈ Finset.range (T + 1),
       ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
-      (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ)) := by
+      (∑ s ∈ Finset.range (T + 1),
+        m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ))) =
+      ∑ j ∈ Finset.range (K + 1), ∑ s ∈ Finset.range (T + 1),
+        ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
+        (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ)) := by
     apply Finset.sum_congr rfl
     intro j _
     rw [Finset.mul_sum]
   have hC : (∑ j ∈ Finset.range (K + 1), ∑ s ∈ Finset.range (T + 1),
-    ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
-    (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ))) =
-    ∑ s ∈ Finset.range (T + 1), ∑ j ∈ Finset.range (K + 1),
-      ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
-      (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ)) :=
+        ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
+        (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ))) =
+      ∑ s ∈ Finset.range (T + 1), ∑ j ∈ Finset.range (K + 1),
+        ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
+        (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ)) :=
     Finset.sum_comm
   have hD : ∀ s ∈ Finset.range (T + 1),
-    (∑ j ∈ Finset.range (K + 1),
-      ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
-      (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ))) =
-    m ^ s * ((T.choose s : ℕ) : ℤ) *
-    (∑ j ∈ Finset.range (K + 1),
-      ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) * (j : ℤ) ^ (T - s)) := by
+      (∑ j ∈ Finset.range (K + 1),
+        ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
+        (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ))) =
+      m ^ s * ((T.choose s : ℕ) : ℤ) *
+      (∑ j ∈ Finset.range (K + 1),
+        ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) * (j : ℤ) ^ (T - s)) := by
     intro s _
     calc (∑ j ∈ Finset.range (K + 1),
-      ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
-      (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ)))
-      = ∑ j ∈ Finset.range (K + 1),
-        (m ^ s * ((T.choose s : ℕ) : ℤ)) *
-        (((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
-          (j : ℤ) ^ (T - s)) :=
-      Finset.sum_congr rfl (fun j _ => by ring)
+            ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
+            (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ)))
+          = ∑ j ∈ Finset.range (K + 1),
+            (m ^ s * ((T.choose s : ℕ) : ℤ)) *
+            (((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
+              (j : ℤ) ^ (T - s)) :=
+          Finset.sum_congr rfl (fun j _ => by ring)
       _ = m ^ s * ((T.choose s : ℕ) : ℤ) *
-        (∑ j ∈ Finset.range (K + 1),
-          ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
-          (j : ℤ) ^ (T - s)) := by
-        rw [Finset.mul_sum]
+          (∑ j ∈ Finset.range (K + 1),
+            ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
+            (j : ℤ) ^ (T - s)) := by
+          rw [Finset.mul_sum]
   have hE : ∀ s ∈ Finset.range (T + 1),
-    (∑ j ∈ Finset.range (K + 1),
-      ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) * (j : ℤ) ^ (T - s)) =
-    Hdiff K (T - s) 0 := by
+      (∑ j ∈ Finset.range (K + 1),
+        ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) * (j : ℤ) ^ (T - s)) =
+      Hdiff K (T - s) 0 := by
     intro s _
     have hrfl : Hdiff K (T - s) 0 = ∑ j ∈ Finset.range (K + 1),
-      (-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ) *
-      ((0 : ℤ) + (j : ℤ)) ^ (T - s) := rfl
+        (-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ) *
+        ((0 : ℤ) + (j : ℤ)) ^ (T - s) := rfl
     rw [hrfl]
     apply Finset.sum_congr rfl
     intro j _
     rw [zero_add]
   have hF : ∀ s ∈ Finset.range (T + 1),
-    (∑ j ∈ Finset.range (K + 1),
-      ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
-      (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ))) =
-    m ^ s * ((T.choose s : ℕ) : ℤ) * Hdiff K (T - s) 0 := by
+      (∑ j ∈ Finset.range (K + 1),
+        ((-1 : ℤ) ^ (K - j) * ((K.choose j : ℕ) : ℤ)) *
+        (m ^ s * (j : ℤ) ^ (T - s) * ((T.choose s : ℕ) : ℤ))) =
+      m ^ s * ((T.choose s : ℕ) : ℤ) * Hdiff K (T - s) 0 := by
     intro s hs
     rw [hD s hs, hE s hs]
   rw [hA, hB, hC]
@@ -432,9 +436,8 @@ namespace MetaMathlibExt
 
 /--
 [Hdiff_ABC](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/HurwitzQuaternionWaring.lean)
--/
-@[path]
 linearly just above it. -/
+@[path]
 private lemma Hdiff_ABC : ∀ k : ℕ,
   (∀ t m, t < k → Hdiff k t m = 0) ∧
   (∀ m, Hdiff k k m = ((Nat.factorial k) : ℤ)) ∧
@@ -446,8 +449,8 @@ private lemma Hdiff_ABC : ∀ k : ℕ,
     have hH0 : ∀ t m, Hdiff 0 t m = m ^ t := by
       intro t m
       have hrfl : Hdiff 0 t m = ∑ j ∈ Finset.range 1,
-        (-1 : ℤ) ^ (0 - j) * (((Nat.choose 0 j : ℕ)) : ℤ) *
-        (m + (j : ℤ)) ^ t := rfl
+          (-1 : ℤ) ^ (0 - j) * (((Nat.choose 0 j : ℕ)) : ℤ) *
+          (m + (j : ℤ)) ^ t := rfl
       rw [hrfl, Finset.sum_range_one]
       simp only [Nat.sub_zero, pow_zero, Nat.choose_zero_right, Nat.cast_one,
         Nat.cast_zero, add_zero, mul_one, one_mul]
@@ -466,12 +469,12 @@ private lemma Hdiff_ABC : ∀ k : ℕ,
     have hA' : ∀ t m, t < k + 1 → Hdiff (k + 1) t m = 0 := by
       intro t m ht
       rw [Hdiff_step]
-      obtain h | h := lt_or_eq_of_le (by omega : t ≤ k)
+      rcases lt_or_eq_of_le (by omega : t ≤ k) with h | h
       · rw [ihA t (m + 1) h, ihA t m h, sub_self]
       · subst h
         rw [ihB (m + 1), ihB m, sub_self]
     have hB' : ∀ m, Hdiff (k + 1) (k + 1) m =
-      ((Nat.factorial (k + 1)) : ℤ) := by
+        ((Nat.factorial (k + 1)) : ℤ) := by
       intro m
       rw [Hdiff_step, ihC (m + 1), ihC m]
       ring
@@ -480,43 +483,43 @@ private lemma Hdiff_ABC : ∀ k : ℕ,
     have hexp := Hdiff_expand (k + 1) ((k + 1) + 1) m
     rw [hexp]
     have hpeel1 : (∑ s ∈ Finset.range (((k + 1) + 1) + 1),
-      m ^ s * (((((k + 1) + 1).choose s : ℕ)) : ℤ) *
-      Hdiff (k + 1) (((k + 1) + 1) - s) 0) =
-      (∑ s ∈ Finset.range ((k + 1) + 1),
-        m ^ (s + 1) * (((((k + 1) + 1).choose (s + 1) : ℕ)) : ℤ) *
-        Hdiff (k + 1) (((k + 1) + 1) - (s + 1)) 0) +
-      (m ^ 0 * (((((k + 1) + 1).choose 0 : ℕ)) : ℤ) *
-        Hdiff (k + 1) (((k + 1) + 1) - 0) 0) :=
+          m ^ s * (((((k + 1) + 1).choose s : ℕ)) : ℤ) *
+          Hdiff (k + 1) (((k + 1) + 1) - s) 0) =
+        (∑ s ∈ Finset.range ((k + 1) + 1),
+          m ^ (s + 1) * (((((k + 1) + 1).choose (s + 1) : ℕ)) : ℤ) *
+          Hdiff (k + 1) (((k + 1) + 1) - (s + 1)) 0) +
+        (m ^ 0 * (((((k + 1) + 1).choose 0 : ℕ)) : ℤ) *
+          Hdiff (k + 1) (((k + 1) + 1) - 0) 0) :=
       Finset.sum_range_succ' _ _
     have hpeel2 : (∑ s ∈ Finset.range ((k + 1) + 1),
-      m ^ (s + 1) * (((((k + 1) + 1).choose (s + 1) : ℕ)) : ℤ) *
-      Hdiff (k + 1) (((k + 1) + 1) - (s + 1)) 0) =
-      (∑ s ∈ Finset.range (k + 1),
-        m ^ ((s + 1) + 1) * (((((k + 1) + 1).choose ((s + 1) + 1) : ℕ)) : ℤ) *
-        Hdiff (k + 1) (((k + 1) + 1) - ((s + 1) + 1)) 0) +
-      (m ^ 1 * (((((k + 1) + 1).choose 1 : ℕ)) : ℤ) *
-        Hdiff (k + 1) (((k + 1) + 1) - 1) 0) :=
+          m ^ (s + 1) * (((((k + 1) + 1).choose (s + 1) : ℕ)) : ℤ) *
+          Hdiff (k + 1) (((k + 1) + 1) - (s + 1)) 0) =
+        (∑ s ∈ Finset.range (k + 1),
+          m ^ ((s + 1) + 1) * (((((k + 1) + 1).choose ((s + 1) + 1) : ℕ)) : ℤ) *
+          Hdiff (k + 1) (((k + 1) + 1) - ((s + 1) + 1)) 0) +
+        (m ^ 1 * (((((k + 1) + 1).choose 1 : ℕ)) : ℤ) *
+          Hdiff (k + 1) (((k + 1) + 1) - 1) 0) :=
       Finset.sum_range_succ' _ _
     have hrest : ∀ s ∈ Finset.range (k + 1),
-      m ^ ((s + 1) + 1) * (((((k + 1) + 1).choose ((s + 1) + 1) : ℕ)) : ℤ) *
-      Hdiff (k + 1) (((k + 1) + 1) - ((s + 1) + 1)) 0 = 0 := by
+        m ^ ((s + 1) + 1) * (((((k + 1) + 1).choose ((s + 1) + 1) : ℕ)) : ℤ) *
+        Hdiff (k + 1) (((k + 1) + 1) - ((s + 1) + 1)) 0 = 0 := by
       intro s hs
       have hmem : s < k + 1 := Finset.mem_range.mp hs
       have hH : Hdiff (k + 1) (((k + 1) + 1) - ((s + 1) + 1)) 0 = 0 :=
         hA' _ 0 (by omega)
       rw [hH, mul_zero]
     have hrest0 : (∑ s ∈ Finset.range (k + 1),
-      m ^ ((s + 1) + 1) * (((((k + 1) + 1).choose ((s + 1) + 1) : ℕ)) : ℤ) *
-      Hdiff (k + 1) (((k + 1) + 1) - ((s + 1) + 1)) 0) = 0 :=
+        m ^ ((s + 1) + 1) * (((((k + 1) + 1).choose ((s + 1) + 1) : ℕ)) : ℤ) *
+        Hdiff (k + 1) (((k + 1) + 1) - ((s + 1) + 1)) 0) = 0 :=
       Finset.sum_eq_zero (fun s hs => hrest s hs)
     have hG1 : m ^ 1 * (((((k + 1) + 1).choose 1 : ℕ)) : ℤ) *
-      Hdiff (k + 1) (((k + 1) + 1) - 1) 0 =
-      m * ((((k + 1) + 1) : ℕ) : ℤ) * ((Nat.factorial (k + 1)) : ℤ) := by
+        Hdiff (k + 1) (((k + 1) + 1) - 1) 0 =
+        m * ((((k + 1) + 1) : ℕ) : ℤ) * ((Nat.factorial (k + 1)) : ℤ) := by
       have hT1 : ((k + 1) + 1) - 1 = k + 1 := by omega
       rw [hT1, hB' 0, Nat.choose_one_right, pow_one]
     have hG0 : m ^ 0 * (((((k + 1) + 1).choose 0 : ℕ)) : ℤ) *
-      Hdiff (k + 1) (((k + 1) + 1) - 0) 0 =
-      Hdiff (k + 1) ((k + 1) + 1) 0 := by
+        Hdiff (k + 1) (((k + 1) + 1) - 0) 0 =
+        Hdiff (k + 1) ((k + 1) + 1) 0 := by
       rw [Nat.sub_zero, Nat.choose_zero_right, pow_zero, Nat.cast_one, mul_one,
         one_mul]
     rw [hpeel1, hpeel2, hrest0, zero_add, hG1, hG0]
@@ -529,38 +532,38 @@ namespace MetaMathlibExt
 
 /--
 [signed_waring](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/HurwitzQuaternionWaring.lean)
--/
-@[path]
 bounded sums of `ℓ`-th powers. -/
+@[path]
 private lemma signed_waring (ℓ : ℕ) (hℓ : 1 ≤ ℓ) :
   ∃ B : ℕ, ∀ N : ℤ, ∃ (p q : ℕ) (x : Fin p → ℤ) (y : Fin q → ℤ),
     p + q ≤ B ∧ N = ∑ i, (x i) ^ ℓ - ∑ i, (y i) ^ ℓ := by
   obtain ⟨_, _, ihC⟩ := Hdiff_ABC (ℓ - 1)
   have hK : ℓ - 1 + 1 = ℓ := Nat.sub_add_cancel hℓ
   have hlin : ∀ m : ℤ, Hdiff (ℓ - 1) ℓ m =
-    ((Nat.factorial ℓ) : ℤ) * m + Hdiff (ℓ - 1) ℓ 0 := by
+      ((Nat.factorial ℓ) : ℤ) * m + Hdiff (ℓ - 1) ℓ 0 := by
     intro m
     have h := ihC m
-    rwa [hK] at h
+    rw [hK] at h
+    exact h
   have hH : ∀ m : ℤ, Hdiff (ℓ - 1) ℓ m =
-    ∑ j ∈ Finset.range ℓ,
-      ((-1 : ℤ) ^ (ℓ - 1 - j) * ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)) *
-      (m + (j : ℤ)) ^ ℓ := by
+      ∑ j ∈ Finset.range ℓ,
+        ((-1 : ℤ) ^ (ℓ - 1 - j) * ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)) *
+        (m + (j : ℤ)) ^ ℓ := by
     intro m
     have hrfl : Hdiff (ℓ - 1) ℓ m = ∑ j ∈ Finset.range (ℓ - 1 + 1),
-      (-1 : ℤ) ^ (ℓ - 1 - j) * ((Nat.choose (ℓ - 1) j : ℕ) : ℤ) *
-      (m + (j : ℤ)) ^ ℓ := rfl
+        (-1 : ℤ) ^ (ℓ - 1 - j) * ((Nat.choose (ℓ - 1) j : ℕ) : ℤ) *
+        (m + (j : ℤ)) ^ ℓ := rfl
     rw [hrfl, hK]
   have hz : ((0 : ℤ).toNat) = 0 := rfl
   have hsplit : ∀ j : ℕ, ∀ v : ℤ,
-    ((-1 : ℤ) ^ (ℓ - 1 - j) * ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)) * v =
-    (((max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat : ℤ) * v -
-    (((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))))).toNat : ℤ) * v := by
+      ((-1 : ℤ) ^ (ℓ - 1 - j) * ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)) * v =
+      (((max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
+        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat : ℤ) * v -
+      (((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
+        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))))).toNat : ℤ) * v := by
     intro j v
     have hdecomp : ∀ d : ℤ, d =
-      (((max 0 d).toNat : ℕ) : ℤ) - (((max 0 (-d)).toNat : ℕ) : ℤ) := by
+        (((max 0 d).toNat : ℕ) : ℤ) - (((max 0 (-d)).toNat : ℕ) : ℤ) := by
       intro d
       by_cases hd : 0 ≤ d
       · rw [max_eq_right hd, max_eq_left (by omega : -d ≤ 0)]
@@ -576,20 +579,20 @@ private lemma signed_waring (ℓ : ℕ) (hℓ : 1 ≤ ℓ) :
     nth_rewrite 1 [h]
     ring
   have hcount : ∀ j : ℕ,
-    (max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))).toNat +
-    (max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat =
-    Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)| := by
+      (max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
+        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))).toNat +
+      (max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
+        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat =
+      Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - j) *
+        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)| := by
     intro j
     by_cases hd : 0 ≤ ((-1 : ℤ) ^ (ℓ - 1 - j) *
       ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))
     · rw [max_eq_right hd, max_eq_left (by omega : -((-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)) ≤ 0), abs_of_nonneg hd]
+        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)) ≤ 0), abs_of_nonneg hd]
       rw [hz, add_zero]
     · have hd' : ((-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)) < 0 := by omega
+        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)) < 0 := by omega
       rw [max_eq_left (le_of_lt hd'),
         max_eq_right (by omega : (0 : ℤ) ≤ -((-1 : ℤ) ^ (ℓ - 1 - j) *
           ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))), abs_of_neg hd']
@@ -602,8 +605,8 @@ private lemma signed_waring (ℓ : ℕ) (hℓ : 1 ≤ ℓ) :
     exact_mod_cast Nat.factorial_pos ℓ
   have hMne : ((Nat.factorial ℓ : ℕ) : ℤ) ≠ 0 := ne_of_gt hMpos
   obtain ⟨q, r, hdiv, hr0, hrM⟩ : ∃ q r : ℤ,
-    ((Nat.factorial ℓ : ℕ) : ℤ) * q + r = N - Hdiff (ℓ - 1) ℓ 0 ∧
-    0 ≤ r ∧ r < ((Nat.factorial ℓ : ℕ) : ℤ) :=
+      ((Nat.factorial ℓ : ℕ) : ℤ) * q + r = N - Hdiff (ℓ - 1) ℓ 0 ∧
+      0 ≤ r ∧ r < ((Nat.factorial ℓ : ℕ) : ℤ) :=
     ⟨_, _, Int.mul_ediv_add_emod _ _, Int.emod_nonneg _ hMne,
       Int.emod_lt_of_pos _ hMpos⟩
   have hNdecomp : N = Hdiff (ℓ - 1) ℓ q + r := by
@@ -611,27 +614,28 @@ private lemma signed_waring (ℓ : ℕ) (hℓ : 1 ≤ ℓ) :
     omega
   have hr : r = ((r.toNat : ℕ) : ℤ) := (Int.toNat_of_nonneg hr0).symm
   have hN : N = (∑ j ∈ Finset.range ℓ, ((((max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
-    ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat : ℤ) *
-    (q + (j : ℤ)) ^ ℓ -
-    (((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))))).toNat : ℤ) *
-      (q + (j : ℤ)) ^ ℓ)) + ((r.toNat : ℕ) : ℤ) := by
+          ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat : ℤ) *
+          (q + (j : ℤ)) ^ ℓ -
+        (((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
+          ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))))).toNat : ℤ) *
+          (q + (j : ℤ)) ^ ℓ)) + ((r.toNat : ℕ) : ℤ) := by
     rw [hNdecomp, hH]
     nth_rewrite 1 [hr]
     have hS : (∑ j ∈ Finset.range ℓ,
-      ((-1 : ℤ) ^ (ℓ - 1 - j) * ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)) *
-      (q + (j : ℤ)) ^ ℓ) =
-      ∑ j ∈ Finset.range ℓ, ((((max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
-        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat : ℤ) *
-        (q + (j : ℤ)) ^ ℓ -
-        (((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
-          ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))))).toNat : ℤ) *
-          (q + (j : ℤ)) ^ ℓ) :=
+          ((-1 : ℤ) ^ (ℓ - 1 - j) * ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)) *
+          (q + (j : ℤ)) ^ ℓ) =
+        ∑ j ∈ Finset.range ℓ, ((((max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
+            ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat : ℤ) *
+            (q + (j : ℤ)) ^ ℓ -
+          (((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
+            ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))))).toNat : ℤ) *
+            (q + (j : ℤ)) ^ ℓ) :=
       Finset.sum_congr rfl (fun j _ => hsplit j _)
     rw [hS]
   have hrNat : r.toNat ≤ Nat.factorial ℓ := by
     have h1 : ((r.toNat : ℕ) : ℤ) < ((Nat.factorial ℓ : ℕ) : ℤ) := by
-      rwa [← hr]
+      rw [← hr]
+      exact hrM
     have h2 : r.toNat < Nat.factorial ℓ := Nat.cast_lt.mp h1
     omega
   obtain ⟨Hp, _, hHpS⟩ := sum_kpiece_pow
@@ -647,54 +651,54 @@ private lemma signed_waring (ℓ : ℕ) (hℓ : 1 ≤ ℓ) :
   obtain ⟨P, _, hPS⟩ := sum_combine_pow Hp (fun _ : Fin r.toNat => (1 : ℤ))
     (fun _ => True) ℓ (fun _ => trivial) (fun _ => trivial)
   have hPeq : ∑ i, (P i) ^ ℓ = (∑ j ∈ Finset.range ℓ,
-    ((((max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat : ℕ) : ℤ) *
-    (q + (j : ℤ)) ^ ℓ) + ((r.toNat : ℕ) : ℤ) := by
+      ((((max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
+        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat : ℕ) : ℤ) *
+      (q + (j : ℤ)) ^ ℓ) + ((r.toNat : ℕ) : ℤ) := by
     have eS : (∑ a : Fin ℓ, ∑ _ : Fin (max 0 ((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-      ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ))).toNat,
-      ((q + ((a : ℕ) : ℤ)) ^ ℓ)) =
-      ∑ a : Fin ℓ, ((((max 0 ((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-        ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)))).toNat : ℕ) : ℤ) *
-      (q + ((a : ℕ) : ℤ)) ^ ℓ := by
+        ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ))).toNat,
+        ((q + ((a : ℕ) : ℤ)) ^ ℓ)) =
+        ∑ a : Fin ℓ, ((((max 0 ((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
+          ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)))).toNat : ℕ) : ℤ) *
+        (q + ((a : ℕ) : ℤ)) ^ ℓ := by
       apply Finset.sum_congr rfl
       intro a _
       simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin,
         nsmul_eq_mul]
     have e3 : (∑ a : Fin ℓ, ((((max 0 ((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-      ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)))).toNat : ℕ) : ℤ) *
-      (q + ((a : ℕ) : ℤ)) ^ ℓ) =
-      ∑ j ∈ Finset.range ℓ, ((((max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
-        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat : ℕ) : ℤ) *
-      (q + (j : ℤ)) ^ ℓ :=
+        ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)))).toNat : ℕ) : ℤ) *
+        (q + ((a : ℕ) : ℤ)) ^ ℓ) =
+        ∑ j ∈ Finset.range ℓ, ((((max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
+          ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat : ℕ) : ℤ) *
+        (q + (j : ℤ)) ^ ℓ :=
       Fin.sum_univ_eq_sum_range (fun j =>
         ((((max 0 ((-1 : ℤ) ^ (ℓ - 1 - j) *
           ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)))).toNat : ℕ) : ℤ) *
         (q + (j : ℤ)) ^ ℓ) ℓ
     have hR' : (∑ i : Fin r.toNat, ((fun _ : Fin r.toNat => (1 : ℤ)) i) ^ ℓ) =
-      ((r.toNat : ℕ) : ℤ) := by
+        ((r.toNat : ℕ) : ℤ) := by
       simp only [one_pow, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
         nsmul_eq_mul, mul_one]
     rw [hPS, hHpS, eS, e3, hR']
   have hQeq : ∑ i, (Hm i) ^ ℓ = ∑ j ∈ Finset.range ℓ,
-    ((((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))))).toNat : ℕ) : ℤ) *
-    (q + (j : ℤ)) ^ ℓ := by
+      ((((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
+        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))))).toNat : ℕ) : ℤ) *
+      (q + (j : ℤ)) ^ ℓ := by
     have eS : (∑ a : Fin ℓ, ∑ _ : Fin (max 0 (-((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-      ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)))).toNat,
-      ((q + ((a : ℕ) : ℤ)) ^ ℓ)) =
-      ∑ a : Fin ℓ, ((((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-        ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ))))).toNat : ℕ) : ℤ) *
-      (q + ((a : ℕ) : ℤ)) ^ ℓ := by
+        ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)))).toNat,
+        ((q + ((a : ℕ) : ℤ)) ^ ℓ)) =
+        ∑ a : Fin ℓ, ((((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
+          ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ))))).toNat : ℕ) : ℤ) *
+        (q + ((a : ℕ) : ℤ)) ^ ℓ := by
       apply Finset.sum_congr rfl
       intro a _
       simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin,
         nsmul_eq_mul]
     have e3 : (∑ a : Fin ℓ, ((((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-      ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ))))).toNat : ℕ) : ℤ) *
-      (q + ((a : ℕ) : ℤ)) ^ ℓ) =
-      ∑ j ∈ Finset.range ℓ, ((((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
-        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))))).toNat : ℕ) : ℤ) *
-      (q + (j : ℤ)) ^ ℓ :=
+        ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ))))).toNat : ℕ) : ℤ) *
+        (q + ((a : ℕ) : ℤ)) ^ ℓ) =
+        ∑ j ∈ Finset.range ℓ, ((((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
+          ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))))).toNat : ℕ) : ℤ) *
+        (q + (j : ℤ)) ^ ℓ :=
       Fin.sum_univ_eq_sum_range (fun j =>
         ((((max 0 (-((-1 : ℤ) ^ (ℓ - 1 - j) *
           ((Nat.choose (ℓ - 1) j : ℕ) : ℤ))))).toNat : ℕ) : ℤ) *
@@ -704,33 +708,34 @@ private lemma signed_waring (ℓ : ℕ) (hℓ : 1 ≤ ℓ) :
     rw [hPeq, hQeq, hN, Finset.sum_sub_distrib]
     ring
   have hcountS : (∑ a : Fin ℓ, ((max 0 ((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-    ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ))).toNat +
-    (max 0 (-((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-    ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)))).toNat)) =
-    ∑ j ∈ Finset.range ℓ, Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)| := by
-    have e1 : (∑ a : Fin ℓ, ((max 0 ((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
       ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ))).toNat +
       (max 0 (-((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
       ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)))).toNat)) =
-      ∑ a : Fin ℓ, Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-        ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)| :=
+      ∑ j ∈ Finset.range ℓ, Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - j) *
+        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)| := by
+    have e1 : (∑ a : Fin ℓ, ((max 0 ((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
+        ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ))).toNat +
+        (max 0 (-((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
+        ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)))).toNat)) =
+        ∑ a : Fin ℓ, Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
+          ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)| :=
       Finset.sum_congr rfl (fun a _ => hcount _)
     have e2 : (∑ a : Fin ℓ, Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-      ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)|) =
-      ∑ j ∈ Finset.range ℓ, Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - j) *
-        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)| :=
+        ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)|) =
+        ∑ j ∈ Finset.range ℓ, Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - j) *
+          ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)| :=
       Fin.sum_univ_eq_sum_range (fun j => Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - j) *
         ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)|) ℓ
     rw [e1, e2]
   refine ⟨_, _, P, Hm, ?_, hNfin⟩
   have hsplit2 : (∑ a : Fin ℓ, (max 0 ((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-    ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ))).toNat) +
-    (∑ a : Fin ℓ, (max 0 (-((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
-    ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)))).toNat) =
-    ∑ j ∈ Finset.range ℓ, Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - j) *
-      ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)| := by
-    rwa [← Finset.sum_add_distrib]
+      ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ))).toNat) +
+      (∑ a : Fin ℓ, (max 0 (-((-1 : ℤ) ^ (ℓ - 1 - (a : ℕ)) *
+      ((Nat.choose (ℓ - 1) (a : ℕ) : ℕ) : ℤ)))).toNat) =
+      ∑ j ∈ Finset.range ℓ, Int.toNat |(-1 : ℤ) ^ (ℓ - 1 - j) *
+        ((Nat.choose (ℓ - 1) j : ℕ) : ℤ)| := by
+    rw [← Finset.sum_add_distrib]
+    exact hcountS
   omega
 
 end MetaMathlibExt
@@ -1007,7 +1012,7 @@ namespace MetaMathlibExt
 private lemma pow_ell_twice (u : Quaternion ℚ) (ℓ : ℕ)
   (hmod : ℓ % 3 = 1 ∨ ℓ % 3 = 2) (h3 : u ^ 3 = 1) :
   (u ^ ℓ) ^ ℓ = u := by
-  obtain h1 | h2 := hmod
+  rcases hmod with h1 | h2
   · rw [pow_mod3_one u ℓ h3 h1, pow_mod3_one u ℓ h3 h1]
   · rw [pow_mod3_two u ℓ h3 h2, ← pow_mul]
     have h21 : (2 * ℓ) % 3 = 1 := by omega
@@ -1145,7 +1150,7 @@ private lemma hurwitz_pow_ell (u : Quaternion ℚ) (ℓ : ℕ)
   (hmod : ℓ % 3 = 1 ∨ ℓ % 3 = 2) (h3 : u ^ 3 = 1)
   (hu : IsHurwitz u) (hu2 : IsHurwitz (u ^ 2)) :
   IsHurwitz (u ^ ℓ) := by
-  obtain h1 | h2 := hmod
+  rcases hmod with h1 | h2
   · rw [pow_mod3_one u ℓ h3 h1]
     exact hu
   · rw [pow_mod3_two u ℓ h3 h2]
@@ -1353,7 +1358,7 @@ private lemma hurwitz_intCast_mul (n : ℤ) (v : Quaternion ℚ)
     rw [← Quaternion.coe_intCast, Quaternion.imJ_coe]
   have hn_K : (n : Quaternion ℚ).imK = 0 := by
     rw [← Quaternion.coe_intCast, Quaternion.imK_coe]
-  obtain ⟨a, b, c, d, ha, hb, hc, hd⟩ | ⟨a, b, c, d, ha, hb, hc, hd⟩ := hv
+  rcases hv with ⟨a, b, c, d, ha, hb, hc, hd⟩ | ⟨a, b, c, d, ha, hb, hc, hd⟩
   · refine Or.inl ⟨n * a, n * b, n * c, n * d, ?_, ?_, ?_, ?_⟩
     · rw [Quaternion.re_mul, hn_re, hn_I, hn_J, hn_K, ha, hb, hc, hd]
       push_cast
@@ -1696,16 +1701,16 @@ private lemma scale_sum {K : ℕ} (V : Fin K → Quaternion ℚ)
     rw [heq]
     exact Quaternion.coe_commute _ _
   have hterm : ∀ t, (((x : Quaternion ℚ) * V t) ^ ℓ) =
-    (((x ^ ℓ : ℤ)) : Quaternion ℚ) * (V t) ^ ℓ := by
+      (((x ^ ℓ : ℤ)) : Quaternion ℚ) * (V t) ^ ℓ := by
     intro t
     rw [(hcomm t).mul_pow]
     congr 1
     norm_cast
   calc ∑ t, (((x : Quaternion ℚ) * V t) ^ ℓ)
-    = ∑ t, (((x ^ ℓ : ℤ)) : Quaternion ℚ) * (V t) ^ ℓ :=
-      Finset.sum_congr rfl (fun t _ => hterm t)
+      = ∑ t, (((x ^ ℓ : ℤ)) : Quaternion ℚ) * (V t) ^ ℓ :=
+        Finset.sum_congr rfl (fun t _ => hterm t)
     _ = (((x ^ ℓ : ℤ)) : Quaternion ℚ) * ∑ t, (V t) ^ ℓ := by
-      rw [← Finset.mul_sum]
+        rw [← Finset.mul_sum]
     _ = (((x ^ ℓ : ℤ)) : Quaternion ℚ) * e := by rw [he]
 
 end MetaMathlibExt
@@ -1736,34 +1741,36 @@ private lemma coord_waring (ℓ B K₁ K₂ : ℕ)
     IsHurwitz ℓ (fun b t => hurwitz_intCast_mul _ _ (hV₂ t))
   obtain ⟨H, hH, hHS⟩ := sum_combine_pow Hp Hm IsHurwitz ℓ hHp hHm
   have hpos : (∑ a, ∑ b, ((((x a : ℤ) : Quaternion ℚ) * V₁ b) ^ ℓ)) =
-    ((((∑ a, (x a) ^ ℓ : ℤ))) : Quaternion ℚ) * e := by
+      ((((∑ a, (x a) ^ ℓ : ℤ))) : Quaternion ℚ) * e := by
     have h1 : ∀ a : Fin p, (∑ b, ((((x a : ℤ) : Quaternion ℚ) * V₁ b) ^ ℓ)) =
-      ((((x a ^ ℓ : ℤ))) : Quaternion ℚ) * e := fun a => scale_sum V₁ e ℓ _ e₁
+        ((((x a ^ ℓ : ℤ))) : Quaternion ℚ) * e := fun a => scale_sum V₁ e ℓ _ e₁
     calc ∑ a, ∑ b, ((((x a : ℤ) : Quaternion ℚ) * V₁ b) ^ ℓ)
-      = ∑ a, ((((x a ^ ℓ : ℤ))) : Quaternion ℚ) * e :=
-        Finset.sum_congr rfl (fun a _ => h1 a)
+        = ∑ a, ((((x a ^ ℓ : ℤ))) : Quaternion ℚ) * e :=
+          Finset.sum_congr rfl (fun a _ => h1 a)
       _ = (∑ a, ((((x a ^ ℓ : ℤ))) : Quaternion ℚ)) * e := by
-        rw [← Finset.sum_mul]
+          rw [← Finset.sum_mul]
       _ = ((((∑ a, (x a) ^ ℓ : ℤ))) : Quaternion ℚ) * e := by
-        congr 1
-        norm_cast
+          congr 1
+          norm_cast
   have hneg : (∑ b, ∑ t, ((((y b : ℤ) : Quaternion ℚ) * V₂ t) ^ ℓ)) =
-    ((((∑ b, (y b) ^ ℓ : ℤ))) : Quaternion ℚ) * (-e) := by
+      ((((∑ b, (y b) ^ ℓ : ℤ))) : Quaternion ℚ) * (-e) := by
     have h1 : ∀ b : Fin q, (∑ t, ((((y b : ℤ) : Quaternion ℚ) * V₂ t) ^ ℓ)) =
-      ((((y b ^ ℓ : ℤ))) : Quaternion ℚ) * (-e) := fun b => scale_sum V₂ _ ℓ _ e₂
+        ((((y b ^ ℓ : ℤ))) : Quaternion ℚ) * (-e) := fun b => scale_sum V₂ _ ℓ _ e₂
     calc ∑ b, ∑ t, ((((y b : ℤ) : Quaternion ℚ) * V₂ t) ^ ℓ)
-      = ∑ b, ((((y b ^ ℓ : ℤ))) : Quaternion ℚ) * (-e) :=
-        Finset.sum_congr rfl (fun b _ => h1 b)
+        = ∑ b, ((((y b ^ ℓ : ℤ))) : Quaternion ℚ) * (-e) :=
+          Finset.sum_congr rfl (fun b _ => h1 b)
       _ = (∑ b, ((((y b ^ ℓ : ℤ))) : Quaternion ℚ)) * (-e) := by
-        rw [← Finset.sum_mul]
+          rw [← Finset.sum_mul]
       _ = ((((∑ b, (y b) ^ ℓ : ℤ))) : Quaternion ℚ) * (-e) := by
-        congr 1
-        norm_cast
+          congr 1
+          norm_cast
   have hP : ∑ i, (Hp i) ^ ℓ = ((((∑ a, (x a) ^ ℓ : ℤ))) : Quaternion ℚ) * e := by
-    rwa [hHpS]
+    rw [hHpS]
+    exact hpos
   have hQ : ∑ i, (Hm i) ^ ℓ =
-    ((((∑ b, (y b) ^ ℓ : ℤ))) : Quaternion ℚ) * (-e) := by
-    rwa [hHmS]
+      ((((∑ b, (y b) ^ ℓ : ℤ))) : Quaternion ℚ) * (-e) := by
+    rw [hHmS]
+    exact hneg
   have hfinal : ∑ i, (H i) ^ ℓ = ((N : Quaternion ℚ)) * e := by
     rw [hHS, hP, hQ, mul_neg, ← sub_eq_add_neg, ← sub_mul]
     congr 1
@@ -1778,9 +1785,11 @@ private lemma coord_waring (ℓ B K₁ K₂ : ℕ)
       Nat.cast_id]
   rw [hsum1, hsum2]
   calc p * K₁ + q * K₂ ≤ p * 3 + q * 3 :=
-    Nat.add_le_add (Nat.mul_le_mul_left p hK₁) (Nat.mul_le_mul_left q hK₂)
+        Nat.add_le_add (Nat.mul_le_mul_left p hK₁) (Nat.mul_le_mul_left q hK₂)
     _ = 3 * (p + q) := by ring
     _ ≤ 3 * B := Nat.mul_le_mul_left 3 hB
+
+/-! # Waring-type bound for Hurwitz quaternion integers -/
 
 end MetaMathlibExt
 
@@ -1791,13 +1800,19 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma hurwitz_quaternion_waring_bound
-  {ℓ : ℕ}
+  (ℓ : ℕ)
 -- given
   (hℓpos : 0 < ℓ)
   (hℓmod : ℓ % 3 = 1 ∨ ℓ % 3 = 2) :
--- imply
-  let IsHurwitz : Quaternion ℚ → Prop := by
--- proof
+  let IsHurwitz : Quaternion ℚ → Prop := fun z =>
+    (∃ a b c d : ℤ,
+      z.re = (a : ℚ) ∧ z.imI = (b : ℚ) ∧ z.imJ = (c : ℚ) ∧ z.imK = (d : ℚ)) ∨
+    (∃ a b c d : ℤ,
+      z.re = (a : ℚ) + 1 / 2 ∧ z.imI = (b : ℚ) + 1 / 2 ∧
+        z.imJ = (c : ℚ) + 1 / 2 ∧ z.imK = (d : ℚ) + 1 / 2)
+  ∃ g : ℕ, ∀ z : Quaternion ℚ, IsHurwitz z →
+    ∃ n : ℕ, n ≤ g ∧ ∃ q : Fin n → Quaternion ℚ,
+      (∀ i, IsHurwitz (q i)) ∧ ∑ i, (q i) ^ ℓ = z := by
   change ∃ g : ℕ, ∀ z : Quaternion ℚ, IsHurwitz z →
     ∃ n : ℕ, n ≤ g ∧ ∃ q : Fin n → Quaternion ℚ,
       (∀ i, IsHurwitz (q i)) ∧ ∑ i, (q i) ^ ℓ = z
@@ -1814,7 +1829,7 @@ lemma hurwitz_quaternion_waring_bound
   obtain ⟨Vo, hVo, eo⟩ := waring_omega ℓ hℓmod
   refine ⟨12 * B + 2, ?_⟩
   intro z hz
-  obtain ⟨a, b, c, d, ha, hb, hc, hd⟩ | ⟨a, b, c, d, ha, hb, hc, hd⟩ := hz
+  rcases hz with ⟨a, b, c, d, ha, hb, hc, hd⟩ | ⟨a, b, c, d, ha, hb, hc, hd⟩
   · obtain ⟨p1, q1, x1, y1, hB1, hN1⟩ := hB a
     obtain ⟨p2, q2, x2, y2, hB2, hN2⟩ := hB b
     obtain ⟨p3, q3, x3, y3, hB3, hN3⟩ := hB c
@@ -1836,7 +1851,7 @@ lemma hurwitz_quaternion_waring_bound
     refine ⟨_, ?_, H, hH, ?_⟩
     · omega
     · rw [eH, eH123, eH12, eH1, eH2, eH3, eH4, mul_one, intCast_mul_i,
-      intCast_mul_j, intCast_mul_k, intCast_eq_mk]
+        intCast_mul_j, intCast_mul_k, intCast_eq_mk]
       refine Quaternion.ext _ _ ?_ ?_ ?_ ?_ <;>
         simp only [Quaternion.re_add, Quaternion.imI_add, Quaternion.imJ_add,
           Quaternion.imK_add]
@@ -1870,7 +1885,7 @@ lemma hurwitz_quaternion_waring_bound
     refine ⟨_, ?_, H, hH, ?_⟩
     · omega
     · rw [eH, eHL, eH123, eH12, eH1, eH2, eH3, eH4, eo, mul_one, intCast_mul_i,
-      intCast_mul_j, intCast_mul_k, intCast_eq_mk]
+        intCast_mul_j, intCast_mul_k, intCast_eq_mk]
       refine Quaternion.ext _ _ ?_ ?_ ?_ ?_ <;>
         simp only [Quaternion.re_add, Quaternion.imI_add, Quaternion.imJ_add,
           Quaternion.imK_add]
@@ -1882,9 +1897,10 @@ lemma hurwitz_quaternion_waring_bound
         ring
       · rw [hd]
         ring
+
 end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

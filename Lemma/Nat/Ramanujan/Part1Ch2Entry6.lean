@@ -12,12 +12,9 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6
 -/
 @[path]
 lemma A_zero
-  {n : ℕ} :
+  (n : ℕ) :
 -- imply
-  A n 0 = n := by
--- proof
-simp [A]
-
+  A n 0 = n := by simp [A]
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6
@@ -27,7 +24,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6
 -/
 @[path]
 lemma A_succ
-  {n k : ℕ} :
+  (n k : ℕ) :
 -- imply
   A n (k + 1) = 3 * A n k + 1 := by
 -- proof
@@ -101,23 +98,23 @@ private lemma triple_sum (f : ℕ → ℚ) (L : ℕ) (hL : 1 ≤ L) (U : ℕ) :
   | succ U ih =>
     by_cases h : L ≤ U + 1
     · have hLU : L ≤ U ∨ L = U + 1 := by omega
-      obtain hLU | hLU := hLU
+      rcases hLU with hLU | hLU
       · rw [Finset.sum_Icc_succ_top h (fun j => f (3 * j - 1) + f (3 * j) + f (3 * j + 1))]
         have hsplit : ∑ m ∈ Finset.Icc (3 * L - 1) (3 * (U + 1) + 1), f m =
-          ∑ m ∈ Finset.Icc (3 * L - 1) (3 * U + 1), f m +
-          (f (3 * U + 2) + f (3 * U + 3) + f (3 * U + 4)) := by
+            ∑ m ∈ Finset.Icc (3 * L - 1) (3 * U + 1), f m +
+            (f (3 * U + 2) + f (3 * U + 3) + f (3 * U + 4)) := by
           have e1 : 3 * (U + 1) + 1 = (3 * U + 1) + 3 := by ring
           rw [e1]
           have s1 : ∑ m ∈ Finset.Icc (3 * L - 1) ((3 * U + 1) + 3), f m =
-            ∑ m ∈ Finset.Icc (3 * L - 1) ((3 * U + 1) + 2), f m + f ((3 * U + 1) + 3) := by
+              ∑ m ∈ Finset.Icc (3 * L - 1) ((3 * U + 1) + 2), f m + f ((3 * U + 1) + 3) := by
             apply Finset.sum_Icc_succ_top
             omega
           have s2 : ∑ m ∈ Finset.Icc (3 * L - 1) ((3 * U + 1) + 2), f m =
-            ∑ m ∈ Finset.Icc (3 * L - 1) ((3 * U + 1) + 1), f m + f ((3 * U + 1) + 2) := by
+              ∑ m ∈ Finset.Icc (3 * L - 1) ((3 * U + 1) + 1), f m + f ((3 * U + 1) + 2) := by
             apply Finset.sum_Icc_succ_top
             omega
           have s3 : ∑ m ∈ Finset.Icc (3 * L - 1) ((3 * U + 1) + 1), f m =
-            ∑ m ∈ Finset.Icc (3 * L - 1) (3 * U + 1), f m + f ((3 * U + 1) + 1) := by
+              ∑ m ∈ Finset.Icc (3 * L - 1) (3 * U + 1), f m + f ((3 * U + 1) + 1) := by
             apply Finset.sum_Icc_succ_top
             omega
           rw [s1, s2, s3]
@@ -153,10 +150,10 @@ private lemma triple_sum (f : ℕ → ℚ) (L : ℕ) (hL : 1 ≤ L) (U : ℕ) :
         have eR2 : 3 * (U + 1) + 1 = 3 * U + 4 := by ring
         rw [eR, eR2]
         have s1 : ∑ m ∈ Finset.Icc (3 * U + 2) (3 * U + 4), f m =
-          ∑ m ∈ Finset.Icc (3 * U + 2) (3 * U + 3), f m + f (3 * U + 4) :=
+            ∑ m ∈ Finset.Icc (3 * U + 2) (3 * U + 3), f m + f (3 * U + 4) :=
           Finset.sum_Icc_succ_top (by omega) f
         have s2 : ∑ m ∈ Finset.Icc (3 * U + 2) (3 * U + 3), f m =
-          ∑ m ∈ Finset.Icc (3 * U + 2) (3 * U + 2), f m + f (3 * U + 3) :=
+            ∑ m ∈ Finset.Icc (3 * U + 2) (3 * U + 2), f m + f (3 * U + 3) :=
           Finset.sum_Icc_succ_top (by omega) f
         rw [s1, s2]
         simp
@@ -220,11 +217,12 @@ private lemma key_nat (j : ℕ) (hj : 1 ≤ j) :
   have h3j : (3 : ℚ) / (3 * ((j : ℕ) : ℚ)) = (1 : ℚ) / ((j : ℕ) : ℚ) := by
     field_simp
   have hD : ((3 : ℚ) * ((j : ℕ) : ℚ)) ^ 3 - (3 : ℚ) * ((j : ℕ) : ℚ)
-    = (3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ) := by ring
+      = (3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ) := by ring
   rw [hD] at key
   have h2 : (2 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
-    = 2 * ((1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))) := by ring
-  rwa [h3j, h2] at key
+      = 2 * ((1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))) := by ring
+  rw [h3j, h2] at key
+  exact key
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6
 
@@ -247,37 +245,37 @@ private lemma H1 (n : ℕ) :
   have htriple := triple_sum (fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) 1 (le_refl 1) n
   simp only [mul_one] at htriple
   have hrewrite : ∑ j ∈ Finset.Icc 1 n,
-    ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
-      + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ))
-    = ∑ j ∈ Finset.Icc 1 n, (1 : ℚ) / ((j : ℕ) : ℚ)
-      + 2 * ∑ j ∈ Finset.Icc 1 n, (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
+        ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
+            + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ))
+      = ∑ j ∈ Finset.Icc 1 n, (1 : ℚ) / ((j : ℕ) : ℚ)
+        + 2 * ∑ j ∈ Finset.Icc 1 n, (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
     have hcongr : ∀ j ∈ Finset.Icc 1 n,
-      ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
-        + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ))
-      = ((1 : ℚ) / ((j : ℕ) : ℚ)
-        + 2 * ((1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)))) := by
+        ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
+            + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ))
+        = ((1 : ℚ) / ((j : ℕ) : ℚ)
+            + 2 * ((1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)))) := by
       intro j hj
       simp only [Finset.mem_Icc] at hj
       exact key_nat j hj.1
     rw [Finset.sum_congr rfl hcongr, Finset.sum_add_distrib, ← Finset.mul_sum]
   have hLHS : ∑ j ∈ Finset.Icc 1 n,
-    ((fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j - 1)
-      + (fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j)
-      + (fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j + 1))
-    = ∑ j ∈ Finset.Icc 1 n,
-      ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
-        + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ)) := by
+        ((fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j - 1)
+          + (fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j)
+          + (fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j + 1))
+      = ∑ j ∈ Finset.Icc 1 n,
+        ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
+            + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ)) := by
     rfl
   rw [hLHS, hrewrite] at htriple
   have hRHS : Finset.Icc (3 * 1 - 1) (3 * n + 1) = Finset.Icc 2 (3 * n + 1) := by norm_num
   rw [hRHS] at htriple
   have hsplit1 : ∑ m ∈ Finset.Icc 1 (3 * n + 1), (1 : ℚ) / ((m : ℕ) : ℚ)
-    = ∑ m ∈ Finset.Icc 1 n, (1 : ℚ) / ((m : ℕ) : ℚ)
-      + ∑ m ∈ Finset.Icc (n + 1) (3 * n + 1), (1 : ℚ) / ((m : ℕ) : ℚ) :=
+      = ∑ m ∈ Finset.Icc 1 n, (1 : ℚ) / ((m : ℕ) : ℚ)
+        + ∑ m ∈ Finset.Icc (n + 1) (3 * n + 1), (1 : ℚ) / ((m : ℕ) : ℚ) :=
     sum_Icc_split _ 1 n (3 * n + 1) (by omega) (by omega)
   have hsplit2 : ∑ m ∈ Finset.Icc 1 (3 * n + 1), (1 : ℚ) / ((m : ℕ) : ℚ)
-    = ∑ m ∈ Finset.Icc 1 1, (1 : ℚ) / ((m : ℕ) : ℚ)
-      + ∑ m ∈ Finset.Icc (1 + 1) (3 * n + 1), (1 : ℚ) / ((m : ℕ) : ℚ) :=
+      = ∑ m ∈ Finset.Icc 1 1, (1 : ℚ) / ((m : ℕ) : ℚ)
+        + ∑ m ∈ Finset.Icc (1 + 1) (3 * n + 1), (1 : ℚ) / ((m : ℕ) : ℚ) :=
     sum_Icc_split (fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) 1 1 (3 * n + 1) (by omega) (by omega)
   have h11 : ∑ m ∈ Finset.Icc 1 1, (1 : ℚ) / ((m : ℕ) : ℚ) = 1 := by simp
   have h22 : Finset.Icc (1 + 1) (3 * n + 1) = Finset.Icc 2 (3 * n + 1) := by norm_num
@@ -300,7 +298,8 @@ private lemma Hstep (n k : ℕ) (hk : 1 ≤ k) :
   have hkk : k - 1 + 1 = k := by omega
   have hAkm : A n k = 3 * A n (k - 1) + 1 := by
     have h := A_succ n (k - 1)
-    rwa [hkk] at h
+    rw [hkk] at h
+    exact h
   have hL : 1 ≤ A n (k - 1) + 1 := by omega
   have htriple := triple_sum (fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (A n (k - 1) + 1) hL (A n k)
   have eLow : 3 * (A n (k - 1) + 1) - 1 = A n k + 1 := by omega
@@ -309,30 +308,31 @@ private lemma Hstep (n k : ℕ) (hk : 1 ≤ k) :
     omega
   rw [eLow, eUp] at htriple
   have hrewrite : ∑ j ∈ Finset.Icc (A n (k - 1) + 1) (A n k),
-    ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
-      + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ))
-    = ∑ j ∈ Finset.Icc (A n (k - 1) + 1) (A n k), (1 : ℚ) / ((j : ℕ) : ℚ)
-      + 2 * ∑ j ∈ Finset.Icc (A n (k - 1) + 1) (A n k),
-        (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
+        ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
+            + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ))
+      = ∑ j ∈ Finset.Icc (A n (k - 1) + 1) (A n k), (1 : ℚ) / ((j : ℕ) : ℚ)
+        + 2 * ∑ j ∈ Finset.Icc (A n (k - 1) + 1) (A n k),
+          (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
     have hcongr : ∀ j ∈ Finset.Icc (A n (k - 1) + 1) (A n k),
-      ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
-        + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ))
-      = ((1 : ℚ) / ((j : ℕ) : ℚ)
-        + 2 * ((1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)))) := by
+        ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
+            + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ))
+        = ((1 : ℚ) / ((j : ℕ) : ℚ)
+            + 2 * ((1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)))) := by
       intro j hj
       simp only [Finset.mem_Icc] at hj
       have hj1 : 1 ≤ j := by omega
       exact key_nat j hj1
     rw [Finset.sum_congr rfl hcongr, Finset.sum_add_distrib, ← Finset.mul_sum]
   have hLHS : ∑ j ∈ Finset.Icc (A n (k - 1) + 1) (A n k),
-    ((fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j - 1)
-      + (fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j)
-      + (fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j + 1))
-    = ∑ j ∈ Finset.Icc (A n (k - 1) + 1) (A n k),
-      ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
-        + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ)) := by
+        ((fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j - 1)
+          + (fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j)
+          + (fun m => (1 : ℚ) / ((m : ℕ) : ℚ)) (3 * j + 1))
+      = ∑ j ∈ Finset.Icc (A n (k - 1) + 1) (A n k),
+        ((1 : ℚ) / (((3 * j - 1 : ℕ)) : ℚ) + (1 : ℚ) / (((3 * j : ℕ)) : ℚ)
+            + (1 : ℚ) / (((3 * j + 1 : ℕ)) : ℚ)) := by
     rfl
-  rwa [hLHS, hrewrite] at htriple
+  rw [hLHS, hrewrite] at htriple
+  exact htriple.symm
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6
 
@@ -352,27 +352,28 @@ private lemma aux (n m : ℕ) :
     have hH1 := H1 n
     have eA0 : A n 0 = n := A_zero n
     have hrange : ∑ k ∈ Finset.range 1,
-      ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-        (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
-      = ∑ j ∈ Finset.Icc 1 (A n 0),
-        (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
+          ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+            (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
+        = ∑ j ∈ Finset.Icc 1 (A n 0),
+          (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
       simp
     rw [hrange, eA0]
     have e01 : A n (0 + 1) = A n 1 := by norm_num
     rw [e01]
-    rwa [eA0] at hH1
+    rw [eA0] at hH1
+    exact hH1
   | succ m ih =>
     have hstep := Hstep n (m + 1) (Nat.succ_le_succ (Nat.zero_le m))
     have hmsub : m + 1 - 1 = m := by omega
     rw [hmsub] at hstep
     have hrange : ∑ k ∈ Finset.range (m + 1 + 1),
-      ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-        (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
-      = ∑ k ∈ Finset.range (m + 1),
-        ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-          (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
-        + ∑ j ∈ Finset.Icc (A n m + 1) (A n (m + 1)),
-          (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
+          ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+            (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
+        = ∑ k ∈ Finset.range (m + 1),
+          ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+            (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
+          + ∑ j ∈ Finset.Icc (A n m + 1) (A n (m + 1)),
+            (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
       rw [Finset.sum_range_succ]
       congr 1
     rw [hrange]
@@ -407,28 +408,28 @@ lemma ramanujan_part1_ch2_entry6_general
       have h := A_succ n r
       omega
     have hLHS : ∑ j ∈ Finset.Icc (n + 1) (A n (r + 1)), (1 : ℚ) / ((j : ℕ) : ℚ)
-      = ∑ j ∈ Finset.Icc (n + 1) (A n r), (1 : ℚ) / ((j : ℕ) : ℚ)
-        + ∑ j ∈ Finset.Icc (A n r + 1) (A n (r + 1)), (1 : ℚ) / ((j : ℕ) : ℚ) :=
+        = ∑ j ∈ Finset.Icc (n + 1) (A n r), (1 : ℚ) / ((j : ℕ) : ℚ)
+          + ∑ j ∈ Finset.Icc (A n r + 1) (A n (r + 1)), (1 : ℚ) / ((j : ℕ) : ℚ) :=
       sum_Icc_split _ (n + 1) (A n r) (A n (r + 1)) (by omega) hAle
     have haux := aux n r
     -- RHS weight manipulation: prove weight identity first
     have hweight : ∑ k ∈ Finset.range (r + 1), (((r + 1 - k : ℕ)) : ℚ) *
-      ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-        (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
-      = ∑ k ∈ Finset.range r, (((r - k : ℕ)) : ℚ) *
-        ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-          (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
-        + ∑ k ∈ Finset.range (r + 1),
-        ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-          (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
-      have h1 : ∀ k ∈ Finset.range (r + 1), (((r + 1 - k : ℕ)) : ℚ) *
-        ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-          (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
-        = ((((r - k : ℕ)) : ℚ) *
           ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
             (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
-          + ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-            (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))) := by
+        = ∑ k ∈ Finset.range r, (((r - k : ℕ)) : ℚ) *
+          ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+            (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
+          + ∑ k ∈ Finset.range (r + 1),
+          ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+            (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
+      have h1 : ∀ k ∈ Finset.range (r + 1), (((r + 1 - k : ℕ)) : ℚ) *
+            ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+              (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
+          = ((((r - k : ℕ)) : ℚ) *
+            ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+              (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
+            + ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+              (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))) := by
         intro k hk
         simp only [Finset.mem_range] at hk
         have hNat : r + 1 - k = (r - k) + 1 := by omega
@@ -441,33 +442,32 @@ lemma ramanujan_part1_ch2_entry6_general
       rw [Finset.sum_congr rfl h1, Finset.sum_add_distrib]
       congr 1
       have hlast : (((r - r : ℕ)) : ℚ) *
-        ∑ j ∈ Finset.Icc (if r = 0 then 1 else A n (r - 1) + 1) (A n r),
-          (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) = 0 := by
+          ∑ j ∈ Finset.Icc (if r = 0 then 1 else A n (r - 1) + 1) (A n r),
+            (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) = 0 := by
         simp
       have hsplit : ∑ k ∈ Finset.range (r + 1), (((r - k : ℕ)) : ℚ) *
-        ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-          (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
-        = ∑ k ∈ Finset.range r, (((r - k : ℕ)) : ℚ) *
-          ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-            (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
+            ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+              (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
+          = ∑ k ∈ Finset.range r, (((r - k : ℕ)) : ℚ) *
+            ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+              (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
         rw [Finset.sum_range_succ]
         rw [hlast, add_zero]
       exact hsplit
     have hcastR : (((r + 1 : ℕ)) : ℚ) = (r : ℚ) + 1 := by push_cast; ring
     rw [hLHS, ih, haux]
     have hgoal : (r : ℚ) + 2 * ∑ k ∈ Finset.range r, (((r - k : ℕ)) : ℚ) *
-      ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-        (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
-      + (1 + 2 * ∑ k ∈ Finset.range (r + 1),
-        ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-          (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)))
-      = (((r + 1 : ℕ)) : ℚ) + 2 * ∑ k ∈ Finset.range (r + 1), (((r + 1 - k : ℕ)) : ℚ) *
-        ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
-          (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
+            ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+              (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ))
+          + (1 + 2 * ∑ k ∈ Finset.range (r + 1),
+            ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+              (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)))
+        = (((r + 1 : ℕ)) : ℚ) + 2 * ∑ k ∈ Finset.range (r + 1), (((r + 1 - k : ℕ)) : ℚ) *
+            ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k),
+              (1 : ℚ) / ((3 * ((j : ℕ) : ℚ)) ^ 3 - 3 * ((j : ℕ) : ℚ)) := by
       rw [hweight, hcastR]
       ring
     linarith [hgoal]
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6
 
@@ -493,4 +493,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -41,22 +41,22 @@ private lemma repSet_finite (n v m : ℕ) (hm : 1 ≤ m) : {M : Multiset ℕ |
   intro a
   by_cases ha : a ≤ v
   · calc Multiset.count a M ≤ M.card := Multiset.count_le_card a M
-    _ = n := hcard
-    _ = Multiset.count a ((Finset.range (v + 1)).val.bind
-      (fun x => Multiset.replicate n x)) := by
-      have hcount : Multiset.count a ((Finset.range (v + 1)).val.bind
-        (fun x => Multiset.replicate n x)) = n := by
-        rw [Multiset.count_bind]
-        have hrfl : (Multiset.map (fun y => Multiset.count a (Multiset.replicate n y))
-          (Finset.range (v + 1)).val).sum
-          = Finset.sum (Finset.range (v + 1))
-            (fun y => Multiset.count a (Multiset.replicate n y)) := rfl
-        rw [hrfl]
-        simp only [Multiset.count_replicate]
-        rw [Finset.sum_ite_eq']
-        have hmem : a ∈ Finset.range (v + 1) := Finset.mem_range.mpr (by omega)
-        simp [hmem]
-      exact hcount.symm
+      _ = n := hcard
+      _ = Multiset.count a ((Finset.range (v + 1)).val.bind
+          (fun x => Multiset.replicate n x)) := by
+        have hcount : Multiset.count a ((Finset.range (v + 1)).val.bind
+            (fun x => Multiset.replicate n x)) = n := by
+          rw [Multiset.count_bind]
+          have hrfl : (Multiset.map (fun y => Multiset.count a (Multiset.replicate n y))
+              (Finset.range (v + 1)).val).sum
+              = Finset.sum (Finset.range (v + 1))
+                (fun y => Multiset.count a (Multiset.replicate n y)) := rfl
+          rw [hrfl]
+          simp only [Multiset.count_replicate]
+          rw [Finset.sum_ite_eq']
+          have hmem : a ∈ Finset.range (v + 1) := Finset.mem_range.mpr (by omega)
+          simp [hmem]
+        exact hcount.symm
   · have hlt : v < a := not_le.mp ha
     have hni : a ∉ M := by
       intro ham
@@ -85,29 +85,29 @@ private lemma pad_ncard_le (n v m : ℕ) (hm : 1 ≤ m) :
     intro M₁ M₂ h
     exact (Multiset.cons_inj_right 1).mp h
   have hmaps : ∀ M ∈ {M : Multiset ℕ | M.card = n ∧ (∀ x ∈ M, 0 < x) ∧
-    (M.map (fun x => x ^ m)).sum = v},
-    (1 ::ₘ M) ∈ {M : Multiset ℕ | M.card = n + 1 ∧ (∀ x ∈ M, 0 < x) ∧
-      (M.map (fun x => x ^ m)).sum = v + 1} := by
+      (M.map (fun x => x ^ m)).sum = v},
+      (1 ::ₘ M) ∈ {M : Multiset ℕ | M.card = n + 1 ∧ (∀ x ∈ M, 0 < x) ∧
+        (M.map (fun x => x ^ m)).sum = v + 1} := by
     intro M hM
     obtain ⟨hc, hp, hs⟩ := hM
     refine ⟨by rw [Multiset.card_cons, hc], ?_, ?_⟩
     · intro x hx
       rw [Multiset.mem_cons] at hx
-      obtain rfl | hx := hx
+      rcases hx with rfl | hx
       · exact zero_lt_one
       · exact hp x hx
     · rw [Multiset.map_cons, Multiset.sum_cons, one_pow, hs, Nat.add_comm]
   calc {M : Multiset ℕ | M.card = n ∧ (∀ x ∈ M, 0 < x) ∧
-    (M.map (fun x => x ^ m)).sum = v}.ncard
-    = ((fun M : Multiset ℕ => 1 ::ₘ M) '' {M : Multiset ℕ | M.card = n ∧
-      (∀ x ∈ M, 0 < x) ∧ (M.map (fun x => x ^ m)).sum = v}).ncard :=
-      (Set.ncard_image_of_injective _ hinj).symm
+        (M.map (fun x => x ^ m)).sum = v}.ncard
+      = ((fun M : Multiset ℕ => 1 ::ₘ M) '' {M : Multiset ℕ | M.card = n ∧
+        (∀ x ∈ M, 0 < x) ∧ (M.map (fun x => x ^ m)).sum = v}).ncard :=
+        (Set.ncard_image_of_injective _ hinj).symm
     _ ≤ {M : Multiset ℕ | M.card = n + 1 ∧ (∀ x ∈ M, 0 < x) ∧
-      (M.map (fun x => x ^ m)).sum = v + 1}.ncard := by
-      apply Set.ncard_le_ncard _ (repSet_finite _ _ _ hm)
-      rw [Set.image_subset_iff]
-      intro M hM
-      exact hmaps M hM
+        (M.map (fun x => x ^ m)).sum = v + 1}.ncard := by
+        apply Set.ncard_le_ncard _ (repSet_finite _ _ _ hm)
+        rw [Set.image_subset_iff]
+        intro M hM
+        exact hmaps M hM
 
 end MetaMathlibExt
 
@@ -124,7 +124,7 @@ private lemma rep_ge_card (n v m t : ℕ) (ht : 1 ≤ t)
   classical
   have hfin := repSet_finite n v m hm
   have hpos : 0 < {M : Multiset ℕ | M.card = n ∧ (∀ x ∈ M, 0 < x) ∧
-    (M.map (fun x => x ^ m)).sum = v}.ncard := by omega
+      (M.map (fun x => x ^ m)).sum = v}.ncard := by omega
   rw [Set.ncard_pos hfin] at hpos
   obtain ⟨M, hM⟩ := hpos
   obtain ⟨hc, hp, hs⟩ := hM
@@ -134,7 +134,8 @@ private lemma rep_ge_card (n v m t : ℕ) (ht : 1 ≤ t)
     obtain ⟨x, hx, rfl⟩ := hy
     exact Nat.one_le_pow m x (hp x hx)
   have h2 := card_le_sum_of_one_le _ h1
-  rwa [Multiset.card_map, hc, hs] at h2
+  rw [Multiset.card_map, hc, hs] at h2
+  exact h2
 
 end MetaMathlibExt
 
@@ -157,18 +158,18 @@ private lemma collision_exists (m t : ℕ) (hm : 1 ≤ m) (ht : 1 ≤ t) :
       Finset.image (fun j => e j (g j)) Finset.univ) Finset.univ with hP
   have hWpos : 0 < W := by omega
   have ediv : ∀ (j : Fin (m + 1)) (i : Fin W),
-    (j.val * W + i.val) / W = j.val := by
+      (j.val * W + i.val) / W = j.val := by
     intro j i
     have hform : j.val * W + i.val = i.val + j.val * W := by ring
     rw [hform, Nat.add_mul_div_right _ _ hWpos, Nat.div_eq_of_lt i.isLt,
       Nat.zero_add]
   have emod : ∀ (j : Fin (m + 1)) (i : Fin W),
-    (j.val * W + i.val) % W = i.val := by
+      (j.val * W + i.val) % W = i.val := by
     intro j i
     have hform : j.val * W + i.val = i.val + j.val * W := by ring
     rw [hform, Nat.add_mul_mod_self_right, Nat.mod_eq_of_lt i.isLt]
   have hsg_inj : ∀ g : Fin (m + 1) → Fin W,
-    Function.Injective (fun j => e j (g j)) := by
+      Function.Injective (fun j => e j (g j)) := by
     intro g j₁ j₂ h
     simp only [he] at h
     have hcancel := Nat.add_right_cancel h
@@ -176,14 +177,14 @@ private lemma collision_exists (m t : ℕ) (hm : 1 ≤ m) (ht : 1 ≤ t) :
     rw [ediv, ediv] at c1
     exact Fin.ext_iff.mpr c1
   have hP_inj : Function.Injective (fun g : Fin (m + 1) → Fin W =>
-    Finset.image (fun j => e j (g j)) Finset.univ) := by
+      Finset.image (fun j => e j (g j)) Finset.univ) := by
     intro g₁ g₂ h
     have h2 : Finset.image (fun j' => e j' (g₁ j')) Finset.univ =
-      Finset.image (fun j' => e j' (g₂ j')) Finset.univ := h
+        Finset.image (fun j' => e j' (g₂ j')) Finset.univ := h
     funext j
     rw [Fin.ext_iff]
     have hmem : e j (g₁ j) ∈
-      Finset.image (fun j' => e j' (g₂ j')) Finset.univ := by
+        Finset.image (fun j' => e j' (g₂ j')) Finset.univ := by
       rw [← h2]
       exact Finset.mem_image.mpr ⟨j, Finset.mem_univ j, rfl⟩
     obtain ⟨j', _, hj'⟩ := Finset.mem_image.mp hmem
@@ -194,9 +195,10 @@ private lemma collision_exists (m t : ℕ) (hm : 1 ≤ m) (ht : 1 ≤ t) :
     have hjj : j = j' := Fin.ext_iff.mpr c1.symm
     subst hjj
     have c2 := congrArg (fun x => x % W) hcancel
-    rwa [emod, emod] at c2
+    rw [emod, emod] at c2
+    exact c2.symm
   have hsg_card : ∀ g : Fin (m + 1) → Fin W,
-    (Finset.image (fun j => e j (g j)) Finset.univ).card = m + 1 := by
+      (Finset.image (fun j => e j (g j)) Finset.univ).card = m + 1 := by
     intro g
     rw [Finset.card_image_of_injective Finset.univ (hsg_inj g),
       Finset.card_univ, Fintype.card_fin]
@@ -204,7 +206,7 @@ private lemma collision_exists (m t : ℕ) (hm : 1 ≤ m) (ht : 1 ≤ t) :
     rw [hP, Finset.card_image_of_injective Finset.univ hP_inj,
       Finset.card_univ, Fintype.card_fun, Fintype.card_fin, Fintype.card_fin]
   have ebound : ∀ (j : Fin (m + 1)) (i : Fin W),
-    j.val * W + i.val + 1 ≤ (m + 1) * W := by
+      j.val * W + i.val + 1 ≤ (m + 1) * W := by
     intro j i
     have hj : j.val * W ≤ m * W := by
       have h : j.val ≤ m := by
@@ -217,20 +219,20 @@ private lemma collision_exists (m t : ℕ) (hm : 1 ≤ m) (ht : 1 ≤ t) :
     have h2 : (m + 1) * W = m * W + W := by ring
     omega
   have hphi_le : ∀ g : Fin (m + 1) → Fin W,
-    φ (Finset.image (fun j => e j (g j)) Finset.univ) ≤ (m + 1) * X ^ m := by
+      φ (Finset.image (fun j => e j (g j)) Finset.univ) ≤ (m + 1) * X ^ m := by
     intro g
     simp only [hφ]
     calc ∑ x ∈ Finset.image (fun j => e j (g j)) Finset.univ, x ^ m
-      ≤ (Finset.image (fun j => e j (g j)) Finset.univ).card • X ^ m := by
-        apply Finset.sum_le_card_nsmul
-        intro x hx
-        obtain ⟨j, _, hjx⟩ := Finset.mem_image.mp hx
-        apply Nat.pow_le_pow_left _ m
-        simp only [he] at hjx
-        have hb := ebound j (g j)
-        omega
+        ≤ (Finset.image (fun j => e j (g j)) Finset.univ).card • X ^ m := by
+          apply Finset.sum_le_card_nsmul
+          intro x hx
+          obtain ⟨j, _, hjx⟩ := Finset.mem_image.mp hx
+          apply Nat.pow_le_pow_left _ m
+          simp only [he] at hjx
+          have hb := ebound j (g j)
+          omega
       _ = (m + 1) * X ^ m := by
-        rw [hsg_card g, nsmul_eq_mul, Nat.cast_id]
+          rw [hsg_card g, nsmul_eq_mul, Nat.cast_id]
   have hmaps : Set.MapsTo φ ↑P ↑(Finset.range ((m + 1) * X ^ m + 1)) := by
     intro s hs
     rw [hP, Finset.mem_coe] at hs
@@ -246,23 +248,23 @@ private lemma collision_exists (m t : ℕ) (hm : 1 ≤ m) (ht : 1 ≤ t) :
   have hWm : 0 < W ^ m := pow_pos hWpos m
   have hnum : ((m + 1) * X ^ m + 1) * (t - 1) < W ^ (m + 1) := by
     calc ((m + 1) * X ^ m + 1) * (t - 1)
-      ≤ ((m + 1) * X ^ m + X ^ m) * (t - 1) := by
-        have hle : (m + 1) * X ^ m + 1 ≤ (m + 1) * X ^ m + X ^ m := by
-          omega
-        exact Nat.mul_le_mul hle le_rfl
+        ≤ ((m + 1) * X ^ m + X ^ m) * (t - 1) := by
+          have hle : (m + 1) * X ^ m + 1 ≤ (m + 1) * X ^ m + X ^ m := by
+            omega
+          exact Nat.mul_le_mul hle le_rfl
       _ = X ^ m * (((m + 1) + 1) * (t - 1)) := by ring
       _ = ((m + 1) * W) ^ m * (((m + 1) + 1) * (t - 1)) := by rw [hX]
       _ = W ^ m * ((m + 1) ^ m * (((m + 1) + 1) * (t - 1))) := by
-        rw [mul_pow]; ring
+          rw [mul_pow]; ring
       _ < W ^ m * W := mul_lt_mul_of_pos_left hB hWm
       _ = W ^ (m + 1) := (pow_succ W m).symm
   obtain ⟨y, _, hyt⟩ :
-    ∃ y ∈ Finset.range ((m + 1) * X ^ m + 1),
-      t ≤ (P.filter (fun s => φ s = y)).card := by
+      ∃ y ∈ Finset.range ((m + 1) * X ^ m + 1),
+        t ≤ (P.filter (fun s => φ s = y)).card := by
     by_contra hcon
     rw [not_exists] at hcon
     have hall : ∀ y ∈ Finset.range ((m + 1) * X ^ m + 1),
-      (P.filter (fun s => φ s = y)).card < t := by
+        (P.filter (fun s => φ s = y)).card < t := by
       intro y hy
       have hle : t ≤ (P.filter (fun s => φ s = y)).card → False := by
         intro hle
@@ -271,8 +273,8 @@ private lemma collision_exists (m t : ℕ) (hm : 1 ≤ m) (ht : 1 ≤ t) :
       exact hle (not_lt.mp hlt)
     have hsum := Finset.card_eq_sum_card_fiberwise hmaps
     have hle2 : ∑ y ∈ Finset.range ((m + 1) * X ^ m + 1),
-      (P.filter (fun s => φ s = y)).card ≤
-      (Finset.range ((m + 1) * X ^ m + 1)).card • (t - 1) := by
+        (P.filter (fun s => φ s = y)).card ≤
+        (Finset.range ((m + 1) * X ^ m + 1)).card • (t - 1) := by
       apply Finset.sum_le_card_nsmul
       intro y hy
       have h := hall y hy
@@ -287,8 +289,8 @@ private lemma collision_exists (m t : ℕ) (hm : 1 ≤ m) (ht : 1 ≤ t) :
     rw [Set.ncard_image_of_injective _ hvalinj,
       Set.ncard_coe_finset, hF'card]
   have hGsub : ((fun s : Finset ℕ => s.val) '' ↑F') ⊆
-    {M : Multiset ℕ | M.card = m + 1 ∧
-    (∀ x ∈ M, 0 < x) ∧ (M.map (fun x => x ^ m)).sum = y} := by
+      {M : Multiset ℕ | M.card = m + 1 ∧
+      (∀ x ∈ M, 0 < x) ∧ (M.map (fun x => x ^ m)).sum = y} := by
     intro M hM
     obtain ⟨s, hs, rfl⟩ := hM
     rw [Finset.mem_coe] at hs
@@ -309,6 +311,9 @@ private lemma collision_exists (m t : ℕ) (hm : 1 ≤ m) (ht : 1 ≤ t) :
   have hle := Set.ncard_le_ncard hGsub (repSet_finite (m + 1) y m hm)
   rw [hGcard] at hle
   exact ⟨y, hle⟩
+
+/-! # Generalized taxicab seed numbers
+-/
 
 end MetaMathlibExt
 
@@ -334,7 +339,7 @@ lemma generalized_taxicab_seed_exists
 -- proof
   classical
   set V : ℕ → Set ℕ := fun n => {v | t ≤ Set.ncard {M : Multiset ℕ |
-    M.card = n ∧ (∀ x ∈ M, 0 < x) ∧ (M.map (fun x => x ^ m)).sum = v}} with hV
+      M.card = n ∧ (∀ x ∈ M, 0 < x) ∧ (M.map (fun x => x ^ m)).sum = v}} with hV
   have hprop : ∀ n, (V n).Nonempty → (V (n + 1)).Nonempty := by
     intro n hne
     obtain ⟨v, hv⟩ := hne
@@ -366,14 +371,14 @@ lemma generalized_taxicab_seed_exists
       (M.map (fun x => x ^ m)).sum = sInf (V n) + 1}
     exact le_trans (hamem n hn) (pad_ncard_le n (sInf (V n)) m hm)
   have hb_step : ∀ j, sInf (V (m + 1 + (j + 1))) - (m + 1 + (j + 1)) ≤
-    sInf (V (m + 1 + j)) - (m + 1 + j) := by
+      sInf (V (m + 1 + j)) - (m + 1 + j) := by
     intro j
     have e1 : m + 1 + (j + 1) = (m + 1 + j) + 1 := by omega
     rw [e1]
     have h := ha_step (m + 1 + j) (by omega)
     omega
   have hb_anti : ∀ j k, sInf (V (m + 1 + (j + k))) - (m + 1 + (j + k)) ≤
-    sInf (V (m + 1 + j)) - (m + 1 + j) := by
+      sInf (V (m + 1 + j)) - (m + 1 + j) := by
     intro j k
     induction k with
     | zero => exact le_rfl
@@ -385,16 +390,16 @@ lemma generalized_taxicab_seed_exists
     ⟨_, ⟨0, rfl⟩⟩
   obtain ⟨j₀, hj₀⟩ := Nat.sInf_mem hbrange
   have hL_le : ∀ j, sInf (Set.range fun j => sInf (V (m + 1 + j)) - (m + 1 + j)) ≤
-    sInf (V (m + 1 + j)) - (m + 1 + j) := fun j =>
+      sInf (V (m + 1 + j)) - (m + 1 + j) := fun j =>
     Nat.sInf_le ⟨j, rfl⟩
   have hj₀b : sInf (V (m + 1 + j₀)) - (m + 1 + j₀) =
-    sInf (Set.range fun j => sInf (V (m + 1 + j)) - (m + 1 + j)) := hj₀
+      sInf (Set.range fun j => sInf (V (m + 1 + j)) - (m + 1 + j)) := hj₀
   have hb_const : ∀ k, sInf (V (m + 1 + (j₀ + k))) - (m + 1 + (j₀ + k)) =
-    sInf (Set.range fun j => sInf (V (m + 1 + j)) - (m + 1 + j)) := by
+      sInf (Set.range fun j => sInf (V (m + 1 + j)) - (m + 1 + j)) := by
     intro k
     apply le_antisymm _ (hL_le (j₀ + k))
     calc sInf (V (m + 1 + (j₀ + k))) - (m + 1 + (j₀ + k))
-      ≤ sInf (V (m + 1 + j₀)) - (m + 1 + j₀) := hb_anti j₀ k
+        ≤ sInf (V (m + 1 + j₀)) - (m + 1 + j₀) := hb_anti j₀ k
       _ = sInf (Set.range fun j => sInf (V (m + 1 + j)) - (m + 1 + j)) := hj₀b
   have hval : ∀ k, sInf (V (m + 1 + (j₀ + k))) = sInf (V (m + 1 + j₀)) + k := by
     intro k
@@ -402,21 +407,21 @@ lemma generalized_taxicab_seed_exists
     have h1 : m + 1 + (j₀ + k) ≤ sInf (V (m + 1 + (j₀ + k))) := ha_ge _ (by omega)
     have nk : m + 1 + (j₀ + k) = (m + 1 + j₀) + k := by omega
     have e0 : sInf (V (m + 1 + j₀)) =
-      sInf (Set.range fun j => sInf (V (m + 1 + j)) - (m + 1 + j)) + (m + 1 + j₀) := by
+        sInf (Set.range fun j => sInf (V (m + 1 + j)) - (m + 1 + j)) + (m + 1 + j₀) := by
       omega
     have hk := hb_const k
     have ek : sInf (V (m + 1 + (j₀ + k))) =
-      sInf (Set.range fun j => sInf (V (m + 1 + j)) - (m + 1 + j)) + (m + 1 + (j₀ + k)) := by
+        sInf (Set.range fun j => sInf (V (m + 1 + j)) - (m + 1 + j)) + (m + 1 + (j₀ + k)) := by
       omega
     omega
   have hseed_T : ∀ k, T (m + 1 + j₀ + k) m t =
-    some (sInf (V (m + 1 + j₀)) + k) := by
+      some (sInf (V (m + 1 + j₀)) + k) := by
     intro k
     have e : m + 1 + j₀ + k = m + 1 + (j₀ + k) := by omega
     rw [e, ← hval k]
     exact haT _ (by omega)
   have hSeed : 0 < m + 1 + j₀ ∧ ∃ v, T (m + 1 + j₀) m t = some v ∧
-    ∀ k, T (m + 1 + j₀ + k) m t = some (v + k) := by
+      ∀ k, T (m + 1 + j₀ + k) m t = some (v + k) := by
     refine ⟨by omega, sInf (V (m + 1 + j₀)), hseed_T 0, ?_⟩
     simpa using hseed_T
   set Seeds : Set ℕ := {s | 0 < s ∧ ∃ v, T s m t = some v ∧
@@ -431,4 +436,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -80,6 +80,7 @@ export {
     Lean_le,
     LeanEq,
     Lean_perp,
+    LeanDistributed,
     LeanBEq,
     Lean_bne,
     Lean_ne,
@@ -235,6 +236,8 @@ export function compile(code) {
 }
 
 LeanParser.instance = new LeanParser();
+/** Allow `new LeanModule(src)` (see LeanModule.constructor). */
+L.LeanModule.compileSource = compile;
 /**
  * Parse a Lean source file and extract the theorem structure.
  *

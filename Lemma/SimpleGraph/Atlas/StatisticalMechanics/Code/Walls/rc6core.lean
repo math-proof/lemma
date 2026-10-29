@@ -102,7 +102,7 @@ private lemma rc6_injectionAll_iff_reimerCardFormAll_eq :
 private lemma rc6_reimer_inequality_of_injectionAll_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : rc5_BoxReflectInjectionAll)

@@ -133,12 +133,12 @@ theorem boundarySourceCurrentPMF_apply_eq_parity_factor
         parityFiberMass_closed G beta hbeta.le H hH,
         ENNReal.ofReal_mul (mul_nonneg hcosh htanh),
         ENNReal.ofReal_mul hcosh]
-    let c : ℝ≥0∞ := ENNReal.ofReal
+    let c : ENNReal := ENNReal.ofReal
       (Real.cosh beta ^ G.edgeFinset.card)
-    let t : ℝ≥0∞ := ENNReal.ofReal (Real.tanh beta ^ H.card)
-    let p : ℝ≥0∞ := ENNReal.ofReal
+    let t : ENNReal := ENNReal.ofReal (Real.tanh beta ^ H.card)
+    let p : ENNReal := ENNReal.ofReal
       (boundarySourceParityPartition G beta interior internalSources)
-    let k : ℝ≥0∞ := ENNReal.ofReal
+    let k : ENNReal := ENNReal.ofReal
       (parityCurrentKernel G beta H m)
     have hc0 : c ≠ 0 := (ENNReal.ofReal_pos.2 (by positivity)).ne'
     have hcTop : c ≠ ⊤ := ENNReal.ofReal_ne_top

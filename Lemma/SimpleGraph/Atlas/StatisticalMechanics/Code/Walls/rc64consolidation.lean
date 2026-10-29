@@ -112,7 +112,7 @@ private lemma rc64_reimer_inequality_of_leaf_eq
   {n : ℕ}
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : rc64_ReimerLeaf)
@@ -130,7 +130,7 @@ private lemma rc64_reimer_inequality_of_boxUnionBound_eq
   {n : ℕ}
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : rc64_BoxUnionBound)
@@ -147,7 +147,7 @@ private lemma rc64_reimer_inequality_of_boxUnionBound_eq
 private lemma rc64_all_reductions_eq
   {n : ℕ} :
 -- imply
-  (rc64_ReimerLeaf → rc64_BoxUnionBound) ∧ (rc64_BoxUnionBound → ∀ (m : ℕ) (𝒜 ℬ : Finset (Finset (Fin m))), #(rc20_famCylBox 𝒜 ℬ) ≤ #(rc10_reflInter 𝒜 ℬ)) ∧ (rc64_BoxUnionBound → ReimerWprobCore) ∧ (rc64_ReimerLeaf → ReimerWprobCore) ∧ (∀ (_h : ReimerWprobCore) (E : Type) [Fintype E] [DecidableEq E] (p : ℝ≥0) (hp : p ≤ 1) (A B : Set (ConfigSpace E)), (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B) ≤ (bernoulliProductMeasure (E := E) p hp).real A * (bernoulliProductMeasure (E := E) p hp).real B) := by
+  (rc64_ReimerLeaf → rc64_BoxUnionBound) ∧ (rc64_BoxUnionBound → ∀ (m : ℕ) (𝒜 ℬ : Finset (Finset (Fin m))), #(rc20_famCylBox 𝒜 ℬ) ≤ #(rc10_reflInter 𝒜 ℬ)) ∧ (rc64_BoxUnionBound → ReimerWprobCore) ∧ (rc64_ReimerLeaf → ReimerWprobCore) ∧ (∀ (_h : ReimerWprobCore) (E : Type) [Fintype E] [DecidableEq E] (p : NNReal) (hp : p ≤ 1) (A B : Set (ConfigSpace E)), (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B) ≤ (bernoulliProductMeasure (E := E) p hp).real A * (bernoulliProductMeasure (E := E) p hp).real B) := by
 -- proof
   apply StatMech.Walls.rc64_all_reductions
 

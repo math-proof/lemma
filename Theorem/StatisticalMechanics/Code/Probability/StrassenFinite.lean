@@ -30,7 +30,7 @@ variable [Fintype P] [PartialOrder P] [DecidableEq P]
 omit [DecidableEq P] in
 
 
-theorem StochasticDom.of_isMonotoneCoupling {μ ν : P → ℝ≥0} {π : P × P → ℝ≥0}
+theorem StochasticDom.of_isMonotoneCoupling {μ ν : P → NNReal} {π : P × P → NNReal}
     (h : IsMonotoneCoupling μ ν π) : StochasticDom μ ν := by
   intro U hU
   have hμU : ∑ x ∈ U, μ x = ∑ p ∈ U ×ˢ (univ : Finset P), π p := by

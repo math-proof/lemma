@@ -34,7 +34,7 @@ theorem bcl2_threeMeetBox_subset_top (n : ℕ) :
   exact hω.1
 
 
-theorem bcl2_tripleEvent_pos_of_threeMeetBox (p : ℝ≥0) (hp1 : p ≤ 1) (n : ℕ)
+theorem bcl2_tripleEvent_pos_of_threeMeetBox (p : NNReal) (hp1 : p ≤ 1) (n : ℕ)
     (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n)) :
     ∃ (m : ℕ) (x y z : Site 2),
       0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (bxp_tripleEvent 2 m x y z) := by

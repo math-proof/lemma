@@ -26,9 +26,8 @@ namespace PDA
 variable {α : Type u} {σ₁ : Type*} {σ₂ : Type*} {γ : Type*}
 /--
 [product_step_proj₁](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/CFLInterRegular.lean)
--/
-@[path]
 step of the original PDA `P` on the first component (state, input, stack). -/
+@[path]
 lemma product_step_proj₁ (P : PDA α σ₁ γ) (D : DFA α σ₂)
   {c₁ c₂ : Config (α := α) (σ := σ₁ × σ₂) (γ := γ)}
   (hs : (P.product D).Step c₁ c₂) :
@@ -86,9 +85,8 @@ namespace PDA
 variable {α : Type u} {σ₁ : Type*} {σ₂ : Type*} {γ : Type*}
 /--
 [product_reaches_proj₁](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/CFLInterRegular.lean)
--/
-@[path]
 PDA `P.product D` projects to a computation of `P` on the first component. -/
+@[path]
 lemma product_reaches_proj₁ (P : PDA α σ₁ γ) (D : DFA α σ₂)
   {c₁ c₂ : Config (α := α) (σ := σ₁ × σ₂) (γ := γ)}
   (hr : (P.product D).Reaches c₁ c₂) :
@@ -270,3 +268,4 @@ private lemma product_reaches_proj_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

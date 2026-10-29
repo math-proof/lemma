@@ -87,7 +87,7 @@ theorem bc41_selfDownArm_of_cutGeometryFixed'_arm (ω : ConfigSpace (Sym2 (Site 
     (bc41_parentFunneling_of_cutGeometryFixed'_arm ω n hgeo hroot_side)
 
 
-theorem bc41_burton_keane_bernoulli_of_cutGeometryFixed'_arm (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc41_burton_keane_bernoulli_of_cutGeometryFixed'_arm (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hgeo : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc40_ArmCutGeometryFixed' ω n)
     (hroot_side : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →

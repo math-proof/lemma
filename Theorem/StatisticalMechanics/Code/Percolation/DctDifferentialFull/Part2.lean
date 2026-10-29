@@ -75,7 +75,7 @@ theorem withinConnEvent_eq (S : Finset (Site d)) (x : Site d)
   exact ⟨fun ⟨_, _, hconn⟩ => hconn, fun hconn => ⟨h0, hx, hconn⟩⟩
 
 
-theorem connWithinProb_eq (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d)) (x : Site d)
+theorem connWithinProb_eq (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d)) (x : Site d)
     (h0 : origin d ∈ (S : Set (Site d))) (hx : x ∈ (S : Set (Site d))) :
     connWithinProb d p hp S x
       = (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
@@ -86,7 +86,7 @@ theorem connWithinProb_eq (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d)) (x 
   rw [dif_pos h0', dif_pos hx', withinConnEvent_eq S x h0 hx]
 
 
-theorem withinConn_indep (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d)) (o x : Site d)
+theorem withinConn_indep (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d)) (o x : Site d)
     (B : Set (ConfigSpace (Sym2 (Site d)))) (U : Finset (Sym2 (Site d)))
     (hdisj : Disjoint (edgesWithinFinset S) U)
     (hB : DependsOn (B.indicator (fun _ => (1 : ℝ))) (U : Set (Sym2 (Site d)))) :
@@ -107,7 +107,7 @@ theorem boundaryEdges_fst_mem {S : Finset (Site d)} {e : Site d × Site d}
   rw [← het]; exact ht1
 
 
-theorem phi_reassembly (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem phi_reassembly (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (h0 : origin d ∈ S)
     (B : Set (ConfigSpace (Sym2 (Site d)))) (U : Finset (Sym2 (Site d)))
     (hdisj : Disjoint (edgesWithinFinset S) U)
@@ -127,7 +127,7 @@ theorem phi_reassembly (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
       connWithinProb_eq p hp S e.1 h0c hxc]
 
 
-theorem phi_surface_summand (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem phi_surface_summand (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (h0 : origin d ∈ S) (hp0 : 0 < (p : ℝ)) (hp1 : (p : ℝ) < 1)
     (B : Set (ConfigSpace (Sym2 (Site d)))) (U : Finset (Sym2 (Site d)))
     (hdisj : Disjoint (edgesWithinFinset S) U)

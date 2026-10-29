@@ -36,7 +36,7 @@ private lemma isTightMeasureSet_range_of_currentCoordinateBox_eq
   [Countable E]
   {mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E)}
 -- given
-  (hbox : ∀ ε : ℝ≥0∞, 0 < ε → ∃ K : E → ℕ, ∀ i, ∑' e : E, (mu i : Measure _) {n : InfiniteCurrentConfig E | K e ≤ n e} ≤ ε) :
+  (hbox : ∀ ε : ENNReal, 0 < ε → ∃ K : E → ℕ, ∀ i, ∑' e : E, (mu i : Measure _) {n : InfiniteCurrentConfig E | K e ≤ n e} ≤ ε) :
 -- imply
   IsTightMeasureSet (Set.range fun i => (mu i : Measure (InfiniteCurrentConfig E))) := by
 -- proof
@@ -50,7 +50,7 @@ private lemma isTightMeasureSet_range_of_coordinate_tight_eq
   [Countable E]
   {mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E)}
 -- given
-  (hcoord : ∀ e : E, ∀ ε : ℝ≥0∞, 0 < ε → ∃ K : ℕ, ∀ i, (mu i : Measure _) {n : InfiniteCurrentConfig E | K ≤ n e} ≤ ε) :
+  (hcoord : ∀ e : E, ∀ ε : ENNReal, 0 < ε → ∃ K : ℕ, ∀ i, (mu i : Measure _) {n : InfiniteCurrentConfig E | K ≤ n e} ≤ ε) :
 -- imply
   IsTightMeasureSet (Set.range fun i => (mu i : Measure (InfiniteCurrentConfig E))) := by
 -- proof
@@ -64,7 +64,7 @@ private lemma isTightMeasureSet_range_of_uniform_inverse_tail_eq
   [Countable E]
   {mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E)}
 -- given
-  (B : ℝ≥0∞)
+  (B : ENNReal)
   (hB : B ≠ ∞)
   (htail : ∀ i e (K : ℕ), 0 < K → (mu i : Measure _) {n : InfiniteCurrentConfig E | K ≤ n e} ≤ B / K) :
 -- imply
@@ -94,7 +94,7 @@ private lemma weakCurrent_subsequence_of_uniform_inverse_tail_eq
   [Countable E]
   {mu : ℕ → ProbabilityMeasure (InfiniteCurrentConfig E)}
 -- given
-  (B : ℝ≥0∞)
+  (B : ENNReal)
   (hB : B ≠ ∞)
   (htail : ∀ i e (K : ℕ), 0 < K → (mu i : Measure _) {n : InfiniteCurrentConfig E | K ≤ n e} ≤ B / K) :
 -- imply

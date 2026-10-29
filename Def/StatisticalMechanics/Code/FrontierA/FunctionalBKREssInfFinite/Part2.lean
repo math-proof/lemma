@@ -26,7 +26,7 @@ variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
 noncomputable def cylinderEssInf
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1)
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1)
     (f : ConfigSpace E → ℝ) (K : Set E) (omega : ConfigSpace E) : ℝ :=
   essInf (fun eta : AgreementFiberPoint K omega => f eta.1)
     (agreementFiberMeasure p hp K omega)

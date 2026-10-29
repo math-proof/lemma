@@ -55,9 +55,9 @@ theorem crr_faceDualConnectionEvent_eq_preimage (n : ℤ) :
 
 theorem crr_faceDualConnection_half_law (n : ℤ)
     (hmeas : MeasurableSet (crr_FaceConnectionEvent n)) :
-    (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one)
+    (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one)
         (crr_FaceDualConnectionEvent n) =
-      (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one)
+      (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one)
         (crr_FaceConnectionEvent n) := by
   rw [crr_faceDualConnectionEvent_eq_preimage]
   exact fci_faceDualConfig_measurePreserving.measure_preimage hmeas.nullMeasurableSet
@@ -76,14 +76,14 @@ theorem crr_square_half_of_frameArcOrder_and_faceComparison (n : ℤ) (hn : 0 �
     (hmeasH : MeasurableSet (horizontalCrossingEvent 0 n 0 n))
     (hmeasFace : MeasurableSet (crr_FaceConnectionEvent n))
     (hcompare :
-      (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one).real
+      (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one).real
           (crr_FaceConnectionEvent n) ≤
-        (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one).real
+        (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one).real
           (horizontalCrossingEvent 0 n 0 n)) :
     (1 : ℝ) / 2 ≤
-      (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one).real
+      (bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one).real
         (horizontalCrossingEvent 0 n 0 n) := by
-  let μ := bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : ℝ≥0) half_le_one
+  let μ := bernoulliProductMeasure (E := Sym2 (Site 2)) (2⁻¹ : NNReal) half_le_one
   have hmono : μ.real (horizontalCrossingEvent 0 n 0 n)ᶜ ≤
       μ.real (crr_FaceDualConnectionEvent n) :=
     measureReal_mono (crr_square_compl_subset_faceDualConnection n hn horder)

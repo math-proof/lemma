@@ -41,11 +41,11 @@ section LipschitzParametrizable
 
 def IsLipschitzContinuous {X Y : Type*} [PseudoMetricSpace X] [PseudoMetricSpace Y]
     (f : X → Y) : Prop :=
-  ∃ K : ℝ≥0, LipschitzWith K f
+  ∃ K : NNReal, LipschitzWith K f
 
 def IsLipschitzParametrizable {X : Type*} [PseudoMetricSpace X] (B : Set X) (d : ℕ) : Prop :=
   ∃ (m : ℕ) (f : Fin m → ((Fin d → ℝ) → X)),
-    (∀ i, ∃ K : ℝ≥0, LipschitzWith K (f i)) ∧
+    (∀ i, ∃ K : NNReal, LipschitzWith K (f i)) ∧
     B ⊆ ⋃ i, (f i) '' (Set.pi Set.univ (fun _ => Set.Icc 0 1))
 
 def outerCubeSet {n : ℕ} (S : Set (Fin n → ℝ)) (t : ℝ) : Set (Fin n → ℤ) :=

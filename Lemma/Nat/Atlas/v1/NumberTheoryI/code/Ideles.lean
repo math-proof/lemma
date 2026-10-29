@@ -82,7 +82,6 @@ lemma mem_OneIdeleGroup_iff
   a ∈ OneIdeleGroup K ↔ NumberField.Adeles.adelicAbsVal (a : NumberField.AdeleRing (𝓞 K) K) = 1 := by
 -- proof
   rw [mem_OneIdeleGroup, adelicNorm_eq]
-set_option maxHeartbeats 400000 in
 
 end Ideles
 
@@ -411,7 +410,6 @@ lemma infiniteAdeleRing_continuousOn_ringInverse
   · intro a (ha : IsUnit a)
     exact (NormedRing.inverse_continuousAt ha.unit).continuousWithinAt
   · intro x (hx : IsUnit x); exact hx.apply w
-set_option maxHeartbeats 800000 in
 
 end Ideles
 

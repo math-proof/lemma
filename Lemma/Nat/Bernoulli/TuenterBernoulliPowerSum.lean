@@ -521,7 +521,7 @@ lemma tuenter_bernoulli_power_sum_identity
           a ^ i * b ^ ((n : ℤ) - 1 - (i : ℤ)) * sigma (b - 1) i)) h0mem)
   rw [hrange] at hsplit
   linear_combination hF0 - hsplit
-end
+end MetaMathlibExt
 
 
 

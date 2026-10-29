@@ -30,7 +30,7 @@ set_option linter.unusedFintypeInType false in
 set_option linter.unusedDecidableInType false in
 
 theorem reimer_inequality_of_slabCard (h : poc_SlabCardAll) {E : Type*}
-    [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1) (A B : Set (ConfigSpace E)) :
+    [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1) (A B : Set (ConfigSpace E)) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A
         * (bernoulliProductMeasure (E := E) p hp).real B :=

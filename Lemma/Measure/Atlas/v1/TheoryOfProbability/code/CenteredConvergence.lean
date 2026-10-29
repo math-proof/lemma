@@ -21,7 +21,7 @@ lemma eLpNorm_one_le_two
   eLpNorm f 1 μ ≤ eLpNorm f 2 μ := by
 -- proof
   have h := eLpNorm_le_eLpNorm_mul_rpow_measure_univ (p := 1) (q := 2)
-    (by norm_num : (1 : ℝ≥0∞) ≤ 2) hf
+    (by norm_num : (1 : ENNReal) ≤ 2) hf
   simp only [measure_univ, one_rpow, mul_one] at h
   exact h
 set_option maxHeartbeats 800000 in
@@ -48,7 +48,7 @@ lemma eLpNorm_one_le_sqrt_integral_sq
 -- proof
   have h1 : eLpNorm f 1 μ ≤ eLpNorm f 2 μ := eLpNorm_one_le_two hf.aestronglyMeasurable
   have h2 : eLpNorm f 2 μ ≤ ENNReal.ofReal (Real.sqrt C) := by
-    rw [hf.eLpNorm_eq_integral_rpow_norm (by norm_num : (2 : ℝ≥0∞) ≠ 0) (by norm_num : (2 : ℝ≥0∞) ≠ ⊤)]
+    rw [hf.eLpNorm_eq_integral_rpow_norm (by norm_num : (2 : ENNReal) ≠ 0) (by norm_num : (2 : ENNReal) ≠ ⊤)]
     apply ENNReal.ofReal_le_ofReal
     simp only [ENNReal.toReal_ofNat]
     rw [Real.sqrt_eq_rpow]

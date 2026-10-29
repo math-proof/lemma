@@ -29,7 +29,7 @@ set_option linter.unusedSectionVars false
 set_option maxRecDepth 4000
 
 
-def bcl2_Bridge (p : ℝ≥0) (hp1 : p ≤ 1) : Prop :=
+def bcl2_Bridge (p : NNReal) (hp1 : p ≤ 1) : Prop :=
   ∀ (m : ℕ) (x y z : Site 2),
     0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (bxp_tripleEvent 2 m x y z) →
       ∃ (I : Finset (Sym2 (Site 2))) (a₁ a₂ a₃ : Site 2) (η₀ : ConfigSpace ↥I),

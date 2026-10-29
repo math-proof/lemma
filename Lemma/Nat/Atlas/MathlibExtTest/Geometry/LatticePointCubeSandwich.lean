@@ -8,7 +8,7 @@ open LatticePointCubeSandwich MeasureTheory
 [singleton_zero_bounded](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/LatticePointCubeSandwich.lean)
 -/
 @[path]
-lemma singleton_zero_bounded
+lemma singleton_zero_bounded :
 -- imply
   Bornology.IsBounded ({0} : Set (Fin 0 → ℝ)) :=
 -- proof
@@ -18,7 +18,7 @@ lemma singleton_zero_bounded
 [halfOpenUnit_bounded](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/LatticePointCubeSandwich.lean)
 -/
 @[path]
-lemma halfOpenUnit_bounded
+lemma halfOpenUnit_bounded :
 -- imply
   Bornology.IsBounded halfOpenUnit :=
 -- proof
@@ -26,3 +26,4 @@ lemma halfOpenUnit_bounded
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

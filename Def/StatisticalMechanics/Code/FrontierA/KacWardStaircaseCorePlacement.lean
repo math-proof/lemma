@@ -22,7 +22,7 @@ open Set
 def KWEndpointInteriorMeshWithin
     {n M : ℕ} [NeZero n]
     {polygon : KWFiniteSimplePolygon n}
-    (data : KWStairParameterData (S := M + 2) polygon) (r : ℝ≥0) : Prop :=
+    (data : KWStairParameterData (S := M + 2) polygon) (r : NNReal) : Prop :=
   ∀ i : Fin n, ∀ k : Fin (M + 2), k ≠ 0 → k ≠ Fin.last (M + 1) →
     (data.parameter i k.succ - data.parameter i k.castSucc) *
       ‖polygon.edgeVector i‖ < r

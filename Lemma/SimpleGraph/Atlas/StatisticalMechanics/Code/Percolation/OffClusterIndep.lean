@@ -268,7 +268,7 @@ private lemma offCluster_factor_eq
   {x y : Site d}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hoS : origin d ∈ (S : Set (Site d)))
   (hxK : x ∈ K) :
@@ -301,7 +301,7 @@ private lemma offClusterBox_crossProb_le_eq
   {y : Site d}
   {L m n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hy : y ∈ box d L)
   (hmLn : m + L ≤ n)

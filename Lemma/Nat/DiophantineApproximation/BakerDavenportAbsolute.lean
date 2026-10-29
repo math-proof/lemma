@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Nat.DiophantineApproximation.BakerDavenportNearestIntegerCore
 
 
 namespace MetaMathlibExt
@@ -27,9 +28,11 @@ lemma bakerDavenport_reduction_absolute_general
   have hlogB : 0 < Real.log B := Real.log_pos hB
   have hAq : 0 < A * (q : ℝ) / epsilon := by positivity
   have h1 : Real.log (A * (q : ℝ) / epsilon) ≤ (w : ℝ) * Real.log B := by
-    rwa [ge_iff_le, div_le_iff₀ hlogB] at hwlog
+    rw [ge_iff_le, div_le_iff₀ hlogB] at hwlog
+    exact hwlog
   have h2 : Real.log (A * (q : ℝ) / epsilon) ≤ Real.log (B ^ w) := by
-    rwa [Real.log_pow]
+    rw [Real.log_pow]
+    exact h1
   have hBpos : (0 : ℝ) < B := by linarith
   have hBwpos : (0 : ℝ) < B ^ w := pow_pos hBpos w
   have hBw : A * (q : ℝ) / epsilon ≤ B ^ w :=
@@ -52,6 +55,7 @@ lemma bakerDavenport_reduction_absolute_general
   push_cast at hcore
   rw [lt_div_iff₀ hqR] at hLamlt
   linarith
+
 
 end MetaMathlibExt
 
@@ -89,4 +93,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

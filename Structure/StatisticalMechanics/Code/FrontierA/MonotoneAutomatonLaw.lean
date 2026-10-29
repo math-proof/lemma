@@ -28,11 +28,11 @@ structure MonotoneAutomaton (d : ℕ) where
   equivariant : ∀ (g : Multiplicative (Site d)) (xi : NonnegativeField d),
     toFun (fieldShift g xi) = shift g (toFun xi)
   monotone : Monotone toFun
-  threshold : ℝ≥0
+  threshold : NNReal
   occupationThreshold : ∀ (xi : NonnegativeField d) (x : Site d),
     threshold ≤ xi x → toFun xi x = true
   otherInfiniteClustersStable : ∀ (xi : NonnegativeField d) (x : Site d)
-    (r : ℝ≥0) (y : Site d),
+    (r : NNReal) (y : Site d),
     y ∉ siteCluster (toFun (raiseField xi x r)) x →
     (siteCluster (toFun (raiseField xi x r)) y).Infinite →
     (siteCluster (toFun xi) y).Infinite

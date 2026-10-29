@@ -57,9 +57,8 @@ namespace MetaMathlibExt
 
 /--
 [B_sum_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/WeightedFibonacciBinet.lean)
--/
-@[path]
 characteristic equation `p.eval lam = 0` divided through by `lam ^ r`. -/
+@[path]
 private lemma B_sum_eq_one
   (r : ℕ)
   (A : Fin r → ℝ)
@@ -121,9 +120,8 @@ namespace MetaMathlibExt
 
 /--
 [b_rec_thm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/WeightedFibonacciBinet.lean)
--/
-@[path]
 `b n = ∑ B k * b (n - 1 - k)`. -/
+@[path]
 private lemma b_rec_thm
   (r : ℕ)
   (A : Fin r → ℝ)
@@ -238,11 +236,11 @@ private lemma key_convergence
           exact ih _ (by omega) (by omega)
         calc mn W0 = mn W0 * 1 := by rw [mul_one]
           _ = mn W0 * Finset.sum Finset.univ (fun k : Fin r => A k / lam ^ (k.val + 1)) := by
-            rw [hB_sum]
+              rw [hB_sum]
           _ = Finset.sum Finset.univ (fun k : Fin r => mn W0 * (A k / lam ^ (k.val + 1))) := by
-            rw [Finset.mul_sum]
+              rw [Finset.mul_sum]
           _ = Finset.sum Finset.univ (fun k : Fin r => (A k / lam ^ (k.val + 1)) * mn W0) := by
-            apply Finset.sum_congr rfl; intro k _; rw [mul_comm]
+              apply Finset.sum_congr rfl; intro k _; rw [mul_comm]
           _ ≤ Finset.sum Finset.univ (fun k : Fin r =>
             (A k / lam ^ (k.val + 1)) * (a (m - 1 - k.val) / lam ^ (m - 1 - k.val))) :=
             Finset.sum_le_sum (fun k _ => hterm k)
@@ -406,10 +404,10 @@ private lemma key_convergence
           rw [e3a, hz, mul_one]
         calc (∑ s ∈ S, (((n : ℤ) * z s - t s) * (s : ℤ)))
           = (∑ s ∈ S, (((n : ℤ) * z s)) * (s : ℤ)) - (∑ s ∈ S, t s * (s : ℤ)) := by
-            rw [← Finset.sum_sub_distrib]
-            refine Finset.sum_congr rfl ?_
-            intro s _
-            rw [sub_mul]
+              rw [← Finset.sum_sub_distrib]
+              refine Finset.sum_congr rfl ?_
+              intro s _
+              rw [sub_mul]
           _ = (n : ℤ) - ∑ s ∈ S, t s * (s : ℤ) := by rw [e3]
       rw [hQ, Finset.mul_sum]
       exact e1.trans e2
@@ -475,10 +473,10 @@ private lemma key_convergence
           (Q.toNat + (t m0).toNat) s * s : ℕ) : ℤ)
           = ∑ s ∈ S, ((Function.update (fun s => (t s).toNat) m0
             (Q.toNat + (t m0).toNat) s : ℕ) : ℤ) * (s : ℤ) := by
-            rw [Nat.cast_sum]
-            apply Finset.sum_congr rfl
-            intro s _
-            rw [Nat.cast_mul]
+              rw [Nat.cast_sum]
+              apply Finset.sum_congr rfl
+              intro s _
+              rw [Nat.cast_mul]
           _ = ((n : ℕ) : ℤ) := hsumI
       exact (Nat.cast_inj.mp hcast).symm
     exact hfinal
@@ -870,21 +868,20 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma binet_general
-  {r : ℕ}
-  {A c : Fin r → ℝ}
-  {a : ℕ → ℝ}
-  {p : Polynomial ℝ}
-  {lam : ℝ}
--- given
+  (r : ℕ)
   (hr : 2 ≤ r)
+  (A c : Fin r → ℝ)
   (hA : ∀ k, 0 ≤ A k)
   (hc : ∀ k, 0 ≤ c k)
   (hAr : ∃ i : Fin r, i.val + 1 = r ∧ 0 < A i)
   (hcpos : ∃ k₀, 0 < c k₀)
   (hgcd : ∀ d : ℕ, (∀ k : Fin r, 0 < A k → d ∣ k.val + 1) → d = 1)
+  (a : ℕ → ℝ)
   (ha_init : ∀ n (h : n < r), a n = c ⟨n, h⟩)
   (ha_rec : ∀ n, r ≤ n → a n = Finset.sum Finset.univ (fun k : Fin r => A k * a (n - 1 - k.val)))
+  (p : Polynomial ℝ)
   (hp : p = Polynomial.X ^ r - Finset.sum Finset.univ (fun k : Fin r => Polynomial.C (A k) * Polynomial.X ^ (r - 1 - k.val)))
+  (lam : ℝ)
   (hlam_pos : 0 < lam)
   (hlam_root : p.IsRoot lam) :
 -- imply
@@ -938,7 +935,6 @@ lemma binet_general
         rw [pow_succ]
         field_simp
     rwa [heq]
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -966,8 +962,8 @@ lemma binet
   (hp : p = Polynomial.X ^ r - Finset.sum Finset.univ (fun k : Fin r => Polynomial.C (A k) * Polynomial.X ^ (r - 1 - k.val)))
   (hlam_pos : 0 < lam)
   (hlam_root : p.IsRoot lam)
-  (hlam_simple : ¬ p.derivative.IsRoot lam)
-  (hlam_dom : ∀ z : ℂ, (p.map Complex.ofRealHom).IsRoot z → ‖z‖ ≤ lam ∧ (‖z‖ = lam → z = ↑lam)) :
+  (_hlam_simple : ¬ p.derivative.IsRoot lam)
+  (_hlam_dom : ∀ z : ℂ, (p.map Complex.ofRealHom).IsRoot z → ‖z‖ ≤ lam ∧ (‖z‖ = lam → z = ↑lam)) :
 -- imply
   ∃ C : ℝ, 0 < C ∧
     Asymptotics.IsLittleO Filter.atTop (fun n => a n - C * lam ^ n)
@@ -980,4 +976,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

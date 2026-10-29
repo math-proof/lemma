@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry3
@@ -116,7 +115,7 @@ private lemma arctan_three_add {m : ℝ} (hm : 1 ≤ m) :
     = (Real.arctan (1 / (3 * m - 1)) + Real.arctan (1 / (3 * m + 1))) +
       Real.arctan (1 / (3 * m)) := by ring
     _ = Real.arctan (6 * m / (9 * m ^ 2 - 2)) + Real.arctan (1 / (3 * m)) := by
-      rw [eA]
+        rw [eA]
     _ = Real.arctan ((27 * m ^ 2 - 2) / (27 * m ^ 3 - 12 * m)) := eB
     _ = Real.arctan (1 / m) +
       Real.arctan ((10 * m) / ((3 * m ^ 2 + 2) * (9 * m ^ 2 - 1))) := eC.symm
@@ -143,9 +142,9 @@ private lemma reindex_sum (n : ℕ) :
   calc (∑ k ∈ Finset.Icc 1 (2 * n + 1), Real.arctan (1 / ((↑n + ↑k : ℝ))))
     = ∑ k ∈ Finset.Icc 1 (2 * n + 1),
       Real.arctan (1 / (((n + k : ℕ)) : ℝ)) := by
-      apply Finset.sum_congr rfl
-      intro k _
-      rw [Nat.cast_add]
+        apply Finset.sum_congr rfl
+        intro k _
+        rw [Nat.cast_add]
     _ = ∑ j ∈ Finset.Icc (n + 1) (3 * n + 1), Real.arctan (1 / ((↑j : ℝ))) := by
       rw [← himg, Finset.sum_image hinj]
 
@@ -209,7 +208,8 @@ private lemma window_sum : ∀ n : ℕ,
     have eJ : Finset.Icc (0 + 1) (3 * 0 + 1) = {1} := by decide
     rw [eI, eJ, Finset.sum_empty, Finset.sum_singleton, add_zero]
     have c1 : ((1 : ℕ):ℝ) = 1 := Nat.cast_one
-    rwa [c1, div_one]
+    rw [c1, div_one]
+    exact Real.arctan_one
   | succ n ih =>
     have hR : (∑ k ∈ Finset.Icc 1 (n + 1),
       Real.arctan ((10 * (↑k : ℝ)) / ((3 * (↑k : ℝ) ^ 2 + 2) * (9 * (↑k : ℝ) ^ 2 - 1))))
@@ -249,7 +249,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry3
 -/
 @[path]
 lemma ramanujan_part1_ch2_entry3_general
-  {n : ℕ} :
+  (n : ℕ) :
 -- imply
   ∑ k ∈ Finset.Icc 1 (2 * n + 1), Real.arctan (1 / ((↑n + ↑k : ℝ))) =
     Real.pi / 4 + ∑ k ∈ Finset.Icc 1 n,
@@ -257,7 +257,6 @@ lemma ramanujan_part1_ch2_entry3_general
 -- proof
   rw [reindex_sum n]
   exact window_sum n
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry3
 
@@ -270,16 +269,16 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry3
 lemma ramanujan_part1_ch2_entry3
   {n : ℕ}
 -- given
-  (hn : 0 < n) :
+  (_hn : 0 < n) :
 -- imply
   ∑ k ∈ Finset.Icc 1 (2 * n + 1), Real.arctan (1 / ((↑n + ↑k : ℝ))) =
     Real.pi / 4 + ∑ k ∈ Finset.Icc 1 n,
     Real.arctan ((10 * (↑k : ℝ)) / ((3 * (↑k : ℝ) ^ 2 + 2) * (9 * (↑k : ℝ) ^ 2 - 1))) := by
 -- proof
-apply ramanujan_part1_ch2_entry3_general <;> assumption
+  apply ramanujan_part1_ch2_entry3_general n
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry3
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

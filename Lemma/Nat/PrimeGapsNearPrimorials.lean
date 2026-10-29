@@ -55,7 +55,6 @@ lemma prime_sub_primorial_prime_of_between_consecutive_primes_general
   have htr : t < r := lt_of_le_of_lt htm_le hmr
   have hle := key t htprime htd
   omega
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -68,9 +67,9 @@ namespace MetaMathlibExt
 lemma prime_sub_primorial_prime_of_between_consecutive_primes
   {q r p : ℕ}
 -- given
-  (hq : Nat.Prime q)
-  (hr : Nat.Prime r)
-  (hqr : q < r)
+  (_hq : Nat.Prime q)
+  (_hr : Nat.Prime r)
+  (_hqr : q < r)
   (hconsecutive : ∀ s : ℕ, q < s → s < r → ¬ Nat.Prime s)
   (hp : Nat.Prime p)
   (hlower : primorial q + 1 < p)

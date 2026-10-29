@@ -26,9 +26,7 @@ private lemma main
   have hloc : ∀ r : R, r ∈ mR → algebraMap R B r ∈ mB := by
     intro r hr
     by_contra h
-    have : IsUnit (algebraMap R B r) := by
-      simp [hmB, mem_maximalIdeal, mem_nonunits_iff]
-      apply h
+    have : IsUnit (algebraMap R B r) := IsLocalRing.notMem_maximalIdeal.mp h
     apply (hmR ▸ hr : r ∈ maximalIdeal R) (IsLocalHom.map_nonunit r this)
   have hmapPow : ∀ (n : ℕ) (r : R), r ∈ mR ^ n → algebraMap R B r ∈ mB ^ n := by
     intro n r hr
@@ -124,3 +122,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-10-28

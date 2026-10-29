@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open SylvesterSchur
+import Lemma.Nat.SylvesterSchur.ErdosKey
 
 
 namespace Nat
@@ -29,4 +29,4 @@ end Nat
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

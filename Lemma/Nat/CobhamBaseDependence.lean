@@ -52,9 +52,8 @@ namespace MetaMathlibExt
 
 /--
 [cbd_class0](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CobhamBaseDependence.lean)
--/
-@[path]
 for `x * c ^ n + z` with `z < c ^ n`. -/
+@[path]
 private lemma cbd_class0 {c : ℕ} {S : Set ℕ} (hR : IsBaseRecognizable c S) :
   ∃ (T : Type) (_ : Finite T) (κ : ℕ → T), ∀ x y n z : ℕ, κ x = κ y →
     z < c ^ n → (x * c ^ n + z ∈ S ↔ y * c ^ n + z ∈ S) := by
@@ -563,9 +562,8 @@ namespace MetaMathlibExt
 
 /--
 [cbd_ultimately_periodic](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CobhamBaseDependence.lean)
--/
-@[path]
 periodicity. -/
+@[path]
 private lemma cbd_ultimately_periodic {a b : ℕ} {S : Set ℕ}
   (haR : IsBaseRecognizable a S) (hbR : IsBaseRecognizable b S)
   (hind : ∀ m n : ℕ, 0 < m → 0 < n → a ^ m ≠ b ^ n) :
@@ -754,4 +752,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

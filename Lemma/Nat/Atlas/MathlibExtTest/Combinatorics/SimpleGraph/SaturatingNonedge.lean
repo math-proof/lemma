@@ -8,7 +8,7 @@ open SimpleGraph
 [test_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_le
+lemma test_le :
 -- imply
   (⊤ : SimpleGraph (Fin 2)) ≤ (⊥ : SimpleGraph (Fin 2)) ⊔ edge (0 : Fin 2) 1 := by
 -- proof
@@ -26,7 +26,7 @@ lemma test_le
 [test_creates_copy](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_creates_copy
+lemma test_creates_copy :
 -- imply
   IsContained (⊤ : SimpleGraph (Fin 2)) ((⊥ : SimpleGraph (Fin 2)) ⊔ edge (0 : Fin 2) 1) :=
 -- proof
@@ -36,7 +36,7 @@ lemma test_creates_copy
 [test_single_missing_edge](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_single_missing_edge
+lemma test_single_missing_edge :
 -- imply
   IsSaturatingNonedge (⊤ : SimpleGraph (Fin 2)) (⊥ : SimpleGraph (Fin 2)) (0 : Fin 2) 1 := by
 -- proof
@@ -47,7 +47,7 @@ lemma test_single_missing_edge
 [test_symm_edge](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_symm_edge
+lemma test_symm_edge :
 -- imply
   IsSaturatingNonedge (⊤ : SimpleGraph (Fin 2)) (⊥ : SimpleGraph (Fin 2)) (1 : Fin 2) 0 :=
 -- proof
@@ -57,7 +57,7 @@ lemma test_symm_edge
 [test_loop_not_adj](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_loop_not_adj
+lemma test_loop_not_adj :
 -- imply
   ¬(⊤ : SimpleGraph (Fin 2)).Adj (0 : Fin 2) 0 := by
 -- proof
@@ -67,7 +67,7 @@ lemma test_loop_not_adj
 [test_loop_contained](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_loop_contained
+lemma test_loop_contained :
 -- imply
   IsContained (⊥ : SimpleGraph (Fin 2)) ((⊤ : SimpleGraph (Fin 2)) ⊔ edge (0 : Fin 2) 0) :=
 -- proof
@@ -77,7 +77,7 @@ lemma test_loop_contained
 [test_loop_rejection](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_loop_rejection
+lemma test_loop_rejection :
 -- imply
   ¬IsSaturatingNonedge (⊥ : SimpleGraph (Fin 2)) (⊤ : SimpleGraph (Fin 2)) (0 : Fin 2) 0 :=
 -- proof
@@ -87,7 +87,7 @@ lemma test_loop_rejection
 [test_present_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_present_ne
+lemma test_present_ne :
 -- imply
   (0 : Fin 2) ≠ 1 := by
 -- proof
@@ -97,7 +97,7 @@ lemma test_present_ne
 [test_present_contained](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_present_contained
+lemma test_present_contained :
 -- imply
   IsContained (⊤ : SimpleGraph (Fin 2)) ((⊤ : SimpleGraph (Fin 2)) ⊔ edge (0 : Fin 2) 1) :=
 -- proof
@@ -107,7 +107,7 @@ lemma test_present_contained
 [test_present_edge_rejection](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_present_edge_rejection
+lemma test_present_edge_rejection :
 -- imply
   ¬IsSaturatingNonedge (⊤ : SimpleGraph (Fin 2)) (⊤ : SimpleGraph (Fin 2)) (0 : Fin 2) 1 :=
 -- proof
@@ -117,7 +117,7 @@ lemma test_present_edge_rejection
 [test_nocopy_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_nocopy_ne
+lemma test_nocopy_ne :
 -- imply
   (0 : Fin 2) ≠ 1 := by
 -- proof
@@ -127,7 +127,7 @@ lemma test_nocopy_ne
 [test_nocopy_not_adj](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_nocopy_not_adj
+lemma test_nocopy_not_adj :
 -- imply
   ¬(⊥ : SimpleGraph (Fin 2)).Adj (0 : Fin 2) 1 := by
 -- proof
@@ -137,7 +137,7 @@ lemma test_nocopy_not_adj
 [test_nocopy_not_contained](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_nocopy_not_contained
+lemma test_nocopy_not_contained :
 -- imply
   ¬IsContained (⊥ : SimpleGraph (Fin 3)) ((⊥ : SimpleGraph (Fin 2)) ⊔ edge (0 : Fin 2) 1) := by
 -- proof
@@ -148,7 +148,7 @@ lemma test_nocopy_not_contained
 [test_nocopy_rejection](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_nocopy_rejection
+lemma test_nocopy_rejection :
 -- imply
   ¬IsSaturatingNonedge (⊥ : SimpleGraph (Fin 3)) (⊥ : SimpleGraph (Fin 2)) (0 : Fin 2) 1 :=
 -- proof
@@ -158,7 +158,7 @@ lemma test_nocopy_rejection
 [test_free_host](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_free_host
+lemma test_free_host :
 -- imply
   Free (⊤ : SimpleGraph (Fin 2)) (⊥ : SimpleGraph (Fin 2)) :=
 -- proof
@@ -173,7 +173,7 @@ lemma test_free_host
 [test_new_copy](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_new_copy
+lemma test_new_copy :
 -- imply
   IsContained (⊤ : SimpleGraph (Fin 2)) ((⊥ : SimpleGraph (Fin 2)) ⊔ edge (0 : Fin 2) 1) ∧ ¬IsContained (⊤ : SimpleGraph (Fin 2)) (⊥ : SimpleGraph (Fin 2)) :=
 -- proof
@@ -183,7 +183,7 @@ lemma test_new_copy
 [test_graph_eq_single](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_graph_eq_single
+lemma test_graph_eq_single :
 -- imply
   saturatingNonedgeGraph (⊤ : SimpleGraph (Fin 2)) (⊥ : SimpleGraph (Fin 2)) = edge (0 : Fin 2) 1 := by
 -- proof
@@ -209,7 +209,7 @@ section CountOne
 [test_count_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_count_one
+lemma test_count_one :
 -- imply
   numSaturatingNonedges (⊤ : SimpleGraph (Fin 2)) (⊥ : SimpleGraph (Fin 2)) = 1 := by
 -- proof
@@ -225,7 +225,7 @@ end CountOne
 [test_graph_eq_empty](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_graph_eq_empty
+lemma test_graph_eq_empty :
 -- imply
   saturatingNonedgeGraph (⊤ : SimpleGraph (Fin 2)) (⊤ : SimpleGraph (Fin 2)) = ⊥ := by
 -- proof
@@ -242,7 +242,7 @@ section CountZero
 [test_count_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean)
 -/
 @[path]
-lemma test_count_zero
+lemma test_count_zero :
 -- imply
   numSaturatingNonedges (⊤ : SimpleGraph (Fin 2)) (⊤ : SimpleGraph (Fin 2)) = 0 := by
 -- proof
@@ -252,3 +252,4 @@ end CountZero
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

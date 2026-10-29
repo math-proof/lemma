@@ -90,7 +90,7 @@ theorem bins_ExtEvent_measurable (I : Finset (Sym2 (Site 2))) (u₁ u₂ u₃ : 
       ((hconn u₂ u₃).compl))
 
 
-theorem bins_exists_ExtEvent_pos_of_cover (p : ℝ≥0) (hp1 : p ≤ 1) (n : ℕ)
+theorem bins_exists_ExtEvent_pos_of_cover (p : NNReal) (hp1 : p ≤ 1) (n : ℕ)
     (I : Finset (Sym2 (Site 2)))
     (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n))
     (hcover : threeMeetBox 2 n ⊆
@@ -210,7 +210,7 @@ theorem bins_threeMeetBox_subset_iUnion_ExtEvent_touch (n : ℕ) :
   simpa [T] using ⟨⟨hu1, hu2, hu3⟩, hcut12, hcut13, hcut23⟩
 
 
-theorem bins_exists_ExtEvent_touch_pos (p : ℝ≥0) (hp1 : p ≤ 1) (n : ℕ)
+theorem bins_exists_ExtEvent_touch_pos (p : NNReal) (hp1 : p ≤ 1) (n : ℕ)
     (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n)) :
     ∃ u₁ u₂ u₃ : Site 2,
       0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1

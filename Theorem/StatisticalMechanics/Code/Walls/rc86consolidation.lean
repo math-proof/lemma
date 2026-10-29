@@ -38,7 +38,7 @@ theorem rc86_complete_chain :
         #(rc20_famCylBox 𝒜 ℬ) ≤ #(rc10_reflInter 𝒜 ℬ)) ∧
     (rc60_BoxUnionBound → ReimerWprobCore) ∧
     (rc20_FamCylBoxResidue → ReimerWprobCore) ∧
-    (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+    (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
         (A B : Set (ConfigSpace E)),
         (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
           ≤ (bernoulliProductMeasure (E := E) p hp).real A
@@ -53,7 +53,7 @@ open Classical in
 
 
 theorem rc86_reimer_of_leaf (h : rc64_ReimerLeaf) {E : Type*} [Fintype E] [DecidableEq E]
-    {p : ℝ≥0} (hp : p ≤ 1) (A B : Set (ConfigSpace E)) :
+    {p : NNReal} (hp : p ≤ 1) (A B : Set (ConfigSpace E)) :
     (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
       ≤ (bernoulliProductMeasure (E := E) p hp).real A
         * (bernoulliProductMeasure (E := E) p hp).real B :=
@@ -189,7 +189,7 @@ theorem rc86_status :
     (rc60_BoxUnionBound → ReimerWprobCore) ∧
     (rc60_BoxUnionBound → ∀ (m : ℕ) (𝒜 ℬ : Finset (Finset (Fin m))),
         #(rc20_famCylBox 𝒜 ℬ) ≤ #(rc10_reflInter 𝒜 ℬ)) ∧
-    (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+    (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
         (A B : Set (ConfigSpace E)),
         (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
           ≤ (bernoulliProductMeasure (E := E) p hp).real A
@@ -207,7 +207,7 @@ theorem rc86_status :
         (∀ p, (rc20_famCylBoxComp 2 p.1 p.2).card ≤ Φ p) →
         (∀ p, Φ p ≤ (rc20_reflInterComp 2 p.1 p.2).card) → False) ∧
     
-    (∀ {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+    (∀ {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
         {A B : Set (ConfigSpace E)}, IsIncreasing A → IsIncreasing B →
         (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B)
           ≤ (bernoulliProductMeasure (E := E) p hp).real A

@@ -93,7 +93,7 @@ theorem percolationEventCompl_subset (henc : PcAnchoredEnclosure) :
   exact ⟨hu', rfl, hc'cyc⟩
 
 
-theorem measure_compl_percolationEvent_le (henc : PcAnchoredEnclosure) (p : ℝ≥0) (hp : p ≤ 1)
+theorem measure_compl_percolationEvent_le (henc : PcAnchoredEnclosure) (p : NNReal) (hp : p ≤ 1)
     (hsum : ‖pcRatio (p : ℝ)‖ < 1) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) ((percolationEvent 2)ᶜ)
       ≤ ENNReal.ofReal (2 * pcUpperBound (p : ℝ)) := by
@@ -103,7 +103,7 @@ theorem measure_compl_percolationEvent_le (henc : PcAnchoredEnclosure) (p : ℝ�
       ≤ μ (⋃ ℓ : ℕ, ⋃ σ ∈ cyclesAtLen ℓ, closedCircuitEvent σ.2) :=
         measure_mono (percolationEventCompl_subset henc)
     _ ≤ ∑' ℓ : ℕ, μ (⋃ σ ∈ cyclesAtLen ℓ, closedCircuitEvent σ.2) := measure_iUnion_le _
-    _ ≤ ∑' ℓ : ℕ, ((2 * ℓ * 4 ^ ℓ : ℕ) : ℝ≥0∞) * ((1 - p : ℝ≥0) : ℝ≥0∞) ^ ℓ :=
+    _ ≤ ∑' ℓ : ℕ, ((2 * ℓ * 4 ^ ℓ : ℕ) : ENNReal) * ((1 - p : NNReal) : ENNReal) ^ ℓ :=
         ENNReal.tsum_le_tsum (fun ℓ => measure_cyclesAtLen_le p hp ℓ)
     _ = ∑' ℓ : ℕ, ENNReal.ofReal (pcSummandTwo (p : ℝ) ℓ) :=
         tsum_congr (fun ℓ => ennSummand_eq_ofReal p hp ℓ)
@@ -114,7 +114,7 @@ theorem measure_compl_percolationEvent_le (henc : PcAnchoredEnclosure) (p : ℝ�
     _ = ENNReal.ofReal (2 * pcUpperBound (p : ℝ)) := by rw [tsum_pcSummandTwo]
 
 
-theorem one_sub_theta_le (henc : PcAnchoredEnclosure) (p : ℝ≥0) (hp : p ≤ 1)
+theorem one_sub_theta_le (henc : PcAnchoredEnclosure) (p : NNReal) (hp : p ≤ 1)
     (hsum : ‖pcRatio (p : ℝ)‖ < 1) :
     1 - theta 2 p hp ≤ 2 * pcUpperBound (p : ℝ) := by
   set μ := bernoulliProductMeasure (E := Sym2 (Site 2)) p hp with hμ
@@ -168,7 +168,7 @@ theorem pc_lt_one_of_enclosure (henc : PcAnchoredEnclosure) : pc 2 < 1 := by
   have hp₀s : p₀ < s := by rw [hs]; linarith
   have hslt : s < 1 := by rw [hs]; linarith
   have hs0 : (0 : ℝ) ≤ s := by rw [hs]; linarith
-  set sN : ℝ≥0 := s.toNNReal with hsN
+  set sN : NNReal := s.toNNReal with hsN
   have hsNcoe : (sN : ℝ) = s := by rw [hsN]; exact Real.coe_toNNReal s hs0
   have hsN1 : sN ≤ 1 := by
     rw [hsN, ← Real.toNNReal_one]; exact Real.toNNReal_le_toNNReal hslt.le

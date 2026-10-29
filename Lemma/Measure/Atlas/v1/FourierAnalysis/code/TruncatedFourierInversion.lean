@@ -26,15 +26,15 @@ lemma tendsto_eLpNorm_indicator_compl_Icc
     atTop (𝓝 0) by
     exact h.congr (fun N => (eLpNorm_congr_ae hg'_ae.indicator).symm)
   suffices h_lint : Tendsto
-    (fun N : ℕ => ∫⁻ x : ℝ, (‖(Icc (-(N : ℝ)) N)ᶜ.indicator g' x‖₊ : ℝ≥0∞) ^ (2 : ℝ) ∂volume)
+    (fun N : ℕ => ∫⁻ x : ℝ, (‖(Icc (-(N : ℝ)) N)ᶜ.indicator g' x‖₊ : ENNReal) ^ (2 : ℝ) ∂volume)
     atTop (𝓝 0) by
     simp_rw [eLpNorm_eq_lintegral_rpow_enorm_toReal two_ne_zero ENNReal.ofNat_ne_top]
     simp only [ENNReal.toReal_ofNat]
     simp_rw [enorm_eq_nnnorm]
-    rw [show (0 : ℝ≥0∞) = 0 ^ (1 / 2 : ℝ) from by simp]
+    rw [show (0 : ENNReal) = 0 ^ (1 / 2 : ℝ) from by simp]
     exact (ENNReal.continuous_rpow_const.tendsto 0).comp h_lint
-  rw [show (0 : ℝ≥0∞) = ∫⁻ (_ : ℝ), (0 : ℝ≥0∞) ∂volume from by simp]
-  apply tendsto_lintegral_of_dominated_convergence (fun x => (‖g' x‖₊ : ℝ≥0∞) ^ (2 : ℝ))
+  rw [show (0 : ENNReal) = ∫⁻ (_ : ℝ), (0 : ENNReal) ∂volume from by simp]
+  apply tendsto_lintegral_of_dominated_convergence (fun x => (‖g' x‖₊ : ENNReal) ^ (2 : ℝ))
   · intro N
     exact (hg'_sm.indicator measurableSet_Icc.compl).measurable.nnnorm.coe_nnreal_ennreal.pow_const _
   · intro N

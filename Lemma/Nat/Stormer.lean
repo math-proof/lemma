@@ -24,9 +24,7 @@ namespace MetaMathlibExt
 [stormU_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Stormer.lean)
 -/
 @[path]
-private lemma stormU_two (a : ℤ) : stormU a 2 = 2 * a := by
-simp [stormU]
-
+private lemma stormU_two (a : ℤ) : stormU a 2 = 2 * a := by simp [stormU]
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -35,9 +33,7 @@ namespace MetaMathlibExt
 [stormU_three](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Stormer.lean)
 -/
 @[path]
-private lemma stormU_three (a : ℤ) : stormU a 3 = 4 * a ^ 2 - 1 := by
-simp [stormU]; ring
-
+private lemma stormU_three (a : ℤ) : stormU a 3 = 4 * a ^ 2 - 1 := by simp [stormU]; ring
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -57,7 +53,6 @@ private lemma stormU_twostep (a : ℤ) (k : ℕ) :
   have e4 : k + 1 + 1 = k + 2 := by omega
   rw [e1, e2] at h1; rw [e3, e4] at h2
   linear_combination h1 + (2 * a) * h2 + h3
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -116,7 +111,6 @@ private lemma stormU_gt_self (a : ℤ) (ha : 2 ≤ a) (k : ℕ) (hk : 2 ≤ k) :
   | succ k hk ih =>
     have hlt := stormU_lt_succ a ha k
     push_cast at ih ⊢; linarith
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -128,7 +122,7 @@ namespace MetaMathlibExt
 private lemma stormU_odd_congr_a (a : ℤ) (m : ℕ) :
   (a ^ 2 - 1) ∣ stormU a (2 * m + 1) - ((2 * m + 1 : ℕ) : ℤ) := by
   have P : ∀ m : ℕ, (a ^ 2 - 1) ∣ stormU a (2 * m + 1) - ((2 * m + 1 : ℕ) : ℤ) ∧
-    (a ^ 2 - 1) ∣ stormU a (2 * (m + 1) + 1) - ((2 * (m + 1) + 1 : ℕ) : ℤ) := by
+      (a ^ 2 - 1) ∣ stormU a (2 * (m + 1) + 1) - ((2 * (m + 1) + 1 : ℕ) : ℤ) := by
     intro m
     induction m with
     | zero =>
@@ -153,7 +147,6 @@ private lemma stormU_odd_congr_a (a : ℤ) (m : ℕ) :
       refine ⟨2 * s' - s + 4 * stormU a (2 * (m + 1) + 1), ?_⟩
       linear_combination hrec - hs + 2 * hs'
   exact (P m).1
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -168,14 +161,14 @@ private lemma stormU_odd_congr_b (a : ℤ) (m : ℕ) :
       + 2 * (m : ℤ) * ((m : ℤ) + 1) * (((2 * m + 1 : ℕ) : ℤ)) * (a ^ 2 - 1)
       + r * (a ^ 2 - 1) ^ 2 := by
   have P : ∀ m : ℕ,
-    (∃ r : ℤ, 3 * stormU a (2 * m + 1)
-      = 3 * ((2 * m + 1 : ℕ) : ℤ)
-        + 2 * (m : ℤ) * ((m : ℤ) + 1) * (((2 * m + 1 : ℕ) : ℤ)) * (a ^ 2 - 1)
-        + r * (a ^ 2 - 1) ^ 2) ∧
-    (∃ r : ℤ, 3 * stormU a (2 * (m + 1) + 1)
-      = 3 * ((2 * (m + 1) + 1 : ℕ) : ℤ)
-        + 2 * ((m : ℤ) + 1) * ((m : ℤ) + 2) * (((2 * (m + 1) + 1 : ℕ) : ℤ)) * (a ^ 2 - 1)
-        + r * (a ^ 2 - 1) ^ 2) := by
+      (∃ r : ℤ, 3 * stormU a (2 * m + 1)
+        = 3 * ((2 * m + 1 : ℕ) : ℤ)
+          + 2 * (m : ℤ) * ((m : ℤ) + 1) * (((2 * m + 1 : ℕ) : ℤ)) * (a ^ 2 - 1)
+          + r * (a ^ 2 - 1) ^ 2) ∧
+      (∃ r : ℤ, 3 * stormU a (2 * (m + 1) + 1)
+        = 3 * ((2 * (m + 1) + 1 : ℕ) : ℤ)
+          + 2 * ((m : ℤ) + 1) * ((m : ℤ) + 2) * (((2 * (m + 1) + 1 : ℕ) : ℤ)) * (a ^ 2 - 1)
+          + r * (a ^ 2 - 1) ^ 2) := by
     intro m
     induction m with
     | zero =>
@@ -205,7 +198,6 @@ private lemma stormU_odd_congr_b (a : ℤ) (m : ℕ) :
         + 2 * r' + 4 * (a ^ 2 - 1) * r' - r, ?_⟩
       linear_combination (2 + 4 * (a ^ 2 - 1)) * hr' - hr + 3 * hrec
   exact (P m).1
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -248,14 +240,16 @@ private lemma stormU_two_newprime (a : ℤ) (ha : 2 ≤ a) :
   obtain ⟨q, hq, hqdvd⟩ := Nat.exists_prime_and_dvd hne
   have hqa : (q : ℤ) ∣ a := by
     have h1 : (q : ℤ) ∣ ((a.natAbs : ℕ) : ℤ) := by exact_mod_cast hqdvd
-    rwa [Int.natCast_natAbs, abs_of_nonneg (by linarith)] at h1
+    rw [Int.natCast_natAbs, abs_of_nonneg (by linarith)] at h1
+    exact h1
   refine ⟨q, hq, by rw [stormU_two]; exact dvd_mul_of_dvd_right hqa 2, ?_⟩
   intro hcon
   have h1 : (q : ℤ) ∣ (1 : ℤ) := by
     have h2 : (q : ℤ) ∣ a * a := dvd_mul_of_dvd_left hqa a
     have h3 : a * a - (a ^ 2 - 1) = 1 := by ring
     have h4 : (q : ℤ) ∣ a * a - (a ^ 2 - 1) := dvd_sub h2 hcon
-    rwa [h3] at h4
+    rw [h3] at h4
+    exact h4
   exact natPrime_not_dvd_int_one hq h1
 
 end MetaMathlibExt
@@ -281,8 +275,8 @@ private lemma stormU_three_newprime (a : ℤ) (ha : 2 ≤ a) :
     · exact Or.inl h
   -- unify the two cases: f with 3 ∤ f, f ≥ 3, and (f = 2a-1 ∨ f = 2a+1)
   obtain ⟨f, hf3, hfge, hfeq⟩ : ∃ f : ℤ, ¬ (3 : ℤ) ∣ f ∧ 3 ≤ f ∧
-    (f = 2 * a - 1 ∨ f = 2 * a + 1) := by
-    obtain h | h := hchoice
+      (f = 2 * a - 1 ∨ f = 2 * a + 1) := by
+    rcases hchoice with h | h
     · exact ⟨2 * a - 1, h, by linarith, Or.inl rfl⟩
     · exact ⟨2 * a + 1, h, by linarith, Or.inr rfl⟩
   have hne : f.natAbs ≠ 1 := by
@@ -292,11 +286,12 @@ private lemma stormU_three_newprime (a : ℤ) (ha : 2 ≤ a) :
   obtain ⟨q, hq, hqdvd⟩ := Nat.exists_prime_and_dvd hne
   have hqf : (q : ℤ) ∣ f := by
     have h1 : (q : ℤ) ∣ ((f.natAbs : ℕ) : ℤ) := by exact_mod_cast hqdvd
-    rwa [Int.natCast_natAbs, abs_of_nonneg (by linarith)] at h1
+    rw [Int.natCast_natAbs, abs_of_nonneg (by linarith)] at h1
+    exact h1
   have hqU : (q : ℤ) ∣ stormU a 3 := by
     rw [stormU_three]
     have hdiv : f ∣ 4 * a ^ 2 - 1 := by
-      obtain rfl | rfl := hfeq
+      rcases hfeq with rfl | rfl
       · exact ⟨2 * a + 1, by ring⟩
       · exact ⟨2 * a - 1, by ring⟩
     exact dvd_trans hqf hdiv
@@ -309,40 +304,43 @@ private lemma stormU_three_newprime (a : ℤ) (ha : 2 ≤ a) :
   have hfac : a ^ 2 - 1 = (a - 1) * (a + 1) := by ring
   rw [hfac] at hcon
   have hprime : Prime (q : ℤ) := Nat.prime_iff_prime_int.mp hq
-  obtain hqa1 | hqa2 := (Prime.dvd_mul hprime).mp hcon
+  rcases (Prime.dvd_mul hprime).mp hcon with hqa1 | hqa2
   · -- q ∣ a-1
-    obtain rfl | rfl := hfeq
+    rcases hfeq with rfl | rfl
     · -- f = 2a-1: (2a-1) - 2(a-1) = 1
       have h1 : (q : ℤ) ∣ (1 : ℤ) := by
         have h2 : (q : ℤ) ∣ (2 * a - 1) - 2 * (a - 1) :=
           dvd_sub hqf (dvd_mul_of_dvd_right hqa1 2)
         have h3 : (2 * a - 1 : ℤ) - 2 * (a - 1) = 1 := by ring
-        rwa [h3] at h2
+        rw [h3] at h2
+        exact h2
       exact natPrime_not_dvd_int_one hq h1
     · -- f = 2a+1: (2a+1) - 2(a-1) = 3
       have h1 : (q : ℤ) ∣ (3 : ℤ) := by
         have h2 : (q : ℤ) ∣ (2 * a + 1) - 2 * (a - 1) :=
           dvd_sub hqf (dvd_mul_of_dvd_right hqa1 2)
         have h3 : (2 * a + 1 : ℤ) - 2 * (a - 1) = 3 := by ring
-        rwa [h3] at h2
+        rw [h3] at h2
+        exact h2
       exact hqne3 (natPrime_eq_of_dvd_int_three hq h1)
   · -- q ∣ a+1
-    obtain rfl | rfl := hfeq
+    rcases hfeq with rfl | rfl
     · -- f = 2a-1: 2(a+1) - (2a-1) = 3
       have h1 : (q : ℤ) ∣ (3 : ℤ) := by
         have h2 : (q : ℤ) ∣ 2 * (a + 1) - (2 * a - 1) :=
           dvd_sub (dvd_mul_of_dvd_right hqa2 2) hqf
         have h3 : (2 : ℤ) * (a + 1) - (2 * a - 1) = 3 := by ring
-        rwa [h3] at h2
+        rw [h3] at h2
+        exact h2
       exact hqne3 (natPrime_eq_of_dvd_int_three hq h1)
     · -- f = 2a+1: 2(a+1) - (2a+1) = 1
       have h1 : (q : ℤ) ∣ (1 : ℤ) := by
         have h2 : (q : ℤ) ∣ 2 * (a + 1) - (2 * a + 1) :=
           dvd_sub (dvd_mul_of_dvd_right hqa2 2) hqf
         have h3 : (2 : ℤ) * (a + 1) - (2 * a + 1) = 1 := by ring
-        rwa [h3] at h2
+        rw [h3] at h2
+        exact h2
       exact natPrime_not_dvd_int_one hq h1
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -373,7 +371,6 @@ private lemma pell_pow_eq (d : ℤ) (c : Pell.Solution₁ d) (k : ℕ) :
     · rw [hy, ihx, ihy]; ring
     · rw [e, hx, ihx, ihy]
       linear_combination stormU c.x k * hprop - hrec
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -406,7 +403,8 @@ private lemma stormU_five_newprime (a : ℤ) (ha : 2 ≤ a) (p : ℕ) (hp : p.Pr
     have hqt : (q : ℤ) ∣ ((2 * m + 1 : ℕ) : ℤ) := by
       have hsub : (q : ℤ) ∣ stormU a (2 * m + 1) - (stormU a (2 * m + 1) - ((2 * m + 1 : ℕ) : ℤ)) :=
         dvd_sub hqu hut
-      rwa [sub_sub_cancel] at hsub
+      rw [sub_sub_cancel] at hsub
+      exact hsub
     have hN : q ∣ 2 * m + 1 := by exact_mod_cast hqt
     exact (Nat.prime_dvd_prime_iff_eq hqp hp).mp hN
   have claim2 : ((2 * m + 1 : ℕ) : ℤ) ∣ a ^ 2 - 1 := by
@@ -418,27 +416,29 @@ private lemma stormU_five_newprime (a : ℤ) (ha : 2 ≤ a) (p : ℕ) (hp : p.Pr
     obtain ⟨q0, hq0, hq0dvd⟩ := Nat.exists_prime_and_dvd hune
     have hq0u : (q0 : ℤ) ∣ stormU a (2 * m + 1) := by
       have h1 : (q0 : ℤ) ∣ (((stormU a (2 * m + 1)).natAbs : ℕ) : ℤ) := by exact_mod_cast hq0dvd
-      rwa [Int.natCast_natAbs, abs_of_nonneg hu_nonneg] at h1
+      rw [Int.natCast_natAbs, abs_of_nonneg hu_nonneg] at h1
+      exact h1
     have e1 : q0 = 2 * m + 1 := claim1 q0 hq0 hq0u
     have hq0e := h q0 hq0 hq0u
-    rwa [e1] at hq0e
+    rw [e1] at hq0e
+    exact hq0e
   have claim3 : ¬ (((2 * m + 1 : ℕ) : ℤ)) ^ 2 ∣ stormU a (2 * m + 1) := by
     intro hsq
     obtain ⟨r, hr⟩ := stormU_odd_congr_b a m
     obtain ⟨s, hs⟩ := claim2
     have ht0 : ((2 * m + 1 : ℕ) : ℤ) ≠ 0 := by exact_mod_cast (by omega : 2 * m + 1 ≠ 0)
     have hfe : (((2 * m + 1 : ℕ) : ℤ)) ^ 2 ∣
-      2 * (m : ℤ) * ((m : ℤ) + 1) * (((2 * m + 1 : ℕ) : ℤ)) * (a ^ 2 - 1) := by
+        2 * (m : ℤ) * ((m : ℤ) + 1) * (((2 * m + 1 : ℕ) : ℤ)) * (a ^ 2 - 1) := by
       refine ⟨2 * (m : ℤ) * ((m : ℤ) + 1) * s, ?_⟩
       linear_combination 2 * (m : ℤ) * ((m : ℤ) + 1) * ((2 * m + 1 : ℕ) : ℤ) * hs
     have hre : (((2 * m + 1 : ℕ) : ℤ)) ^ 2 ∣ r * (a ^ 2 - 1) ^ 2 := by
       refine ⟨r * s ^ 2, ?_⟩
       linear_combination r * ((a ^ 2 - 1) + ((2 * m + 1 : ℕ) : ℤ) * s) * hs
     have h3u : (((2 * m + 1 : ℕ) : ℤ)) ^ 2 ∣ 3 * stormU a (2 * m + 1) - 3 *
-      ((2 * m + 1 : ℕ) : ℤ) := by
+        ((2 * m + 1 : ℕ) : ℤ) := by
       have heq : 3 * stormU a (2 * m + 1) - 3 * ((2 * m + 1 : ℕ) : ℤ)
-        = (2 * (m : ℤ) * ((m : ℤ) + 1) * (((2 * m + 1 : ℕ) : ℤ)) * (a ^ 2 - 1)) +
-          (r * (a ^ 2 - 1) ^ 2) := by
+          = (2 * (m : ℤ) * ((m : ℤ) + 1) * (((2 * m + 1 : ℕ) : ℤ)) * (a ^ 2 - 1)) +
+              (r * (a ^ 2 - 1) ^ 2) := by
         linear_combination hr
       rw [heq]; exact dvd_add hfe hre
     have hmu : (((2 * m + 1 : ℕ) : ℤ)) ^ 2 ∣ 3 * stormU a (2 * m + 1) := by
@@ -482,13 +482,13 @@ private lemma stormU_five_newprime (a : ℤ) (ha : 2 ≤ a) (p : ℕ) (hp : p.Pr
   obtain ⟨q1, hq1, hq1dvd⟩ := Nat.exists_prime_and_dvd hwne
   have hqw : (q1 : ℤ) ∣ w := by
     have h1 : (q1 : ℤ) ∣ ((w.natAbs : ℕ) : ℤ) := by exact_mod_cast hq1dvd
-    rwa [Int.natCast_natAbs, abs_of_nonneg (by linarith)] at h1
+    rw [Int.natCast_natAbs, abs_of_nonneg (by linarith)] at h1
+    exact h1
   have hq1u : (q1 : ℤ) ∣ stormU a (2 * m + 1) := by
     rw [hw]; exact dvd_mul_of_dvd_right hqw ((2 * m + 1 : ℕ) : ℤ)
   have e1 : q1 = 2 * m + 1 := claim1 q1 hq1 hq1u
   rw [e1] at hqw
   exact hntw hqw
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -528,7 +528,8 @@ private lemma pell_pow_y_newprime (d : ℤ) (hd : 0 < d) (c : Pell.Solution₁ d
   have hetax : (0 : ℤ) < (c ^ j).x := Pell.Solution₁.x_pow_pos hcx j
   have hetay : (0 : ℤ) < (c ^ j).y := by
     have h := Pell.Solution₁.y_pow_succ_pos hcx hcy (j - 1)
-    rwa [show (j - 1).succ = j from by omega] at h
+    rw [show (j - 1).succ = j from by omega] at h
+    exact h
   have heta2 : 2 ≤ (c ^ j).x := by
     have hsq : (0 : ℤ) < ((c ^ j).y) ^ 2 := by
       rw [pow_two]; exact mul_self_pos.mpr (ne_of_gt hetay)
@@ -570,7 +571,7 @@ private lemma pell_rad_unique (d : ℤ) (hd : 0 < d) (a b : Pell.Solution₁ d)
     Pell.Solution₁.d_nonsquare_of_one_lt_x (one_lt a hax hay)
   obtain ⟨ε, hε⟩ := Pell.IsFundamental.exists_of_not_isSquare hd hnsq
   have key : ∀ s : Pell.Solution₁ d, 0 < s.x → 0 < s.y →
-    (∀ q : ℕ, q.Prime → (q : ℤ) ∣ s.y → (q : ℤ) ∣ d) → s = ε := by
+      (∀ q : ℕ, q.Prime → (q : ℤ) ∣ s.y → (q : ℤ) ∣ d) → s = ε := by
     intro s hsx hsy hs
     obtain ⟨m, hm⟩ := hε.eq_pow_of_nonneg hsx hsy.le
     by_cases hm0 : m = 0
@@ -585,7 +586,6 @@ private lemma pell_rad_unique (d : ℤ) (hd : 0 < d) (a b : Pell.Solution₁ d)
         have hsy2 : (q : ℤ) ∣ s.y := by rw [hm]; exact hqy
         exact absurd (hs q hq hsy2) hqd
   rw [key a hax hay ha, key b hbx hby hb]
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -614,19 +614,20 @@ private lemma prime_le_of_smooth_pair (y n q : ℕ) (hy : 2 ≤ y) (hn0 : 0 < n)
   (hn1 : ∀ p ∈ (n + 1).primeFactors, p ≤ y)
   (hq : q.Prime) (hqd : q ∣ 4 * n * (n + 1)) : q ≤ y ∧ q ∣ primorial y := by
   have hle : q ≤ y := by
-    obtain h41 | hn1d := hq.dvd_mul.mp hqd
+    rcases hq.dvd_mul.mp hqd with h41 | hn1d
     · rcases hq.dvd_mul.mp h41 with h4 | hnd
       · have h2 : q ∣ 2 * 2 := by
-        have h4e : (4 : ℕ) = 2 * 2 := by norm_num
-        rwa [h4e] at h4
+          have h4e : (4 : ℕ) = 2 * 2 := by norm_num
+          rw [h4e] at h4
+          exact h4
         have h1 : q ∣ 2 := (hq.dvd_mul.mp h2).elim id id
         have hq2 : q = 2 := (Nat.prime_dvd_prime_iff_eq hq Nat.prime_two).mp h1
         omega
       · have hmem : q ∈ n.primeFactors :=
-        Nat.mem_primeFactors.mpr ⟨hq, hnd, ne_of_gt hn0⟩
+          Nat.mem_primeFactors.mpr ⟨hq, hnd, ne_of_gt hn0⟩
         exact hn q hmem
     · have hmem : q ∈ (n + 1).primeFactors :=
-      Nat.mem_primeFactors.mpr ⟨hq, hn1d, by omega⟩
+        Nat.mem_primeFactors.mpr ⟨hq, hn1d, by omega⟩
       exact hn1 q hmem
   exact ⟨hle, prime_dvd_primorial_of_le y q hq hle⟩
 
@@ -664,7 +665,8 @@ private lemma exists_pell_rad_of_smooth (y n : ℕ) (hy : 2 ≤ y) (hn0 : 0 < n)
     have hpa : p ∣ a := Nat.dvd_of_mem_primeFactors hp
     have hpN : p ∣ 4 * n * (n + 1) := by
       have h1 : p ∣ b ^ 2 * a := dvd_mul_of_dvd_right hpa (b ^ 2)
-      rwa [hsq] at h1
+      rw [hsq] at h1
+      exact h1
     have hple : p ≤ y := (hle2 p (Nat.prime_of_mem_primeFactors hp) hpN).1
     have hpp : p.Prime := Nat.prime_of_mem_primeFactors hp
     exact ⟨by omega, hpp⟩
@@ -678,8 +680,8 @@ private lemma exists_pell_rad_of_smooth (y n : ℕ) (hy : 2 ≤ y) (hn0 : 0 < n)
     exact pow_ne_zero 3 (ne_of_gt (primorial_pos y))
   refine ⟨D, hDmem, Y, hY0, ?_, ?_⟩
   · have hDY : D * Y ^ 2 = 4 * n * (n + 1) := by
-    have e1 : D * Y ^ 2 = a * (Y * g) ^ 2 := by rw [hD_def]; ring
-    rw [e1, ← hbg, mul_comm a (b ^ 2), hsq]
+      have e1 : D * Y ^ 2 = a * (Y * g) ^ 2 := by rw [hD_def]; ring
+      rw [e1, ← hbg, mul_comm a (b ^ 2), hsq]
     have h1 : ((2 * n + 1 : ℕ) : ℤ) ^ 2 = 4 * (n : ℤ) * ((n : ℤ) + 1) + 1 := by
       push_cast; ring
     have h2 : ((D * Y ^ 2 : ℕ) : ℤ) = 4 * (n : ℤ) * ((n : ℤ) + 1) := by
@@ -697,7 +699,6 @@ private lemma exists_pell_rad_of_smooth (y n : ℕ) (hy : 2 ≤ y) (hn0 : 0 < n)
     have hg2 : g ∣ g ^ 2 := ⟨g, by ring⟩
     rw [hD_def]
     exact dvd_mul_of_dvd_right (dvd_trans hqg hg2) a
-
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -717,24 +718,24 @@ lemma stormer_theorem
     (n, n + 1) ∈ S := by
 -- proof
   have hsub : {n : ℕ | 0 < n ∧ (∀ p ∈ n.primeFactors, p ≤ y) ∧
-    (∀ p ∈ (n + 1).primeFactors, p ≤ y)} ⊆
-    ⋃ D ∈ (↑((primorial y ^ 3).divisors) : Set ℕ),
-      {n : ℕ | ∃ Y : ℕ, 0 < Y ∧ ((2 * n + 1 : ℕ) : ℤ) ^ 2 - (D : ℤ) * (Y : ℤ) ^ 2 = 1 ∧
-        ∀ q : ℕ, q.Prime → q ∣ Y → q ∣ D} := by
+        (∀ p ∈ (n + 1).primeFactors, p ≤ y)} ⊆
+      ⋃ D ∈ (↑((primorial y ^ 3).divisors) : Set ℕ),
+        {n : ℕ | ∃ Y : ℕ, 0 < Y ∧ ((2 * n + 1 : ℕ) : ℤ) ^ 2 - (D : ℤ) * (Y : ℤ) ^ 2 = 1 ∧
+          ∀ q : ℕ, q.Prime → q ∣ Y → q ∣ D} := by
     intro n hn
     obtain ⟨hn0, hn, hn1⟩ := hn
     obtain ⟨D, hD, Y, hY0, hpe, hrad⟩ := exists_pell_rad_of_smooth y n hy hn0 hn hn1
     exact Set.mem_biUnion hD ⟨Y, hY0, hpe, hrad⟩
   have hfib : ∀ D ∈ (↑((primorial y ^ 3).divisors) : Set ℕ),
-    ({n : ℕ | ∃ Y : ℕ, 0 < Y ∧ ((2 * n + 1 : ℕ) : ℤ) ^ 2 - (D : ℤ) * (Y : ℤ) ^ 2 = 1 ∧
-      ∀ q : ℕ, q.Prime → q ∣ Y → q ∣ D} : Set ℕ).Subsingleton := by
+      ({n : ℕ | ∃ Y : ℕ, 0 < Y ∧ ((2 * n + 1 : ℕ) : ℤ) ^ 2 - (D : ℤ) * (Y : ℤ) ^ 2 = 1 ∧
+        ∀ q : ℕ, q.Prime → q ∣ Y → q ∣ D} : Set ℕ).Subsingleton := by
     intro D hD n1 hn1 n2 hn2
     obtain ⟨Y1, hY1, hpe1, hrad1⟩ := hn1
     obtain ⟨Y2, hY2, hpe2, hrad2⟩ := hn2
     have hD0 : (0 : ℤ) < D := by
       exact_mod_cast Nat.pos_of_mem_divisors (Finset.mem_coe.mp hD)
     have e : Pell.Solution₁.mk ((2 * n1 + 1 : ℕ) : ℤ) (Y1 : ℤ) hpe1
-      = Pell.Solution₁.mk ((2 * n2 + 1 : ℕ) : ℤ) (Y2 : ℤ) hpe2 := by
+        = Pell.Solution₁.mk ((2 * n2 + 1 : ℕ) : ℤ) (Y2 : ℤ) hpe2 := by
       apply pell_rad_unique _ hD0
       · rw [Pell.Solution₁.x_mk]; exact_mod_cast (by omega : 0 < 2 * n1 + 1)
       · rw [Pell.Solution₁.y_mk]; exact_mod_cast hY1
@@ -752,20 +753,21 @@ lemma stormer_theorem
         exact_mod_cast hqD
     have hx : ((2 * n1 + 1 : ℕ) : ℤ) = ((2 * n2 + 1 : ℕ) : ℤ) := by
       have hxx := congrArg Pell.Solution₁.x e
-      rwa [Pell.Solution₁.x_mk, Pell.Solution₁.x_mk] at hxx
+      rw [Pell.Solution₁.x_mk, Pell.Solution₁.x_mk] at hxx
+      exact hxx
     have heq : 2 * n1 + 1 = 2 * n2 + 1 := by exact_mod_cast hx
     omega
   have hfin : {n : ℕ | 0 < n ∧ (∀ p ∈ n.primeFactors, p ≤ y) ∧
-    (∀ p ∈ (n + 1).primeFactors, p ≤ y)}.Finite :=
+      (∀ p ∈ (n + 1).primeFactors, p ≤ y)}.Finite :=
     Set.Finite.subset
       (Set.Finite.biUnion (Finset.finite_toSet _) (fun D hD => (hfib D hD).finite)) hsub
   refine ⟨hfin.toFinset.image (fun n => (n, n + 1)), ?_⟩
   intro n hn0 hn hn1
   rw [Finset.mem_image]
   exact ⟨n, (Set.Finite.mem_toFinset hfin).mpr ⟨hn0, hn, hn1⟩, rfl⟩
-end
 
+end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -29,7 +29,7 @@ variable {d : ℕ}
 
 
 noncomputable def frpEdgeParam (K : FiniteRangeKernel d) (beta : ℝ)
-    (e : Sym2 (Site d)) : ℝ≥0 :=
+    (e : Sym2 (Site d)) : NNReal :=
   Real.toNNReal (1 - Real.exp (-beta * frpEdgeCoupling K e))
 
 end Sharpness

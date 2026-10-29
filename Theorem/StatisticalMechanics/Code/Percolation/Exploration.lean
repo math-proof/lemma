@@ -30,7 +30,7 @@ section Finite
 variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
-theorem w1_sum (p : ℝ≥0) (hp : p ≤ 1) : (∑ b : Bool, w1 p hp b) = 1 := by
+theorem w1_sum (p : NNReal) (hp : p ≤ 1) : (∑ b : Bool, w1 p hp b) = 1 := by
   have h : (∑ b : Bool, w1 p hp b) = (bernoulliMeasure p hp).real Set.univ := by
     simp only [w1]
     rw [← MeasureTheory.measureReal_biUnion_finset]

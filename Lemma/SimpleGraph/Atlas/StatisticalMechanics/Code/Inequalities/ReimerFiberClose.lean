@@ -158,7 +158,7 @@ private lemma reimerCore_holds_on_determinedDisjoint_eq
 private lemma reimer_bernoulli_eq_of_determinedDisjoint_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
   {K L : Set E}
 -- given
@@ -178,7 +178,7 @@ private lemma reimer_bernoulli_eq_of_determinedDisjoint_eq
 private lemma reimer_inequality_determinedDisjoint_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
   {K L : Set E}
 -- given

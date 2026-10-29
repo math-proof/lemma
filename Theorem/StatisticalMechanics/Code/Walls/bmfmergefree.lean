@@ -164,7 +164,7 @@ theorem bmf_hgeo :
     · intro h; exact hb23 (c2.symm.trans (h.trans c3))
 
 
-theorem bmf_precursorPos_of_residues (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
+theorem bmf_precursorPos_of_residues (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
     (hindep : bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
           (cylinder bmf_I ({bmf_η₀} : Set (ConfigSpace ↥bmf_I)) ∩ bmf_X)
         = bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1

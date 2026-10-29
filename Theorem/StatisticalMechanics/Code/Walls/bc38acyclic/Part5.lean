@@ -62,7 +62,7 @@ theorem bc38_Tcount_le_boundary_of_residues (ω : ConfigSpace (Sym2 (Site d))) (
   bc36_Tcount_le_boundary_of_selfDownArm ω n hn (bc38_selfDownArm_of_residues ω n hspan hreal)
 
 
-theorem bc38_burton_keane_bernoulli_of_residues (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc38_burton_keane_bernoulli_of_residues (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hspan : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc38_ArmAdjSpanning ω n)
     (hreal : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc38_ArmRealisation ω n)

@@ -30,7 +30,7 @@ namespace MathlibExtTest.Combinatorics.SimpleGraph.Riha
 [riha_complete_four](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Riha.lean)
 -/
 @[path]
-lemma riha_complete_four
+lemma riha_complete_four :
 -- imply
   ∃ (c : (⊤ : SimpleGraph (Fin 4)).Walk 0 0) (y : Fin 4), c.IsCycle ∧ y ≠ 0 ∧ y ∈ c.support ∧ ((⊤ : SimpleGraph (Fin 4)).Adj y 3 → 3 ∈ c.support) := by
 -- proof
@@ -42,3 +42,4 @@ end MathlibExtTest.Combinatorics.SimpleGraph.Riha
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

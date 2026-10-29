@@ -14,7 +14,7 @@ private lemma krein_rutman_eq
   (T : ContinuousLinearMap (RingHom.id ℝ) (ContinuousMap K ℝ) (ContinuousMap K ℝ))
   (hT_compact : IsCompactOperator T)
   (hT_pos : ∀ f : ContinuousMap K ℝ, (∀ x, 0 ≤ f x) → ∀ x, 0 ≤ (T f) x)
-  (hr : (0 : ℝ≥0∞) < spectralRadius ℝ T) :
+  (hr : (0 : ENNReal) < spectralRadius ℝ T) :
 -- imply
   ∃ f : ContinuousMap K ℝ, f ≠ 0 ∧ (∀ x, 0 ≤ f x) ∧ T f = (spectralRadius ℝ T).toReal • f := by
 -- proof

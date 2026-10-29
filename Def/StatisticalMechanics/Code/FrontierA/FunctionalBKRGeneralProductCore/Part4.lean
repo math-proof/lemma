@@ -32,7 +32,7 @@ variable {E : Type u} [Fintype E] [DecidableEq E]
 
 noncomputable def piCylinderSublevelMeasure
     (μ : ∀ e, Measure (S e)) (f : (∀ e, S e) → ℝ)
-    (K : Set E) (r : ℝ) (x : ∀ e, S e) : ℝ≥0∞ :=
+    (K : Set E) (r : ℝ) (x : ∀ e, S e) : ENNReal :=
   Measure.pi (fun i : {e : E // e ∉ K} => μ i)
     {z | f (piFiberAssemble K x z) ≤ r}
 

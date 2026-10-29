@@ -44,7 +44,7 @@ theorem bxp_threeMeetBox_subset_iUnion (d n : ℕ) :
     htop, hx, hy, hz, hix, hiy, hiz, h12, h13, h23⟩⟩⟩
 
 
-theorem bxp_exists_triple_pos (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem bxp_exists_triple_pos (p : NNReal) (hp1 : p ≤ 1)
     (htop : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
       {ω | numInfiniteClusters d ω = ⊤}) :
     ∃ (n : ℕ) (x y z : Site d),

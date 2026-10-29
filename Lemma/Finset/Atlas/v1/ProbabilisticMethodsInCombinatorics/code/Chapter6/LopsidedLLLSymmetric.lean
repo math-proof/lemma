@@ -67,15 +67,15 @@ lemma ennreal_one_sub_inv_pow_ge
   [IsProbabilityMeasure μ]
   {d : ℕ} :
 -- imply
-  ENNReal.ofReal (Real.exp (-1)) ≤ (1 - ((d : ℝ≥0∞) + 1)⁻¹) ^ d := by
+  ENNReal.ofReal (Real.exp (-1)) ≤ (1 - ((d : ENNReal) + 1)⁻¹) ^ d := by
 -- proof
-  have ha_ne_top : (1 - ((d : ℝ≥0∞) + 1)⁻¹) ^ d ≠ ⊤ :=
+  have ha_ne_top : (1 - ((d : ENNReal) + 1)⁻¹) ^ d ≠ ⊤ :=
     ne_top_of_le_ne_top one_ne_top (pow_le_one₀ (zero_le _) tsub_le_self)
   rw [← ENNReal.toReal_le_toReal ofReal_ne_top ha_ne_top,
     ENNReal.toReal_ofReal (le_of_lt (Real.exp_pos _)),
     ENNReal.toReal_pow]
-  have h_toReal : (1 - ((d : ℝ≥0∞) + 1)⁻¹).toReal = 1 - 1 / ((d : ℝ) + 1) := by
-    have hd1 : ((d : ℝ≥0∞) + 1)⁻¹ ≤ 1 := by rw [ENNReal.inv_le_one]; simp
+  have h_toReal : (1 - ((d : ENNReal) + 1)⁻¹).toReal = 1 - 1 / ((d : ℝ) + 1) := by
+    have hd1 : ((d : ENNReal) + 1)⁻¹ ≤ 1 := by rw [ENNReal.inv_le_one]; simp
     rw [ENNReal.toReal_sub_of_le hd1 one_ne_top, ENNReal.toReal_one, ENNReal.toReal_inv]
     simp [ENNReal.toReal_add, ENNReal.toReal_natCast]
   rw [h_toReal]
@@ -100,7 +100,7 @@ lemma lopsided_local_lemma_symmetric
 -- given
   (hA : ∀ i, MeasurableSet (A i))
   (hlop : ∀ (i : Fin n) (S : Finset (Fin n)), S ⊆ Finset.univ \ (N i ∪ {i}) → μ[A i | avoidSet A S] ≤ μ (A i))
-  (p : ℝ≥0∞)
+  (p : ENNReal)
   (hNd : ∀ i, (N i).card ≤ d)
   (hprob : ∀ i, μ (A i) ≤ p)
   (hepd : ENNReal.ofReal (Real.exp 1) * p * (↑d + 1) ≤ 1) :
@@ -110,7 +110,7 @@ lemma lopsided_local_lemma_symmetric
   classical
   obtain rfl | hd_pos := Nat.eq_zero_or_pos d
   ·
-    set x : Fin n → ℝ≥0∞ := fun _ => 1 / 2
+    set x : Fin n → ENNReal := fun _ => 1 / 2
     have hx_lt : ∀ i, x i < 1 := fun _ => by norm_num [x]
     have hbound : ∀ i, μ (A i) ≤ x i * ∏ j ∈ N i, (1 - x j) := fun i => by
       have hNi_empty : N i = ∅ :=
@@ -124,26 +124,26 @@ lemma lopsided_local_lemma_symmetric
             _ = ENNReal.ofReal (Real.exp 1) * p * (↑(0 : ℕ) + 1) := by simp
             _ ≤ 1 := hepd
         _ ≤ 1 / 2 := by
-          rw [show (1 : ℝ≥0∞) / 2 = 2⁻¹ from one_div 2]
+          rw [show (1 : ENNReal) / 2 = 2⁻¹ from one_div 2]
           exact ENNReal.inv_le_inv' (by
-            rw [show (2 : ℝ≥0∞) = ENNReal.ofReal 2 from by norm_num]
+            rw [show (2 : ENNReal) = ENNReal.ofReal 2 from by norm_num]
             exact ENNReal.ofReal_le_ofReal (by linarith [Real.add_one_le_exp (1 : ℝ)]))
     have hlll := lopsided_local_lemma A hA N x hx_lt hlop hbound
     have hprod_pos : 0 < ∏ i : Fin n, (1 - x i) :=
       pos_iff_ne_zero.mpr (prod_one_sub_ne_zero Finset.univ x (fun i _ => hx_lt i))
     exact lt_of_lt_of_le hprod_pos hlll
   ·
-    set x : Fin n → ℝ≥0∞ := fun _ => ((d : ℝ≥0∞) + 1)⁻¹
+    set x : Fin n → ENNReal := fun _ => ((d : ENNReal) + 1)⁻¹
     have hx_lt : ∀ i, x i < 1 := fun _ => by
       simp only [x]
       rw [ENNReal.inv_lt_one]
-      calc (1 : ℝ≥0∞) = 0 + 1 := by simp
+      calc (1 : ENNReal) = 0 + 1 := by simp
         _ < ↑d + 1 := ENNReal.add_lt_add_right one_ne_top (by exact_mod_cast hd_pos)
-    have hp_bound : p ≤ ((d : ℝ≥0∞) + 1)⁻¹ * ENNReal.ofReal (Real.exp (-1)) := by
+    have hp_bound : p ≤ ((d : ENNReal) + 1)⁻¹ * ENNReal.ofReal (Real.exp (-1)) := by
       rw [show ENNReal.ofReal (Real.exp (-1)) = (ENNReal.ofReal (Real.exp 1))⁻¹ from by
         rw [← ENNReal.ofReal_inv_of_pos (Real.exp_pos 1), Real.exp_neg]]
-      have hd1_ne_zero : (↑d + 1 : ℝ≥0∞) ≠ 0 := by simp
-      have hd1_ne_top : (↑d + 1 : ℝ≥0∞) ≠ ⊤ := by simp
+      have hd1_ne_zero : (↑d + 1 : ENNReal) ≠ 0 := by simp
+      have hd1_ne_top : (↑d + 1 : ENNReal) ≠ ⊤ := by simp
       rw [← ENNReal.mul_inv (Or.inl hd1_ne_zero) (Or.inl hd1_ne_top)]
       rw [le_inv_iff_mul_le]
       calc p * ((↑d + 1) * ENNReal.ofReal (Real.exp 1))
@@ -152,10 +152,10 @@ lemma lopsided_local_lemma_symmetric
     have hbound : ∀ i, μ (A i) ≤ x i * ∏ j ∈ N i, (1 - x j) := fun i => by
       simp only [x, Finset.prod_const]
       calc μ (A i) ≤ p := hprob i
-        _ ≤ ((d : ℝ≥0∞) + 1)⁻¹ * ENNReal.ofReal (Real.exp (-1)) := hp_bound
-        _ ≤ ((d : ℝ≥0∞) + 1)⁻¹ * (1 - ((d : ℝ≥0∞) + 1)⁻¹) ^ d :=
+        _ ≤ ((d : ENNReal) + 1)⁻¹ * ENNReal.ofReal (Real.exp (-1)) := hp_bound
+        _ ≤ ((d : ENNReal) + 1)⁻¹ * (1 - ((d : ENNReal) + 1)⁻¹) ^ d :=
           mul_le_mul' le_rfl (ennreal_one_sub_inv_pow_ge d)
-        _ ≤ ((d : ℝ≥0∞) + 1)⁻¹ * (1 - ((d : ℝ≥0∞) + 1)⁻¹) ^ (N i).card :=
+        _ ≤ ((d : ENNReal) + 1)⁻¹ * (1 - ((d : ENNReal) + 1)⁻¹) ^ (N i).card :=
           mul_le_mul' le_rfl (pow_le_pow_of_le_one (zero_le _) tsub_le_self (hNd i))
     have hlll := lopsided_local_lemma A hA N x hx_lt hlop hbound
     have hprod_pos : 0 < ∏ i : Fin n, (1 - x i) :=

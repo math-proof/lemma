@@ -29,9 +29,9 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma isSolution_tail_of_cFiniteWitness
-  {s : ℕ → ℤ}
-  {p q : ℕ}
-  {c : Fin p → ℤ}
+  (s : ℕ → ℤ)
+  (p q : ℕ)
+  (c : Fin p → ℤ)
 -- given
   (h : ∀ n, q ≤ n → s (n + p) = ∑ i, c i * s (n + (i : ℕ))) :
 -- imply

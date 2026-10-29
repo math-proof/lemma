@@ -14,8 +14,6 @@ lemma unitZpToQp_coe {p : ℕ} [Fact (Nat.Prime p)] (u : ℤ_[p]ˣ) :
   (unitZpToQp u : ℚ_[p]) = ((u : ℤ_[p]) : ℚ_[p]) := by
   rw [unitZpToQp, Units.coe_map]
   exact PadicInt.Coe.ringHom_apply (u : ℤ_[p])
-open scoped Classical in
-set_option maxHeartbeats 800000 in
 
 end HilbertSymbol
 
@@ -26,10 +24,11 @@ namespace HilbertSymbol
 -/
 @[path]
 lemma chevalley_warning_hensel_lift
-  {p : ℕ} [Fact p.Prime]
-  {u v : ℤ_[p]ˣ}
+  (p : ℕ)
+  [Fact p.Prime]
 -- given
-  (hp_odd : p ≠ 2) :
+  (hp_odd : p ≠ 2)
+  (u v : ℤ_[p]ˣ) :
 -- imply
   ∃ (x₀ y₀ : ℤ_[p]) (z₀ : ℤ_[p]ˣ),
     (z₀ : ℤ_[p]) ^ 2 = (u : ℤ_[p]) * x₀ ^ 2 + (v : ℤ_[p]) * y₀ ^ 2 := by
@@ -161,4 +160,4 @@ end HilbertSymbol
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

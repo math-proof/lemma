@@ -9,26 +9,6 @@
 * **公理化**：在依赖类型论框架下，已证结论由公理模式与推理规则经有限步演绎导出；这一立场受 [希尔伯特形式主义计划](https://en.wikipedia.org/wiki/Hilbert%27s_program) 启发，强调证明的可复核性而非诉诸自然语言中的省略语。
 * **程序即证明**：依据 Curry–Howard 同构，命题以 [Lean](https://lean-lang.org/) 语句精确编码，证明即类型正确的程序，从而避免以「显然，易知，同理，一般地，以此类推，反之亦然，综上所述，不失一般性」等自然语言省略语代替可检验的推导；在 Lean 4 的精确实数与超实数语义下，不存在一般数值代码中的浮点舍入误差。
 
-网站可通过 google/baidu/bing 检索「定理库」访问。相关开源证明助手与定理库包括 [Lean/mathlib](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Algebra/Basic.html)、[Coq](https://github.com/coq/coq) 与 [Isabelle](https://isabelle.in.tum.de/)。
-
-熟练使用本系统，通常需要熟悉下列推理模式及其在 Lean 中的对应策略：
-
-## 形式化推理策略
-
-1. **归纳法**  
-   数学归纳法：由基例与归纳步建立对全体自然数（或良基结构）的命题，如：`induction`
-2. **演绎法**  
-   由一般命题推出特殊实例，含全称量词引入与消去，如：`specialize` / `intro` / `rintro`
-3. **反证法**  
-   归谬法：假设结论否定成立，据 [排中律](../?module=Bool.Or_Not) 推导矛盾，如：`by_contra`
-4. **分治法**  
-   分类讨论：将目标分解为互斥且穷尽的情形分别证明，如：`by_cases` / `interval_cases` / `rcases`
-5. **溯因式推理**  
-   由待证目标反向寻找充分条件或适用引理（证明搜索意义上的“由果索因”），如：`refine` / `apply`
-
-<br><br>
-------
-
 
 # 算法定理库的建设
   <br>
@@ -53,12 +33,15 @@
 * [Vector](../?module=Vector) 向量（一维张量）理论
 * [Matrix](../?module=Matrix) 矩阵理论，例：
   - [置盐定理](../?module=Matrix.Any_And_EqSMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
+  - [Cholesky 分解](../?module=Finset.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky)
+  - [PLU 分解](../?module=Tensor.Eq.Dot.PLU.of.Eq.Eq_Dot.Eq_Ite)
 * [Tensor](../?module=Tensor) 形式化张量演算，语义上与 **torch.Tensor** 对齐，用于深度学习算法的形式化表述与验证，例：
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 * [Random](../?module=Random) 概率论与随机过程，例：
   - [朴素贝叶斯文档分类](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)
   - [CRF 损失函数](../?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)、[Viterbi](../?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)
+  - [独立高斯之和](../?module=Random.DistributedAdd.of.Distributed_Gaussian.Distributed_Gaussian.Indep)
   - [GAE（离散）](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Icc.In_Ico)、[GAE（连续）](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico)
 
 <br><br>

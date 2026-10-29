@@ -91,7 +91,7 @@ theorem lhc_boundaryArmInjection_of_uniqueTrif (ω : ConfigSpace (Sym2 (Site d))
   exact (hsingle x hxbox htri).trans (hsingle y hybox htriy).symm
 
 
-theorem lhc_burton_keane_bernoulli_of_boundaryArmInjection (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem lhc_burton_keane_bernoulli_of_boundaryArmInjection (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → tfc_BoundaryArmInjection ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

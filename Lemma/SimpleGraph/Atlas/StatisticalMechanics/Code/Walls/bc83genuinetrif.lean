@@ -88,7 +88,7 @@ private lemma bc83_expected_eq
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) :
 -- imply
-  ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc83_genuineTrif ω L 0} = ∫⁻ ω, (bc83_genuineTrifCount ω L R : ℝ≥0∞) ∂μ := by
+  ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc83_genuineTrif ω L 0} = ∫⁻ ω, (bc83_genuineTrifCount ω L R : ENNReal) ∂μ := by
 -- proof
   apply StatMech.Walls.bc83_expected μ hinv L R
 

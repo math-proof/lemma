@@ -133,7 +133,7 @@ theorem continuousAt_loewnerMaximalMapsInverse_of_lt_im_sq_div_sixteen
 theorem loewnerMaximalMaps_local_lipschitz_of_lt_im_sq_div_sixteen
     {W : ℝ → ℝ} (hW : Continuous W) {t : ℝ} (ht : 0 ≤ t)
     {z₀ : ℂ} (hz₀ : 0 < z₀.im) (hlt : t < z₀.im ^ 2 / 16) :
-    ∃ C : ℝ≥0,
+    ∃ C : NNReal,
       closedBall z₀ (z₀.im / 4) ⊆ loewnerUnswallowedDomain W t ∧
         LipschitzOnWith C (loewnerMaximalMaps W t)
           (closedBall z₀ (z₀.im / 4)) := by

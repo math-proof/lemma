@@ -27,7 +27,7 @@ private lemma tfx_htrif_of_mergeFree_eq
 private lemma bkc_htrif_bernoulli_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hmf : ∀ (n : ℕ) (ω : ConfigSpace (Sym2 (Site d))), ω ∈ threeMeetBox d n → bka_MergeFree ω) :
@@ -44,7 +44,7 @@ private lemma tfx_burton_keane_bernoulli_of_mergeFree_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), Tcount d ω n ≤ boxSV_boundaryCard d n)

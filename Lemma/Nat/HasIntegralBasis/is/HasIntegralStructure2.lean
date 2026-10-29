@@ -17,7 +17,7 @@ private lemma main
   have hset : CuspForm.qIntegralSet N =
       {f : CuspForm (CongruenceSubgroup.Gamma0 N) 2 | ∀ n : ℕ, ∃ m : ℤ, ModularFormClass.qCoeff f n = (m : ℂ)} := by
     ext f
-    simp only [CuspForm.qIntegralSet, Set.mem_setOf_eq]
+    simp only [CuspForm.qIntegralSet, Set.mem_ofPred_eq]
     refine forall_congr' fun n => ?_
     rw [Subring.mem_bot]
     exact ⟨fun ⟨m, hm⟩ => ⟨m, hm.symm⟩, fun ⟨m, hm⟩ => ⟨m, hm.symm⟩⟩
@@ -26,3 +26,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

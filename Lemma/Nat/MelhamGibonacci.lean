@@ -141,11 +141,11 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma melham_fibonacci_gibonacci_sum_of_squares_general
-  {G : ℤ → ℤ}
-  {k : ℤ}
-  {n : ℕ}
+  (G : ℤ → ℤ)
 -- given
-  (hG : ∀ j : ℤ, G (j + 2) = G (j + 1) + G j) :
+  (hG : ∀ j : ℤ, G (j + 2) = G (j + 1) + G j)
+  (k : ℤ)
+  (n : ℕ) :
 -- imply
   6 * (∑ j ∈ Finset.range (2 * n), (G (k + j)) ^ 2) ^ 2 =
     (Nat.fib (2 * n) : ℤ) ^ 2 *
@@ -171,7 +171,6 @@ lemma melham_fibonacci_gibonacci_sum_of_squares_general
     rw [w_eq, hz]; ring
   rw [key, quart]
   ring
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -187,8 +186,8 @@ lemma melham_fibonacci_gibonacci_sum_of_squares
   {n : ℕ}
 -- given
   (hG : ∀ j : ℤ, G (j + 2) = G (j + 1) + G j)
-  (hG_nonzero : G 0 ≠ 0 ∨ G 1 ≠ 0)
-  (hn : 0 < n) :
+  (_hG_nonzero : G 0 ≠ 0 ∨ G 1 ≠ 0)
+  (_hn : 0 < n) :
 -- imply
   6 * (∑ j ∈ Finset.range (2 * n), (G (k + j)) ^ 2) ^ 2 =
     (Nat.fib (2 * n) : ℤ) ^ 2 *

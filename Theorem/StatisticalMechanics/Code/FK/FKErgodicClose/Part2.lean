@@ -81,7 +81,7 @@ theorem fec_isErgodic_of_invariantExtremePoint {μ : Measure (ConfigSpace E)}
 
 
 theorem fec_wiredIV_isErgodic_of_extremePoint {d : ℕ} {p : ℝ} (hp : 0 < p) (hp1 : p < 1)
-    (hext : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ℝ≥0∞),
+    (hext : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ENNReal),
       IsTranslationInvariant (G := Multiplicative (Site d)) ν₁ →
         IsTranslationInvariant (G := Multiplicative (Site d)) ν₂ →
           IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ →
@@ -100,7 +100,7 @@ theorem fec_freeIV_isErgodic_of_extremePoint {d : ℕ} {p : ℝ} (hp : 0 < p) (h
     (htifree : IsTranslationInvariant (G := Multiplicative (Site d))
       (freeInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 2)
         : Measure (ConfigSpace (Sym2 (Site d)))))
-    (hext : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ℝ≥0∞),
+    (hext : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ENNReal),
       IsTranslationInvariant (G := Multiplicative (Site d)) ν₁ →
         IsTranslationInvariant (G := Multiplicative (Site d)) ν₂ →
           IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ →

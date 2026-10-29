@@ -226,7 +226,7 @@ theorem tac_Tcount_le_boundary_of_globalForestArms (ω : ConfigSpace (Sym2 (Site
   aed_Tcount_le_boundary_of_globalForestArms ω n hn h
 
 
-theorem tac_burton_keane_bernoulli_of_globalForestArms (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem tac_burton_keane_bernoulli_of_globalForestArms (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1)
     (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → aed_GlobalForestArms ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

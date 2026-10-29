@@ -66,7 +66,7 @@ private lemma blf_bc69_of_acyclicArmUnion_eq
 @[path]
 private lemma blf_bk_of_acyclicArmUnion_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), blf_AcyclicArmUnion ω L R) :
@@ -101,7 +101,7 @@ private lemma blf_interiorCycle_obstructs_eq :
 @[path]
 private lemma blf_status_eq :
 -- imply
-  (∀ {V : Type} [Fintype V] [DecidableEq V] {F : SimpleGraph V} [_i : DecidableRel F.Adj] {B : V → Prop}, (∀ v, ¬ B v → 2 ≤ F.degree v) → ∀ v, F.degree v = 1 → B v) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), blf_AcyclicArmUnion ω L R → bc69_Gn_globalForest ω L R) ∧ (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), blf_AcyclicArmUnion ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) ∧ (bof2_advT ≤ bof2_advG ∧ bof2_advT.IsAcyclic ∧ bof2_advG.degree 2 = 2 ∧ bof2_advT.degree 2 = 1 ∧ (2 : Fin 4) ∉ ({0} : Finset (Fin 4))) := by
+  (∀ {V : Type} [Fintype V] [DecidableEq V] {F : SimpleGraph V} [_i : DecidableRel F.Adj] {B : V → Prop}, (∀ v, ¬ B v → 2 ≤ F.degree v) → ∀ v, F.degree v = 1 → B v) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), blf_AcyclicArmUnion ω L R → bc69_Gn_globalForest ω L R) ∧ (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), blf_AcyclicArmUnion ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) ∧ (bof2_advT ≤ bof2_advG ∧ bof2_advT.IsAcyclic ∧ bof2_advG.degree 2 = 2 ∧ bof2_advT.degree 2 = 1 ∧ (2 : Fin 4) ∉ ({0} : Finset (Fin 4))) := by
 -- proof
   apply StatMech.Walls.blf_status
 

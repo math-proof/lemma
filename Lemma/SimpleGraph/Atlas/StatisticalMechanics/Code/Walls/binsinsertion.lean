@@ -83,7 +83,7 @@ private lemma bins_exists_ExtEvent_pos_of_cover_eq
   {n : ℕ}
   {I : Finset (Sym2 (Site 2))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n))
   (hcover : threeMeetBox 2 n ⊆ ⋃ u₁ : Site 2, ⋃ u₂ : Site 2, ⋃ u₃ : Site 2, bins_ExtEvent I u₁ u₂ u₃) :
@@ -135,7 +135,7 @@ private lemma bins_threeMeetBox_subset_iUnion_ExtEvent_touch_eq
 private lemma bins_exists_ExtEvent_touch_pos_eq
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n)) :
 -- imply
@@ -185,7 +185,7 @@ private lemma bins_threeMeetBox_subset_iUnion_ShellExtEvent_eq
 private lemma bins_exists_ShellExtEvent_pos_eq
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n)) :
 -- imply
@@ -209,7 +209,7 @@ private lemma bins_iEqTop_subset_iUnion_NineMeetBox_eq :
 @[path]
 private lemma bins_exists_NineMeetBox_pos_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (htop : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 {ω | numInfiniteClusters 2 ω = ⊤}) :
 -- imply
@@ -235,7 +235,7 @@ private lemma bins_NineMeetBox_subset_iUnion_NineShellEvent_eq
 private lemma bins_exists_NineShellEvent_pos_eq
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (bins_NineMeetBox n)) :
 -- imply
@@ -250,7 +250,7 @@ private lemma bins_exists_NineShellEvent_pos_eq
 private lemma bins_exists_NineShellEvent_pos_of_threeMeetBox_eq
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (threeMeetBox 2 n)) :
 -- imply
@@ -330,7 +330,7 @@ private lemma bins_routePackage_of_corridors_eq
   {u₁ u₂ u₃ : Site 2}
   {I : Finset (Sym2 (Site 2))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hu₁ : u₁ ≠ ![0, 0])
   (hu₂ : u₂ ≠ ![0, 0])
@@ -349,7 +349,7 @@ private lemma bins_routePackage_of_corridors_eq
 @[path]
 private lemma bins_hroute_of_route_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)
@@ -365,7 +365,7 @@ private lemma bins_hroute_of_route_eq
 @[path]
 private lemma bins_bk_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)
@@ -381,7 +381,7 @@ private lemma bins_bk_eq
 @[path]
 private lemma bins_bk_atLeastTwo_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1)

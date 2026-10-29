@@ -64,7 +64,8 @@ private lemma minpoly_add_inv_eq_of_minpoly_eq {K : Type*} [Field K] [CharZero K
   have hgen : (eK.symm.trans eC) ⟨zeta, memK0⟩ = ⟨omega, memC0⟩ := by
     have hsymm : eK.symm ⟨zeta, memK0⟩ = AdjoinRoot.root (minpoly ℤ omega) := by
       have h := congrArg (⇑eK.symm) hK
-      rwa [AlgEquiv.symm_apply_apply] at h
+      rw [AlgEquiv.symm_apply_apply] at h
+      exact h.symm
     calc (eK.symm.trans eC) ⟨zeta, memK0⟩ = eC (eK.symm ⟨zeta, memK0⟩) := rfl
       _ = eC (AdjoinRoot.root (minpoly ℤ omega)) := by rw [hsymm]
       _ = ⟨omega, memC0⟩ := hC
@@ -78,7 +79,7 @@ private lemma minpoly_add_inv_eq_of_minpoly_eq {K : Type*} [Field K] [CharZero K
       Subtype.ext (by simp)
     calc (eK.symm.trans eC) ⟨zeta + zeta ^ (n - 1), memK⟩
       = (eK.symm.trans eC) (⟨zeta, memK0⟩ + ⟨zeta, memK0⟩ ^ (n - 1)) := by
-        rw [hdecompK]
+          rw [hdecompK]
       _ = (eK.symm.trans eC) ⟨zeta, memK0⟩ +
         ((eK.symm.trans eC) ⟨zeta, memK0⟩) ^ (n - 1) := by rw [map_add, map_pow]
       _ = ⟨omega, memC0⟩ + ⟨omega, memC0⟩ ^ (n - 1) := by rw [hgen]
@@ -88,7 +89,8 @@ private lemma minpoly_add_inv_eq_of_minpoly_eq {K : Type*} [Field K] [CharZero K
     minpoly ℤ (⟨omega + omega ^ (n - 1), memC⟩ :
       ↥(Algebra.adjoin ℤ ({omega} : Set L))) := by
     have h := minpoly.algEquiv_eq (eK.symm.trans eC) ⟨zeta + zeta ^ (n - 1), memK⟩
-    rwa [htrace] at h
+    rw [htrace] at h
+    exact h.symm
   have downK : minpoly ℤ (zeta + zeta ^ (n - 1)) =
     minpoly ℤ (⟨zeta + zeta ^ (n - 1), memK⟩ :
       ↥(Algebra.adjoin ℤ ({zeta} : Set K))) :=

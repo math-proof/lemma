@@ -193,7 +193,7 @@ private lemma dist_toLpOne_eq
 @[path]
 private lemma isometry_toLpOne_eq :
 -- imply
-  Isometry (toLpOne : SummableTail α → lp (fun _ : α => ℝ) (1 : ℝ≥0∞)) := by
+  Isometry (toLpOne : SummableTail α → lp (fun _ : α => ℝ) (1 : ENNReal)) := by
 -- proof
   apply StatMech.Exact3D.SummableTail.isometry_toLpOne
 
@@ -203,7 +203,7 @@ private lemma isometry_toLpOne_eq :
 @[path]
 private lemma isUniformEmbedding_equivLpOne_eq :
 -- imply
-  IsUniformEmbedding (equivLpOne : SummableTail α ≃ lp (fun _ : α => ℝ) (1 : ℝ≥0∞)) := by
+  IsUniformEmbedding (equivLpOne : SummableTail α ≃ lp (fun _ : α => ℝ) (1 : ENNReal)) := by
 -- proof
   apply StatMech.Exact3D.SummableTail.isUniformEmbedding_equivLpOne
 
@@ -539,7 +539,7 @@ private lemma contractingWith_eq
   {n : ℕ}
   {C : FinitePlusTailLipschitzCertificate n α} :
 -- imply
-  ContractingWith (⟨C.c, C.c_nonneg⟩ : ℝ≥0) C.map := by
+  ContractingWith (⟨C.c, C.c_nonneg⟩ : NNReal) C.map := by
 -- proof
   apply StatMech.Exact3D.FinitePlusTailLipschitzCertificate.contractingWith C
 

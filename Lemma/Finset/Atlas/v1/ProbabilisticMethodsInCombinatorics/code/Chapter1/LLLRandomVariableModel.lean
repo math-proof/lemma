@@ -91,7 +91,7 @@ lemma lll_bound_to_ennreal
 -- imply
   ENNReal.ofReal (rexp 1) * ENNReal.ofReal p * (↑d + 1) ≤ 1 := by
 -- proof
-  have hd_cast : (↑d : ℝ≥0∞) + 1 = ENNReal.ofReal ((d : ℝ) + 1) := by
+  have hd_cast : (↑d : ENNReal) + 1 = ENNReal.ofReal ((d : ℝ) + 1) := by
     rw [ENNReal.ofReal_add (Nat.cast_nonneg d) zero_le_one, ENNReal.ofReal_natCast,
       ENNReal.ofReal_one]
   rw [hd_cast, ← ENNReal.ofReal_mul (le_of_lt (exp_pos 1)),

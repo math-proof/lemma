@@ -177,7 +177,7 @@ theorem rb3_reimerWprobCore : StatMech.ReimerWprobCore :=
   StatMech.rc84_residue_is_famCylBox rb3_famCylBoxResidue
 
 
-theorem rb3_thm_reimer {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1)
+theorem rb3_thm_reimer {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1)
     (A B : Set (StatMech.ConfigSpace E)) :
     (StatMech.bernoulliProductMeasure (E := E) p hp).real (StatMech.disjointOccurrence A B)
       ≤ (StatMech.bernoulliProductMeasure (E := E) p hp).real A

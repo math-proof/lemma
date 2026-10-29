@@ -72,8 +72,8 @@ theorem bpe_expBound_of_perConfigLeaf
     (μ : Measure (ConfigSpace (Sym2 (Site d)))) (L : ℕ) (bdry : ℕ → ℕ)
     (leafBd : ConfigSpace (Sym2 (Site d)) → ℕ → ℕ)
     (hle : ∀ ω R, bc61_coarseTcount ω L R ≤ leafBd ω R)
-    (hExp : ∀ R, ∫⁻ ω, (leafBd ω R : ℝ≥0∞) ∂μ ≤ (bdry R : ℝ≥0∞)) :
-    ∀ R : ℕ, ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ ≤ (bdry R : ℝ≥0∞) := by
+    (hExp : ∀ R, ∫⁻ ω, (leafBd ω R : ENNReal) ∂μ ≤ (bdry R : ENNReal)) :
+    ∀ R : ℕ, ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ ≤ (bdry R : ENNReal) := by
   intro R
   refine le_trans (lintegral_mono (fun ω => ?_)) (hExp R)
   exact Nat.cast_le.mpr (hle ω R)
@@ -85,7 +85,7 @@ theorem bpe_top_null_of_probForest
     (bdry : ℕ → ℕ) (leafBd : ConfigSpace (Sym2 (Site d)) → ℕ → ℕ)
     (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ),
       bpe_CoarseForestNoBnd ω L R (leafBd ω R))
-    (hExpLeaf : ∀ R, ∫⁻ ω, (leafBd ω R : ℝ≥0∞) ∂μ ≤ (bdry R : ℝ≥0∞))
+    (hExpLeaf : ∀ R, ∫⁻ ω, (leafBd ω R : ENNReal) ∂μ ≤ (bdry R : ENNReal))
     (hdens : Filter.Tendsto
       (fun R => (bdry R : ℝ) / ((boxFinsetBK d R).card : ℝ)) Filter.atTop (nhds 0))
     (hexist : bc61_CoarseTrifExistence μ L) :
@@ -94,7 +94,7 @@ theorem bpe_top_null_of_probForest
   have ha : ∀ ω R, bc61_coarseTcount ω L R ≤ leafBd ω R :=
     fun ω R => bpe_coarseTcount_le_leafCard ω L R (leafBd ω R) (hforest ω R)
   
-  have hExpBound : ∀ R : ℕ, ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ ≤ (bdry R : ℝ≥0∞) :=
+  have hExpBound : ∀ R : ℕ, ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ ≤ (bdry R : ENNReal) :=
     bpe_expBound_of_perConfigLeaf μ L bdry leafBd ha hExpLeaf
   
   exact bpe_top_null_of_expCount μ L bdry
@@ -107,9 +107,9 @@ theorem bpe_status (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMe
     (bdry : ℕ → ℕ) :
     
     ((∀ R : ℕ,
-        ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-          = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ) →
-      (∀ R : ℕ, ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ ≤ (bdry R : ℝ≥0∞)) →
+        ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+          = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ) →
+      (∀ R : ℕ, ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ ≤ (bdry R : ENNReal)) →
       (∀ R, 0 < (boxFinsetBK d R).card) →
       Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK d R).card : ℝ)) Filter.atTop (nhds 0) →
       bc61_CoarseTrifExistence μ L →
@@ -120,7 +120,7 @@ theorem bpe_status (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMe
     
     (∀ (leafBd : ConfigSpace (Sym2 (Site d)) → ℕ → ℕ),
       (∀ ω R, bpe_CoarseForestNoBnd ω L R (leafBd ω R)) →
-      (∀ R, ∫⁻ ω, (leafBd ω R : ℝ≥0∞) ∂μ ≤ (bdry R : ℝ≥0∞)) →
+      (∀ R, ∫⁻ ω, (leafBd ω R : ENNReal) ∂μ ≤ (bdry R : ENNReal)) →
       Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK d R).card : ℝ)) Filter.atTop (nhds 0) →
       bc61_CoarseTrifExistence μ L →
       μ {ω | numInfiniteClusters d ω = ⊤} = 0) := by

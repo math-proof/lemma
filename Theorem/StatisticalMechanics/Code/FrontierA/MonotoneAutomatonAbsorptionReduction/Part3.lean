@@ -121,7 +121,7 @@ theorem highOutput_cluster_count_ae_le_one_of_step3Core
     [IsProbabilityMeasure mu]
     (hd : 1 ≤ d)
     (herg : IsTripleFieldErgodic mu)
-    (epsilon : ℝ≥0∞) (hepsilon : epsilon ≠ 0)
+    (epsilon : ENNReal) (hepsilon : epsilon ≠ 0)
     (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon)
     (hmono : ∀ᵐ q ∂mu, IsMonotoneFieldTriple q)
     (hlow : mu {q | 1 ≤ numInfiniteClusters d

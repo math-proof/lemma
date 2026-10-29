@@ -210,7 +210,7 @@ private lemma bft_datum_sep_free_eq
 private lemma bft_bk_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hdata : ∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) :
@@ -226,7 +226,7 @@ private lemma bft_bk_eq
 private lemma bft_status_eq
   {d : ℕ} :
 -- imply
-  (∀ (ω : ConfigSpace (Sym2 (Site d))) (x : Site d), bc67_contractedLattice ω 0 x = bkg_deleteVertex (openSubgraph d ω) x) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (S : Finset (Site d)) {T : SimpleGraph {v // v ∈ S}} [_i : DecidableRel T.Adj], T ≤ bfct_restrict (openSubgraph d ω) S → T.IsTree → ∀ {ι : Type} [Fintype ι] (f : ι → {v // v ∈ S}), Function.Injective f → (∀ i, ∃ a₁ a₂ a₃ : {v // v ∈ S}, (a₁ : Site d) ≠ (f i : Site d) ∧ (a₂ : Site d) ≠ (f i : Site d) ∧ (a₃ : Site d) ≠ (f i : Site d) ∧ ¬ (bkg_deleteVertex (openSubgraph d ω) (f i : Site d)).Reachable (a₁ : Site d) (a₂ : Site d) ∧ ¬ (bkg_deleteVertex (openSubgraph d ω) (f i : Site d)).Reachable (a₁ : Site d) (a₃ : Site d) ∧ ¬ (bkg_deleteVertex (openSubgraph d ω) (f i : Site d)).Reachable (a₂ : Site d) (a₃ : Site d)) → ∀ (B : Finset {v // v ∈ S}), (∀ v, T.degree v = 1 → v ∈ B) → Fintype.card ι ≤ B.card) ∧ (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
+  (∀ (ω : ConfigSpace (Sym2 (Site d))) (x : Site d), bc67_contractedLattice ω 0 x = bkg_deleteVertex (openSubgraph d ω) x) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (S : Finset (Site d)) {T : SimpleGraph {v // v ∈ S}} [_i : DecidableRel T.Adj], T ≤ bfct_restrict (openSubgraph d ω) S → T.IsTree → ∀ {ι : Type} [Fintype ι] (f : ι → {v // v ∈ S}), Function.Injective f → (∀ i, ∃ a₁ a₂ a₃ : {v // v ∈ S}, (a₁ : Site d) ≠ (f i : Site d) ∧ (a₂ : Site d) ≠ (f i : Site d) ∧ (a₃ : Site d) ≠ (f i : Site d) ∧ ¬ (bkg_deleteVertex (openSubgraph d ω) (f i : Site d)).Reachable (a₁ : Site d) (a₂ : Site d) ∧ ¬ (bkg_deleteVertex (openSubgraph d ω) (f i : Site d)).Reachable (a₁ : Site d) (a₃ : Site d) ∧ ¬ (bkg_deleteVertex (openSubgraph d ω) (f i : Site d)).Reachable (a₂ : Site d) (a₃ : Site d)) → ∀ (B : Finset {v // v ∈ S}), (∀ v, T.degree v = 1 → v ∈ B) → Fintype.card ι ≤ B.card) ∧ (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bcv_ClusterTreeData ω L R) → bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) := by
 -- proof
   apply StatMech.Walls.bft_status
 

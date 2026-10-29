@@ -113,7 +113,7 @@ theorem integral_Zc_div (h : SubadditiveCocycle T μ X) {n : ℕ} (hn : 1 ≤ n)
 
 omit [IsFiniteMeasure μ] in
 
-theorem aemeasurable_liminf_ennreal (g : ℕ → α → ℝ≥0∞) (hg : ∀ n, AEMeasurable (g n) μ) :
+theorem aemeasurable_liminf_ennreal (g : ℕ → α → ENNReal) (hg : ∀ n, AEMeasurable (g n) μ) :
     AEMeasurable (fun x => liminf (fun n => g n x) atTop) μ := by
   refine ⟨fun x => liminf (fun n => (hg n).mk _ x) atTop,
     Measurable.liminf (fun n => (hg n).measurable_mk), ?_⟩
@@ -130,7 +130,7 @@ theorem ae_liminf_lt_top (h : SubadditiveCocycle T μ X)
     ∀ᵐ x ∂μ, liminf (fun n => ENNReal.ofReal (Zc T X n x / n)) atTop < ∞ := by
   obtain ⟨B, hB⟩ := hbdd
   set C : ℝ := ((∫ x, X 1 x ∂μ) - B) ⊔ 0 with hC
-  set g : ℕ → α → ℝ≥0∞ := fun n x => ENNReal.ofReal (Zc T X n x / n) with hg
+  set g : ℕ → α → ENNReal := fun n x => ENNReal.ofReal (Zc T X n x / n) with hg
   have hgmeas : ∀ n, AEMeasurable (g n) μ := fun n =>
     ENNReal.measurable_ofReal.comp_aemeasurable
       ((integrable_Zc h n).aestronglyMeasurable.aemeasurable.div_const _)

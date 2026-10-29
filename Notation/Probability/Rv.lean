@@ -10,7 +10,4 @@ attribute [instance] ReferenceMeasure.toSigmaFinite
 
 attribute [simp] CountableMeasure.measure_eq_count
 
-
-notation:50 x:51 " ~ " D:52 => Distributed x D
-
-
+-- Bare `x ~ D` (density-form) removed: use `x ∼[π] μ` / `HasLaw x μ π` instead.

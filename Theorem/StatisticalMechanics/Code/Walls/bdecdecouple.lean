@@ -41,7 +41,7 @@ theorem bdec_forceOpen_empty_preimage (A : Set (ConfigSpace (Sym2 (Site d)))) :
   ext ω; simp only [Set.mem_preimage, bdec_forceOpen_empty]
 
 
-theorem bdec_posRouting_of_precursorPos (p : ℝ≥0) (hp1 : p ≤ 1) (n : ℕ)
+theorem bdec_posRouting_of_precursorPos (p : NNReal) (hp1 : p ≤ 1) (n : ℕ)
     (a₁ a₂ a₃ : Site d)
     (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
              (NeighborTrifPrecursor d a₁ a₂ a₃)) :
@@ -52,7 +52,7 @@ theorem bdec_posRouting_of_precursorPos (p : ℝ≥0) (hp1 : p ≤ 1) (n : ℕ)
   exact hpos
 
 
-theorem bdec_cylinder_singleton_pos (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
+theorem bdec_cylinder_singleton_pos (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
     (I : Finset (Sym2 (Site d))) (η₀ : ConfigSpace ↥I) :
     0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (cylinder I {η₀}) := by
   rw [bernoulliProductMeasure_cylinder p hp1 I {η₀},
@@ -67,7 +67,7 @@ theorem bdec_cylinder_singleton_pos (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) 
     exact ne_of_gt (tsub_pos_iff_lt.mpr hplt)
 
 
-theorem bdec_factor_finite_pos (p : ℝ≥0) (hp1 : p ≤ 1)
+theorem bdec_factor_finite_pos (p : NNReal) (hp1 : p ≤ 1)
     {s t : Finset (Sym2 (Site d))} {S : Set (∀ i : s, Bool)} {T : Set (∀ i : t, Bool)}
     (hS : MeasurableSet S) (hT : MeasurableSet T) (hdisj : Disjoint s t)
     (hSpos : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (cylinder s S))
@@ -77,7 +77,7 @@ theorem bdec_factor_finite_pos (p : ℝ≥0) (hp1 : p ≤ 1)
   exact ENNReal.mul_pos (ne_of_gt hSpos) (ne_of_gt hTpos)
 
 
-theorem bdec_precursorPos_of_decoupled (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
+theorem bdec_precursorPos_of_decoupled (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (hplt : p < 1)
     (a₁ a₂ a₃ : Site d)
     (I : Finset (Sym2 (Site d))) (η₀ : ConfigSpace ↥I)
     (X : Set (ConfigSpace (Sym2 (Site d))))
@@ -95,7 +95,7 @@ theorem bdec_precursorPos_of_decoupled (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < 
   exact lt_of_lt_of_le hInter (measure_mono hgeo)
 
 
-theorem bdec_bk_of_precursorPos (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bdec_bk_of_precursorPos (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hpre : ∀ n : ℕ, ∃ a₁ a₂ a₃ : Site d,
         0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
           (NeighborTrifPrecursor d a₁ a₂ a₃)) :
@@ -111,7 +111,7 @@ theorem bdec_bk_of_precursorPos (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp
     exact bdec_posRouting_of_precursorPos p hp1 n a₁ a₂ a₃ h)
 
 
-theorem bdec_bk_atLeastTwo_of_precursorPos (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bdec_bk_atLeastTwo_of_precursorPos (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hpre : ∀ n : ℕ, ∃ a₁ a₂ a₃ : Site d,
         0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
           (NeighborTrifPrecursor d a₁ a₂ a₃)) :

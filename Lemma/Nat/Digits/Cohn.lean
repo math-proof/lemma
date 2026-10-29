@@ -16,8 +16,8 @@ private lemma complex_sum_root_radius
   (hre : 0 < z.re) (hr : 1 < ‖z‖) :
   ‖z‖ * (‖z‖ - 1) < (b : ℝ) - 1 := by
   have hsplit :
-    (a n : ℂ) * z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) =
-      -∑ i ∈ Finset.range (n - 1), (a i : ℂ) * z ^ i := by
+      (a n : ℂ) * z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) =
+        -∑ i ∈ Finset.range (n - 1), (a i : ℂ) * z ^ i := by
     rw [show n + 1 = (n - 1) + 2 by omega, Finset.sum_range_succ,
       Finset.sum_range_succ] at hz
     rw [add_assoc] at hz
@@ -32,12 +32,12 @@ private lemma complex_sum_root_radius
     conv_lhs => rw [show n = (n - 1) + 1 by omega]
     rw [pow_succ]
   have hfac :
-    (a n : ℂ) * z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) =
-      z ^ (n - 1) * ((a n : ℂ) * z + a (n - 1)) := by
+      (a n : ℂ) * z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) =
+        z ^ (n - 1) * ((a n : ℂ) * z + a (n - 1)) := by
     rw [hpow]
     ring
   have hleft : ‖z‖ ^ n ≤
-    ‖(a n : ℂ) * z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1)‖ := by
+      ‖(a n : ℂ) * z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1)‖ := by
     rw [hfac, norm_mul, norm_pow]
     have hinner : ‖z‖ ≤ ‖(a n : ℂ) * z + a (n - 1)‖ := by
       rw [← sq_le_sq₀ (norm_nonneg _) (norm_nonneg _), Complex.sq_norm,
@@ -60,12 +60,12 @@ private lemma complex_sum_root_radius
       _ ≤ ‖z‖ ^ (n - 1) * ‖(a n : ℂ) * z + a (n - 1)‖ :=
         mul_le_mul_of_nonneg_left hinner hpnonneg
   have hright :
-    ‖(a n : ℂ) * z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1)‖ ≤
-      ((b : ℝ) - 1) * ∑ i ∈ Finset.range (n - 1), ‖z‖ ^ i := by
+      ‖(a n : ℂ) * z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1)‖ ≤
+        ((b : ℝ) - 1) * ∑ i ∈ Finset.range (n - 1), ‖z‖ ^ i := by
     rw [hsplit, norm_neg]
     calc
       ‖∑ i ∈ Finset.range (n - 1), (a i : ℂ) * z ^ i‖ ≤
-        ∑ i ∈ Finset.range (n - 1), ‖(a i : ℂ) * z ^ i‖ := norm_sum_le _ _
+          ∑ i ∈ Finset.range (n - 1), ‖(a i : ℂ) * z ^ i‖ := norm_sum_le _ _
       _ = ∑ i ∈ Finset.range (n - 1), (a i : ℝ) * ‖z‖ ^ i := by
         apply Finset.sum_congr rfl
         intro i hi
@@ -88,18 +88,18 @@ private lemma complex_sum_root_radius
   have hb1 : (0 : ℝ) < (b : ℝ) - 1 := by
     exact sub_pos.mpr (by exact_mod_cast (show 1 < b by omega))
   have hgeom :
-    ∑ i ∈ Finset.range (n - 1), ‖z‖ ^ i < ‖z‖ ^ (n - 1) / (‖z‖ - 1) := by
+      ∑ i ∈ Finset.range (n - 1), ‖z‖ ^ i < ‖z‖ ^ (n - 1) / (‖z‖ - 1) := by
     rw [geom_sum_eq (ne_of_gt hr)]
     apply div_lt_div_of_pos_right _ (sub_pos.mpr hr)
     linarith
   have hstrict :
-    ‖z‖ ^ n < ((b : ℝ) - 1) * (‖z‖ ^ (n - 1) / (‖z‖ - 1)) :=
+      ‖z‖ ^ n < ((b : ℝ) - 1) * (‖z‖ ^ (n - 1) / (‖z‖ - 1)) :=
     hmain.trans_lt (mul_lt_mul_of_pos_left hgeom hb1)
   have hden : 0 < ‖z‖ - 1 := sub_pos.mpr hr
   have hstrict' : ‖z‖ ^ n * (‖z‖ - 1) < ((b : ℝ) - 1) * ‖z‖ ^ (n - 1) := by
     calc
       ‖z‖ ^ n * (‖z‖ - 1) <
-        (((b : ℝ) - 1) * (‖z‖ ^ (n - 1) / (‖z‖ - 1))) * (‖z‖ - 1) :=
+          (((b : ℝ) - 1) * (‖z‖ ^ (n - 1) / (‖z‖ - 1))) * (‖z‖ - 1) :=
         mul_lt_mul_of_pos_right hstrict hden
       _ = ((b : ℝ) - 1) * ‖z‖ ^ (n - 1) := by field_simp
   have hp : 0 < ‖z‖ ^ (n - 1) := pow_pos (norm_pos_iff.mpr hz0) _
@@ -167,9 +167,9 @@ private lemma complex_binary_sum_root_radius_sq
   have hanlt := ha n
   have han1 : a n = 1 := by omega
   have hsplit :
-    z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) +
-      (a (n - 2) : ℂ) * z ^ (n - 2) =
-      -∑ i ∈ Finset.range (n - 2), (a i : ℂ) * z ^ i := by
+      z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) +
+          (a (n - 2) : ℂ) * z ^ (n - 2) =
+        -∑ i ∈ Finset.range (n - 2), (a i : ℂ) * z ^ i := by
     rw [show n + 1 = (n - 2) + 3 by omega, Finset.sum_range_succ,
       Finset.sum_range_succ, Finset.sum_range_succ] at hz
     have hn2 : n - 2 + 2 = n := by omega
@@ -187,19 +187,19 @@ private lemma complex_binary_sum_root_radius_sq
     conv_lhs => rw [show n - 1 = (n - 2) + 1 by omega]
     rw [pow_succ]
   have hfac :
-    z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) +
-      (a (n - 2) : ℂ) * z ^ (n - 2) =
-      z ^ (n - 2) * (z ^ 2 + (a (n - 1) : ℂ) * z + a (n - 2)) := by
+      z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) +
+          (a (n - 2) : ℂ) * z ^ (n - 2) =
+        z ^ (n - 2) * (z ^ 2 + (a (n - 1) : ℂ) * z + a (n - 2)) := by
     rw [hpow2, hpow1]
     ring
   have hinner :
-    ‖z‖ ^ 2 ≤ ‖z ^ 2 + (a (n - 1) : ℂ) * z + a (n - 2)‖ := by
+      ‖z‖ ^ 2 ≤ ‖z ^ 2 + (a (n - 1) : ℂ) * z + a (n - 2)‖ := by
     rw [← norm_pow]
     rw [← sq_le_sq₀ (norm_nonneg _) (norm_nonneg _), Complex.sq_norm,
       Complex.sq_norm]
     change (z ^ 2).re * (z ^ 2).re + (z ^ 2).im * (z ^ 2).im ≤
       (z ^ 2 + (↑(a (n - 1)) : ℂ) * z + (↑(a (n - 2)) : ℂ)).re *
-        (z ^ 2 + (↑(a (n - 1)) : ℂ) * z + (↑(a (n - 2)) : ℂ)).re +
+          (z ^ 2 + (↑(a (n - 1)) : ℂ) * z + (↑(a (n - 2)) : ℂ)).re +
         (z ^ 2 + (↑(a (n - 1)) : ℂ) * z + (↑(a (n - 2)) : ℂ)).im *
           (z ^ 2 + (↑(a (n - 1)) : ℂ) * z + (↑(a (n - 2)) : ℂ)).im
     have hclt := ha (n - 1)
@@ -215,8 +215,8 @@ private lemma complex_binary_sum_root_radius_sq
         mul_nonneg (le_of_lt hre) (sq_nonneg z.re),
         mul_nonneg (le_of_lt hre) (sq_nonneg z.im)]
   have hleft : ‖z‖ ^ n ≤
-    ‖z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) +
-      (a (n - 2) : ℂ) * z ^ (n - 2)‖ := by
+      ‖z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) +
+        (a (n - 2) : ℂ) * z ^ (n - 2)‖ := by
     rw [hfac, norm_mul, norm_pow]
     have hpnonneg : 0 ≤ ‖z‖ ^ (n - 2) := pow_nonneg (norm_nonneg _) _
     calc
@@ -225,13 +225,13 @@ private lemma complex_binary_sum_root_radius_sq
         rw [pow_add]
       _ ≤ _ := mul_le_mul_of_nonneg_left hinner hpnonneg
   have hright :
-    ‖z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) +
-      (a (n - 2) : ℂ) * z ^ (n - 2)‖ ≤
-        ∑ i ∈ Finset.range (n - 2), ‖z‖ ^ i := by
+      ‖z ^ n + (a (n - 1) : ℂ) * z ^ (n - 1) +
+        (a (n - 2) : ℂ) * z ^ (n - 2)‖ ≤
+          ∑ i ∈ Finset.range (n - 2), ‖z‖ ^ i := by
     rw [hsplit, norm_neg]
     calc
       ‖∑ i ∈ Finset.range (n - 2), (a i : ℂ) * z ^ i‖ ≤
-        ∑ i ∈ Finset.range (n - 2), ‖(a i : ℂ) * z ^ i‖ := norm_sum_le _ _
+          ∑ i ∈ Finset.range (n - 2), ‖(a i : ℂ) * z ^ i‖ := norm_sum_le _ _
       _ = ∑ i ∈ Finset.range (n - 2), (a i : ℝ) * ‖z‖ ^ i := by
         apply Finset.sum_congr rfl
         intro i hi
@@ -246,7 +246,7 @@ private lemma complex_binary_sum_root_radius_sq
   have hmain : ‖z‖ ^ n ≤ ∑ i ∈ Finset.range (n - 2), ‖z‖ ^ i :=
     hleft.trans hright
   have hgeom :
-    ∑ i ∈ Finset.range (n - 2), ‖z‖ ^ i < ‖z‖ ^ (n - 2) / (‖z‖ - 1) := by
+      ∑ i ∈ Finset.range (n - 2), ‖z‖ ^ i < ‖z‖ ^ (n - 2) / (‖z‖ - 1) := by
     rw [geom_sum_eq (ne_of_gt hr)]
     apply div_lt_div_of_pos_right _ (sub_pos.mpr hr)
     linarith
@@ -255,7 +255,7 @@ private lemma complex_binary_sum_root_radius_sq
   have hstrict' : ‖z‖ ^ n * (‖z‖ - 1) < ‖z‖ ^ (n - 2) := by
     calc
       ‖z‖ ^ n * (‖z‖ - 1) <
-        (‖z‖ ^ (n - 2) / (‖z‖ - 1)) * (‖z‖ - 1) :=
+          (‖z‖ ^ (n - 2) / (‖z‖ - 1)) * (‖z‖ - 1) :=
         mul_lt_mul_of_pos_right hstrict hden
       _ = ‖z‖ ^ (n - 2) := by field_simp
   have hp : 0 < ‖z‖ ^ (n - 2) := pow_pos (norm_pos_iff.mpr hz0) _
@@ -339,15 +339,15 @@ private lemma one_lt_multiset_prod (s : Multiset ℝ) (hs : s ≠ 0)
   induction s using Multiset.induction_on with
   | empty => simp at hs
   | @cons x s ih =>
-    by_cases hs0 : s = 0
-    · subst s
-      simpa using h x (by simp)
-    · have hx : 1 < x := h x (by simp)
-      have hi : 1 < s.prod := ih hs0 (by
-        intro y hy
-        exact h y (by simp [hy]))
-      simp only [Multiset.prod_cons]
-      nlinarith [mul_pos (lt_trans zero_lt_one hx) (lt_trans zero_lt_one hi)]
+      by_cases hs0 : s = 0
+      · subst s
+        simpa using h x (by simp)
+      · have hx : 1 < x := h x (by simp)
+        have hi : 1 < s.prod := ih hs0 (by
+          intro y hy
+          exact h y (by simp [hy]))
+        simp only [Multiset.prod_cons]
+        nlinarith [mul_pos (lt_trans zero_lt_one hx) (lt_trans zero_lt_one hi)]
 
 end MetaMathlibExt
 
@@ -362,10 +362,10 @@ private lemma multiset_prod_nonneg (s : Multiset ℝ) (h : ∀ x ∈ s, 0 ≤ x)
   induction s using Multiset.induction_on with
   | empty => simp
   | @cons x s ih =>
-    simp only [Multiset.prod_cons]
-    exact mul_nonneg (h x (by simp)) (ih (by
-      intro y hy
-      exact h y (by simp [hy])))
+      simp only [Multiset.prod_cons]
+      exact mul_nonneg (h x (by simp)) (ih (by
+        intro y hy
+        exact h y (by simp [hy])))
 
 end MetaMathlibExt
 
@@ -382,26 +382,26 @@ private lemma multiset_prod_lt_prod_of_nonempty_nonneg
   induction s using Multiset.induction_on with
   | empty => simp at hs
   | @cons x s ih =>
-    by_cases hs0 : s = 0
-    · subst s
-      simpa using hfg x (by simp)
-    · have hx0 := hf x (by simp)
-      have hx := hfg x (by simp)
-      have hgx : 0 < g x := lt_of_le_of_lt hx0 hx
-      have htail0 : 0 ≤ (s.map f).prod := multiset_prod_nonneg _ (by
-        intro y hy
-        obtain ⟨z, hz, rfl⟩ := Multiset.mem_map.mp hy
-        exact hf z (by simp [hz]))
-      have htail := ih hs0 (by
-        intro y hy
-        exact hf y (by simp [hy])) (by
-        intro y hy
-        exact hfg y (by simp [hy]))
-      simp only [Multiset.map_cons, Multiset.prod_cons]
-      calc
-        f x * (s.map f).prod ≤ g x * (s.map f).prod :=
-          mul_le_mul_of_nonneg_right hx.le htail0
-        _ < g x * (s.map g).prod := mul_lt_mul_of_pos_left htail hgx
+      by_cases hs0 : s = 0
+      · subst s
+        simpa using hfg x (by simp)
+      · have hx0 := hf x (by simp)
+        have hx := hfg x (by simp)
+        have hgx : 0 < g x := lt_of_le_of_lt hx0 hx
+        have htail0 : 0 ≤ (s.map f).prod := multiset_prod_nonneg _ (by
+          intro y hy
+          obtain ⟨z, hz, rfl⟩ := Multiset.mem_map.mp hy
+          exact hf z (by simp [hz]))
+        have htail := ih hs0 (by
+          intro y hy
+          exact hf y (by simp [hy])) (by
+          intro y hy
+          exact hfg y (by simp [hy]))
+        simp only [Multiset.map_cons, Multiset.prod_cons]
+        calc
+          f x * (s.map f).prod ≤ g x * (s.map f).prod :=
+            mul_le_mul_of_nonneg_right hx.le htail0
+          _ < g x * (s.map g).prod := mul_lt_mul_of_pos_left htail hgx
 
 end MetaMathlibExt
 
@@ -462,8 +462,8 @@ private lemma isUnit_of_dvd_of_all_roots_far
   have hnormformula := congrArg norm hformula
   rw [norm_mul, norm_multiset_prod, Multiset.map_map] at hnormformula
   have hnormformula' :
-    ‖Q.eval (b : ℂ)‖ = ‖Q.leadingCoeff‖ *
-      (Q.roots.map fun z => ‖(b : ℂ) - z‖).prod := by
+      ‖Q.eval (b : ℂ)‖ = ‖Q.leadingCoeff‖ *
+        (Q.roots.map fun z => ‖(b : ℂ) - z‖).prod := by
     simpa [Function.comp_apply] using hnormformula
   have hevalmap : Q.eval (b : ℂ) = ((Polynomial.eval (b : ℤ) q : ℤ) : ℂ) := by
     dsimp [Q]
@@ -473,7 +473,7 @@ private lemma isUnit_of_dvd_of_all_roots_far
     rfl
   rw [hevalmap] at hnormformula'
   have hevalnorm : ‖((Polynomial.eval (b : ℤ) q : ℤ) : ℂ)‖ = 1 := by
-    obtain h | h <;> rw [h] <;> norm_num := Int.isUnit_iff.mp hu
+    rcases Int.isUnit_iff.mp hu with h | h <;> rw [h] <;> norm_num
   have : 1 < ‖((Polynomial.eval (b : ℤ) q : ℤ) : ℂ)‖ := by
     rw [hnormformula']
     nlinarith [mul_pos (lt_of_lt_of_le zero_lt_one hlead) (lt_trans zero_lt_one hprod)]
@@ -528,14 +528,14 @@ private lemma isUnit_of_dvd_of_binary_root_re_lt
     rw [← sq_lt_sq₀ (norm_nonneg _) (norm_nonneg _), Complex.sq_norm,
       Complex.sq_norm]
     change ((1 : ℂ) - z).re * ((1 : ℂ) - z).re +
-      ((1 : ℂ) - z).im * ((1 : ℂ) - z).im <
+        ((1 : ℂ) - z).im * ((1 : ℂ) - z).im <
       ((2 : ℂ) - z).re * ((2 : ℂ) - z).re +
         ((2 : ℂ) - z).im * ((2 : ℂ) - z).im
     norm_num
     nlinarith [hrootQ z hz]
   have hprods :
-    (Q.roots.map fun z => ‖(1 : ℂ) - z‖).prod <
-      (Q.roots.map fun z => ‖(2 : ℂ) - z‖).prod := by
+      (Q.roots.map fun z => ‖(1 : ℂ) - z‖).prod <
+        (Q.roots.map fun z => ‖(2 : ℂ) - z‖).prod := by
     exact multiset_prod_lt_prod_of_nonempty_nonneg Q.roots _ _ hroots
       (by intros; positivity) hdist
   have hleadpos : 0 < ‖Q.leadingCoeff‖ := norm_pos_iff.mpr
@@ -546,18 +546,18 @@ private lemma isUnit_of_dvd_of_binary_root_re_lt
   have hnorm2 := congrArg norm hformula2
   rw [norm_mul, norm_multiset_prod, Multiset.map_map] at hnorm1 hnorm2
   have hnorm1' :
-    ‖Q.eval (1 : ℂ)‖ = ‖Q.leadingCoeff‖ *
-      (Q.roots.map fun z => ‖(1 : ℂ) - z‖).prod := by
+      ‖Q.eval (1 : ℂ)‖ = ‖Q.leadingCoeff‖ *
+        (Q.roots.map fun z => ‖(1 : ℂ) - z‖).prod := by
     simpa [Function.comp_apply] using hnorm1
   have hnorm2' :
-    ‖Q.eval (2 : ℂ)‖ = ‖Q.leadingCoeff‖ *
-      (Q.roots.map fun z => ‖(2 : ℂ) - z‖).prod := by
+      ‖Q.eval (2 : ℂ)‖ = ‖Q.leadingCoeff‖ *
+        (Q.roots.map fun z => ‖(2 : ℂ) - z‖).prod := by
     simpa [Function.comp_apply] using hnorm2
   have heval_lt : ‖Q.eval (1 : ℂ)‖ < ‖Q.eval (2 : ℂ)‖ := by
     rw [hnorm1', hnorm2']
     exact mul_lt_mul_of_pos_left hprods hleadpos
   have hevalmap (k : ℤ) :
-    Q.eval (k : ℂ) = ((Polynomial.eval k q : ℤ) : ℂ) := by
+      Q.eval (k : ℂ) = ((Polynomial.eval k q : ℤ) : ℂ) := by
     dsimp [Q]
     rw [Polynomial.eval_map]
     have hkcast : (k : ℂ) = Int.castRingHom ℂ k := rfl
@@ -568,7 +568,7 @@ private lemma isUnit_of_dvd_of_binary_root_re_lt
   norm_num at hevalmap1 hevalmap2
   rw [hevalmap1, hevalmap2] at heval_lt
   have heval2 : ‖((Polynomial.eval (2 : ℤ) q : ℤ) : ℂ)‖ = 1 := by
-    obtain h | h <;> rw [h] <;> norm_num := Int.isUnit_iff.mp hu
+    rcases Int.isUnit_iff.mp hu with h | h <;> rw [h] <;> norm_num
   rw [heval2] at heval_lt
   have heval1zero : Polynomial.eval (1 : ℤ) q = 0 := by
     by_contra h
@@ -617,7 +617,7 @@ private lemma digits_last_getElemBang_pos (b p : ℕ) (hp : p ≠ 0) :
     omega
   have hi : (Nat.digits b p).length - 1 < (Nat.digits b p).length := by omega
   have heq : (Nat.digits b p)[(Nat.digits b p).length - 1]! =
-    (Nat.digits b p).getLast hL := by
+      (Nat.digits b p).getLast hL := by
     rw [List.getElem!_eq_getElem?_getD, List.getElem?_eq_getElem hi,
       List.getLast_eq_getElem hL]
     simp only [Option.getD_some]
@@ -679,8 +679,8 @@ private lemma digitPolynomial_roots_far
     apply hne
     simpa [List.getElem!_eq_getElem?_getD] using hzsum
   · apply complex_sum_root_dist_gt_one b n (fun i => L[i]!) z (Nat.one_le_iff_ne_zero.mpr hn)
-    (by simpa [L, n] using digits_last_getElemBang_pos b p hp)
-    (fun i => by simpa [L] using digits_getElemBang_lt_base b p i (by omega)) hb hzsum
+      (by simpa [L, n] using digits_last_getElemBang_pos b p hp)
+      (fun i => by simpa [L] using digits_getElemBang_lt_base b p i (by omega)) hb hzsum
 
 end MetaMathlibExt
 
@@ -756,7 +756,7 @@ private lemma eval_digitPolynomial (b p : ℕ) :
   rw [Nat.ofDigits_eq_sum_mapIdx] at hp
   calc
     ∑ x ∈ Finset.range (b.digits p).length, (b.digits p)[x]! * b ^ x =
-      (List.mapIdx (fun i a => a * b ^ i) (b.digits p)).sum := by
+        (List.mapIdx (fun i a => a * b ^ i) (b.digits p)).sum := by
       rw [List.mapIdx_eq_ofFn, List.sum_ofFn]
       simpa [List.get_eq_getElem] using
         (Fin.sum_univ_eq_sum_range
@@ -782,7 +782,7 @@ private lemma irreducible_of_prime_eval_of_unit_reflects_on_divisors
   · intro g h hfactor
     have heval : Polynomial.eval b f = Polynomial.eval b g * Polynomial.eval b h := by
       rw [hfactor, Polynomial.eval_mul]
-    obtain hg | hh := hp.irreducible.isUnit_or_isUnit heval
+    rcases hp.irreducible.isUnit_or_isUnit heval with hg | hh
     · exact Or.inl (hreflect g (by use h) hg)
     · exact Or.inr (hreflect h (by use g; rw [hfactor, mul_comm]) hh)
 
@@ -811,7 +811,7 @@ lemma cohn_criterion
   · rw [heval]
     exact Nat.prime_iff_prime_int.mp hp
   · intro q hq hu
-    obtain hb2 | hb3 := eq_or_lt_of_le hb
+    rcases eq_or_lt_of_le hb with hb2 | hb3
     · subst b
       apply isUnit_of_dvd_of_binary_root_re_lt P q hq hu
       · simpa [P] using digitPolynomial_eval_one_ne_zero 2 p hp.ne_zero
@@ -820,9 +820,10 @@ lemma cohn_criterion
     · apply isUnit_of_dvd_of_all_roots_far P q b hq hu
       intro z hz
       exact digitPolynomial_roots_far b p hp.ne_zero hb3 z (by simpa [P] using hz)
-end
+
+end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

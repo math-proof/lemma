@@ -52,7 +52,7 @@ theorem lipschitz_equivProduct_symm :
   rw [Prod.dist_eq]
   change
     FiniteContraction.l1Dist xf.coord yf.coord + xt.dist yt ≤
-      ((2 : ℝ≥0) : ℝ) *
+      ((2 : NNReal) : ℝ) *
         max (FiniteContraction.l1Dist xf.coord yf.coord) (xt.dist yt)
   have hfinite :
       FiniteContraction.l1Dist xf.coord yf.coord ≤
@@ -68,9 +68,9 @@ theorem lipschitz_equivProduct_symm :
           max (FiniteContraction.l1Dist xf.coord yf.coord) (xt.dist yt) :=
       add_le_add hfinite htail
     _ =
-        ((2 : ℝ≥0) : ℝ) *
+        ((2 : NNReal) : ℝ) *
           max (FiniteContraction.l1Dist xf.coord yf.coord) (xt.dist yt) := by
-      have htwo : ((2 : ℝ≥0) : ℝ) = (2 : ℝ) := by norm_num
+      have htwo : ((2 : NNReal) : ℝ) = (2 : ℝ) := by norm_num
       rw [htwo]
       ring
 

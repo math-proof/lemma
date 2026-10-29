@@ -15,9 +15,10 @@ private lemma gandhi_moebius_sum_divisors (m : ℕ) :
   ∑ d ∈ Nat.divisors m, ArithmeticFunction.moebius d
     = if m = 1 then 1 else 0 := by
   have h : ((ArithmeticFunction.moebius * ArithmeticFunction.zeta : ArithmeticFunction ℤ) m
-    = (1 : ArithmeticFunction ℤ) m) := by
+      = (1 : ArithmeticFunction ℤ) m) := by
     rw [ArithmeticFunction.moebius_mul_coe_zeta]
-  rwa [ArithmeticFunction.coe_mul_zeta_apply, ArithmeticFunction.one_apply] at h
+  rw [ArithmeticFunction.coe_mul_zeta_apply, ArithmeticFunction.one_apply] at h
+  exact h
 
 end MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 
@@ -25,9 +26,8 @@ namespace MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 
 /--
 [gandhi_hasSum_geom](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/GandhiNthPrimeFormula.lean)
--/
-@[path]
 `μ(d) / (2^d - 1) = ∑' k, μ(d) * (1/2)^(d*(k+1))` as a `HasSum`. -/
+@[path]
 private lemma gandhi_hasSum_geom (d : ℕ) (hd : 1 ≤ d) :
   HasSum (fun k : ℕ => ((ArithmeticFunction.moebius d : ℤ) : ℝ) * (1/2 : ℝ)^(d*(k+1)))
     (((ArithmeticFunction.moebius d : ℤ) : ℝ) / ((2:ℝ)^d - 1)) := by
@@ -41,13 +41,13 @@ private lemma gandhi_hasSum_geom (d : ℕ) (hd : 1 ≤ d) :
   have base := hasSum_geometric_of_lt_one hr0 hr1
   have scaled := base.mul_left (((ArithmeticFunction.moebius d : ℤ) : ℝ) * (1/2 : ℝ)^d)
   have hterm : ∀ k : ℕ, ((ArithmeticFunction.moebius d : ℤ) : ℝ) * (1/2 : ℝ)^(d*(k+1))
-    = (((ArithmeticFunction.moebius d : ℤ) : ℝ) * (1/2 : ℝ)^d) * (((1/2 : ℝ)^d)^k) := by
+      = (((ArithmeticFunction.moebius d : ℤ) : ℝ) * (1/2 : ℝ)^d) * (((1/2 : ℝ)^d)^k) := by
     intro k
     rw [show d * (k + 1) = d * k + d by ring, pow_add, pow_mul]
     ring
   have hval : (((ArithmeticFunction.moebius d : ℤ) : ℝ) * (1/2 : ℝ)^d)
-    * (1 - (1/2 : ℝ)^d)⁻¹
-    = (((ArithmeticFunction.moebius d : ℤ) : ℝ) / ((2:ℝ)^d - 1)) := by
+        * (1 - (1/2 : ℝ)^d)⁻¹
+      = (((ArithmeticFunction.moebius d : ℤ) : ℝ) / ((2:ℝ)^d - 1)) := by
     have h1r : (1:ℝ) - (1/2)^d ≠ 0 := ne_of_gt (sub_pos.mpr hr1)
     have hhalf : (1/2 : ℝ)^d = ((2:ℝ)^d)⁻¹ := by rw [one_div, inv_pow]
     rw [hhalf]
@@ -80,16 +80,16 @@ private lemma gandhi_swap (P : ℕ) :
   = ∑' k : ℕ, ∑ d ∈ P.divisors,
     (((ArithmeticFunction.moebius d : ℤ):ℝ) * (1/2:ℝ)^(d*(k+1))) := by
   calc ∑ d ∈ P.divisors, (((ArithmeticFunction.moebius d : ℤ):ℝ) / ((2:ℝ)^d - 1))
-    = ∑ d ∈ P.divisors, ∑' k : ℕ,
-      (((ArithmeticFunction.moebius d : ℤ):ℝ) * (1/2:ℝ)^(d*(k+1))) := by
-      apply Finset.sum_congr rfl
-      intro d hd
-      exact (gandhi_hasSum_geom d (Nat.pos_of_mem_divisors hd)).unique
-        (gandhi_summable_geom d (Nat.pos_of_mem_divisors hd)).hasSum
+      = ∑ d ∈ P.divisors, ∑' k : ℕ,
+          (((ArithmeticFunction.moebius d : ℤ):ℝ) * (1/2:ℝ)^(d*(k+1))) := by
+        apply Finset.sum_congr rfl
+        intro d hd
+        exact (gandhi_hasSum_geom d (Nat.pos_of_mem_divisors hd)).unique
+          (gandhi_summable_geom d (Nat.pos_of_mem_divisors hd)).hasSum
     _ = ∑' k : ℕ, ∑ d ∈ P.divisors,
-      (((ArithmeticFunction.moebius d : ℤ):ℝ) * (1/2:ℝ)^(d*(k+1))) :=
-      (Summable.tsum_finsetSum
-        (fun d hd => gandhi_summable_geom d (Nat.pos_of_mem_divisors hd))).symm
+          (((ArithmeticFunction.moebius d : ℤ):ℝ) * (1/2:ℝ)^(d*(k+1))) :=
+        (Summable.tsum_finsetSum
+          (fun d hd => gandhi_summable_geom d (Nat.pos_of_mem_divisors hd))).symm
 
 end MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 
@@ -103,7 +103,7 @@ private lemma gandhi_prod_summable (P : ℕ) :
   Summable (fun p : ↥P.divisors × ℕ =>
     ((ArithmeticFunction.moebius p.1.1 : ℤ):ℝ) * (1/2:ℝ)^(p.1.1*(p.2+1))) := by
   have hsig : Summable (fun q : Σ _ : ↥P.divisors, ℕ =>
-    ((ArithmeticFunction.moebius q.1.1 : ℤ):ℝ) * (1/2:ℝ)^(q.1.1*(q.2+1))) := by
+      ((ArithmeticFunction.moebius q.1.1 : ℤ):ℝ) * (1/2:ℝ)^(q.1.1*(q.2+1))) := by
     apply Summable.of_norm
     refine (summable_sigma_of_nonneg (fun x => norm_nonneg _)).mpr ⟨?_, ?_⟩
     · rintro ⟨d, hd⟩
@@ -120,12 +120,12 @@ private lemma gandhi_prod_summable (P : ℕ) :
         rw [Real.norm_eq_abs, ← Int.cast_abs, ← Int.cast_one]
         exact Int.cast_le.mpr ArithmeticFunction.abs_moebius_le_one
       calc ‖(((ArithmeticFunction.moebius d : ℤ)):ℝ)‖ * ‖(1/2:ℝ)^(d*(k+1))‖
-        ≤ 1 * ((1/2:ℝ)^d * (((1/2:ℝ)^d)^k)) := by
-          apply mul_le_mul _ _ (norm_nonneg _) (by positivity)
-          · exact hmu
-          · rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
-            rw [show d*(k+1) = d + d*k by ring, pow_add, pow_mul]
-        _ = (1/2:ℝ)^d * (((1/2:ℝ)^d)^k) := one_mul _
+          ≤ 1 * ((1/2:ℝ)^d * (((1/2:ℝ)^d)^k)) := by
+            apply mul_le_mul _ _ (norm_nonneg _) (by positivity)
+            · exact hmu
+            · rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+              rw [show d*(k+1) = d + d*k by ring, pow_add, pow_mul]
+          _ = (1/2:ℝ)^d * (((1/2:ℝ)^d)^k) := one_mul _
     · exact (hasSum_fintype _).summable
   exact (Equiv.sigmaEquivProd ↥P.divisors ℕ).summable_iff.mp hsig
 
@@ -159,26 +159,26 @@ namespace MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 private lemma gandhiFiber_sum (P : ℕ) (hP : 1 < P) (m : ℕ) :
   ∑ x ∈ gandhiFiber P m, (((ArithmeticFunction.moebius x.1.1 : ℤ):ℝ) * (1/2:ℝ)^(x.1.1*(x.2+1)))
   = (if Nat.gcd m P = 1 then (1/2:ℝ)^m else 0) := by
-  obtain rfl | hm := eq_or_ne m 0
+  rcases eq_or_ne m 0 with rfl | hm
   · have hS : gandhiFiber P 0 = ∅ := by simp [gandhiFiber]
     have hP1 : P ≠ 1 := by omega
     simp [hS, Nat.gcd_zero_left, hP1]
   · have hS : gandhiFiber P m
-    = ((P.divisors.filter (· ∣ m)).attach.image
-      (fun d => ((⟨d.1, (Finset.mem_filter.mp d.2).1⟩, m / d.1 - 1) : ↥P.divisors × ℕ))) := by
-    unfold gandhiFiber
-    simp [hm]
+        = ((P.divisors.filter (· ∣ m)).attach.image
+          (fun d => ((⟨d.1, (Finset.mem_filter.mp d.2).1⟩, m / d.1 - 1) : ↥P.divisors × ℕ))) := by
+      unfold gandhiFiber
+      simp [hm]
     have hinj : Function.Injective
-      (fun d : ↥(P.divisors.filter (· ∣ m)) =>
-        ((⟨d.1, (Finset.mem_filter.mp d.2).1⟩, m / d.1 - 1) : ↥P.divisors × ℕ)) := by
+        (fun d : ↥(P.divisors.filter (· ∣ m)) =>
+          ((⟨d.1, (Finset.mem_filter.mp d.2).1⟩, m / d.1 - 1) : ↥P.divisors × ℕ)) := by
       intro a b hab
       simp only [Prod.mk.injEq] at hab
       obtain ⟨h1, -⟩ := hab
       simp only [Subtype.mk.injEq] at h1
       exact Subtype.ext h1
     have hterm : ∀ x ∈ (P.divisors.filter (· ∣ m)).attach,
-      (((ArithmeticFunction.moebius (↑x : ℕ) : ℤ):ℝ) * (1/2:ℝ)^(x.1 * (m / x.1 - 1 + 1)))
-      = (((ArithmeticFunction.moebius (↑x : ℕ) : ℤ):ℝ) * (1/2:ℝ)^m) := by
+        (((ArithmeticFunction.moebius (↑x : ℕ) : ℤ):ℝ) * (1/2:ℝ)^(x.1 * (m / x.1 - 1 + 1)))
+        = (((ArithmeticFunction.moebius (↑x : ℕ) : ℤ):ℝ) * (1/2:ℝ)^m) := by
       intro x _
       obtain ⟨hdP, hdiv⟩ := Finset.mem_filter.mp x.2
       have hdpos : 0 < x.1 := Nat.pos_of_mem_divisors hdP
@@ -188,25 +188,25 @@ private lemma gandhiFiber_sum (P : ℕ) (hP : 1 < P) (m : ℕ) :
         rw [Nat.sub_add_cancel hle, Nat.mul_div_cancel' hdiv]
       rw [hexp]
     calc ∑ x ∈ gandhiFiber P m,
-      (((ArithmeticFunction.moebius x.1.1 : ℤ):ℝ) * (1/2:ℝ)^(x.1.1*(x.2+1)))
-      = ∑ x ∈ (P.divisors.filter (· ∣ m)).attach,
-        (((ArithmeticFunction.moebius (↑x : ℕ) : ℤ):ℝ) * (1/2:ℝ)^m) := by
-        rw [hS, Finset.sum_image (fun a _ b _ hab => hinj hab)]
-        refine (Finset.sum_congr rfl (fun x _ => rfl)).trans (Finset.sum_congr rfl hterm)
+            (((ArithmeticFunction.moebius x.1.1 : ℤ):ℝ) * (1/2:ℝ)^(x.1.1*(x.2+1)))
+        = ∑ x ∈ (P.divisors.filter (· ∣ m)).attach,
+            (((ArithmeticFunction.moebius (↑x : ℕ) : ℤ):ℝ) * (1/2:ℝ)^m) := by
+          rw [hS, Finset.sum_image (fun a _ b _ hab => hinj hab)]
+          refine (Finset.sum_congr rfl (fun x _ => rfl)).trans (Finset.sum_congr rfl hterm)
       _ = (∑ x ∈ (P.divisors.filter (· ∣ m)).attach,
-        (((ArithmeticFunction.moebius (↑x : ℕ) : ℤ)):ℝ)) * (1/2:ℝ)^m := by
-        rw [Finset.sum_mul]
+            (((ArithmeticFunction.moebius (↑x : ℕ) : ℤ)):ℝ)) * (1/2:ℝ)^m := by
+          rw [Finset.sum_mul]
       _ = (if Nat.gcd m P = 1 then (1/2:ℝ)^m else 0) := by
-        have hI := gandhi_moebius_sum_divisors (Nat.gcd m P)
-        have hcast := congrArg (fun z : ℤ => (z : ℝ)) hI
-        rw [Int.cast_sum] at hcast
-        rw [← gandhi_filter_gcd P (by omega) m] at hcast
-        have hatt : (∑ x ∈ (P.divisors.filter (· ∣ m)).attach,
-          (((ArithmeticFunction.moebius (↑x : ℕ) : ℤ)):ℝ))
-          = ∑ d ∈ P.divisors.filter (· ∣ m), (((ArithmeticFunction.moebius d : ℤ)):ℝ) :=
-          Finset.sum_attach _ (fun d : ℕ => (((ArithmeticFunction.moebius d : ℤ)):ℝ))
-        rw [hatt, hcast]
-        split_ifs <;> simp
+          have hI := gandhi_moebius_sum_divisors (Nat.gcd m P)
+          have hcast := congrArg (fun z : ℤ => (z : ℝ)) hI
+          rw [Int.cast_sum] at hcast
+          rw [← gandhi_filter_gcd P (by omega) m] at hcast
+          have hatt : (∑ x ∈ (P.divisors.filter (· ∣ m)).attach,
+              (((ArithmeticFunction.moebius (↑x : ℕ) : ℤ)):ℝ))
+              = ∑ d ∈ P.divisors.filter (· ∣ m), (((ArithmeticFunction.moebius d : ℤ)):ℝ) :=
+            Finset.sum_attach _ (fun d : ℕ => (((ArithmeticFunction.moebius d : ℤ)):ℝ))
+          rw [hatt, hcast]
+          split_ifs <;> simp
 
 end MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 
@@ -221,8 +221,8 @@ private lemma gandhi_divisor_sum_eq (P : ℕ) (hP : 1 < P) :
   = ∑' m : ℕ, (if Nat.gcd m P = 1 then (1/2:ℝ)^m else 0) := by
   have hprod := gandhi_prod_summable P
   have step1 : (∑' p : ↥P.divisors × ℕ,
-    (((ArithmeticFunction.moebius p.1.1 : ℤ):ℝ) * (1/2:ℝ)^(p.1.1*(p.2+1))))
-    = ∑ d ∈ P.divisors, (((ArithmeticFunction.moebius d : ℤ):ℝ) / ((2:ℝ)^d - 1)) := by
+      (((ArithmeticFunction.moebius p.1.1 : ℤ):ℝ) * (1/2:ℝ)^(p.1.1*(p.2+1))))
+      = ∑ d ∈ P.divisors, (((ArithmeticFunction.moebius d : ℤ):ℝ) / ((2:ℝ)^d - 1)) := by
     rw [hprod.tsum_prod, tsum_fintype, Finset.univ_eq_attach P.divisors,
       Finset.sum_attach _ (fun d : ℕ => (∑' k : ℕ,
         (((ArithmeticFunction.moebius d : ℤ):ℝ) * (1/2:ℝ)^(d*(k+1)))))]
@@ -233,35 +233,35 @@ private lemma gandhi_divisor_sum_eq (P : ℕ) (hP : 1 < P) :
   have hsig := (gandhiEquiv P).summable_iff.mpr hprod
   have hsplit := hsig.tsum_sigma
   have hLHS : (∑' q : Σ m : ℕ, ↥(gandhiFiber P m),
-    (((ArithmeticFunction.moebius ((gandhiEquiv P q).1.1) : ℤ):ℝ)
-      * (1/2:ℝ)^((gandhiEquiv P q).1.1 * ((gandhiEquiv P q).2 + 1))))
-    = (∑' p : ↥P.divisors × ℕ,
-      (((ArithmeticFunction.moebius p.1.1 : ℤ):ℝ) * (1/2:ℝ)^(p.1.1*(p.2+1)))) :=
+        (((ArithmeticFunction.moebius ((gandhiEquiv P q).1.1) : ℤ):ℝ)
+          * (1/2:ℝ)^((gandhiEquiv P q).1.1 * ((gandhiEquiv P q).2 + 1))))
+      = (∑' p : ↥P.divisors × ℕ,
+        (((ArithmeticFunction.moebius p.1.1 : ℤ):ℝ) * (1/2:ℝ)^(p.1.1*(p.2+1)))) :=
     Equiv.tsum_eq (gandhiEquiv P)
       (fun p : ↥P.divisors × ℕ =>
         (((ArithmeticFunction.moebius p.1.1 : ℤ):ℝ) * (1/2:ℝ)^(p.1.1*(p.2+1))))
   calc ∑ d ∈ P.divisors, (((ArithmeticFunction.moebius d : ℤ):ℝ) / ((2:ℝ)^d - 1))
-    = ∑' p : ↥P.divisors × ℕ,
-      (((ArithmeticFunction.moebius p.1.1 : ℤ):ℝ) * (1/2:ℝ)^(p.1.1*(p.2+1))) :=
-      step1.symm
+      = ∑' p : ↥P.divisors × ℕ,
+        (((ArithmeticFunction.moebius p.1.1 : ℤ):ℝ) * (1/2:ℝ)^(p.1.1*(p.2+1))) :=
+        step1.symm
     _ = ∑' q : Σ m : ℕ, ↥(gandhiFiber P m),
-      (((ArithmeticFunction.moebius ((gandhiEquiv P q).1.1) : ℤ):ℝ)
-        * (1/2:ℝ)^((gandhiEquiv P q).1.1 * ((gandhiEquiv P q).2 + 1))) := hLHS.symm
+        (((ArithmeticFunction.moebius ((gandhiEquiv P q).1.1) : ℤ):ℝ)
+          * (1/2:ℝ)^((gandhiEquiv P q).1.1 * ((gandhiEquiv P q).2 + 1))) := hLHS.symm
     _ = ∑' m : ℕ, ∑' x : ↥(gandhiFiber P m),
-      (((ArithmeticFunction.moebius ((gandhiEquiv P ⟨m, x⟩).1.1) : ℤ):ℝ)
-        * (1/2:ℝ)^((gandhiEquiv P ⟨m, x⟩).1.1 * ((gandhiEquiv P ⟨m, x⟩).2 + 1))) :=
-      hsplit
+        (((ArithmeticFunction.moebius ((gandhiEquiv P ⟨m, x⟩).1.1) : ℤ):ℝ)
+          * (1/2:ℝ)^((gandhiEquiv P ⟨m, x⟩).1.1 * ((gandhiEquiv P ⟨m, x⟩).2 + 1))) :=
+        hsplit
     _ = ∑' m : ℕ, ∑ x ∈ gandhiFiber P m,
-      (((ArithmeticFunction.moebius x.1.1 : ℤ):ℝ) * (1/2:ℝ)^(x.1.1*(x.2+1))) := by
-      apply tsum_congr
-      intro m
-      exact Finset.tsum_subtype' (gandhiFiber P m)
-        (fun y : ↥P.divisors × ℕ =>
-          (((ArithmeticFunction.moebius y.1.1 : ℤ):ℝ) * (1/2:ℝ)^(y.1.1*(y.2+1))))
+        (((ArithmeticFunction.moebius x.1.1 : ℤ):ℝ) * (1/2:ℝ)^(x.1.1*(x.2+1))) := by
+        apply tsum_congr
+        intro m
+        exact Finset.tsum_subtype' (gandhiFiber P m)
+          (fun y : ↥P.divisors × ℕ =>
+            (((ArithmeticFunction.moebius y.1.1 : ℤ):ℝ) * (1/2:ℝ)^(y.1.1*(y.2+1))))
     _ = ∑' m : ℕ, (if Nat.gcd m P = 1 then (1/2:ℝ)^m else 0) := by
-      apply tsum_congr
-      intro m
-      exact gandhiFiber_sum P hP m
+        apply tsum_congr
+        intro m
+        exact gandhiFiber_sum P hP m
 
 end MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 
@@ -317,17 +317,16 @@ private lemma gandhi_two_dvd_primorial (n : ℕ) (hn : 2 ≤ n) :
     Finset.mem_Icc.mpr ⟨le_refl 1, by omega⟩
   have hdvd := Finset.dvd_prod_of_mem (fun i => Nat.nth Nat.Prime (i - 1)) hmem
   have h10 : (1 : ℕ) - 1 = 0 := by omega
-  rwa [h10, Nat.nth_prime_zero_eq_two] at hdvd
-
+  rw [h10, Nat.nth_prime_zero_eq_two] at hdvd
+  exact hdvd
 end MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 
 namespace MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 
 /--
 [gandhi_n_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/GandhiNthPrimeFormula.lean)
--/
-@[path]
 so the divisor sum is `μ(1) / (2^1 - 1) = 1`, giving `⌊1 - log₂(1/2)⌋ = 2 = p₁`. -/
+@[path]
 private lemma gandhi_n_one :
   ((Nat.nth Nat.Prime (1 - 1) : ℕ) : ℤ) =
     ⌊1 - Real.logb 2 (-1 / 2 +
@@ -360,7 +359,8 @@ private lemma gandhi_not_coprime_of_lt (n m : ℕ) (hm1 : 1 < m)
   have hqm : q ≤ m := Nat.le_of_dvd (by omega) hqdiv
   have hinf : (Set.ofPred Nat.Prime).Infinite := Nat.infinite_setOfPred_prime
   have hqrange : q ∈ Set.range (Nat.nth Nat.Prime) := by
-    rwa [Nat.range_nth_of_infinite hinf]
+    rw [Nat.range_nth_of_infinite hinf]
+    exact hqprime
   obtain ⟨j, hj⟩ := Set.mem_range.mp hqrange
   have hlt : Nat.nth Nat.Prime j < Nat.nth Nat.Prime (n - 1) := by
     rw [hj]
@@ -390,15 +390,15 @@ private lemma gandhi_coprime_nth_ge (n j : ℕ) (hj : n - 1 ≤ j) :
   have hinf : (Set.ofPred Nat.Prime).Infinite := Nat.infinite_setOfPred_prime
   have hpp : Nat.Prime (Nat.nth Nat.Prime j) := Nat.prime_nth_prime j
   have hgcd_dvd : Nat.gcd (Nat.nth Nat.Prime j)
-    (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1))
-    ∣ Nat.nth Nat.Prime j := Nat.gcd_dvd_left _ _
-  obtain h1 | hp_eq := (Nat.dvd_prime hpp).mp hgcd_dvd
+      (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1))
+      ∣ Nat.nth Nat.Prime j := Nat.gcd_dvd_left _ _
+  rcases (Nat.dvd_prime hpp).mp hgcd_dvd with h1 | hp_eq
   · show Nat.gcd (Nat.nth Nat.Prime j)
-    (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) = 1
+      (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) = 1
     exact h1
   · have hpP : Nat.nth Nat.Prime j
-    ∣ ∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1) :=
-    hp_eq ▸ Nat.gcd_dvd_right _ _
+        ∣ ∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1) :=
+      hp_eq ▸ Nat.gcd_dvd_right _ _
     have hprime : Prime (Nat.nth Nat.Prime j) := Nat.prime_iff.mp hpp
     rw [Prime.dvd_finsetProd_iff hprime] at hpP
     obtain ⟨i, hi, hdiv⟩ := hpP
@@ -422,7 +422,7 @@ private lemma gandhi_not_coprime_succ (n : ℕ) (hn : 2 ≤ n) :
     (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) := by
   intro hcop
   have hgcd : Nat.gcd (Nat.nth Nat.Prime (n - 1) + 1)
-    (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) = 1 := hcop
+      (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) = 1 := hcop
   have hinf : (Set.ofPred Nat.Prime).Infinite := Nat.infinite_setOfPred_prime
   have h01 : Nat.nth Nat.Prime 0 < Nat.nth Nat.Prime 1 :=
     (Nat.nth_lt_nth hinf).mpr (by norm_num)
@@ -435,7 +435,7 @@ private lemma gandhi_not_coprime_succ (n : ℕ) (hn : 2 ≤ n) :
     even_iff_two_dvd.mp hodd.add_one
   have h2P := gandhi_two_dvd_primorial n hn
   have h2gcd : 2 ∣ Nat.gcd (Nat.nth Nat.Prime (n - 1) + 1)
-    (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) :=
+      (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) :=
     Nat.dvd_gcd h2p h2P
   rw [hgcd] at h2gcd
   exact absurd (Nat.dvd_one.mp h2gcd) (by norm_num)
@@ -455,8 +455,8 @@ private lemma gandhi_split (P p : ℕ) (hP1 : 1 < P) (hp1 : 1 < p)
   = 1/2 + (1/2:ℝ)^p
     + (∑' m : ℕ, (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)) := by
   have hFG : ∀ m : ℕ, (if Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)
-    = ((if m = 1 then (1/2:ℝ) else 0) + (if m = p then (1/2:ℝ)^p else 0)
-      + (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)) := by
+      = ((if m = 1 then (1/2:ℝ) else 0) + (if m = p then (1/2:ℝ)^p else 0)
+        + (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)) := by
     intro m
     by_cases h1 : m = 1
     · subst h1
@@ -471,10 +471,10 @@ private lemma gandhi_split (P p : ℕ) (hP1 : 1 < P) (hp1 : 1 < p)
         simp
       · by_cases hg : Nat.gcd m P = 1
         · have hm0 : m ≠ 0 := by
-          intro h0
-          subst h0
-          rw [Nat.gcd_zero_left] at hg
-          omega
+            intro h0
+            subst h0
+            rw [Nat.gcd_zero_left] at hg
+            omega
           have hcop : Nat.Coprime m P := hg
           have hmp : p < m := by
             by_contra hle
@@ -485,14 +485,14 @@ private lemma gandhi_split (P p : ℕ) (hP1 : 1 < P) (hp1 : 1 < p)
           rw [ite_eq_left hg, ite_eq_right h1, ite_eq_right hpm, ite_eq_left ⟨hmp, hg⟩]
           simp
         · rw [ite_eq_right hg, ite_eq_right h1, ite_eq_right hpm,
-          ite_eq_right (fun h => hg h.2)]
+            ite_eq_right (fun h => hg h.2)]
           simp
   have hA : Summable (fun m : ℕ => (if m = 1 then (1/2:ℝ) else 0)) :=
     (hasSum_ite_eq 1 (1/2 : ℝ)).summable
   have hB : Summable (fun m : ℕ => (if m = p then (1/2:ℝ)^p else 0)) :=
     (hasSum_ite_eq p ((1/2:ℝ)^p)).summable
   have hC : Summable
-    (fun m : ℕ => (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)) := by
+      (fun m : ℕ => (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)) := by
     refine Summable.of_nonneg_of_le (fun m => ?_) (fun m => ?_)
       summable_geometric_two
     · split_ifs with h <;> positivity
@@ -500,15 +500,15 @@ private lemma gandhi_split (P p : ℕ) (hP1 : 1 < P) (hp1 : 1 < p)
       · exact le_rfl
       · positivity
   have hABC : Summable (fun m : ℕ =>
-    ((if m = 1 then (1/2:ℝ) else 0) + (if m = p then (1/2:ℝ)^p else 0)
-      + (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0))) :=
+      ((if m = 1 then (1/2:ℝ) else 0) + (if m = p then (1/2:ℝ)^p else 0)
+        + (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0))) :=
     (hA.add hB).add hC
   have hsplit2 : (∑' m : ℕ,
-    (((if m = 1 then (1/2:ℝ) else 0) + (if m = p then (1/2:ℝ)^p else 0))
-      + (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)))
-    = (∑' m : ℕ, (if m = 1 then (1/2:ℝ) else 0))
-      + (∑' m : ℕ, (if m = p then (1/2:ℝ)^p else 0))
-      + (∑' m : ℕ, (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)) := by
+        (((if m = 1 then (1/2:ℝ) else 0) + (if m = p then (1/2:ℝ)^p else 0))
+          + (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)))
+      = (∑' m : ℕ, (if m = 1 then (1/2:ℝ) else 0))
+        + (∑' m : ℕ, (if m = p then (1/2:ℝ)^p else 0))
+        + (∑' m : ℕ, (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)) := by
     rw [← hA.tsum_add hB, ← (hA.add hB).tsum_add hC]
   rw [tsum_congr hFG, hsplit2, tsum_ite_eq 1 (fun _ => (1/2:ℝ)),
     tsum_ite_eq p (fun _ => (1/2:ℝ)^p)]
@@ -531,13 +531,13 @@ private lemma gandhi_tail (K : ℕ) :
     simp only [Finset.mem_range] at hb
     rw [ite_eq_right (by omega : ¬ b ≤ K)]
   have hEF : ∀ m : ℕ, (if K < m then (1/2:ℝ)^m else 0)
-    = (1/2:ℝ)^m - (if m ≤ K then (1/2:ℝ)^m else 0) := by
+      = (1/2:ℝ)^m - (if m ≤ K then (1/2:ℝ)^m else 0) := by
     intro m
     by_cases h : K < m
     · rw [ite_eq_left h, ite_eq_right (by omega : ¬ m ≤ K), sub_zero]
     · rw [ite_eq_right h, ite_eq_left (by omega : m ≤ K), sub_self]
   have hif : ∀ b ∈ Finset.range (K + 1),
-    (if b ≤ K then (1/2:ℝ)^b else 0) = (1/2:ℝ)^b := by
+      (if b ≤ K then (1/2:ℝ)^b else 0) = (1/2:ℝ)^b := by
     intro b hb
     rw [ite_eq_left (by have := Finset.mem_range.mp hb; omega : b ≤ K)]
   have hS : (∑ b ∈ Finset.range (K + 1), (1/2:ℝ)^b) = 2 - (1/2:ℝ)^K := by
@@ -547,16 +547,16 @@ private lemma gandhi_tail (K : ℕ) :
     rw [hgs, h2, div_eq_iff hne]
     ring
   calc (∑' m : ℕ, (if K < m then (1/2:ℝ)^m else 0))
-    = (∑' m : ℕ, ((1/2:ℝ)^m - (if m ≤ K then (1/2:ℝ)^m else 0))) :=
-      tsum_congr hEF
+      = (∑' m : ℕ, ((1/2:ℝ)^m - (if m ≤ K then (1/2:ℝ)^m else 0))) :=
+        tsum_congr hEF
     _ = (∑' m : ℕ, (1/2:ℝ)^m)
-      - (∑' m : ℕ, (if m ≤ K then (1/2:ℝ)^m else 0)) :=
-      hgeo.tsum_sub hfin
+        - (∑' m : ℕ, (if m ≤ K then (1/2:ℝ)^m else 0)) :=
+        hgeo.tsum_sub hfin
     _ = 2 - (∑ b ∈ Finset.range (K + 1), (1/2:ℝ)^b) := by
-      rw [hfull, tsum_eq_sum (s := Finset.range (K + 1)) (fun b hb => by
-        simp only [Finset.mem_range] at hb
-        rw [ite_eq_right (by omega : ¬ b ≤ K)]),
-        Finset.sum_congr rfl hif]
+        rw [hfull, tsum_eq_sum (s := Finset.range (K + 1)) (fun b hb => by
+          simp only [Finset.mem_range] at hb
+          rw [ite_eq_right (by omega : ¬ b ≤ K)]),
+          Finset.sum_congr rfl hif]
     _ = (1/2:ℝ)^K := by rw [hS]; ring
 
 end MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
@@ -589,7 +589,7 @@ private lemma gandhi_R_lt (P p : ℕ) (hE6 : ¬ Nat.Coprime (p + 1) P) :
   (∑' m : ℕ, (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0))
     < (1/2:ℝ)^p := by
   have hC_le : ∀ m : ℕ, (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)
-    ≤ (if p + 1 < m then (1/2:ℝ)^m else 0) := by
+      ≤ (if p + 1 < m then (1/2:ℝ)^m else 0) := by
     intro m
     by_cases h : p < m ∧ Nat.gcd m P = 1
     · rw [ite_eq_left h]
@@ -615,14 +615,14 @@ private lemma gandhi_R_lt (P p : ℕ) (hE6 : ¬ Nat.Coprime (p + 1) P) :
       · exact le_rfl
       · positivity
   calc (∑' m : ℕ, (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0))
-    ≤ (∑' m : ℕ, (if p + 1 < m then (1/2:ℝ)^m else 0)) :=
-      Summable.tsum_le_tsum (fun m => hC_le m)
-        (gandhi_R_summable P p) hE_sum
+      ≤ (∑' m : ℕ, (if p + 1 < m then (1/2:ℝ)^m else 0)) :=
+        Summable.tsum_le_tsum (fun m => hC_le m)
+          (gandhi_R_summable P p) hE_sum
     _ = (1/2:ℝ)^(p+1) := gandhi_tail (p + 1)
     _ < (1/2:ℝ)^p := by
-      have hX : (0:ℝ) < (1/2)^p := by positivity
-      rw [pow_succ']
-      linarith
+        have hX : (0:ℝ) < (1/2)^p := by positivity
+        rw [pow_succ']
+        linarith
 
 end MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 
@@ -640,11 +640,11 @@ private lemma gandhi_R_pos (P p q : ℕ) (hpq : p < q) (hqP : Nat.Coprime q P) :
   calc (0:ℝ) < (1/2:ℝ)^q := by positivity
     _ = (if p < q ∧ Nat.gcd q P = 1 then (1/2:ℝ)^q else 0) := hterm.symm
     _ ≤ (∑' m : ℕ, (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)) :=
-      Summable.le_tsum (gandhi_R_summable P p) q (fun j _ => by
-        by_cases h : p < j ∧ Nat.gcd j P = 1
-        · rw [ite_eq_left h]
-          positivity
-        · rw [ite_eq_right h])
+        Summable.le_tsum (gandhi_R_summable P p) q (fun j _ => by
+          by_cases h : p < j ∧ Nat.gcd j P = 1
+          · rw [ite_eq_left h]
+            positivity
+          · rw [ite_eq_right h])
 
 end MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 
@@ -692,21 +692,21 @@ private lemma gandhi_main_bound (P p : ℕ) (hP1 : 1 < P) (hp1 : 1 < p)
     ∑ d ∈ Nat.divisors P, (((ArithmeticFunction.moebius d : ℤ) : ℝ) / ((2 : ℝ) ^ d - 1)))⌋
     = (p : ℤ) := by
   have hTR : (∑ d ∈ Nat.divisors P,
-    (((ArithmeticFunction.moebius d : ℤ) : ℝ) / ((2 : ℝ) ^ d - 1)))
-    = 1 / 2 + (1 / 2 : ℝ) ^ p
-      + (∑' m : ℕ, (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)) := by
+        (((ArithmeticFunction.moebius d : ℤ) : ℝ) / ((2 : ℝ) ^ d - 1)))
+      = 1 / 2 + (1 / 2 : ℝ) ^ p
+        + (∑' m : ℕ, (if p < m ∧ Nat.gcd m P = 1 then (1/2:ℝ)^m else 0)) := by
     rw [gandhi_divisor_sum_eq P hP1]
     exact gandhi_split P p hP1 hp1 hpP hchar
   obtain ⟨q, hpq, hqP⟩ := hq
   have hRpos := gandhi_R_pos P p q hpq hqP
   have hRlt := gandhi_R_lt P p hE6
   have hSlo : (1/2:ℝ)^p < -1 / 2 +
-    (∑ d ∈ Nat.divisors P, (((ArithmeticFunction.moebius d : ℤ) : ℝ) / ((2 : ℝ) ^ d - 1))) := by
+      (∑ d ∈ Nat.divisors P, (((ArithmeticFunction.moebius d : ℤ) : ℝ) / ((2 : ℝ) ^ d - 1))) := by
     rw [hTR]
     linarith
   have hShi : -1 / 2 +
-    (∑ d ∈ Nat.divisors P, (((ArithmeticFunction.moebius d : ℤ) : ℝ) / ((2 : ℝ) ^ d - 1)))
-    < 2 * (1/2:ℝ)^p := by
+      (∑ d ∈ Nat.divisors P, (((ArithmeticFunction.moebius d : ℤ) : ℝ) / ((2 : ℝ) ^ d - 1)))
+      < 2 * (1/2:ℝ)^p := by
     rw [hTR]
     linarith
   exact gandhi_floor_eq _ _ hSlo hShi
@@ -730,7 +730,7 @@ lemma gandhi_nthPrimeFormula
     (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)),
     (((ArithmeticFunction.moebius d : ℤ) : ℝ) / ((2 : ℝ) ^ d - 1)))⌋ := by
 -- proof
-  obtain rfl | hne := eq_or_ne n 1
+  rcases eq_or_ne n 1 with rfl | hne
   · exact gandhi_n_one
   · have hn2 : 2 ≤ n := by omega
     have hinf : (Set.ofPred Nat.Prime).Infinite := Nat.infinite_setOfPred_prime
@@ -745,17 +745,17 @@ lemma gandhi_nthPrimeFormula
         (Nat.nth_le_nth hinf).mpr (by omega)
       omega
     have hpP : Nat.Coprime (Nat.nth Nat.Prime (n - 1))
-      (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) :=
+        (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) :=
       gandhi_coprime_nth_ge n (n - 1) le_rfl
     have hchar : ∀ m : ℕ, 1 < m → m < Nat.nth Nat.Prime (n - 1) →
-      ¬ Nat.Coprime m
-        (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) :=
+        ¬ Nat.Coprime m
+          (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) :=
       fun m hm1 hmp => gandhi_not_coprime_of_lt n m hm1 hmp
     have hE6 : ¬ Nat.Coprime (Nat.nth Nat.Prime (n - 1) + 1)
-      (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) :=
+        (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) :=
       gandhi_not_coprime_succ n hn2
     have hq : ∃ q : ℕ, Nat.nth Nat.Prime (n - 1) < q ∧ Nat.Coprime q
-      (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) :=
+        (∏ i ∈ Finset.Icc 1 (n - 1), Nat.nth Nat.Prime (i - 1)) :=
       ⟨Nat.nth Nat.Prime n, (Nat.nth_lt_nth hinf).mpr (by omega),
         gandhi_coprime_nth_ge n n (by omega)⟩
     exact (gandhi_main_bound _ _ hP1 hp1 hpP hchar hE6 hq).symm
@@ -764,4 +764,4 @@ end MathlibExt.NumberTheory.PrimeCounting.GandhiNthPrimeFormulaWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

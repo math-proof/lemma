@@ -6,14 +6,13 @@ namespace MetaMathlibExt
 
 /--
 [clement_aux_forward](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ClementTwinPrimes.lean)
--/
-@[path]
 (so `p - 1 = k` and `p + 2 = k + 3`, avoiding natural subtraction).
 Given `Nat.Prime (k + 1)` and `Nat.Prime (k + 3)`, Wilson's lemma gives
 `(k ! : ZMod (k+1)) = -1` and `((k+2)! : ZMod (k+3)) = -1`; expanding
 `(k+2)! = (k+2) * ((k+1) * k!)` and evaluating `k + 2 = -1`,
 `k + 1 = -2` in `ZMod (k + 3)` yields divisibility by each factor, which
 combine by coprimality. -/
+@[path]
 private theorem clement_aux_forward (k : ℕ) (hk : 4 ≤ k) (hp : Nat.Prime (k + 1))
   (hq : Nat.Prime (k + 3)) :
   (k + 1) * (k + 3) ∣ 4 * (Nat.factorial k + 1) + (k + 1) := by
@@ -75,14 +74,13 @@ namespace MetaMathlibExt
 
 /--
 [clement_aux_backward](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ClementTwinPrimes.lean)
--/
-@[path]
 From `(k+1) * (k+3) ∣ 4 * (k! + 1) + (k+1)` we get
 `(k+1) ∣ 4 * (k!+1)` and `(k+3) ∣ 4 * k! + 2`. An even `k + 1 ≥ 4` is
 impossible (else `(k+3)/2 ≤ k` divides both `4 * k!` and `4 * k! + 2`,
 hence divides `2`). Otherwise any prime divisor `m = minFac` of `k + 1`
 (resp. `k + 3`) is `≤ k`, hence divides `k!`, hence divides `4`
 (resp. `2`), forcing `m = 2`, contradicting oddness. -/
+@[path]
 private lemma clement_aux_backward (k : ℕ) (hk : 4 ≤ k)
   (h : (k + 1) * (k + 3) ∣ 4 * (Nat.factorial k + 1) + (k + 1)) :
   Nat.Prime (k + 1) ∧ Nat.Prime (k + 3) := by
@@ -227,4 +225,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

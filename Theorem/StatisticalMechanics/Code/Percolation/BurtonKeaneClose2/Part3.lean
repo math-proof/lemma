@@ -148,7 +148,7 @@ theorem bk2_trif_three_disjoint_boundary (ω : ConfigSpace (Sym2 (Site d))) (n :
       bk2_armEnds_distinct_of_disconnected ω hzd23⟩⟩
 
 
-theorem bk2_burton_keane_bernoulli (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bk2_burton_keane_bernoulli (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hdisj : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n →
       bk2_DisjointArmEnds ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

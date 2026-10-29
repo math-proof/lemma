@@ -87,7 +87,7 @@ private lemma fec_wiredIV_isErgodic_of_extremePoint_eq
 -- given
   (hp : 0 < p)
   (hp1 : p < 1)
-  (hext : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ℝ≥0∞), IsTranslationInvariant (G := Multiplicative (Site d)) ν₁ → IsTranslationInvariant (G := Multiplicative (Site d)) ν₂ → IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ → 0 < a → 0 < b → a + b = 1 → (wiredInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 2) : Measure (ConfigSpace (Sym2 (Site d)))) = a • ν₁ + b • ν₂ → ν₁ = ν₂) :
+  (hext : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ENNReal), IsTranslationInvariant (G := Multiplicative (Site d)) ν₁ → IsTranslationInvariant (G := Multiplicative (Site d)) ν₂ → IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ → 0 < a → 0 < b → a + b = 1 → (wiredInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 2) : Measure (ConfigSpace (Sym2 (Site d)))) = a • ν₁ + b • ν₂ → ν₁ = ν₂) :
 -- imply
   IsErgodic (G := Multiplicative (Site d)) (wiredInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 2) : Measure (ConfigSpace (Sym2 (Site d)))) := by
 -- proof
@@ -106,7 +106,7 @@ private lemma fec_freeIV_isErgodic_of_extremePoint_eq
   (hp : 0 < p)
   (hp1 : p < 1)
   (htifree : IsTranslationInvariant (G := Multiplicative (Site d)) (freeInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 2) : Measure (ConfigSpace (Sym2 (Site d)))))
-  (hext : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ℝ≥0∞), IsTranslationInvariant (G := Multiplicative (Site d)) ν₁ → IsTranslationInvariant (G := Multiplicative (Site d)) ν₂ → IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ → 0 < a → 0 < b → a + b = 1 → (freeInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 2) : Measure (ConfigSpace (Sym2 (Site d)))) = a • ν₁ + b • ν₂ → ν₁ = ν₂) :
+  (hext : ∀ (ν₁ ν₂ : Measure (ConfigSpace (Sym2 (Site d)))) (a b : ENNReal), IsTranslationInvariant (G := Multiplicative (Site d)) ν₁ → IsTranslationInvariant (G := Multiplicative (Site d)) ν₂ → IsProbabilityMeasure ν₁ → IsProbabilityMeasure ν₂ → 0 < a → 0 < b → a + b = 1 → (freeInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 2) : Measure (ConfigSpace (Sym2 (Site d)))) = a • ν₁ + b • ν₂ → ν₁ = ν₂) :
 -- imply
   IsErgodic (G := Multiplicative (Site d)) (freeInfiniteVolume d hp hp1 (by norm_num : (0 : ℝ) < 2) : Measure (ConfigSpace (Sym2 (Site d)))) := by
 -- proof

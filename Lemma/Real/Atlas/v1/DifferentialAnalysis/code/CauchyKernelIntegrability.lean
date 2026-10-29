@@ -95,11 +95,11 @@ lemma integrableOn_cauchyKernelBare_closedBall
     simp_rw [enorm_eq_nnnorm]
     conv_lhs =>
       rw [← lintegral_indicator measurableSet_closedBall
-        (fun p => (‖cauchyKernelBare p‖₊ : ℝ≥0∞)),
+        (fun p => (‖cauchyKernelBare p‖₊ : ENNReal)),
         ← lintegral_comp_polarCoord_symm]
     set F := fun p : ℝ × ℝ => ENNReal.ofReal p.1 •
       (closedBall (0 : ℝ × ℝ) R).indicator
-        (fun p => (‖cauchyKernelBare p‖₊ : ℝ≥0∞)) (polarCoord.symm p)
+        (fun p => (‖cauchyKernelBare p‖₊ : ENNReal)) (polarCoord.symm p)
     set S : Set (ℝ × ℝ) := Set.Ioc 0 (R * Real.sqrt 2) ×ˢ Set.Ioo (-Real.pi) Real.pi
       with hS_def
     have hSmeas : MeasurableSet S := measurableSet_Ioc.prod measurableSet_Ioo
@@ -108,19 +108,19 @@ lemma integrableOn_cauchyKernelBare_closedBall
         Real.volume_Ioc, Real.volume_Ioo]
       exact ENNReal.mul_lt_top ENNReal.ofReal_lt_top ENNReal.ofReal_lt_top
     have hpw : ∀ p ∈ polarCoord.target,
-      F p ≤ S.indicator (fun _ => (1 : ℝ≥0∞)) p := by
+      F p ≤ S.indicator (fun _ => (1 : ENNReal)) p := by
       intro ⟨r, θ⟩ hp
       rw [polarCoord_target] at hp; obtain ⟨hr, hθ⟩ := hp
       simp only [F]
       by_cases hmem : polarCoord.symm (r, θ) ∈ closedBall (0 : ℝ × ℝ) R
       · rw [Set.indicator_of_mem hmem]
         have hr_pos : 0 < r := Set.mem_Ioi.mp hr
-        have hnorm : (‖cauchyKernelBare (polarCoord.symm (r, θ))‖₊ : ℝ≥0∞) =
+        have hnorm : (‖cauchyKernelBare (polarCoord.symm (r, θ))‖₊ : ENNReal) =
           ENNReal.ofReal r⁻¹ := by
           rw [ENNReal.ofReal]; congr 1; ext
           simp only [coe_nnnorm, norm_cauchyKernelBare_polarCoord_symm hr_pos,
             Real.coe_toNNReal _ (inv_nonneg.mpr hr_pos.le)]
-        rw [hnorm, show ENNReal.ofReal r • ENNReal.ofReal r⁻¹ = (1 : ℝ≥0∞) from by
+        rw [hnorm, show ENNReal.ofReal r • ENNReal.ofReal r⁻¹ = (1 : ENNReal) from by
           simp only [smul_eq_mul]
           rw [← ENNReal.ofReal_mul hr_pos.le, mul_inv_cancel₀ hr_pos.ne',
             ENNReal.ofReal_one]]

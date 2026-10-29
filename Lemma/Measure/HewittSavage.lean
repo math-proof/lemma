@@ -16,7 +16,7 @@ The iid symmetric zero–one law on Polish spaces.
 /-- Any measurable set in an iid countable product can be approximated by a finite cylinder. -/
 private lemma exists_cylinder_approx {S : Type*} [MeasurableSpace S]
   (μ : Measure S) [IsProbabilityMeasure μ]
-  (E : Set (ℕ → S)) (hE : MeasurableSet E) {ε : ℝ≥0∞} (hε : 0 < ε) :
+  (E : Set (ℕ → S)) (hE : MeasurableSet E) {ε : ENNReal} (hε : 0 < ε) :
   ∃ F ∈ measurableCylinders (fun _ : ℕ => S),
     Measure.infinitePi (fun _ : ℕ => μ) (symmDiff F E) < ε := by
   have hcov : ∃ D : Set (Set (ℕ → S)), D.Countable ∧
@@ -155,7 +155,7 @@ lemma hewitt_savage_zero_one_general
       have h2 := congrArg ENNReal.toReal hsq
       rwa [ENNReal.toReal_mul] at h2
     have hr1 : (Measure.infinitePi (fun _ : ℕ => μ) E).toReal ≤ 1 :=
-      calc (Measure.infinitePi (fun _ : ℕ => μ) E).toReal ≤ (1 : ℝ≥0∞).toReal :=
+      calc (Measure.infinitePi (fun _ : ℕ => μ) E).toReal ≤ (1 : ENNReal).toReal :=
         (ENNReal.toReal_le_toReal hne ENNReal.one_ne_top).mpr hle
         _ = 1 := ENNReal.toReal_one
     have h01 : (Measure.infinitePi (fun _ : ℕ => μ) E).toReal = 0 ∨
@@ -372,7 +372,7 @@ lemma hewitt_savage_zero_one_general
       rwa [hq'] at hstep1
     have hple : ∀ s : Set (ℕ → S), ((Measure.infinitePi (fun _ : ℕ => μ)) s).toReal ≤ 1 := by
       intro s
-      calc ((Measure.infinitePi (fun _ : ℕ => μ)) s).toReal ≤ (1 : ℝ≥0∞).toReal :=
+      calc ((Measure.infinitePi (fun _ : ℕ => μ)) s).toReal ≤ (1 : ENNReal).toReal :=
         (ENNReal.toReal_le_toReal (measure_ne_top _ _) ENNReal.one_ne_top).mpr prob_le_one
         _ = 1 := ENNReal.toReal_one
     have hqq : |((Measure.infinitePi (fun _ : ℕ => μ)) F).toReal *

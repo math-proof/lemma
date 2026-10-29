@@ -240,7 +240,7 @@ private lemma bins_routePackage_of_nineShell_eq
   {m : ℕ}
   {v u : Fin 9 → Site 2}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hpos : 0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (bins_NineShellEvent m v u)) :
 -- imply
@@ -254,7 +254,7 @@ private lemma bins_routePackage_of_nineShell_eq
 @[path]
 private lemma bins_route_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1) :
 -- imply
   bins_Route p hp1 := by
@@ -267,7 +267,7 @@ private lemma bins_route_eq
 @[path]
 private lemma bins_bk_unconditional_eq
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hplt : p < 1) :

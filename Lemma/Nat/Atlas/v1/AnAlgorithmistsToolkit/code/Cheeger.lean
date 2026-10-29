@@ -12,8 +12,8 @@ namespace Cheeger
 @[path]
 lemma quadForm_nonneg
   {n : ℕ}
-  {edges : Finset (Fin n × Fin n)}
-  {f : Fin n → ℝ} :
+  (edges : Finset (Fin n × Fin n))
+  (f : Fin n → ℝ) :
 -- imply
   0 ≤ quadForm edges f := by
 -- proof
@@ -31,9 +31,9 @@ namespace Cheeger
 @[path]
 lemma quadForm_shift
   {n : ℕ}
-  {edges : Finset (Fin n × Fin n)}
-  {x : Fin n → ℝ}
-  {c : ℝ} :
+  (edges : Finset (Fin n × Fin n))
+  (x : Fin n → ℝ)
+  (c : ℝ) :
 -- imply
   quadForm edges x = quadForm edges (fun i => x i - c) := by
 -- proof
@@ -50,16 +50,16 @@ namespace Cheeger
 @[path]
 lemma sqNorm_shift_ge
   {n : ℕ}
-  {x : Fin n → ℝ}
-  {c : ℝ}
 -- given
+  (x : Fin n → ℝ)
+  (c : ℝ)
   (hx : ∑ i, x i = 0) :
 -- imply
   sqNorm x ≤ sqNorm (fun i => x i - c) := by
 -- proof
   unfold sqNorm
   have expand : ∑ i : Fin n, (x i - c) ^ 2 =
-    ∑ i, x i ^ 2 - 2 * c * ∑ i, x i + ↑n * c ^ 2 := by
+      ∑ i, x i ^ 2 - 2 * c * ∑ i, x i + ↑n * c ^ 2 := by
     simp_rw [sub_sq]
     simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
       Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
@@ -147,7 +147,7 @@ lemma claim7
   apply div_le_div_of_nonneg_right _ (le_of_lt hd)
   have hqsplit := quadForm_ge_splitQuadForm crossing y m hm hcross
   have hunion : quadForm (noncrossing ∪ crossing) y =
-    quadForm noncrossing y + quadForm crossing y := by
+      quadForm noncrossing y + quadForm crossing y := by
     unfold quadForm
     rw [Finset.sum_union hdisjoint]
   linarith
@@ -161,7 +161,7 @@ namespace Cheeger
 -/
 @[path]
 lemma abel_summation
-  {n : ℕ}
+  {_n : ℕ}
   {m : ℕ}
   {a : ℕ → ℝ} :
 -- imply
@@ -198,19 +198,19 @@ lemma lemma8_summation_by_parts
     intro k hk
     linarith [hmono k (k + 1) (Nat.le_succ k) (Nat.succ_le_of_lt hk)]
   calc φ * (∑ k ∈ Finset.range m, (-z k))
-    = φ * (-(∑ k ∈ Finset.range m, z k)) := by
-      congr 1; rw [Finset.sum_neg_distrib]
+      = φ * (-(∑ k ∈ Finset.range m, z k)) := by
+        congr 1; rw [Finset.sum_neg_distrib]
     _ = φ * ((m : ℝ) * z m - ∑ k ∈ Finset.range m, z k) := by
-      rw [hzm, mul_zero, zero_sub]
+        rw [hzm, mul_zero, zero_sub]
     _ = φ * (∑ k ∈ Finset.range m, ((k : ℝ) + 1) * (z (k + 1) - z k)) := by
-      rw [← abel_summation m z]
+        rw [← abel_summation m z]
     _ = ∑ k ∈ Finset.range m, (φ * ((k : ℝ) + 1)) * (z (k + 1) - z k) := by
-      rw [Finset.mul_sum]; congr 1; ext k; ring
+        rw [Finset.mul_sum]; congr 1; ext k; ring
     _ ≤ ∑ k ∈ Finset.range m, C k * (z (k + 1) - z k) := by
-      apply Finset.sum_le_sum
-      intro k hk
-      rw [Finset.mem_range] at hk
-      exact mul_le_mul_of_nonneg_right (hC k hk) (hincr k hk)
+        apply Finset.sum_le_sum
+        intro k hk
+        rw [Finset.mem_range] at hk
+        exact mul_le_mul_of_nonneg_right (hC k hk) (hincr k hk)
 
 end Cheeger
 
@@ -252,7 +252,7 @@ namespace Cheeger
 -/
 @[path]
 lemma crossing_number_decomposition
-  {n : ℕ}
+  {_n : ℕ}
   {m : ℕ}
   {z : ℕ → ℝ}
   {edges : Finset (ℕ × ℕ)}
@@ -261,12 +261,14 @@ lemma crossing_number_decomposition
 -- imply
   ∑ e ∈ edges, (z e.2 - z e.1) = ∑ k ∈ Finset.range m, ((edges.filter (fun e => e.1 ≤ k ∧ k < e.2)).card : ℝ) * (z (k + 1) - z k) := by
 -- proof
+
   have htele : ∀ e ∈ edges, z e.2 - z e.1 =
-    ∑ k ∈ Finset.Ico e.1 e.2, (z (k + 1) - z k) := by
+      ∑ k ∈ Finset.Ico e.1 e.2, (z (k + 1) - z k) := by
     intro e he
     exact (Finset.sum_Ico_sub z (hedge e he).1.le).symm
+
   have hext : ∀ e ∈ edges, ∑ k ∈ Finset.Ico e.1 e.2, (z (k + 1) - z k) =
-    ∑ k ∈ Finset.range m, if e.1 ≤ k ∧ k < e.2 then z (k + 1) - z k else 0 := by
+      ∑ k ∈ Finset.range m, if e.1 ≤ k ∧ k < e.2 then z (k + 1) - z k else 0 := by
     intro e he
     rw [← Finset.sum_filter]
     congr 1
@@ -275,10 +277,12 @@ lemma crossing_number_decomposition
     constructor
     · intro ⟨h1, h2⟩; exact ⟨Nat.lt_of_lt_of_le h2 (hedge e he).2, h1, h2⟩
     · intro ⟨_, h1, h2⟩; exact ⟨h1, h2⟩
+
   conv_lhs =>
     rw [Finset.sum_congr rfl htele]
     rw [Finset.sum_congr rfl hext]
   rw [Finset.sum_comm]
+
   congr 1; ext k
   rw [← Finset.sum_filter]
   simp only [Finset.sum_const, nsmul_eq_mul]
@@ -305,12 +309,16 @@ lemma lemma8_summation_by_parts_edges
 -- imply
   φ * (∑ k ∈ Finset.range m, |z k|) ≤ ∑ e ∈ edges, := by
 -- proof
+
+
   have habs_edge : ∀ e ∈ edges, |z e.2 - z e.1| = z e.2 - z e.1 := by
     intro e he
     have ⟨hlt, hle⟩ := hedge e he
     exact abs_of_nonneg (sub_nonneg.mpr (hmono e.1 e.2 hlt.le hle))
   rw [Finset.sum_congr rfl habs_edge]
+
   rw [crossing_number_decomposition m z edges hedge]
+
   exact lemma8_summation_by_parts_abs m z φ hmono hzm _ hC
 
 end Cheeger
@@ -350,7 +358,7 @@ lemma sqNorm_indicatorVec
 -- proof
   unfold sqNorm indicatorVec
   have key : ∀ i : Fin n, (if i ∈ S then (Sᶜ.card : ℝ) else -(S.card : ℝ)) ^ 2 =
-    if i ∈ S then (Sᶜ.card : ℝ) ^ 2 else (S.card : ℝ) ^ 2 := by
+      if i ∈ S then (Sᶜ.card : ℝ) ^ 2 else (S.card : ℝ) ^ 2 := by
     intro i; split_ifs <;> simp
   simp_rw [key]; rw [Finset.sum_ite]
   simp only [Finset.sum_const, nsmul_eq_mul, Finset.filter_mem_eq_inter, Finset.univ_inter]
@@ -386,7 +394,6 @@ lemma sqNorm_indicatorVec_pos
     have : (n : ℝ) = (S.card : ℝ) + (Sᶜ.card : ℝ) := by push_cast [← hh]; ring
     linarith
   positivity
-set_option linter.unusedVariables false in
 
 end Cheeger
 
@@ -450,35 +457,35 @@ lemma sum_endpoints_sq_le
   ∑ e ∈ edges, (x e.1 ^ 2 + x e.2 ^ 2) ≤ dmax * sqNorm x := by
 -- proof
   have h_split : ∑ e ∈ edges, (x e.1 ^ 2 + x e.2 ^ 2) =
-    ∑ e ∈ edges, x e.1 ^ 2 + ∑ e ∈ edges, x e.2 ^ 2 := Finset.sum_add_distrib
+      ∑ e ∈ edges, x e.1 ^ 2 + ∑ e ∈ edges, x e.2 ^ 2 := Finset.sum_add_distrib
   have h_fst := sum_fst_fiber edges (fun v => x v ^ 2)
   have h_snd : ∑ e ∈ edges, x e.2 ^ 2 =
-    ∑ v : Fin n, ((edges.filter (fun e => e.2 = v)).card : ℝ) * x v ^ 2 := by
+      ∑ v : Fin n, ((edges.filter (fun e => e.2 = v)).card : ℝ) * x v ^ 2 := by
     have := (Finset.sum_fiberwise (g := fun e => e.2) edges (fun e => x e.2 ^ 2)).symm
     rw [this]; congr 1; ext v
     rw [Finset.sum_congr rfl (fun e he => by rw [(Finset.mem_filter.mp he).2])]
     rw [Finset.sum_const, nsmul_eq_mul]
   rw [h_split, h_fst, h_snd, ← Finset.sum_add_distrib]
   have h_card : ∀ v : Fin n,
-    ((edges.filter (fun e => e.1 = v)).card : ℝ) + ((edges.filter (fun e => e.2 = v)).card : ℝ) =
-    ((edges.filter (fun e => e.1 = v ∨ e.2 = v)).card : ℝ) := by
+      ((edges.filter (fun e => e.1 = v)).card : ℝ) + ((edges.filter (fun e => e.2 = v)).card : ℝ) =
+      ((edges.filter (fun e => e.1 = v ∨ e.2 = v)).card : ℝ) := by
     intro v
     have hdisj : Disjoint (edges.filter (fun e => e.1 = v)) (edges.filter (fun e => e.2 = v)) := by
       rw [Finset.disjoint_filter]
       intro e he h1 h2; exact hno e he (h1 ▸ h2.symm)
     have hunion : (edges.filter (fun e => e.1 = v)) ∪ (edges.filter (fun e => e.2 = v)) =
-      edges.filter (fun e => e.1 = v ∨ e.2 = v) := by
+        edges.filter (fun e => e.1 = v ∨ e.2 = v) := by
       ext e; simp only [Finset.mem_union, Finset.mem_filter]; tauto
     rw [← Nat.cast_add, ← Finset.card_union_of_disjoint hdisj, hunion]
   calc ∑ v : Fin n, (((edges.filter (fun e => e.1 = v)).card : ℝ) * x v ^ 2 +
-    ((edges.filter (fun e => e.2 = v)).card : ℝ) * x v ^ 2)
-    = ∑ v : Fin n, (((edges.filter (fun e => e.1 = v)).card : ℝ) +
-      ((edges.filter (fun e => e.2 = v)).card : ℝ)) * x v ^ 2 := by
-      congr 1; ext v; ring
+        ((edges.filter (fun e => e.2 = v)).card : ℝ) * x v ^ 2)
+      = ∑ v : Fin n, (((edges.filter (fun e => e.1 = v)).card : ℝ) +
+        ((edges.filter (fun e => e.2 = v)).card : ℝ)) * x v ^ 2 := by
+        congr 1; ext v; ring
     _ = ∑ v : Fin n, ((edges.filter (fun e => e.1 = v ∨ e.2 = v)).card : ℝ) * x v ^ 2 := by
-      congr 1; ext v; rw [h_card]
+        congr 1; ext v; rw [h_card]
     _ ≤ ∑ v : Fin n, dmax * x v ^ 2 := Finset.sum_le_sum fun v _ =>
-      mul_le_mul_of_nonneg_right (hd v) (sq_nonneg _)
+        mul_le_mul_of_nonneg_right (hd v) (sq_nonneg _)
     _ = dmax * sqNorm x := by unfold sqNorm; rw [Finset.mul_sum]
 
 end Cheeger
@@ -503,11 +510,11 @@ lemma degree_bound_sum_add_sq
   have h_ineq : ∀ e ∈ edges, (x e.1 + x e.2) ^ 2 ≤ 2 * (x e.1 ^ 2 + x e.2 ^ 2) := by
     intro e _; nlinarith [sq_nonneg (x e.1 - x e.2)]
   calc ∑ e ∈ edges, (x e.1 + x e.2) ^ 2
-    ≤ ∑ e ∈ edges, (2 * (x e.1 ^ 2 + x e.2 ^ 2)) := Finset.sum_le_sum h_ineq
+      ≤ ∑ e ∈ edges, (2 * (x e.1 ^ 2 + x e.2 ^ 2)) := Finset.sum_le_sum h_ineq
     _ = 2 * ∑ e ∈ edges, (x e.1 ^ 2 + x e.2 ^ 2) := by rw [Finset.mul_sum]
     _ ≤ 2 * (dmax * sqNorm x) := by
-      apply mul_le_mul_of_nonneg_left (sum_endpoints_sq_le edges x dmax hno hd)
-        (by norm_num : (0:ℝ) ≤ 2)
+        apply mul_le_mul_of_nonneg_left (sum_endpoints_sq_le edges x dmax hno hd)
+          (by norm_num : (0:ℝ) ≤ 2)
     _ = 2 * dmax * sqNorm x := by ring
 
 end Cheeger
@@ -544,27 +551,31 @@ lemma theorem5_sorted_rayleigh_bound
 -- imply
   ∃ i : ℕ, 0 < i ∧ i < n ∧ prefixCutRatio edges i ^ 2 / (2 * dmax) ≤ quadForm edges x / sqNorm x := by
 -- proof
+
   have hφ := prefixCutRatio_nonneg edges i₀ hi₀_pos hi₀_lt
   have hno_selfloop : ∀ e ∈ edges, e.1 ≠ e.2 := by
     intro e he; have := h_edges_sorted e he; exact Fin.ne_of_val_ne (by omega)
   have h_lem8 : prefixCutRatio edges i₀ * sqNorm x ≤
-    ∑ e ∈ edges, |x e.1 ^ 2 - x e.2 ^ 2| := by
+      ∑ e ∈ edges, |x e.1 ^ 2 - x e.2 ^ 2| := by
     rw [h_sqnorm_decomp, mul_add]
+
+
     have h_disj : Disjoint (edges.filter (fun e => (e.2 : ℕ) ≤ i₀))
-      (edges.filter (fun e => i₀ ≤ (e.1 : ℕ))) := by
+        (edges.filter (fun e => i₀ ≤ (e.1 : ℕ))) := by
       rw [Finset.disjoint_filter]
       intro e he h1e h2e
       have := h_edges_sorted e he
       omega
     have h_union_le : ∑ e ∈ edges.filter (fun e => (e.2 : ℕ) ≤ i₀), |x e.1 ^ 2 - x e.2 ^ 2| +
-      ∑ e ∈ edges.filter (fun e => i₀ ≤ (e.1 : ℕ)), |x e.1 ^ 2 - x e.2 ^ 2| ≤
-      ∑ e ∈ edges, |x e.1 ^ 2 - x e.2 ^ 2| := by
+        ∑ e ∈ edges.filter (fun e => i₀ ≤ (e.1 : ℕ)), |x e.1 ^ 2 - x e.2 ^ 2| ≤
+        ∑ e ∈ edges, |x e.1 ^ 2 - x e.2 ^ 2| := by
       rw [← Finset.sum_union h_disj]
       exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.union_subset
         (Finset.filter_subset _ _) (Finset.filter_subset _ _)) (fun _ _ _ => abs_nonneg _)
     have h3 := mul_nonneg hφ h_neg_nn
     have h4 := mul_nonneg hφ h_pos_nn
     linarith [h_neg_bound, h_pos_bound]
+
   have hx_pos : 0 < sqNorm x := by
     unfold sqNorm
     have : ∃ j, x j ≠ 0 := by
@@ -577,10 +588,10 @@ lemma theorem5_sorted_rayleigh_bound
   have h_deg := degree_bound_sum_add_sq edges x dmax hno_selfloop hdmax_bound
   rw [div_le_div_iff₀ h2d hx_pos]
   have h_sq : (prefixCutRatio edges i₀ * sqNorm x) ^ 2 ≤
-    (∑ e ∈ edges, |x e.1 ^ 2 - x e.2 ^ 2|) ^ 2 :=
+      (∑ e ∈ edges, |x e.1 ^ 2 - x e.2 ^ 2|) ^ 2 :=
     pow_le_pow_left₀ (mul_nonneg hφ (le_of_lt hx_pos)) h_lem8 2
   have h_cs : (∑ e ∈ edges, |x e.1 ^ 2 - x e.2 ^ 2|) ^ 2 ≤
-    (∑ e ∈ edges, (x e.1 - x e.2) ^ 2) * (∑ e ∈ edges, (x e.1 + x e.2) ^ 2) := by
+      (∑ e ∈ edges, (x e.1 - x e.2) ^ 2) * (∑ e ∈ edges, (x e.1 + x e.2) ^ 2) := by
     have hf : ∀ e ∈ edges, |x e.1 ^ 2 - x e.2 ^ 2| = |x e.1 - x e.2| * |x e.1 + x e.2| := by
       intro e _
       rw [show x e.1 ^ 2 - x e.2 ^ 2 = (x e.1 - x e.2) * (x e.1 + x e.2) from by ring]
@@ -592,13 +603,13 @@ lemma theorem5_sorted_rayleigh_bound
   have hqf_nn : (0 : ℝ) ≤ ∑ e ∈ edges, (x e.1 - x e.2) ^ 2 :=
     Finset.sum_nonneg (fun e _ => sq_nonneg _)
   have h_comb : (prefixCutRatio edges i₀) ^ 2 * (sqNorm x) ^ 2 ≤
-    quadForm edges x * (2 * dmax * sqNorm x) := by
+      quadForm edges x * (2 * dmax * sqNorm x) := by
     calc (prefixCutRatio edges i₀) ^ 2 * (sqNorm x) ^ 2
-      = (prefixCutRatio edges i₀ * sqNorm x) ^ 2 := by ring
+        = (prefixCutRatio edges i₀ * sqNorm x) ^ 2 := by ring
       _ ≤ (∑ e ∈ edges, |x e.1 ^ 2 - x e.2 ^ 2|) ^ 2 := h_sq
       _ ≤ (∑ e ∈ edges, (x e.1 - x e.2) ^ 2) * (∑ e ∈ edges, (x e.1 + x e.2) ^ 2) := h_cs
       _ ≤ quadForm edges x * (2 * dmax * sqNorm x) :=
-        mul_le_mul_of_nonneg_left h_deg hqf_nn
+          mul_le_mul_of_nonneg_left h_deg hqf_nn
   nlinarith [sq_nonneg (prefixCutRatio edges i₀), sq_nonneg (sqNorm x)]
 
 end Cheeger
@@ -622,6 +633,7 @@ lemma dirEdges_filter_cut
     SimpleGraph.mem_interedges_iff, Finset.mem_compl]
   tauto
 
+
 end Cheeger
 
 namespace Cheeger
@@ -641,6 +653,7 @@ lemma normalized_rayleigh_indicatorVec_le
 -- imply
   quadForm (dirEdges G) (indicatorVec S) / (2 * sqNorm (indicatorVec S)) ≤ 2 * (G.cutRatio S : ℝ) := by
 -- proof
+
   have hs : (0 : ℝ) < (S.card : ℝ) := by exact_mod_cast hS.card_pos
   have hsc : (0 : ℝ) < (Sᶜ.card : ℝ) := by exact_mod_cast hSc.card_pos
   have hn : (n : ℝ) = (S.card : ℝ) + (Sᶜ.card : ℝ) := by
@@ -648,26 +661,31 @@ lemma normalized_rayleigh_indicatorVec_le
   have hn_pos : (0 : ℝ) < (n : ℝ) := by linarith
   have hsqnorm_pos := sqNorm_indicatorVec_pos S hS hSc
   have h2sqnorm_pos : (0 : ℝ) < 2 * sqNorm (indicatorVec S) := by linarith
+
+
   have hqf : quadForm (dirEdges G) (indicatorVec S) =
-    ((G.interedges S Sᶜ).card + (G.interedges Sᶜ S).card : ℝ) * (n : ℝ) ^ 2 := by
+      ((G.interedges S Sᶜ).card + (G.interedges Sᶜ S).card : ℝ) * (n : ℝ) ^ 2 := by
     unfold quadForm indicatorVec
     have hn' : (Sᶜ.card : ℝ) + (S.card : ℝ) = (n : ℝ) := by linarith [hn]
+
     have hval : ∀ e ∈ dirEdges G,
-      ((if e.1 ∈ S then (Sᶜ.card : ℝ) else -(S.card : ℝ)) -
-        (if e.2 ∈ S then (Sᶜ.card : ℝ) else -(S.card : ℝ))) ^ 2 =
-      if (e.1 ∈ S ∧ e.2 ∉ S) ∨ (e.1 ∉ S ∧ e.2 ∈ S) then (n : ℝ) ^ 2 else 0 := by
+        ((if e.1 ∈ S then (Sᶜ.card : ℝ) else -(S.card : ℝ)) -
+         (if e.2 ∈ S then (Sᶜ.card : ℝ) else -(S.card : ℝ))) ^ 2 =
+        if (e.1 ∈ S ∧ e.2 ∉ S) ∨ (e.1 ∉ S ∧ e.2 ∈ S) then (n : ℝ) ^ 2 else 0 := by
       intro e _
       by_cases h1 : e.1 ∈ S <;> by_cases h2 : e.2 ∈ S <;> simp [h1, h2] <;> nlinarith [hn']
     rw [show ∑ e ∈ dirEdges G, _ = ∑ e ∈ dirEdges G,
-      (if (e.1 ∈ S ∧ e.2 ∉ S) ∨ (e.1 ∉ S ∧ e.2 ∈ S) then (n : ℝ) ^ 2 else 0) from
-      Finset.sum_congr rfl hval]
+        (if (e.1 ∈ S ∧ e.2 ∉ S) ∨ (e.1 ∉ S ∧ e.2 ∈ S) then (n : ℝ) ^ 2 else 0) from
+        Finset.sum_congr rfl hval]
     rw [← Finset.sum_filter]
+
     have hfilt : (dirEdges G).filter (fun e => (e.1 ∈ S ∧ e.2 ∉ S) ∨ (e.1 ∉ S ∧ e.2 ∈ S)) =
-      (dirEdges G).filter (fun e => e.1 ∈ S ∧ e.2 ∉ S) ∪
-      (dirEdges G).filter (fun e => e.1 ∉ S ∧ e.2 ∈ S) := by
+        (dirEdges G).filter (fun e => e.1 ∈ S ∧ e.2 ∉ S) ∪
+        (dirEdges G).filter (fun e => e.1 ∉ S ∧ e.2 ∈ S) := by
       ext e; simp only [Finset.mem_filter, Finset.mem_union]; tauto
     rw [hfilt, Finset.sum_union]
     · simp only [Finset.sum_const, nsmul_eq_mul]
+
       have hf1 : (dirEdges G).filter (fun e => e.1 ∈ S ∧ e.2 ∉ S) = G.interedges S Sᶜ :=
         dirEdges_filter_cut G S
       have hf2 : (dirEdges G).filter (fun e => e.1 ∉ S ∧ e.2 ∈ S) = G.interedges Sᶜ S := by
@@ -679,42 +697,54 @@ lemma normalized_rayleigh_indicatorVec_le
     ·
       apply Finset.disjoint_filter.mpr
       intro e _ h1 h2; exact absurd h1.1 h2.1
+
   have hcard_symm : (G.interedges Sᶜ S).card = (G.interedges S Sᶜ).card := by
     exact Rel.card_interedges_comm G.symm Sᶜ S
+
   have hqf_val : quadForm (dirEdges G) (indicatorVec S) =
-    2 * (G.edgeCut S : ℝ) * (n : ℝ) ^ 2 := by
+      2 * (G.edgeCut S : ℝ) * (n : ℝ) ^ 2 := by
     rw [hqf, hcard_symm]
     unfold SimpleGraph.edgeCut
     ring
+
+
   have hlhs : quadForm (dirEdges G) (indicatorVec S) / (2 * sqNorm (indicatorVec S)) =
-    (G.edgeCut S : ℝ) * (n : ℝ) / ((S.card : ℝ) * (Sᶜ.card : ℝ)) := by
+      (G.edgeCut S : ℝ) * (n : ℝ) / ((S.card : ℝ) * (Sᶜ.card : ℝ)) := by
     rw [hqf_val, sqNorm_indicatorVec]
     field_simp
+
   rw [hlhs]
+
+
   by_cases hcut : G.edgeCut S = 0
   · unfold SimpleGraph.cutRatio
     simp [hcut]
   · have hcut_pos : (0 : ℝ) < (G.edgeCut S : ℝ) := by
-    exact_mod_cast Nat.pos_of_ne_zero hcut
+      exact_mod_cast Nat.pos_of_ne_zero hcut
     have hmin_pos : (0 : ℝ) < (min (S.card : ℝ) (Sᶜ.card : ℝ)) := lt_min hs hsc
+
     suffices h : (G.edgeCut S : ℝ) * (n : ℝ) / ((S.card : ℝ) * (Sᶜ.card : ℝ)) ≤
-      2 * (G.edgeCut S : ℝ) / (min (S.card : ℝ) (Sᶜ.card : ℝ)) by
+        2 * (G.edgeCut S : ℝ) / (min (S.card : ℝ) (Sᶜ.card : ℝ)) by
       calc (G.edgeCut S : ℝ) * (n : ℝ) / ((S.card : ℝ) * (Sᶜ.card : ℝ))
-        ≤ 2 * (G.edgeCut S : ℝ) / (min (S.card : ℝ) (Sᶜ.card : ℝ)) := h
+          ≤ 2 * (G.edgeCut S : ℝ) / (min (S.card : ℝ) (Sᶜ.card : ℝ)) := h
         _ = 2 * (G.cutRatio S : ℝ) := by
-          unfold SimpleGraph.cutRatio
-          push_cast [Nat.cast_min]
-          ring
+            unfold SimpleGraph.cutRatio
+            push_cast [Nat.cast_min]
+            ring
+
+
     rw [div_le_div_iff₀ (mul_pos hs hsc) hmin_pos]
     have key : (n : ℝ) * min (S.card : ℝ) (Sᶜ.card : ℝ) ≤
-      2 * ((S.card : ℝ) * (Sᶜ.card : ℝ)) := by
+        2 * ((S.card : ℝ) * (Sᶜ.card : ℝ)) := by
       rw [hn]
-      obtain h | h := le_total (S.card : ℝ) (Sᶜ.card : ℝ)
+      rcases le_total (S.card : ℝ) (Sᶜ.card : ℝ) with h | h
       · rw [min_eq_left h]; nlinarith
       · rw [min_eq_right h]; nlinarith
     nlinarith
+
 
 end Cheeger
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

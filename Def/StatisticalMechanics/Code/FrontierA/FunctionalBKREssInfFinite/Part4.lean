@@ -26,7 +26,7 @@ variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
 noncomputable def bernoulliProductWeight
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1) : E → Bool → ℝ :=
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1) : E → Bool → ℝ :=
   fun e b => (bernoulliMeasure (p e) (hp e)).real {b}
 
 end StatMech.FrontierA

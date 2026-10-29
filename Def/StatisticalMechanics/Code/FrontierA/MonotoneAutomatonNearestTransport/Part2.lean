@@ -25,7 +25,7 @@ variable {d : ℕ}
 
 
 noncomputable def pairNearestTransport (x y : Site d) (omega : PairSiteConfig d) :
-    ℝ≥0∞ :=
+    ENNReal :=
   finiteTargetTransport (pairHighCluster omega x)
     (pairNearestHighFinset omega x) x y
 

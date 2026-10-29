@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
+import Lemma.Complex.RisingProductSeries
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3Psisummable
@@ -10,8 +10,8 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3Psisummable
 -/
 @[path]
 lemma ramanujan_part1_ch3_entry3_psisummable_general
-  {x : ℂ}
-  {ε : ℝ}
+  (x : ℂ)
+  (ε : ℝ)
 -- given
   (hε₁ : 0 < ε) :
 -- imply
@@ -20,14 +20,15 @@ lemma ramanujan_part1_ch3_entry3_psisummable_general
     (z + (↑(k + 1) : ℂ))) := by
 -- proof
   refine ⟨0, fun z _ _ h => ?_⟩
-  have hs := Complex.summable_neg_pow_mul_pow_div_prod_add_mul (b := 1) (c := z) x fun r hr => by
-    have hz : z = ((-((r : ℝ) + 1) : ℝ) : ℂ) := by
-      push_cast at hr ⊢
-      linear_combination hr
-    rw [hz, Complex.arg_ofReal_of_neg (neg_neg_of_pos (by positivity))] at h
-    linarith
+  have hs := Complex.summable_neg_pow_mul_pow_div_prod_add_mul (b := 1) (c := z)
+    (fun r => by
+      intro hr
+      have hz : z = ((-((r : ℝ) + 1) : ℝ) : ℂ) := by
+        push_cast at hr ⊢
+        linear_combination hr
+      rw [hz, Complex.arg_ofReal_of_neg (neg_neg_of_pos (by positivity))] at h
+      linarith) x
   simpa only [one_mul] using hs
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3Psisummable
 
@@ -55,4 +56,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3Psisummable
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

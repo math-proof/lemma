@@ -51,7 +51,7 @@ set_option linter.unusedVariables false in
 
 
 theorem bk_criterion_conn {ι : Type*} [Fintype V] [DecidableEq V]
-    {p : ℝ≥0} (hp : p ≤ 1) (G : SimpleGraph V)
+    {p : NNReal} (hp : p ≤ 1) (G : SimpleGraph V)
     (A S B : Set V) (u : V)
     (s : Finset ι) (boundaryPair : ι → V × V)
     (hincl : connEvent G A u B ⊆

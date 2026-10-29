@@ -33,7 +33,7 @@ theorem tripleEventIgnoresMiddleAt_preimage_interpolatedSite
   rw [hlow, hmiddle y hy]
 
 
-theorem measurableSet_middleThreshold (t : ℝ≥0) (x : Site d) :
+theorem measurableSet_middleThreshold (t : NNReal) (x : Site d) :
     MeasurableSet {q : FieldTriple d | t ≤ q.2.1 x} := by
   have hcoord : Measurable (fun q : FieldTriple d => q.2.1 x) :=
     (measurable_pi_apply x).comp measurable_snd.fst
@@ -48,7 +48,7 @@ theorem interpolatedSite_eq_true_of_middleThreshold
 
 theorem interpolatedSiteLaw_hasInsertionLowerBound
     (T : MonotoneAutomaton d) (mu : Measure (FieldTriple d))
-    (epsilon : ℝ≥0∞)
+    (epsilon : ENNReal)
     (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon) :
     HasSiteInsertionLowerBound (interpolatedSiteLaw T mu) epsilon := by
   intro x B hBmeas hBoff
@@ -77,7 +77,7 @@ theorem interpolatedSiteLaw_hasInsertionLowerBound
 
 
 theorem siteInsertion_positive
-    (nu : Measure (ConfigSpace (Site d))) (epsilon : ℝ≥0∞)
+    (nu : Measure (ConfigSpace (Site d))) (epsilon : ENNReal)
     (hepsilon : 0 < epsilon) (hinsert : HasSiteInsertionLowerBound nu epsilon)
     (x : Site d) (B : Set (ConfigSpace (Site d))) (hBmeas : MeasurableSet B)
     (hBoff : SiteEventIgnores x B) (hBpos : 0 < nu B) :

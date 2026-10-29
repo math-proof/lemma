@@ -62,7 +62,7 @@ Bellman:
 REINFORCE:
 \href{http://www.lemma.cn/lean/?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Ico}{Lean~4}\\[0.25em]
 Unbiased advantage estimate:
-\href{http://www.lemma.cn/lean/?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Ico.advantage}{Lean~4},
+\href{http://www.lemma.cn/lean/?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Ico#advantage}{Lean~4},
 \quad
 generalized advantage estimate:
 \href{http://www.lemma.cn/lean/?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Icc.In_Ico}{discrete},
@@ -425,12 +425,12 @@ Here the series sit inside the expectation; this is possible because rewards are
 \label{sec:zeroscore}
 The property that links the local normalization of Definition~\ref{def:model} to variance reduction is the following.
 
-\begin{lemma}[\lmod{Expect_ConditionedGrad_LogProb.eq.Zero}{Random.Expect_ConditionedGrad_LogProb.eq.Zero}~\cite{lemma_zero}]
+\begin{lemma}[\lmod{Expect_ConditionedGrad_LogProb.eq.Zero}{Random.ExpectConditionedGrad_LogProb.eq.Zero}~\cite{lemma_zero}]
 \label{lem:zero}
 Let $p:\Theta\to A\to\R$ with $\sum_ap_{\theta'}(a)=1$ for all $\theta'$, $p_\theta(a)>0$ and $\theta'\mapsto p_{\theta'}(a)$ differentiable at $\theta$.
 Then $\displaystyle\E_{a\sim p_\theta}\bigl[\grad\log p_\theta(a)\bigr]=\sum_ap_\theta(a)\,\grad\log p_\theta(a)=0$.
 \end{lemma}
-Its conditional form for the policy of the trajectory model is \lmod{LogProb.eq.Zero.policy}{Random.Expect_ConditionedGrad_LogProb.eq.Zero.policy}~\cite{lemma_score}: $\E_\theta[\grad\log\pi_\theta(\av_t\mid\sv_t)\mid\sv_t=x]=0$ for a positive differentiable policy.
+Its conditional form for the policy of the trajectory model is \lmod{LogProb.eq.Zero.policy}{Random.ExpectConditionedGrad_LogProb.eq.Zero#policy}~\cite{lemma_score}: $\E_\theta[\grad\log\pi_\theta(\av_t\mid\sv_t)\mid\sv_t=x]=0$ for a positive differentiable policy.
 Inside the model file the same fact is used without positivity (terms with $\pi_\theta(u\mid x)=0$ vanish): for every $h:S\to\R$, $\E_\theta[h(\sv_t)\,\grad\log\pi_\theta(\av_t\mid\sv_t)]=0$ (\texttt{E\_h\_score}).
 This is why a baseline depending only on the state leaves the policy gradient unchanged, the step used in Section~\ref{sec:gae}.
 For a globally normalized CRF the analogue is different: $\E_{p(y\mid x)}[\grad\log p(y\mid x)]=0$ holds as well, but $\grad\log p=\grad\mathrm{score}-\E[\grad\mathrm{score}]$ contains the partition function; the identity $\grad\log Z=\E[\grad\mathrm{score}]$ is not formalized.

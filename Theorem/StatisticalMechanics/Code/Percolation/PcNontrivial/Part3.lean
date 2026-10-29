@@ -57,9 +57,9 @@ theorem wordEvent_eq_pi (g : ℕ → Fin d × Bool) (n : ℕ) :
   · intro h k hk; exact h (edgeOf g k) k (by simpa using hk) rfl
 
 
-theorem wordEvent_prob_good (p : ℝ≥0) (hp : p ≤ 1) (g : ℕ → Fin d × Bool) (n : ℕ)
+theorem wordEvent_prob_good (p : NNReal) (hp : p ≤ 1) (g : ℕ → Fin d × Bool) (n : ℕ)
     (hg : goodWord g n) :
-    (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) (wordEvent g n) = (p : ℝ≥0∞) ^ n := by
+    (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) (wordEvent g n) = (p : ENNReal) ^ n := by
   rw [wordEvent_eq_pi, cylinder_all_open]
   congr 1
   rw [Finset.card_image_of_injOn (edgeOf_injOn g n hg), Finset.card_range]

@@ -25,7 +25,6 @@ namespace GroupCounts
 lemma subgroupToFinset₂₄_mem (H : Subgroup G₂₄) (g : G₂₄) :
   g ∈ subgroupToFinset₂₄ H ↔ g ∈ H := by
   unfold subgroupToFinset₂₄; simp [Finset.mem_filter]
-set_option maxHeartbeats 400000 in
 
 end GroupCounts
 
@@ -120,7 +119,6 @@ lemma subgroupToFinset₄₃_injective :
   Function.Injective subgroupToFinset₄₃ := by
   intro H₁ H₂ h; apply Subgroup.ext; intro g
   rw [← subgroupToFinset₄₃_mem H₁, ← subgroupToFinset₄₃_mem H₂, h]
-set_option maxHeartbeats 400000 in
 
 end GroupCounts
 

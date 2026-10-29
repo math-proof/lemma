@@ -77,7 +77,7 @@ private lemma reimer_wprob_of_inter_empty_eq
 private lemma reimer_inequality_of_inter_empty_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (hp : p ≤ 1)
@@ -122,7 +122,7 @@ private lemma not_isDecreasing_evXor_eq :
 -/
 @[path]
 private lemma reimer_xor_xnor_inequality_eq
-  {p : ℝ≥0}
+  {p : NNReal}
 -- given
   (hp : p ≤ 1) :
 -- imply

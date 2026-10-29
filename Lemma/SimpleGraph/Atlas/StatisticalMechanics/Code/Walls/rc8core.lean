@@ -12,7 +12,7 @@ private lemma rc8_half_le_one_eq
   [Fintype α]
   [DecidableEq α] :
 -- imply
-  (rc8_half : ℝ≥0) ≤ 1 := by
+  (rc8_half : NNReal) ≤ 1 := by
 -- proof
   apply StatMech.Walls.rc8_half_le_one
 
@@ -62,7 +62,7 @@ private lemma rc8_card_bridge_eq
 private lemma rc8_antiHarris_eq
   [Fintype α]
   [DecidableEq α]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace α)}
 -- given
   (hp : p ≤ 1)
@@ -80,7 +80,7 @@ private lemma rc8_antiHarris_eq
 private lemma rc8_antiHarris'_eq
   [Fintype α]
   [DecidableEq α]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace α)}
 -- given
   (hp : p ≤ 1)
@@ -98,7 +98,7 @@ private lemma rc8_antiHarris'_eq
 private lemma rc8_harrisDec_eq
   [Fintype α]
   [DecidableEq α]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace α)}
 -- given
   (hp : p ≤ 1)

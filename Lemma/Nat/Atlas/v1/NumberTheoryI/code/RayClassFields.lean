@@ -851,7 +851,6 @@ lemma card_primes_le_card_ideals'
     (fun ⟨a, _⟩ ⟨b, _⟩ h => by
       simp only [Subtype.mk.injEq] at h
       exact Subtype.ext (IsDedekindDomain.HeightOneSpectrum.ext h))
-set_option maxHeartbeats 800000 in
 
 end RayClassField
 
@@ -897,7 +896,6 @@ lemma ideal_count_rpow_summable'
       simp [Real.zero_rpow (neg_ne_zero.mpr (ne_of_gt (by linarith : (0 : ℝ) < σ)))]
     · rw [Complex.norm_natCast, Complex.ofReal_re, div_eq_mul_inv,
       ← Real.rpow_neg (Nat.cast_nonneg n)])
-set_option maxHeartbeats 400000 in
 
 end RayClassField
 
@@ -961,7 +959,6 @@ private lemma norm_inv_one_sub_sub_one {a : ℂ} (ha : ‖a‖ ≤ 1 / 2) :
       mul_le_mul_of_nonneg_left
         (inv_anti₀ (by linarith : (0 : ℝ) < 1 / 2) (by linarith)) (norm_nonneg a)
     _ = 2 * ‖a‖ := by ring
-set_option maxHeartbeats 400000 in
 
 end RayClassField
 
@@ -1127,7 +1124,6 @@ lemma card_primes_le_card_ideals_rl
     (fun ⟨a, _⟩ ⟨b, _⟩ h => by
       simp only [Subtype.mk.injEq] at h
       exact Subtype.ext (IsDedekindDomain.HeightOneSpectrum.ext h))
-set_option maxHeartbeats 800000 in
 
 end RayClassField
 
@@ -1173,7 +1169,6 @@ lemma ideal_count_rpow_summable_rl
       simp [Real.zero_rpow (neg_ne_zero.mpr (ne_of_gt (by linarith : (0 : ℝ) < σ)))]
     · rw [Complex.norm_natCast, Complex.ofReal_re, div_eq_mul_inv,
       ← Real.rpow_neg (Nat.cast_nonneg n)])
-set_option maxHeartbeats 400000 in
 
 end RayClassField
 
@@ -1643,7 +1638,6 @@ lemma HasMeromorphicContinuationWithPoleOrder_pow
   rw [meromorphicOrderAt_pow hf.1, hf.2]
   have : (↑n : WithTop ℤ) * ↑(-m) = ↑(↑n * (-m) : ℤ) := by exact_mod_cast rfl
   rw [this]; congr 1; ring
-set_option maxHeartbeats 400000 in
 
 end RayClassField
 

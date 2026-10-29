@@ -49,7 +49,7 @@ theorem brt2_precursor_pos_of_forceOpen_pos
   exact absurd rfl (ne_of_gt hpos)
 
 
-theorem brt2_route_of_posRouting (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem brt2_route_of_posRouting (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hpr : ∀ n : ℕ, brt2_PosRouting (d := d) p hp1 n) :
     ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) →
@@ -63,7 +63,7 @@ theorem brt2_route_of_posRouting (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
   exact ⟨a₁, a₂, a₃, brt2_precursor_pos_of_forceOpen_pos μ hfe G a₁ a₂ a₃ hpos⟩
 
 
-theorem brt2_posRouting_of_routingCover (p : ℝ≥0) (hp1 : p ≤ 1) {n : ℕ}
+theorem brt2_posRouting_of_routingCover (p : NNReal) (hp1 : p ≤ 1) {n : ℕ}
     (hrt : hrHD_DisjointRouting d n) : brt2_PosRouting (d := d) p hp1 n := by
   intro htop
   set μ := bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 with hμ
@@ -85,7 +85,7 @@ theorem brt2_posRouting_of_routingCover (p : ℝ≥0) (hp1 : p ≤ 1) {n : ℕ}
   exact absurd (le_antisymm hle bot_le) (ne_of_gt htop)
 
 
-theorem brt2_bk_of_posRouting (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem brt2_bk_of_posRouting (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hpr : ∀ n : ℕ, brt2_PosRouting (d := d) p hp1 n) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = 0} = 1 ∨
@@ -97,7 +97,7 @@ theorem brt2_bk_of_posRouting (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 
   bfx_bk_of_route hd p hp1 hp0 (brt2_route_of_posRouting p hp1 hp0 hpr)
 
 
-theorem brt2_bk_atLeastTwo_of_posRouting (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem brt2_bk_atLeastTwo_of_posRouting (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hpr : ∀ n : ℕ, brt2_PosRouting (d := d) p hp1 n) :
     bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (atLeastTwoInfinite d) = 0 :=
   (brt2_bk_of_posRouting hd p hp1 hp0 hpr).2.1

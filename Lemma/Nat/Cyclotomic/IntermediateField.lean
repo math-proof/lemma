@@ -12,7 +12,7 @@ namespace CyclotomicField
 -/
 @[path]
 lemma finrank_intermediateFieldOfFinrank
-  {p s : ℕ}
+  (p s : ℕ)
 -- given
   (hp : p.Prime)
   (hs : s ∣ p - 1) :
@@ -54,8 +54,8 @@ namespace CyclotomicField
 -/
 @[path]
 lemma sup_eq_top_of_lcm_eq
-  {n₀ n₁ m : ℕ} [NeZero n₀] [NeZero n₁]
-  {E₀ E₁ : IntermediateField ℚ (CyclotomicField m ℚ)} [IsCyclotomicExtension {n₀} ℚ E₀] [IsCyclotomicExtension {n₁} ℚ E₁]
+  (n₀ n₁ m : ℕ) [NeZero n₀] [NeZero n₁]
+  (E₀ E₁ : IntermediateField ℚ (CyclotomicField m ℚ)) [IsCyclotomicExtension {n₀} ℚ E₀] [IsCyclotomicExtension {n₁} ℚ E₁]
 -- given
   (hlcm : Nat.lcm n₀ n₁ = m) :
 -- imply

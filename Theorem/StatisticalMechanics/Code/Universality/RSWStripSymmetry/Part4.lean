@@ -33,14 +33,14 @@ theorem rss_reflectConfig_apply (n : ℤ)
 
 theorem rss_reflectConfig_measurePreserving (n : ℤ) :
     MeasurePreserving (rss_reflectConfig n)
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one)
-      (bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one) := by
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one)
+      (bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one) := by
   refine ⟨(MeasurableEquiv.piCongrLeft
     (fun _ => Bool) (rss_stripReflectEdge n)).measurable, ?_⟩
   unfold bernoulliProductMeasure
   exact Measure.infinitePi_map_piCongrLeft
     (fun _ : Sym2 (Site 2) =>
-      bernoulliMeasure (2⁻¹ : ℝ≥0) half_le_one)
+      bernoulliMeasure (2⁻¹ : NNReal) half_le_one)
     (rss_stripReflectEdge n)
 
 

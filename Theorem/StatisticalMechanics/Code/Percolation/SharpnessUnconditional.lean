@@ -39,7 +39,7 @@ theorem finset_subset_box_su (S : Finset (Site d)) :
         Finset.le_sup (f := fun y => Finset.univ.sup (fun j => (y j).natAbs)) hx
 
 
-theorem connWithinProb_le_one_su (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d)) (x : Site d) :
+theorem connWithinProb_le_one_su (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d)) (x : Site d) :
     connWithinProb d p hp S x ≤ 1 := by
   classical
   unfold connWithinProb
@@ -62,7 +62,7 @@ theorem card_boundaryEdges_le_su (S : Finset (Site d)) :
   omega
 
 
-theorem phi_le_card_su (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d)) :
+theorem phi_le_card_su (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d)) :
     phi d p hp S ≤ (p : ℝ) * (boundaryEdges d S).card := by
   unfold phi
   apply mul_le_mul_of_nonneg_left _ p.coe_nonneg
@@ -75,11 +75,11 @@ theorem phi_le_card_su (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d)) :
 theorem tildePc_pos (hd : 0 < d) : 0 < (tildePc d : ℝ) := by
   classical
   have hdR : (0 : ℝ) < d := by exact_mod_cast hd
-  set p : ℝ≥0 := 1 / (4 * d + 1) with hp_def
+  set p : NNReal := 1 / (4 * d + 1) with hp_def
   have hpos : 0 < p := by rw [hp_def]; positivity
   have hp1 : p ≤ 1 := by
     rw [hp_def, div_le_one (by positivity)]
-    have h4d : (0 : ℝ≥0) ≤ 4 * d := by positivity
+    have h4d : (0 : NNReal) ≤ 4 * d := by positivity
     linarith
   set S : Finset (Site d) := {origin d} with hS_def
   have h0S : origin d ∈ S := by rw [hS_def]; exact Finset.mem_singleton_self _
@@ -96,7 +96,7 @@ theorem tildePc_pos (hd : 0 < d) : 0 < (tildePc d : ℝ) := by
       _ < 1 := by rw [div_mul_eq_mul_div, div_lt_one (by positivity)]; linarith
   have hmem : p ∈ tildePcSet d := ⟨hp1, S, h0S, hphi⟩
   have hle : p ≤ tildePc d := le_csSup ⟨1, fun q hq => (mem_tildePcSet.mp hq).1⟩ hmem
-  have : (0 : ℝ≥0) < tildePc d := lt_of_lt_of_le hpos hle
+  have : (0 : NNReal) < tildePc d := lt_of_lt_of_le hpos hle
   exact_mod_cast this
 
 

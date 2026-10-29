@@ -26,7 +26,7 @@ variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
 theorem cylinderEssInf_eq_cylinderMin
-    (p : E → ℝ≥0) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
+    (p : E → NNReal) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
     (f : ConfigSpace E → ℝ) (K : Set E) (omega : ConfigSpace E) :
     cylinderEssInf p (fun e => (hp1 e).le) f K omega =
       cylinderMin f K omega := by

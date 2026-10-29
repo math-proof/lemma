@@ -66,9 +66,9 @@ lemma IsFiniteUnramified.map
   obtain ⟨hfin, hunr⟩ := hE
   constructor
   · exact LinearEquiv.finiteDimensional
-    (IntermediateField.intermediateFieldMap σ E).toLinearEquiv
+      (IntermediateField.intermediateFieldMap σ E).toLinearEquiv
   · let e : E ≃ₐ[A] E.map (σ : L →ₐ[K] L) :=
-    (IntermediateField.intermediateFieldMap σ E).restrictScalars A
+      (IntermediateField.intermediateFieldMap σ E).restrictScalars A
     exact Algebra.FormallyUnramified.of_equiv e.mapIntegralClosure
 
 end IntermediateField
@@ -123,4 +123,4 @@ end IntermediateField
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

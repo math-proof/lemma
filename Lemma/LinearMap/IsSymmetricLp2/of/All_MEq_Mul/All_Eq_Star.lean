@@ -23,7 +23,7 @@ private lemma main
     let toLp₂ : C(G, ℂ) →L[ℂ] Lp ℂ 2 μ := ContinuousMap.toLp (p := 2) (μ := μ) (𝕜 := ℂ)
     have htoLp_coe : ∀ ψ : C(G, ℂ), (toLp₂ ψ : G → ℂ) =ᵐ[μ] (ψ : G → ℂ) :=
       ContinuousMap.coeFn_toLp (p := 2) (μ := μ) (𝕜 := ℂ)
-    have hp2 : (2 : ℝ≥0∞) ≠ ⊤ := ENNReal.ofNat_ne_top
+    have hp2 : (2 : ENNReal) ≠ ⊤ := ENNReal.ofNat_ne_top
     have hdense : DenseRange (toLp₂ : C(G, ℂ) → Lp ℂ 2 μ) :=
       ContinuousMap.toLp_denseRange (p := 2) (μ := μ) (𝕜 := ℂ) (E := ℂ) hp2
     have hconv_ae : ∀ (φ : Lp ℂ 2 μ) (p : G → ℂ), ((φ : G → ℂ) =ᵐ[μ] p) →

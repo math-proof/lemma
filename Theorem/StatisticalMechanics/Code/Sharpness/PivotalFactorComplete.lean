@@ -118,7 +118,7 @@ theorem pivotal_surface_event_eq_withinConn {n : ℕ} {S : Finset (Site d)}
     exact ⟨hs.1.1, hs.2⟩
 
 
-theorem pivotal_surface_factor (p : ℝ≥0) (hp : p ≤ 1)
+theorem pivotal_surface_factor (p : NNReal) (hp : p ≤ 1)
     {n : ℕ} {S : Finset (Site d)} (h0S : origin d ∈ S)
     (hSinner : (S : Set (Site d)) ⊆ box d (n - 1)) (hn : 1 ≤ n)
     {e : Site d × Site d} (he : e ∈ boundaryEdges d S) :

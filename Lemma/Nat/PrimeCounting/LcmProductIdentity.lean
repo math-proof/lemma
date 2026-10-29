@@ -9,14 +9,14 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma div_add_le (x y d : ℕ) : x / d + y / d ≤ (x + y) / d := by
-  obtain rfl | hd := Nat.eq_zero_or_pos d
+  rcases Nat.eq_zero_or_pos d with rfl | hd
   · simp
   · have hx := Nat.div_add_mod x d
     have hy := Nat.div_add_mod y d
     have h : x + y = (x % d + y % d) + (d * (x / d) + d * (y / d)) := by omega
     have e : d * (x / d) + d * (y / d) = (x / d + y / d) * d := by ring
     have hdiv' : ((x % d + y % d) + (d * (x / d) + d * (y / d))) / d
-      = (x % d + y % d) / d + (x / d + y / d) := by
+        = (x % d + y % d) / d + (x / d + y / d) := by
       rw [e]
       exact Nat.add_mul_div_right _ _ hd
     rw [h, hdiv']
@@ -60,10 +60,10 @@ private lemma bernoulli_nat {a : ℕ} (ha : 1 ≤ a) (v : ℕ) : 1 + v * (a - 1)
     calc 1 + (v + 1) * (a - 1) = (1 + v * (a - 1)) + (a - 1) := hstep
     _ ≤ a ^ v + a ^ v * (a - 1) := Nat.add_le_add ih h2
     _ = a ^ v * a := by
-      have h3 : 1 + (a - 1) = a := by omega
-      calc a ^ v + a ^ v * (a - 1) = a ^ v * (1 + (a - 1)) := by
-        rw [mul_add, mul_one]
-      _ = a ^ v * a := by rw [h3]
+        have h3 : 1 + (a - 1) = a := by omega
+        calc a ^ v + a ^ v * (a - 1) = a ^ v * (1 + (a - 1)) := by
+              rw [mul_add, mul_one]
+        _ = a ^ v * a := by rw [h3]
     _ = a ^ (v + 1) := (pow_succ a v).symm
 
 end MetaMathlibExt
@@ -78,7 +78,8 @@ private lemma per_elem (q a : ℕ) (ha : 1 ≤ a) :
   a.factorization q ≤ (a - 1) / (q - 1) := by
   by_cases hq : q ≤ 1
   · have hnp : ¬ Nat.Prime q := fun hp => by have := hp.two_le; omega
-    rwa [Nat.factorization_eq_zero_of_not_prime _ hnp]
+    rw [Nat.factorization_eq_zero_of_not_prime _ hnp]
+    exact zero_le
   · have hq' : 1 < q := lt_of_not_ge hq
     have hqm : 0 < q - 1 := by omega
     rw [Nat.le_div_iff_mul_le hqm]
@@ -107,14 +108,14 @@ private lemma tuple_bound (n : ℕ) (t : Fin n → Fin (2 * n + 1))
   apply Nat.div_le_div_right
   have e : (∑ j, (t j).val) = n + ∑ j, ((t j).val - 1) := by
     have hcongr : ∀ j ∈ (Finset.univ : Finset (Fin n)),
-      (t j).val = 1 + ((t j).val - 1) :=
+        (t j).val = 1 + ((t j).val - 1) :=
       fun j _ => (Nat.add_sub_cancel' (hpos j)).symm
     calc (∑ j, (t j).val) = ∑ j ∈ Finset.univ, (1 + ((t j).val - 1)) :=
-      Finset.sum_congr rfl hcongr
+          Finset.sum_congr rfl hcongr
       _ = n + ∑ j, ((t j).val - 1) := by
-        rw [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
-          Fintype.card_fin]
-        simp
+          rw [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
+            Fintype.card_fin]
+          simp
   omega
 
 end MetaMathlibExt
@@ -132,17 +133,17 @@ private lemma lhs_fact (n q : ℕ) :
     intro p hp
     exact pow_ne_zero _ ((Nat.mem_primesBelow.mp hp).2.ne_zero)
   have hterm : ∀ p ∈ Nat.primesBelow (n + 2),
-    ((p ^ (n / (p - 1))).factorization) q = (if p = q then n / (p - 1) else 0) := by
+      ((p ^ (n / (p - 1))).factorization) q = (if p = q then n / (p - 1) else 0) := by
     intro p hp
     have hpp := (Nat.mem_primesBelow.mp hp).2
     rw [hpp.factorization_pow, Finsupp.single_apply]
   calc (∏ p ∈ Nat.primesBelow (n + 2), p ^ (n / (p - 1))).factorization q
-    = ∑ p ∈ Nat.primesBelow (n + 2), ((p ^ (n / (p - 1))).factorization) q := by
-      rw [Nat.factorization_prod hne, Finsupp.finsetSum_apply]
+      = ∑ p ∈ Nat.primesBelow (n + 2), ((p ^ (n / (p - 1))).factorization) q := by
+        rw [Nat.factorization_prod hne, Finsupp.finsetSum_apply]
     _ = ∑ p ∈ Nat.primesBelow (n + 2), (if p = q then n / (p - 1) else 0) :=
-      Finset.sum_congr rfl hterm
+        Finset.sum_congr rfl hterm
     _ = if q ∈ Nat.primesBelow (n + 2) then n / (q - 1) else 0 :=
-      Finset.sum_ite_eq' _ _ _
+        Finset.sum_ite_eq' _ _ _
 
 end MetaMathlibExt
 
@@ -194,7 +195,7 @@ private lemma witness_mem (n q : ℕ) (hqp : Nat.Prime q) (hmem : q ∈ Nat.prim
     rw [h1, h2, mul_one]
   have hsum_eq : (∑ j, (t j).val) = ∑ i ∈ Finset.range n, (if i < k then q else 1) := by
     have hcon : (∑ j, (t j).val)
-      = ∑ j : Fin n, (fun m : ℕ => if m < k then q else 1) ↑j := by
+        = ∑ j : Fin n, (fun m : ℕ => if m < k then q else 1) ↑j := by
       apply Finset.sum_congr rfl
       intro j _
       exact hval j
@@ -202,7 +203,7 @@ private lemma witness_mem (n q : ℕ) (hqp : Nat.Prime q) (hmem : q ∈ Nat.prim
     exact Fin.sum_univ_eq_sum_range (fun m : ℕ => if m < k then q else 1) n
   have hprod_eq : (∏ j, (t j).val) = ∏ i ∈ Finset.range n, (if i < k then q else 1) := by
     have hcon : (∏ j, (t j).val)
-      = ∏ j : Fin n, (fun m : ℕ => if m < k then q else 1) ↑j := by
+        = ∏ j : Fin n, (fun m : ℕ => if m < k then q else 1) ↑j := by
       apply Finset.prod_congr rfl
       intro j _
       exact hval j
@@ -221,6 +222,9 @@ private lemma witness_mem (n q : ℕ) (hqp : Nat.Prime q) (hmem : q ∈ Nat.prim
         conv_lhs => rw [hqq, mul_add, mul_one]
       omega
   · rw [hprod_eq, key_prod]
+
+/-! # LCM product identity
+-/
 
 end MetaMathlibExt
 
@@ -243,8 +247,8 @@ lemma lcm_product_identity
     intro p hp
     exact pow_ne_zero _ ((Nat.mem_primesBelow.mp hp).2.ne_zero)
   have hRHS_ne : Finset.lcm (Finset.image (fun t : Fin n → Fin (2 * n + 1) => ∏ j, (t j).val)
-    (Finset.univ.filter
-      (fun t => (∀ j, 1 ≤ (t j).val) ∧ ∑ j, (t j).val ≤ 2 * n))) id ≠ 0 := by
+      (Finset.univ.filter
+        (fun t => (∀ j, 1 ≤ (t j).val) ∧ ∑ j, (t j).val ≤ 2 * n))) id ≠ 0 := by
     intro h0
     rw [Finset.lcm_eq_zero_iff] at h0
     obtain ⟨b, hb, hb0⟩ := h0
@@ -265,24 +269,25 @@ lemma lcm_product_identity
     · have hprim : Nat.Prime r := (Nat.mem_primesBelow.mp hr).2
       obtain ⟨t, htmem, hdvd⟩ := witness_mem n r hprim hr
       have hX : (∏ j, (t j).val) ∈ Finset.image
-        (fun t : Fin n → Fin (2 * n + 1) => ∏ j, (t j).val)
-        (Finset.univ.filter
-          (fun t => (∀ j, 1 ≤ (t j).val) ∧ ∑ j, (t j).val ≤ 2 * n)) :=
+          (fun t : Fin n → Fin (2 * n + 1) => ∏ j, (t j).val)
+          (Finset.univ.filter
+            (fun t => (∀ j, 1 ≤ (t j).val) ∧ ∑ j, (t j).val ≤ 2 * n)) :=
         Finset.mem_image.mpr ⟨t, htmem, rfl⟩
       have hmem2 : (∏ j, (t j).val) ∣ Finset.lcm (Finset.image
-        (fun t : Fin n → Fin (2 * n + 1) => ∏ j, (t j).val)
-        (Finset.univ.filter
-          (fun t => (∀ j, 1 ≤ (t j).val) ∧ ∑ j, (t j).val ≤ 2 * n))) id :=
+          (fun t : Fin n → Fin (2 * n + 1) => ∏ j, (t j).val)
+          (Finset.univ.filter
+            (fun t => (∀ j, 1 ≤ (t j).val) ∧ ∑ j, (t j).val ≤ 2 * n))) id :=
         Finset.dvd_lcm hX
       have htrans : r ^ (n / (r - 1)) ∣ Finset.lcm (Finset.image
-        (fun t : Fin n → Fin (2 * n + 1) => ∏ j, (t j).val)
-        (Finset.univ.filter
-          (fun t => (∀ j, 1 ≤ (t j).val) ∧ ∑ j, (t j).val ≤ 2 * n))) id :=
+          (fun t : Fin n → Fin (2 * n + 1) => ∏ j, (t j).val)
+          (Finset.univ.filter
+            (fun t => (∀ j, 1 ≤ (t j).val) ∧ ∑ j, (t j).val ≤ 2 * n))) id :=
         hdvd.trans hmem2
       have hk : r ^ (n / (r - 1)) ≠ 0 := pow_ne_zero _ hprim.ne_zero
       have hle := Finsupp.le_def.mp
         ((Nat.factorization_le_iff_dvd hk hRHS_ne).mpr htrans) r
-      rwa [hprim.factorization_pow, Finsupp.single_eq_same] at hle
+      rw [hprim.factorization_pow, Finsupp.single_eq_same] at hle
+      exact hle
     · exact zero_le
   · apply Finset.lcm_dvd
     intro b hb
@@ -302,11 +307,11 @@ lemma lcm_product_identity
     · exact tuple_bound n t hpos hsum r
     · by_cases hpr : Nat.Prime r
       · have hr2 : n + 2 ≤ r := by
-        by_contra hc
-        exact hr (Nat.mem_primesBelow.mpr ⟨lt_of_not_ge hc, hpr⟩)
+          by_contra hc
+          exact hr (Nat.mem_primesBelow.mpr ⟨lt_of_not_ge hc, hpr⟩)
         have h0 : n / (r - 1) = 0 := Nat.div_eq_of_lt (by omega)
         calc (∏ j, (t j).val).factorization r ≤ n / (r - 1) :=
-          tuple_bound n t hpos hsum r
+              tuple_bound n t hpos hsum r
           _ = 0 := h0
       · rw [Nat.factorization_eq_zero_of_not_prime _ hpr]
 
@@ -314,4 +319,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -1,5 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Nat.Ramanujan.Part1Ch3Entry2
+import Lemma.Nat.Ramanujan.Part1Ch3Entry2Rightsummable
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 
 
@@ -102,11 +104,12 @@ lemma ramanujan_part1_ch3_entry2_formula23_series_pair
     ∏ i ∈ Finset.range (j + 1), (z + ((i : ℂ) + 1)))
     (Complex.exp x * ∑' j : ℕ, ((-1 : ℂ) ^ j * x ^ (j + 1) /
       ((z + ((j : ℂ) + 1)) * ((Nat.factorial j : ℕ) : ℂ)))) := by
-    rwa [hval]
+    rw [hval]
+    exact hC.hasSum
   exact HasSum.prodMk hCsum hBsum
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry2Formula23SeriesPair
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

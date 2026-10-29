@@ -296,7 +296,7 @@ private lemma lipschitz_ofFun_eq
   {n : ℕ}
   {n : ℕ} :
 -- imply
-  LipschitzWith (n : ℝ≥0) (ofFun : (Fin n → ℝ) → L1Vector n) := by
+  LipschitzWith (n : NNReal) (ofFun : (Fin n → ℝ) → L1Vector n) := by
 -- proof
   apply StatMech.Exact3D.FiniteContraction.L1Vector.lipschitz_ofFun
 
@@ -325,7 +325,7 @@ private lemma contractingWith_liftMap_of_l1_contraction_eq
   (hc_lt_one : c < 1)
   (hLip : LipschitzWithConstant F c) :
 -- imply
-  ContractingWith (⟨c, hc_nonneg⟩ : ℝ≥0) (L1Vector.liftMap F) := by
+  ContractingWith (⟨c, hc_nonneg⟩ : NNReal) (L1Vector.liftMap F) := by
 -- proof
   apply StatMech.Exact3D.FiniteContraction.contractingWith_liftMap_of_l1_contraction hc_nonneg hc_lt_one hLip
 

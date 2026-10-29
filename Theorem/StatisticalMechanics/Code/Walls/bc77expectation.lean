@@ -32,33 +32,33 @@ variable {d : ℕ}
 
 theorem bc77_expected_count (μ : Measure (ConfigSpace (Sym2 (Site d))))
     (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) (L R : ℕ) :
-    ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-      = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ :=
+    ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+      = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ :=
   bc62_coarse_expectation μ hinv L R
 
 
 theorem bc77_coarseTrif_prob_eq_zero_ae (μ : Measure (ConfigSpace (Sym2 (Site d))))
     [IsProbabilityMeasure μ] (L : ℕ) (bdry : ℕ → ℕ)
     (hexp : ∀ R : ℕ,
-      ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-        = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+      ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+        = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
     (hbound_ae : ∀ R : ℕ, ∀ᵐ ω ∂μ, bc61_coarseTcount ω L R ≤ bdry R)
     (hvol : ∀ R, 0 < (boxFinsetBK d R).card)
     (hdens : Filter.Tendsto
       (fun R => (bdry R : ℝ) / ((boxFinsetBK d R).card : ℝ)) Filter.atTop (nhds 0)) :
     μ {ω | bc61_IsCoarseTrifurcation ω L 0} = 0 := by
   classical
-  set p : ℝ≥0∞ := μ {ω | bc61_IsCoarseTrifurcation ω L 0} with hp
-  have hkey : ∀ R, ((boxFinsetBK d R).card : ℝ≥0∞) * p ≤ (bdry R : ℝ≥0∞) := by
+  set p : ENNReal := μ {ω | bc61_IsCoarseTrifurcation ω L 0} with hp
+  have hkey : ∀ R, ((boxFinsetBK d R).card : ENNReal) * p ≤ (bdry R : ENNReal) := by
     intro R
-    have hle : ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ ≤ (bdry R : ℝ≥0∞) := by
-      calc ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ
-          ≤ ∫⁻ _ω, (bdry R : ℝ≥0∞) ∂μ := by
+    have hle : ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ ≤ (bdry R : ENNReal) := by
+      calc ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ
+          ≤ ∫⁻ _ω, (bdry R : ENNReal) ∂μ := by
             
             refine lintegral_mono_ae ?_
             filter_upwards [hbound_ae R] with ω hω
             exact_mod_cast hω
-        _ = (bdry R : ℝ≥0∞) := by rw [lintegral_const]; simp
+        _ = (bdry R : ENNReal) := by rw [lintegral_const]; simp
     rw [hexp R]; exact hle
   have hpfin : p ≠ ⊤ := by rw [hp]; exact (measure_ne_top μ _)
   set pr : ℝ := p.toReal with hpr
@@ -66,7 +66,7 @@ theorem bc77_coarseTrif_prob_eq_zero_ae (μ : Measure (ConfigSpace (Sym2 (Site d
   have hkeyr : ∀ R, ((boxFinsetBK d R).card : ℝ) * pr ≤ (bdry R : ℝ) := by
     intro R
     have h := hkey R
-    have h' : (((boxFinsetBK d R).card : ℝ≥0∞) * p).toReal ≤ (bdry R : ℝ≥0∞).toReal :=
+    have h' : (((boxFinsetBK d R).card : ENNReal) * p).toReal ≤ (bdry R : ENNReal).toReal :=
       ENNReal.toReal_mono (by simp) h
     rw [ENNReal.toReal_mul] at h'
     simpa [ENNReal.toReal_natCast, hpr] using h'
@@ -85,8 +85,8 @@ theorem bc77_coarseTrif_prob_eq_zero_ae (μ : Measure (ConfigSpace (Sym2 (Site d
 theorem bc77_top_null_of_ae_bound (μ : Measure (ConfigSpace (Sym2 (Site d))))
     [IsProbabilityMeasure μ] (L : ℕ) (bdry : ℕ → ℕ)
     (hexp : ∀ R : ℕ,
-      ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-        = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+      ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+        = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
     (hbound_ae : ∀ R : ℕ, ∀ᵐ ω ∂μ, bc61_coarseTcount ω L R ≤ bdry R)
     (hvol : ∀ R, 0 < (boxFinsetBK d R).card)
     (hdens : Filter.Tendsto
@@ -182,8 +182,8 @@ theorem bc77_status :
     
     (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) [IsProbabilityMeasure μ]
         (L : ℕ) (bdry : ℕ → ℕ),
-      (∀ R : ℕ, ((boxFinsetBK 2 R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-          = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ) →
+      (∀ R : ℕ, ((boxFinsetBK 2 R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+          = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ) →
       (∀ R : ℕ, ∀ᵐ ω ∂μ, bc61_coarseTcount ω L R ≤ bdry R) →
       (∀ R, 0 < (boxFinsetBK 2 R).card) →
       Filter.Tendsto (fun R => (bdry R : ℝ) / ((boxFinsetBK 2 R).card : ℝ)) Filter.atTop (nhds 0) →

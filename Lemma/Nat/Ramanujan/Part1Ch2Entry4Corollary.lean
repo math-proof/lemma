@@ -12,7 +12,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry4Corollary
 -/
 @[path]
 private lemma H_zero : H 0 = 0 := by
-simp [H, harmonic_zero]
+  simp [H, harmonic_zero]
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry4Corollary
 

@@ -11,7 +11,7 @@ open Set SimpleGraph Finset MeasureTheory Filter Topology StatMech StatMech.Latt
 private lemma bc55_hroute_of_routingCover_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hrt : ∀ n : ℕ, hrHD_DisjointRouting d n) :
@@ -27,7 +27,7 @@ private lemma bc55_hroute_of_routingCover_eq
 private lemma bc55_hroute_of_boxMengerAttachment_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hattach : ∀ n : ℕ, bmm_BoxMengerAttachment d n) :
@@ -44,7 +44,7 @@ private lemma bc55_burton_keane_bernoulli_of_boxMenger_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hattach : ∀ n : ℕ, bmm_BoxMengerAttachment d n) :
@@ -61,7 +61,7 @@ private lemma bc55_burton_keane_bernoulli_of_routingCover_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p)
   (hrt : ∀ n : ℕ, hrHD_DisjointRouting d n) :
@@ -150,7 +150,7 @@ private lemma bc55_status_eq
   {d : ℕ}
 -- given
   (hd : 1 ≤ d)
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp1 : p ≤ 1)
   (hp0 : 0 < p) :
 -- imply

@@ -17,8 +17,8 @@ lemma radiusOfConvergence_eq_formalRadius
   radiusOfConvergence a = (FormalMultilinearSeries.ofScalars ℝ a).radius := by
 -- proof
   unfold radiusOfConvergence
-  have heq : (fun n => ((‖a n‖₊ ^ (1 / (n : ℝ)) : ℝ≥0) : ℝ≥0∞)) =
-    (fun n => ((‖FormalMultilinearSeries.ofScalars ℝ a n‖₊ ^ (1 / (n : ℝ)) : ℝ≥0) : ℝ≥0∞)) := by
+  have heq : (fun n => ((‖a n‖₊ ^ (1 / (n : ℝ)) : NNReal) : ENNReal)) =
+    (fun n => ((‖FormalMultilinearSeries.ofScalars ℝ a n‖₊ ^ (1 / (n : ℝ)) : NNReal) : ENNReal)) := by
     ext n; congr 1; congr 1
     simp only [FormalMultilinearSeries.ofScalars, nnnorm_smul]
     have h : ‖ContinuousMultilinearMap.mkPiAlgebraFin ℝ n ℝ‖₊ = 1 := by

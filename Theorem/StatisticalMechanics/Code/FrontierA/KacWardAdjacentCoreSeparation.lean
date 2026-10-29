@@ -63,20 +63,20 @@ theorem KWFiniteSimplePolygon.exists_closedEdgeCore_separation
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
     {eps : ℝ} (heps : 0 < eps ∧ eps < 1 / 2)
     {i j : Fin n} (hij : i ≠ j) :
-    ∃ r : ℝ≥0, 0 < r ∧
+    ∃ r : NNReal, 0 < r ∧
       ∀ x ∈ polygon.closedEdgeCore eps i,
         ∀ y ∈ polygon.closedEdgeCore eps j,
-          (r : ℝ≥0∞) < edist x y := by
+          (r : ENNReal) < edist x y := by
   exact Metric.exists_pos_forall_lt_edist
     (polygon.closedEdgeCore_isCompact eps i)
     (polygon.closedEdgeCore_isClosed eps j)
     (polygon.closedEdgeCore_disjoint heps hij)
 
 theorem exists_uniform_core_radius_finset
-    {ι : Type*} (s : Finset ι) (Q : ι → ℝ≥0 → Prop)
-    (hQ : ∀ i ∈ s, ∃ r : ℝ≥0, 0 < r ∧ Q i r)
-    (hmono : ∀ i ∈ s, ∀ {r r' : ℝ≥0}, r' ≤ r → Q i r → Q i r') :
-    ∃ r : ℝ≥0, 0 < r ∧ ∀ i ∈ s, Q i r := by
+    {ι : Type*} (s : Finset ι) (Q : ι → NNReal → Prop)
+    (hQ : ∀ i ∈ s, ∃ r : NNReal, 0 < r ∧ Q i r)
+    (hmono : ∀ i ∈ s, ∀ {r r' : NNReal}, r' ≤ r → Q i r → Q i r') :
+    ∃ r : NNReal, 0 < r ∧ ∀ i ∈ s, Q i r := by
   classical
   induction s using Finset.induction_on with
   | empty => exact ⟨1, by norm_num, by simp⟩
@@ -96,24 +96,24 @@ theorem exists_uniform_core_radius_finset
 theorem KWFiniteSimplePolygon.exists_uniform_closedEdgeCore_separation
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
     {eps : ℝ} (heps : 0 < eps ∧ eps < 1 / 2) :
-    ∃ r : ℝ≥0, 0 < r ∧
+    ∃ r : NNReal, 0 < r ∧
       ∀ i j : Fin n, i ≠ j →
         ∀ x ∈ polygon.closedEdgeCore eps i,
           ∀ y ∈ polygon.closedEdgeCore eps j,
-            (r : ℝ≥0∞) < edist x y := by
+            (r : ENNReal) < edist x y := by
   classical
   let pairs : Finset (Fin n × Fin n) :=
     Finset.univ.filter (fun p ↦ p.1 ≠ p.2)
-  let Q : (Fin n × Fin n) → ℝ≥0 → Prop := fun p r ↦
+  let Q : (Fin n × Fin n) → NNReal → Prop := fun p r ↦
     ∀ x ∈ polygon.closedEdgeCore eps p.1,
       ∀ y ∈ polygon.closedEdgeCore eps p.2,
-        (r : ℝ≥0∞) < edist x y
-  have hpair : ∀ p ∈ pairs, ∃ r : ℝ≥0, 0 < r ∧ Q p r := by
+        (r : ENNReal) < edist x y
+  have hpair : ∀ p ∈ pairs, ∃ r : NNReal, 0 < r ∧ Q p r := by
     intro p hp
     have hpne : p.1 ≠ p.2 := by
       simpa only [pairs, Finset.mem_filter, Finset.mem_univ, true_and] using hp
     exact polygon.exists_closedEdgeCore_separation heps hpne
-  have hmono : ∀ p ∈ pairs, ∀ {r r' : ℝ≥0},
+  have hmono : ∀ p ∈ pairs, ∀ {r r' : NNReal},
       r' ≤ r → Q p r → Q p r' := by
     intro p _ r r' hle h x hx y hy
     exact (ENNReal.coe_le_coe.mpr hle).trans_lt (h x hx y hy)

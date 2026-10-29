@@ -22,11 +22,11 @@ lemma nat_eq_sq_sub_sq_iff_not_eq_four_mul_add_two
       have ha4 : a ^ 2 % 4 = 0 ∨ a ^ 2 % 4 = 1 := by
         have hr : a % 4 = 0 ∨ a % 4 = 1 ∨ a % 4 = 2 ∨ a % 4 = 3 := by omega
         have hp : a ^ 2 % 4 = (a % 4) ^ 2 % 4 := Nat.pow_mod a 2 4
-        obtain r | r | r | r <;> rw [hp, r] <;> decide := hr
+        obtain r | r | r | r := hr <;> rw [hp, r] <;> decide
       have hb4 : b ^ 2 % 4 = 0 ∨ b ^ 2 % 4 = 1 := by
         have hr : b % 4 = 0 ∨ b % 4 = 1 ∨ b % 4 = 2 ∨ b % 4 = 3 := by omega
         have hp : b ^ 2 % 4 = (b % 4) ^ 2 % 4 := Nat.pow_mod b 2 4
-        obtain r | r | r | r <;> rw [hp, r] <;> decide := hr
+        obtain r | r | r | r := hr <;> rw [hp, r] <;> decide
       omega
     · have hlt : a < b := lt_of_not_ge hle
       have hzero : a ^ 2 - b ^ 2 = 0 :=

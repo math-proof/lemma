@@ -58,11 +58,11 @@ theorem aetc_aeTail_of_approxFarOut {μ : Measure (ConfigSpace (Site d))} [IsFin
     {s : Set (ConfigSpace (Site d))} (happ : AeApproxFarOut μ s) :
     ∃ s' : Set (ConfigSpace (Site d)), IsTailEvent (d := d) s' ∧ s =ᵐ[μ] s' := by
   
-  have hpos : ∀ n : ℕ, (0 : ℝ≥0∞) < ((2 : ℝ≥0∞)⁻¹) ^ n := fun n =>
+  have hpos : ∀ n : ℕ, (0 : ENNReal) < ((2 : ENNReal)⁻¹) ^ n := fun n =>
     ENNReal.pow_pos (by simp) n
   have hchoice : ∀ n : ℕ, ∃ A : Set (ConfigSpace (Site d)),
-      @MeasurableSet _ (outsideSigma (box d n)) A ∧ μ (s ∆ A) < ((2 : ℝ≥0∞)⁻¹) ^ n :=
-    fun n => happ n (((2 : ℝ≥0∞)⁻¹) ^ n) (hpos n)
+      @MeasurableSet _ (outsideSigma (box d n)) A ∧ μ (s ∆ A) < ((2 : ENNReal)⁻¹) ^ n :=
+    fun n => happ n (((2 : ENNReal)⁻¹) ^ n) (hpos n)
   choose A hAmeas hAlt using hchoice
   
   refine ⟨⋃ N, ⋂ i, A (i + N), aetc_isTailEvent_liminf A hAmeas, ?_⟩

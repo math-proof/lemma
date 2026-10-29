@@ -26,7 +26,7 @@ namespace ArithmeticFunction
 -/
 @[path]
 lemma jordanTotient_apply_one
-  {k : ℕ} :
+  (k : ℕ) :
 -- imply
   jordanTotient k 1 = 1 := by
 -- proof
@@ -101,7 +101,7 @@ namespace ArithmeticFunction
 -/
 @[path]
 lemma isMultiplicative_jordanTotient
-  {k : ℕ} :
+  (k : ℕ) :
 -- imply
   IsMultiplicative (jordanTotient k) := by
 -- proof
@@ -359,7 +359,7 @@ lemma jordanTotient_mul_prod_primeFactors_pow
     rw [← pow_add, ← hke, Nat.mul_comm k _, pow_mul]
   calc p ^ (k * (n.factorization p - 1)) * (p ^ k - 1) * p ^ k
     = (p ^ (k * (n.factorization p - 1)) * p ^ k) * (p ^ k - 1) := by
-      ring
+        ring
     _ = (p ^ n.factorization p) ^ k * (p ^ k - 1) := by rw [hpow]
 
 end ArithmeticFunction

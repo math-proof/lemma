@@ -27,7 +27,7 @@ open StatMech.Lattice
 variable {d : ℕ}
 
 
-theorem connWithinProb_nonneg (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem connWithinProb_nonneg (d : ℕ) (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (x : Site d) : 0 ≤ connWithinProb d p hp S x := by
   classical
   unfold connWithinProb

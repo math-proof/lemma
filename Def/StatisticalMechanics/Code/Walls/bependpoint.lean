@@ -29,7 +29,7 @@ set_option linter.unusedSectionVars false
 set_option maxRecDepth 4000
 
 
-def bep_encounter (p : ℝ≥0) (hp1 : p ≤ 1) : Prop :=
+def bep_encounter (p : NNReal) (hp1 : p ≤ 1) : Prop :=
   0 < bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1
       {ω : ConfigSpace (Sym2 (Site 2)) | numInfiniteClusters 2 ω = ⊤} →
     ∃ a₁ a₂ a₃ : Site 2,

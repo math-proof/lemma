@@ -11,7 +11,7 @@ namespace MeasureTheory
 variable {G : Type*} [Group G] [TopologicalSpace G] [MeasurableSpace G]
     [BorelSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G]
 
-private lemma nnreal_eq_one_of_pow_eq_one {x : ℝ≥0} {n : ℕ} (hn : n ≠ 0) (h : x ^ n = 1) :
+private lemma nnreal_eq_one_of_pow_eq_one {x : NNReal} {n : ℕ} (hn : n ≠ 0) (h : x ^ n = 1) :
     x = 1 := by
   rcases lt_trichotomy x 1 with hlt | heq | hgt
   · exact absurd h (pow_lt_one₀ zero_le hlt hn).ne

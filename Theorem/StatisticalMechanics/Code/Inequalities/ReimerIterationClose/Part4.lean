@@ -84,10 +84,10 @@ theorem rit_reimer_inequality_half_of_boxMono (hmono : rit_BoxDownCompMono α)
   set φ : α → Bool → ℝ :=
     fun (_ : α) (b : Bool) => (bernoulliMeasure (1/2) (by norm_num)).real {b} with hφ
   have hφ0 : ∀ x b, 0 ≤ φ x b := fun _ _ => measureReal_nonneg
-  have hf : (bernoulliMeasure (1/2 : ℝ≥0) (by norm_num)).real {false} = (1/2 : ℝ) := by
+  have hf : (bernoulliMeasure (1/2 : NNReal) (by norm_num)).real {false} = (1/2 : ℝ) := by
     rw [Measure.real, bernoulliMeasure_apply_false, ENNReal.coe_toReal,
       NNReal.coe_sub (by norm_num), NNReal.coe_one]; norm_num
-  have ht : (bernoulliMeasure (1/2 : ℝ≥0) (by norm_num)).real {true} = (1/2 : ℝ) := by
+  have ht : (bernoulliMeasure (1/2 : NNReal) (by norm_num)).real {true} = (1/2 : ℝ) := by
     rw [Measure.real, bernoulliMeasure_apply_true, ENNReal.coe_toReal]; norm_num
   have hφ1 : ∀ x, φ x false + φ x true = 1 := by
     intro x; simp only [hφ]; rw [hf, ht]; norm_num

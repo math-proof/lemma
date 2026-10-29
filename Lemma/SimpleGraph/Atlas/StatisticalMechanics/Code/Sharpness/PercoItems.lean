@@ -63,7 +63,7 @@ private lemma theta_le_crossProb_eq
   {d : ℕ}
   {n : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   theta d p hp ≤ crossProb d p hp n := by
@@ -79,7 +79,7 @@ private lemma item1_meanfield_lower_bound_eq
   {p₀ : ℝ}
   {f : ℕ → ℝ → ℝ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hp₀ : 0 < p₀)
   (hp₀1 : p₀ < 1)
@@ -120,7 +120,7 @@ private lemma subcritical_exp_decay_eq
   {S : Finset (Site d)}
   {L : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hS0 : origin d ∈ S)
   (hphi : phi d p hp S < 1)
@@ -138,7 +138,7 @@ private lemma subcritical_exp_decay_eq
 private lemma pc_le_tildePc_eq
   {d : ℕ}
 -- given
-  (hpos : ∀ t : ℝ≥0, tildePc d < t → ∀ ht : t ≤ 1, 0 < theta d t ht) :
+  (hpos : ∀ t : NNReal, tildePc d < t → ∀ ht : t ≤ 1, 0 < theta d t ht) :
 -- imply
   pc d ≤ tildePc d := by
 -- proof
@@ -164,7 +164,7 @@ private lemma tildePc_le_pc_eq
 private lemma bc_eq_eq
   {d : ℕ}
 -- given
-  (hpos : ∀ t : ℝ≥0, tildePc d < t → ∀ ht : t ≤ 1, 0 < theta d t ht)
+  (hpos : ∀ t : NNReal, tildePc d < t → ∀ ht : t ≤ 1, 0 < theta d t ht)
   (hzero : ∀ t ∈ tildePcSet d, ∀ ht : t ≤ 1, theta d t ht = 0) :
 -- imply
   pc d = tildePc d := by

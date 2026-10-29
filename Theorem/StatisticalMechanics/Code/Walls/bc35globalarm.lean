@@ -53,7 +53,7 @@ theorem bc35_TavoidingRayData_of_rootedArmDivergence (ω : ConfigSpace (Sym2 (Si
   exact fun hc => hdiv x hxbox htri y hybox htriy hxy hconn hlt hc.symm
 
 
-theorem bc35_burton_keane_bernoulli_of_rootedArmDivergence (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc35_burton_keane_bernoulli_of_rootedArmDivergence (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → rfp_RootedArmDivergence ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

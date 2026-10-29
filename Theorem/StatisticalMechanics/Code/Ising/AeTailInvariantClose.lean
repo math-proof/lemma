@@ -128,7 +128,7 @@ theorem aetc_invariant_approx (hd : 1 ≤ d) {μ : Measure (ConfigSpace (Site d)
     {s : Set (ConfigSpace (Site d))} (hs : MeasurableSet s)
     (hinv : ∀ g : Multiplicative (Site d),
       (shift g : ConfigSpace (Site d) → ConfigSpace (Site d)) ⁻¹' s = s)
-    (k : ℕ) {ε : ℝ≥0∞} (hε : 0 < ε) :
+    (k : ℕ) {ε : ENNReal} (hε : 0 < ε) :
     ∃ A : Set (ConfigSpace (Site d)), @MeasurableSet _ (outsideSigma (box d k)) A
       ∧ μ (s ∆ A) < ε := by
   

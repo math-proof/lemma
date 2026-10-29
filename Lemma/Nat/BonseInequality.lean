@@ -44,7 +44,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma bonse_nth_prime
-  {k : ℕ} :
+  (k : ℕ) :
 -- imply
   Prime (Nat.nth Prime k) :=
 -- proof
@@ -77,7 +77,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma bonse_nth_succ_lt
-  {k : ℕ} :
+  (k : ℕ) :
 -- imply
   Nat.nth Prime (k + 1) < 2 * Nat.nth Prime k := by
 -- proof

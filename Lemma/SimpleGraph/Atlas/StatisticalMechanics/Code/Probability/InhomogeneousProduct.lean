@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory Set StatMech StatMech.inhomBernoulliProduct
 -/
 @[path]
 private lemma bernoulliMeasure_congr_eq
-  {p q : ℝ≥0}
+  {p q : NNReal}
 -- given
   (hp : p ≤ 1)
   (hq : q ≤ 1)
@@ -24,7 +24,7 @@ private lemma bernoulliMeasure_congr_eq
 -/
 @[path]
 private lemma apply_singleton_eq
-  {p : E → ℝ≥0}
+  {p : E → NNReal}
   {hp : ∀ e, p e ≤ 1}
   [Fintype E]
   {omega : ConfigSpace E} :
@@ -38,7 +38,7 @@ private lemma apply_singleton_eq
 -/
 @[path]
 private lemma real_singleton_eq
-  {p : E → ℝ≥0}
+  {p : E → NNReal}
   {hp : ∀ e, p e ≤ 1}
   [Fintype E]
   {omega : ConfigSpace E} :
@@ -52,7 +52,7 @@ private lemma real_singleton_eq
 -/
 @[path]
 private lemma real_eq_sum_eq
-  {p : E → ℝ≥0}
+  {p : E → NNReal}
   {hp : ∀ e, p e ≤ 1}
   [Fintype E]
   [DecidableEq E]
@@ -71,7 +71,7 @@ private lemma inhom_real_eq_wprob_eq
   [DecidableEq E]
   {A : Set (ConfigSpace E)}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp : ∀ e, p e ≤ 1) :
 -- imply
   (inhomBernoulliProductMeasure p hp).real A = wprob (fun e b => (bernoulliMeasure (p e) (hp e)).real {b}) A := by
@@ -87,7 +87,7 @@ private lemma inhom_bk_inequality_eq
   [DecidableEq E]
   {A B : Set (ConfigSpace E)}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp : ∀ e, p e ≤ 1)
   (hA : IsIncreasing A)
   (hB : IsIncreasing B) :
@@ -106,7 +106,7 @@ private lemma inhom_realProb_cylinder_eq
   {F : Finset E}
   {A : Set (ConfigSpace F)}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp : ∀ e, p e ≤ 1) :
 -- imply
   (inhomBernoulliProductMeasure p hp).real (MeasureTheory.cylinder F A) = (inhomBernoulliProductMeasure (fun e : F => p e) (fun e => hp e)).real A := by
@@ -122,7 +122,7 @@ private lemma inhom_coord_true_prob_eq
   [DecidableEq E]
   {e : E}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp : ∀ e, p e ≤ 1) :
 -- imply
   (inhomBernoulliProductMeasure p hp).real {omega | omega e = true} = (p e : ℝ) := by
@@ -139,7 +139,7 @@ private lemma inhom_bk_of_finite_dependsOn_eq
   {A B : Set (ConfigSpace E)}
   {F : Finset E}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp : ∀ e, p e ≤ 1)
   (hAdep : DependsOn A (F : Set E))
   (hBdep : DependsOn B (F : Set E))
@@ -160,7 +160,7 @@ private lemma inhom_bk_triple_of_finite_dependsOn_eq
   {P Q R : Set (ConfigSpace E)}
   {F : Finset E}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp : ∀ e, p e ≤ 1)
   (hPdep : DependsOn P (F : Set E))
   (hQdep : DependsOn Q (F : Set E))
@@ -185,7 +185,7 @@ private lemma inhom_bk_criterion_of_finite_dependsOn_eq
   {F : Finset E}
   {C : Set (ConfigSpace E)}
 -- given
-  (p : E → ℝ≥0)
+  (p : E → NNReal)
   (hp : ∀ e, p e ≤ 1)
   (hPdep : ∀ i ∈ s, DependsOn (P i) (F : Set E))
   (hQdep : ∀ i ∈ s, DependsOn (Q i) (F : Set E))

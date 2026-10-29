@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgenerating
-open Entry9IiGeneralizedbellgeneratingDefining (generalizedBellGenerating)
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
+open Entry9IiGeneralizedbellgeneratingDefining (generalizedBellGenerating)
 open Entry9IiGeneralizedbellgenerating
 
 
@@ -17,12 +17,12 @@ private lemma hasSum_complex_pow_div_factorial (z : ℂ) :
   have h := NormedSpace.expSeries_hasSum_exp (𝕂 := ℂ) (𝔸 := ℂ) z
   rw [← Complex.exp_eq_exp_ℂ] at h
   have heq : (fun n : ℕ => (NormedSpace.expSeries ℂ ℂ n) fun _ => z)
-    = (fun n : ℕ => z ^ n / (Nat.factorial n : ℂ)) := by
+      = (fun n : ℕ => z ^ n / (Nat.factorial n : ℂ)) := by
     funext n
     rw [NormedSpace.expSeries_apply_eq]
     rw [smul_eq_mul, div_eq_mul_inv, mul_comm]
-  rwa [heq] at h
-
+  rw [heq] at h
+  exact h
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry9IiGeneralizedbellgenerating
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry9IiGeneralizedbellgenerating
@@ -36,12 +36,12 @@ private lemma hasSum_real_pow_div_factorial (t : ℝ) :
   have h := NormedSpace.expSeries_hasSum_exp (𝕂 := ℝ) (𝔸 := ℝ) t
   rw [← Real.exp_eq_exp_ℝ] at h
   have heq : (fun n : ℕ => (NormedSpace.expSeries ℝ ℝ n) fun _ => t)
-    = (fun n : ℕ => t ^ n / (Nat.factorial n : ℝ)) := by
+      = (fun n : ℕ => t ^ n / (Nat.factorial n : ℝ)) := by
     funext n
     rw [NormedSpace.expSeries_apply_eq]
     rw [smul_eq_mul, div_eq_mul_inv, mul_comm]
-  rwa [heq] at h
-
+  rw [heq] at h
+  exact h
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry9IiGeneralizedbellgenerating
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry9IiGeneralizedbellgenerating
@@ -65,12 +65,12 @@ lemma ramanujan_part1_ch3_entry9_ii_generalizedbellgenerating
     unfold auxMajor
     ring
   have hM_row_tsum : ∀ k : ℕ, (∑' n : ℕ, auxMajor y a b x n k)
-    = ‖x‖ ^ (k + 1) / (Nat.factorial k : ℝ) *
-      Real.exp (‖y‖ * (‖a‖ + ‖b‖ * ((k + 1 : ℕ) : ℝ))) := by
+      = ‖x‖ ^ (k + 1) / (Nat.factorial k : ℝ) *
+        Real.exp (‖y‖ * (‖a‖ + ‖b‖ * ((k + 1 : ℕ) : ℝ))) := by
     intro k
     have h1 : (fun n : ℕ => auxMajor y a b x n k)
-      = (fun n : ℕ => (‖x‖ ^ (k + 1) / (Nat.factorial k : ℝ)) *
-        ((‖y‖ * (‖a‖ + ‖b‖ * ((k + 1 : ℕ) : ℝ))) ^ n / (Nat.factorial n : ℝ))) := by
+        = (fun n : ℕ => (‖x‖ ^ (k + 1) / (Nat.factorial k : ℝ)) *
+          ((‖y‖ * (‖a‖ + ‖b‖ * ((k + 1 : ℕ) : ℝ))) ^ n / (Nat.factorial n : ℝ))) := by
       funext n
       rw [mul_pow]
       unfold auxMajor
@@ -80,20 +80,20 @@ lemma ramanujan_part1_ch3_entry9_ii_generalizedbellgenerating
     exact (hasSum_real_pow_div_factorial _).tsum_eq
   have hM_rowsum : Summable (fun k : ℕ => ∑' n : ℕ, auxMajor y a b x n k) := by
     have hexp : ∀ k : ℕ, (∑' n : ℕ, auxMajor y a b x n k)
-      = Real.exp (‖y‖ * ‖a‖) *
-        ((‖x‖ * Real.exp (‖y‖ * ‖b‖)) ^ (k + 1) / (Nat.factorial k : ℝ)) := by
+        = Real.exp (‖y‖ * ‖a‖) *
+          ((‖x‖ * Real.exp (‖y‖ * ‖b‖)) ^ (k + 1) / (Nat.factorial k : ℝ)) := by
       intro k
       rw [hM_row_tsum k]
       have e1 : ‖y‖ * (‖a‖ + ‖b‖ * ((k + 1 : ℕ) : ℝ))
-        = ‖y‖ * ‖a‖ + ((k + 1 : ℕ) : ℝ) * (‖y‖ * ‖b‖) := by ring
+          = ‖y‖ * ‖a‖ + ((k + 1 : ℕ) : ℝ) * (‖y‖ * ‖b‖) := by ring
       rw [e1, Real.exp_add, Real.exp_nat_mul]
       ring
     have hbase := Real.summable_pow_div_factorial (‖x‖ * Real.exp (‖y‖ * ‖b‖))
     have h3 : Summable
-      (fun k : ℕ => (‖x‖ * Real.exp (‖y‖ * ‖b‖)) ^ (k + 1) / (Nat.factorial k : ℝ)) := by
+        (fun k : ℕ => (‖x‖ * Real.exp (‖y‖ * ‖b‖)) ^ (k + 1) / (Nat.factorial k : ℝ)) := by
       have h2 : (fun k : ℕ => (‖x‖ * Real.exp (‖y‖ * ‖b‖)) ^ (k + 1) / (Nat.factorial k : ℝ))
-        = (fun k : ℕ => (‖x‖ * Real.exp (‖y‖ * ‖b‖)) *
-          ((‖x‖ * Real.exp (‖y‖ * ‖b‖)) ^ k / (Nat.factorial k : ℝ))) := by
+          = (fun k : ℕ => (‖x‖ * Real.exp (‖y‖ * ‖b‖)) *
+            ((‖x‖ * Real.exp (‖y‖ * ‖b‖)) ^ k / (Nat.factorial k : ℝ))) := by
         funext k
         rw [pow_succ']
         ring
@@ -112,13 +112,13 @@ lemma ramanujan_part1_ch3_entry9_ii_generalizedbellgenerating
     exact hMnn n k
   have hMswap : Summable (Function.uncurry (fun k n => auxMajor y a b x n k)) := by
     have hrows : ∀ k : ℕ,
-      Summable (fun n : ℕ => Function.uncurry (fun k n => auxMajor y a b x n k) (k, n)) := by
+        Summable (fun n : ℕ => Function.uncurry (fun k n => auxMajor y a b x n k) (k, n)) := by
       intro k
       have h := hM_row k
       refine h.congr fun n => ?_
       rfl
     have hsums : Summable
-      (fun k : ℕ => ∑' n : ℕ, Function.uncurry (fun k n => auxMajor y a b x n k) (k, n)) := by
+        (fun k : ℕ => ∑' n : ℕ, Function.uncurry (fun k n => auxMajor y a b x n k) (k, n)) := by
       have h := hM_rowsum
       refine h.congr fun k => ?_
       apply tsum_congr
@@ -127,7 +127,7 @@ lemma ramanujan_part1_ch3_entry9_ii_generalizedbellgenerating
     exact (summable_prod_of_nonneg hMnonneg).mpr ⟨hrows, hsums⟩
   have hM' : Summable (Function.uncurry (fun n k => auxMajor y a b x n k)) := by
     have heq : Function.uncurry (fun k n => auxMajor y a b x n k)
-      = (Function.uncurry (fun n k => auxMajor y a b x n k)) ∘ (Equiv.prodComm ℕ ℕ) := by
+        = (Function.uncurry (fun n k => auxMajor y a b x n k)) ∘ (Equiv.prodComm ℕ ℕ) := by
       funext p
       obtain ⟨k, n⟩ := p
       rfl
@@ -148,8 +148,8 @@ lemma ramanujan_part1_ch3_entry9_ii_generalizedbellgenerating
     have hZn : ‖a + b * ((k : ℂ) + 1)‖ ^ n ≤ (‖a‖ + ‖b‖ * ((k + 1 : ℕ) : ℝ)) ^ n :=
       pow_le_pow_left₀ (norm_nonneg _) hZ n
     have e1 : ‖auxTerm y a b x n k‖
-      = (‖y‖ ^ n / (Nat.factorial n : ℝ)) *
-        (‖a + b * ((k : ℂ) + 1)‖ ^ n * (‖x‖ ^ (k + 1) / (Nat.factorial k : ℝ))) := by
+        = (‖y‖ ^ n / (Nat.factorial n : ℝ)) *
+          (‖a + b * ((k : ℂ) + 1)‖ ^ n * (‖x‖ ^ (k + 1) / (Nat.factorial k : ℝ))) := by
       unfold auxTerm
       simp only [norm_mul, norm_div, norm_pow, norm_natCast]
       ring
@@ -178,39 +178,43 @@ lemma ramanujan_part1_ch3_entry9_ii_generalizedbellgenerating
     intro n
     have h0 := hS.comp_injective (i := fun k : ℕ => (n, k)) (hinj_row n)
     have heq : ((Function.uncurry (fun n k => auxTerm y a b x n k)) ∘ (fun k : ℕ => (n, k)))
-      = (fun k : ℕ => auxTerm y a b x n k) := by
+        = (fun k : ℕ => auxTerm y a b x n k) := by
       funext k
       rfl
-    rwa [heq] at h0
+    rw [heq] at h0
+    exact h0
   have hNn_row : ∀ n : ℕ, Summable (fun k : ℕ => ‖auxTerm y a b x n k‖) := by
     intro n
     have h0 := hNn.comp_injective (i := fun k : ℕ => (n, k)) (hinj_row n)
     have heq : ((Function.uncurry (fun n k : ℕ => ‖auxTerm y a b x n k‖)) ∘ (fun k : ℕ => (n, k)))
-      = (fun k : ℕ => ‖auxTerm y a b x n k‖) := by
+        = (fun k : ℕ => ‖auxTerm y a b x n k‖) := by
       funext k
       rfl
-    rwa [heq] at h0
+    rw [heq] at h0
+    exact h0
   have hIterNorm : Summable (fun n : ℕ => ∑' k : ℕ, ‖auxTerm y a b x n k‖) := by
     have h := (summable_prod_of_nonneg hNnonneg).mp hNn
     have h2 := h.2
     have heq :
-      (fun n : ℕ => ∑' k : ℕ, Function.uncurry (fun n k : ℕ => ‖auxTerm y a b x n k‖) (n, k))
-      = (fun n : ℕ => ∑' k : ℕ, ‖auxTerm y a b x n k‖) := by
+        (fun n : ℕ => ∑' k : ℕ, Function.uncurry (fun n k : ℕ => ‖auxTerm y a b x n k‖) (n, k))
+        = (fun n : ℕ => ∑' k : ℕ, ‖auxTerm y a b x n k‖) := by
       funext n
       apply tsum_congr
       intro k
       rfl
-    rwa [heq] at h2
+    rw [heq] at h2
+    exact h2
   have hIter : Summable (fun n : ℕ => ∑' k : ℕ, auxTerm y a b x n k) := by
     apply hIterNorm.of_norm_bounded
     intro n
     exact norm_tsum_le_tsum_norm (hNn_row n)
   have hHasN : HasSum (fun n : ℕ => ∑' k : ℕ, auxTerm y a b x n k)
-    (∑' p : ℕ × ℕ, Function.uncurry (fun n k => auxTerm y a b x n k) p) := by
+      (∑' p : ℕ × ℕ, Function.uncurry (fun n k => auxTerm y a b x n k) p) := by
     have heq := hS.tsum_prod_uncurry hg_row
-    rwa [heq]
+    rw [heq]
+    exact hIter.hasSum
   have hCol : ∀ k : ℕ, HasSum (fun n : ℕ => auxTerm y a b x n k)
-    (x ^ (k + 1) / (Nat.factorial k : ℂ) * Complex.exp (y * (a + b * ((k : ℂ) + 1)))) := by
+      (x ^ (k + 1) / (Nat.factorial k : ℂ) * Complex.exp (y * (a + b * ((k : ℂ) + 1)))) := by
     intro k
     have hbase := hasSum_complex_pow_div_factorial (y * (a + b * ((k : ℂ) + 1)))
     have hmul := hbase.mul_left (x ^ (k + 1) / (Nat.factorial k : ℂ))
@@ -219,10 +223,10 @@ lemma ramanujan_part1_ch3_entry9_ii_generalizedbellgenerating
     unfold auxTerm
     ring
   have hColSum : (∑' k : ℕ, ∑' n : ℕ, auxTerm y a b x n k)
-    = x * Complex.exp ((a + b) * y) * Complex.exp (x * Complex.exp (b * y)) := by
+      = x * Complex.exp ((a + b) * y) * Complex.exp (x * Complex.exp (b * y)) := by
     have h1 : ∀ k : ℕ, (∑' n : ℕ, auxTerm y a b x n k)
-      = (x * Complex.exp ((a + b) * y)) *
-        ((x * Complex.exp (b * y)) ^ k / (Nat.factorial k : ℂ)) := by
+        = (x * Complex.exp ((a + b) * y)) *
+          ((x * Complex.exp (b * y)) ^ k / (Nat.factorial k : ℂ)) := by
       intro k
       rw [(hCol k).tsum_eq]
       have e1 : y * (a + b * ((k : ℂ) + 1)) = (a + b) * y + (k : ℂ) * (b * y) := by ring
@@ -230,41 +234,43 @@ lemma ramanujan_part1_ch3_entry9_ii_generalizedbellgenerating
       ring
     rw [tsum_congr h1, tsum_mul_left, (hasSum_complex_pow_div_factorial _).tsum_eq]
   have hL : ∀ n : ℕ, y ^ n / (Nat.factorial n : ℂ) * generalizedBellGenerating a b x n
-    = Complex.exp (-x) * ∑' k : ℕ, auxTerm y a b x n k := by
+      = Complex.exp (-x) * ∑' k : ℕ, auxTerm y a b x n k := by
     intro n
     have eF : generalizedBellGenerating a b x n
-      = Complex.exp (-x) *
-        ∑' k : ℕ, ((a + b * ((k : ℂ) + 1)) ^ n * x ^ (k + 1) / (Nat.factorial k : ℂ)) := by
+        = Complex.exp (-x) *
+          ∑' k : ℕ, ((a + b * ((k : ℂ) + 1)) ^ n * x ^ (k + 1) / (Nat.factorial k : ℂ)) := by
       simp [generalizedBellGenerating]
     have e2 : (y ^ n / (Nat.factorial n : ℂ)) *
-      (∑' k : ℕ, ((a + b * ((k : ℂ) + 1)) ^ n * x ^ (k + 1) / (Nat.factorial k : ℂ)))
-      = ∑' k : ℕ, auxTerm y a b x n k := by
+        (∑' k : ℕ, ((a + b * ((k : ℂ) + 1)) ^ n * x ^ (k + 1) / (Nat.factorial k : ℂ)))
+        = ∑' k : ℕ, auxTerm y a b x n k := by
       rw [← tsum_mul_left]
       exact tsum_congr fun k => rfl
     conv_lhs => rw [eF, ← mul_assoc, mul_comm (y ^ n / (Nat.factorial n : ℂ)) _, mul_assoc]
     exact congrArg (Complex.exp (-x) * ·) e2
   have hLHS : HasSum
-    (fun n : ℕ => y ^ n / (Nat.factorial n : ℂ) * generalizedBellGenerating a b x n)
-    (Complex.exp (-x) * (∑' p : ℕ × ℕ, Function.uncurry (fun n k => auxTerm y a b x n k) p)) := by
+      (fun n : ℕ => y ^ n / (Nat.factorial n : ℂ) * generalizedBellGenerating a b x n)
+      (Complex.exp (-x) * (∑' p : ℕ × ℕ, Function.uncurry (fun n k => auxTerm y a b x n k) p)) := by
     have h := hHasN.mul_left (Complex.exp (-x))
     refine h.congr_fun fun n => ?_
     exact hL n
   have hSwap : (∑' p : ℕ × ℕ, Function.uncurry (fun n k => auxTerm y a b x n k) p)
-    = (∑' k : ℕ, ∑' n : ℕ, auxTerm y a b x n k) := by
+      = (∑' k : ℕ, ∑' n : ℕ, auxTerm y a b x n k) := by
     have heq1 := hS.tsum_prod_uncurry hg_row
     have heq2 := hS.tsum_comm
-    rwa [heq1]
+    rw [heq1]
+    exact heq2.symm
   rw [hSwap, hColSum] at hLHS
   have hexp :
-    Complex.exp (-x) * (x * Complex.exp ((a + b) * y) * Complex.exp (x * Complex.exp (b * y)))
-    = x * Complex.exp ((a + b) * y) * Complex.exp (x * (Complex.exp (b * y) - 1)) := by
+      Complex.exp (-x) * (x * Complex.exp ((a + b) * y) * Complex.exp (x * Complex.exp (b * y)))
+      = x * Complex.exp ((a + b) * y) * Complex.exp (x * (Complex.exp (b * y) - 1)) := by
     have e1 : x * (Complex.exp (b * y) - 1) = x * Complex.exp (b * y) + (-x) := by ring
     rw [e1, Complex.exp_add]
     ring
-  rwa [hexp] at hLHS
+  rw [hexp] at hLHS
+  exact hLHS
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry9IiGeneralizedbellgenerating
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

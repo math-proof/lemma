@@ -10,7 +10,7 @@ namespace EdgeGracefulTest
 [key2](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/EdgeGraceful.lean)
 -/
 @[path]
-lemma key2
+lemma key2 :
 -- imply
   ∀ s : Sym2 (Fin 2), s ∈ (⊤ : SimpleGraph (Fin 2)).edgeSet → (0 : Fin 2) ∈ s ∧ (1 : Fin 2) ∈ s :=
 -- proof
@@ -108,3 +108,4 @@ private lemma eclass_eq :
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

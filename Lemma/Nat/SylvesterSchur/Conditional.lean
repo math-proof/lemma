@@ -1,5 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Nat.SylvesterSchur.Bridge
+import Lemma.Nat.SylvesterSchur.LargePrimeCriteria
 open scoped BigOperators
 open Finset Nat
 
@@ -19,7 +21,7 @@ lemma consecutive_two
 -- proof
   by_cases hk_even : 2 ∣ k
   · have hk1_mf_prime : (k + 1).minFac.Prime :=
-    Nat.minFac_prime (by omega : k + 1 ≠ 1)
+      Nat.minFac_prime (by omega : k + 1 ≠ 1)
     have hk1_mf_odd : 2 < (k + 1).minFac := by
       by_contra h
       push Not at h
@@ -35,6 +37,7 @@ lemma consecutive_two
       exact hk_even ((le_antisymm h hk_mf_prime.two_le) ▸ k.minFac_dvd)
     exact ⟨0, by omega, k.minFac, hk_mf_prime, hk_mf_odd, by simpa using k.minFac_dvd⟩
 
+/- A number greater than one and coprime to `6` has a prime divisor greater than `3`. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -55,6 +58,7 @@ private lemma exists_prime_gt_three_dvd_of_not_two_dvd_of_not_three_dvd {m : ℕ
   · exact h2 hdvd
   · exact h3 hdvd
 
+/- A number greater than one and coprime to `30` has a prime divisor greater than `5`. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -133,6 +137,7 @@ private lemma half_witness_five {k i : ℕ} (hi : i < 5) (hm : 1 < (k + i) / 2)
   exact ⟨i, (k + i) / 2, hi, hm, Nat.div_dvd_of_dvd heven, hcop.1, hcop.2.1,
     hcop.2.2⟩
 
+/- A finite witness certificate for the length-three consecutive theorem. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -196,6 +201,7 @@ lemma consecutive_four
   obtain ⟨i, hi, p, hp, hp_gt_three, hp_dvd⟩ := consecutive_three (k := k) (by omega)
   exact ⟨i, by omega, p, hp, four_lt_of_prime_of_three_lt hp hp_gt_three, hp_dvd⟩
 
+/- The finite residue certificate for the length-five consecutive theorem. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -308,15 +314,16 @@ private lemma consecutive_five_witness_mod_forty_five_to_fifty_nine {k : ℕ} (h
   · exact half_witness_five (i := 0) (by norm_num) (by omega) (by omega) (by omega)
   · exact ⟨0, k, by norm_num, by omega, by simp, by omega, by omega, by omega⟩
 
+/- A finite witness certificate for the length-five consecutive theorem. It chooses
+a term, or half of an even term, that is coprime to `2`, `3`, and `5`. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
 
 /--
 [consecutive_five_witness](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/Conditional.lean)
--/
-@[path]
 a term, or half of an even term, that is coprime to `2`, `3`, and `5`. -/
+@[path]
 private lemma consecutive_five_witness {k : ℕ} (hk : 5 < k) :
   ∃ i m, i < 5 ∧ 1 < m ∧ m ∣ k + i ∧ ¬ 2 ∣ m ∧ ¬ 3 ∣ m ∧ ¬ 5 ∣ m := by
   by_cases h15 : k % 60 < 15
@@ -328,6 +335,7 @@ private lemma consecutive_five_witness {k : ℕ} (hk : 5 < k) :
   exact consecutive_five_witness_mod_forty_five_to_fifty_nine hk (by omega)
     (Nat.mod_lt k (by norm_num))
 
+/- The finite residue certificate for the length-five consecutive theorem. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -423,6 +431,7 @@ lemma consecutive_of_factorial_mul_top_pow_half_add_one_lt_start_pow
     (by omega) (by omega)
   simpa [show k + n - 1 + 1 - n = k by omega] using hbound
 
+/- Power-only consecutive form of the `3n/8` criterion, using `n! ≤ n ^ n`. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -440,6 +449,7 @@ private lemma consecutive_of_self_pow_mul_top_pow_three_mul_div_eight_lt_start_p
     (by omega) hn (by omega)
   simpa [show k + n - 1 + 1 - n = k by omega] using hbound
 
+/- Pure-power large-start form of the `3n/8` criterion. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -508,6 +518,7 @@ lemma consecutive_of_quadratic_start
     exact Nat.pow_lt_pow_left hkquad (by omega : n - e ≠ 0)
   exact hleft.trans_lt hmid
 
+/- Conditional consecutive form using only the elementary exponent `n - 1`. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -591,16 +602,18 @@ lemma consecutive_of_factorial_mul_prod_erdos_div_three_layers_lt_start_pow
     (by omega) (by omega) (by omega) hN6
   simpa [show k + n - 1 + 1 - n = k by omega] using hbound
 
+/- A simple sufficient estimate for the preceding conditional theorem: if the starting point is
+larger than `n ! * 2 ^ (n - 1)`, then the crude factorization bound already forces a prime
+divisor greater than `n`. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
 
 /--
 [factorial_mul_top_pow_sub_one_lt_start_pow_of_large_start](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/Conditional.lean)
--/
-@[path]
 larger than `n ! * 2 ^ (n - 1)`, then the crude factorization bound already forces a prime
 divisor greater than `n`. -/
+@[path]
 private lemma factorial_mul_top_pow_sub_one_lt_start_pow_of_large_start {n k : ℕ}
   (hn : 1 ≤ n) (hk : n < k) (hlarge : n ! * 2 ^ (n - 1) < k) :
   n ! * (k + n - 1) ^ (n - 1) < k ^ n := by
@@ -611,11 +624,11 @@ private lemma factorial_mul_top_pow_sub_one_lt_start_pow_of_large_start {n k : �
   have hstrict : n ! * (2 * k) ^ (n - 1) < k ^ n := by
     calc
       n ! * (2 * k) ^ (n - 1)
-        = (n ! * 2 ^ (n - 1)) * k ^ (n - 1) := by
-          rw [Nat.mul_pow]
-          ac_rfl
+          = (n ! * 2 ^ (n - 1)) * k ^ (n - 1) := by
+            rw [Nat.mul_pow]
+            ac_rfl
       _ < k * k ^ (n - 1) :=
-        Nat.mul_lt_mul_of_pos_right hlarge (by exact pow_pos (by omega : 0 < k) (n - 1))
+          Nat.mul_lt_mul_of_pos_right hlarge (by exact pow_pos (by omega : 0 < k) (n - 1))
       _ = k ^ (n - 1) * k := by rw [Nat.mul_comm]
       _ = k ^ (n - 1 + 1) := by rw [pow_succ]
       _ = k ^ n := by rw [Nat.sub_add_cancel hn]
@@ -645,4 +658,4 @@ end Nat.SylvesterSchur
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

@@ -32,7 +32,7 @@ variable {ι : Type*} {X : ι → Type*} [∀ i, MeasurableSpace (X i)]
 variable {d : ℕ}
 
 
-theorem bkc_factor_ac (p : ℝ≥0) (hp : p ≤ 1) (hp0 : 0 < p) (e : Sym2 (Site d))
+theorem bkc_factor_ac (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (e : Sym2 (Site d))
     (F : Finset (Sym2 (Site d))) :
     (bernoulliMeasure p hp).map (fun b => if e ∈ F then true else b) ≪ bernoulliMeasure p hp := by
   by_cases h : e ∈ F
@@ -45,7 +45,7 @@ theorem bkc_factor_ac (p : ℝ≥0) (hp : p ≤ 1) (hp0 : 0 < p) (e : Sym2 (Site
       have hsub : ({true} : Set Bool) ⊆ s := by rintro x rfl; exact ht
       have h1 : bernoulliMeasure p hp {true} ≤ bernoulliMeasure p hp s := measure_mono hsub
       rw [bernoulliMeasure_apply_true, hs0] at h1
-      have hpz : (p : ℝ≥0∞) = 0 := le_antisymm h1 (by positivity)
+      have hpz : (p : ENNReal) = 0 := le_antisymm h1 (by positivity)
       simp only [ENNReal.coe_eq_zero] at hpz
       exact hp0.ne' hpz
     · have hpre : (fun _ : Bool => true) ⁻¹' s = ∅ := by
@@ -56,7 +56,7 @@ theorem bkc_factor_ac (p : ℝ≥0) (hp : p ≤ 1) (hp0 : 0 < p) (e : Sym2 (Site
     rw [he, Measure.map_id]
 
 
-theorem bkc_bernoulli_hasFiniteEnergyMerge (p : ℝ≥0) (hp : p ≤ 1) (hp0 : 0 < p) :
+theorem bkc_bernoulli_hasFiniteEnergyMerge (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
     HasFiniteEnergyMerge (d := d) (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) := by
   intro F
   
@@ -115,7 +115,7 @@ theorem bkc_smul_sym2_injective (a : Sym2 (Site d)) :
       linarith
 
 
-theorem bkc_bernoulli_isErgodic (hd : 1 ≤ d) (p : ℝ≥0) (hp : p ≤ 1) :
+theorem bkc_bernoulli_isErgodic (hd : 1 ≤ d) (p : NNReal) (hp : p ≤ 1) :
     IsErgodic (G := Multiplicative (Site d))
       (bernoulliProductMeasure (E := Sym2 (Site d)) p hp) := by
   have : Nonempty (Fin d) := ⟨⟨0, hd⟩⟩
@@ -172,7 +172,7 @@ theorem bkc_boundary_vol_tendsto (d : ℕ) (hd : 1 ≤ d) :
   filter_upwards [eventually_ge_atTop 1] with n hn using bkc_boundary_vol_ratio_le d n hd hn
 
 
-theorem bkc_burton_keane_bernoulli (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bkc_burton_keane_bernoulli (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hbound : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ),
       Tcount d ω n ≤ boxSV_boundaryCard d n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

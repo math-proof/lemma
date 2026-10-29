@@ -1,5 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Def.NumberTheory.DirichletCharacter.Quadratic
+import Lemma.Nat.DirichletCharacter.Quadratic
+import Lemma.Nat.DirichletCharacter.QuadraticCharacterAux
 
 
 namespace MetaMathlibExt
@@ -9,8 +12,8 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma kroneckerSym_mul_of_odd
-  {D : ℤ}
-  {m n : ℕ}
+  (D : ℤ)
+  (m n : ℕ)
 -- given
   (hm : Odd m)
   (hn : Odd n) :
@@ -23,7 +26,7 @@ lemma kroneckerSym_mul_of_odd
   have hperm : (m * n).primeFactorsList.Perm
     (m.primeFactorsList ++ n.primeFactorsList) :=
     Nat.perm_primeFactorsList_mul hm0 hn0
-  simp only [kroneckerSym, hmn, if_false, hm0, hn0]
+  simp only [kroneckerSym, hmn, ite_false, hm0, hn0]
   have hmap : ((m * n).primeFactorsList.map (kroneckerAtPrime D)).Perm
     ((m.primeFactorsList ++ n.primeFactorsList).map (kroneckerAtPrime D)) :=
     hperm.map (kroneckerAtPrime D)
@@ -42,8 +45,8 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma kroneckerSym_eq_jacobiSym_of_odd
-  {D : ℤ}
-  {n : ℕ}
+  (D : ℤ)
+  (n : ℕ)
 -- given
   (hn : Odd n) :
 -- imply
@@ -78,4 +81,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

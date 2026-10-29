@@ -56,7 +56,7 @@ theorem clusterEvent_dependsOn {S : Finset (Site d)} {o : Site d} {K : Finset (S
   · rw [Set.indicator_of_notMem hω, Set.indicator_of_notMem (fun hc => hω (hiff.mpr hc))]
 
 
-theorem exploration_decomposition (p : ℝ≥0) (hp : p ≤ 1)
+theorem exploration_decomposition (p : NNReal) (hp : p ≤ 1)
     (S : Finset (Site d)) (o : Site d) (hoS : o ∈ (S : Set (Site d))) (K : Finset (Site d))
     (B : Set (ConfigSpace (Sym2 (Site d)))) (U : Finset (Sym2 (Site d)))
     (hdisj : Disjoint (incidentWithinFinset K S) U)

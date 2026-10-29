@@ -143,7 +143,7 @@ theorem bc54_classicalTrif_prob_eq_zero (μ : Measure (ConfigSpace (Sym2 (Site d
     (bc54_boundary_succ_vol_tendsto d hd)
 
 
-theorem bc54_burton_keane_bernoulli (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bc54_burton_keane_bernoulli (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hroute : ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) →
         ∃ a₁ a₂ a₃ : Site d,

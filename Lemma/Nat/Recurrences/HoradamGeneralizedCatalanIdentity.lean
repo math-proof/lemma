@@ -96,15 +96,15 @@ namespace MetaMathlibExt
 @[path]
 lemma horadam_generalized_catalan_identity
   [CommRing R]
-  {c₁ c₂ : R}
-  {W Y U : ℕ → R}
-  {s i j : ℕ}
+  (c₁ c₂ : R)
+  (W Y U : ℕ → R)
 -- given
   (hW : ∀ n, W (n + 2) = c₁ * W (n + 1) + c₂ * W n)
   (hY : ∀ n, Y (n + 2) = c₁ * Y (n + 1) + c₂ * Y n)
   (hU : ∀ n, U (n + 2) = c₁ * U (n + 1) + c₂ * U n)
   (hU0 : U 0 = 0)
-  (hU1 : U 1 = 1) :
+  (hU1 : U 1 = 1)
+  (s i j : ℕ) :
 -- imply
   W (s + i) * Y (s + j) - W s * Y (s + i + j) =
     (-c₂) ^ s * (W 1 * Y j - W 0 * Y (j + 1)) * U i := by
@@ -123,4 +123,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

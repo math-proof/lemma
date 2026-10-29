@@ -143,7 +143,7 @@ theorem rq1_wiredInfiniteVolume_rectangle_eq_bernoulli
       Measure (ConfigSpace (Sym2 (Site 2)))).real
         (horizontalCrossingEvent a b c d) =
       (bernoulliProductMeasure (E := Sym2 (Site 2))
-        (⟨p, hp.le⟩ : ℝ≥0) (by exact_mod_cast hp1.le)).real
+        (⟨p, hp.le⟩ : NNReal) (by exact_mod_cast hp1.le)).real
         (horizontalCrossingEvent a b c d) := by
   rw [← rq1_finiteRectangleEvent_preimage N a b c d hrect]
   exact rq1_wiredInfiniteVolume_graphCylinder_eq_bernoulli

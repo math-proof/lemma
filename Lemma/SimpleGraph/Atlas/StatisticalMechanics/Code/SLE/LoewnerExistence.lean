@@ -16,7 +16,7 @@ private lemma picard_exists_ball_eq
   {tmin tmax : ℝ}
   {t₀ : Icc tmin tmax}
   {x₀ : E}
-  {a L K : ℝ≥0}
+  {a L K : NNReal}
 -- given
   (hf : IsPicardLindelof f t₀ x₀ a 0 L K) :
 -- imply
@@ -36,11 +36,11 @@ private lemma picard_exists_ball_family_lipschitz_eq
   {tmin tmax : ℝ}
   {t₀ : Icc tmin tmax}
   {x₀ : E}
-  {a r L K : ℝ≥0}
+  {a r L K : NNReal}
 -- given
   (hf : IsPicardLindelof f t₀ x₀ a r L K) :
 -- imply
-  ∃ α : E → ℝ → E, (∀ x ∈ closedBall x₀ r, α x t₀ = x ∧ (∀ t ∈ Icc tmin tmax, HasDerivWithinAt (α x) (f t (α x t)) (Icc tmin tmax) t) ∧ (∀ t, α x t ∈ closedBall x₀ a)) ∧ ∃ C : ℝ≥0, ∀ t ∈ Icc tmin tmax, LipschitzOnWith C (fun x ↦ α x t) (closedBall x₀ r) := by
+  ∃ α : E → ℝ → E, (∀ x ∈ closedBall x₀ r, α x t₀ = x ∧ (∀ t ∈ Icc tmin tmax, HasDerivWithinAt (α x) (f t (α x t)) (Icc tmin tmax) t) ∧ (∀ t, α x t ∈ closedBall x₀ a)) ∧ ∃ C : NNReal, ∀ t ∈ Icc tmin tmax, LipschitzOnWith C (fun x ↦ α x t) (closedBall x₀ r) := by
 -- proof
   apply StatMech.SLE.picard_exists_ball_family_lipschitz hf
 
@@ -56,7 +56,7 @@ private lemma loewner_local_flow_chart_eq
   (hW : Continuous W)
   (hz₀ : 0 < z₀.im) :
 -- imply
-  ∃ α : ℂ → ℝ → ℂ, (∀ z ∈ closedBall z₀ (z₀.im / 4), α z t₀ = z ∧ (∀ t ∈ Icc (t₀ - z₀.im ^ 2 / 16) (t₀ + z₀.im ^ 2 / 16), HasDerivWithinAt (α z) (loewnerField W t (α z t)) (Icc (t₀ - z₀.im ^ 2 / 16) (t₀ + z₀.im ^ 2 / 16)) t) ∧ (∀ t, α z t ∈ loewnerStrip (z₀.im / 2))) ∧ ∃ C : ℝ≥0, ∀ t ∈ Icc (t₀ - z₀.im ^ 2 / 16) (t₀ + z₀.im ^ 2 / 16), LipschitzOnWith C (fun z ↦ α z t) (closedBall z₀ (z₀.im / 4)) := by
+  ∃ α : ℂ → ℝ → ℂ, (∀ z ∈ closedBall z₀ (z₀.im / 4), α z t₀ = z ∧ (∀ t ∈ Icc (t₀ - z₀.im ^ 2 / 16) (t₀ + z₀.im ^ 2 / 16), HasDerivWithinAt (α z) (loewnerField W t (α z t)) (Icc (t₀ - z₀.im ^ 2 / 16) (t₀ + z₀.im ^ 2 / 16)) t) ∧ (∀ t, α z t ∈ loewnerStrip (z₀.im / 2))) ∧ ∃ C : NNReal, ∀ t ∈ Icc (t₀ - z₀.im ^ 2 / 16) (t₀ + z₀.im ^ 2 / 16), LipschitzOnWith C (fun z ↦ α z t) (closedBall z₀ (z₀.im / 4)) := by
 -- proof
   apply StatMech.SLE.loewner_local_flow_chart hW hz₀ t₀
 

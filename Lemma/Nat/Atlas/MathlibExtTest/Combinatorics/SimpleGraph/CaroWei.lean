@@ -33,7 +33,7 @@ lemma caroWeiTest_degree_top
 [caroWeiTest_sum_bot](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/CaroWei.lean)
 -/
 @[path]
-lemma caroWeiTest_sum_bot
+lemma caroWeiTest_sum_bot :
 -- imply
   ∑ v : Fin 3, (1 : ℝ) / ((⊥ : SimpleGraph (Fin 3)).degree v + 1) = 3 := by
 -- proof
@@ -50,7 +50,7 @@ lemma caroWeiTest_sum_bot
 [caroWeiTest_sum_top](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/CaroWei.lean)
 -/
 @[path]
-lemma caroWeiTest_sum_top
+lemma caroWeiTest_sum_top :
 -- imply
   ∑ v : Fin 4, (1 : ℝ) / ((⊤ : SimpleGraph (Fin 4)).degree v + 1) = 1 := by
 -- proof
@@ -67,7 +67,7 @@ lemma caroWeiTest_sum_top
 [caroWeiTest_sum_empty](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/CaroWei.lean)
 -/
 @[path]
-lemma caroWeiTest_sum_empty
+lemma caroWeiTest_sum_empty :
 -- imply
   (∑ v : Fin 0, (1 : ℝ) / ((⊥ : SimpleGraph (Fin 0)).degree v + 1)) = 0 := by
 -- proof
@@ -76,3 +76,4 @@ lemma caroWeiTest_sum_empty
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

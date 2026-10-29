@@ -162,7 +162,7 @@ theorem rfp_Tcount_le_boundary_of_coverArmDivergence (ω : ConfigSpace (Sym2 (Si
     (rfp_rootedSpanningForest_of_coverArmDivergence ω n hcov hdiv)
 
 
-theorem rfp_burton_keane_bernoulli_of_coverArmDivergence (hd : 1 ≤ d) (p : ℝ≥0)
+theorem rfp_burton_keane_bernoulli_of_coverArmDivergence (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hcov : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → fcc_ThreeArmCover ω n)
     (hdiv : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → rfp_RootedArmDivergence ω n)

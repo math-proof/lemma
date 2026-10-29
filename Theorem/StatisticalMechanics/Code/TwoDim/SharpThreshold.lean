@@ -26,7 +26,7 @@ namespace TwoDim
 open StatMech.Lattice StatMech.Universality StatMech.Percolation
 
 
-theorem kst_theta_eq_zero_iff (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) :
+theorem kst_theta_eq_zero_iff (d : ℕ) (p : NNReal) (hp : p ≤ 1) :
     Percolation.theta d p hp = 0 ↔ Universality.percolationProbability d p hp = 0 := by
   unfold Percolation.theta Universality.percolationProbability
   rw [Measure.real]
@@ -60,7 +60,7 @@ theorem kst_criticalProbability_eq_pc (d : ℕ) :
   rw [kst_subcriticalDensities_eq_coe, ← NNReal.coe_sSup]
 
 
-theorem kst_crossProb_tendsto_zero_of_theta_zero (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1)
+theorem kst_crossProb_tendsto_zero_of_theta_zero (d : ℕ) (p : NNReal) (hp : p ≤ 1)
     (h : Percolation.theta d p hp = 0) :
     Tendsto (fun n => Percolation.crossProb d p hp n) atTop (𝓝 0) := by
   have hshift : Tendsto (fun n => Percolation.crossProb d p hp (n + 1)) atTop (𝓝 0) := by
@@ -70,9 +70,9 @@ theorem kst_crossProb_tendsto_zero_of_theta_zero (d : ℕ) (p : ℝ≥0) (hp : p
 
 
 theorem kst_sharpThreshold_crossingEvent (d : ℕ)
-    (hsub : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < Universality.criticalProbability d →
+    (hsub : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < Universality.criticalProbability d →
         Percolation.theta d p hp = 0) :
-    ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < Universality.criticalProbability d →
+    ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < Universality.criticalProbability d →
         Tendsto (fun n => (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
           (Percolation.crossingEvent d n)) atTop (𝓝 0) := by
   intro p hp hlt
@@ -81,12 +81,12 @@ theorem kst_sharpThreshold_crossingEvent (d : ℕ)
 
 theorem kst_sharpThreshold_of_dominated (d : ℕ)
     {boxFam : ℕ → Set (ConfigSpace (Sym2 (Site d)))} {C : ℝ}
-    (hsub : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < Universality.criticalProbability d →
+    (hsub : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < Universality.criticalProbability d →
         Percolation.theta d p hp = 0)
-    (hdom : ∀ (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ),
+    (hdom : ∀ (p : NNReal) (hp : p ≤ 1) (n : ℕ),
         (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (boxFam n)
           ≤ C * Percolation.crossProb d p hp n) :
-    ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < Universality.criticalProbability d →
+    ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < Universality.criticalProbability d →
         Tendsto (fun n => (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
           (boxFam n)) atTop (𝓝 0) := by
   intro p hp hlt

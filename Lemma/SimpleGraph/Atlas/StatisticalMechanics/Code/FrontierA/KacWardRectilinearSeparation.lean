@@ -87,7 +87,7 @@ private lemma exists_uniform_vertex_separation_eq
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n} :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ i j : Fin n, i ≠ j → (r : ℝ) < dist (polygon.vertex i) (polygon.vertex j) := by
+  ∃ r : NNReal, 0 < r ∧ ∀ i j : Fin n, i ≠ j → (r : ℝ) < dist (polygon.vertex i) (polygon.vertex j) := by
 -- proof
   apply StatMech.FrontierA.KWFiniteSimplePolygon.exists_uniform_vertex_separation polygon
 
@@ -100,7 +100,7 @@ private lemma exists_uniform_nonincident_edge_separation_eq
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n} :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ i j : Fin n, KWEdgesNonincident i j → ∀ x ∈ polygon.closedEdge i, ∀ y ∈ polygon.closedEdge j, (r : ℝ≥0∞) < edist x y := by
+  ∃ r : NNReal, 0 < r ∧ ∀ i j : Fin n, KWEdgesNonincident i j → ∀ x ∈ polygon.closedEdge i, ∀ y ∈ polygon.closedEdge j, (r : ENNReal) < edist x y := by
 -- proof
   apply StatMech.FrontierA.KWFiniteSimplePolygon.exists_uniform_nonincident_edge_separation polygon
 
@@ -113,7 +113,7 @@ private lemma exists_uniform_nonincident_edge_dist_separation_eq
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n} :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ i j : Fin n, KWEdgesNonincident i j → ∀ x ∈ polygon.closedEdge i, ∀ y ∈ polygon.closedEdge j, (r : ℝ) < dist x y := by
+  ∃ r : NNReal, 0 < r ∧ ∀ i j : Fin n, KWEdgesNonincident i j → ∀ x ∈ polygon.closedEdge i, ∀ y ∈ polygon.closedEdge j, (r : ℝ) < dist x y := by
 -- proof
   apply StatMech.FrontierA.KWFiniteSimplePolygon.exists_uniform_nonincident_edge_dist_separation polygon
 
@@ -127,7 +127,7 @@ private lemma closedEdgeTube_eq_add_ball_eq
   {polygon : KWFiniteSimplePolygon n}
   {i : Fin n}
 -- given
-  (r : ℝ≥0) :
+  (r : NNReal) :
 -- imply
   polygon.closedEdgeTube r i = polygon.closedEdge i + Metric.ball (0 : ℂ) (r : ℝ) := by
 -- proof
@@ -143,7 +143,7 @@ private lemma closedEdgeTube_convex_eq
   {polygon : KWFiniteSimplePolygon n}
   {i : Fin n}
 -- given
-  (r : ℝ≥0) :
+  (r : NNReal) :
 -- imply
   Convex ℝ (polygon.closedEdgeTube r i) := by
 -- proof
@@ -157,7 +157,7 @@ private lemma closedEdge_subset_closedEdgeTube_eq
   {n : ℕ}
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n}
-  {r : ℝ≥0}
+  {r : NNReal}
   {i : Fin n}
 -- given
   (hr : 0 < r) :
@@ -174,7 +174,7 @@ private lemma closedEdgeTube_disjoint_of_nonincident_eq
   {n : ℕ}
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n}
-  {r : ℝ≥0}
+  {r : NNReal}
   {i j : Fin n}
 -- given
   (hsep : ∀ i j : Fin n, KWEdgesNonincident i j → ∀ x ∈ polygon.closedEdge i, ∀ y ∈ polygon.closedEdge j, (r : ℝ) < dist x y)
@@ -193,7 +193,7 @@ private lemma exists_pairwise_disjoint_nonincident_edgeTubes_eq
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n} :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ i j : Fin n, KWEdgesNonincident i j → Disjoint (polygon.closedEdgeTube (r / 2) i) (polygon.closedEdgeTube (r / 2) j) := by
+  ∃ r : NNReal, 0 < r ∧ ∀ i j : Fin n, KWEdgesNonincident i j → Disjoint (polygon.closedEdgeTube (r / 2) i) (polygon.closedEdgeTube (r / 2) j) := by
 -- proof
   apply StatMech.FrontierA.KWFiniteSimplePolygon.exists_pairwise_disjoint_nonincident_edgeTubes polygon
 

@@ -58,8 +58,8 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma normalSeqFib_add
-  {a : ℤ}
-  {m n : ℕ} :
+  (a : ℤ)
+  (m n : ℕ) :
 -- imply
   normalSeqFib a (m + n + 1) =
     normalSeqFib a (m + 1) * normalSeqFib a (n + 1) +

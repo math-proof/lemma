@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch2
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry1
@@ -120,7 +119,6 @@ lemma ramanujan_part1_ch2_entry1_general
       field_simp
       ring
   exact aux n
-set_option linter.unusedVariables false in
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry1
 
@@ -133,7 +131,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry1
 lemma ramanujan_part1_ch2_entry1
   {n : ℕ}
 -- given
-  (hn : 0 < n) :
+  (_hn : 0 < n) :
 -- imply
   ∑ k ∈ Finset.Icc 1 n, (1 : ℝ) / ((n : ℝ) + (k : ℝ)) =
     (n : ℝ) / (2 * (n : ℝ) + 1) + ∑ k ∈ Finset.Icc 1 n, (1 : ℝ) /
@@ -145,4 +143,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry1
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

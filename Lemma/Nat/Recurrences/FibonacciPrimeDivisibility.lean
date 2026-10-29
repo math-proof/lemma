@@ -14,7 +14,8 @@ private lemma pascal_even (n k : ℕ) :
   Nat.choose (n + 1) (2 * (k + 1))
     = Nat.choose n (2 * k + 1) + Nat.choose n (2 * (k + 1)) := by
   have h := Nat.choose_succ_succ n (2 * k + 1)
-  rwa [Nat.succ_eq_add_one n, show (2 * k + 1).succ = 2 * (k + 1) from by omega] at h
+  rw [Nat.succ_eq_add_one n, show (2 * k + 1).succ = 2 * (k + 1) from by omega] at h
+  exact h
 
 end MetaMathlibExt
 
@@ -28,7 +29,8 @@ private lemma pascal_odd (n k : ℕ) :
   Nat.choose (n + 1) (2 * (k + 1) + 1)
     = Nat.choose n (2 * (k + 1)) + Nat.choose n (2 * (k + 1) + 1) := by
   have h := Nat.choose_succ_succ n (2 * (k + 1))
-  rwa [Nat.succ_eq_add_one n, Nat.succ_eq_add_one (2 * (k + 1))] at h
+  rw [Nat.succ_eq_add_one n, Nat.succ_eq_add_one (2 * (k + 1))] at h
+  exact h
 
 end MetaMathlibExt
 
@@ -49,31 +51,31 @@ private lemma evenSum_step (n : ℕ) :
     have h : Nat.choose (n + 1) (2 * (n + 1)) = 0 := Nat.choose_eq_zero_of_lt (by omega)
     rw [h, Nat.cast_zero, zero_mul]
   have key : ∀ k ∈ Finset.range n,
-    ((Nat.choose (n + 1) (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))
-      = ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))
-        + 5 * (((Nat.choose n (2 * k + 1) : ℤ)) * 5 ^ k) := by
+      ((Nat.choose (n + 1) (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))
+        = ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))
+          + 5 * (((Nat.choose n (2 * k + 1) : ℤ)) * 5 ^ k) := by
     intro k _
     rw [pascal_even n k]
     push_cast
     ring
   have hL1 : (∑ k ∈ Finset.range (n + 1 + 1),
-    ((Nat.choose (n + 1) (2 * k) : ℤ) * 5 ^ k))
-    = 1 + (∑ k ∈ Finset.range n,
-      ((Nat.choose (n + 1) (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))) := by
+        ((Nat.choose (n + 1) (2 * k) : ℤ) * 5 ^ k))
+      = 1 + (∑ k ∈ Finset.range n,
+        ((Nat.choose (n + 1) (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))) := by
     rw [Finset.sum_range_succ, hFn1, add_zero, Finset.sum_range_succ', hF0]
     exact add_comm _ _
   have hE1 : (∑ k ∈ Finset.range (n + 1), ((Nat.choose n (2 * k) : ℤ) * 5 ^ k))
-    = 1 + (∑ k ∈ Finset.range n,
-      ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))) := by
+      = 1 + (∑ k ∈ Finset.range n,
+        ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))) := by
     rw [Finset.sum_range_succ', hG0]
     exact add_comm _ _
   have hO1 : (∑ k ∈ Finset.range (n + 1), ((Nat.choose n (2 * k + 1) : ℤ) * 5 ^ k))
-    = (∑ k ∈ Finset.range n, ((Nat.choose n (2 * k + 1) : ℤ) * 5 ^ k)) := by
+      = (∑ k ∈ Finset.range n, ((Nat.choose n (2 * k + 1) : ℤ) * 5 ^ k)) := by
     rw [Finset.sum_range_succ, hHn, add_zero]
   have hsum : (∑ k ∈ Finset.range n,
-    ((Nat.choose (n + 1) (2 * (k + 1)) : ℤ) * 5 ^ (k + 1)))
-    = (∑ k ∈ Finset.range n, ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1)))
-      + (∑ k ∈ Finset.range n, 5 * (((Nat.choose n (2 * k + 1) : ℤ)) * 5 ^ k)) := by
+        ((Nat.choose (n + 1) (2 * (k + 1)) : ℤ) * 5 ^ (k + 1)))
+      = (∑ k ∈ Finset.range n, ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1)))
+        + (∑ k ∈ Finset.range n, 5 * (((Nat.choose n (2 * k + 1) : ℤ)) * 5 ^ k)) := by
     rw [← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl key
   unfold evenSum oddSum
@@ -100,33 +102,33 @@ private lemma oddSum_step (n : ℕ) :
       Nat.choose_eq_zero_of_lt (by omega)
     rw [h, Nat.cast_zero, zero_mul]
   have key : ∀ k ∈ Finset.range n,
-    ((Nat.choose (n + 1) (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1))
-      = ((Nat.choose n (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1))
-        + ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1)) := by
+      ((Nat.choose (n + 1) (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1))
+        = ((Nat.choose n (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1))
+          + ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1)) := by
     intro k _
     rw [pascal_odd n k]
     push_cast
     ring
   have hL1 : (∑ k ∈ Finset.range (n + 1 + 1),
-    ((Nat.choose (n + 1) (2 * k + 1) : ℤ) * 5 ^ k))
-    = ((n : ℤ) + 1) + (∑ k ∈ Finset.range n,
-      ((Nat.choose (n + 1) (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1))) := by
+        ((Nat.choose (n + 1) (2 * k + 1) : ℤ) * 5 ^ k))
+      = ((n : ℤ) + 1) + (∑ k ∈ Finset.range n,
+        ((Nat.choose (n + 1) (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1))) := by
     rw [Finset.sum_range_succ', hF0, Finset.sum_range_succ, hFn1, add_zero]
     exact add_comm _ _
   have hH1 : (∑ k ∈ Finset.range (n + 1), ((Nat.choose n (2 * k + 1) : ℤ) * 5 ^ k))
-    = (n : ℤ) + (∑ k ∈ Finset.range n,
-      ((Nat.choose n (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1))) := by
+      = (n : ℤ) + (∑ k ∈ Finset.range n,
+        ((Nat.choose n (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1))) := by
     rw [Finset.sum_range_succ', hH0]
     exact add_comm _ _
   have hE1 : (∑ k ∈ Finset.range (n + 1), ((Nat.choose n (2 * k) : ℤ) * 5 ^ k))
-    = 1 + (∑ k ∈ Finset.range n,
-      ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))) := by
+      = 1 + (∑ k ∈ Finset.range n,
+        ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))) := by
     rw [Finset.sum_range_succ', hG0]
     exact add_comm _ _
   have hsum : (∑ k ∈ Finset.range n,
-    ((Nat.choose (n + 1) (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1)))
-    = (∑ k ∈ Finset.range n, ((Nat.choose n (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1)))
-      + (∑ k ∈ Finset.range n, ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))) := by
+        ((Nat.choose (n + 1) (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1)))
+      = (∑ k ∈ Finset.range n, ((Nat.choose n (2 * (k + 1) + 1) : ℤ) * 5 ^ (k + 1)))
+        + (∑ k ∈ Finset.range n, ((Nat.choose n (2 * (k + 1)) : ℤ) * 5 ^ (k + 1))) := by
     rw [← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl key
   unfold evenSum oddSum
@@ -168,7 +170,7 @@ private lemma oddSum_mul_two (n : ℕ) :
     rw [Finset.sum_range_succ, Finset.sum_range_one]
     simp [h13]
   have pair : ∀ n : ℕ, 2 * oddSum n = (2 ^ n : ℤ) * (Nat.fib n : ℤ)
-    ∧ 2 * oddSum (n + 1) = (2 ^ (n + 1) : ℤ) * (Nat.fib (n + 1) : ℤ) := by
+      ∧ 2 * oddSum (n + 1) = (2 ^ (n + 1) : ℤ) * (Nat.fib (n + 1) : ℤ) := by
     intro n
     induction n with
     | zero =>
@@ -197,7 +199,7 @@ private lemma choose_sub_one (p : ℕ) [Fact (Nat.Prime p)] (j : ℕ) (hj : j �
   ((Nat.choose (p - 1) j : ℕ) : ZMod p) = (-1) ^ j := by
   have hp1 : 1 ≤ p := Nat.Prime.pos (Fact.out)
   have key : ∀ j : ℕ, j ≤ p - 1 →
-    ((Nat.choose (p - 1) j : ℕ) : ZMod p) = (-1) ^ j := by
+      ((Nat.choose (p - 1) j : ℕ) : ZMod p) = (-1) ^ j := by
     intro j
     induction j with
     | zero =>
@@ -209,16 +211,18 @@ private lemma choose_sub_one (p : ℕ) [Fact (Nat.Prime p)] (j : ℕ) (hj : j �
       have hpos : j + 1 ≠ 0 := by omega
       have hdvd := (Fact.out : Nat.Prime p).dvd_choose_self hpos hjp
       have h0 : ((Nat.choose p (j + 1) : ℕ) : ZMod p) = 0 := by
-        rwa [CharP.cast_eq_zero_iff (ZMod p) p]
+        rw [CharP.cast_eq_zero_iff (ZMod p) p]
+        exact hdvd
       have hpas : Nat.choose p (j + 1)
-        = Nat.choose (p - 1) j + Nat.choose (p - 1) (j + 1) := by
+          = Nat.choose (p - 1) j + Nat.choose (p - 1) (j + 1) := by
         have h := Nat.choose_succ_succ (p - 1) j
         have e1 : (p - 1).succ = p := by omega
         have e2 : j.succ = j + 1 := by omega
-        rwa [e1, e2] at h
+        rw [e1, e2] at h
+        exact h
       have hpas' : ((Nat.choose p (j + 1) : ℕ) : ZMod p)
-        = ((Nat.choose (p - 1) j : ℕ) : ZMod p)
-          + ((Nat.choose (p - 1) (j + 1) : ℕ) : ZMod p) := by
+          = ((Nat.choose (p - 1) j : ℕ) : ZMod p)
+            + ((Nat.choose (p - 1) (j + 1) : ℕ) : ZMod p) := by
         rw [hpas, Nat.cast_add]
       have e1 := ih (by omega : j ≤ p - 1)
       rw [h0, e1] at hpas'
@@ -241,7 +245,7 @@ private lemma oddSum_mul_two_mod (n p : ℕ) :
   (2 : ZMod p) * ((oddSum n : ℤ) : ZMod p)
     = (2 : ZMod p) ^ n * ((Nat.fib n : ℕ) : ZMod p) := by
   have hcast : ((2 * oddSum n : ℤ) : ZMod p)
-    = ((((2 ^ n : ℤ) * (Nat.fib n : ℤ)) : ℤ) : ZMod p) :=
+      = ((((2 ^ n : ℤ) * (Nat.fib n : ℤ)) : ℤ) : ZMod p) :=
     congrArg (Int.cast : ℤ → ZMod p) (oddSum_mul_two n)
   rw [Int.cast_mul, Int.cast_mul, Int.cast_pow, Int.cast_ofNat,
     Int.cast_natCast] at hcast
@@ -256,10 +260,10 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma fib_prime_dvd_fib_of_legendre_sub
-  {p : ℕ} [Fact (Nat.Prime p)]
+  (p : ℕ) [Fact (Nat.Prime p)]
 -- given
-  (h0 : p ≠ 5)
-  (h1 : 2 < p) :
+  (h5 : p ≠ 5)
+  (h2 : 2 < p) :
 -- imply
   p ∣ Nat.fib (if legendreSym p 5 = 1 then p - 1 else p + 1) := by
 -- proof
@@ -277,7 +281,7 @@ lemma fib_prime_dvd_fib_of_legendre_sub
     have h2dvd : p ∣ 2 := by
       have h4eq : (4 : ℕ) = 2 * 2 := rfl
       rw [h4eq] at hdvd
-      obtain h | h <;> exact h := hp.dvd_mul.mp hdvd
+      rcases hp.dvd_mul.mp hdvd with h | h <;> exact h
     have hpeq : p = 2 := (Nat.prime_dvd_prime_iff_eq hp Nat.prime_two).mp h2dvd
     omega
   have h5ne : ((5 : ℤ) : ZMod p) ≠ 0 := by
@@ -300,8 +304,8 @@ lemma fib_prime_dvd_fib_of_legendre_sub
     rw [hferm2, one_mul] at hidp
     have hO : ((oddSum (p - 1) : ℤ) : ZMod p) = 0 := by
       have hexpand : ((oddSum (p - 1) : ℤ) : ZMod p)
-        = ∑ k ∈ Finset.range p, ((Nat.choose (p - 1) (2 * k + 1) : ℕ) : ZMod p)
-          * (5 : ZMod p) ^ k := by
+          = ∑ k ∈ Finset.range p, ((Nat.choose (p - 1) (2 * k + 1) : ℕ) : ZMod p)
+            * (5 : ZMod p) ^ k := by
         have h1 : p - 1 + 1 = p := by omega
         unfold oddSum
         rw [h1]
@@ -309,8 +313,8 @@ lemma fib_prime_dvd_fib_of_legendre_sub
           Int.cast_ofNat]
       rw [hexpand]
       have hterm : ∀ k ∈ Finset.range p,
-        ((Nat.choose (p - 1) (2 * k + 1) : ℕ) : ZMod p) * (5 : ZMod p) ^ k
-          = if k < m then -((5 : ZMod p) ^ k) else 0 := by
+          ((Nat.choose (p - 1) (2 * k + 1) : ℕ) : ZMod p) * (5 : ZMod p) ^ k
+            = if k < m then -((5 : ZMod p) ^ k) else 0 := by
         intro k hk
         by_cases hkm : k < m
         · rw [ite_eq_left hkm]
@@ -329,14 +333,14 @@ lemma fib_prime_dvd_fib_of_legendre_sub
         simp only [Finset.mem_range] at hx ⊢
         omega
       have hzero : ∀ k ∈ Finset.range p, k ∉ Finset.range m →
-        (if k < m then -((5 : ZMod p) ^ k) else (0 : ZMod p)) = 0 := by
+          (if k < m then -((5 : ZMod p) ^ k) else (0 : ZMod p)) = 0 := by
         intro k _ hkm
         rw [Finset.mem_range] at hkm
         rw [ite_eq_right hkm]
       rw [← Finset.sum_subset hsub hzero]
       have hif : ∀ k ∈ Finset.range m,
-        (if k < m then -((5 : ZMod p) ^ k) else (0 : ZMod p))
-          = -((5 : ZMod p) ^ k) := by
+          (if k < m then -((5 : ZMod p) ^ k) else (0 : ZMod p))
+            = -((5 : ZMod p) ^ k) := by
         intro k hk
         rw [ite_eq_left (Finset.mem_range.mp hk)]
       rw [Finset.sum_congr rfl hif, Finset.sum_neg_distrib, neg_eq_zero]
@@ -353,11 +357,12 @@ lemma fib_prime_dvd_fib_of_legendre_sub
           ring
         rwa [hconv]
       exact (mul_eq_zero.mp hgeom).resolve_right h51
-    rwa [hO, mul_zero] at hidp
+    rw [hO, mul_zero] at hidp
+    exact hidp.symm
   · have hneg : legendreSym p 5 = -1 := by
-    obtain h1 | h1 := legendreSym.eq_one_or_neg_one (p := p) (a := 5) h5ne
-    · exact absurd h1 hcase
-    · exact h1
+      rcases legendreSym.eq_one_or_neg_one (p := p) (a := 5) h5ne with h1 | h1
+      · exact absurd h1 hcase
+      · exact h1
     rw [ite_eq_right hcase]
     apply (CharP.cast_eq_zero_iff (ZMod p) p _).mp
     have hidp := oddSum_mul_two_mod (p + 1) p
@@ -368,9 +373,9 @@ lemma fib_prime_dvd_fib_of_legendre_sub
     rw [h2p1] at hidp
     have hO : ((oddSum (p + 1) : ℤ) : ZMod p) = 0 := by
       have hexpand : ((oddSum (p + 1) : ℤ) : ZMod p)
-        = ∑ k ∈ Finset.range (p + 2),
-          ((Nat.choose (p + 1) (2 * k + 1) : ℕ) : ZMod p)
-          * (5 : ZMod p) ^ k := by
+          = ∑ k ∈ Finset.range (p + 2),
+            ((Nat.choose (p + 1) (2 * k + 1) : ℕ) : ZMod p)
+            * (5 : ZMod p) ^ k := by
         have h1 : p + 1 + 1 = p + 2 := by omega
         unfold oddSum
         rw [h1]
@@ -380,11 +385,11 @@ lemma fib_prime_dvd_fib_of_legendre_sub
       have e2 : ((p + 1 : ℕ) : ZMod p) = 1 := by
         rw [Nat.cast_add, Nat.cast_one, ZMod.natCast_self p, zero_add]
       have ht0 : ((Nat.choose (p + 1) (2 * 0 + 1) : ℕ) : ZMod p)
-        * (5 : ZMod p) ^ (0 : ℕ) = 1 := by
+          * (5 : ZMod p) ^ (0 : ℕ) = 1 := by
         have e1 : (2 * 0 + 1 : ℕ) = 1 := by omega
         rw [e1, Nat.choose_one_right, e2, pow_zero, mul_one]
       have htm : ((Nat.choose (p + 1) (2 * m + 1) : ℕ) : ZMod p)
-        * (5 : ZMod p) ^ m = -1 := by
+          * (5 : ZMod p) ^ m = -1 := by
         have e1 : 2 * m + 1 = p := hm.symm
         rw [e1, Nat.choose_succ_self_right, e2, one_mul]
         have h2 := heuler
@@ -392,19 +397,20 @@ lemma fib_prime_dvd_fib_of_legendre_sub
         rw [e5] at h2
         simpa using h2.symm
       have hrest : ∀ k ∈ Finset.range (p + 2), k ≠ 0 → k ≠ m →
-        ((Nat.choose (p + 1) (2 * k + 1) : ℕ) : ZMod p)
-          * (5 : ZMod p) ^ k = 0 := by
+          ((Nat.choose (p + 1) (2 * k + 1) : ℕ) : ZMod p)
+            * (5 : ZMod p) ^ k = 0 := by
         intro k hk hk0 hkm
         by_cases hj : 2 * k + 1 ≤ p + 1
         · have hjm : 2 * k + 1 ≠ p := by omega
           have hjp1 : 2 * k + 1 ≠ p + 1 := by omega
           have hjlt : 2 * k + 1 < p := by omega
           have hpas : Nat.choose (p + 1) (2 * k + 1)
-            = Nat.choose p (2 * k + 1 - 1) + Nat.choose p (2 * k + 1) := by
+              = Nat.choose p (2 * k + 1 - 1) + Nat.choose p (2 * k + 1) := by
             have hps := Nat.choose_succ_succ p (2 * k + 1 - 1)
             have e1 : p.succ = p + 1 := by omega
             have e2 : (2 * k + 1 - 1).succ = 2 * k + 1 := by omega
-            rwa [e1, e2] at hps
+            rw [e1, e2] at hps
+            exact hps
           have d1 : p ∣ Nat.choose p (2 * k + 1) :=
             hp.dvd_choose_self (by omega) hjlt
           have d2 : p ∣ Nat.choose p (2 * k + 1 - 1) :=
@@ -413,7 +419,8 @@ lemma fib_prime_dvd_fib_of_legendre_sub
             rw [hpas]
             exact Nat.dvd_add d2 d1
           have h0 : ((Nat.choose (p + 1) (2 * k + 1) : ℕ) : ZMod p) = 0 := by
-            rwa [CharP.cast_eq_zero_iff (ZMod p) p]
+            rw [CharP.cast_eq_zero_iff (ZMod p) p]
+            exact hdvd
           rw [h0, zero_mul]
         · have hgt : p + 1 < 2 * k + 1 := by omega
           have hC : Nat.choose (p + 1) (2 * k + 1) = 0 :=
@@ -428,8 +435,8 @@ lemma fib_prime_dvd_fib_of_legendre_sub
       rw [← Finset.add_sum_erase _ _ h0mem, ht0,
         ← Finset.add_sum_erase _ _ hmmem, htm]
       have hzero : (∑ x ∈ (Finset.range (p + 2)).erase 0 |>.erase m,
-        ((Nat.choose (p + 1) (2 * x + 1) : ℕ) : ZMod p)
-          * (5 : ZMod p) ^ x) = 0 := by
+          ((Nat.choose (p + 1) (2 * x + 1) : ℕ) : ZMod p)
+            * (5 : ZMod p) ^ x) = 0 := by
         apply Finset.sum_eq_zero
         intro k hk
         simp only [Finset.mem_erase, Finset.mem_range] at hk
@@ -445,4 +452,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

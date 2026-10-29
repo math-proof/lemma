@@ -6,10 +6,9 @@ namespace Nat
 
 /--
 [ankeny_lattice_value_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean)
--/
-@[path]
 by both `m` and `k` (which are coprime since `m ∣ k + 1`) and below `2 * m * k`
 must equal `m * k`. -/
+@[path]
 private lemma ankeny_lattice_value_eq {m k : ℕ} (hm : 0 < m) (hk : 0 < k)
   (hmk : m ∣ k + 1) {b : ℤ} (hb : (k : ℤ) ∣ b ^ 2 + (m : ℤ))
   {R X T : ℤ} (hne : ¬ (R = 0 ∧ X = 0 ∧ T = 0))
@@ -52,7 +51,7 @@ private lemma ankeny_lattice_value_eq {m k : ℕ} (hm : 0 < m) (hk : 0 < k)
   have hkV : (k : ℤ) ∣ (k : ℤ) * R ^ 2 + X ^ 2 + (m : ℤ) * T ^ 2 := by
     have e1 : (b * T) ^ 2 ≡ X ^ 2 [ZMOD (k : ℤ)] := hX.pow 2
     have e2 : (b * T) ^ 2 + (m : ℤ) * T ^ 2 ≡ X ^ 2 + (m : ℤ) * T ^ 2
-      [ZMOD (k : ℤ)] := e1.add_right _
+        [ZMOD (k : ℤ)] := e1.add_right _
     have hrr : (b * T) ^ 2 + (m : ℤ) * T ^ 2 = (b ^ 2 + (m : ℤ)) * T ^ 2 := by
       ring
     rw [hrr] at e2
@@ -61,17 +60,19 @@ private lemma ankeny_lattice_value_eq {m k : ℕ} (hm : 0 < m) (hk : 0 < k)
     have hfin : X ^ 2 + (m : ℤ) * T ^ 2 ≡ 0 [ZMOD (k : ℤ)] := e2.symm.trans hzero
     have hdvd : (k : ℤ) ∣ X ^ 2 + (m : ℤ) * T ^ 2 := by
       have h := hfin.dvd
-      rwa [zero_sub, dvd_neg] at h
+      rw [zero_sub, dvd_neg] at h
+      exact h
     have h1 : (k : ℤ) ∣ (k : ℤ) * R ^ 2 := dvd_mul_right _ _
     have h := h1.add hdvd
-    rwa [← add_assoc] at h
+    rw [← add_assoc] at h
+    exact h
   -- `m` divides the value, via `R ≡ X` and `k + 1 ≡ 0`.
   have hR : X ≡ R [ZMOD (m : ℤ)] := Int.modEq_iff_dvd.mpr hRX
   have hmV : (m : ℤ) ∣ (k : ℤ) * R ^ 2 + X ^ 2 + (m : ℤ) * T ^ 2 := by
     have e1 : (k : ℤ) * X ^ 2 ≡ (k : ℤ) * R ^ 2 [ZMOD (m : ℤ)] :=
       (Int.ModEq.refl _).mul (hR.pow 2)
     have hmid : (k : ℤ) * X ^ 2 + X ^ 2 ≡ (k : ℤ) * R ^ 2 + X ^ 2
-      [ZMOD (m : ℤ)] := e1.add (Int.ModEq.refl _)
+        [ZMOD (m : ℤ)] := e1.add (Int.ModEq.refl _)
     have hring : (k : ℤ) * X ^ 2 + X ^ 2 = ((k : ℤ) + 1) * X ^ 2 := by ring
     rw [hring] at hmid
     have hkm : ((k : ℤ) + 1) * X ^ 2 ≡ 0 [ZMOD (m : ℤ)] := by
@@ -81,7 +82,8 @@ private lemma ankeny_lattice_value_eq {m k : ℕ} (hm : 0 < m) (hk : 0 < k)
       hmid.symm.trans hkm
     have hdvd : (m : ℤ) ∣ (k : ℤ) * R ^ 2 + X ^ 2 := by
       have h := hfin.dvd
-      rwa [zero_sub, dvd_neg] at h
+      rw [zero_sub, dvd_neg] at h
+      exact h
     have h2 : (m : ℤ) ∣ (m : ℤ) * T ^ 2 := dvd_mul_right _ _
     exact hdvd.add h2
   -- `(m : ℤ)` and `(k : ℤ)` are coprime since `m ∣ k + 1`, so their product
@@ -93,7 +95,7 @@ private lemma ankeny_lattice_value_eq {m k : ℕ} (hm : 0 < m) (hk : 0 < k)
     push_cast at h2
     linear_combination -h2
   have hmkV : (m : ℤ) * (k : ℤ)
-    ∣ (k : ℤ) * R ^ 2 + X ^ 2 + (m : ℤ) * T ^ 2 := hiso.mul_dvd hmV hkV
+      ∣ (k : ℤ) * R ^ 2 + X ^ 2 + (m : ℤ) * T ^ 2 := hiso.mul_dvd hmV hkV
   have hmkZ : (0 : ℤ) < (m : ℤ) * (k : ℤ) := mul_pos hmZ hkZ
   obtain ⟨j, hj⟩ := hmkV
   have hjpos : 0 < j := by
@@ -111,7 +113,8 @@ private lemma ankeny_lattice_value_eq {m k : ℕ} (hm : 0 < m) (hk : 0 < k)
           mul_le_mul_of_nonneg_left h (le_of_lt hmkZ)
     linarith
   have hj1 : j = 1 := by omega
-  rwa [hj1, mul_one] at hj
+  rw [hj1, mul_one] at hj
+  exact hj
 
 end Nat
 
@@ -119,16 +122,15 @@ namespace Nat
 
 /--
 [even_padicValInt_sq_add_mul_sq_of_not_isSquare](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean)
--/
-@[path]
 `X ^ 2 + d * T ^ 2` has even `p`-adic valuation. -/
+@[path]
 private lemma even_padicValInt_sq_add_mul_sq_of_not_isSquare {p : ℕ} [Fact p.Prime]
   {d : ℤ} (hd : ¬ IsSquare (-(d : ZMod p))) (X T : ℤ) :
   Even (padicValInt p (X ^ 2 + d * T ^ 2)) := by
   have hp2 : 1 < p := (Fact.out : p.Prime).one_lt
   have hpZ : _root_.Prime (p : ℤ) := Nat.prime_iff_prime_int.mp (Fact.out : p.Prime)
   have key : ∀ N : ℕ, ∀ X T : ℤ, X.natAbs + T.natAbs = N →
-    Even (padicValInt p (X ^ 2 + d * T ^ 2)) := by
+      Even (padicValInt p (X ^ 2 + d * T ^ 2)) := by
     intro N
     induction N using Nat.strong_induction_on with
     | h N ih =>
@@ -138,27 +140,27 @@ private lemma even_padicValInt_sq_add_mul_sq_of_not_isSquare {p : ℕ} [Fact p.P
         exact ⟨0, rfl⟩
       by_cases hdvd : (p : ℤ) ∣ X ^ 2 + d * T ^ 2
       · have hT : (p : ℤ) ∣ T := by
-        by_contra hT
-        have hTz : (T : ZMod p) ≠ 0 := fun hz =>
-          hT ((ZMod.intCast_zmod_eq_zero_iff_dvd T p).mp hz)
-        have hcast : (X : ZMod p) ^ 2 + (d : ZMod p) * (T : ZMod p) ^ 2 = 0 := by
-          have h := (ZMod.intCast_zmod_eq_zero_iff_dvd _ p).mpr hdvd
-          push_cast at h
-          exact h
-        set x : ZMod p := (X : ZMod p) with hx
-        set t : ZMod p := (T : ZMod p) with ht
-        set δ : ZMod p := (d : ZMod p) with hδ
-        have hx2 : x ^ 2 = -(δ * t ^ 2) := by linear_combination hcast
-        have e2 : (t⁻¹) ^ 2 * t ^ 2 = 1 := by
-          rw [← mul_pow, inv_mul_cancel₀ hTz, one_pow]
-        have e3 : -(δ * t ^ 2) * (t⁻¹) ^ 2 = -δ := by
-          have e4 : -(δ * t ^ 2) * (t⁻¹) ^ 2 = -δ * ((t⁻¹) ^ 2 * t ^ 2) := by
-            ring
-          rw [e4, e2, mul_one]
-        have hsq : -(δ) = (x * t⁻¹) * (x * t⁻¹) := by
-          have e : (x * t⁻¹) * (x * t⁻¹) = x ^ 2 * (t⁻¹) ^ 2 := by ring
-          rw [e, hx2, e3]
-        exact hd ⟨x * t⁻¹, hsq⟩
+          by_contra hT
+          have hTz : (T : ZMod p) ≠ 0 := fun hz =>
+            hT ((ZMod.intCast_zmod_eq_zero_iff_dvd T p).mp hz)
+          have hcast : (X : ZMod p) ^ 2 + (d : ZMod p) * (T : ZMod p) ^ 2 = 0 := by
+            have h := (ZMod.intCast_zmod_eq_zero_iff_dvd _ p).mpr hdvd
+            push_cast at h
+            exact h
+          set x : ZMod p := (X : ZMod p) with hx
+          set t : ZMod p := (T : ZMod p) with ht
+          set δ : ZMod p := (d : ZMod p) with hδ
+          have hx2 : x ^ 2 = -(δ * t ^ 2) := by linear_combination hcast
+          have e2 : (t⁻¹) ^ 2 * t ^ 2 = 1 := by
+            rw [← mul_pow, inv_mul_cancel₀ hTz, one_pow]
+          have e3 : -(δ * t ^ 2) * (t⁻¹) ^ 2 = -δ := by
+            have e4 : -(δ * t ^ 2) * (t⁻¹) ^ 2 = -δ * ((t⁻¹) ^ 2 * t ^ 2) := by
+              ring
+            rw [e4, e2, mul_one]
+          have hsq : -(δ) = (x * t⁻¹) * (x * t⁻¹) := by
+            have e : (x * t⁻¹) * (x * t⁻¹) = x ^ 2 * (t⁻¹) ^ 2 := by ring
+            rw [e, hx2, e3]
+          exact hd ⟨x * t⁻¹, hsq⟩
         have hT2 : (p : ℤ) ∣ d * T ^ 2 :=
           dvd_mul_of_dvd_right (dvd_pow hT two_ne_zero) _
         have hX2 : (p : ℤ) ∣ X ^ 2 := (dvd_add_left hT2).mp hdvd
@@ -166,7 +168,7 @@ private lemma even_padicValInt_sq_add_mul_sq_of_not_isSquare {p : ℕ} [Fact p.P
         obtain ⟨X', hX'⟩ := hX
         obtain ⟨T', hT'⟩ := hT
         have hfactor : X ^ 2 + d * T ^ 2
-          = (p : ℤ) ^ 2 * (X' ^ 2 + d * T' ^ 2) := by
+            = (p : ℤ) ^ 2 * (X' ^ 2 + d * T' ^ 2) := by
           rw [hX', hT']
           ring
         have hSne : X' ^ 2 + d * T' ^ 2 ≠ 0 := by
@@ -180,7 +182,7 @@ private lemma even_padicValInt_sq_add_mul_sq_of_not_isSquare {p : ℕ} [Fact p.P
             omega
           rw [h1, padicValInt.mul hp0 hp0, padicValInt.self hp2]
         have hval : padicValInt p (X ^ 2 + d * T ^ 2)
-          = 2 + padicValInt p (X' ^ 2 + d * T' ^ 2) := by
+            = 2 + padicValInt p (X' ^ 2 + d * T' ^ 2) := by
           rw [hfactor, padicValInt.mul (by positivity) hSne, hpp]
         have eX : X.natAbs = p * X'.natAbs := by
           rw [hX', Int.natAbs_mul, Int.natAbs_natCast]
@@ -223,7 +225,7 @@ private lemma even_padicValInt_sq_add_mul_sq_of_not_isSquare {p : ℕ} [Fact p.P
               _ < p * T'.natAbs := by
                 rw [one_mul]
                 exact lt_mul_of_one_lt_left hpos hp2
-          obtain hneX | hneT := hne00
+          rcases hne00 with hneX | hneT
           · have := hXlt hneX
             omega
           · have := hTlt hneT
@@ -242,10 +244,9 @@ namespace Nat
 
 /--
 [ankeny_exists_two_sq_of_rep](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean)
--/
-@[path]
 with `m` squarefree and no prime factor of `k` congruent to `3 mod 4`,
 conclude `N` is a sum of two natural squares. -/
+@[path]
 private lemma ankeny_exists_two_sq_of_rep {m k : ℕ} (hm : Squarefree m)
   (hk : 0 < k) (hmk : m ∣ k + 1)
   (hk4 : ∀ p : ℕ, p.Prime → p ∣ k → p % 4 ≠ 3)
@@ -267,7 +268,7 @@ private lemma ankeny_exists_two_sq_of_rep {m k : ℕ} (hm : Squarefree m)
   · -- Case `q ∣ m`: derive a contradiction from `-1` being a square mod `q`.
     have hqmN : q ∣ m := Int.natCast_dvd_natCast.mp hqm
     have hqk1 : q ∣ k + 1 := dvd_trans hqmN hmk
-    obtain ⟨m₁, hm₁⟩ := hqmN
+    rcases hqmN with ⟨m₁, hm₁⟩
     have hqm1 : ¬ q ∣ m₁ := by
       intro hd
       obtain ⟨t, ht⟩ := hd
@@ -295,7 +296,7 @@ private lemma ankeny_exists_two_sq_of_rep {m k : ℕ} (hm : Squarefree m)
       rw [hN₁, hm₁, hX₁] at h
       push_cast at h
       have h2 : ((k : ℤ) * (N₁ : ℤ)) * (q : ℤ)
-        = ((q : ℤ) * X₁ ^ 2 + (m₁ : ℤ) * T ^ 2) * (q : ℤ) := by
+          = ((q : ℤ) * X₁ ^ 2 + (m₁ : ℤ) * T ^ 2) * (q : ℤ) := by
         linear_combination h
       exact mul_right_cancel₀ hq0 h2
     have hNm : (N₁ : ℤ) = (m₁ : ℤ) - (q : ℤ) * R₁ ^ 2 := by
@@ -303,12 +304,12 @@ private lemma ankeny_exists_two_sq_of_rep {m k : ℕ} (hm : Squarefree m)
       rw [hN₁, hm₁, hR₁] at h
       push_cast at h
       have hcan : ((m₁ : ℤ) - (N₁ : ℤ)) * (q : ℤ)
-        = ((q : ℤ) * R₁ ^ 2) * (q : ℤ) := by
+          = ((q : ℤ) * R₁ ^ 2) * (q : ℤ) := by
         linear_combination h
       have hcan2 := mul_right_cancel₀ hq0 hcan
       omega
     have hdivZ : (k : ZMod q) * ((N₁ : ℕ) : ZMod q)
-      = ((m₁ : ℕ) : ZMod q) * (T : ZMod q) ^ 2 := by
+        = ((m₁ : ℕ) : ZMod q) * (T : ZMod q) ^ 2 := by
       have h := congrArg (fun z : ℤ => (z : ZMod q)) hdiv
       simpa using h
     have hNmZ : ((N₁ : ℕ) : ZMod q) = ((m₁ : ℕ) : ZMod q) := by
@@ -359,24 +360,25 @@ private lemma ankeny_exists_two_sq_of_rep {m k : ℕ} (hm : Squarefree m)
         rw [hNq, add_zero] at h
         exact_mod_cast h.symm
       have hsq1 : (-1 : ZMod q)
-        = (s * (R : ZMod q)⁻¹) * (s * (R : ZMod q)⁻¹) := by
+          = (s * (R : ZMod q)⁻¹) * (s * (R : ZMod q)⁻¹) := by
         have eR : (R : ZMod q) * (R : ZMod q)⁻¹ = 1 := mul_inv_cancel₀ hRz
         have e : (s * (R : ZMod q)⁻¹) * (s * (R : ZMod q)⁻¹)
-          = (s * s) * ((R : ZMod q)⁻¹ * (R : ZMod q)⁻¹) := by ring
+            = (s * s) * ((R : ZMod q)⁻¹ * (R : ZMod q)⁻¹) := by ring
         have e3 : ((R : ZMod q)⁻¹ * (R : ZMod q)⁻¹) * (R : ZMod q) ^ 2 = 1 := by
           have e4 : ((R : ZMod q)⁻¹ * (R : ZMod q)⁻¹) * (R : ZMod q) ^ 2
-            = ((R : ZMod q) * (R : ZMod q)⁻¹) ^ 2 := by ring
+              = ((R : ZMod q) * (R : ZMod q)⁻¹) ^ 2 := by ring
           rw [e4, eR, one_pow]
         have e6 : -((R : ZMod q) ^ 2) * ((R : ZMod q)⁻¹ * (R : ZMod q)⁻¹)
-          = -1 := by
+            = -1 := by
           have e7 : -((R : ZMod q) ^ 2) * ((R : ZMod q)⁻¹ * (R : ZMod q)⁻¹)
-            = -(((R : ZMod q)⁻¹ * (R : ZMod q)⁻¹) * (R : ZMod q) ^ 2) := by
+              = -(((R : ZMod q)⁻¹ * (R : ZMod q)⁻¹) * (R : ZMod q) ^ 2) := by
             ring
           rw [e7, e3]
-        rwa [e, ← hs, ← hRmz]
+        rw [e, ← hs, ← hRmz]
+        exact e6.symm
       exact (ZMod.exists_sq_eq_neg_one_iff.mp ⟨_, hsq1⟩) hq4
     have hmul : padicValInt q ((k : ℤ) * (N : ℤ))
-      = padicValNat q k + padicValNat q N := by
+        = padicValNat q k + padicValNat q N := by
       have hk0 : (k : ℤ) ≠ 0 := by
         have := hk
         omega
@@ -385,7 +387,8 @@ private lemma ankeny_exists_two_sq_of_rep {m k : ℕ} (hm : Squarefree m)
         omega
       rw [padicValInt.mul hk0 hN0', padicValInt.of_nat, padicValInt.of_nat]
     have heven := even_padicValInt_sq_add_mul_sq_of_not_isSquare (p := q) hnsqB X T
-    rwa [← hrep, hmul, padicValNat.eq_zero_of_not_dvd hqk, zero_add] at heven
+    rw [← hrep, hmul, padicValNat.eq_zero_of_not_dvd hqk, zero_add] at heven
+    exact heven
 
 end Nat
 
@@ -409,7 +412,7 @@ private lemma isSquare_neg_of_one_mod_four_case {q m : ℕ} [Fact q.Prime]
       (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp (by exact_mod_cast hz)
     have hdvdN : q ∣ m := Int.natCast_dvd_natCast.mp hdvdZ
     obtain ⟨s, hs⟩ := hdvd
-    obtain ⟨t, ht⟩ := hdvdN
+    rcases hdvdN with ⟨t, ht⟩
     have hqq1 : q ∣ q + 1 := ⟨t * s, by rw [hs, ht]; ring⟩
     have hqq1Z : (q : ℤ) ∣ (q : ℤ) + 1 := by exact_mod_cast hqq1
     have hq1Z : (q : ℤ) ∣ 1 := by
@@ -424,7 +427,8 @@ private lemma isSquare_neg_of_one_mod_four_case {q m : ℕ} [Fact q.Prime]
     have hcast : ((m : ℕ) : ℤ) ∣ (q : ℤ) + 1 := by exact_mod_cast hdvd
     have h0 : ((q : ℤ) + 1) % ((m : ℕ) : ℤ) = 0 := Int.emod_eq_zero_of_dvd hcast
     have heq : (q : ℤ) - (-1) = (q : ℤ) + 1 := by ring
-    rwa [heq]
+    rw [heq]
+    exact h0
   have hchiq : ZMod.χ₄ (↑q : ZMod 4) = 1 := ZMod.χ₄_nat_one_mod_four hq
   have hchim : ZMod.χ₄ (↑m : ZMod 4) = 1 := ZMod.χ₄_nat_one_mod_four hm
   have hleg : legendreSym q (-((m : ℕ) : ℤ)) = 1 := by
@@ -464,7 +468,7 @@ private lemma isSquare_neg_of_three_mod_eight_case {q m : ℕ} [Fact q.Prime]
       (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp (by exact_mod_cast hz)
     have hdvdN : q ∣ m := Int.natCast_dvd_natCast.mp hdvdZ
     obtain ⟨s, hs⟩ := hdvd
-    obtain ⟨t, ht⟩ := hdvdN
+    rcases hdvdN with ⟨t, ht⟩
     have hqq1 : q ∣ 2 * q + 1 := ⟨t * s, by rw [hs, ht]; ring⟩
     have hqq1Z : (q : ℤ) ∣ 2 * (q : ℤ) + 1 := by exact_mod_cast hqq1
     have hq1Z : (q : ℤ) ∣ 1 := by
@@ -490,8 +494,10 @@ private lemma isSquare_neg_of_three_mod_eight_case {q m : ℕ} [Fact q.Prime]
       rw [jacobiSym.mod_left' hmod2, jacobiSym.one_left]
     have hsplit := jacobiSym.mul_left (-2 : ℤ) ((q : ℤ)) m
     have hneg2 : jacobiSym (-2 : ℤ) m = 1 := by
-      rwa [jacobiSym.at_neg_two hmodd]
-    rwa [hsplit, hneg2, one_mul] at h2q1
+      rw [jacobiSym.at_neg_two hmodd]
+      exact hchi8
+    rw [hsplit, hneg2, one_mul] at h2q1
+    exact h2q1
   have hleg : legendreSym q (-((m : ℕ) : ℤ)) = 1 := by
     rw [jacobiSym.legendreSym.to_jacobiSym, jacobiSym.neg _ hqodd, hchiq, one_mul,
       (jacobiSym.quadratic_reciprocity_one_mod_four hq hmodd).symm, hJq]
@@ -512,9 +518,8 @@ namespace Nat
 
 /--
 [isSquare_neg_of_two_mod_four_case](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean)
--/
-@[path]
 nonzero square in `ZMod q`. Here `m = 2 * m'` with `m'` odd. -/
+@[path]
 private lemma isSquare_neg_of_two_mod_four_case {q m : ℕ} [Fact q.Prime]
   (hm : m % 4 = 2) (hdvd : m ∣ q + 1) (hq8 : q % 8 = (m - 1) % 8) :
   q % 4 = 1 ∧ IsSquare (-((m : ℕ) : ZMod q))
@@ -536,7 +541,7 @@ private lemma isSquare_neg_of_two_mod_four_case {q m : ℕ} [Fact q.Prime]
       (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp (by exact_mod_cast hz)
     have hdvdN : q ∣ m := Int.natCast_dvd_natCast.mp hdvdZ
     obtain ⟨s, hs⟩ := hdvd
-    obtain ⟨t, ht⟩ := hdvdN
+    rcases hdvdN with ⟨t, ht⟩
     have hqq1 : q ∣ q + 1 := ⟨t * s, by rw [hs, ht]; ring⟩
     have hqq1Z : (q : ℤ) ∣ (q : ℤ) + 1 := by exact_mod_cast hqq1
     have hq1Z : (q : ℤ) ∣ 1 := by
@@ -554,7 +559,8 @@ private lemma isSquare_neg_of_two_mod_four_case {q m : ℕ} [Fact q.Prime]
     have hcast : ((m' : ℕ) : ℤ) ∣ (q : ℤ) + 1 := by exact_mod_cast hdvd'
     have h0 : ((q : ℤ) + 1) % ((m' : ℕ) : ℤ) = 0 := Int.emod_eq_zero_of_dvd hcast
     have heq : (q : ℤ) - (-1) = (q : ℤ) + 1 := by ring
-    rwa [heq]
+    rw [heq]
+    exact h0
   have e1 : (-((m : ℕ) : ℤ)) = -(2 * ((m' : ℕ) : ℤ)) := by rw [hmZ]
   have hchiq : ZMod.χ₄ (↑q : ZMod 4) = 1 := ZMod.χ₄_nat_one_mod_four hq4
   have hleg : legendreSym q (-((m : ℕ) : ℤ)) = 1 := by
@@ -564,7 +570,7 @@ private lemma isSquare_neg_of_two_mod_four_case {q m : ℕ} [Fact q.Prime]
       jacobiSym.mod_left' hmod', jacobiSym.at_neg_one hm'odd]
     have h2 : m' % 2 = 1 := Nat.odd_iff.mp hm'odd
     have hm'4 : m' % 4 = 1 ∨ m' % 4 = 3 := by omega
-    obtain h1 | h3 := hm'4
+    rcases hm'4 with h1 | h3
     · have e41 : ZMod.χ₄ (↑q : ZMod 4) = 1 := hchiq
       have e81 : ZMod.χ₈ (↑q : ZMod 8) = 1 := by
         have hq81 : q % 8 = 1 := by omega
@@ -614,7 +620,8 @@ private lemma ankeny_coprime_aux {a n : ℕ} (hodd : Odd a)
     simpa using h
   have h4 : Nat.Coprime a 4 := by
     have h := Nat.coprime_mul_iff_right.mpr ⟨h2, h2⟩
-    rwa [show (2 : ℕ) * 2 = 4 from rfl] at h
+    rw [show (2 : ℕ) * 2 = 4 from rfl] at h
+    exact h
   exact Nat.coprime_mul_iff_right.mpr ⟨h4, hcop⟩
 
 end Nat
@@ -623,9 +630,8 @@ namespace Nat
 
 /--
 [ankeny_dirichlet_prime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean)
--/
-@[path]
 `q ≡ a (mod 4 * m)` exceeding `4 * m`. -/
+@[path]
 private lemma ankeny_dirichlet_prime {m a : ℕ} (hm : 0 < m)
   (hcop : Nat.Coprime a (4 * m)) :
   ∃ q : ℕ, q.Prime ∧ (4 * m) < q ∧ q % (4 * m) = a % (4 * m) := by
@@ -663,9 +669,8 @@ namespace Nat
 
 /--
 [volume_setOf_sum_sq_lt_fin_three](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean)
--/
-@[path]
 openness. It is the preimage of the Euclidean ball under `WithLp.toLp`. -/
+@[path]
 private lemma volume_setOf_sum_sq_lt_fin_three {r : ℝ} (hr : 0 < r) :
   MeasureTheory.volume {x : Fin 3 → ℝ | ∑ i, (x i) ^ 2 < r ^ 2}
     = ENNReal.ofReal r ^ 3 * ENNReal.ofReal (Real.pi * 4 / 3)
@@ -674,19 +679,19 @@ private lemma volume_setOf_sum_sq_lt_fin_three {r : ℝ} (hr : 0 < r) :
     -x ∈ {x : Fin 3 → ℝ | ∑ i, (x i) ^ 2 < r ^ 2})
   ∧ IsOpen {x : Fin 3 → ℝ | ∑ i, (x i) ^ 2 < r ^ 2} := by
   have hmem : ∀ x : Fin 3 → ℝ,
-    (∑ i, (x i) ^ 2 < r ^ 2)
-      ↔ WithLp.toLp 2 x ∈ Metric.ball (0 : EuclideanSpace ℝ (Fin 3)) r := by
+      (∑ i, (x i) ^ 2 < r ^ 2)
+        ↔ WithLp.toLp 2 x ∈ Metric.ball (0 : EuclideanSpace ℝ (Fin 3)) r := by
     intro x
-    rw [Metric.mem_ball, dist_zero_right, EuclideanSpace.norm_eq]
+    rw [Metric.mem_ball, _root_.dist_zero_right, EuclideanSpace.norm_eq]
     simp only [Real.norm_eq_abs, sq_abs, Fin.sum_univ_three]
     rw [Real.sqrt_lt' hr]
   have hset : {x : Fin 3 → ℝ | ∑ i, (x i) ^ 2 < r ^ 2}
-    = WithLp.toLp 2 ⁻¹' Metric.ball (0 : EuclideanSpace ℝ (Fin 3)) r := by
+      = WithLp.toLp 2 ⁻¹' Metric.ball (0 : EuclideanSpace ℝ (Fin 3)) r := by
     ext x
     simp only [Set.mem_preimage]
     exact hmem x
   have hvol : MeasureTheory.volume {x : Fin 3 → ℝ | ∑ i, (x i) ^ 2 < r ^ 2}
-    = ENNReal.ofReal r ^ 3 * ENNReal.ofReal (Real.pi * 4 / 3) := by
+      = ENNReal.ofReal r ^ 3 * ENNReal.ofReal (Real.pi * 4 / 3) := by
     rw [hset, (PiLp.volume_preserving_toLp (ι := Fin 3)).measure_preimage
       measurableSet_ball.nullMeasurableSet]
     exact EuclideanSpace.volume_ball_fin_three _ _
@@ -695,7 +700,7 @@ private lemma volume_setOf_sum_sq_lt_fin_three {r : ℝ} (hr : 0 < r) :
     exact Convex.linear_preimage (convex_ball _ _)
       (WithLp.linearEquiv 2 ℝ (Fin 3 → ℝ)).symm.toLinearMap
   have hsymm : ∀ x ∈ {x : Fin 3 → ℝ | ∑ i, (x i) ^ 2 < r ^ 2},
-    -x ∈ {x : Fin 3 → ℝ | ∑ i, (x i) ^ 2 < r ^ 2} := by
+      -x ∈ {x : Fin 3 → ℝ | ∑ i, (x i) ^ 2 < r ^ 2} := by
     intro x hx
     change ∑ i, ((-x) i) ^ 2 < r ^ 2
     simp only [Pi.neg_apply, neg_sq]
@@ -711,10 +716,9 @@ namespace Nat
 
 /--
 [exists_int_ne_zero_sum_sq_mulVec_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean)
--/
-@[path]
 determinant sends some nonzero integer vector into the ball of radius `r`,
 provided `8 * |det M| < (π * 4 / 3) * r ^ 3`. -/
+@[path]
 private lemma exists_int_ne_zero_sum_sq_mulVec_lt
   (M : Matrix (Fin 3) (Fin 3) ℝ) (hdet : M.det ≠ 0)
   (r : ℝ) (hr : 0 < r)
@@ -733,22 +737,23 @@ private lemma exists_int_ne_zero_sum_sq_mulVec_lt
       exact hBsymm _ hx'
     exact hneg
   have hdetf : LinearMap.det f ≠ 0 := by
-    rwa [hf, LinearMap.det_toLin']
+    rw [hf, LinearMap.det_toLin']
+    exact hdet
   have hSvol : MeasureTheory.volume S = ENNReal.ofReal (|M.det|⁻¹) *
-    (ENNReal.ofReal r ^ 3 * ENNReal.ofReal (Real.pi * 4 / 3)) := by
+      (ENNReal.ofReal r ^ 3 * ENNReal.ofReal (Real.pi * 4 / 3)) := by
     rw [hS,
       MeasureTheory.Measure.addHaar_preimage_linearMap MeasureTheory.volume hdetf,
       hBvol]
     congr 1
     rw [hf, LinearMap.det_toLin', abs_inv]
   have hFvol : MeasureTheory.volume
-    (ZSpan.fundamentalDomain (Pi.basisFun ℝ (Fin 3))) = 1 := by
+      (ZSpan.fundamentalDomain (Pi.basisFun ℝ (Fin 3))) = 1 := by
     rw [ZSpan.fundamentalDomain_pi_basisFun, Real.volume_pi_Ico]
     simp
   have hfin : Module.finrank ℝ (Fin 3 → ℝ) = 3 := by simp
   have hDpos : 0 < |M.det| := abs_pos.mpr hdet
   have hlat : MeasureTheory.volume (ZSpan.fundamentalDomain (Pi.basisFun ℝ (Fin 3))) *
-    2 ^ Module.finrank ℝ (Fin 3 → ℝ) < MeasureTheory.volume S := by
+      2 ^ Module.finrank ℝ (Fin 3 → ℝ) < MeasureTheory.volume S := by
     rw [hFvol, hfin, one_mul]
     have h2 : (2 : ENNReal) ^ 3 = ENNReal.ofReal 8 := by
       rw [show (8 : ℝ) = 2 ^ 3 by norm_num,
@@ -762,7 +767,7 @@ private lemma exists_int_ne_zero_sum_sq_mulVec_lt
     rw [hinv]
     linear_combination hmul
   have : Countable
-    ↥((Submodule.span ℤ (Set.range (Pi.basisFun ℝ (Fin 3)))).toAddSubgroup) :=
+      ↥((Submodule.span ℤ (Set.range (Pi.basisFun ℝ (Fin 3)))).toAddSubgroup) :=
     inferInstanceAs
       (Countable ↥(Submodule.span ℤ (Set.range (Pi.basisFun ℝ (Fin 3)))))
   obtain ⟨x, hx0, hxS⟩ :=
@@ -770,7 +775,7 @@ private lemma exists_int_ne_zero_sum_sq_mulVec_lt
       (ZSpan.isAddFundamentalDomain' (Pi.basisFun ℝ (Fin 3)) MeasureTheory.volume)
       hSsymm hSconv hlat
   have hymem : (↑x : Fin 3 → ℝ) ∈
-    Submodule.span ℤ (Set.range (Pi.basisFun ℝ (Fin 3))) :=
+      Submodule.span ℤ (Set.range (Pi.basisFun ℝ (Fin 3))) :=
     x.2
   rw [Module.Basis.mem_span_iff_repr_mem] at hymem
   choose u hu using hymem
@@ -778,7 +783,8 @@ private lemma exists_int_ne_zero_sum_sq_mulVec_lt
   have hu' : ∀ i, (((u i : ℤ)) : ℝ) = (↑x : Fin 3 → ℝ) i := by
     intro i
     have h1 := hu i
-    rwa [Pi.basisFun_repr, hAlg] at h1
+    rw [Pi.basisFun_repr, hAlg] at h1
+    exact h1
   refine ⟨u, ?_, ?_⟩
   · intro hu0
     apply hx0
@@ -788,10 +794,10 @@ private lemma exists_int_ne_zero_sum_sq_mulVec_lt
       simp only [← hu' i, h1, Int.cast_zero, Pi.zero_apply]
     exact Subtype.ext (by simpa using hy0)
   · have hM : M.mulVec (fun i => ((u i : ℤ) : ℝ)) = f (↑x : Fin 3 → ℝ) := by
-    rw [hf, Matrix.toLin'_apply]
-    congr 1
-    funext i
-    exact hu' i
+      rw [hf, Matrix.toLin'_apply]
+      congr 1
+      funext i
+      exact hu' i
     rw [hM]
     simpa [hS] using hxS
 
@@ -801,10 +807,9 @@ namespace Nat
 
 /--
 [ankeny_exists_small_lattice_point](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean)
--/
-@[path]
 there are integers `R, X, T`, not all zero, with `m ∣ R - X`, `k ∣ X - b * T`
 and `k * R ^ 2 + X ^ 2 + m * T ^ 2 < 2 * m * k`. -/
+@[path]
 private lemma ankeny_exists_small_lattice_point {m k : ℕ} (hm : 0 < m) (hk : 0 < k)
   (b : ℤ) :
   ∃ R X T : ℤ, ¬ (R = 0 ∧ X = 0 ∧ T = 0) ∧ (m : ℤ) ∣ R - X ∧ (k : ℤ) ∣ X - b * T ∧
@@ -813,15 +818,15 @@ private lemma ankeny_exists_small_lattice_point {m k : ℕ} (hm : 0 < m) (hk : 0
   have hkR : (0 : ℝ) < (k : ℝ) := by exact_mod_cast hk
   set M : Matrix (Fin 3) (Fin 3) ℝ :=
     !![Real.sqrt (k : ℝ) * (m : ℝ), Real.sqrt (k : ℝ) * (k : ℝ),
-      Real.sqrt (k : ℝ) * ((b : ℤ) : ℝ);
-      0, (k : ℝ), ((b : ℤ) : ℝ);
-      0, 0, Real.sqrt (m : ℝ)] with hM
+        Real.sqrt (k : ℝ) * ((b : ℤ) : ℝ);
+       0, (k : ℝ), ((b : ℤ) : ℝ);
+       0, 0, Real.sqrt (m : ℝ)] with hM
   set r : ℝ := Real.sqrt (2 * (m : ℝ) * (k : ℝ)) with hr_def
   have hr_pos : 0 < r := by
     rw [hr_def]
     exact Real.sqrt_pos.mpr (by positivity)
   have hdetM : M.det
-    = Real.sqrt (k : ℝ) * (m : ℝ) * ((k : ℝ) * Real.sqrt (m : ℝ)) := by
+      = Real.sqrt (k : ℝ) * (m : ℝ) * ((k : ℝ) * Real.sqrt (m : ℝ)) := by
     rw [Matrix.det_fin_three, hM]
     simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
       Matrix.cons_val_fin_one, Matrix.cons_val_one, Matrix.cons_val]
@@ -833,11 +838,11 @@ private lemma ankeny_exists_small_lattice_point {m k : ℕ} (hm : 0 < m) (hk : 0
     positivity
   have hdet : M.det ≠ 0 := ne_of_gt hdetpos
   have hsq : Real.sqrt (k : ℝ) * Real.sqrt (m : ℝ)
-    = Real.sqrt ((m : ℝ) * (k : ℝ)) := by
+      = Real.sqrt ((m : ℝ) * (k : ℝ)) := by
     rw [mul_comm ((m : ℝ)) ((k : ℝ))]
     exact (Real.sqrt_mul hkR.le _).symm
   have hsq2 : Real.sqrt (2 * (m : ℝ) * (k : ℝ))
-    = Real.sqrt 2 * Real.sqrt ((m : ℝ) * (k : ℝ)) := by
+      = Real.sqrt 2 * Real.sqrt ((m : ℝ) * (k : ℝ)) := by
     rw [show 2 * (m : ℝ) * (k : ℝ) = 2 * ((m : ℝ) * (k : ℝ)) by ring,
       Real.sqrt_mul (show (0 : ℝ) ≤ 2 by norm_num)]
   have ht1 : (1 : ℝ) < Real.sqrt 2 := by
@@ -854,13 +859,13 @@ private lemma ankeny_exists_small_lattice_point {m k : ℕ} (hm : 0 < m) (hk : 0
     exact Real.sq_sqrt (by positivity)
   have hvol : 8 * |M.det| < (Real.pi * 4 / 3) * r ^ 3 := by
     have e1 : |M.det|
-      = (m : ℝ) * (k : ℝ) * Real.sqrt ((m : ℝ) * (k : ℝ)) := by
+        = (m : ℝ) * (k : ℝ) * Real.sqrt ((m : ℝ) * (k : ℝ)) := by
       have e1' : Real.sqrt (k : ℝ) * (m : ℝ) * ((k : ℝ) * Real.sqrt (m : ℝ))
-        = (m : ℝ) * (k : ℝ) * (Real.sqrt (k : ℝ) * Real.sqrt (m : ℝ)) := by ring
+          = (m : ℝ) * (k : ℝ) * (Real.sqrt (k : ℝ) * Real.sqrt (m : ℝ)) := by ring
       rw [abs_of_pos hdetpos, hdetM, e1', hsq]
     have e2 : r ^ 3
-      = 2 * ((m : ℝ) * (k : ℝ))
-        * (Real.sqrt 2 * Real.sqrt ((m : ℝ) * (k : ℝ))) := by
+        = 2 * ((m : ℝ) * (k : ℝ))
+          * (Real.sqrt 2 * Real.sqrt ((m : ℝ) * (k : ℝ))) := by
       have er3 : r ^ 3 = r ^ 2 * r := by ring
       rw [er3, hr2, hr_def, hsq2]
       ring
@@ -874,7 +879,7 @@ private lemma ankeny_exists_small_lattice_point {m k : ℕ} (hm : 0 < m) (hk : 0
   set X : ℤ := (k : ℤ) * u 1 + b * u 2 with hX
   set R : ℤ := (m : ℤ) * u 0 + X with hR
   have e0 : (M.mulVec (fun i => ((u i : ℤ) : ℝ))) 0
-    = Real.sqrt (k : ℝ) * ((R : ℤ) : ℝ) := by
+      = Real.sqrt (k : ℝ) * ((R : ℤ) : ℝ) := by
     rw [hR, hX]
     push_cast
     rw [hM]
@@ -891,7 +896,7 @@ private lemma ankeny_exists_small_lattice_point {m k : ℕ} (hm : 0 < m) (hk : 0
       Matrix.cons_val_one, Matrix.cons_val]
     ring
   have e2 : (M.mulVec (fun i => ((u i : ℤ) : ℝ))) 2
-    = Real.sqrt (m : ℝ) * ((T : ℤ) : ℝ) := by
+      = Real.sqrt (m : ℝ) * ((T : ℤ) : ℝ) := by
     rw [hT, hM]
     simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_three, Matrix.of_apply,
       Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_fin_one,
@@ -901,7 +906,7 @@ private lemma ankeny_exists_small_lattice_point {m k : ℕ} (hm : 0 < m) (hk : 0
   have hmsq : Real.sqrt (m : ℝ) ^ 2 = (m : ℝ) := Real.sq_sqrt hmR.le
   rw [Fin.sum_univ_three, e0, e1, e2, mul_pow, mul_pow, hksq, hmsq, hr2] at hult
   have hint : (k : ℤ) * R ^ 2 + X ^ 2 + (m : ℤ) * T ^ 2
-    < 2 * (m : ℤ) * (k : ℤ) := by
+      < 2 * (m : ℤ) * (k : ℤ) := by
     exact_mod_cast hult
   have hdivR : (m : ℤ) ∣ R - X := ⟨u 0, by rw [hR]; ring⟩
   have hdivX : (k : ℤ) ∣ X - b * T := ⟨u 1, by rw [hX, hT]; ring⟩
@@ -911,15 +916,18 @@ private lemma ankeny_exists_small_lattice_point {m k : ℕ} (hm : 0 < m) (hk : 0
     have hk0 : (k : ℤ) ≠ 0 := by exact_mod_cast hk.ne'
     have hm0 : (m : ℤ) ≠ 0 := by exact_mod_cast hm.ne'
     have hu2 : u 2 = 0 := by
-      rwa [hT] at hT0
+      rw [hT] at hT0
+      exact hT0
     have hu1 : u 1 = 0 := by
       have hX' : (k : ℤ) * u 1 + b * u 2 = 0 := by
-        rwa [← hX]
+        rw [← hX]
+        exact hX0
       rw [hu2, mul_zero, add_zero] at hX'
       exact eq_zero_of_ne_zero_of_mul_left_eq_zero hk0 hX'
     have hu0' : u 0 = 0 := by
       have hR' : (m : ℤ) * u 0 + X = 0 := by
-        rwa [← hR]
+        rw [← hR]
+        exact hR0
       rw [hX0, add_zero] at hR'
       exact eq_zero_of_ne_zero_of_mul_left_eq_zero hm0 hR'
     funext i
@@ -935,10 +943,9 @@ namespace Nat
 
 /--
 [ankeny_exists_three_sq_of_aux](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean)
--/
-@[path]
 `k ∣ b ^ 2 + m`, no prime factor of `k` is `3 mod 4`), the small lattice value
 `m * k` yields `m` as a sum of three natural squares. -/
+@[path]
 private lemma ankeny_exists_three_sq_of_aux {m k : ℕ} (hm : Squarefree m)
   (hk : 0 < k) (hmk : m ∣ k + 1) {b : ℤ} (hb : (k : ℤ) ∣ b ^ 2 + (m : ℤ))
   (hk4 : ∀ p : ℕ, p.Prime → p ∣ k → p % 4 ≠ 3) :
@@ -958,7 +965,8 @@ private lemma ankeny_exists_three_sq_of_aux {m k : ℕ} (hm : Squarefree m)
     exact_mod_cast Int.natAbs_sq R
   have hRnat : R.natAbs ^ 2 ≤ m := by
     have h2 : (((R.natAbs ^ 2 : ℕ)) : ℤ) ≤ ((m : ℕ) : ℤ) := by
-      rwa [hsq]
+      rw [hsq]
+      exact hRle
     exact_mod_cast h2
   set N : ℕ := m - R.natAbs ^ 2 with hN
   have hNadd : R.natAbs ^ 2 + N = m := Nat.add_sub_cancel' hRnat
@@ -977,16 +985,15 @@ namespace Nat
 
 /--
 [ankeny_exists_aux_modulus](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean)
--/
-@[path]
 `m % 8 ∈ {1, 2, 3, 5, 6}` there are `k > 0` and `b` with `m ∣ k + 1`,
 `k ∣ b ^ 2 + m`, and no prime factor of `k` is `3 mod 4`. -/
+@[path]
 private lemma ankeny_exists_aux_modulus {m : ℕ} (hm : 0 < m)
   (hmod : m % 8 = 1 ∨ m % 8 = 2 ∨ m % 8 = 3 ∨ m % 8 = 5 ∨ m % 8 = 6) :
   ∃ k : ℕ, 0 < k ∧ ∃ b : ℤ, m ∣ k + 1 ∧ (k : ℤ) ∣ b ^ 2 + (m : ℤ)
     ∧ ∀ p : ℕ, p.Prime → p ∣ k → p % 4 ≠ 3 := by
   have hcase : m % 4 = 1 ∨ m % 4 = 2 ∨ m % 8 = 3 := by omega
-  obtain h4 | h4 | h8 := hcase
+  rcases hcase with h4 | h4 | h8
   · -- Case `m % 4 = 1`: `a = 2 * m - 1`, `k = q`.
     have hm1 : 1 ≤ m := by omega
     have hodd : Odd (2 * m - 1) := Nat.odd_iff.mpr (by omega)
@@ -1021,7 +1028,7 @@ private lemma ankeny_exists_aux_modulus {m : ℕ} (hm : 0 < m)
     refine ⟨q, hqprime.pos, b₀, hdivm, hb0, ?_⟩
     intro p hpprime hpk
     have h2 := hpprime.two_le
-    obtain h | h := (Nat.dvd_prime hqprime).mp hpk
+    rcases (Nat.dvd_prime hqprime).mp hpk with h | h
     · omega
     · rw [h]
       omega
@@ -1058,7 +1065,7 @@ private lemma ankeny_exists_aux_modulus {m : ℕ} (hm : 0 < m)
       have e8 : 8 * ((m / 2) * (q / (4 * m))) = 4 * (m * (q / (4 * m))) := by
         have hm2eq : m = 2 * (m / 2) := by omega
         calc 8 * ((m / 2) * (q / (4 * m)))
-          = 4 * ((2 * (m / 2)) * (q / (4 * m))) := by ring
+            = 4 * ((2 * (m / 2)) * (q / (4 * m))) := by ring
           _ = 4 * (m * (q / (4 * m))) := by rw [← hm2eq]
       have hq : q = (m - 1) + 8 * ((m / 2) * (q / (4 * m))) := by
         linear_combination -hdiv - e8
@@ -1070,7 +1077,7 @@ private lemma ankeny_exists_aux_modulus {m : ℕ} (hm : 0 < m)
     refine ⟨q, hqprime.pos, b₀, hdivm, hb0, ?_⟩
     intro p hpprime hpk
     have h2 := hpprime.two_le
-    obtain h | h := (Nat.dvd_prime hqprime).mp hpk
+    rcases (Nat.dvd_prime hqprime).mp hpk with h | h
     · omega
     · rw [h]
       omega
@@ -1099,7 +1106,7 @@ private lemma ankeny_exists_aux_modulus {m : ℕ} (hm : 0 < m)
       have e : 2 * ((m - 1) / 2) + 1 = m := by omega
       refine ⟨8 * (q / (4 * m)) + 1, ?_⟩
       calc 2 * q + 1 = 2 * (4 * m * (q / (4 * m)) + (m - 1) / 2) + 1 := by
-        omega
+            omega
         _ = 8 * m * (q / (4 * m)) + (2 * ((m - 1) / 2) + 1) := by ring
         _ = 8 * m * (q / (4 * m)) + m := by rw [e]
         _ = m * (8 * (q / (4 * m)) + 1) := by ring
@@ -1117,7 +1124,7 @@ private lemma ankeny_exists_aux_modulus {m : ℕ} (hm : 0 < m)
     have hdivs : ∀ p : ℕ, p.Prime → p ∣ 2 * q → p % 4 ≠ 3 := by
       intro p hpprime hpk
       have h2 := hpprime.two_le
-      obtain h | h := (Nat.Prime.dvd_mul hpprime).mp hpk
+      rcases (Nat.Prime.dvd_mul hpprime).mp hpk with h | h
       · rcases (Nat.dvd_prime Nat.prime_two).mp h with h1 | h2'
         · omega
         · rw [h2']
@@ -1128,22 +1135,23 @@ private lemma ankeny_exists_aux_modulus {m : ℕ} (hm : 0 < m)
           omega
     by_cases hbodd : Odd b₀
     · have h2dvd : (2 : ℤ) ∣ b₀ ^ 2 + (m : ℤ) := by
-      have hsq_odd : Odd (b₀ ^ 2) := by
-        rw [pow_two]
-        exact hbodd.mul hbodd
-      have heven2 : Even (b₀ ^ 2 + (m : ℤ)) := hsq_odd.add_odd hmoddZ
-      obtain ⟨r, hr⟩ := heven2
-      exact ⟨r, by omega⟩
+        have hsq_odd : Odd (b₀ ^ 2) := by
+          rw [pow_two]
+          exact hbodd.mul hbodd
+        have heven2 : Even (b₀ ^ 2 + (m : ℤ)) := hsq_odd.add_odd hmoddZ
+        obtain ⟨r, hr⟩ := heven2
+        exact ⟨r, by omega⟩
       have h2q : (((2 * q : ℕ)) : ℤ) ∣ b₀ ^ 2 + (m : ℤ) := by
         have h := hcop2q.mul_dvd h2dvd hb0
         have e : (((2 * q : ℕ)) : ℤ) = ((2 : ℕ) : ℤ) * (((q : ℕ)) : ℤ) := by simp
-        rwa [e]
+        rw [e]
+        exact h
       exact ⟨2 * q, mul_pos (by norm_num) hqprime.pos, b₀, hdivm, h2q, hdivs⟩
     · have heven : Even b₀ := Int.not_odd_iff_even.mp hbodd
       have hbodd' : Odd (b₀ + ((q : ℕ) : ℤ)) := heven.add_odd hqoddZ
       have hqb : (q : ℤ) ∣ (b₀ + ((q : ℕ) : ℤ)) ^ 2 + (m : ℤ) := by
         have e : (b₀ + ((q : ℕ) : ℤ)) ^ 2 + (m : ℤ)
-          = (b₀ ^ 2 + (m : ℤ)) + (q : ℤ) * (2 * b₀ + (q : ℤ)) := by ring
+            = (b₀ ^ 2 + (m : ℤ)) + (q : ℤ) * (2 * b₀ + (q : ℤ)) := by ring
         rw [e]
         exact dvd_add hb0 (dvd_mul_right _ _)
       have h2dvd : (2 : ℤ) ∣ (b₀ + ((q : ℕ) : ℤ)) ^ 2 + (m : ℤ) := by
@@ -1157,7 +1165,8 @@ private lemma ankeny_exists_aux_modulus {m : ℕ} (hm : 0 < m)
       have h2q : (((2 * q : ℕ)) : ℤ) ∣ (b₀ + ((q : ℕ) : ℤ)) ^ 2 + (m : ℤ) := by
         have h := hcop2q.mul_dvd h2dvd hqb
         have e : (((2 * q : ℕ)) : ℤ) = ((2 : ℕ) : ℤ) * (((q : ℕ)) : ℤ) := by simp
-        rwa [e]
+        rw [e]
+        exact h
       exact ⟨2 * q, mul_pos (by norm_num) hqprime.pos, b₀ + ((q : ℕ) : ℤ), hdivm, h2q, hdivs⟩
 
 end Nat
@@ -1166,9 +1175,8 @@ namespace Nat
 
 /--
 [exists_three_sq_of_squarefree_of_mod_eight_ne_seven](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean)
--/
-@[path]
 natural squares. -/
+@[path]
 private lemma exists_three_sq_of_squarefree_of_mod_eight_ne_seven {m : ℕ}
   (hm : Squarefree m) (h7 : m % 8 ≠ 7) :
   ∃ x y z : ℕ, x ^ 2 + y ^ 2 + z ^ 2 = m := by
@@ -1177,7 +1185,8 @@ private lemma exists_three_sq_of_squarefree_of_mod_eight_ne_seven {m : ℕ}
     intro hdvd
     have h22 : 2 * 2 ∣ m := by
       have h44 : (4 : ℕ) = 2 * 2 := rfl
-      rwa [h44] at hdvd
+      rw [h44] at hdvd
+      exact hdvd
     exact (Nat.squarefree_iff_prime_squarefree.mp hm) 2 Nat.prime_two h22
   have hmod : m % 8 = 1 ∨ m % 8 = 2 ∨ m % 8 = 3 ∨ m % 8 = 5 ∨ m % 8 = 6 := by
     have h8 : m % 8 < 8 := Nat.mod_lt _ (by norm_num)
@@ -1217,13 +1226,13 @@ namespace Nat
 -/
 @[path]
 lemma exists_three_squares_of_not_four_pow_mul_eight_mul_add_seven
-  {n : Nat}
+  (n : Nat)
 -- given
   (h : ¬ ∃ a b : Nat, n = 4 ^ a * (8 * b + 7)) :
 -- imply
   ∃ x y z : Nat, x ^ 2 + y ^ 2 + z ^ 2 = n := by
 -- proof
-  obtain rfl | hn := Nat.eq_zero_or_pos n
+  rcases Nat.eq_zero_or_pos n with rfl | hn
   · exact ⟨0, 0, 0, by simp⟩
   obtain ⟨e, n', hn4, hn_eq⟩ :=
     Nat.exists_eq_pow_mul_and_not_dvd hn.ne' 4 (by norm_num)
@@ -1240,12 +1249,13 @@ lemma exists_three_squares_of_not_four_pow_mul_eight_mul_add_seven
   have hc2 : c ^ 2 % 8 = 1 := by
     have hodd8 := odd_mod_eight hcodd
     rw [Nat.pow_mod]
-    obtain h | h | h | h <;> rw [h] := hodd8
+    rcases hodd8 with h | h | h | h <;> rw [h]
   have hnm : n' % 8 = m % 8 := by
     have e : (c ^ 2 * m) % 8 = m % 8 := by
       rw [Nat.mul_mod, hc2, Nat.one_mul]
       omega
-    rwa [hcm] at e
+    rw [hcm] at e
+    exact e
   have hm7 : m % 8 ≠ 7 := by
     intro hm7
     apply h
@@ -1262,14 +1272,15 @@ lemma exists_three_squares_of_not_four_pow_mul_eight_mul_add_seven
       rw [← pow_mul]
     rw [g1, g2, mul_comm e 2]
   have hfin : (2 ^ e * c * x) ^ 2 + (2 ^ e * c * y) ^ 2 + (2 ^ e * c * z) ^ 2
-    = 4 ^ e * n' := by
+      = 4 ^ e * n' := by
     rw [← hcm, ← hxyz, h4e]
     ring
   refine ⟨2 ^ e * c * x, 2 ^ e * c * y, 2 ^ e * c * z, ?_⟩
-  rwa [hn_eq]
+  rw [hn_eq]
+  exact hfin
 
 end Nat
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

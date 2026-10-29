@@ -67,8 +67,8 @@ private lemma norm_section_le_of_radius (a : ℕ → ℂ)
   ∃ C : ℝ, 1 ≤ C ∧ ∀ n : ℕ, ∀ w : ℂ, ‖w‖ ≤ 2 →
     ‖∑ k ∈ Finset.range (n + 1), a k * w ^ k‖ ≤ C * 4 ^ n := by
   set p := FormalMultilinearSeries.ofScalars Complex a with hp
-  have hlt : ((1 / 2 : ℝ≥0) : ℝ≥0∞) < p.radius := by
-    have h1 : ((1 / 2 : ℝ≥0) : ℝ≥0∞) < 1 := by
+  have hlt : ((1 / 2 : NNReal) : ENNReal) < p.radius := by
+    have h1 : ((1 / 2 : NNReal) : ENNReal) < 1 := by
       rw [ENNReal.coe_lt_one_iff]
       norm_num
     exact lt_of_lt_of_le h1 h
@@ -78,7 +78,7 @@ private lemma norm_section_le_of_radius (a : ℕ → ℂ)
     intro k
     have hk := hC0 k
     rw [FormalMultilinearSeries.ofScalars_norm] at hk
-    have hr : ((1 / 2 : ℝ≥0) : ℝ) = 1 / 2 := by
+    have hr : ((1 / 2 : NNReal) : ℝ) = 1 / 2 := by
       simp
     rw [hr] at hk
     have h2k : (0:ℝ) < 2 ^ k := by positivity
@@ -162,7 +162,7 @@ private lemma one_lt_radius_of_eventually_norm_section_le (a : ℕ → ℂ) (q :
       _ ≤ R ^ (m + 1) + R ^ m := by linarith [hm.1, hm.2]
       _ ≤ R ^ (m + 1) + R ^ (m + 1) := by linarith
       _ = 2 * R ^ (m + 1) := by ring
-  set rho : ℝ≥0 := ⟨‖q‖ / R, div_nonneg (norm_nonneg _) hRnn⟩ with hrho
+  set rho : NNReal := ⟨‖q‖ / R, div_nonneg (norm_nonneg _) hRnn⟩ with hrho
   have hrho_coe : (rho : ℝ) = ‖q‖ / R := rfl
   have hrho_gt_one : 1 < rho := by
     rw [← NNReal.coe_lt_coe]
@@ -186,15 +186,15 @@ private lemma one_lt_radius_of_eventually_norm_section_le (a : ℕ → ℂ) (q :
     have hKm := hK (n - 1) hm
     have hnm : (n - 1) + 1 = n := by omega
     rwa [hnm] at hKm
-  have hrad : (rho : ℝ≥0∞) ≤ (FormalMultilinearSeries.ofScalars Complex a).radius := by
+  have hrad : (rho : ENNReal) ≤ (FormalMultilinearSeries.ofScalars Complex a).radius := by
     apply FormalMultilinearSeries.le_radius_of_eventually_le _ 2
     filter_upwards [hcoeff] with n hn
     have hn2 : ‖(FormalMultilinearSeries.ofScalars Complex a) n‖ * (rho : ℝ) ^ n ≤ 2 := by
       rwa [FormalMultilinearSeries.ofScalars_norm]
     exact hn2
-  have h1lt : (1 : ℝ≥0∞) < (rho : ℝ≥0∞) := by
+  have h1lt : (1 : ENNReal) < (rho : ENNReal) := by
     rwa [ENNReal.one_lt_coe_iff]
-  calc (1 : ℝ≥0∞) < (rho : ℝ≥0∞) := h1lt
+  calc (1 : ENNReal) < (rho : ENNReal) := h1lt
     _ ≤ _ := hrad
 
 end MathlibExt.Analysis.Complex.JentzschPowerSeriesWanted

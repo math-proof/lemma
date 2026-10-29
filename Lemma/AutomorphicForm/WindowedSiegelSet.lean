@@ -256,7 +256,7 @@ theorem archHeight_pos (g : GL (Fin 2) (InfiniteAdeleRing F)) : 0 < archHeight F
   exact Finset.prod_pos fun v _ => pow_pos (localHeight_pos _) _
 
 
-theorem not_pos_and_lt_top_of_eq_zero_or_top {x : ℝ≥0∞} (h : x = 0 ∨ x = ⊤) :
+theorem not_pos_and_lt_top_of_eq_zero_or_top {x : ENNReal} (h : x = 0 ∨ x = ⊤) :
     ¬(0 < x ∧ x < ⊤) := by
   rcases h with h | h <;> simp [h]
 

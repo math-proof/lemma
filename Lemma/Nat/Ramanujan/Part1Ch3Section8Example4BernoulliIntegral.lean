@@ -2,8 +2,8 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Ramanujan.Part1Ch3Section8Example4Integrable
 import Lemma.Nat.Ramanujan.Part1Ch3Section8Example4Integrable
-open Section8Example4Integrable (f f_natCast)
-open Entry9IiGeneralizedbellgeneratingDefining (generalizedBellGenerating)
+open MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example4Integrable (f f_natCast)
+open MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry9IiGeneralizedbellgeneratingDefining (generalizedBellGenerating)
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3
 
 

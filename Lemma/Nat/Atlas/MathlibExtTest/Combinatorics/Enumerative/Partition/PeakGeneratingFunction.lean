@@ -31,7 +31,7 @@ namespace MathlibExtTest.Combinatorics.Enumerative.Partition.PeakGeneratingFunct
 [pgf_testDen_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Partition/PeakGeneratingFunction.lean)
 -/
 @[path]
-lemma pgf_testDen_ne_zero
+lemma pgf_testDen_ne_zero :
 -- imply
   pgf_testX * (1 - pgf_testQ) - pgf_testX ^ 2 * (1 - pgf_testQ) ≠ 0 := by
 -- proof
@@ -53,7 +53,7 @@ namespace MathlibExtTest.Combinatorics.Enumerative.Partition.PeakGeneratingFunct
 [pgf_testTwo_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Partition/PeakGeneratingFunction.lean)
 -/
 @[path]
-lemma pgf_testTwo_ne_zero
+lemma pgf_testTwo_ne_zero :
 -- imply
   (2 : pgf_testK) ≠ 0 := by
 -- proof
@@ -68,3 +68,4 @@ end MathlibExtTest.Combinatorics.Enumerative.Partition.PeakGeneratingFunction
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

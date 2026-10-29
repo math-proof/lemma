@@ -26,7 +26,7 @@ private lemma main
       simp
     have hker : LinearMap.ker S.g.hom = ⊤ := eq_top_iff.2 fun x _ => hD x
     have hN : ∀ x : ℤ, (S.f.hom x : ℤ) = (Fintype.card G : ℤ) * x := fun x => by
-      change ((Rep.trivial ℤ G ℤ).norm).hom x = _
+      change ((Rep.trivial ℤ G ℤ).norm).asHom.hom x = _
       rw [Rep.norm_apply]
       simp [Representation.norm, Finset.card_univ]
     let e : LinearMap.ker S.g.hom ≃ₗ[ℤ] ℤ := LinearEquiv.ofTop _ hker

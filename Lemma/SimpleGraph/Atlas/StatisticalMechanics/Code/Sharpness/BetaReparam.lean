@@ -56,7 +56,7 @@ private lemma shr_meanfield_beta_eq
 @[path]
 private lemma shr_meanfield_beta_crossProbReal_eq
   {d : ℕ}
-  {q : ℝ≥0}
+  {q : NNReal}
   {J β : ℝ}
   {n : ℕ}
 -- given

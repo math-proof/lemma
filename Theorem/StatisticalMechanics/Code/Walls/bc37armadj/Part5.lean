@@ -241,7 +241,7 @@ theorem bc37_Tcount_le_boundary_of_armForestRooting (ω : ConfigSpace (Sym2 (Sit
   bc36_Tcount_le_boundary_of_selfDownArm ω n hn (bc37_selfDownArm_of_armForestRooting ω n h)
 
 
-theorem bc37_burton_keane_bernoulli_of_armForestRooting (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc37_burton_keane_bernoulli_of_armForestRooting (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc37_ArmForestRooting ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
@@ -461,7 +461,7 @@ theorem bc37_Tcount_le_boundary_of_parentFunneling (ω : ConfigSpace (Sym2 (Site
   bc36_Tcount_le_boundary_of_selfDownArm ω n hn (bc37_selfDownArm_of_parentFunneling ω n h)
 
 
-theorem bc37_burton_keane_bernoulli_of_parentFunneling (hd : 1 ≤ d) (p : ℝ≥0)
+theorem bc37_burton_keane_bernoulli_of_parentFunneling (hd : 1 ≤ d) (p : NNReal)
     (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hres : ∀ (ω : ConfigSpace (Sym2 (Site d))) (n : ℕ), 1 ≤ n → bc37_ParentFunneling ω n)
     (htrif : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

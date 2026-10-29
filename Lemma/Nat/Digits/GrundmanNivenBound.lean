@@ -24,10 +24,10 @@ lemma grundman_consecutive_niven_bound
     intro q r hr
     by_cases h0 : q * b + r = 0
     · have hq : q = 0 := by
-      by_contra hne
-      have h1 : 0 < q := Nat.pos_of_ne_zero hne
-      have h2 : 0 < q * b := Nat.mul_pos h1 hbpos
-      omega
+        by_contra hne
+        have h1 : 0 < q := Nat.pos_of_ne_zero hne
+        have h2 : 0 < q * b := Nat.mul_pos h1 hbpos
+        omega
       have hr0 : r = 0 := by omega
       subst hq; subst hr0
       simp [Nat.digits_zero]
@@ -95,7 +95,8 @@ lemma grundman_consecutive_niven_bound
     intro N i D hN hi hD
     have h := Hc' i hi
     rw [hN] at h
-    rwa [hD] at h
+    rw [hD] at h
+    exact h
   have Claim1 : (Nat.digits b (qlo + 1)).sum = (Nat.digits b qlo).sum + 1 → False := by
     intro hC
     set Dm := (Nat.digits b (qlo + 1)).sum + b - 2 with hDm
@@ -114,7 +115,8 @@ lemma grundman_consecutive_niven_bound
     have hdiff : (qlo + 1) * b + (b - 2) - (qlo * b + (b - 1)) = b - 1 := by omega
     have hdvd : Dm ∣ b - 1 := by
       have h := Nat.dvd_sub d2 d1
-      rwa [hdiff] at h
+      rw [hdiff] at h
+      exact h
     have hle : Dm ≤ b - 1 := Nat.le_of_dvd (by omega) hdvd
     have hC1 : (Nat.digits b (qlo + 1)).sum ≤ 1 := by omega
     rcases (by omega : (Nat.digits b (qlo + 1)).sum = 0 ∨ (Nat.digits b (qlo + 1)).sum = 1) with
@@ -122,20 +124,21 @@ lemma grundman_consecutive_niven_bound
     · have hq := F3 _ h0
       omega
     · have hs3 : (Nat.digits b ((qlo + 1) * b + (b - 1))).sum = b := by
-      rw [F1 (qlo + 1) (b - 1) (by omega)]; omega
+        rw [F1 (qlo + 1) (b - 1) (by omega)]; omega
       have hi3eq : a + (2 * b - 1 - r0) = (qlo + 1) * b + (b - 1) := by omega
       have hi3le : 2 * b - 1 - r0 ≤ 2 * b := by omega
       have d3 : b ∣ (qlo + 1) * b + (b - 1) := Happ _ _ _ hi3eq hi3le hs3
       have h5 : ((qlo + 1) * b + (b - 1)) - ((qlo + 1) * b) = b - 1 := by omega
       have h4 : b ∣ b - 1 := by
         have h := Nat.dvd_sub d3 (dvd_mul_left b (qlo + 1))
-        rwa [h5] at h
+        rw [h5] at h
+        exact h
       have hble : b ≤ b - 1 := Nat.le_of_dvd (by omega) h4
       omega
   have Claim2 : (Nat.digits b (qlo + 2)).sum = (Nat.digits b (qlo + 1)).sum + 1 → False := by
     intro hC
     have hr0split : r0 = b - 1 ∨ r0 + 1 ≤ b - 1 := by omega
-    obtain hr0b | hr0s := hr0split
+    rcases hr0split with hr0b | hr0s
     · set Dm := (Nat.digits b (qlo + 1)).sum + b - 1 with hDm
       have hs_hi : (Nat.digits b ((qlo + 2) * b + (b - 2))).sum = Dm := by
         rw [F1 (qlo + 2) (b - 2) (by omega), hDm]; omega
@@ -150,7 +153,8 @@ lemma grundman_consecutive_niven_bound
       have hdiff : (qlo + 2) * b + (b - 2) - ((qlo + 1) * b + (b - 1)) = b - 1 := by omega
       have hdvd : Dm ∣ b - 1 := by
         have h := Nat.dvd_sub d_hi d_mid
-        rwa [hdiff] at h
+        rw [hdiff] at h
+        exact h
       have hle : Dm ≤ b - 1 := Nat.le_of_dvd (by omega) hdvd
       have hs0 : (Nat.digits b (qlo + 1)).sum = 0 := by omega
       have hq := F3 _ hs0
@@ -169,7 +173,8 @@ lemma grundman_consecutive_niven_bound
       have hdiff : (qlo + 2) * b + r0 - ((qlo + 1) * b + (r0 + 1)) = b - 1 := by omega
       have hdvd : Dm ∣ b - 1 := by
         have h := Nat.dvd_sub d_hi d_mid
-        rwa [hdiff] at h
+        rw [hdiff] at h
+        exact h
       have hle : Dm ≤ b - 1 := Nat.le_of_dvd (by omega) hdvd
       have hspos : 1 ≤ (Nat.digits b (qlo + 1)).sum := by
         by_contra hc
@@ -177,10 +182,10 @@ lemma grundman_consecutive_niven_bound
         have hq := F3 _ h0
         omega
       have hstarb :
-        (Nat.digits b ((qlo + 1) * b + (b - (Nat.digits b (qlo + 1)).sum))).sum = b := by
+          (Nat.digits b ((qlo + 1) * b + (b - (Nat.digits b (qlo + 1)).sum))).sum = b := by
         rw [F1 _ _ (by omega : b - (Nat.digits b (qlo + 1)).sum < b)]; omega
       have histareq : a + (b + (b - (Nat.digits b (qlo + 1)).sum) - r0) =
-        (qlo + 1) * b + (b - (Nat.digits b (qlo + 1)).sum) := by omega
+          (qlo + 1) * b + (b - (Nat.digits b (qlo + 1)).sum) := by omega
       have histarle : b + (b - (Nat.digits b (qlo + 1)).sum) - r0 ≤ 2 * b := by omega
       have dstar : b ∣ (qlo + 1) * b + (b - (Nat.digits b (qlo + 1)).sum) :=
         Happ _ _ _ histareq histarle hstarb
@@ -188,8 +193,9 @@ lemma grundman_consecutive_niven_bound
         have h1 : b ∣ (qlo + 1) * b := dvd_mul_left b _
         have h2 := Nat.dvd_sub dstar h1
         have h3 : ((qlo + 1) * b + (b - (Nat.digits b (qlo + 1)).sum)) - ((qlo + 1) * b) =
-          b - (Nat.digits b (qlo + 1)).sum := by omega
-        rwa [h3] at h2
+            b - (Nat.digits b (qlo + 1)).sum := by omega
+        rw [h3] at h2
+        exact h2
       have hr0v : b - (Nat.digits b (qlo + 1)).sum = 0 :=
         Nat.eq_zero_of_dvd_of_lt hr (by omega)
       omega
@@ -208,9 +214,10 @@ lemma grundman_consecutive_niven_bound
     have e : qlo + 1 = b * (qlo / b + 1) := by omega
     rw [e, Nat.mul_mod_right]
   omega
-end
 
+
+end MathlibExt.NumberTheory.Digits.GrundmanNivenBoundWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

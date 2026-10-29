@@ -69,6 +69,8 @@ end IsDedekindDomain.HeightOneSpectrum
 
 namespace IsDedekindDomain.HeightOneSpectrum
 
+set_option maxHeartbeats 800000 in
+set_option synthInstance.maxHeartbeats 800000 in
 /--
 [completionTensorProductMap_pi_eval](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FinitePlacesOverTensorProduct.lean)
 -/
@@ -76,11 +78,12 @@ namespace IsDedekindDomain.HeightOneSpectrum
 lemma completionTensorProductMap_pi_eval
   [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
   {v : HeightOneSpectrum (𝓞 K)}
-  {w : v.placesOver L} :
+  (w : v.placesOver L) :
 -- imply
   (Pi.evalAlgHom (v.adicCompletion K)
     (fun w : v.placesOver L => w.val.adicCompletion L) w).comp
-    (completionTensorProductMap (K := by
+    (completionTensorProductMap (K := K) (L := L) v) =
+    completionTensorProductComponent v w := by
 -- proof
   ext t
   rfl

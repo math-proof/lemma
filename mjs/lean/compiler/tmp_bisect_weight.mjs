@@ -1,8 +1,10 @@
 import { compile } from "../../../js/parser/lean.js";
 import "../../../js/py.js";
 import fs from "fs";
+import { homedir } from "os";
+import path from "path";
 
-const src = fs.readFileSync("/home/cosmos/src/lean/Lemma/Int/WeightLE/of/BruhatLE.lean", "utf8");
+const src = fs.readFileSync(path.join(homedir(), "src/lean/Lemma/Int/WeightLE/of/BruhatLE.lean"), "utf8");
 const lines = src.split("\n");
 
 // find lemma starts

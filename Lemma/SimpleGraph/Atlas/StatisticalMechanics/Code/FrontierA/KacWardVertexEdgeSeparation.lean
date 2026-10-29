@@ -78,7 +78,7 @@ private lemma exists_uniform_vertex_edge_separation_eq
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n} :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ v j : Fin n, v ≠ j → v ≠ j + 1 → ∀ y ∈ polygon.closedEdge j, (r : ℝ) < dist (polygon.vertex v) y := by
+  ∃ r : NNReal, 0 < r ∧ ∀ v j : Fin n, v ≠ j → v ≠ j + 1 → ∀ y ∈ polygon.closedEdge j, (r : ℝ) < dist (polygon.vertex v) y := by
 -- proof
   apply StatMech.FrontierA.KWFiniteSimplePolygon.exists_uniform_vertex_edge_separation polygon
 
@@ -90,7 +90,7 @@ private lemma vertexBall_disjoint_closedEdgeTube_eq
   {n : ℕ}
   [NeZero n]
   {polygon : KWFiniteSimplePolygon n}
-  {r : ℝ≥0}
+  {r : NNReal}
   {v j : Fin n}
 -- given
   (hsep : ∀ v j : Fin n, v ≠ j → v ≠ j + 1 → ∀ y ∈ polygon.closedEdge j, (r : ℝ) < dist (polygon.vertex v) y)

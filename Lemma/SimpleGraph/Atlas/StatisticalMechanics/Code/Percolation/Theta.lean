@@ -22,7 +22,7 @@ private lemma mem_percolationEvent_eq
 @[path]
 private lemma mem_subcriticalSet_eq
   {d : ℕ}
-  {p : ℝ≥0} :
+  {p : NNReal} :
 -- imply
   p ∈ subcriticalSet d ↔ ∃ hp : p ≤ 1, theta d p hp = 0 := by
 -- proof
@@ -35,7 +35,7 @@ private lemma mem_subcriticalSet_eq
 private lemma theta_nonneg_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   0 ≤ theta d p hp := by
@@ -49,7 +49,7 @@ private lemma theta_nonneg_eq
 private lemma theta_le_one_eq
   {d : ℕ}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1) :
 -- imply
   theta d p hp ≤ 1 := by

@@ -35,7 +35,7 @@ theorem ts_isErgodic_of_extreme
     {mu : Measure (ConfigSpace E)} [IsProbabilityMeasure mu]
     (hti : IsTranslationInvariant (G := H) mu)
     (hstate : IsTailSpecificationState window K mu)
-    (hext : ∀ (nu₁ nu₂ : Measure (ConfigSpace E)) (a b : ℝ≥0∞),
+    (hext : ∀ (nu₁ nu₂ : Measure (ConfigSpace E)) (a b : ENNReal),
       IsProbabilityMeasure nu₁ → IsProbabilityMeasure nu₂ →
       IsTailSpecificationMeasure window K nu₁ →
       IsTailSpecificationMeasure window K nu₂ →

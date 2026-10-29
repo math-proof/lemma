@@ -59,10 +59,10 @@ theorem closedDartContourEvent_eq_pi (hfin : (cluster 2 ω (origin 2)).Finite) :
   · intro h D hD; exact h _ D hD rfl
 
 
-theorem measure_closedDartContourEvent (p : ℝ≥0) (hp : p ≤ 1)
+theorem measure_closedDartContourEvent (p : NNReal) (hp : p ≤ 1)
     (hfin : (cluster 2 ω (origin 2)).Finite) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedDartContourEvent (ω := ω) hfin)
-      = ((1 - p : ℝ≥0) : ℝ≥0∞) ^ (canonicalPrimalEdgeFinset (ω := ω) hfin).card := by
+      = ((1 - p : NNReal) : ENNReal) ^ (canonicalPrimalEdgeFinset (ω := ω) hfin).card := by
   rw [closedDartContourEvent_eq_pi, StatMech.Percolation.cylinder_all_closed]
 
 
@@ -129,10 +129,10 @@ theorem canonicalPrimalEdgeFinset_card (hfin : (cluster 2 ω (origin 2)).Finite)
   rw [List.length_map, List.length_range]
 
 
-theorem measure_closedDartContourEvent_period (p : ℝ≥0) (hp : p ≤ 1)
+theorem measure_closedDartContourEvent_period (p : NNReal) (hp : p ≤ 1)
     (hfin : (cluster 2 ω (origin 2)).Finite) :
     (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) (closedDartContourEvent (ω := ω) hfin)
-      = ((1 - p : ℝ≥0) : ℝ≥0∞) ^ (dartOrbitPeriod (cluster 2 ω (origin 2))
+      = ((1 - p : NNReal) : ENNReal) ^ (dartOrbitPeriod (cluster 2 ω (origin 2))
           ⟨exitDart (ω := ω) hfin, exitDart_isBoundaryDart (ω := ω) hfin⟩) := by
   rw [measure_closedDartContourEvent p hp hfin, canonicalPrimalEdgeFinset_card]
 

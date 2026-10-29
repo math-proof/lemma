@@ -352,7 +352,7 @@ theorem bc59_evenLines_originTrif :
   bc59_corridors_give_trifurcation bc57_evenLines bc59_evenLines_hasDisjointCorridors
 
 
-theorem bc59_status (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) :
+theorem bc59_status (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) :
     
     ((∀ n : ℕ, bc59_HasDisjointCorridors d n) →
       (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1

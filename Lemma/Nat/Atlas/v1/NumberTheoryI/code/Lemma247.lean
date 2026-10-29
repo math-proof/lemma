@@ -35,17 +35,15 @@ lemma lemma_24_7
             (hu k.val j.val (fun h => hjk (Subtype.ext h))))
     have hrowsum : 0 < ∑ j : {w : InfinitePlace K // w ≠ w₀}, A k j := by
       show 0 < ∑ j, (logEmbedding K (Additive.ofMul (u k.val))) j
-      rwa [sum_logEmbedding_component]
+      rw [sum_logEmbedding_component]
+      exact mul_pos_of_neg_of_neg
         (by linarith [show (0 : ℝ) < (w₀ : InfinitePlace K).mult from by exact_mod_cast mult_pos])
         (Real.log_neg (Units.pos_at_place (u k.val) w₀) (hu k.val w₀ (Ne.symm k.prop)))
     simp_rw [Real.norm_eq_abs]
     rw [abs_of_pos (by linarith [Finset.add_sum_erase Finset.univ (fun j => A k j) (Finset.mem_univ k),
-      Finset.sum_nonpos (fun j (hj : j ∈ univ.erase k) =>
-        le_of_lt (hoff j (Finset.ne_of_mem_erase hj)))])]
+        Finset.sum_nonpos (fun j (hj : j ∈ univ.erase k) =>
+          le_of_lt (hoff j (Finset.ne_of_mem_erase hj)))])]
     rw [Finset.sum_congr rfl (fun j hj => abs_of_neg (hoff j (Finset.ne_of_mem_erase hj)))]
     rw [Finset.sum_neg_distrib]
     linarith [(Finset.add_sum_erase Finset.univ (fun j => A k j) (Finset.mem_univ k)).symm]
   exact (linearIndependent_equiv (equivFinRank K)).mpr (linearIndependent_rows_of_det_ne_zero hdet)
-
-
--- created on 2026-10-23

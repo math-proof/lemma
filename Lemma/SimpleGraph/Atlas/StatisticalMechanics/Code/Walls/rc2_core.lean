@@ -154,7 +154,7 @@ private lemma rc2_reimer_inequality_of_slabInjectionAll_eq
   [DecidableEq α]
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : SlabInjectionAll)

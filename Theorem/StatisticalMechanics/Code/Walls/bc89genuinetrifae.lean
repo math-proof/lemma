@@ -208,8 +208,8 @@ theorem bc89_audit (μ : Measure (ConfigSpace (Sym2 (Site d))))
     
     (∃ k : ℕ∞, μ {ω | numInfiniteClusters d ω = k} = 1) ∧
     
-    (∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-      = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ) ∧
+    (∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+      = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ) ∧
     
     ((∀ R : ℕ, ∀ᵐ ω ∂μ, bc73_SublatticeForest ω L R) → bc61_CoarseTrifExistence μ L →
       μ {ω | numInfiniteClusters d ω = ⊤} = 0) ∧

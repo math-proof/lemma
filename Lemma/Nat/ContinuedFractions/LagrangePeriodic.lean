@@ -462,9 +462,8 @@ namespace MetaMathlibExt
 
 /--
 [quad_int_of_minpoly](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ContinuedFractions/LagrangePeriodic.lean)
--/
-@[path]
 with no rational root. -/
+@[path]
 private lemma quad_int_of_minpoly (x : ℝ) (hint : IsIntegral ℚ x)
   (hdeg : (minpoly ℚ x).natDegree = 2) :
   ∃ a b c : ℤ, a ≠ 0 ∧ (a : ℝ) * x ^ 2 + (b : ℝ) * x + (c : ℝ) = 0
@@ -618,4 +617,4 @@ private lemma continuedFractionEventuallyPeriodic_of_isRealQuadraticIrrational_e
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

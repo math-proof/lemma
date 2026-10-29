@@ -259,7 +259,6 @@ variable {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableR
 section EdgeUnion
 variable {V : Type*} [Fintype V] [DecidableEq V]
 variable (G H : SimpleGraph V) [DecidableRel G.Adj] [DecidableRel H.Adj]
-set_option linter.unusedSectionVars false in
 
 end LaplacianProperties
 
@@ -557,3 +556,4 @@ end LaplacianProperties
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

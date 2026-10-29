@@ -132,7 +132,7 @@ private lemma shp_connWithin_factor_eq
   {B : Set (ConfigSpace (Sym2 (Site d)))}
   {U : Finset (Sym2 (Site d))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hdisj : Disjoint (internalEdgesFinset S) U)
   (hB : DependsOn (B.indicator (fun _ => (1 : ℝ))) (U : Set (Sym2 (Site d)))) :
@@ -152,7 +152,7 @@ private lemma shp_pivotal_factor_eq
   {B : Set (ConfigSpace (Sym2 (Site d)))}
   {U : Finset (Sym2 (Site d))}
 -- given
-  (p : ℝ≥0)
+  (p : NNReal)
   (hp : p ≤ 1)
   (hUext : ∀ e ∈ U, ∃ a b : Site d, e = s(a, b) ∧ (a ∉ (S : Set (Site d)) ∨ b ∉ (S : Set (Site d))))
   (hB : DependsOn (B.indicator (fun _ => (1 : ℝ))) (U : Set (Sym2 (Site d)))) :

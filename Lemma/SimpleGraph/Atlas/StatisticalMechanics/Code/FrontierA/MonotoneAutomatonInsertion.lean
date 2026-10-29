@@ -28,7 +28,7 @@ private lemma measurableSet_middleThreshold_eq
   {d : ℕ}
   {x : Site d}
 -- given
-  (t : ℝ≥0) :
+  (t : NNReal) :
 -- imply
   MeasurableSet {q : FieldTriple d | t ≤ q.2.1 x} := by
 -- proof
@@ -59,7 +59,7 @@ private lemma interpolatedSiteLaw_hasInsertionLowerBound_eq
   {T : MonotoneAutomaton d}
   {mu : Measure (FieldTriple d)}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hinsert : HasMiddleInsertionLowerBound mu T.threshold epsilon) :
 -- imply
   HasSiteInsertionLowerBound (interpolatedSiteLaw T mu) epsilon := by
@@ -76,7 +76,7 @@ private lemma siteInsertion_positive_eq
   {x : Site d}
   {B : Set (ConfigSpace (Site d))}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : 0 < epsilon)
   (hinsert : HasSiteInsertionLowerBound nu epsilon)
   (hBmeas : MeasurableSet B)
@@ -164,7 +164,7 @@ private lemma forceSiteOccupied_map_absolutelyContinuous_eq
   {nu : Measure (ConfigSpace (Site d))}
   {x : Site d}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasSiteInsertionLowerBound nu epsilon) :
 -- imply
@@ -232,7 +232,7 @@ private lemma forceSitesOccupied_map_absolutelyContinuous_eq
   {nu : Measure (ConfigSpace (Site d))}
   {S : Finset (Site d)}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasSiteInsertionLowerBound nu epsilon) :
 -- imply
@@ -250,7 +250,7 @@ private lemma positive_of_forceSitesOccupied_preimage_eq
   {S : Finset (Site d)}
   {A B : Set (ConfigSpace (Site d))}
 -- given
-  (epsilon : ℝ≥0∞)
+  (epsilon : ENNReal)
   (hepsilon : epsilon ≠ 0)
   (hinsert : HasSiteInsertionLowerBound nu epsilon)
   (hBmeas : MeasurableSet B)

@@ -10,7 +10,7 @@ open MeasureTheory Set Filter Topology StatMech StatMech.Universality
 @[path]
 private lemma halfMeasure_eq_eq :
 -- imply
-  halfMeasure = bernoulliProductMeasure (2⁻¹ : ℝ≥0) half_le_one := by
+  halfMeasure = bernoulliProductMeasure (2⁻¹ : NNReal) half_le_one := by
 -- proof
   apply StatMech.Universality.halfMeasure_eq
 
@@ -71,7 +71,7 @@ private lemma half_crossingProb_of_selfDual_dichotomy_eq
 @[path]
 private lemma percolationProbability_congr_eq
   {d : ℕ}
-  {p q : ℝ≥0}
+  {p q : NNReal}
 -- given
   (hp : p ≤ 1)
   (hq : q ≤ 1)
@@ -98,7 +98,7 @@ private lemma subcriticalDensities_bddAbove_eq
 @[path]
 private lemma half_mem_subcriticalDensities_eq
 -- given
-  (h : percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0) :
+  (h : percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0) :
 -- imply
   ((1 : ℝ) / 2) ∈ subcriticalDensities 2 := by
 -- proof
@@ -110,7 +110,7 @@ private lemma half_mem_subcriticalDensities_eq
 @[path]
 private lemma half_le_criticalProbability_of_subcritical_eq
 -- given
-  (h : percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0) :
+  (h : percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0) :
 -- imply
   (1 : ℝ) / 2 ≤ criticalProbability 2 := by
 -- proof
@@ -123,7 +123,7 @@ private lemma half_le_criticalProbability_of_subcritical_eq
 private lemma criticalProbability_le_half_of_sharpThreshold_eq
   {boxFam : ℕ → Set (ConfigSpace (Sym2 (Site 2)))}
 -- given
-  (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0))
+  (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0))
   (hbalance : ∀ n : ℕ, halfMeasure.real (boxFam n) = 1 / 2) :
 -- imply
   criticalProbability 2 ≤ (1 : ℝ) / 2 := by
@@ -140,12 +140,12 @@ private lemma kesten_pc_eq_half_of_bxp_eq
   {boxFam : ℕ → Set (ConfigSpace (Sym2 (Site 2)))}
 -- given
   (hbxp : BoxCrossingProperty halfMeasure ρ)
-  (hCorLowerBound : BoxCrossingProperty halfMeasure ρ → percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0)
+  (hCorLowerBound : BoxCrossingProperty halfMeasure ρ → percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0)
   (hHm : ∀ n, MeasurableSet (boxFam n))
   (hRmeas : Measurable R)
   (hRpres : Measure.map R halfMeasure = halfMeasure)
   (hdich : ∀ n, (boxFam n)ᶜ = (R ∘ dualConfig) ⁻¹' (boxFam n))
-  (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
+  (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
 -- imply
   criticalProbability 2 = 1 / 2 := by
 -- proof
@@ -161,14 +161,14 @@ private lemma kesten_no_percolation_at_pc_eq
   {boxFam : ℕ → Set (ConfigSpace (Sym2 (Site 2)))}
 -- given
   (hbxp : BoxCrossingProperty halfMeasure ρ)
-  (hCorLowerBound : BoxCrossingProperty halfMeasure ρ → percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0)
+  (hCorLowerBound : BoxCrossingProperty halfMeasure ρ → percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0)
   (hHm : ∀ n, MeasurableSet (boxFam n))
   (hRmeas : Measurable R)
   (hRpres : Measure.map R halfMeasure = halfMeasure)
   (hdich : ∀ n, (boxFam n)ᶜ = (R ∘ dualConfig) ⁻¹' (boxFam n))
-  (hSharpThreshold : ∀ (p : ℝ≥0) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
+  (hSharpThreshold : ∀ (p : NNReal) (hp : p ≤ 1), (p : ℝ) < criticalProbability 2 → Tendsto (fun n => (bernoulliProductMeasure p hp).real (boxFam n)) atTop (𝓝 0)) :
 -- imply
-  criticalProbability 2 = 1 / 2 ∧ percolationProbability 2 (2⁻¹ : ℝ≥0) half_le_one = 0 := by
+  criticalProbability 2 = 1 / 2 ∧ percolationProbability 2 (2⁻¹ : NNReal) half_le_one = 0 := by
 -- proof
   apply StatMech.Universality.kesten_no_percolation_at_pc hbxp hCorLowerBound hHm hRmeas hRpres hdich hSharpThreshold
 

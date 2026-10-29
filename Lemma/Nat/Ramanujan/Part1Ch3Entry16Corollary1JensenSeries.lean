@@ -9,11 +9,10 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry16Corollary1JensenSeri
 
 /--
 [summable_jensen_series](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Ramanujan/Part1Ch3Entry16Corollary1JensenSeries.lean)
--/
-@[path]
 `‖term k‖ ≤ C * q ^ k` with `q = |n| * exp (1 - n) < 1` on the range
 `-ρ < n < 1` (using `ρ * exp (ρ + 1) = 1` at the left endpoint) and
 `C = exp (‖x‖ / |n|)`; the case `n = 0` is the exponential series. -/
+@[path]
 private lemma summable_jensen_series (ρ : ℝ) (hρ_pos : 0 < ρ)
   (hρ_eq : ρ * Real.exp (ρ + 1) = 1) (n : ℝ) (hn : -ρ < n ∧ n < 1) (x : ℂ) :
   Summable (fun k : ℕ => (x + (k : ℂ) * (n : ℂ)) ^ k /
@@ -1680,4 +1679,4 @@ end
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

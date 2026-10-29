@@ -142,18 +142,18 @@ theorem measurable_pairNearestHighFinset_card (x : Site d) :
 
 
 theorem measurable_pairNearestTransport (x y : Site d) :
-    Measurable (pairNearestTransport x y : PairSiteConfig d → ℝ≥0∞) := by
+    Measurable (pairNearestTransport x y : PairSiteConfig d → ENNReal) := by
   classical
   have hval : Measurable (fun omega : PairSiteConfig d =>
-      (((pairNearestHighFinset omega x).card : ℝ≥0∞)⁻¹)) := by
-    have hcast : Measurable (fun n : ℕ => ((n : ℝ≥0∞)⁻¹)) :=
+      (((pairNearestHighFinset omega x).card : ENNReal)⁻¹)) := by
+    have hcast : Measurable (fun n : ℕ => ((n : ENNReal)⁻¹)) :=
       Measurable.of_discrete
     exact hcast.comp (measurable_pairNearestHighFinset_card x)
   have hself : ∀ omega : PairSiteConfig d, x ∈ pairHighCluster omega x :=
     fun omega => self_mem_cluster _ x
   have hite : Measurable (fun omega : PairSiteConfig d =>
       if y ∈ pairNearestHighFinset omega x then
-        (((pairNearestHighFinset omega x).card : ℝ≥0∞)⁻¹) else 0) :=
+        (((pairNearestHighFinset omega x).card : ENNReal)⁻¹) else 0) :=
     Measurable.ite (measurableSet_pairNearestHighFinset x y) hval measurable_const
   convert hite using 1
   funext omega

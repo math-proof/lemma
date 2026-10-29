@@ -11,7 +11,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma kroneckerSym_zero
-  {D : ℤ} :
+  (D : ℤ) :
 -- imply
   kroneckerSym D 0 = if D.natAbs = 1 then 1 else 0 := by
 -- proof
@@ -26,7 +26,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma kroneckerSym_one
-  {D : ℤ} :
+  (D : ℤ) :
 -- imply
   kroneckerSym D 1 = 1 := by
 -- proof
@@ -56,7 +56,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma kroneckerSym_two
-  {D : ℤ} :
+  (D : ℤ) :
 -- imply
   kroneckerSym D 2 = kroneckerAtTwo D := by
 -- proof
@@ -75,8 +75,8 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma kroneckerSym_prime
-  {D : ℤ}
-  {p : ℕ}
+  (D : ℤ)
+  (p : ℕ)
 -- given
   (hp : p.Prime) :
 -- imply

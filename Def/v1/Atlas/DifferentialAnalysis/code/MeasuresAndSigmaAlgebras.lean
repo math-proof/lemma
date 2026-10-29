@@ -24,7 +24,7 @@ open scoped ENNReal
 namespace MeasuresAndSigmaAlgebras
 
 /-- Conversion from an `IsOuterMeasure` proof to a Mathlib `OuterMeasure` bundle. -/
-noncomputable def IsOuterMeasure.toOuterMeasure {X : Type*} {μstar : Set X → ℝ≥0∞}
+noncomputable def IsOuterMeasure.toOuterMeasure {X : Type*} {μstar : Set X → ENNReal}
     (h : IsOuterMeasure μstar) : OuterMeasure X where
   measureOf := μstar
   empty := h.empty
@@ -34,7 +34,7 @@ noncomputable def IsOuterMeasure.toOuterMeasure {X : Type*} {μstar : Set X → 
 /-- Volume of the axis-aligned rectangle `[a, b]` in `ℝⁿ`, defined as the product of
 side lengths `b i - a i`. -/
 @[simp]
-noncomputable def rectangleVolume {n : ℕ} (a b : Fin n → ℝ) : ℝ≥0∞ :=
+noncomputable def rectangleVolume {n : ℕ} (a b : Fin n → ℝ) : ENNReal :=
   ∏ i, ENNReal.ofReal (b i - a i)
 
 

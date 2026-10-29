@@ -53,7 +53,7 @@ lemma lk_restrict_away_zero_finite {ν : Measure ℝ}
     (hν : ∫⁻ x, ENNReal.ofReal (min 1 (x ^ 2)) ∂ν < ∞) (k : ℕ) :
     IsFiniteMeasure (lkTruncate ν k) := by
   apply IsFiniteMeasure.mk
-  let ε : ℝ≥0∞ := ENNReal.ofReal (lkCutoff k ^ 2)
+  let ε : ENNReal := ENNReal.ofReal (lkCutoff k ^ 2)
   have hε : ε ≠ 0 := by
     dsimp only [ε]
     exact ne_of_gt (ENNReal.ofReal_pos.2 (sq_pos_of_pos (lkCutoff_pos k)))

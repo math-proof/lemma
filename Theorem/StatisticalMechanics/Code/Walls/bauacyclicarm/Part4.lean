@@ -49,7 +49,7 @@ theorem bau_status :
     (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ),
       bau_ArmSubforestData ω L R → blf_AcyclicArmUnion ω L R) ∧
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p →
       (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bau_ArmSubforestData ω L R) →
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp1 (atLeastTwoInfinite 2) = 0) ∧
     

@@ -58,7 +58,7 @@ theorem algebraMap_OO_coe (x : ℤ_[q]) :
 
 
 theorem natCast_mem_nonunits : ((q : ℕ) : PadicAlgCl q) ∈ (padicIntegers q).nonunits := by
-  have hq : Valued.v ((q : ℕ) : PadicAlgCl q) = 1 / (q : ℝ≥0) := PadicAlgCl.valuation_p q
+  have hq : Valued.v ((q : ℕ) : PadicAlgCl q) = 1 / (q : NNReal) := PadicAlgCl.valuation_p q
   have hq2 : (2 : ℕ) ≤ q := (Fact.out : q.Prime).two_le
   rw [ValuationSubring.mem_nonunits_iff, ← (Valuation.isEquiv_valuation_valuationSubring _).lt_one_iff_lt_one]
   change Valued.v ((q : ℕ) : PadicAlgCl q) < 1

@@ -32,14 +32,14 @@ theorem clusterSizeLargeEvent_subset_crossing (n : ℕ) :
   fun _ hω => clusterSize_large_subset_crossing n _ hω
 
 
-theorem clusterSizeLargeProb_le_crossProb (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem clusterSizeLargeProb_le_crossProb (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
         (clusterSizeLargeEvent d n)
       ≤ crossProb d p hp n :=
   measureReal_mono (clusterSizeLargeEvent_subset_crossing n) (measure_ne_top _ _)
 
 
-theorem clusterSizeTail_geometricTail (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+theorem clusterSizeTail_geometricTail (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (hoS : origin d ∈ (S : Set (Site d))) (hphi : phi d p hp S < 1)
     (L : ℕ) (hL : 1 ≤ L) (hSbox : (S : Set (Site d)) ⊆ box d (L - 1)) :
     ∃ C, 0 < C ∧ ∃ r, 0 < r ∧ r < 1 ∧

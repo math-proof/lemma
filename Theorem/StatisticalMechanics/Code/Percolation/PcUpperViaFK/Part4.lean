@@ -30,7 +30,7 @@ open StatMech.Lattice StatMech.FK
 variable {d : ℕ}
 
 
-theorem bernoulliProduct_map_planeRestrict (k : ℕ) (p : ℝ≥0) (hp : p ≤ 1) :
+theorem bernoulliProduct_map_planeRestrict (k : ℕ) (p : NNReal) (hp : p ≤ 1) :
     Measure.map (pcv_planeRestrict k)
         (bernoulliProductMeasure (E := Sym2 (Site (2 + k))) p hp) =
       bernoulliProductMeasure (E := Sym2 (Site 2)) p hp := by
@@ -70,7 +70,7 @@ theorem pcv_plane_percolation_subset (k : ℕ) :
   simpa using pcv_connected_of_planeRestrict k omega hx
 
 
-theorem theta_two_le_theta_add (k : ℕ) (p : ℝ≥0) (hp : p ≤ 1) :
+theorem theta_two_le_theta_add (k : ℕ) (p : NNReal) (hp : p ≤ 1) :
     theta 2 p hp ≤ theta (2 + k) p hp := by
   let mud := bernoulliProductMeasure (E := Sym2 (Site (2 + k))) p hp
   let mu2 := bernoulliProductMeasure (E := Sym2 (Site 2)) p hp
@@ -84,7 +84,7 @@ theorem theta_two_le_theta_add (k : ℕ) (p : ℝ≥0) (hp : p ≤ 1) :
   exact measureReal_mono (pcv_plane_percolation_subset k)
 
 
-theorem theta_mono_parameter {p q : ℝ≥0} (hp : p ≤ 1) (hq : q ≤ 1)
+theorem theta_mono_parameter {p q : NNReal} (hp : p ≤ 1) (hq : q ≤ 1)
     (hpq : p ≤ q) : theta d p hp ≤ theta d q hq := by
   let mup := bernoulliProductMeasure (E := Sym2 (Site d)) p hp
   let muq := bernoulliProductMeasure (E := Sym2 (Site d)) q hq
@@ -116,7 +116,7 @@ theorem theta_mono_parameter {p q : ℝ≥0} (hp : p ≤ 1) (hq : q ≤ 1)
     bernoulliProduct_boxRestrict_preimage] using hmono
 
 
-theorem pc_le_of_theta_pos (p : ℝ≥0) (hp : p ≤ 1)
+theorem pc_le_of_theta_pos (p : NNReal) (hp : p ≤ 1)
     (hpos : 0 < theta d p hp) : pc d ≤ p := by
   unfold pc
   apply csSup_le'
@@ -130,11 +130,11 @@ theorem pc_le_of_theta_pos (p : ℝ≥0) (hp : p ≤ 1)
 
 
 theorem exists_theta_two_pos_below_one :
-    ∃ (p : ℝ≥0) (hp1 : p < 1), 0 < theta 2 p hp1.le := by
+    ∃ (p : NNReal) (hp1 : p < 1), 0 < theta 2 p hp1.le := by
   obtain ⟨beta, hbeta, hmag⟩ := IsingFK.pup_exists_positive_magnetization
   have hp0r : 0 < IsingFK.pOfBeta beta := Ising.pOfBeta_pos hbeta
   have hp1r : IsingFK.pOfBeta beta < 1 := Ising.pOfBeta_lt_one beta
-  let p : ℝ≥0 := ⟨IsingFK.pOfBeta beta, hp0r.le⟩
+  let p : NNReal := ⟨IsingFK.pOfBeta beta, hp0r.le⟩
   have hp0 : 0 < p := by exact_mod_cast hp0r
   have hp1 : p < 1 := by exact_mod_cast hp1r
   have hid : Ising.magnetization 2 beta =

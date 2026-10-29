@@ -32,7 +32,7 @@ open StatMech.Lattice StatMech.Percolation
 variable {d : ℕ}
 
 
-theorem shk_restrictedSusceptibility_le (p : ℝ≥0) (hp : p ≤ 1)
+theorem shk_restrictedSusceptibility_le (p : NNReal) (hp : p ≤ 1)
     (S Lam : Finset (Site d)) (h0S : origin d ∈ S) (h0Lam : origin d ∈ Lam)
     (hphi : phi d p hp S < 1) :
     shk_restrictedSusceptibility p hp Lam (origin d) ≤
@@ -110,7 +110,7 @@ theorem shk_restrictedSusceptibility_le (p : ℝ≥0) (hp : p ≤ 1)
   exact (humax (origin d) h0Lam).trans hub
 
 
-theorem shk_connWithinProb_mono {p q : ℝ≥0} (hp : p ≤ 1) (hq : q ≤ 1)
+theorem shk_connWithinProb_mono {p q : NNReal} (hp : p ≤ 1) (hq : q ≤ 1)
     (hpq : p ≤ q) (S : Finset (Site d)) (x : Site d) :
     connWithinProb d p hp S x ≤ connWithinProb d q hq S x := by
   classical
@@ -132,7 +132,7 @@ theorem shk_connWithinProb_mono {p q : ℝ≥0} (hp : p ≤ 1) (hq : q ≤ 1)
     rw [dif_neg h0, dif_neg h0]
 
 
-theorem shk_phi_mono {p q : ℝ≥0} (hp : p ≤ 1) (hq : q ≤ 1)
+theorem shk_phi_mono {p q : NNReal} (hp : p ≤ 1) (hq : q ≤ 1)
     (hpq : p ≤ q) (S : Finset (Site d)) :
     phi d p hp S ≤ phi d q hq S := by
   unfold phi

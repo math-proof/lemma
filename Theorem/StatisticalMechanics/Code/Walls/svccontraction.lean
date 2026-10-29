@@ -81,8 +81,8 @@ theorem svc_origin_event_eq (ω : ConfigSpace (Sym2 (Site d))) (L : ℕ) :
 theorem svc_separated_drives_dichotomy
     (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ] (hd : 1 ≤ d) (L : ℕ)
     (hexp : ∀ R : ℕ,
-      ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-        = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+      ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+        = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
     (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R)
     (hexist : bc61_CoarseTrifExistence μ L) :
     μ {ω | numInfiniteClusters d ω = ⊤} = 0 :=
@@ -128,15 +128,15 @@ theorem svc_withinHub_boundary_targets (ω : ConfigSpace (Sym2 (Site d))) (L R :
 theorem svc_bk_top_null_of_gap2
     (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ] (hd : 1 ≤ d) (L : ℕ)
     (hexp : ∀ R : ℕ,
-      ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
-        = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ)
+      ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0}
+        = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ)
     (hforest : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R)
     (hexist : bc61_CoarseTrifExistence μ L) :
     μ {ω | numInfiniteClusters d ω = ⊤} = 0 :=
   bc73_infiniteClusters_top_null μ hd L hexp hforest hexist
 
 
-theorem svc_bk_uniqueness_of_gap2 (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
+theorem svc_bk_uniqueness_of_gap2 (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
     (hGlobal : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc69_Gn_globalForest ω L R)
     (hcoarseRoute : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = ⊤} →

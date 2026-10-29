@@ -45,20 +45,20 @@ private lemma newtonP_eq_sum (S : Type*) [CommRing S] (z₁ z₂ z₃ a b c : S)
     | 2 =>
       simp only [newtonP]
       have hsq : (z₁ + z₂ + z₃) ^ 2
-        = z₁ ^ 2 + z₂ ^ 2 + z₃ ^ 2 + 2 * (z₁ * z₂ + z₂ * z₃ + z₃ * z₁) := by ring
+          = z₁ ^ 2 + z₂ ^ 2 + z₃ ^ 2 + 2 * (z₁ * z₂ + z₂ * z₃ + z₃ * z₁) := by ring
       rw [h1, h2] at hsq
       linear_combination hsq
     | (j + 3) =>
       have key1 : z₁ ^ 3 - (z₁ + z₂ + z₃) * z₁ ^ 2
-        + (z₁ * z₂ + z₂ * z₃ + z₃ * z₁) * z₁ - z₁ * z₂ * z₃ = 0 := by ring
+          + (z₁ * z₂ + z₂ * z₃ + z₃ * z₁) * z₁ - z₁ * z₂ * z₃ = 0 := by ring
       rw [h1, h2, h3] at key1
       have hz1 : z₁ ^ 3 = a * z₁ ^ 2 - b * z₁ + c := by linear_combination key1
       have key2 : z₂ ^ 3 - (z₁ + z₂ + z₃) * z₂ ^ 2
-        + (z₁ * z₂ + z₂ * z₃ + z₃ * z₁) * z₂ - z₁ * z₂ * z₃ = 0 := by ring
+          + (z₁ * z₂ + z₂ * z₃ + z₃ * z₁) * z₂ - z₁ * z₂ * z₃ = 0 := by ring
       rw [h1, h2, h3] at key2
       have hz2 : z₂ ^ 3 = a * z₂ ^ 2 - b * z₂ + c := by linear_combination key2
       have key3 : z₃ ^ 3 - (z₁ + z₂ + z₃) * z₃ ^ 2
-        + (z₁ * z₂ + z₂ * z₃ + z₃ * z₁) * z₃ - z₁ * z₂ * z₃ = 0 := by ring
+          + (z₁ * z₂ + z₂ * z₃ + z₃ * z₁) * z₃ - z₁ * z₂ * z₃ = 0 := by ring
       rw [h1, h2, h3] at key3
       have hz3 : z₃ ^ 3 = a * z₃ ^ 2 - b * z₃ + c := by linear_combination key3
       have e1 : z₁ ^ (j + 3) = a * z₁ ^ (j + 2) - b * z₁ ^ (j + 1) + c * z₁ ^ j := by
@@ -199,24 +199,24 @@ private lemma quad_integral (ρ c α : ℂ)
   (heval : α ^ 2 - ρ * α + c = 0) :
   IsIntegral ℤ α := by
   have heval' : Polynomial.eval α
-    (Polynomial.X ^ 2 - Polynomial.C ρ * Polynomial.X + Polynomial.C c : Polynomial ℂ) = 0 := by
+      (Polynomial.X ^ 2 - Polynomial.C ρ * Polynomial.X + Polynomial.C c : Polynomial ℂ) = 0 := by
     simp only [Polynomial.eval_add, Polynomial.eval_sub, Polynomial.eval_mul, Polynomial.eval_pow,
       Polynomial.eval_X, Polynomial.eval_C]
     linear_combination heval
   have hmonic : (Polynomial.X ^ 2 - Polynomial.C ρ * Polynomial.X + Polynomial.C c :
-    Polynomial ℂ).Monic := by
+      Polynomial ℂ).Monic := by
     have h : (Polynomial.X ^ 2 - Polynomial.C ρ * Polynomial.X + Polynomial.C c : Polynomial ℂ)
-      = Polynomial.X ^ 2 + (-Polynomial.C ρ * Polynomial.X + Polynomial.C c) := by ring
+        = Polynomial.X ^ 2 + (-Polynomial.C ρ * Polynomial.X + Polynomial.C c) := by ring
     rw [h]
     apply Polynomial.monic_X_pow_add
     compute_degree
     all_goals norm_num
   have hdeg : (Polynomial.X ^ 2 - Polynomial.C ρ * Polynomial.X + Polynomial.C c :
-    Polynomial ℂ).natDegree ≠ 0 := by
+      Polynomial ℂ).natDegree ≠ 0 := by
     have h : (Polynomial.X ^ 2 - Polynomial.C ρ * Polynomial.X + Polynomial.C c :
-      Polynomial ℂ).natDegree = 2 := by
+        Polynomial ℂ).natDegree = 2 := by
       have heq : (Polynomial.X ^ 2 - Polynomial.C ρ * Polynomial.X + Polynomial.C c : Polynomial ℂ)
-        = Polynomial.X ^ 2 + (-Polynomial.C ρ * Polynomial.X + Polynomial.C c) := by ring
+          = Polynomial.X ^ 2 + (-Polynomial.C ρ * Polynomial.X + Polynomial.C c) := by ring
       rw [heq]
       compute_degree
       all_goals norm_num
@@ -229,24 +229,28 @@ private lemma quad_integral (ρ c α : ℂ)
     cases i with
     | zero =>
       have h0 : (Polynomial.X ^ 2 - Polynomial.C ρ * Polynomial.X + Polynomial.C c :
-        Polynomial ℂ).coeff 0 = c := by simp
-      rwa [h0]
+          Polynomial ℂ).coeff 0 = c := by simp
+      rw [h0]
+      exact hc
     | succ n =>
       cases n with
       | zero =>
         have h1 : (Polynomial.X ^ 2 - Polynomial.C ρ * Polynomial.X + Polynomial.C c :
-          Polynomial ℂ).coeff 1 = -ρ := by simp
-        rwa [h1]
+            Polynomial ℂ).coeff 1 = -ρ := by simp
+        rw [h1]
+        exact hρ.neg
       | succ m =>
         cases m with
         | zero =>
           have h2 : (Polynomial.X ^ 2 - Polynomial.C ρ * Polynomial.X + Polynomial.C c :
-            Polynomial ℂ).coeff 2 = 1 := by simp
-          rwa [h2]
+              Polynomial ℂ).coeff 2 = 1 := by simp
+          rw [h2]
+          exact isIntegral_one
         | succ k =>
           have hk : (Polynomial.X ^ 2 - Polynomial.C ρ * Polynomial.X + Polynomial.C c :
-            Polynomial ℂ).coeff (k + 3) = 0 := by simp
-          rwa [hk]
+              Polynomial ℂ).coeff (k + 3) = 0 := by simp
+          rw [hk]
+          exact isIntegral_zero
 
 end MetaMathlibExt
 
@@ -260,8 +264,8 @@ private lemma rho_integral (S₁ S₂ R : ℤ) (γ : ℂ)
   (hroot : cubicRecurrenceRootCondition S₁ S₂ R γ) :
   IsIntegral ℤ ((R : ℂ) * (γ + γ⁻¹)) := by
   have h0 : ((R : ℂ) * (γ + γ⁻¹)) ^ 3 - (S₁ : ℂ) * ((R : ℂ) * (γ + γ⁻¹)) ^ 2
-    + (S₂ : ℂ) * ((R : ℂ) * (γ + γ⁻¹))
-    - (((R * S₁ ^ 2 - 2 * R * S₂ - 4 * R ^ 3 : ℤ)) : ℂ) = 0 := hroot
+      + (S₂ : ℂ) * ((R : ℂ) * (γ + γ⁻¹))
+      - (((R * S₁ ^ 2 - 2 * R * S₂ - 4 * R ^ 3 : ℤ)) : ℂ) = 0 := hroot
   push_cast at h0
   set p : Polynomial ℤ :=
     Polynomial.X ^ 3 +
@@ -284,7 +288,8 @@ private lemma rho_integral (S₁ S₂ R : ℤ) (γ : ℂ)
       Polynomial.aeval_X, Polynomial.aeval_C, algebraMap_int_eq]
     simp
     linear_combination h0
-  rwa [haeval]
+  rw [haeval]
+  exact isIntegral_zero
 
 end MetaMathlibExt
 
@@ -299,7 +304,7 @@ private lemma alpha_integral (R : ℤ) (γ : ℂ) (hγ : γ ≠ 0)
   IsIntegral ℤ ((R : ℂ) * γ) := by
   have hγinv : γ * γ⁻¹ = 1 := mul_inv_cancel₀ hγ
   have heval : ((R : ℂ) * γ) ^ 2 - ((R : ℂ) * (γ + γ⁻¹)) * ((R : ℂ) * γ)
-    + (R : ℂ) ^ 2 = 0 := by
+      + (R : ℂ) ^ 2 = 0 := by
     linear_combination -((R : ℂ) ^ 2 * hγinv)
   exact quad_integral _ _ _ hρ ((isIntegral_intCast R).pow 2) heval
 
@@ -316,7 +321,7 @@ private lemma beta_integral (R : ℤ) (γ : ℂ) (hγ : γ ≠ 0)
   IsIntegral ℤ ((R : ℂ) * γ⁻¹) := by
   have hγinv : γ⁻¹ * γ = 1 := inv_mul_cancel₀ hγ
   have heval : ((R : ℂ) * γ⁻¹) ^ 2 - ((R : ℂ) * (γ + γ⁻¹)) * ((R : ℂ) * γ⁻¹)
-    + (R : ℂ) ^ 2 = 0 := by
+      + (R : ℂ) ^ 2 = 0 := by
     linear_combination -((R : ℂ) ^ 2 * hγinv)
   exact quad_integral _ _ _ hρ ((isIntegral_intCast R).pow 2) heval
 
@@ -355,9 +360,9 @@ private lemma diff_identity (g₁ g₂ g₃ R : ℂ) (k : ℕ)
   have s3 : (R * g₃) ^ k = R ^ k * g₃ ^ k := by rw [mul_pow]
   rw [r1, r2, r3, s1, s2, s3, e1, e2, e3]
   have hexpand : (1 - g₁ ^ k) * (1 - g₂ ^ k) * (1 - g₃ ^ k)
-    = 1 - (g₁ ^ k + g₂ ^ k + g₃ ^ k)
-      + (g₁ ^ k * g₂ ^ k + g₂ ^ k * g₃ ^ k + g₃ ^ k * g₁ ^ k)
-      - g₁ ^ k * g₂ ^ k * g₃ ^ k := by ring
+      = 1 - (g₁ ^ k + g₂ ^ k + g₃ ^ k)
+        + (g₁ ^ k * g₂ ^ k + g₂ ^ k * g₃ ^ k + g₃ ^ k * g₁ ^ k)
+        - g₁ ^ k * g₂ ^ k * g₃ ^ k := by ring
   rw [hexpand, hpk]
   ring
 
@@ -397,9 +402,9 @@ private lemma sum_identity (g₁ g₂ g₃ R : ℂ) (k : ℕ)
   have s3 : (R * g₃) ^ k = R ^ k * g₃ ^ k := by rw [mul_pow]
   rw [r1, r2, r3, s1, s2, s3, e1, e2, e3, hW]
   have hexpand : (1 + g₁ ^ k) * (1 + g₂ ^ k) * (1 + g₃ ^ k)
-    = 1 + (g₁ ^ k + g₂ ^ k + g₃ ^ k)
-      + (g₁ ^ k * g₂ ^ k + g₂ ^ k * g₃ ^ k + g₃ ^ k * g₁ ^ k)
-      + g₁ ^ k * g₂ ^ k * g₃ ^ k := by ring
+      = 1 + (g₁ ^ k + g₂ ^ k + g₃ ^ k)
+        + (g₁ ^ k * g₂ ^ k + g₂ ^ k * g₃ ^ k + g₃ ^ k * g₁ ^ k)
+        + g₁ ^ k * g₂ ^ k * g₃ ^ k := by ring
   rw [hexpand, hpk]
   ring
 
@@ -479,19 +484,20 @@ private lemma int_dvd_of_complex (d : ℕ) (z : ℤ) (q : ℂ)
     subst hz
     exact dvd_refl 0
   · have hdC : ((d : ℕ) : ℂ) ≠ 0 := by
-    rwa [Nat.cast_ne_zero]
+      rw [Nat.cast_ne_zero]
+      exact hd
     have hqeq : q = ((z : ℤ) : ℂ) / ((d : ℕ) : ℂ) := by
       rw [hdiv]
       field_simp
     have hcast : ((((z : ℚ) / (d : ℚ)) : ℚ) : ℂ) = ((z : ℤ) : ℂ) / ((d : ℕ) : ℂ) := by
       push_cast
       ring
-    have hqrat : ∃ r : ℚ, q = ((r : ℚ) : ℂ) := by
+    have hqrat : q ∈ Set.range (Rat.cast : ℚ → ℂ) := by
       refine ⟨(z : ℚ) / (d : ℚ), ?_⟩
       rw [hqeq, hcast]
-    obtain ⟨k, hk⟩ := (IsIntegral.exists_int_iff_exists_rat hqInt).mp hqrat
+    obtain ⟨k, hk⟩ := (IsIntegral.mem_range_ratCast_iff hqInt).mp hqrat
     have hzk : ((z : ℤ) : ℂ) = ((((d : ℤ) * k : ℤ)) : ℂ) := by
-      rw [hdiv, hk]
+      rw [hdiv, ← hk]
       push_cast
       ring
     have hzz : z = (d : ℤ) * k := Int.cast_injective hzk
@@ -520,15 +526,15 @@ private lemma int_dvd_of_complex_int (d z : ℤ) (q : ℂ)
       rw [hdiv]
       field_simp
     have hcast : ((((z : ℚ) / (d : ℚ)) : ℚ) : ℂ)
-      = ((z : ℤ) : ℂ) / ((d : ℤ) : ℂ) := by
+        = ((z : ℤ) : ℂ) / ((d : ℤ) : ℂ) := by
       push_cast
       ring
-    have hqrat : ∃ r : ℚ, q = ((r : ℚ) : ℂ) := by
+    have hqrat : q ∈ Set.range (Rat.cast : ℚ → ℂ) := by
       refine ⟨(z : ℚ) / (d : ℚ), ?_⟩
       rw [hqeq, hcast]
-    obtain ⟨k, hk⟩ := (IsIntegral.exists_int_iff_exists_rat hqInt).mp hqrat
+    obtain ⟨k, hk⟩ := (IsIntegral.mem_range_ratCast_iff hqInt).mp hqrat
     have hzk : ((z : ℤ) : ℂ) = ((((d * k : ℤ))) : ℂ) := by
-      rw [hdiv, hk]
+      rw [hdiv, ← hk]
       push_cast
       ring
     have hzz : z = d * k := Int.cast_injective hzk
@@ -614,15 +620,16 @@ private lemma W_aux (x y rr : ℂ)
     have h0 : π (xA + yA - 6 * rrA) = 0 := (Ideal.Quotient.eq_zero_iff_mem).mpr hmem
     have h0' : π xA + π yA - π (6 : A) * π rrA = 0 := by simpa [map_sub, map_add, map_mul] using h0
     have h6 : π (6 : A) = 6 := map_ofNat π 6
-    rwa [h6] at h0'
+    rw [h6] at h0'
+    exact h0'
   have h2X : 2 * π xA = 6 * π rrA := by
     rw [hYeqX] at hsum0
     linear_combination hsum0
   have hPXmap : π (newtonP A xA (rrA * yA) (rrA ^ 3) m)
-    = newtonP (A ⧸ I) (π xA) (π rrA * π yA) ((π rrA) ^ 3) m := by
+      = newtonP (A ⧸ I) (π xA) (π rrA * π yA) ((π rrA) ^ 3) m := by
     rw [newtonP_map, map_mul, map_pow]
   have hPYmap : π (newtonP A yA (rrA * xA) (rrA ^ 3) m)
-    = newtonP (A ⧸ I) (π yA) (π rrA * π xA) ((π rrA) ^ 3) m := by
+      = newtonP (A ⧸ I) (π yA) (π rrA * π xA) ((π rrA) ^ 3) m := by
     rw [newtonP_map, map_mul, map_pow]
   set S : A :=
     newtonP A xA (rrA * yA) (rrA ^ 3) m + newtonP A yA (rrA * xA) (rrA ^ 3) m
@@ -630,8 +637,8 @@ private lemma W_aux (x y rr : ℂ)
   have hπS : π S = 0 := by
     have hD := double_newtonP (A ⧸ I) (π xA) (π rrA) h2X m
     have e : π S = newtonP (A ⧸ I) (π xA) (π rrA * π yA) ((π rrA) ^ 3) m
-      + newtonP (A ⧸ I) (π yA) (π rrA * π xA) ((π rrA) ^ 3) m
-      - 6 * (π rrA) ^ m := by
+        + newtonP (A ⧸ I) (π yA) (π rrA * π xA) ((π rrA) ^ 3) m
+        - 6 * (π rrA) ^ m := by
       rw [hS_def, map_sub, map_add, map_mul, hPXmap, hPYmap, map_pow, map_ofNat]
     rw [e, hYeqX]
     linear_combination hD
@@ -640,7 +647,7 @@ private lemma W_aux (x y rr : ℂ)
   obtain ⟨qA, hqA⟩ := hSmem
   let val : A →+* ℂ := (integralClosure ℤ ℂ).val
   have hvalS : val S = newtonP ℂ x (rr * y) (rr ^ 3) m + newtonP ℂ y (rr * x) (rr ^ 3) m
-    - 6 * rr ^ m := by
+      - 6 * rr ^ m := by
     rw [hS_def, map_sub, map_add, map_mul, newtonP_map, newtonP_map, map_pow, map_ofNat]
     rfl
   have hvald : val dA = ((d : ℕ) : ℂ) := rfl
@@ -690,7 +697,7 @@ lemma cubicRecurrenceDiscriminant_dvd_mul
       simp only [pow_one, Int.cast_zero, Nat.sub_self, pow_zero,
         one_mul] at h1
       have hbase : ((U 1 : ℤ) : ℂ) * ((1 - γ₁) * (1 - γ₂) * (1 - γ₃))
-        = 1 * ((1 - γ₁) * (1 - γ₂) * (1 - γ₃)) := by
+          = 1 * ((1 - γ₁) * (1 - γ₂) * (1 - γ₃)) := by
         linear_combination h1
       have hU1c : ((U 1 : ℤ) : ℂ) = 1 := mul_right_cancel₀ hδ hbase
       have hzz : ((U 1 : ℤ) : ℂ) = ((1 : ℤ) : ℂ) := by simpa using hU1c
@@ -701,7 +708,7 @@ lemma cubicRecurrenceDiscriminant_dvd_mul
       have hk1 : k - 1 ≠ 0 := by omega
       simp only [Int.cast_zero, zero_pow hk1, zero_mul] at h1
       have hbase : ((U k : ℤ) : ℂ) * ((1 - γ₁) * (1 - γ₂) * (1 - γ₃))
-        = 0 * ((1 - γ₁) * (1 - γ₂) * (1 - γ₃)) := by
+          = 0 * ((1 - γ₁) * (1 - γ₂) * (1 - γ₃)) := by
         linear_combination h1
       have hUk0 : ((U k : ℤ) : ℂ) = 0 := mul_right_cancel₀ hδ hbase
       have hzz : ((U k : ℤ) : ℂ) = ((0 : ℤ) : ℂ) := by simpa using hUk0
@@ -746,12 +753,12 @@ lemma cubicRecurrenceDiscriminant_dvd_mul
     have hdiff1 := diff_identity γ₁ γ₂ γ₃ (R : ℂ) 1 hprod
     simp only [pow_one] at hdiff1
     have hKeq : K = ((R : ℂ) * γ₁⁻¹ + (R : ℂ) * γ₂⁻¹ + (R : ℂ) * γ₃⁻¹)
-      - ((R : ℂ) * γ₁ + (R : ℂ) * γ₂ + (R : ℂ) * γ₃) := by
+        - ((R : ℂ) * γ₁ + (R : ℂ) * γ₂ + (R : ℂ) * γ₃) := by
       rw [hKdef, hδdef, ← hdiff1]
     have hx1 : IsIntegral ℤ ((R : ℂ) * γ₁ + (R : ℂ) * γ₂ + (R : ℂ) * γ₃) :=
       (hα1.add hα2).add hα3
     have hy1 : IsIntegral ℤ
-      ((R : ℂ) * γ₁⁻¹ + (R : ℂ) * γ₂⁻¹ + (R : ℂ) * γ₃⁻¹) :=
+        ((R : ℂ) * γ₁⁻¹ + (R : ℂ) * γ₂⁻¹ + (R : ℂ) * γ₃⁻¹) :=
       (hβ1.add hβ2).add hβ3
     have hKint : IsIntegral ℤ K := by
       rw [hKeq]
@@ -775,84 +782,88 @@ lemma cubicRecurrenceDiscriminant_dvd_mul
         rw [mul_inv, mul_inv]
       rw [← h2, hprod, inv_one]
     have h1x : ((R : ℂ) * γ₁) ^ n + ((R : ℂ) * γ₂) ^ n
-      + ((R : ℂ) * γ₃) ^ n = x := hxdef.symm
+        + ((R : ℂ) * γ₃) ^ n = x := hxdef.symm
     have h2x : ((R : ℂ) * γ₁) ^ n * (((R : ℂ) * γ₂) ^ n)
-      + ((R : ℂ) * γ₂) ^ n * (((R : ℂ) * γ₃) ^ n)
-      + ((R : ℂ) * γ₃) ^ n * (((R : ℂ) * γ₁) ^ n)
-      = rr * y := by
+          + ((R : ℂ) * γ₂) ^ n * (((R : ℂ) * γ₃) ^ n)
+          + ((R : ℂ) * γ₃) ^ n * (((R : ℂ) * γ₁) ^ n)
+        = rr * y := by
       have h := pairs_identity γ₁ γ₂ γ₃ (R : ℂ) n hprod
-      rwa [← hrrdef, ← hydef] at h
+      rw [← hrrdef, ← hydef] at h
+      exact h
     have h3x : ((R : ℂ) * γ₁) ^ n * (((R : ℂ) * γ₂) ^ n)
-      * (((R : ℂ) * γ₃) ^ n) = rr ^ 3 := by
+          * (((R : ℂ) * γ₃) ^ n) = rr ^ 3 := by
       have h := triple_identity γ₁ γ₂ γ₃ (R : ℂ) n hprod
       have hassoc : ((R : ℂ) * γ₁) ^ n * (((R : ℂ) * γ₂) ^ n)
-        * (((R : ℂ) * γ₃) ^ n)
-        = ((R : ℂ) * γ₁) ^ n
-          * ((((R : ℂ) * γ₂) ^ n) * (((R : ℂ) * γ₃) ^ n)) := by
+              * (((R : ℂ) * γ₃) ^ n)
+          = ((R : ℂ) * γ₁) ^ n
+            * ((((R : ℂ) * γ₂) ^ n) * (((R : ℂ) * γ₃) ^ n)) := by
         ring
       rw [hassoc, h, hrrdef]
     have h1y : ((R : ℂ) * γ₁⁻¹) ^ n + ((R : ℂ) * γ₂⁻¹) ^ n
-      + ((R : ℂ) * γ₃⁻¹) ^ n = y := hydef.symm
+        + ((R : ℂ) * γ₃⁻¹) ^ n = y := hydef.symm
     have h2y : ((R : ℂ) * γ₁⁻¹) ^ n * (((R : ℂ) * γ₂⁻¹) ^ n)
-      + ((R : ℂ) * γ₂⁻¹) ^ n * (((R : ℂ) * γ₃⁻¹) ^ n)
-      + ((R : ℂ) * γ₃⁻¹) ^ n * (((R : ℂ) * γ₁⁻¹) ^ n)
-      = rr * x := by
+          + ((R : ℂ) * γ₂⁻¹) ^ n * (((R : ℂ) * γ₃⁻¹) ^ n)
+          + ((R : ℂ) * γ₃⁻¹) ^ n * (((R : ℂ) * γ₁⁻¹) ^ n)
+        = rr * x := by
       have h :=
         pairs_identity (γ₁⁻¹) (γ₂⁻¹) (γ₃⁻¹) (R : ℂ) n hprod_inv
       simp only [inv_inv] at h
-      rwa [← hrrdef, ← hxdef] at h
+      rw [← hrrdef, ← hxdef] at h
+      exact h
     have h3y : ((R : ℂ) * γ₁⁻¹) ^ n * (((R : ℂ) * γ₂⁻¹) ^ n)
-      * (((R : ℂ) * γ₃⁻¹) ^ n) = rr ^ 3 := by
+          * (((R : ℂ) * γ₃⁻¹) ^ n) = rr ^ 3 := by
       have h :=
         triple_identity (γ₁⁻¹) (γ₂⁻¹) (γ₃⁻¹) (R : ℂ) n hprod_inv
       have hassoc : ((R : ℂ) * γ₁⁻¹) ^ n * (((R : ℂ) * γ₂⁻¹) ^ n)
-        * (((R : ℂ) * γ₃⁻¹) ^ n)
-        = ((R : ℂ) * γ₁⁻¹) ^ n
-          * ((((R : ℂ) * γ₂⁻¹) ^ n) * (((R : ℂ) * γ₃⁻¹) ^ n)) := by
+              * (((R : ℂ) * γ₃⁻¹) ^ n)
+          = ((R : ℂ) * γ₁⁻¹) ^ n
+            * ((((R : ℂ) * γ₂⁻¹) ^ n) * (((R : ℂ) * γ₃⁻¹) ^ n)) := by
         ring
       rw [hassoc, h, hrrdef]
     have hPx : ∀ k : ℕ,
-      newtonP ℂ x (rr * y) (rr ^ 3) k
-        = ((R : ℂ) * γ₁) ^ (n * k) + ((R : ℂ) * γ₂) ^ (n * k)
-          + ((R : ℂ) * γ₃) ^ (n * k) := by
+        newtonP ℂ x (rr * y) (rr ^ 3) k
+          = ((R : ℂ) * γ₁) ^ (n * k) + ((R : ℂ) * γ₂) ^ (n * k)
+            + ((R : ℂ) * γ₃) ^ (n * k) := by
       intro k
       have h := newtonP_eq_sum ℂ (((R : ℂ) * γ₁) ^ n)
         (((R : ℂ) * γ₂) ^ n) (((R : ℂ) * γ₃) ^ n) x (rr * y) (rr ^ 3)
         h1x h2x h3x k
       have e1 : ((((R : ℂ) * γ₁) ^ n) ^ k)
-        = ((R : ℂ) * γ₁) ^ (n * k) := by
+          = ((R : ℂ) * γ₁) ^ (n * k) := by
         rw [pow_mul]
       have e2 : ((((R : ℂ) * γ₂) ^ n) ^ k)
-        = ((R : ℂ) * γ₂) ^ (n * k) := by
+          = ((R : ℂ) * γ₂) ^ (n * k) := by
         rw [pow_mul]
       have e3 : ((((R : ℂ) * γ₃) ^ n) ^ k)
-        = ((R : ℂ) * γ₃) ^ (n * k) := by
+          = ((R : ℂ) * γ₃) ^ (n * k) := by
         rw [pow_mul]
-      rwa [e1, e2, e3] at h
+      rw [e1, e2, e3] at h
+      exact h
     have hPy : ∀ k : ℕ,
-      newtonP ℂ y (rr * x) (rr ^ 3) k
-        = ((R : ℂ) * γ₁⁻¹) ^ (n * k) + ((R : ℂ) * γ₂⁻¹) ^ (n * k)
-          + ((R : ℂ) * γ₃⁻¹) ^ (n * k) := by
+        newtonP ℂ y (rr * x) (rr ^ 3) k
+          = ((R : ℂ) * γ₁⁻¹) ^ (n * k) + ((R : ℂ) * γ₂⁻¹) ^ (n * k)
+            + ((R : ℂ) * γ₃⁻¹) ^ (n * k) := by
       intro k
       have h := newtonP_eq_sum ℂ (((R : ℂ) * γ₁⁻¹) ^ n)
         (((R : ℂ) * γ₂⁻¹) ^ n) (((R : ℂ) * γ₃⁻¹) ^ n) y (rr * x)
         (rr ^ 3) h1y h2y h3y k
       have e1 : ((((R : ℂ) * γ₁⁻¹) ^ n) ^ k)
-        = ((R : ℂ) * γ₁⁻¹) ^ (n * k) := by
+          = ((R : ℂ) * γ₁⁻¹) ^ (n * k) := by
         rw [pow_mul]
       have e2 : ((((R : ℂ) * γ₂⁻¹) ^ n) ^ k)
-        = ((R : ℂ) * γ₂⁻¹) ^ (n * k) := by
+          = ((R : ℂ) * γ₂⁻¹) ^ (n * k) := by
         rw [pow_mul]
       have e3 : ((((R : ℂ) * γ₃⁻¹) ^ n) ^ k)
-        = ((R : ℂ) * γ₃⁻¹) ^ (n * k) := by
+          = ((R : ℂ) * γ₃⁻¹) ^ (n * k) := by
         rw [pow_mul]
-      rwa [e1, e2, e3] at h
+      rw [e1, e2, e3] at h
+      exact h
     have hdiff_eq : ∀ k : ℕ, 1 ≤ k →
-      ((((R : ℂ) * γ₁⁻¹) ^ k + ((R : ℂ) * γ₂⁻¹) ^ k
-        + ((R : ℂ) * γ₃⁻¹) ^ k)
-        - (((R : ℂ) * γ₁) ^ k + ((R : ℂ) * γ₂) ^ k
-          + ((R : ℂ) * γ₃) ^ k))
-        = K * ((U k : ℤ) : ℂ) := by
+        ((((R : ℂ) * γ₁⁻¹) ^ k + ((R : ℂ) * γ₂⁻¹) ^ k
+            + ((R : ℂ) * γ₃⁻¹) ^ k)
+          - (((R : ℂ) * γ₁) ^ k + ((R : ℂ) * γ₂) ^ k
+            + ((R : ℂ) * γ₃) ^ k))
+          = K * ((U k : ℤ) : ℂ) := by
       intro k hk
       have hdiff := diff_identity γ₁ γ₂ γ₃ (R : ℂ) k hprod
       have hU := hUeq k hk
@@ -861,19 +872,19 @@ lemma cubicRecurrenceDiscriminant_dvd_mul
         conv_lhs => rw [hk']
         rw [pow_succ]
       calc ((((R : ℂ) * γ₁⁻¹) ^ k + ((R : ℂ) * γ₂⁻¹) ^ k
-        + ((R : ℂ) * γ₃⁻¹) ^ k)
-        - (((R : ℂ) * γ₁) ^ k + ((R : ℂ) * γ₂) ^ k
-          + ((R : ℂ) * γ₃) ^ k))
-        = (R : ℂ) ^ k * (((1 - γ₁ ^ k) * (1 - γ₂ ^ k))
-          * (1 - γ₃ ^ k)) := hdiff
+              + ((R : ℂ) * γ₃⁻¹) ^ k)
+            - (((R : ℂ) * γ₁) ^ k + ((R : ℂ) * γ₂) ^ k
+              + ((R : ℂ) * γ₃) ^ k))
+          = (R : ℂ) ^ k * (((1 - γ₁ ^ k) * (1 - γ₂ ^ k))
+            * (1 - γ₃ ^ k)) := hdiff
         _ = ((R : ℂ) ^ (k - 1) * (R : ℂ))
-          * (((1 - γ₁ ^ k) * (1 - γ₂ ^ k)) * (1 - γ₃ ^ k)) := by
+            * (((1 - γ₁ ^ k) * (1 - γ₂ ^ k)) * (1 - γ₃ ^ k)) := by
           rw [hRpow]
         _ = (R : ℂ) * (((R : ℂ) ^ (k - 1))
-          * (((1 - γ₁ ^ k) * (1 - γ₂ ^ k)) * (1 - γ₃ ^ k))) := by
+            * (((1 - γ₁ ^ k) * (1 - γ₂ ^ k)) * (1 - γ₃ ^ k))) := by
           ring
         _ = (R : ℂ) * (((U k : ℤ) : ℂ)
-          * (((1 - γ₁) * (1 - γ₂)) * (1 - γ₃))) := by
+            * (((1 - γ₁) * (1 - γ₂)) * (1 - γ₃))) := by
           rw [← hU]
         _ = K * ((U k : ℤ) : ℂ) := by
           rw [hKdef, hδdef]
@@ -886,18 +897,18 @@ lemma cubicRecurrenceDiscriminant_dvd_mul
     have hPxm := hPx m
     have hPym := hPy m
     have hdiff_nm : newtonP ℂ y (rr * x) (rr ^ 3) m
-      - newtonP ℂ x (rr * y) (rr ^ 3) m
-      = K * ((U (n * m) : ℤ) : ℂ) := by
+          - newtonP ℂ x (rr * y) (rr ^ 3) m
+        = K * ((U (n * m) : ℤ) : ℂ) := by
       rw [hPym, hPxm]
       exact hdiff_eq (n * m) hnm_pos
     have hQm_int := newtonQ_integral x y rr hx hy hrr m
     have hcancel : ((U (n * m) : ℤ) : ℂ)
-      = ((U n : ℤ) : ℂ) * newtonQ ℂ x y rr m := by
+        = ((U n : ℤ) : ℂ) * newtonQ ℂ x y rr m := by
       have h1 : K * ((U (n * m) : ℤ) : ℂ)
-        = K * (((U n : ℤ) : ℂ) * newtonQ ℂ x y rr m) := by
+          = K * (((U n : ℤ) : ℂ) * newtonQ ℂ x y rr m) := by
         calc K * ((U (n * m) : ℤ) : ℂ)
-          = newtonP ℂ y (rr * x) (rr ^ 3) m
-            - newtonP ℂ x (rr * y) (rr ^ 3) m := hdiff_nm.symm
+            = newtonP ℂ y (rr * x) (rr ^ 3) m
+              - newtonP ℂ x (rr * y) (rr ^ 3) m := hdiff_nm.symm
           _ = (y - x) * newtonQ ℂ x y rr m := hQ
           _ = (K * ((U n : ℤ) : ℂ)) * newtonQ ℂ x y rr m := by
             rw [hYX]
@@ -913,8 +924,8 @@ lemma cubicRecurrenceDiscriminant_dvd_mul
       rw [hxdef, hydef]
       exact sum_identity γ₁ γ₂ γ₃ (R : ℂ) n hprod (W n) (hWeq n)
     have hPPWnm : newtonP ℂ x (rr * y) (rr ^ 3) m
-      + newtonP ℂ y (rr * x) (rr ^ 3) m
-      = ((W (n * m) : ℤ) : ℂ) := by
+          + newtonP ℂ y (rr * x) (rr ^ 3) m
+        = ((W (n * m) : ℤ) : ℂ) := by
       rw [hPxm, hPym]
       exact sum_identity γ₁ γ₂ γ₃ (R : ℂ) (n * m) hprod (W (n * m))
         (hWeq (n * m))
@@ -954,15 +965,16 @@ lemma cubicRecurrenceDiscriminant_dvd_mul
       push_cast
       rw [pow_mul]
     have hWnm_eq : ((W (n * m) - 6 * R ^ (n * m) : ℤ) : ℂ)
-      = newtonP ℂ x (rr * y) (rr ^ 3) m
-        + newtonP ℂ y (rr * x) (rr ^ 3) m
-        - 6 * rr ^ m := by
+        = newtonP ℂ x (rr * y) (rr ^ 3) m
+          + newtonP ℂ y (rr * x) (rr ^ 3) m
+          - 6 * rr ^ m := by
       rw [hPPWnm, hrrm]
       push_cast
       ring
     have hdiv_W : ((W (n * m) - 6 * R ^ (n * m) : ℤ) : ℂ)
-      = ((d : ℕ) : ℂ) * q := by
-      rwa [hWnm_eq]
+        = ((d : ℕ) : ℂ) * q := by
+      rw [hWnm_eq]
+      exact hq_eq
     have hdvd_Wnm : (d : ℤ) ∣ W (n * m) - 6 * R ^ (n * m) :=
       int_dvd_of_complex d _ q hq_int hdiv_W
     have hdvd_Wnm_nat : d ∣ (W (n * m) - 6 * R ^ (n * m)).natAbs :=
@@ -978,4 +990,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

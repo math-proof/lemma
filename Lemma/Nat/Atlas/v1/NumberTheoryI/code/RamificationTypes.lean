@@ -748,7 +748,7 @@ lemma padic_decomp_unique
     · exact key hm₂ heq.symm h
   ·
     simp only [zero_dvd_iff] at hm₁ hm₂
-    obtain rfl | ha₁ <;> := Nat.eq_zero_or_pos a₁
+    obtain rfl | ha₁ := Nat.eq_zero_or_pos a₁
       obtain rfl | ha₂ := Nat.eq_zero_or_pos a₂
     · simp at heq; exact ⟨heq, rfl⟩
     · simp [zero_pow (by omega : a₂ ≠ 0)] at heq; omega
@@ -1505,7 +1505,7 @@ lemma ramIdx_over_eq_finrank_of_above_maxUnram
     (↥C_E ⧸ IsLocalRing.maximalIdeal ↥C_E) (B ⧸ IsLocalRing.maximalIdeal B) = 1 := by
     exact Nat.eq_one_of_mul_eq_one_right (Nat.mul_comm _ _ ▸ htower.symm)
   rwa [hf_CEB, mul_one] at hfund
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 999999 in
 set_option synthInstance.maxHeartbeats 400000 in
 
 /--

@@ -140,10 +140,10 @@ theorem sourcelessNonnegativeParityPMF_apply_eq_highTemp
   · rw [dif_pos hvalid, dif_pos hvalid,
       inhomogeneousParityFiberMass_eq_cosh_mul_highTemp G beta J H hvalid.1,
       currentSum_eq_cosh_mul_inhomogeneousParityPartition G beta J]
-    let c : ℝ≥0∞ := ENNReal.ofReal
+    let c : ENNReal := ENNReal.ofReal
       (∏ e ∈ G.edgeFinset, Real.cosh (beta * J e))
-    let t : ℝ≥0∞ := ENNReal.ofReal (highTempSubgraphWeight beta J H)
-    let p : ℝ≥0∞ := ENNReal.ofReal
+    let t : ENNReal := ENNReal.ofReal (highTempSubgraphWeight beta J H)
+    let p : ENNReal := ENNReal.ofReal
       (inhomogeneousParityPartition G beta J)
     have hcReal : 0 ≤ ∏ e ∈ G.edgeFinset,
         Real.cosh (beta * J e) := Finset.prod_nonneg fun e _ =>

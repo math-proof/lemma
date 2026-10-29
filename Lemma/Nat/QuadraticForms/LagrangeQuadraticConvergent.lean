@@ -100,8 +100,8 @@ private lemma lagrangeQuad_error_le
   have hgapReal : (4 : ℝ) ≤ ((4 * P * R - Q ^ 2 : ℤ) : ℝ) := by
     exact_mod_cast lagrangeQuad_discriminantGap P Q R hD hD3
   have hcompletedReal :
-    (2 * (P : ℝ) * (u : ℝ) + (Q : ℝ) * (y : ℝ)) ^ 2 +
-      ((4 * P * R - Q ^ 2 : ℤ) : ℝ) * (y : ℝ) ^ 2 = 4 * (P : ℝ) := by
+      (2 * (P : ℝ) * (u : ℝ) + (Q : ℝ) * (y : ℝ)) ^ 2 +
+          ((4 * P * R - Q ^ 2 : ℤ) : ℝ) * (y : ℝ) ^ 2 = 4 * (P : ℝ) := by
     exact_mod_cast lagrangeQuad_completedSquare P Q R u y hsol
   have hlinear := lagrangeQuad_absLinearTerm_mul_le
     (P : ℝ) ((4 * P * R - Q ^ 2 : ℤ) : ℝ)
@@ -109,9 +109,9 @@ private lemma lagrangeQuad_error_le
     hpReal hyReal hgapReal hcompletedReal
   have hden : 0 < 2 * (P : ℝ) * (y : ℝ) := by positivity
   have hrewrite :
-    -(Q : ℝ) / (2 * (P : ℝ)) - (u : ℝ) / (y : ℝ) =
-      -(2 * (P : ℝ) * (u : ℝ) + (Q : ℝ) * (y : ℝ)) /
-        (2 * (P : ℝ) * (y : ℝ)) := by
+      -(Q : ℝ) / (2 * (P : ℝ)) - (u : ℝ) / (y : ℝ) =
+        -(2 * (P : ℝ) * (u : ℝ) + (Q : ℝ) * (y : ℝ)) /
+          (2 * (P : ℝ) * (y : ℝ)) := by
     field_simp [hpReal.ne', hyReal.ne']
     ring
   rw [hrewrite, abs_div, abs_neg, abs_of_pos hden, div_le_iff₀ hden]
@@ -201,7 +201,7 @@ private lemma lagrangeQuad_exists_convergent
   dsimp only
   have hyNatCast : (y.toNat : ℤ) = y := Int.toNat_of_nonneg hy.le
   have hAss : Real.ContfracLegendre.Ass
-    (-(Q : ℝ) / (2 * (P : ℝ))) u (y.toNat : ℤ) := by
+      (-(Q : ℝ) / (2 * (P : ℝ))) u (y.toNat : ℤ) := by
     rw [hyNatCast]
     exact lagrangeQuad_legendreAss P Q R u y hP hy hD hD3 hD4 hsol
   obtain ⟨n, hn⟩ := Real.exists_rat_eq_convergent' hAss
@@ -218,7 +218,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma lagrange_quadratic_convergent
-  {P Q R u y : ℤ}
+  (P Q R u y : ℤ)
 -- given
   (hP : 0 < P)
   (hy : 0 < y)
@@ -226,16 +226,17 @@ lemma lagrange_quadratic_convergent
   (hD3 : Q ^ 2 - 4 * P * R ≠ -3)
   (hD4 : Q ^ 2 - 4 * P * R = -4 → P ≠ 2)
   (hsol : P * u ^ 2 + Q * u * y + R * y ^ 2 = 1) :
--- imply
-  let ω : ℝ := by
--- proof
+  let ω : ℝ := -(Q : ℝ) / (2 * (P : ℝ))
+  ∃ n : ℕ,
+    (n = 0 ∨ ¬(GenContFract.of ω).TerminatedAt (n - 1)) ∧
+      ((ω.convergent n : ℚ) : ℝ) = (u : ℝ) / (y : ℝ) := by
   classical
   let ω : ℝ := -(Q : ℝ) / (2 * (P : ℝ))
   change ∃ n : ℕ,
     (n = 0 ∨ ¬(GenContFract.of ω).TerminatedAt (n - 1)) ∧
       ((ω.convergent n : ℚ) : ℝ) = (u : ℝ) / (y : ℝ)
   have hexists : ∃ n : ℕ,
-    ((ω.convergent n : ℚ) : ℝ) = (u : ℝ) / (y : ℝ) := by
+      ((ω.convergent n : ℚ) : ℝ) = (u : ℝ) / (y : ℝ) := by
     simpa [ω] using lagrangeQuad_exists_convergent P Q R u y hP hy hD hD3 hD4 hsol
   let n := Nat.find hexists
   have hnSpec : ((ω.convergent n : ℚ) : ℝ) = (u : ℝ) / (y : ℝ) := by
@@ -245,7 +246,7 @@ lemma lagrange_quadratic_convergent
   · exact Or.inl hnZero
   · refine Or.inr fun hterminated => ?_
     have hstable :
-      ((ω.convergent n : ℚ) : ℝ) = ((ω.convergent (n - 1) : ℚ) : ℝ) := by
+        ((ω.convergent n : ℚ) : ℝ) = ((ω.convergent (n - 1) : ℚ) : ℝ) := by
       calc
         ((ω.convergent n : ℚ) : ℝ) = (GenContFract.of ω).convs n :=
           (Real.convs_eq_convergent ω n).symm
@@ -254,7 +255,7 @@ lemma lagrange_quadratic_convergent
         _ = ((ω.convergent (n - 1) : ℚ) : ℝ) :=
           Real.convs_eq_convergent ω (n - 1)
     have hprevious :
-      ((ω.convergent (n - 1) : ℚ) : ℝ) = (u : ℝ) / (y : ℝ) :=
+        ((ω.convergent (n - 1) : ℚ) : ℝ) = (u : ℝ) / (y : ℝ) :=
       hstable.symm.trans hnSpec
     have hlt : n - 1 < n := Nat.sub_lt (Nat.pos_of_ne_zero hnZero) Nat.one_pos
     exact (Nat.find_min hexists (by simpa [n] using hlt)) hprevious
@@ -263,4 +264,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -38,8 +38,8 @@ every `ρ × 1` rectangle `R` (any orientation), `|E ∩ R|_δ ≤ C ρ^η |E|_�
 -/
 def RectangleCondition (δ η C : ℝ) (E : Set E2) : Prop :=
   ∀ center dir : E2, ‖dir‖ = 1 → ∀ ρ : ℝ, 0 < ρ →
-    (deltaCoveringNumber δ (E ∩ RhoOneRectangle center dir ρ) : ℝ≥0∞) ≤
-      ENNReal.ofReal (C * ρ ^ η) * (deltaCoveringNumber δ E : ℝ≥0∞)
+    (deltaCoveringNumber δ (E ∩ RhoOneRectangle center dir ρ) : ENNReal) ≤
+      ENNReal.ofReal (C * ρ ^ η) * (deltaCoveringNumber δ E : ENNReal)
 
 /--
 The set of unit-vector directions `(y − x)/‖y − x‖` for `y ∈ E \ {x}`. This

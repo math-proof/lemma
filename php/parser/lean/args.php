@@ -409,6 +409,20 @@ class LeanArgsSpaceSeparated extends LeanArgs
                 $k = $k->arg;
             return [$n->toLatex($syntax), $k->toLatex($syntax)];
         }
+        if (
+            $func instanceof LeanToken &&
+            $func->text === '𝒩' &&
+            count($args) >= 2 &&
+            $args[1] instanceof LeanParenthesis
+        ) {
+            $out = [];
+            foreach (array_slice($args, 1) as $arg) {
+                if ($arg instanceof LeanParenthesis && $arg->arg instanceof LeanDiv)
+                    $arg = $arg->arg;
+                $out[] = $arg->toLatex($syntax);
+            }
+            return $out;
+        }
         return parent::latexArgs($syntax);
     }
 
@@ -499,6 +513,19 @@ class LeanArgsSpaceSeparated extends LeanArgs
                 }
             }
         }
+        $n = count($args);
+        // `𝒩(μ, σ)` — sympy `_latex`: `\\mathcal{N}%s`
+        if (
+            $func instanceof LeanToken &&
+            $func->text === '𝒩' &&
+            $n >= 2 &&
+            $args[1] instanceof LeanParenthesis
+        ) {
+            $fmt = '\\mathcal{N}%s';
+            for ($i = 2; $i < $n; $i++)
+                $fmt .= '\\ {%s}';
+            return $fmt;
+        }
         return implode("\\ ", array_fill(0, count($args), '{%s}'));
     }
 
@@ -508,7 +535,20 @@ class LeanArgsSpaceSeparated extends LeanArgs
 
     public function strFormat()
     {
-        return implode(' ', array_fill(0, count($this->args), '%s'));
+        $args = $this->args;
+        $n = count($args);
+        if ($n === 0) return '';
+        $out = '%s';
+        for ($j = 1; $j < $n; $j++) {
+            $prev = $args[$j - 1];
+            $cur = $args[$j];
+            $glue =
+                $prev instanceof LeanToken &&
+                $prev->text === '𝒩' &&
+                $cur instanceof LeanParenthesis;
+            $out .= $glue ? '%s' : ' %s';
+        }
+        return $out;
     }
 
     public function tactic_block_info() {

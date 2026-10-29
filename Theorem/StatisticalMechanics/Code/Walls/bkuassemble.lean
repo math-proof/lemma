@@ -116,7 +116,7 @@ theorem bku_perHub_cutTransfer_holds (ω : ConfigSpace (Sym2 (Site d))) (L : ℕ
 open Classical in
 
 
-theorem bku_bk_closes_of_armPathCarrier (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
+theorem bku_bk_closes_of_armPathCarrier (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p) (L : ℕ)
     (hGlobal : ∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc69_Gn_globalForest ω L R)
     (hcoarseRoute : 0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = ⊤} →

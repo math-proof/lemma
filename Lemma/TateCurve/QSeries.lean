@@ -31,7 +31,7 @@ theorem nnnorm_eq_of_nnnorm_sub_lt {a b : K} (h : ‖a - b‖₊ < ‖b‖₊) :
     _ = max ‖a - b‖₊ ‖b‖₊ := nnnorm_add_eq_max_of_nnnorm_ne_nnnorm hne
     _ = ‖b‖₊ := max_eq_right h.le
 
-theorem nnnorm_add_le_of_le {a b : K} {C : ℝ≥0} (ha : ‖a‖₊ ≤ C) (hb : ‖b‖₊ ≤ C) :
+theorem nnnorm_add_le_of_le {a b : K} {C : NNReal} (ha : ‖a‖₊ ≤ C) (hb : ‖b‖₊ ≤ C) :
     ‖a + b‖₊ ≤ C :=
   (nnnorm_add_le_max a b).trans (max_le ha hb)
 

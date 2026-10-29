@@ -22,7 +22,7 @@ variable {E : Type*}
 
 namespace inhomBernoulliProductMeasure
 
-variable {p : E → ℝ≥0} {hp : ∀ e, p e ≤ 1}
+variable {p : E → NNReal} {hp : ∀ e, p e ≤ 1}
 
 theorem apply_singleton [Fintype E] (omega : ConfigSpace E) :
     inhomBernoulliProductMeasure p hp {omega} =
@@ -66,7 +66,7 @@ end inhomBernoulliProductMeasure
 
 
 theorem inhom_real_eq_wprob [Fintype E] [DecidableEq E]
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1) (A : Set (ConfigSpace E)) :
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1) (A : Set (ConfigSpace E)) :
     (inhomBernoulliProductMeasure p hp).real A =
       wprob (fun e b => (bernoulliMeasure (p e) (hp e)).real {b}) A := by
   rw [inhomBernoulliProductMeasure.real_eq_sum]
@@ -77,7 +77,7 @@ theorem inhom_real_eq_wprob [Fintype E] [DecidableEq E]
 
 
 theorem inhom_bk_inequality [Fintype E] [DecidableEq E]
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1)
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1)
     {A B : Set (ConfigSpace E)} (hA : IsIncreasing A) (hB : IsIncreasing B) :
     (inhomBernoulliProductMeasure p hp).real (disjointOccurrence A B) ≤
       (inhomBernoulliProductMeasure p hp).real A *
@@ -88,7 +88,7 @@ theorem inhom_bk_inequality [Fintype E] [DecidableEq E]
   have hphi1 : ∀ e, phi e false + phi e true = 1 := by
     intro e
     have hf : (bernoulliMeasure (p e) (hp e)).real {false} =
-        ((1 - p e : ℝ≥0) : ℝ) := by
+        ((1 - p e : NNReal) : ℝ) := by
       rw [Measure.real, bernoulliMeasure_apply_false, ENNReal.coe_toReal]
     have ht : (bernoulliMeasure (p e) (hp e)).real {true} = (p e : ℝ) := by
       rw [Measure.real, bernoulliMeasure_apply_true, ENNReal.coe_toReal]
@@ -102,7 +102,7 @@ theorem inhom_bk_inequality [Fintype E] [DecidableEq E]
 variable [Countable E] [DecidableEq E]
 
 
-theorem inhom_realProb_cylinder (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1)
+theorem inhom_realProb_cylinder (p : E → NNReal) (hp : ∀ e, p e ≤ 1)
     (F : Finset E) (A : Set (ConfigSpace F)) :
     (inhomBernoulliProductMeasure p hp).real (MeasureTheory.cylinder F A) =
       (inhomBernoulliProductMeasure (fun e : F => p e)
@@ -115,7 +115,7 @@ theorem inhom_realProb_cylinder (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1)
     ← Measure.infinitePi_eq_pi]
 
 
-theorem inhom_coord_true_prob (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1) (e : E) :
+theorem inhom_coord_true_prob (p : E → NNReal) (hp : ∀ e, p e ≤ 1) (e : E) :
     (inhomBernoulliProductMeasure p hp).real {omega | omega e = true} =
       (p e : ℝ) := by
   have hmarg :
@@ -134,7 +134,7 @@ theorem inhom_coord_true_prob (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1) (e : E
   rw [Measure.real, happ, bernoulliMeasure_apply_true, ENNReal.coe_toReal]
 
 
-theorem inhom_bk_of_finite_dependsOn (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1)
+theorem inhom_bk_of_finite_dependsOn (p : E → NNReal) (hp : ∀ e, p e ≤ 1)
     {A B : Set (ConfigSpace E)} (F : Finset E)
     (hAdep : DependsOn A (F : Set E)) (hBdep : DependsOn B (F : Set E))
     (hAinc : IsIncreasing A) (hBinc : IsIncreasing B) :
@@ -193,7 +193,7 @@ theorem inhom_bk_of_finite_dependsOn (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1)
       (congrArg₂ (· * ·) hAprob hBprob).symm
 
 
-theorem inhom_bk_triple_of_finite_dependsOn (p : E → ℝ≥0)
+theorem inhom_bk_triple_of_finite_dependsOn (p : E → NNReal)
     (hp : ∀ e, p e ≤ 1) {P Q R : Set (ConfigSpace E)} (F : Finset E)
     (hPdep : DependsOn P (F : Set E)) (hQdep : DependsOn Q (F : Set E))
     (hRdep : DependsOn R (F : Set E))
@@ -218,7 +218,7 @@ theorem inhom_bk_triple_of_finite_dependsOn (p : E → ℝ≥0)
 
 
 theorem inhom_bk_criterion_of_finite_dependsOn {I : Type*}
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1)
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1)
     (s : Finset I) (P Q R : I → Set (ConfigSpace E)) (F : Finset E)
     (hPdep : ∀ i ∈ s, DependsOn (P i) (F : Set E))
     (hQdep : ∀ i ∈ s, DependsOn (Q i) (F : Set E))

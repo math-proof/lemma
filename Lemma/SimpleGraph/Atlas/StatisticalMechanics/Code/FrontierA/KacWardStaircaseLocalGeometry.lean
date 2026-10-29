@@ -203,7 +203,7 @@ private lemma localVertex_range_subset_closedEdgeTube_eq
   {i : Fin n}
 -- given
   (data : KWStairParameterData (S := S) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r) :
 -- imply
@@ -223,7 +223,7 @@ private lemma localVertex_ranges_disjoint_of_nonincident_eq
   {i j : Fin n}
 -- given
   (data : KWStairParameterData (S := S) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r)
   (htubes : ∀ i j : Fin n, KWEdgesNonincident i j → Disjoint (polygon.closedEdgeTube r i) (polygon.closedEdgeTube r j))
@@ -246,7 +246,7 @@ private lemma rawClosedEdge_even_subset_closedEdgeTube_eq
   {k : Fin S}
 -- given
   (data : KWStairParameterData (S := S) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r) :
 -- imply
@@ -266,7 +266,7 @@ private lemma rawClosedEdge_odd_castSucc_subset_closedEdgeTube_eq
   {k : Fin M}
 -- given
   (data : KWStairParameterData (S := M + 1) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r) :
 -- imply
@@ -285,7 +285,7 @@ private lemma rawClosedEdge_odd_last_subset_closedEdgeTube_eq
   {i : Fin n}
 -- given
   (data : KWStairParameterData (S := M + 1) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r) :
 -- imply
@@ -304,7 +304,7 @@ private lemma rawClosedEdge_subset_ownerTube_eq
   {j : Fin (n * (2 * (M + 1)))}
 -- given
   (data : KWStairParameterData (S := M + 1) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hfine : data.MeshWithin r) :
 -- imply

@@ -30,7 +30,7 @@ end HausdorffDimensionFunction
 lemma continuous
   {ψ : HausdorffDimensionFunction} :
 -- imply
-  Continuous (ψ : ℝ≥0 → ℝ≥0) :=
+  Continuous (ψ : NNReal → NNReal) :=
 -- proof
   ψ.toContinuousOrderHom.continuous_toFun
 
@@ -44,7 +44,7 @@ namespace HausdorffDimensionFunction
 lemma monotone
   {ψ : HausdorffDimensionFunction} :
 -- imply
-  Monotone (ψ : ℝ≥0 → ℝ≥0) :=
+  Monotone (ψ : NNReal → NNReal) :=
 -- proof
   ψ.toContinuousOrderHom.monotone
 
@@ -59,7 +59,7 @@ namespace HausdorffDimensionFunction
 lemma map_zero
   {ψ : HausdorffDimensionFunction} :
 -- imply
-  ψ (0 : ℝ≥0) = 0 :=
+  ψ (0 : NNReal) = 0 :=
 -- proof
   ψ.map_zero'
 
@@ -73,7 +73,7 @@ namespace HausdorffDimensionFunction
 @[path]
 lemma map_pos
   {ψ : HausdorffDimensionFunction}
-  {r : ℝ≥0}
+  {r : NNReal}
 -- given
   (hr : 0 < r) :
 -- imply
@@ -91,7 +91,7 @@ namespace HausdorffDimensionFunction
 @[path]
 lemma map_eq_zero_iff
   {ψ : HausdorffDimensionFunction}
-  {r : ℝ≥0} :
+  {r : NNReal} :
 -- imply
   ψ r = 0 ↔ r = 0 := by
 -- proof
@@ -115,9 +115,9 @@ namespace HausdorffDimensionFunction
 lemma tendsto_zero
   {ψ : HausdorffDimensionFunction} :
 -- imply
-  Tendsto (ψ : ℝ≥0 → ℝ≥0) (𝓝[>] (0 : ℝ≥0)) (𝓝 0) := by
+  Tendsto (ψ : NNReal → NNReal) (𝓝[>] (0 : NNReal)) (𝓝 0) := by
 -- proof
-  have h : Tendsto (ψ : ℝ≥0 → ℝ≥0) (𝓝 (0 : ℝ≥0)) (𝓝 (ψ (0 : ℝ≥0))) :=
+  have h : Tendsto (ψ : NNReal → NNReal) (𝓝 (0 : NNReal)) (𝓝 (ψ (0 : NNReal))) :=
     ψ.continuous.continuousAt
   rw [ψ.map_zero] at h
   exact h.mono_left inf_le_left

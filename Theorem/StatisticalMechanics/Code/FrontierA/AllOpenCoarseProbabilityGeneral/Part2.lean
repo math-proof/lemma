@@ -125,28 +125,28 @@ theorem bgfdFaithfulAllOpenTrifAt_prob_eq_zero
     (L : ℕ) :
     mu {omega | BgfdFaithfulAllOpenTrifAt omega L 0} = 0 := by
   classical
-  let p : ℝ≥0∞ := mu {omega | BgfdFaithfulAllOpenTrifAt omega L 0}
+  let p : ENNReal := mu {omega | BgfdFaithfulAllOpenTrifAt omega L 0}
   have hkey : ∀ N,
-      ((boxFinsetBK d N).card : ℝ≥0∞) * p ≤
-        (bgfdFaithfulAllOpenBoundaryCard d L N : ℝ≥0∞) := by
+      ((boxFinsetBK d N).card : ENNReal) * p ≤
+        (bgfdFaithfulAllOpenBoundaryCard d L N : ENNReal) := by
     intro N
     have hexp := expected_bgfdFaithfulAllOpenTrifIndicesInBox mu hinv L N
     rw [nsmul_eq_mul] at hexp
     have hle : ∫⁻ omega,
-        ((bgfdFaithfulAllOpenTrifIndicesInBox omega L N).card : ℝ≥0∞) ∂mu ≤
-        (bgfdFaithfulAllOpenBoundaryCard d L N : ℝ≥0∞) := by
+        ((bgfdFaithfulAllOpenTrifIndicesInBox omega L N).card : ENNReal) ∂mu ≤
+        (bgfdFaithfulAllOpenBoundaryCard d L N : ENNReal) := by
       calc
         ∫⁻ omega,
-            ((bgfdFaithfulAllOpenTrifIndicesInBox omega L N).card : ℝ≥0∞) ∂mu ≤
+            ((bgfdFaithfulAllOpenTrifIndicesInBox omega L N).card : ENNReal) ∂mu ≤
             ∫⁻ _omega,
-              (bgfdFaithfulAllOpenBoundaryCard d L N : ℝ≥0∞) ∂mu := by
+              (bgfdFaithfulAllOpenBoundaryCard d L N : ENNReal) ∂mu := by
           apply lintegral_mono
           intro omega
-          change ((bgfdFaithfulAllOpenTrifIndicesInBox omega L N).card : ℝ≥0∞) ≤
-            (bgfdFaithfulAllOpenBoundaryCard d L N : ℝ≥0∞)
+          change ((bgfdFaithfulAllOpenTrifIndicesInBox omega L N).card : ENNReal) ≤
+            (bgfdFaithfulAllOpenBoundaryCard d L N : ENNReal)
           exact_mod_cast
             bgfdFaithfulAllOpenTrifIndicesInBox_count_bound omega L N
-        _ = (bgfdFaithfulAllOpenBoundaryCard d L N : ℝ≥0∞) := by
+        _ = (bgfdFaithfulAllOpenBoundaryCard d L N : ENNReal) := by
           rw [lintegral_const]
           simp
     rwa [hexp] at hle
@@ -158,8 +158,8 @@ theorem bgfdFaithfulAllOpenTrifAt_prob_eq_zero
         (bgfdFaithfulAllOpenBoundaryCard d L N : ℝ) := by
     intro N
     have h := hkey N
-    have h' : (((boxFinsetBK d N).card : ℝ≥0∞) * p).toReal ≤
-        (bgfdFaithfulAllOpenBoundaryCard d L N : ℝ≥0∞).toReal :=
+    have h' : (((boxFinsetBK d N).card : ENNReal) * p).toReal ≤
+        (bgfdFaithfulAllOpenBoundaryCard d L N : ENNReal).toReal :=
       ENNReal.toReal_mono (by simp) h
     rw [ENNReal.toReal_mul] at h'
     simpa [ENNReal.toReal_natCast, pr] using h'

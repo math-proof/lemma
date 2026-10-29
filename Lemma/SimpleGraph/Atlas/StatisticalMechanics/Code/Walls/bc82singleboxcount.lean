@@ -15,7 +15,7 @@ private lemma bc82_dc_expectation_identity_eq
 -- given
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) :
 -- imply
-  ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ := by
+  ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ := by
 -- proof
   apply StatMech.Walls.bc82_dc_expectation_identity μ hinv L R
 
@@ -159,7 +159,7 @@ private lemma bc82_cardinal_verdict_eq
   (hd : 1 ≤ d)
   (hinv : IsTranslationInvariant (G := Multiplicative (Site d)) μ) :
 -- imply
-  (∀ R : ℕ, ((boxFinsetBK d R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R → bc61_coarseTcount ω L R ≤ (2 * L + 1) ^ d * boxSV_boundaryCard d R) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), (∀ y ∈ boxFinsetBK d R, bc61_IsCoarseTrifurcation ω L y) → bc61_coarseTcount ω L R = (boxFinsetBK d R).card) ∧ ((μ {ω | bc61_IsCoarseTrifurcation ω L 0} = 0) → bc61_CoarseTrifExistence μ L → μ {ω | numInfiniteClusters d ω = ⊤} = 0) := by
+  (∀ R : ℕ, ((boxFinsetBK d R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), bc73_SublatticeForest ω L R → bc61_coarseTcount ω L R ≤ (2 * L + 1) ^ d * boxSV_boundaryCard d R) ∧ (∀ (ω : ConfigSpace (Sym2 (Site d))) (R : ℕ), (∀ y ∈ boxFinsetBK d R, bc61_IsCoarseTrifurcation ω L y) → bc61_coarseTcount ω L R = (boxFinsetBK d R).card) ∧ ((μ {ω | bc61_IsCoarseTrifurcation ω L 0} = 0) → bc61_CoarseTrifExistence μ L → μ {ω | numInfiniteClusters d ω = ⊤} = 0) := by
 -- proof
   apply StatMech.Walls.bc82_cardinal_verdict μ hd L hinv
 
@@ -170,7 +170,7 @@ private lemma bc82_cardinal_verdict_eq
 private lemma bc82_status_eq
   {d : ℕ} :
 -- imply
-  (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) (L R : ℕ), IsTranslationInvariant (G := Multiplicative (Site 2)) μ → ((boxFinsetBK 2 R).card : ℝ≥0∞) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ℝ≥0∞) ∂μ) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bc73_SublatticeForest ω L R → bc61_coarseTcount ω L R ≤ (2 * L + 1) ^ 2 * boxSV_boundaryCard 2 R) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), (∀ y ∈ boxFinsetBK 2 R, bc61_IsCoarseTrifurcation ω L y) → (∀ y ∈ boxFinsetBK 2 R, ∃ a₁ a₂ a₃ : Site 2, ¬ (bc67_contractedLattice ω L y).Reachable a₁ a₂ ∧ ¬ (bc67_contractedLattice ω L y).Reachable a₁ a₃ ∧ ¬ (bc67_contractedLattice ω L y).Reachable a₂ a₃) ∧ bc61_coarseTcount ω L R = (boxFinsetBK 2 R).card) ∧ (∀ {L : ℕ}, 3 ≤ L → ((bc76_twoBoxGn L).induce ({(0 : Site 2)}ᶜ : Set (Site 2))).Reachable ⟨bc57_pt ((L : ℤ) + 1) 1, by simpa using bc76_pt_ne_zero_of_height (by norm_num)⟩ ⟨bc57_pt ((L : ℤ) + 1) 3, by simpa using bc76_pt_ne_zero_of_height (by norm_num)⟩) ∧ (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) [IsProbabilityMeasure μ] (L : ℕ), IsTranslationInvariant (G := Multiplicative (Site 2)) μ → μ {ω | bc61_IsCoarseTrifurcation ω L 0} = 0 → bc61_CoarseTrifExistence μ L → μ {ω | numInfiniteClusters 2 ω = ⊤} = 0) := by
+  (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) (L R : ℕ), IsTranslationInvariant (G := Multiplicative (Site 2)) μ → ((boxFinsetBK 2 R).card : ENNReal) * μ {ω | bc61_IsCoarseTrifurcation ω L 0} = ∫⁻ ω, (bc61_coarseTcount ω L R : ENNReal) ∂μ) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), bc73_SublatticeForest ω L R → bc61_coarseTcount ω L R ≤ (2 * L + 1) ^ 2 * boxSV_boundaryCard 2 R) ∧ (∀ (ω : ConfigSpace (Sym2 (Site 2))) (L R : ℕ), (∀ y ∈ boxFinsetBK 2 R, bc61_IsCoarseTrifurcation ω L y) → (∀ y ∈ boxFinsetBK 2 R, ∃ a₁ a₂ a₃ : Site 2, ¬ (bc67_contractedLattice ω L y).Reachable a₁ a₂ ∧ ¬ (bc67_contractedLattice ω L y).Reachable a₁ a₃ ∧ ¬ (bc67_contractedLattice ω L y).Reachable a₂ a₃) ∧ bc61_coarseTcount ω L R = (boxFinsetBK 2 R).card) ∧ (∀ {L : ℕ}, 3 ≤ L → ((bc76_twoBoxGn L).induce ({(0 : Site 2)}ᶜ : Set (Site 2))).Reachable ⟨bc57_pt ((L : ℤ) + 1) 1, by simpa using bc76_pt_ne_zero_of_height (by norm_num)⟩ ⟨bc57_pt ((L : ℤ) + 1) 3, by simpa using bc76_pt_ne_zero_of_height (by norm_num)⟩) ∧ (∀ (μ : Measure (ConfigSpace (Sym2 (Site 2)))) [IsProbabilityMeasure μ] (L : ℕ), IsTranslationInvariant (G := Multiplicative (Site 2)) μ → μ {ω | bc61_IsCoarseTrifurcation ω L 0} = 0 → bc61_CoarseTrifExistence μ L → μ {ω | numInfiniteClusters 2 ω = ⊤} = 0) := by
 -- proof
   apply StatMech.Walls.bc82_status
 

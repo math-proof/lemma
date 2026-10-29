@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MathlibExt.NumberTheory.Ramanujan.Part1Ch1
 
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch1.Entry1Magicsquare3
@@ -14,7 +13,7 @@ lemma ramanujan_part1_ch1_entry1_magicsquare3
   {a b : Fin n → ℕ}
   {L R : Fin n → Fin n → Fin n}
 -- given
-  (hn : 0 < n)
+  (_hn : 0 < n)
   (hL_row : ∀ i : Fin n, Function.Bijective (L i))
   (hL_col : ∀ j : Fin n, Function.Bijective (fun i : Fin n => L i j))
   (hL_diag : Function.Bijective (fun i : Fin n => L i i))
@@ -23,7 +22,7 @@ lemma ramanujan_part1_ch1_entry1_magicsquare3
   (hR_col : ∀ j : Fin n, Function.Bijective (fun i : Fin n => R i j))
   (hR_diag : Function.Bijective (fun i : Fin n => R i i))
   (hR_anti : Function.Bijective (fun i : Fin n => R i ⟨n - 1 - i.val, by omega⟩))
-  (hPair : Function.Bijective (fun p : Fin n × Fin n => (L p.1 p.2, R p.1 p.2))) :
+  (_hPair : Function.Bijective (fun p : Fin n × Fin n => (L p.1 p.2, R p.1 p.2))) :
 -- imply
   ∃ S : ℕ,
     (∀ i : Fin n, (∑ j : Fin n, (a (L i j) + b (R i j))) = S)
@@ -44,4 +43,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch1.Entry1Magicsquare3
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -10,9 +10,8 @@ namespace MetaMathlibExt.QPochhammer
 
 /--
 [coeff_pentagonalSeries_complex_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ModularForms/JacobiTheta/JacobiCubeEulerProduct.lean)
--/
-@[path]
 coefficients of `PowerSeries.pentagonalSeries ℤ`. -/
+@[path]
 private lemma coeff_pentagonalSeries_complex_eq (n : ℕ) :
   (PowerSeries.pentagonalSeries ℂ).coeff n
     = (((PowerSeries.pentagonalSeries ℤ).coeff n : ℤ) : ℂ) := by
@@ -35,9 +34,8 @@ namespace MetaMathlibExt.QPochhammer
 
 /--
 [norm_pentCoeff_le_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ModularForms/JacobiTheta/JacobiCubeEulerProduct.lean)
--/
-@[path]
 in norm. -/
+@[path]
 private lemma norm_pentCoeff_le_one (n : ℕ) :
   ‖((((PowerSeries.pentagonalSeries ℤ).coeff n : ℤ)) : ℂ)‖ ≤ 1 := by
   by_cases hn : n ∈ Set.range pentagonal
@@ -76,9 +74,8 @@ namespace MetaMathlibExt.QPochhammer
 
 /--
 [hasSum_pentSeries](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ModularForms/JacobiTheta/JacobiCubeEulerProduct.lean)
--/
-@[path]
 `eulerFunction q`. -/
+@[path]
 private lemma hasSum_pentSeries (q : ℂ) (hq : ‖q‖ < 1) :
   HasSum (fun n : ℕ =>
     (((((PowerSeries.pentagonalSeries ℤ).coeff n : ℤ)) : ℂ)) * q ^ n)
@@ -110,10 +107,9 @@ namespace MetaMathlibExt.QPochhammer
 
 /--
 [hasSum_mul_of_abs_summable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ModularForms/JacobiTheta/JacobiCubeEulerProduct.lean)
--/
-@[path]
 if both coefficient series are absolutely summable, their product is the
 evaluation of the product series, which is again absolutely summable. -/
+@[path]
 private lemma hasSum_mul_of_abs_summable (F G : PowerSeries ℤ) (q : ℂ)
   (hF : Summable fun n : ℕ => ‖(((((F.coeff n : ℤ))) : ℂ)) * q ^ n‖)
   (hG : Summable fun n : ℕ => ‖(((((G.coeff n : ℤ))) : ℂ)) * q ^ n‖) :
@@ -272,9 +268,8 @@ namespace MetaMathlibExt.QPochhammer
 
 /--
 [hasSum_triangular_of_hasSum_jacobi](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ModularForms/JacobiTheta/JacobiCubeEulerProduct.lean)
--/
-@[path]
 Wanted sum. -/
+@[path]
 private lemma hasSum_triangular_of_hasSum_jacobi (q : ℂ)
   (hJ : HasSum (fun n : ℕ =>
     (((((MetaMathlibExt.jacobiCubeSeries).coeff n : ℤ)) : ℂ)) * q ^ n)
@@ -322,4 +317,4 @@ end MetaMathlibExt.QPochhammer
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

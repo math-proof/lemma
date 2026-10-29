@@ -42,13 +42,13 @@ namespace GaussianLinearTransform
 
 /-- A real-valued Gaussian random variable with law $\mathcal{N}(0, v)$ lies in $L^2(P)$. -/
 lemma memLp_two_of_hasLaw {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
-    {X : Ω → ℝ} {v : ℝ≥0} (hlaw : HasLaw X (gaussianReal 0 v) P) :
+    {X : Ω → ℝ} {v : NNReal} (hlaw : HasLaw X (gaussianReal 0 v) P) :
     MemLp X 2 P :=
   hlaw.hasGaussianLaw.memLp_two
 
 /-- The partial sum $S_n = \sum_{k < n} X_k$ of Gaussian random variables lies in $L^2(P)$. -/
 lemma memLp_partialSum {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
-    {X : ℕ → Ω → ℝ} {v : ℕ → ℝ≥0}
+    {X : ℕ → Ω → ℝ} {v : ℕ → NNReal}
     (hgauss : ∀ k, HasLaw (X k) (gaussianReal 0 (v k)) P) (n : ℕ) :
     MemLp (fun ω => ∑ k ∈ range n, X k ω) 2 P :=
   memLp_finset_sum _ (fun k _ => memLp_two_of_hasLaw (hgauss k))

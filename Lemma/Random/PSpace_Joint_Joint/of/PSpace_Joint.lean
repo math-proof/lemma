@@ -98,7 +98,7 @@ private lemma main
     rw [hcomp]
     exact measurable_jointDiag.comp_aemeasurable hxym
   obtain ⟨p, D, hlaw⟩ := hP.exists_distribution
-  have hp : Measurable p := D.measurable_density
+  have hp : Measurable p := D
   have href_xy : ReferenceMeasure.measure (α := α × γ) = (Measure.count : Measure (α × γ)) := by
     change (ReferenceMeasure.measure (α := α)).prod (ReferenceMeasure.measure (α := γ)) =
       (Measure.count : Measure (α × γ))
@@ -113,7 +113,7 @@ private lemma main
       π.map (x, y) = (Measure.count : Measure (α × γ)).withDensity p := by
     have h : π.map (x, y) =
         (ReferenceMeasure.measure (α := α × γ)).withDensity p := by
-      simpa [Distributed, JointRandomSymbol] using hlaw
+      exact hlaw
     rw [h, href_xy]
   let ρ : α × γ × γ → ENNReal := fun z => if z.2.1 = z.2.2 then p (z.1, z.2.1) else 0
   have hρ : Measurable ρ := by
@@ -147,7 +147,7 @@ private lemma main
   refine {
     toIsProbabilityMeasure := inferInstance
     aemeasurable := hxyym
-    exists_distribution := ⟨ρ, ⟨hρ⟩, ?_⟩
+    exists_distribution := ⟨ρ, hρ, ?_⟩
   }
   show π.map (x, (y, y)) =
     ReferenceMeasure.measure.withDensity ρ

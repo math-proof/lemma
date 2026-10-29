@@ -48,15 +48,8 @@ variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 -/
 @[path]
 lemma leftMulMatrix_baseChange
-  [CommRing A]
-  [CommRing A']
-  [Algebra A A']
-  [CommRing B]
-  [Algebra A B]
-  [Fintype ι]
-  [DecidableEq ι]
-  {bB : Basis ι A B}
-  {b : B} :
+  (bB : Basis ι A B)
+  (b : B) :
 -- imply
   @Algebra.leftMulMatrix A' (A' ⊗[A] B) _ _ (Algebra.TensorProduct.leftAlgebra) ι _ _ (bB.baseChange A') (Algebra.TensorProduct.includeRight b) = (algebraMap A A').mapMatrix (Algebra.leftMulMatrix bB b) := by
 -- proof
@@ -71,13 +64,6 @@ lemma leftMulMatrix_baseChange
 -/
 @[path]
 lemma norm_baseChange
-  [CommRing A]
-  [CommRing A']
-  [Algebra A A']
-  [CommRing B]
-  [Algebra A B]
-  [Fintype ι]
-  [DecidableEq ι]
   {bB : Basis ι A B}
   {b : B} :
 -- imply
@@ -93,13 +79,6 @@ lemma norm_baseChange
 -/
 @[path]
 lemma trace_baseChange
-  [CommRing A]
-  [CommRing A']
-  [Algebra A A']
-  [CommRing B]
-  [Algebra A B]
-  [Fintype ι]
-  [DecidableEq ι]
   {bB : Basis ι A B}
   {b : B} :
 -- imply
@@ -117,13 +96,6 @@ lemma trace_baseChange
 -/
 @[path]
 lemma free_norm_trace_baseChange
-  [CommRing A]
-  [CommRing A']
-  [Algebra A A']
-  [CommRing B]
-  [Algebra A B]
-  [Fintype ι]
-  [DecidableEq ι]
   {bB : Basis ι A B} :
 -- imply
   Nonempty (Basis ι A' (A' ⊗[A] B)) ∧ (∀ b : B, algebraMap A A' (Algebra.norm A b) = @Algebra.norm A' (A' ⊗[A] B) _ _ (Algebra.TensorProduct.leftAlgebra) (Algebra.TensorProduct.includeRight b)) ∧ (∀ b : B, algebraMap A A' (Algebra.trace A B b) = @Algebra.trace A' (A' ⊗[A] B) _ _ (Algebra.TensorProduct.leftAlgebra) (Algebra.TensorProduct.includeRight b)) :=
@@ -139,9 +111,6 @@ variable (E : Type*) [Field E] [Algebra K E]
 -/
 @[path]
 lemma norm_eq_prod_embeddings'
-  [Field K]
-  [Field L]
-  [Algebra K L]
   {E : Type*}
   [Field E]
   [Algebra K E]
@@ -159,9 +128,6 @@ lemma norm_eq_prod_embeddings'
 -/
 @[path]
 lemma trace_eq_sum_embeddings'
-  [Field K]
-  [Field L]
-  [Algebra K L]
   {E : Type*}
   [Field E]
   [Algebra K E]
@@ -249,6 +215,7 @@ lemma trace_eq_neg_finrank_mul_nextCoeff
 -- proof
   rw [trace_eq_finrank_mul_minpoly_nextCoeff]
   ring
+
 section NormTraceIntegrality
 variable {A : Type*} [CommRing A] [IsDomain A] [IsIntegrallyClosed A]
 variable {K : Type*} [Field K] [Algebra A K] [IsFractionRing A K]
@@ -259,18 +226,8 @@ variable [Algebra A L] [IsScalarTower A K L]
 [norm_mem_of_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/NormTrace.lean)
 -/
 @[path]
+omit [IsDomain A] [FiniteDimensional K L] in
 lemma norm_mem_of_isIntegral
-  [CommRing A]
-  [IsDomain A]
-  [IsIntegrallyClosed A]
-  [Field K]
-  [Algebra A K]
-  [IsFractionRing A K]
-  [Field L]
-  [Algebra K L]
-  [FiniteDimensional K L]
-  [Algebra A L]
-  [IsScalarTower A K L]
   {x : L}
 -- given
   (hx : IsIntegral A x) :
@@ -283,18 +240,8 @@ lemma norm_mem_of_isIntegral
 [trace_mem_of_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/NormTrace.lean)
 -/
 @[path]
+omit [IsDomain A] in
 lemma trace_mem_of_isIntegral
-  [CommRing A]
-  [IsDomain A]
-  [IsIntegrallyClosed A]
-  [Field K]
-  [Algebra A K]
-  [IsFractionRing A K]
-  [Field L]
-  [Algebra K L]
-  [FiniteDimensional K L]
-  [Algebra A L]
-  [IsScalarTower A K L]
   {x : L}
 -- given
   (hx : IsIntegral A x) :

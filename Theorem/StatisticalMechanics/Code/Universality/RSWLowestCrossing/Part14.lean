@@ -47,7 +47,7 @@ theorem rlc_flipYConfig_apply (omega : ConfigSpace (Sym2 (Site 2)))
 theorem rlc_measurable_flipYConfig : Measurable rlc_flipYConfig :=
   (MeasurableEquiv.piCongrLeft (fun _ => Bool) rlc_flipYEdge).measurable
 
-theorem rlc_flipY_measurePreserving (p : ℝ≥0) (hp : p ≤ 1) :
+theorem rlc_flipY_measurePreserving (p : NNReal) (hp : p ≤ 1) :
     MeasurePreserving rlc_flipYConfig
       (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp)
       (bernoulliProductMeasure (E := Sym2 (Site 2)) p hp) := by

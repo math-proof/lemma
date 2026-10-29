@@ -55,7 +55,7 @@ private lemma rc2_reimerWprobCore_of_slabCardAll_eq
 private lemma rc2_reimer_inequality_of_bridge_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : rc_core_CountBoxBridge)
@@ -71,7 +71,7 @@ private lemma rc2_reimer_inequality_of_bridge_eq
 @[path]
 private lemma rc2_slabCardAll_is_bridge_eq :
 -- imply
-  (rc_core_CountBoxBridge ↔ StatMech.poc_SlabCardAll) ∧ (rc_core_CountBoxBridge → ReimerWprobCore) ∧ (rc_core_CountBoxBridge → ∀ {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1) (A B : Set (ConfigSpace E)), (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B) ≤ (bernoulliProductMeasure (E := E) p hp).real A * (bernoulliProductMeasure (E := E) p hp).real B) := by
+  (rc_core_CountBoxBridge ↔ StatMech.poc_SlabCardAll) ∧ (rc_core_CountBoxBridge → ReimerWprobCore) ∧ (rc_core_CountBoxBridge → ∀ {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1) (A B : Set (ConfigSpace E)), (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B) ≤ (bernoulliProductMeasure (E := E) p hp).real A * (bernoulliProductMeasure (E := E) p hp).real B) := by
 -- proof
   apply StatMech.Walls.rc2_slabCardAll_is_bridge
 

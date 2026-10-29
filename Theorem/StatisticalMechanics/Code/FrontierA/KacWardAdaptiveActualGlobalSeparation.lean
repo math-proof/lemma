@@ -24,7 +24,7 @@ theorem KWAdaptivePatchedData.middle_subset_edgeTube
     {eps : ℝ} (heps : 0 < eps ∧ eps < 1 / 2)
     (hepsBeta : eps ≤ patch.beta) (hepsAlpha : ∀ i, eps ≤ patch.alpha i)
     (neighborhood : KWVertexNeighborhoodData polygon)
-    (r : ℝ≥0) (hr : 0 < r)
+    (r : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin patch.data r)
     (hrScale : r ≤ neighborhood.scale / 2)
     (i : Fin n) (q : Fin M) (even : Bool) :
@@ -103,7 +103,7 @@ theorem KWSmallAdaptiveConnectorScales.actualConnector_disjoint_unrelatedMiddle
     (hM : 2 ≤ M)
     {eps : ℝ} (heps : 0 < eps ∧ eps < 1 / 2)
     (hepsBeta : eps ≤ scales.beta) (hepsAlpha : ∀ i, eps ≤ scales.alpha i)
-    (r : ℝ≥0) (hr : 0 < r)
+    (r : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin (scales.toPatchedData hM).data r)
     (hrScale : r ≤ neighborhood.scale / 2)
     (i j : Fin n) (hji : j ≠ i) (hjv : j ≠ i + 1)
@@ -127,7 +127,7 @@ theorem KWSmallAdaptiveConnectorScales.actualConnector_disjoint_unrelatedMiddle
 theorem KWAdaptivePatchedData.actualMiddle_disjoint_of_owner_ne
     {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    {eps : ℝ} (r : ℝ≥0) (hr : 0 < r)
+    {eps : ℝ} (r : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin patch.data r)
     (hepsBeta : eps ≤ patch.beta) (hepsAlpha : ∀ i, eps ≤ patch.alpha i)
     (hcore : ∀ i j : Fin n, i ≠ j →
@@ -169,7 +169,7 @@ theorem KWSmallAdaptiveConnectorScales.actualConnectorMiddle_disjoint
     (hM : 2 ≤ M)
     {eps : ℝ} (heps : 0 < eps ∧ eps < 1 / 2)
     (hepsBeta : eps ≤ scales.beta) (hepsAlpha : ∀ i, eps ≤ scales.alpha i)
-    (r sep : ℝ≥0) (hr : 0 < r)
+    (r sep : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin (scales.toPatchedData hM).data r)
     (hrScale : r ≤ neighborhood.scale / 2)
     (hcoords : ∀ j : Fin n,
@@ -251,7 +251,7 @@ theorem KWSmallAdaptiveConnectorScales.actualConnectorMiddle_disjoint
 theorem KWSmallAdaptiveConnectorScales.actualMiddleMiddle_disjoint
     {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
     (scales : KWSmallAdaptiveConnectorScales polygon R)
-    (hM : 2 ≤ M) {eps : ℝ} (r : ℝ≥0) (hr : 0 < r)
+    (hM : 2 ≤ M) {eps : ℝ} (r : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin (scales.toPatchedData hM).data r)
     (hepsBeta : eps ≤ scales.beta) (hepsAlpha : ∀ i, eps ≤ scales.alpha i)
     (hcore : ∀ i j : Fin n, i ≠ j →
@@ -282,7 +282,7 @@ theorem KWSmallAdaptiveConnectorScales.actual_nonincident_disjoint
     (hM : 2 ≤ M)
     {eps : ℝ} (heps : 0 < eps ∧ eps < 1 / 2)
     (hepsBeta : eps ≤ scales.beta) (hepsAlpha : ∀ i, eps ≤ scales.alpha i)
-    (r sep : ℝ≥0) (hr : 0 < r)
+    (r sep : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin (scales.toPatchedData hM).data r)
     (hrScale : r ≤ neighborhood.scale / 2)
     (hcore : ∀ i j : Fin n, i ≠ j →
@@ -395,7 +395,7 @@ theorem KWSmallAdaptiveConnectorScales.actual_nonincident_disjoint
 
 theorem closedEdgeCoreTube_mono_radius
     {n : ℕ} [NeZero n] (polygon : KWFiniteSimplePolygon n)
-    (eps : ℝ) {r s : ℝ≥0} (hrs : r ≤ s) (i : Fin n) :
+    (eps : ℝ) {r s : NNReal} (hrs : r ≤ s) (i : Fin n) :
     polygon.closedEdgeCoreTube eps r i ⊆
       polygon.closedEdgeCoreTube eps s i := by
   rintro z ⟨x, hx, hzx⟩
@@ -408,7 +408,7 @@ theorem KWSmallAdaptiveConnectorScales.actualRawSimpleData
     (hM : 2 ≤ M)
     {eps : ℝ} (heps : 0 < eps ∧ eps < 1 / 2)
     (hepsBeta : eps ≤ scales.beta) (hepsAlpha : ∀ i, eps ≤ scales.alpha i)
-    (r sep : ℝ≥0) (hr : 0 < r)
+    (r sep : NNReal) (hr : 0 < r)
     (hfine : KWEndpointInteriorMeshWithin (scales.toPatchedData hM).data r)
     (hrScale : r ≤ neighborhood.scale / 2)
     (hcore : ∀ i j : Fin n, i ≠ j →
@@ -461,7 +461,7 @@ theorem KWSmallAdaptiveConnectorScales.exists_actualSimplePolygon_eq_patch
     polygon.exists_pairwise_disjoint_closedEdgeCoreTubes heps
   obtain ⟨sep, hsep, hremote⟩ :=
     scales.exists_uniform_remoteParameter_radius hcross hcoords
-  let r : ℝ≥0 := min coreRadius
+  let r : NNReal := min coreRadius
     (min (neighborhood.scale / 2) (sep / 8))
   have hr : 0 < r := by
     dsimp only [r]

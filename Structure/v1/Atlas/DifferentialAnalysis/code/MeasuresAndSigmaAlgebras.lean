@@ -24,7 +24,7 @@ namespace MeasuresAndSigmaAlgebras
 
 /-- Predicate axiomatising an outer measure `μ*` on `X`: empty set has measure zero,
 monotone with respect to inclusion, and countably subadditive. -/
-structure IsOuterMeasure {X : Type*} (μstar : Set X → ℝ≥0∞) : Prop where
+structure IsOuterMeasure {X : Type*} (μstar : Set X → ENNReal) : Prop where
   empty : μstar ∅ = 0
   mono : ∀ {A B : Set X}, A ⊆ B → μstar A ≤ μstar B
   iUnion_le : ∀ (A : ℕ → Set X), μstar (⋃ j, A j) ≤ ∑' j, μstar (A j)

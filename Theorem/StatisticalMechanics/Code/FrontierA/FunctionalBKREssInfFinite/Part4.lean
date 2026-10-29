@@ -27,18 +27,18 @@ variable {E : Type*} [Fintype E] [DecidableEq E]
 
 omit [Fintype E] [DecidableEq E] in
 theorem bernoulliProductWeight_nonneg
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1) :
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1) :
     ∀ e b, 0 ≤ bernoulliProductWeight p hp e b :=
   fun _ _ => measureReal_nonneg
 
 omit [Fintype E] [DecidableEq E] in
 theorem bernoulliProductWeight_sum
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1) :
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1) :
     ∀ e, bernoulliProductWeight p hp e false +
       bernoulliProductWeight p hp e true = 1 := by
   intro e
   have hf : (bernoulliMeasure (p e) (hp e)).real {false} =
-      ((1 - p e : ℝ≥0) : ℝ) := by
+      ((1 - p e : NNReal) : ℝ) := by
     rw [Measure.real, bernoulliMeasure_apply_false, ENNReal.coe_toReal]
   have ht : (bernoulliMeasure (p e) (hp e)).real {true} = (p e : ℝ) := by
     rw [Measure.real, bernoulliMeasure_apply_true, ENNReal.coe_toReal]
@@ -48,7 +48,7 @@ theorem bernoulliProductWeight_sum
 
 
 theorem integral_inhomBernoulli_eq_productExpectation
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1) (f : ConfigSpace E → ℝ) :
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1) (f : ConfigSpace E → ℝ) :
     ∫ omega, f omega ∂(inhomBernoulliProductMeasure p hp) =
       productExpectation (bernoulliProductWeight p hp) f := by
   rw [integral_fintype Integrable.of_finite]
@@ -60,7 +60,7 @@ theorem integral_inhomBernoulli_eq_productExpectation
 
 
 theorem integral_prod_inhomBernoulli_eq_dualProductExpectation
-    (p : E → ℝ≥0) (hp : ∀ e, p e ≤ 1)
+    (p : E → NNReal) (hp : ∀ e, p e ≤ 1)
     (F : ConfigSpace E × ConfigSpace E → ℝ) :
     ∫ pair, F pair ∂((inhomBernoulliProductMeasure p hp).prod
       (inhomBernoulliProductMeasure p hp)) =
@@ -84,7 +84,7 @@ theorem integral_prod_inhomBernoulli_eq_dualProductExpectation
 
 
 theorem functionalBKR_essInf_integral
-    (p : E → ℝ≥0) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
+    (p : E → NNReal) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
     (f g : ConfigSpace E → ℝ)
     (hf0 : ∀ omega, 0 ≤ f omega) (hg0 : ∀ omega, 0 ≤ g omega) :
     ∫ omega, functionalDisjointEssMax p (fun e => (hp1 e).le)
@@ -104,7 +104,7 @@ theorem functionalBKR_essInf_integral
 
 
 theorem dualFunctionalBKR_essInf_integral
-    (p : E → ℝ≥0) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
+    (p : E → NNReal) (hp0 : ∀ e, 0 < p e) (hp1 : ∀ e, p e < 1)
     (f g : ConfigSpace E → ℝ)
     (hf0 : ∀ omega, 0 ≤ f omega) (hg0 : ∀ omega, 0 ≤ g omega) :
     ∫ pair, functionalDisjointEssMaxAt p (fun e => (hp1 e).le)

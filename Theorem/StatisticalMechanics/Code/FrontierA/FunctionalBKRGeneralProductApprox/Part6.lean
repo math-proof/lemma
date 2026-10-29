@@ -126,7 +126,7 @@ theorem exists_finiteFactor_approx_simple
     (mu : ∀ e, Measure (S e)) [∀ e, IsProbabilityMeasure (mu e)]
     (K : Set E) (s : SimpleFunc (∀ e, S e) ℝ)
     (hs0 : ∀ x, 0 ≤ s x) {C : ℝ} (hsC : ∀ x, s x ≤ C)
-    (hsdep : PiDependsOn K s) {eps : ℝ≥0∞} (heps : 0 < eps) :
+    (hsdep : PiDependsOn K s) {eps : ENNReal} (heps : 0 < eps) :
     ∃ (t : (∀ e, S e) → ℝ)
       (f : FiniteCoordinateFactorOn.{u, v, 0} K t),
       (∀ x, t x ≤ C) ∧
@@ -254,7 +254,7 @@ theorem exists_finiteFactor_approx_bounded
     simp only [simple, SimpleFunc.approxOn, SimpleFunc.coe_comp, Function.comp_apply]
     rw [hhy]
   obtain ⟨eps, heps0, hepssum⟩ :=
-    ENNReal.exists_pos_sum_of_countable' (by norm_num : (1 : ℝ≥0∞) ≠ 0) ℕ
+    ENNReal.exists_pos_sum_of_countable' (by norm_num : (1 : ENNReal) ≠ 0) ℕ
   have happ : ∀ n, ∃ (t : (∀ e, S e) → ℝ)
       (f : FiniteCoordinateFactorOn.{u, v, 0} K t),
       (∀ x, t x ≤ C) ∧ Measure.pi mu {x | t x ≠ simple n x} < eps n :=

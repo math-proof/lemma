@@ -56,7 +56,7 @@ theorem measurableSet_surfaceEvent (n : ℕ) (S : Finset (Site d)) :
   exact MeasurableSet.cylinder _ (S := _) MeasurableSet.of_discrete
 
 
-theorem sum_surfaceProb (p : ℝ≥0) (hp : p ≤ 1) (n : ℕ) :
+theorem sum_surfaceProb (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
     ∑ S ∈ (boxFinset d n).powerset,
       (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real (surfaceEvent d n S) = 1 := by
   classical

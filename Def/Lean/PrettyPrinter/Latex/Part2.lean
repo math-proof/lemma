@@ -417,7 +417,8 @@ def Expr.latexFormat : Expr → String
           | `Root.cubic
           | `Root.quartic =>
             s!"{opStr}%s"
-          | `Complex.conj =>
+          | `Complex.conj
+          | `Star.star =>
             "\\overline{%s}"
           | `Neg.neg =>
             if let const (.ident `Hyperreal.epsilon) := arg then
@@ -660,7 +661,8 @@ def Expr.latexFormat : Expr → String
         | `Finset.Ioi
         | `Set.Ioi => "\\left(%s, \\infty\\right)"
         | `Tensor.eye => "\\mathbb{I}"
-        | `Tensor.matProd =>
+        | `Tensor.matProd
+        | `Matrix.matProd =>
           match Expr.asMatProd? e with
           | some _ =>
             "\\prod\\limits_{%s < %s} {%s}"
@@ -833,8 +835,11 @@ def Expr.latexFormat : Expr → String
           s!"\\{attr} %s"
         | `IsConstant.is_constant =>
           "%s\\ {\\color{blue}\\text{is}}\\ {constant}"
-        | `Tensor.T =>
+        | `Tensor.T
+        | `Matrix.transpose =>
           "{%s}^{\\color{magenta} T}"
+        | `Matrix.conjTranspose =>
+          "{%s}^{\\color{magenta} {\\dagger}}"
         | `Tensor.det
         | `Matrix.det =>
           "\\left|{%s}\\right|"
@@ -1170,7 +1175,8 @@ where
             i.bvarLatex "\\ " :: map [n, fn]
           else
             map args
-        | .Lean_operatorname `Tensor.matProd =>
+        | .Lean_operatorname `Tensor.matProd
+        | .Lean_operatorname `Matrix.matProd =>
           match Expr.asMatProd? e with
           | some (i, n, fn) =>
             i :: map [n, fn]

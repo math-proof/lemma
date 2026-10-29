@@ -32,7 +32,7 @@ open StatMech.Percolation
 variable {d : ℕ}
 
 
-theorem bc104_bk_uniqueness_of_boxMenger (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bc104_bk_uniqueness_of_boxMenger (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hattach : ∀ n : ℕ, bmm_BoxMengerAttachment d n) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 {ω | numInfiniteClusters d ω = 0} = 1 ∨
       bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 {ω | numInfiniteClusters d ω = 1} = 1)
@@ -82,7 +82,7 @@ theorem bc104_coarse_count_from_connectedForest (ω : ConfigSpace (Sym2 (Site d)
 
 theorem bc104_complete_chain (hd : 1 ≤ d) :
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ n : ℕ, bmm_BoxMengerAttachment d n) →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ n : ℕ, bmm_BoxMengerAttachment d n) →
       bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 {ω | numInfiniteClusters d ω ≤ 1} = 1) ∧
     
     (∀ (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ] (L : ℕ),
@@ -330,7 +330,7 @@ theorem bc104_minimal_residue (hd : 1 ≤ d) :
 
 theorem bc104_status (hd : 1 ≤ d) :
     
-    (∀ (p : ℝ≥0) (hp1 : p ≤ 1), 0 < p → (∀ n : ℕ, bmm_BoxMengerAttachment d n) →
+    (∀ (p : NNReal) (hp1 : p ≤ 1), 0 < p → (∀ n : ℕ, bmm_BoxMengerAttachment d n) →
       bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 {ω | numInfiniteClusters d ω ≤ 1} = 1) ∧
     
     (∀ (μ : Measure (ConfigSpace (Sym2 (Site d)))) [IsProbabilityMeasure μ] (L : ℕ),

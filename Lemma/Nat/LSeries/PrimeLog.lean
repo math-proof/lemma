@@ -18,31 +18,31 @@ private lemma summable_log_mul_rpow {σ₀ : ℝ} (hσ : 1 / 2 < σ₀) :
   have hε : (0 : ℝ) < (2 * σ₀ - 1) / 2 := by linarith
   set ε : ℝ := (2 * σ₀ - 1) / 2 with hεdef
   have hsum : Summable
-    (fun p : Nat.Primes => (1 / ε : ℝ) * ((((p : ℕ)) : ℝ) ^ (-(1 + ε)))) :=
+      (fun p : Nat.Primes => (1 / ε : ℝ) * ((((p : ℕ)) : ℝ) ^ (-(1 + ε)))) :=
     Summable.mul_left (1 / ε)
       ((Nat.Primes.summable_rpow (r := -(1 + ε))).mpr (by linarith))
   refine Summable.of_nonneg_of_le (fun p => ?_) (fun p => ?_) hsum
   · have h1 : (1 : ℝ) ≤ (((p : ℕ)) : ℝ) := by
-    have h2 : (2 : ℝ) ≤ (((p : ℕ)) : ℝ) := by
-      exact_mod_cast Nat.Prime.two_le p.prop
-    linarith
+      have h2 : (2 : ℝ) ≤ (((p : ℕ)) : ℝ) := by
+        exact_mod_cast Nat.Prime.two_le p.prop
+      linarith
     exact mul_nonneg (Real.log_nonneg h1)
       (Real.rpow_nonneg (by linarith) _)
   · have h2 : (2 : ℝ) ≤ (((p : ℕ)) : ℝ) := by
-    exact_mod_cast Nat.Prime.two_le p.prop
+      exact_mod_cast Nat.Prime.two_le p.prop
     have hpos : (0 : ℝ) < (((p : ℕ)) : ℝ) := by linarith
     have hplog : Real.log (((p : ℕ)) : ℝ) ≤ ((((p : ℕ)) : ℝ) ^ ε / ε) :=
       Real.log_le_rpow_div (by linarith) hε
     calc Real.log _ * _ ^ (-(2 * σ₀))
-      ≤ (((((p : ℕ)) : ℝ) ^ ε / ε)) * ((((p : ℕ)) : ℝ) ^ (-(2 * σ₀))) :=
-        mul_le_mul_of_nonneg_right hplog (Real.rpow_nonneg (le_of_lt hpos) _)
+        ≤ (((((p : ℕ)) : ℝ) ^ ε / ε)) * ((((p : ℕ)) : ℝ) ^ (-(2 * σ₀))) :=
+          mul_le_mul_of_nonneg_right hplog (Real.rpow_nonneg (le_of_lt hpos) _)
       _ = (1 / ε) * (((((p : ℕ)) : ℝ) ^ ε) * ((((p : ℕ)) : ℝ) ^ (-(2 * σ₀)))) := by
-        ring
-      _ = (1 / ε) * ((((p : ℕ)) : ℝ) ^ (-(1 + ε))) := by
-        have hex : ε + -(2 * σ₀) = -(1 + ε) := by
-          rw [hεdef]
           ring
-        rw [← Real.rpow_add hpos, hex]
+      _ = (1 / ε) * ((((p : ℕ)) : ℝ) ^ (-(1 + ε))) := by
+          have hex : ε + -(2 * σ₀) = -(1 + ε) := by
+            rw [hεdef]
+            ring
+          rw [← Real.rpow_add hpos, hex]
 
 end Nat.Primes
 
@@ -63,14 +63,15 @@ private lemma summable_correctionMajorant {σ₀ : ℝ} (hσ : 1 / 2 < σ₀) :
     exact Real.rpow_nonneg (by norm_num) _
   have h2σ : (1 : ℝ) < (2 : ℝ) ^ σ₀ := by
     have h := Real.rpow_lt_rpow_of_exponent_lt (by norm_num : (1 : ℝ) < 2) hσpos
-    rwa [Real.rpow_zero] at h
+    rw [Real.rpow_zero] at h
+    exact h
   have hq1 : q < 1 := by
     rw [hqdef, Real.rpow_neg (by norm_num)]
     exact inv_lt_one_of_one_lt₀ h2σ
   have hw : Summable (fun k : ℕ => q ^ k) := summable_geometric_of_lt_one hqnn hq1
   have hv : Summable
-    (fun p : Nat.Primes => Real.log (((p : ℕ)) : ℝ) *
-      ((((p : ℕ)) : ℝ) ^ (-(2 * σ₀)))) :=
+      (fun p : Nat.Primes => Real.log (((p : ℕ)) : ℝ) *
+        ((((p : ℕ)) : ℝ) ^ (-(2 * σ₀)))) :=
     summable_log_mul_rpow hσ
   have hprod := hv.mul_of_nonneg hw
     (fun p => mul_nonneg (Real.log_nonneg (by
@@ -104,20 +105,20 @@ private lemma summable_correctionMajorant {σ₀ : ℝ} (hσ : 1 / 2 < σ₀) :
         (Real.rpow_pos_of_pos (by norm_num) _)).mpr
         (Real.rpow_le_rpow (by norm_num) hp2 (le_of_lt hσpos))
     have hnpow : ((((p : ℕ)) : ℝ) ^ ((k : ℝ) * (-σ₀))) =
-      (((((p : ℕ)) : ℝ) ^ (-σ₀)) ^ k) := by
+        (((((p : ℕ)) : ℝ) ^ (-σ₀)) ^ k) := by
       have hex : (k : ℝ) * (-σ₀) = (-σ₀) * (k : ℝ) := by ring
       rw [hex, Real.rpow_mul (le_of_lt hppos), Real.rpow_natCast]
     change Real.log _ * _ ^ _ ≤ (Real.log _ * _ ^ _) * q ^ k
     calc Real.log (((p : ℕ)) : ℝ) * ((((p : ℕ)) : ℝ) ^ (-(((k + 2 : ℕ)) : ℝ) * σ₀))
-      = ((Real.log (((p : ℕ)) : ℝ)) * ((((p : ℕ)) : ℝ) ^ (-(2 * σ₀)))) *
-        ((((p : ℕ)) : ℝ) ^ ((k : ℝ) * (-σ₀))) := by
-        rw [hexp, Real.rpow_add hppos]
-        ring
+        = ((Real.log (((p : ℕ)) : ℝ)) * ((((p : ℕ)) : ℝ) ^ (-(2 * σ₀)))) *
+          ((((p : ℕ)) : ℝ) ^ ((k : ℝ) * (-σ₀))) := by
+          rw [hexp, Real.rpow_add hppos]
+          ring
       _ ≤ ((Real.log (((p : ℕ)) : ℝ)) * ((((p : ℕ)) : ℝ) ^ (-(2 * σ₀)))) * q ^ k := by
-        apply mul_le_mul_of_nonneg_left _ (mul_nonneg hplog
-          (Real.rpow_nonneg (le_of_lt hppos) _))
-        rw [hnpow]
-        exact pow_le_pow_left₀ (Real.rpow_nonneg (le_of_lt hppos) _) hbase k
+          apply mul_le_mul_of_nonneg_left _ (mul_nonneg hplog
+            (Real.rpow_nonneg (le_of_lt hppos) _))
+          rw [hnpow]
+          exact pow_le_pow_left₀ (Real.rpow_nonneg (le_of_lt hppos) _) hbase k
 
 end Nat.Primes
 
@@ -142,24 +143,24 @@ private lemma norm_correctionTerm_le (p : Nat.Primes) (k : ℕ) (w : ℂ) (σ₀
   have h1le : (1 : ℝ) ≤ (((p : ℕ) ^ (k + 2) : ℕ) : ℝ) := by
     exact_mod_cast hN1
   have hbase : (Nat.cast ((p : ℕ) ^ (k + 2)) : ℂ)
-    = ((((p : ℕ) ^ (k + 2) : ℕ) : ℝ) : ℂ) :=
+      = ((((p : ℕ) ^ (k + 2) : ℕ) : ℝ) : ℂ) :=
     (Complex.ofReal_natCast _).symm
   have hNσ : ((((p : ℕ) ^ (k + 2) : ℕ) : ℝ)) ^ σ₀
-    = ((((p : ℕ)) : ℝ) ^ (((((k + 2 : ℕ))) : ℝ) * σ₀)) := by
+      = ((((p : ℕ)) : ℝ) ^ (((((k + 2 : ℕ))) : ℝ) * σ₀)) := by
     rw [Nat.cast_pow, ← Real.rpow_natCast, ← Real.rpow_mul (by linarith)]
   have hle : ((((p : ℕ) ^ (k + 2) : ℕ) : ℝ)) ^ σ₀
-    ≤ ((((p : ℕ) ^ (k + 2) : ℕ) : ℝ)) ^ (w.re) :=
+      ≤ ((((p : ℕ) ^ (k + 2) : ℕ) : ℝ)) ^ (w.re) :=
     Real.rpow_le_rpow_of_exponent_le h1le hw
   change ‖(Real.log (((p : ℕ)) : ℝ) : ℂ) /
-    (Nat.cast ((p : ℕ) ^ (k + 2)) : ℂ) ^ w‖ ≤ _
+      (Nat.cast ((p : ℕ) ^ (k + 2)) : ℂ) ^ w‖ ≤ _
   rw [norm_div, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hlognn, hbase,
     Complex.norm_cpow_eq_rpow_re_of_pos hNpos]
   calc Real.log (((p : ℕ)) : ℝ) / ((((p : ℕ) ^ (k + 2) : ℕ) : ℝ)) ^ (w.re)
-    ≤ Real.log (((p : ℕ)) : ℝ) / ((((p : ℕ) ^ (k + 2) : ℕ) : ℝ)) ^ σ₀ :=
-      div_le_div_of_nonneg_left hlognn (Real.rpow_pos_of_pos hNpos _) hle
+      ≤ Real.log (((p : ℕ)) : ℝ) / ((((p : ℕ) ^ (k + 2) : ℕ) : ℝ)) ^ σ₀ :=
+        div_le_div_of_nonneg_left hlognn (Real.rpow_pos_of_pos hNpos _) hle
     _ = Real.log (((p : ℕ)) : ℝ) *
-      ((((p : ℕ)) : ℝ) ^ (-((((k + 2 : ℕ))) : ℝ) * σ₀)) := by
-      rw [hNσ, div_eq_mul_inv, ← Real.rpow_neg (by linarith), neg_mul]
+        ((((p : ℕ)) : ℝ) ^ (-((((k + 2 : ℕ))) : ℝ) * σ₀)) := by
+        rw [hNσ, div_eq_mul_inv, ← Real.rpow_neg (by linarith), neg_mul]
 
 end Nat.Primes
 
@@ -246,7 +247,7 @@ lemma logDirichlet_vonMangoldt_split
 -- proof
   have hsum := ArithmeticFunction.LSeriesSummable_vonMangoldt hs
   have hsup : Function.support (LSeries.term ↗ArithmeticFunction.vonMangoldt s)
-    ⊆ {n | IsPrimePow n} := by
+      ⊆ {n | IsPrimePow n} := by
     intro n hn
     rw [Function.mem_support] at hn
     change IsPrimePow n
@@ -255,24 +256,24 @@ lemma logDirichlet_vonMangoldt_split
     by_cases h0 : n = 0
     · simp [LSeries.term, h0]
     · have hΛ : ((((ArithmeticFunction.vonMangoldt n : ℝ))) : ℂ) = 0 := by
-      have h0' : ArithmeticFunction.vonMangoldt n = 0 :=
-        ArithmeticFunction.vonMangoldt_eq_zero_iff.mpr hcon
-      rw [h0']
-      rfl
+        have h0' : ArithmeticFunction.vonMangoldt n = 0 :=
+          ArithmeticFunction.vonMangoldt_eq_zero_iff.mpr hcon
+        rw [h0']
+        rfl
       rw [LSeries.term_of_ne_zero h0, hΛ, zero_div]
   have hsplit := tsum_eq_tsum_primes_add_tsum_primes_of_support_subset_prime_powers
     (f := LSeries.term ↗ArithmeticFunction.vonMangoldt s) hsum hsup
   have hcorr := summable_logDirichletCorrectionTerm (s := s) (by linarith : (1 / 2 : ℝ) < s.re)
   have hterm : ∀ p : Nat.Primes, LSeries.term ↗ArithmeticFunction.vonMangoldt s ↑p
-    = (Real.log ((((p : ℕ))) : ℝ) : ℂ) / (((p : ℕ)) : ℂ) ^ s := by
+      = (Real.log ((((p : ℕ))) : ℝ) : ℂ) / (((p : ℕ)) : ℂ) ^ s := by
     intro p
     rw [LSeries.term_of_ne_zero p.prop.ne_zero]
     congr 1
     show ((((ArithmeticFunction.vonMangoldt ↑p : ℝ))) : ℂ) = _
     rw [ArithmeticFunction.vonMangoldt_apply_prime p.prop]
   have hterm2 : ∀ p : Nat.Primes, ∀ k : ℕ,
-    LSeries.term ↗ArithmeticFunction.vonMangoldt s (↑p ^ (k + 2))
-      = logDirichletCorrectionTerm p k s := by
+      LSeries.term ↗ArithmeticFunction.vonMangoldt s (↑p ^ (k + 2))
+        = logDirichletCorrectionTerm p k s := by
     intro p k
     have hN : (↑p : ℕ) ^ (k + 2) ≠ 0 := pow_ne_zero _ p.prop.ne_zero
     rw [LSeries.term_of_ne_zero hN]
@@ -287,8 +288,8 @@ lemma logDirichlet_vonMangoldt_split
   congr 1
   · exact tsum_congr fun p => hterm p
   · change ∑' (p : Nat.Primes) (k : ℕ),
-    LSeries.term ↗ArithmeticFunction.vonMangoldt s (↑p ^ (k + 2))
-    = ∑' x : Nat.Primes × ℕ, logDirichletCorrectionTerm x.1 x.2 s
+        LSeries.term ↗ArithmeticFunction.vonMangoldt s (↑p ^ (k + 2))
+        = ∑' x : Nat.Primes × ℕ, logDirichletCorrectionTerm x.1 x.2 s
     rw [Summable.tsum_prod hcorr]
     exact tsum_congr fun p => tsum_congr fun k => hterm2 p k
 
@@ -311,8 +312,9 @@ lemma logDirichletSeries_eq
   have hΛ := ArithmeticFunction.LSeries_vonMangoldt_eq_deriv_riemannZeta_div hs
   have hsplit := logDirichlet_vonMangoldt_split hs
   have hcomb : logDirichletSeries s + logDirichletCorrection s
-    = -deriv riemannZeta s / riemannZeta s := by
-    rwa [← hsplit]
+      = -deriv riemannZeta s / riemannZeta s := by
+    rw [← hsplit]
+    exact hΛ
   linear_combination hcomb
 
 end Nat.Primes
@@ -338,6 +340,19 @@ lemma logDirichletContinuation_meromorphic
   exact (hmero.deriv.div hmero).neg.sub hC
 
 end Nat.Primes
+
+/--
+[riemannZeta₁_ne_zero_of_one_le_re](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/PrimeLog.lean)
+-/
+@[path]
+lemma riemannZeta₁_ne_zero_of_one_le_re {s : ℂ} (hs : 1 ≤ s.re) :
+  riemannZeta₁ s ≠ 0 := by
+  rcases eq_or_ne s 1 with rfl | hne
+  · rw [riemannZeta₁_one]
+    exact one_ne_zero
+  · have hζ := riemannZeta_ne_zero_of_one_le_re hs
+    rw [riemannZeta_eq_inv_sub_mul hne] at hζ
+    exact (mul_ne_zero_iff.mp hζ).2
 
 namespace Nat.Primes
 
@@ -394,7 +409,7 @@ lemma logDirichletContinuation_agree
   have hsub1 : s - 1 ≠ 0 := sub_ne_zero.mpr hne1
   have hinv : (s - 1)⁻¹ ≠ 0 := inv_ne_zero hsub1
   have hid : -deriv riemannZeta s / riemannZeta s
-    = 1 / (s - 1) - deriv riemannZeta₁ s / riemannZeta₁ s := by
+      = 1 / (s - 1) - deriv riemannZeta₁ s / riemannZeta₁ s := by
     rw [deriv_riemannZeta_eq_neg_inv_sub_sq_mul_add hne1, riemannZeta_eq_inv_sub_mul hne1]
     field_simp
     ring
@@ -422,21 +437,3 @@ lemma logDirichlet_meromorphicContinuation
     logDirichletContinuation_analyticOn, logDirichletContinuation_agree⟩
 
 end Nat.Primes
-
-/--
-[riemannZeta₁_ne_zero_of_one_le_re](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/PrimeLog.lean)
--/
-@[path]
-lemma riemannZeta₁_ne_zero_of_one_le_re {s : ℂ} (hs : 1 ≤ s.re) :
-  riemannZeta₁ s ≠ 0 := by
-  obtain rfl | hne := eq_or_ne s 1
-  · rw [riemannZeta₁_one]
-    exact one_ne_zero
-  · have hζ := riemannZeta_ne_zero_of_one_le_re hs
-    rw [riemannZeta_eq_inv_sub_mul hne] at hζ
-    exact (mul_ne_zero_iff.mp hζ).2
-
-
-
--- created on 2026-10-20
--- updated on 2026-10-26

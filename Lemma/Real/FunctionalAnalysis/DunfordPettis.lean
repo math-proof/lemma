@@ -320,10 +320,10 @@ private lemma dpc_truncation_mem_closedBall_and_dist
   {α : Type*} [MeasurableSpace α] {μ : Measure α} [IsFiniteMeasure μ]
   (v : Lp ℝ 1 μ) (C : NNReal) :
   ∃ G : Lp ℝ 2 μ,
-    ‖G‖ ≤ measureUnivNNReal μ ^ (2 : ℝ≥0∞).toReal⁻¹ * (C : ℝ) ∧
+    ‖G‖ ≤ measureUnivNNReal μ ^ (2 : ENNReal).toReal⁻¹ * (C : ℝ) ∧
     ‖v - dpcLpTwoToLpOneCLM (μ := μ) G‖ ≤
-      (eLpNorm (({x | (↑C : ℝ≥0∞) ≤ ‖v x‖₊}).indicator ⇑v) 1 μ).toReal := by
-  set A : Set α := {x | (↑C : ℝ≥0∞) ≤ ‖⇑v x‖₊} with hAdef
+      (eLpNorm (({x | (↑C : ENNReal) ≤ ‖v x‖₊}).indicator ⇑v) 1 μ).toReal := by
+  set A : Set α := {x | (↑C : ENNReal) ≤ ‖⇑v x‖₊} with hAdef
   have hAmeas : MeasurableSet A :=
     measurableSet_le measurable_const
       ((Lp.stronglyMeasurable v).measurable.nnnorm).coe_nnreal_ennreal
@@ -337,8 +337,8 @@ private lemma dpc_truncation_mem_closedBall_and_dist
     · rw [Set.indicator_of_mem hx _]
       have hxA : x ∉ A := by simpa [hBdef] using hx
       rw [hAdef] at hxA
-      have hxA' : ¬ (↑C : ℝ≥0∞) ≤ (‖⇑v x‖₊ : ℝ≥0∞) := hxA
-      have hlt : (‖⇑v x‖₊ : ℝ≥0∞) < (C : ℝ≥0∞) := lt_of_not_ge hxA'
+      have hxA' : ¬ (↑C : ENNReal) ≤ (‖⇑v x‖₊ : ENNReal) := hxA
+      have hlt : (‖⇑v x‖₊ : ENNReal) < (C : ENNReal) := lt_of_not_ge hxA'
       have hltR : ‖⇑v x‖₊ < C := by exact_mod_cast hlt
       calc ‖⇑v x‖ = (‖⇑v x‖₊ : ℝ) := (coe_nnnorm (⇑v x)).symm
         _ ≤ (C : ℝ) := le_of_lt (by exact_mod_cast hltR)
@@ -389,7 +389,7 @@ private lemma dpc_isCompact_closure_of_uniformIntegrable_Lp
     ENNReal.ofReal ε := fun i => hC i
   refine ⟨WeakSpace.map dpcLpTwoToLpOneCLM ''
     closure (toWeakSpace ℝ (Lp ℝ 2 μ) ''
-      Metric.closedBall 0 (measureUnivNNReal μ ^ (2 : ℝ≥0∞).toReal⁻¹ * (C : ℝ))),
+      Metric.closedBall 0 (measureUnivNNReal μ ^ (2 : ENNReal).toReal⁻¹ * (C : ℝ))),
     (dpc_isCompact_closure_toWeakSpace_closedBall _).image
       (WeakSpace.map dpcLpTwoToLpOneCLM).continuous,
     fun x hxS => ?_⟩
@@ -397,23 +397,23 @@ private lemma dpc_isCompact_closure_of_uniformIntegrable_Lp
   have hxu : x = u i := ((toWeakSpace ℝ (Lp ℝ 1 μ)).injective hzx).symm
   obtain ⟨G, hGball, hGdist⟩ := dpc_truncation_mem_closedBall_and_dist (u i) C
   have hGin : G ∈ Metric.closedBall (0 : Lp ℝ 2 μ)
-    (measureUnivNNReal μ ^ (2 : ℝ≥0∞).toReal⁻¹ * (C : ℝ)) := by
+    (measureUnivNNReal μ ^ (2 : ENNReal).toReal⁻¹ * (C : ℝ)) := by
     rwa [Metric.mem_closedBall, dist_eq_norm, sub_zero]
   have hmem : toWeakSpace ℝ (Lp ℝ 2 μ) G ∈
     closure (toWeakSpace ℝ (Lp ℝ 2 μ) ''
-      Metric.closedBall 0 (measureUnivNNReal μ ^ (2 : ℝ≥0∞).toReal⁻¹ * (C : ℝ))) :=
+      Metric.closedBall 0 (measureUnivNNReal μ ^ (2 : ENNReal).toReal⁻¹ * (C : ℝ))) :=
     subset_closure (Set.mem_image_of_mem _ hGin)
   have hmap : WeakSpace.map dpcLpTwoToLpOneCLM (toWeakSpace ℝ (Lp ℝ 2 μ) G) =
     toWeakSpace ℝ (Lp ℝ 1 μ) (dpcLpTwoToLpOneCLM G) :=
     WeakSpace.map_apply _ _
   subst hxu
   refine ⟨dpcLpTwoToLpOneCLM G, ⟨toWeakSpace ℝ (Lp ℝ 2 μ) G, hmem, hmap⟩, ?_⟩
-  have hset : ({x | ((C : ℝ≥0∞)) ≤ ‖⇑(u i) x‖₊}) = {x | C ≤ ‖⇑(u i) x‖₊} := by
+  have hset : ({x | ((C : ENNReal)) ≤ ‖⇑(u i) x‖₊}) = {x | C ≤ ‖⇑(u i) x‖₊} := by
     ext x
     exact ENNReal.coe_le_coe
-  have herr : (eLpNorm ((({x | (↑C : ℝ≥0∞) ≤ ‖⇑(u i) x‖₊}).indicator ⇑(u i))) 1 μ).toReal
+  have herr : (eLpNorm ((({x | (↑C : ENNReal) ≤ ‖⇑(u i) x‖₊}).indicator ⇑(u i))) 1 μ).toReal
     ≤ ε := by
-    have h1 : eLpNorm (({x | (↑C : ℝ≥0∞) ≤ ‖⇑(u i) x‖₊}).indicator ⇑(u i)) 1 μ ≤
+    have h1 : eLpNorm (({x | (↑C : ENNReal) ≤ ‖⇑(u i) x‖₊}).indicator ⇑(u i)) 1 μ ≤
       ENNReal.ofReal ε := by
       rw [hset]
       exact hCi i
@@ -514,32 +514,32 @@ namespace MathlibExt.Analysis.FunctionalAnalysis.DunfordPettisWanted
 private lemma dpc_exists_seq_small_measure
   {α : Type*} [MeasurableSpace α] {μ : Measure α}
   {s : ℕ → Set α}
-  (hμ : ∀ n, μ (s n) ≤ (4⁻¹ : ℝ≥0∞) ^ n)
-  {δ : ℕ → ℝ≥0∞} (hδpos : ∀ x, 0 < δ x) :
+  (hμ : ∀ n, μ (s n) ≤ (4⁻¹ : ENNReal) ^ n)
+  {δ : ℕ → ENNReal} (hδpos : ∀ x, 0 < δ x) :
   ∃ φ : ℕ → ℕ, StrictMono φ ∧
-    ∀ m n, m < n → μ (s (φ n)) ≤ (2⁻¹ : ℝ≥0∞) ^ (φ n + 1) * δ (φ m) := by
-  have h42 : (4⁻¹ : ℝ≥0∞) = 2⁻¹ * 2⁻¹ := by
-    have h4 : (4 : ℝ≥0∞) = 2 * 2 := by norm_num
+    ∀ m n, m < n → μ (s (φ n)) ≤ (2⁻¹ : ENNReal) ^ (φ n + 1) * δ (φ m) := by
+  have h42 : (4⁻¹ : ENNReal) = 2⁻¹ * 2⁻¹ := by
+    have h4 : (4 : ENNReal) = 2 * 2 := by norm_num
     rw [h4, ENNReal.mul_inv (Or.inr (by simp)) (Or.inl (by simp))]
-  have hev : ∀ x : ℕ, ∀ᶠ y in atTop, x < y ∧ μ (s y) ≤ (2⁻¹ : ℝ≥0∞) ^ (y + 1) * δ x := by
+  have hev : ∀ x : ℕ, ∀ᶠ y in atTop, x < y ∧ μ (s y) ≤ (2⁻¹ : ENNReal) ^ (y + 1) * δ x := by
     intro x
     have hgt : ∀ᶠ y in atTop, x < y := Filter.eventually_gt_atTop x
-    have hsmall2 : ∀ᶠ y in atTop, (2⁻¹ : ℝ≥0∞) ^ y ≤ 2⁻¹ * δ x := by
-      have hpos : (0 : ℝ≥0∞) < 2⁻¹ * δ x :=
+    have hsmall2 : ∀ᶠ y in atTop, (2⁻¹ : ENNReal) ^ y ≤ 2⁻¹ * δ x := by
+      have hpos : (0 : ENNReal) < 2⁻¹ * δ x :=
         ENNReal.mul_pos (by simp) (ne_of_gt (hδpos x))
       have htend :=
         ENNReal.tendsto_pow_atTop_nhds_zero_of_lt_one ENNReal.one_half_lt_one
       exact (htend.eventually (Iio_mem_nhds hpos)).mono fun y hy => le_of_lt hy
-    have hmeas : ∀ᶠ y in atTop, μ (s y) ≤ (2⁻¹ : ℝ≥0∞) ^ (y + 1) * δ x := by
+    have hmeas : ∀ᶠ y in atTop, μ (s y) ≤ (2⁻¹ : ENNReal) ^ (y + 1) * δ x := by
       filter_upwards [hsmall2] with y hy
-      calc μ (s y) ≤ (4⁻¹ : ℝ≥0∞) ^ y := hμ y
-        _ = (2⁻¹ : ℝ≥0∞) ^ y * (2⁻¹ : ℝ≥0∞) ^ y := by rw [h42, mul_pow]
-        _ ≤ (2⁻¹ : ℝ≥0∞) ^ (y + 1) * δ x := by
+      calc μ (s y) ≤ (4⁻¹ : ENNReal) ^ y := hμ y
+        _ = (2⁻¹ : ENNReal) ^ y * (2⁻¹ : ENNReal) ^ y := by rw [h42, mul_pow]
+        _ ≤ (2⁻¹ : ENNReal) ^ (y + 1) * δ x := by
           rw [pow_succ, mul_assoc]
           exact mul_le_mul_of_nonneg_left hy (by positivity)
     exact hgt.and hmeas
   obtain ⟨φ, _, hφr⟩ := exists_seq_of_forall_finset_exists (fun _ : ℕ => True)
-    (fun x y => x < y ∧ μ (s y) ≤ (2⁻¹ : ℝ≥0∞) ^ (y + 1) * δ x)
+    (fun x y => x < y ∧ μ (s y) ≤ (2⁻¹ : ENNReal) ^ (y + 1) * δ x)
     (fun σ _ => by
       obtain ⟨y, hy⟩ := ((Filter.eventually_all_finset σ).mpr fun x _ => hev x).exists
       exact ⟨y, trivial, hy⟩)
@@ -557,13 +557,13 @@ private lemma dpc_exists_disjoint_of_small_sets
   {α : Type*} [MeasurableSpace α] {μ : Measure α}
   {v : ℕ → α → ℝ} (hv : ∀ n, MemLp (v n) 1 μ)
   {s : ℕ → Set α} (hs : ∀ n, MeasurableSet (s n))
-  (hμ : ∀ n, μ (s n) ≤ (4⁻¹ : ℝ≥0∞) ^ n)
+  (hμ : ∀ n, μ (s n) ≤ (4⁻¹ : ENNReal) ^ n)
   {η : ℝ} (hη : 0 < η)
   (hmass : ∀ n, η ≤ ∫ x in s n, |v n x| ∂μ) :
   ∃ (φ : ℕ → ℕ), StrictMono φ ∧ ∃ C : ℕ → Set α,
     (∀ j, MeasurableSet (C j)) ∧ Pairwise (Function.onFun Disjoint C) ∧
     ∀ j, η / 2 ≤ ∫ x in C j, |v (φ j) x| ∂μ := by
-  have hδ : ∀ n, ∃ δ : ℝ≥0∞, δ > 0 ∧ ∀ t : Set α, MeasurableSet t → μ t ≤ δ →
+  have hδ : ∀ n, ∃ δ : ENNReal, δ > 0 ∧ ∀ t : Set α, MeasurableSet t → μ t ≤ δ →
     eLpNorm (t.indicator (v n)) 1 μ ≤ ENNReal.ofReal (η / 2) := fun n =>
     (hv n).eLpNorm_indicator_le le_rfl ENNReal.one_ne_top
       (ENNReal.ofReal_pos.mpr (half_pos hη))
@@ -571,8 +571,8 @@ private lemma dpc_exists_disjoint_of_small_sets
   obtain ⟨φ, hφm, hφb⟩ := dpc_exists_seq_small_measure hμ (fun x => (hδ x).1)
   have hUmeas : ∀ j, MeasurableSet (⋃ l, s (φ (l + j + 1))) :=
     fun j => MeasurableSet.iUnion (fun l => hs _)
-  have hgeom : (∑' m, (2⁻¹ : ℝ≥0∞) ^ (m + 1)) = 1 := by
-    have h12 : ((1 : ℝ≥0∞) - 2⁻¹)⁻¹ = 2 := by
+  have hgeom : (∑' m, (2⁻¹ : ENNReal) ^ (m + 1)) = 1 := by
+    have h12 : ((1 : ENNReal) - 2⁻¹)⁻¹ = 2 := by
       rw [ENNReal.one_sub_inv_two, inv_inv]
     rw [ENNReal.tsum_geometric_add_one, h12]
     exact ENNReal.inv_mul_cancel (Ne.symm (NeZero.ne' 2)) (Ne.symm ENNReal.top_ne_ofNat)
@@ -582,17 +582,17 @@ private lemma dpc_exists_disjoint_of_small_sets
       intro a b hab
       have h2 := hφm.injective hab
       omega
-    have hsum : (∑' l, (2⁻¹ : ℝ≥0∞) ^ (φ (l + j + 1) + 1)) ≤ 1 := by
-      calc ∑' l, (2⁻¹ : ℝ≥0∞) ^ (φ (l + j + 1) + 1)
-        ≤ ∑' m, (2⁻¹ : ℝ≥0∞) ^ (m + 1) :=
+    have hsum : (∑' l, (2⁻¹ : ENNReal) ^ (φ (l + j + 1) + 1)) ≤ 1 := by
+      calc ∑' l, (2⁻¹ : ENNReal) ^ (φ (l + j + 1) + 1)
+        ≤ ∑' m, (2⁻¹ : ENNReal) ^ (m + 1) :=
           ENNReal.tsum_comp_le_tsum_of_injective (f := fun l => φ (l + j + 1))
-            hinj (fun m => (2⁻¹ : ℝ≥0∞) ^ (m + 1))
+            hinj (fun m => (2⁻¹ : ENNReal) ^ (m + 1))
         _ = 1 := hgeom
     calc μ (⋃ l, s (φ (l + j + 1))) ≤ ∑' l, μ (s (φ (l + j + 1))) :=
       measure_iUnion_le _
-      _ ≤ ∑' l, (2⁻¹ : ℝ≥0∞) ^ (φ (l + j + 1) + 1) * δ (φ j) :=
+      _ ≤ ∑' l, (2⁻¹ : ENNReal) ^ (φ (l + j + 1) + 1) * δ (φ j) :=
         ENNReal.tsum_le_tsum (fun l => hφb j (l + j + 1) (by omega))
-      _ = (∑' l, (2⁻¹ : ℝ≥0∞) ^ (φ (l + j + 1) + 1)) * δ (φ j) :=
+      _ = (∑' l, (2⁻¹ : ENNReal) ^ (φ (l + j + 1) + 1)) * δ (φ j) :=
         ENNReal.tsum_mul_right
       _ ≤ 1 * δ (φ j) :=
         mul_le_mul_of_nonneg_right hsum (hδ (φ j)).1.le
@@ -1006,7 +1006,7 @@ private lemma dpc_tendsto_eLpNorm_restrict_of_weakly_null
   (hv : ∀ φ : StrongDual ℝ (Lp ℝ 1 μ),
     Filter.Tendsto (fun k ↦ φ (v k)) Filter.atTop (𝓝 0))
   {s : ℕ → Set α} (hs : ∀ k, MeasurableSet (s k))
-  (hμ : ∀ k, μ (s k) ≤ (4⁻¹ : ℝ≥0∞) ^ k) :
+  (hμ : ∀ k, μ (s k) ≤ (4⁻¹ : ENNReal) ^ k) :
   Filter.Tendsto (fun k ↦ eLpNorm (⇑(v k)) 1 (μ.restrict (s k)))
     Filter.atTop (𝓝 0) := by
   rw [ENNReal.tendsto_nhds_zero]
@@ -1048,10 +1048,10 @@ private lemma dpc_tendsto_eLpNorm_restrict_of_weakly_null
         rw [hεeq]
         exact le_of_lt hlt
       exact (ENNReal.ofReal_le_ofReal_iff hInonneg).mp hle
-    have hμψ : ∀ n, μ (s (ψ n)) ≤ (4⁻¹ : ℝ≥0∞) ^ n := by
+    have hμψ : ∀ n, μ (s (ψ n)) ≤ (4⁻¹ : ENNReal) ^ n := by
       intro n
-      calc μ (s (ψ n)) ≤ (4⁻¹ : ℝ≥0∞) ^ (ψ n) := hμ _
-        _ ≤ (4⁻¹ : ℝ≥0∞) ^ n :=
+      calc μ (s (ψ n)) ≤ (4⁻¹ : ENNReal) ^ (ψ n) := hμ _
+        _ ≤ (4⁻¹ : ENNReal) ^ n :=
           pow_le_pow_of_le_one zero_le (by norm_num)
             (StrictMono.id_le hψm n)
     obtain ⟨φ, hφm, C, hCmeas, hCdisj, hCmass⟩ :=
@@ -1128,10 +1128,10 @@ private lemma dpc_uniformIntegrable_of_isCompact_closure_Lp
   intro ε hε
   by_contra hnot
   push Not at hnot
-  have hδpos : ∀ n : ℕ, (0 : ℝ≥0∞) < (4⁻¹ : ℝ≥0∞) ^ n := fun n =>
+  have hδpos : ∀ n : ℕ, (0 : ENNReal) < (4⁻¹ : ENNReal) ^ n := fun n =>
     ENNReal.pow_pos (by simp) n
   have hchoice : ∀ n : ℕ, ∃ i, ∃ s, MeasurableSet s ∧
-    μ s ≤ (4⁻¹ : ℝ≥0∞) ^ n ∧ ε < eLpNorm ⇑(u i) 1 (μ.restrict s) :=
+    μ s ≤ (4⁻¹ : ENNReal) ^ n ∧ ε < eLpNorm ⇑(u i) 1 (μ.restrict s) :=
     fun n => hnot _ (hδpos n)
   choose i s hs hμs hlt using hchoice
   have htop : ε ≠ ⊤ := by
@@ -1176,10 +1176,10 @@ private lemma dpc_uniformIntegrable_of_isCompact_closure_Lp
       = (fun j => f (u (i (ψ j))) - f g) :=
       funext fun j => map_sub _ _ _
     rwa [heq]
-  have hμψ : ∀ k, μ (s (ψ k)) ≤ (4⁻¹ : ℝ≥0∞) ^ k := by
+  have hμψ : ∀ k, μ (s (ψ k)) ≤ (4⁻¹ : ENNReal) ^ k := by
     intro k
-    calc μ (s (ψ k)) ≤ (4⁻¹ : ℝ≥0∞) ^ (ψ k) := hμs _
-      _ ≤ (4⁻¹ : ℝ≥0∞) ^ k :=
+    calc μ (s (ψ k)) ≤ (4⁻¹ : ENNReal) ^ (ψ k) := hμs _
+      _ ≤ (4⁻¹ : ENNReal) ^ k :=
         pow_le_pow_of_le_one zero_le (by norm_num)
           (StrictMono.id_le hψm k)
   have hN12 : Filter.Tendsto
@@ -1193,14 +1193,14 @@ private lemma dpc_uniformIntegrable_of_isCompact_closure_Lp
     intro ε' hε'
     obtain ⟨δ, hδpos', hδ⟩ :=
       (Lp.memLp g).eLpNorm_indicator_le le_rfl ENNReal.one_ne_top hε'
-    have hpow : Filter.Tendsto (fun k => (4⁻¹ : ℝ≥0∞) ^ (ψ k)) Filter.atTop
+    have hpow : Filter.Tendsto (fun k => (4⁻¹ : ENNReal) ^ (ψ k)) Filter.atTop
       (𝓝 0) :=
       (ENNReal.tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num)).comp
         hψm.tendsto_atTop
-    have hev2 : ∀ᶠ k in Filter.atTop, (4⁻¹ : ℝ≥0∞) ^ (ψ k) ≤ δ :=
+    have hev2 : ∀ᶠ k in Filter.atTop, (4⁻¹ : ENNReal) ^ (ψ k) ≤ δ :=
       (ENNReal.tendsto_nhds_zero.mp hpow) δ hδpos'
     filter_upwards [hev2] with k hk
-    have hμk : μ (s (ψ k)) ≤ (4⁻¹ : ℝ≥0∞) ^ (ψ k) := hμs _
+    have hμk : μ (s (ψ k)) ≤ (4⁻¹ : ENNReal) ^ (ψ k) := hμs _
     have hle : μ (s (ψ k)) ≤ δ := hμk.trans hk
     have hcongr : eLpNorm (⇑g) 1 (μ.restrict (s (ψ k)))
       = eLpNorm ((s (ψ k)).indicator ⇑g) 1 μ :=
@@ -1253,7 +1253,7 @@ lemma dunford_pettis_compactness
 -- given
   (hf : ∀ i, MemLp (f i) 1 μ) :
 -- imply
-  UniformIntegrable f (1 : ℝ≥0∞) μ ↔
+  UniformIntegrable f (1 : ENNReal) μ ↔
     IsCompact
     (closure
     (toWeakSpace ℝ (Lp ℝ 1 μ) '' Set.range (fun i => (hf i).toLp (f i))

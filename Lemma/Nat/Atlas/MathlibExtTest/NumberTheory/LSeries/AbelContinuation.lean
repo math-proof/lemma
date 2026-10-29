@@ -11,7 +11,7 @@ namespace AbelContinuationTest
 [zero_isBigO](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/AbelContinuation.lean)
 -/
 @[path]
-lemma zero_isBigO
+lemma zero_isBigO :
 -- imply
   (fun n => abelPartialSum (fun _ => (0 : ℂ)) n) =O[atTop] fun n => ((n : ℝ) ^ (0 : ℝ) : ℝ) := by
 -- proof
@@ -43,7 +43,7 @@ namespace AbelContinuationTest
 [single_isBigO](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/AbelContinuation.lean)
 -/
 @[path]
-lemma single_isBigO
+lemma single_isBigO :
 -- imply
   (fun n => abelPartialSum (fun n => if n = 1 then (1 : ℂ) else 0) n) =O[atTop] fun n => ((n : ℝ) ^ (0 : ℝ) : ℝ) := by
 -- proof
@@ -136,7 +136,7 @@ namespace AbelContinuationTest
 [alt_isBigO](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/AbelContinuation.lean)
 -/
 @[path]
-lemma alt_isBigO
+lemma alt_isBigO :
 -- imply
   (fun n => abelPartialSum alt n) =O[atTop] fun n => ((n : ℝ) ^ (0 : ℝ) : ℝ) := by
 -- proof
@@ -153,7 +153,7 @@ namespace AbelContinuationTest
 [alt_pointwise_isBigO](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/AbelContinuation.lean)
 -/
 @[path]
-lemma alt_pointwise_isBigO
+lemma alt_pointwise_isBigO :
 -- imply
   alt =O[atTop] fun n => ((n : ℝ) ^ ((1 : ℝ) - 1) : ℝ) := by
 -- proof
@@ -168,3 +168,4 @@ end AbelContinuationTest
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

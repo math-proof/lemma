@@ -32,7 +32,7 @@ open StatMech.Lattice StatMech.Percolation
 variable {d : ℕ}
 
 
-noncomputable def shk_restrictedSusceptibility (p : ℝ≥0) (hp : p ≤ 1)
+noncomputable def shk_restrictedSusceptibility (p : NNReal) (hp : p ≤ 1)
     (Lam : Finset (Site d)) (u : Site d) : ℝ :=
   ∑ x ∈ Lam, (bernoulliProductMeasure (E := Sym2 (Site d)) p hp).real
     (connEvent (hypercubicLattice d) (Lam : Set (Site d)) u {x})

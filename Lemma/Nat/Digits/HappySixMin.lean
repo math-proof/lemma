@@ -17,16 +17,15 @@ private lemma digitSqSum_ten_mul_add (q d : ℕ) (hd : d < 10) :
   · obtain ⟨rfl, rfl⟩ := h
     simp [Nat.digits_zero]
   · have hne : d ≠ 0 ∨ q ≠ 0 := by
-    obtain rfl | hd0 := eq_or_ne d 0
-    · rcases eq_or_ne q 0 with rfl | hq0
-      · exfalso; exact h ⟨rfl, rfl⟩
-      · exact Or.inr hq0
-    · exact Or.inl hd0
+      rcases eq_or_ne d 0 with rfl | hd0
+      · rcases eq_or_ne q 0 with rfl | hq0
+        · exfalso; exact h ⟨rfl, rfl⟩
+        · exact Or.inr hq0
+      · exact Or.inl hd0
     have hdig : Nat.digits 10 (d + 10 * q) = d :: Nat.digits 10 q :=
       Nat.digits_add 10 (by norm_num) d q hd hne
     have heq : 10 * q + d = d + 10 * q := by omega
     rw [heq, hdig, List.map_cons, List.sum_cons, Nat.add_comm]
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -38,7 +37,6 @@ namespace MetaMathlibExt.HappySix
 private lemma digitSqSum_zero : digitSqSum 0 = 0 := by
   unfold digitSqSum
   simp [Nat.digits_zero]
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -52,7 +50,6 @@ private lemma digitSqSum_single (d : ℕ) (hd : d < 10) (hd0 : d ≠ 0) :
   unfold digitSqSum
   rw [Nat.digits_of_lt 10 d hd0 hd, List.map_cons, List.map_nil, List.sum_cons,
     List.sum_nil, Nat.add_zero]
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -64,7 +61,6 @@ namespace MetaMathlibExt.HappySix
 private lemma digitSqSum_one : digitSqSum 1 = 1 := by
   have h := digitSqSum_single 1 (by norm_num) (by norm_num)
   simpa using h
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -78,7 +74,6 @@ private lemma digitSqSum_carry_low (q r j : ℕ) (h : r + j < 10) :
   have heq : 10 * q + r + j = 10 * q + (r + j) := by omega
   rw [heq]
   exact digitSqSum_ten_mul_add q (r + j) (by omega)
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -92,7 +87,6 @@ private lemma digitSqSum_carry_high (q r j : ℕ) (h1 : 10 ≤ r + j) (h2 : r + 
   have heq : 10 * q + r + j = 10 * (q + 1) + (r + j - 10) := by omega
   rw [heq]
   exact digitSqSum_ten_mul_add (q + 1) (r + j - 10) (by omega)
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -124,7 +118,7 @@ private lemma digitSqSum_add_pow_mul (k : ℕ) : ∀ (x y : ℕ), x < 10 ^ k →
       conv_lhs => rw [hdecomp, hps]
       ring
     have lhs : digitSqSum (x + 10 ^ (k + 1) * y)
-      = digitSqSum (x / 10 + 10 ^ k * y) + (x % 10) ^ 2 := by
+        = digitSqSum (x / 10 + 10 ^ k * y) + (x % 10) ^ 2 := by
       rw [hbig]
       exact digitSqSum_ten_mul_add _ _ hmod
     have rhs : digitSqSum x = digitSqSum (x / 10) + (x % 10) ^ 2 := by
@@ -132,7 +126,6 @@ private lemma digitSqSum_add_pow_mul (k : ℕ) : ∀ (x y : ℕ), x < 10 ^ k →
       exact digitSqSum_ten_mul_add _ _ hmod
     rw [lhs, rhs, ih _ _ hdiv]
     ring
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -146,7 +139,6 @@ private lemma digitSqSum_pow_mul (k y : ℕ) :
   have h0 : (0 : ℕ) < 10 ^ k := Nat.pow_pos (by norm_num)
   have h := digitSqSum_add_pow_mul k 0 y h0
   simpa [digitSqSum_zero] using h
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -165,7 +157,6 @@ private lemma digitSqSum_nines (k : ℕ) : digitSqSum (10 ^ k - 1) = 81 * k := b
       omega
     rw [heq, digitSqSum_ten_mul_add _ _ (by norm_num), ih]
     ring
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -202,7 +193,6 @@ private lemma digitSqSum_le_of_lt_pow (n : ℕ) : ∀ (x : ℕ), x < 10 ^ n →
       have := Nat.pow_le_pow_left hle 2
       simpa using this
     omega
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -215,7 +205,6 @@ private lemma digit_deficit_cases (d : ℕ) (hd : d < 10) (hle : 81 - d ^ 2 ≤ 
   (81 - d ^ 2 = 0 ∨ 81 - d ^ 2 = 17 ∨ 81 - d ^ 2 = 32 ∨ 81 - d ^ 2 = 45 ∨
     81 - d ^ 2 = 56) := by
   interval_cases d <;> omega
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -231,9 +220,8 @@ private lemma W_closed (w e : ℕ)
   (hle : w + e ≤ 64) :
   (w + e = 0 ∨ w + e = 17 ∨ w + e = 32 ∨ w + e = 34 ∨ w + e = 45 ∨
     w + e = 49 ∨ w + e = 51 ∨ w + e = 56 ∨ w + e = 62 ∨ w + e = 64) := by
-  obtain rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;> := hw
-    obtain rfl | rfl | rfl | rfl | rfl <;> omega := he
-
+  rcases hw with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
+    rcases he with rfl | rfl | rfl | rfl | rfl <;> omega
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -280,11 +268,10 @@ private lemma digitSqSum_deficit_mem (n : ℕ) : ∀ (x : ℕ), x < 10 ^ n →
     have hmem1 := ih _ hdiv hD1
     have hmem2 := digit_deficit_cases _ hmod hD2
     have hsplit : 81 * (n + 1) - digitSqSum x
-      = (81 * n - digitSqSum (x / 10)) + (81 - (x % 10) ^ 2) := by
+        = (81 * n - digitSqSum (x / 10)) + (81 - (x % 10) ^ 2) := by
       omega
     rw [hsplit]
     exact W_closed _ _ hmem1 hmem2 (by omega)
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -295,7 +282,6 @@ namespace MetaMathlibExt.HappySix
 @[path]
 private lemma sq_eq_81 (d : ℕ) (_hd : d < 10) (h : d ^ 2 = 81) : d = 9 := by
   interval_cases d <;> omega
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -370,7 +356,6 @@ private lemma isHap_iff_exists_iterate (n : ℕ) :
     · simp [Function.iterate_zero_apply]
     · intro i _
       exact Function.iterate_succ_apply' digitSqSum i n
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -382,7 +367,7 @@ namespace MetaMathlibExt.HappySix
 private lemma isHap_digitSqSum (n : ℕ) (h : IsHap n) : IsHap (digitSqSum n) := by
   rw [isHap_iff_exists_iterate] at h ⊢
   obtain ⟨k, hk⟩ := h
-  obtain _ | k' := k
+  rcases k with _ | k'
   · simp only [Function.iterate_zero_apply] at hk
     subst hk
     refine ⟨0, ?_⟩
@@ -391,7 +376,6 @@ private lemma isHap_digitSqSum (n : ℕ) (h : IsHap n) : IsHap (digitSqSum n) :=
     have hsk : (digitSqSum^[k' + 1]) n = (digitSqSum^[k']) (digitSqSum n) :=
       Function.iterate_succ_apply digitSqSum k' n
     omega
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -402,8 +386,7 @@ namespace MetaMathlibExt.HappySix
 @[path]
 private lemma digitSqSum_maps_C (c : ℕ) (hc : Cmem c) : Cmem (digitSqSum c) := by
   unfold Cmem at hc ⊢
-  obtain rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;> decide := hc
-
+  rcases hc with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;> decide
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -419,7 +402,6 @@ private lemma iterate_mem_C (j c : ℕ) (hc : Cmem c) : Cmem ((digitSqSum^[j]) c
   | succ j ih =>
     rw [Function.iterate_succ_apply']
     exact digitSqSum_maps_C _ ih
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -431,7 +413,6 @@ namespace MetaMathlibExt.HappySix
 private lemma one_not_mem_C : ¬ Cmem 1 := by
   unfold Cmem
   rintro (h | h | h | h | h | h | h | h | h) <;> omega
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -459,8 +440,8 @@ private lemma unhCert_hit (k n : ℕ) (h : unhCert k n = true) :
         refine ⟨i + 1, ?_⟩
         have e : (digitSqSum^[i + 1]) n = (digitSqSum^[i]) (digitSqSum n) :=
           Function.iterate_succ_apply digitSqSum i n
-        rwa [e]
-
+        rw [e]
+        exact hi
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -475,20 +456,22 @@ private lemma not_isHap_of_unhCert (k n : ℕ) (h : unhCert k n = true) : ¬ IsH
   obtain ⟨i, hi⟩ := unhCert_hit k n h
   by_cases hle : t ≤ i
   · have hadd : (digitSqSum^[i]) n
-    = (digitSqSum^[i - t]) ((digitSqSum^[t]) n) := by
-    have e := Function.iterate_add_apply digitSqSum (i - t) t n
-    have hii : i - t + t = i := by omega
-    rwa [hii] at e
+        = (digitSqSum^[i - t]) ((digitSqSum^[t]) n) := by
+      have e := Function.iterate_add_apply digitSqSum (i - t) t n
+      have hii : i - t + t = i := by omega
+      rw [hii] at e
+      exact e
     rw [ht, Function.iterate_fixed digitSqSum_one (i - t)] at hadd
     omega
   · have hlt : i < t := by omega
     have hadd : (digitSqSum^[t]) n
-      = (digitSqSum^[t - i]) ((digitSqSum^[i]) n) := by
+        = (digitSqSum^[t - i]) ((digitSqSum^[i]) n) := by
       have e := Function.iterate_add_apply digitSqSum (t - i) i n
       have hii : t - i + i = t := by omega
-      rwa [hii] at e
+      rw [hii] at e
+      exact e
     have hmem : Cmem ((digitSqSum^[t - i]) ((digitSqSum^[i]) n)) := by
-      obtain h0 | h4 := hi
+      rcases hi with h0 | h4
       · rw [h0]
         exact iterate_mem_C _ _ (Or.inl rfl)
       · rw [h4]
@@ -496,7 +479,6 @@ private lemma not_isHap_of_unhCert (k n : ℕ) (h : unhCert k n = true) : ¬ IsH
     rw [ht] at hadd
     rw [← hadd] at hmem
     exact one_not_mem_C hmem
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -522,8 +504,8 @@ private lemma isHap_of_hapCert (k n : ℕ) (h : hapCert k n = true) : IsHap n :=
       refine ⟨i + 1, ?_⟩
       have e : (digitSqSum^[i + 1]) n = (digitSqSum^[i]) (digitSqSum n) :=
         Function.iterate_succ_apply digitSqSum i n
-      rwa [e]
-
+      rw [e]
+      exact hi
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -567,7 +549,7 @@ private lemma exists_trailing_nines_decomp (q : ℕ) :
       omega
     have hq1 : q + 1 = 10 * (q / 10 + 1) := by omega
     have e3 : 10 * (10 ^ t' * (10 * w + (e + 1)))
-      = 10 ^ (t' + 1) * (10 * w + (e + 1)) := by
+        = 10 ^ (t' + 1) * (10 * w + (e + 1)) := by
       rw [hps]; ring
     have hsucc' : q + 1 = 10 ^ (t' + 1) * (10 * w + (e + 1)) := by
       rw [hq1, hsucc, e3]
@@ -584,10 +566,10 @@ private lemma exists_trailing_nines_decomp (q : ℕ) :
       intro r
       have hle100 : 100 * w ≤ 10 * (10 * w + e) := by omega
       have e4 : 10 ^ (t' + 1) * 100 * w
-        ≤ 10 * (10 ^ (t' + 1) * (10 * w + e)) := by
+          ≤ 10 * (10 ^ (t' + 1) * (10 * w + e)) := by
         calc 10 ^ (t' + 1) * 100 * w = 10 ^ (t' + 1) * (100 * w) := by ring
           _ ≤ 10 ^ (t' + 1) * (10 * (10 * w + e)) :=
-            Nat.mul_le_mul_left _ hle100
+              Nat.mul_le_mul_left _ hle100
           _ = 10 * (10 ^ (t' + 1) * (10 * w + e)) := by ring
       rw [h10]
       omega
@@ -619,7 +601,6 @@ private lemma exists_trailing_nines_decomp (q : ℕ) :
       rw [h02]
       omega
     exact ⟨0, q / 10, q % 10, he8, hmain, hS, hS1, hsucc, hbound⟩
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -635,7 +616,6 @@ private lemma bound_of_digitSqSum_300 (w : ℕ) (h : digitSqSum w = 300) : 10 ^ 
   have hmem := digitSqSum_deficit_mem 4 w hlt (by omega)
   rw [hdef] at hmem
   omega
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -651,7 +631,6 @@ private lemma bound_of_digitSqSum_588 (w : ℕ) (h : digitSqSum w = 588) : 10 ^ 
   have hmem := digitSqSum_deficit_mem 8 w hlt (by omega)
   rw [hdef] at hmem
   omega
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -667,7 +646,6 @@ private lemma bound_of_digitSqSum_1398 (w : ℕ) (h : digitSqSum w = 1398) : 10 
   have hmem := digitSqSum_deficit_mem 18 w hlt (by omega)
   rw [hdef] at hmem
   omega
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -683,7 +661,6 @@ private lemma bound_of_digitSqSum_1722 (w : ℕ) (h : digitSqSum w = 1722) : 10 
   have hmem := digitSqSum_deficit_mem 22 w hlt (by omega)
   rw [hdef] at hmem
   omega
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -728,7 +705,7 @@ private lemma le_of_digitSqSum_eq_1085 (w : ℕ) (h : digitSqSum w = 1085) :
     rw [← hwd, h] at hN2
     -- hN2 : digitSqSum x + digitSqSum d = 1085
     have hSd : digitSqSum d = d ^ 2 := by
-      obtain h0 | hne := eq_or_ne d 0
+      rcases eq_or_ne d 0 with h0 | hne
       · rw [h0]
         simp [digitSqSum_zero]
       · exact digitSqSum_single d (by omega) hne
@@ -746,7 +723,7 @@ private lemma le_of_digitSqSum_eq_1085 (w : ℕ) (h : digitSqSum w = 1085) :
       norm_num at hh
       omega
     have hd67 : d = 6 ∨ d = 7 := by omega
-    obtain h6 | h7 := hd67
+    rcases hd67 with h6 | h7
     · -- d = 6: deficit of x is 4, not in W
       rw [h6] at hSx
       have h36 : (6 : ℕ) ^ 2 = 36 := by norm_num
@@ -782,7 +759,7 @@ private lemma le_of_digitSqSum_eq_1085 (w : ℕ) (h : digitSqSum w = 1085) :
       have hN2' := digitSqSum_add_pow_mul 12 y d' hy12
       rw [← hxeq, hx1036] at hN2'
       have hSd' : digitSqSum d' = d' ^ 2 := by
-        obtain h0' | hne := eq_or_ne d' 0
+        rcases eq_or_ne d' 0 with h0' | hne
         · rw [h0']
           simp [digitSqSum_zero]
         · exact digitSqSum_single d' (by omega) hne
@@ -807,7 +784,6 @@ private lemma le_of_digitSqSum_eq_1085 (w : ℕ) (h : digitSqSum w = 1085) :
       have hy_eq := eq_pow_sub_one_of_digitSqSum_eq 12 y hy12 hSy972
       rw [h12] at hy_eq
       omega
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -819,7 +795,6 @@ namespace MetaMathlibExt.HappySix
 private lemma table_T1_0 : ∀ a < 2026, ∃ j < 6,
   unhCert 20 (a + (0 + j) ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -831,7 +806,6 @@ namespace MetaMathlibExt.HappySix
 private lemma table_T1_1 : ∀ a < 2026, ∃ j < 6,
   unhCert 20 (a + (1 + j) ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -843,7 +817,6 @@ namespace MetaMathlibExt.HappySix
 private lemma table_T1_2 : ∀ a < 2026, ∃ j < 6,
   unhCert 20 (a + (2 + j) ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -855,7 +828,6 @@ namespace MetaMathlibExt.HappySix
 private lemma table_T1_3 : ∀ a < 2026, ∃ j < 6,
   unhCert 20 (a + (3 + j) ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -867,7 +839,6 @@ namespace MetaMathlibExt.HappySix
 private lemma table_T1_4 : ∀ a < 2026, ∃ j < 6,
   unhCert 20 (a + (4 + j) ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -879,7 +850,6 @@ namespace MetaMathlibExt.HappySix
 private lemma table_T2 : ∀ a < 2026, ∃ d ∈ ([5, 6, 7, 8, 9] : List ℕ),
   unhCert 20 (a + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -891,7 +861,6 @@ namespace MetaMathlibExt.HappySix
 private lemma table_T3 : ∀ b < 2026, ∃ d ∈ ([0, 1, 2, 3] : List ℕ),
   unhCert 20 (b + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -903,7 +872,6 @@ namespace MetaMathlibExt.HappySix
 private lemma table_T4 : ∀ a < 2026, a ≠ 1839 →
   ∃ d ∈ ([6, 7, 8, 9] : List ℕ), unhCert 20 (a + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -915,7 +883,6 @@ namespace MetaMathlibExt.HappySix
 private lemma table_T5 : ∀ a < 2026, a ≠ 568 → a ≠ 574 → a ≠ 1839 →
   ∃ d ∈ ([7, 8, 9] : List ℕ), unhCert 20 (a + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -957,7 +924,7 @@ private lemma no_happy_run_of_residue (q r : ℕ) (hr : r < 10) (hr6 : r ≠ 6)
   · -- r = 5
     obtain ⟨d, hdm, hdcert⟩ := table_T2 (digitSqSum q) (by omega)
     have hdd : d = 5 ∨ d = 6 ∨ d = 7 ∨ d = 8 ∨ d = 9 := by simpa using hdm
-    obtain rfl | rfl | rfl | rfl | rfl := hdd
+    rcases hdd with rfl | rfl | rfl | rfl | rfl
     · have heq := digitSqSum_carry_low q 5 0 (by norm_num)
       have h1 := hall 0 (by norm_num)
       rw [heq] at h1
@@ -983,7 +950,7 @@ private lemma no_happy_run_of_residue (q r : ℕ) (hr : r < 10) (hr6 : r ≠ 6)
   · -- r = 8
     obtain ⟨d, hdm, hdcert⟩ := table_T3 (digitSqSum (q + 1)) (by omega)
     have hdd : d = 0 ∨ d = 1 ∨ d = 2 ∨ d = 3 := by simpa using hdm
-    obtain rfl | rfl | rfl | rfl := hdd
+    rcases hdd with rfl | rfl | rfl | rfl
     · have heq := digitSqSum_carry_high q 8 2 (by norm_num) (by norm_num)
       have h1 := hall 2 (by norm_num)
       rw [heq] at h1
@@ -1003,7 +970,7 @@ private lemma no_happy_run_of_residue (q r : ℕ) (hr : r < 10) (hr6 : r ≠ 6)
   · -- r = 9
     obtain ⟨d, hdm, hdcert⟩ := table_T3 (digitSqSum (q + 1)) (by omega)
     have hdd : d = 0 ∨ d = 1 ∨ d = 2 ∨ d = 3 := by simpa using hdm
-    obtain rfl | rfl | rfl | rfl := hdd
+    rcases hdd with rfl | rfl | rfl | rfl
     · have heq := digitSqSum_carry_high q 9 1 (by norm_num) (by norm_num)
       have h1 := hall 1 (by norm_num)
       rw [heq] at h1
@@ -1020,7 +987,6 @@ private lemma no_happy_run_of_residue (q r : ℕ) (hr : r < 10) (hr6 : r ≠ 6)
       have h1 := hall 4 (by norm_num)
       rw [heq] at h1
       exact not_isHap_of_unhCert 20 _ hdcert h1
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1033,7 +999,6 @@ private lemma table_T6_0 : ∀ t < 23, 0 ^ 2 + 81 * t ≤ 1839 → t ≠ 19 →
   ∃ d ∈ ([0, 1] : List ℕ),
     unhCert 20 (1839 - 0 ^ 2 - 81 * t + (0 + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1046,7 +1011,6 @@ private lemma table_T6_1 : ∀ t < 23, 1 ^ 2 + 81 * t ≤ 1839 →
   ∃ d ∈ ([0, 1] : List ℕ),
     unhCert 20 (1839 - 1 ^ 2 - 81 * t + (1 + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1059,7 +1023,6 @@ private lemma table_T6_2 : ∀ t < 23, 2 ^ 2 + 81 * t ≤ 1839 →
   ∃ d ∈ ([0, 1] : List ℕ),
     unhCert 20 (1839 - 2 ^ 2 - 81 * t + (2 + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1072,7 +1035,6 @@ private lemma table_T6_3 : ∀ t < 23, 3 ^ 2 + 81 * t ≤ 1839 →
   ∃ d ∈ ([0, 1] : List ℕ),
     unhCert 20 (1839 - 3 ^ 2 - 81 * t + (3 + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1085,7 +1047,6 @@ private lemma table_T6_4 : ∀ t < 23, 4 ^ 2 + 81 * t ≤ 1839 →
   ∃ d ∈ ([0, 1] : List ℕ),
     unhCert 20 (1839 - 4 ^ 2 - 81 * t + (4 + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1098,7 +1059,6 @@ private lemma table_T6_5 : ∀ t < 23, 5 ^ 2 + 81 * t ≤ 1839 → t ≠ 9 →
   ∃ d ∈ ([0, 1] : List ℕ),
     unhCert 20 (1839 - 5 ^ 2 - 81 * t + (5 + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1112,7 +1072,6 @@ private lemma table_T6_6 : ∀ t < 23, 6 ^ 2 + 81 * t ≤ 1839 →
   ∃ d ∈ ([0, 1] : List ℕ),
     unhCert 20 (1839 - 6 ^ 2 - 81 * t + (6 + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1125,7 +1084,6 @@ private lemma table_T6_7 : ∀ t < 23, 7 ^ 2 + 81 * t ≤ 1839 →
   ∃ d ∈ ([0, 1] : List ℕ),
     unhCert 20 (1839 - 7 ^ 2 - 81 * t + (7 + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1138,7 +1096,6 @@ private lemma table_T6_8 : ∀ t < 23, 8 ^ 2 + 81 * t ≤ 1839 →
   ∃ d ∈ ([0, 1] : List ℕ),
     unhCert 20 (1839 - 8 ^ 2 - 81 * t + (8 + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1151,7 +1108,6 @@ private lemma table_T7_568 : ∀ e < 9, ∀ t < 23, e ^ 2 + 81 * t ≤ 568 →
   ∃ d ∈ ([0, 1, 2] : List ℕ),
     unhCert 20 (568 - e ^ 2 - 81 * t + (e + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1164,7 +1120,6 @@ private lemma table_T7_574 : ∀ e < 9, ∀ t < 23, e ^ 2 + 81 * t ≤ 574 →
   ∃ d ∈ ([0, 1, 2] : List ℕ),
     unhCert 20 (574 - e ^ 2 - 81 * t + (e + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1178,7 +1133,6 @@ private lemma table_T7_1839 : ∀ e < 9, ∀ t < 23, e ^ 2 + 81 * t ≤ 1839 →
   ∃ d ∈ ([0, 1, 2] : List ℕ),
     unhCert 20 (1839 - e ^ 2 - 81 * t + (e + 1) ^ 2 + d ^ 2) = true := by
   decide +kernel
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1206,7 +1160,7 @@ private lemma le_of_happy_run_six (q : ℕ) (hSq : digitSqSum q ≤ 2025)
     rw [e1] at g1
     rw [e2] at g2
     rw [e3] at g3
-    obtain rfl | rfl | rfl | rfl := hdd
+    rcases hdd with rfl | rfl | rfl | rfl
     · exact (not_isHap_of_unhCert 20 _ hdcert g0).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g1).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g2).elim
@@ -1238,7 +1192,7 @@ private lemma le_of_happy_run_six (q : ℕ) (hSq : digitSqSum q ≤ 2025)
       have g5 := hall 5 (by norm_num)
       rw [e4, hB] at g4
       rw [e5, hB] at g5
-      obtain rfl | rfl := hdd
+      rcases hdd with rfl | rfl
       · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
       · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
   · -- e = 1
@@ -1250,7 +1204,7 @@ private lemma le_of_happy_run_six (q : ℕ) (hSq : digitSqSum q ≤ 2025)
     have g5 := hall 5 (by norm_num)
     rw [e4, hB] at g4
     rw [e5, hB] at g5
-    obtain rfl | rfl := hdd
+    rcases hdd with rfl | rfl
     · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
   · -- e = 2
@@ -1262,7 +1216,7 @@ private lemma le_of_happy_run_six (q : ℕ) (hSq : digitSqSum q ≤ 2025)
     have g5 := hall 5 (by norm_num)
     rw [e4, hB] at g4
     rw [e5, hB] at g5
-    obtain rfl | rfl := hdd
+    rcases hdd with rfl | rfl
     · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
   · -- e = 3
@@ -1274,7 +1228,7 @@ private lemma le_of_happy_run_six (q : ℕ) (hSq : digitSqSum q ≤ 2025)
     have g5 := hall 5 (by norm_num)
     rw [e4, hB] at g4
     rw [e5, hB] at g5
-    obtain rfl | rfl := hdd
+    rcases hdd with rfl | rfl
     · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
   · -- e = 4
@@ -1286,7 +1240,7 @@ private lemma le_of_happy_run_six (q : ℕ) (hSq : digitSqSum q ≤ 2025)
     have g5 := hall 5 (by norm_num)
     rw [e4, hB] at g4
     rw [e5, hB] at g5
-    obtain rfl | rfl := hdd
+    rcases hdd with rfl | rfl
     · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
   · -- e = 5
@@ -1305,7 +1259,7 @@ private lemma le_of_happy_run_six (q : ℕ) (hSq : digitSqSum q ≤ 2025)
       have g5 := hall 5 (by norm_num)
       rw [e4, hB] at g4
       rw [e5, hB] at g5
-      obtain rfl | rfl := hdd
+      rcases hdd with rfl | rfl
       · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
       · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
   · -- e = 6
@@ -1346,7 +1300,7 @@ private lemma le_of_happy_run_six (q : ℕ) (hSq : digitSqSum q ≤ 2025)
       have g5 := hall 5 (by norm_num)
       rw [e4, hB] at g4
       rw [e5, hB] at g5
-      obtain rfl | rfl := hdd
+      rcases hdd with rfl | rfl
       · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
       · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
   · -- e = 7
@@ -1358,7 +1312,7 @@ private lemma le_of_happy_run_six (q : ℕ) (hSq : digitSqSum q ≤ 2025)
     have g5 := hall 5 (by norm_num)
     rw [e4, hB] at g4
     rw [e5, hB] at g5
-    obtain rfl | rfl := hdd
+    rcases hdd with rfl | rfl
     · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
   · -- e = 8
@@ -1370,10 +1324,9 @@ private lemma le_of_happy_run_six (q : ℕ) (hSq : digitSqSum q ≤ 2025)
     have g5 := hall 5 (by norm_num)
     rw [e4, hB] at g4
     rw [e5, hB] at g5
-    obtain rfl | rfl := hdd
+    rcases hdd with rfl | rfl
     · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1401,7 +1354,7 @@ private lemma le_of_happy_run_seven (q : ℕ) (hSq : digitSqSum q ≤ 2025)
     rw [e0] at g0
     rw [e1] at g1
     rw [e2] at g2
-    obtain rfl | rfl | rfl := hdd
+    rcases hdd with rfl | rfl | rfl
     · exact (not_isHap_of_unhCert 20 _ hdcert g0).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g1).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g2).elim
@@ -1414,7 +1367,7 @@ private lemma le_of_happy_run_seven (q : ℕ) (hSq : digitSqSum q ≤ 2025)
   have g3 := hall 3 (by norm_num)
   have g4 := hall 4 (by norm_num)
   have g5 := hall 5 (by norm_num)
-  obtain h568 | h574 | h1839 := hSqA
+  rcases hSqA with h568 | h574 | h1839
   · -- a = 568
     have hguard : e ^ 2 + 81 * t ≤ 568 := by omega
     have ht23 : t < 23 := by omega
@@ -1425,7 +1378,7 @@ private lemma le_of_happy_run_seven (q : ℕ) (hSq : digitSqSum q ≤ 2025)
     rw [e3, hB] at g3
     rw [e4, hB] at g4
     rw [e5, hB] at g5
-    obtain rfl | rfl | rfl := hdd
+    rcases hdd with rfl | rfl | rfl
     · exact (not_isHap_of_unhCert 20 _ hdcert g3).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
@@ -1439,7 +1392,7 @@ private lemma le_of_happy_run_seven (q : ℕ) (hSq : digitSqSum q ≤ 2025)
     rw [e3, hB] at g3
     rw [e4, hB] at g4
     rw [e5, hB] at g5
-    obtain rfl | rfl | rfl := hdd
+    rcases hdd with rfl | rfl | rfl
     · exact (not_isHap_of_unhCert 20 _ hdcert g3).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
     · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
@@ -1461,11 +1414,10 @@ private lemma le_of_happy_run_seven (q : ℕ) (hSq : digitSqSum q ≤ 2025)
       rw [e3, hB] at g3
       rw [e4, hB] at g4
       rw [e5, hB] at g5
-      obtain rfl | rfl | rfl := hdd
+      rcases hdd with rfl | rfl | rfl
       · exact (not_isHap_of_unhCert 20 _ hdcert g3).elim
       · exact (not_isHap_of_unhCert 20 _ hdcert g4).elim
       · exact (not_isHap_of_unhCert 20 _ hdcert g5).elim
-
 end MetaMathlibExt.HappySix
 
 namespace MetaMathlibExt.HappySix
@@ -1478,7 +1430,7 @@ private lemma le_of_happy_run_residue_six_seven (q r : ℕ) (hr67 : r = 6 ∨ r 
   (hSq : digitSqSum q ≤ 2025)
   (hall : ∀ j : ℕ, j < 6 → IsHap (digitSqSum (10 * q + r + j))) :
   7899999999999959999999996 ≤ 10 * q + r := by
-  obtain rfl | rfl := hr67
+  rcases hr67 with rfl | rfl
   · exact le_of_happy_run_six q hSq hall
   · exact le_of_happy_run_seven q hSq hall
 end MetaMathlibExt.HappySix
@@ -1513,17 +1465,17 @@ lemma happy_six_min
   · intro j hj
     interval_cases j
     · exact HappySix.isHap_of_hapCert 10 (7899999999999959999999996 + 0)
-      (by decide +kernel)
+        (by decide +kernel)
     · exact HappySix.isHap_of_hapCert 10 (7899999999999959999999996 + 1)
-      (by decide +kernel)
+        (by decide +kernel)
     · exact HappySix.isHap_of_hapCert 10 (7899999999999959999999996 + 2)
-      (by decide +kernel)
+        (by decide +kernel)
     · exact HappySix.isHap_of_hapCert 10 (7899999999999959999999996 + 3)
-      (by decide +kernel)
+        (by decide +kernel)
     · exact HappySix.isHap_of_hapCert 10 (7899999999999959999999996 + 4)
-      (by decide +kernel)
+        (by decide +kernel)
     · exact HappySix.isHap_of_hapCert 10 (7899999999999959999999996 + 5)
-      (by decide +kernel)
+        (by decide +kernel)
   · intro m hm
     by_contra hcon
     have hlt : m < 7899999999999959999999996 := not_le.mp hcon
@@ -1554,17 +1506,18 @@ lemma happy_six_min
       have hle := HappySix.digitSqSum_le_of_lt_pow 25 (q + 1) hq1lt
       omega
     have hallS : ∀ j : ℕ, j < 6 →
-      HappySix.IsHap (HappySix.digitSqSum (m + j)) := by
+        HappySix.IsHap (HappySix.digitSqSum (m + j)) := by
       intro j hj
       obtain ⟨k, f, h0, hk, hstep⟩ := hm j hj
       have hhap : HappySix.IsHap (m + j) := ⟨k, f, h0, hk, hstep⟩
       exact HappySix.isHap_digitSqSum _ hhap
     have hall' : ∀ j : ℕ, j < 6 →
-      HappySix.IsHap (HappySix.digitSqSum (10 * q + r + j)) := by
+        HappySix.IsHap (HappySix.digitSqSum (10 * q + r + j)) := by
       intro j hj
       have e : m + j = 10 * q + r + j := by omega
       have hS := hallS j hj
-      rwa [e] at hS
+      rw [e] at hS
+      exact hS
     by_cases hr67 : r = 6 ∨ r = 7
     · have hle := HappySix.le_of_happy_run_residue_six_seven q r hr67 hSq hall'
       omega

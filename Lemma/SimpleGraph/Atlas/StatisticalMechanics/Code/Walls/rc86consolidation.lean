@@ -10,7 +10,7 @@ open Finset MeasureTheory StatMech StatMech.Walls
 @[path]
 private lemma rc86_complete_chain_eq :
 -- imply
-  (rc64_ReimerLeaf → rc60_BoxUnionBound) ∧ (rc60_BoxUnionBound → ∀ (m : ℕ) (𝒜 ℬ : Finset (Finset (Fin m))), #(rc20_famCylBox 𝒜 ℬ) ≤ #(rc10_reflInter 𝒜 ℬ)) ∧ (rc60_BoxUnionBound → ReimerWprobCore) ∧ (rc20_FamCylBoxResidue → ReimerWprobCore) ∧ (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1) (A B : Set (ConfigSpace E)), (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B) ≤ (bernoulliProductMeasure (E := E) p hp).real A * (bernoulliProductMeasure (E := E) p hp).real B) := by
+  (rc64_ReimerLeaf → rc60_BoxUnionBound) ∧ (rc60_BoxUnionBound → ∀ (m : ℕ) (𝒜 ℬ : Finset (Finset (Fin m))), #(rc20_famCylBox 𝒜 ℬ) ≤ #(rc10_reflInter 𝒜 ℬ)) ∧ (rc60_BoxUnionBound → ReimerWprobCore) ∧ (rc20_FamCylBoxResidue → ReimerWprobCore) ∧ (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1) (A B : Set (ConfigSpace E)), (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B) ≤ (bernoulliProductMeasure (E := E) p hp).real A * (bernoulliProductMeasure (E := E) p hp).real B) := by
 -- proof
   apply StatMech.Walls.rc86_complete_chain
 
@@ -21,7 +21,7 @@ private lemma rc86_complete_chain_eq :
 private lemma rc86_reimer_of_leaf_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (h : rc64_ReimerLeaf)
@@ -77,7 +77,7 @@ private lemma rc86_minimal_residue_eq :
 @[path]
 private lemma rc86_status_eq :
 -- imply
-  (rc64_ReimerLeaf → rc60_BoxUnionBound) ∧ (rc60_BoxUnionBound → ReimerWprobCore) ∧ (rc60_BoxUnionBound → ∀ (m : ℕ) (𝒜 ℬ : Finset (Finset (Fin m))), #(rc20_famCylBox 𝒜 ℬ) ≤ #(rc10_reflInter 𝒜 ℬ)) ∧ (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1) (A B : Set (ConfigSpace E)), (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B) ≤ (bernoulliProductMeasure (E := E) p hp).real A * (bernoulliProductMeasure (E := E) p hp).real B) ∧ (rc20_FamCylBoxResidue → ReimerWprobCore) ∧ (∀ {ι : Type} [Fintype ι] [DecidableEq ι] (A B : Finset (ConfigSpace ι)), rc80_IsUpper A → rc80_IsLower B → rc80_disjOccG A B = A ∩ B) ∧ (∀ A B : Finset (ConfigSpace (Fin 2)), (rc75_disjOccF A B).card ≤ (rc79_reflInterF A B).card) ∧ (∀ (Φ : Finset (Finset (Fin 2)) × Finset (Finset (Fin 2)) → ℕ), (∀ (i : Fin 2) (p : _), Φ (rc62_step i p) = Φ p) → (∀ p, (rc20_famCylBoxComp 2 p.1 p.2).card ≤ Φ p) → (∀ p, Φ p ≤ (rc20_reflInterComp 2 p.1 p.2).card) → False) ∧ (∀ {E : Type*} [Fintype E] [DecidableEq E] {p : ℝ≥0} (hp : p ≤ 1) {A B : Set (ConfigSpace E)}, IsIncreasing A → IsIncreasing B → (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B) ≤ (bernoulliProductMeasure (E := E) p hp).real A * (bernoulliProductMeasure (E := E) p hp).real B) := by
+  (rc64_ReimerLeaf → rc60_BoxUnionBound) ∧ (rc60_BoxUnionBound → ReimerWprobCore) ∧ (rc60_BoxUnionBound → ∀ (m : ℕ) (𝒜 ℬ : Finset (Finset (Fin m))), #(rc20_famCylBox 𝒜 ℬ) ≤ #(rc10_reflInter 𝒜 ℬ)) ∧ (∀ (_h : ReimerWprobCore) {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1) (A B : Set (ConfigSpace E)), (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B) ≤ (bernoulliProductMeasure (E := E) p hp).real A * (bernoulliProductMeasure (E := E) p hp).real B) ∧ (rc20_FamCylBoxResidue → ReimerWprobCore) ∧ (∀ {ι : Type} [Fintype ι] [DecidableEq ι] (A B : Finset (ConfigSpace ι)), rc80_IsUpper A → rc80_IsLower B → rc80_disjOccG A B = A ∩ B) ∧ (∀ A B : Finset (ConfigSpace (Fin 2)), (rc75_disjOccF A B).card ≤ (rc79_reflInterF A B).card) ∧ (∀ (Φ : Finset (Finset (Fin 2)) × Finset (Finset (Fin 2)) → ℕ), (∀ (i : Fin 2) (p : _), Φ (rc62_step i p) = Φ p) → (∀ p, (rc20_famCylBoxComp 2 p.1 p.2).card ≤ Φ p) → (∀ p, Φ p ≤ (rc20_reflInterComp 2 p.1 p.2).card) → False) ∧ (∀ {E : Type*} [Fintype E] [DecidableEq E] {p : NNReal} (hp : p ≤ 1) {A B : Set (ConfigSpace E)}, IsIncreasing A → IsIncreasing B → (bernoulliProductMeasure (E := E) p hp).real (disjointOccurrence A B) ≤ (bernoulliProductMeasure (E := E) p hp).real A * (bernoulliProductMeasure (E := E) p hp).real B) := by
 -- proof
   apply StatMech.Walls.rc86_status
 

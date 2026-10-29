@@ -27,7 +27,7 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
   set G : ℕ × ℕ → ℚ_[p] := fun q =>
     if q.2 < q.1 then b q.1 * (y ^ q.2 * α ^ (q.1 - 1 - q.2)) else 0
   have hGval : ∀ m i, G (m, i)
-    = if i < m then b m * (y ^ i * α ^ (m - 1 - i)) else 0 := fun m i => rfl
+      = if i < m then b m * (y ^ i * α ^ (m - 1 - i)) else 0 := fun m i => rfl
   have hGbound : ∀ q : ℕ × ℕ, ‖G q‖ ≤ ‖b q.1‖ := by
     rintro ⟨m, i⟩
     by_cases h : i < m
@@ -35,16 +35,16 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
       have e1 : ‖y ^ i‖ ≤ 1 := hypow _
       have e2 : ‖α ^ (m - 1 - i)‖ ≤ 1 := hαpow _
       calc ‖b m * (y ^ i * α ^ (m - 1 - i))‖
-        = ‖b m‖ * (‖y ^ i‖ * ‖α ^ (m - 1 - i)‖) := by
-          rw [norm_mul, norm_mul]
+          = ‖b m‖ * (‖y ^ i‖ * ‖α ^ (m - 1 - i)‖) := by
+            rw [norm_mul, norm_mul]
         _ ≤ ‖b m‖ * (1 * 1) := by
-          apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
-          exact mul_le_mul e1 e2 (norm_nonneg _) zero_le_one
+            apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
+            exact mul_le_mul e1 e2 (norm_nonneg _) zero_le_one
         _ = ‖b m‖ := by ring
     · rw [hGval, ite_eq_right h, norm_zero]
       exact norm_nonneg _
   have hdom : ∀ F : ℕ → ℚ_[p], ∀ t : ℕ, (∀ n, ‖F n‖ ≤ ‖b (n + t)‖) →
-    Filter.Tendsto F Filter.cofinite (nhds 0) := by
+      Filter.Tendsto F Filter.cofinite (nhds 0) := by
     intro F t hF
     rw [Filter.tendsto_def]
     intro s hs
@@ -63,7 +63,7 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
     have hpre : ((fun n => n + t) ⁻¹' {m | ¬ dist (b m) 0 < ε}).Finite :=
       Set.Finite.preimage (Set.injOn_of_injective hinj) hfin
     have hsub : {n | ¬ F n ∈ s}
-      ⊆ (fun n => n + t) ⁻¹' {m | ¬ dist (b m) 0 < ε} := by
+        ⊆ (fun n => n + t) ⁻¹' {m | ¬ dist (b m) 0 < ε} := by
       intro n hn
       have hn' : ¬ F n ∈ s := hn
       intro hcon
@@ -103,7 +103,8 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
           exact ite_eq_right hcon
         rw [h0] at hdi
         have hpos : dist (0 : ℚ_[p]) 0 < ε := by
-          rwa [dist_self]
+          rw [dist_self]
+          exact hε
         exact hdi hpos
       have hmF : m ∈ F := by
         have hmem : m ∈ {m | ¬ dist (b m) 0 < ε} := by
@@ -144,9 +145,9 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
     intro n
     calc ‖b n * z ^ n‖ = ‖b n‖ * ‖z ^ n‖ := norm_mul _ _
       _ ≤ ‖b n‖ * 1 := by
-        apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
-        rw [norm_pow]
-        exact pow_le_one₀ (norm_nonneg _) hz
+          apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
+          rw [norm_pow]
+          exact pow_le_one₀ (norm_nonneg _) hz
       _ = ‖b (n + 0)‖ := by rw [Nat.add_zero, mul_one]
   have hsumk : ∀ i, Summable (fun k => b (k + (i + 1)) * α ^ k) := by
     intro i
@@ -155,9 +156,9 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
     intro k
     calc ‖b (k + (i + 1)) * α ^ k‖ = ‖b (k + (i + 1))‖ * ‖α ^ k‖ := norm_mul _ _
       _ ≤ ‖b (k + (i + 1))‖ * 1 := by
-        apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
-        rw [norm_pow]
-        exact pow_le_one₀ (norm_nonneg _) hα
+          apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
+          rw [norm_pow]
+          exact pow_le_one₀ (norm_nonneg _) hα
       _ = ‖b (k + (i + 1))‖ := by ring
   have hSbound : ∀ m, ‖∑' i, G (m, i)‖ ≤ ‖b m‖ := by
     intro m
@@ -168,7 +169,7 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
     intro n
     exact hSbound n
   have hrow_eq : ∀ m, (∑' i, G (m, i))
-    = ∑ i ∈ Finset.range m, b m * (y ^ i * α ^ (m - 1 - i)) := by
+      = ∑ i ∈ Finset.range m, b m * (y ^ i * α ^ (m - 1 - i)) := by
     intro m
     rw [tsum_eq_sum (show ∀ b ∉ Finset.range m, G (m, b) = 0 from by
       intro i hi
@@ -178,13 +179,13 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
     intro i hi
     rw [hGval, ite_eq_left (Finset.mem_range.mp hi)]
   have hrow_term : ∀ m,
-    (∑ i ∈ Finset.range m, b m * (y ^ i * α ^ (m - 1 - i))) * (y - α)
-      = b m * (y ^ m - α ^ m) := by
+      (∑ i ∈ Finset.range m, b m * (y ^ i * α ^ (m - 1 - i))) * (y - α)
+        = b m * (y ^ m - α ^ m) := by
     intro m
     have h := geom_sum₂_mul y α m
     rw [← Finset.mul_sum, mul_assoc, h]
   have hcol_eq : ∀ i, (∑' m, G (m, i))
-    = (∑' m, b (m + (i + 1)) * α ^ m) * y ^ i := by
+      = (∑' m, b (m + (i + 1)) * α ^ m) * y ^ i := by
     intro i
     have hshift : (∑' k, G (k + (i + 1), i)) = ∑' m, G (m, i) :=
       Function.Injective.tsum_eq (g := fun k => k + (i + 1))
@@ -199,28 +200,29 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
           exact hm h0
         exact Set.mem_range.mpr ⟨m - (i + 1), Nat.sub_add_cancel him⟩)
     have hfac : (∑' k, b (k + (i + 1)) * α ^ k * y ^ i)
-      = (∑' k, b (k + (i + 1)) * α ^ k) * y ^ i :=
+        = (∑' k, b (k + (i + 1)) * α ^ k) * y ^ i :=
       Summable.tsum_mul_right _ (hsumk i)
     have hterm : ∀ k, G (k + (i + 1), i)
-      = b (k + (i + 1)) * α ^ k * y ^ i := by
+        = b (k + (i + 1)) * α ^ k * y ^ i := by
       intro k
       have hexp : (k + (i + 1)) - 1 - i = k := by omega
       rw [hGval, ite_eq_left (by omega), hexp]
       ring
-    rwa [← hshift, tsum_congr hterm]
+    rw [← hshift, tsum_congr hterm]
+    exact hfac
   have hRHS : (∑' i, ∑' m, G (m, i))
-    = ∑' i, (∑' m, b (m + (i + 1)) * α ^ m) * y ^ i := by
+      = ∑' i, (∑' m, b (m + (i + 1)) * α ^ m) * y ^ i := by
     apply tsum_congr
     intro i
     exact hcol_eq i
   have hLHS : (∑' m, ∑' i, G (m, i)) * (y - α)
-    = ∑' m, b m * y ^ m - ∑' m, b m * α ^ m := by
+      = ∑' m, b m * y ^ m - ∑' m, b m * α ^ m := by
     have h1 : (∑' m, ∑' i, G (m, i)) * (y - α)
-      = ∑' m, (∑' i, G (m, i)) * (y - α) :=
+        = ∑' m, (∑' i, G (m, i)) * (y - α) :=
       (Summable.tsum_mul_right _ hSsum).symm
     rw [h1]
     have h2 : (fun m => (∑' i, G (m, i)) * (y - α))
-      = (fun m => b m * y ^ m - b m * α ^ m) := by
+        = (fun m => b m * y ^ m - b m * α ^ m) := by
       funext m
       rw [hrow_eq m, hrow_term m, mul_sub]
     rw [h2]
@@ -236,7 +238,7 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
     intro m
     calc ‖b (m + (i + 1)) * α ^ m‖ = ‖b (m + (i + 1))‖ * ‖α ^ m‖ := norm_mul _ _
       _ ≤ C * 1 := by
-        refine mul_le_mul (hC _ (by omega)) (hαpow m) (norm_nonneg _) hC0
+          refine mul_le_mul (hC _ (by omega)) (hαpow m) (norm_nonneg _) hC0
       _ = C := by ring
   · rw [Filter.tendsto_def]
     intro s hs
@@ -252,7 +254,7 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
     rw [Nat.cofinite_eq_atTop] at hbε
     obtain ⟨N₀, hN₀⟩ := Filter.eventually_atTop.mp hbε
     have hsub : {i | ¬ (∑' m, b (m + (i + 1)) * α ^ m) ∈ s}
-      ⊆ ↑(Finset.range N₀) := by
+        ⊆ ↑(Finset.range N₀) := by
       intro i hi
       have hi' : ¬ (∑' m, b (m + (i + 1)) * α ^ m) ∈ s := hi
       rw [Finset.mem_coe, Finset.mem_range]
@@ -262,11 +264,11 @@ private lemma strassmann_factor (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p])
         apply IsUltrametricDist.norm_tsum_le_of_forall_le
         intro m
         calc ‖b (m + (i + 1)) * α ^ m‖ = ‖b (m + (i + 1))‖ * ‖α ^ m‖ :=
-          norm_mul _ _
+              norm_mul _ _
           _ ≤ (ε / 2) * 1 := by
-            refine mul_le_mul ?_ (hαpow m) (norm_nonneg _) ?_
-            · exact le_of_lt (hN₀ _ (by omega))
-            · exact le_of_lt (half_pos hε)
+              refine mul_le_mul ?_ (hαpow m) (norm_nonneg _) ?_
+              · exact le_of_lt (hN₀ _ (by omega))
+              · exact le_of_lt (half_pos hε)
           _ = ε / 2 := by ring
       have hmem : (∑' m, b (m + (i + 1)) * α ^ m) ∈ Metric.ball 0 ε := by
         rw [Metric.mem_ball, dist_zero_right]
@@ -304,7 +306,7 @@ private lemma strassmann_gap (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p]) (N :
     Finset.mem_union.mpr (Or.inr (Finset.mem_singleton.mpr rfl))
   refine ⟨U.max' ⟨‖b N‖ / 2, hmem⟩, ?_, ?_⟩
   · have hCmem : U.max' ⟨‖b N‖ / 2, hmem⟩ ∈ U := Finset.max'_mem _ _
-    obtain himg | hsing := Finset.mem_union.mp hCmem
+    rcases Finset.mem_union.mp hCmem with himg | hsing
     · obtain ⟨m, hmT, hmeq⟩ := Finset.mem_image.mp himg
       rw [← hmeq]
       exact hlt m (Finset.mem_filter.mp hmT |>.2)
@@ -314,7 +316,7 @@ private lemma strassmann_gap (p : ℕ) [Fact p.Prime] (b : ℕ → ℚ_[p]) (N :
     by_cases hm : ‖b m‖ < ‖b N‖ / 2
     · exact le_trans hm.le (Finset.le_max' U _ hmem)
     · have hmT : m ∈ T := Finset.mem_filter.mpr
-      ⟨(Set.Finite.mem_toFinset hSfin).mpr hm, hmN⟩
+        ⟨(Set.Finite.mem_toFinset hSfin).mpr hm, hmN⟩
       have hUmem : ‖b m‖ ∈ U :=
         Finset.mem_union.mpr (Or.inl (Finset.mem_image.mpr ⟨m, hmT, rfl⟩))
       exact Finset.le_max' U _ hUmem
@@ -338,9 +340,9 @@ lemma strassmann
 -- proof
   classical
   have key : ∀ N (c : ℕ → ℚ_[p]),
-    Filter.Tendsto c Filter.cofinite (nhds 0) → c N ≠ 0 →
-    (∀ m, ‖c m‖ ≤ ‖c N‖) → (∀ m > N, ‖c m‖ < ‖c N‖) →
-    {y : ℚ_[p] | ‖y‖ ≤ 1 ∧ ∑' m, c m * y ^ m = 0}.Finite := by
+      Filter.Tendsto c Filter.cofinite (nhds 0) → c N ≠ 0 →
+      (∀ m, ‖c m‖ ≤ ‖c N‖) → (∀ m > N, ‖c m‖ < ‖c N‖) →
+      {y : ℚ_[p] | ‖y‖ ≤ 1 ∧ ∑' m, c m * y ^ m = 0}.Finite := by
     intro N
     induction N with
     | zero =>
@@ -358,7 +360,7 @@ lemma strassmann
             rw [zero_pow hm, mul_zero]
           rw [tsum_eq_sum hsupp, Finset.sum_singleton, pow_zero, mul_one]
         have hTbound :
-          ‖∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i‖ ≤ C := by
+            ‖∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i‖ ≤ C := by
           apply IsUltrametricDist.norm_tsum_le_of_forall_le
           intro i
           have hci : ‖∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m‖ ≤ C :=
@@ -367,31 +369,32 @@ lemma strassmann
             rw [norm_pow]
             exact pow_le_one₀ (norm_nonneg _) hy
           calc ‖(∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i‖
-            = ‖∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m‖ * ‖y ^ i‖ :=
-              norm_mul _ _
+              = ‖∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m‖ * ‖y ^ i‖ :=
+                norm_mul _ _
             _ ≤ C * 1 := mul_le_mul hci hyi (norm_nonneg _) hC0
             _ = C := by ring
         rw [h0sum] at hfac
         have htail :
-          ‖(y - 0) * (∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i)‖
-            < ‖c 0‖ := by
+            ‖(y - 0) * (∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i)‖
+              < ‖c 0‖ := by
           calc ‖(y - 0) * (∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i)‖
-            = ‖y - 0‖ * ‖∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i‖ :=
-              norm_mul _ _
+              = ‖y - 0‖ * ‖∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i‖ :=
+                norm_mul _ _
             _ ≤ 1 * C := by
-              refine mul_le_mul ?_ hTbound (norm_nonneg _) zero_le_one
-              rwa [sub_zero]
+                refine mul_le_mul ?_ hTbound (norm_nonneg _) zero_le_one
+                rw [sub_zero]
+                exact hy
             _ = C := by ring
             _ < ‖c 0‖ := hClt
         have hA : (∑' m, c m * y ^ m)
-          = c 0 + (y - 0) * (∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i) := by
+            = c 0 + (y - 0) * (∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i) := by
           linear_combination hfac
         rw [hA]
         intro hcon
         have h1 : ‖c 0 + (y - 0) * (∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i)‖
-          = 0 := by rw [hcon, norm_zero]
+            = 0 := by rw [hcon, norm_zero]
         have hne : ‖c 0‖
-          ≠ ‖(y - 0) * (∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i)‖ :=
+            ≠ ‖(y - 0) * (∑' i, (∑' m, c (m + (i + 1)) * (0 : ℚ_[p]) ^ m) * y ^ i)‖ :=
           (ne_of_lt htail).symm
         rw [IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm hne,
           max_eq_left (le_of_lt htail)] at h1
@@ -444,7 +447,7 @@ lemma strassmann
             have hpre : ((fun n => n + (N + 1)) ⁻¹' {m | ¬ dist (c m) 0 < ε}).Finite :=
               Set.Finite.preimage (Set.injOn_of_injective hinj) hfin
             have hsub : {n | ¬ (c (n + (N + 1)) * α₀ ^ n) ∈ s}
-              ⊆ (fun n => n + (N + 1)) ⁻¹' {m | ¬ dist (c m) 0 < ε} := by
+                ⊆ (fun n => n + (N + 1)) ⁻¹' {m | ¬ dist (c m) 0 < ε} := by
               intro n hn
               have hn' : ¬ (c (n + (N + 1)) * α₀ ^ n) ∈ s := hn
               intro hcon
@@ -455,11 +458,11 @@ lemma strassmann
                 rw [norm_pow]
                 exact pow_le_one₀ (norm_nonneg _) hα₀
               calc dist (c (n + (N + 1)) * α₀ ^ n) 0
-                = ‖c (n + (N + 1))‖ * ‖α₀ ^ n‖ := by
-                  rw [dist_zero_right, norm_mul]
+                  = ‖c (n + (N + 1))‖ * ‖α₀ ^ n‖ := by
+                    rw [dist_zero_right, norm_mul]
                 _ ≤ dist (c (n + (N + 1))) 0 * 1 := by
-                  rw [dist_zero_right]
-                  exact mul_le_mul_of_nonneg_left hα₀pow (norm_nonneg _)
+                    rw [dist_zero_right]
+                    exact mul_le_mul_of_nonneg_left hα₀pow (norm_nonneg _)
                 _ = dist (c (n + (N + 1))) 0 := by ring
                 _ < ε := hcon
             exact Filter.eventually_cofinite.mpr (Set.Finite.subset hpre hsub)
@@ -479,11 +482,12 @@ lemma strassmann
                 exact ite_eq_right hm0
               apply hn'
               apply hball
-              rwa [Metric.mem_ball, he0', dist_self]
+              rw [Metric.mem_ball, he0', dist_self]
+              exact hε
             exact Filter.eventually_cofinite.mpr
               (Set.Finite.subset (Finset.finite_toSet _) hsub)
           have hR : (∑' m, c (m + (N + 1)) * α₀ ^ m) - c (N + 1)
-            = ∑' m, (c (m + (N + 1)) * α₀ ^ m - e m) := by
+              = ∑' m, (c (m + (N + 1)) * α₀ ^ m - e m) := by
             rw [← hesum]
             exact (hFsum.tsum_sub he_sum).symm
           have hRbound : ‖∑' m, (c (m + (N + 1)) * α₀ ^ m - e m)‖ ≤ C := by
@@ -494,28 +498,29 @@ lemma strassmann
               have hthis : c (0 + (N + 1)) * α₀ ^ 0 - e 0 = 0 := by
                 rw [he0]
                 simp
-              rwa [hthis, norm_zero]
+              rw [hthis, norm_zero]
+              exact hC0
             · have hem : e m = 0 := by
-              rw [he0]
-              exact ite_eq_right hm
+                rw [he0]
+                exact ite_eq_right hm
               have hterm : c (m + (N + 1)) * α₀ ^ m - e m
-                = c (m + (N + 1)) * α₀ ^ m := by
+                  = c (m + (N + 1)) * α₀ ^ m := by
                 rw [hem, sub_zero]
               rw [hterm]
               have hα₀pow : ‖α₀ ^ m‖ ≤ 1 := by
                 rw [norm_pow]
                 exact pow_le_one₀ (norm_nonneg _) hα₀
               calc ‖c (m + (N + 1)) * α₀ ^ m‖
-                = ‖c (m + (N + 1))‖ * ‖α₀ ^ m‖ := norm_mul _ _
+                  = ‖c (m + (N + 1))‖ * ‖α₀ ^ m‖ := norm_mul _ _
                 _ ≤ C * 1 := by
-                  refine mul_le_mul ?_ hα₀pow (norm_nonneg _) hC0
-                  exact hCbound _ (by omega)
+                    refine mul_le_mul ?_ hα₀pow (norm_nonneg _) hC0
+                    exact hCbound _ (by omega)
                 _ = C := by ring
           have hdecomp : (∑' m, c (m + (N + 1)) * α₀ ^ m)
-            = c (N + 1) + ∑' m, (c (m + (N + 1)) * α₀ ^ m - e m) := by
+              = c (N + 1) + ∑' m, (c (m + (N + 1)) * α₀ ^ m - e m) := by
             linear_combination hR
           have hneC : ‖c (N + 1)‖
-            ≠ ‖∑' m, (c (m + (N + 1)) * α₀ ^ m - e m)‖ :=
+              ≠ ‖∑' m, (c (m + (N + 1)) * α₀ ^ m - e m)‖ :=
             (ne_of_lt (lt_of_le_of_lt hRbound hClt)).symm
           rw [hdecomp,
             IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm hneC,
@@ -540,7 +545,7 @@ lemma strassmann
           have hT0 : (∑' i, (∑' m, c (m + (i + 1)) * α₀ ^ m) * y ^ i) = 0 := by
             have hne' : y - α₀ ≠ 0 := sub_ne_zero.mpr heq
             simp only [sub_self] at hfac_y
-            obtain h | h := mul_eq_zero.mp hfac_y.symm
+            rcases mul_eq_zero.mp hfac_y.symm with h | h
             · exact absurd h hne'
             · exact h
           exact Set.mem_insert_iff.mpr (Or.inr ⟨hyy, hT0⟩)
@@ -577,10 +582,10 @@ lemma strassmann
     by_cases hm : m ∈ hTfin.toFinset
     · exact hMmax m hm
     · have hmlt : ‖b m‖ < ‖b m₀‖ := by
-      have hnge : ¬ ‖b m₀‖ ≤ ‖b m‖ := by
-        intro hle
-        exact hm (by rw [Set.Finite.mem_toFinset]; exact hle)
-      exact lt_of_not_ge hnge
+        have hnge : ¬ ‖b m₀‖ ≤ ‖b m‖ := by
+          intro hle
+          exact hm (by rw [Set.Finite.mem_toFinset]; exact hle)
+        exact lt_of_not_ge hnge
       exact le_trans hmlt.le (hMmax m₀ hm₀T)
   have hT'ne : ((hTfin.toFinset).filter (fun m => ‖b m‖ = ‖b M‖)).Nonempty :=
     ⟨M, Finset.mem_filter.mpr ⟨hMT, rfl⟩⟩
@@ -598,11 +603,13 @@ lemma strassmann
     by_contra hcon
     have hge : ‖b N‖ ≤ ‖b m‖ := le_of_not_gt hcon
     have hgeM : ‖b M‖ ≤ ‖b m‖ := by
-      rwa [← hNbN]
+      rw [← hNbN]
+      exact hge
     have heqM : ‖b m‖ = ‖b M‖ := le_antisymm (hglob m) hgeM
     have hle0 : ‖b m₀‖ ≤ ‖b m‖ := le_trans (hMmax m₀ hm₀T) heqM.symm.le
     have hmT : m ∈ hTfin.toFinset := by
-      rwa [Set.Finite.mem_toFinset]
+      rw [Set.Finite.mem_toFinset]
+      exact hle0
     have hmfilt : m ∈ (hTfin.toFinset).filter (fun m => ‖b m‖ = ‖b M‖) :=
       Finset.mem_filter.mpr ⟨hmT, heqM⟩
     have hleN : m ≤ N := Finset.le_max' _ _ hmfilt
@@ -613,4 +620,4 @@ end Padic
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

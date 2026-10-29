@@ -29,8 +29,8 @@ private lemma tendsto_lintegral_of_monotone_ae_eq
   [MeasurableSpace X]
   {mu : Measure X}
 -- given
-  (u : ℕ → X → ℝ≥0∞)
-  (v : X → ℝ≥0∞)
+  (u : ℕ → X → ENNReal)
+  (v : X → ENNReal)
   (hu : ∀ n, Measurable (u n))
   (hmono : ∀ x, Monotone fun n => u n x)
   (hlim : ∀ᵐ x ∂mu, Tendsto (fun n => u n x) atTop (𝓝 (v x))) :

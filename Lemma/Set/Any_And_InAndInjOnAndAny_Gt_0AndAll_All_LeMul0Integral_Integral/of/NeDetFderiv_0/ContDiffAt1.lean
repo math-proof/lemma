@@ -17,9 +17,9 @@ private lemma main
   (hf : ContDiffAt ℝ 1 f a)
   (hf' : (fderiv ℝ f a).det ≠ 0) :
 -- imply
-  ∃ s : Set E, IsOpen s ∧ a ∈ s ∧ Set.InjOn f s ∧ ∃ δ : ℝ≥0, 0 < δ ∧
-      ∀ t ⊆ s, MeasurableSet t → ∀ g : E → ℝ≥0∞,
-        (δ : ℝ≥0∞) * ∫⁻ x in t, g (f x) ∂μ ≤ ∫⁻ y in f '' t, g y ∂μ := by
+  ∃ s : Set E, IsOpen s ∧ a ∈ s ∧ Set.InjOn f s ∧ ∃ δ : NNReal, 0 < δ ∧
+      ∀ t ⊆ s, MeasurableSet t → ∀ g : E → ENNReal,
+        (δ : ENNReal) * ∫⁻ x in t, g (f x) ∂μ ≤ ∫⁻ y in f '' t, g y ∂μ := by
 -- proof
   classical
     obtain ⟨F', u, hu, hF'c, hF'⟩ := contDiffAt_one_iff.1 hf

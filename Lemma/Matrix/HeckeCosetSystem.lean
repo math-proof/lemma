@@ -103,7 +103,7 @@ theorem measure_smul_coe (μ : Measure G) [μ.IsMulLeftInvariant] (y : G) :
 theorem IsHeckeCosetSystem.measure_doubleCoset {ι : Type*} [Fintype ι] {reps : ι → G}
     (hsys : IsHeckeCosetSystem U g reps) (μ : Measure G) [μ.IsMulLeftInvariant]
     (hU : MeasurableSet (U : Set G)) :
-    μ (HeckePair.doubleCoset U g) = (Fintype.card ι : ℝ≥0∞) * μ (U : Set G) := by
+    μ (HeckePair.doubleCoset U g) = (Fintype.card ι : ENNReal) * μ (U : Set G) := by
   classical
   rw [hsys.doubleCoset_eq_iUnion]
   have hbU : (⋃ i, reps i • (U : Set G))

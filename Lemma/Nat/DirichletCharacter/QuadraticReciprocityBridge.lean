@@ -1,5 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Def.NumberTheory.DirichletCharacter.Quadratic
+import Lemma.Nat.DirichletCharacter.QuadraticCharacterAux
 
 
 namespace MetaMathlibExt
@@ -9,8 +11,8 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma jacobiSym_natAbs_eq_kroneckerSym_of_prime_ne_two_of_one_mod_four_pos
-  {D : ℤ}
-  {p : ℕ}
+  (D : ℤ)
+  (p : ℕ)
 -- given
   (hp : p.Prime)
   (hp2 : p ≠ 2)
@@ -35,4 +37,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

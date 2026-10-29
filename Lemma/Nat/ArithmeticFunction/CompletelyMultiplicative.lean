@@ -38,10 +38,10 @@ lemma IsCompletelyMultiplicative.isMultiplicative
 -- imply
   f.IsMultiplicative :=
 -- proof
-  ⟨h1, fun _ => hf _ _⟩
+  ⟨h0, fun _ => hf _ _⟩
 
 end ArithmeticFunction
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

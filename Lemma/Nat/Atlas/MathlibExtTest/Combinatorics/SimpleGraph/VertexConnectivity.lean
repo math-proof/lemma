@@ -30,7 +30,7 @@ namespace MathlibExtTest.Combinatorics.SimpleGraph.VertexConnectivity
 [complete_four_has_cycle_through](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/VertexConnectivity.lean)
 -/
 @[path]
-lemma complete_four_has_cycle_through
+lemma complete_four_has_cycle_through :
 -- imply
   ∃ c : (⊤ : SimpleGraph (Fin 4)).Walk 0 0, c.IsCycle ∧ 3 ≤ c.length := by
 -- proof
@@ -41,3 +41,4 @@ end MathlibExtTest.Combinatorics.SimpleGraph.VertexConnectivity
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

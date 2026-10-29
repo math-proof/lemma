@@ -3,8 +3,8 @@ import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
-/-- An `x ~ D` hypothesis, together with an a.e. measurability proof for `x`, supplies the
-`SinglePSpace D.measure x` instance. -/
+/-- An a.e. measurable random variable whose law equals a reference density supplies the
+`SinglePSpace π x` instance. -/
 @[path]
 private lemma main
   [MeasurableSpace Ω]
@@ -12,9 +12,9 @@ private lemma main
   {π : Measure Ω} [IsProbabilityMeasure π]
   {x : Ω → α}
   {ρ : α → ENNReal}
-  {D : Distribution π ρ}
 -- given
-  (h : x ~ D)
+  (hρ : Measurable ρ)
+  (h : π.map x = ReferenceMeasure.measure.withDensity ρ)
   (hx : AEMeasurable x π) :
 -- imply
   SinglePSpace π x := by
@@ -22,8 +22,9 @@ private lemma main
   exact {
     toIsProbabilityMeasure := inferInstance
     aemeasurable := hx
-    exists_distribution := ⟨D.density, D, h⟩
+    exists_distribution := ⟨ρ, hρ, h⟩
   }
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-29

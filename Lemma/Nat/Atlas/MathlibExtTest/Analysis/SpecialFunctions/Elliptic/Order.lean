@@ -8,9 +8,8 @@ namespace PeriodPair
 
 /--
 [order_inv_sub_self](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/Order.lean)
--/
-@[path]
 lemmas. Only the behavior near `a` is used. -/
+@[path]
 private lemma order_inv_sub_self (a : ℂ) :
   meromorphicOrderAt (fun z : ℂ => (z - a)⁻¹) a = -1 := by
   have h1 : meromorphicOrderAt (fun z : ℂ => z - a) a = 1 :=
@@ -38,10 +37,9 @@ namespace PeriodPair
 
 /--
 [not_differentiableAt_conj](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/Order.lean)
--/
-@[path]
 if it existed, would have to agree (as a real-linear map) with `conjCLE`, which
 is not complex-linear: it fixes `1` but negates `Complex.I`. -/
+@[path]
 private lemma not_differentiableAt_conj (b : ℂ) :
   ¬ DifferentiableAt ℂ (⇑(starRingEnd ℂ)) b := by
   intro h
@@ -89,11 +87,10 @@ namespace PeriodPair
 
 /--
 [poleWithConjBranch_not_meromorphicAt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/Order.lean)
--/
-@[path]
 there would force analyticity at some point of the conjugation ball, where the
 function locally equals conjugation, contradicting nowhere-analyticity of
 conjugation. The contradiction uses the whole ball, not a single value. -/
+@[path]
 private lemma poleWithConjBranch_not_meromorphicAt :
   ¬ MeromorphicAt poleWithConjBranch 1 := by
   intro hf
@@ -113,9 +110,8 @@ end PeriodPair
 
 /--
 [poleWithConjBranch_eq_near_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/Order.lean)
--/
-@[path]
 positive distance away from the conjugation ball around `1`. -/
+@[path]
 private lemma poleWithConjBranch_eq_near_zero :
   poleWithConjBranch =ᶠ[𝓝 (0 : ℂ)] (fun z : ℂ => (z - 0)⁻¹) := by
   have h01 : dist (0 : ℂ) 1 = 1 := by rw [dist_comm, dist_zero_right, norm_one]
@@ -134,3 +130,4 @@ private lemma poleWithConjBranch_eq_near_zero :
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

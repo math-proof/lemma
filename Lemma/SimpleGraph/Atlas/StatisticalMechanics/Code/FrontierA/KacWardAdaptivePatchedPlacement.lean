@@ -74,7 +74,7 @@ private lemma middleCorner_mem_coreTube_eq
   {q : Fin M}
 -- given
   (patch : KWAdaptivePatchedData (M := M) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hmesh : KWEndpointInteriorMeshWithin patch.data r)
   (hepsBeta : eps ≤ patch.beta)
@@ -98,7 +98,7 @@ private lemma pathBase_mem_coreTube_eq
   {q : Fin M}
 -- given
   (patch : KWAdaptivePatchedData (M := M) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hepsBeta : eps ≤ patch.beta)
   (hepsAlpha : ∀ i, eps ≤ patch.alpha i) :
@@ -139,7 +139,7 @@ private lemma pathBase_succ_mem_coreTube_eq
   {q : Fin M}
 -- given
   (patch : KWAdaptivePatchedData (M := M) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hepsBeta : eps ≤ patch.beta)
   (hepsAlpha : ∀ i, eps ≤ patch.alpha i) :
@@ -198,7 +198,7 @@ private lemma middle_rawClosedEdges_subset_coreTube_eq
   {q : Fin M}
 -- given
   (patch : KWAdaptivePatchedData (M := M) polygon)
-  (r : ℝ≥0)
+  (r : NNReal)
   (hr : 0 < r)
   (hmesh : KWEndpointInteriorMeshWithin patch.data r)
   (hepsBeta : eps ≤ patch.beta)

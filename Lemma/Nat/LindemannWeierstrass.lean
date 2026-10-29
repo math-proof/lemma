@@ -6,15 +6,14 @@ open MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
-/--
+/-!
 [lw_exists_splitting_field](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
--/
-@[path]
 # Lindemann–Weierstrass lemma
 This file proves the Lindemann–Weierstrass theorem: exponentials of distinct algebraic numbers
 are linearly independent over the algebraic numbers.
 -/
 /-- Galois splitting field inside `ℂ` containing all the data. -/
+@[path]
 private theorem lw_exists_splitting_field {ι : Type*} [Finite ι]
   (α β : ι → ℂ) (hα : ∀ i, IsAlgebraic ℚ (α i))
   (hβ : ∀ i, IsAlgebraic ℚ (β i)) :
@@ -46,7 +45,7 @@ private theorem lw_exists_splitting_field {ι : Type*} [Finite ι]
       Polynomial.mem_rootSet'.mpr ⟨hmap0, hβroot i⟩⟩
   have hsplit : (P.map (algebraMap ℚ ℂ)).Splits := Complex.isAlgClosed.splits _
   have hSF : Polynomial.IsSplittingField ℚ
-    (IntermediateField.adjoin ℚ (P.rootSet ℂ)) P :=
+      (IntermediateField.adjoin ℚ (P.rootSet ℂ)) P :=
     IntermediateField.adjoin_rootSet_isSplittingField hsplit
   have hfin : FiniteDimensional ℚ (IntermediateField.adjoin ℚ (P.rootSet ℂ)) :=
     Polynomial.IsSplittingField.finiteDimensional _ P
@@ -162,7 +161,7 @@ private lemma lw_evK_mapRingHom_eq {K : IntermediateField ℚ ℂ}
   (E : AddMonoidAlgebra ℚ K) :
   lw_evK (AddMonoidAlgebra.mapRingHom K (algebraMap ℚ K) E) = lw_evQ E := by
   have h : lw_evK.toRingHom.comp (AddMonoidAlgebra.mapRingHom K (algebraMap ℚ K))
-    = lw_evQ.toRingHom := by
+      = lw_evQ.toRingHom := by
     apply AddMonoidAlgebra.ringHom_ext
     · intro r
       change lw_evK (AddMonoidAlgebra.mapRingHom K (algebraMap ℚ K)
@@ -180,11 +179,11 @@ end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_initial](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_initial {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   {ι : Type*} [Fintype ι] (a b : ι → K)
@@ -199,7 +198,7 @@ private lemma lw_initial {K : IntermediateField ℚ ℂ}
     exact lw_evK_single (a i) (b i)
   · intro h0
     have hcoeff : (∑ i, AddMonoidAlgebra.single (a i) (b i)).coeff (a i₀)
-      = b i₀ := by
+        = b i₀ := by
       rw [AddMonoidAlgebra.coeff_sum]
       simp only [Finsupp.finsetSum_apply]
       rw [Finset.sum_eq_single i₀]
@@ -224,10 +223,9 @@ namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 /--
 [lw_coeffNorm_props](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
--/
-@[path]
 open Classical in
 Galois-fixed coefficients. -/
+@[path]
 private lemma lw_coeffNorm_props {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   (E : AddMonoidAlgebra K K) (hE0 : E ≠ 0) (hev : lw_evK E = 0) :
@@ -235,7 +233,7 @@ private lemma lw_coeffNorm_props {K : IntermediateField ℚ ℂ}
     ∀ τ : (K ≃ₐ[ℚ] K), ∀ x : K, τ ((lw_coeffNorm E).coeff x)
       = (lw_coeffNorm E).coeff x := by
   have hinj : ∀ σ : (K ≃ₐ[ℚ] K), Function.Injective
-    (AddMonoidAlgebra.mapRingHom K (σ : K →+* K)) := by
+      (AddMonoidAlgebra.mapRingHom K (σ : K →+* K)) := by
     intro σ x y hxy
     apply AddMonoidAlgebra.ext
     apply Finsupp.ext
@@ -245,18 +243,18 @@ private lemma lw_coeffNorm_props {K : IntermediateField ℚ ℂ}
       AddMonoidAlgebra.coeff_mapRingHom] at hmc
     exact σ.injective hmc
   have hfac : ∀ σ ∈ (Finset.univ : Finset (K ≃ₐ[ℚ] K)),
-    (AddMonoidAlgebra.mapRingHom K (σ : K →+* K)) E ≠ 0 := by
+      (AddMonoidAlgebra.mapRingHom K (σ : K →+* K)) E ≠ 0 := by
     intro σ _ hcon
     apply hE0
     have h2 : (AddMonoidAlgebra.mapRingHom K (σ : K →+* K)) E
-      = (AddMonoidAlgebra.mapRingHom K (σ : K →+* K)) 0 := by
+        = (AddMonoidAlgebra.mapRingHom K (σ : K →+* K)) 0 := by
       rw [hcon, map_zero]
     exact hinj σ h2
   have hne : lw_coeffNorm E ≠ 0 := by
     simp only [lw_coeffNorm]
     exact Finset.prod_ne_zero_iff.mpr hfac
   have h1E : (AddMonoidAlgebra.mapRingHom K ((1 : K ≃ₐ[ℚ] K) : K →+* K)) E
-    = E := by
+      = E := by
     apply AddMonoidAlgebra.ext
     apply Finsupp.ext
     intro m
@@ -267,15 +265,15 @@ private lemma lw_coeffNorm_props {K : IntermediateField ℚ ℂ}
     rw [map_prod]
     exact Finset.prod_eq_zero (Finset.mem_univ 1) (by rw [h1E]; exact hev)
   have hstab : ∀ τ : (K ≃ₐ[ℚ] K),
-    AddMonoidAlgebra.mapRingHom K (τ : K →+* K) (lw_coeffNorm E)
-      = lw_coeffNorm E := by
+      AddMonoidAlgebra.mapRingHom K (τ : K →+* K) (lw_coeffNorm E)
+        = lw_coeffNorm E := by
     intro τ
     simp only [lw_coeffNorm]
     rw [map_prod]
     have hcomp : ∀ σ : (K ≃ₐ[ℚ] K),
-      (AddMonoidAlgebra.mapRingHom K (τ : K →+* K))
-        ((AddMonoidAlgebra.mapRingHom K (σ : K →+* K)) E)
-      = (AddMonoidAlgebra.mapRingHom K (((τ * σ : K ≃ₐ[ℚ] K)) : K →+* K)) E := by
+        (AddMonoidAlgebra.mapRingHom K (τ : K →+* K))
+          ((AddMonoidAlgebra.mapRingHom K (σ : K →+* K)) E)
+        = (AddMonoidAlgebra.mapRingHom K (((τ * σ : K ≃ₐ[ℚ] K)) : K →+* K)) E := by
       intro σ
       apply AddMonoidAlgebra.ext
       apply Finsupp.ext
@@ -286,17 +284,18 @@ private lemma lw_coeffNorm_props {K : IntermediateField ℚ ℂ}
     exact Fintype.prod_equiv (Equiv.mulLeft τ) _ _ (fun σ => rfl)
   refine ⟨hne, hev1, fun τ x => ?_⟩
   have h2 := congrArg (fun z => z.coeff x) (hstab τ)
-  rwa [AddMonoidAlgebra.coeff_mapRingHom] at h2
+  rw [AddMonoidAlgebra.coeff_mapRingHom] at h2
+  exact h2
 
 end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_descend](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_descend {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   (E₁ : AddMonoidAlgebra K K) (hne : E₁ ≠ 0) (hev : lw_evK E₁ = 0)
@@ -317,8 +316,8 @@ private lemma lw_descend {K : IntermediateField ℚ ℂ}
       rw [hcon, map_zero]
     exact FaithfulSMul.algebraMap_injective ℚ K h2
   have hmap : AddMonoidAlgebra.mapRingHom K (algebraMap ℚ K)
-    (AddMonoidAlgebra.ofCoeff (Finsupp.onFinset E₁.coeff.support q hsupp))
-    = E₁ := by
+      (AddMonoidAlgebra.ofCoeff (Finsupp.onFinset E₁.coeff.support q hsupp))
+      = E₁ := by
     apply AddMonoidAlgebra.ext
     apply Finsupp.ext
     intro x
@@ -337,10 +336,9 @@ namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 /--
 [lw_expNorm_props](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
--/
-@[path]
 open Classical in
 Galois-invariant. -/
+@[path]
 private lemma lw_expNorm_props {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   (E₂ : AddMonoidAlgebra ℚ K) (hE0 : E₂ ≠ 0) (hev : lw_evQ E₂ = 0) :
@@ -349,14 +347,14 @@ private lemma lw_expNorm_props {K : IntermediateField ℚ ℂ}
       AddMonoidAlgebra.mapDomainRingHom ℚ (τ : K →+ K) (lw_expNorm E₂)
         = lw_expNorm E₂ := by
   have hinj : ∀ σ : (K ≃ₐ[ℚ] K), Function.Injective
-    (AddMonoidAlgebra.mapDomainRingHom ℚ (σ : K →+ K)) :=
+      (AddMonoidAlgebra.mapDomainRingHom ℚ (σ : K →+ K)) :=
     fun σ => AddMonoidAlgebra.mapDomain_injective (R := ℚ) σ.injective
   have hfac : ∀ σ ∈ (Finset.univ : Finset (K ≃ₐ[ℚ] K)),
-    AddMonoidAlgebra.mapDomainRingHom ℚ (σ : K →+ K) E₂ ≠ 0 := by
+      AddMonoidAlgebra.mapDomainRingHom ℚ (σ : K →+ K) E₂ ≠ 0 := by
     intro σ _ hcon
     apply hE0
     have h2 : AddMonoidAlgebra.mapDomainRingHom ℚ (σ : K →+ K) E₂
-      = AddMonoidAlgebra.mapDomainRingHom ℚ (σ : K →+ K) 0 := by
+        = AddMonoidAlgebra.mapDomainRingHom ℚ (σ : K →+ K) 0 := by
       rw [hcon, map_zero]
     exact hinj σ h2
   have hne : lw_expNorm E₂ ≠ 0 := by
@@ -367,36 +365,37 @@ private lemma lw_expNorm_props {K : IntermediateField ℚ ℂ}
     intro x
     exact AlgEquiv.one_apply x
   have h1E : AddMonoidAlgebra.mapDomainRingHom ℚ ((1 : K ≃ₐ[ℚ] K) : K →+ K)
-    E₂ = E₂ := by
+      E₂ = E₂ := by
     rw [h1, AddMonoidAlgebra.mapDomainRingHom_id, RingHom.id_apply]
   have hev1 : lw_evQ (lw_expNorm E₂) = 0 := by
     simp only [lw_expNorm]
     rw [map_prod]
     exact Finset.prod_eq_zero (Finset.mem_univ 1) (by rw [h1E]; exact hev)
   have hhom : ∀ τ σ : (K ≃ₐ[ℚ] K), (τ : K →+ K).comp (σ : K →+ K)
-    = (((τ * σ : K ≃ₐ[ℚ] K)) : K →+ K) := by
+      = (((τ * σ : K ≃ₐ[ℚ] K)) : K →+ K) := by
     intro τ σ
     apply AddMonoidHom.ext
     intro x
     simp only [AddMonoidHom.comp_apply]
     exact (AlgEquiv.mul_apply τ σ x).symm
   have hstab : ∀ τ : (K ≃ₐ[ℚ] K),
-    AddMonoidAlgebra.mapDomainRingHom ℚ (τ : K →+ K) (lw_expNorm E₂)
-      = lw_expNorm E₂ := by
+      AddMonoidAlgebra.mapDomainRingHom ℚ (τ : K →+ K) (lw_expNorm E₂)
+        = lw_expNorm E₂ := by
     intro τ
     simp only [lw_expNorm]
     rw [map_prod]
     have hcomp : ∀ σ : (K ≃ₐ[ℚ] K),
-      AddMonoidAlgebra.mapDomainRingHom ℚ (τ : K →+ K)
-        (AddMonoidAlgebra.mapDomainRingHom ℚ (σ : K →+ K) E₂)
-      = AddMonoidAlgebra.mapDomainRingHom ℚ
-        (((τ * σ : K ≃ₐ[ℚ] K)) : K →+ K) E₂ := by
+        AddMonoidAlgebra.mapDomainRingHom ℚ (τ : K →+ K)
+          (AddMonoidAlgebra.mapDomainRingHom ℚ (σ : K →+ K) E₂)
+        = AddMonoidAlgebra.mapDomainRingHom ℚ
+          (((τ * σ : K ≃ₐ[ℚ] K)) : K →+ K) E₂ := by
       intro σ
       have e := AddMonoidAlgebra.mapDomainRingHom_comp (R := ℚ) (τ : K →+ K)
         (σ : K →+ K)
       rw [hhom τ σ] at e
       have e2 := DFunLike.congr_fun e E₂
-      rwa [RingHom.comp_apply] at e2
+      rw [RingHom.comp_apply] at e2
+      exact e2.symm
     simp only [hcomp]
     exact Fintype.prod_equiv (Equiv.mulLeft τ) _ _ (fun σ => rfl)
   exact ⟨hne, hev1, hstab⟩
@@ -405,11 +404,11 @@ end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_invariant_coeff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_invariant_coeff {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   (E : AddMonoidAlgebra ℚ K) (τ : (K ≃ₐ[ℚ] K))
@@ -428,17 +427,18 @@ private lemma lw_invariant_coeff {K : IntermediateField ℚ ℂ}
       τ.injective] at h3
     exact h3
   refine ⟨fun x => (hpt x).symm, fun x => ?_⟩
-  rwa [Finsupp.mem_support_iff, Finsupp.mem_support_iff, hpt x]
+  rw [Finsupp.mem_support_iff, Finsupp.mem_support_iff, hpt x]
+  exact Iff.rfl
 
 end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_refl_coeff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_refl_coeff {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   (E : AddMonoidAlgebra ℚ K) (y : K) :
@@ -454,11 +454,11 @@ end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_coeff_zero_mul_refl](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_coeff_zero_mul_refl {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   (E : AddMonoidAlgebra ℚ K) :
@@ -467,7 +467,7 @@ private lemma lw_coeff_zero_mul_refl {K : IntermediateField ℚ ℂ}
   apply Finsupp.sum_congr
   intro x hx
   change (lw_refl E).coeff.sum
-    (fun m₂ r₂ => if x + m₂ = 0 then E.coeff x * r₂ else 0)
+      (fun m₂ r₂ => if x + m₂ = 0 then E.coeff x * r₂ else 0)
     = E.coeff x * E.coeff x
   have hguard : ∀ m₂ : K, (x + m₂ = 0 ↔ m₂ = -x) := by
     intro m₂
@@ -490,10 +490,9 @@ namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 /--
 [lw_reflect](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
--/
-@[path]
 open Classical in
 constant term. -/
+@[path]
 private lemma lw_reflect {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   (E₃ : AddMonoidAlgebra ℚ K) (hE0 : E₃ ≠ 0) (hev : lw_evQ E₃ = 0)
@@ -506,16 +505,16 @@ private lemma lw_reflect {K : IntermediateField ℚ ℂ}
   have hev1 : lw_evQ (E₃ * lw_refl E₃) = 0 := by
     rw [map_mul, hev, zero_mul]
   have hcomm : ∀ τ : (K ≃ₐ[ℚ] K), (τ : K →+ K).comp
-    (negAddMonoidHom : K →+ K)
-    = (negAddMonoidHom : K →+ K).comp (τ : K →+ K) := by
+      (negAddMonoidHom : K →+ K)
+      = (negAddMonoidHom : K →+ K).comp (τ : K →+ K) := by
     intro τ
     apply AddMonoidHom.ext
     intro x
     change τ (-x) = -(τ x)
     exact map_neg _ _
   have hrefl : ∀ τ : (K ≃ₐ[ℚ] K),
-    AddMonoidAlgebra.mapDomainRingHom ℚ (τ : K →+ K) (lw_refl E₃)
-      = lw_refl (AddMonoidAlgebra.mapDomainRingHom ℚ (τ : K →+ K) E₃) := by
+      AddMonoidAlgebra.mapDomainRingHom ℚ (τ : K →+ K) (lw_refl E₃)
+        = lw_refl (AddMonoidAlgebra.mapDomainRingHom ℚ (τ : K →+ K) E₃) := by
     intro τ
     have e1 := DFunLike.congr_fun
       (AddMonoidAlgebra.mapDomainRingHom_comp (R := ℚ) (τ : K →+ K)
@@ -528,7 +527,7 @@ private lemma lw_reflect {K : IntermediateField ℚ ℂ}
     simp only [lw_refl] at e1 e2 ⊢
     exact e1.symm.trans e2
   have hstab : ∀ τ : (K ≃ₐ[ℚ] K), AddMonoidAlgebra.mapDomainRingHom ℚ
-    (τ : K →+ K) (E₃ * lw_refl E₃) = E₃ * lw_refl E₃ := by
+      (τ : K →+ K) (E₃ * lw_refl E₃) = E₃ * lw_refl E₃ := by
     intro τ
     rw [map_mul, hrefl, hinv τ]
   have hpos : 0 < (E₃ * lw_refl E₃).coeff 0 := by
@@ -548,11 +547,11 @@ end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_weights](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_weights {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   (E₄ : AddMonoidAlgebra ℚ K) (hev : lw_evQ E₄ = 0)
@@ -577,8 +576,8 @@ private lemma lw_weights {K : IntermediateField ℚ ℂ}
       rw [hk', Int.cast_mul, Nat.cast_mul, Int.cast_natCast, h]
       ring
     · have hx0 : E₄.coeff x = 0 := by
-      rw [hSdef] at hxm
-      exact Finsupp.notMem_support_iff.mp hxm
+        rw [hSdef] at hxm
+        exact Finsupp.notMem_support_iff.mp hxm
       refine ⟨0, ?_⟩
       rw [hx0, mul_zero, Int.cast_zero]
   choose w hw using hex
@@ -597,7 +596,7 @@ private lemma lw_weights {K : IntermediateField ℚ ℂ}
       exact mul_pos hNpos hpos
     exact_mod_cast h0
   have hwinv : ∀ τ : (K ≃ₐ[ℚ] K), ∀ x : K,
-    w (τ x) = w x ∧ (x ∈ S ↔ τ x ∈ S) := by
+      w (τ x) = w x ∧ (x ∈ S ↔ τ x ∈ S) := by
     intro τ x
     obtain ⟨hcoeffτ, hsuppτ⟩ := lw_invariant_coeff E₄ τ (hinv τ)
     refine ⟨?_, ?_⟩
@@ -608,18 +607,19 @@ private lemma lw_weights {K : IntermediateField ℚ ℂ}
     · rw [hSdef]
       exact hsuppτ x
   have hevS : ∑ x ∈ E₄.coeff.support, (E₄.coeff x : ℂ) * Complex.exp (x : ℂ)
-    = 0 := by
+      = 0 := by
     have h := lw_evQ_sum E₄
-    rwa [hev] at h
+    rw [hev] at h
+    exact h.symm
   rw [← hSdef] at hevS
   have hterm : ∀ x ∈ S, (w x : ℂ)
-    = (N : ℂ) * (E₄.coeff x : ℂ) := by
+      = (N : ℂ) * (E₄.coeff x : ℂ) := by
     intro x _
     have eC := congrArg (Rat.cast : ℚ → ℂ) (hw x)
     simpa using eC
   have hsum : ∑ x ∈ S, (w x : ℂ) * Complex.exp (x : ℂ) = 0 := by
     have hstep : (∑ x ∈ S, (w x : ℂ) * Complex.exp (x : ℂ))
-      = (N : ℂ) * (∑ x ∈ S, (E₄.coeff x : ℂ) * Complex.exp (x : ℂ)) := by
+        = (N : ℂ) * (∑ x ∈ S, (E₄.coeff x : ℂ) * Complex.exp (x : ℂ)) := by
       rw [Finset.mul_sum]
       exact Finset.sum_congr rfl (fun x hx => by rw [hterm x hx]; ring)
     rw [hstep, hevS, mul_zero]
@@ -629,11 +629,11 @@ end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_common_denom](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_common_denom {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   (S : Finset K) : ∃ d : ℤ, d ≠ 0 ∧ ∀ x ∈ S, IsIntegral ℤ (d • x) := by
@@ -661,9 +661,8 @@ namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 /--
 [lw_exists_monic_coeff_zero_ne_zero_of_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
--/
-@[path]
 a nonzero integral `x`. -/
+@[path]
 private lemma lw_exists_monic_coeff_zero_ne_zero_of_isIntegral (x : ℂ) (hx : x ≠ 0)
   (hint : IsIntegral ℤ x) :
   ∃ q : Polynomial ℤ, q.Monic ∧ q.coeff 0 ≠ 0 ∧ Polynomial.aeval x q = 0 := by
@@ -676,8 +675,8 @@ private lemma lw_exists_monic_coeff_zero_ne_zero_of_isIntegral (x : ℂ) (hx : x
     Polynomial.monic_X_pow _
   have hq_monic : q.Monic := by
     have hprod_monic :
-      ((Polynomial.X : Polynomial ℤ) ^ Polynomial.rootMultiplicity 0 p
-        * q).Monic := by
+        ((Polynomial.X : Polynomial ℤ) ^ Polynomial.rootMultiplicity 0 p
+          * q).Monic := by
       rw [← hq_eq]; exact hpmonic
     exact Polynomial.Monic.of_mul_monic_left hXpow_monic hprod_monic
   refine ⟨q, hq_monic, ?_, ?_⟩
@@ -685,12 +684,12 @@ private lemma lw_exists_monic_coeff_zero_ne_zero_of_isIntegral (x : ℂ) (hx : x
     exact hq_ndvd (Polynomial.X_dvd_iff.mpr hcoeff)
   · have hpeval_a : Polynomial.aeval x p = 0 := hpeval
     have haeval : Polynomial.aeval x p = Polynomial.aeval x
-      ((Polynomial.X : Polynomial ℤ) ^ Polynomial.rootMultiplicity 0 p * q) := by
+        ((Polynomial.X : Polynomial ℤ) ^ Polynomial.rootMultiplicity 0 p * q) := by
       rw [← hq_eq]
     rw [map_mul, map_pow, Polynomial.aeval_X] at haeval
     rw [hpeval_a] at haeval
     have hxr : x ^ Polynomial.rootMultiplicity 0 p ≠ 0 := pow_ne_zero _ hx
-    obtain h1 | h1 := mul_eq_zero.mp haeval.symm
+    rcases mul_eq_zero.mp haeval.symm with h1 | h1
     · exact absurd h1 hxr
     · exact h1
 
@@ -700,21 +699,20 @@ namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 /--
 [lw_exists_int_poly_eval_zero_ne_zero_of_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
--/
-@[path]
 open Classical in
 points, with nonzero constant term. -/
+@[path]
 private lemma lw_exists_int_poly_eval_zero_ne_zero_of_isIntegral {ι : Type*}
   [Finite ι] (x : ι → ℂ) (hint : ∀ i, IsIntegral ℤ (x i)) :
   ∃ F : Polynomial ℤ, F.Monic ∧ Polynomial.eval 0 F ≠ 0 ∧
     ∀ i, x i ≠ 0 → Polynomial.aeval (x i) F = 0 := by
   have := Fintype.ofFinite ι
   have hex : ∀ i, ∃ q : Polynomial ℤ,
-    q.Monic ∧ (x i ≠ 0 → q.coeff 0 ≠ 0 ∧ Polynomial.aeval (x i) q = 0) := by
+      q.Monic ∧ (x i ≠ 0 → q.coeff 0 ≠ 0 ∧ Polynomial.aeval (x i) q = 0) := by
     intro i
     by_cases hi : x i ≠ 0
     · obtain ⟨q, hqm, hq0, hqeval⟩ :=
-      lw_exists_monic_coeff_zero_ne_zero_of_isIntegral (x i) hi (hint i)
+        lw_exists_monic_coeff_zero_ne_zero_of_isIntegral (x i) hi (hint i)
       exact ⟨q, hqm, fun _ => ⟨hq0, hqeval⟩⟩
     · exact ⟨1, Polynomial.monic_one, fun h => absurd h hi⟩
   choose Q hQm hQ using hex
@@ -726,12 +724,13 @@ private lemma lw_exists_int_poly_eval_zero_ne_zero_of_isIntegral {ι : Type*}
     intro i hi
     have hne : x i ≠ 0 := (Finset.mem_filter.mp hi).2
     have h := (hQ i hne).1
-    rwa [Polynomial.coeff_zero_eq_eval_zero] at h
+    rw [Polynomial.coeff_zero_eq_eval_zero] at h
+    exact h
   · intro i hi
     have himem : i ∈ s := Finset.mem_filter.mpr ⟨Finset.mem_univ i, hi⟩
     have hQi : Polynomial.aeval (x i) (Q i) = 0 := (hQ i hi).2
     have hmap : Polynomial.aeval (x i) (s.prod (fun j => Q j))
-      = s.prod (fun j => Polynomial.aeval (x i) (Q j)) := by
+        = s.prod (fun j => Polynomial.aeval (x i) (Q j)) := by
       rw [map_prod]
     rw [hmap]
     exact Finset.prod_eq_zero himem hQi
@@ -754,10 +753,9 @@ namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 /--
 [lw_aux_poly](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
--/
-@[path]
 open Classical in
 after scaling by `d`, with nonzero constant term. -/
+@[path]
 private lemma lw_aux_poly {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   (S : Finset K) (d : ℤ) (hd : d ≠ 0)
@@ -776,13 +774,14 @@ private lemma lw_aux_poly {K : IntermediateField ℚ ℂ}
       (fun i : ↥S => (d : ℂ) * ((i : K) : ℂ)) hintC
   refine ⟨F₀.comp (Polynomial.C d * Polynomial.X), ?_, ?_⟩
   · have heval : Polynomial.eval 0 (Polynomial.C d * Polynomial.X) = 0 := by
-    rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_X, mul_zero]
-    rwa [Polynomial.eval_comp, heval]
+      rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_X, mul_zero]
+    rw [Polynomial.eval_comp, heval]
+    exact hF₀0
   · intro x hx hx0
     have hae : Polynomial.aeval ((x : K) : ℂ) (F₀.comp (Polynomial.C d * Polynomial.X))
-      = Polynomial.aeval ((d : ℂ) * (x : ℂ)) F₀ := by
+        = Polynomial.aeval ((d : ℂ) * (x : ℂ)) F₀ := by
       have hq : Polynomial.aeval ((x : K) : ℂ) (Polynomial.C d * Polynomial.X)
-        = (d : ℂ) * (x : ℂ) := by
+          = (d : ℂ) * (x : ℂ) := by
         simp [map_mul, Polynomial.aeval_X, eq_intCast]
       rw [Polynomial.aeval_comp, hq]
     rw [hae]
@@ -795,11 +794,11 @@ end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_weight_sum_eq_intCast](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_weight_sum_eq_intCast {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   (S : Finset K) (w : K → ℤ) (d : ℤ)
@@ -809,12 +808,12 @@ private lemma lw_weight_sum_eq_intCast {K : IntermediateField ℚ ℂ}
   ∃ z : ℤ, ∑ x ∈ S, (w x : ℂ) * Polynomial.aeval ((d : ℂ) * (x : ℂ)) g
     = (z : ℂ) := by
   have hT : IsIntegral ℤ
-    (∑ x ∈ S, ((w x : ℤ) : K) * Polynomial.aeval (d • x) g) := by
+      (∑ x ∈ S, ((w x : ℤ) : K) * Polynomial.aeval (d • x) g) := by
     refine IsIntegral.sum _ fun x hx => ?_
     have hsm : (((w x : ℤ) : K) * Polynomial.aeval (d • x) g)
-      = (w x) • Polynomial.aeval (d • x) g := (zsmul_eq_mul _ _).symm
+        = (w x) • Polynomial.aeval (d • x) g := (zsmul_eq_mul _ _).symm
     have hae : Polynomial.aeval (d • x) g
-      = ∑ i ∈ Finset.range (g.natDegree + 1), g.coeff i • (d • x) ^ i :=
+        = ∑ i ∈ Finset.range (g.natDegree + 1), g.coeff i • (d • x) ^ i :=
       Polynomial.aeval_eq_sum_range (R := ℤ) (S := K) (d • x)
     rw [hsm]
     refine IsIntegral.zsmul (R := ℤ) (B := K) ?_ (w x)
@@ -823,16 +822,17 @@ private lemma lw_weight_sum_eq_intCast {K : IntermediateField ℚ ℂ}
       fun i _ => ?_
     exact IsIntegral.zsmul (R := ℤ) (B := K) (IsIntegral.pow (hint x hx) i) _
   have hcomm : ∀ (τ : (K ≃ₐ[ℚ] K)) (x : K),
-    τ (Polynomial.aeval (d • x) g) = Polynomial.aeval (d • τ x) g := by
+      τ (Polynomial.aeval (d • x) g) = Polynomial.aeval (d • τ x) g := by
     intro τ x
     have e := Polynomial.aeval_algHom_apply ((τ : K →+* K).toIntAlgHom) (d • x) g
     have ez : ((τ : K →+* K).toIntAlgHom) (d • x) = d • τ x := by
       have h1 : (τ : K →+* K) (d • x) = d • τ x := map_zsmul _ _ _
       exact h1
-    rwa [ez] at e
+    rw [ez] at e
+    exact e.symm
   have hinv : ∀ τ : (K ≃ₐ[ℚ] K),
-    τ (∑ x ∈ S, ((w x : ℤ) : K) * Polynomial.aeval (d • x) g)
-      = ∑ x ∈ S, ((w x : ℤ) : K) * Polynomial.aeval (d • x) g := by
+      τ (∑ x ∈ S, ((w x : ℤ) : K) * Polynomial.aeval (d • x) g)
+        = ∑ x ∈ S, ((w x : ℤ) : K) * Polynomial.aeval (d • x) g := by
     intro τ
     rw [map_sum]
     refine Finset.sum_nbij' (fun x => τ x) (fun x => τ.symm x) ?_ ?_ ?_ ?_ ?_
@@ -850,10 +850,11 @@ private lemma lw_weight_sum_eq_intCast {K : IntermediateField ℚ ℂ}
       rw [map_mul, map_intCast, hcomm τ a, ← (hstab τ a).2]
   obtain ⟨q, hq⟩ := lw_exists_rat_of_forall_aut_eq _ hinv
   have hTq : IsIntegral ℤ (algebraMap ℚ K q) := by
-    rwa [hq]
+    rw [hq]
+    exact hT
   obtain ⟨z, hz⟩ := lw_exists_int_of_isIntegral_rat q hTq
   have hterm : ∀ x ∈ S, algebraMap K ℂ (((w x : ℤ) : K) * Polynomial.aeval (d • x) g)
-    = (w x : ℂ) * Polynomial.aeval ((d : ℂ) * (x : ℂ)) g := by
+      = (w x : ℂ) * Polynomial.aeval ((d : ℂ) * (x : ℂ)) g := by
     intro x _
     rw [map_mul, map_intCast]
     congr 1
@@ -863,10 +864,11 @@ private lemma lw_weight_sum_eq_intCast {K : IntermediateField ℚ ℂ}
       have h1 : algebraMap K ℂ (d • x) = (d : ℂ) * (x : ℂ) := by
         rw [map_zsmul, zsmul_eq_mul, IntermediateField.algebraMap_apply]
       exact h1
-    rwa [ez] at e
+    rw [ez] at e
+    exact e.symm
   have hsum : (∑ x ∈ S, (w x : ℂ) * Polynomial.aeval ((d : ℂ) * (x : ℂ)) g)
-    = algebraMap K ℂ
-      (∑ x ∈ S, ((w x : ℤ) : K) * Polynomial.aeval (d • x) g) := by
+      = algebraMap K ℂ
+        (∑ x ∈ S, ((w x : ℤ) : K) * Polynomial.aeval (d • x) g) := by
     rw [map_sum]
     exact Finset.sum_congr rfl (fun x hx => (hterm x hx).symm)
   refine ⟨z, ?_⟩
@@ -889,7 +891,7 @@ private lemma lw_exists_prime_gt_mul_pow_div_factorial_lt_one (C : ℝ) (hC : 0 
   have htend : Filter.Tendsto (fun n : ℕ => C ^ n / ((n.factorial : ℝ))) Filter.atTop (nhds 0) :=
     FloorSemiring.tendsto_pow_div_factorial_atTop C
   have htendW : Filter.Tendsto (fun n : ℕ => W * C * (C ^ n / ((n.factorial : ℝ))))
-    Filter.atTop (nhds 0) := by
+      Filter.atTop (nhds 0) := by
     have h0 : (0 : ℝ) = W * C * 0 := by ring
     rw [h0]
     exact Filter.Tendsto.const_mul _ htend
@@ -909,7 +911,7 @@ private lemma lw_exists_prime_gt_mul_pow_div_factorial_lt_one (C : ℝ) (hC : 0 
     have hpeq : p = (p - 1) + 1 := by omega
     conv_lhs => rw [hpeq, pow_succ']
   have hrewrite : W * C ^ p / (((p - 1).factorial : ℕ) : ℝ)
-    = W * C * (C ^ (p - 1) / ((((p - 1).factorial : ℕ)) : ℝ)) := by
+      = W * C * (C ^ (p - 1) / ((((p - 1).factorial : ℕ)) : ℝ)) := by
     rw [hCeq]; ring
   rw [hrewrite]
   have hnn : 0 ≤ W * C * (C ^ (p - 1) / ((((p - 1).factorial : ℕ)) : ℝ)) := by
@@ -917,17 +919,18 @@ private lemma lw_exists_prime_gt_mul_pow_div_factorial_lt_one (C : ℝ) (hC : 0 
     apply div_nonneg (pow_nonneg hC _)
     positivity
   have hmem := hN0 (p - 1) hN0le
-  rwa [dist_zero_right, Real.norm_of_nonneg hnn] at hmem
+  rw [dist_zero_right, Real.norm_of_nonneg hnn] at hmem
+  exact hmem
 
 end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_scaled_identity](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_scaled_identity {ι : Type*} [Fintype ι]
   (w : ι → ℤ) (γ : ι → ℂ) (d : ℤ)
   (h1 : ∑ i, (w i : ℂ) * Complex.exp (γ i) = 0)
@@ -938,7 +941,7 @@ private lemma lw_scaled_identity {ι : Type*} [Fintype ι]
     * ((np : ℂ) * Complex.exp (γ i) - (p : ℂ) * Polynomial.aeval (γ i) gp))
     = -((p : ℂ) * (z : ℂ)) := by
   have key : ∀ i, Polynomial.aeval ((d : ℂ) * γ i) (gp.scaleRoots d)
-    = (d : ℂ) ^ gp.natDegree * Polynomial.aeval (γ i) gp := by
+      = (d : ℂ) ^ gp.natDegree * Polynomial.aeval (γ i) gp := by
     intro i
     have e := Polynomial.scaleRoots_aeval_smul (S := ℤ) (R := ℂ) (p := gp)
       (γ i) (d : ℤ)
@@ -946,8 +949,8 @@ private lemma lw_scaled_identity {ι : Type*} [Fintype ι]
     exact e
   obtain ⟨z, hz⟩ := h4 (gp.scaleRoots d)
   have hzD : (∑ i, ((w i : ℂ))
-    * ((d : ℂ) ^ gp.natDegree * Polynomial.aeval (γ i) gp))
-    = ((z : ℤ) : ℂ) := by
+        * ((d : ℂ) ^ gp.natDegree * Polynomial.aeval (γ i) gp))
+      = ((z : ℤ) : ℂ) := by
     rw [← hz]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [key i]
@@ -955,27 +958,27 @@ private lemma lw_scaled_identity {ι : Type*} [Fintype ι]
     rw [← Finset.mul_sum, h1, mul_zero]
   refine ⟨z, ?_⟩
   have hsub : (∑ i, (w i : ℂ) * ((d : ℂ) ^ gp.natDegree
-    * ((np : ℂ) * Complex.exp (γ i) - (p : ℂ) * Polynomial.aeval (γ i) gp)))
-    = (d : ℂ) ^ gp.natDegree * (∑ i, (np : ℂ) * (((w i : ℂ)) * Complex.exp (γ i)))
-      - (d : ℂ) ^ gp.natDegree
-        * ((p : ℂ) * (∑ i, ((w i : ℂ)) * Polynomial.aeval (γ i) gp)) := by
+        * ((np : ℂ) * Complex.exp (γ i) - (p : ℂ) * Polynomial.aeval (γ i) gp)))
+      = (d : ℂ) ^ gp.natDegree * (∑ i, (np : ℂ) * (((w i : ℂ)) * Complex.exp (γ i)))
+        - (d : ℂ) ^ gp.natDegree
+          * ((p : ℂ) * (∑ i, ((w i : ℂ)) * Polynomial.aeval (γ i) gp)) := by
     have hfac : (∑ i, (w i : ℂ) * ((d : ℂ) ^ gp.natDegree
-      * ((np : ℂ) * Complex.exp (γ i) - (p : ℂ) * Polynomial.aeval (γ i) gp)))
-      = (d : ℂ) ^ gp.natDegree * (∑ i, ((w i : ℂ)
-        * ((np : ℂ) * Complex.exp (γ i) - (p : ℂ) * Polynomial.aeval (γ i) gp))) := by
+          * ((np : ℂ) * Complex.exp (γ i) - (p : ℂ) * Polynomial.aeval (γ i) gp)))
+        = (d : ℂ) ^ gp.natDegree * (∑ i, ((w i : ℂ)
+          * ((np : ℂ) * Complex.exp (γ i) - (p : ℂ) * Polynomial.aeval (γ i) gp))) := by
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       ring
     have hsplit : (∑ i, ((w i : ℂ)
-      * ((np : ℂ) * Complex.exp (γ i) - (p : ℂ) * Polynomial.aeval (γ i) gp)))
-      = (∑ i, (np : ℂ) * (((w i : ℂ)) * Complex.exp (γ i)))
-        - (p : ℂ) * (∑ i, ((w i : ℂ)) * Polynomial.aeval (γ i) gp) := by
+          * ((np : ℂ) * Complex.exp (γ i) - (p : ℂ) * Polynomial.aeval (γ i) gp)))
+        = (∑ i, (np : ℂ) * (((w i : ℂ)) * Complex.exp (γ i)))
+          - (p : ℂ) * (∑ i, ((w i : ℂ)) * Polynomial.aeval (γ i) gp) := by
       rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
       ring
     rw [hfac, hsplit, mul_sub]
   have hzD' : (d : ℂ) ^ gp.natDegree
-    * (∑ i, ((w i : ℂ)) * Polynomial.aeval (γ i) gp) = ((z : ℤ) : ℂ) := by
+        * (∑ i, ((w i : ℂ)) * Polynomial.aeval (γ i) gp) = ((z : ℤ) : ℂ) := by
     rw [Finset.mul_sum, ← hzD]
     refine Finset.sum_congr rfl fun i _ => ?_
     ring
@@ -987,11 +990,11 @@ end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_zero_error](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_zero_error {ι : Type*} [Fintype ι]
   (w : ι → ℤ) (γ : ι → ℂ) (d : ℤ) (hd : d ≠ 0)
   (F : Polynomial ℤ) (hF0 : Polynomial.eval 0 F ≠ 0)
@@ -1015,40 +1018,41 @@ private lemma lw_zero_error {ι : Type*} [Fintype ι]
       / ((((p - 1).factorial : ℕ)) : ℝ) := by
   constructor
   · have hterm : ∀ i ∈ Finset.univ.filter (fun i => γ i = 0),
-    (w i : ℂ) * ((d : ℂ) ^ gp.natDegree
-      * ((np : ℂ) * Complex.exp (γ i)
-        - (p : ℂ) * Polynomial.aeval (γ i) gp))
-    = ((w i : ℤ) : ℂ) * ((d : ℂ) ^ gp.natDegree
-      * ((np : ℂ) - (p : ℂ) * ((((gp.eval 0 : ℤ))) : ℂ))) := by
-    intro i hi
-    have hzi : γ i = 0 := (Finset.mem_filter.mp hi).2
-    have h1 : Polynomial.aeval (0 : ℂ) gp = ((((gp.eval 0 : ℤ))) : ℂ) := by
-      have h := Polynomial.coeff_zero_eq_aeval_zero' (R := ℤ)
-        (A := ℂ) gp
-      have halg : (algebraMap ℤ ℂ) (gp.coeff 0)
-        = ((((gp.coeff 0 : ℤ))) : ℂ) := by
-        simp
-      rwa [halg, Polynomial.coeff_zero_eq_eval_zero] at h
-    rw [hzi, Complex.exp_zero, mul_one, h1]
+        (w i : ℂ) * ((d : ℂ) ^ gp.natDegree
+          * ((np : ℂ) * Complex.exp (γ i)
+            - (p : ℂ) * Polynomial.aeval (γ i) gp))
+        = ((w i : ℤ) : ℂ) * ((d : ℂ) ^ gp.natDegree
+          * ((np : ℂ) - (p : ℂ) * ((((gp.eval 0 : ℤ))) : ℂ))) := by
+      intro i hi
+      have hzi : γ i = 0 := (Finset.mem_filter.mp hi).2
+      have h1 : Polynomial.aeval (0 : ℂ) gp = ((((gp.eval 0 : ℤ))) : ℂ) := by
+        have h := Polynomial.coeff_zero_eq_aeval_zero' (R := ℤ)
+          (A := ℂ) gp
+        have halg : (algebraMap ℤ ℂ) (gp.coeff 0)
+            = ((((gp.coeff 0 : ℤ))) : ℂ) := by
+          simp
+        rw [halg, Polynomial.coeff_zero_eq_eval_zero] at h
+        exact h.symm
+      rw [hzi, Complex.exp_zero, mul_one, h1]
     have hstep : (∑ i ∈ Finset.univ.filter (fun i => γ i = 0),
-      (w i : ℂ) * ((d : ℂ) ^ gp.natDegree
-        * ((np : ℂ) * Complex.exp (γ i)
-          - (p : ℂ) * Polynomial.aeval (γ i) gp)))
-      = ∑ i ∈ Finset.univ.filter (fun i => γ i = 0),
-        ((w i : ℤ) : ℂ) * ((d : ℂ) ^ gp.natDegree
-          * ((np : ℂ) - (p : ℂ) * ((((gp.eval 0 : ℤ))) : ℂ))) :=
+          (w i : ℂ) * ((d : ℂ) ^ gp.natDegree
+            * ((np : ℂ) * Complex.exp (γ i)
+              - (p : ℂ) * Polynomial.aeval (γ i) gp)))
+        = ∑ i ∈ Finset.univ.filter (fun i => γ i = 0),
+          ((w i : ℤ) : ℂ) * ((d : ℂ) ^ gp.natDegree
+            * ((np : ℂ) - (p : ℂ) * ((((gp.eval 0 : ℤ))) : ℂ))) :=
       Finset.sum_congr rfl hterm
     have hcast : (∑ i ∈ Finset.univ.filter (fun i => γ i = 0),
-      ((w i : ℤ) : ℂ))
-      = (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i
-        : ℤ)) : ℂ) :=
+          ((w i : ℤ) : ℂ))
+        = (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i
+          : ℤ)) : ℂ) :=
       (Int.cast_sum _ _).symm
     rw [hstep, ← Finset.sum_mul, hcast]
     have hexpand : (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-      * d ^ gp.natDegree * (np - (p : ℤ) * gp.eval 0) : ℤ) : ℂ)
-      = (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i : ℤ)) : ℂ)
-        * ((d : ℂ) ^ gp.natDegree
-          * ((np : ℂ) - (p : ℂ) * ((((gp.eval 0 : ℤ))) : ℂ))) := by
+        * d ^ gp.natDegree * (np - (p : ℤ) * gp.eval 0) : ℤ) : ℂ)
+        = (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i : ℤ)) : ℂ)
+          * ((d : ℂ) ^ gp.natDegree
+            * ((np : ℂ) - (p : ℂ) * ((((gp.eval 0 : ℤ))) : ℂ))) := by
       push_cast
       ring
     exact hexpand.symm
@@ -1069,20 +1073,22 @@ private lemma lw_zero_error {ι : Type*} [Fintype ι]
     have hd1 : (1 : ℝ) ≤ |(d : ℝ)| := by
       have h := Int.one_le_abs hd
       have hc : ((1 : ℤ) : ℝ) ≤ ((|d| : ℤ) : ℝ) := by exact_mod_cast h
-      rwa [Int.cast_one, Int.cast_abs] at hc
+      rw [Int.cast_one, Int.cast_abs] at hc
+      exact hc
     have hdpow : |(d : ℝ)| ^ gp.natDegree ≤ (|(d : ℝ)| ^ F.natDegree) ^ p := by
       have h1 : |(d : ℝ)| ^ gp.natDegree ≤ |(d : ℝ)| ^ (p * F.natDegree) :=
         pow_le_pow_right₀ hd1 (le_trans hdeg (Nat.sub_le _ _))
-      rwa [mul_comm p (F.natDegree), pow_mul] at h1
+      rw [mul_comm p (F.natDegree), pow_mul] at h1
+      exact h1
     refine (norm_sum_le _ _).trans ?_
     have hper : ∀ i ∈ Finset.univ.filter (fun i => ¬γ i = 0),
-      ‖((w i : ℤ) : ℂ)
-        * ((d : ℂ) ^ gp.natDegree
-          * ((np : ℂ) * Complex.exp (γ i)
-            - (p : ℂ) * Polynomial.aeval (γ i) gp))‖
-      ≤ |(w i : ℝ)|
-        * (((|c| * |(d : ℝ)| ^ F.natDegree) ^ p
-          / ((((p - 1).factorial : ℕ)) : ℝ))) := by
+        ‖((w i : ℤ) : ℂ)
+          * ((d : ℂ) ^ gp.natDegree
+            * ((np : ℂ) * Complex.exp (γ i)
+              - (p : ℂ) * Polynomial.aeval (γ i) gp))‖
+        ≤ |(w i : ℝ)|
+          * (((|c| * |(d : ℝ)| ^ F.natDegree) ^ p
+            / ((((p - 1).factorial : ℕ)) : ℝ))) := by
       intro i hi
       have hmem : γ i ≠ 0 := (Finset.mem_filter.mp hi).2
       have hroot : γ i ∈ F.aroots ℂ := by
@@ -1091,53 +1097,53 @@ private lemma lw_zero_error {ι : Type*} [Fintype ι]
       have hb0 := hb (γ i) hroot
       rw [zsmul_eq_mul, nsmul_eq_mul] at hb0
       have hXi : ‖(np : ℂ) * Complex.exp (γ i)
-        - (p : ℂ) * Polynomial.aeval (γ i) gp‖
-        ≤ |c| ^ p / ((((p - 1).factorial : ℕ)) : ℝ) := by
+            - (p : ℂ) * Polynomial.aeval (γ i) gp‖
+          ≤ |c| ^ p / ((((p - 1).factorial : ℕ)) : ℝ) := by
         refine hb0.trans ?_
         rw [div_eq_mul_inv, div_eq_mul_inv]
         exact mul_le_mul_of_nonneg_right hcp
           (inv_nonneg.mpr (le_of_lt hFpos))
       have hterm : ‖((w i : ℤ) : ℂ)
-        * ((d : ℂ) ^ gp.natDegree
-          * ((np : ℂ) * Complex.exp (γ i)
-            - (p : ℂ) * Polynomial.aeval (γ i) gp))‖
-        = |(w i : ℝ)| * (|(d : ℝ)| ^ gp.natDegree
-          * ‖(np : ℂ) * Complex.exp (γ i)
-            - (p : ℂ) * Polynomial.aeval (γ i) gp‖) := by
+            * ((d : ℂ) ^ gp.natDegree
+              * ((np : ℂ) * Complex.exp (γ i)
+                - (p : ℂ) * Polynomial.aeval (γ i) gp))‖
+          = |(w i : ℝ)| * (|(d : ℝ)| ^ gp.natDegree
+            * ‖(np : ℂ) * Complex.exp (γ i)
+              - (p : ℂ) * Polynomial.aeval (γ i) gp‖) := by
         rw [norm_mul, norm_mul, Complex.norm_intCast, norm_pow,
           Complex.norm_intCast]
       rw [hterm]
       have hle : |(d : ℝ)| ^ gp.natDegree
-        * ‖(np : ℂ) * Complex.exp (γ i)
-          - (p : ℂ) * Polynomial.aeval (γ i) gp‖
-        ≤ (|c| * |(d : ℝ)| ^ F.natDegree) ^ p
-          / ((((p - 1).factorial : ℕ)) : ℝ) := by
-        calc |(d : ℝ)| ^ gp.natDegree
-          * ‖(np : ℂ) * Complex.exp (γ i)
-            - (p : ℂ) * Polynomial.aeval (γ i) gp‖
-          ≤ (|(d : ℝ)| ^ F.natDegree) ^ p * (|c| ^ p
-            / ((((p - 1).factorial : ℕ)) : ℝ)) :=
-            mul_le_mul hdpow hXi (by positivity) (by positivity)
-          _ = (|c| * |(d : ℝ)| ^ F.natDegree) ^ p
+            * ‖(np : ℂ) * Complex.exp (γ i)
+              - (p : ℂ) * Polynomial.aeval (γ i) gp‖
+          ≤ (|c| * |(d : ℝ)| ^ F.natDegree) ^ p
             / ((((p - 1).factorial : ℕ)) : ℝ) := by
-            rw [mul_pow]
-            ring
+        calc |(d : ℝ)| ^ gp.natDegree
+                * ‖(np : ℂ) * Complex.exp (γ i)
+                  - (p : ℂ) * Polynomial.aeval (γ i) gp‖
+            ≤ (|(d : ℝ)| ^ F.natDegree) ^ p * (|c| ^ p
+              / ((((p - 1).factorial : ℕ)) : ℝ)) :=
+              mul_le_mul hdpow hXi (by positivity) (by positivity)
+          _ = (|c| * |(d : ℝ)| ^ F.natDegree) ^ p
+              / ((((p - 1).factorial : ℕ)) : ℝ) := by
+              rw [mul_pow]
+              ring
       exact mul_le_mul_of_nonneg_left hle (abs_nonneg _)
     refine (Finset.sum_le_sum hper).trans ?_
     have hsub : (∑ i ∈ Finset.univ.filter (fun i => ¬γ i = 0),
-      |(w i : ℝ)| * (((|c| * |(d : ℝ)| ^ F.natDegree) ^ p
-        / ((((p - 1).factorial : ℕ)) : ℝ))))
-      ≤ ∑ i, |(w i : ℝ)|
-        * (((|c| * |(d : ℝ)| ^ F.natDegree) ^ p
-          / ((((p - 1).factorial : ℕ)) : ℝ))) :=
+          |(w i : ℝ)| * (((|c| * |(d : ℝ)| ^ F.natDegree) ^ p
+            / ((((p - 1).factorial : ℕ)) : ℝ))))
+        ≤ ∑ i, |(w i : ℝ)|
+          * (((|c| * |(d : ℝ)| ^ F.natDegree) ^ p
+            / ((((p - 1).factorial : ℕ)) : ℝ))) :=
       Finset.sum_le_sum_of_subset_of_nonneg
         (fun x _ => Finset.mem_univ x)
         (fun i _ _ => by positivity)
     have hfac : (∑ i, |(w i : ℝ)|
-      * (((|c| * |(d : ℝ)| ^ F.natDegree) ^ p
-        / ((((p - 1).factorial : ℕ)) : ℝ))))
-      = (∑ i, |(w i : ℝ)|) * (|c| * |(d : ℝ)| ^ F.natDegree) ^ p
-        / ((((p - 1).factorial : ℕ)) : ℝ) := by
+          * (((|c| * |(d : ℝ)| ^ F.natDegree) ^ p
+            / ((((p - 1).factorial : ℕ)) : ℝ))))
+        = (∑ i, |(w i : ℝ)|) * (|c| * |(d : ℝ)| ^ F.natDegree) ^ p
+          / ((((p - 1).factorial : ℕ)) : ℝ) := by
       rw [← Finset.sum_mul, mul_div_assoc]
     exact hsub.trans (le_of_eq hfac)
 
@@ -1145,11 +1151,11 @@ end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_arith_core](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_arith_core {ι : Type*} [Fintype ι]
   (w : ι → ℤ) (γ : ι → ℂ) (d : ℤ) (hd : d ≠ 0)
   (h1 : ∑ i, (w i : ℂ) * Complex.exp (γ i) = 0)
@@ -1181,94 +1187,95 @@ private lemma lw_arith_core {ι : Type*} [Fintype ι]
   obtain ⟨hzero, hbound⟩ := lw_zero_error w γ d hd F hF0 hFvan c np p gp hgpdeg
     (fun r hr => hgpbound hr)
   have hsplit : (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), (w i : ℂ)
-    * ((d : ℂ) ^ gp.natDegree
-      * ((np : ℂ) * Complex.exp (γ i)
-        - (p : ℂ) * Polynomial.aeval (γ i) gp)))
-    + (∑ i ∈ Finset.univ.filter (fun i => ¬γ i = 0), (w i : ℂ)
-      * ((d : ℂ) ^ gp.natDegree
+        * ((d : ℂ) ^ gp.natDegree
+          * ((np : ℂ) * Complex.exp (γ i)
+            - (p : ℂ) * Polynomial.aeval (γ i) gp)))
+      + (∑ i ∈ Finset.univ.filter (fun i => ¬γ i = 0), (w i : ℂ)
+        * ((d : ℂ) ^ gp.natDegree
+          * ((np : ℂ) * Complex.exp (γ i)
+            - (p : ℂ) * Polynomial.aeval (γ i) gp)))
+      = ∑ i, (w i : ℂ) * ((d : ℂ) ^ gp.natDegree
         * ((np : ℂ) * Complex.exp (γ i)
-          - (p : ℂ) * Polynomial.aeval (γ i) gp)))
-    = ∑ i, (w i : ℂ) * ((d : ℂ) ^ gp.natDegree
-      * ((np : ℂ) * Complex.exp (γ i)
-        - (p : ℂ) * Polynomial.aeval (γ i) gp)) :=
+          - (p : ℂ) * Polynomial.aeval (γ i) gp)) :=
     Finset.sum_filter_add_sum_filter_not _ _ _
   have hNS : (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-    * d ^ gp.natDegree * np
-    + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-      * d ^ gp.natDegree * gp.eval 0) : ℤ) : ℂ)
-    + (∑ i ∈ Finset.univ.filter (fun i => ¬γ i = 0), (w i : ℂ)
-      * ((d : ℂ) ^ gp.natDegree
-        * ((np : ℂ) * Complex.exp (γ i)
-          - (p : ℂ) * Polynomial.aeval (γ i) gp))) = 0 := by
+        * d ^ gp.natDegree * np
+        + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+          * d ^ gp.natDegree * gp.eval 0) : ℤ) : ℂ)
+      + (∑ i ∈ Finset.univ.filter (fun i => ¬γ i = 0), (w i : ℂ)
+        * ((d : ℂ) ^ gp.natDegree
+          * ((np : ℂ) * Complex.exp (γ i)
+            - (p : ℂ) * Polynomial.aeval (γ i) gp))) = 0 := by
     have h3 := hsplit
     rw [hz, hzero] at h3
     push_cast at h3
     have hexpand : (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-      * d ^ gp.natDegree * np
-      + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-        * d ^ gp.natDegree * gp.eval 0) : ℤ) : ℂ)
-      = (np : ℂ) * (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-        * d ^ gp.natDegree : ℤ) : ℂ)
-        + (p : ℂ) * ((z : ℂ)
-          - (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-            * d ^ gp.natDegree : ℤ) : ℂ) * (((gp.eval 0 : ℤ))) ) := by
+          * d ^ gp.natDegree * np
+          + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+            * d ^ gp.natDegree * gp.eval 0) : ℤ) : ℂ)
+          = (np : ℂ) * (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+              * d ^ gp.natDegree : ℤ) : ℂ)
+            + (p : ℂ) * ((z : ℂ)
+              - (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+                * d ^ gp.natDegree : ℤ) : ℂ) * (((gp.eval 0 : ℤ))) ) := by
       push_cast
       ring
     rw [hexpand]
     push_cast at h3 ⊢
     linear_combination h3
   have hNeq : (((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-    * d ^ gp.natDegree * np
-    + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-      * d ^ gp.natDegree * gp.eval 0) : ℤ) : ℂ)
-    = -(∑ i ∈ Finset.univ.filter (fun i => ¬γ i = 0), (w i : ℂ)
-      * ((d : ℂ) ^ gp.natDegree
-        * ((np : ℂ) * Complex.exp (γ i)
-          - (p : ℂ) * Polynomial.aeval (γ i) gp))) :=
+        * d ^ gp.natDegree * np
+        + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+          * d ^ gp.natDegree * gp.eval 0) : ℤ) : ℂ)
+      = -(∑ i ∈ Finset.univ.filter (fun i => ¬γ i = 0), (w i : ℂ)
+        * ((d : ℂ) ^ gp.natDegree
+          * ((np : ℂ) * Complex.exp (γ i)
+            - (p : ℂ) * Polynomial.aeval (γ i) gp))) :=
     eq_neg_of_add_eq_zero_left hNS
   have hnorm_lt : ‖(((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-    * d ^ gp.natDegree * np
-    + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-      * d ^ gp.natDegree * gp.eval 0) : ℤ) : ℂ)‖ < 1 := by
+        * d ^ gp.natDegree * np
+        + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+          * d ^ gp.natDegree * gp.eval 0) : ℤ) : ℂ)‖ < 1 := by
     rw [hNeq, norm_neg]
     exact lt_of_le_of_lt hbound hplt
   have hpN : ¬ (p : ℤ) ∣ ((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-    * d ^ gp.natDegree * np
-    + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-      * d ^ gp.natDegree * gp.eval 0)) := by
-    intro hdiv
-    have hdvd : (p : ℤ) ∣ (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-      * d ^ gp.natDegree * np := by
-      have h1 : (p : ℤ) ∣ ((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
         * d ^ gp.natDegree * np
         + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-          * d ^ gp.natDegree * gp.eval 0)) := hdiv
+          * d ^ gp.natDegree * gp.eval 0)) := by
+    intro hdiv
+    have hdvd : (p : ℤ) ∣ (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+        * d ^ gp.natDegree * np := by
+      have h1 : (p : ℤ) ∣ ((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+          * d ^ gp.natDegree * np
+          + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+            * d ^ gp.natDegree * gp.eval 0)) := hdiv
       have h2 : (p : ℤ) ∣ (p : ℤ)
-        * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-          * d ^ gp.natDegree * gp.eval 0) :=
+          * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+            * d ^ gp.natDegree * gp.eval 0) :=
         dvd_mul_right _ _
       have h3 := dvd_sub h1 h2
       have heq : ((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-        * d ^ gp.natDegree * np
-        + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-          * d ^ gp.natDegree * gp.eval 0))
-        - (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-          * d ^ gp.natDegree * gp.eval 0)
-        = (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-          * d ^ gp.natDegree * np := by ring
-      rwa [heq] at h3
+            * d ^ gp.natDegree * np
+            + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+              * d ^ gp.natDegree * gp.eval 0))
+            - (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+              * d ^ gp.natDegree * gp.eval 0)
+            = (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+              * d ^ gp.natDegree * np := by ring
+      rw [heq] at h3
+      exact h3
     have hprime : Prime (p : ℤ) := Nat.prime_iff_prime_int.mp hpprime
-    obtain hleft | hnp' := hprime.dvd_mul.mp hdvd
+    rcases hprime.dvd_mul.mp hdvd with hleft | hnp'
     · rcases hprime.dvd_mul.mp hleft with hq0' | hdvd_pow
       · have hlt : (∑ i ∈ Finset.univ.filter (fun i => γ i = 0),
-        w i).natAbs < p := hpq
+            w i).natAbs < p := hpq
         have hpos : 0 < (∑ i ∈ Finset.univ.filter (fun i => γ i = 0),
-          w i).natAbs :=
+            w i).natAbs :=
           Int.natAbs_pos.mpr h2
         have hle : p ≤ (∑ i ∈ Finset.univ.filter (fun i => γ i = 0),
-          w i).natAbs := by
+            w i).natAbs := by
           have h1 : (p : ℤ).natAbs ∣ (∑ i ∈ Finset.univ.filter
-            (fun i => γ i = 0), w i).natAbs :=
+              (fun i => γ i = 0), w i).natAbs :=
             Int.natAbs_dvd_natAbs.mpr hq0'
           rw [Int.natAbs_natCast] at h1
           exact Nat.le_of_dvd hpos h1
@@ -1284,23 +1291,24 @@ private lemma lw_arith_core {ι : Type*} [Fintype ι]
         omega
     · exact hnp hnp'
   have hNne : ((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-    * d ^ gp.natDegree * np
-    + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-      * d ^ gp.natDegree * gp.eval 0)) ≠ 0 := by
+      * d ^ gp.natDegree * np
+      + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+        * d ^ gp.natDegree * gp.eval 0)) ≠ 0 := by
     intro h0
     apply hpN
     rw [h0]
     exact dvd_zero _
   have hNlt : (((|((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-    * d ^ gp.natDegree * np
-    + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-      * d ^ gp.natDegree * gp.eval 0))| : ℤ)) : ℝ) < 1 := by
+      * d ^ gp.natDegree * np
+      + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+        * d ^ gp.natDegree * gp.eval 0))| : ℤ)) : ℝ) < 1 := by
     have h1 := hnorm_lt
-    rwa [Complex.norm_intCast, ← Int.cast_abs] at h1
+    rw [Complex.norm_intCast, ← Int.cast_abs] at h1
+    exact h1
   have h1le : (1 : ℝ) ≤ (((|((∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-    * d ^ gp.natDegree * np
-    + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
-      * d ^ gp.natDegree * gp.eval 0))| : ℤ)) : ℝ) :=
+      * d ^ gp.natDegree * np
+      + (p : ℤ) * (z - (∑ i ∈ Finset.univ.filter (fun i => γ i = 0), w i)
+        * d ^ gp.natDegree * gp.eval 0))| : ℤ)) : ℝ) :=
     by exact_mod_cast Int.one_le_abs hNne
   linarith
 
@@ -1308,11 +1316,11 @@ end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 namespace MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
+open Classical in
 /--
 [lw_false_of_data](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LindemannWeierstrass.lean)
 -/
 @[path]
-open Classical in
 private lemma lw_false_of_data {K : IntermediateField ℚ ℂ}
   [FiniteDimensional ℚ K] [IsGalois ℚ K]
   {ι : Type*} [Fintype ι] (a b : ι → K)
@@ -1333,19 +1341,19 @@ private lemma lw_false_of_data {K : IntermediateField ℚ ℂ}
   obtain ⟨d, hd, hdintegral⟩ := lw_common_denom S
   obtain ⟨F, hF0, hFvan⟩ := lw_aux_poly S d hd hdintegral
   have h4 : ∀ g : Polynomial ℤ, ∃ z : ℤ,
-    ∑ x ∈ S, (w x : ℂ) * Polynomial.aeval ((d : ℂ) * (x : ℂ)) g = (z : ℂ) := by
+      ∑ x ∈ S, (w x : ℂ) * Polynomial.aeval ((d : ℂ) * (x : ℂ)) g = (z : ℂ) := by
     intro g
     exact lw_weight_sum_eq_intCast S w d hdintegral
       (fun τ x => ⟨(hwinv τ x).2, (hwinv τ x).1⟩) g
   have h1 : ∑ i : ↥S, (((w ((i : K)) : ℤ)) : ℂ)
-    * Complex.exp ((((i : K)) : ℂ)) = 0 := by
+      * Complex.exp ((((i : K)) : ℂ)) = 0 := by
     rw [Finset.sum_coe_sort (s := S)
       (f := fun x : K => (w x : ℂ) * Complex.exp (x : ℂ))]
     exact hsumS
   have h2 : (∑ i ∈ Finset.univ.filter (fun i : ↥S => ((((i : K)) : ℂ) = 0)),
-    w ((i : K))) ≠ 0 := by
+      w ((i : K))) ≠ 0 := by
     have hfil : Finset.univ.filter (fun i : ↥S => ((((i : K)) : ℂ) = 0))
-      = {⟨0, hS0⟩} := by
+        = {⟨0, hS0⟩} := by
       ext i
       simp only [Finset.mem_filter, Finset.mem_univ, true_and,
         Finset.mem_singleton]
@@ -1358,8 +1366,8 @@ private lemma lw_false_of_data {K : IntermediateField ℚ ℂ}
     rw [hfil, Finset.sum_singleton]
     exact ne_of_gt hw0
   have h3 : ∃ F : Polynomial ℤ, Polynomial.eval 0 F ≠ 0 ∧
-    ∀ i : ↥S, ((((i : K)) : ℂ) ≠ 0
-      → Polynomial.aeval ((((i : K)) : ℂ)) F = 0) := by
+      ∀ i : ↥S, ((((i : K)) : ℂ) ≠ 0
+        → Polynomial.aeval ((((i : K)) : ℂ)) F = 0) := by
     refine ⟨F, hF0, fun i hi => ?_⟩
     have hxS : (i : K) ∈ S := i.2
     have hx0 : (i : K) ≠ 0 := by
@@ -1368,8 +1376,8 @@ private lemma lw_false_of_data {K : IntermediateField ℚ ℂ}
       rw [← IntermediateField.algebraMap_apply, h, map_zero]
     exact hFvan _ hxS hx0
   have h4' : ∀ g : Polynomial ℤ, ∃ z : ℤ,
-    ∑ i : ↥S, (((w ((i : K)) : ℤ)) : ℂ)
-      * Polynomial.aeval ((d : ℂ) * ((((i : K)) : ℂ))) g = (z : ℂ) := by
+      ∑ i : ↥S, (((w ((i : K)) : ℤ)) : ℂ)
+        * Polynomial.aeval ((d : ℂ) * ((((i : K)) : ℂ))) g = (z : ℂ) := by
     intro g
     obtain ⟨z, hz⟩ := h4 g
     refine ⟨z, ?_⟩
@@ -1401,7 +1409,8 @@ lemma lindemann_weierstrass'
   refine @lw_false_of_data K hfin hgal ι inferInstance
     (fun i => ⟨α i, (hmem i).1⟩) (fun i => ⟨β i, (hmem i).2⟩) ?_ i₀ ?_ ?_
   · have e : (fun i => (((⟨α i, (hmem i).1⟩ : K)) : ℂ)) = α := rfl
-    rwa [e]
+    rw [e]
+    exact hαinj
   · exact hi₀
   · exact hsum
 
@@ -1423,9 +1432,10 @@ lemma lindemann_weierstrass
 -- proof
   intro ι _ _ α hαinj hαalg β hβalg hβne hsum
   exact lindemann_weierstrass' α hαinj hαalg β hβalg hβne hsum
+
 end MathlibExt.NumberTheory.LindemannWeierstrassWanted
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

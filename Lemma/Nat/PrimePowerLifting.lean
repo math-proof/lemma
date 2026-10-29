@@ -9,7 +9,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 lemma pow_pow_modEq_one_of_modEq_one
-  {p n a : ℕ}
+  (p n a : ℕ)
 -- given
   (h : Nat.ModEq p a 1) :
 -- imply
@@ -17,7 +17,6 @@ lemma pow_pow_modEq_one_of_modEq_one
 -- proof
   rw [Nat.modEq_iff_dvd] at h ⊢
   simpa using dvd_sub_pow_of_dvd_sub h n
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -30,9 +29,9 @@ namespace MetaMathlibExt
 lemma prime_power_lifting_modEq_one
   {p n a : ℕ}
 -- given
-  (hp : Nat.Prime p)
-  (hn : 0 < n)
-  (ha : 0 < a)
+  (_hp : Nat.Prime p)
+  (_hn : 0 < n)
+  (_ha : 0 < a)
   (h : Nat.ModEq p a 1) :
 -- imply
   Nat.ModEq (p ^ (n + 1)) (a ^ (p ^ n)) 1 := by

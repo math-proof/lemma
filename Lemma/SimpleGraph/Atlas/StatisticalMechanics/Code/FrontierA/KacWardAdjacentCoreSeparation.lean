@@ -83,7 +83,7 @@ private lemma exists_closedEdgeCore_separation_eq
   (heps : 0 < eps ∧ eps < 1 / 2)
   (hij : i ≠ j) :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ x ∈ polygon.closedEdgeCore eps i, ∀ y ∈ polygon.closedEdgeCore eps j, (r : ℝ≥0∞) < edist x y := by
+  ∃ r : NNReal, 0 < r ∧ ∀ x ∈ polygon.closedEdgeCore eps i, ∀ y ∈ polygon.closedEdgeCore eps j, (r : ENNReal) < edist x y := by
 -- proof
   apply StatMech.FrontierA.KWFiniteSimplePolygon.exists_closedEdgeCore_separation polygon heps hij
 
@@ -99,7 +99,7 @@ private lemma exists_uniform_closedEdgeCore_separation_eq
 -- given
   (heps : 0 < eps ∧ eps < 1 / 2) :
 -- imply
-  ∃ r : ℝ≥0, 0 < r ∧ ∀ i j : Fin n, i ≠ j → ∀ x ∈ polygon.closedEdgeCore eps i, ∀ y ∈ polygon.closedEdgeCore eps j, (r : ℝ≥0∞) < edist x y := by
+  ∃ r : NNReal, 0 < r ∧ ∀ i j : Fin n, i ≠ j → ∀ x ∈ polygon.closedEdgeCore eps i, ∀ y ∈ polygon.closedEdgeCore eps j, (r : ENNReal) < edist x y := by
 -- proof
   apply StatMech.FrontierA.KWFiniteSimplePolygon.exists_uniform_closedEdgeCore_separation polygon heps
 

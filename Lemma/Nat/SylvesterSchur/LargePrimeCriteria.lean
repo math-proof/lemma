@@ -1,5 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Nat.SylvesterSchur.PrimeCounting
+import Lemma.Nat.SylvesterSchur.ChooseFactorization
 open scoped BigOperators
 open Finset Nat
 
@@ -41,6 +43,7 @@ lemma exists_large_prime_dvd_choose_of_factorial_mul_prod_erdos_layers_lt_lower_
   rw [lt_div_iff₀' (by exact_mod_cast Nat.factorial_pos r)]
   norm_cast
 
+/- Rational lower-bound formulation using the full Erdős prime-power layer bound. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -93,21 +96,21 @@ private lemma choose_small_factorization_product_le_top_pow_sqrt {N r : ℕ} (hN
   classical
   calc
     (∏ p ∈ (Finset.range (r + 1)).filter (fun p => p ≤ Nat.sqrt N),
-      p ^ (Nat.choose N r).factorization p) ≤
-      ∏ _p ∈ (Finset.range (r + 1)).filter (fun p => p ≤ Nat.sqrt N), N := by
-        apply Finset.prod_le_prod'
-        intro p hp
-        by_cases hp_prime : p.Prime
-        · exact Nat.pow_factorization_choose_le hN
-        · rw [Nat.factorization_eq_zero_of_not_prime _ hp_prime, pow_zero]
-          exact hN
+        p ^ (Nat.choose N r).factorization p) ≤
+        ∏ _p ∈ (Finset.range (r + 1)).filter (fun p => p ≤ Nat.sqrt N), N := by
+          apply Finset.prod_le_prod
+          intro p hp
+          by_cases hp_prime : p.Prime
+          · exact Nat.pow_factorization_choose_le hN
+          · rw [Nat.factorization_eq_zero_of_not_prime _ hp_prime, pow_zero]
+            exact hN
     _ = N ^ ((Finset.range (r + 1)).filter (fun p => p ≤ Nat.sqrt N)).card := by
       rw [Finset.prod_const]
     _ ≤ N ^ (Nat.sqrt N + 1) := by
       apply Nat.pow_le_pow_right hN
       have hcard :
-        ((Finset.range (r + 1)).filter (fun p => p ≤ Nat.sqrt N)).card ≤
-          (Finset.range (Nat.sqrt N + 1)).card :=
+          ((Finset.range (r + 1)).filter (fun p => p ≤ Nat.sqrt N)).card ≤
+            (Finset.range (Nat.sqrt N + 1)).card :=
         Finset.card_le_card fun p hp => by
           rw [Finset.mem_filter, Finset.mem_range] at hp
           exact Finset.mem_range.mpr (Nat.lt_succ_iff.mpr hp.2)
@@ -149,8 +152,8 @@ private lemma choose_large_factorization_product_le_primorial (N r : ℕ) :
       dsimp [f]
       rw [Nat.factorization_eq_zero_of_not_prime _ hp_ne_one, pow_zero])).symm
   rw [show (∏ p ∈ (Finset.range (r + 1)).filter (fun p => ¬ p ≤ Nat.sqrt N),
-    p ^ (Nat.choose N r).factorization p) = ∏ p ∈ large, f p by rfl, hfilter]
-  refine (Finset.prod_le_prod'
+      p ^ (Nat.choose N r).factorization p) = ∏ p ∈ large, f p by rfl, hfilter]
+  refine (Finset.prod_le_prod
     (s := large.filter Nat.Prime) (f := f) (g := fun p => p) fun p hp => ?_).trans ?_
   · obtain ⟨hlarge, hp_prime⟩ := Finset.mem_filter.mp hp
     exact choose_factorization_pow_le_self_of_sqrt_lt hp_prime (by
@@ -158,7 +161,7 @@ private lemma choose_large_factorization_product_le_primorial (N r : ℕ) :
       rw [Finset.mem_filter] at hlarge
       omega)
   dsimp [primorial]
-  apply Finset.prod_le_prod_of_subset_of_one_le'
+  apply Finset.prod_le_prod_of_subset_of_one_le
   · intro p hp
     rw [Finset.mem_filter] at hp
     rw [Finset.mem_filter]
@@ -168,18 +171,23 @@ private lemma choose_large_factorization_product_le_primorial (N r : ℕ) :
   · intro p hp _hp_not
     exact (Finset.mem_filter.mp hp).2.one_le
 
+/- Erdős-style split of the no-large-prime factorization at `sqrt N`.
+
+Prime factors at most `sqrt N` each contribute at most `N`; prime factors above `sqrt N`
+occur with multiplicity at most one, so their contribution is bounded by the primorial of `r`.
+This is weaker than the full 1934 product estimate, but it is the next useful refinement beyond
+the crude `N ^ Nat.primeCounting r` bound. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
 
 /--
 [choose_le_top_pow_sqrt_mul_primorial_of_no_large](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/LargePrimeCriteria.lean)
--/
-@[path]
 Prime factors at most `sqrt N` each contribute at most `N`; prime factors above `sqrt N`
 occur with multiplicity at most one, so their contribution is bounded by the primorial of `r`.
 This is weaker than the full 1934 product estimate, but it is the next useful refinement beyond
 the crude `N ^ Nat.primeCounting r` bound. -/
+@[path]
 private lemma choose_le_top_pow_sqrt_mul_primorial_of_no_large {N r : ℕ} (hN : 0 < N)
   (hrN : r ≤ N) (hsmall : ∀ p : ℕ, p.Prime → p ∣ Nat.choose N r → p ≤ r) :
   Nat.choose N r ≤ N ^ (Nat.sqrt N + 1) * primorial r := by
@@ -189,8 +197,8 @@ private lemma choose_le_top_pow_sqrt_mul_primorial_of_no_large {N r : ℕ} (hN :
   let small : Finset ℕ := (Finset.range (r + 1)).filter (fun p => p ≤ Nat.sqrt N)
   let large : Finset ℕ := (Finset.range (r + 1)).filter (fun p => ¬ p ≤ Nat.sqrt N)
   have hsplit :
-    (∏ p ∈ Finset.range (r + 1), f p) =
-      (∏ p ∈ small, f p) * (∏ p ∈ large, f p) := by
+      (∏ p ∈ Finset.range (r + 1), f p) =
+        (∏ p ∈ small, f p) * (∏ p ∈ large, f p) := by
     dsimp [small, large]
     exact (Finset.prod_filter_mul_prod_filter_not
       (Finset.range (r + 1)) (fun p => p ≤ Nat.sqrt N) f).symm
@@ -199,6 +207,7 @@ private lemma choose_le_top_pow_sqrt_mul_primorial_of_no_large {N r : ℕ} (hN :
   · simpa [small, f] using choose_small_factorization_product_le_top_pow_sqrt (N := N) (r := r) hN
   · simpa [large, f] using choose_large_factorization_product_le_primorial N r
 
+/- Contrapositive of `choose_le_top_pow_sqrt_mul_primorial_of_no_large`. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -248,6 +257,7 @@ lemma exists_large_prime_dvd_choose_of_mul_top_pow_sqrt_mul_primorial_lt_four_po
     Nat.mul_le_mul_left r hnot
   exact (not_lt_of_ge hbound.le) (hlower.trans_le hmul)
 
+/- Rational lower-bound formulation using the split `sqrt/primorial` upper bound. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -286,16 +296,18 @@ lemma exists_large_prime_dvd_choose_of_factorial_mul_top_pow_sqrt_mul_primorial_
   rw [lt_div_iff₀' (by exact_mod_cast Nat.factorial_pos r)]
   norm_cast
 
+/- A rational lower-bound formulation convenient for later analytic estimates.  Once a separate
+calculation proves that this lower bound already exceeds the no-large-prime upper bound, a large
+prime divisor follows. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
 
 /--
 [exists_large_prime_dvd_choose_of_top_pow_primeCounting_lt_lower_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SylvesterSchur/LargePrimeCriteria.lean)
--/
-@[path]
 calculation proves that this lower bound already exceeds the no-large-prime upper bound, a large
 prime divisor follows. -/
+@[path]
 private lemma exists_large_prime_dvd_choose_of_top_pow_primeCounting_lt_lower_bound {N r : ℕ}
   (hN : 0 < N) (hrN : r ≤ N)
   (hbound :
@@ -325,6 +337,7 @@ lemma exists_large_prime_dvd_choose_of_factorial_mul_top_pow_primeCounting_lt_lo
   rw [lt_div_iff₀' (by exact_mod_cast Nat.factorial_pos r)]
   norm_cast
 
+/- Lower-bound criterion using the formalized `π(r) ≤ r / 2 + 1` estimate. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -361,6 +374,7 @@ lemma exists_large_prime_dvd_choose_of_factorial_mul_top_pow_half_add_one_lt_low
   rw [lt_div_iff₀' (by exact_mod_cast Nat.factorial_pos r)]
   norm_cast
 
+/- Lower-bound criterion using the explicit `π(r) ≤ 3r/8` estimate. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -423,6 +437,7 @@ lemma exists_large_prime_dvd_choose_of_self_pow_mul_top_pow_three_mul_div_eight_
   exact (Nat.mul_le_mul_right (N ^ (3 * r / 8)) (Nat.factorial_le_pow r)).trans_lt
     hbound
 
+/- The same lower-bound criterion with the elementary exponent `r - 1`. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -464,4 +479,4 @@ end Nat.SylvesterSchur
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

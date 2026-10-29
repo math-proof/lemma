@@ -54,7 +54,7 @@ lemma polynomial_diameter_bound
 -- imply
   G.diam ≤ k := by
 -- proof
-  suffices hediam : G.ediam ≤ ↑k from ENat.toNat_le_of_le_coe hediam
+  suffices hediam : G.ediam ≤ ↑k from ENat.toNat_le_of_le_natCast hediam
   apply SimpleGraph.ediam_le_of_edist_le
   intro u v
   have h_exists : ∃ i ∈ range (p.natDegree + 1), (G.adjMatrix ℝ ^ i) u v ≠ 0 := by
@@ -128,7 +128,7 @@ lemma aeval_conjStarAlgAut_eq
   have h := Polynomial.aeval_algEquiv
     (Unitary.conjStarAlgAut ℝ (Matrix m m ℝ) u).toAlgEquiv D
   have := congr_fun (congrArg DFunLike.coe h) p
-  simp only [AlgHom.comp_apply, AlgHom.coe_coe] at this
+  simp only [AlgHom.comp_apply] at this
   convert this using 1
 
 end ExpanderDiameter
@@ -154,7 +154,7 @@ lemma conjStarAlgAut_diagonal_entry_eq
     RCLike.star_def, conj_trivial, Matrix.diagonal_apply]
   congr 1; ext i; simp only [Finset.sum_mul]
   rw [Finset.sum_eq_single i]
-  · simp only [if_true]; ring
+  · simp only [ite_true]; ring
   · intro j _ hji; simp [hji]
   · intro hi; exact absurd (Finset.mem_univ i) hi
 
@@ -233,14 +233,14 @@ lemma walk_matrix_mulVec_ones
   M *ᵥ (Function.const (Fin n) 1) = Function.const (Fin n) 1 := by
 -- proof
   ext v
-  simp only [hM, mulVec, dotProduct, smul_apply, smul_eq_mul, Function.const_apply]
+  simp only [hM, mulVec, dotProduct, smul_apply, Function.const_apply]
   have key : ∑ x : Fin n, (G.adjMatrix ℝ) v x = (d : ℝ) := by
     have h := G.adjMatrix_mulVec_const_apply (a := (1 : ℝ)) (v := v)
     simp only [mulVec, dotProduct, Function.const_apply, mul_one] at h
     rw [h, hreg v]
   calc ∑ x, 1 / (d : ℝ) * (G.adjMatrix ℝ) v x * 1
     = (d : ℝ)⁻¹ * ∑ x, (G.adjMatrix ℝ) v x := by
-      rw [Finset.mul_sum]; congr 1; ext x; ring
+        rw [Finset.mul_sum]; congr 1; ext x; ring
     _ = (d : ℝ)⁻¹ * (d : ℝ) := by rw [key]
     _ = 1 := by field_simp
 
@@ -424,12 +424,12 @@ lemma poly_degree_bounds_diameter
       exact this
     calc ∑ j : Fin n, (∑ v : Fin n, U v j) ^ 2
       = ∑ v, ∑ w, ∑ j, U v j * U w j := by
-        simp_rw [sq, Finset.sum_mul, Finset.mul_sum]
-        rw [Finset.sum_comm (s := Finset.univ) (t := Finset.univ)]
-        congr 1; ext v
-        rw [Finset.sum_comm (s := Finset.univ) (t := Finset.univ)]
+          simp_rw [sq, Finset.sum_mul, Finset.mul_sum]
+          rw [Finset.sum_comm (s := Finset.univ) (t := Finset.univ)]
+          congr 1; ext v
+          rw [Finset.sum_comm (s := Finset.univ) (t := Finset.univ)]
       _ = ∑ v, ∑ w, (U * Uᵀ) v w := by
-        simp only [Matrix.mul_apply, Matrix.transpose_apply]
+          simp only [Matrix.mul_apply, Matrix.transpose_apply]
       _ = (n : ℝ) := by
         rw [hUUT]; simp [Matrix.one_apply, Finset.sum_ite_eq',
           Finset.card_univ, Fintype.card_fin]
@@ -543,15 +543,15 @@ lemma poly_degree_bounds_diameter
       ≤ ∑ j ∈ Finset.univ.erase j₀, |p.eval (hM_sym.eigenvalues₀ j) * U a (e j) * U b (e j)| :=
         Finset.abs_sum_le_sum_abs _ _
       _ ≤ ∑ j ∈ Finset.univ.erase j₀, (1 / (n : ℝ)) * (|U a (e j)| * |U b (e j)|) := by
-        apply Finset.sum_le_sum; intro j hj
-        rw [abs_mul, abs_mul, mul_assoc]
-        apply mul_le_mul_of_nonneg_right _ (mul_nonneg (abs_nonneg _) (abs_nonneg _))
-        have hj_val : j.val ≥ 1 := by
-          have := (Finset.mem_erase.mp hj).1
-          exact Nat.one_le_iff_ne_zero.mpr (fun h => this (Fin.ext h))
-        exact le_of_lt (hp_small j hj_val)
+          apply Finset.sum_le_sum; intro j hj
+          rw [abs_mul, abs_mul, mul_assoc]
+          apply mul_le_mul_of_nonneg_right _ (mul_nonneg (abs_nonneg _) (abs_nonneg _))
+          have hj_val : j.val ≥ 1 := by
+              have := (Finset.mem_erase.mp hj).1
+              exact Nat.one_le_iff_ne_zero.mpr (fun h => this (Fin.ext h))
+            exact le_of_lt (hp_small j hj_val)
       _ = (1 / (n : ℝ)) * ∑ j ∈ Finset.univ.erase j₀, |U a (e j)| * |U b (e j)| := by
-        rw [← Finset.mul_sum]
+          rw [← Finset.mul_sum]
       _ ≤ (1 / (n : ℝ)) * (Real.sqrt (∑ j ∈ Finset.univ.erase j₀, U a (e j) ^ 2) *
         Real.sqrt (∑ j ∈ Finset.univ.erase j₀, U b (e j) ^ 2)) :=
         mul_le_mul_of_nonneg_left h_cs (by positivity)
@@ -689,7 +689,7 @@ lemma diameter_spectral_gap_bound
       lt_of_le_of_lt hbound h_pow_lt
     rw [abs_lt] at hlt
     linarith [hlt.1]
-  suffices hediam : G.ediam ≤ ↑t from ENat.toNat_le_of_le_coe hediam
+  suffices hediam : G.ediam ≤ ↑t from ENat.toNat_le_of_le_natCast hediam
   apply SimpleGraph.ediam_le_of_edist_le
   intro u v
   have hMuv := h_entry_pos u v
@@ -759,3 +759,4 @@ private lemma walk_matrix_eigenvalues_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

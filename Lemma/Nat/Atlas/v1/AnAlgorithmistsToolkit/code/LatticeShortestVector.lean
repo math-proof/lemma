@@ -11,7 +11,7 @@ namespace LatticeShortestVector
 -/
 @[path]
 lemma lattice_vector_norm_bound
-  {n : ℕ}
+  {_n : ℕ}
   [NormedAddCommGroup E]
   [InnerProductSpace ℝ E]
   {n : ℕ}
@@ -67,7 +67,7 @@ lemma lattice_vector_norm_bound
               by_contra hci_ne
               exact absurd (hj_max i hci_ne) (not_le.mpr h_gt)
             simp [hci]
-      simp_rw [h_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      simp_rw [h_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
     rw [h_sum]
     have h_inner_self : ⟪gs j, b j⟫_ℝ = ‖gs j‖ ^ 2 := by
       have hdecomp := gramSchmidt_def'' ℝ b j
@@ -113,3 +113,4 @@ end LatticeShortestVector
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-28

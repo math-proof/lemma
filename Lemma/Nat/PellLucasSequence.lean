@@ -29,7 +29,7 @@ private lemma pellLucasSequence_zero_eq
 -- imply
   pellLucasSequence 0 = 1 := by
 -- proof
-  apply MetaMathlibExt.pellLucasSequence_zero
+  rfl
 
 /--
 [pellLucasSequence_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PellLucasSequence.lean)
@@ -40,8 +40,8 @@ private lemma pellLucasSequence_one_eq
 -- imply
   pellLucasSequence 1 = 1 := by
 -- proof
-  apply MetaMathlibExt.pellLucasSequence_one
+  rfl
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

@@ -14,13 +14,13 @@ namespace MetaMathlibExt.StarCyclic
 -/
 @[path]
 private lemma tailWS_sum (t : List ℕ) {ι : Type*} (s : Finset ι)
-  (v : ι → ℕ → ℝ≥0∞) (A : ℕ) :
+  (v : ι → ℕ → ENNReal) (A : ℕ) :
   tailWS t (fun y => ∑ i ∈ s, v i y) A = ∑ i ∈ s, tailWS t (v i) A := by
   induction t generalizing A with
   | nil => rfl
   | cons e t ih =>
     unfold tailWS
-    trans ∑ y ∈ Finset.Icc 1 A, ∑ i ∈ s, ((y : ℝ≥0∞) ^ e)⁻¹ * tailWS t (v i) y
+    trans ∑ y ∈ Finset.Icc 1 A, ∑ i ∈ s, ((y : ENNReal) ^ e)⁻¹ * tailWS t (v i) y
     · apply Finset.sum_congr rfl
       intro y _
       rw [ih, Finset.mul_sum]
@@ -34,14 +34,14 @@ namespace MetaMathlibExt.StarCyclic
 [tailWS_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean)
 -/
 @[path]
-private lemma tailWS_add (t : List ℕ) (w w' : ℕ → ℝ≥0∞) (A : ℕ) :
+private lemma tailWS_add (t : List ℕ) (w w' : ℕ → ENNReal) (A : ℕ) :
   tailWS t (fun y => w y + w' y) A = tailWS t w A + tailWS t w' A := by
   induction t generalizing A with
   | nil => rfl
   | cons e t ih =>
     unfold tailWS
-    trans ∑ y ∈ Finset.Icc 1 A, (((y : ℝ≥0∞) ^ e)⁻¹ * tailWS t w y
-      + ((y : ℝ≥0∞) ^ e)⁻¹ * tailWS t w' y)
+    trans ∑ y ∈ Finset.Icc 1 A, (((y : ENNReal) ^ e)⁻¹ * tailWS t w y
+      + ((y : ENNReal) ^ e)⁻¹ * tailWS t w' y)
     · apply Finset.sum_congr rfl
       intro y _
       rw [ih, mul_add]
@@ -55,7 +55,7 @@ namespace MetaMathlibExt.StarCyclic
 [tailWS_const_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean)
 -/
 @[path]
-private lemma tailWS_const_mul (t : List ℕ) (r : ℝ≥0∞) (w : ℕ → ℝ≥0∞) (A : ℕ) :
+private lemma tailWS_const_mul (t : List ℕ) (r : ENNReal) (w : ℕ → ENNReal) (A : ℕ) :
   tailWS t (fun y => r * w y) A = r * tailWS t w A := by
   induction t generalizing A with
   | nil => rfl
@@ -74,7 +74,7 @@ namespace MetaMathlibExt.StarCyclic
 [tailWS_congr](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean)
 -/
 @[path]
-private lemma tailWS_congr (t : List ℕ) (w w' : ℕ → ℝ≥0∞) (A : ℕ) (hA : 0 < A)
+private lemma tailWS_congr (t : List ℕ) (w w' : ℕ → ENNReal) (A : ℕ) (hA : 0 < A)
   (h : ∀ y, 0 < y → y ≤ A → w y = w' y) : tailWS t w A = tailWS t w' A := by
   induction t generalizing A with
   | nil => exact h A hA (le_refl A)
@@ -95,7 +95,7 @@ namespace MetaMathlibExt.StarCyclic
 [tailWS_mono](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean)
 -/
 @[path]
-private lemma tailWS_mono (t : List ℕ) (w w' : ℕ → ℝ≥0∞) (A : ℕ) (hA : 0 < A)
+private lemma tailWS_mono (t : List ℕ) (w w' : ℕ → ENNReal) (A : ℕ) (hA : 0 < A)
   (h : ∀ y, 0 < y → y ≤ A → w y ≤ w' y) : tailWS t w A ≤ tailWS t w' A := by
   induction t generalizing A with
   | nil => exact h A hA (le_refl A)
@@ -115,9 +115,9 @@ namespace MetaMathlibExt.StarCyclic
 [tailWS_append](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean)
 -/
 @[path]
-private lemma tailWS_append (t : List ℕ) (e : ℕ) (w : ℕ → ℝ≥0∞) (A : ℕ) :
+private lemma tailWS_append (t : List ℕ) (e : ℕ) (w : ℕ → ENNReal) (A : ℕ) :
   tailWS (t ++ [e]) w A
-    = tailWS t (fun y => ∑ c ∈ Finset.Icc 1 y, ((c : ℝ≥0∞) ^ e)⁻¹ * w c) A := by
+    = tailWS t (fun y => ∑ c ∈ Finset.Icc 1 y, ((c : ENNReal) ^ e)⁻¹ * w c) A := by
   induction t generalizing A with
   | nil => rfl
   | cons e' t ih =>
@@ -136,7 +136,7 @@ namespace MetaMathlibExt.StarCyclic
 [tailWS_tsum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean)
 -/
 @[path]
-private lemma tailWS_tsum (t : List ℕ) {ι : Type*} (v : ι → ℕ → ℝ≥0∞) (A : ℕ) :
+private lemma tailWS_tsum (t : List ℕ) {ι : Type*} (v : ι → ℕ → ENNReal) (A : ℕ) :
   (∑' i, tailWS t (v i) A) = tailWS t (fun y => ∑' i, v i y) A := by
   induction t generalizing A with
   | nil => rfl
@@ -170,7 +170,7 @@ namespace MetaMathlibExt.StarCyclic
 [tsum_Icc_swap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean)
 -/
 @[path]
-private lemma tsum_Icc_swap (F : ℕ → ℕ → ℝ≥0∞) :
+private lemma tsum_Icc_swap (F : ℕ → ℕ → ENNReal) :
   (∑' x : ℕ, (if 0 < x then ∑ y ∈ Finset.Icc 1 x, F x y else 0))
     = ∑' y : ℕ, (if 0 < y then ∑' x : ℕ, (if y ≤ x then F x y else 0) else 0) := by
   have h1 : ∀ x : ℕ, (∑ y ∈ Finset.Icc 1 x, F x y)
@@ -273,35 +273,35 @@ namespace MetaMathlibExt.StarCyclic
 @[path]
 private lemma partial_fraction_cyclic (x c L : ℕ) (hc : 1 ≤ c) (hcx : c < x)
   (hL : 1 ≤ L) :
-  ((x : ℝ≥0∞) ^ L)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹
+  ((x : ENNReal) ^ L)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹
     + ∑ i ∈ Finset.Icc 1 (L - 1),
-      ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ * ((c : ℝ≥0∞) ^ i)⁻¹
-    = (x : ℝ≥0∞)⁻¹ * ((c : ℝ≥0∞) ^ (L - 1))⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ := by
+      ((x : ENNReal) ^ (L - i + 1))⁻¹ * ((c : ENNReal) ^ i)⁻¹
+    = (x : ENNReal)⁻¹ * ((c : ENNReal) ^ (L - 1))⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ := by
   obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : L ≠ 0)
   simp only [Nat.succ_eq_add_one] at *
   rw [Nat.add_sub_cancel]
   have hx0 : x ≠ 0 := by omega
   have hc0' : c ≠ 0 := by omega
   have hsub0 : x - c ≠ 0 := by omega
-  have hxE0 : (x : ℝ≥0∞) ≠ 0 := by exact_mod_cast hx0
-  have hcE0 : (c : ℝ≥0∞) ≠ 0 := by exact_mod_cast hc0'
-  have hsubE0 : ((x - c : ℕ) : ℝ≥0∞) ≠ 0 := by exact_mod_cast hsub0
-  have hpowE_ne_zero : ∀ (a : ℝ≥0∞) (k : ℕ), a ≠ 0 → a ^ k ≠ 0 :=
+  have hxE0 : (x : ENNReal) ≠ 0 := by exact_mod_cast hx0
+  have hcE0 : (c : ENNReal) ≠ 0 := by exact_mod_cast hc0'
+  have hsubE0 : ((x - c : ℕ) : ENNReal) ≠ 0 := by exact_mod_cast hsub0
+  have hpowE_ne_zero : ∀ (a : ENNReal) (k : ℕ), a ≠ 0 → a ^ k ≠ 0 :=
     fun a k ha => ENNReal.pow_ne_zero ha k
-  have hA_ne : ((x : ℝ≥0∞) ^ (n + 1))⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ ≠ ⊤ :=
+  have hA_ne : ((x : ENNReal) ^ (n + 1))⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ ≠ ⊤ :=
     ENNReal.mul_ne_top (ENNReal.inv_ne_top.mpr (hpowE_ne_zero _ _ hxE0))
       (ENNReal.inv_ne_top.mpr hsubE0)
   have hS_ne : ∀ i ∈ Finset.Icc 1 n,
-    ((x : ℝ≥0∞) ^ (n + 1 - i + 1))⁻¹ * ((c : ℝ≥0∞) ^ i)⁻¹ ≠ ⊤ := by
+    ((x : ENNReal) ^ (n + 1 - i + 1))⁻¹ * ((c : ENNReal) ^ i)⁻¹ ≠ ⊤ := by
     intro i _
     exact ENNReal.mul_ne_top
       (ENNReal.inv_ne_top.mpr (hpowE_ne_zero _ _ hxE0))
       (ENNReal.inv_ne_top.mpr (hpowE_ne_zero _ _ hcE0))
-  have hLHS_ne : ((x : ℝ≥0∞) ^ (n + 1))⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹
+  have hLHS_ne : ((x : ENNReal) ^ (n + 1))⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹
     + ∑ i ∈ Finset.Icc 1 n,
-      ((x : ℝ≥0∞) ^ (n + 1 - i + 1))⁻¹ * ((c : ℝ≥0∞) ^ i)⁻¹ ≠ ⊤ :=
+      ((x : ENNReal) ^ (n + 1 - i + 1))⁻¹ * ((c : ENNReal) ^ i)⁻¹ ≠ ⊤ :=
     ENNReal.add_ne_top.mpr ⟨hA_ne, ENNReal.sum_ne_top.mpr hS_ne⟩
-  have hRHS_ne : (x : ℝ≥0∞)⁻¹ * ((c : ℝ≥0∞) ^ n)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ ≠ ⊤ :=
+  have hRHS_ne : (x : ENNReal)⁻¹ * ((c : ENNReal) ^ n)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ ≠ ⊤ :=
     ENNReal.mul_ne_top
       (ENNReal.mul_ne_top (ENNReal.inv_ne_top.mpr hxE0)
         (ENNReal.inv_ne_top.mpr (hpowE_ne_zero _ _ hcE0)))
@@ -549,10 +549,10 @@ namespace MetaMathlibExt.StarCyclic
 -/
 @[path]
 private lemma tsum_inv_mul_inv_sub_eq (c A : ℕ) (hc : 1 ≤ c) (hca : c ≤ A) :
-  (∑' x : ℕ, (if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0))
-    = (c : ℝ≥0∞)⁻¹ * harmTailLt A c := by
+  (∑' x : ℕ, (if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0))
+    = (c : ENNReal)⁻¹ * harmTailLt A c := by
   have hne : ∀ x : ℕ,
-    (if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0) ≠ ⊤ := by
+    (if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0) ≠ ⊤ := by
     intro x
     split_ifs with hx
     · apply ENNReal.mul_ne_top
@@ -564,11 +564,11 @@ private lemma tsum_inv_mul_inv_sub_eq (c A : ℕ) (hc : 1 ≤ c) (hca : c ≤ A)
         exact_mod_cast this
     · exact bot_ne_top
   have hmain : (∑' x : ℕ,
-    (if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0)).toReal
+    (if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0)).toReal
     = (c : ℝ)⁻¹ * ∑ d ∈ Finset.range c, ((((A - d : ℕ)) : ℝ))⁻¹ := by
     rw [ENNReal.tsum_toReal_eq hne]
     have hterm : ∀ x : ℕ,
-      ((if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0)).toReal
+      ((if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0)).toReal
       = (if A < x then ((x : ℝ))⁻¹ * ((((x - c : ℕ)) : ℝ))⁻¹ else 0) := by
       intro x
       split_ifs with hx
@@ -590,17 +590,17 @@ private lemma tsum_inv_mul_inv_sub_eq (c A : ℕ) (hc : 1 ≤ c) (hca : c ≤ A)
         exact inv_pos.mpr hpos
       · exact Finset.nonempty_range_iff.mpr (by omega : c ≠ 0)
   have hfin : (∑' x : ℕ,
-    (if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0)) ≠ ⊤ := by
+    (if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0)) ≠ ⊤ := by
     intro hcon
     apply hval0
     have h0 : (∑' x : ℕ,
-      (if A < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0)).toReal = 0 := by
+      (if A < x then (x : ENNReal)⁻¹ * (((x - c : ℕ) : ENNReal))⁻¹ else 0)).toReal = 0 := by
       rwa [hcon]
     rwa [hmain] at h0
   have hof := congrArg ENNReal.ofReal hmain
   rw [ENNReal.ofReal_toReal hfin] at hof
   have hfin_eq : ∀ d ∈ Finset.range c,
-    ENNReal.ofReal ((((A - d : ℕ)) : ℝ))⁻¹ = ((((A - d : ℕ)) : ℝ≥0∞))⁻¹ := by
+    ENNReal.ofReal ((((A - d : ℕ)) : ℝ))⁻¹ = ((((A - d : ℕ)) : ENNReal))⁻¹ := by
     intro d hd
     have hdc : d < c := Finset.mem_range.mp hd
     have hpos : (0:ℝ) < ((((A - d : ℕ)) : ℝ)) := by
@@ -669,7 +669,7 @@ namespace MetaMathlibExt.StarCyclic
 [sum_rotate_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean)
 -/
 @[path]
-private lemma sum_rotate_succ (k : List ℕ) (f : List ℕ → ℝ≥0∞) :
+private lemma sum_rotate_succ (k : List ℕ) (f : List ℕ → ENNReal) :
   ∑ j : Fin k.length, f (k.rotate (j.1 + 1)) = ∑ j : Fin k.length, f (k.rotate j.1) := by
   obtain rfl | hne := eq_or_ne k []
   · simp
@@ -784,8 +784,8 @@ namespace MetaMathlibExt.StarCyclic
 @[path]
 private lemma prod_cons_split_star (h : ℕ) (tl : List ℕ) (y : ℕ)
   (n' : Fin tl.length → ℕ) :
-  (∏ a : Fin (tl.length + 1), ((Fin.cons (α := fun _ => ℕ) y n' a : ℝ≥0∞) ^ (h :: tl).get a)⁻¹)
-  = ((y : ℝ≥0∞) ^ h)⁻¹ * ∏ a', ((n' a' : ℝ≥0∞) ^ tl.get a')⁻¹ := by
+  (∏ a : Fin (tl.length + 1), ((Fin.cons (α := fun _ => ℕ) y n' a : ENNReal) ^ (h :: tl).get a)⁻¹)
+  = ((y : ENNReal) ^ h)⁻¹ * ∏ a', ((n' a' : ENNReal) ^ tl.get a')⁻¹ := by
   have hget0 : (h :: tl).get (0 : Fin (tl.length + 1)) = h := rfl
   have hgetS : ∀ i : Fin tl.length, (h :: tl).get i.succ = tl.get i := fun i => rfl
   rw [Fin.prod_univ_succ]
@@ -802,7 +802,7 @@ namespace MetaMathlibExt.StarCyclic
 private lemma zetaEStar_bounded_eq_tailWS (t : List ℕ) (A : ℕ) :
   (∑' n : Fin t.length → ℕ,
     if (∀ a b : Fin t.length, a < b → n b ≤ n a) ∧ (∀ a, 0 < n a) ∧ (∀ a, n a ≤ A)
-    then ∏ a, ((n a : ℝ≥0∞) ^ t.get a)⁻¹ else 0)
+    then ∏ a, ((n a : ENNReal) ^ t.get a)⁻¹ else 0)
   = tailWS t (fun _ => 1) A := by
   induction t generalizing A with
   | nil =>
@@ -843,15 +843,15 @@ private lemma zetaEStar_bounded_eq_tailWS (t : List ℕ) (A : ℕ) :
         ∧ (∀ a, 0 < Fin.cons (α := fun _ => ℕ) y n' a)
         ∧ (∀ a, Fin.cons (α := fun _ => ℕ) y n' a ≤ A)
         then ∏ a : Fin (tl.length + 1),
-          ((Fin.cons (α := fun _ => ℕ) y n' a : ℝ≥0∞) ^ (h :: tl).get a)⁻¹ else 0))
-      = (if 0 < y ∧ y ≤ A then ((y : ℝ≥0∞) ^ h)⁻¹ * tailWS tl (fun _ => 1) y else 0) := by
+          ((Fin.cons (α := fun _ => ℕ) y n' a : ENNReal) ^ (h :: tl).get a)⁻¹ else 0))
+      = (if 0 < y ∧ y ≤ A then ((y : ENNReal) ^ h)⁻¹ * tailWS tl (fun _ => 1) y else 0) := by
       intro y
       by_cases hQ : 0 < y ∧ y ≤ A
       · rw [ite_eq_left hQ]
-        trans ((y : ℝ≥0∞) ^ h)⁻¹ * ∑' n' : Fin tl.length → ℕ,
+        trans ((y : ENNReal) ^ h)⁻¹ * ∑' n' : Fin tl.length → ℕ,
           (if (∀ a b : Fin tl.length, a < b → n' b ≤ n' a) ∧ (∀ a, 0 < n' a) ∧
             (∀ a, n' a ≤ y)
-            then ∏ a', ((n' a' : ℝ≥0∞) ^ tl.get a')⁻¹ else 0)
+            then ∏ a', ((n' a' : ENNReal) ^ tl.get a')⁻¹ else 0)
         · rw [← ENNReal.tsum_mul_left]
           apply tsum_congr
           intro n'
@@ -861,16 +861,16 @@ private lemma zetaEStar_bounded_eq_tailWS (t : List ℕ) (A : ℕ) :
           · exact (mul_zero _).symm
         · rw [ih y]
       · rw [ite_eq_right hQ]
-        trans (∑' _ : Fin tl.length → ℕ, (0 : ℝ≥0∞))
+        trans (∑' _ : Fin tl.length → ℕ, (0 : ENNReal))
         · apply tsum_congr
           intro n'
           simp only [hcond y n']
           exact ite_eq_right (fun h => hQ h.1)
         · exact tsum_zero
-    trans ∑' y : ℕ, (if 0 < y ∧ y ≤ A then ((y : ℝ≥0∞) ^ h)⁻¹ * tailWS tl (fun _ => 1) y else 0)
+    trans ∑' y : ℕ, (if 0 < y ∧ y ≤ A then ((y : ENNReal) ^ h)⁻¹ * tailWS tl (fun _ => 1) y else 0)
     · exact tsum_congr hpoint
     · have hsupp : Function.support
-      (fun y : ℕ => if 0 < y ∧ y ≤ A then ((y : ℝ≥0∞) ^ h)⁻¹ * tailWS tl (fun _ => 1) y else 0)
+      (fun y : ℕ => if 0 < y ∧ y ≤ A then ((y : ENNReal) ^ h)⁻¹ * tailWS tl (fun _ => 1) y else 0)
       ⊆ ↑(Finset.Icc 1 A) := by
       intro y hy
       simp only [Function.mem_support, ne_eq] at hy
@@ -879,7 +879,7 @@ private lemma zetaEStar_bounded_eq_tailWS (t : List ℕ) (A : ℕ) :
       exact hy (ite_eq_right hcon)
       rw [tsum_eq_sum' hsupp]
       have hRHS : tailWS (h :: tl) (fun _ => 1) A
-        = ∑ y ∈ Finset.Icc 1 A, ((y : ℝ≥0∞) ^ h)⁻¹ * tailWS tl (fun _ => 1) y := rfl
+        = ∑ y ∈ Finset.Icc 1 A, ((y : ENNReal) ^ h)⁻¹ * tailWS tl (fun _ => 1) y := rfl
       rw [hRHS]
       apply Finset.sum_congr rfl
       intro y hy
@@ -897,7 +897,7 @@ namespace MetaMathlibExt.StarCyclic
 @[path]
 private lemma zetaEStar_term_ne_top (l : List ℕ) (n : Fin l.length → ℕ) :
   (if (∀ a b : Fin l.length, a < b → n b ≤ n a) ∧ (∀ a, 0 < n a) then
-    ∏ a, ((n a : ℝ≥0∞) ^ l.get a)⁻¹ else 0) ≠ ⊤ := by
+    ∏ a, ((n a : ENNReal) ^ l.get a)⁻¹ else 0) ≠ ⊤ := by
   split_ifs with h
   · obtain ⟨_, hpos⟩ := h
     apply ENNReal.prod_ne_top
@@ -924,7 +924,7 @@ private lemma starValue_toIndexS_eq (l : List ℕ)
   have hdepth : index.depth = l.length := rfl
   have hterm : ∀ n : Fin l.length → ℕ,
     ((if (∀ a b : Fin l.length, a < b → n b ≤ n a) ∧ (∀ a, 0 < n a) then
-      ∏ a, ((n a : ℝ≥0∞) ^ l.get a)⁻¹ else 0)).toReal
+      ∏ a, ((n a : ENNReal) ^ l.get a)⁻¹ else 0)).toReal
     = if (∀ a b : Fin l.length, a < b → n b ≤ n a) ∧ (∀ a, 0 < n a) then
       ∏ a, (((n a : ℕ) : ℝ) ^ l.get a)⁻¹ else 0 := by
     intro n
@@ -1015,7 +1015,7 @@ private lemma strictValue_singleton_toIndexS_eq (e : ℕ)
   have hdepth : index.depth = [e].length := rfl
   have hterm : ∀ n : Fin [e].length → ℕ,
     ((if (∀ a b : Fin [e].length, a < b → n b ≤ n a) ∧ (∀ a, 0 < n a) then
-      ∏ a, ((n a : ℝ≥0∞) ^ [e].get a)⁻¹ else 0)).toReal
+      ∏ a, ((n a : ENNReal) ^ [e].get a)⁻¹ else 0)).toReal
     = if (∀ a b : Fin [e].length, a < b → n b ≤ n a) ∧ (∀ a, 0 < n a) then
       ∏ a, ((((n a : ℕ) : ℝ)) ^ [e].get a)⁻¹ else 0 := by
     intro n
@@ -1159,11 +1159,11 @@ namespace MetaMathlibExt.StarCyclic
 -/
 @[path]
 private lemma pow_inv_mul_pow_inv (x : ℕ) (hx : 0 < x) (a b : ℕ) :
-  ((x : ℝ≥0∞) ^ a)⁻¹ * ((x : ℝ≥0∞) ^ b)⁻¹ = ((x : ℝ≥0∞) ^ (a + b))⁻¹ := by
-  have hx0 : (x : ℝ≥0∞) ≠ 0 := by exact_mod_cast (ne_of_gt hx)
-  have hxT : (x : ℝ≥0∞) ≠ ⊤ := ENNReal.natCast_ne_top x
-  have ha0 : ((x : ℝ≥0∞) ^ a) ≠ 0 := ENNReal.pow_ne_zero hx0 a
-  have haT : ((x : ℝ≥0∞) ^ a) ≠ ⊤ := ENNReal.pow_ne_top hxT
+  ((x : ENNReal) ^ a)⁻¹ * ((x : ENNReal) ^ b)⁻¹ = ((x : ENNReal) ^ (a + b))⁻¹ := by
+  have hx0 : (x : ENNReal) ≠ 0 := by exact_mod_cast (ne_of_gt hx)
+  have hxT : (x : ENNReal) ≠ ⊤ := ENNReal.natCast_ne_top x
+  have ha0 : ((x : ENNReal) ^ a) ≠ 0 := ENNReal.pow_ne_zero hx0 a
+  have haT : ((x : ENNReal) ^ a) ≠ ⊤ := ENNReal.pow_ne_top hxT
   rw [pow_add, ENNReal.mul_inv (Or.inl ha0) (Or.inl haT)]
 
 end MetaMathlibExt.StarCyclic
@@ -1174,7 +1174,7 @@ namespace MetaMathlibExt.StarCyclic
 [tailWS_dirac_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean)
 -/
 @[path]
-private lemma tailWS_dirac_zero (t : List ℕ) (x y : ℕ) (v : ℝ≥0∞) (hyx : y < x) :
+private lemma tailWS_dirac_zero (t : List ℕ) (x y : ℕ) (v : ENNReal) (hyx : y < x) :
   tailWS t (fun z => if z = x then v else 0) y = 0 := by
   induction t generalizing y with
   | nil =>
@@ -1195,9 +1195,9 @@ namespace MetaMathlibExt.StarCyclic
 [tailWS_dirac_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean)
 -/
 @[path]
-private lemma tailWS_dirac_eq (rest : List ℕ) (x : ℕ) (hx : 0 < x) (v : ℝ≥0∞) :
+private lemma tailWS_dirac_eq (rest : List ℕ) (x : ℕ) (hx : 0 < x) (v : ENNReal) :
   tailWS rest (fun y => if y = x then v else 0) x
-    = ((x : ℝ≥0∞) ^ rest.sum)⁻¹ * v := by
+    = ((x : ENNReal) ^ rest.sum)⁻¹ * v := by
   induction rest generalizing v with
   | nil =>
     unfold tailWS
@@ -1205,8 +1205,8 @@ private lemma tailWS_dirac_eq (rest : List ℕ) (x : ℕ) (hx : 0 < x) (v : ℝ�
   | cons r rest' ih =>
     unfold tailWS
     have hsingle : ∀ y ∈ Finset.Icc 1 x,
-      ((y : ℝ≥0∞) ^ r)⁻¹ * tailWS rest' (fun z => if z = x then v else 0) y
-      = if y = x then ((x : ℝ≥0∞) ^ r)⁻¹ * (((x : ℝ≥0∞) ^ rest'.sum)⁻¹ * v) else 0 := by
+      ((y : ENNReal) ^ r)⁻¹ * tailWS rest' (fun z => if z = x then v else 0) y
+      = if y = x then ((x : ENNReal) ^ r)⁻¹ * (((x : ENNReal) ^ rest'.sum)⁻¹ * v) else 0 := by
       intro y hy
       by_cases hyx : y = x
       · subst hyx
@@ -1237,11 +1237,11 @@ namespace MetaMathlibExt.StarCyclic
 -/
 @[path]
 private lemma diag_sum_single (L x : ℕ) (hL : 1 ≤ L) (hx : 0 < x) :
-  ∑ i ∈ Finset.Icc 1 (L - 1), ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ * ((x : ℝ≥0∞) ^ i)⁻¹
-    = ((L - 1 : ℕ) : ℝ≥0∞) * ((x : ℝ≥0∞) ^ (L + 1))⁻¹ := by
+  ∑ i ∈ Finset.Icc 1 (L - 1), ((x : ENNReal) ^ (L - i + 1))⁻¹ * ((x : ENNReal) ^ i)⁻¹
+    = ((L - 1 : ℕ) : ENNReal) * ((x : ENNReal) ^ (L + 1))⁻¹ := by
   have hterm : ∀ i ∈ Finset.Icc 1 (L - 1),
-    ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ * ((x : ℝ≥0∞) ^ i)⁻¹
-      = ((x : ℝ≥0∞) ^ (L + 1))⁻¹ := by
+    ((x : ENNReal) ^ (L - i + 1))⁻¹ * ((x : ENNReal) ^ i)⁻¹
+      = ((x : ENNReal) ^ (L + 1))⁻¹ := by
     intro i hi
     have hi2 : i ≤ L - 1 := (Finset.mem_Icc.mp hi).2
     have hexp : L - i + 1 + i = L + 1 := by omega
@@ -1249,8 +1249,8 @@ private lemma diag_sum_single (L x : ℕ) (hL : 1 ≤ L) (hx : 0 < x) :
   have hcard : (Finset.Icc 1 (L - 1)).card = L - 1 := by
     rw [Nat.card_Icc]
     omega
-  have hconst : (∑ _i ∈ Finset.Icc 1 (L - 1), ((x : ℝ≥0∞) ^ (L + 1))⁻¹)
-    = ((L - 1 : ℕ) : ℝ≥0∞) * ((x : ℝ≥0∞) ^ (L + 1))⁻¹ := by
+  have hconst : (∑ _i ∈ Finset.Icc 1 (L - 1), ((x : ENNReal) ^ (L + 1))⁻¹)
+    = ((L - 1 : ℕ) : ENNReal) * ((x : ENNReal) ^ (L + 1))⁻¹ := by
     rw [Finset.sum_const, hcard, nsmul_eq_mul]
   exact (Finset.sum_congr rfl (fun i hi => hterm i hi)).trans hconst
 
@@ -1264,25 +1264,25 @@ namespace MetaMathlibExt.StarCyclic
 @[path]
 private lemma split_pointwise (L x y : ℕ) (hL : 1 ≤ L) (hx : 0 < x)
   (hyx : y ≤ x) :
-  (∑ i ∈ Finset.Icc 1 (L - 1), ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ *
-    (∑ c ∈ Finset.Icc 1 y, ((c : ℝ≥0∞) ^ i)⁻¹))
-    + ((x : ℝ≥0∞) ^ L)⁻¹ * harmStar x y
+  (∑ i ∈ Finset.Icc 1 (L - 1), ((x : ENNReal) ^ (L - i + 1))⁻¹ *
+    (∑ c ∈ Finset.Icc 1 y, ((c : ENNReal) ^ i)⁻¹))
+    + ((x : ENNReal) ^ L)⁻¹ * harmStar x y
   = wWeightS L x y
-    + (if y = x then ((L - 1 : ℕ) : ℝ≥0∞) * ((x : ℝ≥0∞) ^ (L + 1))⁻¹ else 0) := by
-  have hS : (∑ i ∈ Finset.Icc 1 (L - 1), ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ *
-    (∑ c ∈ Finset.Icc 1 y, ((c : ℝ≥0∞) ^ i)⁻¹))
+    + (if y = x then ((L - 1 : ℕ) : ENNReal) * ((x : ENNReal) ^ (L + 1))⁻¹ else 0) := by
+  have hS : (∑ i ∈ Finset.Icc 1 (L - 1), ((x : ENNReal) ^ (L - i + 1))⁻¹ *
+    (∑ c ∈ Finset.Icc 1 y, ((c : ENNReal) ^ i)⁻¹))
     = ∑ c ∈ Finset.Icc 1 y, ∑ i ∈ Finset.Icc 1 (L - 1),
-      ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ * ((c : ℝ≥0∞) ^ i)⁻¹ := by
+      ((x : ENNReal) ^ (L - i + 1))⁻¹ * ((c : ENNReal) ^ i)⁻¹ := by
     simp only [Finset.mul_sum]
     exact Finset.sum_comm
-  have hB : ((x : ℝ≥0∞) ^ L)⁻¹ * harmStar x y
+  have hB : ((x : ENNReal) ^ L)⁻¹ * harmStar x y
     = ∑ c ∈ Finset.Icc 1 y,
-      ((x : ℝ≥0∞) ^ L)⁻¹ * (if c < x then (((x - c : ℕ) : ℝ≥0∞))⁻¹ else 0) := by
+      ((x : ENNReal) ^ L)⁻¹ * (if c < x then (((x - c : ℕ) : ENNReal))⁻¹ else 0) := by
     unfold harmStar
     rw [Finset.mul_sum]
-  have hD : (if y = x then ((L - 1 : ℕ) : ℝ≥0∞) * ((x : ℝ≥0∞) ^ (L + 1))⁻¹ else 0)
+  have hD : (if y = x then ((L - 1 : ℕ) : ENNReal) * ((x : ENNReal) ^ (L + 1))⁻¹ else 0)
     = ∑ c ∈ Finset.Icc 1 y,
-      (if c = x then ((L - 1 : ℕ) : ℝ≥0∞) * ((x : ℝ≥0∞) ^ (L + 1))⁻¹ else 0) := by
+      (if c = x then ((L - 1 : ℕ) : ENNReal) * ((x : ENNReal) ^ (L + 1))⁻¹ else 0) := by
     by_cases hyx' : y = x
     · rw [ite_eq_left hyx', hyx']
       rw [Finset.sum_eq_single x]
@@ -1311,7 +1311,7 @@ private lemma split_pointwise (L x y : ℕ) (hL : 1 ≤ L) (hx : 0 < x)
     rw [ite_eq_left hcx, ite_eq_left hcx, ite_eq_right hne, add_zero]
     have hpf := partial_fraction_cyclic x c L hc1 hcx hL
     rw [add_comm (∑ i ∈ Finset.Icc 1 (L - 1),
-      ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ * ((c : ℝ≥0∞) ^ i)⁻¹)]
+      ((x : ENNReal) ^ (L - i + 1))⁻¹ * ((c : ENNReal) ^ i)⁻¹)]
     exact hpf
   · have hceq : c = x := by omega
     have hnc : ¬ c < x := by omega
@@ -1330,41 +1330,41 @@ namespace MetaMathlibExt.StarCyclic
 @[path]
 private lemma split_fixed (L : ℕ) (rest : List ℕ) (x : ℕ) (hL : 1 ≤ L)
   (hx : 0 < x) :
-  (∑ i ∈ Finset.Icc 1 (L - 1), ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ *
+  (∑ i ∈ Finset.Icc 1 (L - 1), ((x : ENNReal) ^ (L - i + 1))⁻¹ *
     tailWS (rest ++ [i]) (fun _ => 1) x)
-    + ((x : ℝ≥0∞) ^ L)⁻¹ * tailWS rest (harmStar x) x
+    + ((x : ENNReal) ^ L)⁻¹ * tailWS rest (harmStar x) x
   = tailWS rest (wWeightS L x) x
     + tailWS rest
-      (fun y => if y = x then ((L - 1 : ℕ) : ℝ≥0∞) * ((x : ℝ≥0∞) ^ (L + 1))⁻¹
+      (fun y => if y = x then ((L - 1 : ℕ) : ENNReal) * ((x : ENNReal) ^ (L + 1))⁻¹
         else 0) x := by
   have e1 : ∀ i ∈ Finset.Icc 1 (L - 1),
-    ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ * tailWS (rest ++ [i]) (fun _ => 1) x
+    ((x : ENNReal) ^ (L - i + 1))⁻¹ * tailWS (rest ++ [i]) (fun _ => 1) x
     = tailWS rest
-      (fun y => ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ *
-        (∑ c ∈ Finset.Icc 1 y, ((c : ℝ≥0∞) ^ i)⁻¹)) x := by
+      (fun y => ((x : ENNReal) ^ (L - i + 1))⁻¹ *
+        (∑ c ∈ Finset.Icc 1 y, ((c : ENNReal) ^ i)⁻¹)) x := by
     intro i _
     have happ : tailWS (rest ++ [i]) (fun _ => 1) x
-      = tailWS rest (fun y => ∑ c ∈ Finset.Icc 1 y, ((c : ℝ≥0∞) ^ i)⁻¹) x := by
+      = tailWS rest (fun y => ∑ c ∈ Finset.Icc 1 y, ((c : ENNReal) ^ i)⁻¹) x := by
       rw [tailWS_append rest i (fun _ => 1) x]
       exact tailWS_congr rest _ _ x hx (fun y _ _ => by simp [mul_one])
     rw [happ, ← tailWS_const_mul]
-  have eS : (∑ i ∈ Finset.Icc 1 (L - 1), ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ *
+  have eS : (∑ i ∈ Finset.Icc 1 (L - 1), ((x : ENNReal) ^ (L - i + 1))⁻¹ *
     tailWS (rest ++ [i]) (fun _ => 1) x)
     = tailWS rest (fun y => ∑ i ∈ Finset.Icc 1 (L - 1),
-      ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ *
-        (∑ c ∈ Finset.Icc 1 y, ((c : ℝ≥0∞) ^ i)⁻¹)) x := by
-    calc (∑ i ∈ Finset.Icc 1 (L - 1), ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ *
+      ((x : ENNReal) ^ (L - i + 1))⁻¹ *
+        (∑ c ∈ Finset.Icc 1 y, ((c : ENNReal) ^ i)⁻¹)) x := by
+    calc (∑ i ∈ Finset.Icc 1 (L - 1), ((x : ENNReal) ^ (L - i + 1))⁻¹ *
       tailWS (rest ++ [i]) (fun _ => 1) x)
       = ∑ i ∈ Finset.Icc 1 (L - 1), tailWS rest
-        (fun y => ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ *
-          (∑ c ∈ Finset.Icc 1 y, ((c : ℝ≥0∞) ^ i)⁻¹)) x :=
+        (fun y => ((x : ENNReal) ^ (L - i + 1))⁻¹ *
+          (∑ c ∈ Finset.Icc 1 y, ((c : ENNReal) ^ i)⁻¹)) x :=
         Finset.sum_congr rfl (fun i hi => e1 i hi)
       _ = tailWS rest (fun y => ∑ i ∈ Finset.Icc 1 (L - 1),
-        ((x : ℝ≥0∞) ^ (L - i + 1))⁻¹ *
-          (∑ c ∈ Finset.Icc 1 y, ((c : ℝ≥0∞) ^ i)⁻¹)) x :=
+        ((x : ENNReal) ^ (L - i + 1))⁻¹ *
+          (∑ c ∈ Finset.Icc 1 y, ((c : ENNReal) ^ i)⁻¹)) x :=
         (tailWS_sum rest _ _ _).symm
-  have eB : ((x : ℝ≥0∞) ^ L)⁻¹ * tailWS rest (harmStar x) x
-    = tailWS rest (fun y => ((x : ℝ≥0∞) ^ L)⁻¹ * harmStar x y) x :=
+  have eB : ((x : ENNReal) ^ L)⁻¹ * tailWS rest (harmStar x) x
+    = tailWS rest (fun y => ((x : ENNReal) ^ L)⁻¹ * harmStar x y) x :=
     (tailWS_const_mul rest _ _ _).symm
   rw [eS, eB, ← tailWS_add, ← tailWS_add]
   exact tailWS_congr rest _ _ x hx
@@ -1381,16 +1381,16 @@ namespace MetaMathlibExt.StarCyclic
 private lemma split_add (L : ℕ) (hL : 1 ≤ L) (rest : List ℕ) :
   (∑ i ∈ Finset.Icc 1 (L - 1), zetaRS ((L - i + 1) :: (rest ++ [i])))
     + cycB (L :: rest)
-  = ((L - 1 : ℕ) : ℝ≥0∞) * zetaRS [L + rest.sum + 1]
+  = ((L - 1 : ℕ) : ENNReal) * zetaRS [L + rest.sum + 1]
     + topSumS 0 rest (wWeightS L) := by
   have hZ : zetaRS [L + rest.sum + 1]
-    = (∑' x : ℕ, (if 0 < x then ((x : ℝ≥0∞) ^ (L + rest.sum + 1))⁻¹ * 1 else 0)) :=
+    = (∑' x : ℕ, (if 0 < x then ((x : ENNReal) ^ (L + rest.sum + 1))⁻¹ * 1 else 0)) :=
     rfl
   have hD : ∀ x : ℕ, 0 < x →
     tailWS rest
-      (fun y => if y = x then ((L - 1 : ℕ) : ℝ≥0∞) * ((x : ℝ≥0∞) ^ (L + 1))⁻¹
+      (fun y => if y = x then ((L - 1 : ℕ) : ENNReal) * ((x : ENNReal) ^ (L + 1))⁻¹
         else 0) x
-    = ((L - 1 : ℕ) : ℝ≥0∞) * (((x : ℝ≥0∞) ^ (L + rest.sum + 1))⁻¹ * 1) := by
+    = ((L - 1 : ℕ) : ENNReal) * (((x : ENNReal) ^ (L + rest.sum + 1))⁻¹ * 1) := by
     intro x hx
     rw [tailWS_dirac_eq rest x hx]
     have hexp : L + rest.sum + 1 = rest.sum + (L + 1) := by omega
@@ -1419,15 +1419,15 @@ namespace MetaMathlibExt.StarCyclic
 -/
 @[path]
 private lemma cpow_succ_inv (L c : ℕ) (hL : 1 ≤ L) (hc : 1 ≤ c) :
-  ((c : ℝ≥0∞) ^ (L - 1))⁻¹ * (c : ℝ≥0∞)⁻¹ = ((c : ℝ≥0∞) ^ L)⁻¹ := by
+  ((c : ENNReal) ^ (L - 1))⁻¹ * (c : ENNReal)⁻¹ = ((c : ENNReal) ^ L)⁻¹ := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le' hL
   rw [Nat.add_sub_cancel]
-  have hc0 : (c : ℝ≥0∞) ≠ 0 := by
+  have hc0 : (c : ENNReal) ≠ 0 := by
     have hc0' : c ≠ 0 := by omega
     exact_mod_cast hc0'
-  have hcT : (c : ℝ≥0∞) ≠ ⊤ := ENNReal.natCast_ne_top c
-  have ha : ((c : ℝ≥0∞) ^ k) ≠ 0 ∨ (c : ℝ≥0∞) ≠ ⊤ := Or.inr hcT
-  have hb : ((c : ℝ≥0∞) ^ k) ≠ ⊤ ∨ (c : ℝ≥0∞) ≠ 0 := Or.inr hc0
+  have hcT : (c : ENNReal) ≠ ⊤ := ENNReal.natCast_ne_top c
+  have ha : ((c : ENNReal) ^ k) ≠ 0 ∨ (c : ENNReal) ≠ ⊤ := Or.inr hcT
+  have hb : ((c : ENNReal) ^ k) ≠ ⊤ ∨ (c : ENNReal) ≠ 0 := Or.inr hc0
   rw [pow_succ, ENNReal.mul_inv ha hb]
 
 end MetaMathlibExt.StarCyclic
@@ -1438,7 +1438,7 @@ namespace MetaMathlibExt.StarCyclic
 [sum_Icc_one_eq_sum_range](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean)
 -/
 @[path]
-private lemma sum_Icc_one_eq_sum_range (g : ℕ → ℝ≥0∞) (c : ℕ) :
+private lemma sum_Icc_one_eq_sum_range (g : ℕ → ENNReal) (c : ℕ) :
   ∑ c' ∈ Finset.Icc 1 c, g c' = ∑ i ∈ Finset.range c, g (i + 1) := by
   have h1 : Finset.Icc 1 c = Finset.Ico 1 (c + 1) := by
     ext i
@@ -1460,7 +1460,7 @@ namespace MetaMathlibExt.StarCyclic
 @[path]
 private lemma bridge_sub_one (y c : ℕ) (hcy : c < y) :
   harmTailLt (y - 1) c = harmStar y c := by
-  have hS : harmStar y c = ∑ c' ∈ Finset.Icc 1 c, (((y - c' : ℕ) : ℝ≥0∞))⁻¹ := by
+  have hS : harmStar y c = ∑ c' ∈ Finset.Icc 1 c, (((y - c' : ℕ) : ENNReal))⁻¹ := by
     unfold harmStar
     apply Finset.sum_congr rfl
     intro c' hc'
@@ -1485,10 +1485,10 @@ namespace MetaMathlibExt.StarCyclic
 -/
 @[path]
 private lemma bridge_self (y : ℕ) (hy : 0 < y) :
-  harmTailLt y y = harmStar y y + ((y : ℝ≥0∞))⁻¹ := by
+  harmTailLt y y = harmStar y y + ((y : ENNReal))⁻¹ := by
   obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : y ≠ 0)
   have hS : harmStar (m + 1) (m + 1)
-    = ∑ c' ∈ Finset.Icc 1 m, ((((m + 1) - c' : ℕ)) : ℝ≥0∞)⁻¹ := by
+    = ∑ c' ∈ Finset.Icc 1 m, ((((m + 1) - c' : ℕ)) : ENNReal)⁻¹ := by
     unfold harmStar
     rw [Finset.sum_Icc_succ_top (by omega : 1 ≤ m + 1)]
     rw [ite_eq_right (lt_irrefl _)]
@@ -1500,8 +1500,8 @@ private lemma bridge_self (y : ℕ) (hy : 0 < y) :
       omega
     rw [ite_eq_left hlt]
   have hT : harmTailLt (m + 1) (m + 1)
-    = ((((m + 1 : ℕ))) : ℝ≥0∞)⁻¹
-      + ∑ c' ∈ Finset.Icc 1 m, ((((m + 1) - c' : ℕ)) : ℝ≥0∞)⁻¹ := by
+    = ((((m + 1 : ℕ))) : ENNReal)⁻¹
+      + ∑ c' ∈ Finset.Icc 1 m, ((((m + 1) - c' : ℕ)) : ENNReal)⁻¹ := by
     unfold harmTailLt
     rw [Finset.sum_range_succ']
     have hf0 : ((((m + 1) - 0 : ℕ))) = ((m + 1 : ℕ)) := by rw [Nat.sub_zero]
@@ -1518,7 +1518,7 @@ namespace MetaMathlibExt.StarCyclic
 -/
 @[path]
 private lemma guard_collapse (x y c A : ℕ) (hA : A = max (y - 1) c) (hcy : c ≤ y)
-  (G : ℕ → ℝ≥0∞) :
+  (G : ℕ → ENNReal) :
   (if y ≤ x then (if c < x then G x else 0) else 0)
     = (if A < x then G x else 0) := by
   by_cases h1 : y ≤ x
@@ -1547,15 +1547,15 @@ namespace MetaMathlibExt.StarCyclic
 @[path]
 private lemma inner_single_star (L c y : ℕ) (hL : 1 ≤ L) (hc : 1 ≤ c)
   (hcy : c ≤ y) (hy : 0 < y) :
-  (∑' x : ℕ, (if y ≤ x then (if c < x then (x : ℝ≥0∞)⁻¹ *
-    ((c : ℝ≥0∞) ^ (L - 1))⁻¹ * (((x - c : ℕ)) : ℝ≥0∞)⁻¹ else 0) else 0))
-  = ((c : ℝ≥0∞) ^ L)⁻¹ * harmStar y c
-    + (if c = y then ((y : ℝ≥0∞) ^ (L + 1))⁻¹ else 0) := by
+  (∑' x : ℕ, (if y ≤ x then (if c < x then (x : ENNReal)⁻¹ *
+    ((c : ENNReal) ^ (L - 1))⁻¹ * (((x - c : ℕ)) : ENNReal)⁻¹ else 0) else 0))
+  = ((c : ENNReal) ^ L)⁻¹ * harmStar y c
+    + (if c = y then ((y : ENNReal) ^ (L + 1))⁻¹ else 0) := by
   have hfactor : ∀ x : ℕ,
-    (if y ≤ x then (if c < x then (x : ℝ≥0∞)⁻¹ * ((c : ℝ≥0∞) ^ (L - 1))⁻¹ *
-      (((x - c : ℕ)) : ℝ≥0∞)⁻¹ else 0) else 0)
-    = ((c : ℝ≥0∞) ^ (L - 1))⁻¹ *
-      (if y ≤ x then (if c < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ)) : ℝ≥0∞)⁻¹
+    (if y ≤ x then (if c < x then (x : ENNReal)⁻¹ * ((c : ENNReal) ^ (L - 1))⁻¹ *
+      (((x - c : ℕ)) : ENNReal)⁻¹ else 0) else 0)
+    = ((c : ENNReal) ^ (L - 1))⁻¹ *
+      (if y ≤ x then (if c < x then (x : ENNReal)⁻¹ * (((x - c : ℕ)) : ENNReal)⁻¹
         else 0) else 0) := by
     intro x
     by_cases h1 : y ≤ x
@@ -1570,24 +1570,24 @@ private lemma inner_single_star (L c y : ℕ) (hL : 1 ≤ L) (hc : 1 ≤ c)
   rw [tsum_congr hfactor, ENNReal.tsum_mul_left]
   by_cases hcy_lt : c < y
   · have hAeq : max (y - 1) c = y - 1 := by omega
-    have hguard : ∀ x : ℕ, (if y ≤ x then (if c < x then (x : ℝ≥0∞)⁻¹ *
-      (((x - c : ℕ)) : ℝ≥0∞)⁻¹ else 0) else 0)
-      = (if y - 1 < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ)) : ℝ≥0∞)⁻¹ else 0) := by
+    have hguard : ∀ x : ℕ, (if y ≤ x then (if c < x then (x : ENNReal)⁻¹ *
+      (((x - c : ℕ)) : ENNReal)⁻¹ else 0) else 0)
+      = (if y - 1 < x then (x : ENNReal)⁻¹ * (((x - c : ℕ)) : ENNReal)⁻¹ else 0) := by
       intro x
       have h := guard_collapse x y c (max (y - 1) c) rfl hcy
-        (fun t => (t : ℝ≥0∞)⁻¹ * ((((t - c : ℕ))) : ℝ≥0∞)⁻¹)
+        (fun t => (t : ENNReal)⁻¹ * ((((t - c : ℕ))) : ENNReal)⁻¹)
       rwa [hAeq] at h
     rw [tsum_congr hguard, tsum_inv_mul_inv_sub_eq c (y - 1) hc (by omega : c ≤ y - 1)]
     rw [bridge_sub_one y c hcy_lt, ← mul_assoc, cpow_succ_inv L c hL hc]
     rw [ite_eq_right (by omega : ¬ c = y), add_zero]
   · have hceq : c = y := by omega
     have hAeq : max (y - 1) c = y := by omega
-    have hguard : ∀ x : ℕ, (if y ≤ x then (if c < x then (x : ℝ≥0∞)⁻¹ *
-      (((x - c : ℕ)) : ℝ≥0∞)⁻¹ else 0) else 0)
-      = (if y < x then (x : ℝ≥0∞)⁻¹ * (((x - c : ℕ)) : ℝ≥0∞)⁻¹ else 0) := by
+    have hguard : ∀ x : ℕ, (if y ≤ x then (if c < x then (x : ENNReal)⁻¹ *
+      (((x - c : ℕ)) : ENNReal)⁻¹ else 0) else 0)
+      = (if y < x then (x : ENNReal)⁻¹ * (((x - c : ℕ)) : ENNReal)⁻¹ else 0) := by
       intro x
       have h := guard_collapse x y c (max (y - 1) c) rfl hcy
-        (fun t => (t : ℝ≥0∞)⁻¹ * ((((t - c : ℕ))) : ℝ≥0∞)⁻¹)
+        (fun t => (t : ENNReal)⁻¹ * ((((t - c : ℕ))) : ENNReal)⁻¹)
       rwa [hAeq] at h
     rw [tsum_congr hguard, tsum_inv_mul_inv_sub_eq c y hc hcy]
     rw [ite_eq_left hceq, hceq]
@@ -1595,7 +1595,7 @@ private lemma inner_single_star (L c y : ℕ) (hL : 1 ≤ L) (hc : 1 ≤ c)
     rw [hbr, mul_add, mul_add]
     congr 1
     · rw [← mul_assoc, cpow_succ_inv L y hL (by omega : 1 ≤ y)]
-    · have hy1 : ((y : ℝ≥0∞))⁻¹ = ((y : ℝ≥0∞) ^ 1)⁻¹ := by rw [pow_one]
+    · have hy1 : ((y : ENNReal))⁻¹ = ((y : ENNReal) ^ 1)⁻¹ := by rw [pow_one]
       rw [← mul_assoc, cpow_succ_inv L y hL (by omega : 1 ≤ y), hy1,
         pow_inv_mul_pow_inv y hy L 1]
 
@@ -1610,12 +1610,12 @@ namespace MetaMathlibExt.StarCyclic
 private lemma inner_tsum_wWeightS (L y z : ℕ) (hL : 1 ≤ L) (hy : 0 < y)
   (hzy : z ≤ y) :
   (∑' x : ℕ, (if y ≤ x then wWeightS L x z else 0))
-  = (∑ c ∈ Finset.Icc 1 z, ((c : ℝ≥0∞) ^ L)⁻¹ * harmStar y c)
-    + (if z = y then ((y : ℝ≥0∞) ^ (L + 1))⁻¹ else 0) := by
+  = (∑ c ∈ Finset.Icc 1 z, ((c : ENNReal) ^ L)⁻¹ * harmStar y c)
+    + (if z = y then ((y : ENNReal) ^ (L + 1))⁻¹ else 0) := by
   have hpush : ∀ x : ℕ, (if y ≤ x then wWeightS L x z else 0)
     = ∑ c ∈ Finset.Icc 1 z,
-      (if y ≤ x then (if c < x then (x : ℝ≥0∞)⁻¹ * ((c : ℝ≥0∞) ^ (L - 1))⁻¹ *
-        ((((x - c : ℕ))) : ℝ≥0∞)⁻¹ else 0) else 0) := by
+      (if y ≤ x then (if c < x then (x : ENNReal)⁻¹ * ((c : ENNReal) ^ (L - 1))⁻¹ *
+        ((((x - c : ℕ))) : ENNReal)⁻¹ else 0) else 0) := by
     intro x
     unfold wWeightS
     by_cases h : y ≤ x
@@ -1628,9 +1628,9 @@ private lemma inner_tsum_wWeightS (L y z : ℕ) (hL : 1 ≤ L) (hy : 0 < y)
       apply Finset.sum_eq_zero
       intro c _
       rw [ite_eq_right h]
-  have hE : (if z = y then ((y : ℝ≥0∞) ^ (L + 1))⁻¹ else 0)
+  have hE : (if z = y then ((y : ENNReal) ^ (L + 1))⁻¹ else 0)
     = ∑ c ∈ Finset.Icc 1 z,
-      (if c = y then ((y : ℝ≥0∞) ^ (L + 1))⁻¹ else 0) := by
+      (if c = y then ((y : ENNReal) ^ (L + 1))⁻¹ else 0) := by
     by_cases hzy' : z = y
     · rw [ite_eq_left hzy', hzy']
       rw [Finset.sum_eq_single y]
@@ -1666,15 +1666,15 @@ namespace MetaMathlibExt.StarCyclic
 @[path]
 private lemma rotate_nil (L : ℕ) (hL : 1 ≤ L) :
   topSumS 0 [] (wWeightS L) = cycB [L] + zetaRS [L + 1] := by
-  have hnil : ∀ (w : ℕ → ℝ≥0∞) (A : ℕ), tailWS [] w A = w A := fun w A => rfl
+  have hnil : ∀ (w : ℕ → ENNReal) (A : ℕ), tailWS [] w A = w A := fun w A => rfl
   have hZ1 : zetaRS [L + 1]
-    = (∑' c : ℕ, (if 0 < c then ((c : ℝ≥0∞) ^ (L + 1))⁻¹ * 1 else 0)) := rfl
+    = (∑' c : ℕ, (if 0 < c then ((c : ENNReal) ^ (L + 1))⁻¹ * 1 else 0)) := rfl
   have eSwap : (∑' x : ℕ, (if 0 < x then wWeightS L x x else 0))
-    = (∑' a : ℕ, ((if 0 < a then ((a : ℝ≥0∞) ^ L)⁻¹ * harmStar a a else 0)
-      + (if 0 < a then ((a : ℝ≥0∞) ^ (L + 1))⁻¹ * 1 else 0))) := by
+    = (∑' a : ℕ, ((if 0 < a then ((a : ENNReal) ^ L)⁻¹ * harmStar a a else 0)
+      + (if 0 < a then ((a : ENNReal) ^ (L + 1))⁻¹ * 1 else 0))) := by
     have hU : ∀ x : ℕ, (if 0 < x then wWeightS L x x else 0)
-      = (if 0 < x then ∑ c ∈ Finset.Icc 1 x, (if c < x then (x : ℝ≥0∞)⁻¹ *
-        ((c : ℝ≥0∞) ^ (L - 1))⁻¹ * (((x - c : ℕ)) : ℝ≥0∞)⁻¹ else 0) else 0) := by
+      = (if 0 < x then ∑ c ∈ Finset.Icc 1 x, (if c < x then (x : ENNReal)⁻¹ *
+        ((c : ENNReal) ^ (L - 1))⁻¹ * (((x - c : ℕ)) : ENNReal)⁻¹ else 0) else 0) := by
       intro x
       unfold wWeightS
       by_cases hx : 0 < x <;> simp [hx]
@@ -1702,16 +1702,16 @@ private lemma rotate_cons (L e : ℕ) (r : List ℕ) (hL : 1 ≤ L) :
     = cycB ((e :: r) ++ [L]) + zetaRS [L + (e :: r).sum + 1] := by
   simp only [List.cons_append, List.sum_cons]
   have htail : ∀ x : ℕ, tailWS (e :: r) (wWeightS L x) x
-    = ∑ y ∈ Finset.Icc 1 x, ((y : ℝ≥0∞) ^ e)⁻¹ * tailWS r (wWeightS L x) y :=
+    = ∑ y ∈ Finset.Icc 1 x, ((y : ENNReal) ^ e)⁻¹ * tailWS r (wWeightS L x) y :=
     fun x => rfl
   have hZ : zetaRS [L + (e + r.sum) + 1]
-    = (∑' y : ℕ, (if 0 < y then ((y : ℝ≥0∞) ^ (L + (e + r.sum) + 1))⁻¹ * 1
+    = (∑' y : ℕ, (if 0 < y then ((y : ENNReal) ^ (L + (e + r.sum) + 1))⁻¹ * 1
       else 0)) := rfl
   have hB : cycB (e :: (r ++ [L]))
-    = (∑' y : ℕ, (if 0 < y then ((y : ℝ≥0∞) ^ e)⁻¹ *
+    = (∑' y : ℕ, (if 0 < y then ((y : ENNReal) ^ e)⁻¹ *
       tailWS (r ++ [L]) (harmStar y) y else 0)) := rfl
   have hLHS : topSumS 0 (e :: r) (wWeightS L)
-    = (∑' y : ℕ, (if 0 < y then ∑' x : ℕ, (if y ≤ x then ((y : ℝ≥0∞) ^ e)⁻¹ *
+    = (∑' y : ℕ, (if 0 < y then ∑' x : ℕ, (if y ≤ x then ((y : ENNReal) ^ e)⁻¹ *
       tailWS r (wWeightS L x) y else 0) else 0)) := by
     unfold topSumS
     simp only [pow_zero, inv_one, one_mul, htail]
@@ -1720,9 +1720,9 @@ private lemma rotate_cons (L e : ℕ) (r : List ℕ) (hL : 1 ≤ L) :
   apply tsum_congr
   intro y
   split_ifs with hy
-  · have hf : ∀ x : ℕ, (if y ≤ x then ((y : ℝ≥0∞) ^ e)⁻¹ * tailWS r (wWeightS L x) y
+  · have hf : ∀ x : ℕ, (if y ≤ x then ((y : ENNReal) ^ e)⁻¹ * tailWS r (wWeightS L x) y
     else 0)
-    = ((y : ℝ≥0∞) ^ e)⁻¹ * (if y ≤ x then tailWS r (wWeightS L x) y else 0) := by
+    = ((y : ENNReal) ^ e)⁻¹ * (if y ≤ x then tailWS r (wWeightS L x) y else 0) := by
     intro x
     by_cases h : y ≤ x
     · rw [ite_eq_left h, ite_eq_left h]
@@ -1738,14 +1738,14 @@ private lemma rotate_cons (L e : ℕ) (r : List ℕ) (hL : 1 ≤ L) :
     rw [ENNReal.tsum_mul_left, tailWS_tsum]
     have hIn : ∀ z : ℕ, 0 < z → z ≤ y →
       (∑' x : ℕ, (if y ≤ x then wWeightS L x z else 0))
-      = (∑ c ∈ Finset.Icc 1 z, ((c : ℝ≥0∞) ^ L)⁻¹ * harmStar y c)
-        + (if z = y then ((y : ℝ≥0∞) ^ (L + 1))⁻¹ else 0) :=
+      = (∑ c ∈ Finset.Icc 1 z, ((c : ENNReal) ^ L)⁻¹ * harmStar y c)
+        + (if z = y then ((y : ENNReal) ^ (L + 1))⁻¹ else 0) :=
       fun z _ hzy => inner_tsum_wWeightS L y z hL hy hzy
     have hcongr := tailWS_congr r _ _ y hy hIn
     rw [hcongr, tailWS_add, mul_add]
     congr 1
     · have happ0 : tailWS r
-      (fun z => ∑ c ∈ Finset.Icc 1 z, ((c : ℝ≥0∞) ^ L)⁻¹ * harmStar y c) y
+      (fun z => ∑ c ∈ Finset.Icc 1 z, ((c : ENNReal) ^ L)⁻¹ * harmStar y c) y
       = tailWS (r ++ [L]) (harmStar y) y := by
       rw [tailWS_append r L (harmStar y) y]
       rw [happ0]
@@ -1945,8 +1945,8 @@ namespace MetaMathlibExt.StarCyclic
 -/
 @[path]
 private lemma enn_harm_ne_top (p : ℕ) :
-  (∑' x : ℕ, (if 0 < x then (Hstar x) ^ p * (((x : ℝ≥0∞) ^ 2))⁻¹ else 0)) ≠ ⊤ := by
-  have hterm : ∀ x : ℕ, (if 0 < x then (Hstar x) ^ p * (((x : ℝ≥0∞) ^ 2))⁻¹ else 0)
+  (∑' x : ℕ, (if 0 < x then (Hstar x) ^ p * (((x : ENNReal) ^ 2))⁻¹ else 0)) ≠ ⊤ := by
+  have hterm : ∀ x : ℕ, (if 0 < x then (Hstar x) ^ p * (((x : ENNReal) ^ 2))⁻¹ else 0)
     = ENNReal.ofReal ((hR x) ^ p / (x : ℝ) ^ 2) := by
     intro x
     by_cases hx : 0 < x
@@ -1980,9 +1980,9 @@ namespace MetaMathlibExt.StarCyclic
 -/
 @[path]
 private lemma pow_inv_le_one (y e : ℕ) (hy : 1 ≤ y) (he : 1 ≤ e) :
-  (((y : ℝ≥0∞) ^ e))⁻¹ ≤ ((y : ℝ≥0∞))⁻¹ := by
-  have hy1 : (1:ℝ≥0∞) ≤ ((y : ℝ≥0∞)) := by exact_mod_cast hy
-  have hpow : ((y : ℝ≥0∞)) ^ 1 ≤ ((y : ℝ≥0∞)) ^ e := pow_le_pow_right₀ hy1 he
+  (((y : ENNReal) ^ e))⁻¹ ≤ ((y : ENNReal))⁻¹ := by
+  have hy1 : (1:ENNReal) ≤ ((y : ENNReal)) := by exact_mod_cast hy
+  have hpow : ((y : ENNReal)) ^ 1 ≤ ((y : ENNReal)) ^ e := pow_le_pow_right₀ hy1 he
   rw [pow_one] at hpow
   exact ENNReal.inv_le_inv.mpr hpow
 
@@ -2004,21 +2004,21 @@ private lemma tailWS_one_le (t : List ℕ) (ht : ∀ e ∈ t, 1 ≤ e) (A : ℕ)
     have hf : 1 ≤ f := ht f (by simp)
     have hfs : ∀ e ∈ fs, 1 ≤ e := fun e he => ht e (by simp [he])
     calc tailWS (f :: fs) (fun _ => 1) A
-      = ∑ y ∈ Finset.Icc 1 A, ((y : ℝ≥0∞) ^ f)⁻¹ * tailWS fs (fun _ => 1) y :=
+      = ∑ y ∈ Finset.Icc 1 A, ((y : ENNReal) ^ f)⁻¹ * tailWS fs (fun _ => 1) y :=
         rfl
-      _ ≤ ∑ y ∈ Finset.Icc 1 A, ((y : ℝ≥0∞))⁻¹ * (Hstar A) ^ fs.length := by
+      _ ≤ ∑ y ∈ Finset.Icc 1 A, ((y : ENNReal))⁻¹ * (Hstar A) ^ fs.length := by
         apply Finset.sum_le_sum
         intro y hy
         have hy1 : 1 ≤ y := (Finset.mem_Icc.mp hy).1
         have hyA : y ≤ A := (Finset.mem_Icc.mp hy).2
-        have e1 : ((y : ℝ≥0∞) ^ f)⁻¹ ≤ ((y : ℝ≥0∞))⁻¹ :=
+        have e1 : ((y : ENNReal) ^ f)⁻¹ ≤ ((y : ENNReal))⁻¹ :=
           pow_inv_le_one y f hy1 hf
         have e2 : tailWS fs (fun _ => 1) y ≤ (Hstar A) ^ fs.length :=
           (ih hfs y).trans (pow_le_pow_left₀ bot_le (Hstar_mono hyA) _)
         exact mul_le_mul e1 e2 bot_le bot_le
       _ = (Hstar A) ^ (fs.length + 1) := by
         rw [← Finset.sum_mul]
-        have hH : (∑ y ∈ Finset.Icc 1 A, ((y : ℝ≥0∞))⁻¹) = Hstar A := rfl
+        have hH : (∑ y ∈ Finset.Icc 1 A, ((y : ENNReal))⁻¹) = Hstar A := rfl
         rw [hH, pow_succ']
 
 end MetaMathlibExt.StarCyclic
@@ -2031,24 +2031,24 @@ namespace MetaMathlibExt.StarCyclic
 @[path]
 private lemma zetaRS_ne_top_of (e : ℕ) (t : List ℕ) (he : 2 ≤ e)
   (ht : ∀ x ∈ t, 1 ≤ x) : zetaRS (e :: t) ≠ ⊤ := by
-  have hle : ∀ x : ℕ, (if 0 < x then ((x : ℝ≥0∞) ^ e)⁻¹ * tailWS t (fun _ => 1) x
+  have hle : ∀ x : ℕ, (if 0 < x then ((x : ENNReal) ^ e)⁻¹ * tailWS t (fun _ => 1) x
     else 0)
-    ≤ (if 0 < x then (Hstar x) ^ t.length * (((x : ℝ≥0∞) ^ 2))⁻¹ else 0) := by
+    ≤ (if 0 < x then (Hstar x) ^ t.length * (((x : ENNReal) ^ 2))⁻¹ else 0) := by
     intro x
     by_cases hx : 0 < x
     · rw [ite_eq_left hx, ite_eq_left hx]
       have hx1 : 1 ≤ x := hx
-      have e1 : ((x : ℝ≥0∞) ^ e)⁻¹ ≤ ((x : ℝ≥0∞) ^ 2)⁻¹ := by
-        have hxE1 : (1:ℝ≥0∞) ≤ ((x : ℝ≥0∞)) := by exact_mod_cast hx1
-        have hpow : ((x : ℝ≥0∞)) ^ 2 ≤ ((x : ℝ≥0∞)) ^ e :=
+      have e1 : ((x : ENNReal) ^ e)⁻¹ ≤ ((x : ENNReal) ^ 2)⁻¹ := by
+        have hxE1 : (1:ENNReal) ≤ ((x : ENNReal)) := by exact_mod_cast hx1
+        have hpow : ((x : ENNReal)) ^ 2 ≤ ((x : ENNReal)) ^ e :=
           pow_le_pow_right₀ hxE1 he
         exact ENNReal.inv_le_inv.mpr hpow
       have e2 : tailWS t (fun _ => 1) x ≤ (Hstar x) ^ t.length :=
         tailWS_one_le t ht x
-      calc ((x : ℝ≥0∞) ^ e)⁻¹ * tailWS t (fun _ => 1) x
-        ≤ ((x : ℝ≥0∞) ^ 2)⁻¹ * (Hstar x) ^ t.length :=
+      calc ((x : ENNReal) ^ e)⁻¹ * tailWS t (fun _ => 1) x
+        ≤ ((x : ENNReal) ^ 2)⁻¹ * (Hstar x) ^ t.length :=
           mul_le_mul e1 e2 bot_le bot_le
-        _ = (Hstar x) ^ t.length * (((x : ℝ≥0∞) ^ 2))⁻¹ := mul_comm _ _
+        _ = (Hstar x) ^ t.length * (((x : ENNReal) ^ 2))⁻¹ := mul_comm _ _
     · rw [ite_eq_right hx, ite_eq_right hx]
   have hZ := enn_harm_ne_top t.length
   unfold zetaRS topSumS
@@ -2064,7 +2064,7 @@ namespace MetaMathlibExt.StarCyclic
 @[path]
 private lemma harmStar_le_H (x y : ℕ) : harmStar x y ≤ Hstar x := by
   have e1 : harmStar x y
-    = ∑ c ∈ (Finset.Icc 1 y).filter (· < x), ((((x - c : ℕ))) : ℝ≥0∞)⁻¹ := by
+    = ∑ c ∈ (Finset.Icc 1 y).filter (· < x), ((((x - c : ℕ))) : ENNReal)⁻¹ := by
     unfold harmStar
     exact (Finset.sum_filter _ _).symm
   have hinj : ∀ a ∈ (Finset.Icc 1 y).filter (· < x),
@@ -2074,11 +2074,11 @@ private lemma harmStar_le_H (x y : ℕ) : harmStar x y ≤ Hstar x := by
     have ha1 : a ≤ x := le_of_lt ha.2
     have hb1 : b ≤ x := le_of_lt hb.2
     omega
-  have e2 : (∑ c ∈ (Finset.Icc 1 y).filter (· < x), ((((x - c : ℕ))) : ℝ≥0∞)⁻¹)
+  have e2 : (∑ c ∈ (Finset.Icc 1 y).filter (· < x), ((((x - c : ℕ))) : ENNReal)⁻¹)
     = ∑ r ∈ ((Finset.Icc 1 y).filter (· < x)).image (fun c => x - c),
-      ((r : ℝ≥0∞))⁻¹ :=
+      ((r : ENNReal))⁻¹ :=
     (Finset.sum_image (s := (Finset.Icc 1 y).filter (· < x)) (g := fun c => x - c)
-      (f := fun r : ℕ => ((r : ℝ≥0∞))⁻¹) hinj).symm
+      (f := fun r : ℕ => ((r : ENNReal))⁻¹) hinj).symm
   have hsub : ((Finset.Icc 1 y).filter (· < x)).image (fun c => x - c)
     ⊆ Finset.Icc 1 x := by
     intro r hr
@@ -2112,22 +2112,22 @@ private lemma tailWS_harm_le (t : List ℕ) (ht : ∀ e ∈ t, 1 ≤ e) (x A : �
     have hf : 1 ≤ f := ht f (by simp)
     have hfs : ∀ e ∈ fs, 1 ≤ e := fun e he => ht e (by simp [he])
     calc tailWS (f :: fs) (harmStar x) A
-      = ∑ y ∈ Finset.Icc 1 A, ((y : ℝ≥0∞) ^ f)⁻¹ * tailWS fs (harmStar x) y :=
+      = ∑ y ∈ Finset.Icc 1 A, ((y : ENNReal) ^ f)⁻¹ * tailWS fs (harmStar x) y :=
         rfl
-      _ ≤ ∑ y ∈ Finset.Icc 1 A, ((y : ℝ≥0∞))⁻¹ * (Hstar x) ^ (fs.length + 1) := by
+      _ ≤ ∑ y ∈ Finset.Icc 1 A, ((y : ENNReal))⁻¹ * (Hstar x) ^ (fs.length + 1) := by
         apply Finset.sum_le_sum
         intro y hy
         have hy1 : 1 ≤ y := (Finset.mem_Icc.mp hy).1
         have hyA : y ≤ A := (Finset.mem_Icc.mp hy).2
-        have e1 : ((y : ℝ≥0∞) ^ f)⁻¹ ≤ ((y : ℝ≥0∞))⁻¹ :=
+        have e1 : ((y : ENNReal) ^ f)⁻¹ ≤ ((y : ENNReal))⁻¹ :=
           pow_inv_le_one y f hy1 hf
         have e2 : tailWS fs (harmStar x) y ≤ (Hstar x) ^ (fs.length + 1) :=
           ih hfs y (le_trans hyA hAx)
         exact mul_le_mul e1 e2 bot_le bot_le
       _ ≤ (Hstar x) ^ (fs.length + 1 + 1) := by
         rw [← Finset.sum_mul]
-        have hSeq : (∑ y ∈ Finset.Icc 1 A, ((y : ℝ≥0∞))⁻¹) = Hstar A := rfl
-        calc (∑ y ∈ Finset.Icc 1 A, ((y : ℝ≥0∞))⁻¹) * (Hstar x) ^ (fs.length + 1)
+        have hSeq : (∑ y ∈ Finset.Icc 1 A, ((y : ENNReal))⁻¹) = Hstar A := rfl
+        calc (∑ y ∈ Finset.Icc 1 A, ((y : ENNReal))⁻¹) * (Hstar x) ^ (fs.length + 1)
           = (Hstar A) * (Hstar x) ^ (fs.length + 1) := by rw [hSeq]
           _ ≤ (Hstar x) * (Hstar x) ^ (fs.length + 1) :=
             mul_le_mul (Hstar_mono hAx) le_rfl bot_le bot_le
@@ -2143,25 +2143,25 @@ namespace MetaMathlibExt.StarCyclic
 @[path]
 private lemma cycB_ne_top_of (L : ℕ) (rest : List ℕ) (hL : 2 ≤ L)
   (ht : ∀ x ∈ rest, 1 ≤ x) : cycB (L :: rest) ≠ ⊤ := by
-  have hle : ∀ x : ℕ, (if 0 < x then ((x : ℝ≥0∞) ^ L)⁻¹ * tailWS rest (harmStar x) x
+  have hle : ∀ x : ℕ, (if 0 < x then ((x : ENNReal) ^ L)⁻¹ * tailWS rest (harmStar x) x
     else 0)
-    ≤ (if 0 < x then (Hstar x) ^ (rest.length + 1) * (((x : ℝ≥0∞) ^ 2))⁻¹
+    ≤ (if 0 < x then (Hstar x) ^ (rest.length + 1) * (((x : ENNReal) ^ 2))⁻¹
       else 0) := by
     intro x
     by_cases hx : 0 < x
     · rw [ite_eq_left hx, ite_eq_left hx]
       have hx1 : 1 ≤ x := hx
-      have e1 : ((x : ℝ≥0∞) ^ L)⁻¹ ≤ ((x : ℝ≥0∞) ^ 2)⁻¹ := by
-        have hxE1 : (1:ℝ≥0∞) ≤ ((x : ℝ≥0∞)) := by exact_mod_cast hx1
-        have hpow : ((x : ℝ≥0∞)) ^ 2 ≤ ((x : ℝ≥0∞)) ^ L :=
+      have e1 : ((x : ENNReal) ^ L)⁻¹ ≤ ((x : ENNReal) ^ 2)⁻¹ := by
+        have hxE1 : (1:ENNReal) ≤ ((x : ENNReal)) := by exact_mod_cast hx1
+        have hpow : ((x : ENNReal)) ^ 2 ≤ ((x : ENNReal)) ^ L :=
           pow_le_pow_right₀ hxE1 hL
         exact ENNReal.inv_le_inv.mpr hpow
       have e2 : tailWS rest (harmStar x) x ≤ (Hstar x) ^ (rest.length + 1) :=
         tailWS_harm_le rest ht x x le_rfl
-      calc ((x : ℝ≥0∞) ^ L)⁻¹ * tailWS rest (harmStar x) x
-        ≤ ((x : ℝ≥0∞) ^ 2)⁻¹ * (Hstar x) ^ (rest.length + 1) :=
+      calc ((x : ENNReal) ^ L)⁻¹ * tailWS rest (harmStar x) x
+        ≤ ((x : ENNReal) ^ 2)⁻¹ * (Hstar x) ^ (rest.length + 1) :=
           mul_le_mul e1 e2 bot_le bot_le
-        _ = (Hstar x) ^ (rest.length + 1) * (((x : ℝ≥0∞) ^ 2))⁻¹ := mul_comm _ _
+        _ = (Hstar x) ^ (rest.length + 1) * (((x : ENNReal) ^ 2))⁻¹ := mul_comm _ _
     · rw [ite_eq_right hx, ite_eq_right hx]
   have hZ := enn_harm_ne_top (rest.length + 1)
   unfold cycB topSumS
@@ -2202,15 +2202,15 @@ private lemma zetaEStar_cons_eq_zetaRS (e : ℕ) (t : List ℕ) :
       Fin.cons (α := fun _ => ℕ) x n' b ≤ Fin.cons (α := fun _ => ℕ) x n' a)
       ∧ (∀ a, 0 < Fin.cons (α := fun _ => ℕ) x n' a)
       then ∏ a : Fin (t.length + 1),
-        ((Fin.cons (α := fun _ => ℕ) x n' a : ℝ≥0∞) ^ (e :: t).get a)⁻¹ else 0))
-    = (if 0 < x then ((x : ℝ≥0∞) ^ e)⁻¹ * tailWS t (fun _ => 1) x else 0) := by
+        ((Fin.cons (α := fun _ => ℕ) x n' a : ENNReal) ^ (e :: t).get a)⁻¹ else 0))
+    = (if 0 < x then ((x : ENNReal) ^ e)⁻¹ * tailWS t (fun _ => 1) x else 0) := by
     intro x
     by_cases hQ : 0 < x
     · rw [ite_eq_left hQ]
-      trans ((x : ℝ≥0∞) ^ e)⁻¹ * ∑' n' : Fin t.length → ℕ,
+      trans ((x : ENNReal) ^ e)⁻¹ * ∑' n' : Fin t.length → ℕ,
         (if (∀ a b : Fin t.length, a < b → n' b ≤ n' a) ∧ (∀ a, 0 < n' a) ∧
           (∀ a, n' a ≤ x)
-          then ∏ a', ((n' a' : ℝ≥0∞) ^ t.get a')⁻¹ else 0)
+          then ∏ a', ((n' a' : ENNReal) ^ t.get a')⁻¹ else 0)
       · rw [← ENNReal.tsum_mul_left]
         apply tsum_congr
         intro n'
@@ -2220,7 +2220,7 @@ private lemma zetaEStar_cons_eq_zetaRS (e : ℕ) (t : List ℕ) :
         · exact (mul_zero _).symm
       · rw [zetaEStar_bounded_eq_tailWS t x]
     · rw [ite_eq_right hQ]
-      trans (∑' _ : Fin t.length → ℕ, (0 : ℝ≥0∞))
+      trans (∑' _ : Fin t.length → ℕ, (0 : ENNReal))
       · apply tsum_congr
         intro n'
         simp only [hcond x n']
@@ -2363,7 +2363,7 @@ private lemma cycB_ne_top (e : List ℕ) (hpos : ∀ x ∈ e, 1 ≤ x)
     have hR1 : R ++ [1] = List.replicate p 1 ++ L :: (s ++ [1]) := by
       rw [hR, List.append_assoc, List.cons_append]
     rw [hR1] at hstep
-    have hcast : ((1 - 1 : ℕ) : ℝ≥0∞) = 0 := by simp
+    have hcast : ((1 - 1 : ℕ) : ENNReal) = 0 := by simp
     rw [hcast, zero_mul, zero_add] at hstep
     rw [hstep]
     apply ENNReal.add_ne_top.mpr
@@ -2389,7 +2389,7 @@ private lemma rot_step (kl : List ℕ) (hpos : ∀ x ∈ kl, 1 ≤ x) (j : Fin k
   (∑ i ∈ Finset.Icc 1 (kl.get j - 1),
     zetaRS ((kl.get j - i + 1) :: ((kl.rotate j.val).tail ++ [i])))
     + cycB (kl.rotate j.val)
-  = (kl.get j : ℝ≥0∞) * zetaRS [kl.sum + 1] + cycB (kl.rotate (j.val + 1)) := by
+  = (kl.get j : ENNReal) * zetaRS [kl.sum + 1] + cycB (kl.rotate (j.val + 1)) := by
   have hLpos : 1 ≤ kl.get j := hpos _ (List.get_mem kl j)
   have hLa : kl.rotate j.val = kl.get j :: (kl.rotate j.val).tail :=
     rotate_eq_get_cons_tail kl j
@@ -2402,31 +2402,31 @@ private lemma rot_step (kl : List ℕ) (hpos : ∀ x ∈ kl, 1 ≤ x) (j : Fin k
   have h10 := rotate_add (kl.get j) hLpos ((kl.rotate j.val).tail)
   rw [hsum] at h9 h10
   have hsub : kl.get j - 1 + 1 = kl.get j := Nat.sub_add_cancel hLpos
-  have hL_eq : (kl.get j : ℝ≥0∞) = ((kl.get j - 1 : ℕ) : ℝ≥0∞) + 1 := by
+  have hL_eq : (kl.get j : ENNReal) = ((kl.get j - 1 : ℕ) : ENNReal) + 1 := by
     conv_lhs => rw [← hsub]
     rw [Nat.cast_add, Nat.cast_one]
-  have hmul : ((kl.get j - 1 : ℕ) : ℝ≥0∞) * zetaRS [kl.sum + 1]
+  have hmul : ((kl.get j - 1 : ℕ) : ENNReal) * zetaRS [kl.sum + 1]
     + zetaRS [kl.sum + 1]
-    = (kl.get j : ℝ≥0∞) * zetaRS [kl.sum + 1] := by
-    have hbase : (((kl.get j - 1 : ℕ) : ℝ≥0∞) + 1) * zetaRS [kl.sum + 1]
-      = (kl.get j : ℝ≥0∞) * zetaRS [kl.sum + 1] := by rw [← hL_eq]
-    calc ((kl.get j - 1 : ℕ) : ℝ≥0∞) * zetaRS [kl.sum + 1]
+    = (kl.get j : ENNReal) * zetaRS [kl.sum + 1] := by
+    have hbase : (((kl.get j - 1 : ℕ) : ENNReal) + 1) * zetaRS [kl.sum + 1]
+      = (kl.get j : ENNReal) * zetaRS [kl.sum + 1] := by rw [← hL_eq]
+    calc ((kl.get j - 1 : ℕ) : ENNReal) * zetaRS [kl.sum + 1]
       + zetaRS [kl.sum + 1]
-      = (((kl.get j - 1 : ℕ) : ℝ≥0∞) + 1) * zetaRS [kl.sum + 1] := by
+      = (((kl.get j - 1 : ℕ) : ENNReal) + 1) * zetaRS [kl.sum + 1] := by
         rw [add_mul, one_mul]
-      _ = (kl.get j : ℝ≥0∞) * zetaRS [kl.sum + 1] := hbase
+      _ = (kl.get j : ENNReal) * zetaRS [kl.sum + 1] := hbase
   calc (∑ i ∈ Finset.Icc 1 (kl.get j - 1),
     zetaRS ((kl.get j - i + 1) :: ((kl.rotate j.val).tail ++ [i])))
     + cycB (kl.rotate j.val)
     = (∑ i ∈ Finset.Icc 1 (kl.get j - 1),
       zetaRS ((kl.get j - i + 1) :: ((kl.rotate j.val).tail ++ [i])))
       + cycB (kl.get j :: (kl.rotate j.val).tail) := by rw [← hLa]
-    _ = ((kl.get j - 1 : ℕ) : ℝ≥0∞) * zetaRS [kl.sum + 1]
+    _ = ((kl.get j - 1 : ℕ) : ENNReal) * zetaRS [kl.sum + 1]
       + topSumS 0 ((kl.rotate j.val).tail) (wWeightS (kl.get j)) := h9
-    _ = ((kl.get j - 1 : ℕ) : ℝ≥0∞) * zetaRS [kl.sum + 1]
+    _ = ((kl.get j - 1 : ℕ) : ENNReal) * zetaRS [kl.sum + 1]
       + (cycB ((kl.rotate j.val).tail ++ [kl.get j])
         + zetaRS [kl.sum + 1]) := by rw [h10]
-    _ = ((kl.get j : ℝ≥0∞) * zetaRS [kl.sum + 1])
+    _ = ((kl.get j : ENNReal) * zetaRS [kl.sum + 1])
       + cycB (kl.rotate (j.val + 1)) := by
         rw [← hLb, ← hmul]
         ac_rfl
@@ -2443,18 +2443,18 @@ private lemma enn_sum_eq (kl : List ℕ) (hpos : ∀ x ∈ kl, 1 ≤ x)
   (hne : ∃ x ∈ kl, x ≠ 1) :
   ∑ j : Fin kl.length, ∑ i ∈ Finset.Icc 1 (kl.get j - 1),
     zetaRS ((kl.get j - i + 1) :: ((kl.rotate j.val).tail ++ [i]))
-  = (kl.sum : ℝ≥0∞) * zetaRS [kl.sum + 1] := by
+  = (kl.sum : ENNReal) * zetaRS [kl.sum + 1] := by
   have hstep : ∀ j : Fin kl.length,
     (∑ i ∈ Finset.Icc 1 (kl.get j - 1),
       zetaRS ((kl.get j - i + 1) :: ((kl.rotate j.val).tail ++ [i])))
       + cycB (kl.rotate j.val)
-    = (kl.get j : ℝ≥0∞) * zetaRS [kl.sum + 1]
+    = (kl.get j : ENNReal) * zetaRS [kl.sum + 1]
       + cycB (kl.rotate (j.val + 1)) :=
     fun j => rot_step kl hpos j
   have hsum : (∑ j : Fin kl.length, ∑ i ∈ Finset.Icc 1 (kl.get j - 1),
     zetaRS ((kl.get j - i + 1) :: ((kl.rotate j.val).tail ++ [i])))
     + ∑ j : Fin kl.length, cycB (kl.rotate j.val)
-    = (∑ j : Fin kl.length, (kl.get j : ℝ≥0∞) * zetaRS [kl.sum + 1])
+    = (∑ j : Fin kl.length, (kl.get j : ENNReal) * zetaRS [kl.sum + 1])
       + ∑ j : Fin kl.length, cycB (kl.rotate (j.val + 1)) := by
     rw [← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl (fun j _ => hstep j)
@@ -2472,17 +2472,17 @@ private lemma enn_sum_eq (kl : List ℕ) (hpos : ∀ x ∈ kl, 1 ≤ x)
       exact ⟨x, List.mem_rotate.mpr hx, hx1⟩
   have hcancel : (∑ j : Fin kl.length, ∑ i ∈ Finset.Icc 1 (kl.get j - 1),
     zetaRS ((kl.get j - i + 1) :: ((kl.rotate j.val).tail ++ [i])))
-    = ∑ j : Fin kl.length, (kl.get j : ℝ≥0∞) * zetaRS [kl.sum + 1] := by
+    = ∑ j : Fin kl.length, (kl.get j : ENNReal) * zetaRS [kl.sum + 1] := by
     rw [hreidx] at hsum
     exact (ENNReal.add_left_inj hSne).mp hsum
   have hget_nat : ∑ j : Fin kl.length, kl.get j = kl.sum := by
     conv_rhs => rw [← List.ofFn_get kl]
     rw [List.sum_ofFn]
-  have hget : ∑ j : Fin kl.length, (kl.get j : ℝ≥0∞)
-    = (kl.sum : ℝ≥0∞) := by
+  have hget : ∑ j : Fin kl.length, (kl.get j : ENNReal)
+    = (kl.sum : ENNReal) := by
     rw [← Nat.cast_sum, hget_nat]
-  have hmul : (∑ j : Fin kl.length, (kl.get j : ℝ≥0∞) * zetaRS [kl.sum + 1])
-    = (kl.sum : ℝ≥0∞) * zetaRS [kl.sum + 1] := by
+  have hmul : (∑ j : Fin kl.length, (kl.get j : ENNReal) * zetaRS [kl.sum + 1])
+    = (kl.sum : ENNReal) * zetaRS [kl.sum + 1] := by
     rw [← Finset.sum_mul, hget]
   rw [hcancel, hmul]
 

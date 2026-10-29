@@ -19,7 +19,7 @@ open scoped NNReal
 theorem KWAdaptivePatchedData.dist_middleCorner_ideal_lt_two_mul
     {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    (r : ℝ≥0) (hfine : patch.data.MeshWithin r)
+    (r : NNReal) (hfine : patch.data.MeshWithin r)
     (i : Fin n) (q : Fin M) :
     dist (patch.middleCorner i q) (patch.idealMiddleCorner i q) < 2 * r := by
   let base := patch.data.base i q.succ.castSucc.castSucc
@@ -79,7 +79,7 @@ theorem KWAdaptivePatchedData.dist_middleCorner_ideal_lt_two_mul
 theorem KWAdaptivePatchedData.dist_vertex_idealVertex_lt_two_mul
     {n M : ℕ} [NeZero n] [NeZero M] {polygon : KWFiniteSimplePolygon n}
     (patch : KWAdaptivePatchedData (M := M) polygon)
-    (r : ℝ≥0) (hr : 0 < r) (hfine : patch.data.MeshWithin r) :
+    (r : NNReal) (hr : 0 < r) (hfine : patch.data.MeshWithin r) :
     ∀ j : Fin (n * (2 * (M + 1))),
       dist (patch.vertex j) (patch.idealVertex j) < 2 * r := by
   intro j
@@ -99,7 +99,7 @@ theorem KWAdaptivePatchedData.actual_nonincident_disjoint_of_close_to_ideal
     (patch : KWAdaptivePatchedData (M := M) polygon)
     (ideal : KWFiniteSimplePolygon (n * (2 * (M + 1))))
     (hideal : ideal.vertex = patch.idealVertex)
-    (r sep : ℝ≥0) (hr : 0 < r)
+    (r sep : NNReal) (hr : 0 < r)
     (hfine : patch.data.MeshWithin r)
     (hsep : ∀ i j, KWEdgesNonincident i j →
       ∀ x ∈ ideal.closedEdge i, ∀ y ∈ ideal.closedEdge j,

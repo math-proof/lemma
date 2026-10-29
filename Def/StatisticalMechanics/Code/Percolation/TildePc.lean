@@ -42,7 +42,7 @@ noncomputable def boundaryEdges (d : ℕ) (S : Finset (Site d)) :
       (fun t => (t.1, coordShift t.1 t.2.1 (stepSign t.2.2)))
 
 
-noncomputable def connWithinProb (d : ℕ) (p : ℝ≥0) (hp : p ≤ 1) (S : Finset (Site d))
+noncomputable def connWithinProb (d : ℕ) (p : NNReal) (hp : p ≤ 1) (S : Finset (Site d))
     (x : Site d) : ℝ := by
   classical
   exact

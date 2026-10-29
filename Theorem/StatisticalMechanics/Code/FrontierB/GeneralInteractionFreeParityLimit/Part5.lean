@@ -37,7 +37,7 @@ theorem generalFreeBoxCurrentMeasure_parityAvoid_full_tendsto {d : Nat}
     (J : Sym2 (Site d) → ℝ) (hJ : ∀ e, 0 ≤ J e)
     (beta : ℝ) (hbeta : 0 < beta)
     (F : Finset (Sym2 (Site d))) (hFdiag : ∀ e ∈ F, ¬e.IsDiag) :
-    ∃ L : ℝ≥0∞, Tendsto
+    ∃ L : ENNReal, Tendsto
       (fun n => (generalFreeBoxCurrentMeasure J hJ n beta hbeta.le :
         Measure (InfiniteCurrentConfig (Sym2 (Site d))))
           (currentParityAvoidCylinder F)) atTop (nhds L) := by

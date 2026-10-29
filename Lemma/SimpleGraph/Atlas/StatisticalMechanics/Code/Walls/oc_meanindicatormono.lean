@@ -15,7 +15,7 @@ private lemma oc_mean_indicator_mono_eq
 -- given
   (h : s ⊆ t) :
 -- imply
-  ∫⁻ x, s.indicator (fun _ => (1 : ℝ≥0∞)) x ∂μ ≤ ∫⁻ x, t.indicator (fun _ => (1 : ℝ≥0∞)) x ∂μ := by
+  ∫⁻ x, s.indicator (fun _ => (1 : ENNReal)) x ∂μ ≤ ∫⁻ x, t.indicator (fun _ => (1 : ENNReal)) x ∂μ := by
 -- proof
   apply StatMech.Walls.oc_mean_indicator_mono μ h
 
@@ -30,7 +30,7 @@ private lemma oc_mean_indicator_mono_pred_eq
 -- given
   (h : ∀ x, P x → Q x) :
 -- imply
-  ∫⁻ x, {x | P x}.indicator (fun _ => (1 : ℝ≥0∞)) x ∂μ ≤ ∫⁻ x, {x | Q x}.indicator (fun _ => (1 : ℝ≥0∞)) x ∂μ := by
+  ∫⁻ x, {x | P x}.indicator (fun _ => (1 : ENNReal)) x ∂μ ≤ ∫⁻ x, {x | Q x}.indicator (fun _ => (1 : ENNReal)) x ∂μ := by
 -- proof
   apply StatMech.Walls.oc_mean_indicator_mono_pred μ h
 
@@ -45,7 +45,7 @@ private lemma oc_indicator_mean_eq_measure_eq
 -- given
   (hs : MeasurableSet s) :
 -- imply
-  ∫⁻ x, s.indicator (fun _ => (1 : ℝ≥0∞)) x ∂μ = μ s := by
+  ∫⁻ x, s.indicator (fun _ => (1 : ENNReal)) x ∂μ = μ s := by
 -- proof
   apply StatMech.Walls.oc_indicator_mean_eq_measure μ hs
 

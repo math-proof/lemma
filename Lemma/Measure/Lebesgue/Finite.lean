@@ -20,7 +20,7 @@ lemma exists_gt_not_mem_of_volume_lt_top
 -- proof
   by_contra! h
   have hmono : volume (Ioi X) ≤ volume E := measure_mono fun x hx ↦ h x hx
-  have htop : (∞ : ℝ≥0∞) ≤ volume E := by
+  have htop : (∞ : ENNReal) ≤ volume E := by
     simpa only [Real.volume_Ioi] using hmono
   exact (not_lt_of_ge htop) hE
 

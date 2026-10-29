@@ -34,14 +34,14 @@ def TripleEventIgnoresMiddleAt (x : Site d) (A : Set (FieldTriple d)) : Prop :=
 
 
 def HasMiddleInsertionLowerBound (mu : Measure (FieldTriple d))
-    (t : ℝ≥0) (epsilon : ℝ≥0∞) : Prop :=
+    (t : NNReal) (epsilon : ENNReal) : Prop :=
   ∀ (x : Site d) (A : Set (FieldTriple d)), MeasurableSet A →
     TripleEventIgnoresMiddleAt x A →
     epsilon * mu A ≤ mu (A ∩ {q | t ≤ q.2.1 x})
 
 
 def HasSiteInsertionLowerBound (nu : Measure (ConfigSpace (Site d)))
-    (epsilon : ℝ≥0∞) : Prop :=
+    (epsilon : ENNReal) : Prop :=
   ∀ (x : Site d) (B : Set (ConfigSpace (Site d))), MeasurableSet B →
     SiteEventIgnores x B →
     epsilon * nu B ≤ nu (B ∩ {eta | eta x = true})

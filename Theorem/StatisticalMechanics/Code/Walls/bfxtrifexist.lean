@@ -74,7 +74,7 @@ theorem bfx_coarseSet_eq_fineSet :
   exact (bfl_fineTrif_iff_bc67_zero ω 0).symm
 
 
-theorem bfx_trifExistence_of_route (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bfx_trifExistence_of_route (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hroute : ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) →
         ∃ a₁ a₂ a₃ : Site d,
@@ -95,7 +95,7 @@ theorem bfx_trifExistence_of_route (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
   exact hbft
 
 
-theorem bfx_trifExistence_of_routingCover (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bfx_trifExistence_of_routingCover (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hrt : ∀ n : ℕ, hrHD_DisjointRouting d n) :
     bc61_CoarseTrifExistence (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1) 0 :=
   bfx_trifExistence_of_route p hp1 hp0
@@ -103,7 +103,7 @@ theorem bfx_trifExistence_of_routingCover (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0
       (bkc_bernoulli_hasFiniteEnergyMerge p hp1 hp0) hrt)
 
 
-theorem bfx_bk_of_route (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bfx_bk_of_route (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hroute : ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) →
         ∃ a₁ a₂ a₃ : Site d,
@@ -119,7 +119,7 @@ theorem bfx_bk_of_route (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < 
   bfe_bk hd p hp1 hp0 (bfx_trifExistence_of_route p hp1 hp0 hroute)
 
 
-theorem bfx_bk_of_routingCover (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bfx_bk_of_routingCover (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hrt : ∀ n : ℕ, hrHD_DisjointRouting d n) :
     (bernoulliProductMeasure (E := Sym2 (Site d)) p hp1
         {ω | numInfiniteClusters d ω = 0} = 1 ∨
@@ -131,7 +131,7 @@ theorem bfx_bk_of_routingCover (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0
   bfe_bk hd p hp1 hp0 (bfx_trifExistence_of_routingCover p hp1 hp0 hrt)
 
 
-theorem bfx_bk_atLeastTwo_of_route (hd : 1 ≤ d) (p : ℝ≥0) (hp1 : p ≤ 1) (hp0 : 0 < p)
+theorem bfx_bk_atLeastTwo_of_route (hd : 1 ≤ d) (p : NNReal) (hp1 : p ≤ 1) (hp0 : 0 < p)
     (hroute : ∀ n : ℕ,
       0 < bernoulliProductMeasure (E := Sym2 (Site d)) p hp1 (threeMeetBox d n) →
         ∃ a₁ a₂ a₃ : Site d,

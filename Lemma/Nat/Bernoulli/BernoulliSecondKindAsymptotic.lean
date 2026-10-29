@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.Asymptotics.WatsonLaplaceLemma
 
 
 namespace MetaMathlibExt
@@ -19,7 +20,7 @@ private lemma exp_logGammaSeq_eq_gammaSeq {s : ℝ} (hs : 0 < s) {n : ℕ} (hn :
     apply Real.exp_log
     exact_mod_cast Nat.factorial_pos n
   have e3 : Real.exp (∑ m ∈ Finset.range (n + 1), Real.log (s + (m : ℝ)))
-    = ∏ j ∈ Finset.range (n + 1), (s + (j : ℝ)) := by
+      = ∏ j ∈ Finset.range (n + 1), (s + (j : ℝ)) := by
     rw [Real.exp_sum]
     apply Finset.prod_congr rfl
     intro m _
@@ -63,8 +64,8 @@ private lemma gammaSeq_le_gamma {s : ℝ} (hs : 0 < s) {n : ℕ} (hn : n ≠ 0) 
   simp only [Function.comp_apply, Real.Gamma_one, Real.log_one, zero_add] at hge
   have hexp := Real.exp_le_exp.mpr hge
   rw [Real.exp_log hGs] at hexp
-  rwa [exp_logGammaSeq_eq_gammaSeq hs hn] at hexp
-
+  rw [exp_logGammaSeq_eq_gammaSeq hs hn] at hexp
+  exact hexp
 end MetaMathlibExt
 
 namespace MetaMathlibExt
@@ -87,13 +88,13 @@ private lemma gamma_le_one_add_inv_mul_gammaSeq {s : ℝ} (hs : 0 < s) (hs1 : s 
   have hexp := Real.exp_le_exp.mpr hle
   rw [Real.exp_log hGs] at hexp
   have hsplit : Real.exp (s * Real.log ((n : ℝ) + 1) - s * Real.log (n : ℝ)
-    + Real.BohrMollerup.logGammaSeq s n)
-    = Real.exp (s * Real.log ((n : ℝ) + 1) - s * Real.log (n : ℝ))
-      * Real.GammaSeq s n := by
+      + Real.BohrMollerup.logGammaSeq s n)
+      = Real.exp (s * Real.log ((n : ℝ) + 1) - s * Real.log (n : ℝ))
+        * Real.GammaSeq s n := by
     rw [Real.exp_add, exp_logGammaSeq_eq_gammaSeq hs hn]
   rw [hsplit] at hexp
   have hexp2 : Real.exp (s * Real.log ((n : ℝ) + 1) - s * Real.log (n : ℝ))
-    = (((n : ℝ) + 1) / (n : ℝ)) ^ s := by
+      = (((n : ℝ) + 1) / (n : ℝ)) ^ s := by
     rw [Real.div_rpow (le_of_lt hn1R) (le_of_lt hnR)]
     rw [Real.rpow_def_of_pos hn1R, Real.rpow_def_of_pos hnR]
     rw [← Real.exp_sub]
@@ -105,12 +106,13 @@ private lemma gamma_le_one_add_inv_mul_gammaSeq {s : ℝ} (hs : 0 < s) (hs1 : s 
     linarith
   have hrpow : (((n : ℝ) + 1) / (n : ℝ)) ^ s ≤ ((n : ℝ) + 1) / (n : ℝ) := by
     have h := Real.rpow_le_rpow_of_exponent_le hbase hs1
-    rwa [Real.rpow_one] at h
+    rw [Real.rpow_one] at h
+    exact h
   have h11 : ((n : ℝ) + 1) / (n : ℝ) = 1 + 1 / (n : ℝ) := by
     field_simp
   calc Real.Gamma s ≤ (((n : ℝ) + 1) / (n : ℝ)) ^ s * Real.GammaSeq s n := hexp
     _ ≤ (((n : ℝ) + 1) / (n : ℝ)) * Real.GammaSeq s n := by
-      apply mul_le_mul_of_nonneg_right hrpow (le_of_lt hGS)
+        apply mul_le_mul_of_nonneg_right hrpow (le_of_lt hGS)
     _ = (1 + 1 / (n : ℝ)) * Real.GammaSeq s n := by rw [h11]
 
 end MetaMathlibExt
@@ -127,8 +129,8 @@ private lemma phi_mem {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x ≤ 1) :
   · subst hx
     simp [Real.Gamma_zero]
   · have hs : 0 < 1 - x := by
-    have : x < 1 := lt_of_le_of_ne hx1 hx
-    linarith
+      have : x < 1 := lt_of_le_of_ne hx1 hx
+      linarith
     have hs1 : 1 - x ≤ 1 := by linarith
     have hGs : 0 < Real.Gamma (1 - x) := Real.Gamma_pos_of_pos hs
     have hseq1 : Real.GammaSeq (1 - x) 1 = 1 / ((1 - x) * ((1 - x) + 1)) := by
@@ -138,14 +140,14 @@ private lemma phi_mem {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x ≤ 1) :
       rw [Real.one_rpow]
       ring
     have hfeq : ∀ {y : ℝ}, 0 < y → (Real.log ∘ Real.Gamma) (y + 1)
-      = (Real.log ∘ Real.Gamma) y + Real.log y :=
+        = (Real.log ∘ Real.Gamma) y + Real.log y :=
       logGamma_fe
     have hge := Real.BohrMollerup.ge_logGammaSeq (f := Real.log ∘ Real.Gamma)
       Real.convexOn_log_Gamma hfeq hs (by norm_num : (1:ℕ) ≠ 0)
     simp only [Function.comp_apply, Real.Gamma_one, Real.log_one, zero_add] at hge
     have hexp := Real.exp_le_exp.mpr hge
     have hbridge : Real.exp (Real.BohrMollerup.logGammaSeq (1 - x) 1)
-      = Real.GammaSeq (1 - x) 1 :=
+        = Real.GammaSeq (1 - x) 1 :=
       exp_logGammaSeq_eq_gammaSeq hs (by norm_num)
     rw [Real.exp_log hGs] at hexp
     rw [hbridge, hseq1] at hexp
@@ -157,10 +159,10 @@ private lemma phi_mem {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x ≤ 1) :
     · apply mul_nonneg hx0
       exact le_of_lt (inv_pos.mpr hGs)
     · have hinv : (Real.Gamma (1 - x))⁻¹ ≤ 2 := by
-      rw [inv_le_iff_one_le_mul₀ hGs]
-      linarith
+        rw [inv_le_iff_one_le_mul₀ hGs]
+        linarith
       calc x * (Real.Gamma (1 - x))⁻¹ ≤ 1 * 2 := by
-        apply mul_le_mul hx1 hinv (le_of_lt (inv_pos.mpr hGs)) (by norm_num)
+            apply mul_le_mul hx1 hinv (le_of_lt (inv_pos.mpr hGs)) (by norm_num)
         _ = 2 := one_mul 2
 
 end MetaMathlibExt
@@ -222,8 +224,8 @@ private lemma integrand_eq (n : ℕ) (hn : 2 ≤ n) (x : ℝ) (_hx0 : 0 ≤ x) (
     · exact hQ_ne
   have hN1 := prod_range_sub_mul_eq_prod_one_sub_add n x
   have hP : (∏ j ∈ Finset.range n, (x - (j : ℝ)))
-    = (((-1 : ℝ) ^ (n + 1) * x * ∏ j ∈ Finset.range (n + 1), ((1 - x) + (j : ℝ)))
-      / (((n : ℝ) + 1 - x) * ((n : ℝ) - x))) := by
+      = (((-1 : ℝ) ^ (n + 1) * x * ∏ j ∈ Finset.range (n + 1), ((1 - x) + (j : ℝ)))
+        / (((n : ℝ) + 1 - x) * ((n : ℝ) - x))) := by
     refine (eq_div_iff hAB).mpr ?_
     linear_combination hN1
   have hsign : (-1 : ℝ) ^ (n + 1) * (-1 : ℝ) ^ (n + 1) = 1 := by
@@ -232,7 +234,8 @@ private lemma integrand_eq (n : ℕ) (hn : 2 ≤ n) (x : ℝ) (_hx0 : 0 ≤ x) (
     exact Even.neg_one_pow this
   have hrpow : (n : ℝ) ^ ((1 : ℝ) - x) = (n : ℝ) * (n : ℝ) ^ (-x) := by
     have h := Real.rpow_add hn0 (1 : ℝ) (-x)
-    rwa [Real.rpow_one] at h
+    rw [Real.rpow_one] at h
+    exact h
   rw [hP, Real.GammaSeq.eq_1, hrpow]
   field_simp
   have hsign2 : (((-1 : ℝ) ^ (n + 1)) ^ 2) = 1 := by rw [sq]; exact hsign
@@ -323,7 +326,8 @@ private lemma abs_integrand_sub_le (n : ℕ) (hn : 2 ≤ n) (x : ℝ)
       linarith
     have hBhi2 : B ≤ ((n:ℝ)+1)/(n:ℝ) := by
       have heq : (1:ℝ) + 1/(n:ℝ) = ((n:ℝ)+1)/(n:ℝ) := by field_simp
-      rwa [heq] at hBhi
+      rw [heq] at hBhi
+      exact hBhi
     have hAB : |A*B - 1| ≤ 4/(n:ℝ) := by
       rw [abs_le]
       have hUB : A*B ≤ ((n:ℝ)/((n:ℝ)-1))*(((n:ℝ)+1)/(n:ℝ)) :=
@@ -347,10 +351,10 @@ private lemma abs_integrand_sub_le (n : ℕ) (hn : 2 ≤ n) (x : ℝ)
       · exact_mod_cast (show 1 ≤ n by omega)
       · exact neg_nonpos.mpr hx0
     have hdiff : (n:ℝ) * (-1 : ℝ) ^ (n + 1) * (∏ j ∈ Finset.range n, (x - (j : ℝ)))
-      / (n.factorial : ℝ) - R*φ = (R*φ)*(A*B - 1) := by
+        / (n.factorial : ℝ) - R*φ = (R*φ)*(A*B - 1) := by
       rw [hN4]; ring
     have hfin : |(n:ℝ) * (-1 : ℝ) ^ (n + 1) * (∏ j ∈ Finset.range n, (x - (j : ℝ)))
-      / (n.factorial : ℝ) - R*φ| ≤ 8/(n:ℝ) := by
+        / (n.factorial : ℝ) - R*φ| ≤ 8/(n:ℝ) := by
       rw [hdiff, abs_mul, abs_of_nonneg (mul_nonneg hR_nn hphi.1)]
       have h1 : R*φ ≤ 1*2 := mul_le_mul hR_le hphi.2 hphi.1 (by norm_num)
       have h2 : (R*φ)*|A*B-1| ≤ (1*2)*(4/(n:ℝ)) :=
@@ -373,11 +377,12 @@ private lemma contDiff_inv_gamma (n : WithTop ℕ∞) :
     Complex.differentiable_one_div_Gamma.contDiff
   have hR := ContDiff.real_of_complex hC
   have heq : (fun x : ℝ => ((Complex.Gamma (x : ℂ))⁻¹).re)
-    = (fun s : ℝ => (Real.Gamma s)⁻¹) := by
+      = (fun s : ℝ => (Real.Gamma s)⁻¹) := by
     funext x
     rw [Complex.Gamma_ofReal, ← Complex.ofReal_inv, Complex.ofReal_re]
   have hR' : ContDiff ℝ n (fun x : ℝ => ((Complex.Gamma (x : ℂ))⁻¹).re) := hR
-  rwa [heq] at hR'
+  rw [heq] at hR'
+  exact hR'
 
 end MetaMathlibExt
 
@@ -399,7 +404,7 @@ private lemma phi_eq_neg_inv_gamma_neg (x : ℝ) :
     have hxx : x * (-x)⁻¹ = -1 := by
       rw [inv_neg, mul_neg, mul_inv_cancel₀ hx]
     calc x * ((-x)⁻¹ * (Real.Gamma (-x))⁻¹)
-      = (x * (-x)⁻¹) * (Real.Gamma (-x))⁻¹ := by ring
+        = (x * (-x)⁻¹) * (Real.Gamma (-x))⁻¹ := by ring
       _ = -1 * (Real.Gamma (-x))⁻¹ := by rw [hxx]
       _ = -((Real.Gamma (-x))⁻¹) := by ring
 
@@ -418,9 +423,10 @@ private lemma contDiff_phi (n : WithTop ℕ∞) :
   have hcomp : ContDiff ℝ n (fun x : ℝ => (Real.Gamma (-x))⁻¹) :=
     h1.comp hneg
   have hphi : (fun x : ℝ => x * (Real.Gamma (1 - x))⁻¹)
-    = (fun x : ℝ => -((Real.Gamma (-x))⁻¹)) := by
+      = (fun x : ℝ => -((Real.Gamma (-x))⁻¹)) := by
     funext x; exact phi_eq_neg_inv_gamma_neg x
-  rwa [hphi]
+  rw [hphi]
+  exact hcomp.neg
 
 end MetaMathlibExt
 
@@ -445,13 +451,13 @@ private lemma phi_iteratedDeriv (k : ℕ) :
   iteratedDeriv (k + 1) (fun x : ℝ => x * (Real.Gamma (1 - x))⁻¹) (0 : ℝ)
     = (-1 : ℝ) ^ k * iteratedDeriv (k + 1) (fun s : ℝ => (Real.Gamma s)⁻¹) (0 : ℝ) := by
   have hphi : (fun x : ℝ => x * (Real.Gamma (1 - x))⁻¹)
-    = (fun x : ℝ => -((Real.Gamma (-x))⁻¹)) := by
+      = (fun x : ℝ => -((Real.Gamma (-x))⁻¹)) := by
     funext x; exact phi_eq_neg_inv_gamma_neg x
   have h2 : (fun x : ℝ => -((Real.Gamma (-x))⁻¹))
-    = -(fun x : ℝ => (Real.Gamma (-x))⁻¹) := by
+      = -(fun x : ℝ => (Real.Gamma (-x))⁻¹) := by
     funext x; rfl
   have h3 : (fun x : ℝ => (Real.Gamma (-x))⁻¹)
-    = (fun x : ℝ => (fun s : ℝ => (Real.Gamma s)⁻¹) (-x)) := by
+      = (fun x : ℝ => (fun s : ℝ => (Real.Gamma s)⁻¹) (-x)) := by
     funext x; rfl
   rw [hphi, h2, iteratedDeriv_neg, h3,
     iteratedDeriv_comp_neg (k + 1) (fun s : ℝ => (Real.Gamma s)⁻¹) 0]
@@ -483,39 +489,39 @@ private lemma n_mul_b_sub_laplace_isBigO (b : ℕ → ℝ)
   have hcontP : Continuous (fun x : ℝ => ∏ j ∈ Finset.range n, (x - (j:ℝ))) := by
     continuity
   have hcont1 : Continuous (fun x : ℝ => (n:ℝ) * (-1 : ℝ)^(n+1)
-    * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ)) := by
+      * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ)) := by
     continuity
   have hR_cont : Continuous (fun x : ℝ => (n:ℝ)^(-x)) :=
     (Real.continuous_const_rpow hn_ne).comp continuous_neg
   have hcont2 : Continuous (fun x : ℝ => (n:ℝ)^(-x) * (x * (Real.Gamma (1 - x))⁻¹)) :=
     hR_cont.mul (contDiff_phi ⊤).continuous
   have hint1 : IntervalIntegrable (fun x : ℝ => (n:ℝ) * (-1 : ℝ)^(n+1)
-    * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ))
-    MeasureTheory.volume 0 1 :=
+      * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ))
+      MeasureTheory.volume 0 1 :=
     hcont1.intervalIntegrable 0 1
   have hint2 : IntervalIntegrable (fun x : ℝ => (n:ℝ)^(-x) * (x * (Real.Gamma (1 - x))⁻¹))
-    MeasureTheory.volume 0 1 :=
+      MeasureTheory.volume 0 1 :=
     hcont2.intervalIntegrable 0 1
   have hb_n : (n:ℝ) * (-1 : ℝ)^(n+1) * b n
-    = ∫ x in (0:ℝ)..1, (n:ℝ) * (-1 : ℝ)^(n+1)
-      * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ) := by
+      = ∫ x in (0:ℝ)..1, (n:ℝ) * (-1 : ℝ)^(n+1)
+        * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ) := by
     rw [hb n]
     have hSP : (fun x : ℝ => (n:ℝ) * (-1 : ℝ)^(n+1)
-      * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ))
-      = (fun x : ℝ => ((n:ℝ) * (-1 : ℝ)^(n+1) / (n.factorial : ℝ))
-        * (∏ j ∈ Finset.range n, (x - (j : ℝ)))) := by
+          * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ))
+        = (fun x : ℝ => ((n:ℝ) * (-1 : ℝ)^(n+1) / (n.factorial : ℝ))
+          * (∏ j ∈ Finset.range n, (x - (j : ℝ)))) := by
       funext x; ring
     rw [hSP, intervalIntegral.integral_const_mul]
     ring
   have hdiff_int : (n:ℝ) * (-1 : ℝ)^(n+1) * b n
-    - ∫ x in (0:ℝ)..1, (n:ℝ)^(-x) * (x * (Real.Gamma (1 - x))⁻¹)
-    = ∫ x in (0:ℝ)..1, ((n:ℝ) * (-1 : ℝ)^(n+1)
-      * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ)
-      - (n:ℝ)^(-x) * (x * (Real.Gamma (1 - x))⁻¹)) := by
+        - ∫ x in (0:ℝ)..1, (n:ℝ)^(-x) * (x * (Real.Gamma (1 - x))⁻¹)
+      = ∫ x in (0:ℝ)..1, ((n:ℝ) * (-1 : ℝ)^(n+1)
+        * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ)
+        - (n:ℝ)^(-x) * (x * (Real.Gamma (1 - x))⁻¹)) := by
     rw [hb_n, ← intervalIntegral.integral_sub hint1 hint2]
   have hnorm : ∀ x ∈ Set.uIoc (0:ℝ) 1,
-    ‖(n:ℝ) * (-1 : ℝ)^(n+1) * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ)
-      - (n:ℝ)^(-x) * (x * (Real.Gamma (1 - x))⁻¹)‖ ≤ 8/(n:ℝ) := by
+      ‖(n:ℝ) * (-1 : ℝ)^(n+1) * (∏ j ∈ Finset.range n, (x - (j : ℝ))) / (n.factorial : ℝ)
+        - (n:ℝ)^(-x) * (x * (Real.Gamma (1 - x))⁻¹)‖ ≤ 8/(n:ℝ) := by
     intro x hx
     rw [Real.norm_eq_abs]
     rw [Set.uIoc_of_le (by norm_num : (0:ℝ) ≤ 1)] at hx
@@ -527,7 +533,8 @@ private lemma n_mul_b_sub_laplace_isBigO (b : ℕ → ℝ)
   have e1 : (8:ℝ) * ‖(1:ℝ)/(n:ℝ)‖ = 8/(n:ℝ) := by
     rw [Real.norm_eq_abs, abs_of_pos (div_pos one_pos hn0)]
     ring
-  rwa [e1]
+  rw [e1]
+  exact hle
 
 end MetaMathlibExt
 
@@ -546,7 +553,7 @@ private lemma one_div_n_isLittleO_one_div_log_pow (j : ℕ) :
   have h2 : (fun n : ℕ => (Real.log (n:ℝ))^j) =o[Filter.atTop] (fun n : ℕ => (n:ℝ)) :=
     h.comp_tendsto hc
   have hside : ∀ᶠ n : ℕ in Filter.atTop,
-    ((Real.log (n:ℝ))^j = 0 → (n:ℝ) = 0) := by
+      ((Real.log (n:ℝ))^j = 0 → (n:ℝ) = 0) := by
     rw [Filter.eventually_atTop]
     refine ⟨2, fun n hn => ?_⟩
     intro h0
@@ -588,39 +595,39 @@ private lemma sub_taylor_isBigO (f : ℝ → ℝ) (hcont : ContDiff ℝ ⊤ f) (
   have hcontN : ContDiff ℝ ((N + 1 : ℕ) : WithTop ℕ∞) f := hcont.of_le le_top
   have htay := taylor_isLittleO_univ (f := f) (x₀ := (0:ℝ)) (n := N + 1) hcontN
   have htay' : (fun x => f x - taylorWithinEval f (N+1) Set.univ 0 x)
-    =o[nhds (0:ℝ)] (fun x => x^(N+1)) := by
+      =o[nhds (0:ℝ)] (fun x => x^(N+1)) := by
     simpa only [sub_zero] using htay
   have hterm : ∀ k : ℕ, ∀ x : ℝ,
-    ((((k.factorial : ℝ))⁻¹ * (x - (0:ℝ))^k) • iteratedDerivWithin k f Set.univ (0:ℝ))
-      = (iteratedDeriv k f 0 / ((k.factorial : ℝ))) * x^k := by
+      ((((k.factorial : ℝ))⁻¹ * (x - (0:ℝ))^k) • iteratedDerivWithin k f Set.univ (0:ℝ))
+        = (iteratedDeriv k f 0 / ((k.factorial : ℝ))) * x^k := by
     intro k x
     rw [iteratedDerivWithin_univ, sub_zero, smul_eq_mul]
     ring
   have hc0 : ∀ x : ℝ,
-    (iteratedDeriv 0 f 0 / ((0).factorial : ℝ)) * x^(0:ℕ) = 0 := by
+      (iteratedDeriv 0 f 0 / ((0).factorial : ℝ)) * x^(0:ℕ) = 0 := by
     intro x; simp [hf0]
   have hT : ∀ x : ℝ, taylorWithinEval f (N+1) Set.univ 0 x
-    = (∑ k ∈ Finset.range N,
-      (iteratedDeriv (k+1) f 0 / ((k + 1).factorial : ℝ)) * x^(k+1))
-      + (iteratedDeriv (N+1) f 0 / (((N + 1).factorial : ℕ) : ℝ)) * x^(N+1) := by
+      = (∑ k ∈ Finset.range N,
+          (iteratedDeriv (k+1) f 0 / ((k + 1).factorial : ℝ)) * x^(k+1))
+        + (iteratedDeriv (N+1) f 0 / (((N + 1).factorial : ℕ) : ℝ)) * x^(N+1) := by
     intro x
     rw [taylor_within_apply]
     simp only [hterm]
     rw [Finset.sum_range_succ', hc0 x, add_zero, Finset.sum_range_succ]
   have ho_top : (fun s : ℝ => (iteratedDeriv (N+1) f 0 / (((N + 1).factorial : ℕ) : ℝ)) * s^(N+1))
-    =O[nhds (0:ℝ)] (fun s => s^(N+1)) := by
+      =O[nhds (0:ℝ)] (fun s => s^(N+1)) := by
     apply Asymptotics.IsBigO.of_bound ‖iteratedDeriv (N+1) f 0 / (((N + 1).factorial : ℕ) : ℝ)‖
     apply Filter.Eventually.of_forall
     intro s
     rw [norm_mul]
   have hcomb : (fun x => (f x - taylorWithinEval f (N+1) Set.univ 0 x)
-    + (iteratedDeriv (N+1) f 0 / (((N + 1).factorial : ℕ) : ℝ)) * x^(N+1))
-    =O[nhds (0:ℝ)] (fun x => x^(N+1)) :=
+        + (iteratedDeriv (N+1) f 0 / (((N + 1).factorial : ℕ) : ℝ)) * x^(N+1))
+      =O[nhds (0:ℝ)] (fun x => x^(N+1)) :=
     Asymptotics.IsLittleO.add_isBigO htay' ho_top
   have heq : (fun s => f s - ∑ k ∈ Finset.range N,
-    (iteratedDeriv (k+1) f 0 / ((k + 1).factorial : ℝ)) * s^(k+1))
-    = (fun s => (f s - taylorWithinEval f (N+1) Set.univ 0 s)
-      + (iteratedDeriv (N+1) f 0 / (((N + 1).factorial : ℕ) : ℝ)) * s^(N+1)) := by
+        (iteratedDeriv (k+1) f 0 / ((k + 1).factorial : ℝ)) * s^(k+1))
+      = (fun s => (f s - taylorWithinEval f (N+1) Set.univ 0 s)
+        + (iteratedDeriv (N+1) f 0 / (((N + 1).factorial : ℕ) : ℝ)) * s^(N+1)) := by
     funext s; rw [hT s]; ring
   rw [heq]
   exact hcomb.mono nhdsWithin_le_nhds
@@ -641,18 +648,18 @@ private lemma watson_unit_interval (f : ℝ → ℝ) (hcont : ContDiff ℝ ⊤ f
         / M ^ (k + 2)))
     =O[Filter.atTop] (fun M : ℝ => 1 / M ^ (N + 2)) := by
   have hfun : ∀ m : ℝ,
-    (fun s : ℝ => Set.indicator (Set.Ioc (0 : ℝ) 1) f s * Real.exp (-m * s))
-    = Set.indicator (Set.Ioc (0 : ℝ) 1) (fun s : ℝ => f s * Real.exp (-m * s)) := by
+      (fun s : ℝ => Set.indicator (Set.Ioc (0 : ℝ) 1) f s * Real.exp (-m * s))
+      = Set.indicator (Set.Ioc (0 : ℝ) 1) (fun s : ℝ => f s * Real.exp (-m * s)) := by
     intro m
     funext s
     by_cases hs : s ∈ Set.Ioc (0 : ℝ) 1
     · simp only [Set.indicator_of_mem hs]
     · simp only [Set.indicator_of_notMem hs, zero_mul]
   have hlocal : ∀ N' : ℕ, Asymptotics.IsBigO (nhdsWithin 0 (Set.Ioi 0))
-    (fun s : ℝ => Set.indicator (Set.Ioc (0 : ℝ) 1) f s
-      - ∑ k ∈ Finset.range N',
-        (iteratedDeriv (k + 1) f 0 / ((k + 1).factorial : ℝ)) * s ^ (k + 1))
-    (fun s : ℝ => s ^ (N' + 1)) := by
+      (fun s : ℝ => Set.indicator (Set.Ioc (0 : ℝ) 1) f s
+        - ∑ k ∈ Finset.range N',
+          (iteratedDeriv (k + 1) f 0 / ((k + 1).factorial : ℝ)) * s ^ (k + 1))
+      (fun s : ℝ => s ^ (N' + 1)) := by
     intro N'
     have hbase := sub_taylor_isBigO f hcont hf0 N'
     refine hbase.congr' ?_ (Filter.Eventually.of_forall fun _ => rfl)
@@ -664,14 +671,14 @@ private lemma watson_unit_interval (f : ℝ → ℝ) (hcont : ContDiff ℝ ⊤ f
     have hmem : s ∈ Set.Ioc (0 : ℝ) 1 := ⟨hpos, le_of_lt hlt⟩
     simp only [Set.indicator_of_mem hmem]
   have hconv : ∃ m₀ : ℝ, ∀ m ≥ m₀, MeasureTheory.IntegrableOn
-    (fun s : ℝ => Set.indicator (Set.Ioc (0 : ℝ) 1) f s * Real.exp (-m * s))
-    (Set.Ioi 0) := by
+      (fun s : ℝ => Set.indicator (Set.Ioc (0 : ℝ) 1) f s * Real.exp (-m * s))
+      (Set.Ioi 0) := by
     refine ⟨0, fun m _ => ?_⟩
     have hFcont : Continuous (fun s : ℝ => f s * Real.exp (-m * s)) :=
       hcont.continuous.mul
         (Real.continuous_exp.comp (continuous_const.mul continuous_id'))
     have hIoc : MeasureTheory.IntegrableOn (fun s : ℝ => f s * Real.exp (-m * s))
-      (Set.Ioc (0 : ℝ) 1) :=
+        (Set.Ioc (0 : ℝ) 1) :=
       hFcont.integrableOn_Ioc
     rw [hfun m]
     exact (hIoc.integrable_indicator measurableSet_Ioc).integrableOn
@@ -679,24 +686,24 @@ private lemma watson_unit_interval (f : ℝ → ℝ) (hcont : ContDiff ℝ ⊤ f
     (Set.indicator (Set.Ioc (0 : ℝ) 1) f)
     (fun j : ℕ => iteratedDeriv j f 0 / (j.factorial : ℝ)) hlocal hconv N
   have hint : ∀ M : ℝ, (∫ s in Set.Ioi 0,
-    Set.indicator (Set.Ioc (0 : ℝ) 1) f s * Real.exp (-M * s))
-    = ∫ x in (0 : ℝ)..1, f x * Real.exp (-M * x) := by
+      Set.indicator (Set.Ioc (0 : ℝ) 1) f s * Real.exp (-M * s))
+      = ∫ x in (0 : ℝ)..1, f x * Real.exp (-M * x) := by
     intro M
     rw [hfun M, MeasureTheory.setIntegral_indicator measurableSet_Ioc,
       Set.inter_eq_self_of_subset_right Set.Ioc_subset_Ioi_self,
       intervalIntegral.integral_of_le (show (0 : ℝ) ≤ 1 by norm_num)]
   have hsums : ∀ M : ℝ, (∑ k ∈ Finset.range N, ((Nat.factorial (k + 1) : ℕ) : ℝ)
-    * (fun j : ℕ => iteratedDeriv j f 0 / (j.factorial : ℝ)) (k + 1) / M ^ (k + 2))
-    = ∑ k ∈ Finset.range N, ((k + 1).factorial : ℝ)
-      * (iteratedDeriv (k + 1) f 0 / ((k + 1).factorial : ℝ)) / M ^ (k + 2) :=
+        * (fun j : ℕ => iteratedDeriv j f 0 / (j.factorial : ℝ)) (k + 1) / M ^ (k + 2))
+      = ∑ k ∈ Finset.range N, ((k + 1).factorial : ℝ)
+        * (iteratedDeriv (k + 1) f 0 / ((k + 1).factorial : ℝ)) / M ^ (k + 2) :=
     fun _ => rfl
   have e : ∀ M : ℝ, (∫ s in Set.Ioi 0,
-    Set.indicator (Set.Ioc (0 : ℝ) 1) f s * Real.exp (-M * s))
-    - ∑ k ∈ Finset.range N, ((Nat.factorial (k + 1) : ℕ) : ℝ)
-      * (fun j : ℕ => iteratedDeriv j f 0 / (j.factorial : ℝ)) (k + 1) / M ^ (k + 2)
-    = (∫ x in (0 : ℝ)..1, f x * Real.exp (-M * x))
-      - ∑ k ∈ Finset.range N, ((k + 1).factorial : ℝ)
-        * (iteratedDeriv (k + 1) f 0 / ((k + 1).factorial : ℝ)) / M ^ (k + 2) := by
+        Set.indicator (Set.Ioc (0 : ℝ) 1) f s * Real.exp (-M * s))
+        - ∑ k ∈ Finset.range N, ((Nat.factorial (k + 1) : ℕ) : ℝ)
+          * (fun j : ℕ => iteratedDeriv j f 0 / (j.factorial : ℝ)) (k + 1) / M ^ (k + 2)
+      = (∫ x in (0 : ℝ)..1, f x * Real.exp (-M * x))
+        - ∑ k ∈ Finset.range N, ((k + 1).factorial : ℝ)
+          * (iteratedDeriv (k + 1) f 0 / ((k + 1).factorial : ℝ)) / M ^ (k + 2) := by
     intro M
     rw [hint M, hsums M]
   exact hW.congr_left e
@@ -717,94 +724,95 @@ private lemma laplace_phi_log_asymptotic (β : ℕ → ℝ)
     - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2))
     =o[Filter.atTop] (fun n : ℕ => 1 / (Real.log (n : ℝ)) ^ (m + 2)) := by
   have hcoeff : ∀ k : ℕ, ((k + 1).factorial : ℝ)
-    * (iteratedDeriv (k + 1) (fun x : ℝ => x * (Real.Gamma (1 - x))⁻¹) 0
-      / ((k + 1).factorial : ℝ)) = β k := by
+      * (iteratedDeriv (k + 1) (fun x : ℝ => x * (Real.Gamma (1 - x))⁻¹) 0
+        / ((k + 1).factorial : ℝ)) = β k := by
     intro k
     have hne : ((k + 1).factorial : ℝ) ≠ 0 := by
       exact_mod_cast Nat.factorial_ne_zero (k + 1)
     rw [mul_comm ((k + 1).factorial : ℝ), div_mul_cancel₀ _ hne,
       phi_iteratedDeriv k, ← hβ k]
   have hWβ : (fun M : ℝ => (∫ x in (0 : ℝ)..1,
-    (x * (Real.Gamma (1 - x))⁻¹) * Real.exp (-M * x))
-    - ∑ k ∈ Finset.range (m + 1), β k / M ^ (k + 2))
-    =O[Filter.atTop] (fun M : ℝ => 1 / M ^ (m + 3)) := by
+            (x * (Real.Gamma (1 - x))⁻¹) * Real.exp (-M * x))
+          - ∑ k ∈ Finset.range (m + 1), β k / M ^ (k + 2))
+      =O[Filter.atTop] (fun M : ℝ => 1 / M ^ (m + 3)) := by
     have hsumM : ∀ M : ℝ, (∑ k ∈ Finset.range (m + 1),
-      ((k + 1).factorial : ℝ)
-        * (iteratedDeriv (k + 1) (fun x : ℝ => x * (Real.Gamma (1 - x))⁻¹) 0
-          / ((k + 1).factorial : ℝ)) / M ^ (k + 2))
-      = ∑ k ∈ Finset.range (m + 1), β k / M ^ (k + 2) := by
+            ((k + 1).factorial : ℝ)
+              * (iteratedDeriv (k + 1) (fun x : ℝ => x * (Real.Gamma (1 - x))⁻¹) 0
+                / ((k + 1).factorial : ℝ)) / M ^ (k + 2))
+        = ∑ k ∈ Finset.range (m + 1), β k / M ^ (k + 2) := by
       intro M
       apply Finset.sum_congr rfl
       intro k _
       rw [hcoeff k]
     have hexp3 : m + 1 + 2 = m + 3 := by omega
     have hWred : (fun M : ℝ => (∫ x in (0 : ℝ)..1,
-      (x * (Real.Gamma (1 - x))⁻¹) * Real.exp (-M * x))
-      - ∑ k ∈ Finset.range (m + 1), ((k + 1).factorial : ℝ)
-        * (iteratedDeriv (k + 1) (fun x : ℝ => x * (Real.Gamma (1 - x))⁻¹) 0
-          / ((k + 1).factorial : ℝ)) / M ^ (k + 2))
-      =O[Filter.atTop] (fun M : ℝ => 1 / M ^ (m + 1 + 2)) :=
+              (x * (Real.Gamma (1 - x))⁻¹) * Real.exp (-M * x))
+            - ∑ k ∈ Finset.range (m + 1), ((k + 1).factorial : ℝ)
+              * (iteratedDeriv (k + 1) (fun x : ℝ => x * (Real.Gamma (1 - x))⁻¹) 0
+                / ((k + 1).factorial : ℝ)) / M ^ (k + 2))
+        =O[Filter.atTop] (fun M : ℝ => 1 / M ^ (m + 1 + 2)) :=
       watson_unit_interval (fun x : ℝ => x * (Real.Gamma (1 - x))⁻¹)
         (contDiff_phi ⊤) phi_zero (m + 1)
     simp only [hexp3, hsumM] at hWred
     exact hWred
   have hlogtend : Filter.Tendsto (fun n : ℕ => Real.log (n : ℝ))
-    Filter.atTop Filter.atTop :=
+      Filter.atTop Filter.atTop :=
     Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
   have hmain : (fun n : ℕ => (∫ x in (0 : ℝ)..1,
-    (x * (Real.Gamma (1 - x))⁻¹) * Real.exp (-(Real.log (n : ℝ)) * x))
-    - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2))
-    =O[Filter.atTop] (fun n : ℕ => 1 / (Real.log (n : ℝ)) ^ (m + 3)) :=
+            (x * (Real.Gamma (1 - x))⁻¹) * Real.exp (-(Real.log (n : ℝ)) * x))
+          - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2))
+      =O[Filter.atTop] (fun n : ℕ => 1 / (Real.log (n : ℝ)) ^ (m + 3)) :=
     hWβ.comp_tendsto hlogtend
   have hmain2 : (fun n : ℕ => (∫ x in (0 : ℝ)..1,
-    (n : ℝ) ^ (-x) * (x * (Real.Gamma (1 - x))⁻¹))
-    - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2))
-    =O[Filter.atTop] (fun n : ℕ => 1 / (Real.log (n : ℝ)) ^ (m + 3)) := by
+            (n : ℝ) ^ (-x) * (x * (Real.Gamma (1 - x))⁻¹))
+          - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2))
+      =O[Filter.atTop] (fun n : ℕ => 1 / (Real.log (n : ℝ)) ^ (m + 3)) := by
     refine hmain.congr' ?_ (Filter.Eventually.of_forall fun _ => rfl)
     filter_upwards [Filter.eventually_ge_atTop 1] with n hn
     have hn0 : (0 : ℝ) < (n : ℝ) := by exact_mod_cast (show 0 < n by omega)
     have hx : ∀ x : ℝ, (x * (Real.Gamma (1 - x))⁻¹) * Real.exp (-(Real.log (n : ℝ)) * x)
-      = (n : ℝ) ^ (-x) * (x * (Real.Gamma (1 - x))⁻¹) := by
+        = (n : ℝ) ^ (-x) * (x * (Real.Gamma (1 - x))⁻¹) := by
       intro x
       have e : Real.log (n : ℝ) * (-x) = -(Real.log (n : ℝ)) * x := by ring
       rw [Real.rpow_def_of_pos hn0, e]
       ring
     change (∫ x in (0 : ℝ)..1,
-      (x * (Real.Gamma (1 - x))⁻¹) * Real.exp (-(Real.log (n : ℝ)) * x))
-      - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2)
-      = (∫ x in (0 : ℝ)..1, (n : ℝ) ^ (-x) * (x * (Real.Gamma (1 - x))⁻¹))
-        - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2)
+            (x * (Real.Gamma (1 - x))⁻¹) * Real.exp (-(Real.log (n : ℝ)) * x))
+          - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2)
+        = (∫ x in (0 : ℝ)..1, (n : ℝ) ^ (-x) * (x * (Real.Gamma (1 - x))⁻¹))
+          - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2)
     simp only [hx]
   have herr : (fun n : ℕ => (1 : ℝ) / (Real.log (n : ℝ)) ^ (m + 3))
-    =o[Filter.atTop] (fun n : ℕ => 1 / (Real.log (n : ℝ)) ^ (m + 2)) := by
+      =o[Filter.atTop] (fun n : ℕ => 1 / (Real.log (n : ℝ)) ^ (m + 2)) := by
     refine Asymptotics.isLittleO_of_tendsto' ?hg ?ht
     · filter_upwards [Filter.eventually_ge_atTop 2] with n hn h0
       have hlog : (0 : ℝ) < Real.log (n : ℝ) :=
         Real.log_pos (by exact_mod_cast (show 1 < n by omega))
       exact absurd h0 (one_div_ne_zero (pow_ne_zero _ (ne_of_gt hlog)))
     · have heq : ∀ᶠ n : ℕ in Filter.atTop,
-      ((1 : ℝ) / (Real.log (n : ℝ)) ^ (m + 3)) / (1 / (Real.log (n : ℝ)) ^ (m + 2))
-        = 1 / Real.log (n : ℝ) := by
-      filter_upwards [Filter.eventually_ge_atTop 2] with n hn
-      have hL : Real.log (n : ℝ) ≠ 0 :=
-        ne_of_gt (Real.log_pos (by exact_mod_cast (show 1 < n by omega)))
-      have hLm2 : (Real.log (n : ℝ)) ^ (m + 2) ≠ 0 := pow_ne_zero _ hL
-      have h1 : (1 : ℝ) / (Real.log (n : ℝ)) ^ (m + 2) ≠ 0 := one_div_ne_zero hLm2
-      have hpow : (Real.log (n : ℝ)) ^ (m + 3)
-        = (Real.log (n : ℝ)) ^ (m + 2) * Real.log (n : ℝ) := by
-        rw [show m + 3 = (m + 2) + 1 from by omega, pow_succ]
-      have hAL : (Real.log (n : ℝ)) ^ (m + 2) * Real.log (n : ℝ) ≠ 0 :=
-        mul_ne_zero hLm2 hL
-      rw [div_eq_div_iff h1 hL, one_mul, hpow, div_mul_eq_mul_div, one_mul,
-        div_eq_iff hAL, div_mul_eq_mul_div, one_mul, mul_div_cancel_left₀ _ hLm2]
+          ((1 : ℝ) / (Real.log (n : ℝ)) ^ (m + 3)) / (1 / (Real.log (n : ℝ)) ^ (m + 2))
+            = 1 / Real.log (n : ℝ) := by
+        filter_upwards [Filter.eventually_ge_atTop 2] with n hn
+        have hL : Real.log (n : ℝ) ≠ 0 :=
+          ne_of_gt (Real.log_pos (by exact_mod_cast (show 1 < n by omega)))
+        have hLm2 : (Real.log (n : ℝ)) ^ (m + 2) ≠ 0 := pow_ne_zero _ hL
+        have h1 : (1 : ℝ) / (Real.log (n : ℝ)) ^ (m + 2) ≠ 0 := one_div_ne_zero hLm2
+        have hpow : (Real.log (n : ℝ)) ^ (m + 3)
+            = (Real.log (n : ℝ)) ^ (m + 2) * Real.log (n : ℝ) := by
+          rw [show m + 3 = (m + 2) + 1 from by omega, pow_succ]
+        have hAL : (Real.log (n : ℝ)) ^ (m + 2) * Real.log (n : ℝ) ≠ 0 :=
+          mul_ne_zero hLm2 hL
+        rw [div_eq_div_iff h1 hL, one_mul, hpow, div_mul_eq_mul_div, one_mul,
+          div_eq_iff hAL, div_mul_eq_mul_div, one_mul, mul_div_cancel_left₀ _ hLm2]
       have hlim : Filter.Tendsto (fun n : ℕ => (1 : ℝ) / Real.log (n : ℝ))
-        Filter.atTop (nhds 0) := by
+          Filter.atTop (nhds 0) := by
         have h2 := hlogtend.inv_tendsto_atTop
         have heq2 : (fun n : ℕ => Real.log (n : ℝ))⁻¹
-          = fun n : ℕ => (1 : ℝ) / Real.log (n : ℝ) := by
+            = fun n : ℕ => (1 : ℝ) / Real.log (n : ℝ) := by
           funext n
           simp only [Pi.inv_apply, inv_eq_one_div]
-        rwa [heq2] at h2
+        rw [heq2] at h2
+        exact h2
       exact (Filter.tendsto_congr' heq).mpr hlim
   exact hmain2.trans_isLittleO herr
 
@@ -831,21 +839,21 @@ lemma bernoulli_second_kind_asymptotic
   have h11 := n_mul_b_sub_laplace_isLittleO b hb (m + 2)
   have h10 := laplace_phi_log_asymptotic β hβ m
   have hE : (fun n : ℕ => (n : ℝ) * (-1 : ℝ) ^ (n + 1) * b n
-    - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2))
-    =o[Filter.atTop] (fun n : ℕ => 1 / (Real.log (n : ℝ)) ^ (m + 2)) := by
+      - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2))
+      =o[Filter.atTop] (fun n : ℕ => 1 / (Real.log (n : ℝ)) ^ (m + 2)) := by
     have hsum := h11.add h10
     refine hsum.congr' ?_ (Filter.Eventually.of_forall fun _ => rfl)
     apply Filter.Eventually.of_forall
     intro n
     change ((n : ℝ) * (-1 : ℝ) ^ (n + 1) * b n
-      - ∫ x in (0 : ℝ)..1, (n : ℝ) ^ (-x) * (x * (Real.Gamma (1 - x))⁻¹))
-      + ((∫ x in (0 : ℝ)..1, (n : ℝ) ^ (-x) * (x * (Real.Gamma (1 - x))⁻¹))
-      - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2))
-      = (n : ℝ) * (-1 : ℝ) ^ (n + 1) * b n
-        - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2)
+          - ∫ x in (0 : ℝ)..1, (n : ℝ) ^ (-x) * (x * (Real.Gamma (1 - x))⁻¹))
+          + ((∫ x in (0 : ℝ)..1, (n : ℝ) ^ (-x) * (x * (Real.Gamma (1 - x))⁻¹))
+          - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2))
+        = (n : ℝ) * (-1 : ℝ) ^ (n + 1) * b n
+          - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2)
     ring
   have hscale : (fun n : ℕ => (-1 : ℝ) ^ (n + 1) / (n : ℝ))
-    =O[Filter.atTop] (fun n : ℕ => 1 / (n : ℝ)) := by
+      =O[Filter.atTop] (fun n : ℕ => 1 / (n : ℝ)) := by
     apply Asymptotics.isBigO_of_le
     intro n
     have h1 : |(-1 : ℝ) ^ (n + 1)| = 1 := by
@@ -863,15 +871,15 @@ lemma bernoulli_second_kind_asymptotic
       have hev : Even ((n + 1) + (n + 1)) := ⟨n + 1, by ring⟩
       exact Even.neg_one_pow hev
     have hmain : ((-1 : ℝ) ^ (n + 1) / (n : ℝ))
-      * ((n : ℝ) * (-1 : ℝ) ^ (n + 1) * b n) = b n := by
+        * ((n : ℝ) * (-1 : ℝ) ^ (n + 1) * b n) = b n := by
       rw [div_mul_eq_mul_div, div_eq_iff hN]
       linear_combination (b n * (n : ℝ)) * hsign
     have hpow : ∀ k : ℕ, (Real.log (n : ℝ)) ^ (k + 2)
-      = (Real.log (n : ℝ)) ^ k * (Real.log (n : ℝ)) ^ 2 := fun k => pow_add _ _ _
+        = (Real.log (n : ℝ)) ^ k * (Real.log (n : ℝ)) ^ 2 := fun k => pow_add _ _ _
     have hS : ((-1 : ℝ) ^ (n + 1) / (n : ℝ))
-      * ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2)
-      = ((-1 : ℝ) ^ (n + 1) / ((n : ℝ) * (Real.log (n : ℝ)) ^ 2))
-        * ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ k := by
+          * ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2)
+        = ((-1 : ℝ) ^ (n + 1) / ((n : ℝ) * (Real.log (n : ℝ)) ^ 2))
+          * ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ k := by
       rw [Finset.mul_sum, Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro k _
@@ -883,10 +891,10 @@ lemma bernoulli_second_kind_asymptotic
       rw [hpow k]
       field_simp
     change ((-1 : ℝ) ^ (n + 1) / (n : ℝ))
-      * ((n : ℝ) * (-1 : ℝ) ^ (n + 1) * b n
-        - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2))
-      = b n - (((-1 : ℝ) ^ (n + 1) / ((n : ℝ) * (Real.log (n : ℝ)) ^ 2))
-        * ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ k)
+          * ((n : ℝ) * (-1 : ℝ) ^ (n + 1) * b n
+            - ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ (k + 2))
+        = b n - (((-1 : ℝ) ^ (n + 1) / ((n : ℝ) * (Real.log (n : ℝ)) ^ 2))
+          * ∑ k ∈ Finset.range (m + 1), β k / (Real.log (n : ℝ)) ^ k)
     rw [mul_sub, hmain, hS]
   · filter_upwards [Filter.eventually_ge_atTop 2] with n hn
     have hn1 : (1 : ℝ) < (n : ℝ) := by exact_mod_cast (show 1 < n by omega)
@@ -899,9 +907,10 @@ lemma bernoulli_second_kind_asymptotic
       = 1 / ((n : ℝ) * (Real.log (n : ℝ)) ^ (m + 2))
     rw [div_mul_eq_mul_div, one_mul, div_eq_div_iff hN hNM, one_mul,
       div_mul_eq_mul_div, one_mul, div_eq_iff hM]
+
 end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

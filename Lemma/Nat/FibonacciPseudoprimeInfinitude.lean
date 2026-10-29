@@ -20,22 +20,22 @@ private lemma wanted_fib_matrix_pow (R : Type*) [CommRing R] (n : ℕ) :
     fin_cases i
     · fin_cases j
       · simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply,
-        Matrix.cons_val_zero, Matrix.cons_val_one, Fin.mk_zero, Fin.mk_one,
-        mul_one, mul_zero, add_zero, zero_add]
+        Matrix.cons_val_zero, Matrix.cons_val_one, Fin.mk_zero, 
+        mul_one]
         rw [Nat.fib_add_two (n := n + 1), hS, Nat.cast_add]
         ring
       · simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply,
         Matrix.cons_val_zero, Matrix.cons_val_one, Fin.mk_zero, Fin.mk_one,
-        mul_one, mul_zero, add_zero, zero_add]
+        mul_one, mul_zero, add_zero]
     · fin_cases j
       · simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply,
         Matrix.cons_val_zero, Matrix.cons_val_one, Fin.mk_zero, Fin.mk_one,
-        mul_one, mul_zero, add_zero, zero_add]
+        mul_one]
         rw [hS, Nat.fib_add_two, Nat.cast_add]
         ring
       · simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply,
-        Matrix.cons_val_zero, Matrix.cons_val_one, Fin.mk_zero, Fin.mk_one,
-        mul_one, mul_zero, add_zero, zero_add]
+        Matrix.cons_val_zero, Matrix.cons_val_one, Fin.mk_one,
+        mul_one, mul_zero, add_zero]
 
 end MetaMathlibExt
 
@@ -70,7 +70,7 @@ private lemma wanted_S_sq_smul (p : ℕ) [Fact (Nat.Prime p)] :
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp only [Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
-      Fin.mk_zero, Fin.mk_one, Matrix.smul_apply, smul_eq_mul] <;>
+      Fin.mk_zero, Fin.mk_one, Matrix.smul_apply] <;>
     ring
 
 end MetaMathlibExt
@@ -90,8 +90,7 @@ private lemma wanted_diag_pow (p : ℕ) [Fact (Nat.Prime p)] (m : ℕ) :
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp only [Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
-        Fin.mk_zero, Fin.mk_one, Matrix.one_apply_eq, Matrix.one_apply_ne,
-        pow_zero] <;>
+        Fin.mk_zero, Fin.mk_one, Matrix.one_apply_eq] <;>
       rfl
   | succ m ih =>
     rw [pow_succ, ih]
@@ -99,7 +98,7 @@ private lemma wanted_diag_pow (p : ℕ) [Fact (Nat.Prime p)] (m : ℕ) :
     fin_cases i <;> fin_cases j <;>
       simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply,
         Matrix.cons_val_zero, Matrix.cons_val_one, Fin.mk_zero, Fin.mk_one,
-        mul_one, mul_zero, add_zero, zero_add, pow_succ] <;>
+        mul_zero, add_zero, zero_add, pow_succ] <;>
       ring
 
 end MetaMathlibExt
@@ -123,7 +122,7 @@ private lemma wanted_S_odd_pow (p : ℕ) [Fact (Nat.Prime p)] (m : ℕ) :
     fin_cases i <;> fin_cases j <;>
       simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply,
         Matrix.cons_val_zero, Matrix.cons_val_one, Fin.mk_zero, Fin.mk_one,
-        mul_one, mul_zero, add_zero, zero_add, pow_succ] <;>
+        mul_zero, add_zero, zero_add, pow_succ] <;>
       ring
 
 end MetaMathlibExt
@@ -334,8 +333,7 @@ private lemma wanted_fib_two_mul_eq (p : ℕ) [Fact (Nat.Prime p)] (hp2 : p ≠ 
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp only [Matrix.add_apply, Matrix.of_apply, Matrix.cons_val_zero,
-        Matrix.cons_val_one, Fin.mk_zero, Fin.mk_one, add_zero, zero_add] <;>
-      ring
+        Matrix.cons_val_one, Fin.mk_zero, Fin.mk_one, add_zero, zero_add]
   -- 2 • T^p explicit
   have h2T : (2 : ZMod p) • T ^ p
     = !![(2 : ZMod p), 2 * (5 : ZMod p) ^ (p / 2 + 1);
@@ -504,11 +502,11 @@ private lemma wanted_fib_two_mul_odd (p : ℕ) (hp : Nat.Prime p) (hp3 : p ≠ 3
     obtain h | h := hD
     · norm_num at h
     · have hEq := hp.eq_one_or_self_of_dvd 3 h
-      obtain h1 | h1 <;> omega := hEq
+      obtain h1 | h1 := hEq <;> omega
   have hmod : (2 * p) % 3 = 1 ∨ (2 * p) % 3 = 2 := by omega
   have hdecomp : 2 * p = 3 * (2 * p / 3) + (2 * p) % 3 := (Nat.div_add_mod (2 * p) 3).symm
   rw [Nat.odd_iff, hdecomp, wanted_fib_mod2_mul]
-  obtain h | h <;> rw [h] <;> decide := hmod
+  obtain h | h := hmod <;> rw [h] <;> decide
 
 end MetaMathlibExt
 
@@ -526,7 +524,7 @@ private lemma wanted_fib_mod5_eq (p : ℕ) (hp : Nat.Prime p) (hp5 : 5 < p) :
     intro h0
     have hD : 5 ∣ p := Nat.dvd_of_mod_eq_zero h0
     have hEq := hp.eq_one_or_self_of_dvd 5 hD
-    obtain h1 | h1 <;> omega := hEq
+    obtain h1 | h1 := hEq <;> omega
   have hlt10 : p % 10 < 10 := Nat.mod_lt _ (by norm_num)
   have h10 : p % 10 = 1 ∨ p % 10 = 3 ∨ p % 10 = 7 ∨ p % 10 = 9 := by omega
   have h2p20 : (2 * p) % 20 = 2 * (p % 10) := by omega
@@ -537,7 +535,7 @@ private lemma wanted_fib_mod5_eq (p : ℕ) (hp : Nat.Prime p) (hp5 : 5 < p) :
   rw [hF, h2p20]
   have hp5v : p % 5 = (p % 10) % 5 := by omega
   rw [hp5v]
-  obtain h | h | h | h <;> rw [h] <;> decide := h10
+  obtain h | h | h | h := h10 <;> rw [h] <;> decide
 
 end MetaMathlibExt
 
@@ -549,7 +547,7 @@ namespace MetaMathlibExt
 @[path]
 private lemma wanted_jacobi_eq (p : ℕ) [Fact (Nat.Prime p)] (hp5 : 5 < p) :
   jacobiSym 5 (Nat.fib (2 * p)) = legendreSym p 5 := by
-  haveI : Fact (Nat.Prime 5) := ⟨by decide⟩
+  have : Fact (Nat.Prime 5) := ⟨by decide⟩
   have hp : Nat.Prime p := Fact.out
   have hp2 : p ≠ 2 := by omega
   have hp3 : p ≠ 3 := by omega
@@ -664,7 +662,7 @@ private lemma wanted_mem_core (p : ℕ) [Fact (Nat.Prime p)] (hp5 : 5 < p) :
     have hjTri : j = 0 ∨ j = 1 ∨ j = -1 := by
       rw [hjdef]
       exact jacobiSym.trichotomy _ _
-    obtain h0 | h1 | hm1 <;> omega := hjTri
+    obtain h0 | h1 | hm1 := hjTri <;> omega
   have hXnn : 0 ≤ (((F : ℤ)) - j) := by
     have h1Fc : ((1 : ℕ) : ℤ) ≤ ((F : ℕ) : ℤ) := by
       exact_mod_cast le_of_lt h1F
@@ -705,7 +703,8 @@ lemma infinitely_many_primes_fibonacci_pseudoprime
   :
 -- imply
   Set.Infinite {p : ℕ | p.Prime ∧
-    let n := by
+    let n := Nat.fib (2 * p)
+    n ∣ Nat.fib (Int.toNat ((n : ℤ) - jacobiSym 5 n)) ∧ ¬n.Prime ∧ 1 < n} := by
 -- proof
   have hSub : {p : ℕ | p.Prime ∧ 5 < p}
     ⊆ {p : ℕ | p.Prime ∧
@@ -713,7 +712,7 @@ lemma infinitely_many_primes_fibonacci_pseudoprime
       n ∣ Nat.fib (Int.toNat ((n : ℤ) - jacobiSym 5 n)) ∧ ¬n.Prime ∧ 1 < n} := by
     intro p hp
     obtain ⟨hPrime, h5⟩ := hp
-    haveI : Fact (Nat.Prime p) := ⟨hPrime⟩
+    have : Fact (Nat.Prime p) := ⟨hPrime⟩
     have hCore := wanted_mem_core p h5
     show p.Prime ∧
       (let n := Nat.fib (2 * p)
@@ -722,7 +721,7 @@ lemma infinitely_many_primes_fibonacci_pseudoprime
   have hInf : {p : ℕ | p.Prime ∧ 5 < p}.Infinite := by
     have hEq : {p : ℕ | p.Prime ∧ 5 < p} = {p : ℕ | p.Prime} \ Set.Iic 5 := by
       ext p
-      simp only [Set.mem_setOf_eq, Set.mem_diff, Set.mem_Iic, not_le]
+      simp only [Set.mem_ofPred_eq, Set.mem_sdiff, Set.mem_Iic, not_le]
     rw [hEq]
     exact Nat.infinite_setOfPred_prime.sdiff (Set.finite_Iic 5)
   exact Set.Infinite.mono hSub hInf
@@ -731,4 +730,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

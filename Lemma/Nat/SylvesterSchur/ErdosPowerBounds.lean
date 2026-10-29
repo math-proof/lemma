@@ -14,11 +14,11 @@ private lemma cube_le_two_pow_of_ten_le {m : ℕ} (hm : 10 ≤ m) : m ^ 3 ≤ 2 
   induction m, hm using Nat.le_induction with
   | base => norm_num
   | succ m hm ih =>
-    calc
-      (m + 1) ^ 3 ≤ 2 * m ^ 3 := by
-        nlinarith [hm, sq_nonneg (m : ℤ), sq_nonneg ((m : ℤ) - 3)]
-      _ ≤ 2 * 2 ^ m := Nat.mul_le_mul_left 2 ih
-      _ = 2 ^ (m + 1) := by ring
+      calc
+        (m + 1) ^ 3 ≤ 2 * m ^ 3 := by
+          nlinarith [hm, sq_nonneg (m : ℤ), sq_nonneg ((m : ℤ) - 3)]
+        _ ≤ 2 * 2 ^ m := Nat.mul_le_mul_left 2 ih
+        _ = 2 ^ (m + 1) := by ring
 
 end Nat.SylvesterSchur
 
@@ -121,8 +121,8 @@ private lemma self_le_four_pow_div_one_twenty_eight_add_one {n : ℕ} (hn : 512 
     induction m, hm using Nat.le_induction with
     | base => norm_num
     | succ m hm ih =>
-      calc
-        128 * (m + 1 + 1) ≤ 4 * (128 * (m + 1)) := by nlinarith
+        calc
+          128 * (m + 1 + 1) ≤ 4 * (128 * (m + 1)) := by nlinarith
       _ ≤ 4 * 4 ^ (m + 1) := Nat.mul_le_mul_left 4 ih
       _ = 4 ^ (m + 1 + 1) := by ring
   exact hnlt.le.trans (hmul_general m hm4)
@@ -185,6 +185,8 @@ private lemma nthRoot_le_nthRoot_three_of_three_le {N m : ℕ} (hm : 3 ≤ m) :
   dsimp [c] at hlt ⊢
   omega
 
+/-! ### Power-of-four bounds for residual ranges -/
+
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -201,14 +203,15 @@ private lemma erdos_layers_tail_le_four_pow_of_nthRoot_le {N r B : ℕ}
     (4 ^ B) ^ Nat.log 2 N := by
   calc
     (∏ j ∈ s, if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N))
-      ≤ ∏ _j ∈ s, 4 ^ B := by
-        exact Finset.prod_le_prod' fun j hj => by
-          have hj0 : j ≠ 0 := hzero j hj
-          simpa [hj0] using (primorial_mono (hroot j hj)).trans (primorial_le_four_pow B)
+        ≤ ∏ _j ∈ s, 4 ^ B := by
+          exact Finset.prod_le_prod fun j hj => by
+            have hj0 : j ≠ 0 := hzero j hj
+            simpa [hj0] using (primorial_mono (hroot j hj)).trans (primorial_le_four_pow B)
     _ = (4 ^ B) ^ s.card := by rw [Finset.prod_const]
     _ ≤ (4 ^ B) ^ Nat.log 2 N :=
       Nat.pow_le_pow_right (pow_pos (by norm_num : 0 < 4) B) hcard
 
+/- Bound the Erdős layer product after the zeroth and first layers. -/
 end Nat.SylvesterSchur
 
 namespace Nat.SylvesterSchur
@@ -231,8 +234,8 @@ private lemma erdos_layers_tail_le_four_pow_cuberoot (N r : ℕ) :
     (fun j hj => (Finset.mem_erase.mp (Finset.mem_erase.mp hj).2).1)
     (by
       have hcard :
-        (((Finset.range (Nat.log 2 N)).erase 0).erase 1).card ≤
-          (Finset.range (Nat.log 2 N)).card :=
+          (((Finset.range (Nat.log 2 N)).erase 0).erase 1).card ≤
+            (Finset.range (Nat.log 2 N)).card :=
         Finset.card_le_card fun j hj =>
           (Finset.mem_erase.mp (Finset.mem_erase.mp hj).2).2
       simpa using hcard)
@@ -256,23 +259,23 @@ private lemma erdos_layers_le_four_pow_three_layers_of_zero_one_mem
   have hf1 : primorial (Nat.nthRoot 2 N) ≤ 4 ^ Nat.sqrt N :=
     (primorial_mono (nthRoot_two_le_sqrt N)).trans (primorial_le_four_pow (Nat.sqrt N))
   have hrest :
-    (∏ j ∈ ((Finset.range (Nat.log 2 N)).erase 0).erase 1,
-      if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N)) ≤
-      (4 ^ c) ^ Nat.log 2 N := by
+      (∏ j ∈ ((Finset.range (Nat.log 2 N)).erase 0).erase 1,
+          if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N)) ≤
+        (4 ^ c) ^ Nat.log 2 N := by
     simpa [c] using erdos_layers_tail_le_four_pow_cuberoot N r
   calc
     (∏ j ∈ Finset.range (Nat.log 2 N),
-      if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N))
-      = primorial r *
-        (primorial (Nat.nthRoot 2 N) *
-          ∏ j ∈ ((Finset.range (Nat.log 2 N)).erase 0).erase 1,
-            if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N)) := by
-        rw [← Finset.mul_prod_erase (Finset.range (Nat.log 2 N))
-          (fun j => if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N)) h0,
-          ← Finset.mul_prod_erase ((Finset.range (Nat.log 2 N)).erase 0)
-            (fun j => if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N))
-            h1]
-        simp
+        if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N))
+        = primorial r *
+            (primorial (Nat.nthRoot 2 N) *
+              ∏ j ∈ ((Finset.range (Nat.log 2 N)).erase 0).erase 1,
+                if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N)) := by
+          rw [← Finset.mul_prod_erase (Finset.range (Nat.log 2 N))
+            (fun j => if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N)) h0,
+            ← Finset.mul_prod_erase ((Finset.range (Nat.log 2 N)).erase 0)
+              (fun j => if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N))
+              h1]
+          simp
     _ ≤ 4 ^ r * (4 ^ Nat.sqrt N * (4 ^ c) ^ Nat.log 2 N) :=
       Nat.mul_le_mul hf0 (Nat.mul_le_mul hf1 hrest)
     _ = 4 ^ (r + Nat.sqrt N + c * Nat.log 2 N) := by
@@ -305,8 +308,8 @@ private lemma erdos_layers_le_four_pow_three_layers_of_zero_mem_not_one_mem
   have hlog : Nat.log 2 N = 1 := by omega
   calc
     (∏ j ∈ Finset.range (Nat.log 2 N),
-      if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N))
-      = primorial r := by simp [hlog]
+        if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N))
+        = primorial r := by simp [hlog]
     _ ≤ 4 ^ r := primorial_le_four_pow r
     _ ≤ 4 ^ (r + Nat.sqrt N + Nat.nthRoot 3 N * Nat.log 2 N) := by
       apply Nat.pow_le_pow_right (by norm_num : 0 < 4)
@@ -384,10 +387,10 @@ private lemma central_layers_two_mul_add_two_le_four_pow {n : ℕ} (hn : 512 ≤
       _ ≤ n / 4 := hc_sq
   calc
     (∏ j ∈ Finset.range (Nat.log 2 (2 * n + 2)),
-      if j = 0 then primorial ((2 * n + 2) / 3)
-      else primorial (Nat.nthRoot (j + 1) (2 * n + 2)))
-      ≤ 4 ^ (N / 3 + Nat.sqrt N + c * L) := by
-        simpa [N, L, c] using erdos_layers_le_four_pow_three_layers_aux N (N / 3)
+        if j = 0 then primorial ((2 * n + 2) / 3)
+        else primorial (Nat.nthRoot (j + 1) (2 * n + 2)))
+        ≤ 4 ^ (N / 3 + Nat.sqrt N + c * L) := by
+          simpa [N, L, c] using erdos_layers_le_four_pow_three_layers_aux N (N / 3)
     _ ≤ 4 ^ ((2 * n + 2) / 3 + n / 15 + n / 4) := by
       dsimp [N] at hsqrt hcL ⊢
       apply Nat.pow_le_pow_right (by norm_num : 0 < 4)
@@ -416,10 +419,10 @@ lemma central_erdos_layers_two_mul_add_two_lt_four_pow
     omega
   calc
     n * (∏ j ∈ Finset.range (Nat.log 2 (2 * n + 2)),
-      if j = 0 then primorial ((2 * n + 2) / 3)
-      else primorial (Nat.nthRoot (j + 1) (2 * n + 2)))
-      ≤ 4 ^ (n / 128 + 1) * 4 ^ ((2 * n + 2) / 3 + n / 15 + n / 4) :=
-        Nat.mul_le_mul hnfac hprod
+        if j = 0 then primorial ((2 * n + 2) / 3)
+        else primorial (Nat.nthRoot (j + 1) (2 * n + 2)))
+        ≤ 4 ^ (n / 128 + 1) * 4 ^ ((2 * n + 2) / 3 + n / 15 + n / 4) :=
+          Nat.mul_le_mul hnfac hprod
     _ = 4 ^ ((n / 128 + 1) + ((2 * n + 2) / 3 + n / 15 + n / 4)) := by
       rw [← pow_add]
     _ < 4 ^ n := by
@@ -446,8 +449,8 @@ private lemma erdos_layers_tail_le_four_pow_sqrt (N r : ℕ) :
     (fun j hj => (Finset.mem_erase.mp hj).1)
     (by
       have hcard :
-        ((Finset.range (Nat.log 2 N)).erase 0).card ≤
-          (Finset.range (Nat.log 2 N)).card :=
+          ((Finset.range (Nat.log 2 N)).erase 0).card ≤
+            (Finset.range (Nat.log 2 N)).card :=
         Finset.card_le_card fun j hj => (Finset.mem_erase.mp hj).2
       simpa using hcard)
 
@@ -466,26 +469,26 @@ private lemma erdos_layers_le_four_pow_aux (N r : ℕ) :
   by_cases h0 : 0 ∈ Finset.range (Nat.log 2 N)
   · have hf0 : primorial r ≤ 4 ^ r := primorial_le_four_pow r
     have hrest :
-      (∏ j ∈ (Finset.range (Nat.log 2 N)).erase 0,
-        if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N)) ≤
-        (4 ^ Nat.sqrt N) ^ Nat.log 2 N :=
+        (∏ j ∈ (Finset.range (Nat.log 2 N)).erase 0,
+            if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N)) ≤
+          (4 ^ Nat.sqrt N) ^ Nat.log 2 N :=
       erdos_layers_tail_le_four_pow_sqrt N r
     calc
       (∏ j ∈ Finset.range (Nat.log 2 N),
-        if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N))
-        = primorial r *
-          ∏ j ∈ (Finset.range (Nat.log 2 N)).erase 0,
-            if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N) := by
-          rw [← Finset.mul_prod_erase (Finset.range (Nat.log 2 N))
-            (fun j => if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N))
-            h0]
-          simp
+          if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N))
+          = primorial r *
+              ∏ j ∈ (Finset.range (Nat.log 2 N)).erase 0,
+                if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N) := by
+            rw [← Finset.mul_prod_erase (Finset.range (Nat.log 2 N))
+              (fun j => if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N))
+              h0]
+            simp
       _ ≤ 4 ^ r * (4 ^ Nat.sqrt N) ^ Nat.log 2 N := Nat.mul_le_mul hf0 hrest
       _ = 4 ^ (r + Nat.sqrt N * Nat.log 2 N) := by
         rw [← pow_mul, ← pow_add]
   · have hlog : Nat.log 2 N = 0 := by
-    rw [Finset.mem_range] at h0
-    omega
+      rw [Finset.mem_range] at h0
+      omega
     simpa [hlog] using Nat.succ_le_of_lt (pow_pos (by norm_num : 0 < 4) r)
 
 end Nat.SylvesterSchur
@@ -514,7 +517,7 @@ namespace Nat.SylvesterSchur
 -/
 @[path]
 lemma erdos_layers_le_four_pow_three_layers
-  {N r : ℕ} :
+  (N r : ℕ) :
 -- imply
   (∏ j ∈ Finset.range (Nat.log 2 N),
     if j = 0 then primorial r else primorial (Nat.nthRoot (j + 1) N)) ≤
@@ -526,4 +529,4 @@ end Nat.SylvesterSchur
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

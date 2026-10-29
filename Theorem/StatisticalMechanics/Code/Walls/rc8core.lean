@@ -24,7 +24,7 @@ open StatMech ConfigSpace
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
 
-lemma rc8_half_le_one : (rc8_half : ℝ≥0) ≤ 1 := by unfold rc8_half; norm_num
+lemma rc8_half_le_one : (rc8_half : NNReal) ≤ 1 := by unfold rc8_half; norm_num
 
 
 lemma rc8_half_singleton_bool (b : Bool) :
@@ -63,7 +63,7 @@ lemma rc8_card_bridge (S : Set (ConfigSpace α)) :
   simp [Finset.sum_const]
 
 
-lemma rc8_antiHarris {p : ℝ≥0} (hp : p ≤ 1) {A B : Set (ConfigSpace α)}
+lemma rc8_antiHarris {p : NNReal} (hp : p ≤ 1) {A B : Set (ConfigSpace α)}
     (hA : IsIncreasing A) (hB : IsDecreasing B) :
     (bernoulliProductMeasure (E := α) p hp).real (A ∩ B)
       ≤ (bernoulliProductMeasure (E := α) p hp).real A
@@ -84,7 +84,7 @@ lemma rc8_antiHarris {p : ℝ≥0} (hp : p ≤ 1) {A B : Set (ConfigSpace α)}
   rw [hcompl, hsplit] at hh; nlinarith [hh]
 
 
-lemma rc8_antiHarris' {p : ℝ≥0} (hp : p ≤ 1) {A B : Set (ConfigSpace α)}
+lemma rc8_antiHarris' {p : NNReal} (hp : p ≤ 1) {A B : Set (ConfigSpace α)}
     (hA : IsDecreasing A) (hB : IsIncreasing B) :
     (bernoulliProductMeasure (E := α) p hp).real (A ∩ B)
       ≤ (bernoulliProductMeasure (E := α) p hp).real A
@@ -94,7 +94,7 @@ lemma rc8_antiHarris' {p : ℝ≥0} (hp : p ≤ 1) {A B : Set (ConfigSpace α)}
   exact h
 
 
-lemma rc8_harrisDec {p : ℝ≥0} (hp : p ≤ 1) {A B : Set (ConfigSpace α)}
+lemma rc8_harrisDec {p : NNReal} (hp : p ≤ 1) {A B : Set (ConfigSpace α)}
     (hA : IsDecreasing A) (hB : IsDecreasing B) :
     (bernoulliProductMeasure (E := α) p hp).real A
         * (bernoulliProductMeasure (E := α) p hp).real B

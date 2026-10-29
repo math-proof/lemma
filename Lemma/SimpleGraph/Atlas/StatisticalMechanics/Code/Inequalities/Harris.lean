@@ -11,7 +11,7 @@ open StatMech
 private lemma harris_inequality_eq
   [Fintype E]
   [DecidableEq E]
-  {p : ℝ≥0}
+  {p : NNReal}
   {A B : Set (ConfigSpace E)}
 -- given
   (hp : p ≤ 1)

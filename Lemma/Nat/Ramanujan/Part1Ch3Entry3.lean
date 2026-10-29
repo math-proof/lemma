@@ -87,7 +87,8 @@ lemma ramanujan_part1_ch3_entry3_general
     (fun z : ℂ => (1 : ℂ) / z ^ (N + 2)) := by
 -- proof
   have h9 :=
-    Entry9Odd.ramanujan_part1_ch3_entry9_odd 0 1 x one_ne_zero ε hε_pos hε_lt N
+    Entry9Odd.ramanujan_part1_ch3_entry9_odd (a := 0) (b := 1) (x := x) (ε := ε) (n := N)
+      one_ne_zero hε_pos hε_lt
   have hfun : (fun z : ℂ => (z + (0 : ℂ)) / (1 : ℂ)) = id := by
     funext z
     simp
@@ -118,7 +119,8 @@ lemma ramanujan_part1_ch3_entry3_general
     funext z
     rw [← psi_eq_entry9_P, hsum z]
     ring
-  rwa [hLHS]
+  rw [hLHS]
+  exact h9.neg_left
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
 
@@ -142,11 +144,10 @@ lemma ramanujan_part1_ch3_entry3
     (fun z : ℂ => (1 : ℂ) / z ^ (N + 2)) := by
 -- proof
   have _ : x ≠ 0 := hx
-  exact ramanujan_part1_ch3_entry3_general x ε hε_pos hε_lt N
-end Entry3Fsummable
+  exact ramanujan_part1_ch3_entry3_general (x := x) (ε := ε) (N := N) hε_pos hε_lt
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry3
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-29

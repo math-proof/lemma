@@ -199,7 +199,8 @@ private lemma tccHead_card (k N j : ℕ) (hj : j < k + 1) (hle : tccWn j ≤ N) 
       omega
     · show (⟨j, hj⟩ : Fin (k + 1)) :: bt = bh :: bt
       have e2 : (⟨j, hj⟩ : Fin (k + 1)) = bh := by
-        rwa [Fin.ext_iff]
+        rw [Fin.ext_iff]
+        exact hbh.symm
       rw [e2]
 
 end MetaMathlibExt
@@ -252,7 +253,8 @@ private lemma tcc_biUnion (k N : ℕ) (hN : 1 ≤ N) :
     rw [tcc_mem_head]
     exact ⟨(tcc_mem_fin k N _).mpr ⟨hlen, hW⟩, rfl⟩
   · rintro ⟨j, _, hl⟩
-    rwa [tcc_mem_head] at hl
+    rw [tcc_mem_head] at hl
+    exact hl.1
 
 end MetaMathlibExt
 
@@ -297,7 +299,7 @@ private lemma tcc_range_split (k : ℕ) (hk : 2 ≤ k) (F : ℕ → ℕ) :
     have h2 : x + 2 = y + 2 := h
     omega
   have hde : Disjoint ({0, 1} : Finset ℕ)
-    ((Finset.range (k - 1)).map ⟨(· + 2), hem⟩) := by
+      ((Finset.range (k - 1)).map ⟨(· + 2), hem⟩) := by
     rw [Finset.disjoint_left]
     intro a ha
     simp only [Finset.mem_insert, Finset.mem_singleton] at ha
@@ -306,7 +308,7 @@ private lemma tcc_range_split (k : ℕ) (hk : 2 ≤ k) (F : ℕ → ℕ) :
     simp only [Function.Embedding.coeFn_mk] at hx
     omega
   have hunion : Finset.range (k + 1)
-    = {0, 1} ∪ ((Finset.range (k - 1)).map ⟨(· + 2), hem⟩) := by
+      = {0, 1} ∪ ((Finset.range (k - 1)).map ⟨(· + 2), hem⟩) := by
     ext j
     simp only [Finset.mem_range, Finset.mem_union, Finset.mem_insert,
       Finset.mem_singleton, Finset.mem_map, Function.Embedding.coeFn_mk]
@@ -355,10 +357,11 @@ private lemma tcc_card_aux (k : ℕ) (hk : 2 ≤ k) (P : ℤ → ℕ)
       have hM : M ≤ N := by omega
       have h1M : 1 ≤ M + 1 := by omega
       have hsum : (tccFin k (M + 1)).card
-        = tccPiece k (M + 1) 0 + tccPiece k (M + 1) 1
-          + ∑ j ∈ Finset.range (k - 1), tccPiece k (M + 1) (j + 2) := by
+          = tccPiece k (M + 1) 0 + tccPiece k (M + 1) 1
+            + ∑ j ∈ Finset.range (k - 1), tccPiece k (M + 1) (j + 2) := by
         have h1 := tcc_card_eq_sum k (M + 1) h1M
-        rwa [tcc_range_split k hk (tccPiece k (M + 1))] at h1
+        rw [tcc_range_split k hk (tccPiece k (M + 1))] at h1
+        exact h1
       have hp0 : tccPiece k (M + 1) 0 = P (((M + 1 : ℕ)) : ℤ) := by
         have hw : tccWn 0 = 1 := rfl
         have hle : (1 : ℕ) ≤ M + 1 := by omega
@@ -374,7 +377,7 @@ private lemma tcc_card_aux (k : ℕ) (hk : 2 ≤ k) (P : ℤ → ℕ)
       have hP2 : (2 : ℤ) ≤ ((((M + 2 : ℕ))) : ℤ) := by omega
       have hrec := hPrec ((((M + 2 : ℕ))) : ℤ) hP2
       have hconv : (∑ i : Fin (k - 1), P ((((M + 2 : ℕ)) : ℤ) - ((((i : ℕ)) : ℤ) + 2)))
-        = ∑ j ∈ Finset.range (k - 1), P ((((M + 2 : ℕ)) : ℤ) - ((((j : ℕ)) : ℤ) + 2)) := by
+          = ∑ j ∈ Finset.range (k - 1), P ((((M + 2 : ℕ)) : ℤ) - ((((j : ℕ)) : ℤ) + 2)) := by
         apply Finset.sum_bij (fun i _ => (i.val : ℕ))
         · intro i _
           exact Finset.mem_range.mpr i.isLt
@@ -386,7 +389,7 @@ private lemma tcc_card_aux (k : ℕ) (hk : 2 ≤ k) (P : ℤ → ℕ)
         · intro i _
           rfl
       have hpiece : (∑ j ∈ Finset.range (k - 1), P ((((M + 2 : ℕ)) : ℤ) - ((((j : ℕ)) : ℤ) + 2)))
-        = ∑ j ∈ Finset.range (k - 1), tccPiece k (M + 1) (j + 2) := by
+          = ∑ j ∈ Finset.range (k - 1), tccPiece k (M + 1) (j + 2) := by
         apply Finset.sum_congr rfl
         intro j hj
         rw [Finset.mem_range] at hj
@@ -454,10 +457,11 @@ lemma generalized_pell_eq_two_colored_compositions
       have h := c.1.isLt
       omega
     · have e : tccW k (List.ofFn c.2) = ∑ j : Fin (↑c.1 : ℕ), tccWt k (c.2 j) := by
-      unfold tccW
-      rw [List.map_ofFn, List.sum_ofFn]
-      rfl
-      rwa [e]
+        unfold tccW
+        rw [List.map_ofFn, List.sum_ofFn]
+        rfl
+      rw [e]
+      exact hc
   · intro a b ha hb h
     obtain ⟨a1, a2⟩ := a
     obtain ⟨b1, b2⟩ := b
@@ -482,7 +486,8 @@ lemma generalized_pell_eq_two_colored_compositions
         unfold tccW
         rw [List.map_ofFn, List.sum_ofFn]
         rfl
-      rwa [← e]
+      rw [← e]
+      exact hW
     · change List.ofFn (fun j : Fin l.length => l.get j) = l
       exact List.ofFn_get l
 
@@ -490,4 +495,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-10-28

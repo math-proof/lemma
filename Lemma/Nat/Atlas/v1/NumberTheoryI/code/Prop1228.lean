@@ -3,35 +3,49 @@ import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.Prop1228
 open Module Ideal
 
+attribute [local instance] FractionRing.liftAlgebra FractionRing.isScalarTower_liftAlgebra
+
 
 /--
 [different_tower](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Prop1228.lean)
 -/
 @[path]
 lemma different_tower
-  {A : Type*}
-  {B : Type*}
-  {C : Type*} :
+  (A B C : Type*)
+  [CommRing A] [IsDomain A] [IsIntegrallyClosed A]
+  [CommRing B] [IsDomain B] [IsIntegrallyClosed B] [IsDedekindDomain B]
+  [Algebra A B] [Module.Finite A B] [IsTorsionFree A B]
+  [CommRing C] [IsDomain C] [IsDedekindDomain C]
+  [Algebra A C] [Algebra B C] [IsScalarTower A B C]
+  [Module.Finite A C] [Module.Finite B C]
+  [IsTorsionFree A C] [IsTorsionFree B C]
+  [Algebra.IsSeparable (FractionRing A) (FractionRing C)] :
 -- imply
   differentIdeal A C = differentIdeal B C * (differentIdeal A B).map (algebraMap B C) :=
 -- proof
-  differentIdeal_eq_differentIdeal_mul_differentIdeal A B C
+  differentIdeal_eq_differentIdeal_mul_differentIdeal A (FractionRing A) B (FractionRing B) C
 
 /--
 [discr_tower](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Prop1228.lean)
 -/
 @[path]
 lemma discr_tower
-  {A : Type*}
-  {B : Type*}
-  {C : Type*} :
+  (A B C : Type*)
+  [CommRing A] [IsDomain A] [IsIntegrallyClosed A]
+  [CommRing B] [IsDomain B] [IsIntegrallyClosed B] [IsDedekindDomain B]
+  [Algebra A B] [Module.Finite A B] [IsTorsionFree A B]
+  [CommRing C] [IsDomain C] [IsDedekindDomain C]
+  [Algebra A C] [Algebra B C] [IsScalarTower A B C]
+  [Module.Finite A C] [Module.Finite B C]
+  [IsTorsionFree A C] [IsTorsionFree B C]
+  [Algebra.IsSeparable (FractionRing A) (FractionRing C)] :
 -- imply
   discrIdeal A C = (discrIdeal A B) ^ (finrank (FractionRing B) (FractionRing C)) * Ideal.spanNorm A (discrIdeal B C) := by
 -- proof
-  haveI : Algebra.IsSeparable (FractionRing A) (FractionRing B) :=
+  have : Algebra.IsSeparable (FractionRing A) (FractionRing B) :=
     Algebra.isSeparable_tower_bot_of_isSeparable
       (FractionRing A) (FractionRing B) (FractionRing C)
-  haveI : Algebra.IsSeparable (FractionRing B) (FractionRing C) :=
+  have : Algebra.IsSeparable (FractionRing B) (FractionRing C) :=
     Algebra.isSeparable_tower_top_of_isSeparable
       (FractionRing A) (FractionRing B) (FractionRing C)
   unfold discrIdeal
@@ -55,9 +69,15 @@ lemma discr_tower
 -/
 @[path]
 lemma proposition_12_28
-  {A : Type*}
-  {B : Type*}
-  {C : Type*} :
+  (A B C : Type*)
+  [CommRing A] [IsDomain A] [IsIntegrallyClosed A]
+  [CommRing B] [IsDomain B] [IsIntegrallyClosed B] [IsDedekindDomain B]
+  [Algebra A B] [Module.Finite A B] [IsTorsionFree A B]
+  [CommRing C] [IsDomain C] [IsDedekindDomain C]
+  [Algebra A C] [Algebra B C] [IsScalarTower A B C]
+  [Module.Finite A C] [Module.Finite B C]
+  [IsTorsionFree A C] [IsTorsionFree B C]
+  [Algebra.IsSeparable (FractionRing A) (FractionRing C)] :
 -- imply
   (differentIdeal A C = differentIdeal B C * (differentIdeal A B).map (algebraMap B C)) ∧ (discrIdeal A C = (discrIdeal A B) ^ (finrank (FractionRing B) (FractionRing C)) * Ideal.spanNorm A (discrIdeal B C)) :=
 -- proof
@@ -65,3 +85,4 @@ lemma proposition_12_28
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29
