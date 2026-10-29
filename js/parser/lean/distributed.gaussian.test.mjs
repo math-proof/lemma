@@ -95,6 +95,41 @@ function checkGlued(name, latex) {
   check('given lean not call-paren', (vue.given || []).every((g) => !String(g.lean).includes('gaussianReal(')), JSON.stringify(vue.given));
 }
 
+{
+  // Sum / prod binders stay black under ∼; the summand head `x` stays red.
+  // `∑ k : Fin n` prints as `\sum_{k < n}` (DistributedSum imply shape).
+  const src = `lemma m
+  (h₁ : (∑ k : Fin n, x k) ∼[π] gaussianReal (∑ k : Fin n, μ k) (∑ k : Fin n, (σ k) ^ 2)) :
+  (∑ k : Fin n, x k) ∼[π] gaussianReal (∑ k : Fin n, μ k) (∑ k : Fin n, (σ k) ^ 2) := by sorry`;
+  const vue = compile(src).render2vue(false).lemma[0];
+  const imply = vue.imply?.latex || '';
+  const given = (vue.given || []).map((g) => g.latex).join('\n');
+  const redK = /\\color\{red\}\s*\{k\}/;
+  const redX = /\\color\{red\}\s*\{x\}/;
+  check('imply sum binder k not red', !redK.test(imply), imply);
+  check('imply summand x red', redX.test(imply), imply);
+  check('given sum binder k not red', !redK.test(given), given);
+  check('given summand x red', redX.test(given), given);
+  const law = imply.split('\\sim').slice(1).join('\\sim');
+  check('imply law side not red', law.length > 0 && !/\\color\{red\}/.test(law), law);
+}
+
+{
+  const forms = [
+    ['lt', '(∑ k < n, x k)'],
+    ['univ', '(∑ k ∈ Finset.univ, x k)'],
+    ['prod', '(∏ k : Fin n, x k)'],
+  ];
+  for (const [name, lhs] of forms) {
+    const latex = compile(`lemma m : ${lhs} ∼[π] gaussianReal μ σ := by sorry`)
+      .render2vue(false).lemma[0].imply.latex;
+    check(`${name} binder k not red`, !/\\color\{red\}\s*\{k\}/.test(latex), latex);
+    check(`${name} summand x red`, /\\color\{red\}\s*\{x\}/.test(latex), latex);
+    if (name === 'lt')
+      check('lt bound n not red', !/\\color\{red\}\s*\{n\}/.test(latex), latex);
+  }
+}
+
 if (failed) {
   console.error(`\n${failed} failure(s)`);
   process.exit(1);
