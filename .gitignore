@@ -20,3 +20,6 @@ backup*
 .agent_tmp/
 .run.sh.flock
 tmp/
+
+# Local append-only rename map from sh/rename.sh
+sh/rename.tsv
