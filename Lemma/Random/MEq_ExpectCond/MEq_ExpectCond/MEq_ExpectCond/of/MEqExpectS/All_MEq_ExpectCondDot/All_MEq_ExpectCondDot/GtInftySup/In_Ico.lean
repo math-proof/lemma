@@ -2,7 +2,7 @@ import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Lemma.Random.MeasurableJoint.is.Measurable.Measurable
 import Theorem.Algebra.Power.Part2
 import Theorem.Data.Vector.Basic.Part2
-import Macro.Order.Sup
+import Syntax.Order.Sup
 open MeasureTheory Random
 
 

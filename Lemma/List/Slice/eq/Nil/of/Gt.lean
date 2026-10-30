@@ -1,4 +1,4 @@
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 import Lemma.List.Slice.eq.Nil.of.Ge
 import Lemma.Nat.Ge.of.Gt
 open List Nat

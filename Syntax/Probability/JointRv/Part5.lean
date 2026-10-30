@@ -30,3 +30,35 @@ syntax:max "ℙ[" term "]" "(" sepBy1(term:max "=" term:lead, "∧") "|" sepBy1(
 
 syntax:max "ℙ[" term "]" "(" sepBy1(term:max "=" term:lead, "∧") "|" term:51,+ ")" : term
 
+
+
+
+
+macro_rules
+  | `(ℙ[$π]($xs:term,*)) => do
+      let x ← Probability.Macro.mkJointRV xs
+      `(Measure.probRA $π $x)
+  | `(ℙ[$π]($xs:term,* | $ys:term,*)) => do
+      let x ← Probability.Macro.mkJointRV xs
+      let y ← Probability.Macro.mkJointRV ys
+      `(Measure.probCondRA $π (JointRandomSymbol $x $y))
+  | `(ℙ[$π]($xs:term,* | $[$y:term = $y0:term]∧*)) => do
+      let x ← Probability.Macro.mkJointRV xs
+      let y ← Probability.Macro.mkJointRV y
+      let y0 ← Probability.Macro.mkProd y0
+      `(Measure.probCond $π (JointRandomSymbol $x $y) $y0)
+  | `(ℙ[$π]($[$x:term = $x0:term]∧*)) => do
+      let x ← Probability.Macro.mkJointRV x
+      let x0 ← Probability.Macro.mkProd x0
+      `(Measure.prob $π $x $x0)
+  | `(ℙ[$π]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*)) => do
+      let x ← Probability.Macro.mkJointRV x
+      let x0 ← Probability.Macro.mkProd x0
+      let y ← Probability.Macro.mkJointRV y
+      let y0 ← Probability.Macro.mkProd y0
+      `(Measure.condProb $π (JointRandomSymbol $x $y) ($x0, $y0))
+  | `(ℙ[$π]($[$x:term = $x0:term]∧* | $ys:term,*)) => do
+      let x ← Probability.Macro.mkJointRV x
+      let x0 ← Probability.Macro.mkProd x0
+      let y ← Probability.Macro.mkJointRV ys
+      `(Measure.condProbRA $π (JointRandomSymbol $x $y) $x0)

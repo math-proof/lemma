@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Calculus.Gradient.Basic
-import Macro.Analysis.Calculus.Gradient.Operators
+import Syntax.Analysis.Calculus.Gradient.Operators
 
 
 /-- Infoview: `gradient (fun θ ↦ e) θ` ↦ `∇[θ] e`; `gradient (fun θ ↦ e) p` ↦ `∇[θ = p] e`;

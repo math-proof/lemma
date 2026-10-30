@@ -1,7 +1,6 @@
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Polynomial.FieldDivision
 import Mathlib.Algebra.Polynomial.RingDivision
-import Instance.Fun
 import Notation.Fun
 import Syntax.Fun
 import Initialize.Tactic.Attr.Basic

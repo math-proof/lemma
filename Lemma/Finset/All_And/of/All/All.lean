@@ -1,5 +1,5 @@
 import Initialize.Tactic.Attr.Basic
-import Macro.Logic.Quantifier.Part4
+import Syntax.Logic.Quantifier.Part4
 
 
 @[path]

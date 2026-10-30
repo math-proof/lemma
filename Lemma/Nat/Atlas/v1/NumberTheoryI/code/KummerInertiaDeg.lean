@@ -12,15 +12,16 @@ namespace DedekindKummer
 lemma inertiaDeg_eq_natDegree_lift
   [Field K]
   [NumberField K]
+  {p : ℕ} [Fact (Nat.Prime p)]
   {θ : 𝓞 K}
-  {p : ℕ}
-  [Fact (Nat.Prime p)]
   {Q : ℤ[X]}
 -- given
   (hp : ¬ p ∣ RingOfIntegers.exponent θ)
   (hQ : Q.map (Int.castRingHom (ZMod p)) ∈ RingOfIntegers.monicFactorsMod θ p) :
 -- imply
-  inertiaDeg (span {(p : ℤ)}) ((Ideal.primesOverSpanEquivMonicFactorsMod hp).symm ⟨Q.map (Int.castRingHom (ZMod p)), hQ⟩ : Ideal (𝓞 K)) = (Q.map (Int.castRingHom (ZMod p))).natDegree :=
+  inertiaDeg ((Ideal.primesOverSpanEquivMonicFactorsMod hp).symm
+      ⟨Q.map (Int.castRingHom (ZMod p)), hQ⟩ : Ideal (𝓞 K)) ℤ =
+    (Q.map (Int.castRingHom (ZMod p))).natDegree :=
 -- proof
   NumberField.Ideal.inertiaDeg_primesOverSpanEquivMonicFactorsMod_symm_apply hp hQ
 
@@ -35,15 +36,17 @@ namespace DedekindKummer
 lemma ramificationIdx_eq_multiplicity_lift
   [Field K]
   [NumberField K]
+  {p : ℕ} [Fact (Nat.Prime p)]
   {θ : 𝓞 K}
-  {p : ℕ}
-  [Fact (Nat.Prime p)]
   {Q : ℤ[X]}
 -- given
   (hp : ¬ p ∣ RingOfIntegers.exponent θ)
   (hQ : Q.map (Int.castRingHom (ZMod p)) ∈ RingOfIntegers.monicFactorsMod θ p) :
 -- imply
-  (span {(p : ℤ)}).ramificationIdx ((Ideal.primesOverSpanEquivMonicFactorsMod hp).symm ⟨Q.map (Int.castRingHom (ZMod p)), hQ⟩ : Ideal (𝓞 K)) = multiplicity (Q.map (Int.castRingHom (ZMod p))) ((minpoly ℤ θ).map (Int.castRingHom (ZMod p))) :=
+  ramificationIdx ((Ideal.primesOverSpanEquivMonicFactorsMod hp).symm
+      ⟨Q.map (Int.castRingHom (ZMod p)), hQ⟩ : Ideal (𝓞 K)) ℤ =
+    multiplicity (Q.map (Int.castRingHom (ZMod p)))
+      ((minpoly ℤ θ).map (Int.castRingHom (ZMod p))) :=
 -- proof
   NumberField.Ideal.ramificationIdx_primesOverSpanEquivMonicFactorsMod_symm_apply hp hQ
 
@@ -58,9 +61,8 @@ namespace DedekindKummer
 lemma prime_eq_span_pair
   [Field K]
   [NumberField K]
+  {p : ℕ} [Fact (Nat.Prime p)]
   {θ : 𝓞 K}
-  {p : ℕ}
-  [Fact (Nat.Prime p)]
   {Q : ℤ[X]}
 -- given
   (hp : ¬ p ∣ RingOfIntegers.exponent θ)
@@ -81,15 +83,23 @@ namespace DedekindKummer
 lemma kummer_inertiaDeg_ramificationIdx_prime
   [Field K]
   [NumberField K]
+  {p : ℕ} [Fact (Nat.Prime p)]
   {θ : 𝓞 K}
-  {p : ℕ}
-  [Fact (Nat.Prime p)]
   {Q : ℤ[X]}
 -- given
   (hp : ¬ p ∣ RingOfIntegers.exponent θ)
   (hQ : Q.map (Int.castRingHom (ZMod p)) ∈ RingOfIntegers.monicFactorsMod θ p) :
 -- imply
-  inertiaDeg (span {(p : ℤ)}) ((Ideal.primesOverSpanEquivMonicFactorsMod hp).symm ⟨Q.map (Int.castRingHom (ZMod p)), hQ⟩ : Ideal (𝓞 K)) = (Q.map (Int.castRingHom (ZMod p))).natDegree ∧ (span {(p : ℤ)}).ramificationIdx ((Ideal.primesOverSpanEquivMonicFactorsMod hp).symm ⟨Q.map (Int.castRingHom (ZMod p)), hQ⟩ : Ideal (𝓞 K)) = multiplicity (Q.map (Int.castRingHom (ZMod p))) ((minpoly ℤ θ).map (Int.castRingHom (ZMod p))) ∧ ((Ideal.primesOverSpanEquivMonicFactorsMod hp).symm ⟨Q.map (Int.castRingHom (ZMod p)), hQ⟩ : Ideal (𝓞 K)) = span {(p : 𝓞 K), aeval θ Q} :=
+  inertiaDeg ((Ideal.primesOverSpanEquivMonicFactorsMod hp).symm
+      ⟨Q.map (Int.castRingHom (ZMod p)), hQ⟩ : Ideal (𝓞 K)) ℤ =
+    (Q.map (Int.castRingHom (ZMod p))).natDegree ∧
+      ramificationIdx ((Ideal.primesOverSpanEquivMonicFactorsMod hp).symm
+        ⟨Q.map (Int.castRingHom (ZMod p)), hQ⟩ : Ideal (𝓞 K)) ℤ =
+    multiplicity (Q.map (Int.castRingHom (ZMod p)))
+      ((minpoly ℤ θ).map (Int.castRingHom (ZMod p))) ∧
+      ((Ideal.primesOverSpanEquivMonicFactorsMod hp).symm
+        ⟨Q.map (Int.castRingHom (ZMod p)), hQ⟩ : Ideal (𝓞 K)) =
+    span {(p : 𝓞 K), aeval θ Q} :=
 -- proof
   ⟨inertiaDeg_eq_natDegree_lift hp hQ,
     ramificationIdx_eq_multiplicity_lift hp hQ,
@@ -99,3 +109,4 @@ end DedekindKummer
 
 
 -- created on 2026-10-23
+-- updated on 2026-10-29

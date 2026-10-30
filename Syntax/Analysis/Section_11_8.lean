@@ -45,4 +45,6 @@ open BoundedInterval Chapter9
 
 syntax:max term "[" term "]ₗ" : term
 
+macro_rules | ([]ₗ) => (α_length  )
+
 end Chapter11

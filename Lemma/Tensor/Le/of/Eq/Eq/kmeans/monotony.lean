@@ -1,5 +1,5 @@
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Macro.Order.ExprWithLimits
+import Syntax.Order.ExprWithLimits
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Lemma.Finset.Eq.of.In.In.Lt.Lt.EqBiUnion.EqSum_Card
 open Finset

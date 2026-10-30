@@ -11,10 +11,8 @@ namespace TopologicalSpace.DirectLimit
 -/
 @[path]
 lemma of_continuous
-  {ι : Type*}
   [Preorder ι]
-  {X : ι → Type*}
-  [∀ i, TopologicalSpace (X i)]
+  {X : ι → Type*} [∀ i, TopologicalSpace (X i)]
   {f : ∀ i j, i ≤ j → X i → X j}
   {i : ι} :
 -- imply
@@ -31,10 +29,8 @@ namespace TopologicalSpace.DirectLimit
 -/
 @[path]
 lemma of_comp
-  {ι : Type*}
   [Preorder ι]
-  {X : ι → Type*}
-  [∀ i, TopologicalSpace (X i)]
+  {X : ι → Type*} [∀ i, TopologicalSpace (X i)]
   {f : ∀ i j, i ≤ j → X i → X j}
   {i j : ι}
   {x : X i}
@@ -55,13 +51,10 @@ namespace TopologicalSpace.DirectLimit
 -/
 @[path]
 lemma lift_continuous
-  {ι : Type*}
   [Preorder ι]
-  {X : ι → Type*}
-  [∀ i, TopologicalSpace (X i)]
-  {f : ∀ i j, i ≤ j → X i → X j}
-  {Y : Type*}
   [TopologicalSpace Y]
+  {X : ι → Type*} [∀ i, TopologicalSpace (X i)]
+  {f : ∀ i j, i ≤ j → X i → X j}
 -- given
   (ψ : ∀ i, X i → Y)
   (hψ_cont : ∀ i, Continuous (ψ i))

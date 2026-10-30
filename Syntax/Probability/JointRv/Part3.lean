@@ -32,3 +32,9 @@ It is applied to both sides of `=ᵐ[μ]` (see the `macro_rules` below), e.g.
 -/
 syntax (name := liftRV) "rv%[" term "] " term:max : term
 
+
+
+-- `f =ᵐ[μ] g` (Mathlib's `Filter.EventuallyEq (ae μ) f g`) with both sides read through `rv%[μ]`,
+-- e.g. `V t (s t) =ᵐ[π] …` is `(fun ω ↦ V t (s t ω)) =ᵐ[π] …`.
+macro_rules
+  | `($f =ᵐ[$μ] $g) => `(Filter.EventuallyEq (MeasureTheory.ae $μ) (rv%[$μ] $f) (rv%[$μ] $g))

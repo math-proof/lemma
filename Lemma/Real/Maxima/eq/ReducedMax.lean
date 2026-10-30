@@ -1,5 +1,5 @@
 import Initialize.Tactic.Attr.Basic
-import Macro.Order.ExprWithLimits
+import Syntax.Order.ExprWithLimits
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.Basic.Finite.Prod
 import Mathlib.Data.Fintype.Lattice

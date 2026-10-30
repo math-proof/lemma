@@ -13,7 +13,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { listLemmaTopLevelDirs } from '../lemmaSections.mjs';
 import { prepare, findDecls } from './scan.mjs';
-import { scanImportsAndOpens, headerSpacing, maxHeartbeats, openSection, openDuplicate, openPrefix, attrDocstring, dates, declKeywordDirText, blankSublemmas } from './headerRules.mjs';
+import { scanImportsAndOpens, headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, attrDocstring, dates, declKeywordDirText, blankSublemmas } from './headerRules.mjs';
 import { signatureRules } from './signatureRules.mjs';
 import { indentRules, proofRules, underscoreNameRule } from './proofRules.mjs';
 import { attrRules } from './attrRules.mjs';
@@ -126,6 +126,7 @@ export const RULES = {
     'date-spacing': Q.dateSp,
     'open-section': Q.openSec,
     'open-duplicate': Q.openDup,
+    'open-merge': Q.openDup,
     'open-prefix': Q.openPrefix,
     'header-spacing': Q.headerSp,
     'max-heartbeats': Q.heartbeats,
@@ -201,7 +202,7 @@ export function lintLean(source, opts = {}) {
     // `decl-keyword-dir`: trust the tree only when it sees the same lemma/theorem declarations as the text scan
     if (tree && countLemmaTheoremNodes(tree) !== ctx.decls.filter((d) => d.kind === 'lemma' || d.kind === 'theorem').length)
         ctx.astCovered.delete('decl-keyword-dir');
-    const steps = [headerSpacing, maxHeartbeats, openSection, openDuplicate, openPrefix, declKeywordDirText, attrDocstring, dates, blankSublemmas, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
+    const steps = [headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, declKeywordDirText, attrDocstring, dates, blankSublemmas, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
     for (const step of steps) {
         try {
             step(ctx);

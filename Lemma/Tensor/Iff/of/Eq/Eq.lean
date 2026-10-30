@@ -1,5 +1,5 @@
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Macro.Order.ExprWithLimits
+import Syntax.Order.ExprWithLimits
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Initialize.Tactic.Attr.Basic
 

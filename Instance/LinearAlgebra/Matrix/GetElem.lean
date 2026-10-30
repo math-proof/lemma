@@ -7,7 +7,7 @@ Do not add comma GetElem sugar `L[i, j]` here: it collides with List multi-index
 Distinct from Syntax ofFun sugar `[i < m, j < n] body` (has `<`).
 -/
 import Mathlib.LinearAlgebra.Matrix.Defs
-import Instance.Fun
+import Notation.Fun
 import Structure.Fun
 
 

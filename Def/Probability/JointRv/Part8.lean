@@ -8,7 +8,7 @@ import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
 import Def.Probability.SymbolicProbability.Part2
 import Theorem.Function
-import Macro.Probability.JointRv.Part2
+import Syntax.Probability.JointRv.Part5
 open MeasureTheory
 open scoped ProbabilityTheory
 

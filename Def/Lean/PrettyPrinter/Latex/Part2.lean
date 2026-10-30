@@ -1,6 +1,6 @@
 import Def.Lean.Level
 import Def.Lean.Name
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 import Def.Lean.Expr.Part11
 import Inductive.Lean.PrettyPrinter.Latex
 open Lean (Name)
@@ -195,6 +195,14 @@ def Expr.asEventuallyEq? : Expr → Option (Expr × Expr)
   | e =>
     if let some ("EventuallyEq", [μ, f, g]) := e.asNamedApp? then
       if μ.isAeMeasure then some (f, g) else none
+    else none
+
+/-- `HasLaw X μ π` (Mathlib `ProbabilityTheory.HasLaw`) → `(X, μ, π)`.
+    Latex matches lean.js `LeanDistributed`: `X \sim μ` (measure bracket elided). -/
+def Expr.asHasLaw? : Expr → Option (Expr × Expr × Expr)
+  | e =>
+    if let some ("HasLaw", [x, μ, π]) := e.asNamedApp? then
+      some (x, μ, π)
     else none
 
 def Expr.asEtaPair? : Expr → Option (List Expr)
@@ -392,7 +400,18 @@ def Expr.latexFormat : Expr → String
         op.toString
 
     | .UnaryPrefix ⟨op⟩ =>
-      if let [arg] := args then
+      if op.getLast == `toFun then
+        let (base, indices) := e.collectToFunChain
+        if !indices.isEmpty then
+          let baseFmt := level.toColor (base.priority > func.priority || base.is_EnclosedGroup || base.is_LeanProperty || base.is_Eye)
+          baseFmt ++ "_{" ++ ", ".intercalate (["%s"].repeat indices.length) ++ "}"
+        else if let [arg] := args then
+          let arg := level.toColor (arg.priority ≥ func.priority || arg.is_EnclosedGroup)
+          let arg := if func.priority == 76 then "\\ " ++ arg else arg
+          s!"{opStr}{arg}"
+        else
+          op.toString
+      else if let [arg] := args then
         let format :=
           match op with
           | `Not =>
@@ -476,8 +495,17 @@ def Expr.latexFormat : Expr → String
           else
             opStr ++ "\\ %s".repeat (args.length - 1) ++ ",\\ %s"
         | .Lean_sum =>
-          if e.asIcoClosed?.isSome then
+          -- Nested plain ∑∑ → one ∑ with stacked limits (lean.js nestedSumChain).
+          if e.nestedSumChain?.isSome then
+            opStr ++ "\\limits_{\\substack{%s}} {%s}"
+          else if e.asIcoClosed?.isSome then
             opStr ++ "\\limits_{%s=%s}^{%s} {%s}"
+          else if e.asRangeClosedBound?.isSome then
+            opStr ++ "\\limits_{%s=0}^{%s} {%s}"
+          else if e.asRangeBound?.isSome || e.asIioBound?.isSome || e.asFinSumBound?.isSome then
+            opStr ++ "\\limits_{%s < %s} {%s}"
+          else if e.asIicBound?.isSome then
+            opStr ++ "\\limits_{%s \\le %s} {%s}"
           else if e.asUnivCondProbSum?.isSome then
             opStr ++ "\\limits_{\\substack{%s}} {%s}"
           else
@@ -487,6 +515,12 @@ def Expr.latexFormat : Expr → String
         | .Lean_bigcap =>
           if e.asIcoClosed?.isSome then
             opStr ++ "\\limits_{%s=%s}^{%s} {%s}"
+          else if e.asRangeClosedBound?.isSome then
+            opStr ++ "\\limits_{%s=0}^{%s} {%s}"
+          else if e.asRangeBound?.isSome || e.asIioBound?.isSome || e.asFinSumBound?.isSome then
+            opStr ++ "\\limits_{%s < %s} {%s}"
+          else if e.asIicBound?.isSome then
+            opStr ++ "\\limits_{%s \\le %s} {%s}"
           else
             opStr ++ "\\limits_{\\substack{%s}} {%s}"
         | .Lean_lim =>
@@ -616,6 +650,9 @@ def Expr.latexFormat : Expr → String
         "{\\mathbb{P}}_{%s}\\left(%s\\,\\middle|\\,%s\\right)"
       else if let some (_, _) := e.asEventuallyEq? then
         "{%s} {=^{\\mathrm{m}}} {%s}"
+      else if let some (_, _, _) := e.asHasLaw? then
+        -- lean.js LeanDistributed: `{%s} \\sim {%s}` (π elided)
+        "{%s} \\sim {%s}"
       else if let some (_) := e.asEtaPair? then
         "%s, %s"
       else match op with
@@ -691,6 +728,24 @@ def Expr.latexFormat : Expr → String
           s!"\\left[%s < %s\\right] {arg}"
         | `letFun => "{\\begin{align*}&{\\color{blue}let}\\ %s : %s := ⋯\\\\&%s\\end{align*}}"
         | `KroneckerDelta => "\\delta_{%s %s}"
+        | `chiSquaredReal =>
+          -- js/php: chiSquaredReal n -> \\mathcal{X}^{2}\\left(n\\right) (bare -> \\mathcal{X}^{2})
+          match args with
+          | [_] => "\\mathcal{X}^{2}\\left(%s\\right)"
+          | [] => "\\mathcal{X}^{2}"
+          | _ =>
+            let args := args.map fun arg =>
+              level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
+            opStr ++ "\\ " ++ "\\ ".intercalate args
+        | `ProbabilityTheory.gaussianReal =>
+          -- js/php: gaussianReal mu sigma -> \\mathcal{N}\\left(mu, sigma\\right) (bare -> \\mathcal{N})
+          match args with
+          | [_, _] => "\\mathcal{N}\\left(%s, %s\\right)"
+          | [] => "\\mathcal{N}"
+          | _ =>
+            let args := args.map fun arg =>
+              level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
+            opStr ++ "\\ " ++ "\\ ".intercalate args
         | `Function.getSliceFrom =>
           -- Python open slice `f[t:]` = `Function.getSliceFrom f t` → `{f}_{t:}` (lean.js `{f}_{t : }`)
           "{%s}_{%s:}"
@@ -787,6 +842,22 @@ def Expr.latexFormat : Expr → String
           let M := level.toColor (M.priority > func.priority || M.toList != none || M.is_Eye)
           let θ := level.toColor (θ.priority > func.priority || θ.is_Div || θ.is_BlockMatrix)
           s!"{M}\\ {θ}"
+        | "toFun", _ =>
+          let (base, indices) := e.collectToFunChain
+          if indices.isEmpty then
+            if args.length ≤ idx then
+              let op := name.toString.escape_specials
+              let args := args.map fun arg =>
+                level.toColor (arg.priority ≥ func.priority || arg.is_Div || arg.is_BlockMatrix)
+              let args := "\\ ".intercalate args
+              s!"{op}\\ {args}"
+            else if let obj :: args := args.swap 0 idx then
+              obj.methodFormat args func attr level
+            else
+              opStr
+          else
+            let baseFmt := level.toColor (base.priority > func.priority || base.is_EnclosedGroup || base.is_LeanProperty || base.is_Eye)
+            baseFmt ++ "_{" ++ ", ".intercalate (["%s"].repeat indices.length) ++ "}"
         | "getSliceFrom", [_, _] =>
           "{%s}_{%s:}"
         | "getSlice", [_, Basic (.Special ⟨`Slice.mk⟩) [start, _, step] _] =>
@@ -826,32 +897,45 @@ def Expr.latexFormat : Expr → String
         s!"{opStr}\\ {args}"
       | .LeanProperty name =>
         let attr := name.getLast.toString
-        match name with
-        | `Complex.exp =>
-          "{\\color{RoyalBlue} e} ^ %s"
-        | `Complex.cos
-        | `Complex.sin
-        | `Complex.log =>
-          s!"\\{attr} %s"
-        | `IsConstant.is_constant =>
-          "%s\\ {\\color{blue}\\text{is}}\\ {constant}"
-        | `Tensor.T
-        | `Matrix.transpose =>
-          "{%s}^{\\color{magenta} T}"
-        | `Matrix.conjTranspose =>
-          "{%s}^{\\color{magenta} {\\dagger}}"
-        | `Tensor.det
-        | `Matrix.det =>
-          "\\left|{%s}\\right|"
-        | `Nat.factorial =>
-          "{%s}!"
-        | _ =>
-          match args with
-          | arg :: _ =>
-            let arg := level.toColor (arg.priority ≥ func.priority || arg.toList != none || arg.is_Eye)
-            s!"{arg}.{attr}"
-          | .nil =>
-            name.toString.escape_specials
+        if name.getLast == `toFun then
+          let (base, indices) := e.collectToFunChain
+          if !indices.isEmpty then
+            let baseFmt := level.toColor (base.priority > func.priority || base.is_EnclosedGroup || base.is_LeanProperty || base.is_Eye)
+            baseFmt ++ "_{" ++ ", ".intercalate (["%s"].repeat indices.length) ++ "}"
+          else
+            match args with
+            | arg :: _ =>
+              let arg := level.toColor (arg.priority ≥ func.priority || arg.toList != none || arg.is_Eye)
+              s!"{arg}.{attr}"
+            | .nil =>
+              name.toString.escape_specials
+        else
+          match name with
+          | `Complex.exp =>
+            "{\\color{RoyalBlue} e} ^ %s"
+          | `Complex.cos
+          | `Complex.sin
+          | `Complex.log =>
+            s!"\\{attr} %s"
+          | `IsConstant.is_constant =>
+            "%s\\ {\\color{blue}\\text{is}}\\ {constant}"
+          | `Tensor.T
+          | `Matrix.transpose =>
+            "{%s}^{\\color{magenta} T}"
+          | `Matrix.conjTranspose =>
+            "{%s}^{\\color{magenta} {\\dagger}}"
+          | `Tensor.det
+          | `Matrix.det =>
+            "\\left|{%s}\\right|"
+          | `Nat.factorial =>
+            "{%s}!"
+          | _ =>
+            match args with
+            | arg :: _ =>
+              let arg := level.toColor (arg.priority ≥ func.priority || arg.toList != none || arg.is_Eye)
+              s!"{arg}.{attr}"
+            | .nil =>
+              name.toString.escape_specials
       | .LeanLemma _ =>
         opStr
 
@@ -876,6 +960,27 @@ partial def Expr.toLatex (e : Expr) : String :=
   let e := e.markNamesAsRVHeads (e.foldRVHeadNames [])
   e.latexFormat.printf (latexArgs e)
 where
+  /-- Limit fragment for one ∑ in a nested chain (no body). Mirrors lean.js `sumLimitLatex`. -/
+  sumLimitLatex : Expr → String
+  | e =>
+    if let some (i, a, b, _) := e.asIcoClosed? then
+      "{%s} \\le {%s} \\le {%s}".format a.toLatex, i, b.toLatex
+    else if let some (i, top, _) := e.asRangeClosedBound? then
+      "0 \\le {%s} \\le {%s}".format i, top.toLatex
+    else if let some (i, n, _) := e.asRangeBound? <|> e.asIioBound? <|> e.asFinSumBound? then
+      "{%s} < {%s}".format i, n.toLatex
+    else if let some (i, k, _) := e.asIicBound? then
+      "{%s} \\le {%s}".format i, k.toLatex
+    else if let some (rv, _) := e.asUnivCondProbSum? then
+      rv.toLatex
+    else
+      match e with
+      | Basic (.ExprWithLimits .Lean_sum) [_, binder@(Binder .contains ..)] _ =>
+        binder.toLatex
+      | Basic (.ExprWithLimits .Lean_sum) [_, Binder .default name type nil] _ =>
+        "{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex
+      | _ =>
+        ""
   latexArgs : Expr → List String
   | nil => []
 
@@ -933,30 +1038,62 @@ where
             args.reverse.map (·.toLatex)
         | .Lean_exists
         | .Lean_sum =>
-          match e.asIcoClosed?, e.asUnivCondProbSum?, args with
-          | some (i, a, b, body), _, _ =>
-            [i, a.toLatex, b.toLatex, body.toLatex]
-          | none, some (rv, body), _ =>
-            -- lean.js: index is the RV `a t` / `s (t+1)` (not red — it is the bound value)
-            [rv.toLatex, body.toLatex]
-          | none, none, [expr, Binder .default name (Basic (.ExprWithAttr (.Lean_typeclass `Fin)) [n] _) nil] =>
-            [("{%s < %s}".format name.toString.bvarLatex.escape_specials, n.toLatex), expr.toLatex]
-          | none, none, [expr, Binder .default name type nil] =>
-            [("{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex), expr.toLatex]
-          | _, _, _ =>
-            []
+          match e.nestedSumChain? with
+          | some (chain, body) =>
+            -- Inner binder first (evaluation / sympy substack order), then outer.
+            let limits := " \\\\ ".intercalate (chain.reverse.map sumLimitLatex)
+            [limits, body.toLatex]
+          | none =>
+            match e.asIcoClosed? with
+            | some (i, a, b, body) =>
+              [i, a.toLatex, b.toLatex, body.toLatex]
+            | none =>
+              match e.asRangeClosedBound? with
+              | some (i, top, body) =>
+                [i, top.toLatex, body.toLatex]
+              | none =>
+                match e.asRangeBound? <|> e.asIioBound? <|> e.asFinSumBound? with
+                | some (i, n, body) =>
+                  [i, n.toLatex, body.toLatex]
+                | none =>
+                  match e.asIicBound? with
+                  | some (i, k, body) =>
+                    [i, k.toLatex, body.toLatex]
+                  | none =>
+                    match e.asUnivCondProbSum? with
+                    | some (rv, body) =>
+                      -- lean.js: index is the RV `a t` / `s (t+1)` (not red — it is the bound value)
+                      [rv.toLatex, body.toLatex]
+                    | none =>
+                      match args with
+                      | [expr, Binder .default name type nil] =>
+                        [("{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex), expr.toLatex]
+                      | _ =>
+                        []
         | .Lean_prod
         | .Lean_bigcup
         | .Lean_bigcap =>
-          match e.asIcoClosed?, args with
-          | some (i, a, b, body), _ =>
+          match e.asIcoClosed? with
+          | some (i, a, b, body) =>
             [i, a.toLatex, b.toLatex, body.toLatex]
-          | none, [expr, Binder .default name (Basic (.ExprWithAttr (.Lean_typeclass `Fin)) [n] _) nil] =>
-            [("{%s < %s}".format name.toString.bvarLatex.escape_specials, n.toLatex), expr.toLatex]
-          | none, [expr, Binder .default name type nil] =>
-            [("{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex), expr.toLatex]
-          | _, _ =>
-            []
+          | none =>
+            match e.asRangeClosedBound? with
+            | some (i, top, body) =>
+              [i, top.toLatex, body.toLatex]
+            | none =>
+              match e.asRangeBound? <|> e.asIioBound? <|> e.asFinSumBound? with
+              | some (i, n, body) =>
+                [i, n.toLatex, body.toLatex]
+              | none =>
+                match e.asIicBound? with
+                | some (i, k, body) =>
+                  [i, k.toLatex, body.toLatex]
+                | none =>
+                  match args with
+                  | [expr, Binder .default name type nil] =>
+                    [("{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex), expr.toLatex]
+                  | _ =>
+                    []
         | .Lean_lim =>
           match Expr.asLimBound? args with
           | some (n, dir, fn) =>
@@ -1118,12 +1255,20 @@ where
         [obj.toLatex, x.toLatex, y.toLatex]
       else if let some (f, g) := e.asEventuallyEq? then
         [f.toLatex, g.toLatex]
+      else if let some (x, μ, _) := e.asHasLaw? then
+        [x.toLatex, μ.toLatex]
       else if let some etaArgs := e.asEtaPair? then
         etaArgs.map (·.toLatex)
       else
         match op with
         | .LeanMethod op idx =>
           match op with
+          | .str _ "toFun" =>
+            let (base, indices) := e.collectToFunChain
+            if indices.isEmpty then
+              map (args.swap 0 idx)
+            else
+              map (base :: indices)
           | .str _ "getSliceFrom" =>
             map args  -- `f[t:]` → format `{%s}_{%s:}`, args [f, t]
           | .str _ "getSlice" =>
@@ -1298,6 +1443,13 @@ where
             map args
         | .Lean_operatorname `Tensor.eye =>
           []
+        | .LeanProperty name =>
+          if name.getLast == `toFun then
+            let (base, indices) := e.collectToFunChain
+            if indices.isEmpty then map args
+            else map (base :: indices)
+          else
+            map args
         | _ =>
           map args
     | .UnaryPrefix ⟨`Not⟩ =>
@@ -1310,6 +1462,13 @@ where
         else
           map args
       | _ =>
+        map args
+    | .UnaryPrefix ⟨op⟩ =>
+      if op.getLast == `toFun then
+        let (base, indices) := e.collectToFunChain
+        if indices.isEmpty then map args
+        else map (base :: indices)
+      else
         map args
     | _ =>
       map args

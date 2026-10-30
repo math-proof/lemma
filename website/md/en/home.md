@@ -40,9 +40,9 @@ The library currently contains <label id=count>5000</label> proved theorems (<la
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 * [Random](../?module=Random) Probability theory and stochastic processes, e.g.:
+  - [𝒳²(n)](../?module=Random.Distributed.ChiSquared.of.All_Distributed_Gaussian.All_Indep), [sum of independent Gaussians](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep)
   - [naive Bayes document classification](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)
   - [CRF loss function](../?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM), [Viterbi](../?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)
-  - [sum of independent Gaussians](../?module=Random.DistributedAdd.of.Distributed_Gaussian.Distributed_Gaussian.Indep)
   - [GAE (discrete)](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Icc.In_Ico), [GAE (continuous)](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico)
 
 <br><br>

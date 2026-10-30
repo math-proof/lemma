@@ -1,14 +1,12 @@
 import Abbrev.Difference
 import Abbrev.Subst
-import Def.Fun
+import Def.Data.List.List.Basic
 import Def.Subst
-import Instance.Fun
-import Macro.Subst
+import Syntax.Subst
 import Notation.Fun
 import Structure.Fun
 import Syntax.Fun
 import Syntax.Subst
-import Def.Data.List.List.Part5
 
 
 @[simp]

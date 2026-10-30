@@ -402,7 +402,9 @@ class LeanArgsSpaceSeparated extends LeanArgs
                             $rhs = $args[2]->toLatex($syntax);
                             return [$lhs, $rhs];
                         case 'gaussianReal':
-                            // `gaussianReal μ σ` — peel grouping parens; `\mathcal{N}` is the format atom.
+                        case 'multivariateGaussian':
+                        case 'fisherReal':
+                            // `gaussianReal μ σ` / `multivariateGaussian μ σ` — peel grouping parens; `\mathcal{N}` is the format atom.
                             $pair = $this->args;
                             $peel = function ($arg) {
                                 if ($arg instanceof LeanParenthesis && $arg->arg instanceof LeanDiv)
@@ -501,8 +503,12 @@ class LeanArgsSpaceSeparated extends LeanArgs
                         case 'KroneckerDelta':
                             return '\delta_{%s %s}';
                         case 'gaussianReal':
+                        case 'multivariateGaussian':
                             // sympy `_latex`: `\mathcal{N}%s` with `%s` = `\left(μ, σ\right)` (one atom; no space before the paren).
                             return '\\mathcal{N}\\left(%s, %s\\right)';
+                        case 'fisherReal':
+                            // Fisher-Snedecor F(d1, d2): upright F, same juxta peel as gaussianReal.
+                            return '\\mathrm{F}\\left(%s, %s\\right)';
                     }
                     break;
             }

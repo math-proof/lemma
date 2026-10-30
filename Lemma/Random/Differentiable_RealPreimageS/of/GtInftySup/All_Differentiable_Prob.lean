@@ -1,5 +1,5 @@
 import Def.Analysis.Calculus.Gradient.Operators.Part2
-import Macro.Order.Sup
+import Syntax.Order.Sup
 import Lemma.Random.RealPreimageS.eq.Sum_MulRealPn
 import Lemma.Random.Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real

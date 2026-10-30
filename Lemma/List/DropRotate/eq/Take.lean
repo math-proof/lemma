@@ -1,4 +1,4 @@
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 import Lemma.List.Rotate.eq.AppendDrop__Take
 open List
 

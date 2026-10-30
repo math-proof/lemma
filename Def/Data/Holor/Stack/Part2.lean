@@ -1,5 +1,5 @@
 import Instance.Data.Holor.Tensor.Part2
-import Macro.Data.Holor.Stack.Part3
+import Syntax.Data.Holor.Stack.Part3
 open Lean
 
 

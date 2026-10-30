@@ -1,6 +1,6 @@
 import Lemma.Random.ProbCond.eq.DivMulProb_Prod_ProbCond.of.NeProbJoint__0.All_Indep
 import Lemma.Random.Prob.ne.Zero.of.NeProb_0
-import Macro.Order.ExprWithLimits
+import Syntax.Order.ExprWithLimits
 open MeasureTheory ProbabilityTheory Measure Random
 open scoped ENNReal.ToRealCoe
 open Fun

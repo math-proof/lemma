@@ -1,5 +1,5 @@
 import Lemma.List.DropTake.eq.TakeDrop
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 open List
 
 

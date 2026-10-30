@@ -132,8 +132,45 @@ class Lean_sum extends LeanBigOperator
                 return parent::__get($vname);
         }
     }
+
+    /** Display-only: nested `∑ i, ∑ j, body` → one ∑ with stacked limits. */
+    public function nestedSumChain()
+    {
+        if ($this->prime)
+            return null;
+        $chain = [$this];
+        $cur = $this;
+        while (true) {
+            $next = $cur->scope;
+            while ($next instanceof LeanParenthesis)
+                $next = $next->arg;
+            if (!($next instanceof Lean_sum) || $next->prime)
+                break;
+            $chain[] = $next;
+            $cur = $next;
+        }
+        if (count($chain) < 2)
+            return null;
+        return ['chain' => $chain, 'body' => $cur->scope];
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $nested = $this->nestedSumChain();
+        if ($nested) {
+            $limits = [];
+            // Inner binder first (evaluation / sympy substack order), then outer.
+            foreach (array_reverse($nested['chain']) as $s)
+                $limits[] = $s->bound->toLatex($syntax);
+            return [implode(' \\\\ ', $limits), $nested['body']->toLatex($syntax)];
+        }
+        return parent::latexArgs($syntax);
+    }
+
     public function latexFormat()
     {
+        if ($this->nestedSumChain())
+            return "\\sum\\limits_{\\substack{%s}} {%s}";
         if (!$this->prime)
             return parent::latexFormat();
         // `\sum'` carries the prime as a superscript; wrap in `\mathop` to keep

@@ -1,6 +1,6 @@
 import Def.Lean.Level
 import Def.Lean.Name
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 import Def.Lean.Expr.Part11
 import Def.Lean.PrettyPrinter.Latex
 open Lean (Name)

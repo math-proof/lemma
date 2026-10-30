@@ -1,5 +1,6 @@
 import Mathlib.Probability.Distributions.Gaussian.Real
-import Notation.Probability.Gaussian
+import Notation.Probability.HasLaw
+import Notation.Algebra.Power
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 open scoped NNReal
@@ -13,10 +14,10 @@ private lemma main
   {μ₀ μ₁ : ℝ} {σ₀ σ₁ : NNReal}
 -- given
   (h₀ : x₀ ⟂ᵢ[π] x₁)
-  (h₁ : x₀ ∼[π] 𝒩(μ₀, σ₀²))
-  (h₂ : x₁ ∼[π] 𝒩(μ₁, σ₁²)) :
+  (h₁ : x₀ ∼[π] gaussianReal μ₀ σ₀²)
+  (h₂ : x₁ ∼[π] gaussianReal μ₁ σ₁²) :
 -- imply
-  (x₀ + x₁) ∼[π] 𝒩(μ₀ + μ₁, σ₀² + σ₁²) := by
+  x₀ + x₁ ∼[π] gaussianReal (μ₀ + μ₁) (σ₀² + σ₁²) := by
 -- proof
   refine ⟨h₁.aemeasurable.add h₂.aemeasurable, ?_⟩
   apply gaussianReal_add_gaussianReal_of_indepFun h₀ h₁ h₂

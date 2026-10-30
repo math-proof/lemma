@@ -1,4 +1,4 @@
-import Macro.Logic.Quantifier.Part4
+import Syntax.Logic.Quantifier.Part4
 import Def.Analysis.Real.Limits.Part4
 import Theorem.Data.Set.Sets
 import Initialize.Tactic.Attr.Basic

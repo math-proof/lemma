@@ -8,3 +8,7 @@ open scoped Topology
 /-- `x → +∞` — x is positive infinite. -/
 syntax (name := tendsToPosInf) term:26 " → " "+" "∞" : term
 
+
+
+macro_rules (kind := tendsToPosInf)
+  | `($x → +∞) => `(0 < $x ∧ ArchimedeanClass.mk $x < 0)

@@ -1,6 +1,5 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Order.Interval.Finset.Fin
-import Instance.Fun
 import Notation.Fun
 import Initialize.Tactic.Attr.Basic
 

@@ -9,7 +9,6 @@ open Polynomial TensorProduct Module SepClosedDecomposition
 -/
 @[path]
 private lemma algHom_card_eq_finrank_of_isSepClosed_eq
-  (K L Ω : Type*)
   [Field K]
   [Field L]
   [Field Ω]
@@ -28,7 +27,6 @@ private lemma algHom_card_eq_finrank_of_isSepClosed_eq
 -/
 @[path]
 private lemma algHom_linearIndependent_eq
-  (K L Ω : Type*)
   [Field K]
   [Field L]
   [Field Ω]
@@ -47,7 +45,6 @@ private lemma algHom_linearIndependent_eq
 -/
 @[path]
 private lemma column_functions_linearIndependent_eq
-  (K L Ω : Type*)
   [Field K]
   [Field L]
   [Field Ω]
@@ -66,7 +63,6 @@ private lemma column_functions_linearIndependent_eq
 -/
 @[path]
 private lemma tensorSepClosedAlgHom_injective_eq
-  (K L Ω : Type*)
   [Field K]
   [Field L]
   [Field Ω]
@@ -85,7 +81,6 @@ private lemma tensorSepClosedAlgHom_injective_eq
 -/
 @[path]
 private lemma finrank_tensor_eq_finrank_pi_of_isSepClosed_eq
-  (K L Ω : Type*)
   [Field K]
   [Field L]
   [Field Ω]
@@ -104,7 +99,6 @@ private lemma finrank_tensor_eq_finrank_pi_of_isSepClosed_eq
 -/
 @[path]
 private lemma tensorSepClosedAlgHom_surjective_eq
-  (K L Ω : Type*)
   [Field K]
   [Field L]
   [Field Ω]
@@ -123,7 +117,6 @@ private lemma tensorSepClosedAlgHom_surjective_eq
 -/
 @[path]
 private lemma tensorSepClosedAlgHom_bijective_eq
-  (K L Ω : Type*)
   [Field K]
   [Field L]
   [Field Ω]

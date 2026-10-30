@@ -183,6 +183,94 @@ export function openDuplicate(ctx) {
         seen.set(e.name, e.line);
     }
 }
+/**
+ * `open-merge`: consecutive plain (or consecutive `scoped`) top-level `open` commands
+ * should be one `open A B C …` (resp. `open scoped A B C …`). Only blank lines may sit
+ * between them; a comment, `import`, `set_option`, selective/`in` open, or a different
+ * open kind breaks the run. Suggests the merged line.
+ */
+export function openMerge(ctx) {
+    const { raw, code: lines } = ctx.P;
+    /** @type {{ start: number, end: number, kind: string, names: string[], code: string }[]} */
+    const cmds = [];
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        if (!/^open\b/.test(line)) continue;
+        const start = i;
+        let text = line.replace(/^open\b/, '');
+        while (i + 1 < lines.length && /^\s+\S/.test(lines[i + 1])) text += ` ${lines[++i]}`;
+        text = text.trim();
+        const sc = /^scoped\b/.exec(text);
+        if (sc) text = text.slice(sc[0].length).trim();
+        const isIn = /\bin\s*$/.test(text);
+        const tail = /\b(hiding|renaming)\b/.exec(text);
+        const head = tail ? text.slice(0, tail.index) : text;
+        const body = head.replace(/\bin\s*$/, ' ');
+        const names = [];
+        let selective = false;
+        const re = /([^\s()]+)(\s*\([^()]*\))?/g;
+        let e;
+        while ((e = re.exec(body))) {
+            names.push(e[1]);
+            if (e[2]) selective = true;
+        }
+        // kind: plain | scoped | other (selective / local — never merge)
+        let kind = 'other';
+        if (!selective && !isIn && !tail) kind = sc ? 'scoped' : 'plain';
+        cmds.push({ start, end: i, kind, names, code: raw[start] });
+    }
+    // runs of same mergeable kind with only blank lines between commands
+    let run = [];
+    const flush = () => {
+        if (run.length < 2) {
+            run = [];
+            return;
+        }
+        const kind = run[0].kind;
+        const names = run.flatMap((c) => c.names);
+        const merged =
+            kind === 'scoped'
+                ? `open scoped ${names.join(' ')}`
+                : `open ${names.join(' ')}`;
+        const first = run[0];
+        ctx.warn(
+            'open-merge',
+            first.start + 1,
+            1,
+            `merge ${run.length} consecutive \`open\` commands into one: \`${merged}\``,
+            { suggested: merged },
+        );
+        run = [];
+    };
+    for (let k = 0; k < cmds.length; k++) {
+        const c = cmds[k];
+        if (c.kind === 'other' || !c.names.length) {
+            flush();
+            continue;
+        }
+        if (!run.length) {
+            run = [c];
+            continue;
+        }
+        const prev = run[run.length - 1];
+        // only blanks between previous command end and this start
+        let onlyBlanks = true;
+        for (let j = prev.end + 1; j < c.start; j++) {
+            if (!/^\s*$/.test(raw[j])) {
+                onlyBlanks = false;
+                break;
+            }
+        }
+        if (onlyBlanks && c.kind === prev.kind) {
+            run.push(c);
+        } else {
+            flush();
+            run = [c];
+        }
+    }
+    flush();
+}
+
 
 
 /**

@@ -1,6 +1,6 @@
 import Theorem.Algebra.Power.Part2
 import Theorem.Data.Vector.Basic.Part2
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 open MeasureTheory
 

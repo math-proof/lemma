@@ -1,4 +1,4 @@
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 import Lemma.Rat.CeilDivSub.eq.One.of.GeAdd.Gt_0
 import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Nat.Le.of.Sub.eq.Zero

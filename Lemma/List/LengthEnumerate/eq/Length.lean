@@ -1,6 +1,4 @@
-import Def.Data.List.List.Part5
-
-
+import Def.Data.List.List.Basic
 @[path]
 private lemma main
 -- given

@@ -20,6 +20,7 @@ export const tactics = [
     'clear',
     'congr',
     'constructor',
+    'continuity',
     'contradiction',
     'contrapose',
     'conv',

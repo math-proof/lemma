@@ -1,5 +1,5 @@
 import Lemma.Random.GradVkd.eq.AddIntegral_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico
-import Macro.Algebra.BigOperators.Summations
+import Syntax.Algebra.BigOperators.Summations
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 open MeasureTheory PolicyGradient Random
 

@@ -1,5 +1,5 @@
 import Instance.Data.Holor.Tensor.Part2
-import Macro.Data.Holor.Stack.Part2
+import Syntax.Data.Holor.Stack.Part2
 open Lean
 
 
@@ -9,3 +9,8 @@ Uses priority above Mathlib's bounded `∏ i < n, …` (Finset.Iio) notation.
 -/
 syntax (priority := 10000) "∏ " binderIdent "<" term ", " term:67 : term
 
+
+
+macro_rules
+  | `(∏ _ < $n, $body) => `(([ _ < $n ] $body).prod 0)
+  | `(∏ $x:ident < $n, $body) => `(([ $x:ident < $n ] $body).prod 0)

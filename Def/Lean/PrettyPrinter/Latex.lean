@@ -1,6 +1,6 @@
 import Def.Lean.Level
 import Def.Lean.Name
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 import Def.Lean.Expr.Part11
 open Lean (Name)
 set_option linter.unusedVariables false
@@ -227,6 +227,73 @@ def Expr.collectGetElemChain : Expr → Expr × List Expr
       (base, idxs ++ [i])
     | _, _ =>
       (e, [])
+  | e =>
+    (e, [])
+
+/-- True when `e` is a `*.toFun` structure projection / method head (`Fun.toFun`, …). -/
+def Expr.isToFunHead : Expr → Bool
+  | Basic (.ExprWithAttr (.LeanMethod name _)) _ _
+  | Basic (.ExprWithAttr (.LeanProperty name)) _ _ =>
+    name.getLast == `toFun
+  | Basic (.UnaryPrefix ⟨name⟩) _ _ =>
+    name.getLast == `toFun
+  | _ => false
+
+/-- Object + trailing index args of a `*.toFun` application, after method-idx swap.
+`Fun.toFun x i` → `some (x, [i])`; bare `x.toFun` → `none`. -/
+def Expr.asToFunApp? : Expr → Option (Expr × List Expr)
+  | Basic (.ExprWithAttr (.LeanMethod _ idx)) args _ =>
+    if args.length ≤ idx then none
+    else
+      match args.swap 0 idx with
+      | obj :: index :: rest => some (obj, index :: rest)
+      | _ => none
+  | Basic (.ExprWithAttr (.LeanProperty _)) args _ =>
+    match args with
+    | obj :: index :: rest => some (obj, index :: rest)
+    | _ => none
+  | Basic (.UnaryPrefix _) args _ =>
+    match args with
+    | obj :: index :: rest => some (obj, index :: rest)
+    | _ => none
+  | _ => none
+
+/--
+Peel consecutive `*.toFun` applications into `(base, indices)`.
+Used so `(x.toFun i).toFun j` becomes `{x}_{i, j}` (one subscript level), matching
+`GetElem` / lean.js multi-index style (`x[i][j]` → `x_{i, j}`).
+-/
+partial def Expr.collectToFunChain : Expr → Expr × List Expr
+  | e@(Basic (.ExprWithAttr (.LeanMethod name idx)) args _) =>
+    if name.getLast != `toFun || args.length ≤ idx then
+      (e, [])
+    else
+      match args.swap 0 idx with
+      | obj :: index :: rest =>
+        let (base, idxs) := obj.collectToFunChain
+        (base, idxs ++ index :: rest)
+      | _ =>
+        (e, [])
+  | e@(Basic (.ExprWithAttr (.LeanProperty name)) args _) =>
+    if name.getLast != `toFun then
+      (e, [])
+    else
+      match args with
+      | obj :: index :: rest =>
+        let (base, idxs) := obj.collectToFunChain
+        (base, idxs ++ index :: rest)
+      | _ =>
+        (e, [])
+  | e@(Basic (.UnaryPrefix ⟨name⟩) args _) =>
+    if name.getLast != `toFun then
+      (e, [])
+    else
+      match args with
+      | obj :: index :: rest =>
+        let (base, idxs) := obj.collectToFunChain
+        (base, idxs ++ index :: rest)
+      | _ =>
+        (e, [])
   | e =>
     (e, [])
 
@@ -721,6 +788,84 @@ def Expr.asIcoClosed? : Expr → Option (String × Expr × Expr × Expr)
         some (name.toString.bvarLatex.escape_specials, a, b, body)
       | _ => none
     | _ => none
+  | _ => none
+
+
+/-- `∑/∏ i ∈ Finset.range (e + 1), f` → `(i, e, f)`; rendered `\\sum_{i=0}^{e}` like lean.js
+`rangeClosedBound`. Prefer this over `asRangeBound?`. -/
+def Expr.asRangeClosedBound? : Expr → Option (String × Expr × Expr)
+  | Basic (.ExprWithLimits op) [body, Binder .contains name set nil] _ =>
+    match op with
+    | .Lean_sum | .Lean_prod =>
+      match set.asNamedApp? with
+      | some ("range", [Basic (.BinaryInfix ⟨`HAdd.hAdd⟩) [e, const (.natVal 1)] _]) =>
+        some (name.toString.bvarLatex.escape_specials, e, body)
+      | _ => none
+    | _ => none
+  | _ => none
+
+/-- `∑/∏ i ∈ Finset.range n, f` → `(i, n, f)`; rendered `\\sum_{i < n}` like lean.js `rangeBound`. -/
+def Expr.asRangeBound? : Expr → Option (String × Expr × Expr)
+  | Basic (.ExprWithLimits op) [body, Binder .contains name set nil] _ =>
+    match op with
+    | .Lean_sum | .Lean_prod =>
+      match set.asNamedApp? with
+      | some ("range", [n]) =>
+        some (name.toString.bvarLatex.escape_specials, n, body)
+      | _ => none
+    | _ => none
+  | _ => none
+
+/-- `∑/∏ i ∈ Finset.Iio k, f` → `(i, k, f)`; rendered `\\sum_{i < k}` like lean.js `iioBound`. -/
+def Expr.asIioBound? : Expr → Option (String × Expr × Expr)
+  | Basic (.ExprWithLimits op) [body, Binder .contains name set nil] _ =>
+    match op with
+    | .Lean_sum | .Lean_prod =>
+      match set.asNamedApp? with
+      | some ("Iio", [k]) =>
+        some (name.toString.bvarLatex.escape_specials, k, body)
+      | _ => none
+    | _ => none
+  | _ => none
+
+/-- `∑/∏ i ∈ Finset.Iic k, f` → `(i, k, f)`; rendered `\\sum_{i \\le k}` like lean.js `iicBound`. -/
+def Expr.asIicBound? : Expr → Option (String × Expr × Expr)
+  | Basic (.ExprWithLimits op) [body, Binder .contains name set nil] _ =>
+    match op with
+    | .Lean_sum | .Lean_prod =>
+      match set.asNamedApp? with
+      | some ("Iic", [k]) =>
+        some (name.toString.bvarLatex.escape_specials, k, body)
+      | _ => none
+    | _ => none
+  | _ => none
+
+/-- `∑/∏ i : Fin n, f` → `(i, n, f)`; rendered `\\sum_{i < n}` (same sugar as lean.js `finRangeBound`). -/
+def Expr.asFinSumBound? : Expr → Option (String × Expr × Expr)
+  | Basic (.ExprWithLimits op) [body, Binder .default name (Basic (.ExprWithAttr (.Lean_typeclass `Fin)) [n] _) nil] _ =>
+    match op with
+    | .Lean_sum | .Lean_prod =>
+      some (name.toString.bvarLatex.escape_specials, n, body)
+    | _ => none
+  | _ => none
+
+/-- Display-only: nested plain `∑ i, ∑ j, body` → `(chain, body)` with `chain.length ≥ 2`
+(outer first). Mirrors lean.js `Lean_sum.nestedSumChain`. `∑'` is `Lean_tsum` here, so it never
+joins the chain. Parentheses are already gone after Lean elaboration into this Expr AST. -/
+def Expr.nestedSumChain? : Expr → Option (List Expr × Expr)
+  | e@(Basic (.ExprWithLimits .Lean_sum) _ _) =>
+    let rec go (cur : Expr) (acc : List Expr) : List Expr × Expr :=
+      match cur with
+      | Basic (.ExprWithLimits .Lean_sum) [body, _] _ =>
+        match body with
+        | next@(Basic (.ExprWithLimits .Lean_sum) _ _) =>
+          go next (acc ++ [next])
+        | _ =>
+          (acc, body)
+      | _ =>
+        (acc, cur)
+    let (chain, body) := go e [e]
+    if chain.length ≥ 2 then some (chain, body) else none
   | _ => none
 
 /-- Slice bounds are `ℤ`, so `x[:t + 1]` elaborates to `x.getSlice ⟨0, ↑t + 1, 1⟩`; lean.js shows the

@@ -200,10 +200,12 @@ class LeanToken extends Lean
 
     public function latexFormat()
     {
-        if ($this->text === '𝒩' || $this->text === 'gaussianReal')
+        if ($this->text === '𝒩' || $this->text === 'gaussianReal' || $this->text === 'multivariateGaussian')
             return '\\mathcal{N}';
         if ($this->text === 'chiSquaredReal')
             return '\\mathcal{X}^{2}';
+        if ($this->text === 'fisherReal')
+            return '\\mathrm{F}';
         if ($this->text === '∇')
             return '\\nabla';
         if ($this->text === '∞')

@@ -1,6 +1,6 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Matrix.Mul
-import Def.Fun
+import Notation.Fun
 import Class.Data.Fin.Dot
 
 

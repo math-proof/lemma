@@ -1,5 +1,5 @@
 import Mathlib.Data.Finset.Sort
-import Macro.Order.ExprWithLimits
+import Syntax.Order.ExprWithLimits
 import Theorem.Data.Set.Sets
 import Initialize.Tactic.Attr.Basic
 

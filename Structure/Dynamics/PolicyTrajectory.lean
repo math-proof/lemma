@@ -10,7 +10,7 @@ import Def.Probability.Moments.Variance
 import Instance.Analysis.Real.Numbers
 import Theorem.Algebra.Power.Part2
 import Theorem.Data.Vector.Basic.Part2
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 import Theorem.Function
 import Lemma.Random.SinglePSpace.of.Measurable
 import Lemma.Random.SinglePSpace.of.Measurable.Measurable

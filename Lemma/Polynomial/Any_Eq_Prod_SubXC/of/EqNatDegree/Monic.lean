@@ -2,7 +2,6 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Polynomial.RingDivision
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Instance.Fun
 import Notation.Fun
 import Syntax.Fun
 import Initialize.Tactic.Attr.Basic
@@ -47,4 +46,4 @@ private lemma main
 
 
 -- created on 2026-10-25
--- updated on 2026-10-27
+-- updated on 2026-10-30

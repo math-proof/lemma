@@ -2,7 +2,7 @@ import Lemma.Random.MulMeasure.eq.MulMeasure.of.CondIndep
 import Lemma.Random.Measure.eq.Mul_MulDivS.of.Subset
 import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
 import Instance.Probability.Process.DiscreteHMM.Part2
-import Macro.Algebra.BigOperators.Summations
+import Syntax.Algebra.BigOperators.Summations
 open MeasureTheory Random
 open IsDiscreteHMM
 open Fun

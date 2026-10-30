@@ -3,6 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.Prop1228
 open Module Ideal
 
+
 attribute [local instance] FractionRing.liftAlgebra FractionRing.isScalarTower_liftAlgebra
 
 
@@ -11,7 +12,6 @@ attribute [local instance] FractionRing.liftAlgebra FractionRing.isScalarTower_l
 -/
 @[path]
 lemma different_tower
-  (A B C : Type*)
   [CommRing A] [IsDomain A] [IsIntegrallyClosed A]
   [CommRing B] [IsDomain B] [IsIntegrallyClosed B] [IsDedekindDomain B]
   [Algebra A B] [Module.Finite A B] [IsTorsionFree A B]
@@ -30,7 +30,6 @@ lemma different_tower
 -/
 @[path]
 lemma discr_tower
-  (A B C : Type*)
   [CommRing A] [IsDomain A] [IsIntegrallyClosed A]
   [CommRing B] [IsDomain B] [IsIntegrallyClosed B] [IsDedekindDomain B]
   [Algebra A B] [Module.Finite A B] [IsTorsionFree A B]
@@ -50,7 +49,7 @@ lemma discr_tower
       (FractionRing A) (FractionRing B) (FractionRing C)
   unfold discrIdeal
   rw [spanNorm_eq A (differentIdeal A C)]
-  have h := different_tower A B C
+  have h := different_tower (A := A) (B := B) (C := C)
   conv_lhs => rw [h]
   rw [map_mul, mul_comm]
   congr 1
@@ -69,7 +68,6 @@ lemma discr_tower
 -/
 @[path]
 lemma proposition_12_28
-  (A B C : Type*)
   [CommRing A] [IsDomain A] [IsIntegrallyClosed A]
   [CommRing B] [IsDomain B] [IsIntegrallyClosed B] [IsDedekindDomain B]
   [Algebra A B] [Module.Finite A B] [IsTorsionFree A B]
@@ -81,7 +79,7 @@ lemma proposition_12_28
 -- imply
   (differentIdeal A C = differentIdeal B C * (differentIdeal A B).map (algebraMap B C)) ∧ (discrIdeal A C = (discrIdeal A B) ^ (finrank (FractionRing B) (FractionRing C)) * Ideal.spanNorm A (discrIdeal B C)) :=
 -- proof
-  ⟨different_tower A B C, discr_tower A B C⟩
+  ⟨different_tower (A := A) (B := B) (C := C), discr_tower (A := A) (B := B) (C := C)⟩
 
 
 -- created on 2026-10-23

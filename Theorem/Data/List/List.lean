@@ -1,5 +1,5 @@
 import Def.Data.List.Slice
-import Def.Data.List.List.Part2
+import Def.Data.List.List.Basic
 open Lean
 
 

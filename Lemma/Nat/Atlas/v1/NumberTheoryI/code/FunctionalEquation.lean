@@ -14,7 +14,7 @@ namespace FunctionalEquation
 lemma jacobiTheta_modular_S_transform
   {τ : UpperHalfPlane} :
 -- imply
-  jacobiTheta ↑(ModularGroup.S • τ) = (-I * (τ : ℂ)) ^ (1 / 2 : ℂ) * jacobiTheta (τ : ℂ) :=
+  jacobiTheta ↑(ModularGroup.S • τ) = (-I * τ) ^ (1 / 2 : ℂ) * jacobiTheta τ :=
 -- proof
   jacobiTheta_S_smul τ
 
@@ -31,7 +31,7 @@ lemma gamma_ne_zero
 -- given
   (hs : ∀ m : ℕ, s ≠ -↑m) :
 -- imply
-  Gamma s ≠ 0 :=
+  Complex.Gamma s ≠ 0 :=
 -- proof
   Complex.Gamma_ne_zero hs
 
@@ -48,7 +48,8 @@ lemma xi_differentiable :
   Differentiable ℂ xi := by
 -- proof
   apply Differentiable.add
-  · apply Differentiable.mul
+  ·
+    apply Differentiable.mul
     · exact (differentiable_id.mul (differentiable_id.sub (differentiable_const 1))).div_const 2
     · exact differentiable_completedZeta₀
   · exact differentiable_const _
@@ -84,7 +85,8 @@ namespace FunctionalEquation
 -/
 @[path]
 lemma xi_functional_equation
-  {s : ℂ} :
+-- given
+  (s : ℂ) :
 -- imply
   xi (1 - s) = xi s := by
 -- proof
@@ -134,11 +136,12 @@ lemma completedRiemannZeta_zero_re_in_critical_strip
   ·
     by_contra h
     push Not at h
-    have h1s_re : 1 ≤ (1 - s).re := by simp [sub_re, one_re]; linarith
-    have h1s_ne0 : (1 : ℂ) - s ≠ 0 := sub_ne_zero.mpr (Ne.symm hs1)
-    have hΛ : completedRiemannZeta (1 - s) = 0 := by
-      rw [completedRiemannZeta_one_sub]; exact hs
-    exact completedRiemannZeta_ne_zero_of_one_le_re h1s_re h1s_ne0 hΛ
+    apply completedRiemannZeta_ne_zero_of_one_le_re _
+      (sub_ne_zero.mpr (Ne.symm hs1))
+    ·
+      simp [Complex.sub_re, Complex.one_re]
+      linarith
+    rwa [completedRiemannZeta_one_sub]
   ·
     by_contra h
     push Not at h
@@ -159,20 +162,17 @@ lemma xi_zero_re_in_critical_strip
 -- imply
   0 < s.re ∧ s.re < 1 := by
 -- proof
-
   have hs0 : s ≠ 0 := by
     intro h; rw [h] at hs; unfold xi at hs; simp at hs
   have hs1 : s ≠ 1 := by
     intro h; rw [h] at hs; unfold xi at hs; simp at hs
-
   rw [xi_eq_mul_completedZeta hs0 hs1] at hs
   have hfac : s * (s - 1) / 2 ≠ 0 :=
     div_ne_zero (mul_ne_zero hs0 (sub_ne_zero.mpr hs1)) two_ne_zero
-  have hΛ : completedRiemannZeta s = 0 := by
-    rcases mul_eq_zero.mp hs with h | h
-    · exact absurd h hfac
-    · exact h
-  exact completedRiemannZeta_zero_re_in_critical_strip s hΛ hs0 hs1
+  apply completedRiemannZeta_zero_re_in_critical_strip (hs0 := hs0) (hs1 := hs1)
+  obtain h | h := mul_eq_zero.mp hs
+  · exact absurd h hfac
+  · exact h
 
 end FunctionalEquation
 
@@ -186,10 +186,10 @@ lemma xi_entire_functional_equation_and_critical_strip :
 -- imply
   (Differentiable ℂ xi) ∧ (∀ s : ℂ, xi (1 - s) = xi s) ∧ (∀ s : ℂ, xi s = 0 → 0 < s.re ∧ s.re < 1) :=
 -- proof
-  ⟨xi_differentiable, xi_functional_equation, xi_zero_re_in_critical_strip⟩
+  ⟨xi_differentiable, xi_functional_equation, fun s => xi_zero_re_in_critical_strip (s := s)⟩
 
 end FunctionalEquation
 
 
 -- created on 2026-10-23
--- updated on 2026-10-28
+-- updated on 2026-10-29

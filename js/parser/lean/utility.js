@@ -226,6 +226,21 @@ export function LeanGetElemBase(Base) {
             return $new;
         }
 
+        /** `cov[f, g; π]` / `a[i, j; μ]` — measure after `;` inside GetElem index (mirrors Bracket). */
+        insert_semicolon(caret) {
+            const {LeanCaret, LeanArgsSemicolonSeparated} = Lean.classes;
+            const $new = new LeanCaret(this.indent, caret.level);
+            const idx = this.args[1];
+            if (idx instanceof LeanArgsSemicolonSeparated) {
+                idx.push($new);
+            } else {
+                const semiSep = new LeanArgsSemicolonSeparated([idx, $new], this.indent, $new.level);
+                this.args[1] = semiSep;
+                semiSep.parent = this;
+            }
+            return $new;
+        }
+
         push_token(word) {
             const {LeanToken, LeanArgsSpaceSeparated} = Lean.classes;
             const level = this.level;

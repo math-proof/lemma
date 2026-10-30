@@ -1,5 +1,5 @@
 import Initialize.Tactic.Attr.Basic
-import Macro.Order.ExprWithLimits
+import Syntax.Order.ExprWithLimits
 import Mathlib.Topology.Order.IntermediateValue
 
 

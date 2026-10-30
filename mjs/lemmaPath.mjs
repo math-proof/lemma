@@ -2722,6 +2722,74 @@ function peelStmt(node) {
   return unwrapParen(u);
 }
 
+
+/** Mean denominator: hole, Finset.card, or size product `m * n` (Mul of holes). */
+function isMeanDivDenomName(right) {
+  if (!right) return true;
+  if (/^Card/.test(right)) return true;
+  if (/^Mul/.test(right)) return true;
+  return false;
+}
+
+/** `(∑ …) / size` — mean; path atom is bare Div_Sum / DivSum (drop nested Sum / Mul card). */
+function isMeanDivNames(left, right) {
+  return !!(left && /^(Sum|TSum)/.test(left) && isMeanDivDenomName(right));
+}
+
+/** `(_ - mean) ^ 2` with mean = (∑)/size. */
+function isSquareSubOfMeanDiv(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanPow") return false;
+  if (!(cls(u.args?.[1]) === "LeanToken" && u.args[1].text === "2")) return false;
+  const sub = unwrapParen(u.args?.[0]);
+  if (cls(sub) !== "LeanSub") return false;
+  const mean = unwrapParen(sub.args?.[1]);
+  if (cls(mean) !== "LeanDiv") return false;
+  return cls(unwrapParen(mean.args?.[0])) === "Lean_sum";
+}
+
+/** ∑ … (x - mean)², or nested ∑∑ of that shape. */
+function isSumOfSquareSubMean(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "Lean_sum") return false;
+  const body = u.args?.[u.args.length - 1];
+  if (isSquareSubOfMeanDiv(body)) return true;
+  return isSumOfSquareSubMean(body);
+}
+
+/** `n * ∑ (ȳ - μ)²` (between-group / SA term). */
+function isMulSumOfSquareSubMean(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanMul") return false;
+  return isSumOfSquareSubMean(u.args?.[0]) || isSumOfSquareSubMean(u.args?.[1]);
+}
+
+/**
+ * One-way ANOVA identity ST = SA + SE:
+ * ∑∑ (x - μ)² = n * ∑ (ȳ - μ)² + ∑∑ (x - ȳ)².
+ * Body: Sum_SquareSub_DivSum/eq/AddMul_Sum_SquareSubDivSSum
+ * (mean → DivSum; dual SquareSub(SA)+SquareSub(SE) → SquareSubDivSSum).
+ */
+const SUM_SQUARESUB_DIVSUM_EQ_ADDMUL_SQUARESUBDIVSSUM =
+  "Sum_SquareSub_DivSum/eq/AddMul_Sum_SquareSubDivSSum";
+
+function isAnovaStEqSaSeShape(implyStmts) {
+  const eq = peelImplyEq(implyStmts);
+  if (!eq) return false;
+  if (!isSumOfSquareSubMean(eq.args?.[0])) return false;
+  const right = unwrapParen(eq.args?.[1]);
+  if (cls(right) !== "LeanAdd") return false;
+  const a = right.args?.[0];
+  const b = right.args?.[1];
+  const hasMulSum = isMulSumOfSquareSubMean(a) || isMulSumOfSquareSubMean(b);
+  const hasSum = isSumOfSquareSubMean(a) || isSumOfSquareSubMean(b);
+  return hasMulSum && hasSum;
+}
+
+function sumSquareSubDivSumEqAddMulBodyName(implyStmts) {
+  return isAnovaStEqSaSeShape(implyStmts) ? SUM_SQUARESUB_DIVSUM_EQ_ADDMUL_SQUARESUBDIVSSUM : "";
+}
+
 /** Peel statement wrappers / have scaffolding to a top-level `A = B`. */
 function peelImplyEq(implyStmts) {
   const u = peelStmt(implyStmts);
@@ -3510,7 +3578,14 @@ function postAlts(node, opts, alts, canon) {
   if (c === "Lean_land" && probJointStepConjName(node)) return uniq([probJointStepConjName(node), ...alts]);
   if (c === "LeanPow" && cls(args[1]) === "LeanToken" && args[1].text === "2") {
     const b = A(args[0]);
-    const sq = b.length ? b.flatMap((y) => ["Square" + y, "Square_" + y]) : ["Square"];
+    const sq = b.length ? b.flatMap((y) => {
+      // Exact Sub_Div_Sum / SubDivSum only (not Sub_Div_Sum_Card — that collapsed k-means Le sides).
+      // Camel SquareSub_DivSum kept as alt for House ANOVA Sum_SquareSub_DivSum.
+      if (y === "Sub_Div_Sum" || y === "SubDivSum" || y === "Sub_DivSum") {
+        return ["Square" + y, "Square_" + y, "SquareSub_DivSum", "SquareSub_Div_Sum", "SquareSubDivSum"];
+      }
+      return ["Square" + y, "Square_" + y];
+    }) : ["Square"];
     return uniq([...sq, ...alts]);
   }
   if (c === "Lean_sum" || c === "Lean_prod") {
@@ -3526,6 +3601,14 @@ function postAlts(node, opts, alts, canon) {
       alts = preferDom
         ? uniq(extra.flatMap((e, i) => (i < alts.length ? [e, alts[i]] : [e])).concat(alts.slice(extra.length)))
         : uniq([...alts, ...(canon ? [] : extra)]);
+    }
+    // Nested ∑∑ SquareSub… → prefer Sum_Square* over Sum_Sum_Square*
+    if (c === "Lean_sum") {
+      const collapsed = [];
+      for (const a of alts) {
+        if (/^Sum_Sum_Square/.test(a)) collapsed.push("Sum_" + a.slice("Sum_Sum_".length));
+      }
+      if (collapsed.length) alts = uniq([...collapsed, ...alts]);
     }
     // body may be omitted: ∑ k ∈ Ico k n, b k * ∏ i ∈ …, (1 + c i) → SumMulProd
     if (!canon && alts.length) alts = uniq([alts[0], c === "Lean_prod" ? "Prod" : node.superscript === "'" ? "TSum" : "Sum", ...alts.slice(1)]);
@@ -4894,6 +4977,8 @@ function nameExprBase(node, opts = {}) {
     const tag = (node.superscript === "'" ? "TSum" : "Sum") + (keepDom ? dom : "");
     const args = node.args || [];
     const body = nameExpr(args[args.length - 1], opts);
+    // Nested ∑∑ (· - mean)² → Sum_SquareSub_DivSum (collapse Sum_Sum_Square*)
+    if (body && /^Sum_Square/.test(body)) return tag + "_" + body.replace(/^Sum_/, "");
     return body ? tag + "_" + body : tag;
   }
   // LeanStack: operator "Stack". Matrix ofFun = comma-of-two-lt (matrixFinBinders);
@@ -4917,7 +5002,7 @@ function nameExprBase(node, opts = {}) {
     if (cls(unwrapParen(arg)) === "LeanSub") {
       // |a - (∑)/card| → AbsSub_Div_Sum (keep mean Div_Sum; never AbsSub alone for that shape)
       const subR = nameExpr(unwrapParen(arg).args?.[1], opts);
-      if (subR && /^Div_Sum/.test(subR)) return wrapPrefix + "Sub_" + subR;
+      if (subR && /^(Div_Sum|DivSum)/.test(subR)) return wrapPrefix + "Sub_" + subR.replace(/^DivSum/, "Div_Sum");
       return wrapPrefix + "Sub";
     }
     const leafHead = cls(arg) === "LeanArgsSpaceSeparated" && cls(arg.args?.[0]) === "LeanToken" && isLeafName(arg.args[0].text, opts.leaves) && cls(unwrapParen(arg.args?.[1])) !== "LeanSub";
@@ -5155,9 +5240,17 @@ if (name === "LeanToken") {
     }
     const left = nameExpr(args[0], opts);
     const right = nameExpr(args[1], opts);
-    // mean `(∑ …) / card` → Div_Sum (Sum/card); never bare Sum in SquareSub_Div_Sum / LeAbsSSub_Div_Sum
-    if (name === "LeanDiv" && left && /^(Sum|TSum)/.test(left) && (!right || /^Card/.test(right))) {
-      return "Div_" + left;
+    // SA + SE: n * ∑ (ȳ - μ)² + ∑∑ (x - ȳ)² → AddMul_Sum_SquareSubDivSSum (plural S)
+    if (name === "LeanAdd" && isMulSumOfSquareSubMean(args[0]) && isSumOfSquareSubMean(args[1])) {
+      return "AddMul_Sum_SquareSubDivSSum";
+    }
+    if (name === "LeanAdd" && isSumOfSquareSubMean(args[0]) && isMulSumOfSquareSubMean(args[1])) {
+      return "AddMul_Sum_SquareSubDivSSum";
+    }
+    // mean `(∑ …) / size` → bare Div_Sum (hole / Card / Mul m*n); never Div_Sum_Sum / DivSum_SumMul
+    // House also files camel DivSum (Sum_SquareSub_DivSum); alts emit both.
+    if (name === "LeanDiv" && isMeanDivNames(left, right)) {
+      return "Div_Sum";
     }
     // Pow (Sub …) (Mul …) → PowSub__Mul (binary Pow args split by `__`; never flat PowSubMul / PowSub_Mul)
     if (name === "LeanPow" && left && right
@@ -5509,7 +5602,7 @@ function nameExprAltsBase(node, opts = {}) {
     const arg = node.args?.[0];
     if (cls(unwrapParen(arg)) === "LeanSub") {
       const subRAlts = nameExprAlts(unwrapParen(arg).args?.[1], opts);
-      const withDiv = subRAlts.filter((r) => /^Div_Sum/.test(r)).map((r) => wrapPrefix + "Sub_" + r);
+      const withDiv = subRAlts.filter((r) => /^(Div_Sum|DivSum)/.test(r)).map((r) => wrapPrefix + "Sub_" + r.replace(/^DivSum/, "Div_Sum"));
       return uniq([...withDiv, wrapPrefix + "Sub"]);
     }
     const leafHead = cls(arg) === "LeanArgsSpaceSeparated" && cls(arg.args?.[0]) === "LeanToken" && isLeafName(arg.args[0].text, opts.leaves) && cls(unwrapParen(arg.args?.[1])) !== "LeanSub";
@@ -5798,12 +5891,21 @@ function nameExprAltsBase(node, opts = {}) {
     const leftAlts = nameExprAlts(args[0], opts);
     const rightAlts = nameExprAlts(args[1], opts);
     const out = [];
-    // mean (∑)/card → Div_Sum preferred (SquareSub_Div_Sum / LeAbsSSub_Div_Sum)
+    // SA + SE → AddMul_Sum_SquareSubDivSSum first (plural S for dual SquareSub means)
+    if (name === "LeanAdd" && (
+      (isMulSumOfSquareSubMean(args[0]) && isSumOfSquareSubMean(args[1])) ||
+      (isSumOfSquareSubMean(args[0]) && isMulSumOfSquareSubMean(args[1]))
+    )) {
+      out.push("AddMul_Sum_SquareSubDivSSum");
+    }
+    // mean (∑)/size → bare Div_Sum / DivSum preferred (SquareSub_DivSum / LeAbsSSub_Div_Sum)
     if (name === "LeanDiv") {
+      let mean = false;
       for (const l of leftAlts) {
         if (!l || !/^(Sum|TSum)/.test(l)) continue;
-        if (!rightAlts.length || rightAlts.some((r) => !r || /^Card/.test(r))) out.push("Div_" + l);
+        if (!rightAlts.length || rightAlts.some((r) => isMeanDivDenomName(r))) mean = true;
       }
+      if (mean) out.push("Div_Sum", "DivSum");
     }
     // same child on both sides first (Plural S: MulProdS), so node caps keep them
     const rightSet = new Set(rightAlts);
@@ -6491,6 +6593,15 @@ export function suggest(filePath, lemmaName, options = {}) {
     if (bodyDetEntry) {
       implyAltsA = uniq([bodyDetEntry, ...implyAltsA]);
       implyAltsA.preferred = bodyDetEntry;
+    }
+  }
+  // Body: ∑∑ (x-μ)² = n·∑(ȳ-μ)² + ∑∑(x-ȳ)² → Sum_SquareSub_DivSum/eq/AddMul_Sum_SquareSubDivSSum
+  // (mean DivSum; plural S for SA+SE SquareSub). Long Sum_Sum_SquareSub_DivSum_SumMul dump is alt-only.
+  {
+    const bodyAnova = sumSquareSubDivSumEqAddMulBodyName(sig.implyStmts);
+    if (bodyAnova) {
+      implyAltsA = uniq([bodyAnova, ...implyAltsA]);
+      implyAltsA.preferred = bodyAnova;
     }
   }
   // Canonical rendering (nameExpr) first when it is among the alternatives.

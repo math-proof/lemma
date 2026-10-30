@@ -1,7 +1,7 @@
 import Mathlib
 import Mathlib.Topology.Instances.Irrational
 import Theorem.Analysis.Section_11_6
-import Macro.Analysis.Section_11_8
+import Syntax.Analysis.Section_11_8
 set_option doc.verso.suggestions false
 
 /-!

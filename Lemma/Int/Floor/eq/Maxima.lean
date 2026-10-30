@@ -1,4 +1,4 @@
-import Macro.Order.ExprWithLimits
+import Syntax.Order.ExprWithLimits
 import Mathlib.Algebra.Order.Floor.Ring
 import Theorem.Data.Set.Sets
 import Initialize.Tactic.Attr.Basic

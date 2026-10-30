@@ -2,7 +2,7 @@ import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.DvdProdSDrop.of.Ge
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdEraseIdx.eq.Mul_ProdDrop_2
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 open List Nat
 
 

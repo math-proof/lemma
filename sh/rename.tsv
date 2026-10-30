@@ -1,0 +1,6 @@
+# timestamp	src	real_dst	dst	note
+2026-10-29T16:54:40+0800	Random.Distributed.ChiSquared.of.Eq_Conditioned.Distributed	Random.Distributed.ChiSquared.of.All_Distributed_Gaussian.All_Indep	Random.Distributed.ChiSquared.of.All_Distributed_Gaussian.All_Indep	
+2026-10-30T00:36:32+0800	Rat.Sum_SquareSub_DivSum.eq.AddMul_SumSquareSubDivSSum	Rat.Sum_Sum_SquareSub_DivSum_SumMul.eq.AddMul_Sum_SquareSubDiv_SumDivSum_SumMulSum_Sum_SquareSub_Div_Sum	Rat.Sum_Sum_SquareSub_DivSum_SumMul.eq.AddMul_Sum_SquareSubDiv_SumDivSum_SumMulSum_Sum_SquareSub_Div_Sum	
+2026-10-30T02:01:14+0800	Rat.Sum_Sum_SquareSub_DivSum_SumMul.eq.AddMul_Sum_SquareSubDiv_SumDivSum_SumMulSum_Sum_SquareSub_Div_Sum	Finset.Sum_SquareSub_DivSum.eq.AddMul_Sum_SquareSubDivSSum	Finset.Sum_SquareSub_DivSum.eq.AddMul_Sum_SquareSubDivSSum	
+2026-10-30T08:30:29+0800	Random.Distributed.Fisher.of.All_Distributed_Gaussian.All_Indep	Random.Distributed_Fisher.of.All_Distributed_Gaussian.All_Indep	Random.Distributed_Fisher.of.All_Distributed_Gaussian.All_Indep	
+2026-10-30T08:47:31+0800	Random.Distributed.ChiSquared.of.All_Distributed_Gaussian.All_Indep	Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep	Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep	

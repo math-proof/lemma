@@ -143,6 +143,19 @@ trait LeanGetElemBase
         $this->rhs = new LeanArgsCommaSeparated([$caret, $new], $this->indent, $caret->level);
         return $new;
     }
+
+    /** `cov[f, g; π]` / `a[i, j; μ]` — measure after `;` inside GetElem index (mirrors Bracket). */
+    public function insert_semicolon($caret)
+    {
+        $new = new LeanCaret($this->indent, $caret->level);
+        $idx = $this->rhs;
+        if ($idx instanceof LeanArgsSemicolonSeparated) {
+            $idx->push($new);
+        } else {
+            $this->rhs = new LeanArgsSemicolonSeparated([$idx, $new], $this->indent, $caret->level);
+        }
+        return $new;
+    }
 }
 
 trait LeanGetElemBaseBinary 

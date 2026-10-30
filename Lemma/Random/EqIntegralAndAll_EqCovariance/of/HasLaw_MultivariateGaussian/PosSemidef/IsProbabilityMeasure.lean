@@ -1,38 +1,39 @@
 import Mathlib.Probability.Distributions.Gaussian.Multivariate
-import Mathlib.Probability.HasLaw
-import Initialize.Tactic.Attr.Basic
+import Notation.Probability.HasLaw
+import Syntax.Probability.JointRv.Part6
 open MeasureTheory ProbabilityTheory
+open scoped ProbabilityTheory
 
 
 /--
-py `Random.EqIntegralAndAll_EqCovariance.of.HasLaw_MultivariateGaussian.PosSemidef.IsProbabilityMeasure`: if `x ~ N(μ, Σ)` (multivariate Gaussian),
-then the mean parameter is `𝔼[x]` and the covariance matrix entries are `Cov(xᵢ, xⱼ)`.
+py `Random.EqIntegralAndAll_EqCovariance.of.HasLaw_MultivariateGaussian.PosSemidef.IsProbabilityMeasure`: if `x ∼[π] N(μ, σ)` (multivariate Gaussian),
+then `μ = 𝔼[x]` and the square covariance matrix is `σ = cov[x]`.
 -/
 @[path]
 private lemma main
   {n : ℕ} [MeasurableSpace Ω]
   {π : Measure Ω}
-  {x : Ω → EuclideanSpace ℝ (Fin n)}
+  {x : Ω → EuclideanSpace ℝ (Fin n)} [PSpace π x]
   {μ : EuclideanSpace ℝ (Fin n)}
-  {S : Matrix (Fin n) (Fin n) ℝ}
+  {σ : Matrix (Fin n) (Fin n) ℝ}
 -- given
   (_ : IsProbabilityMeasure π)
-  (hS : S.PosSemidef)
-  (h : HasLaw x (multivariateGaussian μ S) π) :
+  (hσ : σ.PosSemidef)
+  (h : x ∼[π] multivariateGaussian μ σ) :
 -- imply
-  (∫ ω, x ω ∂π) = μ ∧
-    ∀ i j : Fin n,
-      covariance (fun ω ↦ x ω i) (fun ω ↦ x ω j) π = S i j := by
+  μ = 𝔼[x: π](x) ∧
+    σ = Matrix.of fun i j ↦ cov[fun ω ↦ x ω i, fun ω ↦ x ω j; π] := by
 -- proof
   constructor
   ·
-    apply Eq.trans
-    ·
-      apply h.integral_eq
-    ·
-      apply integral_id_multivariateGaussian
+    symm
+    simp only [Expectation.ofRV, Expectation.asRV_function]
+    rw [h.map_eq]
+    apply integral_id_multivariateGaussian
   ·
+    apply Matrix.ext
     intro i j
+    symm
     apply Eq.trans
     ·
       apply h.covariance_fun_comp
@@ -40,7 +41,8 @@ private lemma main
         (g := fun z : EuclideanSpace ℝ (Fin n) ↦ z j)
         (by fun_prop) (by fun_prop)
     ·
-      apply covariance_eval_multivariateGaussian hS
+      apply covariance_eval_multivariateGaussian hσ
 
 
 -- created on 2023-04-30
+-- updated on 2026-10-29

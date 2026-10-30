@@ -3,9 +3,9 @@ import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fintype.Pi
 import Syntax.Probability.JointRv.Part6
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 import Instance.Analysis.Real.Numbers
-import Def.Fun
+import Notation.Fun
 import Instance.Probability.Process.HiddenMarkovSequence
 open MeasureTheory
 open scoped ENNReal.ToRealCoe

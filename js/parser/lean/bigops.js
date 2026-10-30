@@ -343,6 +343,72 @@ export class Lean_sum extends LeanBigOperator {
     get baseOperator() {
         return '∑';
     }
+
+    /** Peel `(∑ …)` so nested display stacking still sees the inner sum. */
+    static peelSum(n) {
+        while (n instanceof L.LeanParenthesis) n = n.arg;
+        return n;
+    }
+
+    /**
+     * Display-only: `∑ i, ∑ j, body` → one `∑` with stacked limits.
+     * Returns `{chain, body}` for a run of plain (non-`∑'`) nested sums, else null.
+     */
+    nestedSumChain() {
+        if (this.superscript) return null;
+        const chain = [this];
+        let cur = this;
+        while (true) {
+            const next = Lean_sum.peelSum(cur.scope);
+            if (!(next instanceof Lean_sum) || next.superscript) break;
+            chain.push(next);
+            cur = next;
+        }
+        if (chain.length < 2) return null;
+        return {chain, body: cur.scope};
+    }
+
+    /**
+     * Limit fragment for stacked nested sums (no body). Prefers the same sugar as
+     * single-sum `latexFormat` (`i < n`, `i ≤ k`, …); upper-limit forms become
+     * closed inequalities so they fit under `\substack`.
+     */
+    sumLimitLatex(syntax) {
+        const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
+        const fin = this.finRangeBound();
+        if (fin) {
+            const [i, n] = fin;
+            return `${i.toLatex(syntax)} < ${peel(n).toLatex(syntax)}`;
+        }
+        const rngClosed = !this.superscript && this.rangeClosedBound();
+        if (rngClosed) {
+            const [i, e] = rngClosed;
+            return `0 \\le ${i.toLatex(syntax)} \\le ${e.toLatex(syntax)}`;
+        }
+        const rng = !this.superscript && this.rangeBound();
+        if (rng) {
+            const [i, n] = rng;
+            return `${i.toLatex(syntax)} < ${peel(n).toLatex(syntax)}`;
+        }
+        const iio = !this.superscript && this.iioBound();
+        if (iio) {
+            const [i, k] = iio;
+            return `${i.toLatex(syntax)} < ${peel(k).toLatex(syntax)}`;
+        }
+        const iic = !this.superscript && this.iicBound();
+        if (iic) {
+            const [i, k] = iic;
+            return `${i.toLatex(syntax)} \\le ${peel(k).toLatex(syntax)}`;
+        }
+        const ico = !this.superscript && this.icoClosedBound();
+        if (ico) {
+            const [i, a, b] = ico;
+            return `${a.toLatex(syntax)} \\le ${i.toLatex(syntax)} \\le ${b.toLatex(syntax)}`;
+        }
+        // Default / membership binder: same content that single-sum puts in `\substack`.
+        return this.bound ? this.bound.toLatex(syntax) : '';
+    }
+
     /**
      * `∑ «y.bvar»[t], f` / `∑ «y.bvar» t, f`: a bound variable is never red, so the index and the
      * body's `y[t]` / `y t` that stands for the bound value (`y[t] = «y.bvar»[t]` / `y t = «y.bvar» t`
@@ -392,9 +458,17 @@ export class Lean_sum extends LeanBigOperator {
                 base.kwargs.neverRed = true;
             }
         }
+        const nested = this.nestedSumChain();
+        if (nested) {
+            // Inner binder first (evaluation / sympy substack order), then outer.
+            const limits = [...nested.chain].reverse().map((s) => s.sumLimitLatex(syntax)).join(' \\\\ ');
+            return [limits, nested.body.toLatex(syntax)];
+        }
         return super.latexArgs(syntax);
     }
     latexFormat() {
+        if (this.nestedSumChain())
+            return `\\sum\\limits_{\\substack{%s}} {%s}`;
         if (!this.superscript) return super.latexFormat();
         const op = `\\mathop{${this.command}\\nolimits${this.superscript}}`;
         if (this.rangeClosedBound())

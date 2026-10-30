@@ -1,4 +1,4 @@
-import Def.Data.List.List.Part5
+import Def.Data.List.List.Basic
 import Lemma.List.Permute.eq.Rotate.of.GtLength_0
 import Lemma.List.EqRotateRotate.of.GeLength
 open List

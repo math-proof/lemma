@@ -382,7 +382,8 @@ const self = new Vue({
         mounted(this);
         var {module} = this;
         if (this.lemma.any(lemma => this.heed_update(lemma)) && !getParameterByName('new')) {
-            await this.echo(module);
+            // Non-blocking: first paint stays on given/imply latex; Lean echo fills proof latex in background.
+            this.echo(module).catch(err => console.error('[echo]', err));
         }
 
         var {hash} = location;
