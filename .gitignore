@@ -23,3 +23,6 @@ tmp/
 
 # Local append-only rename map from sh/rename.sh
 sh/rename.tsv
+
+# Node/lean.js unit tests (keep local; do not track)
+*.test.mjs

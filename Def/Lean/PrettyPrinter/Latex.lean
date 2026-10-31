@@ -297,6 +297,34 @@ partial def Expr.collectToFunChain : Expr → Expr × List Expr
   | e =>
     (e, [])
 
+/-- `*.toFun` application that latex-prints as a subscript atom (`x_i` / `x_{i, j}`). -/
+def Expr.is_ToFunSubscript (e : Expr) : Bool :=
+  !(e.collectToFunChain).2.isEmpty
+
+/-- Index suitable for a tight subscript (token / get / toFun-subscript / nat literal). -/
+def Expr.is_SimpleIndex : Expr → Bool
+  | Symbol ..
+  | const _ => true
+  | e => e.is_GetElem || e.is_GetElem? || e.is_ToFunSubscript
+
+/-- Base of a juxta index app that may print as `a_i` (variable / get / toFun-subscript). -/
+def Expr.is_SubscriptBase : Expr → Bool
+  | Symbol .. => true
+  | e => e.is_GetElem || e.is_GetElem? || e.is_ToFunSubscript
+
+/--
+Plain application `a i` / `a i j` of a subscript base to simple indices.
+Latex prints these like GetElem (`a_i`), so pow must not wrap them as `(a_i)^2`.
+-/
+def Expr.is_JuxtaIndexApp : Expr → Bool
+  | Basic (.Special ⟨.anonymous⟩) (base :: indices@( _ :: _)) _ =>
+    base.is_SubscriptBase && indices.all (·.is_SimpleIndex)
+  | _ => false
+
+/-- GetElem / toFun-subscript / juxta-index — already a simple subscript atom in latex. -/
+def Expr.is_SubscriptAtom (e : Expr) : Bool :=
+  e.is_GetElem || e.is_GetElem? || e.is_ToFunSubscript || e.is_JuxtaIndexApp
+
 def Expr.is_LeanProperty : Expr → Bool
   | Basic (.ExprWithAttr (.LeanProperty name)) .. => name != `IsConstant.is_constant
   | _ => false

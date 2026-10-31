@@ -21,25 +21,25 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
 * [Int](../?module=Int) Algèbre élémentaire des entiers relatifs
 * [Rat](../?module=Rat) Algèbre élémentaire des rationnels
 * [Real](../?module=Real) Algèbre et analyse réelle, p. ex. :
-  - [inégalité de Jensen](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc.main)
+  - [inégalité de Jensen](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc)
 * [Hyperreal](../?module=Real) Analyse non standard
 * [Complex](../?module=Complex) Analyse complexe, p. ex. :
   - [équation quartique](../?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0)
   - [forme fermée d'une récurrence linéaire homogène à coefficients constants](../?module=Complex.Any_All_Eq_Dot_MulDescFactorial.of.All_Eq_Dot)
 * [Set](../?module=Set) Théorie des ensembles
 * [Finset](../?module=Finset) Ensembles finis, p. ex. :
-  - [clustering k-means](../?module=Finset.LeAddSumS_SquareSub_Div_Sum.of.LeAbsSSub_Div_Sum.NotIn.In.GtCard_0)
+  - [clustering k-means](../?module=Finset.LtAddSumS_SquareSub_Div_Sum.of.LtAbsSSub_Div_Sum.NotIn.In.GtCard_0)
 * [List](../?module=List) Théorie des listes
 * [Vector](../?module=Vector) Vecteurs (tenseurs unidimensionnels)
 * [Matrix](../?module=Matrix) Théorie des matrices, p. ex. :
   - [théorème d'Okishio](../?module=Matrix.Any_And_EqSMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
-  - [décomposition de Cholesky](../?module=Finset.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky)
-  - [décomposition PLU](../?module=Tensor.Eq.Dot.PLU.of.Eq.Eq_Dot.Eq_Ite)
+  - [décomposition de Cholesky](../?module=Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky)
+  - [décomposition PLU](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
 * [Tensor](../?module=Tensor) Calcul tensoriel formalisé, sémantiquement aligné sur **torch.Tensor**, pour la spécification et la vérification formelle d'algorithmes d'apprentissage profond, p. ex. :
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 * [Random](../?module=Random) Probabilités et processus stochastiques, p. ex. :
-  - [𝒳²(n)](../?module=Random.Distributed.ChiSquared.of.All_Distributed_Gaussian.All_Indep), [somme de gaussiennes indépendantes](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep)
+  - [𝒳²(n)](../?module=Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep), [somme de gaussiennes indépendantes](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep), [Fisher](../?module=Random.Distributed_Fisher.of.All_And_Distributed_Gaussian.Gt_1.Gt_1)
   - [classification de documents naïve bayésienne](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)
   - [fonction de perte CRF](../?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM), [Viterbi](../?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)
   - [GAE (discret)](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Icc.In_Ico), [GAE (continu)](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico)

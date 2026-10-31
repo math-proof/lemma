@@ -35,7 +35,7 @@ Textbook characterization via Beta: if `Y ∼ Beta(d₁/2, d₂/2)`, then
 `(d₂/d₁) · (Y/(1-Y)) ∼ F(d₁, d₂)`.
 
 Edge cases: if `d₁ = 0` or `d₂ = 0` this is `Measure.dirac 0` (degenerate /
-undefined classical F; mirrors `chiSquaredReal 0 = dirac 0`). -/
+undefined classical F; mirrors `Real.chiSquare 0 = dirac 0`). -/
 noncomputable def fisherReal (d₁ d₂ : ℕ) : Measure ℝ :=
   if d₁ = 0 ∨ d₂ = 0 then
     Measure.dirac 0

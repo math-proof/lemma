@@ -350,7 +350,10 @@ def Expr.latexFormat : Expr → String
           "%s {/\\!\\!/} %s"
 
         | `HPow.hPow =>
-          let left := level.toColor (left.priority ≥ func.priority || left.is_EnclosedGroup)
+          -- Subscript atoms (`a_i` / GetElem / toFun / juxta-index) need no pow parens.
+          let base := left.peelLatexCoe
+          let left := level.toColor (
+            base.priority ≥ func.priority || base.is_EnclosedGroup || base.is_SubscriptAtom)
           s!"{left} {opStr} %s"
         | `LT.lt =>
           if e.asTendsToZero? != none then
@@ -546,6 +549,16 @@ def Expr.latexFormat : Expr → String
           let fns := fns.map fun arg =>
             (0 : Nat).toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
           "\\ ".intercalate (obj :: fns)
+        else if e.is_JuxtaIndexApp then
+          -- `a i` / `a i j` → `{a}_{i}` / `{a}_{i, j}` (match GetElem / toFun)
+          match args with
+          | base :: indices =>
+            let baseFmt := level.toColor (
+              base.priority > func.priority || base.is_EnclosedGroup || base.is_LeanProperty ||
+                base.is_Eye || base.is_SubscriptAtom)
+            baseFmt ++ "_{" ++ ", ".intercalate (["%s"].repeat indices.length) ++ "}"
+          | _ =>
+            opStr
         else
           let args := args.zipIdx.map fun ⟨arg, i⟩ =>
             level.toColor (((i == 0 || arg.priority > func.priority) && (i > 0 || arg.priority ≥ func.priority) || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
@@ -728,8 +741,9 @@ def Expr.latexFormat : Expr → String
           s!"\\left[%s < %s\\right] {arg}"
         | `letFun => "{\\begin{align*}&{\\color{blue}let}\\ %s : %s := ⋯\\\\&%s\\end{align*}}"
         | `KroneckerDelta => "\\delta_{%s %s}"
-        | `chiSquaredReal =>
-          -- js/php: chiSquaredReal n -> \\mathcal{X}^{2}\\left(n\\right) (bare -> \\mathcal{X}^{2})
+        | `chiSquare
+        | `Real.chiSquare =>
+          -- js/php: Real.chiSquare / chiSquare n -> \\mathcal{X}^{2}\\left(n\\right) (bare -> \\mathcal{X}^{2})
           match args with
           | [_] => "\\mathcal{X}^{2}\\left(%s\\right)"
           | [] => "\\mathcal{X}^{2}"

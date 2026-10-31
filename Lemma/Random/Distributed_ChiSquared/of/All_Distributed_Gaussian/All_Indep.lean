@@ -3,7 +3,7 @@ import Mathlib.Algebra.BigOperators.Fin
 import Notation.Fun
 import Notation.Probability.HasLaw
 import Notation.Algebra.Power
-import Def.Probability.ChiSquared
+import Def.Probability.ChiSquare
 import Lemma.Measure.SumSqGaussians.eq.ChiSquaredReal
 import Instance.Probability.Process.HiddenMarkovSequence
 open MeasureTheory ProbabilityTheory
@@ -24,7 +24,7 @@ private lemma main
   (h₀ : ∀ k, x[k] ⟂ᵢ[π] x[:k])
   (h₁ : ∀ k, x[k] ∼[π] gaussianReal 0 1) :
 -- imply
-  ∑ i : Fin n, x[i]² ∼[π] chiSquaredReal n := by
+  ∑ i : Fin n, x[i]² ∼[π] Real.chiSquare n := by
 -- proof
   have hvec : HasLaw (fun ω (i : Fin n) ↦ x[i] ω)
       (Measure.pi fun _ : Fin n ↦ gaussianReal 0 1) π := by
@@ -72,9 +72,9 @@ private lemma main
       (Measure.pi fun _ : Fin n ↦ gaussianReal 0 1) := by
     unfold sumSqGaussians
     apply hasLaw_map (Continuous.aemeasurable (by continuity))
-  have hchar : sumSqGaussians n = chiSquaredReal n :=
+  have hchar : sumSqGaussians n = Real.chiSquare n :=
     SumSqGaussians.eq.ChiSquaredReal n
-  have hsq : HasLaw (fun v : Fin n → ℝ ↦ ∑ i, (v i) ^ 2) (chiSquaredReal n)
+  have hsq : HasLaw (fun v : Fin n → ℝ ↦ ∑ i, (v i) ^ 2) (Real.chiSquare n)
       (Measure.pi fun _ : Fin n ↦ gaussianReal 0 1) := by
     rwa [← hchar]
   have hcomp : (∑ i : Fin n, x[i]²) =

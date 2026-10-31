@@ -9,7 +9,7 @@ import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.MeasureTheory.Group.Convolution
 import Mathlib.Algebra.BigOperators.Fin
-import Def.Probability.ChiSquared
+import Def.Probability.ChiSquare
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Real Set
 open scoped ENNReal NNReal
@@ -361,8 +361,8 @@ private lemma sumSqGaussians_succ (n : ℕ) :
       ((Measure.pi fun _ : Fin n ↦ gaussianReal 0 1).map fun x ↦ ∑ i, x i ^ 2) = _
   rw [Measure.conv_comm]
 
-private lemma sumSqGaussians_zero : sumSqGaussians 0 = chiSquaredReal 0 := by
-  unfold sumSqGaussians chiSquaredReal
+private lemma sumSqGaussians_zero : sumSqGaussians 0 = Real.chiSquare 0 := by
+  unfold sumSqGaussians Real.chiSquare
   have hfun : (fun x : Fin 0 → ℝ ↦ ∑ i, (x i) ^ 2) = fun _ ↦ (0 : ℝ) := by
     funext x
     simp
@@ -371,21 +371,21 @@ private lemma sumSqGaussians_zero : sumSqGaussians 0 = chiSquaredReal 0 := by
 
 /--
 Characterization: the sum-of-squares pushforward of `n` i.i.d. standard Gaussians
-equals the textbook chi-squared measure `chiSquaredReal n`.
+equals the textbook chi-squared measure `Real.chiSquare n`.
 -/
 @[path]
 private lemma main
 -- given
   (n : ℕ) :
 -- imply
-  (sumSqGaussians n : Measure ℝ) = chiSquaredReal n := by
+  (sumSqGaussians n : Measure ℝ) = Real.chiSquare n := by
 -- proof
   induction n with
   | zero =>
     apply sumSqGaussians_zero
   | succ n ih =>
     rw [sumSqGaussians_succ, ih, map_sq_gaussianReal_eq_gammaMeasure]
-    unfold chiSquaredReal
+    unfold Real.chiSquare
     if hn : n = 0 then
       subst hn
       simp only [Nat.zero_add, Nat.cast_one, one_div, one_ne_zero, ↓reduceIte]
@@ -410,3 +410,4 @@ private lemma main
 
 
 -- created on 2026-10-30
+-- updated on 2026-10-31
