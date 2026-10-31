@@ -104,6 +104,7 @@ export function proofRules(ctx) {
         bulletRule(ctx, d, b.lines);
         if (b.isLemma) termModeExactRule(ctx, d);
         if (!ctx.astCovered.has('have-inline-once')) haveOnceRule(ctx, d, b.lines);
+        if (!ctx.astCovered.has('have-underscore')) haveUnderscoreRule(ctx, d, b.lines);
         holeRule(ctx, d, b.lines);
         rwExactRule(ctx, d);
         showMultilineRule(ctx, d);
@@ -376,6 +377,18 @@ function haveOnceRule(ctx, d, lines) {
         if (!/^(exact|apply)\b/.test(nt)) continue;
         if (/\bat\b/.test(nt)) continue;
         ctx.warn('have-inline-once', i + 1, ind + 1, `\`${name}\` is used only once, by the next \`${nt.split(/\s/)[0]}\`: inline it (e.g. \`apply\` with a hole \`_\` and prove it afterwards) instead of a \`have\``);
+    }
+}
+
+function haveUnderscoreRule(ctx, d, lines) {
+    const { P } = ctx;
+    const first = lines[0]?.line ?? d.end;
+    for (let i = first; i < d.end; i++) {
+        // bare binder `_` only (not `_h`, not pattern binders); `haveI` left to tactic-haveI
+        const m = /^(\s*)have\s+_(?![\p{L}\p{N}_'])\s*(:(?!=)|:=)/u.exec(P.code[i]);
+        if (!m) continue;
+        ctx.warn('have-underscore', i + 1, m[1].length + 1,
+            '`have _ :=` is redundant: the underscore discards the result — inline or drop the `have`');
     }
 }
 

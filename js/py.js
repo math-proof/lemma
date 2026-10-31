@@ -1,7 +1,7 @@
 /**
  * Python-like APIs for the browser/Node: builtins (range, len, zip, …),
  * Number/String/Array/BigInt prototype helpers, Rational, collections,
- * and sympy-ish SymbolicSet types.
+ * and SymbolicSet types.
  *
  * Non-Python shared utils live in `std.js` (load after this file).
  */

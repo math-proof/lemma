@@ -1,6 +1,7 @@
 import Mathlib.Analysis.Real.Hyperreal
 import Mathlib.Topology.Defs.Filter
-import Syntax.Analysis.Real.Limits.Part2
+import Syntax.Analysis.Real.Limits
+import Def.Analysis.Real.Limits.Basic
 open Lean
 open scoped Topology
 

@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecificLimits.Basic
-import Def.Analysis.Real.Limits.Part4
+import Def.Analysis.Real.Limits.Basic
 import Theorem.Data.Set.Sets
 import Initialize.Tactic.Attr.Basic
 import Syntax.Order.Sup

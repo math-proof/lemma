@@ -19,28 +19,23 @@ private noncomputable def pluU {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Matr
 
 private lemma swapMatrix_mul_apply
   {n : ℕ} (i j : Fin n) (A : Matrix (Fin n) (Fin n) ℂ) (a b : Fin n) :
-  (swapMatrix i j * A) a b = A (Equiv.swap i j a) b := by
-  classical
-  simp [swapMatrix, Matrix.mul_apply, Matrix.of_apply]
+  (swapMatrix (α := ℂ) i j * A) a b = A (Equiv.swap i j a) b := by
+  simp only [swapMatrix, Matrix.mul_apply, Matrix.of_apply, KroneckerDelta]
+  rw [Finset.sum_eq_single (Equiv.swap i j a)
+    (fun k _ hk => by simp [hk.symm, Bool.toNat])
+    (fun h => absurd (Finset.mem_univ _) h)]
+  simp [Bool.toNat]
 
 private lemma swapMatrix_mul_self
   {n : ℕ} (i j : Fin n) :
-  swapMatrix i j * swapMatrix i j = (1 : Matrix (Fin n) (Fin n) ℂ) := by
+  swapMatrix (α := ℂ) i j * swapMatrix (α := ℂ) i j =
+    (1 : Matrix (Fin n) (Fin n) ℂ) := by
   ext a b
-  classical
-  simp only [swapMatrix, Matrix.mul_apply, Matrix.of_apply, Matrix.one_apply]
-  have hsum :
-    (∑ k : Fin n, (if k = Equiv.swap i j a then (1 : ℂ) else 0) *
-        (if b = Equiv.swap i j k then 1 else 0)) =
-      if a = b then (1 : ℂ) else 0 := calc
-      _ = ∑ k : Fin n, if k = Equiv.swap i j a then
-          (if b = Equiv.swap i j k then (1 : ℂ) else 0) else 0 := by
-        congr; ext k; split_ifs <;> ring
-      _ = if b = Equiv.swap i j (Equiv.swap i j a) then (1 : ℂ) else 0 := by
-        simp [Finset.sum_ite_eq']
-      _ = if a = b then 1 else 0 := by
-        simp [Equiv.swap_apply_self, eq_comm]
-  simpa using hsum
+  simp only [swapMatrix, Matrix.mul_apply, Matrix.of_apply, Matrix.one_apply, KroneckerDelta]
+  rw [Finset.sum_eq_single (Equiv.swap i j a)
+    (fun k _ hk => by simp [hk.symm, Bool.toNat])
+    (fun h => absurd (Finset.mem_univ _) h)]
+  simp [Equiv.swap_apply_self, Bool.toNat, eq_comm]
 
 private lemma pluBorderDiag_mul_pluBorderLower
   {n : ℕ} (P L : Matrix (Fin n) (Fin n) ℂ) (d : Fin n → ℂ) :
@@ -191,10 +186,10 @@ private lemma elimBlock_eq_pluBorderLower
 
 private lemma pivot_swap_col_zero
   {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
-  (hB00 : (swapMatrix (0 : Fin (n + 1)) (pivotRow A 0) * A) 0 0 = 0)
+  (hB00 : (swapMatrix (α := ℂ) (0 : Fin (n + 1)) (pivotRow A 0) * A) 0 0 = 0)
   (i : Fin (n + 1)) :
-  (swapMatrix (0 : Fin (n + 1)) (pivotRow A 0) * A) i 0 = 0 := by
-  set S := swapMatrix (0 : Fin (n + 1)) (pivotRow A 0)
+  (swapMatrix (α := ℂ) (0 : Fin (n + 1)) (pivotRow A 0) * A) i 0 = 0 := by
+  set S := swapMatrix (α := ℂ) (0 : Fin (n + 1)) (pivotRow A 0)
   set B := S * A
   change B 0 0 = 0 at hB00
   have hBA : ∀ a b, B a b = A (Equiv.swap 0 (pivotRow A 0) a) b := by
@@ -274,24 +269,34 @@ private lemma eq_pluBorderUpper_of_col_zero
 
 private lemma swapMatrix_transpose_eq
   {n : ℕ} (i j : Fin n) :
-  (swapMatrix i j)ᵀ = swapMatrix i j := by
+  (swapMatrix (α := ℂ) i j)ᵀ = swapMatrix (α := ℂ) i j := by
   ext a b
-  simp only [swapMatrix, Matrix.transpose_apply, Matrix.of_apply]
-  split_ifs with h1 h2 h2
-  · rfl
-  ·
-    have : b = Equiv.swap i j a := by
-      rw [h1, Equiv.swap_apply_self]
-    contradiction
-  ·
-    have : a = Equiv.swap i j b := by
-      rw [h2, Equiv.swap_apply_self]
-    contradiction
-  · rfl
+  simp only [swapMatrix, Matrix.transpose_apply, Matrix.of_apply, KroneckerDelta]
+  have hiff : Equiv.swap i j b = a ↔ Equiv.swap i j a = b := by
+    constructor
+    ·
+      intro h
+      rw [← h, Equiv.swap_apply_self]
+    ·
+      intro h
+      rw [← h, Equiv.swap_apply_self]
+  if h : Equiv.swap i j a = b then
+    have h2 : Equiv.swap i j b = a := by
+      apply hiff.mpr
+      apply h
+    simp [h, h2, Bool.toNat]
+  else
+    have h2 : Equiv.swap i j b ≠ a := by
+      intro hb
+      apply h
+      apply hiff.mp
+      apply hb
+    simp [h, h2, Bool.toNat]
 
 private lemma swapMatrix_mul_transpose
   {n : ℕ} (i j : Fin n) :
-  swapMatrix i j * (swapMatrix i j)ᵀ = (1 : Matrix (Fin n) (Fin n) ℂ) := by
+  swapMatrix (α := ℂ) i j * (swapMatrix (α := ℂ) i j)ᵀ =
+    (1 : Matrix (Fin n) (Fin n) ℂ) := by
   rw [swapMatrix_transpose_eq, swapMatrix_mul_self]
 
 private lemma pluBorderDiag_mul
@@ -436,7 +441,7 @@ private lemma plu_factors_props
     · simpa [pluL, plu] using one_isLowerTriangular (n := 0)
     · simpa [pluU, plu] using one_isUpperTriangular (n := 0)
   | succ n ih =>
-    set S := swapMatrix (0 : Fin (n + 1)) (pivotRow A 0)
+    set S := swapMatrix (α := ℂ) (0 : Fin (n + 1)) (pivotRow A 0)
     set B := S * A
     set E := elimBlock B 0
     set C := E * B
@@ -489,7 +494,7 @@ private lemma plu_mul_eq
     have hA : A = 1 := Subsingleton.elim _ _
     simp [pluP, pluL, pluU, plu, hA]
   | succ n ih =>
-    set S := swapMatrix (0 : Fin (n + 1)) (pivotRow A 0)
+    set S := swapMatrix (α := ℂ) (0 : Fin (n + 1)) (pivotRow A 0)
     set B := S * A
     set E := elimBlock B 0
     set C := E * B

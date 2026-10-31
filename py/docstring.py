@@ -35,7 +35,7 @@ CUSTOM_ATTR_HEADS = frozenset({
     "mt", "mp.mt", "mpr.mt", "Or.inl", "Or.inr", "mpr.left", "mpr.right",
     "mp.left", "mp.right",
     "And.left", "And.right",
-    "fin", "fin.comm", "fin.mp", "fin.mpr", "val", "subst", "cast", "cast.fin",
+    "fin", "fin.comm", "fin.mp", "fin.mpr", "val", "Fun", "subst", "cast", "cast.fin",
     "mp and", "mpr and", "mp.comm and", "mpr.comm and",
 })
 
@@ -59,7 +59,11 @@ LEMMA_NAME_RE = re.compile(
 def attr_head(token: str) -> str:
     if token in ("mp and", "mpr and", "mp.comm and", "mpr.comm and"):
         return token
-    return token.split()[0]
+    head = token.split()[0]
+    # Lean keyword attrs are written escaped, e.g. «fun».
+    if head.startswith("«") and head.endswith("»") and len(head) >= 2:
+        head = head[1:-1]
+    return head
 
 
 def is_custom_attr(token: str) -> bool:

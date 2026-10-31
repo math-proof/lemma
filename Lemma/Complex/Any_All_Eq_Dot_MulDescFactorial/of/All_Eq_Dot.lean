@@ -1,5 +1,5 @@
 import Lemma.Finset.AddSumIio.eq.SumIic
-import Lemma.Finset.Any_In_Ico_SumIio_SumIic.of.Eq_Sum
+import Lemma.Finset.Any_In_IcoSumIio_SumIic.of.Eq_Sum
 import Lemma.Finset.Eq.of.In_IcoSumIio_SumIic.In_IcoSumIio_SumIic
 import Lemma.Matrix.DetOf_Sum_In_Ico_SumIio_SumIic.ne.Zero.of.EqSum.All_Ne
 import Lemma.Polynomial.Any_Eq_Prod_SubXC.of.EqNatDegree.Monic
@@ -120,7 +120,11 @@ private lemma main
         (fun a _ b _ hab => hdisj a b hab)
     rw [hunion] at hcard
     simpa [d, Finset.card_univ] using hcard.symm
-  have hdet := DetOf_Sum_In_Ico_SumIio_SumIic.ne.Zero.of.EqSum.All_Ne hdist hsum
+  have hdet :=
+    DetOf_Sum_In_Ico_SumIio_SumIic.ne.Zero.of.EqSum.All_Ne
+      (x := Fun.mk x) (d := Fun.mk d)
+      (fun i j hij => by simpa [Fun.getElem_eq] using hdist i j hij)
+      (by simpa [Fun.getElem_eq] using hsum)
   have hblock (i : Fin n) :
     ∃ k : Fin rd, (i : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d j) (∑ j ∈ Finset.Iic k, d j) := by
     have hsumd : ∑ k : Fin rd, (Fun.mk d)[k] = n := by

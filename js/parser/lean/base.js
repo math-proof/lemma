@@ -374,7 +374,7 @@ export class Lean extends IndentedNode {
             }
         }
 
-        // `rv%[μ] x` — sympy's `liftRV` syntax (`syntax "rv%[" term "] " term:max`, stats/joint_rv.lean): the Lean token
+        // `rv%[μ] x` — `liftRV` syntax (`syntax "rv%[" term "] " term:max`, stats/joint_rv.lean): the Lean token
         // is `rv%[`, so this `%` is never `HMod.hMod`. The tokenizer splits it into `rv` `%` `[`; glue `rv%` into one word so
         // `[μ]` attaches as its index (`LeanGetElem`) and the source / echo keep `rv%[μ]` instead of `rv % [μ]` (Lean rejects that).
         if (token === 'rv' && tokens[self.start_idx + 1] === '%' && tokens[self.start_idx + 2] === '[' && tokens[self.start_idx - 1] !== '.') {
@@ -1433,7 +1433,19 @@ export class Lean extends IndentedNode {
         if (x instanceof LeanToken) return /^\d/.test(x.text) ? [] : [x];
         if (x instanceof LeanParenthesis) return Lean.headTokens(x.arg);
         if (x instanceof LeanArgsSpaceSeparated || x instanceof LeanGetElem) return Lean.headTokens(x.args[0]);
-        if (x instanceof LeanColon) return Lean.headTokens(x.lhs);
+        if (x instanceof LeanColon) {
+            // (n : Omega -> R) constant Pi cast used as HDiv scalar: not an RV head
+            const ty = x.rhs?.peelGroup?.() ?? x.rhs;
+            if (ty instanceof L.Lean_rightarrow) {
+                const dom = ty.lhs?.peelGroup?.() ?? ty.lhs;
+                if (dom instanceof LeanToken && (dom.text === 'Ω' || dom.text === 'Omega')) {
+                    const cod = ty.rhs?.peelGroup?.() ?? ty.rhs;
+                    if (!(cod instanceof L.Lean_rightarrow || cod instanceof L.Lean_rightharpoonup))
+                        return [];
+                }
+            }
+            return Lean.headTokens(x.lhs);
+        }
         if (x instanceof LeanProperty) return [];
         if (x instanceof Lean_fun) {
             const m = x.arg instanceof LeanColon ? x.arg.lhs : x.arg; // `fun x : T ↦ …` (`↦` inside `:`)

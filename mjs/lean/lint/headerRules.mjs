@@ -373,9 +373,17 @@ export function openPrefix(ctx) {
 const CUSTOM_ATTR_HEADS = new Set([
     'main', 'comm', 'mp', 'mpr', 'mp.comm', 'mpr.comm', 'comm.is', 'is.comm',
     'mt', 'mp.mt', 'mpr.mt', 'Or.inl', 'Or.inr', 'mpr.left', 'mpr.right', 'mp.left', 'mp.right',
-    'And.left', 'And.right', 'fin', 'fin.comm', 'fin.mp', 'fin.mpr', 'val', 'subst', 'cast', 'cast.fin',
+    'And.left', 'And.right', 'fin', 'fin.comm', 'fin.mp', 'fin.mpr', 'val', 'Fun', 'subst', 'cast', 'cast.fin',
     'mp and', 'mpr and', 'mp.comm and', 'mpr.comm and',
 ]); // = py/docstring.py CUSTOM_ATTR_HEADS
+
+/** Strip Lean «» escapes so keyword attrs like «fun» match CUSTOM_ATTR_HEADS. */
+function attrHeadToken(t) {
+    if (/^(mp|mpr|mp\.comm|mpr\.comm) and$/.test(t)) return t;
+    const head = t.split(/\s+/)[0];
+    if (head.startsWith('«') && head.endsWith('»') && head.length >= 2) return head.slice(1, -1);
+    return head;
+}
 
 export function attrDocstring(ctx) {
     const src = ctx.source.replace(/\r\n?/g, '\n');
@@ -383,7 +391,7 @@ export function attrDocstring(ctx) {
     let m;
     while ((m = re.exec(src))) {
         const custom = m[1].split(',').map((t) => t.trim()).filter(Boolean)
-            .map((t) => (/^(mp|mpr|mp\.comm|mpr\.comm) and$/.test(t) ? t : t.split(/\s+/)[0]))
+            .map(attrHeadToken)
             .filter((t) => t !== 'main' && CUSTOM_ATTR_HEADS.has(t));
         if (!custom.length) continue;
         const before = src.slice(0, m.index);
@@ -533,6 +541,32 @@ export function blankSublemmas(ctx) {
             n === 2
                 ? 'two blank lines between sublemmas; use one'
                 : `${n} blank lines between sublemmas; use one`,
+        );
+    }
+}
+
+
+/**
+ * `lemma-namespace`: on Lemma/ files, ban top-level `namespace` / `section` / `variable(s)`.
+ * Comments/strings are blanked by prepare, so `-- namespace …` is clean. Non-Lemma files skip.
+ */
+export function lemmaNamespace(ctx) {
+    if (!ctx.isLemmaFile) return;
+    const { P } = ctx;
+    for (let i = 0; i < P.code.length; i++) {
+        const line = P.code[i];
+        let kind = null;
+        if (/^namespace\s+\S/.test(line)) kind = 'namespace';
+        else if (/^section\s+\S/.test(line)) kind = 'section';
+        else if (/^variables\b/.test(line)) kind = 'variables';
+        else if (/^variable\b/.test(line)) kind = 'variable';
+        if (!kind) continue;
+        const shown = (P.raw[i] ?? '').trim();
+        ctx.warn(
+            'lemma-namespace',
+            i + 1,
+            1,
+            `\`${shown}\`: ${kind} within Lemma is not allowed`,
         );
     }
 }

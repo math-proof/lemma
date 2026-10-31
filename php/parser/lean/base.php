@@ -983,7 +983,22 @@ abstract class Lean extends IndentedNode
         if ($x instanceof LeanToken) return preg_match('/^\d/', $x->text) ? [] : [$x];
         if ($x instanceof LeanParenthesis) return Lean::headTokens($x->arg);
         if ($x instanceof LeanArgsSpaceSeparated || $x instanceof LeanGetElem) return Lean::headTokens($x->args[0]);
-        if ($x instanceof LeanColon) return Lean::headTokens($x->args[0]);
+        if ($x instanceof LeanColon) {
+            // (n : Omega -> R) constant Pi cast used as HDiv scalar: not an RV head
+            $ty = $x->rhs;
+            while ($ty instanceof LeanParenthesis) $ty = $ty->arg;
+            if ($ty instanceof Lean_rightarrow) {
+                $dom = $ty->lhs;
+                while ($dom instanceof LeanParenthesis) $dom = $dom->arg;
+                if ($dom instanceof LeanToken && ($dom->text === "Ω" || $dom->text === "Omega")) {
+                    $cod = $ty->rhs;
+                    while ($cod instanceof LeanParenthesis) $cod = $cod->arg;
+                    if (!($cod instanceof Lean_rightarrow || $cod instanceof Lean_rightharpoonup))
+                        return [];
+                }
+            }
+            return Lean::headTokens($x->args[0]);
+        }
         if ($x instanceof LeanProperty) return [];
         if ($x instanceof Lean_fun) {
             $m = $x->arg instanceof LeanColon ? $x->arg->args[0] : $x->arg;

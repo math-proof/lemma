@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqGetStack
-import Def.LinearAlgebra.Matrix.Permutation
+import Def.LinearAlgebra.Matrix.Permutation.Tensor
 open Tensor
 
 

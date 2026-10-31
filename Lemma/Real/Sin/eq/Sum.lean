@@ -1,7 +1,7 @@
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
 import Def.Data.Nat.Factorial.Factorials
 import Def.Analysis.SpecialFunctions.Trigonometric.Part2
-import Def.Analysis.Real.Limits.Part4
+import Def.Analysis.Real.Limits.Basic
 import Theorem.Data.Set.Sets
 import Initialize.Tactic.Attr.Basic
 

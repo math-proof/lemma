@@ -87,6 +87,11 @@ class LeanBigOperator extends LeanArgs
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
         if ($caret === $this->scope) {
+            // Continue trailing app in scope across newline under forall/exists.
+            if ($caret instanceof LeanArgsSpaceSeparated) {
+                if ($cont = $caret->push_args_indented($indent, $newline_count))
+                    return $cont;
+            }
             if ($new = $this->push_args_indented($this->indent + 2, $newline_count))
                 return $new;
         }

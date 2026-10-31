@@ -77,6 +77,16 @@ export class Node {
         return String(this);
     }
 
+    /**
+     * Lemma-path factor choices for this subtree (`""` = omit / hole).
+     * Lean* nodes override; trailing `_` marks open holes until Eq root strips.
+     * @param {object} [_opts]
+     * @returns {string[]}
+     */
+    pathChoices(_opts = {}) {
+        return [""];
+    }
+
     get previousElementSibling() {
         if (!this.parent) return null;
         const index = this.parent.args.indexOf(this);

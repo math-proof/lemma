@@ -390,18 +390,20 @@ class LeanParenthesis extends LeanPairedGroup
         if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
             return false;
         $p = $this->parent;
+        // Term cast `(e : T)` in expression position: show only `e` (any T).
+        // Binders keep ascriptions (paren parent is forall / sum / fun, not the cases below).
         if ($p instanceof LeanArgsSpaceSeparated ||
             $p instanceof LeanArgsCommaSeparated ||
             $p instanceof LeanGetElem ||
             $p instanceof LeanGetElemQue ||
             $p instanceof LeanGetElemQuote ||
-            $p instanceof LeanRelational)
-            return true;
-        // ENNReal→ℝ (`open scoped ENNReal.ToRealCoe`): `(ℙ[…](…) : ℝ)` under `•` / `+` / …
-        if ($arg->rhs instanceof LeanToken && $arg->rhs->text === 'ℝ' && $p instanceof LeanArithmetic)
+            $p instanceof LeanRelational ||
+            $p instanceof LeanArithmetic ||
+            $p instanceof LeanUnaryArithmetic)
             return true;
         return false;
     }
+
 
     public function peelLatexCoe()
     {
@@ -436,6 +438,15 @@ class LeanParenthesis extends LeanPairedGroup
         $g = "9f"[$n & 1];
         $n >>= 1;
         $r = "9f"[$n & 1];
+        // Nested \colorbox{…}{$…$} closes the outer $ → KaTeX nulldelimiters.
+        // Tuples: delimiters in ambient math outside the colorbox $.
+        $arg = $this->arg;
+        $tuple = $arg instanceof LeanArgsCommaSeparated
+            || $arg instanceof LeanArgsCommaNewLineSeparated;
+        if ($tuple) {
+            // for katex:
+            return "\\mathord{\\left({\\colorbox{#{$r}{$g}{$b}}{\$%s\$}}\\right)}";
+        }
         // for katex:
         return "\\colorbox{#{$r}{$g}{$b}}{\$\\mathord{\\left(%s\\right)}\$}";
         // for mathjax:

@@ -5,6 +5,11 @@ import { fileURLToPath, pathToFileURL } from "url";
 import { compile } from "../js/parser/lean.js";
 import { strStmt } from "../js/parser/lean/utility.js";
 import { loadSectionKindMap } from "./lemmaSectionKind.mjs";
+import {
+  pathCombineMulChoices,
+  pathEqCombineChoices,
+  pathEqFlatStem,
+} from "../js/parser/lean/pathChoices.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, "..");
@@ -86,9 +91,7 @@ const SECTION_WEIGHT = {
   Aperiodic: 2, DoeblinMinorization: 2, Simplex: 2, broadcast: 2,
 };
 
-/** sympy/<dir>/… modules whose data structures belong to a data-type section. */
-const SYMPY_DIR_SECTION = { stats: "Random", matrices: "Matrix", tensor: "Tensor", sets: "Set" };
-/** Weight of a binder typed by a repo data structure (`{M : Model Θ S A}` from sympy.stats.policy_trajectory):
+/** Weight of a binder typed by a repo data structure (`{M : Model Θ S A}`):
  *  beats incidental `γ ∈ Set.Ico 0 1` (Set 3) and typeclass / scalar evidence. */
 const STRUCT_BINDER_WEIGHT = 4;
 
@@ -113,6 +116,7 @@ const CLASS_TOKEN = {
   LeanMul: "Mul",
   LeanDiv: "Div",
   LeanNeg: "Neg",
+  LeanInv: "Inv",  // postfix value inverse (max/min ArgMax/ArgMin; preimage separate)
   LeanPow: "Pow",
   LeanDvd: "Dvd",
   Lean_in: "In",
@@ -152,12 +156,12 @@ function declTypeHead(hd) {
   return cut < 0 ? null : codomainHead(hd.slice(cut));
 }
 
-/** Repo structure/abbrev decls (maps empty for now; sympy/** walk removed). */
-let SYMPY_DECLS = null;
-function sympyDecls() {
-  if (SYMPY_DECLS) return SYMPY_DECLS;
+/** Repo structure/abbrev decls (empty stubs; former declaration scan removed). */
+let REPO_DECLS = null;
+function repoDecls() {
+  if (REPO_DECLS) return REPO_DECLS;
   // Empty-shaped stubs so callers keep working; do not retarget to Structure/Def yet.
-  SYMPY_DECLS = {
+  REPO_DECLS = {
     structs: new Map(), // structure → Map(field → type head)
     structInfo: new Map(), // structure → { module, ns, prop }
     typeAbbrevs: new Set(), // type abbreviations
@@ -168,13 +172,12 @@ function sympyDecls() {
     members: new Map(), // structure → Map(field → type head)
     parents: new Map(), // structure → parent structure
   };
-  return SYMPY_DECLS;
+  return REPO_DECLS;
 }
 
 /**
  * Section of a repo data structure (not a Prop structure, not a Lemma folder of its own — those are
- * custom sections): its namespace names a section (`namespace Kernel`). Module-dir fallback was tied
- * to the removed sympy/** scan (`sympyDecls` is empty for now). null otherwise.
+ * custom sections): its namespace names a section (`namespace Kernel`). null otherwise.
  */
 let LEMMA_FOLDERS = null;
 function lemmaFolders() {
@@ -182,16 +185,15 @@ function lemmaFolders() {
   return LEMMA_FOLDERS;
 }
 function structSection(name, sections = lemmaFolders()) {
-  const info = sympyDecls().structInfo.get(name);
+  const info = repoDecls().structInfo.get(name);
   if (!info || info.prop) return null;
   if (sections.includes(name) || sections.some((s) => !DATA_TYPE_SECTIONS.has(s) && name.startsWith(s) && /[A-Z]/.test(name.charAt(s.length)))) return null;
   // a bundle of section data (`kernel : Kernel S S`, `init : ProbabilityMeasure S`: HomMarkovChainSpec) is read
   // through its projections (M.kernel → Kernel); only a notion built from repo structures / functions
   // (`env : Env S A`, `pol : Policy Θ S A`: Model) is placed by its namespace / module
   const SCALAR = new Set(["Real", "Nat", "Int", "Rat", "Complex"]);
-  for (const ty of sympyDecls().structs.get(name)?.values() || []) { const sec = TYPE_TO_SECTION[ty]; if (sec && !SCALAR.has(sec)) return null; }
+  for (const ty of repoDecls().structs.get(name)?.values() || []) { const sec = TYPE_TO_SECTION[ty]; if (sec && !SCALAR.has(sec)) return null; }
   for (const n of [...info.ns].reverse()) if (DATA_TYPE_SECTIONS.has(n) && sections.includes(n)) return n;
-  for (const d of info.module.slice(0, -1)) if (SYMPY_DIR_SECTION[d]) return SYMPY_DIR_SECTION[d];
   return null;
 }
 
@@ -202,14 +204,14 @@ function structSection(name, sections = lemmaFolders()) {
  * conclusion token. Files still filed under such a folder stay accepted there (see `legacySection` in suggest).
  */
 function nonDataFolder(name) {
-  const { propDecls, dataDecls, valueDefs } = sympyDecls();
+  const { propDecls, dataDecls, valueDefs } = repoDecls();
   if (DATA_TYPE_SECTIONS.has(name) || TYPE_TO_SECTION[name] || dataDecls.has(name)) return false;
   return propDecls.has(name) || valueDefs.has(name);
 }
 
 /** Declared (co)domain head of a structure member (field or namespace def), through `extends`. */
 function memberType(T, f, k = 0) {
-  const { members, parents } = sympyDecls();
+  const { members, parents } = repoDecls();
   const t = members.get(T)?.get(f);
   if (t) return t;
   const p = parents.get(T);
@@ -218,7 +220,7 @@ function memberType(T, f, k = 0) {
 
 /** Section of a repo type abbreviation through its head: EuclideanVec → EuclideanSpace → Matrix. */
 function abbrevSection(name) {
-  const { abbrevHeads } = sympyDecls();
+  const { abbrevHeads } = repoDecls();
   for (let t = name, k = 0; t && k < 5; k++) {
     if (TYPE_TO_SECTION[t]) return TYPE_TO_SECTION[t];
     t = abbrevHeads.get(t);
@@ -247,7 +249,7 @@ function structBinderTypes(node) {
 
 /** `{sk : Skeleton S d}` → Map(sk → Skeleton) for binders typed by a repo structure. */
 function bundleVars(indented, explicitOnly = false) {
-  const { structs } = sympyDecls();
+  const { structs } = repoDecls();
   const out = new Map();
   (function walk(n) {
     if (!n || typeof n !== "object") return;
@@ -310,7 +312,7 @@ function reassociateDotProduct(root) {
  */
 function holeBundleProjections(root, bundles, leaves) {
   if (!bundles.size) return;
-  const { structs } = sympyDecls();
+  const { structs } = repoDecls();
   const varLike = (s) => (KEEP_GREEK ? /^[a-z][₀-₉ᵢⱼₖₙ'′]*$/u : /^[a-zα-ωϑϕ][₀-₉ᵢⱼₖₙ'′]*$/u).test(s || "");
   let k = 0;
   (function walk(n, parent, idx) {
@@ -549,7 +551,7 @@ function collectTokenWeights(node, w = 1, out = new Map()) {
     if (t.includes(".")) {
       const ns = t.slice(0, t.indexOf("."));
       if (TYPE_TO_SECTION[ns] === ns) put("ns:" + ns, w);
-      // a constant of a repo data structure's namespace (`QLearningSpec.maxₐ`, sympy/stats) → its section
+      // a constant of a repo data structure's namespace (`QLearningSpec.maxₐ`) → its section
       else if (structSection(ns)) put("st:" + ns, w);
     }
   }
@@ -574,28 +576,11 @@ function collectTokenWeights(node, w = 1, out = new Map()) {
 }
 
 /**
- * Custom namespace sections (Lemma/<Section> folders that are not data types, e.g. Iterates,
- * LyapunovCandidate): a conclusion token or given head naming the folder (`Iterates …`,
- * `IteratesOfResidual …`) decides the section; conclusion first, then givens in Lean order.
+ * Custom namespace sections (Lemma/<Section> folders that are not data types): a conclusion
+ * token or given head naming the folder decides the section; conclusion first, then givens.
+ * Legal section names come only from `lemmaSectionKind` (data type), plus Random/Tensor
+ * special-cases already applied in that map — no hard-coded typeclass/topic denylists.
  */
-/** Lemma folders named after typeclasses: sections are data types, so these are never chosen from binders. */
-const TYPECLASS_FOLDERS = new Set(["NormedSpace", "NormedAddCommGroup", "NormedField", "InnerProductSpace", "AddCommGroup",
-  "Group", "IsAlgClosed", "Module", "NumberField"]);
-
-/** Topic/util Lemma folders that are never legal sections (AGENTS.md: section = data type). */
-const TOPIC_FOLDERS = new Set([
-  "AlgebraicCurve", "AlgebraicGeometry", "AutomorphicForm", "CerednikDrinfeld", "Curve",
-  "Definitions", "Fourier", "groupCohomology", "HeckeEis", "ModularCurve", "P2M",
-  // Mathlib non-type-former defs / util names - never legal as Lemma sections (Ideal/Count dumps).
-  "Count", "Sum", "Prod", "Map", "Factors", "RamificationIdx", "RamificationIdx'",
-]);
-
-/** Body 2026-10-24: these 17 are never legal sections (no transitional keep). */
-const ILLEGAL_SECTIONS = new Set([
-  "Group", "InnerProductSpace", "IsAlgClosed", "Module", "NormedSpace", "NumberField",
-  "AlgebraicCurve", "AlgebraicGeometry", "AutomorphicForm", "CerednikDrinfeld", "Curve",
-  "Definitions", "Fourier", "groupCohomology", "HeckeEis", "ModularCurve", "P2M",
-]);
 
 /** Mathlib kinds from `mjs/lemmaSectionKinds.json` (refreshed by `node mjs/lemmaSectionKind.mjs`). */
 let SECTION_KIND_MAP = null;
@@ -604,12 +589,15 @@ function sectionKindMap() {
   return SECTION_KIND_MAP;
 }
 
-/** Topic/typeclass folders must not be chosen as sections (AGENTS.md). TYPE_TO_SECTION aliases stay allowed. */
+/**
+ * Not a legal Lemma section pick. Allowed only when TYPE_TO_SECTION / DATA_TYPE_SECTIONS say so,
+ * or lemmaSectionKind classifies the folder as `data type` (Random/Tensor included there).
+ * Util tokens (Count, Sum, …) and topic/type-class folders are refused.
+ */
 export function refusedSectionFolder(name) {
   if (DATA_TYPE_SECTIONS.has(name) || TYPE_TO_SECTION[name]) return false;
-  if (ILLEGAL_SECTIONS.has(name) || TYPECLASS_FOLDERS.has(name) || TOPIC_FOLDERS.has(name)) return true;
   const kind = sectionKindMap().get(name);
-  return kind === "topic/unknown" || kind === "type class";
+  return kind !== "data type";
 }
 
 function customSection(sections, conclNode, givenTypes, importDecls = new Map(), binders = null) {
@@ -685,14 +673,14 @@ function customSection(sections, conclNode, givenTypes, importDecls = new Map(),
   };
   for (const t of conclTokens(conclNode)) { if (custom.includes(t) || custom.includes(t.split(".")[0])) return custom.includes(t) ? t : t.split(".")[0]; }
   // a repo structure named in the conclusion extends a folder name: Nonempty (FrozenInvariantLawWitness …)
-  for (const t of conclTokens(conclNode)) if (/^[A-Z]/.test(t) && sympyDecls().structs.has(t)) { const f = folderOf(t); if (f) return f; }
+  for (const t of conclTokens(conclNode)) if (/^[A-Z]/.test(t) && repoDecls().structs.has(t)) { const f = folderOf(t); if (f) return f; }
   for (const g of givenTypes) {
     let h = unwrapParen(g);
     if (cls(h) === "LeanArgsSpaceSeparated") h = h.args?.[0];
     if (cls(h) === "LeanGetElem") h = h.args?.[0];
     const s = cls(h) === "LeanToken" ? match(h.text) : null;
     if (s) return s;
-    // a hypothesis about a notion declared in `sympy.….<folder>` (AdaptedOnSamplePath x → Iterates)
+    // a hypothesis about a notion declared under a custom Lemma folder (AdaptedOnSamplePath x → Iterates)
     if (cls(h) === "LeanToken") for (const [sec, names] of importDecls) if (custom.includes(sec) && names.has(h.text)) return sec;
   }
   // snake_case / lowerCamel definitions named like a folder: absorbing_set → AbsorbingSet, omegaLimit → OmegaLimit,
@@ -723,12 +711,11 @@ function customSection(sections, conclNode, givenTypes, importDecls = new Map(),
   }
   // a variable typed by a custom notion: {x : LpSpace p d} → LpSpace
   // typeclasses (NormedSpace, …) name no data type, so they never pick a section
-  for (const t of conclTokens(binders)) if (custom.includes(t) && !TYPECLASS_FOLDERS.has(t)) return t;
+  for (const t of conclTokens(binders)) if (custom.includes(t)) return t;
   return null;
 }
 
-/** `import sympy.stats.iterates` → Iterates, when such a Lemma folder exists. */
-/** open MvPolynomial PowerSeries -> data-type section boosts (like sympy imports). */
+/** open MvPolynomial PowerSeries → data-type section boosts. */
 function openDataSections(source) {
   const out = [];
   for (const m of String(source || "").matchAll(/^open\s+([^\n]+)/gm)) {
@@ -740,18 +727,9 @@ function openDataSections(source) {
   return out;
 }
 
-function importSections(source, sections) {
-  // folder → names declared (class/structure/def/…) in the imported sympy module of the same name
-  const out = new Map();
-  for (const m of String(source || "").matchAll(/^import\s+(sympy\.[\w.]*?(\w+))\s*$/gm)) {
-    const camel = m[2].split("_").map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join("");
-    if (!sections.includes(camel)) continue;
-    let text = "";
-    try { text = fs.readFileSync(path.join(REPO, ...m[1].split(".")) + ".lean", "utf8"); } catch {}
-    const names = new Set([...text.matchAll(/^(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+)*(?:class|structure|def|abbrev|inductive)\s+([^\s({\[:]+)/gm)].map((d) => d[1]));
-    out.set(camel, names);
-  }
-  return out;
+function importSections(_source, _sections) {
+  // Former import→custom-folder scan removed; keep empty Map for call-site shape.
+  return new Map();
 }
 
 /**
@@ -784,7 +762,7 @@ function pickSection(sigNode, sections, extra = {}) {
     else if (t.startsWith("ns:")) { sec = TYPE_TO_SECTION[t.slice(3)]; raw = 1; }
     else if (t.startsWith("st:")) { sec = structSection(t.slice(3)); raw = STRUCT_BINDER_WEIGHT; }
     else if (!TYPE_TO_SECTION[t] && structTypes.has(t)) { sec = structTypes.get(t); raw = STRUCT_BINDER_WEIGHT; } // {M : Model Θ S A} → Random
-    else if (!TYPE_TO_SECTION[t] && sympyDecls().abbrevHeads.has(t)) { sec = abbrevSection(t); raw = 1; } // {w : ℝ → EuclideanVec m} → Matrix
+    else if (!TYPE_TO_SECTION[t] && repoDecls().abbrevHeads.has(t)) { sec = abbrevSection(t); raw = 1; } // {w : ℝ → EuclideanVec m} → Matrix
     else { sec = TYPE_TO_SECTION[t]; raw = t === sec ? 3 : SECTION_WEIGHT[t] ?? 1; }
     if (!sec) continue;
     // ℕ/ℤ/Fin often only index or count (e : Fin 2 picks an exponent); prefer the value field (ℂ → Complex).
@@ -1282,7 +1260,7 @@ function isConstNode(node) {
   const n = unwrapParen(node);
   const c = cls(n);
   if (c === "LeanToken") return /^-?\d+(\.\d+)?$/.test(n.text || "") || n.text === "π" || n.text === "∞";
-  if (c === "LeanAdd" || c === "LeanSub" || c === "LeanMul" || c === "LeanDiv" || c === "LeanPow" || c === "LeanNeg" || c === "Lean_sqrt") {
+  if (c === "LeanAdd" || c === "LeanSub" || c === "LeanMul" || c === "LeanDiv" || c === "LeanPow" || c === "LeanNeg" || c === "LeanInv" || c === "Lean_sqrt") {
     return (n.args || []).length > 0 && n.args.every(isConstNode);
   }
   return false;
@@ -1395,7 +1373,7 @@ function normHead(head, opts) {
 }
 
 /** Infix / wrap arithmetic whose path atom is already a compound head (DotPow_Id, …). */
-const ARITH_OP = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanMatMul"]);
+const ARITH_OP = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanInv", "LeanMatMul"]);
 
 /**
  * Binder-only Get index (`h[k + n]`, slice `h[k: k + n]`) is not the relation.
@@ -1425,7 +1403,7 @@ function isQuantBinderHole(node, opts) {
     return !t || t === "_" || isLeafName(t, opts?.quantLeaves);
   }
   // Decorations of quant binders stay holes (exists L, ... L adjoint); peel only here.
-  if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj")
+  if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj" || c === "LeanInv")
     return isQuantBinderHole(u.args?.[0], opts);
   if (c === "LeanGetElem") return isQuantBinderHole(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
   if (c === "LeanParenthesis") return isQuantBinderHole(u.args?.[0], opts);
@@ -1443,7 +1421,7 @@ function isBinderHole(node, opts) {
   // Postfix Adjoint/Transpose / prefix Conj: peel only for quant/exists/let binders
   // (L adjoint under exists L stays a hole). Signature params keep the decoration as an atom
   // (A adjoint = A -> EqAdjoint, not bare Eq).
-  if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj")
+  if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj" || c === "LeanInv")
     return isQuantBinderHole(u.args?.[0], opts);
   if (c === "LeanGetElem") return isBinderHole(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
   if (c === "LeanParenthesis") return isBinderHole(u.args?.[0], opts);
@@ -1485,7 +1463,7 @@ function isHoleyExpr(node, opts) {
     return !t || t === "_" || isLeafName(t, opts?.leaves) || /^-?\d+$/.test(t);
   }
   // Match isBinderHole: only peel decorations of quant/exists binders (not signature A adjoint)
-  if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj")
+  if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj" || c === "LeanInv")
     return isQuantBinderHole(u.args?.[0], opts) && isHoleyExpr(u.args?.[0], opts);
   if (c === "LeanGetElem") return isHoleyExpr(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
   if (c === "LeanParenthesis" || c === "LeanColon") return isHoleyExpr(u.args?.[0], opts);
@@ -2400,7 +2378,7 @@ function isInftyToken(n) {
   return cls(u) === "LeanToken" && (u.text === "∞" || u.text === "oo");
 }
 /**
- * `sup[x, y] e < ∞` (sympy/concrete/sup.lean): GetElem `sup[…]` compared with infinity.
+ * `sup[x, y] e < ∞`: GetElem `sup[…]` compared with infinity.
  * Literal given atom: `LtSup__Infty` (`Sup _ < ∞`; body of `sup` is a hole).
  * Short form (preferred in paths): `GtInftySup` (`∞ > Sup`, constant mirrored to the front).
  */
@@ -2413,7 +2391,7 @@ function isSupLtInfty(node) {
   return cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "sup";
 }
 /**
- * The elaborated forms of the `sup[…] e < ∞` sugar (sympy/concrete/sup.lean), written out:
+ * The elaborated forms of the `sup[…] e < ∞` sugar, written out:
  * `BddAbove (Set.range fun x ↦ e)` and `BddAbove ((fun (x, y) ↦ e) '' {p | c})`. Named like the sugar,
  * GtInftySup (the only accepted spelling). A plain `BddAbove (f '' S)` / `BddAbove (Set.range f)` is not the sugar.
  */
@@ -2631,13 +2609,23 @@ function expectSMulGradLogNames(node, canon) {
 }
 
 
+
+/** Imply stem of an on-disk Lemma leaf: drop section + `/of/…` + `.lean`. */
+function implyStemFromRelPath(relPath) {
+  let s = String(relPath || "").replace(/\\/g, "/").replace(/\.lean$/, "");
+  if (s.startsWith("Lemma/")) s = s.slice("Lemma/".length);
+  const parts = s.split("/").filter(Boolean);
+  if (parts.length < 2) return "";
+  let rest = parts.slice(1).join("/");
+  const ofi = rest.indexOf("/of/");
+  if (ofi >= 0) rest = rest.slice(0, ofi);
+  return rest;
+}
+
 /**
  * Body Eq_SymmToDual In_Ico0 imply stem (LHS fused; not SymmToDual/eq/ExpectTSum_SMul).
  * Shared by the remigrated NeProb leaf and the legacy EqMeasureCount sister In_Ico1.
  */
-const EQ_SYMM_TO_DUAL_TSUM_BODY =
-  "Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond";
-
 /**
  * `(InnerProductSpace.toDual …).symm (∑' … • ∫ … • fderiv … log ℙ(·|·).toReal) = 𝔼[…](… • ∇ log …)`.
  * Clean Expect RHS (In_Ico0); legacy In_Ico1 with let/TODO scaffolding may not match — leave its #1 alone.
@@ -2678,8 +2666,8 @@ function isEqSymmToDualTSumGradLogShape(implyStmts) {
   return hasSymm && hasToDual && hasFderiv && hasLog;
 }
 
-function eqSymmToDualTSumBodyName(implyStmts) {
-  return isEqSymmToDualTSumGradLogShape(implyStmts) ? EQ_SYMM_TO_DUAL_TSUM_BODY : "";
+function eqSymmToDualTSumBodyName(implyStmts, houseFromDisk = "") {
+  return isEqSymmToDualTSumGradLogShape(implyStmts) ? houseFromDisk : "";
 }
 
 /**
@@ -2689,8 +2677,6 @@ function eqSymmToDualTSumBodyName(implyStmts) {
  * of-tail: Ae_GtInftySup + All_Measurable; NeProb stays Lean h2 (no Diff/NeProb cluster).
  * (FunPowDot / ExtDot / AeGtInftySup / All_MeasurableFun remain alts.)
  */
-const EXPECT_DOT_EQ_INTEGRAL_EXT_DOT = "ExpectDot/eq/Integral_Dot_FunSMul_GradLogProbCond";
-
 /** Peel statement wrappers / have / indent scaffolding. */
 function peelStmt(node) {
   let u = node;
@@ -2770,9 +2756,6 @@ function isMulSumOfSquareSubMean(node) {
  * Body: Sum_SquareSub_DivSum/eq/AddMul_Sum_SquareSubDivSSum
  * (mean → DivSum; dual SquareSub(SA)+SquareSub(SE) → SquareSubDivSSum).
  */
-const SUM_SQUARESUB_DIVSUM_EQ_ADDMUL_SQUARESUBDIVSSUM =
-  "Sum_SquareSub_DivSum/eq/AddMul_Sum_SquareSubDivSSum";
-
 function isAnovaStEqSaSeShape(implyStmts) {
   const eq = peelImplyEq(implyStmts);
   if (!eq) return false;
@@ -2786,9 +2769,274 @@ function isAnovaStEqSaSeShape(implyStmts) {
   return hasMulSum && hasSum;
 }
 
-function sumSquareSubDivSumEqAddMulBodyName(implyStmts) {
-  return isAnovaStEqSaSeShape(implyStmts) ? SUM_SQUARESUB_DIVSUM_EQ_ADDMUL_SQUARESUBDIVSSUM : "";
+function sumSquareSubDivSumEqAddMulBodyName(implyStmts, houseFromDisk = "") {
+  return isAnovaStEqSaSeShape(implyStmts) ? houseFromDisk : "";
 }
+
+/** Sum of plain squares a^2 (not mean-deviation SquareSub). */
+function isSumOfSquares(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "Lean_sum") return false;
+  const body = unwrapParen(u.args?.[u.args.length - 1]);
+  if (cls(body) !== "LeanPow") return false;
+  if (!(cls(body.args?.[1]) === "LeanToken" && body.args[1].text === "2")) return false;
+  if (isSquareSubOfMeanDiv(body)) return false;
+  return true;
+}
+
+/** Finset.card / s.card, optionally ascribed (s.card : Real). */
+function isCardDenom(node) {
+  let u = unwrapParen(node);
+  while (cls(u) === "LeanColon") u = unwrapParen(u.args?.[0]);
+  if (cls(u) === "LeanProperty" && cls(u.args?.[1]) === "LeanToken" && u.args[1].text === "card") return true;
+  if (cls(u) === "LeanToken" && /^card$/i.test(u.text || "")) return true;
+  return false;
+}
+
+/** (sum ...)^2 / card -> DivSquareSum__Card shape. */
+function isDivSquareSumByCard(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanDiv") return false;
+  if (!isCardDenom(u.args?.[1])) return false;
+  const num = unwrapParen(u.args?.[0]);
+  if (cls(num) !== "LeanPow") return false;
+  if (!(cls(num.args?.[1]) === "LeanToken" && num.args[1].text === "2")) return false;
+  return cls(unwrapParen(num.args?.[0])) === "Lean_sum";
+}
+
+/**
+ * Mean-deviation SSE identity:
+ * sum (a - mean)^2 = sum a^2 - (sum a)^2 / |s|
+ * Body: Sum_SquareSub_DivSum/eq/SubSum_Square_DivSquareSum__Card
+ * (camel DivSum; Sub separates Sum_Square from DivSquareSum; __Card for card cast).
+ */
+function isSseSumSquareSubMeanEqSubSumSquareDivCard(implyStmts) {
+  const eq = peelImplyEq(implyStmts);
+  if (!eq) return false;
+  if (!isSumOfSquareSubMean(eq.args?.[0])) return false;
+  const right = unwrapParen(eq.args?.[1]);
+  if (cls(right) !== "LeanSub") return false;
+  return isSumOfSquares(right.args?.[0]) && isDivSquareSumByCard(right.args?.[1]);
+}
+
+function sumSquareSubDivSumEqSubSumSquareDivSquareSumCardBodyName(implyStmts, houseFromDisk = "") {
+  return isSseSumSquareSubMeanEqSubSumSquareDivCard(implyStmts) ? houseFromDisk : "";
+}
+
+/**
+ * SSE eq-preserving cartesian enumeration from House
+ * Sum_SquareSub_DivSum/eq/SubSum_Square_DivSquareSum__Card.
+ *
+ * LHS (5): progressive shortenings of House LHS.
+ * RHS (24): Sub + sumFactor × divFactor (3 × 8).
+ *   sumFactor: _(hole) | Sum | Sum_Square  → Sub, SubSum, SubSum_Square
+ *   divFactor: _(hole) | Div | Div_Card | DivSquare | DivSquare_Card |
+ *              DivSquareSum | DivSquareSum__Card | DivSum
+ *   Non-hole divFactor attaches with a leading `_`.
+ * Two join families (same 5×24):
+ *   `/eq/` → LHS/eq/RHS  (120)
+ *   Eq__   → see sseEqFlatStem (120 generated; `_{3,}` omitted from suggestions)
+ */
+
+export const SSE_EQ_LHS = [
+  "Sum",
+  "Sum_Square",
+  "Sum_SquareSub",
+  "Sum_SquareSub_Div",
+  "Sum_SquareSub_DivSum",
+];
+
+/** sumFactor glue after Sub (hole → empty; Sum/Sum_Square camel-glued, no `_`). */
+export const SSE_EQ_SUM_FACTORS = ["", "Sum", "Sum_Square"];
+
+/**
+ * divFactor stems (8). Hole is ""; non-hole attach as `_` + factor.
+ * 8th is DivSum (House-parallel to LHS Sum_SquareSub_DivSum).
+ */
+export const SSE_EQ_DIV_FACTORS = [
+  "",
+  "Div",
+  "Div_Card",
+  "DivSquare",
+  "DivSquare_Card",
+  "DivSquareSum",
+  "DivSquareSum__Card",
+  "DivSum",
+];
+
+/** Full House `/eq/` stem from factor tables (longest LHS × Sum_Square×DivSquareSum__Card RHS). */
+function sseEqHouseImplyStem() {
+  return SSE_EQ_LHS[SSE_EQ_LHS.length - 1] + "/eq/" + sseEqRhsStem("Sum_Square", "DivSquareSum__Card");
+}
+
+/** Build one RHS: Sub + sumFactor + optional `_` + divFactor. */
+export function sseEqRhsStem(sumFactor, divFactor) {
+  const mid = sumFactor || "";
+  const div = divFactor ? "_" + divFactor : "";
+  return "Sub" + mid + div;
+}
+
+/**
+ * All 24 RHS stems (sumFactor × divFactor). Sorted length then lex.
+ * @param {string} [_houseRhs] ignored; kept for call-site compat
+ */
+export function sseEqRhsFromHouseRhs(_houseRhs = "") {
+  const stems = [];
+  for (const sf of SSE_EQ_SUM_FACTORS)
+    for (const df of SSE_EQ_DIV_FACTORS) stems.push(sseEqRhsStem(sf, df));
+  return stems.sort((a, b) => a.length - b.length || (a < b ? -1 : a > b ? 1 : 0));
+}
+
+/** True if stem/path has 3+ consecutive underscores — omitted from suggestions. */
+export function sseHasTripleUnderscore(s) {
+  return /_{3,}/.test(String(s || ""));
+}
+
+/**
+ * Flat Eq__ stem from LHS/eq/RHS.
+ * Join (concrete examples + Sum/Div hole semantics — not Eq args):
+ *   - LHS === "Sum" → `Eq${LHS}__${RHS}`
+ *       `__` = Sum's two holes (open Sum)
+ *   - LHS !== "Sum" && RHS === bare "Sub" → `Eq${LHS}_${RHS}`
+ *       e.g. EqSum_Square_Sub (Sum bound hole + Square arg hole as single `_`s)
+ *   - LHS ends with "DivSum" → `Eq${LHS}___${RHS}`
+ *       `DivSum___`: first `__` = Sum's two holes; third `_` = Div's denominator hole
+ *       (House: EqSum_SquareSub_DivSum___SubSum_Square_DivSquareSum__Card)
+ *   - else → `Eq${LHS}__${RHS}`
+ * Stems with `_{3,}` are generated for semantics but omitted from suggestions.
+ */
+export function sseEqFlatStem(lhs, rhs) {
+  const L = String(lhs);
+  const R = String(rhs);
+  let join;
+  if (L === "Sum") join = "__";
+  else if (R === "Sub") join = "_";
+  else if (L.endsWith("DivSum")) join = "___";
+  else join = "__";
+  return "Eq" + L + join + R;
+}
+
+/** All 120 flat Eq__ stems (same 5×24 cartesian). Sorted length then lex. */
+export function sseEqFlatImplyStems() {
+  const rhs = sseEqRhsFromHouseRhs();
+  const stems = [];
+  for (const lhs of SSE_EQ_LHS) for (const r of rhs) stems.push(sseEqFlatStem(lhs, r));
+  return stems.sort((a, b) => a.length - b.length || (a < b ? -1 : a > b ? 1 : 0));
+}
+
+/**
+ * All imply stems for the SSE family: 120 `/eq/` + 120 flat Eq__.
+ * House `/eq/` path first; remaining `/eq/` by length/lex; then Eq__ flats.
+ * Caller must drop `_{3,}` before suggesting (see bodySse inject).
+ */
+export function sseEqCartesianImplyStems(houseImply = "") {
+  const rhs = sseEqRhsFromHouseRhs();
+  const slash = [];
+  for (const lhs of SSE_EQ_LHS) for (const r of rhs) slash.push(lhs + "/eq/" + r);
+  const house = String(houseImply || "").replace(/\\/g, "/");
+  const slashRest = slash
+    .filter((s) => s !== house)
+    .sort((a, b) => a.length - b.length || (a < b ? -1 : a > b ? 1 : 0));
+  const flats = sseEqFlatImplyStems();
+  return house ? [house, ...slashRest, ...flats] : [...slashRest, ...flats];
+}
+
+
+
+
+
+
+/**
+ * MulInvSqrt leaf (Body): tree-walk via Node#pathChoices / Lean* overrides
+ * (`js/parser/lean/pathChoices.js` + polymorphic methods on Colon/Property/
+ * Parenthesis/Mul/Div/Inv/√/Eq). lemmaPath peels the Eq and asks the node —
+ * no `cls(u) === "LeanMul"` / `cls.name` dispatch for the walk.
+ *
+ * Standing rules (on the nodes / helpers):
+ *   unary Inv/Sqrt → Op(Arg)+omit; Mul → Op(LHS)(RHS); Eq infix → /eq/ + flat
+ *   trailing `_` through combine; strip only at Eq root; skip EqMulS (Mul covers)
+ */
+
+/** @deprecated prefer node.pathChoices(opts) — thin compatibility wrapper. */
+export function mulInvSqrtNodeChoices(node, opts = {}) {
+  if (node && typeof node.pathChoices === "function") return node.pathChoices(opts);
+  return [""];
+}
+
+/** @deprecated prefer pathCombineMulChoices — re-export for tests. */
+export function mulInvSqrtCombineMulChoices(leftChoices, rightChoices) {
+  return pathCombineMulChoices(leftChoices, rightChoices);
+}
+
+/** @deprecated prefer pathEqFlatStem — re-export for tests. */
+export function mulInvSqrtEqFlatStem(lhs, rhs) {
+  return pathEqFlatStem(lhs, rhs);
+}
+
+/** @deprecated prefer pathEqCombineChoices — re-export for tests. */
+export function mulInvSqrtEqCombineChoices(leftChoices, rightChoices, house = "") {
+  return pathEqCombineChoices(leftChoices, rightChoices, house);
+}
+
+/**
+ * Walk imply AST at Eq root via LeanEq#pathImplyStems (polymorphic).
+ * `house` is the on-disk imply stem when known (preferred slash first); not a hard-coded table.
+ * Returns null when not MulInvSqrt / MulSqrt_Div family.
+ */
+export function mulInvSqrtEqImplyStemsFromTree(implyStmts, opts = {}, house = "") {
+  const eq = peelImplyEq(implyStmts);
+  if (!eq || typeof eq.pathImplyStems !== "function") return null;
+  return eq.pathImplyStems(opts, house);
+}
+
+/** Compatibility wrapper — requires implyStmts (tree); no hard-coded LHS/RHS tables. */
+export function mulInvSqrtEqAllowedImplyStems(house = "", implyStmts = null, opts = {}) {
+  if (!implyStmts) return [];
+  const got = mulInvSqrtEqImplyStemsFromTree(implyStmts, opts, house);
+  return got ? got.stems : [];
+}
+
+export function mulInvSqrtEqFlatImplyStems(implyStmts = null, opts = {}, house = "") {
+  const stems = mulInvSqrtEqAllowedImplyStems(house, implyStmts, opts);
+  return stems.filter((s) => !String(s).includes("/eq/"));
+}
+
+export function isAllowedMulInvSqrtEqSlashImply(stem) {
+  const s = String(stem || "").replace(/\\/g, "/").replace(/\.lean$/, "");
+  return /^(MulInvSqrt|MulInv|Mul)\/eq\/(MulSqrt_Div|MulSqrt|Mul_Div|Mul)$/.test(s);
+}
+
+export function isAllowedMulInvSqrtEqFlatImply(stem) {
+  const s = String(stem || "").replace(/\\/g, "/").replace(/\.lean$/, "");
+  if (s === "EqMulS") return false;
+  if (s === "EqMul__Mul" || s === "EqMul_Mul") return false;
+  if (s === "EqMulInv_Mul") return false;
+  if (s === "EqMulInv__Mul") return true;
+  if (s === "EqMulInvSqrt_Mul") return false;
+  if (s === "EqMulInvSqrt__Mul") return true;
+  if (/^EqMul__(MulSqrt_Div|MulSqrt|Mul_Div)$/.test(s)) return true;
+  if (/^EqMulInv__(MulSqrt_Div|MulSqrt|Mul_Div)$/.test(s)) return true;
+  if (/^EqMulInvSqrt__(MulSqrt_Div|MulSqrt|Mul_Div)$/.test(s)) return true;
+  return false;
+}
+
+export function isAllowedMulInvSqrtEqImply(stem) {
+  return isAllowedMulInvSqrtEqSlashImply(stem) || isAllowedMulInvSqrtEqFlatImply(stem);
+}
+
+/** Family detect from stem shape / preferred — not equality to a hard-coded BODY const. */
+export function isMulInvSqrtEqFamily(altsOrPreferred) {
+  const hit = (raw) => {
+    const s = String(raw || "").replace(/\\/g, "/");
+    if (isAllowedMulInvSqrtEqImply(s)) return true;
+    return /(?:^|\/)(MulInvSqrt|MulInv|Mul)\/eq\/(MulSqrt_Div|MulSqrt|Mul_Div|Mul)(?:\/|$)/.test(s);
+  };
+  if (typeof altsOrPreferred === "string") return hit(altsOrPreferred);
+  const list = altsOrPreferred || [];
+  if (list.preferred && hit(list.preferred)) return true;
+  return list.some((a) => hit(a));
+}
+
 
 /** Peel statement wrappers / have scaffolding to a top-level `A = B`. */
 function peelImplyEq(implyStmts) {
@@ -2881,8 +3129,8 @@ function isExpectDotEqIntegralExtDotShape(implyStmts) {
   return isDotPowWithGradLog(expectBody) && isDotPowWithGradLog(intCore);
 }
 
-function expectDotEqIntegralExtDotBodyName(implyStmts) {
-  return isExpectDotEqIntegralExtDotShape(implyStmts) ? EXPECT_DOT_EQ_INTEGRAL_EXT_DOT : "";
+function expectDotEqIntegralExtDotBodyName(implyStmts, houseFromDisk = "") {
+  return isExpectDotEqIntegralExtDotShape(implyStmts) ? houseFromDisk : "";
 }
 
 
@@ -2894,9 +3142,6 @@ function expectDotEqIntegralExtDotBodyName(implyStmts) {
  * ExpectSum_SMulMulPow_GradLogProbCond stems for this shape.
  * of: IsPolicyTrajectory (as on live path).
  */
-const EXPECT_SUM_SMUL_EQ_INTEGRAL_SUM_SMUL =
-  "ExpectSum_SMulMulPow/eq/Integral_Sum_SMul_GradLogProbCond";
-
 /** Peel wrappers down to a Lean_sum, or null. */
 function peelToSum(node) {
   let u = peelStmt(node);
@@ -2969,8 +3214,8 @@ function isExpectSumEqIntegralSumSMulShape(implyStmts) {
   return !!sumR && isSumSMulGradLog(sumR);
 }
 
-function expectSumSMulEqIntegralSumSMulBodyName(implyStmts) {
-  return isExpectSumEqIntegralSumSMulShape(implyStmts) ? EXPECT_SUM_SMUL_EQ_INTEGRAL_SUM_SMUL : "";
+function expectSumSMulEqIntegralSumSMulBodyName(implyStmts, houseFromDisk = "") {
+  return isExpectSumEqIntegralSumSMulShape(implyStmts) ? houseFromDisk : "";
 }
 
 /**
@@ -3113,10 +3358,6 @@ function findArgMaxImplyEq(implyStmts) {
  * Legacy ArgMax/eq/ArgMax and Eq/ArgMax/Mul/Prod_ProbCond stay alts.
  * Never GetArgMaxProbCond / ArgMaxProbCond CamelCase fusion.
  */
-const ARGMAX_PROBCOND_EQ_ARGMAX_MUL_PROD =
-  "ArgMax_ProbCond/eq/ArgMax_Mul_Prod_ProbCond";
-const ARGMAX_EQ_ARGMAX = "ArgMax/eq/ArgMax";
-const ARGMAX_EQ_MUL_PROD_PROBCOND = "Eq/ArgMax/Mul/Prod_ProbCond";
 function isArgMaxProbCondEqMulProdShape(implyStmts) {
   const found = findArgMaxImplyEq(implyStmts);
   if (!found) return false;
@@ -3126,8 +3367,8 @@ function isArgMaxProbCondEqMulProdShape(implyStmts) {
   if (nameProbApp(lb) !== "ProbCond") return false;
   return !!found.rhsBody && isMulProbProdProbCond(found.rhsBody);
 }
-function argMaxEqArgMaxBodyName(implyStmts) {
-  return isArgMaxProbCondEqMulProdShape(implyStmts) ? ARGMAX_PROBCOND_EQ_ARGMAX_MUL_PROD : "";
+function argMaxEqArgMaxBodyName(implyStmts, houseFromDisk = "") {
+  return isArgMaxProbCondEqMulProdShape(implyStmts) ? houseFromDisk : "";
 }
 /**
  * Illegal CamelCase fuse of ArgMax with ProbCond (GetArgMaxProbCond / ArgMaxProbCond).
@@ -3144,13 +3385,6 @@ function hasIllegalGetArgMaxProbCond(path) {
  * Prefer DetStack_Mul_Sum_Mul_Pow_Sub for sugar; DetOfFunMul_Sum_Mul_Pow_Sub for Matrix.of fun.
  * Choose / Range / other Pows omitted; bare DetOf / DetLtI are wrong for this spine.
  */
-const DET_STACK_MUL_SUM_MUL_POW_SUB = "DetStack_Mul_Sum_Mul_Pow_Sub";
-const DET_STACK_MUL_SUM_EQ_POW_SUB_MUL =
-  DET_STACK_MUL_SUM_MUL_POW_SUB + "/eq/PowSub__Mul";
-const DET_OF_FUN_MUL_SUM_MUL_POW_SUB = "DetOfFunMul_Sum_Mul_Pow_Sub";
-const DET_OF_FUN_MUL_SUM_EQ_POW_SUB_MUL =
-  DET_OF_FUN_MUL_SUM_MUL_POW_SUB + "/eq/PowSub__Mul";
-
 /** Matrix ofFun Fin binders on a LeanStack (`matrixFinBinders()` or structural comma-of-two-lt). */
 function matrixFinBindersOf(stack) {
   if (cls(stack) !== "LeanStack") return null;
@@ -3261,8 +3495,9 @@ function isDetOfFunMulSumMulPowSubShape(node) {
 function detMatrixEntryMulSumMulPowSubName(node) {
   const u = unwrapParen(node);
   if (cls(u) !== "LeanProperty" || cls(u.args?.[1]) !== "LeanToken" || u.args[1].text !== "det") return "";
-  if (isDetStackMulSumMulPowSubShape(u)) return DET_STACK_MUL_SUM_MUL_POW_SUB;
-  if (isDetOfFunMulSumMulPowSubShape(u)) return DET_OF_FUN_MUL_SUM_MUL_POW_SUB;
+  // Tree-shaped nameExpr atom (not a house-path table): Stack sugar vs Matrix.of fun.
+  if (isDetStackMulSumMulPowSubShape(u)) return "DetStack_Mul_Sum_Mul_Pow_Sub";
+  if (isDetOfFunMulSumMulPowSubShape(u)) return "DetOfFunMul_Sum_Mul_Pow_Sub";
   return "";
 }
 
@@ -3273,12 +3508,12 @@ function isPowSubMulExpr(node) {
   return cls(unwrapParen(u.args[0])) === "LeanSub" && cls(unwrapParen(u.args[1])) === "LeanMul";
 }
 
-function detMatrixEntryEqPowSubMulBodyName(implyStmts) {
+function detMatrixEntryEqPowSubMulBodyName(implyStmts, houseFromDisk = "") {
   const eq = peelStmt(implyStmts);
   if (cls(eq) !== "LeanEq" || (eq.args || []).length !== 2) return "";
   if (!isPowSubMulExpr(eq.args[1])) return "";
-  if (isDetStackMulSumMulPowSubShape(eq.args[0])) return DET_STACK_MUL_SUM_EQ_POW_SUB_MUL;
-  if (isDetOfFunMulSumMulPowSubShape(eq.args[0])) return DET_OF_FUN_MUL_SUM_EQ_POW_SUB_MUL;
+  if (isDetStackMulSumMulPowSubShape(eq.args[0]) || isDetOfFunMulSumMulPowSubShape(eq.args[0]))
+    return houseFromDisk;
   return "";
 }
 
@@ -4887,7 +5122,7 @@ function nameExprBase(node, opts = {}) {
 
   if (CLASS_TOKEN[name]) {
     // Arith ops stay Camel (DivLeftRight) / Prob idioms — not Left/div/Right paths.
-    const ARITH = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanMatMul"]);
+    const ARITH = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanInv", "LeanMatMul"]);
     if (!ARITH.has(name)) {
     const tag = CLASS_TOKEN[name];
     const args = node.args || [];
@@ -5026,7 +5261,7 @@ function nameExprBase(node, opts = {}) {
   // quant/exists/fun binder child (~x, L adjoint) stays a hole by default; signature A adjoint -> Adjoint (EqAdjoint).
   // keepDecorOnBinder: keep Adjoint/T/Conj as structure tokens when filling And holes (Eq_Mul_Adjoint / Eq_Mul_T).
   {
-    const decor = { LeanAdjoint: "Adjoint", LeanTranspose: "T", LeanConj: "Conj" }[name];
+    const decor = { LeanAdjoint: "Adjoint", LeanTranspose: "T", LeanConj: "Conj", LeanInv: "Inv" }[name];
     if (decor) {
       if (isQuantBinderHole(node.args?.[0], opts)) return opts?.keepDecorOnBinder ? decor : "";
       const inner = nameExpr(node.args?.[0], opts);
@@ -5269,6 +5504,9 @@ if (name === "LeanToken") {
         const hole = chooseHoleLeft(left);
         if (hole) return tag + hole + "__" + right;
       }
+      // Body: √ * (s/n) → MulSqrt_Div (underscore before Div hole; never camel MulSqrtDiv)
+      if (name === "LeanMul" && /Sqrt$/.test(left || "") && /^Div/.test(right || ""))
+        return tag + left + "_" + right;
       return tag + joinDigits(left, right);
     }
     // C * ‖x - y‖ → MulNormSub: a wrapped (norm/abs) right operand reads camel like a unary head
@@ -5468,7 +5706,7 @@ function nameExprAltsBase(node, opts = {}) {
   }
 
   if (CLASS_TOKEN[name]) {
-    const ARITH = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanMatMul"]);
+    const ARITH = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanInv", "LeanMatMul"]);
     if (!ARITH.has(name)) {
       const tag = CLASS_TOKEN[name];
       const args = node.args || [];
@@ -5630,7 +5868,7 @@ function nameExprAltsBase(node, opts = {}) {
 
     // Postfix Adjoint/T / Conj alts: quant binder child stays hole; keepDecorOnBinder keeps Adjoint*/T.
   {
-    const decor = { LeanAdjoint: "Adjoint", LeanTranspose: "T", LeanConj: "Conj" }[name];
+    const decor = { LeanAdjoint: "Adjoint", LeanTranspose: "T", LeanConj: "Conj", LeanInv: "Inv" }[name];
     if (decor) {
       if (isQuantBinderHole(node.args?.[0], opts)) return opts?.keepDecorOnBinder ? [decor] : [];
       const inner = nameExprAlts(node.args?.[0], opts);
@@ -5954,6 +6192,12 @@ function nameExprAltsBase(node, opts = {}) {
               if (prodOfFactorial(args[1])) out.push("Mul_Prod_Factorial");
               continue;
             }
+          }
+          // Body: MulSqrt_Div before camel MulSqrtDiv
+          if (name === "LeanMul" && /Sqrt$/.test(l || "") && /^Div/.test(r || "")) {
+            out.push(tag + l + "_" + r);
+            out.push(tag + l + r);
+            continue;
           }
           if (joinDigits(l, r) !== l + r) out.push(tag + joinDigits(l, r));
           out.push(tag + l + r);
@@ -6352,15 +6596,12 @@ export function suggest(filePath, lemmaName, options = {}) {
   const sections = existingSections();
   // sections are data types: folders named after Prop predicates / value definitions never decide the section
   const curTop = path.relative(LEMMA_ROOT, abs).replace(/\\/g, "/").split("/")[0];
-  // typeclass folders (NormedSpace, …) are no data types either: they only keep the files already filed there
-  // (`exp (t • Q)` with Q : Matrix … is a Matrix lemma elsewhere)
-  // topic/unknown never become sections; typeclass folders only stay if this file is still filed there
+  // lemmaSectionKind: topic/unknown never become sections; type-class folders only stay if already filed there
   const dataSections = sections.filter((s) => {
     if (nonDataFolder(s)) return false;
-    // Body 2026-10-24: these 17 are never legal (rename away; no transitional keep)
-    if (ILLEGAL_SECTIONS.has(s)) return false;
+    // refused (topic/type class / unknown): type-class folders only keep files already filed there
     if (refusedSectionFolder(s)) return sectionKindMap().get(s) === "type class" && s === curTop;
-    return !TYPECLASS_FOLDERS.has(s) || s === curTop;
+    return true;
   });
   const givenTypeNodes = extractGivens(sig.nls).filter((h) => h.prop).map((h) => h.typeNode);
   // …except for a file still filed under the predicate folder that names it: it is named as before (transitional,
@@ -6370,7 +6611,7 @@ export function suggest(filePath, lemmaName, options = {}) {
   const custom = legacy ? legacyCustom : customSection(dataSections, sig.implyStmts, givenTypeNodes, importSections(source, dataSections), sig.indented);
   const picked = pickSection(sig.colon, legacy ? sections : dataSections, {
     custom,
-    // `import sympy.….vector` → +1.5 for Vector; custom folders (Iterates, …) are decided by customSection only
+    // open/import data-type section boosts; custom folders (Iterates, …) are decided by customSection only
     imports: [
       ...[...importSections(source, sections).keys()].filter((s) => DATA_TYPE_SECTIONS.has(s) || TYPE_TO_SECTION[s]),
       ...openDataSections(source),
@@ -6538,9 +6779,10 @@ export function suggest(filePath, lemmaName, options = {}) {
   };
   setRvNames(sig.indented);
   let implyAltsA = implyAltsOf(sig, nameOpts);
-  // Body: Eq_SymmToDual In_Ico0 keeps the long fused LHS stem (not SymmToDual/eq/ExpectTSum_SMul).
+  const diskImplyHouse = implyStemFromRelPath(relCurrent);
+  // Body: Eq_SymmToDual In_Ico0 — prefer on-disk imply stem when shape matches (no hard-coded BODY const).
   {
-    const bodySymm = eqSymmToDualTSumBodyName(sig.implyStmts);
+    const bodySymm = eqSymmToDualTSumBodyName(sig.implyStmts, diskImplyHouse);
     if (bodySymm) {
       implyAltsA = uniq([bodySymm, ...implyAltsA]);
       implyAltsA.preferred = bodySymm;
@@ -6550,7 +6792,7 @@ export function suggest(filePath, lemmaName, options = {}) {
   // → ExpectDot/eq/Integral_Dot_FunSMul_GradLogProbCond
   // (not ExpectFunPowDot / Integral_Ext_FunPowDot / Integral_ExtDot).
   {
-    const bodyExpectDot = expectDotEqIntegralExtDotBodyName(sig.implyStmts);
+    const bodyExpectDot = expectDotEqIntegralExtDotBodyName(sig.implyStmts, diskImplyHouse);
     if (bodyExpectDot) {
       implyAltsA = uniq([bodyExpectDot, ...implyAltsA]);
       implyAltsA.preferred = bodyExpectDot;
@@ -6560,36 +6802,25 @@ export function suggest(filePath, lemmaName, options = {}) {
   // → ExpectSum_SMulMulPow/eq/Integral_Sum_SMul_GradLogProbCond
   // (MulPow on ExpectSum LHS; GradLog on Integral RHS — not short SMul or fused MulPow_GradLog).
   {
-    const bodyExpectSum = expectSumSMulEqIntegralSumSMulBodyName(sig.implyStmts);
+    const bodyExpectSum = expectSumSMulEqIntegralSumSMulBodyName(sig.implyStmts, diskImplyHouse);
     if (bodyExpectSum) {
       implyAltsA = uniq([bodyExpectSum, ...implyAltsA]);
       implyAltsA.preferred = bodyExpectSum;
     }
   }
   // Body: max⁻¹ ProbCond = max⁻¹ (Mul Prob * Prod ProbCond)
-  // → ArgMax_ProbCond/eq/ArgMax_Mul_Prod_ProbCond (never GetArgMaxProbCond / ArgMaxProbCond).
-  // Legacy ArgMax/eq/ArgMax and Eq/ArgMax/Mul/Prod_ProbCond stay accepted.
+  // Prefer on-disk imply stem when shape matches (no hard-coded ArgMax BODY / legacy const alts).
   {
-    const bodyArgMax = argMaxEqArgMaxBodyName(sig.implyStmts);
+    const bodyArgMax = argMaxEqArgMaxBodyName(sig.implyStmts, diskImplyHouse);
     if (bodyArgMax) {
-      implyAltsA = uniq([
-        bodyArgMax,
-        ARGMAX_EQ_ARGMAX,
-        ARGMAX_EQ_MUL_PROD_PROBCOND,
-        ...implyAltsA,
-      ]);
+      implyAltsA = uniq([bodyArgMax, ...implyAltsA]);
       implyAltsA.preferred = bodyArgMax;
-      implyAltsA.extra = uniq([
-        ...(implyAltsA.extra || []),
-        ARGMAX_EQ_ARGMAX,
-        ARGMAX_EQ_MUL_PROD_PROBCOND,
-      ]);
     }
   }
   // Body: ([i < n, j < n] … Mul_Sum … Pow_Sub).det = (x - l)^(d * n)
   // → DetStack_Mul_Sum_Mul_Pow_Sub/eq/PowSub__Mul (Matrix.of fun → DetOfFun…; not DetLtI / bare DetOf).
   {
-    const bodyDetEntry = detMatrixEntryEqPowSubMulBodyName(sig.implyStmts);
+    const bodyDetEntry = detMatrixEntryEqPowSubMulBodyName(sig.implyStmts, diskImplyHouse);
     if (bodyDetEntry) {
       implyAltsA = uniq([bodyDetEntry, ...implyAltsA]);
       implyAltsA.preferred = bodyDetEntry;
@@ -6598,10 +6829,97 @@ export function suggest(filePath, lemmaName, options = {}) {
   // Body: ∑∑ (x-μ)² = n·∑(ȳ-μ)² + ∑∑(x-ȳ)² → Sum_SquareSub_DivSum/eq/AddMul_Sum_SquareSubDivSSum
   // (mean DivSum; plural S for SA+SE SquareSub). Long Sum_Sum_SquareSub_DivSum_SumMul dump is alt-only.
   {
-    const bodyAnova = sumSquareSubDivSumEqAddMulBodyName(sig.implyStmts);
+    const bodyAnova = sumSquareSubDivSumEqAddMulBodyName(sig.implyStmts, diskImplyHouse);
     if (bodyAnova) {
       implyAltsA = uniq([bodyAnova, ...implyAltsA]);
       implyAltsA.preferred = bodyAnova;
+    }
+  }
+  // Body: sum (a-mean)^2 = sum a^2 - (sum a)^2/|s| -> Sum_SquareSub_DivSum/eq/SubSum_Square_DivSquareSum__Card
+  // (camel DivSum; SubSum_Square_DivSquareSum__Card — not Div_Sum / glued SquareDivSquareSumCard).
+  {
+    const bodySse = isSseSumSquareSubMeanEqSubSumSquareDivCard(sig.implyStmts)
+      ? sseEqHouseImplyStem()
+      : "";
+    if (bodySse) {
+      // 120 `/eq/` + 120 Eq__; drop any stem with `_{3,}` (e.g. House Eq…DivSum___…).
+      const sseEqAll = sseEqCartesianImplyStems(bodySse);
+      const sseEqKeep = sseEqAll.filter((s) => !sseHasTripleUnderscore(s));
+      const sseEqKeepSet = new Set(sseEqKeep);
+      const sseLhsAlt = SSE_EQ_LHS.slice().sort((a, b) => b.length - a.length).join("|");
+      const isSseEqPreservingExpansion = (core) => {
+        const s = String(core || "").replace(/\\/g, "/").replace(/\.lean$/, "");
+        if (sseHasTripleUnderscore(s)) return false;
+        const i = s.search(new RegExp("(?:^|/)(?:" + sseLhsAlt + ")/eq/"));
+        if (i >= 0) {
+          const leaf = s.slice(i === 0 ? 0 : i + 1);
+          if (sseEqKeepSet.has(leaf)) return true;
+        }
+        const base = s.includes("/") ? s.slice(s.lastIndexOf("/") + 1) : s;
+        return sseEqKeepSet.has(base);
+      };
+      const isLegacySseImply = (p) => {
+        const core = String(p || "").replace(/\\/g, "/").replace(/\.lean$/, "");
+        return !isSseEqPreservingExpansion(core);
+      };
+      // House `/eq/` first in inject list; `_{3,}` already stripped.
+      const injected = [...sseEqKeepSet];
+      injected.sort((a, b) => {
+        if (a === bodySse) return -1;
+        if (b === bodySse) return 1;
+        return a.length - b.length || (a < b ? -1 : a > b ? 1 : 0);
+      });
+      implyAltsA = uniq([
+        ...injected,
+        ...implyAltsA.filter((p) => !isLegacySseImply(p)),
+      ]);
+      implyAltsA.preferred = bodySse;
+      implyAltsA.isLegacySseImply = isLegacySseImply;
+      implyAltsA.sseShowCap = sseEqKeepSet.size;
+    }
+  }
+
+
+
+  // Body: MulInvSqrt family — tree walk emits choices; house preference from on-disk imply stem.
+  {
+    const houseMis = isMulInvSqrtEqFamily(diskImplyHouse) ? diskImplyHouse : "";
+    const fromTree = mulInvSqrtEqImplyStemsFromTree(sig.implyStmts, nameOpts, houseMis);
+    const nameMis = sanitizeRelPath(nameExpr(sig.implyStmts, nameOpts) || "");
+    if (fromTree || isMulInvSqrtEqFamily(implyAltsA) || isMulInvSqrtEqFamily(nameMis) || houseMis) {
+      const bodyMis =
+        houseMis ||
+        (fromTree && fromTree.stems.find((s) => String(s).includes("/eq/"))) ||
+        (fromTree && fromTree.stems[0]) ||
+        "";
+      const injected = fromTree ? fromTree.stems : mulInvSqrtEqAllowedImplyStems(bodyMis, sig.implyStmts, nameOpts);
+      const keepSet = new Set(injected);
+      const isLegacyMulInvSqrtImply = (p) => {
+        const core = String(p || "").replace(/\\/g, "/").replace(/\.lean$/, "");
+        let leaf = core;
+        const eqi = core.search(/(?:^|\/)(?:MulInvSqrt|MulInv|Mul)\/eq\//);
+        if (eqi >= 0) {
+          const start = eqi === 0 ? 0 : eqi + 1;
+          const ofi = core.indexOf("/of/", start);
+          leaf = ofi >= 0 ? core.slice(start, ofi) : core.slice(start);
+        } else {
+          const ofi = core.indexOf("/of/");
+          const body = ofi >= 0 ? core.slice(0, ofi) : core;
+          leaf = body.includes("/") ? body.slice(body.lastIndexOf("/") + 1) : body;
+        }
+        return !keepSet.has(leaf) && !isAllowedMulInvSqrtEqImply(core) && !isAllowedMulInvSqrtEqImply(leaf);
+      };
+      implyAltsA = uniq([
+        ...injected,
+        ...implyAltsA.filter((p) => isAllowedMulInvSqrtEqImply(p)),
+      ]);
+      if (bodyMis) implyAltsA.preferred = bodyMis;
+      implyAltsA.isLegacyMulInvSqrtImply = isLegacyMulInvSqrtImply;
+      implyAltsA.mulInvSqrtShowCap = keepSet.size;
+      if (fromTree) {
+        implyAltsA.mulInvSqrtLhs = fromTree.left;
+        implyAltsA.mulInvSqrtRhs = fromTree.right;
+      }
     }
   }
   // Canonical rendering (nameExpr) first when it is among the alternatives.
@@ -6654,7 +6972,10 @@ export function suggest(filePath, lemmaName, options = {}) {
     const segs = String(p).split("/").filter(Boolean);
     return !(segs.includes("MEq") && segs.length > 1);
   };
-  const implyAlts = uniq([...implyAltsA, ...(passB?.implyAlts || [])]).filter(legalMeqImply);
+  const implyAlts = uniq([...implyAltsA, ...(passB?.implyAlts || [])])
+    .filter(legalMeqImply)
+    .filter((p) => !(implyAltsA.isLegacySseImply && implyAltsA.isLegacySseImply(p)))
+    .filter((p) => !(implyAltsA.isLegacyMulInvSqrtImply && implyAltsA.isLegacyMulInvSqrtImply(p)));
   // Hole-hole descFactorial * Pow_Sub. Preferred tail is MulDescFactorial.
   // The `__` and Mul_Pow_Sub spellings are longer and otherwise fall past the shown-alt cap.
   {
@@ -6723,11 +7044,11 @@ export function suggest(filePath, lemmaName, options = {}) {
     if (h.prop && structLike && dataHeads.has(typeHead(t)) && !/^Is[A-Z]/.test(typeHead(t))) return { ...h, prop: false };
     // `(w : EuclideanVec d)` used in the conclusion: EuclideanVec is a type abbreviation, so w is a value
     // (kept as an optional given: ActorBox/Dist/le/Dist/of/EuclideanVec spells it)
-    if (h.prop && structLike && sympyDecls().typeAbbrevs.has(typeHead(t)) && usedInConcl) return { ...h, optional: true, canonSkip: true };
+    if (h.prop && structLike && repoDecls().typeAbbrevs.has(typeHead(t)) && usedInConcl) return { ...h, optional: true, canonSkip: true };
     // `(μ : Measure Ω)` passed to the conclusion: a data argument (Random/Quantile/sub/QuantileLower);
     // a repo structure passed whole (`hMix : UniformExponentialMixing …`) may still be listed
     if (h.prop && structLike && usedInConcl && (TYPE_TO_SECTION[typeHead(t)] === typeHead(t) || typeHead(t) === "Measure")) return { ...h, optional: true, canonSkip: true };
-    if (h.prop && structLike && usedInConcl && sympyDecls().structs.has(typeHead(t))) return { ...h, optional: true };
+    if (h.prop && structLike && usedInConcl && repoDecls().structs.has(typeHead(t))) return { ...h, optional: true };
     // integrability side conditions may be left out of Random/ expectation names (Random/LeExpect/of/Le)
     if (h.prop && section === "Random") {
       let b = t;
@@ -6984,7 +7305,8 @@ export function suggest(filePath, lemmaName, options = {}) {
   ])];
   // Displayed suggestions: capped product; membership is decided by altMatch below.
   const PATH_CAP = 20000;
-  const shownImply = implyAlts.slice(0, 200);
+  const implyShowCap = Math.max(200, implyAltsA.sseShowCap || 0, implyAltsA.mulInvSqrtShowCap || 0);
+  const shownImply = implyAlts.slice(0, implyShowCap);
   const shownGiven = givenPaths.slice(0, Math.max(1, Math.floor(PATH_CAP / Math.max(1, shownImply.length))));
   // non-ASCII (Greek / subscript) components are allowed, as in the repo (QLearningSpec/AbsSubMaxₐ);
   // invalid module components are filtered below
@@ -7212,8 +7534,24 @@ export function pathsConsistent(existing, suggested) {
 /** Paths longer than this ("Lemma/…​.lean") are flagged; build prefixes push them past MAX_PATH. */
 const PATH_WARN_LEN = 150;
 
-/** Shortest ASCII bytes first; tie-break lexicographic. Occupied-path demotion is applied by the caller. */
+/**
+ * Body ranking (2026-10-31): after free/canon, prefer underscore Gt_0 and MulSqrt_Div;
+ * keep bare Lt0 (do not prefer Lt_0). Then shortest ASCII bytes; tie-break lexicographic.
+ * Occupied-path demotion is applied by the caller.
+ */
+function pathBodyPenalty(p) {
+  const s = String(p || "").replace(/\\/g, "/");
+  let pen = 0;
+  // of-atom Gt0 is wrong → Gt_0; of-atom Lt_0 loses to Lt0
+  if (/(?:^|\/)Gt0(?=\/|\.lean$)/.test(s)) pen += 200;
+  if (/(?:^|\/)Lt_0(?=\/|\.lean$)/.test(s)) pen += 200;
+  // camel MulSqrtDiv loses to MulSqrt_Div
+  if (/(?:^|\/|eq\/)MulSqrtDiv(?=\/|\.lean$)/.test(s)) pen += 100;
+  return pen;
+}
 function byBestToWorst(a, b) {
+  const pa = pathBodyPenalty(a), pb = pathBodyPenalty(b);
+  if (pa !== pb) return pa - pb;
   const ba = Buffer.byteLength(a, "utf8");
   const bb = Buffer.byteLength(b, "utf8");
   if (ba !== bb) return ba - bb;

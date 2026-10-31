@@ -1,5 +1,5 @@
 import Initialize.Tactic.Attr.Basic
-import Def.Analysis.Real.Limits.Part4
+import Def.Analysis.Real.Limits.Basic
 open ArchimedeanClass
 
 

@@ -1,7 +1,7 @@
 import Mathlib.Topology.Order.DenselyOrdered
 import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
 import Mathlib.Topology.Algebra.Order.Field
-import Def.Analysis.Real.Limits.Part4
+import Def.Analysis.Real.Limits.Basic
 import Initialize.Tactic.Attr.Basic
 
 

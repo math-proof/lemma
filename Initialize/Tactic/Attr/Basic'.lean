@@ -1,4 +1,5 @@
 import Def.Tactic.Attr.Basic'
+import Initialize.Lean.Meta.Fun2Arrow
 open Lean Lean.Meta
 
 
@@ -696,6 +697,25 @@ initialize registerBuiltinAttribute {
     Lean.logInfo s!"[mp.right'] final type = {type}"
     let name := Name.mpProjName (← getEnv).moduleTokens declName false
     Lean.logInfo s!"[mp.right'] name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `Fun'
+  descr := "Automatically generate the theorem with Fun/⇀ binders as bare arrows and GetElem as application (debug Fun')."
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ := Expr.substFun decl.type (.const declName (levelParams.map .param)) stx.getNum
+    let name := ((← getEnv).module.lemmaName declName).str "fun"
+    println! s!"Fun' name = {name}"
+    println! s!"Fun' type = {type}"
     addAndCompile <| .thmDecl {
       name := name
       levelParams := levelParams

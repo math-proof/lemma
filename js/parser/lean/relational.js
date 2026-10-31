@@ -13,6 +13,7 @@
 import { escapeSpecialsForLatex } from './utility.js';
 import { LeanBinaryBoolean } from './boolean.js';
 import { Lean } from './base.js';
+import { pathEqCombineChoices } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -154,6 +155,24 @@ export class LeanEq extends LeanRelational {
         const sep = this.sep();
         return `{%s} ${this.opLatex()}${sep}{%s}`;
     }
+
+    /**
+     * Lemma-path imply stems at an Eq root (infix): both LHS.eq.RHS and flat Op(LHS)(RHS).
+     * Trailing `_` stripped only here. Mul×Mul flat (EqMulS) skipped — Mul/eq/Mul covers it.
+     * Returns null when not the MulInvSqrt / MulSqrt_Div family.
+     * @param {object} [opts]
+     * @param {string} [house]
+     * @returns {{ left: string[], right: string[], stems: string[], soft: string } | null}
+     */
+    pathImplyStems(opts = {}, house = "") {
+        const left = this.lhs?.pathChoices?.(opts) ?? [""];
+        const right = this.rhs?.pathChoices?.(opts) ?? [""];
+        const combined = pathEqCombineChoices(left, right, house);
+        if (!combined.left.includes("MulInvSqrt") || !combined.right.includes("MulSqrt_Div"))
+            return null;
+        return combined;
+    }
+
 }
 
 /**

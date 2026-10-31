@@ -150,9 +150,17 @@ export class LeanColon extends LeanBinary {
         return super.latexArgs(syntax);
     }
 
+    /** `:i` / `:i, :j` inside `y[...]` stay tight; ascriptions keep spaces. */
+    isGetElemIndexColon() {
+        const p = this.parent;
+        if (p instanceof L.LeanGetElem) return true;
+        if (p instanceof L.LeanArgsCommaSeparated && p.parent instanceof L.LeanGetElem) return true;
+        return false;
+    }
+
     sep() {
         const rhs = this.rhs;
-        return rhs instanceof L.LeanStatements ? '\n' : (rhs instanceof L.LeanCaret || this.parent instanceof L.LeanGetElem ? '' : ' ');
+        return rhs instanceof L.LeanStatements ? '\n' : (rhs instanceof L.LeanCaret || this.isGetElemIndexColon() ? '' : ' ');
     }
 
     strArgs() {
@@ -169,7 +177,7 @@ export class LeanColon extends LeanBinary {
     strFormat() {
         const sep = this.sep();
         let first = '%s';
-        if (!(this.parent instanceof L.LeanGetElem)) {
+        if (!this.isGetElemIndexColon()) {
             if (sep === ' ') {
                 first += ' ';
             } else if (sep === '\n') {
@@ -181,5 +189,14 @@ export class LeanColon extends LeanBinary {
             }
         }
         return `${first}${this.operator}${sep}%s`;
+    }
+
+    /**
+     * Path choices: ascription `a : T` — walk the value (lhs), ignore type.
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        return this.lhs?.pathChoices?.(opts) ?? [""];
     }
 }

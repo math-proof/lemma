@@ -1,4 +1,4 @@
-import Def.LinearAlgebra.Matrix.Permutation
+import Def.LinearAlgebra.Matrix.Permutation.Tensor
 
 
 @[path]

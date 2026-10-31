@@ -27,6 +27,19 @@ abstract class LeanArithmetic extends LeanBinary
         return "%s $this->operator$sep%s";
     }
 
+    /**
+     * Big operators (sum/prod/...) as arithmetic operands need parens so echo
+     * round-trip keeps binder `:` from being misparsed (e.g. inside `have` types:
+     * `a * sum i : Fin m, e` -> unexpected identifier). Do not reparent the AST.
+     */
+    public function strArgs()
+    {
+        return array_map(
+            fn($arg) => $arg instanceof LeanBigOperator ? "($arg)" : $arg,
+            $this->args
+        );
+    }
+
 }
 
 
@@ -248,20 +261,37 @@ class LeanDiv extends LeanArithmetic
     {
         $lhs = $this->lhs->peelLatexCoe();
         $rhs = $this->rhs->peelLatexCoe();
-        if ($lhs instanceof LeanDiv) {
-        } else {
+        if (!($lhs instanceof LeanDiv)) {
             if ($lhs instanceof LeanParenthesis && !($lhs->arg instanceof LeanColon))
                 $lhs = $lhs->arg;
             if ($rhs instanceof LeanParenthesis && !($rhs->arg instanceof LeanColon))
                 $rhs = $rhs->arg;
         }
-        $lhs = $lhs->toLatex($syntax);
-        if ($rhs instanceof LeanDiv)
-            $rhs = sprintf('\left. {%s} \right/ {%s}', ...$rhs->latexArgs($syntax));
-        else
-            $rhs = $rhs->toLatex($syntax);
-        return [$lhs, $rhs];
+        // Flat / needs parens around low-precedence Add/Sub denominator.
+        $wrapFlatRhs = function ($node, $latex) {
+            if ($node instanceof LeanAdd || $node instanceof LeanSub)
+                return sprintf('\left(%s\right)', $latex);
+            return $latex;
+        };
+        $flatDiv = function ($node) use (&$syntax, $wrapFlatRhs) {
+            [$a, $b] = $node->latexArgs($syntax);
+            $lhsN = $node->lhs->peelLatexCoe();
+            if (!($lhsN instanceof LeanDiv)) {
+                $r = $node->rhs->peelLatexCoe();
+                if ($r instanceof LeanParenthesis && !($r->arg instanceof LeanColon))
+                    $r = $r->arg;
+                $b = $wrapFlatRhs($r, $b);
+            }
+            return sprintf('\left. {%s} \right/ {%s}', $a, $b);
+        };
+        // Nested Div as numerator or denominator of a Div lies flat (inline /).
+        $lhsLatex = $lhs instanceof LeanDiv ? $flatDiv($lhs) : $lhs->toLatex($syntax);
+        $rhsLatex = $rhs instanceof LeanDiv ? $flatDiv($rhs) : $rhs->toLatex($syntax);
+        if ($lhs instanceof LeanDiv)
+            $rhsLatex = $wrapFlatRhs($rhs, $rhsLatex);
+        return [$lhsLatex, $rhsLatex];
     }
+
     public function latexFormat()
     {
         if ($this->lhs instanceof LeanDiv) {
@@ -481,7 +511,12 @@ class LeanPow extends LeanArithmetic
 
         if ($rhs instanceof LeanParenthesis)
             $rhs = $rhs->arg;
-        return [$lhs->toLatex($syntax), $rhs->toLatex($syntax)];
+        // Juxta/app base needs grouping: `a i ^ 2` → `(a i)^2`. Skip when the
+        // source already wrapped the app (`(a i) ^ 2`) or Abs/Bool self-delimit.
+        $lhsLatex = $lhs->toLatex($syntax);
+        if ($lhs instanceof LeanArgsSpaceSeparated && !$lhs->is_Abs() && !$lhs->is_Bool())
+            $lhsLatex = "\\left($lhsLatex\\right)";
+        return [$lhsLatex, $rhs->toLatex($syntax)];
     }
 }
 

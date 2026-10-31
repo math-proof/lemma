@@ -143,6 +143,16 @@ export class CMBridge {
     };
   }
 
+  /** CM5 setSelection — replace selection with one range and scroll it into view. */
+  setSelection(anchor, head) {
+    const a = posToOffset(this.doc, anchor.line, anchor.ch);
+    const h = head != null ? posToOffset(this.doc, head.line, head.ch) : a;
+    this.view.dispatch({
+      selection: EditorSelection.range(a, h),
+      scrollIntoView: true,
+    });
+  }
+
   /** CM5 addSelection — extend multi-selection (error highlight path). */
   addSelection(anchor, head) {
     const a = posToOffset(this.doc, anchor.line, anchor.ch);
@@ -152,7 +162,7 @@ export class CMBridge {
       [...cur.ranges, EditorSelection.range(a, h)],
       cur.ranges.length,
     );
-    this.view.dispatch({ selection: next });
+    this.view.dispatch({ selection: next, scrollIntoView: true });
   }
 
   moveH(dir, unit) {

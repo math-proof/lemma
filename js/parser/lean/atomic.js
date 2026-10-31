@@ -237,7 +237,7 @@ export class LeanToken extends Lean {
 
     latexFormat() {
         if (this.text === '𝒩' || this.text === 'gaussianReal' || this.text === 'multivariateGaussian') return '\\mathcal{N}';
-        if (this.text === 'chiSquaredReal') return '\\mathcal{X}^{2}';
+        if (this.text === 'chiSquare' || this.text === 'chiSquaredReal') return '\\mathcal{X}^{2}';
         if (this.text === 'fisherReal') return '\\mathrm{F}';
         if (this.text === '∇') return '\\nabla';
         if (this.text === '∞') return '\\infty';

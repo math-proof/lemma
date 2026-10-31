@@ -10,6 +10,7 @@
 import '../../py.js';
 import { LeanBinary, LeanUnary } from './abstract.js';
 import { Lean } from './base.js';
+import { pathCombineMulChoices, pathUniqKeepEmpty } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -31,6 +32,15 @@ export class LeanArithmetic extends LeanBinary {
     strFormat() {
         const sep = this.sep();
         return `%s ${this.operator}${sep}%s`;
+    }
+
+    /**
+     * Big operators (sum/prod/...) as arithmetic operands need parens so echo
+     * round-trip keeps binder `:` from being misparsed (e.g. inside `have` types:
+     * `a * sum i : Fin m, e` -> unexpected identifier). Do not reparent the AST.
+     */
+    strArgs() {
+        return this.args.map((arg) => (arg instanceof L.LeanBigOperator ? `(${arg})` : arg));
     }
 }
 
@@ -153,6 +163,19 @@ export class LeanMul extends LeanArithmetic {
         const {command} = this;
         return `%s ${command} %s`;
     }
+
+    /**
+     * Path choices: non-infix binary — Op(LHS)(RHS) factor forms only (keep trailing `_`).
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        return pathCombineMulChoices(
+            this.lhs?.pathChoices?.(opts) ?? [""],
+            this.rhs?.pathChoices?.(opts) ?? [""],
+        );
+    }
+
 }
 
 export class Lean_times extends LeanArithmetic {
@@ -284,10 +307,28 @@ export class LeanDiv extends LeanArithmetic {
             if (rhs instanceof L.LeanParenthesis && !(rhs.arg instanceof L.LeanColon))
                 rhs = rhs.arg;
         }
-        const rhsLatex = rhs instanceof LeanDiv
-            ? '\\left. {%s} \\right/ {%s}'.format(...rhs.latexArgs(syntax))
-            : rhs.toLatex(syntax);
-        return [lhs.toLatex(syntax), rhsLatex];
+        // Flat / needs parens around low-precedence Add/Sub denominator.
+        const wrapFlatRhs = (node, latex) =>
+            (node instanceof LeanAdd || node instanceof LeanSub)
+                ? ('\\left(' + latex + '\\right)')
+                : latex;
+        // Nested Div as numerator or denominator of a Div lies flat (inline /),
+        // never as a tall stacked frac inside another fraction.
+        const flatDiv = (node) => {
+            let [a, b] = node.latexArgs(syntax);
+            if (!(node.lhs.peelLatexCoe() instanceof LeanDiv)) {
+                let r = node.rhs.peelLatexCoe();
+                if (r instanceof L.LeanParenthesis && !(r.arg instanceof L.LeanColon))
+                    r = r.arg;
+                b = wrapFlatRhs(r, b);
+            }
+            return '\\left. {%s} \\right/ {%s}'.format(a, b);
+        };
+        const lhsLatex = lhs instanceof LeanDiv ? flatDiv(lhs) : lhs.toLatex(syntax);
+        let rhsLatex = rhs instanceof LeanDiv ? flatDiv(rhs) : rhs.toLatex(syntax);
+        if (lhs instanceof LeanDiv)
+            rhsLatex = wrapFlatRhs(rhs, rhsLatex);
+        return [lhsLatex, rhsLatex];
     }
 
     latexFormat() {
@@ -296,6 +337,16 @@ export class LeanDiv extends LeanArithmetic {
         }
         return '\\frac {%s} {%s}';
     }
+
+    /**
+     * Path choices: Div fragment (+ omit). Mid `_` appears at MulSqrt_Div in Mul combine.
+     * @param {object} [_opts]
+     * @returns {string[]}
+     */
+    pathChoices(_opts = {}) {
+        return ["Div", ""];
+    }
+
 }
 
 export class LeanFDiv extends LeanArithmetic {
@@ -491,10 +542,19 @@ export class LeanPow extends LeanArithmetic {
         }
         if (rhs instanceof L.LeanParenthesis)
             rhs = rhs.arg;
+        // Juxta/app base needs grouping: `a i ^ 2` → `(a i)^2`. Skip when the
+        // source already wrapped the app (`(a i) ^ 2`) or Abs/Bool self-delimit.
+        let lhsLatex = lhs.toLatex(syntax);
+        if (
+            lhs instanceof L.LeanArgsSpaceSeparated &&
+            !lhs.is_Abs() &&
+            !lhs.is_Bool()
+        )
+            lhsLatex = `\\left(${lhsLatex}\\right)`;
         const rhsLatex = rhs instanceof LeanDiv
             ? '\\left. {%s} \\right/ {%s}'.format(...rhs.latexArgs(syntax))
             : rhs.toLatex(syntax);
-        return [lhs.toLatex(syntax), rhsLatex];
+        return [lhsLatex, rhsLatex];
     }
 }
 
@@ -840,6 +900,19 @@ export class LeanInv extends LeanUnaryArithmeticPost {
     latexArgs(syntax) {
         return [this.arg.peelLatexCoe().toLatex(syntax)];
     }
+
+    /**
+     * Path choices: unary Op(Arg); omit arg → Inv_ (hole kept through combine).
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        const kids = this.arg?.pathChoices?.(opts) ?? [""];
+        const out = [""];
+        for (const k of kids) out.push(k ? "Inv" + k : "Inv_");
+        return pathUniqKeepEmpty(out);
+    }
+
 }
 
 /** Mathlib `infixl:80 " ⁻¹' "` — preimage `f ⁻¹' s`. */
@@ -928,9 +1001,19 @@ export class Lean_sqrt extends LeanUnaryArithmeticPre {
         if (arg instanceof L.LeanParenthesis) arg = arg.arg;
         return [arg.toLatex(syntax)];
     }
+
+    /**
+     * Path choices: Sqrt_ (+ omit); arg hole kept for Mul(Inv(Sqrt_)_).
+     * @param {object} [_opts]
+     * @returns {string[]}
+     */
+    pathChoices(_opts = {}) {
+        return ["Sqrt_", ""];
+    }
+
 }
 
-/** Prefix conjugate `~z` (`starRingEnd ℂ` / SymPy `~z`). */
+/** Prefix conjugate `~z` (`starRingEnd ℂ`). */
 export class LeanConj extends LeanUnaryArithmeticPre {
     static { this.register(); }
 

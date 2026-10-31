@@ -376,8 +376,10 @@ class LeanArgsSpaceSeparated extends LeanArgs
                             $args = $this->strip_parenthesis();
                             $arg = $args[1]->toLatex($syntax);
                             return [$arg];
+                        case 'chiSquare':
                         case 'chiSquaredReal':
-                            // `chiSquaredReal n` — peel grouping parens; `\mathcal{X}^{2}` is the format atom.
+                            // `chiSquare n` / legacy `chiSquaredReal n` — peel grouping parens.
+                            // Qualified `Real.chiSquare n` is handled via LeanProperty below.
                             $arg = $this->args[1];
                             if ($arg instanceof LeanParenthesis && $arg->arg instanceof LeanDiv)
                                 $arg = $arg->arg;
@@ -427,6 +429,21 @@ class LeanArgsSpaceSeparated extends LeanArgs
             if ($k instanceof LeanParenthesis)
                 $k = $k->arg;
             return [$n->toLatex($syntax), $k->toLatex($syntax)];
+        } elseif (
+            $func instanceof LeanProperty &&
+            $func->lhs instanceof LeanToken &&
+            $func->lhs->text === 'Real' &&
+            $func->rhs instanceof LeanToken &&
+            $func->rhs->text === 'chiSquare' &&
+            count($args) === 2
+        ) {
+            // `Real.chiSquare n` — same peel as bare `chiSquare n`.
+            $arg = $this->args[1];
+            if ($arg instanceof LeanParenthesis && $arg->arg instanceof LeanDiv)
+                $arg = $arg->arg;
+            else
+                $arg = $arg->peelGroup();
+            return [$arg->toLatex($syntax)];
         }
         return parent::latexArgs($syntax);
     }
@@ -485,6 +502,7 @@ class LeanArgsSpaceSeparated extends LeanArgs
                             return '\mathbf{0}_{%s}';
                         case 'Ones':
                             return '\mathbf{1}_{%s}';
+                        case 'chiSquare':
                         case 'chiSquaredReal':
                             // sympy `_latex`: `\mathcal{X}^{2}%s` with `%s` = `\left(n\right)` (one atom; no space before the paren).
                             return '\\mathcal{X}^{2}\\left(%s\\right)';
@@ -524,6 +542,15 @@ class LeanArgsSpaceSeparated extends LeanArgs
                     case 'choose':
                         if (count($args) == 2 || count($args) == 3)
                             return '\\binom{%s}{%s}';
+                        break;
+                    case 'chiSquare':
+                        // `Real.chiSquare n` -> glued mathcal X^2 (Def Part2).
+                        if (
+                            $func->lhs instanceof LeanToken &&
+                            $func->lhs->text === 'Real' &&
+                            count($args) === 2
+                        )
+                            return '\\mathcal{X}^{2}\\left(%s\\right)';
                         break;
                 }
             }

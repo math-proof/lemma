@@ -1,4 +1,4 @@
-import Def.Analysis.Real.Limits.Part4
+import Def.Analysis.Real.Limits.Basic
 import Lemma.Nat.NotLt.of.Ge
 open Nat
 

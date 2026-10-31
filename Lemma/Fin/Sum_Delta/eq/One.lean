@@ -1,4 +1,4 @@
-import Def.LinearAlgebra.Matrix.Permutation
+import Def.LinearAlgebra.Matrix.Permutation.Tensor
 import Lemma.Nat.Delta.eq.Ite
 open Nat
 

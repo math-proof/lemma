@@ -1,12 +1,9 @@
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Basic.Complex.Basic
 import Mathlib.Order.Interval.Finset.Fin
+import Def.LinearAlgebra.Matrix.Permutation
 open Matrix
 
-
-/-- py `SwapMatrix(n, i, j)`: the permutation matrix of the transposition `(i j)`. -/
-def swapMatrix {n : ℕ} (i j : Fin n) : Matrix (Fin n) (Fin n) ℂ :=
-  Matrix.of fun a b => if b = Equiv.swap i j a then 1 else 0
 
 /-- py `k + ReducedArgMax(Sign(Abs(M[k:, k])))`: the first row `r ≥ k` with `M r k ≠ 0`
 (argmax of the 0/1 vector `sign |M[k:, k]|`, first index on ties), or `k` if there is none. -/

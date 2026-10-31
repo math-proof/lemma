@@ -320,6 +320,12 @@ export class LeanBigOperator extends LeanArgs {
                 return caret;
             }
             else if (indent > this.indent) {
+                // Continue trailing app in scope across newline under forall/exists
+                // (HasLaw (fun...) then indented (Measure.pi...)).
+                if (caret instanceof L.LeanArgsSpaceSeparated) {
+                    const cont = caret.push_args_indented(indent, newline_count);
+                    if (cont) return cont;
+                }
                 // a more-indented line continues the scope (e.g. a dangling
                 // operator); a dedent closes this statement entirely — let the
                 // enclosing statement list handle it instead of absorbing it
@@ -460,7 +466,7 @@ export class Lean_sum extends LeanBigOperator {
         }
         const nested = this.nestedSumChain();
         if (nested) {
-            // Inner binder first (evaluation / sympy substack order), then outer.
+            // Inner binder first (evaluation / substack order), then outer.
             const limits = [...nested.chain].reverse().map((s) => s.sumLimitLatex(syntax)).join(' \\\\ ');
             return [limits, nested.body.toLatex(syntax)];
         }

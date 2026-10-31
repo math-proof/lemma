@@ -386,34 +386,14 @@ const self = new Vue({
             this.echo(module).catch(err => console.error('[echo]', err));
         }
 
+        // Start proof fetch before #anchor so regexp2indices can see proof text.
+        if (this.lemma.any(lemma => !lemma.proof))
+            this.fetch_proof(module).catch(err => console.error('[fetch_proof]', err));
+
         var {hash} = location;
         if (hash) {
             hash = hash.slice(1).decodeURI();
-            var [line, col] = hash.split(':');
-            var index;
-            if (line.isInteger) {
-                line = parseInt(line);
-                col = parseInt(col);
-            }
-            else if ((index = this.lemma.findIndex(lem => lem.name == line)) >= 0) {
-                var indices = [index, 'proof'];
-                var {proof} = this.lemma[index];
-                if (proof.calc)
-                    indices.push('calc');
-                else if (proof.by)
-                    indices.push('by');
-                indices.push(0);
-                line = this.indices2line(indices);
-            } else {
-                var [indices] = this.regexp2indices(line.replace(/\./g, '\\.'));
-                if (indices)
-                    line = this.indices2line(indices);
-                else 
-                    line = null;
-            }
-            if (line)
-                this.highlight(line, col);
-            else {
+            if (!this.apply_location_hash()) {
                 switch (hash) {
                 case 'window.close':
                     var count = 0;
@@ -468,9 +448,6 @@ where
         }
         else if (!hash && !this.lemma.any(lemma => !lemma.proof))
             this.focus_main_proof_when_ready();
-
-        if (this.lemma.any(lemma =>!lemma.proof))
-            this.fetch_proof(module).catch(err => console.error('[fetch_proof]', err));
     },
 
     methods: {
@@ -595,7 +572,77 @@ order by depth desc`);
             );
 		},
 
-        highlight(line, col, title) {
+        apply_location_hash(tries = 0) {
+            var raw = location.hash;
+            if (!raw)
+                return false;
+            var hash = raw.slice(1).decodeURI();
+            if (hash === "window.close" || hash === "lean4web")
+                return false;
+
+            var [linePart, colPart] = hash.split(":");
+            var line, col, end;
+            var index;
+
+            if (linePart.isInteger) {
+                line = parseInt(linePart);
+                if (colPart != null && colPart !== "")
+                    col = parseInt(colPart);
+            } else if ((index = this.lemma.findIndex(lem => lem.name == linePart)) >= 0) {
+                // #lemmaName → name field, not proof[0]
+                line = this.indices2line([index, "name"]);
+            } else {
+                var [indices] = this.regexp2indices(linePart.replace(/\./g, "\\."));
+                if (!indices) {
+                    // Proof may still be loading (fetch_proof) or about to remount (echo).
+                    if (tries < 120 && this.lemma.any(l => !l.proof)) {
+                        this.$nextTick(() => {
+                            requestAnimationFrame(() => this.apply_location_hash(tries + 1));
+                        });
+                        return true;
+                    }
+                    return false;
+                }
+                line = this.indices2line(indices);
+                var offset = indices[indices.length - 1];
+                var leanNode = getitem(this.lemma, ...indices.slice(0, -1));
+                var textLine = leanNode?.lean?.split("\n")[offset] ?? "";
+                var start = textLine.indexOf(linePart);
+                if (start < 0) {
+                    var m = textLine.match(new RegExp("\\b" + linePart.replace(/\./g, "\\.") + "\\b"));
+                    if (m)
+                        start = m.index;
+                }
+                if (start >= 0) {
+                    col = start;
+                    end = start + linePart.length;
+                }
+            }
+
+            if (!line)
+                return false;
+
+            // Wait for CodeMirror leaf + editor (createEditor is async via ensureCodeMirror)
+            var pathIdx = this.line2indices(line);
+            var cmLine = pathIdx.pop();
+            if (cmLine != null) {
+                var cm = getitem(this.renderLean, ...pathIdx);
+                if (!cm || !cm.editor) {
+                    if (tries < 180) {
+                        this.$nextTick(() => {
+                            requestAnimationFrame(() => this.apply_location_hash(tries + 1));
+                        });
+                        return true;
+                    }
+                    return false;
+                }
+            }
+
+            this.highlight(line, col, undefined, end);
+            return true;
+        },
+
+        highlight(line, col, title, end) {
             var indices = this.line2indices(line);
             var line = indices.pop();
             if (line == null) {
@@ -642,19 +689,19 @@ order by depth desc`);
                     break;
                 }
             }
-            else if (!this.select(indices, line, col, title)) {
+            else if (!this.select(indices, line, col, title, end)) {
                 var [index, attr] = indices;
                 switch (attr) {
                 case 'imply':
                         this.lemma[index].imply.insert = true;
                     this.$nextTick(() => {
-                        this.select(indices, line, col, title);
+                        this.select(indices, line, col, title, end);
                     });
                     break;
                 case 'given':
                         this.lemma[index].given[indices[2]].insert = true;
                     this.$nextTick(() => {
-                        this.select(indices, line, col, title);
+                        this.select(indices, line, col, title, end);
                     });
                     break;
                 }
@@ -1012,7 +1059,7 @@ where
         focus(cmObj, line, start, stop, title) {
             if (!cmObj.editor) {
                 console.log('editor not ready, retrying in 100ms...');
-                return sleep(100).then(() => this.focus(cmObj, line, start, stop, title));
+                return sleep(0.1).then(() => this.focus(cmObj, line, start, stop, title));
             }
             let cm = cmObj.editor;
             if (title) {
@@ -1032,10 +1079,18 @@ where
                 cm.addLineClass(line, "gutter", "panic");
             }
             else {
-                cm.setCursor(line, start);
-                cm.addSelection({ line, ch : start}, { line, ch: stop });
+                // replace selection with the span and scroll it into view (#anchor / jump)
+                if (cm.setSelection)
+                    cm.setSelection({ line, ch: start }, { line, ch: stop });
+                else {
+                    cm.setCursor(line, start);
+                    cm.addSelection({ line, ch : start}, { line, ch: stop });
+                }
             }
             cm.focus();
+            try {
+                cm.getWrapperElement()?.scrollIntoView({ block: "center", inline: "nearest" });
+            } catch (e) {}
         },
 
         openContainingFolder() {
@@ -1051,11 +1106,14 @@ where
             location.search = search.substring(0, index);
         },
 
-        select(indices, line, col, title) {
+        select(indices, line, col, title, end) {
             var text = getitem(this.lemma, ...indices).lean.split('\n')[line];
             var cm = getitem(this.renderLean, ...indices);
             if (cm) {
-                if (col) {
+                if (end != null && end !== undefined) {
+                    // #anchor: select the matched identifier span exactly
+                    this.focus(cm, line, col, end, title);
+                } else if (col != null && col !== '' && !Number.isNaN(+col)) {
                     // determine the end of the code segment
                     form_post('php/request/segment_detection.php', {lean: text.slice(col)}).then(data => {
                         var {lean} = data;
@@ -1169,8 +1227,12 @@ where
                     return [index, 'proof', null];
                 
                 var {proof} = this.lemma[index];
+                if (!proof)
+                    continue;
                 var attr = proof.by? 'by' : (proof.calc? 'calc' : null);
                 proof = proof.by?? proof.calc?? proof;
+                if (!proof)
+                    continue;
                 for (var i of range(proof.length)) {
                     var line_start = line;
                     var {lean, latex} = proof[i]
@@ -1276,8 +1338,12 @@ where
                     return line;
                 ++line; // -- proof
                 var {proof} = this.lemma[index];
+                if (!proof)
+                    continue;
                 // var by = proof.by? 'by' : (proof.calc? 'calc' : null);
                 proof = proof.by?? proof.calc?? proof;
+                if (!proof)
+                    continue;
                 for (var j of range(proof.length)) {
                     if (index == i && j == Index)
                         return line;
@@ -1352,8 +1418,12 @@ where
                         yield [index, 'imply', offset];
                 }
                 var {proof} = this.lemma[index];
+                if (!proof)
+                    continue;
                 var attr = proof.by? 'by' : (proof.calc? 'calc' : null);
                 proof = proof.by?? proof.calc?? proof;
+                if (!proof)
+                    continue;
                 for (var i of range(proof.length)) {
                     for (var [offset, line] of enumerate(proof[i].lean.split("\n"))) {
                         if (line.match(regexp))
@@ -1440,7 +1510,14 @@ GROUP BY l.user, l.module`;
                 this.lemma[i].proof = proof;
             }
             this.refresh = true;
-            this.focus_main_proof_when_ready();
+            this.$nextTick(() => {
+                requestAnimationFrame(() => {
+                    if (location.hash)
+                        this.apply_location_hash();
+                    else
+                        this.focus_main_proof_when_ready();
+                });
+            });
         },
 
         focus_main_proof() {
@@ -1480,6 +1557,12 @@ GROUP BY l.user, l.module`;
             this.lemma.array_assign(lemma);
             this.meta.error.array_assign(meta.error);
             this.refresh = true;
+            // Remount wipes CM selection; re-apply #anchor after new leaves exist.
+            if (location.hash) {
+                this.$nextTick(() => {
+                    requestAnimationFrame(() => this.apply_location_hash());
+                });
+            }
             var {user} = this;
             meta = meta.error.length ? {error: meta.error} : null;
             var sql = `

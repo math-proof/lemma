@@ -1,4 +1,6 @@
 import Theorem.Function
+import Lemma.Finset.Sum_SquareSub_DivSum.eq.Sub_DivSquareSum
+open Finset
 
 
 /--
@@ -79,42 +81,21 @@ private lemma main
     have hsqE : ∑ y ∈ Y \ {y'}, a[y] ^ 2 = (∑ y ∈ Y, a[y] ^ 2) - yv ^ 2 := by
       simpa [Finset.sdiff_singleton_eq_erase, yv] using
         eq_sub_of_add_eq (Finset.sum_erase_add Y (fun y => a[y] ^ 2) h₁)
-    have hsse {s : Finset α} (hs : s.card ≠ 0) :
-      ∑ x ∈ s, (a[x] - (∑ x ∈ s, a[x]) / (s.card : ℝ)) ^ 2 =
-        ∑ x ∈ s, a[x] ^ 2 - (∑ x ∈ s, a[x]) ^ 2 / (s.card : ℝ) := by
-      have hc : (s.card : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hs
-      have hμ : ∑ x ∈ s, ((∑ x ∈ s, a[x]) / (s.card : ℝ)) ^ 2 =
-          (∑ x ∈ s, a[x]) ^ 2 / (s.card : ℝ) := by
-        rw [Finset.sum_const, nsmul_eq_mul]
-        field_simp
-      have hcross : ∑ x ∈ s, 2 * a[x] * ((∑ x ∈ s, a[x]) / (s.card : ℝ)) =
-          2 * (∑ x ∈ s, a[x]) ^ 2 / (s.card : ℝ) := by
-        simp_rw [mul_assoc, ← Finset.mul_sum, ← Finset.sum_mul]
-        field_simp
-      simp_rw [sub_sq, Finset.sum_add_distrib, Finset.sum_sub_distrib]
-      rw [hμ, hcross]
-      field_simp
-      ring
-    have hXn : X.card ≠ 0 := h₀.ne'
-    have hYn : Y.card ≠ 0 := by omega
-    have hIn : (X ∪ {y'}).card ≠ 0 := by rw [hcardI]; omega
-    have hEn : (Y \ {y'}).card ≠ 0 := by
-      rw [Finset.sdiff_singleton_eq_erase, Finset.card_erase_of_mem h₁]; omega
     have hIX : ∑ x ∈ X ∪ {y'}, (a[x] - (∑ x ∈ X ∪ {y'}, a[x]) / ((n + 1 : ℕ) : ℝ)) ^ 2 =
         (∑ x ∈ X, a[x] ^ 2) + yv ^ 2 - (S + yv) ^ 2 / ((n : ℝ) + 1) := by
       have hden : ((X ∪ {y'}).card : ℝ) = (n : ℝ) + 1 := by
         rw [hcardI, Nat.cast_add, Nat.cast_one]
-      rw [← hcardI, hsse hIn, hsqI, hsumI, hden]
+      rw [← hcardI, Sum_SquareSub_DivSum.eq.Sub_DivSquareSum.fun, hsqI, hsumI, hden]
     have hEY : ∑ y ∈ Y \ {y'}, (a[y] - (∑ y ∈ Y \ {y'}, a[y]) / ((m - 1 : ℕ) : ℝ)) ^ 2 =
         (∑ y ∈ Y, a[y] ^ 2) - yv ^ 2 - (T - yv) ^ 2 / ((m : ℝ) - 1) := by
-      simp_rw [Finset.sdiff_singleton_eq_erase] at hEn hsqE hsumE ⊢
+      simp_rw [Finset.sdiff_singleton_eq_erase] at hsqE hsumE ⊢
       have hden : ((Y.erase y').card : ℝ) = (m : ℝ) - 1 := by
         rw [Finset.card_erase_of_mem h₁, Nat.cast_sub (by omega : 1 ≤ m), Nat.cast_one]
-      rw [← Finset.card_erase_of_mem h₁, hsse hEn, hsqE, hsumE, hden]
+      rw [← Finset.card_erase_of_mem h₁, Sum_SquareSub_DivSum.eq.Sub_DivSquareSum.fun, hsqE, hsumE, hden]
     have hX : ∑ x ∈ X, (a[x] - S / (n : ℝ)) ^ 2 = (∑ x ∈ X, a[x] ^ 2) - S ^ 2 / (n : ℝ) := by
-      simpa [S, n] using hsse hXn
+      simpa [S, n] using Sum_SquareSub_DivSum.eq.Sub_DivSquareSum.fun
     have hY : ∑ y ∈ Y, (a[y] - T / (m : ℝ)) ^ 2 = (∑ y ∈ Y, a[y] ^ 2) - T ^ 2 / (m : ℝ) := by
-      simpa [T, m] using hsse hYn
+      simpa [T, m] using Sum_SquareSub_DivSum.eq.Sub_DivSquareSum.fun
     have hgoal :
       ((∑ x ∈ X, a[x] ^ 2) + yv ^ 2 - (S + yv) ^ 2 / ((n : ℝ) + 1) +
         ((∑ y ∈ Y, a[y] ^ 2) - yv ^ 2 - (T - yv) ^ 2 / ((m : ℝ) - 1))) -
@@ -156,4 +137,4 @@ private lemma main
 
 
 -- created on 2021-03-25
--- updated on 2026-10-23
+-- updated on 2026-10-31

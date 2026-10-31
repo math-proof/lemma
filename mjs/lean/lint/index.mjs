@@ -13,7 +13,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { listLemmaTopLevelDirs } from '../lemmaSections.mjs';
 import { prepare, findDecls } from './scan.mjs';
-import { scanImportsAndOpens, headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, attrDocstring, dates, declKeywordDirText, blankSublemmas } from './headerRules.mjs';
+import { scanImportsAndOpens, headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, attrDocstring, dates, declKeywordDirText, blankSublemmas, lemmaNamespace } from './headerRules.mjs';
 import { signatureRules } from './signatureRules.mjs';
 import { indentRules, proofRules, underscoreNameRule } from './proofRules.mjs';
 import { attrRules } from './attrRules.mjs';
@@ -83,6 +83,8 @@ export const RULES = {
     'proof-blank-line': null,
     // not an AGENTS.md rule: exactly one blank line between consecutive private lemmas
     'blank-sublemmas': null,
+    // not an AGENTS.md rule yet: namespaces/sections/variables within Lemma/ are not allowed (standing Body rule)
+    'lemma-namespace': null,
     'proof-binop-newline': Q.binop,
     'bullet-newline': Q.bullet,
     'tactic-rcases': Q.swap,
@@ -93,13 +95,21 @@ export const RULES = {
     'calc-after-assign': null,
     // not an AGENTS.md rule (user request): `(x[t])` / `(x[t:])` -> drop the parens
     'paren-getelem': null,
+    // not an AGENTS.md rule (user request via Random): prefer bare `y[i]` over `y[i.val]` / `y[↑i]` (Fin index)
+    'fin-index-val': null,
     // not an AGENTS.md rule (user request): `f (x)` / `path (s)` -> drop the parens
     'paren-apparg': null,
     // not an AGENTS.md rule (user request): `(h : (T))` -> drop redundant parens around binder type
     'paren-redundant-type': null,
+    // not an AGENTS.md rule (Body via Real / @js): ASCII Nat/Int/Rat/Real/Complex/Hyperreal in binder/ascription → Unicode
+    'prefer-unicode-type': null,
     // not an AGENTS.md rule (user request via Matrix/Body): `a - (∑ …)` -> drop parens around ∑/∏ RHS of `-`
     'paren-redundant-sum-sub': null,
+    // not an AGENTS.md rule (user request via Random / @js): `((sub) ^ 2)` -> drop outer parens around pow
+    'paren-redundant-pow': null,
     'have-inline-once': Q.haveOnce,
+    // not an AGENTS.md rule (Body via Tensor): lean.js/linter warning; message carries the reason
+    'have-underscore': null,
     'by-calc': Q.calc,
     'calc-start-underscore': Q.calc,
     // not an AGENTS.md rule: bare `calc`; every `_` step at calc+2 (enforced by the linter)
@@ -202,7 +212,7 @@ export function lintLean(source, opts = {}) {
     // `decl-keyword-dir`: trust the tree only when it sees the same lemma/theorem declarations as the text scan
     if (tree && countLemmaTheoremNodes(tree) !== ctx.decls.filter((d) => d.kind === 'lemma' || d.kind === 'theorem').length)
         ctx.astCovered.delete('decl-keyword-dir');
-    const steps = [headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, declKeywordDirText, attrDocstring, dates, blankSublemmas, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
+    const steps = [headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, declKeywordDirText, attrDocstring, dates, blankSublemmas, lemmaNamespace, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
     for (const step of steps) {
         try {
             step(ctx);

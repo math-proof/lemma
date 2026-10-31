@@ -41,7 +41,7 @@ function resolveImportToLeanPath(imp) {
   if (s.startsWith('Lemma.')) {
     return moduleToLeanPath(s.slice('Lemma.'.length));
   }
-  for (const root of ['stdlib', 'sympy']) {
+  for (const root of ['stdlib']) {
     if (s === root || s.startsWith(`${root}.`)) {
       const p = path.join(REPO_ROOT, ...s.split('.')) + '.lean';
       return fs.existsSync(p) ? p : null;

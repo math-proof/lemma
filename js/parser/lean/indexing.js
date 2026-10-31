@@ -127,7 +127,7 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
         if (indices.length === 1 && indices[0] instanceof L.LeanCondBar)
             // Lean `μ[|s]` has an empty slot before `|`; do not invent a · placeholder.
             return '{%s}\\left[\\,\\middle|\\, {%s}\\right]';
-        // Mathlib `μ[f | m]` (`condExp`), base is the measure — not sympy `𝔼[…](…)` sugar.
+        // Mathlib `μ[f | m]` (`condExp`), base is the measure — not Expect-sugar `𝔼[…](…)`.
         // Keep the measure as the left operand; do not wrap in `\mathbb{E}`.
         if (indices.length === 1 && !(base instanceof L.LeanToken && base.text === '𝔼') &&
             (indices[0] instanceof L.LeanBitOr ||

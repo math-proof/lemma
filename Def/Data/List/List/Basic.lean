@@ -3,8 +3,6 @@ import Def.Data.List.Slice
 import Structure.Fun
 import Notation.Fun
 import Syntax.Data.List.List
-import Syntax.Data.List.List.Part7
-import Syntax.Data.List.List.Part8
 
 open Lean
 

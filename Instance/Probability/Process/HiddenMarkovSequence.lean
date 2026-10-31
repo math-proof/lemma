@@ -16,4 +16,3 @@ open scoped ENNReal.ToRealCoe
 instance {Ω α : Type*} : FunSlice (Ω → α) where
   Out s := Ω → Fin (s.stop.toNat - s.start.toNat) → α
   slice x s := fun ω i => x (i.val + s.start.toNat) ω
-

@@ -1,5 +1,5 @@
 import Instance.Analysis.SpecialFunctions.Exponential.Part5
-import Def.Analysis.Real.Limits.Part4
+import Def.Analysis.Real.Limits.Basic
 open ArchimedeanClass
 
 

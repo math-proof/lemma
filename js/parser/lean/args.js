@@ -157,7 +157,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
     /**
      * `JointRandomSymbol x y` is the body of the coercion `↑(x, y)` (`Function.coeProdPi*`,
-     * sympy/stats/joint_rv.lean), i.e. the tuple `(x, y)` of random variables: its components,
+     * joint_rv), i.e. the tuple `(x, y)` of random variables: its components,
      * right-nested chains flattened (`JointRandomSymbol x (JointRandomSymbol y z)` ↦ `[x, y, z]`, rendered `(x, y, z)`).
      * @returns {Lean[] | null}
      */
@@ -856,8 +856,10 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                             const s = this.strip_parenthesis();
                             return [s[1].toLatex(syntax)];
                         }
+                        case 'chiSquare':
                         case 'chiSquaredReal': {
-                            // `chiSquaredReal n` — peel grouping parens; `\mathcal{X}^{2}` is the format atom.
+                            // `chiSquare n` / legacy `chiSquaredReal n` — peel grouping parens.
+                            // Qualified `Real.chiSquare n` is handled via LeanProperty below.
                             let arg = args[1];
                             if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
                                 arg = arg.arg;
@@ -930,6 +932,22 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 arg = arg.arg;
             return [arg.toLatex(syntax)];
         }
+        if (
+            func instanceof L.LeanProperty &&
+            func.lhs instanceof L.LeanToken &&
+            func.lhs.text === 'Real' &&
+            func.rhs instanceof L.LeanToken &&
+            func.rhs.text === 'chiSquare' &&
+            args.length === 2
+        ) {
+            // `Real.chiSquare n` — same peel as bare `chiSquare n`.
+            let arg = args[1];
+            if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
+                arg = arg.arg;
+            else
+                arg = L.LeanParenthesis.peelLatex(arg);
+            return [arg.toLatex(syntax)];
+        }
         return args.map((arg) => {
             if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
                 arg = arg.arg;
@@ -960,7 +978,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (joint) return `\\left(${joint.map(() => '{%s}').join(', ')}\\right)`; // a tuple keeps its parentheses
         const subst = this.substOperands();
         if (subst) {
-            // sympy `_print_Subs`: `\left. expr \right|_{\substack{x=x_0 \\ y=y_0}}`
+            // Subs print: `\left. expr \right|_{\substack{x=x_0 \\ y=y_0}}`
             const subs = subst.bindings.map(() => '{%s} = {%s}').join(' \\\\ ');
             if (subst.bindings.length === 1) return `\\left. {%s} \\right|_{${subs}}`;
             return `\\left. {%s} \\right|_{\\substack{${subs}}}`;
@@ -1004,8 +1022,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                             return '\\mathbf{0}_{%s}';
                         case 'Ones':
                             return '\\mathbf{1}_{%s}';
+                        case 'chiSquare':
                         case 'chiSquaredReal':
-                            // sympy `_latex`: `\mathcal{X}^{2}%s` with `%s` = `\left(n\right)` (one atom; no space before the paren).
+                            // LaTeX: `\mathcal{X}^{2}%s` with `%s` = `\left(n\right)` (one atom; no space before the paren).
                             return '\\mathcal{X}^{2}\\left(%s\\right)';
                         default:
                     }
@@ -1016,7 +1035,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                             return '\\delta_{%s %s}';
                         case 'gaussianReal':
                         case 'multivariateGaussian':
-                            // sympy `_latex`: `\mathcal{N}%s` with `%s` = `\left(μ, σ\right)` (one atom; no space before the paren).
+                            // LaTeX: `\mathcal{N}%s` with `%s` = `\left(μ, σ\right)` (one atom; no space before the paren).
                             return '\\mathcal{N}\\left(%s, %s\\right)';
                         case 'fisherReal':
                             // Fisher-Snedecor F(d1, d2): upright F, same juxta peel as gaussianReal.
@@ -1037,6 +1056,14 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             // `Finset.card {…}` / `Matrix.det M` — bars around the arg, not the namespace.
             if ((func.rhs.text === 'card' || func.rhs.text === 'det') && args.length === 2)
                 return '\\left|{%s}\\right|';
+            // `Real.chiSquare n` -> glued mathcal X^2 (Def Part2).
+            if (
+                func.rhs.text === 'chiSquare' &&
+                func.lhs instanceof L.LeanToken &&
+                func.lhs.text === 'Real' &&
+                args.length === 2
+            )
+                return '\\mathcal{X}^{2}\\left(%s\\right)';
         }
         const n = args.length;
         return Array(n)

@@ -61,8 +61,15 @@ def parityBits (n : Nat) : List Bool :=
 
 def escapeMd (s : String) : String := s
 
+/-- Strip Lean «ident» escapes (needed for keyword attrs like «fun»). -/
+def stripGuillemets (s : String) : String :=
+  if s.startsWith "«" && s.endsWith "»" && s.length ≥ 2 then
+    ((s.drop 1).take (s.length - 2)).toString
+  else
+    s
+
 def customAttrHead (attr : String) : String :=
-  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
+  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "") |>.map stripGuillemets
   match parts with
   | ["mp", "and"] => "mp and"
   | ["mpr", "and"] => "mpr and"
@@ -76,7 +83,7 @@ def customAttrHeads : List String :=
    "Or.inl", "Or.inr", "mpr.left", "mpr.right", "mp.left", "mp.right",
    "And.left", "And.right", "And.right.left", "And.right.right",
    "fin", "fin.comm", "fin.mp", "fin.mpr",
-   "val", "subst", "cast", "cast.fin", "cast.comm", "mp and", "mpr and", "mp.comm and", "mpr.comm and"]
+   "val", "Fun", "subst", "cast", "cast.fin", "cast.comm", "mp and", "mpr and", "mp.comm and", "mpr.comm and"]
 
 /-- Generated module name for an `And.left`/`And.right` projection
     (mirrors `Name.andProjName`): drop the other conjunct segment; append
@@ -217,7 +224,7 @@ def mprLemmaName (tokens : List String) : String :=
        | none => moduleName (List.mpr tokens)
 
 def attrLemmaName (tokens : List String) (attr : String) : String :=
-  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
+  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "") |>.map stripGuillemets
   match parts with
   | ["path"] => moduleName tokens
   | ["comm"] => moduleName (List.comm tokens (ofParityFromTokens tokens))
@@ -260,6 +267,7 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
   | ["And.right.left"] => andRightProjModuleName tokens true
   | ["And.right.right"] => andRightProjModuleName tokens false
   | ["val"] => moduleName (tokens ++ ["val"])
+  | ["Fun"] => moduleName (tokens ++ ["fun"])
   | ["mt"] => nameToModule (List.mt tokens : Lean.Name)
   | ["mt", n] => nameToModule (List.mt tokens false n.toNat! : Lean.Name)
   | ["mp.mt"] => nameToModule (List.mt (List.mp tokens) : Lean.Name)
@@ -275,7 +283,7 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
     binder-aware engine algorithm by importing the built module; falls back to
     the token-only approximation if the module cannot be imported. -/
 def attrLemmaNameIO (_rel : String) (tokens : List String) (attr : String) : IO String := do
-  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
+  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "") |>.map stripGuillemets
   match parts with
   | ["comm", n] =>
     let modName := fullModuleName tokens
@@ -291,7 +299,7 @@ def attrLemmaNameIO (_rel : String) (tokens : List String) (attr : String) : IO 
   | _ => return attrLemmaName tokens attr
 
 def formatAttrLabel (attr : String) : String :=
-  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
+  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "") |>.map stripGuillemets
   match parts with
   | ["mp", "and"] => "mp and"
   | ["mpr", "and"] => "mpr and"

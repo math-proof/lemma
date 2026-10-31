@@ -516,7 +516,12 @@ export class LeanParenthesis extends LeanPairedGroup {
         // (nested `𝔼`, compound `•` / `∇` bodies, multiline bodies, peelLatex, …).
         if (this.isExpectBodyParen() || this.isProbEventParen()) return true;
         const arg = this.arg;
-        if (arg instanceof L.LeanArgsCommaSeparated) return true;
+        // Inline `(a, b)` and multiline `(a,\n  b)` tuples both need the outer pair —
+        // a bare comma list is not a term (incl. joint RV LHS of `∼[π]`).
+        if (
+            arg instanceof L.LeanArgsCommaSeparated ||
+            arg instanceof L.LeanArgsCommaNewLineSeparated
+        ) return true;
         return LeanParenthesis.hasOwnCdot(arg);
     }
 
@@ -611,24 +616,24 @@ export class LeanParenthesis extends LeanPairedGroup {
             (p.parent instanceof L.LeanRightarrow || p.parent instanceof L.Lean_mapsto) &&
             p.parent.lhs === p && p.parent.parent instanceof L.Lean_fun
         ) return false;
-        // Only elide simple casts like `(n : ℝ)`; a structured type such as
-        // `(μ : Measure (ℕ → S))` carries information the reader needs.
-        if (!(arg.rhs instanceof L.LeanToken)) return false;
+        // Term cast `(e : T)` in expression position: show only `e` (any T — token or
+        // structured). Binders keep ascriptions (paren parent is binder construct).
         if (
             p instanceof L.LeanArgsSpaceSeparated ||
             p instanceof L.LeanArgsCommaSeparated ||
             p instanceof L.LeanGetElem ||
             p instanceof L.LeanGetElemQue ||
             p instanceof L.LeanGetElemQuote ||
-            p instanceof L.LeanRelational
+            p instanceof L.LeanRelational ||
+            p instanceof L.LeanArithmetic ||
+            p instanceof L.LeanUnaryArithmetic
         ) return true;
-        // Big-operator body (`∏ j ∈ s, (j ! : ℝ)`): elide only in scope position —
-        // a parenthesized binder (`∑ (i : Fin n), …`) keeps its type ascription.
+        // Big-operator body: elide only in scope position —
+        // a parenthesized binder (`sum (i : Fin n), ...`) keeps its type ascription.
         if (p instanceof L.LeanBigOperator && p.scope === this) return true;
-        // ENNReal→ℝ (`open scoped ENNReal.ToRealCoe`): `(ℙ[…](…) : ℝ)` under `•` / `+` / …
-        if (arg.rhs.text === 'ℝ' && p instanceof L.LeanArithmetic) return true;
-        // Standalone / `:=` imply: `(ℙ[M θ] (a t | s t) : ℝ)` → drop outer cast (same for `Real` / 𝔼).
+        // Standalone / `:=` imply: `(P[...](...) : R)` drop outer cast.
         if (
+            arg.rhs instanceof L.LeanToken &&
             (arg.rhs.text === 'ℝ' || arg.rhs.text === 'Real') &&
             LeanParenthesis.isProbExpectAscriptionSubject(arg.lhs)
         ) return true;
@@ -695,8 +700,23 @@ export class LeanParenthesis extends LeanPairedGroup {
         const g = '9f'[n & 1];
         n >>= 1;
         const r = '9f'[n & 1];
+        // Nested \\colorbox{…}{$…$} closes the outer $ and turns spanning
+        // \\left/\\right into KaTeX nulldelimiters (invisible). Tuples / · sections
+        // need delimiters in ambient math, outside the colorbox $.
+        if (this.latexParenRequired())
+            return `\\mathord{\\left({\\colorbox{#${r}${g}${b}}{$%s$}}\\right)}`;
         return `\\colorbox{#${r}${g}${b}}{$\\mathord{\\left(%s\\right)}$}`;
     }
+
+    /**
+     * Path choices: unwrap paren and walk the inner arg.
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        return this.arg?.pathChoices?.(opts) ?? [""];
+    }
+
 }
 
 export class LeanAngleBracket extends LeanPairedGroup {

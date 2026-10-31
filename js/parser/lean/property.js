@@ -215,6 +215,19 @@ export class LeanProperty extends LeanBinary {
                 case 'toReal':
                     // ENNReal→ℝ: `ℙ[…](…).toReal` — keep the paren so Prob short-form / `\middle|` still run
                     return [this.lhs.toLatex(syntax)];
+                case 'chiSquare':
+                    // bare `Real.chiSquare` -> mathcal X^2 (applied form is LeanArgs).
+                    if (lhs instanceof L.LeanToken && lhs.text === 'Real') return [];
+                    break;
+                case 'sqrt': {
+                    // (n : R).sqrt / x.sqrt -> \sqrt{...}; bare Real.sqrt stays dotted
+                    if (lhs instanceof L.LeanToken && (lhs.text === 'Real' || lhs.text === 'Complex'))
+                        break;
+                    let arg = this.lhs;
+                    if (arg instanceof L.LeanParenthesis) arg = arg.arg;
+                    if (arg instanceof L.LeanColon) arg = arg.lhs;
+                    return [arg.toLatex(syntax)];
+                }
             }
         }
         return super.latexArgs(syntax);
@@ -290,6 +303,15 @@ export class LeanProperty extends LeanBinary {
                     return '\\left|{%s}\\right|';
                 case 'toReal':
                     return '%s';
+                case 'chiSquare':
+                    // bare `Real.chiSquare` -> mathcal X^2 (Def Part2).
+                    if (lhs instanceof L.LeanToken && lhs.text === 'Real') return '\\mathcal{X}^{2}';
+                    break;
+                case 'sqrt':
+                    // (n : R).sqrt / x.sqrt -> \sqrt{...} (same as unicode)
+                    if (lhs instanceof L.LeanToken && (lhs.text === 'Real' || lhs.text === 'Complex'))
+                        break;
+                    return '\\sqrt{%s}';
             }
         }
         return `{%s}${this.command}{%s}`;
@@ -332,4 +354,16 @@ export class LeanProperty extends LeanBinary {
         }
         return [this.lhs, rhs];
     }
+
+    /**
+     * Path choices: `.sqrt` → Sqrt_ (+ omit); else walk lhs.
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        if (this.rhs instanceof L.LeanToken && (this.rhs.text || "") === "sqrt")
+            return ["Sqrt_", ""];
+        return this.lhs?.pathChoices?.(opts) ?? [""];
+    }
+
 }

@@ -202,7 +202,7 @@ class LeanToken extends Lean
     {
         if ($this->text === '𝒩' || $this->text === 'gaussianReal' || $this->text === 'multivariateGaussian')
             return '\\mathcal{N}';
-        if ($this->text === 'chiSquaredReal')
+        if ($this->text === 'chiSquare' || $this->text === 'chiSquaredReal')
             return '\\mathcal{X}^{2}';
         if ($this->text === 'fisherReal')
             return '\\mathrm{F}';

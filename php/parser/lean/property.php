@@ -195,6 +195,21 @@ class LeanProperty extends LeanBinary
                 case 'toReal':
                     // ENNReal→ℝ: `ℙ[…](…).toReal` — keep the paren so Prob short-form / `\middle|` still run
                     return [$this->lhs->toLatex($syntax)];
+                case 'chiSquare':
+                    // bare `Real.chiSquare` -> mathcal X^2 (applied form is LeanArgs).
+                    if ($lhs instanceof LeanToken && $lhs->text === 'Real')
+                        return [];
+                    break;
+                case 'sqrt':
+                    // (n : R).sqrt / x.sqrt -> \sqrt{...}; bare Real.sqrt stays dotted.
+                    if ($lhs instanceof LeanToken && ($lhs->text === 'Real' || $lhs->text === 'Complex'))
+                        break;
+                    $arg = $this->lhs;
+                    if ($arg instanceof LeanParenthesis)
+                        $arg = $arg->arg;
+                    if ($arg instanceof LeanColon)
+                        $arg = $arg->lhs;
+                    return [$arg->toLatex($syntax)];
             }
         }
         return parent::latexArgs($syntax);
@@ -259,6 +274,16 @@ class LeanProperty extends LeanBinary
                     break;
                 case 'toReal':
                     return '%s';
+                case 'chiSquare':
+                    // bare `Real.chiSquare` -> mathcal X^2 (Def Part2).
+                    if ($lhs instanceof LeanToken && $lhs->text === 'Real')
+                        return '\\mathcal{X}^{2}';
+                    break;
+                case 'sqrt':
+                    // (n : R).sqrt / x.sqrt -> \sqrt{...} (same as unicode).
+                    if ($lhs instanceof LeanToken && ($lhs->text === 'Real' || $lhs->text === 'Complex'))
+                        break;
+                    return '\\sqrt{%s}';
             }
         }
         return "{%s}$this->command{%s}";

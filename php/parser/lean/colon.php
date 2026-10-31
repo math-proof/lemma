@@ -108,10 +108,21 @@ class LeanColon extends LeanBinary
         }
         return parent::latexArgs($syntax);
     }
+    /** `:i` / `:i, :j` inside `y[...]` stay tight; ascriptions keep spaces. */
+    public function isGetElemIndexColon()
+    {
+        $p = $this->parent;
+        if ($p instanceof LeanGetElem)
+            return true;
+        if ($p instanceof LeanArgsCommaSeparated && $p->parent instanceof LeanGetElem)
+            return true;
+        return false;
+    }
+
     public function sep()
     {
         $rhs = $this->rhs;
-        return $rhs instanceof LeanStatements ? "\n" : ($rhs instanceof LeanCaret || $this->parent instanceof LeanGetElem ? '' : ' ');
+        return $rhs instanceof LeanStatements ? "\n" : ($rhs instanceof LeanCaret || $this->isGetElemIndexColon() ? '' : ' ');
     }
 
     public function strArgs()
@@ -129,7 +140,7 @@ class LeanColon extends LeanBinary
     {
         $sep = $this->sep();
         $first = "%s";
-        if (!($this->parent instanceof LeanGetElem))
+        if (!$this->isGetElemIndexColon())
             $first .= " ";
         return "$first$this->operator$sep%s";
     }

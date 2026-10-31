@@ -9,7 +9,7 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub']);
+export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'prefer-unicode-type']);
 
 /** parse `source`, or null when the parser throws / does not return a module */
 export function parseAst(source) {
@@ -68,7 +68,7 @@ function haveInlineOnce(ctx, stmts) {
         if (!(assign instanceof LeanAssign)) continue;
         let lhs = assign.lhs;
         if (lhs instanceof LeanColon) lhs = lhs.lhs;
-        if (!(lhs instanceof LeanToken) || !lhs.text || lhs.text === 'this') continue;
+        if (!(lhs instanceof LeanToken) || !lhs.text || lhs.text === 'this' || lhs.text === '_') continue;
         const name = lhs.text;
         let j = i + 1;
         while (j < args.length && isTrivia(args[j])) j++;
@@ -92,6 +92,27 @@ function haveInlineOnce(ctx, stmts) {
             `\`${name}\` is used only once, by the next \`${next.tacticName}\`: inline it (e.g. \`apply\` with a hole \`_\` and prove it afterwards) instead of a \`have\``,
             2, next);
     }
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+
+/**
+ * `have _ := ...` / `have _ : T := ...`: the underscore binder discards the result, so the `have` is redundant —
+ * inline the RHS or drop the statement. Named `have h :=`, anonymous `have : T :=` (binds `this`), pattern
+ * binders (`have ⟨_, h⟩ :=`), and `haveI` (see `tactic-haveI`) are out of scope. Not `let _ :=`.
+ */
+function haveUnderscore(ctx, node) {
+    const { Lean_have, Lean_replace, LeanAssign, LeanColon, LeanToken } = Lean.classes;
+    if (!(node instanceof Lean_have) || node instanceof Lean_replace || node.inst) return;
+    if (node.args.length !== 1) return;
+    const assign = node.args[0];
+    if (!(assign instanceof LeanAssign)) return;
+    let lhs = assign.lhs;
+    if (lhs instanceof LeanColon) lhs = lhs.lhs;
+    if (!(lhs instanceof LeanToken) || lhs.text !== '_') return;
+    ctx.warnAst('have-underscore', node,
+        '`have _ :=` is redundant: the underscore discards the result — inline or drop the `have`',
+        1);
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -366,6 +387,81 @@ function calcAfterAssign(ctx, node) {
 
 
 /**
+ * `y[i.val]` / `y[↑i]` / slice bounds: prefer bare Fin index `y[i]` (not `.val` or `↑`).
+ * Only the index atom (or each comma-separated / colon bound) is checked; deeper `.val` / `↑`
+ * inside arithmetic (`y[i.val + 1]`, `y[↑i + 1]`) is out of scope. Not an AGENTS.md rule
+ * (user request via Random).
+ */
+function unwrapParens(node) {
+    const { LeanParenthesis } = Lean.classes;
+    let n = node;
+    while (n instanceof LeanParenthesis) n = n.arg;
+    return n;
+}
+
+function isValProjection(node) {
+    const { LeanProperty, LeanToken } = Lean.classes;
+    const n = unwrapParens(node);
+    return n instanceof LeanProperty && n.rhs instanceof LeanToken && n.rhs.text === 'val' ? n : null;
+}
+
+/** `↑i` / `↑(…)` as a GetElem index atom (`Lean_uparrow`). */
+function isUpArrowIndex(node) {
+    const { Lean_uparrow } = Lean.classes;
+    const n = unwrapParens(node);
+    return n instanceof Lean_uparrow ? n : null;
+}
+
+/** Top-level index atoms of a GetElem index: comma parts, slice bounds; skip `; μ` measure tail. */
+function* getElemIndexAtoms(idx) {
+    const { LeanArgsCommaSeparated, LeanArgsSemicolonSeparated, LeanColon, LeanCaret } = Lean.classes;
+    if (!idx) return;
+    if (idx instanceof LeanArgsSemicolonSeparated) {
+        yield* getElemIndexAtoms(idx.args[0]);
+        return;
+    }
+    if (idx instanceof LeanArgsCommaSeparated) {
+        for (const a of idx.args) yield* getElemIndexAtoms(a);
+        return;
+    }
+    if (idx instanceof LeanColon) {
+        if (idx.lhs && !(idx.lhs instanceof LeanCaret)) yield idx.lhs;
+        if (idx.rhs && !(idx.rhs instanceof LeanCaret)) yield idx.rhs;
+        return;
+    }
+    yield idx;
+}
+
+function finIndexVal(ctx, node) {
+    const { LeanGetElem } = Lean.classes;
+    if (!(node instanceof LeanGetElem)) return;
+    const hits = [];
+    for (const atom of getElemIndexAtoms(node.args[1])) {
+        const prop = isValProjection(atom);
+        if (prop) {
+            const bad = String(prop).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+            const base = String(prop.lhs).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+            hits.push({ bad, base, kind: 'val' });
+            continue;
+        }
+        const upNode = isUpArrowIndex(atom);
+        if (upNode) {
+            const bad = String(upNode).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+            const base = String(upNode.arg).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+            hits.push({ bad, base, kind: 'uparrow' });
+        }
+    }
+    if (!hits.length) return;
+    const show = (s) => (s.length > 40 ? `${s.slice(0, 37)}…` : s);
+    const bits = hits.map(({ bad, base }) => `\`${show(base)}\` over \`${show(bad)}\``);
+    ctx.warnAst('fin-index-val', node,
+        `prefer ${bits.join('; ')} as a Fin GetElem/slice index (avoid \`.val\` and \`↑\`)`,
+        1);
+}
+
+
+
+/**
  * `(x[t])` / `(x[t:])` / `(name[t])`: a single parenthesis pair whose only content is a
  * GetElem / slice. GetElem binds tightly enough that the parens never change the parse
  * (`f (x[t])` == `f x[t]`; contrast `(f x)[t]`, whose arg is an application, not GetElem).
@@ -421,6 +517,41 @@ function parenAppArg(ctx, node) {
         1);
 }
 
+
+/**
+ * Binder / type ascription whose type is a bare ASCII number-type name:
+ * `(s : Real)` / `{n : Nat}` / `(0 : Int)` → prefer Unicode `ℝ` / `ℕ` / `ℤ` / `ℚ` / `ℂ` / `ℝ*`.
+ * Only when the ascription type is exactly that token (not `Real → Real`, `Set Real`, `Real.chiSquare`,
+ * `import Real.…`, or `open Real`). Not an AGENTS.md rule (Body via Real / @js).
+ */
+const ASCII_TYPE = Object.freeze({
+    Nat: 'ℕ',
+    Int: 'ℤ',
+    Rat: 'ℚ',
+    Real: 'ℝ',
+    Complex: 'ℂ',
+    Hyperreal: 'ℝ*',
+});
+
+function preferUnicodeType(ctx, node) {
+    const { LeanColon, LeanToken, LeanParenthesis, LeanBrace } = Lean.classes;
+    if (!(node instanceof LeanParenthesis || node instanceof LeanBrace)) return;
+    const colon = node.arg;
+    if (!(colon instanceof LeanColon)) return;
+    const ty = colon.rhs;
+    if (!(ty instanceof LeanToken)) return;
+    const uni = ASCII_TYPE[ty.text];
+    if (!uni) return;
+    const shown = quote(node, 80, 1);
+    const open = node instanceof LeanBrace ? '{' : '(';
+    const close = node instanceof LeanBrace ? '}' : ')';
+    const lhs = String(colon.lhs).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+    const suggest = `${open}${lhs} : ${uni}${close}`;
+    ctx.warnAst('prefer-unicode-type', node,
+        `\`${shown}\` → \`${suggest}\`: prefer Unicode type in binder / ascription`,
+        1);
+}
+
 /**
  * `(h : (T))`: the type of an explicit binder is already a complete term; an outer parenthesis
  * pair around it is redundant against the binder's closing `)` (`(hMs : (sup[…] e < ∞))` →
@@ -468,6 +599,45 @@ function parenRedundantSumSub(ctx, node) {
         1);
 }
 
+
+/**
+ * `((a - b) ^ 2)` / `((a + b) ^ n)`: outer parentheses around a `^` whose base is already
+ * parenthesized are redundant whenever the parent does not need them for precedence
+ * (sum body, `*`/`/`/`+`/`-` operand, relational side, ...). Keep them as an application
+ * argument (`f ((a - b) ^ 2)`), property base (`((a - b) ^ 2).foo`), GetElem base, or
+ * nested-pow LHS (`((a - b) ^ 2) ^ 3`). Fisher imply / SB pattern. Not an AGENTS.md rule
+ * (user request via Random / @js).
+ */
+function parenRedundantPow(ctx, node) {
+    const {
+        LeanParenthesis, LeanPow, LeanArgsSpaceSeparated, LeanProperty,
+        LeanGetElem, LeanGetElemQue, LeanGetElemQuote, LeanColon,
+    } = Lean.classes;
+    if (!(node instanceof LeanParenthesis)) return;
+    const pow = node.arg;
+    if (!(pow instanceof LeanPow)) return;
+    // base already parenthesized: ((sub) ^ 2); bare (x ^ 2) stays quiet
+    if (!(pow.lhs instanceof LeanParenthesis)) return;
+    if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
+    const parent = node.parent;
+    // f ((a - b) ^ 2): juxtaposition arg needs the paren
+    if (parent instanceof LeanArgsSpaceSeparated && parent.args[0] !== node) return;
+    // ((a - b) ^ 2).foo
+    if (parent instanceof LeanProperty && parent.lhs === node) return;
+    // ((a - b) ^ 2)[i]
+    if (parent instanceof LeanGetElem && parent.lhs === node) return;
+    if (LeanGetElemQue && parent instanceof LeanGetElemQue && parent.lhs === node) return;
+    if (LeanGetElemQuote && parent instanceof LeanGetElemQuote && parent.args?.[0] === node) return;
+    // ((a - b) ^ 2) ^ 3 -- right-assoc without paren
+    if (parent instanceof LeanPow && parent.lhs === node) return;
+    if (parent instanceof LeanColon) return;
+    const text = String(pow).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+    const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
+    ctx.warnAst('paren-redundant-pow', node,
+        `\`(${show(text)})\` → \`${show(text)}\`: outer parentheses around \`… ^ …\` are redundant`,
+        1);
+}
+
 /** is the repo-relative path a `Lemma/…` file? */
 export function isLemmaPath(file) {
     return /(^|\/)Lemma\//.test(String(file ?? '').replace(/\\/g, '/'));
@@ -477,7 +647,6 @@ export function isLemmaPath(file) {
  * `decl-keyword-dir`: a `theorem` in a `Lemma/` file (AGENTS.md: `Lemma/` holds only `lemma`s). The keyword is the
  * node class (`Lean_theorem`), so modifiers (`private`, `noncomputable`, `@[…]`), comments, strings and names like
  * `theorem_foo` never match. Quotes the declaration head (the reprint's line holding the keyword).
- * (`sympy/` files are never rendered or linted, so the `lemma`-in-`sympy/` half is not checked.)
  */
 function declKeywordDir(ctx, decl) {
     const { Lean_theorem } = Lean.classes;
@@ -536,12 +705,16 @@ export function astRules(ctx, tree) {
         else if (node instanceof Lean_let) {
             instanceVariant(sink, node);
             calcAfterAssign(sink, node);
+            haveUnderscore(sink, node);
         }
         else {
             parenGetElem(sink, node);
+            finIndexVal(sink, node);
             parenAppArg(sink, node);
             parenRedundantType(sink, node);
             parenRedundantSumSub(sink, node);
+            parenRedundantPow(sink, node);
+            preferUnicodeType(sink, node);
         }
     }
     found.sort((a, b) => order.get(a.node) - order.get(b.node));

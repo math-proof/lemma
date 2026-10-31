@@ -1,5 +1,5 @@
 import Mathlib
-import Def.Analysis.Real.Limits.Part4
+import Def.Analysis.Real.Limits.Basic
 import Initialize.Tactic.Attr.Basic
 
 

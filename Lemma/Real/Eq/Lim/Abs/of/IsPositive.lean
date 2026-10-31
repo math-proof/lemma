@@ -1,6 +1,6 @@
 import Mathlib.Topology.Order.DenselyOrdered
 import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
-import Def.Analysis.Real.Limits.Part4
+import Def.Analysis.Real.Limits.Basic
 import Theorem.Data.Set.Sets
 import Initialize.Tactic.Attr.Basic
 

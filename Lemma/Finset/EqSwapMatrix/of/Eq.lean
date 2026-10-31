@@ -1,4 +1,4 @@
-import Def.LinearAlgebra.Matrix.Echelon.Plu
+import Def.LinearAlgebra.Matrix.Permutation
 import Theorem.Data.Set.Sets
 import Initialize.Tactic.Attr.Basic
 

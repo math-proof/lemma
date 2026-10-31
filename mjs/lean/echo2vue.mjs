@@ -88,7 +88,7 @@ function oleanStatus(pkg, repoRoot) {
 /**
  * Whether echo2vue should `lake build` this import.
  * Lemma: missing or mtime-stale (proofs change often).
- * sympy/stdlib/torch: missing only — lake uses content hashes; bulk file touches
+ * stdlib/torch: missing only — lake uses content hashes; bulk file touches
  * otherwise force-rebuild the whole graph and drown the UI in false failures.
  * @param {string} pkg
  * @param {string} repoRoot
