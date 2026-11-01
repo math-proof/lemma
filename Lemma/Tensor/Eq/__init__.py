@@ -1,5 +1,4 @@
 from . import Add
-from . import Cup
 from . import Dot
 from . import Eq
 from . import Expect

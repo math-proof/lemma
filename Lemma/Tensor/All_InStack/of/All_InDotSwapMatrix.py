@@ -20,7 +20,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Tensor, Bool, Set, Nat
+    from Lemma import Matrix, Finset, Bool, Set, Nat
 
     n = Symbol(domain=Range(2, oo))
     S = Symbol(etype=dtype.integer[n], given=True)
@@ -29,7 +29,7 @@ def prove(Eq):
     w = Symbol(Stack[j, i](SwapMatrix(n, i, j)))
     Eq.swap, (Eq.P_definition, Eq.w_definition), Eq.axiom = apply(All[x[:n]:S](Element(w[i, j] @ x[:n], S)))
 
-    Eq << Tensor.Any_Eq_Dot_MatProd_SwapMatrix.apply(n)
+    Eq << Matrix.Any_Eq_Dot_MatProd_SwapMatrix.apply(n)
 
     * _, b_i = Eq[-1].rhs.args[1].expr.args
     b, _i = b_i.args
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.rhs.args[0].limits_subs(_i, k)
 
-    Eq << Tensor.Stack.eq.Dot.swapn.helper.apply(x[:n], b[:n], w)
+    Eq << Matrix.Stack.eq.Dot.swapn.helper.apply(x[:n], b[:n], w)
 
     Eq << Bool.All_Any_UFn.of.All_UFn.All_Any_Eq.apply(Eq[-2].reversed, Eq[-1])
 

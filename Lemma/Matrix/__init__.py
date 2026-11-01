@@ -3,3 +3,7 @@ from . import DetMulStackS_MulPow
 from . import Any_And_Eq_Mul_Adjoint
 from . import EqMul_T_1
 from . import Eq_Mul_Adjoint
+from . import Any_Eq_Dot_MatProd_SwapMatrix
+from . import Stack
+from . import Eq
+from . import EqDotDot_SwapMatrix

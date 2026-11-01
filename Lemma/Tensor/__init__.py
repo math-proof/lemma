@@ -146,7 +146,6 @@ from . import Zero
 from . import nn
 from . import All_Ge_ReducedMin
 from . import All_Le_ReducedMax
-from . import Any_Eq_Dot_MatProd_SwapMatrix
 from . import EqDotDot_ShiftMatrix
 from . import EqDot_DotShiftMatrix
 from . import EqToMatrixStack

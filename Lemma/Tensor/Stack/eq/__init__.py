@@ -10,7 +10,6 @@ from . import ReducedSum
 from . import Add
 from . import Ite
 from . import Eye
-from . import Dot
 from . import AppendStackS
 from . import Cos
 from . import Sin
