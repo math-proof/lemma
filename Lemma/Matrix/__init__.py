@@ -7,3 +7,7 @@ from . import Any_Eq_Dot_MatProd_SwapMatrix
 from . import Stack
 from . import Eq
 from . import EqDotDot_SwapMatrix
+from . import Dot
+from . import All_InDotSwapMatrix
+from . import SetOfDotGetSwapMatrix
+from . import AppendHstackS

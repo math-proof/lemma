@@ -6,7 +6,6 @@ from . import All
 from . import All_Eq_0
 from . import All_Ge
 from . import All_Gt
-from . import All_InDotSwapMatrix
 from . import All_InStack
 from . import All_Le
 from . import All_Lt

@@ -204,7 +204,6 @@ from . import SDiffUnion
 from . import SDiff_Finset
 from . import SDiff_SDiff
 from . import SInfImage
-from . import SetOfDotGetSwapMatrix
 from . import SetOf_In_Range
 from . import Sqrt
 from . import SqrtSubSquareS

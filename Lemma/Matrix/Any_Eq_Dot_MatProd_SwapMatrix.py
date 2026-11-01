@@ -71,7 +71,9 @@ def prove(Eq):
 
     Eq << Eq.induct.expr.expr.rhs.args[1].this.apply(Tensor.MatProd.eq.DotMatProd)
 
-    Eq << Tensor.AppendHstackS.eq.MatProd_SwapMatrix.of.Le.apply(n, n, b)
+    import Lemma.Matrix as _Matrix
+
+    Eq << _Matrix.AppendHstackS.eq.MatProd_SwapMatrix.of.Le.apply(n, n, b)
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
@@ -110,7 +112,7 @@ def prove(Eq):
 
     Eq.any_n_plausible = Eq[-1].this.expr.apply(Set.Any.of.Any.Subset, wrt=Eq[-1].expr.variable)
 
-    Eq << Tensor.All_InDotSwapMatrix.of.Eq_SetOf_EqRange.apply(n + 1, left=False)
+    Eq << _Matrix.All_InDotSwapMatrix.of.Eq_SetOf_EqRange.apply(n + 1, left=False)
 
     i, j = Eq[-1].find(Indexed).indices
     Eq << Eq[-1].this.find(Indexed).definition

@@ -12,7 +12,7 @@ def apply(n, u, v):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Finset, Bool, Tensor
+    from Lemma import Matrix, Set, Finset, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     u, v = Symbol(domain=Range(n + 1))
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq.x_j_equality.this.expr.limits_subs(Eq.x_j_equality.expr.variable, j)
 
-    Eq << Tensor.All_InDotSwapMatrix.of.Eq_SetOf_EqRange.apply(n + 1, w=w)
+    Eq << Matrix.All_InDotSwapMatrix.of.Eq_SetOf_EqRange.apply(n + 1, w=w)
 
     Eq << Subset(Eq[-2].limits[0][1], Eq[-1].rhs, plausible=True)
 

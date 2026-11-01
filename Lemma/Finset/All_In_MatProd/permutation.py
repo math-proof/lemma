@@ -24,7 +24,7 @@ def apply(m, d, w=None, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Tensor
+    from Lemma import Matrix, Bool
 
     n = Symbol(domain=Range(2, oo))
     m = Symbol(integer=True, nonnegative=True, given=False)
@@ -34,7 +34,7 @@ def prove(Eq):
     Eq.induct = Eq[-1].subs(m, m + 1)
 
     w, i, j = Eq[0].lhs.args
-    Eq << Tensor.All_InDotSwapMatrix.of.Eq_SetOf_EqRange.apply(n, w, left=False).subs(i, m).subs(j, d[m])
+    Eq << Matrix.All_InDotSwapMatrix.of.Eq_SetOf_EqRange.apply(n, w, left=False).subs(i, m).subs(j, d[m])
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, Eq[2].expr.lhs)
 

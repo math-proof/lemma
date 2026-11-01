@@ -27,7 +27,7 @@ def predefined_symbols(n):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Finset, Bool, Tensor
+    from Lemma import Matrix, Set, Finset, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     u = Symbol(domain=Range(n + 1), given=True)
@@ -45,7 +45,7 @@ def prove(Eq):
     Eq.h_domain, Eq.x_h_equality = Bool.All.All.of.All_And.apply(Eq[-1])
 
     hv = Eq.x_h_equality.expr.lhs.indices[0]
-    Eq << Tensor.All_InDotSwapMatrix.of.Eq_SetOf_EqRange.apply(n + 1, w=w)
+    Eq << Matrix.All_InDotSwapMatrix.of.Eq_SetOf_EqRange.apply(n + 1, w=w)
 
     Eq << Subset(Eq[-2].limits[0][1], Eq[-1].rhs, plausible=True)
 

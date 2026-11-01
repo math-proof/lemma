@@ -12,7 +12,7 @@ def apply(n, m, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Tensor
+    from Lemma import Matrix, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     m = Symbol(positive=True, integer=True, given=False)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq.initial = Eq[0].subs(m, 1)
 
-    Eq.concatenate = Tensor.AppendHstackS.eq.SwapMatrix.apply(n)
+    Eq.concatenate = Matrix.AppendHstackS.eq.SwapMatrix.apply(n)
 
     * _, i, j = Eq.concatenate.rhs.args
     Eq << Eq.concatenate.subs(i, 0).subs(j, b[0]).T
