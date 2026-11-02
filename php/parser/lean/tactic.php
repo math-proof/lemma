@@ -207,6 +207,8 @@ class LeanTactic extends LeanSyntax
                         elseif ($arg instanceof LeanArgsCommaSeparated)
                             $token = array_map(fn($arg) => clone $arg, $arg->args);
                     }
+                    // `_` is anonymous: `echo _` does not name that intro, so drop it.
+                    $token = array_values(array_filter($token, fn($t) => $t->text !== '_'));
                     break;
                 case 'denote':
                 case "denote'":

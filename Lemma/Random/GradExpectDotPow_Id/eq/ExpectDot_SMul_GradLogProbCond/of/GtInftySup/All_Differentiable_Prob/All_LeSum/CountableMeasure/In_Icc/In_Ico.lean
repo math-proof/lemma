@@ -67,10 +67,10 @@ private lemma main
   have hμ : (ReferenceMeasure.measure : Measure A) = Measure.count :=
     CountableMeasure.measure_eq_count
   apply GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico
-    (M := M) (Cg := Cg) h₀ h₁ htr haj
-    (fun θ t sb ab =>
+    (M := M) (Cg := Cg) h₀ h₁
+    ⟨htr, haj, fun θ t x u =>
       (ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
-        (M := M) htr haj (hfactor θ t (sb t) (ab t)) (hdens θ t (sb t)).1 (hdens θ t (sb t)).2).symm)
+        (M := M) htr haj (hfactor θ t x u) (hdens θ t x).1 (hdens θ t x).2).symm⟩
     hπ h₃ h₄
   ·
     intro x

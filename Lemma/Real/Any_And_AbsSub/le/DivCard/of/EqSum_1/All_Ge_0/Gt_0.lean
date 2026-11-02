@@ -5,6 +5,7 @@ import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
+import Initialize.Tactic.Attr.Basic
 open Finset
 
 

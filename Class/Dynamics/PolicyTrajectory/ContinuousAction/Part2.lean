@@ -6,7 +6,7 @@ import Def.Order.Miscellaneous
 import Lemma.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
 import Lemma.Random.SinglePSpace.of.AEMeasurable.Distributed
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part2
+import Class.Dynamics.PolicyTrajectory.ContinuousAction
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal
 
@@ -41,28 +41,5 @@ These are the continuous-action counterparts of `Model.rk`, `Model.Wk`, `Model.V
 -/
 
 
-namespace PolicyGradient
-
-variable {Θ S A : Type*} [MeasurableSpace S] [ReferenceMeasure A]
-
-section DensityModelIsPolicyTrajectorySinglePSpace
-
-variable {Θ S A : Type*} [ReferenceMeasure S] [ReferenceMeasure A]
-
-/-- Absolute continuity of every state marginal `law(s[t])` w.r.t. `ReferenceMeasure` on `S`. -/
-class DensityModel.AbsContStateMarginal (M : DensityModel Θ S A)
-    (s : ℕ ⇀ (ℕ → ℝ × S × A) → S) : Prop where
-  map_s_ac : ∀ θ t, (M θ).map (s t) ≪ (ReferenceMeasure.measure : Measure S)
-
-/-- Absolute continuity of every joint law `law(a[t], s[t])` w.r.t. the product reference
-measure on `A × S`. Together with `AbsContStateMarginal`, enables `SinglePSpace` for
-`(a t, s t)` so `ℙ[M θ](a[t] | s[t])` elaborates. -/
-class DensityModel.AbsContJointAS (M : DensityModel Θ S A)
-    (a : ℕ ⇀ (ℕ → ℝ × S × A) → A)
-    (s : ℕ ⇀ (ℕ → ℝ × S × A) → S) : Prop where
-  map_as_ac : ∀ θ t,
-    (M θ).map (fun ω => (a t ω, s t ω)) ≪
-      ((ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S))
-
-end DensityModelIsPolicyTrajectorySinglePSpace
-end PolicyGradient
+/-! `AbsContStateMarginal`, `AbsContJointAS`, and `IsConditionalProbability` are declared
+in `Class.Dynamics.PolicyTrajectory.ContinuousAction`, beside `IsPolicyTrajectory`. -/

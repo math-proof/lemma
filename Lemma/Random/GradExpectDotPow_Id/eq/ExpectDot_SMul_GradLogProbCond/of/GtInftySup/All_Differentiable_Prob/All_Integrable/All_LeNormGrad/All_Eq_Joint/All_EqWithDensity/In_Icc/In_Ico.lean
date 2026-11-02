@@ -28,11 +28,7 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ℓ ∈ Set.Icc 0 1)
-  (htr : DensityModel.IsPolicyTrajectory M r s a)
-  (haj : DensityModel.AbsContJointAS M a s)
-  (hfactor : ∀ θ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
-    M.policy.prob θ «\sf{s}»[t] «\sf{a}»[t] =
-      (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ))
+  (hfactor : DensityModel.IsConditionalProbability M r s a)
   (hπ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
@@ -42,12 +38,14 @@ private lemma main
     (fun z : S × A => ∇[θ] Real.log (M.policy.prob θ z.1 z.2)))
   (hMs : ∀ y u, ‖∇[θ] Real.log (M.policy.prob θ y u)‖ ≤ Ms) :
 -- imply
+  letI : DensityModel.IsPolicyTrajectory M r s a := hfactor.htr
+  letI : DensityModel.AbsContJointAS M a s := hfactor.haj
   have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hfactor.htr.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path s) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hfactor.htr.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) hfactor.htr.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
   let V_θ : ℕ ⇀ (ℕ → S) → ℕ → ℝ := ⟨fun _ δ k => M.Vkd θ γ (δ k)⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
@@ -59,20 +57,20 @@ private lemma main
   obtain ⟨r⟩ := r
   obtain ⟨s⟩ := s
   obtain ⟨a⟩ := a
-  obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (htr.stage_eq t) ω)).symm
-  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (htr.stage_eq t) ω)).symm
-  obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (htr.stage_eq t) ω)).symm
+  obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (hfactor.htr.stage_eq t) ω)).symm
+  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (hfactor.htr.stage_eq t) ω)).symm
+  obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (hfactor.htr.stage_eq t) ω)).symm
   set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   let : MeasurableSpace Θ := borel Θ
   let : BorelSpace Θ := ⟨rfl⟩
   have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst hfactor.htr.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path s) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst hfactor.htr.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd hfactor.htr.stage_eq t).aemeasurable⟩)
   have hc : γ * ℓ ∈ Set.Ico 0 1 :=
     ⟨mul_nonneg h₀.1 h₁.1, (mul_le_of_le_one_right h₀.1 h₁.2).trans_lt h₀.2⟩
   -- parent / Integral_SMul still take the dual (`fderiv`) form of the score
@@ -92,17 +90,17 @@ private lemma main
     (fun (s : ℕ → S) (_ : ℕ → A) (r : ℕ → ℝ) (k : ℕ) =>
         r k + γ * M.Vkd θ γ (s (k + 1)) - M.Vkd θ γ (s k))
       (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) k := fun k =>
-    ((Random.Measurable.of.All_Eq.fst htr.stage_eq k).add
+    ((Random.Measurable.of.All_Eq.fst hfactor.htr.stage_eq k).add
       (((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp
-          (Random.Measurable.of.All_Eq.snd.fst htr.stage_eq (k + 1))).const_mul γ)).sub
+          (Random.Measurable.of.All_Eq.snd.fst hfactor.htr.stage_eq (k + 1))).const_mul γ)).sub
       ((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp
-        (Random.Measurable.of.All_Eq.snd.fst htr.stage_eq k))
+        (Random.Measurable.of.All_Eq.snd.fst hfactor.htr.stage_eq k))
   have hbd : ∀ c ∈ Set.Ico (0 : ℝ) 1, ∀ᵐ ω ∂(M θ), ∀ t,
     ‖∑' k, c ^ k * (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) -
       M.Vkd θ γ (s (t + k) ω))‖ ≤
       (1 - c)⁻¹ * ((3 / (1 - γ) - 1) * |M.env.R|) := fun c hc' =>
     AeAll_LeNorm_TSum_MulPowSubAddRMul_VkdVkdMulSub1DeltaBound.of.In_Ico.In_Ico.All_EqWithDensity
-      (M := M) h₀ htr.stage_eq hc' θ
+      (M := M) h₀ hfactor.htr.stage_eq hc' θ
   -- `c`-discounted advantage against the density score collapses to the first residual
   have hinner : ∀ c ∈ Set.Ico (0 : ℝ) 1, ∀ t, ∫ ω,
     (∑' k, c ^ k * (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) -
@@ -112,14 +110,14 @@ private lemma main
       fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) :=
     fun c hc' t =>
       Integral_SMul.of.In_Ico.In_Ico.All_EqWithDensity
-        (M := M) h₀ htr.stage_eq hπ θ hc' t ψ hψ ⟨Ms, hMs'⟩
+        (M := M) h₀ hfactor.htr.stage_eq hπ θ hc' t ψ hψ ⟨Ms, hMs'⟩
   have hbase :
     ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
       𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
         (((γ ^ (id : ℕ → ℕ)) @ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
           ∇[θ] Real.log (M.policy.prob θ (s t) (a t)))) :=
     GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Ico
-      (M := M) h₀ htr.stage_eq hπ h₂ h₃' h₄ h₅ hφ' hMs'
+      (M := M) h₀ hfactor.htr.stage_eq hπ h₂ h₃' h₄ h₅ hφ' hMs'
   -- rewrite V_θ sugar into Vkd pointwise form for dual conversion
   have hbaseexp :
     ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
@@ -177,12 +175,12 @@ private lemma main
     Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.All_Eq_Joint.All_EqWithDensity1
       (M := M) (θ := θ) (γ := γ) (c := γ)
       (X := fun s _ r k => r k + γ * M.Vkd θ γ (s (k + 1)) - M.Vkd θ γ (s k))
-      (B := Bγ) (Ms := Ms) h₀ htr.stage_eq hmeas (hbd γ h₀) hφ hMs
+      (B := Bγ) (Ms := Ms) h₀ hfactor.htr.stage_eq hmeas (hbd γ h₀) hφ hMs
   have hA₂ :=
     Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.All_Eq_Joint.All_EqWithDensity1
       (M := M) (θ := θ) (γ := γ) (c := γ * ℓ)
       (X := fun s _ r k => r k + γ * M.Vkd θ γ (s (k + 1)) - M.Vkd θ γ (s k))
-      (B := Bc) (Ms := Ms) h₀ htr.stage_eq hmeas (hbd (γ * ℓ) hc) hφ hMs
+      (B := Bc) (Ms := Ms) h₀ hfactor.htr.stage_eq hmeas (hbd (γ * ℓ) hc) hφ hMs
   have hsplit :
     ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
       𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
@@ -220,7 +218,7 @@ private lemma main
   refine tsum_congr fun t => ?_
   have hsc :=
     congrArg (fun φ : Θ → ℝ => gradient φ θ)
-      (funext fun θ' => congrArg Real.log (hfactor θ' t ⟨integ.2.1⟩ ⟨integ.2.2⟩))
+      (funext fun θ' => congrArg Real.log (hfactor.factor θ' t (integ.2.1 t) (integ.2.2 t)))
   rw [hsc]
   congr 1
 

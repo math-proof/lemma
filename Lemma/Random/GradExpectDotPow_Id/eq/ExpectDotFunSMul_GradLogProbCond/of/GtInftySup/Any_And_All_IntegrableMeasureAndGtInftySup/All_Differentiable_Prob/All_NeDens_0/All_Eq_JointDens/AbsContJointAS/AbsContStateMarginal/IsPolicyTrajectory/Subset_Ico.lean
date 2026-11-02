@@ -272,15 +272,15 @@ private lemma main
     funext ω
     exact congrArg (fun δ => Dot.dot ((γ * ℓ) ^ (id : ℕ → ℕ)) δ)
       (hδθ (fun j => s j ω) (fun j => r j ω) t).symm
-  have hcond : ∀ θ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
-      M.policy.prob θ «\sf{s}»[t] «\sf{a}»[t] =
-        (ℙ[M θ]((a t) = «\sf{a}»[t] | (s t) = «\sf{s}»[t]) : ℝ) :=
-    fun θ t sb ab =>
+  have hcond : ∀ θ t (x : S) (u : A),
+      M.policy.prob θ x u =
+        (ℙ[M θ]((a t) = u | (s t) = x) : ℝ) :=
+    fun θ t x u =>
       (ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
-        (M := M) h₁ haj (hfactor θ t (sb t) (ab t)) (hdens θ t (sb t)).1 (hdens θ t (sb t)).2).symm
+        (M := M) h₁ haj (hfactor θ t x u) (hdens θ t x).1 (hdens θ t x).2).symm
   refine (GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico
     (M := M) (θ := θ) (r := ⟨r⟩) (s := ⟨s⟩) (a := ⟨a⟩)
-    hγ hℓ h₁ haj hcond hπ h₂pol h₃pol h₄ h₅ hφpol hMspol).trans ?_
+    hγ hℓ ⟨h₁, haj, hcond⟩ hπ h₂pol h₃pol h₄ h₅ hφpol hMspol).trans ?_
   symm
   have hFeq :
     (fun t (s : ℕ → S) (a : ℕ → A) (r : ℕ → ℝ) =>

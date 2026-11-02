@@ -254,6 +254,8 @@ export class LeanTactic extends LeanSyntax {
                     else if (inner instanceof L.LeanArgsCommaSeparated)
                         token = inner.args.map((x) => x.clone());
                 }
+                // `_` is anonymous: `echo _` does not name that intro, so drop it (`intro _ _ V_θ` → `echo V_θ, ⊢`).
+                token = token.filter((t) => t.text !== '_');
                 break;
             case 'denote':
             case "denote'":

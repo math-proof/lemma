@@ -41,42 +41,5 @@ These are the continuous-action counterparts of `Model.rk`, `Model.Wk`, `Model.V
 -/
 
 
-namespace PolicyGradient
-
-variable {Θ S A : Type*} [MeasurableSpace S] [ReferenceMeasure A]
-
-namespace DensityModel.IsPolicyTrajectory
-
-variable {M : DensityModel Θ S A}
-  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
-  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
-
-/-- `s t` is measurable: rewrite via `stage_eq` to `(ω t).2.1`. -/
-theorem measurable_s [h : DensityModel.IsPolicyTrajectory M r s a] (t : ℕ) :
-    Measurable (s t) := by
-  have : s t = fun ω : ℕ → ℝ × S × A ↦ (ω t).2.1 :=
-    funext fun ω ↦ (congrArg (fun z : ℝ × S × A ↦ z.2.1) (congrFun (h.stage_eq t) ω)).symm
-  rw [this]
-  exact measurable_fst.comp <| measurable_snd.comp <|
-    (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t)
-
-/-- `a t` is measurable: rewrite via `stage_eq` to `(ω t).2.2`. -/
-theorem measurable_a [h : DensityModel.IsPolicyTrajectory M r s a] (t : ℕ) :
-    Measurable (a t) := by
-  have : a t = fun ω : ℕ → ℝ × S × A ↦ (ω t).2.2 :=
-    funext fun ω ↦ (congrArg (fun z : ℝ × S × A ↦ z.2.2) (congrFun (h.stage_eq t) ω)).symm
-  rw [this]
-  exact measurable_snd.comp <| measurable_snd.comp <|
-    (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t)
-
-/-- `r t` is measurable: rewrite via `stage_eq` to `(ω t).1`. -/
-theorem measurable_r [h : DensityModel.IsPolicyTrajectory M r s a] (t : ℕ) :
-    Measurable (r t) := by
-  have : r t = fun ω : ℕ → ℝ × S × A ↦ (ω t).1 :=
-    funext fun ω ↦ (congrArg Prod.fst (congrFun (h.stage_eq t) ω)).symm
-  rw [this]
-  exact measurable_fst.comp (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t)
-
-end DensityModel.IsPolicyTrajectory
-end PolicyGradient
+/-! `measurable_r`, `measurable_s`, and `measurable_a` are declared next to
+`DensityModel.IsPolicyTrajectory`. -/
