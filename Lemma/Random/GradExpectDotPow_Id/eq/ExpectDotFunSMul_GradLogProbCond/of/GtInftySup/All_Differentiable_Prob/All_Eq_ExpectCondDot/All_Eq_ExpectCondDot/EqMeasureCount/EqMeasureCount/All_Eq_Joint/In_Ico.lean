@@ -201,8 +201,8 @@ private lemma fderiv_tsum_eq_integral_score
   {a : ℕ → (ℕ → ℝ × S × A) → A}
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
-  (h₃ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
+  (h₂ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A), Q θ t («\sf{s}» t) («\sf{a}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
+  (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
@@ -499,8 +499,8 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
-  (h₃ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
+  (h₂ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A), Q θ t («\sf{s}» t) («\sf{a}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
+  (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
@@ -778,4 +778,5 @@ private lemma main
 
 
 -- created on 2023-03-30
+-- updated on 2026-11-02
 -- updated on 2026-10-18 (heartbeat extracts)

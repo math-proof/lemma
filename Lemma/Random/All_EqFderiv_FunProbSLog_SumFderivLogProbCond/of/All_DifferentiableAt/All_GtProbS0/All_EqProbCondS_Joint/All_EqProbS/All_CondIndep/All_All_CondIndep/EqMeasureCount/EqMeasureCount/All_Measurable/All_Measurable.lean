@@ -52,7 +52,7 @@ private lemma policy_gradient_theorem
   have hfac : ∀ θ, (ℙ[π θ](s[:T + 1] = sv[:T + 1] ∧ a[:T] = av[:T]) : ℝ) = C * ∏ t ∈ Finset.range T, p θ t := by
     intro θ
     have h := ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM.mdp (π := π θ)
-      («s.bvar» := sv) («a.bvar» := av) hs ha (hpol θ) (htrans θ) T
+      («\sf{s}» := sv) («\sf{a}» := av) hs ha (hpol θ) (htrans θ) T
     rw [h, ENNReal.toReal_mul, ENNReal.toReal_prod]
     simp only [ENNReal.toReal_mul]
     rw [Finset.prod_mul_distrib, hC, hinit θ θ₀, mul_assoc]
@@ -90,4 +90,4 @@ private lemma policy_gradient_theorem
 
 
 -- created on 2023-03-22
--- updated on 2026-10-23
+-- updated on 2026-11-02

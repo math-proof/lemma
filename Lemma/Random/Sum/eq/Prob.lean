@@ -27,11 +27,11 @@ private lemma main
   (hP : SinglePSpace π (x, y))
   (hα : ReferenceMeasure.measure (α := α) = Measure.count)
   (hβ : ReferenceMeasure.measure (α := β) = Measure.count)
-  («y.bvar» : β) :
+  («\sf{y}» : β) :
 -- imply
   have : SinglePSpace π y := SinglePSpace.of.SinglePSpace.snd hP
-  ∑' «x.bvar» : α, ℙ[π](x = «x.bvar» ∧ y = «y.bvar») =
-    ℙ[π](y = «y.bvar») := by
+  ∑' «\sf{x}» : α, ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») =
+    ℙ[π](y = «\sf{y}») := by
 -- proof
   intro hPy
   have hleft : ∀ᵐ y₀ ∂ReferenceMeasure.measure,
@@ -41,8 +41,9 @@ private lemma main
   have hall := by
     rw [hα, hβ] at hleft
     exact ae_count_iff.mp hleft
-  have h := hall «y.bvar»
+  have h := hall «\sf{y}»
   rwa [lintegral_count] at h
 
 
 -- created on 2020-12-21
+-- updated on 2026-11-02

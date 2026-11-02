@@ -556,10 +556,12 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         )
             return null;
         // rhs spells the same expression with its base wrapped as a bound value:
-        // `«x.bvar»`, `«x.bvar»[:t + 1]` or `«x[:t + 1].bvar»`
+        // `«x.bvar»`, `«x.bvar»[:t + 1]`, `«x[:t + 1].bvar»`, or `«\sf{x}»` / `«\sf{x}»[t]`
         const rhsText = strStmt(peel(n.rhs)).trim(); // peel so `(«a.bvar» t)` matches `a t`
-        if (!/«[^»]*\.bvar»/.test(rhsText)) return null;
-        const plain = rhsText.replace(/«([^»]*?)\.bvar»/g, '$1');
+        if (!/«[^»]*\.bvar»/.test(rhsText) && !/«\\sf\{[A-Za-z]\}»/.test(rhsText)) return null;
+        const plain = rhsText
+            .replace(/«\\sf\{([A-Za-z])\}»/g, '$1')
+            .replace(/«([^»]*?)\.bvar»/g, '$1');
         if (plain !== strStmt(lhs).trim()) return null;
         return lhs;
     }

@@ -31,7 +31,7 @@ private lemma main
   have hp : Measurable p := D
   refine ⟨?_, ?_⟩
   ·
-    let q : α → ENNReal := fun «x.bvar» ↦ lintegral ν (fun «y.bvar» ↦ p («x.bvar», «y.bvar»))
+    let q : α → ENNReal := fun «\sf{x}» ↦ lintegral ν (fun «\sf{y}» ↦ p («\sf{x}», «\sf{y}»))
     have hq : Measurable q := hp.lintegral_prod_right'
     have hmap : π.map x = (π.map (x, y)).map Prod.fst :=
       (AEMeasurable.map_map_of_aemeasurable measurable_fst.aemeasurable
@@ -53,7 +53,7 @@ private lemma main
       setLIntegral_prod p hp.aemeasurable.restrict]
     simp [q]
   ·
-    let q : β → ENNReal := fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))
+    let q : β → ENNReal := fun «\sf{y}» ↦ lintegral μ (fun «\sf{x}» ↦ p («\sf{x}», «\sf{y}»))
     have hq : Measurable q := hp.lintegral_prod_left'
     have hmap : π.map y = (π.map (x, y)).map Prod.snd :=
       (AEMeasurable.map_map_of_aemeasurable measurable_snd.aemeasurable
@@ -77,4 +77,4 @@ private lemma main
 
 
 -- created on 2026-09-14
--- updated on 2026-10-26
+-- updated on 2026-11-02

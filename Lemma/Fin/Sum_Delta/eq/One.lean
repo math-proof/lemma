@@ -1,4 +1,4 @@
-import Def.LinearAlgebra.Matrix.Permutation.Tensor
+import Def.LinearAlgebra.Matrix.Permutation
 import Lemma.Nat.Delta.eq.Ite
 open Nat
 
@@ -24,3 +24,4 @@ private lemma main
 
 
 -- created on 2026-09-12
+-- updated on 2026-11-01

@@ -5,6 +5,7 @@ import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiabl
 import Lemma.Random.AeRealPreimageSS.ne.Zero
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Lemma.Random.SinglePSpace.of.Measurable
+import Theorem.Dynamics.PolicyTrajectory
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open scoped ENNReal.ToRealCoe
@@ -33,17 +34,17 @@ private lemma main
   {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : IsPolicyTrajectory M r s a)
-  (h₂ : ∀ θ («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-    ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) ≠ 0)
+  [h₁ : IsPolicyTrajectory M r s a]
+  (h₂ : ∀ θ («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+    ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) ≠ 0)
   (h₃ : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
     X (r · ω) (s · ω) (a · ω) k)
   (h₄ : ∀ᵐ ω ∂(M θ),
     sup[t] |((γ ^ (id : ℕ → ℕ)) @ (X (r · ω) (s · ω) (a · ω))[t:])| < ∞)
-  (h₅ : ∀ t («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)))
-  (h₆ : sup[θ, t, «s.bvar» : ℕ ⇀ S, «a.bvar» : ℕ ⇀ A]
-    ‖∇[θ] (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)‖ < ∞) :
+  (h₅ : ∀ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
+  (h₆ : sup[θ, t, «\sf{s}» : ℕ ⇀ S, «\sf{a}» : ℕ ⇀ A]
+    ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t))
@@ -118,3 +119,4 @@ private lemma main
 
 
 -- created on 2026-10-21
+-- updated on 2026-11-02

@@ -22,7 +22,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
     - drop redundant type ascriptions `(v : T)` by heuristic, not a `run.mjs` warning or Lean linter (both forms elaborate; the compiler cannot flag them). Drop when `v` already has type `T`, or a coercion fills the expected type anyway (`Fin`→`ℕ`, `ℕ`→`ℂ` at `*`, `n - e` with `e : Fin`). Keep ascriptions that pick a numeral’s type (`(0 : ℂ)`), that state a `show` used as a rewrite (`show ((1 : Fin 3) : ℕ) = 1`), or that the file fails to elaborate without.
   - before the `given` section, omit auto-bound implicits
   - explicit binders `(…)` (hypotheses and given-section expressions) sit under `-- given`; type binders `{…}` / `⦃…⦄` and instance binders `[…]` stay above it
-  - an instance binder that a later given hypothesis needs stays an instance binder `[instImplicit]` inside `-- given`, before that hypothesis; never `(h : … := by infer_instance)` or any `(h : T := by tactic)`
+  - a named instance binder `[h : T]` is written `(h : T)` under `-- given`; unnamed `[T]` stays above `-- given`; never `(h : … := by infer_instance)` or any `(h : T := by tactic)`
   - within the `given` section: propositions come first, expressions come next, unless otherwise specified
   - within the `proof` section, tactics convention:
     - prefer `apply` instead of `exact`, perhaps by creating some holes

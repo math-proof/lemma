@@ -27,7 +27,7 @@ private lemma main
   {θ : Θ}
   {γ : ℝ}
   {t : ℕ}
-  {«s.bvar» : ℕ → S}
+  {«\sf{s}» : ℕ → S}
   {p : S → A → S → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
@@ -38,11 +38,11 @@ private lemma main
   (h₅ : ∀ x u y, p x u y ≥ 0)
   (h₆ : ∀ x u, M.env.trans (x, u) = (ReferenceMeasure.measure : Measure S).withDensity (fun y => ENNReal.ofReal (p x u y))) :
 -- imply
-  ∇[θ] M.Vk θ γ («s.bvar» t) =
-    ∑ «a.bvar» t, M.Qk θ γ («s.bvar» t) («a.bvar» t) • ∇[θ] M.policy.prob θ («s.bvar» t) («a.bvar» t) +
-      γ • ∫ y, M.P1k θ p («s.bvar» t) y • ∇[θ] M.Vk θ γ y ∂ReferenceMeasure.measure := by
+  ∇[θ] M.Vk θ γ («\sf{s}» t) =
+    ∑ «\sf{a}» t, M.Qk θ γ («\sf{s}» t) («\sf{a}» t) • ∇[θ] M.policy.prob θ («\sf{s}» t) («\sf{a}» t) +
+      γ • ∫ y, M.P1k θ p («\sf{s}» t) y • ∇[θ] M.Vk θ γ y ∂ReferenceMeasure.measure := by
 -- proof
-  set x := «s.bvar» t
+  set x := «\sf{s}» t
   have := M.env.trans_markov
   have hF := Fderiv.eq.AddSum_SMulSMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂ h₀ h₃ x θ
   obtain ⟨C, hC⟩ := GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂ h₀ h₃
@@ -86,3 +86,4 @@ private lemma main
 
 
 -- created on 2023-03-30
+-- updated on 2026-11-02

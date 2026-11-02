@@ -15,12 +15,12 @@ private lemma main
 -- imply
   have _hPxy_z : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
   have _hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hP
-  ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
-    ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
-      ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
-        ℙ[π](x = «x.bvar» ∧ y = «y.bvar» | z = «z.bvar») =
-          ℙ[π](x = «x.bvar» | y = «y.bvar» ∧ z = «z.bvar») *
-            ℙ[π](y = «y.bvar» | z = «z.bvar») := by
+  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
+    ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
+      ∀ᵐ «\sf{z}» ∂ReferenceMeasure.measure,
+        ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}» | z = «\sf{z}») =
+          ℙ[π](x = «\sf{x}» | y = «\sf{y}» ∧ z = «\sf{z}») *
+            ℙ[π](y = «\sf{y}» | z = «\sf{z}») := by
 -- proof
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
@@ -119,12 +119,12 @@ private lemma Cond
 -- imply
   have _hPxy_z : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
   have _hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hP
-  ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
-    ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
-      ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
-        ℙ[π](x = «x.bvar» ∧ y = «y.bvar» | z = «z.bvar») =
-          ℙ[π](y = «y.bvar» | z = «z.bvar») *
-            ℙ[π](x = «x.bvar» | y = «y.bvar» ∧ z = «z.bvar») := by
+  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
+    ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
+      ∀ᵐ «\sf{z}» ∂ReferenceMeasure.measure,
+        ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}» | z = «\sf{z}») =
+          ℙ[π](y = «\sf{y}» | z = «\sf{z}») *
+            ℙ[π](x = «\sf{x}» | y = «\sf{y}» ∧ z = «\sf{z}») := by
 -- proof
   intro _ _
   filter_upwards [main hP] with a ha
@@ -135,4 +135,4 @@ private lemma Cond
 
 -- created on 2020-12-11
 -- updated on 2026-09-20
--- updated on 2026-09-27
+-- updated on 2026-11-02

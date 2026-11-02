@@ -23,8 +23,8 @@ private lemma main
   (hP : SinglePSpace π (x, y))
   (h : ∀ᵐ z ∂(ReferenceMeasure.measure : Measure (α × β)), ℙ[π](x = z.1 ∧ y = z.2) ≠ 0) :
 -- imply
-  (have := SinglePSpace.of.SinglePSpace.fst hP; ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure, ℙ[π](x = «x.bvar») ≠ 0) ∧
-  (have := SinglePSpace.of.SinglePSpace.snd hP; ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure, ℙ[π](y = «y.bvar») ≠ 0) := by
+  (have := SinglePSpace.of.SinglePSpace.fst hP; ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure, ℙ[π](x = «\sf{x}») ≠ 0) ∧
+  (have := SinglePSpace.of.SinglePSpace.snd hP; ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure, ℙ[π](y = «\sf{y}») ≠ 0) := by
 -- proof
   extract_lets hP_x hP_y
   let μ : Measure α := ReferenceMeasure.measure
@@ -99,4 +99,4 @@ private lemma main
 
 
 -- created on 2020-12-08
--- updated on 2026-09-20
+-- updated on 2026-11-02

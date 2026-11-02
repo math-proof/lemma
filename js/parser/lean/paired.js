@@ -1147,6 +1147,21 @@ export class LeanDoubleAngleQuotation extends LeanPairedGroup {
     get operator() {
         return ['«', '»'];
     }
+    /**
+     * Letter of an observed value `«\sf{w}»` (w one letter), or null.
+     * @returns {string | null}
+     */
+    sfBoundLetter() {
+        const inner = this.arg;
+        if (!(inner instanceof L.LeanToken)) return null;
+        const m = /^\\sf\{([A-Za-z])\}$/.exec(inner.text);
+        return m ? m[1] : null;
+    }
+
+    /**
+     * `«y.bvar»` → the name token `y`. `«\sf{w}»` → a token whose text is `w`
+     * (for RV / sum matching). LaTeX of the sf form is `\sf{w}`, not this token.
+     */
     boundValueLhs() {
         const inner = this.arg;
         if (
@@ -1156,12 +1171,17 @@ export class LeanDoubleAngleQuotation extends LeanPairedGroup {
         ) {
             return inner.lhs;
         }
+        const letter = this.sfBoundLetter();
+        if (letter) return new L.LeanToken(letter, this.indent, this.level);
         return null;
     }
     latexFormat() {
+        if (this.sfBoundLetter()) return '\\sf{%s}';
         return this.boundValueLhs() ? '%s' : '{\\color{red}%s}';
     }
     latexArgs(syntax) {
+        const letter = this.sfBoundLetter();
+        if (letter) return [letter];
         const lhs = this.boundValueLhs();
         return lhs ? [lhs.toLatex(syntax)] : super.latexArgs(syntax);
     }

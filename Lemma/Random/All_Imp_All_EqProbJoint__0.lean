@@ -12,15 +12,15 @@ private lemma main
   (hP : SinglePSpace π (x, y)) :
 -- imply
   have := SinglePSpace.of.SinglePSpace.fst hP
-  ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
-    ℙ[π](x = «x.bvar») = 0 →
-    ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
-      ℙ[π](x = «x.bvar» ∧ y = «y.bvar») = 0 := by
+  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
+    ℙ[π](x = «\sf{x}») = 0 →
+    ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
+      ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») = 0 := by
 -- proof
   refine (All_EqIntegral_ProbJoint.of.PSpace_Joint hP).mono fun z hz hzero => ?_
-  apply (MeasureTheory.lintegral_eq_zero_iff (f := fun «y.bvar» => π.prob (x, y) (z, «y.bvar»)) ((MeasureTheory.Measure.measurable_rnDeriv _ _).comp (measurable_const.prodMk measurable_id))).mp
+  apply (MeasureTheory.lintegral_eq_zero_iff (f := fun «\sf{y}» => π.prob (x, y) (z, «\sf{y}»)) ((MeasureTheory.Measure.measurable_rnDeriv _ _).comp (measurable_const.prodMk measurable_id))).mp
   rw [hz, hzero]
 
 
 -- created on 2023-03-21
--- updated on 2026-09-26
+-- updated on 2026-11-02

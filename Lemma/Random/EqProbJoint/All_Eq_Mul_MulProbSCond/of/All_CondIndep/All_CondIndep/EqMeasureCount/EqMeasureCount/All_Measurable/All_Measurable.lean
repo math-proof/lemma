@@ -10,7 +10,7 @@ private lemma main
   [CountableMeasure S] [CountableMeasure A]
   [Countable S] [MeasurableSingletonClass S] [Countable A] [MeasurableSingletonClass A]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ → Ω → S} {a : ℕ → Ω → A} {«s.bvar» : ℕ → S} {«a.bvar» : ℕ → A}
+  {s : ℕ → Ω → S} {a : ℕ → Ω → A} {«\sf{s}» : ℕ → S} {«\sf{a}» : ℕ → A}
 -- given
   (hs : ∀ k, Measurable (s k))
   (ha : ∀ k, Measurable (a k))
@@ -27,17 +27,17 @@ private lemma main
     SinglePSpace.of.Measurable.Measurable (hs (i + 1)) ((hs i).prodMk (ha i))
   have : ∀ n, SinglePSpace π (s[:n + 1], a[:n]) := fun _ =>
     SinglePSpace.of.All_Measurable.All_Measurable hs ha
-  ℙ[π](s[:0 + 1] = «s.bvar»[:0 + 1] ∧ a[:0] = «a.bvar»[:0]) = ℙ[π]((s 0) = «s.bvar» 0) ∧
-    ∀ t : ℕ, ℙ[π](s[:t + 1 + 1] = «s.bvar»[:t + 1 + 1] ∧ a[:t + 1] = «a.bvar»[:t + 1]) =
-      ℙ[π](s[:t + 1] = «s.bvar»[:t + 1] ∧ a[:t] = «a.bvar»[:t]) *
-        (ℙ[π]((a t) = «a.bvar» t | (s t) = «s.bvar» t) *
-          ℙ[π]((s (t + 1)) = «s.bvar» (t + 1) | (s t) = «s.bvar» t ∧ (a t) = «a.bvar» t)) := by
+  ℙ[π](s[:0 + 1] = «\sf{s}»[:0 + 1] ∧ a[:0] = «\sf{a}»[:0]) = ℙ[π]((s 0) = «\sf{s}» 0) ∧
+    ∀ t : ℕ, ℙ[π](s[:t + 1 + 1] = «\sf{s}»[:t + 1 + 1] ∧ a[:t + 1] = «\sf{a}»[:t + 1]) =
+      ℙ[π](s[:t + 1] = «\sf{s}»[:t + 1] ∧ a[:t] = «\sf{a}»[:t]) *
+        (ℙ[π]((a t) = «\sf{a}» t | (s t) = «\sf{s}» t) *
+          ℙ[π]((s (t + 1)) = «\sf{s}» (t + 1) | (s t) = «\sf{s}» t ∧ (a t) = «\sf{a}» t)) := by
 -- proof
   intro _ _ _ _
-  have : Nonempty S := ⟨«s.bvar» 0⟩
-  have : Nonempty A := ⟨«a.bvar» 0⟩
-  have hP : ∀ p q : ℕ, (s[:(p : ℤ)], a[:(q : ℤ)]) ⁻¹' {(«s.bvar»[:(p : ℤ)], «a.bvar»[:(q : ℤ)])} =
-      {ω | (∀ i < p, s i ω = «s.bvar» i) ∧ ∀ i < q, a i ω = «a.bvar» i} := by
+  have : Nonempty S := ⟨«\sf{s}» 0⟩
+  have : Nonempty A := ⟨«\sf{a}» 0⟩
+  have hP : ∀ p q : ℕ, (s[:(p : ℤ)], a[:(q : ℤ)]) ⁻¹' {(«\sf{s}»[:(p : ℤ)], «\sf{a}»[:(q : ℤ)])} =
+      {ω | (∀ i < p, s i ω = «\sf{s}» i) ∧ ∀ i < q, a i ω = «\sf{a}» i} := by
     intro p q
     ext ω
     simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_ofPred_eq, JointRandomSymbol, Prod.mk.injEq, funext_iff]
@@ -50,11 +50,11 @@ private lemma main
       exact ⟨fun i => h.1 i i.2, fun i => h.2 i i.2⟩
   have hJ : ∀ p q : ℕ, Measurable (s[:(p : ℤ)], a[:(q : ℤ)]) := fun p q =>
     (Measurable.of_eval fun i => hs _).prodMk (Measurable.of_eval fun i => ha _)
-  obtain ⟨Q, hQdef⟩ : ∃ Q : ℕ → Set Ω, ∀ n, Q n = {ω | (∀ i < n + 1, s i ω = «s.bvar» i) ∧ ∀ i < n, a i ω = «a.bvar» i} :=
+  obtain ⟨Q, hQdef⟩ : ∃ Q : ℕ → Set Ω, ∀ n, Q n = {ω | (∀ i < n + 1, s i ω = «\sf{s}» i) ∧ ∀ i < n, a i ω = «\sf{a}» i} :=
     ⟨_, fun _ => rfl⟩
-  obtain ⟨H, hHdef⟩ : ∃ H : ℕ → Set Ω, ∀ n, H n = {ω | (∀ i < n, s i ω = «s.bvar» i) ∧ ∀ i < n, a i ω = «a.bvar» i} :=
+  obtain ⟨H, hHdef⟩ : ∃ H : ℕ → Set Ω, ∀ n, H n = {ω | (∀ i < n, s i ω = «\sf{s}» i) ∧ ∀ i < n, a i ω = «\sf{a}» i} :=
     ⟨_, fun _ => rfl⟩
-  have hQ : ∀ n : ℕ, ℙ[π](s[:(n : ℤ) + 1] = «s.bvar»[:(n : ℤ) + 1] ∧ a[:(n : ℤ)] = «a.bvar»[:(n : ℤ)]) = π (Q n) := by
+  have hQ : ∀ n : ℕ, ℙ[π](s[:(n : ℤ) + 1] = «\sf{s}»[:(n : ℤ) + 1] ∧ a[:(n : ℤ)] = «\sf{a}»[:(n : ℤ)]) = π (Q n) := by
     intro n
     rw [EqProb, hQdef]
     exact congrArg π (hP (n + 1) n)
@@ -71,43 +71,43 @@ private lemma main
     ext ω
     simp [hQdef]
   ·
-    have hZ : (s t, a t) ⁻¹' {(«s.bvar» t, «a.bvar» t)} = s t ⁻¹' {«s.bvar» t} ∩ a t ⁻¹' {«a.bvar» t} := by
+    have hZ : (s t, a t) ⁻¹' {(«\sf{s}» t, «\sf{a}» t)} = s t ⁻¹' {«\sf{s}» t} ∩ a t ⁻¹' {«\sf{a}» t} := by
       ext ω
       simp [JointRandomSymbol]
     have hZm : Measurable (s t, a t) := (hs t).prodMk (ha t)
-    have hQH : Q t = H t ∩ s t ⁻¹' {«s.bvar» t} := by
+    have hQH : Q t = H t ∩ s t ⁻¹' {«\sf{s}» t} := by
       ext ω
       simp only [hQdef, hHdef, Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_preimage, Set.mem_singleton_iff]
-      rw [key (fun i => s i ω = «s.bvar» i)]
+      rw [key (fun i => s i ω = «\sf{s}» i)]
       tauto
-    have hQQ : Q (t + 1) = Q t ∩ (s t ⁻¹' {«s.bvar» t} ∩ a t ⁻¹' {«a.bvar» t}) ∩ s (t + 1) ⁻¹' {«s.bvar» (t + 1)} := by
+    have hQQ : Q (t + 1) = Q t ∩ (s t ⁻¹' {«\sf{s}» t} ∩ a t ⁻¹' {«\sf{a}» t}) ∩ s (t + 1) ⁻¹' {«\sf{s}» (t + 1)} := by
       ext ω
       simp only [hQdef, Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_preimage, Set.mem_singleton_iff]
-      rw [key (fun i => s i ω = «s.bvar» i) (t + 1), key (fun i => s i ω = «s.bvar» i) t, key (fun i => a i ω = «a.bvar» i) t]
+      rw [key (fun i => s i ω = «\sf{s}» i) (t + 1), key (fun i => s i ω = «\sf{s}» i) t, key (fun i => a i ω = «\sf{a}» i) t]
       tauto
-    have hHist : (s[:(t : ℤ)], a[:(t : ℤ)]) ⁻¹' {(«s.bvar»[:(t : ℤ)], «a.bvar»[:(t : ℤ)])} = H t := by
+    have hHist : (s[:(t : ℤ)], a[:(t : ℤ)]) ⁻¹' {(«\sf{s}»[:(t : ℤ)], «\sf{a}»[:(t : ℤ)])} = H t := by
       rw [hP t t, hHdef]
     -- policy: `a t ⟂ history | s t`
     have hpol' := MulMeasure.eq.MulMeasure.of.CondIndep (ha t) (hJ t t) (hs t)
-      (hpol t (hs t)) («a.bvar» t) («s.bvar»[:(t : ℤ)], «a.bvar»[:(t : ℤ)]) («s.bvar» t)
+      (hpol t (hs t)) («\sf{a}» t) («\sf{s}»[:(t : ℤ)], «\sf{a}»[:(t : ℤ)]) («\sf{s}» t)
     rw [hHist] at hpol'
     -- transition: `s (t + 1) ⟂ history | (s t, a t)`
     have htrans' := MulMeasure.eq.MulMeasure.of.CondIndep (hs (t + 1)) (hJ t t) hZm
-      (htrans t hZm) («s.bvar» (t + 1)) («s.bvar»[:(t : ℤ)], «a.bvar»[:(t : ℤ)]) («s.bvar» t, «a.bvar» t)
+      (htrans t hZm) («\sf{s}» (t + 1)) («\sf{s}»[:(t : ℤ)], «\sf{a}»[:(t : ℤ)]) («\sf{s}» t, «\sf{a}» t)
     rw [hHist] at htrans'
     rw [hZ] at htrans'
-    have hSsub : Q t ⊆ s t ⁻¹' {«s.bvar» t} :=
+    have hSsub : Q t ⊆ s t ⁻¹' {«\sf{s}» t} :=
       hQH ▸ Set.inter_subset_right
-    have h₁ : π (s (t + 1) ⁻¹' {«s.bvar» (t + 1)} ∩ Q t ∩ (s t ⁻¹' {«s.bvar» t} ∩ a t ⁻¹' {«a.bvar» t})) * π (s t ⁻¹' {«s.bvar» t} ∩ a t ⁻¹' {«a.bvar» t}) =
-        π (s (t + 1) ⁻¹' {«s.bvar» (t + 1)} ∩ (s t ⁻¹' {«s.bvar» t} ∩ a t ⁻¹' {«a.bvar» t})) * π (Q t ∩ (s t ⁻¹' {«s.bvar» t} ∩ a t ⁻¹' {«a.bvar» t})) := by
+    have h₁ : π (s (t + 1) ⁻¹' {«\sf{s}» (t + 1)} ∩ Q t ∩ (s t ⁻¹' {«\sf{s}» t} ∩ a t ⁻¹' {«\sf{a}» t})) * π (s t ⁻¹' {«\sf{s}» t} ∩ a t ⁻¹' {«\sf{a}» t}) =
+        π (s (t + 1) ⁻¹' {«\sf{s}» (t + 1)} ∩ (s t ⁻¹' {«\sf{s}» t} ∩ a t ⁻¹' {«\sf{a}» t})) * π (Q t ∩ (s t ⁻¹' {«\sf{s}» t} ∩ a t ⁻¹' {«\sf{a}» t})) := by
       rw [hQH]
       convert htrans' using 3 <;>
       ·
         ext ω
         simp only [Set.mem_inter_iff]
         tauto
-    have h₂ : π ((s t ⁻¹' {«s.bvar» t} ∩ a t ⁻¹' {«a.bvar» t}) ∩ Q t) * π (s t ⁻¹' {«s.bvar» t}) =
-        π ((s t ⁻¹' {«s.bvar» t} ∩ a t ⁻¹' {«a.bvar» t}) ∩ s t ⁻¹' {«s.bvar» t}) * π (Q t) := by
+    have h₂ : π ((s t ⁻¹' {«\sf{s}» t} ∩ a t ⁻¹' {«\sf{a}» t}) ∩ Q t) * π (s t ⁻¹' {«\sf{s}» t}) =
+        π ((s t ⁻¹' {«\sf{s}» t} ∩ a t ⁻¹' {«\sf{a}» t}) ∩ s t ⁻¹' {«\sf{s}» t}) * π (Q t) := by
       rw [hQH]
       convert hpol' using 3 <;>
       ·
@@ -115,7 +115,7 @@ private lemma main
         simp only [Set.mem_inter_iff]
         tauto
     have h := Measure.eq.Mul_MulDivS.of.Subset hSsub h₁ h₂
-    have hFS : (s t ⁻¹' {«s.bvar» t} ∩ a t ⁻¹' {«a.bvar» t}) ∩ s t ⁻¹' {«s.bvar» t} = a t ⁻¹' {«a.bvar» t} ∩ s t ⁻¹' {«s.bvar» t} := by
+    have hFS : (s t ⁻¹' {«\sf{s}» t} ∩ a t ⁻¹' {«\sf{a}» t}) ∩ s t ⁻¹' {«\sf{s}» t} = a t ⁻¹' {«\sf{a}» t} ∩ s t ⁻¹' {«\sf{s}» t} := by
       ext ω
       simp only [Set.mem_inter_iff]
       tauto
@@ -125,4 +125,4 @@ private lemma main
 
 
 -- created on 2023-03-22
--- updated on 2026-10-23
+-- updated on 2026-11-02

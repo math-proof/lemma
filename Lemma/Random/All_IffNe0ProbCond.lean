@@ -19,9 +19,9 @@ private lemma main
 -- given
   (hP : SinglePSpace π (x, y)) :
 -- imply
-  ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure, ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
-    ℙ[π](x = «x.bvar» ∧ y = «y.bvar») ≠ 0 ↔
-      ℙ[π](x = «x.bvar» | y = «y.bvar») ≠ 0 := by
+  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure, ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
+    ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») ≠ 0 ↔
+      ℙ[π](x = «\sf{x}» | y = «\sf{y}») ≠ 0 := by
 -- proof
   have hmul := All_Eq_MulProbCond.of.PSpace_Joint hP
   have := SinglePSpace.of.SinglePSpace.snd hP
@@ -29,15 +29,16 @@ private lemma main
       π.prob (x, y) (a, b) = 0 → π.condProb (x, y) (a, b) = 0 :=
     fun a b hz ↦ by
       simp only [Measure.condProb, hz, div_eq_mul_inv, zero_mul]
-  refine hmul.mono fun «x.bvar» hx => hx.mono fun «y.bvar» hmul' => ?_
+  refine hmul.mono fun «\sf{x}» hx => hx.mono fun «\sf{y}» hmul' => ?_
   constructor
   · intro hne
     have hprod :
-        π.condProb (x, y) («x.bvar», «y.bvar») * π.prob y «y.bvar» ≠ 0 := by
+        π.condProb (x, y) («\sf{x}», «\sf{y}») * π.prob y «\sf{y}» ≠ 0 := by
       rwa [hmul'] at hne
     exact (mul_ne_zero_iff.mp hprod).1
   · intro hz hprob0
-    exact hz (hzero «x.bvar» «y.bvar» hprob0)
+    exact hz (hzero «\sf{x}» «\sf{y}» hprob0)
 
 
 -- created on 2026-09-21
+-- updated on 2026-11-02

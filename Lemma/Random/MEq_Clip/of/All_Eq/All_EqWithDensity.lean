@@ -1,5 +1,6 @@
 import Lemma.Random.Map.eq.BindStageK.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.StageKSetOf1.eq.Zero.of.All_EqWithDensity
+import Def.Probability.JointRv.Part6
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
 
 

@@ -23,12 +23,12 @@ private lemma main
   have : SinglePSpace π z := SinglePSpace.of.SinglePSpace.snd this
   have : SinglePSpace π (x, z) := PSpace_Joint.comm
     (SinglePSpace.of.SinglePSpace.fst (PSpace_JointJoint.of.PSpace_Joint_Joint (PSpace_Joint.comm (PSpace_JointJoint.of.PSpace_Joint_Joint hPxyz))))
-  ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
-    ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
-      ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
-        ℙ[π](y = «y.bvar» ∧ z = «z.bvar») ≠ 0 →
-          ℙ[π](x = «x.bvar» | y = «y.bvar» ∧ z = «z.bvar») =
-            ℙ[π](x = «x.bvar» | z = «z.bvar») := by
+  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
+    ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
+      ∀ᵐ «\sf{z}» ∂ReferenceMeasure.measure,
+        ℙ[π](y = «\sf{y}» ∧ z = «\sf{z}») ≠ 0 →
+          ℙ[π](x = «\sf{x}» | y = «\sf{y}» ∧ z = «\sf{z}») =
+            ℙ[π](x = «\sf{x}» | z = «\sf{z}») := by
 -- proof
   intro hPyz hPz hPxz
   let μ : Measure α := ReferenceMeasure.measure
@@ -579,4 +579,4 @@ private lemma main
 
 
 -- created on 2020-12-16
--- updated on 2026-09-22
+-- updated on 2026-11-02

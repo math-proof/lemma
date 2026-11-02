@@ -13,7 +13,7 @@ private lemma main
   [CountableMeasure S] [CountableMeasure A]
   [Countable S] [MeasurableSingletonClass S] [Countable A] [MeasurableSingletonClass A]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ → Ω → S} {a : ℕ → Ω → A} {«s.bvar» : ℕ → S} {«a.bvar» : ℕ → A}
+  {s : ℕ → Ω → S} {a : ℕ → Ω → A} {«\sf{s}» : ℕ → S} {«\sf{a}» : ℕ → A}
 -- given
   (hs : ∀ k, Measurable (s k))
   (ha : ∀ k, Measurable (a k))
@@ -30,14 +30,14 @@ private lemma main
     SinglePSpace.of.Measurable.Measurable (hs (i + 1)) ((hs i).prodMk (ha i))
   have : ∀ n, SinglePSpace π (s[:n + 1], a[:n]) := fun _ =>
     SinglePSpace.of.All_Measurable.All_Measurable hs ha
-  ∀ t : ℕ, ℙ[π](s[:t + 1 + 1] = «s.bvar»[:t + 1 + 1] ∧ a[:t + 1] = «a.bvar»[:t + 1]) =
-    ℙ[π](s[:t + 1] = «s.bvar»[:t + 1] ∧ a[:t] = «a.bvar»[:t]) *
-      (ℙ[π]((a t) = «a.bvar» t | (s t) = «s.bvar» t) *
-        ℙ[π]((s (t + 1)) = «s.bvar» (t + 1) | (s t) = «s.bvar» t ∧ (a t) = «a.bvar» t)) := by
+  ∀ t : ℕ, ℙ[π](s[:t + 1 + 1] = «\sf{s}»[:t + 1 + 1] ∧ a[:t + 1] = «\sf{a}»[:t + 1]) =
+    ℙ[π](s[:t + 1] = «\sf{s}»[:t + 1] ∧ a[:t] = «\sf{a}»[:t]) *
+      (ℙ[π]((a t) = «\sf{a}» t | (s t) = «\sf{s}» t) *
+        ℙ[π]((s (t + 1)) = «\sf{s}» (t + 1) | (s t) = «\sf{s}» t ∧ (a t) = «\sf{a}» t)) := by
 -- proof
   intro _ _ _ _
   exact (EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable hs ha hpol htrans).2
 
 
 -- created on 2026-10-04
--- updated on 2026-10-23
+-- updated on 2026-11-02

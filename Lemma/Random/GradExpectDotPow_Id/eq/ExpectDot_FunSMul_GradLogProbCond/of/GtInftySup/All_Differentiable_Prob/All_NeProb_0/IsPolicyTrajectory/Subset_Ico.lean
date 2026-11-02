@@ -31,13 +31,13 @@ private lemma main
   {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : {γ, ℓ} ⊆ Set.Ico 0 1)
-  (h₁ : IsPolicyTrajectory M r s a)
-  (h₂ : ∀ θ («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-    ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) ≠ 0)
-  (h₃ : ∀ t («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)))
-  (h₄ : sup[θ, t, «s.bvar» : ℕ ⇀ S, «a.bvar» : ℕ ⇀ A]
-    ‖∇[θ] (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)‖ < ∞) :
+  [h₁ : IsPolicyTrajectory M r s a]
+  (h₂ : ∀ θ («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+    ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) ≠ 0)
+  (h₃ : ∀ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
+  (h₄ : sup[θ, t, «\sf{s}» : ℕ ⇀ S, «\sf{a}» : ℕ ⇀ A]
+    ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t))
@@ -67,40 +67,40 @@ private lemma main
     haveI : IsEmpty A := not_nonempty_iff.mp h
     simp [Finset.univ_eq_empty, Finset.sum_empty] at hsum
   -- joint ℙ(a[0]∧s[0]) = ℙ(s[0]) * ℙ(a[0]|s[0]) (counting); recover product form of joint h₂
-  have hπ_mul : ∀ θ («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-      (ℙ[M θ](s[0] = «s.bvar»[0])) * (ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0])) ≠ 0 := by
-    intro θ «s.bvar» «a.bvar»
-    have hj := h₂ θ «s.bvar» «a.bvar»
-    have hJ : ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) =
-        (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) := by
+  have hπ_mul : ∀ θ («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+      (ℙ[M θ](s[0] = «\sf{s}»[0])) * (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0])) ≠ 0 := by
+    intro θ «\sf{s}» «\sf{a}»
+    have hj := h₂ θ «\sf{s}» «\sf{a}»
+    have hJ : ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) =
+        (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) := by
       rw [EqProb («π» := M θ) (x := (a 0, s 0))]
       congr 1
       ext ω
       simp [JointRandomSymbol, Prod.ext_iff]
-    have hS : ℙ[M θ](s[0] = «s.bvar»[0]) = (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
-      EqProb («π» := M θ) (x := s 0) «s.bvar»[0]
-    have hD : ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0]) =
-        (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) /
-          (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
+    have hS : ℙ[M θ](s[0] = «\sf{s}»[0]) = (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) :=
+      EqProb («π» := M θ) (x := s 0) «\sf{s}»[0]
+    have hD : ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) =
+        (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) /
+          (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) :=
       ProbCond.eq.Div.of.SinglePSpace inferInstance («π» := M θ) (x := a 0) (y := s 0)
-        «a.bvar»[0] «s.bvar»[0]
-    have hs0 : (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
-      have hne : (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
+        «\sf{a}»[0] «\sf{s}»[0]
+    have hs0 : (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) ≠ 0 := by
+      have hne : (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) ≠ 0 := by
         rwa [← hJ]
       intro h0
       exact hne <| nonpos_iff_eq_zero.mp <|
         (measure_mono Set.inter_subset_right).trans_eq h0
-    have heq : ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) =
-        (ℙ[M θ](s[0] = «s.bvar»[0])) * (ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0])) := by
+    have heq : ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) =
+        (ℙ[M θ](s[0] = «\sf{s}»[0])) * (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0])) := by
       rw [hJ, hS, hD]
       exact (ENNReal.mul_div_cancel hs0 (measure_ne_top (M θ) _)).symm
     rwa [← heq]
   -- hP0 follows from product form: pick any constant action path; left ENNReal factor ≠ 0
-  have hP0 : ∀ θ («s.bvar» : ℕ ⇀ S), ℙ[M θ](s[0] = «s.bvar»[0]) ≠ 0 := by
-    intro θ «s.bvar»
-    have ⟨hs0, _⟩ : ℙ[M θ](s[0] = «s.bvar»[0]) ≠ 0 ∧
-        ℙ[M θ](a[0] = (⟨fun _ => Classical.arbitrary A⟩ : ℕ ⇀ A)[0] | s[0] = «s.bvar»[0]) ≠ 0 := by
-      have h := mt mul_eq_zero.mpr (hπ_mul θ «s.bvar» ⟨fun _ => Classical.arbitrary A⟩)
+  have hP0 : ∀ θ («\sf{s}» : ℕ ⇀ S), ℙ[M θ](s[0] = «\sf{s}»[0]) ≠ 0 := by
+    intro θ «\sf{s}»
+    have ⟨hs0, _⟩ : ℙ[M θ](s[0] = «\sf{s}»[0]) ≠ 0 ∧
+        ℙ[M θ](a[0] = (⟨fun _ => Classical.arbitrary A⟩ : ℕ ⇀ A)[0] | s[0] = «\sf{s}»[0]) ≠ 0 := by
+      have h := mt mul_eq_zero.mpr (hπ_mul θ «\sf{s}» ⟨fun _ => Classical.arbitrary A⟩)
       rwa [not_or] at h
     exact hs0
   -- bridge ℙ(s[0]=·) to .real ((s 0)⁻¹' {·}); after unpack/rfl, s 0 is the projection
@@ -111,7 +111,7 @@ private lemma main
       rfl
     have heqE : ℙ[M θ](s[0] = x) = (M θ) ((s 0) ⁻¹' {x}) :=
       EqProb («π» := M θ) (x := s 0) x
-    -- derived hP0 over constant path «s.bvar» = fun _ ↦ x; bare ENNReal ≠ 0 → ℝ via toReal
+    -- derived hP0 over constant path «\sf{s}» = fun _ ↦ x; bare ENNReal ≠ 0 → ℝ via toReal
     rw [← heqR]
     apply ENNReal.toReal_ne_zero.mpr
     exact ⟨hP0 θ ⟨fun _ => x⟩, heqE ▸ measure_ne_top (M θ) _⟩
@@ -263,7 +263,7 @@ private lemma main
     exact congrArg (fun δ => Dot.dot ((γ * ℓ) ^ (id : ℕ → ℕ)) δ)
       (hδθ (fun j => s j ω) (fun j => r j ω) t).symm
   refine (GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Icc.In_Ico
-    (θ := θ) hγ hℓ h₁ h₂ h₃ h₄).trans ?_
+    (θ := θ) (h₂ := h₁) hγ hℓ h₂ h₃ h₄).trans ?_
   symm
   -- V_θ[t] s[t:] i = M.V θ γ (t + i) (s (t + i))
   have hres : ∀ (s : ℕ → S) (t i : ℕ),
@@ -307,4 +307,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-10-23
+-- updated on 2026-11-02

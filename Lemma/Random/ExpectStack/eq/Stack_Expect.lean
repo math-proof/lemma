@@ -74,13 +74,13 @@ private lemma main
   {x : Ω → Fin n → α} {y : Ω → γ}
   {f : α → Tensor ENNReal s}
 -- given
-  («y.bvar» : γ) :
+  («\sf{y}» : γ) :
 -- imply
-  𝔼[x: π]([k < n] f (x k) | y = «y.bvar») =
-    [k < n] (𝔼[x: π](f (x k) | y = «y.bvar»)) := by
+  𝔼[x: π]([k < n] f (x k) | y = «\sf{y}») =
+    [k < n] (𝔼[x: π](f (x k) | y = «\sf{y}»)) := by
 -- proof
   simp only [Expectation.asRV_function, Expectation.condEvent]
-  let ν := (ProbabilityTheory.cond π (y ⁻¹' {«y.bvar»})).map x
+  let ν := (ProbabilityTheory.cond π (y ⁻¹' {«\sf{y}»})).map x
   change
     expectation ν (fun xv ↦ [k < n] f (xv k)) =
       [k < n] (expectation ν (fun xv ↦ f (xv k)))
@@ -104,4 +104,4 @@ private lemma main
 
 
 -- created on 2023-04-02
--- updated on 2026-10-26
+-- updated on 2026-11-02

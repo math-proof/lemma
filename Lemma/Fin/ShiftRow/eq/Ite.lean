@@ -1,4 +1,5 @@
-import Def.LinearAlgebra.Matrix.Permutation.Tensor
+import Initialize.Tactic.Attr.Basic
+import Def.LinearAlgebra.Matrix.Permutation
 
 
 @[path]
@@ -12,10 +13,10 @@ private lemma main
     else if (i₀ : ℕ) ≤ (i : ℕ) ∧ (i : ℕ) < (j₀ : ℕ) then ↑i + 1
     else i := by
 -- proof
-  simp only [Fin.shiftRow, Set.mem_Ioc, Set.mem_Ico]
-  split_ifs <;> first
-  | rfl
-  | omega
+  simp only [Fin.shiftRow, Set.mem_Ioc, Set.mem_Ico, Fin.ext_iff]
+  split_ifs <;> try rfl
+  all_goals omega
 
 
 -- created on 2026-09-12
+-- updated on 2026-11-01

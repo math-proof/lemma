@@ -32,11 +32,11 @@ private lemma main
   (h₃ : ∀ t x, Measurable (Q t x))
   (h₄ : r[t + 1:] ⟂ᵢ[π] (s t, a t) | s (t + 1))
   (h₅ : ∀ t, Q t (s t) (a t) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t, a t))
-  (h₆ : ∀ t («s.bvar» : ℕ → S), V t («s.bvar» t) = 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
-  («s.bvar» : ℕ → S) :
+  (h₆ : ∀ t («\sf{s}» : ℕ → S), V t («\sf{s}» t) = 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
+  («\sf{s}» : ℕ → S) :
 -- imply
-  V t («s.bvar» t) = 𝔼[a: π](Q t («s.bvar» t) (a t) | s t = «s.bvar» t) ∧
-    V t («s.bvar» t) = 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t = «s.bvar» t) ∧
+  V t («\sf{s}» t) = 𝔼[a: π](Q t («\sf{s}» t) (a t) | s t = «\sf{s}» t) ∧
+    V t («\sf{s}» t) = 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t = «\sf{s}» t) ∧
     Q t (s t) (a t) =ᵐ[π] 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t, a t) := by
 -- proof
   have hrm : ∀ n, Measurable (r n) := fun n ↦ (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).1
@@ -80,7 +80,8 @@ private lemma main
     rw [← hσ]
     exact h
   exact Random.Eq_Expect.Eq_Expect.MEq_Expect.of.Expect.All_Eq_Expect.All_MEq_Expect.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico
-    h₀ h₁ h₂ h₃ h₅ h₆ hM «s.bvar»
+    h₀ h₁ h₂ h₃ h₅ h₆ hM «\sf{s}»
 
 
 -- created on 2026-10-06
+-- updated on 2026-11-02

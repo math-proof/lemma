@@ -354,7 +354,8 @@ export function signatureRules(ctx) {
         }
 
         // ---- explicit (non-instance) binders belong under `-- given` ------------------------------------------
-        // `{…}` / `⦃…⦄` / `[…]` stay in the pre-given region. Lean defaults `(h : T := …)` are `default-arg-given`.
+        // `{…}` / `⦃…⦄` / unnamed `[T]` stay in the pre-given region. A named `[h : T]` is a hypothesis.
+        // Lean defaults `(h : T := …)` are `default-arg-given`.
         if (given != null) {
             for (const g of groups) {
                 if (g.kind !== 'explicit' || g.deflt != null || g.line >= given) continue;
@@ -365,21 +366,48 @@ export function signatureRules(ctx) {
                     `explicit binder \`(${g.flat})\` is above \`-- given\`; move it under \`-- given\``,
                 );
             }
+            for (const g of groups) {
+                if (g.kind !== 'instImplicit' || !g.names.length || g.line >= given) continue;
+                ctx.warn(
+                    'named-inst-above-given',
+                    g.line + 1,
+                    g.col + 1,
+                    `[${g.flat}] should be changed to \`(${g.flat})\` and put under \`-- given\``,
+                );
+            }
         }
 
-        // ---- given: never `(h : T := by tactic)`; keep needed instances as `[…]` before the hyp ----------
+        // ---- given: named `[h : T]` becomes `(h : T)` here; unnamed `[T]` may move above. Never `(h : T := by tactic)` ----------
         const gg = given != null
             ? groups.filter((g) => g.line > given && (imply == null || g.line < imply))
             : [];
         for (const g of gg) {
+            if (g.kind !== 'instImplicit') continue;
+            const shown = `[${g.flat}]`;
+            if (g.names.length) {
+                ctx.warn(
+                    'inst-under-given',
+                    g.line + 1,
+                    g.col + 1,
+                    `${shown} under \`-- given\` should be changed to \`(${g.flat})\``,
+                );
+            } else {
+                ctx.warn(
+                    'inst-under-given',
+                    g.line + 1,
+                    g.col + 1,
+                    `${shown} under \`-- given\` should be changed to \`(h : ${g.type})\`, or moved above \`-- given\``,
+                );
+            }
+        }
+        for (const g of gg) {
             // tactic-valued binder defaults are forbidden (incl. `:= by infer_instance`)
             if (g.deflt == null || !/^by\b/.test(g.deflt)) continue;
-            const inst = g.names.length ? `[${g.names[0]} : ${g.type}]` : `[${g.type}]`;
             ctx.warn(
                 'given-inst',
                 g.line + 1,
                 g.col + 1,
-                `binder default \`${g.open}${g.flat}${closeOf(g.open)}\` uses a tactic; keep an instance binder \`${inst}\` inside \`-- given\`, before the hypothesis that needs it`,
+                `binder default \`${g.open}${g.flat}${closeOf(g.open)}\` uses a tactic; never \`(h : T := by tactic)\` or \`(h : T := by infer_instance)\``,
             );
         }
 

@@ -15,24 +15,24 @@ private lemma main
 -- given
   (hP : SinglePSpace π (x, y)) :
 -- imply
-  ∀ᵐ «y.bvar» ∂π.map y,
-    ∫⁻ «x.bvar», ℙ[π](x = «x.bvar» | y = «y.bvar») ∂ReferenceMeasure.measure = 1 := by
+  ∀ᵐ «\sf{y}» ∂π.map y,
+    ∫⁻ «\sf{x}», ℙ[π](x = «\sf{x}» | y = «\sf{y}») ∂ReferenceMeasure.measure = 1 := by
 -- proof
   have := SinglePSpace.of.SinglePSpace.snd hP
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
   have hp : Measurable p := D
-  let q : β → ENNReal := fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))
+  let q : β → ENNReal := fun «\sf{y}» ↦ lintegral μ (fun «\sf{x}» ↦ p («\sf{x}», «\sf{y}»))
   have hq : Measurable q := hp.lintegral_prod_left'
   have hlaw : π.map y = ν.withDensity q := by
     erw [← AEMeasurable.map_map_of_aemeasurable measurable_snd.aemeasurable hP.aemeasurable, hjoint]
-    have hmarg : ν.withDensity (fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))) =
+    have hmarg : ν.withDensity (fun «\sf{y}» ↦ lintegral μ (fun «\sf{x}» ↦ p («\sf{x}», «\sf{y}»))) =
         ((μ.prod ν).withDensity p).snd := by
       ext s hs
       rw [withDensity_apply _ hs]
       have h : ((μ.prod ν).withDensity p).snd s =
-          lintegral (ν.restrict s) (fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))) := by
+          lintegral (ν.restrict s) (fun «\sf{y}» ↦ lintegral μ (fun «\sf{x}» ↦ p («\sf{x}», «\sf{y}»))) := by
         rw [Measure.snd_apply hs, ← Set.univ_prod,
           withDensity_apply _ (MeasurableSet.prod MeasurableSet.univ hs),
           setLIntegral_prod_symm p (hp.aemeasurable.restrict)]
@@ -44,7 +44,7 @@ private lemma main
     rw [hjoint]
     exact Measure.rnDeriv_withDensity _ hp
   have hsec :
-      (fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ π.prob (x, y) («x.bvar», «y.bvar»))) =ᵐ[ν] q := by
+      (fun «\sf{y}» ↦ lintegral μ (fun «\sf{x}» ↦ π.prob (x, y) («\sf{x}», «\sf{y}»))) =ᵐ[ν] q := by
     have hjp' : π.prob (x, y) =ᵐ[(ν.prod μ).map Prod.swap] p := by
       rwa [Measure.prod_swap]
     have hswap :
@@ -63,22 +63,22 @@ private lemma main
       rw [withDensity_apply q MeasurableSet.univ, setLIntegral_univ]
     rw [← hlaw, measure_univ] at h
     exact h.symm
-  have htop : ∀ᵐ «y.bvar» ∂ν, q «y.bvar» ≠ ⊤ :=
+  have htop : ∀ᵐ «\sf{y}» ∂ν, q «\sf{y}» ≠ ⊤ :=
     (ae_lt_top hq (h1 ▸ ENNReal.one_ne_top)).mono fun _ hb ↦ hb.ne
   rw [hlaw, ae_withDensity_iff hq]
-  filter_upwards [hsec, hm, htop] with «y.bvar» hsec_y hm_y htop_y hnz_y
-  have hsec_m : Measurable (fun («x.bvar» : α) ↦ π.prob (x, y) («x.bvar», «y.bvar»)) := by
+  filter_upwards [hsec, hm, htop] with «\sf{y}» hsec_y hm_y htop_y hnz_y
+  have hsec_m : Measurable (fun («\sf{x}» : α) ↦ π.prob (x, y) («\sf{x}», «\sf{y}»)) := by
     unfold Measure.prob
     fun_prop
-  show ∫⁻ «x.bvar», π.prob (x, y) («x.bvar», «y.bvar») / π.prob y «y.bvar» ∂μ = 1
+  show ∫⁻ «\sf{x}», π.prob (x, y) («\sf{x}», «\sf{y}») / π.prob y «\sf{y}» ∂μ = 1
   have key :
-      (fun «x.bvar» : α ↦ π.prob (x, y) («x.bvar», «y.bvar») / π.prob y «y.bvar») =
-        fun «x.bvar» ↦ (π.prob y «y.bvar»)⁻¹ * π.prob (x, y) («x.bvar», «y.bvar») := by
-    funext «x.bvar»
+      (fun «\sf{x}» : α ↦ π.prob (x, y) («\sf{x}», «\sf{y}») / π.prob y «\sf{y}») =
+        fun «\sf{x}» ↦ (π.prob y «\sf{y}»)⁻¹ * π.prob (x, y) («\sf{x}», «\sf{y}») := by
+    funext «\sf{x}»
     rw [div_eq_mul_inv, mul_comm]
   rw [key, lintegral_const_mul'' _ hsec_m.aemeasurable, hsec_y, hm_y]
   exact ENNReal.inv_mul_cancel hnz_y htop_y
 
 
 -- created on 2021-07-20
--- updated on 2026-09-20
+-- updated on 2026-11-02

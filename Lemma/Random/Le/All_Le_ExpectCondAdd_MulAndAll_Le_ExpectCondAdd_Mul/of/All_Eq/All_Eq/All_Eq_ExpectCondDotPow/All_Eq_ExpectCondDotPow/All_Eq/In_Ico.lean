@@ -40,25 +40,25 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A),
-    Q θ t («s.bvar» t) («a.bvar» t) =
-      𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
-  (h₃ : ∀ θ t («s.bvar» : ℕ → S),
-    V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
+  (h₂ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A),
+    Q θ t («\sf{s}» t) («\sf{a}» t) =
+      𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
+  (h₃ : ∀ θ t («\sf{s}» : ℕ → S),
+    V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
   (hQstar : ∀ t x u, Qstar t x u = ⨆ θ, Q θ t x u)
   (hVstar : ∀ t x, Vstar t x = ⨆ θ, V θ t x)
-  («s.bvar» : ℕ → S)
-  («a.bvar» : ℕ → A) :
+  («\sf{s}» : ℕ → S)
+  («\sf{a}» : ℕ → A) :
 -- imply
-  Vstar t («s.bvar» t) ≤ ⨆ u, Qstar t («s.bvar» t) u ∧
-    (∀ θ, V θ t («s.bvar» t) ≤
-      𝔼[r, s : M θ](r t + γ * Vstar (t + 1) (s (t + 1)) | s t = «s.bvar» t)) ∧
-    (∀ θ, Q θ t («s.bvar» t) («a.bvar» t) ≤
+  Vstar t («\sf{s}» t) ≤ ⨆ u, Qstar t («\sf{s}» t) u ∧
+    (∀ θ, V θ t («\sf{s}» t) ≤
+      𝔼[r, s : M θ](r t + γ * Vstar (t + 1) (s (t + 1)) | s t = «\sf{s}» t)) ∧
+    (∀ θ, Q θ t («\sf{s}» t) («\sf{a}» t) ≤
       𝔼[r, s : M θ](r t + γ * Vstar (t + 1) (s (t + 1)) |
-        s t = «s.bvar» t ∧ a t = «a.bvar» t)) := by
+        s t = «\sf{s}» t ∧ a t = «\sf{a}» t)) := by
 -- proof
-  set x := «s.bvar» t
-  set u := «a.bvar» t
+  set x := «\sf{s}» t
+  set u := «\sf{a}» t
   have hs : ∀ n, Measurable (s n) := Random.Measurable.of.All_Eq.snd.fst h₁
   have ha : ∀ n, Measurable (a n) := Random.Measurable.of.All_Eq.snd.snd h₁
   have hr : ∀ n, Measurable (r n) := Random.Measurable.of.All_Eq.fst h₁
@@ -95,7 +95,7 @@ private lemma main
   have hBellman (θ : Θ) :=
     Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico
       (M := M) (θ := θ) (t := t) (Q := Q θ) (V := V θ) h₀ h₁
-      (fun n => h₂ θ n) (fun n => h₃ θ n) «s.bvar» «a.bvar»
+      (fun n => h₂ θ n) (fun n => h₃ θ n) «\sf{s}» «\sf{a}»
   have hpR : Measurable (fun ω n ↦ r n ω) := Measurable.of_eval hr
   have hfG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) :=
     Measurable.tsum fun k ↦ (measurable_pi_apply (t + k)).const_mul _
@@ -208,3 +208,4 @@ private lemma main
 
 
 -- created on 2026-10-12
+-- updated on 2026-11-02

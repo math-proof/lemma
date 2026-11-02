@@ -17,7 +17,7 @@ private lemma main
   (hf : Measurable f)
   (hμ : ReferenceMeasure.measure (α := α) = Measure.count) :
 -- imply
-  𝔼[a: π](f a) = ∑' «a.bvar» : α, f «a.bvar» * ℙ[π](a = «a.bvar») := by
+  𝔼[a: π](f a) = ∑' «\sf{a}» : α, f «\sf{a}» * ℙ[π](a = «\sf{a}») := by
 -- proof
   simp only [Expectation.asRV_function, Expectation.ofRV, expectation_ennreal]
   have hmp : Measurable (π.prob a) :=
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2023-03-20
--- updated on 2026-10-26
+-- updated on 2026-11-02

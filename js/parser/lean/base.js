@@ -630,8 +630,27 @@ export class Lean extends IndentedNode {
                 return this.parent.insert_left(this, 'LeanWhiteSquareBracket', self.start_idx ? tokens[self.start_idx - 1] : '');
             case '⟧':
                 return this.parent.push_right('LeanWhiteSquareBracket');
-            case '«':
+            case '«': {
+                // `«\sf{w}»` is one identifier (w a single letter). The lexer splits
+                // `\`, `sf`, `{`, `w`, `}` ; gluing them here reprints without spaces.
+                const t = tokens;
+                const i = self.start_idx;
+                if (
+                    t[i + 1] === '\\' &&
+                    t[i + 2] === 'sf' &&
+                    t[i + 3] === '{' &&
+                    /^[A-Za-z]$/u.test(t[i + 4] ?? '') &&
+                    t[i + 5] === '}' &&
+                    t[i + 6] === '»'
+                ) {
+                    const letter = t[i + 4];
+                    self.start_idx = i + 6;
+                    const caret = this.parent.insert_left(this, 'LeanDoubleAngleQuotation');
+                    const tok = caret.push_token(`\\sf{${letter}}`);
+                    return tok.parent.push_right('LeanDoubleAngleQuotation');
+                }
                 return this.parent.insert_left(this, 'LeanDoubleAngleQuotation');
+            }
             case '»':
                 return this.parent.push_right('LeanDoubleAngleQuotation');
             case '⟪':

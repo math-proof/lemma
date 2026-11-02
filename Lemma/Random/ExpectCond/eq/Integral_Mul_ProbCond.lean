@@ -14,10 +14,10 @@ private lemma main
 -- given
   (hP : SinglePSpace π (a, s))
   (hf : Measurable f)
-  («s.bvar» : β) :
+  («\sf{s}» : β) :
 -- imply
-  Expectation.condRV π a s f «s.bvar» =
-    ∫⁻ «a.bvar», f «a.bvar» * ℙ[π](a = «a.bvar» | s = «s.bvar») ∂ReferenceMeasure.measure := by
+  Expectation.condRV π a s f «\sf{s}» =
+    ∫⁻ «\sf{a}», f «\sf{a}» * ℙ[π](a = «\sf{a}» | s = «\sf{s}») ∂ReferenceMeasure.measure := by
 -- proof
   simp only [Expectation.condRV, expectation_ennreal]
   have hmp : Measurable (π.prob (a, s)) := by
@@ -27,11 +27,11 @@ private lemma main
       (π.map (fun ω ↦ ((a, s) ω).2)).rnDeriv ReferenceMeasure.measure z.2)
     exact hmp.div ((Measure.measurable_rnDeriv (π.map (fun ω ↦ ((a, s) ω).2))
       ReferenceMeasure.measure).comp measurable_snd)
-  have hcd : Measurable (fun «a.bvar» : α ↦ π.condProb (a, s) («a.bvar», «s.bvar»)) :=
+  have hcd : Measurable (fun «\sf{a}» : α ↦ π.condProb (a, s) («\sf{a}», «\sf{s}»)) :=
     hmc.comp (Measurable.prodMk measurable_id measurable_const)
   rw [lintegral_withDensity_eq_lintegral_mul _ hcd hf]
   simp only [Pi.mul_apply, mul_comm]
 
 
 -- created on 2026-09-18
--- updated on 2026-10-26
+-- updated on 2026-11-02

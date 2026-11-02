@@ -9,8 +9,7 @@ import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open scoped ENNReal.ToRealCoe
 open Finset (range)
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Filter Topology Random Measure Real
-open IsPolicyTrajectory
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Filter Topology Random Measure Real IsPolicyTrajectory
 set_option maxHeartbeats 900000
 set_option linter.style.haveILetI false
 
@@ -25,7 +24,7 @@ average `(1 - ℓ) * ((ℓ ^ id) @ fun k ↦ (γ ^ range(k+1)) @ δ)` equals the
 
 Given hyps and the imply score use `IsPolicyTrajectory` and the `ℙ` conditional-density sugar
 (mirroring the discrete `IsPolicyTrajectory` Subset_Ico): Fun binders `ℕ ⇀ S` / `ℕ ⇀ A`
-appear as `s[t] = «s.bvar»[t]` / `a[t] = «a.bvar»[t]` (not point values `x` / `u`). The score is
+appear as `s[t] = «\sf{s}»[t]` / `a[t] = «\sf{a}»[t]` (not point values `x` / `u`). The score is
 `∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log` under `𝔼[r, s, a : M θ]` (so `desugarProbRA` applies).
 Absolute continuity of `law(s[t])` and `law(a[t], s[t])` (`AbsContStateMarginal` /
 `AbsContJointAS`) is required for `SinglePSpace` / `ℙ` elaboration and is not implied by `Env`
@@ -59,18 +58,18 @@ private lemma main
         ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure S) x)
   (hdens : ∀ θ t x,
     ℙ[M θ](s[t] = x) ≠ 0 ∧ ℙ[M θ](s[t] = x) ≠ ⊤)
-  (h₂ : ∀ t («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)))
+  (h₂ : ∀ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
   (h₃ : ∃ (g : S → A → ℝ),
-    (∀ θ t («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-      ‖∇[θ] (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)‖ ≤
-        g «s.bvar»[t] «a.bvar»[t]) ∧
+    (∀ θ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+      ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ ≤
+        g «\sf{s}»[t] «\sf{a}»[t]) ∧
     (∀ x, Integrable (g x) ReferenceMeasure.measure) ∧
     (sup[x] (∫ u, g x u ∂ReferenceMeasure.measure) < ∞))
   (hφ : StronglyMeasurable
     (fun ((x, u) : S × A) => ∇[θ] (ℙ[M θ](a[0] = u | s[0] = x) : ℝ).log))
-  (hMs : sup[«s.bvar» : ℕ ⇀ S, «a.bvar» : ℕ ⇀ A]
-    ‖∇[θ] (ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0]) : ℝ).log‖ < ∞) :
+  (hMs : sup[«\sf{s}» : ℕ ⇀ S, «\sf{a}» : ℕ ⇀ A]
+    ‖∇[θ] (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) : ℝ).log‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun θ t =>
     h₁.singlePSpace_as (haj := haj) θ t
@@ -94,9 +93,9 @@ private lemma main
   haveI : DensityModel.IsPolicyTrajectory M r s a := h₁
   haveI : DensityModel.AbsContStateMarginal M s := hacc
   haveI : DensityModel.AbsContJointAS M a s := haj
-  have hπeq : ∀ θ t («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-      (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ) =
-        M.policy.prob θ «s.bvar»[t] «a.bvar»[t] := fun θ t sb ab =>
+  have hπeq : ∀ θ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+      (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ) =
+        M.policy.prob θ «\sf{s}»[t] «\sf{a}»[t] := fun θ t sb ab =>
     ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
       (M := M) h₁ haj (hfactor θ t (sb t) (ab t))
       (hdens θ t (sb t)).1 (hdens θ t (sb t)).2
@@ -152,7 +151,7 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   let _ : MeasurableSpace Θ := borel Θ
-  have _ : BorelSpace Θ := ⟨rfl⟩
+  let : BorelSpace Θ := ⟨rfl⟩
   have h₁' : ∀ t, (· t) = (r t, s t, a t) := fun t => by
     funext ω; rfl
   have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
@@ -205,44 +204,6 @@ private lemma main
     filter_upwards [hbdd] with ω hb t
     exact MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico
       (δ := ⟨fun j => r j ω + γ * M.Vkd θ γ (s (j + 1) ω) - M.Vkd θ γ (s j ω)⟩) (t := t) h₀ hb
-  have hexp_pol : ∀ F : ℕ → (ℕ → S) → (ℕ → A) → (ℕ → ℝ) → ℝ,
-    (∀ t, Measurable fun ω : ℕ → ℝ × S × A => F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω)) →
-    𝔼[r, s, a : M θ](
-      (γ ^ (id : ℕ → ℕ)) @ fun t ↦ (F t s a r •
-        ∇[θ] Real.log (M.policy.prob θ (s t) (a t)))) =
-    ∫ ω, ∑' t, γ ^ t • (F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) •
-      ∇[θ] Real.log (M.policy.prob θ (s t ω) (a t ω))) ∂(M θ) := by
-    intro F hF
-    have hg := fun t : ℕ =>
-      StronglyMeasurable.smul (hF t).stronglyMeasurable
-        (hφg.comp_measurable
-          ((Random.Measurable.of.All_Eq.snd.fst h₁' t).prodMk
-            (Random.Measurable.of.All_Eq.snd.snd h₁' t)))
-    have hGsm : StronglyMeasurable fun ω : ℕ → ℝ × S × A =>
-      ∑' t, γ ^ t • (F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) •
-        ∇[θ] Real.log (M.policy.prob θ (s t ω) (a t ω))) :=
-      StronglyMeasurable.tsum (L := SummationFilter.unconditional ℕ) fun t =>
-        (hg t).const_smul (γ ^ t)
-    let fromPath := fun (p : (ℕ → ℝ) × (ℕ → S) × (ℕ → A)) =>
-      fun t => (p.1 t, p.2.1 t, p.2.2 t)
-    have fromPath_meas : Measurable fromPath :=
-      Measurable.of_eval fun t =>
-        ((measurable_pi_apply t).comp measurable_fst).prodMk
-          (((measurable_pi_apply t).comp (measurable_fst.comp measurable_snd)).prodMk
-            ((measurable_pi_apply t).comp (measurable_snd.comp measurable_snd)))
-    have hx : AEMeasurable
-      (AsPathRV.path r, AsPathRV.path s, AsPathRV.path a) (M θ) :=
-      PSpace.aemeasurable
-    simp only [AsPathRV.path_process]
-    rw [Expectation.ofRV, expectation_bochner]
-    refine (integral_map hx ?_).trans ?_
-    ·
-      exact (hGsm.comp_measurable fromPath_meas).aestronglyMeasurable.congr
-        (Filter.Eventually.of_forall fun p => by
-          simp only [Function.comp_apply, fromPath]
-          rfl)
-    simp only [AsPathRV.path_process, JointRandomSymbol]
-    rfl
   have hexp : ∀ F : ℕ → (ℕ → S) → (ℕ → A) → (ℕ → ℝ) → ℝ,
     (∀ t, Measurable fun ω : ℕ → ℝ × S × A => F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω)) →
     𝔼[r, s, a : M θ](
@@ -311,25 +272,15 @@ private lemma main
     funext ω
     exact congrArg (fun δ => Dot.dot ((γ * ℓ) ^ (id : ℕ → ℕ)) δ)
       (hδθ (fun j => s j ω) (fun j => r j ω) t).symm
+  have hcond : ∀ θ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+      M.policy.prob θ «\sf{s}»[t] «\sf{a}»[t] =
+        (ℙ[M θ]((a t) = «\sf{a}»[t] | (s t) = «\sf{s}»[t]) : ℝ) :=
+    fun θ t sb ab =>
+      (ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
+        (M := M) h₁ haj (hfactor θ t (sb t) (ab t)) (hdens θ t (sb t)).1 (hdens θ t (sb t)).2).symm
   refine (GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico
-    (M := M) (θ := θ) (r := ⟨r⟩) (s := ⟨s⟩) (a := ⟨a⟩) hγ hℓ h₁' hπ h₂pol h₃pol h₄ h₅ hφpol hMspol).trans ?_
-  -- In_Icc concludes with `policy.prob`; rewrite that score to the imply `ℙ` RA form via `hπeq`
-  have hπRHS :
-    𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
-      ((((γ * ℓ) ^ (id : ℕ → ℕ)) @
-        (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
-        ∇[θ] Real.log (M.policy.prob θ (s t) (a t)))) =
-    𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
-      ((((γ * ℓ) ^ (id : ℕ → ℕ)) @
-        (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
-        ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) :=
-    (hexp_pol (fun t s a r => ((γ * ℓ) ^ (id : ℕ → ℕ)) @
-      (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) hFθ).trans <|
-      (integral_congr_ae (Filter.Eventually.of_forall fun ω =>
-        tsum_congr fun t => by rw [hscore t (s t ω) (a t ω)])).trans
-        (hexp (fun t s a r => ((γ * ℓ) ^ (id : ℕ → ℕ)) @
-          (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) hFθ).symm
-  refine hπRHS.trans ?_
+    (M := M) (θ := θ) (r := ⟨r⟩) (s := ⟨s⟩) (a := ⟨a⟩)
+    hγ hℓ h₁ haj hcond hπ h₂pol h₃pol h₄ h₅ hφpol hMspol).trans ?_
   symm
   have hFeq :
     (fun t (s : ℕ → S) (a : ℕ → A) (r : ℕ → ℝ) =>
@@ -363,4 +314,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-10-23
+-- updated on 2026-11-02

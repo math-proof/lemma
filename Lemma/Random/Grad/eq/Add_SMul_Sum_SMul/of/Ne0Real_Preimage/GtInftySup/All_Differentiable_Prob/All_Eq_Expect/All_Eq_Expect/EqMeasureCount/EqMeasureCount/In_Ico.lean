@@ -35,7 +35,7 @@ private lemma main
   {θ : Θ}
   {γ : ℝ}
   {t : ℕ}
-  {«s.bvar» : ℕ → S}
+  {«\sf{s}» : ℕ → S}
   {Q : Θ → ℕ → S → A → ℝ}
   {V : Θ → ℕ → S → ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
@@ -44,13 +44,13 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
-  (h₃ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
+  (h₂ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A), Q θ t («\sf{s}» t) («\sf{a}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
+  (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
-  (h₆ : (M θ).real (s t ⁻¹' {«s.bvar» t}) ≠ 0)
+  (h₆ : (M θ).real (s t ⁻¹' {«\sf{s}» t}) ≠ 0)
   (hP : ∀ θ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0)
-  (hπ : ∀ θ u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {«s.bvar» t}) * M.policy.prob θ («s.bvar» t) u ≠ 0) :
+  (hπ : ∀ θ u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {«\sf{s}» t}) * M.policy.prob θ («\sf{s}» t) u ≠ 0) :
 -- imply
   have hs : ∀ t, Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₁
   have ha : ∀ t, Measurable (a t) := Random.Measurable.of.All_Eq.snd.snd h₁
@@ -58,11 +58,11 @@ private lemma main
     SinglePSpace.of.Measurable.Measurable (ha t) (hs t)
   have : ∀ θ t, SinglePSpace (M θ) (s (t + 1), s t) := fun _ t =>
     SinglePSpace.of.Measurable.Measurable (hs (t + 1)) (hs t)
-  ∇[θ] V θ t («s.bvar» t) =
-    ∑ «a.bvar» t, Q θ t («s.bvar» t) («a.bvar» t) •
-        ∇[θ] (ℙ[M θ]((a t) = («a.bvar» t) | (s t) = («s.bvar» t)) : ℝ) +
-      γ • (∑ «s.bvar» (t + 1), (ℙ[M θ]((s (t + 1)) = («s.bvar» (t + 1)) | (s t) = («s.bvar» t)) : ℝ) •
-        ∇[θ] V θ (t + 1) («s.bvar» (t + 1))) := by
+  ∇[θ] V θ t («\sf{s}» t) =
+    ∑ «\sf{a}» t, Q θ t («\sf{s}» t) («\sf{a}» t) •
+        ∇[θ] (ℙ[M θ]((a t) = («\sf{a}» t) | (s t) = («\sf{s}» t)) : ℝ) +
+      γ • (∑ «\sf{s}» (t + 1), (ℙ[M θ]((s (t + 1)) = («\sf{s}» (t + 1)) | (s t) = («\sf{s}» t)) : ℝ) •
+        ∇[θ] V θ (t + 1) («\sf{s}» (t + 1))) := by
 -- proof
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
@@ -82,7 +82,7 @@ private lemma main
   subst hQ hV
   classical
   beta_reduce
-  set x := «s.bvar» t
+  set x := «\sf{s}» t
   have hπ_eq : ∀ u, ∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ) = ∇[θ] M.policy.prob θ x u := by
     intro u
     refine Filter.EventuallyEq.gradient_eq ?_
@@ -106,4 +106,4 @@ private lemma main
 
 
 -- created on 2023-03-30
--- updated on 2026-10-23
+-- updated on 2026-11-02

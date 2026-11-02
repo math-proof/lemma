@@ -157,7 +157,7 @@ I_{d} \odot \sin\alpha & \phantom{-}I_{d} \odot \cos\alpha
 \(\boldsymbol{P}\) 正交：\(\boldsymbol{P}^{\top}@\boldsymbol{P}=I_{d+d}\)（[DotTInterleave.eq.Eye](http://www.lemma.cn/lean/?module=Tensor.DotTInterleave.eq.Eye)），且 \(\boldsymbol{P}@\boldsymbol{P}^{\top}=I_{d+d}\)（[Dot_TInterleave.eq.Eye](http://www.lemma.cn/lean/?module=Tensor.Dot_TInterleave.eq.Eye)）。
 其行列式也已形式化为
 \(\det(\boldsymbol{P})=(-1)^{d/2}\)
-（[DetInterleave.eq.PowNeg1Div_2](http://www.lemma.cn/lean/?module=Tensor.DetInterleave.eq.PowNeg1Div_2)），刻画了该奇偶聚集置换的奇偶性。
+（[DetInterleave.eq.PowNeg1Div_2](http://www.lemma.cn/lean/?module=Matrix.DetInterleave.eq.PowNeg1Div_2)），刻画了该奇偶聚集置换的奇偶性。
 
 **定理 4.4**（共轭，[RotaryMatrix%27.eq.DotDot_RotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)）。对每一 \(\alpha\in\mathbb{R}^{d}\)，
 

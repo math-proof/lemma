@@ -26,14 +26,14 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
-  (h₃ : ∀ t («s.bvar» : ℕ → S), V t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
-  («s.bvar» : ℕ → S)
-  («a.bvar» : ℕ → A) :
+  (h₂ : ∀ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A), Q t («\sf{s}» t) («\sf{a}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
+  (h₃ : ∀ t («\sf{s}» : ℕ → S), V t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
+  («\sf{s}» : ℕ → S)
+  («\sf{a}» : ℕ → A) :
 -- imply
-  V t («s.bvar» t) = 𝔼[a : M θ](Q t («s.bvar» t) (a t) | s t = «s.bvar» t) ∧
-    V t («s.bvar» t) = 𝔼[r, s : M θ](r t + γ * V (t + 1) (s (t + 1)) | s t = «s.bvar» t) ∧
-    Q t («s.bvar» t) («a.bvar» t) = 𝔼[r, s : M θ](r t + γ * V (t + 1) (s (t + 1)) | s t = «s.bvar» t ∧ a t = «a.bvar» t) := by
+  V t («\sf{s}» t) = 𝔼[a : M θ](Q t («\sf{s}» t) (a t) | s t = «\sf{s}» t) ∧
+    V t («\sf{s}» t) = 𝔼[r, s : M θ](r t + γ * V (t + 1) (s (t + 1)) | s t = «\sf{s}» t) ∧
+    Q t («\sf{s}» t) («\sf{a}» t) = 𝔼[r, s : M θ](r t + γ * V (t + 1) (s (t + 1)) | s t = «\sf{s}» t ∧ a t = «\sf{a}» t) := by
 -- proof
   set G := fun n : ℕ ↦ (γ ^ (id : ℕ → ℕ)) @ r[n:]
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
@@ -42,8 +42,8 @@ private lemma main
   set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
-  set x := «s.bvar» t
-  set u := «a.bvar» t
+  set x := «\sf{s}» t
+  set u := «\sf{a}» t
   have hs : ∀ t, Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₁
   have ha : ∀ t, Measurable (a t) := Random.Measurable.of.All_Eq.snd.snd h₁
   have hr : ∀ t, Measurable (r t) := Random.Measurable.of.All_Eq.fst h₁
@@ -153,4 +153,4 @@ private lemma main
 
 
 -- created on 2023-03-28
--- updated on 2026-10-26
+-- updated on 2026-11-02

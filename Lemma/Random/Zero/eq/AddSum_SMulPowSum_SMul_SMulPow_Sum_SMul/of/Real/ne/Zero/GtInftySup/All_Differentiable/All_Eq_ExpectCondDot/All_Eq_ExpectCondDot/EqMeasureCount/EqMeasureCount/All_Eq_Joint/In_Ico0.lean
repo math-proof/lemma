@@ -30,8 +30,8 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
-  (h₃ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
+  (h₂ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A), Q θ t («\sf{s}» t) («\sf{a}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
+  (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₆ : (M θ).real (s 0 ⁻¹' {x}) ≠ 0)
@@ -64,13 +64,13 @@ private lemma main
     have h := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) θ 0 t x y h₁ h₆
     rwa [zero_add] at h
   simp_rw [h₈]
-  have hQ_expect : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A),
-      Qloc θ t («s.bvar» t) («a.bvar» t) =
-        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t) :=
+  have hQ_expect : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A),
+      Qloc θ t («\sf{s}» t) («\sf{a}» t) =
+        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t) :=
     fun _ _ _ _ => rfl
-  have hV_expect : ∀ θ t («s.bvar» : ℕ → S),
-      Vloc θ t («s.bvar» t) =
-        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t) :=
+  have hV_expect : ∀ θ t («\sf{s}» : ℕ → S),
+      Vloc θ t («\sf{s}» t) =
+        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t) :=
     fun _ _ _ => rfl
   induction n with
   | zero => simp [Pn0.eq.Eq]
@@ -84,7 +84,7 @@ private lemma main
       else
         have hReach := RealPreimageS.ne.Zero.of.NePn_0.Ne0Real_Preimage (M := M) θ n x y h₁ h₆ hy
         have h := Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico
-          («s.bvar» := fun _ ↦ y)
+          («\sf{s}» := fun _ ↦ y)
           h₀ h₁ (Q := Qloc) (V := Vloc) hQ_expect hV_expect h₄ h₅ hReach hP (fun θ u => hπ θ y u)
         have hSingle : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
           SinglePSpace.of.Measurable.Measurable (Random.Measurable.of.All_Eq.snd.snd h₁ t) (Random.Measurable.of.All_Eq.snd.fst h₁ t)
@@ -128,4 +128,4 @@ private lemma main
 
 
 -- created on 2023-03-30
--- updated on 2026-10-23
+-- updated on 2026-11-02

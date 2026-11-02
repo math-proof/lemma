@@ -32,11 +32,11 @@ private lemma main
   {π : Measure Ω} [IsProbabilityMeasure π]
   {m : ℕ}
   {x : ℕ ⇀ Ω → α} {y : ℕ ⇀ Ω → β}
-  {«x.bvar» : ℕ ⇀ α} [Fact (Measurable x[:n])]
-  {«y.bvar» : ℕ ⇀ β} [Fact (Measurable y[:m])]
+  {«\sf{x}» : ℕ ⇀ α} [Fact (Measurable x[:n])]
+  {«\sf{y}» : ℕ ⇀ β} [Fact (Measurable y[:m])]
 -- given
   (h₀ : ∀ (i : Fin n) (t : ℕ), 0 < t → t < m → y[t] ⟂ᵢ[π] y[:t] | x[i])
-  (h₁ : ℙ[π](x[:n] = «x.bvar»[:n] ∧ y[:m] = «y.bvar»[:m]) ≠ 0) :
+  (h₁ : ℙ[π](x[:n] = «\sf{x}»[:n] ∧ y[:m] = «\sf{y}»[:m]) ≠ 0) :
 -- imply
   have : ∀ i : Fin n, Measurable x[i] :=
     fun i => (measurable_pi_apply i).comp ‹Fact (Measurable x[:n])›.out
@@ -55,11 +55,11 @@ private lemma main
     fun i j => SinglePSpace.of.Measurable.Measurable
       ((measurable_pi_apply j).comp ‹Fact (Measurable y[:m])›.out)
       ((measurable_pi_apply i).comp ‹Fact (Measurable x[:n])›.out)
-  max⁻¹[i : Fin n] (ℙ[π](x[i] = «x.bvar»[i] | y[:m] = «y.bvar»[:m]) : ℝ) =
-    max⁻¹[i : Fin n] ((ℙ[π](x[i] = «x.bvar»[i]) : ℝ) * ∏ j : Fin m, (ℙ[π](y[j] = «y.bvar»[j] | x[i] = «x.bvar»[i]) : ℝ)) := by
+  max⁻¹[i : Fin n] (ℙ[π](x[i] = «\sf{x}»[i] | y[:m] = «\sf{y}»[:m]) : ℝ) =
+    max⁻¹[i : Fin n] ((ℙ[π](x[i] = «\sf{x}»[i]) : ℝ) * ∏ j : Fin m, (ℙ[π](y[j] = «\sf{y}»[j] | x[i] = «\sf{x}»[i]) : ℝ)) := by
 -- proof
   intro hxi hyj hys hsp hxy hyx
-  have h1i : ∀ i : Fin n, ℙ[π](x[i] = «x.bvar»[i] ∧ y[:m] = «y.bvar»[:m]) ≠ 0 := by
+  have h1i : ∀ i : Fin n, ℙ[π](x[i] = «\sf{x}»[i] ∧ y[:m] = «\sf{y}»[:m]) ≠ 0 := by
     intro i
     let xs : Ω → Fin n → α := x[:n]
     let ys : Ω → Fin m → β := y[:m]
@@ -73,12 +73,12 @@ private lemma main
     have hgz : g ∘ z = (x[i], show Ω → Fin m → β from y[:m]) := by
       funext ω
       rfl
-    have hgv : g («x.bvar»[:n], «y.bvar»[:m]) = («x.bvar»[i], «y.bvar»[:m]) := rfl
-    have h1z : π.prob z («x.bvar»[:n], «y.bvar»[:m]) ≠ 0 := h₁
+    have hgv : g («\sf{x}»[:n], «\sf{y}»[:m]) = («\sf{x}»[i], «\sf{y}»[:m]) := rfl
+    have h1z : π.prob z («\sf{x}»[:n], «\sf{y}»[:m]) ≠ 0 := h₁
     have : Fact (Measurable z) := ⟨hz⟩
     simpa [hgz, hgv] using Prob.ne.Zero.of.NeProb_0 (x := z) (g := g)
-      («x.bvar»[:n], «y.bvar»[:m]) hg (h := h1z)
-  have hMne : ℙ[π](y[:m] = «y.bvar»[:m]) ≠ 0 := by
+      («\sf{x}»[:n], «\sf{y}»[:m]) hg (h := h1z)
+  have hMne : ℙ[π](y[:m] = «\sf{y}»[:m]) ≠ 0 := by
     have i0 : Fin n := ⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩
     have h1 := h1i i0
     let ys : Ω → Fin m → β := y[:m]
@@ -86,29 +86,29 @@ private lemma main
     have hz : Measurable z :=
       Measurable.prodMk (hxi i0) ‹Fact (Measurable y[:m])›.out
     have hspz : SinglePSpace π z := hxy i0
-    have h1z : π.prob z («x.bvar»[i0], «y.bvar»[:m]) ≠ 0 := h1
+    have h1z : π.prob z («\sf{x}»[i0], «\sf{y}»[:m]) ≠ 0 := h1
     have hsnd : Prod.snd ∘ z = y[:m] := by
       funext ω
       rfl
     have : Fact (Measurable z) := ⟨hz⟩
     simpa [hsnd] using Prob.ne.Zero.of.NeProb_0 (x := z) (g := Prod.snd)
-      («x.bvar»[i0], «y.bvar»[:m]) measurable_snd (h := h1z)
-  have hMtop : ℙ[π](y[:m] = «y.bvar»[:m]) ≠ ⊤ := by
+      («\sf{x}»[i0], «\sf{y}»[:m]) measurable_snd (h := h1z)
+  have hMtop : ℙ[π](y[:m] = «\sf{y}»[:m]) ≠ ⊤ := by
     rw [Measure.prob,
       show (ReferenceMeasure.measure : Measure (Fin m → β)) = Measure.count from rfl,
       EqRnDeriv_Count]
     apply measure_ne_top
-  have hc : 0 < (ℙ[π](y[:m] = «y.bvar»[:m]) : ℝ) :=
+  have hc : 0 < (ℙ[π](y[:m] = «\sf{y}»[:m]) : ℝ) :=
     ENNReal.toReal_pos hMne hMtop
   have hpt : ∀ i : Fin n,
-      (ℙ[π](x[i] = «x.bvar»[i] | y[:m] = «y.bvar»[:m]) : ℝ) =
-        ((ℙ[π](x[i] = «x.bvar»[i]) : ℝ) *
-          ∏ j : Fin m, (ℙ[π](y[j] = «y.bvar»[j] | x[i] = «x.bvar»[i]) : ℝ)) /
-        (ℙ[π](y[:m] = «y.bvar»[:m]) : ℝ) := by
+      (ℙ[π](x[i] = «\sf{x}»[i] | y[:m] = «\sf{y}»[:m]) : ℝ) =
+        ((ℙ[π](x[i] = «\sf{x}»[i]) : ℝ) *
+          ∏ j : Fin m, (ℙ[π](y[j] = «\sf{y}»[j] | x[i] = «\sf{x}»[i]) : ℝ)) /
+        (ℙ[π](y[:m] = «\sf{y}»[:m]) : ℝ) := by
     intro i
     have : Fact (Measurable x[i]) := ⟨hxi i⟩
     have hmul := ProbCond.eq.DivMulProb_Prod_ProbCond.of.NeProbJoint__0.All_Indep
-      (x := x[i]) («x.bvar» := «x.bvar»[i])
+      (x := x[i]) («\sf{x}» := «\sf{x}»[i])
       (y := y)
       (h₀ := fun t ht htm => h₀ i t ht htm)
       (h₁ := h1i i)
@@ -140,4 +140,4 @@ private lemma main
 
 
 -- created on 2021-07-21
--- updated on 2026-10-23
+-- updated on 2026-11-02

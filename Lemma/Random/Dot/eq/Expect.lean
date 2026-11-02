@@ -24,13 +24,14 @@ private lemma main
 -- given
   (A : Tensor ENNReal [m, k])
   (hf : ∀ p : Fin k, Measurable (fun x : α ↦ (f x)[p].item))
-  («s.bvar» : γ) :
+  («\sf{s}» : γ) :
 -- imply
-  A @ 𝔼[a: π](f a | s = «s.bvar») =
-    𝔼[a: π](A @ f a | s = «s.bvar») :=
+  A @ 𝔼[a: π](f a | s = «\sf{s}») =
+    𝔼[a: π](A @ f a | s = «\sf{s}») :=
 -- proof
   (ExpectCondDot.eq.Dot_ExpectCond (A := A)
-    (hf := hf) («s.bvar» := «s.bvar»)).symm
+    (hf := hf) («\sf{s}» := «\sf{s}»)).symm
 
 
 -- created on 2023-04-07
+-- updated on 2026-11-02

@@ -15,13 +15,13 @@ private lemma main
 -- given
   (hf : Measurable f)
   (c : ENNReal)
-  («s.bvar» : γ) :
+  («\sf{s}» : γ) :
 -- imply
-  𝔼[a: π](c * f a | s = «s.bvar») = c * 𝔼[a: π](f a | s = «s.bvar») := by
+  𝔼[a: π](c * f a | s = «\sf{s}») = c * 𝔼[a: π](f a | s = «\sf{s}») := by
 -- proof
   simp only [Expectation.asRV_function, Expectation.condEvent, expectation_ennreal]
   exact lintegral_const_mul c hf
 
 
 -- created on 2026-09-19
--- updated on 2026-10-26
+-- updated on 2026-11-02

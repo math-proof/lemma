@@ -9,6 +9,8 @@ import Lemma.List.Prod.eq.MulProdS
 import Theorem.Algebra.Power.Part2
 import Theorem.Function
 import Notation.Data.Vector.Basic.Part2
+import Macro.Data.List.List
+import Instance.Data.List.List
 open Nat Lean
 open scoped BigOperators
 

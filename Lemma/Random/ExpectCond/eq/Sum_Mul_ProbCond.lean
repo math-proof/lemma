@@ -18,13 +18,13 @@ private lemma main
   (hP : SinglePSpace π (a, s))
   (hf : Measurable f)
   (hμ : ReferenceMeasure.measure (α := α) = Measure.count)
-  («s.bvar» : β) :
+  («\sf{s}» : β) :
 -- imply
-  Expectation.condRV π a s f «s.bvar» =
-    ∑' «a.bvar» : α, f «a.bvar» * ℙ[π](a = «a.bvar» | s = «s.bvar») := by
+  Expectation.condRV π a s f «\sf{s}» =
+    ∑' «\sf{a}» : α, f «\sf{a}» * ℙ[π](a = «\sf{a}» | s = «\sf{s}») := by
 -- proof
   simp only [Expectation.condRV, expectation_ennreal]
-  have hcd : Measurable (fun «a.bvar» : α ↦ π.condProb (a, s) («a.bvar», «s.bvar»)) := by
+  have hcd : Measurable (fun «\sf{a}» : α ↦ π.condProb (a, s) («\sf{a}», «\sf{s}»)) := by
     unfold Measure.condProb
     fun_prop
   rw [lintegral_withDensity_eq_lintegral_mul _ hcd hf, hμ, lintegral_count]
@@ -32,4 +32,4 @@ private lemma main
 
 
 -- created on 2026-09-16
--- updated on 2026-10-26
+-- updated on 2026-11-02

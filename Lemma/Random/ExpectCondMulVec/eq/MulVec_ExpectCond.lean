@@ -27,10 +27,10 @@ private lemma main
 -- given
   (A : Matrix (Fin m) (Fin n) ENNReal)
   (hf : ∀ i : Fin n, Measurable (fun x : α ↦ f x i))
-  («s.bvar» : γ) :
+  («\sf{s}» : γ) :
 -- imply
-  (fun j : Fin m ↦ 𝔼[a: π](Matrix.mulVec A (f a) j | s = «s.bvar»)) =
-    Matrix.mulVec A (fun i : Fin n ↦ 𝔼[a: π](f a i | s = «s.bvar»)) := by
+  (fun j : Fin m ↦ 𝔼[a: π](Matrix.mulVec A (f a) j | s = «\sf{s}»)) =
+    Matrix.mulVec A (fun i : Fin n ↦ 𝔼[a: π](f a i | s = «\sf{s}»)) := by
 -- proof
   ext j
   simp only [Expectation.asRV_function, Expectation.condEvent, expectation_ennreal, Matrix.mulVec, dotProduct]
@@ -42,4 +42,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-10-26
+-- updated on 2026-11-02

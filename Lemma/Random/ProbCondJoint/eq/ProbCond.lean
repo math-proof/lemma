@@ -21,12 +21,12 @@ private lemma main
   (hP : SinglePSpace π (x, y))
   (hα : ReferenceMeasure.measure (α := α) = Measure.count)
   (hγ : ReferenceMeasure.measure (α := γ) = Measure.count)
-  («x.bvar» : α)
-  («y.bvar» : γ) :
+  («\sf{x}» : α)
+  («\sf{y}» : γ) :
 -- imply
   have hPxyy : SinglePSpace π (x, y, y) := Random.PSpace_Joint_Joint.of.PSpace_Joint hP hα hγ
   have : SinglePSpace π ((x, y), y) := PSpace_JointJoint.of.PSpace_Joint_Joint hPxyy
-  ℙ[π](x = «x.bvar» ∧ y = «y.bvar» | y = «y.bvar») = ℙ[π](x = «x.bvar» | y = «y.bvar») := by
+  ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}» | y = «\sf{y}») = ℙ[π](x = «\sf{x}» | y = «\sf{y}») := by
 -- proof
   intro _ hP_left
   have hxym : AEMeasurable (x, y) π := hP.aemeasurable
@@ -51,28 +51,28 @@ private lemma main
   have : IsProbabilityMeasure (π.map ((x, y), y)) :=
     inferInstance
   have hmass_xy :
-      (π.map (x, y)).rnDeriv (count : Measure (α × γ)) («x.bvar», «y.bvar») =
-        π.map (x, y) {(«x.bvar», «y.bvar»)} :=
+      (π.map (x, y)).rnDeriv (count : Measure (α × γ)) («\sf{x}», «\sf{y}») =
+        π.map (x, y) {(«\sf{x}», «\sf{y}»)} :=
     EqRnDeriv_Count _
   have hmass_y :
-      (π.map y).rnDeriv (count : Measure γ) «y.bvar» = π.map y {«y.bvar»} :=
+      (π.map y).rnDeriv (count : Measure γ) «\sf{y}» = π.map y {«\sf{y}»} :=
     EqRnDeriv_Count _
   have hmass_xy_y :
       (π.map ((x, y), y)).rnDeriv
-          (count : Measure ((α × γ) × γ)) ((«x.bvar», «y.bvar»), «y.bvar») =
+          (count : Measure ((α × γ) × γ)) ((«\sf{x}», «\sf{y}»), «\sf{y}») =
         π.map ((x, y), y)
-          {((«x.bvar», «y.bvar»), «y.bvar»)} :=
+          {((«\sf{x}», «\sf{y}»), «\sf{y}»)} :=
     EqRnDeriv_Count _
   have hpre :
       ((x, y), y) ⁻¹'
-          {((«x.bvar», «y.bvar»), «y.bvar»)} =
-        (x, y) ⁻¹' {(«x.bvar», «y.bvar»)} := by
+          {((«\sf{x}», «\sf{y}»), «\sf{y}»)} =
+        (x, y) ⁻¹' {(«\sf{x}», «\sf{y}»)} := by
     ext ω
     simp [JointRandomSymbol, Prod.mk.injEq]
   have hset :
       π.map ((x, y), y)
-          {((«x.bvar», «y.bvar»), «y.bvar»)} =
-        π.map (x, y) {(«x.bvar», «y.bvar»)} := by
+          {((«\sf{x}», «\sf{y}»), «\sf{y}»)} =
+        π.map (x, y) {(«\sf{x}», «\sf{y}»)} := by
     rw [Measure.map_apply_of_aemeasurable hxyym (measurableSet_singleton _),
       Measure.map_apply_of_aemeasurable hxym (measurableSet_singleton _), hpre]
   dsimp only [Measure.condProb, Measure.prob]
@@ -85,3 +85,4 @@ private lemma main
 
 
 -- created on 2026-09-20
+-- updated on 2026-11-02

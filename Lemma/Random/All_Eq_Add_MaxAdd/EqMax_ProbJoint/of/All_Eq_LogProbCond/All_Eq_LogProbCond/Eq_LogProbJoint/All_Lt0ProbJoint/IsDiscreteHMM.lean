@@ -22,34 +22,34 @@ private lemma main
   [Fintype Y] [DecidableEq Y] [Nonempty Y]
   [NeZero (n : ℕ)]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {x : ℕ ⇀ Ω → X} {y : ℕ ⇀ Ω → Y} {«x.bvar» : ℕ ⇀ X}
+  {x : ℕ ⇀ Ω → X} {y : ℕ ⇀ Ω → Y} {«\sf{x}» : ℕ ⇀ X}
   {s : ℕ ⇀ (ℕ ⇀ Y) → ℝ}
   {e : ℕ ⇀ Y → ℝ}
   {G : Y → Y → ℝ}
 -- given
   (h₀ : IsDiscreteHMM π (⇑x) (⇑y))
-  (h₁ : ∀ t («y.bvar» : ℕ ⇀ Y), (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = «y.bvar»[:t + 1]) : ℝ) > 0)
-  (h₂ : ∀ t («y.bvar» : ℕ ⇀ Y), s[t] «y.bvar» = (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = «y.bvar»[:t + 1]) : ℝ).log)
-  (h₃ : ∀ t («y.bvar» : ℕ ⇀ Y), e[t] «y.bvar»[t] = (ℙ[π](x[t] = «x.bvar»[t] | y[t] = «y.bvar»[t]) : ℝ).log)
-  (h₄ : ∀ i («y.bvar» : ℕ ⇀ Y),
-    G «y.bvar»[i + 1] «y.bvar»[i] = (ℙ[π](y[i + 1] = «y.bvar»[i + 1] | y[i] = «y.bvar»[i]) : ℝ).log) :
+  (h₁ : ∀ t («\sf{y}» : ℕ ⇀ Y), (ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = «\sf{y}»[:t + 1]) : ℝ) > 0)
+  (h₂ : ∀ t («\sf{y}» : ℕ ⇀ Y), s[t] «\sf{y}» = (ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = «\sf{y}»[:t + 1]) : ℝ).log)
+  (h₃ : ∀ t («\sf{y}» : ℕ ⇀ Y), e[t] «\sf{y}»[t] = (ℙ[π](x[t] = «\sf{x}»[t] | y[t] = «\sf{y}»[t]) : ℝ).log)
+  (h₄ : ∀ i («\sf{y}» : ℕ ⇀ Y),
+    G «\sf{y}»[i + 1] «\sf{y}»[i] = (ℙ[π](y[i + 1] = «\sf{y}»[i + 1] | y[i] = «\sf{y}»[i]) : ℝ).log) :
 -- imply
   let x' : ℕ ⇀ Y → ℝ :=
-    ⟨fun t a => max[«y.bvar» : Fin t → Y] s[t] ⟨fun i => if h : i < t then «y.bvar» ⟨i, h⟩ else a⟩⟩;
+    ⟨fun t a => max[«\sf{y}» : Fin t → Y] s[t] ⟨fun i => if h : i < t then «\sf{y}» ⟨i, h⟩ else a⟩⟩;
   (∀ t, x'[t + 1] = e[t + 1] + (G + x'[t]).max) ∧
-    max[«y.bvar» : Fin n → Y] (ℙ[π](x[:n] = «x.bvar»[:n] ∧ y[:n] = «y.bvar») : ℝ) =
+    max[«\sf{y}» : Fin n → Y] (ℙ[π](x[:n] = «\sf{x}»[:n] ∧ y[:n] = «\sf{y}») : ℝ) =
       x'[n - 1].max.exp := by
 -- proof
   intro x'
-  have h₅ : ∀ t a, x'[t] a = max[«y.bvar» : Fin t → Y] s[t] ⟨fun i => if h : i < t then «y.bvar» ⟨i, h⟩ else a⟩ :=
+  have h₅ : ∀ t a, x'[t] a = max[«\sf{y}» : Fin t → Y] s[t] ⟨fun i => if h : i < t then «\sf{y}» ⟨i, h⟩ else a⟩ :=
     fun _ _ => rfl
   have hX : (ReferenceMeasure.measure : Measure X) = Measure.count := CountableMeasure.measure_eq_count
   have hY : (ReferenceMeasure.measure : Measure Y) = Measure.count := CountableMeasure.measure_eq_count
   have : ∀ i : ℕ, SinglePSpace π y[i] := fun i => IsDiscreteHMM.singlePSpace_y (x := ⇑x) i
   have : ∀ i j : ℕ, SinglePSpace π (y[i], y[j]) := fun i j => IsDiscreteHMM.singlePSpace_yy (x := ⇑x) i j
   have : ∀ k : ℕ, SinglePSpace π ((⇑x)[:k], (⇑y)[:k]) := fun k => inferInstance
-  have hQ : ∀ (ys : ℕ → Y) (k : ℕ), (ℙ[π](x[:(k : ℤ)] = «x.bvar»[:(k : ℤ)] ∧ y[:(k : ℤ)] = ys[:(k : ℤ)]) : ENNReal) =
-      π {ω | (∀ i < k, x[i] ω = «x.bvar»[i]) ∧ ∀ i < k, y[i] ω = ys i} := by
+  have hQ : ∀ (ys : ℕ → Y) (k : ℕ), (ℙ[π](x[:(k : ℤ)] = «\sf{x}»[:(k : ℤ)] ∧ y[:(k : ℤ)] = ys[:(k : ℤ)]) : ENNReal) =
+      π {ω | (∀ i < k, x[i] ω = «\sf{x}»[i]) ∧ ∀ i < k, y[i] ω = ys i} := by
     intro ys k
     rw [EqProb]
     congr 1
@@ -62,21 +62,21 @@ private lemma main
     ·
       intro h
       exact ⟨fun i => h.1 i i.2, fun i => h.2 i i.2⟩
-  have hM : ∀ (t : ℕ) (ys : ℕ → Y), π {ω | (∀ i < t + 1, x[i] ω = «x.bvar»[i]) ∧ ∀ i < t + 1, y[i] ω = ys i} ≠ 0 := fun t ys h0 => by
+  have hM : ∀ (t : ℕ) (ys : ℕ → Y), π {ω | (∀ i < t + 1, x[i] ω = «\sf{x}»[i]) ∧ ∀ i < t + 1, y[i] ω = ys i} ≠ 0 := fun t ys h0 => by
     apply (h₁ t ⟨ys⟩).ne'
     have h' := hQ ys (t + 1)
     push_cast at h'
     rw [h'.trans h0]
     rfl
-  have hE : ∀ t a, (0 : ℝ) < (ℙ[π](x[t] = «x.bvar»[t] | y[t] = a) : ℝ) := by
+  have hE : ∀ t a, (0 : ℝ) < (ℙ[π](x[t] = «\sf{x}»[t] | y[t] = a) : ℝ) := by
     intro t a
     have hdiv := ProbCond.eq.Div.of.SinglePSpace inferInstance (π := π) (x := x[t]) (y := y[t])
-      «x.bvar»[t] a
-    show 0 < ((ℙ[π](x[t] = «x.bvar»[t] | y[t] = a) : ENNReal)).toReal
+      «\sf{x}»[t] a
+    show 0 < ((ℙ[π](x[t] = «\sf{x}»[t] | y[t] = a) : ENNReal)).toReal
     rw [hdiv]
-    have hsub : {ω | (∀ i < t + 1, x[i] ω = «x.bvar»[i]) ∧ ∀ i < t + 1, y[i] ω = (fun _ => a) i} ⊆ x[t] ⁻¹' {«x.bvar»[t]} ∩ y[t] ⁻¹' {a} :=
+    have hsub : {ω | (∀ i < t + 1, x[i] ω = «\sf{x}»[i]) ∧ ∀ i < t + 1, y[i] ω = (fun _ => a) i} ⊆ x[t] ⁻¹' {«\sf{x}»[t]} ∩ y[t] ⁻¹' {a} :=
       fun ω h => ⟨h.1 t (by omega), h.2 t (by omega)⟩
-    have hne : π (x[t] ⁻¹' {«x.bvar»[t]} ∩ y[t] ⁻¹' {a}) ≠ 0 := fun h0 => hM t (fun _ => a) (measure_mono_null hsub h0)
+    have hne : π (x[t] ⁻¹' {«\sf{x}»[t]} ∩ y[t] ⁻¹' {a}) ≠ 0 := fun h0 => hM t (fun _ => a) (measure_mono_null hsub h0)
     exact ENNReal.toReal_pos (ENNReal.div_pos_iff.mpr ⟨hne, measure_ne_top _ _⟩).ne'
       (ENNReal.div_lt_top (measure_ne_top _ _) (fun h0 => hne (measure_mono_null Set.inter_subset_right h0))).ne
   have hT : ∀ i a b, (0 : ℝ) < (ℙ[π](y[i + 1] = a | y[i] = b) : ℝ) := by
@@ -84,17 +84,17 @@ private lemma main
     have hdiv := ProbCond.eq.Div.of.SinglePSpace inferInstance (π := π) (x := y[i + 1]) (y := y[i]) a b
     show 0 < ((ℙ[π](y[i + 1] = a | y[i] = b) : ENNReal)).toReal
     rw [hdiv]
-    have hsub : {ω | (∀ k < i + 1 + 1, x[k] ω = «x.bvar»[k]) ∧ ∀ k < i + 1 + 1, y[k] ω = (fun k => if k = i + 1 then a else b) k} ⊆ y[i + 1] ⁻¹' {a} ∩ y[i] ⁻¹' {b} :=
+    have hsub : {ω | (∀ k < i + 1 + 1, x[k] ω = «\sf{x}»[k]) ∧ ∀ k < i + 1 + 1, y[k] ω = (fun k => if k = i + 1 then a else b) k} ⊆ y[i + 1] ⁻¹' {a} ∩ y[i] ⁻¹' {b} :=
       fun ω h => ⟨by simpa using h.2 (i + 1) (by omega), by simpa using h.2 i (by omega)⟩
     have hne : π (y[i + 1] ⁻¹' {a} ∩ y[i] ⁻¹' {b}) ≠ 0 := fun h0 => hM (i + 1) (fun k => if k = i + 1 then a else b) (measure_mono_null hsub h0)
     exact ENNReal.toReal_pos (ENNReal.div_pos_iff.mpr ⟨hne, measure_ne_top _ _⟩).ne'
       (ENNReal.div_lt_top (measure_ne_top _ _) (fun h0 => hne (measure_mono_null Set.inter_subset_right h0))).ne
-  obtain ⟨P, hPdef⟩ : ∃ P : ℕ → (ℕ → Y) → ℝ, ∀ t (ys : ℕ → Y), P t ys = (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ) := ⟨fun t ys => (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ), fun _ _ => rfl⟩
+  obtain ⟨P, hPdef⟩ : ∃ P : ℕ → (ℕ → Y) → ℝ, ∀ t (ys : ℕ → Y), P t ys = (ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ) := ⟨fun t ys => (ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ), fun _ _ => rfl⟩
   have h₁ : ∀ t (ys : ℕ → Y), P t ys > 0 := fun t ys => by rw [hPdef]; exact h₁ t ⟨ys⟩
-  have h₀ : IsHiddenMarkovFac π (⇑x) (⇑y) (⇑«x.bvar») P := IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr (IsHiddenMarkovPr.of.CondIndep.CondIndep h₀) hPdef
+  have h₀ : IsHiddenMarkovFac π (⇑x) (⇑y) (⇑«\sf{x}») P := IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr (IsHiddenMarkovPr.of.CondIndep.CondIndep h₀) hPdef
   have h₂ : ∀ t (ys : ℕ → Y), s[t] ⟨ys⟩ = (P t ys).log := fun t ys => by rw [h₂, hPdef]
   have hpre := All_Imp_Eq.of.IsHiddenMarkovFac h₀
-  have he : ∀ t a, e[t] a = (ℙ[π](x[t] = «x.bvar»[t] | y[t] = a) : ℝ).log := fun t a => h₃ t ⟨fun _ => a⟩
+  have he : ∀ t a, e[t] a = (ℙ[π](x[t] = «\sf{x}»[t] | y[t] = a) : ℝ).log := fun t a => h₃ t ⟨fun _ => a⟩
   have hG : ∀ i a b, G a b = (ℙ[π](y[i + 1] = a | y[i] = b) : ℝ).log := fun i a b => by
     simpa using h₄ i ⟨fun k => if k = i + 1 then a else b⟩
   have hTt := hT
@@ -126,10 +126,10 @@ private lemma main
       funext i
       show (if h : i.val + 0 < k then w ⟨i.val + 0, h⟩ else c) = w i
       simp
-    have e : ∀ «y.bvar» : Fin (m + 1) → Y, (ℙ[π](x[:(m + 1 : ℕ)] = «x.bvar»[:(m + 1 : ℕ)] ∧ y[:(m + 1 : ℕ)] = «y.bvar») : ℝ) = P (m + 1 - 1) (fun i => if h : i < m + 1 then «y.bvar» ⟨i, h⟩ else Classical.arbitrary Y) := by
-      intro «y.bvar»
+    have e : ∀ «\sf{y}» : Fin (m + 1) → Y, (ℙ[π](x[:(m + 1 : ℕ)] = «\sf{x}»[:(m + 1 : ℕ)] ∧ y[:(m + 1 : ℕ)] = «\sf{y}») : ℝ) = P (m + 1 - 1) (fun i => if h : i < m + 1 then «\sf{y}» ⟨i, h⟩ else Classical.arbitrary Y) := by
+      intro «\sf{y}»
       rw [Nat.add_sub_cancel, hPdef]
-      exact congrArg (fun w => (ℙ[π](x[:(m + 1 : ℕ)] = «x.bvar»[:(m + 1 : ℕ)] ∧ y[:(m + 1 : ℕ)] = w) : ℝ)) (pad (m + 1) (Classical.arbitrary Y) «y.bvar»).symm
+      exact congrArg (fun w => (ℙ[π](x[:(m + 1 : ℕ)] = «\sf{x}»[:(m + 1 : ℕ)] ∧ y[:(m + 1 : ℕ)] = w) : ℝ)) (pad (m + 1) (Classical.arbitrary Y) «\sf{y}»).symm
     simp only [e, Nat.add_sub_cancel]
     rw [SupUniv.eq.SupUnivSupUnivSnoc, Max.eq.SupUniv,
       Finset.apply_sup'_eq_sup'_comp _ Real.exp (fun u v => Real.exp_monotone.map_sup u v)]
@@ -143,4 +143,4 @@ private lemma main
 
 
 -- created on 2020-12-20
--- updated on 2026-10-23
+-- updated on 2026-11-02

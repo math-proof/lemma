@@ -27,7 +27,8 @@ private lemma main
     Expectation.condRV]
   congr 1
   apply congrArg
-  exact funext fun «x.bvar» ↦ ProbCond_Joint.eq.ProbCond hP hα hγ «x.bvar» (y ω)
+  exact funext fun «\sf{x}» ↦ ProbCond_Joint.eq.ProbCond hP hα hγ «\sf{x}» (y ω)
 
 
 -- created on 2026-09-20
+-- updated on 2026-11-02

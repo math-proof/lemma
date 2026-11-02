@@ -10,18 +10,18 @@ private lemma main
   [CountableMeasure Y] [CountableMeasure X]
   [Countable Y] [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {x : ℕ → Ω → X} {y : ℕ → Ω → Y} {«x.bvar» : ℕ → X} {«y.bvar» : ℕ → Y}
+  {x : ℕ → Ω → X} {y : ℕ → Ω → Y} {«\sf{x}» : ℕ → X} {«\sf{y}» : ℕ → Y}
 -- given
   (h : IsDiscreteHMM π x y)
   (t : ℕ) :
 -- imply
-  ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = «y.bvar»[:t + 1]) =
-    ℙ[π]((x 0) = «x.bvar» 0 | (y 0) = «y.bvar» 0) * ℙ[π]((y 0) = «y.bvar» 0) *
+  ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = «\sf{y}»[:t + 1]) =
+    ℙ[π]((x 0) = «\sf{x}» 0 | (y 0) = «\sf{y}» 0) * ℙ[π]((y 0) = «\sf{y}» 0) *
       ∏ i ∈ Finset.Ico 1 (t + 1),
-        ℙ[π]((y i) = «y.bvar» i | (y (i - 1)) = «y.bvar» (i - 1)) * ℙ[π]((x i) = «x.bvar» i | (y i) = «y.bvar» i) := by
+        ℙ[π]((y i) = «\sf{y}» i | (y (i - 1)) = «\sf{y}» (i - 1)) * ℙ[π]((x i) = «\sf{x}» i | (y i) = «\sf{y}» i) := by
 -- proof
   obtain ⟨h₀, h₁⟩ := Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
-    («x.bvar» := «x.bvar») h «y.bvar»
+    («\sf{x}» := «\sf{x}») h «\sf{y}»
   simp only [fun_getElem] at h₀ h₁
   induction t with
   | zero =>
@@ -38,7 +38,7 @@ private lemma mdp
   [CountableMeasure S] [CountableMeasure A]
   [Countable S] [MeasurableSingletonClass S] [Countable A] [MeasurableSingletonClass A]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ → Ω → S} {a : ℕ → Ω → A} {«s.bvar» : ℕ → S} {«a.bvar» : ℕ → A}
+  {s : ℕ → Ω → S} {a : ℕ → Ω → A} {«\sf{s}» : ℕ → S} {«\sf{a}» : ℕ → A}
 -- given
   (hs : ∀ k, Measurable (s k))
   (ha : ∀ k, Measurable (a k))
@@ -56,14 +56,14 @@ private lemma mdp
     SinglePSpace.of.Measurable.Measurable (hs (i + 1)) ((hs i).prodMk (ha i))
   have : ∀ n, SinglePSpace π (s[:n + 1], a[:n]) := fun _ =>
     SinglePSpace.of.All_Measurable.All_Measurable hs ha
-  ℙ[π](s[:t + 1] = «s.bvar»[:t + 1] ∧ a[:t] = «a.bvar»[:t]) =
-    ℙ[π]((s 0) = «s.bvar» 0) *
+  ℙ[π](s[:t + 1] = «\sf{s}»[:t + 1] ∧ a[:t] = «\sf{a}»[:t]) =
+    ℙ[π]((s 0) = «\sf{s}» 0) *
       ∏ i ∈ Finset.range t,
-        ℙ[π]((a i) = «a.bvar» i | (s i) = «s.bvar» i) * ℙ[π]((s (i + 1)) = «s.bvar» (i + 1) | (s i) = «s.bvar» i ∧ (a i) = «a.bvar» i) := by
+        ℙ[π]((a i) = «\sf{a}» i | (s i) = «\sf{s}» i) * ℙ[π]((s (i + 1)) = «\sf{s}» (i + 1) | (s i) = «\sf{s}» i ∧ (a i) = «\sf{a}» i) := by
 -- proof
   intro _ _ _ _
   obtain ⟨h₀, h₁⟩ := EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
-    («s.bvar» := «s.bvar») («a.bvar» := «a.bvar») hs ha hpol htrans
+    («\sf{s}» := «\sf{s}») («\sf{a}» := «\sf{a}») hs ha hpol htrans
   induction t with
   | zero =>
     simpa using h₀
@@ -75,4 +75,4 @@ private lemma mdp
 
 
 -- created on 2023-03-22
--- updated on 2026-10-23
+-- updated on 2026-11-02

@@ -31,9 +31,9 @@ private lemma main
   (hx : Measurable x)
   (hy : Measurable y)
   (hz : Measurable z)
-  («x.bvar» : α)
-  («y.bvar» : β)
-  («z.bvar» : γ) :
+  («\sf{x}» : α)
+  («\sf{y}» : β)
+  («\sf{z}» : γ) :
 -- imply
   have : SinglePSpace π ((x, y), z) :=
     PSpace_JointJoint.of.PSpace_Joint_Joint ‹SinglePSpace π (x, y, z)›
@@ -65,15 +65,15 @@ private lemma main
         ReferenceMeasure.measure = Measure.count
     rw [hβ, ‹ReferenceMeasure.measure (α := α × γ) = Measure.count›,
       ← Count.eq.ProdCountS (α := β) (β := α × γ)]
-  ℙ[π](x = «x.bvar» ∧ y = «y.bvar» | z = «z.bvar») =
-    ℙ[π](x = «x.bvar» | z = «z.bvar») *
-      ℙ[π](y = «y.bvar» | x = «x.bvar» ∧ z = «z.bvar») := by
+  ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}» | z = «\sf{z}») =
+    ℙ[π](x = «\sf{x}» | z = «\sf{z}») *
+      ℙ[π](y = «\sf{y}» | x = «\sf{x}» ∧ z = «\sf{z}») := by
 -- proof
   intro _ _ _ _ href_ab href_abg href_ag href_bag
   set sT : Set Ω :=
-    {ω | x ω = «x.bvar» ∧ y ω = «y.bvar» ∧ z ω = «z.bvar»} with hsT
-  set sB : Set Ω := {ω | x ω = «x.bvar» ∧ z ω = «z.bvar»} with hsB
-  set sC : Set Ω := {ω | z ω = «z.bvar»} with hsC
+    {ω | x ω = «\sf{x}» ∧ y ω = «\sf{y}» ∧ z ω = «\sf{z}»} with hsT
+  set sB : Set Ω := {ω | x ω = «\sf{x}» ∧ z ω = «\sf{z}»} with hsB
+  set sC : Set Ω := {ω | z ω = «\sf{z}»} with hsC
   have hTB : sT ⊆ sB := by
     intro ω hω
     simp only [hsT, hsB, Set.mem_ofPred_eq] at hω ⊢
@@ -97,34 +97,34 @@ private lemma main
     hy.aemeasurable.prodMk hxzm
   have hpreT :
       ((x, y), z) ⁻¹'
-        {((«x.bvar», «y.bvar»), «z.bvar»)} = sT := by
+        {((«\sf{x}», «\sf{y}»), «\sf{z}»)} = sT := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
       hsT, Set.mem_ofPred_eq, Prod.ext_iff, and_assoc]
-  have hpreB : (x, z) ⁻¹' {(«x.bvar», «z.bvar»)} = sB := by
+  have hpreB : (x, z) ⁻¹' {(«\sf{x}», «\sf{z}»)} = sB := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
       hsB, Set.mem_ofPred_eq, Prod.ext_iff]
-  have hpreC : z ⁻¹' {«z.bvar»} = sC := by
+  have hpreC : z ⁻¹' {«\sf{z}»} = sC := by
     ext ω; simp [hsC]
   have hpreT' :
       (y, (x, z)) ⁻¹'
-        {(«y.bvar», («x.bvar», «z.bvar»))} = sT := by
+        {(«\sf{y}», («\sf{x}», «\sf{z}»))} = sT := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
       hsT, Set.mem_ofPred_eq, Prod.ext_iff, and_left_comm]
   have hpreDC : (fun ω ↦ (((x, y), z) ω).2) ⁻¹'
-      {«z.bvar»} = sC := by
+      {«\sf{z}»} = sC := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
       hsC, Set.mem_ofPred_eq]
   have hpreDC' : (fun ω ↦ ((x, z) ω).2) ⁻¹'
-      {«z.bvar»} = sC := by
+      {«\sf{z}»} = sC := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
       hsC, Set.mem_ofPred_eq]
   have hpreBC : (fun ω ↦ ((y, (x, z)) ω).2) ⁻¹'
-      {(«x.bvar», «z.bvar»)} = sB := by
+      {(«\sf{x}», «\sf{z}»)} = sB := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
       hsB, Set.mem_ofPred_eq, Prod.ext_iff]
@@ -138,7 +138,7 @@ private lemma main
     ((measure_mono hTB).trans (measure_mono hBC) |>.trans hleC)
   have eq_lhs :
       π.condProb ((x, y), z)
-        ((«x.bvar», «y.bvar»), «z.bvar») = T / C := by
+        ((«\sf{x}», «\sf{y}»), «\sf{z}») = T / C := by
     unfold Measure.condProb Measure.prob
     rw [href_abg,
       EqRnDeriv_Count (μ := π.map ((x, y), z)) _,
@@ -148,7 +148,7 @@ private lemma main
         (((x, y), z) ω).2)) _,
       Measure.map_apply_of_aemeasurable hxyzm.snd (measurableSet_singleton _),
       hpreDC]
-  have eq_mid : π.condProb (x, z) («x.bvar», «z.bvar») = B / C := by
+  have eq_mid : π.condProb (x, z) («\sf{x}», «\sf{z}») = B / C := by
     unfold Measure.condProb Measure.prob
     rw [href_ag, EqRnDeriv_Count (μ := π.map (x, z)) _,
       Measure.map_apply_of_aemeasurable hxzm (measurableSet_singleton _), hpreB,
@@ -158,7 +158,7 @@ private lemma main
       hpreDC']
   have eq_rhs :
       π.condProb (y, (x, z))
-        («y.bvar», («x.bvar», «z.bvar»)) = T / B := by
+        («\sf{y}», («\sf{x}», «\sf{z}»)) = T / B := by
     unfold Measure.condProb Measure.prob
     rw [href_bag,
       EqRnDeriv_Count (μ := π.map (y, (x, z))) _,
@@ -184,3 +184,4 @@ private lemma main
   · exact key hB0
 
 -- created on 2023-10-14
+-- updated on 2026-11-02

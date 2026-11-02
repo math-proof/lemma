@@ -26,7 +26,7 @@ const Q = {
     deflt: 'default arguments should be put within the `given` section',
     explicitAbove: 'explicit binders `(…)` (hypotheses and given-section expressions) sit under `-- given`; type binders `{…}` / `⦃…⦄` and instance binders `[…]` stay above it',
     propFirst: 'within the `given` section: propositions come first, expressions come next, unless otherwise specified',
-    givenInst: 'an instance binder that a later given hypothesis needs stays an instance binder `[instImplicit]` inside `-- given`, before that hypothesis; never `(h : … := by infer_instance)` or any `(h : T := by tactic)`',
+    givenInst: 'a named instance binder `[h : T]` is written `(h : T)` under `-- given`; unnamed `[T]` stays above `-- given`; never `(h : … := by infer_instance)` or any `(h : T := by tactic)`',
     combine: 'arguments of the same type should be combined, eg: {a b: Type} or (a b: Type)',
     given: 'partition the lemma into `-- given`, `-- imply`, and `-- proof` (hypotheses under `given`, conclusion under `imply`, tactics under `proof`)',
     imply: 'conclusion must be put within the `imply` section',
@@ -67,6 +67,8 @@ export const RULES = {
     // not an AGENTS.md rule: an explicit `-- given` binder that a later hypothesis mentions is an implicit above `-- given`
     'given-implicit-dep': null,
     'given-inst': Q.givenInst,
+    'inst-under-given': Q.givenInst,
+    'named-inst-above-given': Q.givenInst,
     // not an AGENTS.md rule (user request): the page typesets only the first run of `given` propositions
     'given-prop-consecutive': null,
     // not an AGENTS.md rule: numbered `h₀`/`h0`… in `-- given` must start at 0 with no gaps, and lower indices must appear earlier

@@ -79,22 +79,22 @@ private lemma main
   have _hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hPxyz
   have _hPz : SinglePSpace π z := SinglePSpace.of.SinglePSpace.snd _hPyz
   have _hPxz : SinglePSpace π (x, z) := of_xz hx hz hμα hμγ
-  ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
-    ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
-      ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
-        ℙ[π](y = «y.bvar» ∧ z = «z.bvar») ≠ 0 →
-          ℙ[π](x = «x.bvar» | y = «y.bvar» ∧ z = «z.bvar») =
-            ℙ[π](x = «x.bvar» | z = «z.bvar») := by
+  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
+    ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
+      ∀ᵐ «\sf{z}» ∂ReferenceMeasure.measure,
+        ℙ[π](y = «\sf{y}» ∧ z = «\sf{z}») ≠ 0 →
+          ℙ[π](x = «\sf{x}» | y = «\sf{y}» ∧ z = «\sf{z}») =
+            ℙ[π](x = «\sf{x}» | z = «\sf{z}») := by
 -- proof
   have hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hPxyz
   have hPz : SinglePSpace π z := SinglePSpace.of.SinglePSpace.snd hPyz
   have hPxz : SinglePSpace π (x, z) := of_xz hx hz hμα hμγ
   have hDens :
-      ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
-        ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
-          ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
-            ℙ[π](x = «x.bvar» ∧ y = «y.bvar» ∧ z = «z.bvar») * ℙ[π](z = «z.bvar») =
-              ℙ[π](x = «x.bvar» ∧ z = «z.bvar») * ℙ[π](y = «y.bvar» ∧ z = «z.bvar») := by
+      ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
+        ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
+          ∀ᵐ «\sf{z}» ∂ReferenceMeasure.measure,
+            ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}» ∧ z = «\sf{z}») * ℙ[π](z = «\sf{z}») =
+              ℙ[π](x = «\sf{x}» ∧ z = «\sf{z}») * ℙ[π](y = «\sf{y}» ∧ z = «\sf{z}») := by
     rw [hμα, hμβ, hμγ]
     refine ae_of_all _ fun a ↦ ae_of_all _ fun b ↦ ae_of_all _ fun c ↦ ?_
     have hmap :
@@ -323,4 +323,4 @@ private lemma main
   simpa [mul_comm (π.prob z c), mul_comm (π.prob (y, z) (b, c))] using hDens
 
 -- created on 2026-09-21
--- updated on 2026-09-21
+-- updated on 2026-11-02

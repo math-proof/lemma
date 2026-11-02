@@ -54,8 +54,10 @@ variable {M : DensityModel Θ S A}
   {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
   {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 
+set_option synthInstance.checkSynthOrder false
+
 /-- Under `[IsPolicyTrajectory]` and `[AbsContStateMarginal]`, `s t` is a `SinglePSpace` RV. -/
-theorem DensityModel.IsPolicyTrajectory.singlePSpace_s
+instance DensityModel.IsPolicyTrajectory.singlePSpace_s
     [h : DensityModel.IsPolicyTrajectory M r s a]
     [hac : DensityModel.AbsContStateMarginal M s] (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (s t) := by
@@ -64,12 +66,12 @@ theorem DensityModel.IsPolicyTrajectory.singlePSpace_s
   refine {
     toIsProbabilityMeasure := inferInstance
     aemeasurable := hx
-    exists_distribution := ⟨ρ, ⟨Measure.measurable_rnDeriv _ _⟩, ?_⟩
+    exists_distribution := ⟨ρ, Measure.measurable_rnDeriv _ _, ?_⟩
   }
   exact (Measure.withDensity_rnDeriv_eq _ _ (hac.map_s_ac θ t)).symm
 
 /-- Under `[IsPolicyTrajectory]` and `[AbsContJointAS]`, `(a t, s t)` is a `SinglePSpace` RV. -/
-theorem DensityModel.IsPolicyTrajectory.singlePSpace_as
+instance DensityModel.IsPolicyTrajectory.singlePSpace_as
     [h : DensityModel.IsPolicyTrajectory M r s a]
     [haj : DensityModel.AbsContJointAS M a s] (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (a t, s t) := by

@@ -5,8 +5,8 @@ open MeasureTheory Random Fun
 
 /--
 A nonzero atom of a length-`n` random vector stays nonzero on a prefix:
-`ℙ(x[:n] = «x.bvar»[:n]) ≠ 0` and `t ≤ n` give
-`ℙ(x[:t] = «x.bvar»[:t]) ≠ 0`.
+`ℙ(x[:n] = «\sf{x}»[:n]) ≠ 0` and `t ≤ n` give
+`ℙ(x[:t] = «\sf{x}»[:t]) ≠ 0`.
 
 Python: Random.NeProb_0.of.NeProb_0.Le, for `index = slice(0, t)` on a random
 vector of shape `(n,)`.
@@ -18,15 +18,15 @@ private lemma main
   [Countable α]
   [MeasurableSingletonClass α]
   {π : Measure Ω}
-  {x : ℕ ⇀ Ω → α} {«x.bvar» : ℕ ⇀ α} {n : ℕ} [SinglePSpace π x[:n]]
+  {x : ℕ ⇀ Ω → α} {«\sf{x}» : ℕ ⇀ α} {n : ℕ} [SinglePSpace π x[:n]]
 -- given
   (t : ℕ)
   (ht : t ≤ n)
-  (h : ℙ[π](x[:n] = «x.bvar»[:n]) ≠ 0) :
+  (h : ℙ[π](x[:n] = «\sf{x}»[:n]) ≠ 0) :
 -- imply
   have : SinglePSpace π x[:t] :=
     SinglePSpace.of.AEMeasurable.Le t ht ‹SinglePSpace π x[:n]›.aemeasurable
-  ℙ[π](x[:t] = «x.bvar»[:t]) ≠ 0 := by
+  ℙ[π](x[:t] = «\sf{x}»[:t]) ≠ 0 := by
 -- proof
   intro hxt
   let g : (Fin n → α) → Fin t → α := fun v => v ∘ Fin.castLE ht
@@ -39,18 +39,18 @@ private lemma main
   have hgx : g ∘ x[:n] = x[:t] := by
     funext ω i
     rfl
-  have hgv : g «x.bvar»[:n] = «x.bvar»[:t] := by
+  have hgv : g «\sf{x}»[:n] = «\sf{x}»[:t] := by
     funext i
     rfl
   have hmap : π.map x₀ = π.map x[:n] := by
     rw [← Measure.mapₗ_apply_of_measurable hx₀,
       Measure.mapₗ_mk_apply_of_aemeasurable ‹SinglePSpace π x[:n]›.aemeasurable]
-  have h0 : π.prob x₀ «x.bvar»[:n] ≠ 0 := by
+  have h0 : π.prob x₀ «\sf{x}»[:n] ≠ 0 := by
     unfold Measure.prob at h ⊢
     rwa [← hmap] at h
   have : Fact (Measurable x₀) := ⟨hx₀⟩
   have hne :=
-    Prob.ne.Zero.of.NeProb_0 (x := x₀) (g := g) («x.bvar» := «x.bvar»[:n]) hg (h := h0)
+    Prob.ne.Zero.of.NeProb_0 (x := x₀) (g := g) («\sf{x}» := «\sf{x}»[:n]) hg (h := h0)
   have hmapt : π.map (g ∘ x₀) = π.map x[:t] := by
     rw [← hgx]
     apply Measure.map_congr
@@ -60,4 +60,4 @@ private lemma main
 
 
 -- created on 2021-07-23
--- updated on 2026-10-23
+-- updated on 2026-11-02

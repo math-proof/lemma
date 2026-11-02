@@ -14,14 +14,14 @@ private lemma main
   {f g : α → ENNReal}
 -- given
   (hf : Measurable f)
-  («s.bvar» : β) :
+  («\sf{s}» : β) :
 -- imply
-  𝔼[a: π](f a + g a | s = «s.bvar») =
-    𝔼[a: π](f a | s = «s.bvar») + 𝔼[a: π](g a | s = «s.bvar») := by
+  𝔼[a: π](f a + g a | s = «\sf{s}») =
+    𝔼[a: π](f a | s = «\sf{s}») + 𝔼[a: π](g a | s = «\sf{s}») := by
 -- proof
   simp only [Expectation.asRV_function, Expectation.condEvent, expectation_ennreal]
   exact lintegral_add_left hf g
 
 
 -- created on 2023-03-24
--- updated on 2026-10-26
+-- updated on 2026-11-02

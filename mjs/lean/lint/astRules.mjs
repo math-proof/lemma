@@ -604,14 +604,16 @@ function parenRedundantSumSub(ctx, node) {
  * `((a - b) ^ 2)` / `((a + b) ^ n)`: outer parentheses around a `^` whose base is already
  * parenthesized are redundant whenever the parent does not need them for precedence
  * (sum body, `*`/`/`/`+`/`-` operand, relational side, ...). Keep them as an application
- * argument (`f ((a - b) ^ 2)`), property base (`((a - b) ^ 2).foo`), GetElem base, or
- * nested-pow LHS (`((a - b) ^ 2) ^ 3`). Fisher imply / SB pattern. Not an AGENTS.md rule
- * (user request via Random / @js).
+ * argument (`f ((a - b) ^ 2)`), property base (`((a - b) ^ 2).foo`), GetElem base,
+ * nested-pow LHS (`((a - b) ^ 2) ^ 3`), or the left operand of `@`
+ * (`((γ * ℓ) ^ id) @ r`). `^` is `infixr:80` and `@` is `infixl:70`, so dropping the
+ * outer parens parses as `(γ * ℓ) ^ (id @ r)`. Fisher imply / SB pattern. Not an
+ * AGENTS.md rule (user request via Random / @js).
  */
 function parenRedundantPow(ctx, node) {
     const {
         LeanParenthesis, LeanPow, LeanArgsSpaceSeparated, LeanProperty,
-        LeanGetElem, LeanGetElemQue, LeanGetElemQuote, LeanColon,
+        LeanGetElem, LeanGetElemQue, LeanGetElemQuote, LeanColon, LeanMatMul,
     } = Lean.classes;
     if (!(node instanceof LeanParenthesis)) return;
     const pow = node.arg;
@@ -631,6 +633,8 @@ function parenRedundantPow(ctx, node) {
     // ((a - b) ^ 2) ^ 3 -- right-assoc without paren
     if (parent instanceof LeanPow && parent.lhs === node) return;
     if (parent instanceof LeanColon) return;
+    // ((γ * ℓ) ^ id) @ r — outer parens keep `@` outside the power
+    if (parent instanceof LeanMatMul && parent.args[0] === node) return;
     const text = String(pow).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
     const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
     ctx.warnAst('paren-redundant-pow', node,

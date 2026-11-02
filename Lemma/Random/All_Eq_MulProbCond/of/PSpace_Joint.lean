@@ -15,9 +15,9 @@ private lemma main
   (hP : SinglePSpace π (x, y)) :
 -- imply
   have := SinglePSpace.of.SinglePSpace.snd hP
-  ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure, ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
-    ℙ[π](x = «x.bvar» ∧ y = «y.bvar») =
-      ℙ[π](x = «x.bvar» | y = «y.bvar») * ℙ[π](y = «y.bvar») := by
+  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure, ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
+    ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») =
+      ℙ[π](x = «\sf{x}» | y = «\sf{y}») * ℙ[π](y = «\sf{y}») := by
 -- proof
   intro _
   let μ : Measure α := ReferenceMeasure.measure
@@ -128,4 +128,4 @@ private lemma main
 
 
 -- created on 2020-12-09
--- updated on 2026-09-20
+-- updated on 2026-11-02

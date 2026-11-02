@@ -14,7 +14,7 @@ private lemma main
   (hf : Measurable f) :
 -- imply
   𝔼[a: π](f a) =
-    ∫⁻ «a.bvar», f «a.bvar» * ℙ[π](a = «a.bvar») ∂ReferenceMeasure.measure := by
+    ∫⁻ «\sf{a}», f «\sf{a}» * ℙ[π](a = «\sf{a}») ∂ReferenceMeasure.measure := by
 -- proof
   simp only [Expectation.asRV_function, Expectation.ofRV, expectation_ennreal]
   have hmp : Measurable (π.prob a) :=
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2023-03-24
--- updated on 2026-10-26
+-- updated on 2026-11-02

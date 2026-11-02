@@ -551,6 +551,9 @@ export class LeanPow extends LeanArithmetic {
             !lhs.is_Bool()
         )
             lhsLatex = `\\left(${lhsLatex}\\right)`;
+        // `(-1 : ℝ) ^ n` drops the cast and leaves `-1^n`, which TeX reads as `-(1^n)`.
+        else if (lhs instanceof LeanNeg)
+            lhsLatex = `\\left(${lhsLatex}\\right)`;
         const rhsLatex = rhs instanceof LeanDiv
             ? '\\left. {%s} \\right/ {%s}'.format(...rhs.latexArgs(syntax))
             : rhs.toLatex(syntax);

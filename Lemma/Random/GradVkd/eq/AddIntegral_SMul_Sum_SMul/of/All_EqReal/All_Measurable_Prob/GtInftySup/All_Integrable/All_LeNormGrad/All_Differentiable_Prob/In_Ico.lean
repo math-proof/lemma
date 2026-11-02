@@ -33,7 +33,7 @@ private lemma main
   {θ : Θ}
   {γ : ℝ}
   {t : ℕ}
-  {«s.bvar» : ℕ → S}
+  {«\sf{s}» : ℕ → S}
   {g : S → A → ℝ}
   {p : S → A → S → ℝ}
 -- given
@@ -45,9 +45,9 @@ private lemma main
   (h₅ : ∀ θ x, Measurable (M.policy.prob θ x))
   (h₆ : ∀ x u y, (M.env.trans (x, u)).real {y} = p x u y) :
 -- imply
-  ∇[θ] M.Vkd θ γ («s.bvar» t) =
-    ∫ u, M.Qkd θ γ («s.bvar» t) u • ∇[θ] M.policy.prob θ («s.bvar» t) u ∂ReferenceMeasure.measure +
-      γ • (∑ «s.bvar» (t + 1), M.P1kd θ p («s.bvar» t) («s.bvar» (t + 1)) • ∇[θ] M.Vkd θ γ («s.bvar» (t + 1))) := by
+  ∇[θ] M.Vkd θ γ («\sf{s}» t) =
+    ∫ u, M.Qkd θ γ («\sf{s}» t) u • ∇[θ] M.policy.prob θ («\sf{s}» t) u ∂ReferenceMeasure.measure +
+      γ • (∑ «\sf{s}» (t + 1), M.P1kd θ p («\sf{s}» t) («\sf{s}» (t + 1)) • ∇[θ] M.Vkd θ γ («\sf{s}» (t + 1))) := by
 -- proof
   let : ReferenceMeasure S := ReferenceMeasure.of Measure.count
   have := M.env.trans_markov
@@ -60,7 +60,7 @@ private lemma main
     rw [withDensity_apply _ (measurableSet_singleton y), lintegral_singleton, Measure.count_singleton, mul_one, ← h₆,
       ofReal_measureReal]
   rw [GradVkd.eq.AddIntegral_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico
-    (M := M) (θ := θ) (t := t) («s.bvar» := «s.bvar») h₀ h₁ h₂ h₃ h₄
+    (M := M) (θ := θ) (t := t) («\sf{s}» := «\sf{s}») h₀ h₁ h₂ h₃ h₄
     (fun θ => measurable_from_prod_countable_right fun x => h₅ θ x)
     (fun x => measurable_from_prod_countable_left fun y => by
       simp_rw [← h₆]
@@ -73,3 +73,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-02

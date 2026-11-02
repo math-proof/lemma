@@ -33,15 +33,15 @@ private lemma main
   (h₂ : sup[t, ω] |r t ω| < ∞)
   (h₃ : ∀ t x, Measurable (Q t x))
   (h₄ : ∀ t, Q t (s t) (a t) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t, a t))
-  (h₅ : ∀ t («s.bvar» : ℕ → S), V t («s.bvar» t) = 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
+  (h₅ : ∀ t («\sf{s}» : ℕ → S), V t («\sf{s}» t) = 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
   (h₆ : 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t + 1:] | s t, a t, s (t + 1)) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t + 1:] | s (t + 1)))
-  («s.bvar» : ℕ → S) :
+  («\sf{s}» : ℕ → S) :
 -- imply
-  V t («s.bvar» t) = 𝔼[a: π](Q t («s.bvar» t) (a t) | s t = «s.bvar» t) ∧
-    V t («s.bvar» t) = 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t = «s.bvar» t) ∧
+  V t («\sf{s}» t) = 𝔼[a: π](Q t («\sf{s}» t) (a t) | s t = «\sf{s}» t) ∧
+    V t («\sf{s}» t) = 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t = «\sf{s}» t) ∧
     Q t (s t) (a t) =ᵐ[π] 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t, a t) := by
 -- proof
-  set x := «s.bvar» t
+  set x := «\sf{s}» t
   have hrm : ∀ n, Measurable (r n) := fun n ↦ (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).1
   have hsm : ∀ n, Measurable (s n) := fun n ↦
     (Random.Measurable.Measurable.of.MeasurableJoint (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).2).1
@@ -107,3 +107,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-11-02

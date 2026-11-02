@@ -116,16 +116,16 @@ private lemma main
 -- given
   (A : Tensor ENNReal [m, k])
   (hf : ∀ p : Fin k, Measurable (fun x : α ↦ (f x)[p].item))
-  («s.bvar» : γ) :
+  («\sf{s}» : γ) :
 -- imply
-  𝔼[a: π](A @ f a | s = «s.bvar») =
-    A @ 𝔼[a: π](f a | s = «s.bvar») := by
+  𝔼[a: π](A @ f a | s = «\sf{s}») =
+    A @ 𝔼[a: π](f a | s = «\sf{s}») := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i
   apply Eq.of.Item
   simp only [Expectation.asRV_function, Expectation.condEvent]
-  let ν := (ProbabilityTheory.cond π (s ⁻¹' {«s.bvar»})).map a
+  let ν := (ProbabilityTheory.cond π (s ⁻¹' {«\sf{s}»})).map a
   change (expectation ν fun x ↦ A @ f x)[i].item =
     (A @ expectation ν f)[i].item
   have hL := expect_get_item ν (fun x ↦ A @ f x) i
@@ -166,4 +166,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-10-26
+-- updated on 2026-11-02

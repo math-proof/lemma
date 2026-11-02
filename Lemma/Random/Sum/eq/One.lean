@@ -23,7 +23,7 @@ private lemma main
   (hP : SinglePSpace π x)
   (hμ : ReferenceMeasure.measure (α := α) = Measure.count) :
 -- imply
-  ∑' «x.bvar» : α, ℙ[π](x = «x.bvar») = 1 := by
+  ∑' «\sf{x}» : α, ℙ[π](x = «\sf{x}») = 1 := by
 -- proof
   obtain ⟨ρ, D, hρ⟩ := hP.exists_distribution
   have hρ' : π.map x = ReferenceMeasure.measure.withDensity ρ := hρ
@@ -49,3 +49,4 @@ private lemma main
 
 
 -- created on 2021-07-19
+-- updated on 2026-11-02

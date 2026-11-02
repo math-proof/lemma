@@ -416,8 +416,8 @@ export class Lean_sum extends LeanBigOperator {
     }
 
     /**
-     * `∑ «y.bvar»[t], f` / `∑ «y.bvar» t, f`: a bound variable is never red, so the index and the
-     * body's `y[t]` / `y t` that stands for the bound value (`y[t] = «y.bvar»[t]` / `y t = «y.bvar» t`
+     * `∑ «y.bvar»[t], f` / `∑ «\sf{y}»[t], f` / `∑ «y.bvar» t, f`: a bound variable is never red, so the index and the
+     * body's `y[t]` / `y t` that stands for the bound value (`y[t] = «\sf{y}»[t]` / `y t = «y.bvar» t`
      * inside `ℙ[π](…)`) are drawn in the normal colour.
      */
     latexArgs(syntax) {

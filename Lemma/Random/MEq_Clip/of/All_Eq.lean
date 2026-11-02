@@ -1,6 +1,7 @@
 import Def.Order.Miscellaneous
 import Lemma.Random.Map.eq.BindStageK.of.All_Eq_Joint
 import Lemma.Random.StageKSetOf1.eq.Zero
+import Def.Probability.JointRv.Part6
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 

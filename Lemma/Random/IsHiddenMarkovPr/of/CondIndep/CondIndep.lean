@@ -23,7 +23,7 @@ private lemma main
 -- proof
   intro ys
   obtain ⟨h₀, h₁⟩ := Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
-    («x.bvar» := xo) h ys
+    («\sf{x}» := xo) h ys
   simp only [fun_getElem] at h₀ h₁
   refine ⟨?_, fun t => ?_⟩
   · rw [h₀, ENNReal.toReal_mul]
@@ -31,4 +31,4 @@ private lemma main
 
 
 -- created on 2026-10-02
--- updated on 2026-10-19
+-- updated on 2026-11-02

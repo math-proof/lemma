@@ -113,9 +113,11 @@ variable {Θ S A : Type*}
   {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
   {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 
+set_option synthInstance.checkSynthOrder false
+
 omit [MeasurableSingletonClass A] in
 /-- Under `[IsPolicyTrajectory M r s a]` and `[CountableMeasure S]`, `s t` is a `SinglePSpace` RV on `M θ`. -/
-theorem IsPolicyTrajectory.singlePSpace_s [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
+instance IsPolicyTrajectory.singlePSpace_s [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (s t) :=
   Random.SinglePSpace.of.Measurable (h.measurable_s t)
 
@@ -131,8 +133,10 @@ variable {Θ S A : Type*}
   {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
   {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 
+set_option synthInstance.checkSynthOrder false
+
 /-- Under `[IsPolicyTrajectory M r s a]` and `[CountableMeasure A]`, `a t` is a `SinglePSpace` RV on `M θ`. -/
-theorem IsPolicyTrajectory.singlePSpace_a [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
+instance IsPolicyTrajectory.singlePSpace_a [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (a t) :=
   Random.SinglePSpace.of.Measurable (h.measurable_a t)
 
@@ -148,14 +152,16 @@ variable {Θ S A : Type*}
   {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
   {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 
+set_option synthInstance.checkSynthOrder false
+
 /-- Joint `(s t, a t)`. Scoped: `r` is not in the conclusion (HMM-style). -/
-theorem IsPolicyTrajectory.singlePSpace_sa [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
+instance IsPolicyTrajectory.singlePSpace_sa [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (s t, a t) :=
   Random.SinglePSpace.of.Measurable.Measurable
     (h.measurable_s t) (h.measurable_a t)
 
 /-- Joint `(a t, s t)` (order used by some Random condProb / Grad lemmas). Scoped. -/
-theorem IsPolicyTrajectory.singlePSpace_as [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
+instance IsPolicyTrajectory.singlePSpace_as [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
     SinglePSpace (M θ) (a t, s t) :=
   Random.SinglePSpace.of.Measurable.Measurable
     (h.measurable_a t) (h.measurable_s t)

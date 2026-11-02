@@ -15,10 +15,10 @@ private lemma main
   {f : α → ENNReal}
 -- given
   (hf : Measurable f)
-  («y.bvar» : γ) :
+  («\sf{y}» : γ) :
 -- imply
-  𝔼[x: π](∑ k, f (x k) | y = «y.bvar») =
-    ∑ k, 𝔼[x: π](f (x k) | y = «y.bvar») := by
+  𝔼[x: π](∑ k, f (x k) | y = «\sf{y}») =
+    ∑ k, 𝔼[x: π](f (x k) | y = «\sf{y}») := by
 -- proof
   simp only [Expectation.asRV_function, Expectation.condEvent, expectation_ennreal]
   have hfk : ∀ k : Fin n, Measurable (fun xv : Fin n → α ↦ f (xv k)) :=
@@ -27,4 +27,4 @@ private lemma main
 
 
 -- created on 2023-04-01
--- updated on 2026-10-26
+-- updated on 2026-11-02

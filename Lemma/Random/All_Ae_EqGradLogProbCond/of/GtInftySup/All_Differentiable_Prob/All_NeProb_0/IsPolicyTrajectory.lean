@@ -22,11 +22,11 @@ private lemma main
   {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : IsPolicyTrajectory M r s a)
-  (h₁ : ∀ θ («s.bvar» : ℕ ⇀ S), ℙ[M θ](s[0] = «s.bvar»[0]) ≠ 0)
-  (h₂ : ∀ t («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)))
-  (h₃ : sup[θ, t, «s.bvar» : ℕ ⇀ S, «a.bvar» : ℕ ⇀ A]
-    ‖∇[θ] (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)‖ < ∞) :
+  (h₁ : ∀ θ («\sf{s}» : ℕ ⇀ S), ℙ[M θ](s[0] = «\sf{s}»[0]) ≠ 0)
+  (h₂ : ∀ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
+  (h₃ : sup[θ, t, «\sf{s}» : ℕ ⇀ S, «\sf{a}» : ℕ ⇀ A]
+    ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     IsPolicyTrajectory.singlePSpace_as (h := h₀) _ t
@@ -85,4 +85,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-10-23
+-- updated on 2026-11-02

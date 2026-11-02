@@ -13,8 +13,8 @@ open scoped ProbabilityTheory
 Bayes product for a label `x` and document features `y`. If each feature `y[t]`
 is conditionally independent of its prefix given the label,
 `y[t] ⟂ᵢ[π] y[:t] | x`, and the joint atom is nonzero, then
-`ℙ(x = «x.bvar» | y[:m] = «y.bvar»[:m]) =
-  ℙ(x = «x.bvar») * (∏ j, ℙ(y[j] = «y.bvar»[j] | x = «x.bvar»)) / ℙ(y[:m] = «y.bvar»[:m])`.
+`ℙ(x = «\sf{x}» | y[:m] = «\sf{y}»[:m]) =
+  ℙ(x = «\sf{x}») * (∏ j, ℙ(y[j] = «\sf{y}»[j] | x = «\sf{x}»)) / ℙ(y[:m] = «\sf{y}»[:m])`.
 
 In NLP this is the core identity behind naive Bayes document classification
 (text categorization): bag-of-words features `y`, keywords/labels `x`.
@@ -31,10 +31,10 @@ private lemma main
   {π : Measure Ω} [IsProbabilityMeasure π]
   {x : Ω → α} [Fact (Measurable x)]
   {y : ℕ ⇀ Ω → β} {m : ℕ} [Fact (Measurable y[:m])]
-  {«x.bvar» : α} {«y.bvar» : ℕ ⇀ β}
+  {«\sf{x}» : α} {«\sf{y}» : ℕ ⇀ β}
 -- given
   (h₀ : ∀ t : ℕ, 0 < t → t < m → y[t] ⟂ᵢ[x, ‹Fact (Measurable x)›.out; π] y[:t])
-  (h₁ : ℙ[π](x = «x.bvar» ∧ y[:m] = «y.bvar»[:m]) ≠ 0) :
+  (h₁ : ℙ[π](x = «\sf{x}» ∧ y[:m] = «\sf{y}»[:m]) ≠ 0) :
 -- imply
   have : SinglePSpace π x :=
     SinglePSpace.of.SinglePSpace.fst
@@ -43,14 +43,14 @@ private lemma main
     SinglePSpace.of.Measurable ‹Fact (Measurable y[:m])›.out
   have : ∀ j : Fin m, SinglePSpace π (y[j], x) :=
     fun j => SinglePSpace.of.Measurable.Measurable ((measurable_pi_apply j).comp ‹Fact (Measurable y[:m])›.out) ‹Fact (Measurable x)›.out
-  ℙ[π](x = «x.bvar» | y[:m] = «y.bvar»[:m]) =
-    ℙ[π](x = «x.bvar») *
-      (∏ j : Fin m, ℙ[π](y[j] = «y.bvar»[j] | x = «x.bvar»)) /
-      ℙ[π](y[:m] = «y.bvar»[:m]) := by
+  ℙ[π](x = «\sf{x}» | y[:m] = «\sf{y}»[:m]) =
+    ℙ[π](x = «\sf{x}») *
+      (∏ j : Fin m, ℙ[π](y[j] = «\sf{y}»[j] | x = «\sf{x}»)) /
+      ℙ[π](y[:m] = «\sf{y}»[:m]) := by
 -- proof
   intro hxs hys hyx
-  let a : α := «x.bvar»
-  let b : ℕ → β := ⇑«y.bvar»
+  let a : α := «\sf{x}»
+  let b : ℕ → β := ⇑«\sf{y}»
   let ys : Ω → Fin m → β := y[:m]
   let A : Set Ω := x ⁻¹' {a}
   let prefixSet : ℕ → Set Ω := fun k => ⋂ j : Fin k, y[j] ⁻¹' {b j}
@@ -107,8 +107,8 @@ private lemma main
     let z : Ω → α × (Fin m → β) := (x, show Ω → Fin m → β from y[:m])
     have hz : z = fun ω => (x ω, y[:m] ω) := rfl
     have hprob :
-      π.prob z («x.bvar», show Fin m → β from «y.bvar»[:m]) =
-        π (z ⁻¹' {(«x.bvar», show Fin m → β from «y.bvar»[:m])}) :=
+      π.prob z («\sf{x}», show Fin m → β from «\sf{y}»[:m]) =
+        π (z ⁻¹' {(«\sf{x}», show Fin m → β from «\sf{y}»[:m])}) :=
       EqProb _
     have hpre : z ⁻¹' {(a, show Fin m → β from b[:m])} = A ∩ ys ⁻¹' {b[:m]} := by
       rw [hz]
@@ -286,10 +286,10 @@ private lemma main
         ℙ[π](ys = b[:m]) := by
       rw [hC, ← hprod]
       rw [← hmarg, ← hC, ← hmargY]
-    _ = ℙ[π](x = «x.bvar») *
-        (∏ j : Fin m, ℙ[π](y[j] = «y.bvar»[j] | x = «x.bvar»)) /
-        ℙ[π](y[:m] = «y.bvar»[:m]) := rfl
+    _ = ℙ[π](x = «\sf{x}») *
+        (∏ j : Fin m, ℙ[π](y[j] = «\sf{y}»[j] | x = «\sf{x}»)) /
+        ℙ[π](y[:m] = «\sf{y}»[:m]) := rfl
 
 
 -- created on 2024-06-18
--- updated on 2026-10-26
+-- updated on 2026-11-02

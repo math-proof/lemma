@@ -34,16 +34,16 @@ private lemma left
   (hP : SinglePSpace π (x, y)) :
 -- imply
   have := SinglePSpace.of.SinglePSpace.snd hP
-  ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
-    ∫⁻ «x.bvar», ℙ[π](x = «x.bvar» ∧ y = «y.bvar») ∂ReferenceMeasure.measure =
-      ℙ[π](y = «y.bvar») := by
+  ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
+    ∫⁻ «\sf{x}», ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») ∂ReferenceMeasure.measure =
+      ℙ[π](y = «\sf{y}») := by
 -- proof
   simp
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
   have hp : Measurable p := D
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
-  let q := fun «y.bvar» : β ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))
+  let q := fun «\sf{y}» : β ↦ lintegral μ (fun «\sf{x}» ↦ p («\sf{x}», «\sf{y}»))
   have hlaw : π.map y = ν.withDensity q := by
     erw [← AEMeasurable.map_map_of_aemeasurable measurable_snd.aemeasurable hP.aemeasurable, hjoint]
     symm
@@ -84,16 +84,16 @@ private lemma main
   (hP : SinglePSpace π (x, y)) :
 -- imply
   have := SinglePSpace.of.SinglePSpace.fst hP
-  ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
-    ∫⁻ «y.bvar», ℙ[π](x = «x.bvar» ∧ y = «y.bvar») ∂ReferenceMeasure.measure =
-      ℙ[π](x = «x.bvar») := by
+  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
+    ∫⁻ «\sf{y}», ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») ∂ReferenceMeasure.measure =
+      ℙ[π](x = «\sf{x}») := by
 -- proof
   simp
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
   have hp : Measurable p := D
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
-  let q := fun «x.bvar» : α ↦ lintegral ν (fun «y.bvar» ↦ p («x.bvar», «y.bvar»))
+  let q := fun «\sf{x}» : α ↦ lintegral ν (fun «\sf{y}» ↦ p («\sf{x}», «\sf{y}»))
   have hlaw : π.map x = μ.withDensity q := by
     erw [← AEMeasurable.map_map_of_aemeasurable measurable_fst.aemeasurable hP.aemeasurable, hjoint]
     symm
@@ -117,4 +117,4 @@ private lemma main
 
 
 -- created on 2020-12-07
--- updated on 2026-09-20
+-- updated on 2026-11-02

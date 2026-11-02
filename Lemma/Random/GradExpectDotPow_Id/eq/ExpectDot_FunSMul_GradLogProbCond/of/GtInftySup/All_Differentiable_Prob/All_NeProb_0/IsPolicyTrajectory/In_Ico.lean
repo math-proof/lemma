@@ -15,6 +15,8 @@ import Lemma.Random.Integral_SMul.eq.Zero.of.All_Differentiable_Prob
 import Lemma.Random.Integrable.of.In_Ico
 import Lemma.Random.V.eq.Integral.of.Measurable
 import Lemma.Random.ExpectSum_SMulMulPow.eq.Integral_Sum_SMul_GradLogProbCond.of.IsPolicyTrajectory
+import Theorem.Dynamics.PolicyTrajectory
+import Theorem.Data.List.List
 open scoped ENNReal.ToRealCoe
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure Set
 open IsPolicyTrajectory
@@ -148,13 +150,13 @@ private lemma main
   {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : IsPolicyTrajectory M r s a)
-  (h₂ : ∀ θ («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-    ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) ≠ 0)
-  (h₃ : ∀ t («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)))
-  (h₄ : sup[θ, t, «s.bvar» : ℕ ⇀ S, «a.bvar» : ℕ ⇀ A]
-    ‖∇[θ] (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)‖ < ∞) :
+  [h₁ : IsPolicyTrajectory M r s a]
+  (h₂ : ∀ θ («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+    ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) ≠ 0)
+  (h₃ : ∀ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
+  (h₄ : sup[θ, t, «\sf{s}» : ℕ ⇀ S, «\sf{a}» : ℕ ⇀ A]
+    ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t))
@@ -183,39 +185,39 @@ private lemma main
     have : IsEmpty A := not_nonempty_iff.mp h
     simp [Finset.univ_eq_empty, Finset.sum_empty] at hsum
   -- joint ℙ(a[0]∧s[0]) = ℙ(s[0]) * ℙ(a[0]|s[0]); recover product form of joint h₂
-  have hπ_mul : ∀ θ («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-      (ℙ[M θ](s[0] = «s.bvar»[0])) * (ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0])) ≠ 0 := by
-    intro θ «s.bvar» «a.bvar»
-    have hj := h₂ θ «s.bvar» «a.bvar»
-    have hJ : ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) =
-        (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) := by
+  have hπ_mul : ∀ θ («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+      (ℙ[M θ](s[0] = «\sf{s}»[0])) * (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0])) ≠ 0 := by
+    intro θ «\sf{s}» «\sf{a}»
+    have hj := h₂ θ «\sf{s}» «\sf{a}»
+    have hJ : ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) =
+        (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) := by
       rw [EqProb («π» := M θ) (x := (a 0, s 0))]
       congr 1
       ext ω
       simp [JointRandomSymbol, Prod.ext_iff]
-    have hS₀ : ℙ[M θ](s[0] = «s.bvar»[0]) = (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
-      EqProb («π» := M θ) (x := s 0) «s.bvar»[0]
-    have hD : ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0]) =
-        (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) /
-          (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
+    have hS₀ : ℙ[M θ](s[0] = «\sf{s}»[0]) = (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) :=
+      EqProb («π» := M θ) (x := s 0) «\sf{s}»[0]
+    have hD : ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) =
+        (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) /
+          (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) :=
       ProbCond.eq.Div.of.SinglePSpace inferInstance («π» := M θ) (x := a 0) (y := s 0)
-        «a.bvar»[0] «s.bvar»[0]
-    have hs0 : (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
-      have hne : (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
+        «\sf{a}»[0] «\sf{s}»[0]
+    have hs0 : (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) ≠ 0 := by
+      have hne : (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) ≠ 0 := by
         rwa [← hJ]
       intro h0
       exact hne <| nonpos_iff_eq_zero.mp <|
         (measure_mono Set.inter_subset_right).trans_eq h0
-    have heq : ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) =
-        (ℙ[M θ](s[0] = «s.bvar»[0])) * (ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0])) := by
+    have heq : ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) =
+        (ℙ[M θ](s[0] = «\sf{s}»[0])) * (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0])) := by
       rw [hJ, hS₀, hD]
       exact (ENNReal.mul_div_cancel hs0 (measure_ne_top (M θ) _)).symm
     rwa [← heq]
-  have hP0_bind : ∀ θ («s.bvar» : ℕ ⇀ S), ℙ[M θ](s[0] = «s.bvar»[0]) ≠ 0 := by
-    intro θ «s.bvar»
-    have ⟨hs0, _⟩ : ℙ[M θ](s[0] = «s.bvar»[0]) ≠ 0 ∧
-        ℙ[M θ](a[0] = (⟨fun _ => Classical.arbitrary A⟩ : ℕ ⇀ A)[0] | s[0] = «s.bvar»[0]) ≠ 0 := by
-      have h := mt mul_eq_zero.mpr (hπ_mul θ «s.bvar» ⟨fun _ => Classical.arbitrary A⟩)
+  have hP0_bind : ∀ θ («\sf{s}» : ℕ ⇀ S), ℙ[M θ](s[0] = «\sf{s}»[0]) ≠ 0 := by
+    intro θ «\sf{s}»
+    have ⟨hs0, _⟩ : ℙ[M θ](s[0] = «\sf{s}»[0]) ≠ 0 ∧
+        ℙ[M θ](a[0] = (⟨fun _ => Classical.arbitrary A⟩ : ℕ ⇀ A)[0] | s[0] = «\sf{s}»[0]) ≠ 0 := by
+      have h := mt mul_eq_zero.mpr (hπ_mul θ «\sf{s}» ⟨fun _ => Classical.arbitrary A⟩)
       rwa [not_or] at h
     exact hs0
   have hP0raw : ∀ θ x, (M θ).real ((s 0) ⁻¹' {x}) ≠ 0 := by
@@ -292,15 +294,15 @@ private lemma main
     classical
     let Qloc (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
       𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
-    have hQ_expect : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A),
-        Qloc θ t («s.bvar» t) («a.bvar» t) =
-          𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t) :=
+    have hQ_expect : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A),
+        Qloc θ t («\sf{s}» t) («\sf{a}» t) =
+          𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t) :=
       fun _ _ _ _ => rfl
     let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
       𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)
-    have hV_expect : ∀ θ t («s.bvar» : ℕ → S),
-        Vloc θ t («s.bvar» t) =
-          𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t) :=
+    have hV_expect : ∀ θ t («\sf{s}» : ℕ → S),
+        Vloc θ t («\sf{s}» t) =
+          𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t) :=
       fun _ _ _ => rfl
     -- inlined from former In_Ico1 (fderiv/CLM Q-score series)
     have h7grad :=
@@ -792,13 +794,13 @@ private lemma advantage
   {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : IsPolicyTrajectory M r s a)
-  (h₂ : ∀ θ («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-    ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) ≠ 0)
-  (h₃ : ∀ t («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)))
-  (h₄ : sup[θ, t, «s.bvar» : ℕ ⇀ S, «a.bvar» : ℕ ⇀ A]
-    ‖∇[θ] (ℙ[M θ](a[t] = «a.bvar»[t] | s[t] = «s.bvar»[t]) : ℝ)‖ < ∞) :
+  [h₁ : IsPolicyTrajectory M r s a]
+  (h₂ : ∀ θ («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+    ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) ≠ 0)
+  (h₃ : ∀ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
+  (h₄ : sup[θ, t, «\sf{s}» : ℕ ⇀ S, «\sf{a}» : ℕ ⇀ A]
+    ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t))
@@ -832,39 +834,39 @@ private lemma advantage
     have : IsEmpty A := not_nonempty_iff.mp h
     simp [Finset.univ_eq_empty, Finset.sum_empty] at hsum
   -- joint ℙ(a[0]∧s[0]) = ℙ(s[0]) * ℙ(a[0]|s[0]); recover product form of joint h₂
-  have hπ_mul : ∀ θ («s.bvar» : ℕ ⇀ S) («a.bvar» : ℕ ⇀ A),
-      (ℙ[M θ](s[0] = «s.bvar»[0])) * (ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0])) ≠ 0 := by
-    intro θ «s.bvar» «a.bvar»
-    have hj := h₂ θ «s.bvar» «a.bvar»
-    have hJ : ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) =
-        (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) := by
+  have hπ_mul : ∀ θ («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+      (ℙ[M θ](s[0] = «\sf{s}»[0])) * (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0])) ≠ 0 := by
+    intro θ «\sf{s}» «\sf{a}»
+    have hj := h₂ θ «\sf{s}» «\sf{a}»
+    have hJ : ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) =
+        (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) := by
       rw [EqProb («π» := M θ) (x := (a 0, s 0))]
       congr 1
       ext ω
       simp [JointRandomSymbol, Prod.ext_iff]
-    have hS₀ : ℙ[M θ](s[0] = «s.bvar»[0]) = (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
-      EqProb («π» := M θ) (x := s 0) «s.bvar»[0]
-    have hD : ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0]) =
-        (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) /
-          (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
+    have hS₀ : ℙ[M θ](s[0] = «\sf{s}»[0]) = (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) :=
+      EqProb («π» := M θ) (x := s 0) «\sf{s}»[0]
+    have hD : ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) =
+        (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) /
+          (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) :=
       ProbCond.eq.Div.of.SinglePSpace inferInstance («π» := M θ) (x := a 0) (y := s 0)
-        «a.bvar»[0] «s.bvar»[0]
-    have hs0 : (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
-      have hne : (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
+        «\sf{a}»[0] «\sf{s}»[0]
+    have hs0 : (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) ≠ 0 := by
+      have hne : (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) ≠ 0 := by
         rwa [← hJ]
       intro h0
       exact hne <| nonpos_iff_eq_zero.mp <|
         (measure_mono Set.inter_subset_right).trans_eq h0
-    have heq : ℙ[M θ](a[0] = «a.bvar»[0] ∧ s[0] = «s.bvar»[0]) =
-        (ℙ[M θ](s[0] = «s.bvar»[0])) * (ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0])) := by
+    have heq : ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) =
+        (ℙ[M θ](s[0] = «\sf{s}»[0])) * (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0])) := by
       rw [hJ, hS₀, hD]
       exact (ENNReal.mul_div_cancel hs0 (measure_ne_top (M θ) _)).symm
     rwa [← heq]
-  have hP0_bind : ∀ θ («s.bvar» : ℕ ⇀ S), ℙ[M θ](s[0] = «s.bvar»[0]) ≠ 0 := by
-    intro θ «s.bvar»
-    have ⟨hs0, _⟩ : ℙ[M θ](s[0] = «s.bvar»[0]) ≠ 0 ∧
-        ℙ[M θ](a[0] = (⟨fun _ => Classical.arbitrary A⟩ : ℕ ⇀ A)[0] | s[0] = «s.bvar»[0]) ≠ 0 := by
-      have h := mt mul_eq_zero.mpr (hπ_mul θ «s.bvar» ⟨fun _ => Classical.arbitrary A⟩)
+  have hP0_bind : ∀ θ («\sf{s}» : ℕ ⇀ S), ℙ[M θ](s[0] = «\sf{s}»[0]) ≠ 0 := by
+    intro θ «\sf{s}»
+    have ⟨hs0, _⟩ : ℙ[M θ](s[0] = «\sf{s}»[0]) ≠ 0 ∧
+        ℙ[M θ](a[0] = (⟨fun _ => Classical.arbitrary A⟩ : ℕ ⇀ A)[0] | s[0] = «\sf{s}»[0]) ≠ 0 := by
+      have h := mt mul_eq_zero.mpr (hπ_mul θ «\sf{s}» ⟨fun _ => Classical.arbitrary A⟩)
       rwa [not_or] at h
     exact hs0
   have hP0raw : ∀ θ x, (M θ).real ((s 0) ⁻¹' {x}) ≠ 0 := by
@@ -1065,7 +1067,7 @@ private lemma advantage
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
   have hT : ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
       𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ((γ ^ (id : ℕ → ℕ)) @ (fun k => r (t + k))) • ∇[θ] (ℙ[M θ](a t | s t) : ℝ).log) :=
-    main h₀ h₁pol h₂ne h₃diff h₄sup
+    main h₀ (h₁ := h₁pol) h₂ne h₃diff h₄sup
   have hRae : ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, γ ^ k * r (t + k) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
     filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ] with ω hr t
     refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right _) fun k => ?_
@@ -1333,4 +1335,4 @@ private lemma advantage
 
 
 -- created on 2026-10-21
--- updated on 2026-10-23
+-- updated on 2026-11-02
