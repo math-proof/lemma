@@ -1024,7 +1024,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                         for (const v of Object.values(vars))
                                             if (typeof v === 'string' && /^[^\s()]+$/u.test(v) && v !== 'Prop') typeVars.add(v);
                                     }
-                                    // A function-valued binder (`(«s.bvar» : ℕ → S)`) is data, not a
+                                    // A function-valued binder (`(«\sf{s}» : ℕ → S)`) is data, not a
                                     // hypothesis. After givens have started, it ends the given run so the
                                     // binder moves to `default` with the other variables (trailing case).
                                     // Mid-run data between hypotheses still ends the given run too.

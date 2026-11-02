@@ -495,7 +495,7 @@ function hasRandomAstCues(node) {
 
 /**
  * Strong Random signal: a random-variable binder (x : … → Ω → X, a function out of the sample space)
- * together with probability structure: ℙ / 𝔼 notation, an observed-value «x.bvar» binder or a PSpace instance.
+ * together with probability structure: ℙ / 𝔼 notation, an observed-value `«\sf{w}»` binder or a PSpace instance.
  */
 function hasRandomVariableCues(node) {
   let rv = false;
@@ -509,7 +509,7 @@ function hasRandomVariableCues(node) {
       const t = n.text;
       // a Random data structure binder (PolicyGradient.Model, the trajectory law) stands in for Ω → · binders
       if (structBinderTypes(node).get(t) === "Random") rv = true;
-      if (t === "ℙ" || t === "𝔼" || /PSpace$/.test(t) || /\.bvar$/.test(t)) prob = true;
+      if (t === "ℙ" || t === "𝔼" || /PSpace$/.test(t) || /\.bvar$/.test(t) || isSfBvarText(t)) prob = true;
     }
     if (Array.isArray(n.args)) for (const c of n.args) walk(c);
   };
@@ -817,7 +817,7 @@ function pickSection(sigNode, sections, extra = {}) {
   if (hasRandomAstCues(sigNode) && scores.has("Random"))
     scores.set("Random", scores.get("Random") + 5);
   // random variables with their observed values / probability-expectation sugar
-  // ({x : ℕ → Ω → X} {«x.bvar» : ℕ → X}, ℙ[π](x = «x.bvar»), 𝔼[π] x, SinglePSpace π x) are Random lemmas,
+  // ({x : ℕ → Ω → X} {«\sf{x}» : ℕ → X}, ℙ[π](x = «\sf{x}»), 𝔼[π] x, SinglePSpace π x) are Random lemmas,
   // even though Measure / Measurable hypotheses also score for the Measure section.
   if (hasRandomVariableCues(sigNode) && scores.has("Random"))
     scores.set("Random", scores.get("Random") + 4);
@@ -4023,7 +4023,10 @@ function isBareFunNode(node) {
   return cls(unwrapAngle(node)) === "Lean_fun";
 }
 
-/** `«x.bvar»` quotations are holes (like binder leaves), not Bvar atoms. */
+/** `«\sf{w}»` quotations are holes (like binder leaves), not path atoms. `w` is one word character. */
+function isSfBvarText(text) {
+  return /^\\sf\{\w\}$/.test(text || "") || /^«\\sf\{\w\}»$/.test(text || "");
+}
 function isBvarQuotation(node) {
   if (!node || typeof node !== "object") return false;
   if (cls(node) === "LeanDoubleAngleQuotation") {
@@ -4031,6 +4034,7 @@ function isBvarQuotation(node) {
     if (cls(inner) === "LeanProperty" && cls(inner.args?.[1]) === "LeanToken" && inner.args[1].text === "bvar") {
       return true;
     }
+    if (cls(inner) === "LeanToken" && isSfBvarText(inner.text)) return true;
     return isBvarQuotation(inner);
   }
   return false;
@@ -4038,7 +4042,7 @@ function isBvarQuotation(node) {
 
 /**
  * Peel `⇑` / Fun coercions wrapping a bvar quotation head of a GetElem slice
- * (`(⇑«x.bvar»)[:n]`). Body: Lean_land joints of such slices are ProbJoint, not ProbS
+ * (`(⇑«\sf{x}»)[:n]`). Body: Lean_land joints of such slices are ProbJoint, not ProbS
  * (trailing S must not read as a second Prob).
  */
 function bvarHead(node) {
@@ -4391,7 +4395,7 @@ function nameProbApp(node) {
 }
 
 /**
- * Joint of sequence slices with their observed values: `x[:n] = «x.bvar»[:n] ∧ y[:n] = «y.bvar»[:n]`.
+ * Joint of sequence slices with their observed values: `x[:n] = «\sf{x}»[:n] ∧ y[:n] = «\sf{y}»[:n]`.
  * Such a joint reads ProbJoint (ProbJointGetSliceS), not ProbS, in Random/ProbJoint/eq/Mul_Prod_MulProbSCond/….
  */
 function isBvarSliceJointEvent(event) {
@@ -4406,12 +4410,12 @@ function isBvarSliceJointEvent(event) {
   return conj.length >= 2 && conj.every((c) => {
     if (cls(c) !== "LeanEq" || (c.args || []).length !== 2) return false;
     const [l, r] = c.args.map(unwrapParen);
-    // peel ⇑ on either side: `(⇑x)[:n] = (⇑«x.bvar»)[:n]` (DiscreteHMM Eq_LogProbJoint / All_Lt0ProbJoint)
+    // peel ⇑ on either side: `(⇑x)[:n] = (⇑«\sf{x}»)[:n]` (DiscreteHMM Eq_LogProbJoint / All_Lt0ProbJoint)
     return isSlice(l) && isSlice(r) && isBvarQuotation(bvarHead(r.args[0]));
   });
 }
 /**
- * Point-and-slice ∧-joint: `x = «x.bvar» ∧ y[:m] = «y.bvar»[:m]`.
+ * Point-and-slice ∧-joint: `x = «\sf{x}» ∧ y[:m] = «\sf{y}»[:m]`.
  * Not a single-variable Prob, and not two slices (`isBvarSliceJointEvent`); still a ProbJoint.
  */
 function isBvarPointSliceJointEvent(event) {
@@ -4439,7 +4443,7 @@ function isProbJointEvent(event) {
   return isBvarSliceJointEvent(event) || isBvarPointSliceJointEvent(event);
 }
 /**
- * Bare `ℙ[π](x = «x.bvar» ∧ y[:m] = «y.bvar»[:m]) ≠ 0` → NeProbJoint__0.
+ * Bare `ℙ[π](x = «\sf{x}» ∧ y[:m] = «\sf{y}»[:m]) ≠ 0` → NeProbJoint__0.
  * Point-and-slice is a ProbJoint (not NeProbS_0). Joint is binary → `__0` (never NeProbJoint_0);
  * `Ne0ProbJoint` stays an alt (same pattern as All_GtProbJoint__0).
  */
@@ -4477,7 +4481,7 @@ function chainRuleProdName(node) {
 }
 
 /**
- * `ℙ[π](s[:0+1] = «s.bvar»[:0+1] ∧ a[:0] = «a.bvar»[:0]) = ℙ[π](s 0 = «s.bvar» 0) ∧
+ * `ℙ[π](s[:0+1] = «\sf{s}»[:0+1] ∧ a[:0] = «\sf{a}»[:0]) = ℙ[π](s 0 = «\sf{s}» 0) ∧
  *   ∀ t, ℙ[π](slice-joint) = ℙ[π](slice-joint) * (ℙ(a | s) * ℙ(s' | s ∧ a))` — the chain-rule recursion of a
  * bvar-slice joint (Random/EqProbJoint/All_Eq_Mul_MulProbSCond/of/All_CondIndep/…). Deliberately narrow.
  */
@@ -4515,12 +4519,12 @@ function nodeSig(n) {
 }
 
 /**
- * `ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[t] = «y.bvar»[t]) * ℙ[π](x[t + 1:n] = «x.bvar»[t + 1:n] | y[t] = «y.bvar»[t])` —
+ * `ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[t] = «\sf{y}»[t]) * ℙ[π](x[t + 1:n] = «\sf{x}»[t + 1:n] | y[t] = «\sf{y}»[t])` —
  * the forward × backward product of a hidden Markov model cut at time t: a JOINT probability of an observed bvar
  * slice and the hidden state at t times the CONDITIONAL probability of the observed future given that same state
  * (Random/Sum_Mul_ProbCond/eq/Prob/of/IsDiscreteHMM). The joint factor is left implicit (not spelled `ProbS`), so the
  * product reads `Mul_ProbCond` instead of `MulProbSProbCond`. Deliberately narrow: both factors must pin the same
- * hidden state at t (`y[t] = «y.bvar»[t]`, or the bare-function forms `y[t] = «y.bvar» t` / `y t = «y.bvar» t`).
+ * hidden state at t (`y[t] = «\sf{y}»[t]`, or the bare-function forms `y[t] = «\sf{y}» t` / `y t = «\sf{y}» t`).
  * Closed slices may be written on `Fun` (`x[:…]`, via `Fun.getSlice`) or on a coercion (`(⇑x)[:…]`).
  */
 function jointCondMulName(node) {
@@ -4531,12 +4535,12 @@ function jointCondMulName(node) {
   if (!lEv || !rEv || nameProbEvent(lEv) !== "ProbS" || nameProbEvent(rEv) !== "ProbCond") return "";
   const isSlice = (x) => cls(x) === "LeanGetElem" && cls(x.args?.[1]) === "LeanColon";
   const eq2 = (x) => { const u = unwrapParen(x); return cls(u) === "LeanEq" && (u.args || []).length === 2 ? u.args.map(unwrapParen) : null; };
-  // `(⇑«x.bvar»)[:…]` / `«x.bvar»[:…]` — Fun coercions wrap the bvar quotation
+  // `(⇑«\sf{x}»)[:…]` / `«\sf{x}»[:…]` — Fun coercions wrap the bvar quotation
   const sliceEq = (x) => {
     const e = eq2(x);
     return !!e && isSlice(e[0]) && isSlice(e[1]) && isBvarQuotation(bvarHead(e[1].args[0]));
   };
-  // `y[t] = «y.bvar» t` / `y t = «y.bvar» t` / `y[t] = «y.bvar»[t]`
+  // `y[t] = «\sf{y}» t` / `y t = «\sf{y}» t` / `y[t] = «\sf{y}»[t]`
   const stateEq = (x) => {
     const e = eq2(x);
     if (!e || isSlice(e[0])) return false;
@@ -4555,10 +4559,10 @@ function jointCondMulName(node) {
 }
 
 /**
- * `«y.bvar»`-quantified hypotheses: DiscreteHMM of-atoms `∀ t («y.bvar»), … = (ℙ(…|…) : ℝ).log`
+ * `«\sf{y}»`-quantified hypotheses: DiscreteHMM of-atoms `∀ t («\sf{y}»), … = (ℙ(…|…) : ℝ).log`
  * prefer `All_Eq_LogProbCond` (see bvarAllEqLogProbCondName; same All_ policy as All_Lt0ProbJoint).
  * Bare `Eq_LogProbCond` stays an alt. In the HMM log-posterior imply shape
- *   `(∀ t, t + 1 < n → …) ∧ ∀ «y.bvar», -(ℙ(y[:n] = … | x[:n] = …) : ℝ).log = …`
+ *   `(∀ t, t + 1 < n → …) ∧ ∀ «\sf{y}», -(ℙ(y[:n] = … | x[:n] = …) : ℝ).log = …`
  * hmmBvarAllAlts still widens altMatch for `All_Eq_LogProbCond` / `All_Lt0Prob` / `All_EqNegLogProb`.
  */
 function hasBvarBinder(quant) {
@@ -4587,7 +4591,7 @@ function isHmmNegLogCondShape(implyStmts) {
   if (cls(steps) !== "Lean_forall" || hasBvarBinder(steps)) return false;
   const imp = strip(steps.args[steps.args.length - 1]);
   if (cls(imp) !== "Lean_rightarrow" || cls(strip(imp.args?.[0])) !== "Lean_lt") return false;
-  // ∀ «y.bvar», -(ℙ(… | …) : ℝ).log = …
+  // ∀ «\sf{y}», -(ℙ(… | …) : ℝ).log = …
   if (!hasBvarBinder(post)) return false;
   const eq = strip(post.args[post.args.length - 1]);
   if (cls(eq) !== "LeanEq" || (eq.args || []).length !== 2) return false;
@@ -4606,7 +4610,7 @@ function isHmmNegLogCondShape(implyStmts) {
 }
 /**
  * Extra alternatives (accepted by altMatch, never enumerated into the displayed suggestions) for a
- * `«y.bvar»`-quantified statement of the isHmmNegLogCondShape lemma.
+ * `«\sf{y}»`-quantified statement of the isHmmNegLogCondShape lemma.
  */
 function hmmBvarAllAlts(alts) {
   const out = [];
@@ -4622,8 +4626,8 @@ function hmmBvarAllAlts(alts) {
 }
 
 /**
- * Hypothesis `∀ t («y.bvar» : ℕ → Y), 0 < ℙ[π](… ∧ …)` / `(ℙ[π](… ∧ …) : ℝ) > 0`, or lone `∀ «y.bvar», …`:
- * a `∀` over a `«…bvar»` binder (optionally with plain binders like `t`), body a strict positivity
+ * Hypothesis `∀ t («\sf{y}» : ℕ → Y), 0 < ℙ[π](… ∧ …)` / `(ℙ[π](… ∧ …) : ℝ) > 0`, or lone `∀ «\sf{y}», …`:
+ * a `∀` over a `«\sf{w}»` binder (optionally with plain binders like `t`), body a strict positivity
  * comparison of a joint of ≥ 2 bvar-slice equations vs 0. Reads `All_Lt0ProbJoint` (`Lt0` = strictly
  * positive vs 0 — argument order `0 < p` vs `p > 0` does not matter; `Joint` = the two-equation event);
  * ranked first in givenAltLists. `All_GtProbJoint__0` is kept as an alt (`>` / `__0` because Joint is
@@ -4633,7 +4637,7 @@ function bvarAllLt0ProbJointName(typeNode) {
   const u = unwrapParen(typeNode);
   if (cls(u) !== "Lean_forall" || u.superscript === "ᵐ" || !hasBvarBinder(u)) return "";
   let body = unwrapParen(u.args[u.args.length - 1]);
-  // multiline `∀ «y.bvar»,\n  0 < ℙ(…)` / `ℙ(…) > 0` wraps the inequality
+  // multiline `∀ «\sf{y}»,\n  0 < ℙ(…)` / `ℙ(…) > 0` wraps the inequality
   while (cls(body) === "LeanArgsNewLineSeparated" || cls(body) === "LeanStatements") {
     const kids = (body.args || []).filter((a) => cls(a) !== "LeanLineComment");
     body = unwrapParen(kids[kids.length - 1] || kids[0]);
@@ -4667,8 +4671,8 @@ function isIllegalNeProbJointAtom(name) {
 }
 
 /**
- * Hypothesis `∀ t («y.bvar» : …), lhs = (ℙ[π](… | …) : ℝ).log` (and `∀ i …` with Get-index `i + 1`):
- * a `∀` over a plain binder next to `«…bvar»`, body equality to `.log` of a conditional probability.
+ * Hypothesis `∀ t («\sf{y}» : …), lhs = (ℙ[π](… | …) : ℝ).log` (and `∀ i …` with Get-index `i + 1`):
+ * a `∀` over a plain binder next to `«\sf{w}»`, body equality to `.log` of a conditional probability.
  * Prefers `All_Eq_LogProbCond` (drops Get-index `Add_1` noise like Body); bare `Eq_LogProbCond` /
  * `EqAdd_1_LogProbCond` stay alts. Joint-log hyps (`ℙ(… ∧ …).log`) are not this shape.
  */
@@ -4677,7 +4681,7 @@ function bvarAllEqLogProbCondName(typeNode) {
   if (cls(u) !== "Lean_forall" || u.superscript === "ᵐ" || !hasBvarBinder(u)) return "";
   const hasBvar = (n) => { let f = false; (function w(x) { if (!x || typeof x !== "object" || f) return; if (isBvarQuotation(x)) { f = true; return; } for (const a of x.args || []) w(a); })(n); return f; };
   const items = (u.args || []).slice(0, -1).flatMap((b) => (cls(b) === "LeanArgsSpaceSeparated" ? b.args || [] : [b]));
-  if (!items.some((b) => !hasBvar(b))) return ""; // needs a plain binder next to the bvar one (∀ t «y.bvar»)
+  if (!items.some((b) => !hasBvar(b))) return ""; // needs a plain binder next to the bvar one (∀ t «\sf{y}»)
   let body = unwrapParen(u.args[u.args.length - 1]);
   while (cls(body) === "LeanArgsNewLineSeparated" || cls(body) === "LeanStatements") {
     const kids = (body.args || []).filter((a) => cls(a) !== "LeanLineComment");
@@ -4693,7 +4697,7 @@ function bvarAllEqLogProbCondName(typeNode) {
 }
 
 /**
- * `∀ θ («s.bvar») («a.bvar»), ℙ[…](…) ≠ 0` (and plain-binder variants): Body / GradExpect Subset_Ico
+ * `∀ θ («\sf{s}») («\sf{a}»), ℙ[…](…) ≠ 0` (and plain-binder variants): Body / GradExpect Subset_Ico
  * prefers `All_NeProb_0` over the ae-stripped `NeProbS_0` (sibling Random/All_NeProb_0).
  * Legacy `NeProbS_0` / `All_NeProbS_0` stay alts. Returns "" when the body is not Prob ≠ 0.
  */
@@ -4746,7 +4750,7 @@ function allDifferentiableGivenName(typeNode) {
 
 
 /**
- * Viterbi shape: a `max[«y.bvar» : Fin n → Y]` big operator over the joint probability of bvar-valued x/y slices.
+ * Viterbi shape: a `max[«\sf{y}» : Fin n → Y]` big operator over the joint probability of bvar-valued x/y slices.
  * `Max` is the max big operator (not an applied function), so its LHS reads `EqMax_ProbJoint`, not `GetMax`.
  */
 function stripStmt(x) {
@@ -4761,7 +4765,7 @@ function unwrapAscribed(n) {
   while (cls(u) === "LeanColon") u = unwrapParen(u.args?.[0]);
   return u;
 }
-/** Joint event of equations `slice = «bvar» | slice = «bvar»[:k]` (at least two, one of them a bvar value). */
+/** Joint event of equations `slice = «\sf{w}» | slice = «\sf{w}»[:k]` (at least two, one of them an observed value). */
 function isBvarJointEvent(event) {
   const conj = [];
   const flat = (n) => {
@@ -4777,7 +4781,7 @@ function isBvarJointEvent(event) {
     return isSlice(l) && (isBvarQuotation(bvarHead(r)) || (isSlice(r) && isBvarQuotation(bvarHead(r.args[0]))));
   });
 }
-/** `max[«y.bvar» : …] a b …` → [a, b, …] (the applied arguments), else null. */
+/** `max[«\sf{y}» : …] a b …` → [a, b, …] (the applied arguments), else null. */
 function maxBvarOperands(node) {
   const n = unwrapParen(node);
   if (cls(n) !== "LeanArgsSpaceSeparated") return null;
@@ -4797,7 +4801,7 @@ function isBvarProbJoint(node, log = false) {
   const ev = matchProbApp(unwrapAscribed(u));
   return !!ev && nameProbEvent(ev) === "ProbS" && isBvarJointEvent(ev);
 }
-/** Conjunct `max[«y.bvar» : …] (ℙ(joint) : ℝ) = rhs`. */
+/** Conjunct `max[«\sf{y}» : …] (ℙ(joint) : ℝ) = rhs`. */
 function isMaxProbJointEq(node) {
   const u = stripStmt(node);
   if (cls(u) !== "LeanEq" || (u.args || []).length !== 2) return false;
@@ -4825,8 +4829,8 @@ function logProbJointFnNames(typeNodes) {
   return out;
 }
 /**
- * Hypothesis `∀ t a, x t a = max[«y.bvar» : Fin t → Y] s t (…)` where `s` is the log joint probability
- * (another hypothesis `s t «y.bvar» = (ℙ(joint) : ℝ).log`): reads `All_Eq_Max` (not `All_Eq_GetMaxH`; `All_Eq_Max_LogProbJoint` stays accepted).
+ * Hypothesis `∀ t a, x t a = max[«\sf{y}» : Fin t → Y] s t (…)` where `s` is the log joint probability
+ * (another hypothesis `s t «\sf{y}» = (ℙ(joint) : ℝ).log`): reads `All_Eq_Max` (not `All_Eq_GetMaxH`; `All_Eq_Max_LogProbJoint` stays accepted).
  * Returns { name, extras } (extras: accepted spellings that leave the Log implicit) or null.
  */
 function maxLogProbJointGiven(typeNode, fns) {
@@ -4851,7 +4855,7 @@ function maxLogProbJointGiven(typeNode, fns) {
  */
 
 /**
- * Ae / reference-measure binders: `∀ᵐ «x.bvar» ∂ReferenceMeasure.measure, …`
+ * Ae / reference-measure binders: `∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure, …`
  * Path convention drops these wrappers (no All_All_All_ prefix). Plain math
  * `∀ x, P x` still gets All_.
  */
@@ -4866,12 +4870,7 @@ function isAeQuantifier(node) {
     if (!n || typeof n !== "object" || (foundPartial && foundBvar)) return;
     const c = cls(n);
     if (c === "Lean_partial" || c === "LeanPartial") foundPartial = true;
-    if (c === "LeanDoubleAngleQuotation" || c === "LeanDoubleAngleQuotation") {
-      const inner = n.args?.[0];
-      if (cls(inner) === "LeanProperty" && cls(inner.args?.[1]) === "LeanToken" && inner.args[1].text === "bvar") {
-        foundBvar = true;
-      }
-    }
+    if (isBvarQuotation(n)) foundBvar = true;
     if (c === "LeanToken" && (n.text === "ReferenceMeasure" || n.text === "measure")) foundPartial = true;
     if (Array.isArray(n.args)) for (const a of n.args) walk(a);
   };
@@ -4880,9 +4879,9 @@ function isAeQuantifier(node) {
 }
 
 /**
- * `∀ t («s.bvar» : ℕ → S), V t («s.bvar» t) = …`: a plain `∀` (no `ᵐ`, no reference measure) that binds an
- * ordinary variable (t) next to the `«…bvar»` ones is a genuine universal statement, so it keeps the `All_` tag
- * (Random/…/of/All_Eq_Expect/All_Eq_Expect/In_Ico, cf. All_Lt0ProbJoint); a lone `∀ «y.bvar»,` stays implicit.
+ * `∀ t («\sf{s}» : ℕ → S), V t («\sf{s}» t) = …`: a plain `∀` (no `ᵐ`, no reference measure) that binds an
+ * ordinary variable (t) next to the `«\sf{w}»` ones is a genuine universal statement, so it keeps the `All_` tag
+ * (Random/…/of/All_Eq_Expect/All_Eq_Expect/In_Ico, cf. All_Lt0ProbJoint); a lone `∀ «\sf{y}»,` stays implicit.
  * Probability log bodies prefer `All_Eq_LogProbCond` via bvarAllEqLogProbCondName (DiscreteHMM of-atoms);
  * this helper only tags non-ℙ bodies (expectations, …).
  */
@@ -6657,7 +6656,7 @@ export function suggest(filePath, lemmaName, options = {}) {
     const finishedPeer = partsFull && partsFull.length >= 2 && partsFull.length <= 6 && partsFull.every(isFinishedPathConjunct);
     const parts = (eqConj || finishedPeer) ? partsFull : partsLeft;
     if (!parts || parts.length < 2) return joined;
-    // `… ∧ max[«y.bvar» : …] ℙ(joint) = …`: Max is the big operator → EqMax_ProbJoint (ranked first, replaces GetMax)
+    // `… ∧ max[«\sf{y}» : …] ℙ(joint) = …`: Max is the big operator → EqMax_ProbJoint (ranked first, replaces GetMax)
     const fixJ = parts.length === 2 && isMaxProbJointEq(parts[1]) ? fixMaxProbJointName : (x) => x;
     // Finished peers: also name each conjunct asGiven+keepDecor so binder transpose/adjoint
     // stay Cap tokens and flat EqMul_T_1 / EqMulS beat Rel0 nests (Mul_T/eq/One) and And-glued names.
@@ -7100,7 +7099,7 @@ export function suggest(filePath, lemmaName, options = {}) {
       ...(neProb0 ? ["NeProbS_0", "All_NeProbS_0", "NeProb_0"] : []),
       ...(allDiff ? ["All_Differentiable", "Differentiable_ProbCond", "All_Differentiable_ProbCond", "Differentiable"] : []),
     ];
-    // max over the log joint probability (`x' t a = max[«y.bvar» …] s t …`): All_Eq_Max replaces GetMax
+    // max over the log joint probability (`x' t a = max[«\sf{y}» …] s t …`): All_Eq_Max replaces GetMax
     const maxLog = maxLogProbJointGiven(h.typeNode, logJointFns);
     const dropIllegalJoint = (xs) =>
       xs.filter((x) => !isIllegalGtProbJointAtom(x) && !isIllegalNeProbJointAtom(x) && !isIllegalTripleUnderscoreAtom(x));

@@ -367,20 +367,61 @@ def Expr.traceCases (e : Expr) : ℕ × Expr :=
   | _ =>
     ⟨0, e⟩
 
-/-- Render a bound/observed-value name for LaTeX.
-
-The quoted name `«x.bvar»` denotes the observed value of the random variable
-`x`; it renders as the bare *black* letter `x`, while the random variable `x`
-itself is rendered red elsewhere. -/
-def String.bvarLatex (s : String) : String :=
+/-- Inner text of a `«…»` name, when the whole string is quoted. -/
+def String.guillemetInner? (s : String) : Option String :=
   if s.startsWith "«" && s.endsWith "»" then
-    let inner := (s.drop 1).dropEnd 1 |>.copy
-    if inner.endsWith ".bvar" then
-      inner.dropEnd ".bvar".length |>.copy
-    else s
-  else s
+    some ((s.drop 1).dropEnd 1).toString
+  else
+    none
 
-/-- Name-level variant of `String.bvarLatex`; non-`.bvar` names use `escape_specials`. -/
+/-- Body of `\sf{w}` (one backslash). `none` when `s` is not that form. -/
+def String.sfBody? (s : String) : Option String :=
+  let p := "\\sf{"
+  if s.startsWith p && s.endsWith "}" then
+    let body := ((s.drop p.length).dropEnd 1).toString
+    if body.isEmpty then none else some body
+  else
+    none
+
+/-- `«\sf{x}»` (`Name.toString` of an observed value). -/
+def String.isObservedName (s : String) : Bool :=
+  match s.guillemetInner? with
+  | some inner => inner.endsWith ".bvar" || inner.sfBody?.isSome
+  | none => false
+
+/-- Match key against the random variable: `«\sf{x}»` → `x`. -/
+def String.bvarKey (s : String) : String :=
+  match s.guillemetInner? with
+  | some inner =>
+    if inner.endsWith ".bvar" then
+      (inner.dropEnd ".bvar".length).toString
+    else
+      inner.sfBody?.getD s
+  | none => s
+
+/-- Display form of an observed value.
+
+`«\sf{x}»` is the LaTeX `\sf{x}` (already escaped; do not run `escape_specials`
+on it). The random variable `x` itself is rendered red elsewhere; this observed
+value stays black. -/
+def String.bvarLatex (s : String) : String :=
+  match s.guillemetInner? with
+  | some inner =>
+    if inner.endsWith ".bvar" then
+      (inner.dropEnd ".bvar".length).toString
+    else if inner.sfBody?.isSome then
+      inner
+    else
+      s
+  | none => s
+
+/-- `escape_specials` after `bvarLatex`. `\sf{w}` is already LaTeX, so its
+backslash and braces stay. -/
+def String.escapeBvarLatex (s : String) : String :=
+  if s.sfBody?.isSome then s else s.escape_specials
+
+/-- Name-level variant of `String.bvarLatex`. Quoted observed names use
+`bvarLatex`; other names use `escape_specials`. -/
 def Lean.Name.bvarLatex (name : Name) (sep : String) : String :=
   let s := name.toString
   if s.startsWith "«" && s.endsWith "»" then
@@ -539,21 +580,21 @@ def Expr.is_Lambda : Expr → Bool
   | Basic (.ExprWithLimits .Lean_lambda) .. => true
   | _ => false
 
-/-- An observed value: `«x.bvar»`, an indexed `«x.bvar» i`, a slice `«x.bvar»[a:b]`, or a
-tuple / singleton / insert of those. Mirrors lean.js, which drops all of these from `ℙ[π](x = «x.bvar»)`. -/
+/-- An observed value: `«\sf{x}»`, an indexed `«\sf{x}» i`, a slice `«\sf{x}»[a:b]`,
+or a tuple / singleton / insert of those. Mirrors lean.js, which drops all of
+these from `ℙ[π](x = «\sf{x}»)`. -/
 partial def Expr.isBoundObservation : Expr → Bool
   | Symbol name _ =>
-    let s := name.toString
-    s.startsWith "«" && s.endsWith "»" && s.contains ".bvar"
+    name.toString.isObservedName
   | Basic (.Special ⟨.str _ "mk"⟩) [a, b] _ =>
     a.isBoundObservation && b.isBoundObservation
   | Basic (.Special ⟨`Singleton.singleton⟩) [x] _
   | Basic (.Special ⟨`Insert.insert⟩) [x] _ =>
     x.isBoundObservation
-  -- `«x.bvar» i` : application of a local variable (`get_args` builds `Special .anonymous (f :: args)`)
+  -- `«\sf{x}» i` : application of a local variable (`get_args` builds `Special .anonymous (f :: args)`)
   | Basic (.Special ⟨.anonymous⟩) (f@(Symbol ..) :: _ :: _) _ =>
     f.isBoundObservation
-  -- `«x.bvar»[a:b]` : `getSlice «x.bvar» (Slice.mk ..)`
+  -- `«\sf{x}»[a:b]` : `getSlice «\sf{x}» (Slice.mk ..)`
   | e@(Basic _ _ _) =>
     match e.asNamedApp? with
     | some ("getSlice", b :: _)
@@ -569,8 +610,9 @@ partial def Expr.peelToReal : Expr → Expr
     | _ => e
 
 /-- Drop the evaluation point of `condProb` for the short form `ℙ(x | y)`, as lean.js drops
-`= «x.bvar»`. Accepts a full bound observation or the residual after `∑ «a.bvar» t` elaborates to
-`∑ c ∈ Finset.univ` (point `(c, «s.bvar» t)` / `(«a.bvar» t, c)` — only one side stays a `.bvar`). -/
+`= «\sf{x}»`. Accepts a full bound observation or the residual after
+`∑ «\sf{a}» t` elaborates to `∑ c ∈ Finset.univ` (point `(c, «\sf{s}» t)` / `(«\sf{a}» t, c)` —
+only one side stays an observed value). -/
 def Expr.isCondProbPoint : Expr → Bool
   | e =>
     e.isBoundObservation ||
@@ -659,14 +701,18 @@ partial def Expr.markAsRandomArgument : Expr → Expr
     | _ => e
   | e => e
 
-/-- lean.js token text for RV-head matching: last segment, `«x.bvar»` → `x`. -/
+/-- lean.js token text for RV-head matching: last segment, `«\sf{x}»` → `x`.
+
+The key is the letter, not the display string `\sf{x}`, so the head `x` still
+matches the observed value. -/
 def rvToken (n : Name) : String :=
   let n := n.eraseMacroScopes
-  -- Prefer full-name bvar strip (`«s.bvar»` is often a single Name segment including guillemets),
+  -- Prefer the full-name key (`«\sf{s}»` is often one Name segment, guillemets included),
   -- then fall back to the last segment (for `Foo.a` / hygienic names).
-  let full := n.toString.bvarLatex
-  if full != n.toString then full
-  else n.getLast.toString.bvarLatex
+  let raw := n.toString
+  let key := raw.bvarKey
+  if key != raw then key
+  else n.getLast.toString.bvarKey
 
 /-- Name key used in RV-head lists (always `mkSimple` of `rvToken`). -/
 def rvKey (n : Name) : Name :=
@@ -739,7 +785,10 @@ partial def Expr.markNamesAsRVHeads (e : Expr) (names : List Name) : Expr :=
   if names.isEmpty then e
   else match e with
   | Symbol name type =>
-    if rvNamesContain names name then markAsRandomVariable (Symbol name type)
+    -- `«\sf{w}»` shares the key `w` with the red random variable, but the observed
+    -- value itself stays black.
+    if name.toString.isObservedName then Symbol name type
+    else if rvNamesContain names name then markAsRandomVariable (Symbol name type)
     else Symbol name type
   | Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [_] _ => e
   | Basic (.ExprWithAttr (.Lean_operatorname `RandomArgument)) [_] _ => e
@@ -813,7 +862,7 @@ def Expr.asIcoClosed? : Expr → Option (String × Expr × Expr × Expr)
     | .Lean_sum | .Lean_prod =>
       match set.asNamedApp? with
       | some ("Ico", [a, Basic (.BinaryInfix ⟨`HAdd.hAdd⟩) [b, const (.natVal 1)] _]) =>
-        some (name.toString.bvarLatex.escape_specials, a, b, body)
+        some (name.toString.bvarLatex.escapeBvarLatex, a, b, body)
       | _ => none
     | _ => none
   | _ => none
@@ -827,7 +876,7 @@ def Expr.asRangeClosedBound? : Expr → Option (String × Expr × Expr)
     | .Lean_sum | .Lean_prod =>
       match set.asNamedApp? with
       | some ("range", [Basic (.BinaryInfix ⟨`HAdd.hAdd⟩) [e, const (.natVal 1)] _]) =>
-        some (name.toString.bvarLatex.escape_specials, e, body)
+        some (name.toString.bvarLatex.escapeBvarLatex, e, body)
       | _ => none
     | _ => none
   | _ => none
@@ -839,7 +888,7 @@ def Expr.asRangeBound? : Expr → Option (String × Expr × Expr)
     | .Lean_sum | .Lean_prod =>
       match set.asNamedApp? with
       | some ("range", [n]) =>
-        some (name.toString.bvarLatex.escape_specials, n, body)
+        some (name.toString.bvarLatex.escapeBvarLatex, n, body)
       | _ => none
     | _ => none
   | _ => none
@@ -851,7 +900,7 @@ def Expr.asIioBound? : Expr → Option (String × Expr × Expr)
     | .Lean_sum | .Lean_prod =>
       match set.asNamedApp? with
       | some ("Iio", [k]) =>
-        some (name.toString.bvarLatex.escape_specials, k, body)
+        some (name.toString.bvarLatex.escapeBvarLatex, k, body)
       | _ => none
     | _ => none
   | _ => none
@@ -863,7 +912,7 @@ def Expr.asIicBound? : Expr → Option (String × Expr × Expr)
     | .Lean_sum | .Lean_prod =>
       match set.asNamedApp? with
       | some ("Iic", [k]) =>
-        some (name.toString.bvarLatex.escape_specials, k, body)
+        some (name.toString.bvarLatex.escapeBvarLatex, k, body)
       | _ => none
     | _ => none
   | _ => none
@@ -873,7 +922,7 @@ def Expr.asFinSumBound? : Expr → Option (String × Expr × Expr)
   | Basic (.ExprWithLimits op) [body, Binder .default name (Basic (.ExprWithAttr (.Lean_typeclass `Fin)) [n] _) nil] _ =>
     match op with
     | .Lean_sum | .Lean_prod =>
-      some (name.toString.bvarLatex.escape_specials, n, body)
+      some (name.toString.bvarLatex.escapeBvarLatex, n, body)
     | _ => none
   | _ => none
 
@@ -936,16 +985,16 @@ def Expr.asProb? : Expr → Option (Expr × List Expr)
 
 /-- `tsum (fun a ↦ body) (SummationFilter.unconditional α)` → `(a, α, body)`:
 extract the binder name, domain type, and body from a `tsum` expression.
-Mirrors lean.js `∑' «a.bvar» : α, f «a.bvar»` rendering. -/
+Mirrors lean.js `∑' «\sf{a}» : α, f «\sf{a}»` rendering. -/
 def Expr.asTsum? : Expr → Option (String × Expr × Expr)
   | Basic (.ExprWithLimits .Lean_tsum) args _ =>
     match args with
     | [Basic (.ExprWithLimits .Lean_lambda) [body, Binder .default name type nil] _] =>
       -- No explicit summation filter; type comes from binder type
-      some (name.toString.bvarLatex.escape_specials, type, body)
+      some (name.toString.bvarLatex.escapeBvarLatex, type, body)
     | [Basic (.ExprWithLimits .Lean_lambda) [body, Binder .default name type nil] _, _filter] =>
       -- Filter present; type still from binder
-      some (name.toString.bvarLatex.escape_specials, type, body)
+      some (name.toString.bvarLatex.escapeBvarLatex, type, body)
     | _ => none
   | _ => none
 

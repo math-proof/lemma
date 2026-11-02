@@ -121,7 +121,7 @@ export class LeanPairedGroup extends Closable(LeanUnary) {
     /**
      * After the closing delimiter, a new token/space-separated arg arrives.
      * Push it into the parent's arg list (or wrap self+new in LeanArgsSpaceSeparated),
-     * so tokens like `hsec_y` after `«y.bvar»` are not swallowed.
+     * so tokens like `hsec_y` after `«\sf{y}»` are not swallowed.
      */
     append($new, _func) {
         const {indent, level} = this;
@@ -1136,7 +1136,7 @@ export class LeanDoubleAngleQuotation extends LeanPairedGroup {
         return false;
     }
 
-    /** `«y.bvar»` is a term-level node — never add its own indentation. */
+    /** `«\sf{y}»` is a term-level node — never add its own indentation. */
     is_indented() {
         return false;
     }
@@ -1159,31 +1159,22 @@ export class LeanDoubleAngleQuotation extends LeanPairedGroup {
     }
 
     /**
-     * `«y.bvar»` → the name token `y`. `«\sf{w}»` → a token whose text is `w`
-     * (for RV / sum matching). LaTeX of the sf form is `\sf{w}`, not this token.
+     * `«\sf{w}»` → a token whose text is `w` (for RV / sum matching).
+     * LaTeX is `\sf{w}`, not this token.
      */
     boundValueLhs() {
-        const inner = this.arg;
-        if (
-            inner instanceof L.LeanProperty &&
-            inner.rhs instanceof L.LeanToken &&
-            inner.rhs.text === 'bvar'
-        ) {
-            return inner.lhs;
-        }
         const letter = this.sfBoundLetter();
         if (letter) return new L.LeanToken(letter, this.indent, this.level);
         return null;
     }
     latexFormat() {
         if (this.sfBoundLetter()) return '\\sf{%s}';
-        return this.boundValueLhs() ? '%s' : '{\\color{red}%s}';
+        return '{\\color{red}%s}';
     }
     latexArgs(syntax) {
         const letter = this.sfBoundLetter();
         if (letter) return [letter];
-        const lhs = this.boundValueLhs();
-        return lhs ? [lhs.toLatex(syntax)] : super.latexArgs(syntax);
+        return super.latexArgs(syntax);
     }
 }
 

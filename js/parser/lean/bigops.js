@@ -416,8 +416,8 @@ export class Lean_sum extends LeanBigOperator {
     }
 
     /**
-     * `∑ «y.bvar»[t], f` / `∑ «\sf{y}»[t], f` / `∑ «y.bvar» t, f`: a bound variable is never red, so the index and the
-     * body's `y[t]` / `y t` that stands for the bound value (`y[t] = «\sf{y}»[t]` / `y t = «y.bvar» t`
+     * `∑ «\sf{y}»[t], f` / `∑ «\sf{y}» t, f`: a bound variable is never red, so the index and the
+     * body's `y[t]` / `y t` that stands for the bound value (`y[t] = «\sf{y}»[t]` / `y t = «\sf{y}» t`
      * inside `ℙ[π](…)`) are drawn in the normal colour.
      */
     latexArgs(syntax) {
@@ -431,15 +431,15 @@ export class Lean_sum extends LeanBigOperator {
             bnd.args[0] instanceof L.LeanDoubleAngleQuotation
         ) {
             quote = bnd.args[0];
-            keyApp = strStmt(bnd).trim(); // `«y.bvar» t`
-            keyGet = `${strStmt(bnd.args[0]).trim()}[${strStmt(bnd.args[1]).trim()}]`; // `«y.bvar»[t]`
+            keyApp = strStmt(bnd).trim(); // `«\sf{y}» t`
+            keyGet = `${strStmt(bnd.args[0]).trim()}[${strStmt(bnd.args[1]).trim()}]`; // `«\sf{y}»[t]`
         } else if (
             bnd instanceof L.LeanGetElem &&
             bnd.args[0] instanceof L.LeanDoubleAngleQuotation
         ) {
             quote = bnd.args[0];
-            keyGet = strStmt(bnd).trim(); // `«y.bvar»[t]`
-            keyApp = `${strStmt(bnd.args[0]).trim()} ${strStmt(bnd.args[1]).trim()}`; // `«y.bvar» t`
+            keyGet = strStmt(bnd).trim(); // `«\sf{y}»[t]`
+            keyApp = `${strStmt(bnd.args[0]).trim()} ${strStmt(bnd.args[1]).trim()}`; // `«\sf{y}» t`
         }
         if (quote) {
             const base = quote.boundValueLhs();

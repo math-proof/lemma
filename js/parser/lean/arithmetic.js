@@ -408,7 +408,7 @@ export class LeanBitwiseXor extends LeanArithmetic {
 export class LeanBitOr extends LeanArithmetic {
     static { this.register(); }
 
-    // Below Eq (50) and ∧ (35): Prob conditional `x = «x.bvar» | y = «y.bvar»`
+    // Below Eq (50) and ∧ (35): Prob conditional `x = «\sf{x}» | y = «\sf{y}»`
     // must wrap whole equations, not nest `|` inside the first `=`.
     static input_priority = 33;
 

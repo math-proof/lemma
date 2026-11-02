@@ -141,14 +141,14 @@ def Expr.asCondProb? : Expr → Option (Expr × Expr × Expr)
     else none
 
 /-- In `body`, find `condProb μ (x, y) (binder, _)` or `(_, binder)` (after `toReal`) and return the
-RV whose value is the `∑ «·.bvar» t` sum binder — lean.js index `a t` / `s (t + 1)`.
+RV whose value is the `∑ «\sf{a}» t` sum binder — lean.js index `a t` / `s (t + 1)`.
 Handles both the flat method app and the curried `(μ.condProb pair) point` form. -/
 partial def Expr.condProbSumRV? (e : Expr) (binder : Name) : Option Expr :=
   let e := e.peelToReal
   let fromPoint (pair point : Expr) : Option Expr :=
     match pair.asJointRandomSymbol?, point with
     | some (x, y), Basic (.Special ⟨.str _ "mk"⟩) [a, b] _ =>
-      -- sumAt residual: `(c, «s.bvar» t)` or `(«a.bvar» t, c)` — Symbol ↔ bound observation
+      -- sumAt residual: `(c, «\sf{s}» t)` or `(«\sf{a}» t, c)` — Symbol ↔ bound observation
       if a.symbolName?.isSome && b.isBoundObservation then some x
       else if b.symbolName?.isSome && a.isBoundObservation then some y
       else
@@ -172,7 +172,7 @@ partial def Expr.condProbSumRV? (e : Expr) (binder : Name) : Option Expr :=
       | Binder _ _ t v => (t.condProbSumRV? binder).orElse fun _ => v.condProbSumRV? binder
       | _ => none
 
-/-- `∑ c ∈ Finset.univ, body` arising from `∑ «a.bvar»[t], …` / `∑ «a.bvar» t, …` (see `sumAt` in
+/-- `∑ c ∈ Finset.univ, body` arising from `∑ «\sf{a}»[t], …` / `∑ «\sf{a}» t, …` (see `sumAt` in
 `Macro/Algebra/BigOperators/Summations.lean`) → `(a t, body[c ↦ a t])`, so the index prints as the RV
 (lean.js) rather than `c ∈ Finset.univ`. Triggered by finding `condProb … (c, …)` in the body
 (the sumAt residual), not by matching `Finset.univ` alone — that node's attr shape varies. -/
@@ -970,7 +970,8 @@ def Expr.latexFormat : Expr → String
 
 partial def Expr.toLatex (e : Expr) : String :=
   -- lean.js `markRandomVarNames`: once Prob/joint RVs reveal head names (`a`, `s`), recolor every
-  -- matching head in the goal (including `V θ t (s t)` / `«s.bvar» t`), skipping magenta RAs.
+  -- matching head in the goal (including `V θ t (s t)`). `«\sf{s}»` shares that key
+  -- but stays a black observed value. Magenta random arguments are left alone.
   let e := e.markNamesAsRVHeads (e.foldRVHeadNames [])
   e.latexFormat.printf (latexArgs e)
 where
@@ -992,7 +993,7 @@ where
       | Basic (.ExprWithLimits .Lean_sum) [_, binder@(Binder .contains ..)] _ =>
         binder.toLatex
       | Basic (.ExprWithLimits .Lean_sum) [_, Binder .default name type nil] _ =>
-        "{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex
+        "{%s : %s}".format name.toString.bvarLatex.escapeBvarLatex, type.toLatex
       | _ =>
         ""
   latexArgs : Expr → List String
@@ -1005,7 +1006,9 @@ where
     [u.toString]
 
   | Symbol name type =>
-    if type.isRandomArgument then
+    if name.toString.isObservedName then
+      [name.bvarLatex "."]
+    else if type.isRandomArgument then
       ["{\\color{magenta} {" ++ name.bvarLatex "." ++ "}}"]
     else if type.isRandomVariable then
       ["{\\color{red} {" ++ name.bvarLatex "." ++ "}}"]
@@ -1041,7 +1044,7 @@ where
         | .Lean_let =>
           args.reverse.map fun expr =>
             if let Binder _ name type _ := expr then
-              "{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex
+              "{%s : %s}".format name.toString.bvarLatex.escapeBvarLatex, type.toLatex
             else
               "{%s}".format expr.toLatex
         | .Lean_tsum =>
@@ -1081,7 +1084,7 @@ where
                     | none =>
                       match args with
                       | [expr, Binder .default name type nil] =>
-                        [("{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex), expr.toLatex]
+                        [("{%s : %s}".format name.toString.bvarLatex.escapeBvarLatex, type.toLatex), expr.toLatex]
                       | _ =>
                         []
         | .Lean_prod
@@ -1105,7 +1108,7 @@ where
                 | none =>
                   match args with
                   | [expr, Binder .default name type nil] =>
-                    [("{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex), expr.toLatex]
+                    [("{%s : %s}".format name.toString.bvarLatex.escapeBvarLatex, type.toLatex), expr.toLatex]
                   | _ =>
                     []
         | .Lean_lim =>
@@ -1526,7 +1529,7 @@ where
       let ifBranch :=
         match ifBranch with
         | Binder .given name type nil =>
-          "{%s} : {%s}".format name.toString.bvarLatex.escape_specials, type.toLatex
+          "{%s} : {%s}".format name.toString.bvarLatex.escapeBvarLatex, type.toLatex
         | _ =>
           ifBranch.toLatex
       let cases := cases.concat ("{{%s}} & {\\color{blue}\\text{if}}\\ %s ".format thenBranch.toLatex, ifBranch)

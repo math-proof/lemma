@@ -13,7 +13,7 @@ proofs: `Sup[s[t].bvar, t](Abs(f)) < oo`.
 
 Binders may be bare `ident`, typed `ident : type` (Python-style, preferred), or typed
 `(ident : type)`. Guillemet names work in all forms:
-`sup[θ, t, «s.bvar» : ℕ ⇀ S, «a.bvar» : ℕ ⇀ A] e < ∞`
+`sup[θ, t, «\sf{s}» : ℕ ⇀ S, «\sf{a}» : ℕ ⇀ A] e < ∞`
 (typed slots ascribe types; bare slots stay `_` and are inferred from `e`).
 
 The body is parsed at precedence 51, just above `<`, so `sup[x] ‖f x‖ + 1 < ∞` bounds the sum
