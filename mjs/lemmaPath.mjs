@@ -1048,7 +1048,7 @@ const TOKEN_ALIAS = {
 
 /** Non-ASCII notation → ASCII atom ("" drops it); path atoms are ASCII only. */
 const SYMBOL_NAME = {
-  "𝔼": "Expect", "∇": "Grad", "∅": "Empty", "⊤": "Top", "⊥": "Bot", "∞": "Infty", "π": "Pi", "√": "Sqrt", "𝓝": "",
+  "𝔼": "Expect", "𝕍𝕒𝕣": "Var", "∇": "Grad", "∅": "Empty", "⊤": "Top", "⊥": "Bot", "∞": "Infty", "π": "Pi", "√": "Sqrt", "𝓝": "",
   "𝒩": "Gaussian", // density-free `𝒩(μ, σ)` law (HasLaw / ∼[π]); not Mathlib `gaussianReal` token
   "max⁻¹": "ArgMax", "min⁻¹": "ArgMin",
   atTop: "", atBot: "",
@@ -1992,6 +1992,14 @@ function mentionsUpdateCol(node) {
   return found;
 }
 
+/** `𝕍𝕒𝕣[x[k]: π](x k)` — variance sugar, same shape as `𝔼[…](…)`. */
+function isVarApp(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated") return false;
+  const head = u.args?.[0];
+  return cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝕍𝕒𝕣";
+}
+
 /** Relation alternatives: `ae` soft relations for ᵐ (`=ᵐ` reads MEq, composed like Eq), literal-left mirroring, identity. */
 function relationAlts(node, tag0, opts) {
   const args = node.args || [];
@@ -2187,6 +2195,11 @@ function relationAlts(node, tag0, opts) {
   // RHS `_* ∏ (i !)` stays Mul_Prod_Factorial. One alt, so the long entry spelling remains canonical.
   if (!opts.asGiven && tag0 === "Eq" && isDetMulStackMulPow(args[0]) && isMulProdFactorial(args[1])) {
     outR = uniq(["DetMulStackS_MulPow/eq/Mul_Prod_Factorial", ...outR]);
+  }
+  // 𝕍𝕒𝕣[x: π](x) = σ² → EqVar (All_EqVar). Bare Eq stays a shorter alt and must not lead.
+  if (tag0 === "Eq" && isVarApp(args[0])) {
+    const varEq = outR.filter((a) => a === "EqVar" || a.startsWith("EqVar"));
+    outR = uniq([...varEq, ...outR.filter((a) => !varEq.includes(a)), "Eq"]);
   }
   // EqSMul of a matrix `.updateCol` also reads EqSMul_UpdateCol (longer; not canonical).
   if (!opts.asGiven && tag0 === "Eq" && mentionsUpdateCol(node)) {
@@ -3827,6 +3840,11 @@ function preAlts(node, opts, canon) {
       // unary Expect: CamelCase only (ExpectAdd); never Expect_Add
       return b.length ? uniq(b.map((y) => "Expect" + y)) : ["Expect"];
     }
+    // 𝕍𝕒𝕣[x[k]: π](x k) → Var, same unary pattern as Expect (hole integrand is not spelled)
+    if (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝕍𝕒𝕣" && args.length === 2) {
+      const b = A(args[1]);
+      return b.length ? uniq(b.map((y) => "Var" + y)) : ["Var"];
+    }
     // μ.real {ω | X ω ≤ t} → RealLe (Random/RealLe/le/RealLe, Random/AddRealLeRealGt/eq/One)
     if (cls(head) === "LeanProperty" && cls(head.args?.[1]) === "LeanToken" && /^(real|toReal)$/.test(head.args[1].text || "") && args.length === 2 && isSetBuilder(args[1])) {
       const p = setCondNames(args[1], opts, canon);
@@ -4050,17 +4068,20 @@ function indepCanon(node, opts = {}) {
   if (joint) return joint;
   const u = stripIndepWrap(node);
   if (cls(u) === "Lean_perp") {
-    if (typeof u.pathChoices === "function") {
-      const ch = (u.pathChoices(opts) || []).filter(Boolean);
-      if (ch.length) return ch[0];
-    }
-    // structural fallback if pathChoices unavailable
     const isSlice = (n) => {
       const x = unwrapParen(n);
       return cls(x) === "LeanGetElem" && cls(x.args?.[1]) === "LeanColon";
     };
     const L = isSlice(u.args?.[0]);
     const R = isSlice(u.args?.[1]);
+    // Several givens: `x[k] ⟂ᵢ x[:k]` is Indep (`All_Indep`). The slice spelling stays an alt.
+    // One given keeps Indep_GetSlice (`All_Indep/of/All_Indep_GetSlice`).
+    if (opts.multiGiven && R && !L) return "Indep";
+    if (typeof u.pathChoices === "function") {
+      const ch = (u.pathChoices(opts) || []).filter(Boolean);
+      if (ch.length) return ch[0];
+    }
+    // structural fallback if pathChoices unavailable
     if (L && R) return "IndepGetSlice_GetSlice";
     if (R) return "Indep_GetSlice";
     if (L) return "IndepGetSlice";
@@ -7164,7 +7185,7 @@ export function suggest(filePath, lemmaName, options = {}) {
       const multiGivenB = givensAllB.filter((h) => h.prop).length > 1;
       const givens = givensAllB.map((h) => ({
         alts: nameExprAlts(h.typeNode, { ...optsB, asGiven: true, multiGiven: multiGivenB }).filter(Boolean),
-        name: nameExpr(h.typeNode, { ...optsB, asGiven: true }) || "Given",
+        name: nameExpr(h.typeNode, { ...optsB, asGiven: true, multiGiven: multiGivenB }) || "Given",
       }));
       return { implyAlts, implyName, givens };
     } catch {
@@ -7293,7 +7314,7 @@ export function suggest(filePath, lemmaName, options = {}) {
   let givenAltLists = [...hyps.filter((h) => h.prop)].reverse().map((h) => {
     const b = passB?.givens?.[h.idx];
     const altsA = nameExprAlts(h.typeNode, { ...nameOpts, asGiven: true, multiGiven }).filter(Boolean);
-    const nameA = nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) || "Given";
+    const nameA = nameExpr(h.typeNode, { ...nameOpts, asGiven: true, multiGiven }) || "Given";
     const lt0Joint = bvarAllLt0ProbJointName(h.typeNode); // All_Lt0ProbJoint, ranked first for this shape
     const logProbCond = bvarAllEqLogProbCondName(h.typeNode); // All_Eq_LogProbCond (not bare / Add_1)
     // point∧slice ℙ ≠ 0 → NeProbJoint__0 (Joint binary; not NeProbS_0 / NeProbJoint_0)
