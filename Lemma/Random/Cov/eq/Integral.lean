@@ -1,6 +1,6 @@
 import Def.Probability.Moments.Variance
-import Lemma.Random.Expect.eq.Integral.Id
-open MeasureTheory
+import Lemma.Random.Expect.eq.Integral
+open MeasureTheory Random
 
 
 @[path]
@@ -11,8 +11,13 @@ private lemma main
   ℂ𝕠𝕧 π x y = ∫ ω, (x ω - ∫ ω', x ω' ∂π) * (y ω - ∫ ω', y ω' ∂π) ∂π := by
 -- proof
   unfold ℂ𝕠𝕧
-  rw [Random.Expect.eq.Integral.Id, Random.Expect.eq.Integral.Id]
-  exact Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map (Continuous.aestronglyMeasurable (by fun_prop))
+  have hId {z : Ω → ℝ} [PSpace π z] :
+    Expectation.ofRV π z (fun a : ℝ ↦ a) = ∫ ω, z ω ∂π := by
+    change 𝔼[z: π](z) = _
+    apply Expect.eq.Integral
+  rw [hId, hId]
+  exact OfRV.eq.Integral.of.AEStronglyMeasurable_Map (Continuous.aestronglyMeasurable (by fun_prop))
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-03

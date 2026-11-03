@@ -16,6 +16,7 @@ import {
 } from './utility.js';
 import { LeanArgs, LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
+import { pathStripTrailingHoles, pathUniqKeepEmpty } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -51,6 +52,34 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
     peelGroup() {
         return this.args.length === 1 ? this.args[0].peelGroup() : this;
+    }
+
+    /**
+     * `𝔼[…](body)` path choices. A product body keeps Mul's holes:
+     * `Expect(_)(Mul(_)(_))` is `Expect_Mul__` (stripped to `Expect_Mul` at an Eq root).
+     * The body may be omitted (`Expect`); the whole expectation may be omitted (`""`).
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        const head = this.args?.[0];
+        const body = this.args?.[1];
+        const expect = this.args?.length === 2
+            && head instanceof L.LeanGetElem
+            && head.lhs instanceof L.LeanToken
+            && head.lhs.text === "𝔼";
+        if (!expect) return [""];
+        const kids = body?.pathChoices?.(opts) ?? [""];
+        const out = [];
+        for (const k of kids) {
+            if (!k) continue;
+            const core = pathStripTrailingHoles(k);
+            if (!core) continue;
+            // Keep Mul's trailing holes so Eq(Expect_Mul__)(Mul) is EqExpect_Mul__Mul.
+            out.push(core === "Mul" ? "Expect_" + k : "Expect" + core);
+        }
+        out.push("Expect", "");
+        return pathUniqKeepEmpty(out);
     }
 
     /**
@@ -487,25 +516,39 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         );
     }
 
+    /** A numeric event is not an observation, so it is not a random argument (magenta).
+     * The random variable itself (`x` of `x[i]`) stays red. */
+    static clearRandomArguments(n) {
+        const walk = (x) => {
+            if (!x || typeof x !== 'object') return;
+            if (x instanceof L.LeanToken) {
+                delete x.kwargs.isRandomArgument;
+                return;
+            }
+            if (Array.isArray(x.args)) for (const a of x.args) walk(a);
+        };
+        walk(n);
+    }
+
     static markProbBinderArgs(node) {
         const peel = (n) => {
             while (n instanceof L.LeanProperty) n = n.args[0]; // `ℙ[…](…).toReal`
-            return n instanceof L.LeanParenthesis ? n.arg : n;
-        };
-        const markRA = (n) => {
-            if (n instanceof L.LeanToken) n.kwargs.isRandomArgument = true;
+            while (n instanceof L.LeanParenthesis || n instanceof L.LeanBrace)
+                n = n instanceof L.LeanParenthesis ? n.arg : n.args[0];
+            return n;
         };
         const markRV = (n) => {
             // head only (`Lean.headTokens`): `a t` / `s (t + 1)` → `a`/`s` red, index black
-            for (const h of Lean.headTokens(n)) h.kwargs.isRandomVariable = true;
+            for (const h of Lean.headTokens(n)) {
+                delete h.kwargs.isRandomArgument;
+                h.kwargs.isRandomVariable = true;
+            }
         };
         const markFactor = (n) => {
             if (!n) return;
             n = peel(n);
-            if (n instanceof L.LeanToken) {
-                markRA(n);
-                return;
-            }
+            // An observation `x = «\sf{x}»` (and a conjunction of them). A numeric
+            // event `{|…| < ε}` is not one: do not paint it magenta. `x` stays red.
             if (n instanceof L.LeanEq) {
                 markRV(peel(n.lhs));
                 return;
@@ -524,8 +567,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 markFactor(n.rhs);
                 return;
             }
-            // RA apps: `a t`, `s (t + 1)` — magenta on head only (same as Expectation conditioner)
-            for (const h of Lean.headTokens(n)) h.kwargs.isRandomArgument = true;
+            LeanArgsSpaceSeparated.clearRandomArguments(n);
         };
         markFactor(node);
     }

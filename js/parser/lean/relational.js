@@ -13,7 +13,7 @@
 import { escapeSpecialsForLatex } from './utility.js';
 import { LeanBinaryBoolean } from './boolean.js';
 import { Lean } from './base.js';
-import { pathEqCombineChoices, pathCombineIndepChoices } from './pathChoices.js';
+import { pathEqCombineChoices, pathCombineIndepChoices, pathEqInfixChoices, pathStripTrailingHoles } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -207,6 +207,23 @@ export class LeanEq extends LeanRelational {
         if (!combined.left.includes("MulInvSqrt") || !combined.right.includes("MulSqrt_Div"))
             return null;
         return combined;
+    }
+
+    /**
+     * `𝔼(x * y) = 𝔼 x * 𝔼 y`. Side choices come from `pathChoices`:
+     * LHS `Expect_Mul | Expect | _`, RHS `MulExpectS | MulExpect | Mul_Expect | Mul | _`.
+     * Stems are `LHS.eq.RHS` and flat `Eq(LHS)(RHS)` only.
+     * @param {object} [opts]
+     * @param {string} [house]
+     * @returns {{ left: string[], right: string[], stems: string[], soft: string } | null}
+     */
+    pathExpectEqStems(opts = {}, house = "") {
+        const left = this.lhs?.pathChoices?.(opts) ?? [""];
+        const right = this.rhs?.pathChoices?.(opts) ?? [""];
+        if (!left.some((s) => pathStripTrailingHoles(s) === "Expect_Mul") || !right.includes("MulExpectS")) return null;
+        const canon = "Expect_Mul/eq/MulExpectS";
+        const h = String(house || "").replace(/\\/g, "/");
+        return pathEqInfixChoices(left, right, h === canon ? h : canon);
     }
 
 }

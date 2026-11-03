@@ -1231,7 +1231,8 @@ function sanitizePathSeg(seg) {
   // Cond token is ExpectCond (not Expect_Cond), including mid-segment (ExpectSMulExpect_Cond).
   seg = seg.replaceAll("Expect_Cond", "ExpectCond");
   // Remaining Expect_* unary → CamelCase: Expect_Add → ExpectAdd. GradExpect_* -> GradExpect* (fuse). AddExpect_* / *_Expect untouched.
-  if (seg.startsWith("Expect_"))
+  // Expectation of a product keeps the underscore: Expect_Mul (not ExpectMul).
+  if (seg.startsWith("Expect_") && !/^Expect_Mul(?![A-Za-z])/.test(seg))
     seg = "Expect" + seg.slice("Expect_".length);
   // GradExpect_DotPow_Id -> GradExpectDotPow_Id (Body: match ExpectDotPow_Id CamelCase)
   if (seg.startsWith("GradExpect_"))
@@ -3828,7 +3829,7 @@ function preAlts(node, opts, canon) {
         if (isExpectDotPowId(node)) return canon ? ["ExpectDotPow_Id"] : uniq(["ExpectDotPow_Id", "ExpectDot"]);
       }
       // conditional 𝔼[a : π](X | C) → ExpectCond* CamelCase (Body: ExpectCond, not Expect_Cond).
-      // Non-cond Expect stays CamelCase unary (ExpectAdd / ExpectMul) below.
+      // Non-cond Expect stays CamelCase unary (ExpectAdd). A product body is Expect_Mul, not ExpectMul.
       const body = expectCondBody(args[1]);
       if (body) {
         const x = A(body);
@@ -3837,8 +3838,9 @@ function preAlts(node, opts, canon) {
         return canon ? cond.slice(0, 1) : uniq([...cond.slice(0, 2), "ExpectCond", "Expect", ...cond]);
       }
       const b = A(args[1]);
-      // unary Expect: CamelCase only (ExpectAdd); never Expect_Add
-      return b.length ? uniq(b.map((y) => "Expect" + y)) : ["Expect"];
+      // unary Expect: CamelCase (ExpectAdd). Product: Expect_Mul only (ExpectMul is not an alt).
+      const fuseExpect = (y) => y === "Mul" ? ["Expect_Mul"] : ["Expect" + y];
+      return b.length ? uniq(b.flatMap(fuseExpect)) : ["Expect"];
     }
     // 𝕍𝕒𝕣[x[k]: π](x k) → Var, same unary pattern as Expect (hole integrand is not spelled)
     if (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝕍𝕒𝕣" && args.length === 2) {
@@ -3919,14 +3921,15 @@ function preAlts(node, opts, canon) {
       }
     }
     const b = A(core);
-    // in Random/, `∫ ω, f ω ∂μ` is an expectation: Random/MulExpect/eq/ExpectMul, Random/Expect/le/ExpectAbs
-    // Expect unary CamelCase: Integral_Mul → ExpectMul (never Expect_Mul); IntegralMul → ExpectMul
+    // in Random/, `∫ ω, f ω ∂μ` is an expectation: Random/MulExpect/eq/Expect_Mul, Random/Expect/le/ExpectAbs
+    // Integral_Mul / IntegralMul → Expect_Mul (product). Other bodies stay CamelCase (ExpectAdd).
     const asExpect = (xs) => {
       if (canon || opts.section !== "Random") return xs;
+      const expectOf = (rest) => rest === "Mul" ? "Expect_Mul" : "Expect" + rest;
       const extra = [];
       for (const x of xs) {
-        if (x.startsWith("Integral_")) extra.push("Expect" + x.slice("Integral_".length));
-        else if (x.startsWith("Integral")) extra.push("Expect" + x.slice("Integral".length));
+        if (x.startsWith("Integral_")) extra.push(expectOf(x.slice("Integral_".length)));
+        else if (x.startsWith("Integral")) extra.push(expectOf(x.slice("Integral".length)));
       }
       return uniq([...xs, ...extra]);
     };
@@ -4200,12 +4203,13 @@ function distributedAlts(node, opts = {}) {
 
 /**
  * Expect_Cond → ExpectCond (anywhere); other Expect_* unary prefix → CamelCase (Expect_Add → ExpectAdd).
- * GradExpect_* -> GradExpect* (fuse, match ExpectDotPow_Id); AddExpect_* / *_Expect untouched.
+ * Expect_Mul stays (expectation of a product). GradExpect_* -> GradExpect* (fuse, match ExpectDotPow_Id); AddExpect_* / *_Expect untouched.
  */
 function demoteExpectSnake(name) {
   if (!name) return name;
   name = name.replaceAll("Expect_Cond", "ExpectCond");
-  if (name.startsWith("Expect_")) name = "Expect" + name.slice("Expect_".length);
+  if (name.startsWith("Expect_") && !/^Expect_Mul(?![A-Za-z])/.test(name))
+    name = "Expect" + name.slice("Expect_".length);
   if (name.startsWith("GradExpect_")) return "GradExpect" + name.slice("GradExpect_".length);
   return name;
 }
@@ -6423,6 +6427,11 @@ function nameExprAltsBase(node, opts = {}) {
             continue;
           }
           if (joinDigits(l, r) !== l + r) out.push(tag + joinDigits(l, r));
+          // 𝔼 * 𝔼 is MulExpectS (plural). Not MulExpectExpect, ExpectMulExpect, ExpectExpectMul, or Expect_Mul_Expect.
+          if (name === "LeanMul" && l === "Expect" && r === "Expect") {
+            out.push(tag + "ExpectS");
+            continue;
+          }
           out.push(tag + l + r);
           out.push(tag + l + "_" + r); // AddMulProd_SumMulProd
         }
@@ -6432,6 +6441,7 @@ function nameExprAltsBase(node, opts = {}) {
     for (const [, di, dj] of diag) {
       const l = leftAlts[di], r = rightAlts[dj];
       if (!l || !r) continue;
+      if (name === "LeanMul" && l === "Expect" && r === "Expect") continue;
       // Pow_Choose + Prod → Pow_ChooseProdMul; that still reads as ChooseProd.
       if (name === "LeanMul" && chooseHoleLeft(l) && /^(Prod|Sum|TSum)/.test(r)) continue;
       out.push(l + tag + r);
@@ -7160,6 +7170,23 @@ export function suggest(filePath, lemmaName, options = {}) {
   const pickCanon = (alts, preferred) =>
     alts.find((a) => sanitizeRelPath(a) === sanitizeRelPath(preferred || "")) ||
     (preferred ? alts.find((a) => /\d'\d/.test(a) && undig(a) === undig(preferred)) : null) || alts[0] || preferred;
+  // 𝔼(x * y) = 𝔼 x * 𝔼 y: side pathChoices, then LHS.eq.RHS and Eq(LHS)(RHS) only.
+  {
+    const eq = peelImplyEq(sig.implyStmts);
+    const fromExpect = eq && typeof eq.pathExpectEqStems === "function" ? eq.pathExpectEqStems(nameOpts) : null;
+    if (fromExpect) {
+      const keep = new Set(fromExpect.stems);
+      const canon = "Expect_Mul/eq/MulExpectS";
+      implyAltsA = fromExpect.stems.slice();
+      implyAltsA.preferred = canon;
+      implyAltsA.isLegacyExpectEqImply = (p) => {
+        const core = String(p || "").replace(/\\/g, "/").replace(/\.lean$/, "");
+        const ofi = core.indexOf("/of/");
+        const leaf = ofi >= 0 ? core.slice(0, ofi) : core;
+        return !keep.has(leaf);
+      };
+    }
+  }
   // Equation conjunctions: prefer slash-separated segments over And-glued nameExpr.
   const implyNameA = pickCanon(implyAltsA, implyAltsA.preferred || nameExpr(sig.implyStmts, nameOpts)) || "Imply";
   // Second pass keeping Greek / subscript letters and Greek projections (`spec.η`, `maxₐ`, `μmin`).
@@ -7207,7 +7234,8 @@ export function suggest(filePath, lemmaName, options = {}) {
   const implyAlts = uniq([...implyAltsA, ...(passB?.implyAlts || [])])
     .filter(legalMeqImply)
     .filter((p) => !(implyAltsA.isLegacySseImply && implyAltsA.isLegacySseImply(p)))
-    .filter((p) => !(implyAltsA.isLegacyMulInvSqrtImply && implyAltsA.isLegacyMulInvSqrtImply(p)));
+    .filter((p) => !(implyAltsA.isLegacyMulInvSqrtImply && implyAltsA.isLegacyMulInvSqrtImply(p)))
+    .filter((p) => !(implyAltsA.isLegacyExpectEqImply && implyAltsA.isLegacyExpectEqImply(p)));
   // Hole-hole descFactorial * Pow_Sub. Preferred tail is MulDescFactorial.
   // The `__` and Mul_Pow_Sub spellings are longer and otherwise fall past the shown-alt cap.
   {
@@ -7509,8 +7537,9 @@ export function suggest(filePath, lemmaName, options = {}) {
       if (g.nameB && relSplitInline(g.nameB)) g.nameB = relSplitInline(g.nameB);
     }
   }
-  // Instance hyps precede the `-- given` block, so in (reverse-order) paths they come last.
-  // Canonical: explicit givens only; instance hyps only when there are no explicit givens.
+  // Instance hyps precede `-- given`. They are not givens: do not append them after an
+  // explicit of-tail (`…/of/Indep/PSpace/PSpace`). They name the of-tail only when
+  // the lemma has no explicit given.
   const canonGivenLists = givenAltLists.filter((g) => !g.canonSkip); // instance hyps are optional, never canonical
   let givenNames = canonGivenLists.map((g) => ({ binder: g.binder, name: pickCanon(g.alts, g.name), chain: g.chain }));
   if (preferB) givenNames = canonGivenLists.map((g) => ({ binder: g.binder, name: g.nameB || pickCanon(g.alts, g.name), chain: g.chain }));
@@ -7531,9 +7560,10 @@ export function suggest(filePath, lemmaName, options = {}) {
     }
     return acc;
   }
+  const useInstTail = instAltLists.length > 0 && instAltLists.length <= 3 && canonGivenLists.length === 0;
   const givenPaths = [...new Set([
     ...cartGiven(givenAltLists),
-    ...(instAltLists.length && instAltLists.length <= 3 ? cartGiven([...givenAltLists, ...instAltLists]) : []),
+    ...(useInstTail ? cartGiven([...givenAltLists, ...instAltLists]) : []),
   ])];
   // Displayed suggestions: capped product; membership is decided by altMatch below.
   const PATH_CAP = 20000;
@@ -7558,7 +7588,7 @@ export function suggest(filePath, lemmaName, options = {}) {
   const altSet = (alts) => new Set(alts.map((a) => sanitizeRelPath(a)));
   const implySet = altSet(implyExtraAlts.length ? [...implyAlts, ...implyExtraAlts] : implyAlts);
   const gSets = givenAltLists.map((g) => { const s = g.alts.length ? altSet(g.extraAlts?.length ? [...g.alts, ...g.extraAlts] : g.alts) : new Set(["Given"]); if (g.optional) s.__optional = true; return s; });
-  const iSets = instAltLists.length && instAltLists.length <= 3
+  const iSets = useInstTail
     ? instAltLists.map((g) => (g.alts.length ? altSet(g.alts) : new Set(["Given"])))
     : null;
   // No section evidence at all (generic typeclass lemma, no ℕ/ℤ/ℝ/Set token): Nat is only the repo-majority

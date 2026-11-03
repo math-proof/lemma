@@ -5,7 +5,7 @@ import Notation.Algebra.Power
 import Notation.Lean.Expr.Singleton
 import Def.Analysis.Real.Limits.Basic
 import Lemma.Random.Var.eq.Integral
-import Lemma.Random.Expect.eq.Integral.Id
+import Lemma.Random.Expect.eq.Integral
 import Lemma.Random.All_Indep.of.All_Indep_GetSlice
 open MeasureTheory ProbabilityTheory Finset Filter Fun Random
 
@@ -24,19 +24,18 @@ private lemma main
   (h₀ : ∀ k, PSpace π x[k])
   (h₁ : ∀ k, MemLp x[k] 2 π)
   (h₂ : ∀ k, x[k] ⟂ᵢ[π] x[:k])
-  (h₃ : ∀ k, 𝔼[x[k]: π](x k) = μ)
-  (h₄ : ∀ k, 𝕍𝕒𝕣[x[k]: π](x k) = σ²) :
+  (h₃ : ∀ k, 𝔼[x[k]: π](x[k]) = μ)
+  (h₄ : ∀ k, 𝕍𝕒𝕣[x[k]: π](x[k]) = σ²) :
 -- imply
   lim[n → ∞] ℙ[π]{|(∑ i ∈ range n, x[i]) / (n : ℝ) - μ| < ε} = 1 := by
 -- proof
   have hvar₀ : ∀ i, variance x[i] π = σ² := fun i => by
     have := h₀ i
-    have h₄' : 𝕍𝕒𝕣 π x[i] = σ² := by
-      simpa [𝕍𝕒𝕣, Expectation.asRV_function] using h₄ i
-    rw [variance_eq_integral (PSpace.aemeasurable (x := x[i])), ← Var.eq.Integral, h₄']
+    rw [variance_eq_integral (PSpace.aemeasurable (x := x[i])), ← Var.eq.Integral]
+    apply h₄ i
   have h₃' : ∀ i, π[x[i]] = μ := fun i => by
     have := h₀ i
-    simpa [← Expect.eq.Integral.Id, Expectation.asRV_function] using h₃ i
+    simpa [← Expect.eq.Integral, Expectation.asRV_function] using h₃ i
   have hpair : ∀ i j (_ : i ≠ j), x[i] ⟂ᵢ[π] x[j] := All_Indep.of.All_Indep_GetSlice h₂
   let avg : ℕ → Ω → ℝ := fun n ω => (n : ℝ)⁻¹ * ∑ i ∈ range n, x[i] ω
   have hmem : ∀ n, MemLp (avg n) 2 π := fun n => by

@@ -10,7 +10,7 @@
 import '../../py.js';
 import { LeanBinary, LeanUnary } from './abstract.js';
 import { Lean } from './base.js';
-import { pathCombineMulChoices, pathUniqKeepEmpty } from './pathChoices.js';
+import { pathCombineMulChoices, pathStripTrailingHoles, pathUniqKeepEmpty } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -170,10 +170,15 @@ export class LeanMul extends LeanArithmetic {
      * @returns {string[]}
      */
     pathChoices(opts = {}) {
-        return pathCombineMulChoices(
+        const combined = pathCombineMulChoices(
             this.lhs?.pathChoices?.(opts) ?? [""],
             this.rhs?.pathChoices?.(opts) ?? [""],
         );
+        // 𝔼 * 𝔼: plural MulExpectS, one-side omit MulExpect / Mul_Expect, both operands omit Mul, whole mul omit.
+        // Trailing holes are stripped here because this product is an Eq side (Eq root also strips).
+        if (combined.includes("MulExpectS"))
+            return pathUniqKeepEmpty([...combined.map(pathStripTrailingHoles), ""]);
+        return combined;
     }
 
 }

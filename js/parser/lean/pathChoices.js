@@ -45,7 +45,10 @@ export function pathCombineMulChoices(leftChoices, rightChoices) {
       if (!l && !r) out.push("Mul__");
       else if (l && r) {
         const lCore = pathStripTrailingHoles(l);
-        if (/Sqrt$/.test(lCore) && /^Div/.test(r)) out.push("Mul" + lCore + "_" + r);
+        const rCore = pathStripTrailingHoles(r);
+        // 𝔼 * 𝔼 → MulExpectS (plural). Not MulExpectExpect.
+        if (lCore === "Expect" && rCore === "Expect") out.push("MulExpectS");
+        else if (/Sqrt$/.test(lCore) && /^Div/.test(r)) out.push("Mul" + lCore + "_" + r);
         else out.push("Mul" + l + r);
       } else if (l) {
         out.push("Mul" + l + "_"); // Mul's right hole — never strip here
@@ -68,7 +71,11 @@ export function pathEqFlatStem(lhs, rhs) {
   const R = pathStripTrailingHoles(rhs);
   if (L === "Mul" && R === "Mul") return null;
   let join;
-  if (R === "Mul") join = "_".repeat(Math.max(1, lH));
+  // Omitted LHS is one hole: Eq_MulExpectS, not Eq__MulExpectS.
+  // RHS Mul keeps a holed LHS's trailing `_` as the join (Expect_Mul__ → EqExpect_Mul__Mul).
+  // No holes on the LHS: Eq(Expect)(Mul) is EqExpect__Mul, same `__` as Eq(Expect)(MulExpect).
+  if (!L) join = "_";
+  else if (R === "Mul") join = lH ? "_".repeat(lH) : "__";
   else if (L === "Mul") join = "__";
   else join = "__";
   return "Eq" + L + join + R;
@@ -105,6 +112,41 @@ export function pathEqCombineChoices(leftChoices, rightChoices, house = "") {
     ? [houseN, ...slashRest]
     : [...slashU].sort((a, b) => a.length - b.length || (a < b ? -1 : a > b ? 1 : 0));
   return { left, right, leftRaw, rightRaw, stems: [...orderedSlash, ...flatSorted], soft };
+}
+
+/**
+ * Eq infix for any side choices, including omit (`""`).
+ * Both sides named → `LHS/eq/RHS`. Flat form is `Eq(LHS)(RHS)` (`pathEqFlatStem`, trailing `_` stripped).
+ * Both-omit is dropped (`Eq` alone is not a side pair).
+ */
+export function pathEqInfixChoices(leftChoices, rightChoices, house = "") {
+  const leftRaw = pathUniqKeepEmpty(leftChoices || [""]);
+  const rightRaw = pathUniqKeepEmpty(rightChoices || [""]);
+  const slash = [];
+  const flats = [];
+  for (const lRaw of leftRaw) {
+    for (const rRaw of rightRaw) {
+      const l = pathStripTrailingHoles(lRaw);
+      const r = pathStripTrailingHoles(rRaw);
+      if (l && r) slash.push(l + "/eq/" + r);
+      if (!l && !r) continue;
+      const flat = pathEqFlatStem(lRaw, rRaw);
+      if (flat) flats.push(pathStripTrailingHoles(flat));
+    }
+  }
+  const byLen = (a, b) => a.length - b.length || (a < b ? -1 : a > b ? 1 : 0);
+  const slashU = pathUniq(slash);
+  const flatU = pathUniq(flats).filter((s) => !slashU.includes(s));
+  const houseN = String(house || "").replace(/\\/g, "/");
+  const slashRest = slashU.filter((s) => s !== houseN).sort(byLen);
+  const flatRest = flatU.filter((s) => s !== houseN).sort(byLen);
+  const head = slashU.includes(houseN) || flatU.includes(houseN) ? [houseN] : [];
+  return {
+    left: pathUniq(leftRaw.map(pathStripTrailingHoles)),
+    right: pathUniq(rightRaw.map(pathStripTrailingHoles)),
+    stems: pathUniq([...head, ...slashRest, ...flatRest]),
+    soft: "eq",
+  };
 }
 
 

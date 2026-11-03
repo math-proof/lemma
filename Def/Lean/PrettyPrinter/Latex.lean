@@ -779,6 +779,19 @@ partial def Expr.foldRVHeadNames (e : Expr) (acc : List Name) : List Name :=
   | Binder _ _ t v => v.foldRVHeadNames (t.foldRVHeadNames acc)
   | _ => acc
 
+/-- Names bound by one `fun` / `∀` / `let`. They are elaborator binders, not random variables. -/
+def Expr.limitBinderNames : List Expr → List Name
+  | binders =>
+    binders.filterMap fun b =>
+      match b with
+      | Binder _ name _ _ => some name
+      | _ => none
+
+/-- `names` with every `fun` / `let` / `∀` binder of `binders` removed (same `rvToken`). -/
+def List.withoutLimitBinders (names : List Name) (binders : List Expr) : List Name :=
+  let hidden := Expr.limitBinderNames binders
+  names.filter fun n => !hidden.any (fun h => rvToken h == rvToken n)
+
 /-- Mark every head whose `rvKey` is in `names` (lean.js `markRandomVarNames`). Skips magenta
 `RandomArgument` Symbols. -/
 partial def Expr.markNamesAsRVHeads (e : Expr) (names : List Name) : Expr :=
@@ -792,6 +805,18 @@ partial def Expr.markNamesAsRVHeads (e : Expr) (names : List Name) : Expr :=
     else Symbol name type
   | Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [_] _ => e
   | Basic (.ExprWithAttr (.Lean_operatorname `RandomArgument)) [_] _ => e
+  | Basic f@(.ExprWithLimits op) (body :: binders) level =>
+    match op with
+    | .Lean_lambda | .Lean_forall | .Lean_let =>
+      -- `fun integ` / `let x₀` / `∀ α` are elaborator binders, not random variables.
+      let names' := names.withoutLimitBinders binders
+      let markBinder : Expr → Expr
+        | Binder b n t v =>
+          Binder b n (t.markNamesAsRVHeads names) (v.markNamesAsRVHeads names)
+        | other => other.markNamesAsRVHeads names
+      Basic f (body.markNamesAsRVHeads names' :: binders.map markBinder) level
+    | _ =>
+      Basic f ((body :: binders).map (·.markNamesAsRVHeads names)) level
   | Basic f@(.Special ⟨.anonymous⟩) (x :: rest) level =>
     Basic f (x.markNamesAsRVHeads names :: rest.map (·.markNamesAsRVHeads names)) level
   | Basic f@(.Special ⟨.str _ "mk"⟩) [a, b] level =>

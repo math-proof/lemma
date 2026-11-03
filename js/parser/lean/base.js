@@ -1516,12 +1516,31 @@ export class Lean extends IndentedNode {
         const isHidden = (name) =>
             letBound.includes(name) || localFrames.some((f) => f.includes(name));
 
+        const clearBinderTokens = (node, names) => {
+            const go = (x) => {
+                if (!x || typeof x !== 'object') return;
+                if (x instanceof L.LeanToken) {
+                    if (names.includes(x.text)) {
+                        delete x.kwargs.isRandomArgument;
+                        delete x.kwargs.isRandomVariable;
+                    }
+                    return;
+                }
+                if (Array.isArray(x.args)) for (const k of x.args) go(k);
+            };
+            go(node);
+        };
         const walk = (n) => {
             if (!n || typeof n !== 'object') return;
             if (n instanceof L.LeanDoubleAngleQuotation && n.boundValueLhs())
                 return;
             if (n instanceof L.LeanToken) {
-                if (rvNames.has(n.text) && !isHidden(n.text))
+                if (isHidden(n.text)) {
+                    delete n.kwargs.isRandomArgument;
+                    delete n.kwargs.isRandomVariable;
+                    return;
+                }
+                if (rvNames.has(n.text))
                     n.kwargs.isRandomVariable = true;
                 return;
             }
@@ -1535,13 +1554,18 @@ export class Lean extends IndentedNode {
                 }
             }
             if (n instanceof L.Lean_mapsto) {
-                localFrames.push(Lean._binderNames(n.lhs));
+                const names = Lean._binderNames(n.lhs);
+                clearBinderTokens(n.lhs, names);
+                localFrames.push(names);
                 walk(n.rhs);
                 localFrames.pop();
                 return;
             }
             if (n instanceof L.LeanBigOperator) {
-                localFrames.push(n.bound ? Lean._binderNames(n.bound) : []);
+                const names = n.bound ? Lean._binderNames(n.bound) : [];
+                const binderLhs = n.bound instanceof L.LeanColon ? n.bound.lhs : n.bound;
+                if (binderLhs) clearBinderTokens(binderLhs, names);
+                localFrames.push(names);
                 // domain/type of the bound variable is outside its own scope
                 if (n.bound instanceof L.LeanColon) walk(n.bound.rhs);
                 if (n.scope) walk(n.scope);
@@ -1549,21 +1573,35 @@ export class Lean extends IndentedNode {
                 return;
             }
             if (n instanceof L.Lean_let) {
-                // RHS is evaluated first; the name binds only the continuation
+                // RHS is evaluated first; the name binds the continuation
+                // (`let x := v; body`, body either inside this node or the next sibling).
                 const a = n.arg;
+                const bind = (lhs) => {
+                    const names = Lean._binderNames(lhs);
+                    clearBinderTokens(lhs, names);
+                    letBound.push(...names);
+                };
                 if (a instanceof L.LeanAssign) {
                     if (a.lhs instanceof L.LeanColon) {
                         walk(a.lhs.rhs);
                         walk(a.rhs);
-                        letBound.push(...Lean._binderNames(a.lhs.lhs));
+                        bind(a.lhs.lhs);
                     } else {
                         walk(a.rhs);
-                        letBound.push(...Lean._binderNames(a.lhs));
+                        bind(a.lhs);
                     }
                 } else if (a instanceof L.LeanColon && a.rhs instanceof L.LeanAssign) {
                     walk(a.rhs.rhs);
-                    letBound.push(...Lean._binderNames(a.rhs.lhs));
+                    bind(a.rhs.lhs);
                 }
+                if (Array.isArray(n.args)) for (const k of n.args) if (k !== a) walk(k);
+                return;
+            }
+            // `let x := v; body` — `x` covers the rest of this sequence only.
+            if (n instanceof L.LeanArgsSemicolonSeparated) {
+                const mark = letBound.length;
+                for (const k of n.args) walk(k);
+                letBound.length = mark;
                 return;
             }
             if (Array.isArray(n.args)) for (const k of n.args) walk(k);

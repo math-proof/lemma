@@ -35,6 +35,17 @@ partial def Expr.markNamesAsRandomVariable (e : Expr) (names : List Name) : Expr
   | Symbol name type =>
     if names.contains name then markAsRandomVariable (Symbol name type)
     else Symbol name type
+  | Basic f@(.ExprWithLimits op) (body :: binders) level =>
+    match op with
+    | .Lean_lambda | .Lean_forall | .Lean_let =>
+      let names' := names.withoutLimitBinders binders
+      let markBinder : Expr → Expr
+        | Binder b n t v =>
+          Binder b n (t.markNamesAsRandomVariable names) (v.markNamesAsRandomVariable names)
+        | other => other.markNamesAsRandomVariable names
+      Basic f (body.markNamesAsRandomVariable names' :: binders.map markBinder) level
+    | _ =>
+      Basic f ((body :: binders).map (·.markNamesAsRandomVariable names)) level
   | Basic func args level =>
     Basic func (args.map (·.markNamesAsRandomVariable names)) level
   | Binder b n t v =>
@@ -48,6 +59,17 @@ partial def Expr.markNamesAsRandomArgument (e : Expr) (names : List Name) : Expr
   | Symbol name type =>
     if names.contains name then markAsRandomArgument (Symbol name type)
     else Symbol name type
+  | Basic f@(.ExprWithLimits op) (body :: binders) level =>
+    match op with
+    | .Lean_lambda | .Lean_forall | .Lean_let =>
+      let names' := names.withoutLimitBinders binders
+      let markBinder : Expr → Expr
+        | Binder b n t v =>
+          Binder b n (t.markNamesAsRandomArgument names) (v.markNamesAsRandomArgument names)
+        | other => other.markNamesAsRandomArgument names
+      Basic f (body.markNamesAsRandomArgument names' :: binders.map markBinder) level
+    | _ =>
+      Basic f ((body :: binders).map (·.markNamesAsRandomArgument names)) level
   | Basic func args level =>
     Basic func (args.map (·.markNamesAsRandomArgument names)) level
   | Binder b n t v =>
@@ -61,7 +83,10 @@ def Expr.expectationFromObservable (μ x f : Expr) (mkApp : Expr → Expr → Ex
   let rv := markAsRandomVariable x.stripAsRV
   match f.peelExpectObservable? with
   | some (body, letNames) =>
-    let names := rv.symbolName?.toList ++ letNames.filter (!free.contains ·)
+    -- A `let` peeled off the integrand (`let x := integ; x`, `let x₀ := …`) binds an
+    -- elaborator name. Do not paint that name in the body. The 𝔼 subscript stays the RV.
+    let names := rv.symbolName?.toList.filter fun n =>
+      !letNames.any (fun h => rvToken h == rvToken n)
     let body := (body.markNamesAsRandomVariable names).markNamesAsRandomArgument
       (letNames.filter free.contains)
     mkBody body rv μ
