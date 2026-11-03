@@ -2,7 +2,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fintype.Pi
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 import Syntax.Data.List
 import Def.Data.List.List.Basic
 import Instance.Analysis.Real.Numbers

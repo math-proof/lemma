@@ -1,5 +1,6 @@
 import Syntax.Order.Sup
 import Lemma.Random.Integral_Fderiv_Vkd.eq.Add_SMul_Integral_SMul_FderivLog.of.All_Eq_Joint.All_EqWithDensity
+import Lemma.Random.NormQkd.le.AddAbs_RMulInvSub1Abs_R.of.In_Ico
 import Lemma.Random.Map.eq.Init.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
 import Lemma.Real.Eq_0.Lim.of.LtAbs.GtInftySup
@@ -16,7 +17,8 @@ Finite-horizon policy-gradient unroll under the continuous path law.
 -/
 private lemma finite
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [ReferenceMeasure A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
+  [ReferenceMeasure A] [MeasurableSingletonClass A]
   {M : DensityModel Θ S A}
   {θ : Θ}
   {γ : ℝ}
@@ -36,10 +38,10 @@ private lemma finite
     (fun z : S × A => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
   (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms)
   (n : ℕ) :
-  ∫ x, fderiv ℝ (fun θ => M.Vkd θ γ x) θ ∂((M θ).map (s 0)) =
-    ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, M.Qkd θ γ (s t ω) (a t ω) •
+  ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂((M θ).map (s 0)) =
+    ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, (M.rkd (s t ω) (a t ω) + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (s t ω, a t ω))) •
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) +
-      γ ^ n • ∫ x, fderiv ℝ (fun θ => M.Vkd θ γ x) θ ∂((M θ).map (s n)) := by
+      γ ^ n • ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂((M θ).map (s n)) := by
   induction n with
   | zero =>
     simp
@@ -48,29 +50,30 @@ private lemma finite
       Integral_Fderiv_Vkd.eq.Add_SMul_Integral_SMul_FderivLog.of.All_Eq_Joint.All_EqWithDensity
         (M := M) h₀ h₁ hπ h₂ h₃ h₄ h₅ hφ hMs n
     calc
-      _ = ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, M.Qkd θ γ (s t ω) (a t ω) •
+      _ = ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, (M.rkd (s t ω) (a t ω) + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (s t ω, a t ω))) •
             fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) +
-          γ ^ n • ∫ x, fderiv ℝ (fun θ => M.Vkd θ γ x) θ ∂((M θ).map (s n)) := ih
-      _ = ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, M.Qkd θ γ (s t ω) (a t ω) •
+          γ ^ n • ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂((M θ).map (s n)) := ih
+      _ = ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, (M.rkd (s t ω) (a t ω) + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (s t ω, a t ω))) •
             fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) +
-          γ ^ n • (∫ ω, M.Qkd θ γ (s n ω) (a n ω) •
+          γ ^ n • (∫ ω, (M.rkd (s n ω) (a n ω) + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (s n ω, a n ω))) •
             fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s n ω) (a n ω))) θ ∂(M θ) +
-            γ • ∫ x, fderiv ℝ (fun θ => M.Vkd θ γ x) θ ∂((M θ).map (s (n + 1)))) := by
+            γ • ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂((M θ).map (s (n + 1)))) := by
         rw [hstep]
-      _ = ∑ t ∈ Finset.range (n + 1), γ ^ t • ∫ ω, M.Qkd θ γ (s t ω) (a t ω) •
+      _ = ∑ t ∈ Finset.range (n + 1), γ ^ t • ∫ ω, (M.rkd (s t ω) (a t ω) + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (s t ω, a t ω))) •
             fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) +
-          γ ^ (n + 1) • ∫ x, fderiv ℝ (fun θ => M.Vkd θ γ x) θ ∂((M θ).map (s (n + 1))) := by
+          γ ^ (n + 1) • ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂((M θ).map (s (n + 1))) := by
         simp only [Finset.sum_range_succ, smul_add, smul_smul, pow_succ]
         abel
 
 /--
-Infinite-horizon policy-gradient identity: path integral of `∇Vkd` at `init` equals the
+Infinite-horizon policy-gradient identity: path integral of `∇V0` at `init` equals the
 discounted Q-score series.
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [ReferenceMeasure A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
+  [ReferenceMeasure A] [MeasurableSingletonClass A]
   {M : DensityModel Θ S A}
   {θ : Θ}
   {γ : ℝ}
@@ -91,8 +94,8 @@ private lemma main
     (fun z : S × A => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
   (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms) :
 -- imply
-  ∫ x, fderiv ℝ (fun θ => M.Vkd θ γ x) θ ∂M.env.init =
-    ∑' t, γ ^ t • ∫ ω, M.Qkd θ γ (s t ω) (a t ω) •
+  ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂M.env.init =
+    ∑' t, γ ^ t • ∫ ω, (M.rkd (s t ω) (a t ω) + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (s t ω, a t ω))) •
       fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
 -- proof
   classical
@@ -105,20 +108,23 @@ private lemma main
   obtain ⟨C, hC⟩ :=
     GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
       (M := M) h₂ hgrad h₄ hsup h₀ hπ
-  have hCb : ∀ y, ‖fderiv ℝ (fun θ => M.Vkd θ γ y) θ‖ ≤ C := fun y => by
+  have hCb : ∀ y, ‖fderiv ℝ (fun θ => M.V0 θ γ y) θ‖ ≤ C := fun y => by
     have h := hC ⟨(θ, y), rfl⟩
     simpa [gradient, LinearIsometryEquiv.norm_map] using h
   have hinit := Map.eq.Init.of.All_Eq_Joint.All_EqWithDensity (M := M) h₁ θ
   set BQ : ℝ := |M.env.R| + γ * ((1 - γ)⁻¹ * |M.env.R|)
-  have hQb : ∀ x u, ‖M.Qkd θ γ x u‖ ≤ BQ := fun x u => by
-    have h := norm_integral_le_of_norm_le_const (μ := M.env.trans (x, u))
-      (Filter.Eventually.of_forall fun y => NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ θ y)
-    unfold DensityModel.Qkd
-    refine (norm_add_le _ _).trans (add_le_add (NormRkd.le.Abs_R (M := M) x u) ?_)
-    rw [norm_mul, Real.norm_of_nonneg h₀.1]
-    exact mul_le_mul_of_nonneg_left (by simpa using h) h₀.1
+  have hQb : ∀ x u, ‖(M.rkd x u + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (x, u)))‖ ≤ BQ :=
+    fun x u => by
+      refine (norm_add_le _ _).trans ?_
+      refine add_le_add (NormRkd.le.Abs_R (M := M) x u) ?_
+      rw [norm_mul, Real.norm_of_nonneg h₀.1]
+      exact mul_le_mul_of_nonneg_left
+        ((norm_integral_le_of_norm_le_const
+          (Filter.Eventually.of_forall fun y =>
+            NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ θ y)).trans_eq (by simp))
+        h₀.1
   have hscore_bd : ∀ t,
-    ‖∫ ω, M.Qkd θ γ (s t ω) (a t ω) •
+    ‖∫ ω, (M.rkd (s t ω) (a t ω) + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (s t ω, a t ω))) •
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ)‖ ≤
         BQ * Ms := fun t => by
     have : IsProbabilityMeasure (M θ) := inferInstance
@@ -128,17 +134,17 @@ private lemma main
         exact mul_le_mul (hQb (s t ω) (a t ω)) (hMs (s t ω) (a t ω)) (norm_nonneg _)
           ((norm_nonneg _).trans (hQb (s t ω) (a t ω))))).trans_eq (by simp)
   have hsum :
-    Summable fun t => γ ^ t • ∫ ω, M.Qkd θ γ (s t ω) (a t ω) •
+    Summable fun t => γ ^ t • ∫ ω, (M.rkd (s t ω) (a t ω) + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (s t ω, a t ω))) •
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
     refine Summable.of_norm_bounded
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right (BQ * Ms)) fun t => ?_
     rw [norm_smul, norm_pow, Real.norm_of_nonneg h₀.1]
     exact mul_le_mul_of_nonneg_left (hscore_bd t) (pow_nonneg h₀.1 t)
   have hrem : Tendsto
-    (fun n => γ ^ n • ∫ x, fderiv ℝ (fun θ => M.Vkd θ γ x) θ ∂((M θ).map (s n)))
+    (fun n => γ ^ n • ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂((M θ).map (s n)))
       atTop (𝓝 0) := by
     have hγ : |γ| < 1 := (abs_of_nonneg h₀.1).symm ▸ h₀.2
-    have hbd : ∀ n, ‖∫ x, fderiv ℝ (fun θ => M.Vkd θ γ x) θ ∂((M θ).map (s n))‖ ≤ C :=
+    have hbd : ∀ n, ‖∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂((M θ).map (s n))‖ ≤ C :=
       fun n => by
         have : IsProbabilityMeasure ((M θ).map (s n)) := inferInstance
         exact (norm_integral_le_of_norm_le_const
@@ -156,3 +162,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-03

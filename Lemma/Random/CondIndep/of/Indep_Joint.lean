@@ -2,7 +2,7 @@ import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
 import Mathlib.Probability.Kernel.CondDistrib
 import Mathlib.Probability.Kernel.Composition.MeasureCompProd
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 import Initialize.Tactic.Attr.Basic
 open ProbabilityTheory MeasureTheory
 open scoped ProbabilityTheory

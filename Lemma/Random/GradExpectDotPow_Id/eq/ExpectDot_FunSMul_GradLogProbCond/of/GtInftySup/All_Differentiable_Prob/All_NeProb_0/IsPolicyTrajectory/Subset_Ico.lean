@@ -4,8 +4,7 @@ import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open scoped ENNReal.ToRealCoe
 open Finset (range)
-open MeasureTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real
-open IsPolicyTrajectory
+open MeasureTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real IsPolicyTrajectory
 set_option linter.style.haveILetI false
 
 
@@ -31,26 +30,22 @@ private lemma main
   {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : {γ, ℓ} ⊆ Set.Ico 0 1)
-  [h₁ : IsPolicyTrajectory M r s a]
-  (h₂ : ∀ θ («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
-    ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) ≠ 0)
-  (h₃ : ∀ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
-    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
-  (h₄ : sup[θ, t, «\sf{s}» : ℕ ⇀ S, «\sf{a}» : ℕ ⇀ A]
-    ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ < ∞) :
+  (h₁ : IsPolicyTrajectory M r s a)
+  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₃ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t))
   have : ∀ θ t, SinglePSpace (M θ) (s t) := fun _ t =>
     SinglePSpace.of.Measurable (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t)
-  have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun θ =>
+  have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun _ =>
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_θ : ℕ ⇀ (ℕ → S) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
+  let V_θ : ℕ ⇀ (ℕ → S) → ℕ → ℝ := ⟨fun _ δ k => M.V0 θ γ (δ k)⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
       (((1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ (γ ^ range (k + 1)) @
@@ -66,55 +61,6 @@ private lemma main
     by_contra h
     haveI : IsEmpty A := not_nonempty_iff.mp h
     simp [Finset.univ_eq_empty, Finset.sum_empty] at hsum
-  -- joint ℙ(a[0]∧s[0]) = ℙ(s[0]) * ℙ(a[0]|s[0]) (counting); recover product form of joint h₂
-  have hπ_mul : ∀ θ («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
-      (ℙ[M θ](s[0] = «\sf{s}»[0])) * (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0])) ≠ 0 := by
-    intro θ «\sf{s}» «\sf{a}»
-    have hj := h₂ θ «\sf{s}» «\sf{a}»
-    have hJ : ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) =
-        (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) := by
-      rw [EqProb («π» := M θ) (x := (a 0, s 0))]
-      congr 1
-      ext ω
-      simp [JointRandomSymbol, Prod.ext_iff]
-    have hS : ℙ[M θ](s[0] = «\sf{s}»[0]) = (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) :=
-      EqProb («π» := M θ) (x := s 0) «\sf{s}»[0]
-    have hD : ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) =
-        (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) /
-          (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) :=
-      ProbCond.eq.Div.of.SinglePSpace inferInstance («π» := M θ) (x := a 0) (y := s 0)
-        «\sf{a}»[0] «\sf{s}»[0]
-    have hs0 : (M θ) ((s 0) ⁻¹' {«\sf{s}»[0]}) ≠ 0 := by
-      have hne : (M θ) ((a 0) ⁻¹' {«\sf{a}»[0]} ∩ (s 0) ⁻¹' {«\sf{s}»[0]}) ≠ 0 := by
-        rwa [← hJ]
-      intro h0
-      exact hne <| nonpos_iff_eq_zero.mp <|
-        (measure_mono Set.inter_subset_right).trans_eq h0
-    have heq : ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) =
-        (ℙ[M θ](s[0] = «\sf{s}»[0])) * (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0])) := by
-      rw [hJ, hS, hD]
-      exact (ENNReal.mul_div_cancel hs0 (measure_ne_top (M θ) _)).symm
-    rwa [← heq]
-  -- hP0 follows from product form: pick any constant action path; left ENNReal factor ≠ 0
-  have hP0 : ∀ θ («\sf{s}» : ℕ ⇀ S), ℙ[M θ](s[0] = «\sf{s}»[0]) ≠ 0 := by
-    intro θ «\sf{s}»
-    have ⟨hs0, _⟩ : ℙ[M θ](s[0] = «\sf{s}»[0]) ≠ 0 ∧
-        ℙ[M θ](a[0] = (⟨fun _ => Classical.arbitrary A⟩ : ℕ ⇀ A)[0] | s[0] = «\sf{s}»[0]) ≠ 0 := by
-      have h := mt mul_eq_zero.mpr (hπ_mul θ «\sf{s}» ⟨fun _ => Classical.arbitrary A⟩)
-      rwa [not_or] at h
-    exact hs0
-  -- bridge ℙ(s[0]=·) to .real ((s 0)⁻¹' {·}); after unpack/rfl, s 0 is the projection
-  have hP0raw : ∀ θ x, (M θ).real ((s 0) ⁻¹' {x}) ≠ 0 := by
-    intro θ x
-    have heqR : (ℙ[M θ](s[0] = x) : ℝ) = (M θ).real ((s 0) ⁻¹' {x}) := by
-      rw [EqProb («π» := M θ) (x := s 0) x]
-      rfl
-    have heqE : ℙ[M θ](s[0] = x) = (M θ) ((s 0) ⁻¹' {x}) :=
-      EqProb («π» := M θ) (x := s 0) x
-    -- derived hP0 over constant path «\sf{s}» = fun _ ↦ x; bare ENNReal ≠ 0 → ℝ via toReal
-    rw [← heqR]
-    apply ENNReal.toReal_ne_zero.mpr
-    exact ⟨hP0 θ ⟨fun _ => x⟩, heqE ▸ measure_ne_top (M θ) _⟩
   simp only [FinsetPow.dot_eq]
   have hγ : γ ∈ Set.Ico 0 1 := h₀ (by simp)
   have hℓ₀ : ℓ ∈ Set.Ico 0 1 := h₀ (by simp)
@@ -130,40 +76,15 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   let _ : MeasurableSpace Θ := borel Θ
-  have _ : BorelSpace Θ := ⟨rfl⟩
-  -- bridge conditional-ℙ hyps to policy.prob facts expected by In_Icc.In_Ico
-  have h_pol_eq : ∀ θ' x u, (ℙ[M θ']((a 0) = u | (s 0) = x) : ℝ) = M.policy.prob θ' x u := by
-    intro θ' x u
-    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq (hP θ' 0) (hP0raw θ' x),
-      ENNReal.toReal_ofReal (M.policy.nonneg θ' x u)]
-  have hπraw : ∀ θ' y u, (M θ').real ((s 0) ⁻¹' {y}) * M.policy.prob θ' y u ≠ 0 := by
-    intro θ' y u
-    -- h₂ is ENNReal.mul ≠ 0 over constant paths; split and bridge each factor to ℝ
-    have ⟨hs0, hcond⟩ : ℙ[M θ']((s 0) = y) ≠ 0 ∧
-        ℙ[M θ']((a 0) = u | (s 0) = y) ≠ 0 := by
-      have h := mt mul_eq_zero.mpr (hπ_mul θ' ⟨fun _ => y⟩ ⟨fun _ => u⟩)
-      rwa [not_or] at h
-    have heqE : ℙ[M θ']((s 0) = y) = (M θ') ((s 0) ⁻¹' {y}) :=
-      EqProb («π» := M θ') (x := s 0) y
-    have hreal : (M θ').real ((s 0) ⁻¹' {y}) ≠ 0 :=
-      ENNReal.toReal_ne_zero.mpr ⟨heqE ▸ hs0, measure_ne_top (M θ') _⟩
-    refine mul_ne_zero hreal ?_
-    rw [← h_pol_eq θ' y u]
-    refine ENNReal.toReal_ne_zero.mpr ⟨hcond, ?_⟩
-    have hOF : ℙ[M θ']((a 0) = u | (s 0) = y) = ENNReal.ofReal (M.policy.prob θ' y u) :=
-      ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq (hP θ' 0) (hP0raw θ' y)
-    rw [hOF]
-    apply ENNReal.ofReal_ne_top
+  let : BorelSpace Θ := ⟨rfl⟩
   have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁.stage_eq)
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ ∑' k, γ ^ k * integ (t + k)) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
-  -- almost surely the learned value is the time-free value function
-  have hVc : ∀ᵐ ω ∂(M θ), ∀ k, M.V θ γ k (s k ω) = M.Vc θ γ (s k ω) :=
-    (AeRealPreimageSS.ne.Zero (s := s) (M := M) θ).mono fun ω h k =>
-      V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ k (s k ω) hγ
-        (by simpa [s] using h k) (hP0raw θ (s k ω))
+  -- V = V0 definitionally (time-homogeneous series)
+  have hVc : ∀ᵐ ω ∂(M θ), ∀ k, M.V θ γ k (s k ω) = M.V0 θ γ (s k ω) :=
+    Filter.Eventually.of_forall fun _ _ => rfl
   have hδ : ∀ᵐ ω ∂(M θ), ∀ j, r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω) =
-      r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω) :=
+      r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω) :=
     hVc.mono fun ω h j => by rw [h j, h (j + 1)]
   -- almost surely the residuals are bounded
   have hbdd : ∀ᵐ ω ∂(M θ),
@@ -244,7 +165,7 @@ private lemma main
   -- relate statement V_θ to Model.V
   have eqVθ : ∀ t (δ : ℕ → S) k, V_θ[t] δ k = M.V θ γ (t + k) (δ k) := by
     intro t δ k
-    simp [V_θ]
+    simp [V_θ, Model.V]
   have hδθ : ∀ (s : ℕ → S) (r : ℕ → ℝ) (t : ℕ),
       (fun k => r (t + k) + γ * M.V θ γ (t + k + 1) (s (t + k + 1)) - M.V θ γ (t + k) (s (t + k))) =
         r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:] := by
@@ -263,7 +184,7 @@ private lemma main
     exact congrArg (fun δ => Dot.dot ((γ * ℓ) ^ (id : ℕ → ℕ)) δ)
       (hδθ (fun j => s j ω) (fun j => r j ω) t).symm
   refine (GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Icc.In_Ico
-    (θ := θ) (h₂ := h₁) hγ hℓ h₂ h₃ h₄).trans ?_
+    (θ := θ) (h₂ := h₁) hγ hℓ h₂ h₃).trans ?_
   symm
   -- V_θ[t] s[t:] i = M.V θ γ (t + i) (s (t + i))
   have hres : ∀ (s : ℕ → S) (t i : ℕ),

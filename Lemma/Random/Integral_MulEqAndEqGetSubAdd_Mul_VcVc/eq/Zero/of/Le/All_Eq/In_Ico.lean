@@ -31,10 +31,9 @@ private lemma main
   (h₂ : t ≤ n)
   (θ : Θ)
   (x : S)
-  (u : A)
-  (hP : ∀ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0) :
+  (u : A) :
 -- imply
-  ∫ ω, (if s t ω = x ∧ a t ω = u then (1 : ℝ) else 0) * (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) ∂(M θ) = 0 := by
+  ∫ ω, (if s t ω = x ∧ a t ω = u then (1 : ℝ) else 0) * (r (n + 1) ω + γ * M.V0 θ γ (s (n + 1 + 1) ω) - M.V0 θ γ (s (n + 1) ω)) ∂(M θ) = 0 := by
 -- proof
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
@@ -48,9 +47,9 @@ private lemma main
         (measurable_snd.snd.comp (measurable_pi_apply _)))
   have hCG : ∀ h, ‖Gh h‖ ≤ 1 := fun h => by dsimp only [Gh]; split_ifs <;> simp
   have hGω : ∀ ω : ℕ → ℝ × S × A, Gh (Preorder.frestrictLe n ω) = (if s t ω = x ∧ a t ω = u then (1 : ℝ) else 0) := fun ω => rfl
-  let f : ℝ × S × A → ℝ := fun w => M.Vc θ γ w.2.1
-  have hf : StronglyMeasurable f := (StronglyMeasurable.of_discrete (f := (M.Vc θ γ))).comp_measurable measurable_snd.fst
-  have hC : ∀ w, ‖f w‖ ≤ ∑ y', ‖M.Vc θ γ y'‖ := fun w => Norm.le.Sum_Norm (M.Vc θ γ) w.2.1
+  let f : ℝ × S × A → ℝ := fun w => M.V0 θ γ w.2.1
+  have hf : StronglyMeasurable f := (StronglyMeasurable.of_discrete (f := (M.V0 θ γ))).comp_measurable measurable_snd.fst
+  have hC : ∀ w, ‖f w‖ ≤ ∑ y', ‖M.V0 θ γ y'‖ := fun w => Norm.le.Sum_Norm (M.V0 θ γ) w.2.1
   have h1 := All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableClip (M := M)) (NormClip.le.AbsR (M := M)) θ 1 n hG hCG
   have h2 := All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ 2 n hG hCG
   have h3 := All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ 1 n hG hCG
@@ -64,13 +63,13 @@ private lemma main
   have j2 := int_hist_mul M θ n n hG hCG k2.1 k2.2
   have j3 := int_hist_mul M θ n n hG hCG k3.1 k3.2
   have hae : ∀ᵐ ω ∂(M θ),
-      (if s t ω = x ∧ a t ω = u then (1 : ℝ) else 0) * (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) = Gh (Preorder.frestrictLe n ω) * clip (ω (n + 1)).1 (-M.env.R) M.env.R + γ * (Gh (Preorder.frestrictLe n ω) * f (ω (n + 2))) - Gh (Preorder.frestrictLe n ω) * f (ω (n + 1)) := by
+      (if s t ω = x ∧ a t ω = u then (1 : ℝ) else 0) * (r (n + 1) ω + γ * M.V0 θ γ (s (n + 1 + 1) ω) - M.V0 θ γ (s (n + 1) ω)) = Gh (Preorder.frestrictLe n ω) * clip (ω (n + 1)).1 (-M.env.R) M.env.R + γ * (Gh (Preorder.frestrictLe n ω) * f (ω (n + 2))) - Gh (Preorder.frestrictLe n ω) * f (ω (n + 1)) := by
     filter_upwards [MEq_Clip.of.All_Eq h₁ (M := M) θ (n + 1)] with ω hω
     rw [hGω, hω]
-    show _ * (clip (ω (n + 1)).1 (-M.env.R) M.env.R + γ * M.Vc θ γ (ω (n + 2)).2.1 - M.Vc θ γ (ω (n + 1)).2.1) = _
+    show _ * (clip (ω (n + 1)).1 (-M.env.R) M.env.R + γ * M.V0 θ γ (ω (n + 2)).2.1 - M.V0 θ γ (ω (n + 1)).2.1) = _
     ring
   have hz : ∀ ω : ℕ → ℝ × S × A, Gh (Preorder.frestrictLe n ω) * M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) + γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ f 2 (ω n)) - Gh (Preorder.frestrictLe n ω) * M.Kf θ f 1 (ω n) = 0 := fun ω => by
-    have := SubAddKfMul_KfKf.eq.Zero.of.In_Ico (M := M) h₀ θ (ω n) hP
+    have := SubAddKfMul_KfKf.eq.Zero.of.In_Ico (M := M) h₀ θ (ω n)
     calc
       _ = Gh (Preorder.frestrictLe n ω) * (M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) + γ * M.Kf θ f 2 (ω n) - M.Kf θ f 1 (ω n)) := by
         ring
@@ -92,4 +91,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-12
+-- updated on 2026-11-03

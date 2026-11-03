@@ -1,6 +1,6 @@
 import Mathlib.Probability.Distributions.Gaussian.Multivariate
 import Notation.Probability.HasLaw
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 open MeasureTheory ProbabilityTheory
 open scoped ProbabilityTheory
 

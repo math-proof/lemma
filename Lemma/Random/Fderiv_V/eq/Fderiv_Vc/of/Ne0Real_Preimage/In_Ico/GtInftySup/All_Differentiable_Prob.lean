@@ -4,7 +4,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 /--
 On a reachable state, the derivative of the state value equals that of its time-free closed form:
-`fderiv ℝ (fun θ' ↦ V θ' γ t x) θ = fderiv ℝ (fun θ' ↦ Vc θ' γ x) θ`.
+`fderiv ℝ (fun θ' ↦ V θ' γ t x) θ = fderiv ℝ (fun θ' ↦ V0 θ' γ x) θ`.
 -/
 @[path]
 private lemma main
@@ -25,7 +25,7 @@ private lemma main
   (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0)
   (h₅ : (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0) :
 -- imply
-  fderiv ℝ (fun θ' => M.V θ' γ t x) θ = fderiv ℝ (fun θ' => M.Vc θ' γ x) θ := by
+  fderiv ℝ (fun θ' => M.V θ' γ t x) θ = fderiv ℝ (fun θ' => M.V0 θ' γ x) θ := by
 -- proof
   obtain ⟨Cp, hCp⟩ := id h₃
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
@@ -35,4 +35,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-20
+-- updated on 2026-11-02

@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Calculus.ParametricIntegral
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory Topology
 

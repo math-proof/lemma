@@ -1,5 +1,5 @@
 import Mathlib.Probability.Independence.Integration
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 import Theorem.Function
 import Instance.Probability.Moments.Variance
 open MeasureTheory

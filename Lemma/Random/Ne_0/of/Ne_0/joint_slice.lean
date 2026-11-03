@@ -2,7 +2,7 @@ import Mathlib.MeasureTheory.Measure.Count
 import Lemma.Measure.EqRnDeriv_Count
 import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Random.SinglePSpace.of.Measurable
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 open MeasureTheory Measure Random
 
 

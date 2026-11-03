@@ -5,7 +5,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 /--
 On a reachable state-action at time 0:
-`Qc θ γ x u = ∫ ρ, clip ρ ∂reward(x,u) + γ * ∑ y, T(x,u,y) * Vc θ γ y`.
+`Q0 θ γ x u = ∫ ρ, clip ρ ∂reward(x,u) + γ * ∑ y, T(x,u,y) * V0 θ γ y`.
 -/
 @[path]
 private lemma main
@@ -22,9 +22,9 @@ private lemma main
   (hV : ∀ y, (M.env.trans (x, u)).real {y} ≠ 0 →
       (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0) :
 -- imply
-  M.Qc θ γ x u =
+  M.Q0 θ γ x u =
     (∫ ρ, clip ρ (-M.env.R) M.env.R ∂(M.env.reward (x, u))) +
-      γ * ∑ y, (M.env.trans (x, u)).real {y} * M.Vc θ γ y := by
+      γ * ∑ y, (M.env.trans (x, u)).real {y} * M.V0 θ γ y := by
 -- proof
   let r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
   let s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
@@ -34,12 +34,12 @@ private lemma main
   have hsum :
       (∑ y : S, (M.env.trans (x, u)).real {y} *
         ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y)) =
-      (∑ y : S, (M.env.trans (x, u)).real {y} * M.Vc θ γ y) := by
+      (∑ y : S, (M.env.trans (x, u)).real {y} * M.V0 θ γ y) := by
     refine Finset.sum_congr rfl fun (y : S) _ => ?_
     by_cases hy : (M.env.trans (x, u)).real {y} = 0
     · simp [hy]
-    · rw [Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico (M := M) h₀ θ y (hV y hy)]
-  unfold Model.Qc
+    · rw [Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico (M := M) h₀ θ y]
+  unfold Model.Q0
   have hQ :=
     Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico
       (M := M) θ 0 x u h₀ h₁ hP
@@ -48,3 +48,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-02

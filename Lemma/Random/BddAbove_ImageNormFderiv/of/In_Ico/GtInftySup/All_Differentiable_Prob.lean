@@ -1,11 +1,15 @@
-import Lemma.Random.Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
+import Def.Analysis.Calculus.Gradient.Operators.Part2
+import Syntax.Order.Sup
+import Lemma.Set.Summable_MulPowMulAdd_1.of.In_Ico
+import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1MulMulCardAbs_R.of.All_LeNormFderiv.All_Differentiable_Prob
+import Lemma.Random.NormW.le.Abs_R
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Set
+set_option linter.unusedVariables false
 
 
 /--
 the gradients of the state-value function are bounded over the reachable pairs `(t, x)`:
-by time-homogeneity (`Random.Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob`)
-the derivative of `V(t, x)` equals that of `Vc(x)`, and `S` is finite
+by definition `V θ γ t x = V0 θ γ x`, and `S` is finite
 -/
 @[path]
 private lemma main
@@ -20,21 +24,17 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
-  (θ : Θ)
-  (h₅ : ∀ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0) :
+  (θ : Θ) :
 -- imply
   BddAbove ((fun p : ℕ × S => ‖fderiv ℝ (fun θ => M.V θ γ p.1 p.2) θ‖) ''
     {p | (M θ).real (s p.1 ⁻¹' {p.2}) ≠ 0}) := by
 -- proof
-  obtain ⟨Cp, hCp⟩ := id h₃
-  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
-    simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
-  refine ⟨∑ x, ‖fderiv ℝ (fun θ => M.Vc θ γ x) θ‖, ?_⟩
+  refine ⟨∑ x, ‖fderiv ℝ (fun θ => M.V0 θ γ x) θ‖, ?_⟩
   rintro _ ⟨p, hp, rfl⟩
   beta_reduce
-  rw [Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) p.1 p.2 θ h₀ h₁ h₂ h₃ hp (h₅ p.2)]
-  apply Finset.single_le_sum (f := fun x => ‖fderiv ℝ (fun θ => M.Vc θ γ x) θ‖) (fun _ _ => norm_nonneg _) (Finset.mem_univ p.2)
+  simp only [Model.V]
+  apply Finset.single_le_sum (f := fun x => ‖fderiv ℝ (fun θ => M.V0 θ γ x) θ‖) (fun _ _ => norm_nonneg _) (Finset.mem_univ p.2)
 
 
 -- created on 2026-10-06
--- updated on 2026-10-20
+-- updated on 2026-11-03

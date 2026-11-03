@@ -24,8 +24,7 @@ private lemma main
   (h₂ : c ∈ Set.Ico 0 1)
   (θ : Θ)
   (t : ℕ)
-  (ψ : S → A → E)
-  (hP : ∀ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0) :
+  (ψ : S → A → E) :
 -- imply
   have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace
@@ -36,9 +35,9 @@ private lemma main
   have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun _ =>
     PSpace_Path.of.All_PSpace
       (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
-  𝔼[r, s, a : M θ]((∑' k, c ^ k * (r (t + k) + γ * M.Vc θ γ (s (t + k + 1)) -
-      M.Vc θ γ (s (t + k)))) • ψ (s t) (a t)) =
-    𝔼[r, s, a : M θ]((r t + γ * M.Vc θ γ (s (t + 1)) - M.Vc θ γ (s t)) • ψ (s t) (a t)) := by
+  𝔼[r, s, a : M θ]((∑' k, c ^ k * (r (t + k) + γ * M.V0 θ γ (s (t + k + 1)) -
+      M.V0 θ γ (s (t + k)))) • ψ (s t) (a t)) =
+    𝔼[r, s, a : M θ]((r t + γ * M.V0 θ γ (s (t + 1)) - M.V0 θ γ (s t)) • ψ (s t) (a t)) := by
 -- proof
   intro _ _ _
   classical
@@ -59,31 +58,31 @@ private lemma main
         (((measurable_pi_apply n).comp (measurable_fst.comp measurable_snd)).prodMk
           ((measurable_pi_apply n).comp (measurable_snd.comp measurable_snd)))
   have hδj : ∀ j, Measurable fun ω : ℕ → ℝ × S × A =>
-      r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω) := fun j =>
+      r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω) := fun j =>
     ((Measurable.of.All_Eq.fst h₁ j).add
-      (((measurable_of_countable (M.Vc θ γ)).comp
+      (((measurable_of_countable (M.V0 θ γ)).comp
           (Measurable.of.All_Eq.snd.fst h₁ (j + 1))).const_mul γ)).sub
-      ((measurable_of_countable (M.Vc θ γ)).comp (Measurable.of.All_Eq.snd.fst h₁ j))
+      ((measurable_of_countable (M.V0 θ γ)).comp (Measurable.of.All_Eq.snd.fst h₁ j))
   have hψω : StronglyMeasurable fun ω : ℕ → ℝ × S × A => ψ (s t ω) (a t ω) :=
     (StronglyMeasurable.of_discrete (f := fun p : S × A => ψ p.1 p.2)).comp_measurable
       ((Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Measurable.of.All_Eq.snd.snd h₁ t))
   let δL : (ℕ → ℝ × S × A) → ℝ := fun ω =>
-    ∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) - M.Vc θ γ (s (t + k) ω))
+    ∑' k, c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) - M.V0 θ γ (s (t + k) ω))
   let ψt : (ℕ → ℝ × S × A) → E := fun ω => ψ (s t ω) (a t ω)
   let Gleft : (ℕ → ℝ × S × A) → E := δL • ψt
   have hGleft : StronglyMeasurable Gleft := by
     convert ((Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k =>
       (hδj (t + k)).const_mul (c ^ k)).stronglyMeasurable).smul hψω
   let δR : (ℕ → ℝ × S × A) → ℝ := fun ω =>
-    r t ω + γ * M.Vc θ γ (s (t + 1) ω) - M.Vc θ γ (s t ω)
+    r t ω + γ * M.V0 θ γ (s (t + 1) ω) - M.V0 θ γ (s t ω)
   let Gright : (ℕ → ℝ × S × A) → E := δR • ψt
   have hGright : StronglyMeasurable Gright := by
     convert (hδj t).stronglyMeasurable.smul hψω
   let F : ℕ → (ℕ → ℝ × S × A) → E := fun k ω =>
-    (c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) - M.Vc θ γ (s (t + k) ω))) •
+    (c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) - M.V0 θ γ (s (t + k) ω))) •
       ψ (s t ω) (a t ω)
-  have hF : ∀ k ω, F k ω = c ^ k • ((r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
-      M.Vc θ γ (s (t + k) ω)) • ψ (s t ω) (a t ω)) := fun k ω => by
+  have hF : ∀ k ω, F k ω = c ^ k • ((r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+      M.V0 θ γ (s (t + k) ω)) • ψ (s t ω) (a t ω)) := fun k ω => by
     simp only [F, mul_smul]
   have hFi : ∀ k, Integrable (F k) (M θ) := fun k => by
     have := (Integrable_SMulSubAddRMul_VcVc.of.In_Ico (M := M) h₀ h₁ θ t (t + k) ψ).smul (c ^ k)
@@ -110,14 +109,14 @@ private lemma main
     obtain ⟨k', rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
     simp_rw [hF]
     rw [integral_smul]
-    have := Integral_SMul.eq.Zero.of.Le.In_Ico (M := M) t (t + k') h₀ h₁ (Nat.le_add_right t k') θ ψ hP
-    rw [show (fun ω => (r (t + k'.succ) ω + γ * M.Vc θ γ (s (t + k'.succ + 1) ω) -
-        M.Vc θ γ (s (t + k'.succ) ω)) • ψ (s t ω) (a t ω)) = fun ω => (r (t + k' + 1) ω +
-        γ * M.Vc θ γ (s (t + k' + 1 + 1) ω) - M.Vc θ γ (s (t + k' + 1) ω)) • ψ (s t ω) (a t ω)
+    have := Integral_SMul.eq.Zero.of.Le.In_Ico (M := M) t (t + k') h₀ h₁ (Nat.le_add_right t k') θ ψ
+    rw [show (fun ω => (r (t + k'.succ) ω + γ * M.V0 θ γ (s (t + k'.succ + 1) ω) -
+        M.V0 θ γ (s (t + k'.succ) ω)) • ψ (s t ω) (a t ω)) = fun ω => (r (t + k' + 1) ω +
+        γ * M.V0 θ γ (s (t + k' + 1 + 1) ω) - M.V0 θ γ (s (t + k' + 1) ω)) • ψ (s t ω) (a t ω)
         from rfl, this, smul_zero]
   have h0 : ∑' k, ∫ ω, F k ω ∂(M θ) = ∫ ω, F 0 ω ∂(M θ) := tsum_eq_single 0 hzero
-  have hae : ∀ᵐ ω ∂(M θ), (∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
-        M.Vc θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) = ∑' k, F k ω := by
+  have hae : ∀ᵐ ω ∂(M θ), (∑' k, c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+        M.V0 θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) = ∑' k, F k ω := by
     filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico (M := M) h₀ h₁ θ] with ω h
     refine (Summable.tsum_smul_const ?_ _).symm
     refine Summable.of_norm_bounded ((summable_geometric_of_lt_one h₂.1 h₂.2).mul_right
@@ -125,15 +124,15 @@ private lemma main
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₂.1]
     exact mul_le_mul_of_nonneg_left (h _) (pow_nonneg h₂.1 k)
   have hint : ∫ ω, Gleft ω ∂(M θ) = ∫ ω, Gright ω ∂(M θ) := by
-    change ∫ ω, (∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
-        M.Vc θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) ∂(M θ) =
-      ∫ ω, (r t ω + γ * M.Vc θ γ (s (t + 1) ω) - M.Vc θ γ (s t ω)) • ψ (s t ω) (a t ω)
+    change ∫ ω, (∑' k, c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+        M.V0 θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) ∂(M θ) =
+      ∫ ω, (r t ω + γ * M.V0 θ γ (s (t + 1) ω) - M.V0 θ γ (s t ω)) • ψ (s t ω) (a t ω)
       ∂(M θ)
     rw [integral_congr_ae hae, ← hHas.tsum_eq, h0]
     simp [F]
   have hL :
-    𝔼[r, s, a : M θ]((∑' k, c ^ k * (r (t + k) + γ * M.Vc θ γ (s (t + k + 1)) -
-        M.Vc θ γ (s (t + k)))) • ψ (s t) (a t)) =
+    𝔼[r, s, a : M θ]((∑' k, c ^ k * (r (t + k) + γ * M.V0 θ γ (s (t + k + 1)) -
+        M.V0 θ γ (s (t + k)))) • ψ (s t) (a t)) =
       ∫ ω, Gleft ω ∂(M θ) := by
     have hx : AEMeasurable
       (AsPathRV.path r, AsPathRV.path s, AsPathRV.path a) (M θ) :=
@@ -166,4 +165,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-20
+-- updated on 2026-11-03

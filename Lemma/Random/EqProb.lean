@@ -1,5 +1,5 @@
 import Lemma.Measure.EqRnDeriv_Count
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 open MeasureTheory Measure
 
 

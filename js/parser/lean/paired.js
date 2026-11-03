@@ -609,6 +609,12 @@ export class LeanParenthesis extends LeanPairedGroup {
         if (arg.isZeroOneTensor()) return false;
         if (arg.lhs instanceof LeanBrace) return false;
         if (arg.rhs instanceof L.LeanToken && arg.rhs.text === 'Bool') return false;
+        // Anonymous Prop binder `(_ : i ≠ j)`: keep the hypothesis type; do not collapse to `_`.
+        if (
+            arg.lhs instanceof L.LeanToken &&
+            arg.lhs.text === '_' &&
+            arg.rhs.isProp({})
+        ) return false;
         const p = this.parent;
         // Binder of a lambda (`fun s (_ : Iic 0) => s`): the type is part of the binder.
         if (

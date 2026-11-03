@@ -24,7 +24,7 @@ regular (kernel) sense: they are the integrals against the transition kernel `M.
   when `p x u` is the density of `M.env.trans (x, u)`.
 
 These are the continuous-state counterparts of the clamped j-step stage expectation
-used in `Model.Pn` / `Model.Vc`, and of `Model.Qc`, `Model.P1`
+used in `Model.Pn` / `Model.V0`, and of `Model.Q0`, `Model.P1`
 (`Def.Dynamics.PolicyTrajectory.Gradient`), which need `Fintype S`; the model is time-homogeneous, so
 none of them depends on `t`.
 -/

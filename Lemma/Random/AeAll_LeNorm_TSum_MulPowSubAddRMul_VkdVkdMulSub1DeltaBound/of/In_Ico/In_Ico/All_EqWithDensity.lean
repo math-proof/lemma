@@ -20,8 +20,8 @@ private lemma main
   (h₂ : c ∈ Set.Ico 0 1)
   (θ : Θ) :
 -- imply
-  ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, c ^ k * (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) -
-    M.Vkd θ γ (s (t + k) ω))‖ ≤ (1 - c)⁻¹ * ((3 / (1 - γ) - 1) * |M.env.R|) := by
+  ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+    M.V0 θ γ (s (t + k) ω))‖ ≤ (1 - c)⁻¹ * ((3 / (1 - γ) - 1) * |M.env.R|) := by
 -- proof
   filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity (M := M) h₀ h₁ θ] with ω h t
   refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₂.1 h₂.2).mul_right _) fun k => ?_
@@ -30,3 +30,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-02

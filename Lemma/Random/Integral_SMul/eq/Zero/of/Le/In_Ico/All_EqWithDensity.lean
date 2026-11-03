@@ -33,7 +33,8 @@ For `t ≤ n`, `𝔼[δ[n+1] * ψ(s[t], a[t])] = 0` under the continuous-action 
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
+  [ReferenceMeasure A] [MeasurableSingletonClass A]
   {M : DensityModel Θ S A}
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
@@ -50,7 +51,7 @@ private lemma main
   (hψ : StronglyMeasurable (Function.uncurry ψ))
   (hMs : ∃ Ms : ℝ, ∀ y u, ‖ψ y u‖ ≤ Ms) :
 -- imply
-  ∫ ω, (r (n + 1) ω + γ * M.Vkd θ γ (s (n + 1 + 1) ω) - M.Vkd θ γ (s (n + 1) ω)) *
+  ∫ ω, (r (n + 1) ω + γ * M.V0 θ γ (s (n + 1 + 1) ω) - M.V0 θ γ (s (n + 1) ω)) *
     ψ (s t ω) (a t ω) ∂(M θ) = 0 := by
 -- proof
   classical
@@ -68,7 +69,7 @@ private lemma main
       ((measurable_snd.fst.comp (measurable_pi_apply _)).prodMk
         (measurable_snd.snd.comp (measurable_pi_apply _)))
   have hCG : ∀ h, ‖Gh h‖ ≤ Ms := fun h => hMs _ _
-  let fV : ℝ × S × A → ℝ := fun w => M.Vkd θ γ w.2.1
+  let fV : ℝ × S × A → ℝ := fun w => M.V0 θ γ w.2.1
   have hfV : StronglyMeasurable fV :=
     ((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp measurable_snd.fst).stronglyMeasurable
   have hCV : ∀ w, ‖fV w‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
@@ -96,7 +97,7 @@ private lemma main
   have j2 := int_hist_mul M θ n n hG hCG k2.1 k2.2
   have j3 := int_hist_mul M θ n n hG hCG k3.1 k3.2
   have hae : ∀ᵐ ω ∂(M θ),
-      (r (n + 1) ω + γ * M.Vkd θ γ (s (n + 1 + 1) ω) - M.Vkd θ γ (s (n + 1) ω)) *
+      (r (n + 1) ω + γ * M.V0 θ γ (s (n + 1 + 1) ω) - M.V0 θ γ (s (n + 1) ω)) *
         ψ (s t ω) (a t ω) =
         Gh (Preorder.frestrictLe n ω) * clip (ω (n + 1)).1 (-M.env.R) M.env.R +
           γ * (Gh (Preorder.frestrictLe n ω) * fV (ω (n + 2))) -
@@ -137,3 +138,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-03

@@ -106,3 +106,26 @@ export function pathEqCombineChoices(leftChoices, rightChoices, house = "") {
     : [...slashU].sort((a, b) => a.length - b.length || (a < b ? -1 : a > b ? 1 : 0));
   return { left, right, leftRaw, rightRaw, stems: [...orderedSlash, ...flatSorted], soft };
 }
+
+
+/**
+ * IndepFun `⟂ᵢ` infix combine (binary op like Mul/Eq): LHS.Indep.RHS.
+ * Hole sides omit; a GetSlice operand yields Indep_GetSlice (right) /
+ * IndepGetSlice (left, camel — parallel IndepJoint / Indep_Joint).
+ */
+export function pathCombineIndepChoices(leftChoices, rightChoices) {
+  const L = pathUniqKeepEmpty(leftChoices || [""]);
+  const R = pathUniqKeepEmpty(rightChoices || [""]);
+  const out = [];
+  for (const l of L) {
+    for (const r of R) {
+      if (l && r) out.push("Indep" + l + "_" + r);
+      else if (!l && r) out.push("Indep_" + r);
+      else if (l && !r) out.push("Indep" + l);
+    }
+  }
+  // bare Indep last so richer operand spellings rank first
+  if (L.some((x) => !x) && R.some((x) => !x)) out.push("Indep");
+  if (!out.length) out.push("Indep");
+  return pathUniq(out);
+}

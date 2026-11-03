@@ -2,6 +2,7 @@ import Mathlib.Tactic
 import Def.Lean.Expr.Parser
 import Def.Lean.PrettyPrinter.Latex.Part2
 import Def.Tactic.Echo
+import Initialize.Tactic.Attr.Axioms
 open Lean Elab.Tactic Meta
 set_option linter.unusedVariables false
 

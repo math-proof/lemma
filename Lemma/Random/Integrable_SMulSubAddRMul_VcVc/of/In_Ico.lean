@@ -29,12 +29,12 @@ private lemma main
   (t j : ℕ)
   (ψ : S → A → E) :
 -- imply
-  Integrable (fun ω => (r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω)) •
+  Integrable (fun ω => (r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω)) •
     ψ (s t ω) (a t ω)) (M θ) := by
 -- proof
   have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)
   refine Integrable.of_bound (C := (3 / (1 - γ) - 1) * |M.env.R| * ∑ p : S × A, ‖ψ p.1 p.2‖)
-    ((delta_meas h₁ (M.Vc θ γ) γ j).stronglyMeasurable.smul
+    ((delta_meas h₁ (M.V0 θ γ) γ j).stronglyMeasurable.smul
       ((StronglyMeasurable.of_discrete (f := fun p : S × A => ψ p.1 p.2)).comp_measurable
         hX)).aestronglyMeasurable ?_
   filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico (M := M) h₀ h₁ θ] with ω h
@@ -45,4 +45,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-10
+-- updated on 2026-11-02

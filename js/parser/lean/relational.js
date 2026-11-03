@@ -13,7 +13,7 @@
 import { escapeSpecialsForLatex } from './utility.js';
 import { LeanBinaryBoolean } from './boolean.js';
 import { Lean } from './base.js';
-import { pathEqCombineChoices } from './pathChoices.js';
+import { pathEqCombineChoices, pathCombineIndepChoices } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -24,6 +24,42 @@ export class LeanRelational extends LeanBinaryBoolean {
 
     insert_tactic(caret, token) {
         return this.insert_word(caret, token);
+    }
+
+    /**
+     * `lhs =\n  rhs` while the caret indent drifted inside parentheses
+     * (`𝔼(\n  (…\n    ∇ …) =\n  ∫ …`). The next line is still the right-hand side
+     * when it stays deeper than the enclosing `have` / `let` / tactic.
+     */
+    insert_newline(caret, newline_count, indent, next) {
+        if (caret === this.rhs && caret instanceof L.LeanCaret && indent >= this.indent) {
+            caret.indent = indent;
+            return caret;
+        }
+        if (caret === this.rhs && caret instanceof L.LeanCaret && this.rhsContinues(indent)) {
+            caret.indent = indent;
+            const nl = new L.LeanArgsNewLineSeparated([caret], indent, caret.level);
+            this.rhs = nl;
+            return newline_count > 1 ? nl.push_newlines(newline_count - 1) : caret;
+        }
+        return super.insert_newline(caret, newline_count, indent, next);
+    }
+
+    /** @param {number} indent */
+    rhsContinues(indent) {
+        let p = this.parent;
+        while (p) {
+            if (p instanceof L.Lean_have || p instanceof L.Lean_let || p instanceof L.LeanTactic)
+                return indent > p.indent;
+            p = p.parent;
+        }
+        return false;
+    }
+
+    sep() {
+        if (this.rhs instanceof L.LeanArgsNewLineSeparated || this.rhs instanceof L.LeanStatements)
+            return '\n';
+        return ' ';
     }
 
     latexArgs(syntax = null) {
@@ -215,6 +251,20 @@ export class Lean_perp extends LeanRelational {
     /** `⟂ᵢ` is (conditional) independence: both operands are random variables. */
     get isIndependence() {
         return this.subscript === 'ᵢ';
+    }
+
+    /**
+     * IndepFun as binary infix for lemma-path (like Mul/Eq): walk LHS/RHS pathChoices.
+     * `x[k] ⟂ᵢ x[:k]` → Indep_GetSlice; pairwise holes → Indep.
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        if (!this.isIndependence) return super.pathChoices?.(opts) ?? [""];
+        return pathCombineIndepChoices(
+            this.lhs?.pathChoices?.(opts) ?? [""],
+            this.rhs?.pathChoices?.(opts) ?? [""],
+        );
     }
 
     /**

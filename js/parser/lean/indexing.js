@@ -11,6 +11,7 @@
 import { LeanGetElemBase, LeanGetElemBaseBinary } from './utility.js';
 import { LeanArgs, LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
+import { pathUniqKeepEmpty } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -18,6 +19,25 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
     static { this.register(); }
 
     static input_priority = 67;
+
+    /**
+     * Colon-slice GetElem `x[:k]` / `(⇑x)[:n]` → GetSlice for IndepFun operand walk.
+     * Big-op / Expect / Prob binder colons stay holes (omit).
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        const ix = this.rhs;
+        if (ix instanceof L.LeanColon) {
+            const head = this.lhs;
+            const BIG = new Set(["𝔼", "ℙ", "∇", "max", "min", "sup", "inf", "max⁻¹", "min⁻¹"]);
+            if (!(head instanceof L.LeanToken && BIG.has(head.text))) {
+                const bases = head?.pathChoices?.(opts) ?? [""];
+                return pathUniqKeepEmpty(bases.map((b) => (b ? `${b}GetSlice` : "GetSlice")));
+            }
+        }
+        return [""];
+    }
 
     collectGetElemChain() {
         const indices = [];

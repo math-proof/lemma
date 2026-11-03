@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 import Instance.Probability.SymbolicMultivariateProbability
 import Def.Data.Holor.Item
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt

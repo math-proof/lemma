@@ -35,16 +35,12 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   [h₁ : IsPolicyTrajectory M r s a]
-  (h₂ : ∀ θ («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
-    ℙ[M θ](a[0] = «\sf{a}»[0] ∧ s[0] = «\sf{s}»[0]) ≠ 0)
   (h₃ : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
     X (r · ω) (s · ω) (a · ω) k)
   (h₄ : ∀ᵐ ω ∂(M θ),
     sup[t] |((γ ^ (id : ℕ → ℕ)) @ (X (r · ω) (s · ω) (a · ω))[t:])| < ∞)
-  (h₅ : ∀ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
-    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
-  (h₆ : sup[θ, t, «\sf{s}» : ℕ ⇀ S, «\sf{a}» : ℕ ⇀ A]
-    ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ < ∞) :
+  (h₅ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₆ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁.stage_eq t))
@@ -86,9 +82,8 @@ private lemma main
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   let _ : MeasurableSpace Θ := borel Θ
   have _ : BorelSpace Θ := ⟨rfl⟩
-  -- h₀/h₂/h₄/h₅/h₆ unused after Expect=∫ (kept on statement for of-atoms / callers)
+  -- h₀/h₄/h₅/h₆ unused after Expect=∫ (kept on statement for of-atoms / callers)
   have _ := h₀
-  have _ := h₂
   have _ := h₄
   have _ := h₅
   have _ := h₆
@@ -119,4 +114,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-02
+-- updated on 2026-11-03

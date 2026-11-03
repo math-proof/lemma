@@ -8,7 +8,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 /--
 Bellman equation of the time-free values on a reachable state:
-`Vc θ γ x = ∑ u, π_θ(u | x) * Qc θ γ x u`.
+`V0 θ γ x = ∑ u, π_θ(u | x) * Q0 θ γ x u`.
 -/
 @[path]
 private lemma main
@@ -22,13 +22,13 @@ private lemma main
   (x : S)
   (hP : (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0) :
 -- imply
-  M.Vc θ γ x = ∑ u, M.policy.prob θ x u * M.Qc θ γ x u := by
+  M.V0 θ γ x = ∑ u, M.policy.prob θ x u * M.Q0 θ γ x u := by
 -- proof
   let r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
   let s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   let a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   have h₁ : ∀ t, (· t) = (r t, s t, a t) := fun t => funext fun ω => rfl
-  rw [Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico (M := M) h₀ θ x hP,
+  rw [Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico (M := M) h₀ θ x,
     TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ x]
   have hKf0 : M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 0 =
       fun z ↦ clip z.1 (-M.env.R) M.env.R := rfl
@@ -39,7 +39,7 @@ private lemma main
       ((∫ ρ, clip (ρ, x, u).1 (-M.env.R) M.env.R ∂(M.env.reward (x, u))) +
         γ * ∑ y, (M.env.trans (x, u)).real {y} *
           ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y)) =
-      M.policy.prob θ x u * M.Qc θ γ x u := by
+      M.policy.prob θ x u * M.Q0 θ γ x u := by
     intro u
     by_cases hu : M.policy.prob θ x u = 0
     · simp [hu]
@@ -49,7 +49,7 @@ private lemma main
         Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico
           (M := M) θ 0 x u h₀ h₁ hPu
       rw [← hQ]
-      unfold Model.Qc Model.Q
+      unfold Model.Q0 Model.Q
       -- both sides: π * Expectation.condEvent … ; align RV/coords
       congr 1
   have hreshape :
@@ -68,4 +68,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-20
+-- updated on 2026-11-02

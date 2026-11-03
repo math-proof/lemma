@@ -6,8 +6,8 @@ import Def.Order.Miscellaneous
 import Lemma.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
 import Lemma.Random.SinglePSpace.of.AEMeasurable.Distributed
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Def.Dynamics.PolicyTrajectory.ContinuousAction.Part6
-import Syntax.Probability.JointRv.Part5
+import Instance.Dynamics.PolicyTrajectory.ContinuousAction.Part5
+import Syntax.Probability.Probability
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal ENNReal.ToRealCoe
 
@@ -158,6 +158,14 @@ class DensityModel.IsConditionalProbability
   factor : ∀ θ t (x : S) (u : A),
     M.policy.prob θ x u =
       (ℙ[M θ]((a t) = u | (s t) = x) : ℝ)
+
+instance [h : DensityModel.IsConditionalProbability M r s a] :
+    DensityModel.IsPolicyTrajectory M r s a :=
+  h.htr
+
+instance [h : DensityModel.IsConditionalProbability M r s a] :
+    DensityModel.AbsContJointAS M a s :=
+  h.haj
 
 end DensityModelIsPolicyTrajectorySinglePSpace
 end PolicyGradient

@@ -48,9 +48,7 @@ private lemma main
   (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
-  (h₆ : (M θ).real (s t ⁻¹' {«\sf{s}» t}) ≠ 0)
-  (hP : ∀ θ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0)
-  (hπ : ∀ θ u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {«\sf{s}» t}) * M.policy.prob θ («\sf{s}» t) u ≠ 0) :
+  (h₆ : (M θ).real (s t ⁻¹' {«\sf{s}» t}) ≠ 0) :
 -- imply
   have hs : ∀ t, Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₁
   have ha : ∀ t, Measurable (a t) := Random.Measurable.of.All_Eq.snd.snd h₁
@@ -90,7 +88,7 @@ private lemma main
     erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ (hSPA θ' t) h, ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   simp only [s, a] at hπ_eq
   simp_rw [hπ_eq]
-  rw [GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico h₀ h₁ h₄ h₅ h₆ hP hπ]
+  rw [GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico h₀ h₁ h₄ h₅ h₆]
   have hP1 : ∀ y, (ℙ[M θ]((s (t + 1)) = y | (s t) = x) : ℝ) = M.P1 θ x y := by
     intro y
     rw [ProbCond.eq.Div.of.SinglePSpace inferInstance (π := M θ) (x := s (t + 1)) (y := s t) y x,
@@ -106,4 +104,4 @@ private lemma main
 
 
 -- created on 2023-03-30
--- updated on 2026-11-02
+-- updated on 2026-11-03

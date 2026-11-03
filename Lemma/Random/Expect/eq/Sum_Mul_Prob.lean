@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Mathlib.MeasureTheory.Measure.WithDensity
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 import Lemma.Random.Map.eq.WithDensityProb
 open MeasureTheory
 

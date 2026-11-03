@@ -3,7 +3,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 /--
-On a state reachable at times t and 0: `M.Vc θ γ x = M.V θ γ t x`.
+On a state reachable at times t and 0: `M.V0 θ γ x = M.V θ γ t x`.
 -/
 @[path]
 private lemma main
@@ -18,9 +18,10 @@ private lemma main
   (h₂ : (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω t).2.1) ⁻¹' {x}) ≠ 0)
   (h₃ : (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0) :
 -- imply
-  M.Vc θ γ x = M.V θ γ t x := by
+  M.V0 θ γ x = M.V θ γ t x := by
 -- proof
   exact (V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₂ h₃).symm
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-02

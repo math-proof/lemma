@@ -12,8 +12,8 @@ set_option maxHeartbeats 400000
 
 /--
 Baseline cancellation for continuous REINFORCE: replacing the discounted return
-`∑' k, γ ^ k * r[t + k]` by the Vkd temporal-difference residual series
-`∑' k, γ ^ k * (r[t + k] + γ * Vkd(s[t + k + 1]) - Vkd(s[t + k]))` does not change the
+`∑' k, γ ^ k * r[t + k]` by the V0 temporal-difference residual series
+`∑' k, γ ^ k * (r[t + k] + γ * V0(s[t + k + 1]) - V0(s[t + k]))` does not change the
 score-weighted path integral (telescoping + zero expected score).
 Continuous-action counterpart of the `key` step in
 `Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Ico.advantage`.
@@ -43,25 +43,25 @@ private lemma main
 -- imply
   ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
       fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
-    ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) -
-      M.Vkd θ γ (s (t + k) ω))) •
+    ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+      M.V0 θ γ (s (t + k) ω))) •
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
 -- proof
   classical
-  obtain ⟨B, hBd⟩ : ∃ B : ℝ, ∀ x, |M.Vkd θ γ x| ≤ B :=
+  obtain ⟨B, hBd⟩ : ∃ B : ℝ, ∀ x, |M.V0 θ γ x| ≤ B :=
     ⟨(1 - γ)⁻¹ * |M.env.R|, fun x => by
       simpa [Real.norm_eq_abs] using NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ θ x⟩
   refine tsum_congr fun t => congrArg (fun z => γ ^ t • z) ?_
-  have h₉ : ∀ᵐ ω ∂(M θ), ∑' k, γ ^ k * (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) -
-      M.Vkd θ γ (s (t + k) ω)) = (∑' k, γ ^ k * r (t + k) ω) - M.Vkd θ γ (s t ω) := by
+  have h₉ : ∀ᵐ ω ∂(M θ), ∑' k, γ ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+      M.V0 θ γ (s (t + k) ω)) = (∑' k, γ ^ k * r (t + k) ω) - M.V0 θ γ (s t ω) := by
     filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) θ] with ω hr
-    have hb : ∀ k, |M.Vkd θ γ (s k ω)| ≤ B := fun k => hBd _
-    set b : ℕ → ℝ := fun k => γ ^ k * M.Vkd θ γ (s (t + k) ω) with hbd
+    have hb : ∀ k, |M.V0 θ γ (s k ω)| ≤ B := fun k => hBd _
+    set b : ℕ → ℝ := fun k => γ ^ k * M.V0 θ γ (s (t + k) ω) with hbd
     have hlim : Tendsto b atTop (𝓝 0) :=
-      Eq_0.Lim.of.LtAbs.GtInftySup (x := fun k => M.Vkd θ γ (s (t + k) ω))
+      Eq_0.Lim.of.LtAbs.GtInftySup (x := fun k => M.V0 θ γ (s (t + k) ω))
         (by simpa [abs_of_nonneg h₀.1] using h₀.2) ⟨B, by rintro _ ⟨k, rfl⟩; exact hb (t + k)⟩
-    have he : ∀ k, γ ^ k * (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) -
-        M.Vkd θ γ (s (t + k) ω)) = γ ^ k * r (t + k) ω + (b (k + 1) - b k) := fun k => by
+    have he : ∀ k, γ ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+        M.V0 θ γ (s (t + k) ω)) = γ ^ k * r (t + k) ω + (b (k + 1) - b k) := fun k => by
       simp only [hbd]
       rw [show t + (k + 1) = t + k + 1 by omega]
       ring
@@ -90,7 +90,7 @@ private lemma main
     rw [hG.tsum_add hbs, hbsum]
     simp only [hbd, pow_zero, one_mul, add_zero]
     ring
-  have hmeasV : Measurable (M.Vkd θ γ) := Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ θ γ
+  have hmeasV : Measurable (M.V0 θ γ) := Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ θ γ
   have hscore_sm : StronglyMeasurable fun ω =>
       fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ :=
     hφ.comp_measurable
@@ -111,7 +111,7 @@ private lemma main
           rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
           exact mul_le_mul_of_nonneg_left (hr _) (pow_nonneg h₀.1 k)
       exact mul_le_mul hret (hMs _ _) (norm_nonneg _) ((norm_nonneg _).trans hret)
-  have hIntV : Integrable (fun ω => M.Vkd θ γ (s t ω) •
+  have hIntV : Integrable (fun ω => M.V0 θ γ (s t ω) •
       fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ) (M θ) := by
     refine Integrable.of_bound (C := B * Ms) ?_ ?_
     ·
@@ -121,24 +121,25 @@ private lemma main
       filter_upwards with ω
       rw [norm_smul, Real.norm_eq_abs]
       exact mul_le_mul (hBd _) (hMs _ _) (norm_nonneg _)
-        ((abs_nonneg (M.Vkd θ γ (s t ω))).trans (hBd _))
+        ((abs_nonneg (M.V0 θ γ (s t ω))).trans (hBd _))
   symm
   calc
-    _ = ∫ ω, ((∑' k, γ ^ k * r (t + k) ω) - M.Vkd θ γ (s t ω)) •
+    _ = ∫ ω, ((∑' k, γ ^ k * r (t + k) ω) - M.V0 θ γ (s t ω)) •
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) :=
       integral_congr_ae (h₉.mono fun ω h => by dsimp only; rw [h])
     _ = (∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
           fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ)) -
-        ∫ ω, M.Vkd θ γ (s t ω) •
+        ∫ ω, M.V0 θ γ (s t ω) •
           fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
       simp_rw [sub_smul]
       exact integral_sub hIntG hIntV
     _ = _ := by
       have hz := Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity
         (M := M) (θ := θ) (r := r) (s := s) (a := a) (g := g) (C := B) (B := Ms)
-        h₁ h₂ h₃ h₄ (M.Vkd θ γ) hmeasV (fun y => by
+        h₁ h₂ h₃ h₄ (M.V0 θ γ) hmeasV (fun y => by
           simpa [Real.norm_eq_abs] using hBd y) hφ hMs t
       rw [hz, sub_zero]
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-02

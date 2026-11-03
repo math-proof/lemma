@@ -5,7 +5,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 /--
 On a reachable state (`ℙ(s[t] = x) ≠ 0` and `ℙ(s[0] = x) ≠ 0` at `θ`), near `θ`:
-`M.V θ' γ t x = M.Vc θ' γ x`.
+`M.V θ' γ t x = M.V0 θ' γ x`.
 -/
 @[path]
 private lemma main
@@ -26,7 +26,7 @@ private lemma main
   (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0)
   (h₅ : (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0) :
 -- imply
-  (fun θ' => M.V θ' γ t x) =ᶠ[𝓝 θ] fun θ' => M.Vc θ' γ x := by
+  (fun θ' => M.V θ' γ t x) =ᶠ[𝓝 θ] fun θ' => M.V0 θ' γ x := by
 -- proof
   have hs : s = fun t ω ↦ (ω t).2.1 :=
     funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
@@ -43,4 +43,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-20
+-- updated on 2026-11-02

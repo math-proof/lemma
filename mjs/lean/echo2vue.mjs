@@ -264,6 +264,15 @@ export function spawnLakeLean(command, args, { cwd, env, windowsHide = true }) {
   });
 }
 
+/** Echo reprint: `@[path]` on the lemma becomes `@[path, axioms]` so Lean logs axiom use. Source `.lean` is unchanged. */
+function withEchoAxiomsAttr(code) {
+  return String(code).replace(/^([ \t]*)@\[([^\]]*)\][ \t]*$/gm, (line, indent, inner) => {
+    const parts = inner.split(',').map((s) => s.trim()).filter(Boolean);
+    if (!parts.includes('path') || parts.includes('axioms')) return line;
+    return `${indent}@[${[...parts, 'axioms'].join(', ')}]`;
+  });
+}
+
 export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   if (!(tree instanceof LeanModule)) throw new Error('runEcho2Vue expects LeanModule');
   const repoRoot = REPO_ROOT;
@@ -276,7 +285,7 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     fs.mkdirSync(path.dirname(leanEchoFile), { recursive: true });
     fs.writeFileSync(leanEchoFile, '', 'utf8');
   }
-  const codeStr = String(tree);
+  let codeStr = withEchoAxiomsAttr(String(tree));
   fs.writeFileSync(leanEchoFile, codeStr, 'utf8');
 
   const lakePath = get_lake_path();

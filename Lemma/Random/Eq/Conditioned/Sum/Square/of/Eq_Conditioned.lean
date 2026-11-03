@@ -1,5 +1,5 @@
 import Mathlib.Probability.Independence.Basic
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 import Initialize.Tactic.Attr.Basic
 
 open ProbabilityTheory MeasureTheory

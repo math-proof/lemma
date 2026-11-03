@@ -1,4 +1,7 @@
 import Lemma.Random.Zero.eq.AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul.of.Real.ne.Zero.GtInftySup.All_Differentiable.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0
+import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
+import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico
+import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Lemma.Random.Integral.eq.Sum_SMul
 import Lemma.Random.Integral_SMul.eq.Sum_SMul.of.All_Differentiable_Prob
@@ -120,9 +123,7 @@ private lemma fderiv_dotPow_eq_integral_finset_smul_add
       V θ t («\sf{s}» t) =
         𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
-  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
-  (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
-  (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0) :
+  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
   (γ ^ (id : ℕ → ℕ)) @ (fun t ↦ fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ) =
     ∫ ω, ∑ t ∈ Finset.range n, (γ ^ t * Q θ t (s t ω) (a t ω)) •
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) +
@@ -132,7 +133,7 @@ private lemma fderiv_dotPow_eq_integral_finset_smul_add
     funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
   have hs : s = fun t ω ↦ (ω t).2.1 :=
     funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
-  have h₈ : ∀ x, M.env.init.real {x} • fderiv ℝ (fun θ => M.Vc θ γ x) θ =
+  have h₈ : ∀ x, M.env.init.real {x} • fderiv ℝ (fun θ => M.V0 θ γ x) θ =
     M.env.init.real {x} • (∑ t ∈ Finset.range n, γ ^ t • ∑ y, M.Pn θ t x y •
           ∑ u, Q θ t y u • fderiv ℝ (fun θ => M.policy.prob θ y u) θ +
         γ ^ n • ∑ y, M.Pn θ n x y • fderiv ℝ (fun θ => V θ n y) θ) := by
@@ -143,7 +144,7 @@ private lemma fderiv_dotPow_eq_integral_finset_smul_add
       have hReach : (M θ).real (s 0 ⁻¹' {x}) ≠ 0 := by rwa [RealPreimageS0.eq.Real h₁]
       have hg :=
         Zero.eq.AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul.of.Real.ne.Zero.GtInftySup.All_Differentiable.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0
-          (Q := Q) (V := V) h₀ h₁ hQ hV h₄ h₅ hReach hP0 hπ n
+          (Q := Q) (V := V) h₀ h₁ hQ hV h₄ h₅ hReach n
       have h' : ∀ t y, (M θ)[|s 0 ⁻¹' {x}].real (s t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
         have h'' := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) θ 0 t x y h₁ hReach
         rwa [zero_add] at h''
@@ -154,20 +155,26 @@ private lemma fderiv_dotPow_eq_integral_finset_smul_add
             γ ^ n • ∑ y, M.Pn θ n x y • fderiv ℝ (fun θ => V θ n y) θ := by
         apply (InnerProductSpace.toDual ℝ Θ).symm.injective
         simpa [gradient, map_add, map_smul, _root_.map_sum] using hg
-      -- Bridge M.Vc → M.V via Fderiv_V, then M.V → abstract V via hV + Model.V.
-      have hVcV : fderiv ℝ (fun θ => M.Vc θ γ x) θ =
+      -- Bridge M.V0 ↔ abstract V (= conditional) near θ on the reachable state x.
+      have hVcV : fderiv ℝ (fun θ => M.V0 θ γ x) θ =
           fderiv ℝ (fun θ => V θ 0 x) θ := by
-        have h0 : (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0 := hP0 θ x
-        rw [← Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
-            (M := M) 0 x θ h₀ h₁ h₄ h₅ hReach h0]
-        congr 1
-        funext θ'
-        -- goal: M.V θ' γ 0 x = V θ' 0 x
-        have hVθ : V θ' 0 x =
-            𝔼[r : M θ']((γ ^ (id : ℕ → ℕ)) @ r[0:] | s 0 = x) :=
-          hV θ' 0 (fun _ => x)
-        simp only [Model.V, hr, hs] at hVθ ⊢
-        exact hVθ.symm
+        have hEV : (fun θ' => V θ' 0 x) =ᶠ[𝓝 θ] fun θ' => M.V0 θ' γ x := by
+          have hc : ContinuousAt (fun θ' => (M θ').real (s 0 ⁻¹' {x})) θ :=
+            (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
+              (M := M) h₁ h₄ h₅ 0 x θ).continuousAt
+          filter_upwards [hc.eventually_ne hReach] with θ' ht
+          have hVθ : V θ' 0 x =
+              𝔼[r : M θ']((γ ^ (id : ℕ → ℕ)) @ r[0:] | s 0 = x) :=
+            hV θ' 0 (fun _ => x)
+          have hseries :
+              𝔼[r : M θ']((γ ^ (id : ℕ → ℕ)) @ r[0:] | s 0 = x) =
+                ∑' k, γ ^ k * ∫ z, M.Kf θ' (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z
+                  ∂(M.stageK θ' x) :=
+            _root_.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) (r := r) (s := s) (a := a)
+              θ' 0 x h₀ h₁ ht
+          exact (hVθ.trans hseries).trans
+            (_root_.Random.Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico (M := M) h₀ θ' x).symm
+        exact (EventuallyEq.fderiv_eq hEV).symm
       rw [hVcV, h]
   have h₉ : ∀ t, ∫ ω, (γ ^ t * Q θ t (s t ω) (a t ω)) •
       fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
@@ -178,7 +185,7 @@ private lemma fderiv_dotPow_eq_integral_finset_smul_add
     ∑ y, (M θ).real (s n ⁻¹' {y}) • fderiv ℝ (fun θ' => V θ' n y) θ :=
     Integral.eq.Sum_SMul h₁ (M := M) θ n (fun y => fderiv ℝ (fun θ' => V θ' n y) θ)
   simp only [Dot.dot, Function.hPow_apply, id_eq]
-  rw [TSum_SMul.eq.Sum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₄ h₅ θ hP0, Finset.sum_congr rfl fun x _ => h₈ x,
+  rw [TSum_SMul.eq.Sum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₄ h₅ θ, Finset.sum_congr rfl fun x _ => h₈ x,
     integral_finsetSum _ fun t _ => Random.Integrable_Fun h₁ (M := M) θ t
       (fun y u => (γ ^ t * Q θ t y u) • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ)]
   simp_rw [h₉, h₁₀, RealPreimageS.eq.Sum_MulRealPn (M := M) h₁ θ]
@@ -317,8 +324,6 @@ private lemma main
   (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
-  (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
-  (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0)
   (n : ℕ) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
@@ -371,7 +376,7 @@ private lemma main
           γ ^ n • ∫ ω, fderiv ℝ (fun θ' => Vloc θ' n (s n ω)) θ ∂(M θ) :=
     fderiv_dotPow_eq_integral_finset_smul_add (M := M) (θ := θ) (γ := γ) (n := n)
       (Q := Qloc) (V := Vloc) (r := r) (s := s) (a := a)
-      h₀ h₁ hQ_expect hV_expect h₄ h₄n hP0 hπ
+      h₀ h₁ hQ_expect hV_expect h₄ h₄n
   let L : StrongDual ℝ Θ ≃L[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
   obtain ⟨Cp, hCp⟩ := id h₄n
@@ -563,4 +568,4 @@ private lemma main
 
 
 -- created on 2023-04-04
--- updated on 2026-11-02
+-- updated on 2026-11-03

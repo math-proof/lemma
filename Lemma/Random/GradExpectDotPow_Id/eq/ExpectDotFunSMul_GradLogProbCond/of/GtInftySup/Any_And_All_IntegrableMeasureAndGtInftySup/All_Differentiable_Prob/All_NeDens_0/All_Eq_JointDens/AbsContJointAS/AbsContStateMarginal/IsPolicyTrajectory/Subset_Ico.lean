@@ -4,43 +4,33 @@ import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.PSpace_Path.of.All_PSpace
-import Lemma.Random.ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
+import Lemma.Random.EqProb
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open scoped ENNReal.ToRealCoe
 open Finset (range)
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Filter Topology Random Measure Real IsPolicyTrajectory
 set_option maxHeartbeats 900000
-set_option linter.style.haveILetI false
 
 
 /--
 Generalized advantage estimation with the paper's weighted-average estimator (Schulman et al.,
 arXiv 1506.02438, Eq. (16)) for continuous actions: with TD residuals
-`δ[j] = r[j] + γ * Vkd(s[j+1]) - Vkd(s[j])` and `{γ, ℓ} ⊆ Ico 0 1`, the exponentially weighted
+`δ[j] = r[j] + γ * V(0, s[j+1]) - V(0, s[j])` and `{γ, ℓ} ⊆ Ico 0 1`, the exponentially weighted
 average `(1 - ℓ) * ((ℓ ^ id) @ fun k ↦ (γ ^ range(k+1)) @ δ)` equals the closed form, via
 `Real.MulSub1_Dot_FunDotPow_Range.…Subset_Ico` and
 `AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity`, applying the continuous closed-form GAE.
 
-Given hyps and the imply score use `IsPolicyTrajectory` and the `ℙ` conditional-density sugar
-(mirroring the discrete `IsPolicyTrajectory` Subset_Ico): Fun binders `ℕ ⇀ S` / `ℕ ⇀ A`
-appear as `s[t] = «\sf{s}»[t]` / `a[t] = «\sf{a}»[t]` (not point values `x` / `u`). The score is
-`∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log` under `𝔼[r, s, a : M θ]` (so `desugarProbRA` applies).
-Absolute continuity of `law(s[t])` and `law(a[t], s[t])` (`AbsContStateMarginal` /
-`AbsContJointAS`) is required for `SinglePSpace` / `ℙ` elaboration and is not implied by `Env`
-alone. Pointwise joint-density factorization `hfactor` (policy dens × state RN derivative) and
-`hdens` (state dens ≠ 0, ≠ ⊤ everywhere) discharge the Fun-binder bridge
-`ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens` inside the proof
-(mirroring discrete `All_NeProb_0` + `OfRealPol.of.Ne_0`); Radon–Nikodym versions are unique
-only a.e., so `hfactor` remains an explicit continuous-version choice until a `stageK`
-pointwise lift is available. The proof specializes to constant paths for the `policy.prob`
-form expected by `In_Icc.In_Ico`. The old redundant `hπ : Measurable (policy.prob …)` is
-dropped (`DensityPolicy.measurable_prob`).
+`IsConditionalProbability` supplies `IsPolicyTrajectory`, `AbsContJointAS`, and
+`M.policy.prob θ x u = (ℙ[M θ]((a t) = u | (s t) = x) : ℝ)`. Fun binders `ℕ ⇀ S` / `ℕ ⇀ A`
+appear as `s[t] = «\sf{s}»[t]` / `a[t] = «\sf{a}»[t]`. The score is
+`∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log` under `𝔼[r, s, a : M θ]`.
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [ReferenceMeasure S] [ReferenceMeasure A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Countable S]
+  [ReferenceMeasure A] [MeasurableSingletonClass A]
   {M : DensityModel Θ S A}
   {θ : Θ}
   {γ ℓ : ℝ}
@@ -49,56 +39,41 @@ private lemma main
   {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : {γ, ℓ} ⊆ Set.Ico 0 1)
-  (h₁ : DensityModel.IsPolicyTrajectory M r s a)
-  (hacc : DensityModel.AbsContStateMarginal M s)
-  (haj : DensityModel.AbsContJointAS M a s)
-  (hfactor : ∀ θ t x u,
-    (M θ).prob (a t, s t) (u, x) =
-      ENNReal.ofReal (M.policy.prob θ x u) *
-        ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure S) x)
-  (hdens : ∀ θ t x,
-    ℙ[M θ](s[t] = x) ≠ 0 ∧ ℙ[M θ](s[t] = x) ≠ ⊤)
-  (h₂ : ∀ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
+  (hfactor : DensityModel.IsConditionalProbability M r s a)
+  (h₁ : ∀ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
     Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
-  (h₃ : ∃ (g : S → A → ℝ),
+  (h₂ : ∃ (g : S → A → ℝ),
     (∀ θ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
       ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ ≤
         g «\sf{s}»[t] «\sf{a}»[t]) ∧
     (∀ x, Integrable (g x) ReferenceMeasure.measure) ∧
     (sup[x] (∫ u, g x u ∂ReferenceMeasure.measure) < ∞))
   (hφ : StronglyMeasurable
-    (fun ((x, u) : S × A) => ∇[θ] (ℙ[M θ](a[0] = u | s[0] = x) : ℝ).log))
+    (fun ((s0, a0) : S × A) => ∇[θ] (ℙ[M θ](a[0] = a0 | s[0] = s0) : ℝ).log))
   (hMs : sup[«\sf{s}» : ℕ ⇀ S, «\sf{a}» : ℕ ⇀ A]
     ‖∇[θ] (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) : ℝ).log‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun θ t =>
-    h₁.singlePSpace_as (haj := haj) θ t
-  have : ∀ θ t, SinglePSpace (M θ) (s t) := fun θ t =>
-    h₁.singlePSpace_s (hac := hacc) θ t
+    hfactor.htr.singlePSpace_as (haj := hfactor.haj) θ t
   have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun _ =>
-    PSpace_Path.of.All_PSpace (fun t => ⟨(h₁.measurable_r t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(hfactor.htr.measurable_r t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path s) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(h₁.measurable_s t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(hfactor.htr.measurable_s t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(h₁.measurable_a t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(hfactor.htr.measurable_a t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_θ : ℕ ⇀ (ℕ → S) → ℕ → ℝ := ⟨fun _ δ k => M.Vkd θ γ (δ k)⟩
+  let V_θ : ℕ ⇀ (ℕ → S) → ℕ → ℝ := ⟨fun _ δ k => M.V0 θ γ (δ k)⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
       (((1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ (γ ^ range (k + 1)) @
         (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:]))) •
         ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) := by
 -- proof
-  intro hPas hPs _ _ _ _ V_θ
-  haveI : DensityModel.IsPolicyTrajectory M r s a := h₁
-  haveI : DensityModel.AbsContStateMarginal M s := hacc
-  haveI : DensityModel.AbsContJointAS M a s := haj
+  intro hPas _ _ _ _ V_θ
   have hπeq : ∀ θ t («\sf{s}» : ℕ ⇀ S) («\sf{a}» : ℕ ⇀ A),
       (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ) =
         M.policy.prob θ «\sf{s}»[t] «\sf{a}»[t] := fun θ t sb ab =>
-    ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
-      (M := M) h₁ haj (hfactor θ t (sb t) (ab t))
-      (hdens θ t (sb t)).1 (hdens θ t (sb t)).2
+    (hfactor.factor θ t (sb t) (ab t)).symm
   simp only [FinsetPow.dot_eq]
   classical
   have hγ : γ ∈ Set.Ico 0 1 := h₀ (by simp)
@@ -106,22 +81,10 @@ private lemma main
   have hℓ : ℓ ∈ Set.Icc 0 1 := ⟨hℓ₀.1, hℓ₀.2.le⟩
   have hπ : ∀ θ', Measurable (fun z : S × A => M.policy.prob θ' z.1 z.2) :=
     M.policy.measurable_prob
-  obtain ⟨g, ⟨h₃bound, ⟨h₄, h₅sup⟩⟩⟩ := h₃
+  obtain ⟨g, ⟨h₃bound, ⟨h₄, h₅sup⟩⟩⟩ := h₂
   obtain ⟨Cg, h₅UB⟩ := h₅sup
   have h₅ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg := fun x =>
     h₅UB (Set.mem_range_self x)
-  -- specialize Fun binders to constant paths for In_Icc's pointwise policy.prob hyps
-  have h₂pol : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u) := fun x u =>
-    (funext fun θ' => (hπeq θ' 0 ⟨fun _ => x⟩ ⟨fun _ => u⟩).symm) ▸
-      h₂ 0 ⟨fun _ => x⟩ ⟨fun _ => u⟩
-  have h₃pol : ∀ θ' x u, ‖∇[θ'] M.policy.prob θ' x u‖ ≤ g x u := by
-    intro θ' x u
-    have hfe : (fun θ => M.policy.prob θ x u) =
-        (fun θ => (ℙ[M θ](a[0] = (⟨fun _ => u⟩ : ℕ ⇀ A)[0] |
-          s[0] = (⟨fun _ => x⟩ : ℕ ⇀ S)[0]) : ℝ)) :=
-      funext fun θ'' => (hπeq θ'' 0 ⟨fun _ => x⟩ ⟨fun _ => u⟩).symm
-    have := h₃bound θ' 0 ⟨fun _ => x⟩ ⟨fun _ => u⟩
-    simpa [hfe] using this
   have hφpol : StronglyMeasurable
     (fun z : S × A => ∇[θ] Real.log (M.policy.prob θ z.1 z.2)) := by
     convert hφ using 1
@@ -130,23 +93,15 @@ private lemma main
     funext θ'
     simp only [hπeq θ' 0 ⟨fun _ => z.1⟩ ⟨fun _ => z.2⟩]
   obtain ⟨Ms, hMsUB⟩ := hMs
-  have hMspol : ∀ y u, ‖∇[θ] Real.log (M.policy.prob θ y u)‖ ≤ Ms := by
-    intro y u
-    have hfe : (fun θ' => Real.log (M.policy.prob θ' y u)) =
-        (fun θ' => (ℙ[M θ'](a[0] = (⟨fun _ => u⟩ : ℕ ⇀ A)[0] |
-          s[0] = (⟨fun _ => y⟩ : ℕ ⇀ S)[0]) : ℝ).log) :=
-      funext fun θ' => congrArg Real.log (hπeq θ' 0 ⟨fun _ => y⟩ ⟨fun _ => u⟩).symm
-    have := hMsUB (Set.mem_range_self (⟨fun _ => y⟩, ⟨fun _ => u⟩))
-    simpa [hfe] using this
   obtain ⟨r⟩ := r
   obtain ⟨s⟩ := s
   obtain ⟨a⟩ := a
   obtain rfl : r = fun t ω ↦ (ω t).1 :=
-    funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁.stage_eq t) ω)).symm
+    funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (hfactor.htr.stage_eq t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
-    funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁.stage_eq t) ω)).symm
+    funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (hfactor.htr.stage_eq t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 :=
-    funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁.stage_eq t) ω)).symm
+    funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (hfactor.htr.stage_eq t) ω)).symm
   set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
@@ -160,10 +115,8 @@ private lemma main
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst h₁' t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd h₁' t).aemeasurable⟩)
-  haveI : ∀ θ' t, SinglePSpace (M θ') (a t, s t) := fun θ' t =>
-    h₁.singlePSpace_as (haj := haj) θ' t
-  haveI : ∀ θ' t, SinglePSpace (M θ') (s t) := fun θ' t =>
-    h₁.singlePSpace_s (hac := hacc) θ' t
+  have : ∀ θ' t, SinglePSpace (M θ') (a t, s t) := fun θ' t =>
+    hfactor.htr.singlePSpace_as (haj := hfactor.haj) θ' t
   have hscore : ∀ t (x : S) (u : A),
       gradient (fun θ' : Θ => Real.log (M.policy.prob θ' x u)) θ =
         gradient (fun θ' : Θ => (ℙ[M θ']((a t) = u | (s t) = x) : ℝ).log) θ := by
@@ -182,7 +135,7 @@ private lemma main
     funext z
     exact (hscore t z.1 z.2).symm
   have hmeas : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
-    r k ω + γ * M.Vkd θ γ (s (k + 1) ω) - M.Vkd θ γ (s k ω) := fun k =>
+    r k ω + γ * M.V0 θ γ (s (k + 1) ω) - M.V0 θ γ (s k ω) := fun k =>
     ((Random.Measurable.of.All_Eq.fst h₁' k).add
       (((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp
           (Random.Measurable.of.All_Eq.snd.fst h₁' (k + 1))).const_mul γ)).sub
@@ -190,7 +143,7 @@ private lemma main
         (Random.Measurable.of.All_Eq.snd.fst h₁' k))
   have hbdd : ∀ᵐ ω ∂(M θ),
       BddAbove (Set.range fun j =>
-        |r j ω + γ * M.Vkd θ γ (s (j + 1) ω) - M.Vkd θ γ (s j ω)|) := by
+        |r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω)|) := by
     filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity (M := M) hγ h₁' θ] with ω h1
     refine ⟨(3 / (1 - γ) - 1) * |M.env.R|, ?_⟩
     rintro _ ⟨j, rfl⟩
@@ -198,12 +151,12 @@ private lemma main
     rwa [Real.norm_eq_abs] at this
   have hpt : ∀ᵐ ω ∂(M θ), ∀ t,
     (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
-      (r (t + i) ω + γ * M.Vkd θ γ (s (t + i + 1) ω) - M.Vkd θ γ (s (t + i) ω))) =
+      (r (t + i) ω + γ * M.V0 θ γ (s (t + i + 1) ω) - M.V0 θ γ (s (t + i) ω))) =
     ((γ * ℓ) ^ (id : ℕ → ℕ)) @
-      (fun k : ℕ => r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) - M.Vkd θ γ (s (t + k) ω)) := by
+      (fun k : ℕ => r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) - M.V0 θ γ (s (t + k) ω)) := by
     filter_upwards [hbdd] with ω hb t
     exact MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico
-      (δ := ⟨fun j => r j ω + γ * M.Vkd θ γ (s (j + 1) ω) - M.Vkd θ γ (s j ω)⟩) (t := t) h₀ hb
+      (δ := ⟨fun j => r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω)⟩) (t := t) h₀ hb
   have hexp : ∀ F : ℕ → (ℕ → S) → (ℕ → A) → (ℕ → ℝ) → ℝ,
     (∀ t, Measurable fun ω : ℕ → ℝ × S × A => F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω)) →
     𝔼[r, s, a : M θ](
@@ -244,20 +197,20 @@ private lemma main
     rfl
   have hF₁ : ∀ t, Measurable fun ω : ℕ → ℝ × S × A =>
     (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
-      (r (t + i) ω + γ * M.Vkd θ γ (s (t + i + 1) ω) - M.Vkd θ γ (s (t + i) ω))) := fun t => by
+      (r (t + i) ω + γ * M.V0 θ γ (s (t + i + 1) ω) - M.V0 θ γ (s (t + i) ω))) := fun t => by
     show Measurable fun ω : ℕ → ℝ × S × A =>
       (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i *
-        (r (t + i) ω + γ * M.Vkd θ γ (s (t + i + 1) ω) - M.Vkd θ γ (s (t + i) ω))
+        (r (t + i) ω + γ * M.V0 θ γ (s (t + i + 1) ω) - M.V0 θ γ (s (t + i) ω))
     exact (Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k =>
       (Finset.measurable_sum _ fun i _ => (hmeas (t + i)).const_mul _).const_mul _).const_mul _
   have hF₂ : ∀ t, Measurable fun ω : ℕ → ℝ × S × A =>
     (((γ * ℓ) ^ (id : ℕ → ℕ)) @
-      (fun k : ℕ => r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) - M.Vkd θ γ (s (t + k) ω))) := fun t => by
+      (fun k : ℕ => r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) - M.V0 θ γ (s (t + k) ω))) := fun t => by
     show Measurable fun ω : ℕ → ℝ × S × A => ∑' k, (γ * ℓ) ^ k *
-      (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) - M.Vkd θ γ (s (t + k) ω))
+      (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) - M.V0 θ γ (s (t + k) ω))
     exact Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k => (hmeas (t + k)).const_mul _
   have hδθ : ∀ (s : ℕ → S) (r : ℕ → ℝ) (t : ℕ),
-    (fun k => r (t + k) + γ * M.Vkd θ γ (s (t + k + 1)) - M.Vkd θ γ (s (t + k))) =
+    (fun k => r (t + k) + γ * M.V0 θ γ (s (t + k + 1)) - M.V0 θ γ (s (t + k))) =
       r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:] := by
     intro s r t
     funext k
@@ -272,15 +225,10 @@ private lemma main
     funext ω
     exact congrArg (fun δ => Dot.dot ((γ * ℓ) ^ (id : ℕ → ℕ)) δ)
       (hδθ (fun j => s j ω) (fun j => r j ω) t).symm
-  have hcond : ∀ θ t (x : S) (u : A),
-      M.policy.prob θ x u =
-        (ℙ[M θ]((a t) = u | (s t) = x) : ℝ) :=
-    fun θ t x u =>
-      (ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
-        (M := M) h₁ haj (hfactor θ t x u) (hdens θ t x).1 (hdens θ t x).2).symm
   refine (GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico
     (M := M) (θ := θ) (r := ⟨r⟩) (s := ⟨s⟩) (a := ⟨a⟩)
-    hγ hℓ ⟨h₁, haj, hcond⟩ hπ h₂pol h₃pol h₄ h₅ hφpol hMspol).trans ?_
+    hγ hℓ hfactor hπ h₁ h₃bound h₄ h₅ hφpol
+    (fun sb ab => hMsUB (Set.mem_range_self (sb, ab)))).trans ?_
   symm
   have hFeq :
     (fun t (s : ℕ → S) (a : ℕ → A) (r : ℕ → ℝ) =>
@@ -288,7 +236,7 @@ private lemma main
           (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:]) i)) =
       (fun t s a r =>
         (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
-          (r (t + i) + γ * M.Vkd θ γ (s (t + i + 1)) - M.Vkd θ γ (s (t + i))))) := by
+          (r (t + i) + γ * M.V0 θ γ (s (t + i + 1)) - M.V0 θ γ (s (t + i))))) := by
     funext t s a r
     congr 1
     congr 1
@@ -304,7 +252,7 @@ private lemma main
             ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)))
       hFeq).trans ?_
   refine (hexp (fun t s a r => (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
-      (r (t + i) + γ * M.Vkd θ γ (s (t + i + 1)) - M.Vkd θ γ (s (t + i))))) hF₁).trans
+      (r (t + i) + γ * M.V0 θ γ (s (t + i + 1)) - M.V0 θ γ (s (t + i))))) hF₁).trans
     ((integral_congr_ae ?_).trans
       (hexp (fun t s a r => ((γ * ℓ) ^ (id : ℕ → ℕ)) @
         (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) hFθ).symm)
@@ -314,4 +262,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-02
+-- updated on 2026-11-03

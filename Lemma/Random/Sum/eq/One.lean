@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 

@@ -20,13 +20,14 @@ set_option maxHeartbeats 900000
 
 /--
 Unbiased continuous-action advantage estimate: with
-`V_θ[t] δ k := M.Vkd θ γ (δ k)` and density score `∇ log π`,
+`V_θ[t] δ k := M.V0 θ γ (δ k)` and density score `∇ log π`,
 `∇𝔼[(γ ^ id) @ r] = 𝔼[(γ ^ id) @ fun t ↦ ((γ ^ id) @ (r[t:] + γ • V_θ[t+1] s[t+1:] - V_θ[t] s[t:])) • ∇ log π]`.
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [ReferenceMeasure A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
+  [ReferenceMeasure A] [MeasurableSingletonClass A]
   {M : DensityModel Θ S A}
   {θ : Θ}
   {γ : ℝ}
@@ -54,7 +55,7 @@ private lemma main
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_θ : ℕ ⇀ (ℕ → S) → ℕ → ℝ := ⟨fun _t δ k => M.Vkd θ γ (δ k)⟩
+  let V_θ : ℕ ⇀ (ℕ → S) → ℕ → ℝ := ⟨fun _t δ k => M.V0 θ γ (δ k)⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
       (((γ ^ (id : ℕ → ℕ)) @ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
@@ -134,8 +135,8 @@ private lemma main
   -- ∑ γ^t • fderiv(∫r) = ∑ γ^t • ∫ (∑ γ^k δ) • fderiv log
   have hchain :
       ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
-        ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) -
-          M.Vkd θ γ (s (t + k) ω))) •
+        ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+          M.V0 θ γ (s (t + k) ω))) •
             fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
     have hTSum :=
       TSum_SMul.eq.Integral_Fderiv_Vkd.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
@@ -153,7 +154,7 @@ private lemma main
     exact hQδ.trans hgae.symm
   have hmeas : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
       (fun (s : ℕ → S) (_ : ℕ → A) (r : ℕ → ℝ) (k : ℕ) =>
-          r k + γ * M.Vkd θ γ (s (k + 1)) - M.Vkd θ γ (s k))
+          r k + γ * M.V0 θ γ (s (k + 1)) - M.V0 θ γ (s k))
         (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) k := fun k =>
     ((Random.Measurable.of.All_Eq.fst h₁ k).add
       (((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp
@@ -167,7 +168,7 @@ private lemma main
   have hAdvExp :=
     Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.All_Eq_Joint.All_EqWithDensity
       (M := M) (θ := θ) (γ := γ)
-      (X := fun s _ r k => r k + γ * M.Vkd θ γ (s (k + 1)) - M.Vkd θ γ (s k))
+      (X := fun s _ r k => r k + γ * M.V0 θ γ (s (k + 1)) - M.V0 θ γ (s k))
       (B := Bδ) (Ms := Ms) h₀ h₁ hmeas hbd hφg hMsg
   refine hLHS.trans ((congrArg L hchain).trans (hAdvExp.trans ?_))
   -- rewrite ∑' sugar into Dot / V_θ form
@@ -180,8 +181,8 @@ private lemma main
   change
       (∑' t, γ ^ t •
           (((fun k : ℕ => γ ^ k) @
-              (fun k => integ.1 (t + k) + γ * M.Vkd θ γ (integ.2.1 (t + k + 1)) -
-                M.Vkd θ γ (integ.2.1 (t + k)))) •
+              (fun k => integ.1 (t + k) + γ * M.V0 θ γ (integ.2.1 (t + k + 1)) -
+                M.V0 θ γ (integ.2.1 (t + k)))) •
             ∇[θ] Real.log (M.policy.prob θ (integ.2.1 t) (integ.2.2 t)))) =
         ((γ ^ (id : ℕ → ℕ)) @ fun t ↦
           (((γ ^ (id : ℕ → ℕ)) @
@@ -199,3 +200,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-03

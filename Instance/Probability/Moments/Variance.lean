@@ -1,12 +1,12 @@
 import Mathlib.Probability.Independence.Integration
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 import Theorem.Function
 open MeasureTheory
 
 
 /-!
 [sympy.Variance / sympy.Covariance](https://github.com/sympy/sympy/blob/master/sympy/stats/symbolic_probability.py)
-for real random variables, built on `Expectation.ofRV` (the `𝔼[x: π](…)` of `Syntax.Probability.JointRv.Part6`)
+for real random variables, built on `Expectation.ofRV` (the `𝔼[x: π](…)` of `Syntax.Probability.Expectation.Elab`)
 with the `Expectation ℝ` (Bochner) instance. Only the weak `PSpace` is needed.
 -/
 

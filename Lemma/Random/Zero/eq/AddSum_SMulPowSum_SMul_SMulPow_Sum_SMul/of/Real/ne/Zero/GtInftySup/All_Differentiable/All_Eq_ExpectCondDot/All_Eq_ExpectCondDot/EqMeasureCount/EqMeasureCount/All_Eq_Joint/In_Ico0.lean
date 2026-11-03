@@ -35,8 +35,6 @@ private lemma main
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₆ : (M θ).real (s 0 ⁻¹' {x}) ≠ 0)
-  (hP : ∀ θ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0)
-  (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0)
   (n : ℕ) :
 -- imply
   ∇[θ] V θ 0 x =
@@ -85,7 +83,7 @@ private lemma main
         have hReach := RealPreimageS.ne.Zero.of.NePn_0.Ne0Real_Preimage (M := M) θ n x y h₁ h₆ hy
         have h := Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico
           («\sf{s}» := fun _ ↦ y)
-          h₀ h₁ (Q := Qloc) (V := Vloc) hQ_expect hV_expect h₄ h₅ hReach hP (fun θ u => hπ θ y u)
+          h₀ h₁ (Q := Qloc) (V := Vloc) hQ_expect hV_expect h₄ h₅ hReach
         have hSingle : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
           SinglePSpace.of.Measurable.Measurable (Random.Measurable.of.All_Eq.snd.snd h₁ t) (Random.Measurable.of.All_Eq.snd.fst h₁ t)
         have hπ_eq : ∀ u, ∇[θ] (ℙ[M θ]((a n) = u | (s n) = y) : ℝ) = ∇[θ] M.policy.prob θ y u := by
@@ -128,4 +126,4 @@ private lemma main
 
 
 -- created on 2023-03-30
--- updated on 2026-11-02
+-- updated on 2026-11-03

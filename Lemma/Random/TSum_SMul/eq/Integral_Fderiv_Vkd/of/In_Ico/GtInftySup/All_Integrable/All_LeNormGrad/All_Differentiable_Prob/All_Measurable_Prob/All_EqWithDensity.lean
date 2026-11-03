@@ -12,14 +12,14 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Dens
 
 
 /--
-`∑' t, γ ^ t • fderiv (∫ r[t]) = ∫ fderiv Vkd ∂ init`.
+`∑' t, γ ^ t • fderiv (∫ r[t]) = ∫ fderiv V0 ∂ init`.
 Continuous-action counterpart of
 `Random.TSum_SMul.eq.Sum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob`.
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [ReferenceMeasure A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}
   {γ : ℝ}
   {g : S → A → ℝ}
@@ -38,14 +38,14 @@ private lemma main
   (θ : Θ) :
 -- imply
   ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
-    ∫ x, fderiv ℝ (fun θ => M.Vkd θ γ x) θ ∂M.env.init := by
+    ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂M.env.init := by
 -- proof
   have := M.env.init_prob
   have hGet :=
     GetTSum_SMul.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
       (M := M) h₀ h₁ hπ h₂ h₃ h₄ h₅ θ
   have hobj : (fun θ => ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ)) =
-      fun θ => ∫ x, M.Vkd θ γ x ∂M.env.init :=
+      fun θ => ∫ x, M.V0 θ γ x ∂M.env.init :=
     funext fun θ =>
       (Integral_Vkd.eq.TSum_MulPowIntegral_R.of.In_Ico.All_EqWithDensity
         (M := M) h₀ h₁ hπ θ).symm
@@ -60,15 +60,15 @@ private lemma main
   obtain ⟨C, hC⟩ :=
     GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
       (M := M) h₂ hgrad h₄ hsup h₀ hπ
-  have hCb : ∀ y, ‖fderiv ℝ (fun θ => M.Vkd θ γ y) θ‖ ≤ C :=
+  have hCb : ∀ y, ‖fderiv ℝ (fun θ => M.V0 θ γ y) θ‖ ≤ C :=
     fun y => by
       have h := hC ⟨(θ, y), rfl⟩
       simpa [gradient, LinearIsometryEquiv.norm_map] using h
-  have hI : HasFDerivAt (fun θ => ∫ x, M.Vkd θ γ x ∂M.env.init)
-      (∫ x, fderiv ℝ (fun θ => M.Vkd θ γ x) θ ∂M.env.init) θ :=
+  have hI : HasFDerivAt (fun θ => ∫ x, M.V0 θ γ x ∂M.env.init)
+      (∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂M.env.init) θ :=
     hasFDerivAt_integral_of_dominated_of_fderiv_le
-      (F := fun θ x => M.Vkd θ γ x)
-      (F' := fun θ x => fderiv ℝ (fun θ => M.Vkd θ γ x) θ)
+      (F := fun θ x => M.V0 θ γ x)
+      (F' := fun θ x => fderiv ℝ (fun θ => M.V0 θ γ x) θ)
       (s := Set.univ) (bound := fun _ => C) Filter.univ_mem
       (Filter.Eventually.of_forall fun θ' =>
         (Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ' γ).aestronglyMeasurable)
@@ -86,9 +86,10 @@ private lemma main
       (integrable_const _)
       (Filter.Eventually.of_forall fun y θ' _ => (hV y θ').differentiableAt.hasFDerivAt)
   have : fderiv ℝ (fun θ => ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ)) θ =
-      ∫ x, fderiv ℝ (fun θ => M.Vkd θ γ x) θ ∂M.env.init := by
+      ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂M.env.init := by
     rw [hobj, hI.fderiv]
   exact hGet.fderiv.symm.trans this
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-03

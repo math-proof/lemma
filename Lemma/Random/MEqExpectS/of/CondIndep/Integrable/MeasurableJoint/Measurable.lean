@@ -2,7 +2,7 @@ import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Real
 import Mathlib.Probability.Independence.Conditional
 import Initialize.Tactic.Attr.Basic
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 open MeasureTheory ProbabilityTheory
 
 

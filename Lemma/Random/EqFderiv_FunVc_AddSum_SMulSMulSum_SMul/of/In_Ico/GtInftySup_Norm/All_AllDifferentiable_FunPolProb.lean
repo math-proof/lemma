@@ -1,5 +1,5 @@
-import Lemma.Random.Vc.eq.Sum_MulProbQc.of.In_Ico
-import Lemma.Random.DifferentiableAt.EqFderiv_FunQc_SMulSum_SMulTFderivVc.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol
+import Lemma.Random.Vk.eq.Sum_MulProbQk.of.In_Ico.All_Measurable_Prob
+import Lemma.Random.Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -16,20 +16,49 @@ private lemma main
   (h₁ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₂ : γ ∈ Set.Ico 0 1)
   (x : S)
-  (θ : Θ)
-  (hP : ∀ θ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0)
-  (hπ : ∀ θ u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) * M.policy.prob θ x u ≠ 0) :
+  (θ : Θ) :
 -- imply
-  fderiv ℝ (fun θ => M.Vc θ γ x) θ =
-    ∑ u, M.Qc θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ +
-    γ • ∑ y, M.P1 θ x y • fderiv ℝ (fun θ => M.Vc θ γ y) θ := by
+  fderiv ℝ (fun θ => M.V0 θ γ x) θ =
+    ∑ u, M.Qk θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ +
+    γ • ∑ y, M.P1 θ x y • fderiv ℝ (fun θ => M.V0 θ γ y) θ := by
 -- proof
-  have hQ := fun u =>
-    DifferentiableAt.EqFderiv_FunQc_SMulSum_SMulTFderivVc.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol
-      (M := M) h₀ h₁ h₂ x u θ (fun θ y => hP θ y) (fun θ => hπ θ u)
-  rw [funext fun θ => Vc.eq.Sum_MulProbQc.of.In_Ico (M := M) h₂ θ x (hP θ x),
-    fderiv_fun_sum fun u _ => ((h₀ x u) θ).fun_mul (hQ u).1]
-  simp_rw [fderiv_fun_mul ((h₀ _ _) θ) (hQ _).1, (hQ _).2]
+  have := M.env.trans_markov
+  have hπm : ∀ θ u, Measurable (fun x : S => M.policy.prob θ x u) := fun _ _ =>
+    measurable_of_finite _
+  have hb : (fun θ => M.V0 θ γ x) = fun θ => ∑ u, M.policy.prob θ x u * M.Qk θ γ x u := by
+    funext θ'
+    change M.Vk θ' γ x = ∑ u, M.policy.prob θ' x u * M.Qk θ' γ x u
+    exact Vk.eq.Sum_MulProbQk.of.In_Ico.All_Measurable_Prob (M := M) hπm h₂ θ' x
+  have hVdiff : ∀ y, DifferentiableAt ℝ (fun θ => M.V0 θ γ y) θ := fun y =>
+    (Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb (M := M) h₀ h₁ h₂ y) θ
+  have hT : ∀ θ' u, ∫ y, M.V0 θ' γ y ∂(M.env.trans (x, u)) =
+      ∑ y, (M.env.trans (x, u)).real {y} * M.V0 θ' γ y := fun θ' u => by
+    rw [integral_fintype Integrable.of_finite]
+    simp [smul_eq_mul, mul_comm]
+  have hQk_eq : ∀ u, (fun θ => M.Qk θ γ x u) =
+      fun θ => M.rk x u + γ * ∑ y, (M.env.trans (x, u)).real {y} * M.V0 θ γ y := fun u => by
+    funext θ'
+    calc
+      M.Qk θ' γ x u
+          = M.rk x u + γ * ∫ y, M.V0 θ' γ y ∂(M.env.trans (x, u)) := rfl
+      _ = M.rk x u + γ * ∑ y, (M.env.trans (x, u)).real {y} * M.V0 θ' γ y := by
+          rw [hT]
+  have hQdiff : ∀ u, DifferentiableAt ℝ (fun θ => M.Qk θ γ x u) θ := fun u => by
+    have hs : DifferentiableAt ℝ
+        (fun θ => ∑ y, (M.env.trans (x, u)).real {y} * M.V0 θ γ y) θ :=
+      DifferentiableAt.fun_sum fun y _ => (hVdiff y).const_mul _
+    exact (hQk_eq u ▸ (hs.const_mul γ).const_add _)
+  have hQf : ∀ u, fderiv ℝ (fun θ => M.Qk θ γ x u) θ =
+      γ • ∑ y, (M.env.trans (x, u)).real {y} • fderiv ℝ (fun θ => M.V0 θ γ y) θ := by
+    intro u
+    have hs : DifferentiableAt ℝ
+        (fun θ => ∑ y, (M.env.trans (x, u)).real {y} * M.V0 θ γ y) θ :=
+      DifferentiableAt.fun_sum fun y _ => (hVdiff y).const_mul _
+    rw [hQk_eq u, fderiv_const_add, fderiv_const_mul hs,
+      fderiv_fun_sum fun y _ => (hVdiff y).const_mul _]
+    simp [fderiv_const_mul (hVdiff _), Finset.smul_sum, smul_smul, smul_comm]
+  rw [hb, fderiv_fun_sum fun u _ => ((h₀ x u) θ).fun_mul (hQdiff u)]
+  simp_rw [fderiv_fun_mul ((h₀ _ _) θ) (hQdiff _), hQf]
   rw [Finset.sum_add_distrib, add_comm]
   congr 1
   unfold Model.P1
@@ -41,4 +70,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-20
+-- updated on 2026-11-03

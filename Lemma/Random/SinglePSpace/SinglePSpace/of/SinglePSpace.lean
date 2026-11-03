@@ -2,7 +2,7 @@ import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 open MeasureTheory
 
 

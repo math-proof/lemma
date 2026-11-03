@@ -5,7 +5,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Dens
 
 /--
 Almost surely every temporal-difference residual
-`δ[j] = r[j] + γ * Vkd(s[j+1]) - Vkd(s[j])` is bounded by `(3 / (1 - γ) - 1) * |R|`
+`δ[j] = r[j] + γ * V0(s[j+1]) - V0(s[j])` is bounded by `(3 / (1 - γ) - 1) * |R|`
 (continuous-action model).
 -/
 @[path]
@@ -21,12 +21,12 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ) :
 -- imply
-  ∀ᵐ ω ∂(M θ), ∀ j, ‖r j ω + γ * M.Vkd θ γ (s (j + 1) ω) - M.Vkd θ γ (s j ω)‖ ≤
+  ∀ᵐ ω ∂(M θ), ∀ j, ‖r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω)‖ ≤
     (3 / (1 - γ) - 1) * |M.env.R| := by
 -- proof
   filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) θ] with ω hr j
   calc
-    _ ≤ ‖r j ω‖ + ‖γ * M.Vkd θ γ (s (j + 1) ω)‖ + ‖M.Vkd θ γ (s j ω)‖ :=
+    _ ≤ ‖r j ω‖ + ‖γ * M.V0 θ γ (s (j + 1) ω)‖ + ‖M.V0 θ γ (s j ω)‖ :=
       (norm_sub_le _ _).trans (by gcongr; apply norm_add_le)
     _ ≤ (3 / (1 - γ) - 1) * |M.env.R| := by
       rw [norm_mul, Real.norm_of_nonneg h₀.1]
@@ -52,3 +52,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-02

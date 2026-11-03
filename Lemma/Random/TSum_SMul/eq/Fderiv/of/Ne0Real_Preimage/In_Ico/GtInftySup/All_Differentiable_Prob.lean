@@ -56,7 +56,7 @@ private lemma main
     apply cond_r_W h₁ M θ' t k x h
   simp_rw [hk]
   rw [Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) t x θ h₀ h₁ h₂ h₃ h₄ h₅,
-    (HasFDerivAt_FunVc_TSum_SMulPowFderiv_FunW.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol (M := M) h₂ h₃ h₀ x θ h₅).fderiv]
+    (HasFDerivAt_FunVc_TSum_SMulPowFderiv_FunW.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol (M := M) h₂ h₃ h₀ x θ).fderiv]
 
 
 -- created on 2026-10-06

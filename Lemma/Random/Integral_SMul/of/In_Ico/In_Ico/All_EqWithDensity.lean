@@ -10,7 +10,8 @@ set_option maxHeartbeats 800000
 
 private lemma integral_delta_smul_eq_zero
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [CompleteSpace Θ]
-  [MeasurableSpace S] [ReferenceMeasure A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
+  [ReferenceMeasure A] [MeasurableSingletonClass A]
   {M : DensityModel Θ S A} {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
   {s : ℕ → (ℕ → ℝ × S × A) → S}
@@ -24,7 +25,7 @@ private lemma integral_delta_smul_eq_zero
   (ψ : S → A → Θ →L[ℝ] ℝ)
   (hψ : StronglyMeasurable (Function.uncurry ψ))
   (hMs : ∃ Ms : ℝ, ∀ y u, ‖ψ y u‖ ≤ Ms) :
-  ∫ ω, (r (n + 1) ω + γ * M.Vkd θ γ (s (n + 1 + 1) ω) - M.Vkd θ γ (s (n + 1) ω)) •
+  ∫ ω, (r (n + 1) ω + γ * M.V0 θ γ (s (n + 1 + 1) ω) - M.V0 θ γ (s (n + 1) ω)) •
     ψ (s t ω) (a t ω) ∂(M θ) = 0 := by
   obtain ⟨Ms, hMs⟩ := hMs
   refine ContinuousLinearMap.ext fun v => ?_
@@ -37,7 +38,7 @@ private lemma integral_delta_smul_eq_zero
   set Bδ : ℝ := (3 / (1 - γ) - 1) * |M.env.R|
   have hInt :
       Integrable (fun ω =>
-        (r (n + 1) ω + γ * M.Vkd θ γ (s (n + 1 + 1) ω) - M.Vkd θ γ (s (n + 1) ω)) •
+        (r (n + 1) ω + γ * M.V0 θ γ (s (n + 1 + 1) ω) - M.V0 θ γ (s (n + 1) ω)) •
           ψ (s t ω) (a t ω)) (M θ) := by
     refine Integrable.of_bound
       ((((Random.Measurable.of.All_Eq.fst h₁ (n + 1)).add
@@ -70,7 +71,8 @@ GAE reduction under the continuous-action path law:
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [CompleteSpace Θ]
-  [MeasurableSpace S] [ReferenceMeasure A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
+  [ReferenceMeasure A] [MeasurableSingletonClass A]
   {M : DensityModel Θ S A}
   {γ c : ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
@@ -87,18 +89,18 @@ private lemma main
   (hψ : StronglyMeasurable (Function.uncurry ψ))
   (hMs : ∃ Ms : ℝ, ∀ y u, ‖ψ y u‖ ≤ Ms) :
 -- imply
-  ∫ ω, (∑' k, c ^ k * (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) -
-    M.Vkd θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) ∂(M θ) =
-    ∫ ω, (r t ω + γ * M.Vkd θ γ (s (t + 1) ω) - M.Vkd θ γ (s t ω)) •
+  ∫ ω, (∑' k, c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+    M.V0 θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) ∂(M θ) =
+    ∫ ω, (r t ω + γ * M.V0 θ γ (s (t + 1) ω) - M.V0 θ γ (s t ω)) •
       ψ (s t ω) (a t ω) ∂(M θ) := by
 -- proof
   classical
   obtain ⟨Ms, hMs⟩ := hMs
   let F : ℕ → (ℕ → ℝ × S × A) → (Θ →L[ℝ] ℝ) := fun k ω =>
-    (c ^ k * (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) - M.Vkd θ γ (s (t + k) ω))) •
+    (c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) - M.V0 θ γ (s (t + k) ω))) •
       ψ (s t ω) (a t ω)
-  have hF : ∀ k ω, F k ω = c ^ k • ((r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) -
-      M.Vkd θ γ (s (t + k) ω)) • ψ (s t ω) (a t ω)) := fun k ω => by
+  have hF : ∀ k ω, F k ω = c ^ k • ((r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+      M.V0 θ γ (s (t + k) ω)) • ψ (s t ω) (a t ω)) := fun k ω => by
     simp only [F, mul_smul]
   set Bδ : ℝ := (3 / (1 - γ) - 1) * |M.env.R|
   have hB0 : 0 ≤ Bδ := by
@@ -107,7 +109,7 @@ private lemma main
     have hγ : 0 < 1 - γ := sub_pos.2 h₀.2
     exact (one_le_div₀ hγ).2 (by linarith [h₀.1, h₀.2])
   have hδm : ∀ k, Measurable fun ω =>
-      r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) - M.Vkd θ γ (s (t + k) ω) := fun k =>
+      r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) - M.V0 θ γ (s (t + k) ω) := fun k =>
     ((Random.Measurable.of.All_Eq.fst h₁ (t + k)).add
       (((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp
         (Random.Measurable.of.All_Eq.snd.fst h₁ (t + k + 1))).const_mul γ)).sub
@@ -143,16 +145,16 @@ private lemma main
     simp_rw [hF]
     rw [integral_smul]
     have := integral_delta_smul_eq_zero (M := M) t (t + k') h₀ h₁ hπ (Nat.le_add_right t k') θ ψ hψ ⟨Ms, hMs⟩
-    rw [show (fun ω => (r (t + k'.succ) ω + γ * M.Vkd θ γ (s (t + k'.succ + 1) ω) -
-        M.Vkd θ γ (s (t + k'.succ) ω)) • ψ (s t ω) (a t ω)) = fun ω => (r (t + k' + 1) ω +
-        γ * M.Vkd θ γ (s (t + k' + 1 + 1) ω) - M.Vkd θ γ (s (t + k' + 1) ω)) • ψ (s t ω) (a t ω)
+    rw [show (fun ω => (r (t + k'.succ) ω + γ * M.V0 θ γ (s (t + k'.succ + 1) ω) -
+        M.V0 θ γ (s (t + k'.succ) ω)) • ψ (s t ω) (a t ω)) = fun ω => (r (t + k' + 1) ω +
+        γ * M.V0 θ γ (s (t + k' + 1 + 1) ω) - M.V0 θ γ (s (t + k' + 1) ω)) • ψ (s t ω) (a t ω)
         from rfl, this, smul_zero]
   have h0 : ∑' k, ∫ ω, F k ω ∂(M θ) = ∫ ω, F 0 ω ∂(M θ) := tsum_eq_single 0 hzero
-  have hae : ∀ᵐ ω ∂(M θ), (∑' k, c ^ k * (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) -
-        M.Vkd θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) = ∑' k, F k ω := by
+  have hae : ∀ᵐ ω ∂(M θ), (∑' k, c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+        M.V0 θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) = ∑' k, F k ω := by
     filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity (M := M) h₀ h₁ θ] with ω h
-    have hs : Summable (fun k => c ^ k * (r (t + k) ω + γ * M.Vkd θ γ (s (t + k + 1) ω) -
-        M.Vkd θ γ (s (t + k) ω))) := by
+    have hs : Summable (fun k => c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+        M.V0 θ γ (s (t + k) ω))) := by
       refine Summable.of_norm_bounded ((summable_geometric_of_lt_one h₂.1 h₂.2).mul_right Bδ)
         fun k => ?_
       rw [norm_mul, norm_pow, Real.norm_of_nonneg h₂.1]
@@ -163,3 +165,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-03

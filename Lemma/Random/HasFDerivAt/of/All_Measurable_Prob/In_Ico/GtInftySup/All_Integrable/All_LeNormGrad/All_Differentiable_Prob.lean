@@ -8,7 +8,7 @@ open MeasureTheory PolicyGradient Random Set
 
 
 /--
-Derivative of the closed-form state value with continuous states and a density policy: `θ ↦ Vkd θ γ x` has derivative
+Derivative of the closed-form state value with continuous states and a density policy: `θ ↦ V0 θ γ x` has derivative
 `∑' k, γ ^ k • fderiv ℝ (fun θ ↦ Wkd θ k x) θ`.
 Continuous-action counterpart of `Random.HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob`.
 `h₀`, `h₁`: `θ ↦ π_θ(u | x)` is differentiable and its gradient is dominated by `g x u`; `h₂`, `h₃`: `g x` is integrable
@@ -17,7 +17,8 @@ over the actions, uniformly in the state (this replaces `|A| * sup ‖∇π‖ <
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [ReferenceMeasure A]
+  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}
   {γ : ℝ}
   {g : S → A → ℝ}
@@ -31,13 +32,15 @@ private lemma main
   (x : S)
   (θ : Θ) :
 -- imply
-  HasFDerivAt (fun θ => M.Vkd θ γ x) (∑' k, γ ^ k • fderiv ℝ (fun θ => M.Wkd θ k x) θ) θ := by
+  HasFDerivAt (fun θ => M.V0 θ γ x) (∑' k, γ ^ k • fderiv ℝ (fun θ => M.Wkd θ k x) θ) θ := by
 -- proof
   obtain ⟨Cg, hCg⟩ := id h₃
   have hg : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg := fun x => hCg ⟨x, rfl⟩
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using h₁ θ x u
   have hW := fun k => Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob (M := M) h₅ h₀ hC h₂ hg k x
+  have hEq : (fun θ => M.V0 θ γ x) = fun θ => ∑' k, γ ^ k * M.Wkd θ k x := rfl
+  rw [hEq]
   apply hasFDerivAt_tsum (Summable_MulPowMulAdd_1.of.In_Ico h₄ (Cg * |M.env.R|))
     (fun k θ => ((hW k).1 θ).hasFDerivAt.const_mul (γ ^ k))
     (fun k θ => by
@@ -47,3 +50,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-03

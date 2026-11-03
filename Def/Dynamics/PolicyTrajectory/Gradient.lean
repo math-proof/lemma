@@ -1,4 +1,5 @@
 import Theorem.Dynamics.PolicyTrajectory
+import Def.Dynamics.PolicyTrajectory.Continuous
 import Def.Order.Miscellaneous
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
@@ -12,11 +13,12 @@ open MeasureTheory ProbabilityTheory Finset Filter Topology
 Definitions only (repo rule: `sympy/` holds definitions, theorems live in `Lemma/`):
 
 * `Pn θ n x y = ℙ(s[t+n] = y | s[t] = x)` and `P1 θ x y = ℙ(s[t+1] = y | s[t] = x)`;
-* the state / action value functions `V`, `Q` and their time-free forms `Vc`, `Qc`.
+* the state / action value functions `V`, `Q` and their time-free forms `V0`, `Q0`
+  (`V0 θ γ x = ∑' k, γ ^ k * Wk θ k x`, and `V θ γ t x = V0 θ γ x`).
 
-All facts about these (Chapman–Kolmogorov, differentiability of the stage expectation / `Vc`, `Qc`, the gradient of the
-Bellman equation, finite-sum forms of expectations, `V = Vc` on reachable states, …) live in
-`Lemma/Random/*`, `Lemma/Tensor/*` and `Lemma/Real/*`; see the 2026-10-06 breaking-change entries
+All facts about these (Chapman–Kolmogorov, differentiability of the stage expectation / `V0`, `Q0`, the gradient of the
+Bellman equation, finite-sum forms of expectations, equality of `V0` to the conditional expectation on reachable
+states, …) live in `Lemma/Random/*`, `Lemma/Tensor/*` and `Lemma/Real/*`; see the 2026-10-06 breaking-change entries
 in `AGENTS.md` for the name maps.
 -/
 
@@ -38,17 +40,18 @@ noncomputable def Pn (M : Model Θ S A) (θ : Θ) (n : ℕ) (x y : S) : ℝ :=
 noncomputable def P1 (M : Model Θ S A) (θ : Θ) (x y : S) : ℝ :=
   ∑ u, M.policy.prob θ x u * (M.env.trans (x, u)).real {y}
 
-/-- State-value function:
-`V θ γ t s_t = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = s_t)`,
-where `(r t ω, s t ω, _) = ω t` on the trajectory space. -/
-noncomputable def V (M : Model Θ S A) (θ : Θ) (γ : ℝ) (t : ℕ) (s_t : S) : ℝ :=
-  let r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω => (ω t).1
-  let s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω => (ω t).2.1
-  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = s_t)
+/-- Time-homogeneous state-value as the discounted `Wk` series, defined on all states:
+`V0 θ γ x = ∑' k, γ ^ k * Wk θ k x` (same formula as `Vk`).
+Agrees with the conditional expectation `𝔼[(γ ^ (id : ℕ → ℕ)) @ r[0:] | s 0 = x]` whenever
+`ℙ(s[0] = x) ≠ 0`. -/
+noncomputable def V0 (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
+  ∑' k, γ ^ k * M.Wk θ k x
 
-/-- Time-free closed form of the state-value function: `Vc θ γ x = V θ γ 0 x`. -/
-noncomputable def Vc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
-  M.V θ γ 0 x
+set_option linter.unusedVariables false in
+/-- Time-homogeneous state-value function:
+`V θ γ t s_t = V0 θ γ s_t` (independent of `t`, matching time-homogeneity of `Wk`). -/
+noncomputable def V (M : Model Θ S A) (θ : Θ) (γ : ℝ) (t : ℕ) (s_t : S) : ℝ :=
+  M.V0 θ γ s_t
 
 /-- Action-value function:
 `Q θ γ t s_t a_t = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = s_t ∧ a t = a_t)`,
@@ -59,8 +62,8 @@ noncomputable def Q (M : Model Θ S A) (θ : Θ) (γ : ℝ) (t : ℕ) (s_t : S) 
   let a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω => (ω t).2.2
   𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = s_t ∧ a t = a_t)
 
-/-- Time-free closed form of the action-value function: `Qc θ γ x u = Q θ γ 0 x u`. -/
-noncomputable def Qc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
+/-- Time-free closed form of the action-value function: `Q0 θ γ x u = Q θ γ 0 x u`. -/
+noncomputable def Q0 (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
   M.Q θ γ 0 x u
 
 end Model

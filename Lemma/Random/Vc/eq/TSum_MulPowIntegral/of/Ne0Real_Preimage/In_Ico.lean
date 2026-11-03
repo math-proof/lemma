@@ -1,35 +1,75 @@
+import Def.Dynamics.PolicyTrajectory.Continuous
 import Def.Dynamics.PolicyTrajectory.Gradient
-import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
+import Lemma.Random.NormClip.le.AbsR
+import Lemma.Random.StronglyMeasurableClip
+import Lemma.Random.W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable
+import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
+set_option linter.unusedVariables false
 
+
+private lemma Wk_eq_integral_Kf
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
+  (M : Model Θ S A) (θ : Θ) (k : ℕ) (y : S) :
+  M.Wk θ k y =
+    ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y) := by
+  have hfC : StronglyMeasurable fun w : ℝ × S × A ↦ clip w.1 (-M.env.R) M.env.R :=
+    Random.StronglyMeasurableClip (M := M)
+  have hCC : ∀ w : ℝ × S × A, ‖clip w.1 (-M.env.R) M.env.R‖ ≤ |M.env.R| :=
+    fun w => NormClip.le.AbsR (M := M) w
+  induction k generalizing y with
+  | zero =>
+    have := M.env.reward_markov
+    simpa [Model.Wk, Model.rk,
+      show M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 0 =
+        (fun z ↦ clip z.1 (-M.env.R) M.env.R) from rfl] using
+      (W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) hfC hCC θ y).symm
+  | succ k ih =>
+    have := M.env.trans_markov
+    have hW : ∀ u, ∫ y', M.Wk θ k y' ∂(M.env.trans (y, u)) =
+        ∑ y', (M.env.trans (y, u)).real {y'} * M.Wk θ k y' := fun u => by
+      rw [integral_fintype Integrable.of_finite]
+      simp [smul_eq_mul, mul_comm]
+    calc
+      M.Wk θ (k + 1) y
+          = ∑ u, M.policy.prob θ y u * ∫ y', M.Wk θ k y' ∂(M.env.trans (y, u)) := rfl
+      _ = ∑ u, M.policy.prob θ y u *
+            ∑ y', (M.env.trans (y, u)).real {y'} * M.Wk θ k y' := by
+              refine Finset.sum_congr rfl fun u _ => ?_
+              rw [hW]
+      _ = ∑ u, M.policy.prob θ y u *
+            ∑ y', (M.env.trans (y, u)).real {y'} *
+              ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y') := by
+              refine Finset.sum_congr rfl fun u _ => ?_
+              refine congrArg _ (Finset.sum_congr rfl fun y' _ => ?_)
+              rw [ih]
+      _ = ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) (k + 1) z ∂(M.stageK θ y) :=
+            (WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
+              (M := M) hfC hCC θ k y).symm
 
 /--
-On a state reachable at time 0 (ℙ(s[0] = y) ≠ 0), the time-free value equals the
-kernel series:
-Vc θ γ y = ∑' k, γ ^ k * ∫ z, Kf θ (clip ·.1) k z ∂(stageK θ y).
+The time-free value equals the kernel series on every state (no reachability hypothesis):
+`V0 θ γ y = ∑' k, γ ^ k * ∫ z, Kf θ (clip ·.1) k z ∂(stageK θ y)`.
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}
   {γ : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (θ : Θ)
-  (y : S)
-  (hP : (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0) :
+  (y : S) :
 -- imply
-  M.Vc θ γ y = ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y) := by
+  M.V0 θ γ y =
+    ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y) := by
 -- proof
-  let r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
-  let s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
-  let a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
-  have h₁ : ∀ t, (· t) = (r t, s t, a t) := fun t => funext fun ω => rfl
-  have hP' : (M θ).real (s 0 ⁻¹' {y}) ≠ 0 := hP
-  unfold Model.Vc Model.V
-  exact V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) (r := r) (s := s) (a := a)
-    θ 0 y h₀ h₁ hP'
+  unfold Model.V0
+  refine tsum_congr fun k => ?_
+  rw [Wk_eq_integral_Kf (M := M) θ k y]
 
 
 -- created on 2026-10-11
--- updated on 2026-10-26
+-- updated on 2026-11-03

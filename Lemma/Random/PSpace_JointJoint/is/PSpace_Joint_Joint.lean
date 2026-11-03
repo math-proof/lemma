@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Integral.Lebesgue.Map
-import Syntax.Probability.JointRv.Part6
+import Syntax.Probability.Expectation.Elab
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 

@@ -21,7 +21,7 @@ On a finite state space with measurable singletons every function of the state i
 continuous-state version simplify: joint measurability of the policy becomes measurability in the action (h₅), and the
 nonnegativity, measurability and density hypotheses on `p` all follow from h₆.
 h₁: θ ↦ π_θ(u | x) is differentiable; h₂, h₃, h₄: its gradient is dominated by `g x u`, where `g x` is integrable over
-the actions uniformly in the state. `V = Vkd`, `Q = Qkd` are the closed-form values of
+the actions uniformly in the state. `V = V0`, `Q = Q0` are the closed-form values of
 `Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3`.
 -/
 @[path]
@@ -45,9 +45,9 @@ private lemma main
   (h₅ : ∀ θ x, Measurable (M.policy.prob θ x))
   (h₆ : ∀ x u y, (M.env.trans (x, u)).real {y} = p x u y) :
 -- imply
-  ∇[θ] M.Vkd θ γ («\sf{s}» t) =
-    ∫ u, M.Qkd θ γ («\sf{s}» t) u • ∇[θ] M.policy.prob θ («\sf{s}» t) u ∂ReferenceMeasure.measure +
-      γ • (∑ «\sf{s}» (t + 1), M.P1kd θ p («\sf{s}» t) («\sf{s}» (t + 1)) • ∇[θ] M.Vkd θ γ («\sf{s}» (t + 1))) := by
+  ∇[θ] M.V0 θ γ («\sf{s}» t) =
+    ∫ u, M.Q0 θ γ («\sf{s}» t) u • ∇[θ] M.policy.prob θ («\sf{s}» t) u ∂ReferenceMeasure.measure +
+      γ • (∑ «\sf{s}» (t + 1), M.P1kd θ p («\sf{s}» t) («\sf{s}» (t + 1)) • ∇[θ] M.V0 θ γ («\sf{s}» (t + 1))) := by
 -- proof
   let : ReferenceMeasure S := ReferenceMeasure.of Measure.count
   have := M.env.trans_markov

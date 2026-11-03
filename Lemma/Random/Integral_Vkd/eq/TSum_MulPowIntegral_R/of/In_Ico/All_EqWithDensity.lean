@@ -4,15 +4,16 @@ import Lemma.Random.Measurable_Wkd.of.All_Measurable_Prob
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random Real
+set_option maxHeartbeats 900000
 
 
 /--
-The init-average of `Vkd` is the discounted expected path return:
-`∫ Vkd θ γ ∂init = ∑' t, γ ^ t * ∫ r[t]`.
+The init-average of `V0` is the discounted expected path return:
+`∫ V0 θ γ ∂init = ∑' t, γ ^ t * ∫ r[t]`.
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
@@ -24,7 +25,7 @@ private lemma main
   (hπ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
   (θ : Θ) :
 -- imply
-  ∫ x, M.Vkd θ γ x ∂M.env.init =
+  ∫ x, M.V0 θ γ x ∂M.env.init =
     ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ) := by
 -- proof
   have := M.env.init_prob
@@ -60,7 +61,7 @@ private lemma main
     ∫ x, ∑' t, γ ^ t * M.Wkd θ t x ∂M.env.init =
       ∑' t, ∫ x, γ ^ t * M.Wkd θ t x ∂M.env.init :=
     (integral_tsum_of_summable_integral_norm hri hsum_norm).symm
-  have hV : (fun x => M.Vkd θ γ x) =
+  have hV : (fun x => M.V0 θ γ x) =
     fun x => ∑' t, γ ^ t * M.Wkd θ t x := funext fun x => rfl
   rw [hV, hswap]
   refine tsum_congr fun t => ?_
@@ -68,3 +69,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-03

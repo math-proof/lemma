@@ -302,6 +302,16 @@ class MarkdownText extends Markdown {
     }
 }
 
+/** Link whose `href` is `node` or an ancestor of the caret, still open. */
+function openLinkAroundHref(node) {
+    for (let p = node; p; p = p.parent) {
+        const parent = p.parent;
+        if (parent instanceof MarkdownLink && parent.href === p && !parent.is_closed)
+            return parent;
+    }
+    return null;
+}
+
 class MarkdownArgs extends Markdown {
     constructor(args, indent, parent) {
         super(indent, parent);
@@ -360,6 +370,22 @@ class MarkdownArgs extends Markdown {
     }
 
     insert_right_parenthesis(caret, ...kwargs) {
+        // `[label](url with [brackets])` makes the URL a span, so `)` never
+        // reaches MarkdownLink and the link swallows the rest of the paragraph
+        // (`(ℙ[M θ](a[t] | s[t]) : ℝ).log` inside a docstring code span).
+        const link = openLinkAroundHref(this);
+        if (link) {
+            const hrefText = link.href?.plainText ?? '';
+            let depth = 0;
+            for (const ch of hrefText) {
+                if (ch === '(') depth++;
+                else if (ch === ')') depth--;
+            }
+            if (depth <= 0) {
+                link.is_closed = true;
+                return link;
+            }
+        }
         return this.insert_token(caret, ')', ...kwargs);
     }
 

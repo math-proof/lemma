@@ -4,6 +4,9 @@ import Lemma.Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differenti
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Lemma.Random.NormQ.le.MulSub1Abs_R.of.In_Ico
 import Lemma.Random.Sum_RealPreimageS.eq.One
+import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
+import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico
+import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure Set
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 625000
@@ -204,9 +207,7 @@ private lemma fderiv_tsum_eq_integral_score
   (h₂ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A), Q θ t («\sf{s}» t) («\sf{a}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
   (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
-  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
-  (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
-  (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0) :
+  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
   ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
     ∑' t, γ ^ t • ∫ ω, Q θ t (s t ω) (a t ω) • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
@@ -244,7 +245,7 @@ private lemma fderiv_tsum_eq_integral_score
     have h8fd : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cfd := fun θ x u => hCfd ⟨(θ, x, u), rfl⟩
     have h7grad :=
       GradExpectDotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
-        (θ := θ) h₀ h₁ h₂ h₃ h₄ h5n hP0 hπ
+        (θ := θ) h₀ h₁ h₂ h₃ h₄ h5n
     let Lgrad : StrongDual ℝ Θ ≃L[ℝ] Θ :=
       (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
     have hLgrad : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = Lgrad φ := fun _ => rfl
@@ -407,7 +408,7 @@ private lemma fderiv_tsum_eq_integral_score
         refine Eq.trans (congrArg (fun z => γ ^ n • z) (Lgrad.integral_comp_comm _)) ?_
         exact (map_smul Lgrad (γ ^ n) _).symm
     classical
-    obtain ⟨B, hB⟩ := BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₄ h5n θ (hP0 θ)
+    obtain ⟨B, hB⟩ := BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₄ h5n θ
     have h₉ : ∀ n, ‖∫ ω, fderiv ℝ (fun θ' => Vloc θ' n (s n ω)) θ ∂(M θ)‖ ≤ max B 0 := by
       intro n
       rw [Integral.eq.Sum_SMul h₁ (M := M) θ n (fun y => fderiv ℝ (fun θ' => Vloc θ' n y) θ)]
@@ -420,7 +421,27 @@ private lemma fderiv_tsum_eq_integral_score
           if hy : (M θ).real (s n ⁻¹' {y}) = 0 then
             rw [hy, zero_mul, zero_mul]
           else
-            exact mul_le_mul_of_nonneg_left ((hB ⟨(n, y), hy, rfl⟩).trans (le_max_left _ _)) measureReal_nonneg
+            have hc : ContinuousAt (fun θ' => (M θ').real (s n ⁻¹' {y})) θ :=
+              (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
+                (M := M) h₁ h₄ h5n n y θ).continuousAt
+            have hEV : (fun θ' => Vloc θ' n y) =ᶠ[𝓝 θ] fun θ' => M.V0 θ' γ y := by
+              filter_upwards [hc.eventually_ne hy] with θ' ht
+              have hseries :
+                  Vloc θ' n y =
+                    ∑' k, γ ^ k * ∫ z, M.Kf θ' (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z
+                      ∂(M.stageK θ' y) :=
+                _root_.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
+                  (M := M) (r := r) (s := s) (a := a) θ' n y h₀ h₁ ht
+              exact hseries.trans
+                (_root_.Random.Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico
+                  (M := M) h₀ θ' y).symm
+            have hfd :
+                fderiv ℝ (fun θ' => Vloc θ' n y) θ =
+                  fderiv ℝ (fun θ' => M.V θ' γ n y) θ := by
+              simpa [Model.V] using EventuallyEq.fderiv_eq hEV
+            refine mul_le_mul_of_nonneg_left ?_ measureReal_nonneg
+            rw [hfd]
+            exact (hB ⟨(n, y), hy, rfl⟩).trans (le_max_left _ _)
         _ = max B 0 := by rw [← Finset.sum_mul, Sum_RealPreimageS.eq.One h₁, one_mul]
     have hγ : |γ| < 1 := by
       rw [abs_of_nonneg h₀.1]
@@ -502,9 +523,7 @@ private lemma main
   (h₂ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A), Q θ t («\sf{s}» t) («\sf{a}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
   (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
-  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
-  (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
-  (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0) :
+  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t))
@@ -531,7 +550,7 @@ private lemma main
     set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
     set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
     have hfd :=
-      fderiv_tsum_eq_integral_score (M := M) (θ := θ) (γ := γ) (Q := Q) (V := V) (r := r) (s := s) (a := a) h₀ h₁ h₂ h₃ h₄ h₅ hP0 hπ
+      fderiv_tsum_eq_integral_score (M := M) (θ := θ) (γ := γ) (Q := Q) (V := V) (r := r) (s := s) (a := a) h₀ h₁ h₂ h₃ h₄ h₅
     let Qloc (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
       𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
     let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
@@ -778,5 +797,5 @@ private lemma main
 
 
 -- created on 2023-03-30
--- updated on 2026-11-02
+-- updated on 2026-11-03
 -- updated on 2026-10-18 (heartbeat extracts)

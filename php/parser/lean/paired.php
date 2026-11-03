@@ -389,6 +389,11 @@ class LeanParenthesis extends LeanPairedGroup
             return false;
         if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
             return false;
+        // Anonymous Prop binder `(_ : i ≠ j)`: keep the hypothesis type; do not collapse to `_`.
+        if ($arg->lhs instanceof LeanToken &&
+            $arg->lhs->text == '_' &&
+            $arg->rhs->isProp([]))
+            return false;
         $p = $this->parent;
         // Term cast `(e : T)` in expression position: show only `e` (any T).
         // Binders keep ascriptions (paren parent is forall / sum / fun, not the cases below).

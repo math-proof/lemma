@@ -517,6 +517,43 @@ function hasRandomVariableCues(node) {
   return rv && prob;
 }
 
+
+/**
+ * Bare measure pushforward / named law (not RV/ℙ): Measure.pi, Measure ascription,
+ * Real.chiSquare, gaussianReal, fisherReal, gammaMeasure, sumSqGaussians.
+ * Pins Measure over the Real namespace of constructors and ℝ field tokens (Body/Measure).
+ */
+function hasMeasureLawCues(node) {
+  const LAW = new Set([
+    "chiSquare", "gaussianReal", "fisherReal", "gammaMeasure", "sumSqGaussians",
+  ]);
+  let found = false;
+  const walk = (n) => {
+    if (!n || typeof n !== "object" || found) return;
+    if (cls(n) === "LeanToken" && typeof n.text === "string" && LAW.has(n.text)) {
+      found = true;
+      return;
+    }
+    // Measure.pi / Measure.map / Measure.count …
+    if (cls(n) === "LeanProperty" && cls(n.args?.[0]) === "LeanToken" && n.args[0].text === "Measure") {
+      found = true;
+      return;
+    }
+    // (mu : Measure alpha) / (gaussianReal 0 1 : Measure R)
+    if (cls(n) === "LeanColon") {
+      let ty = unwrapParen(n.args?.[1]);
+      if (cls(ty) === "LeanArgsSpaceSeparated") ty = ty.args?.[0];
+      if (cls(ty) === "LeanToken" && ty.text === "Measure") {
+        found = true;
+        return;
+      }
+    }
+    for (const a of n.args || []) walk(a);
+  };
+  walk(node);
+  return found;
+}
+
 function conclusionLhsHeadToken(colonNode) {
   let type = colonNode?.args?.[colonNode.args.length - 1];
   while (type && (cls(type) === "LeanStatements" || cls(type) === "LeanArgsNewLineSeparated")) {
@@ -821,6 +858,14 @@ function pickSection(sigNode, sections, extra = {}) {
   // even though Measure / Measurable hypotheses also score for the Measure section.
   if (hasRandomVariableCues(sigNode) && scores.has("Random"))
     scores.set("Random", scores.get("Random") + 4);
+  // Measure pushforward / product laws (Measure.pi, Measure ascription, Real.chiSquare,
+  // gaussianReal, fisherReal): prefer Measure over Real.chiSquare namespace + Real scalars.
+  // Skip when Random cues present (those already overweight Measure / Real).
+  if (!hasRandomAstCues(sigNode) && !hasRandomVariableCues(sigNode) &&
+      scores.has("Measure") && hasMeasureLawCues(sigNode)) {
+    add("Measure", 5);
+    if ((scores.get("Real") ?? 0) > 2) scores.set("Real", 2);
+  }
   // pure set identities / inclusions between set constructions ({ω | …} ∪ {ω | …} = {ω | …}) are Set lemmas
   {
     const INTERVAL = /^(Set\.)?I(cc|co|oc|oo|ci|ic|oi|io)$/;
@@ -2773,6 +2818,81 @@ function sumSquareSubDivSumEqAddMulBodyName(implyStmts, houseFromDisk = "") {
   return isAnovaStEqSaSeShape(implyStmts) ? houseFromDisk : "";
 }
 
+
+/**
+ * Measure ANOVA MapPi: (Measure.pi ... gaussianReal ...).map (...) = (Real.chiSquare ...).prod (Real.chiSquare ...).
+ * Multiline .map often traps = inside LeanArgsIndented, so nameExpr only sees the map LHS
+ * (MapPi_GaussianReal_NNReal) and never emits /eq/ProdChiSquareS. Detect the intended shape
+ * even on that broken AST; prefer on-disk imply stem (or synthesize MapPi_GaussianReal/eq/ProdChiSquareS).
+ * ProdChiSquareS = two equal-family chi^2 factors (ChiSquare not ChiSquared), parallel Random.Distributed_ProdChiSquareS.
+ */
+function treeHasTokenText(node, texts) {
+  const want = new Set(texts);
+  let found = false;
+  (function walk(n) {
+    if (!n || typeof n !== "object" || found) return;
+    if (cls(n) === "LeanToken" && want.has(n.text || "")) found = true;
+    for (const a of n.args || []) walk(a);
+  })(node);
+  return found;
+}
+
+/** Real.chiSquare n / chiSquare n application (or property head). */
+function isChiSquareApp(node) {
+  const u = unwrapParen(node);
+  if (cls(u) === "LeanArgsSpaceSeparated" && (u.args || []).length >= 1) {
+    const h = u.args[0];
+    if (cls(h) === "LeanProperty" && cls(h.args?.[1]) === "LeanToken" && h.args[1].text === "chiSquare")
+      return true;
+    if (cls(h) === "LeanToken" && h.text === "chiSquare") return true;
+  }
+  if (cls(u) === "LeanProperty" && cls(u.args?.[1]) === "LeanToken" && u.args[1].text === "chiSquare")
+    return true;
+  return false;
+}
+
+/** (Real.chiSquare a).prod (Real.chiSquare b) — two chi^2 factors. */
+function isProdOfTwoChiSquare(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length !== 2) return false;
+  const left = u.args[0];
+  const right = u.args[1];
+  if (cls(left) !== "LeanProperty" || cls(left.args?.[1]) !== "LeanToken" || left.args[1].text !== "prod")
+    return false;
+  return isChiSquareApp(left.args?.[0]) && isChiSquareApp(right);
+}
+
+/** (Measure.pi ... gaussianReal ...).map head (object side of Property.map). */
+function isMapPiGaussianRealHead(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanProperty" || cls(u.args?.[1]) !== "LeanToken" || u.args[1].text !== "map")
+    return false;
+  const obj = u.args?.[0];
+  return treeHasTokenText(obj, ["pi"]) && treeHasTokenText(obj, ["gaussianReal"]);
+}
+
+function isMapPiGaussianRealEqProdChiSquareSShape(implyStmts) {
+  let hasMapPiGauss = false;
+  let hasProdChi = false;
+  (function walk(n) {
+    if (!n || typeof n !== "object") return;
+    if (isMapPiGaussianRealHead(n)) hasMapPiGauss = true;
+    if (cls(n) === "LeanArgsIndented" && isMapPiGaussianRealHead(n.args?.[0])) hasMapPiGauss = true;
+    if (isProdOfTwoChiSquare(n)) hasProdChi = true;
+    for (const a of n.args || []) walk(a);
+  })(implyStmts);
+  return hasMapPiGauss && hasProdChi;
+}
+
+function mapPiGaussianRealEqProdChiSquareSBodyName(implyStmts, houseFromDisk = "") {
+  if (!isMapPiGaussianRealEqProdChiSquareSShape(implyStmts)) return "";
+  const house = String(houseFromDisk || "").replace(/\\/g, "/");
+  if (/MapPi_?GaussianReal\/eq\/ProdChiSquareS/.test(house)) return house;
+  // Remigration from MapPi_GaussianReal_NNReal / bare MapPi: synthesize the canon stem from shape.
+  return "MapPi_GaussianReal/eq/ProdChiSquareS";
+}
+
+
 /** Sum of plain squares a^2 (not mean-deviation SquareSub). */
 function isSumOfSquares(node) {
   const u = unwrapParen(node);
@@ -3869,23 +3989,72 @@ function postAlts(node, opts, alts, canon) {
 }
 
 const NODE_ALT_CAP = 1000;
+/** Strip one-line newline wrappers around a ⟂ᵢ atom (same as CondIndep left side). */
+function stripIndepWrap(n) {
+  let u = unwrapParen(n);
+  while ((cls(u) === "LeanArgsNewLineSeparated" || cls(u) === "LeanStatements") && (u.args || []).filter((a) => cls(a) !== "LeanLineComment").length === 1) {
+    u = unwrapParen((u.args || []).find((a) => cls(a) !== "LeanLineComment"));
+  }
+  return u;
+}
 /**
  * `x ⟂ᵢ[π] y` → Indep, conditional `(x ⟂ᵢ[π] y) | z` → CondIndep (Random/…/of/CondIndep/CondIndep).
- * Returns "" for anything else.
+ * Returns "" for anything else. Operand-aware spellings (Indep_GetSlice) come from indepCanon.
  */
 function indepAtom(node) {
-  // the left side of `a ⟂ᵢ[π] b | c` spanning two lines is wrapped in LeanArgsNewLineSeparated
-  const strip = (n) => {
-    let u = unwrapParen(n);
-    while ((cls(u) === "LeanArgsNewLineSeparated" || cls(u) === "LeanStatements") && (u.args || []).filter((a) => cls(a) !== "LeanLineComment").length === 1) {
-      u = unwrapParen((u.args || []).find((a) => cls(a) !== "LeanLineComment"));
-    }
-    return u;
-  };
-  const u = strip(node);
+  const u = stripIndepWrap(node);
   if (cls(u) === "Lean_perp") return "Indep";
-  if (cls(u) === "LeanBitOr" && cls(strip(u.args?.[0])) === "Lean_perp") return "CondIndep";
+  if (cls(u) === "LeanBitOr" && cls(stripIndepWrap(u.args?.[0])) === "Lean_perp") return "CondIndep";
   return "";
+}
+/**
+ * IndepFun as binary infix (like Mul/Eq): walk operands via Lean_perp#pathChoices.
+ * `x[k] ⟂ᵢ[π] x[:k]` → Indep_GetSlice; pairwise holes → Indep.
+ * CondIndep keeps joint alts; bare CondIndep when no richer spelling.
+ */
+function indepCanon(node, opts = {}) {
+  const joint = indepJointAlt(node);
+  if (joint) return joint;
+  const u = stripIndepWrap(node);
+  if (cls(u) === "Lean_perp") {
+    if (typeof u.pathChoices === "function") {
+      const ch = (u.pathChoices(opts) || []).filter(Boolean);
+      if (ch.length) return ch[0];
+    }
+    // structural fallback if pathChoices unavailable
+    const isSlice = (n) => {
+      const x = unwrapParen(n);
+      return cls(x) === "LeanGetElem" && cls(x.args?.[1]) === "LeanColon";
+    };
+    const L = isSlice(u.args?.[0]);
+    const R = isSlice(u.args?.[1]);
+    if (L && R) return "IndepGetSlice_GetSlice";
+    if (R) return "Indep_GetSlice";
+    if (L) return "IndepGetSlice";
+    return "Indep";
+  }
+  if (cls(u) === "LeanBitOr" && cls(stripIndepWrap(u.args?.[0])) === "Lean_perp") return "CondIndep";
+  return "";
+}
+function indepAlts(node, opts = {}) {
+  const joint = indepJointAlt(node);
+  const u = stripIndepWrap(node);
+  if (cls(u) === "Lean_perp") {
+    let ch = typeof u.pathChoices === "function"
+      ? [...new Set((u.pathChoices(opts) || []).filter(Boolean))]
+      : [];
+    if (!ch.length) {
+      const c = indepCanon(node, opts);
+      if (c) ch = [c];
+    }
+    if (joint && !ch.includes(joint)) ch = [joint, ...ch];
+    if (!ch.includes("Indep")) ch.push("Indep");
+    return ch;
+  }
+  if (cls(u) === "LeanBitOr" && cls(stripIndepWrap(u.args?.[0])) === "Lean_perp") {
+    return joint && joint !== "CondIndep" ? [joint, "CondIndep"] : ["CondIndep"];
+  }
+  return [];
 }
 
 /**
@@ -5097,8 +5266,8 @@ function nameExprBase(node, opts = {}) {
     }
   }
 
-  // prefer CondIndep_Joint / IndepJoint / Indep_Joint over bare CondIndep / Indep
-  if (indepAtom(node)) return indepJointAlt(node) || indepAtom(node);
+  // IndepFun binary infix (pathChoices): Indep_GetSlice / IndepJoint / CondIndep_Joint
+  if (indepAtom(node)) return indepCanon(node, opts);
 
   // `x ∼[π] μ` → Distributed / DistributedAdd / Distributed_Gaussian
   {
@@ -5671,10 +5840,8 @@ function nameExprAltsBase(node, opts = {}) {
   }
 
   if (indepAtom(node)) {
-    const base = indepAtom(node);
-    const joint = indepJointAlt(node);
-    // joint first (CondIndep_Joint / Indep_Joint); never camel CondIndepJoint for a right joint
-    return joint && joint !== base ? [joint, base] : [base];
+    // joint / GetSlice first via Lean_perp#pathChoices; bare Indep last
+    return indepAlts(node, opts);
   }
   {
     const dAlts = distributedAlts(node, opts);
@@ -6832,6 +6999,15 @@ export function suggest(filePath, lemmaName, options = {}) {
     if (bodyAnova) {
       implyAltsA = uniq([bodyAnova, ...implyAltsA]);
       implyAltsA.preferred = bodyAnova;
+    }
+  }
+  // Measure: (Measure.pi ... gaussianReal).map = (chi^2).prod (chi^2)
+  // -> MapPi_GaussianReal/eq/ProdChiSquareS (multiline map/= AST often loses /eq/; prefer disk/synth).
+  {
+    const bodyMapPi = mapPiGaussianRealEqProdChiSquareSBodyName(sig.implyStmts, diskImplyHouse);
+    if (bodyMapPi) {
+      implyAltsA = uniq([bodyMapPi, ...implyAltsA]);
+      implyAltsA.preferred = bodyMapPi;
     }
   }
   // Body: sum (a-mean)^2 = sum a^2 - (sum a)^2/|s| -> Sum_SquareSub_DivSum/eq/SubSum_Square_DivSquareSum__Card

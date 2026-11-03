@@ -6,7 +6,7 @@ import Def.Order.Miscellaneous
 import Lemma.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
 import Lemma.Random.SinglePSpace.of.AEMeasurable.Distributed
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Instance.Dynamics.PolicyTrajectory.ContinuousAction
+import Structure.Dynamics.PolicyTrajectory.ContinuousAction
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal
 
