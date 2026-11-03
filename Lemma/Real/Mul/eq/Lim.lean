@@ -9,11 +9,11 @@ private lemma main
   {f : ℝ → ℝ}
   {x₀ y A : ℝ}
 -- given
-  (h : lim [x → x₀] f x = A) :
+  (h : lim[x → x₀] f x = A) :
 -- imply
-  (lim [x → x₀] f x) * y = lim [x → x₀] (f x * y) := by
+  (lim[x → x₀] f x) * y = lim[x → x₀] (f x * y) := by
 -- proof
-  have h₁ : lim [x → x₀] (f x * y) = A * y := h.mul_const y
+  have h₁ : lim[x → x₀] (f x * y) = A * y := h.mul_const y
   rw [h₁.limUnder_eq, h.limUnder_eq]
 
 

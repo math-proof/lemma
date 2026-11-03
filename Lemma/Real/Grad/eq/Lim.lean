@@ -11,7 +11,7 @@ private lemma main
 -- given
   (h : DifferentiableAt ℝ f x) :
 -- imply
-  deriv f x = lim [ε → 0] ((f (x + ε) - f x) / ε) := by
+  deriv f x = lim[ε → 0] ((f (x + ε) - f x) / ε) := by
 -- proof
   have key : Filter.Tendsto (fun ε : ℝ => (f (x + ε) - f x) / ε)
       (nhdsWithin 0 ({0}ᶜ : Set ℝ)) (𝓝 (deriv f x)) := by

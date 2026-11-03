@@ -8,7 +8,7 @@ private lemma main
 -- given
   (f : ℤ → ℝ) :
 -- imply
-  (lim [n → ∞] ∏ i ∈ Finset.Ico (-n) (n + 1), f i) = (lim [n → ∞] ∏ i ∈ Finset.Ico (-n) (n + 1), f (-i)) := by
+  (lim[n → ∞] ∏ i ∈ Finset.Ico (-n) (n + 1), f i) = (lim[n → ∞] ∏ i ∈ Finset.Ico (-n) (n + 1), f (-i)) := by
 -- proof
   apply Real.EqLim.of.Eq.inf
   apply funext

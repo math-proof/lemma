@@ -548,8 +548,9 @@ export class Lean_lim extends LeanBigOperator {
     }
     strFormat() {
         const sep = this.sep();
-        if (this.args.length === 1) return `${this.operator} [%s]`;
-        return `${this.operator} [%s]${sep}%s`;
+        // Glued like `sup[…]`. A space (`lim […]`) parses as `Filter.lim` applied to a `List`.
+        if (this.args.length === 1) return `${this.operator}[%s]`;
+        return `${this.operator}[%s]${sep}%s`;
     }
 }
 

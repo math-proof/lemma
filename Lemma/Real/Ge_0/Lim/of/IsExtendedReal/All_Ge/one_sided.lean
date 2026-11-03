@@ -9,7 +9,7 @@ private lemma main
   {x₀ δ a : ℝ}
 -- given
   (hδ : δ > 0)
-  (hlim : lim [x → x₀] f x = a)
+  (hlim : lim[x → x₀] f x = a)
   (hge : ∀ x ∈ Ioc (x₀ - δ) x₀, f x ≥ 0) :
 -- imply
   a ≥ 0 := by

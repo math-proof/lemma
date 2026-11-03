@@ -11,7 +11,7 @@ private lemma main
   (hge : ∀ n, a n ≤ a (n + 1))
   (hM : ∃ M, ∀ n, a n ≤ M) :
 -- imply
-  lim [n → ∞] a n = sSup (Set.range a) := by
+  lim[n → ∞] a n = sSup (Set.range a) := by
 -- proof
   have hmono : Monotone a := monotone_nat_of_le_succ hge
   obtain ⟨M, hM⟩ := hM

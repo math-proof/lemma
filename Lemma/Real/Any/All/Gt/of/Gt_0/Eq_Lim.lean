@@ -8,7 +8,7 @@ private lemma main
   (x₀ A : ℝ)
 -- given
   (hA : 0 < A)
-  (h : lim [x → x₀] f x = A) :
+  (h : lim[x → x₀] f x = A) :
 -- imply
   ∃ δ > 0, ∀ x | |x - x₀| ∈ Ioo 0 δ, f x > A / 2 := by
 -- proof

@@ -10,9 +10,9 @@ private lemma main
 -- given
   (hcont : ContinuousOn f (Set.Iio b))
   (hδ : δ > 0)
-  (h : ∀ ε ∈ Set.Ioc 0 δ, ∃ L > 0, lim [x → b - ε] f x = L) :
+  (h : ∀ ε ∈ Set.Ioc 0 δ, ∃ L > 0, lim[x → b - ε] f x = L) :
 -- imply
-  ∀ L, (lim [x → b⁻] f x = L) → 0 ≤ L := by
+  ∀ L, (lim[x → b⁻] f x = L) → 0 ≤ L := by
 -- proof
   have hpos : ∀ x ∈ Set.Ico (b - δ) b, 0 < f x := by
     intro x hx

@@ -8,10 +8,10 @@ private lemma main
   {f : ℝ → ℝ}
   {x₀ A : ℝ}
 -- given
-  (h₀ : lim [x → x₀] f x = A)
+  (h₀ : lim[x → x₀] f x = A)
   (h₁ : A ≠ 0) :
 -- imply
-  lim [x → x₀] (f x)⁻¹ = A⁻¹ := by
+  lim[x → x₀] (f x)⁻¹ = A⁻¹ := by
 -- proof
   apply h₀.inv₀ h₁
 

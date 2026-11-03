@@ -15,7 +15,7 @@ private lemma main
   (a : ℝ)
   (h : ∀ ε > 0, ∃ N > 0, ∀ x > N, |f x - a| < ε) :
 -- imply
-  lim [x → ∞] f x = a := by
+  lim[x → ∞] f x = a := by
 -- proof
   apply Metric.tendsto_atTop'.mpr
   intro ε hε

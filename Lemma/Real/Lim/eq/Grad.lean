@@ -10,7 +10,7 @@ private lemma main
 -- given
   (h₀ : DifferentiableAt ℝ f x) :
 -- imply
-  lim [y → x] slope f x y = deriv f x :=
+  lim[y → x] slope f x y = deriv f x :=
 -- proof
   h₀.hasDerivAt.tendsto_slope
 

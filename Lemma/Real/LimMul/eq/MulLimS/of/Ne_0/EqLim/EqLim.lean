@@ -11,11 +11,11 @@ private lemma main
   {f g : ℝ → ℝ}
   {x₀ y z : ℝ}
 -- given
-  (hf : lim [x → x₀] f x = y)
-  (hg : lim [x → x₀] g x = z)
+  (hf : lim[x → x₀] f x = y)
+  (hg : lim[x → x₀] g x = z)
   (_ : z ≠ 0) :
 -- imply
-  lim [x → x₀] (f x * g x) = (lim [x → x₀] f x) * (lim [x → x₀] g x) := by
+  lim[x → x₀] (f x * g x) = (lim[x → x₀] f x) * (lim[x → x₀] g x) := by
 -- proof
   rw [hf.limUnder_eq, hg.limUnder_eq]
   apply hf.mul hg

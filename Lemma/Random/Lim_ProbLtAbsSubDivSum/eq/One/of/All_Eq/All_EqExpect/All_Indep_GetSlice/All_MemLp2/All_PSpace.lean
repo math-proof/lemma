@@ -21,31 +21,32 @@ private lemma main
   {x : ℕ ⇀ Ω → ℝ}
   {μ σ : ℝ} {ε : ℝ⁺}
 -- given
-  (h₀ : ∀ k, PSpace π x[k] ∧ MemLp x[k] 2 π)
-  (h₁ : ∀ k, x[k] ⟂ᵢ[π] x[:k])
-  (h₂ : ∀ k, letI := (h₀ k).1; 𝔼[x[k]: π](x k) = μ)
-  (h₃ : ∀ k, letI := (h₀ k).1; 𝕍𝕒𝕣[x[k]: π](x k) = σ²) :
+  (h₀ : ∀ k, PSpace π x[k])
+  (h₁ : ∀ k, MemLp x[k] 2 π)
+  (h₂ : ∀ k, x[k] ⟂ᵢ[π] x[:k])
+  (h₃ : ∀ k, 𝔼[x[k]: π](x k) = μ)
+  (h₄ : ∀ k, 𝕍𝕒𝕣[x[k]: π](x k) = σ²) :
 -- imply
-  lim [n → ∞] ℙ[π]{|(∑ i ∈ range n, x[i]) / (n : ℝ) - μ| < ε} = 1 := by
+  lim[n → ∞] ℙ[π]{|(∑ i ∈ range n, x[i]) / (n : ℝ) - μ| < ε} = 1 := by
 -- proof
   have hvar₀ : ∀ i, variance x[i] π = σ² := fun i => by
-    have := (h₀ i).1
-    have h₃' : 𝕍𝕒𝕣 π x[i] = σ² := by
-      simpa [𝕍𝕒𝕣, Expectation.asRV_function] using h₃ i
-    rw [variance_eq_integral (PSpace.aemeasurable (x := x[i])), ← Var.eq.Integral, h₃']
-  have h₂' : ∀ i, π[x[i]] = μ := fun i => by
-    have := (h₀ i).1
-    simpa [← Expect.eq.Integral.Id, Expectation.asRV_function] using h₂ i
-  have hpair : ∀ i j (_ : i ≠ j), x[i] ⟂ᵢ[π] x[j] := All_Indep.of.All_Indep_GetSlice h₁
+    have := h₀ i
+    have h₄' : 𝕍𝕒𝕣 π x[i] = σ² := by
+      simpa [𝕍𝕒𝕣, Expectation.asRV_function] using h₄ i
+    rw [variance_eq_integral (PSpace.aemeasurable (x := x[i])), ← Var.eq.Integral, h₄']
+  have h₃' : ∀ i, π[x[i]] = μ := fun i => by
+    have := h₀ i
+    simpa [← Expect.eq.Integral.Id, Expectation.asRV_function] using h₃ i
+  have hpair : ∀ i j (_ : i ≠ j), x[i] ⟂ᵢ[π] x[j] := All_Indep.of.All_Indep_GetSlice h₂
   let avg : ℕ → Ω → ℝ := fun n ω => (n : ℝ)⁻¹ * ∑ i ∈ range n, x[i] ω
   have hmem : ∀ n, MemLp (avg n) 2 π := fun n => by
     simpa [avg, Finset.sum_apply] using
-      (memLp_finsetSum' (range n) fun i _ => (h₀ i).2).const_mul (n : ℝ)⁻¹
+      (memLp_finsetSum' (range n) fun i _ => h₁ i).const_mul (n : ℝ)⁻¹
   have hmean : ∀ n ≠ 0, π[avg n] = μ := by
     intro n hn
     have hn0 : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hn
-    rw [integral_const_mul, integral_finsetSum _ fun i _ => ((h₀ i).2).integrable one_le_two,
-      Finset.sum_congr rfl fun i _ => h₂' i, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+    rw [integral_const_mul, integral_finsetSum _ fun i _ => (h₁ i).integrable one_le_two,
+      Finset.sum_congr rfl fun i _ => h₃' i, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
     field_simp [hn0]
   have hvar : ∀ n ≠ 0, variance (avg n) π = σ² / (n : ℝ) := by
     intro n hn
@@ -53,7 +54,7 @@ private lemma main
     rw [variance_const_mul,
       show (fun ω => ∑ i ∈ range n, x[i] ω) = ∑ i ∈ range n, x[i] from
         funext fun ω => (Finset.sum_apply ω (range n) (fun i => x[i])).symm,
-      IndepFun.variance_sum (fun i _ => (h₀ i).2) (fun i _ j _ hij => hpair i j hij),
+      IndepFun.variance_sum (fun i _ => h₁ i) (fun i _ j _ hij => hpair i j hij),
       Finset.sum_congr rfl fun i _ => hvar₀ i, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
     field_simp [hn0]
   have htail : Tendsto (fun n => π.real {ω | ε ≤ |avg n ω - μ|}) atTop (nhds 0) := by

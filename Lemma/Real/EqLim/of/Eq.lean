@@ -9,7 +9,7 @@ private lemma main
 -- given
   (h : f = g) :
 -- imply
-  (lim [x → x₀] f x) = (lim [x → x₀] g x) := by
+  (lim[x → x₀] f x) = (lim[x → x₀] g x) := by
 -- proof
   rw [h]
 
@@ -21,9 +21,9 @@ private lemma inf
 -- given
   (h : f = g) :
 -- imply
-  (lim [x → ∞] f x) = (lim [x → ∞] g x) := by
+  (lim[x → ∞] f x) = (lim[x → ∞] g x) := by
 -- proof
-  apply congrArg (fun fn : α → ℝ => lim [x → ∞] fn x)
+  apply congrArg (fun fn : α → ℝ => lim[x → ∞] fn x)
   apply h
 
 

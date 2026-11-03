@@ -9,7 +9,7 @@ private lemma main
   {x₀ δ a : ℝ}
 -- given
   (hδ : δ > 0)
-  (hlim : lim [x → x₀] f x = a)
+  (hlim : lim[x → x₀] f x = a)
   (hle : ∀ x ∈ Ico x₀ (x₀ + δ), f x ≤ 0) :
 -- imply
   a ≤ 0 := by

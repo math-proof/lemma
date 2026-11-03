@@ -13,7 +13,7 @@ private lemma main
   (h₀ : |ℓ| < 1)
   (h₁ : sup[n] |x n| < ∞) :
 -- imply
-  lim [n → ∞] ℓ ^ n * x n = 0 := by
+  lim[n → ∞] ℓ ^ n * x n = 0 := by
 -- proof
   rcases lt_trichotomy ℓ 0 with h_lt | h_eq | h_gt
   · have h₂ := Int.Gt.of.LtAbs h₀

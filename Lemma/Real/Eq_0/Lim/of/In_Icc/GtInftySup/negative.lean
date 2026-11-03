@@ -11,7 +11,7 @@ private lemma main
   (h₀ : γ ∈ Ioo (-1) 0)
   (h₁ : sup[n] |x n| < ∞) :
 -- imply
-  lim [n → ∞] γ ^ n * x n = 0 := by
+  lim[n → ∞] γ ^ n * x n = 0 := by
 -- proof
   let h : ℕ → ℝ := fun n => (-1) ^ n * x n
   have h_def : ∀ n, h n * (-1) ^ n = x n := by

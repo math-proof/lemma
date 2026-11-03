@@ -11,7 +11,7 @@ private lemma main
   (hle : ∀ n, a (n + 1) ≤ a n)
   (hM : ∃ M, ∀ n, M ≤ a n) :
 -- imply
-  lim [n → ∞] a n = sInf (Set.range a) := by
+  lim[n → ∞] a n = sInf (Set.range a) := by
 -- proof
   have hanti : Antitone a := antitone_nat_of_succ_le hle
   obtain ⟨M, hM⟩ := hM

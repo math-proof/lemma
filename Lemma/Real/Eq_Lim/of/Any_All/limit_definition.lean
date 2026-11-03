@@ -9,7 +9,7 @@ private lemma main
 -- given
   (h : ∀ ε > 0, ∃ N : ℤ, ∀ x | x ≥ N + 1, |f x - a| < ε) :
 -- imply
-  lim [x → ∞] f x = a := by
+  lim[x → ∞] f x = a := by
 -- proof
   have h' : ∀ ε > 0, ∃ N > 0, ∀ x | x > N, |f x - a| < ε := by
     intro ε hε

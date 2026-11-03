@@ -10,7 +10,7 @@ open Filter
 private lemma main
   :
 -- imply
-  lim [n → ∞] ((harmonic n : ℝ) / Real.log ((n : ℝ) + 1)) = 1 := by
+  lim[n → ∞] ((harmonic n : ℝ) / Real.log ((n : ℝ) + 1)) = 1 := by
 -- proof
   have hγ :
       Tendsto (fun n : ℕ => (harmonic n : ℝ) - Real.log ((n : ℝ) + 1)) atTop

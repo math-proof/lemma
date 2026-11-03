@@ -13,7 +13,7 @@ private lemma main
 -- given
   (f : α → ℝ)
   (A : ℝ)
-  (h : lim [x → ∞] f x = A) :
+  (h : lim[x → ∞] f x = A) :
 -- imply
   ∀ ε > 0, ∃ N > 0, ∀ x > N, |f x - A| < ε := by
 -- proof

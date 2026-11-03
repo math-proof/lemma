@@ -137,7 +137,7 @@ def Expr.strFormat : Expr → String
         | .Lean_lim =>
           match Expr.asLimBound? args with
           | some _ =>
-            "lim [%s → %s] %s"
+            "lim[%s → %s] %s"
           | none =>
             ""
         | _ =>

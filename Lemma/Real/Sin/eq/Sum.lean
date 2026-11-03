@@ -11,7 +11,7 @@ private lemma main
 -- given
   (x : ℝ) :
 -- imply
-  sin x = lim [N → ∞] ∑ n ∈ range N, (-1) ^ n * x ^ (2 * n + 1) / ((2 * n + 1) !) := by
+  sin x = lim[N → ∞] ∑ n ∈ range N, (-1) ^ n * x ^ (2 * n + 1) / ((2 * n + 1) !) := by
 -- proof
   have h := (Real.hasSum_sin x).tendsto_sum_nat
   simpa using h.limUnder_eq.symm

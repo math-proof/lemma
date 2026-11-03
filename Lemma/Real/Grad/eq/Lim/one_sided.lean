@@ -12,7 +12,7 @@ private lemma main
 -- given
   (h : DifferentiableWithinAt ℝ f (Set.Ioi x) x) :
 -- imply
-  derivWithin f (Set.Ioi x) x = lim [ε → 0⁺] ((f (ε + x) - f x) / ε) := by
+  derivWithin f (Set.Ioi x) x = lim[ε → 0⁺] ((f (ε + x) - f x) / ε) := by
 -- proof
   have hs : Filter.Tendsto (slope f x) (nhdsWithin x (Set.Ioi x))
     (𝓝 (derivWithin f (Set.Ioi x) x)) := by

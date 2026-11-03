@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Real.Hyperreal
 import Mathlib.Topology.Defs.Filter
-import Macro.Analysis.Real.Limits
+import Syntax.Analysis.Real.Limits
 open Lean
 open scoped Topology
 
@@ -10,7 +10,7 @@ open scoped Topology
 Merged from Part2 + Part3 + Part4.
 
 * Part2: unparenTerm?, tends-to ±∞ / 0± And-unexpander
-* Part3: termOfLimPt — already defined in Macro.Analysis.Real.Limits (imported above); not redeclared
+* Part3: `limPt` lives in Syntax.Analysis.Real.Limits (imported above)
 * Part4: Filter.limUnder / Filter.Tendsto unexpanders for lim notation
 -/
 
@@ -126,7 +126,7 @@ def asNhdsArg? (stx : Syntax) : Option (TSyntax `term) :=
     if isNhdsIdent? nh then some a else none
   | _ => none
 
-/-- `0` / `x₀` as a `limPt` for `lim [x → x₀⁺]` / `lim [x → x₀⁻]`. -/
+/-- `0` / `x₀` as a `limPt` for `lim[x → x₀⁺]` / `lim[x → x₀⁻]`. -/
 def asLimPt (x : Syntax) : PrettyPrinter.UnexpandM (TSyntax `limPt) := do
   match unparenTerm? x with
   | `($id:ident) => `(limPt| $id:ident)
@@ -137,7 +137,7 @@ def asLimPt (x : Syntax) : PrettyPrinter.UnexpandM (TSyntax `limPt) := do
     | .atom _ "0" => `(limPt| 0)
     | _ => throw ()
 
-/-- Rebuild `lim [n → x₀] e`, `lim [n → x₀⁺] e`, … (`dir`: 0 two-sided, 1 right, 2 left). -/
+/-- Rebuild `lim[n → x₀] e`, `lim[n → x₀⁺] e`, … (`dir`: 0 two-sided, 1 right, 2 left). -/
 def dummyLimBinder : TSyntax `ident := ⟨mkIdent `x⟩
 
 def unexpandLimAt (n : TSyntax `ident) (x e : TSyntax `term) (dir : Nat)
@@ -146,37 +146,37 @@ def unexpandLimAt (n : TSyntax `ident) (x e : TSyntax `term) (dir : Nat)
   match dir with
   | 0 =>
     match ty?, wild, eq? with
-    | none, false, none => `(lim [$n:ident → $x:term] $e)
-    | none, false, some a => `(lim [$n:ident → $x:term] $e = $a)
-    | none, true, none => `(lim [_ → $x:term] $e)
-    | none, true, some a => `(lim [_ → $x:term] $e = $a)
-    | some ty, false, none => `(lim [($n:ident : $ty) → $x:term] $e)
-    | some ty, false, some a => `(lim [($n:ident : $ty) → $x:term] $e = $a)
+    | none, false, none => `(lim[$n:ident → $x:term] $e)
+    | none, false, some a => `(lim[$n:ident → $x:term] $e = $a)
+    | none, true, none => `(lim[_ → $x:term] $e)
+    | none, true, some a => `(lim[_ → $x:term] $e = $a)
+    | some ty, false, none => `(lim[($n:ident : $ty) → $x:term] $e)
+    | some ty, false, some a => `(lim[($n:ident : $ty) → $x:term] $e = $a)
     | _, _, _ => throw ()
   | 1 =>
     let pt ← asLimPt x
     match ty?, wild, eq? with
-    | none, false, none => `(lim [$n:ident → $pt:limPt⁺] $e)
-    | none, false, some a => `(lim [$n:ident → $pt:limPt⁺] $e = $a)
-    | none, true, none => `(lim [_ → $pt:limPt⁺] $e)
-    | none, true, some a => `(lim [_ → $pt:limPt⁺] $e = $a)
-    | some ty, false, none => `(lim [($n:ident : $ty) → $pt:limPt⁺] $e)
-    | some ty, false, some a => `(lim [($n:ident : $ty) → $pt:limPt⁺] $e = $a)
+    | none, false, none => `(lim[$n:ident → $pt:limPt⁺] $e)
+    | none, false, some a => `(lim[$n:ident → $pt:limPt⁺] $e = $a)
+    | none, true, none => `(lim[_ → $pt:limPt⁺] $e)
+    | none, true, some a => `(lim[_ → $pt:limPt⁺] $e = $a)
+    | some ty, false, none => `(lim[($n:ident : $ty) → $pt:limPt⁺] $e)
+    | some ty, false, some a => `(lim[($n:ident : $ty) → $pt:limPt⁺] $e = $a)
     | _, _, _ => throw ()
   | 2 =>
     let pt ← asLimPt x
     match ty?, wild, eq? with
-    | none, false, none => `(lim [$n:ident → $pt:limPt⁻] $e)
-    | none, false, some a => `(lim [$n:ident → $pt:limPt⁻] $e = $a)
-    | none, true, none => `(lim [_ → $pt:limPt⁻] $e)
-    | none, true, some a => `(lim [_ → $pt:limPt⁻] $e = $a)
-    | some ty, false, none => `(lim [($n:ident : $ty) → $pt:limPt⁻] $e)
-    | some ty, false, some a => `(lim [($n:ident : $ty) → $pt:limPt⁻] $e = $a)
+    | none, false, none => `(lim[$n:ident → $pt:limPt⁻] $e)
+    | none, false, some a => `(lim[$n:ident → $pt:limPt⁻] $e = $a)
+    | none, true, none => `(lim[_ → $pt:limPt⁻] $e)
+    | none, true, some a => `(lim[_ → $pt:limPt⁻] $e = $a)
+    | some ty, false, none => `(lim[($n:ident : $ty) → $pt:limPt⁻] $e)
+    | some ty, false, some a => `(lim[($n:ident : $ty) → $pt:limPt⁻] $e = $a)
     | _, _, _ => throw ()
   | _ =>
     throw ()
 
-/-- Infoview: print `Filter.limUnder … fun n ↦ e` as `lim [n → ∞] e`, `lim [x → 0] e`, … -/
+/-- Infoview: print `Filter.limUnder … fun n ↦ e` as `lim[n → ∞] e`, `lim[x → 0] e`, … -/
 @[app_unexpander Filter.limUnder]
 def limUnder.unexpand : PrettyPrinter.Unexpander
   | `($_ $nw $x $s fun $n:ident => $e) =>
@@ -205,9 +205,9 @@ def limUnder.unexpand : PrettyPrinter.Unexpander
       throw ()
   | `($_ $f fun $n:ident => $e) =>
     if isAtTopSyntax? f then
-      `(lim [$n:ident → ∞] $e)
+      `(lim[$n:ident → ∞] $e)
     else if isAtBotSyntax? f then
-      `(lim [$n:ident → -∞] $e)
+      `(lim[$n:ident → -∞] $e)
     else if let some (x, s) := asNhdsWithinArgs? f then
       match limDirOfNhdsSet? s with
       | some dir =>
@@ -217,9 +217,9 @@ def limUnder.unexpand : PrettyPrinter.Unexpander
       throw ()
   | `($_ $f fun ($n:ident : $ty) => $e) =>
     if isAtTopSyntax? f then
-      `(lim [($n:ident : $ty) → ∞] $e)
+      `(lim[($n:ident : $ty) → ∞] $e)
     else if isAtBotSyntax? f then
-      `(lim [($n:ident : $ty) → -∞] $e)
+      `(lim[($n:ident : $ty) → -∞] $e)
     else if let some (x, s) := asNhdsWithinArgs? f then
       match limDirOfNhdsSet? s with
       | some dir =>
@@ -229,9 +229,9 @@ def limUnder.unexpand : PrettyPrinter.Unexpander
       throw ()
   | `($_ $f fun _ => $e) =>
     if isAtTopSyntax? f then
-      `(lim [_ → ∞] $e)
+      `(lim[_ → ∞] $e)
     else if isAtBotSyntax? f then
-      `(lim [_ → -∞] $e)
+      `(lim[_ → -∞] $e)
     else if let some (x, s) := asNhdsWithinArgs? f then
       match limDirOfNhdsSet? s with
       | some dir =>
@@ -242,7 +242,7 @@ def limUnder.unexpand : PrettyPrinter.Unexpander
   | _ =>
     throw ()
 
-/-- Infoview: print `Tendsto (fun x => e) (𝓝[≠] x₀) (𝓝 a)` as `lim [x → x₀] e = a`. -/
+/-- Infoview: print `Tendsto (fun x => e) (𝓝[≠] x₀) (𝓝 a)` as `lim[x → x₀] e = a`. -/
 @[app_unexpander Filter.Tendsto]
 def tendstoLim.unexpand : PrettyPrinter.Unexpander
   | `($_ $f $l $na) =>
@@ -250,9 +250,9 @@ def tendstoLim.unexpand : PrettyPrinter.Unexpander
       match f with
       | `(fun $n:ident => $e) =>
         if isAtTopSyntax? l then
-          `(lim [$n:ident → ∞] $e = $a)
+          `(lim[$n:ident → ∞] $e = $a)
         else if isAtBotSyntax? l then
-          `(lim [$n:ident → -∞] $e = $a)
+          `(lim[$n:ident → -∞] $e = $a)
         else if let some (x, s) := asNhdsWithinArgs? l then
           match limDirOfNhdsSet? s with
           | some dir =>
@@ -262,9 +262,9 @@ def tendstoLim.unexpand : PrettyPrinter.Unexpander
           throw ()
       | `(fun ($n:ident : $ty) => $e) =>
         if isAtTopSyntax? l then
-          `(lim [($n:ident : $ty) → ∞] $e = $a)
+          `(lim[($n:ident : $ty) → ∞] $e = $a)
         else if isAtBotSyntax? l then
-          `(lim [($n:ident : $ty) → -∞] $e = $a)
+          `(lim[($n:ident : $ty) → -∞] $e = $a)
         else if let some (x, s) := asNhdsWithinArgs? l then
           match limDirOfNhdsSet? s with
           | some dir =>
@@ -274,9 +274,9 @@ def tendstoLim.unexpand : PrettyPrinter.Unexpander
           throw ()
       | `(fun _ => $e) =>
         if isAtTopSyntax? l then
-          `(lim [_ → ∞] $e = $a)
+          `(lim[_ → ∞] $e = $a)
         else if isAtBotSyntax? l then
-          `(lim [_ → -∞] $e = $a)
+          `(lim[_ → -∞] $e = $a)
         else if let some (x, s) := asNhdsWithinArgs? l then
           match limDirOfNhdsSet? s with
           | some dir =>

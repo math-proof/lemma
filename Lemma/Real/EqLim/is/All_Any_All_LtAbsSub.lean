@@ -10,7 +10,7 @@ private lemma εδ
   (f : ℝ → ℝ)
   (x₀ a : ℝ) :
 -- imply
-  lim [x → x₀] f x = a ↔ ∀ ε > 0, ∃ δ > 0, ∀ x | |x - x₀| ∈ Ioo 0 δ, |f x - a| < ε := by
+  lim[x → x₀] f x = a ↔ ∀ ε > 0, ∃ δ > 0, ∀ x | |x - x₀| ∈ Ioo 0 δ, |f x - a| < ε := by
 -- proof
   constructor
   ·
@@ -33,7 +33,7 @@ private lemma εδ.pos
   (f : ℝ → ℝ)
   (x₀ a : ℝ) :
 -- imply
-  lim [x → x₀⁺] f x = a ↔ ∀ ε > 0, ∃ δ > 0, ∀ x | x - x₀ ∈ Ioo 0 δ, |f x - a| < ε := by
+  lim[x → x₀⁺] f x = a ↔ ∀ ε > 0, ∃ δ > 0, ∀ x | x - x₀ ∈ Ioo 0 δ, |f x - a| < ε := by
 -- proof
   constructor
   ·
@@ -57,7 +57,7 @@ private lemma εδ.neg
   (f : ℝ → ℝ)
   (x₀ a : ℝ) :
 -- imply
-  lim [x → x₀⁻] f x = a ↔ ∀ ε > 0, ∃ δ > 0, ∀ x | x₀ - x ∈ Ioo 0 δ, |f x - a| < ε := by
+  lim[x → x₀⁻] f x = a ↔ ∀ ε > 0, ∃ δ > 0, ∀ x | x₀ - x ∈ Ioo 0 δ, |f x - a| < ε := by
 -- proof
   constructor
   ·
@@ -89,7 +89,7 @@ private lemma εN.pos
   (f : α → ℝ)
   (a : ℝ) :
 -- imply
-  lim [x → ∞] f x = a ↔ ∀ ε > 0, ∃ N > 0, ∀ x | x > N, |f x - a| < ε := by
+  lim[x → ∞] f x = a ↔ ∀ ε > 0, ∃ N > 0, ∀ x | x > N, |f x - a| < ε := by
 -- proof
   constructor
   ·
@@ -118,7 +118,7 @@ private lemma εN.neg
   (f : α → ℝ)
   (a : ℝ) :
 -- imply
-  lim [x → -∞] f x = a ↔ ∀ ε > 0, ∃ N > 0, ∀ x | x < -N, |f x - a| < ε := by
+  lim[x → -∞] f x = a ↔ ∀ ε > 0, ∃ N > 0, ∀ x | x < -N, |f x - a| < ε := by
 -- proof
   constructor
   ·

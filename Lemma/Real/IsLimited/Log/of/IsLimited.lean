@@ -7,10 +7,10 @@ private lemma main
   {g : ℝ → ℝ}
   {x₀ y : ℝ}
 -- given
-  (h : lim [x → x₀] g x = y)
+  (h : lim[x → x₀] g x = y)
   (hy : y ∈ Ioi 0) :
 -- imply
-  ∃ z : ℝ, lim [x → x₀] log (g x) = z := by
+  ∃ z : ℝ, lim[x → x₀] log (g x) = z := by
 -- proof
   apply Exists.intro (log y)
   apply EqLog.of.IsLimited h hy

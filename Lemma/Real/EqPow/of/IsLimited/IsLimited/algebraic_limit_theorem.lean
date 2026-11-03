@@ -9,11 +9,11 @@ private lemma main
   {f g : ℝ → ℝ}
   {x₀ y z : ℝ}
 -- given
-  (hf : lim [x → x₀] f x = y)
+  (hf : lim[x → x₀] f x = y)
   (hy : y ∈ Ioi 0)
-  (hg : lim [x → x₀] g x = z) :
+  (hg : lim[x → x₀] g x = z) :
 -- imply
-  lim [x → x₀] (f x ^ g x) = y ^ z := by
+  lim[x → x₀] (f x ^ g x) = y ^ z := by
 -- proof
   apply Filter.Tendsto.rpow hf hg
   apply Or.inl

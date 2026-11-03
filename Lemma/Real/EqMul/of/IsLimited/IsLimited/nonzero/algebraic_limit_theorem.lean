@@ -8,10 +8,10 @@ private lemma main
   {x₀ a b : ℝ}
 -- given
   (_ : a ≠ 0)
-  (hf : lim [x → x₀] f x = a)
-  (hg : lim [x → x₀] g x = b) :
+  (hf : lim[x → x₀] f x = a)
+  (hg : lim[x → x₀] g x = b) :
 -- imply
-  lim [x → x₀] (f x * g x) = a * b := by
+  lim[x → x₀] (f x * g x) = a * b := by
 -- proof
   apply hf.mul hg
 

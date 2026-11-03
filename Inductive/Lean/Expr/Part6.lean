@@ -6,7 +6,7 @@ open Lean (Name Json Level BinderInfo getMCtx)
 set_option linter.unusedVariables false
 
 
-/-- Direction of `lim [x → …]`. -/
+/-- Direction of `lim[x → …]`. -/
 inductive LimTo where
   | inf
   | ninf

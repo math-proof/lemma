@@ -9,9 +9,9 @@ private lemma main
   {g : ℝ → ℝ}
   {x₀ y : ℝ}
 -- given
-  (h : lim [x → x₀] g x = y) :
+  (h : lim[x → x₀] g x = y) :
 -- imply
-  lim [x → x₀] |g x| = |y| := by
+  lim[x → x₀] |g x| = |y| := by
 -- proof
   exact h.abs
 

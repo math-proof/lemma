@@ -11,7 +11,7 @@ private lemma main
 -- given
   (h : x ∈ Ioo (-1 : ℝ) 0) :
 -- imply
-  lim [n → ∞] x ^ n = 0 := by
+  lim[n → ∞] x ^ n = 0 := by
 -- proof
   obtain ⟨h1, h2⟩ := h
   have h' : |x| < 1 := by

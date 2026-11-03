@@ -11,7 +11,7 @@ private lemma main
 -- given
   (x : ℝ) :
 -- imply
-  cos x = lim [N → ∞] ∑ n ∈ range N, (-1) ^ n * x ^ (2 * n) / ((2 * n) !) := by
+  cos x = lim[N → ∞] ∑ n ∈ range N, (-1) ^ n * x ^ (2 * n) / ((2 * n) !) := by
 -- proof
   have h := (Real.hasSum_cos x).tendsto_sum_nat
   simpa using h.limUnder_eq.symm

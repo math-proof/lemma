@@ -10,10 +10,10 @@ private lemma main
   {g : ℝ → ℝ}
   {x₀ y : ℝ}
 -- given
-  (h₀ : lim [x → x₀] g x = y)
+  (h₀ : lim[x → x₀] g x = y)
   (h₁ : y ∈ Iio 0) :
 -- imply
-  lim [x → x₀] |g x| = -lim [x → x₀] g x := by
+  lim[x → x₀] |g x| = -lim[x → x₀] g x := by
 -- proof
   rw [h₀.limUnder_eq, ← abs_of_neg (Set.mem_Iio.mp h₁)]
   exact h₀.abs

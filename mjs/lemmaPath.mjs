@@ -1660,11 +1660,31 @@ function prodOfFactorial(node) {
   return cls(body) === "LeanFactorial";
 }
 
-/** Prefix for `f x`: arithmetic compounds (@ / ^ / …) ω-eval → Ext (ExtDotPow_Id); else Get. */
+/** Prefix for `f x`: arithmetic compounds (@ / ^ / …) ω-eval → Ext (ExtDotPow_Id); else Get.
+ *  `ℙ[π]{E}` / `𝔼[π](f)` is already Prob / Expect. The GetElem is the binder, not a Get atom
+ *  (`x[i]` inside a sum is an index hole the same way). */
 function applyEvalPrefix(head) {
   if (fnLikeHead(head)) return "";
   if (ARITH_OP.has(cls(unwrapParen(head)))) return "Ext";
+  const h = unwrapParen(head);
+  if (cls(h) === "LeanGetElem" && cls(h.args?.[0]) === "LeanToken" && (h.args[0].text === "ℙ" || h.args[0].text === "𝔼")) return "";
   return "Get";
+}
+
+/** `|(∑ i ∈ range n, x[i]) / (n : ℝ) - μ|`: n, μ, and the `x[i]` index are holes.
+ *  The operators stay, camel-glued: Abs Sub Div Sum. */
+function isSubDivSumAbs(node) {
+  const sub = unwrapParen(node);
+  if (cls(sub) !== "LeanSub") return false;
+  const div = unwrapParen(sub.args?.[0]);
+  if (cls(div) !== "LeanDiv") return false;
+  if (cls(unwrapParen(div.args?.[0])) !== "Lean_sum") return false;
+  const hole = (n) => {
+    const u = unwrapParen(n);
+    if (cls(u) === "LeanToken") return true;
+    return cls(u) === "LeanColon" && cls(unwrapParen(u.args?.[0])) === "LeanToken";
+  };
+  return hole(div.args?.[1]) && hole(sub.args?.[1]);
 }
 
 /**
@@ -2094,15 +2114,26 @@ function relationAlts(node, tag0, opts) {
   if (tag0 === "Eq" && args.every((a) => cls(unwrapParen(a)) === "LeanColon") && args.some((a) => isCoeAscription(unwrapParen(a))))
     return uniq([...gen(tag0, leftAlts, rightAlts), "Coe"]);
   // `lim [x → x₀] f x = a`: the limit statement reads Rel_rhs/Lim/Body (Real/Eq_0/Lim/Abs, Real/Eq/Lim/Abs);
-  // as a hypothesis the limit side may be implicit (…/of/Eq_0)
+  // as a hypothesis the limit side may be implicit (…/of/Eq_0).
+  // A probability body joins with an underscore: `lim ℙ{|(∑)/n - μ| < ε} = 1`
+  // → Lim_ProbLtAbsSubDivSum/eq/One (not LimGetProb…, not camel LimProb…, not Eq_1/Lim/…).
   if (cls(unwrapParen(args[0])) === "Lean_lim") {
+    const limNode = unwrapParen(args[0]);
+    const bodyNode = limNode.args?.[limNode.args.length - 1];
+    const bodyCanon = nameExpr(bodyNode, opts);
+    const prefer = [];
+    if (bodyCanon.startsWith("Prob") && bodyCanon !== "Prob") {
+      const head = "Lim_" + bodyCanon;
+      for (const r of rightAlts) prefer.push(head + "/" + S(tag0) + "/" + r);
+      if (!rightAlts.length) prefer.push(head);
+    }
     const limOut = [];
-    const bodyAlts = nameExprAlts(unwrapParen(args[0]).args?.slice(-1)[0], opts);
+    const bodyAlts = nameExprAlts(bodyNode, opts);
     const lims = bodyAlts.length ? bodyAlts.map((b) => "Lim/" + b) : ["Lim"];
     const rc = isConstNode(args[1]) ? rightAlts : [];
     for (const l of lims) { for (const r of rc) limOut.push(T0(tag0) + "_" + r + "/" + l); limOut.push(T0(tag0) + "/" + l); }
     for (const r of rightAlts) limOut.push(T0(tag0) + "_" + r);
-    return uniq([...gen(tag0, leftAlts, rightAlts), ...limOut]);
+    return uniq([...prefer, ...gen(tag0, leftAlts, rightAlts), ...limOut]);
   }
   // a lambda side may be abbreviated away: `μ[f | m] ≤ᵐ fun ω => …` → AeLeCondExp
   const isFun = (n) => cls(unwrapParen(n)) === "Lean_fun";
@@ -3739,7 +3770,9 @@ function preAlts(node, opts, canon) {
   }
   if (c === "Lean_lim") {
     const b = A(args[args.length - 1]);
-    const lim = b.length ? uniq(b.flatMap((y) => ["Lim" + y, "Lim_" + y, "Lim/" + y])) : ["Lim"];
+    // Probability limits spell Lim_Prob… (the wrapper is a separate atom). Other limits stay camel LimBody first.
+    const glueLim = (y) => (y.startsWith("Prob") ? ["Lim_" + y, "Lim" + y, "Lim/" + y] : ["Lim" + y, "Lim_" + y, "Lim/" + y]);
+    const lim = b.length ? uniq(b.flatMap(glueLim)) : ["Lim"];
     if (canon) return lim;
     const base = nameExprAltsBase(node, opts); // the limit may stay implicit (Real/Cos/eq/Sum); keep it within node caps
     return uniq([...lim.slice(0, 30), ...base.slice(0, 200), ...lim, ...base]);
@@ -5403,6 +5436,8 @@ function nameExprBase(node, opts = {}) {
   if (wrapPrefix !== undefined) {
     const arg = node.args?.[0];
     if (cls(unwrapParen(arg)) === "LeanSub") {
+      // |(∑ i ∈ range n, x[i]) / n - μ| → AbsSubDivSum (Div and Sum stay; n, μ, x[i] are holes)
+      if (isSubDivSumAbs(arg)) return wrapPrefix + "SubDivSum";
       // |a - (∑)/card| → AbsSub_Div_Sum (keep mean Div_Sum; never AbsSub alone for that shape)
       const subR = nameExpr(unwrapParen(arg).args?.[1], opts);
       if (subR && /^(Div_Sum|DivSum)/.test(subR)) return wrapPrefix + "Sub_" + subR.replace(/^DivSum/, "Div_Sum");
@@ -6007,7 +6042,8 @@ function nameExprAltsBase(node, opts = {}) {
     if (cls(unwrapParen(arg)) === "LeanSub") {
       const subRAlts = nameExprAlts(unwrapParen(arg).args?.[1], opts);
       const withDiv = subRAlts.filter((r) => /^(Div_Sum|DivSum)/.test(r)).map((r) => wrapPrefix + "Sub_" + r.replace(/^DivSum/, "Div_Sum"));
-      return uniq([...withDiv, wrapPrefix + "Sub"]);
+      const sample = isSubDivSumAbs(arg) ? [wrapPrefix + "SubDivSum"] : [];
+      return uniq([...sample, ...withDiv, wrapPrefix + "Sub"]);
     }
     const leafHead = cls(arg) === "LeanArgsSpaceSeparated" && cls(arg.args?.[0]) === "LeanToken" && isLeafName(arg.args[0].text, opts.leaves) && cls(unwrapParen(arg.args?.[1])) !== "LeanSub";
     const oldLeaf = leafHead ? [wrapPrefix + nameToken(arg.args[0].text)] : [];

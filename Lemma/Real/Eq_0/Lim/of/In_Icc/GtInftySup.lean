@@ -14,7 +14,7 @@ private lemma main
   (h₀ : γ ∈ Ioo 0 1)
   (h₁ : sup[n] |x n| < ∞) :
 -- imply
-  lim [n → ∞] γ ^ n * x n = 0 := by
+  lim[n → ∞] γ ^ n * x n = 0 := by
 -- proof
   obtain ⟨M, hM⟩ := h₁
   have h₂ : ∀ n, |x n| ≤ M := fun n => hM ⟨n, rfl⟩
@@ -23,7 +23,7 @@ private lemma main
     intro n
     rw [abs_mul, abs_of_pos (h₃ n)]
     exact mul_le_mul_of_nonneg_left (h₂ n) (h₃ n).le
-  have h₅ : lim [n → ∞] γ ^ n * M = 0 := by
+  have h₅ : lim[n → ∞] γ ^ n * M = 0 := by
     simpa using (tendsto_pow_atTop_nhds_zero_of_lt_one h₀.1.le h₀.2).mul_const M
   exact squeeze_zero_norm h₄ h₅
 

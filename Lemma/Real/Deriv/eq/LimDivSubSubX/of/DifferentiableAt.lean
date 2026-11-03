@@ -10,7 +10,7 @@ private lemma main
 -- given
   (h : DifferentiableAt ℝ f x₀) :
 -- imply
-  deriv f x₀ = lim [x → x₀] ((f x - f x₀) / (x - x₀)) := by
+  deriv f x₀ = lim[x → x₀] ((f x - f x₀) / (x - x₀)) := by
 -- proof
   have hslope := h.hasDerivAt.tendsto_slope
   have hfun : (fun x => (f x - f x₀) / (x - x₀)) = slope f x₀ := by

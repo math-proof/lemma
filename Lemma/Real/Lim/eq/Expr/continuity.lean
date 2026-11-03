@@ -10,7 +10,7 @@ private lemma main
 -- given
   (h : ContinuousAt f x₀) :
 -- imply
-  lim [x → x₀] (f x) = f x₀ :=
+  lim[x → x₀] (f x) = f x₀ :=
   -- proof
   h.tendsto.mono_left nhdsWithin_le_nhds
 

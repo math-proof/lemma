@@ -8,7 +8,7 @@ private lemma main
 -- given
   (h : ∃ M, ∀ n, a (n + 1) ≤ M ∧ a n ≤ a (n + 1)) :
 -- imply
-  lim [n → ∞] a n = sSup (Set.range a) := by
+  lim[n → ∞] a n = sSup (Set.range a) := by
 -- proof
   obtain ⟨M, hM⟩ := h
   have hge : ∀ n, a n ≤ a (n + 1) := fun n => (hM n).2

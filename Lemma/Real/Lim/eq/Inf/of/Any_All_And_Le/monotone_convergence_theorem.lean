@@ -8,7 +8,7 @@ private lemma main
 -- given
   (h : ∃ M, ∀ n, M ≤ a (n + 1) ∧ a (n + 1) ≤ a n) :
 -- imply
-  lim [n → ∞] a n = sInf (Set.range a) := by
+  lim[n → ∞] a n = sInf (Set.range a) := by
 -- proof
   obtain ⟨M, hM⟩ := h
   have hle : ∀ n, a (n + 1) ≤ a n := fun n => (hM n).2

@@ -10,7 +10,7 @@ private lemma εδ
   (f : ℂ → ℂ)
   (x₀ a : ℂ) :
 -- imply
-  lim [x → x₀] f x = a ↔ ∀ ε > 0, ∃ δ > 0, ∀ x | ‖x - x₀‖ ∈ Ioo 0 δ, ‖f x - a‖ < ε := by
+  lim[x → x₀] f x = a ↔ ∀ ε > 0, ∃ δ > 0, ∀ x | ‖x - x₀‖ ∈ Ioo 0 δ, ‖f x - a‖ < ε := by
 -- proof
   constructor
   ·
@@ -43,7 +43,7 @@ private lemma εN.pos
   (f : α → ℂ)
   (a : ℂ) :
 -- imply
-  lim [x → ∞] f x = a ↔ ∀ ε > 0, ∃ N > 0, ∀ x | x > N, ‖f x - a‖ < ε := by
+  lim[x → ∞] f x = a ↔ ∀ ε > 0, ∃ N > 0, ∀ x | x > N, ‖f x - a‖ < ε := by
 -- proof
   constructor
   ·
@@ -72,7 +72,7 @@ private lemma εN.neg
   (f : α → ℂ)
   (a : ℂ) :
 -- imply
-  lim [x → -∞] f x = a ↔ ∀ ε > 0, ∃ N > 0, ∀ x | x < -N, ‖f x - a‖ < ε := by
+  lim[x → -∞] f x = a ↔ ∀ ε > 0, ∃ N > 0, ∀ x | x < -N, ‖f x - a‖ < ε := by
 -- proof
   constructor
   ·

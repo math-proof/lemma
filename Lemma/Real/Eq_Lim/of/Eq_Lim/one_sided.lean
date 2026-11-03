@@ -7,9 +7,9 @@ private lemma main
   {f : ℝ → ℝ}
   {x₀ A : ℝ}
 -- given
-  (h : lim [x → x₀] f x = A) :
+  (h : lim[x → x₀] f x = A) :
 -- imply
-  lim [x → x₀] f x = A := by
+  lim[x → x₀] f x = A := by
 -- proof
   apply h
 
