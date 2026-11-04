@@ -1,5 +1,6 @@
 import Def.Analysis.Real.Limits.Basic
 import Def.Analysis.SpecialFunctions.Trigonometric
+import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
 import Lemma.Hyperreal.IsSt.is.Le0Mk.EqStdPart
 import Lemma.Hyperreal.UFn.of.All_UFn
 import Lemma.Hyperreal.XEq.of.InfinitesimalSub
@@ -11,7 +12,7 @@ private lemma main
   {θ : ℝ*}
 -- given
   (h : θ → 0)
-  (h_tan : θ.tan ≠ 0) :
+  (h0 : θ ≠ 0) :
 -- imply
   θ.sin / θ.tan ≈ 1 := by
 -- proof
@@ -33,6 +34,32 @@ private lemma main
     ·
       apply stdPart_of_tendsto
       simpa [Real.cos_zero] using stdPart_map Real.continuous_cos.continuousAt h_tendsto
+  have h_tan : θ.tan ≠ 0 := by
+    intro htan
+    apply h0
+    have habs := (All_LtAbs.of.Infinitesimal h) ⟨π / 2, half_pos Real.pi_pos⟩
+    have hzero : (|θ| < ↑(π / 2) ∧ θ.tan = 0) → θ = 0 := by
+      apply UFn.of.All_UFn θ
+      intro f hf
+      obtain ⟨habs, htan⟩ := hf
+      let x : ℝ* := Hyperreal.ofSeq f
+      have habs' : |x| < ↑(π / 2) := habs
+      have htan' : x.tan = 0 := htan
+      simp only [abs_lt] at habs'
+      dsimp only [Hyperreal.tan] at htan'
+      apply Germ.coe_eq.mpr
+      have hlt : ∀ᶠ n in hyperfilter ℕ, f n < π / 2 := Germ.coe_lt.mp habs'.2
+      have hgt : ∀ᶠ n in hyperfilter ℕ, -(π / 2 : ℝ) < f n := Germ.coe_lt.mp habs'.1
+      have htz : ∀ᶠ n in hyperfilter ℕ, Real.tan (f n) = 0 :=
+        Germ.coe_eq.mp <| by
+          simp only [x, Hyperreal.ofSeq, Germ.map_coe] at htan'
+          apply htan'
+      filter_upwards [hlt, hgt, htz] with n hn hp ht
+      have hmem : f n ∈ Set.Ioo (-(π / 2)) (π / 2) := ⟨hp, hn⟩
+      apply (Real.sin_eq_zero_iff_of_lt_of_lt (by linarith [hp, Real.pi_pos]) (by linarith [hn, Real.pi_pos])).mp
+      rw [Real.tan_eq_sin_div_cos] at ht
+      apply (div_eq_zero_iff.mp ht).resolve_right (Real.cos_pos_of_mem_Ioo hmem).ne'
+    simpa using hzero ⟨habs, htan⟩
   have h_eq : θ.sin / θ.tan = θ.cos := by
     revert h_tan
     apply UFn.of.All_UFn θ
