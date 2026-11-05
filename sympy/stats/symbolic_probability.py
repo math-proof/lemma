@@ -1080,15 +1080,15 @@ class Expectation(ExprWithLimits):
             weights_str = ','.join([p._print(w) for w in weights])
             def _format_ineq(limit):
                 if len(limit) == 1:
-                    return r"%s \sim %s" % (p._print(limit[0]), weights_str)
+                    return r"%s : %s" % (p._print(limit[0]), weights_str)
                 x, cond = limit
-                return r"%s \sim %s \mid %s" % (p._print(x), p._print(cond), weights_str)
+                return r"%s : %s \mid %s" % (p._print(x), p._print(cond), weights_str)
         else:
             def _format_ineq(limit):
                 if len(limit) == 1:
                     return p._print(limit[0])
                 x, cond = limit
-                return r"%s \sim %s" % (p._print(x), p._print(cond))
+                return r"%s : %s" % (p._print(x), p._print(cond))
 
         if not limits:
             tex += ' '  
@@ -1097,7 +1097,7 @@ class Expectation(ExprWithLimits):
             if len(limit) == 1:
                 x, = limit
                 if weights:
-                    tex += r"_{%s \sim %s} " % (p._print(x), weights_str)
+                    tex += r"_{%s : %s} " % (p._print(x), weights_str)
                 else:
                     if self.scope_variables - {x}:
                         tex += r"_{%s} " % p._print(x)
