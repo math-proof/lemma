@@ -15,14 +15,21 @@ import Initialize.Tactic.Attr.Basic
 Catenary general solution (悬链线): if \(y'' = a^{-1}\sqrt{1+(y')^2}\) for
 \(a:\mathbb{R}^+\) and \(y\) is \(C^2\), then
 \(y(x)=a\cosh((x-x_0)/a)+b\) for some \(x_0,b\in\mathbb{R}\).
+
+The ODE `hode` is the conclude of the static force-balance lemma
+[\(\partial_x(T e^{i\arctan y'})=i\mu g\sqrt{1+(y')^2}\)](?module=Real.Deriv.eq.Mul_SqrtAdd1SquareDeriv.of.All_EqDeriv_MulIMulMul_SqrtAdd1SquareDeriv.ContDiff_2.Differentiable):
+given `Differentiable ℝ T`, `ContDiff ℝ 2 y`, and
+\(h_{\mathrm{force}}:\forall x,\;\partial_x\bigl(T(x)\,e^{i\arctan y'(x)}\bigr)=i\cdot\mu\sqrt{1+(y'(x))^2}\cdot g\)
+(\(\mu,g:\mathbb{R}^+\)), that lemma obtains \(\exists H\) with \(a=H/(\mu g)\) such that the same ODE holds.
+This leaf then solves that ODE by a catenary.
 -/
 @[path]
 private lemma main
   {a : ℝ⁺}
   {y : ℝ → ℝ}
 -- given
-  (hode : ∀ x, ∂[x, x] y x = (a : ℝ)⁻¹ * √(1 + (∂[x] y x) ^ 2))
-  (hy : ContDiff ℝ 2 y) :
+  (hy : ContDiff ℝ 2 y)
+  (hode : ∀ x, ∂[x, x] y x = (a : ℝ)⁻¹ * √(1 + (∂[x] y x) ^ 2)) :
 -- imply
   ∃ x₀ b : ℝ, y = fun x => (a : ℝ) * Real.cosh ((x - x₀) / a) + b := by
 -- proof

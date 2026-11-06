@@ -205,6 +205,60 @@ export function pathAndInfixChoices(leftChoices, rightChoices, house = "") {
 }
 
 /**
+ * Flat Imp Op(LHS)(RHS). Same hole join as Eq/And (`pathEqFlatStem`).
+ * Both arguments omitted → `Imp__` (two holes), not `Imp_`.
+ */
+export function pathImpFlatStem(lhs, rhs) {
+  const L = pathStripTrailingHoles(lhs);
+  const R = pathStripTrailingHoles(rhs);
+  if (!L && !R) return "Imp__";
+  const stem = pathEqFlatStem(lhs, rhs);
+  if (!stem || !stem.startsWith("Eq")) return null;
+  return "Imp" + stem.slice(2);
+}
+
+/**
+ * Imp (`→`) infix for any side choices, including omit (`""`).
+ * Both sides named → `LHS/imp/RHS`. Flat form is `Imp(LHS)(RHS)`.
+ * Both-omit is `Imp__`. Parallel to And (`pathAndInfixChoices`).
+ * @param {string[]} leftChoices
+ * @param {string[]} rightChoices
+ * @param {string} [house]
+ */
+export function pathImpInfixChoices(leftChoices, rightChoices, house = "") {
+  const leftRaw = pathUniqKeepEmpty(leftChoices || [""]);
+  const rightRaw = pathUniqKeepEmpty(rightChoices || [""]);
+  const slash = [];
+  const flats = [];
+  for (const lRaw of leftRaw) {
+    for (const rRaw of rightRaw) {
+      const l = pathStripTrailingHoles(lRaw);
+      const r = pathStripTrailingHoles(rRaw);
+      if (l && r) slash.push(l + "/imp/" + r);
+      if (!l && !r) {
+        flats.push("Imp__");
+        continue;
+      }
+      const flat = pathImpFlatStem(lRaw, rRaw);
+      if (flat) flats.push(flat === "Imp__" ? flat : pathStripTrailingHoles(flat));
+    }
+  }
+  const byLen = (a, b) => a.length - b.length || (a < b ? -1 : a > b ? 1 : 0);
+  const slashU = pathUniq(slash);
+  const flatU = pathUniq(flats).filter((s) => !slashU.includes(s));
+  const houseN = String(house || "").replace(/\\/g, "/");
+  const slashRest = slashU.filter((s) => s !== houseN).sort(byLen);
+  const flatRest = flatU.filter((s) => s !== houseN).sort(byLen);
+  const head = slashU.includes(houseN) || flatU.includes(houseN) ? [houseN] : [];
+  return {
+    left: pathUniq(leftRaw.map(pathStripTrailingHoles)),
+    right: pathUniq(rightRaw.map(pathStripTrailingHoles)),
+    stems: pathUniq([...head, ...slashRest, ...flatRest]),
+    soft: "imp",
+  };
+}
+
+/**
  * IndepFun `⟂ᵢ` infix combine (binary op like Mul/Eq): LHS.Indep.RHS.
  * Hole sides omit; a GetSlice operand yields Indep_GetSlice (right) /
  * IndepGetSlice (left, camel — parallel IndepJoint / Indep_Joint).
@@ -272,8 +326,29 @@ export function holeRegexDefaultNameToken(text) {
 
 /** @param {object|null|undefined} node @param {object} [opts] @returns {string|null} */
 export function holeRegexChild(node, opts = {}) {
-  if (!node || typeof node.holeRegex !== "function") return null;
-  const frag = node.holeRegex(opts);
+  if (!node) return null;
+  // Peel display wrappers so binary Imp/And/Eq children keep structured holeRegex
+  // (newline-wrapped antecedent of `P → Q` under ∀ᵐ must not freeze via nameExpr).
+  let n = node;
+  for (let i = 0; i < 8 && n; i++) {
+    const c = n.constructor?.name || "";
+    if (c === "LeanParenthesis") {
+      n = n.arg ?? n.args?.[0];
+      continue;
+    }
+    if (c === "LeanStatements" || c === "LeanArgsNewLineSeparated") {
+      const args = n.args || [];
+      n = args.find((a) => (a?.constructor?.name || "") !== "LeanLineComment") || args[0];
+      continue;
+    }
+    if (c === "LeanColon") {
+      n = n.args?.[0];
+      continue;
+    }
+    break;
+  }
+  if (!n || typeof n.holeRegex !== "function") return null;
+  const frag = n.holeRegex(opts);
   return frag == null || frag === "" ? null : frag;
 }
 
@@ -370,3 +445,24 @@ export function holeRegexCombineUnary(tag, argNode, opts = {}) {
   if (inner == null || inner === "") return tag;
   return tag + wrapHoleOpt(inner);
 }
+
+/**
+ * Binary Nat.choose / d.choose -> Binom (Body / Cosmos).
+ * Filled left + hole right: Binom((Mul(_|2)_)_) -- required group around left
+ * fill (same paren style as Deriv_(scope)), then second-arg hole.
+ * @param {object|null} leftNode
+ * @param {object|null} rightNode
+ * @param {object} [opts]
+ * @returns {string}
+ */
+export function holeRegexCombineBinom(leftNode, rightNode, opts = {}) {
+  const L = holeRegexChild(leftNode, opts);
+  const R = rightNode != null ? holeRegexChild(rightNode, opts) : null;
+  const lHole = L == null || L === "";
+  const rHole = R == null || R === "";
+  if (!lHole && rHole) return "Binom((" + L + ")_)";
+  if (lHole && !rHole) return "Binom(_" + wrapHoleOpt(R) + ")";
+  if (!lHole && !rHole) return "Binom((" + L + ")" + wrapHoleOpt(R) + ")";
+  return "Binom__";
+}
+

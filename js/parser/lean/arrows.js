@@ -8,6 +8,7 @@
  */
 import { LeanBinary, LeanUnary } from './abstract.js';
 import { Lean } from './base.js';
+import { holeRegexCombineRel, pathImpInfixChoices } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -176,12 +177,26 @@ export class Lean_rightarrow extends LeanBinary {
     }
 
     /**
-     * Hole-regex: drop guard; path follows conclusion (rhs).
+     * Hole-regex: binary Imp (antecedent + consequent), like Eq/Iff/And.
+     * Do not peel to rhs — that flattens P -> Q into Q and drops Imp
+     * (e.g. All_EqProb_Eq0 instead of All_...Imp...).
      * @param {object} [opts]
      * @returns {string|null}
      */
     holeRegex(opts = {}) {
-        return this.rhs?.holeRegex?.(opts) ?? null;
+        return holeRegexCombineRel("Imp", this.lhs, this.rhs, opts);
+    }
+
+    /**
+     * Imp as a binary path op (like And): LHS/imp/RHS and Imp(LHS)(RHS).
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        return pathImpInfixChoices(
+            this.lhs?.pathChoices?.(opts) ?? [""],
+            this.rhs?.pathChoices?.(opts) ?? [""],
+        ).stems;
     }
 
 

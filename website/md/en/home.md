@@ -22,7 +22,7 @@ The library currently contains <label id=count>5000</label> proved theorems (<la
 * [Int](../?module=Int) Elementary algebra of integers
 * [Rat](../?module=Rat) Elementary algebra of rationals
 * [Real](../?module=Real) Algebra and real analysis, e.g.:
-  - [Jensen's inequality](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc)
+  - [Jensen's inequality](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc), [catenary](../?module=Real.Any_Eq_AddMul_CoshDivSub.of.All_EqDeriv_MulInvSqrtAdd1SquareDeriv.ContDiff_2)
 * [Hyperreal](../?module=Hyperreal) Nonstandard analysis, e.g.:
   - [Mersenne's law](../?module=Hyperreal.Eq_Mul_SqrtDiv.of.All_EqMul_Deriv_SinArctan.All_Eq_MulMul_Sin_Cos)
 * [Complex](../?module=Complex) Complex analysis, e.g.:

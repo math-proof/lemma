@@ -903,8 +903,12 @@ export class Lean_partial extends LeanBigOperator {
      * @param {object} [_opts]
      * @returns {string|null}
      */
-    holeRegex(_opts = {}) {
-        return (this.bound != null || this.scope != null) ? "Deriv_" : null;
+    holeRegex(opts = {}) {
+        if (this.bound == null && this.scope == null) return null;
+        // Hole scope (d[x] u / d[t,t] u): Deriv_. Structured integrand: Deriv_(scopeFrag).
+        const scopeFrag = this.scope?.holeRegex?.(opts) ?? null;
+        if (scopeFrag == null || scopeFrag === "" || scopeFrag === "_") return "Deriv_";
+        return "Deriv_(" + scopeFrag + ")";
     }
 
     pathChoices(opts = {}) {
@@ -1080,22 +1084,36 @@ export class LeanRandomBigOp extends LeanBigOperator {
         return 'Expect';
     }
 
-    holeRegex(_opts = {}) {
-        return (this.bound != null || this.scope != null) ? `${this.pathToken}_` : null;
+    /**
+     * Hole-regex: binder Expect/Prob/Var are binary (bound + scope).
+     * Both holes -> Name__; bound hole + filled scope -> Name_(scopeFrag)
+     * (same shape as Deriv_(scope) / Binom__). Mathlib Var[Y] stays GetElem.
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        if (this.bound == null && this.scope == null) return null;
+        const tok = this.pathToken;
+        const scopeFrag = this.scope?.holeRegex?.(opts) ?? null;
+        if (scopeFrag == null || scopeFrag === "" || scopeFrag === "_") return `${tok}__`;
+        return `${tok}_(${scopeFrag})`;
     }
 
     pathChoices(opts = {}) {
-        const kid = this.scope ?? this.bound;
-        const kids = kid?.pathChoices?.(opts) ?? [''];
         const tok = this.pathToken;
-        const out = [];
+        const kids = this.scope?.pathChoices?.(opts) ?? [''];
+        const out = [''];
+        let sawBothHoles = false;
         for (const k of kids) {
-            if (!k) continue;
-            const core = pathStripTrailingHoles(k);
-            if (!core) continue;
-            out.push(core === 'Mul' && tok === 'Expect' ? `${tok}_` + k : tok + core);
+            if (!k) {
+                if (!sawBothHoles) { out.push(`${tok}__`); sawBothHoles = true; }
+                continue;
+            }
+            // Binary bound hole + scope fill: Expect_Mul..., Prob_..., Var_...
+            out.push(`${tok}_` + k);
         }
-        out.push(tok, '');
+        if (!sawBothHoles) out.push(`${tok}__`);
+        out.push(tok);
         return pathUniqKeepEmpty(out);
     }
 
@@ -1192,14 +1210,32 @@ export class Lean_Prob extends LeanRandomBigOp {
         return '{{{ℙ}}_{%s}}\\ {%s}';
     }
 
-    pathChoices(opts = {}) {
-        const kid = this.scope ?? this.bound;
-        const kids = kid?.pathChoices?.(opts) ?? [''];
-        const out = [''];
-        for (const k of kids) out.push(k ? 'Prob' + k : 'Prob');
-        out.push('Prob');
-        return pathUniqKeepEmpty(out);
+
+    /**
+     * Observation events `x = «\\sf{x}»` (and ∧ of them) are elided in latex to
+     * `ℙ[π](x)` via collectProbEventRVs — hole-regex must be Prob__ (both holes),
+     * never Prob_(Eq). Same rule as the RA form `ℙ[π](x)`.
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        if (this.bound == null && this.scope == null) return null;
+        if (this.scope && L.LeanArgsSpaceSeparated.collectProbEventRVs(this.scope))
+            return "Prob__";
+        return super.holeRegex(opts);
     }
+
+    /**
+     * Observation events path like RA `ℙ[π](x)`: Prob__ / Prob, not Prob_Eq.
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        if (this.scope && L.LeanArgsSpaceSeparated.collectProbEventRVs(this.scope))
+            return pathUniqKeepEmpty(["", "Prob__", "Prob"]);
+        return super.pathChoices(opts);
+    }
+
 }
 
 export class Lean_Var extends LeanRandomBigOp {

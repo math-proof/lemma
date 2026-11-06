@@ -9,8 +9,8 @@ Closed form of the Catalan recurrence: if `C` satisfies `C[0] = 1` and
 `C[n] = (2 n).choose n / (n + 1)` (as rationals).
 | attributes | lemma |
 | :---: | :---: |
-| path | Finset.Eq.of.Eq.Eq.catalan.recurrence |
-| Fun | Finset.Eq.of.Eq.Eq.catalan.recurrence.fun |
+| path | Finset.Eq_DivBinomMul2.of.All_Eq_Sum_Mul.Eq_1 |
+| Fun | Finset.Eq_DivBinomMul2.of.All_Eq_Sum_Mul.Eq_1.fun |
 -/
 @[path, Fun]
 private lemma main

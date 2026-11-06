@@ -10,7 +10,7 @@ ratios as string-length ratios.
 
 This is a consequence of the Pythagorean tuning law (equal-tension strings:
 frequency inversely proportional to length), which is the equal-tension special
-case of [Mersenne's law](?module=Hyperreal.Eq_Mul_SqrtDiv.of.All_EqMul_Deriv_SinArctan.All_Eq_MulMul_Sin_Cos) `f ∝ (1/L)√(T/μ)`.
+case of [Mersenne's law](?module=Hyperreal.Eq_Mul_SqrtDiv.of.All_EqDeriv_Mul_ExpMulIArctanDeriv_MulIMul_Deriv.All_Eq_MulMul_Sin_Cos) `f ∝ (1/L)√(T/μ)`.
 -/
 
 @[path]

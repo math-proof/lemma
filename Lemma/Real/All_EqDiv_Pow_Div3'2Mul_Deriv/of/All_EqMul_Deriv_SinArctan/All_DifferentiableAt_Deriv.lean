@@ -1,5 +1,4 @@
 import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Real.Hyperreal
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
@@ -8,7 +7,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Def.Analysis.SpecialFunctions.Trigonometric
 import Lemma.Real.HasDerivAt_Deriv.is.DifferentiableAt
 import Syntax.Analysis.Calculus.Deriv.Operators
-open Real Hyperreal
+open Real
 
 
 /--
@@ -33,7 +32,7 @@ The older discrete free-body form of the force law was
 for infinitesimal \(\Delta x\to 0^+\); its continuum limit is the binder `h_force` above.
 
 Derivation (no appeal to
-[Mersenne's frequency law](?module=Hyperreal.Eq_Mul_SqrtDiv.of.All_EqMul_Deriv_SinArctan.All_Eq_MulMul_Sin_Cos)):
+[Mersenne's frequency law](?module=Hyperreal.Eq_Mul_SqrtDiv.of.All_EqDeriv_Mul_ExpMulIArctanDeriv_MulIMul_Deriv.All_Eq_MulMul_Sin_Cos)):
 chain rule for \(x\mapsto\sin(\arctan u_x)\) yields
 \(\partial_x(\sin(\arctan u_x))=u_{xx}/(1+u_x^2)^{3/2}\), so `h_force` rewrites to the
 displayed identity. The linear wave equation
@@ -94,3 +93,4 @@ private lemma main
 
 
 -- created on 2026-11-05
+-- updated on 2026-11-06

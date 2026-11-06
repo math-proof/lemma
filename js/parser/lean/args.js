@@ -16,7 +16,7 @@ import {
 } from './utility.js';
 import { LeanArgs, LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
-import { pathStripTrailingHoles, pathUniqKeepEmpty, wrapHoleOpt, HOLE_RE_TRIG_FN, holeRegexDefaultNameToken } from './pathChoices.js';
+import { pathStripTrailingHoles, pathUniqKeepEmpty, wrapHoleOpt, HOLE_RE_TRIG_FN, holeRegexDefaultNameToken, holeRegexCombineBinom } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -80,6 +80,24 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             }
             if (inner == null || inner === "") return headTok + "_";
             return headTok + wrapHoleOpt(inner);
+        }
+        // Nat.choose / d.choose — binary Binom((left)_) (Body / Cosmos).
+        {
+            const prop = head instanceof L.LeanProperty && head.rhs instanceof L.LeanToken && head.rhs.text === "choose";
+            const tok = head instanceof L.LeanToken && /^(?:Nat\.)?choose$/.test(head.text || "");
+            const args = this.args || [];
+            let nNode = null;
+            let kNode = null;
+            if (prop && args.length === 2) {
+                nNode = head.lhs;
+                kNode = args[1];
+            } else if ((prop || tok) && args.length === 3) {
+                nNode = args[1];
+                kNode = args[2];
+            }
+            if (nNode != null || kNode != null) {
+                return holeRegexCombineBinom(nNode, kNode, opts);
+            }
         }
         return super.holeRegex?.(opts) ?? null;
     }

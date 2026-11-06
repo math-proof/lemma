@@ -1,13 +1,16 @@
 import Mathlib.Analysis.Calculus.Deriv.Basic
 import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Real.Hyperreal
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Def.Analysis.SpecialFunctions.Trigonometric
 import Lemma.Real.All_EqDiv_Pow_Div3'2Mul_Deriv.of.All_EqMul_Deriv_SinArctan.All_DifferentiableAt_Deriv
 import Lemma.Real.CosAdd.eq.SubCosCos_SinSin
 import Syntax.Analysis.Calculus.Deriv.Operators
-open Real Hyperreal
+open Real Complex
 
 
 /--
@@ -20,18 +23,25 @@ amplitude–phase form
 \]
 (so \(X(x)=\sin(n\pi x/L)\), \(T(t)=A\cos(2\pi f t+\theta)\), with
 \(X''=-k^2 X\), \(k=n\pi/L\), and \(T''=-\omega^2 T\), \(\omega=2\pi f\)),
-together with the continuum soft-string force balance `h_force`
+together with the continuum soft-string force balance `h_force` in complex
+\(F=ma\) packing (string tension \(T\), linear density \(\mu\); inertial RHS, not
+the hanging-chain weight \(\mu g\,\Delta s\))
 \[
-  T\,\partial_x\bigl(\sin(\arctan u_x)\bigr)=\mu\,u_{tt}
+  \partial_x\bigl(T e^{i\theta}\bigr)=i\cdot\mu\,u_{tt},
+  \qquad\theta=\arctan u_x
 \]
-(the older discrete free-body form was
+encoding both \(\partial_x(T\cos\theta)=0\) and
+\(\partial_x(T\sin\theta)=\mu\,u_{tt}\). The older discrete free-body form was
 \(
 T(\sin(\arctan u_x(x+\Delta x))-\sin(\arctan u_x(x)))=\mu\,\Delta x\,u_{tt}
 \)
-for infinitesimal \(\Delta x\to 0^+\)).
+for infinitesimal \(\Delta x\to 0^+\); its continuum vertical component is the
+imaginary part of `h_force`.
 
 Derivation:
-1. From continuum `h_force` and spatial \(C^2\) regularity of the mode, apply
+1. Project \(\operatorname{Im}\) of continuum `h_force` to recover the real vertical
+   law \(T\,\partial_x(\sin(\arctan u_x))=\mu\,u_{tt}\); with spatial \(C^2\)
+   regularity of the mode, apply
    [nonlinear continuum wave law from soft-string \(F=ma\)](?module=Real.All_EqDiv_Pow_Div3'2Mul_Deriv.of.All_EqMul_Deriv_SinArctan.All_DifferentiableAt_Deriv)
    to get
    \(T\,u_{xx}/(1+u_x^2)^{3/2}=\mu\,u_{tt}\).
@@ -54,7 +64,8 @@ private lemma main
     A * Real.sin (n * π * x / L) *
       Real.cos (2 * π * f * t + θ))
   (h_force : ∀ (t x : ℝ),
-    T * ∂[x] (∂[x] u t x).arctan.sin = μ * ∂[t, t] u t x) :
+    ∂[x] ((T : ℂ) * exp (I * (∂[x] u t x).arctan)) =
+      I * (μ * ∂[t, t] u t x)) :
 -- imply
   f = (n : ℝ) / (2 * L) * √((T : ℝ) / μ) := by
 -- proof
@@ -88,7 +99,7 @@ private lemma main
     have hEq : X = fun x => Real.sin (k * x) := funext hkS
     apply HasDerivAt.deriv
     rw [hEq]
-    apply ((hasDerivAt_sin (k * x)).comp x _).congr_deriv
+    apply ((Real.hasDerivAt_sin (k * x)).comp x _).congr_deriv
     ·
       ring_nf
     ·
@@ -97,7 +108,7 @@ private lemma main
     intro x
     have hEq : X = fun x => Real.sin (k * x) := funext hkS
     rw [hS_deriv, hEq]
-    apply ((hasDerivAt_sin (k * x)).comp x _).congr_deriv
+    apply ((Real.hasDerivAt_sin (k * x)).comp x _).congr_deriv
     ·
       ring_nf
     ·
@@ -105,7 +116,7 @@ private lemma main
   have h_X2 : ∀ x, HasDerivAt (deriv X) (-k ^ 2 * X x) x := by
     intro x
     rw [hS_deriv]
-    apply (((hasDerivAt_cos (k * x)).comp x _).const_mul k).congr_deriv
+    apply (((Real.hasDerivAt_cos (k * x)).comp x _).const_mul k).congr_deriv
     ·
       rw [hkS x]
       ring_nf
@@ -117,22 +128,22 @@ private lemma main
     have hlin : HasDerivAt (fun t => angFreq * t) angFreq t := by
       simpa using (hasDerivAt_id t).const_mul angFreq
     apply HasDerivAt.deriv
-    apply ((((hasDerivAt_cos (angFreq * t)).comp t hlin).const_mul a).add
-      (((hasDerivAt_sin (angFreq * t)).comp t hlin).const_mul b)).congr_deriv (by ring)
+    apply ((((Real.hasDerivAt_cos (angFreq * t)).comp t hlin).const_mul a).add
+      (((Real.hasDerivAt_sin (angFreq * t)).comp t hlin).const_mul b)).congr_deriv (by ring)
   have h_Tempo' : ∀ t, HasDerivAt Tempo (deriv Tempo t) t := by
     intro t
     have hlin : HasDerivAt (fun t => angFreq * t) angFreq t := by
       simpa using (hasDerivAt_id t).const_mul angFreq
     rw [hT_deriv]
-    apply ((((hasDerivAt_cos (angFreq * t)).comp t hlin).const_mul a).add
-      (((hasDerivAt_sin (angFreq * t)).comp t hlin).const_mul b)).congr_deriv (by ring)
+    apply ((((Real.hasDerivAt_cos (angFreq * t)).comp t hlin).const_mul a).add
+      (((Real.hasDerivAt_sin (angFreq * t)).comp t hlin).const_mul b)).congr_deriv (by ring)
   have h_Tempo2 : ∀ t, HasDerivAt (deriv Tempo) (-angFreq ^ 2 * Tempo t) t := by
     intro t
     rw [hT_deriv]
     have hlin : HasDerivAt (fun t => angFreq * t) angFreq t := by
       simpa using (hasDerivAt_id t).const_mul angFreq
-    apply ((((hasDerivAt_sin (angFreq * t)).comp t hlin).const_mul (-a * angFreq)).add
-      (((hasDerivAt_cos (angFreq * t)).comp t hlin).const_mul (b * angFreq))).congr_deriv
+    apply ((((Real.hasDerivAt_sin (angFreq * t)).comp t hlin).const_mul (-a * angFreq)).add
+      (((Real.hasDerivAt_cos (angFreq * t)).comp t hlin).const_mul (b * angFreq))).congr_deriv
       (by simp only [Tempo]; ring)
   have hn : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (NeZero.ne n)
   have hk : k ≠ 0 := by
@@ -154,7 +165,7 @@ private lemma main
       have harg : n * π * x0 / L = π / 2 := by
         simp only [x0]
         field_simp [L.property.ne', hn]
-      simp only [X, harg, sin_pi_div_two]
+      simp only [X, harg, Real.sin_pi_div_two]
       norm_num
   have h_Tempo_ne : ∃ t0, Tempo t0 ≠ 0 := by
     refine ⟨-θ / angFreq, ?_⟩
@@ -166,9 +177,9 @@ private lemma main
       field_simp [hAng]
     have hsum : A * Real.cos θ * Real.cos θ + -A * Real.sin θ * -Real.sin θ = A := calc
       _ = A * (Real.cos θ ^ 2 + Real.sin θ ^ 2) := by ring
-      _ = A * 1 := by rw [cos_sq_add_sin_sq]
+      _ = A * 1 := by rw [Real.cos_sq_add_sin_sq]
       _ = (A : ℝ) := by ring
-    simp only [Tempo, hAngT, a, b, cos_neg, sin_neg]
+    simp only [Tempo, hAngT, a, b, Real.cos_neg, Real.sin_neg]
     exact hsum.symm ▸ A.property.ne'
   -- Mode product derivatives and continuum nonlinear law.
   have hX2_eq : ∀ x, ∂[x, x] X x = -k ^ 2 * X x := fun x => (h_X2 x).deriv
@@ -225,12 +236,79 @@ private lemma main
         (Tempo t * (-k ^ 2 * X x)) x :=
       (h_X2 x).const_mul (Tempo t)
     simpa [hderiv1] using h2.differentiableAt
+  -- Im-project complex F=ma packing to the real vertical soft-string law.
+  have h_force_real : ∀ (t x : ℝ),
+      (T : ℝ) * ∂[x] (∂[x] u t x).arctan.sin = (μ : ℝ) * ∂[t, t] u t x := by
+    intro t x
+    set θ : ℝ → ℝ := fun ξ => Real.arctan (deriv (u t) ξ)
+    set U : ℝ → ℝ := fun ξ => (T : ℝ) * Real.cos (θ ξ)
+    set V : ℝ → ℝ := fun ξ => (T : ℝ) * Real.sin (θ ξ)
+    set W : ℝ → ℂ := fun ξ => (T : ℝ) * exp (I * θ ξ)
+    have hW_eq : W = fun ξ => (U ξ : ℂ) + I * (V ξ : ℂ) := by
+      funext ξ
+      simp only [W, U, V, θ]
+      have hExp : exp (I * Real.arctan (deriv (u t) ξ)) =
+          ↑(Real.cos (Real.arctan (deriv (u t) ξ))) +
+            ↑(Real.sin (Real.arctan (deriv (u t) ξ))) * I := by
+        rw [mul_comm I]
+        apply exp_ofReal_mul_I _
+      rw [hExp, mul_add, ← ofReal_mul]
+      congr 1
+      calc
+        _ = ↑(T : ℝ) * ↑(Real.sin (Real.arctan (deriv (u t) ξ))) * I := by ring
+        _ = ↑((T : ℝ) * Real.sin (Real.arctan (deriv (u t) ξ))) * I := by
+          rw [← ofReal_mul]
+        _ = I * ↑((T : ℝ) * Real.sin (Real.arctan (deriv (u t) ξ))) := by
+          rw [mul_comm]
+    have hθ_diff : Differentiable ℝ θ :=
+      Real.differentiable_arctan.comp fun ξ => h_ux' t ξ
+    have hU_diff : Differentiable ℝ U := by
+      refine Differentiable.mul (differentiable_const _) ?_
+      exact Real.differentiable_cos.comp hθ_diff
+    have hV_diff : Differentiable ℝ V := by
+      refine Differentiable.mul (differentiable_const _) ?_
+      exact Real.differentiable_sin.comp hθ_diff
+    have hW_deriv : deriv W x = ↑(deriv U x) + I * ↑(deriv V x) := by
+      have hUd : HasDerivAt U (deriv U x) x := (hU_diff x).hasDerivAt
+      have hVd : HasDerivAt V (deriv V x) x := (hV_diff x).hasDerivAt
+      have hU' : HasDerivAt (fun ξ => (U ξ : ℂ)) ↑(deriv U x) x :=
+        hUd.ofReal_comp
+      have hV' : HasDerivAt (fun ξ => (V ξ : ℂ)) ↑(deriv V x) x :=
+        hVd.ofReal_comp
+      have hIV : HasDerivAt (fun ξ => I * (V ξ : ℂ))
+          (I * ↑(deriv V x)) x :=
+        hV'.const_mul I
+      have hsum := hU'.add hIV
+      have hfun : (fun ξ => (U ξ : ℂ)) + (fun ξ => I * (V ξ : ℂ)) =
+          fun ξ => (U ξ : ℂ) + I * (V ξ : ℂ) := rfl
+      simpa [hW_eq, ← hfun] using hsum.deriv
+    have hW0 : deriv W x = I * ↑((μ : ℝ) * ∂[t, t] u t x) := by
+      simpa [W, θ] using h_force t x
+    have him := congrArg im (hW_deriv ▸ hW0)
+    simp [add_im, mul_im, I_re, I_im, ofReal_re, ofReal_im] at him
+    -- V = T · sin∘arctan∘u_x, so deriv V = T · ∂_x(sin(arctan u_x))
+    have hV_eq : deriv V x =
+        (T : ℝ) * ∂[x] (∂[x] u t x).arctan.sin := by
+      have hfun : V = fun ξ => (T : ℝ) *
+          Real.sin (Real.arctan (deriv (fun y => u t y) ξ)) := by
+        funext ξ
+        simp only [V, θ]
+      have hmul : deriv V x =
+          (T : ℝ) * deriv (fun ξ =>
+            Real.sin (Real.arctan (deriv (fun y => u t y) ξ))) x := by
+        rw [hfun]
+        apply deriv_const_mul
+        exact (Real.differentiable_sin.comp
+          (Real.differentiable_arctan.comp fun ξ => h_ux' t ξ)) x
+      simp [hmul]
+    -- sugar goal matches Im projection
+    simpa [hV_eq] using him
   have h_nl :
     ∀ t x,
       (T : ℝ) * (∂[x, x] u t x) / (1 + (∂[x] u t x) ^ 2) ^ ((3 : ℝ) / 2) =
         (μ : ℝ) * ∂[t, t] u t x :=
     All_EqDiv_Pow_Div3'2Mul_Deriv.of.All_EqMul_Deriv_SinArctan.All_DifferentiableAt_Deriv
-      h_ux' h_force
+      h_ux' h_force_real
   have huxx_mode : ∀ t x, ∂[x, x] u t x = -k ^ 2 * u t x := by
     intro t x
     rw [huxx t x, hX2_eq x, h_sep t x]
@@ -309,3 +387,4 @@ private lemma main
 
 
 -- created on 2026-11-05
+-- updated on 2026-11-06

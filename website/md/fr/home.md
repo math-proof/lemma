@@ -21,7 +21,7 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
 * [Int](../?module=Int) Algèbre élémentaire des entiers relatifs
 * [Rat](../?module=Rat) Algèbre élémentaire des rationnels
 * [Real](../?module=Real) Algèbre et analyse réelle, p. ex. :
-  - [inégalité de Jensen](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc)
+  - [inégalité de Jensen](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc), [chaînette](../?module=Real.Any_Eq_AddMul_CoshDivSub.of.All_EqDeriv_MulInvSqrtAdd1SquareDeriv.ContDiff_2)
 * [Hyperreal](../?module=Hyperreal) Analyse non standard, p. ex. :
   - [loi de Mersenne](../?module=Hyperreal.Eq_Mul_SqrtDiv.of.All_EqMul_Deriv_SinArctan.All_Eq_MulMul_Sin_Cos)
 * [Complex](../?module=Complex) Analyse complexe, p. ex. :

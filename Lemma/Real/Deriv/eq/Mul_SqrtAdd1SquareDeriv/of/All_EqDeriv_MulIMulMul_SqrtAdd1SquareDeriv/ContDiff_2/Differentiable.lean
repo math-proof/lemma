@@ -10,10 +10,9 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Def.Analysis.SpecialFunctions.Trigonometric
-import Notation.Analysis.Real.Numbers
 import Syntax.Analysis.Calculus.Deriv.Operators
 import Initialize.Tactic.Attr.Basic
-open Real
+open Real Complex
 
 
 /--
@@ -46,11 +45,11 @@ private lemma main
   (hT : Differentiable ℝ T)
   (hy : ContDiff ℝ 2 y)
   (h_force : ∀ x,
-    ∂[x] ((T x : ℂ) * Complex.exp (Complex.I * ((∂[x] y x).arctan : ℂ)))
-      = Complex.I * (((μ : ℝ) * √(1 + (∂[x] y x) ^ 2) * (g : ℝ) : ℂ))) :
+    ∂[x] (T x * exp (I * (∂[x] y x).arctan)) =
+      I * (μ * √(1 + (∂[x] y x) ^ 2) * g)) :
 -- imply
   ∃ H : ℝ,
-    let a := H / ((μ : ℝ) * g)
+    let a := H / (μ * g)
     ∀ x, ∂[x, x] y x = a⁻¹ * √(1 + (∂[x] y x) ^ 2) := by
 -- proof
   have hμ0 : (μ : ℝ) ≠ 0 := ne_of_gt μ.property
@@ -59,29 +58,21 @@ private lemma main
   set θ : ℝ → ℝ := fun ξ => Real.arctan (deriv y ξ)
   set U : ℝ → ℝ := fun ξ => T ξ * Real.cos (θ ξ)
   set V : ℝ → ℝ := fun ξ => T ξ * Real.sin (θ ξ)
-  set W : ℝ → ℂ :=
-    fun ξ => (T ξ : ℂ) * Complex.exp (Complex.I * (θ ξ : ℂ))
-  have hW_eq : W = fun ξ => (U ξ : ℂ) + Complex.I * (V ξ : ℂ) := by
+  set W : ℝ → ℂ := fun ξ => T ξ * exp (I * θ ξ)
+  have hW_eq : W = fun ξ => (U ξ : ℂ) + I * (V ξ : ℂ) := by
     funext ξ
     simp only [W, U, V, θ]
-    have hExp : Complex.exp (Complex.I * (Real.arctan (deriv y ξ) : ℂ)) =
+    have hExp : exp (I * Real.arctan (deriv y ξ)) =
         ↑(Real.cos (Real.arctan (deriv y ξ))) +
-          ↑(Real.sin (Real.arctan (deriv y ξ))) * Complex.I := by
-      rw [mul_comm Complex.I]
-      exact Complex.exp_ofReal_mul_I _
-    rw [hExp, mul_add]
-    have h1 : (T ξ : ℂ) * ↑(Real.cos (Real.arctan (deriv y ξ))) =
-        ↑(T ξ * Real.cos (Real.arctan (deriv y ξ))) := by
-      rw [← Complex.ofReal_mul]
-    have h2 : (T ξ : ℂ) * (↑(Real.sin (Real.arctan (deriv y ξ))) * Complex.I) =
-        Complex.I * ↑(T ξ * Real.sin (Real.arctan (deriv y ξ))) := calc
-        _ = ↑(T ξ) * ↑(Real.sin (Real.arctan (deriv y ξ))) * Complex.I := by
-          ring
-        _ = ↑(T ξ * Real.sin (Real.arctan (deriv y ξ))) * Complex.I := by
-          rw [← Complex.ofReal_mul]
-        _ = Complex.I * ↑(T ξ * Real.sin (Real.arctan (deriv y ξ))) := by
-          rw [mul_comm]
-    rw [h1, h2]
+          ↑(Real.sin (Real.arctan (deriv y ξ))) * I := by
+      rw [mul_comm I]
+      apply exp_ofReal_mul_I _
+    rw [hExp, mul_add, ← ofReal_mul]
+    congr 1
+    calc
+      _ = ↑(T ξ) * ↑(Real.sin (Real.arctan (deriv y ξ))) * I := by ring
+      _ = ↑(T ξ * Real.sin (Real.arctan (deriv y ξ))) * I := by rw [← ofReal_mul]
+      _ = I * ↑(T ξ * Real.sin (Real.arctan (deriv y ξ))) := by rw [mul_comm]
   have hθ_diff : ContDiff ℝ 1 θ := by
     change ContDiff ℝ 1 (Real.arctan ∘ deriv y)
     exact Real.contDiff_arctan.comp hy.deriv'
@@ -89,13 +80,13 @@ private lemma main
     have h_cos : ContDiff ℝ 1 (Real.cos ∘ θ) := Real.contDiff_cos.comp hθ_diff
     refine Differentiable.mul hT ?_
     change Differentiable ℝ (Real.cos ∘ θ)
-    exact h_cos.differentiable_one
+    apply h_cos.differentiable_one
   have hV_diff : Differentiable ℝ V := by
     have h_sin : ContDiff ℝ 1 (Real.sin ∘ θ) := Real.contDiff_sin.comp hθ_diff
     refine Differentiable.mul hT ?_
     change Differentiable ℝ (Real.sin ∘ θ)
-    exact h_sin.differentiable_one
-  have hW_deriv : ∀ x, deriv W x = ↑(deriv U x) + Complex.I * ↑(deriv V x) := by
+    apply h_sin.differentiable_one
+  have hW_deriv : ∀ x, deriv W x = ↑(deriv U x) + I * ↑(deriv V x) := by
     intro x
     have hUd : HasDerivAt U (deriv U x) x := (hU_diff x).hasDerivAt
     have hVd : HasDerivAt V (deriv V x) x := (hV_diff x).hasDerivAt
@@ -103,33 +94,33 @@ private lemma main
       hUd.ofReal_comp
     have hV' : HasDerivAt (fun ξ => (V ξ : ℂ)) ↑(deriv V x) x :=
       hVd.ofReal_comp
-    have hIV : HasDerivAt (fun ξ => Complex.I * (V ξ : ℂ))
-        (Complex.I * ↑(deriv V x)) x :=
-      hV'.const_mul Complex.I
+    have hIV : HasDerivAt (fun ξ => I * (V ξ : ℂ))
+        (I * ↑(deriv V x)) x :=
+      hV'.const_mul I
     have hsum := hU'.add hIV
-    have hfun : (fun ξ => (U ξ : ℂ)) + (fun ξ => Complex.I * (V ξ : ℂ)) =
-        fun ξ => (U ξ : ℂ) + Complex.I * (V ξ : ℂ) := rfl
+    have hfun : (fun ξ => (U ξ : ℂ)) + (fun ξ => I * (V ξ : ℂ)) =
+        fun ξ => (U ξ : ℂ) + I * (V ξ : ℂ) := rfl
     simpa [hW_eq, ← hfun] using hsum.deriv
   have h_horiz : ∀ x, deriv U x = 0 := by
     intro x
     have hW0 : deriv W x =
-        Complex.I * ↑((μ : ℝ) * √(1 + (deriv y x) ^ 2) * (g : ℝ)) := by
+        I * ↑(μ * √(1 + (deriv y x) ^ 2) * g) := by
       simpa [W, θ] using h_force x
-    have hre := congrArg Complex.re (hW_deriv x ▸ hW0)
+    have hre := congrArg re (hW_deriv x ▸ hW0)
     -- re(↑U' + I*↑V') = U'; re(I*↑r) = 0
-    simp [Complex.add_re, Complex.mul_re, Complex.I_re, Complex.I_im,
-      Complex.ofReal_re, Complex.ofReal_im] at hre
-    exact hre
+    simp [add_re, mul_re, I_re, I_im,
+      ofReal_re, ofReal_im] at hre
+    apply hre
   have h_vert : ∀ x, deriv V x =
-      (μ : ℝ) * √(1 + (deriv y x) ^ 2) * (g : ℝ) := by
+      μ * √(1 + (deriv y x) ^ 2) * g := by
     intro x
     have hW0 : deriv W x =
-        Complex.I * ↑((μ : ℝ) * √(1 + (deriv y x) ^ 2) * (g : ℝ)) := by
+        I * ↑(μ * √(1 + (deriv y x) ^ 2) * g) := by
       simpa [W, θ] using h_force x
-    have him := congrArg Complex.im (hW_deriv x ▸ hW0)
-    simp [Complex.add_im, Complex.mul_im, Complex.I_re, Complex.I_im,
-      Complex.ofReal_re, Complex.ofReal_im] at him
-    exact him
+    have him := congrArg im (hW_deriv x ▸ hW0)
+    simp [add_im, mul_im, I_re, I_im,
+      ofReal_re, ofReal_im] at him
+    apply him
   have hU_const : ∀ x, U x = U 0 := fun x =>
     is_const_of_deriv_eq_zero hU_diff h_horiz x 0
   set H : ℝ := U 0
@@ -151,7 +142,7 @@ private lemma main
       have hT0 : T ξ = 0 := by
         apply mul_right_cancel₀ hcos_ne
         simpa using hc
-      simp [V, θ, hT0]
+      simp [V, hT0]
     have hspos : 0 < √(1 + (deriv y 0) ^ 2) :=
       Real.sqrt_pos.2 (lt_of_lt_of_le zero_lt_one
         (le_add_of_nonneg_right (sq_nonneg _)))
@@ -179,7 +170,7 @@ private lemma main
       refine div_ne_zero one_ne_zero ?_
       exact (Real.sqrt_pos.2 (lt_of_lt_of_le zero_lt_one
         (le_add_of_nonneg_right (sq_nonneg _)))).ne'
-    simp only [V, θ]
+    simp only [V]
     calc
       _ = T ξ * Real.sin (Real.arctan u) := rfl
       _ = T ξ * Real.cos (Real.arctan u) *
@@ -190,12 +181,12 @@ private lemma main
       _ = H * u := by rw [Real.tan_arctan]
   have hV_derivAt : HasDerivAt V (H * uxx) x := by
     rw [hV_eq]
-    exact h_ux_deriv.const_mul H
-  have hforce' : H * uxx = (μ : ℝ) * √(1 + ux ^ 2) * (g : ℝ) := by
+    apply h_ux_deriv.const_mul H
+  have hforce' : H * uxx = μ * √(1 + ux ^ 2) * g := by
     simpa [ux, hV_derivAt.deriv] using h_vert x
   have hode' : uxx = a⁻¹ * √(1 + ux ^ 2) := calc
     _ = H⁻¹ * (H * uxx) := by field_simp [hH0]
-    _ = H⁻¹ * ((μ : ℝ) * √(1 + ux ^ 2) * (g : ℝ)) := by rw [hforce']
+    _ = H⁻¹ * (μ * √(1 + ux ^ 2) * g) := by rw [hforce']
     _ = a⁻¹ * √(1 + ux ^ 2) := by
       simp only [a]
       field_simp [hH0, hμ0, hg0]
